@@ -2,131 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0717720281
-	for <e@80x24.org>; Thu,  5 Oct 2017 12:39:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F119920281
+	for <e@80x24.org>; Thu,  5 Oct 2017 13:10:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751335AbdJEMjq (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Oct 2017 08:39:46 -0400
-Received: from mail-qk0-f196.google.com ([209.85.220.196]:38467 "EHLO
-        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751280AbdJEMjq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Oct 2017 08:39:46 -0400
-Received: by mail-qk0-f196.google.com with SMTP id 17so2943525qkq.5
-        for <git@vger.kernel.org>; Thu, 05 Oct 2017 05:39:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=zYHSR1JNAYYpLtkcprWQuFzGoropJ2b6fHMow6KUTYU=;
-        b=DSENfA0c7q51al2K6kSlh/Y/WBqVWzgnGjTR0WOZukm0Q45G4x84fZaNj2oTpHC0EK
-         RxTHYzO7GkBqg1VBVMvCBFWbyNUv7ZDifbPS8boZa0CsV4veoYgvNtj8WKFB/yzoarHw
-         R2FIBrrPoL8G0zDVa99CkPWKiXgbL6Auf3lYjSRxzPHIF3bxG5IZh6Qt+MkAFrA1Ef33
-         DovLWnHd80wGAEaJJ844FNPA0iTRpS7krfeTCVVTDy/xE3dalIBoW0X1JX+M0mbxhJDf
-         A4v7QbV7A5fTwfOzn7XsDJ2IIF/rX1AVTu7TdD6k3m9Aphdntkzt22PuWpOtr1DIB/kF
-         fOCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=zYHSR1JNAYYpLtkcprWQuFzGoropJ2b6fHMow6KUTYU=;
-        b=AjiWP1U52Z0IQ+8ftTI2phz4wwae/sg/xnI8XO0QpeTFU1UMgYH2CvedHhRtBFyzD8
-         4HhgoLpg6dXhUK07B1ZXkz6JI/WWPeMgJRvFHJvp2H9/qgcb6uNfDeBrczxQeRB/x0Km
-         Z+n1RO0m5BHYOHG3wD9RkQYJZUZWuFJ37MKUhooXWPXeMcLmfwzzcK6bT+2OjurcK7oH
-         MIwIoTZu3evdXSJkfDoM1/kokZx48DmfHjesFVUfhBgDzKmszA52ShU/SwLbml6DtArx
-         WUfUvhw8v19dtynFJ7dWoRg0LMLTttZUo9bbtUcAmurwgq0oOPyOe9cqEB5EKeHDGc2c
-         3MOA==
-X-Gm-Message-State: AMCzsaWYX0YfoHeDrpFXwVtmiFo0i4iy+3v4He9T71vkYXOy3r/oVB8i
-        lViNp9aylY/p/xhadjArYglsfHzGmf0=
-X-Google-Smtp-Source: AOwi7QA7l2sYK7PYhlEaxHOkJKqB4lnfw72xDuK4XJhbTzYBMVsWpCqwD8Eq1VR8sHUyk0yEUPX4vw==
-X-Received: by 10.55.128.66 with SMTP id b63mr12269737qkd.61.1507207185308;
-        Thu, 05 Oct 2017 05:39:45 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010::7cc])
-        by smtp.gmail.com with ESMTPSA id z13sm6303987qtb.97.2017.10.05.05.39.44
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 05 Oct 2017 05:39:44 -0700 (PDT)
-Subject: Re: [PATCH v2 1/5] test-list-objects: List a subset of object ids
-To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Cc:     Derrick Stolee <dstolee@microsoft.com>, git@vger.kernel.org,
-        git@jeffhostetler.com
-References: <20170925095452.66833-1-dstolee@microsoft.com>
- <20170925095452.66833-2-dstolee@microsoft.com>
- <20171005084249.sdkimglkxqh2vi4i@sigill.intra.peff.net>
- <xmqqvaju6i3p.fsf@gitster.mtv.corp.google.com>
- <20171005100001.do5m4zhexcsltvw7@sigill.intra.peff.net>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <6222f65a-c518-74a4-9df4-89bf997425cb@gmail.com>
-Date:   Thu, 5 Oct 2017 08:39:42 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
+        id S1751344AbdJENKj (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Oct 2017 09:10:39 -0400
+Received: from mout.gmx.net ([212.227.15.15]:60752 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751280AbdJENKi (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Oct 2017 09:10:38 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MegbQ-1dgNBA3Qvw-00OI8m; Thu, 05
+ Oct 2017 15:10:32 +0200
+Date:   Thu, 5 Oct 2017 15:10:31 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org, Linux Kernel <linux-kernel@vger.kernel.org>
+Subject: Re: [ANNOUNCE] Git v2.15.0-rc0
+In-Reply-To: <xmqq7ewa87fw.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.21.1.1710051509360.40514@virtualbox>
+References: <xmqq7ewa87fw.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <20171005100001.do5m4zhexcsltvw7@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: multipart/mixed; boundary="8323329-1213969949-1507209032=:40514"
+X-Provags-ID: V03:K0:lWOeMM7oBo+ZQLN5YoKcVCVF3Lx/a7oSVMGSFE4mD4nPriAk512
+ SYAPDq4FDkerTGDUWunHMjHd1zORR7mjekMrBibBu6ROm+LXqgrbU5s+hSMCn4g3b9GaVS3
+ Rq4afJFf1Xl5cZhAyG2zjMZW6f63hMay6UzPaxCaUEJ8YJRN5aaSSxTE5KARHpbU26/hLEj
+ 5zkwp1JDua2qUJ93TTEMA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:3nGNIXOA7yI=:bLJaGBAjlnyKT6/XNitHLA
+ nWdgBlvDtGzJjhWd3f87J+QaCbYEeShnSiTO1dHQttzsvVL5TZadNArnbjysCRf5KkTjiJQ+0
+ 5n3iMA+EleClGzvqUOrjGJQnFJ4u4YbnrGcBMy2Z0VkQEIDltCCIFCAjvYOrZmXw0nCQxpbKA
+ FzlGWInX8YZ0+QgTEhoGpaCTbdVbV2uh4FcP9lfVwXuKeQ08pMXaJi60bKm+axPc6nfk6YoS9
+ ti1Ar0RAHMGKmTQyiBbUIyr/zr68tuhFittyD6lH4EonsqRk0eOGtn/7eTErMMzWmpSudLOy2
+ FsqGy0WH+ZtP3EUPwkuQm73fA3kQdJU4FEr+NG9/L7XRUIaDj3CMJ5yRS72AKwjiBL6C0aS/b
+ xA0Yd7UXSXiq02bZLJ8QZ530B2h104c7A41Fr1CL2dexYOaAxZP9n3a42yPhzyF4UZNx7DwIf
+ qBvwg/Z8gdj3C9tES9/zXw5XA7HXpkNyvml5++SnnO8l3FHoTe4OWMAgj8TMZ8GkUnkpyfz8U
+ JZfVVDHmt5IXYODlR31EfOHGYpybQiYwtzanlZ2uYcpWsWx7UbcuGAHYgg4h58ppmGpYA12p3
+ uZ1BgXhdBLCzbVDIMW7oE7fsoiyKzfDT5c1QVqNltLPUYOLWcBL13zg7D9rnxYen6B7jFGNNE
+ IC4dJY4sI+7MnyANrxuJBAsMFlQ7Ny3IajiVpJ5N4FeojKAD1ftkt5/Wjgr/HZ9ywLL0+bsRt
+ RiGGlw9r/CRsMv1qjcmfcUP06YWt2BqPc7MnIz41wp4ZUKo9V5PqwWyIEkDy/wkt0dL2/0Cdl
+ 8kiUahZJkdniQ0lQWvGgBkRC5ExQsdRg24SS42P9LDK308E8Rc=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
+--8323329-1213969949-1507209032=:40514
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-On 10/5/2017 6:00 AM, Jeff King wrote:
-> On Thu, Oct 05, 2017 at 06:48:10PM +0900, Junio C Hamano wrote:
->
->> Jeff King <peff@peff.net> writes:
->>
->>> This is weirdly specific. Can we accomplish the same thing with existing
->>> tools?
->>>
->>> E.g., could:
->>>
->>>    git cat-file --batch-all-objects --batch-check='%(objectname)' |
->>>    shuffle |
->>>    head -n 100
->>>
->>> do the same thing?
->>>
->>> I know that "shuffle" isn't available everywhere, but I'd much rather
->>> see us fill in portability gaps in a general way, rather than
->>> introducing one-shot C code that needs to be maintained (and you
->>> wouldn't _think_ that t/helper programs need much maintenance, but try
->>> perusing "git log t/helper" output; they have to adapt to the same
->>> tree-wide changes as the rest of the code).
->> I was thinking about this a bit more, and came to the conclusion
->> that "sort -R" and "shuf" are wrong tools to use.  We would want to
->> measure with something close to real world workload.  for example,
->> letting
->>
->> 	git rev-list --all --objects
->>
->> produce the listof objects in traversal order (i.e. this is very
->> similar to the order in which "git log -p" needs to access the
->> objects) and chomping at the number of sample objects you need in
->> your test would give you such a list.
-> Actually, I'd just as soon see timings for "git log --format=%h" or "git
-> log --raw", as opposed to patches 1 and 2.
->
-> You won't see a 90% speedup there, but you will see the actual
-> improvement that real-world users are going to experience, which is way
-> more important, IMHO.
->
-> -Peff
-Thanks for thinking hard about this.
+Hi Junio,
 
-For some real-user context: Some engineers using Git for the Windows 
-repo were seeing extremely slow commands, such as 'fetch' or 'commit', 
-and when we took a trace we saw most of the time spinning in this 
-abbreviation code. Our workaround so far has been to set core.abbrev=40.
+On Thu, 5 Oct 2017, Junio C Hamano wrote:
 
-I'll run some perf numbers for these commands you recommend, and also 
-see if I can replicate some of the pain points that triggered this 
-change using the Linux repo.
+> New contributors whose contributions weren't in v2.14.0 are as follows.
+> Welcome to the Git development community!
+>=20
+>   Ann T Ropea, Daniel Watkins, Dimitrios Christidis, Eric Rannaud,
+>   Evan Zacks, Hielke Christian Braun, Ian Campbell, Ilya Kantor,
+>   Jameson Miller, Job Snijders, Joel Teichroeb, joernchen,
+>   =C5=81ukasz Gryglicki, Manav Rathi, Martin =C3=85gren, Michael Forney,
+>   Patryk Obara, Rene Scharfe, Ross Kabus, and Urs Thuermann.
+                  ^^^^^^^^^^^^
 
-Thanks,
--Stolee
+I think we need a .mailmap entry there... I guess the difference is the =C3=
+=A9
+vs e.
+
+Ciao,
+Dscho
+--8323329-1213969949-1507209032=:40514--
