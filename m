@@ -2,82 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F119920281
-	for <e@80x24.org>; Thu,  5 Oct 2017 13:10:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 862DD20281
+	for <e@80x24.org>; Thu,  5 Oct 2017 13:22:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751344AbdJENKj (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Oct 2017 09:10:39 -0400
-Received: from mout.gmx.net ([212.227.15.15]:60752 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751280AbdJENKi (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Oct 2017 09:10:38 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MegbQ-1dgNBA3Qvw-00OI8m; Thu, 05
- Oct 2017 15:10:32 +0200
-Date:   Thu, 5 Oct 2017 15:10:31 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org, Linux Kernel <linux-kernel@vger.kernel.org>
-Subject: Re: [ANNOUNCE] Git v2.15.0-rc0
-In-Reply-To: <xmqq7ewa87fw.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.21.1.1710051509360.40514@virtualbox>
-References: <xmqq7ewa87fw.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323329-1213969949-1507209032=:40514"
-X-Provags-ID: V03:K0:lWOeMM7oBo+ZQLN5YoKcVCVF3Lx/a7oSVMGSFE4mD4nPriAk512
- SYAPDq4FDkerTGDUWunHMjHd1zORR7mjekMrBibBu6ROm+LXqgrbU5s+hSMCn4g3b9GaVS3
- Rq4afJFf1Xl5cZhAyG2zjMZW6f63hMay6UzPaxCaUEJ8YJRN5aaSSxTE5KARHpbU26/hLEj
- 5zkwp1JDua2qUJ93TTEMA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:3nGNIXOA7yI=:bLJaGBAjlnyKT6/XNitHLA
- nWdgBlvDtGzJjhWd3f87J+QaCbYEeShnSiTO1dHQttzsvVL5TZadNArnbjysCRf5KkTjiJQ+0
- 5n3iMA+EleClGzvqUOrjGJQnFJ4u4YbnrGcBMy2Z0VkQEIDltCCIFCAjvYOrZmXw0nCQxpbKA
- FzlGWInX8YZ0+QgTEhoGpaCTbdVbV2uh4FcP9lfVwXuKeQ08pMXaJi60bKm+axPc6nfk6YoS9
- ti1Ar0RAHMGKmTQyiBbUIyr/zr68tuhFittyD6lH4EonsqRk0eOGtn/7eTErMMzWmpSudLOy2
- FsqGy0WH+ZtP3EUPwkuQm73fA3kQdJU4FEr+NG9/L7XRUIaDj3CMJ5yRS72AKwjiBL6C0aS/b
- xA0Yd7UXSXiq02bZLJ8QZ530B2h104c7A41Fr1CL2dexYOaAxZP9n3a42yPhzyF4UZNx7DwIf
- qBvwg/Z8gdj3C9tES9/zXw5XA7HXpkNyvml5++SnnO8l3FHoTe4OWMAgj8TMZ8GkUnkpyfz8U
- JZfVVDHmt5IXYODlR31EfOHGYpybQiYwtzanlZ2uYcpWsWx7UbcuGAHYgg4h58ppmGpYA12p3
- uZ1BgXhdBLCzbVDIMW7oE7fsoiyKzfDT5c1QVqNltLPUYOLWcBL13zg7D9rnxYen6B7jFGNNE
- IC4dJY4sI+7MnyANrxuJBAsMFlQ7Ny3IajiVpJ5N4FeojKAD1ftkt5/Wjgr/HZ9ywLL0+bsRt
- RiGGlw9r/CRsMv1qjcmfcUP06YWt2BqPc7MnIz41wp4ZUKo9V5PqwWyIEkDy/wkt0dL2/0Cdl
- 8kiUahZJkdniQ0lQWvGgBkRC5ExQsdRg24SS42P9LDK308E8Rc=
+        id S1751620AbdJENWt (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Oct 2017 09:22:49 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:35703 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751330AbdJENWr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Oct 2017 09:22:47 -0400
+Received: by mail-wr0-f193.google.com with SMTP id y44so4535140wry.2
+        for <git@vger.kernel.org>; Thu, 05 Oct 2017 06:22:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:subject:date:message-id;
+        bh=vq1QFVr5zYiKM3aRQgCNCtGYVjqmzcJdVMapnTSe48g=;
+        b=Ejye44w0ftIiV+ktPBcqLIMdgEQ8fcHm8l6gW1tmind+aQU3UHNvvFvyGM7sVKGuPw
+         QzdKtDbIosK7ecUy/xj9OeAjVTCUciBo6UeOY66V03I+p2CWuRulGr0tEccLbRn0mNyd
+         Eh+3iWWucjtX5t8T85bNYA2WldAd1EqyGA7NuudBvErDCInmVDF9wRhC3eZVIzJy9dbo
+         pdBGSZ01Q3EYaT4pbaUl+EhYWCqo3dk7aobdee5jDrz1Q9hcLUVq6pQJtOcKyxLzqwgw
+         /BCWBdkoQqaRP73lmsUnTxH++jeHiKrE2HXl91aihwDBi70BZnq906nHUP2hD8HIjybO
+         HfJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:subject:date:message-id;
+        bh=vq1QFVr5zYiKM3aRQgCNCtGYVjqmzcJdVMapnTSe48g=;
+        b=QG33srDfoK3cMe/mr2j7QqlIfDZGu76Urxl0mcN9Cm9AiwYQMIIdyg+9YeajRg/5uo
+         MwpbbADqPJndcvQ6jeNSnj9Tf5+aUfhv4iVROmExvqlZjfU+FLtL5ydVSFmmSu4hP/OO
+         4U/Qh/Jx8JfscPvv74gdL2xccco79YF6nuwbn34W4nJvAMjhMIE53JZN6gIiRtysczpY
+         r9NvvETnWCAsJPARghOdufit44nqI/lf8rUlB4PZz8RmRnCDLjP+ufmWxWIyEIkDfA/1
+         7DcAfq7j7QEh3CdA3SVdHuUIErr5kUXS5RkR87tDA3K2eswQw+XqjfGV/V8e69s/oUZ+
+         NCIg==
+X-Gm-Message-State: AHPjjUgPWZbsc7kmdoxXD7RcP12RQYQqC6TYchL3N3uTpr7VupswwJQ2
+        FU7MlTryLMaanM3HEGVkeiaCfK1E
+X-Google-Smtp-Source: AOwi7QCBnQyeKImmPpADQ/9sk1nfJlNprjs2f6h43FOqxoSJFAq8i9KVaV37+AALHWvbpw4h/jknyw==
+X-Received: by 10.223.133.147 with SMTP id 19mr22240749wrt.184.1507209765491;
+        Thu, 05 Oct 2017 06:22:45 -0700 (PDT)
+Received: from donizetti.redhat.com (dynamic-adsl-78-12-246-117.clienti.tiscali.it. [78.12.246.117])
+        by smtp.gmail.com with ESMTPSA id r15sm10864439wrc.30.2017.10.05.06.22.44
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 05 Oct 2017 06:22:44 -0700 (PDT)
+From:   Paolo Bonzini <pbonzini@redhat.com>
+To:     git@vger.kernel.org
+Subject: [RFC PATCH 0/4] interpret-trailers: introduce "move" action
+Date:   Thu,  5 Oct 2017 15:22:39 +0200
+Message-Id: <20171005132243.27058-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.14.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+The purpose of this action is for scripts to be able to keep the
+user's Signed-off-by at the end.  For example say I have a script
+that adds a Reviewed-by tag:
 
---8323329-1213969949-1507209032=:40514
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+    #! /bin/sh
+    them=$(git log -i -1 --pretty='format:%an <%ae>' --author="$*")
+    trailer="Reviewed-by: $them"
+    git log -1 --pretty=format:%B | \
+      git interpret-trailers --where end --if-exists doNothing --trailer "$trailer" | \
+      git commit --amend -F-
 
-Hi Junio,
+Now, this script will leave my Signed-off-by line in a non-canonical
+place, like
 
-On Thu, 5 Oct 2017, Junio C Hamano wrote:
+   Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+   Reviewed-by: Junio C Hamano <gitster@pobox.com>
 
-> New contributors whose contributions weren't in v2.14.0 are as follows.
-> Welcome to the Git development community!
->=20
->   Ann T Ropea, Daniel Watkins, Dimitrios Christidis, Eric Rannaud,
->   Evan Zacks, Hielke Christian Braun, Ian Campbell, Ilya Kantor,
->   Jameson Miller, Job Snijders, Joel Teichroeb, joernchen,
->   =C5=81ukasz Gryglicki, Manav Rathi, Martin =C3=85gren, Michael Forney,
->   Patryk Obara, Rene Scharfe, Ross Kabus, and Urs Thuermann.
-                  ^^^^^^^^^^^^
+This new option enables the following improvement:
 
-I think we need a .mailmap entry there... I guess the difference is the =C3=
-=A9
-vs e.
+    #! /bin/sh
+    me=$(git var GIT_COMMITTER_IDENT | sed 's,>.*,>,')
+    them=$(git log -i -1 --pretty='format:%an <%ae>' --author="$*")
+    trailer="Reviewed-by: $them"
+    sob="Signed-off-by: $me"
+    git log -1 --pretty=format:%B | \
+      git interpret-trailers --where end --if-exists doNothing --trailer "$trailer" \
+                             --where end --if-exists move --if-missing doNothing --trailer "$sob" | \
+      git commit --amend -F-
 
-Ciao,
-Dscho
---8323329-1213969949-1507209032=:40514--
+which lets me keep the SoB line at the end, as it should be.
+Posting as RFC because it's possible that I'm missing a simpler
+way to achieve this...
+
+Paolo Bonzini (4):
+  trailer: push free_arg_item up
+  trailer: simplify check_if_different
+  trailer: create a new function to handle adding trailers
+  trailer: add "move" configuration for trailer.ifExists
+
+ Documentation/git-interpret-trailers.txt |  13 ++-
+ t/t7513-interpret-trailers.sh            |  37 +++++++
+ trailer.c                                | 169 ++++++++++++++++++-------------
+ trailer.h                                |   1 +
+ 4 files changed, 149 insertions(+), 71 deletions(-)
+
+-- 
+2.14.2
+
