@@ -2,104 +2,150 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CEBD72036C
-	for <e@80x24.org>; Thu,  5 Oct 2017 01:46:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2E3462036D
+	for <e@80x24.org>; Thu,  5 Oct 2017 01:49:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751220AbdJEBqz (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Oct 2017 21:46:55 -0400
-Received: from mail-pf0-f171.google.com ([209.85.192.171]:44466 "EHLO
-        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751197AbdJEBqz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Oct 2017 21:46:55 -0400
-Received: by mail-pf0-f171.google.com with SMTP id t62so5999384pfd.1
-        for <git@vger.kernel.org>; Wed, 04 Oct 2017 18:46:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Ok23Jwo+EZ0k9awtGiGBPGWGExIkDAQt+MSZEksnhUE=;
-        b=SM0tBymvuX3FbrIqUQ5H6n5nLmKKuliT0p6vtfCs5qBsBiD/ab1aRl4fs0Wp69qQPM
-         NxN7KPUOnmdQincbsygoU0Se+/+M9NVERsttB4oFa065xp+daZ2kcQgb/6lJnMOoXhZz
-         D6UxLSzbtDQDZ67a0q6lIuK/BnJZGo0IrVmsoXwRn9FUU2N3TYBbvu3X2hpqoXq0iGgY
-         TNA/OWi6KrhaP7QIH9mNcto6ipVsQBV2xqFZhg9Vhh8td/jrfBDWyi3M7NDRNhhUwJy5
-         o6K3haxeYAOCK5KMQCjBjDHQTqsfENe8GNIKGCHnVD+HP2un9s58iuBP/te0X3OrvYCF
-         upZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Ok23Jwo+EZ0k9awtGiGBPGWGExIkDAQt+MSZEksnhUE=;
-        b=s1ulfk7TOLAOOHyhYPg4+kkIGvQ01P/oum5KSSrM2oWdeyX421f3bBU9mOggH7Cawv
-         A4z42c7K3xIEVulb8JIwWwE31cN5+ikC1yDqfaUv82TuKZ0Pl/xvU7p/xPdgr+JfPg1I
-         QDundETbA2iUsZXktDD2G9KV7IUvFbQMnuxAnJPuRqw4OylXtvsqFSJsfMtVreJpw5aB
-         ZiPbcaWoQuizS2/llMSEJUlSSP2ozPWSCcKdQJ9f9l6O/UNjwJ9L1P97Cv/1HJFPj01W
-         8PUmvtBHrDANzdCCVmzGacutf63Yv/uwuM99e2tFYqyeUQoBhU3Ihcfyi61wJw1KuRUO
-         Gl3A==
-X-Gm-Message-State: AHPjjUhXiT2ypcOMRGHhNH5Y78Q+V9bYFCIKbvZltJlEiT8zPE6MsQuv
-        0PShRUgMyaUYLpNou97VpzU=
-X-Google-Smtp-Source: AOwi7QCHc6TZDsY7yw8mVfJ8Xf0Bc6qVhe3e1XyTwhl9oGyDRp7GQhoOa2IEd7RLVVWtMP3BFsLwSg==
-X-Received: by 10.99.177.6 with SMTP id r6mr19357190pgf.194.1507168014362;
-        Wed, 04 Oct 2017 18:46:54 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:960:8965:26b6:313])
-        by smtp.gmail.com with ESMTPSA id i12sm25050438pgr.21.2017.10.04.18.46.53
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 04 Oct 2017 18:46:53 -0700 (PDT)
-Date:   Wed, 4 Oct 2017 18:46:51 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Robert Dailey <rcdailey.lists@gmail.com>,
-        Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>,
-        Git <git@vger.kernel.org>
-Subject: Re: Line ending normalization doesn't work as expected
-Message-ID: <20171005014651.GT19555@aiede.mtv.corp.google.com>
-References: <CAHd499B5hM9ixnsnwWwB2uyDT10dRQpN473m5QjxH9raHtFXiw@mail.gmail.com>
- <958c9b03-062c-0bea-3b25-939a36659f32@web.de>
- <CAHd499AD5Kgbp-vxXTnEPkb-Mb5oEeXhaRO5kGniDdqmXwd2QQ@mail.gmail.com>
- <88c57b88-ef2c-d7db-15e2-12791d4cb201@web.de>
- <xmqq8tgrhdt0.fsf@gitster.mtv.corp.google.com>
- <CAHd499BCMOcur6NRbKfwd81zpnyzoiVCY54d=UmGpAhbD7AVTA@mail.gmail.com>
- <20171004165947.GN19555@aiede.mtv.corp.google.com>
- <xmqqbmlm9y94.fsf@gitster.mtv.corp.google.com>
+        id S1751266AbdJEBtJ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Oct 2017 21:49:09 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58960 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751223AbdJEBtI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Oct 2017 21:49:08 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A674DB2716;
+        Wed,  4 Oct 2017 21:49:02 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=pdvHYdAUJ9c6yQ0ywtBIAc8jC54=; b=sfPUPz
+        TgQ9ZUlMafZa7hMCXacLOyTQYM57pAG9FLMp+KowBMcIRaPEn+7oPBLaUtaws2E7
+        F99EHV7Vix7Oui+CrqL8wGGRZsOYaHxODCpNU32WsBhYx7Qwyq+22aVeRe4xrr2q
+        YQH0xKy7UZNnzcinFV42rkb4qCfOhQXQgJJws=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=PyjPhQDrfnmEwNMgKMueMoCGY2//WDAD
+        GJeKjbqLRZ+t8jtkSoaq56NFt5FWdsfqjuy9UdljrKrKZYxTqg0RUWGHW7zqdYxX
+        hDFYgNqafKBvu30F1WJWhu8Usd8tFYx9obvvD25B8O4w0kid4sPvJQgvn6ne8n9r
+        DVDQm9dftNQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9DBCEB2715;
+        Wed,  4 Oct 2017 21:49:02 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 12D8AB2714;
+        Wed,  4 Oct 2017 21:49:02 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+        peff@peff.net
+Subject: Re: [PATCH v2] ref-filter.c: pass empty-string as NULL to atom parsers
+References: <20171002055052.GB10729@D-10-157-251-166.dhcp4.washington.edu>
+        <20171002161034.44867-1-me@ttaylorr.com>
+        <20171002224052.GR19555@aiede.mtv.corp.google.com>
+        <xmqqmv59m7fu.fsf@gitster.mtv.corp.google.com>
+        <20171003033726.GA84817@D-10-157-251-166.dhcp4.washington.edu>
+Date:   Thu, 05 Oct 2017 10:49:00 +0900
+In-Reply-To: <20171003033726.GA84817@D-10-157-251-166.dhcp4.washington.edu>
+        (Taylor Blau's message of "Mon, 2 Oct 2017 20:37:26 -0700")
+Message-ID: <xmqq376y9xf7.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqbmlm9y94.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5CC48CFA-A96F-11E7-874D-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
+Taylor Blau <me@ttaylorr.com> writes:
 
->> 	git checkout --renormalize .
->> 	git status; # Show files that will be normalized
->> 	git commit; # Commit the result
+> On Tue, Oct 03, 2017 at 08:55:01AM +0900, Junio C Hamano wrote:
+>> Jonathan Nieder <jrnieder@gmail.com> writes:
 >>
->> What do you think?  Would you be interested in writing a patch for it?
->> ("No" is as always an acceptable answer.)
->
-> I actually think what is being requested is the opposite, i.e. "the
-> object registered in the index have wrong line endings, and the
-> safe-crlf is getting in the way to prevent me from correcting by
-> hashing the working tree contents again to register contents with
-> corrected line endings, even with 'git add .'".
->
-> So I would understand if your suggestion were for
->
-> 	git checkin --renormalize .
->
-> but not "git checkout".  And it probably is more familiar to lay
-> people if we spelled that as "git add --renormalize ." ;-)
+>> > The above does a nice job of explaining
+>> >
+>> >  - what this change is going to do
+>> >  - how it's good for the internal code structure / maintainability
+>> >
+>> > What it doesn't tell me about is why the user-facing effect won't
+>> > cause problems.  Is there no atom where %(atom:) was previously
+>> > accepted and did something meaningful that this may break?
 
-Good catch.  You understood correctly --- "git add --renormalize" is
-the feature that I think is being hinted at here.
+This loose end needs to be tied.  
 
-Thanks,
-Jonathan
+I replaced "let's assume that doing this change is OK" from the
+original log message with something a bit stronger, as with this
+change, we are saying that it is forbidden to treat %(atom) and
+%(atom:) differently.  I also recorded the result of due-diligence
+survey of the current code to suggest that the change would be OK
+for current users.
+
+-- >8 --
+From: Taylor Blau <me@ttaylorr.com>
+Date: Mon, 2 Oct 2017 09:10:34 -0700
+Subject: [PATCH] ref-filter.c: pass empty-string as NULL to atom parsers
+
+Peff points out that different atom parsers handle the empty
+"sub-argument" list differently. An example of this is the format
+"%(refname:)".
+
+Since callers often use `string_list_split` (which splits the empty
+string with any delimiter as a 1-ary string_list containing the empty
+string), this makes handling empty sub-argument strings non-ergonomic.
+
+Let's fix this by declaring that atom parser implementations must
+not care about distinguishing between the empty string "%(refname:)"
+and no sub-arguments "%(refname)".  Current code aborts, either with
+"unrecognised arg" (e.g. "refname:") or "does not take args"
+(e.g. "body:") as an error message.
+
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+Reviewed-by: Jeff King <peff@peff.net>
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ ref-filter.c            | 10 +++++++++-
+ t/t6300-for-each-ref.sh |  1 +
+ 2 files changed, 10 insertions(+), 1 deletion(-)
+
+diff --git a/ref-filter.c b/ref-filter.c
+index bc591f4f3d..f3e53d4448 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -415,8 +415,16 @@ static int parse_ref_filter_atom(const struct ref_format *format,
+ 	REALLOC_ARRAY(used_atom, used_atom_cnt);
+ 	used_atom[at].name = xmemdupz(atom, ep - atom);
+ 	used_atom[at].type = valid_atom[i].cmp_type;
+-	if (arg)
++	if (arg) {
+ 		arg = used_atom[at].name + (arg - atom) + 1;
++		if (!*arg) {
++			/*
++			 * Treat empty sub-arguments list as NULL (i.e.,
++			 * "%(atom:)" is equivalent to "%(atom)").
++			 */
++			arg = NULL;
++		}
++	}
+ 	memset(&used_atom[at].u, 0, sizeof(used_atom[at].u));
+ 	if (valid_atom[i].parser)
+ 		valid_atom[i].parser(format, &used_atom[at], arg);
+diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+index 2274a4b733..edc1bd8eab 100755
+--- a/t/t6300-for-each-ref.sh
++++ b/t/t6300-for-each-ref.sh
+@@ -51,6 +51,7 @@ test_atom() {
+ }
+ 
+ test_atom head refname refs/heads/master
++test_atom head refname: refs/heads/master
+ test_atom head refname:short master
+ test_atom head refname:lstrip=1 heads/master
+ test_atom head refname:lstrip=2 master
+-- 
+2.14.2-921-g20a440a8ba
+
