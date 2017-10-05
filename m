@@ -7,56 +7,55 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F2A6520370
-	for <e@80x24.org>; Thu,  5 Oct 2017 20:33:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C1C3C20370
+	for <e@80x24.org>; Thu,  5 Oct 2017 20:33:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751918AbdJEUdH (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Oct 2017 16:33:07 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:52619 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751888AbdJEUdC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Oct 2017 16:33:02 -0400
-Received: by mail-wm0-f66.google.com with SMTP id k4so4406351wmc.1
-        for <git@vger.kernel.org>; Thu, 05 Oct 2017 13:33:02 -0700 (PDT)
+        id S1751649AbdJEUcr (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Oct 2017 16:32:47 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:51086 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751469AbdJEUcn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Oct 2017 16:32:43 -0400
+Received: by mail-wm0-f68.google.com with SMTP id u138so4143463wmu.5
+        for <git@vger.kernel.org>; Thu, 05 Oct 2017 13:32:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=eqN+8W8UU6Y63bcjuSNet5caA254MGuSKwClbb5VExk=;
-        b=LWJNu+869nFQxB+4klBLERjNrM1gkiwsu/XgXQjBhu1YR/Lq/oHzo8HsDjhaiDQzBX
-         kgJ6awULQd+A/MoCoUHbPJ7UEpzr9cKYfP5PKzYxIW1DNa4V2vIXBgMi5yLw9O0jEFrn
-         ve2qQ8Lx4CybRnTKfnaMxq/TSYs2xsMcIwUtx5DjQmsx717C5fe1lk4p57kBRrpIupyD
-         V0bR8wXfR8rjkjEtY0T/aTwv2Wemg4giOp3hoDW7HJ7PfgkJsjXEbdS6w8ocRIpN0HoO
-         GmaUZzwqwmbE3ILOFJz1sjHVzQ/0dpFYIiELYjxtSI64AMpZvaDeKaiRHK+rFKJiC4yU
-         3Vug==
+        bh=0NkX3UXctAgczppqMQaTbVP5jGMzhl5x1Ww44e1UIpw=;
+        b=PlXVUCAHvzfgb0UCKW6ymPev4DtgkR7TTTlECzZvOU6T+FO8vl8U5ragjwJd2ouXlh
+         oDbyrm+RnGsrlaka7JT2FuO6ODNA97R0lJtAZHqICGt5mc9c9EqO31fMzJNm6HdtvoT1
+         oe0Wk/fn05UB69LEmsLur0mzOoPILN4Yh6t4Trq1Z2dcLNU4GyThKhJXzFHK74GMvrd4
+         JDc+jzUiFtnIghf9Ox/OP5CgRcWZbYoA/BII8o2IjNGEWJCBT39vgrl/MeJou9sSQ+cD
+         BhGs1MJOtk0AladzxUgVNyHS2v/ocr8+VjFYNclSHhVeiytVYSTQcqYuSNbDeCky4hri
+         K4xQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=eqN+8W8UU6Y63bcjuSNet5caA254MGuSKwClbb5VExk=;
-        b=C/PBAZdN1p1ACho8J6qvSXEoumQmlT2BsLqupNYRMs3LvBFXEezZZTlGOVZFyeJe7T
-         up6hf2Ct3R0dR0Q9dzBDkj6JKc8jmZyMaZ59z0YzleW6ywC7qqT3meafdPBoUnXXCMpb
-         JMJAEW/z46EwYEvlhkKrptWqkLjmU+hr+fKNvMTH7Bq8QapPjEQ3X6VtG+7l5YTuhzHW
-         avJxpeUNAg36ZE+XSzK7QmhczttLDDepmmdHhCv5olFgZoEDAzGAR7OmSznMnPkxvdFg
-         gER91lV8g+TC3TmgkI1/N4RRcew/uLjYu21OUYj2q7StC13TEkAU2xRiSv7sdDZDLxQw
-         Eguw==
-X-Gm-Message-State: AMCzsaX6jJD5Iu3RuzPidN/8ZeDuytAJIJjPvfE4xva5L8FYG4Q4IthQ
-        g17YJetjQ21bnfwAv2CPnJglfVbA
-X-Google-Smtp-Source: AOwi7QA1RvGPAPwVIGWec/aE2mSD6VxXa7aI8f7g41tWAg1y+g2TZ8IHUFLV2MX3eF1DeqtogPMxDg==
-X-Received: by 10.28.184.141 with SMTP id i135mr251171wmf.143.1507235581223;
-        Thu, 05 Oct 2017 13:33:01 -0700 (PDT)
+        bh=0NkX3UXctAgczppqMQaTbVP5jGMzhl5x1Ww44e1UIpw=;
+        b=BqG93lnOOmK0pXpovWweDPQitcGVlPx+okBR+j305qHMLYec2QlaqC56htAMiOrom2
+         u8U6sN5UpV47PWEubvcqxCy8TThOfDUZ6VyA+3lLPUtIFifid+FdibGwtHdUEHtFl8A7
+         OuKhdpgEYZGodFT9u+2/fOTLJP9ZmsM1fjc/dHb0N2VWkqVpzpQJX8CZz+XrQiKDPhQv
+         VCbALJTGBOhEkPpNJ2jHiXFLFRFtCfMlfwTo8oy0IpdQz/zVDwuJNXzrou9W4sVEaeHF
+         mblGsgAiMYxg1uxiDt0358ldTmyRs9QOht9LeF4c1O0xktro0ycJyYdp/xdKeV/EJYyx
+         Xjqg==
+X-Gm-Message-State: AMCzsaU6tdcivO24rVyjOAE75Ad6d4yzL8+8gmu5TRWwUJ3An7fmhddz
+        8XZ8QYfXqzhQ71wyohFhIpx/oBSN
+X-Google-Smtp-Source: AOwi7QDZwyz33HbtdJlTcOotNyofAL72UClNq0ijl63OM8Z5id8/75edg6SQvLHihvCiYEmYSpJAcg==
+X-Received: by 10.28.139.72 with SMTP id n69mr281246wmd.29.1507235561705;
+        Thu, 05 Oct 2017 13:32:41 -0700 (PDT)
 Received: from localhost.localdomain ([2a02:aa16:5782:c100:c938:fbb7:46f8:2405])
-        by smtp.gmail.com with ESMTPSA id i76sm698424wmd.2.2017.10.05.13.33.00
+        by smtp.gmail.com with ESMTPSA id i76sm698424wmd.2.2017.10.05.13.32.40
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 05 Oct 2017 13:33:00 -0700 (PDT)
+        Thu, 05 Oct 2017 13:32:40 -0700 (PDT)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 12/12] read_cache: roll back lock in `update_index_if_able()`
-Date:   Thu,  5 Oct 2017 22:32:14 +0200
-Message-Id: <1da9447e4c8ea0c1137c97f6122b48c06a95b1c7.1507228170.git.martin.agren@gmail.com>
+Cc:     Michael Haggerty <mhagger@alum.mit.edu>, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 04/12] tempfile: fix documentation on `delete_tempfile()`
+Date:   Thu,  5 Oct 2017 22:32:06 +0200
+Message-Id: <d7837015eb5706a32918b6a87688d9ac895ecb81.1507228170.git.martin.agren@gmail.com>
 X-Mailer: git-send-email 2.14.2.666.gea220ee40
 In-Reply-To: <cover.1507228170.git.martin.agren@gmail.com>
 References: <xmqqy3osiwe6.fsf@gitster.mtv.corp.google.com> <cover.1507228170.git.martin.agren@gmail.com>
@@ -68,65 +67,38 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-`update_index_if_able()` used to always commit the lock or roll it back.
-Commit 03b866477 (read-cache: new API write_locked_index instead of
-write_index/write_cache, 2014-06-13) stopped rolling it back in case a
-write was not even attempted. This change in behavior is not motivated
-in the commit message and appears to be accidental: the `else`-path was
-removed, although that changed the behavior in case the `if` shortcuts.
+The function has always been documented as returning 0 or -1. It is in
+fact `void`. Correct that. As part of the rearrangements we lose the
+mention that `delete_tempfile()` might set `errno`. Because there is
+no return value, the user can't really know whether it did anyway.
 
-Reintroduce the rollback and document this behavior. While at it, move
-the documentation on this function from the function definition to the
-function declaration in cache.h.
-
-If `write_locked_index(..., COMMIT_LOCK)` fails, it will roll back the
-lock for us (see the previous commit).
-
-Noticed-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
-v2: New patch.
+v2: Identical.
 
- cache.h      | 4 ++++
- read-cache.c | 5 ++---
- 2 files changed, 6 insertions(+), 3 deletions(-)
+ tempfile.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index 0e26224b9..8c2493766 100644
---- a/cache.h
-+++ b/cache.h
-@@ -734,6 +734,10 @@ extern void fill_stat_cache_info(struct cache_entry *ce, struct stat *st);
- extern int refresh_index(struct index_state *, unsigned int flags, const struct pathspec *pathspec, char *seen, const char *header_msg);
- extern struct cache_entry *refresh_cache_entry(struct cache_entry *, unsigned int);
+diff --git a/tempfile.h b/tempfile.h
+index b8f4b5e14..450908b2e 100644
+--- a/tempfile.h
++++ b/tempfile.h
+@@ -68,10 +68,10 @@
+  * `create_tempfile()` returns an allocated tempfile on success or NULL
+  * on failure. On errors, `errno` describes the reason for failure.
+  *
+- * `delete_tempfile()`, `rename_tempfile()`, and `close_tempfile_gently()`
+- * return 0 on success. On failure they set `errno` appropriately and return
+- * -1. `delete` and `rename` (but not `close`) do their best to delete the
+- * temporary file before returning.
++ * `rename_tempfile()` and `close_tempfile_gently()` return 0 on success.
++ * On failure they set `errno` appropriately and return -1.
++ * `delete_tempfile()` and `rename` (but not `close`) do their best to
++ * delete the temporary file before returning.
+  */
  
-+/*
-+ * Opportunistically update the index but do not complain if we can't.
-+ * The lockfile is always committed or rolled back.
-+ */
- extern void update_index_if_able(struct index_state *, struct lock_file *);
- 
- extern int hold_locked_index(struct lock_file *, int);
-diff --git a/read-cache.c b/read-cache.c
-index 0090ab886..92ea5df96 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -2176,14 +2176,13 @@ static int has_racy_timestamp(struct index_state *istate)
- 	return 0;
- }
- 
--/*
-- * Opportunistically update the index but do not complain if we can't
-- */
- void update_index_if_able(struct index_state *istate, struct lock_file *lockfile)
- {
- 	if ((istate->cache_changed || has_racy_timestamp(istate)) &&
- 	    verify_index(istate))
- 		write_locked_index(istate, lockfile, COMMIT_LOCK);
-+	else
-+		rollback_lock_file(lockfile);
- }
- 
- static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
+ struct tempfile {
 -- 
 2.14.2.666.gea220ee40
 
