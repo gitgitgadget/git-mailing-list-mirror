@@ -7,97 +7,105 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 799451FA21
-	for <e@80x24.org>; Thu,  5 Oct 2017 22:08:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EFDD01FA21
+	for <e@80x24.org>; Thu,  5 Oct 2017 22:17:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751419AbdJEWIL (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Oct 2017 18:08:11 -0400
-Received: from mail-qt0-f169.google.com ([209.85.216.169]:49449 "EHLO
-        mail-qt0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751381AbdJEWIK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Oct 2017 18:08:10 -0400
-Received: by mail-qt0-f169.google.com with SMTP id o3so28248272qte.6
-        for <git@vger.kernel.org>; Thu, 05 Oct 2017 15:08:10 -0700 (PDT)
+        id S1751980AbdJEWRJ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Oct 2017 18:17:09 -0400
+Received: from mail-qk0-f177.google.com ([209.85.220.177]:43738 "EHLO
+        mail-qk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751966AbdJEWRJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Oct 2017 18:17:09 -0400
+Received: by mail-qk0-f177.google.com with SMTP id w134so16277427qkb.0
+        for <git@vger.kernel.org>; Thu, 05 Oct 2017 15:17:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=J86/htunIFk0/iC3PhMLdKOpC16rK0j6aSPFF26fZYg=;
-        b=SB1aw6+1aAlbZXP1GhaAzVP9IXYKdwaAjULkolg5rjpR/FWuMwxXIa2401k/ZaoT3E
-         fxU+KgxvjvCB532PdcAPCCT0Vz2yN7F/HWYgvoVcNr9OsFUXyjuzjto+84TREVIkInwz
-         uwh/E7xC3LUOZAMh6o8bC3yCxDjKm4QG/w0ZXzTSNjSZJV+BvwcXodT+yHVbfdrdBfI4
-         Pe0zbOldNp5b2bwamLn4jogZyXW/ZqRzlDZXas8QmqBgmXDMBhWBUY9pzlqIKqUyXqjb
-         HnSoAly+oT/0riOnXRmmZ/7co9+6ONyXp7Kb6U/MmtxwwdptgFZ6MowIgAeaSmIuoDcR
-         AqXQ==
+        bh=KInGPbMjd+kGlwuVEeBety/vU6QT0cFqpnsvGDMbP10=;
+        b=Xy5P40bFoVocucwBLLFMVdj3hOpqEHPVwAFE0WMzycGZPhEWtNiH+OByA2RMxpS1ru
+         avl6IQVV4iZtSmyqrk/xYwxdbzUcdLQU0J2x6dv7c7PtsynaD+nX5si2asj5t7vEddHc
+         zxaLW5csC3Ukr0dA+5rLW/7k8SeqebYUiu72G9kN04Kw2ZOXLim3YFY/WeqIoeqiL42Y
+         w/YaYVi3EkZXRaThIK5hfsD+UlXvEB5fGFPQ1b6BN0SsmpFC3FtiQ77hTurAhWeVW+Vp
+         oTzTA96hhwFuQG7kRFTtyjM4C9rKDjT5tS9ia04MEA1va64+GTdxmpvxZTzjHYLek28L
+         1+mQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=J86/htunIFk0/iC3PhMLdKOpC16rK0j6aSPFF26fZYg=;
-        b=CpR8ChYb37cMPh6o9Hi9wyQEoj5HEHO+gT40eQFscm37PHCudon2f8MyDSZovTH+Ti
-         2cXVkNSHBTQcPZbzHc30M9NmzAtOWhUKscvRPz7E31M4k+b6CFOMePRnJsyDGSRc36jT
-         TSG+g5u0xBxrtzX5N8UoSilgEu6w4PsBFJKDNslApz/H2Ozmw4364jSUWzhM9UFfBtoF
-         QS288yGXSvBUKRjQbkFplCdLYGTal1wZpFH+2CH/C5vaEYyl9vwVTDM+7IccszGXBY+1
-         hgOV0W7j6dR+AcAhpf0hqM3xlxbxJoGDks1hiHW1T0wfJ0gJWgmmONnoFLHdde/a4XBb
-         dMpA==
-X-Gm-Message-State: AMCzsaVzZMQBoImzxbBy5IOzGT87Tu/H1bGzt02Y0JSYdNV/SH4UNrVZ
-        RzZG2sOvmD86uKxRdW0T+6RgDaD1EcWkTzYE59E+2g==
-X-Google-Smtp-Source: AOwi7QCDROSVleAiZguPUOsK8TymZp/mLHRtg6eJ//Ufq2tUJxmQzDD5akDbCb6SkHTbdR8YAKA/Hv2daepeVbgdTAE=
-X-Received: by 10.200.8.53 with SMTP id u50mr203841qth.260.1507241289548; Thu,
- 05 Oct 2017 15:08:09 -0700 (PDT)
+        bh=KInGPbMjd+kGlwuVEeBety/vU6QT0cFqpnsvGDMbP10=;
+        b=rM2PbCWRssIC9PDWmEnCeEXnZS+DjYe5g3Ee8V8esiJPNGDYp9apzeisze/CeIeehh
+         xvigLE6Il2OWyzDUis0rONXe/g1PHUVwQq5tZWXr+lt1iVer3vMt9cPkxeNwox3edEHS
+         TNq0c+kNx2BQlDu44SIOf72iaHnovW5mpoKdjsAH/WD/N7kjR4gDNn3ynr5jgiYEa+HL
+         toxhJlYX5OOUe1duXP0B0YjrF7VH/KxHyDas2FlHB7hWGG8+2xxkqXwnb2hI44cm+6O+
+         hORwSSv6VqMNVNcQnOQePqjnN6oM2GkIElMvmrHumRQacfdVfhWxbHZHfgqDWuUu16yA
+         b0Kw==
+X-Gm-Message-State: AMCzsaXdkYdqNyLLy3ZFivo9wxY2A1cFr8UJg1AYkydyRidFnGVpF826
+        cZIOxGC8XrS5lbzuGcIrSfMeS3xqK7k23U7qzBYyguWBKfo=
+X-Google-Smtp-Source: AOwi7QDVy2IdGH9h9zS9/zRZlooeR6oBCJU8w5l+oCZa67IMSQnT5tAMCuauYLDfolCQapQER9HtmPuRsJzg5qIZoWQ=
+X-Received: by 10.233.239.140 with SMTP id d134mr9512645qkg.308.1507241828169;
+ Thu, 05 Oct 2017 15:17:08 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.140.102.46 with HTTP; Thu, 5 Oct 2017 15:08:08 -0700 (PDT)
-In-Reply-To: <20171005205443.206900-7-jameson.miller81@gmail.com>
-References: <20171005205443.206900-1-jameson.miller81@gmail.com> <20171005205443.206900-7-jameson.miller81@gmail.com>
+Received: by 10.140.102.46 with HTTP; Thu, 5 Oct 2017 15:17:07 -0700 (PDT)
+In-Reply-To: <20171005212344.22887-1-thomas.braun@virtuell-zuhause.de>
+References: <20171005212344.22887-1-thomas.braun@virtuell-zuhause.de>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 5 Oct 2017 15:08:08 -0700
-Message-ID: <CAGZ79kbdObhu0j5yAo-KZk0H12oSzoP5sLd6S8kUbZMzEXBEQA@mail.gmail.com>
-Subject: Re: [PATCH 6/6] Handle unsupported combination status arguments
-To:     Jameson Miller <jameson.miller81@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Brandon Williams <bmwill@google.com>,
-        Jameson Miller <jamill@microsoft.com>
+Date:   Thu, 5 Oct 2017 15:17:07 -0700
+Message-ID: <CAGZ79kbp=ewvdR8gXptwDjDdtM3TdC8qp1qR8XhETa7_CKgqRQ@mail.gmail.com>
+Subject: Re: [PATCH 1/1] completion: Add forgotten describe options
+To:     Thomas Braun <thomas.braun@virtuell-zuhause.de>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 5, 2017 at 1:54 PM,  <jameson.miller81@gmail.com> wrote:
-> From: Jameson Miller <jamill@microsoft.com>
->
-> It is not clear what the correct behavior should be when you ask for
-> specific ignored behavior without reporting untracked files. For now,
-> report this as an unsupported combination of input arguments, so it
-> can be modified in the future without back compat concerns.
+On Thu, Oct 5, 2017 at 2:23 PM, Thomas Braun
+<thomas.braun@virtuell-zuhause.de> wrote:
 
-Is there a rationale to put this as an extra commit at the end,
-or could this be squashed into the first commit as well?
+> completion: Add forgotten describe options
 
->
-> Signed-off-by: Jameson Miller <jamill@microsoft.com>
+When/Why was it forgotten? git-blame thinks it was me in b0176ce6b5
+(builtin/describe: introduce --broken flag, 2017-03-21)
+Which do you add? (dirty and broken)
+
+I had these questions when reading the subject (which is the
+equivalent of reading the output of `git log --oneline` in the future)
+I think a better wording might be
+
+    completion: add --broken and --dirty to describe
+
+    When the flags for broken and dirty were implemented in
+    b0176ce6b5 (builtin/describe: introduce --broken flag, 2017-03-21)
+    and 9f67d2e827 (Teach "git describe" --dirty option, 2009-10-21)
+    the completion was not updated, although these flags are useful
+    completions. Add them.
+
+> Signed-off-by: Thomas Braun <thomas.braun@virtuell-zuhause.de>
 > ---
->  builtin/commit.c | 5 +++++
->  1 file changed, 5 insertions(+)
->
-> diff --git a/builtin/commit.c b/builtin/commit.c
-> index 34443b45d3..7812e106ad 100644
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -1400,6 +1400,11 @@ int cmd_status(int argc, const char **argv, const char *prefix)
->         handle_untracked_files_arg(&s);
->         handle_ignored_arg(&s);
->
-> +       /* Check for unsupported combination of args */
 
-Oh, this is the first check that we add here for unsupported combinations.
-How much value does this comment bring to the future reader?
+The patch looks correct.
 
-> +       if (s.show_ignored_mode == SHOW_MATCHING_IGNORED &&
-> +           s.show_untracked_files == SHOW_NO_UNTRACKED_FILES)
-> +               die(_("Unsupported combination of ignored and untracked-files arguments"));
-
-Thanks for taking care of the corner case!
+Thanks,
 Stefan
+
+>  contrib/completion/git-completion.bash | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index d934417475..0e16f017a4 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -1385,7 +1385,7 @@ _git_describe ()
+>                 __gitcomp "
+>                         --all --tags --contains --abbrev= --candidates=
+>                         --exact-match --debug --long --match --always --first-parent
+> -                       --exclude
+> +                       --exclude --dirty --broken
+>                         "
+>                 return
+>         esac
+> --
+> 2.14.2.746.g8fb8a945bc.dirty
+>
