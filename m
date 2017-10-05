@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BFDE620370
-	for <e@80x24.org>; Thu,  5 Oct 2017 20:33:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A921920370
+	for <e@80x24.org>; Thu,  5 Oct 2017 20:33:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751776AbdJEUc7 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Oct 2017 16:32:59 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:51109 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751469AbdJEUc5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Oct 2017 16:32:57 -0400
-Received: by mail-wm0-f65.google.com with SMTP id u138so4144495wmu.5
-        for <git@vger.kernel.org>; Thu, 05 Oct 2017 13:32:56 -0700 (PDT)
+        id S1751916AbdJEUdD (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Oct 2017 16:33:03 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:35599 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751469AbdJEUdA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Oct 2017 16:33:00 -0400
+Received: by mail-wr0-f193.google.com with SMTP id y44so5146030wry.2
+        for <git@vger.kernel.org>; Thu, 05 Oct 2017 13:32:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=0dgMFsdguv2GYWvd8O8bFMeR7kCx+OpihpB+SCO4UfQ=;
-        b=ayapwGBQu3iyIoOXcJ+vV51CPPfZrpjaNXw7P3e8EKzr17HNp4b/CdPKuV5GA69LdT
-         8/MpLWjzzig8QaSkDP2deEjpaU2U+pETqOYKHGLh0tkfwofJ+Ba+sCCzN4UBsFm45mjc
-         d83rnx6EC3ujVH3e64/oZELM7qeXZ8pEmQF08eKmZGk0kf1JdqgwmdRAWS8UE0AqquTT
-         Q1LRweVlG7L9SIDLaJiI0+PQkIka+H2YItQM2B9lUK/1CXgQWhR8awKSeS/oMbHeIlNZ
-         VRCvw9MCdc9PADaXsXeFIopAn15S98upZs2G2FMCGl7Y1QQ1A82xBszf2Zpv9KQqrqEj
-         z8Ww==
+        bh=aAjRX4a6f8GkaFKD+0ybRc1u+wPRNvi9FFSiTJ6oWAw=;
+        b=jahwcM6ECsTR2+StQ6mIgLKTwl/BVxgqZW6j56Ibf929U9ptSBlsxCGOg7ZoPkO/Lp
+         /qTWQ3+Dz/dsK7I9hlX5diYnChmKpdP8/dlhkuf7aq3gZDLW3UO+DAzKDFLZLNpuulSh
+         S2lCJPwkv12OQuvfRmPrSPhC9W2hfJ52x6RP/H9oYWNML7+qpn+26nUKqJlw+RFbgtvR
+         498shzZZWQJ/DF5+LBLNdHed8+gdMv78YmV5aGWhMgQDO+5r49Q1VlWt87JypSlBfYhP
+         Sc59cmZkV5nz8KpoqcE0NGsoLJiwgE/nH7E5fihmJC5nMGPvcUT1024+cK9gYeyYSvlT
+         dvxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=0dgMFsdguv2GYWvd8O8bFMeR7kCx+OpihpB+SCO4UfQ=;
-        b=l8lGCIbRhc/kgyO8V4N8uNd+1gtAuNnREgpiTLYoGUef03Uj4UW9FGEqW0RWM8Db52
-         VoEU1AL5f1hcJbGJ9gQzDOYTJeXBSyu7p+mfsp5SfLKKrNiIxb8B+s+5AyVOBmIRXisK
-         +Fl/a6X8ttAmrZN9Otb9iZSQP+8NmTSq1wYDZpZFpiKbOx0q3rrKeF3XtMgAlVr1S4Sz
-         4TgZ2tl2bQGzUMXn0Xfv78i/7mxswaSPKVqzxtu4UgQXxSODT9W+kqBne6csZMjaDlcZ
-         BfColsTQlDL0aP8Di35n45vGTCFPVZ8bjB8cTEXr2jqXFb3NV8CmgXY0VOOVoqlCwsd4
-         yEaA==
-X-Gm-Message-State: AMCzsaV++pSEgVXC6Gvp+0adyvBezzghqXDZgEH1TWRJY07c3c4HE3wB
-        zOJpe5LI+/ZCRS5X8aGluZfXoN4q
-X-Google-Smtp-Source: AOwi7QDoKTGj1fy2LvVUMDjdzWkVzRWYGmEJtSkd8mTCJTy+7Z7MEkN6BfTZDtzG+sZafCI5kMRpEg==
-X-Received: by 10.28.47.69 with SMTP id v66mr272712wmv.98.1507235575869;
-        Thu, 05 Oct 2017 13:32:55 -0700 (PDT)
+        bh=aAjRX4a6f8GkaFKD+0ybRc1u+wPRNvi9FFSiTJ6oWAw=;
+        b=Zf4XMwVv8jKOIy96mHnOG3bxu0Sstt/3OVHKQp6yKjkeyd8/oDP6wHSpfED4nDXrje
+         +fTG+d9dL8++0SwcQfwzfe5Ia96iI69b7Cx8e+kVqjV6ozzHdYNBCVyQlE60MT8bbeYP
+         wzQ0PrEdCIBA+g01/7lWCF48ROE8u+qtbc4B4gJcpeNcBrq8BHorjhzGYr7l7OKf7aYK
+         KPG75yiwmh/owstoZ7ZtP5AJuJM7qdrl1ksRY/SP0KbI/l3CJt4gcMPNl/jkK6lFz/ya
+         mVeQ7aybmEj0kDsMg2dbv7z0UM74mSLv04InjiloftxOUKh+QORdqJkOeycca83DlZ3g
+         zv0w==
+X-Gm-Message-State: AHPjjUg3Z07MJZWYLpnIwBufNmvQXF9V0uBRao2Ddgz7iYWGhdfZOrS6
+        htAcdwez8hpqHbzO9x33JOB26EkY
+X-Google-Smtp-Source: AOwi7QCtSb6fS4eS+JMfc9s07+fYJXOP67fMhTN4g6jntqhCTDDdJ7GPU9VLtNqPbTy1G+loy2jPCA==
+X-Received: by 10.223.167.79 with SMTP id e15mr26220072wrd.92.1507235578606;
+        Thu, 05 Oct 2017 13:32:58 -0700 (PDT)
 Received: from localhost.localdomain ([2a02:aa16:5782:c100:c938:fbb7:46f8:2405])
-        by smtp.gmail.com with ESMTPSA id i76sm698424wmd.2.2017.10.05.13.32.54
+        by smtp.gmail.com with ESMTPSA id i76sm698424wmd.2.2017.10.05.13.32.57
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 05 Oct 2017 13:32:55 -0700 (PDT)
+        Thu, 05 Oct 2017 13:32:57 -0700 (PDT)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 10/12] read-cache: drop explicit `CLOSE_LOCK`-flag
-Date:   Thu,  5 Oct 2017 22:32:12 +0200
-Message-Id: <db82bb7dc0828a415e48e654031b3b0d0ed763a5.1507228170.git.martin.agren@gmail.com>
+Subject: [PATCH v2 11/12] read-cache: leave lock in right state in `write_locked_index()`
+Date:   Thu,  5 Oct 2017 22:32:13 +0200
+Message-Id: <b5fc950e4594fb9dec07ec8872c0df8514d149ff.1507228170.git.martin.agren@gmail.com>
 X-Mailer: git-send-email 2.14.2.666.gea220ee40
 In-Reply-To: <cover.1507228170.git.martin.agren@gmail.com>
 References: <xmqqy3osiwe6.fsf@gitster.mtv.corp.google.com> <cover.1507228170.git.martin.agren@gmail.com>
@@ -68,129 +68,189 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-`write_locked_index()` takes two flags: `COMMIT_LOCK` and `CLOSE_LOCK`.
-At most one is allowed. But it is also possible to use no flag, i.e.,
-`0`. But when `write_locked_index()` calls `do_write_index()`, the
-temporary file, a.k.a. the lockfile, will be closed. So passing `0` is
-effectively the same as `CLOSE_LOCK`, which seems like a bug.
+If the original version of `write_locked_index()` returned with an
+error, it didn't roll back the lockfile unless the error occured at the
+very end, during closing/committing. See commit 03b866477 (read-cache:
+new API write_locked_index instead of write_index/write_cache,
+2014-06-13).
 
-We might feel tempted to restructure the code in order to close the file
-later, or conditionally. It also feels a bit unfortunate that we simply
-"happen" to close the lock by way of an implementation detail of
+In commit 9f41c7a6b (read-cache: close index.lock in do_write_index,
+2017-04-26), we learned to roll back the lock slightly earlier in the
+callstack, but that was mostly a side-effect of lockfiles being
+implemented using temporary files.
+
+At that point, the behavior was still mostly the same as originally,
+except 1) the file was closed (and possibly rolled back) a few
+CPU-instructions earlier, and 2) the file was closed even if the caller
+didn't ask us to close it. Case 2) is not very interesting since we
+never had any such caller and the commit before this one removed the
+possibility of asking to leave the lockfile open.
+
+Recently, commit 076aa2cbd (tempfile: auto-allocate tempfiles on heap,
+2017-09-05) introduced a subtle bug. If the lockfile is rolled back
+(i.e., the temporary file is deleted), the tempfile-pointer in the
+`struct lock_file` will be left dangling. Thus, an attempt to reuse the
+lockfile, or even just to roll it back, will induce undefined behavior
+-- most likely a crash.
+
+Besides not crashing, we clearly want to make things consistent. But
+should we roll back always on error, or never? The semantics which the
+lockfile-machinery itself provides is A) if we ask to commit and it
+fails, roll back, and B) if we ask to close and it fails, do _not_ roll
+back.
+
+We should note that commit 83a3069a3 (lockfile: do not rollback lock on
+failed close, 2017-09-05) recently changed the behavior for B -- we used
+to roll back. We might worry that our callers rely on us rolling back in
+case of B. But we only did so for some errors, we never documented
+anything, and all our in-tree callers (they are not many) `die()` in
+case of an error. This is our opportunity for establishing a consistent
+and predictable behavior going forward, so let's enforce the same
+semantics that 83a3069a3 introduced to the lockfile-machinery itself.
+
+Similarly, let's ensure that when we are asked to commit, that we always
+either commit or roll back. Right now, we have some early return paths
+which fail to roll back the lock.
+
+So: Do not delete the temporary file in `do_write_index()`. One of its
+callers, `write_locked_index()` will thereby avoid rolling back the
+lock. The other caller, `write_shared_index()`, will delete its
+temporary file anyway. Both of these callers will avoid undefined
+behavior (crashing).
+
+Teach `write_locked_index(..., COMMIT_LOCK)` to roll back the lock
+before returning. If we have already succeeded and committed, it will be
+a noop. Simplify the existing callers where we now have a superfluous
+call to `rollback_lockfile()`. This should keep future readers from
+wondering why the callers are inconsistent.
+
+We still close the lock as we close the temporary file. This is what is
+referred to as "1)" above. It does feel a bit unfortunate that we simply
+"happen" to close the lock by way of an implementation-detail of
 lockfiles. But note that we need to close the temporary file before
 `stat`-ing it, at least on Windows. See 9f41c7a6b (read-cache: close
 index.lock in do_write_index, 2017-04-26).
 
-Drop `CLOSE_LOCK` and make it explicit that `write_locked_index()`
-always closes the lock. Whether it is also committed is governed by the
-remaining flag, `COMMIT_LOCK`.
-
-This means we neither have nor suggest that we have a mode to write the
-index and leave the file open. Whatever extra contents we might
-eventually want to write, we should probably write it from within
-`write_locked_index()` itself anyway.
-
 Signed-off-by: Martin Ågren <martin.agren@gmail.com>
 ---
-v2: Drop `CLOSE_LOCK` altogether instead of requiring precisely one of
-the flags to be set.
+v2: Except for the slightly different documentation in cache.h, this is
+a squash of the last two patches of v1. I hope the commit message is
+better.
 
- builtin/commit.c | 10 +++++-----
- cache.h          |  5 ++---
- read-cache.c     | 11 +++++------
- 3 files changed, 12 insertions(+), 14 deletions(-)
+ builtin/difftool.c |  1 -
+ cache.h            |  4 ++++
+ merge.c            |  4 +---
+ read-cache.c       | 14 ++++++++------
+ sequencer.c        |  1 -
+ 5 files changed, 13 insertions(+), 11 deletions(-)
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 0f8ddb686..32dc2101f 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -355,7 +355,7 @@ static const char *prepare_index(int argc, const char **argv, const char *prefix
- 
- 		refresh_cache_or_die(refresh_flags);
- 
--		if (write_locked_index(&the_index, &index_lock, CLOSE_LOCK))
-+		if (write_locked_index(&the_index, &index_lock, 0))
- 			die(_("unable to create temporary index"));
- 
- 		old_index_env = getenv(INDEX_ENVIRONMENT);
-@@ -374,7 +374,7 @@ static const char *prepare_index(int argc, const char **argv, const char *prefix
- 		if (update_main_cache_tree(WRITE_TREE_SILENT) == 0) {
- 			if (reopen_lock_file(&index_lock) < 0)
- 				die(_("unable to write index file"));
--			if (write_locked_index(&the_index, &index_lock, CLOSE_LOCK))
-+			if (write_locked_index(&the_index, &index_lock, 0))
- 				die(_("unable to update temporary index"));
- 		} else
- 			warning(_("Failed to update main cache tree"));
-@@ -401,7 +401,7 @@ static const char *prepare_index(int argc, const char **argv, const char *prefix
- 		add_files_to_cache(also ? prefix : NULL, &pathspec, 0);
- 		refresh_cache_or_die(refresh_flags);
- 		update_main_cache_tree(WRITE_TREE_SILENT);
--		if (write_locked_index(&the_index, &index_lock, CLOSE_LOCK))
-+		if (write_locked_index(&the_index, &index_lock, 0))
- 			die(_("unable to write new_index file"));
- 		commit_style = COMMIT_NORMAL;
- 		ret = get_lock_file_path(&index_lock);
-@@ -474,7 +474,7 @@ static const char *prepare_index(int argc, const char **argv, const char *prefix
- 	add_remove_files(&partial);
- 	refresh_cache(REFRESH_QUIET);
- 	update_main_cache_tree(WRITE_TREE_SILENT);
--	if (write_locked_index(&the_index, &index_lock, CLOSE_LOCK))
-+	if (write_locked_index(&the_index, &index_lock, 0))
- 		die(_("unable to write new_index file"));
- 
- 	hold_lock_file_for_update(&false_lock,
-@@ -486,7 +486,7 @@ static const char *prepare_index(int argc, const char **argv, const char *prefix
- 	add_remove_files(&partial);
- 	refresh_cache(REFRESH_QUIET);
- 
--	if (write_locked_index(&the_index, &false_lock, CLOSE_LOCK))
-+	if (write_locked_index(&the_index, &false_lock, 0))
- 		die(_("unable to write temporary index file"));
- 
- 	discard_cache();
+diff --git a/builtin/difftool.c b/builtin/difftool.c
+index b2d3ba753..bcc79d188 100644
+--- a/builtin/difftool.c
++++ b/builtin/difftool.c
+@@ -616,7 +616,6 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
+ 			if (hold_lock_file_for_update(&lock, buf.buf, 0) < 0 ||
+ 			    write_locked_index(&wtindex, &lock, COMMIT_LOCK)) {
+ 				ret = error("could not write %s", buf.buf);
+-				rollback_lock_file(&lock);
+ 				goto finish;
+ 			}
+ 			changed_files(&wt_modified, buf.buf, workdir);
 diff --git a/cache.h b/cache.h
-index e9d9556e3..21a6856c5 100644
+index 21a6856c5..0e26224b9 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -604,11 +604,10 @@ extern int read_index_unmerged(struct index_state *);
+@@ -616,6 +616,10 @@ extern int read_index_unmerged(struct index_state *);
+  * split index to the lockfile. If the temporary file for the shared
+  * index cannot be created, fall back to the behavior described in
+  * the previous paragraph.
++ *
++ * With `COMMIT_LOCK`, the lock is always committed or rolled back.
++ * Without it, the lock is closed, but neither committed nor rolled
++ * back.
+  */
+ extern int write_locked_index(struct index_state *, struct lock_file *lock, unsigned flags);
  
- /* For use with `write_locked_index()`. */
- #define COMMIT_LOCK		(1 << 0)
--#define CLOSE_LOCK		(1 << 1)
- 
- /*
-- * Write the index while holding an already-taken lock. The flags may
-- * contain at most one of `COMMIT_LOCK` and `CLOSE_LOCK`.
-+ * Write the index while holding an already-taken lock. Close the lock,
-+ * and if `COMMIT_LOCK` is given, commit it.
-  *
-  * Unless a split index is in use, write the index into the lockfile.
-  *
+diff --git a/merge.c b/merge.c
+index a18a452b5..e5d796c9f 100644
+--- a/merge.c
++++ b/merge.c
+@@ -91,9 +91,7 @@ int checkout_fast_forward(const struct object_id *head,
+ 	}
+ 	if (unpack_trees(nr_trees, t, &opts))
+ 		return -1;
+-	if (write_locked_index(&the_index, &lock_file, COMMIT_LOCK)) {
+-		rollback_lock_file(&lock_file);
++	if (write_locked_index(&the_index, &lock_file, COMMIT_LOCK))
+ 		return error(_("unable to write new index file"));
+-	}
+ 	return 0;
+ }
 diff --git a/read-cache.c b/read-cache.c
-index 65f4fe837..1c917eba9 100644
+index 1c917eba9..0090ab886 100644
 --- a/read-cache.c
 +++ b/read-cache.c
-@@ -2343,14 +2343,13 @@ static int do_write_locked_index(struct index_state *istate, struct lock_file *l
- 	int ret = do_write_index(istate, lock->tempfile, 0);
- 	if (ret)
- 		return ret;
--	assert((flags & (COMMIT_LOCK | CLOSE_LOCK)) !=
--	       (COMMIT_LOCK | CLOSE_LOCK));
- 	if (flags & COMMIT_LOCK)
- 		return commit_locked_index(lock);
--	else if (flags & CLOSE_LOCK)
--		return close_lock_file_gently(lock);
--	else
--		return ret;
-+	/*
-+	 * The lockfile already happens to have
-+	 * been closed, but let's be specific.
-+	 */
-+	return close_lock_file_gently(lock);
+@@ -2182,9 +2182,8 @@ static int has_racy_timestamp(struct index_state *istate)
+ void update_index_if_able(struct index_state *istate, struct lock_file *lockfile)
+ {
+ 	if ((istate->cache_changed || has_racy_timestamp(istate)) &&
+-	    verify_index(istate) &&
+-	    write_locked_index(istate, lockfile, COMMIT_LOCK))
+-		rollback_lock_file(lockfile);
++	    verify_index(istate))
++		write_locked_index(istate, lockfile, COMMIT_LOCK);
  }
  
- static int write_split_index(struct index_state *istate,
+ static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
+@@ -2314,7 +2313,6 @@ static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
+ 		return -1;
+ 	if (close_tempfile_gently(tempfile)) {
+ 		error(_("could not close '%s'"), tempfile->filename.buf);
+-		delete_tempfile(&tempfile);
+ 		return -1;
+ 	}
+ 	if (stat(tempfile->filename.buf, &st))
+@@ -2498,7 +2496,8 @@ int write_locked_index(struct index_state *istate, struct lock_file *lock,
+ 	    (istate->cache_changed & ~EXTMASK)) {
+ 		if (si)
+ 			hashclr(si->base_sha1);
+-		return do_write_locked_index(istate, lock, flags);
++		ret = do_write_locked_index(istate, lock, flags);
++		goto out;
+ 	}
+ 
+ 	if (getenv("GIT_TEST_SPLIT_INDEX")) {
+@@ -2514,7 +2513,7 @@ int write_locked_index(struct index_state *istate, struct lock_file *lock,
+ 	if (new_shared_index) {
+ 		ret = write_shared_index(istate, lock, flags);
+ 		if (ret)
+-			return ret;
++			goto out;
+ 	}
+ 
+ 	ret = write_split_index(istate, lock, flags);
+@@ -2523,6 +2522,9 @@ int write_locked_index(struct index_state *istate, struct lock_file *lock,
+ 	if (!ret && !new_shared_index)
+ 		freshen_shared_index(sha1_to_hex(si->base_sha1), 1);
+ 
++out:
++	if (flags & COMMIT_LOCK)
++		rollback_lock_file(lock);
+ 	return ret;
+ }
+ 
+diff --git a/sequencer.c b/sequencer.c
+index 60636ce54..d56c38081 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -1183,7 +1183,6 @@ static int read_and_refresh_cache(struct replay_opts *opts)
+ 	refresh_index(&the_index, REFRESH_QUIET|REFRESH_UNMERGED, NULL, NULL, NULL);
+ 	if (the_index.cache_changed && index_fd >= 0) {
+ 		if (write_locked_index(&the_index, &index_lock, COMMIT_LOCK)) {
+-			rollback_lock_file(&index_lock);
+ 			return error(_("git %s: failed to refresh the index"),
+ 				_(action_name(opts)));
+ 		}
 -- 
 2.14.2.666.gea220ee40
 
