@@ -2,173 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2612D1FA21
-	for <e@80x24.org>; Thu,  5 Oct 2017 23:02:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B4BE91FA21
+	for <e@80x24.org>; Thu,  5 Oct 2017 23:39:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752205AbdJEXCB (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Oct 2017 19:02:01 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51277 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752134AbdJEXB7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Oct 2017 19:01:59 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0D1CE95E1B;
-        Thu,  5 Oct 2017 19:01:58 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ldwpLjuo+elhHQ2ZuikHtW7Oh4s=; b=OE0udr
-        TtYEbJ3wAXrReGq84w1O3LW5JuqTqXYPNkkgCmda5rgRrxse06s6gWtzFlRyHJ2U
-        VTZxEk0gdNpPdBkeWw9yLNJ/x0MZVYYv+G61dvwxmrXq2oWs/XFJ1GyKjB4MNlsD
-        P9eMLhGc4xNzws2LZx1NvGPiKjnGAm74yiDQc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=hYZD9aEyDY45SOTAuEfey4Uz8fM7+pSm
-        kMEvJKFbIItC3b3LbGPOVpBcfcg+te/SMGCIEw0fh9FrK+eJq8Z9qnH3NMsPgzgc
-        K6F2Z3nj+E22wOSHDJjJmqmVLWMiMODJvbCuf0e0sXRW0WN7a0C+teK2w9Z30/7L
-        20t+pvKmDa0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E9AC195E19;
-        Thu,  5 Oct 2017 19:01:57 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6FD3395E12;
-        Thu,  5 Oct 2017 19:01:49 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     lars.schneider@autodesk.com, git@vger.kernel.org,
-        t.gummerer@gmail.com, jrnieder@gmail.com,
-        Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [PATCH v1 1/2] entry.c: update cache entry only for existing files
-References: <20171005104407.65948-1-lars.schneider@autodesk.com>
-        <20171005104407.65948-2-lars.schneider@autodesk.com>
-        <xmqqk2097sge.fsf@gitster.mtv.corp.google.com>
-        <20171005112658.p7hohhtkdkcapwe6@sigill.intra.peff.net>
-Date:   Fri, 06 Oct 2017 08:01:48 +0900
-In-Reply-To: <20171005112658.p7hohhtkdkcapwe6@sigill.intra.peff.net> (Jeff
-        King's message of "Thu, 5 Oct 2017 07:26:58 -0400")
-Message-ID: <xmqqefqh6vxf.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751459AbdJEXj1 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Oct 2017 19:39:27 -0400
+Received: from mail-pg0-f41.google.com ([74.125.83.41]:46806 "EHLO
+        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751083AbdJEXj0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Oct 2017 19:39:26 -0400
+Received: by mail-pg0-f41.google.com with SMTP id k7so4096827pga.3
+        for <git@vger.kernel.org>; Thu, 05 Oct 2017 16:39:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=dropbox.com; s=corp;
+        h=date:from:to:subject:message-id:user-agent:mime-version;
+        bh=NJJfrLkF1xwt5oxOVk3y2B1rdo4Zczmqwk5u7+nDiGE=;
+        b=GSQnMLIkq3cA75yFqU2I988F03RIuVSaTTskCWeqlqGSOgvocTUctIcXqUOTD0liWT
+         e0dg5u8RTjw+1jgNl03X25L/MM4fGzg8UtgEXpSkIKBufoVNRNI4TFtHEThv9/0naHU8
+         o4VUgEdfujNXF4HReXCzUincVSD+z85SiwFJM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:subject:message-id:user-agent
+         :mime-version;
+        bh=NJJfrLkF1xwt5oxOVk3y2B1rdo4Zczmqwk5u7+nDiGE=;
+        b=jTuHsN9Zo+hlTl6fQui6lnbzwYPpz5AslRxPSLUedgZ9ARSZcvKJrG2xcTqwlaVFYP
+         4zD74t+gJdEuDU3ZJBT26vVBZG3mjEUPZT4kegaeBq0AqHieQ6ymrOZXfr/TfgdXMUu9
+         hUQZ0OTxgf5jkCgN9B+qGUF5g6ROFVVlnWWTGsMGGOY1MKKjStkKU8bMaWx22HzR7a2v
+         cLNWWd03FkU+k4AITleNl44U/9IZG1n7hlCehEzPI6ZVNnlQbkyx8ga0vWUGmA/6BVRg
+         NZhZXAILVztDyNIByOLLo9kdZh6qWXrh8ZHnm9RLGDcny+UrF1Bru3IExZhIZD/WIx1Y
+         jcYA==
+X-Gm-Message-State: AMCzsaWKyVfq2Q1yBCJ6s2G76SZKEai2B9Bs3RQhs8/56Lw8wn0bohez
+        YUFnB7lLRzDO4aBTbhA/S4kBNmZC/i0=
+X-Google-Smtp-Source: AOwi7QBR4Rf5Gfb5Rqdj1mPMGYjMcDcyQPCX1HSn88IVKlVFepO93nFK/4OjJbVgofmHVZS4EhPNMA==
+X-Received: by 10.101.64.72 with SMTP id h8mr281339pgp.110.1507246765798;
+        Thu, 05 Oct 2017 16:39:25 -0700 (PDT)
+Received: from alexmv-linux.corp.dropbox.com (Guest-GW2.corp.dropbox.com. [205.189.0.166])
+        by smtp.gmail.com with ESMTPSA id m10sm148489pgs.77.2017.10.05.16.39.24
+        for <git@vger.kernel.org>
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 05 Oct 2017 16:39:25 -0700 (PDT)
+Date:   Thu, 5 Oct 2017 16:39:20 -0700 (PDT)
+From:   Alex Vandiver <alexmv@dropbox.com>
+X-X-Sender: alexmv@alexmv-linux
+To:     git@vger.kernel.org
+Subject: [RFC] Reporting index properties
+Message-ID: <alpine.DEB.2.10.1710051625430.812@alexmv-linux>
+User-Agent: Alpine 2.10 (DEB 1266 2009-07-14)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2B4FA792-AA21-11E7-8396-8EF31968708C-77302942!pb-smtp1.pobox.com
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Heya,
 
-> On Thu, Oct 05, 2017 at 08:19:13PM +0900, Junio C Hamano wrote:
->
->> This is unrelated to the main topic of this patch, but we see this
->> just before the precontext of this hunk:
->> 
->> 			if (dco && dco->state != CE_NO_DELAY) {
->> 				/* Do not send the blob in case of a retry. */
->> 				if (dco->state == CE_RETRY) {
->> 					new = NULL;
->> 					size = 0;
->> 				}
->> 				ret = async_convert_to_working_tree(
->> 					ce->name, new, size, &buf, dco);
->> 
->> Aren't we leaking "new" in that CE_RETRY case?
->
-> Yes, it certainly looks like it. Wouldn't we want to avoid reading the
-> file from disk entirely in that case?
+As part of gathering some automated performance statistics of git, it
+would be useful to be able to extract some vital properties of the
+index.  While `git update-index` has ways to _set_ the index version,
+and enable/disable various extensions, AFAICT there is no method by
+which one can ask for reporting about the current state of them --
+short of re-implementing all of the index-parsing logic external to
+Git, which is not terribly appealing.
 
-Probably.  But that is more of a removal of pessimization than a fix ;-)
+I hesitate to propose adding a flag to `git update-index` which reads
+but does no updating, as that seems to make a misnomer of the
+command.  But this also doesn't seem worthy of a new top-level command.
 
-> I.e., I think free(new) is sufficient to fix the leak you
-> mentioned.
+Do folks have feelings about surfacing this information, and where such
+logic should live?
 
-In addition to keeping the new = NULL assignment, of course.
-
-> But
-> I think we'd want to protect the read_blob_entry() call at the top of
-> the case with a check for dco->state == CE_RETRY.
-
-Yeah, I think that makes more sense.
-
-A patch may look like this on top of these two patches, but I'd
-prefer to see Lars's eyeballing and possibly wrapping it up in an
-applicable patch after taking the authorship.
-
-I considered initializing new to NULL and size to 0 but decided
-against it, as that would lose the justification to have an if
-statement that marks that "dco->state == CE_RETRY" is a special
-case.  I think explicit if() with clearing these two variables makes
-it clearer to show what is going on.
-
-By the way, the S_IFLNK handling seems iffy with or without this
-change (or for that matter, I suspect this iffy-ness existed before
-Lars's delayed filtering change).  On a platform without symlinks,
-we do the same as S_IFREG, but obviously we do not want any content
-conversion that happens to the regular files in such a case.  So we
-may further want to fix that, but I left it outside the scope of
-fixing the leak of NULL and optimizing the blob reading out.
-
-
- entry.c | 26 +++++++++++++++++---------
- 1 file changed, 17 insertions(+), 9 deletions(-)
-
-diff --git a/entry.c b/entry.c
-index cac5bf5af2..74e35f942c 100644
---- a/entry.c
-+++ b/entry.c
-@@ -274,14 +274,12 @@ static int write_entry(struct cache_entry *ce,
- 	}
- 
- 	switch (ce_mode_s_ifmt) {
--	case S_IFREG:
- 	case S_IFLNK:
- 		new = read_blob_entry(ce, &size);
- 		if (!new)
- 			return error("unable to read sha1 file of %s (%s)",
- 				path, oid_to_hex(&ce->oid));
--
--		if (ce_mode_s_ifmt == S_IFLNK && has_symlinks && !to_tempfile) {
-+		if (has_symlinks && !to_tempfile) {
- 			ret = symlink(new, path);
- 			free(new);
- 			if (ret)
-@@ -289,18 +287,28 @@ static int write_entry(struct cache_entry *ce,
- 						   path);
- 			break;
- 		}
--
-+		/* fallthru */
-+	case S_IFREG:
- 		/*
- 		 * Convert from git internal format to working tree format
- 		 */
- 		if (ce_mode_s_ifmt == S_IFREG) {
- 			struct delayed_checkout *dco = state->delayed_checkout;
-+
-+			/* 
-+			 * In case of a retry, we do not send blob, hence no
-+			 * need to read it, either.
-+			 */
-+			if (dco && dco->state == CE_RETRY) {
-+				new = NULL;
-+				size = 0;
-+			} else {
-+				new = read_blob_entry(ce, &size);
-+				if (!new)
-+					return error("unable to read sha1 file of %s (%s)",
-+						     path, oid_to_hex(&ce->oid));
-+			}
- 			if (dco && dco->state != CE_NO_DELAY) {
--				/* Do not send the blob in case of a retry. */
--				if (dco->state == CE_RETRY) {
--					new = NULL;
--					size = 0;
--				}
- 				ret = async_convert_to_working_tree(
- 					ce->name, new, size, &buf, dco);
- 				if (ret && string_list_has_string(&dco->paths, ce->name)) {
+ - Alex
