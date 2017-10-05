@@ -6,87 +6,83 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8C3A92036B
-	for <e@80x24.org>; Thu,  5 Oct 2017 09:56:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AA1172036B
+	for <e@80x24.org>; Thu,  5 Oct 2017 10:00:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751532AbdJEJ4l (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Oct 2017 05:56:41 -0400
-Received: from cloud.peff.net ([104.130.231.41]:33334 "HELO cloud.peff.net"
+        id S1751400AbdJEKAE (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Oct 2017 06:00:04 -0400
+Received: from cloud.peff.net ([104.130.231.41]:33350 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751522AbdJEJ4j (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Oct 2017 05:56:39 -0400
-Received: (qmail 16212 invoked by uid 109); 5 Oct 2017 09:56:38 -0000
+        id S1751331AbdJEKAE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Oct 2017 06:00:04 -0400
+Received: (qmail 16428 invoked by uid 109); 5 Oct 2017 10:00:03 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 05 Oct 2017 09:56:38 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 05 Oct 2017 10:00:03 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 25908 invoked by uid 111); 5 Oct 2017 09:56:38 -0000
+Received: (qmail 25935 invoked by uid 111); 5 Oct 2017 10:00:04 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Thu, 05 Oct 2017 05:56:38 -0400
+ by peff.net (qpsmtpd/0.94) with SMTP; Thu, 05 Oct 2017 06:00:04 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 05 Oct 2017 05:56:36 -0400
-Date:   Thu, 5 Oct 2017 05:56:36 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 05 Oct 2017 06:00:02 -0400
+Date:   Thu, 5 Oct 2017 06:00:02 -0400
 From:   Jeff King <peff@peff.net>
-To:     rpjday@crashcourse.ca
-Cc:     git@vger.kernel.org
-Subject: Re: couple questions about git "logical variables" and "git var"
-Message-ID: <20171005095636.mpp2ohf7vp7mtzeb@sigill.intra.peff.net>
-References: <20171005051104.Horde.8J0J7-XC6jD4AOgtYrou3Na@crashcourse.ca>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Derrick Stolee <dstolee@microsoft.com>, git@vger.kernel.org,
+        stolee@gmail.com, git@jeffhostetler.com
+Subject: Re: [PATCH v2 1/5] test-list-objects: List a subset of object ids
+Message-ID: <20171005100001.do5m4zhexcsltvw7@sigill.intra.peff.net>
+References: <20170925095452.66833-1-dstolee@microsoft.com>
+ <20170925095452.66833-2-dstolee@microsoft.com>
+ <20171005084249.sdkimglkxqh2vi4i@sigill.intra.peff.net>
+ <xmqqvaju6i3p.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20171005051104.Horde.8J0J7-XC6jD4AOgtYrou3Na@crashcourse.ca>
+In-Reply-To: <xmqqvaju6i3p.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 05, 2017 at 05:11:04AM -0400, rpjday@crashcourse.ca wrote:
+On Thu, Oct 05, 2017 at 06:48:10PM +0900, Junio C Hamano wrote:
 
->   i just ran across "git var" for the first time, and it seems a bit weird.
-> it refers to the (apparently) four git "logical variables":
-
-It's definitely weird.
-
->  - GIT_AUTHOR_IDENT
->  - GIT_COMMITTER_IDENT
->  - GIT_EDITOR
->  - GIT_PAGER
+> Jeff King <peff@peff.net> writes:
 > 
-> first question -- what is it about precisely those four variables that makes
-> them "logical" variables in git parlance? just those four? no others?
-
-It was introduced in the very early days as a way for scripts to get
-access to "standard" values that would be computed the same way as the C
-portions of Git.  But it hasn't generally been kept up to date with new
-possible variables.
-
-It also only tells half the story. You have to know not just what's in
-$GIT_EDITOR, but you have to know the right way to evaluate it. There's
-a git_editor helper in git-sh-setup, but other scripting languages are
-on their own. We'd probably have done better to introduce a "git editor"
-command which can be run from any language.
-
-But as most of Git is written in C these days, it seems that nobody had
-enough interest to smooth out these kinds of rough edges.
-
->   also, the man page "man git-var" seems wrong:
+> > This is weirdly specific. Can we accomplish the same thing with existing
+> > tools?
+> >
+> > E.g., could:
+> >
+> >   git cat-file --batch-all-objects --batch-check='%(objectname)' |
+> >   shuffle |
+> >   head -n 100
+> >
+> > do the same thing?
+> >
+> > I know that "shuffle" isn't available everywhere, but I'd much rather
+> > see us fill in portability gaps in a general way, rather than
+> > introducing one-shot C code that needs to be maintained (and you
+> > wouldn't _think_ that t/helper programs need much maintenance, but try
+> > perusing "git log t/helper" output; they have to adapt to the same
+> > tree-wide changes as the rest of the code).
 > 
-> "OPTIONS
->   -l
->     Cause the logical variables to be listed. In addition, all the variables
->     of the Git configuration file .git/config are listed as well."
+> I was thinking about this a bit more, and came to the conclusion
+> that "sort -R" and "shuf" are wrong tools to use.  We would want to
+> measure with something close to real world workload.  for example,
+> letting
 > 
-> no, if i run "git var -l", i see not only the logical variables, but i
-> see *all* of the available config settings (system and global), not just
-> those in .git/config (unless i'm misreading what that is supposed to mean).
+> 	git rev-list --all --objects
+> 
+> produce the listof objects in traversal order (i.e. this is very
+> similar to the order in which "git log -p" needs to access the
+> objects) and chomping at the number of sample objects you need in
+> your test would give you such a list.
 
-Yes, I agree the description there is wrong. I'd have to dig in the
-history to be sure, but I'm pretty sure it has _always_ been wrong.
+Actually, I'd just as soon see timings for "git log --format=%h" or "git
+log --raw", as opposed to patches 1 and 2.
 
-> p.s. yes, i realize this command is deprecated in favour of "git config -l",
-> but as long as it's available, it should work as described in the man page.
-
-Yes, though I think fixing the manpage is the right way to make them
-consistent.
+You won't see a 90% speedup there, but you will see the actual
+improvement that real-world users are going to experience, which is way
+more important, IMHO.
 
 -Peff
