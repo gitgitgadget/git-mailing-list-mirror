@@ -2,93 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 160A220375
-	for <e@80x24.org>; Thu,  5 Oct 2017 20:09:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4930620370
+	for <e@80x24.org>; Thu,  5 Oct 2017 20:22:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752103AbdJEUJp (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Oct 2017 16:09:45 -0400
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:36226 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751415AbdJEUJo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Oct 2017 16:09:44 -0400
-Received: by mail-wr0-f195.google.com with SMTP id l10so1922056wre.3
-        for <git@vger.kernel.org>; Thu, 05 Oct 2017 13:09:44 -0700 (PDT)
+        id S1752128AbdJEUWl (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Oct 2017 16:22:41 -0400
+Received: from mail-wr0-f173.google.com ([209.85.128.173]:48650 "EHLO
+        mail-wr0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751966AbdJEUWl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Oct 2017 16:22:41 -0400
+Received: by mail-wr0-f173.google.com with SMTP id u5so11549698wrc.5
+        for <git@vger.kernel.org>; Thu, 05 Oct 2017 13:22:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Y4yW3uoNkPjeKa67VTf5V93guE/K7KDAXsNwHgXMcAI=;
-        b=qi4njQGYyxq0qL2l+vTnIZMl8Tys9dMpO6dYe/fkH0xHOzpDMcHpiGhGTwE3UNLoI1
-         cfl+xICH1kkmF/IjEkYjU6OGgvlu/83JMl/SgO/XMu0WiGeCVHAL+VqtEC03kZA39x+0
-         XTFlBjWb+Eg6Th74/wp+5j5WtJqXVaz6u1NgLCGIs2y3wXRgmHaXoCwCklB+rWolkdin
-         eRUH203U1M85OYR9dgzfGPiPF07JgiSTn1MeHcCccZYg3LD8NLkfK1cRGKym0VANPA+S
-         6P9kUzJ9BRnVRMfmT3D4DvWbbRavQqwphxIZWtStgLkmOLKBmBR+/FogOcPvpZ/E5TVK
-         ipqw==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=ShPQFAmIn4oB/EFBIoJ8DVghQy4a7SIuLdcDEHrUfmI=;
+        b=vTfYjHFpNg7aAFHtCWa92Op+Kc6VNQ9qy5JV3VPfK7O/LJNr8OeIlGvntHW/afFUb9
+         a+Las8qMPK6MBPd1aW0HDws8vS1UOE8p4mdfXtxTgOT+Z/AEHu39GJurQ/Usc61fwGE3
+         bqZy8bvI05qD4sCrJDVzCEVvrSFVaE7bJknze+rVgTCCDCUroFoY0Xvtq49sLhGV/GzY
+         oixnlaypFZkWPkQhiXKJpCBMOW2iko4hASz1ijjUfx1xHuSYUleJRtHIcedBfRgx5j9Z
+         +3SLAfElxdfSfa0iipu2ydzs/uX7feH9uewdmSq7tf5vIkgwr05R2SMlX1tydmq4B76u
+         y8/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=Y4yW3uoNkPjeKa67VTf5V93guE/K7KDAXsNwHgXMcAI=;
-        b=Ql3kIUCrsuW0wx81cN+eDJZVjBeiViB3BGiXJMl/MT7+7IHhHTbgpulbQE4m/hR0Md
-         K15q87Gd/raSARtycr+UfRD+jErerdNPMcbw7xen5lgoR+UAfz3DjXY174BhfwXb3v3C
-         Puz3XBPuOzbKv6DFAkHXvhadw83Gw2hF9dCZK66Ha3Wpay4T3lYcCe3Bl0yxMA3SUBzq
-         w/dWGW/uCg9rP3Km7v8HRtEAN9EqPhmPPSI7QGvEceJV17UK9DBSnjc4N20DrNwNy7qf
-         /Zk7sDIte/HAsWuV3PiZW/9adrCBbQtTdgzjoi7ntgt64ota2bumN8OCuTiCFEyXkJ+h
-         c/1w==
-X-Gm-Message-State: AMCzsaUQAWWGidX/Yst2Ub7fLCORS74pV3EEWdxb3PATU8knc/jiVK3t
-        BcVL0nFFLAmyXMwZI+e6vq4=
-X-Google-Smtp-Source: AOwi7QBMSAlbc9p01i9XOGkSib7onXXA9iOrIbegkbzu3pQJcMHX3S1qYkaTP+CUN0UWtmjU4E/MTA==
-X-Received: by 10.223.186.20 with SMTP id o20mr5256655wrg.3.1507234183546;
-        Thu, 05 Oct 2017 13:09:43 -0700 (PDT)
-Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
-        by smtp.gmail.com with ESMTPSA id k141sm138818wmg.15.2017.10.05.13.09.42
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 05 Oct 2017 13:09:42 -0700 (PDT)
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
-        git@vger.kernel.org, Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH 2/1] mention git stash push first in the man page
-Date:   Thu,  5 Oct 2017 21:10:29 +0100
-Message-Id: <20171005201029.4173-1-t.gummerer@gmail.com>
-X-Mailer: git-send-email 2.14.1.480.gb18f417b89
-In-Reply-To: <20171005200049.GF30301@hank>
-References: <20171005200049.GF30301@hank>
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=ShPQFAmIn4oB/EFBIoJ8DVghQy4a7SIuLdcDEHrUfmI=;
+        b=NrBaxNWoi9PiIHP7eYrUwkhLsEp2UcgEORLYk1QhMRHwFIbbG65Lz1CysOcAvRJ09M
+         kTlWhc016wEKw1caNpsPEJeMCUrjQAAy+PUTzMOUrifEo/W3VaAZONtbFCGHCY7I1up5
+         nHVUFxSJjOo0Msx2+o32B8/5H1EncItgsRDXr/OSpqBtSF4TKhb/xqfqX/N1TVFLKisJ
+         gHBfBpBNNf50wDz+I7OwSyLOxbU3quwNMqNuAyc6OxFqKPsPsWmHSbmknLOI/YaYwMur
+         Gg/YaK07SdEIriS729zNhZQA0OacE+V1D5gTgOi4/fzpQb7rKTW1iYcYI48/KQ4lV42m
+         B5/w==
+X-Gm-Message-State: AMCzsaXQzw1OcNSIW47WxiaZjnHwnbBxkGxWVoADjgumDVP94kLtw7Wm
+        CtP2we52bU0N3Wdp58jRXjQ=
+X-Google-Smtp-Source: AOwi7QCL9Rmi/kciLdI0JREHW/U0v97zb2FVhVrQUJ/WEq0wU0edBQi0ITM0fJ83FuqaBX4vFZyluA==
+X-Received: by 10.223.176.75 with SMTP id g11mr14021884wra.211.1507234959861;
+        Thu, 05 Oct 2017 13:22:39 -0700 (PDT)
+Received: from slxbook4.fritz.box (p5DDB5A15.dip0.t-ipconnect.de. [93.219.90.21])
+        by smtp.gmail.com with ESMTPSA id v5sm165807wme.5.2017.10.05.13.22.38
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 05 Oct 2017 13:22:39 -0700 (PDT)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [git-for-windows] [ANNOUNCE] Git for Windows 2.14.2(2)
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <20171005200227.8028-1-johannes.schindelin@gmx.de>
+Date:   Thu, 5 Oct 2017 22:22:37 +0200
+Cc:     git-for-windows@googlegroups.com, git@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <E2CD2BA7-130B-479B-84DF-A7AFA0EBF30F@gmail.com>
+References: <20171005200227.8028-1-johannes.schindelin@gmx.de>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Because 'stash push' and 'stash save' are so closely related they share one
-section in the man page.  Currently 'stash save' comes first, as that
-was the command that people were historically using.  However this makes
-the newer, more feature rich git stash push very easy to overlook.
-Change the order to give the newer interface for creating a stash the
-more prominent position.
 
-Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
----
- Documentation/git-stash.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> On 05 Oct 2017, at 22:02, Johannes Schindelin =
+<johannes.schindelin@gmx.de> wrote:
+>=20
+> Dear Git users,
+>=20
+> It is my pleasure to announce that Git for Windows 2.14.2(2) is =
+available from:
+>=20
+> 	https://git-for-windows.github.io/
+>=20
+> Changes since Git for Windows v2.14.2 (September 26th 2017)
+>=20
+> New Features
+>=20
+>  * Comes with BusyBox v1.28.0pre.16467.b4c390e17.
+>  * Comes with Git LFS v2.3.2.
 
-diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
-index 53b2e60aeb..a1ddfb8eae 100644
---- a/Documentation/git-stash.txt
-+++ b/Documentation/git-stash.txt
-@@ -48,8 +48,8 @@ stash index (e.g. the integer `n` is equivalent to `stash@{n}`).
- OPTIONS
- -------
- 
--save [-p|--patch] [-k|--[no-]keep-index] [-u|--include-untracked] [-a|--all] [-q|--quiet] [<message>]::
- push [-p|--patch] [-k|--[no-]keep-index] [-u|--include-untracked] [-a|--all] [-q|--quiet] [-m|--message <message>] [--] [<pathspec>...]::
-+save [-p|--patch] [-k|--[no-]keep-index] [-u|--include-untracked] [-a|--all] [-q|--quiet] [<message>]::
- 
- 	Save your local modifications to a new 'stash entry' and roll them
- 	back to HEAD (in the working tree and in the index).
--- 
-2.14.1.480.gb18f417b89
+Just a heads-up:=20
+Git LFS 2.3.2 contains a bug in the `git lfs clone` and `git lfs pull` =
+calls:
+https://github.com/git-lfs/git-lfs/issues/2649
 
+I expect 2.3.3 to be out soonish.
+
+- Lars=
