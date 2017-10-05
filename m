@@ -2,77 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AB3CF20370
-	for <e@80x24.org>; Thu,  5 Oct 2017 19:41:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D75E620370
+	for <e@80x24.org>; Thu,  5 Oct 2017 19:47:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752056AbdJETll (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Oct 2017 15:41:41 -0400
-Received: from mout.web.de ([217.72.192.78]:56043 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751953AbdJETlk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Oct 2017 15:41:40 -0400
-Received: from [192.168.178.36] ([91.20.57.42]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MTh2S-1drUpL3SKm-00QPVc; Thu, 05
- Oct 2017 21:41:35 +0200
-To:     Git List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
+        id S1752229AbdJETrE (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Oct 2017 15:47:04 -0400
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:38116 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752160AbdJETrD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Oct 2017 15:47:03 -0400
+Received: by mail-pg0-f67.google.com with SMTP id j3so771467pga.5
+        for <git@vger.kernel.org>; Thu, 05 Oct 2017 12:47:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=bQ/JiYgdLVs0nENB5FFEX8UopHiiwX8muE+7vdn1RIw=;
+        b=HXb0C/47bl2uf478FOK26BBsGt5Hdb1gZq70KvrEhsj92FyIQg5irMCUtEEsK4QeT7
+         nOr28YeqpFFZOT+Q4zEE5WuRSfqdVjhLidFqvEGeDoVBwwVBGZT7WGoeWW6yFIYgmzpA
+         YNk4TvtChi7GpricDNg+meDbICky8bFJm7BocXPkz6ooBATdwcjdD6kdCVLq9g/VWtuZ
+         2Z/jYuHxvwFodn+Y/6nLyrVR2YB5mjXnEZE60LNPuLtkU0m/aD0BXpaul1IGo0G/h1FF
+         AvpGuiggCPqWnjBtMKwcR9MmYmz73jUgW0o9fyGHIhTM3ov4ixlj0IVZHTisXlqbAoto
+         uesw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=bQ/JiYgdLVs0nENB5FFEX8UopHiiwX8muE+7vdn1RIw=;
+        b=pIDCfA39noW1QrT33TzIUQQjUTqKrYrNsQ1JLm58uP9GK400uW8IwgKlZcMw27AJc7
+         r6SUNjmE5NZnOiOdGD7ze+WgZPuB7Ui5s+5a7ONmcwoFtc7WOz/e7YWifyoX//RVIpIj
+         srTKwGjDJwHEUgOxOSepQv1y5NryRs7tchGUMYOtk0uXQN8M0VQiYSz7NH6mGa3U2UF8
+         3ilAjDT1a8XRvxlN9kKDWKT5njX8IpfHMvSXL6b2DH2flNP4Ee8ag7q5ABcM34MRDhHH
+         ay2FyRzSt+vK74NEpEPvK4l8qq4YH+Kcyd1tKuw5kRk0igORcNCg9M+EHa3gkayNbB2J
+         lUmw==
+X-Gm-Message-State: AHPjjUibKzG+Ojq8bcY99t1U3mG2Ida5WPBPDn7FVseBHHeXOXcHG5mt
+        7BVoY3joJY8mngGE1jF1rHc=
+X-Google-Smtp-Source: AOwi7QCL3TdX7O0xNCEqxqwen+UuHxmreB1cfbSTsq6ENt+tKb+rZzK2lJgnQg4fyOLVmxWe7q60eA==
+X-Received: by 10.101.78.209 with SMTP id w17mr19576457pgq.402.1507232822940;
+        Thu, 05 Oct 2017 12:47:02 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:960:8965:26b6:313])
+        by smtp.gmail.com with ESMTPSA id f24sm19043897pfk.183.2017.10.05.12.47.01
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 05 Oct 2017 12:47:02 -0700 (PDT)
+Date:   Thu, 5 Oct 2017 12:47:00 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
         Stefan Beller <sbeller@google.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: =?UTF-8?Q?[PATCH]_.mailmap:_normalize_name_for_Ren=c3=a9_Scharfe?=
-Message-ID: <101cfcb6-3475-f055-24b8-3f7296ad05fc@web.de>
-Date:   Thu, 5 Oct 2017 21:41:31 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
+Subject: Re: [PATCH] .mailmap: =?iso-8859-1?Q?norma?=
+ =?iso-8859-1?Q?lize_name_for_Ren=E9?= Scharfe
+Message-ID: <20171005194700.GB88769@aiede.mtv.corp.google.com>
+References: <101cfcb6-3475-f055-24b8-3f7296ad05fc@web.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:yDvw53JK4ZGtAOqBXeIFechoEvmhqPKFR7CW4CHw7t05n6lWOck
- HDa1kWlgaegtsDEOSEoDHowr82lkEf1VGtpS4DIcKfN/8oDUM0bd4k2cIJ1VRkSoT09IdEb
- REFjgIsmz5bpfbL7LCF6NV3ByMl0o1QHyWe1jfH66VJrLwheCByq8hnQfv6CL1FRtbDjOvb
- rSTQxMuDKIU8T5kJVnd3Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:xxEowpHSlhE=:alRlmahq2Bzz9RApTB5aP+
- Eb03+O9NVugTn1JrDZfT3yLMZfv8ZXxv+I3VZWk6yKpgXOqV6MSy45I8zyWWUKwnVIBA1otVf
- StrpWtt9Utl04UmkzqC6EOdYHInui0yptYBGAzOs1MnFf0kC3AYeQvbvBzirQSJsl0/2yQ4/2
- H/7XtpTsY15kJU7YpkogdG1rceeTvCS1kOPL8ifP4rSCmzRkH0RDCynnuSobt3uLW8yzjdgKK
- tHH7TWxCdeQ4vjjkah6y/oCZlZyfm5UpAN+nJm21YmYdn450BCVLy8N5SsRmfWftR3sfkUfJy
- IYTacg1ha/U5z3aWJnRHhMYgyWrw2gRXukUzxbRNL40DRVDEC0c1Hhtw+EnBFhg1i1c8Y5zMj
- JJataRJqB3ra/tohNhwy5EHCuaFmCWVY4BVvcnOQ5tl+y51dcDgyTX2WOf8M5AnZaDdoouiWS
- cdz97yz7TsZDrTmn40McNvVYlwwNyb8rysT7CaS6hf9UZccpnDimqrgj7oGXTCQMuc8YlG5zP
- nKy4BjnqfkWfWy8rinHjdwWGQLkJdB6P5m1WFkS8eZ6j2dSqwHS7eYP0STuHNCpWnBApsN0Kr
- YCMu/FQzMJT7J61E3F86MDfboDwShJFcY3/arTpjm7VDZTTqjbe18yi4qHqZRgaLevbImtYpS
- nqgdfRznx80IImQZBInGdu2eG3LK60xyAHdwHOCWvTeCfNNmSHGfl2T7rIPlmrgr9GdHxu8+w
- OIr49dYHA3+mOookAHm7o4U3/zfemUUqDJOOxlgFetqnKmj8KCRugv6TWCIWnwApnXXo94qEl
- +w48ddkzEAjqySUQGDK1FlbBBlpgyE5gwvWx49/8ubdJOpOIH4=
+In-Reply-To: <101cfcb6-3475-f055-24b8-3f7296ad05fc@web.de>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Reported-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Reported-by: Stefan Beller <sbeller@google.com>
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
- .mailmap | 1 +
- 1 file changed, 1 insertion(+)
+René Scharfe wrote:
 
-diff --git a/.mailmap b/.mailmap
-index ab85e0d16d..224db83887 100644
---- a/.mailmap
-+++ b/.mailmap
-@@ -194,6 +194,7 @@ Philippe Bruhat <book@cpan.org>
- Ralf Thielow <ralf.thielow@gmail.com> <ralf.thielow@googlemail.com>
- Ramsay Jones <ramsay@ramsayjones.plus.com> <ramsay@ramsay1.demon.co.uk>
- RenÃ© Scharfe <l.s.r@web.de> <rene.scharfe@lsrfire.ath.cx>
-+RenÃ© Scharfe <l.s.r@web.de> Rene Scharfe
- Richard Hansen <rhansen@rhansen.org> <hansenr@google.com>
- Richard Hansen <rhansen@rhansen.org> <rhansen@bbn.com>
- Robert Fitzsimons <robfitz@273k.net>
--- 
-2.14.2
+> Reported-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> Reported-by: Stefan Beller <sbeller@google.com>
+> Signed-off-by: Rene Scharfe <l.s.r@web.de>
+> ---
+>  .mailmap | 1 +
+>  1 file changed, 1 insertion(+)
+
+A quick "git shortlog -nse" run confirms that this works.
+
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+Thanks.
+
+> diff --git a/.mailmap b/.mailmap
+> index ab85e0d16d..224db83887 100644
+> --- a/.mailmap
+> +++ b/.mailmap
+> @@ -194,6 +194,7 @@ Philippe Bruhat <book@cpan.org>
+>  Ralf Thielow <ralf.thielow@gmail.com> <ralf.thielow@googlemail.com>
+>  Ramsay Jones <ramsay@ramsayjones.plus.com> <ramsay@ramsay1.demon.co.uk>
+>  René Scharfe <l.s.r@web.de> <rene.scharfe@lsrfire.ath.cx>
+> +René Scharfe <l.s.r@web.de> Rene Scharfe
+>  Richard Hansen <rhansen@rhansen.org> <hansenr@google.com>
+>  Richard Hansen <rhansen@rhansen.org> <rhansen@bbn.com>
+>  Robert Fitzsimons <robfitz@273k.net>
