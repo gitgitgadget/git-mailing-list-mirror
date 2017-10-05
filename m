@@ -2,82 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF1022036B
-	for <e@80x24.org>; Thu,  5 Oct 2017 09:14:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9FF4D2036D
+	for <e@80x24.org>; Thu,  5 Oct 2017 09:15:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751785AbdJEJOz (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Oct 2017 05:14:55 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50360 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751278AbdJEJOw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Oct 2017 05:14:52 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 265D6AE9EE;
-        Thu,  5 Oct 2017 05:14:52 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=deQf2fwV+FAVIQf9GaELubead+I=; b=jPZ4uf
-        VU37rsRajxVRYr7fEV/6WQ7EXvgDKJKF0BuP8mF6l9CF1rxodTAV/HydONPbvG1K
-        XtYev15L2xW3ZzoOfVjkzFfvgfvTWLt5L844kGFIWvMT+okWxHf4CMixKv0TFrA0
-        W9DQarrEdjzeykh3UJTVeVGCmsWbqIB0FEVkw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=bmXZA3QamklfimsgatTI2Eqqx8jkSAqM
-        QrZrdIwyQQvFvdZEawO4p34y28xRRAh4bHOaBLImCgljquhar18H7P4VDH6113IK
-        r9YXqTM1vzS+3qN1xZxJjV1S9xlclCkhvPJ+pmlPHVRzSCzCfNHvL25b0Uhtyy2C
-        8Zxt2tq3/uk=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 083B6AE9ED;
-        Thu,  5 Oct 2017 05:14:52 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7C9C5AE9E8;
-        Thu,  5 Oct 2017 05:14:51 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, J Wyman <jwyman@microsoft.com>
-Subject: Re: [PATCH 2/3] for-each-ref: let upstream/push optionally report merge name.
-References: <cover.1506952571.git.johannes.schindelin@gmx.de>
-        <f615fcc05fa358b4c7e3531cbdbd91661be321aa.1506952571.git.johannes.schindelin@gmx.de>
-        <xmqq4lrfb7jk.fsf@gitster.mtv.corp.google.com>
-        <xmqqvajv9m2k.fsf@gitster.mtv.corp.google.com>
-Date:   Thu, 05 Oct 2017 18:14:50 +0900
-In-Reply-To: <xmqqvajv9m2k.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Wed, 04 Oct 2017 20:41:55 +0900")
-Message-ID: <xmqqzi966jn9.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751450AbdJEJPS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Oct 2017 05:15:18 -0400
+Received: from smtp5-g21.free.fr ([212.27.42.5]:33492 "EHLO smtp5-g21.free.fr"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751278AbdJEJPR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Oct 2017 05:15:17 -0400
+Received: from [172.27.0.114] (unknown [92.154.11.170])
+        (Authenticated sender: slash.tmp)
+        by smtp5-g21.free.fr (Postfix) with ESMTPSA id 232D45FF20;
+        Thu,  5 Oct 2017 11:15:09 +0200 (CEST)
+To:     git <git@vger.kernel.org>
+From:   Mason <slash.tmp@free.fr>
+Subject: Quoted-printable support in git am
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Message-ID: <165c9648-e7f0-66de-b3b9-023c48c49d95@free.fr>
+Date:   Thu, 5 Oct 2017 11:15:08 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Firefox/52.0 SeaMonkey/2.49.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A4ABAE16-A9AD-11E7-86E8-8EF31968708C-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hello everyone,
 
-> I think the remaining points from my reviews are:
->
->  - It would be better to compute precomputable stuff when used atoms
->    are parsed, instead of running starts_with() in these functions;
+Recently, the SMTP server we use at work started mangling outgoing
+messages, by converting them to quoted-printable, whatever their
+original encoding (even 7-bit clean, pure ASCII).
 
-After reading the original (before these three patches) code for
-populate_value(), I think reverting this mess back to how the thing
-was originally envisioned to be would be outside the scope of this
-addition.  It was way too messy before your series than I expected.
+This breaks patches I send to Linux mailing lists, because it changes
+TAB to =09, EQUAL to =3D, TRAILING SPACE to =20 and also wraps long
+lines using a "=" continuation.
 
-So, unless you or your collaborator feel like helping us to clean up
-the codebase for better future, let's forget about that point, and
-leave the cleaning up for now.
+It looks like 'git am' doesn't support decoding this mess.
+(I tried git version 2.14.2)
 
-For those who want to help with the #leftoverbits, the first step of
-cleaning up would be to introduce an enum field that sits next to
-used_atom[i].name, and have the if/else if/... cascades use that
-instead of these starts_with(name) to choose what value to grab from
-the given ref.
+$ git am ~/rc.patch
+Applying: media: rc: Add driver for tango IR decoder
+error: patch failed: drivers/media/rc/Kconfig:469
+error: drivers/media/rc/Kconfig: patch does not apply
+error: patch failed: drivers/media/rc/Makefile:44
+error: drivers/media/rc/Makefile: patch does not apply
+Patch failed at 0001 media: rc: Add driver for tango IR decoder
+The copy of the patch that failed is found in: .git/rebase-apply/patch
+When you have resolved this problem, run "git am --continue".
+If you prefer to skip this patch, run "git am --skip" instead.
+To restore the original branch and stop patching, run "git am --abort".
 
+Is there a magic option I should be passing to git am?
+
+
+The patch header contains:
+
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+
+
+The drivers/media/rc/Kconfig:469 part is
+
+--- a/drivers/media/rc/Kconfig
++++ b/drivers/media/rc/Kconfig
+@@ -469,6 +469,11 @@ config IR_SIR
+  =09   To compile this driver as a module, choose M here: the module will
+  =09   be called sir-ir.
+ =20
++config IR_TANGO
++=09tristate "Sigma Designs SMP86xx IR decoder"
++=09depends on RC_CORE
++=09depends on ARCH_TANGO || COMPILE_TEST
++
+  config IR_ZX
+  =09tristate "ZTE ZX IR remote control"
+  =09depends on RC_CORE
+
+
+Googling a bit...
+https://stackoverflow.com/questions/6289001/git-am-format-patch-control-format-of-line-endings
+https://public-inbox.org/git/24940e12-3f72-1ef0-0983-58523d8dec51@redhat.com/t/
+
+Looks like it should work...
+
+Maybe I hit some weird corner case?
+
+Regards.
