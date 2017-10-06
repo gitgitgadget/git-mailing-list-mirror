@@ -2,82 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BD9DC2036B
-	for <e@80x24.org>; Fri,  6 Oct 2017 11:04:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 790AA2036B
+	for <e@80x24.org>; Fri,  6 Oct 2017 11:10:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751850AbdJFLEz (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Oct 2017 07:04:55 -0400
-Received: from mail-pg0-f41.google.com ([74.125.83.41]:53793 "EHLO
-        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750849AbdJFLEy (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Oct 2017 07:04:54 -0400
-Received: by mail-pg0-f41.google.com with SMTP id s2so1597643pge.10
-        for <git@vger.kernel.org>; Fri, 06 Oct 2017 04:04:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=LQKROZvbPxzpD7ebeXiuxQ+TDdVR1VNNxBPx1+L5ITw=;
-        b=iyk+S45Xw7u0F2wOQMrOkLY36vI8ckhSvsCQRXz0ivn3fjTLpSVdQ0+zoaebUxaon9
-         wa7fA2NvzppjYd4fuulRS4ek3tXdsAS/YSBk9xHdOW0r6+9k5zgvjj10By3WddJ1jlYF
-         6CbGs9dssqBYjVu3Gd9SWYj1oiy1w9gi3O1MUJNUHgLq/UZ0RASIg4e7mMq34pLBwtRK
-         vC4mMiFHsrfg+2VxuvA/JO1ep6M022jnmYOXdTZv/nvA9Fgt0DkaA59qOobthAyEEiRj
-         9BYXkYNxRlnFdyqKScUI1spj1X8zOYQcYH/IzdFu8n9RoQHQ+4jk4RCRigSXk0ggD5Xx
-         CB0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=LQKROZvbPxzpD7ebeXiuxQ+TDdVR1VNNxBPx1+L5ITw=;
-        b=noZgfWON0jtGdqpbAGyaupcdIu0hI+bWjoh8yRHZkWYFRXUAjcOBPDHe+NhsYGaQyd
-         DIr0KQivmQQ92tGdRfm2hZzQ7N/LpMgi/Zpuf6RePSYhRx1A3U8kYErB+KAHRRhmIDGj
-         9h+BqXVtDna390Q5AEnmLMjNe0hRum21Sru4HtqJp9tVTFpx7eKzyvRLRcraYElyDnC0
-         VHp6d9Y0RCeeF/n8yM9y+SjUL2519ZwIv5uJZ/BTRJNwighSUHQ5MtHFVQCoF42Kx4Uz
-         bPuH/qLGe2YABfF0tUHdv73i3Nhni6YC7Faxufo3Jj2cHbxdLbkJwTTE4ysE3RnNkUAE
-         VuTw==
-X-Gm-Message-State: AMCzsaV94g5S31mFxasOUn6AHEdewzrZT7n53g1o8AbQSfuoxPyQpWDY
-        Hgju2gTz1s8WR5YVsz6NDoe1O+rXjvw5wXHVEb0=
-X-Google-Smtp-Source: AOwi7QBwG8VRDSiFcY59hkkc28lB6Ell+COFjwGJ5Pd0Dm6XLNUNohAQL/He3F/kZIcddIn5JLvr0d318glakLKDP08=
-X-Received: by 10.84.252.152 with SMTP id y24mr1703470pll.392.1507287894219;
- Fri, 06 Oct 2017 04:04:54 -0700 (PDT)
+        id S1751604AbdJFLK1 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Oct 2017 07:10:27 -0400
+Received: from sonic307-54.consmr.mail.ir2.yahoo.com ([87.248.110.31]:44631
+        "EHLO sonic307-54.consmr.mail.ir2.yahoo.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1750967AbdJFLK0 (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 6 Oct 2017 07:10:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.pl; s=s2048; t=1507288223; bh=JniuPcS2+1/w/HYW2veKQ5PJzfb05hUTEHJ1QKSbvFk=; h=To:From:Subject:Date:From:Subject; b=Z2r8IaCAo3592ePFQeqWDh6GBS1xM4otJQcxYCu5/GSTtlbtcP3tdUywDb9nkvbd6qiTeF/puDNPi6ZjABP+mYSsRS1wsXsYzrqcpnprTrSTUSPegfzG6ghbFxP4x7HAnp5R1lXPBsliUdHYm5qPoFh+8i1bUY8p17e7XplVaY1Jg+1JJPmTi5q4xiU7cFXtjyMM7y9lc4pnk+hRS524iI99u7ZwAR+ahAPZmguitNzR2Zeqiyo+1fEoFgEz7TQ4PuGg30yBa4tCATgyrMjvWSiiKasqw5gP2on9ogagSwePssHCD3MSapOt1B/czXcj5EU0L+I4Hnemz5FPOV7FJA==
+X-YMail-OSG: 3CAV4M0VM1nYMNkTKcxBb15wzuo796jHiPyA6YTpntNl.FYn5RfwmNELqMZT5CN
+ 1ozCzQPR7ZJ46TnwolBzQfm8gXtEWK373ftQsEbf9Y9TfG.EZUbSL9JVKLZOH.FcXaRSrLxGTPSK
+ A2.x66H2ko29bMKX5LMuh4.NMGlRbcU1EfcHpTizmCinZr3mB57pJ5NdUfTfn7crzIPZYUUGbGtC
+ F6ES6Ob_qhgZ61Z6UeEJluH_Yebu81E6X99CSvkEtSj6jNEyoIuUwRHLRmLal5bGTvu1KWbWV_ZK
+ xvVN4fZM.3cBYM4JsxYM_C8YYaq.CiMRG.XVdP4sc9Vx7ngElZ3YYxNhix_lkq5wksXMyCFsfYCb
+ NzNccGFgNk_oPEYNfXnoMnWEMuwf0u1_tGeOVAIjMAIXJUERz4BU_ZSWlGIFZeocSRV9TLYDOflc
+ WToHtURN6sEy3rsBxcdWuPhC5.M_Zc1FoU2_8XEbUthx59juk04e642dxTMbTb4s7HGzn7vVrVsT
+ kuQxC6Q6I4E8Zu.2hKLc9Rc22xWXXJR9VVd91
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic307.consmr.mail.ir2.yahoo.com with HTTP; Fri, 6 Oct 2017 11:10:23 +0000
+Received: from [127.0.0.1] by smtp144.mail.ir2.yahoo.com with NNFMP; 06 Oct 2017 11:10:18 -0000
+X-Yahoo-Newman-Id: 167624.42859.bm@smtp144.mail.ir2.yahoo.com
+X-Yahoo-Newman-Property: ymail-3
+X-YMail-OSG: 3CAV4M0VM1nYMNkTKcxBb15wzuo796jHiPyA6YTpntNl.FY
+ n5RfwmNELqMZT5CN1ozCzQPR7ZJ46TnwolBzQfm8gXtEWK373ftQsEbf9Y9T
+ fG.EZUbSL9JVKLZOH.FcXaRSrLxGTPSKA2.x66H2ko29bMKX5LMuh4.NMGlR
+ bcU1EfcHpTizmCinZr3mB57pJ5NdUfTfn7crzIPZYUUGbGtCF6ES6Ob_qhgZ
+ 61Z6UeEJluH_Yebu81E6X99CSvkEtSj6jNEyoIuUwRHLRmLal5bGTvu1KWbW
+ V_ZKxvVN4fZM.3cBYM4JsxYM_C8YYaq.CiMRG.XVdP4sc9Vx7ngElZ3YYxNh
+ ix_lkq5wksXMyCFsfYCbNzNccGFgNk_oPEYNfXnoMnWEMuwf0u1_tGeOVAIj
+ MAIXJUERz4BU_ZSWlGIFZeocSRV9TLYDOflcWToHtURN6sEy3rsBxcdWuPhC
+ 5.M_Zc1FoU2_8XEbUthx59juk04e642dxTMbTb4s7HGzn7vVrVsTkuQxC6Q6
+ I4E8Zu.2hKLc9Rc22xWXXJR9VVd91
+X-Yahoo-SMTP: .w5QqJ6swBA_3w7N9yIVdzdJdKQq_njOOGspvdTCCa.iTA--
+To:     git@vger.kernel.org
+From:   "aleksander.baranowski" <aleksander.baranowski@yahoo.pl>
+Subject: Git config multiple values
+Message-ID: <4b848032-e8b6-be67-58d9-e3fcc2c11853@yahoo.pl>
+Date:   Fri, 6 Oct 2017 13:10:17 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
 MIME-Version: 1.0
-Received: by 10.100.156.137 with HTTP; Fri, 6 Oct 2017 04:04:53 -0700 (PDT)
-In-Reply-To: <xmqqefqhyqyg.fsf@gitster.mtv.corp.google.com>
-References: <xmqqy3osiwe6.fsf@gitster.mtv.corp.google.com> <cover.1507228170.git.martin.agren@gmail.com>
- <b5fc950e4594fb9dec07ec8872c0df8514d149ff.1507228170.git.martin.agren@gmail.com>
- <xmqqefqhyqyg.fsf@gitster.mtv.corp.google.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Fri, 6 Oct 2017 13:04:53 +0200
-Message-ID: <CAN0heSojqHEQQfwUaGuLH2TjN+aHSFHg4WAvcd5Ksnxd-54YMg@mail.gmail.com>
-Subject: Re: [PATCH v2 11/12] read-cache: leave lock in right state in `write_locked_index()`
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-MW
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6 October 2017 at 04:01, Junio C Hamano <gitster@pobox.com> wrote:
-> Martin =C3=85gren <martin.agren@gmail.com> writes:
->
->> v2: Except for the slightly different documentation in cache.h, this is
->> a squash of the last two patches of v1. I hope the commit message is
->> better.
->
-> Yeah, it is long ;-) but readable.
+Hi,
 
-"Long but readable"... Yeah. When I rework the previous patch (document
-the closing-behavior of `do_write_index()`) I could address this. I
-think there are several interesting details here and I'm not sure which
-I'd want to leave out, but yeah, they add up...
+I'm currently using git version 2.14.2. There is possible to put
+multiple values into same variable with git config.
 
-Martin
+Case 1:
+# git config --global user.name Foo - returns 0
+# git config --global user.name Bar - returns 0 and replace Foo to Bar
+# git config --global user.name Foo - returns 0 and replace Bar to Foo
+
+Case 2:
+# git config --global user.name Foo - returns 0
+# git config --global user.name Foo2 Bar - returns 0 and put second name
+# cat ~/.gitconfig
+[user]
+	email = aleksander.baranowski@yahoo.pl
+	name = Foo
+	name = Foo2
+# git config --global user.name Foo - return 5 and message
+"warning: user.name has multiple values
+error: cannot overwrite multiple values with a single value
+       Use a regexp, --add or --replace-all to change user.name."
+
+It's just an opinion, but this behaviour is no consistent for me.
+
+If it's not the bug it's a feature just let me know.
+
+Bests,
+Alex
