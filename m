@@ -2,204 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 750A520372
-	for <e@80x24.org>; Fri,  6 Oct 2017 19:41:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1DCF420372
+	for <e@80x24.org>; Fri,  6 Oct 2017 19:42:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752618AbdJFTl0 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Oct 2017 15:41:26 -0400
-Received: from mail-qt0-f175.google.com ([209.85.216.175]:56626 "EHLO
-        mail-qt0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752495AbdJFTlZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Oct 2017 15:41:25 -0400
-Received: by mail-qt0-f175.google.com with SMTP id 34so16335252qtb.13
-        for <git@vger.kernel.org>; Fri, 06 Oct 2017 12:41:25 -0700 (PDT)
+        id S1752494AbdJFTmO (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Oct 2017 15:42:14 -0400
+Received: from mail-pf0-f176.google.com ([209.85.192.176]:55622 "EHLO
+        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752390AbdJFTmN (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Oct 2017 15:42:13 -0400
+Received: by mail-pf0-f176.google.com with SMTP id 17so1679538pfn.12
+        for <git@vger.kernel.org>; Fri, 06 Oct 2017 12:42:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Q9640pBNtE0L7o2vE40GYHfnjfbs8fH/WQKVPAx3WHQ=;
-        b=Sqq5/dMTIFzYFNspF+d7WijZvAAGTRk63aYA37B+/KR9MAmhkBRkq7bpxqKi+I1uxC
-         IWQwLis+OhlyLbI7cbq/aK3W/dwEcgL6OqZfBBlWPh9Un0gMwFyDzjI8reTockBfxtKR
-         vCQ+o2QRT4Gdncd9HjR0OD2pOKoGGUnHn3gMw9VzsjJ5WIdcxpwQDQLoGygebvAfMhdG
-         Hoem/2naT+iV1C2p4SOoAoMWgKNpzgf1A4c4PCcdoO3Jj339lM5ZwHPMTia66gSE/3/R
-         lbHr1cNB2T6K5F/D/8PsWdmHr6TkIAZ7rDKXiZrDVu/XeOrAdgCZ+lp67cZfTjjrvqQJ
-         ZBmA==
+         :cc:content-transfer-encoding;
+        bh=ZApzSLoeS4PGX1sH95e3PQCGmnlCcBX8ohCXzwquBbU=;
+        b=BeZHevrBkimB+8CCWOGDIn5LlDNnc+4uwsW/bhWuP7n9Ieu26cJvX2mR4OjGRoZgQr
+         pob+Jr2GufK3tJJeOk0YC2UvbURm5JpnigFiqk0GSrQdLTUGnd31qSDaZeCeXZBSwMRe
+         ORnj7tB8z0exNjs/5qS8skgJwyweUSZ8tYHGRzAaHhYokQzsBg3/MQ3/n3jc/WSxwnnQ
+         CyWBBhKTmZCEAkF2dsK6loQXtmFqJnc1MoGi8oZ2sU1C50wuiFPI+xYdPpSlHRncrWFl
+         PVON8EmnfTeU+YfZlPeGxbFYBETpLcP+VkLWhPy862DGu2KSLrB4/SrXj5E8vQ2OIoBk
+         sQog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Q9640pBNtE0L7o2vE40GYHfnjfbs8fH/WQKVPAx3WHQ=;
-        b=oGg+R+5RD2YDYKyanbCfJ9lwaTHuAAs/kw6vFR2al1t/8RCvtN6LcnmcVDHzDEOiAa
-         qb9suG9dA2w1jTgjnp6sFiP4erBMUq9ddYRbcauenOD7hRpDWRCi3xq+xe29hN/xMvpA
-         cARmrNFO13L50kZJMIKZpkkf/H6u3riEnnwOvQWkXVkzY5luqRE1poqHJBG5FUI8gU/7
-         chhdbtBzyuop31Fj32Ug8mMHqh1bbFS457dwKbN34957tIuOCXiltRkxXmwJLXzUioAz
-         pJI+/RVC7bpVpdNgmMEmeT1Yo4D6FYgJkieXll2l+1ImX/tL+x4PGV2slx3TFU3Q6Odl
-         TWzg==
-X-Gm-Message-State: AMCzsaVZxPeu1LDK/b1xgA9dOsFiCHakNUO2SBUX3HQJ2F/GXmWoPC12
-        nWF+cECSQyal766ZIwaXnJbDpy+3QE0K5GrgnTnsKnd/
-X-Google-Smtp-Source: AOwi7QBcnhbkRiKebwDw7Tn11ZaguwQde9IVqqhNgpDhCVkZm3DeSBPheGjtFz1kJqpNfXvyKRh1RjgOAVjqBwoc7w0=
-X-Received: by 10.200.36.175 with SMTP id s44mr4706486qts.298.1507318883234;
- Fri, 06 Oct 2017 12:41:23 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=ZApzSLoeS4PGX1sH95e3PQCGmnlCcBX8ohCXzwquBbU=;
+        b=BrCkHS8AFVB6E84Z8VIfb0JsnpxQUyeoy8JbJqhpRogjzJ5yGzSGJszoRPTQOyXDDq
+         vYX7dRDG6iFIcN+mtUONTrOnh4haw7X27dF65+WK3jVgLz48RO8V5FuGfdsWH4KV+Ogn
+         6GWtJR8lhJQtsLpfDsQaZ+YgH9gicUqkp2jJ+CV6gO1+vRONl/PbyiOf6+HebTIHPTFo
+         Fq+bckvfImsrzXDUfNQRYH8pc3aa4bFX8AiW6mgFCnknMaaRDHfpO86tRCr996YVWlNE
+         5h/eXGPvUcKwH8ceeJpC3hrk52jk0RDQchG8LP7my4xeb2gETKbyNsKWLoeuADdsmLL9
+         AiFQ==
+X-Gm-Message-State: AMCzsaVj0kFrZZ6aXLE5b0AiCXgWvE8JMMgSKeeUomTqgyVJocFP/1R9
+        x4vYaIcRSdKtGNT+LBBENwnA6AslHlf9jbBdW6w=
+X-Google-Smtp-Source: AOwi7QDFmTNywrSx0jceb8H1YDhq2ZQ502HueqTv/mmMbQSDDzvHoOBdr4Buc2V0G4g3s83ZMQ9l6Ug7MaV2v2tb9aA=
+X-Received: by 10.101.80.140 with SMTP id r12mr2835986pgp.267.1507318932684;
+ Fri, 06 Oct 2017 12:42:12 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.140.102.46 with HTTP; Fri, 6 Oct 2017 12:41:22 -0700 (PDT)
-In-Reply-To: <20171006192252.3a27enzim5yurhe5@sigill.intra.peff.net>
-References: <20171006190006.19623-1-sbeller@google.com> <20171006192252.3a27enzim5yurhe5@sigill.intra.peff.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 6 Oct 2017 12:41:22 -0700
-Message-ID: <CAGZ79kb4N2442HNWJuviATpOwiQ-qoGOgK+6Ys2JQMuS_kvjzg@mail.gmail.com>
-Subject: Re: [PATCH 1/2] tests: use shell negation instead of test_must_fail
- for test_cmp
-To:     Jeff King <peff@peff.net>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Received: by 10.100.156.137 with HTTP; Fri, 6 Oct 2017 12:42:11 -0700 (PDT)
+In-Reply-To: <xmqqr2ugv5om.fsf@gitster.mtv.corp.google.com>
+References: <20170926235627.79606-1-bmwill@google.com> <20171003201507.3589-1-bmwill@google.com>
+ <20171003201507.3589-4-bmwill@google.com> <20171006090907.gbsgygulzj3bgqrg@ruderich.org>
+ <xmqq4lrcwr5c.fsf@gitster.mtv.corp.google.com> <CAN0heSrWekXdzqzhL3Lk37YOGPHUdKCDU85t3hJgqK7PSVBZ_g@mail.gmail.com>
+ <xmqqr2ugv5om.fsf@gitster.mtv.corp.google.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Fri, 6 Oct 2017 21:42:11 +0200
+Message-ID: <CAN0heSo28RYmZKxY4UXq9ewVgYGJCXGf-6KSzkOB-enZppv5qg@mail.gmail.com>
+Subject: Re: [PATCH v3 03/10] protocol: introduce protocol extention mechanisms
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Simon Ruderich <simon@ruderich.org>,
+        Brandon Williams <bmwill@google.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        bturner@atlassian.com, Jeff Hostetler <git@jeffhostetler.com>,
+        jonathantanmy@google.com, Jonathan Nieder <jrnieder@gmail.com>,
+        Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 6, 2017 at 12:22 PM, Jeff King <peff@peff.net> wrote:
-> On Fri, Oct 06, 2017 at 12:00:05PM -0700, Stefan Beller wrote:
+On 6 October 2017 at 14:09, Junio C Hamano <gitster@pobox.com> wrote:
+> Martin =C3=85gren <martin.agren@gmail.com> writes:
 >
->> The `test_must_fail` should only be used to indicate a git command is
->> failing. `test_cmp` is not a git command, such that it doesn't need the
->> special treatment of `test_must_fail` (which e.g. includes checking for
->> segfault)
+>> Maybe I'm missing something Git-specific, but isn't the only thing that
+>> needs to be done now, to document/specify that 1) the client should send
+>> its list ordered by preference, 2) how preference is signalled, and 3)
+>> that the server gets to choose?
 >
-> Hmph. "test_must_fail test_cmp" is a weird thing for somebody to write.
-> And your patch is obviously an improvement, but I have to wonder if some
-> of these make any sense.
+> I think Simon's reminder of Stefan's was about specifying something
+> different from (1) above---it was just a list of good ones (as
+> opposed to ones to be avoided).  I was suggesting to tweak that to
+> match what you wrote above.
 
-Thanks for actually thinking about the problem. I just searched and replaced
-the combination of test_must_fail and test_cmp mechanically after I noticed
-one such occurrence whilst preparing the next patch (order of test_cmp args).
+I replied to your mail, but also to the general notion of "we need a
+carefully designed configuration and fall-back strategy before we can
+include this series" which I sensed (and which I hope I didn't just
+misrepresent). I didn't make it very clear exactly what I was replying
+to, sorry about that.
 
->
-> If we're expecting some outcome, then it's reasonable to say:
->
->   1. The output should look exactly like this. (test_cmp)
->
->   2. The output should look something like this. (grep)
->
->   3. The output should _not_ mention this (! grep)
->
-> But "the output should not look exactly like this" doesn't seem very
-> robust. It's likely to give a false success due to small changes (or
-> translations), or even bugs in the script.
+Note that my 1-3 above are not about "configuration", which I interpret
+as "how does the user tell Git how to select a protocol version?", but
+about the protocol, i.e., "how do the client and server agree on which
+version to use?".
 
-I agree that the case "should not look like exactly this" is most likely
-indicating a weak test.
-
-
-> Running ./t3504 with "-v" (with or without your patch) shows:
+>> Why would a server operator with only v0 and v1 at their disposal want
+>> to choose v0 instead of v1, considering that -- as far as I understand
+>> -- they are in fact the same?
 >
->   --- expect    2017-10-06 19:14:43.677840120 +0000
->   +++ foo       2017-10-06 19:14:43.705840120 +0000
->   @@ -1 +1 @@
->   -fatal: cherry-pick: --no-rerere-autoupdate cannot be used with --continue
->   +foo-dev
->
-> Which just seems like a bug.  Did the original author mean foo-expect?
+> Because we may later discover some reason we not yet know that makes
+> v$n+1 unsuitable after we introduce it, and we need to avoid it by
+> preferring v$n instead?
 
-This was originally written by a non regular in 2008. I don't think
-they remember even if we'd ask.
+For n in general, I agree completely. For n=3D0, and in particular for a
+Git which only knows v0 and v1, I'm not so sure. If v1 has a problem
+which v0 doesn't, then to the best of my understanding, that problem
+would be in this series, i.e., in the version-negotiation. And to
+minimize risk in that area, we'd want to make this series more complex?
+That might be the correct thing to do -- certainly, if we botch this
+series totally, then we might be in big trouble going forward --, but
+it's not at all obvious to me. Nor is it obvious to me that such an
+escape-hatch needs to be a multi-choice, prioritized configuration.
 
-I think we'd want to not resolve it to foo-dev here,
-(so ideally we'd test for
+If a fall-back mechanism to v0 is wanted on the first Git server with
+v1/v0, the simplest approach might be to make the server respect
+protocol.version (possibly with a default of 1!?).
 
-<<<<
-foo
-====
-foo-dev
->>>>
+I might be naive in thinking that protocol.version could be removed or
+redefined at our discretion just because it's marked as "experimental".
 
-but just testing that we do not blindly resolve to foo seems ok-ish)
-
-Thanks for spotting this!
-
-> It's hard to tell, as we are just reusing expectations from previous
-> tests.
->
->> diff --git a/t/t5512-ls-remote.sh b/t/t5512-ls-remote.sh
->> index 02106c9226..7178b917ce 100755
->> --- a/t/t5512-ls-remote.sh
->> +++ b/t/t5512-ls-remote.sh
->> @@ -56,7 +56,7 @@ test_expect_success 'use "origin" when no remote specified' '
->>
->>  test_expect_success 'suppress "From <url>" with -q' '
->>       git ls-remote -q 2>actual_err &&
->> -     test_must_fail test_cmp exp_err actual_err
->> +     ! test_cmp exp_err actual_err
->>  '
->
-> This one seems like "test_18ngrep ! ^From" would be more appropriate. Or
-> even "test_must_be_empty".
-
-Going by the test title, I agree.
-
->> diff --git a/t/t5612-clone-refspec.sh b/t/t5612-clone-refspec.sh
->> index fac5a73851..5f9ad51929 100755
->> --- a/t/t5612-clone-refspec.sh
->> +++ b/t/t5612-clone-refspec.sh
->> @@ -87,7 +87,7 @@ test_expect_success 'by default no tags will be kept updated' '
->>               git for-each-ref refs/tags >../actual
->>       ) &&
->>       git for-each-ref refs/tags >expect &&
->> -     test_must_fail test_cmp expect actual &&
->> +     ! test_cmp expect actual &&
->>       test_line_count = 2 actual
->
-> Here we check that no updates happened due to a fetch because we see
-> that the tags in the fetched repo do not match the tags in the parent
-> repo. That actually seems pretty legitimate. But I think:
->
->   git for-each-ref refs/tags >before
->   git fetch
->   git for-each-ref refs/tags >after
->   test_cmp before after
->
-> would be more straightforward.
->
->> diff --git a/t/t7508-status.sh b/t/t7508-status.sh
->> index 93f162a4f7..1644866571 100755
->> --- a/t/t7508-status.sh
->> +++ b/t/t7508-status.sh
->> @@ -1532,7 +1532,7 @@ test_expect_success '"status.branch=true" same as "-b"' '
->>  test_expect_success '"status.branch=true" different from "--no-branch"' '
->>       git status -s --no-branch  >expected_nobranch &&
->>       git -c status.branch=true status -s >actual &&
->> -     test_must_fail test_cmp expected_nobranch actual
->> +     ! test_cmp expected_nobranch actual
->>  '
->
-> Shouldn't this be comparing it positively to the output with "--branch"?
->
->>  test_expect_success '"status.branch=true" weaker than "--no-branch"' '
->> diff --git a/t/t9164-git-svn-dcommit-concurrent.sh b/t/t9164-git-svn-dcommit-concurrent.sh
->> index d8464d4218..5cd6b40432 100755
->> --- a/t/t9164-git-svn-dcommit-concurrent.sh
->> +++ b/t/t9164-git-svn-dcommit-concurrent.sh
->> @@ -92,7 +92,7 @@ test_expect_success 'check if post-commit hook creates a concurrent commit' '
->>               echo 1 >> file &&
->>               svn_cmd commit -m "changing file" &&
->>               svn_cmd up &&
->> -             test_must_fail test_cmp auto_updated_file au_file_saved
->> +             ! test_cmp auto_updated_file au_file_saved
->>       )
->>  '
->
-> This one looked complicated, so I leave it as an exercise for the
-> reader. :)
-
-eh, I was hoping to not stirr up a controversy, but treating this as a
-drive-by patch "making the tests a better place, one tiny step at a time".
-
-Thanks,
-Stefan
-
->
-> -Peff
+Martin
