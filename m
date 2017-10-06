@@ -2,96 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C5FB120372
-	for <e@80x24.org>; Fri,  6 Oct 2017 18:13:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 72CD920370
+	for <e@80x24.org>; Fri,  6 Oct 2017 18:13:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752495AbdJFSNi (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Oct 2017 14:13:38 -0400
-Received: from mail-qk0-f179.google.com ([209.85.220.179]:43707 "EHLO
-        mail-qk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752292AbdJFSNh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Oct 2017 14:13:37 -0400
-Received: by mail-qk0-f179.google.com with SMTP id w134so18731677qkb.0
-        for <git@vger.kernel.org>; Fri, 06 Oct 2017 11:13:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=dYhUZGfusCSeaXL3XUH+/twlnrgCjjtBb3KK6+MLfPk=;
-        b=tWKBcQ7of4LPv/6TQ74cLtSWUhEUlFBpHj2v7LH9IJcZeUFOnmJI8XuHa/Ge9+Aluv
-         W9JNU3K9gvscu0gyhuyrHQvGvrVOGoNRASvBgV8SmDOFQPzMI44/+kUv9KJxwI7rw5KM
-         zAU9sBKva/F8ZOSTUGwoAMv+Oq38kJAsBUCb1E5Dd/qD8qpZXLqm0GdQbItP0YfhoP0b
-         +76kAiuhrSmXsEZj0zmxFOChIjsyo8cT8jJlsHjBNYpXvhRb93EfkwToCIOxElHxUY9X
-         g1ghAIDyZPnCfmFd5U1pJhSgd3y2eCaCfqdmRWEy1j4iGqgQqDw2VTn6HjnTLmXrTMVh
-         9mTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=dYhUZGfusCSeaXL3XUH+/twlnrgCjjtBb3KK6+MLfPk=;
-        b=ZVnyvDvOpymVNxB/ODRL5DlVA/VuWOHATF71aNwmxPT17XPE7qStLdvQ9/BvuLq5bE
-         3/YttJZsfb6uJtzhya6d7cB0J3eP8Yl49LWQnmLChLu6hYyVealGPGMcpwUPfUbOc1pf
-         WQIrZiVp1KCdtfjH3+0J3Bf/1jCYcQsU/iim7PjPCaMMO/gycAHyELAuHAh4IHU9aegi
-         KkMr1dPEFcwW0lVY6C8ASCyDwALYdGsDJL6jAmCzg37YgFte5P0mAhBN1ZPYZMnJkKLg
-         8OQY5iZM006D6WYFtXGvkm0AJSQrxMqm0Z2GmKIh7Si9LO4ucL2E3oJvUo8z9H67LHlJ
-         6FEg==
-X-Gm-Message-State: AMCzsaUiLp+q/kPzgm1/RzAMvZLAXyWXcaT9o2CXDN0SxVHrdZeT4W0n
-        Cm3kd+rl2Xh4w1jCPzBasXX6DsOkXwrPBrxp9wjMAfBRNEY=
-X-Google-Smtp-Source: AOwi7QBTXHRtCWwRLJpl33ExeqASXjRvreoU116o6CibZ6vMMXZ6chjpeBYn3UpP/BObPn/nMW6hLMUsPiolGg6KW3A=
-X-Received: by 10.55.90.199 with SMTP id o190mr38799352qkb.180.1507313616657;
- Fri, 06 Oct 2017 11:13:36 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.140.102.46 with HTTP; Fri, 6 Oct 2017 11:13:36 -0700 (PDT)
-In-Reply-To: <AE36B16D-0284-4AC0-BD5E-CD346036D69D@theunraveler.com>
-References: <AE36B16D-0284-4AC0-BD5E-CD346036D69D@theunraveler.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 6 Oct 2017 11:13:36 -0700
-Message-ID: <CAGZ79kZBKhg7buTDXZxG7mtr7gLE0ZmJkPFSd0xUCyTiuR2rng@mail.gmail.com>
+        id S1752545AbdJFSNo (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Oct 2017 14:13:44 -0400
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:34637 "EHLO
+        out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752292AbdJFSNn (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 6 Oct 2017 14:13:43 -0400
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+        by mailout.nyi.internal (Postfix) with ESMTP id 59A6C20B63
+        for <git@vger.kernel.org>; Fri,  6 Oct 2017 14:13:43 -0400 (EDT)
+Received: from frontend1 ([10.202.2.160])
+  by compute2.internal (MEProxy); Fri, 06 Oct 2017 14:13:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-sender
+        :x-me-sender:x-sasl-enc:x-sasl-enc; s=fm1; bh=DjLLwDv/XNb4oM8Vjv
+        BrlhLzmL/1qmyFTpxRHe0Hek4=; b=dRxB8gszSnBIJHDiHlFeOfYbS5BNjK7yjN
+        SONCMD204whTVZHoJzUunH8NIVb2IrJr0S3SRDgC/2cQvSm2HoUg270QmU40IB2e
+        sYxIrj0b9q/VPAz1DHXy38K42TgWULkV0wX6X/W76raNDEdJ4EeMxeqGSr4mYGpe
+        WTcKnOwcifXd4UVl+EheywCCXTHTLoyVw/BxatxocSzexY9AK4Ihl9uFHAAi84bZ
+        sJf72Dh4oiZr81zTifh5mRDj4i6kRgh1TRPkSmfpBve437CutFyy+3qMXT7pq+gy
+        tiZdSeIkyx6Y04jaDzt/znxOgDC/mKm8hT7pvZa4k4DpcSqsFk6Q==
+X-ME-Sender: <xms:18fXWfaQRNzbEfmO2DF8lRBzuna2k_-TvOwdDETM-F8SC9kKquvSsg>
+X-Sasl-enc: Ab+7/js+uQOFpR39u7Kf7tMWSlj+oOHVAn6MBJ7Uu5An 1507313623
+Received: from [192.168.1.8] (c-75-72-214-216.hsd1.mn.comcast.net [75.72.214.216])
+        by mail.messagingengine.com (Postfix) with ESMTPA id 0ACCB7E8E6
+        for <git@vger.kernel.org>; Fri,  6 Oct 2017 14:13:42 -0400 (EDT)
+From:   Jake Bell <jake@theunraveler.com>
+Content-Type: multipart/signed;
+        boundary="Apple-Mail=_486E988E-2820-48C5-BC10-74B028982701";
+        protocol="application/pgp-signature";
+        micalg=pgp-sha512
+Mime-Version: 1.0 (Mac OS X Mail 11.0 \(3445.1.7\))
 Subject: Re: git add --patch displays diff and exits
-To:     Jake Bell <jake@theunraveler.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Date:   Fri, 6 Oct 2017 13:13:42 -0500
+References: <AE36B16D-0284-4AC0-BD5E-CD346036D69D@theunraveler.com>
+ <74010545-3186-4224-9A54-649284FB2933@theunraveler.com>
+To:     git@vger.kernel.org
+In-Reply-To: <74010545-3186-4224-9A54-649284FB2933@theunraveler.com>
+Message-Id: <B0494C9A-EDFC-4069-BAD1-8E5AFDD08C8F@theunraveler.com>
+X-Mailer: Apple Mail (2.3445.1.7)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 6, 2017 at 11:09 AM, Jake Bell <jake@theunraveler.com> wrote:
-> Hello,
->
-> I'm not sure if this is the right place to report this issue, so apologie=
-s in advance if it isn't.
->
-> Recently, I upgraded from git 2.14.1 to 2.14.2, and noticed that "git add=
- --patch" does not work properly. It just prints a diff of what's changed a=
-nd exits, instead of presenting the dialogs to add changes to the index. I =
-did some bisecting and tracked the bug down to this commit: https://github.=
-com/git/git/commit/136c8c8b8fa39f1315713248473dececf20f8fe7.
->
-> Unfortunately, I'm not familiar with the codebase and don't know C well e=
-nough to debug the issue. Please let me know what additional information I =
-can provide to help you all figure it out.
-> Thanks!
 
-Please see
-https://public-inbox.org/git/20171003093157.gq7za2fwcqsouire@sigill.intra.p=
-eff.net/T/
-and replace the color=3Dalways by color=3Dauto setting to see if it fixes
-your problem.
-(If it doesn't we're dealing with a new problem and not the one
-reported more than 5 times already :)
+--Apple-Mail=_486E988E-2820-48C5-BC10-74B028982701
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=us-ascii
 
-Thanks,
-Stefan
+Sorry, please disregard---this is a duplicate of some other messages =
+already sent to the list. Setting "color.ui =3D auto" fixed the issue =
+for me.
 
 
+-- Jake
 
->
+> On Oct 6, 2017, at 1:13 PM, Jake Bell <jake@theunraveler.com> wrote:
+>=20
+> Sorry, please disregard---this is a duplicate of some other messages =
+already sent to the list. Setting "color.ui =3D auto" fixed the issue =
+for me.
+>=20
+>=20
 > -- Jake
->
+>=20
+>> On Oct 6, 2017, at 1:09 PM, Jake Bell <jake@theunraveler.com> wrote:
+>>=20
+>> Hello,
+>>=20
+>> I'm not sure if this is the right place to report this issue, so =
+apologies in advance if it isn't.
+>>=20
+>> Recently, I upgraded from git 2.14.1 to 2.14.2, and noticed that "git =
+add --patch" does not work properly. It just prints a diff of what's =
+changed and exits, instead of presenting the dialogs to add changes to =
+the index. I did some bisecting and tracked the bug down to this commit: =
+https://github.com/git/git/commit/136c8c8b8fa39f1315713248473dececf20f8fe7=
+.
+>>=20
+>> Unfortunately, I'm not familiar with the codebase and don't know C =
+well enough to debug the issue. Please let me know what additional =
+information I can provide to help you all figure it out.
+>> Thanks!
+>>=20
+>> -- Jake
+>>=20
+>=20
+
+
+--Apple-Mail=_486E988E-2820-48C5-BC10-74B028982701
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename=signature.asc
+Content-Type: application/pgp-signature;
+	name=signature.asc
+Content-Description: Message signed with OpenPGP
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEENFtmcOhOFMZ2oYMozkHV3VyCET4FAlnXx9YACgkQzkHV3VyC
+ET6NOA/+Nr61cAF60o+0oqxEgJQvnoIyBNYngD6jZi0MJ4cDN56zZTHddAB9ocxW
+OKdM7ddWCInWcqICvZPrcjIGdIahFetrAIgjjYXSFY8r3xyDYB/y7Axx/d/ukm/W
+zryhoNJYjQBY+ugUhyKzXjNso7K0FLdy8hlVdxIINfwakcPOL2KnXELRaPwIkF/Y
+1afPNDkr4acEI8MnmrJfmRdxm+PkM/SVq57v3gZvIvhWU1IIVI8n9Lhvcpg4S3cg
+S+JR3ZrGo1nwQHj7F7YxxGD9x0Lhjq6bCElxZ+fJ1BnmtE0uBaU9mqisxqWrCwm7
+xmU099IPxgzt8U4oi28OwVq/h22HM6HRccKsi3ko1y03LNGnPNIPD3u52eIyP+w6
+DyymJSO5OO6KDY04B+3Z+nLLVTYzp5je9qXYBbbinCEfMrGxbeZ2BH5rMB5M1ogl
+KBrwC+jrs5gl3a81ulbH0nJUT2xE2nB9qtOUaK/XUBlUuVquADnvK04Gel0MET/O
+ED0lhCiIEkPqNOTK0gkbBsPfM/4DHKeRxNFEgsLJ72AhWal6XUBiv9lx4I9sP5nj
+O5F/rPnwqqVfJRDGvU/z9Hbd4HG12Q9ila2cPebzH5tv6HAeQSoV5RyhaUujvftf
+jN3YrVeWkI/+E5VEwP90YID3hfwyyi4bS8vAdj7A1xYTjMFzdxQ=
+=c8D3
+-----END PGP SIGNATURE-----
+
+--Apple-Mail=_486E988E-2820-48C5-BC10-74B028982701--
