@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A095B20372
-	for <e@80x24.org>; Fri,  6 Oct 2017 20:12:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3D5C120372
+	for <e@80x24.org>; Fri,  6 Oct 2017 20:12:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752720AbdJFUMp (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Oct 2017 16:12:45 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:53610 "EHLO
+        id S1752731AbdJFUMu (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Oct 2017 16:12:50 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:43776 "EHLO
         mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752678AbdJFUMn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Oct 2017 16:12:43 -0400
-Received: by mail-wm0-f65.google.com with SMTP id q132so10051955wmd.2
-        for <git@vger.kernel.org>; Fri, 06 Oct 2017 13:12:43 -0700 (PDT)
+        with ESMTP id S1752678AbdJFUMr (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Oct 2017 16:12:47 -0400
+Received: by mail-wm0-f65.google.com with SMTP id m72so3855209wmc.0
+        for <git@vger.kernel.org>; Fri, 06 Oct 2017 13:12:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=iSWwDSa1aRDr1APyznlCM1XNVehiY3NmBR0FKYpfkUc=;
-        b=sMbzFkXUhJSQiY/3AJa6ofYMMoPFDHGz6mej67QQEK8UuqJqVYc1PHaspYVu+D0ViS
-         81J23WUMRanWyzRkV9AqCi5dxcuqQZmqEiuJBE0/W9RgXBAzF0H3FhVrDWeJLmC0nIpQ
-         /3XucIt3JiCWCTShQCNkGEIxkUNVvalBjRe3XGmX8K+4r7BUe14C5UQQY6G3EOfTC6S9
-         X5Ea7y4yovIaVBTwUq2Wd0Sf4/NjMY33m5iKwBcoxUbund8/FYjPoOhJ56OUjCuVJ7B7
-         x5wCId0XjwsyvP4qVmf4+p5q7Ls42HwyCTyEa83bBJLTNxVfABS6FlyVM5Yoln3OyGR0
-         P0/A==
+        bh=fGZGEdKjaIqTcODAFe3p4WjLsboo9JNsa2mzpFuuXXw=;
+        b=HzS8SZn590cOm7OXZEgZgRTOQI0eWP+FwsDdaalccTM1oiHjLk6gysrOMqMP9RFzqU
+         gvRMzmm1HzSFZuhcxeRwFTv8g+XHuCaA8JlIWMUAn55YgZ8Opn3rnHeRRlXA83kI/nj2
+         e+PIZmlkWAcVJBIsvPCtEN/6hy8DZLdk3/t1RN624FZYKPfWOQKjzqvXVKV7QyI4Uawk
+         9huXXQEFfgyEffgSvThVIqienTiz92rRKLfxLIs/f1NTR+1V8h1V/n5gi4vQRnXiVcDe
+         9kk3vK5chxzTjJvLprO9TOULpvEFHxOBcKwuWBWdPz/AvZFnKtUNJ6f1y3K1U0WZKjdB
+         EeSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=iSWwDSa1aRDr1APyznlCM1XNVehiY3NmBR0FKYpfkUc=;
-        b=GfJSdpFPPyqdLxyBfzaoR7BIinwIRTMuvDK9x7Z+HxWBcbXGa/9K8OGgzxeDEUnTIs
-         cLpuOi6Fi3sh+XlD247ob4h2fEUtuGBb3yqxuDnjlaRlODuVladD/Bh5+j7D+Ft3AaIU
-         ve11rT9zRWiy+BU/4zv7EGlRQMdTUhoINMBIkxbtaZKHo0z37wzYesjLPszqhS+hJjBF
-         cyDWfDK9CqNUnnndyV7BfIoV0Tsc4OC++tcPVIq8MwDkpLa3J48zOxYEJDL1fpayJPpO
-         +hVakNee0oDWvxNC6cWjCVIfIGslFYisFnG2RvJI4vElkTaDFuwuj7KG7022Eswx/cme
-         IhmQ==
-X-Gm-Message-State: AMCzsaW+4YLKtyvWOEQO0wWVb0FI/n7aisut/iwOazPGhPVS/7uTarDU
-        2I89FYPfdChyHW7ANNuir0JNpHg4wmc=
-X-Google-Smtp-Source: AOwi7QCPFXuvV9wtbVaNb937kANSDgq564kUqb7iMQ2KWcW8qUPVh2dcVxhV566XS1WwnNQ8xy2Xlw==
-X-Received: by 10.28.157.83 with SMTP id g80mr2853472wme.9.1507320762578;
-        Fri, 06 Oct 2017 13:12:42 -0700 (PDT)
+        bh=fGZGEdKjaIqTcODAFe3p4WjLsboo9JNsa2mzpFuuXXw=;
+        b=O70LbX5t9rqlYjtTUc04UByC4HR4TyVXtNDSt4uHzGl/0L+6ZR6lqEl2pqTh3nQ9UW
+         pmfMe4+QgHtK9QUtkG79+EJzmqI/pudvn5jgc1JdEn1LG9VugiCzfDZdaLhH0ZyDV3B4
+         57BsxNFkgQB0fO+4LXYWrBn+zwesQj1J7lATYLk8Jl5Cn/h5p9F8eapTGNz73A59r2eW
+         5wm2IIZg9MX/aom9jtE7/dBVLfW/ifeESAJruMk3lB/q1/11M37wqbVkUveehr1+z/mx
+         wpEaEMqYTtpaI5gFfvf53M1z4rV1wJTu1I6N7Dq2NfvyD/XaJTb+jFBeH9E75fS33e4V
+         QCCg==
+X-Gm-Message-State: AMCzsaXWfhQYHFXoxVlrvkbbGttj4jcSNszzyZUEqijej+M8rkQRFBaF
+        pBJnW5B1/fTezwrFH6rgn5R2cfzVzTE=
+X-Google-Smtp-Source: AOwi7QCkT/rcnrXcR3A/Ya1XvwGZpTZSLGBZkruw1sB2aNn0sWkwkonZ0Y3oLRuHYl+KuyD/qig/9g==
+X-Received: by 10.28.23.1 with SMTP id 1mr2519073wmx.101.1507320765991;
+        Fri, 06 Oct 2017 13:12:45 -0700 (PDT)
 Received: from localhost.localdomain ([2a02:aa16:5782:c100:c938:fbb7:46f8:2405])
-        by smtp.gmail.com with ESMTPSA id h45sm2906522wrf.36.2017.10.06.13.12.41
+        by smtp.gmail.com with ESMTPSA id h45sm2906522wrf.36.2017.10.06.13.12.44
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 06 Oct 2017 13:12:41 -0700 (PDT)
+        Fri, 06 Oct 2017 13:12:45 -0700 (PDT)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Michael Haggerty <mhagger@alum.mit.edu>, Jeff King <peff@peff.net>,
@@ -56,9 +56,9 @@ Cc:     Michael Haggerty <mhagger@alum.mit.edu>, Jeff King <peff@peff.net>,
         Christian Couder <christian.couder@gmail.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 04/12] tempfile: fix documentation on `delete_tempfile()`
-Date:   Fri,  6 Oct 2017 22:12:06 +0200
-Message-Id: <5de134ca8594de22f2a0b738824f9b5176ae6c00.1507320376.git.martin.agren@gmail.com>
+Subject: [PATCH v3 06/12] cache-tree: simplify locking logic
+Date:   Fri,  6 Oct 2017 22:12:08 +0200
+Message-Id: <2954e5ec4361c6932593663859aa437583edb500.1507320376.git.martin.agren@gmail.com>
 X-Mailer: git-send-email 2.15.0.rc0
 In-Reply-To: <cover.1507320376.git.martin.agren@gmail.com>
 References: <CAN0heSqr77dptPG2mixnLdNKKcgD36aPnEFtnTB6Oyip6WfQBA@mail.gmail.com> <cover.1507320376.git.martin.agren@gmail.com>
@@ -70,36 +70,65 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The function has always been documented as returning 0 or -1. It is in
-fact `void`. Correct that. As part of the rearrangements we lose the
-mention that `delete_tempfile()` might set `errno`. Because there is
-no return value, the user can't really know whether it did anyway.
+After we have taken the lock using `LOCK_DIE_ON_ERROR`, we know that
+`newfd` is non-negative. So when we check for exactly that property
+before calling `write_locked_index()`, the outcome is guaranteed.
+
+If we write and commit successfully, we set `newfd = -1`, so that we can
+later avoid calling `rollback_lock_file` on an already-committed lock.
+But we might just as well unconditionally call `rollback_lock_file()` --
+it will be a no-op if we have already committed.
+
+All in all, we use `newfd` as a bool and the only benefit we get from it
+is that we can avoid calling a no-op. Remove `newfd` so that we have one
+variable less to reason about.
 
 Signed-off-by: Martin Ågren <martin.agren@gmail.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- tempfile.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ cache-tree.c | 12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
-diff --git a/tempfile.h b/tempfile.h
-index b8f4b5e14..450908b2e 100644
---- a/tempfile.h
-+++ b/tempfile.h
-@@ -68,10 +68,10 @@
-  * `create_tempfile()` returns an allocated tempfile on success or NULL
-  * on failure. On errors, `errno` describes the reason for failure.
-  *
-- * `delete_tempfile()`, `rename_tempfile()`, and `close_tempfile_gently()`
-- * return 0 on success. On failure they set `errno` appropriately and return
-- * -1. `delete` and `rename` (but not `close`) do their best to delete the
-- * temporary file before returning.
-+ * `rename_tempfile()` and `close_tempfile_gently()` return 0 on success.
-+ * On failure they set `errno` appropriately and return -1.
-+ * `delete_tempfile()` and `rename` (but not `close`) do their best to
-+ * delete the temporary file before returning.
-  */
+diff --git a/cache-tree.c b/cache-tree.c
+index 71d092ed5..f646f5673 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -602,11 +602,11 @@ static struct cache_tree *cache_tree_find(struct cache_tree *it, const char *pat
  
- struct tempfile {
+ int write_index_as_tree(unsigned char *sha1, struct index_state *index_state, const char *index_path, int flags, const char *prefix)
+ {
+-	int entries, was_valid, newfd;
++	int entries, was_valid;
+ 	struct lock_file lock_file = LOCK_INIT;
+ 	int ret = 0;
+ 
+-	newfd = hold_lock_file_for_update(&lock_file, index_path, LOCK_DIE_ON_ERROR);
++	hold_lock_file_for_update(&lock_file, index_path, LOCK_DIE_ON_ERROR);
+ 
+ 	entries = read_index_from(index_state, index_path);
+ 	if (entries < 0) {
+@@ -625,10 +625,7 @@ int write_index_as_tree(unsigned char *sha1, struct index_state *index_state, co
+ 			ret = WRITE_TREE_UNMERGED_INDEX;
+ 			goto out;
+ 		}
+-		if (0 <= newfd) {
+-			if (!write_locked_index(index_state, &lock_file, COMMIT_LOCK))
+-				newfd = -1;
+-		}
++		write_locked_index(index_state, &lock_file, COMMIT_LOCK);
+ 		/* Not being able to write is fine -- we are only interested
+ 		 * in updating the cache-tree part, and if the next caller
+ 		 * ends up using the old index with unupdated cache-tree part
+@@ -650,8 +647,7 @@ int write_index_as_tree(unsigned char *sha1, struct index_state *index_state, co
+ 		hashcpy(sha1, index_state->cache_tree->oid.hash);
+ 
+ out:
+-	if (0 <= newfd)
+-		rollback_lock_file(&lock_file);
++	rollback_lock_file(&lock_file);
+ 	return ret;
+ }
+ 
 -- 
 2.15.0.rc0
 
