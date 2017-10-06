@@ -2,78 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B4BE91FA21
-	for <e@80x24.org>; Thu,  5 Oct 2017 23:39:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7C7281FA21
+	for <e@80x24.org>; Fri,  6 Oct 2017 00:33:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751459AbdJEXj1 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Oct 2017 19:39:27 -0400
-Received: from mail-pg0-f41.google.com ([74.125.83.41]:46806 "EHLO
-        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751083AbdJEXj0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Oct 2017 19:39:26 -0400
-Received: by mail-pg0-f41.google.com with SMTP id k7so4096827pga.3
-        for <git@vger.kernel.org>; Thu, 05 Oct 2017 16:39:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dropbox.com; s=corp;
-        h=date:from:to:subject:message-id:user-agent:mime-version;
-        bh=NJJfrLkF1xwt5oxOVk3y2B1rdo4Zczmqwk5u7+nDiGE=;
-        b=GSQnMLIkq3cA75yFqU2I988F03RIuVSaTTskCWeqlqGSOgvocTUctIcXqUOTD0liWT
-         e0dg5u8RTjw+1jgNl03X25L/MM4fGzg8UtgEXpSkIKBufoVNRNI4TFtHEThv9/0naHU8
-         o4VUgEdfujNXF4HReXCzUincVSD+z85SiwFJM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:user-agent
-         :mime-version;
-        bh=NJJfrLkF1xwt5oxOVk3y2B1rdo4Zczmqwk5u7+nDiGE=;
-        b=jTuHsN9Zo+hlTl6fQui6lnbzwYPpz5AslRxPSLUedgZ9ARSZcvKJrG2xcTqwlaVFYP
-         4zD74t+gJdEuDU3ZJBT26vVBZG3mjEUPZT4kegaeBq0AqHieQ6ymrOZXfr/TfgdXMUu9
-         hUQZ0OTxgf5jkCgN9B+qGUF5g6ROFVVlnWWTGsMGGOY1MKKjStkKU8bMaWx22HzR7a2v
-         cLNWWd03FkU+k4AITleNl44U/9IZG1n7hlCehEzPI6ZVNnlQbkyx8ga0vWUGmA/6BVRg
-         NZhZXAILVztDyNIByOLLo9kdZh6qWXrh8ZHnm9RLGDcny+UrF1Bru3IExZhIZD/WIx1Y
-         jcYA==
-X-Gm-Message-State: AMCzsaWKyVfq2Q1yBCJ6s2G76SZKEai2B9Bs3RQhs8/56Lw8wn0bohez
-        YUFnB7lLRzDO4aBTbhA/S4kBNmZC/i0=
-X-Google-Smtp-Source: AOwi7QBR4Rf5Gfb5Rqdj1mPMGYjMcDcyQPCX1HSn88IVKlVFepO93nFK/4OjJbVgofmHVZS4EhPNMA==
-X-Received: by 10.101.64.72 with SMTP id h8mr281339pgp.110.1507246765798;
-        Thu, 05 Oct 2017 16:39:25 -0700 (PDT)
-Received: from alexmv-linux.corp.dropbox.com (Guest-GW2.corp.dropbox.com. [205.189.0.166])
-        by smtp.gmail.com with ESMTPSA id m10sm148489pgs.77.2017.10.05.16.39.24
-        for <git@vger.kernel.org>
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 05 Oct 2017 16:39:25 -0700 (PDT)
-Date:   Thu, 5 Oct 2017 16:39:20 -0700 (PDT)
-From:   Alex Vandiver <alexmv@dropbox.com>
-X-X-Sender: alexmv@alexmv-linux
-To:     git@vger.kernel.org
-Subject: [RFC] Reporting index properties
-Message-ID: <alpine.DEB.2.10.1710051625430.812@alexmv-linux>
-User-Agent: Alpine 2.10 (DEB 1266 2009-07-14)
+        id S1752296AbdJFAde (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Oct 2017 20:33:34 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51207 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752276AbdJFAdd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Oct 2017 20:33:33 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D92C2A5D35;
+        Thu,  5 Oct 2017 20:33:32 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=2eCmvhX6Dz2i
+        hSF4f3BE1UA0M04=; b=i0qRsQlw9efOnTglLWJFHolqd2Mh7tHPQ8Mztt/5dLjk
+        RxoNAMZnFob3r6h6g0d3LwEq8vfjrw4bjextV5NtUgarU+yRBYRc6WNpEKngXQhG
+        1PmBTFl1ucQro0Dq28+o2MuPP+YX+jmQmG5/8mKt6yRVb2HsMGqM65e5K0OBIHI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=RhEuYm
+        e0EEVpwtmEWsj1W1ybB3axGPz2B32O3eGJz6lpeEW1jd1axe1PNr6WvO6VwtC0SC
+        YqQLpMvIGaj7uPD11UUg5Uyuq3pGBRuh1j3CJmr7s2z7cjxCGXpG4EI6UDF0NbrH
+        +GekRVAs3aNgpzpDDsf9vup7ujEz1+vF26Pvo=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D0061A5D34;
+        Thu,  5 Oct 2017 20:33:32 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 54A05A5D32;
+        Thu,  5 Oct 2017 20:33:32 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+Cc:     Robert Dailey <rcdailey.lists@gmail.com>, Git <git@vger.kernel.org>
+Subject: Re: Line ending normalization doesn't work as expected
+References: <CAHd499B5hM9ixnsnwWwB2uyDT10dRQpN473m5QjxH9raHtFXiw@mail.gmail.com>
+        <958c9b03-062c-0bea-3b25-939a36659f32@web.de>
+        <CAHd499AD5Kgbp-vxXTnEPkb-Mb5oEeXhaRO5kGniDdqmXwd2QQ@mail.gmail.com>
+        <88c57b88-ef2c-d7db-15e2-12791d4cb201@web.de>
+        <xmqq8tgrhdt0.fsf@gitster.mtv.corp.google.com>
+        <CAHd499BCMOcur6NRbKfwd81zpnyzoiVCY54d=UmGpAhbD7AVTA@mail.gmail.com>
+        <20171004211734.GA25379@tor.lan>
+        <xmqq7ewa9xw6.fsf@gitster.mtv.corp.google.com>
+        <xmqqo9pm8e4l.fsf@gitster.mtv.corp.google.com>
+        <20171005214248.GA31593@tor.lan>
+Date:   Fri, 06 Oct 2017 09:33:31 +0900
+In-Reply-To: <20171005214248.GA31593@tor.lan> ("Torsten =?utf-8?Q?B=C3=B6g?=
+ =?utf-8?Q?ershausen=22's?=
+        message of "Thu, 5 Oct 2017 23:42:48 +0200")
+Message-ID: <xmqqa8156rok.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: FB3FD6D2-AA2D-11E7-BB6B-575F0C78B957-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Heya,
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
-As part of gathering some automated performance statistics of git, it
-would be useful to be able to extract some vital properties of the
-index.  While `git update-index` has ways to _set_ the index version,
-and enable/disable various extensions, AFAICT there is no method by
-which one can ask for reporting about the current state of them --
-short of re-implementing all of the index-parsing logic external to
-Git, which is not terribly appealing.
+> Before we put this into stone:
+> Does it make sense to say "renormalize" instead of "rehash" ?
+> (That term does exist already for merge.
+>  And rehash is more a technical term,  rather then a user-point-of-view=
+ explanation)
 
-I hesitate to propose adding a flag to `git update-index` which reads
-but does no updating, as that seems to make a misnomer of the
-command.  But this also doesn't seem worthy of a new top-level command.
+I do not mind "renormalize" at all.
 
-Do folks have feelings about surfacing this information, and where such
-logic should live?
+As to the toy patch, I think it needs to (at least by default) turn
+off the add_new_files codepath, and be allowed to work without any
+pathspec (in which case all tracked paths should be renormalized).
 
- - Alex
+And we really shouldn't do the "rm && add", which would not work
+well on platforms where filesystem without executing-bit support is
+prevalent.  This new feature is primarily needed on platforms where
+CRLF line endings are used, and unfortunately these two sets of
+platforms overlap quite a bit X-<.
+
+
