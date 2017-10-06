@@ -2,230 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,PLING_QUERY,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3A87E2036C
-	for <e@80x24.org>; Fri,  6 Oct 2017 14:42:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 570B01FC43
+	for <e@80x24.org>; Fri,  6 Oct 2017 14:43:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751532AbdJFOmV (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Oct 2017 10:42:21 -0400
-Received: from cloud.peff.net ([104.130.231.41]:35366 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751491AbdJFOmU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Oct 2017 10:42:20 -0400
-Received: (qmail 7640 invoked by uid 109); 6 Oct 2017 14:42:19 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 06 Oct 2017 14:42:19 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6802 invoked by uid 111); 6 Oct 2017 14:42:20 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Fri, 06 Oct 2017 10:42:20 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 06 Oct 2017 10:42:17 -0400
-Date:   Fri, 6 Oct 2017 10:42:17 -0400
-From:   Jeff King <peff@peff.net>
-To:     Andreas Krey <a.krey@gmx.de>
-Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Junio C Hamano <gitster@pobox.com>,
+        id S1751831AbdJFOn4 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Oct 2017 10:43:56 -0400
+Received: from mail-pf0-f171.google.com ([209.85.192.171]:47927 "EHLO
+        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751522AbdJFOnz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Oct 2017 10:43:55 -0400
+Received: by mail-pf0-f171.google.com with SMTP id u12so9660876pfl.4
+        for <git@vger.kernel.org>; Fri, 06 Oct 2017 07:43:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:message-id:subject:to:in-reply-to:references:date:mime-version
+         :content-transfer-encoding;
+        bh=PumScc90jFpXd251H+PWJZ7Alhjpl46YSXwzwe+G3gE=;
+        b=edGbJU56hsjOhS9m4TvZovHTnxPsV4EOXMRuflFITouQT/uyCLDkzNXZsXvpavv/zx
+         ANDmOv1dFHXrt9JfJ8v+Wd5FFj9geZcZieZ82OHjRVdBTUpucRfDGrt5am8cFuewwqYE
+         chmg3YeyJQxVYaw88+EdYnwueappMKXs/AkBc70bhQ0dfRbIo8YR/LQElYfOzBr/a8eC
+         6+GwGHZeG6TJ0sMmBAeeIxZOIaWsslapWXkoRoyFzl1YE2xVmRYf6LXjTSbAUHwhSMlh
+         8g7ZtTDyjeBQsqqpg5RORzH6TpwYEzVG9xVR15kyLWVKmQe6tfmm7D3P7PpqjerSb1dd
+         ginA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:message-id:subject:to:in-reply-to
+         :references:date:mime-version:content-transfer-encoding;
+        bh=PumScc90jFpXd251H+PWJZ7Alhjpl46YSXwzwe+G3gE=;
+        b=GFsdOK6pldZKpuUXjLv773IiD53paWCPQwHop4WFtB99+f5AR6WAU8AhYjJbtr08kr
+         WGrnrBCWzkWr0/M+OgWzFtZR18Ojatdoc/RYAyd3dtNJDEeTiSsJselBCsj9uMjPC5A2
+         /wql+9xCxDbA284bjHemK6vlqKHkHdIbWCQRF3pJI9muPTDfmoj/gnhZjI4Dtw5cH14+
+         c4jvBx3cz1zAVr8HsjkgYF64P4To6iMxt/hqXjc4ZoqYuBA5wogtgqLU0B6OvTPUkHDj
+         GjK35kIvxBjhwuqlbQuDB+2YrX0vdL/OhB3nQqQHVEMIx/IZ0BmPkSd0gbaBQc+MjZrc
+         CZTw==
+X-Gm-Message-State: AMCzsaXr/x8NOmdHRHaLuQ51i09XTeJcSihqWKhZo66IKYZ8fQQKIBIq
+        E2JeV4HWD2mHfD2T2OMltXaNo/hv
+X-Google-Smtp-Source: AOwi7QB874bCJm9h1wmyaxh7QvZYtKPrNYt3m0+Ig7Nz3orrFi5hdvLYh3nqgVK7K9YqUAS2azjLlQ==
+X-Received: by 10.84.253.16 with SMTP id z16mr2180840pll.210.1507301034688;
+        Fri, 06 Oct 2017 07:43:54 -0700 (PDT)
+Received: from unique-pc ([14.102.72.146])
+        by smtp.gmail.com with ESMTPSA id p6sm2908984pga.93.2017.10.06.07.43.51
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 06 Oct 2017 07:43:53 -0700 (PDT)
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+X-Google-Original-From: Kaartic Sivaraam <kaarticsivaraam@gmail.com>
+Message-ID: <1507301029.12554.12.camel@gmail.com>
+Subject: Re: git send-email does not work with Google anymore?!
+To:     Lars Schneider <larsxschneider@gmail.com>,
         Git Users <git@vger.kernel.org>
-Subject: [PATCH 2/2] refs_resolve_ref_unsafe: handle d/f conflicts for writes
-Message-ID: <20171006144217.y6oxux26hh2fb7og@sigill.intra.peff.net>
-References: <20171006143745.w6q2yfgy6nvd2m2a@sigill.intra.peff.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20171006143745.w6q2yfgy6nvd2m2a@sigill.intra.peff.net>
+In-Reply-To: <EC14D46D-61AB-4531-AE20-8C2B3F6B5A2A@gmail.com>
+References: <EC14D46D-61AB-4531-AE20-8C2B3F6B5A2A@gmail.com>
+Content-Type: text/plain; charset="ISO-8859-15"
+Date:   Fri, 06 Oct 2017 20:13:49 +0530
+Mime-Version: 1.0
+X-Mailer: Evolution 3.22.6-1 
+Content-Transfer-Encoding: 7bit
+X-Cyberoam-smtpxy-version: 1.0.6.3
+X-Cyberoam-AV-Policy: default
+X-CTCH-Error: Unable to connect local ctasd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If our call to refs_read_raw_ref() fails, we check errno to
-see if the ref is simply missing, or if we encountered a
-more serious error. If it's just missing, then in "write"
-mode (i.e., when RESOLVE_REFS_READING is not set), this is
-perfectly fine.
+On Thu, 2017-10-05 at 12:52 +0200, Lars Schneider wrote:
+> Apparently that stopped working today. I get this error:
+> 
+>     (mbox) Adding cc: Lars Schneider <larsxschneider@gmail.com> from line 'From: Lars Schneider <larsxschneider@gmail.com>'
+>     Password for 'smtp://larsxschneider@gmail.com@smtp.gmail.com:587':
+>     5.7.14 <https://accounts.google.com/signin/continue?...token...
+>     5.7.14 ...> Please log in via your web browser and
+>     5.7.14 then try again.
+>     5.7.14  Learn more at
+>     5.7.14  https://support.google.com/mail/answer/78754 ... - gsmtp
+> 
+> Of couse I tried to log in via web browser etc. Does anyone else use 
+> Google as SMTP server? If yes, does it work for you?
+> 
 
-However, checking for ENOENT isn't sufficient to catch all
-missing-ref cases. In the filesystem backend, we may also
-see EISDIR when we try to resolve "a" and "a/b" exists.
-Likewise, we may see ENOTDIR if we try to resolve "a/b" and
-"a" exists. In both of those cases, we know that our
-resolved ref doesn't exist, but we return an error (rather
-than reporting the refname and returning a null sha1).
+I thought I was the only one having this problem. Seems, I'm not alone
+;-) Until recently I was using the email address,
 
-This has been broken for a long time, but nobody really
-noticed because the next step after resolving without the
-READING flag is usually to lock the ref and write it. But in
-both of those cases, the write will fail with the same
-errno due to the directory/file conflict.
+kaarticsivaraam91196@gmail.com
 
-There are two cases where we can notice this, though:
+to send patches. Last week, I got the same error message you did and
+tried to fix it in various ways but failed in my attempt; got fed up
+and switched to another mail address I owned (the current one) using
+which I'm able to send patches (surprise !). Fortune for me as, it
+wasn't a big deal. I think this is an issue with Google.
 
-  1. If we try to write "a" and there's a leftover directory
-     already at "a", even though there is no ref "a/b". The
-     actual write is smart enough to move the empty "a" out
-     of the way.
+(I still don't know when I'm going to get the error for this one. I
+don't have ideas to change this one.)
 
-     This is reasonably rare, if only because the writing
-     code has to do an independent resolution before trying
-     its write (because the actual update_ref() code handles
-     this case fine). The notes-merge code does this, and
-     before the fix in the prior commit t3308 erroneously
-     expected this case to fail.
 
-  2. When resolving symbolic refs, we typically do not use
-     the READING flag because we want to resolve even
-     symrefs that point to unborn refs. Even if those unborn
-     refs could not actually be written because of d/f
-     conflicts with existing refs.
-
-     You can see this by asking "git symbolic-ref" to report
-     the target of a symref pointing past a d/f conflict.
-
-We can fix the problem by recognizing the other "missing"
-errnos and treating them like ENOENT. This should be safe to
-do even for callers who are then going to actually write the
-ref, because the actual writing process will fail if the d/f
-conflict is a real one (and t1404 checks these cases).
-
-Arguably this should be the responsibility of the
-files-backend to normalize all "missing ref" errors into
-ENOENT (since something like EISDIR may not be meaningful at
-all to a database backend). However other callers of
-refs_read_raw_ref() may actually care about the distinction;
-putting this into resolve_ref() is the minimal fix for now.
-
-The new tests in t1401 use git-symbolic-ref, which is the
-most direct way to check the resolution by itself.
-Interestingly we actually had a test that setup this case
-already, but we only used it to verify that the funny state
-could be overwritten, not that it could be resolved.
-
-We also add a new test in t3200, as "branch -m" was the
-original motivation for looking into this. What happens is
-this:
-
-  0. HEAD is pointing to branch "a"
-
-  1. The user asks to rename "a" to "a/b".
-
-  2. We create "a/b" and delete "a".
-
-  3. We then try to update any worktree HEADs that point to
-     the renamed ref (including the main repo HEAD). To do
-     that, we have to resolve each HEAD. But now our HEAD is
-     pointing at "a", and we get EISDIR due to the loose
-     "a/b". As a result, we think there is no HEAD, and we
-     do not update it. It now points to the bogus "a".
-
-Interestingly this case used to work, but only accidentally.
-Before 31824d180d (branch: fix branch renaming not updating
-HEADs correctly, 2017-08-24), we'd update any HEAD which we
-couldn't resolve. That was wrong, but it papered over the
-fact that we were incorrectly failing to resolve HEAD.
-
-So while the bug demonstrated by the git-symbolic-ref is
-quite old, the regression to "branch -m" is recent.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- refs.c                  | 15 ++++++++++++++-
- t/t1401-symbolic-ref.sh | 26 +++++++++++++++++++++++++-
- t/t3200-branch.sh       | 10 ++++++++++
- 3 files changed, 49 insertions(+), 2 deletions(-)
-
-diff --git a/refs.c b/refs.c
-index df075fcd06..c590a992fb 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1435,8 +1435,21 @@ const char *refs_resolve_ref_unsafe(struct ref_store *refs,
- 		if (refs_read_raw_ref(refs, refname,
- 				      sha1, &sb_refname, &read_flags)) {
- 			*flags |= read_flags;
--			if (errno != ENOENT || (resolve_flags & RESOLVE_REF_READING))
-+
-+			/* In reading mode, refs must eventually resolve */
-+			if (resolve_flags & RESOLVE_REF_READING)
-+				return NULL;
-+
-+			/*
-+			 * Otherwise a missing ref is OK. But the files backend
-+			 * may show errors besides ENOENT if there are
-+			 * similarly-named refs.
-+			 */
-+			if (errno != ENOENT &&
-+			    errno != EISDIR &&
-+			    errno != ENOTDIR)
- 				return NULL;
-+
- 			hashclr(sha1);
- 			if (*flags & REF_BAD_NAME)
- 				*flags |= REF_ISBROKEN;
-diff --git a/t/t1401-symbolic-ref.sh b/t/t1401-symbolic-ref.sh
-index eec3e90f9c..9e782a8122 100755
---- a/t/t1401-symbolic-ref.sh
-+++ b/t/t1401-symbolic-ref.sh
-@@ -129,11 +129,35 @@ test_expect_success 'symbolic-ref does not create ref d/f conflicts' '
- 	test_must_fail git symbolic-ref refs/heads/df/conflict refs/heads/df
- '
- 
--test_expect_success 'symbolic-ref handles existing pointer to invalid name' '
-+test_expect_success 'symbolic-ref can overwrite pointer to invalid name' '
-+	test_when_finished reset_to_sane &&
- 	head=$(git rev-parse HEAD) &&
- 	git symbolic-ref HEAD refs/heads/outer &&
-+	test_when_finished "git update-ref -d refs/heads/outer/inner" &&
- 	git update-ref refs/heads/outer/inner $head &&
- 	git symbolic-ref HEAD refs/heads/unrelated
- '
- 
-+test_expect_success 'symbolic-ref can resolve d/f name (EISDIR)' '
-+	test_when_finished reset_to_sane &&
-+	head=$(git rev-parse HEAD) &&
-+	git symbolic-ref HEAD refs/heads/outer/inner &&
-+	test_when_finished "git update-ref -d refs/heads/outer" &&
-+	git update-ref refs/heads/outer $head &&
-+	echo refs/heads/outer/inner >expect &&
-+	git symbolic-ref HEAD >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'symbolic-ref can resolve d/f name (ENOTDIR)' '
-+	test_when_finished reset_to_sane &&
-+	head=$(git rev-parse HEAD) &&
-+	git symbolic-ref HEAD refs/heads/outer &&
-+	test_when_finished "git update-ref -d refs/heads/outer/inner" &&
-+	git update-ref refs/heads/outer/inner $head &&
-+	echo refs/heads/outer >expect &&
-+	git symbolic-ref HEAD >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index 3ac7ebf85f..503a88d029 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -117,6 +117,16 @@ test_expect_success 'git branch -m bbb should rename checked out branch' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'renaming checked out branch works with d/f conflict' '
-+	test_when_finished "git branch -D foo/bar || git branch -D foo" &&
-+	test_when_finished git checkout master &&
-+	git checkout -b foo &&
-+	git branch -m foo/bar &&
-+	git symbolic-ref HEAD >actual &&
-+	echo refs/heads/foo/bar >expect &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'git branch -m o/o o should fail when o/p exists' '
- 	git branch o/o &&
- 	git branch o/p &&
 -- 
-2.15.0.rc0.413.g9bb4ac64e2
+Kaartic
