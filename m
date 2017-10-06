@@ -2,127 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,URIBL_BLACK shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 72CD920370
-	for <e@80x24.org>; Fri,  6 Oct 2017 18:13:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3560C20131
+	for <e@80x24.org>; Fri,  6 Oct 2017 18:58:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752545AbdJFSNo (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Oct 2017 14:13:44 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:34637 "EHLO
-        out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752292AbdJFSNn (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 6 Oct 2017 14:13:43 -0400
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
-        by mailout.nyi.internal (Postfix) with ESMTP id 59A6C20B63
-        for <git@vger.kernel.org>; Fri,  6 Oct 2017 14:13:43 -0400 (EDT)
-Received: from frontend1 ([10.202.2.160])
-  by compute2.internal (MEProxy); Fri, 06 Oct 2017 14:13:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-sender
-        :x-me-sender:x-sasl-enc:x-sasl-enc; s=fm1; bh=DjLLwDv/XNb4oM8Vjv
-        BrlhLzmL/1qmyFTpxRHe0Hek4=; b=dRxB8gszSnBIJHDiHlFeOfYbS5BNjK7yjN
-        SONCMD204whTVZHoJzUunH8NIVb2IrJr0S3SRDgC/2cQvSm2HoUg270QmU40IB2e
-        sYxIrj0b9q/VPAz1DHXy38K42TgWULkV0wX6X/W76raNDEdJ4EeMxeqGSr4mYGpe
-        WTcKnOwcifXd4UVl+EheywCCXTHTLoyVw/BxatxocSzexY9AK4Ihl9uFHAAi84bZ
-        sJf72Dh4oiZr81zTifh5mRDj4i6kRgh1TRPkSmfpBve437CutFyy+3qMXT7pq+gy
-        tiZdSeIkyx6Y04jaDzt/znxOgDC/mKm8hT7pvZa4k4DpcSqsFk6Q==
-X-ME-Sender: <xms:18fXWfaQRNzbEfmO2DF8lRBzuna2k_-TvOwdDETM-F8SC9kKquvSsg>
-X-Sasl-enc: Ab+7/js+uQOFpR39u7Kf7tMWSlj+oOHVAn6MBJ7Uu5An 1507313623
-Received: from [192.168.1.8] (c-75-72-214-216.hsd1.mn.comcast.net [75.72.214.216])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 0ACCB7E8E6
-        for <git@vger.kernel.org>; Fri,  6 Oct 2017 14:13:42 -0400 (EDT)
-From:   Jake Bell <jake@theunraveler.com>
-Content-Type: multipart/signed;
-        boundary="Apple-Mail=_486E988E-2820-48C5-BC10-74B028982701";
-        protocol="application/pgp-signature";
-        micalg=pgp-sha512
-Mime-Version: 1.0 (Mac OS X Mail 11.0 \(3445.1.7\))
-Subject: Re: git add --patch displays diff and exits
-Date:   Fri, 6 Oct 2017 13:13:42 -0500
-References: <AE36B16D-0284-4AC0-BD5E-CD346036D69D@theunraveler.com>
- <74010545-3186-4224-9A54-649284FB2933@theunraveler.com>
-To:     git@vger.kernel.org
-In-Reply-To: <74010545-3186-4224-9A54-649284FB2933@theunraveler.com>
-Message-Id: <B0494C9A-EDFC-4069-BAD1-8E5AFDD08C8F@theunraveler.com>
-X-Mailer: Apple Mail (2.3445.1.7)
+        id S1752563AbdJFS6V (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Oct 2017 14:58:21 -0400
+Received: from mail-wm0-f50.google.com ([74.125.82.50]:55918 "EHLO
+        mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752276AbdJFS6T (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Oct 2017 14:58:19 -0400
+Received: by mail-wm0-f50.google.com with SMTP id u138so9656444wmu.4
+        for <git@vger.kernel.org>; Fri, 06 Oct 2017 11:58:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=KTKC6dYIY4+991Nqcw2Y1Zl2ehJ8tBvifNjrE4/IgA4=;
+        b=R+rNPUC18tuqWQ9UqqGaTqEICLu9gjqqRE0tHwzRQaWCkmU6st1azxKa62v5j+8Fpm
+         nkm2O2lYX+6ihbQkPW4ZSeJyPpOVJv/Ap6f+gB9/eplewqJB0tcUTxIua8BhYz4ni1xM
+         7dtBvpTmTPbKad0B48ULS/8mm/c6zatFXkgARZxBCih0Duw2d/BskZfgCEuOuZAkNXHN
+         Ss8+zrJ0U/pMeMOgD9cb1vc+z9WcoCtKm/zvlCsYL9pyoNgJVzHGXGnxnoeFnhGZtxME
+         e66WgwUDq7GIJ4kG2atkFSgNxKrNHwR41mzl7fcygrgzr9CRZyZz/cPhp+kaFaSFTsVm
+         ygAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=KTKC6dYIY4+991Nqcw2Y1Zl2ehJ8tBvifNjrE4/IgA4=;
+        b=n97WRcOalC8F7yS8848E+uwUlAzoHdcVHLog4oieWgHJp6fufC4M6KMllj7eeviwJk
+         GHM4LzwCbl7bIgC65y58oO1+FOOWVj5TL/buI66wvB+FXy/6jtAYBRDCFvC67A50AMzq
+         0dXXQYyxnYRfPxeRVsec6CC2r/FRjY8vmpDXFT9VACh3R1BCfc48vF6hLPvXZsWUEeFR
+         D20dCNg3gDwaifzp6PjJYJrMNohWXGjBN6UDQovnlSOukyaRip+S0zsO/XK/HdMxv3Xt
+         dXej6ZZqZXPAJj0FjjJt5gTHGaSd5S5McE14ROet8miGKmpWWfKhpcdU+C2vJwVGVB3w
+         Y6Gw==
+X-Gm-Message-State: AMCzsaWNo4qaVT5DpHfufI2kOFwspUouWB50ewYNqZkwHE5abl3IuAYS
+        V66hsi83Y473a8HUvGhiqP3A+g==
+X-Google-Smtp-Source: AOwi7QCQMnf4NLGWLpMxrsJ3ddH0Zq3JbYhr4IBsaqDEnrfWwkTV/0wN2T0LUTPfParK3MBIBgFPzw==
+X-Received: by 10.80.222.8 with SMTP id z8mr4639070edk.214.1507316298038;
+        Fri, 06 Oct 2017 11:58:18 -0700 (PDT)
+Received: from ?IPv6:2001:a61:103e:7401:51cc:1510:e458:9af3? ([2001:a61:103e:7401:51cc:1510:e458:9af3])
+        by smtp.googlemail.com with ESMTPSA id e50sm2469174ede.18.2017.10.06.11.58.16
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 06 Oct 2017 11:58:16 -0700 (PDT)
+Subject: Re: Git config multiple values
+To:     Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>
+Cc:     "aleksander.baranowski" <aleksander.baranowski@yahoo.pl>,
+        git@vger.kernel.org
+References: <4b848032-e8b6-be67-58d9-e3fcc2c11853@yahoo.pl>
+ <20171006143219.4bn63aoenluc77fd@sigill.intra.peff.net>
+ <20171006172530.GV19555@aiede.mtv.corp.google.com>
+From:   Andreas Heiduk <asheiduk@gmail.com>
+Message-ID: <962cbecd-4be1-f041-30e3-cc4cd19310d0@gmail.com>
+Date:   Fri, 6 Oct 2017 20:58:15 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
+MIME-Version: 1.0
+In-Reply-To: <20171006172530.GV19555@aiede.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: de-BE
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi,
 
---Apple-Mail=_486E988E-2820-48C5-BC10-74B028982701
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=us-ascii
-
-Sorry, please disregard---this is a duplicate of some other messages =
-already sent to the list. Setting "color.ui =3D auto" fixed the issue =
-for me.
-
-
--- Jake
-
-> On Oct 6, 2017, at 1:13 PM, Jake Bell <jake@theunraveler.com> wrote:
->=20
-> Sorry, please disregard---this is a duplicate of some other messages =
-already sent to the list. Setting "color.ui =3D auto" fixed the issue =
-for me.
->=20
->=20
-> -- Jake
->=20
->> On Oct 6, 2017, at 1:09 PM, Jake Bell <jake@theunraveler.com> wrote:
->>=20
->> Hello,
->>=20
->> I'm not sure if this is the right place to report this issue, so =
-apologies in advance if it isn't.
->>=20
->> Recently, I upgraded from git 2.14.1 to 2.14.2, and noticed that "git =
-add --patch" does not work properly. It just prints a diff of what's =
-changed and exits, instead of presenting the dialogs to add changes to =
-the index. I did some bisecting and tracked the bug down to this commit: =
-https://github.com/git/git/commit/136c8c8b8fa39f1315713248473dececf20f8fe7=
-.
->>=20
->> Unfortunately, I'm not familiar with the codebase and don't know C =
-well enough to debug the issue. Please let me know what additional =
-information I can provide to help you all figure it out.
->> Thanks!
->>=20
->> -- Jake
->>=20
->=20
+Am 06.10.2017 um 19:25 schrieb Jonathan Nieder:
+> Hi,
+> 
+> Jeff King wrote:
+>> On Fri, Oct 06, 2017 at 01:10:17PM +0200, aleksander.baranowski wrote:
+> 
+>>> It's just an opinion, but this behaviour is no consistent for me.
+>>>
+>>> If it's not the bug it's a feature just let me know.
+>>
+>> It's a feature, though I agree that git-config is rather baroque. We're
+>> mostly stuck with it for reasons of backwards compatibility, though.
+> 
+> This feels like a dodge.  Can we make a list of what is baroque here,
+> with an eye to fixing it?  E.g. if we introduce a new --set option,
+> then what should its semantics be, to be more intuitive?
 
 
---Apple-Mail=_486E988E-2820-48C5-BC10-74B028982701
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
-	filename=signature.asc
-Content-Type: application/pgp-signature;
-	name=signature.asc
-Content-Description: Message signed with OpenPGP
+My reading of the manual for 
 
------BEGIN PGP SIGNATURE-----
+	git config --global user.name Foo2 Bar
 
-iQIzBAEBCgAdFiEENFtmcOhOFMZ2oYMozkHV3VyCET4FAlnXx9YACgkQzkHV3VyC
-ET6NOA/+Nr61cAF60o+0oqxEgJQvnoIyBNYngD6jZi0MJ4cDN56zZTHddAB9ocxW
-OKdM7ddWCInWcqICvZPrcjIGdIahFetrAIgjjYXSFY8r3xyDYB/y7Axx/d/ukm/W
-zryhoNJYjQBY+ugUhyKzXjNso7K0FLdy8hlVdxIINfwakcPOL2KnXELRaPwIkF/Y
-1afPNDkr4acEI8MnmrJfmRdxm+PkM/SVq57v3gZvIvhWU1IIVI8n9Lhvcpg4S3cg
-S+JR3ZrGo1nwQHj7F7YxxGD9x0Lhjq6bCElxZ+fJ1BnmtE0uBaU9mqisxqWrCwm7
-xmU099IPxgzt8U4oi28OwVq/h22HM6HRccKsi3ko1y03LNGnPNIPD3u52eIyP+w6
-DyymJSO5OO6KDY04B+3Z+nLLVTYzp5je9qXYBbbinCEfMrGxbeZ2BH5rMB5M1ogl
-KBrwC+jrs5gl3a81ulbH0nJUT2xE2nB9qtOUaK/XUBlUuVquADnvK04Gel0MET/O
-ED0lhCiIEkPqNOTK0gkbBsPfM/4DHKeRxNFEgsLJ72AhWal6XUBiv9lx4I9sP5nj
-O5F/rPnwqqVfJRDGvU/z9Hbd4HG12Q9ila2cPebzH5tv6HAeQSoV5RyhaUujvftf
-jN3YrVeWkI/+E5VEwP90YID3hfwyyi4bS8vAdj7A1xYTjMFzdxQ=
-=c8D3
------END PGP SIGNATURE-----
+is this:
 
---Apple-Mail=_486E988E-2820-48C5-BC10-74B028982701--
+       Multiple lines can be added to an option by using the --add option.
+
+Does not apply here - no `--add` option, so no new value should be added.
+
+       If you want to update or unset an option which can occur on multiple
+       lines, a POSIX regexp value_regex needs to be given. 
+
+does not apply: First: no "--unset" variant is used here leaving only "update".
+Second: before that command there is only one value.
+
+       Only the existing values that match the regexp are updated or unset.
+
+Since "Two" does not match the previous value and `update` is the only 
+described case left I'd expect that the command changes nothing.I don't
+understand how the description allows `git config` to add a new value,
+because the manual talks about "update" twice, nothing about adding.
+
+
+Confused
+--Andreas
