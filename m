@@ -2,232 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6EE3220372
-	for <e@80x24.org>; Fri,  6 Oct 2017 20:13:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 949D520372
+	for <e@80x24.org>; Fri,  6 Oct 2017 20:21:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752495AbdJFUNL (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Oct 2017 16:13:11 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:44183 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752725AbdJFUMt (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Oct 2017 16:12:49 -0400
-Received: by mail-wm0-f65.google.com with SMTP id 196so3828310wma.1
-        for <git@vger.kernel.org>; Fri, 06 Oct 2017 13:12:48 -0700 (PDT)
+        id S1752458AbdJFUVM (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Oct 2017 16:21:12 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:37177 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751618AbdJFUVL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Oct 2017 16:21:11 -0400
+Received: by mail-pf0-f194.google.com with SMTP id e69so17578376pfg.4
+        for <git@vger.kernel.org>; Fri, 06 Oct 2017 13:21:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=gxwcD9qMzonY74HgdUCN3bvFG429ZQXqVrFSpdUaBrI=;
-        b=Dh6CTajJHL4NLZAvJiU3DAKC459o7+sQ0vBVfdhAEK3YzNAkxeCKDaL6MfvCJV8wZL
-         Qzy7ng2iN6lKFcGbUVEBOTRFgNJ/RiFPEcUNJ/RbRetWSMmrEYGmyOFHLq/zxOxyzcud
-         AeuvzEo6igW2oOCp4ESVm8slBRGQfPCqMLv1XY1Rmx8OV0DJ7F3RJibZkLqbB2uIdiiq
-         r+qiLTSHKQtbZxDQ0shotkEXvuYcs9txf2Yu0QrMX9qJ3nsCaEpuUboYNBm1Zlf7lhLK
-         5/lsl9adTWWN0KvvweCGQpX76PDWQaz4PLBfZqho8W5Ux/B/LA2Mq2bunjvQGUprmMbc
-         f9yg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=RS33Mx6fccpU9DjR2UCDR44fIe3l/xwOEDlSo5DodeU=;
+        b=tOGWQIu/qhVbhlhTlfPUBNJVFQNXiM7jXnANVwZkjx34+FzyfUqL/5PEVqUoTP0K8p
+         y5q0NxAH+xqoGxr61/EGicLarXfncwUDNCzu5uMpx3pgO2vSqGmnZbLz1jwYz+kMrJ0u
+         mO1d3O5VgIzODOQxrOiac7JxgGzufkxHSC/ncJ1iNfewrtcrDVZ+T2kRCksmWDnhVkmf
+         qmeax/1xguTmJXOoIN3+uBprn8QgFWCB7bUOGlyui4bFiV9ew9uIOy77gzylCPYMuw34
+         XzfxiKeDjMpvRI8KQ8/1yZRIB7HcwrUdughqsj20TxBGr/FdjnqxUIzYfUe6Cm/SvuR3
+         06pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=gxwcD9qMzonY74HgdUCN3bvFG429ZQXqVrFSpdUaBrI=;
-        b=pzeUBuMj6A6CncXak4UGsIhLdT+eD7Fnuv4bNZ4gmtIMpjH+jGgAcE4txzxKJop2WI
-         2m1RjchoATBt7xct4oWuU5x+PwJFVKiWlc3jQskbueM/dl2vzr3BDglOAnG5xODM/k8M
-         PEvgnaqfE7mlZ3EYmQU1HM1UT2GOqzyYy8fbJGLOOCdPw9KKNy3T0XKHRf11hfd0dgV+
-         trDbRRXysW/b+Aqo3pghyqi8nz0ok4VzAowoDuxRxjS5v7/RJpWBnUujMtdDWIZSi5aO
-         o5p/h+0oU3zzyMgOH3yb2EaRrqtjzBlxq5gf29PjOJTQDTkGzT3LwfFq40IrR/FVqQHI
-         Zdcw==
-X-Gm-Message-State: AMCzsaUl/z/ILYzH8vmIjcKO/8Ms1jIft7cojaSvku55G9++msj4+hGK
-        8C6neDISI5KQdkUaI4ggAKWOAf+RnXA=
-X-Google-Smtp-Source: AOwi7QCkr0Xn3tOvjdqBBrRnCCyFNJIUsMXVV5U1og1blu4zzUFSxWFe+jojAojVElYr3UiZFMtOEQ==
-X-Received: by 10.28.165.150 with SMTP id o144mr2968581wme.31.1507320767828;
-        Fri, 06 Oct 2017 13:12:47 -0700 (PDT)
-Received: from localhost.localdomain ([2a02:aa16:5782:c100:c938:fbb7:46f8:2405])
-        by smtp.gmail.com with ESMTPSA id h45sm2906522wrf.36.2017.10.06.13.12.46
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 06 Oct 2017 13:12:46 -0700 (PDT)
-From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Michael Haggerty <mhagger@alum.mit.edu>, Jeff King <peff@peff.net>,
-        Paul Tan <pyokagan@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 07/12] apply: move lockfile into `apply_state`
-Date:   Fri,  6 Oct 2017 22:12:09 +0200
-Message-Id: <6d058c882643dc45c8d708be98e86c38f25511a9.1507320376.git.martin.agren@gmail.com>
-X-Mailer: git-send-email 2.15.0.rc0
-In-Reply-To: <cover.1507320376.git.martin.agren@gmail.com>
-References: <CAN0heSqr77dptPG2mixnLdNKKcgD36aPnEFtnTB6Oyip6WfQBA@mail.gmail.com> <cover.1507320376.git.martin.agren@gmail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=RS33Mx6fccpU9DjR2UCDR44fIe3l/xwOEDlSo5DodeU=;
+        b=sN9zm7Tw1tHB89rZfg2yzDD2evclysOWbn6ZE43b+FO9FdF7UyhfhffqWPRgGgQBeN
+         8tCi2FDfh+dpWv1qX2+bMcL3x6BnuAoBREoCgIamGrH1+9VeiHlReBE6s9+W3tDVeReM
+         3WkOnyTrwJX11ZdZ2VJFZzN+IH9qwzIFQmIqyKrER/3Ty3nHWxPAJH1lUZaI1gKShrnb
+         Ory8r9IvImsfWgmfsR/C5w9Fx/nTjmQQavSVtFD5DzTFCHpz7oMQBXuN6wPOpxm6wk7N
+         1yuSMLO3t30GAPyiuOaQyI2u6A14Mt0Yu8KcKde0uTYNrojeHyLqqptSKdL5Lemt8+2r
+         D+4w==
+X-Gm-Message-State: AMCzsaXWq5/SqJ9UQPmvAqMe5GfuybweWDguebBpnV572VCRSP5/Q891
+        iUaXBGafTEFy20k7QHzB4Y9ouuQl
+X-Google-Smtp-Source: AOwi7QA39x8wwBi9lT41Oqp5ab6mGLvSe+9tuNR92Vww8KY1vmfNvMD3xMSTwnfqWV2jfF90iDqz1g==
+X-Received: by 10.99.104.6 with SMTP id d6mr2950440pgc.168.1507321270825;
+        Fri, 06 Oct 2017 13:21:10 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:78c3:3d0d:a9b5:4320])
+        by smtp.gmail.com with ESMTPSA id j6sm4148159pgn.68.2017.10.06.13.21.09
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 06 Oct 2017 13:21:10 -0700 (PDT)
+Date:   Fri, 6 Oct 2017 13:21:08 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 1/2] tests: use shell negation instead of test_must_fail
+ for test_cmp
+Message-ID: <20171006202108.GX19555@aiede.mtv.corp.google.com>
+References: <20171006190006.19623-1-sbeller@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20171006190006.19623-1-sbeller@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We have two users of `struct apply_state` and the related functionality
-in apply.c. Each user sets up its `apply_state` by handing over a
-pointer to its static `lock_file`. (Before 076aa2cbd (tempfile:
-auto-allocate tempfiles on heap, 2017-09-05), we could never free
-lockfiles, so making them static was a reasonable approach.)
+Stefan Beller wrote:
 
-Other than that, they never directly access their `lock_file`s, which
-are instead handled by the functionality in apply.c.
+> The `test_must_fail` should only be used to indicate a git command is
+> failing. `test_cmp` is not a git command, such that it doesn't need the
+> special treatment of `test_must_fail` (which e.g. includes checking for
+> segfault).
+>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  t/t3504-cherry-pick-rerere.sh         | 2 +-
+>  t/t5512-ls-remote.sh                  | 2 +-
+>  t/t5612-clone-refspec.sh              | 2 +-
+>  t/t7508-status.sh                     | 2 +-
+>  t/t9164-git-svn-dcommit-concurrent.sh | 2 +-
+>  5 files changed, 5 insertions(+), 5 deletions(-)
 
-To make life easier for the caller and to make it less tempting for a
-future caller to mess with the lock, make apply.c fully responsible for
-setting up the `lock_file`. As mentioned above, it is now safe to free a
-`lock_file`, so we can make the `struct apply_state` contain an actual
-`struct lock_file` instead of a pointer to one.
+Thanks.  I agree that this is more readable, and it matches the advice
+in t/README:
 
-The user in builtin/apply.c is rather simple. For builtin/am.c, we might
-worry that the lock state is actually meant to be inherited across
-calls. But the lock is only taken as `apply_all_patches()` executes, and
-code inspection shows that it will always be released.
+   On the other hand, don't use test_must_fail for running regular
+   platform commands; just use '! cmd'.  We are not in the business
+   of verifying that the world given to us sanely works.
 
-Alternatively, we can observe that the lock itself is never queried
-directly. When we decide whether we should lock, we check a related
-variable `newfd`. That variable is not inherited, so from the point of
-view of apply.c, the state machine really is reset with each call to
-`init_apply_state()`. (It would be a bug if `newfd` and the lock status
-were not in sync. The duplication of information in `newfd` and the lock
-will be addressed in the next patch.)
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-Signed-off-by: Martin Ågren <martin.agren@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- apply.c         | 14 +++++---------
- apply.h         |  5 ++---
- builtin/am.c    |  3 +--
- builtin/apply.c |  4 +---
- 4 files changed, 9 insertions(+), 17 deletions(-)
-
-diff --git a/apply.c b/apply.c
-index c022af53a..5a6ca10a7 100644
---- a/apply.c
-+++ b/apply.c
-@@ -75,12 +75,10 @@ static int parse_ignorewhitespace_option(struct apply_state *state,
- }
- 
- int init_apply_state(struct apply_state *state,
--		     const char *prefix,
--		     struct lock_file *lock_file)
-+		     const char *prefix)
- {
- 	memset(state, 0, sizeof(*state));
- 	state->prefix = prefix;
--	state->lock_file = lock_file;
- 	state->newfd = -1;
- 	state->apply = 1;
- 	state->line_termination = '\n';
-@@ -146,8 +144,6 @@ int check_apply_state(struct apply_state *state, int force_apply)
- 	}
- 	if (state->check_index)
- 		state->unsafe_paths = 0;
--	if (!state->lock_file)
--		return error("BUG: state->lock_file should not be NULL");
- 
- 	if (state->apply_verbosity <= verbosity_silent) {
- 		state->saved_error_routine = get_error_routine();
-@@ -4711,11 +4707,11 @@ static int apply_patch(struct apply_state *state,
- 	state->update_index = state->check_index && state->apply;
- 	if (state->update_index && state->newfd < 0) {
- 		if (state->index_file)
--			state->newfd = hold_lock_file_for_update(state->lock_file,
-+			state->newfd = hold_lock_file_for_update(&state->lock_file,
- 								 state->index_file,
- 								 LOCK_DIE_ON_ERROR);
- 		else
--			state->newfd = hold_locked_index(state->lock_file, LOCK_DIE_ON_ERROR);
-+			state->newfd = hold_locked_index(&state->lock_file, LOCK_DIE_ON_ERROR);
- 	}
- 
- 	if (state->check_index && read_apply_cache(state) < 0) {
-@@ -4911,7 +4907,7 @@ int apply_all_patches(struct apply_state *state,
- 	}
- 
- 	if (state->update_index) {
--		res = write_locked_index(&the_index, state->lock_file, COMMIT_LOCK);
-+		res = write_locked_index(&the_index, &state->lock_file, COMMIT_LOCK);
- 		if (res) {
- 			error(_("Unable to write new index file"));
- 			res = -128;
-@@ -4924,7 +4920,7 @@ int apply_all_patches(struct apply_state *state,
- 
- end:
- 	if (state->newfd >= 0) {
--		rollback_lock_file(state->lock_file);
-+		rollback_lock_file(&state->lock_file);
- 		state->newfd = -1;
- 	}
- 
-diff --git a/apply.h b/apply.h
-index d9b395770..cf00cda17 100644
---- a/apply.h
-+++ b/apply.h
-@@ -37,7 +37,7 @@ struct apply_state {
- 	const char *prefix;
- 
- 	/* These are lock_file related */
--	struct lock_file *lock_file;
-+	struct lock_file lock_file;
- 	int newfd;
- 
- 	/* These control what gets looked at and modified */
-@@ -116,8 +116,7 @@ extern int apply_parse_options(int argc, const char **argv,
- 			       int *force_apply, int *options,
- 			       const char * const *apply_usage);
- extern int init_apply_state(struct apply_state *state,
--			    const char *prefix,
--			    struct lock_file *lock_file);
-+			    const char *prefix);
- extern void clear_apply_state(struct apply_state *state);
- extern int check_apply_state(struct apply_state *state, int force_apply);
- 
-diff --git a/builtin/am.c b/builtin/am.c
-index 4e16fd428..40968428d 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -1488,11 +1488,10 @@ static int run_apply(const struct am_state *state, const char *index_file)
- 	struct argv_array apply_opts = ARGV_ARRAY_INIT;
- 	struct apply_state apply_state;
- 	int res, opts_left;
--	static struct lock_file lock_file;
- 	int force_apply = 0;
- 	int options = 0;
- 
--	if (init_apply_state(&apply_state, NULL, &lock_file))
-+	if (init_apply_state(&apply_state, NULL))
- 		die("BUG: init_apply_state() failed");
- 
- 	argv_array_push(&apply_opts, "apply");
-diff --git a/builtin/apply.c b/builtin/apply.c
-index 81b9a61c3..48d398933 100644
---- a/builtin/apply.c
-+++ b/builtin/apply.c
-@@ -9,8 +9,6 @@ static const char * const apply_usage[] = {
- 	NULL
- };
- 
--static struct lock_file lock_file;
--
- int cmd_apply(int argc, const char **argv, const char *prefix)
- {
- 	int force_apply = 0;
-@@ -18,7 +16,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix)
- 	int ret;
- 	struct apply_state state;
- 
--	if (init_apply_state(&state, prefix, &lock_file))
-+	if (init_apply_state(&state, prefix))
- 		exit(128);
- 
- 	argc = apply_parse_options(argc, argv,
--- 
-2.15.0.rc0
-
+I wonder if it would be useful to have a nod to that advice in the
+docstring in t/test-lib-functions.sh, too.
