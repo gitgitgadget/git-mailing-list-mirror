@@ -2,199 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3B29420372
-	for <e@80x24.org>; Fri,  6 Oct 2017 21:56:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 661CE20372
+	for <e@80x24.org>; Fri,  6 Oct 2017 21:59:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751515AbdJFV4G (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Oct 2017 17:56:06 -0400
-Received: from mail-qk0-f194.google.com ([209.85.220.194]:37174 "EHLO
-        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751412AbdJFV4F (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Oct 2017 17:56:05 -0400
-Received: by mail-qk0-f194.google.com with SMTP id a12so10065373qka.4
-        for <git@vger.kernel.org>; Fri, 06 Oct 2017 14:56:05 -0700 (PDT)
+        id S1751759AbdJFV7a (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Oct 2017 17:59:30 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:35396 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751412AbdJFV73 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Oct 2017 17:59:29 -0400
+Received: by mail-pf0-f194.google.com with SMTP id i23so17740063pfi.2
+        for <git@vger.kernel.org>; Fri, 06 Oct 2017 14:59:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=OGSuW8lxiGjz4UztEUXdAMOa6P0PBuQiwDELuKLJP8M=;
-        b=egbaRA/chwWFxjiADdLzL/rUXRfMvNiImquKspRc6pNDa2VNf4qxwa4STFbeHwWXld
-         Eav2Vbs3I9Q4oZ10khjRfcyvhrzhZtHbe3E44ebTlWB+3BpVTI1K40xxB5Z9V3VN//Ql
-         g3Q41g7p5gkDMaL/VeWcgTibay/SY8MtH0apj2s4sn2bTcgYeZ9Qiznj7TrnJhfjzY9e
-         iBESiOtViaj3QhV03Mwh3pTrHiIz7VBDo+4mkr5BMs9qLkjcTPWALtIt810Dns/dVzhE
-         prD6+BdDYrGDI27rt/rAqXPx6sI+myE8nZDh3rfXDEeqcW9/2uDxQOlg/1BeihWXRtCp
-         KSGw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=U3co7hSqrGHY3Lrjumnk8hajraD3kysX3pV8Vd7qSPM=;
+        b=TMEKm+DmONt5qh32KgKgbXElaxG0FVfol/eDJ9nG6eyp+htHDRtvUjKJkLoDF1f7W/
+         R35XM1IWq6ixJL+0jM9bTij/jVOcbkMx4yAHqeGqFt+iR4V6R7F6zupf/DbtEY1W4X3a
+         dzs1lhQ3jN3AvOcS21jN/1fzwfXbNqBluhHo+ZCxOfxiCP6HXvMdq7Zudk57oJnw3Du0
+         5EFSD2yNMwDYh9SndEOjRi06XhyMjJiGLgMbm/JXm+SYQlvOV+7t87XeW/MRtTSQOwZ9
+         +k5oobwAV02QWccnYRM74sxPsc9wWfA1z2ENYVbHKueUesZzz9LdUmTcZn6r60rHQR/V
+         s+OQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=OGSuW8lxiGjz4UztEUXdAMOa6P0PBuQiwDELuKLJP8M=;
-        b=h/xBcl+Ci8boA08rJ0fUcXCl6KiKalqdFyCWUrRLxcIh0cfXZyHLGV25ZjP8IQGOde
-         ni4UzD9we8YPu936xWq7YDaQkYpFkIQVavS51aQzGLgHz+MVmgjGyndMWkar2zWPMxsA
-         3qEnn9JyiEc/OVnPpxaf8SlfT7P3IL7uiHiXOR+Hu4tjzyJYmitNUJqIiq/0SmD7gHWu
-         AkvVGagTIJRUY6d6sDhAgJFmmU40SpJ+LPo4wl9Gmi1Yn7wpXI88Z0nf8W+P3woIP+aE
-         yH4MnJVrUVzXr7XzcFn6h9t76DpePyROS2oE/h69mXp8rywN4JKhNY9368mxJXrJSRvY
-         aMQw==
-X-Gm-Message-State: AMCzsaVExtWmoNHCkl1hm4Q8nMwMs1GvfLKQDHdAD6hD3kFSuLcHTnmo
-        AdemckdLm8gV6jvBlR3dqzIFSMWuPpv8rHo/OTHLRQ==
-X-Google-Smtp-Source: AOwi7QB4fqHzdwHv7LbIvJEM27nT3//7AmmnuO/gBUP/j4tg3vk5/m0hILBjKNAXYn9PT6GVRgyg4xVe7b1LeacLBDY=
-X-Received: by 10.55.151.196 with SMTP id z187mr325026qkd.135.1507326964753;
- Fri, 06 Oct 2017 14:56:04 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=U3co7hSqrGHY3Lrjumnk8hajraD3kysX3pV8Vd7qSPM=;
+        b=nFhQq4+iEPRZb7U9ctWytz862UXqIWRzscCY88ZRzOp0MqdwT8O0gCBrLPqBxdtfr3
+         kL9b0HMsMdyvsOmUb50mLxQbru9KInggwDpB81eNBuVPnT6Mq3CHDaIdmHYJxnw7vG2D
+         kTKeNhbUngQ4lRykzSGOpo6lyIY32DPmAR9GJPMiAA7Am42UJQVosaWNIMHYzmkhROfr
+         jupe/OZW2B10L4nBFb3EWr5t+UTzFGnS5DvDzJLwQXLWyn0TqdO9+gwolWQvfbm8M/H2
+         0Ax0u0lfBVKU8Ilo0LxsRt4TDtb8KxjTmpSIGKssOrNBeIQ2C8FMc57bI/lEbwMLoXBK
+         GCfg==
+X-Gm-Message-State: AMCzsaUZlD4tx644CukCWcjBe9YsfwKzuLaFhJF5USPRgfKNeq404Atv
+        K/ySnSE2zJLijEFPLAHrzwM=
+X-Google-Smtp-Source: AOwi7QAlKiklgHDPF6cKEcdfB2Y1NDk+WpFVAFgAjw4CxCjYC4s1wzOhrdizmWKn1ECEX70UD+GZOg==
+X-Received: by 10.99.111.194 with SMTP id k185mr3215665pgc.424.1507327168949;
+        Fri, 06 Oct 2017 14:59:28 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:78c3:3d0d:a9b5:4320])
+        by smtp.gmail.com with ESMTPSA id p77sm5579822pfa.92.2017.10.06.14.59.27
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 06 Oct 2017 14:59:27 -0700 (PDT)
+Date:   Fri, 6 Oct 2017 14:59:26 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH 1/2] tests: use shell negation instead of test_must_fail
+ for test_cmp
+Message-ID: <20171006215926.GY19555@aiede.mtv.corp.google.com>
+References: <20171006190006.19623-1-sbeller@google.com>
+ <20171006192252.3a27enzim5yurhe5@sigill.intra.peff.net>
 MIME-Version: 1.0
-Received: by 10.12.146.118 with HTTP; Fri, 6 Oct 2017 14:56:04 -0700 (PDT)
-In-Reply-To: <20171006132415.2876-3-pc44800@gmail.com>
-References: <xmqqy3ouqruh.fsf@gitster.mtv.corp.google.com> <20171006132415.2876-1-pc44800@gmail.com>
- <20171006132415.2876-3-pc44800@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 6 Oct 2017 17:56:04 -0400
-X-Google-Sender-Auth: oD1AvdhSCD2TijY8l2rA1gxkfZ8
-Message-ID: <CAPig+cT31XM9nW7sytukbQQ_O_15np6oepazKJaoNuHey+kiBA@mail.gmail.com>
-Subject: Re: [PATCH v7 2/3] submodule--helper: introduce for_each_listed_submodule()
-To:     Prathamesh Chavan <pc44800@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Git List <git@vger.kernel.org>, hanwen@google.com,
-        Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20171006192252.3a27enzim5yurhe5@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Same disclaimer as in my review of patch 1/3: I didn't see a URL in
-the cover letter pointing at discussions of earlier iterations, so
-below comments may be at odds with what went on previously...
+Hi,
 
-On Fri, Oct 6, 2017 at 9:24 AM, Prathamesh Chavan <pc44800@gmail.com> wrote:
-> Introduce function for_each_listed_submodule() and replace a loop
-> in module_init() with a call to it.
+Jeff King wrote:
+> On Fri, Oct 06, 2017 at 12:00:05PM -0700, Stefan Beller wrote:
+
+>> The `test_must_fail` should only be used to indicate a git command is
+>> failing. `test_cmp` is not a git command, such that it doesn't need the
+>> special treatment of `test_must_fail` (which e.g. includes checking for
+>> segfault)
 >
-> The new function will also be used in other parts of the
-> system in later patches.
->
-> Signed-off-by: Prathamesh Chavan <pc44800@gmail.com>
-> ---
-> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> @@ -14,6 +14,11 @@
->  #include "refs.h"
->  #include "connect.h"
->
-> +#define OPT_QUIET (1 << 0)
-> +
-> +typedef void (*each_submodule_fn)(const struct cache_entry *list_item,
-> +                                 void *cb_data);
+> Hmph. "test_must_fail test_cmp" is a weird thing for somebody to write.
+> And your patch is obviously an improvement, but I have to wonder if some
+> of these make any sense.
 
-What is the reason for having the definition of 'each_submodule_fn' so
-far removed textually from its first reference by
-for_each_listed_submodule() below?
+Just for the record: I agree with all the above, and my Reviewed-by
+still stands.
 
->  static char *get_default_remote(void)
->  {
->         char *dest = NULL, *ret;
-> @@ -348,7 +353,23 @@ static int module_list(int argc, const char **argv, const char *prefix)
->         return 0;
->  }
->
-> -static void init_submodule(const char *path, const char *prefix, int quiet)
-> +static void for_each_listed_submodule(const struct module_list *list,
-> +                                     each_submodule_fn fn, void *cb_data)
-> +{
-> +       int i;
-> +       for (i = 0; i < list->nr; i++)
-> +               fn(list->entries[i], cb_data);
-> +}
+Thanks for looking closer.  I wonder if there's a systematic way to
+avoid this kind of weak test that can bitrot and still pass too easily
+--- e.g. should we have a test_must_differ command with an explanation
+of why it should usually be avoided?  Would a lint check that bans
+this kind of construct completely be going too far?
 
-I'm very curious about the justification for introducing a for-each
-function for what amounts to the simplest sort of loop possible: a
-canonical for-loop with a one-line body. I could easily understand the
-desire for such a function if either the loop conditions or the body
-of the loop, or both, were complex, but this does not seem to be the
-case. Even the callers of this new function, in this patch and in 3/3,
-are as simple as possible: one-liners (simple function calls).
-
-Although this sort of for-each function can, at times, be helpful,
-there are costs: extra boilerplate and increased complexity for
-clients since it requires callback functions and (optionally) callback
-data. The separation of logic into a callback function can make code
-more difficult to reason about than when it is simply the body of a
-for-loop.
-
-So, unless the plan for the future is that this for-each function will
-have considerable additional functionality baked into it, I'm having a
-difficult time understanding why this change is desirable.
-
-> +struct init_cb {
-> +       const char *prefix;
-> +       unsigned int flags;
-> +};
-> +
-> +#define INIT_CB_INIT { NULL, 0 }
-
-Why are these definitions so far removed from init_submodule_cb() below?
-
-> +static void init_submodule(const char *path, const char *prefix,
-> +                          unsigned int flags)
->  {
->         const struct submodule *sub;
->         struct strbuf sb = STRBUF_INIT;
-> @@ -410,7 +431,7 @@ static void init_submodule(const char *path, const char *prefix, int quiet)
->                 if (git_config_set_gently(sb.buf, url))
->                         die(_("Failed to register url for submodule path '%s'"),
->                             displaypath);
-> -               if (!quiet)
-> +               if (!(flags & OPT_QUIET))
-
-This change of having init_submodule() accept a 'flags' argument,
-rather than a single boolean, increases reviewer burden, since the
-reviewer is forced to puzzle out how this change relates to the stated
-intention of the patch since it is not mentioned at all by the commit
-message.
-
-It's also conceptually unrelated to the introduction of a for-each
-function, thus should be instead be done by a separate preparatory
-patch.
-
->                         fprintf(stderr,
->                                 _("Submodule '%s' (%s) registered for path '%s'\n"),
->                                 sub->name, url, displaypath);
-> @@ -437,12 +458,18 @@ static void init_submodule(const char *path, const char *prefix, int quiet)
->         free(upd);
->  }
->
-> +static void init_submodule_cb(const struct cache_entry *list_item, void *cb_data)
-> +{
-> +       struct init_cb *info = cb_data;
-> +       init_submodule(list_item->name, info->prefix, info->flags);
-> +}
-> +
->  static int module_init(int argc, const char **argv, const char *prefix)
->  {
-> +       struct init_cb info = INIT_CB_INIT;
->         struct pathspec pathspec;
->         struct module_list list = MODULE_LIST_INIT;
->         int quiet = 0;
-> -       int i;
->
->         struct option module_init_options[] = {
->                 OPT__QUIET(&quiet, N_("Suppress output for initializing a submodule")),
-> @@ -467,8 +494,11 @@ static int module_init(int argc, const char **argv, const char *prefix)
->         if (!argc && git_config_get_value_multi("submodule.active"))
->                 module_list_active(&list);
->
-> -       for (i = 0; i < list.nr; i++)
-> -               init_submodule(list.entries[i]->name, prefix, quiet);
-> +       info.prefix = prefix;
-> +       if (quiet)
-> +               info.flags |= OPT_QUIET;
-> +
-> +       for_each_listed_submodule(&list, init_submodule_cb, &info);
->
->         return 0;
->  }
-> --
-> 2.14.2
+Jonathan
