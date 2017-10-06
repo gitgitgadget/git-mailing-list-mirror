@@ -6,54 +6,56 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 659991FA21
-	for <e@80x24.org>; Fri,  6 Oct 2017 01:21:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D56E51FA21
+	for <e@80x24.org>; Fri,  6 Oct 2017 01:39:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751432AbdJFBVN (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Oct 2017 21:21:13 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62370 "EHLO
+        id S1751432AbdJFBjy (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Oct 2017 21:39:54 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50432 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751395AbdJFBVM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Oct 2017 21:21:12 -0400
+        with ESMTP id S1751395AbdJFBjx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Oct 2017 21:39:53 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BCF10985C4;
-        Thu,  5 Oct 2017 21:21:11 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 65CA798ADD;
+        Thu,  5 Oct 2017 21:39:53 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=WZbtk1Spz+Uk
-        RMyVgVdswb/pbzo=; b=dpN1+dA2wrfZDCd5NYELtgZxTrspXBtPmw3peaL5ZFhI
-        p0p23IpvO9WdjZWmCE3Yc9/2O4aBhxNshV3nGAqUdXhabmzjE9YPbXCI/rR1DWhi
-        B2ul2FKdn1TNHUxYnX0ZaXmHsbZh3DeSK6VsY5HLWeAAX3RRoLSyPcV5rNoH1fA=
+        :content-type:content-transfer-encoding; s=sasl; bh=W7vsSsSlZDqK
+        CVQ3Koby35mx/jk=; b=n0gQd61dlsEftuLiYpdJsa2WDaApke3/jIsOJTtmQ+da
+        Uiq/bCS2Kwtlr7Hxj+NLCV+doP2xIyl+L+69EiLlkFmGvsXpRHsvcVOgvYND6h+2
+        UXbgCoY4EtccRafWAcn9eTHovPsF31Z1udExuy6uWmFvoukMJIJskgSe0bMFqX4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=RA6i4N
-        8t3ykHQizut8wzj5ncNgE52pJfDVOLFqMVWjI5Pn1G54YLuFXXOAc4dUvrQRBqOa
-        gEehwiUJk/wnZbryG7r+p15KrtjNaszr3m5/nVQl8P6XfV8ePG/QRhMDgFaJl9KZ
-        6LRll+NEf8p5x1H8UvgEItRxmoiA8Kf5Osf5I=
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=A6aM6Y
+        7ZSApwIVxyEi1blcQoJN0Pe066sY1e7zItD45fgcvnbk2C6KD55UOexDHhHr00lo
+        x8VQ46L4ne+cHyCt+8rMCQP49RWCcXwfE0sqGQetR/mkh8NMn0X7ofjAhQX9P2Hl
+        UNeRbfV8yfw4eFLbfPuJ+5JAj2eBcDuOTF5Ec=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B4370985BF;
-        Thu,  5 Oct 2017 21:21:11 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5CA8D98ADC;
+        Thu,  5 Oct 2017 21:39:53 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2D9FE985BD;
-        Thu,  5 Oct 2017 21:21:11 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C9D7398ADB;
+        Thu,  5 Oct 2017 21:39:52 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 05/12] checkout-index: simplify locking logic
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        =?utf-8?B?Tmd1eQ==?= =?utf-8?B?4buFbiBUaMOhaSBOZ+G7jWM=?= Duy 
+        <pclouds@gmail.com>
+Subject: Re: [PATCH v2 10/12] read-cache: drop explicit `CLOSE_LOCK`-flag
 References: <xmqqy3osiwe6.fsf@gitster.mtv.corp.google.com>
         <cover.1507228170.git.martin.agren@gmail.com>
-        <fe78be885bb4f5a4e021abdf80097cd5c497746f.1507228170.git.martin.agren@gmail.com>
-Date:   Fri, 06 Oct 2017 10:21:10 +0900
-In-Reply-To: <fe78be885bb4f5a4e021abdf80097cd5c497746f.1507228170.git.martin.agren@gmail.com>
-        ("Martin =?utf-8?Q?=C3=85gren=22's?= message of "Thu, 5 Oct 2017 22:32:07
+        <db82bb7dc0828a415e48e654031b3b0d0ed763a5.1507228170.git.martin.agren@gmail.com>
+Date:   Fri, 06 Oct 2017 10:39:51 +0900
+In-Reply-To: <db82bb7dc0828a415e48e654031b3b0d0ed763a5.1507228170.git.martin.agren@gmail.com>
+        ("Martin =?utf-8?Q?=C3=85gren=22's?= message of "Thu, 5 Oct 2017 22:32:12
  +0200")
-Message-ID: <xmqqpoa1ysu1.fsf@gitster.mtv.corp.google.com>
+Message-ID: <xmqqinftyryw.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: A3408BDC-AA34-11E7-9881-8EF31968708C-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 3FCD0302-AA37-11E7-871A-8EF31968708C-77302942!pb-smtp1.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -62,71 +64,41 @@ X-Mailing-List: git@vger.kernel.org
 
 Martin =C3=85gren <martin.agren@gmail.com> writes:
 
-> `newfd` starts out negative. If we then take the lock, `newfd` will
-> become non-negative. We later check for exactly that property before
-> calling `write_locked_index()`. That is, we are simply using `newfd` as
-> a boolean to keep track of whether we took the lock or not. (We always
-> use `newfd` and `lock_file` together, so they really are mirroring each
-> other.)
->
-> Drop `newfd` and check with `is_lock_file_locked()` instead. While at
-> it, move the `static struct lock_file` into `cmd_checkout_index()` and
-> make it non-static. It is only used in this function, and after
-> 076aa2cbd (tempfile: auto-allocate tempfiles on heap, 2017-09-05), we
-> can have lockfiles on the stack.
->
-> Signed-off-by: Martin =C3=85gren <martin.agren@gmail.com>
-> ---
-> v2: New patch.
+> diff --git a/read-cache.c b/read-cache.c
+> index 65f4fe837..1c917eba9 100644
+> --- a/read-cache.c
+> +++ b/read-cache.c
+> @@ -2343,14 +2343,13 @@ static int do_write_locked_index(struct index_s=
+tate *istate, struct lock_file *l
+>  	int ret =3D do_write_index(istate, lock->tempfile, 0);
+>  	if (ret)
+>  		return ret;
+> -	assert((flags & (COMMIT_LOCK | CLOSE_LOCK)) !=3D
+> -	       (COMMIT_LOCK | CLOSE_LOCK));
+>  	if (flags & COMMIT_LOCK)
+>  		return commit_locked_index(lock);
+> -	else if (flags & CLOSE_LOCK)
+> -		return close_lock_file_gently(lock);
+> -	else
+> -		return ret;
+> +	/*
+> +	 * The lockfile already happens to have
+> +	 * been closed, but let's be specific.
+> +	 */
+> +	return close_lock_file_gently(lock);
 
-Well reasoned and explained.  Thanks.
+"already happens to have been" is quite a mouthful, and is not quite
+truthful, as we do not foresee ever wanting to change that (because
+of that stat(2) issue you mentioned).  It might be better to declare
+that do_write_index() closes the lockfile after successfully writing
+the data out to it.  I dunno if that reasoning is strong enough to
+remove this (extra) close, though.
 
->
->  builtin/checkout-index.c | 8 +++-----
->  1 file changed, 3 insertions(+), 5 deletions(-)
->
-> diff --git a/builtin/checkout-index.c b/builtin/checkout-index.c
-> index 39c8be05d..b0e78b819 100644
-> --- a/builtin/checkout-index.c
-> +++ b/builtin/checkout-index.c
-> @@ -129,8 +129,6 @@ static const char * const builtin_checkout_index_us=
-age[] =3D {
->  	NULL
->  };
-> =20
-> -static struct lock_file lock_file;
-> -
->  static int option_parse_stage(const struct option *opt,
->  			      const char *arg, int unset)
->  {
-> @@ -150,7 +148,7 @@ static int option_parse_stage(const struct option *=
-opt,
->  int cmd_checkout_index(int argc, const char **argv, const char *prefix=
-)
->  {
->  	int i;
-> -	int newfd =3D -1;
-> +	struct lock_file lock_file =3D LOCK_INIT;
->  	int all =3D 0;
->  	int read_from_stdin =3D 0;
->  	int prefix_length;
-> @@ -206,7 +204,7 @@ int cmd_checkout_index(int argc, const char **argv,=
- const char *prefix)
->  	if (index_opt && !state.base_dir_len && !to_tempfile) {
->  		state.refresh_cache =3D 1;
->  		state.istate =3D &the_index;
-> -		newfd =3D hold_locked_index(&lock_file, LOCK_DIE_ON_ERROR);
-> +		hold_locked_index(&lock_file, LOCK_DIE_ON_ERROR);
->  	}
-> =20
->  	/* Check out named files first */
-> @@ -251,7 +249,7 @@ int cmd_checkout_index(int argc, const char **argv,=
- const char *prefix)
->  	if (all)
->  		checkout_all(prefix, prefix_length);
-> =20
-> -	if (0 <=3D newfd &&
-> +	if (is_lock_file_locked(&lock_file) &&
->  	    write_locked_index(&the_index, &lock_file, COMMIT_LOCK))
->  		die("Unable to write new index file");
->  	return 0;
+When any of the ce_write() calls in do_write_index() fails, the
+function returns -1 without hitting the close/stat (obviously).
+Somebody very high in the callchain (e.g. write_locked_index())
+would clean it up by calling rollback_lock_file() eventually, so
+that would not be a problem ;-)
+
+
+
