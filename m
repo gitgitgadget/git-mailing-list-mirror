@@ -2,94 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D405320372
-	for <e@80x24.org>; Fri,  6 Oct 2017 19:44:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 62B9320372
+	for <e@80x24.org>; Fri,  6 Oct 2017 20:12:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752426AbdJFTon (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Oct 2017 15:44:43 -0400
-Received: from mail-pf0-f176.google.com ([209.85.192.176]:48464 "EHLO
-        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752378AbdJFTom (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Oct 2017 15:44:42 -0400
-Received: by mail-pf0-f176.google.com with SMTP id n24so10019086pfk.5
-        for <git@vger.kernel.org>; Fri, 06 Oct 2017 12:44:42 -0700 (PDT)
+        id S1752676AbdJFUMg (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Oct 2017 16:12:36 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:45546 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751484AbdJFUMd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Oct 2017 16:12:33 -0400
+Received: by mail-wm0-f66.google.com with SMTP id q124so9666630wmb.0
+        for <git@vger.kernel.org>; Fri, 06 Oct 2017 13:12:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=eTt80R3bM9z0ewH8/8L6f2rBL4VWOBhX2kie1roZy6w=;
-        b=Ws7O7xCKfeWrap/bPQX/tNNmTKGJFJ+d6mos+ae8HuXTyL50mMAfPo+CmGhdacX8IC
-         qRMaxP1AuRGsuXnLNnXIcTRd5pYvdOXBhUSg+hoNV4Jx9nfnJNrELq1xAadIdyEy61Zz
-         dDhOI5Ozj6jqiNUKtHTvERH5aV58F8hJvFVveWQT8RUPl+AiBB2ijW0O9qyEj0uePlm/
-         ZdHYpGBkbAqbUu4iFntGbfOXK3a5LB3KpZBq5eCy977To+wb+9wyS8XyJIXtehAsGQMX
-         xsJ90HQlnlhaZ5uF4s51AWKgmaoosulmRMvENiv8Vl6qIHc2lmmtu13DAEcf+hM35seb
-         KxNQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=dSWHzwI02HbQ0za2jmrCxGNYLUqNGynMg3UJJ0QTVgw=;
+        b=hmcjA6vyDTZHbHlJuNzI3d7xV5X+VyBsOsF/I/C4B6a/H+zGB32PbpYio3fwPCka8j
+         BosGQa9C8O9ucEg6tFnJwTtY4vkhkW+5Px5w0ODYNXDapo3t2yRB12mzrD5UzSY+BBcF
+         GctYDOgVi2TaR73PPEurjY5p3jAjz0FnpblFGcm8mewclYWa6ArOEe5FYNk6QqTmaTJh
+         4mPfmUpKKQiaOsT+u6Pc98vnDPPRKxGrJLyp8asxaR18bIKfT+QoKNsvzot9R77PLoCr
+         2y2c3qoickjn2DKUysp02CrsFl+OSi8G7HFHqu7gZXlFgFz06pJd0VpUfodax/J8h4oZ
+         /HCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=eTt80R3bM9z0ewH8/8L6f2rBL4VWOBhX2kie1roZy6w=;
-        b=j2OPx+bQF1qWA075r5Rbr7BQUtj/T8rNPFvmPGmzh2ob2iylhoJqCv3N3XbhzfAt7e
-         hrNT6kWMIbQJRcxtCNo0a7OjfinjqgVhPt/ZmYl3ACUgoJbVqpdqatl0VCS9sp2eytpd
-         mdE1QG3+uzw93bzGHdnX/q8rOh/338xB1otLgdDtLVe2V1YtbrSRcEV7y63H3jrcWPwP
-         8xRr4SxD+hxfqQJtqDbzVhG+BEF7SN/QzBMKzotE8ZCetGqcp6Cf9Y7uOjYSt5f2OKyl
-         oX5Nk0C8k4XI42EOsSKNlysjD2pwNc6JmnZbe9DzFz9MM2bm0V/0CUq2mSto0stAQApu
-         9muw==
-X-Gm-Message-State: AMCzsaVlTRC0cYZNjUBuBW69Zi9QGzKPiTyhasmSKLnYz93n3dT72z9S
-        MnSoacOJSvHwoFNIYQ4xVWseCzmSWCrmj+RQcs8=
-X-Google-Smtp-Source: AOwi7QDcQBJF5Gm1kRdzAqrnbp/DPGEplJXnfv0m5Rf/XmYSqGnisPUcPQCNZAnx55sLMH2X8deo5iv8ZiC3rRwbTgA=
-X-Received: by 10.98.35.194 with SMTP id q63mr3114829pfj.15.1507319082304;
- Fri, 06 Oct 2017 12:44:42 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=dSWHzwI02HbQ0za2jmrCxGNYLUqNGynMg3UJJ0QTVgw=;
+        b=bKlk9KYfSbUMq+QZkuzIKQL63H4ihKfNFNFzrK3Nw5/5GyAxXue163TTs5i3oDQV70
+         466QCE4CNomlO0zYNy1X83bMBaR/luYoZIlSkrRqfdPNClunCleihf1Bouta9Vw0Xqsl
+         sz9rvn7R+RlWgUiC2UxqGrqZtJ7tZzM/egp3FAY4P+KWxjCDigYz10lNm0gg/fmj7JVk
+         9g/cl+Px6wzteQBPgOPvrinxrFB4nyt7iWwPsvwymXYjoc5qpxXd3wQ8ybfq4Y4L1qlq
+         MKwYle4Pr27t1RjBcalzJuoeOr55eppa6EE7YbjoXRT71u5tJ2/Cav4VOYSwRGGxELq8
+         nDHA==
+X-Gm-Message-State: AMCzsaWXrvJcWpl1Li+A+e1EmGOhe+q2nEd4W2tUdviU2sPyZOFCEMN3
+        LcuNMNA8QXpXBbTWluVv7GOOwhOfc00=
+X-Google-Smtp-Source: AOwi7QChHxSn4HorzrfP2HnpucEicaxXp1DAemo94ggTpZpUCj2GZG4t0jaSjQJBeQNLb9zHjJxNZA==
+X-Received: by 10.28.55.2 with SMTP id e2mr2826707wma.60.1507320752149;
+        Fri, 06 Oct 2017 13:12:32 -0700 (PDT)
+Received: from localhost.localdomain ([2a02:aa16:5782:c100:c938:fbb7:46f8:2405])
+        by smtp.gmail.com with ESMTPSA id h45sm2906522wrf.36.2017.10.06.13.12.30
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 06 Oct 2017 13:12:30 -0700 (PDT)
+From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Michael Haggerty <mhagger@alum.mit.edu>, Jeff King <peff@peff.net>,
+        Paul Tan <pyokagan@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v3 00/12] Re: various lockfile-leaks and -fixes
+Date:   Fri,  6 Oct 2017 22:12:02 +0200
+Message-Id: <cover.1507320376.git.martin.agren@gmail.com>
+X-Mailer: git-send-email 2.15.0.rc0
+In-Reply-To: <CAN0heSqr77dptPG2mixnLdNKKcgD36aPnEFtnTB6Oyip6WfQBA@mail.gmail.com>
+References: <CAN0heSqr77dptPG2mixnLdNKKcgD36aPnEFtnTB6Oyip6WfQBA@mail.gmail.com>
 MIME-Version: 1.0
-Received: by 10.100.156.137 with HTTP; Fri, 6 Oct 2017 12:44:41 -0700 (PDT)
-In-Reply-To: <xmqqvajsv60e.fsf@gitster.mtv.corp.google.com>
-References: <xmqqy3osiwe6.fsf@gitster.mtv.corp.google.com> <cover.1507228170.git.martin.agren@gmail.com>
- <b5fc950e4594fb9dec07ec8872c0df8514d149ff.1507228170.git.martin.agren@gmail.com>
- <xmqqefqhyqyg.fsf@gitster.mtv.corp.google.com> <CAN0heSojqHEQQfwUaGuLH2TjN+aHSFHg4WAvcd5Ksnxd-54YMg@mail.gmail.com>
- <xmqqvajsv60e.fsf@gitster.mtv.corp.google.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Fri, 6 Oct 2017 21:44:41 +0200
-Message-ID: <CAN0heSqr77dptPG2mixnLdNKKcgD36aPnEFtnTB6Oyip6WfQBA@mail.gmail.com>
-Subject: Re: [PATCH v2 11/12] read-cache: leave lock in right state in `write_locked_index()`
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6 October 2017 at 14:02, Junio C Hamano <gitster@pobox.com> wrote:
-> Martin =C3=85gren <martin.agren@gmail.com> writes:
->
->> On 6 October 2017 at 04:01, Junio C Hamano <gitster@pobox.com> wrote:
->>> Martin =C3=85gren <martin.agren@gmail.com> writes:
->>>
->>>> v2: Except for the slightly different documentation in cache.h, this i=
-s
->>>> a squash of the last two patches of v1. I hope the commit message is
->>>> better.
->>>
->>> Yeah, it is long ;-) but readable.
->>
->> "Long but readable"... Yeah. When I rework the previous patch (document
->> the closing-behavior of `do_write_index()`) I could address this. I
->> think there are several interesting details here and I'm not sure which
->> I'd want to leave out, but yeah, they add up...
->
-> I didn't mean "long is bad" at all in this case.
->
-> Certainly, from time to time we find commits with overlong
-> explanation that only states obvious, and they are "long and bad".
-> But I do not think this one falls into the same category as those.
+On 6 October 2017 at 21:44, Martin Ågren <martin.agren@gmail.com> wrote:
+> Ok, thanks. I've got a rerolled series running through the final checks
+> right now. I did end up making this log message a bit more succinct.
 
-Ok, thanks. I've got a rerolled series running through the final checks
-right now. I did end up making this log message a bit more succinct.
+This is v3 of this series. All patches are identical to
+ma/lockfile-fixes in Junio's tree, except 10 and 11.
+
+Martin Ågren (12):
+  sha1_file: do not leak `lock_file`
+  treewide: prefer lockfiles on the stack
+  lockfile: fix documentation on `close_lock_file_gently()`
+  tempfile: fix documentation on `delete_tempfile()`
+  checkout-index: simplify locking logic
+  cache-tree: simplify locking logic
+  apply: move lockfile into `apply_state`
+  apply: remove `newfd` from `struct apply_state`
+  cache.h: document `write_locked_index()`
+  read-cache: drop explicit `CLOSE_LOCK`-flag
+  read-cache: leave lock in right state in `write_locked_index()`
+  read_cache: roll back lock in `update_index_if_able()`
+
+ apply.c                  | 25 ++++++++-----------------
+ apply.h                  |  8 +++-----
+ builtin/am.c             | 27 ++++++++++++---------------
+ builtin/apply.c          |  4 +---
+ builtin/checkout-index.c |  8 +++-----
+ builtin/checkout.c       | 14 ++++++--------
+ builtin/clone.c          |  7 +++----
+ builtin/commit.c         | 10 +++++-----
+ builtin/diff.c           |  7 +++----
+ builtin/difftool.c       |  1 -
+ cache-tree.c             | 12 ++++--------
+ cache.h                  | 25 ++++++++++++++++++++++++-
+ config.c                 | 17 ++++++++---------
+ lockfile.h               |  4 ++--
+ merge-recursive.c        |  6 +++---
+ merge.c                  |  8 +++-----
+ read-cache.c             | 31 +++++++++++++++++--------------
+ sequencer.c              |  1 -
+ sha1_file.c              | 19 ++++++++-----------
+ tempfile.h               |  8 ++++----
+ wt-status.c              |  8 ++++----
+ 21 files changed, 121 insertions(+), 129 deletions(-)
+
+-- 
+2.15.0.rc0
+
