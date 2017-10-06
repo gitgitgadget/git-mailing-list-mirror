@@ -2,95 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D8DA120372
-	for <e@80x24.org>; Fri,  6 Oct 2017 22:10:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F37A520372
+	for <e@80x24.org>; Fri,  6 Oct 2017 22:25:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752122AbdJFWK3 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Oct 2017 18:10:29 -0400
-Received: from mail-qk0-f174.google.com ([209.85.220.174]:43383 "EHLO
-        mail-qk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751917AbdJFWK3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Oct 2017 18:10:29 -0400
-Received: by mail-qk0-f174.google.com with SMTP id w134so19293271qkb.0
-        for <git@vger.kernel.org>; Fri, 06 Oct 2017 15:10:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=1mgnRYHv4MbpRKZRh+TyU6smbaUpt/qKq8tWr4Gqq+c=;
-        b=BOeRQbXiHQfYQo5kz0ctNM+4MA3Of+lKwdbxwdDTUjon7c3PMc+kpkaFOWDS6g6DOC
-         e9BNG316KpNR62joVuhtzt2GevPhvR5jgHcM8VvGVBCS8XI+7n7NRlVki4ufKfiejv21
-         tB9Xy/kSBjaV4LM5D+NzwTvwbhCM+u+4BPdFJcEoSTUZpBKKMQLSYCO71U53ZM3nlWlR
-         HtwBdduhNdCJnuR9HXG8x1BzOIZ2WHKFiBX8zicKjc/8DjjkYKtzhsE7L0V9vHIhXFCy
-         xFjutXdyWlxAe+hAFWZDbzLe6Z9kDTNMgjGHrpGL0+pM2a5fq8SvMtQ2s7fV9huXh4r5
-         iyRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=1mgnRYHv4MbpRKZRh+TyU6smbaUpt/qKq8tWr4Gqq+c=;
-        b=Wvm/eZO8Tm5ZIx/dqxxDurreYKSnnQUrq9qVGt3pDqdoYnGqWvdVf+zcKhKNVLXx6+
-         C/txEo6UGrJdVXBLR7szH1dzgD4z7q8T2ovyQnFinltyVxoswEw9tGFlSDylhAFKeNiR
-         bk+4fMo2fmQb3h1F9Qd2yWQIfWmPIMxEZjnO8cVbAO5KkG/qv6Uh9jq1asxDncVARqML
-         gpmGzKsp9ShfYujk7jMjK8O1OQ2xvx68jFUsLP4jmgzQYHnikwyTwPm+Ly2TYE7o6VoL
-         C8hZjL3wjU9vK2HAtX/ZBXKwSLJCwHxl+7MZ59QXcEpXk660CyFM9qJrzMQcv3W7Q38b
-         VqHQ==
-X-Gm-Message-State: AMCzsaVLcCASnLClW36Qmd2We0dYVviW6CwWK6K0cltCcRJig2z5WiEG
-        jQQga289u63IUwDngWgf0N6/OFORZGC7355OEvS1IRPJH7s=
-X-Google-Smtp-Source: AOwi7QDcq9dyuhs8oQYHD2kEbydiwO0ly4ZsH7n/A/ffcgf0UvabSKGLWbgzg4FVLz58hFkIJ+PRNc/kRkSQ7g/q/Ks=
-X-Received: by 10.55.127.7 with SMTP id a7mr430408qkd.45.1507327828272; Fri,
- 06 Oct 2017 15:10:28 -0700 (PDT)
+        id S1753004AbdJFWZt (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Oct 2017 18:25:49 -0400
+Received: from smtprelay03.ispgateway.de ([80.67.31.26]:10352 "EHLO
+        smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752999AbdJFWZs (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Oct 2017 18:25:48 -0400
+Received: from [89.246.212.34] (helo=sandbox)
+        by smtprelay03.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
+        (Exim 4.89)
+        (envelope-from <hvoigt@hvoigt.net>)
+        id 1e0b3x-0000pv-Ko; Sat, 07 Oct 2017 00:25:45 +0200
+Date:   Sat, 7 Oct 2017 00:25:44 +0200
+From:   Heiko Voigt <hvoigt@hvoigt.net>
+To:     git@vger.kernel.org
+Cc:     sbeller@google.com, jrnieder@gmail.com, Jens.Lehmann@web.de,
+        bmwill@google.com
+Subject: [RFC PATCH v3 0/4] implement fetching of moved submodules
+Message-ID: <20171006222544.GA26642@sandbox>
 MIME-Version: 1.0
-Received: by 10.140.102.46 with HTTP; Fri, 6 Oct 2017 15:10:27 -0700 (PDT)
-In-Reply-To: <20171006220101.GZ19555@aiede.mtv.corp.google.com>
-References: <20171006190006.19623-1-sbeller@google.com> <20171006190006.19623-2-sbeller@google.com>
- <20171006220101.GZ19555@aiede.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 6 Oct 2017 15:10:27 -0700
-Message-ID: <CAGZ79kZhF=-baqPPqTCsbdyybOTV+SdvTqYiRbvsvB1epqpkZQ@mail.gmail.com>
-Subject: Re: [PATCH 2/2] tests: fix diff order arguments in test_cmp
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 6, 2017 at 3:01 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Stefan Beller wrote:
->
->> Fix the argument order for test_cmp. When given the expected
->> result first the diff shows the actual output with '+' and the
->> expectation with '-', which is the convention for our tests.
->>
->> Signed-off-by: Stefan Beller <sbeller@google.com>
->> ---
->
-> Yes, this should make the output from failing tests easier to take in
-> at a glance.
->
-> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
->
-> How did you find these?  E.g. is there a grep pattern that reviewers
-> can use to repeat your results?
+The last iteration can be found here:
 
-The grunge work was done via scrolling through
+https://public-inbox.org/git/20170817105349.GC52233@book.hvoigt.net/
 
-git -C t grep test_cmp
+This is mainly a status update and to let people know that I am still
+working on this.
 
-However it occurred to me that checking for the completeness could be done
-via
+I struggled quite a bit with reviving my original test for the path
+based recursive fetch (first patch). The behavior seems to haved changed
+and simply setting the submodule configuration in .git/config without
+one in .gitmodules does not work anymore. I did not have time to
+investigate whether this was a deliberate change or a maybe a bug?
 
-  git -C t grep test_cmp | \
-    awk '{$1=""; print }  | \ # remove file name from output
-    sort | uniq
+So the solution for now is that I write my fake configuration (to avoid
+skipping submodule handling altogether) into a .gitmodules file.
 
-There are some cases that are still pretty obvious what the
-"actual" and the "expect" is, but they are not included in this patch
-as the code (and file names) looked hairy.
+The second patch (cleanup of a submodule push testcase) was written
+because that currently is the only test failing. It is not meant for
+inclusion but rather as a demonstration of what might be happening when
+we cleanup testcases: Because of the behavioral change above, on first
+sight, it seemed like there was a shortcut in fetch and so on-demand
+fetch without submodule configuration would not be supported anymore.
+
+IIRC there were a lot more tests failing before when I implemented my
+patch without the fallback on paths. So my guess is that some tests have
+been cleaned up to use proper (.gitmodules) submodule setup.
+
+So the thing here is: If we want to make sure that we stay backwards
+compatible by supporting the setup with gitlinks without configuration.
+Then we also should keep tests around that have the plain manual setup
+without .gitmodules files. Just something, I think, we should keep in
+mind.
+
+Apart from the tests nothing has been added in this iteration. Since I
+finally have a working test now I will continue with reviving the
+fallback to paths.
+
+Cheers Heiko
+
+Heiko Voigt (4):
+  fetch: add test to make sure we stay backwards compatible
+  change submodule push test to use proper repository setup
+  implement fetching of moved submodules
+  submodule: simplify decision tree whether to or not to fetch
+
+ submodule.c                    | 155 ++++++++++++++++++++++-------------------
+ t/t5526-fetch-submodules.sh    |  77 +++++++++++++++++++-
+ t/t5531-deep-submodule-push.sh |  29 ++++----
+ 3 files changed, 174 insertions(+), 87 deletions(-)
+
+-- 
+2.10.0.129.g35f6318
+
