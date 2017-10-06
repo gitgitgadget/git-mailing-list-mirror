@@ -2,313 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0FFB020372
-	for <e@80x24.org>; Fri,  6 Oct 2017 22:50:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4333F20372
+	for <e@80x24.org>; Fri,  6 Oct 2017 22:50:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751868AbdJFWuE (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Oct 2017 18:50:04 -0400
-Received: from smtprelay01.ispgateway.de ([80.67.31.39]:53119 "EHLO
-        smtprelay01.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751485AbdJFWuE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Oct 2017 18:50:04 -0400
-Received: from [89.246.212.34] (helo=sandbox)
-        by smtprelay01.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
-        (Exim 4.89)
-        (envelope-from <hvoigt@hvoigt.net>)
-        id 1e0bBx-0003uk-Jz; Sat, 07 Oct 2017 00:34:01 +0200
-Date:   Sat, 7 Oct 2017 00:34:00 +0200
-From:   Heiko Voigt <hvoigt@hvoigt.net>
-To:     git@vger.kernel.org
-Cc:     sbeller@google.com, jrnieder@gmail.com, Jens.Lehmann@web.de,
-        bmwill@google.com
-Subject: [RFC PATCH v3 3/4] implement fetching of moved submodules
-Message-ID: <20171006223400.GD26642@sandbox>
-References: <20171006222544.GA26642@sandbox>
+        id S1752155AbdJFWuy (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Oct 2017 18:50:54 -0400
+Received: from mail-pg0-f44.google.com ([74.125.83.44]:45085 "EHLO
+        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751485AbdJFWux (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Oct 2017 18:50:53 -0400
+Received: by mail-pg0-f44.google.com with SMTP id b192so7532380pga.2
+        for <git@vger.kernel.org>; Fri, 06 Oct 2017 15:50:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=wdR186deMwCHHdPfZs5YfbF3la3Rn4wUAdfx+GMXxhQ=;
+        b=VlSBQDsskcK7z187QNZsGd9aNusSgxXDYzHTRb37OtRu727RZiBoZ3NpU/f7G6OqTA
+         TuOnciqsbYsJw2oAhqUDFFuggaq6uCLny+t3QgxOnPD+4DsEZ66KWfYlO4ISK/a1h3SY
+         T9DumObvS2rkiSjGkz/eArMG8jYrZtrbj/IdgjO/5QVubUmew8sg9lhe1DYDi19B8jdp
+         yeTZxGM+lhzl7nasLfjsAmAPrBgNBMAFylMnjn/6TM9GA2q0rLXeEq+U1qdH0qVjuWCx
+         AB7MEZofhkA2o517RbjbuWMZrw0xD8M4ULJitXnYGyt7MX/23NGItp9yALI6yLo546GN
+         ROGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=wdR186deMwCHHdPfZs5YfbF3la3Rn4wUAdfx+GMXxhQ=;
+        b=J5bT37AZsGxcOJgnTVY4Igllx2jKZ863TYjX/4Q+tQPwiCDrFNCWuYFlVWolsCSl2Q
+         wJoOqMVLXq+nJM2fUPsF+fdRd/fJPVD3NvhYGCVK3h75/mSp5Upwqc5hvH0eQqU8BOI2
+         6ETEURR+DszM87MoAkXKryvr24ByZIzlGJ/sBz+23YAhr5XL1YjsfO31ocge8B0R8MpG
+         nFeohFO472dbmbAL96tEoYipqwQTxkHtCkhChVpMjNgANElmcOcDq75GItMBRPgqtjIc
+         GLpSKQYzS+wVfSBr35sxMd+hBdUcvsx0Mrq4myRfhNjYLb4Mwd6QsqrWq097XeMVJ6e2
+         F7mw==
+X-Gm-Message-State: AMCzsaV4uI3m2ccBpKGFTNSa3mh5qSeLIGWja+byfBmD/QVfOy+1ome8
+        Xnqh38rUaRoJaa6/g2HyFaGUyPC3
+X-Google-Smtp-Source: AOwi7QDcbZqlz1f3nOZSI5lVPtSo/CbohnNG4JMNabbf+0VIv6DM7BTAH8d+1nE078a3J/+uDIvrcw==
+X-Received: by 10.99.168.13 with SMTP id o13mr3217667pgf.435.1507330252562;
+        Fri, 06 Oct 2017 15:50:52 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:78c3:3d0d:a9b5:4320])
+        by smtp.gmail.com with ESMTPSA id k8sm4339183pgt.22.2017.10.06.15.50.51
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 06 Oct 2017 15:50:52 -0700 (PDT)
+Date:   Fri, 6 Oct 2017 15:50:49 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [Question] Documenting platform implications on CVE to git
+Message-ID: <20171006225049.GA19555@aiede.mtv.corp.google.com>
+References: <000801d33ea7$04a7c240$0df746c0$@nexbridge.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20171006222544.GA26642@sandbox>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+In-Reply-To: <000801d33ea7$04a7c240$0df746c0$@nexbridge.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We store the changed submodules paths to calculate which submodule needs
-fetching. This does not work for moved submodules since their paths do
-not stay the same in case of a moved submodules. In case of new
-submodules we do not have a path in the current checkout, since they
-just appeared in this fetch.
+Hi Randall,
 
-It is more general to collect the submodule names for changes instead of
-their paths to include the above cases.
+Randall S. Becker wrote:
 
-With the change described above we implement 'on-demand' fetching of
-changes in moved submodules.
+> I wonder whether there is some mechanism for providing official responses
+> from platform ports relating to security CVE reports, like CVE-2017-14867.
 
-Note: This does only work when repositories have a .gitmodules file. In
-other words: We now require a name for a submodule repository.
+This question is too abstract for me.  Can you say more concretely
+what you are trying to do?
 
-Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
----
+E.g. are you asking how you would communicate to users of your port
+that CVE-2017-14867 does not apply to them?  Or are you asking where
+to start a conversation about who a bug applies to?  Or something
+else?
 
-No changes from the previous version here.
+Thanks,
+Jonathan
 
- submodule.c                 | 91 +++++++++++++++++++++++++--------------------
- t/t5526-fetch-submodules.sh | 35 +++++++++++++++++
- 2 files changed, 85 insertions(+), 41 deletions(-)
-
-diff --git a/submodule.c b/submodule.c
-index 63e7094..0c586a0 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -21,7 +21,7 @@
- #include "parse-options.h"
- 
- static int config_update_recurse_submodules = RECURSE_SUBMODULES_OFF;
--static struct string_list changed_submodule_paths = STRING_LIST_INIT_DUP;
-+static struct string_list changed_submodule_names = STRING_LIST_INIT_DUP;
- static int initialized_fetch_ref_tips;
- static struct oid_array ref_tips_before_fetch;
- static struct oid_array ref_tips_after_fetch;
-@@ -674,11 +674,11 @@ const struct submodule *submodule_from_ce(const struct cache_entry *ce)
- }
- 
- static struct oid_array *submodule_commits(struct string_list *submodules,
--					   const char *path)
-+					   const char *name)
- {
- 	struct string_list_item *item;
- 
--	item = string_list_insert(submodules, path);
-+	item = string_list_insert(submodules, name);
- 	if (item->util)
- 		return (struct oid_array *) item->util;
- 
-@@ -687,39 +687,34 @@ static struct oid_array *submodule_commits(struct string_list *submodules,
- 	return (struct oid_array *) item->util;
- }
- 
-+struct collect_changed_submodules_cb_data {
-+	struct string_list *changed;
-+	const struct object_id *commit_oid;
-+};
-+
- static void collect_changed_submodules_cb(struct diff_queue_struct *q,
- 					  struct diff_options *options,
- 					  void *data)
- {
-+	struct collect_changed_submodules_cb_data *me = data;
-+	struct string_list *changed = me->changed;
-+	const struct object_id *commit_oid = me->commit_oid;
- 	int i;
--	struct string_list *changed = data;
- 
- 	for (i = 0; i < q->nr; i++) {
- 		struct diff_filepair *p = q->queue[i];
- 		struct oid_array *commits;
-+		const struct submodule *submodule;
-+
- 		if (!S_ISGITLINK(p->two->mode))
- 			continue;
- 
--		if (S_ISGITLINK(p->one->mode)) {
--			/*
--			 * NEEDSWORK: We should honor the name configured in
--			 * the .gitmodules file of the commit we are examining
--			 * here to be able to correctly follow submodules
--			 * being moved around.
--			 */
--			commits = submodule_commits(changed, p->two->path);
--			oid_array_append(commits, &p->two->oid);
--		} else {
--			/* Submodule is new or was moved here */
--			/*
--			 * NEEDSWORK: When the .git directories of submodules
--			 * live inside the superprojects .git directory some
--			 * day we should fetch new submodules directly into
--			 * that location too when config or options request
--			 * that so they can be checked out from there.
--			 */
-+		submodule = submodule_from_path(commit_oid, p->two->path);
-+		if (!submodule)
- 			continue;
--		}
-+
-+		commits = submodule_commits(changed, submodule->name);
-+		oid_array_append(commits, &p->two->oid);
- 	}
- }
- 
-@@ -742,11 +737,14 @@ static void collect_changed_submodules(struct string_list *changed,
- 
- 	while ((commit = get_revision(&rev))) {
- 		struct rev_info diff_rev;
-+		struct collect_changed_submodules_cb_data data;
-+		data.changed = changed;
-+		data.commit_oid = &commit->object.oid;
- 
- 		init_revisions(&diff_rev, NULL);
- 		diff_rev.diffopt.output_format |= DIFF_FORMAT_CALLBACK;
- 		diff_rev.diffopt.format_callback = collect_changed_submodules_cb;
--		diff_rev.diffopt.format_callback_data = changed;
-+		diff_rev.diffopt.format_callback_data = &data;
- 		diff_tree_combined_merge(commit, 1, &diff_rev);
- 	}
- 
-@@ -894,7 +892,7 @@ int find_unpushed_submodules(struct oid_array *commits,
- 		const char *remotes_name, struct string_list *needs_pushing)
- {
- 	struct string_list submodules = STRING_LIST_INIT_DUP;
--	struct string_list_item *submodule;
-+	struct string_list_item *name;
- 	struct argv_array argv = ARGV_ARRAY_INIT;
- 
- 	/* argv.argv[0] will be ignored by setup_revisions */
-@@ -905,12 +903,16 @@ int find_unpushed_submodules(struct oid_array *commits,
- 
- 	collect_changed_submodules(&submodules, &argv);
- 
--	for_each_string_list_item(submodule, &submodules) {
--		struct oid_array *commits = submodule->util;
--		const char *path = submodule->string;
-+	for_each_string_list_item(name, &submodules) {
-+		struct oid_array *commits = name->util;
-+		const struct submodule *submodule;
-+
-+		submodule = submodule_from_name(&null_oid, name->string);
-+		if (!submodule)
-+			continue;
- 
--		if (submodule_needs_pushing(path, commits))
--			string_list_insert(needs_pushing, path);
-+		if (submodule_needs_pushing(submodule->path, commits))
-+			string_list_insert(needs_pushing, submodule->path);
- 	}
- 
- 	free_submodules_oids(&submodules);
-@@ -1065,7 +1067,7 @@ static void calculate_changed_submodule_paths(void)
- {
- 	struct argv_array argv = ARGV_ARRAY_INIT;
- 	struct string_list changed_submodules = STRING_LIST_INIT_DUP;
--	const struct string_list_item *item;
-+	const struct string_list_item *name;
- 
- 	/* No need to check if there are no submodules configured */
- 	if (!submodule_from_path(NULL, NULL))
-@@ -1080,16 +1082,20 @@ static void calculate_changed_submodule_paths(void)
- 
- 	/*
- 	 * Collect all submodules (whether checked out or not) for which new
--	 * commits have been recorded upstream in "changed_submodule_paths".
-+	 * commits have been recorded upstream in "changed_submodule_names".
- 	 */
- 	collect_changed_submodules(&changed_submodules, &argv);
- 
--	for_each_string_list_item(item, &changed_submodules) {
--		struct oid_array *commits = item->util;
--		const char *path = item->string;
-+	for_each_string_list_item(name, &changed_submodules) {
-+		struct oid_array *commits = name->util;
-+		const struct submodule *submodule;
-+
-+		submodule = submodule_from_name(&null_oid, name->string);
-+		if (!submodule)
-+			continue;
- 
--		if (!submodule_has_commits(path, commits))
--			string_list_append(&changed_submodule_paths, path);
-+		if (!submodule_has_commits(submodule->path, commits))
-+			string_list_append(&changed_submodule_names, name->string);
- 	}
- 
- 	free_submodules_oids(&changed_submodules);
-@@ -1175,7 +1181,8 @@ static int get_next_submodule(struct child_process *cp,
- 				if (fetch_recurse == RECURSE_SUBMODULES_OFF)
- 					continue;
- 				if (fetch_recurse == RECURSE_SUBMODULES_ON_DEMAND) {
--					if (!unsorted_string_list_lookup(&changed_submodule_paths, ce->name))
-+					if (!unsorted_string_list_lookup(&changed_submodule_names,
-+									 submodule->name))
- 						continue;
- 					default_argv = "on-demand";
- 				}
-@@ -1183,13 +1190,15 @@ static int get_next_submodule(struct child_process *cp,
- 				if (spf->default_option == RECURSE_SUBMODULES_OFF)
- 					continue;
- 				if (spf->default_option == RECURSE_SUBMODULES_ON_DEMAND) {
--					if (!unsorted_string_list_lookup(&changed_submodule_paths, ce->name))
-+					if (!unsorted_string_list_lookup(&changed_submodule_names,
-+									  submodule->name))
- 						continue;
- 					default_argv = "on-demand";
- 				}
- 			}
- 		} else if (spf->command_line_option == RECURSE_SUBMODULES_ON_DEMAND) {
--			if (!unsorted_string_list_lookup(&changed_submodule_paths, ce->name))
-+			if (!unsorted_string_list_lookup(&changed_submodule_names,
-+							 submodule->name))
- 				continue;
- 			default_argv = "on-demand";
- 		}
-@@ -1282,7 +1291,7 @@ int fetch_populated_submodules(const struct argv_array *options,
- 
- 	argv_array_clear(&spf.args);
- out:
--	string_list_clear(&changed_submodule_paths, 1);
-+	string_list_clear(&changed_submodule_names, 1);
- 	return spf.result;
- }
- 
-diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
-index 43a22f6..a552ad4 100755
---- a/t/t5526-fetch-submodules.sh
-+++ b/t/t5526-fetch-submodules.sh
-@@ -570,4 +570,39 @@ test_expect_success 'fetching submodule into a broken repository' '
- 	test_must_fail git -C dst fetch --recurse-submodules
- '
- 
-+test_expect_success "fetch new commits when submodule got renamed" '
-+	git clone . downstream_rename &&
-+	(
-+		cd downstream_rename &&
-+		git submodule update --init &&
-+# NEEDSWORK: we omitted --recursive for the submodule update here since
-+# that does not work. See test 7001 for mv "moving nested submodules"
-+# for details. Once that is fixed we should add the --recursive option
-+# here.
-+		git checkout -b rename &&
-+		git mv submodule submodule_renamed &&
-+		(
-+			cd submodule_renamed &&
-+			git checkout -b rename_sub &&
-+			echo a >a &&
-+			git add a &&
-+			git commit -ma &&
-+			git push origin rename_sub &&
-+			git rev-parse HEAD >../../expect
-+		) &&
-+		git add submodule_renamed &&
-+		git commit -m "update renamed submodule" &&
-+		git push origin rename
-+	) &&
-+	(
-+		cd downstream &&
-+		git fetch --recurse-submodules=on-demand &&
-+		(
-+			cd submodule &&
-+			git rev-parse origin/rename_sub >../../actual
-+		)
-+	) &&
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-2.10.0.129.g35f6318
-
+> For example, the Perl implementation on HPE NonStop does not include the SCM
+> module so commands relating cvsserver may not be available - one thing to be
+> verified so is a question #1. But the real question (#2) is: where would one
+> most appropriately document issues like this to be consistent with other
+> platform responses relating to git?
+>
+> Thanks,
+> Randall
+>
+> -- Brief whoami: NonStop&UNIX developer since approximately
+> UNIX(421664400)/NonStop(211288444200000000)
+> -- In my real life, I talk too much.
