@@ -2,83 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 99DC91FC43
-	for <e@80x24.org>; Fri,  6 Oct 2017 17:58:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 763351FC43
+	for <e@80x24.org>; Fri,  6 Oct 2017 18:03:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752754AbdJFR6Z (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Oct 2017 13:58:25 -0400
-Received: from mout.web.de ([217.72.192.78]:50248 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752746AbdJFR6X (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Oct 2017 13:58:23 -0400
-Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MK1s1-1dz9Rd1U6X-001UG1; Fri, 06
- Oct 2017 19:58:16 +0200
-Date:   Fri, 6 Oct 2017 19:58:15 +0200
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Robert Dailey <rcdailey.lists@gmail.com>, Git <git@vger.kernel.org>
-Subject: Re: Line ending normalization doesn't work as expected
-Message-ID: <20171006175815.GA31970@tor.lan>
-References: <958c9b03-062c-0bea-3b25-939a36659f32@web.de>
- <CAHd499AD5Kgbp-vxXTnEPkb-Mb5oEeXhaRO5kGniDdqmXwd2QQ@mail.gmail.com>
- <88c57b88-ef2c-d7db-15e2-12791d4cb201@web.de>
- <xmqq8tgrhdt0.fsf@gitster.mtv.corp.google.com>
- <CAHd499BCMOcur6NRbKfwd81zpnyzoiVCY54d=UmGpAhbD7AVTA@mail.gmail.com>
- <20171004211734.GA25379@tor.lan>
- <xmqq7ewa9xw6.fsf@gitster.mtv.corp.google.com>
- <xmqqo9pm8e4l.fsf@gitster.mtv.corp.google.com>
- <20171005214248.GA31593@tor.lan>
- <xmqqa8156rok.fsf@gitster.mtv.corp.google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqa8156rok.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Provags-ID: V03:K0:0o6gQBp4kYueJoRpdTijppk8ywNDvFcMy9QvC5z3fMiqi7mIjvB
- BgtVaRWTgj/rusxYg7y5P3NW8o0dUJzNeqBoc0I6TX/sdz4qmX47Sq8rv7N+NiYR0RfId8g
- 8PLvzxlp7XHZg3eGWWtTx6GAeKSdbUqJ1uUHJ/r3wDX0zIBAby+MwzzlaE1z/BNSu8T5Xav
- VRXihUILTe2sPVQE0d78g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:BcnedS8Apek=:wCpS2V9IwMsqjpSAeJ7p+V
- oyRIs2d2IETjOSV0PxBKFpOxF9Hcr+Ij9MNDnjBB/rTz4BJBV33zz6yWK1sqHyd2rTPoQvEtx
- bRgL+1H7NJUo66epva09K2U/evbOdmYgqDxRjAEYhbpSsnsRqvl4z5vZ5KuKU0ZUWb/aHyK8W
- zDcYhtuomTZ4Ql+fUstHdtg/2cBnFyo+rLldnPNHa/l+6HbCKFCAXNBoNaHYXA8zd3QJNNOYh
- FTr5yDy5fHUJX19FjzjMHXATlcHU4PjMporNu83g/Crz5HsqzM5g4itImXHyI8UH9hZj29mpR
- JvqSrxU/YsJNWsps3OG049d2jFkny44o//P7Swz3jZyQRbRhQ32wpLZfQe9bjHX1BhzbfVYnH
- C1+nx/Xpk0/RRYpHMUkejUIc/O9igJLPPEytM0CBygBJCqSQvWrSIwabAN9MjPHYScWbA80bg
- 7S1rGva084lzZIZMic3FPDgwnWg/HJzaAR335c0pzTeMeZrzegeV+Ep1SXsNQbKGEOjxDHsQh
- 84DkGRwJLrMsSa4QWQM8tKOzuYEyoZseIQOVPdMZwksIXSg1ziJjqyGGCqrJyXAgec9pLd3SM
- 0Xqs2Z533XqgY7RV4U2hEn/BtXNtzDc+9ov6bXEl62u2naH8JgZolWmRxMun25n2rjxgUkvdk
- d0EGzykJIJNC/QFgDXksfjc3Ew6WahI+XQ4e9WxuD4zhGo+KhNWz7I5YJgULXtr4JMKdXx3sy
- 5OywxOrDzneEXrGk+GTJke6uUogTRp9HQHsifDY+DlZuyeUa7wyk6rG6qJA4BaT0K6JALNUKM
- PmZ6tEzjLJGag1s1B64VsCMmoKv6w==
+        id S1752518AbdJFSDK (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Oct 2017 14:03:10 -0400
+Received: from wp156.webpack.hosteurope.de ([80.237.132.163]:59720 "EHLO
+        wp156.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752428AbdJFSDJ (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 6 Oct 2017 14:03:09 -0400
+Received: from p5099125b.dip0.t-ipconnect.de ([80.153.18.91] helo=localhost.localdomain); authenticated
+        by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        id 1e0Wxn-0004j6-CN; Fri, 06 Oct 2017 20:03:07 +0200
+From:   Thomas Braun <thomas.braun@virtuell-zuhause.de>
+To:     git@vger.kernel.org
+Cc:     sbeller@google.com, gitster@pobox.com,
+        Thomas Braun <thomas.braun@virtuell-zuhause.de>
+Subject: [PATCH v2 1/1] completion: add --broken and --dirty to describe
+Date:   Fri,  6 Oct 2017 20:02:47 +0200
+Message-Id: <20171006180247.26718-1-thomas.braun@virtuell-zuhause.de>
+X-Mailer: git-send-email 2.14.2.746.g8fb8a945bc.dirty
+In-Reply-To: <20171005212344.22887-1-thomas.braun@virtuell-zuhause.de>
+References: <20171005212344.22887-1-thomas.braun@virtuell-zuhause.de>
+X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1507312989;0a9a4bea;
+X-HE-SMSGID: 1e0Wxn-0004j6-CN
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 06, 2017 at 09:33:31AM +0900, Junio C Hamano wrote:
-> Torsten Bögershausen <tboegi@web.de> writes:
-> 
-> > Before we put this into stone:
-> > Does it make sense to say "renormalize" instead of "rehash" ?
-> > (That term does exist already for merge.
-> >  And rehash is more a technical term,  rather then a user-point-of-view explanation)
-> 
-> I do not mind "renormalize" at all.
-> 
-> As to the toy patch, I think it needs to (at least by default) turn
-> off the add_new_files codepath, and be allowed to work without any
-> pathspec (in which case all tracked paths should be renormalized).
-> 
+When the flags for broken and dirty were implemented in
+b0176ce6b5 (builtin/describe: introduce --broken flag, 2017-03-21)
+and 9f67d2e827 (Teach "git describe" --dirty option, 2009-10-21)
+the completion was not updated, although these flags are useful
+completions. Add them.
 
-OK, then I will pick up your patch in a couple of days/weeks, and push it further then
-(Documentation, test cases, other ?)
+Signed-off-by: Thomas Braun <thomas.braun@virtuell-zuhause.de>
+Helped-by: Stefan Beller <sbeller@google.com>
+---
+ contrib/completion/git-completion.bash | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index d934417475..0e16f017a4 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1385,7 +1385,7 @@ _git_describe ()
+ 		__gitcomp "
+ 			--all --tags --contains --abbrev= --candidates=
+ 			--exact-match --debug --long --match --always --first-parent
+-			--exclude
++			--exclude --dirty --broken
+ 			"
+ 		return
+ 	esac
+-- 
+2.14.2.746.g8fb8a945bc.dirty
 
