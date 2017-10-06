@@ -2,59 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C78FC20372
-	for <e@80x24.org>; Fri,  6 Oct 2017 21:12:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3B29420372
+	for <e@80x24.org>; Fri,  6 Oct 2017 21:56:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752428AbdJFVMy (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Oct 2017 17:12:54 -0400
-Received: from mail-qt0-f196.google.com ([209.85.216.196]:52775 "EHLO
-        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751618AbdJFVMx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Oct 2017 17:12:53 -0400
-Received: by mail-qt0-f196.google.com with SMTP id o52so33837517qtc.9
-        for <git@vger.kernel.org>; Fri, 06 Oct 2017 14:12:53 -0700 (PDT)
+        id S1751515AbdJFV4G (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Oct 2017 17:56:06 -0400
+Received: from mail-qk0-f194.google.com ([209.85.220.194]:37174 "EHLO
+        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751412AbdJFV4F (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Oct 2017 17:56:05 -0400
+Received: by mail-qk0-f194.google.com with SMTP id a12so10065373qka.4
+        for <git@vger.kernel.org>; Fri, 06 Oct 2017 14:56:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:sender:in-reply-to:references:from:date:message-id
          :subject:to:cc;
-        bh=ZxFD4cXOJsFCofXT/SifqRciih1baKtOUZYTTqZ2i8s=;
-        b=eha2NzYn7AraiA2IDAFdbZM7vDARnhyneUaKCvsJTdFRphWZQwEHQveM5b6DPQTedm
-         ndv6lMY4phTELgZpVTXhS2u6Go1pDwR3rsUBrIEVTBJVnl4mbUJi7XXkrvVqHTrZKvv9
-         evogdOaLwEKh9SXf1GSvSY/dEctpi79MXE5IzWvH9LqCzAvWkAQfZr6EkYba5kLyXZKd
-         UskJ+cEr3Mh4i9cGkJsXaGL+nplavjGqaoI/KLdb0hmLu88jc3VtNCOXTiyWhWCePbZc
-         xXCwivlfjDL138X1bHvyBAXdidmFYcDT98E+KYafJ0sxwPMUVuWGSaxose3sltcssHsq
-         /itw==
+        bh=OGSuW8lxiGjz4UztEUXdAMOa6P0PBuQiwDELuKLJP8M=;
+        b=egbaRA/chwWFxjiADdLzL/rUXRfMvNiImquKspRc6pNDa2VNf4qxwa4STFbeHwWXld
+         Eav2Vbs3I9Q4oZ10khjRfcyvhrzhZtHbe3E44ebTlWB+3BpVTI1K40xxB5Z9V3VN//Ql
+         g3Q41g7p5gkDMaL/VeWcgTibay/SY8MtH0apj2s4sn2bTcgYeZ9Qiznj7TrnJhfjzY9e
+         iBESiOtViaj3QhV03Mwh3pTrHiIz7VBDo+4mkr5BMs9qLkjcTPWALtIt810Dns/dVzhE
+         prD6+BdDYrGDI27rt/rAqXPx6sI+myE8nZDh3rfXDEeqcW9/2uDxQOlg/1BeihWXRtCp
+         KSGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
          :date:message-id:subject:to:cc;
-        bh=ZxFD4cXOJsFCofXT/SifqRciih1baKtOUZYTTqZ2i8s=;
-        b=NzeZa9lNcSn8CAZhx076EZjVWZVTxELEoosdqBfhzb3zCmJ3EpBbLLB27m/wWiFfc+
-         +P+YlPaRcGcIi/ZI8qx6f/LWdSAl1iT9ZNdpSOlCumpZDDaFcDtq05yrdQ5iHVAMz3TD
-         sDJPCXOJllx4plHuDctvAUgzPbwu4buwTDOfwtM3O5I3W1773pz6vCqZ+QD7gMPGImv9
-         tR5Rk3fESD1rjCBwbPCDqtWjHxoAjGdsBALoVwf088DaEu8XcVItjYy0KQ5H4lnYtKsT
-         N4qb954bh4AHFR0cW4psZ0sWQCMCjKxari0R9pxKDaXVQuow3Nho/7TIJZ7JBdwPm7EO
-         0btg==
-X-Gm-Message-State: AMCzsaX8H4ElC2li713UD/pwLOGJehObrp1nyq7QYz3gAf0kTALLuWzk
-        tMk5YhE96kkXiVlkJze2bILl1LQJURQo6b+XQz+18g==
-X-Google-Smtp-Source: AOwi7QATyECPV+qhgTzMUcJ5PjDP3jId7yYBIChuBdy8/uId2jAYbMoqHibaGKK8VHUTof/qHPqvuCJ9/c/4qTbKF/E=
-X-Received: by 10.200.33.131 with SMTP id 3mr4866635qty.177.1507324372445;
- Fri, 06 Oct 2017 14:12:52 -0700 (PDT)
+        bh=OGSuW8lxiGjz4UztEUXdAMOa6P0PBuQiwDELuKLJP8M=;
+        b=h/xBcl+Ci8boA08rJ0fUcXCl6KiKalqdFyCWUrRLxcIh0cfXZyHLGV25ZjP8IQGOde
+         ni4UzD9we8YPu936xWq7YDaQkYpFkIQVavS51aQzGLgHz+MVmgjGyndMWkar2zWPMxsA
+         3qEnn9JyiEc/OVnPpxaf8SlfT7P3IL7uiHiXOR+Hu4tjzyJYmitNUJqIiq/0SmD7gHWu
+         AkvVGagTIJRUY6d6sDhAgJFmmU40SpJ+LPo4wl9Gmi1Yn7wpXI88Z0nf8W+P3woIP+aE
+         yH4MnJVrUVzXr7XzcFn6h9t76DpePyROS2oE/h69mXp8rywN4JKhNY9368mxJXrJSRvY
+         aMQw==
+X-Gm-Message-State: AMCzsaVExtWmoNHCkl1hm4Q8nMwMs1GvfLKQDHdAD6hD3kFSuLcHTnmo
+        AdemckdLm8gV6jvBlR3dqzIFSMWuPpv8rHo/OTHLRQ==
+X-Google-Smtp-Source: AOwi7QB4fqHzdwHv7LbIvJEM27nT3//7AmmnuO/gBUP/j4tg3vk5/m0hILBjKNAXYn9PT6GVRgyg4xVe7b1LeacLBDY=
+X-Received: by 10.55.151.196 with SMTP id z187mr325026qkd.135.1507326964753;
+ Fri, 06 Oct 2017 14:56:04 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.12.146.118 with HTTP; Fri, 6 Oct 2017 14:12:52 -0700 (PDT)
-In-Reply-To: <20171006132415.2876-2-pc44800@gmail.com>
+Received: by 10.12.146.118 with HTTP; Fri, 6 Oct 2017 14:56:04 -0700 (PDT)
+In-Reply-To: <20171006132415.2876-3-pc44800@gmail.com>
 References: <xmqqy3ouqruh.fsf@gitster.mtv.corp.google.com> <20171006132415.2876-1-pc44800@gmail.com>
- <20171006132415.2876-2-pc44800@gmail.com>
+ <20171006132415.2876-3-pc44800@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 6 Oct 2017 17:12:52 -0400
-X-Google-Sender-Auth: joGzeZgl59J3xgtY29o6flWGqhA
-Message-ID: <CAPig+cTEMH=RVfqekuP-oWOoRmNWEdvdFZz4bOdS321oND1Ypg@mail.gmail.com>
-Subject: Re: [PATCH v7 1/3] submodule--helper: introduce get_submodule_displaypath()
+Date:   Fri, 6 Oct 2017 17:56:04 -0400
+X-Google-Sender-Auth: oD1AvdhSCD2TijY8l2rA1gxkfZ8
+Message-ID: <CAPig+cT31XM9nW7sytukbQQ_O_15np6oepazKJaoNuHey+kiBA@mail.gmail.com>
+Subject: Re: [PATCH v7 2/3] submodule--helper: introduce for_each_listed_submodule()
 To:     Prathamesh Chavan <pc44800@gmail.com>
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Christian Couder <christian.couder@gmail.com>,
@@ -66,144 +66,135 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I didn't find a URL in the cover letter pointing at previous
-iterations of this patch series and related discussions, so forgive me
-if comments below merely repeat what was said earlier...
+Same disclaimer as in my review of patch 1/3: I didn't see a URL in
+the cover letter pointing at discussions of earlier iterations, so
+below comments may be at odds with what went on previously...
 
 On Fri, Oct 6, 2017 at 9:24 AM, Prathamesh Chavan <pc44800@gmail.com> wrote:
-> Introduce function get_submodule_displaypath() to replace the code
-> occurring in submodule_init() for generating displaypath of the
-> submodule with a call to it.
+> Introduce function for_each_listed_submodule() and replace a loop
+> in module_init() with a call to it.
 >
-> This new function will also be used in other parts of the system
-> in later patches.
+> The new function will also be used in other parts of the
+> system in later patches.
 >
 > Signed-off-by: Prathamesh Chavan <pc44800@gmail.com>
 > ---
 > diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> @@ -219,6 +219,26 @@ static int resolve_relative_url_test(int argc, const char **argv, const char *pr
-> +/* the result should be freed by the caller. */
-> +static char *get_submodule_displaypath(const char *path, const char *prefix)
-> +{
-> +       const char *super_prefix = get_super_prefix();
+> @@ -14,6 +14,11 @@
+>  #include "refs.h"
+>  #include "connect.h"
+>
+> +#define OPT_QUIET (1 << 0)
 > +
-> +       if (prefix && super_prefix) {
-> +               BUG("cannot have prefix '%s' and superprefix '%s'",
-> +                   prefix, super_prefix);
-> +       } else if (prefix) {
-> +               struct strbuf sb = STRBUF_INIT;
-> +               char *displaypath = xstrdup(relative_path(path, prefix, &sb));
-> +               strbuf_release(&sb);
-> +               return displaypath;
-> +       } else if (super_prefix) {
-> +               return xstrfmt("%s%s", super_prefix, path);
-> +       } else {
-> +               return xstrdup(path);
-> +       }
+> +typedef void (*each_submodule_fn)(const struct cache_entry *list_item,
+> +                                 void *cb_data);
+
+What is the reason for having the definition of 'each_submodule_fn' so
+far removed textually from its first reference by
+for_each_listed_submodule() below?
+
+>  static char *get_default_remote(void)
+>  {
+>         char *dest = NULL, *ret;
+> @@ -348,7 +353,23 @@ static int module_list(int argc, const char **argv, const char *prefix)
+>         return 0;
+>  }
+>
+> -static void init_submodule(const char *path, const char *prefix, int quiet)
+> +static void for_each_listed_submodule(const struct module_list *list,
+> +                                     each_submodule_fn fn, void *cb_data)
+> +{
+> +       int i;
+> +       for (i = 0; i < list->nr; i++)
+> +               fn(list->entries[i], cb_data);
 > +}
 
-At first glance, this appears to be a simple code-movement patch which
-shouldn't require deep inspection by a reviewer, however, upon closer
-examination, it turns out that it is doing rather more than that,
-which increases reviewer burden, especially since these additional
-changes are not mentioned in the commit message. At a minimum, it
-includes these changes:
+I'm very curious about the justification for introducing a for-each
+function for what amounts to the simplest sort of loop possible: a
+canonical for-loop with a one-line body. I could easily understand the
+desire for such a function if either the loop conditions or the body
+of the loop, or both, were complex, but this does not seem to be the
+case. Even the callers of this new function, in this patch and in 3/3,
+are as simple as possible: one-liners (simple function calls).
 
-* factors out calls to get_super_prefix()
-* adds extra context to the "BUG" message
-* changes die("BUG...") to BUG(...)
-* allocates/releases a strbuf
-* changes assignments to returns
+Although this sort of for-each function can, at times, be helpful,
+there are costs: extra boilerplate and increased complexity for
+clients since it requires callback functions and (optionally) callback
+data. The separation of logic into a callback function can make code
+more difficult to reason about than when it is simply the body of a
+for-loop.
 
-The final two are obvious necessary (or clarifying) changes which a
-reviewer would expect to see in a patch which factors code out to its
-own function; the others not so.
+So, unless the plan for the future is that this for-each function will
+have considerable additional functionality baked into it, I'm having a
+difficult time understanding why this change is desirable.
 
-This isn't to say that the other changes are not reasonable -- they
-are -- but if one of your goals is to make the patches easy for
-reviewers to digest, then you should make the changes as obvious as
-possible for reviewers to spot. One way would be to mention in the
-commit message that you're taking the opportunity to also make these
-particular cleanups to the code. A more common approach is to place
-the various cleanups in preparatory patches before this one, with one
-cleanup per patch. I'd prefer to see the latter (if my opinion carries
-any weight).
+> +struct init_cb {
+> +       const char *prefix;
+> +       unsigned int flags;
+> +};
+> +
+> +#define INIT_CB_INIT { NULL, 0 }
 
-More below...
+Why are these definitions so far removed from init_submodule_cb() below?
 
-> @@ -334,15 +354,7 @@ static void init_submodule(const char *path, const char *prefix, int quiet)
+> +static void init_submodule(const char *path, const char *prefix,
+> +                          unsigned int flags)
+>  {
+>         const struct submodule *sub;
 >         struct strbuf sb = STRBUF_INIT;
->         char *upd = NULL, *url = NULL, *displaypath;
->
-> -       if (prefix && get_super_prefix())
-> -               die("BUG: cannot have prefix and superprefix");
-> -       else if (prefix)
-> -               displaypath = xstrdup(relative_path(path, prefix, &sb));
-> -       else if (get_super_prefix()) {
-> -               strbuf_addf(&sb, "%s%s", get_super_prefix(), path);
-> -               displaypath = strbuf_detach(&sb, NULL);
-> -       } else
-> -               displaypath = xstrdup(path);
-> +       displaypath = get_submodule_displaypath(path, prefix);
->
->         sub = submodule_from_path(&null_oid, path);
->
-> @@ -357,9 +369,9 @@ static void init_submodule(const char *path, const char *prefix, int quiet)
->          * Set active flag for the submodule being initialized
->          */
->         if (!is_submodule_active(the_repository, path)) {
-> -               strbuf_reset(&sb);
->                 strbuf_addf(&sb, "submodule.%s.active", sub->name);
->                 git_config_set_gently(sb.buf, "true");
-> +               strbuf_reset(&sb);
+> @@ -410,7 +431,7 @@ static void init_submodule(const char *path, const char *prefix, int quiet)
+>                 if (git_config_set_gently(sb.buf, url))
+>                         die(_("Failed to register url for submodule path '%s'"),
+>                             displaypath);
+> -               if (!quiet)
+> +               if (!(flags & OPT_QUIET))
 
-This strbuf_reset() movement, and those below, are pretty much just
-"noise" changes. They add extra burden to the review process without
-really improving the code. The reason they add to reviewer burden is
-that they do not seem to be related to the intention stated in the
-commit message, so the reviewer must spend extra time trying to
-understand their purpose and correctness.
+This change of having init_submodule() accept a 'flags' argument,
+rather than a single boolean, increases reviewer burden, since the
+reviewer is forced to puzzle out how this change relates to the stated
+intention of the patch since it is not mentioned at all by the commit
+message.
 
-More serious, though, is that these strbuf_reset() movements may
-actually increase the burden on someone changing the code in the
-future. Presumably, your reason for making these changes is that you
-reviewed the code after factoring out the get_submodule_displaypath()
-logic and discovered that the strbuf was no longer touched before this
-point, therefore resetting it before strbuf_addf() is unnecessary.
-While this may be true today, it may not be so in the future. If
-someone comes along and adds code above this point which does touch
-the strbuf, then these code movements either need to be reverted by
-that person (more noise) or that person needs to remember to add a
-strbuf_reset() at the end of the new code.
+It's also conceptually unrelated to the introduction of a for-each
+function, thus should be instead be done by a separate preparatory
+patch.
 
-Moreover, it's somewhat easier to reason about the strbuf_reset()'s
-and the corresponding strbuf_addf()'s when they are kept together, as
-in the original code, so, for that reason alone, one could argue that
-moving the strbuf_reset()'s does not really improve the code.
-
-I'd suggest dropping these changes in the re-roll.
-
->         }
->
->         /*
-> @@ -367,7 +379,6 @@ static void init_submodule(const char *path, const char *prefix, int quiet)
->          * To look up the url in .git/config, we must not fall back to
->          * .gitmodules, so look it up directly.
->          */
-> -       strbuf_reset(&sb);
->         strbuf_addf(&sb, "submodule.%s.url", sub->name);
->         if (git_config_get_string(sb.buf, &url)) {
->                 if (!sub->url)
-> @@ -404,9 +415,9 @@ static void init_submodule(const char *path, const char *prefix, int quiet)
+>                         fprintf(stderr,
 >                                 _("Submodule '%s' (%s) registered for path '%s'\n"),
 >                                 sub->name, url, displaypath);
->         }
-> +       strbuf_reset(&sb);
+> @@ -437,12 +458,18 @@ static void init_submodule(const char *path, const char *prefix, int quiet)
+>         free(upd);
+>  }
 >
->         /* Copy "update" setting when it is not set yet */
-> -       strbuf_reset(&sb);
->         strbuf_addf(&sb, "submodule.%s.update", sub->name);
->         if (git_config_get_string(sb.buf, &upd) &&
->             sub->update_strategy.type != SM_UPDATE_UNSPECIFIED) {
+> +static void init_submodule_cb(const struct cache_entry *list_item, void *cb_data)
+> +{
+> +       struct init_cb *info = cb_data;
+> +       init_submodule(list_item->name, info->prefix, info->flags);
+> +}
+> +
+>  static int module_init(int argc, const char **argv, const char *prefix)
+>  {
+> +       struct init_cb info = INIT_CB_INIT;
+>         struct pathspec pathspec;
+>         struct module_list list = MODULE_LIST_INIT;
+>         int quiet = 0;
+> -       int i;
+>
+>         struct option module_init_options[] = {
+>                 OPT__QUIET(&quiet, N_("Suppress output for initializing a submodule")),
+> @@ -467,8 +494,11 @@ static int module_init(int argc, const char **argv, const char *prefix)
+>         if (!argc && git_config_get_value_multi("submodule.active"))
+>                 module_list_active(&list);
+>
+> -       for (i = 0; i < list.nr; i++)
+> -               init_submodule(list.entries[i]->name, prefix, quiet);
+> +       info.prefix = prefix;
+> +       if (quiet)
+> +               info.flags |= OPT_QUIET;
+> +
+> +       for_each_listed_submodule(&list, init_submodule_cb, &info);
+>
+>         return 0;
+>  }
 > --
 > 2.14.2
