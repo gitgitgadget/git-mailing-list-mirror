@@ -2,32 +2,32 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 775B320373
-	for <e@80x24.org>; Fri,  6 Oct 2017 22:32:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E862E20372
+	for <e@80x24.org>; Fri,  6 Oct 2017 22:35:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751782AbdJFWcj (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Oct 2017 18:32:39 -0400
-Received: from smtprelay09.ispgateway.de ([134.119.228.119]:56810 "EHLO
-        smtprelay09.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751418AbdJFWcj (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Oct 2017 18:32:39 -0400
+        id S1751850AbdJFWfM (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Oct 2017 18:35:12 -0400
+Received: from smtprelay03.ispgateway.de ([80.67.31.30]:46826 "EHLO
+        smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751418AbdJFWfM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Oct 2017 18:35:12 -0400
 Received: from [89.246.212.34] (helo=sandbox)
-        by smtprelay09.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
+        by smtprelay03.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
         (Exim 4.89)
         (envelope-from <hvoigt@hvoigt.net>)
-        id 1e0bAa-000732-06; Sat, 07 Oct 2017 00:32:36 +0200
-Date:   Sat, 7 Oct 2017 00:32:34 +0200
+        id 1e0bD4-0006O3-LL; Sat, 07 Oct 2017 00:35:10 +0200
+Date:   Sat, 7 Oct 2017 00:35:09 +0200
 From:   Heiko Voigt <hvoigt@hvoigt.net>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, jrnieder@gmail.com, Jens.Lehmann@web.de,
         bmwill@google.com
-Subject: [RFC PATCH 2/4] change submodule push test to use proper repository
- setup
-Message-ID: <20171006223234.GC26642@sandbox>
+Subject: [RFC PATCH v3 4/4] submodule: simplify decision tree whether to or
+ not to fetch
+Message-ID: <20171006223509.GE26642@sandbox>
 References: <20171006222544.GA26642@sandbox>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -40,87 +40,111 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-NOTE: The argument in this message is not correct, see description in
-cover letter.
-
-The setup of the repositories in this test is using gitlinks without the
-.gitmodules infrastructure. It is however testing convenience features
-like --recurse-submodules=on-demand. These features are already not
-supported by fetch without a .gitmodules file. This leads us to the
-conclusion that it is not really used here as well.
-
-Let's use the usual submodule commands to setup the repository in a
-typical way. This also has the advantage that we are testing with a
-repository structure that is more similar to one we could expect on a
-users setup.
+To make extending this logic later easier.
 
 Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
 ---
 
-As mentioned in the cover letter. This seems to be the only test that
-ensures that we stay compatible with setups without .gitmodules. Maybe
-we should add/revive some?
+This should also be the same as in the previous version.
 
-Cheers Heiko
+ submodule.c | 74 ++++++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 37 insertions(+), 37 deletions(-)
 
- t/t5531-deep-submodule-push.sh | 29 ++++++++++++++++-------------
- 1 file changed, 16 insertions(+), 13 deletions(-)
-
-diff --git a/t/t5531-deep-submodule-push.sh b/t/t5531-deep-submodule-push.sh
-index 39cb2c1..a4a2c6a 100755
---- a/t/t5531-deep-submodule-push.sh
-+++ b/t/t5531-deep-submodule-push.sh
-@@ -8,22 +8,26 @@ test_expect_success setup '
- 	mkdir pub.git &&
- 	GIT_DIR=pub.git git init --bare &&
- 	GIT_DIR=pub.git git config receive.fsckobjects true &&
-+	mkdir submodule &&
-+	(
-+		cd submodule &&
-+		git init &&
-+		git config push.default matching &&
-+		>junk &&
-+		git add junk &&
-+		git commit -m "Initial junk"
-+	) &&
-+	git clone --bare submodule submodule.git &&
- 	mkdir work &&
- 	(
- 		cd work &&
- 		git init &&
- 		git config push.default matching &&
--		mkdir -p gar/bage &&
--		(
--			cd gar/bage &&
--			git init &&
--			git config push.default matching &&
--			>junk &&
--			git add junk &&
--			git commit -m "Initial junk"
--		) &&
--		git add gar/bage &&
-+		mkdir gar &&
-+		git submodule add ../submodule.git gar/bage &&
- 		git commit -m "Initial superproject"
-+		cd gar/bage &&
-+		git remote rm origin
- 	)
- '
+diff --git a/submodule.c b/submodule.c
+index 0c586a0..c7b32c6 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -1142,6 +1142,31 @@ struct submodule_parallel_fetch {
+ };
+ #define SPF_INIT {0, ARGV_ARRAY_INIT, NULL, NULL, 0, 0, 0, 0}
  
-@@ -51,11 +55,10 @@ test_expect_success 'push if submodule has no remote' '
++static int get_fetch_recurse_config(const struct submodule *submodule,
++				    struct submodule_parallel_fetch *spf)
++{
++	if (spf->command_line_option != RECURSE_SUBMODULES_DEFAULT)
++		return spf->command_line_option;
++
++	if (submodule) {
++		char *key;
++		const char *value;
++
++		int fetch_recurse = submodule->fetch_recurse;
++		key = xstrfmt("submodule.%s.fetchRecurseSubmodules", submodule->name);
++		if (!repo_config_get_string_const(the_repository, key, &value)) {
++			fetch_recurse = parse_fetch_recurse_submodules_arg(key, value);
++		}
++		free(key);
++
++		if (fetch_recurse != RECURSE_SUBMODULES_NONE)
++			/* local config overrules everything except commandline */
++			return fetch_recurse;
++	}
++
++	return spf->default_option;
++}
++
+ static int get_next_submodule(struct child_process *cp,
+ 			      struct strbuf *err, void *data, void **task_cb)
+ {
+@@ -1161,46 +1186,21 @@ static int get_next_submodule(struct child_process *cp,
  
- test_expect_success 'push fails if submodule commit not on remote' '
- 	(
--		cd work/gar &&
--		git clone --bare bage ../../submodule.git &&
--		cd bage &&
-+		cd work/gar/bage &&
- 		git remote add origin ../../../submodule.git &&
- 		git fetch &&
-+		git push --set-upstream origin master &&
- 		>junk3 &&
- 		git add junk3 &&
- 		git commit -m "Third junk"
+ 		submodule = submodule_from_path(&null_oid, ce->name);
+ 
+-		default_argv = "yes";
+-		if (spf->command_line_option == RECURSE_SUBMODULES_DEFAULT) {
+-			int fetch_recurse = RECURSE_SUBMODULES_NONE;
+-
+-			if (submodule) {
+-				char *key;
+-				const char *value;
+-
+-				fetch_recurse = submodule->fetch_recurse;
+-				key = xstrfmt("submodule.%s.fetchRecurseSubmodules", submodule->name);
+-				if (!repo_config_get_string_const(the_repository, key, &value)) {
+-					fetch_recurse = parse_fetch_recurse_submodules_arg(key, value);
+-				}
+-				free(key);
+-			}
+-
+-			if (fetch_recurse != RECURSE_SUBMODULES_NONE) {
+-				if (fetch_recurse == RECURSE_SUBMODULES_OFF)
+-					continue;
+-				if (fetch_recurse == RECURSE_SUBMODULES_ON_DEMAND) {
+-					if (!unsorted_string_list_lookup(&changed_submodule_names,
+-									 submodule->name))
+-						continue;
+-					default_argv = "on-demand";
+-				}
+-			} else {
+-				if (spf->default_option == RECURSE_SUBMODULES_OFF)
+-					continue;
+-				if (spf->default_option == RECURSE_SUBMODULES_ON_DEMAND) {
+-					if (!unsorted_string_list_lookup(&changed_submodule_names,
+-									  submodule->name))
+-						continue;
+-					default_argv = "on-demand";
+-				}
+-			}
+-		} else if (spf->command_line_option == RECURSE_SUBMODULES_ON_DEMAND) {
+-			if (!unsorted_string_list_lookup(&changed_submodule_names,
++		switch (get_fetch_recurse_config(submodule, spf))
++		{
++		default:
++		case RECURSE_SUBMODULES_DEFAULT:
++		case RECURSE_SUBMODULES_ON_DEMAND:
++			if (!submodule || !unsorted_string_list_lookup(&changed_submodule_names,
+ 							 submodule->name))
+ 				continue;
+ 			default_argv = "on-demand";
++			break;
++		case RECURSE_SUBMODULES_ON:
++			default_argv = "yes";
++			break;
++		case RECURSE_SUBMODULES_OFF:
++			continue;
+ 		}
+ 
+ 		strbuf_addf(&submodule_path, "%s/%s", spf->work_tree, ce->name);
 -- 
 2.10.0.129.g35f6318
 
