@@ -6,99 +6,62 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 334C31FA21
-	for <e@80x24.org>; Fri,  6 Oct 2017 05:10:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5D9821FA21
+	for <e@80x24.org>; Fri,  6 Oct 2017 05:26:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751454AbdJFFKK (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Oct 2017 01:10:10 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53192 "EHLO
+        id S1750898AbdJFF0C (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Oct 2017 01:26:02 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56721 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750781AbdJFFKJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Oct 2017 01:10:09 -0400
+        with ESMTP id S1750781AbdJFF0B (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Oct 2017 01:26:01 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B9F2C9C00D;
-        Fri,  6 Oct 2017 01:10:08 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BA5849C4B4;
+        Fri,  6 Oct 2017 01:25:58 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=2nlJPB0cpX13jJNElsZmAY5/Sdk=; b=NSEjRx
-        aXR7xlVTH4XCsFnfqm6Mp9iO8UrHGsaogcjUqLqGM4ial+LLBGOAp0gkcFMEkZsg
-        eaSctNd6rFRydoRsGfvey8x1PtDM5styvNw9GCiKtMSQpLhW5C0li5BOSm2ifb7/
-        ipXtkD5mYG59NbcQV/1yFn7sImXiFtyqkoCPc=
+        :content-type; s=sasl; bh=jVhlE75i8RWzB26belvT/dgMB5E=; b=tkTYew
+        5zYmNk1XyhGsr1CZm0NHqOQ1BraCx6prvCktpef5XO9KE+Ka5ZYv+pGOeZ+Gnyjm
+        GAiFVHmA0Dghuc+Hfzc9MOIkjuGjNXZLjHtMKFNkYBiQtTAxh60BHEbQJPEs0g3F
+        OpttB9xkBQu8H7XtvqNNAKoAy1W53MV+mrEUU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Dbc7T/WpWRW+pP1/+ubCggv383HTSBhb
-        1E+GHu8RTeLxXPXVl9+CBSHkDNERuefehf0Bpg5ktrOuD+Ee8DCJF6ImjR/O+wP7
-        f664JbjVYwR5BDsmCRM00TzHiFA4U8wefCMegrBGdcsp6JGGWwWJtiMzJulRiIWe
-        n6JRYWY/0SU=
+        :content-type; q=dns; s=sasl; b=hcv3Yld1L25tFuaHVv2SUHFKoxJXfRVn
+        NEADcNCl/4iew6myuBwrEYl+cXQL3ZxqTdjjHg9TJKCYZnNpVUHTscMrW4dUWft2
+        RSMd6sRJf+RqoLj2jCIW17nB+kCvEtKfyfxip5oldXS+NOWUZtCg3frNz/lJeI5Q
+        WA0AVqNzWNA=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B02129C00B;
-        Fri,  6 Oct 2017 01:10:08 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id AF7CD9C4B3;
+        Fri,  6 Oct 2017 01:25:58 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 27BAD9C008;
-        Fri,  6 Oct 2017 01:10:08 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2CFA99C4B1;
+        Fri,  6 Oct 2017 01:25:58 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, J Wyman <jwyman@microsoft.com>
-Subject: Re: [PATCH v2 2/3] for-each-ref: let upstream/push optionally remote ref name
-References: <cover.1506952571.git.johannes.schindelin@gmx.de>
-        <cover.1507205895.git.johannes.schindelin@gmx.de>
-        <7da6c7e2563d14cb7cd7ff2637c79c51896a9788.1507205895.git.johannes.schindelin@gmx.de>
-Date:   Fri, 06 Oct 2017 14:10:07 +0900
-In-Reply-To: <7da6c7e2563d14cb7cd7ff2637c79c51896a9788.1507205895.git.johannes.schindelin@gmx.de>
-        (Johannes Schindelin's message of "Thu, 5 Oct 2017 14:19:15 +0200
-        (CEST)")
-Message-ID: <xmqqvajsx3o0.fsf@gitster.mtv.corp.google.com>
+To:     Damien =?utf-8?Q?Mari=C3=A9?= <damien@dam.io>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2] run-command: add hint when a hook is ignored
+References: <0102015ee1e41f17-927a8da1-ac14-4399-8424-fee8a82c2b0a-000000@eu-west-1.amazonses.com>
+        <0102015eee503678-52126849-7580-4832-9d46-0f5ac7a52336-000000@eu-west-1.amazonses.com>
+        <xmqq4lrcyj1p.fsf@gitster.mtv.corp.google.com>
+Date:   Fri, 06 Oct 2017 14:25:57 +0900
+In-Reply-To: <xmqq4lrcyj1p.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Fri, 06 Oct 2017 13:52:34 +0900")
+Message-ID: <xmqqr2ugx2xm.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 9F20DE10-AA54-11E7-8806-8EF31968708C-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: D56216A4-AA56-11E7-B929-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Subject: Re: [PATCH v2 2/3] for-each-ref: let upstream/push optionally remote ref name
+>> diff --git a/t/t7519-ignored-hook-warning.sh b/t/t7519-ignored-hook-warning.sh
+>> new file mode 100755
 
-No verb?  s/optionally/report/ perhaps?
-
-> diff --git a/ref-filter.c b/ref-filter.c
-> index 4819707d032..b4b2c9b2190 100644
-> --- a/ref-filter.c
-> +++ b/ref-filter.c
-> @@ -77,7 +77,7 @@ static struct used_atom {
->  		struct align align;
->  		struct {
->  			enum {
-> -				RR_REF, RR_TRACK, RR_TRACKSHORT, RR_REMOTE_NAME
-> +				RR_REF, RR_TRACK, RR_TRACKSHORT, RR_REMOTE_NAME, RR_REMOTE_REF
->  			} option;
->  			struct refname_atom refname;
->  			unsigned int nobracket : 1, push : 1, push_remote : 1;
-> @@ -164,6 +164,9 @@ static void remote_ref_atom_parser(const struct ref_format *format, struct used_
->  		else if (!strcmp(s, "remotename")) {
->  			atom->u.remote_ref.option = RR_REMOTE_NAME;
->  			atom->u.remote_ref.push_remote = 1;
-> +		} else if (!strcmp(s, "remoteref")) {
-> +			atom->u.remote_ref.option = RR_REMOTE_REF;
-> +			atom->u.remote_ref.push_remote = 1;
->  		} else {
->  			atom->u.remote_ref.option = RR_REF;
->  			refname_atom_parser_internal(&atom->u.remote_ref.refname,
-> @@ -1262,6 +1265,14 @@ static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
->  			*s = xstrdup(remote);
->  		else
->  			*s = "";
-> +	} else if (atom->u.remote_ref.option == RR_REMOTE_REF) {
-> +		int explicit, for_push = starts_with(atom->name, "push");
-
-Hmph, the previous step got rid of starts_with() rather nicely by
-introducing atom->u.remote_ref.push bit; can't we do the same in
-this step?
-
-Other than that, looks nicer.
-
-Thanks.
+Another thing; t7519 is taken by another topic in flight.  Let's use
+t7520 instead.
