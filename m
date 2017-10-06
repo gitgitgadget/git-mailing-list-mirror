@@ -2,115 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 98D381FA21
-	for <e@80x24.org>; Fri,  6 Oct 2017 02:36:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 712C41FA21
+	for <e@80x24.org>; Fri,  6 Oct 2017 02:38:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751518AbdJFCf6 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Oct 2017 22:35:58 -0400
-Received: from mail-pf0-f176.google.com ([209.85.192.176]:43643 "EHLO
-        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751395AbdJFCf5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Oct 2017 22:35:57 -0400
-Received: by mail-pf0-f176.google.com with SMTP id d2so5685950pfh.0
-        for <git@vger.kernel.org>; Thu, 05 Oct 2017 19:35:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=UaOcyeny91C3YYogwwKwZcjSJ7IOnbZbDGHbQThN44c=;
-        b=sKV6oNUoG6yhuGm15m65Yb7KNVt+bJx2Nos+3EveaG43GOTpatMMRUFYVkrdyyDMIN
-         dfD/zn9NM+O7Io1jWNS22F93E4MDc5R+MaSi369byBipZaHrNG6u6G+pWwE48XA0n+59
-         AWCr/6Ov7tCAx6M1HgsJEkFltTaE/0kcBo6/I0R3oTAkBlYEt9oEQQktGJ9iiUwfyOMg
-         1tOazd7n2eNDifb80Z3VuRkN5AUyQHxe4Q9ALXAmFGuIiKGGgwDZWmr2mWKo2ZCyxO+V
-         W/oIwrQkq/5YbyWvsuJ8nfIklrWR6l+jAhYL0g6ure2KIo2jTvoHdS7L+Kxat6Ec/6vY
-         BARg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=UaOcyeny91C3YYogwwKwZcjSJ7IOnbZbDGHbQThN44c=;
-        b=iQdEQ65PbOZxCDNP50iZZm2RwcURb5iJdbpVlusanv1vzjIMxNJrlhAzOWO+1cuamJ
-         A2twBMT9Hejazsvc+KFt5kSYqohJq2vzSzg/XgKQue4HZ5+LN0b9PrCGxBIMifRmEvtk
-         aam1BTouS3iHEuYD0yv9mac9gb1yBeJvXn/1LGvPlESXPCkD8pDmwd5qTv2we+t7Zx90
-         4Q8hFuTii1p/VMZqJ/65JkEFIZXwl+D71V7zDPylOB9pZWX68Znq9U9XhmjT5G0KZCul
-         tV7wPbfDhkiO+wKb1OWhUgOHXm53Y0b0gLrjaQ0BJX9VJNbqg+fTFqxu3hVFU3FTbeWL
-         lntw==
-X-Gm-Message-State: AMCzsaWVpYZeYXG7Gwl24z10Uc+008FtO5mlbCMMUnyK/3uU5AYK588O
-        3LAkrhfDo+0VQ25J0Q1ZopA=
-X-Google-Smtp-Source: AOwi7QArTeJoamfgWlgC7cV9sTllHYt/zKlt181T7OVVk8ZEHu3szw4INub9AeZ2S9G8oRQxbXsRew==
-X-Received: by 10.98.150.203 with SMTP id s72mr653554pfk.199.1507257357218;
-        Thu, 05 Oct 2017 19:35:57 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:78c3:3d0d:a9b5:4320])
-        by smtp.gmail.com with ESMTPSA id d7sm410315pgf.20.2017.10.05.19.35.56
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 05 Oct 2017 19:35:56 -0700 (PDT)
-Date:   Thu, 5 Oct 2017 19:35:30 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     rpjday@crashcourse.ca, git@vger.kernel.org
-Subject: Re: couple questions about git "logical variables" and "git var"
-Message-ID: <20171006023530.GA134987@aiede.mtv.corp.google.com>
-References: <20171005051104.Horde.8J0J7-XC6jD4AOgtYrou3Na@crashcourse.ca>
- <20171005095636.mpp2ohf7vp7mtzeb@sigill.intra.peff.net>
+        id S1751440AbdJFCin (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Oct 2017 22:38:43 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50554 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751418AbdJFCim (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Oct 2017 22:38:42 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2BEFD99995;
+        Thu,  5 Oct 2017 22:38:42 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=09S3/mkZjkkxFOW3drjUANknbZs=; b=doVA99
+        xoPilq7WrXchGpPeK+C02jzZZDsQ0zPhz3hoPRyF8T3sYfq378KoUEgyLIvBAMW2
+        iYwX3LR1i+Aem9UkzfnEaAJV46a+n5S+GB4bNrjuj6lfhHxkpqAzMUzxOP+ccwA6
+        kS9Y80PV6L05UIFYaEBFYzfDEiVWhVRCF9FRo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=XOhbSd2tYJ9YXYafhTNX5GdDb0Lc2ArY
+        HphXF18n7eErLi3tUbrJhtg5W7o+49UYJG22g/XG6bdWIDuNPdknZknaLxCz12fk
+        FbrVG+oUKZ3qN8lcjPD1t2wr7r8tAMGSBNXNGxg4Yiho4o0tXlH9nNjt+lSaTES8
+        90ezkZSif08=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 20C5E99994;
+        Thu,  5 Oct 2017 22:38:42 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8B3F899993;
+        Thu,  5 Oct 2017 22:38:41 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Todd Zullinger <tmz@pobox.com>
+Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>
+Subject: Re: [PATCH] api-argv-array.txt: Update link to string-list API
+References: <20171005211203.11913-1-tmz@pobox.com>
+Date:   Fri, 06 Oct 2017 11:38:40 +0900
+In-Reply-To: <20171005211203.11913-1-tmz@pobox.com> (Todd Zullinger's message
+        of "Thu, 5 Oct 2017 17:12:03 -0400")
+Message-ID: <xmqq4lrdyp8v.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20171005095636.mpp2ohf7vp7mtzeb@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 77189FC6-AA3F-11E7-A3E3-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King wrote:
-> On Thu, Oct 05, 2017 at 05:11:04AM -0400, rpjday@crashcourse.ca wrote:
+Todd Zullinger <tmz@pobox.com> writes:
 
->>  - GIT_AUTHOR_IDENT
->>  - GIT_COMMITTER_IDENT
->>  - GIT_EDITOR
->>  - GIT_PAGER
->>
->> first question -- what is it about precisely those four variables that makes
->> them "logical" variables in git parlance? just those four? no others?
+> I noticed this broken link in the html documentation while building
+> 2.15.0-rc0.  I'm not sure whether it's better to point the link to the
+> string-list.h file on Git Hub, remove the link, or drop the entire
+> paragraph.
+
+Probably removing the link is the right thing to do.  In the longer
+term, as we move more and more API documentation to the header file,
+we may want to have a mechanism in the documentation build procedure
+to extract them back to text.  And at that point:
+
+ - the API doc for argv-array is no longer in api-argv-array.txt in
+   the source form;
+
+ - however, it would be extacted from argv-array.h and made into
+   manpage or html or whatever human readable format.
+
+ - the API doc for string-list would also be extracted from
+   string-list.h and made into manpage or html or whatever human
+   readable format.
+
+ - And these two can refer to each other as needed.
+
+But we are not there yet.
+
+> The change I made to remove the link was simply:
 >
-> It was introduced in the very early days as a way for scripts to get
-> access to "standard" values that would be computed the same way as the C
-> portions of Git.  But it hasn't generally been kept up to date with new
-> possible variables.
->
-> It also only tells half the story. You have to know not just what's in
-> $GIT_EDITOR, but you have to know the right way to evaluate it. There's
-> a git_editor helper in git-sh-setup, but other scripting languages are
-> on their own.
+> -The link:api-string-list.html[string-list API] is similar, but cannot be
+> +The string-list API (documented in string-list.h) is similar, but cannot be
 
-I am not sure I understand the complaint here.  git-var(1) says:
+This is preferrable for now, I would think.
 
-	GIT_EDITOR
-	   Text editor for use by Git commands. The value is meant to be
-	   interpreted by the shell when it is used. Examples: [...]
-
-Are you saying that the output of the command should quote that
-manpage, so as to tell the rest of the story?
-
->               We'd probably have done better to introduce a "git editor"
-> command which can be run from any language.
-
-I remember that we discussed this at the time but don't remember why
-it didn't happen.  It seems like a good idea.
-
-[...]
->> p.s. yes, i realize this command is deprecated in favour of "git config -l",
->> but as long as it's available, it should work as described in the man page.
->
-> Yes, though I think fixing the manpage is the right way to make them
-> consistent.
-
-Agreed as well.  rday, care to take a stab at wording?
-
-Thanks,
-Jonathan
