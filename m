@@ -2,97 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 209E220372
-	for <e@80x24.org>; Sat,  7 Oct 2017 04:36:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E97911FA21
+	for <e@80x24.org>; Sat,  7 Oct 2017 08:51:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750765AbdJGEgO (ORCPT <rfc822;e@80x24.org>);
-        Sat, 7 Oct 2017 00:36:14 -0400
-Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:60736 "EHLO
-        alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1750750AbdJGEgO (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 7 Oct 2017 00:36:14 -0400
-X-AuditID: 12074411-f7dff70000007f0a-fb-59d859bd672d
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id F1.B2.32522.DB958D95; Sat,  7 Oct 2017 00:36:13 -0400 (EDT)
-Received: from [192.168.69.190] (p4FC6E063.dip0.t-ipconnect.de [79.198.224.99])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v974aAg1017512
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-        Sat, 7 Oct 2017 00:36:11 -0400
-Subject: Re: [PATCH 2/2] refs_resolve_ref_unsafe: handle d/f conflicts for
- writes
-To:     Jeff King <peff@peff.net>
-Cc:     Andreas Krey <a.krey@gmx.de>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1?= =?UTF-8?Q?y?= 
-        <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-        Git Users <git@vger.kernel.org>
-References: <20171006143745.w6q2yfgy6nvd2m2a@sigill.intra.peff.net>
- <20171006144217.y6oxux26hh2fb7og@sigill.intra.peff.net>
- <38c17fdc-7a3b-d166-1abe-afe64fc823c5@alum.mit.edu>
- <20171006171623.kjzeavnzopowvqzv@sigill.intra.peff.net>
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-Message-ID: <cae7028d-b92e-a7ca-6d33-713665848da3@alum.mit.edu>
-Date:   Sat, 7 Oct 2017 06:36:09 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
+        id S1750862AbdJGIvM (ORCPT <rfc822;e@80x24.org>);
+        Sat, 7 Oct 2017 04:51:12 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61913 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750763AbdJGIvL (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 7 Oct 2017 04:51:11 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 232C3B5D71;
+        Sat,  7 Oct 2017 04:51:10 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=qFkUQIlg1EhfkP4M/bshwiEr5w0=; b=PFF5jQ
+        DSgSeBkaYOksxlsZ9+fZHYvYdbgIB9DAqQZYnVK9YILEYni13laFzHRo0JGQbs3/
+        t4Qos5EVfCWM6MvFh/Y2Njn5RrLrUsGojMkByBP469dOTZ5iJ44hRaP/Ese7vQUv
+        sNDc+SUWnU0/TdAjoUoZcw9419ml/1WyTyaNw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=kfXi+90ggbnim7C31FonF6hSH0pqSFVo
+        oBDjfPxnNPGVb+Yd3PCcjYHS2Q7L+ynZpcPK1mauh7aKla1t3D+iLSKQESTD2oFX
+        iaU7b0UNymC+ZoCKn6yn/zUWHy5lGN3VaLwYvfchjVPyRFjsMZGIdSQt9d/48V6H
+        hAPYTEXPaps=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1B2D3B5D70;
+        Sat,  7 Oct 2017 04:51:10 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 94716B5D6F;
+        Sat,  7 Oct 2017 04:51:09 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v7 0/3] Incremental rewrite of git-submodules
+References: <xmqqy3ouqruh.fsf@gitster.mtv.corp.google.com>
+        <20171006132415.2876-1-pc44800@gmail.com>
+Date:   Sat, 07 Oct 2017 17:51:08 +0900
+In-Reply-To: <20171006132415.2876-1-pc44800@gmail.com> (Prathamesh Chavan's
+        message of "Fri, 6 Oct 2017 18:54:12 +0530")
+Message-ID: <xmqqshevtk77.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20171006171623.kjzeavnzopowvqzv@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprCKsWRmVeSWpSXmKPExsUixO6iqLs38kakwesd3BbLjnUyWnRd6Way
-        aOi9wmzRPeUto8WPlh5mB1aPnbPusnt8+Bjn8ax3D6PHxUvKHp83yQWwRnHZpKTmZJalFunb
-        JXBl9Oy+wFbwkatixqtelgbGQxxdjJwcEgImEkua5jB1MXJxCAnsYJKY37+REcI5xyRxeM1S
-        JpAqYYFgiflTGxhBbBEBWYnvhyGKmAVOMkocn7IOquMto8TKzjfsIFVsAroSi3qawbp5Bewl
-        znz6w9zFyMHBIqAi8e1LLYgpKhAhsWEjP0SFoMTJmU9YQGxOAReJk38ng3UyC6hL/Jl3iRnC
-        Fpe49WQ+VFxeYvvbOcwTGAVmIWmfhaRlFpKWWUhaFjCyrGKUS8wpzdXNTczMKU5N1i1OTszL
-        Sy3SNdXLzSzRS00p3cQICXzBHYwzTsodYhTgYFTi4TVYez1SiDWxrLgy9xCjJAeTkiivUsSN
-        SCG+pPyUyozE4oz4otKc1OJDjBIczEoivPdCgHK8KYmVValF+TApaQ4WJXFeviXqfkIC6Ykl
-        qdmpqQWpRTBZGQ4OJQneeyBDBYtS01Mr0jJzShDSTBycIMN5gIZ/AqnhLS5IzC3OTIfIn2JU
-        lBLnnQmSEABJZJTmwfXCEtMrRnGgV4R5P4NU8QCTGlz3K6DBTECD5zRdARlckoiQkmpg3JE2
-        +deCRkWr7o8mvh95X96NnXjjmreT1lfDKdMfVaxXZrPSTuZ0X8HULcAbJcdbu3SO5KWV+g9e
-        MN/cd3aB8pn9DEusngVvKty49Ve2KUfPdbVu1jmLRPRDO09l3vJPT1x0tf+GCf8zg4eduyyP
-        ci+dKB96V2h3/u0orqhY7ogkiTzLs1tOKLEUZyQaajEXFScCAMzu/ScnAwAA
+Content-Type: text/plain
+X-Pobox-Relay-ID: A9FA3708-AB3C-11E7-A3D0-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/06/2017 07:16 PM, Jeff King wrote:
-> On Fri, Oct 06, 2017 at 07:09:10PM +0200, Michael Haggerty wrote:
-> 
->> I do have one twinge of uneasiness at a deeper level, that I haven't had
->> time to check...
->>
->> Does this patch make it easier to *set* HEAD to an unborn branch that
->> d/f conflicts with an existing reference? If so, that might be a
->> slightly worse UI for users. I'd rather learn about such a problem when
->> setting HEAD (when I am thinking about the new branch name and am in the
->> frame of mind to solve the problem) rather than later, when I try to
->> commit to the new branch.
-> 
-> Good question. The answer is no, it's allowed both before and after my
-> patch. At least via git-symbolic-ref.
-> 
-> I agree it would be nice to know earlier for such a case. For
-> symbolic-ref, we probably should allow it, because it's plumbing that
-> may be used for tricky things. For things like "checkout -b", you'd
-> generally get a timely warning as we try to create the ref.
-> 
-> The odd man out is "checkout --orphan", which leaves the branch unborn.
-> It might be nice if it did a manual check that the ref is available (and
-> also that it's syntactically acceptable, though I think we may do that
-> already).
-> 
-> But all of that is orthogonal to this fix, I think.
+Prathamesh Chavan <pc44800@gmail.com> writes:
 
-Thanks for checking. Yes, I totally agree that this is orthogonal.
+> Changes in v7:
 
-Michael
+FWIW, the previous one is at
+
+    https://public-inbox.org/git/20170929094453.4499-1-pc44800@gmail.com
+
+Alternatively, the References link can be followed back from the
+cover letter to go back to quite an early iteration of the series.
+
+Hope that helps ;-)
+
+
+
