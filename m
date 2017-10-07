@@ -2,85 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 935CE20372
-	for <e@80x24.org>; Sat,  7 Oct 2017 02:29:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 209E220372
+	for <e@80x24.org>; Sat,  7 Oct 2017 04:36:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753395AbdJGC3X (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Oct 2017 22:29:23 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:52690 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753316AbdJGC3V (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Oct 2017 22:29:21 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 388F9B12F4;
-        Fri,  6 Oct 2017 22:29:21 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=X8tLUgLOE6yVyCfmBxLv2cBu9w4=; b=YhId2K
-        lOSrWFD7pV8e76u0VAME+StvW9ejFpXYjJbRXF3SU6SLlz7XbFah03b2f2QuR+am
-        7gd+6TakKZPb0Kqm72BwK2+haLa0TwIt8kYbjxnHcERR0O2O4OZfrgbkKB9gB2fg
-        pavpN9Inj/Tr5XpEzGPerMNnB1XIY6zGmS4eg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=w7F1yv6h/ty5Tna5bhuGMebrgHtGwLUD
-        7s3ISamQ0a8q4JMb+Al0L8u6Wv/6kWA9TguSNsfWca5XRv9jQgcy2ZBcNNtLmmj5
-        J+gVAIpUNhWjZ9eDDT0SFE42KveIp6hMY6o/pzgaih6BBLMG29IVJoWFopgxoDHQ
-        EXmi+5J5iTE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 30CE4B12F3;
-        Fri,  6 Oct 2017 22:29:21 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9EAA5B12F2;
-        Fri,  6 Oct 2017 22:29:20 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/2] tests: fix diff order arguments in test_cmp
-References: <20171006190006.19623-1-sbeller@google.com>
-        <20171006190006.19623-2-sbeller@google.com>
-Date:   Sat, 07 Oct 2017 11:29:19 +0900
-In-Reply-To: <20171006190006.19623-2-sbeller@google.com> (Stefan Beller's
-        message of "Fri, 6 Oct 2017 12:00:06 -0700")
-Message-ID: <xmqqwp47u1vk.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1750765AbdJGEgO (ORCPT <rfc822;e@80x24.org>);
+        Sat, 7 Oct 2017 00:36:14 -0400
+Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:60736 "EHLO
+        alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1750750AbdJGEgO (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 7 Oct 2017 00:36:14 -0400
+X-AuditID: 12074411-f7dff70000007f0a-fb-59d859bd672d
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id F1.B2.32522.DB958D95; Sat,  7 Oct 2017 00:36:13 -0400 (EDT)
+Received: from [192.168.69.190] (p4FC6E063.dip0.t-ipconnect.de [79.198.224.99])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v974aAg1017512
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+        Sat, 7 Oct 2017 00:36:11 -0400
+Subject: Re: [PATCH 2/2] refs_resolve_ref_unsafe: handle d/f conflicts for
+ writes
+To:     Jeff King <peff@peff.net>
+Cc:     Andreas Krey <a.krey@gmx.de>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1?= =?UTF-8?Q?y?= 
+        <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        Git Users <git@vger.kernel.org>
+References: <20171006143745.w6q2yfgy6nvd2m2a@sigill.intra.peff.net>
+ <20171006144217.y6oxux26hh2fb7og@sigill.intra.peff.net>
+ <38c17fdc-7a3b-d166-1abe-afe64fc823c5@alum.mit.edu>
+ <20171006171623.kjzeavnzopowvqzv@sigill.intra.peff.net>
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Message-ID: <cae7028d-b92e-a7ca-6d33-713665848da3@alum.mit.edu>
+Date:   Sat, 7 Oct 2017 06:36:09 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 532C6E26-AB07-11E7-AD7B-8EF31968708C-77302942!pb-smtp1.pobox.com
+In-Reply-To: <20171006171623.kjzeavnzopowvqzv@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprCKsWRmVeSWpSXmKPExsUixO6iqLs38kakwesd3BbLjnUyWnRd6Way
+        aOi9wmzRPeUto8WPlh5mB1aPnbPusnt8+Bjn8ax3D6PHxUvKHp83yQWwRnHZpKTmZJalFunb
+        JXBl9Oy+wFbwkatixqtelgbGQxxdjJwcEgImEkua5jB1MXJxCAnsYJKY37+REcI5xyRxeM1S
+        JpAqYYFgiflTGxhBbBEBWYnvhyGKmAVOMkocn7IOquMto8TKzjfsIFVsAroSi3qawbp5Bewl
+        znz6w9zFyMHBIqAi8e1LLYgpKhAhsWEjP0SFoMTJmU9YQGxOAReJk38ng3UyC6hL/Jl3iRnC
+        Fpe49WQ+VFxeYvvbOcwTGAVmIWmfhaRlFpKWWUhaFjCyrGKUS8wpzdXNTczMKU5N1i1OTszL
+        Sy3SNdXLzSzRS00p3cQICXzBHYwzTsodYhTgYFTi4TVYez1SiDWxrLgy9xCjJAeTkiivUsSN
+        SCG+pPyUyozE4oz4otKc1OJDjBIczEoivPdCgHK8KYmVValF+TApaQ4WJXFeviXqfkIC6Ykl
+        qdmpqQWpRTBZGQ4OJQneeyBDBYtS01Mr0jJzShDSTBycIMN5gIZ/AqnhLS5IzC3OTIfIn2JU
+        lBLnnQmSEABJZJTmwfXCEtMrRnGgV4R5P4NU8QCTGlz3K6DBTECD5zRdARlckoiQkmpg3JE2
+        +deCRkWr7o8mvh95X96NnXjjmreT1lfDKdMfVaxXZrPSTuZ0X8HULcAbJcdbu3SO5KWV+g9e
+        MN/cd3aB8pn9DEusngVvKty49Ve2KUfPdbVu1jmLRPRDO09l3vJPT1x0tf+GCf8zg4eduyyP
+        ci+dKB96V2h3/u0orqhY7ogkiTzLs1tOKLEUZyQaajEXFScCAMzu/ScnAwAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+On 10/06/2017 07:16 PM, Jeff King wrote:
+> On Fri, Oct 06, 2017 at 07:09:10PM +0200, Michael Haggerty wrote:
+> 
+>> I do have one twinge of uneasiness at a deeper level, that I haven't had
+>> time to check...
+>>
+>> Does this patch make it easier to *set* HEAD to an unborn branch that
+>> d/f conflicts with an existing reference? If so, that might be a
+>> slightly worse UI for users. I'd rather learn about such a problem when
+>> setting HEAD (when I am thinking about the new branch name and am in the
+>> frame of mind to solve the problem) rather than later, when I try to
+>> commit to the new branch.
+> 
+> Good question. The answer is no, it's allowed both before and after my
+> patch. At least via git-symbolic-ref.
+> 
+> I agree it would be nice to know earlier for such a case. For
+> symbolic-ref, we probably should allow it, because it's plumbing that
+> may be used for tricky things. For things like "checkout -b", you'd
+> generally get a timely warning as we try to create the ref.
+> 
+> The odd man out is "checkout --orphan", which leaves the branch unborn.
+> It might be nice if it did a manual check that the ref is available (and
+> also that it's syntactically acceptable, though I think we may do that
+> already).
+> 
+> But all of that is orthogonal to this fix, I think.
 
-> diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
-> index ec5f530102..42f584f8b3 100755
-> --- a/t/t4205-log-pretty-formats.sh
-> +++ b/t/t4205-log-pretty-formats.sh
-> @@ -590,7 +590,7 @@ test_expect_success '%(trailers:unfold) unfolds trailers' '
->  test_expect_success ':only and :unfold work together' '
->  	git log --no-walk --pretty="%(trailers:only:unfold)" >actual &&
->  	git log --no-walk --pretty="%(trailers:unfold:only)" >reverse &&
-> -	test_cmp actual reverse &&
-> +	test_cmp reverse actual &&
->  	{
->  		grep -v patch.description <trailers | unfold &&
->  		echo
+Thanks for checking. Yes, I totally agree that this is orthogonal.
 
-This test is trying to see that giving the two modifers in any order
-produces identical results, so the result of swaping is no more or
-no less correct than the original, because what this test calls
-"actual" is no less authoritative result than what is in "reverse"
-at this point, which is the reason why we prefer "expect actual" in
-the typical use of test_cmp.
-
-Renaming <actual, reverse> to (rather meaningless) <one, two> or
-<only-unfold, unfold-only> might make the intention a bit clearer.
-
-THanks.
+Michael
