@@ -2,136 +2,163 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 711E820372
-	for <e@80x24.org>; Sun,  8 Oct 2017 11:37:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5F14020372
+	for <e@80x24.org>; Sun,  8 Oct 2017 11:56:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753245AbdJHLhe (ORCPT <rfc822;e@80x24.org>);
-        Sun, 8 Oct 2017 07:37:34 -0400
-Received: from ikke.info ([178.21.113.177]:59274 "EHLO vps892.directvps.nl"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751685AbdJHLhe (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Oct 2017 07:37:34 -0400
-Received: by vps892.directvps.nl (Postfix, from userid 1008)
-        id A1974440397; Sun,  8 Oct 2017 13:37:32 +0200 (CEST)
-Date:   Sun, 8 Oct 2017 13:37:32 +0200
-From:   Kevin Daudt <me@ikke.info>
-To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Paul Smith <paul@mad-scientist.net>,
+        id S1753396AbdJHL4Y (ORCPT <rfc822;e@80x24.org>);
+        Sun, 8 Oct 2017 07:56:24 -0400
+Received: from cpanel2.indieserve.net ([199.212.143.6]:41989 "EHLO
+        cpanel2.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751685AbdJHL4X (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Oct 2017 07:56:23 -0400
+Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:38166 helo=localhost.localdomain)
+        by cpanel2.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.89)
+        (envelope-from <rpjday@crashcourse.ca>)
+        id 1e1ABy-0003zk-FL; Sun, 08 Oct 2017 07:56:22 -0400
+Date:   Sun, 8 Oct 2017 07:56:20 -0400 (EDT)
+From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
+X-X-Sender: rpjday@localhost.localdomain
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Paul Smith <paul@mad-scientist.net>,
         Git Mailing list <git@vger.kernel.org>
 Subject: Re: "git rm" seems to do recursive removal even without "-r"
-Message-ID: <20171008113732.GA8251@alpha.vpn.ikke.info>
-References: <20171007190402.GH3382@zaya.teonanacatl.net>
- <alpine.LFD.2.21.1710071506210.15271@localhost.localdomain>
- <20171007192902.ma4s47hn6edwldx5@sigill.intra.peff.net>
- <alpine.LFD.2.21.1710071531090.15738@localhost.localdomain>
- <20171007193805.a2mwzkweonb6ymdk@sigill.intra.peff.net>
- <alpine.LFD.2.21.1710071541430.15964@localhost.localdomain>
- <1507412674.8322.4.camel@mad-scientist.net>
- <alpine.LFD.2.21.1710071749240.16818@localhost.localdomain>
+In-Reply-To: <xmqqy3oms22q.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.LFD.2.21.1710080736530.21897@localhost.localdomain>
+References: <alpine.LFD.2.21.1710071436140.14843@localhost.localdomain> <20171007190402.GH3382@zaya.teonanacatl.net> <alpine.LFD.2.21.1710071506210.15271@localhost.localdomain> <20171007192902.ma4s47hn6edwldx5@sigill.intra.peff.net>
+ <alpine.LFD.2.21.1710071531090.15738@localhost.localdomain> <20171007193805.a2mwzkweonb6ymdk@sigill.intra.peff.net> <alpine.LFD.2.21.1710071541430.15964@localhost.localdomain> <1507412674.8322.4.camel@mad-scientist.net> <alpine.LFD.2.21.1710071749240.16818@localhost.localdomain>
  <xmqqy3oms22q.fsf@gitster.mtv.corp.google.com>
- <alpine.LFD.2.21.1710080502050.19600@localhost.localdomain>
+User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.21.1710080502050.19600@localhost.localdomain>
-User-Agent: Mutt/1.8.3 (2017-05-23)
+Content-Type: text/plain; charset=US-ASCII
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel2.indieserve.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - crashcourse.ca
+X-Get-Message-Sender-Via: cpanel2.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: cpanel2.indieserve.net: rpjday@crashcourse.ca
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Oct 08, 2017 at 05:07:12AM -0400, Robert P. J. Day wrote:
-> On Sun, 8 Oct 2017, Junio C Hamano wrote:
-> 
-> > "Robert P. J. Day" <rpjday@crashcourse.ca> writes:
+On Sun, 8 Oct 2017, Junio C Hamano wrote:
+
+> "Robert P. J. Day" <rpjday@crashcourse.ca> writes:
+>
+> > ... so if, in the kernel source
+> > tree, i ran:
 > >
-> > > ... so if, in the kernel source
-> > > tree, i ran:
-> > >
-> > >   $ git rm \*.c
-> > >
-> > > i would end up removing *all* 25,569 "*.c" files in the kernel source
-> > > repository.
+> >   $ git rm \*.c
 > >
-> > Yes, as that is exactly what the command line asks Git to do.
-> 
->   so if i wanted git to remove, say, all files named "Makefile*" from
-> everywhere in the linux kernel source tree, the (dry run) command
-> would be:
-> 
->   $ git rm -n Makefile\*
-> 
-> is that it? let's try that:
-> 
->   $ git rm -n Makefile\*
->   rm 'Makefile'
->   $
-> 
-> oops.
-> 
-> rday
-> 
+> > i would end up removing *all* 25,569 "*.c" files in the kernel
+> > source repository.
+>
+> Yes, as that is exactly what the command line asks Git to do.
 
-So your question is not su much  about the recursive option (delete
-mentioned directories, including their contents), but globbing
-(expanding the * to any files matching the pattern).
+  ok, i truly want to understand this, so let me dig through this
+carefully. i can now see (from the man page and the recent
+explanations) that "git rm" will accept *escaped* fileglobs to remove
+and that, further, "File globbing matches across directory
+boundaries." which is why, in the linux kernel source tree, if i run
+one of:
 
-The explanation of <files> mentions this:
+  $ git rm \*.c
+  $ git rm '*.c'
 
-   Files to remove. Fileglobs (e.g.  *.c) can be given to remove all
-   matching files.
+the "git rm" command will internally process the fileglob and apply it
+across directory boundaries. and that's why, when i try a dry run, i
+can see the effect it would have on the kernel source:
 
-This indicates that git itself (not your shell alone) does file
-globbing.
+  $ git rm -n '*.c' | wc -l
+  25569
+  $
 
-I think the confusing part is that most people have no clear idea of the
-separation between what the shell sees and interprets, and what the
-program actually gets.
+> If you said
+>
+>     $ git rm *.c
+>
+> then the shell expands the glob and all Git sees is that you want to
+> remove a.c b.c d.c ...; if you said "git rm -r *.c", unless b.c is
+> not a directory, these and only these files are removed.
 
-When you execute:
+  right, that's just regular shell fileglob processing, no surprise
+there. (let's stick to just file removal for now.)
 
-    $ git rm Makefile\*
+> >   however, let's say i wanted to remove, recursively, all files with a
+> > *precise* (non-globbed) name, such as "Makefile". so i, naively, run:
+> >
+> >   $ git rm Makefile
+> >
+> > guess what ... the lack of globbing means i remove only the single
+> > Makefile at the top of the working directory.
+>
+> Again, that is exactly what you asked Git to do.
 
-What git actually sees is this:
+  yes, now i get it -- a lack of fileglob arguments disallows
+traversing directory boundaries, so one gets the "normal" behaviour.
 
-    Makefile*
+>     $ git rm $(find . -name Makefile -print)
+>
+> would of course one way to remove all Makefiles.  If you let POSIX
+> shell glob, i.e.
+>
+>     $ git rm */Makefile
+>
+> the asterisk would not expand nothing but a single level, so it may
+> remove fs/Makefile, but not fs/ext4/Makefile (some shells allow
+> "wildmatch" expansion so "git rm **/Makefile" may catch the latter
+> with such a shell).
 
-The shell intepreted the \* to mean just '*' and not interpret it
-itself, and provide that to the executed program. Git, in its turn,
-would start matching any file to that pattern to see which files
-matches.
+  sure, all regular shell fileglob processing.
 
+> By letting Git see the glob, i.e.
+>
+>     $ git rm Makefile \*/Makefile
+>
+> you would let Git to go over the paths it knows/cares about to find
+> ones that match the pathspec pattern and remove them (but not
+> recursively, even if you had a directory whose name is Makefile; for
+> that, you would use "-r").
 
-If you would execute:
+  right ... i can now see that '*/Makefile' would pick up all
+Makefiles *below* the current directory, so you need that initial
+reference to 'Makefile' to catch the top one. this just seems ...
+awkward.
 
-    $ git rm 'Makefile\*'
+  but as i asked in my earlier post, if i wanted to remove *all* files
+with names of "Makefile*", why can't i use:
 
-Git would see:
+  $ git rm 'Makefile*'
 
-    Makefile\*
+just as i used:
 
-Which does the thing you intended. So you have to deal with 2 levels of
-programs interpreting the arguments, not just one.
+  $ git rm '*.c'
 
-Whether '*.c' should match just all .c files in the current dir, or all
-files ending with .c depends on whether the path seperator is matched by
-* or not and is a separate discussion.
+are those not both acceptable fileglobs? why does the former clearly
+only match the top-level Makefile, and refuse to cross directory
+boundaries?
 
-GITGLOSSARY(7) under pathspec mentions this:
+  $ git rm -n 'Makefile*'
+  rm 'Makefile'
+  $
 
-    glob    Git treats the pattern as a shell glob suitable for consumption
-            by fnmatch(3) with the FNM_PATHNAME flag: wildcards in the
-            pattern will not match a / in the pathname.
+rday
 
-So that seems to indicate '*.c' should only match .c files in the
-current dir. I'm not sure why that's not the case.
+-- 
 
-I hope this clears up what's happening a bit, and perhaps can lead to
-improvements to the documentation so that it's not so surprising.
+========================================================================
+Robert P. J. Day                                 Ottawa, Ontario, CANADA
+                        http://crashcourse.ca
 
-Kind regards, Kevin.
+Twitter:                                       http://twitter.com/rpjday
+LinkedIn:                               http://ca.linkedin.com/in/rpjday
+========================================================================
