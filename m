@@ -3,162 +3,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5F14020372
-	for <e@80x24.org>; Sun,  8 Oct 2017 11:56:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 53F3E1FA21
+	for <e@80x24.org>; Sun,  8 Oct 2017 12:19:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753396AbdJHL4Y (ORCPT <rfc822;e@80x24.org>);
-        Sun, 8 Oct 2017 07:56:24 -0400
-Received: from cpanel2.indieserve.net ([199.212.143.6]:41989 "EHLO
-        cpanel2.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751685AbdJHL4X (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Oct 2017 07:56:23 -0400
-Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:38166 helo=localhost.localdomain)
-        by cpanel2.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.89)
-        (envelope-from <rpjday@crashcourse.ca>)
-        id 1e1ABy-0003zk-FL; Sun, 08 Oct 2017 07:56:22 -0400
-Date:   Sun, 8 Oct 2017 07:56:20 -0400 (EDT)
-From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
-X-X-Sender: rpjday@localhost.localdomain
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Paul Smith <paul@mad-scientist.net>,
-        Git Mailing list <git@vger.kernel.org>
-Subject: Re: "git rm" seems to do recursive removal even without "-r"
-In-Reply-To: <xmqqy3oms22q.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.LFD.2.21.1710080736530.21897@localhost.localdomain>
-References: <alpine.LFD.2.21.1710071436140.14843@localhost.localdomain> <20171007190402.GH3382@zaya.teonanacatl.net> <alpine.LFD.2.21.1710071506210.15271@localhost.localdomain> <20171007192902.ma4s47hn6edwldx5@sigill.intra.peff.net>
- <alpine.LFD.2.21.1710071531090.15738@localhost.localdomain> <20171007193805.a2mwzkweonb6ymdk@sigill.intra.peff.net> <alpine.LFD.2.21.1710071541430.15964@localhost.localdomain> <1507412674.8322.4.camel@mad-scientist.net> <alpine.LFD.2.21.1710071749240.16818@localhost.localdomain>
- <xmqqy3oms22q.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cpanel2.indieserve.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - crashcourse.ca
-X-Get-Message-Sender-Via: cpanel2.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
-X-Authenticated-Sender: cpanel2.indieserve.net: rpjday@crashcourse.ca
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+        id S1751802AbdJHMTj (ORCPT <rfc822;e@80x24.org>);
+        Sun, 8 Oct 2017 08:19:39 -0400
+Received: from smtp1-g21.free.fr ([212.27.42.1]:8688 "EHLO smtp1-g21.free.fr"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751747AbdJHMTi (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Oct 2017 08:19:38 -0400
+Received: from localhost.localdomain (unknown [IPv6:2a01:e35:2ef1:f910:580d:40ec:c1e:d5b3])
+        by smtp1-g21.free.fr (Postfix) with ESMTP id 07FE3B0056B;
+        Sun,  8 Oct 2017 14:19:20 +0200 (CEST)
+From:   Jean-Noel Avila <jn.avila@free.fr>
+To:     Git List <git@vger.kernel.org>
+Cc:     Jean-Noel Avila <jn.avila@free.fr>,
+        Alexander Shopov <ash@kambanaria.org>,
+        Jordi Mas <jmas@softcatala.org>,
+        Ralf Thielow <ralf.thielow@gmail.com>,
+        =?UTF-8?Q?Christopher_D=C3=ADaz?= <christopher.diaz.riv@gmail.com>,
+        Marco Paolone <marcopaolone@gmail.com>,
+        Changwoo Ryu <cwryu@debian.org>,
+        Vasco Almeida <vascomalmeida@sapo.pt>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        =?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
+        Jiang Xin <worldhello.net@gmail.com>,
+        Jacques Viviers <jacques.viviers@gmail.com>,
+        m4sk1n <m4sk1n@o2.pl>, Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] i18n: add a missing space in message
+Date:   Sun,  8 Oct 2017 14:18:39 +0200
+Message-Id: <20171008121839.30067-1-jn.avila@free.fr>
+X-Mailer: git-send-email 2.14.0
+In-Reply-To: <CANYiYbGHBDGMEjbrvX_ayXkXkciT3GgL4seM_X1NmWtud2upcg@mail.gmail.com>
+References: <CANYiYbGHBDGMEjbrvX_ayXkXkciT3GgL4seM_X1NmWtud2upcg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, 8 Oct 2017, Junio C Hamano wrote:
+The message spans over 2 lines but the C conconcatenation does not add
+the needed space between the two lines.
 
-> "Robert P. J. Day" <rpjday@crashcourse.ca> writes:
->
-> > ... so if, in the kernel source
-> > tree, i ran:
-> >
-> >   $ git rm \*.c
-> >
-> > i would end up removing *all* 25,569 "*.c" files in the kernel
-> > source repository.
->
-> Yes, as that is exactly what the command line asks Git to do.
+Signed-off-by: Jean-Noel Avila <jn.avila@free.fr>
+---
+ sequencer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-  ok, i truly want to understand this, so let me dig through this
-carefully. i can now see (from the man page and the recent
-explanations) that "git rm" will accept *escaped* fileglobs to remove
-and that, further, "File globbing matches across directory
-boundaries." which is why, in the linux kernel source tree, if i run
-one of:
+This is a single change discovered while doing the localization task.
 
-  $ git rm \*.c
-  $ git rm '*.c'
+Moreover, what's the status of the options in '--<option>' in the
+messages?  Must they be single-quoted or not? This may sound a bit
+picky, but there has been some shifts from one form to the other in
+the latest batch of strings, leading to fuzzy matchings. Settling on a
+given "standard" would probably reduce translators'work.
 
-the "git rm" command will internally process the fileglob and apply it
-across directory boundaries. and that's why, when i try a dry run, i
-can see the effect it would have on the kernel source:
-
-  $ git rm -n '*.c' | wc -l
-  25569
-  $
-
-> If you said
->
->     $ git rm *.c
->
-> then the shell expands the glob and all Git sees is that you want to
-> remove a.c b.c d.c ...; if you said "git rm -r *.c", unless b.c is
-> not a directory, these and only these files are removed.
-
-  right, that's just regular shell fileglob processing, no surprise
-there. (let's stick to just file removal for now.)
-
-> >   however, let's say i wanted to remove, recursively, all files with a
-> > *precise* (non-globbed) name, such as "Makefile". so i, naively, run:
-> >
-> >   $ git rm Makefile
-> >
-> > guess what ... the lack of globbing means i remove only the single
-> > Makefile at the top of the working directory.
->
-> Again, that is exactly what you asked Git to do.
-
-  yes, now i get it -- a lack of fileglob arguments disallows
-traversing directory boundaries, so one gets the "normal" behaviour.
-
->     $ git rm $(find . -name Makefile -print)
->
-> would of course one way to remove all Makefiles.  If you let POSIX
-> shell glob, i.e.
->
->     $ git rm */Makefile
->
-> the asterisk would not expand nothing but a single level, so it may
-> remove fs/Makefile, but not fs/ext4/Makefile (some shells allow
-> "wildmatch" expansion so "git rm **/Makefile" may catch the latter
-> with such a shell).
-
-  sure, all regular shell fileglob processing.
-
-> By letting Git see the glob, i.e.
->
->     $ git rm Makefile \*/Makefile
->
-> you would let Git to go over the paths it knows/cares about to find
-> ones that match the pathspec pattern and remove them (but not
-> recursively, even if you had a directory whose name is Makefile; for
-> that, you would use "-r").
-
-  right ... i can now see that '*/Makefile' would pick up all
-Makefiles *below* the current directory, so you need that initial
-reference to 'Makefile' to catch the top one. this just seems ...
-awkward.
-
-  but as i asked in my earlier post, if i wanted to remove *all* files
-with names of "Makefile*", why can't i use:
-
-  $ git rm 'Makefile*'
-
-just as i used:
-
-  $ git rm '*.c'
-
-are those not both acceptable fileglobs? why does the former clearly
-only match the top-level Makefile, and refuse to cross directory
-boundaries?
-
-  $ git rm -n 'Makefile*'
-  rm 'Makefile'
-  $
-
-rday
-
+diff --git a/sequencer.c b/sequencer.c
+index 7886e2269..e258bb646 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -2558,7 +2558,7 @@ static enum check_level get_missing_commit_check_level(void)
+ 		return CHECK_WARN;
+ 	if (!strcasecmp("error", value))
+ 		return CHECK_ERROR;
+-	warning(_("unrecognized setting %s for option"
++	warning(_("unrecognized setting %s for option "
+ 		  "rebase.missingCommitsCheck. Ignoring."), value);
+ 	return CHECK_IGNORE;
+ }
 -- 
+2.14.0
 
-========================================================================
-Robert P. J. Day                                 Ottawa, Ontario, CANADA
-                        http://crashcourse.ca
-
-Twitter:                                       http://twitter.com/rpjday
-LinkedIn:                               http://ca.linkedin.com/in/rpjday
-========================================================================
