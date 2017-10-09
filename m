@@ -2,86 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 02C9520372
-	for <e@80x24.org>; Mon,  9 Oct 2017 23:21:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F18B220404
+	for <e@80x24.org>; Mon,  9 Oct 2017 23:27:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755195AbdJIXVB (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Oct 2017 19:21:01 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:36964 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754404AbdJIXVB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Oct 2017 19:21:01 -0400
-Received: by mail-pf0-f193.google.com with SMTP id z80so12520349pff.4
-        for <git@vger.kernel.org>; Mon, 09 Oct 2017 16:21:00 -0700 (PDT)
+        id S1754959AbdJIX1U (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Oct 2017 19:27:20 -0400
+Received: from mail-qt0-f194.google.com ([209.85.216.194]:35415 "EHLO
+        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754644AbdJIX1U (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Oct 2017 19:27:20 -0400
+Received: by mail-qt0-f194.google.com with SMTP id z19so5034255qtg.2
+        for <git@vger.kernel.org>; Mon, 09 Oct 2017 16:27:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=27GxXbZ5AES5HiDj/T7tWas9pXLEMR7daeJkNEqGDPM=;
-        b=aB81l2G4OBXgfR6OrKtiWkfcrV+RNTXsK//NDnxXqtSoRYY3aX8ntHiUGP0vwH2zA9
-         q4PkpcYGbiaGjz9Kqpqecc6SWtD9B4KD82cQRsfopCoKM+efZ4P6pMvEFI+XEBNmSOIU
-         e4wbiLZRoYYF6qVI93gYgYt8rA6XDFtkKE/Tvm2+vojuShhQaHGu5TZurQVb5aJnNcg8
-         npyGqG5dN/Q5x/8RWu/0fijk88ctM3o4SyfRNpWGZn3ypuD/s2bceUFJaCyrR+MYHmTJ
-         OjaXj4bYYtCvyuQnzT3jAOrM6ljaUPMgmsaAHn3ZGLcEFrSjuaFgiALbXLokh9+Ge7bQ
-         Jegw==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=q1qO/OwX47/WhylP6nHqLOGxyfnL8mrzORSyfl08aTc=;
+        b=gsdJjrJltHZ/Kzij6jq7iS5ZgMUTZITgKue8rWQh33UqAYVkLyEJE01ub5ttAsEtU/
+         BTFemkJgNCit8Ie6lqVzdEx8LmYUnR3rPY4xhRYpX2C8s3XBpxeiS4tttpKpuSoZYEqF
+         nw2R7Zv/jYJ0bsGA12uzGtwNV8Dp9HvQbWxtYw1B4u3yIb+tKdR95ZGZe24y/cTB7EEw
+         qRvtCe5wiMLDQoA7+foCx1R2bAfD0Ul0jBVmEKiH+MRciJH1QuJh/D58SLTsNu41FGsY
+         rJOxYqZb5NEX2VqqNIYdjiwpnHUtEzj8v1YDJIo1nI7rV4DEq4AnWmN8khBjyUGnROPJ
+         CuWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=27GxXbZ5AES5HiDj/T7tWas9pXLEMR7daeJkNEqGDPM=;
-        b=PMLNdZK+EDigVqgTTETOb2aln65QvjPc7VaVo/A8/QZZGdyK4n2LJywadIg2gqSVzR
-         ZSn1qhJBfrdRsJi4wIS4Zw96MeEWSIVyCMYnfZY0u+dVKBLKOGZILlQQFRRPDIfvPdMp
-         D7OnbymJK4RcX6DVfEdQtSOXN2/8P9Cx/gGtb9K6TQ48Jac5uSSdO/5uW1D3BdsYLeFQ
-         Ganw6Uulc/atPIk8tyoC6fmnPF1oQmMr33sQQyzS30LnjHrXe98FONGSojR/01SNkdjE
-         +y9DVmGwp5j7JQLIHqQtMT5haPKqCrbx5DjrDkH/Oc/+L1JT26VxFKFyFJjwZL6AxK9a
-         DHaw==
-X-Gm-Message-State: AMCzsaW65iVNjpxvZxsYwvPiNncMTdLrGPjbGw+C4EMnzCwXldO4wTxy
-        niXGOOMupKl9AJ0pHOLUk0A=
-X-Google-Smtp-Source: AOwi7QCkYZHRZo1Es4U31CyArQ3fPxnonsTkGz4XrEUiaWjxGr8kf2agc3eM7TVp04IZJGiojV2fIQ==
-X-Received: by 10.84.247.133 with SMTP id o5mr9949692pll.6.1507591260506;
-        Mon, 09 Oct 2017 16:21:00 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:c9c7:66a0:181:dab2])
-        by smtp.gmail.com with ESMTPSA id 77sm16594195pfi.103.2017.10.09.16.20.59
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 09 Oct 2017 16:20:59 -0700 (PDT)
-Date:   Mon, 9 Oct 2017 16:20:57 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Brandon Williams <bmwill@google.com>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH v2 06/24] Convert check_connected to use struct object_id
-Message-ID: <20171009232057.GJ19555@aiede.mtv.corp.google.com>
-References: <20171009011132.675341-1-sandals@crustytoothpaste.net>
- <20171009011132.675341-7-sandals@crustytoothpaste.net>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=q1qO/OwX47/WhylP6nHqLOGxyfnL8mrzORSyfl08aTc=;
+        b=ANmynyKy5BPytVcz4M1CO/1nvEQVctOPQtqxo2bH8sSUa3GpuPHFBmX+FI/gZNGMvY
+         nj9bkqgIBWWsTcZzq20N8/oe2yX2bmMwze06Bug11Y6x0jVoqmnCrbPhfcJw2q52KN/2
+         /JlOTHvzN0ZT6R6GPdx8hrYTX9i6floCj3650INfjK/B3Ei6miuKfrfvmmezjj2xFwZQ
+         wpDdCpEaSizvrpgPiqFITTYTOmP4lg/AyjiUeiPES6H9WGx3YMR4TyRTEBpywX2o9ily
+         xGntERstYqNqHa4ybw6Cj5Zv0fHAGakYV4gmqH99IHK9WXJu5gjDvf+/56Vq3IeE2SMR
+         zrHg==
+X-Gm-Message-State: AMCzsaXahusy1NDxTmOFPqO0nUTdgaTBUiHqZu/kiyZKmbV/QRjlJXil
+        aUR6ovl2jnazJQPCtYeOGK+4oSncDeVSG9xVswc=
+X-Google-Smtp-Source: AOwi7QDHh37NupzYxXTA3RGNNKl0i3yKg33ZiF5SpSKpUpEOmCPJaxXqm1kVdoqJ8MNA0AhbPW2OEzgBbcWA5gbO0zk=
+X-Received: by 10.233.222.134 with SMTP id s128mr9010404qkf.14.1507591639529;
+ Mon, 09 Oct 2017 16:27:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20171009011132.675341-7-sandals@crustytoothpaste.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Received: by 10.12.146.118 with HTTP; Mon, 9 Oct 2017 16:27:19 -0700 (PDT)
+In-Reply-To: <20171009214543.12986-1-me@ikke.info>
+References: <20171009214543.12986-1-me@ikke.info>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 9 Oct 2017 19:27:19 -0400
+X-Google-Sender-Auth: GznCXjgff00tsodp5oIPkUFo3K8
+Message-ID: <CAPig+cTnm01CJJN6tf-K_6Ah7uDoMeMJAxHUbC9YE1TxvAKF5g@mail.gmail.com>
+Subject: Re: [RFC] column: show auto columns when pager is active
+To:     Kevin Daudt <me@ikke.info>
+Cc:     Git List <git@vger.kernel.org>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-brian m. carlson wrote:
-
-> Convert check_connected and the callbacks it takes to use struct
-> object_id.
+On Mon, Oct 9, 2017 at 5:45 PM, Kevin Daudt <me@ikke.info> wrote:
+> When columns are set to automatic for git tag and the output is
+> paginated by git, the output is a single column instead of multiple
+> columns.
 >
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> ---
->  builtin/clone.c        |  4 ++--
->  builtin/fetch.c        |  4 ++--
->  builtin/receive-pack.c | 10 +++++-----
->  connected.c            | 18 +++++++++---------
->  connected.h            |  4 ++--
->  5 files changed, 20 insertions(+), 20 deletions(-)
+> Standard behaviour in git is to honor auto values when the pager is
+> active, which happens for example with commands like git log showing
+> colors when being paged.
+>
+> Since ff1e72483 (tag: change default of `pager.tag` to "on",
+> 2017-08-02), the pager has been enabled by default, exposing this
+> problem to more people.
+>
+> finalize_colopts in column.c only checks whether the output is a TTY to
+> determine if columns should be enabled with columns set to autol. Also ch=
+eck
 
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+Presumably: s/autol/auto/
+
+> if the pager is active.
+>
+> Helped-by: Rafael Ascens=C3=A3o <rafa.almas@gmail.com>
+> Signed-off-by: Kevin Daudt <me@ikke.info>
