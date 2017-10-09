@@ -6,42 +6,42 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 35E721FA21
-	for <e@80x24.org>; Mon,  9 Oct 2017 01:12:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A8E441FA21
+	for <e@80x24.org>; Mon,  9 Oct 2017 01:12:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753889AbdJIBMS (ORCPT <rfc822;e@80x24.org>);
-        Sun, 8 Oct 2017 21:12:18 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:54780 "EHLO
+        id S1753859AbdJIBML (ORCPT <rfc822;e@80x24.org>);
+        Sun, 8 Oct 2017 21:12:11 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:54756 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753878AbdJIBMO (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 8 Oct 2017 21:12:14 -0400
+        by vger.kernel.org with ESMTP id S1753810AbdJIBMJ (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 8 Oct 2017 21:12:09 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id CA20E60DA6;
-        Mon,  9 Oct 2017 01:12:12 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 9580460DA5;
+        Mon,  9 Oct 2017 01:12:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1507511533;
-        bh=KSeMGcKNa6V3xD366lv5NLmPS3/H0OIED9yNCjfvWYo=;
+        s=default; t=1507511528;
+        bh=8nWqR6/Jb8tDINJUuaJmD0I2xa7NNM7MrgY7Zh+oLgc=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=aX0dKbkadc58UDtlQrBXZIYId/sPZMfUUsyZ++VU9p75aROqA10YNg/FALqdwFvDj
-         uP9FTix5/dVnPYOagOYxYmI0YIXIUnzInePgBYUBfp3+szMWN6KU2Z9ZNISug+Aqeh
-         mQE73gStmLSRK0LgFTyZauXrlA5awjEz5OLAHjbVg0v5ZJw2ulSUvDv/DFJTbocZot
-         Dwi9Hb0hTbkahywLB3XgWA3E0iUkmeLCk5kVN7ImmOUjOS1T2+u534fWe0r1zYW+CK
-         NBMA1fm6AY/2gWwtKiINC+4uVehXMqd9Lp5r6piWlLVLnHfDXhugOvP9p7g9J6q+5D
-         b4AeScH1LY80zGUYvOdOVVUo9HJoX+Lk/yxQFUOboLK/ljLU3T48vYf3efc2NMbHpr
-         nCggWBPSanR9XSkSps4TiZOJAxxiE82LvwagtvVxAttwFDzTVozMU+xRaXCc1HHHiu
-         9VUdhSR17Ty0ZmplaEPvJ5PGoKLYWBO86QyZj6Wvw/LPwUTB2D2
+        b=hT+ZQWtOkwmL/UmmOnuAZqtIEBJ8VINQMg2CJ2x9lUGrwM26LivroIUo6jNU/zoYV
+         mVEzXc17Jelm1KkyCgOLADThn3AVlgURTOc7OZT6Vb7LTZxCfvNm1iw5NRQeCth224
+         LzBx5aeRwYCyqA3DArKF2J3aEyGX/kWDrPImuAGR75gq3uuve345NuZViPG9vyk+ay
+         cxJga+93QZyI9yHy29FYueRxaj1kmuxVs/b0KONUKbIQOmNr73Rfl5fJyr8622lMRK
+         zK8hQZ1WJfl/1lKIiOhkg/TR5D2IfcK8ky7BADcsPRTDah1g591Qh/zn5xNT1cH/Qt
+         eOBTRJu7ntLogRM3sSnmtXqT8UJX4vmU2iu0n1r1Cddsv3nAGXZj2xQH47E/NtdbCJ
+         /Z5f/+k/v2XKa2CUrMbvAZWmrYzXPsM712JGmwUN0c5dTn8BKeZhliPyO784Lxygjg
+         bA5a5A+usRdAnuI+NS0ibsN56BnHoSKvZ0tSEQ3kyGD7pEga5eL
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
         Brandon Williams <bmwill@google.com>,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCH v2 23/24] refs: convert read_raw_ref backends to struct object_id
-Date:   Mon,  9 Oct 2017 01:11:31 +0000
-Message-Id: <20171009011132.675341-24-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 19/24] refs: convert resolve_gitlink_ref to struct object_id
+Date:   Mon,  9 Oct 2017 01:11:27 +0000
+Message-Id: <20171009011132.675341-20-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.14.2.920.gcf0c67979c
 In-Reply-To: <20171009011132.675341-1-sandals@crustytoothpaste.net>
 References: <20171009011132.675341-1-sandals@crustytoothpaste.net>
@@ -51,182 +51,180 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert the unsigned char * parameter to struct object_id * for
-files_read_raw_ref and packed_read_raw-ref.  Update the documentation.
-Switch from using get_sha1_hex and a hard-coded 40 to using
-parse_oid_hex.
+Convert the declaration and definition of resolve_gitlink_ref to use
+struct object_id and apply the following semantic patch:
+
+@@
+expression E1, E2, E3;
+@@
+- resolve_gitlink_ref(E1, E2, E3.hash)
++ resolve_gitlink_ref(E1, E2, &E3)
+
+@@
+expression E1, E2, E3;
+@@
+- resolve_gitlink_ref(E1, E2, E3->hash)
++ resolve_gitlink_ref(E1, E2, E3)
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- refs.c                |  8 ++++----
- refs/files-backend.c  | 13 +++++++------
- refs/packed-backend.c |  4 ++--
- refs/refs-internal.h  | 10 +++++-----
- 4 files changed, 18 insertions(+), 17 deletions(-)
+ builtin/update-index.c | 4 ++--
+ combine-diff.c         | 2 +-
+ diff-lib.c             | 2 +-
+ dir.c                  | 4 ++--
+ read-cache.c           | 2 +-
+ refs.c                 | 6 +++---
+ refs.h                 | 2 +-
+ sha1_file.c            | 2 +-
+ unpack-trees.c         | 2 +-
+ 9 files changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index 958234e7d6..d8d4e06438 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1374,10 +1374,10 @@ int for_each_rawref(each_ref_fn fn, void *cb_data)
- }
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index 24f4b28951..fefbe60167 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -328,7 +328,7 @@ static int process_directory(const char *path, int len, struct stat *st)
+ 		if (S_ISGITLINK(ce->ce_mode)) {
  
- int refs_read_raw_ref(struct ref_store *ref_store,
--		      const char *refname, unsigned char *sha1,
-+		      const char *refname, struct object_id *oid,
- 		      struct strbuf *referent, unsigned int *type)
- {
--	return ref_store->be->read_raw_ref(ref_store, refname, sha1, referent, type);
-+	return ref_store->be->read_raw_ref(ref_store, refname, oid, referent, type);
- }
+ 			/* Do nothing to the index if there is no HEAD! */
+-			if (resolve_gitlink_ref(path, "HEAD", oid.hash) < 0)
++			if (resolve_gitlink_ref(path, "HEAD", &oid) < 0)
+ 				return 0;
  
- /* This function needs to return a meaningful errno on failure */
-@@ -1420,7 +1420,7 @@ const char *refs_resolve_ref_unsafe(struct ref_store *refs,
- 		unsigned int read_flags = 0;
- 
- 		if (refs_read_raw_ref(refs, refname,
--				      oid->hash, &sb_refname, &read_flags)) {
-+				      oid, &sb_refname, &read_flags)) {
- 			*flags |= read_flags;
- 			if (errno != ENOENT || (resolve_flags & RESOLVE_REF_READING))
- 				return NULL;
-@@ -1842,7 +1842,7 @@ int refs_verify_refname_available(struct ref_store *refs,
- 		if (skip && string_list_has_string(skip, dirname.buf))
- 			continue;
- 
--		if (!refs_read_raw_ref(refs, dirname.buf, oid.hash, &referent, &type)) {
-+		if (!refs_read_raw_ref(refs, dirname.buf, &oid, &referent, &type)) {
- 			strbuf_addf(err, "'%s' exists; cannot create '%s'",
- 				    dirname.buf, refname);
- 			goto cleanup;
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 417c662d5d..7281f27f62 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -261,7 +261,7 @@ static struct ref_cache *get_loose_ref_cache(struct files_ref_store *refs)
- }
- 
- static int files_read_raw_ref(struct ref_store *ref_store,
--			      const char *refname, unsigned char *sha1,
-+			      const char *refname, struct object_id *oid,
- 			      struct strbuf *referent, unsigned int *type)
- {
- 	struct files_ref_store *refs =
-@@ -270,6 +270,7 @@ static int files_read_raw_ref(struct ref_store *ref_store,
- 	struct strbuf sb_path = STRBUF_INIT;
- 	const char *path;
- 	const char *buf;
-+	const char *p;
- 	struct stat st;
- 	int fd;
- 	int ret = -1;
-@@ -304,7 +305,7 @@ static int files_read_raw_ref(struct ref_store *ref_store,
- 		if (errno != ENOENT)
- 			goto out;
- 		if (refs_read_raw_ref(refs->packed_ref_store, refname,
--				      sha1, referent, type)) {
-+				      oid, referent, type)) {
- 			errno = ENOENT;
- 			goto out;
- 		}
-@@ -344,7 +345,7 @@ static int files_read_raw_ref(struct ref_store *ref_store,
- 		 * packed ref:
- 		 */
- 		if (refs_read_raw_ref(refs->packed_ref_store, refname,
--				      sha1, referent, type)) {
-+				      oid, referent, type)) {
- 			errno = EISDIR;
- 			goto out;
- 		}
-@@ -390,8 +391,8 @@ static int files_read_raw_ref(struct ref_store *ref_store,
- 	 * Please note that FETCH_HEAD has additional
- 	 * data after the sha.
- 	 */
--	if (get_sha1_hex(buf, sha1) ||
--	    (buf[40] != '\0' && !isspace(buf[40]))) {
-+	if (parse_oid_hex(buf, oid, &p) ||
-+	    (*p != '\0' && !isspace(*p))) {
- 		*type |= REF_ISBROKEN;
- 		errno = EINVAL;
- 		goto out;
-@@ -545,7 +546,7 @@ static int lock_raw_ref(struct files_ref_store *refs,
- 	 */
- 
- 	if (files_read_raw_ref(&refs->base, refname,
--			       lock->old_oid.hash, referent, type)) {
-+			       &lock->old_oid, referent, type)) {
- 		if (errno == ENOENT) {
- 			if (mustexist) {
- 				/* Garden variety missing reference. */
-diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index 25e6fc4ffe..c1960c4cfa 100644
---- a/refs/packed-backend.c
-+++ b/refs/packed-backend.c
-@@ -319,7 +319,7 @@ static struct ref_entry *get_packed_ref(struct packed_ref_store *refs,
- }
- 
- static int packed_read_raw_ref(struct ref_store *ref_store,
--			       const char *refname, unsigned char *sha1,
-+			       const char *refname, struct object_id *oid,
- 			       struct strbuf *referent, unsigned int *type)
- {
- 	struct packed_ref_store *refs =
-@@ -335,7 +335,7 @@ static int packed_read_raw_ref(struct ref_store *ref_store,
- 		return -1;
+ 			return add_one_path(ce, path, len, st);
+@@ -354,7 +354,7 @@ static int process_directory(const char *path, int len, struct stat *st)
  	}
  
--	hashcpy(sha1, entry->u.value.oid.hash);
-+	oidcpy(oid, &entry->u.value.oid);
- 	*type = REF_ISPACKED;
+ 	/* No match - should we add it as a gitlink? */
+-	if (!resolve_gitlink_ref(path, "HEAD", oid.hash))
++	if (!resolve_gitlink_ref(path, "HEAD", &oid))
+ 		return add_one_path(NULL, path, len, st);
+ 
+ 	/* Error out. */
+diff --git a/combine-diff.c b/combine-diff.c
+index 9e163d5ada..82f6070977 100644
+--- a/combine-diff.c
++++ b/combine-diff.c
+@@ -1014,7 +1014,7 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
+ 			elem->mode = canon_mode(st.st_mode);
+ 		} else if (S_ISDIR(st.st_mode)) {
+ 			struct object_id oid;
+-			if (resolve_gitlink_ref(elem->path, "HEAD", oid.hash) < 0)
++			if (resolve_gitlink_ref(elem->path, "HEAD", &oid) < 0)
+ 				result = grab_blob(&elem->oid, elem->mode,
+ 						   &result_size, NULL, NULL);
+ 			else
+diff --git a/diff-lib.c b/diff-lib.c
+index af4f1b7865..d2ea02f4d7 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -50,7 +50,7 @@ static int check_removed(const struct cache_entry *ce, struct stat *st)
+ 		 * a directory --- the blob was removed!
+ 		 */
+ 		if (!S_ISGITLINK(ce->ce_mode) &&
+-		    resolve_gitlink_ref(ce->name, "HEAD", sub.hash))
++		    resolve_gitlink_ref(ce->name, "HEAD", &sub))
+ 			return 1;
+ 	}
+ 	return 0;
+diff --git a/dir.c b/dir.c
+index a4198ba7fd..f09a31e102 100644
+--- a/dir.c
++++ b/dir.c
+@@ -1391,7 +1391,7 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
+ 			break;
+ 		if (!(dir->flags & DIR_NO_GITLINKS)) {
+ 			struct object_id oid;
+-			if (resolve_gitlink_ref(dirname, "HEAD", oid.hash) == 0)
++			if (resolve_gitlink_ref(dirname, "HEAD", &oid) == 0)
+ 				return path_untracked;
+ 		}
+ 		return path_recurse;
+@@ -2282,7 +2282,7 @@ static int remove_dir_recurse(struct strbuf *path, int flag, int *kept_up)
+ 	struct object_id submodule_head;
+ 
+ 	if ((flag & REMOVE_DIR_KEEP_NESTED_GIT) &&
+-	    !resolve_gitlink_ref(path->buf, "HEAD", submodule_head.hash)) {
++	    !resolve_gitlink_ref(path->buf, "HEAD", &submodule_head)) {
+ 		/* Do not descend and nuke a nested git work tree. */
+ 		if (kept_up)
+ 			*kept_up = 1;
+diff --git a/read-cache.c b/read-cache.c
+index 131485b3a6..7766196aff 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -201,7 +201,7 @@ static int ce_compare_gitlink(const struct cache_entry *ce)
+ 	 *
+ 	 * If so, we consider it always to match.
+ 	 */
+-	if (resolve_gitlink_ref(ce->name, "HEAD", oid.hash) < 0)
++	if (resolve_gitlink_ref(ce->name, "HEAD", &oid) < 0)
+ 		return 0;
+ 	return oidcmp(&oid, &ce->oid);
+ }
+diff --git a/refs.c b/refs.c
+index 9ddf7fcf7d..2fbe9942e2 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1476,7 +1476,7 @@ const char *resolve_ref_unsafe(const char *refname, int resolve_flags,
+ }
+ 
+ int resolve_gitlink_ref(const char *submodule, const char *refname,
+-			unsigned char *sha1)
++			struct object_id *oid)
+ {
+ 	struct ref_store *refs;
+ 	int flags;
+@@ -1486,8 +1486,8 @@ int resolve_gitlink_ref(const char *submodule, const char *refname,
+ 	if (!refs)
+ 		return -1;
+ 
+-	if (!refs_resolve_ref_unsafe(refs, refname, 0, sha1, &flags) ||
+-	    is_null_sha1(sha1))
++	if (!refs_resolve_ref_unsafe(refs, refname, 0, oid->hash, &flags) ||
++	    is_null_oid(oid))
+ 		return -1;
  	return 0;
  }
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index cf84da33d5..d2bcaef321 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -181,7 +181,7 @@ struct ref_update {
- };
- 
- int refs_read_raw_ref(struct ref_store *ref_store,
--		      const char *refname, unsigned char *sha1,
-+		      const char *refname, struct object_id *oid,
- 		      struct strbuf *referent, unsigned int *type);
+diff --git a/refs.h b/refs.h
+index 1bc241424d..bb0dcd97af 100644
+--- a/refs.h
++++ b/refs.h
+@@ -130,7 +130,7 @@ int peel_ref(const char *refname, struct object_id *oid);
+  * otherwise, return a non-zero value.
+  */
+ int resolve_gitlink_ref(const char *submodule, const char *refname,
+-			unsigned char *sha1);
++			struct object_id *oid);
  
  /*
-@@ -603,13 +603,13 @@ typedef int reflog_expire_fn(struct ref_store *ref_store,
-  * Read a reference from the specified reference store, non-recursively.
-  * Set type to describe the reference, and:
-  *
-- * - If refname is the name of a normal reference, fill in sha1
-+ * - If refname is the name of a normal reference, fill in oid
-  *   (leaving referent unchanged).
-  *
-  * - If refname is the name of a symbolic reference, write the full
-  *   name of the reference to which it refers (e.g.
-  *   "refs/heads/master") to referent and set the REF_ISSYMREF bit in
-- *   type (leaving sha1 unchanged). The caller is responsible for
-+ *   type (leaving oid unchanged). The caller is responsible for
-  *   validating that referent is a valid reference name.
-  *
-  * WARNING: refname might be used as part of a filename, so it is
-@@ -621,7 +621,7 @@ typedef int reflog_expire_fn(struct ref_store *ref_store,
-  *
-  * Return 0 on success. If the ref doesn't exist, set errno to ENOENT
-  * and return -1. If the ref exists but is neither a symbolic ref nor
-- * a sha1, it is broken; set REF_ISBROKEN in type, set errno to
-+ * an object ID, it is broken; set REF_ISBROKEN in type, set errno to
-  * EINVAL, and return -1. If there is another error reading the ref,
-  * set errno appropriately and return -1.
-  *
-@@ -638,7 +638,7 @@ typedef int reflog_expire_fn(struct ref_store *ref_store,
-  *   refname will still be valid and unchanged.
-  */
- typedef int read_raw_ref_fn(struct ref_store *ref_store,
--			    const char *refname, unsigned char *sha1,
-+			    const char *refname, struct object_id *oid,
- 			    struct strbuf *referent, unsigned int *type);
+  * Return true iff abbrev_name is a possible abbreviation for
+diff --git a/sha1_file.c b/sha1_file.c
+index 793fd2d194..f8c82ce2a2 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1832,7 +1832,7 @@ int index_path(struct object_id *oid, const char *path, struct stat *st, unsigne
+ 		strbuf_release(&sb);
+ 		break;
+ 	case S_IFDIR:
+-		return resolve_gitlink_ref(path, "HEAD", oid->hash);
++		return resolve_gitlink_ref(path, "HEAD", oid);
+ 	default:
+ 		return error("%s: unsupported file type", path);
+ 	}
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 0dc76eddfe..25740cb593 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -1542,7 +1542,7 @@ static int verify_clean_subdirectory(const struct cache_entry *ce,
  
- struct ref_storage_be {
+ 	if (S_ISGITLINK(ce->ce_mode)) {
+ 		struct object_id oid;
+-		int sub_head = resolve_gitlink_ref(ce->name, "HEAD", oid.hash);
++		int sub_head = resolve_gitlink_ref(ce->name, "HEAD", &oid);
+ 		/*
+ 		 * If we are not going to update the submodule, then
+ 		 * we don't care.
 -- 
 2.14.2.920.gcf0c67979c
 
