@@ -2,107 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 35AA020372
-	for <e@80x24.org>; Mon,  9 Oct 2017 21:29:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5C46C20372
+	for <e@80x24.org>; Mon,  9 Oct 2017 21:46:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754318AbdJIV3E (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Oct 2017 17:29:04 -0400
-Received: from wp156.webpack.hosteurope.de ([80.237.132.163]:34870 "EHLO
-        wp156.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751156AbdJIV3D (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 9 Oct 2017 17:29:03 -0400
-Received: from app10-neu.ox.hosteurope.de ([92.51.170.144] helo=null); authenticated
-        by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:ECDHE_RSA_AES_256_CBC_SHA1:256)
-        id 1e1fbh-0001l0-Mx; Mon, 09 Oct 2017 23:29:01 +0200
-Date:   Mon, 9 Oct 2017 23:29:01 +0200 (CEST)
-From:   Thomas Braun <thomas.braun@virtuell-zuhause.de>
+        id S1754217AbdJIVqH (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Oct 2017 17:46:07 -0400
+Received: from ikke.info ([178.21.113.177]:54762 "EHLO vps892.directvps.nl"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751156AbdJIVqG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Oct 2017 17:46:06 -0400
+Received: by vps892.directvps.nl (Postfix, from userid 182)
+        id E92B044039C; Mon,  9 Oct 2017 23:46:04 +0200 (CEST)
+Received: from epsilon.home (unknown [10.8.0.22])
+        by vps892.directvps.nl (Postfix) with ESMTP id 698F3440393;
+        Mon,  9 Oct 2017 23:46:04 +0200 (CEST)
+From:   Kevin Daudt <me@ikke.info>
 To:     git@vger.kernel.org
-Message-ID: <788230417.115707.1507584541605@ox.hosteurope.de>
-Subject: Branch switching with submodules where the submodule replaces a
- folder aborts unexpectedly
+Cc:     pclouds@gmail.com, Kevin Daudt <me@ikke.info>
+Subject: [RFC] column: show auto columns when pager is active
+Date:   Mon,  9 Oct 2017 23:45:43 +0200
+Message-Id: <20171009214543.12986-1-me@ikke.info>
+X-Mailer: git-send-email 2.14.2
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-Importance: Medium
-X-Mailer: Open-Xchange Mailer v7.8.4-Rev10
-X-Originating-Client: open-xchange-appsuite
-X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1507584543;14416229;
-X-HE-SMSGID: 1e1fbh-0001l0-Mx
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+When columns are set to automatic for git tag and the output is
+paginated by git, the output is a single column instead of multiple
+columns.
 
-I'm currently in the progress of pulling some subprojects in a git repository of mine into their own repositories and adding these subprojects back as submodules.
+Standard behaviour in git is to honor auto values when the pager is
+active, which happens for example with commands like git log showing
+colors when being paged.
 
-While doing this I enountered a potential bug as checkout complains on branch switching that a file already exists.
+Since ff1e72483 (tag: change default of `pager.tag` to "on",
+2017-08-02), the pager has been enabled by default, exposing this
+problem to more people.
 
-I've reproduced it on debian stretch with the following git versions:
+finalize_colopts in column.c only checks whether the output is a TTY to
+determine if columns should be enabled with columns set to autol. Also check
+if the pager is active.
 
-master:
-git version 2.15.0.rc0.39.g2f0e14e649
-pu:
-git version 2.15.0.rc0.245.g6d586db062
+Helped-by: Rafael Ascensão <rafa.almas@gmail.com>
+Signed-off-by: Kevin Daudt <me@ikke.info>
+---
+This came to light when someone wondered on irc why
+column.tag=[auto|always] did not work on Mac OS. Testing it myself, I
+found it to work with always, but not with auto.
 
-A script to trigger it is
+I could not get the test to work yet, because somehow it's not giving
+any output, so feedback regarding that is welcome.
 
-mkdir -p test/subproject
-cd test
-git init
-touch subproject/1
-git add subproject
-git commit -m "blah"
-cd ..
-mkdir subproject
-cd subproject
-git init
-touch 1
-git add 1
-git commit -m "blubb"
-cd ../test
-git branch old
-git rm -rf subproject
-git commit -m "remove blah"
-git submodule add ../subproject
-git add -A
-git commit -m "added subproject"
-git branch new
-git checkout old
 
-and this fails with 
+ column.c          |  3 ++-
+ t/t9002-column.sh | 13 +++++++++++++
+ 2 files changed, 15 insertions(+), 1 deletion(-)
 
-$LANG=C ./run.sh 
-Initialized empty Git repository in /home/XXX/devel/test/.git/
-[master (root-commit) 33e6607] blah
- 1 file changed, 0 insertions(+), 0 deletions(-)
- create mode 100644 subproject/1
-Initialized empty Git repository in /home/XXX/devel/subproject/.git/
-[master (root-commit) e817644] blubb
- 1 file changed, 0 insertions(+), 0 deletions(-)
- create mode 100644 1
-rm 'subproject/1'
-[master 9cbfd57] remove blah
- 1 file changed, 0 insertions(+), 0 deletions(-)
- delete mode 100644 subproject/1
-Cloning into '/home/XXX/devel/test/subproject'...
-done.
-[master 1c67e23] added subproject
- 2 files changed, 4 insertions(+)
- create mode 100644 .gitmodules
- create mode 160000 subproject
-error: The following untracked working tree files would be overwritten by checkout:
-        subproject/1
-Please move or remove them before you switch branches.
-Aborting
+diff --git a/column.c b/column.c
+index ff7bdab1a..ded50337f 100644
+--- a/column.c
++++ b/column.c
+@@ -5,6 +5,7 @@
+ #include "parse-options.h"
+ #include "run-command.h"
+ #include "utf8.h"
++#include "pager.c"
+ 
+ #define XY2LINEAR(d, x, y) (COL_LAYOUT((d)->colopts) == COL_COLUMN ? \
+ 			    (x) * (d)->rows + (y) : \
+@@ -224,7 +225,7 @@ int finalize_colopts(unsigned int *colopts, int stdout_is_tty)
+ 		if (stdout_is_tty < 0)
+ 			stdout_is_tty = isatty(1);
+ 		*colopts &= ~COL_ENABLE_MASK;
+-		if (stdout_is_tty)
++		if (stdout_is_tty || pager_in_use())
+ 			*colopts |= COL_ENABLED;
+ 	}
+ 	return 0;
+diff --git a/t/t9002-column.sh b/t/t9002-column.sh
+index 89983527b..9441145bf 100755
+--- a/t/t9002-column.sh
++++ b/t/t9002-column.sh
+@@ -2,6 +2,7 @@
+ 
+ test_description='git column'
+ . ./test-lib.sh
++. "$TEST_DIRECTORY"/lib-terminal.sh
+ 
+ test_expect_success 'setup' '
+ 	cat >lista <<\EOF
+@@ -177,4 +178,16 @@ EOF
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success TTY '20 columns, mode auto, pager' '
++	cat >expected <<\EOF &&
++one    seven
++two    eight
++three  nine
++four   ten
++five   eleven
++six
++EOF
++	test_terminal env PAGER="cat|cat" git column --mode=auto <lista >actual &&
++	test_cmp expected actual
++'
+ test_done
+-- 
+2.14.2
 
-If I'm misusing git here I'm glad for any advice.
-
-Thanks,
-Thomas
