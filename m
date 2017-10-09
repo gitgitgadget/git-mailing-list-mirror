@@ -6,42 +6,42 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 02E211FA21
-	for <e@80x24.org>; Mon,  9 Oct 2017 01:12:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 05ACB20373
+	for <e@80x24.org>; Mon,  9 Oct 2017 01:12:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753778AbdJIBMB (ORCPT <rfc822;e@80x24.org>);
-        Sun, 8 Oct 2017 21:12:01 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:54692 "EHLO
+        id S1753842AbdJIBMI (ORCPT <rfc822;e@80x24.org>);
+        Sun, 8 Oct 2017 21:12:08 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:54712 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753762AbdJIBL4 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 8 Oct 2017 21:11:56 -0400
+        by vger.kernel.org with ESMTP id S1753810AbdJIBMA (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 8 Oct 2017 21:12:00 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 6185760D9A;
-        Mon,  9 Oct 2017 01:11:54 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 05CC960D9E;
+        Mon,  9 Oct 2017 01:11:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1507511514;
-        bh=AIXrVDuAvrIy47g1nrxIJz4W4KMBIARzNGmzPmpWP8Q=;
+        s=default; t=1507511519;
+        bh=foQPoxQvKrz8xhm77SvaOtJTyOn/QE0fU3JLh169Gbs=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=tlthL5QFkCAC72BI65XnpVYGfQu6Mqc53Jm8Utg/s7JytPt+RWc4H6I3tFuB/Sm25
-         u5t5xAE6rhbqWuZMr776eUJ97qEH3DeFHdDPpRPn7nZQtjqX/zYjGtMpklx+7fXqFy
-         Vj2lvweU9bmab5uddIsf9woAlJTzs/g/M4y7iGOf3cEII3BaSb/lJdm9hO2s9NkoPL
-         za97ELJ89omZmFcGk/o8E6k0YW2id2ajMUDBOaZvuIYVtSNuBabcSzLB3LADhVrYHm
-         BipG1tx+63N9ncenOCbluXp4o7tAb2xPDKOF0o/Z7DJzvjFo0qPn0I6GiJsU58sFh3
-         VWo3fSfTUpnoQAtcz0GvBtGXmVXL8Bm1ntYBKkbNBk76VdUILiHhp/k2823ZACTW78
-         T0Ym1zCR/hwvDSTNsrMWkftg4fyt6MJF2LWyLiN41kMzoWaostCX+rWwqFvwl6AKpP
-         CwNDYn3I4tw9a6BnprJGxy3YKLIF6La2Klg+Dlm04uNTd0yZCLf
+        b=E7VETfjbbRieSrq0gSRtm3S0zlYw5eXp/BvSdLk/1VwPFy+Q3lMoEIKFnHZdB/H4/
+         BQKp1rvISDHUaHeZHML9nzQuB4UdPL2MdK2jlyhkrU7eQE6fzwG5n/0YWYjyMyUHLU
+         Wiqse6nD7AAIZYcqHKLSjSv9xAGWpgLqI4B3p+yElnIZBysuCQVvNDUnMYlbrfcUDN
+         +TWzYYHxjfQr26fXbb+yB29+sNcn/yEvf1hGl5Va0M8JgKoJjIFGPaXhKhj+916w8f
+         PfYJwTF0IvQdFfZZkK8zYloOO+LV3WTh4aZdA+m+MJEvDtcunksi+GEZ64th/IO7aQ
+         TEuGuEYdUTOtTNTOsFV3lr2zfyQMy4zLYobTpXWeFe4AFmQaMIjmqJc/KPQ1kGTQt2
+         o8E3JYBgRgyGzDD1/uybYz3LwudcD2DhCNFYTZwq6ZK37b5htWdxwJHY3LHwYZ8jdC
+         pZ23WrHT5i2xwAISnLpOoXyE+bD4Hlbux4TQF3cXsZrlR8lbdAb
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
         Brandon Williams <bmwill@google.com>,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCH v2 09/24] refs: convert dwim_ref and expand_ref to struct object_id
-Date:   Mon,  9 Oct 2017 01:11:17 +0000
-Message-Id: <20171009011132.675341-10-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 12/24] pack-bitmap: convert traverse_bitmap_commit_list to object_id
+Date:   Mon,  9 Oct 2017 01:11:20 +0000
+Message-Id: <20171009011132.675341-13-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.14.2.920.gcf0c67979c
 In-Reply-To: <20171009011132.675341-1-sandals@crustytoothpaste.net>
 References: <20171009011132.675341-1-sandals@crustytoothpaste.net>
@@ -51,271 +51,117 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-All of the callers of these functions just pass the hash member of a
-struct object_id, so convert them to use a pointer to struct object_id
-directly.
+Convert traverse_bitmap_commit_list and the callbacks it takes to use a
+pointer to struct object_id.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- archive.c             |  2 +-
- branch.c              |  2 +-
- builtin/fast-export.c |  2 +-
- builtin/log.c         |  2 +-
- builtin/merge-base.c  |  2 +-
- builtin/merge.c       |  2 +-
- builtin/rev-parse.c   |  2 +-
- builtin/show-branch.c |  2 +-
- bundle.c              |  2 +-
- refs.c                | 14 +++++++-------
- refs.h                |  4 ++--
- remote.c              |  3 +--
- sha1_name.c           |  6 +++---
- upload-pack.c         |  2 +-
- wt-status.c           |  2 +-
- 15 files changed, 24 insertions(+), 25 deletions(-)
+ builtin/pack-objects.c | 8 ++++----
+ builtin/rev-list.c     | 4 ++--
+ pack-bitmap.c          | 8 ++++----
+ pack-bitmap.h          | 2 +-
+ 4 files changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/archive.c b/archive.c
-index 1e41f4bbeb..0b7b62af0c 100644
---- a/archive.c
-+++ b/archive.c
-@@ -371,7 +371,7 @@ static void parse_treeish_arg(const char **argv,
- 		const char *colon = strchrnul(name, ':');
- 		int refnamelen = colon - name;
- 
--		if (!dwim_ref(name, refnamelen, oid.hash, &ref))
-+		if (!dwim_ref(name, refnamelen, &oid, &ref))
- 			die("no such ref: %.*s", refnamelen, name);
- 		free(ref);
- 	}
-diff --git a/branch.c b/branch.c
-index 45029ea142..62f7b0d8c2 100644
---- a/branch.c
-+++ b/branch.c
-@@ -264,7 +264,7 @@ void create_branch(const char *name, const char *start_name,
- 		die(_("Not a valid object name: '%s'."), start_name);
- 	}
- 
--	switch (dwim_ref(start_name, strlen(start_name), oid.hash, &real_ref)) {
-+	switch (dwim_ref(start_name, strlen(start_name), &oid, &real_ref)) {
- 	case 0:
- 		/* Not branching from any existing branch */
- 		if (explicit_tracking)
-diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index 2fb60d6d48..d74c73f777 100644
---- a/builtin/fast-export.c
-+++ b/builtin/fast-export.c
-@@ -823,7 +823,7 @@ static void get_tags_and_duplicates(struct rev_cmdline_info *info)
- 		if (e->flags & UNINTERESTING)
- 			continue;
- 
--		if (dwim_ref(e->name, strlen(e->name), oid.hash, &full_name) != 1)
-+		if (dwim_ref(e->name, strlen(e->name), &oid, &full_name) != 1)
- 			continue;
- 
- 		if (refspecs) {
-diff --git a/builtin/log.c b/builtin/log.c
-index d81a09051e..ba9d4cd786 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -975,7 +975,7 @@ static char *find_branch_name(struct rev_info *rev)
- 		return NULL;
- 	ref = rev->cmdline.rev[positive].name;
- 	tip_oid = &rev->cmdline.rev[positive].item->oid;
--	if (dwim_ref(ref, strlen(ref), branch_oid.hash, &full_ref) &&
-+	if (dwim_ref(ref, strlen(ref), &branch_oid, &full_ref) &&
- 	    skip_prefix(full_ref, "refs/heads/", &v) &&
- 	    !oidcmp(tip_oid, &branch_oid))
- 		branch = xstrdup(v);
-diff --git a/builtin/merge-base.c b/builtin/merge-base.c
-index 6dbd167d3b..e99f5405ce 100644
---- a/builtin/merge-base.c
-+++ b/builtin/merge-base.c
-@@ -156,7 +156,7 @@ static int handle_fork_point(int argc, const char **argv)
- 	struct commit_list *bases;
- 	int i, ret = 0;
- 
--	switch (dwim_ref(argv[0], strlen(argv[0]), oid.hash, &refname)) {
-+	switch (dwim_ref(argv[0], strlen(argv[0]), &oid, &refname)) {
- 	case 0:
- 		die("No such ref: '%s'", argv[0]);
- 	case 1:
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 99d2df965f..6071dbfe34 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -454,7 +454,7 @@ static void merge_name(const char *remote, struct strbuf *msg)
- 	if (!remote_head)
- 		die(_("'%s' does not point to a commit"), remote);
- 
--	if (dwim_ref(remote, strlen(remote), branch_head.hash, &found_ref) > 0) {
-+	if (dwim_ref(remote, strlen(remote), &branch_head, &found_ref) > 0) {
- 		if (starts_with(found_ref, "refs/heads/")) {
- 			strbuf_addf(msg, "%s\t\tbranch '%s' of .\n",
- 				    oid_to_hex(&branch_head), remote);
-diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
-index b9c13d3d9d..ad20a948f0 100644
---- a/builtin/rev-parse.c
-+++ b/builtin/rev-parse.c
-@@ -133,7 +133,7 @@ static void show_rev(int type, const struct object_id *oid, const char *name)
- 			struct object_id discard;
- 			char *full;
- 
--			switch (dwim_ref(name, strlen(name), discard.hash, &full)) {
-+			switch (dwim_ref(name, strlen(name), &discard, &full)) {
- 			case 0:
- 				/*
- 				 * Not found -- not a ref.  We could
-diff --git a/builtin/show-branch.c b/builtin/show-branch.c
-index 0237be4975..722a7f4bec 100644
---- a/builtin/show-branch.c
-+++ b/builtin/show-branch.c
-@@ -720,7 +720,7 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
- 			die(Q_("only %d entry can be shown at one time.",
- 			       "only %d entries can be shown at one time.",
- 			       MAX_REVS), MAX_REVS);
--		if (!dwim_ref(*av, strlen(*av), oid.hash, &ref))
-+		if (!dwim_ref(*av, strlen(*av), &oid, &ref))
- 			die(_("no such ref %s"), *av);
- 
- 		/* Has the base been specified? */
-diff --git a/bundle.c b/bundle.c
-index 12658c5c9f..93290962c9 100644
---- a/bundle.c
-+++ b/bundle.c
-@@ -338,7 +338,7 @@ static int write_bundle_refs(int bundle_fd, struct rev_info *revs)
- 
- 		if (e->item->flags & UNINTERESTING)
- 			continue;
--		if (dwim_ref(e->name, strlen(e->name), oid.hash, &ref) != 1)
-+		if (dwim_ref(e->name, strlen(e->name), &oid, &ref) != 1)
- 			goto skip_write_ref;
- 		if (read_ref_full(e->name, RESOLVE_REF_READING, &oid, &flag))
- 			flag = 0;
-diff --git a/refs.c b/refs.c
-index 05e01d8116..14a700ade6 100644
---- a/refs.c
-+++ b/refs.c
-@@ -456,15 +456,15 @@ static char *substitute_branch_name(const char **string, int *len)
- 	return NULL;
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 5ee2c48ffb..180c17904b 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -1097,20 +1097,20 @@ static int add_object_entry(const unsigned char *sha1, enum object_type type,
+ 	return 1;
  }
  
--int dwim_ref(const char *str, int len, unsigned char *sha1, char **ref)
-+int dwim_ref(const char *str, int len, struct object_id *oid, char **ref)
+-static int add_object_entry_from_bitmap(const unsigned char *sha1,
++static int add_object_entry_from_bitmap(const struct object_id *oid,
+ 					enum object_type type,
+ 					int flags, uint32_t name_hash,
+ 					struct packed_git *pack, off_t offset)
  {
- 	char *last_branch = substitute_branch_name(&str, &len);
--	int   refs_found  = expand_ref(str, len, sha1, ref);
-+	int   refs_found  = expand_ref(str, len, oid, ref);
- 	free(last_branch);
- 	return refs_found;
+ 	uint32_t index_pos;
+ 
+-	if (have_duplicate_entry(sha1, 0, &index_pos))
++	if (have_duplicate_entry(oid->hash, 0, &index_pos))
+ 		return 0;
+ 
+-	if (!want_object_in_pack(sha1, 0, &pack, &offset))
++	if (!want_object_in_pack(oid->hash, 0, &pack, &offset))
+ 		return 0;
+ 
+-	create_object_entry(sha1, type, name_hash, 0, 0, index_pos, pack, offset);
++	create_object_entry(oid->hash, type, name_hash, 0, 0, index_pos, pack, offset);
+ 
+ 	display_progress(progress_state, nr_result);
+ 	return 1;
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index c1c74d4a79..9bf8d5991c 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -258,14 +258,14 @@ static int show_bisect_vars(struct rev_list_info *info, int reaches, int all)
  }
  
--int expand_ref(const char *str, int len, unsigned char *sha1, char **ref)
-+int expand_ref(const char *str, int len, struct object_id *oid, char **ref)
+ static int show_object_fast(
+-	const unsigned char *sha1,
++	const struct object_id *oid,
+ 	enum object_type type,
+ 	int exclude,
+ 	uint32_t name_hash,
+ 	struct packed_git *found_pack,
+ 	off_t found_offset)
  {
- 	const char **p, *r;
- 	int refs_found = 0;
-@@ -472,15 +472,15 @@ int expand_ref(const char *str, int len, unsigned char *sha1, char **ref)
+-	fprintf(stdout, "%s\n", sha1_to_hex(sha1));
++	fprintf(stdout, "%s\n", oid_to_hex(oid));
+ 	return 1;
+ }
  
- 	*ref = NULL;
- 	for (p = ref_rev_parse_rules; *p; p++) {
--		unsigned char sha1_from_ref[20];
--		unsigned char *this_result;
-+		struct object_id oid_from_ref;
-+		struct object_id *this_result;
- 		int flag;
- 
--		this_result = refs_found ? sha1_from_ref : sha1;
-+		this_result = refs_found ? &oid_from_ref : oid;
- 		strbuf_reset(&fullref);
- 		strbuf_addf(&fullref, *p, len, str);
- 		r = resolve_ref_unsafe(fullref.buf, RESOLVE_REF_READING,
--				       this_result, &flag);
-+				       this_result->hash, &flag);
- 		if (r) {
- 			if (!refs_found++)
- 				*ref = xstrdup(r);
-diff --git a/refs.h b/refs.h
-index a2032b8397..832a77183c 100644
---- a/refs.h
-+++ b/refs.h
-@@ -139,8 +139,8 @@ int resolve_gitlink_ref(const char *submodule, const char *refname,
-  */
- int refname_match(const char *abbrev_name, const char *full_name);
- 
--int expand_ref(const char *str, int len, unsigned char *sha1, char **ref);
--int dwim_ref(const char *str, int len, unsigned char *sha1, char **ref);
-+int expand_ref(const char *str, int len, struct object_id *oid, char **ref);
-+int dwim_ref(const char *str, int len, struct object_id *oid, char **ref);
- int dwim_log(const char *str, int len, unsigned char *sha1, char **ref);
- 
- /*
-diff --git a/remote.c b/remote.c
-index 698a890a83..439d3b32f2 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1628,8 +1628,7 @@ static void set_merge(struct branch *ret)
- 		if (!remote_find_tracking(remote, ret->merge[i]) ||
- 		    strcmp(ret->remote_name, "."))
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index 42e3d5f4f2..9270983e5f 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -587,7 +587,7 @@ static void show_extended_objects(struct bitmap *objects,
  			continue;
--		if (dwim_ref(ret->merge_name[i], strlen(ret->merge_name[i]),
--			     oid.hash, &ref) == 1)
-+		if (dwim_ref(ret->merge_name[i], strlen(ret->merge_name[i]), &oid, &ref) == 1)
- 			ret->merge[i]->dst = ref;
- 		else
- 			ret->merge[i]->dst = xstrdup(ret->merge_name[i]);
-diff --git a/sha1_name.c b/sha1_name.c
-index 134ac9742f..28bad3e74b 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -603,7 +603,7 @@ static int get_oid_basic(const char *str, int len, struct object_id *oid,
  
- 	if (len == GIT_SHA1_HEXSZ && !get_oid_hex(str, oid)) {
- 		if (warn_ambiguous_refs && warn_on_object_refname_ambiguity) {
--			refs_found = dwim_ref(str, len, tmp_oid.hash, &real_ref);
-+			refs_found = dwim_ref(str, len, &tmp_oid, &real_ref);
- 			if (refs_found > 0) {
- 				warning(warn_msg, len, str);
- 				if (advice_object_name_warning)
-@@ -654,11 +654,11 @@ static int get_oid_basic(const char *str, int len, struct object_id *oid,
- 
- 	if (!len && reflog_len)
- 		/* allow "@{...}" to mean the current branch reflog */
--		refs_found = dwim_ref("HEAD", 4, oid->hash, &real_ref);
-+		refs_found = dwim_ref("HEAD", 4, oid, &real_ref);
- 	else if (reflog_len)
- 		refs_found = dwim_log(str, len, oid->hash, &real_ref);
- 	else
--		refs_found = dwim_ref(str, len, oid->hash, &real_ref);
-+		refs_found = dwim_ref(str, len, oid, &real_ref);
- 
- 	if (!refs_found)
- 		return -1;
-diff --git a/upload-pack.c b/upload-pack.c
-index e25f725c0f..030eba5a0c 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -787,7 +787,7 @@ static void receive_needs(void)
- 		if (skip_prefix(line, "deepen-not ", &arg)) {
- 			char *ref = NULL;
- 			struct object_id oid;
--			if (expand_ref(arg, strlen(arg), oid.hash, &ref) != 1)
-+			if (expand_ref(arg, strlen(arg), &oid, &ref) != 1)
- 				die("git upload-pack: ambiguous deepen-not: %s", line);
- 			string_list_append(&deepen_not, ref);
- 			free(ref);
-diff --git a/wt-status.c b/wt-status.c
-index 6d7d675a5b..280518a89b 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -1451,7 +1451,7 @@ static void wt_status_get_detached_from(struct wt_status_state *state)
- 		return;
+ 		obj = eindex->objects[i];
+-		show_reach(obj->oid.hash, obj->type, 0, eindex->hashes[i], NULL, 0);
++		show_reach(&obj->oid, obj->type, 0, eindex->hashes[i], NULL, 0);
  	}
+ }
  
--	if (dwim_ref(cb.buf.buf, cb.buf.len, oid.hash, &ref) == 1 &&
-+	if (dwim_ref(cb.buf.buf, cb.buf.len, &oid, &ref) == 1 &&
- 	    /* sha1 is a commit? match without further lookup */
- 	    (!oidcmp(&cb.noid, &oid) ||
- 	     /* perhaps sha1 is a tag, try to dereference to a commit */
+@@ -612,7 +612,7 @@ static void show_objects_for_type(
+ 		eword_t word = objects->words[i] & filter;
+ 
+ 		for (offset = 0; offset < BITS_IN_EWORD; ++offset) {
+-			const unsigned char *sha1;
++			struct object_id oid;
+ 			struct revindex_entry *entry;
+ 			uint32_t hash = 0;
+ 
+@@ -625,12 +625,12 @@ static void show_objects_for_type(
+ 				continue;
+ 
+ 			entry = &bitmap_git.pack->revindex[pos + offset];
+-			sha1 = nth_packed_object_sha1(bitmap_git.pack, entry->nr);
++			nth_packed_object_oid(&oid, bitmap_git.pack, entry->nr);
+ 
+ 			if (bitmap_git.hashes)
+ 				hash = get_be32(bitmap_git.hashes + entry->nr);
+ 
+-			show_reach(sha1, object_type, 0, hash, bitmap_git.pack, entry->offset);
++			show_reach(&oid, object_type, 0, hash, bitmap_git.pack, entry->offset);
+ 		}
+ 
+ 		pos += BITS_IN_EWORD;
+diff --git a/pack-bitmap.h b/pack-bitmap.h
+index 0adcef77b5..3742a00e14 100644
+--- a/pack-bitmap.h
++++ b/pack-bitmap.h
+@@ -27,7 +27,7 @@ enum pack_bitmap_flags {
+ };
+ 
+ typedef int (*show_reachable_fn)(
+-	const unsigned char *sha1,
++	const struct object_id *oid,
+ 	enum object_type type,
+ 	int flags,
+ 	uint32_t hash,
 -- 
 2.14.2.920.gcf0c67979c
 
