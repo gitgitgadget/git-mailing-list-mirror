@@ -2,123 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8F8151FA21
-	for <e@80x24.org>; Mon,  9 Oct 2017 04:14:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 670A42036B
+	for <e@80x24.org>; Mon,  9 Oct 2017 09:04:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753893AbdJIEOO (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Oct 2017 00:14:14 -0400
-Received: from mail-pf0-f173.google.com ([209.85.192.173]:45694 "EHLO
-        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753711AbdJIEON (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Oct 2017 00:14:13 -0400
-Received: by mail-pf0-f173.google.com with SMTP id z84so12552763pfi.2
-        for <git@vger.kernel.org>; Sun, 08 Oct 2017 21:14:13 -0700 (PDT)
+        id S1754056AbdJIJEg (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Oct 2017 05:04:36 -0400
+Received: from mail-io0-f178.google.com ([209.85.223.178]:55991 "EHLO
+        mail-io0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753997AbdJIJEd (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Oct 2017 05:04:33 -0400
+Received: by mail-io0-f178.google.com with SMTP id z187so20580338ioz.12
+        for <git@vger.kernel.org>; Mon, 09 Oct 2017 02:04:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=5jCkR4kLoDGsFXReXNaK6h0MEkX+75B9wcjezjBpRHs=;
-        b=D/PYG82L1m2LuBZUd8kBL7gsnJElvrHZGlthqh6FYpz+eMtWy1Gq9f+uaWOYrO7O4j
-         FcPs6GP4wodox7M7qfvM9w1Wc/iN9ECTbZsK/LUExOUjjn5VvbuVi2y6oaMrvQpvU1TW
-         WlM9vklAsmO91OBBW1BfImVdZm/ONgVQxjL5O4SyoL38cZeJarNjHVDODxu4X4MehM5q
-         caMJC6pJFPlXGl89Bd7L2Wt36zTp9L0i+jOqDnLw9I9LBKPbmGnH8SJJX+oh31bMzn8K
-         gjZ8LFHaQ7JVk2uZuMGLhrRU+qUczITy+Byj4KmAZ9wkQ1HXBoCBUwczvcp6SkdzuQtH
-         /bMw==
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=h/N4sm1h+cB9R0N8lslztG7MJZZDxDnnMSmjWkrlvi0=;
+        b=KCtn8fil1PI1NtZIWI0nwss46pwmTvljX/01IAap5FcuiaAt1F608WANVYdbWnHhTL
+         /uHUsUkg6St775bag4JVnwh9IV200SFb+XNSJbOFKnNadCSlX7nb8OmHZmoTou5NUNKV
+         cKEdiMj3lUJIjUAnLDGJVQGHyFtyxYygHmcnPtI9jOyRdFzXkDj35sTtyKxP5HMlyn2D
+         9o3R3ChzYo2d10pecO6E5IWkGju4D0LqDD0vkK4sSe5clHoAJ2eKEj1hKmscn79bbdTz
+         9yX55a3HD0maSK8uLhMPfL+VV5zreKW9nI6B+A2z8EuWL/c8xfA+lm9DlPnr3/CmipIP
+         niog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=5jCkR4kLoDGsFXReXNaK6h0MEkX+75B9wcjezjBpRHs=;
-        b=FUUajht43kMV0037yNV/NVoGXS3812iHilw7AIyIdygPPgE9GupB5hq/FgnXBMPaTE
-         owPfEkURU2N35BObil42DQ5wXcS+p1Hd7rGmyESk4PMdhffaL+uftMPCjzwoGNT6XKTg
-         IWb+6f6seHiqpFMPJjSfjALwuhsI0Aq3D+wyS6zLUDoZoDUxnuItwpDeK7fOgFuTmKT6
-         FC2GEkeJuZ51chMsrcbVF+ZjsvIF+9L8qIhbj4RpZOc5YpP/tziell0L1qn+mlRMC1OF
-         rnCd06HcB/S9upwQd9woXSkaFZ2L3muT4zPsOiTc0bZ1D2cadaDp6e062OmXcc0X+56F
-         X/fQ==
-X-Gm-Message-State: AMCzsaXejgRCFp470KaAA052RYTRhzbsF2Q5bZFHGNWJP/D2PbOG47U4
-        5BAGKC3DGoVWxumWXAgbfX5veVUo76j0pJ2N3HU=
-X-Google-Smtp-Source: AOwi7QCl2p6FCAK1l8Ut9RY9tqgbLotuap/06TspSKBNVi8AH5UzyXSHZsr5gpgUgaJQAZ8NHJNg8N+O5ZTJhFg/20A=
-X-Received: by 10.84.185.106 with SMTP id e39mr7931470plg.333.1507522453099;
- Sun, 08 Oct 2017 21:14:13 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=h/N4sm1h+cB9R0N8lslztG7MJZZDxDnnMSmjWkrlvi0=;
+        b=hRWzzX5U5eaC6Bm2BB5aaQWNdliiR8DYYYi88x71RjAuESKx/p8BZRc5gFdCBLpTW1
+         aCcnZ+xg7zirtmqNShxqpWTmUw5dBUNfq7okoxXzUH6i0ajN1AopaReYfs2achgG9/y9
+         oxgBuwVcKkr3TYCAUgYVtJq2x1Kq0wh1PnWLo2xJgpa524jj1gjvjDh343vjMLRsx+Ks
+         sHLN6YF7STxOhWi+wkAEtSO10D4WhvJJXd3YDcuHFusQvbQdW3CSD9+n04S7vH4JhJl8
+         mS50bTHOizSC5Lgj9NE3GbG3tN/aWLs84SaujoNMnEsv+aeDW8GS+hWNyJ67tO1YZrHF
+         XeIQ==
+X-Gm-Message-State: AMCzsaUfd3u/8WpPOSAB6AjIGpReBVEPwqoUoJEYfsqf9eBg0Zysu3Uy
+        b15mlOLrPWMPgM7QdWKHC6Tw04g2ermpCgFuMvgvEw==
+X-Google-Smtp-Source: AOwi7QAhx6e4518d+GM+BBNRLHtoQBpmaWc8rW6rp/5WsxNp2QPuLg8SOvwcYOHeHm5aMRdqqfXv4FkqbTZVkb4c4X0=
+X-Received: by 10.107.137.38 with SMTP id l38mr1753804iod.138.1507539872399;
+ Mon, 09 Oct 2017 02:04:32 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.100.156.137 with HTTP; Sun, 8 Oct 2017 21:14:12 -0700 (PDT)
-In-Reply-To: <CAPc5daVk+sPLmw4G_AghOVFeO5myKTADQjKr823U3xaQZK+43g@mail.gmail.com>
-References: <CANYiYbGHBDGMEjbrvX_ayXkXkciT3GgL4seM_X1NmWtud2upcg@mail.gmail.com>
- <20171008084824.5331-1-martin.agren@gmail.com> <8686C1FA80EF45099730B50235CAFF6F@PhilipOakley>
- <20171009005137.4qwvkpedjslvbkca@genre.crustytoothpaste.net> <CAPc5daVk+sPLmw4G_AghOVFeO5myKTADQjKr823U3xaQZK+43g@mail.gmail.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Mon, 9 Oct 2017 06:14:12 +0200
-Message-ID: <CAN0heSqFSiev8BeZVu3KBA5vswsbQrrOH=tYYOSs_h_eq=8-3Q@mail.gmail.com>
-Subject: Re: [PATCH] submodule: avoid sentence-lego in translated string
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+Received: by 10.79.115.198 with HTTP; Mon, 9 Oct 2017 02:04:31 -0700 (PDT)
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Mon, 9 Oct 2017 11:04:31 +0200
+Message-ID: <CAP8UFD1f=sXnnUS1kmBBdfdhE3ugZ91RtYXgsTjSQhuQbBt=-Q@mail.gmail.com>
+Subject: Draft of Git Rev News edition 32
+To:     git <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Thomas Ferris Nicolaisen <tfnico@gmail.com>,
+        Jakub Narebski <jnareb@gmail.com>,
+        Markus Jansen <mja@jansen-preisler.de>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Stefan Beller <sbeller@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Prathamesh Chavan <pc44800@gmail.com>,
+        Andy Lowry <andy.work@nglowry.com>,
+        =?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@dwim.me>,
+        Marc Herbert <Marc.Herbert@intel.com>, Eric Wong <e@80x24.org>,
         Philip Oakley <philipoakley@iee.org>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jiang Xin <worldhello.net@gmail.com>,
-        Alexander Shopov <ash@kambanaria.org>,
-        Jordi Mas <jmas@softcatala.org>,
-        Ralf Thielow <ralf.thielow@gmail.com>,
-        =?UTF-8?Q?Christopher_D=C3=ADaz?= <christopher.diaz.riv@gmail.com>,
-        =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
-        Marco Paolone <marcopaolone@gmail.com>,
-        Changwoo Ryu <cwryu@debian.org>,
-        Vasco Almeida <vascomalmeida@sapo.pt>,
-        Dimitriy Ryazantcev <DJm00n@mail.ru>,
-        Peter Krefting <peter@softwolves.pp.se>,
-        =?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
-        Jacques Viviers <jacques.viviers@gmail.com>,
-        m4sk1n <m4sk1n@o2.pl>, Stefan Beller <sbeller@google.com>
+        Pavel Kretov <firegurafiku@gmail.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
+        Jeff Hostetler <git@jeffhostetler.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9 October 2017 at 03:30, Junio C Hamano <gitster@pobox.com> wrote:
-> On Mon, Oct 9, 2017 at 9:51 AM, brian m. carlson
-> <sandals@crustytoothpaste.net> wrote:
->> On Sun, Oct 08, 2017 at 10:32:35AM +0100, Philip Oakley wrote:
->>> From: "Martin =C3=85gren" <martin.agren@gmail.com>
->>> > - die(_("submodule entry '%s' (%s) is a %s, not a commit"),
->>> > -     cb->path, oid_to_hex(oid), typename(type));
->>> > + die(_("submodule entry '%s' (%s) is not a commit"),
->>> > +     cb->path, oid_to_hex(oid));
->>> Bikeshed,
->>> maybe:
->>> "submodule entry '%s' (%s) is not a commit. It is a %s"
->>> This puts the two parts in separate sentences?
->>
->> Languages with multiple grammatical genders are going to have problems
->> with this.  In French, "a tree" is "un arbre" (masculine), but "a tag"
->> is "une =C3=A9tiquette" (feminine).  We don't currently have a Spanish
->> translation, but this would break there as well.
->>
->> Splitting the article out with the type name is still problematic for
->> languages where articles vary by case, like German, since the
->> translation might be reused in another place requiring a different case.
->
-> While all of the above is correct, would we really need to subject typena=
-me()
-> to translation? IOW, can't we just treat 'blob', 'tree', 'commit' and
-> 'tag' as-is,
-> as terms of art (i.e. with a specific or precise meaning within a
-> given discipline
-> or field and might have a different meaning in common usage)?
+Hi,
 
-In another subthread, I sort of suggested "... is of type '%s', not 'commit=
-'".
-So "commit" and "%s" would appear as the file-format-level terms that they =
-are.
-I think it looks odd but I guess it might work in Swedish, FWIW.
+A draft of a new Git Rev News edition is available here:
 
-In this particular case, we could have three specific messages plus one def=
-ault
-message (which at the time shouldn't ever occur). Or we have one specific
-message for the "tag"-case, which seems to have been Stefan's original
-motivation, and a generic message for the other cases.
+  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-32.md
+
+Everyone is welcome to contribute in any section either by editing the
+above page on GitHub and sending a pull request, or by commenting on
+this GitHub issue:
+
+  https://github.com/git/git.github.io/issues/259
+
+You can also reply to this email.
+
+In general all kinds of contribution, for example proofreading,
+suggestions for articles or links, help on the issues in GitHub, and
+so on, are very much appreciated.
+
+I tried to cc everyone who appears in this edition, but maybe I missed
+some people, sorry about that.
+
+Thomas, Jakub, Markus and myself plan to publish this edition on
+Wednesday October 11th.
+
+Thanks,
+Christian.
