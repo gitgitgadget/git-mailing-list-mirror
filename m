@@ -6,42 +6,42 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EB6271FA21
-	for <e@80x24.org>; Mon,  9 Oct 2017 01:12:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 02E211FA21
+	for <e@80x24.org>; Mon,  9 Oct 2017 01:12:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753817AbdJIBMA (ORCPT <rfc822;e@80x24.org>);
-        Sun, 8 Oct 2017 21:12:00 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:54682 "EHLO
+        id S1753778AbdJIBMB (ORCPT <rfc822;e@80x24.org>);
+        Sun, 8 Oct 2017 21:12:01 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:54692 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753778AbdJIBL4 (ORCPT
+        by vger.kernel.org with ESMTP id S1753762AbdJIBL4 (ORCPT
         <rfc822;git@vger.kernel.org>); Sun, 8 Oct 2017 21:11:56 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 66A0B60D9D;
-        Mon,  9 Oct 2017 01:11:55 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 6185760D9A;
+        Mon,  9 Oct 2017 01:11:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1507511515;
-        bh=DBa5yzDeUx6uKgII1ZHsBZMC7qewxAFSL1l6/nE5dVc=;
+        s=default; t=1507511514;
+        bh=AIXrVDuAvrIy47g1nrxIJz4W4KMBIARzNGmzPmpWP8Q=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=dTMjgbyJg4ANzzrkIWU1mvnwYoqgUuYY62ykuWKFOQExq4hzsRvQ9mdy7lTB2+0+M
-         QxYPODuizY+F9IyX460Kw6pj8CpWuBA1WwX8kkV9FhYuGGJqbUOatLiR1LBQPX1gLR
-         SyaRwW6GLwU400wR5BWcoAcA8Bf/i+iH8h6/O9ynRQIQHLfR7M2DTrPP4oOIH7RBWe
-         mNV4yYHnAMjOeWI/c9fkOP/dCjm6HEkuK7P4HXXSYi2Gs/jIAOBV8+9zpwLP/yDx5e
-         jFM/7vAqZVDaGzGiSmnozF9tS34x5rzWIdhjZKfNoFU20bIW/Eu0pAi4CoWl82DqpN
-         H5Cfq+9BJsIAXogqt2MZ9bILpA2tZEpdWRq7yQlf2VrqsOv9Tt6RVWAEa+lkiG/nEd
-         GpiotYyJFaXgbseLxcUZ39KgaE5pCTvGh/wy3UmQNtgvsPIVaQGNJ5+YSr5Y/w67mr
-         0HSXAYvbT9T3kKmh0DEzNPDS8HhvK1pjJlTEDPJXSXOpLs/5uWs
+        b=tlthL5QFkCAC72BI65XnpVYGfQu6Mqc53Jm8Utg/s7JytPt+RWc4H6I3tFuB/Sm25
+         u5t5xAE6rhbqWuZMr776eUJ97qEH3DeFHdDPpRPn7nZQtjqX/zYjGtMpklx+7fXqFy
+         Vj2lvweU9bmab5uddIsf9woAlJTzs/g/M4y7iGOf3cEII3BaSb/lJdm9hO2s9NkoPL
+         za97ELJ89omZmFcGk/o8E6k0YW2id2ajMUDBOaZvuIYVtSNuBabcSzLB3LADhVrYHm
+         BipG1tx+63N9ncenOCbluXp4o7tAb2xPDKOF0o/Z7DJzvjFo0qPn0I6GiJsU58sFh3
+         VWo3fSfTUpnoQAtcz0GvBtGXmVXL8Bm1ntYBKkbNBk76VdUILiHhp/k2823ZACTW78
+         T0Ym1zCR/hwvDSTNsrMWkftg4fyt6MJF2LWyLiN41kMzoWaostCX+rWwqFvwl6AKpP
+         CwNDYn3I4tw9a6BnprJGxy3YKLIF6La2Klg+Dlm04uNTd0yZCLf
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
         Brandon Williams <bmwill@google.com>,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCH v2 10/24] builtin/reflog: convert remaining unsigned char uses to object_id
-Date:   Mon,  9 Oct 2017 01:11:18 +0000
-Message-Id: <20171009011132.675341-11-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 09/24] refs: convert dwim_ref and expand_ref to struct object_id
+Date:   Mon,  9 Oct 2017 01:11:17 +0000
+Message-Id: <20171009011132.675341-10-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.14.2.920.gcf0c67979c
 In-Reply-To: <20171009011132.675341-1-sandals@crustytoothpaste.net>
 References: <20171009011132.675341-1-sandals@crustytoothpaste.net>
@@ -51,89 +51,271 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert the remaining uses of unsigned char [20] to struct object_id.
-This conversion is needed for dwim_log.
+All of the callers of these functions just pass the hash member of a
+struct object_id, so convert them to use a pointer to struct object_id
+directly.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/reflog.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ archive.c             |  2 +-
+ branch.c              |  2 +-
+ builtin/fast-export.c |  2 +-
+ builtin/log.c         |  2 +-
+ builtin/merge-base.c  |  2 +-
+ builtin/merge.c       |  2 +-
+ builtin/rev-parse.c   |  2 +-
+ builtin/show-branch.c |  2 +-
+ bundle.c              |  2 +-
+ refs.c                | 14 +++++++-------
+ refs.h                |  4 ++--
+ remote.c              |  3 +--
+ sha1_name.c           |  6 +++---
+ upload-pack.c         |  2 +-
+ wt-status.c           |  2 +-
+ 15 files changed, 24 insertions(+), 25 deletions(-)
 
-diff --git a/builtin/reflog.c b/builtin/reflog.c
-index 2067cca5b1..302fafbeef 100644
---- a/builtin/reflog.c
-+++ b/builtin/reflog.c
-@@ -42,7 +42,7 @@ struct expire_reflog_policy_cb {
- };
+diff --git a/archive.c b/archive.c
+index 1e41f4bbeb..0b7b62af0c 100644
+--- a/archive.c
++++ b/archive.c
+@@ -371,7 +371,7 @@ static void parse_treeish_arg(const char **argv,
+ 		const char *colon = strchrnul(name, ':');
+ 		int refnamelen = colon - name;
  
- struct collected_reflog {
--	unsigned char sha1[20];
-+	struct object_id oid;
- 	char reflog[FLEX_ARRAY];
- };
+-		if (!dwim_ref(name, refnamelen, oid.hash, &ref))
++		if (!dwim_ref(name, refnamelen, &oid, &ref))
+ 			die("no such ref: %.*s", refnamelen, name);
+ 		free(ref);
+ 	}
+diff --git a/branch.c b/branch.c
+index 45029ea142..62f7b0d8c2 100644
+--- a/branch.c
++++ b/branch.c
+@@ -264,7 +264,7 @@ void create_branch(const char *name, const char *start_name,
+ 		die(_("Not a valid object name: '%s'."), start_name);
+ 	}
  
-@@ -385,7 +385,7 @@ static int collect_reflog(const char *ref, const struct object_id *oid, int unus
- 	struct collect_reflog_cb *cb = cb_data;
- 
- 	FLEX_ALLOC_STR(e, reflog, ref);
--	hashcpy(e->sha1, oid->hash);
-+	oidcpy(&e->oid, oid);
- 	ALLOC_GROW(cb->e, cb->nr + 1, cb->alloc);
- 	cb->e[cb->nr++] = e;
- 	return 0;
-@@ -589,7 +589,7 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
- 		for (i = 0; i < collected.nr; i++) {
- 			struct collected_reflog *e = collected.e[i];
- 			set_reflog_expiry_param(&cb.cmd, explicit_expiry, e->reflog);
--			status |= reflog_expire(e->reflog, e->sha1, flags,
-+			status |= reflog_expire(e->reflog, e->oid.hash, flags,
- 						reflog_expiry_prepare,
- 						should_expire_reflog_ent,
- 						reflog_expiry_cleanup,
-@@ -601,13 +601,13 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
- 
- 	for (; i < argc; i++) {
- 		char *ref;
--		unsigned char sha1[20];
--		if (!dwim_log(argv[i], strlen(argv[i]), sha1, &ref)) {
-+		struct object_id oid;
-+		if (!dwim_log(argv[i], strlen(argv[i]), oid.hash, &ref)) {
- 			status |= error("%s points nowhere!", argv[i]);
+-	switch (dwim_ref(start_name, strlen(start_name), oid.hash, &real_ref)) {
++	switch (dwim_ref(start_name, strlen(start_name), &oid, &real_ref)) {
+ 	case 0:
+ 		/* Not branching from any existing branch */
+ 		if (explicit_tracking)
+diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+index 2fb60d6d48..d74c73f777 100644
+--- a/builtin/fast-export.c
++++ b/builtin/fast-export.c
+@@ -823,7 +823,7 @@ static void get_tags_and_duplicates(struct rev_cmdline_info *info)
+ 		if (e->flags & UNINTERESTING)
  			continue;
- 		}
- 		set_reflog_expiry_param(&cb.cmd, explicit_expiry, ref);
--		status |= reflog_expire(ref, sha1, flags,
-+		status |= reflog_expire(ref, oid.hash, flags,
- 					reflog_expiry_prepare,
- 					should_expire_reflog_ent,
- 					reflog_expiry_cleanup,
-@@ -659,7 +659,7 @@ static int cmd_reflog_delete(int argc, const char **argv, const char *prefix)
  
- 	for ( ; i < argc; i++) {
- 		const char *spec = strstr(argv[i], "@{");
--		unsigned char sha1[20];
-+		struct object_id oid;
- 		char *ep, *ref;
- 		int recno;
- 
-@@ -668,7 +668,7 @@ static int cmd_reflog_delete(int argc, const char **argv, const char *prefix)
+-		if (dwim_ref(e->name, strlen(e->name), oid.hash, &full_name) != 1)
++		if (dwim_ref(e->name, strlen(e->name), &oid, &full_name) != 1)
  			continue;
- 		}
  
--		if (!dwim_log(argv[i], spec - argv[i], sha1, &ref)) {
-+		if (!dwim_log(argv[i], spec - argv[i], oid.hash, &ref)) {
- 			status |= error("no reflog for '%s'", argv[i]);
+ 		if (refspecs) {
+diff --git a/builtin/log.c b/builtin/log.c
+index d81a09051e..ba9d4cd786 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -975,7 +975,7 @@ static char *find_branch_name(struct rev_info *rev)
+ 		return NULL;
+ 	ref = rev->cmdline.rev[positive].name;
+ 	tip_oid = &rev->cmdline.rev[positive].item->oid;
+-	if (dwim_ref(ref, strlen(ref), branch_oid.hash, &full_ref) &&
++	if (dwim_ref(ref, strlen(ref), &branch_oid, &full_ref) &&
+ 	    skip_prefix(full_ref, "refs/heads/", &v) &&
+ 	    !oidcmp(tip_oid, &branch_oid))
+ 		branch = xstrdup(v);
+diff --git a/builtin/merge-base.c b/builtin/merge-base.c
+index 6dbd167d3b..e99f5405ce 100644
+--- a/builtin/merge-base.c
++++ b/builtin/merge-base.c
+@@ -156,7 +156,7 @@ static int handle_fork_point(int argc, const char **argv)
+ 	struct commit_list *bases;
+ 	int i, ret = 0;
+ 
+-	switch (dwim_ref(argv[0], strlen(argv[0]), oid.hash, &refname)) {
++	switch (dwim_ref(argv[0], strlen(argv[0]), &oid, &refname)) {
+ 	case 0:
+ 		die("No such ref: '%s'", argv[0]);
+ 	case 1:
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 99d2df965f..6071dbfe34 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -454,7 +454,7 @@ static void merge_name(const char *remote, struct strbuf *msg)
+ 	if (!remote_head)
+ 		die(_("'%s' does not point to a commit"), remote);
+ 
+-	if (dwim_ref(remote, strlen(remote), branch_head.hash, &found_ref) > 0) {
++	if (dwim_ref(remote, strlen(remote), &branch_head, &found_ref) > 0) {
+ 		if (starts_with(found_ref, "refs/heads/")) {
+ 			strbuf_addf(msg, "%s\t\tbranch '%s' of .\n",
+ 				    oid_to_hex(&branch_head), remote);
+diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
+index b9c13d3d9d..ad20a948f0 100644
+--- a/builtin/rev-parse.c
++++ b/builtin/rev-parse.c
+@@ -133,7 +133,7 @@ static void show_rev(int type, const struct object_id *oid, const char *name)
+ 			struct object_id discard;
+ 			char *full;
+ 
+-			switch (dwim_ref(name, strlen(name), discard.hash, &full)) {
++			switch (dwim_ref(name, strlen(name), &discard, &full)) {
+ 			case 0:
+ 				/*
+ 				 * Not found -- not a ref.  We could
+diff --git a/builtin/show-branch.c b/builtin/show-branch.c
+index 0237be4975..722a7f4bec 100644
+--- a/builtin/show-branch.c
++++ b/builtin/show-branch.c
+@@ -720,7 +720,7 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
+ 			die(Q_("only %d entry can be shown at one time.",
+ 			       "only %d entries can be shown at one time.",
+ 			       MAX_REVS), MAX_REVS);
+-		if (!dwim_ref(*av, strlen(*av), oid.hash, &ref))
++		if (!dwim_ref(*av, strlen(*av), &oid, &ref))
+ 			die(_("no such ref %s"), *av);
+ 
+ 		/* Has the base been specified? */
+diff --git a/bundle.c b/bundle.c
+index 12658c5c9f..93290962c9 100644
+--- a/bundle.c
++++ b/bundle.c
+@@ -338,7 +338,7 @@ static int write_bundle_refs(int bundle_fd, struct rev_info *revs)
+ 
+ 		if (e->item->flags & UNINTERESTING)
  			continue;
- 		}
-@@ -683,7 +683,7 @@ static int cmd_reflog_delete(int argc, const char **argv, const char *prefix)
- 			cb.cmd.expire_total = 0;
- 		}
+-		if (dwim_ref(e->name, strlen(e->name), oid.hash, &ref) != 1)
++		if (dwim_ref(e->name, strlen(e->name), &oid, &ref) != 1)
+ 			goto skip_write_ref;
+ 		if (read_ref_full(e->name, RESOLVE_REF_READING, &oid, &flag))
+ 			flag = 0;
+diff --git a/refs.c b/refs.c
+index 05e01d8116..14a700ade6 100644
+--- a/refs.c
++++ b/refs.c
+@@ -456,15 +456,15 @@ static char *substitute_branch_name(const char **string, int *len)
+ 	return NULL;
+ }
  
--		status |= reflog_expire(ref, sha1, flags,
-+		status |= reflog_expire(ref, oid.hash, flags,
- 					reflog_expiry_prepare,
- 					should_expire_reflog_ent,
- 					reflog_expiry_cleanup,
+-int dwim_ref(const char *str, int len, unsigned char *sha1, char **ref)
++int dwim_ref(const char *str, int len, struct object_id *oid, char **ref)
+ {
+ 	char *last_branch = substitute_branch_name(&str, &len);
+-	int   refs_found  = expand_ref(str, len, sha1, ref);
++	int   refs_found  = expand_ref(str, len, oid, ref);
+ 	free(last_branch);
+ 	return refs_found;
+ }
+ 
+-int expand_ref(const char *str, int len, unsigned char *sha1, char **ref)
++int expand_ref(const char *str, int len, struct object_id *oid, char **ref)
+ {
+ 	const char **p, *r;
+ 	int refs_found = 0;
+@@ -472,15 +472,15 @@ int expand_ref(const char *str, int len, unsigned char *sha1, char **ref)
+ 
+ 	*ref = NULL;
+ 	for (p = ref_rev_parse_rules; *p; p++) {
+-		unsigned char sha1_from_ref[20];
+-		unsigned char *this_result;
++		struct object_id oid_from_ref;
++		struct object_id *this_result;
+ 		int flag;
+ 
+-		this_result = refs_found ? sha1_from_ref : sha1;
++		this_result = refs_found ? &oid_from_ref : oid;
+ 		strbuf_reset(&fullref);
+ 		strbuf_addf(&fullref, *p, len, str);
+ 		r = resolve_ref_unsafe(fullref.buf, RESOLVE_REF_READING,
+-				       this_result, &flag);
++				       this_result->hash, &flag);
+ 		if (r) {
+ 			if (!refs_found++)
+ 				*ref = xstrdup(r);
+diff --git a/refs.h b/refs.h
+index a2032b8397..832a77183c 100644
+--- a/refs.h
++++ b/refs.h
+@@ -139,8 +139,8 @@ int resolve_gitlink_ref(const char *submodule, const char *refname,
+  */
+ int refname_match(const char *abbrev_name, const char *full_name);
+ 
+-int expand_ref(const char *str, int len, unsigned char *sha1, char **ref);
+-int dwim_ref(const char *str, int len, unsigned char *sha1, char **ref);
++int expand_ref(const char *str, int len, struct object_id *oid, char **ref);
++int dwim_ref(const char *str, int len, struct object_id *oid, char **ref);
+ int dwim_log(const char *str, int len, unsigned char *sha1, char **ref);
+ 
+ /*
+diff --git a/remote.c b/remote.c
+index 698a890a83..439d3b32f2 100644
+--- a/remote.c
++++ b/remote.c
+@@ -1628,8 +1628,7 @@ static void set_merge(struct branch *ret)
+ 		if (!remote_find_tracking(remote, ret->merge[i]) ||
+ 		    strcmp(ret->remote_name, "."))
+ 			continue;
+-		if (dwim_ref(ret->merge_name[i], strlen(ret->merge_name[i]),
+-			     oid.hash, &ref) == 1)
++		if (dwim_ref(ret->merge_name[i], strlen(ret->merge_name[i]), &oid, &ref) == 1)
+ 			ret->merge[i]->dst = ref;
+ 		else
+ 			ret->merge[i]->dst = xstrdup(ret->merge_name[i]);
+diff --git a/sha1_name.c b/sha1_name.c
+index 134ac9742f..28bad3e74b 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -603,7 +603,7 @@ static int get_oid_basic(const char *str, int len, struct object_id *oid,
+ 
+ 	if (len == GIT_SHA1_HEXSZ && !get_oid_hex(str, oid)) {
+ 		if (warn_ambiguous_refs && warn_on_object_refname_ambiguity) {
+-			refs_found = dwim_ref(str, len, tmp_oid.hash, &real_ref);
++			refs_found = dwim_ref(str, len, &tmp_oid, &real_ref);
+ 			if (refs_found > 0) {
+ 				warning(warn_msg, len, str);
+ 				if (advice_object_name_warning)
+@@ -654,11 +654,11 @@ static int get_oid_basic(const char *str, int len, struct object_id *oid,
+ 
+ 	if (!len && reflog_len)
+ 		/* allow "@{...}" to mean the current branch reflog */
+-		refs_found = dwim_ref("HEAD", 4, oid->hash, &real_ref);
++		refs_found = dwim_ref("HEAD", 4, oid, &real_ref);
+ 	else if (reflog_len)
+ 		refs_found = dwim_log(str, len, oid->hash, &real_ref);
+ 	else
+-		refs_found = dwim_ref(str, len, oid->hash, &real_ref);
++		refs_found = dwim_ref(str, len, oid, &real_ref);
+ 
+ 	if (!refs_found)
+ 		return -1;
+diff --git a/upload-pack.c b/upload-pack.c
+index e25f725c0f..030eba5a0c 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -787,7 +787,7 @@ static void receive_needs(void)
+ 		if (skip_prefix(line, "deepen-not ", &arg)) {
+ 			char *ref = NULL;
+ 			struct object_id oid;
+-			if (expand_ref(arg, strlen(arg), oid.hash, &ref) != 1)
++			if (expand_ref(arg, strlen(arg), &oid, &ref) != 1)
+ 				die("git upload-pack: ambiguous deepen-not: %s", line);
+ 			string_list_append(&deepen_not, ref);
+ 			free(ref);
+diff --git a/wt-status.c b/wt-status.c
+index 6d7d675a5b..280518a89b 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -1451,7 +1451,7 @@ static void wt_status_get_detached_from(struct wt_status_state *state)
+ 		return;
+ 	}
+ 
+-	if (dwim_ref(cb.buf.buf, cb.buf.len, oid.hash, &ref) == 1 &&
++	if (dwim_ref(cb.buf.buf, cb.buf.len, &oid, &ref) == 1 &&
+ 	    /* sha1 is a commit? match without further lookup */
+ 	    (!oidcmp(&cb.noid, &oid) ||
+ 	     /* perhaps sha1 is a tag, try to dereference to a commit */
 -- 
 2.14.2.920.gcf0c67979c
 
