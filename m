@@ -2,243 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 481C71FA21
-	for <e@80x24.org>; Mon,  9 Oct 2017 01:13:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 988DE1FA21
+	for <e@80x24.org>; Mon,  9 Oct 2017 01:31:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753907AbdJIBNJ (ORCPT <rfc822;e@80x24.org>);
-        Sun, 8 Oct 2017 21:13:09 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:54666 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753740AbdJIBLw (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 8 Oct 2017 21:11:52 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 9013A60D94;
-        Mon,  9 Oct 2017 01:11:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1507511510;
-        bh=jCRgLTHqKCyuNvMMDPDm7u/UicWHAJpRI1ALOmVTOME=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-         In-Reply-To:References:Content-Type:Content-Disposition;
-        b=vmIbUPwGyq04IwhT4leFduA6v9zknfmEAEMXXWakH/blOvkY4/ypPtlNp4Y/EpCfz
-         1/jyM70MRZq9eFNSJKOBntohsOm0mvWghqIRy87o/krvQ/sw4Iam35Nlpse25jghVs
-         27/UGhJoiYB7JLF0pXOUt1Hsk4q7NnVMy9zYVEDH5M5Cup1nQykZuUcq92tMnGspat
-         56kQ0g1VN/RGb3x+Q6AKenH8weZIbDGzOD+ZCut0e6BuffEfKGd2tvo8+Z2dWC7kgA
-         QEM7OI81OVkN/fp4Xp9A0lsMlMGG3csjjUNVmaxnpruvnmJmqb7mhQDpeRGA/7MPfY
-         MLqNh8v4bEPAxGPQcELlvNP5/lt4/OAQIaxVizv/eqxHzCPb5i2ljf1YViobKII/Eb
-         OgPZH7JacsYtHFFeFmrDd9NuskbjjWLR5D5+B2jiuArKU9SCtXELFTr4TVzaZD/CFE
-         BEQDl8pd6JQqnMXobfSYzlWhaRwLjw5EUNbaAWwXiYUYTgeqxCX
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
-        Brandon Williams <bmwill@google.com>,
+        id S1753702AbdJIBa7 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 8 Oct 2017 21:30:59 -0400
+Received: from mail-ua0-f181.google.com ([209.85.217.181]:52252 "EHLO
+        mail-ua0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753235AbdJIBa6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Oct 2017 21:30:58 -0400
+Received: by mail-ua0-f181.google.com with SMTP id i35so11245206uah.9
+        for <git@vger.kernel.org>; Sun, 08 Oct 2017 18:30:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:content-transfer-encoding;
+        bh=o7O6Nm5GYjoZNarZ1ZF22xfTeJMRE/y6SUE40FzhNIw=;
+        b=MPLYfT4+4Id5PdseFdmqZvzsNAeZrM3MXySBafnyw3yD08Jbc/zAJzUYqb8AHBZvDa
+         u19n14mmv9DSsTXXcmVq/UScqeIkkDy0CvQNMrHJsHw0WVCa5/3JaxroR3tsxpiyBt7A
+         KLeQsw5DYy9vzpc0ihoNwnvBBHUj3WThwZw2YrzHthwNb7SOMlG6Pb5KmOfh/S68qB7u
+         dvvJhqqo7BcfHl4KyurB/c8iWG5BDl1g8Gdp3ZNUgEELZWudA9EJmBm//XYm9VxxQM/I
+         1lICG3oA0G4Gpf5KmTcK/uhq/5nWb7OWvB/bKftxC9Iu/HPwCITH5YDk1G2bNDwnzL3I
+         kwIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:content-transfer-encoding;
+        bh=o7O6Nm5GYjoZNarZ1ZF22xfTeJMRE/y6SUE40FzhNIw=;
+        b=Dw3ZIDrXNf01tMU6zrZeXC8Jcsbl5TWlTrsl2nEdDfIRvae9twd/BedLlkUca2+ZLX
+         gZw51GEoY1DuRlFUuc5Jf5UB/K/O1kJt2wMPR3lw456ZMXVikWbMDT0m3L/2hvFKKS5m
+         N1aDVPcs9xfNC3I9S2f0CvZz0aSDG7hcdDrJ/is9/An8zXYz07uZXE4wue4UVgN0k+Xc
+         kHFNlVD6VbyO5QLsR2AUbTsd9GlMge5x052NIEl21TyljbbyA+zuD05jjvo86LSsv8SN
+         P3vn4BVsC3NJek63YMzB5O9MkQjCnscUSz4o9CJCpOTXb/4mQBDQmfybyyUEmK1AoiVR
+         kgzA==
+X-Gm-Message-State: AMCzsaVyy6Aod1HZjzsDue6UqheYjn2tCK49lW3i4JfUvt3E5QfxBrPk
+        2kpNsg7shKn1sjvaI8yIeoojzm3tIdpSQvNlv2k=
+X-Google-Smtp-Source: AOwi7QCrvppPtnzhsL82CFqWzTsG+vb0lruMjdjz+PfkcArMU3IYhY8abEcJSuUYSdeWb1NE3kZK9TdW1WuSVWwbsXo=
+X-Received: by 10.176.6.195 with SMTP id g61mr5050286uag.161.1507512657512;
+ Sun, 08 Oct 2017 18:30:57 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.31.124.141 with HTTP; Sun, 8 Oct 2017 18:30:37 -0700 (PDT)
+In-Reply-To: <20171009005137.4qwvkpedjslvbkca@genre.crustytoothpaste.net>
+References: <CANYiYbGHBDGMEjbrvX_ayXkXkciT3GgL4seM_X1NmWtud2upcg@mail.gmail.com>
+ <20171008084824.5331-1-martin.agren@gmail.com> <8686C1FA80EF45099730B50235CAFF6F@PhilipOakley>
+ <20171009005137.4qwvkpedjslvbkca@genre.crustytoothpaste.net>
+From:   Junio C Hamano <gitster@pobox.com>
+Date:   Mon, 9 Oct 2017 10:30:37 +0900
+X-Google-Sender-Auth: 4dhmwtOljYVMRwXSHc7Wf85Av0U
+Message-ID: <CAPc5daVk+sPLmw4G_AghOVFeO5myKTADQjKr823U3xaQZK+43g@mail.gmail.com>
+Subject: Re: [PATCH] submodule: avoid sentence-lego in translated string
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Philip Oakley <philipoakley@iee.org>,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jiang Xin <worldhello.net@gmail.com>,
+        Alexander Shopov <ash@kambanaria.org>,
+        Jordi Mas <jmas@softcatala.org>,
+        Ralf Thielow <ralf.thielow@gmail.com>,
+        =?UTF-8?Q?Christopher_D=C3=ADaz?= <christopher.diaz.riv@gmail.com>,
+        =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
+        Marco Paolone <marcopaolone@gmail.com>,
+        Changwoo Ryu <cwryu@debian.org>,
+        Vasco Almeida <vascomalmeida@sapo.pt>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        =?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
+        Jacques Viviers <jacques.viviers@gmail.com>,
+        m4sk1n <m4sk1n@o2.pl>, Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCH v2 06/24] Convert check_connected to use struct object_id
-Date:   Mon,  9 Oct 2017 01:11:14 +0000
-Message-Id: <20171009011132.675341-7-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.14.2.920.gcf0c67979c
-In-Reply-To: <20171009011132.675341-1-sandals@crustytoothpaste.net>
-References: <20171009011132.675341-1-sandals@crustytoothpaste.net>
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert check_connected and the callbacks it takes to use struct
-object_id.
+On Mon, Oct 9, 2017 at 9:51 AM, brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+> On Sun, Oct 08, 2017 at 10:32:35AM +0100, Philip Oakley wrote:
+>> From: "Martin =C3=85gren" <martin.agren@gmail.com>
+>> > - die(_("submodule entry '%s' (%s) is a %s, not a commit"),
+>> > -     cb->path, oid_to_hex(oid), typename(type));
+>> > + die(_("submodule entry '%s' (%s) is not a commit"),
+>> > +     cb->path, oid_to_hex(oid));
+>> Bikeshed,
+>> maybe:
+>> "submodule entry '%s' (%s) is not a commit. It is a %s"
+>> This puts the two parts in separate sentences?
+>
+> Languages with multiple grammatical genders are going to have problems
+> with this.  In French, "a tree" is "un arbre" (masculine), but "a tag"
+> is "une =C3=A9tiquette" (feminine).  We don't currently have a Spanish
+> translation, but this would break there as well.
+>
+> Splitting the article out with the type name is still problematic for
+> languages where articles vary by case, like German, since the
+> translation might be reused in another place requiring a different case.
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- builtin/clone.c        |  4 ++--
- builtin/fetch.c        |  4 ++--
- builtin/receive-pack.c | 10 +++++-----
- connected.c            | 18 +++++++++---------
- connected.h            |  4 ++--
- 5 files changed, 20 insertions(+), 20 deletions(-)
-
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 665a0e2673..5cd1b02d53 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -615,7 +615,7 @@ static void write_followtags(const struct ref *refs, const char *msg)
- 	}
- }
- 
--static int iterate_ref_map(void *cb_data, unsigned char sha1[20])
-+static int iterate_ref_map(void *cb_data, struct object_id *oid)
- {
- 	struct ref **rm = cb_data;
- 	struct ref *ref = *rm;
-@@ -630,7 +630,7 @@ static int iterate_ref_map(void *cb_data, unsigned char sha1[20])
- 	if (!ref)
- 		return -1;
- 
--	hashcpy(sha1, ref->old_oid.hash);
-+	oidcpy(oid, &ref->old_oid);
- 	*rm = ref->next;
- 	return 0;
- }
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 859be91d6c..e705237fa9 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -727,7 +727,7 @@ static int update_local_ref(struct ref *ref,
- 	}
- }
- 
--static int iterate_ref_map(void *cb_data, unsigned char sha1[20])
-+static int iterate_ref_map(void *cb_data, struct object_id *oid)
- {
- 	struct ref **rm = cb_data;
- 	struct ref *ref = *rm;
-@@ -737,7 +737,7 @@ static int iterate_ref_map(void *cb_data, unsigned char sha1[20])
- 	if (!ref)
- 		return -1; /* end of the list */
- 	*rm = ref->next;
--	hashcpy(sha1, ref->old_oid.hash);
-+	oidcpy(oid, &ref->old_oid);
- 	return 0;
- }
- 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 39defd4e3c..046b600b11 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -870,7 +870,7 @@ static void refuse_unconfigured_deny_delete_current(void)
- 	rp_error("%s", _(refuse_unconfigured_deny_delete_current_msg));
- }
- 
--static int command_singleton_iterator(void *cb_data, unsigned char sha1[20]);
-+static int command_singleton_iterator(void *cb_data, struct object_id *oid);
- static int update_shallow_ref(struct command *cmd, struct shallow_info *si)
- {
- 	static struct lock_file shallow_lock;
-@@ -1270,7 +1270,7 @@ static void check_aliased_updates(struct command *commands)
- 	string_list_clear(&ref_list, 0);
- }
- 
--static int command_singleton_iterator(void *cb_data, unsigned char sha1[20])
-+static int command_singleton_iterator(void *cb_data, struct object_id *oid)
- {
- 	struct command **cmd_list = cb_data;
- 	struct command *cmd = *cmd_list;
-@@ -1278,7 +1278,7 @@ static int command_singleton_iterator(void *cb_data, unsigned char sha1[20])
- 	if (!cmd || is_null_oid(&cmd->new_oid))
- 		return -1; /* end of list */
- 	*cmd_list = NULL; /* this returns only one */
--	hashcpy(sha1, cmd->new_oid.hash);
-+	oidcpy(oid, &cmd->new_oid);
- 	return 0;
- }
- 
-@@ -1309,7 +1309,7 @@ struct iterate_data {
- 	struct shallow_info *si;
- };
- 
--static int iterate_receive_command_list(void *cb_data, unsigned char sha1[20])
-+static int iterate_receive_command_list(void *cb_data, struct object_id *oid)
- {
- 	struct iterate_data *data = cb_data;
- 	struct command **cmd_list = &data->cmds;
-@@ -1320,7 +1320,7 @@ static int iterate_receive_command_list(void *cb_data, unsigned char sha1[20])
- 			/* to be checked in update_shallow_ref() */
- 			continue;
- 		if (!is_null_oid(&cmd->new_oid) && !cmd->skip_update) {
--			hashcpy(sha1, cmd->new_oid.hash);
-+			oidcpy(oid, &cmd->new_oid);
- 			*cmd_list = cmd->next;
- 			return 0;
- 		}
-diff --git a/connected.c b/connected.c
-index f416b05051..4a47f33270 100644
---- a/connected.c
-+++ b/connected.c
-@@ -16,13 +16,13 @@
-  *
-  * Returns 0 if everything is connected, non-zero otherwise.
-  */
--int check_connected(sha1_iterate_fn fn, void *cb_data,
-+int check_connected(oid_iterate_fn fn, void *cb_data,
- 		    struct check_connected_options *opt)
- {
- 	struct child_process rev_list = CHILD_PROCESS_INIT;
- 	struct check_connected_options defaults = CHECK_CONNECTED_INIT;
--	char commit[41];
--	unsigned char sha1[20];
-+	char commit[GIT_MAX_HEXSZ + 1];
-+	struct object_id oid;
- 	int err = 0;
- 	struct packed_git *new_pack = NULL;
- 	struct transport *transport;
-@@ -32,7 +32,7 @@ int check_connected(sha1_iterate_fn fn, void *cb_data,
- 		opt = &defaults;
- 	transport = opt->transport;
- 
--	if (fn(cb_data, sha1)) {
-+	if (fn(cb_data, &oid)) {
- 		if (opt->err_fd)
- 			close(opt->err_fd);
- 		return err;
-@@ -77,7 +77,7 @@ int check_connected(sha1_iterate_fn fn, void *cb_data,
- 
- 	sigchain_push(SIGPIPE, SIG_IGN);
- 
--	commit[40] = '\n';
-+	commit[GIT_SHA1_HEXSZ] = '\n';
- 	do {
- 		/*
- 		 * If index-pack already checked that:
-@@ -87,17 +87,17 @@ int check_connected(sha1_iterate_fn fn, void *cb_data,
- 		 * are sure the ref is good and not sending it to
- 		 * rev-list for verification.
- 		 */
--		if (new_pack && find_pack_entry_one(sha1, new_pack))
-+		if (new_pack && find_pack_entry_one(oid.hash, new_pack))
- 			continue;
- 
--		memcpy(commit, sha1_to_hex(sha1), 40);
--		if (write_in_full(rev_list.in, commit, 41) < 0) {
-+		memcpy(commit, oid_to_hex(&oid), GIT_SHA1_HEXSZ);
-+		if (write_in_full(rev_list.in, commit, GIT_SHA1_HEXSZ + 1) < 0) {
- 			if (errno != EPIPE && errno != EINVAL)
- 				error_errno(_("failed write to rev-list"));
- 			err = -1;
- 			break;
- 		}
--	} while (!fn(cb_data, sha1));
-+	} while (!fn(cb_data, &oid));
- 
- 	if (close(rev_list.in))
- 		err = error_errno(_("failed to close rev-list's stdin"));
-diff --git a/connected.h b/connected.h
-index 4ca325f79d..a53f03a61a 100644
---- a/connected.h
-+++ b/connected.h
-@@ -8,7 +8,7 @@ struct transport;
-  * When called after returning the name for the last object, return -1
-  * to signal EOF, otherwise return 0.
-  */
--typedef int (*sha1_iterate_fn)(void *, unsigned char [20]);
-+typedef int (*oid_iterate_fn)(void *, struct object_id *oid);
- 
- /*
-  * Named-arguments struct for check_connected. All arguments are
-@@ -51,7 +51,7 @@ struct check_connected_options {
-  *
-  * If "opt" is NULL, behaves as if CHECK_CONNECTED_INIT was passed.
-  */
--int check_connected(sha1_iterate_fn fn, void *cb_data,
-+int check_connected(oid_iterate_fn fn, void *cb_data,
- 		    struct check_connected_options *opt);
- 
- #endif /* CONNECTED_H */
--- 
-2.14.2.920.gcf0c67979c
-
+While all of the above is correct, would we really need to subject typename=
+()
+to translation? IOW, can't we just treat 'blob', 'tree', 'commit' and
+'tag' as-is,
+as terms of art (i.e. with a specific or precise meaning within a
+given discipline
+or field and might have a different meaning in common usage)?
