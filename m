@@ -6,42 +6,42 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 05ACB20373
-	for <e@80x24.org>; Mon,  9 Oct 2017 01:12:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DD32D1FA21
+	for <e@80x24.org>; Mon,  9 Oct 2017 01:12:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753842AbdJIBMI (ORCPT <rfc822;e@80x24.org>);
-        Sun, 8 Oct 2017 21:12:08 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:54712 "EHLO
+        id S1753877AbdJIBMM (ORCPT <rfc822;e@80x24.org>);
+        Sun, 8 Oct 2017 21:12:12 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:54750 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753810AbdJIBMA (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 8 Oct 2017 21:12:00 -0400
+        by vger.kernel.org with ESMTP id S1753840AbdJIBMH (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 8 Oct 2017 21:12:07 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 05CC960D9E;
-        Mon,  9 Oct 2017 01:11:58 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 8E84160DAE;
+        Mon,  9 Oct 2017 01:12:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1507511519;
-        bh=foQPoxQvKrz8xhm77SvaOtJTyOn/QE0fU3JLh169Gbs=;
+        s=default; t=1507511527;
+        bh=Dm6hhysCm1yIbwxsHNsj06SCX7vFTLyKzPffh/NmbPQ=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=E7VETfjbbRieSrq0gSRtm3S0zlYw5eXp/BvSdLk/1VwPFy+Q3lMoEIKFnHZdB/H4/
-         BQKp1rvISDHUaHeZHML9nzQuB4UdPL2MdK2jlyhkrU7eQE6fzwG5n/0YWYjyMyUHLU
-         Wiqse6nD7AAIZYcqHKLSjSv9xAGWpgLqI4B3p+yElnIZBysuCQVvNDUnMYlbrfcUDN
-         +TWzYYHxjfQr26fXbb+yB29+sNcn/yEvf1hGl5Va0M8JgKoJjIFGPaXhKhj+916w8f
-         PfYJwTF0IvQdFfZZkK8zYloOO+LV3WTh4aZdA+m+MJEvDtcunksi+GEZ64th/IO7aQ
-         TEuGuEYdUTOtTNTOsFV3lr2zfyQMy4zLYobTpXWeFe4AFmQaMIjmqJc/KPQ1kGTQt2
-         o8E3JYBgRgyGzDD1/uybYz3LwudcD2DhCNFYTZwq6ZK37b5htWdxwJHY3LHwYZ8jdC
-         pZ23WrHT5i2xwAISnLpOoXyE+bD4Hlbux4TQF3cXsZrlR8lbdAb
+        b=scGKWNpF34H+8XhOom40Av+SIPJy12fkNH3Wk9vONtodiOKf8jwV/cdZ6EVhxNH+V
+         xZN7MI1kIWtM+3jyKnwT4Hw2ydqI5CTEApNoIQU4tCQfqQYJczHG6c4uxlRYYYUEJf
+         +B6pjUa0j3JPHiukK92/SnVqN7V3fl+LrarAeoF2GrMqJJljHI8YAX5pNoCASue1/A
+         GJE2aAqApZH1q5szIMn5J00UzU7i00qmWtyAVo5t4eI9zmN5sPihG4kK3zFLKmFBD+
+         UOghgVTmTy4lY9sfqPvFeTmkK9CcQh6HAzlMeTCeJgpJj5N4NImMLGASTIdyj04ZCH
+         iCkz7r9Z0WyS4WLGbFtfs38RI9cqm5inzDzDZdq2eCin84bki5fyRU+inUJU2htmBi
+         bvxYMX4ojRZnrwsmroro7/qSdFEPxMxTb7fbSo1v1AVMFczbi7fLp0ZgSy+c6pGOZN
+         ZCQlkD+YHfUfloY5N+S6edqZFIjElGbE80AOdJcOBjQdIXCwfj+
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
         Brandon Williams <bmwill@google.com>,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCH v2 12/24] pack-bitmap: convert traverse_bitmap_commit_list to object_id
-Date:   Mon,  9 Oct 2017 01:11:20 +0000
-Message-Id: <20171009011132.675341-13-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 18/24] Convert remaining callers of resolve_gitlink_ref to object_id
+Date:   Mon,  9 Oct 2017 01:11:26 +0000
+Message-Id: <20171009011132.675341-19-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.14.2.920.gcf0c67979c
 In-Reply-To: <20171009011132.675341-1-sandals@crustytoothpaste.net>
 References: <20171009011132.675341-1-sandals@crustytoothpaste.net>
@@ -51,117 +51,113 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert traverse_bitmap_commit_list and the callbacks it takes to use a
-pointer to struct object_id.
-
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/pack-objects.c | 8 ++++----
- builtin/rev-list.c     | 4 ++--
- pack-bitmap.c          | 8 ++++----
- pack-bitmap.h          | 2 +-
- 4 files changed, 11 insertions(+), 11 deletions(-)
+ diff-lib.c     | 4 ++--
+ dir.c          | 8 ++++----
+ read-cache.c   | 6 +++---
+ unpack-trees.c | 8 ++++----
+ 4 files changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 5ee2c48ffb..180c17904b 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -1097,20 +1097,20 @@ static int add_object_entry(const unsigned char *sha1, enum object_type type,
- 	return 1;
- }
+diff --git a/diff-lib.c b/diff-lib.c
+index 4e0980caa8..af4f1b7865 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -36,7 +36,7 @@ static int check_removed(const struct cache_entry *ce, struct stat *st)
+ 	if (has_symlink_leading_path(ce->name, ce_namelen(ce)))
+ 		return 1;
+ 	if (S_ISDIR(st->st_mode)) {
+-		unsigned char sub[20];
++		struct object_id sub;
  
--static int add_object_entry_from_bitmap(const unsigned char *sha1,
-+static int add_object_entry_from_bitmap(const struct object_id *oid,
- 					enum object_type type,
- 					int flags, uint32_t name_hash,
- 					struct packed_git *pack, off_t offset)
- {
- 	uint32_t index_pos;
- 
--	if (have_duplicate_entry(sha1, 0, &index_pos))
-+	if (have_duplicate_entry(oid->hash, 0, &index_pos))
- 		return 0;
- 
--	if (!want_object_in_pack(sha1, 0, &pack, &offset))
-+	if (!want_object_in_pack(oid->hash, 0, &pack, &offset))
- 		return 0;
- 
--	create_object_entry(sha1, type, name_hash, 0, 0, index_pos, pack, offset);
-+	create_object_entry(oid->hash, type, name_hash, 0, 0, index_pos, pack, offset);
- 
- 	display_progress(progress_state, nr_result);
- 	return 1;
-diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-index c1c74d4a79..9bf8d5991c 100644
---- a/builtin/rev-list.c
-+++ b/builtin/rev-list.c
-@@ -258,14 +258,14 @@ static int show_bisect_vars(struct rev_list_info *info, int reaches, int all)
- }
- 
- static int show_object_fast(
--	const unsigned char *sha1,
-+	const struct object_id *oid,
- 	enum object_type type,
- 	int exclude,
- 	uint32_t name_hash,
- 	struct packed_git *found_pack,
- 	off_t found_offset)
- {
--	fprintf(stdout, "%s\n", sha1_to_hex(sha1));
-+	fprintf(stdout, "%s\n", oid_to_hex(oid));
- 	return 1;
- }
- 
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index 42e3d5f4f2..9270983e5f 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -587,7 +587,7 @@ static void show_extended_objects(struct bitmap *objects,
- 			continue;
- 
- 		obj = eindex->objects[i];
--		show_reach(obj->oid.hash, obj->type, 0, eindex->hashes[i], NULL, 0);
-+		show_reach(&obj->oid, obj->type, 0, eindex->hashes[i], NULL, 0);
+ 		/*
+ 		 * If ce is already a gitlink, we can have a plain
+@@ -50,7 +50,7 @@ static int check_removed(const struct cache_entry *ce, struct stat *st)
+ 		 * a directory --- the blob was removed!
+ 		 */
+ 		if (!S_ISGITLINK(ce->ce_mode) &&
+-		    resolve_gitlink_ref(ce->name, "HEAD", sub))
++		    resolve_gitlink_ref(ce->name, "HEAD", sub.hash))
+ 			return 1;
  	}
+ 	return 0;
+diff --git a/dir.c b/dir.c
+index 1d17b800cf..a4198ba7fd 100644
+--- a/dir.c
++++ b/dir.c
+@@ -1390,8 +1390,8 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
+ 		if (dir->flags & DIR_SHOW_OTHER_DIRECTORIES)
+ 			break;
+ 		if (!(dir->flags & DIR_NO_GITLINKS)) {
+-			unsigned char sha1[20];
+-			if (resolve_gitlink_ref(dirname, "HEAD", sha1) == 0)
++			struct object_id oid;
++			if (resolve_gitlink_ref(dirname, "HEAD", oid.hash) == 0)
+ 				return path_untracked;
+ 		}
+ 		return path_recurse;
+@@ -2279,10 +2279,10 @@ static int remove_dir_recurse(struct strbuf *path, int flag, int *kept_up)
+ 	int ret = 0, original_len = path->len, len, kept_down = 0;
+ 	int only_empty = (flag & REMOVE_DIR_EMPTY_ONLY);
+ 	int keep_toplevel = (flag & REMOVE_DIR_KEEP_TOPLEVEL);
+-	unsigned char submodule_head[20];
++	struct object_id submodule_head;
+ 
+ 	if ((flag & REMOVE_DIR_KEEP_NESTED_GIT) &&
+-	    !resolve_gitlink_ref(path->buf, "HEAD", submodule_head)) {
++	    !resolve_gitlink_ref(path->buf, "HEAD", submodule_head.hash)) {
+ 		/* Do not descend and nuke a nested git work tree. */
+ 		if (kept_up)
+ 			*kept_up = 1;
+diff --git a/read-cache.c b/read-cache.c
+index 65f4fe8375..131485b3a6 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -191,7 +191,7 @@ static int ce_compare_link(const struct cache_entry *ce, size_t expected_size)
+ 
+ static int ce_compare_gitlink(const struct cache_entry *ce)
+ {
+-	unsigned char sha1[20];
++	struct object_id oid;
+ 
+ 	/*
+ 	 * We don't actually require that the .git directory
+@@ -201,9 +201,9 @@ static int ce_compare_gitlink(const struct cache_entry *ce)
+ 	 *
+ 	 * If so, we consider it always to match.
+ 	 */
+-	if (resolve_gitlink_ref(ce->name, "HEAD", sha1) < 0)
++	if (resolve_gitlink_ref(ce->name, "HEAD", oid.hash) < 0)
+ 		return 0;
+-	return hashcmp(sha1, ce->oid.hash);
++	return oidcmp(&oid, &ce->oid);
  }
  
-@@ -612,7 +612,7 @@ static void show_objects_for_type(
- 		eword_t word = objects->words[i] & filter;
+ static int ce_modified_check_fs(const struct cache_entry *ce, struct stat *st)
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 71b70ccb12..0dc76eddfe 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -1541,15 +1541,15 @@ static int verify_clean_subdirectory(const struct cache_entry *ce,
+ 	int cnt = 0;
  
- 		for (offset = 0; offset < BITS_IN_EWORD; ++offset) {
--			const unsigned char *sha1;
-+			struct object_id oid;
- 			struct revindex_entry *entry;
- 			uint32_t hash = 0;
+ 	if (S_ISGITLINK(ce->ce_mode)) {
+-		unsigned char sha1[20];
+-		int sub_head = resolve_gitlink_ref(ce->name, "HEAD", sha1);
++		struct object_id oid;
++		int sub_head = resolve_gitlink_ref(ce->name, "HEAD", oid.hash);
+ 		/*
+ 		 * If we are not going to update the submodule, then
+ 		 * we don't care.
+ 		 */
+-		if (!sub_head && !hashcmp(sha1, ce->oid.hash))
++		if (!sub_head && !oidcmp(&oid, &ce->oid))
+ 			return 0;
+-		return verify_clean_submodule(sub_head ? NULL : sha1_to_hex(sha1),
++		return verify_clean_submodule(sub_head ? NULL : oid_to_hex(&oid),
+ 					      ce, error_type, o);
+ 	}
  
-@@ -625,12 +625,12 @@ static void show_objects_for_type(
- 				continue;
- 
- 			entry = &bitmap_git.pack->revindex[pos + offset];
--			sha1 = nth_packed_object_sha1(bitmap_git.pack, entry->nr);
-+			nth_packed_object_oid(&oid, bitmap_git.pack, entry->nr);
- 
- 			if (bitmap_git.hashes)
- 				hash = get_be32(bitmap_git.hashes + entry->nr);
- 
--			show_reach(sha1, object_type, 0, hash, bitmap_git.pack, entry->offset);
-+			show_reach(&oid, object_type, 0, hash, bitmap_git.pack, entry->offset);
- 		}
- 
- 		pos += BITS_IN_EWORD;
-diff --git a/pack-bitmap.h b/pack-bitmap.h
-index 0adcef77b5..3742a00e14 100644
---- a/pack-bitmap.h
-+++ b/pack-bitmap.h
-@@ -27,7 +27,7 @@ enum pack_bitmap_flags {
- };
- 
- typedef int (*show_reachable_fn)(
--	const unsigned char *sha1,
-+	const struct object_id *oid,
- 	enum object_type type,
- 	int flags,
- 	uint32_t hash,
 -- 
 2.14.2.920.gcf0c67979c
 
