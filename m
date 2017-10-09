@@ -6,42 +6,42 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 49D931FA21
-	for <e@80x24.org>; Mon,  9 Oct 2017 01:12:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 758EA1FA21
+	for <e@80x24.org>; Mon,  9 Oct 2017 01:12:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753887AbdJIBMR (ORCPT <rfc822;e@80x24.org>);
-        Sun, 8 Oct 2017 21:12:17 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:54786 "EHLO
+        id S1753891AbdJIBMS (ORCPT <rfc822;e@80x24.org>);
+        Sun, 8 Oct 2017 21:12:18 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:54772 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753884AbdJIBMP (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 8 Oct 2017 21:12:15 -0400
+        by vger.kernel.org with ESMTP id S1753840AbdJIBMN (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 8 Oct 2017 21:12:13 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id D4F6A60DA7;
-        Mon,  9 Oct 2017 01:12:13 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 07AA860DA0;
+        Mon,  9 Oct 2017 01:12:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1507511534;
-        bh=jvPUF1IVg0QSVsUMwaDzqjtvZvZFz/TA0Nc4E9P2eCw=;
+        s=default; t=1507511532;
+        bh=vooHURFFBBSqZw8ztbVpq0Ltcxatl6P6st2pV6O5ZyQ=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=U519lHdjJzhKjbxw7nnY283+oSj1FpemvEzKZ2UpYJ5nKfZ4NvtgYpMq5+z4VSldr
-         7ZdBGYfkdqCRNkiz9gXx/GV1x5/hYv9wmN9mKBfN7GZ6gE0Jq6iApT6Ox7aMISbJxM
-         +STc370gOxOabGTUAExjUx9gR5SMQk//Xo3TVZoJCvdaBrSAK4t86rv/lGhmjPAnml
-         On0sPg6d+POyvIPDP60B/+mvJ89QcmRo5Ki0J6zVE4IktAI8/0J181i8IdJhVBZjqk
-         epLdVMFYQLbroB8MsG120etOOa9Hf7aNK+zJgJw2SCic1xyr+qMDcrt2i8okkpcyD1
-         aAI+phdJdnp7ih3O0FOMe/TwOPj+8DvvexRa+mCTp02cZNIEC2JaRXD4cZqKCxJk4h
-         Wrf7VB7hFpxsK1BXq//ltzZySOA0fLyFiPRdIEx+c0jERRXW+ZOWgG+kjUVkIbBdfM
-         V4yXVds4y//3tVMRrTE/y0g+h0DpEnH4uYemAlJ68yQ4oAWW4vz
+        b=VP9+ZaGn928HnTe77FIqgJwfF7nP1HCMToREp4T+/oF0QgBdudFpHw5h7XQW7GVjK
+         g71pkG+98WrNClp8YUCmLvO1U5kdiJX0mqm94y4Lr6zYUhaud+jX8AovFIPnqWTv6M
+         MCTMlZVeW5VzL1ONDe4HgSt2iPczSJrDAqKF2803w5sFluZClYlwqGc2bofvCmVfBh
+         cGLvDeREeHvnvvBM4I57NRYAw6TI/RZM1O4+FLFCSCyxO4bHN5/AoPwHEsLWIOZamb
+         U//SHWKdFIUHKZ36JRZiFoupAHYIyKygG5oYSLpdYa3lWKAojoNwFU+pF5863CubwG
+         Hj7XCsO3bC3K5hyJnQ1f8LA3BpJ/aTBQru4UxTKdS+LcyzSWuanSSeDcDNzPCXs5oa
+         mG/EqnVlzGYxw8b2xxRtBAsnnJPM5ZhhOXUj7zDWfJrlfLoV3dlwCRkmGYDnt+BsdN
+         Qf96pk4TxcLkfA6vqBofcuruGnzskB2P5hLUhCgz8xoDR229kVV
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
         Brandon Williams <bmwill@google.com>,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCH v2 24/24] refs/files-backend: convert static functions to object_id
-Date:   Mon,  9 Oct 2017 01:11:32 +0000
-Message-Id: <20171009011132.675341-25-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 22/24] refs: convert peel_object to struct object_id
+Date:   Mon,  9 Oct 2017 01:11:30 +0000
+Message-Id: <20171009011132.675341-23-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.14.2.920.gcf0c67979c
 In-Reply-To: <20171009011132.675341-1-sandals@crustytoothpaste.net>
 References: <20171009011132.675341-1-sandals@crustytoothpaste.net>
@@ -51,141 +51,103 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert several static functions to take pointers to struct object_id.
-Change the relevant parameters to write_packed_entry to be const, as we
-don't modify them.  Rename lock_ref_sha1_basic to lock_ref_oid_basic to
-reflect its new argument.
-
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- refs/files-backend.c | 48 ++++++++++++++++++++++++------------------------
- 1 file changed, 24 insertions(+), 24 deletions(-)
+ refs.c                | 8 ++++----
+ refs/files-backend.c  | 2 +-
+ refs/packed-backend.c | 4 ++--
+ refs/ref-cache.c      | 2 +-
+ refs/refs-internal.h  | 4 ++--
+ 5 files changed, 10 insertions(+), 10 deletions(-)
 
+diff --git a/refs.c b/refs.c
+index a030937f77..958234e7d6 100644
+--- a/refs.c
++++ b/refs.c
+@@ -252,12 +252,12 @@ static int filter_refs(const char *refname, const struct object_id *oid,
+ 	return filter->fn(refname, oid, flags, filter->cb_data);
+ }
+ 
+-enum peel_status peel_object(const unsigned char *name, unsigned char *sha1)
++enum peel_status peel_object(const struct object_id *name, struct object_id *oid)
+ {
+-	struct object *o = lookup_unknown_object(name);
++	struct object *o = lookup_unknown_object(name->hash);
+ 
+ 	if (o->type == OBJ_NONE) {
+-		int type = sha1_object_info(name, NULL);
++		int type = sha1_object_info(name->hash, NULL);
+ 		if (type < 0 || !object_as_type(o, type, 0))
+ 			return PEEL_INVALID;
+ 	}
+@@ -269,7 +269,7 @@ enum peel_status peel_object(const unsigned char *name, unsigned char *sha1)
+ 	if (!o)
+ 		return PEEL_INVALID;
+ 
+-	hashcpy(sha1, o->oid.hash);
++	oidcpy(oid, &o->oid);
+ 	return PEEL_PEELED;
+ }
+ 
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 7281f27f62..84d8e3da99 100644
+index 61f3690299..417c662d5d 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -811,7 +811,7 @@ static struct ref_iterator *files_ref_iterator_begin(
-  * return a negative value.
+@@ -675,7 +675,7 @@ static int files_peel_ref(struct ref_store *ref_store,
+ 	    !refs_peel_ref(refs->packed_ref_store, refname, oid))
+ 		return 0;
+ 
+-	return peel_object(base.hash, oid->hash);
++	return peel_object(&base, oid);
+ }
+ 
+ struct files_ref_iterator {
+diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+index a450efd21e..25e6fc4ffe 100644
+--- a/refs/packed-backend.c
++++ b/refs/packed-backend.c
+@@ -716,8 +716,8 @@ static int write_with_updates(struct packed_ref_store *refs,
+ 			i++;
+ 		} else {
+ 			struct object_id peeled;
+-			int peel_error = peel_object(update->new_oid.hash,
+-						     peeled.hash);
++			int peel_error = peel_object(&update->new_oid,
++						     &peeled);
+ 
+ 			if (write_packed_entry(out, update->refname,
+ 					       update->new_oid.hash,
+diff --git a/refs/ref-cache.c b/refs/ref-cache.c
+index 76bb723c86..e36702ed06 100644
+--- a/refs/ref-cache.c
++++ b/refs/ref-cache.c
+@@ -509,7 +509,7 @@ enum peel_status peel_entry(struct ref_entry *entry, int repeel)
+ 	if (entry->flag & REF_ISSYMREF)
+ 		return PEEL_IS_SYMREF;
+ 
+-	status = peel_object(entry->u.value.oid.hash, entry->u.value.peeled.hash);
++	status = peel_object(&entry->u.value.oid, &entry->u.value.peeled);
+ 	if (status == PEEL_PEELED || status == PEEL_NON_TAG)
+ 		entry->flag |= REF_KNOWS_PEELED;
+ 	return status;
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index 0cbce76f21..cf84da33d5 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -120,11 +120,11 @@ enum peel_status {
+ /*
+  * Peel the named object; i.e., if the object is a tag, resolve the
+  * tag recursively until a non-tag is found.  If successful, store the
+- * result to sha1 and return PEEL_PEELED.  If the object is not a tag
++ * result to oid and return PEEL_PEELED.  If the object is not a tag
+  * or is not valid, return PEEL_NON_TAG or PEEL_INVALID, respectively,
+  * and leave sha1 unchanged.
   */
- static int verify_lock(struct ref_store *ref_store, struct ref_lock *lock,
--		       const unsigned char *old_sha1, int mustexist,
-+		       const struct object_id *old_oid, int mustexist,
- 		       struct strbuf *err)
- {
- 	assert(err);
-@@ -819,7 +819,7 @@ static int verify_lock(struct ref_store *ref_store, struct ref_lock *lock,
- 	if (refs_read_ref_full(ref_store, lock->ref_name,
- 			       mustexist ? RESOLVE_REF_READING : 0,
- 			       &lock->old_oid, NULL)) {
--		if (old_sha1) {
-+		if (old_oid) {
- 			int save_errno = errno;
- 			strbuf_addf(err, "can't verify ref '%s'", lock->ref_name);
- 			errno = save_errno;
-@@ -829,11 +829,11 @@ static int verify_lock(struct ref_store *ref_store, struct ref_lock *lock,
- 			return 0;
- 		}
- 	}
--	if (old_sha1 && hashcmp(lock->old_oid.hash, old_sha1)) {
-+	if (old_oid && oidcmp(&lock->old_oid, old_oid)) {
- 		strbuf_addf(err, "ref '%s' is at %s but expected %s",
- 			    lock->ref_name,
- 			    oid_to_hex(&lock->old_oid),
--			    sha1_to_hex(old_sha1));
-+			    oid_to_hex(old_oid));
- 		errno = EBUSY;
- 		return -1;
- 	}
-@@ -863,22 +863,22 @@ static int create_reflock(const char *path, void *cb)
-  * Locks a ref returning the lock on success and NULL on failure.
-  * On failure errno is set to something meaningful.
-  */
--static struct ref_lock *lock_ref_sha1_basic(struct files_ref_store *refs,
--					    const char *refname,
--					    const unsigned char *old_sha1,
--					    const struct string_list *extras,
--					    const struct string_list *skip,
--					    unsigned int flags, int *type,
--					    struct strbuf *err)
-+static struct ref_lock *lock_ref_oid_basic(struct files_ref_store *refs,
-+					   const char *refname,
-+					   const struct object_id *old_oid,
-+					   const struct string_list *extras,
-+					   const struct string_list *skip,
-+					   unsigned int flags, int *type,
-+					   struct strbuf *err)
- {
- 	struct strbuf ref_file = STRBUF_INIT;
- 	struct ref_lock *lock;
- 	int last_errno = 0;
--	int mustexist = (old_sha1 && !is_null_sha1(old_sha1));
-+	int mustexist = (old_oid && !is_null_oid(old_oid));
- 	int resolve_flags = RESOLVE_REF_NO_RECURSE;
- 	int resolved;
+-enum peel_status peel_object(const unsigned char *name, unsigned char *sha1);
++enum peel_status peel_object(const struct object_id *name, struct object_id *oid);
  
--	files_assert_main_repository(refs, "lock_ref_sha1_basic");
-+	files_assert_main_repository(refs, "lock_ref_oid_basic");
- 	assert(err);
- 
- 	lock = xcalloc(1, sizeof(struct ref_lock));
-@@ -944,7 +944,7 @@ static struct ref_lock *lock_ref_sha1_basic(struct files_ref_store *refs,
- 		goto error_return;
- 	}
- 
--	if (verify_lock(&refs->base, lock, old_sha1, mustexist, err)) {
-+	if (verify_lock(&refs->base, lock, old_oid, mustexist, err)) {
- 		last_errno = errno;
- 		goto error_return;
- 	}
-@@ -1349,8 +1349,8 @@ static int files_rename_ref(struct ref_store *ref_store,
- 
- 	logmoved = log;
- 
--	lock = lock_ref_sha1_basic(refs, newrefname, NULL, NULL, NULL,
--				   REF_NODEREF, NULL, &err);
-+	lock = lock_ref_oid_basic(refs, newrefname, NULL, NULL, NULL,
-+				  REF_NODEREF, NULL, &err);
- 	if (!lock) {
- 		error("unable to rename '%s' to '%s': %s", oldrefname, newrefname, err.buf);
- 		strbuf_release(&err);
-@@ -1369,8 +1369,8 @@ static int files_rename_ref(struct ref_store *ref_store,
- 	goto out;
- 
-  rollback:
--	lock = lock_ref_sha1_basic(refs, oldrefname, NULL, NULL, NULL,
--				   REF_NODEREF, NULL, &err);
-+	lock = lock_ref_oid_basic(refs, oldrefname, NULL, NULL, NULL,
-+				  REF_NODEREF, NULL, &err);
- 	if (!lock) {
- 		error("unable to lock %s for rollback: %s", oldrefname, err.buf);
- 		strbuf_release(&err);
-@@ -1769,9 +1769,9 @@ static int files_create_symref(struct ref_store *ref_store,
- 	struct ref_lock *lock;
- 	int ret;
- 
--	lock = lock_ref_sha1_basic(refs, refname, NULL,
--				   NULL, NULL, REF_NODEREF, NULL,
--				   &err);
-+	lock = lock_ref_oid_basic(refs, refname, NULL,
-+				  NULL, NULL, REF_NODEREF, NULL,
-+				  &err);
- 	if (!lock) {
- 		error("%s", err.buf);
- 		strbuf_release(&err);
-@@ -2943,9 +2943,9 @@ static int files_reflog_expire(struct ref_store *ref_store,
- 	 * reference itself, plus we might need to update the
- 	 * reference if --updateref was specified:
- 	 */
--	lock = lock_ref_sha1_basic(refs, refname, oid->hash,
--				   NULL, NULL, REF_NODEREF,
--				   &type, &err);
-+	lock = lock_ref_oid_basic(refs, refname, oid,
-+				  NULL, NULL, REF_NODEREF,
-+				  &type, &err);
- 	if (!lock) {
- 		error("cannot lock ref '%s': %s", refname, err.buf);
- 		strbuf_release(&err);
+ /*
+  * Copy the reflog message msg to buf, which has been allocated sufficiently
 -- 
 2.14.2.920.gcf0c67979c
 
