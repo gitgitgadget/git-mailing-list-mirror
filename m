@@ -6,140 +6,165 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 835981FA21
-	for <e@80x24.org>; Mon,  9 Oct 2017 00:51:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1920B1FA21
+	for <e@80x24.org>; Mon,  9 Oct 2017 01:11:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753762AbdJIAvt (ORCPT <rfc822;e@80x24.org>);
-        Sun, 8 Oct 2017 20:51:49 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:54564 "EHLO
+        id S1753522AbdJIBLo (ORCPT <rfc822;e@80x24.org>);
+        Sun, 8 Oct 2017 21:11:44 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:54614 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753743AbdJIAvq (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 8 Oct 2017 20:51:46 -0400
+        by vger.kernel.org with ESMTP id S1752185AbdJIBLm (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 8 Oct 2017 21:11:42 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 8FE8460D91;
-        Mon,  9 Oct 2017 00:51:43 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 8F4DE60D91;
+        Mon,  9 Oct 2017 01:11:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1507510305;
-        bh=tLjO+sDY/Ofo5md7K7PZcOCg2r6uaD0ll5ClRzCnxTw=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+        s=default; t=1507511501;
+        bh=XoTyfDBkYIvzR4iMKGh+qJHbf77GHm6xj6lFtLMBwic=;
+        h=From:To:Cc:Subject:Date:From:Reply-To:Subject:Date:To:CC:
          Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
          Content-Type:Content-Disposition;
-        b=0lQnRoX2gFXxaG//d+Xn/OMtyRG+f+TgSrQubUhxGygTl2d/Z2hbj2dX49VpGNdzC
-         0Ey5bgNp6TnXyUANeypSH1CM7XlqFqJaZ35jJLYRmB34uUNK3DUhjk8bZ5L6GKiyYn
-         kzK7dsOkKmEXTmKJDiFkwzJQU/zvZ2Lthsoeep/QbGnvn7blZjetnLUZG4F3QxttoH
-         LZHEJfOS74rjfUQWyrdk+IPJDFpvRPTpVDGDIl/5D2c4SMSBZcSGFhqDoHnij89YjF
-         j797tx6Jb73hpzvpDM+6ke1y5/2iFGTLTO/Li1FDUi1ue7fhhwdlwg9xnmllwYPCfX
-         zVfzLW/uYQ3HOmHYA1vWVnTblzAWPjxubgYXV0BEFsSxgmOV3mEHrBPind38ObbYTE
-         fLktkZemdQVx2dBP6p6ErozoNR4DoMJI1Pdblk4CGHah0r6QzqCbD1WboslokJXi84
-         0IQxrz+6LKPB6OWKx/UieHPdPAWLCOsK6zxQCAe3Dwoe9lxzYJy
-Date:   Mon, 9 Oct 2017 00:51:37 +0000
+        b=HgDskKy8b6uIwY9R9iYU4wtAqzF3+D+sgXfmEr4lFCboZ1SY3as4UsCn9MaBEreYI
+         4Hw1bzLtw6CS9Ks8fRmIbJyG7IvyfqY0U/AUc2acdMeBltHaH6RBvcZdISpjmK4sV8
+         Ptg0YJysm8zOdJnaPq/jOLGH25MfMKCwJ09xWflDLWgcK7+rLCFlqenmOQ2v4T0SiV
+         0OUcmEgOxfUShmdu5fllr8DC6KZcoHbgXBRB9JjZsdzuvqPPtOEIVV3ryAYTso0CeS
+         3X8p1GEhuqcGjuZulNWZ7GH3P59F66OORiygRsgwT/0Iz3jqDA5tUmouMfHKtlld2m
+         VtZlc5XBa9VbnRMP0W2tw1bbxnPRADHtWyOMQXuuKBkho3WPGyirS0ETT0e2MKXSI0
+         w330MHn/EQ3cM6Vv1RmO56KVVbZXh4OIpd2Rher89QO1C+ctCdEJPozwd0Bm3fkOMX
+         uRdYAoaHLq34PqYs/vPw81Ri4lR4SfW/fwrHtsuo9n4U6mXLZcO
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Philip Oakley <philipoakley@iee.org>
-Cc:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>,
-        Alexander Shopov <ash@kambanaria.org>,
-        Jordi Mas <jmas@softcatala.org>,
-        Ralf Thielow <ralf.thielow@gmail.com>,
-        Christopher =?utf-8?B?RMOtYXo=?= <christopher.diaz.riv@gmail.com>,
-        =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
-        Marco Paolone <marcopaolone@gmail.com>,
-        Changwoo Ryu <cwryu@debian.org>,
-        Vasco Almeida <vascomalmeida@sapo.pt>,
-        Dimitriy Ryazantcev <DJm00n@mail.ru>,
-        Peter Krefting <peter@softwolves.pp.se>,
-        =?utf-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
-        Jacques Viviers <jacques.viviers@gmail.com>,
-        m4sk1n <m4sk1n@o2.pl>, Junio C Hamano <gitster@pobox.com>,
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
+        Brandon Williams <bmwill@google.com>,
         Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH] submodule: avoid sentence-lego in translated string
-Message-ID: <20171009005137.4qwvkpedjslvbkca@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Philip Oakley <philipoakley@iee.org>,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>,
-        Alexander Shopov <ash@kambanaria.org>,
-        Jordi Mas <jmas@softcatala.org>,
-        Ralf Thielow <ralf.thielow@gmail.com>,
-        Christopher =?utf-8?B?RMOtYXo=?= <christopher.diaz.riv@gmail.com>,
-        =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
-        Marco Paolone <marcopaolone@gmail.com>,
-        Changwoo Ryu <cwryu@debian.org>,
-        Vasco Almeida <vascomalmeida@sapo.pt>,
-        Dimitriy Ryazantcev <DJm00n@mail.ru>,
-        Peter Krefting <peter@softwolves.pp.se>,
-        =?utf-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
-        Jacques Viviers <jacques.viviers@gmail.com>, m4sk1n <m4sk1n@o2.pl>,
-        Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>
-References: <CANYiYbGHBDGMEjbrvX_ayXkXkciT3GgL4seM_X1NmWtud2upcg@mail.gmail.com>
- <20171008084824.5331-1-martin.agren@gmail.com>
- <8686C1FA80EF45099730B50235CAFF6F@PhilipOakley>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="znvhucwbrec2xvty"
-Content-Disposition: inline
-In-Reply-To: <8686C1FA80EF45099730B50235CAFF6F@PhilipOakley>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.12.0-2-amd64)
-User-Agent: NeoMutt/20170609 (1.8.3)
+Subject: [PATCH v2 00/24] object_id part 10
+Date:   Mon,  9 Oct 2017 01:11:08 +0000
+Message-Id: <20171009011132.675341-1-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.14.2.920.gcf0c67979c
 X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This is the tenth in a series of patches to convert from unsigned char
+[20] to struct object_id.  This series mostly involves changes to the
+refs code.  After these changes, there are almost no references to
+unsigned char in the main refs code.
 
---znvhucwbrec2xvty
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+The series has not been rebased on master since the last submission, but
+I can do so if that's more convenient.
 
-On Sun, Oct 08, 2017 at 10:32:35AM +0100, Philip Oakley wrote:
-> From: "Martin =C3=85gren" <martin.agren@gmail.com>
-> > - die(_("submodule entry '%s' (%s) is a %s, not a commit"),
-> > -     cb->path, oid_to_hex(oid), typename(type));
-> > + die(_("submodule entry '%s' (%s) is not a commit"),
-> > +     cb->path, oid_to_hex(oid));
-> Bikeshed,
-> maybe:
-> "submodule entry '%s' (%s) is not a commit. It is a %s"
-> This puts the two parts in separate sentences?
+This series is available from the following URL:
+https://github.com/bk2204/git.git object-id-part10
 
-Languages with multiple grammatical genders are going to have problems
-with this.  In French, "a tree" is "un arbre" (masculine), but "a tag"
-is "une =C3=A9tiquette" (feminine).  We don't currently have a Spanish
-translation, but this would break there as well.
+Changes from v1:
+* Fix line wrapping in several places.
+* Remove empty line.
+* Update die messages to refer to "object ID" instead of "sha1".
 
-Splitting the article out with the type name is still problematic for
-languages where articles vary by case, like German, since the
-translation might be reused in another place requiring a different case.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
+brian m. carlson (24):
+  walker: convert to struct object_id
+  refs/files-backend: convert struct ref_to_prune to object_id
+  refs: convert delete_ref and refs_delete_ref to struct object_id
+  refs: convert update_ref and refs_update_ref to use struct object_id
+  refs: update ref transactions to use struct object_id
+  Convert check_connected to use struct object_id
+  refs: convert resolve_refdup and refs_resolve_refdup to struct
+    object_id
+  refs: convert read_ref and read_ref_full to object_id
+  refs: convert dwim_ref and expand_ref to struct object_id
+  builtin/reflog: convert remaining unsigned char uses to object_id
+  refs: convert dwim_log to struct object_id
+  pack-bitmap: convert traverse_bitmap_commit_list to object_id
+  builtin/pack-objects: convert to struct object_id
+  refs: convert peel_ref to struct object_id
+  refs: convert read_ref_at to struct object_id
+  refs: convert reflog_expire parameter to struct object_id
+  sha1_file: convert index_path and index_fd to struct object_id
+  Convert remaining callers of resolve_gitlink_ref to object_id
+  refs: convert resolve_gitlink_ref to struct object_id
+  worktree: convert struct worktree to object_id
+  refs: convert resolve_ref_unsafe to struct object_id
+  refs: convert peel_object to struct object_id
+  refs: convert read_raw_ref backends to struct object_id
+  refs/files-backend: convert static functions to object_id
 
---znvhucwbrec2xvty
-Content-Type: application/pgp-signature; name="signature.asc"
+ archive.c                   |   2 +-
+ bisect.c                    |   5 +-
+ blame.c                     |   4 +-
+ branch.c                    |   4 +-
+ builtin/am.c                |  16 ++--
+ builtin/branch.c            |   8 +-
+ builtin/checkout.c          |  13 ++-
+ builtin/clone.c             |  22 ++---
+ builtin/commit.c            |   4 +-
+ builtin/describe.c          |   2 +-
+ builtin/fast-export.c       |   2 +-
+ builtin/fetch.c             |   8 +-
+ builtin/fmt-merge-msg.c     |   2 +-
+ builtin/fsck.c              |   2 +-
+ builtin/log.c               |   2 +-
+ builtin/merge-base.c        |   2 +-
+ builtin/merge.c             |  17 ++--
+ builtin/notes.c             |  12 +--
+ builtin/pack-objects.c      | 139 ++++++++++++++-------------
+ builtin/pull.c              |   2 +-
+ builtin/receive-pack.c      |  16 ++--
+ builtin/reflog.c            |  18 ++--
+ builtin/remote.c            |   2 +-
+ builtin/replace.c           |   8 +-
+ builtin/reset.c             |   6 +-
+ builtin/rev-list.c          |   4 +-
+ builtin/rev-parse.c         |   2 +-
+ builtin/show-branch.c       |  12 +--
+ builtin/show-ref.c          |   4 +-
+ builtin/submodule--helper.c |   2 +-
+ builtin/tag.c               |   8 +-
+ builtin/update-index.c      |  10 +-
+ builtin/update-ref.c        |  12 +--
+ builtin/worktree.c          |   6 +-
+ bundle.c                    |   4 +-
+ combine-diff.c              |   2 +-
+ connected.c                 |  18 ++--
+ connected.h                 |   4 +-
+ diff-lib.c                  |   4 +-
+ dir.c                       |   8 +-
+ fast-import.c               |   6 +-
+ notes-cache.c               |   4 +-
+ notes-merge.c               |   2 +-
+ notes-utils.c               |   4 +-
+ notes.c                     |   2 +-
+ pack-bitmap.c               |   8 +-
+ pack-bitmap.h               |   2 +-
+ read-cache.c                |   6 +-
+ ref-filter.c                |   4 +-
+ reflog-walk.c               |   6 +-
+ refs.c                      | 229 +++++++++++++++++++++-----------------------
+ refs.h                      |  75 +++++++--------
+ refs/files-backend.c        | 118 +++++++++++------------
+ refs/packed-backend.c       |  14 +--
+ refs/ref-cache.c            |   2 +-
+ refs/refs-internal.h        |  22 ++---
+ remote-testsvn.c            |   2 +-
+ remote.c                    |   9 +-
+ sequencer.c                 |  15 ++-
+ sha1_file.c                 |  32 +++----
+ sha1_name.c                 |  10 +-
+ submodule.c                 |   2 +-
+ t/helper/test-ref-store.c   |  28 +++---
+ transport-helper.c          |  15 ++-
+ transport.c                 |   6 +-
+ unpack-trees.c              |   8 +-
+ upload-pack.c               |   4 +-
+ walker.c                    |  24 ++---
+ worktree.c                  |   2 +-
+ worktree.h                  |   2 +-
+ wt-status.c                 |   4 +-
+ 71 files changed, 533 insertions(+), 552 deletions(-)
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.1 (GNU/Linux)
+-- 
+2.14.2.920.gcf0c67979c
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlnayBgACgkQv1NdgR9S
-9osbSg//YxSBa3M/WeFwdOpZE4/A/dzJTIfi/Wc3riz3rNMKFSWTmHdo3aixUAcA
-0Fk91AWmdL9zV9saYNjgWrAJ1xGfWMgjXhPIueHYI7VaGZ3SLbFhM2HqfH+0AcER
-9A/eYD8T4D+bmMGRaPUYz9mnh2QGKaIsY7fHcAOzXOGlCOUtHcbTn5i5oQ+DgsC5
-u6AjhQMnKMjKprn1tUBa4BliFufCZywUo4edE+jLf0NzJBbCsnWzwmJVCaBj/lLx
-Z6X/QE+K9WoW8jrXdBMuFzMOCmv80/dYo0KeyHSWk4H3dyJgPIwzR2XwoS2eWDyw
-WCWups89NghJ9ZBEFjMlll11OtLcSlcBJAl/0qwvCJDP8ntRRISlVBds8PW4PbGa
-qtjIoSYuO+sRkdbog7qWVt8/jvjeVh+95I9sXvT+VYjelkVn6u7pVZTCfYHtxThK
-NzQMow67F6R9Q5nUPqwKU8hTgNk6H/xB5UOb2qaUpodIyESK5nmRcjig15RyqSqi
-YBVNVyfuIy+HNHMZh0RAhb/gSHVRsmjnW4kqyaVwaMnrwfYSw0PPokmHbGlUYuBe
-huORhRbtC6IXz2hzRNxVgd3jMamM9Tvl0XC7qMCQicVkWsn/+O45RbP51CkO1Ykl
-mozGucQcY4gTiePtVnthaMjDEQICESYXFsPbp4LEsH1UeHRp2+Y=
-=c8Nl
------END PGP SIGNATURE-----
-
---znvhucwbrec2xvty--
