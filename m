@@ -6,42 +6,42 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 42AB71FA21
-	for <e@80x24.org>; Mon,  9 Oct 2017 01:13:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 481C71FA21
+	for <e@80x24.org>; Mon,  9 Oct 2017 01:13:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753751AbdJIBLw (ORCPT <rfc822;e@80x24.org>);
-        Sun, 8 Oct 2017 21:11:52 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:54642 "EHLO
+        id S1753907AbdJIBNJ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 8 Oct 2017 21:13:09 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:54666 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753702AbdJIBLt (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 8 Oct 2017 21:11:49 -0400
+        by vger.kernel.org with ESMTP id S1753740AbdJIBLw (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 8 Oct 2017 21:11:52 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 4A5E360D91;
-        Mon,  9 Oct 2017 01:11:48 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 9013A60D94;
+        Mon,  9 Oct 2017 01:11:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1507511508;
-        bh=/LzX/liU4uUoRIuy2zE1DiTcCYwm7j1lXCK6Zp0511c=;
+        s=default; t=1507511510;
+        bh=jCRgLTHqKCyuNvMMDPDm7u/UicWHAJpRI1ALOmVTOME=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=kZHlNuFdgAqJ9yT2JhtBBZNzSln2/qxpSQbSPzjKXdA5OINnnKDc7r0ui6ASC1JA9
-         RehFAGguIVjr1lDYJen6ikzpogjqeQnXp5FXmc8WF5Ad693Rz0fP8Ezg1s3OHVaXfq
-         2aV/OSexpeCSld2Tg2Ke2cNDuVKqsIwuie0XXqb4319ZjuaClGyDQj+nR8XQmXxOnx
-         AxkBM0EN1POo4qtwlCLrQ/8f8l1nw0oJbRTksmIcxyeS8vi/Hb5nzLyCKQKxeLnBqf
-         IippsqG583J1EDDf9b3NG5foIDZmCO+caeYRx0+nph1rVrBA9emsfycOMjF9h8LLzc
-         z6hKHhCtMR7ZnVLJMHjfR/+ckHAwXKx98LHDE6NJjHw8RPJhlDhhUFX2A/ICXArbNt
-         gPzbKWtrIpdz4vXuX3Cagsw2GxuTdgbf9b5bgPCvpJ0ydg4mvG8+EDOdyYDiEmHDv2
-         HiFOCHpsbJAioz3LLH8MpK3tPsu82gpPNelVccxrH7kfoCq2MrZ
+        b=vmIbUPwGyq04IwhT4leFduA6v9zknfmEAEMXXWakH/blOvkY4/ypPtlNp4Y/EpCfz
+         1/jyM70MRZq9eFNSJKOBntohsOm0mvWghqIRy87o/krvQ/sw4Iam35Nlpse25jghVs
+         27/UGhJoiYB7JLF0pXOUt1Hsk4q7NnVMy9zYVEDH5M5Cup1nQykZuUcq92tMnGspat
+         56kQ0g1VN/RGb3x+Q6AKenH8weZIbDGzOD+ZCut0e6BuffEfKGd2tvo8+Z2dWC7kgA
+         QEM7OI81OVkN/fp4Xp9A0lsMlMGG3csjjUNVmaxnpruvnmJmqb7mhQDpeRGA/7MPfY
+         MLqNh8v4bEPAxGPQcELlvNP5/lt4/OAQIaxVizv/eqxHzCPb5i2ljf1YViobKII/Eb
+         OgPZH7JacsYtHFFeFmrDd9NuskbjjWLR5D5+B2jiuArKU9SCtXELFTr4TVzaZD/CFE
+         BEQDl8pd6JQqnMXobfSYzlWhaRwLjw5EUNbaAWwXiYUYTgeqxCX
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
         Brandon Williams <bmwill@google.com>,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCH v2 05/24] refs: update ref transactions to use struct object_id
-Date:   Mon,  9 Oct 2017 01:11:13 +0000
-Message-Id: <20171009011132.675341-6-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 06/24] Convert check_connected to use struct object_id
+Date:   Mon,  9 Oct 2017 01:11:14 +0000
+Message-Id: <20171009011132.675341-7-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.14.2.920.gcf0c67979c
 In-Reply-To: <20171009011132.675341-1-sandals@crustytoothpaste.net>
 References: <20171009011132.675341-1-sandals@crustytoothpaste.net>
@@ -51,489 +51,194 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Update the ref transaction code to use struct object_id.  Remove one
-NULL pointer check which was previously inserted around a dereference;
-since we now pass a pointer to struct object_id directly through, the
-code we're calling handles this for us.
+Convert check_connected and the callbacks it takes to use struct
+object_id.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- branch.c               |  2 +-
- builtin/clone.c        |  2 +-
- builtin/commit.c       |  4 ++--
+ builtin/clone.c        |  4 ++--
  builtin/fetch.c        |  4 ++--
- builtin/receive-pack.c |  4 ++--
- builtin/replace.c      |  2 +-
- builtin/tag.c          |  2 +-
- builtin/update-ref.c   |  8 ++++----
- fast-import.c          |  4 ++--
- refs.c                 | 44 +++++++++++++++++++++-----------------------
- refs.h                 | 24 ++++++++++++------------
- refs/files-backend.c   | 12 ++++++------
- refs/refs-internal.h   |  4 ++--
- sequencer.c            |  2 +-
- walker.c               |  2 +-
- 15 files changed, 59 insertions(+), 61 deletions(-)
+ builtin/receive-pack.c | 10 +++++-----
+ connected.c            | 18 +++++++++---------
+ connected.h            |  4 ++--
+ 5 files changed, 20 insertions(+), 20 deletions(-)
 
-diff --git a/branch.c b/branch.c
-index 4377ce2fb1..45029ea142 100644
---- a/branch.c
-+++ b/branch.c
-@@ -305,7 +305,7 @@ void create_branch(const char *name, const char *start_name,
- 		transaction = ref_transaction_begin(&err);
- 		if (!transaction ||
- 		    ref_transaction_update(transaction, ref.buf,
--					   oid.hash, forcing ? NULL : null_sha1,
-+					   &oid, forcing ? NULL : &null_oid,
- 					   0, msg, &err) ||
- 		    ref_transaction_commit(transaction, &err))
- 			die("%s", err.buf);
 diff --git a/builtin/clone.c b/builtin/clone.c
-index 4135621aa3..665a0e2673 100644
+index 665a0e2673..5cd1b02d53 100644
 --- a/builtin/clone.c
 +++ b/builtin/clone.c
-@@ -588,7 +588,7 @@ static void write_remote_refs(const struct ref *local_refs)
- 	for (r = local_refs; r; r = r->next) {
- 		if (!r->peer_ref)
- 			continue;
--		if (ref_transaction_create(t, r->peer_ref->name, r->old_oid.hash,
-+		if (ref_transaction_create(t, r->peer_ref->name, &r->old_oid,
- 					   0, NULL, &err))
- 			die("%s", err.buf);
+@@ -615,7 +615,7 @@ static void write_followtags(const struct ref *refs, const char *msg)
  	}
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 0f8ddb6866..d5fbf404f4 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1785,9 +1785,9 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 
- 	transaction = ref_transaction_begin(&err);
- 	if (!transaction ||
--	    ref_transaction_update(transaction, "HEAD", oid.hash,
-+	    ref_transaction_update(transaction, "HEAD", &oid,
- 				   current_head
--				   ? current_head->object.oid.hash : null_sha1,
-+				   ? &current_head->object.oid : &null_oid,
- 				   0, sb.buf, &err) ||
- 	    ref_transaction_commit(transaction, &err)) {
- 		rollback_index_files();
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 225c734924..859be91d6c 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -457,8 +457,8 @@ static int s_update_ref(const char *action,
- 	transaction = ref_transaction_begin(&err);
- 	if (!transaction ||
- 	    ref_transaction_update(transaction, ref->name,
--				   ref->new_oid.hash,
--				   check_old ? ref->old_oid.hash : NULL,
-+				   &ref->new_oid,
-+				   check_old ? &ref->old_oid : NULL,
- 				   0, msg, &err))
- 		goto fail;
- 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 29a0f3b75f..39defd4e3c 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -1139,7 +1139,7 @@ static const char *update(struct command *cmd, struct shallow_info *si)
- 		}
- 		if (ref_transaction_delete(transaction,
- 					   namespaced_name,
--					   old_oid ? old_oid->hash : NULL,
-+					   old_oid,
- 					   0, "push", &err)) {
- 			rp_error("%s", err.buf);
- 			strbuf_release(&err);
-@@ -1156,7 +1156,7 @@ static const char *update(struct command *cmd, struct shallow_info *si)
- 
- 		if (ref_transaction_update(transaction,
- 					   namespaced_name,
--					   new_oid->hash, old_oid->hash,
-+					   new_oid, old_oid,
- 					   0, "push",
- 					   &err)) {
- 			rp_error("%s", err.buf);
-diff --git a/builtin/replace.c b/builtin/replace.c
-index 2854eaa0f3..3099e55307 100644
---- a/builtin/replace.c
-+++ b/builtin/replace.c
-@@ -175,7 +175,7 @@ static int replace_object_oid(const char *object_ref,
- 
- 	transaction = ref_transaction_begin(&err);
- 	if (!transaction ||
--	    ref_transaction_update(transaction, ref.buf, repl->hash, prev.hash,
-+	    ref_transaction_update(transaction, ref.buf, repl, &prev,
- 				   0, NULL, &err) ||
- 	    ref_transaction_commit(transaction, &err))
- 		die("%s", err.buf);
-diff --git a/builtin/tag.c b/builtin/tag.c
-index 46ff4ca736..2ededc3fb1 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -543,7 +543,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 
- 	transaction = ref_transaction_begin(&err);
- 	if (!transaction ||
--	    ref_transaction_update(transaction, ref.buf, object.hash, prev.hash,
-+	    ref_transaction_update(transaction, ref.buf, &object, &prev,
- 				   create_reflog ? REF_FORCE_CREATE_REFLOG : 0,
- 				   reflog_msg.buf, &err) ||
- 	    ref_transaction_commit(transaction, &err))
-diff --git a/builtin/update-ref.c b/builtin/update-ref.c
-index f491cf1a92..cf1552b478 100644
---- a/builtin/update-ref.c
-+++ b/builtin/update-ref.c
-@@ -200,7 +200,7 @@ static const char *parse_cmd_update(struct ref_transaction *transaction,
- 		die("update %s: extra input: %s", refname, next);
- 
- 	if (ref_transaction_update(transaction, refname,
--				   new_oid.hash, have_old ? old_oid.hash : NULL,
-+				   &new_oid, have_old ? &old_oid : NULL,
- 				   update_flags | create_reflog_flag,
- 				   msg, &err))
- 		die("%s", err.buf);
-@@ -232,7 +232,7 @@ static const char *parse_cmd_create(struct ref_transaction *transaction,
- 	if (*next != line_termination)
- 		die("create %s: extra input: %s", refname, next);
- 
--	if (ref_transaction_create(transaction, refname, new_oid.hash,
-+	if (ref_transaction_create(transaction, refname, &new_oid,
- 				   update_flags | create_reflog_flag,
- 				   msg, &err))
- 		die("%s", err.buf);
-@@ -269,7 +269,7 @@ static const char *parse_cmd_delete(struct ref_transaction *transaction,
- 		die("delete %s: extra input: %s", refname, next);
- 
- 	if (ref_transaction_delete(transaction, refname,
--				   have_old ? old_oid.hash : NULL,
-+				   have_old ? &old_oid : NULL,
- 				   update_flags, msg, &err))
- 		die("%s", err.buf);
- 
-@@ -298,7 +298,7 @@ static const char *parse_cmd_verify(struct ref_transaction *transaction,
- 	if (*next != line_termination)
- 		die("verify %s: extra input: %s", refname, next);
- 
--	if (ref_transaction_verify(transaction, refname, old_oid.hash,
-+	if (ref_transaction_verify(transaction, refname, &old_oid,
- 				   update_flags, &err))
- 		die("%s", err.buf);
- 
-diff --git a/fast-import.c b/fast-import.c
-index 35bf671f12..2d2d0d98f0 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -1778,7 +1778,7 @@ static int update_branch(struct branch *b)
- 	}
- 	transaction = ref_transaction_begin(&err);
- 	if (!transaction ||
--	    ref_transaction_update(transaction, b->name, b->oid.hash, old_oid.hash,
-+	    ref_transaction_update(transaction, b->name, &b->oid, &old_oid,
- 				   0, msg, &err) ||
- 	    ref_transaction_commit(transaction, &err)) {
- 		ref_transaction_free(transaction);
-@@ -1820,7 +1820,7 @@ static void dump_tags(void)
- 		strbuf_addf(&ref_name, "refs/tags/%s", t->name);
- 
- 		if (ref_transaction_update(transaction, ref_name.buf,
--					   t->oid.hash, NULL, 0, msg, &err)) {
-+					   &t->oid, NULL, 0, msg, &err)) {
- 			failure |= error("%s", err.buf);
- 			goto cleanup;
- 		}
-diff --git a/refs.c b/refs.c
-index 51942df7b3..1e6dec4046 100644
---- a/refs.c
-+++ b/refs.c
-@@ -668,8 +668,7 @@ int refs_delete_ref(struct ref_store *refs, const char *msg,
- 
- 	transaction = ref_store_transaction_begin(refs, &err);
- 	if (!transaction ||
--	    ref_transaction_delete(transaction, refname,
--				   old_oid ? old_oid->hash : NULL,
-+	    ref_transaction_delete(transaction, refname, old_oid,
- 				   flags, msg, &err) ||
- 	    ref_transaction_commit(transaction, &err)) {
- 		error("%s", err.buf);
-@@ -895,8 +894,8 @@ void ref_transaction_free(struct ref_transaction *transaction)
- struct ref_update *ref_transaction_add_update(
- 		struct ref_transaction *transaction,
- 		const char *refname, unsigned int flags,
--		const unsigned char *new_sha1,
--		const unsigned char *old_sha1,
-+		const struct object_id *new_oid,
-+		const struct object_id *old_oid,
- 		const char *msg)
- {
- 	struct ref_update *update;
-@@ -914,23 +913,23 @@ struct ref_update *ref_transaction_add_update(
- 	update->flags = flags;
- 
- 	if (flags & REF_HAVE_NEW)
--		hashcpy(update->new_oid.hash, new_sha1);
-+		oidcpy(&update->new_oid, new_oid);
- 	if (flags & REF_HAVE_OLD)
--		hashcpy(update->old_oid.hash, old_sha1);
-+		oidcpy(&update->old_oid, old_oid);
- 	update->msg = xstrdup_or_null(msg);
- 	return update;
  }
  
- int ref_transaction_update(struct ref_transaction *transaction,
- 			   const char *refname,
--			   const unsigned char *new_sha1,
--			   const unsigned char *old_sha1,
-+			   const struct object_id *new_oid,
-+			   const struct object_id *old_oid,
- 			   unsigned int flags, const char *msg,
- 			   struct strbuf *err)
+-static int iterate_ref_map(void *cb_data, unsigned char sha1[20])
++static int iterate_ref_map(void *cb_data, struct object_id *oid)
  {
- 	assert(err);
+ 	struct ref **rm = cb_data;
+ 	struct ref *ref = *rm;
+@@ -630,7 +630,7 @@ static int iterate_ref_map(void *cb_data, unsigned char sha1[20])
+ 	if (!ref)
+ 		return -1;
  
--	if ((new_sha1 && !is_null_sha1(new_sha1)) ?
-+	if ((new_oid && !is_null_oid(new_oid)) ?
- 	    check_refname_format(refname, REFNAME_ALLOW_ONELEVEL) :
- 	    !refname_is_safe(refname)) {
- 		strbuf_addf(err, "refusing to update ref with bad name '%s'",
-@@ -940,48 +939,48 @@ int ref_transaction_update(struct ref_transaction *transaction,
+-	hashcpy(sha1, ref->old_oid.hash);
++	oidcpy(oid, &ref->old_oid);
+ 	*rm = ref->next;
+ 	return 0;
+ }
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 859be91d6c..e705237fa9 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -727,7 +727,7 @@ static int update_local_ref(struct ref *ref,
+ 	}
+ }
  
- 	flags &= REF_TRANSACTION_UPDATE_ALLOWED_FLAGS;
- 
--	flags |= (new_sha1 ? REF_HAVE_NEW : 0) | (old_sha1 ? REF_HAVE_OLD : 0);
-+	flags |= (new_oid ? REF_HAVE_NEW : 0) | (old_oid ? REF_HAVE_OLD : 0);
- 
- 	ref_transaction_add_update(transaction, refname, flags,
--				   new_sha1, old_sha1, msg);
-+				   new_oid, old_oid, msg);
+-static int iterate_ref_map(void *cb_data, unsigned char sha1[20])
++static int iterate_ref_map(void *cb_data, struct object_id *oid)
+ {
+ 	struct ref **rm = cb_data;
+ 	struct ref *ref = *rm;
+@@ -737,7 +737,7 @@ static int iterate_ref_map(void *cb_data, unsigned char sha1[20])
+ 	if (!ref)
+ 		return -1; /* end of the list */
+ 	*rm = ref->next;
+-	hashcpy(sha1, ref->old_oid.hash);
++	oidcpy(oid, &ref->old_oid);
  	return 0;
  }
  
- int ref_transaction_create(struct ref_transaction *transaction,
- 			   const char *refname,
--			   const unsigned char *new_sha1,
-+			   const struct object_id *new_oid,
- 			   unsigned int flags, const char *msg,
- 			   struct strbuf *err)
- {
--	if (!new_sha1 || is_null_sha1(new_sha1))
-+	if (!new_oid || is_null_oid(new_oid))
- 		die("BUG: create called without valid new_sha1");
--	return ref_transaction_update(transaction, refname, new_sha1,
--				      null_sha1, flags, msg, err);
-+	return ref_transaction_update(transaction, refname, new_oid,
-+				      &null_oid, flags, msg, err);
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 39defd4e3c..046b600b11 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -870,7 +870,7 @@ static void refuse_unconfigured_deny_delete_current(void)
+ 	rp_error("%s", _(refuse_unconfigured_deny_delete_current_msg));
  }
  
- int ref_transaction_delete(struct ref_transaction *transaction,
- 			   const char *refname,
--			   const unsigned char *old_sha1,
-+			   const struct object_id *old_oid,
- 			   unsigned int flags, const char *msg,
- 			   struct strbuf *err)
+-static int command_singleton_iterator(void *cb_data, unsigned char sha1[20]);
++static int command_singleton_iterator(void *cb_data, struct object_id *oid);
+ static int update_shallow_ref(struct command *cmd, struct shallow_info *si)
  {
--	if (old_sha1 && is_null_sha1(old_sha1))
-+	if (old_oid && is_null_oid(old_oid))
- 		die("BUG: delete called with old_sha1 set to zeros");
- 	return ref_transaction_update(transaction, refname,
--				      null_sha1, old_sha1,
-+				      &null_oid, old_oid,
- 				      flags, msg, err);
+ 	static struct lock_file shallow_lock;
+@@ -1270,7 +1270,7 @@ static void check_aliased_updates(struct command *commands)
+ 	string_list_clear(&ref_list, 0);
  }
  
- int ref_transaction_verify(struct ref_transaction *transaction,
- 			   const char *refname,
--			   const unsigned char *old_sha1,
-+			   const struct object_id *old_oid,
- 			   unsigned int flags,
- 			   struct strbuf *err)
+-static int command_singleton_iterator(void *cb_data, unsigned char sha1[20])
++static int command_singleton_iterator(void *cb_data, struct object_id *oid)
  {
--	if (!old_sha1)
-+	if (!old_oid)
- 		die("BUG: verify called with old_sha1 set to NULL");
- 	return ref_transaction_update(transaction, refname,
--				      NULL, old_sha1,
-+				      NULL, old_oid,
- 				      flags, NULL, err);
+ 	struct command **cmd_list = cb_data;
+ 	struct command *cmd = *cmd_list;
+@@ -1278,7 +1278,7 @@ static int command_singleton_iterator(void *cb_data, unsigned char sha1[20])
+ 	if (!cmd || is_null_oid(&cmd->new_oid))
+ 		return -1; /* end of list */
+ 	*cmd_list = NULL; /* this returns only one */
+-	hashcpy(sha1, cmd->new_oid.hash);
++	oidcpy(oid, &cmd->new_oid);
+ 	return 0;
  }
  
-@@ -999,8 +998,7 @@ int refs_update_ref(struct ref_store *refs, const char *msg,
- 	} else {
- 		t = ref_store_transaction_begin(refs, &err);
- 		if (!t ||
--		    ref_transaction_update(t, refname, new_oid ? new_oid->hash : NULL,
--					   old_oid ? old_oid->hash : NULL,
-+		    ref_transaction_update(t, refname, new_oid, old_oid,
- 					   flags, msg, &err) ||
- 		    ref_transaction_commit(t, &err)) {
- 			ret = 1;
-diff --git a/refs.h b/refs.h
-index 369614d392..543dcc5956 100644
---- a/refs.h
-+++ b/refs.h
-@@ -519,15 +519,15 @@ struct ref_transaction *ref_transaction_begin(struct strbuf *err);
-  */
- int ref_transaction_update(struct ref_transaction *transaction,
- 			   const char *refname,
--			   const unsigned char *new_sha1,
--			   const unsigned char *old_sha1,
-+			   const struct object_id *new_oid,
-+			   const struct object_id *old_oid,
- 			   unsigned int flags, const char *msg,
- 			   struct strbuf *err);
+@@ -1309,7 +1309,7 @@ struct iterate_data {
+ 	struct shallow_info *si;
+ };
  
- /*
-- * Add a reference creation to transaction. new_sha1 is the value that
-+ * Add a reference creation to transaction. new_oid is the value that
-  * the reference should have after the update; it must not be
-- * null_sha1. It is verified that the reference does not exist
-+ * null_oid. It is verified that the reference does not exist
-  * already.
-  *
-  * See the above comment "Reference transaction updates" for more
-@@ -535,35 +535,35 @@ int ref_transaction_update(struct ref_transaction *transaction,
-  */
- int ref_transaction_create(struct ref_transaction *transaction,
- 			   const char *refname,
--			   const unsigned char *new_sha1,
-+			   const struct object_id *new_oid,
- 			   unsigned int flags, const char *msg,
- 			   struct strbuf *err);
- 
- /*
-- * Add a reference deletion to transaction. If old_sha1 is non-NULL,
-+ * Add a reference deletion to transaction. If old_oid is non-NULL,
-  * then it holds the value that the reference should have had before
-- * the update (which must not be null_sha1).
-+ * the update (which must not be null_oid).
-  *
-  * See the above comment "Reference transaction updates" for more
-  * information.
-  */
- int ref_transaction_delete(struct ref_transaction *transaction,
- 			   const char *refname,
--			   const unsigned char *old_sha1,
-+			   const struct object_id *old_oid,
- 			   unsigned int flags, const char *msg,
- 			   struct strbuf *err);
- 
- /*
-- * Verify, within a transaction, that refname has the value old_sha1,
-- * or, if old_sha1 is null_sha1, then verify that the reference
-- * doesn't exist. old_sha1 must be non-NULL.
-+ * Verify, within a transaction, that refname has the value old_oid,
-+ * or, if old_oid is null_oid, then verify that the reference
-+ * doesn't exist. old_oid must be non-NULL.
-  *
-  * See the above comment "Reference transaction updates" for more
-  * information.
-  */
- int ref_transaction_verify(struct ref_transaction *transaction,
- 			   const char *refname,
--			   const unsigned char *old_sha1,
-+			   const struct object_id *old_oid,
- 			   unsigned int flags,
- 			   struct strbuf *err);
- 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 0c641f0ad0..46dbcda6a6 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -1029,7 +1029,7 @@ static void prune_ref(struct files_ref_store *refs, struct ref_to_prune *r)
- 
- 	transaction = ref_store_transaction_begin(&refs->base, &err);
- 	if (!transaction ||
--	    ref_transaction_delete(transaction, r->name, r->oid.hash,
-+	    ref_transaction_delete(transaction, r->name, &r->oid,
- 				   REF_ISPRUNING | REF_NODEREF, NULL, &err) ||
- 	    ref_transaction_commit(transaction, &err)) {
- 		ref_transaction_free(transaction);
-@@ -1114,7 +1114,7 @@ static int files_pack_refs(struct ref_store *ref_store, unsigned int flags)
- 		 * packed-refs transaction:
- 		 */
- 		if (ref_transaction_update(transaction, iter->refname,
--					   iter->oid->hash, NULL,
-+					   iter->oid, NULL,
- 					   REF_NODEREF, NULL, &err))
- 			die("failure preparing to create packed reference %s: %s",
- 			    iter->refname, err.buf);
-@@ -2153,7 +2153,7 @@ static int split_head_update(struct ref_update *update,
- 	new_update = ref_transaction_add_update(
- 			transaction, "HEAD",
- 			update->flags | REF_LOG_ONLY | REF_NODEREF,
--			update->new_oid.hash, update->old_oid.hash,
-+			&update->new_oid, &update->old_oid,
- 			update->msg);
- 
- 	/*
-@@ -2217,7 +2217,7 @@ static int split_symref_update(struct files_ref_store *refs,
- 
- 	new_update = ref_transaction_add_update(
- 			transaction, referent, new_flags,
--			update->new_oid.hash, update->old_oid.hash,
-+			&update->new_oid, &update->old_oid,
- 			update->msg);
- 
- 	new_update->parent_update = update;
-@@ -2600,7 +2600,7 @@ static int files_transaction_prepare(struct ref_store *ref_store,
- 			ref_transaction_add_update(
- 					packed_transaction, update->refname,
- 					update->flags & ~REF_HAVE_OLD,
--					update->new_oid.hash, update->old_oid.hash,
-+					&update->new_oid, &update->old_oid,
- 					NULL);
+-static int iterate_receive_command_list(void *cb_data, unsigned char sha1[20])
++static int iterate_receive_command_list(void *cb_data, struct object_id *oid)
+ {
+ 	struct iterate_data *data = cb_data;
+ 	struct command **cmd_list = &data->cmds;
+@@ -1320,7 +1320,7 @@ static int iterate_receive_command_list(void *cb_data, unsigned char sha1[20])
+ 			/* to be checked in update_shallow_ref() */
+ 			continue;
+ 		if (!is_null_oid(&cmd->new_oid) && !cmd->skip_update) {
+-			hashcpy(sha1, cmd->new_oid.hash);
++			oidcpy(oid, &cmd->new_oid);
+ 			*cmd_list = cmd->next;
+ 			return 0;
  		}
- 	}
-@@ -2853,7 +2853,7 @@ static int files_initial_transaction_commit(struct ref_store *ref_store,
- 		 */
- 		ref_transaction_add_update(packed_transaction, update->refname,
- 					   update->flags & ~REF_HAVE_OLD,
--					   update->new_oid.hash, update->old_oid.hash,
-+					   &update->new_oid, &update->old_oid,
- 					   NULL);
- 	}
+diff --git a/connected.c b/connected.c
+index f416b05051..4a47f33270 100644
+--- a/connected.c
++++ b/connected.c
+@@ -16,13 +16,13 @@
+  *
+  * Returns 0 if everything is connected, non-zero otherwise.
+  */
+-int check_connected(sha1_iterate_fn fn, void *cb_data,
++int check_connected(oid_iterate_fn fn, void *cb_data,
+ 		    struct check_connected_options *opt)
+ {
+ 	struct child_process rev_list = CHILD_PROCESS_INIT;
+ 	struct check_connected_options defaults = CHECK_CONNECTED_INIT;
+-	char commit[41];
+-	unsigned char sha1[20];
++	char commit[GIT_MAX_HEXSZ + 1];
++	struct object_id oid;
+ 	int err = 0;
+ 	struct packed_git *new_pack = NULL;
+ 	struct transport *transport;
+@@ -32,7 +32,7 @@ int check_connected(sha1_iterate_fn fn, void *cb_data,
+ 		opt = &defaults;
+ 	transport = opt->transport;
  
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index d7d344de73..6636a13a62 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -202,8 +202,8 @@ int ref_update_reject_duplicates(struct string_list *refnames,
- struct ref_update *ref_transaction_add_update(
- 		struct ref_transaction *transaction,
- 		const char *refname, unsigned int flags,
--		const unsigned char *new_sha1,
--		const unsigned char *old_sha1,
-+		const struct object_id *new_oid,
-+		const struct object_id *old_oid,
- 		const char *msg);
+-	if (fn(cb_data, sha1)) {
++	if (fn(cb_data, &oid)) {
+ 		if (opt->err_fd)
+ 			close(opt->err_fd);
+ 		return err;
+@@ -77,7 +77,7 @@ int check_connected(sha1_iterate_fn fn, void *cb_data,
+ 
+ 	sigchain_push(SIGPIPE, SIG_IGN);
+ 
+-	commit[40] = '\n';
++	commit[GIT_SHA1_HEXSZ] = '\n';
+ 	do {
+ 		/*
+ 		 * If index-pack already checked that:
+@@ -87,17 +87,17 @@ int check_connected(sha1_iterate_fn fn, void *cb_data,
+ 		 * are sure the ref is good and not sending it to
+ 		 * rev-list for verification.
+ 		 */
+-		if (new_pack && find_pack_entry_one(sha1, new_pack))
++		if (new_pack && find_pack_entry_one(oid.hash, new_pack))
+ 			continue;
+ 
+-		memcpy(commit, sha1_to_hex(sha1), 40);
+-		if (write_in_full(rev_list.in, commit, 41) < 0) {
++		memcpy(commit, oid_to_hex(&oid), GIT_SHA1_HEXSZ);
++		if (write_in_full(rev_list.in, commit, GIT_SHA1_HEXSZ + 1) < 0) {
+ 			if (errno != EPIPE && errno != EINVAL)
+ 				error_errno(_("failed write to rev-list"));
+ 			err = -1;
+ 			break;
+ 		}
+-	} while (!fn(cb_data, sha1));
++	} while (!fn(cb_data, &oid));
+ 
+ 	if (close(rev_list.in))
+ 		err = error_errno(_("failed to close rev-list's stdin"));
+diff --git a/connected.h b/connected.h
+index 4ca325f79d..a53f03a61a 100644
+--- a/connected.h
++++ b/connected.h
+@@ -8,7 +8,7 @@ struct transport;
+  * When called after returning the name for the last object, return -1
+  * to signal EOF, otherwise return 0.
+  */
+-typedef int (*sha1_iterate_fn)(void *, unsigned char [20]);
++typedef int (*oid_iterate_fn)(void *, struct object_id *oid);
  
  /*
-diff --git a/sequencer.c b/sequencer.c
-index b349474bd3..43a6f14eb3 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -392,7 +392,7 @@ static int fast_forward_to(const struct object_id *to, const struct object_id *f
- 	transaction = ref_transaction_begin(&err);
- 	if (!transaction ||
- 	    ref_transaction_update(transaction, "HEAD",
--				   to->hash, unborn ? null_sha1 : from->hash,
-+				   to, unborn ? &null_oid : from,
- 				   0, sb.buf, &err) ||
- 	    ref_transaction_commit(transaction, &err)) {
- 		ref_transaction_free(transaction);
-diff --git a/walker.c b/walker.c
-index 2d83254bc0..5d4d3733f7 100644
---- a/walker.c
-+++ b/walker.c
-@@ -304,7 +304,7 @@ int walker_fetch(struct walker *walker, int targets, char **target,
- 		strbuf_reset(&refname);
- 		strbuf_addf(&refname, "refs/%s", write_ref[i]);
- 		if (ref_transaction_update(transaction, refname.buf,
--					   oids[i].hash, NULL, 0,
-+					   oids + i, NULL, 0,
- 					   msg ? msg : "fetch (unknown)",
- 					   &err)) {
- 			error("%s", err.buf);
+  * Named-arguments struct for check_connected. All arguments are
+@@ -51,7 +51,7 @@ struct check_connected_options {
+  *
+  * If "opt" is NULL, behaves as if CHECK_CONNECTED_INIT was passed.
+  */
+-int check_connected(sha1_iterate_fn fn, void *cb_data,
++int check_connected(oid_iterate_fn fn, void *cb_data,
+ 		    struct check_connected_options *opt);
+ 
+ #endif /* CONNECTED_H */
 -- 
 2.14.2.920.gcf0c67979c
 
