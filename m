@@ -2,87 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CA1661FA21
-	for <e@80x24.org>; Tue, 10 Oct 2017 11:53:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B08D62036B
+	for <e@80x24.org>; Tue, 10 Oct 2017 12:16:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755948AbdJJLw6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Oct 2017 07:52:58 -0400
-Received: from smtprelay07.ispgateway.de ([134.119.228.100]:60443 "EHLO
-        smtprelay07.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755888AbdJJLw5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Oct 2017 07:52:57 -0400
-Received: from [84.141.117.173] (helo=book.hvoigt.net)
-        by smtprelay07.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.89)
-        (envelope-from <hvoigt@hvoigt.net>)
-        id 1e1t5g-0005eb-BG; Tue, 10 Oct 2017 13:52:52 +0200
-Date:   Tue, 10 Oct 2017 13:52:50 +0200
-From:   Heiko Voigt <hvoigt@hvoigt.net>
-To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Paul Smith <paul@mad-scientist.net>,
-        Git Mailing list <git@vger.kernel.org>
-Subject: Re: "git rm" seems to do recursive removal even without "-r"
-Message-ID: <20171010115250.GA75189@book.hvoigt.net>
-References: <20171007190402.GH3382@zaya.teonanacatl.net>
- <alpine.LFD.2.21.1710071506210.15271@localhost.localdomain>
- <20171007192902.ma4s47hn6edwldx5@sigill.intra.peff.net>
- <alpine.LFD.2.21.1710071531090.15738@localhost.localdomain>
- <20171007193805.a2mwzkweonb6ymdk@sigill.intra.peff.net>
- <alpine.LFD.2.21.1710071541430.15964@localhost.localdomain>
- <1507412674.8322.4.camel@mad-scientist.net>
- <alpine.LFD.2.21.1710071749240.16818@localhost.localdomain>
- <xmqqy3oms22q.fsf@gitster.mtv.corp.google.com>
- <alpine.LFD.2.21.1710080736530.21897@localhost.localdomain>
+        id S1755981AbdJJMQb (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Oct 2017 08:16:31 -0400
+Received: from mail-qt0-f169.google.com ([209.85.216.169]:53690 "EHLO
+        mail-qt0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755165AbdJJMQa (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Oct 2017 08:16:30 -0400
+Received: by mail-qt0-f169.google.com with SMTP id n61so22453860qte.10
+        for <git@vger.kernel.org>; Tue, 10 Oct 2017 05:16:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=lQMFtJRCArwp3wzx3Cjb6oQ0UqbfIZ6ZBRWH4m+nfrg=;
+        b=mtua/+YVMMggtJ+5WLrJZ1m7bYjjM9iaZ5BV5xfnxY4r0HwKp1ysjYKTY54kCpdnAc
+         ytOVm3afyx1ohw3jWCYlM4/1TXVht5Fp/A1aR+UIXAfHg7uMSHaYUlkEeqSpf1ymXlKF
+         L8J+DXOaH/BHXiMsv8xqGMiMuegh0u9BE6UiVRX0ly1gr8B1c1n8+RnCRAu4Jua2eneL
+         /YSLyUzyVBUGO1PFiYZfmy5OaNffPqxDBdA+ixE0wc3h+3HJ7q71b2dAMk97B1ByYfKx
+         cDZBFHcF64Wj3yP3nf5t7a8W0Pw14WrH5A9eBjrhdStdqCQu5ATz1/BKxQzK2agKINh0
+         D2vw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=lQMFtJRCArwp3wzx3Cjb6oQ0UqbfIZ6ZBRWH4m+nfrg=;
+        b=aJpJLopyjh6ERrRmCp4vuoYzS/zeE2nZ5hiJW92zXfrvj9X+gz8JXMZL93Z/+fXZuq
+         92K6fSNcZ1x79S5RLz/8ixaTqW5lBZF0HYpszBUuAuK6qd0ybI62An5mHYgJnFK4v39Q
+         iYmY5P/a8fOBFy0a0kPZqp6rW5YLfJMH9J5Qq77twtulS7HFDoMMb/njf4LxRMJzI0oz
+         A14IKGKNkqEJNXcvFjSdD19cRlXiZRgFziQImVlqYKhEj1j1G0V1fLF7oERiJa6KDJgw
+         KiRqfhN2QQXYedziPxXDAs+Ea/MQKi4XIY/X2PeHinAC1gVOW89zdXZ/iaKH5VbqzxUP
+         iQPw==
+X-Gm-Message-State: AMCzsaU6RDNObNqeb04W1VYDTPpGq2osv7vddidPnMYUbN9ghs2Vle8b
+        UNq39DFmER73WcrFuM6twMY=
+X-Google-Smtp-Source: AOwi7QD/+CoHfH2gNlK0X3BCg2ehdFujiIteP40TGwKQdEHP2sYwTMoKndHboYFuJCCYj3AMicrCkg==
+X-Received: by 10.200.52.212 with SMTP id x20mr19376503qtb.90.1507637789631;
+        Tue, 10 Oct 2017 05:16:29 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010::7cc])
+        by smtp.gmail.com with ESMTPSA id x65sm6167815qke.60.2017.10.10.05.16.28
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 10 Oct 2017 05:16:28 -0700 (PDT)
+Subject: Re: [PATCH v4 4/4] sha1_name: minimize OID comparisons during
+ disambiguation
+To:     Jeff King <peff@peff.net>, Derrick Stolee <dstolee@microsoft.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com,
+        ramsay@ramsayjones.plus.com, sbeller@google.com
+References: <20171008184942.69444-1-dstolee@microsoft.com>
+ <20171008184942.69444-5-dstolee@microsoft.com>
+ <20171009134933.vmba67adelqbkx4y@sigill.intra.peff.net>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <338aab6a-1181-d740-1bf2-2ac86749a6b2@gmail.com>
+Date:   Tue, 10 Oct 2017 08:16:27 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.21.1710080736530.21897@localhost.localdomain>
-User-Agent: Mutt/1.9.0 (2017-09-02)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+In-Reply-To: <20171009134933.vmba67adelqbkx4y@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Oct 08, 2017 at 07:56:20AM -0400, Robert P. J. Day wrote:
->   but as i asked in my earlier post, if i wanted to remove *all* files
-> with names of "Makefile*", why can't i use:
-> 
->   $ git rm 'Makefile*'
-> 
-> just as i used:
-> 
->   $ git rm '*.c'
-> 
-> are those not both acceptable fileglobs? why does the former clearly
-> only match the top-level Makefile, and refuse to cross directory
-> boundaries?
+On 10/9/2017 9:49 AM, Jeff King wrote:
+> On Sun, Oct 08, 2017 at 02:49:42PM -0400, Derrick Stolee wrote:
+>
+>> @@ -505,6 +506,65 @@ static int extend_abbrev_len(const struct object_id *oid, void *cb_data)
+>>   	return 0;
+>>   }
+>>   
+>> +static void find_abbrev_len_for_pack(struct packed_git *p,
+>> +				     struct min_abbrev_data *mad)
+>> +{
+>> +	int match = 0;
+>> +	uint32_t num, last, first = 0;
+>> +	struct object_id oid;
+>> +
+>> +	open_pack_index(p);
+>> +	num = p->num_objects;
+>> +	last = num;
+>> +	while (first < last) {
+>> [...]
+> Your cover letter lists:
+>
+>    * Silently skip packfiles that fail to open with open_pack_index()
+>
+> as a change from the previous version. But this looks the same as the
+> last round. I think this _does_ end up skipping such packfiles because
+> p->num_objects will be zero. Is it worth having a comment to that
+> effect (or even just an early return) to make it clear that the
+> situation is intentional?
+>
+> Although...
+>
+>> +	/*
+>> +	 * first is now the position in the packfile where we would insert
+>> +	 * mad->hash if it does not exist (or the position of mad->hash if
+>> +	 * it does exist). Hence, we consider a maximum of three objects
+>> +	 * nearby for the abbreviation length.
+>> +	 */
+>> +	mad->init_len = 0;
+>> +	if (!match) {
+>> +		nth_packed_object_oid(&oid, p, first);
+>> +		extend_abbrev_len(&oid, mad);
+> If we have zero objects in the pack, what would nth_packed_object_oid()
+> be returning here?
+>
+> So I actually think we do want an early return, not just when
+> open_packed_index() fails, but also when p->num_objects is zero.
+>
+> -Peff
 
-Maybe think about it this way: The only difference between git's
-globbing and the default shell globbing is that the '/' in a path has a
-special meaning. The shells expansion stops at a '/' but git does not.
+Sorry about this. I caught this while I was writing my cover letter and 
+amended my last commit to include the following:
 
-So with *.c the shell matches: blabla.c, blub.c, ...  but not
-subdir/bla.c, subdir/blub.c, ... since it only considers files in the
-current directory. A little different for Makefile* that will also match
-Makefile.bla, Makefile/bla or Makefile_bla/blub in shell but not
-subdir/Makefile or bla.Makefile. Basically anything directly in *this*
-directory that *starts* with 'Makefile'.
+     if (open_pack_index(p))
+         return;
 
-Git on the other hand does not consider '/' to be special. So *.c
-matches all of the path above: bla.c, blub.c, subdir/bla.c,
-subdir/blub.c. Basically any file below the current directory with a
-path that ends in '.c'. With Makefile* it is the opposite: Every file
-below the current directory that *starts* with 'Makefile'. So
-Makefile.bla, Makefile/bla, ... but also not subdir/Makefile or
-bla.Makefile.
+After I amended the commit, I forgot to 'format-patch' again. I can send 
+a diff between the commits after review has calmed.
 
-Maybe that helps...
-
-Cheers Heiko
-
+Thanks,
+-Stolee
