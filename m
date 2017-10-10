@@ -2,111 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E18920404
-	for <e@80x24.org>; Tue, 10 Oct 2017 12:41:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AD3622036B
+	for <e@80x24.org>; Tue, 10 Oct 2017 12:51:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755272AbdJJMlD (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Oct 2017 08:41:03 -0400
-Received: from gproxy7-pub.mail.unifiedlayer.com ([70.40.196.235]:39496 "EHLO
-        gproxy7-pub.mail.unifiedlayer.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751415AbdJJMlC (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 10 Oct 2017 08:41:02 -0400
-X-Greylist: delayed 1278 seconds by postgrey-1.27 at vger.kernel.org; Tue, 10 Oct 2017 08:41:02 EDT
-Received: from cmgw2 (unknown [10.0.90.83])
-        by gproxy7.mail.unifiedlayer.com (Postfix) with ESMTP id 669AC215E09
-        for <git@vger.kernel.org>; Tue, 10 Oct 2017 06:19:44 -0600 (MDT)
-Received: from box5008.bluehost.com ([50.116.64.19])
-        by cmgw2 with 
-        id KoKg1w0140QvKlu01oKkxQ; Tue, 10 Oct 2017 06:19:44 -0600
-X-Authority-Analysis: v=2.2 cv=dZfw5Tfe c=1 sm=1 tr=0
- a=gch/BGY/Gm5DEW28s2kmlQ==:117 a=gch/BGY/Gm5DEW28s2kmlQ==:17
- a=IkcTkHD0fZMA:10 a=02M-m0pO-4AA:10 a=n0cEkMv3dxfyu5oJbw8A:9 a=QEXdDO2ut3YA:10
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=mad-scientist.net; s=default; h=Content-Transfer-Encoding:Mime-Version:
-        Content-Type:References:In-Reply-To:Date:Cc:To:Reply-To:From:Subject:
-        Message-ID:Sender:Content-ID:Content-Description:Resent-Date:Resent-From:
-        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=711pJz94FaGGnDyXMpyguPZMDfvAd12yrAcf/oVtn6E=; b=qFPMLGVBVoXAH/bErAROT80j7l
-        0/rwJx+ojppH+onYxmuG3mGFaDLjs6kgJIuUtz1YJNNi0Fpa5iztpFsjbvjKJBGHCAYpJp0E3jOjF
-        GXagjBWpYoqrRt+NHdy8SdKpp;
-Received: from pool-74-104-137-100.bstnma.fios.verizon.net ([74.104.137.100]:57720 helo=homebase)
-        by box5008.bluehost.com with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.87)
-        (envelope-from <paul@mad-scientist.net>)
-        id 1e1tVc-0000S0-ME; Tue, 10 Oct 2017 06:19:40 -0600
-Message-ID: <1507637979.8322.33.camel@mad-scientist.net>
-Subject: Re: "git rm" seems to do recursive removal even without "-r"
-From:   Paul Smith <paul@mad-scientist.net>
-Reply-To: paul@mad-scientist.net
-To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
-Cc:     Git Mailing list <git@vger.kernel.org>
-Date:   Tue, 10 Oct 2017 08:19:39 -0400
-In-Reply-To: <alpine.LFD.2.21.1710100432220.16182@localhost.localdomain>
-References: <20171007192902.ma4s47hn6edwldx5@sigill.intra.peff.net>
-         <alpine.LFD.2.21.1710071531090.15738@localhost.localdomain>
-         <20171007193805.a2mwzkweonb6ymdk@sigill.intra.peff.net>
-         <alpine.LFD.2.21.1710071541430.15964@localhost.localdomain>
-         <1507412674.8322.4.camel@mad-scientist.net>
-         <alpine.LFD.2.21.1710071749240.16818@localhost.localdomain>
-         <1507473160.8322.12.camel@mad-scientist.net>
-         <20171008184046.uj7gcutddli54ic3@thunk.org>
-         <alpine.LFD.2.21.1710081536180.28646@localhost.localdomain>
-         <20171008204227.f6wgaobosa6yn62g@thunk.org>
-         <20171009175225.qn6a3j2th3dxjjn2@sigill.intra.peff.net>
-         <alpine.LFD.2.21.1710100432220.16182@localhost.localdomain>
-Organization: Please remain calm!
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.22.6-1ubuntu1 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5008.bluehost.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - mad-scientist.net
-X-BWhitelist: no
-X-Source-IP: 74.104.137.100
-X-Exim-ID: 1e1tVc-0000S0-ME
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: pool-74-104-137-100.bstnma.fios.verizon.net (homebase) [74.104.137.100]:57720
-X-Source-Auth: paul@mad-scientist.us
-X-Email-Count: 2
-X-Source-Cap: bWFkc2NpZTE7bWFkc2NpZTE7Ym94NTAwOC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
+        id S1756134AbdJJMvm (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Oct 2017 08:51:42 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59483 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1755888AbdJJMvl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Oct 2017 08:51:41 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A3FDA9741A;
+        Tue, 10 Oct 2017 08:51:40 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=/ElTFys0ls4aofmAG/1EakJvW8s=; b=PlDDa7
+        /b82h+6yBetXstWC02H0BjDWNFR6tEL5moqeH3g/TtvXL6il4jvlyBL7cndoH6Un
+        VeJSahOj+ZgYf7VF73DgiqKhyIi/Q82sHWHgg4Fah9ozh13J95M29h5X7b8wD6gv
+        uFUFpYNLATLhVlx+GWL6bEIaODqpWZZQTUYBA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=woxc7MqJxNRt10k2F7eMbBLRyWB/bpAY
+        nmktl63O/cTmfcdDD4+UZ7ltpF1dTnHGeWtd66iUkooCXkhsatYmDL5hM3XLne6Q
+        a5nyxoq21Eh5WncPPOFUDROp/Kjpvst8NPgx4uBUUga234EgO/34LawGxOzPy59u
+        MrP8xtwakqY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 99B6397419;
+        Tue, 10 Oct 2017 08:51:40 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1469C97417;
+        Tue, 10 Oct 2017 08:51:40 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Nazri Ramliy <ayiehere@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: What happened to "git status --color=(always|auto|never)"?
+References: <CAEY4ZpO2G-kTmuReE5gwKpftFqLfAqdpQwCK4R+qYbogCgGtUA@mail.gmail.com>
+        <20171010001619.GL19555@aiede.mtv.corp.google.com>
+        <CAEY4ZpPj3=+gL_wBW548qzAuS=aC=qswuPx-4H9DS=X10iJWVw@mail.gmail.com>
+        <20171010005942.GO19555@aiede.mtv.corp.google.com>
+        <CAEY4ZpMKE6yf2baaJt+x6c_esorFnyWvLZ=_KS1iRs6XbL42hw@mail.gmail.com>
+        <20171010102509.e7ucbyon6ka6722l@sigill.intra.peff.net>
+Date:   Tue, 10 Oct 2017 21:51:38 +0900
+In-Reply-To: <20171010102509.e7ucbyon6ka6722l@sigill.intra.peff.net> (Jeff
+        King's message of "Tue, 10 Oct 2017 06:25:10 -0400")
+Message-ID: <xmqqfuarp3mt.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: C273908E-ADB9-11E7-A476-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 2017-10-10 at 04:36 -0400, Robert P. J. Day wrote:
->   ah, now *that* is a compelling rationale that justifies the
-> underlying weirdness. but it still doesn't explain the different
-> behaviour between:
-> 
->   $ git rm -n 'Makefile*'
->   $ git rm -n '*Makefile'
+Jeff King <peff@peff.net> writes:
 
-I explained that behavior in the email up-thread from this reply:
-
-> Globbing in "git rm" matches on the FULL PATH, not just the file name. 
-> So, if you have a list of Makefiles in your repository like:
-> 
->   Makefile
->   foo/Makefile
->   bar/Makefile
-> 
-> Then 'Makefile*' only matches the first one, since 'Makefile*' doesn't
-> match 'foo/Makefile' or 'bar/Makefile'.
+> :( I was worried that this might hit some third-party scripts.
+> ...
+> All that said, should we revisit the decision from 6be4595edb? The two
+> code changes we could make are:
 >
-> If you you worry that '*Makefile' will match things you don't want to
-> match, you'll have to use:
-> 
->   git rm -n Makefile '*/Makefile'
+>   1. Adding a "--color" option to "git status". Commit 0c88bf5050
+>      (provide --color option for all ref-filter users, 2017-10-03) from
+>      that same series shows some prior art.
+>
+>      This is a clean solution, but it does mean that scripts have to
+>      adapt (and would potentially need to care about which Git version
+>      they're relying on).
+
+If we view that "always" issue is a regression, then this is not a
+"solution".  It is a part of an ideal world where we never allowed
+"always" as a value for color.ui, which is not the world we live in.
+
+>   2. Re-allow "color.always" config from the command-line. It's actually
+>      on-disk config that we want to downgrade, but I wanted to avoid
+>      making complicated rules about how the config would behave in
+>      different scopes. The patch for this would look something like the
+>      one below.
+
+Yuck, ugly.  The code is simple (thanks to the "who ordered it?"
+thing), but the behaviour is rather embarrassing to explain.
+
+>   3. Revert the original series, and revisit the original "respect
+>      color.ui via porcelain" commit which broke add--interactive in
+>      v2.14.2 (136c8c8b8fa).
+
+Which one do you mean is "the original series"?  The one that made
+plumbing to pay attention to the color config?  I think it would be
+the cleanest "solution" in the world we live in, but the series (and
+the follow-on changes that started assuming that config_default
+reads the color config) have a rather large footprint and it will be
+quite painful to vet the result.
+
+I think the right fix to the original problem (you cannot remove
+auto-color from the plumbing) is to stop paying attention to color
+configuration from the default config.  I wonder if something like
+this would work?
+
+ - Initialize color.c::git_use_color_default to GIT_COLOR_UNKNOWN;
+
+ - When git_color_config() is called, and if git_use_color_default
+   is still GIT_COLOR_UNKNOWN, set it to GIT_COLOR_AUTO (regardless
+   of the variable git_color_config() is called for).
+
+ - In color.c::want_color(), when git_use_color_default is used,
+   notice if it is GIT_COLOR_UNKNOWN and behave as if it is
+   GIT_COLOR_NEVER.
+
+Then we make sure that git_color_config() is never called by any
+plumbing command.  The fact it is (ever) called can be taken as a
+clue that we are running a Porcelain (hence we transition from
+UNKNOWN to AUTO), so we'd get the desirable "no default color for
+plumbing, auto color for Porcelain", I would think.
 
