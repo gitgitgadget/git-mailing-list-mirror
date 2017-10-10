@@ -2,84 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E125920405
-	for <e@80x24.org>; Tue, 10 Oct 2017 02:24:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D027220372
+	for <e@80x24.org>; Tue, 10 Oct 2017 02:35:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754287AbdJJCYX (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Oct 2017 22:24:23 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:33814 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754126AbdJJCYX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Oct 2017 22:24:23 -0400
-Received: by mail-pf0-f194.google.com with SMTP id b85so11507155pfj.1
-        for <git@vger.kernel.org>; Mon, 09 Oct 2017 19:24:22 -0700 (PDT)
+        id S1754268AbdJJCfI (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Oct 2017 22:35:08 -0400
+Received: from mail-oi0-f67.google.com ([209.85.218.67]:38350 "EHLO
+        mail-oi0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751184AbdJJCfH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Oct 2017 22:35:07 -0400
+Received: by mail-oi0-f67.google.com with SMTP id t134so8067420oih.5
+        for <git@vger.kernel.org>; Mon, 09 Oct 2017 19:35:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=1zWpUQdRbqj4YBomeEMbCJBltCcwrufUTyqtSBkp7AU=;
-        b=O7XOm05R28Ld7vQm/Q27QjG2KDNwzinPddWfeSz/pzGcpGjDot5x58XLo0jpm5BalW
-         P8tR2ydpsW8CY+ddqvfw5dcjldA8j74xqq4nobTL8TIa+JOAupbPhmtPjBWjlELDhse3
-         KByPpvAOC/6/MT15ePgbENPpKkWRApOccLp7D+V/9heVn51oY+GXPsxbOwb72b9UnoAK
-         82JUX1ZH0eqQILwa2BctV8Sp8HoiKXdWgKot9Pu8eRhnG2xO8bY/ja+sypyrV1UIy3Je
-         9dmRKw2oqte6uyQxYRo39MAe/IsRXZv0A3CxCX6I/j/uofth1BaeJskhzIXFniR8PAhb
-         nZQQ==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=lMgcCVHSZ7xmeR99HMBd4W6yEMzQxS2ZIK/Dq6c82HU=;
+        b=t1DFNgAais8KIIchrIOhcBOt7qjJL4d+M8E1mx194Wc9LubfV6WFw/Oo0L00LbHd98
+         j7Wzt055JsfFwN4YjvplJfzbcQk51xkcPjxwb8cLZ1I1kqruwFSpKl4Bwhi5QTPgDPNG
+         C9crXgSbB9LM4X9zVBVbJczm5nYwj8Lyr6SYEajYMgfmdxpdg7yDSPQsz7cTi6eCTQA1
+         r5Pt/vGy/MqoIU5QYwDxorj88Od4vN8few6+Ms+QvB3wfeLucXzM+oBdKtJQHFqzPv6B
+         nHdzDlmOAORexxWRsMi1VjxUMrZf73fmxwnrerZyYrw/oh0o5ZVTVag2ZKhxt8sWyZTn
+         pfsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=1zWpUQdRbqj4YBomeEMbCJBltCcwrufUTyqtSBkp7AU=;
-        b=MS7NuTyQHgjagGOmFFtwmwWydS78a41W2q84q1BdAN3cB6H+mGOYbzIfm32CjAaHHL
-         d+vlD6danw8M35W06C9PALOiisPLjTfnByPR5bTYnsKKm/kKazrRyB1U9UqzE3SKsXqS
-         P2rukuyQr53UwUTeDX/vOyhcP3U5aAZe/2rMJgeLnOiU7cnVgtMTveGRbPczvnPmExZa
-         qCQ/2+Qp2o3BBfyRcWNj0c0EfiPTrrAbEbEt9yM0uVdHRqhCH4qHnj4ocj/Huy9RgALh
-         m6izbEuVFu0eyVu+VlCM4AqdY7J877dXo6UjjUpTXuflzvwpHVckrt90ldGorEmTZF93
-         cH/A==
-X-Gm-Message-State: AMCzsaX0cvkhShYRuE+lDC/1+SRou1bD7eNNykIyXE5MOTWvZFRm43MX
-        egijvm8XRtlyUrmmMSe8bFw=
-X-Google-Smtp-Source: AOwi7QC0NbOzR1K0tVgd328pHCJNea7Dl5Hc9mlOroPkMbNyVt/8g5lIQEXs0PCyKigvIWTfs1YL5Q==
-X-Received: by 10.98.53.196 with SMTP id c187mr12010563pfa.38.1507602262421;
-        Mon, 09 Oct 2017 19:24:22 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:c9c7:66a0:181:dab2])
-        by smtp.gmail.com with ESMTPSA id b3sm843697pgr.81.2017.10.09.19.24.21
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 09 Oct 2017 19:24:21 -0700 (PDT)
-Date:   Mon, 9 Oct 2017 19:24:19 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Brandon Williams <bmwill@google.com>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH v2 13/24] builtin/pack-objects: convert to struct
- object_id
-Message-ID: <20171010022419.GU19555@aiede.mtv.corp.google.com>
-References: <20171009011132.675341-1-sandals@crustytoothpaste.net>
- <20171009011132.675341-14-sandals@crustytoothpaste.net>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=lMgcCVHSZ7xmeR99HMBd4W6yEMzQxS2ZIK/Dq6c82HU=;
+        b=fXcikARrMzWeK57hhXZm1FzgoF9g4S1O2X/GMUjff3wERv1N1nc2kpxH9H0hPFxQxx
+         q5FWTG3fwBOtzV7uW+H9dLoLQKIxghjx9jvrejYuAyJITPuSRH6BVwhHrIuRHAhCNeei
+         bczdaKG6SK+m6h0zQtBFwGv/3yhJjVDKDNNW/GzptuONHnsJ5Px3m02oZSOMTf9Q4D6r
+         wj6KC/REqJTP+uMBmIu0ED3cJ0sSNKp9P+9+AboCbUaXNXj5fVlZcxYz/L9ispTuwjKz
+         tvYHK+33L82ingoumJybvELmZSK92pe97F0mjMcYX6PQ+nRgVobf8qmeW9IWAhG6Xkga
+         UwXQ==
+X-Gm-Message-State: AMCzsaWIX14QWkRWDo+bcxZqir9K3ZkLwyXskS5N2oSJyZcBGwS9nllk
+        9V6tzLUnStZRd0Amc5zVGkFFV6AOXRF5yfLySsQ=
+X-Google-Smtp-Source: AOwi7QB7Zx6PEZSyP6s5g7joixO63+ASSXOwk2CyAdgWmQxSQh55ZJWZO9CbTa8k1OA0Gy+6GxFthvSmSEFZC/MhKpM=
+X-Received: by 10.157.43.36 with SMTP id o33mr686396otb.456.1507602906439;
+ Mon, 09 Oct 2017 19:35:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20171009011132.675341-14-sandals@crustytoothpaste.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Received: by 10.157.6.10 with HTTP; Mon, 9 Oct 2017 19:35:05 -0700 (PDT)
+In-Reply-To: <xmqq7ew3rdxa.fsf@gitster.mtv.corp.google.com>
+References: <CANYiYbGHBDGMEjbrvX_ayXkXkciT3GgL4seM_X1NmWtud2upcg@mail.gmail.com>
+ <CAN0heSqFSiev8BeZVu3KBA5vswsbQrrOH=tYYOSs_h_eq=8-3Q@mail.gmail.com>
+ <CAGZ79ka7xo96MHaAUbkDuFjWMQaaD4j2UrRndcinAg6uzaP6Kw@mail.gmail.com>
+ <7894534.MaGmRTisnX@cayenne> <xmqq7ew3rdxa.fsf@gitster.mtv.corp.google.com>
+From:   Changwoo Ryu <cwryu@debian.org>
+Date:   Tue, 10 Oct 2017 11:35:05 +0900
+X-Google-Sender-Auth: ORMxQw8DFHQ4gGOQhGZmuyz0af4
+Message-ID: <CAEe2ifX5+OUOWw75pFZN86pT1iwYk2vb6u+uEMYLDpxYzmJLEQ@mail.gmail.com>
+Subject: Re: [PATCH] submodule: avoid sentence-lego in translated string
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?Q?Jean=2DNo=C3=ABl_AVILA?= <jn.avila@free.fr>,
+        Stefan Beller <sbeller@google.com>,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Philip Oakley <philipoakley@iee.org>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jiang Xin <worldhello.net@gmail.com>,
+        Alexander Shopov <ash@kambanaria.org>,
+        Jordi Mas <jmas@softcatala.org>,
+        Ralf Thielow <ralf.thielow@gmail.com>,
+        =?UTF-8?Q?Christopher_D=C3=ADaz?= <christopher.diaz.riv@gmail.com>,
+        Marco Paolone <marcopaolone@gmail.com>,
+        Vasco Almeida <vascomalmeida@sapo.pt>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        =?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
+        Jacques Viviers <jacques.viviers@gmail.com>,
+        m4sk1n <m4sk1n@o2.pl>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-brian m. carlson wrote:
-
-> This is one of the last unconverted callers to peel_ref.  While we're
-> fixing that, convert the rest of the file, since it will need to be
-> converted at some point anyway.
+2017-10-10 10:26 GMT+09:00 Junio C Hamano <gitster@pobox.com>:
+> Jean-No=C3=ABl AVILA <jn.avila@free.fr> writes:
 >
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> ---
->  builtin/pack-objects.c | 135 +++++++++++++++++++++++++------------------------
->  1 file changed, 68 insertions(+), 67 deletions(-)
+>> On Monday, 9 October 2017, 09:47:26 CEST Stefan Beller wrote:
+>>
+>>> I always assumed that translators are aware of these issues and sort of
+>>> work around this somehow, maybe like this:
+>>>
+>>>   "submodule entry '%s' (%s) is not a commit. It is of type %s"
+>>
+>> Translators can be aware of the issue if the coder commented the
+>> internationalization string with some possible candidates for the placeh=
+olders
+>> when it is not clear unless you check in the source code. Much effort wa=
+s
+>> poured into translating the technical terms in other parts of Git; it se=
+ems
+>> awkward to just step back in this occurence.
+>
+> I do not see this particular case as "stepping back", though.
+>
+> Our users do not spell "git cat-file -t commit v2.0^{commit}" with
+> 'commit' translated to their language, right?  Shouldn't an error
+> message output use the same phrase the input side requests users to
+> use?
 
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+Users know the limit of command-line translation. They type "commit"
+to commit but they see translated "commit" in output messages. It is
+actually confusing. But the untranslated English literals in the
+middle of translated sentences does not remove the confusion but
+increase it in a different way.
