@@ -7,79 +7,111 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6B18720372
-	for <e@80x24.org>; Tue, 10 Oct 2017 00:16:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A1CEF20372
+	for <e@80x24.org>; Tue, 10 Oct 2017 00:27:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755823AbdJJAQX (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Oct 2017 20:16:23 -0400
-Received: from mail-pf0-f169.google.com ([209.85.192.169]:47212 "EHLO
-        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755560AbdJJAQW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Oct 2017 20:16:22 -0400
-Received: by mail-pf0-f169.google.com with SMTP id z11so5452525pfk.4
-        for <git@vger.kernel.org>; Mon, 09 Oct 2017 17:16:22 -0700 (PDT)
+        id S1755935AbdJJA1g (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Oct 2017 20:27:36 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:32832 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755826AbdJJA1e (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Oct 2017 20:27:34 -0400
+Received: by mail-pf0-f193.google.com with SMTP id m28so31198520pfi.0
+        for <git@vger.kernel.org>; Mon, 09 Oct 2017 17:27:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=pRgKm2l+/O6i+ZmbWK4ENikvW3f6GkARSj8qxZVmsiQ=;
-        b=T8EF9WKtrmzHRsZFt5k/VE9ZB+WTVA99GCV3cMtjHra92FSdmnm5C4WxJ8EX/4nSHR
-         LwpMWbJcqhTbCf1qx2OR2yJeJO/s5VCtf9MIrD5O8HYcmARWgYmbi/dbRf7kjiWgf9lT
-         NRMvdzQbiyB8KQO2hT0ZJde0soe6aTaSArGUP3Si6jcq+LMwTQZNg70J0P2380eXIOvW
-         QAftmZhBBIGQH5+q6L7vxQAJzYNYIp0c2hdo7idALNfpIGPvarCiZP7eQOfPFmPHid1K
-         i9Jw6Rc5gjkTpvTrYlXX1cp0Y47ABx0YNEyuYnQUXLUcARGMhvAK2dePqGJw4qy8p1dK
-         eVLQ==
+        bh=R5RR9KbPoVoYH/jIX5M8wK0otx0KQzQhv6LKkm7oViY=;
+        b=k6nmP34amQl/m7BolVlgGeh9cA0nCk9DUcoMXrAqz7yXGQdgYk4jJ/79vfkVlMM/7T
+         bHo6liErdQKceM21BR7iXBzsslsgFddYo6Afl2kOnYM0YTpCQYDSDBh2cxXLNJz/lvZP
+         cpfDnsnc1/9f75JcUXFR5fmlikdyiZur3PjjvB0TZMAjmBXAhc4KthcTMhJYOeKXp1pj
+         DJK0dBkiyX4Xtn/a1c55W+ZBPEN0OJ4jlucaQ6kmf1jyQYTXIkc01qnuAEh4twvFjeJX
+         P3m7o/JeokIitGYmWlfYhqGRtloF9pck1bH25FBgH9vlL3Th3+ccHHZcn5ZQu0KSlygE
+         ovuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=pRgKm2l+/O6i+ZmbWK4ENikvW3f6GkARSj8qxZVmsiQ=;
-        b=SkMwGV59eG4Y2Qjz5wiITR1WJ+bHO6tO+j0aIALUZsQ9RPBf14xg6ua8HhqlHk01fH
-         kapl+2F57h9EFCLW7qQQNev/2dXLUUEcghyHBPe/2zykw0dWQUpX9u9M8O5XC1UGT84/
-         PQC4CcyfkcbBnlvpJc7CQmx6gzM797z6gDE+zIFZkeXFDLzCkbJ7zN4UmWecgZ2QkWiq
-         SlSVXkmFtmEQ6M96jkWjjmN28ZL0fJCO4Fs3d8Lj3VLrhsl26cTub7jDoXXppAVs06cu
-         9LE5QHdMboWmsugL/KXOrl7/Oscg6DbIWdQL6JOK1lwQNehBlclY9RUeBNec3nGXcC8r
-         7sZQ==
-X-Gm-Message-State: AMCzsaWOSfS/KW8Xp80mFGTL93FFxaNQsx2OTM/xndcvShDolvaYIAmF
-        OeZzf4F5qOsSZOK4m7CLx/0=
-X-Google-Smtp-Source: AOwi7QBZsEPqpeQDjELWLk3PUxUnFqzAEM/wl52JtxJ9o+lEYogWNurU/Mm5j4bBr87mgyDsquMygg==
-X-Received: by 10.98.18.18 with SMTP id a18mr4169953pfj.301.1507594582072;
-        Mon, 09 Oct 2017 17:16:22 -0700 (PDT)
+        bh=R5RR9KbPoVoYH/jIX5M8wK0otx0KQzQhv6LKkm7oViY=;
+        b=GP+fv57Y6Tf2DJ0J27FEPwIjdqHZJXVUfmuKI/mJIMhrSzvibP7m/T4LOuqm7Bq92O
+         ZfPS97abLIkJybAyf/zeH4XC0gJxDNadjVTLr0Zr6dMB/nEaBWzDrnpaCqnFa12VRox3
+         sTDTKXlX2t53BDXqpcA/6W3l6UzpQEp/Z48ux6i8jRsyiY959u86xgNsyBiIznoAbDWm
+         UMAH6+E+DKYsAvQEhh5kTxYXCKe4TCJVgWHOirOYX+oozlX4KoCmd2I/PzZQ/BVj4RRW
+         VviYPecDp3YYO+MipSl0awxQEMgjWUk5Hs+g+JBHr8aavEzyRzRDWg8+3fgAlwfasDAv
+         edJg==
+X-Gm-Message-State: AMCzsaVPfF2pA45Cm+rRj4GHFJhABanoQPld33irfsqyUh/uFke2K96O
+        GUjz6A3311o7+79SbmBhuw8=
+X-Google-Smtp-Source: AOwi7QCUDtldV9XcgKmvMYiterAgH5f72mYW2V9+3mJRY9viozgCde7gJCvzYV5RSnjuYyxrImm5QQ==
+X-Received: by 10.98.133.4 with SMTP id u4mr11732461pfd.79.1507595253757;
+        Mon, 09 Oct 2017 17:27:33 -0700 (PDT)
 Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:c9c7:66a0:181:dab2])
-        by smtp.gmail.com with ESMTPSA id g68sm16272880pfb.120.2017.10.09.17.16.21
+        by smtp.gmail.com with ESMTPSA id 74sm12714794pft.184.2017.10.09.17.27.33
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 09 Oct 2017 17:16:21 -0700 (PDT)
-Date:   Mon, 9 Oct 2017 17:16:19 -0700
+        Mon, 09 Oct 2017 17:27:33 -0700 (PDT)
+Date:   Mon, 9 Oct 2017 17:27:31 -0700
 From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Nazri Ramliy <ayiehere@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: What happened to "git status --color=(always|auto|never)"?
-Message-ID: <20171010001619.GL19555@aiede.mtv.corp.google.com>
-References: <CAEY4ZpO2G-kTmuReE5gwKpftFqLfAqdpQwCK4R+qYbogCgGtUA@mail.gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH] submodule: spell out API of submodule_move_head
+Message-ID: <20171010002731.GM19555@aiede.mtv.corp.google.com>
+References: <20171009220615.27541-1-sbeller@google.com>
+ <xmqqtvz7rh68.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAEY4ZpO2G-kTmuReE5gwKpftFqLfAqdpQwCK4R+qYbogCgGtUA@mail.gmail.com>
+In-Reply-To: <xmqqtvz7rh68.fsf@gitster.mtv.corp.google.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Junio C Hamano wrote:
+> Stefan Beller <sbeller@google.com> writes:
 
-Nazri Ramliy wrote:
-
-> I used to work before, but now:
+>> +/**
+>> + * Move the HEAD and content of the active submodule at 'path' from object id
+>> + * 'old' to 'new'.
+>> + *
+>> + * Updates the submodule at 'path' and files in its work tree to commit
+>> + * 'new'. The commit previously pointed to by the submodule is named by
+>> + * 'old'. This updates the submodule's HEAD, index, and work tree but
+>> + * does not touch its gitlink entry in the superproject.
+>> + *
+>> + * If the submodule did not previously exist, then 'old' should be NULL.
+>> + * Similarly, if the submodule is to be removed, 'new' should be NULL.
+>> + *
+>> + * If updating the submodule would cause local changes to be overwritten,
+>> + * then instead of updating the submodule, this function prints an error
+>> + * message and returns -1.
 >
-> $ git version
-> git version 2.15.0.rc0.39.g2f0e14e649
->
-> $ git status --color=always
-> error: unknown option `color=always'
-> usage: git status [<options>] [--] <pathspec>...
+> This is not a new issue (the removed comment did not mention this at
+> all), but is it correct to say that updates to "index and work tree"
+> was as if we did "git -C $path checkout new" (and of course, HEAD in
+> the $path submodule must be at 'old')?
 
-Which version did it work in?  That would allow me to bisect.
+I don't understand the question.  This comment doesn't say it's like
+"git checkout" --- are you saying it should?
+
+The function is more like "git read-tree -m -u" (or --reset when
+SUBMODULE_MOVE_HEAD_FORCE is passed) than like "git checkout".
+Perhaps what you are hinting at is that read-tree --recurse-submodules
+is not necessarily the right primitive to implement "git checkout"
+with.  But that's a separate issue from documenting the current
+behavior of the function.
+
+> What should happen if 'old' does not match reality (i.e. old is NULL
+> but HEAD does point at some commit, old and HEAD are different,
+> etc.)?  Should the call be aborted?
+
+No.
 
 Thanks,
 Jonathan
+
+>> + * If the submodule is not active, this does nothing and returns 0.
+>> + */
+>>  #define SUBMODULE_MOVE_HEAD_DRY_RUN (1<<0)
+>>  #define SUBMODULE_MOVE_HEAD_FORCE   (1<<1)
+>>  extern int submodule_move_head(const char *path,
