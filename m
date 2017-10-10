@@ -2,124 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 170D120372
-	for <e@80x24.org>; Tue, 10 Oct 2017 00:55:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7CA0F20372
+	for <e@80x24.org>; Tue, 10 Oct 2017 00:59:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755770AbdJJAzZ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Oct 2017 20:55:25 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:37960 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755506AbdJJAzY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Oct 2017 20:55:24 -0400
-Received: by mail-pf0-f194.google.com with SMTP id a7so31433496pfj.5
-        for <git@vger.kernel.org>; Mon, 09 Oct 2017 17:55:24 -0700 (PDT)
+        id S1755786AbdJJA7q (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Oct 2017 20:59:46 -0400
+Received: from mail-pf0-f180.google.com ([209.85.192.180]:43133 "EHLO
+        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755625AbdJJA7p (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Oct 2017 20:59:45 -0400
+Received: by mail-pf0-f180.google.com with SMTP id d2so12290341pfh.0
+        for <git@vger.kernel.org>; Mon, 09 Oct 2017 17:59:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=ey9/XQHHPs07wo6t31uDRR20EgtwZQuFReBuyMhkW84=;
-        b=JNcg0WSmpqaf5kwSq0EMOyiUqGZkO9r3hkLdC0as0IGT/4AcVQ7ei925kXmQ6gYnum
-         yNrx5bhbeBC6VzSGBOyvnvK5y+6RQ3sMoIhjkyMSS0fXBvhTXTQI/o82JzhIkWYvJeXN
-         trg1y9io5M+8aZO1Sr1AlfWufJeA2ODQO6B9ZaIdn3oFNdDE9Avjt29+s2nHr3e6QfjP
-         wWzTtSaObVLlplOfk7ZwbLPW2uiYhnY1H8XbYKthJnxm6vbUDG6+vXxZcbdkZn/ztPsR
-         gxsjjPU5R0m3iDweGp2+gqFipRQwF1qSA+hlVXS9bol0p2Md6HMGSEEQ/qYaNcD8sn1e
-         YQmA==
+        bh=gel4Cx7nfpPgN+lUVr/JyiDWXcvV/b4ebDx+PSk11As=;
+        b=r+kWdcRkoXXWWQnurc+BFYSJOLhguo53UFhIIZw5GxrUVvOvjBenb5UiYsgYw5QJvO
+         WuRRxMlTVuNY8zET2RpBUc2bseCA8ScAOlPH7R0+ftpIiM2VExMO5Ku0C9cYoPaAPAaO
+         bRnGM/gMsnH1GZh199N8dBcGFfB3cOE4sAXBYJOnzf74qEJXedNaG93NAOTio+yn0F4E
+         2R7ICv0QusucZby8OA33S4yGpwZVdEE/gqyllUKNlMHp23FqeYitFfjN12PwdniqBoKw
+         MS0OvWz51DwDfnW6WDTiVEaQKMwUcdjIuX2IdlI616vchz+spJ4xb6ViVcZi59gR3gPc
+         s9wg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ey9/XQHHPs07wo6t31uDRR20EgtwZQuFReBuyMhkW84=;
-        b=YEQ6xFfD2CvdWnv+LCVJlMqsI9JNuNhXfyz2SjW+wXJAYQDzhq9yGy7aul7FZv4fYE
-         qvfw84kNDRtDnWSNEHT4Z2FtFlcutVbiOUZ9SyrpeIiqePXEjMU8Ebcd1aoNo5udQh3b
-         VXYHSRr1EoAAFnYYqphLlXXOMVgkZXay6sgekCppaqpcDKoX2VVSr86dw5u1L/1kAvdE
-         pDJLNO/Aozjw7ut3xaeB28rMTs0Euihlwna3i05dNy3/0LKE85VIfVqXXF2szvwHapoW
-         uJWU4kbL4wb3cYqo4O78z7Qgz3Ba2dpTEHB7Xmgx8FSxQ/7qdwqdy7lFh/mkPFtFHqMU
-         E/GQ==
-X-Gm-Message-State: AMCzsaUlzyTLLdE9Hzj0HPTcoaRleAVjiW5gG8bbysE4rpYDfJxODbVP
-        EOOoxosd72cejG0UB+r29E5Ww10v
-X-Google-Smtp-Source: AOwi7QAV3gnBecIBXEhvUkMZ5nQm+nmsXaIpZB9v1bZuhZRdCDFJXAwauD6z+PwvcMZbI7J2AYecHA==
-X-Received: by 10.99.171.77 with SMTP id k13mr10782470pgp.229.1507596923638;
-        Mon, 09 Oct 2017 17:55:23 -0700 (PDT)
+        bh=gel4Cx7nfpPgN+lUVr/JyiDWXcvV/b4ebDx+PSk11As=;
+        b=Rs+iEPwXy+H/w4l3sHh7AaqagojUpWdMtpPXS2iAOStC08JHe9gIBS2am7X7710U/Y
+         7Bni1CBFu/U+2F4K+4x1Y4J7MxKwBWWwUUxzjfn/H5KR6SYW/G52gpWH/XtryJLNMsdi
+         zEa+Byj9Gcz5uw9mZZ+y11WwROmRiI6w0TEUW7y7tUHXUUQVp9ywKp2yWUx/ZGeDs85+
+         wcvyDoOUNm53xp54/0Mt+sBbw10Tb7mIrtAKQi/rm6pm3PvabFy32fkYXOTdEHpTl3hO
+         BwpYfJVY3sf1JHB0ozigocMfS6V4CzydXBeiQ9xTm+ZbeuGQ2eb3PLoASuVN8GBW983/
+         EuWQ==
+X-Gm-Message-State: AMCzsaXzh4F+6u04BpeU6x6XMqCyq8CqsUwDSlGzTxvcUFlQBu53zcjH
+        H/FjRC+ClLuXCRy7JVItSdsJ/P9A
+X-Google-Smtp-Source: AOwi7QCBq1LF+XQ/eG6WyTOwK3vYLiPUrV2YYOzFDUyAuqODEyFLCo7tCKXxAkq2C2Ey/wG1X4zXiA==
+X-Received: by 10.99.145.73 with SMTP id l70mr10654123pge.132.1507597185235;
+        Mon, 09 Oct 2017 17:59:45 -0700 (PDT)
 Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:c9c7:66a0:181:dab2])
-        by smtp.gmail.com with ESMTPSA id z26sm17705994pfa.49.2017.10.09.17.55.22
+        by smtp.gmail.com with ESMTPSA id k8sm15573920pgt.22.2017.10.09.17.59.44
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 09 Oct 2017 17:55:23 -0700 (PDT)
-Date:   Mon, 9 Oct 2017 17:55:20 -0700
+        Mon, 09 Oct 2017 17:59:44 -0700 (PDT)
+Date:   Mon, 9 Oct 2017 17:59:42 -0700
 From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH] submodule: spell out API of submodule_move_head
-Message-ID: <20171010005520.GN19555@aiede.mtv.corp.google.com>
-References: <20171009220615.27541-1-sbeller@google.com>
- <xmqqtvz7rh68.fsf@gitster.mtv.corp.google.com>
- <20171010002731.GM19555@aiede.mtv.corp.google.com>
- <xmqqmv4zrfye.fsf@gitster.mtv.corp.google.com>
+To:     Nazri Ramliy <ayiehere@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: What happened to "git status --color=(always|auto|never)"?
+Message-ID: <20171010005942.GO19555@aiede.mtv.corp.google.com>
+References: <CAEY4ZpO2G-kTmuReE5gwKpftFqLfAqdpQwCK4R+qYbogCgGtUA@mail.gmail.com>
+ <20171010001619.GL19555@aiede.mtv.corp.google.com>
+ <CAEY4ZpPj3=+gL_wBW548qzAuS=aC=qswuPx-4H9DS=X10iJWVw@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqmv4zrfye.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <CAEY4ZpPj3=+gL_wBW548qzAuS=aC=qswuPx-4H9DS=X10iJWVw@mail.gmail.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
->> Junio C Hamano wrote:
+Nazri Ramliy wrote:
+> On Tue, Oct 10, 2017 at 8:16 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+>> Nazri Ramliy wrote:
 
->>> This is not a new issue (the removed comment did not mention this at
->>> all), but is it correct to say that updates to "index and work tree"
->>> was as if we did "git -C $path checkout new" (and of course, HEAD in
->>> the $path submodule must be at 'old')?
+>>> I used to work before, but now:
+>>>
+>>> $ git version
+>>> git version 2.15.0.rc0.39.g2f0e14e649
+>>>
+>>> $ git status --color=always
+>>> error: unknown option `color=always'
+>>> usage: git status [<options>] [--] <pathspec>...
 >>
->> I don't understand the question.  This comment doesn't say it's like
->> "git checkout" --- are you saying it should?
+>> Which version did it work in?  That would allow me to bisect.
 >
-> No, I am pointing out that this comment does not say what it's like
-> clearly enough.  s/is it correct/am I correct/ would have been less
-> prone to get misunderstood, I guess.
+> Sorry. It's my bad. I must have confused this with `git grep`'s --color option.
 
-No problem.  I think a word or two about how it's like read-tree
-in the docstring could be an improvement.
+No problem.  It sounds like a reasonable feature request to me,
+especially now that we are about to drop support for
+color.status=always in configuration:
 
-> If it behaves like two-tree "read-tree -m -u", I'd say that the best
-> explanation an average developer would understand is that the update
-> done to "index and work tree" is like using 'git checkout' to switch
-> to the branch whose tip is 'new'.
+	commit 6be4595edb8e5b616c6e8b9fbc78b0f831fa2a87
+	Author: Jeff King <peff@peff.net>
+	Date:   Tue Oct 3 09:46:06 2017 -0400
 
-If it says it's like "git checkout", then I fear that can just lead to
-more confusion, since "git checkout" does a number of things (e.g.
-updating the HEAD symref) that this function does not do.
+	    color: make "always" the same as "auto" in config
 
-It could say that it's like "git reset --keep", I suppose.
-
-[...]
->>> What should happen if 'old' does not match reality (i.e. old is NULL
->>> but HEAD does point at some commit, old and HEAD are different,
->>> etc.)?  Should the call be aborted?
->>
->> No.
->
-> ... and that is because?
->
-> When does it make sense to do a two-tree "read-tree -m -u" giving
-> the 'old' that is very different from the real 'old' tree-ish that
-> corresponds to where your index started at?
-
-Because that is not the purpose of the function.
-
-The caller is responsible for setting 'old' appropriately.  A word or
-two in that direction would not be a terrible thing.
-
-All that said, I want this function to go away completely. :)
-Documenting how it currently behaves is just a good way to understand
-what is happening when doing so.
+Would you like to take a stab at adding it?  builtin/commit.c and
+Documentation/git-{commit,status}.txt would be my best guesses at
+where to start.
 
 Thanks,
 Jonathan
