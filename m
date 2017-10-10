@@ -2,116 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A1CEF20372
-	for <e@80x24.org>; Tue, 10 Oct 2017 00:27:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1CA8B20372
+	for <e@80x24.org>; Tue, 10 Oct 2017 00:42:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755935AbdJJA1g (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Oct 2017 20:27:36 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:32832 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755826AbdJJA1e (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Oct 2017 20:27:34 -0400
-Received: by mail-pf0-f193.google.com with SMTP id m28so31198520pfi.0
-        for <git@vger.kernel.org>; Mon, 09 Oct 2017 17:27:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=R5RR9KbPoVoYH/jIX5M8wK0otx0KQzQhv6LKkm7oViY=;
-        b=k6nmP34amQl/m7BolVlgGeh9cA0nCk9DUcoMXrAqz7yXGQdgYk4jJ/79vfkVlMM/7T
-         bHo6liErdQKceM21BR7iXBzsslsgFddYo6Afl2kOnYM0YTpCQYDSDBh2cxXLNJz/lvZP
-         cpfDnsnc1/9f75JcUXFR5fmlikdyiZur3PjjvB0TZMAjmBXAhc4KthcTMhJYOeKXp1pj
-         DJK0dBkiyX4Xtn/a1c55W+ZBPEN0OJ4jlucaQ6kmf1jyQYTXIkc01qnuAEh4twvFjeJX
-         P3m7o/JeokIitGYmWlfYhqGRtloF9pck1bH25FBgH9vlL3Th3+ccHHZcn5ZQu0KSlygE
-         ovuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=R5RR9KbPoVoYH/jIX5M8wK0otx0KQzQhv6LKkm7oViY=;
-        b=GP+fv57Y6Tf2DJ0J27FEPwIjdqHZJXVUfmuKI/mJIMhrSzvibP7m/T4LOuqm7Bq92O
-         ZfPS97abLIkJybAyf/zeH4XC0gJxDNadjVTLr0Zr6dMB/nEaBWzDrnpaCqnFa12VRox3
-         sTDTKXlX2t53BDXqpcA/6W3l6UzpQEp/Z48ux6i8jRsyiY959u86xgNsyBiIznoAbDWm
-         UMAH6+E+DKYsAvQEhh5kTxYXCKe4TCJVgWHOirOYX+oozlX4KoCmd2I/PzZQ/BVj4RRW
-         VviYPecDp3YYO+MipSl0awxQEMgjWUk5Hs+g+JBHr8aavEzyRzRDWg8+3fgAlwfasDAv
-         edJg==
-X-Gm-Message-State: AMCzsaVPfF2pA45Cm+rRj4GHFJhABanoQPld33irfsqyUh/uFke2K96O
-        GUjz6A3311o7+79SbmBhuw8=
-X-Google-Smtp-Source: AOwi7QCUDtldV9XcgKmvMYiterAgH5f72mYW2V9+3mJRY9viozgCde7gJCvzYV5RSnjuYyxrImm5QQ==
-X-Received: by 10.98.133.4 with SMTP id u4mr11732461pfd.79.1507595253757;
-        Mon, 09 Oct 2017 17:27:33 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:c9c7:66a0:181:dab2])
-        by smtp.gmail.com with ESMTPSA id 74sm12714794pft.184.2017.10.09.17.27.33
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 09 Oct 2017 17:27:33 -0700 (PDT)
-Date:   Mon, 9 Oct 2017 17:27:31 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
+        id S1755596AbdJJAmg (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Oct 2017 20:42:36 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52555 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754280AbdJJAmf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Oct 2017 20:42:35 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4A524B2C17;
+        Mon,  9 Oct 2017 20:42:35 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=mlvrUdUnOL9QLWvyJQ1t4hQOmG8=; b=PJCBZw
+        adUs8SQ2ttbCYFxnK+ak3AUhmn4itU5oTkcyGZRhFWiQC2zSrtGwj6NXeLk6eFA0
+        VrN6iup7pfcl/aiSQctJ+aY47Yzgs6+k5V1teVNoFZsQpMTSlSKcvKwBmalzWswC
+        xwdRCLPvupsPtHl8H7VE+1ykDZ+Tlntcc1190=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=W/2cdMnz6Tw/n1Y6NosO2/Y0Kgn9oP1i
+        9ETXS7wKxSHDTDWMW6raIqkvn7BSyPhG5kdAo+X3EMwpsJes22EGDB+Q85HZriUH
+        0xOvkl66Ykwe1z1by+YAFsWdL7bKWYwnRdLEpQT6FyodhGDn71kSk6N6TzwG2xPj
+        1rCJN5A6b10=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 435B8B2C16;
+        Mon,  9 Oct 2017 20:42:35 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B3EA7B2C15;
+        Mon,  9 Oct 2017 20:42:34 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
 Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org
 Subject: Re: [PATCH] submodule: spell out API of submodule_move_head
-Message-ID: <20171010002731.GM19555@aiede.mtv.corp.google.com>
 References: <20171009220615.27541-1-sbeller@google.com>
- <xmqqtvz7rh68.fsf@gitster.mtv.corp.google.com>
+        <xmqqtvz7rh68.fsf@gitster.mtv.corp.google.com>
+        <20171010002731.GM19555@aiede.mtv.corp.google.com>
+Date:   Tue, 10 Oct 2017 09:42:33 +0900
+In-Reply-To: <20171010002731.GM19555@aiede.mtv.corp.google.com> (Jonathan
+        Nieder's message of "Mon, 9 Oct 2017 17:27:31 -0700")
+Message-ID: <xmqqmv4zrfye.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqtvz7rh68.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain
+X-Pobox-Relay-ID: E83105A6-AD53-11E7-A9FA-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> Stefan Beller <sbeller@google.com> writes:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
->> +/**
->> + * Move the HEAD and content of the active submodule at 'path' from object id
->> + * 'old' to 'new'.
->> + *
->> + * Updates the submodule at 'path' and files in its work tree to commit
->> + * 'new'. The commit previously pointed to by the submodule is named by
->> + * 'old'. This updates the submodule's HEAD, index, and work tree but
->> + * does not touch its gitlink entry in the superproject.
->> + *
->> + * If the submodule did not previously exist, then 'old' should be NULL.
->> + * Similarly, if the submodule is to be removed, 'new' should be NULL.
->> + *
->> + * If updating the submodule would cause local changes to be overwritten,
->> + * then instead of updating the submodule, this function prints an error
->> + * message and returns -1.
+>> This is not a new issue (the removed comment did not mention this at
+>> all), but is it correct to say that updates to "index and work tree"
+>> was as if we did "git -C $path checkout new" (and of course, HEAD in
+>> the $path submodule must be at 'old')?
 >
-> This is not a new issue (the removed comment did not mention this at
-> all), but is it correct to say that updates to "index and work tree"
-> was as if we did "git -C $path checkout new" (and of course, HEAD in
-> the $path submodule must be at 'old')?
+> I don't understand the question.  This comment doesn't say it's like
+> "git checkout" --- are you saying it should?
 
-I don't understand the question.  This comment doesn't say it's like
-"git checkout" --- are you saying it should?
+No, I am pointing out that this comment does not say what it's like
+clearly enough.  s/is it correct/am I correct/ would have been less
+prone to get misunderstood, I guess.
 
-The function is more like "git read-tree -m -u" (or --reset when
-SUBMODULE_MOVE_HEAD_FORCE is passed) than like "git checkout".
-Perhaps what you are hinting at is that read-tree --recurse-submodules
-is not necessarily the right primitive to implement "git checkout"
-with.  But that's a separate issue from documenting the current
-behavior of the function.
+> The function is more like "git read-tree -m -u" (or --reset when
+> SUBMODULE_MOVE_HEAD_FORCE is passed) than like "git checkout".
 
-> What should happen if 'old' does not match reality (i.e. old is NULL
-> but HEAD does point at some commit, old and HEAD are different,
-> etc.)?  Should the call be aborted?
+If it behaves like two-tree "read-tree -m -u", I'd say that the best
+explanation an average developer would understand is that the update
+done to "index and work tree" is like using 'git checkout' to switch
+to the branch whose tip is 'new'.
 
-No.
+> Perhaps what you are hinting at is that read-tree --recurse-submodules
+> is not necessarily the right primitive to implement "git checkout"
+> with.  But that's a separate issue from documenting the current
+> behavior of the function.
 
-Thanks,
-Jonathan
+No, you are way too ahead in this discussion.  I was merely saying
+that what the comment says was unclear and does not allow me to get
+that far due to lack of clear information ;-).
 
->> + * If the submodule is not active, this does nothing and returns 0.
->> + */
->>  #define SUBMODULE_MOVE_HEAD_DRY_RUN (1<<0)
->>  #define SUBMODULE_MOVE_HEAD_FORCE   (1<<1)
->>  extern int submodule_move_head(const char *path,
+>> What should happen if 'old' does not match reality (i.e. old is NULL
+>> but HEAD does point at some commit, old and HEAD are different,
+>> etc.)?  Should the call be aborted?
+>
+> No.
+
+... and that is because?
+
+When does it make sense to do a two-tree "read-tree -m -u" giving
+the 'old' that is very different from the real 'old' tree-ish that
+corresponds to where your index started at?
+
