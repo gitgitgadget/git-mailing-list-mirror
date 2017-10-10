@@ -2,129 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 79F8A1FA21
-	for <e@80x24.org>; Tue, 10 Oct 2017 10:30:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CA1661FA21
+	for <e@80x24.org>; Tue, 10 Oct 2017 11:53:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754416AbdJJKaw (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Oct 2017 06:30:52 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:34758 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751398AbdJJKav (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Oct 2017 06:30:51 -0400
-Received: by mail-pf0-f196.google.com with SMTP id b85so14232318pfj.1
-        for <git@vger.kernel.org>; Tue, 10 Oct 2017 03:30:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=D4FGoc7MnRHkrjpGlna606cvaK6dt2B8Ts8tUpMlz4o=;
-        b=V1/51oDf+gPsTqltAd74oqs0NRC2U8DoWfA/0fJew0bd/vuJI7HbfJ7uGqi8siLatR
-         MO/Vkwd2fXgPryfRQhgAsMoFz1p34JDQMOeUXv2k8Q4RHtHr4cyKsFtCXEWi10BZwQk3
-         xHL3mZFpzovRx/qzs64PPTogTSruDvstniEKO9X8BHkZRAqHchQWvOjxHEBK5SI3SR2V
-         QmRD5a2v7PUFVeYZbM+N9BfVHVQV5974h2L8rpoQPZfuS0lfkDyg88eWRoneP93tAMfi
-         9mquwjG9pSsp4ix2dVo/+d3pqzlE/A44IskudhGbe+XHoslwjMuA3UJrOZIE2OWJ9FXB
-         V4xg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=D4FGoc7MnRHkrjpGlna606cvaK6dt2B8Ts8tUpMlz4o=;
-        b=jB0vGfwyB5y0yWbMhUOYagV+TLldd3qZx4Hfb6PMG196pi0s94G5doq236lgVbkjKm
-         UhskL9U4rS4gWE6qo3KnVsM8OZWdQXeVIwXsHtcz3YIhF53vKOpA9jVAAgNF+Jfu4qON
-         dlZTC0GdbnDf9SwnAiSGFHf9LVmIM7lcIDrTH58SxAImQt8cr5xRGT85oigF859ZRk0H
-         nPwZrkMJbXjuDjP0EXOniHWESB8n3j4vz0iQj1Hr/cqp29sqQ94cJNTYTDzSpDLw5P6t
-         NjFy4zPu5oh6Pqq/QJJ1kbnjzh3hS+on5vinjSex76xrHGvUu2PyXT9bKa71THaAbzb7
-         Rj8A==
-X-Gm-Message-State: AMCzsaUpGEpVi6XLNLDBKdZybvdFFO3/1AgWpB0y6YKV4osNd5UjfjtV
-        kCVgGks3kheI/YGq6TiO+AcBBM8aOV0fa1eHIwYEx2J/
-X-Google-Smtp-Source: AOwi7QAnFGbC93KFArzwI5k9tGGuju3B1IV8vpoG7y4iVHflMN+HSmuVqfKDjO+esrqKAuSg3mmqbedfM0+LpNVV1Zo=
-X-Received: by 10.84.185.106 with SMTP id e39mr11578952plg.333.1507631450582;
- Tue, 10 Oct 2017 03:30:50 -0700 (PDT)
+        id S1755948AbdJJLw6 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Oct 2017 07:52:58 -0400
+Received: from smtprelay07.ispgateway.de ([134.119.228.100]:60443 "EHLO
+        smtprelay07.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755888AbdJJLw5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Oct 2017 07:52:57 -0400
+Received: from [84.141.117.173] (helo=book.hvoigt.net)
+        by smtprelay07.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.89)
+        (envelope-from <hvoigt@hvoigt.net>)
+        id 1e1t5g-0005eb-BG; Tue, 10 Oct 2017 13:52:52 +0200
+Date:   Tue, 10 Oct 2017 13:52:50 +0200
+From:   Heiko Voigt <hvoigt@hvoigt.net>
+To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Paul Smith <paul@mad-scientist.net>,
+        Git Mailing list <git@vger.kernel.org>
+Subject: Re: "git rm" seems to do recursive removal even without "-r"
+Message-ID: <20171010115250.GA75189@book.hvoigt.net>
+References: <20171007190402.GH3382@zaya.teonanacatl.net>
+ <alpine.LFD.2.21.1710071506210.15271@localhost.localdomain>
+ <20171007192902.ma4s47hn6edwldx5@sigill.intra.peff.net>
+ <alpine.LFD.2.21.1710071531090.15738@localhost.localdomain>
+ <20171007193805.a2mwzkweonb6ymdk@sigill.intra.peff.net>
+ <alpine.LFD.2.21.1710071541430.15964@localhost.localdomain>
+ <1507412674.8322.4.camel@mad-scientist.net>
+ <alpine.LFD.2.21.1710071749240.16818@localhost.localdomain>
+ <xmqqy3oms22q.fsf@gitster.mtv.corp.google.com>
+ <alpine.LFD.2.21.1710080736530.21897@localhost.localdomain>
 MIME-Version: 1.0
-Received: by 10.100.156.137 with HTTP; Tue, 10 Oct 2017 03:30:49 -0700 (PDT)
-In-Reply-To: <20171009214543.12986-1-me@ikke.info>
-References: <20171009214543.12986-1-me@ikke.info>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Tue, 10 Oct 2017 12:30:49 +0200
-Message-ID: <CAN0heSoWTpVZXmJkoEQtc_rjFj3PdPWV_37B9LukxxsYy5ox1w@mail.gmail.com>
-Subject: Re: [RFC] column: show auto columns when pager is active
-To:     Kevin Daudt <me@ikke.info>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.2.21.1710080736530.21897@localhost.localdomain>
+User-Agent: Mutt/1.9.0 (2017-09-02)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9 October 2017 at 23:45, Kevin Daudt <me@ikke.info> wrote:
-> When columns are set to automatic for git tag and the output is
-> paginated by git, the output is a single column instead of multiple
-> columns.
->
-> Standard behaviour in git is to honor auto values when the pager is
-> active, which happens for example with commands like git log showing
-> colors when being paged.
->
-> Since ff1e72483 (tag: change default of `pager.tag` to "on",
-> 2017-08-02), the pager has been enabled by default, exposing this
-> problem to more people.
+On Sun, Oct 08, 2017 at 07:56:20AM -0400, Robert P. J. Day wrote:
+>   but as i asked in my earlier post, if i wanted to remove *all* files
+> with names of "Makefile*", why can't i use:
+> 
+>   $ git rm 'Makefile*'
+> 
+> just as i used:
+> 
+>   $ git rm '*.c'
+> 
+> are those not both acceptable fileglobs? why does the former clearly
+> only match the top-level Makefile, and refuse to cross directory
+> boundaries?
 
-Oh. :( I didn't know about "column" to be honest.
+Maybe think about it this way: The only difference between git's
+globbing and the default shell globbing is that the '/' in a path has a
+special meaning. The shells expansion stops at a '/' but git does not.
 
-> finalize_colopts in column.c only checks whether the output is a TTY to
-> determine if columns should be enabled with columns set to autol. Also ch=
-eck
-> if the pager is active.
->
-> Helped-by: Rafael Ascens=C3=A3o <rafa.almas@gmail.com>
-> Signed-off-by: Kevin Daudt <me@ikke.info>
-> ---
-> This came to light when someone wondered on irc why
-> column.tag=3D[auto|always] did not work on Mac OS. Testing it myself, I
-> found it to work with always, but not with auto.
->
-> I could not get the test to work yet, because somehow it's not giving
-> any output, so feedback regarding that is welcome.
+So with *.c the shell matches: blabla.c, blub.c, ...  but not
+subdir/bla.c, subdir/blub.c, ... since it only considers files in the
+current directory. A little different for Makefile* that will also match
+Makefile.bla, Makefile/bla or Makefile_bla/blub in shell but not
+subdir/Makefile or bla.Makefile. Basically anything directly in *this*
+directory that *starts* with 'Makefile'.
 
-I had slightly more success with PAGER=3D"cat >actual", but the test is
-flaky for some reason. In any case, it might make sense to test an
-actual use-case also. Of course, the code should be largely the same,
-but in builtin/tag.c, it's quite important that `setup_auto_pager()`
-and `finalize_colopts()` are called in the right order. In other words,
-there is some regression-potential. This is a whitespace-damaged and
-hacky attempt to test. Maybe it helps a little. I hope I'll have more
-time later today.
+Git on the other hand does not consider '/' to be special. So *.c
+matches all of the path above: bla.c, blub.c, subdir/bla.c,
+subdir/blub.c. Basically any file below the current directory with a
+path that ends in '.c'. With Makefile* it is the opposite: Every file
+below the current directory that *starts* with 'Makefile'. So
+Makefile.bla, Makefile/bla, ... but also not subdir/Makefile or
+bla.Makefile.
 
-diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
-index f0f1abd1c..91f2b5871 100755
---- a/t/t7006-pager.sh
-+++ b/t/t7006-pager.sh
-@@ -214,6 +214,19 @@ test_expect_success TTY 'git tag as alias
-respects pager.tag with -l' '
-        ! test -e paginated.out
- '
+Maybe that helps...
 
-+test_expect_success TTY 'git tag with column.tag=3Dauto' '
-+       test_commit second &&
-+       test_commit third &&
-+       test_commit fourth &&
-+       test_when_finished "git reset --hard HEAD~3" &&
-+       cat >expected <<\EOF &&
-+fourth   initial  second   third
-+EOF
-+       rm -f paginated.out &&
-+       test_terminal git -c pager.tag -c column.tag=3Dauto tag &&
-+       test_cmp expected paginated.out
-+'
-+
- # A colored commit log will begin with an appropriate ANSI escape
- # for the first color; the text "commit" comes later.
- colorful() {
+Cheers Heiko
+
