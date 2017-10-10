@@ -2,102 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7CA0F20372
-	for <e@80x24.org>; Tue, 10 Oct 2017 00:59:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 67BE620372
+	for <e@80x24.org>; Tue, 10 Oct 2017 01:06:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755786AbdJJA7q (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Oct 2017 20:59:46 -0400
-Received: from mail-pf0-f180.google.com ([209.85.192.180]:43133 "EHLO
-        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755625AbdJJA7p (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Oct 2017 20:59:45 -0400
-Received: by mail-pf0-f180.google.com with SMTP id d2so12290341pfh.0
-        for <git@vger.kernel.org>; Mon, 09 Oct 2017 17:59:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=gel4Cx7nfpPgN+lUVr/JyiDWXcvV/b4ebDx+PSk11As=;
-        b=r+kWdcRkoXXWWQnurc+BFYSJOLhguo53UFhIIZw5GxrUVvOvjBenb5UiYsgYw5QJvO
-         WuRRxMlTVuNY8zET2RpBUc2bseCA8ScAOlPH7R0+ftpIiM2VExMO5Ku0C9cYoPaAPAaO
-         bRnGM/gMsnH1GZh199N8dBcGFfB3cOE4sAXBYJOnzf74qEJXedNaG93NAOTio+yn0F4E
-         2R7ICv0QusucZby8OA33S4yGpwZVdEE/gqyllUKNlMHp23FqeYitFfjN12PwdniqBoKw
-         MS0OvWz51DwDfnW6WDTiVEaQKMwUcdjIuX2IdlI616vchz+spJ4xb6ViVcZi59gR3gPc
-         s9wg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=gel4Cx7nfpPgN+lUVr/JyiDWXcvV/b4ebDx+PSk11As=;
-        b=Rs+iEPwXy+H/w4l3sHh7AaqagojUpWdMtpPXS2iAOStC08JHe9gIBS2am7X7710U/Y
-         7Bni1CBFu/U+2F4K+4x1Y4J7MxKwBWWwUUxzjfn/H5KR6SYW/G52gpWH/XtryJLNMsdi
-         zEa+Byj9Gcz5uw9mZZ+y11WwROmRiI6w0TEUW7y7tUHXUUQVp9ywKp2yWUx/ZGeDs85+
-         wcvyDoOUNm53xp54/0Mt+sBbw10Tb7mIrtAKQi/rm6pm3PvabFy32fkYXOTdEHpTl3hO
-         BwpYfJVY3sf1JHB0ozigocMfS6V4CzydXBeiQ9xTm+ZbeuGQ2eb3PLoASuVN8GBW983/
-         EuWQ==
-X-Gm-Message-State: AMCzsaXzh4F+6u04BpeU6x6XMqCyq8CqsUwDSlGzTxvcUFlQBu53zcjH
-        H/FjRC+ClLuXCRy7JVItSdsJ/P9A
-X-Google-Smtp-Source: AOwi7QCBq1LF+XQ/eG6WyTOwK3vYLiPUrV2YYOzFDUyAuqODEyFLCo7tCKXxAkq2C2Ey/wG1X4zXiA==
-X-Received: by 10.99.145.73 with SMTP id l70mr10654123pge.132.1507597185235;
-        Mon, 09 Oct 2017 17:59:45 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:c9c7:66a0:181:dab2])
-        by smtp.gmail.com with ESMTPSA id k8sm15573920pgt.22.2017.10.09.17.59.44
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 09 Oct 2017 17:59:44 -0700 (PDT)
-Date:   Mon, 9 Oct 2017 17:59:42 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Nazri Ramliy <ayiehere@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: What happened to "git status --color=(always|auto|never)"?
-Message-ID: <20171010005942.GO19555@aiede.mtv.corp.google.com>
-References: <CAEY4ZpO2G-kTmuReE5gwKpftFqLfAqdpQwCK4R+qYbogCgGtUA@mail.gmail.com>
- <20171010001619.GL19555@aiede.mtv.corp.google.com>
- <CAEY4ZpPj3=+gL_wBW548qzAuS=aC=qswuPx-4H9DS=X10iJWVw@mail.gmail.com>
+        id S1755606AbdJJBGi (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Oct 2017 21:06:38 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55659 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1755457AbdJJBGh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Oct 2017 21:06:37 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E29D1A9115;
+        Mon,  9 Oct 2017 21:06:36 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=qF+dy/e3RqhGxBL1yz0rjzfeoZE=; b=deVFTK
+        EvSJZj5/vqn9Q18ybBrxdvyZ93HMZC4He1XCa9hMNm4KQ4dNYbvOks5flmttC5Or
+        Zx+/VZ7SmrZrM8lQHWa/f7rWMTr7YOI7JU0eDaXM2MIhaw1B5EbV+E8FDj0rBNSy
+        XYpVUn91FvhOIB6uwM9Iiowm52fycaOyj39WM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=U0Jb3jafhCGYMQ5fUOTV0+qmzG2CEXPA
+        /arf8giz2zh4poLJAbp/47JO8seDHMqlDNRepXwk0TgqSWV8oHnj5dPVLMcZy3Hc
+        7evUYBatr65O8iB2kZD9wtFbJxikSKgeuDXcOU28S3nlaRXr+XLKjoAbENg8mrBx
+        REIFYeaD6yk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id DAEE5A9114;
+        Mon,  9 Oct 2017 21:06:36 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 411BBA9113;
+        Mon,  9 Oct 2017 21:06:36 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH] submodule: spell out API of submodule_move_head
+References: <20171009220615.27541-1-sbeller@google.com>
+        <xmqqtvz7rh68.fsf@gitster.mtv.corp.google.com>
+        <20171010002731.GM19555@aiede.mtv.corp.google.com>
+        <xmqqmv4zrfye.fsf@gitster.mtv.corp.google.com>
+        <20171010005520.GN19555@aiede.mtv.corp.google.com>
+Date:   Tue, 10 Oct 2017 10:06:34 +0900
+In-Reply-To: <20171010005520.GN19555@aiede.mtv.corp.google.com> (Jonathan
+        Nieder's message of "Mon, 9 Oct 2017 17:55:20 -0700")
+Message-ID: <xmqqinfnreud.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAEY4ZpPj3=+gL_wBW548qzAuS=aC=qswuPx-4H9DS=X10iJWVw@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 43698936-AD57-11E7-A09F-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nazri Ramliy wrote:
-> On Tue, Oct 10, 2017 at 8:16 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
->> Nazri Ramliy wrote:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
->>> I used to work before, but now:
->>>
->>> $ git version
->>> git version 2.15.0.rc0.39.g2f0e14e649
->>>
->>> $ git status --color=always
->>> error: unknown option `color=always'
->>> usage: git status [<options>] [--] <pathspec>...
->>
->> Which version did it work in?  That would allow me to bisect.
->
-> Sorry. It's my bad. I must have confused this with `git grep`'s --color option.
+> All that said, I want this function to go away completely. :)
 
-No problem.  It sounds like a reasonable feature request to me,
-especially now that we are about to drop support for
-color.status=always in configuration:
+Oh, if you are planning to replace it with something else, then I
+wouldn't bother wasting my time trying to understand the updated
+comment, or making it more understandable by others.
 
-	commit 6be4595edb8e5b616c6e8b9fbc78b0f831fa2a87
-	Author: Jeff King <peff@peff.net>
-	Date:   Tue Oct 3 09:46:06 2017 -0400
-
-	    color: make "always" the same as "auto" in config
-
-Would you like to take a stab at adding it?  builtin/commit.c and
-Documentation/git-{commit,status}.txt would be my best guesses at
-where to start.
-
-Thanks,
-Jonathan
