@@ -2,118 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F3FD91FA21
-	for <e@80x24.org>; Tue, 10 Oct 2017 08:20:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 903621FA21
+	for <e@80x24.org>; Tue, 10 Oct 2017 08:37:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932158AbdJJIUU (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Oct 2017 04:20:20 -0400
-Received: from mail-qt0-f172.google.com ([209.85.216.172]:43425 "EHLO
-        mail-qt0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932100AbdJJIUT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Oct 2017 04:20:19 -0400
-Received: by mail-qt0-f172.google.com with SMTP id a43so42939623qta.0
-        for <git@vger.kernel.org>; Tue, 10 Oct 2017 01:20:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=hfLnZsdb92tGsxXRtun2omOh6PRB8g1kBoXXtaYY71I=;
-        b=kpYZLKTva7PswlRw1i0Z9otGGreeLqefRLFCvMgvVMU1BhiUgTqaFSIxAUI24w6Gb9
-         qDIIiihH84ubC2bfuyD4H/DbPWJXAv7G45OYHHQaUWy00s8ajuEQfgZPLe2eJXSOJYEL
-         n4xt6Tgd0/X9Z0RqZK0mwI5YNLTRoAnZWLaC07Wz9qmoz+BlDgVnuDdKmEpRrcw0GqE1
-         Ywifb5UTGxoiS4Lc0sS2as37HCzG90dnq7SFbOGBCekXMoyzgV7POclHF0SPamucG3yz
-         S1NJ5aGqplHDo88ymDfF3cqvQ4pV/7pEpkIFmSHCvX3Vyzm5PRt5c05ciPCUTGbZHPyT
-         0S3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=hfLnZsdb92tGsxXRtun2omOh6PRB8g1kBoXXtaYY71I=;
-        b=a9xgEVfzptbBPUbZrcslQnIWsbOJWrvfla/KXGcWPD9OZct8/mOySxzEJvbSY8keXm
-         NxvA0t7wryPK6sB+uVbnNjSpQOP01mhv6wNYMh3VFmmryInUGRjmEICpkX7iNINHAsYe
-         w81e2C8PwTC0XTCgJ50uiIetDrfo4X6UaTv0sHhwwWC4cl6LmbtpIn9FZ3LlwNVYGTah
-         evYR8rhHLm1DxCx0RsiKzW8OlNez/OpRSPz4RJZ+QFLBW9Yf9a1wSQeZdkba21yfu3ac
-         Tosm2NcsTM3OaL/10FqNuPPTsiIfiK3rAQhTCZeNcG4yyToYN6q6SeozMqUNzV0CVceq
-         ZIkw==
-X-Gm-Message-State: AMCzsaXgLre4bMiyi+ZejD+uBS2FyDbCfrb7MCNVEkNQSLI6Wq/H8PIF
-        Ei2c5Il2pVujpdltQ4mDYJ8fg4Qf3vYUkT4J39I=
-X-Google-Smtp-Source: AOwi7QCABrcCMNnCC94hKvcvTiZdkMQvozzDVsG2blM9y7YVBTweR+e9AoAbipRmlORnpphStGutxtlQ2Hn5DNatAX4=
-X-Received: by 10.129.147.65 with SMTP id k62mr1576237ywg.237.1507623618499;
- Tue, 10 Oct 2017 01:20:18 -0700 (PDT)
+        id S1755650AbdJJIg7 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Oct 2017 04:36:59 -0400
+Received: from cpanel2.indieserve.net ([199.212.143.6]:45105 "EHLO
+        cpanel2.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754108AbdJJIg4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Oct 2017 04:36:56 -0400
+Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:51264 helo=localhost.localdomain)
+        by cpanel2.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.89)
+        (envelope-from <rpjday@crashcourse.ca>)
+        id 1e1q23-0003yM-4Z; Tue, 10 Oct 2017 04:36:55 -0400
+Date:   Tue, 10 Oct 2017 04:36:53 -0400 (EDT)
+From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
+X-X-Sender: rpjday@localhost.localdomain
+To:     Jeff King <peff@peff.net>
+cc:     Theodore Ts'o <tytso@mit.edu>, Paul Smith <paul@mad-scientist.net>,
+        Git Mailing list <git@vger.kernel.org>
+Subject: Re: "git rm" seems to do recursive removal even without "-r"
+In-Reply-To: <20171009175225.qn6a3j2th3dxjjn2@sigill.intra.peff.net>
+Message-ID: <alpine.LFD.2.21.1710100432220.16182@localhost.localdomain>
+References: <20171007192902.ma4s47hn6edwldx5@sigill.intra.peff.net> <alpine.LFD.2.21.1710071531090.15738@localhost.localdomain> <20171007193805.a2mwzkweonb6ymdk@sigill.intra.peff.net> <alpine.LFD.2.21.1710071541430.15964@localhost.localdomain>
+ <1507412674.8322.4.camel@mad-scientist.net> <alpine.LFD.2.21.1710071749240.16818@localhost.localdomain> <1507473160.8322.12.camel@mad-scientist.net> <20171008184046.uj7gcutddli54ic3@thunk.org> <alpine.LFD.2.21.1710081536180.28646@localhost.localdomain>
+ <20171008204227.f6wgaobosa6yn62g@thunk.org> <20171009175225.qn6a3j2th3dxjjn2@sigill.intra.peff.net>
+User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
 MIME-Version: 1.0
-Received: by 10.129.43.214 with HTTP; Tue, 10 Oct 2017 01:20:18 -0700 (PDT)
-In-Reply-To: <xmqq60bvfthv.fsf@gitster.mtv.corp.google.com>
-References: <CAGb4CBUrozoz9iS5pd57VrnV2e6jkSn7N=POdeUFSkvvpPDSZg@mail.gmail.com>
- <xmqq60bvfthv.fsf@gitster.mtv.corp.google.com>
-From:   Nathan PAYRE <second.payre@gmail.com>
-Date:   Tue, 10 Oct 2017 10:20:18 +0200
-Message-ID: <CAGb4CBWtc762b6w2udpZp5j+=0DqbeZmihd2_gjnge5jX5UAsw@mail.gmail.com>
-Subject: Re: new contributors presentation
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, matthieu.moy@univ-lyon1.fr,
-        timothee.albertin@etu.univ-lyon1.fr,
-        daniel.bensoussan--bohm@etu.univ-lyon1.fr
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel2.indieserve.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - crashcourse.ca
+X-Get-Message-Sender-Via: cpanel2.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: cpanel2.indieserve.net: rpjday@crashcourse.ca
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Mon, 9 Oct 2017, Jeff King wrote:
 
->First things first.  I suspect that you are trying to contribute to
->the Git project (GitHub is totally a different animal, even though
->they benefit greatly from our presence, and we theirs).
-
-You are right excuse us for this.
-
->And if you are dipping your toes to the Git project's development
->community, then, "Welcome!" ;-).
-
-Thanks we are enthusiastic to begin!
-
-
->I do not know about others, but I cannot quite tell what you are
->propsing from that three-line description to tell if it would be
->useful or not.  Let's wait to hear more from you guys.
-
-Last year, another students group (Tom Russelo, Samuel Groot)
-supervised by Matthieu Moy were working on git.
-There goal was to create the --quote-mail=<file> option for git
-send-email, this option permit to quote an email in the same cover letter.
-All the metadata ("Cc", "Subject", ...) will be automatically filled.
-
-For now the code contains a syntax error then our obvious first
-goal is to fix it.
-
-Discussion of the previous team with more information:
-https://public-inbox.org/git/1464031829-6107-1-git-send-email-tom.russello@grenoble-inp.org/
-
-2017-10-04 6:05 GMT+02:00 Junio C Hamano <gitster@pobox.com>:
-> Nathan PAYRE <second.payre@gmail.com> writes:
+> On Sun, Oct 08, 2017 at 04:42:27PM -0400, Theodore Ts'o wrote:
 >
->> Hi all,
->> me and my two other partner (Daniel and Timothee) have make the choice
->> to contribute to gitHub for a university project supervised by Mattieu
->> Moy.
+> > On Sun, Oct 08, 2017 at 03:44:14PM -0400, Robert P. J. Day wrote:
+> > > >
+> > > >     find <find args> | xargs git rm
+> > > >
+> > > > myself.
+> > >
+> > >   that's what i would have normally used until i learned about
+> > > git's magical globbing capabilities, and i'm going to go back to
+> > > using it, because git's magical globbing capabilities now scare
+> > > me.
+> >
+> > Hmm, I wonder if the reason why git's magically globbing
+> > capabilities even exist at all is for those poor benighted souls
+> > on Windows, for which their shell (and associated utilities)
+> > doesn't have advanced tools like "find" and "xargs"....
 >
-> First things first.  I suspect that you are trying to contribute to
-> the Git project (GitHub is totally a different animal, even though
-> they benefit greatly from our presence, and we theirs).
->
-> And if you are dipping your toes to the Git project's development
-> community, then, "Welcome!" ;-).
->
->> The principal project is to improve the git-send-email function, for
->> example we will try to implement the possibility to answer to a email
->> by keeping the recipient list or quote properly the email body!
->> Do you think that it's will be usefull ?
->
-> I do not know about others, but I cannot quite tell what you are
-> propsing from that three-line description to tell if it would be
-> useful or not.  Let's wait to hear more from you guys.
+> One benefit of globbing with Git is that it restricts the matches
+> only to tracked files. That matters a lot when you have a very broad
+> glob (e.g., like you might use with "git grep") because it avoids
+> looking at cruft like generated files (or even inside .git).
+
+  ah, now *that* is a compelling rationale that justifies the
+underlying weirdness. but it still doesn't explain the different
+behaviour between:
+
+  $ git rm -n 'Makefile*'
+  $ git rm -n '*Makefile'
+
+in the linux kernel source tree, the first form matches only the
+single, top-level Makefile, while the second form gets *all* of them
+recursively, even though those globs should be equivalent in terms of
+matching all files named "Makefile".
+
+  am i misunderstanding something?
+
+rday
+
+-- 
+
+========================================================================
+Robert P. J. Day                                 Ottawa, Ontario, CANADA
+                        http://crashcourse.ca
+
+Twitter:                                       http://twitter.com/rpjday
+LinkedIn:                               http://ca.linkedin.com/in/rpjday
+========================================================================
