@@ -2,101 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DBC1E20372
-	for <e@80x24.org>; Tue, 10 Oct 2017 04:21:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8083F20372
+	for <e@80x24.org>; Tue, 10 Oct 2017 04:43:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751791AbdJJEVT (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Oct 2017 00:21:19 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:58297 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750734AbdJJEVS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Oct 2017 00:21:18 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 29FF0ACD86;
-        Tue, 10 Oct 2017 00:21:18 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=vPa/EduAwUIa
-        fkibVLpN+f6Xfy0=; b=cyEsMM69rXk3bPlNImpN97otp8lBBFixzzqLB1ienQIX
-        jpVFousXu6JY71lUdyTdmrtbNBDNhpg1U+6uQOuQcej1w8jKwYrKz7ZCIS9BoOhO
-        6WVtJO6906yr/VqCo024wOG2LBv14nelbR8EMkBEo65sNb0JjuJU0DYZTRuQzhk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=GpaJ1u
-        pXflEqN524deIh8AZkzI83iAu9LBbNNM4TOS/0buu7GVg65TWI7x1XqFCTwaBwuV
-        oeQp/Wc5GfFuBMPsG/Xu8Bm4LkwzJWBlMeAHe7I3ijXg32pZ2NFUOOs+lggCDfbX
-        ueQPuD5hOWnn/MH1b/SeF4vZ24ifmi8McdfP0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 21FB0ACD85;
-        Tue, 10 Oct 2017 00:21:18 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8DE9AACD84;
-        Tue, 10 Oct 2017 00:21:17 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Cc:     Damien =?utf-8?Q?Mari=C3=A9?= <damien@dam.io>
-Subject: Re: [PATCH v3] run-command: add hint when a hook is ignored
-References: <xmqqh8vcx1nh.fsf@gitster.mtv.corp.google.com>
-        <0102015ef0ba0273-ed29c030-7cdc-4535-a411-6cc443bd5f43-000000@eu-west-1.amazonses.com>
-Date:   Tue, 10 Oct 2017 13:21:16 +0900
-In-Reply-To: <0102015ef0ba0273-ed29c030-7cdc-4535-a411-6cc443bd5f43-000000@eu-west-1.amazonses.com>
-        ("Damien =?utf-8?Q?Mari=C3=A9=22's?= message of "Fri, 6 Oct 2017 08:07:55
- +0000")
-Message-ID: <xmqqy3ojpr9f.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751937AbdJJEnF (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Oct 2017 00:43:05 -0400
+Received: from mail-qt0-f194.google.com ([209.85.216.194]:38580 "EHLO
+        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751794AbdJJEnE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Oct 2017 00:43:04 -0400
+Received: by mail-qt0-f194.google.com with SMTP id k31so4976439qta.5
+        for <git@vger.kernel.org>; Mon, 09 Oct 2017 21:43:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Jya9WKV81gvis27xPhnnRnQcLbm4zon9g1nVxVT8Z6Y=;
+        b=O9iEipnXx0YJJnIX++pBfcDJpTyMfQ9fbiDrzXX7fZuzec1uYWmRByG8anANs+g3+i
+         HRcPbJzLRpkHnwPt9EW84lOUQ7Y2IaRAhfyEmJU0IWskYREpdZkgTR1iVAdmblNJRquv
+         LE1+B7bRBo7gevRP81Kvf9Y/BXwQUsQQS08WWB5Pbee92Re14ZRdPdywRztybGHAPb2c
+         fNm2mga+xg0paom+MAUizToSbh6jxkOnrXqAMtPKUVxOUCt4EJg5plesJbxFQG1W46Vk
+         ZRvoypqv3Rc9V6KzxCkpeOVQZQPr4DOgeZQP4oVEGNcffEFMnmOJictGqVmvmH4lAcfb
+         vcxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Jya9WKV81gvis27xPhnnRnQcLbm4zon9g1nVxVT8Z6Y=;
+        b=lf3m/k2CJyKqRhyHMHheTCWRCWtSHGFZAmrwevxXuQtcYR3X2ZfdxbFceWQk1xWBAU
+         hPwZBpd7ToMdYtKiHqnkKjignQE2CxqGqXZ3kF9DYQBmkpcWx0k5FIKsJEuIcTXDvBVg
+         f+NtizRfMzn05+Vl2ZKRqU1L61RA8mPcG+Mc4xU0ObKbLMQqV7UL5MRB3KA8S0stpA2n
+         yprD3dyUKaB33mO/y0trP4gGohOKvQrTvC1Y/Zw7LHniEGdplzdoR9EU0oG0lOIlwq6U
+         L9rDdo9u7vb8GQbIz8IJOrSNgLCbojPBuF3VU8ZQ3Q5lokWO0epks/JR6/qdzk1F/WmQ
+         K4Kg==
+X-Gm-Message-State: AMCzsaV2iffnvgdIiosskNi6KJ/NeVakFl6J5tjYJuQxlaGEN73Gvdfr
+        S44h7jVTsaRG/s5LuN8gT+FR6igbTq2Zv7Y0jQ==
+X-Google-Smtp-Source: AOwi7QDfTk4uH+kgKIYjoYBlvHs5ydCN4axCIeGo5SvUqZHpfHUJb5cHJm/5ENB7bQ8IwKtuD7rwJAIGyEIcvQsmJVk=
+X-Received: by 10.55.185.67 with SMTP id j64mr11373929qkf.37.1507610583702;
+ Mon, 09 Oct 2017 21:43:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 76041FEE-AD72-11E7-B3AA-8EF31968708C-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Received: by 10.200.19.8 with HTTP; Mon, 9 Oct 2017 21:42:43 -0700 (PDT)
+In-Reply-To: <20171010005942.GO19555@aiede.mtv.corp.google.com>
+References: <CAEY4ZpO2G-kTmuReE5gwKpftFqLfAqdpQwCK4R+qYbogCgGtUA@mail.gmail.com>
+ <20171010001619.GL19555@aiede.mtv.corp.google.com> <CAEY4ZpPj3=+gL_wBW548qzAuS=aC=qswuPx-4H9DS=X10iJWVw@mail.gmail.com>
+ <20171010005942.GO19555@aiede.mtv.corp.google.com>
+From:   Nazri Ramliy <ayiehere@gmail.com>
+Date:   Tue, 10 Oct 2017 12:42:43 +0800
+Message-ID: <CAEY4ZpMKE6yf2baaJt+x6c_esorFnyWvLZ=_KS1iRs6XbL42hw@mail.gmail.com>
+Subject: Re: What happened to "git status --color=(always|auto|never)"?
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Damien Mari=C3=A9 <damien@dam.io> writes:
+>         commit 6be4595edb8e5b616c6e8b9fbc78b0f831fa2a87
+>         Author: Jeff King <peff@peff.net>
+>         Date:   Tue Oct 3 09:46:06 2017 -0400
+>
+>             color: make "always" the same as "auto" in config
+>
+> Would you like to take a stab at adding it?  builtin/commit.c and
+> Documentation/git-{commit,status}.txt would be my best guesses at
+> where to start.
 
-> When an hook is present but the file is not set as executable then git =
-will
-> ignore the hook.
-> For now this is silent which can be confusing.
+Perhaps, seeing that that commit intentionally "broke" the color
+output of my tool[1], because it parses the output of `git -c
+color.status=always status`, which now no longer work the way it used
+to. I know, I know... shame on me for parsing the output of a
+porcelain command :)
 
-Quite honestly, I do not particulary think this is confusing, and I
-expect that this change will irritate many people by forcing them to
-either set the advise config or move the ones that they deliberately
-left unexecutable by renaming them by adding ".disabled" at the end.
+But this also means that I will have to modify [1] to cope with this,
+given that it may be used with an older version of git (parse
+git-version and shell out to different git command - either `git -c
+color.ui=always status`, or the not-yet-exist `git status
+--color=always`), or make it use the plumbing output of `git status`,
+but that would just add additional work that  I really don't look
+forward to doing at this moment.
 
-But these remedies are easy enough, so let's see how well it works
-by merging it to 'next' and cooking it there for a while.
+nazri
 
-I've spotted two issues during the last-minute scan; I'll squash the
-fixes in in the meantime (if you are not going to change anything
-other than these two, there is no need to resend corrected patches).
-
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 1ac0ae6adb046..9abca499f725c 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -351,6 +351,9 @@ advice.*::
->  	addEmbeddedRepo::
->  		Advice on what to do when you've accidentally added one
->  		git repo inside of another.
-> +	ignoredHook::
-> +		Advice shown if an hook is ignored because the it's not
-> +		set as executable.
-
-s/the it's not/the hook is not/;
-
-> @@ -38,6 +39,7 @@ static struct {
->  	{ "objectnamewarning", &advice_object_name_warning },
->  	{ "rmhints", &advice_rm_hints },
->  	{ "addembeddedrepo", &advice_add_embedded_repo },
-> +	{ "ignoredhook", &advice_ignored_hook},
-
-s/ignored_hook/& /;
-
+[1] https://github.com/holygeek/git-number
+This tool (naively) parses the porcelain output out `git -c
+color.status=always status` in order to insert numbers for each
+filenames that `git status` prints.
