@@ -6,101 +6,97 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AC4C220372
-	for <e@80x24.org>; Tue, 10 Oct 2017 01:26:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C6ADE20372
+	for <e@80x24.org>; Tue, 10 Oct 2017 01:34:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755863AbdJJB03 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Oct 2017 21:26:29 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54642 "EHLO
+        id S1755476AbdJJBeF (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Oct 2017 21:34:05 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51528 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1755560AbdJJB02 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Oct 2017 21:26:28 -0400
+        with ESMTP id S1754707AbdJJBeE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Oct 2017 21:34:04 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id F2436B38B8;
-        Mon,  9 Oct 2017 21:26:27 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 01965A9A58;
+        Mon,  9 Oct 2017 21:34:04 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=rW0ZoraM6x6a
-        WdVRJvmSllyEpfc=; b=bc4DYjQ9/CNGXIZPMj/x2Q2RmkY9oCiQ/jUORPJszsJP
-        fkEnawj/uM5O1DnihYv9AIxXYFQfuQElkAlf5aq/mna1A7tL354ezLMGVrN0tMxx
-        hs8DgA5Wn31r+d/xlS4tDKlP4gvg+JVWjTZe9JRgyDrlfA3zOvFkYt4SkJn+/Pc=
+        :content-type; s=sasl; bh=DqHRXWDn2yMXfhQcZxvfnBZIUDA=; b=Q6jMH4
+        N3Qodk1PNolsfdZMozQuDcB/o+y6Al5QJt7uz2WEs7fMC5lZzy3AH3OF30QhGASe
+        VYPPbHgoYm6LctSbj8jbZqC3Qat5pQ5/GOO3AwyAd6mMy0p+N8mqoD5+f8JOzeC1
+        X67XJw8h+VnUc8KVzexhM2dTyRTRq+qRgr2yI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=PvH8xs
-        j4AkPFh8/MbD01XDkv/9vkNf87D2NWjz0vrhyuKJ0DrMwV/AG7AVRI9CIXqqDpRo
-        J/dmnHxOYTTWmsBRr3bhu1Xr6s2xC9OdYNHaf07WIFM35+Rd+KNyV9sZJRnEYz5T
-        B7GHjPqF8xEv+UQP2ocnO+g7EQQCQpKsQww3s=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E8B5DB38B7;
-        Mon,  9 Oct 2017 21:26:27 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=exgoJQEdp83BSKyfahnG4cbu+A80Sm7b
+        Ggw5waxJHlb7vNiyBtqmg88AS38m5QDr8k9LUzAxWItqYgQS0kOtVzlLnG4uKYD8
+        Mbrvp0k47wFuQdDa56x/eF3s2TlVRXE8TeF8T8zy0VC+K3+yRaGzdGkTdjv/IMom
+        i7DU8m7jNeY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id ED570A9A57;
+        Mon,  9 Oct 2017 21:34:03 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 496BBB38B3;
-        Mon,  9 Oct 2017 21:26:27 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6A202A9A55;
+        Mon,  9 Oct 2017 21:34:03 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Philip Oakley <philipoakley@iee.org>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jiang Xin <worldhello.net@gmail.com>,
-        Alexander Shopov <ash@kambanaria.org>,
-        Jordi Mas <jmas@softcatala.org>,
-        Ralf Thielow <ralf.thielow@gmail.com>,
-        Christopher =?utf-8?Q?D=C3=ADaz?= 
-        <christopher.diaz.riv@gmail.com>,
-        Marco Paolone <marcopaolone@gmail.com>,
-        Changwoo Ryu <cwryu@debian.org>,
-        Vasco Almeida <vascomalmeida@sapo.pt>,
-        Dimitriy Ryazantcev <DJm00n@mail.ru>,
-        Peter Krefting <peter@softwolves.pp.se>,
-        =?utf-8?B?VHLhuqduIE5n4buNYyBR?= =?utf-8?B?dcOibg==?= 
-        <vnwildman@gmail.com>, Jacques Viviers <jacques.viviers@gmail.com>,
-        m4sk1n <m4sk1n@o2.pl>
-Subject: Re: [PATCH] submodule: avoid sentence-lego in translated string
-References: <CANYiYbGHBDGMEjbrvX_ayXkXkciT3GgL4seM_X1NmWtud2upcg@mail.gmail.com>
-        <CAN0heSqFSiev8BeZVu3KBA5vswsbQrrOH=tYYOSs_h_eq=8-3Q@mail.gmail.com>
-        <CAGZ79ka7xo96MHaAUbkDuFjWMQaaD4j2UrRndcinAg6uzaP6Kw@mail.gmail.com>
-        <7894534.MaGmRTisnX@cayenne>
-Date:   Tue, 10 Oct 2017 10:26:25 +0900
-In-Reply-To: <7894534.MaGmRTisnX@cayenne> (=?utf-8?Q?=22Jean-No=C3=ABl?=
- AVILA"'s message of
-        "Mon, 09 Oct 2017 23:11:42 +0200")
-Message-ID: <xmqq7ew3rdxa.fsf@gitster.mtv.corp.google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] sha1_loose_object_info: handle errors from unpack_sha1_rest
+References: <20171005055952.t5ef7hyolyevoj3d@sigill.intra.peff.net>
+        <xmqqr2ugykl2.fsf@gitster.mtv.corp.google.com>
+        <20171006043008.2s6pg4aurwledf3s@sigill.intra.peff.net>
+        <20171006043847.hja2yjlvatckgy4d@sigill.intra.peff.net>
+Date:   Tue, 10 Oct 2017 10:34:01 +0900
+In-Reply-To: <20171006043847.hja2yjlvatckgy4d@sigill.intra.peff.net> (Jeff
+        King's message of "Fri, 6 Oct 2017 00:38:47 -0400")
+Message-ID: <xmqq376rrdkm.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 095D3D5C-AD5A-11E7-B67C-575F0C78B957-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 193328D0-AD5B-11E7-8F1A-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jean-No=C3=ABl AVILA <jn.avila@free.fr> writes:
+Jeff King <peff@peff.net> writes:
 
-> On Monday, 9 October 2017, 09:47:26 CEST Stefan Beller wrote:
+> Actually, there are only two callers left these days. One of them leaks,
+> and the other immediately closes the zstream. So something like:
 >
->> I always assumed that translators are aware of these issues and sort o=
-f
->> work around this somehow, maybe like this:
->>=20
->>   "submodule entry '%s' (%s) is not a commit. It is of type %s"
+> diff --git a/sha1_file.c b/sha1_file.c
+> index 09ad64ce55..cea003d182 100644
+> --- a/sha1_file.c
+> +++ b/sha1_file.c
+> @@ -978,10 +978,10 @@ static void *unpack_sha1_rest(git_zstream *stream, void *buffer, unsigned long s
+>  		while (status == Z_OK)
+>  			status = git_inflate(stream, Z_FINISH);
+>  	}
+> -	if (status == Z_STREAM_END && !stream->avail_in) {
+> -		git_inflate_end(stream);
+> +	git_inflate_end(stream);
+> +
+> +	if (status == Z_STREAM_END && !stream->avail_in)
+>  		return buf;
+> -	}
+>  
+>  	if (status < 0)
+>  		error("corrupt loose object '%s'", sha1_to_hex(sha1));
+> @@ -2107,7 +2107,6 @@ int read_loose_object(const char *path,
+>  		*contents = unpack_sha1_rest(&stream, hdr, *size, expected_sha1);
+>  		if (!*contents) {
+>  			error("unable to unpack contents of %s", path);
+> -			git_inflate_end(&stream);
+>  			goto out;
+>  		}
+>  		if (check_sha1_signature(expected_sha1, *contents,
 >
-> Translators can be aware of the issue if the coder commented the=20
-> internationalization string with some possible candidates for the place=
-holders=20
-> when it is not clear unless you check in the source code. Much effort w=
-as=20
-> poured into translating the technical terms in other parts of Git; it s=
-eems=20
-> awkward to just step back in this occurence.
+> seems reasonable. Doing it that (with my other patch on top) splits the
+> leak-fix and the not-yet-a-bug-but-confusing-error-return problems into
+> two separate patches.
+>
+> I dunno. There aren't that many callers of unpack_sha1_rest(), so it may
+> not matter that much, but while we're here...
 
-I do not see this particular case as "stepping back", though.
-
-Our users do not spell "git cat-file -t commit v2.0^{commit}" with
-'commit' translated to their language, right?  Shouldn't an error
-message output use the same phrase the input side requests users to
-use?
+Yeah, I agree that it is a reasonable thing to do.
