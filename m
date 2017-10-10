@@ -2,115 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D027220372
-	for <e@80x24.org>; Tue, 10 Oct 2017 02:35:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A31C320372
+	for <e@80x24.org>; Tue, 10 Oct 2017 04:06:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754268AbdJJCfI (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Oct 2017 22:35:08 -0400
-Received: from mail-oi0-f67.google.com ([209.85.218.67]:38350 "EHLO
-        mail-oi0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751184AbdJJCfH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Oct 2017 22:35:07 -0400
-Received: by mail-oi0-f67.google.com with SMTP id t134so8067420oih.5
-        for <git@vger.kernel.org>; Mon, 09 Oct 2017 19:35:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=lMgcCVHSZ7xmeR99HMBd4W6yEMzQxS2ZIK/Dq6c82HU=;
-        b=t1DFNgAais8KIIchrIOhcBOt7qjJL4d+M8E1mx194Wc9LubfV6WFw/Oo0L00LbHd98
-         j7Wzt055JsfFwN4YjvplJfzbcQk51xkcPjxwb8cLZ1I1kqruwFSpKl4Bwhi5QTPgDPNG
-         C9crXgSbB9LM4X9zVBVbJczm5nYwj8Lyr6SYEajYMgfmdxpdg7yDSPQsz7cTi6eCTQA1
-         r5Pt/vGy/MqoIU5QYwDxorj88Od4vN8few6+Ms+QvB3wfeLucXzM+oBdKtJQHFqzPv6B
-         nHdzDlmOAORexxWRsMi1VjxUMrZf73fmxwnrerZyYrw/oh0o5ZVTVag2ZKhxt8sWyZTn
-         pfsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=lMgcCVHSZ7xmeR99HMBd4W6yEMzQxS2ZIK/Dq6c82HU=;
-        b=fXcikARrMzWeK57hhXZm1FzgoF9g4S1O2X/GMUjff3wERv1N1nc2kpxH9H0hPFxQxx
-         q5FWTG3fwBOtzV7uW+H9dLoLQKIxghjx9jvrejYuAyJITPuSRH6BVwhHrIuRHAhCNeei
-         bczdaKG6SK+m6h0zQtBFwGv/3yhJjVDKDNNW/GzptuONHnsJ5Px3m02oZSOMTf9Q4D6r
-         wj6KC/REqJTP+uMBmIu0ED3cJ0sSNKp9P+9+AboCbUaXNXj5fVlZcxYz/L9ispTuwjKz
-         tvYHK+33L82ingoumJybvELmZSK92pe97F0mjMcYX6PQ+nRgVobf8qmeW9IWAhG6Xkga
-         UwXQ==
-X-Gm-Message-State: AMCzsaWIX14QWkRWDo+bcxZqir9K3ZkLwyXskS5N2oSJyZcBGwS9nllk
-        9V6tzLUnStZRd0Amc5zVGkFFV6AOXRF5yfLySsQ=
-X-Google-Smtp-Source: AOwi7QB7Zx6PEZSyP6s5g7joixO63+ASSXOwk2CyAdgWmQxSQh55ZJWZO9CbTa8k1OA0Gy+6GxFthvSmSEFZC/MhKpM=
-X-Received: by 10.157.43.36 with SMTP id o33mr686396otb.456.1507602906439;
- Mon, 09 Oct 2017 19:35:06 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.157.6.10 with HTTP; Mon, 9 Oct 2017 19:35:05 -0700 (PDT)
-In-Reply-To: <xmqq7ew3rdxa.fsf@gitster.mtv.corp.google.com>
-References: <CANYiYbGHBDGMEjbrvX_ayXkXkciT3GgL4seM_X1NmWtud2upcg@mail.gmail.com>
- <CAN0heSqFSiev8BeZVu3KBA5vswsbQrrOH=tYYOSs_h_eq=8-3Q@mail.gmail.com>
- <CAGZ79ka7xo96MHaAUbkDuFjWMQaaD4j2UrRndcinAg6uzaP6Kw@mail.gmail.com>
- <7894534.MaGmRTisnX@cayenne> <xmqq7ew3rdxa.fsf@gitster.mtv.corp.google.com>
-From:   Changwoo Ryu <cwryu@debian.org>
-Date:   Tue, 10 Oct 2017 11:35:05 +0900
-X-Google-Sender-Auth: ORMxQw8DFHQ4gGOQhGZmuyz0af4
-Message-ID: <CAEe2ifX5+OUOWw75pFZN86pT1iwYk2vb6u+uEMYLDpxYzmJLEQ@mail.gmail.com>
-Subject: Re: [PATCH] submodule: avoid sentence-lego in translated string
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?Q?Jean=2DNo=C3=ABl_AVILA?= <jn.avila@free.fr>,
-        Stefan Beller <sbeller@google.com>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Philip Oakley <philipoakley@iee.org>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jiang Xin <worldhello.net@gmail.com>,
-        Alexander Shopov <ash@kambanaria.org>,
-        Jordi Mas <jmas@softcatala.org>,
-        Ralf Thielow <ralf.thielow@gmail.com>,
-        =?UTF-8?Q?Christopher_D=C3=ADaz?= <christopher.diaz.riv@gmail.com>,
-        Marco Paolone <marcopaolone@gmail.com>,
-        Vasco Almeida <vascomalmeida@sapo.pt>,
-        Dimitriy Ryazantcev <DJm00n@mail.ru>,
-        Peter Krefting <peter@softwolves.pp.se>,
-        =?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
-        Jacques Viviers <jacques.viviers@gmail.com>,
-        m4sk1n <m4sk1n@o2.pl>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        id S1751368AbdJJEGI (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Oct 2017 00:06:08 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62145 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750734AbdJJEGH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Oct 2017 00:06:07 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 83FDAAC875;
+        Tue, 10 Oct 2017 00:06:06 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+        :subject:date:message-id:in-reply-to:references; s=sasl; bh=jYUf
+        mSTDM9c7HHSWubEZJSAh7w8=; b=wnpuQoXqZDeJMdvAsiBXeJYV2Fryj1Dd8axL
+        JXxypT9AbTSbFdfI8czzBkK4tpeKSoBPEHdQZ0qdnLxHV3FeN8pBp21mxobVjDFM
+        A4V8UW5NH/y487lGzLpJSUQWigTb22dkHk1I+0okLS2zI+bQAnK7NFsPsGeSdxKU
+        O9eFVlE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+        :date:message-id:in-reply-to:references; q=dns; s=sasl; b=grN8eH
+        NQeUqzH9uWskawi2rTj2ndgySJksP7P4fwHnTDiKJh51CcS+bHF5iFzk6n4aAXEM
+        yeTdJyOVUsZAmkm/wLUksennXZQFAOMCzsHNUlSAjAn2xtcudHckG0o+Jk6HyhHJ
+        afeKeZxPLGL726V3hMRC+ZHrbbXrD7kATutgE=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7DB38AC874;
+        Tue, 10 Oct 2017 00:06:06 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 02AFDAC873;
+        Tue, 10 Oct 2017 00:06:05 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org
+Subject: [PATCH 0/2] Do not call cmd_*() as a subroutine
+Date:   Tue, 10 Oct 2017 13:06:02 +0900
+Message-Id: <20171010040604.26029-1-gitster@pobox.com>
+X-Mailer: git-send-email 2.15.0-rc0-209-g4adfc7b6b1
+In-Reply-To: <xmqqr2vlbgyk.fsf@gitster.mtv.corp.google.com>
+References: <xmqqr2vlbgyk.fsf@gitster.mtv.corp.google.com>
+X-Pobox-Relay-ID: 56ADBAD0-AD70-11E7-B34D-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-2017-10-10 10:26 GMT+09:00 Junio C Hamano <gitster@pobox.com>:
-> Jean-No=C3=ABl AVILA <jn.avila@free.fr> writes:
->
->> On Monday, 9 October 2017, 09:47:26 CEST Stefan Beller wrote:
->>
->>> I always assumed that translators are aware of these issues and sort of
->>> work around this somehow, maybe like this:
->>>
->>>   "submodule entry '%s' (%s) is not a commit. It is of type %s"
->>
->> Translators can be aware of the issue if the coder commented the
->> internationalization string with some possible candidates for the placeh=
-olders
->> when it is not clear unless you check in the source code. Much effort wa=
-s
->> poured into translating the technical terms in other parts of Git; it se=
-ems
->> awkward to just step back in this occurence.
->
-> I do not see this particular case as "stepping back", though.
->
-> Our users do not spell "git cat-file -t commit v2.0^{commit}" with
-> 'commit' translated to their language, right?  Shouldn't an error
-> message output use the same phrase the input side requests users to
-> use?
+These two patches are for a recent #leftoverbits topic.
 
-Users know the limit of command-line translation. They type "commit"
-to commit but they see translated "commit" in output messages. It is
-actually confusing. But the untranslated English literals in the
-middle of translated sentences does not remove the confusion but
-increase it in a different way.
+https://public-inbox.org/git/xmqqr2vlbgyk.fsf@gitster.mtv.corp.google.com/
+
+The cmd_foo() function is a moral equivalent of 'main' for a Git
+subcommand 'git foo', and as such, it is allowed to do many things
+that make it unsuitable to be called as a subroutine, including
+
+ - call exit(3) to terminate the process;
+
+ - allocate resource held and used throughout its lifetime, without
+   releasing it upon return/exit;
+
+ - rely on global variables being initialized at program startup,
+   and update them as needed, making another clean invocation of the
+   function impossible.
+
+Correcting two callers by using helper API calls is not so hard.
+
+Junio C Hamano (2):
+  describe: do not use cmd_*() as a subroutine
+  merge-ours: do not use cmd_*() as a subroutine
+
+ builtin/describe.c   | 15 +++++++++++----
+ builtin/merge-ours.c | 16 +++++++---------
+ 2 files changed, 18 insertions(+), 13 deletions(-)
+
+-- 
+2.15.0-rc0-203-g4c8d0e28b1
+
