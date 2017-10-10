@@ -2,82 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0AFCC2036B
-	for <e@80x24.org>; Tue, 10 Oct 2017 12:57:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 379D22036B
+	for <e@80x24.org>; Tue, 10 Oct 2017 13:03:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755349AbdJJM5F (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Oct 2017 08:57:05 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57671 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1755144AbdJJM5E (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Oct 2017 08:57:04 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 811E0B5784;
-        Tue, 10 Oct 2017 08:56:58 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=eE3+6hvFPLCxiGO/Zf8S3UyCWYQ=; b=rPla96
-        9V7x+vlnKDDrXh31HQxstg1fY/XOVrwH2DFKuA84MnxMol87xGqFrmKEtoQ0cKHO
-        IU6y+pnInwCR24DQOr7zbkgPcwcRMnaSJavKVhgFZ3baf0BKeHKRGPicLZGlrwKl
-        Q57GQ8gXPUL1mrHDgvqrfGL1vY1/057SIGdZM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=So9hvvs9hZZJPzK3Bq2OXxLTuXSc0i0Z
-        dpwy+tHYuH4kqGpKnlWMpv/RFw9A+yqEUWpRS2/W/lBBdYfCMvry/hnXSSbS8je1
-        he4iU+aK5JNh9lxwEzQh+4yI03cQz2y3C5AYBEyrYNuUKUCXDwykLGBq8QtKcOhE
-        EPZpBQEPDII=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 77E68B5783;
-        Tue, 10 Oct 2017 08:56:58 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 59FF0B5776;
-        Tue, 10 Oct 2017 08:56:39 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Derrick Stolee <dstolee@microsoft.com>, git@vger.kernel.org,
-        ramsay@ramsayjones.plus.com, sbeller@google.com
-Subject: Re: [PATCH v4 4/4] sha1_name: minimize OID comparisons during disambiguation
-References: <20171008184942.69444-1-dstolee@microsoft.com>
-        <20171008184942.69444-5-dstolee@microsoft.com>
-        <20171009134933.vmba67adelqbkx4y@sigill.intra.peff.net>
-        <338aab6a-1181-d740-1bf2-2ac86749a6b2@gmail.com>
-        <20171010123634.3hdqxpo6mbl6jhbx@sigill.intra.peff.net>
-Date:   Tue, 10 Oct 2017 21:56:38 +0900
-In-Reply-To: <20171010123634.3hdqxpo6mbl6jhbx@sigill.intra.peff.net> (Jeff
-        King's message of "Tue, 10 Oct 2017 08:36:34 -0400")
-Message-ID: <xmqqbmlfp3eh.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751415AbdJJNDl (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Oct 2017 09:03:41 -0400
+Received: from smtprelay08.ispgateway.de ([134.119.228.98]:31479 "EHLO
+        smtprelay08.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755165AbdJJNDk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Oct 2017 09:03:40 -0400
+Received: from [84.141.117.173] (helo=book.hvoigt.net)
+        by smtprelay08.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.89)
+        (envelope-from <hvoigt@hvoigt.net>)
+        id 1e1uC9-00019C-3J; Tue, 10 Oct 2017 15:03:37 +0200
+Date:   Tue, 10 Oct 2017 15:03:35 +0200
+From:   Heiko Voigt <hvoigt@hvoigt.net>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jens Lehmann <Jens.Lehmann@web.de>,
+        Brandon Williams <bmwill@google.com>
+Subject: Re: [RFC PATCH 2/4] change submodule push test to use proper
+ repository setup
+Message-ID: <20171010130335.GB75189@book.hvoigt.net>
+References: <20171006222544.GA26642@sandbox>
+ <20171006223234.GC26642@sandbox>
+ <CAGZ79kZqaC-hFAa3dc7_j8Ah94Ua0+sAjcDUYBL0N-C_J4Bx4A@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 74E05ACC-ADBA-11E7-89BE-8EF31968708C-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kZqaC-hFAa3dc7_j8Ah94Ua0+sAjcDUYBL0N-C_J4Bx4A@mail.gmail.com>
+User-Agent: Mutt/1.9.0 (2017-09-02)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Hi,
 
-> OK, I think that makes more sense. But note the p->num_objects thing I
-> mentioned. If I do:
->
->   git pack-objects .git/objects/pack/pack </dev/null
->
-> then I have a pack with zero objects, which I think we'd similarly want
-> to return early from. I.e., I think we need:
->
->   if (p->num_objects)
-> 	return;
->
-> Technically that also covers open_pack_index() failure, too, but that's
-> a subtlety I don't think we should rely on.
+On Mon, Oct 09, 2017 at 11:20:51AM -0700, Stefan Beller wrote:
+> On Fri, Oct 6, 2017 at 3:32 PM, Heiko Voigt <hvoigt@hvoigt.net> wrote:
+> > NOTE: The argument in this message is not correct, see description in
+> > cover letter.
+> >
+> > The setup of the repositories in this test is using gitlinks without the
+> > .gitmodules infrastructure. It is however testing convenience features
+> > like --recurse-submodules=on-demand. These features are already not
+> > supported by fetch without a .gitmodules file. This leads us to the
+> > conclusion that it is not really used here as well.
+> >
+> > Let's use the usual submodule commands to setup the repository in a
+> > typical way. This also has the advantage that we are testing with a
+> > repository structure that is more similar to one we could expect on a
+> > users setup.
+> >
+> > Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
+> > ---
+> >
+> > As mentioned in the cover letter. This seems to be the only test that
+> > ensures that we stay compatible with setups without .gitmodules. Maybe
+> > we should add/revive some?
+> 
+> An interesting discussion covering this topic is found at
+> https://public-inbox.org/git/20170606035650.oykbz2uc4xkr3cr2@sigill.intra.peff.net/
 
-True.  I notice that the early part of the two functions look almost
-identical.  Do we need error condition handling for the other one,
-too?
+Thanks for that pointer. So in that discussion Junio said that the
+recursive operations should succeed if we have everything necessary at
+hand. I kind of agree because why should we limit usage when not
+necessary. On the other hand we want git to be easy to use. And that
+example from Peff is perfect as a demonstration of a incosistency we
+currently have:
+
+git clone git://some.where.git/submodule.git
+git add submodule
+
+is an operation I remember, I did, when first getting in contact with
+submodules (many years back), since that is one intuitive way. And the
+thing is: It works, kind of... Only later I discovered that one actually
+needs to us a special submodule command to get everything approriately
+setup to work together with others.
+
+If everyone agrees that submodules are the default way of handling
+repositories insided repositories, IMO, 'git add' should also alter
+.gitmodules by default. We could provide a switch to avoid doing that.
+
+An intermediate solution would be to warn but in the long run my goal
+for submodules is and always was: Make them behave as close to files as
+possible. And why should a 'git add submodule' not magically do
+everything it can to make submodules just work? I can look into a patch
+for that if people agree here...
+
+Regarding handling of gitlinks with or without .gitmodules:
+
+Currently we are actually in some intermediate state:
+
+ * If there is no .gitmodules file: No submodule processing on any
+   gitlinks (AFAIK)
+ * If there is a .gitmodules files with some submodule configured: Do
+   recursive fetch and push as far as possible on gitlinks.
+
+So I am not sure whether there are actually many users (knowingly)
+using a mix of some submodules configured and some not and then relying
+on the submodule infrastructure.
+
+I would rather expect two sorts of users:
+
+  1. Those that do use .gitmodules
+
+  2. Those that do *not* use .gitmodules
+
+Users that do not use any .gitmodules file will currently (AFAIK) not
+get any submodule handling. So the question is are there really many
+"mixed users"? My guess would be no.
+Because without those using this mixed we could switch to saying: "You
+need to have a .gitmodules file for submodule handling" without much
+fallout from breaking users use cases.
+
+Maybe we can test this out somehow? My patch series would be ready in
+that case, just had to drop the first patch and adjust the commit
+message of this one.
+
+Cheers Heiko
