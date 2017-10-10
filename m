@@ -2,146 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 14D4F1FA21
-	for <e@80x24.org>; Tue, 10 Oct 2017 10:25:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 79F8A1FA21
+	for <e@80x24.org>; Tue, 10 Oct 2017 10:30:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755723AbdJJKZO (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Oct 2017 06:25:14 -0400
-Received: from cloud.peff.net ([104.130.231.41]:48088 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1755400AbdJJKZM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Oct 2017 06:25:12 -0400
-Received: (qmail 4594 invoked by uid 109); 10 Oct 2017 10:25:11 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 10 Oct 2017 10:25:11 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 24975 invoked by uid 111); 10 Oct 2017 10:25:13 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Tue, 10 Oct 2017 06:25:13 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 10 Oct 2017 06:25:10 -0400
-Date:   Tue, 10 Oct 2017 06:25:10 -0400
-From:   Jeff King <peff@peff.net>
-To:     Nazri Ramliy <ayiehere@gmail.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: What happened to "git status --color=(always|auto|never)"?
-Message-ID: <20171010102509.e7ucbyon6ka6722l@sigill.intra.peff.net>
-References: <CAEY4ZpO2G-kTmuReE5gwKpftFqLfAqdpQwCK4R+qYbogCgGtUA@mail.gmail.com>
- <20171010001619.GL19555@aiede.mtv.corp.google.com>
- <CAEY4ZpPj3=+gL_wBW548qzAuS=aC=qswuPx-4H9DS=X10iJWVw@mail.gmail.com>
- <20171010005942.GO19555@aiede.mtv.corp.google.com>
- <CAEY4ZpMKE6yf2baaJt+x6c_esorFnyWvLZ=_KS1iRs6XbL42hw@mail.gmail.com>
+        id S1754416AbdJJKaw (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Oct 2017 06:30:52 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:34758 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751398AbdJJKav (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Oct 2017 06:30:51 -0400
+Received: by mail-pf0-f196.google.com with SMTP id b85so14232318pfj.1
+        for <git@vger.kernel.org>; Tue, 10 Oct 2017 03:30:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=D4FGoc7MnRHkrjpGlna606cvaK6dt2B8Ts8tUpMlz4o=;
+        b=V1/51oDf+gPsTqltAd74oqs0NRC2U8DoWfA/0fJew0bd/vuJI7HbfJ7uGqi8siLatR
+         MO/Vkwd2fXgPryfRQhgAsMoFz1p34JDQMOeUXv2k8Q4RHtHr4cyKsFtCXEWi10BZwQk3
+         xHL3mZFpzovRx/qzs64PPTogTSruDvstniEKO9X8BHkZRAqHchQWvOjxHEBK5SI3SR2V
+         QmRD5a2v7PUFVeYZbM+N9BfVHVQV5974h2L8rpoQPZfuS0lfkDyg88eWRoneP93tAMfi
+         9mquwjG9pSsp4ix2dVo/+d3pqzlE/A44IskudhGbe+XHoslwjMuA3UJrOZIE2OWJ9FXB
+         V4xg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=D4FGoc7MnRHkrjpGlna606cvaK6dt2B8Ts8tUpMlz4o=;
+        b=jB0vGfwyB5y0yWbMhUOYagV+TLldd3qZx4Hfb6PMG196pi0s94G5doq236lgVbkjKm
+         UhskL9U4rS4gWE6qo3KnVsM8OZWdQXeVIwXsHtcz3YIhF53vKOpA9jVAAgNF+Jfu4qON
+         dlZTC0GdbnDf9SwnAiSGFHf9LVmIM7lcIDrTH58SxAImQt8cr5xRGT85oigF859ZRk0H
+         nPwZrkMJbXjuDjP0EXOniHWESB8n3j4vz0iQj1Hr/cqp29sqQ94cJNTYTDzSpDLw5P6t
+         NjFy4zPu5oh6Pqq/QJJ1kbnjzh3hS+on5vinjSex76xrHGvUu2PyXT9bKa71THaAbzb7
+         Rj8A==
+X-Gm-Message-State: AMCzsaUpGEpVi6XLNLDBKdZybvdFFO3/1AgWpB0y6YKV4osNd5UjfjtV
+        kCVgGks3kheI/YGq6TiO+AcBBM8aOV0fa1eHIwYEx2J/
+X-Google-Smtp-Source: AOwi7QAnFGbC93KFArzwI5k9tGGuju3B1IV8vpoG7y4iVHflMN+HSmuVqfKDjO+esrqKAuSg3mmqbedfM0+LpNVV1Zo=
+X-Received: by 10.84.185.106 with SMTP id e39mr11578952plg.333.1507631450582;
+ Tue, 10 Oct 2017 03:30:50 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAEY4ZpMKE6yf2baaJt+x6c_esorFnyWvLZ=_KS1iRs6XbL42hw@mail.gmail.com>
+Received: by 10.100.156.137 with HTTP; Tue, 10 Oct 2017 03:30:49 -0700 (PDT)
+In-Reply-To: <20171009214543.12986-1-me@ikke.info>
+References: <20171009214543.12986-1-me@ikke.info>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Tue, 10 Oct 2017 12:30:49 +0200
+Message-ID: <CAN0heSoWTpVZXmJkoEQtc_rjFj3PdPWV_37B9LukxxsYy5ox1w@mail.gmail.com>
+Subject: Re: [RFC] column: show auto columns when pager is active
+To:     Kevin Daudt <me@ikke.info>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 10, 2017 at 12:42:43PM +0800, Nazri Ramliy wrote:
+On 9 October 2017 at 23:45, Kevin Daudt <me@ikke.info> wrote:
+> When columns are set to automatic for git tag and the output is
+> paginated by git, the output is a single column instead of multiple
+> columns.
+>
+> Standard behaviour in git is to honor auto values when the pager is
+> active, which happens for example with commands like git log showing
+> colors when being paged.
+>
+> Since ff1e72483 (tag: change default of `pager.tag` to "on",
+> 2017-08-02), the pager has been enabled by default, exposing this
+> problem to more people.
 
-> >         commit 6be4595edb8e5b616c6e8b9fbc78b0f831fa2a87
-> >         Author: Jeff King <peff@peff.net>
-> >         Date:   Tue Oct 3 09:46:06 2017 -0400
-> >
-> >             color: make "always" the same as "auto" in config
-> >
-> > Would you like to take a stab at adding it?  builtin/commit.c and
-> > Documentation/git-{commit,status}.txt would be my best guesses at
-> > where to start.
-> 
-> Perhaps, seeing that that commit intentionally "broke" the color
-> output of my tool[1], because it parses the output of `git -c
-> color.status=always status`, which now no longer work the way it used
-> to. I know, I know... shame on me for parsing the output of a
-> porcelain command :)
-> 
-> But this also means that I will have to modify [1] to cope with this,
-> given that it may be used with an older version of git (parse
-> git-version and shell out to different git command - either `git -c
-> color.ui=always status`, or the not-yet-exist `git status
-> --color=always`), or make it use the plumbing output of `git status`,
-> but that would just add additional work that  I really don't look
-> forward to doing at this moment.
+Oh. :( I didn't know about "column" to be honest.
 
-:( I was worried that this might hit some third-party scripts.
+> finalize_colopts in column.c only checks whether the output is a TTY to
+> determine if columns should be enabled with columns set to autol. Also ch=
+eck
+> if the pager is active.
+>
+> Helped-by: Rafael Ascens=C3=A3o <rafa.almas@gmail.com>
+> Signed-off-by: Kevin Daudt <me@ikke.info>
+> ---
+> This came to light when someone wondered on irc why
+> column.tag=3D[auto|always] did not work on Mac OS. Testing it myself, I
+> found it to work with always, but not with auto.
+>
+> I could not get the test to work yet, because somehow it's not giving
+> any output, so feedback regarding that is welcome.
 
-One workaround you can do that should work with any version of Git is:
+I had slightly more success with PAGER=3D"cat >actual", but the test is
+flaky for some reason. In any case, it might make sense to test an
+actual use-case also. Of course, the code should be largely the same,
+but in builtin/tag.c, it's quite important that `setup_auto_pager()`
+and `finalize_colopts()` are called in the right order. In other words,
+there is some regression-potential. This is a whitespace-damaged and
+hacky attempt to test. Maybe it helps a little. I hope I'll have more
+time later today.
 
-  GIT_PAGER_IN_USE=1 git status | your-parser
+diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
+index f0f1abd1c..91f2b5871 100755
+--- a/t/t7006-pager.sh
++++ b/t/t7006-pager.sh
+@@ -214,6 +214,19 @@ test_expect_success TTY 'git tag as alias
+respects pager.tag with -l' '
+        ! test -e paginated.out
+ '
 
-That tells Git that even though stdout isn't a tty, you're expecting to
-present the data to the user and it should be colored appropriately. It
-has the additional upside that it doesn't override the user's color
-config.
-
-It does have the potential downside that other non-color changes could
-kick in (e.g., somebody recently proposed that auto-columns kick in with
-GIT_PAGER_IN_USE).
-
-All that said, should we revisit the decision from 6be4595edb? The two
-code changes we could make are:
-
-  1. Adding a "--color" option to "git status". Commit 0c88bf5050
-     (provide --color option for all ref-filter users, 2017-10-03) from
-     that same series shows some prior art.
-
-     This is a clean solution, but it does mean that scripts have to
-     adapt (and would potentially need to care about which Git version
-     they're relying on).
-
-  2. Re-allow "color.always" config from the command-line. It's actually
-     on-disk config that we want to downgrade, but I wanted to avoid
-     making complicated rules about how the config would behave in
-     different scopes. The patch for this would look something like the
-     one below.
-
-  3. Revert the original series, and revisit the original "respect
-     color.ui via porcelain" commit which broke add--interactive in
-     v2.14.2 (136c8c8b8fa).
-
-I dunno. I think for your use case, PAGER_IN_USE may actually be the
-"right" solution, because it most closely expresses what you're doing.
-We probably ought to have (1) as a general rule for commands which
-handle color.
-
-But (2) and (3) are the only ones that will work seamlessly with
-existing scripts. I'm not excited about either of them, though.
-
--Peff
-
-diff --git a/color.c b/color.c
-index 9c0dc82370..3870d3e395 100644
---- a/color.c
-+++ b/color.c
-@@ -307,8 +307,21 @@ int git_config_colorbool(const char *var, const char *value)
- 	if (value) {
- 		if (!strcasecmp(value, "never"))
- 			return 0;
--		if (!strcasecmp(value, "always"))
--			return var ? GIT_COLOR_AUTO : 1;
-+		if (!strcasecmp(value, "always")) {
-+			/*
-+			 * Command-line options always respect "always".
-+			 * Likewise for "-c" config on the command-line.
-+			 */
-+			if (!var ||
-+			    current_config_scope() == CONFIG_SCOPE_CMDLINE)
-+				return 1;
++test_expect_success TTY 'git tag with column.tag=3Dauto' '
++       test_commit second &&
++       test_commit third &&
++       test_commit fourth &&
++       test_when_finished "git reset --hard HEAD~3" &&
++       cat >expected <<\EOF &&
++fourth   initial  second   third
++EOF
++       rm -f paginated.out &&
++       test_terminal git -c pager.tag -c column.tag=3Dauto tag &&
++       test_cmp expected paginated.out
++'
 +
-+			/*
-+			 * Otherwise, we're looking at on-disk config;
-+			 * downgrade to auto.
-+			 */
-+			return GIT_COLOR_AUTO;
-+		}
- 		if (!strcasecmp(value, "auto"))
- 			return GIT_COLOR_AUTO;
- 	}
+ # A colored commit log will begin with an appropriate ANSI escape
+ # for the first color; the text "commit" comes later.
+ colorful() {
