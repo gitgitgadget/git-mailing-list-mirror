@@ -2,87 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 57E7E20372
-	for <e@80x24.org>; Wed, 11 Oct 2017 10:05:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2B34520444
+	for <e@80x24.org>; Wed, 11 Oct 2017 10:42:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752846AbdJKKFz (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Oct 2017 06:05:55 -0400
-Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:63887 "EHLO
-        alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751816AbdJKKFy (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 11 Oct 2017 06:05:54 -0400
-X-AuditID: 12074413-38bff70000007929-6c-59dded008c31
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 8C.86.31017.00DEDD95; Wed, 11 Oct 2017 06:05:52 -0400 (EDT)
-Received: from [192.168.69.190] (p57BCCD9E.dip0.t-ipconnect.de [87.188.205.158])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v9BA5ogm010898
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-        Wed, 11 Oct 2017 06:05:51 -0400
-Subject: Re: [PATCH v2 00/24] object_id part 10
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Brandon Williams <bmwill@google.com>,
+        id S1756811AbdJKKm2 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Oct 2017 06:42:28 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60781 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1753345AbdJKKm1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Oct 2017 06:42:27 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 83797ACADD;
+        Wed, 11 Oct 2017 06:42:27 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=qX2Kk7njKb/oxelmeCpXKqfIe1U=; b=n1GTZG
+        3x/PR3PmDMs25yivvR28mYlbQGuz09jl2I5LEiYeHGitaNvyaGR78YOYIL6YqzVK
+        NcZc2fIdmvSy0yS4EEaGt62DBCoP8JJxB2SYbXouGnxkFIyOFX1Zp+772putohug
+        cotdFRNm83JoP3+tH3G80Rh9hIqllt5/so/hE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=V+mTUINeCdiCKA67YQd2TXOJRrjhLVJ6
+        bPXbsPyISHhFEdlTtQPdKuMJJ/17FQZ/xKCff+GcxrfuAaHbTHIQy4Mb9dhhG80J
+        Aq4oYLzlBER0xeVFBZTiseilW29ul/iAB4zqgjL4egFznRNP030wPdLrgKH8aR2I
+        OqZ2Qb9IbtM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7C3D4ACADC;
+        Wed, 11 Oct 2017 06:42:27 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id EB92BACADB;
+        Wed, 11 Oct 2017 06:42:26 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Michael Haggerty <mhagger@alum.mit.edu>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Brandon Williams <bmwill@google.com>,
         Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH v2 00/24] object_id part 10
 References: <20171009011132.675341-1-sandals@crustytoothpaste.net>
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-Message-ID: <9e44abcf-abcb-4868-d1cd-2326ea8df3ed@alum.mit.edu>
-Date:   Wed, 11 Oct 2017 12:05:50 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
+        <9e44abcf-abcb-4868-d1cd-2326ea8df3ed@alum.mit.edu>
+Date:   Wed, 11 Oct 2017 19:42:25 +0900
+In-Reply-To: <9e44abcf-abcb-4868-d1cd-2326ea8df3ed@alum.mit.edu> (Michael
+        Haggerty's message of "Wed, 11 Oct 2017 12:05:50 +0200")
+Message-ID: <xmqq8tgim0dq.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20171009011132.675341-1-sandals@crustytoothpaste.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupnleLIzCtJLcpLzFFi42IRYndR1GV8ezfSoOMBs8Xz9SfYLbqudDNZ
-        /GjpYbZom/mDyWLz5nYWB1aP5Tf/Mnks2FTq8ax3D6PH501yASxRXDYpqTmZZalF+nYJXBmd
-        a36xF3RwVjw8OIOtgXElexcjJ4eEgIlE6/9Wli5GLg4hgR1MEjO3vGOHcC4wSdztm8cMUiUs
-        oC9x9/cFNhBbRMBLYv6jGawgNrNAgcTz9juMILaQgJPE7XczwaayCehKLOppZgKxeQXsJR61
-        HwSrZxFQldiz7j7QTA4OUYEIiQ0b+SFKBCVOznzCAmJzCjhLrLy8iR1ivLrEn3mXmCFscYlb
-        T+YzQdjyEtvfzmGewCgwC0n7LCQts5C0zELSsoCRZRWjXGJOaa5ubmJmTnFqsm5xcmJeXmqR
-        rrlebmaJXmpK6SZGSLgL72DcdVLuEKMAB6MSD6/A9TuRQqyJZcWVuYcYJTmYlER5rz+/GynE
-        l5SfUpmRWJwRX1Sak1p8iFGCg1lJhHfBa6Acb0piZVVqUT5MSpqDRUmcV22Jup+QQHpiSWp2
-        ampBahFMVoaDQ0mCV/INUKNgUWp6akVaZk4JQpqJgxNkOA/Q8Adgw4sLEnOLM9Mh8qcYFaXE
-        eT+BJARAEhmleXC9sHT0ilEc6BVhXhaQFTzAVAbX/QpoMBPQYNG0OyCDSxIRUlINjPErz+eI
-        OtVPjl/7Qt4heFbw9/6fncoOrkmzJjibf3x8Rk7ix++PQg8+5q1p/jy9/NyfaXGW5m+tI1s8
-        yx9+i9k3d9XV7e92/U05cPq3Ga9awJHJP958/j3dIazm5oN3ZjPM5lUau0i9+R+lI5jK6nGo
-        8vO/dr+6OzzZ9l+e/pyVqfIudE7a4ytKLMUZiYZazEXFiQDskvAcIgMAAA==
+Content-Type: text/plain
+X-Pobox-Relay-ID: DFA54050-AE70-11E7-9D63-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/09/2017 03:11 AM, brian m. carlson wrote:
-> This is the tenth in a series of patches to convert from unsigned char
-> [20] to struct object_id.  This series mostly involves changes to the
-> refs code.  After these changes, there are almost no references to
-> unsigned char in the main refs code.
-> 
-> The series has not been rebased on master since the last submission, but
-> I can do so if that's more convenient.
-> 
-> This series is available from the following URL:
-> https://github.com/bk2204/git.git object-id-part10
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-I read through the whole series medium-thoroughly and left a few
-comments, but overall it looks very good and clear. Thanks so much for
-working on this!
+> I took a stab at rebasing this patch series on top of current master
+> using `git-imerge`. I pushed the results to my GitHub fork [1] as branch
+> `object-id-part-10-rebased`. I didn't check the results very carefully,
+> nor whether the commit messages need adjusting, but I did verify that
+> each of the commits passes the test suite. Junio, it might serve as
+> something to compare against your conflict resolution.
+>
+> Michael
+>
+> [1] https://github.com/mhagger/git
 
-I took a stab at rebasing this patch series on top of current master
-using `git-imerge`. I pushed the results to my GitHub fork [1] as branch
-`object-id-part-10-rebased`. I didn't check the results very carefully,
-nor whether the commit messages need adjusting, but I did verify that
-each of the commits passes the test suite. Junio, it might serve as
-something to compare against your conflict resolution.
+2f0e14e6 ("Merge branch 'js/rebase-i-final'", 2017-10-09) is where
+your -rebased series has forked from the mainline.  I checked that
+fork-point out, merged bc/object-id I queued to it, with the help
+from rerere I earlier taught.  The resulting tree was identical to
+the tip of your rebase.
 
-Michael
+So hopefully both of us should be good ;-)  I do not know about the
+intermediate steps, though.
 
-[1] https://github.com/mhagger/git
+Thanks.
