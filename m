@@ -2,65 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5A2581FA21
-	for <e@80x24.org>; Wed, 11 Oct 2017 15:30:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 729661FA21
+	for <e@80x24.org>; Wed, 11 Oct 2017 17:24:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751913AbdJKPaW (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Oct 2017 11:30:22 -0400
-Received: from continuum.iocl.org ([217.140.74.2]:35707 "EHLO
-        continuum.iocl.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750970AbdJKPaT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Oct 2017 11:30:19 -0400
-X-Greylist: delayed 1469 seconds by postgrey-1.27 at vger.kernel.org; Wed, 11 Oct 2017 11:30:18 EDT
-Received: (from krey@localhost)
-        by continuum.iocl.org (8.11.3/8.9.3) id v9BF5k609874;
-        Wed, 11 Oct 2017 17:05:46 +0200
-Date:   Wed, 11 Oct 2017 17:05:46 +0200
-From:   Andreas Krey <a.krey@gmx.de>
-To:     Git Users <git@vger.kernel.org>
-Subject: git repack leaks disk space on ENOSPC
-Message-ID: <20171011150546.GC32090@inner.h.apk.li>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.1i
-X-message-flag: What did you expect to see here?
+        id S1757459AbdJKRYB (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Oct 2017 13:24:01 -0400
+Received: from ikke.info ([178.21.113.177]:34980 "EHLO vps892.directvps.nl"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1757389AbdJKRYA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Oct 2017 13:24:00 -0400
+Received: by vps892.directvps.nl (Postfix, from userid 182)
+        id 013064403A1; Wed, 11 Oct 2017 19:23:59 +0200 (CEST)
+Received: from epsilon.home (unknown [10.8.0.22])
+        by vps892.directvps.nl (Postfix) with ESMTP id 7AD46440393;
+        Wed, 11 Oct 2017 19:23:58 +0200 (CEST)
+From:   Kevin Daudt <me@ikke.info>
+To:     git@vger.kernel.org
+Cc:     Kevin Daudt <me@ikke.info>,
+        =?UTF-8?q?Rafael=20Ascens=C3=A3o?= <rafa.almas@gmail.com>,
+        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH] column: show auto columns when pager is active
+Date:   Wed, 11 Oct 2017 19:23:10 +0200
+Message-Id: <20171011172310.2932-1-me@ikke.info>
+X-Mailer: git-send-email 2.14.2
+In-Reply-To: <20171009214543.12986-1-me@ikke.info>
+References: <20171009214543.12986-1-me@ikke.info>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all,
+When columns are set to automatic for git tag and the output is
+paginated by git, the output is a single column instead of multiple
+columns.
 
-I observed (again) an annoying behavior of 'git repack':
-When the new pack file cannot be fully written because
-the disk gets full beforehand, the tmp_pack file isn't
-deleted, meaning the disk stays full:
+Standard behaviour in git is to honor auto values when the pager is
+active, which happens for example with commands like git log showing
+colors when being paged.
 
-  $ df -h .; git repack -ad; df -h .; ls -lart .git/objects/pack/tmp*; rm .git/objects/pack/tmp*; df -h .
-  Filesystem                        Size  Used Avail Use% Mounted on
-  /dev/mapper/vg02-localworkspaces  250G  245G  5.1G  98% /workspaces/calvin
-  Counting objects: 4715349, done.
-  Delta compression using up to 8 threads.
-  Compressing objects: 100% (978051/978051), done.
-  fatal: sha1 file '.git/objects/pack/tmp_pack_xB7DMt' write error: No space left on device
-  Filesystem                        Size  Used Avail Use% Mounted on
-  /dev/mapper/vg02-localworkspaces  250G  250G   20K 100% /workspaces/calvin
-  -r--r--r-- 1 andrkrey users 5438435328 Oct 11 17:03 .git/objects/pack/tmp_pack_xB7DMt
-  rm: remove write-protected regular file '.git/objects/pack/tmp_pack_xB7DMt'? y
-  Filesystem                        Size  Used Avail Use% Mounted on
-  /dev/mapper/vg02-localworkspaces  250G  245G  5.1G  98% /workspaces/calvin
+Since ff1e72483 (tag: change default of `pager.tag` to "on",
+2017-08-02), the pager has been enabled by default, exposing this
+problem to more people.
 
-- Andreas
+finalize_colopts in column.c only checks whether the output is a TTY to
+determine if columns should be enabled with columns set to auto. Also check
+if the pager is active.
 
-git version 2.15.0.rc0
+Helped-by: Rafael Ascensão <rafa.almas@gmail.com>
+Signed-off-by: Kevin Daudt <me@ikke.info>
+---
+ column.c         |  3 ++-
+ t/t7006-pager.sh | 14 ++++++++++++++
+ 2 files changed, 16 insertions(+), 1 deletion(-)
 
+diff --git a/column.c b/column.c
+index ff7bdab1a..ded50337f 100644
+--- a/column.c
++++ b/column.c
+@@ -5,6 +5,7 @@
+ #include "parse-options.h"
+ #include "run-command.h"
+ #include "utf8.h"
++#include "pager.c"
+ 
+ #define XY2LINEAR(d, x, y) (COL_LAYOUT((d)->colopts) == COL_COLUMN ? \
+ 			    (x) * (d)->rows + (y) : \
+@@ -224,7 +225,7 @@ int finalize_colopts(unsigned int *colopts, int stdout_is_tty)
+ 		if (stdout_is_tty < 0)
+ 			stdout_is_tty = isatty(1);
+ 		*colopts &= ~COL_ENABLE_MASK;
+-		if (stdout_is_tty)
++		if (stdout_is_tty || pager_in_use())
+ 			*colopts |= COL_ENABLED;
+ 	}
+ 	return 0;
+diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
+index f0f1abd1c..44c2ca5d3 100755
+--- a/t/t7006-pager.sh
++++ b/t/t7006-pager.sh
+@@ -570,4 +570,18 @@ test_expect_success 'command with underscores does not complain' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success TTY 'git tag with auto-columns ' '
++	test_commit one &&
++	test_commit two &&
++	test_commit three &&
++	test_commit four &&
++	test_commit five &&
++	cat >expected <<\EOF &&
++initial  one      two      three    four     five
++EOF
++	test_terminal env PAGER="cat >actual.tag" COLUMNS=80 \
++		git -p -c column.ui=auto tag --sort=authordate &&
++	test_cmp expected actual.tag
++'
++
+ test_done
 -- 
-"Totally trivial. Famous last words."
-From: Linus Torvalds <torvalds@*.org>
-Date: Fri, 22 Jan 2010 07:29:21 -0800
+2.14.2
+
