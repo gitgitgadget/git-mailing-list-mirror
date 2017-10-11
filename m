@@ -2,90 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.9 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C4C7E1FA21
-	for <e@80x24.org>; Wed, 11 Oct 2017 19:27:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8D9831FA21
+	for <e@80x24.org>; Wed, 11 Oct 2017 20:02:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757967AbdJKT1S (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Oct 2017 15:27:18 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:37127 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1757163AbdJKT1Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Oct 2017 15:27:16 -0400
-Received: by mail-wm0-f68.google.com with SMTP id r68so2788631wmr.4
-        for <git@vger.kernel.org>; Wed, 11 Oct 2017 12:27:16 -0700 (PDT)
+        id S1752563AbdJKUC3 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Oct 2017 16:02:29 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:47361 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752275AbdJKUC3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Oct 2017 16:02:29 -0400
+Received: by mail-pf0-f196.google.com with SMTP id z11so1864667pfk.4
+        for <git@vger.kernel.org>; Wed, 11 Oct 2017 13:02:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=uvpWExyf+14fZOSmG9XzXzAIARVfoPia4rQkT97ibV4=;
-        b=GZt1eqy/bj0N9N7PSkXM5tGugGRqXuvSNG+7Eq+PfBMvB82qbIlBSLyv6ozq5VxQbE
-         291B9tnN+r5EFlKbg6EvDsEj0gXr/S9wFER3v6OoVBSTSPrHOk5Zt0cKYSTyE+Uhu/tC
-         BYzqHwbihvnOxzZNTssE6MYbWqA9bcbpb9K1nqbyCt0PB5QoTStuyfpUs/NEoUBwU3wE
-         BRgxW2OFD/f+o7M3uUqYY0FxwgEBb3nUAyds2ou7PCui1rmKS7YhpFeQwyuiw3CID1hy
-         gS5rppQXvVCWtW2NLucxsVl+VJkEhSQ9t4sFz/H4MCOeA4augvJekmp24au73xgqlY8t
-         rAXA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=vOXgDtI056T2pNgiSAsN0FBWPv9DXtAjt4V4ONWt2ys=;
+        b=IQMPxW85VTk7rqqWU5poMYE8kg6U5PM8PxWlpCUwYZ9oGMGYHupMme0YBmBKR4JkSN
+         a2+jdKLSBAZw+NlzmHpRKUwZi/6Ykiry4Kl/rPp/RYJqXhXVWNuWL/owa1xcuGoHeWim
+         7VC+2RxidJ2PkaJMTK+/TGl2UIhKKJ5NkY1FEPgQvZeLAyAyaeIYC6J5Ni+pSmz4PUV8
+         rOgQ3Ft7dsG7dlc4LN0P7tqcIeZVvuROCdT9oqoZF5m1V1R/jdmeVvSpbo7BdQbZvQUU
+         omi4c4EsofUuCD9wPFlhQXtnFSvVhbJXNSJIthOrmZ9S6m6Cy8cgTHx9BpIllw7sX4Hl
+         Wwew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=uvpWExyf+14fZOSmG9XzXzAIARVfoPia4rQkT97ibV4=;
-        b=tLVtAChCOM2rL1Uu7KMVQY6PSt9BdzzfeF8wI4qLUxcT+HQhuh9kx8tIocgKp79VhO
-         ha2YuzVkVQKHCvHdYxOOVHqqnMl/KCBmDH5B3acyOSNnAB7h/zhtKSYRBqGkF1C3N84Y
-         jciGyeJ7it83Fl1xlL/rhRsj2isrdM4pn7gRR3Dmb7h+dNLPCjbELvkNab32zBBtxf6H
-         PXj7NYIon/hs0kv1qpw9/Ix3EzjDqCTYBKfKzTBf3tiKQbwzcuXRcTv+1VX4lInuvg5k
-         dWgZh7UwE6hzION6nz3Np8woAS2ngxC7pOlk4RQVSljgMPvk6TRoLmDSPUoUYyDcEyeU
-         geuQ==
-X-Gm-Message-State: AMCzsaUl1xy02RcJksLL8PtA9Z/muiHwyi5DHhnQ2Inn+Iha2Czc20Xv
-        V1GTDZNfrNTmHZAO4Z2jrAxLgwYE
-X-Google-Smtp-Source: AOwi7QA6QO21pCs8w2DbLU7kwwSEJdlG9h5wArhD6iQeWAnFxGei0CzDyhC2IsVt871LpQpHFVsXkQ==
-X-Received: by 10.223.145.105 with SMTP id j96mr40534wrj.273.1507750035576;
-        Wed, 11 Oct 2017 12:27:15 -0700 (PDT)
-Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
-        by smtp.gmail.com with ESMTPSA id v10sm12330611wrb.92.2017.10.11.12.27.14
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 11 Oct 2017 12:27:14 -0700 (PDT)
-Date:   Wed, 11 Oct 2017 20:28:09 +0100
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     =?utf-8?B?5bCP5bed5oGt5Y+y?= <aiueogawa217@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Fwd: how can I conform if I succeed in sending patch to mailing
- list
-Message-ID: <20171011192809.GD15399@hank>
-References: <CAC2JkrLfcUzipRPhUHiVEMipsPVcia6ku+QK7OwMJrME-JtAzQ@mail.gmail.com>
- <CAC2JkrJV7XdRyLiu3fTLZmLSJzU3GX_2rr6sQcUx-w0-BZ7f1g@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAC2JkrJV7XdRyLiu3fTLZmLSJzU3GX_2rr6sQcUx-w0-BZ7f1g@mail.gmail.com>
-User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=vOXgDtI056T2pNgiSAsN0FBWPv9DXtAjt4V4ONWt2ys=;
+        b=jcz99ZLZcddOLU4l5nV0rasWfzXOBrd4yTNUxCcwPpK29T3yEMQMwdeHQwLRqmgfVb
+         cFhc1nekKCPXlDLenmIozeFPP1HVfk8WjcqobYd6naxLACETHoFJNauBMEb6Q+ogZeP0
+         DLXu8iK52xdEjdPEzfzgccBr6HHkFLkoqEeGqhSqMEzzi4XWFedB5y5eZsTAcMsbKWpd
+         F7EotYTRFxRqbKDzsl5suwhdDKWj7a6NFGHRwNMXYFCKnBCLGewXcC8dE3INwvM/WU0p
+         FH+FyNWyGgaRBnLhvple+kkd4Hjy8gEVInZcOyq5QoVK7kycoK++cyo4eoqamalAL0Rt
+         PpdQ==
+X-Gm-Message-State: AMCzsaUTj7NVLI7B4GIsgpSModm2LVqfjunvDNPl/wiT1CznFVZacjzj
+        Mf5fELPv8qw0KQynjwO044k=
+X-Google-Smtp-Source: AOwi7QACrT7emgmTXclPgxiRq1vjabkfMImEDzzg7NlJ95KHUmRWxVgYonmCEx71oW/bW541uEwGPQ==
+X-Received: by 10.98.209.88 with SMTP id t24mr110304pfl.269.1507752148589;
+        Wed, 11 Oct 2017 13:02:28 -0700 (PDT)
+Received: from localhost.localdomain (64.71.239.49.rev.vmobile.jp. [49.239.71.64])
+        by smtp.gmail.com with ESMTPSA id s3sm28725943pfb.16.2017.10.11.13.02.25
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 11 Oct 2017 13:02:27 -0700 (PDT)
+From:   Takahito Ogawa <aiueogawa217@gmail.com>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, Takahito Ogawa <aiueogawa217@gmail.com>
+Subject: [PATCH 1/1] git-stash.txt: correct "git stash" behavior with no arguments
+Date:   Thu, 12 Oct 2017 05:01:47 +0900
+Message-Id: <20171011200147.4377-1-aiueogawa217@gmail.com>
+X-Mailer: git-send-email 2.13.1
+In-Reply-To: <n>
+References: <n>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/12, 小川恭史 wrote:
-> Hello, I found a mistake in documents, fixed it, and send patch to mailing list.
-> 
-> Sending patches by 'git send-email' with Gmail smtp seemed to be
-> successful because CC included my email address and I received it.
-> However, I never received email from mailing list. Of course I'm
-> subscribing mailing list.
-> 
-> How can I conform if I succeed in sending patch to mailing list?
+"git stash" behavior without any arguments was changed in
+1ada5020b ("stash: use stash_push for no verb form", 2017-02-28).
+This is equivalent to "git stash push" but documents says
+"git stash save".
 
-I think that's just a feature of the mailing list, where it doesn't
-send you an email in which you are already Cc'd in, or something like
-that.  I received your mails through the mailing list.
+Correct it.
 
-You can check if they arrived on the list at the public archives of
-the mailing list (https://public-inbox.org/git/).
+Reviewed-by: Thomas Gummerer <t.gummerer@gmail.com>
+Signed-off-by: Takahito Ogawa <aiueogawa217@gmail.com>
+---
+ Documentation/git-stash.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> Takahito Ogawa
+diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
+index 00f95fee1..63642c145 100644
+--- a/Documentation/git-stash.txt
++++ b/Documentation/git-stash.txt
+@@ -33,7 +33,7 @@ and reverts the working directory to match the `HEAD` commit.
+ The modifications stashed away by this command can be listed with
+ `git stash list`, inspected with `git stash show`, and restored
+ (potentially on top of a different commit) with `git stash apply`.
+-Calling `git stash` without any arguments is equivalent to `git stash save`.
++Calling `git stash` without any arguments is equivalent to `git stash push`.
+ A stash is by default listed as "WIP on 'branchname' ...", but
+ you can give a more descriptive message on the command line when
+ you create one.
+-- 
+2.13.1
+
