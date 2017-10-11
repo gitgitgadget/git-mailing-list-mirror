@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 097EF1FA21
-	for <e@80x24.org>; Wed, 11 Oct 2017 13:35:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0DD021FA21
+	for <e@80x24.org>; Wed, 11 Oct 2017 13:35:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757453AbdJKNf0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Oct 2017 09:35:26 -0400
-Received: from mail-qt0-f196.google.com ([209.85.216.196]:55761 "EHLO
-        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752266AbdJKNfV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Oct 2017 09:35:21 -0400
-Received: by mail-qt0-f196.google.com with SMTP id x54so5102472qth.12
-        for <git@vger.kernel.org>; Wed, 11 Oct 2017 06:35:21 -0700 (PDT)
+        id S1757309AbdJKNf3 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Oct 2017 09:35:29 -0400
+Received: from mail-qt0-f194.google.com ([209.85.216.194]:33334 "EHLO
+        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752243AbdJKNfY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Oct 2017 09:35:24 -0400
+Received: by mail-qt0-f194.google.com with SMTP id x54so2447641qth.0
+        for <git@vger.kernel.org>; Wed, 11 Oct 2017 06:35:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=wy/Ch3aooRHa29rlWLMfV674hGg6mPZe0jwOrN3dYPo=;
-        b=GH1WqYlUiIjNvmdFx4+xpL5hluXKUPd7zUlqxmKp1OkvE2CfWSbR6P5zac2BdCcvQ8
-         hjKgU1TX7Ya6aF6oU1fiN84XZtP0npwhyorkU/hnHSxVRUGbiQ6eHuIH9I1dtowDsOb2
-         iIKOGgCSPVMOg9cr5PmiJMKTBdwHdFzvIgmwnqN83suWKmkMH5rJ6XhGMPPlsyIKjsOs
-         TblUcxe4j21qwnNnQbCxRZPV59jm4x5GP7Ds65R778/GWJskp9u7h5k9ipX651lRsTjW
-         jTE9kv8mmLOJvD6n7rf+zhI0QksgX2TurHdyurfUQgyHkXqObgw7pS1zj70WKC4OdTHP
-         SZJQ==
+        bh=ICHiwzGo0k5gnaRGqYsFgWSer6IaDfzSuJSbLL3K1Ew=;
+        b=gyRpcGsneZLQYdKkbsrYLMv3lnPTn1nRB1Xbyc4eBh1BZ+e/dG9XdxXmgTNsZtzkdG
+         iJ6xCmCsf6ONpMbOHewtlnEN6G+p1BMtM7txIBH1YiS7zSSkdLayXnAm5oZdhRXwGrTl
+         kA/VClfWPJo/voUPP+r+fvMPU9YP89HXjQeSgntEqUF0REzUFrScGuHIRxzoJTj/DPs4
+         j3piFvcn6KsEnRcUvhYnNjEO772OLHa5gCGQgbrnFDyVRf3lgiZSxLypGmHY5iLCSpRP
+         YC1fizIsXw4ghHU5PxYtPzHXkl8S2JE6oE2gX6J0GSUSKJAwxzqAtE7BtHBsS1vXixq6
+         Zrig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=wy/Ch3aooRHa29rlWLMfV674hGg6mPZe0jwOrN3dYPo=;
-        b=Y/KhX21YLchhUsbwWq/urI9MAR7b0CGKi27ZlekDjuqV1BPPTJyCbX2mmUYOTtjzVP
-         7F4SvQX3YErb/JO2k3bZYivuvjFdW/bJX2Gdolrix0h24dv1kniR4xBvGITO+1fsG7d5
-         H3PMsz3FG5iDLLlPJ4JXUF1Lv2HCe+Ku55VtO62uZJIvt7aXFxHBxiUvfTaFfxMf39fr
-         yM4WPHCB1SZ3nfnuyigTDFoh45mCJIt7wYe6A3k2wNita2XbHCkxVE0DPFc/K/HTh5bt
-         sb2TihZwbf8Jrjs7vfRZyK8UL718KXKmElObe3x8WurpOKDOdZ39R91g7Yi/XwOO08Fo
-         ah6w==
-X-Gm-Message-State: AMCzsaUAuZ+I/jwA+L/p1W6RL2jfU1f9YtGOhvpA+r9gKqDkIMxxCJY1
-        7HPOhShQ8jnGHjoM3lYGX/A=
-X-Google-Smtp-Source: AOwi7QA7B4zDfNDhVkpmXwmHpusyPbkfEjH20c2YTcDIfm86D+G3dQny0/Aav4HgWua44GdlEb3O3w==
-X-Received: by 10.200.34.28 with SMTP id o28mr25389451qto.184.1507728920947;
-        Wed, 11 Oct 2017 06:35:20 -0700 (PDT)
+        bh=ICHiwzGo0k5gnaRGqYsFgWSer6IaDfzSuJSbLL3K1Ew=;
+        b=o1LJ66Nv0q96o1BAxSdt6bYMythtfxhZ4PkihZnnQ0WSeQm4i0UzQLhtwvKA0DD4Y0
+         wHuzoDRl6eErOj+p0CkoW1cYvjSCffwF0OBp3rUHNDhUDfWn33m2zOLlTSxUQpmoescE
+         726n0FqCkSZ/AAwHXEJdI5iLEIHI2KV1DqT/2TYGX/gtyYdaKmCNwss9SMct+zfBpIWy
+         jAFZSg3fOLPdBndEZxItWYMABlxgiI9t6dF1GPHhXEPNfE1uWJBX+ivlPECbvqVBSRm6
+         WQ8nbh96aiohBhKkYX98VpilkPH6CBFji/WBx0MBV0MeDtJbA5PYIp2W5olUNBb2N2BC
+         Vmbg==
+X-Gm-Message-State: AMCzsaUz69ZFQT6pVbHFmutwUMNSSpbMSjLsAdx7wNfkTIv+DDL22gvc
+        z12OMad6Y4+iRgsqDwjQlMI=
+X-Google-Smtp-Source: AOwi7QC0OSAVRyA3/cQ83/ZA4qtAUbkWLoffHrVNKBWjxPoByScIGo9LIBW5lTPW+OxdU9/VenHZHw==
+X-Received: by 10.233.237.195 with SMTP id c186mr20175353qkg.69.1507728923550;
+        Wed, 11 Oct 2017 06:35:23 -0700 (PDT)
 Received: from localhost.corp.microsoft.com ([2001:4898:8010::76e])
-        by smtp.gmail.com with ESMTPSA id i1sm8192685qta.19.2017.10.11.06.35.20
+        by smtp.gmail.com with ESMTPSA id i1sm8192685qta.19.2017.10.11.06.35.22
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 11 Oct 2017 06:35:20 -0700 (PDT)
+        Wed, 11 Oct 2017 06:35:23 -0700 (PDT)
 From:   Jameson Miller <jameson.miller81@gmail.com>
 X-Google-Original-From: Jameson Miller <jamill@microsoft.com>
 To:     jameson.miller81@gmail.com
 Cc:     bmwill@google.com, git@vger.kernel.org, gitster@pobox.com,
         jamill@microsoft.com, peff@peff.net, sbeller@google.com
-Subject: [PATCH v2 2/5] Update documentation for new directory and status logic
-Date:   Wed, 11 Oct 2017 09:35:01 -0400
-Message-Id: <20171011133504.15049-3-jamill@microsoft.com>
+Subject: [PATCH v2 5/5] Add tests around status handling of ignored arguments
+Date:   Wed, 11 Oct 2017 09:35:04 -0400
+Message-Id: <20171011133504.15049-6-jamill@microsoft.com>
 X-Mailer: git-send-email 2.13.6
 In-Reply-To: <20171011133504.15049-1-jamill@microsoft.com>
 References: <20171005205443.206900-1-jameson.miller81@gmail.com>
@@ -65,96 +65,88 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Add tests for status handling of '--ignored=matching` and
+`--untracked-files=normal`.
+
 Signed-off-by: Jameson Miller <jamill@microsoft.com>
 ---
- Documentation/git-status.txt                      | 21 +++++++++++++++++-
- Documentation/technical/api-directory-listing.txt | 27 +++++++++++++++++++----
- 2 files changed, 43 insertions(+), 5 deletions(-)
+ t/t7519-ignored-mode.sh | 60 ++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 59 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/git-status.txt b/Documentation/git-status.txt
-index 9f3a78a36c..fc282e0a92 100644
---- a/Documentation/git-status.txt
-+++ b/Documentation/git-status.txt
-@@ -97,8 +97,27 @@ configuration variable documented in linkgit:git-config[1].
- 	(and suppresses the output of submodule summaries when the config option
- 	`status.submoduleSummary` is set).
+diff --git a/t/t7519-ignored-mode.sh b/t/t7519-ignored-mode.sh
+index 76e91427b0..6be7701d79 100755
+--- a/t/t7519-ignored-mode.sh
++++ b/t/t7519-ignored-mode.sh
+@@ -116,10 +116,68 @@ test_expect_success 'Verify status behavior on ignored folder containing tracked
+ 		ignored_dir/ignored_1.ign ignored_dir/ignored_2.ign \
+ 		ignored_dir/tracked &&
+ 	git add -f ignored_dir/tracked &&
+-	test_tick &&
+ 	git commit -m "Force add file in ignored directory" &&
+ 	git status --porcelain=v2 --ignored=matching --untracked-files=all >output &&
+ 	test_i18ncmp expect output
+ '
  
----ignored::
-+--ignored[=<mode>]::
- 	Show ignored files as well.
-++
-+The mode parameter is used to specify the handling of ignored files.
-+It is optional: it defaults to 'traditional'.
-++
-+The possible options are:
-++
-+	- 'traditional' - Shows ignored files and directories, unless
-+			  --untracked-files=all is specifed, in which case
-+			  individual files in ignored directories are
-+			  displayed.
-+	- 'no'	        - Show no ignored files.
-+	- 'matching'    - Shows ignored files and directories matching an
-+			  ignore pattern.
-++
-+When 'matching' mode is specified, paths that explicity match an
-+ignored pattern are shown. If a directory matches an ignore pattern,
-+then it is shown, but not paths contained in the ignored directory. If
-+a directory does not match an ignore pattern, but all contents are
-+ignored, then the directory is not shown, but all contents are shown.
- 
- -z::
- 	Terminate entries with NUL, instead of LF.  This implies
-diff --git a/Documentation/technical/api-directory-listing.txt b/Documentation/technical/api-directory-listing.txt
-index 6c77b4920c..7fae00f44f 100644
---- a/Documentation/technical/api-directory-listing.txt
-+++ b/Documentation/technical/api-directory-listing.txt
-@@ -22,16 +22,20 @@ The notable options are:
- 
- `flags`::
- 
--	A bit-field of options (the `*IGNORED*` flags are mutually exclusive):
-+	A bit-field of options:
- 
- `DIR_SHOW_IGNORED`:::
- 
--	Return just ignored files in `entries[]`, not untracked files.
-+	Return just ignored files in `entries[]`, not untracked
-+	files. This flag is mutually exclusive with
-+	`DIR_SHOW_IGNORED_TOO`.
- 
- `DIR_SHOW_IGNORED_TOO`:::
- 
--	Similar to `DIR_SHOW_IGNORED`, but return ignored files in `ignored[]`
--	in addition to untracked files in `entries[]`.
-+	Similar to `DIR_SHOW_IGNORED`, but return ignored files in
-+	`ignored[]` in addition to untracked files in
-+	`entries[]`. This flag is mutually exclusive with
-+	`DIR_SHOW_IGNORED`.
- 
- `DIR_KEEP_UNTRACKED_CONTENTS`:::
- 
-@@ -39,6 +43,21 @@ The notable options are:
- 	untracked contents of untracked directories are also returned in
- 	`entries[]`.
- 
-+`DIR_SHOW_IGNORED_TOO_MODE_MATCHING`:::
++test_expect_success 'Verify matching ignored files with --untracked-files=normal' '
++	test_when_finished "git clean -fdx" &&
++	cat >expect <<-\EOF &&
++	? expect
++	? output
++	? untracked_dir/
++	! ignored_dir/
++	! ignored_files/ignored_1.ign
++	! ignored_files/ignored_2.ign
++	EOF
 +
-+	Only has meaning if `DIR_SHOW_IGNORED_TOO` is also set; if
-+	this is set, returns ignored files and directories that match
-+	an exclude pattern. If a directory matches an exclude pattern,
-+	then the directory is returned and the contained paths are
-+	not. A directory that does not match an exclude pattern will
-+	not be returned even if all of its contents are ignored. In
-+	this case, the contents are returned as individual entries.
-++
-+If this is set, files and directories that explicity match an ignore
-+pattern are reported. Implicity ignored directories (directories that
-+do not match an ignore pattern, but whose contents are all ignored)
-+are not reported, instead all of the contents are reported.
++	mkdir ignored_dir ignored_files untracked_dir &&
++	touch ignored_dir/ignored_1 ignored_dir/ignored_2 \
++		ignored_files/ignored_1.ign ignored_files/ignored_2.ign \
++		untracked_dir/untracked &&
++	git status --porcelain=v2 --ignored=matching --untracked-files=normal >output &&
++	test_i18ncmp expect output
++'
 +
- `DIR_COLLECT_IGNORED`:::
- 
- 	Special mode for git-add. Return ignored files in `ignored[]` and
++test_expect_success 'Verify matching ignored files with --untracked-files=normal' '
++	test_when_finished "git clean -fdx" &&
++	cat >expect <<-\EOF &&
++	? expect
++	? output
++	? untracked_dir/
++	! ignored_dir/
++	! ignored_files/ignored_1.ign
++	! ignored_files/ignored_2.ign
++	EOF
++
++	mkdir ignored_dir ignored_files untracked_dir &&
++	touch ignored_dir/ignored_1 ignored_dir/ignored_2 \
++		ignored_files/ignored_1.ign ignored_files/ignored_2.ign \
++		untracked_dir/untracked &&
++	git status --porcelain=v2 --ignored=matching --untracked-files=normal >output &&
++	test_i18ncmp expect output
++'
++
++test_expect_success 'Verify status behavior on ignored folder containing tracked file' '
++	test_when_finished "git clean -fdx && git reset HEAD~1 --hard" &&
++	cat >expect <<-\EOF &&
++	? expect
++	? output
++	! ignored_dir/ignored_1
++	! ignored_dir/ignored_1.ign
++	! ignored_dir/ignored_2
++	! ignored_dir/ignored_2.ign
++	EOF
++
++	mkdir ignored_dir &&
++	touch ignored_dir/ignored_1 ignored_dir/ignored_2 \
++		ignored_dir/ignored_1.ign ignored_dir/ignored_2.ign \
++		ignored_dir/tracked &&
++	git add -f ignored_dir/tracked &&
++	git commit -m "Force add file in ignored directory" &&
++	git status --porcelain=v2 --ignored=matching --untracked-files=normal >output &&
++	test_i18ncmp expect output
++'
++
+ test_done
 -- 
 2.13.6
 
