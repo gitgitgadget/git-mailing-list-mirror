@@ -2,112 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 729661FA21
-	for <e@80x24.org>; Wed, 11 Oct 2017 17:24:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9CA8B20444
+	for <e@80x24.org>; Wed, 11 Oct 2017 17:47:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757459AbdJKRYB (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Oct 2017 13:24:01 -0400
-Received: from ikke.info ([178.21.113.177]:34980 "EHLO vps892.directvps.nl"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1757389AbdJKRYA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Oct 2017 13:24:00 -0400
-Received: by vps892.directvps.nl (Postfix, from userid 182)
-        id 013064403A1; Wed, 11 Oct 2017 19:23:59 +0200 (CEST)
-Received: from epsilon.home (unknown [10.8.0.22])
-        by vps892.directvps.nl (Postfix) with ESMTP id 7AD46440393;
-        Wed, 11 Oct 2017 19:23:58 +0200 (CEST)
-From:   Kevin Daudt <me@ikke.info>
-To:     git@vger.kernel.org
-Cc:     Kevin Daudt <me@ikke.info>,
-        =?UTF-8?q?Rafael=20Ascens=C3=A3o?= <rafa.almas@gmail.com>,
-        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH] column: show auto columns when pager is active
-Date:   Wed, 11 Oct 2017 19:23:10 +0200
-Message-Id: <20171011172310.2932-1-me@ikke.info>
-X-Mailer: git-send-email 2.14.2
-In-Reply-To: <20171009214543.12986-1-me@ikke.info>
-References: <20171009214543.12986-1-me@ikke.info>
+        id S1752501AbdJKRrB (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Oct 2017 13:47:01 -0400
+Received: from mail-it0-f65.google.com ([209.85.214.65]:49658 "EHLO
+        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752314AbdJKRrA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Oct 2017 13:47:00 -0400
+Received: by mail-it0-f65.google.com with SMTP id y15so4024597ita.4
+        for <git@vger.kernel.org>; Wed, 11 Oct 2017 10:47:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=RbUPLGPp17RCshR/vcTFMmTLBHXzCeekeNOWR996IGQ=;
+        b=ghmmEAFZqxQZlaJmHgH5zrlRovUbkt+b02rJEUYn8rMRrhLK8jAhN/WKYyNZQ6bxwU
+         X9JzfvEweMmY1NeBxrWxUr8qQ6/XDiSGnOBowUzAq5HGjIB2qjsVrD6UmwcVNHC8L7St
+         UFU1SlN8Y5gIw+4ro7r3qlDQJga1mLxZlvsirc96jtS95CywCcEjV92Ujl6huR5sCOia
+         y9BL2RqCDmm4GLaQWnmw9qw1ebk9E2y2UmMccc80EAhLShkyrppg14T2+5Juamop4vDH
+         0MIwR09Ot34V+YRLHUf2C35+bJO64BAurkuZNOsJnt/1DoqgfknyAgdEhmIV9BV5DH41
+         UyAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=RbUPLGPp17RCshR/vcTFMmTLBHXzCeekeNOWR996IGQ=;
+        b=aeidnkUyHXuANAGuG/mkST7G2JJOSDVGWmn6q+ZVvBbllJ2b+bkTNCdoBzrzaPPLaP
+         Vdw8IMJ0ixX9atThg2na5Q+zxl/wrG+pE4SsWMSTvqD5ldzFZwowp8S3UjXxcLGTocMc
+         kquA6qpZwJjHz7P6r4+dvZq4B+Ns68ZhQjNc2akq1K97j5L47e8FGCFV2FUjqb6DWpN+
+         iyUxGzyH+z8arVc8rAdF3Wm0pGcyrFENlIbys4ocrs3d4JYcVepqC7OgSgoM9s4fbWnX
+         Pf8RWKDA+o5Hrm+KSIzFW0tEBG4BwxPNk8rAmIDMGdZSKx2ZQiSFDRhKRH5qLj47ijQ2
+         VKaw==
+X-Gm-Message-State: AMCzsaXmCdSSof6MjNri8Vmm1RorOJ1tZq+k6xUcv90ss21ZGDZhBIuH
+        ppakM3fnKuRn5/6OEV0VDRWQe9REsbqqoSK3CdmTXhst
+X-Google-Smtp-Source: AOwi7QB91uDIyrwwWmlvgh/f4hh9I67AzHa1wziUHCwr+8MccybpYofwUUXQV5uBX1zJXSk4pqPVMBZ2vcWkklUimrI=
+X-Received: by 10.36.203.129 with SMTP id u123mr480365itg.107.1507744019685;
+ Wed, 11 Oct 2017 10:46:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.107.145.215 with HTTP; Wed, 11 Oct 2017 10:46:39 -0700 (PDT)
+From:   Ayush Goel <ayushgoel111@gmail.com>
+Date:   Wed, 11 Oct 2017 23:16:39 +0530
+Message-ID: <CAEBs8jLnU44n2fhE8tGommqfEpFPdd0FLUtmeZXZ+qhB1RV6XQ@mail.gmail.com>
+Subject: Unable to use --patch with git add
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When columns are set to automatic for git tag and the output is
-paginated by git, the output is a single column instead of multiple
-columns.
+$ git --version
+git version 2.14.2
 
-Standard behaviour in git is to honor auto values when the pager is
-active, which happens for example with commands like git log showing
-colors when being paged.
+What more details can I provide to help debug this?
 
-Since ff1e72483 (tag: change default of `pager.tag` to "on",
-2017-08-02), the pager has been enabled by default, exposing this
-problem to more people.
-
-finalize_colopts in column.c only checks whether the output is a TTY to
-determine if columns should be enabled with columns set to auto. Also check
-if the pager is active.
-
-Helped-by: Rafael Ascensão <rafa.almas@gmail.com>
-Signed-off-by: Kevin Daudt <me@ikke.info>
----
- column.c         |  3 ++-
- t/t7006-pager.sh | 14 ++++++++++++++
- 2 files changed, 16 insertions(+), 1 deletion(-)
-
-diff --git a/column.c b/column.c
-index ff7bdab1a..ded50337f 100644
---- a/column.c
-+++ b/column.c
-@@ -5,6 +5,7 @@
- #include "parse-options.h"
- #include "run-command.h"
- #include "utf8.h"
-+#include "pager.c"
- 
- #define XY2LINEAR(d, x, y) (COL_LAYOUT((d)->colopts) == COL_COLUMN ? \
- 			    (x) * (d)->rows + (y) : \
-@@ -224,7 +225,7 @@ int finalize_colopts(unsigned int *colopts, int stdout_is_tty)
- 		if (stdout_is_tty < 0)
- 			stdout_is_tty = isatty(1);
- 		*colopts &= ~COL_ENABLE_MASK;
--		if (stdout_is_tty)
-+		if (stdout_is_tty || pager_in_use())
- 			*colopts |= COL_ENABLED;
- 	}
- 	return 0;
-diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
-index f0f1abd1c..44c2ca5d3 100755
---- a/t/t7006-pager.sh
-+++ b/t/t7006-pager.sh
-@@ -570,4 +570,18 @@ test_expect_success 'command with underscores does not complain' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success TTY 'git tag with auto-columns ' '
-+	test_commit one &&
-+	test_commit two &&
-+	test_commit three &&
-+	test_commit four &&
-+	test_commit five &&
-+	cat >expected <<\EOF &&
-+initial  one      two      three    four     five
-+EOF
-+	test_terminal env PAGER="cat >actual.tag" COLUMNS=80 \
-+		git -p -c column.ui=auto tag --sort=authordate &&
-+	test_cmp expected actual.tag
-+'
-+
- test_done
 -- 
-2.14.2
-
+Regards,
+Ayush Goel
