@@ -2,89 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.2 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 26BBC1FA21
-	for <e@80x24.org>; Wed, 11 Oct 2017 19:23:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5AE021FA21
+	for <e@80x24.org>; Wed, 11 Oct 2017 19:24:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757934AbdJKTXV (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Oct 2017 15:23:21 -0400
-Received: from mail-pf0-f169.google.com ([209.85.192.169]:46289 "EHLO
-        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1757370AbdJKTXU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Oct 2017 15:23:20 -0400
-Received: by mail-pf0-f169.google.com with SMTP id p87so1748460pfj.3
-        for <git@vger.kernel.org>; Wed, 11 Oct 2017 12:23:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Yy3sx8Ue6JaI885mFsGT0VddiGfrytFzDymdwYuJJlY=;
-        b=jjZhtwnwNDmV2LcG4H/94yM2dtH6dNW7ZDE7RcARkkE443FaHEX2jS3IezUxlOmsPD
-         MbyhmymHeiHQZZW30W5ET1QqdMiBxRg8BLB0NmdzzXsg1Ouwcwc96UrtXcKWHSnulDi9
-         kV1AkdBKi0KM/Asfl86A49QRBiA3CJKLQbO8rnLcTn9ugMb/PmzAMn5zXld+ImAt5Mge
-         2Ijy8Kdvky3HaRBnkc3fG3mCHuLgepx2r+A8QAZSzIxwqvrr4M4uOrfY1jyQ30Lxu0vz
-         kHBQ7L60WGXIjT8v7yxVNmgV5d7bM+XqeroK4IatU14JuKs1CaUqpU1qZCQwo3ZerMBd
-         KPIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Yy3sx8Ue6JaI885mFsGT0VddiGfrytFzDymdwYuJJlY=;
-        b=KU3flOnxpxxbdleiKS0m60+GT0nuqSCTf88dpSfUv9lY9viEcCKYtKvfJGyPHBoq7a
-         DToKIih4lr6fK2iZkoU51tB/S694GPnkqbp97X+VwkP9QFFxeaW7v11RJcS47wJ/sglM
-         9EXRBQOOXMkeUgGthFc6pJ7Y9uz6jFAi74jz4sH66fBHIjw2ZvSmw6yVKZqHRNkERakr
-         vtPGwmLHM+lLDbWPlY5Ccq1Hy1Zb6McLGjmmFnAMacdkRLX/PNE4QYDKVXAz09A8iyDG
-         l44h6Wplc5++48n2DYFW/ST1UotWLzyxccACLn/8dz5hixC5RDXzCH9vGk9LTeNwOEdi
-         6MJg==
-X-Gm-Message-State: AMCzsaWNd8ejFKVAQjwJbhpRBBx4JmZQD5d+ghyiCV9pIB7HZW00NdSW
-        WOJMMCfKO1g01U/Hb0G25J8XVQ==
-X-Google-Smtp-Source: AOwi7QAuTN9IhchNW2jaZ0/XcTC43QGwdDcZj5o5gEx3GwsYFzqT1N9+d1r5QYY8TdMHB2y0t1p3fw==
-X-Received: by 10.101.86.9 with SMTP id l9mr32394pgs.297.1507749799423;
-        Wed, 11 Oct 2017 12:23:19 -0700 (PDT)
-Received: from twelve3.mtv.corp.google.com ([2620:0:100e:422:f009:30df:5144:99e2])
-        by smtp.gmail.com with ESMTPSA id d124sm24557167pfc.42.2017.10.11.12.23.18
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 11 Oct 2017 12:23:18 -0700 (PDT)
-Date:   Wed, 11 Oct 2017 12:23:18 -0700
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     =?UTF-8?B?5bCP5bed5oGt5Y+y?= <aiueogawa217@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Fwd: how can I conform if I succeed in sending patch to mailing
- list
-Message-Id: <20171011122318.71a40d5e6d89fedbb74e22da@google.com>
-In-Reply-To: <CAC2JkrJV7XdRyLiu3fTLZmLSJzU3GX_2rr6sQcUx-w0-BZ7f1g@mail.gmail.com>
-References: <CAC2JkrLfcUzipRPhUHiVEMipsPVcia6ku+QK7OwMJrME-JtAzQ@mail.gmail.com>
-        <CAC2JkrJV7XdRyLiu3fTLZmLSJzU3GX_2rr6sQcUx-w0-BZ7f1g@mail.gmail.com>
-X-Mailer: Sylpheed 3.4.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1757851AbdJKTYx (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Oct 2017 15:24:53 -0400
+Received: from cpanel2.indieserve.net ([199.212.143.6]:43235 "EHLO
+        cpanel2.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1757432AbdJKTYv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Oct 2017 15:24:51 -0400
+Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:58838 helo=localhost.localdomain)
+        by cpanel2.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.89)
+        (envelope-from <rpjday@crashcourse.ca>)
+        id 1e2Mcc-0004iH-5J; Wed, 11 Oct 2017 15:24:50 -0400
+Date:   Wed, 11 Oct 2017 15:24:48 -0400 (EDT)
+From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
+X-X-Sender: rpjday@localhost.localdomain
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+cc:     Git Mailing list <git@vger.kernel.org>
+Subject: Re: slight addition to t.gummerer's proposed "git stash" patch
+In-Reply-To: <20171011192109.GC15399@hank>
+Message-ID: <alpine.LFD.2.21.1710111523510.4185@localhost.localdomain>
+References: <alpine.LFD.2.21.1710110454240.11490@localhost.localdomain> <20171011192109.GC15399@hank>
+User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel2.indieserve.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - crashcourse.ca
+X-Get-Message-Sender-Via: cpanel2.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: cpanel2.indieserve.net: rpjday@crashcourse.ca
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 12 Oct 2017 04:14:18 +0900
-小川恭史 <aiueogawa217@gmail.com> wrote:
+On Wed, 11 Oct 2017, Thomas Gummerer wrote:
 
-> Hello, I found a mistake in documents, fixed it, and send patch to mailing list.
-> 
-> Sending patches by 'git send-email' with Gmail smtp seemed to be
-> successful because CC included my email address and I received it.
-> However, I never received email from mailing list. Of course I'm
-> subscribing mailing list.
-> 
-> How can I conform if I succeed in sending patch to mailing list?
+> On 10/11, Robert P. J. Day wrote:
+> >
+> >   was perusing thomas gummerer's proposed "git stash" patch here:
+> >
+> > https://www.spinics.net/lists/git/msg313993.html
+> >
+> > and i'd make one more change -- i'd separate the OPTIONS entries for
+> > "git stash push" and "git stash save" so they don't end up being
+> > rendered all crushed together when displaying the man page:
+>
+> I for one would like that.  I sent a patch recently [1] that would
+> show git stash push first on the man page, which didn't seem to get
+> much traction.  This goes a bit further than that, which I'd be happy
+> with.
+>
+> [1]: https://public-inbox.org/git/20171005201029.4173-1-t.gummerer@gmail.com/
 
-The easiest way I can think of is to check an online mailing list
-archive [1].
+  ... snip ...
 
-I think your patch was received, as you can see in [2].
+if you want, just crush my suggestion into your earlier patch and
+resubmit it.
 
-[1] for example, https://public-inbox.org/git/
+rday
 
-[2] https://public-inbox.org/git/?q=aiueogawa217
+-- 
+
+========================================================================
+Robert P. J. Day                                 Ottawa, Ontario, CANADA
+                        http://crashcourse.ca
+
+Twitter:                                       http://twitter.com/rpjday
+LinkedIn:                               http://ca.linkedin.com/in/rpjday
+========================================================================
