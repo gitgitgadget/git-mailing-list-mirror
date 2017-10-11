@@ -2,116 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA2071FA21
-	for <e@80x24.org>; Wed, 11 Oct 2017 17:49:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 49AFD1FA21
+	for <e@80x24.org>; Wed, 11 Oct 2017 17:56:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752214AbdJKRt2 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Oct 2017 13:49:28 -0400
-Received: from mail-qt0-f173.google.com ([209.85.216.173]:43796 "EHLO
-        mail-qt0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751988AbdJKRt1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Oct 2017 13:49:27 -0400
-Received: by mail-qt0-f173.google.com with SMTP id a43so7702181qta.0
-        for <git@vger.kernel.org>; Wed, 11 Oct 2017 10:49:27 -0700 (PDT)
+        id S1757594AbdJKR4O (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Oct 2017 13:56:14 -0400
+Received: from mail-io0-f174.google.com ([209.85.223.174]:51177 "EHLO
+        mail-io0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752195AbdJKR4N (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Oct 2017 13:56:13 -0400
+Received: by mail-io0-f174.google.com with SMTP id 97so2671770iok.7
+        for <git@vger.kernel.org>; Wed, 11 Oct 2017 10:56:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=NWF3Gaf/U0yYL/KzHL9Sx6uEEqlQxYwa/bXd3O8Estk=;
-        b=Fw/R3eclwvtRSohjtbDPtd0Ej0QTad6hitqgTTvWVYlRNhFuz79XByYThuSbWJf1Rg
-         SswbjGgDfeljmKy6fv1ADMA1VyD9nJEMJ1H3t2p486mSMEKaQ1S2MCqaDxhJM9jBPvJd
-         Cvc6bANK8GlQS0gCH0drLRQ9fL/C1ZezlDuluwKmo88X4IdqLE3ub4d263MeAbmrSDgs
-         prYqR1h9Z+1/CoQ9CNp+bXyJSc/Krvdg9JfehPel7/+bbPMvoEHkBxfjAp6j1Q9G4WPZ
-         biXeNKS3OMGamH5w+MVQWTQVkTwavCFJTgJnRgjeYYaCw328sWPaIYfJHMb3r6/JPfYy
-         mmWA==
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=tZZjiU1CCCPgma+dwG3dxgVane2iueZ9p/pQPwN6+BU=;
+        b=rkfn3liyJ0BO/Y5lPHs5yLlpl8pWLKfXd6QjJMrCsRY8DwmJY5gTzxa7VwhXVcJ0s6
+         fCBHYgyI27AIOLUWtItUkyqkdBzRLF/XY60gGPYWFTlTPdLfytLhlWKl5e8FZcwIcz9e
+         rKEwL4mCJnS+sMVrhDUrIUTkZYZTrzaLUMx14e5Prqma8CpabNYSAuDXpL8sAO2jVVAl
+         TX9G2byipnYiBMzxRlXgPa6xX9iMNd5r5Dy1/ujYWD4xC6Npsaeb3Zz5DMpDJ8HED7WJ
+         M/jkytZ+ORrG3Hw2XrZIoXzaPy7Dx+x5kZ7JuCUS8UyTtk+E4KKH8FqJAOUW4FxcrUjK
+         w0KQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=NWF3Gaf/U0yYL/KzHL9Sx6uEEqlQxYwa/bXd3O8Estk=;
-        b=LqAWKnQpS8FAGytiRTkZUpGh5JzRuGoW1RMUAkELtcpNRSAAqrDYRTEqp0da9GnbWj
-         9Xp6zG5UHxZVyuj6PR5I/KJb/elqlltq8sNc0EtGSxAfdc3zU1FrnRujA6Puj6+eJGxz
-         +k0i+ixm+dGeh6kp3TlDaBmQQ8+CYb75B9X3nPj8IYNB08XgIaLyEWE1EsNl+raClEf/
-         /9T7nGme97CEF39zIERBgBi1aJ9whk6rmP7IqARSo+w2eDH/0KzZGcO2DfDOKsvDAzFZ
-         Z79rqfIgRbJhL0X9E6a+1dTGO/2a+YPoz4s2j4SlCkj0oVhCD5jwBrhBeT1mCHKn5oT3
-         VeCw==
-X-Gm-Message-State: AMCzsaWGnR5hq3nWuEHa0V8BtPD7RNfTg1IjEYgzooCGtidi1PN/x8RC
-        GBaz1VvZh14zGh4VVAygtGEMWpw+
-X-Google-Smtp-Source: AOwi7QCze06Xr5r86ajN826dmIjSebQ+cfOZG4z57gDzOuTLA154EwLSoJzTEPYSez8K6ap34uoNCA==
-X-Received: by 10.200.42.118 with SMTP id l51mr743927qtl.37.1507744166976;
-        Wed, 11 Oct 2017 10:49:26 -0700 (PDT)
-Received: from LykOS.localdomain ([2604:2000:8209:6800:c238:96ff:fe6c:25f])
-        by smtp.gmail.com with ESMTPSA id r6sm8417420qkh.22.2017.10.11.10.49.26
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 11 Oct 2017 10:49:26 -0700 (PDT)
-Date:   Wed, 11 Oct 2017 13:49:52 -0400
-From:   Santiago Torres <santiago@nyu.edu>
-To:     Ayush Goel <ayushgoel111@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Unable to use --patch with git add
-Message-ID: <20171011174952.almye3qa2tmyrmol@LykOS.localdomain>
-References: <CAEBs8jLnU44n2fhE8tGommqfEpFPdd0FLUtmeZXZ+qhB1RV6XQ@mail.gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=tZZjiU1CCCPgma+dwG3dxgVane2iueZ9p/pQPwN6+BU=;
+        b=cWb9+XKjIRALJMdxPohxe0tqhr6JVGKYSlqu6y4gpilJ5S4EMmOcgPwDsfy3sYvaLf
+         Zbj1vytgIL+gt1B7huH9HQlHO5oLsedFVC0aR1WmirjOIocgfOPrSqWbc8vKmNMciNcJ
+         iZAelLDoYu4bik9BAig4RvOUBQMA0qTG1KBkTv2rPHzAj/DYOsTomVJhiwzIYNzn/E1G
+         v6W0T7gtXSesGMbVqr7/AzLGSSlV+bo18EGGadRT2klxcKvADnQuHz0/UMtad1FKFuOb
+         xv4WnVodKeU8lqxpZVv3H4Rmd57BgxRwwPdrJ9HoMc+wrGBblfwpcULOFeYDsT3Folov
+         GT2Q==
+X-Gm-Message-State: AMCzsaUdEkR3Us1nSX5WrLRjde75bhdf/EYGB8H0z2n9VTDscEty20tW
+        L0AgNqx86rtBjznXbfSkRbIJ1vAYkP6KgGkXFYk=
+X-Google-Smtp-Source: AOwi7QANEdi/FwMkYRiLqwyJwnAdbseXaSyRXpPU6nRZgtvFgZDO3NxNc0Isoc+AO+uK7LENmTpTnbnVm7nMYN8rhLY=
+X-Received: by 10.107.24.133 with SMTP id 127mr113755ioy.115.1507744572535;
+ Wed, 11 Oct 2017 10:56:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="aawnjxgg7xxdngmw"
-Content-Disposition: inline
-In-Reply-To: <CAEBs8jLnU44n2fhE8tGommqfEpFPdd0FLUtmeZXZ+qhB1RV6XQ@mail.gmail.com>
+Received: by 10.107.145.215 with HTTP; Wed, 11 Oct 2017 10:55:52 -0700 (PDT)
+In-Reply-To: <20171011174952.almye3qa2tmyrmol@LykOS.localdomain>
+References: <CAEBs8jLnU44n2fhE8tGommqfEpFPdd0FLUtmeZXZ+qhB1RV6XQ@mail.gmail.com>
+ <20171011174952.almye3qa2tmyrmol@LykOS.localdomain>
+From:   Ayush Goel <ayushgoel111@gmail.com>
+Date:   Wed, 11 Oct 2017 23:25:52 +0530
+Message-ID: <CAEBs8jKAsb3B-6WJ=ptL2AsGvDRFVPYLCsztpdTN6KCBLOo1XA@mail.gmail.com>
+Subject: Re: Unable to use --patch with git add
+To:     Santiago Torres <santiago@nyu.edu>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hello Santiago,
 
---aawnjxgg7xxdngmw
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Thank you for picking this up.
 
-It'd be helpful to know:
 
-- What did you do?
-- What did you expect to happen?
-- What happened instead?
+On Wed, Oct 11, 2017 at 11:19 PM, Santiago Torres <santiago@nyu.edu> wrote:
+> It'd be helpful to know:
+>
+> - What did you do?
 
-I suspect you are using --patch with a new file, so you probably need to fi=
-rst
-add it with -N or so. This is just a shot in the dark though...
+I have recently updated to git version 2.14.2. The problem started
+happening after that.
+Made changes to a file. Tried `git add -p`.
 
-Thanks,
--Santiago.
+> - What did you expect to happen?
 
-On Wed, Oct 11, 2017 at 11:16:39PM +0530, Ayush Goel wrote:
-> $ git --version
-> git version 2.14.2
->=20
-> What more details can I provide to help debug this?
->=20
-> --=20
-> Regards,
-> Ayush Goel
+Enter the patch add mode of git.
 
---aawnjxgg7xxdngmw
-Content-Type: application/pgp-signature; name="signature.asc"
+> - What happened instead?
 
------BEGIN PGP SIGNATURE-----
+Usual git patch mode is that it shows a patch and expects user to
+add/skip/split etc. Instead it never stops to take input from me.
 
-iQIzBAEBCAAdFiEEkDurc2QOttZVM+/zRo8SLOgWIpUFAlneWbsACgkQRo8SLOgW
-IpXuLA/+J6+HJAwqKlOdKAbpHFhxlIuU0IFYnXU4ZARFrVApp2zZjahEWuDXfWYt
-Wxvlc5zo3p00A2/QtnByJDV2aPuNyVSyDhMpFO1VN2Pl7hSWRZBupl1C/iwRflC2
-U6HFDS9PRqs8ITfT5um334WG57ZkZYYgGih3+kGL+LwxT7slwVi9xRqzwBoJCjt5
-uCXvnvE9vqaAmixsmvOzeVhKk/Ys9yw9DKVXNb8ARRQlX3411K9ceDDvZQrmWYCS
-7P87RbKkGDS1C58AXPAYb56dmA5ykcHtwAlaHGODi4KjogHhACcgz/QGSJSvIgEs
-9/P/Nt4grmpyqnB0241ZBdgCNABV2KCsZfZTe/4IaSboAy1dFPJ3exOvk9G8CHAC
-QxIJME8IbRZcSpPSlxGM5FXK2/+VaX/D6788LK7dYBJwQRrQLQNLMa8IcRrIuJVF
-KdWOXPPLako1GRcESY3Kn5zsy5gjVeMvaTkMk0UXZUUiMoX2wPKX7Fw8ZNrTY68O
-oRgjtwpD9rKXpsk0Ne8kjLrtcB3No7qbm/TSAHhh7g7Yv9oX/wuaUrUDc+yfZ0/7
-jLXNKgJsanr0j5cAACxWWDKDjmqbjYbsKDjxBmXjCaOSI7T/VsI/raHeyd2vIxUo
-9UNslL5skBBYkxU+7Iy7sf7T3R1CmzTvPpi8x/AUkBwtMSI/aGE=
-=cgRy
------END PGP SIGNATURE-----
+See this ->
 
---aawnjxgg7xxdngmw--
+
+git add -p
+diff --git a/Tests/OSXTests/TDTStreamingTests.m
+b/Tests/OSXTests/TDTStreamingTests.m
+index 35757bc..525fe56 100644
+--- a/Tests/OSXTests/TDTStreamingTests.m
++++ b/Tests/OSXTests/TDTStreamingTests.m
+@@ -116,7 +116,7 @@ static NSTask *compressionServerTask;
+ }
+
+ - (void)breathe {
+-  NSDate *date = [NSDate dateWithTimeIntervalSinceNow:0.1];
++  NSDate *date = [NSDate dateWithTimeIntervalSinceNow:0.01];
+   [[NSRunLoop currentRunLoop] runUntilDate:date];
+ }
+
+#### Expecting git input mode to stop the process here #####
+#### Instead git exits without any error #####
+
+>
+> I suspect you are using --patch with a new file, so you probably need to first
+> add it with -N or so. This is just a shot in the dark though...
+>
+
+Not adding new file.
+
+> Thanks,
+> -Santiago.
+>
+> On Wed, Oct 11, 2017 at 11:16:39PM +0530, Ayush Goel wrote:
+>> $ git --version
+>> git version 2.14.2
+>>
+>> What more details can I provide to help debug this?
+>>
+>> --
+>> Regards,
+>> Ayush Goel
+
+
+
+-- 
+Regards,
+Ayush Goel
