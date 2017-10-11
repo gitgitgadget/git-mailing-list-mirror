@@ -7,92 +7,104 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 475241FA21
-	for <e@80x24.org>; Wed, 11 Oct 2017 19:02:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 31EE01FA21
+	for <e@80x24.org>; Wed, 11 Oct 2017 19:08:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752427AbdJKTCa (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Oct 2017 15:02:30 -0400
-Received: from mail-pf0-f182.google.com ([209.85.192.182]:48568 "EHLO
-        mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751946AbdJKTC3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Oct 2017 15:02:29 -0400
-Received: by mail-pf0-f182.google.com with SMTP id b79so1677707pfk.5
-        for <git@vger.kernel.org>; Wed, 11 Oct 2017 12:02:29 -0700 (PDT)
+        id S1757528AbdJKTIn (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Oct 2017 15:08:43 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:43224 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1757486AbdJKTIm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Oct 2017 15:08:42 -0400
+Received: by mail-wm0-f68.google.com with SMTP id m72so21134927wmc.0
+        for <git@vger.kernel.org>; Wed, 11 Oct 2017 12:08:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=szlqLIr2znwLTJkyDEBT3QUJu6aX2eSkaqqUcW4c9gE=;
-        b=Agt4UXADOvkDWXYdqf7qVRKTVFfZZrARDJujjjqJYWXVesY467cIeqdpzLG3iPg+2P
-         8uaEXjMeaEZHbylBV9E6C5Tootu7sUDpMhD4I8BlbTKCXVegVW4Ix3lS5vIywqv+xaXy
-         eZJ2o9C+w16r2S1ac6FpkI3QH0V1H7YwIyWd4paMxTcU7oYSN6y7jZAG6SjY7Im/9VBn
-         w+YtkalR5wGv7QCamrsfN781kyTPMLXfFM5eIIrSYpyhkiRHw9GdYvsXlO8EuWC/Fhuc
-         IjfUlTovE6Jo0Fq8iepMJakM/1M3tnNSRUKqCN4n2y9nIqI0HOcghDD1tomzSU3dL7cd
-         8bhg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=dv4/OdA5tPFBLzOBd1yAzwKcMCpEH5pJlETbduxItOI=;
+        b=uIWuXJqiXnkMdgswuK0izQ174ZN/yQOXXfCyh6DUYXrrDc12QFcvZ5t6YdX8UMKj5d
+         j3ArqEIlUuPqNhcJiJiJd6IA4n+bB37gyUy/e3opjMHifnbd4h96PEwlDh2R3aGK0lNR
+         NqnYK6vv5bxwDBD+exlilfGudJfHK4/dBPZaJ7xkAtd8Dcby05xgpIIsPRc7T39z4FDX
+         PpWxCrubmHS7sTRD+12pLTLIofI72meotifH4HdebP7FNz4nb6ZZwEeH+zavU9hTWnRX
+         RpjCuYdEWMPoRdtYzoDdPFKxX11M8nMy5/bSCXtiBlM/GnsnROMNiEqTpWL0JO03Dk0b
+         dVig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=szlqLIr2znwLTJkyDEBT3QUJu6aX2eSkaqqUcW4c9gE=;
-        b=ESvtTkuls8bOlmujTTx/wQ6BaFAFh1xD5En70EgDWf4smR//ozHCjMapFY34Ijoa1N
-         4omCEAL/iKaVncY0DNvZP3JkMowt4E+Rm6FTpTaU97Im0ha8dMh0TokncYFaJrMvkXk6
-         p7KZRbeI4Q1o2MOnagxa9b4uWJ50ibcxBNU7aGogDwZine8bpxqRD73xBgPK/uWf2nLa
-         5aDd/0vkBYh31+XpN9zEbs6CzDl6v92CkVc+zAhmwId3csfWtKnjMyo8mxs3pbg6S3pF
-         8t18GuXkKLztrPcitb1vYxCOoSG/q2qZaw8X6EA4Q5KccZNDMRuaqWCQGFLE03eUz4lI
-         pJHQ==
-X-Gm-Message-State: AMCzsaVEt/p9IcDKKBOexHPnnjWGduuYO8CEqIzEmPcQ6NvJ0yif9ZNr
-        KCYGh7TznUv7w+g8KUfI5en2d8W9200cEJ+2tLc=
-X-Google-Smtp-Source: AOwi7QADPUnkBETn2kfYr8CLriNJ0aNJFKYdHoklrg3ztSd2JZaHNDLNEpylTAEppldKU6M4HINMWdMZ1tu1+JogcBc=
-X-Received: by 10.98.62.195 with SMTP id y64mr17875pfj.140.1507748548823; Wed,
- 11 Oct 2017 12:02:28 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=dv4/OdA5tPFBLzOBd1yAzwKcMCpEH5pJlETbduxItOI=;
+        b=JQuFbO+PBSWjMErL+MQ+BmIzxHpza/kX0qLFrCnPPMnc2dNuwCvW62LRxiW73oWt8D
+         28W+z2Qfd8kQz59bUXM0narIite6XUlSdh7ZeAdkf/YwDuewS3fpGqMiw33mAAqE7Xbo
+         zHv9nFfvIWiaHRtOS5wA7AE1EmzwJbCVDOoW/im9Y+fUjt7RCvxFXXXeyKN8PvBfyQtR
+         OubdqPLCm3g/9VAg1ayUicpxqJMT8k8yVSZq5ce14YG1sV8kjjMB3YLpkFqZ4gtEV+fa
+         8CViJaVLMswVdEh89a6XG/PAYC9skxsZMGbVwwvOx3PrE8RPgPOTRPjaR2MShuuqP149
+         CFag==
+X-Gm-Message-State: AMCzsaVdeAMRVRt4TcCA9rIuo/PCilYftzlWCcr4i4DWzEDvY0y/wtkC
+        Qy1lZRnReslxWsMR4CbkYfM=
+X-Google-Smtp-Source: AOwi7QCZfQd/GaC94BT2FjwHguBWFDbW6/Ri3I9bLCdLUWtANI/J5JK1UgYZcvsLbdckfIMVZu32cw==
+X-Received: by 10.28.168.203 with SMTP id r194mr29007wme.2.1507748920972;
+        Wed, 11 Oct 2017 12:08:40 -0700 (PDT)
+Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
+        by smtp.gmail.com with ESMTPSA id 38sm7592429wrl.76.2017.10.11.12.08.40
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 11 Oct 2017 12:08:40 -0700 (PDT)
+Date:   Wed, 11 Oct 2017 20:09:35 +0100
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Takahito Ogawa <aiueogawa217@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 1/1] git-stash.txt: correct "git stash" behavior with no
+ arguments
+Message-ID: <20171011190935.GA15399@hank>
+References: <n>
+ <20171011183718.2404-1-aiueogawa217@gmail.com>
 MIME-Version: 1.0
-Received: by 10.100.156.137 with HTTP; Wed, 11 Oct 2017 12:02:27 -0700 (PDT)
-In-Reply-To: <20171011183640.GC16800@alpha.vpn.ikke.info>
-References: <20171009214543.12986-1-me@ikke.info> <20171011172310.2932-1-me@ikke.info>
- <CAN0heSqbD8TJu+_d11gj2eftG3gR+n0j621q_uSnuLQc9t_pbQ@mail.gmail.com> <20171011183640.GC16800@alpha.vpn.ikke.info>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Wed, 11 Oct 2017 21:02:27 +0200
-Message-ID: <CAN0heSqJuE5RorQSf8yX3TF_giqL-Mt+DJ5-V08eH3=xi+Q9wA@mail.gmail.com>
-Subject: Re: [PATCH] column: show auto columns when pager is active
-To:     Kevin Daudt <me@ikke.info>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?Q?Rafael_Ascens=C3=A3o?= <rafa.almas@gmail.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20171011183718.2404-1-aiueogawa217@gmail.com>
+User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11 October 2017 at 20:36, Kevin Daudt <me@ikke.info> wrote:
-> On Wed, Oct 11, 2017 at 08:12:35PM +0200, Martin =C3=85gren wrote:
->> On 11 October 2017 at 19:23, Kevin Daudt <me@ikke.info> wrote:
->> I wonder if it's useful to set COLUMNS a bit lower so that this has to
->> split across more than one line (but not six), i.e., to do something
->> non-trivial. I suppose that might lower the chances of some weird
->> breakage slipping through.
->
-> Yeah, I was doubting about that, but wouldn't this amount to testing
-> whether git column is working properly, instead of just testing whether
-> it's being done at all?
+On 10/12, Takahito Ogawa wrote:
+> "git stash" behavior without any arguments was changed in
+> 1ada5020b ("stash: use stash_push for no verb form", 2017-02-28).
+> This is equivalent to "git stash push" but documents says
+> "git stash save".
+> 
+> Correct it.
 
-Right, I think you'd need a pretty crazy bug in order to slip through
-all tests here.
+Thanks for fixing this!  I recently sent a patch that would advertise
+git stash push more in general, which would also fix this occurrence [1], 
+but it didn't seem like it got much interest.  However this is
+obviously correct, and should definitely be fixed, while the other
+places can still mention 'git stash save'.
 
->> These were just the thoughts that occurred to me, not sure if any of
->> them is particularly significant. Thanks for cleaning up after me.
->>
->
-> np. Just as I posted earlier, I think you did not actually cause the bug
-> (because this has never worked), it just made it visible to more users.
+For what it's worth this is
 
-Well, the general bug/behavior was always there, but I regressed a
-particular use-case. In 2.14, you could do `git tag` with column.ui=3Dauto
-and it would do the columns-thing. But with ff1e72483, the behavior
-changed. To add insult to injury, it might be non-obvious that the pager
-is running, since with just a few tags, the pager simply exits silently.
-So debugging this could probably be quite frustrating.
+Reviewed-by: Thomas Gummerer <t.gummerer@gmail.com>
 
-Martin
+
+> Signed-off-by: Takahito Ogawa <aiueogawa217@gmail.com>
+> ---
+>  Documentation/git-stash.txt | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
+> index 00f95fee1..63642c145 100644
+> --- a/Documentation/git-stash.txt
+> +++ b/Documentation/git-stash.txt
+> @@ -33,7 +33,7 @@ and reverts the working directory to match the `HEAD` commit.
+>  The modifications stashed away by this command can be listed with
+>  `git stash list`, inspected with `git stash show`, and restored
+>  (potentially on top of a different commit) with `git stash apply`.
+> -Calling `git stash` without any arguments is equivalent to `git stash save`.
+> +Calling `git stash` without any arguments is equivalent to `git stash push`.
+>  A stash is by default listed as "WIP on 'branchname' ...", but
+>  you can give a more descriptive message on the command line when
+>  you create one.
+> -- 
+> 2.13.1
+> 
