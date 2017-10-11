@@ -2,180 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 59F921FA21
-	for <e@80x24.org>; Wed, 11 Oct 2017 13:38:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8B25B1FA21
+	for <e@80x24.org>; Wed, 11 Oct 2017 13:58:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752111AbdJKNiZ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Oct 2017 09:38:25 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64104 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751462AbdJKNiY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Oct 2017 09:38:24 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 03415A801B;
-        Wed, 11 Oct 2017 09:38:23 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=KlGB6o66vnMrcJiVZ7fa+EnHkN4=; b=H07fuu
-        Al3y8hYKCtnJfJ9k5TPhUuTYYDdxNKKbLp78wAB0uH+rEWSF8MEnB+UdWJ8c28Ti
-        5b3ml9Ka/PvPUaIcJKqk+KSmu90W/gh2ErhUhDo2sgG/yuxB6VIRvTdNBVKXYHzL
-        P6SLAACwt/yErcEFI14xtYdSgpa66cKRoSEaY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=bmxbZ+h+fqLCue5/9QbMsLDBAneOzwqF
-        j5JK3uMGb76wHrJnvT4VkQhBT8WG21C7j3jcJ4hjeFiRsEXg7YuCDozZh05rp9MY
-        hlWUOnLmb4hFEmP9RglBqgbpuB3tn/8Azs/MAaxEuqoBmW4UKeMAr+KQS9S5SMiP
-        jT2MmLyG80M=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id ED62BA801A;
-        Wed, 11 Oct 2017 09:38:22 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 585DCA8019;
-        Wed, 11 Oct 2017 09:38:22 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Marius Paliga <marius.paliga@gmail.com>
-Cc:     Stefan Beller <sbeller@google.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Enhancement request: git-push: Allow (configurable) default push-option
-In-Reply-To: <CAK7vU=22W9mYdSnw_LP2uWYyKZuTzF0JgTVWCX+nMhUnLjQ_Cw@mail.gmail.com>
-        (Marius Paliga's message of "Wed, 11 Oct 2017 09:14:14 +0200")
-References: <CAK7vU=0ztEwMPsGO4Cd1A5JEnxmwkF57QPKjjvjD8rBUB79dRA@mail.gmail.com>
-        <CAGZ79kaBJnXW=rSiKuHpds79mXVL0Aoo+PBa0a5V-C_bop=Kbg@mail.gmail.com>
-        <CAK7vU=3whGsx4L4KACSC+XDWQEbUWuZZZqTsW2R=CbF8d7rkuQ@mail.gmail.com>
-        <CAK7vU=22W9mYdSnw_LP2uWYyKZuTzF0JgTVWCX+nMhUnLjQ_Cw@mail.gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
-Date:   Wed, 11 Oct 2017 22:38:21 +0900
-Message-ID: <xmqqh8v5ls8i.fsf@gitster.mtv.corp.google.com>
+        id S1757714AbdJKN6n (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Oct 2017 09:58:43 -0400
+Received: from mail-qt0-f194.google.com ([209.85.216.194]:48188 "EHLO
+        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1757560AbdJKN6l (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Oct 2017 09:58:41 -0400
+Received: by mail-qt0-f194.google.com with SMTP id f8so5392353qta.5
+        for <git@vger.kernel.org>; Wed, 11 Oct 2017 06:58:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=8SVzFAfXY5b4PsSw0ILezEOe+1aT+LiPd7fLTuikDK8=;
+        b=uyan+IV49mN0ZIaqoDQR8JnQHZGWXpaUHJjxvhHsb66jyW1hA9VXiIWoPbK0wxYljA
+         5Lmy513iss1LY13p5goRClFJf0gYDdZ5dcwX2fx0p8f6mXj6QhmSLHEb6Z7Mnxt9ntWQ
+         YozeYkYM3dU7V1e0a6jGPAA6VHB3DRg0HniPAP3EHMftQ47Jykkm9AQp80ekjz80VDmu
+         FMuic19MOe/hfchxwrLuIFCw3mnGZu7BvYtPq4fFrVEwyveLOhyifyZZa3Bcyh8RtDmT
+         NI1hXvX7DYaGsAjHPBxmXtJSGLjkCXcC2LyhLsIFkaAVZkZ9sOiN6EdmrTCXc2WPPNJd
+         z7fA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=8SVzFAfXY5b4PsSw0ILezEOe+1aT+LiPd7fLTuikDK8=;
+        b=s0bP2sQVj57SO4fhHLUiFkqa+niPWFkZvT52KiNLD9uxwB4CXbs6zQA2VU9TLa15KH
+         CMv815ulM9b0ZCc4XGO6FRsKNDJhA6cXDJvYiTn9Mr7GEEZiTlKDJjOGK1o1LHNnEZ9/
+         dAm3ckZ3dycGfYA1/2KTUI/yiqgCdCYFg5XXufdvCwQ0F3LazmBSG8P9oUTXBJvL8iD8
+         +y1vYpgppe8FDcyoLh9sNejhiM8Gv+U6HkMwSkypy1SqMIfTDSnloxxv4az33ZBQ/e7k
+         vN9NLWVmGrYFszxpBoV9Yffv488+UxWAqvVHZ04HZuFU8nLoNpI9nDNdx078DoUxTuXl
+         nfag==
+X-Gm-Message-State: AMCzsaVx4fUGFdVP3JFZ2H6A5OSk7K0PuZH6TDHFQ4GsCvkztZKnIoTx
+        IkM7yTfD6vjKzQZrQekJeYA=
+X-Google-Smtp-Source: AOwi7QDQpuFQE8cmaVgC5kdIgzZI9ohsK2PlQb+tH+mkBx3XHtApb79bluoj0u9b2aY3rKGd2pttJw==
+X-Received: by 10.200.35.21 with SMTP id a21mr25327463qta.215.1507730320181;
+        Wed, 11 Oct 2017 06:58:40 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010::7cc])
+        by smtp.gmail.com with ESMTPSA id k11sm7990510qtg.62.2017.10.11.06.58.38
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 11 Oct 2017 06:58:39 -0700 (PDT)
+Subject: Re: [PATCH v4 4/4] sha1_name: minimize OID comparisons during
+ disambiguation
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>, git@vger.kernel.org,
+        ramsay@ramsayjones.plus.com, sbeller@google.com
+References: <20171008184942.69444-1-dstolee@microsoft.com>
+ <20171008184942.69444-5-dstolee@microsoft.com>
+ <20171009134933.vmba67adelqbkx4y@sigill.intra.peff.net>
+ <338aab6a-1181-d740-1bf2-2ac86749a6b2@gmail.com>
+ <20171010123634.3hdqxpo6mbl6jhbx@sigill.intra.peff.net>
+ <xmqqbmlfp3eh.fsf@gitster.mtv.corp.google.com>
+ <f9add2c3-5499-085e-e433-799427dda6d8@gmail.com>
+ <20171010133040.2j5wpgcvucquizpn@sigill.intra.peff.net>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <61168095-d392-39d2-ba65-823525239b5c@gmail.com>
+Date:   Wed, 11 Oct 2017 09:58:38 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 7327189A-AE89-11E7-8EF2-8EF31968708C-77302942!pb-smtp1.pobox.com
+In-Reply-To: <20171010133040.2j5wpgcvucquizpn@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Marius Paliga <marius.paliga@gmail.com> writes:
-
-> @@ -505,6 +509,12 @@ static int git_push_config(const char *k, const
-> char *v, void *cb)
->          recurse_submodules = val;
->      }
+On 10/10/2017 9:30 AM, Jeff King wrote:
+> On Tue, Oct 10, 2017 at 09:11:15AM -0400, Derrick Stolee wrote:
 >
-> +    default_push_options = git_config_get_value_multi("push.optiondefault");
-> +    if (default_push_options)
-> +        for_each_string_list_item(item, default_push_options)
-> +            if (!string_list_has_string(&push_options, item->string))
-> +                string_list_append(&push_options, item->string);
-> +
->      return git_default_config(k, v, NULL);
->  }
-
-Sorry for not catching this earlier, but git_config_get_value* call
-inside git_push_config() is just wrong.
-
-There are two styles of configuration parsing.  The original (and
-still perfectly valid) way is to call git_config() with a callback
-function like git_push_config().  Under this style, the config files
-are read from lower-priority to higher-priority ones, and the
-callback function is called once for each entry found, with <key, value>
-pair and the callback specific opaque data.  One way to add the
-parsing of a new variable like push.optiondefault is to add
-
-	if (!strcmp(k, "push.optiondefault") {
-		... handle one "[push] optiondefault" entry here ...
-		return 0;
-	}
-
-to the function.
-
-An alternate way is to use git_config_get_* functions _outside_
-callback of git_config().  This is a newer invention.  Your call to
-git_config_get_value_multi() will scan all configuration files and
-returns _all_  entries for the given variable at once.
-
-When there is already a callback style parser, in general, it is
-cleaner to simply piggy-back on it, instead of reading variables
-independently using git_config_get_* functions.  When there isn't a
-callback style parser, using either style is OK.  It also is OK to
-switch to git_config_get_* altogether, rewriting the callback style
-parser, but I do not think it is warranted in this case, which adds
-just one variable.
-
-In any case, with the above code, you'll end up calling the
-git_config_get_* function and grabbing all the values for
-push.optiondefault for each and every configuration variable
-definition (count "git config -l | wc -l" to estimate how many times
-it will be called).  Which is probably not what you wanted to do.
-
-Also, watch out for how a configuration variable defined like below
-is reported to either of the above two styles:
-
-	[push]	optiondefault
-
- - To a git_config() callback function like git_push_config(), such
-   an entry is called with k=="push.optiondefault", v==NULL.
-
- - git_config_get_value_multi() would return a string-list element
-   with the string set to NULL to signal that one value is NULL
-   (i.e. it is different from "[push] optiondefault = ").
-
-I suspect that with your code, we'd hit
-
-	if (strchr(item->string, '\n'))
-
-and end up dereferencing NULL right there.
-
-> @@ -515,7 +525,6 @@ int cmd_push(int argc, const char **argv, const
-> char *prefix)
->      int push_cert = -1;
->      int rc;
->      const char *repo = NULL;    /* default repository */
-> -    struct string_list push_options = STRING_LIST_INIT_DUP;
->      const struct string_list_item *item;
+>> On 10/10/2017 8:56 AM, Junio C Hamano wrote:
+>>> Jeff King <peff@peff.net> writes:
+>>>
+>>>> OK, I think that makes more sense. But note the p->num_objects thing I
+>>>> mentioned. If I do:
+>>>>
+>>>>     git pack-objects .git/objects/pack/pack </dev/null
+>>>>
+>>>> then I have a pack with zero objects, which I think we'd similarly want
+>>>> to return early from. I.e., I think we need:
+>>>>
+>>>>     if (p->num_objects)
+>>>> 	return;
+>>>>
+>>>> Technically that also covers open_pack_index() failure, too, but that's
+>>>> a subtlety I don't think we should rely on.
+>>> True.  I notice that the early part of the two functions look almost
+>>> identical.  Do we need error condition handling for the other one,
+>>> too?
+>> I prefer to fix the problem in all code clones when they cause review
+>> friction, so I'll send a fifth commit showing just the diff for these
+>> packfile issues in sha1_name.c. See patch below.
+> Ah, that answers my earlier question. Junio mean unique_in_pack(). And
+> yeah, I think it suffers from the same problem.
 >
->      struct option options[] = {
+>> Should open_pack_index() return a non-zero status if the packfile is empty?
+>> Or, is there a meaningful reason to have empty packfiles?
+> I can't think of a compelling reason to have an empty packfile. But nor
+> do I think we should consider them an error when we can handle them
+> quietly (and returning non-zero status would cause Git to complain on
+> many operations in a repository that has such a file).
+>
+> -Peff
 
-Also, I suspect that this code does not allow the command line
-option to override the default set in the configuration file.
-OPT_STRING_LIST() appends to the &push_options string list without
-first clearing it, and you are pre-populating the list while reading
-the configuration, so the values taken from the command line will
-only add to them.
+Thanks for the comments. I found some typos in my commit messages, too.
 
-The right way to do this would probably be:
+I plan to send a (hopefully) final version tomorrow (Thursday). It will 
+include:
 
- - Do not muck with push_options in cmd_push().
+* Make 'pos' unsigned in get_hex_char_from_oid()
 
- - Prepare another string list, push_options_from_config, that is
-   file-scope global.
+* Check response from open_pack_index()
 
- - In git_push_config(), do not call get_multi; instead react to a
-   call with k=="push.optionsdefault" and
+* Small typos in commit messages
 
-   - reject if "v" is NULL, with "return config_error_nonbool(k);"
+If there are other issues, then please let me know.
 
-   - otherwise, append "v" to the "from-config" string list--do not
-     attempt to dedup or sort.
-
-   - if "v" is an empty string, clear the "from-config" list.
-
- - After parse_options() returns to cmd_push(), see if push_options
-   is empty.  If it is, you did not get any command line option, so
-   override it with what you collected in the "from-config" string
-   list.  Otherwise, do not even look at "from-config" string list.
-
-By the way, I really hate "push.optiondefault" as the variable
-name.  The "default" part is obvious and there is no need to say it,
-as the configuration variables are there to give the default to what
-we would normally give from the command line.  Rather, you should
-say for which option (there are many options "git push" takes) this
-variable gives the default.  Perhaps "push.pushOption" is a much
-better name; I am sure people can come up with even better ones,
-though ;-)
-
+Thanks,
+-Stolee
