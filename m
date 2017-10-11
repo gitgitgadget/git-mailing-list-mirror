@@ -2,125 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 384BA1FA21
-	for <e@80x24.org>; Wed, 11 Oct 2017 18:36:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4ECBA1FA21
+	for <e@80x24.org>; Wed, 11 Oct 2017 18:37:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752502AbdJKSgn (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Oct 2017 14:36:43 -0400
-Received: from ikke.info ([178.21.113.177]:43924 "EHLO vps892.directvps.nl"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752045AbdJKSgm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Oct 2017 14:36:42 -0400
-Received: by vps892.directvps.nl (Postfix, from userid 1008)
-        id F01FF44039C; Wed, 11 Oct 2017 20:36:40 +0200 (CEST)
-Date:   Wed, 11 Oct 2017 20:36:40 +0200
-From:   Kevin Daudt <me@ikke.info>
-To:     Martin =?iso-8859-1?Q?=C5gren?= <martin.agren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Rafael =?iso-8859-1?Q?Ascens=E3o?= <rafa.almas@gmail.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] column: show auto columns when pager is active
-Message-ID: <20171011183640.GC16800@alpha.vpn.ikke.info>
-References: <20171009214543.12986-1-me@ikke.info>
- <20171011172310.2932-1-me@ikke.info>
- <CAN0heSqbD8TJu+_d11gj2eftG3gR+n0j621q_uSnuLQc9t_pbQ@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAN0heSqbD8TJu+_d11gj2eftG3gR+n0j621q_uSnuLQc9t_pbQ@mail.gmail.com>
-User-Agent: Mutt/1.8.3 (2017-05-23)
+        id S1752654AbdJKShj (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Oct 2017 14:37:39 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:34942 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752532AbdJKShi (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Oct 2017 14:37:38 -0400
+Received: by mail-pf0-f193.google.com with SMTP id i23so2987323pfi.2
+        for <git@vger.kernel.org>; Wed, 11 Oct 2017 11:37:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=LwayeFMxdhS3OOmszuKb5XpnpJcXRU4dEz2KSrOC9H0=;
+        b=E88qGlqG2odfvX7hVtwAPxCrik1bJvxysh95Bx23ePaNBklNy7x4KX82M1eI2YoBEi
+         NaiQoU3XqChNVrQ+AEN+Fl6sLrQOV/6ihvUav+DL+wya/mAmksCp2rKQCCxhga6ObvbQ
+         nOPlZ63IfoVMPxWa3lv7s5goTdKCWD9W77oUpgg5xhw3Ai5PDif8Jy98gicOKoloeTY/
+         6mX2nYiQB6hU2oeruOBNwuvEdNaAuWiya3LECfh1oJQhBRTC8j0BapDXy7jlBrVMQPGr
+         2mNy8Kz17d/UF20aXB/5yvi0GSpHZmRwj3qQDeu5PBpzVYMcGBgJIL3uP+iqC8SvMlUv
+         poqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=LwayeFMxdhS3OOmszuKb5XpnpJcXRU4dEz2KSrOC9H0=;
+        b=GQP8F3w0fZXzSXnuqMyj0ZiMgzdoFreFV3F0Mw1MMNI3GjBpWCK6pTbrvZvKPugJha
+         Px05XNhE+yd4ctOiTL9WUp1+9gwsX2sP7HySAcuPNDpkbdY3ldkFY09bdEbRxaKPfTgB
+         TzaGoZT/fwVvJs9ENCX7UBowHx/dV4EH1sRliCkvWEIFEkOqCRgFpuzGusNrvQ9inBLi
+         kxxAmJiEAuhMFbVzZ8ADh3eCFuiKjAKLdBOR7Ozt8ejjsAz53fyFbS9HWWd3aJRabFg6
+         C43S1hG1H/scr1E8yf6Fcb4FFWI5Gk9e61ZBe0u44+1irFVQqOiJHCqvwyfqs2DTcyT8
+         OU0w==
+X-Gm-Message-State: AMCzsaUAiKoX/hN0s0+Qa94Njiyyywy/CYZm0aNK4S7XuYBNpLtxAOxR
+        C3Qcd3nnYI4CGqpyPKbly94DJDMp
+X-Google-Smtp-Source: AOwi7QBmA//VddNzbu7XYYIaLip673gN3CKv4sUGaVQKlGDtlJTrjye9hWOAzDzA7j7Oblzuaf0rtw==
+X-Received: by 10.99.127.94 with SMTP id p30mr420042pgn.66.1507747057633;
+        Wed, 11 Oct 2017 11:37:37 -0700 (PDT)
+Received: from localhost.localdomain (64.71.239.49.rev.vmobile.jp. [49.239.71.64])
+        by smtp.gmail.com with ESMTPSA id x26sm27494144pfh.95.2017.10.11.11.37.36
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 11 Oct 2017 11:37:37 -0700 (PDT)
+From:   Takahito Ogawa <aiueogawa217@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Takahito Ogawa <aiueogawa217@gmail.com>
+Subject: [PATCH 1/1] git-stash.txt: correct "git stash" behavior with no arguments
+Date:   Thu, 12 Oct 2017 03:37:18 +0900
+Message-Id: <20171011183718.2404-1-aiueogawa217@gmail.com>
+X-Mailer: git-send-email 2.13.1
+In-Reply-To: <n>
+References: <n>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 11, 2017 at 08:12:35PM +0200, Martin Ågren wrote:
-> On 11 October 2017 at 19:23, Kevin Daudt <me@ikke.info> wrote:
-> > finalize_colopts in column.c only checks whether the output is a TTY to
-> > determine if columns should be enabled with columns set to auto. Also check
-> > if the pager is active.
-> 
-> Maybe you could say something about the difficulties of writing a test
-> for `git column` proper. Something like this perhaps:
-> 
->   Adding a test for git column is possible but requires some care to
->   work around a race on stdin. See commit 18d8c2693 (test_terminal:
->   redirect child process' stdin to a pty, 2015-08-04). Test git tag
->   instead, since that does not involve stdin, and since that was the
->   original motivation for this patch.
+"git stash" behavior without any arguments was changed in
+1ada5020b ("stash: use stash_push for no verb form", 2017-02-28).
+This is equivalent to "git stash push" but documents says
+"git stash save".
 
-Right, makes sense.
-> 
-> > Helped-by: Rafael Ascensão <rafa.almas@gmail.com>
-> > Signed-off-by: Kevin Daudt <me@ikke.info>
-> > ---
-> >  column.c         |  3 ++-
-> >  t/t7006-pager.sh | 14 ++++++++++++++
-> >  2 files changed, 16 insertions(+), 1 deletion(-)
-> 
-> Does the documentation on `column.ui` need to be updated? It talks about
-> "if the output is to the terminal". That's similar to the documentation
-> on the various `color.*`, so we should be fine, and arguably it's even
-> better not to say anything since that makes it consistent.
-> 
-> > diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
-> > index f0f1abd1c..44c2ca5d3 100755
-> > --- a/t/t7006-pager.sh
-> > +++ b/t/t7006-pager.sh
-> > @@ -570,4 +570,18 @@ test_expect_success 'command with underscores does not complain' '
-> >         test_cmp expect actual
-> >  '
-> >
-> > +test_expect_success TTY 'git tag with auto-columns ' '
-> > +       test_commit one &&
-> > +       test_commit two &&
-> > +       test_commit three &&
-> > +       test_commit four &&
-> > +       test_commit five &&
-> > +       cat >expected <<\EOF &&
-> > +initial  one      two      three    four     five
-> > +EOF
-> > +       test_terminal env PAGER="cat >actual.tag" COLUMNS=80 \
-> > +               git -p -c column.ui=auto tag --sort=authordate &&
-> > +       test_cmp expected actual.tag
-> > +'
-> > +
-> >  test_done
-> 
-> Since `git tag` pages when it's listing, you don't need the `-p`. But
-> it's not like it hurts to have it. Yeah, I know, you needed it with `git
-> column`. :-)
+Correct it.
 
-Right, it was a bit of a left-over since I assumed the PAGER='cat >paginated.out'
-from the beginning of the test was in place and I wasn't getting any
-output, but it turned out PAGER wasn't set.
+Signed-off-by: Takahito Ogawa <aiueogawa217@gmail.com>
+---
+ Documentation/git-stash.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> I wonder if it's useful to set COLUMNS a bit lower so that this has to
-> split across more than one line (but not six), i.e., to do something
-> non-trivial. I suppose that might lower the chances of some weird
-> breakage slipping through.
+diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
+index 00f95fee1..63642c145 100644
+--- a/Documentation/git-stash.txt
++++ b/Documentation/git-stash.txt
+@@ -33,7 +33,7 @@ and reverts the working directory to match the `HEAD` commit.
+ The modifications stashed away by this command can be listed with
+ `git stash list`, inspected with `git stash show`, and restored
+ (potentially on top of a different commit) with `git stash apply`.
+-Calling `git stash` without any arguments is equivalent to `git stash save`.
++Calling `git stash` without any arguments is equivalent to `git stash push`.
+ A stash is by default listed as "WIP on 'branchname' ...", but
+ you can give a more descriptive message on the command line when
+ you create one.
+-- 
+2.13.1
 
-Yeah, I was doubting about that, but wouldn't this amount to testing
-whether git column is working properly, instead of just testing whether
-it's being done at all?
-
-> This test uses "actual.tag" while most (all?) others in this file use
-> "actual". Maybe you worry about checking the "wrong" file, e.g., in case
-> the pager doesn't kick in. You could do `rm -f actual` before the
-> `test_terminal`-invocation to protect against that.
-
-Yeah, I actually ran into that, but rm-ing it is better, I agree.
-
-> These were just the thoughts that occurred to me, not sure if any of
-> them is particularly significant. Thanks for cleaning up after me.
-> 
-
-np. Just as I posted earlier, I think you did not actually cause the bug
-(because this has never worked), it just made it visible to more users.
-
-Kevin
