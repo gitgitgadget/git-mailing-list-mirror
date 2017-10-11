@@ -2,108 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 311B520437
-	for <e@80x24.org>; Wed, 11 Oct 2017 05:16:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5DDD920437
+	for <e@80x24.org>; Wed, 11 Oct 2017 05:58:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750959AbdJKFQW (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Oct 2017 01:16:22 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:35424 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750718AbdJKFQV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Oct 2017 01:16:21 -0400
-Received: by mail-pf0-f194.google.com with SMTP id i23so1287870pfi.2
-        for <git@vger.kernel.org>; Tue, 10 Oct 2017 22:16:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=gqPVgLsAHm11ElfzxnC4gQStxRWqYvVJwNumUpYru/8=;
-        b=KnZ9ckeGkWATjysuMpmnkJgZ5EEYOpPJTjIw8AlnE4iq97nReVrlc5ngqvR6HcbBGh
-         3h1f09cZ/KFtRfjtjwlhBGmBdlqpY6QYz496QeGa1MisgSFK5VM08F5jdGIyv1dII7JL
-         54O05trPjjOdUpSGTlK8y2RQXGv0nlBUjPFcTAwffWwvtC/VVCJ/yxDMOHgy3sWW9ZNM
-         Xgt0o3DN47lB8P03Oly56Nr2Rn1ShaizfcEKnunWKDLxllTOl0MWnyhTJugdUkPaX9AT
-         zrKowLtVCFsOD5Qjp2dNWHO+O7IqVCEa9LhSGLw/tHa+RyizvsW1c94j6E1fXXijoMji
-         UKvA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=gqPVgLsAHm11ElfzxnC4gQStxRWqYvVJwNumUpYru/8=;
-        b=NEGijzPGMMTvqVJ2jaYYpQDcCNN4cducuzhwwTqYXjABJoBEU9BUtjpHaNI/9EQG7H
-         nJTR+Glw0vENEYIxS4MwO/TriFPvoirB88mHo0apCTiZaIsE9Zra9kSKqBHfe6ES3No9
-         aRlY9dhaQ4US6UZPAhnuH/D+f38SsMNzLrZl5Un88k0ptFA7FLaOsUFFXqOvjVcb81tM
-         bFEbbuZNwVpsNKI+nemAUzwFahqBrcPUCvnNExn8kNhDQJ9maiuSFaubmISxchm+Vc7K
-         0LGEET0IvET8useEMKDRF9WqBm7MkCpyT76+7rTVuXXZBGYxVc7ANXVHeMe+vDJUeZuo
-         hxQA==
-X-Gm-Message-State: AMCzsaW/f+/bQ3hTIPoq4xPl8CzEso597/aouRSRSIYBRb4DknhC9OEi
-        iiYK4jYdlFNyVPU4GpPNJrELozp/
-X-Google-Smtp-Source: AOwi7QCdtf5uSHnxKs70NIJzYHgzRMMTZhDUSjTjPBNjkCX5i6EqlolWKxMOQPxeeSE4wyOxKuOIcg==
-X-Received: by 10.98.152.74 with SMTP id q71mr15200209pfd.291.1507698980518;
-        Tue, 10 Oct 2017 22:16:20 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:8577:c864:99f:8edc])
-        by smtp.gmail.com with ESMTPSA id d7sm20129685pgf.20.2017.10.10.22.16.19
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 10 Oct 2017 22:16:19 -0700 (PDT)
-Date:   Tue, 10 Oct 2017 22:16:04 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing list <git@vger.kernel.org>, Kevin Daudt <me@ikke.info>,
-        "Robert P. J. Day" <rpjday@crashcourse.ca>
-Subject: Re: [PATCH] checkout doc: clarify command line args for "checkout
- paths" mode
-Message-ID: <20171011051604.GA140836@aiede.mtv.corp.google.com>
-References: <alpine.LFD.2.21.1709300523190.27819@localhost.localdomain>
- <20170930143258.GA20886@alpha.vpn.ikke.info>
- <alpine.LFD.2.21.1709301800060.7869@localhost.localdomain>
- <xmqqo9prv86l.fsf@gitster.mtv.corp.google.com>
- <alpine.LFD.2.21.1710010603340.17338@localhost.localdomain>
- <xmqqtvzis87i.fsf@gitster.mtv.corp.google.com>
- <xmqqefqao1av.fsf_-_@gitster.mtv.corp.google.com>
- <20171011032240.GZ19555@aiede.mtv.corp.google.com>
- <xmqqzi8ymg4f.fsf@gitster.mtv.corp.google.com>
+        id S1756480AbdJKF6t (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Oct 2017 01:58:49 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55796 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754212AbdJKF6s (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Oct 2017 01:58:48 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 885BBA93BB;
+        Wed, 11 Oct 2017 01:58:47 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=m5xI4BsMCrX+xWW8+YMwQKayhno=; b=iafcdp
+        Hdnirka/726OaIN8QlhfR3jHA9dT8PnWOGu3HQ1qiC3Of37E4OhY7d8BvEHQ4V0y
+        mI4666O8rDcy0bXetHSpT94Avtofnnbbj0T65mzaGMFOsghT53P9DLHwlmqB0MX+
+        NxAqhuPWt8kqceMG3xjneJqRHkehSoDUj9irk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=rw2PV6Ex9pnaHqOPzIsiWvoOoOT6ILDT
+        SeOuM1q+RUf7Hk8VsJ9nNd/yeDILCL08T+2mu86L26HfVrIZ1esXXLrgjIoESzyk
+        bpaJM1/8Dwd3IS6Gan4gt6On20HaFD2AhCNJviLTcxJQjNvv0u0yl3CKEB60sFuP
+        mlAKumZun/I=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7FA0AA93B9;
+        Wed, 11 Oct 2017 01:58:47 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DE12AA93B8;
+        Wed, 11 Oct 2017 01:58:46 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org, J Wyman <jwyman@microsoft.com>
+Subject: Re: [PATCH v2 2/3] for-each-ref: let upstream/push optionally remote ref name
+References: <cover.1506952571.git.johannes.schindelin@gmx.de>
+        <cover.1507205895.git.johannes.schindelin@gmx.de>
+        <7da6c7e2563d14cb7cd7ff2637c79c51896a9788.1507205895.git.johannes.schindelin@gmx.de>
+        <xmqqvajsx3o0.fsf@gitster.mtv.corp.google.com>
+Date:   Wed, 11 Oct 2017 14:58:45 +0900
+In-Reply-To: <xmqqvajsx3o0.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Fri, 06 Oct 2017 14:10:07 +0900")
+Message-ID: <xmqqvajmmdii.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqzi8ymg4f.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3EE6D6E6-AE49-11E7-BF45-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> here is another attempt, this time to avoid "Restore" and <paths>...
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 >
->  Documentation/git-checkout.txt | 30 ++++++++++++++++--------------
->  1 file changed, 16 insertions(+), 14 deletions(-)
+>> Subject: Re: [PATCH v2 2/3] for-each-ref: let upstream/push optionally remote ref name
+>
+> No verb?  s/optionally/report/ perhaps?
 
-Thanks.  I find this one easier to read indeed.
+I just noticed that I didn't tweak the copy I have in my tree after
+sending this message, but now I did s/optionally/& report the/;
 
-[...]
-> --- a/Documentation/git-checkout.txt
-> +++ b/Documentation/git-checkout.txt
-> @@ -13,7 +13,8 @@ SYNOPSIS
-[...]
-> @@ -101,6 +95,14 @@ specific side of the merge can be checked out of the index by
->  using `--ours` or `--theirs`.  With `-m`, changes made to the working tree
->  file can be discarded to re-create the original conflicted merge result.
->  
-> +'git checkout' (-p|--patch) [<tree-ish>] [--] [<pathspec>...]::
-> +	This is similar to the "check out paths to the working tree
-> +	from either the index or from a tree-ish" mode described
-> +	above, but lets you use the interactive interface to show
-> +	the "diff" output and choose which hunks to use in the
-> +	result.  See below for the descriptoin of `--patch` option.
+I am still puzzled by the hunk below, though.
 
-nit: s/descriptoin/description/
-
-With that tweak,
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+>> @@ -1262,6 +1265,14 @@ static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
+>>  			*s = xstrdup(remote);
+>>  		else
+>>  			*s = "";
+>> +	} else if (atom->u.remote_ref.option == RR_REMOTE_REF) {
+>> +		int explicit, for_push = starts_with(atom->name, "push");
+>
+> Hmph, the previous step got rid of starts_with() rather nicely by
+> introducing atom->u.remote_ref.push bit; can't we do the same in
+> this step?
+>
+> Other than that, looks nicer.
 
 Thanks.
