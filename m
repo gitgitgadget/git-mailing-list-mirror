@@ -2,84 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0C37020372
-	for <e@80x24.org>; Wed, 11 Oct 2017 07:51:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AFC5920372
+	for <e@80x24.org>; Wed, 11 Oct 2017 08:01:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756661AbdJKHv4 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Oct 2017 03:51:56 -0400
-Received: from mail-it0-f66.google.com ([209.85.214.66]:54901 "EHLO
-        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751147AbdJKHv4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Oct 2017 03:51:56 -0400
-Received: by mail-it0-f66.google.com with SMTP id 72so1773772itk.3
-        for <git@vger.kernel.org>; Wed, 11 Oct 2017 00:51:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=2+eJe9Ma47Pxnofxb2xWJ5soL0Ck3dofGEJhHcZdBBA=;
-        b=NpYsmDMs6l+liYEEuO9OQQKv+/E5Y543ejdPWBmd2KPcjNoLdJ6v8yP9UOTtd7voFS
-         t3nsjwHLgpdS5ydPmPdPvo0xfCwSyQ1Ul8XBaPb1tucg8AzAsPETaXlIWk9PlekCe7hg
-         cJapCujRIwCxAY/4VEsTYqfbMISZ57NzSQ4PEs76cYNfotMNUkeb1Gu16eRAYJdMxRpn
-         AwXBccTwReWNG6uThTuG7sp1QIa110TU7R2KhBJFORrzmguXE9ucktW+46KgP5A9wXxU
-         1jfT4B5vjnPJVIro3WYldIEYACClT6tPbD+IkD9WDQbUqFnNw6KcUhOKBBo5AOHZQp1l
-         Da1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=2+eJe9Ma47Pxnofxb2xWJ5soL0Ck3dofGEJhHcZdBBA=;
-        b=mL9ZLEXnjpohJxFKXxDxtsE/GpuQXdcnp0jVjoLumjciLfqzkFlsCRYU4n2G12jpKt
-         dXk5xNaSyuAgXVRS51AncmfpnRLKMNnBxpkP4J44PS7qpMvzAPw+YsF0Z2cUpWtpcafS
-         OAaXE5oGawnS9w52pVw4K4PN2YZ+zksQaeTpCRKCRhnpnCSc7/ouBi0Efhv6/hJB63Df
-         onbU9nxvb96q1/RzgD6KrZJphjN2zyojFt6AWoZghEJs0eZXjPD5QevTanvSGVAyVpHZ
-         Mpi35Ua7JxsSxsyAX/HiMlvArYnrtOJGKwQv2zCwiAhbo/LhZyqrdkUD9hKFT5AEQzra
-         A1KA==
-X-Gm-Message-State: AMCzsaWFQpqEDjIRQWN3Xr46gvlCyudWOJBWbKbVG0kZIjIL33KQUj1/
-        9MksCtORXc7B7CnabVcpFRDrneN5f56VOyHH3Msptw==
-X-Google-Smtp-Source: AOwi7QB6hoT7aDX8pJ6FNtyWmUEbQ9vpd+AlGhWGZog7kqOg0v+wgXfbBChzxZ249Ql0DLCIDG2xjNywx9BYUOG+nLs=
-X-Received: by 10.36.65.200 with SMTP id b69mr23022763itd.116.1507708315069;
- Wed, 11 Oct 2017 00:51:55 -0700 (PDT)
+        id S1756638AbdJKIBX (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Oct 2017 04:01:23 -0400
+Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:48199 "EHLO
+        alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1756600AbdJKIA6 (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 11 Oct 2017 04:00:58 -0400
+X-AuditID: 1207440e-be1ff70000007085-24-59ddcfb9d44b
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 88.B3.28805.9BFCDD95; Wed, 11 Oct 2017 04:00:58 -0400 (EDT)
+Received: from [192.168.69.190] (p57BCCD9E.dip0.t-ipconnect.de [87.188.205.158])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v9B80tnu005385
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+        Wed, 11 Oct 2017 04:00:56 -0400
+Subject: Re: [PATCH v2 14/24] refs: convert peel_ref to struct object_id
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>, Brandon Williams <bmwill@google.com>,
+        Stefan Beller <sbeller@google.com>
+References: <20171009011132.675341-1-sandals@crustytoothpaste.net>
+ <20171009011132.675341-15-sandals@crustytoothpaste.net>
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Message-ID: <fd5d26cc-94fb-5530-6344-25a1ed88ba92@alum.mit.edu>
+Date:   Wed, 11 Oct 2017 10:00:55 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
 MIME-Version: 1.0
-Received: by 10.79.7.10 with HTTP; Wed, 11 Oct 2017 00:51:54 -0700 (PDT)
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Wed, 11 Oct 2017 09:51:54 +0200
-Message-ID: <CAP8UFD3ubxC0VkkOs=VWOuFNPosA_FyAYdUeVRN4-DdX-D09Rg@mail.gmail.com>
-Subject: [ANNOUNCE] Git Rev News edition 32
-To:     git <git@vger.kernel.org>
-Cc:     lwn@lwn.net, Junio C Hamano <gitster@pobox.com>,
-        Thomas Ferris Nicolaisen <tfnico@gmail.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Markus Jansen <mja@jansen-preisler.de>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Stefan Beller <sbeller@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Prathamesh Chavan <pc44800@gmail.com>,
-        Andy Lowry <andy.work@nglowry.com>,
-        =?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@dwim.me>,
-        Marc Herbert <Marc.Herbert@intel.com>, Eric Wong <e@80x24.org>,
-        Philip Oakley <philipoakley@iee.org>,
-        Pavel Kretov <firegurafiku@gmail.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        Jeff Hostetler <git@jeffhostetler.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20171009011132.675341-15-sandals@crustytoothpaste.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFuplleLIzCtJLcpLzFFi42IRYndR1N11/m6kwdo3rBbP159gt+i60s1k
+        8aOlh9mibeYPJovNm9tZHFg9lt/8y+SxYFOpx7PePYwenzfJBbBEcdmkpOZklqUW6dslcGXc
+        n3GQqeA4T8W1o6ENjGs4uxg5OSQETCQeb1jG3MXIxSEksINJ4sHt61DOBSaJY/N/sXYxcnAI
+        C3hItP0IAmkQEfCSmP9oBiuIzSxQIPG8/Q4jiC0kUCPxZMUuFhCbTUBXYlFPMxOIzStgL/H3
+        /F9mEJtFQFVi/fsv7CAjRQUiJDZs5IcoEZQ4OfMJWCungItE44TVTBDj1SX+zLvEDGGLS9x6
+        Mh8qLi+x/e0c5gmMArOQtM9C0jILScssJC0LGFlWMcol5pTm6uYmZuYUpybrFicn5uWlFuka
+        6+VmluilppRuYoSEOt8Oxvb1MocYBTgYlXh4Ba7fiRRiTSwrrsw9xCjJwaQkyqsw526kEF9S
+        fkplRmJxRnxRaU5q8SFGCQ5mJRHeLaeAcrwpiZVVqUX5MClpDhYlcV61Jep+QgLpiSWp2amp
+        BalFMFkZDg4lCd6354AaBYtS01Mr0jJzShDSTBycIMN5gIZbngcZXlyQmFucmQ6RP8WoKCXO
+        2wbSLACSyCjNg+uFpaJXjOJArwjz/gep4gGmMbjuV0CDmYAGi6bdARlckoiQkmpg1NoacSrt
+        tWfu7ojNe0p5Ft+5tshwKs8sfxPu/ul5PC/PiTwMWLL6E9vWurt9LLOMPCpeTElU/Tor8H70
+        NA2hhhkx/1SL2uJ+SV5f69Bu7pv3uYrx6ObDXxX7l08RiHO9fmaf3oPi1gXrvul/OtTvPE3C
+        7cQFddun4TYPLTRquxKUQ88WRb89r8RSnJFoqMVcVJwIAIl5y9ogAwAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone,
+On 10/09/2017 03:11 AM, brian m. carlson wrote:
+> Convert peel_ref (and its corresponding backend) to struct object_id.
+> 
+> This transformation was done with an update to the declaration,
+> definition, and test helper and the following semantic patch:
+> 
+> @@
+> expression E1, E2;
+> @@
+> - peel_ref(E1, E2.hash)
+> + peel_ref(E1, &E2)
+> 
+> @@
+> expression E1, E2;
+> @@
+> - peel_ref(E1, E2->hash)
+> + peel_ref(E1, E2)
+> 
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> ---
+>  builtin/describe.c        | 2 +-
+>  builtin/pack-objects.c    | 4 ++--
+>  builtin/show-ref.c        | 2 +-
+>  refs.c                    | 8 ++++----
+>  refs.h                    | 4 ++--
+>  refs/files-backend.c      | 8 ++++----
+>  refs/packed-backend.c     | 4 ++--
+>  refs/refs-internal.h      | 2 +-
+>  t/helper/test-ref-store.c | 6 +++---
+>  upload-pack.c             | 2 +-
+>  10 files changed, 21 insertions(+), 21 deletions(-)
+> 
+> [...]
+> diff --git a/refs.h b/refs.h
+> index 8159b7b067..832ade2b13 100644
+> --- a/refs.h
+> +++ b/refs.h
+> @@ -120,8 +120,8 @@ extern int refs_init_db(struct strbuf *err);
+>   * ultimately resolve to a peelable tag.
+>   */
 
-The 32st edition of Git Rev News is now published:
+The comment just above needs to be adjusted.
 
-  https://git.github.io/rev_news/2017/10/11/edition-32/
+>  int refs_peel_ref(struct ref_store *refs, const char *refname,
+> -		  unsigned char *sha1);
+> -int peel_ref(const char *refname, unsigned char *sha1);
+> +		  struct object_id *oid);
+> +int peel_ref(const char *refname, struct object_id *oid);
+>  
+>  /**
+>   * Resolve refname in the nested "gitlink" repository in the specified
+> [...]
 
-Thanks a lot to all the contributors and helpers!
+Michael
 
-Enjoy,
-Christian, Thomas, Jakub and Markus.
