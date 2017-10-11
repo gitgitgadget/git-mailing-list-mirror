@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8303E1FA21
-	for <e@80x24.org>; Wed, 11 Oct 2017 13:35:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 097EF1FA21
+	for <e@80x24.org>; Wed, 11 Oct 2017 13:35:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752486AbdJKNfX (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Oct 2017 09:35:23 -0400
-Received: from mail-qt0-f194.google.com ([209.85.216.194]:35741 "EHLO
-        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752162AbdJKNfU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Oct 2017 09:35:20 -0400
-Received: by mail-qt0-f194.google.com with SMTP id z19so2437341qtg.2
-        for <git@vger.kernel.org>; Wed, 11 Oct 2017 06:35:20 -0700 (PDT)
+        id S1757453AbdJKNf0 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Oct 2017 09:35:26 -0400
+Received: from mail-qt0-f196.google.com ([209.85.216.196]:55761 "EHLO
+        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752266AbdJKNfV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Oct 2017 09:35:21 -0400
+Received: by mail-qt0-f196.google.com with SMTP id x54so5102472qth.12
+        for <git@vger.kernel.org>; Wed, 11 Oct 2017 06:35:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Au5Nj+/mQNwCjnsoE0PYdU6tMDY+GMXhgP9r2n0Aa2k=;
-        b=BVJ070WTMVCLqLOTUAE3mu//zt5ZRKViM5PPcb0jnJD78901IsOmcSu6OsVkhtsmGL
-         c9PUA/nxezzdb8e8uZmPbEvd0odly+FAjRq9Kyixj4yzj7SbKk4I6a6cM0dV7gX9rmp6
-         B/4FRB2Gj5czVC+CZyaz1/vG5GrpkzbnJ9vs4glXAcV7lYU0f9+EsrdlDvVY4h53+Inb
-         jmSyfudnfRWV2evK7qh5NTdK4uCH/a3qsYid96uJdoxTwqNlnKqeIKT6/xtLgDUUJ4lk
-         pB69T/sXqHQWSV6PrJn9+ZaqOZNdKdrDioL4B6v7oRTiSeeQ1IAToycHkA8LJSRagI+P
-         a+Lw==
+        bh=wy/Ch3aooRHa29rlWLMfV674hGg6mPZe0jwOrN3dYPo=;
+        b=GH1WqYlUiIjNvmdFx4+xpL5hluXKUPd7zUlqxmKp1OkvE2CfWSbR6P5zac2BdCcvQ8
+         hjKgU1TX7Ya6aF6oU1fiN84XZtP0npwhyorkU/hnHSxVRUGbiQ6eHuIH9I1dtowDsOb2
+         iIKOGgCSPVMOg9cr5PmiJMKTBdwHdFzvIgmwnqN83suWKmkMH5rJ6XhGMPPlsyIKjsOs
+         TblUcxe4j21qwnNnQbCxRZPV59jm4x5GP7Ds65R778/GWJskp9u7h5k9ipX651lRsTjW
+         jTE9kv8mmLOJvD6n7rf+zhI0QksgX2TurHdyurfUQgyHkXqObgw7pS1zj70WKC4OdTHP
+         SZJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Au5Nj+/mQNwCjnsoE0PYdU6tMDY+GMXhgP9r2n0Aa2k=;
-        b=EOJ1V1Ov/heDK+qvVm45yrIUV/68gTzt7PsFeDGavYTJebOqxtiwVSGNr5YHtvxd7V
-         dsNjMsCKq83sC52BzWZerAN1TYYP9WFnQIPmVLElHppdmQmR8CVe/mGiTlIXkAv7QMxp
-         qZiRRuTmaVk9NMk/l4okqto70ZGZazfQQgtjvFXroF0RxmbaVl4I+k78ID5iFDBQytBH
-         7oq0lX5uoGMPtGTCGaPKRJ09WZx1rOfAhFAT2bmKN3ejOFiHMUKtbQBR1mUKdpSzbj8D
-         mf4n3zaE+63WkuJbuPjO/T8K6fjr4q+LpMuSA+DdMJ6fZLJkPnzTZc3A+/+Bl3kd+SvF
-         SToQ==
-X-Gm-Message-State: AMCzsaXKcgQvKyWp12i/kPXRgbAKp+1Hn72BKWjtPB+EMjUmO3bHd99b
-        jsqjAFn1+24EM3mlcRnaaXw=
-X-Google-Smtp-Source: AOwi7QBSvB0IumKa1daEbx7WrJQ0osino8ix44PIEC9Z0Px7baofmjoQP0ha4c8ngqzIaGoxHeZsJw==
-X-Received: by 10.55.17.211 with SMTP id 80mr18715487qkr.270.1507728920067;
+        bh=wy/Ch3aooRHa29rlWLMfV674hGg6mPZe0jwOrN3dYPo=;
+        b=Y/KhX21YLchhUsbwWq/urI9MAR7b0CGKi27ZlekDjuqV1BPPTJyCbX2mmUYOTtjzVP
+         7F4SvQX3YErb/JO2k3bZYivuvjFdW/bJX2Gdolrix0h24dv1kniR4xBvGITO+1fsG7d5
+         H3PMsz3FG5iDLLlPJ4JXUF1Lv2HCe+Ku55VtO62uZJIvt7aXFxHBxiUvfTaFfxMf39fr
+         yM4WPHCB1SZ3nfnuyigTDFoh45mCJIt7wYe6A3k2wNita2XbHCkxVE0DPFc/K/HTh5bt
+         sb2TihZwbf8Jrjs7vfRZyK8UL718KXKmElObe3x8WurpOKDOdZ39R91g7Yi/XwOO08Fo
+         ah6w==
+X-Gm-Message-State: AMCzsaUAuZ+I/jwA+L/p1W6RL2jfU1f9YtGOhvpA+r9gKqDkIMxxCJY1
+        7HPOhShQ8jnGHjoM3lYGX/A=
+X-Google-Smtp-Source: AOwi7QA7B4zDfNDhVkpmXwmHpusyPbkfEjH20c2YTcDIfm86D+G3dQny0/Aav4HgWua44GdlEb3O3w==
+X-Received: by 10.200.34.28 with SMTP id o28mr25389451qto.184.1507728920947;
         Wed, 11 Oct 2017 06:35:20 -0700 (PDT)
 Received: from localhost.corp.microsoft.com ([2001:4898:8010::76e])
-        by smtp.gmail.com with ESMTPSA id i1sm8192685qta.19.2017.10.11.06.35.19
+        by smtp.gmail.com with ESMTPSA id i1sm8192685qta.19.2017.10.11.06.35.20
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 11 Oct 2017 06:35:19 -0700 (PDT)
+        Wed, 11 Oct 2017 06:35:20 -0700 (PDT)
 From:   Jameson Miller <jameson.miller81@gmail.com>
 X-Google-Original-From: Jameson Miller <jamill@microsoft.com>
 To:     jameson.miller81@gmail.com
 Cc:     bmwill@google.com, git@vger.kernel.org, gitster@pobox.com,
         jamill@microsoft.com, peff@peff.net, sbeller@google.com
-Subject: [PATCH v2 1/5] Teach status options around showing ignored files
-Date:   Wed, 11 Oct 2017 09:35:00 -0400
-Message-Id: <20171011133504.15049-2-jamill@microsoft.com>
+Subject: [PATCH v2 2/5] Update documentation for new directory and status logic
+Date:   Wed, 11 Oct 2017 09:35:01 -0400
+Message-Id: <20171011133504.15049-3-jamill@microsoft.com>
 X-Mailer: git-send-email 2.13.6
 In-Reply-To: <20171011133504.15049-1-jamill@microsoft.com>
 References: <20171005205443.206900-1-jameson.miller81@gmail.com>
@@ -65,228 +65,96 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This change teaches the status command more options to control which
-ignored files are reported independently of the which untracked files
-are reported by allowing the `--ignored` option to take additional
-arguments.  Currently, the shown ignored files are linked to how
-untracked files are reported. Both ignored and untracked files are
-controlled by arguments to `--untracked-files` option. This makes it
-impossible to show all untracked files individually, but show ignored
-"files and directories" (that is, ignored directories are shown as 1
-entry, instead of having all contents shown).
-
-Our application (Visual Studio) has a specific set of requirements
-about how it wants untracked / ignored files reported by git status.
-It requires all untracked files listed individually. It would like
-ignored files and directories that explicity match an exclude pattern
-listed. If an ignored directory matches an exclude pattern, then the
-path of the directory should be returned. If a directory does not
-match an exclude pattern, but all of its contents are ignored, then we
-want the contained files reported instead of the directory.
-
-The reason for controlling these behaviors separately is that there
-can be a significant performance impact to scanning the contents of
-excluded directories. Additionally, knowing whether a directory
-explicitly matches an exclude pattern can help the application make
-decisions about how to handle the directory. If an ignored directory
-itself matches an exclude pattern, then the application will know that
-any files underneath the directory must be ignored as well.
-
-As a more concrete example, on Windows, Visual Studio creates a bin/
-and obj/ directory inside of the project where it writes all .obj and
-binary build output files. Normal usage is to explicitly ignore these
-2 directory names in the .gitignore file (rather than or in addition
-to *.obj). We just want to see the "bin/" and "obj/" paths regardless
-of which "--untracked-files" flag is passed in. Additionally, if we
-know the bin/ and obj/ directories are ignored, then we can ignore any
-files changes we notice underneath these paths, as we know they do not
-affect the output of stats.
-
 Signed-off-by: Jameson Miller <jamill@microsoft.com>
 ---
- builtin/commit.c | 31 +++++++++++++++++++++++++------
- dir.c            | 24 ++++++++++++++++++++++++
- dir.h            |  3 ++-
- wt-status.c      | 11 ++++++++---
- wt-status.h      |  8 +++++++-
- 5 files changed, 66 insertions(+), 11 deletions(-)
+ Documentation/git-status.txt                      | 21 +++++++++++++++++-
+ Documentation/technical/api-directory-listing.txt | 27 +++++++++++++++++++----
+ 2 files changed, 43 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index d75b3805ea..98d84d0277 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -118,7 +118,7 @@ static int edit_flag = -1; /* unspecified */
- static int quiet, verbose, no_verify, allow_empty, dry_run, renew_authorship;
- static int config_commit_verbose = -1; /* unspecified */
- static int no_post_rewrite, allow_empty_message;
--static char *untracked_files_arg, *force_date, *ignore_submodule_arg;
-+static char *untracked_files_arg, *force_date, *ignore_submodule_arg, *ignored_arg;
- static char *sign_commit;
+diff --git a/Documentation/git-status.txt b/Documentation/git-status.txt
+index 9f3a78a36c..fc282e0a92 100644
+--- a/Documentation/git-status.txt
++++ b/Documentation/git-status.txt
+@@ -97,8 +97,27 @@ configuration variable documented in linkgit:git-config[1].
+ 	(and suppresses the output of submodule summaries when the config option
+ 	`status.submoduleSummary` is set).
  
- /*
-@@ -139,7 +139,7 @@ static const char *cleanup_arg;
- static enum commit_whence whence;
- static int sequencer_in_use;
- static int use_editor = 1, include_status = 1;
--static int show_ignored_in_status, have_option_m;
-+static int have_option_m;
- static struct strbuf message = STRBUF_INIT;
+---ignored::
++--ignored[=<mode>]::
+ 	Show ignored files as well.
+++
++The mode parameter is used to specify the handling of ignored files.
++It is optional: it defaults to 'traditional'.
+++
++The possible options are:
+++
++	- 'traditional' - Shows ignored files and directories, unless
++			  --untracked-files=all is specifed, in which case
++			  individual files in ignored directories are
++			  displayed.
++	- 'no'	        - Show no ignored files.
++	- 'matching'    - Shows ignored files and directories matching an
++			  ignore pattern.
+++
++When 'matching' mode is specified, paths that explicity match an
++ignored pattern are shown. If a directory matches an ignore pattern,
++then it is shown, but not paths contained in the ignored directory. If
++a directory does not match an ignore pattern, but all contents are
++ignored, then the directory is not shown, but all contents are shown.
  
- static enum wt_status_format status_format = STATUS_FORMAT_UNSPECIFIED;
-@@ -1075,6 +1075,19 @@ static const char *find_author_by_nickname(const char *name)
- 	die(_("--author '%s' is not 'Name <email>' and matches no existing author"), name);
- }
+ -z::
+ 	Terminate entries with NUL, instead of LF.  This implies
+diff --git a/Documentation/technical/api-directory-listing.txt b/Documentation/technical/api-directory-listing.txt
+index 6c77b4920c..7fae00f44f 100644
+--- a/Documentation/technical/api-directory-listing.txt
++++ b/Documentation/technical/api-directory-listing.txt
+@@ -22,16 +22,20 @@ The notable options are:
  
-+static void handle_ignored_arg(struct wt_status *s)
-+{
-+	if (!ignored_arg)
-+		; /* default already initialized */
-+	else if (!strcmp(ignored_arg, "traditional"))
-+		s->show_ignored_mode = SHOW_TRADITIONAL_IGNORED;
-+	else if (!strcmp(ignored_arg, "no"))
-+		s->show_ignored_mode = SHOW_NO_IGNORED;
-+	else if (!strcmp(ignored_arg, "matching"))
-+		s->show_ignored_mode = SHOW_MATCHING_IGNORED;
-+	else
-+		die(_("Invalid ignored mode '%s'"), ignored_arg);
-+}
+ `flags`::
  
- static void handle_untracked_files_arg(struct wt_status *s)
- {
-@@ -1363,8 +1376,10 @@ int cmd_status(int argc, const char **argv, const char *prefix)
- 		  N_("mode"),
- 		  N_("show untracked files, optional modes: all, normal, no. (Default: all)"),
- 		  PARSE_OPT_OPTARG, NULL, (intptr_t)"all" },
--		OPT_BOOL(0, "ignored", &show_ignored_in_status,
--			 N_("show ignored files")),
-+		{ OPTION_STRING, 0, "ignored", &ignored_arg,
-+		  N_("mode"),
-+		  N_("show ignored files, optional modes: traditional, matching, no. (Default: traditional)"),
-+		  PARSE_OPT_OPTARG, NULL, (intptr_t)"traditional" },
- 		{ OPTION_STRING, 0, "ignore-submodules", &ignore_submodule_arg, N_("when"),
- 		  N_("ignore changes to submodules, optional when: all, dirty, untracked. (Default: all)"),
- 		  PARSE_OPT_OPTARG, NULL, (intptr_t)"all" },
-@@ -1383,8 +1398,12 @@ int cmd_status(int argc, const char **argv, const char *prefix)
- 	finalize_deferred_config(&s);
+-	A bit-field of options (the `*IGNORED*` flags are mutually exclusive):
++	A bit-field of options:
  
- 	handle_untracked_files_arg(&s);
--	if (show_ignored_in_status)
--		s.show_ignored_files = 1;
-+	handle_ignored_arg(&s);
-+
-+	if (s.show_ignored_mode == SHOW_MATCHING_IGNORED &&
-+	    s.show_untracked_files == SHOW_NO_UNTRACKED_FILES)
-+		die(_("Unsupported combination of ignored and untracked-files arguments"));
-+
- 	parse_pathspec(&s.pathspec, 0,
- 		       PATHSPEC_PREFER_FULL,
- 		       prefix, argv);
-diff --git a/dir.c b/dir.c
-index 1d17b800cf..b9af87eca9 100644
---- a/dir.c
-+++ b/dir.c
-@@ -1389,6 +1389,30 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
- 	case index_nonexistent:
- 		if (dir->flags & DIR_SHOW_OTHER_DIRECTORIES)
- 			break;
-+		if (exclude &&
-+			(dir->flags & DIR_SHOW_IGNORED_TOO) &&
-+			(dir->flags & DIR_SHOW_IGNORED_TOO_MODE_MATCHING)) {
-+
-+			/*
-+			 * This is an excluded directory and we are
-+			 * showing ignored paths that match an exclude
-+			 * pattern.  (e.g. show directory as ignored
-+			 * only if it matches an exclude pattern).
-+			 * This path will either be 'path_excluded`
-+			 * (if we are showing empty directories or if
-+			 * the directory is not empty), or will be
-+			 * 'path_none' (empty directory, and we are
-+			 * not showing empty directories).
-+			 */
-+			if (!(dir->flags & DIR_HIDE_EMPTY_DIRECTORIES))
-+				return path_excluded;
-+
-+			if (read_directory_recursive(dir, istate, dirname, len,
-+						     untracked, 1, 1, pathspec) == path_excluded)
-+				return path_excluded;
-+
-+			return path_none;
-+		}
- 		if (!(dir->flags & DIR_NO_GITLINKS)) {
- 			unsigned char sha1[20];
- 			if (resolve_gitlink_ref(dirname, "HEAD", sha1) == 0)
-diff --git a/dir.h b/dir.h
-index e3717055d1..57b0943dae 100644
---- a/dir.h
-+++ b/dir.h
-@@ -152,7 +152,8 @@ struct dir_struct {
- 		DIR_COLLECT_IGNORED = 1<<4,
- 		DIR_SHOW_IGNORED_TOO = 1<<5,
- 		DIR_COLLECT_KILLED_ONLY = 1<<6,
--		DIR_KEEP_UNTRACKED_CONTENTS = 1<<7
-+		DIR_KEEP_UNTRACKED_CONTENTS = 1<<7,
-+		DIR_SHOW_IGNORED_TOO_MODE_MATCHING = 1<<8
- 	} flags;
- 	struct dir_entry **entries;
- 	struct dir_entry **ignored;
-diff --git a/wt-status.c b/wt-status.c
-index 6f730ee8f2..8301c84946 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -660,10 +660,15 @@ static void wt_status_collect_untracked(struct wt_status *s)
- 	if (s->show_untracked_files != SHOW_ALL_UNTRACKED_FILES)
- 		dir.flags |=
- 			DIR_SHOW_OTHER_DIRECTORIES | DIR_HIDE_EMPTY_DIRECTORIES;
--	if (s->show_ignored_files)
-+	if (s->show_ignored_mode) {
- 		dir.flags |= DIR_SHOW_IGNORED_TOO;
--	else
-+
-+		if (s->show_ignored_mode == SHOW_MATCHING_IGNORED)
-+			dir.flags |= DIR_SHOW_IGNORED_TOO_MODE_MATCHING;
-+	} else {
- 		dir.untracked = the_index.untracked;
-+	}
-+
- 	setup_standard_excludes(&dir);
+ `DIR_SHOW_IGNORED`:::
  
- 	fill_directory(&dir, &the_index, &s->pathspec);
-@@ -1621,7 +1626,7 @@ static void wt_longstatus_print(struct wt_status *s)
- 	}
- 	if (s->show_untracked_files) {
- 		wt_longstatus_print_other(s, &s->untracked, _("Untracked files"), "add");
--		if (s->show_ignored_files)
-+		if (s->show_ignored_mode)
- 			wt_longstatus_print_other(s, &s->ignored, _("Ignored files"), "add -f");
- 		if (advice_status_u_option && 2000 < s->untracked_in_ms) {
- 			status_printf_ln(s, GIT_COLOR_NORMAL, "%s", "");
-diff --git a/wt-status.h b/wt-status.h
-index 64f4d33ea1..fe27b465e2 100644
---- a/wt-status.h
-+++ b/wt-status.h
-@@ -27,6 +27,12 @@ enum untracked_status_type {
- 	SHOW_ALL_UNTRACKED_FILES
- };
+-	Return just ignored files in `entries[]`, not untracked files.
++	Return just ignored files in `entries[]`, not untracked
++	files. This flag is mutually exclusive with
++	`DIR_SHOW_IGNORED_TOO`.
  
-+enum show_ignored_type {
-+	SHOW_NO_IGNORED,
-+	SHOW_TRADITIONAL_IGNORED,
-+	SHOW_MATCHING_IGNORED,
-+};
+ `DIR_SHOW_IGNORED_TOO`:::
+ 
+-	Similar to `DIR_SHOW_IGNORED`, but return ignored files in `ignored[]`
+-	in addition to untracked files in `entries[]`.
++	Similar to `DIR_SHOW_IGNORED`, but return ignored files in
++	`ignored[]` in addition to untracked files in
++	`entries[]`. This flag is mutually exclusive with
++	`DIR_SHOW_IGNORED`.
+ 
+ `DIR_KEEP_UNTRACKED_CONTENTS`:::
+ 
+@@ -39,6 +43,21 @@ The notable options are:
+ 	untracked contents of untracked directories are also returned in
+ 	`entries[]`.
+ 
++`DIR_SHOW_IGNORED_TOO_MODE_MATCHING`:::
 +
- /* from where does this commit originate */
- enum commit_whence {
- 	FROM_COMMIT,     /* normal */
-@@ -70,7 +76,7 @@ struct wt_status {
- 	int display_comment_prefix;
- 	int relative_paths;
- 	int submodule_summary;
--	int show_ignored_files;
-+	enum show_ignored_type show_ignored_mode;
- 	enum untracked_status_type show_untracked_files;
- 	const char *ignore_submodule_arg;
- 	char color_palette[WT_STATUS_MAXSLOT][COLOR_MAXLEN];
++	Only has meaning if `DIR_SHOW_IGNORED_TOO` is also set; if
++	this is set, returns ignored files and directories that match
++	an exclude pattern. If a directory matches an exclude pattern,
++	then the directory is returned and the contained paths are
++	not. A directory that does not match an exclude pattern will
++	not be returned even if all of its contents are ignored. In
++	this case, the contents are returned as individual entries.
+++
++If this is set, files and directories that explicity match an ignore
++pattern are reported. Implicity ignored directories (directories that
++do not match an ignore pattern, but whose contents are all ignored)
++are not reported, instead all of the contents are reported.
++
+ `DIR_COLLECT_IGNORED`:::
+ 
+ 	Special mode for git-add. Return ignored files in `ignored[]` and
 -- 
 2.13.6
 
