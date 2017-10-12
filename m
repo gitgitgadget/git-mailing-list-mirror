@@ -2,164 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7DF9D20372
-	for <e@80x24.org>; Thu, 12 Oct 2017 19:13:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2106C20372
+	for <e@80x24.org>; Thu, 12 Oct 2017 19:53:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751996AbdJLTNt (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Oct 2017 15:13:49 -0400
-Received: from mout.gmx.net ([212.227.17.21]:56307 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751205AbdJLTNs (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Oct 2017 15:13:48 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M35iN-1d9vXu1LUt-00st9K; Thu, 12
- Oct 2017 21:13:41 +0200
-Date:   Thu, 12 Oct 2017 21:13:40 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org, J Wyman <jwyman@microsoft.com>
-Subject: Re: [PATCH v2 2/3] for-each-ref: let upstream/push optionally remote
- ref name
-In-Reply-To: <xmqqvajmmdii.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.21.1.1710122110170.40514@virtualbox>
-References: <cover.1506952571.git.johannes.schindelin@gmx.de> <cover.1507205895.git.johannes.schindelin@gmx.de> <7da6c7e2563d14cb7cd7ff2637c79c51896a9788.1507205895.git.johannes.schindelin@gmx.de> <xmqqvajsx3o0.fsf@gitster.mtv.corp.google.com>
- <xmqqvajmmdii.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1752308AbdJLTx0 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Oct 2017 15:53:26 -0400
+Received: from mail-vk0-f53.google.com ([209.85.213.53]:56219 "EHLO
+        mail-vk0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752065AbdJLTxZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Oct 2017 15:53:25 -0400
+Received: by mail-vk0-f53.google.com with SMTP id b5so3246860vkf.12
+        for <git@vger.kernel.org>; Thu, 12 Oct 2017 12:53:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=BnAy2Dw4Jv6XQ9EugVW4tz3DOh07b01hzFubYQkZnvM=;
+        b=dYJtgrlu7pIzQcQfdVsKTVjNg9BdVJ15kfu7U7yl8G6fSqw240mq2TBwKN7ItS+Ogj
+         p4j74FQXV720xN5D6cKKol2bSuNoBQEmx4w/GJMfnHyQnYQikn+/M4bh5Bdsv8fbvSje
+         SD60fcdeXIpV2VN26WwwHDE08R+UCW3RgTDXq3UQtNsCwRXKQZIe4LriW0fB/YJXvMja
+         wthUXId4AfMem5tNZU1uph90sSqn0G6I+uLR47EWOg/3QdmdwMXG7DvzqLhBYxg7yyno
+         Di60pZ7BM8L344F/XShY5IkgKBJ94ew2HLSa1bpBg6CPiHlYw2B7+lyy9Aeae9nTzQvC
+         mOFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=BnAy2Dw4Jv6XQ9EugVW4tz3DOh07b01hzFubYQkZnvM=;
+        b=XnUDEORUzoAIXMuQBwel7IFi05mjRFKwF+h0f/FYZGNBN9Hfqe0x/3qTeaB8mtP1R/
+         9u0dZ9zsCiWt4MoUoEvnR6+bDbCL1C/qEMhMFKP2v8O8xpm4l5BB7NBLlTo+/VsN83xL
+         o/auDp4lmAuA0hcSH4B+GnbU3X2TKzVITx2h7baDO3uyM0oWUFFtHbqTPehT9nmaHo1r
+         lI69obk40Ktf/I6kF7LQCDIckfpgt9EXkwDCqSsPz/Xkb9+AxT/1jVF17ea3jbW4WLwn
+         GiRZ3BKoB0sUd/N+mVwyht2JrlQXxdvDK93zDX2Pj0wW4gJNz7NcjplaB5VpvGsdHkge
+         QLeQ==
+X-Gm-Message-State: AMCzsaUam+BxmcljHxHPWxCr9UYlHZF2fPZQqlNxqE+wn+ky/B+n3isk
+        e5N1xJKUyKDmPhLCPRqYCm/ONHJfax7rC16OJXLvBA==
+X-Google-Smtp-Source: AOwi7QC6Kvds9nUriNvns9LFoMLKQl4POcW9PKSPyWLmDL4IHdeVmhnt7y17O9gXFaJxlysiLBlKvYgsu1LYkjGv4dM=
+X-Received: by 10.31.7.142 with SMTP id 136mr3243944vkh.10.1507838003715; Thu,
+ 12 Oct 2017 12:53:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:m4Txmt3hvEVsNqHizYhvqnaits3eL524KwxMZI4ih4j2lYTlgfR
- DcTwfBOAtWzprCkug/p1PqaaRxUg0bDqPaEeh6emQTMriG20tlEYk96SIoNXglkGEOybfLu
- k6ZaW1PJE5+SzSllWUEsKlFrxAUPL+5gREfERkcPxBoJEnWiOJK6L1oiyOpPUuQvuLsUBLf
- WxJIC8Pz4RKKy2h/Vg+AQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:npOS4w2oi6M=:+nZYObQGz94kj/rhQxVrWJ
- PGugTRYOS0bjgK9uY5Y51o2i+k1lecd8P+s2VfufswKUIy/l77gE5IsLwyB0XpZ4/rtXpM0yq
- JjfJbszSETQmf7r+FRl/ecgixxnNQ1VTP/AlQ4Ka4L/DyZ1QqUz6l4Cs2omGxQ66OX3HYuOH6
- I3tABiqrCEJiDxguc2qvQ4mAUHVpCwLUKLwbLHPDk2bahNaVc5Ss5WTEOgZN0YibBi5mQng3U
- j+ziXMqghzHcpF8G/mLxTPdnBfa6tQ3R84UmrR23X5pfwAsltpUCNAhvUgivYViHqgKIeloSB
- jnqI9pcZSV/MsUbSyEPBEj3eVMSF9r9cXsj+3FIg/HbQK7F5K6XCIqu3SpkA96SBkxnJWzaeM
- vvHWbZmzeQnZ5NAIbgiIQR83LjNjEOvohuJEQ6xkTU7tCWM6YECCRH4550Ag45F9T9esBJQSm
- r2168wzdOg8yNYjPKoQy2g78tu5WyXsQjg01FzofbWmQO5ET4rp/AENGD6RgKZ6QDetYVG2+V
- dGV8GPG1Z45/gX+WXgCnvK1KLfu971TPpOK4tMQ7lgqXHqz1wd3eY5JVbnpHVDRJtMTdMVhC8
- Ff8Jyzeyu3vt2vCmBLFfIhi6dmbkpY4GJ5oiOAtTSjnDP7RboXxmJtO6pyD7naXgxgt/tfuDA
- h+T/hUc/jjwoqqVuQC5b4c8yNae7bN9L9x99LWz5p7JStcwPMi21TZmzEfxqwU6JG6iyeVeX/
- yJChdj+tMarlX3ShAvWqUp43tOeKvUwhRiOiLnF/PLqGm2JyORgtYTX82zHUm6AKkiuaB/eub
- R9Hkq6qdl/aHVy1y/N3NT/Y/Uvr+BPCrc7uo7Rzw1PNyQyp0TE=
+Received: by 10.159.56.100 with HTTP; Thu, 12 Oct 2017 12:53:23 -0700 (PDT)
+From:   Orgad Shaneh <orgads@gmail.com>
+Date:   Thu, 12 Oct 2017 22:53:23 +0300
+Message-ID: <CAGHpTBLQ8vi00e3Tt3KTrCfaAWhZKQX6u6Ca17t2ySVQdoGc5g@mail.gmail.com>
+Subject: Out of memory with diff.colormoved enabled
+To:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi,
 
-On Wed, 11 Oct 2017, Junio C Hamano wrote:
+git version 2.15.0.rc0 (from debian sid package)
 
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> >
-> >> Subject: Re: [PATCH v2 2/3] for-each-ref: let upstream/push optionally remote ref name
-> >
-> > No verb?  s/optionally/report/ perhaps?
-> 
-> I just noticed that I didn't tweak the copy I have in my tree after
-> sending this message, but now I did s/optionally/& report the/;
+There is an infinite loop when colormoved is used with --ignore-space-change:
 
-Yes, sorry for not reading this earlier, this is what I meant the commit
-subject to say.
+git init
+seq 20 > test
+git add test
+sed -i 's/9/42/' test
+git -c diff.colormoved diff --ignore-space-change -- test
 
-> I am still puzzled by the hunk below, though.
-> 
-> >> @@ -1262,6 +1265,14 @@ static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
-> >>  			*s = xstrdup(remote);
-> >>  		else
-> >>  			*s = "";
-> >> +	} else if (atom->u.remote_ref.option == RR_REMOTE_REF) {
-> >> +		int explicit, for_push = starts_with(atom->name, "push");
-> >
-> > Hmph, the previous step got rid of starts_with() rather nicely by
-> > introducing atom->u.remote_ref.push bit; can't we do the same in
-> > this step?
-
-Right, I forgot to edit this. FWIW I have this in my branch now:
-
--- snip --
-[PATCH] squash! for-each-ref: let upstream/push optionally remote ref
- name
-
-for-each-ref: let upstream/push optionally report the remote ref name
-
-There are times when scripts want to know not only the name of the
-push branch on the remote, but also the name of the branch as known
-by the remote repository.
-
-An example of this is when a tool wants to push to the very same branch
-from which it would pull automatically, i.e. the `<remote>` and the `<to>`
-in `git push <remote> <from>:<to>` would be provided by
-`%(upstream:remotename)` and `%(upstream:remoteref)`, respectively.
-
-This patch offers the new suffix :remoteref for the `upstream` and `push`
-atoms, allowing to show exactly that. Example:
-
-	$ cat .git/config
-	...
-	[remote "origin"]
-		url = https://where.do.we.come/from
-		fetch = refs/heads/*:refs/remote/origin/*
-	[branch "master"]
-		remote = origin
-		merge = refs/heads/master
-	[branch "develop/with/topics"]
-		remote = origin
-		merge = refs/heads/develop/with/topics
-	...
-
-	$ git for-each-ref \
-		--format='%(push) %(push:remoteref)' \
-		refs/heads
-	refs/remotes/origin/master refs/heads/master
-	refs/remotes/origin/develop/with/topics refs/heads/develop/with/topics
-
-Signed-off-by: J Wyman <jwyman@microsoft.com>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- ref-filter.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
-
-diff --git a/ref-filter.c b/ref-filter.c
-index 2556c7885de..6ab12658cb3 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -1268,9 +1268,11 @@ static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
- 		else
- 			*s = "";
- 	} else if (atom->u.remote_ref.option == RR_REMOTE_REF) {
--		int explicit, for_push = starts_with(atom->name, "push");
--		const char *merge = remote_ref_for_branch(branch, for_push,
--							  &explicit);
-+		int explicit;
-+		const char *merge;
-+
-+		merge = remote_ref_for_branch(branch, atom->u.remote_ref.push,
-+					      &explicit);
- 		if (explicit)
- 			*s = xstrdup(merge);
- 		else
--- 
-2.14.2.windows.2
--- snap --
-
-(The funny "squash!" followed by a complete version of the rewritten
-commit message is what I do until I -- or anybody else -- comes up with a
-patch to implement support for "reword!".)
-
-I'll let this simmer until next week and send out a new iteration of the
-patch series then.
-
-Thanks,
-Dscho
+- Orgad
