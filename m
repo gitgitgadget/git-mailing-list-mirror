@@ -2,103 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3E9F220372
-	for <e@80x24.org>; Thu, 12 Oct 2017 13:20:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BAC0220372
+	for <e@80x24.org>; Thu, 12 Oct 2017 13:27:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753395AbdJLNUW (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Oct 2017 09:20:22 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:41496 "EHLO mx1.redhat.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751932AbdJLNUV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Oct 2017 09:20:21 -0400
-Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.phx2.redhat.com [10.5.11.12])
-        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by mx1.redhat.com (Postfix) with ESMTPS id 0B6162D0FCD;
-        Thu, 12 Oct 2017 13:20:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com 0B6162D0FCD
-Authentication-Results: ext-mx05.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
-Authentication-Results: ext-mx05.extmail.prod.ext.phx2.redhat.com; spf=fail smtp.mailfrom=fweimer@redhat.com
-Received: from oldenburg.str.redhat.com (dhcp-192-212.str.redhat.com [10.33.192.212])
-        by smtp.corp.redhat.com (Postfix) with ESMTPS id 61FDE6E717;
-        Thu, 12 Oct 2017 13:20:20 +0000 (UTC)
-Subject: Re: Is git am supposed to decode MIME?
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-References: <24940e12-3f72-1ef0-0983-58523d8dec51@redhat.com>
- <20171004092546.vnjddxqwvia5cfn6@sigill.intra.peff.net>
-From:   Florian Weimer <fweimer@redhat.com>
-Message-ID: <39aebcbd-7820-eafe-3c44-b96b057d0059@redhat.com>
-Date:   Thu, 12 Oct 2017 15:20:19 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
+        id S1756721AbdJLN1d (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Oct 2017 09:27:33 -0400
+Received: from cloud.peff.net ([104.130.231.41]:50896 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1755462AbdJLN1c (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Oct 2017 09:27:32 -0400
+Received: (qmail 15180 invoked by uid 109); 12 Oct 2017 13:27:32 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 12 Oct 2017 13:27:32 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 15527 invoked by uid 111); 12 Oct 2017 13:27:34 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Thu, 12 Oct 2017 09:27:34 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 12 Oct 2017 09:27:30 -0400
+Date:   Thu, 12 Oct 2017 09:27:30 -0400
+From:   Jeff King <peff@peff.net>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Andreas Krey <a.krey@gmx.de>, Git Users <git@vger.kernel.org>
+Subject: Re: git repack leaks disk space on ENOSPC
+Message-ID: <20171012132730.bvglyiar4h6win4b@sigill.intra.peff.net>
+References: <20171011150546.GC32090@inner.h.apk.li>
+ <20171012031702.GB155740@aiede.mtv.corp.google.com>
 MIME-Version: 1.0
-In-Reply-To: <20171004092546.vnjddxqwvia5cfn6@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.12
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.29]); Thu, 12 Oct 2017 13:20:21 +0000 (UTC)
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20171012031702.GB155740@aiede.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/04/2017 11:25 AM, Jeff King wrote:
-> On Wed, Oct 04, 2017 at 10:44:31AM +0200, Florian Weimer wrote:
+On Wed, Oct 11, 2017 at 08:17:03PM -0700, Jonathan Nieder wrote:
+
+> I can imagine this behavior of retaining tmp_pack being useful for
+> debugging in some circumstances, but I agree with you that it is
+> certainly not a good default.
 > 
->> The git am documentation talks about “mailboxes”.  I suppose these contain
->> messages in Internet Mail syntax.  Is git am supposed to decode MIME?
->>
->> I'm asking because I have a message whose body is encoded as
->> quoted-printable, but git am does not parse the patch contained in it.
->>
->> If git am is supposed to deal with this, I'll dig deeper and try to figure
->> out where things go wrong.
+> Chasing this down, I find:
 > 
-> Yes, it should. I just double-checked with the toy patch patch below,
-> and it correctly extracted the quoted-printable from the commit message
-> and patch, as well as in the headers.
+>   pack-write.c::create_tmp_packfile chooses the filename
+>   builtin/pack-objects.c::write_pack_file writes to it and the .bitmap, calling
+>   pack-write.c::finish_tmp_packfile to rename it into place
+> 
+> Nothing tries to install an atexit handler to do anything special to it
+> on exit.
+> 
+> The natural thing, I'd expect, would be for pack-write to use the
+> tempfile API (see tempfile.h) to create and finish the file.  That way,
+> we'd get such atexit handlers for free.  If we want a way to keep temp
+> files for debugging on abnormal exit, we could set that up separately as
+> a generic feature of the tempfile API (e.g. an envvar
+> GIT_KEEP_TEMPFILES_ON_FAILURE), making that an orthogonal topic.
 
-It took me a while, but I know think the message is simply corrupted. 
-It's encoded with quoted-printable, and that looks correct, but it ends 
-with:
+Yes, I think this is the right direction. I've had a patch in GitHub's
+fork for years that does so (since otherwise failures can fill up your
+disk and need manual intervention).
 
-@@ -5137,11 +5114,13 @@ __libc_mallopt (int param_number, int value)
-    if (__malloc_initialized < 0)
-      ptmalloc_init ();
-    __libc_lock_lock (av->mutex);
--  /* Ensure initialization/consolidation */
--  malloc_consolidate (av);
-=20
-    LIBC_PROBE (memory_mallopt, 2, param_number, value);
-=20
-+  /* We must consolidate main arena before changing max_fast
-+     (see definition of set_max_fast).  */
-+  malloc_consolidate (av);
-+
-    switch (param_number)
-      {
-      case M_MXFAST:=
+The main reason that I hadn't submitted it upstream was because of the
+"you can never free a struct tempfile" requirement. So my patch just
+leaks the tempfile structs. That's OK for packs, of which we tend to
+create only a few in a given process, but doesn't scale for loose
+objects.
 
-The “=” masks the final newline, and that doesn't decode into a valid 
-diff hunk.  The file being patched continues after that, so it's not 
-even the “\ No newline at end of file” case.
+Now that 89563ec379 (Merge branch 'jk/incore-lockfile-removal',
+2017-09-19) has landed, I think it makes sense to pursue that direction.
 
-So in short, there is no Git bug here, and I just failed to interpret 
-the “git am” diagnostics correctly:
+My patch roughly looks like:
 
-Applying: Improve malloc initialization sequence
-error: corrupt patch at line 342
-Patch failed at 0001 Improve malloc initialization sequence
-The copy of the patch that failed is found in: .git/rebase-apply/patch
+  diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+  index 4ff567db47..7f261e56c4 100644
+  --- a/builtin/index-pack.c
+  +++ b/builtin/index-pack.c
 
-Line 342 refers to the file in .git/rebase-apply/patch, not the original 
-input, and it took me a while to figure that out.
+  @@ -308,9 +348,11 @@ static const char *open_pack_file(const char *pack_name)
+                  input_fd = 0;
+                  if (!pack_name) {
+                          struct strbuf tmp_file = STRBUF_INIT;
+  +                       struct tempfile *t = xcalloc(1, sizeof(*t));
+                          output_fd = odb_mkstemp(&tmp_file,
+                                                  "pack/tmp_pack_XXXXXX");
+                          pack_name = strbuf_detach(&tmp_file, NULL);
+  +                       register_tempfile(t, pack_name);
+                  } else {
+                          output_fd = open(pack_name, O_CREAT|O_EXCL|O_RDWR, 0600);
+                          if (output_fd < 0)
 
-Thanks,
-Florian
+but note that's not quite what we'd want. It never closes the tempfile,
+so:
+
+  1. Under the new regime, we'd still leak the struct!
+
+  2. Git will still try to unlink the tempfile on exit, even if we
+     successfully moved it into place.
+
+So I think all the code around open_pack_file() needs to learn to pass
+around the tempfile struct, and eventually use rename_tempfile() to
+cement it in place. I also suspect that odb_mkstemp should just take a
+"struct tempfile".
+
+-Peff
