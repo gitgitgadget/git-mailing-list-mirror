@@ -2,96 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4110F1FF32
-	for <e@80x24.org>; Thu, 12 Oct 2017 02:33:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A79E1FF32
+	for <e@80x24.org>; Thu, 12 Oct 2017 02:41:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752440AbdJLCdh (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Oct 2017 22:33:37 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57693 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752120AbdJLCdg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Oct 2017 22:33:36 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5448EB673A;
-        Wed, 11 Oct 2017 22:33:36 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=RldJrpvxB7MXL9FVO9zzwimOcDA=; b=o1AO+7
-        WUvUw5/m+yeGsTmq8Kie9w9FqwHmSxIZGY9Y7+TUQA5z9upnPMvLC7xpqYWl/DAG
-        TNZi423YohzUwxYS1BcVsp7vGDFXMs8kRqM6W1wd9j4qK+acnoh8UPX80c0BdieL
-        FVpqzRUHl+foml14ozyUzcixG5gdKIjkhXpwo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ssw5MQhsuF/XyAijJ/bAiw6JRT+LSwfU
-        AwYrvx48e6x+TeBOb9q9qFOAtbs+uwIuABD9Fe4fPT6hko+5CX6LL8Fg8P8/QJ6J
-        mFe6fE4uV0StOQA/V1/9p1hpnFWp9S5hwGgFQNc7WJu5hE0//i49W6F0eaL4HOxp
-        NN2U/gbwcqY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4B8D6B6739;
-        Wed, 11 Oct 2017 22:33:36 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AFD85B6737;
-        Wed, 11 Oct 2017 22:33:35 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jameson Miller <jameson.miller81@gmail.com>
-Cc:     bmwill@google.com, git@vger.kernel.org, jamill@microsoft.com,
-        peff@peff.net, sbeller@google.com
-Subject: Re: [PATCH v2 0/5] Teach Status options around showing ignored files
-References: <20171005205443.206900-1-jameson.miller81@gmail.com>
-        <20171011133504.15049-1-jamill@microsoft.com>
-Date:   Thu, 12 Oct 2017 11:33:34 +0900
-In-Reply-To: <20171011133504.15049-1-jamill@microsoft.com> (Jameson Miller's
-        message of "Wed, 11 Oct 2017 09:34:59 -0400")
-Message-ID: <xmqq60bl2iyp.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1752645AbdJLClw (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Oct 2017 22:41:52 -0400
+Received: from mail-io0-f174.google.com ([209.85.223.174]:47167 "EHLO
+        mail-io0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752123AbdJLClu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Oct 2017 22:41:50 -0400
+Received: by mail-io0-f174.google.com with SMTP id h70so3940601ioi.4
+        for <git@vger.kernel.org>; Wed, 11 Oct 2017 19:41:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=nAanuCUP7VJl+n4x9jRg5JeuhHLI7N+fGPM0dP4UhRw=;
+        b=QGldlXccFrOtZcOaKCpC92S5ThFlDzeIDYe6NwBUqXPnble4Yox98Y/ltqOAtZiH5I
+         n1AzXp0L4jQk1m+rolFv+vpl7E2h1tNEfLdIoxRLR01bVXyPmid4/F6MVHzlqL73/GyV
+         /wcpYEeDWcsvI0aRG1Jdf+7Mz/Bec3+OGLDULEH1TwHMPiE/6DuKNo81JNEVvGvL+Cpg
+         SPqr9SMC9ArxDxcUQDe734AlA5GnbrOxjj2dB9pzsZy+axJIL6VeyWR4KrE29DtT52Mv
+         r6TA+QCnKpzPI7jRmHH/WknIxusoMA35TmUpOyo3LhapFMBoE3EUE1TnWvNiSmCvGR/c
+         lv0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=nAanuCUP7VJl+n4x9jRg5JeuhHLI7N+fGPM0dP4UhRw=;
+        b=MCIIXpJMLZbE1U64rgkrTTOr9QTOA1W1wGHT9OhPS4nKSSzSFsREPOdruZ0ORQGL3r
+         iHoH5oq+DwMoMXPQsQM1JOKlbsgeIa9pW7BLPZdjZoi03yoH1GVF/qeawZGUwEb5ntZs
+         GBQL5MFYdZ2JkJw+d44VuszOxQwefzUQNC/RA9VMT/SIE2NwtgY6x3VyDlENLIzyPw8o
+         49OgILzp4J57lIZvu1zmRw+eJGQH27FPIs0InM3+IuzdX4St73a2dvRsULdShgtuYYYS
+         xj5sravbaqXvxn8Y8Ls8BVhHWOTy6iFrrKyAeFSyj8gXIRh3vYJPA1+W79vnSPRdePTz
+         ZDjA==
+X-Gm-Message-State: AMCzsaVC0I1YLPGVF78ifyjJfy3bCOPSW70JN3WC9hDIdujVpySaLkQ9
+        sNpFU6WPOJw8RvOxwhmPG0q0STy3l/hyQ50LF9A=
+X-Google-Smtp-Source: AOwi7QDfqQX9+MBqXHWfoYrrhcGx0OY3WO77o60e/hjSRM4r2/hX5V8qTbPkMSFk32akZ/XeRQM4U9SWimSAoTR44TU=
+X-Received: by 10.107.70.22 with SMTP id t22mr1352067ioa.69.1507776110238;
+ Wed, 11 Oct 2017 19:41:50 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: BF4FD880-AEF5-11E7-9DCE-8EF31968708C-77302942!pb-smtp1.pobox.com
+Received: by 10.79.7.10 with HTTP; Wed, 11 Oct 2017 19:41:49 -0700 (PDT)
+In-Reply-To: <xmqqa80x2mb4.fsf@gitster.mtv.corp.google.com>
+References: <CAK7vU=3whGsx4L4KACSC+XDWQEbUWuZZZqTsW2R=CbF8d7rkuQ@mail.gmail.com>
+ <20171011202505.10113-1-thais.dinizbraz@gmail.com> <20171011202505.10113-2-thais.dinizbraz@gmail.com>
+ <xmqqa80x2mb4.fsf@gitster.mtv.corp.google.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Thu, 12 Oct 2017 04:41:49 +0200
+Message-ID: <CAP8UFD3VnVod7SPTM11XG=vHBYD4EwA+xZB563iwpL1Ue4pPnA@mail.gmail.com>
+Subject: Re: [PATCH][Outreachy] New git config variable to specify string that
+ will be automatically passed as --push-option
+To:     Junio C Hamano <gitster@pobox.com>,
+        "Thais D. Braz" <thais.dinizbraz@gmail.com>
+Cc:     marius.paliga@gmail.com, git <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jameson Miller <jameson.miller81@gmail.com> writes:
-
-> Changes in v2:
+On Thu, Oct 12, 2017 at 3:21 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> "Thais D. Braz" <thais.dinizbraz@gmail.com> writes:
 >
-> Addressed review comments from the original series:
+>> ---
+>>  Documentation/git-push.txt | 3 +++
+>>  builtin/push.c             | 9 ++++++++-
+>>  2 files changed, 11 insertions(+), 1 deletion(-)
 >
-> * Made fixes / simplifications suggested for documentation
+> Can somebody explain what is going on?
 >
-> * Removed test_tick from test scripts
->
-> * Merged 2 commits (as suggested)
->
-> Jameson Miller (5):
->   Teach status options around showing ignored files
->   Update documentation for new directory and status logic
->   Add tests for git status `--ignored=matching`
->   Expand support for ignored arguments on status
->   Add tests around status handling of ignored arguments
+> I am guessing that Thais and marius are different people (judging by
+> the fact that one CC's a message to the other).  Are you two
+> collaborating on this change, or something?
 
-Please make sure these titles mix well when they appear together
-with changes from other people that are completely unrelated to
-them.  Keep in mind that your "git status" is *not* the most
-important thing in the world (of course, it is no less important
-than others, either).  Perhaps
+I guess that Thais decided to work on this, because we ask Outreachy
+applicants to search for #leftoverbits mentions in the mailing list
+archive to find small tasks they could work on.
 
-    status: add new options to show ignored files differently
-    status: document logic to show new directory
-    status: test --ignored=matching
+In this case it looks like Marius sent a patch a few hours before
+Thais also sent one.
 
-etc.  Rules of thumb:
+Thais, I am sorry, but as Marius sent a patch first, I think it is
+better if you search for another different small task to work on.
+Also please keep Peff and me in cc.
 
- (1) choose "<area>: " prefix appropriately
- (2) keep them short and to the point
- (3) word that follow "<area>: " prefix is not capitalized
- (4) no need for full-stop at the end of the title
-
-
+Thanks.
