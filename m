@@ -2,127 +2,218 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 941EC1FF32
-	for <e@80x24.org>; Thu, 12 Oct 2017 06:23:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4FA1F20467
+	for <e@80x24.org>; Thu, 12 Oct 2017 06:58:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751416AbdJLGX0 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Oct 2017 02:23:26 -0400
-Received: from resqmta-po-12v.sys.comcast.net ([96.114.154.171]:50476 "EHLO
-        resqmta-po-12v.sys.comcast.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1750774AbdJLGXZ (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 12 Oct 2017 02:23:25 -0400
-Received: from resomta-po-09v.sys.comcast.net ([96.114.154.233])
-        by resqmta-po-12v.sys.comcast.net with ESMTP
-        id 2WtteRWOejaVo2WtxeLPiB; Thu, 12 Oct 2017 06:23:25 +0000
-Received: from mail.tremily.us ([IPv6:2001:558:600a:ce:480b:3bd8:dc5a:403a])
-        by resomta-po-09v.sys.comcast.net with SMTP
-        id 2WtveJJHqelnr2WtwelckM; Thu, 12 Oct 2017 06:23:24 +0000
-Received: by mail.tremily.us (Postfix, from userid 1000)
-        id BFCBBFED338; Wed, 11 Oct 2017 23:23:51 -0700 (PDT)
-Date:   Wed, 11 Oct 2017 23:23:51 -0700
-From:   "W. Trevor King" <wking@tremily.us>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git <git@vger.kernel.org>,
-        =?utf-8?Q?=C5=81ukasz?= Gryglicki <lukaszgryglicki@o2.pl>
-Subject: Re: [PATCH] pull: pass --signoff/--no-signoff to "git merge"
-Message-ID: <20171012062351.GB11004@valgrind.tremily.us>
-References: <18953f46ffb5e3dbc4da8fbda7fe3ab4298d7cbd.1507752482.git.wking@tremily.us>
- <xmqqefq92mgw.fsf@gitster.mtv.corp.google.com>
- <20171012053002.GZ11004@valgrind.tremily.us>
- <xmqq60bk2a7t.fsf@gitster.mtv.corp.google.com>
+        id S1751832AbdJLG61 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Oct 2017 02:58:27 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53508 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750750AbdJLG60 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Oct 2017 02:58:26 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 562219CBE7;
+        Thu, 12 Oct 2017 02:58:20 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=SOatc2PmcwGe6HvyoNBYpqcqkAQ=; b=bBCLmL
+        pQ/l08mBOjE5vdmBSOZxOFvtCrJnbtc1o8UjyWf06puje1kvYmKxRh+mcgYVji9G
+        QbVfUTof6ml3tAFokYOVDY3TupVtBtaZwI71BQ1/xXDBbF80Jo2GIIiW9SkYjN+V
+        ssy9bA6CIhogF6U7Gzkoy7hhMokWmRzLK/VeM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=CnPmKtbeUI2RR6BAtgQwZtP2uD7WwGEU
+        UCyBeNgiPJp66bfY2tqOm9MvF10BiBZHr7BMMR6hItdkDh5HvcJs3P5+Yg3qU9Qu
+        CuJuzbVtnrvCpShJhxAWkcsQlrNomsvzQQ9mIs3xoeiVBow3bj10M50/0HHwr93E
+        ZoPVU+rdaW8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4D15A9CBE6;
+        Thu, 12 Oct 2017 02:58:20 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id ADAE39CBE5;
+        Thu, 12 Oct 2017 02:58:19 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/2] color: downgrade "always" to "auto" only for on-disk configuration
+References: <xmqqr2uao2vy.fsf@gitster.mtv.corp.google.com>
+        <20171012021007.7441-1-gitster@pobox.com>
+        <20171012021007.7441-2-gitster@pobox.com>
+        <20171012044724.GD155740@aiede.mtv.corp.google.com>
+        <xmqqa80x0xcw.fsf@gitster.mtv.corp.google.com>
+        <20171012054049.GF155740@aiede.mtv.corp.google.com>
+        <xmqq1sm828pi.fsf@gitster.mtv.corp.google.com>
+Date:   Thu, 12 Oct 2017 15:58:18 +0900
+In-Reply-To: <xmqq1sm828pi.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Thu, 12 Oct 2017 15:15:05 +0900")
+Message-ID: <xmqqwp40zwc5.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="jn9UjnPB79FDtyKu"
-Content-Disposition: inline
-In-Reply-To: <xmqq60bk2a7t.fsf@gitster.mtv.corp.google.com>
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-CMAE-Envelope: MS4wfDK9IfvA46O/JszFYhC449bpM6qiLczVUSXYiPIzLXodgit72RsjGfY3NP72O7EZRROnRTgUL6qDtzfacbKCIVvrHr+2NbzWEu8P94mNoFC2klYgJZx7
- 8GaLgynQKCzuKOsOdYUG5PWgQyK2LyF0uajFhSj5qh1jkkjOSoAf9nlsi+VhE4lL6BJtLtFTXAVaHJzju858rnwS9/m2TTp1lPU=
+Content-Type: text/plain
+X-Pobox-Relay-ID: BADF6D9A-AF1A-11E7-8460-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Junio C Hamano <gitster@pobox.com> writes:
 
---jn9UjnPB79FDtyKu
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> We need to be able to answer "why does '-c color.ui=always' work
+> only from the command line?", but I doubt we want to actively
+> encourage the use of it, though, so I dunno.
 
-On Thu, Oct 12, 2017 at 02:42:30PM +0900, Junio C Hamano wrote:
-> "W. Trevor King" <wking@tremily.us> writes:
-> > On Thu, Oct 12, 2017 at 10:17:51AM +0900, Junio C Hamano wrote:
-> >> "W. Trevor King" <wking@tremily.us> writes:
-> >>=20
-> >> > Following 09c2cb87 (pull: pass --allow-unrelated-histories to "git
-> >> > merge", 2016-03-18) with the tests also drawing on 14d01b4f (merge:
-> >> > add a --signoff flag, 2017-07-04).
-> >>=20
-> >> I cannot find a verb in the above.
-> >
-> > I'd meant it as either a continuation of the subject line, or with an
->=20
-> Never do that.  The title should be able to stand on its own, and
-> must not be an early part of incomplete sentence.
+For today's pushout, I've queued this as [PATCH 3/2]
 
-=E2=80=9CFollowing=E2=80=9D to an imperative =E2=80=9CFollow=E2=80=9D it is=
- then, unless you want a
-more drastic rewording.
+Thanks..
 
-> > Sounds good.  I'll add a patch to v2 to make the same change to
-> > the existing t5521 --allow-unrelated-histories test.
->=20
-> Please don't, unless you are actively working on the features that
-> they test.  We do not have infinite amount of bandwidth to deal with
-> changes for the sake of perceived consistency and no other real
-> gain.
+-- >8 --
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: color: document that "git -c color.*=always" is a bit special
+Date: Wed, 11 Oct 2017 21:47:24 -0700
 
-By extention, I'm guessing that means that while the:
+When used from the command line as an option to "git" potty,
+'always' does not get demoted to 'auto', to help third-party scripts
+that (ab)used it to override the settings the end-user has.
+Document it.
 
-  test_has_trailer $OBJECT $TOKEN $VALUE
+While at it, clarify description for per-command configuration
+variables (color.branch, color.grep, color.interactive,
+color.showBranch and color.status) so that they can more easily
+share the new text to talk about this special-casing.
 
-and:
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/config.txt | 68 ++++++++++++++++++++++++++++++++----------------
+ 1 file changed, 45 insertions(+), 23 deletions(-)
 
-  test_has_no_trailer $OBJECT $TOKEN
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index ba01b8d3df..f79e82b79a 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1051,11 +1051,15 @@ clean.requireForce::
+ 	-i or -n.   Defaults to true.
+ 
+ color.branch::
+-	A boolean to enable/disable color in the output of
+-	linkgit:git-branch[1]. May be set to `false` (or `never`) to
+-	disable color entirely, `auto` (or `true` or `always`) in which
+-	case colors are used only when the output is to a terminal.  If
+-	unset, then the value of `color.ui` is used (`auto` by default).
++	When to use color in the output of linkgit:git-branch[1].
++	May be set to `never` (or `false`) to disable color entirely,
++	or `auto` (or `true`) in which case colors are used only when
++	the output is to a terminal.  If unset, then the value of
++	`color.ui` is used (`auto` by default).
+++
++The value `always` is a historical synonym for `auto`, except when
++passed on the command line using `-c`, where it is a historical synonym
++for `--color=always`.
+ 
+ color.branch.<slot>::
+ 	Use customized color for branch coloration. `<slot>` is one of
+@@ -1068,10 +1072,13 @@ color.diff::
+ 	Whether to use ANSI escape sequences to add color to patches.
+ 	If this is set to `true` or `auto`, linkgit:git-diff[1],
+ 	linkgit:git-log[1], and linkgit:git-show[1] will use color
+-	when output is to the terminal. The value `always` is a
+-	historical synonym for `auto`.  If unset, then the value of
++	when output is to the terminal. If unset, then the value of
+ 	`color.ui` is used (`auto` by default).
+ +
++The value `always` is a historical synonym for `auto`, except when
++passed on the command line using `-c`, where it is a historical
++synonym for `--color=always`.
+++
+ This does not affect linkgit:git-format-patch[1] or the
+ 'git-diff-{asterisk}' plumbing commands.  Can be overridden on the
+ command line with the `--color[=<when>]` option.
+@@ -1091,10 +1098,14 @@ color.decorate.<slot>::
+ 	branches, remote-tracking branches, tags, stash and HEAD, respectively.
+ 
+ color.grep::
+-	When set to `always`, always highlight matches.  When `false` (or
++	When to highlight matches using color. When `false` (or
+ 	`never`), never.  When set to `true` or `auto`, use color only
+ 	when the output is written to the terminal.  If unset, then the
+ 	value of `color.ui` is used (`auto` by default).
+++
++The value `always` is a historical synonym for `auto`, except when
++passed on the command line using `-c`, where it is a historical synonym
++for `--color=always`.
+ 
+ color.grep.<slot>::
+ 	Use customized color for grep colorization.  `<slot>` specifies which
+@@ -1126,9 +1137,11 @@ color.interactive::
+ 	When set to `true` or `auto`, use colors for interactive prompts
+ 	and displays (such as those used by "git-add --interactive" and
+ 	"git-clean --interactive") when the output is to the terminal.
+-	When false (or `never`), never show colors. The value `always`
+-	is a historical synonym for `auto`.  If unset, then the value of
+-	`color.ui` is used (`auto` by default).
++	When false (or `never`), never show colors.
+++
++The value `always` is a historical synonym for `auto`, except when
++passed on the command line using `-c`, where it means to use color
++regardless of whether output is to the terminal.
+ 
+ color.interactive.<slot>::
+ 	Use customized color for 'git add --interactive' and 'git clean
+@@ -1141,18 +1154,24 @@ color.pager::
+ 	use (default is true).
+ 
+ color.showBranch::
+-	A boolean to enable/disable color in the output of
+-	linkgit:git-show-branch[1]. May be set to `always`,
+-	`false` (or `never`) or `auto` (or `true`), in which case colors are used
+-	only when the output is to a terminal. If unset, then the
+-	value of `color.ui` is used (`auto` by default).
++	When to use color in the output of linkgit:git-show-branch[1].
++	May be set to `never` (or `false`) to disable color or `auto`
++	(or `true`) to use colors only when the output is to a terminal.
++	If unset, the value of `color.ui` is used (`auto` by default).
+++
++The value `always` is a historical synonym for `auto`, except when
++passed on the command line using `-c`, where it is a historical synonym
++for `--color=always`.
+ 
+ color.status::
+-	A boolean to enable/disable color in the output of
+-	linkgit:git-status[1]. May be set to `always`,
+-	`false` (or `never`) or `auto` (or `true`), in which case colors are used
+-	only when the output is to a terminal. If unset, then the
+-	value of `color.ui` is used (`auto` by default).
++	When to use color in the output of linkgit:git-status[1].
++	May be set to `never` (or `false`) to disable color or `auto`
++	(or `true`) to use colors only when the output is to the terminal.
++	If unset, then the value of `color.ui` is used (`auto` by default).
+++
++The value `always` is a historical synonym for `auto`, except when
++passed on the command line using `-c`, where it means to use color
++regardless of whether output is to the terminal.
+ 
+ color.status.<slot>::
+ 	Use customized color for status colorization. `<slot>` is
+@@ -1177,8 +1196,11 @@ color.ui::
+ 	color unless enabled explicitly with some other configuration
+ 	or the `--color` option. Set it to `true` or `auto` to enable
+ 	color when output is written to the terminal (this is also the
+-	default since Git 1.8.4). The value `always` is a historical
+-	synonym for `auto` and its use is discouraged.
++	default since Git 1.8.4).
+++
++The value `always` is a historical synonym for `auto` (and its use is
++discouraged), except when passed on the command line using `-c`, where
++it means to use color regardless of whether output is to the terminal.
+ 
+ column.ui::
+ 	Specify whether supported commands should output in columns.
+-- 
+2.15.0-rc1-154-g0b692121ee
 
-test-lib-functions.sh helpers I floated may be acceptable (or not, no
-need to commit before you've seen a patch), you don't want me updating
-existing tests to use them.  I'll just use them in my new tests, and
-folks can gradually transition existing tests to them as they touch
-those tests (if they remember the helpers exist ;).
-
-Cheers,
-Trevor
-
---=20
-This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
-For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
-
---jn9UjnPB79FDtyKu
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEpgNNa8H/zemHkt2gprXBz9Wld7YFAlnfCmwACgkQprXBz9Wl
-d7YnjA/9FzgKt3RhPkJd9n5Qdjeb+WenkQ7m8Pghy9v+KH+wOkgxHjEBVptJ/Mow
-gILjXTqw0rLGnRqy8irAVwAAuDqZgsAhbefUj+8HpID+dETaavs5mkicgoPD68o5
-InM33LnEU66zqH7OlAy+QpU5BIU1pGpM2Cl4wizjCK6lYVC7MoZevh7RIGt2hFCa
-e0YvE61Tb8pOwobRcSfAE3frPmdpFu/y9ua6Ejc9Mc1ubLwrXOQaZ6LutO3pk0Iv
-z950P+ZJ6RYe2jn8ijyc7VnJAEi8hzotyhSu74ImV5UuvvOV2E0uXp9M1oWEpdt2
-ebu9+dusf/JkitugLhhT/U98RWr9IQ3AOPlAStAA0AYytEXuWWuLsfBq93oarDSE
-Xbw4XGb/q9dz6X7BHSI3GlMo42heBSoEy1TaDB57WfpjxKX8RlyJmxnPo6bzLLmg
-wp2AW710B80LLPSgZ7+3/2JpFvZvJVicefNc6cneZda37dVnooh1RFqHxw+9qjOM
-L2Pb9lFS+5wcGJZvQvb9YeVLRzEjdCIs6sAe/1DphOl9nUusCW/iM+A9NOlhuMZX
-rTTqrykNBOstxEFJzCRFjOs572oQx27mEnec9nkV3j1FFHgEPWe+ZbVW6Beg/MNp
-/7v9I5JsgCXpLHIUNfC8ra5CdD4GQS8IlAIDi5QzUd2FlzlUwXQ=
-=x0kQ
------END PGP SIGNATURE-----
-
---jn9UjnPB79FDtyKu--
