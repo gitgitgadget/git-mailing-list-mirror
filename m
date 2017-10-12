@@ -2,83 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E508920437
-	for <e@80x24.org>; Thu, 12 Oct 2017 11:14:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4A3D120437
+	for <e@80x24.org>; Thu, 12 Oct 2017 11:48:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755919AbdJLLOn (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Oct 2017 07:14:43 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62409 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1755540AbdJLLOm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Oct 2017 07:14:42 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id AAA05979B0;
-        Thu, 12 Oct 2017 07:14:41 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=0UigmbI4vt8unKSvZWXVC5y44pg=; b=NgVJOo
-        ndaUR88dAff4IykUbGWAREaTxcVKopoyhu1Vtc2O/vFc5Pn6mb1H2vN7k+ni9dnj
-        4DImzAUKWZDWSw9AVw424UuNfKV/xNRu47RzlZq0L8wQvp5xrT0LGX2RWdbPLTrj
-        LmZhtsWdyNrlw5HHDGISj/3MC1ojUO/rR6EB4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Rb491aUAnqeDTMXoAJuuz+DkIUJidlGZ
-        ki/ATANY+ZYreU2qnup228EAO8a6ijZwLxNttieFwhk3lOlheZPKjyAEClI28/p3
-        1u3G5+4WQ1Hi9zm3JjQIsn8SBPgxTgleOYqmOx4oavBISNHYsvAZC0TuIUjiAL9Q
-        9ubzrquDIMM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A2C3D979AE;
-        Thu, 12 Oct 2017 07:14:41 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1E991979AB;
-        Thu, 12 Oct 2017 07:14:41 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [RFC] deprecate git stash save?
-References: <20171005200049.GF30301@hank>
-        <xmqqmv4x2ngs.fsf@gitster.mtv.corp.google.com>
-Date:   Thu, 12 Oct 2017 20:14:40 +0900
-In-Reply-To: <xmqqmv4x2ngs.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Thu, 12 Oct 2017 09:56:19 +0900")
-Message-ID: <xmqqy3ogy5wf.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1752986AbdJLLsx (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Oct 2017 07:48:53 -0400
+Received: from wp156.webpack.hosteurope.de ([80.237.132.163]:47630 "EHLO
+        wp156.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752138AbdJLLsw (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 12 Oct 2017 07:48:52 -0400
+Received: from app04-neu.ox.hosteurope.de ([92.51.170.138] helo=null); authenticated
+        by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:ECDHE_RSA_AES_256_CBC_SHA1:256)
+        id 1e2bys-0003qU-JQ; Thu, 12 Oct 2017 13:48:50 +0200
+Date:   Thu, 12 Oct 2017 13:48:50 +0200 (CEST)
+From:   Thomas Braun <thomas.braun@virtuell-zuhause.de>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org
+Message-ID: <591155758.21471.1507808930483@ox.hosteurope.de>
+In-Reply-To: <CAGZ79kYTY6U0eNwvU0PcDyt_QXGyYGm5VkDvWLtuQgQG6BbtFA@mail.gmail.com>
+References: <788230417.115707.1507584541605@ox.hosteurope.de>
+ <CAGZ79kYTY6U0eNwvU0PcDyt_QXGyYGm5VkDvWLtuQgQG6BbtFA@mail.gmail.com>
+Subject: Re: Branch switching with submodules where the submodule replaces a
+ folder aborts unexpectedly
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8AE88738-AF3E-11E7-B831-8EF31968708C-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+Importance: Medium
+X-Mailer: Open-Xchange Mailer v7.8.4-Rev10
+X-Originating-Client: open-xchange-appsuite
+X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1507808932;6db20736;
+X-HE-SMSGID: 1e2bys-0003qU-JQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+> Stefan Beller <sbeller@google.com> hat am 9. Oktober 2017 um 23:59 geschrieben:
+> 
+> 
+> On Mon, Oct 9, 2017 at 2:29 PM, Thomas Braun
+> <thomas.braun@virtuell-zuhause.de> wrote:
+> > Hi,
+> >
+> > I'm currently in the progress of pulling some subprojects in a git repository of mine into their
+> > own repositories and adding these subprojects back as submodules.
+> >
+> > While doing this I enountered a potential bug as checkout complains on branch switching that a 
+> > file already exists.
+> 
+> (And I presume you know about --recurse-submodules as a flag for git-checkout)
 
-> Thomas Gummerer <t.gummerer@gmail.com> writes:
->
->> git stash push is the newer interface for creating a stash.  While we
->> are still keeping git stash save around for the time being, it's better
->> to point new users of git stash to the more modern (and more feature
->> rich) interface, instead of teaching them the older version that we
->> might want to phase out in the future.
->
-> With devil's advocate hat on, because the primary point of "stash"
-> being "clear the desk quickly", I do not necessarily agree that
-> "more feature rich" is a plus and something we should nudge newbies
-> towards.
+No I did not know about it. I tend to not know options which don't complete in my shell (patch follows for that).
 
-I do not particulary view "feature richness" is the primary benefit
-of 'push' that makes it shine.  'save' has a quirk in the command
-line option syntax, but 'push' corrects it, and that is why we want
-to move users towards the latter.
+> This is consistent with our tests, unfortunately.
+> 
+> git/t$ ./t2013-checkout-submodule.sh
+> ...
+> not ok 15 - git checkout --recurse-submodules: replace submodule with
+> a directory # TODO known breakage
+> ...
+> 
+> > If I'm misusing git here I'm glad for any advice.
+> 
+> You are not.
 
-IOW, I do not object to the agenda; it is just I found the
-justification used to push the agenda forward was flawed.
+Glad to know that.
 
-Thanks.
+> Apart from this bug report, would you think that such filtering of
+> trees into submodules (and back again) might be an interesting feature
+> of Git or are these cases rare and special?
+
+For me not particularly. In my case it is a one time thing going from an embedded project folder to a submodule.
