@@ -2,80 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 27C1E20437
-	for <e@80x24.org>; Thu, 12 Oct 2017 08:56:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5F9EF20467
+	for <e@80x24.org>; Thu, 12 Oct 2017 09:00:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751835AbdJLI4J (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Oct 2017 04:56:09 -0400
-Received: from mail96.atlas.de ([194.156.172.86]:55235 "EHLO mail96.atlas.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750774AbdJLI4J (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Oct 2017 04:56:09 -0400
-X-Greylist: delayed 630 seconds by postgrey-1.27 at vger.kernel.org; Thu, 12 Oct 2017 04:56:08 EDT
-X-IPAS-Result: =?us-ascii?q?A2C2AwBlK99Z/wXKxApdHAEBBAEBCgEBhVaDeqQIj3wKE4U?=
- =?us-ascii?q?oHIUPFAECAQEBAQEBAYEThR0BKRFXARkDAQIDAiYCBB8LBhUCAQUKBA0GAgEBi?=
- =?us-ascii?q?gIDqViCJ4dBDYNsMoEOgh+FbYVdgj41gkeCYQWKFpZwPIFtjgOQVYczjHuBCod?=
- =?us-ascii?q?ggTk2gS94XocddopsAQEB?=
-Received: from scesrv02.atlas.de ([10.196.202.5])
-  by MGW102FE.atlas.de with ESMTP/TLS/DHE-RSA-AES128-GCM-SHA256; 12 Oct 2017 10:45:32 +0200
-Received: by SCESRV02.atlas.de (Postfix, from userid 600)
-        id 3yCPZ44D5kz2yWS3; Thu, 12 Oct 2017 08:45:20 +0000 (UTC)
-Received: from MGW202PAR.atlas.de (unknown [10.206.101.61])
-        by SCESRV02.atlas.de (Postfix) with ESMTPS id 3yCPYr42ntz2yWS2
-        for <git@vger.kernel.org>; Thu, 12 Oct 2017 08:45:20 +0000 (UTC)
-Received: from msexsrv1.atlas.de ([10.200.102.56])
-  by MGW202DAT.atlas.de with ESMTP/TLS/DHE-RSA-AES256-SHA; 12 Oct 2017 10:45:20 +0200
-Received: from MSEXSRV5.atlas.de ([169.254.3.60]) by MSEXSRV1.atlas.de
- ([10.200.102.56]) with mapi id 14.03.0351.000; Thu, 12 Oct 2017 10:45:20
- +0200
-From:   <stefan.naewe@atlas-elektronik.com>
-To:     <git@vger.kernel.org>
-Subject: Bug or feature: format-patch breaks long subject lines
-Thread-Topic: Bug or feature: format-patch breaks long subject lines
-Thread-Index: AQHTQzZuFoGZz2xm30WL6cr/TPSiRA==
-Date:   Thu, 12 Oct 2017 08:45:19 +0000
-Message-ID: <3405d79e-f7be-322c-615e-fd7d8987c0cf@atlas-elektronik.com>
-Accept-Language: de-DE, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.1
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <292462B41F072C42A824F265B91A244A@atlas.de>
-Content-Transfer-Encoding: base64
-MIME-Version: 1.0
+        id S1752516AbdJLJAV (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Oct 2017 05:00:21 -0400
+Received: from resqmta-po-06v.sys.comcast.net ([96.114.154.165]:45668 "EHLO
+        resqmta-po-06v.sys.comcast.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751434AbdJLJAU (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 12 Oct 2017 05:00:20 -0400
+Received: from resomta-po-06v.sys.comcast.net ([96.114.154.230])
+        by resqmta-po-06v.sys.comcast.net with ESMTP
+        id 2ZLoeBc4xfyfN2ZLoe1EXu; Thu, 12 Oct 2017 09:00:20 +0000
+Received: from mail.tremily.us ([IPv6:2001:558:600a:ce:480b:3bd8:dc5a:403a])
+        by resomta-po-06v.sys.comcast.net with SMTP
+        id 2ZLneKPBu14XP2ZLnebk5y; Thu, 12 Oct 2017 09:00:20 +0000
+Received: from ullr.tremily.us (ullr.tremily.us [192.168.10.7])
+        by mail.tremily.us (Postfix) with SMTP id 95E25FED5DC;
+        Thu, 12 Oct 2017 02:00:47 -0700 (PDT)
+Received: (nullmailer pid 14623 invoked by uid 1000);
+        Thu, 12 Oct 2017 09:02:19 -0000
+From:   "W. Trevor King" <wking@tremily.us>
+To:     Git <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "W. Trevor King" <wking@tremily.us>
+Subject: [PATCH] Documentation/merge-options.txt: Add -S/--gpg-sign
+Date:   Thu, 12 Oct 2017 02:02:17 -0700
+Message-Id: <406769a31421cb26a0e1bcf6e15bcf7ab48617c8.1507798709.git.wking@tremily.us>
+X-Mailer: git-send-email 2.13.6
+X-CMAE-Envelope: MS4wfLAk9LkKS+o20UzqOq1hbJWvMGg8eDhJmG0wmNqvoBD71w1UmFSArwxGX98F5z5qHVRCykPXRicALF1HB+QO4VUfQq7S/gT+5pufVRTm7NR85vZT5zNz
+ CPFNApubABDQXGbCSkEmiUK5doL0Vdp33ECS8v7x/90Qrc5jMQsHGnT0kPp8TzWYxun1jZvEnRTrWg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SGVsbG8gbGlzdCwNCg0KZ2l0IGZvcm1hdC1wYXRjaCBicmVha3MgKG9yIGJldHRlcjogd29yZC13
-cmFwcykgbG9uZyBzdWJqZWN0IGxpbmVzLg0KDQpUaGlzIGlzIG9uIFdpbmRvd3MgNyB3aXRoDQoN
-CiQgZ2l0IC0tdmVyc2lvbg0KZ2l0IHZlcnNpb24gMi4xNC4yLndpbmRvd3MuMg0KDQpSZXByb2R1
-Y2Ugd2l0aCAoc29tZSBvdXRwdXQgb21pdHRlZCk6DQoNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0K
-JCBnaXQgaW5pdCB0ZXN0LWZvcm1hdC1wYXRjaA0KJCBjZCB0ZXN0LWZvcm1hdC1wYXRjaA0KJCB0
-b3VjaCBmaWxlDQokIGdpdCBhZGQgZmlsZQ0KJCBnaXQgY29tbWl0IC1tIjAxMjM0NTY3ODkwMTIz
-NDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODki
-DQokIGdpdCBmb3JtYXQtcGF0Y2ggLTEgLS1zdGRvdXQNCkZyb20gZWM3MTFjY2EzMzBmMTAzMmQy
-ODYxMTQ5MzJhOTA0ODg1NDJmMWRhMiBNb24gU2VwIDE3IDAwOjAwOjAwIDIwMDENCkZyb206IFN0
-ZWZhbiBOYWV3ZSA8c3RlZmFuLm5hZXdlQGdtYWlsLmNvbT4NCkRhdGU6IFRodSwgMTIgT2N0IDIw
-MTcgMTA6MzY6NTIgKzAyMDANClN1YmplY3Q6IFtQQVRDSF0NCiAwMTIzNDU2Nzg5MDEyMzQ1Njc4
-OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5DQoNCi0t
-LQ0KIGZpbGUgfCAwDQogMSBmaWxlIGNoYW5nZWQsIDAgaW5zZXJ0aW9ucygrKSwgMCBkZWxldGlv
-bnMoLSkNCiBjcmVhdGUgbW9kZSAxMDA2NDQgZmlsZQ0KDQpkaWZmIC0tZ2l0IGEvZmlsZSBiL2Zp
-bGUNCm5ldyBmaWxlIG1vZGUgMTAwNjQ0DQppbmRleCAwMDAwMDAwLi5lNjlkZTI5DQotLQ0KMi4x
-NC4yLndpbmRvd3MuMg0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQoNCklzIHRoaXMgdGhlIGV4cGVj
-dGVkIGJlaGF2aW91cj8NCg0KVGhhbmtzLA0KICBTdGVmYW4NCi0tIA0KLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KL2Rldi9y
-YW5kb20gc2F5czogSSBIYXZlIFRvIFN0b3AgTm93LCBNeSBGaW5nZXJzIEFyZSBHZXR0aW5nIEhv
-YXJzZSENCnB5dGhvbiAtYyAicHJpbnQgJzczNzQ2NTY2NjE2ZTJlNmU2MTY1Nzc2NTQwNjE3NDZj
-NjE3MzJkNjU2YzY1NmI3NDcyNmY2ZTY5NmIyZTYzNmY2ZCcuZGVjb2RlKCdoZXgnKSIgDQpHUEcg
-S2V5IGZpbmdlcnByaW50ID0gMkRGNSBFMDFCIDA5QzMgNzUwMSBCQ0E5ICA5NjY2IDgyOUIgNDlD
-NSA5MjIxIDI3QUY=
+Pull has supported these since ea230d8 (pull: add the --gpg-sign
+option, 2014-02-10).  Insert in long-option alphabetical order
+following 7c85d274 (Documentation/merge-options.txt: order options in
+alphabetical groups, 2009-10-22).
+
+Signed-off-by: W. Trevor King <wking@tremily.us>
+---
+This patch is based on maint.  It will have trivial conflicts with the
+--signoff docs which landed in 14d01b4f07 (merge: add a --signoff
+flag, 2017-07-04, v2.15.0-rc0~138^2).
+
+ Documentation/git-merge.txt     | 6 ------
+ Documentation/merge-options.txt | 6 ++++++
+ 2 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
+index f90faf7aaa..1d97a17904 100644
+--- a/Documentation/git-merge.txt
++++ b/Documentation/git-merge.txt
+@@ -64,12 +64,6 @@ OPTIONS
+ -------
+ include::merge-options.txt[]
+ 
+--S[<keyid>]::
+---gpg-sign[=<keyid>]::
+-	GPG-sign the resulting merge commit. The `keyid` argument is
+-	optional and defaults to the committer identity; if specified,
+-	it must be stuck to the option without a space.
+-
+ -m <msg>::
+ 	Set the commit message to be used for the merge commit (in
+ 	case one is created).
+diff --git a/Documentation/merge-options.txt b/Documentation/merge-options.txt
+index 5b4a62e936..6d85a76872 100644
+--- a/Documentation/merge-options.txt
++++ b/Documentation/merge-options.txt
+@@ -42,6 +42,12 @@ set to `no` at the beginning of them.
+ 	current `HEAD` is already up-to-date or the merge can be
+ 	resolved as a fast-forward.
+ 
++-S[<keyid>]::
++--gpg-sign[=<keyid>]::
++	GPG-sign the resulting merge commit. The `keyid` argument is
++	optional and defaults to the committer identity; if specified,
++	it must be stuck to the option without a space.
++
+ --log[=<n>]::
+ --no-log::
+ 	In addition to branch names, populate the log message with
+-- 
+2.13.6
+
