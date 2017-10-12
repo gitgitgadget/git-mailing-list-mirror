@@ -2,96 +2,152 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1016920372
-	for <e@80x24.org>; Thu, 12 Oct 2017 21:05:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ABDF520372
+	for <e@80x24.org>; Thu, 12 Oct 2017 22:39:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755627AbdJLVFL (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Oct 2017 17:05:11 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:52834 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751541AbdJLVFK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Oct 2017 17:05:10 -0400
-Received: by mail-wm0-f66.google.com with SMTP id k4so16649431wmc.1
-        for <git@vger.kernel.org>; Thu, 12 Oct 2017 14:05:09 -0700 (PDT)
+        id S1753283AbdJLWjF (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Oct 2017 18:39:05 -0400
+Received: from mail-qt0-f176.google.com ([209.85.216.176]:49157 "EHLO
+        mail-qt0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753191AbdJLWjE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Oct 2017 18:39:04 -0400
+Received: by mail-qt0-f176.google.com with SMTP id k31so16453198qta.6
+        for <git@vger.kernel.org>; Thu, 12 Oct 2017 15:39:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=RnJYb+1R/4D5/Bz6OE1FK9e8HuvOK761HW6s18abHdo=;
-        b=Bq89tCmgsTpt+3xozmWdv2oKIhWH2hr6QrJ6/j3re3ndAAonyZfw0GYSGRkqj9c0aN
-         Il4kB1n/3wksAtgZsJ07ixxZX12oEHhQdUM5tBVqC1EW5joLiLG11hil/paaxA56j7W+
-         QmIrnE52ZA+RLjDsGNkfxWBr2Khj8PVfMVOORwD3VHPFeQ4CwkIdg0oBU72hUzCjWt2x
-         +aHvVr45EnMC/FgqAbk53EvR95VoOFO75njx7xb/zHQ3VVylNLplsmQyrTLCWp0lXwd/
-         /E6PTYf5S960NkvmAdl1NmDBcSBEYmNhWpUMekXCVryh0yLdm8e9Qt/xOwXHYyfVmYBK
-         sm7g==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=E0A2YfKy5+/iVWY7hs0ZGy9RBnERSpB4ftp7I1SqRC4=;
+        b=CuQNpxe91gdY1MRpvVi+s4bWuoo2jSZocsXH8w3sqh3ql3tXRcm+jHoimH3N+yCC/4
+         lvLKscPf5JugTDGk9m3AwM1BS4grGtRlrc5HXI4Jw2TsfZmLXQwm8Mg+z6EiL5dZls7l
+         MUMWEfGUvyUO2DzxjGLvvvRn138S/wp+W1Hohh9GMFo7bBTBvs1ODJCvKnWRiZCT4J/U
+         CxiDq6EEq8JoxwYWF0rIJ+f01ID9zFQGcJPHeQYbyxa55OYVPqDESXfBpdZKaJBDJ7L8
+         eUBYzDOBslJ3uH+4R/Voha0u1d0scWwpeBRWuAgtsgwerrSIkxJUbKy9aTSFc2NkAu4b
+         nIKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=RnJYb+1R/4D5/Bz6OE1FK9e8HuvOK761HW6s18abHdo=;
-        b=AwSXGB5m70P1TS+WEwXCfUjXrizCp0VAQiTo76wKrfegSy7mT0aaVACP29LYcDSXCB
-         0pD6SUhOtNfzvonkoOr6jQZowVeBbUvQE+eS2+42cvv/SsRHDZwFD3Fg0TM51Q65oO5t
-         rJIIeOAxPv2rRnKYoGhcpWBPjHU8HNBHI/QY38kelHOtCt2IYUmOtSn+IS7VbKEjCQiu
-         yCh8RTNTnDhlbBv/jgVCgGAlBDECjeB0IWFPk0laK07I/Y8b9Knlqyn2yfNQ7RgXrKm1
-         MbK1iPtppA5nuh9Ou5swJZzI6cmrHm/z6Cv+OAdwFlSUZIs+1KHrfL6BlvVXZzQPiNIH
-         0hHQ==
-X-Gm-Message-State: AMCzsaWfVfmiXVHbXn/mIJXvWBxc7hrrrQH09b0WUJTIf6bTcXKekp5Y
-        EdVrFyixxfzaiPynQbuU2GA=
-X-Google-Smtp-Source: AOwi7QDij4fB2Dmk2knVmGXTK0rR03A+iyJ6zyiAA1lFBNSWZGofaj8mZh92MTCU6s7yvcBSF+SCNg==
-X-Received: by 10.80.172.5 with SMTP id v5mr4278744edc.91.1507842308840;
-        Thu, 12 Oct 2017 14:05:08 -0700 (PDT)
-Received: from evledraar (dhcp-077-250-131-208.chello.nl. [77.250.131.208])
-        by smtp.gmail.com with ESMTPSA id q12sm12157266edj.29.2017.10.12.14.05.07
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 12 Oct 2017 14:05:07 -0700 (PDT)
-Received: from avar by evledraar with local (Exim 4.89)
-        (envelope-from <avarab@gmail.com>)
-        id 1e2kfD-0006Km-1n; Thu, 12 Oct 2017 23:05:07 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Jeffrey Walton <noloader@gmail.com>, Git List <git@vger.kernel.org>
-Subject: Re: undefined reference to `pcre_jit_exec'
-References: <CAH8yC8mvG3bSpgshHay7B0SSyAafWLrPTtVZRuq2cShn9xQ9JA@mail.gmail.com> <20171012201023.wrfbs7p7lups5glz@sigill.intra.peff.net> <CAH8yC8nHpdA+fX3pcaLRzEYwTCmoxF3NKSh6SUkORZuEvg0JGA@mail.gmail.com> <20171012203832.ui52j7cdrztc6vhs@sigill.intra.peff.net>
-User-agent: Debian GNU/Linux 9.1 (stretch); Emacs 25.1.1; mu4e 0.9.19
-In-reply-to: <20171012203832.ui52j7cdrztc6vhs@sigill.intra.peff.net>
-Date:   Thu, 12 Oct 2017 23:05:06 +0200
-Message-ID: <874lr46prx.fsf@evledraar.booking.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=E0A2YfKy5+/iVWY7hs0ZGy9RBnERSpB4ftp7I1SqRC4=;
+        b=fbJ2tvBooIPKyylYyka7kD32jMwA6Soq6YYIwzuaR8U+8Ad39A7dTGUPP7Qs9NPOIz
+         KrGFrUEZ+aj/NJwoND60fsjtZ7ebECfHSs3ptQLdwHzqvYy3K+/w8daKdruSvAGjWAei
+         bYRz9MKR69UXT7ylgmGLRNMVPe23XnvaOW3zsmtgftAy34aqxat4MCM3TxhTAAwedLcl
+         wAawXH+JxmRsvDHq9XLYsz6QZkqJghrjEZfJcc43hrUJAVscWxmpdm5KUOyyJ7gqOBIc
+         2gxXlaiITAFe4J7WaLRhBNoX9YsysnKBxYcU2jFzaUnkKQUDZPAaqPvVc39FKLFtXGHT
+         0yAg==
+X-Gm-Message-State: AMCzsaUZxpyZGRvVFtav0w/dEWMALqBhwmihp/Fvp505YGlzykCuw0fO
+        ANcQpHxCKMAtdQkUgVAD4kh8ElHKsvKLFGBqAR+8Cg==
+X-Google-Smtp-Source: AOwi7QA+L1Dr431LWYig9MlUYi5PA47GPpLd9uiHMJks13q3+fNcjo2pIpEKpWqFlH8iSFA9Mt34RaLKgxOULkdaCGw=
+X-Received: by 10.200.36.175 with SMTP id s44mr6130549qts.298.1507847943785;
+ Thu, 12 Oct 2017 15:39:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.140.102.46 with HTTP; Thu, 12 Oct 2017 15:39:03 -0700 (PDT)
+In-Reply-To: <20171012200536.m6oz4zrjcze3yw4i@sigill.intra.peff.net>
+References: <CAGHpTBLQ8vi00e3Tt3KTrCfaAWhZKQX6u6Ca17t2ySVQdoGc5g@mail.gmail.com>
+ <20171012200536.m6oz4zrjcze3yw4i@sigill.intra.peff.net>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 12 Oct 2017 15:39:03 -0700
+Message-ID: <CAGZ79kZ=v0GiBfNPK=iRp7Hi=zG=KUL6+jHuc3N5CRqtECt7fw@mail.gmail.com>
+Subject: Re: Out of memory with diff.colormoved enabled
+To:     Jeff King <peff@peff.net>
+Cc:     Orgad Shaneh <orgads@gmail.com>, git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Thu, Oct 12 2017, Jeff King jotted:
-
-> On Thu, Oct 12, 2017 at 04:34:38PM -0400, Jeffrey Walton wrote:
+On Thu, Oct 12, 2017 at 1:05 PM, Jeff King <peff@peff.net> wrote:
+> On Thu, Oct 12, 2017 at 10:53:23PM +0300, Orgad Shaneh wrote:
 >
->> > It looks like autoconf turns on USE_LIBPCRE1, but isn't smart enough to
->> > test NO_LIBPCRE1_JIT.
+>> There is an infinite loop when colormoved is used with --ignore-space-change:
 >>
->> If Git wants Jit, then I am inclined to configure PCRE to provide it.
+>> git init
+>> seq 20 > test
+>> git add test
+>> sed -i 's/9/42/' test
+>> git -c diff.colormoved diff --ignore-space-change -- test
 >
-> It does make things faster. OTOH, we lived for many years without it, so
-> certainly it's not the end of the world to build without it.
->
-> There are some numbers in the commit message of fbaceaac47 (grep: add
-> support for the PCRE v1 JIT API, 2017-05-25).
->
->> A quick question if you happen to know... Does PCRE Jit cause a loss
->> of NX-stacks? If it causes a loss of NX-stacks, then I think I prefer
->> to disable it.
->
-> I don't know. Ævar (cc'd) might.
+> Thanks for an easy reproduction recipe.
 
-Sorry, no idea. I do see some references to that in sljit (which pcre
-JIT uses), but haven't tried this myself. From what I understand of how
-NX works it should fail really fast if it doesn't, so it would be cool
-if you could try it and report if it works.
+Thanks here as well!
+
+> It looks like the problem is that next_byte() doesn't make any forward
+> progress in the buffer with --ignore-space-change. We try to convert
+> whitespace into a single space
+
+> (I'm not sure why, but I'm not very
+> familiar with this part of the code).
+
+(on why you don't feel familiar)
+Because it is quite new, and you weren't one of the main reviewers.
+2e2d5ac184 (diff.c: color moved lines differently, 2017-06-30) was also very
+large, such that it is easy to overlook. Though I remember Junio and me
+discussing the next_byte part quite vividly. :/
+
+(On why it is the way it is)
+Consider the three strings
+    one SP word
+    one TAB word
+    oneword
+
+The first two are equal, but the third is different with
+`--ignore-space-change` given. To achieve that goal,
+the easiest thing to do (in my mind) was to replace
+any sequence of blank characters by "a standard
+space" sequence. That will make all strings with different
+white space sequences compare equal, but the one
+without blanks will be different.
+
+> But if there's no space, then the
+> "cp" pointer never gets advanced.
+
+Right, because of the early return, skipping the increment of *cp
+
+> This fixes it, but I have no idea if it's doing the right thing:
+>
+> diff --git a/diff.c b/diff.c
+> index 69f03570ad..e8dedc7357 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -713,13 +713,17 @@ static int next_byte(const char **cp, const char **endp,
+>                 return -1;
+>
+>         if (DIFF_XDL_TST(diffopt, IGNORE_WHITESPACE_CHANGE)) {
+> -               while (*cp < *endp && isspace(**cp))
+> +               int saw_whitespace = 0;
+> +               while (*cp < *endp && isspace(**cp)) {
+>                         (*cp)++;
+> +                       saw_whitespace = 1;
+> +               }
+>                 /*
+>                  * After skipping a couple of whitespaces, we still have to
+>                  * account for one space.
+>                  */
+> -               return (int)' ';
+> +               if (saw_whitespace)
+> +                       return (int)' ';
+
+The "else" is implicit and it falls through to
+the standard case at the end of the function,
+incrementing *cp, returning the character *cp
+pointed at prior to being incremented.
+
+That sounds correct.
+
+>         }
+>
+>         if (DIFF_XDL_TST(diffopt, IGNORE_WHITESPACE)) {
+>
+> I guess it would be equally correct to not enter that if-block unless
+> isspace(**cp).
+
+This also sounds correct.
+
+>
+> -Peff
