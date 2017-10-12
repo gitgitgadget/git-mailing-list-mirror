@@ -2,272 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A98121FF32
-	for <e@80x24.org>; Thu, 12 Oct 2017 05:31:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8B3B81FF32
+	for <e@80x24.org>; Thu, 12 Oct 2017 05:40:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751057AbdJLFbg (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Oct 2017 01:31:36 -0400
-Received: from resqmta-po-04v.sys.comcast.net ([96.114.154.163]:42064 "EHLO
-        resqmta-po-04v.sys.comcast.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1750758AbdJLFbf (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 12 Oct 2017 01:31:35 -0400
-Received: from resomta-po-11v.sys.comcast.net ([96.114.154.235])
-        by resqmta-po-04v.sys.comcast.net with ESMTP
-        id 2W5ne7rS5bjnM2W5neXQEs; Thu, 12 Oct 2017 05:31:35 +0000
-Received: from mail.tremily.us ([67.168.186.5])
-        by resomta-po-11v.sys.comcast.net with SMTP
-        id 2W3qe9KkVsmO32W3qeKC2c; Thu, 12 Oct 2017 05:29:35 +0000
-Received: by mail.tremily.us (Postfix, from userid 1000)
-        id 29E52FED23A; Wed, 11 Oct 2017 22:30:02 -0700 (PDT)
-Date:   Wed, 11 Oct 2017 22:30:02 -0700
-From:   "W. Trevor King" <wking@tremily.us>
+        id S1751237AbdJLFky (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Oct 2017 01:40:54 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:37279 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750758AbdJLFkx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Oct 2017 01:40:53 -0400
+Received: by mail-pf0-f194.google.com with SMTP id z80so4676430pff.4
+        for <git@vger.kernel.org>; Wed, 11 Oct 2017 22:40:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=pD3nbnpoqmyvCX1rvay74RTMsTmBsmYwrjCJ7sl5E6U=;
+        b=fu1MKVGjrEP4LnVThFFZLOXR+voSHuxll1M9ijnqYrm210okwOqiqfr7aPlHjmLH0/
+         0w7hhAuGmcXXUOerkb86UT0FVAakrxyHedt30eTbLNdSOTLgYs0x6ZPkMZwQxXu7Tug1
+         6ylsU6PQJ9vNxsMhsM5YhJIekReoEEYcBYgeEEI2kE8NWE5DLkwzENEBRoWGLCrKLSZS
+         UCI1oSJv8IP2kTyoBFX3va3+G14u4SZYgj9wCueHXYWq9n4t3xvb3145IKICuMOfhfUX
+         0k6LS/e7mQeg+eP1ZaB4/sCmJOrPg9V6HNdXtdqB79GWZ16j4NU7A9iq6+VCP41QACwb
+         NiFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=pD3nbnpoqmyvCX1rvay74RTMsTmBsmYwrjCJ7sl5E6U=;
+        b=q4rIm7AkktOc6FlRKD6FOGXJXbVgcaWBePlj2A0UiIIGbXv62mn2LvNi/8kPFctkvu
+         gz61u9BdoTFWqO8JxGndkzOajcwuTDb3IumDmOYBWN2irmS9YwGNvWRAKMoKb9Ias2us
+         3gPaEboCA37hQEoONAxve85oRzx0usX0YZeimXvDPWwj0vdNPyFXoiMRZQmg2o6PY2zb
+         7WYjJGkAkDCwsWKVu+YaFz8UH7kCpr3nO/FH98XpX4QHb/MCLD0MU6DIeWkG9ZrMSyCR
+         +mG6xp5ZH/M0hgMIOZI2WVt9M2RNxTAXvFgr92QKU9xaTBn4llCGiBTHUyh3K+y3QDog
+         suYA==
+X-Gm-Message-State: AMCzsaWOo07OpZJ2bu+05bhmogwoaljQ9p9UojCPJBKYdigs56BtdpYj
+        GWNexCMe7lpiHrh+eLruIvA=
+X-Google-Smtp-Source: AOwi7QDmmDrq7tBxrVzNmH6t893XCAfxNhP7Zdu6cEIkLaIY53uVXSzny70lc0WLTkQQdxONPxfExg==
+X-Received: by 10.84.224.131 with SMTP id s3mr1188805plj.409.1507786852396;
+        Wed, 11 Oct 2017 22:40:52 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:9e:660c:b9bb:a349])
+        by smtp.gmail.com with ESMTPSA id a7sm21643790pgc.40.2017.10.11.22.40.51
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 11 Oct 2017 22:40:51 -0700 (PDT)
+Date:   Wed, 11 Oct 2017 22:40:49 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git <git@vger.kernel.org>,
-        =?utf-8?Q?=C5=81ukasz?= Gryglicki <lukaszgryglicki@o2.pl>
-Subject: Re: [PATCH] pull: pass --signoff/--no-signoff to "git merge"
-Message-ID: <20171012053002.GZ11004@valgrind.tremily.us>
-References: <18953f46ffb5e3dbc4da8fbda7fe3ab4298d7cbd.1507752482.git.wking@tremily.us>
- <xmqqefq92mgw.fsf@gitster.mtv.corp.google.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/2] color: downgrade "always" to "auto" only for on-disk
+ configuration
+Message-ID: <20171012054049.GF155740@aiede.mtv.corp.google.com>
+References: <xmqqr2uao2vy.fsf@gitster.mtv.corp.google.com>
+ <20171012021007.7441-1-gitster@pobox.com>
+ <20171012021007.7441-2-gitster@pobox.com>
+ <20171012044724.GD155740@aiede.mtv.corp.google.com>
+ <xmqqa80x0xcw.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="1IWgL8yD8uKyf/Tu"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqefq92mgw.fsf@gitster.mtv.corp.google.com>
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-CMAE-Envelope: MS4wfDfHnHbDDtdAvZ8NEdSBZCd6bcYxZywPQjZyXcDWu7577IuIIEGtJjrHj7KKTPUxAcq6qd9rFk7UXrYgtabYgScTZKfDAZF1+bfwYRv+lHLF1Ms7bhe0
- McSiEOKKpks7TteYoit6ngohmCqN/Wmrk+Z70APy6oV3fUw2ZDmAEaCoBus052m3SP1Jk14SmLtf3C/mS7eZJtJ21d6Je0ENwXeZefIcuECkcG40GH25RrwQ
+In-Reply-To: <xmqqa80x0xcw.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 
---1IWgL8yD8uKyf/Tu
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Thu, Oct 12, 2017 at 10:17:51AM +0900, Junio C Hamano wrote:
-> "W. Trevor King" <wking@tremily.us> writes:
->=20
-> > Following 09c2cb87 (pull: pass --allow-unrelated-histories to "git
-> > merge", 2016-03-18) with the tests also drawing on 14d01b4f (merge:
-> > add a --signoff flag, 2017-07-04).
->=20
-> I cannot find a verb in the above.
-
-I'd meant it as either a continuation of the subject line, or with an
-implicit leading =E2=80=9CI did this=E2=80=A6=E2=80=9D :p.  I can reword if=
- you like, maybe
-just =E2=80=9CFollowing=E2=80=9D =E2=86=92 =E2=80=9CFollow=E2=80=9D?  Somet=
-hing more drastic?
-
-> > The order of options in merge-options.txt isn't clear to me, but
-> > I've put --signoff between --log and --stat as somewhat
-> > alphabetized and having an "add to the commit message" function
-> > like --log.
-> >
-> > The tests aren't as extensive as t7614-merge-signoff.sh, but they
-> > exercises both the --signoff and --no-signoff options.  There may
-> > be a more efficient way to set them up (like
-> > t7614-merge-signoff.sh's test_setup), but with all the pull
-> > options packed into a single test script it seemed easiest to just
-> > copy/paste the duplicate setup code.
+>> Should we document this special case treatment of color.* in -c
+>> somewhere?  E.g.
 >
-> The above two paragraphs read more like "requesting help for hints
-> to improve this patch" than commit log message.  Perhaps move them
-> below the three-dash line and instead describe what you actually did
-> here (if they were worth explaining, that is)?
+> Perhaps, although I'd save that until we actually add the new option
+> to "git" potty, which hasn't happened yet, if I were thinking about
+> adding some text like that.  Also I'd call that --default-color=always
+> or something like that, to avoid having to answer: what are the
+> differences between these two --color thing in the following?
+>
+>     git --color=foo cmd --color=bar
 
-I think something about merge-options.txt ordering should end up in
-the history of that content.  Reading through:
+I agree that the color.status text in the example doc is unfortunate.
+But the surprising thing I found when writing that doc is that
+color.status ("git status", "git commit --dry-run") and
+color.interactive are the only items that needed it (aside from
+color.ui that needed it for those two).  All the other commands that
+use color already accept
 
-  $ git log Documentation/merge-options.txt
+	git cmd --color=bar
 
-only turned up 690b2975 (Documentation/merge-options.txt: group "ff"
-related options together, 2012-02-22) discussing option order (it
-suggested grouping similar options together, although --ff and
---ff-only would also be close alphabetically).
+color.interactive applies to multiple commands (e.g. "git clean"), so
+it would take a little more chasing down to make them all use
+OPT__COLOR.
 
-I agree that the first paragraph you quote above doesn't have me
-coming down firmly in favor of a particular ordering strategy, but I
-think having something like it in the Git history will help whoever
-ends up giving merge-options.txt a well-defined strategy by showing I
-didn't have any strong opinions to account for ;).  Silence can mean
-=E2=80=9Cdoesn't have a strong opinion=E2=80=9D, but sometimes it means =E2=
-=80=9Cfeels the
-choice is so obvious that it doesn't need explicit motivation=E2=80=9D.
+Heading off to sleep, can look more tomorrow.
 
-I'm fine moving the second paragraph you quote below the fold in a v2,
-although you're calling for more tests below, and it won't apply
-anymore once I've added those :).
+I don't think we can get around documenting this -c special case
+behavior, though.
 
-> > 09c2cb87 didn't motivate the addition of --allow-unrelated-histories
-> > to pull; only citing the reason from e379fdf3 (merge: refuse to create
-> > too cool a merge by default, 2016-03-18) gave for *not* including it.
-> > I like having both exposed in pull because while the fetch-and-merge
-> > approach might be a more popular way to judge "how well they fit
-> > together", you can also do that after an optimistic pull.  And in
-> > cases where an optimistic pull is likely to succeed, suggesting it is
-> > easier to explain to Git newbies than a FETCH_HEAD merge.
->=20
-> I find this paragraph totally unrelated to what the patch does.
-> Save it for the patch you add to pass --allow-unrelated-histories
-> given to pull down to underlying merge, perhaps?
-
-09c2cb87 is your commit in master (v2.9.0-rc0~88^2) that is doing just
-that.  I haven't gone through the list history to figure out why it
-ended up getting landed with its current commit message; =E2=80=9CPrepare a
-patch to make it a reality, just in case it is needed=E2=80=9D sounds more
-like it was =E2=80=9Chere's the code in case folks want it, I'll reroll the
-motivation if they do=E2=80=9D.  This paragraph was aiming to motivate both
-the --signoff pass-through I'm adding here and (retroactively) the
---allow-unrelated-histories pass-through you added there.  I'll add
-more context in v2 to try to make that more clear.
-
-> > +	cat >expected <<-EOF &&
-> > +		Signed-off-by: $(git var GIT_COMMITTER_IDENT | sed -e "s/>.*/>/")
-> > +	EOF
->=20
-> 	echo "Signed-off-by: $GIT_COMMITER_NAME <$GIT_COMMITTER_EMAIL>" >expect
-
-Much nicer, thanks.  I'll add a patch to v2 to make the same change to
-t7614.
-
-> > +	git init src &&
-> > +	(
-> > +		cd src &&
-> > +		test_commit one
-> > +	) &&
->=20
-> I suspect somebody will suggest "test_commit -C" ;-)
-
-Sounds good.  I'll add a patch to v2 to make the same change to the
-existing t5521 --allow-unrelated-histories test.
-
-> > +	git clone src dst &&
-> > +	(
-> > +		cd src &&
-> > +		test_commit two
-> > +	) &&
-> > +	(
-> > +		cd dst &&
-> > +		git pull --signoff --no-ff &&
-> > +		git cat-file commit HEAD | tail -n1 >../actual
->=20
-> I think it makes it more robust to replace "tail" with "collect all
-> the signed-off-by lines" like the other test (below) does.  Perhaps
-> have a helper function and use it in both?
->=20
-> 	get_signoff () {
-> 		git cat-file commit "$1" | sed -n -e '/^Signed-off-by: /p'
-> 	}
->=20
-> Some may say "cat-file can fail, and having it on the LHS of a pipe
-> hides its failure", advocating for something like:
->=20
-> 	get_signoff () {
-> 		git cat-file commit "$1" >sign-off-temp &&
-> 		sed -n -e '/^Signed-off-by: /p' sign-off-temp
-> 	}
-
-There are several existing consumers using grep and sed for this:
-
-  wking@ullr ~/src/git/git $ git grep Signed-off-by v2.15.0-rc1 -- 't/*.sh'=
- | grep 'grep\|sed'
-  =E2=80=A6
-  v2.15.0-rc1:t/t3501-revert-cherry-pick.sh:      git cat-file commit HEAD =
-| grep ^Signed-off-by: >signoff &&
-  v2.15.0-rc1:t/t3507-cherry-pick-conflict.sh:    test_i18ngrep -e "Signed-=
-off-by" .git/MERGE_MSG
-  v2.15.0-rc1:t/t3507-cherry-pick-conflict.sh:    test $(git show -s |grep =
--c "Signed-off-by") =3D 1
-  v2.15.0-rc1:t/t3507-cherry-pick-conflict.sh:    grep -e "^# Conflicts:" -=
-e '^Signed-off-by' <.git/COMMIT_EDITMSG >actual &&
-  v2.15.0-rc1:t/t3507-cherry-pick-conflict.sh:    grep -e "^Conflicts:" -e =
-'^Signed-off-by' <.git/COMMIT_EDITMSG >actual &&
-  v2.15.0-rc1:t/t3510-cherry-pick-sequence.sh:    ! grep "Signed-off-by:" i=
-nitial_msg &&
-  v2.15.0-rc1:t/t3510-cherry-pick-sequence.sh:    grep "Signed-off-by:" unr=
-elatedpick_msg &&
-  v2.15.0-rc1:t/t3510-cherry-pick-sequence.sh:    ! grep "Signed-off-by:" p=
-icked_msg &&
-  v2.15.0-rc1:t/t3510-cherry-pick-sequence.sh:    grep "Signed-off-by:" ano=
-therpick_msg
-  v2.15.0-rc1:t/t3510-cherry-pick-sequence.sh:    ! grep Signed-off-by: msg
-  v2.15.0-rc1:t/t3510-cherry-pick-sequence.sh:    ! grep Signed-off-by: msg
-  v2.15.0-rc1:t/t4014-format-patch.sh:    grep "^Signed-off-by: $GIT_COMMIT=
-TER_NAME <$GIT_COMMITTER_EMAIL>" out
-  v2.15.0-rc1:t/t4014-format-patch.sh:    ! sed "/^Signed-off-by: /q" out |=
- grep "test message" &&
-  v2.15.0-rc1:t/t4014-format-patch.sh:    sed "1,/^Signed-off-by: /d" out |=
- grep "test message" &&
-  v2.15.0-rc1:t/t4153-am-resume-override-opts.sh: git cat-file commit HEAD^=
- | grep "Signed-off-by:" >actual &&
-  v2.15.0-rc1:t/t4153-am-resume-override-opts.sh: test $(git cat-file commi=
-t HEAD | grep -c "Signed-off-by:") -eq 0
-  v2.15.0-rc1:t/t7501-commit.sh:          sed -e "s/>.*/>/" -e "s/^/Signed-=
-off-by: /"
-  v2.15.0-rc1:t/t7501-commit.sh:          sed -e "s/>.*/>/" -e "s/^/Signed-=
-off-by: /"
-  v2.15.0-rc1:t/t7501-commit.sh:          sed -e "s/>.*/>/" -e "s/^/Signed-=
-off-by: /"
-  v2.15.0-rc1:t/t7501-commit.sh:          sed -e "s/>.*/>/" -e "s/^/Signed-=
-off-by: /"
-  v2.15.0-rc1:t/t7502-commit.sh:  actual=3D$(git cat-file commit HEAD | sed=
- -ne "s/Signed-off-by: //p") &&
-  v2.15.0-rc1:t/t7614-merge-signoff.sh:Signed-off-by: $(git var GIT_COMMITT=
-ER_IDENT | sed -e "s/>.*/>/")
-
-Perhaps we want something like:
-
-  test_has_trailer $OBJECT $TOKEN $VALUE
-
-and:
-
-  test_has_no_trailer $OBJECT $TOKEN
-
-in test-lib-functions.sh that we can use in all of these cases?
-
-> I think "--signoff" and "--signoff --no-signoff" are reasonable
-> minimum things to test.  Two more cases, i.e. running it without
-> either and with "--no-signoff" alone, to ensure that the sign-off
-> mechanism does not kick in would make it even better.
-
-Sounds good, I'll add those in v2.
-
-Cheers,
-Trevor
-
---=20
-This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
-For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
-
---1IWgL8yD8uKyf/Tu
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEpgNNa8H/zemHkt2gprXBz9Wld7YFAlne/bEACgkQprXBz9Wl
-d7aURw//fdbn2nayjXA0TILEFd7YYrfXS9IhgtdV7lDkTXdu+SX/ZLacXnULYnJU
-wpeBDyRVQtAu0f8T+V8lbz/tVRlg3oTmBihjNGzEYCHpi1eEBBdsARfQQgjSmsJb
-TBGf2hiMm/jM66YWcbLvRzMSfwE/xNyIrY2lJUkR4HwTU5hekFIVfdXS20amJiQf
-dU9eNtXfEoKUKoGKEe/IWXylb5hZXcVHKJltZVNLJ1uz01HXdXrzDQUlJlymm7Np
-nU0HfYn63pWs6iIt/Ik/oXBco/ecFZ71cnE+D89LE+HS/SmBJ+11DvBgrWt2klX0
-+L4XE41g7VBBqqy1MMqvXhPToa3/rF4bx8rNaUgXROUENQ+CnAcC4zBCxYoDH3q3
-1Yfuc9uK6CyXBO0iOjb1BSJkH+rWv2iYPPp/YyaqrIDr8BQIVn+/x8hvqNda34Se
-8fE3/+IvhcXQx7FvaXNrPayAdgPrEBTKVLRAf7kTkh7BmV/9liKNmEznasFzSX4M
-MG1jtlAN7bZerOcdZ0XeRSR9bPbCKqKZaSuYuUDroKlgHcYyD5QkdsQFObq5BRkk
-PWU7/52oTtkp4avHb5adjokbLELIqIC77qkRUTQQMNeU57p12br7pzbuobKtvhyP
-jHNekYMA30/vKXCXBze+ObHzjHA7RcnBu9HfRD5yfEczEPOSCBU=
-=8Jxs
------END PGP SIGNATURE-----
-
---1IWgL8yD8uKyf/Tu--
+diff --git i/builtin/commit.c w/builtin/commit.c
+index d75b3805ea..fc5b7cd538 100644
+--- i/builtin/commit.c
++++ w/builtin/commit.c
+@@ -1345,6 +1345,7 @@ int cmd_status(int argc, const char **argv, const char *prefix)
+ 	struct object_id oid;
+ 	static struct option builtin_status_options[] = {
+ 		OPT__VERBOSE(&verbose, N_("be verbose")),
++		OPT__COLOR(&s.use_color, N_("use color")),
+ 		OPT_SET_INT('s', "short", &status_format,
+ 			    N_("show status concisely"), STATUS_FORMAT_SHORT),
+ 		OPT_BOOL('b', "branch", &s.show_branch,
+@@ -1595,6 +1596,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 	static struct option builtin_commit_options[] = {
+ 		OPT__QUIET(&quiet, N_("suppress summary after successful commit")),
+ 		OPT__VERBOSE(&verbose, N_("show diff in commit message template")),
++		OPT__COLOR(&s.use_color, N_("use color")),
+ 
+ 		OPT_GROUP(N_("Commit message options")),
+ 		OPT_FILENAME('F', "file", &logfile, N_("read message from file")),
