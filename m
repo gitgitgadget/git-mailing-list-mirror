@@ -2,139 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 24AF920437
-	for <e@80x24.org>; Thu, 12 Oct 2017 07:16:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5CC8920437
+	for <e@80x24.org>; Thu, 12 Oct 2017 08:42:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751996AbdJLHQN (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Oct 2017 03:16:13 -0400
-Received: from cpanel2.indieserve.net ([199.212.143.6]:59257 "EHLO
-        cpanel2.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750716AbdJLHQN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Oct 2017 03:16:13 -0400
-Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:34462 helo=localhost.localdomain)
-        by cpanel2.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.89)
-        (envelope-from <rpjday@crashcourse.ca>)
-        id 1e2Xj2-0007Ul-CQ; Thu, 12 Oct 2017 03:16:12 -0400
-Date:   Thu, 12 Oct 2017 03:16:10 -0400 (EDT)
-From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
-X-X-Sender: rpjday@localhost.localdomain
-To:     Jonathan Nieder <jrnieder@gmail.com>
-cc:     Git Mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH] doc: emphasize stash "--keep-index" stashes staged
- content
-In-Reply-To: <20171012041631.GC155740@aiede.mtv.corp.google.com>
-Message-ID: <alpine.LFD.2.21.1710120257450.24121@localhost.localdomain>
-References: <alpine.LFD.2.21.1710110443360.11205@localhost.localdomain> <20171012041631.GC155740@aiede.mtv.corp.google.com>
-User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+        id S1751853AbdJLImj (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Oct 2017 04:42:39 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:54912 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751499AbdJLImi (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 12 Oct 2017 04:42:38 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id F02B36042F;
+        Thu, 12 Oct 2017 08:42:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1507797757;
+        bh=pzVE6TrCmFRtW+wrpjcwFvTPQTR4klHHvpuezrKUOUM=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=rcCtPIvsDL5Lk3r9siJs8yBaZsoa4JSZm8j8jlPBF+Fx2A/e0oFXwN3+leeM5h3rD
+         MScqx9JNqFGDcwQkRKXYvhzqPHPiaZFHL9orT0FSBFTY4mZRL+yuGC1/TYxKF9fQDa
+         /fbt8MAfHHFIHAUUtDLZBvpaKhsbXpGFQfcEF0EwWf6cMJ/14zxqKBiHVj+7o1ilDb
+         cyzKBUIdnTUruuUwwsWsMsBDKvV7fiqW/+7b9CinP2kQfyNHVeS+0Gi4LKwci8G7H5
+         lbIvjjomI3aD3g6dC+f+KOKyrQ+aoNoDyA+OIVS87wRZ8vnTtor/p6yCDGsCoKtW+M
+         rdK3OWunMtHhl+YXWn6IkpsjGn5+bIFqXPfI553aV8se72qS5Qv+Kg1kZs9YYEURBw
+         D2PCg0hWc6CUm/fSBJqLYrKPy/DsLcXwMJNwbCyhHnZ1dlFOSbaCYx1poc1C/MIZwq
+         2342cGic4ae6R+qn6MrDxAWL6+i4AWTzj9CZkf14t044hFsUoMu
+Date:   Thu, 12 Oct 2017 08:42:32 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Michael Haggerty <mhagger@alum.mit.edu>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Brandon Williams <bmwill@google.com>,
+        Stefan Beller <sbeller@google.com>,
+        David Turner <novalis@novalis.org>
+Subject: Re: [PATCH v2 04/24] refs: convert update_ref and refs_update_ref to
+ use struct object_id
+Message-ID: <20171012084232.gag72xmflhpsk6wo@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
+        Jeff King <peff@peff.net>, Brandon Williams <bmwill@google.com>,
+        Stefan Beller <sbeller@google.com>,
+        David Turner <novalis@novalis.org>
+References: <20171009011132.675341-1-sandals@crustytoothpaste.net>
+ <20171009011132.675341-5-sandals@crustytoothpaste.net>
+ <9d4c3854-38fb-d5b4-0436-0eee707201ab@alum.mit.edu>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cpanel2.indieserve.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - crashcourse.ca
-X-Get-Message-Sender-Via: cpanel2.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
-X-Authenticated-Sender: cpanel2.indieserve.net: rpjday@crashcourse.ca
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="3imbzqujlil7ex4o"
+Content-Disposition: inline
+In-Reply-To: <9d4c3854-38fb-d5b4-0436-0eee707201ab@alum.mit.edu>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.12.0-2-amd64)
+User-Agent: NeoMutt/20170609 (1.8.3)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 11 Oct 2017, Jonathan Nieder wrote:
 
-> Hi,
->
-> Robert P. J. Day wrote:
->
-> > It's not immediately obvious from the man page that the "--keep-index"
-> > option still adds the staged content to the stash, so make that
-> > abundantly clear.
-> >
-> > Signed-off-by: Robert P. J. Day <rpjday@crashcourse.ca>
-> > ---
-> >
-> > diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
-> > index 00f95fee1..037144037 100644
-> > --- a/Documentation/git-stash.txt
-> > +++ b/Documentation/git-stash.txt
-> > @@ -68,8 +68,8 @@ entries and working tree files are then rolled back to the state in
-> >  HEAD only for these files, too, leaving files that do not match the
-> >  pathspec intact.
-> >  +
-> > -If the `--keep-index` option is used, all changes already added to the
-> > -index are left intact.
-> > +If the `--keep-index` option is used, all changes already staged in the
-> > +index are left intact in the index, while still being added to the stash.
->
-> Aside from Junio's note about "in the index" vs "in the working tree":
+--3imbzqujlil7ex4o
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-  yes, that was a good point, i will ponder further.
+On Wed, Oct 11, 2017 at 08:33:46AM +0200, Michael Haggerty wrote:
+> On 10/09/2017 03:11 AM, brian m. carlson wrote:
+> > diff --git a/refs.c b/refs.c
+> > index 0a5b68d6fb..51942df7b3 100644
+> > --- a/refs.c
+> > +++ b/refs.c
+> > [...]
+> > @@ -1003,12 +995,12 @@ int refs_update_ref(struct ref_store *refs, cons=
+t char *msg,
+> >  	int ret =3D 0;
+> > =20
+> >  	if (ref_type(refname) =3D=3D REF_TYPE_PSEUDOREF) {
+> > -		assert(refs =3D=3D get_main_ref_store());
+>=20
+> Was the deletion of the line above intentional?
 
-> The "Testing partial commits" item in the EXAMPLES section explains
-> what --keep-index is useful for.  I wonder if some allusion to that
-> would make the explanation in the OPTIONS section easier to
-> understand.
->
-> Something that I end up still curious about when reading this
-> description is what will happen when I "git stash pop".  Will it
-> apply only the changes that were stashed away and removed from the
-> working tree, or will it apply the changes that were kept in the
-> index, too? If the latter, why?  Is there some way I can turn that
-> behavior off?
+No, that would not have been intentional.  (I would have mentioned it in
+the commit message if it were.)  I probably accidentally deleted a line
+in my editor.  Will fix.
 
-  at risk of embarrassing myself, it seems that the simplest way to
-explain stashing WRT to those --keep-index and --index options is to
-first explain that, regardless of --keep-index with push, stash will
-*always* stash all of your changes in the working tree, and will
-further distinguish between staged and unstaged content. that's based
-on the diagram in the man page:
+> > -		ret =3D write_pseudoref(refname, new_sha1, old_sha1, &err);
+> > +		ret =3D write_pseudoref(refname, new_oid, old_oid, &err);
+>=20
+> This is not new to your code, but I just noticed a problem here.
+> `refs_update_ref()` is documented, via its reference to
+> `ref_transaction_update()`, to allow `new_sha1` (i.e., now `new_oid`) to
+> be NULL. (NULL signifies that the value of the reference shouldn't be
+> changed.)
+>=20
+> But `write_pseudoref()` dereferences its `oid` argument unconditionally,
+> so this call would fail if `new_oid` is NULL.
+>=20
+> This has all been the case since `write_pseudoref()` was introduced in
+> 74ec19d4be (pseudorefs: create and use pseudoref update and delete
+> functions, 2015-07-31).
+>=20
+> In my opinion, `write_pseudoref()` is broken. It should accept NULL as
+> its `oid` argument.
 
-                  .----W
-                 /    /
-           -----H----I
+I can stuff a patch in for that.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
+https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: https://keybase.io/bk2204
 
-so the initial explanation should be that the above *always* happens,
-no matter what.
+--3imbzqujlil7ex4o
+Content-Type: application/pgp-signature; name="signature.asc"
 
-  the next sentence should then say, "if you add --keep-index, then
-staged changes are preserved in the working tree and index", or
-something like that. but the use of --keep-index does not (unless i'm
-reading this incorrectly) in any way affect what is stashed, correct?
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.1 (GNU/Linux)
 
-  in that same vein, the explanation should then go on to explain that
-popping always restores the *entire* stash to the working tree -- all
-of it -- and the use of "--index" simply means that the portion of
-the stash representing what had been staged will be restaged.
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlnfKvgACgkQv1NdgR9S
+9osIVw//VqBUDjkQE3KGpQl7+JWQQAajJ2VSrTbBeioAiyOEDMQZdfMDo1rUOTzh
+tErys9qdzae8gzfMPuvQsPOsS1Z7OlGDCBWAvSDtLX4bWGNpsW/bveN6RYrNGdxo
+HWn8h0bXvoQsZXafPKtdQIToJC8jCS3qUfToiNlMTmshjQE05eGDFXVLAExEeINs
+asuJDjV+ptN6vVP+p5YYJfgpBa2LYk9ojxvgJrV9bLmrC7Gs6oNaSZdRZffm4WQf
+w3TSuSFjNZSLFnx4hALrAGJHgbUrIgHKP1Vwa05emz1YZUevPQn/zPn7oI91qMWv
+wCi5O33Nz90fzF2CJvsW1mUfQBPcnqlyw3QUtKOilzcBxkVif65WSTz3pIkfao/K
+Bj1wLJNPTvJ60AC4YaB1c1jEya7QW3Sf5Jhr5mzSQgCpidjOr2NuNxYRhnVvebfy
+ymlZ3whpsaGEE3sBvzTupCwoHt86hdOHMu5bwo29uzcXQAnifWDovFSoNF5O4hPA
+Gha0OiXhr/Ziwh5NIo97PRCmrQSnWT3Zyzhb88GXBtojAuXVvHbLvoYiM22I99h7
+Clkf9Wkc8zL7DwZnPwP6/cUxFGTEv8l3gzlYlWuzpeCc8Fq7Wm73zNGmSAiAE1Zl
+HbPQ29Yli3xdL6Yr6b76oGRitTh5O/nXfGYAuVnbYYw+63la50k=
+=4BCV
+-----END PGP SIGNATURE-----
 
-  not to belabour the point, but i think it's important to emphasize
-early that --keep-index and --index in no way affect what is stashed,
-and what is popped, which i think is a common misunderstanding.
-
-> E.g. in the "Testing partial commits" example, it seems like the
-> natural behavior for "git stash pop" would be just restore the
-> changes that were removed from the working tree.  That would also
-> match an assumption of save/push and pop being symmetrical ('inverse
-> operations').
->
-> Is this related to "git stash pop --index"?  I notice that the
-> EXAMPLES section doesn't give any examples of that option.
-
-rday
-
--- 
-
-========================================================================
-Robert P. J. Day                                 Ottawa, Ontario, CANADA
-                        http://crashcourse.ca
-
-Twitter:                                       http://twitter.com/rpjday
-LinkedIn:                               http://ca.linkedin.com/in/rpjday
-========================================================================
+--3imbzqujlil7ex4o--
