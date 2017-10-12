@@ -2,154 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 178081FF32
-	for <e@80x24.org>; Thu, 12 Oct 2017 04:06:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C15341FF32
+	for <e@80x24.org>; Thu, 12 Oct 2017 04:16:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751617AbdJLEGK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Oct 2017 00:06:10 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58540 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750716AbdJLEGJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Oct 2017 00:06:09 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9297E9A565;
-        Thu, 12 Oct 2017 00:06:08 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=BoLux277kjoZTxyWj0Nrl5oORLU=; b=K5FBf2
-        bTN7mCjqE+otmjA4fTFJEp7EcSdD6+Bfa76KNRWX5DePQaJQo8aFFTcUZFjng34C
-        OXcyliJvQNB+aseghL1ZY17jwvBKJopZ2HY37DYKpE7gHVypN7PvMVjBVy5bHqqV
-        Bzn59km9qgtUjz/4FJJmECjgHXkJGB7t9MSCY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=GXzFzUhf5q35qLTWd0SQzUwVMZKbuvgS
-        DQnZca77QwyRGpWWqFIfy0IIPAYcyzCzflz3UFCPfY9uOzJ0NK4AJXZxsWr/gOxu
-        dVMFhAJ38F54kWjGRUSoKSO7ZsU72OEaxTqFbY3EFnqpcbNLuR4XCsHLp+CBfTxV
-        mciXKmmghus=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 894FC9A564;
-        Thu, 12 Oct 2017 00:06:08 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B124A9A560;
-        Thu, 12 Oct 2017 00:06:07 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jameson Miller <jameson.miller81@gmail.com>
-Cc:     bmwill@google.com, git@vger.kernel.org, jamill@microsoft.com,
-        peff@peff.net, sbeller@google.com
-Subject: Re: [PATCH v2 5/5] Add tests around status handling of ignored arguments
-References: <20171005205443.206900-1-jameson.miller81@gmail.com>
-        <20171011133504.15049-1-jamill@microsoft.com>
-        <20171011133504.15049-6-jamill@microsoft.com>
-Date:   Thu, 12 Oct 2017 13:06:06 +0900
-In-Reply-To: <20171011133504.15049-6-jamill@microsoft.com> (Jameson Miller's
-        message of "Wed, 11 Oct 2017 09:35:04 -0400")
-Message-ID: <xmqqefq91041.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1750918AbdJLEQf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Oct 2017 00:16:35 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:36513 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750722AbdJLEQe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Oct 2017 00:16:34 -0400
+Received: by mail-pf0-f195.google.com with SMTP id z11so4386912pfk.3
+        for <git@vger.kernel.org>; Wed, 11 Oct 2017 21:16:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=OhjbCv3NDosigu2oRCmb0XoxqL7Y16khP4Bm0VQkyqA=;
+        b=dVvgT8lm9eJLdmQZSQahmncV5xiZ4LEQpu7EjY5oNJJ0NKCv9eawJ6AAizeF3wQWGA
+         i0IdsLWfKfZM511/AlhvGfUmdyPZ9uWrGHtMG/SlAgN4EFmEJdjFr6TxKHh9qJBk622F
+         leyZ3YyeIgyjghYgLgX4jAE0hknXTKnIOQi/gkjwWe5FctP3SzG2GRulBDNBWWCKAP8Z
+         Cz3glL2t1zUc0ENmxj8U9iIK8OT+xFQwMm+YdWV0rhkKNRRFdhILDjuc84hfm2CuzxI/
+         r9aChtkxCQWI/f5lX/0c5sOzkgkwKylJWvwDUxQ1nka4lronJGepXHbtsx2VeiIQ6CuX
+         nU9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=OhjbCv3NDosigu2oRCmb0XoxqL7Y16khP4Bm0VQkyqA=;
+        b=Ys+NP0kVE27NhUMAz/TuQdHHIaFC6tsV5erAYLML2w4tWZBt2VVIYp82JtNx0JMJvB
+         /DHTogtDUI4QBbfYYc+MTYL1FjS4XTryQv7ZEPIVcOpRxvDExZrGyV69DpBPGEhXevki
+         B8fK4dE0+J+/jOWA2YPaXRq+ZPBc9LS06vDSjkP8q/ERyOdk+vEexfLlViW+B/FX+iRS
+         TahUAW2VQN3SKtxVuzBQbbGnCIUdoJ5GXOCnzAG8DABILrCOBkAjJQONTQrrtulDsTC0
+         1DyKPejN+U16XB0QaZEo1bXkPkvreTEmuqUZvCcixLVpi2JRlaLJ9aHaLhnO0NFWs2pq
+         xkWQ==
+X-Gm-Message-State: AMCzsaUnCUfzGYlhrHIwgklO/l48NtL9ank2/kuN+gFczX2FtYISdoTx
+        kw38SdcoPP54r5XgVaQiO3STLDdU
+X-Google-Smtp-Source: AOwi7QCn7LPwOJfQV7L0GvhyAN6D4GjJYaR69Yaej+d/uHyjRY3Nl51T5VXXRdg58ebaj8HErbUYYA==
+X-Received: by 10.101.87.202 with SMTP id q10mr1044677pgr.141.1507781793784;
+        Wed, 11 Oct 2017 21:16:33 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:9e:660c:b9bb:a349])
+        by smtp.gmail.com with ESMTPSA id f7sm841423pgq.5.2017.10.11.21.16.33
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 11 Oct 2017 21:16:33 -0700 (PDT)
+Date:   Wed, 11 Oct 2017 21:16:31 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
+Cc:     Git Mailing list <git@vger.kernel.org>
+Subject: Re: [PATCH] doc: emphasize stash "--keep-index" stashes staged
+ content
+Message-ID: <20171012041631.GC155740@aiede.mtv.corp.google.com>
+References: <alpine.LFD.2.21.1710110443360.11205@localhost.localdomain>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: AC907328-AF02-11E7-A3A2-575F0C78B957-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.2.21.1710110443360.11205@localhost.localdomain>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jameson Miller <jameson.miller81@gmail.com> writes:
+Hi,
 
-> Add tests for status handling of '--ignored=matching` and
-> `--untracked-files=normal`.
+Robert P. J. Day wrote:
+
+> It's not immediately obvious from the man page that the "--keep-index"
+> option still adds the staged content to the stash, so make that
+> abundantly clear.
 >
-> Signed-off-by: Jameson Miller <jamill@microsoft.com>
+> Signed-off-by: Robert P. J. Day <rpjday@crashcourse.ca>
 > ---
-
-Hmph, having some tests in 3/5, changes in 4/5 and even more tests
-in 5/5 makes me as a reader a bit confused, as the description for
-these two test patches does not make it clear how they are related
-and how they are different.  Is it that changes in 1/5 alone does
-not fulfill the promise made by documentation added at 2/5 so 3/5
-only has tests for behaviour that works with 1/5 alone but is broken
-with respect to what 2/5 claims until 4/5 is applied, and these "not
-working with 1/5 alone, but works after 4/5" are added in this step?
-
->  t/t7519-ignored-mode.sh | 60 ++++++++++++++++++++++++++++++++++++++++++++++++-
->  1 file changed, 59 insertions(+), 1 deletion(-)
 >
-> diff --git a/t/t7519-ignored-mode.sh b/t/t7519-ignored-mode.sh
-> index 76e91427b0..6be7701d79 100755
-> --- a/t/t7519-ignored-mode.sh
-> +++ b/t/t7519-ignored-mode.sh
-> @@ -116,10 +116,68 @@ test_expect_success 'Verify status behavior on ignored folder containing tracked
->  		ignored_dir/ignored_1.ign ignored_dir/ignored_2.ign \
->  		ignored_dir/tracked &&
->  	git add -f ignored_dir/tracked &&
-> -	test_tick &&
->  	git commit -m "Force add file in ignored directory" &&
->  	git status --porcelain=v2 --ignored=matching --untracked-files=all >output &&
->  	test_i18ncmp expect output
->  '
->  
-> +test_expect_success 'Verify matching ignored files with --untracked-files=normal' '
-> +	test_when_finished "git clean -fdx" &&
-> +	cat >expect <<-\EOF &&
-> +	? expect
-> +	? output
-> +	? untracked_dir/
-> +	! ignored_dir/
-> +	! ignored_files/ignored_1.ign
-> +	! ignored_files/ignored_2.ign
-> +	EOF
-> +
-> +	mkdir ignored_dir ignored_files untracked_dir &&
-> +	touch ignored_dir/ignored_1 ignored_dir/ignored_2 \
-> +		ignored_files/ignored_1.ign ignored_files/ignored_2.ign \
-> +		untracked_dir/untracked &&
-> +	git status --porcelain=v2 --ignored=matching --untracked-files=normal >output &&
-> +	test_i18ncmp expect output
-> +'
-> +
-> +test_expect_success 'Verify matching ignored files with --untracked-files=normal' '
-> +	test_when_finished "git clean -fdx" &&
-> +	cat >expect <<-\EOF &&
-> +	? expect
-> +	? output
-> +	? untracked_dir/
-> +	! ignored_dir/
-> +	! ignored_files/ignored_1.ign
-> +	! ignored_files/ignored_2.ign
-> +	EOF
-> +
-> +	mkdir ignored_dir ignored_files untracked_dir &&
-> +	touch ignored_dir/ignored_1 ignored_dir/ignored_2 \
-> +		ignored_files/ignored_1.ign ignored_files/ignored_2.ign \
-> +		untracked_dir/untracked &&
-> +	git status --porcelain=v2 --ignored=matching --untracked-files=normal >output &&
-> +	test_i18ncmp expect output
-> +'
-> +
-> +test_expect_success 'Verify status behavior on ignored folder containing tracked file' '
-> +	test_when_finished "git clean -fdx && git reset HEAD~1 --hard" &&
-> +	cat >expect <<-\EOF &&
-> +	? expect
-> +	? output
-> +	! ignored_dir/ignored_1
-> +	! ignored_dir/ignored_1.ign
-> +	! ignored_dir/ignored_2
-> +	! ignored_dir/ignored_2.ign
-> +	EOF
-> +
-> +	mkdir ignored_dir &&
-> +	touch ignored_dir/ignored_1 ignored_dir/ignored_2 \
-> +		ignored_dir/ignored_1.ign ignored_dir/ignored_2.ign \
-> +		ignored_dir/tracked &&
-> +	git add -f ignored_dir/tracked &&
-> +	git commit -m "Force add file in ignored directory" &&
-> +	git status --porcelain=v2 --ignored=matching --untracked-files=normal >output &&
-> +	test_i18ncmp expect output
-> +'
-> +
->  test_done
+> diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
+> index 00f95fee1..037144037 100644
+> --- a/Documentation/git-stash.txt
+> +++ b/Documentation/git-stash.txt
+> @@ -68,8 +68,8 @@ entries and working tree files are then rolled back to the state in
+>  HEAD only for these files, too, leaving files that do not match the
+>  pathspec intact.
+>  +
+> -If the `--keep-index` option is used, all changes already added to the
+> -index are left intact.
+> +If the `--keep-index` option is used, all changes already staged in the
+> +index are left intact in the index, while still being added to the stash.
+
+Aside from Junio's note about "in the index" vs "in the working tree":
+
+The "Testing partial commits" item in the EXAMPLES section explains
+what --keep-index is useful for.  I wonder if some allusion to that
+would make the explanation in the OPTIONS section easier to
+understand.
+
+Something that I end up still curious about when reading this
+description is what will happen when I "git stash pop".  Will it apply
+only the changes that were stashed away and removed from the working
+tree, or will it apply the changes that were kept in the index, too?
+If the latter, why?  Is there some way I can turn that behavior off?
+
+E.g. in the "Testing partial commits" example, it seems like the
+natural behavior for "git stash pop" would be just restore the changes
+that were removed from the working tree.  That would also match an
+assumption of save/push and pop being symmetrical ('inverse
+operations').
+
+Is this related to "git stash pop --index"?  I notice that the
+EXAMPLES section doesn't give any examples of that option.
+
+Thanks,
+Jonathan
