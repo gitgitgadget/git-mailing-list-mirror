@@ -2,122 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 351301FF32
-	for <e@80x24.org>; Thu, 12 Oct 2017 03:17:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0D7221FF32
+	for <e@80x24.org>; Thu, 12 Oct 2017 03:30:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752440AbdJLDRG (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Oct 2017 23:17:06 -0400
-Received: from mail-pf0-f182.google.com ([209.85.192.182]:48835 "EHLO
-        mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752029AbdJLDRG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Oct 2017 23:17:06 -0400
-Received: by mail-pf0-f182.google.com with SMTP id b79so3056736pfk.5
-        for <git@vger.kernel.org>; Wed, 11 Oct 2017 20:17:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Mmrt7eT0IKTJDXQ06eJNnidd/w1ylElGjENk9fAZcqM=;
-        b=p8GHla7GFGnAC6rADtg+AsgfgymgqgN7Kmh4QBE+BBo4GQZlCUOnD3T66HOpF8RN7h
-         9aoiI97S80Wk8fvAJXIj/94ZiRNoGOBf720K2ksmOtVgA5Bfw+8TClJiK92FtUbCHt8D
-         diMR5kJCNw3VcB7a7YnHzAbbbpnLscP5W7jpbdeERVQqIkT1QPc7GwbhWFbPipqNk69o
-         PxEJDS9EbKheTSu3i7b0S48kElNQcK3tiHhctaTGpQvJ30eMETpiQJqXQSn/bC64alFS
-         BjJZWyN3wRxsh9QDozfrCQLfPR5kIqlkSXbZVi8PMlkpmFzE7sfGkfjvMVAcfP/lL1mH
-         YQyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Mmrt7eT0IKTJDXQ06eJNnidd/w1ylElGjENk9fAZcqM=;
-        b=IXggePmF1yC1f9HOwLCquCclmUdRkJ5gmYydIcntEAD+zgYMR1LeJdmmzWnHObf+Hb
-         8dbHWtgKB910aHDybO8oaVaQxIqbhw2/p3cE189wnnhVUYg9rn7oB6mEveSPadNmhfTK
-         hwV2tG5hDmUd/0/lwZlEYch1UtQhyitP93UERhZCTfqh7Y8LQjiRbhgNM1SVCVU49tdc
-         wcLRm8+MFoVAURYaCuhN8eZCdCP2GeFm6TK8WyJDQLPcJIb2jaboVvKvIMeO+5LRsfdv
-         hn2T1eQ+6polce3/gtQM7AaEbHjXi9fKxk2sDKrkZd3HjnDtL0FUYc4EQi0DuMCpamtd
-         Wj7A==
-X-Gm-Message-State: AMCzsaUy8FZZRaJenbnhklhrCfvz0KJ1GEFKCCfNM5G/S/vp0vIJ0KNe
-        KYR3zJB0YwEORDoNNMPUcps=
-X-Google-Smtp-Source: AOwi7QDSKsrFOXvkqgcWzgHRHkNLt3262yzKqT1POCl03SLiKOtUyjdAOFRUPpqMk788DIwjZmQz2A==
-X-Received: by 10.84.252.136 with SMTP id y8mr942526pll.137.1507778225348;
-        Wed, 11 Oct 2017 20:17:05 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:9e:660c:b9bb:a349])
-        by smtp.gmail.com with ESMTPSA id l85sm27076639pfg.155.2017.10.11.20.17.04
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 11 Oct 2017 20:17:04 -0700 (PDT)
-Date:   Wed, 11 Oct 2017 20:17:03 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Andreas Krey <a.krey@gmx.de>
-Cc:     Git Users <git@vger.kernel.org>
-Subject: Re: git repack leaks disk space on ENOSPC
-Message-ID: <20171012031702.GB155740@aiede.mtv.corp.google.com>
-References: <20171011150546.GC32090@inner.h.apk.li>
+        id S1752309AbdJLD3T (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Oct 2017 23:29:19 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:65331 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751953AbdJLD0Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Oct 2017 23:26:25 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B7EB599C4B;
+        Wed, 11 Oct 2017 23:26:24 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=pZDV6jHPuU2Y/6Izxk/FmzUs32Y=; b=sWQkRM
+        Bs/Lk6A4pLLJz9ibMDDro56EgAv/hJUM5pb8hFC5kNhSUSdTOa+h1buFrvoRVJ+0
+        tRQL83nNPcXgOMHtlEvSCTCrO1zU+bkcBXUjw1bb+Hr2Bf0hrtOgCHHffbtIVoCH
+        IF9bwFGTQdrfiCZWyCSQi2TcdC9Y5YLa9RehQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=EWiX9YUgkKd8PK4hNB4+t56NBkG8OHNk
+        po2KpvjbEGE6bhbPcFWYOR9uJz45wZU99rN1RsEK+XLyh/9ZfRNSY4+RTs8ilpeM
+        dEGCLXwysCqM8/to6nddaVlg9kXC7mV4w2v/HMYNJ+8jR++IgzvAoxjriQ7zQeeI
+        UtQXpcscM24=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id AFA9199C4A;
+        Wed, 11 Oct 2017 23:26:24 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2850599C49;
+        Wed, 11 Oct 2017 23:26:24 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     "Thais D. Braz" <thais.dinizbraz@gmail.com>,
+        marius.paliga@gmail.com, git <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH][Outreachy] New git config variable to specify string that will be automatically passed as --push-option
+References: <CAK7vU=3whGsx4L4KACSC+XDWQEbUWuZZZqTsW2R=CbF8d7rkuQ@mail.gmail.com>
+        <20171011202505.10113-1-thais.dinizbraz@gmail.com>
+        <20171011202505.10113-2-thais.dinizbraz@gmail.com>
+        <xmqqa80x2mb4.fsf@gitster.mtv.corp.google.com>
+        <CAP8UFD3VnVod7SPTM11XG=vHBYD4EwA+xZB563iwpL1Ue4pPnA@mail.gmail.com>
+Date:   Thu, 12 Oct 2017 12:26:22 +0900
+In-Reply-To: <CAP8UFD3VnVod7SPTM11XG=vHBYD4EwA+xZB563iwpL1Ue4pPnA@mail.gmail.com>
+        (Christian Couder's message of "Thu, 12 Oct 2017 04:41:49 +0200")
+Message-ID: <xmqqmv4x11y9.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20171011150546.GC32090@inner.h.apk.li>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1FD0ECE2-AEFD-11E7-BD8C-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Andreas,
+Christian Couder <christian.couder@gmail.com> writes:
 
-Andreas Krey wrote:
-
-> I observed (again) an annoying behavior of 'git repack':
-
-Do you have context for this 'again'?  E.g. was this discussed
-previously on-list?
-
-> When the new pack file cannot be fully written because
-> the disk gets full beforehand, the tmp_pack file isn't
-> deleted, meaning the disk stays full:
+>> Can somebody explain what is going on?
+>>
+>> I am guessing that Thais and marius are different people (judging by
+>> the fact that one CC's a message to the other).  Are you two
+>> collaborating on this change, or something?
 >
->   $ df -h .; git repack -ad; df -h .; ls -lart .git/objects/pack/tmp*; rm .git/objects/pack/tmp*; df -h .
->   Filesystem                        Size  Used Avail Use% Mounted on
->   /dev/mapper/vg02-localworkspaces  250G  245G  5.1G  98% /workspaces/calvin
->   Counting objects: 4715349, done.
->   Delta compression using up to 8 threads.
->   Compressing objects: 100% (978051/978051), done.
->   fatal: sha1 file '.git/objects/pack/tmp_pack_xB7DMt' write error: No space left on device
->   Filesystem                        Size  Used Avail Use% Mounted on
->   /dev/mapper/vg02-localworkspaces  250G  250G   20K 100% /workspaces/calvin
->   -r--r--r-- 1 andrkrey users 5438435328 Oct 11 17:03 .git/objects/pack/tmp_pack_xB7DMt
->   rm: remove write-protected regular file '.git/objects/pack/tmp_pack_xB7DMt'? y
->   Filesystem                        Size  Used Avail Use% Mounted on
->   /dev/mapper/vg02-localworkspaces  250G  245G  5.1G  98% /workspaces/calvin
+> I guess that Thais decided to work on this, because we ask Outreachy
+> applicants to search for #leftoverbits mentions in the mailing list
+> archive to find small tasks they could work on.
 >
-> git version 2.15.0.rc0
+> In this case it looks like Marius sent a patch a few hours before
+> Thais also sent one.
 
-I can imagine this behavior of retaining tmp_pack being useful for
-debugging in some circumstances, but I agree with you that it is
-certainly not a good default.
+... after seeing Marius's already working on it, I think.
 
-Chasing this down, I find:
+> Thais, I am sorry, but as Marius sent a patch first, I think it is
+> better if you search for another different small task to work on.
 
-  pack-write.c::create_tmp_packfile chooses the filename
-  builtin/pack-objects.c::write_pack_file writes to it and the .bitmap, calling
-  pack-write.c::finish_tmp_packfile to rename it into place
+In general, I do not mind seeing people working together well, and
+it is one of the more important skills necessary in the open source
+community.  I however tend to agree with you that this is a bit too
+small a topic for multiple people to be working on.
 
-Nothing tries to install an atexit handler to do anything special to it
-on exit.
+> Also please keep Peff and me in cc.
 
-The natural thing, I'd expect, would be for pack-write to use the
-tempfile API (see tempfile.h) to create and finish the file.  That way,
-we'd get such atexit handlers for free.  If we want a way to keep temp
-files for debugging on abnormal exit, we could set that up separately as
-a generic feature of the tempfile API (e.g. an envvar
-GIT_KEEP_TEMPFILES_ON_FAILURE), making that an orthogonal topic.
+Yup, that is always a good idea.
 
-Does using create_tempfile there seem like a good path forward to you?
-Would you be interested in working on it (either writing a patch with
-such a fix or a test in t/ to make sure it keeps working)?
-
-Thanks,
-Jonathan
