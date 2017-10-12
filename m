@@ -2,81 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4F15D20372
-	for <e@80x24.org>; Thu, 12 Oct 2017 23:18:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E8E0D20445
+	for <e@80x24.org>; Thu, 12 Oct 2017 23:33:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753497AbdJLXSH (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Oct 2017 19:18:07 -0400
-Received: from mout.gmx.net ([212.227.17.20]:52992 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751631AbdJLXSG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Oct 2017 19:18:06 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M0QLp-1d8Cm544SL-00uXuf; Fri, 13
- Oct 2017 01:18:01 +0200
-Date:   Fri, 13 Oct 2017 01:18:00 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>
-Subject: Re: is there a truly compelling rationale for .git/info/exclude?
-In-Reply-To: <alpine.LFD.2.21.1710061337300.14079@localhost.localdomain>
-Message-ID: <alpine.DEB.2.21.1.1710130116430.40514@virtualbox>
-References: <20171006061434.Horde.16MqZ-fejqXm6BLpL7prK1K@crashcourse.ca> <xmqqmv54v5h6.fsf@gitster.mtv.corp.google.com> <alpine.LFD.2.21.1710061337300.14079@localhost.localdomain>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:KMGOBroAflHzHR29PIOexdCFJ23GvDdoZ0km9S9in/N9JtcVf2s
- UXEs5wnojzrAILVUi58Oq2IvasgXQGnDgNli05pacZdglpWE6Rf7uEWn36vNw2vxsB38EKb
- yvl5Uptj9nr6vEu9Im0YpCgyqHSLrnGErzlHAMqsuDz1mofuNgtkv9fwM73CyA4aI7r7Nhc
- 73NxLuiZGuGcQt6blbflw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:M/JmUiyUM9c=:0ZKIQP16wkNwhWD2q3s73/
- Mtl1uHuJGnAunfuiApuHh9OjgzVNgw5fbz7NlEBEqJ7u3hBMoBCq1NfU1Zt8NFyxHkMX9BiLU
- pxvpzrqcM/KnGMP4JEIhCKzX/8Br+PxqbxVvdIXcO9nrwvZ5HM1WcED0mRHXCGS8YfsKQM4Qi
- aWHn5Oilzh9UmbhjK9VinPPH+/066zG3TNX1KKJtGtsvPGDvehj3TZ4nR3Yc42n7rMRIVauhq
- 9ovG9igtkuANbBr2duFVr5lxaFgQ56k1br0GkKPMPYjxQ/KXUpWAlitMJ+xiNpmgIWvKEXuM9
- IZ/QkX9icnLfEDwGvKmsHPwK4s0UzH2DoDZrKH7oshScqdcRxQAllIu0t2ILy7er25Oyyt16j
- MKMzg+kpaUb3AbVtk6c0FkdvKaw1YDNSM/kyEZOfTqMXZfzztpVe/sJFU7UzcS17wUw5vOSTG
- BuUE0BlxOl5kGQeMeTvSlKreIdFHUXgIeaBTA66mrCQ3KKVYCH3pATPpG5dWSE2NUyBosxKRI
- swKrcLS87lmviCM25v9BxgzZrp1XECcgTW1fMH4hKGq9FqWGUbElidBzHLnqFVtplCcCSiyr/
- eISnhK5p5ZIlg0LBf5IV8Ssb3wcjhGt2Jpq0eF2RzSwL931LSLUAkJMf2P+Xf5gFzcNsstnJP
- 2FDKMHKdZY/E3WICps5w/AZfJuCk8o6s9Zn4vTHNR6BoH/wUm2EhrnEP3+tj94i7fC+5NEVK6
- mleejlKIgSfpMn/J3rMO6Emg6V4mo5eMgsnQJl+0Pqcuz0zip8y6Eh6lO23F3J8WpMUi+eTVj
- 2/bF3quBNW6uJgbU0d4ZUlK9XU7k4kIlEomEp6fQf9hAeYZeMM=
+        id S1753116AbdJLXd1 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Oct 2017 19:33:27 -0400
+Received: from mail-pf0-f175.google.com ([209.85.192.175]:50438 "EHLO
+        mail-pf0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752243AbdJLXd1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Oct 2017 19:33:27 -0400
+Received: by mail-pf0-f175.google.com with SMTP id m63so7148438pfk.7
+        for <git@vger.kernel.org>; Thu, 12 Oct 2017 16:33:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=fyv/MJ0Am6yBiODeAuJCRS3v8GlVibs+O3/S3y/M2CE=;
+        b=gWdd3OHF67Nz53IcV8/CcOuWefciT6qlF4jbkmphM19wlv80gzV++8HEvbcPqWcCz0
+         lSvd4ruO+Ms3VDXE0vFTC64/LGVPefjWCnEnihf+3H8DAmS/PwB61kXZw/13hPww0iwn
+         tCD5Q8lVdN+vRlnpTSg20XNtHuenE0sDCm/vRAJr0V1jImiV2NOLpIUZ6mADa1w86XUK
+         CFxGzk4PmzkSeyuEKx2ieyKrUsNwGAFojeUeuEoA+0uwDbvkhALhLUpCfPG4J/mHTm8r
+         ZmUz4nTELkonzuCcLbTGQ2Fx4wzrOHa94tdMssGZACZi5FSF3f6kZd+NrqAWlhW1H9EI
+         L47Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=fyv/MJ0Am6yBiODeAuJCRS3v8GlVibs+O3/S3y/M2CE=;
+        b=E9my5IBtR9xqRHzHg983n77rlVJvwISqJzznMSkClr+brGWIXx2pBQj3erUMt6zt0s
+         2a3hUa3wfFj/sttOHbIoZVLSQ6LHimkb+noRaQrQAaOX++IgQK26583ic5vo9UTkBJlf
+         A03/6ErbWUrjPCJ8yFx2lmOWyNTjbiP/6GBRPbj+EirlqIdBarq9bShn7xOe24PTn5XY
+         iNUVaL/FqqYrNe18S+1cOk+wEKSJwZto7YT1PX0wJMJheuIQHIAbi3nfhW/ONDR74AZG
+         259WjmFmk0wLBvy56G5h359ai827OhoUdcVLgDAMce88f4AfZIRQiub4C6jHKVfODDGb
+         sKyQ==
+X-Gm-Message-State: AMCzsaUR/8tyKQq1MLeGFYmjm94l1UZ+jNYPfygAewHfBQ2w4sHsQNUv
+        ACHszEtt+k+vLxghAQiPNLLNvg==
+X-Google-Smtp-Source: AOwi7QAIsSIgE1BZBNsg5gsHR8Bm/RqCVW+7pYAM24wGMHiXmr//Vt8zxBhTDx30JSEqYIDcdzaIIA==
+X-Received: by 10.84.217.206 with SMTP id d14mr1500029plj.196.1507851206497;
+        Thu, 12 Oct 2017 16:33:26 -0700 (PDT)
+Received: from localhost ([2620:0:100e:422:9cc2:8741:42ae:ff22])
+        by smtp.gmail.com with ESMTPSA id s86sm32726444pfi.74.2017.10.12.16.33.25
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 12 Oct 2017 16:33:25 -0700 (PDT)
+From:   Stefan Beller <sbeller@google.com>
+To:     peff@peff.net
+Cc:     git@vger.kernel.org, orgads@gmail.com, sbeller@google.com
+Subject: [PATCH] diff.c: increment buffer pointer in all code path
+Date:   Thu, 12 Oct 2017 16:33:22 -0700
+Message-Id: <20171012233322.31203-1-sbeller@google.com>
+X-Mailer: git-send-email 2.14.0.rc0.3.g6c2e499285
+In-Reply-To: <20171012200536.m6oz4zrjcze3yw4i@sigill.intra.peff.net>
+References: <20171012200536.m6oz4zrjcze3yw4i@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Robert,
+The added test would hang up Git due to an infinite loop. The function
+`next_byte()` doesn't make any forward progress in the buffer with
+`--ignore-space-change`.
 
-[who I had to cull from the To:/Cc: headers, as my mailer consistently
-told me that there is no valid DNS record to route mail to
-rpjday@crashcourse.ca, which *is* weird.]
+Fix this by only returning early when there was actual white space
+to be covered, fall back to the default case at the end of the function
+when there is no white space.
 
-On Fri, 6 Oct 2017, Robert P. J. Day wrote:
+Reported-by: Orgad Shaneh <orgads@gmail.com>
+Debugged-by: Jeff King <peff@peff.net>
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
 
-> On Fri, 6 Oct 2017, Junio C Hamano wrote:
-> 
-> > Don't waste time by seeking a "compelling" reason.  A mere "this is
-> > the most expedite way to gain convenience" back when something was
-> > introduced could be an answer, and it is way too late to complain
-> > about such a choice anyway.
-> 
->   perfectly respectable answer ... it tells me that, between .gitignore
->   files and core.excludesFile, there's not much left for
->   .git/info/exclude to do, except in weird circumstances.
+Peff, feel free to take ownership here. I merely made it to a patch.
 
-I use .git/info/exclude to keep worktrees in subdirectories of the "main"
-worktree.
+Thanks,
+Stefan
 
-That's not really weird. It's just something few people do, but that's not
-the same as "weird".
+ diff.c                     | 12 ++++++++----
+ t/t4015-diff-whitespace.sh |  8 ++++++++
+ 2 files changed, 16 insertions(+), 4 deletions(-)
 
-Ciao,
-Johannes
+diff --git a/diff.c b/diff.c
+index 69f03570ad..6fe84e6994 100644
+--- a/diff.c
++++ b/diff.c
+@@ -713,13 +713,17 @@ static int next_byte(const char **cp, const char **endp,
+ 		return -1;
+ 
+ 	if (DIFF_XDL_TST(diffopt, IGNORE_WHITESPACE_CHANGE)) {
+-		while (*cp < *endp && isspace(**cp))
++		int saw_whitespace = 0;
++		while (*cp < *endp && isspace(**cp)) {
+ 			(*cp)++;
++			saw_whitespace = 1;
++		}
+ 		/*
+-		 * After skipping a couple of whitespaces, we still have to
+-		 * account for one space.
++		 * After skipping a couple of whitespaces,
++		 * we still have to account for one space.
+ 		 */
+-		return (int)' ';
++		if (saw_whitespace)
++			return (int)' ';
+ 	}
+ 
+ 	if (DIFF_XDL_TST(diffopt, IGNORE_WHITESPACE)) {
+diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
+index bd0f75d9f7..c088ae86af 100755
+--- a/t/t4015-diff-whitespace.sh
++++ b/t/t4015-diff-whitespace.sh
+@@ -1530,4 +1530,12 @@ test_expect_success 'move detection with submodules' '
+ 	test_cmp expect decoded_actual
+ '
+ 
++test_expect_success 'move detection with whitespace changes' '
++	test_seq 10 > test &&
++	git add test &&
++	sed -i "s/3/42/" test &&
++	git -c diff.colormoved diff --ignore-space-change -- test &&
++	git reset --hard
++'
++
+ test_done
+-- 
+2.14.0.rc0.3.g6c2e499285
+
