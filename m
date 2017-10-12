@@ -2,36 +2,36 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7DEBF20372
-	for <e@80x24.org>; Thu, 12 Oct 2017 12:02:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6D3B320372
+	for <e@80x24.org>; Thu, 12 Oct 2017 12:02:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756607AbdJLMCr (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Oct 2017 08:02:47 -0400
+        id S1756853AbdJLMCw (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Oct 2017 08:02:52 -0400
 Received: from mail-by2nam03on0109.outbound.protection.outlook.com ([104.47.42.109]:35352
         "EHLO NAM03-BY2-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1756288AbdJLMCn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Oct 2017 08:02:43 -0400
+        id S1755701AbdJLMCm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Oct 2017 08:02:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=ktHp6PgOmoaNGQm6giN+HUwwLnMJvgt2Ar5JA3+GDqI=;
- b=Bv4khDyUUR4z+pXTAEfEP6TnZV6FnqTbcQzBtq4nlwcHOOW/v16xX3ZDlJmAZUkPGUc6yCdOW5QzbMkFBL0k6kT8yGeJj6QjZKKec6mZ6yYfSr2QFzPP+RCcqqHMTzLC1fVI3kIbobi1Nhc1a46xboR0mm0McTtY90nWvFudqA0=
+ bh=f1y486UkRpN4ZGq4HCCtcMyOkGIlFQu6/rPQVx/32r4=;
+ b=iu0wUlAoFnHyfHTSSRE5u1GRLLrJV5sLLkzEMc+FTuECDfk6ANo0wFfY8aDQFRlDv4tBueuLDPPU+c8tsaTRMrW3VYAjFWT4y9CutDtDi561478rFr/t46eisXv+0V+S2dlxE1tVHROrtrczJMLLDQBk6iJ8auutVuq57Z1YRUE=
 Received: from stolee-linux.corp.microsoft.com (2001:4898:8010:1::2e) by
  MWHPR2101MB0729.namprd21.prod.outlook.com (2603:10b6:301:76::39) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P256) id 15.20.122.0; Thu, 12
- Oct 2017 12:02:40 +0000
+ Oct 2017 12:02:39 +0000
 From:   Derrick Stolee <dstolee@microsoft.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, gitster@pobox.com, stolee@gmail.com,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: [PATCH v5 3/4] sha1_name: parse less while finding common prefix
-Date:   Thu, 12 Oct 2017 08:02:19 -0400
-Message-Id: <20171012120220.226427-4-dstolee@microsoft.com>
+Subject: [PATCH v5 2/4] sha1_name: unroll len loop in find_unique_abbrev_r
+Date:   Thu, 12 Oct 2017 08:02:18 -0400
+Message-Id: <20171012120220.226427-3-dstolee@microsoft.com>
 X-Mailer: git-send-email 2.14.1.538.g56ec8fc98.dirty
 In-Reply-To: <61168095-d392-39d2-ba65-823525239b5c@gmail.com>
 References: <61168095-d392-39d2-ba65-823525239b5c@gmail.com>
@@ -42,14 +42,14 @@ X-ClientProxiedBy: BN6PR20CA0066.namprd20.prod.outlook.com
  (2603:10b6:404:151::28) To MWHPR2101MB0729.namprd21.prod.outlook.com
  (2603:10b6:301:76::39)
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: e5a67697-2fba-4bb1-c815-08d511692413
+X-MS-Office365-Filtering-Correlation-Id: cb90d874-61de-4c84-94ec-08d51169235e
 X-MS-Office365-Filtering-HT: Tenant
 X-Microsoft-Antispam: UriScan:;BCL:0;PCL:0;RULEID:(22001)(2017030254152)(48565401081)(2017052603210)(201703131423075)(201703031133081)(201702281549075);SRVR:MWHPR2101MB0729;
-X-Microsoft-Exchange-Diagnostics: 1;MWHPR2101MB0729;3:oIOkT8ZZoqbx9kn1XRCn1dKJvBl/QgAkxRX7+UMCuS/rNTF+uzvhLijYjH3QJM6KcJMGY7/5Lt9vb/5K/iQ3ddacHBKuu50/txXlAf8XU3Ksz2tDo05FFn9PI7JX68oUK3J75h4K1UQVidShySx1QWc6qw/B7uYP37DYP1JaWdB9TTKLEAgZfC49pjxosNQjrLHByrxgI8x5Agd2pX8jkFIgaj7Ixn+97q9vg2kObjPvSuf/OT91SOE3WZYVpcpn;25:jY5LtfE8fPhmqJRo071XrNjVcH+0ZfAk6voX5+R+/FXh5xuSSu7sR+jRxEW1FkblUCHFxz37jaE9fQC2Xxs7im5SdvDzsubB2sCh54MYpNQbC7JKSR6SBmOzuTYYGTtePxlJ3AhT7gZp9i6OtmxA036NeSlwn7mFAqcLJIm85N5tv4ZbX425m3IPIJlXs4NGKNqPNLa5C462U9XkO84hh5Kvev9i+JVkeewywuGeSiswMykfPvbW+sTju6e0fb//qcNOO5aAzdRYNRkCyOAbJYQZMn2yDuKIcIpCTMgen433jiVRnp2PC3CrycuAC4Z+MMVdgOas9O9xh23qZnUujQ==;31:cWIUTPGTb1yTKu7GJpMRlRpCydsGs04rNoZPBU9Ks9Tw+brKE5j5HIPqHqhQVGSsA1ENZ/qQ+afyWC7wS+o0do/g/hcsuYH/ZdEcBnmfwhWKoMfEJ6am0cq7Ebz2QTrbSo0T2u/xuFhzpquJTw7gWzPr5cBoMH90DTaq1eemYZ3JpMWtVL9XGHSJsBLOA0ZwiBGjFc+s2D8RCsRysz+1zMYey69D01KZ/TQlBZRaYQ8=
+X-Microsoft-Exchange-Diagnostics: 1;MWHPR2101MB0729;3:K89JbHM7tLn9UUcsVKVp40FeCBA4HZCWxoVVFZ1AZDE0/TMuw2MxP4sGZrSENvBT1aecNjBwYz+TMkn3835NAMc2b+RQE8GEeMLexAxLatVEw9bTFFxZbBfzUp9T1sBTzX09ebkVEsYjiAYWCmYH1moPqvVi64yZDhRYd2R/QhDBDJTcVLPPeko/xyWLTBUaLGzmppePG3D0AZVO3BeiN0vK9fgqMiTx2a7zuZfpAINcTVTm2g+VlCHI396F1yx6;25:etylQDNUNBemIIUhd2Jd+CL4nO6coINj5DquLBMCeO+TtMA93oISh5kE2xCTe0JJtsJ69VoxJk7mfA6QcU7MWwgVyExuRpJunrLI+F5mFThhFVWdio8VPwCblrV+E6l9CB2f1lyARXLmA0El45yAK85WDrhcnbkedITsieLgegZw70mJlf67Ho7e4E+dTK3NhwuDgmAIlEci65Uo4lv3ePMzqGq84xekRBO63vXm6cjgR+19rOFSnGBIHHlq7aoqOzT3QWi1FmgJZYp3X4krMa37H6XQxnng5+nEKFF/xz3SeLt6VXNiSlV3Fnt0QjzyJ1Lb+zxHS2X14enSjgwiRw==;31:PXcCyZ78Jqs5GhsUWvmH90nlLgUjSxwB05yX2k/84pImwCLiblXUfSDA9CXFqwI4hhb0ef+krCItNAW1+Mjr9IEkyQHs/554z6/4U72i7C4Nlnz1V7LuGjWCVs7rCUJjLrEpGcnK9pq+z22eqh2D9mE7xm05dqIUytWXfSiRrZaB8sep4bQjfyWRll7M/K8XNY5WdBCvTaJHMtjWAckP0vq3OBfk/fXfItHUTnMNRGg=
 X-MS-TrafficTypeDiagnostic: MWHPR2101MB0729:
-X-Microsoft-Exchange-Diagnostics: 1;MWHPR2101MB0729;20:3OQcEzYbzLY6Z1AoYYm61dsDIbb19YWlfCo7geyHpqRF9KNMBK5jy1Glru8Qf960YrYYXSLQKZIOEGADAGsdE1Bch+HsVI50lxrh4lm1/2zF4q7ciWJ2m0zHDipJjc+hFXpX1KW69w+wjFz9cJvwCsPFPhoTkKidoCIuCyH1qcRqqTWslYzZvwW2iPrj3cmuNvpiHFjvRJ4cptSgyuwEJZb8d7BWSuLDw/cMb5kygwdSpN5o4kkBeZrMDS271J9WgowIkLj5QuM2pGHYBc3Ur0w8oqjPwY3GHgvZIjFA5ZBIknyZHdpcLvj+6qJkat2chohewzINQfVtHq2gpY3sqfjmSot2o4RNTrz3Z1OcBWGU7iEYy++plsrjtYzSfxS0sOlJUTg/rk8ZNuh2ZH3nUY7wLFQC+Zine3rJylX03vT9bMUaxRooIzYI6BNJGw7ShSA2HYR5rc6FB4Cp0T7SWAVAq4qtzNKqCPeqoEXn4ACgSrwF10kK3lvdn8ixWHU8;4:Z4Lbj1US+KMTYZsvWXWObb2oywyz8zsD7n23XsxkegH2UsiUpe91gsw8Yb6+U4Lc8d+5YDgXbCCAhC832vrfDsXx086FSFNe0Ucfsz99U83TTD5eHtGMS3W1hm6FgnEhrqsOFJBZQKic9VQCKw9tknV1QOS0G94oss/pZQS20gdAffHW8LA7xCQrL0CQF0+0lgrdVkE7IcctZ88Gw0Iay0KzLGx8k6Nk4P5qIkxbOZig8OGlkfNVmoi957G3onkSuBOPFeiS4efHFl6k8t6gpMnZoVBp4fOkGJEfTVy1zD0=
-X-Exchange-Antispam-Report-Test: UriScan:(89211679590171);
-X-Microsoft-Antispam-PRVS: <MWHPR2101MB072975F154A4BA7CC2833521A14B0@MWHPR2101MB0729.namprd21.prod.outlook.com>
+X-Microsoft-Exchange-Diagnostics: 1;MWHPR2101MB0729;20:v2T4PzFBHbTOR+dgTlVtBpuiFSAB6iaEpsrLsvsRC2+ugELZlN9Izau4IXMrMau+ZwA6xZSSp79hoXDbjchWnrf0ZyrxYVEj4noxjwmKTizbBhsCodZ8mCTIfsu658VD5KKFBskbmQxocnu0cxtX6W3A3yC+ivmxWw61yXMD8wmzD/wRIdTp8ZTUkaB2PMazau4u5TG6EaDaXnAQT4ALYcosNOhr9JqxtxEJhitDxLHVnOnSp1+7UfB8O3FlDUBmDhs7VxxbyYsTz5QHRYcl/KR73KqYtzLca1h/omNsIa76J9ZP/khhECwuAIchKjMZgrrFe5BKSTNCdmTWQbdDcQrJl7c4vuZ+abDV/huvKeN+pnvgjn6Dbpi3NdrHSEDaq3MwUt/WVyvE9CFQGZjpKy7iV90RwSDAuE23w5cZ3VGRgXt7SMN9AEgSbg4QsK3x8OfjYgJbqi8QoidKaRHQBeF1MQKAQ8RrX0r05dCzhR3R2e23PLoHsD+Hgg2AYLv/;4:8kwUhUEJfEo22S5PaEPLXXRoQ+nTRwtij8egFCsE6frczNGYBg+zC31YgNq1arqGWq5H560IaaEXsb7cCzcOz6m7YyhWdQn1KhXJ+nGZqXCNE7Usr/NBaNmypLYYU5iuyNMhWBeeILnbDBZlx5dCZ8ThuhOcGbOnjcm4pVW6dY8am51NspbQRdRCypdBE8W47DHbxdR2BgEWRb95pS8awlgHlP+/e4wRlCtQZM98YEwlcB6Rno3/lHDoyLydC/nzLmjR8b+IpoZoDSaRbuvDR4ektV1AhX775VAdaAmXKj0FBqAQPdBcasH8sKDaU+2HGKiz++hcXQaMjhfzOSo7YQ==
+X-Exchange-Antispam-Report-Test: UriScan:(89211679590171)(17755550239193);
+X-Microsoft-Antispam-PRVS: <MWHPR2101MB07290AD6C95E8080BA131A0CA14B0@MWHPR2101MB0729.namprd21.prod.outlook.com>
 X-Exchange-Antispam-Report-CFA-Test: BCL:0;PCL:0;RULEID:(100000700101)(100105000095)(100000701101)(100105300095)(100000702101)(100105100095)(61425038)(6040450)(2401047)(5005006)(8121501046)(10201501046)(93006095)(93001095)(100000703101)(100105400095)(3002001)(6055026)(61426038)(61427038)(6041248)(201703131423075)(201702281528075)(201703061421075)(201703061406153)(20161123564025)(20161123562025)(20161123558100)(20161123555025)(20161123560025)(6072148)(201708071742011)(100000704101)(100105200095)(100000705101)(100105500095);SRVR:MWHPR2101MB0729;BCL:0;PCL:0;RULEID:(100000800101)(100110000095)(100000801101)(100110300095)(100000802101)(100110100095)(100000803101)(100110400095)(100000804101)(100110200095)(100000805101)(100110500095);SRVR:MWHPR2101MB0729;
 X-Forefront-PRVS: 04583CED1A
 X-Forefront-Antispam-Report: SFV:NSPM;SFS:(10019020)(6009001)(346002)(376002)(39860400002)(47760400005)(189002)(199003)(76176999)(189998001)(1076002)(6116002)(2351001)(50986999)(105586002)(106356001)(53936002)(2361001)(10290500003)(6666003)(478600001)(25786009)(47776003)(33646002)(36756003)(305945005)(39060400002)(4326008)(101416001)(107886003)(6486002)(97736004)(22452003)(50226002)(48376002)(68736007)(7736002)(50466002)(16586007)(8656003)(5660300001)(2906002)(10090500001)(2950100002)(86612001)(81156014)(316002)(8936002)(6916009)(86362001)(81166006)(8676002)(5003940100001);DIR:OUT;SFP:1102;SCL:1;SRVR:MWHPR2101MB0729;H:stolee-linux.corp.microsoft.com;FPR:;SPF:None;PTR:InfoNoRecords;MX:1;A:1;LANG:en;
@@ -57,35 +57,35 @@ Received-SPF: None (protection.outlook.com: microsoft.com does not designate
  permitted sender hosts)
 Authentication-Results: spf=none (sender IP is )
  smtp.mailfrom=dstolee@microsoft.com; 
-X-Microsoft-Exchange-Diagnostics: =?us-ascii?Q?1;MWHPR2101MB0729;23:IaDbMsepCJzLmCmh4tw98kXYcgrhxEnQgGKISz/?=
- =?us-ascii?Q?O3fw/IerWyZe+tTt+biQIblc40Vk3hsoRUSqCcBxrFfwGa/rJYTmBAtL7JCQ?=
- =?us-ascii?Q?gLODkKD6petAtlHaK8At95WMzY4VEYEmzmB+stn/jfm7lhW1tAv1tJel4kkm?=
- =?us-ascii?Q?q0cgw90eXr1wSZ14KAnCWT7yfD7T0PM/CWgf3zDXshoLne1b+j4swTgxiyxj?=
- =?us-ascii?Q?jPIg9ey5gbpSHsQkow97FdrSUuAY6uxMlK/R2ADt0Vs4kmZJw3zDQ5EGAjxC?=
- =?us-ascii?Q?YlyvuR6AWRltehYdgsj/K/PtCKqTzqDvkon9VGbCNomzdpBLl2LW4ybEN09J?=
- =?us-ascii?Q?2dUdSAOWoh5E02FXDnpzHAZesZIU9v+7g4DoM58cbFDrl3qLj3un3dnxgV2o?=
- =?us-ascii?Q?GizYHPB6MVBbLryjQ3ditqsV0dKLzZSKHVZyDQzM+gEdRXCnMVZ4IEZPtVXz?=
- =?us-ascii?Q?j1YglcQSGztru8gGVPTRZG/JzzzCLL4fidM9GxWQb+jhsPxskkLH4NA5R+7A?=
- =?us-ascii?Q?8TMvm943X1s9/mUImqhHYG04qhv5fTJwUBJpqoJNwMwyUqsNhQYNb/uAYnO/?=
- =?us-ascii?Q?IuTGVpYkkhZ6eec3tqsUDAyUWOhG3ctK+Oy/6h0x8mnddoFLVY9qobs+x0a/?=
- =?us-ascii?Q?EcGKW2ZofGHsYbXyZtf/j8iSzobTz2jPaSD7APFk86CDKOTJznJ/1gYKivjK?=
- =?us-ascii?Q?B6dDuTrRkpEzqmexmVwPIQ+54481/jCWzLjnjidwErpZonWuqoq2XpPapp4N?=
- =?us-ascii?Q?vainzMRBVli8DhL5RAkJI3XLNT5jOdJuO19r2qTiFtLJnIBWVvlWPbNxdWi7?=
- =?us-ascii?Q?x4H+GyriiddzRJwoydiVNIwc78oxL5UUMXNmO7XX4TKJKC4ZAi8/EqTnaIix?=
- =?us-ascii?Q?kbv2/rWzIY8hACi8L2dlU8ndGB8hFpyxAOxDZK+8QXIbRIeIjEYZqkPdrkij?=
- =?us-ascii?Q?tX9xxRKEfu0Vgw4zOqYx80MatVmKBQFf1YA8qmbWEaI6YcjvJnjy71FR+lcF?=
- =?us-ascii?Q?lSyGbSRT6FNFS+P9dkjAShMkWjvTCtQaa5+0X3mHsNr8LyvizgSMzXNuKqAT?=
- =?us-ascii?Q?Sj1Sf4DZ4xXANAmUylvTgOWx93FzQO/rLkGCPaNnYA2I5gI+24txHkYfgb8f?=
- =?us-ascii?Q?XV+AOynX52rd5Aq/XnjmWX/hDjPvHl+9Lg3gIzIvxJxp1gaqf8z9axmqXYZ8?=
- =?us-ascii?Q?SIvRCnAoulMzcWJyu9xqe8iZvyXp1f2Y+nFAaXggyShug4xG3Lpch8x40T2d?=
- =?us-ascii?Q?a9H78AUQEQTZipWtPMJE=3D?=
-X-Microsoft-Exchange-Diagnostics: 1;MWHPR2101MB0729;6:FRXtPotrAjiSj6IrR8ztnJKKdiC6lYOaezONTJ6uYHPm8WbUC5CroWjG6TuloTh/uuxEbhsPQYEbnDs6EZpsq8HSxbA73fq10PY3RsVnpL/bgOFni4L6CR1y4hIrhhoMyEucFDK19E/1JF4v1iQWfrr7uPaIjeGbF2LARAYISx65uVCXSw9eaTnWW+2wXimgqe47Quwd/bHXIQCG8GrKZbF709LDmK0fDiF7aL+mHZGpxl89Y4ysLnocSDh0mNtHkjBkSDBmt5AiI1AX9QjBgmyijxwvHY1eF3hv+bFMimahz8p96MAX7MqmFRvWtr7gF3uatv4EKFJZ6bFKKNby2g==;5:EJNBdkpAY6uk8oAxvw0uDZtbs5RdokiZ+CWoeHYXQE4wmKMHVijMpTc1n9eRRnE2b/U1CQt1L9ypE7Hfbcn8Nm09k3ZJPUivwXsst5rj+sc6iokKdNps0oFw4/BmVj9YoPilCxsqlzJ5hb02iQZdXr34Q9Mx5yEcl+Io83Lexdo=;24:AtSUw/Yf+4Q/ycrSReUHLdf8oen4OWjD7OFLMvMZi2/oGsrZm6d4RVd686ZHaB9M5R1Y5dlDkd8L2Vd2o3Wu+ly5VMToPREzWX67NTklQuM=;7:RhO6/yT+V4HKVBiIJPSIkkpeHMg+Zf8QvgIpt5xMxlaFhyZqUqZtffivFSti1DdnPo9awWMRb0UAyJQE2E3j9D3gDQLW/RDSFv7U0gFGB+NK8vWf+wifJoeHb1VGA7fq86uHSwLQ1p5qu4uK+XhDz8vD6ANZ8LNVIEkwqk7Ccyvdx9uS0g2X2iO1+TwbO7XaLSoAUAbaU/F5rec+kDghtfNb26FstPR4m0lE/A/Awcw=
+X-Microsoft-Exchange-Diagnostics: =?us-ascii?Q?1;MWHPR2101MB0729;23:aIFTVNsXhtmBPUlGQ6p+wqLkCcf7fd9jTJIgs6U?=
+ =?us-ascii?Q?AV4jqBLXyFmwU/Re18q9pLRU6b30/pEIhIJ7h+88iTvsNaT3gmM+CAIadSuw?=
+ =?us-ascii?Q?tftoMBF0lqBmi5ZYdBq6BabZgkTUNkEHGhljPtRgE2/eGV+OSmJIFD1oaHUE?=
+ =?us-ascii?Q?9n812aGX6vTYlwjbjKIyq2Sw5MP0c0LRI3W5NMoaGRqHcGnx15N3o8vUTCvh?=
+ =?us-ascii?Q?lSPaDkvsQKM/5GQ0y49La1HYMBP+TaHiYhiitrY6beu8N5pzliW8IFjsvxsu?=
+ =?us-ascii?Q?acbooYbVNnIdgC6MskDjJfmCpYWIrXu1FG94KVBl82DSWsSDS6gTOY4wnn8D?=
+ =?us-ascii?Q?xHEozn2pQMjRbux2YDPj6fvwPl/79krjrF+OsjjbKlZYUS8rNiP4o1pk2CKi?=
+ =?us-ascii?Q?403Ygwfoz3VtIV6bko4YiznMz10IfrTGCJWTekWHnAzkZjUOSFuZvIYwVEy9?=
+ =?us-ascii?Q?/5zU1vSNpi8feN5wr25C4Z75tEQPAF+K6iix+9Ltfub7aJNwKYh/ZJLgM08X?=
+ =?us-ascii?Q?EwkuOyjH1OHOAq/7vsQ4VCzVsRJipi0VP+npT4wOfxcVQ/p9d3y0LpPnU8Ss?=
+ =?us-ascii?Q?4haDyVZho32Xd3nHAh2cTnQKobF8Ja9uhuMnmq+RLMbQQ7pCQywSVe2qAO4i?=
+ =?us-ascii?Q?IhO623st3q27jNlFz3QeubKvyTwz44+iQmKgboiqcvI+Lt8Y9k931Vn+KsX7?=
+ =?us-ascii?Q?mTfCleRQ4NDOcWhgKP+KxAL+YCQERHvmiS38FiotZTrwaoXwDjoxq4aTjoDP?=
+ =?us-ascii?Q?+gCHcfMtSZGQgniR7i+1SmoP2Tf9ViOijViJcXTr4AFzcJs6U8xheWOiFViM?=
+ =?us-ascii?Q?z4IW0oEAyWLJ1qGXutSEg53M6FfytoqOfGOSpjuzyhn9RFev2mNqH0qvvFsi?=
+ =?us-ascii?Q?4/AQvujgd3zsl4BtpC+OcHNiqjGvQPDDdpPnZ7Zd851jXfuYuqLDCtLDVlYb?=
+ =?us-ascii?Q?0Ht4T5XuhxUQoKCiyCsHOIkhppC8mA5KhquGI/jtY0Y2+aAXYb5FX21nAMg0?=
+ =?us-ascii?Q?+szw5dsykgPgiAV49tnwT04j0VNGDL8HG3m0S+1NVEPWGtpVazXCK8EgT6lo?=
+ =?us-ascii?Q?ATUglO4O4PBGdeD6t+khKqCGJv2XzJUpqnoAx3FN7EMZaQWRwOCE19VFaaP7?=
+ =?us-ascii?Q?r4aqXijydmZhHqsbhvcUf85wF8/w62ArXl31yVVwzDk13hV32GYTOwl5nVyX?=
+ =?us-ascii?Q?Sg2w2sbv5Spi1kIvNBj1MpAo+6x4WZqwSs1xFEfADWHCVQIRpA/IzK6SapnA?=
+ =?us-ascii?Q?deIdGd/dyWvx3dm5yckY=3D?=
+X-Microsoft-Exchange-Diagnostics: 1;MWHPR2101MB0729;6:kgPpRgUr5kCrAA9k9FWb5SvJNsFyKX6Aajn7pmRCNPipL15nfZzovHsVvvV1FCSPcEzEkL/DKtuFiuE6zFZ3tbfQAZqTr53neRqnxhx/h86GQlHt7/ypE5TFxktqWuFr0uSoAM5golCAIj/Nzn2HP54UrsgrW4bCfahOilOX6sesHN0nJwqmfMLIy3l/IkqcOacr8nhQc9i7f8I53C/Nr4u6dZWbXV5KzCbIHgNZw2mtCDC6D8hstIft4nFKKRP8zrx43fiHX1leSECtzZDotMUjpwGgcp+qi0swVX+dTY56Frea4Ncy/m5FrAWuF/WYn7wZ6KjdIpzqG/lUxZ0Xaw==;5:hOvnp3K3sSbSohmST5aIE6+Iv72A7pdxUK7wVLRr9knbJjUYEFVoXCKU8iNlbHTqhJtmk7uwvG9qReZB8mx2judRup3cPUaokMIno5dX+E3rofFdF238NZadc9W4HezpNrs7W4y1nEQD5w3smFAUa1aWlg3NKQ1AfiDAuxcr9mY=;24:pBpgDpHqmI9BF3nNJ+Rf9l9Xj0eOvkEur3tFsINN83oyJvZGc7ZW2FxAU5vI3wQBKGt8paD7au+SuBDntE2PxWAcwvB0ypO/l4OX0BitaAA=;7:dL2qrKXR+ImsC371aogI+iB0G8gRXkcjnUYR7i1vVs+Ov4sOg/yg+yD3cX7+iflqg0/4XRZ3qu1NtMvZjtCmGGG4I5whWYTMWEpBbQHqt4nFQB3HvkkFApm1vw6nnRDixvP8sTvnNIrpqjc8aTs/P2skImvqnPDnWheCC4l3xG9b3bqxDjNgFZlI7u3aWw08tjKZxMnK3MXeUaGZI77Q9OAG4gJERZdGwp/jkWmLGL4=
 SpamDiagnosticOutput: 1:99
 SpamDiagnosticMetadata: NSPM
 X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Oct 2017 12:02:40.9651
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Oct 2017 12:02:39.7932
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: e5a67697-2fba-4bb1-c815-08d511692413
+X-MS-Exchange-CrossTenant-Network-Message-Id: cb90d874-61de-4c84-94ec-08d51169235e
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 72f988bf-86f1-41af-91ab-2d7cd011db47
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHPR2101MB0729
@@ -94,45 +94,100 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Create get_hex_char_from_oid() to parse oids one hex character at a
-time. This prevents unnecessary copying of hex characters in
-extend_abbrev_len() when finding the length of a common prefix.
+Unroll the while loop inside find_unique_abbrev_r to avoid iterating
+through all loose objects and packfiles multiple times when the short
+name is longer than the predicted length.
+
+Instead, inspect each object that collides with the estimated
+abbreviation to find the longest common prefix.
+
+The focus of this change is to refactor the existing method in a way
+that clearly does not change the current behavior. In some cases, the
+new method is slower than the previous method. Later changes will
+correct all performance loss.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- sha1_name.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ sha1_name.c | 57 ++++++++++++++++++++++++++++++++++++++++++---------------
+ 1 file changed, 42 insertions(+), 15 deletions(-)
 
 diff --git a/sha1_name.c b/sha1_name.c
-index 19603713f..fdd2711a6 100644
+index c7c5ab376..19603713f 100644
 --- a/sha1_name.c
 +++ b/sha1_name.c
-@@ -480,13 +480,23 @@ struct min_abbrev_data {
- 	char *hex;
- };
+@@ -474,10 +474,32 @@ static unsigned msb(unsigned long val)
+ 	return r;
+ }
  
-+static inline char get_hex_char_from_oid(const struct object_id *oid,
-+					 unsigned int pos)
-+{
-+	static const char hex[] = "0123456789abcdef";
+-int find_unique_abbrev_r(char *hex, const unsigned char *sha1, int len)
++struct min_abbrev_data {
++	unsigned int init_len;
++	unsigned int cur_len;
++	char *hex;
++};
 +
-+	if ((pos & 1) == 0)
-+		return hex[oid->hash[pos >> 1] >> 4];
-+	else
-+		return hex[oid->hash[pos >> 1] & 0xf];
-+}
-+
- static int extend_abbrev_len(const struct object_id *oid, void *cb_data)
++static int extend_abbrev_len(const struct object_id *oid, void *cb_data)
  {
- 	struct min_abbrev_data *mad = cb_data;
+-	int status, exists;
++	struct min_abbrev_data *mad = cb_data;
++
++	char *hex = oid_to_hex(oid);
++	unsigned int i = mad->init_len;
++	while (mad->hex[i] && mad->hex[i] == hex[i])
++		i++;
++
++	if (i < GIT_MAX_RAWSZ && i >= mad->cur_len)
++		mad->cur_len = i + 1;
++
++	return 0;
++}
  
--	char *hex = oid_to_hex(oid);
- 	unsigned int i = mad->init_len;
--	while (mad->hex[i] && mad->hex[i] == hex[i])
-+	while (mad->hex[i] && mad->hex[i] == get_hex_char_from_oid(oid, i))
- 		i++;
++int find_unique_abbrev_r(char *hex, const unsigned char *sha1, int len)
++{
++	struct disambiguate_state ds;
++	struct min_abbrev_data mad;
++	struct object_id oid_ret;
+ 	if (len < 0) {
+ 		unsigned long count = approximate_object_count();
+ 		/*
+@@ -503,19 +525,24 @@ int find_unique_abbrev_r(char *hex, const unsigned char *sha1, int len)
+ 	sha1_to_hex_r(hex, sha1);
+ 	if (len == GIT_SHA1_HEXSZ || !len)
+ 		return GIT_SHA1_HEXSZ;
+-	exists = has_sha1_file(sha1);
+-	while (len < GIT_SHA1_HEXSZ) {
+-		struct object_id oid_ret;
+-		status = get_short_oid(hex, len, &oid_ret, GET_OID_QUIETLY);
+-		if (exists
+-		    ? !status
+-		    : status == SHORT_NAME_NOT_FOUND) {
+-			hex[len] = 0;
+-			return len;
+-		}
+-		len++;
+-	}
+-	return len;
++
++	if (init_object_disambiguation(hex, len, &ds) < 0)
++		return -1;
++
++	mad.init_len = len;
++	mad.cur_len = len;
++	mad.hex = hex;
++
++	ds.fn = extend_abbrev_len;
++	ds.always_call_fn = 1;
++	ds.cb_data = (void*)&mad;
++
++	find_short_object_filename(&ds);
++	find_short_packed_object(&ds);
++	(void)finish_object_disambiguation(&ds, &oid_ret);
++
++	hex[mad.cur_len] = 0;
++	return mad.cur_len;
+ }
  
- 	if (i < GIT_MAX_RAWSZ && i >= mad->cur_len)
+ const char *find_unique_abbrev(const unsigned char *sha1, int len)
 -- 
 2.14.1.538.g56ec8fc98.dirty
 
