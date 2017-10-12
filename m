@@ -2,115 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5F0D020437
-	for <e@80x24.org>; Thu, 12 Oct 2017 09:17:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0592220437
+	for <e@80x24.org>; Thu, 12 Oct 2017 09:19:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752631AbdJLJRy (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Oct 2017 05:17:54 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:36457 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751420AbdJLJRx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Oct 2017 05:17:53 -0400
-Received: by mail-wm0-f67.google.com with SMTP id 131so3598449wmk.3
-        for <git@vger.kernel.org>; Thu, 12 Oct 2017 02:17:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=X2b3TAOdYY3vJ6AEIzirMpBsvNzAMLYNlLbkuQAuMDk=;
-        b=QZ5zRw3xqiose6WJnzWivJBVPb+NPESM4WRX6EMeu/V8g0XJC6LTvfZlfg8PX1+M7y
-         xMqdau+34v1PkjSWS+lAalsI87dAHSv5ZZWwtXTYPGgnbu3Ds9KkF76cJfBA+kdoZueN
-         J+k9TbsTLcK+ksVzq7VUytisoRrifUz/tJ2L9Pxl1QM/bk8pwgE8SW5zpqFgXqhk0dCp
-         Fo8txNWMt9XTN238ah/VdCv+galJpQzFQ59A/aScFBzkwvL5ePh9H/jJ8Cxjj2pFzgkS
-         sIYDvM4zUGyDyXPRcZt9Tdg1oimYDrfYdJJfLzfDKCyrz3uqEfMA5gl7ZMRybuy7TSGI
-         m6Bg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=X2b3TAOdYY3vJ6AEIzirMpBsvNzAMLYNlLbkuQAuMDk=;
-        b=WTzjJRh9AwkotxtSryfIku30ODDIX2dkmekOoQIBnc/zrmDRRphKrigdW3JwPfllok
-         pdxM8GUL+Emnh+1F1v8oaLVwRI+Wc0KCCO5GfJ0luV44QLe4ERgtNAjO/GdntpWVLmFu
-         PuFr4KhpHqhlYXkFtxv2ADNP+7SyxjjLe4V+1W52baHzfC6HayGqIpC3xXTVYgapaM9m
-         DX0e0y7FpOYbyIspW5eoKr7jwkXvvAbwZP5rVN8oj0DnwEuOc5peft9igZCAQoJaOaXz
-         1YMzTSHSBlPbyhMFxj8aVYDZETZFAUN4G+g3yFZLnu4vKCEtQ1r82dVswGRFwJx4nhxu
-         3Q+w==
-X-Gm-Message-State: AMCzsaUkC9hRxGe2utALunr9mlqKQaWSJ6rdlPe3OlMAoDZU5hrvmEsS
-        oLRqNVV0pSQmVvDs2FZAz0l3wA==
-X-Google-Smtp-Source: AOwi7QCEE8MS6S2u1ls9+j9tgHFkbS+kqLdC8GWlLTVnnrSw5xFWb6ajMazdVs2ROO76VJJ07ainGw==
-X-Received: by 10.223.151.221 with SMTP id t29mr1367671wrb.34.1507799871799;
-        Thu, 12 Oct 2017 02:17:51 -0700 (PDT)
-Received: from Laptops-nathan.univ-lyon1.fr (wifi-ext-0151.univ-lyon1.fr. [134.214.214.152])
-        by smtp.gmail.com with ESMTPSA id w126sm17014714wme.25.2017.10.12.02.17.50
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 12 Oct 2017 02:17:51 -0700 (PDT)
-From:   second.payre@gmail.com
-To:     git@vger.kernel.org
-Cc:     PAYRE NATHAN p1508475 <nathan.payre@etu.univ-lyon1.fr>,
-        MOY Matthieu <matthieu.moy@univ-lyon1.fr>,
-        Daniel Bensoussan <daniel.bensoussan--bohm@etu.univ-lyon1.fr>,
-        Timothee Albertin <timothee.albertin@etu.univ-lyon1.fr>,
-        Nathan Payre <second.payre@gmail.com>
-Subject: [PATCH v2] Documentation/git-config.txt: reword missleading sentence
-Date:   Thu, 12 Oct 2017 11:17:27 +0200
-Message-Id: <20171012091727.30759-1-second.payre@gmail.com>
-X-Mailer: git-send-email 2.14.2
-In-Reply-To: <xmqqtvz7pewn.fsf@gitster.mtv.corp.google.com>
-References: <xmqqtvz7pewn.fsf@gitster.mtv.corp.google.com>
+        id S1752697AbdJLJT4 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Oct 2017 05:19:56 -0400
+Received: from resqmta-po-08v.sys.comcast.net ([96.114.154.167]:47720 "EHLO
+        resqmta-po-08v.sys.comcast.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752615AbdJLJTz (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 12 Oct 2017 05:19:55 -0400
+Received: from resomta-po-03v.sys.comcast.net ([96.114.154.227])
+        by resqmta-po-08v.sys.comcast.net with ESMTP
+        id 2ZelejfKsZFxg2Zeleg39s; Thu, 12 Oct 2017 09:19:55 +0000
+Received: from mail.tremily.us ([67.168.186.5])
+        by resomta-po-03v.sys.comcast.net with SMTP
+        id 2Zcne5NxCuXCz2Zcoerfvf; Thu, 12 Oct 2017 09:17:55 +0000
+Received: by mail.tremily.us (Postfix, from userid 1000)
+        id 49D3DFED620; Thu, 12 Oct 2017 02:18:22 -0700 (PDT)
+Date:   Thu, 12 Oct 2017 02:18:22 -0700
+From:   "W. Trevor King" <wking@tremily.us>
+To:     Git <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?Q?=C5=81ukasz?= Gryglicki <lukaszgryglicki@o2.pl>
+Subject: Re: [PATCH v2] pull: pass --signoff/--no-signoff to "git merge"
+Message-ID: <20171012091822.GA27403@valgrind.us>
+References: <18953f46ffb5e3dbc4da8fbda7fe3ab4298d7cbd.1507752482.git.wking@tremily.us>
+ <51d67d6d707182d4973d9961ab29358f26c4988a.1507796638.git.wking@tremily.us>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="mP3DRpeJDSE+ciuQ"
+Content-Disposition: inline
+In-Reply-To: <51d67d6d707182d4973d9961ab29358f26c4988a.1507796638.git.wking@tremily.us>
+OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
+ url=http://tremily.us/pubkey.txt
+User-Agent: Mutt/1.7.2 (2016-11-26)
+X-CMAE-Envelope: MS4wfI4Fd9lXBboMyjBFJN/3uATHr1AMorA1YKBj9avc1gY5ThlsldPUcUwb2F1a92EA/k6IeUbNK/qmfZRHWVfRh/zOjMpJUPhjk1d3dwAh0p6zxWXICgus
+ QfM8Y2foQJvPRMQulaGoOl88ipXXCEPHnD+rZpGOLkNYtMhe5Og8+vmXDJqm9Gwk0XlS0/4K65KgJMOcS1XQoMUc2YRDmRM14S0ZE5E1vkoiOWzp756gUtqE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: PAYRE NATHAN p1508475 <nathan.payre@etu.univ-lyon1.fr>
 
-Change the word "bla" to "section.variable", "bla" is a placeholder
-for a variable name and it wasn't clear for everyone.
-This change clarify it.
+--mP3DRpeJDSE+ciuQ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Change the appearance of 'git config section.variable {tilde}/' to
-`git config section.variable {tilde}/` to harmonize it with
-the rest of the file, this is a command line then the "`" are
-necessary.
+On Thu, Oct 12, 2017 at 01:46:39AM -0700, W. Trevor King wrote:
+> The order of options in merge-options.txt isn't clear to me, but
+> I've put --signoff between --log and --stat as somewhat alphabetized
+> and having an "add to the commit message" function like --log.
 
-Replace "git-config" by "git config" because the command
-is not "git-config".
+The order of options in merge-options.txt was intended to be by
+"alphabetical groups", at least back in 7c85d274
+(Documentation/merge-options.txt: order options in alphabetical
+groups, 2009-10-22).  I'm not quite clear on what that means.  After
+7c85d274 landed there were already long-option irregularities:
 
-See discussion at:
-https://public-inbox.org/git/20171002061303.Horde.SL92grZCqTRV9oQkBFPELQ7@crashcourse.ca/
+  $ git grep -h ^-- 7c85d27 -- Documentation/merge-options.txt
+  --commit::
+  --no-commit::
+  --ff::
+  --no-ff::
+  --log::
+  --no-log::
+  --stat::
+  --no-stat::
+  --squash::
+  --no-squash::
+  --strategy=3D<strategy>::
+  --summary::
+  --no-summary::
+  --quiet::
+  --verbose::
 
-Signed-off-by: MOY Matthieu <matthieu.moy@univ-lyon1.fr>
-Signed-off-by: Daniel Bensoussan <daniel.bensoussan--bohm@etu.univ-lyon1.fr>
-Signed-off-by: Timothee Albertin <timothee.albertin@etu.univ-lyon1.fr>
-Signed-off-by: Nathan Payre <second.payre@gmail.com>
-Noticed-by: rpjday@crashcourse.ca
----
- Documentation/git-config.txt | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+If the order was purely alphabetical, --stat/--no-stat should have
+after --squash/--no-squash, and --quiet should have been much earlier.
+And putting --signoff after --log is still alphabetical in v2.15.0-rc1
+(ignoring a few outliers).  So I don't think it's a reason to change
+where I'd put the option, but in v3 of this patch I'll update the
+commit message to cite 7c85d274 when motivating the location.
 
-diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-index 83f86b923..2ab9e4c56 100644
---- a/Documentation/git-config.txt
-+++ b/Documentation/git-config.txt
-@@ -174,11 +174,11 @@ See also <<FILES>>.
- 	either --bool or --int, as described above.
- 
- --path::
--	'git-config' will expand leading '{tilde}' to the value of
-+	'git config' will expand leading '{tilde}' to the value of
- 	'$HOME', and '{tilde}user' to the home directory for the
- 	specified user.  This option has no effect when setting the
--	value (but you can use 'git config bla {tilde}/' from the
--	command line to let your shell do the expansion).
-+	value (but you can use `git config section.variable {tilde}/`
-+	from the command line to let your shell do the expansion).
- 
- -z::
- --null::
--- 
-2.14.2
+Cheers,
+Trevor
 
+--=20
+This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
+For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
+
+--mP3DRpeJDSE+ciuQ
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEpgNNa8H/zemHkt2gprXBz9Wld7YFAlnfM0sACgkQprXBz9Wl
+d7Z3Ww/8Du4yjFatXTCi84oL/YcMP1FIBOW+hGmJZqgWXm79S5Uol46U+IWrYV4d
+iT8OgIsTjJV+xVj2OWdRj0Y2zUrRrnBbtFRfQJuTiTzN4Zyxh9lWYeHRkZAsOabW
+ne05awhpeQAx5jPktiFT3IQhCOphwK4zYT2R+AZWsSYaZd0h1a2DuasqyNgzusC5
+c9DjW6fXFjqsoXC/dIwENTPK0gSYQH2ihRv4ybpdQrpX6OpIt9mAHROXulpIv9xC
+c5lUdWIZDOHddt7T4T3s9GTT6/aGIvFtpWvvtC5+R3ZUGjDMgVj1bmggcnpn1wpG
+j9KGbiAvmZzLCvJHD7R1BOcP3naVlGibJGeH35za+ozO0UY+TUUSEXnZE1yd2DAY
+b7brEIqNJeRUL9NWhJnRpTO0/bYW33uHP/DIr2GXGXDCqtSP+hp7WzdwaJ0p+3Vi
+EAmvTODMKWFwK2/jVDPwALzO8POXU8WIfyxrDLzLh1xyGuJXTtBisquACrkpjqt6
+bHnKR29uBNuxAiNh5nSm0mHi48DYI48XKwm02MyvhAL/gS1CdIUB2CevmCDXBGmJ
+TxfhVePA8WtKpEZLhbT0pKPf+ENGEgx3jNDcJZuF5qGUh9FCqVdUlMWP3NezsKfG
+JbIa3tWgsI9eRs4G5WUgtdbqnszHPN3hyS5c3UEoOL0X1aHxYt0=
+=AUP5
+-----END PGP SIGNATURE-----
+
+--mP3DRpeJDSE+ciuQ--
