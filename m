@@ -7,189 +7,95 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E00CB20372
-	for <e@80x24.org>; Thu, 12 Oct 2017 20:54:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7D37B20372
+	for <e@80x24.org>; Thu, 12 Oct 2017 21:00:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753135AbdJLUyb (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Oct 2017 16:54:31 -0400
-Received: from mail-qk0-f193.google.com ([209.85.220.193]:45879 "EHLO
-        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751657AbdJLUya (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Oct 2017 16:54:30 -0400
-Received: by mail-qk0-f193.google.com with SMTP id f199so2732028qke.2
-        for <git@vger.kernel.org>; Thu, 12 Oct 2017 13:54:30 -0700 (PDT)
+        id S1752856AbdJLVAi (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Oct 2017 17:00:38 -0400
+Received: from mail-oi0-f65.google.com ([209.85.218.65]:34943 "EHLO
+        mail-oi0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752452AbdJLVAd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Oct 2017 17:00:33 -0400
+Received: by mail-oi0-f65.google.com with SMTP id e123so2946520oig.2
+        for <git@vger.kernel.org>; Thu, 12 Oct 2017 14:00:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=yAwqJJTqP70KqRQEu9Ff9ZyQNzGbdS1Bo9zPUQaposw=;
-        b=e88Li7AN3yEUaHqVEYW19cnD7cErn/YYrUlt/ORe/Ni2NjDDFB1MI0Z2CBX5nWV5en
-         TTBEWAIgJUqEHcnkjZtNvfLonbi4thuo0kEkSJ8qZk6lqKbJAq3rvO4/SHcejPHMFD4M
-         Zn3TTHogTqRzLDB7HvbsDFp7nNu+COEbF1GT0jKpO40ccUZaSJx/PYETEBXQ9E/+fr+F
-         dSKBUhT/LMjn0DlyIL/ChuiidlZZWEvcI15tbppF8IY4bZKkY2Yf+GLXMS8Fszyh8rQv
-         0Ukyt+oE8eqL0aDP6N6sUg4SPY9TT6kk4VupY8MdhgbZ2OZE2xNpbgKO80iFuKV2qbW/
-         dRPQ==
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=rHqEk2/xROzgV9bRNulfjdjwBKQ/kYnwEgFuRtOaTV4=;
+        b=gX+dO3EO/tDEts84CbXtKUlo9NXE/MNCrtRDvGfkrIAD2aZJioTtzt1N3hHDJpfI2B
+         Ex44GCbzNHnEXXziMn/xPIPDlo03CjoDOXlkENPnsH0/siFZGOCHuiGA6TRQnUBJUcRf
+         edvgA+7VDQ/NOtnhSqUd9aCAjWhl1aioS4wkgWfhEH625Iyzs6ndGJdl0AmkPmpTKNHW
+         XGXELm0d6oIcAe50XIw3rsmwkbbjN99rslIbZ8YgEsTKpiMsRanvemCUMrhnBn5fPyiN
+         px/OAyBm/vHzGzVny6d7S8FVFeE01xgFVsegelbUcsN2SIKUBwOUxnbne5KPzI6Li2Lb
+         eZRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=yAwqJJTqP70KqRQEu9Ff9ZyQNzGbdS1Bo9zPUQaposw=;
-        b=Ku/ahIE9oqK01w1XXuUJZ9jF+ittXSIPr4NyyLTNePh5NeNOHnIta9pXse5tB1Mcjq
-         rumKQko5eNZ48h/nKrEdRDgDq3FgwHe1feX+nwBfoxdiuHl62ayWqgsvL4U99YiYbBe8
-         ZrLh7xFXgep/c6fGzQaLRuut/twjEn0EMaW2/WzBIpchnOLbZW+bRl9/EiycWK29KX4h
-         DVL+dEcQOf7YpQfBhhNCpw2rZMtHLmw/IQCY8iEvTKvsl9L2a9nPDXnDw8FpvxHLKgiK
-         /Ot/UAi01jbI3f26U09ruTS9ifserkAVAvt/7k9mIYCdaNBee9FTr0pk/WHiqf1nJZ5a
-         qYew==
-X-Gm-Message-State: AMCzsaW6h4NdcKuAbTCcV5i0JNt5wPSzlvkAcIsfqiIhyQNC8ioIR52E
-        jh0qcf2abLrqoWagOsmk9pQ=
-X-Google-Smtp-Source: ABhQp+R+Q8bMEENe8MPXNVdaYJ650fCoO5ywObImbmBdf4CsuaWYVo3Kspyd03g9ErJoUuTWiIzllQ==
-X-Received: by 10.55.42.73 with SMTP id q70mr2281160qkh.337.1507841669573;
-        Thu, 12 Oct 2017 13:54:29 -0700 (PDT)
-Received: from localhost.localdomain ([2001:4898:8010::76e])
-        by smtp.gmail.com with ESMTPSA id m4sm10253446qtc.73.2017.10.12.13.54.28
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 12 Oct 2017 13:54:29 -0700 (PDT)
-Subject: Re: [PATCH v2 2/5] Update documentation for new directory and status
- logic
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     bmwill@google.com, git@vger.kernel.org, jamill@microsoft.com,
-        peff@peff.net, sbeller@google.com
-References: <20171005205443.206900-1-jameson.miller81@gmail.com>
- <20171011133504.15049-1-jamill@microsoft.com>
- <20171011133504.15049-3-jamill@microsoft.com>
- <xmqqtvz513dm.fsf@gitster.mtv.corp.google.com>
-From:   Jameson Miller <jameson.miller81@gmail.com>
-Message-ID: <c71a2580-ade3-c8d0-d566-272bf3bb572b@gmail.com>
-Date:   Thu, 12 Oct 2017 16:54:28 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
+        h=x-gm-message-state:mime-version:reply-to:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=rHqEk2/xROzgV9bRNulfjdjwBKQ/kYnwEgFuRtOaTV4=;
+        b=L8ltQBSidvv4R1tgfrM+OZi+dirxzmYnpPo21ZLTk1r/F2ZQOd3Fu+RnYmP4T6ODvv
+         NDDNjiyROLxP0hbuQGbym/Lk9cBX20tfalmsljWFfJwfwbsNkSUzgRcfSNG4OO0UoTnz
+         NOOfWaUeVpBJeid0gCAfcpFl0qyXscJPo7il4DXR7KIQfo46ed1Sc7jrxM2ZD3JZwuAY
+         Si/zSsMG6f9JJ62Vtk/ni3RpXNMiFIGl50q4srEUFuoZM2Uvn3uZYb0+FbYlerThmYnX
+         9FewLylN/MRZC6V+uo8786duVyySOM/GO1Ry+4Oe1Biz+zdmwjs17d92x4sakVTYV8mK
+         FRTg==
+X-Gm-Message-State: AMCzsaW4385Gz+H50poTXGqi98iNgU/eOFAxrqXiYCoaNQ9oubwRZQXT
+        urPDUAR+b1FlvGQfv0FEtTLoDjdLCJkjJFsHUH4=
+X-Google-Smtp-Source: ABhQp+QrVqaeZ+/u4JScdIuKynujrnspwxTa2LCrzgDbbZP07/HfpsvXoIc5a1E6LHop/7GZMNqU7Ne4K6AwopLITH4=
+X-Received: by 10.157.0.37 with SMTP id 34mr2615777ota.468.1507842033432; Thu,
+ 12 Oct 2017 14:00:33 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <xmqqtvz513dm.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Received: by 10.74.19.87 with HTTP; Thu, 12 Oct 2017 14:00:33 -0700 (PDT)
+Reply-To: noloader@gmail.com
+In-Reply-To: <20171012203832.ui52j7cdrztc6vhs@sigill.intra.peff.net>
+References: <CAH8yC8mvG3bSpgshHay7B0SSyAafWLrPTtVZRuq2cShn9xQ9JA@mail.gmail.com>
+ <20171012201023.wrfbs7p7lups5glz@sigill.intra.peff.net> <CAH8yC8nHpdA+fX3pcaLRzEYwTCmoxF3NKSh6SUkORZuEvg0JGA@mail.gmail.com>
+ <20171012203832.ui52j7cdrztc6vhs@sigill.intra.peff.net>
+From:   Jeffrey Walton <noloader@gmail.com>
+Date:   Thu, 12 Oct 2017 17:00:33 -0400
+Message-ID: <CAH8yC8kSpON5UP=pfsGXQ9JhhZOHVPetFHbr0BqBPnoYzj4Hog@mail.gmail.com>
+Subject: Re: undefined reference to `pcre_jit_exec'
+To:     Jeff King <peff@peff.net>
+Cc:     Git List <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On 10/11/2017 10:55 PM, Junio C Hamano wrote:
-> Jameson Miller <jameson.miller81@gmail.com> writes:
+On Thu, Oct 12, 2017 at 4:38 PM, Jeff King <peff@peff.net> wrote:
+> On Thu, Oct 12, 2017 at 04:34:38PM -0400, Jeffrey Walton wrote:
 >
->> Signed-off-by: Jameson Miller <jamill@microsoft.com>
->> ---
->>   Documentation/git-status.txt                      | 21 +++++++++++++++++-
->>   Documentation/technical/api-directory-listing.txt | 27 +++++++++++++++++++----
->>   2 files changed, 43 insertions(+), 5 deletions(-)
+>> > It looks like autoconf turns on USE_LIBPCRE1, but isn't smart enough t=
+o
+>> > test NO_LIBPCRE1_JIT.
 >>
->> diff --git a/Documentation/git-status.txt b/Documentation/git-status.txt
->> index 9f3a78a36c..fc282e0a92 100644
->> --- a/Documentation/git-status.txt
->> +++ b/Documentation/git-status.txt
->> @@ -97,8 +97,27 @@ configuration variable documented in linkgit:git-config[1].
->>   	(and suppresses the output of submodule summaries when the config option
->>   	`status.submoduleSummary` is set).
->>   
->> ---ignored::
->> +--ignored[=<mode>]::
->>   	Show ignored files as well.
->> ++
->> +The mode parameter is used to specify the handling of ignored files.
->> +It is optional: it defaults to 'traditional'.
->> ++
->> +The possible options are:
->> ++
->> +	- 'traditional' - Shows ignored files and directories, unless
->> +			  --untracked-files=all is specifed, in which case
->> +			  individual files in ignored directories are
->> +			  displayed.
->> +	- 'no'	        - Show no ignored files.
->> +	- 'matching'    - Shows ignored files and directories matching an
->> +			  ignore pattern.
->> ++
->> +When 'matching' mode is specified, paths that explicity match an
->> +ignored pattern are shown. If a directory matches an ignore pattern,
->> +then it is shown, but not paths contained in the ignored directory. If
->> +a directory does not match an ignore pattern, but all contents are
->> +ignored, then the directory is not shown, but all contents are shown.
-> Well explained.
+>> If Git wants Jit, then I am inclined to configure PCRE to provide it.
 >
->> diff --git a/Documentation/technical/api-directory-listing.txt b/Documentation/technical/api-directory-listing.txt
->> index 6c77b4920c..7fae00f44f 100644
->> --- a/Documentation/technical/api-directory-listing.txt
->> +++ b/Documentation/technical/api-directory-listing.txt
->> @@ -22,16 +22,20 @@ The notable options are:
->>   
->>   `flags`::
->>   
->> -	A bit-field of options (the `*IGNORED*` flags are mutually exclusive):
->> +	A bit-field of options:
->>   
->>   `DIR_SHOW_IGNORED`:::
->>   
->> -	Return just ignored files in `entries[]`, not untracked files.
->> +	Return just ignored files in `entries[]`, not untracked
->> +	files. This flag is mutually exclusive with
->> +	`DIR_SHOW_IGNORED_TOO`.
->>   
->>   `DIR_SHOW_IGNORED_TOO`:::
->>   
->> -	Similar to `DIR_SHOW_IGNORED`, but return ignored files in `ignored[]`
->> -	in addition to untracked files in `entries[]`.
->> +	Similar to `DIR_SHOW_IGNORED`, but return ignored files in
->> +	`ignored[]` in addition to untracked files in
->> +	`entries[]`. This flag is mutually exclusive with
->> +	`DIR_SHOW_IGNORED`.
->>   
->>   `DIR_KEEP_UNTRACKED_CONTENTS`:::
->>   
->> @@ -39,6 +43,21 @@ The notable options are:
->>   	untracked contents of untracked directories are also returned in
->>   	`entries[]`.
->>   
->> +`DIR_SHOW_IGNORED_TOO_MODE_MATCHING`:::
->> +
->> +	Only has meaning if `DIR_SHOW_IGNORED_TOO` is also set; if
->> +	this is set, returns ignored files and directories that match
->> +	an exclude pattern. If a directory matches an exclude pattern,
->> +	then the directory is returned and the contained paths are
->> +	not. A directory that does not match an exclude pattern will
->> +	not be returned even if all of its contents are ignored. In
->> +	this case, the contents are returned as individual entries.
->> ++
->> +If this is set, files and directories that explicity match an ignore
->> +pattern are reported. Implicity ignored directories (directories that
->> +do not match an ignore pattern, but whose contents are all ignored)
->> +are not reported, instead all of the contents are reported.
-> Makes me wonder if DIR_SHOW_IGNORED* should be splt out into a short
-> enum.  We have:
+> It does make things faster. OTOH, we lived for many years without it, so
+> certainly it's not the end of the world to build without it.
 >
->   - Do not show ignored ones (0)
+> There are some numbers in the commit message of fbaceaac47 (grep: add
+> support for the PCRE v1 JIT API, 2017-05-25).
 >
->   - Collect ignored ones (DIR_SHOW_IGNORED)
+>> A quick question if you happen to know... Does PCRE Jit cause a loss
+>> of NX-stacks? If it causes a loss of NX-stacks, then I think I prefer
+>> to disable it.
 >
->   - Collect ignored and untracked ones separately (DIR_SHOW_IGNORED_TOO)
->
->   - Collect ignored and duntracked ones separately, but limit them to
->     those mach exclude patterns explicitly (DIR_SHOW_IGNORED_TOO|...MODE_MATCHING)
->
-> so we need two bits to fit a 4-possiblity enum.
->
-> Then we do not have to worry about saying quirky things like A and B
-> are incompatible, and C makes sense only when B is set, etc.
-I could see a potential for other values for the "show ignored
-mode" flags - for example: "NORMAL", "MATCHING", "ALL"... Instead
-of making more change at this point in time, how would you feel
-about waiting until the next change in this area.
+> I don't know. =C3=86var (cc'd) might.
 
-If you would prefer for me to change these enums now, I can do
-that.
+Thanks. Building PCRE with Jit enabled results in:
 
->
->>   `DIR_COLLECT_IGNORED`:::
->>   
->>   	Special mode for git-add. Return ignored files in `ignored[]` and
+$ readelf -l /usr/local/libexec/git-core/git-credential-re| grep -i -A1 sta=
+ck
+  GNU_STACK      0x0000000000000000 0x0000000000000000 0x0000000000000000
+                 0x0000000000000000 0x0000000000000000  RW     10
 
+So it looks like the NX-stacks were not lost.
+
+Thanks again.
+
+Jeff
