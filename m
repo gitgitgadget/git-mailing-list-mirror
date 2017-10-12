@@ -6,106 +6,92 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3A02B1FF32
-	for <e@80x24.org>; Thu, 12 Oct 2017 02:10:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4110F1FF32
+	for <e@80x24.org>; Thu, 12 Oct 2017 02:33:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752620AbdJLCKr (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Oct 2017 22:10:47 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64542 "EHLO
+        id S1752440AbdJLCdh (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Oct 2017 22:33:37 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57693 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752123AbdJLCKq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Oct 2017 22:10:46 -0400
+        with ESMTP id S1752120AbdJLCdg (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Oct 2017 22:33:36 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 28C9198B42;
-        Wed, 11 Oct 2017 22:10:41 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5448EB673A;
+        Wed, 11 Oct 2017 22:33:36 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:date:message-id:in-reply-to:references; s=sasl; bh=NKcP
-        HO1Ad4BRA/yheayg/1KSths=; b=Up6gY4nVUvZLQ1en8FIuPERfELMgVMQ6zrnt
-        Qlgz6Cvdin40Hi/QCW6sFUrLbLXIzb0ig9RvZtx8v3nyyvC6bMPAVX3ibADHMi3v
-        u0Xa2ktThmCHIhDbTUWR0WzsDZu30RWjJjReMycnRcHWimKJ0VbVDex1Qeg/bXbC
-        ANm1lJI=
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=RldJrpvxB7MXL9FVO9zzwimOcDA=; b=o1AO+7
+        WUvUw5/m+yeGsTmq8Kie9w9FqwHmSxIZGY9Y7+TUQA5z9upnPMvLC7xpqYWl/DAG
+        TNZi423YohzUwxYS1BcVsp7vGDFXMs8kRqM6W1wd9j4qK+acnoh8UPX80c0BdieL
+        FVpqzRUHl+foml14ozyUzcixG5gdKIjkhXpwo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
-        hYcqa5+5+c1Op4E/6jvoyTkkRbnM2JwmrLK0TFR2vDR30Awvv95QjLoe+bLlQKwe
-        iEyT4/rFov06kEn5phnKMLU97tVHetIc/XDdcgFpE3XSn0lxkiZE96seEg4Vk0xw
-        mwJPjyzGN68Mz8lbh3jTxuuiwTw3CDfRlYN0xT/LELo=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1FFBB98B41;
-        Wed, 11 Oct 2017 22:10:41 -0400 (EDT)
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ssw5MQhsuF/XyAijJ/bAiw6JRT+LSwfU
+        AwYrvx48e6x+TeBOb9q9qFOAtbs+uwIuABD9Fe4fPT6hko+5CX6LL8Fg8P8/QJ6J
+        mFe6fE4uV0StOQA/V1/9p1hpnFWp9S5hwGgFQNc7WJu5hE0//i49W6F0eaL4HOxp
+        NN2U/gbwcqY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4B8D6B6739;
+        Wed, 11 Oct 2017 22:33:36 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8031298A6C;
-        Wed, 11 Oct 2017 22:10:10 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AFD85B6737;
+        Wed, 11 Oct 2017 22:33:35 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>
-Subject: [PATCH 1/2] color: downgrade "always" to "auto" only for on-disk configuration
-Date:   Thu, 12 Oct 2017 11:10:06 +0900
-Message-Id: <20171012021007.7441-2-gitster@pobox.com>
-X-Mailer: git-send-email 2.15.0-rc1-151-g44fe2f342f
-In-Reply-To: <20171012021007.7441-1-gitster@pobox.com>
-References: <xmqqr2uao2vy.fsf@gitster.mtv.corp.google.com>
- <20171012021007.7441-1-gitster@pobox.com>
-X-Pobox-Relay-ID: 79B652B6-AEF2-11E7-92C7-575F0C78B957-77302942!pb-smtp2.pobox.com
+To:     Jameson Miller <jameson.miller81@gmail.com>
+Cc:     bmwill@google.com, git@vger.kernel.org, jamill@microsoft.com,
+        peff@peff.net, sbeller@google.com
+Subject: Re: [PATCH v2 0/5] Teach Status options around showing ignored files
+References: <20171005205443.206900-1-jameson.miller81@gmail.com>
+        <20171011133504.15049-1-jamill@microsoft.com>
+Date:   Thu, 12 Oct 2017 11:33:34 +0900
+In-Reply-To: <20171011133504.15049-1-jamill@microsoft.com> (Jameson Miller's
+        message of "Wed, 11 Oct 2017 09:34:59 -0400")
+Message-ID: <xmqq60bl2iyp.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: BF4FD880-AEF5-11E7-9DCE-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff King <peff@peff.net>
+Jameson Miller <jameson.miller81@gmail.com> writes:
 
-An earlier patch downgraded "always" that comes via the ui.color
-configuration variable to "auto", in order to work around an
-unfortunate regression to "git add -i".
+> Changes in v2:
+>
+> Addressed review comments from the original series:
+>
+> * Made fixes / simplifications suggested for documentation
+>
+> * Removed test_tick from test scripts
+>
+> * Merged 2 commits (as suggested)
+>
+> Jameson Miller (5):
+>   Teach status options around showing ignored files
+>   Update documentation for new directory and status logic
+>   Add tests for git status `--ignored=matching`
+>   Expand support for ignored arguments on status
+>   Add tests around status handling of ignored arguments
 
-That "fix" however regressed other third-party tools that depend on
-"git -c color.ui=always cmd" as the way to defeat any end-user
-configuration and force coloured output from git subcommand, even
-when the output does not go to a terminal.
+Please make sure these titles mix well when they appear together
+with changes from other people that are completely unrelated to
+them.  Keep in mind that your "git status" is *not* the most
+important thing in the world (of course, it is no less important
+than others, either).  Perhaps
 
-It is a bit ugly to treat "-c color.ui=always" from the command line
-differently from a definition that comes from on-disk configuration
-files, but it is a moral equivalent of "--color=always" option given
-to the subcommand from the command line, i.e. a signal that tells us
-that the script writer knows what s/he is doing.  So let's take that
-route to unbreak this case while defeating a (now declared to be)
-misguided color.ui that is set to always in the configuration file.
+    status: add new options to show ignored files differently
+    status: document logic to show new directory
+    status: test --ignored=matching
 
-NEEDS-SIGN-OFF-BY: Jeff King <peff@peff.net>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- color.c | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+etc.  Rules of thumb:
 
-diff --git a/color.c b/color.c
-index 17e2713f96..5b06c76bdc 100644
---- a/color.c
-+++ b/color.c
-@@ -307,8 +307,21 @@ int git_config_colorbool(const char *var, const char *value)
- 	if (value) {
- 		if (!strcasecmp(value, "never"))
- 			return 0;
--		if (!strcasecmp(value, "always"))
--			return var ? GIT_COLOR_AUTO : 1;
-+		if (!strcasecmp(value, "always")) {
-+			/*
-+			 * Command-line options always respect "always".
-+			 * Likewise for "-c" config on the command-line.
-+			 */
-+			if (!var ||
-+			    current_config_scope() == CONFIG_SCOPE_CMDLINE)
-+				return 1;
-+
-+			/*
-+			 * Otherwise, we're looking at on-disk config;
-+			 * downgrade to auto.
-+			 */
-+			return GIT_COLOR_AUTO;
-+		}
- 		if (!strcasecmp(value, "auto"))
- 			return GIT_COLOR_AUTO;
- 	}
--- 
-2.15.0-rc1-151-g44fe2f342f
+ (1) choose "<area>: " prefix appropriately
+ (2) keep them short and to the point
+ (3) word that follow "<area>: " prefix is not capitalized
+ (4) no need for full-stop at the end of the title
+
 
