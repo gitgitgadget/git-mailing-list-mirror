@@ -2,104 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD,UNPARSEABLE_RELAY shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E741F20437
-	for <e@80x24.org>; Fri, 13 Oct 2017 17:57:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5214A20437
+	for <e@80x24.org>; Fri, 13 Oct 2017 19:49:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752936AbdJMR5A (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Oct 2017 13:57:00 -0400
-Received: from cloud.peff.net ([104.130.231.41]:52426 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1752895AbdJMR46 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Oct 2017 13:56:58 -0400
-Received: (qmail 395 invoked by uid 109); 13 Oct 2017 17:56:58 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 13 Oct 2017 17:56:58 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27463 invoked by uid 111); 13 Oct 2017 17:57:01 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Fri, 13 Oct 2017 13:57:01 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 13 Oct 2017 13:56:56 -0400
-Date:   Fri, 13 Oct 2017 13:56:56 -0400
-From:   Jeff King <peff@peff.net>
-To:     Anthony Sottile <asottile@umich.edu>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] diff: alias -q to --quiet
-Message-ID: <20171013175656.qitarz6lvrppyb5f@sigill.intra.peff.net>
-References: <20171013164415.6632-1-asottile@umich.edu>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20171013164415.6632-1-asottile@umich.edu>
+        id S1753078AbdJMTtc (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Oct 2017 15:49:32 -0400
+Received: from smtp.mail.umich.edu ([141.211.125.12]:52258 "EHLO
+        maleficent.mr.itd.umich.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751632AbdJMTtb (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 13 Oct 2017 15:49:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=umich.edu;
+        s=relay-2016-05-12; t=1507924165;
+        bh=mC6/FAqRMcjyjry7ZQXVJlBy/DUUeTnelvPoqfDpi4k=;
+        h=From:To:Cc:Subject:Date;
+        b=BfiIsswFdftd6KQZKINJFYq/8qAFSU242KpAwhYq855GNnHE84o9YAfdZm3/hkixg
+         kDUq+aoMWmUqFs2+Dgd70B38HiUjklua2D/D5FyPqT1qxeOwG1egMwvtAzvZpy8cpd
+         TVhKq2aful+DOFubBtb848p14f7boPc8kDq2c2/8QTgCWgNQ+7z39iDx3+ICXhjF2W
+         o9Gdo6Hp8DWiGmrVzOl03uOQ591wBD6WtBRvT7z3FEKuafGu9tfvyqp+t7K0++vPh1
+         8n8MhvGyu2IPKEe+Ca9dHDKXfARpOdNDRhW/f22jZWN3LSv4bpfjJr2F9VCcqnF8gc
+         Ut9fJwSUPqfpQ==
+Authentication-Results: maleficent.mr.itd.umich.edu;
+        iprev=permerror policy.iprev=4.14.106.2 (unknown);
+        auth=pass smtp.auth=asottile
+Received: FROM asottile-VirtualBox.lyft-corp.net (unknown [4.14.106.2])
+        By maleficent.mr.itd.umich.edu ID 59E118C5.75DA5.1901;
+        Authuser asottile;
+        Fri, 13 Oct 2017 15:49:25 -0400
+From:   Anthony Sottile <asottile@umich.edu>
+To:     git@vger.kernel.org
+Cc:     Anthony Sottile <asottile@umich.edu>
+Subject: [PATCH v2 1/2] diff: alias -q to --quiet
+Date:   Fri, 13 Oct 2017 12:49:15 -0700
+Message-Id: <20171013194916.4617-1-asottile@umich.edu>
+X-Mailer: git-send-email 2.15.0.rc1.2.ge430ed6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 13, 2017 at 09:44:15AM -0700, Anthony Sottile wrote:
+Previously, `-q` was silently ignored:
 
-> Previously, `-q` was silently ignored:
+Before:
 
-I'm not sure if is totally ignored. Normally if we have an unknown
-options we'd complain:
+$ git diff -q -- Documentation/; echo $?
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index a88c767..aa6e724 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -587,6 +587,7 @@ ifndef::git-log[]
+        That is, it exits with 1 if there were differences and
+        0 means no differences.
 
-  $ git diff -x
-  error: invalid option: -x
++-q::
+ --quiet::
+        Disable all output of the program. Implies `--exit-code`.
+ endif::git-log[]
+0
+$
 
-but we don't with "-q". Why?
+After:
+$ ./git diff -q -- Documentation/; echo $?
+1
+$
 
-In builtin/diff.c:471, we can see:
+Signed-off-by: Anthony Sottile <asottile@umich.edu>
+---
+ Documentation/diff-options.txt | 1 +
+ diff.c                         | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-  else if (!strcmp(argv[1], "-q"))
-          options |= DIFF_SILENT_ON_REMOVED;
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index a88c767..aa6e724 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -587,6 +587,7 @@ ifndef::git-log[]
+ 	That is, it exits with 1 if there were differences and
+ 	0 means no differences.
+ 
++-q::
+ --quiet::
+ 	Disable all output of the program. Implies `--exit-code`.
+ endif::git-log[]
+diff --git a/diff.c b/diff.c
+index 69f0357..13dfc3e 100644
+--- a/diff.c
++++ b/diff.c
+@@ -4751,7 +4751,7 @@ int diff_opt_parse(struct diff_options *options,
+ 	}
+ 	else if (!strcmp(arg, "--exit-code"))
+ 		DIFF_OPT_SET(options, EXIT_WITH_STATUS);
+-	else if (!strcmp(arg, "--quiet"))
++	else if (!strcmp(arg, "-q") || !strcmp(arg, "--quiet"))
+ 		DIFF_OPT_SET(options, QUICK);
+ 	else if (!strcmp(arg, "--ext-diff"))
+ 		DIFF_OPT_SET(options, ALLOW_EXTERNAL);
+-- 
+2.7.4
 
-So it _does_ do something, just not what you expected.
-
-But wait, that's not the whole story. We convert "-q" into
-SILENT_ON_REMOVED in git-diff-files and in git-diff (when we're acting
-like diff-files). But nobody ever seems to check it!
-
-Running "git log -p -SSILENT_ON_REMOVED" turns up two interesting
-commits:
-
-  - 95a7c546b0 (diff: deprecate -q option to diff-files, 2013-07-17)
-
-  - c48f6816f0 (diff: remove "diff-files -q" in a version of Git in a
-    distant future, 2013-07-18).
-
-So we dropped "-q" a few years ago and added a deprecation notice. "git
-tag --contains 95a7c546b0" tells us that happened in v1.8.5, which
-shipped in Nov 2013.
-
-And then in v2.0.0 (May 2014) we tried to drop "-q" completely. Looking
-over c48f6816f0, I _think_ it's a mistake that "-q" became a silent noop
-there. That commit should have ripped out the remaining bits that set
-the SILENT_ON_REMOVED flag, and "-q" would have become an error.
-
-So there are two separate questions/tasks:
-
-  1. Should we remove the special handling of "-q" leftover from this
-     deprecation? I think the answer is yes.
-
-  2. Should we teach the diff machinery as a whole to treat "-q" as a
-     synonym for "--quiet".
-
-     Probably yes, but it's less clear to me that this won't have funny
-     interactions. Are there other commands which use the diff-options
-     parser via setup_revisions(), but expect "-q" to be left in the
-     output so that they can handle it themselves?
-
-     It looks like git-log does so, but it pulls the "-q" out before
-     handing the remainder to setup_revisions(). And anyway, it just
-     converts the option into a quiet diff (though it does in a way
-     that's different than the rest of the diff code -- that might bear
-     investigating on its own).
-
-     Grepping for 'q' and OPT__QUIET, I don't see any others, but I
-     didn't spend very much time digging.
-
--Peff
