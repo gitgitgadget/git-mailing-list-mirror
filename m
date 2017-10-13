@@ -2,100 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9D94B20372
-	for <e@80x24.org>; Fri, 13 Oct 2017 01:48:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6A53320372
+	for <e@80x24.org>; Fri, 13 Oct 2017 02:58:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756669AbdJMBsI (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Oct 2017 21:48:08 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57524 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753615AbdJMBsI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Oct 2017 21:48:08 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9F22EB0471;
-        Thu, 12 Oct 2017 21:48:07 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=trgq1qK0joUzgJdnvZISz/IvAQA=; b=xh/zxw
-        D40j/wm1qdxi4A9iGWoQkNO6klM/dVLmDNkGCSbX6LVZ0bwRVj1pgnAg/rwFcFqs
-        vuhh/u6rFIuckBuMBIOjha2WyS5cCItft7SoMJn6WfjfPOoTx/LhCviJw70kzYyd
-        Etj8+fal+rRSEm50RO8/R7hSoxLWqEis6F1CY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=f89MebSw9WFudxt2P5+1koIGV47y8M5s
-        lXkTjML7rk2X+fnFeE6pRZodDRLLKPcTKuS5GtA4tDJ1jB3OTHik/xsAQWtTdi0k
-        m8aHG5HKHtYCB9UoYAOcUV7hEWlZ2VEQWErm8sSfDL7TldIUFGzuXnxV3onyZ4RX
-        f7GuxpUzWGE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9662DB0470;
-        Thu, 12 Oct 2017 21:48:07 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0C62EB046F;
-        Thu, 12 Oct 2017 21:48:06 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "W. Trevor King" <wking@tremily.us>
-Cc:     Git <git@vger.kernel.org>,
-        =?utf-8?Q?=C5=81ukasz?= Gryglicki <lukaszgryglicki@o2.pl>
-Subject: Re: [PATCH v3] pull: pass --signoff/--no-signoff to "git merge"
-References: <51d67d6d707182d4973d9961ab29358f26c4988a.1507796638.git.wking@tremily.us>
-        <129274f0cc768b7a309f41315580fe1013636516.1507832722.git.wking@tremily.us>
-Date:   Fri, 13 Oct 2017 10:48:05 +0900
-In-Reply-To: <129274f0cc768b7a309f41315580fe1013636516.1507832722.git.wking@tremily.us>
-        (W. Trevor King's message of "Thu, 12 Oct 2017 11:35:42 -0700")
-Message-ID: <xmqqd15rx1gq.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1753377AbdJMC6O (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Oct 2017 22:58:14 -0400
+Received: from mail-qk0-f172.google.com ([209.85.220.172]:43582 "EHLO
+        mail-qk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753291AbdJMC6O (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Oct 2017 22:58:14 -0400
+Received: by mail-qk0-f172.google.com with SMTP id w134so3488589qkb.0
+        for <git@vger.kernel.org>; Thu, 12 Oct 2017 19:58:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=W+3zjCrXUh6Qg3pVgnY3izm6vZ7zOuPKBop5CFJdyHI=;
+        b=JWf6XnI4oWQ9JrwKe43eiRKlnX92bfF6zOIpL3jlOOaYDuJOE8CdDIuDUPxcwv03ic
+         rc/7N8wbuV2grc3b792qwSt2vImji7t2izOUxVLb5Z2po9Efq/UXViU+eErURqdHQhOK
+         qo/QD+Yoj42KINy3lXCL2RX0wOfi4QV1pYz3QP4cpVSaz7HsTRNtZHWDmZoW3lTkTd7I
+         D8tEKY7TuggnAX8kUkQDD4bGu+KbYlo0ssh4pNVf4hsX8Ro/hdlLpJL2RckI7NWGfj+y
+         UWKFaad33DBPLCwEXvHAXxZasaIM1Bl5wf1F3/Y6lLmh6PerUYTN2e3haCyb2mv5d4TW
+         FuFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=W+3zjCrXUh6Qg3pVgnY3izm6vZ7zOuPKBop5CFJdyHI=;
+        b=ocdz+xg8Hj/AXdlVapjaBrpjJNA7AYuKh6ryXWQgBmB3vTCQs1CgUlsbXLWfQKCjM7
+         A5wyzvAUj/c53DFBhbuGakcZQk4d5/mymLkJPD05GQN9p8TZrOPamu3/bWvrY6y7gwVK
+         lo+ezlpRPSRuGwO5qbki0TpOBD6Vlt6oKAF95Qv4sSNNPBCH4juKOWftY5wiNupjDiSE
+         ZPwdoWikpjdtt68mJXgp2IGNINa8OG3uAD39k8u4mHP612bjHbqkMCVq0NXKom4BGSyj
+         vt1Ilm1T5PSNbpmBCoCU7SBTcPK8Y8I+qGTFuPa4E+jGOewacUgDjVRR/zu/Th3f0VdQ
+         14oA==
+X-Gm-Message-State: AMCzsaVQlnOHGpLcJQLAG/KkFJvefpa9by6MRl+nVh+e3VGVPd1QqSrU
+        Z+EcXU6QoPhOcMP41c3F6lPjW9NQhGz+gqGvZ/s=
+X-Google-Smtp-Source: AOwi7QACs9d5FA/jB3/PQzsQa2UCYOug+dIqpsgmgDi/5mihJi4Mn2L/aq3VgJ8CE8KUk6S0RJ19YSVP3XU6jpL8nr8=
+X-Received: by 10.55.180.132 with SMTP id d126mr3009qkf.268.1507863493329;
+ Thu, 12 Oct 2017 19:58:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8F4629F0-AFB8-11E7-9E82-575F0C78B957-77302942!pb-smtp2.pobox.com
+Received: by 10.237.32.226 with HTTP; Thu, 12 Oct 2017 19:58:12 -0700 (PDT)
+From:   =?UTF-8?B?5bCP5bed5oGt5Y+y?= <aiueogawa217@gmail.com>
+Date:   Fri, 13 Oct 2017 11:58:12 +0900
+Message-ID: <CAC2JkrLm3QCNW1t-Yju-sA=9Tbv8hH1AHZUEDux8kSG9mkG5wg@mail.gmail.com>
+Subject: Can I remove multiple stashed states at a time?
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"W. Trevor King" <wking@tremily.us> writes:
+I want to remove multiple stashed states at a time.
 
-> diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
-> index 4df6431c34..0ada8c856b 100644
-> --- a/Documentation/git-merge.txt
-> +++ b/Documentation/git-merge.txt
-> @@ -64,14 +64,6 @@ OPTIONS
->  -------
->  include::merge-options.txt[]
->  
-> ---signoff::
-> -	Add Signed-off-by line by the committer at the end of the commit
-> -	log message.  The meaning of a signoff depends on the project,
-> -	but it typically certifies that committer has
-> -	the rights to submit this work under the same license and
-> -	agrees to a Developer Certificate of Origin
-> -	(see http://developercertificate.org/ for more information).
-> -
->  -S[<keyid>]::
->  --gpg-sign[=<keyid>]::
->  	GPG-sign the resulting merge commit. The `keyid` argument is
-> diff --git a/Documentation/merge-options.txt b/Documentation/merge-options.txt
-> index 4e32304301..f394622d65 100644
-> --- a/Documentation/merge-options.txt
-> +++ b/Documentation/merge-options.txt
-> @@ -51,6 +51,16 @@ set to `no` at the beginning of them.
->  With --no-log do not list one-line descriptions from the
->  actual commits being merged.
->  
-> +--signoff::
-> +--no-signoff::
-> +	Add Signed-off-by line by the committer at the end of the commit
-> +	log message.  The meaning of a signoff depends on the project,
-> +	but it typically certifies that committer has
-> +	the rights to submit this work under the same license and
-> +	agrees to a Developer Certificate of Origin
-> +	(see http://developercertificate.org/ for more information).
-> ++
-> +With --no-signoff do not add a Signed-off-by line.
+But "git stash drop <stash>" removes only one stashed state at a time
+and "git stash clear" remove all.
 
-Makes sense.  Thanks, will queue.
+Can I do that?
