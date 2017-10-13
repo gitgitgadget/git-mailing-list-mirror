@@ -2,88 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6BC4120372
-	for <e@80x24.org>; Fri, 13 Oct 2017 01:47:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9D94B20372
+	for <e@80x24.org>; Fri, 13 Oct 2017 01:48:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753575AbdJMBrY (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Oct 2017 21:47:24 -0400
-Received: from cloud.peff.net ([104.130.231.41]:51736 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1753327AbdJMBrX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Oct 2017 21:47:23 -0400
-Received: (qmail 15718 invoked by uid 109); 13 Oct 2017 01:47:23 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 13 Oct 2017 01:47:23 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 22458 invoked by uid 111); 13 Oct 2017 01:47:25 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Thu, 12 Oct 2017 21:47:25 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 12 Oct 2017 21:47:21 -0400
-Date:   Thu, 12 Oct 2017 21:47:21 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/2] color: downgrade "always" to "auto" only for on-disk
- configuration
-Message-ID: <20171013014721.d4vesqv4v5j7tmk2@sigill.intra.peff.net>
-References: <xmqqr2uao2vy.fsf@gitster.mtv.corp.google.com>
- <20171012021007.7441-1-gitster@pobox.com>
- <20171012021007.7441-2-gitster@pobox.com>
- <20171012123153.i265nun6pklw7kjg@sigill.intra.peff.net>
- <xmqqinfjykm2.fsf@gitster.mtv.corp.google.com>
+        id S1756669AbdJMBsI (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Oct 2017 21:48:08 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57524 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1753615AbdJMBsI (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Oct 2017 21:48:08 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9F22EB0471;
+        Thu, 12 Oct 2017 21:48:07 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=trgq1qK0joUzgJdnvZISz/IvAQA=; b=xh/zxw
+        D40j/wm1qdxi4A9iGWoQkNO6klM/dVLmDNkGCSbX6LVZ0bwRVj1pgnAg/rwFcFqs
+        vuhh/u6rFIuckBuMBIOjha2WyS5cCItft7SoMJn6WfjfPOoTx/LhCviJw70kzYyd
+        Etj8+fal+rRSEm50RO8/R7hSoxLWqEis6F1CY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=f89MebSw9WFudxt2P5+1koIGV47y8M5s
+        lXkTjML7rk2X+fnFeE6pRZodDRLLKPcTKuS5GtA4tDJ1jB3OTHik/xsAQWtTdi0k
+        m8aHG5HKHtYCB9UoYAOcUV7hEWlZ2VEQWErm8sSfDL7TldIUFGzuXnxV3onyZ4RX
+        f7GuxpUzWGE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9662DB0470;
+        Thu, 12 Oct 2017 21:48:07 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0C62EB046F;
+        Thu, 12 Oct 2017 21:48:06 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "W. Trevor King" <wking@tremily.us>
+Cc:     Git <git@vger.kernel.org>,
+        =?utf-8?Q?=C5=81ukasz?= Gryglicki <lukaszgryglicki@o2.pl>
+Subject: Re: [PATCH v3] pull: pass --signoff/--no-signoff to "git merge"
+References: <51d67d6d707182d4973d9961ab29358f26c4988a.1507796638.git.wking@tremily.us>
+        <129274f0cc768b7a309f41315580fe1013636516.1507832722.git.wking@tremily.us>
+Date:   Fri, 13 Oct 2017 10:48:05 +0900
+In-Reply-To: <129274f0cc768b7a309f41315580fe1013636516.1507832722.git.wking@tremily.us>
+        (W. Trevor King's message of "Thu, 12 Oct 2017 11:35:42 -0700")
+Message-ID: <xmqqd15rx1gq.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqinfjykm2.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 8F4629F0-AFB8-11E7-9E82-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 13, 2017 at 09:09:09AM +0900, Junio C Hamano wrote:
+"W. Trevor King" <wking@tremily.us> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > ... Also
-> > as an aside, I think this patch means that:
-> >
-> >   git -c color.ui=always add -p
-> >
-> > is broken (as would a hypothetical "git --default-color=always add -p").
-> > That's sufficiently insane that I'm not sure we should care about it.
-> 
-> Do you mean that "'-c color.ui=always' from the command line is
-> passed down to the invocations of 'git' the 'add' command makes, and
-> would break output from 'diff-index' that 'add -i' wants to parse"?
+> diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
+> index 4df6431c34..0ada8c856b 100644
+> --- a/Documentation/git-merge.txt
+> +++ b/Documentation/git-merge.txt
+> @@ -64,14 +64,6 @@ OPTIONS
+>  -------
+>  include::merge-options.txt[]
+>  
+> ---signoff::
+> -	Add Signed-off-by line by the committer at the end of the commit
+> -	log message.  The meaning of a signoff depends on the project,
+> -	but it typically certifies that committer has
+> -	the rights to submit this work under the same license and
+> -	agrees to a Developer Certificate of Origin
+> -	(see http://developercertificate.org/ for more information).
+> -
+>  -S[<keyid>]::
+>  --gpg-sign[=<keyid>]::
+>  	GPG-sign the resulting merge commit. The `keyid` argument is
+> diff --git a/Documentation/merge-options.txt b/Documentation/merge-options.txt
+> index 4e32304301..f394622d65 100644
+> --- a/Documentation/merge-options.txt
+> +++ b/Documentation/merge-options.txt
+> @@ -51,6 +51,16 @@ set to `no` at the beginning of them.
+>  With --no-log do not list one-line descriptions from the
+>  actual commits being merged.
+>  
+> +--signoff::
+> +--no-signoff::
+> +	Add Signed-off-by line by the committer at the end of the commit
+> +	log message.  The meaning of a signoff depends on the project,
+> +	but it typically certifies that committer has
+> +	the rights to submit this work under the same license and
+> +	agrees to a Developer Certificate of Origin
+> +	(see http://developercertificate.org/ for more information).
+> ++
+> +With --no-signoff do not add a Signed-off-by line.
 
-Yes, exactly.
-
-> With the breakage that motivated "downgrade only for on-disk" change
-> in mind, I do think that is the right behaviour.  Those third-party
-> scripts we broke knew how '-c color.ui=always' works and depended on
-> it, and I consider that the command line configuration getting
-> passed around as an integral part of 'how it works'.  "Fixing" it
-> will break them again.
-
-Yeah, agreed. We cannot know what the script is expecting, so without
-that we cannot win, short of turning off color.ui entirely for plumbing.
-
-> Let's take it as a signal that tells us that the script writers know
-> what they are doing and leave it as a longish rope they can play with.
-
-OK. For the record, I'm not against scrapping this whole thing and
-trying to rollback to your "plumbing never looks at color.ui" proposal.
-It's quite late in the -rc cycle to do that, but there's nothing that
-says we can't bump the release date if that's what we need to do to get
-it right.
-
-If we ship v2.15 with the "color.ui=always really means auto", I don't
-think we'd want to undo that. So if we ship with what's in -rc1 (plus
-this new hack on top) I think that would be fairly final.
-
--Peff
+Makes sense.  Thanks, will queue.
