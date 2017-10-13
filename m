@@ -6,98 +6,98 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 89C2A20372
-	for <e@80x24.org>; Fri, 13 Oct 2017 00:37:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8CA3520372
+	for <e@80x24.org>; Fri, 13 Oct 2017 00:42:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755985AbdJMAhb (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Oct 2017 20:37:31 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50035 "EHLO
+        id S1753427AbdJMAmj (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Oct 2017 20:42:39 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54585 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753286AbdJMAha (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Oct 2017 20:37:30 -0400
+        with ESMTP id S1753278AbdJMAmi (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Oct 2017 20:42:38 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id F303FAF454;
-        Thu, 12 Oct 2017 20:37:29 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E8399A6A97;
+        Thu, 12 Oct 2017 20:42:37 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=GEEm9ifKe+oo5KF11LTHW84Hd/w=; b=AOJe8O
-        b2kSHXFQj+5gv2482whN+nWbq4jDg490K7Bp/nstBJyZ76oLfzhMam2hO97B6n1W
-        iS9/+VpcQNK2shmWngeiFSHnVUgmMflh0uuyh8jhaLaBc/nTmcsSIhsc4oa7HKpm
-        kXKFXqUsW1BQMoxlUwRjHEr9Q3O4j9qiZIzDg=
+        :content-type; s=sasl; bh=qo5l0DJfr3yP3EKyk/GIf2GgkLE=; b=WfexM9
+        Yc1pGXyDoc9/q/RRUVI1muSMV28U14UrT4NSZBPqVemDzy7Q0V+ltSGVRjqNI+Pz
+        MCfq+FLpe7hOsR5BBJxxFoJg9tBAH7eNEGT3eyrAtdcg6YUM+4Opj6TdUb4Yn0dH
+        tE1vJoZXltMRUjRDKh/NWqy0Spi3r4a3XyLII=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=FPq5nmgujy2Gw/c7TSueT7dA9yzpxeCU
-        ZIUoX7cXu5o/B8JEiP2VNfIYVBP31lGj7qTX7QpXot2GYGdsNOoaH2Uutm4ubazf
-        fUrpmX9DclPqick1TOg+93zcOGReJfBZ6Gbpz3eCgxcBB3ub7cGDAccHpZJmkihK
-        BV0Sbbb5Rm0=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id EAC7EAF452;
-        Thu, 12 Oct 2017 20:37:29 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=DV6NTJ/hz78kdf0SPXUQuuuOazsO7Thk
+        +UvX6Vaxli05sr/9D9t9k4OOoAKK5IDAOtbk24NRK2SlxL0MbWPTtpEtQVtCNnyX
+        Rb8g/oOJZIbZC9RNWDhgamZYLz0xhUvx9WlGzMvrw2pFkz8V3ua+BSvI/dTPxjyy
+        gLVzrHb54y0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E001EA6A92;
+        Thu, 12 Oct 2017 20:42:37 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5A232AF451;
-        Thu, 12 Oct 2017 20:37:29 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 25C7DA6A91;
+        Thu, 12 Oct 2017 20:42:37 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Marius Paliga <marius.paliga@gmail.com>
-Cc:     Stefan Beller <sbeller@google.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>,
-        christian.couder@gmail.com, peff@peff.net,
-        thais.dinizbraz@gmail.com
-Subject: Re: Enhancement request: git-push: Allow (configurable) default push-option
-References: <CAK7vU=0ztEwMPsGO4Cd1A5JEnxmwkF57QPKjjvjD8rBUB79dRA@mail.gmail.com>
-        <CAGZ79kaBJnXW=rSiKuHpds79mXVL0Aoo+PBa0a5V-C_bop=Kbg@mail.gmail.com>
-        <CAK7vU=3whGsx4L4KACSC+XDWQEbUWuZZZqTsW2R=CbF8d7rkuQ@mail.gmail.com>
-        <CAK7vU=22W9mYdSnw_LP2uWYyKZuTzF0JgTVWCX+nMhUnLjQ_Cw@mail.gmail.com>
-        <xmqqh8v5ls8i.fsf@gitster.mtv.corp.google.com>
-        <CAK7vU=0wbGsFCXmwmCc-XX9K07UF_OZ7tFa4_GVb-H7fxakssg@mail.gmail.com>
-Date:   Fri, 13 Oct 2017 09:37:28 +0900
-In-Reply-To: <CAK7vU=0wbGsFCXmwmCc-XX9K07UF_OZ7tFa4_GVb-H7fxakssg@mail.gmail.com>
-        (Marius Paliga's message of "Thu, 12 Oct 2017 16:59:47 +0200")
-Message-ID: <xmqq1sm7yjav.fsf@gitster.mtv.corp.google.com>
+To:     Jameson Miller <jameson.miller81@gmail.com>
+Cc:     bmwill@google.com, git@vger.kernel.org, jamill@microsoft.com,
+        peff@peff.net, sbeller@google.com
+Subject: Re: [PATCH v2 2/5] Update documentation for new directory and status logic
+References: <20171005205443.206900-1-jameson.miller81@gmail.com>
+        <20171011133504.15049-1-jamill@microsoft.com>
+        <20171011133504.15049-3-jamill@microsoft.com>
+        <xmqqtvz513dm.fsf@gitster.mtv.corp.google.com>
+        <c71a2580-ade3-c8d0-d566-272bf3bb572b@gmail.com>
+Date:   Fri, 13 Oct 2017 09:42:36 +0900
+In-Reply-To: <c71a2580-ade3-c8d0-d566-272bf3bb572b@gmail.com> (Jameson
+        Miller's message of "Thu, 12 Oct 2017 16:54:28 -0400")
+Message-ID: <xmqqshenx4hv.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: B174B226-AFAE-11E7-846A-575F0C78B957-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 68E91B7C-AFAF-11E7-B15B-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Marius Paliga <marius.paliga@gmail.com> writes:
+Jameson Miller <jameson.miller81@gmail.com> writes:
 
-> Thank you for your coments and explanation.
+>>> +If this is set, files and directories that explicity match an ignore
+>>> +pattern are reported. Implicity ignored directories (directories that
+>>> +do not match an ignore pattern, but whose contents are all ignored)
+>>> +are not reported, instead all of the contents are reported.
+>> Makes me wonder if DIR_SHOW_IGNORED* should be splt out into a short
+>> enum.  We have:
+>>
+>>   - Do not show ignored ones (0)
+>>
+>>   - Collect ignored ones (DIR_SHOW_IGNORED)
+>>
+>>   - Collect ignored and untracked ones separately (DIR_SHOW_IGNORED_TOO)
+>>
+>>   - Collect ignored and duntracked ones separately, but limit them to
+>>     those mach exclude patterns explicitly (DIR_SHOW_IGNORED_TOO|...MODE_MATCHING)
+>>
+>> so we need two bits to fit a 4-possiblity enum.
+>>
+>> Then we do not have to worry about saying quirky things like A and B
+>> are incompatible, and C makes sense only when B is set, etc.
+> I could see a potential for other values for the "show ignored
+> mode" flags - for example: "NORMAL", "MATCHING", "ALL"... Instead
+> of making more change at this point in time, how would you feel
+> about waiting until the next change in this area.
 >
-> Just one thing:
->
->>  - After parse_options() returns to cmd_push(), see if push_options
->>    is empty.  If it is, you did not get any command line option, so
->>    override it with what you collected in the "from-config" string
->>    list.  Otherwise, do not even look at "from-config" string list.
->
-> The idea is that there are default push options (read from config) that are
-> always sent to the server and you can add (not overwrite) additional by
-> specifying "--push-option".
+> If you would prefer for me to change these enums now, I can do
+> that.
 
-I can imagine that sometimes giving a base from a configuration and
-then adding more for specific invocation may be useful.  
+"Makes me wonder" was just that.  I was made to wonder.  I did not
+have strong opinions either way.  You thought about the area of this
+code longer than I did, so I do not mind you picking the course of
+action that is best for the project, and if you think it is better
+to wait until we know more about the vocabulary we want to support
+before we restructure these flags, that is fine by me.
 
-But I do not think of any --command-line-option and config.variable
-pair whose configured value cannot be overriden by the command line
-option; we should strive to avoid making --push-option a special
-case that the users need to aware of, and more importantly, users
-other than you who expect the more usual "command line overrides"
-behaviour should get that.
+Thanks.
 
-Your "I wanted to accumulate, so I made so and made it impossible to
-override" won't fly as a justification.  The default should be
-"command line overrides", and if you need a way to allow command
-line to add without overiding, that should be added as an optional
-feature.
-
-	[alias]
-		mypush = push --push-option=foo --push-option=bar
-
-may give you a set of push-options that are always in effect (they
-are not even "by default") and cannot be overriden.
 
