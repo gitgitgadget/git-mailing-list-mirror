@@ -2,108 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD,UNPARSEABLE_RELAY shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E173A20437
-	for <e@80x24.org>; Fri, 13 Oct 2017 19:49:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4DB6920437
+	for <e@80x24.org>; Fri, 13 Oct 2017 21:12:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753344AbdJMTtd (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Oct 2017 15:49:33 -0400
-Received: from smtp.mail.umich.edu ([141.211.125.12]:52258 "EHLO
-        maleficent.mr.itd.umich.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752454AbdJMTtc (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 13 Oct 2017 15:49:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=umich.edu;
-        s=relay-2016-05-12; t=1507924169;
-        bh=nic441PQ2H4CKBE3kD23cn7Xp68oUM8c1ELMGi+dBWE=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=bq7IvdzOMvUQ/lzCveofuk61gI+8XfZEtuXhxQGL8oOfEWOStJApN5Hy2q4KFBGl7
-         JW/a5fLmUQ3MGAO5OQxTFq7z1IXalb/pY8VyUSUJwimq/q4tAm/qVlWCeDDPaU6s1T
-         vIYJAqd3yGWTNaFBp90f/t+ZZ13Lfr68nKJdfK+8e37A2lZBsWGo1bAlta88bHXQdh
-         gwfVh+XqhtPOy10M3DuGCRwl84ByXXIhOJf8b1Hlq3IxYkrdOrhBzqyv0nzXFRhjGE
-         oxGjw5bFfCLGvoE9PZb18C+zGpcfjyf50DcmAU42sOhicg17GZsUXVyBctF2PX28rH
-         2pf10Cx6rBrRA==
-Authentication-Results: maleficent.mr.itd.umich.edu;
-        iprev=permerror policy.iprev=4.14.106.2 (unknown);
-        auth=pass smtp.auth=asottile
-Received: FROM asottile-VirtualBox.lyft-corp.net (unknown [4.14.106.2])
-        By maleficent.mr.itd.umich.edu ID 59E118C8.C3D1A.1901;
-        Authuser asottile;
-        Fri, 13 Oct 2017 15:49:28 -0400
-From:   Anthony Sottile <asottile@umich.edu>
-To:     git@vger.kernel.org
-Cc:     Anthony Sottile <asottile@umich.edu>
-Subject: [PATCH v2 2/2] diff: finish removal of deprecated -q option
-Date:   Fri, 13 Oct 2017 12:49:16 -0700
-Message-Id: <20171013194916.4617-2-asottile@umich.edu>
-X-Mailer: git-send-email 2.15.0.rc1.2.ge430ed6
-In-Reply-To: <20171013194916.4617-1-asottile@umich.edu>
-References: <20171013194916.4617-1-asottile@umich.edu>
+        id S1752195AbdJMVM3 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Oct 2017 17:12:29 -0400
+Received: from mout.web.de ([217.72.192.78]:56484 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751509AbdJMVM3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Oct 2017 17:12:29 -0400
+Received: from [192.168.178.36] ([91.20.63.142]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MhDYL-1dpjGR3USf-00ML1u; Fri, 13
+ Oct 2017 23:12:22 +0200
+Subject: Re: [PATCH] sequencer.c: unify error messages
+To:     Ralf Thielow <ralf.thielow@gmail.com>, git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+References: <20171013175157.13634-1-ralf.thielow@gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <58336f0d-366c-6636-1e94-22afbafdfe4c@web.de>
+Date:   Fri, 13 Oct 2017 23:12:22 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
+MIME-Version: 1.0
+In-Reply-To: <20171013175157.13634-1-ralf.thielow@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:imh7YxGUeupZKTD9ALmrqqnq4KCTFLbQGx/4PjOKDPLvZ5cOrsr
+ CRQvKBf+C59Q6e2AbZIZILpY43JshwO3L7IQuHOv5bP4Gjxf+AOD/Z5VMG4dhfQcI4OTvkz
+ wMi3iu5peC+y9CoU9VkE9OCIpeegRCIcvCGUfvZDYGdY3jjr6TUontJJJPp5vlDUObn9CZu
+ SwypmelKCWaE+hLBttOxA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:l3Gvj7MCz84=:oQ+ecs5ewqZ3h2GDlHc4wz
+ hHU4Klf3f96/+xI2vb7kkTgZnzsnsJ9Q/sqiM/FKlFDC+rXA8lKd6ar0IR9pxyqLaGC1HMvGZ
+ vWpAOmoZJLtefDFV/JHpTlwvyZIH/i1OhTo+9+D/ENyYCtfsFY4ZF9L5MwRa6TZBGeCK89qFw
+ WQhDwCj/3Tc1JPPM+8z3AYhdUkMjJtaJzpOvwLbLD3P6g/dfrzgHC5wLXJhV21Z00zso79vPP
+ XQKLtEF4xRJkB8VNfUADmBkIJowuR8uDR97Jqbhm+2oXwr0Cs9abeDhbHQJzCUg9W15Im/eEd
+ Va0n4CkRA/MMJYoiNMOE0UXxJvP8ti8bxGpOhoZ2yEmJPtiZwAf7Xnnn5DSLUaHU3AQH3Jy5T
+ WhAVIS9yMM5SGnXy7tEnm6YSret+EtDRJ7v8CL0ji2iYri8IiU7GVrVeZZN5LIrmFqG+ba8lh
+ W74dejS9cH6nzrM032oM+flpB/iKMb0742r/HoWGgMfNmOpXmplldjQjy5Ip1EV8uVCoV83Sz
+ DtKKz0tNqPsXYIt6N42HpYQtA+9zwMRp3ArZgwaCeE1IHMm1kjT2DRDIEdxnzn4rdBOaNzppx
+ BizTswDwfrrVs5lhaZod0Bn2y4jaTXqZF+YKNTeKnJEwgPSX4bbFi0namjcInLZRJjHgso1dn
+ DmywnLxbZNCEG6P8rgXlJYBMC/zp4UgddJJI6+9M/EyF3WhUe6Yqiyv5WL/EIqcvHf5w95fiw
+ hshA0A6p7bmNUJBd/DlFDthCHooHdFZ954Qzj7m4JT1qXaLA/IXAg9oZevaaykKl7Not2yBzc
+ ppwaPdUmQxjMIcw9cHgpr5F5Yv88Mzx0aet0jg16D+E+ngIwQo=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Functionality was removed in c48f6816f0 but the cli option was not removed.
+Am 13.10.2017 um 19:51 schrieb Ralf Thielow:
+> When ftruncate() in rearrange_squash() fails, we write
+> that we couldn't finish the operation on the todo file.
+> It is more accurate to write that we couldn't truncate
+> as we do in other calls of ftruncate().
 
-Signed-off-by: Anthony Sottile <asottile@umich.edu>
----
- builtin/diff-files.c | 2 --
- builtin/diff.c       | 2 --
- diff.h               | 4 +---
- 3 files changed, 1 insertion(+), 7 deletions(-)
+Would it make sense to factor out rewriting the to-do file to avoid
+code duplication in the first place?
 
-diff --git a/builtin/diff-files.c b/builtin/diff-files.c
-index e88493f..b0ff251 100644
---- a/builtin/diff-files.c
-+++ b/builtin/diff-files.c
-@@ -37,8 +37,6 @@ int cmd_diff_files(int argc, const char **argv, const char *prefix)
- 			rev.max_count = 2;
- 		else if (!strcmp(argv[1], "--theirs"))
- 			rev.max_count = 3;
--		else if (!strcmp(argv[1], "-q"))
--			options |= DIFF_SILENT_ON_REMOVED;
- 		else
- 			usage(diff_files_usage);
- 		argv++; argc--;
-diff --git a/builtin/diff.c b/builtin/diff.c
-index f5bbd4d..96513e8 100644
---- a/builtin/diff.c
-+++ b/builtin/diff.c
-@@ -227,8 +227,6 @@ static int builtin_diff_files(struct rev_info *revs, int argc, const char **argv
- 			revs->max_count = 2;
- 		else if (!strcmp(argv[1], "--theirs"))
- 			revs->max_count = 3;
--		else if (!strcmp(argv[1], "-q"))
--			options |= DIFF_SILENT_ON_REMOVED;
- 		else if (!strcmp(argv[1], "-h"))
- 			usage(builtin_diff_usage);
- 		else
-diff --git a/diff.h b/diff.h
-index aca150b..c9d71e1 100644
---- a/diff.h
-+++ b/diff.h
-@@ -65,7 +65,7 @@ typedef struct strbuf *(*diff_prefix_fn_t)(struct diff_options *opt, void *data)
- #define DIFF_OPT_BINARY              (1 <<  2)
- #define DIFF_OPT_TEXT                (1 <<  3)
- #define DIFF_OPT_FULL_INDEX          (1 <<  4)
--#define DIFF_OPT_SILENT_ON_REMOVE    (1 <<  5)
-+/* (1 << 5) unused */
- #define DIFF_OPT_FIND_COPIES_HARDER  (1 <<  6)
- #define DIFF_OPT_FOLLOW_RENAMES      (1 <<  7)
- #define DIFF_OPT_RENAME_EMPTY        (1 <<  8)
-@@ -374,8 +374,6 @@ extern void diff_warn_rename_limit(const char *varname, int needed, int degraded
-  */
- extern const char *diff_aligned_abbrev(const struct object_id *sha1, int);
- 
--/* do not report anything on removed paths */
--#define DIFF_SILENT_ON_REMOVED 01
- /* report racily-clean paths as modified */
- #define DIFF_RACY_IS_MODIFIED 02
- extern int run_diff_files(struct rev_info *revs, unsigned int option);
--- 
-2.7.4
+> While at there, remove a full stop in another error message.
+> 
+> Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+> ---
+>   sequencer.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/sequencer.c b/sequencer.c
+> index e258bb646..b0e6459a5 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -2948,9 +2948,9 @@ int rearrange_squash(void)
+>   		if (fd < 0)
+>   			res = error_errno(_("could not open '%s'"), todo_file);
+>   		else if (write(fd, buf.buf, buf.len) < 0)
+> -			res = error_errno(_("could not read '%s'."), todo_file);
+> +			res = error_errno(_("could not read '%s'"), todo_file);
+                                                       ^^^^
+That should read "write", right?
 
+>   		else if (ftruncate(fd, buf.len) < 0)
+> -			res = error_errno(_("could not finish '%s'"),
+> +			res = error_errno(_("could not truncate '%s'"),
+>   					   todo_file);
+
+Hmm, why call ftruncate(2) instead of opening the file with O_TRUNC?
+
+>   		close(fd);
+>   		strbuf_release(&buf);
+> 
