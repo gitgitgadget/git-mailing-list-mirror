@@ -7,100 +7,103 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,UNPARSEABLE_RELAY shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5214A20437
-	for <e@80x24.org>; Fri, 13 Oct 2017 19:49:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E173A20437
+	for <e@80x24.org>; Fri, 13 Oct 2017 19:49:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753078AbdJMTtc (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Oct 2017 15:49:32 -0400
+        id S1753344AbdJMTtd (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Oct 2017 15:49:33 -0400
 Received: from smtp.mail.umich.edu ([141.211.125.12]:52258 "EHLO
         maleficent.mr.itd.umich.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751632AbdJMTtb (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 13 Oct 2017 15:49:31 -0400
+        by vger.kernel.org with ESMTP id S1752454AbdJMTtc (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 13 Oct 2017 15:49:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=umich.edu;
-        s=relay-2016-05-12; t=1507924165;
-        bh=mC6/FAqRMcjyjry7ZQXVJlBy/DUUeTnelvPoqfDpi4k=;
-        h=From:To:Cc:Subject:Date;
-        b=BfiIsswFdftd6KQZKINJFYq/8qAFSU242KpAwhYq855GNnHE84o9YAfdZm3/hkixg
-         kDUq+aoMWmUqFs2+Dgd70B38HiUjklua2D/D5FyPqT1qxeOwG1egMwvtAzvZpy8cpd
-         TVhKq2aful+DOFubBtb848p14f7boPc8kDq2c2/8QTgCWgNQ+7z39iDx3+ICXhjF2W
-         o9Gdo6Hp8DWiGmrVzOl03uOQ591wBD6WtBRvT7z3FEKuafGu9tfvyqp+t7K0++vPh1
-         8n8MhvGyu2IPKEe+Ca9dHDKXfARpOdNDRhW/f22jZWN3LSv4bpfjJr2F9VCcqnF8gc
-         Ut9fJwSUPqfpQ==
+        s=relay-2016-05-12; t=1507924169;
+        bh=nic441PQ2H4CKBE3kD23cn7Xp68oUM8c1ELMGi+dBWE=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References;
+        b=bq7IvdzOMvUQ/lzCveofuk61gI+8XfZEtuXhxQGL8oOfEWOStJApN5Hy2q4KFBGl7
+         JW/a5fLmUQ3MGAO5OQxTFq7z1IXalb/pY8VyUSUJwimq/q4tAm/qVlWCeDDPaU6s1T
+         vIYJAqd3yGWTNaFBp90f/t+ZZ13Lfr68nKJdfK+8e37A2lZBsWGo1bAlta88bHXQdh
+         gwfVh+XqhtPOy10M3DuGCRwl84ByXXIhOJf8b1Hlq3IxYkrdOrhBzqyv0nzXFRhjGE
+         oxGjw5bFfCLGvoE9PZb18C+zGpcfjyf50DcmAU42sOhicg17GZsUXVyBctF2PX28rH
+         2pf10Cx6rBrRA==
 Authentication-Results: maleficent.mr.itd.umich.edu;
         iprev=permerror policy.iprev=4.14.106.2 (unknown);
         auth=pass smtp.auth=asottile
 Received: FROM asottile-VirtualBox.lyft-corp.net (unknown [4.14.106.2])
-        By maleficent.mr.itd.umich.edu ID 59E118C5.75DA5.1901;
+        By maleficent.mr.itd.umich.edu ID 59E118C8.C3D1A.1901;
         Authuser asottile;
-        Fri, 13 Oct 2017 15:49:25 -0400
+        Fri, 13 Oct 2017 15:49:28 -0400
 From:   Anthony Sottile <asottile@umich.edu>
 To:     git@vger.kernel.org
 Cc:     Anthony Sottile <asottile@umich.edu>
-Subject: [PATCH v2 1/2] diff: alias -q to --quiet
-Date:   Fri, 13 Oct 2017 12:49:15 -0700
-Message-Id: <20171013194916.4617-1-asottile@umich.edu>
+Subject: [PATCH v2 2/2] diff: finish removal of deprecated -q option
+Date:   Fri, 13 Oct 2017 12:49:16 -0700
+Message-Id: <20171013194916.4617-2-asottile@umich.edu>
 X-Mailer: git-send-email 2.15.0.rc1.2.ge430ed6
+In-Reply-To: <20171013194916.4617-1-asottile@umich.edu>
+References: <20171013194916.4617-1-asottile@umich.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Previously, `-q` was silently ignored:
-
-Before:
-
-$ git diff -q -- Documentation/; echo $?
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index a88c767..aa6e724 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -587,6 +587,7 @@ ifndef::git-log[]
-        That is, it exits with 1 if there were differences and
-        0 means no differences.
-
-+-q::
- --quiet::
-        Disable all output of the program. Implies `--exit-code`.
- endif::git-log[]
-0
-$
-
-After:
-$ ./git diff -q -- Documentation/; echo $?
-1
-$
+Functionality was removed in c48f6816f0 but the cli option was not removed.
 
 Signed-off-by: Anthony Sottile <asottile@umich.edu>
 ---
- Documentation/diff-options.txt | 1 +
- diff.c                         | 2 +-
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ builtin/diff-files.c | 2 --
+ builtin/diff.c       | 2 --
+ diff.h               | 4 +---
+ 3 files changed, 1 insertion(+), 7 deletions(-)
 
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index a88c767..aa6e724 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -587,6 +587,7 @@ ifndef::git-log[]
- 	That is, it exits with 1 if there were differences and
- 	0 means no differences.
+diff --git a/builtin/diff-files.c b/builtin/diff-files.c
+index e88493f..b0ff251 100644
+--- a/builtin/diff-files.c
++++ b/builtin/diff-files.c
+@@ -37,8 +37,6 @@ int cmd_diff_files(int argc, const char **argv, const char *prefix)
+ 			rev.max_count = 2;
+ 		else if (!strcmp(argv[1], "--theirs"))
+ 			rev.max_count = 3;
+-		else if (!strcmp(argv[1], "-q"))
+-			options |= DIFF_SILENT_ON_REMOVED;
+ 		else
+ 			usage(diff_files_usage);
+ 		argv++; argc--;
+diff --git a/builtin/diff.c b/builtin/diff.c
+index f5bbd4d..96513e8 100644
+--- a/builtin/diff.c
++++ b/builtin/diff.c
+@@ -227,8 +227,6 @@ static int builtin_diff_files(struct rev_info *revs, int argc, const char **argv
+ 			revs->max_count = 2;
+ 		else if (!strcmp(argv[1], "--theirs"))
+ 			revs->max_count = 3;
+-		else if (!strcmp(argv[1], "-q"))
+-			options |= DIFF_SILENT_ON_REMOVED;
+ 		else if (!strcmp(argv[1], "-h"))
+ 			usage(builtin_diff_usage);
+ 		else
+diff --git a/diff.h b/diff.h
+index aca150b..c9d71e1 100644
+--- a/diff.h
++++ b/diff.h
+@@ -65,7 +65,7 @@ typedef struct strbuf *(*diff_prefix_fn_t)(struct diff_options *opt, void *data)
+ #define DIFF_OPT_BINARY              (1 <<  2)
+ #define DIFF_OPT_TEXT                (1 <<  3)
+ #define DIFF_OPT_FULL_INDEX          (1 <<  4)
+-#define DIFF_OPT_SILENT_ON_REMOVE    (1 <<  5)
++/* (1 << 5) unused */
+ #define DIFF_OPT_FIND_COPIES_HARDER  (1 <<  6)
+ #define DIFF_OPT_FOLLOW_RENAMES      (1 <<  7)
+ #define DIFF_OPT_RENAME_EMPTY        (1 <<  8)
+@@ -374,8 +374,6 @@ extern void diff_warn_rename_limit(const char *varname, int needed, int degraded
+  */
+ extern const char *diff_aligned_abbrev(const struct object_id *sha1, int);
  
-+-q::
- --quiet::
- 	Disable all output of the program. Implies `--exit-code`.
- endif::git-log[]
-diff --git a/diff.c b/diff.c
-index 69f0357..13dfc3e 100644
---- a/diff.c
-+++ b/diff.c
-@@ -4751,7 +4751,7 @@ int diff_opt_parse(struct diff_options *options,
- 	}
- 	else if (!strcmp(arg, "--exit-code"))
- 		DIFF_OPT_SET(options, EXIT_WITH_STATUS);
--	else if (!strcmp(arg, "--quiet"))
-+	else if (!strcmp(arg, "-q") || !strcmp(arg, "--quiet"))
- 		DIFF_OPT_SET(options, QUICK);
- 	else if (!strcmp(arg, "--ext-diff"))
- 		DIFF_OPT_SET(options, ALLOW_EXTERNAL);
+-/* do not report anything on removed paths */
+-#define DIFF_SILENT_ON_REMOVED 01
+ /* report racily-clean paths as modified */
+ #define DIFF_RACY_IS_MODIFIED 02
+ extern int run_diff_files(struct rev_info *revs, unsigned int option);
 -- 
 2.7.4
 
