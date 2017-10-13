@@ -6,69 +6,64 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1048520372
-	for <e@80x24.org>; Fri, 13 Oct 2017 03:38:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 29DA720372
+	for <e@80x24.org>; Fri, 13 Oct 2017 05:11:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753456AbdJMDiA (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Oct 2017 23:38:00 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:52062 "EHLO
+        id S1752808AbdJMFLf (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Oct 2017 01:11:35 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56365 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753336AbdJMDiA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Oct 2017 23:38:00 -0400
+        with ESMTP id S1751353AbdJMFLf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Oct 2017 01:11:35 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6F2FBA95B5;
-        Thu, 12 Oct 2017 23:37:59 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=PSA61Yg9gQx/sOuhTMpdgMlDvDA=; b=d/Xhxis0GHT8Ke0LYZJH
-        xJyHaSKiM1B+D38Y7SY6Uk+m0NNs5AzlrDm8Ejxv1aCMDee6jeYgxGSeUUAgH9jl
-        nF8u0GGE2BHYphItvlLkndwht8OvfIN6szqLGbrVa8N6SB0FV7CAwk04M8xB7+pe
-        QChqAhpciSdXMK/SW+er9/A=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         q=dns; s=sasl; b=Vdn2iK1He2QnjIZ6vaP+ksv3ZOwt1X0pSnmSgFPp2ToV5j
-        HoqQi8htpHKwLa3MQ2dMYmRhb5iraEQGgmgwobwkOA1SBx3468tl5mJYp9cX6FpZ
-        0NKp1CW/p/Yd0cld+hQiH3hJjowZlT0pZpvu0JYrvQaMWDjhYOtrRs0qVGVs0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 68268A95B3;
-        Thu, 12 Oct 2017 23:37:59 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 67207B3085;
+        Fri, 13 Oct 2017 01:11:34 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+        :subject:date:message-id; s=sasl; bh=e/iOoTeC43TYFOjOn4lXQuP7aQA
+        =; b=H001HRhXj85nquYGGEr3eLHfFeRUAiAva9tx4S5YBM4M+VFvzYDbX22doEX
+        JcGHUv2fvQZ43jwbJsRXhzBBE9KVL3y2HQcxJp02lj7f8xj5quHuFlvqfgcN0qlQ
+        vIsJI9uy8Do6Pveu88QMiDHCS5fU09IpDIvcHF+BsgKRbtTk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+        :date:message-id; q=dns; s=sasl; b=EuBjt+iePc5S6nWrMpgRogBaj6HDl
+        NW239LTEFAwYbNQ5kZ18b4pHHaHBrEfeQkvw5mg7uRCA6UNFyqzw7uxXaOZ7J+sF
+        KuRLqqrTPyN6mqAFyJyXWtQUQcZAiZvQCcFIVYheIE3ov3vWstutLjW3HQvr/Htf
+        pbRGppAOMbBuok=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5946AB3084;
+        Fri, 13 Oct 2017 01:11:34 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A93E6A95B2;
-        Thu, 12 Oct 2017 23:37:58 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 879E4B3083;
+        Fri, 13 Oct 2017 01:11:33 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/2] color: downgrade "always" to "auto" only for on-disk configuration
-References: <xmqqr2uao2vy.fsf@gitster.mtv.corp.google.com>
-        <20171012021007.7441-1-gitster@pobox.com>
-        <20171012021007.7441-2-gitster@pobox.com>
-        <20171012123153.i265nun6pklw7kjg@sigill.intra.peff.net>
-        <xmqqinfjykm2.fsf@gitster.mtv.corp.google.com>
-        <20171013014721.d4vesqv4v5j7tmk2@sigill.intra.peff.net>
-Date:   Fri, 13 Oct 2017 12:37:57 +0900
-Message-ID: <xmqqzi8vvht6.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E832A944-AFC7-11E7-88A3-8EF31968708C-77302942!pb-smtp1.pobox.com
+To:     git@vger.kernel.org
+Subject: [PATCH 0/3] a small branch API clean-up
+Date:   Fri, 13 Oct 2017 14:11:29 +0900
+Message-Id: <20171013051132.3973-1-gitster@pobox.com>
+X-Mailer: git-send-email 2.15.0-rc1-158-gbd035ae683
+X-Pobox-Relay-ID: FAEAF67E-AFD4-11E7-B5C1-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+This started as a little clean-up for a NEEDSWORK comment in
+branch.h, but it ended up adding a rather useful safety feature.
 
-> OK. For the record, I'm not against scrapping this whole thing and
-> trying to rollback to your "plumbing never looks at color.ui" proposal.
-> It's quite late in the -rc cycle to do that, but there's nothing that
-> says we can't bump the release date if that's what we need to do to get
-> it right.
+Junio C Hamano (3):
+  branch: streamline "attr_only" handling in validate_new_branchname()
+  branch: split validate_new_branchname() into two
+  branch: forbid refs/heads/HEAD
 
-I think that it is too late, regardless of our release cycle.
+ branch.c                | 44 ++++++++++++++++++++++++++++++--------------
+ branch.h                | 27 ++++++++++++---------------
+ builtin/branch.c        |  8 ++++----
+ builtin/checkout.c      | 10 +++++-----
+ sha1_name.c             |  2 +-
+ t/t1430-bad-ref-name.sh |  8 ++++++++
+ 6 files changed, 60 insertions(+), 39 deletions(-)
 
-"Plumbing never looks at color.ui" implies that "plumbing must not
-get color.ui=auto from 4c7f1819", but given that 4c7f1819 is from
-2013, I'd be surprised if we stopped coloring output from plumbing
-without getting any complaints from third-party script writers.
+-- 
+2.15.0-rc1-158-gbd035ae683
+
