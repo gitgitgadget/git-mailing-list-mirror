@@ -6,118 +6,95 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D3B4920437
-	for <e@80x24.org>; Fri, 13 Oct 2017 13:06:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1FF4E20437
+	for <e@80x24.org>; Fri, 13 Oct 2017 13:15:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757807AbdJMNGl (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Oct 2017 09:06:41 -0400
-Received: from cloud.peff.net ([104.130.231.41]:52014 "HELO cloud.peff.net"
+        id S1758186AbdJMNPF (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Oct 2017 09:15:05 -0400
+Received: from cloud.peff.net ([104.130.231.41]:52034 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1753231AbdJMNGk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Oct 2017 09:06:40 -0400
-Received: (qmail 19864 invoked by uid 109); 13 Oct 2017 13:06:40 -0000
+        id S1753380AbdJMNPD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Oct 2017 09:15:03 -0400
+Received: (qmail 20242 invoked by uid 109); 13 Oct 2017 13:15:03 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 13 Oct 2017 13:06:40 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 13 Oct 2017 13:15:03 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 24998 invoked by uid 111); 13 Oct 2017 13:06:42 -0000
+Received: (qmail 25159 invoked by uid 111); 13 Oct 2017 13:15:06 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Fri, 13 Oct 2017 09:06:42 -0400
+ by peff.net (qpsmtpd/0.94) with SMTP; Fri, 13 Oct 2017 09:15:06 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 13 Oct 2017 09:06:38 -0400
-Date:   Fri, 13 Oct 2017 09:06:38 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 13 Oct 2017 09:15:01 -0400
+Date:   Fri, 13 Oct 2017 09:15:01 -0400
 From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/2] color: downgrade "always" to "auto" only for on-disk
- configuration
-Message-ID: <20171013130638.dgc6kawy5mvrbasz@sigill.intra.peff.net>
-References: <xmqqr2uao2vy.fsf@gitster.mtv.corp.google.com>
- <20171012021007.7441-1-gitster@pobox.com>
- <20171012021007.7441-2-gitster@pobox.com>
- <20171012123153.i265nun6pklw7kjg@sigill.intra.peff.net>
- <xmqqinfjykm2.fsf@gitster.mtv.corp.google.com>
- <20171013014721.d4vesqv4v5j7tmk2@sigill.intra.peff.net>
- <xmqqzi8vvht6.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH 3/3] branch: forbid refs/heads/HEAD
+Message-ID: <20171013131501.3qarwhanktfvgjqd@sigill.intra.peff.net>
+References: <20171013051132.3973-1-gitster@pobox.com>
+ <20171013051132.3973-4-gitster@pobox.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqzi8vvht6.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <20171013051132.3973-4-gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 13, 2017 at 12:37:57PM +0900, Junio C Hamano wrote:
+On Fri, Oct 13, 2017 at 02:11:32PM +0900, Junio C Hamano wrote:
 
-> Jeff King <peff@peff.net> writes:
+> strbuf_check_branch_ref() is the central place where many codepaths
+> see if a proposed name is suitable for the name of a branch.  It was
+> designed to allow us to get stricter than the check_refname_format()
+> check used for refnames in general, and we already use it to reject
+> a branch whose name begins with a '-'.
 > 
-> > OK. For the record, I'm not against scrapping this whole thing and
-> > trying to rollback to your "plumbing never looks at color.ui" proposal.
-> > It's quite late in the -rc cycle to do that, but there's nothing that
-> > says we can't bump the release date if that's what we need to do to get
-> > it right.
-> 
-> I think that it is too late, regardless of our release cycle.
-> 
-> "Plumbing never looks at color.ui" implies that "plumbing must not
-> get color.ui=auto from 4c7f1819", but given that 4c7f1819 is from
-> 2013, I'd be surprised if we stopped coloring output from plumbing
-> without getting any complaints from third-party script writers.
+> Use it to also reject "HEAD" as a branch name.
 
-I agree that 4c7f1819 is the root of things. But there also weren't a
-lot of people complaining about it. I only noticed it as part of other
-work I was doing, and (perhaps foolishly) tried to clean it up.
+Heh, I just pointed somebody to this a day or two ago as #leftoverbit. I
+guess it's taken now. :)
 
-All of the regressions people have actually _noticed_ stem from my
-136c8c8b8f in v2.14.2. So I think it is a viable option to try to go
-back to the pre-v2.14.2 state. I.e.:
+Related to this: should we do a better job of confirming that the
+refname is available for use?
 
-  1. Revert my 20120618c1 (color: downgrade "always" to "auto" only for
-     on-disk configuration, 2017-10-10) and the test changes that came
-     with it.
+If you do:
 
-  2. Teach for-each-ref and tag to use git_color_default_config(). These
-     are the two I _know_ need this treatment as part of the series that
-     contained 136c8c8b8f. As you've noted there may be others, but I'd
-     be surprised if there are many. There hasn't been a lot of color
-     work in the last few months besides what I've done.
+  git branch foo
+  git checkout -b foo/bar
 
-  3. Revert 136c8c8b8f.
+then "foo/bar" is not available. And for "checkout -b", we'd notice when
+we tried to create the ref. But for:
 
-That takes us back to the pre-regression state. The ancient bug from
-4c7f1819 still exists, but that would be OK for v2.15. We'd probably
-want to bump the -rc cycle a bit to give more confidence that (2) caught
-everything.
+  git checkout --orphan foo/bar
 
-Post-release, we would either:
+we'd update HEAD with a non-viable name, and only find out later during
+"git commit". That's not the end of the world, but it might be nice to
+complain when writing the symlink.
 
-  a. Do nothing. As far as we know, nobody has cared deeply about
-     4c7f1819 for the past 4 years.
+Largely orthogonal to the problem you're solving here, but I suspect it
+may touch the same code, so it might be worth thinking about while we're
+here.
 
-  b. Teach git_default_config() to respect "never" but not "always", so
-     that you can disable the auto-color in the plumbing (but not shoot
-     yourself in the foot).
+> diff --git a/t/t1430-bad-ref-name.sh b/t/t1430-bad-ref-name.sh
+> index e88349c8a0..3ecb2eab0c 100755
+> --- a/t/t1430-bad-ref-name.sh
+> +++ b/t/t1430-bad-ref-name.sh
+> @@ -331,4 +331,12 @@ test_expect_success 'update-ref --stdin -z fails delete with bad ref name' '
+>  	grep "fatal: invalid ref format: ~a" err
+>  '
+>  
+> +test_expect_success 'branch rejects HEAD as a branch name' '
+> +	test_must_fail git branch HEAD HEAD^
+> +'
+> +
+> +test_expect_success 'checkout -b rejects HEAD as a branch name' '
+> +	test_must_fail git checkout -B HEAD HEAD^
+> +'
 
-  c. Go all-out and remove the "auto" behavior from plumbing. This is
-     much more likely to have fallouts since we've had 4 years of the
-     wrong behavior. But we'd have a whole cycle to identify
-     regressions.
+Should we test that:
 
-I'd probably vote for (b), followed by (a). Option (c) seems like a lot
-of risk for little benefit.
+  git update-ref refs/heads/HEAD HEAD^
 
-But we could punt on that part until after the release. The only thing
-we'd need to decide on now is that first set of reversions. What I
-really _don't_ want to do is ship v2.15 with "always works like auto"
-and then flip that back in v2.16.
-
-I know you're probably infuriated with me because I'm essentially
-arguing the opposite of what I did earlier in the cycle. And I really am
-OK with going either way (shipping what's in -rc1 plus the "let 'always'
-work from the command line", or doing something like what I outlined
-above). But you've convinced me that the road I was going down really is
-piling up the hacks, and I want to make it clear that I'm not married to
-following the path I outlined earlier, and that I think there _is_ a
-viable alternative.
+continues to work?
 
 -Peff
