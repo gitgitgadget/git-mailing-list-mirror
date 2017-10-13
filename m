@@ -2,89 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 88D9C20437
-	for <e@80x24.org>; Fri, 13 Oct 2017 12:45:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0CA1220437
+	for <e@80x24.org>; Fri, 13 Oct 2017 12:49:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756659AbdJMMo7 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Oct 2017 08:44:59 -0400
-Received: from cloud.peff.net ([104.130.231.41]:51980 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1753276AbdJMMo6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Oct 2017 08:44:58 -0400
-Received: (qmail 18889 invoked by uid 109); 13 Oct 2017 12:44:58 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 13 Oct 2017 12:44:58 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 24896 invoked by uid 111); 13 Oct 2017 12:45:01 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Fri, 13 Oct 2017 08:45:01 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 13 Oct 2017 08:44:56 -0400
-Date:   Fri, 13 Oct 2017 08:44:56 -0400
-From:   Jeff King <peff@peff.net>
-To:     Constantine <hi-angel@yandex.ru>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Mike Hommey <mh@glandium.org>, git <git@vger.kernel.org>
-Subject: Re: git-clone causes out of memory
-Message-ID: <20171013124456.qsbaol7txdgdb6wq@sigill.intra.peff.net>
-References: <515b1400-4053-70b0-18e2-1f61ebc3b2d7@yandex.ru>
- <20171013100603.5eed26sjjigph2il@glandium.org>
- <CAP8UFD1KuBdUCo=x_q4__s1kW15CWMH1jJkKzXqmf3=T3jcrng@mail.gmail.com>
- <20171013103722.rvr7536mu2hoo4wb@glandium.org>
- <CAP8UFD3vniWZQ9Wb1oMo-bbj8n7CTjTHUNhBRwg6jN9x0+ApAQ@mail.gmail.com>
- <xmqqr2u7uuc8.fsf@gitster.mtv.corp.google.com>
- <2f9b8856-dacc-768d-32c2-985f5f145ba7@yandex.ru>
+        id S1758400AbdJMMtW (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Oct 2017 08:49:22 -0400
+Received: from mail-qk0-f178.google.com ([209.85.220.178]:54732 "EHLO
+        mail-qk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1758378AbdJMMtU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Oct 2017 08:49:20 -0400
+Received: by mail-qk0-f178.google.com with SMTP id n5so4829326qke.11
+        for <git@vger.kernel.org>; Fri, 13 Oct 2017 05:49:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=+qSVt6DwAcUAdU1hyhFwNHbppSmgBrUZF03VOQxcpdo=;
+        b=BFD8aw4V17HaWg54ki+2zxO+dv832Lkx1owD4UVKoF6ph0nOWaub8/Z9UPaaNCuR0D
+         aO6NBdqg9XBvxuV8Cy669uR4lN2Uwp0dn2BBmJbm3Gz8SaZlAbJiLHSkc3LejUkb4c4+
+         iuJjtBVjshy+6yvGU/boEIpVtmYNagIU3Gkgd26bvq3RI47vODvWOn+A+ysQQf2NMDQU
+         UzcHI6pEPQ553GI9pJe7iAmtvsSbvZUZkJF2ks3ysKD7hLcI1HamjNtGNnxVRd8NNa9k
+         ZZSkBZ+E6EQwYTRqI3EPtDB2nqrXc5w/CBJIOIEn3EzVQnx4Q+SfDu9MGiatPcQzIMob
+         ObXQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=+qSVt6DwAcUAdU1hyhFwNHbppSmgBrUZF03VOQxcpdo=;
+        b=E26KwD30Q4CQ+G62YzQS6HsdGUJH1wbzNJ5D8Ps6YKdsLYObawmsMXM7qCxWXMKg5H
+         3N26vi4H4Fcaw4zEL68c8FMdRqd/fKqvrws0Frk7VjfR+/SAkcYKlIeHT7iqpEAoIwHz
+         snqtzKmj+qzNdDk4UKq2uCGkgdoDEPTqweCp5KctHkwYRA/f38I02oep+ud2Hva9Roxn
+         6Z72YqUL+Slw75Wjc4XK9426r8J1zqtWLAN2EcqEZjATL3kQs4YpO2vtaYn/Crx4C1N7
+         g1OSqOHYB6mzZM4mMNWWsgbBj5CUFGegeyP//NBJ+h7rYxq/rTi/oRhh89fMWtOD3uly
+         IcJQ==
+X-Gm-Message-State: AMCzsaWPVJo2FsZPwEZJngtUBUzvjUBxoGbwpY42g3hZsGocz6G4eQSd
+        Jsak02oe2F8l9wZ4Z+jT7Y7Tpli7bfD25tIzeHE=
+X-Google-Smtp-Source: ABhQp+TsLtpgBaL+LwN53KjYEPXI6Xyv16cZQH4JQDlCohHJkq4gOQWYmgQczqshLL+0S6yxgEItlIOxUzQKKefloqM=
+X-Received: by 10.55.215.93 with SMTP id m90mr1717607qki.197.1507898959417;
+ Fri, 13 Oct 2017 05:49:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <2f9b8856-dacc-768d-32c2-985f5f145ba7@yandex.ru>
+Received: by 10.200.47.238 with HTTP; Fri, 13 Oct 2017 05:48:58 -0700 (PDT)
+In-Reply-To: <20171012225339.2808-1-johannes.schindelin@gmx.de>
+References: <20171012225339.2808-1-johannes.schindelin@gmx.de>
+From:   Steve Hoelzer <shoelzer@gmail.com>
+Date:   Fri, 13 Oct 2017 07:48:58 -0500
+Message-ID: <CACbrTHfnph8Cp9G7LrspPa4s-E2ATHWkLqj7WDPFSiLXzOSz7g@mail.gmail.com>
+Subject: Re: [ANNOUNCE] Git for Windows 2.14.2(3)
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git-for-windows@googlegroups.com, git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 13, 2017 at 03:12:43PM +0300, Constantine wrote:
+Johannes,
 
-> On 13.10.2017 15:04, Junio C Hamano wrote:
-> > Christian Couder <christian.couder@gmail.com> writes:
-> > 
-> > > Yeah, but perhaps Git could be smarter when rev-listing too and avoid
-> > > processing files or directories it has already seen?
-> > 
-> > Aren't you suggesting to optimize for a wrong case?
-> > 
-> 
-> Anything that is possible with a software should be considered as a possible
-> usecase. It's in fact a DoS attack. Imagine there's a server that using git
-> to process something, and now there's a way to knock down this server. It's
-> also bad from a promotional stand point.
+On Thu, Oct 12, 2017 at 5:53 PM, Johannes Schindelin
+<johannes.schindelin@gmx.de> wrote:
+> Dear Git users,
+>
+> It is my pleasure to announce that Git for Windows 2.14.2(3) is available from:
+>
+>         https://git-for-windows.github.io/
+>
+> Changes since Git for Windows v2.14.2(2) (October 5th 2017)
+>
+> New Features
+>
+>   * Comes with Git LFS v2.3.3.
 
-But the point is that you'd have the same problem with any repository
-that had 10^7 files in it. Yes, it's convenient for the attacker that
-there are only 9 objects, but fundamentally it's pretty easy for an
-attacker to construct repositories that have large trees (or very deep
-trees -- that's what causes stack exhaustion in some cases).
+I just ran "git update" and afterward "git version" reported
+2.14.2(3), but "git lfs version" still said 2.3.2.
 
-Note too that this attack almost always comes down to the diff code
-(which is why it kicks in for pathspec limiting) which has to actually
-expand the tree. Most "normal" server-side operations (like accepting
-pushes or serving fetches) operate only on the object graph and _do_
-avoid processing already-seen objects.
+I also uninstalled/reinstalled Git for Windows and LFS is still 2.3.2.
 
-As soon as servers start trying to checkout or diff, though, the attack
-surface gets quite large. And you really need to start thinking about
-having resource limits and quotas for CPU and memory use of each process
-(and group by requesting user, IP, repo, etc).
-
-I think the main thing Git could be doing here is to limit the size of
-the tree (both width and depth). But arbitrary limits like that have a
-way of being annoying, and I think it just pushes resource-exhaustion
-attacks off a little (e.g., can you construct a blob that behaves badly
-with the "--patch"?).
-
--Peff
+Steve
