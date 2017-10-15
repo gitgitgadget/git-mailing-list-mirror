@@ -6,43 +6,43 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A7C6020372
-	for <e@80x24.org>; Sun, 15 Oct 2017 22:08:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 42B7420372
+	for <e@80x24.org>; Sun, 15 Oct 2017 22:08:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751697AbdJOWH6 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 15 Oct 2017 18:07:58 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:55106 "EHLO
+        id S1751725AbdJOWIC (ORCPT <rfc822;e@80x24.org>);
+        Sun, 15 Oct 2017 18:08:02 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:55138 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751512AbdJOWHw (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 15 Oct 2017 18:07:52 -0400
+        by vger.kernel.org with ESMTP id S1751655AbdJOWH5 (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 15 Oct 2017 18:07:57 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id E01B860460;
-        Sun, 15 Oct 2017 22:07:50 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 16A3260461;
+        Sun, 15 Oct 2017 22:07:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1508105271;
-        bh=YujvQUYkw8TNUMO2Q2i4CAe6FIe4H6+qyETWY6q/qnY=;
+        s=default; t=1508105275;
+        bh=GLCkjvmy5gTMkurTNskq0yiD7jqLVWVFtR43jIso8Vs=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=NZw3rIH3n7Gj425jVIyoivW7jcePbdETC9w7aUO8oF+p5S7Tltitx9DJr+jnclW0v
-         qZcNmm2xsq9kw67771IDKPcEj1Uc9mJGNhbU3GY1g93l94Ww5iAm3AT5mDhY6x/X7X
-         hLOaq38TQlT6jmWtJErm0LKtzVqtGBXz57aokeqy/+/ryXDt+xjXKjbYtPGLgRrB+o
-         BZYCLaxK+XUczcV+UCoOB6ID0bWiGJFeCnHXOlJq8XxNZkCjrvw4RcqQmF98QKOOWR
-         ZKvbbPDaFgvy6qIm8VQ8MYfG/zNb4rcO7BDjTy+eq1MT9/EkdMu1GwOJwYN9JKxYHd
-         VuqeRnBsozd1xG4SdDaM1JBWKG9oy6AYeRlr7YQF2IixFoiagZtTE7dxWAmW03maoc
-         XGyomZbSLcFpKGprbAfTXsNDdnHSRcQS18flHjeiYwAJBDUERbbrNo99KH+m1VA0Zf
-         /2NHJV1kQIUcc3l6wmZ+9JNRohEDDsGlTyC/mmrNCSnJ0MqqZeG
+        b=bc3VeHOGyYlg5f0gGz1t5z+9zKKFOvj1tMC3Kb/6pq/OmRCkNLq2JoWFz8ogRr8bg
+         wKcSSK3MfviAbVINc2Rlz2XYn4P3AqNrt/LjxOMwhkkfIjsqeoesHQNgB8GUlPRSGV
+         ChldpqAI+sfmC5RsabDgM+YYjQ7P1xJfmhhuk1DtjJ4p27W7WRQ1IXR/SSBkoEikfG
+         40dMqavq8VzeEEw2VqcjmzZjGG+wUVQHseyYQNiIHMYp+WHNU2yaaBshbrXDPbXBfn
+         OPzUQy9RAZ39MEFzHTqMWOemTrTbJuZtqGPG4ThMDM1dS8r/jzkEEcBGhbOli1r9bO
+         5ZTzHeqhlHWejpguqUbVvzQSrMwVU+2RXBnAdzQM1aqKPX5vLCU6ql4gA18qSO07cY
+         URi71sveKJgrC8xT7u0hcDiXXH3RwX31yGkPhHHYOl/GoiJmhhY+H2ga/l1dk+1wJ3
+         wJfhVEiAGWKFez5Ok1DzTcbHnx5YlX4JKrU1jaCGGlgs417Txdi
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
         Brandon Williams <bmwill@google.com>,
         Stefan Beller <sbeller@google.com>,
         Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH v3 14/25] builtin/pack-objects: convert to struct object_id
-Date:   Sun, 15 Oct 2017 22:07:01 +0000
-Message-Id: <20171015220712.97308-15-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 18/25] sha1_file: convert index_path and index_fd to struct object_id
+Date:   Sun, 15 Oct 2017 22:07:05 +0000
+Message-Id: <20171015220712.97308-19-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.15.0.rc0.271.g36b669edcc
 In-Reply-To: <20171015220712.97308-1-sandals@crustytoothpaste.net>
 References: <20171015220712.97308-1-sandals@crustytoothpaste.net>
@@ -52,491 +52,122 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is one of the last unconverted callers to peel_ref.  While we're
-fixing that, convert the rest of the file, since it will need to be
-converted at some point anyway.
+Convert these two functions and the functions that underlie them to take
+pointers to struct object_id.  This is a prerequisite to convert
+resolve_gitlink_ref.  Fix a stray tab in the middle of the index_mem
+call in index_pipe by converting it to a space.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/pack-objects.c | 135 +++++++++++++++++++++++++------------------------
- 1 file changed, 68 insertions(+), 67 deletions(-)
+ sha1_file.c | 30 +++++++++++++++---------------
+ 1 file changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index d2d97cc61e..9c6b224973 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -151,7 +151,7 @@ static unsigned long do_compress(void **pptr, unsigned long size)
+diff --git a/sha1_file.c b/sha1_file.c
+index 10c3a0083d..cd910b2103 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1664,7 +1664,7 @@ static void check_tag(const void *buf, size_t size)
+ 		die("corrupt tag");
  }
  
- static unsigned long write_large_blob_data(struct git_istream *st, struct sha1file *f,
--					   const unsigned char *sha1)
-+					   const struct object_id *oid)
+-static int index_mem(unsigned char *sha1, void *buf, size_t size,
++static int index_mem(struct object_id *oid, void *buf, size_t size,
+ 		     enum object_type type,
+ 		     const char *path, unsigned flags)
  {
- 	git_zstream stream;
- 	unsigned char ibuf[1024 * 16];
-@@ -165,7 +165,7 @@ static unsigned long write_large_blob_data(struct git_istream *st, struct sha1fi
- 		int zret = Z_OK;
- 		readlen = read_istream(st, ibuf, sizeof(ibuf));
- 		if (readlen == -1)
--			die(_("unable to read %s"), sha1_to_hex(sha1));
-+			die(_("unable to read %s"), oid_to_hex(oid));
- 
- 		stream.next_in = ibuf;
- 		stream.avail_in = readlen;
-@@ -339,7 +339,7 @@ static unsigned long write_no_reuse_object(struct sha1file *f, struct object_ent
- 		sha1write(f, header, hdrlen);
+@@ -1695,15 +1695,15 @@ static int index_mem(unsigned char *sha1, void *buf, size_t size,
  	}
- 	if (st) {
--		datalen = write_large_blob_data(st, f, entry->idx.oid.hash);
-+		datalen = write_large_blob_data(st, f, &entry->idx.oid);
- 		close_istream(st);
- 	} else {
- 		sha1write(f, buf, datalen);
-@@ -557,13 +557,13 @@ static enum write_one_status write_one(struct sha1file *f,
- static int mark_tagged(const char *path, const struct object_id *oid, int flag,
- 		       void *cb_data)
+ 
+ 	if (write_object)
+-		ret = write_sha1_file(buf, size, typename(type), sha1);
++		ret = write_sha1_file(buf, size, typename(type), oid->hash);
+ 	else
+-		ret = hash_sha1_file(buf, size, typename(type), sha1);
++		ret = hash_sha1_file(buf, size, typename(type), oid->hash);
+ 	if (re_allocated)
+ 		free(buf);
+ 	return ret;
+ }
+ 
+-static int index_stream_convert_blob(unsigned char *sha1, int fd,
++static int index_stream_convert_blob(struct object_id *oid, int fd,
+ 				     const char *path, unsigned flags)
  {
--	unsigned char peeled[20];
-+	struct object_id peeled;
- 	struct object_entry *entry = packlist_find(&to_pack, oid->hash, NULL);
+ 	int ret;
+@@ -1718,22 +1718,22 @@ static int index_stream_convert_blob(unsigned char *sha1, int fd,
  
- 	if (entry)
- 		entry->tagged = 1;
--	if (!peel_ref(path, peeled)) {
--		entry = packlist_find(&to_pack, peeled, NULL);
-+	if (!peel_ref(path, peeled.hash)) {
-+		entry = packlist_find(&to_pack, peeled.hash, NULL);
- 		if (entry)
- 			entry->tagged = 1;
- 	}
-@@ -792,7 +792,7 @@ static void write_pack_file(void)
- 	write_order = compute_write_order();
+ 	if (write_object)
+ 		ret = write_sha1_file(sbuf.buf, sbuf.len, typename(OBJ_BLOB),
+-				      sha1);
++				      oid->hash);
+ 	else
+ 		ret = hash_sha1_file(sbuf.buf, sbuf.len, typename(OBJ_BLOB),
+-				     sha1);
++				     oid->hash);
+ 	strbuf_release(&sbuf);
+ 	return ret;
+ }
  
- 	do {
--		unsigned char sha1[20];
-+		struct object_id oid;
- 		char *pack_tmp_name = NULL;
- 
- 		if (pack_to_stdout)
-@@ -823,13 +823,13 @@ static void write_pack_file(void)
- 		 * If so, rewrite it like in fast-import
- 		 */
- 		if (pack_to_stdout) {
--			sha1close(f, sha1, CSUM_CLOSE);
-+			sha1close(f, oid.hash, CSUM_CLOSE);
- 		} else if (nr_written == nr_remaining) {
--			sha1close(f, sha1, CSUM_FSYNC);
-+			sha1close(f, oid.hash, CSUM_FSYNC);
- 		} else {
--			int fd = sha1close(f, sha1, 0);
--			fixup_pack_header_footer(fd, sha1, pack_tmp_name,
--						 nr_written, sha1, offset);
-+			int fd = sha1close(f, oid.hash, 0);
-+			fixup_pack_header_footer(fd, oid.hash, pack_tmp_name,
-+						 nr_written, oid.hash, offset);
- 			close(fd);
- 			if (write_bitmap_index) {
- 				warning(_(no_split_warning));
-@@ -863,16 +863,16 @@ static void write_pack_file(void)
- 			strbuf_addf(&tmpname, "%s-", base_name);
- 
- 			if (write_bitmap_index) {
--				bitmap_writer_set_checksum(sha1);
-+				bitmap_writer_set_checksum(oid.hash);
- 				bitmap_writer_build_type_index(written_list, nr_written);
- 			}
- 
- 			finish_tmp_packfile(&tmpname, pack_tmp_name,
- 					    written_list, nr_written,
--					    &pack_idx_opts, sha1);
-+					    &pack_idx_opts, oid.hash);
- 
- 			if (write_bitmap_index) {
--				strbuf_addf(&tmpname, "%s.bitmap", sha1_to_hex(sha1));
-+				strbuf_addf(&tmpname, "%s.bitmap", oid_to_hex(&oid));
- 
- 				stop_progress(&progress_state);
- 
-@@ -887,7 +887,7 @@ static void write_pack_file(void)
- 
- 			strbuf_release(&tmpname);
- 			free(pack_tmp_name);
--			puts(sha1_to_hex(sha1));
-+			puts(oid_to_hex(&oid));
- 		}
- 
- 		/* mark written objects as written to previous pack */
-@@ -928,13 +928,13 @@ static int no_try_delta(const char *path)
-  * found the item, since that saves us from having to look it up again a
-  * few lines later when we want to add the new entry.
-  */
--static int have_duplicate_entry(const unsigned char *sha1,
-+static int have_duplicate_entry(const struct object_id *oid,
- 				int exclude,
- 				uint32_t *index_pos)
+-static int index_pipe(unsigned char *sha1, int fd, enum object_type type,
++static int index_pipe(struct object_id *oid, int fd, enum object_type type,
+ 		      const char *path, unsigned flags)
  {
- 	struct object_entry *entry;
+ 	struct strbuf sbuf = STRBUF_INIT;
+ 	int ret;
  
--	entry = packlist_find(&to_pack, sha1, index_pos);
-+	entry = packlist_find(&to_pack, oid->hash, index_pos);
- 	if (!entry)
- 		return 0;
+ 	if (strbuf_read(&sbuf, fd, 4096) >= 0)
+-		ret = index_mem(sha1, sbuf.buf, sbuf.len, type,	path, flags);
++		ret = index_mem(oid, sbuf.buf, sbuf.len, type, path, flags);
+ 	else
+ 		ret = -1;
+ 	strbuf_release(&sbuf);
+@@ -1742,14 +1742,14 @@ static int index_pipe(unsigned char *sha1, int fd, enum object_type type,
  
-@@ -990,7 +990,7 @@ static int want_found_object(int exclude, struct packed_git *p)
-  * function finds if there is any pack that has the object and returns the pack
-  * and its offset in these variables.
-  */
--static int want_object_in_pack(const unsigned char *sha1,
-+static int want_object_in_pack(const struct object_id *oid,
- 			       int exclude,
- 			       struct packed_git **found_pack,
- 			       off_t *found_offset)
-@@ -998,7 +998,7 @@ static int want_object_in_pack(const unsigned char *sha1,
- 	struct mru_entry *entry;
- 	int want;
+ #define SMALL_FILE_SIZE (32*1024)
  
--	if (!exclude && local && has_loose_object_nonlocal(sha1))
-+	if (!exclude && local && has_loose_object_nonlocal(oid->hash))
- 		return 0;
+-static int index_core(unsigned char *sha1, int fd, size_t size,
++static int index_core(struct object_id *oid, int fd, size_t size,
+ 		      enum object_type type, const char *path,
+ 		      unsigned flags)
+ {
+ 	int ret;
  
- 	/*
-@@ -1019,7 +1019,7 @@ static int want_object_in_pack(const unsigned char *sha1,
- 		if (p == *found_pack)
- 			offset = *found_offset;
+ 	if (!size) {
+-		ret = index_mem(sha1, "", size, type, path, flags);
++		ret = index_mem(oid, "", size, type, path, flags);
+ 	} else if (size <= SMALL_FILE_SIZE) {
+ 		char *buf = xmalloc(size);
+ 		ssize_t read_result = read_in_full(fd, buf, size);
+@@ -1760,11 +1760,11 @@ static int index_core(unsigned char *sha1, int fd, size_t size,
+ 			ret = error("short read while indexing %s",
+ 				    path ? path : "<unknown>");
  		else
--			offset = find_pack_entry_one(sha1, p);
-+			offset = find_pack_entry_one(oid->hash, p);
- 
- 		if (offset) {
- 			if (!*found_pack) {
-@@ -1039,7 +1039,7 @@ static int want_object_in_pack(const unsigned char *sha1,
- 	return 1;
- }
- 
--static void create_object_entry(const unsigned char *sha1,
-+static void create_object_entry(const struct object_id *oid,
- 				enum object_type type,
- 				uint32_t hash,
- 				int exclude,
-@@ -1050,7 +1050,7 @@ static void create_object_entry(const unsigned char *sha1,
- {
- 	struct object_entry *entry;
- 
--	entry = packlist_alloc(&to_pack, sha1, index_pos);
-+	entry = packlist_alloc(&to_pack, oid->hash, index_pos);
- 	entry->hash = hash;
- 	if (type)
- 		entry->type = type;
-@@ -1070,17 +1070,17 @@ static const char no_closure_warning[] = N_(
- "disabling bitmap writing, as some objects are not being packed"
- );
- 
--static int add_object_entry(const unsigned char *sha1, enum object_type type,
-+static int add_object_entry(const struct object_id *oid, enum object_type type,
- 			    const char *name, int exclude)
- {
- 	struct packed_git *found_pack = NULL;
- 	off_t found_offset = 0;
- 	uint32_t index_pos;
- 
--	if (have_duplicate_entry(sha1, exclude, &index_pos))
-+	if (have_duplicate_entry(oid, exclude, &index_pos))
- 		return 0;
- 
--	if (!want_object_in_pack(sha1, exclude, &found_pack, &found_offset)) {
-+	if (!want_object_in_pack(oid, exclude, &found_pack, &found_offset)) {
- 		/* The pack is missing an object, so it will not have closure */
- 		if (write_bitmap_index) {
- 			warning(_(no_closure_warning));
-@@ -1089,7 +1089,7 @@ static int add_object_entry(const unsigned char *sha1, enum object_type type,
- 		return 0;
+-			ret = index_mem(sha1, buf, size, type, path, flags);
++			ret = index_mem(oid, buf, size, type, path, flags);
+ 		free(buf);
+ 	} else {
+ 		void *buf = xmmap(NULL, size, PROT_READ, MAP_PRIVATE, fd, 0);
+-		ret = index_mem(sha1, buf, size, type, path, flags);
++		ret = index_mem(oid, buf, size, type, path, flags);
+ 		munmap(buf, size);
  	}
- 
--	create_object_entry(sha1, type, pack_name_hash(name),
-+	create_object_entry(oid, type, pack_name_hash(name),
- 			    exclude, name && no_try_delta(name),
- 			    index_pos, found_pack, found_offset);
- 
-@@ -1104,20 +1104,20 @@ static int add_object_entry_from_bitmap(const struct object_id *oid,
- {
- 	uint32_t index_pos;
- 
--	if (have_duplicate_entry(oid->hash, 0, &index_pos))
-+	if (have_duplicate_entry(oid, 0, &index_pos))
- 		return 0;
- 
--	if (!want_object_in_pack(oid->hash, 0, &pack, &offset))
-+	if (!want_object_in_pack(oid, 0, &pack, &offset))
- 		return 0;
- 
--	create_object_entry(oid->hash, type, name_hash, 0, 0, index_pos, pack, offset);
-+	create_object_entry(oid, type, name_hash, 0, 0, index_pos, pack, offset);
- 
- 	display_progress(progress_state, nr_result);
- 	return 1;
- }
- 
- struct pbase_tree_cache {
--	unsigned char sha1[20];
-+	struct object_id oid;
- 	int ref;
- 	int temporary;
- 	void *tree_data;
-@@ -1125,9 +1125,9 @@ struct pbase_tree_cache {
- };
- 
- static struct pbase_tree_cache *(pbase_tree_cache[256]);
--static int pbase_tree_cache_ix(const unsigned char *sha1)
-+static int pbase_tree_cache_ix(const struct object_id *oid)
- {
--	return sha1[0] % ARRAY_SIZE(pbase_tree_cache);
-+	return oid->hash[0] % ARRAY_SIZE(pbase_tree_cache);
- }
- static int pbase_tree_cache_ix_incr(int ix)
- {
-@@ -1144,14 +1144,14 @@ static struct pbase_tree {
- 	struct pbase_tree_cache pcache;
- } *pbase_tree;
- 
--static struct pbase_tree_cache *pbase_tree_get(const unsigned char *sha1)
-+static struct pbase_tree_cache *pbase_tree_get(const struct object_id *oid)
- {
- 	struct pbase_tree_cache *ent, *nent;
- 	void *data;
- 	unsigned long size;
- 	enum object_type type;
- 	int neigh;
--	int my_ix = pbase_tree_cache_ix(sha1);
-+	int my_ix = pbase_tree_cache_ix(oid);
- 	int available_ix = -1;
- 
- 	/* pbase-tree-cache acts as a limited hashtable.
-@@ -1160,7 +1160,7 @@ static struct pbase_tree_cache *pbase_tree_get(const unsigned char *sha1)
+ 	return ret;
+@@ -1802,12 +1802,12 @@ int index_fd(struct object_id *oid, int fd, struct stat *st,
+ 	 * die() for large files.
  	 */
- 	for (neigh = 0; neigh < 8; neigh++) {
- 		ent = pbase_tree_cache[my_ix];
--		if (ent && !hashcmp(ent->sha1, sha1)) {
-+		if (ent && !oidcmp(&ent->oid, oid)) {
- 			ent->ref++;
- 			return ent;
- 		}
-@@ -1176,7 +1176,7 @@ static struct pbase_tree_cache *pbase_tree_get(const unsigned char *sha1)
- 	/* Did not find one.  Either we got a bogus request or
- 	 * we need to read and perhaps cache.
- 	 */
--	data = read_sha1_file(sha1, &type, &size);
-+	data = read_sha1_file(oid->hash, &type, &size);
- 	if (!data)
- 		return NULL;
- 	if (type != OBJ_TREE) {
-@@ -1202,7 +1202,7 @@ static struct pbase_tree_cache *pbase_tree_get(const unsigned char *sha1)
- 		free(ent->tree_data);
- 		nent = ent;
- 	}
--	hashcpy(nent->sha1, sha1);
-+	oidcpy(&nent->oid, oid);
- 	nent->tree_data = data;
- 	nent->tree_size = size;
- 	nent->ref = 1;
-@@ -1247,7 +1247,7 @@ static void add_pbase_object(struct tree_desc *tree,
- 		if (cmp < 0)
- 			return;
- 		if (name[cmplen] != '/') {
--			add_object_entry(entry.oid->hash,
-+			add_object_entry(entry.oid,
- 					 object_type(entry.mode),
- 					 fullname, 1);
- 			return;
-@@ -1258,7 +1258,7 @@ static void add_pbase_object(struct tree_desc *tree,
- 			const char *down = name+cmplen+1;
- 			int downlen = name_cmp_len(down);
- 
--			tree = pbase_tree_get(entry.oid->hash);
-+			tree = pbase_tree_get(entry.oid);
- 			if (!tree)
- 				return;
- 			init_tree_desc(&sub, tree->tree_data, tree->tree_size);
-@@ -1317,7 +1317,7 @@ static void add_preferred_base_object(const char *name)
- 	cmplen = name_cmp_len(name);
- 	for (it = pbase_tree; it; it = it->next) {
- 		if (cmplen == 0) {
--			add_object_entry(it->pcache.sha1, OBJ_TREE, NULL, 1);
-+			add_object_entry(&it->pcache.oid, OBJ_TREE, NULL, 1);
- 		}
- 		else {
- 			struct tree_desc tree;
-@@ -1327,22 +1327,22 @@ static void add_preferred_base_object(const char *name)
- 	}
- }
- 
--static void add_preferred_base(unsigned char *sha1)
-+static void add_preferred_base(struct object_id *oid)
- {
- 	struct pbase_tree *it;
- 	void *data;
- 	unsigned long size;
--	unsigned char tree_sha1[20];
-+	struct object_id tree_oid;
- 
- 	if (window <= num_preferred_base++)
- 		return;
- 
--	data = read_object_with_reference(sha1, tree_type, &size, tree_sha1);
-+	data = read_object_with_reference(oid->hash, tree_type, &size, tree_oid.hash);
- 	if (!data)
- 		return;
- 
- 	for (it = pbase_tree; it; it = it->next) {
--		if (!hashcmp(it->pcache.sha1, tree_sha1)) {
-+		if (!oidcmp(&it->pcache.oid, &tree_oid)) {
- 			free(data);
- 			return;
- 		}
-@@ -1352,7 +1352,7 @@ static void add_preferred_base(unsigned char *sha1)
- 	it->next = pbase_tree;
- 	pbase_tree = it;
- 
--	hashcpy(it->pcache.sha1, tree_sha1);
-+	oidcpy(&it->pcache.oid, &tree_oid);
- 	it->pcache.tree_data = data;
- 	it->pcache.tree_size = size;
- }
-@@ -2357,7 +2357,7 @@ static void add_tag_chain(const struct object_id *oid)
- 			die("unable to pack objects reachable from tag %s",
- 			    oid_to_hex(oid));
- 
--		add_object_entry(tag->object.oid.hash, OBJ_TAG, NULL, 0);
-+		add_object_entry(&tag->object.oid, OBJ_TAG, NULL, 0);
- 
- 		if (tag->tagged->type != OBJ_TAG)
- 			return;
-@@ -2505,8 +2505,9 @@ static int git_pack_config(const char *k, const char *v, void *cb)
- 
- static void read_object_list_from_stdin(void)
- {
--	char line[40 + 1 + PATH_MAX + 2];
--	unsigned char sha1[20];
-+	char line[GIT_MAX_HEXSZ + 1 + PATH_MAX + 2];
-+	struct object_id oid;
-+	const char *p;
- 
- 	for (;;) {
- 		if (!fgets(line, sizeof(line), stdin)) {
-@@ -2520,17 +2521,17 @@ static void read_object_list_from_stdin(void)
- 			continue;
- 		}
- 		if (line[0] == '-') {
--			if (get_sha1_hex(line+1, sha1))
--				die("expected edge sha1, got garbage:\n %s",
-+			if (get_oid_hex(line+1, &oid))
-+				die("expected edge object ID, got garbage:\n %s",
- 				    line);
--			add_preferred_base(sha1);
-+			add_preferred_base(&oid);
- 			continue;
- 		}
--		if (get_sha1_hex(line, sha1))
--			die("expected sha1, got garbage:\n %s", line);
-+		if (parse_oid_hex(line, &oid, &p))
-+			die("expected object ID, got garbage:\n %s", line);
- 
--		add_preferred_base_object(line+41);
--		add_object_entry(sha1, 0, line+41, 0);
-+		add_preferred_base_object(p + 1);
-+		add_object_entry(&oid, 0, p + 1, 0);
- 	}
- }
- 
-@@ -2538,7 +2539,7 @@ static void read_object_list_from_stdin(void)
- 
- static void show_commit(struct commit *commit, void *data)
- {
--	add_object_entry(commit->object.oid.hash, OBJ_COMMIT, NULL, 0);
-+	add_object_entry(&commit->object.oid, OBJ_COMMIT, NULL, 0);
- 	commit->object.flags |= OBJECT_ADDED;
- 
- 	if (write_bitmap_index)
-@@ -2548,13 +2549,13 @@ static void show_commit(struct commit *commit, void *data)
- static void show_object(struct object *obj, const char *name, void *data)
- {
- 	add_preferred_base_object(name);
--	add_object_entry(obj->oid.hash, obj->type, name, 0);
-+	add_object_entry(&obj->oid, obj->type, name, 0);
- 	obj->flags |= OBJECT_ADDED;
- }
- 
- static void show_edge(struct commit *commit)
- {
--	add_preferred_base(commit->object.oid.hash);
-+	add_preferred_base(&commit->object.oid);
- }
- 
- struct in_pack_object {
-@@ -2601,7 +2602,7 @@ static void add_objects_in_unpacked_packs(struct rev_info *revs)
- 	memset(&in_pack, 0, sizeof(in_pack));
- 
- 	for (p = packed_git; p; p = p->next) {
--		const unsigned char *sha1;
-+		struct object_id oid;
- 		struct object *o;
- 
- 		if (!p->pack_local || p->pack_keep)
-@@ -2614,8 +2615,8 @@ static void add_objects_in_unpacked_packs(struct rev_info *revs)
- 			   in_pack.alloc);
- 
- 		for (i = 0; i < p->num_objects; i++) {
--			sha1 = nth_packed_object_sha1(p, i);
--			o = lookup_unknown_object(sha1);
-+			nth_packed_object_oid(&oid, p, i);
-+			o = lookup_unknown_object(oid.hash);
- 			if (!(o->flags & OBJECT_ADDED))
- 				mark_in_pack_object(o, p, &in_pack);
- 			o->flags |= OBJECT_ADDED;
-@@ -2626,7 +2627,7 @@ static void add_objects_in_unpacked_packs(struct rev_info *revs)
- 		QSORT(in_pack.array, in_pack.nr, ofscmp);
- 		for (i = 0; i < in_pack.nr; i++) {
- 			struct object *o = in_pack.array[i].object;
--			add_object_entry(o->oid.hash, o->type, "", 0);
-+			add_object_entry(&o->oid, o->type, "", 0);
- 		}
- 	}
- 	free(in_pack.array);
-@@ -2642,7 +2643,7 @@ static int add_loose_object(const struct object_id *oid, const char *path,
- 		return 0;
- 	}
- 
--	add_object_entry(oid->hash, type, "", 0);
-+	add_object_entry(oid, type, "", 0);
- 	return 0;
- }
- 
-@@ -2658,7 +2659,7 @@ static void add_unreachable_loose_objects(void)
- 				      NULL, NULL, NULL);
- }
- 
--static int has_sha1_pack_kept_or_nonlocal(const unsigned char *sha1)
-+static int has_sha1_pack_kept_or_nonlocal(const struct object_id *oid)
- {
- 	static struct packed_git *last_found = (void *)1;
- 	struct packed_git *p;
-@@ -2667,7 +2668,7 @@ static int has_sha1_pack_kept_or_nonlocal(const unsigned char *sha1)
- 
- 	while (p) {
- 		if ((!p->pack_local || p->pack_keep) &&
--			find_pack_entry_one(sha1, p)) {
-+			find_pack_entry_one(oid->hash, p)) {
- 			last_found = p;
- 			return 1;
- 		}
-@@ -2718,7 +2719,7 @@ static void loosen_unused_packed_objects(struct rev_info *revs)
- 		for (i = 0; i < p->num_objects; i++) {
- 			nth_packed_object_oid(&oid, p, i);
- 			if (!packlist_find(&to_pack, oid.hash, NULL) &&
--			    !has_sha1_pack_kept_or_nonlocal(oid.hash) &&
-+			    !has_sha1_pack_kept_or_nonlocal(&oid) &&
- 			    !loosened_object_can_be_discarded(&oid, p->mtime))
- 				if (force_object_loose(oid.hash, p->mtime))
- 					die("unable to force loose object");
+ 	if (type == OBJ_BLOB && path && would_convert_to_git_filter_fd(path))
+-		ret = index_stream_convert_blob(oid->hash, fd, path, flags);
++		ret = index_stream_convert_blob(oid, fd, path, flags);
+ 	else if (!S_ISREG(st->st_mode))
+-		ret = index_pipe(oid->hash, fd, type, path, flags);
++		ret = index_pipe(oid, fd, type, path, flags);
+ 	else if (st->st_size <= big_file_threshold || type != OBJ_BLOB ||
+ 		 (path && would_convert_to_git(&the_index, path)))
+-		ret = index_core(oid->hash, fd, xsize_t(st->st_size), type, path,
++		ret = index_core(oid, fd, xsize_t(st->st_size), type, path,
+ 				 flags);
+ 	else
+ 		ret = index_stream(oid, fd, xsize_t(st->st_size), type, path,
 -- 
 2.15.0.rc0.271.g36b669edcc
 
