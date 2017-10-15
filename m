@@ -6,43 +6,43 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4072520372
-	for <e@80x24.org>; Sun, 15 Oct 2017 22:07:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B40B220372
+	for <e@80x24.org>; Sun, 15 Oct 2017 22:07:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751541AbdJOWHp (ORCPT <rfc822;e@80x24.org>);
-        Sun, 15 Oct 2017 18:07:45 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:55044 "EHLO
+        id S1751619AbdJOWHv (ORCPT <rfc822;e@80x24.org>);
+        Sun, 15 Oct 2017 18:07:51 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:55054 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751461AbdJOWHn (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 15 Oct 2017 18:07:43 -0400
+        by vger.kernel.org with ESMTP id S1751512AbdJOWHp (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 15 Oct 2017 18:07:45 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 524D86044F;
-        Sun, 15 Oct 2017 22:07:42 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 5F48F60450;
+        Sun, 15 Oct 2017 22:07:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1508105262;
-        bh=ErBPOwRLncEDjIjg30/sapSM4fJrEj6Pv7UDf3PXXy4=;
+        s=default; t=1508105264;
+        bh=jaSP0MKhX0yXZJ/G2Uh2FBM5E8RO64QpIdQjRzRNKNA=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=Ycqi4oXRCMo4lNYepl5XpmI3plyJXj5447owaMrAiw0eivM1IsoxjzMbADUff9i77
-         rkUH3jnX5t7xasXRyPvUk/qNAzPyJTZFgIklW7boiP6h6FBpaa9otxjX3fRjKM4Vid
-         Ly7g40OwAc/gXqmvyexv584zWfRzqcmDJqZlDPYTr5jYg0hgAHmlJrJI2Ogo2s+Ud7
-         r6Gpqq5n4+joAQn4Gjd+KlBmOt2BhQwQnlGWCe7wVOVjl7r7XcNecKjudks6CpJeDU
-         SxYMcEgQDnzJIS+C0Q2Wk+F1Z8xbMTKjA82MX0VDztaQD8Ik2msTdT39byJ18QDCfr
-         KueWHPRjVheR8FRq4UrRlUpbdh/u6eyUUQ+ilQ1+gR92XkvpLhJn1Q26qNwFyhonNM
-         ENf69S0Nb4UdGvzz7jMxYfO+UykhGJGes6eRdKSwTeyd8FK0Hoo9wuGNkSdRJII6f+
-         6yLSNH6QBZv+nxaFHandYtAqzhZ3T4qeY5mthm/gwihzydP9iNg
+        b=T7pj4/7ED4nbGFu39zUiO28YRRyZG7mTV4wWHiYTMag3b8+doenL6EbYO6RIhQrOC
+         qv8mu7Ggvc0BKsuL0bSikKQtjCDdWHNQIqSlaED4tsIX8GaubCZ4zPY1LhkWJN1Tv6
+         VzxqqkQjWAhfov9Hs6rN29BY0lrpHAKXaaHDF0rPjmAQoCw4weFcnnNHVcHg2fWmPj
+         awNpbaGfYwddyEa3Vtkb2hcp9EycwU6wPbjtipk6Pf6iWSCCQP0ScyiMP57tePmCqS
+         26IlztD4tP12u7nvIht0/+mQYNFG+P8MPTJkdzaJXfT3xA6KAXZDPXr56ma/XKc7iD
+         aqdup+7O/JzUkxmiwuguwqqxyMHY+z/0lHvCo8tfptSrqjCx0UNmvK8rE5FlRJHijK
+         a/aamnOcPyN+G8KQTgedQvmbW+NoV6M9EBzzSMKIC8EwuTwlK2U3nFIEYBgwNEkHTR
+         wWMTzjd+SYXT1C+AP9uCOiQ57iNwaOf8GOehWRImrVESR1MBZGZ
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
         Brandon Williams <bmwill@google.com>,
         Stefan Beller <sbeller@google.com>,
         Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH v3 07/25] Convert check_connected to use struct object_id
-Date:   Sun, 15 Oct 2017 22:06:54 +0000
-Message-Id: <20171015220712.97308-8-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 08/25] refs: convert resolve_refdup and refs_resolve_refdup to struct object_id
+Date:   Sun, 15 Oct 2017 22:06:55 +0000
+Message-Id: <20171015220712.97308-9-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.15.0.rc0.271.g36b669edcc
 In-Reply-To: <20171015220712.97308-1-sandals@crustytoothpaste.net>
 References: <20171015220712.97308-1-sandals@crustytoothpaste.net>
@@ -52,194 +52,245 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert check_connected and the callbacks it takes to use struct
-object_id.
+All of the callers already pass the hash member of struct object_id, so
+update them to pass a pointer to the struct directly,
+
+This transformation was done with an update to declaration and
+definition and the following semantic patch:
+
+@@
+expression E1, E2, E3, E4;
+@@
+- resolve_refdup(E1, E2, E3.hash, E4)
++ resolve_refdup(E1, E2, &E3, E4)
+
+@@
+expression E1, E2, E3, E4;
+@@
+- resolve_refdup(E1, E2, E3->hash, E4)
++ resolve_refdup(E1, E2, E3, E4)
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/clone.c        |  4 ++--
- builtin/fetch.c        |  4 ++--
- builtin/receive-pack.c | 10 +++++-----
- connected.c            | 18 +++++++++---------
- connected.h            |  4 ++--
- 5 files changed, 20 insertions(+), 20 deletions(-)
+ builtin/am.c                | 2 +-
+ builtin/branch.c            | 6 +++---
+ builtin/checkout.c          | 2 +-
+ builtin/clone.c             | 2 +-
+ builtin/fmt-merge-msg.c     | 2 +-
+ builtin/merge.c             | 2 +-
+ builtin/notes.c             | 2 +-
+ builtin/show-branch.c       | 6 +++---
+ builtin/submodule--helper.c | 2 +-
+ refs.c                      | 8 ++++----
+ refs.h                      | 4 ++--
+ submodule.c                 | 2 +-
+ 12 files changed, 20 insertions(+), 20 deletions(-)
 
+diff --git a/builtin/am.c b/builtin/am.c
+index 32120f42df..c9bb14a6c2 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -2135,7 +2135,7 @@ static void am_abort(struct am_state *state)
+ 
+ 	am_rerere_clear();
+ 
+-	curr_branch = resolve_refdup("HEAD", 0, curr_head.hash, NULL);
++	curr_branch = resolve_refdup("HEAD", 0, &curr_head, NULL);
+ 	has_curr_head = curr_branch && !is_null_oid(&curr_head);
+ 	if (!has_curr_head)
+ 		hashcpy(curr_head.hash, EMPTY_TREE_SHA1_BIN);
+diff --git a/builtin/branch.c b/builtin/branch.c
+index f5237541a2..c5f88b59ef 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -125,7 +125,7 @@ static int branch_merged(int kind, const char *name,
+ 		if (upstream &&
+ 		    (reference_name = reference_name_to_free =
+ 		     resolve_refdup(upstream, RESOLVE_REF_READING,
+-				    oid.hash, NULL)) != NULL)
++				    &oid, NULL)) != NULL)
+ 			reference_rev = lookup_commit_reference(&oid);
+ 	}
+ 	if (!reference_rev)
+@@ -241,7 +241,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+ 					RESOLVE_REF_READING
+ 					| RESOLVE_REF_NO_RECURSE
+ 					| RESOLVE_REF_ALLOW_BAD_NAME,
+-					oid.hash, &flags);
++					&oid, &flags);
+ 		if (!target) {
+ 			error(remote_branch
+ 			      ? _("remote-tracking branch '%s' not found.")
+@@ -636,7 +636,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 
+ 	track = git_branch_track;
+ 
+-	head = resolve_refdup("HEAD", 0, head_oid.hash, NULL);
++	head = resolve_refdup("HEAD", 0, &head_oid, NULL);
+ 	if (!head)
+ 		die(_("Failed to resolve HEAD as a valid ref."));
+ 	if (!strcmp(head, "HEAD"))
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 2bb009ec0e..c33dbb70fb 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -827,7 +827,7 @@ static int switch_branches(const struct checkout_opts *opts,
+ 	struct object_id rev;
+ 	int flag, writeout_error = 0;
+ 	memset(&old, 0, sizeof(old));
+-	old.path = path_to_free = resolve_refdup("HEAD", 0, rev.hash, &flag);
++	old.path = path_to_free = resolve_refdup("HEAD", 0, &rev, &flag);
+ 	if (old.path)
+ 		old.commit = lookup_commit_reference_gently(&rev, 1);
+ 	if (!(flag & REF_ISSYMREF))
 diff --git a/builtin/clone.c b/builtin/clone.c
-index 665a0e2673..5cd1b02d53 100644
+index 5cd1b02d53..695bdd7046 100644
 --- a/builtin/clone.c
 +++ b/builtin/clone.c
-@@ -615,7 +615,7 @@ static void write_followtags(const struct ref *refs, const char *msg)
+@@ -715,7 +715,7 @@ static int checkout(int submodule_progress)
+ 	if (option_no_checkout)
+ 		return 0;
+ 
+-	head = resolve_refdup("HEAD", RESOLVE_REF_READING, oid.hash, NULL);
++	head = resolve_refdup("HEAD", RESOLVE_REF_READING, &oid, NULL);
+ 	if (!head) {
+ 		warning(_("remote HEAD refers to nonexistent ref, "
+ 			  "unable to checkout.\n"));
+diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
+index e99b5ddbf9..b69f7d3be2 100644
+--- a/builtin/fmt-merge-msg.c
++++ b/builtin/fmt-merge-msg.c
+@@ -603,7 +603,7 @@ int fmt_merge_msg(struct strbuf *in, struct strbuf *out,
+ 
+ 	/* get current branch */
+ 	current_branch = current_branch_to_free =
+-		resolve_refdup("HEAD", RESOLVE_REF_READING, head_oid.hash, NULL);
++		resolve_refdup("HEAD", RESOLVE_REF_READING, &head_oid, NULL);
+ 	if (!current_branch)
+ 		die("No current branch");
+ 	if (starts_with(current_branch, "refs/heads/"))
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 99d4b873f0..99d2df965f 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -1142,7 +1142,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 	 * Check if we are _not_ on a detached HEAD, i.e. if there is a
+ 	 * current branch.
+ 	 */
+-	branch = branch_to_free = resolve_refdup("HEAD", 0, head_oid.hash, NULL);
++	branch = branch_to_free = resolve_refdup("HEAD", 0, &head_oid, NULL);
+ 	if (branch)
+ 		skip_prefix(branch, "refs/heads/", &branch);
+ 	if (!branch || is_null_oid(&head_oid))
+diff --git a/builtin/notes.c b/builtin/notes.c
+index 8276af419b..12afdf1907 100644
+--- a/builtin/notes.c
++++ b/builtin/notes.c
+@@ -724,7 +724,7 @@ static int merge_commit(struct notes_merge_options *o)
+ 	init_notes(t, "NOTES_MERGE_PARTIAL", combine_notes_overwrite, 0);
+ 
+ 	o->local_ref = local_ref_to_free =
+-		resolve_refdup("NOTES_MERGE_REF", 0, oid.hash, NULL);
++		resolve_refdup("NOTES_MERGE_REF", 0, &oid, NULL);
+ 	if (!o->local_ref)
+ 		die(_("failed to resolve NOTES_MERGE_REF"));
+ 
+diff --git a/builtin/show-branch.c b/builtin/show-branch.c
+index 84547d6fba..0237be4975 100644
+--- a/builtin/show-branch.c
++++ b/builtin/show-branch.c
+@@ -705,8 +705,8 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
+ 			static const char *fake_av[2];
+ 
+ 			fake_av[0] = resolve_refdup("HEAD",
+-						    RESOLVE_REF_READING,
+-						    oid.hash, NULL);
++						    RESOLVE_REF_READING, &oid,
++						    NULL);
+ 			fake_av[1] = NULL;
+ 			av = fake_av;
+ 			ac = 1;
+@@ -775,7 +775,7 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
  	}
- }
  
--static int iterate_ref_map(void *cb_data, unsigned char sha1[20])
-+static int iterate_ref_map(void *cb_data, struct object_id *oid)
+ 	head = resolve_refdup("HEAD", RESOLVE_REF_READING,
+-			      head_oid.hash, NULL);
++			      &head_oid, NULL);
+ 
+ 	if (with_current_branch && head) {
+ 		int has_head = 0;
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 06ed02f994..5946a7ca93 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -1144,7 +1144,7 @@ static int push_check(int argc, const char **argv, const char *prefix)
+ 	argv++;
+ 	argc--;
+ 	/* Get the submodule's head ref and determine if it is detached */
+-	head = resolve_refdup("HEAD", 0, head_oid.hash, NULL);
++	head = resolve_refdup("HEAD", 0, &head_oid, NULL);
+ 	if (!head)
+ 		die(_("Failed to resolve HEAD as a valid ref."));
+ 	if (!strcmp(head, "HEAD"))
+diff --git a/refs.c b/refs.c
+index db4988ab3c..3bca4c273b 100644
+--- a/refs.c
++++ b/refs.c
+@@ -194,21 +194,21 @@ int ref_resolves_to_object(const char *refname,
+ 
+ char *refs_resolve_refdup(struct ref_store *refs,
+ 			  const char *refname, int resolve_flags,
+-			  unsigned char *sha1, int *flags)
++			  struct object_id *oid, int *flags)
  {
- 	struct ref **rm = cb_data;
- 	struct ref *ref = *rm;
-@@ -630,7 +630,7 @@ static int iterate_ref_map(void *cb_data, unsigned char sha1[20])
- 	if (!ref)
- 		return -1;
+ 	const char *result;
  
--	hashcpy(sha1, ref->old_oid.hash);
-+	oidcpy(oid, &ref->old_oid);
- 	*rm = ref->next;
- 	return 0;
- }
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 859be91d6c..e705237fa9 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -727,7 +727,7 @@ static int update_local_ref(struct ref *ref,
- 	}
+ 	result = refs_resolve_ref_unsafe(refs, refname, resolve_flags,
+-					 sha1, flags);
++					 oid->hash, flags);
+ 	return xstrdup_or_null(result);
  }
  
--static int iterate_ref_map(void *cb_data, unsigned char sha1[20])
-+static int iterate_ref_map(void *cb_data, struct object_id *oid)
+ char *resolve_refdup(const char *refname, int resolve_flags,
+-		     unsigned char *sha1, int *flags)
++		     struct object_id *oid, int *flags)
  {
- 	struct ref **rm = cb_data;
- 	struct ref *ref = *rm;
-@@ -737,7 +737,7 @@ static int iterate_ref_map(void *cb_data, unsigned char sha1[20])
- 	if (!ref)
- 		return -1; /* end of the list */
- 	*rm = ref->next;
--	hashcpy(sha1, ref->old_oid.hash);
-+	oidcpy(oid, &ref->old_oid);
- 	return 0;
+ 	return refs_resolve_refdup(get_main_ref_store(),
+ 				   refname, resolve_flags,
+-				   sha1, flags);
++				   oid, flags);
  }
  
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 2da3c4cd5c..4d37a160d7 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -870,7 +870,7 @@ static void refuse_unconfigured_deny_delete_current(void)
- 	rp_error("%s", _(refuse_unconfigured_deny_delete_current_msg));
- }
+ /* The argument to filter_refs */
+diff --git a/refs.h b/refs.h
+index 1fee56d132..8dd39eab72 100644
+--- a/refs.h
++++ b/refs.h
+@@ -69,9 +69,9 @@ const char *resolve_ref_unsafe(const char *refname, int resolve_flags,
  
--static int command_singleton_iterator(void *cb_data, unsigned char sha1[20]);
-+static int command_singleton_iterator(void *cb_data, struct object_id *oid);
- static int update_shallow_ref(struct command *cmd, struct shallow_info *si)
- {
- 	static struct lock_file shallow_lock;
-@@ -1270,7 +1270,7 @@ static void check_aliased_updates(struct command *commands)
- 	string_list_clear(&ref_list, 0);
- }
+ char *refs_resolve_refdup(struct ref_store *refs,
+ 			  const char *refname, int resolve_flags,
+-			  unsigned char *sha1, int *flags);
++			  struct object_id *oid, int *flags);
+ char *resolve_refdup(const char *refname, int resolve_flags,
+-		     unsigned char *sha1, int *flags);
++		     struct object_id *oid, int *flags);
  
--static int command_singleton_iterator(void *cb_data, unsigned char sha1[20])
-+static int command_singleton_iterator(void *cb_data, struct object_id *oid)
- {
- 	struct command **cmd_list = cb_data;
- 	struct command *cmd = *cmd_list;
-@@ -1278,7 +1278,7 @@ static int command_singleton_iterator(void *cb_data, unsigned char sha1[20])
- 	if (!cmd || is_null_oid(&cmd->new_oid))
- 		return -1; /* end of list */
- 	*cmd_list = NULL; /* this returns only one */
--	hashcpy(sha1, cmd->new_oid.hash);
-+	oidcpy(oid, &cmd->new_oid);
- 	return 0;
- }
+ int refs_read_ref_full(struct ref_store *refs, const char *refname,
+ 		       int resolve_flags, unsigned char *sha1, int *flags);
+diff --git a/submodule.c b/submodule.c
+index 63e7094e16..3b7be4cafe 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -1016,7 +1016,7 @@ int push_unpushed_submodules(struct oid_array *commits,
+ 		char *head;
+ 		struct object_id head_oid;
  
-@@ -1309,7 +1309,7 @@ struct iterate_data {
- 	struct shallow_info *si;
- };
+-		head = resolve_refdup("HEAD", 0, head_oid.hash, NULL);
++		head = resolve_refdup("HEAD", 0, &head_oid, NULL);
+ 		if (!head)
+ 			die(_("Failed to resolve HEAD as a valid ref."));
  
--static int iterate_receive_command_list(void *cb_data, unsigned char sha1[20])
-+static int iterate_receive_command_list(void *cb_data, struct object_id *oid)
- {
- 	struct iterate_data *data = cb_data;
- 	struct command **cmd_list = &data->cmds;
-@@ -1320,7 +1320,7 @@ static int iterate_receive_command_list(void *cb_data, unsigned char sha1[20])
- 			/* to be checked in update_shallow_ref() */
- 			continue;
- 		if (!is_null_oid(&cmd->new_oid) && !cmd->skip_update) {
--			hashcpy(sha1, cmd->new_oid.hash);
-+			oidcpy(oid, &cmd->new_oid);
- 			*cmd_list = cmd->next;
- 			return 0;
- 		}
-diff --git a/connected.c b/connected.c
-index f416b05051..4a47f33270 100644
---- a/connected.c
-+++ b/connected.c
-@@ -16,13 +16,13 @@
-  *
-  * Returns 0 if everything is connected, non-zero otherwise.
-  */
--int check_connected(sha1_iterate_fn fn, void *cb_data,
-+int check_connected(oid_iterate_fn fn, void *cb_data,
- 		    struct check_connected_options *opt)
- {
- 	struct child_process rev_list = CHILD_PROCESS_INIT;
- 	struct check_connected_options defaults = CHECK_CONNECTED_INIT;
--	char commit[41];
--	unsigned char sha1[20];
-+	char commit[GIT_MAX_HEXSZ + 1];
-+	struct object_id oid;
- 	int err = 0;
- 	struct packed_git *new_pack = NULL;
- 	struct transport *transport;
-@@ -32,7 +32,7 @@ int check_connected(sha1_iterate_fn fn, void *cb_data,
- 		opt = &defaults;
- 	transport = opt->transport;
- 
--	if (fn(cb_data, sha1)) {
-+	if (fn(cb_data, &oid)) {
- 		if (opt->err_fd)
- 			close(opt->err_fd);
- 		return err;
-@@ -77,7 +77,7 @@ int check_connected(sha1_iterate_fn fn, void *cb_data,
- 
- 	sigchain_push(SIGPIPE, SIG_IGN);
- 
--	commit[40] = '\n';
-+	commit[GIT_SHA1_HEXSZ] = '\n';
- 	do {
- 		/*
- 		 * If index-pack already checked that:
-@@ -87,17 +87,17 @@ int check_connected(sha1_iterate_fn fn, void *cb_data,
- 		 * are sure the ref is good and not sending it to
- 		 * rev-list for verification.
- 		 */
--		if (new_pack && find_pack_entry_one(sha1, new_pack))
-+		if (new_pack && find_pack_entry_one(oid.hash, new_pack))
- 			continue;
- 
--		memcpy(commit, sha1_to_hex(sha1), 40);
--		if (write_in_full(rev_list.in, commit, 41) < 0) {
-+		memcpy(commit, oid_to_hex(&oid), GIT_SHA1_HEXSZ);
-+		if (write_in_full(rev_list.in, commit, GIT_SHA1_HEXSZ + 1) < 0) {
- 			if (errno != EPIPE && errno != EINVAL)
- 				error_errno(_("failed write to rev-list"));
- 			err = -1;
- 			break;
- 		}
--	} while (!fn(cb_data, sha1));
-+	} while (!fn(cb_data, &oid));
- 
- 	if (close(rev_list.in))
- 		err = error_errno(_("failed to close rev-list's stdin"));
-diff --git a/connected.h b/connected.h
-index 4ca325f79d..a53f03a61a 100644
---- a/connected.h
-+++ b/connected.h
-@@ -8,7 +8,7 @@ struct transport;
-  * When called after returning the name for the last object, return -1
-  * to signal EOF, otherwise return 0.
-  */
--typedef int (*sha1_iterate_fn)(void *, unsigned char [20]);
-+typedef int (*oid_iterate_fn)(void *, struct object_id *oid);
- 
- /*
-  * Named-arguments struct for check_connected. All arguments are
-@@ -51,7 +51,7 @@ struct check_connected_options {
-  *
-  * If "opt" is NULL, behaves as if CHECK_CONNECTED_INIT was passed.
-  */
--int check_connected(sha1_iterate_fn fn, void *cb_data,
-+int check_connected(oid_iterate_fn fn, void *cb_data,
- 		    struct check_connected_options *opt);
- 
- #endif /* CONNECTED_H */
 -- 
 2.15.0.rc0.271.g36b669edcc
 
