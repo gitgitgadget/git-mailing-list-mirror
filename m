@@ -6,43 +6,43 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 33A4820372
-	for <e@80x24.org>; Sun, 15 Oct 2017 22:08:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F1BEB20372
+	for <e@80x24.org>; Sun, 15 Oct 2017 22:08:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751804AbdJOWIj (ORCPT <rfc822;e@80x24.org>);
-        Sun, 15 Oct 2017 18:08:39 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:55088 "EHLO
+        id S1751398AbdJOWHi (ORCPT <rfc822;e@80x24.org>);
+        Sun, 15 Oct 2017 18:07:38 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:54984 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751587AbdJOWHt (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 15 Oct 2017 18:07:49 -0400
+        by vger.kernel.org with ESMTP id S1751235AbdJOWHg (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 15 Oct 2017 18:07:36 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 54BF06045B;
-        Sun, 15 Oct 2017 22:07:48 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 57D4260449;
+        Sun, 15 Oct 2017 22:07:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1508105268;
-        bh=iVKmioAxcCnCdgziRN4BHodbQlm89OXa9D8k6f6NBAA=;
+        s=default; t=1508105255;
+        bh=JB2Y7TdL7tGwdZxXG6NNmucBDX09D1aBHeqEV9Sfqj8=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=t8LwrZe84StuoUY+3tA9oYt7AZAiH/09WJhMceLStB7Uf/858USX1HJHhmo2koIeR
-         833QFpydhlSRhs5PYBJsSmFlISH86K/HVir2jZ+gk5VYH2TkCYXcX4rkR8NtNOAIG/
-         z6QrB7NeFLtc+Io4UQjNcWter+X8aK5Tv1KnJzQO6HXYby/C2tQoAs6MWRSgiryunu
-         XFvwsYpMKynhqFiO6kmPvN7l0qlr6DoTBJ+LOWTg2Jm+Uxd484z43efsYbi+Ln2Z9E
-         hLvCSnmPQB2LBLBDuX/98s4MrxvdE5XJb0BEdcFi9mU7BbQfHf4e1YjEMbyfUmGHmu
-         sZUs+VFinxeeCOENiDf4lSeqeTxb29RanwTi3NgGl/3OziaZPS/YYu+zzKN00i7xx5
-         Wu03Ew/LZALtX0beoL8I4B+oigiMQuVEckTHREfnDLKENXdw6e3RON5UfUn0wL8kMb
-         TJgFu/1Lp+YnrPWvEUnM2+Nd2v7pllxkBNLieAWEjIdssBOzQi7
+        b=Kr9AKhBPF8aqPUvq+a81SJzfl5owWZKH5CmcGObwzggHAvLSOGG99Un6d0iH+m/Fj
+         hYl5JUejHRsYxI2YXRVsW4WMfW/vDmzqklvvRNhbvyDIeOXIzP7QrEHTsQTA/8hFrV
+         MdeLPXAe08SeU/H92K9+/JXNzbGWWmAp4ESKQug039FWWCZSOZF8WDAYNZUlNWLxM+
+         d9uM9UAXqBUHyhoXkGpkOwPsy9GDAhS/kU4LEBgo5uHzh/J7vwQnPBtr5Oh0d0mUE4
+         KM+uCAgxAr/YnE63GiM2zHWrEDy2eMvsCp2ZewpqYFeknxiUWm4gFY9dqx+J5LiGE7
+         29t64aVUVc81TTMNaNrOHghDMsuwkzghHNPt/9OcSpQ+Z+8eaEbmCbl5pdbWQg8b9L
+         QiQtKCt6Txx8EB4/cUHJyg8FOUWv4NGznpdbqnDn5fwbg/8RlkWuarYhcBaVujuole
+         pfgwbgXnVSwkmxXSKgYUfhMWx+rhcIeAmeu1pTI+ePBurz9a7AN
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
         Brandon Williams <bmwill@google.com>,
         Stefan Beller <sbeller@google.com>,
         Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH v3 12/25] refs: convert dwim_log to struct object_id
-Date:   Sun, 15 Oct 2017 22:06:59 +0000
-Message-Id: <20171015220712.97308-13-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 01/25] walker: convert to struct object_id
+Date:   Sun, 15 Oct 2017 22:06:48 +0000
+Message-Id: <20171015220712.97308-2-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.15.0.rc0.271.g36b669edcc
 In-Reply-To: <20171015220712.97308-1-sandals@crustytoothpaste.net>
 References: <20171015220712.97308-1-sandals@crustytoothpaste.net>
@@ -54,112 +54,102 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/reflog.c | 4 ++--
- reflog-walk.c    | 2 +-
- refs.c           | 8 ++++----
- refs.h           | 2 +-
- sha1_name.c      | 2 +-
- 5 files changed, 9 insertions(+), 9 deletions(-)
+ walker.c | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/builtin/reflog.c b/builtin/reflog.c
-index 302fafbeef..cd4c4847b7 100644
---- a/builtin/reflog.c
-+++ b/builtin/reflog.c
-@@ -602,7 +602,7 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
- 	for (; i < argc; i++) {
- 		char *ref;
- 		struct object_id oid;
--		if (!dwim_log(argv[i], strlen(argv[i]), oid.hash, &ref)) {
-+		if (!dwim_log(argv[i], strlen(argv[i]), &oid, &ref)) {
- 			status |= error("%s points nowhere!", argv[i]);
- 			continue;
- 		}
-@@ -668,7 +668,7 @@ static int cmd_reflog_delete(int argc, const char **argv, const char *prefix)
- 			continue;
- 		}
+diff --git a/walker.c b/walker.c
+index 274f1a4935..2d83254bc0 100644
+--- a/walker.c
++++ b/walker.c
+@@ -7,7 +7,7 @@
+ #include "blob.h"
+ #include "refs.h"
  
--		if (!dwim_log(argv[i], spec - argv[i], oid.hash, &ref)) {
-+		if (!dwim_log(argv[i], spec - argv[i], &oid, &ref)) {
- 			status |= error("no reflog for '%s'", argv[i]);
- 			continue;
- 		}
-diff --git a/reflog-walk.c b/reflog-walk.c
-index 842b2f77dc..5008bbf6ad 100644
---- a/reflog-walk.c
-+++ b/reflog-walk.c
-@@ -161,7 +161,7 @@ int add_reflog_for_walk(struct reflog_walk_info *info,
- 			struct object_id oid;
- 			char *b;
- 			int ret = dwim_log(branch, strlen(branch),
--					   oid.hash, &b);
-+					   &oid, &b);
- 			if (ret > 1)
- 				free(b);
- 			else if (ret == 1) {
-diff --git a/refs.c b/refs.c
-index 9bb555e7ff..ecb43a113e 100644
---- a/refs.c
-+++ b/refs.c
-@@ -497,7 +497,7 @@ int expand_ref(const char *str, int len, struct object_id *oid, char **ref)
- 	return refs_found;
+-static unsigned char current_commit_sha1[20];
++static struct object_id current_commit_oid;
+ 
+ void walker_say(struct walker *walker, const char *fmt, ...)
+ {
+@@ -24,9 +24,9 @@ static void report_missing(const struct object *obj)
+ 	fprintf(stderr, "Cannot obtain needed %s %s\n",
+ 		obj->type ? typename(obj->type): "object",
+ 		oid_to_hex(&obj->oid));
+-	if (!is_null_sha1(current_commit_sha1))
++	if (!is_null_oid(&current_commit_oid))
+ 		fprintf(stderr, "while processing commit %s.\n",
+-			sha1_to_hex(current_commit_sha1));
++			oid_to_hex(&current_commit_oid));
  }
  
--int dwim_log(const char *str, int len, unsigned char *sha1, char **log)
-+int dwim_log(const char *str, int len, struct object_id *oid, char **log)
+ static int process(struct walker *walker, struct object *obj);
+@@ -82,7 +82,7 @@ static int process_commit(struct walker *walker, struct commit *commit)
+ 	if (commit->object.flags & COMPLETE)
+ 		return 0;
+ 
+-	hashcpy(current_commit_sha1, commit->object.oid.hash);
++	oidcpy(&current_commit_oid, &commit->object.oid);
+ 
+ 	walker_say(walker, "walk %s\n", oid_to_hex(&commit->object.oid));
+ 
+@@ -187,14 +187,14 @@ static int loop(struct walker *walker)
+ 	return 0;
+ }
+ 
+-static int interpret_target(struct walker *walker, char *target, unsigned char *sha1)
++static int interpret_target(struct walker *walker, char *target, struct object_id *oid)
  {
- 	char *last_branch = substitute_branch_name(&str, &len);
- 	const char **p;
-@@ -506,13 +506,13 @@ int dwim_log(const char *str, int len, unsigned char *sha1, char **log)
- 
- 	*log = NULL;
- 	for (p = ref_rev_parse_rules; *p; p++) {
--		unsigned char hash[20];
-+		struct object_id hash;
- 		const char *ref, *it;
- 
- 		strbuf_reset(&path);
- 		strbuf_addf(&path, *p, len, str);
- 		ref = resolve_ref_unsafe(path.buf, RESOLVE_REF_READING,
--					 hash, NULL);
-+					 hash.hash, NULL);
- 		if (!ref)
- 			continue;
- 		if (reflog_exists(path.buf))
-@@ -523,7 +523,7 @@ int dwim_log(const char *str, int len, unsigned char *sha1, char **log)
- 			continue;
- 		if (!logs_found++) {
- 			*log = xstrdup(it);
--			hashcpy(sha1, hash);
-+			oidcpy(oid, &hash);
+-	if (!get_sha1_hex(target, sha1))
++	if (!get_oid_hex(target, oid))
+ 		return 0;
+ 	if (!check_refname_format(target, 0)) {
+ 		struct ref *ref = alloc_ref(target);
+ 		if (!walker->fetch_ref(walker, ref)) {
+-			hashcpy(sha1, ref->old_oid.hash);
++			oidcpy(oid, &ref->old_oid);
+ 			free(ref);
+ 			return 0;
  		}
- 		if (!warn_ambiguous_refs)
- 			break;
-diff --git a/refs.h b/refs.h
-index 0d864b0ab1..9d59c414aa 100644
---- a/refs.h
-+++ b/refs.h
-@@ -141,7 +141,7 @@ int refname_match(const char *abbrev_name, const char *full_name);
+@@ -259,7 +259,7 @@ int walker_fetch(struct walker *walker, int targets, char **target,
+ 	struct strbuf refname = STRBUF_INIT;
+ 	struct strbuf err = STRBUF_INIT;
+ 	struct ref_transaction *transaction = NULL;
+-	unsigned char *sha1 = xmalloc(targets * 20);
++	struct object_id *oids = xmalloc(targets * sizeof(struct object_id));
+ 	char *msg = NULL;
+ 	int i, ret = -1;
  
- int expand_ref(const char *str, int len, struct object_id *oid, char **ref);
- int dwim_ref(const char *str, int len, struct object_id *oid, char **ref);
--int dwim_log(const char *str, int len, unsigned char *sha1, char **ref);
-+int dwim_log(const char *str, int len, struct object_id *oid, char **ref);
+@@ -279,11 +279,11 @@ int walker_fetch(struct walker *walker, int targets, char **target,
+ 	}
  
- /*
-  * A ref_transaction represents a collection of reference updates that
-diff --git a/sha1_name.c b/sha1_name.c
-index d8ff831759..514915460f 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -656,7 +656,7 @@ static int get_oid_basic(const char *str, int len, struct object_id *oid,
- 		/* allow "@{...}" to mean the current branch reflog */
- 		refs_found = dwim_ref("HEAD", 4, oid, &real_ref);
- 	else if (reflog_len)
--		refs_found = dwim_log(str, len, oid->hash, &real_ref);
-+		refs_found = dwim_log(str, len, oid, &real_ref);
- 	else
- 		refs_found = dwim_ref(str, len, oid, &real_ref);
+ 	for (i = 0; i < targets; i++) {
+-		if (interpret_target(walker, target[i], &sha1[20 * i])) {
++		if (interpret_target(walker, target[i], oids + i)) {
+ 			error("Could not interpret response from server '%s' as something to pull", target[i]);
+ 			goto done;
+ 		}
+-		if (process(walker, lookup_unknown_object(&sha1[20 * i])))
++		if (process(walker, lookup_unknown_object(oids[i].hash)))
+ 			goto done;
+ 	}
  
+@@ -304,7 +304,7 @@ int walker_fetch(struct walker *walker, int targets, char **target,
+ 		strbuf_reset(&refname);
+ 		strbuf_addf(&refname, "refs/%s", write_ref[i]);
+ 		if (ref_transaction_update(transaction, refname.buf,
+-					   &sha1[20 * i], NULL, 0,
++					   oids[i].hash, NULL, 0,
+ 					   msg ? msg : "fetch (unknown)",
+ 					   &err)) {
+ 			error("%s", err.buf);
+@@ -321,7 +321,7 @@ int walker_fetch(struct walker *walker, int targets, char **target,
+ done:
+ 	ref_transaction_free(transaction);
+ 	free(msg);
+-	free(sha1);
++	free(oids);
+ 	strbuf_release(&err);
+ 	strbuf_release(&refname);
+ 	return ret;
 -- 
 2.15.0.rc0.271.g36b669edcc
 
