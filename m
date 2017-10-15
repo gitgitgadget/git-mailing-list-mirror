@@ -2,109 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9E25220372
-	for <e@80x24.org>; Sun, 15 Oct 2017 16:39:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4B18920372
+	for <e@80x24.org>; Sun, 15 Oct 2017 17:07:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751809AbdJOQjr (ORCPT <rfc822;e@80x24.org>);
-        Sun, 15 Oct 2017 12:39:47 -0400
-Received: from mail-oi0-f66.google.com ([209.85.218.66]:33499 "EHLO
-        mail-oi0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751441AbdJOQjq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 15 Oct 2017 12:39:46 -0400
-Received: by mail-oi0-f66.google.com with SMTP id 14so5759421oii.0
-        for <git@vger.kernel.org>; Sun, 15 Oct 2017 09:39:45 -0700 (PDT)
+        id S1751763AbdJORHO (ORCPT <rfc822;e@80x24.org>);
+        Sun, 15 Oct 2017 13:07:14 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:46511 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751386AbdJORHN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 15 Oct 2017 13:07:13 -0400
+Received: by mail-wm0-f68.google.com with SMTP id m72so29573847wmc.1
+        for <git@vger.kernel.org>; Sun, 15 Oct 2017 10:07:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=0xl403YWozVwPuLG/K4mVUOGwzQbgZeCzkcrMLaYwLk=;
-        b=glMZJpr3oWhqh5NKBAD4oksHPMtHSFC7ZFELyM8NNw1pgrDZRiuxtH/xlLFxbQjhkp
-         TV5YZHtInTQzfmpBIy952L0k7JVrfWntHh/Z9gQ92V1ubPC7ENdYN9ey9DzA0JTyMEP0
-         53wfYP93IiTEkmCK467TAjmKHRVVM9SD7H4c1lXQfEqsQbQmWkysS2wvEt6MYIves8Ie
-         kieSONQnF29A+w/ic4xtcyjSg3YObJ2d5615tztWQczOk5WmAIPS7KOQs0SS6oZ5QGkP
-         n7o89Hj2gtuHEtgKfzs1+69jgL+IgRAttNTVKGJ7AGsCvs6Hqca+uOR28aTtZwHgvsde
-         zZVQ==
+         :cc:content-transfer-encoding;
+        bh=Kd7UzyRhCz++UZNku2fucT5czGpjnHueN8EMuZ782hw=;
+        b=fZYV0AYvNm77sFsLXeuxqJgoKM8TabLLPgndLv7udlrGYL10OHzT4y9M+CyLfMm0sd
+         H7RQACd3XmI+/BhMvyBiP1J0CchJFpxK81qrq81GdqBACTZKG/Le4qe6VDE91SexmfWe
+         IAkxoW2DQu70IG224rJtXhFVZA5nm0XAJP32I+t1A2m1nF2hpOvq1IlB3U3wHBPxKYKI
+         Vso8SDOnaY/cIQN3Og6KJMd6uLY47Jvn4xFAWPgjlR9vRdp9TsaWpObvQ1UZ+o7O3HdH
+         vtbs8dey3j8e2yf+nxxIv6DiU5ayhEcBcfnoXEW5dOAUWuP9W1UyLvyS7Og/a2j9sctn
+         BqKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=0xl403YWozVwPuLG/K4mVUOGwzQbgZeCzkcrMLaYwLk=;
-        b=RiH/EtY64hRh8iom8xtgNy/svxQu1IYYgkLSlWSg5ixptQY5R57g0KGlIv+1ttb3bI
-         Rsvm7mGrFsc3dsTOJ2XVmXkdTl+t8Y86ttIyYIVaPbJAOgrBFFgNg0xvn9lZE78ovC0a
-         OhnPwP2jLez+cSAP1G9jIc+sDsPhtgH7N5LEN3f/TTDTWfoD03ZCpdS34EohDzuQZ4ka
-         k0Yc8aZJVPu3n/e77viJYyHaKToNcLbpQ8HCQyYX6z0eLIsT0F/cZDynuI6VRrgZ6XIm
-         a/D297mcPu00MazXRRBsz32tbS2+X4CunlXrsVrB9MVMUcK5/77+drGceQ8KRfmQ0oix
-         fDoQ==
-X-Gm-Message-State: AMCzsaVxQavAtw1Q34yUIdTzVWtORCe1jRaD2ovQa7DWPXaH22m33sm7
-        8uSJKRk1dtWLqBTXT1u58C9By4n6H4hn0JnhfD4=
-X-Google-Smtp-Source: ABhQp+TxZZUAfRL5vyN2iMnEqEUpfDSBSFcwzXPa8Vzi+fkZJ8dFWYcFkRRwvvktksey3jAKE2fTDPx83CnSW01XKJI=
-X-Received: by 10.157.91.106 with SMTP id e39mr4622069otj.435.1508085585442;
- Sun, 15 Oct 2017 09:39:45 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Kd7UzyRhCz++UZNku2fucT5czGpjnHueN8EMuZ782hw=;
+        b=m+DjCVaPdxQMVkFbk498N+rk+5yyEgL06TFr38DOha1etgnerjVwXdULdCc3tvBDnd
+         t+M5XTYbTR+iZ3JH/ISSaiR6FsoAOH6Af4nXhAcWwJFVucqIPW2dC83arLB6ZINGL66F
+         8e9fKt8yDFlGfZNEQeRWM4F6sYdqrQJy3nMQfLpVDyD1EaeGrmzsr0K5G+DVQPxZ5sCL
+         yaEsFjmN+muTQj/oqw40mC+vN46fYlb76i3xepYh6hQwDnb9rquyaGfvB5PwXUZbsrew
+         BQXeSyH1wrEuRGNppXoBCRea/qnfrYs7z+DnMDW0HjVOXhuTK3g2dhEw3aB8+mkBSw3X
+         b3Gw==
+X-Gm-Message-State: AMCzsaVG5HrjUX1xh3N+nP3ipMky3PG45eKwmpMftunhy/AwT2PYbPVk
+        OsRk32QspTYd8oop2VilsEYhTINtJDDeJFNIlvU=
+X-Google-Smtp-Source: AOwi7QAL8GEpO4pdWKVx7FGgyqidybQQuaGPQ9Rc+v/rIfY6e7yP+Vouhuq+4md0rduvrnri0uI9jWMNYmUm7i2fk5U=
+X-Received: by 10.80.142.212 with SMTP id x20mr10172162edx.285.1508087232194;
+ Sun, 15 Oct 2017 10:07:12 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.157.4.104 with HTTP; Sun, 15 Oct 2017 09:39:45 -0700 (PDT)
-In-Reply-To: <87zi8sxvkg.fsf@linux-m68k.org>
-References: <CA+o7MD8bhXWxy2M7z++jrq+k85SwzdEV6uwnUjV9=0_X99=VJg@mail.gmail.com>
- <773EDE3B5FDB48AD8FB0DB048CAEC8DE@blackfat> <87zi8sxvkg.fsf@linux-m68k.org>
-From:   Joris Valette <joris.valette@gmail.com>
-Date:   Sun, 15 Oct 2017 18:39:45 +0200
-Message-ID: <CA+o7MD8fcD5-SFeQsX84Etu68ov7yy48OO4dV=gXMp5xY8s9Rg@mail.gmail.com>
-Subject: Re: Consider escaping special characters like 'less' does
-To:     Andreas Schwab <schwab@linux-m68k.org>
-Cc:     Jason Pyeron <jpyeron@pdinc.us>, git@vger.kernel.org
+Received: by 10.80.172.225 with HTTP; Sun, 15 Oct 2017 10:07:11 -0700 (PDT)
+In-Reply-To: <58336f0d-366c-6636-1e94-22afbafdfe4c@web.de>
+References: <20171013175157.13634-1-ralf.thielow@gmail.com> <58336f0d-366c-6636-1e94-22afbafdfe4c@web.de>
+From:   Ralf Thielow <ralf.thielow@gmail.com>
+Date:   Sun, 15 Oct 2017 19:07:11 +0200
+Message-ID: <CAN0XMOKjhoi-_bWqOpF-uTtaF8YrmPfR_0RMDePZSzOxAi2bwQ@mail.gmail.com>
+Subject: Re: [PATCH] sequencer.c: unify error messages
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Cc:     git <git@vger.kernel.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-2017-10-15 17:46 GMT+02:00 Andreas Schwab <schwab@linux-m68k.org>:
-> On Okt 15 2017, "Jason Pyeron" <jpyeron@pdinc.us> wrote:
+2017-10-13 23:12 GMT+02:00 Ren=C3=A9 Scharfe <l.s.r@web.de>:
+> Am 13.10.2017 um 19:51 schrieb Ralf Thielow:
+>> When ftruncate() in rearrange_squash() fails, we write
+>> that we couldn't finish the operation on the todo file.
+>> It is more accurate to write that we couldn't truncate
+>> as we do in other calls of ftruncate().
 >
->>> -----Original Message-----
->>> From: Joris Valette
->>> Sent: Sunday, October 15, 2017 9:34 AM
->>> To: git@vger.kernel.org
->>> Subject: Consider escaping special characters like 'less' does
->>>
->>> The pager 'less' escapes some characters when calling 'git diff'. This
->>> is what I might get:
->>>
->>> $ git diff --cached
->>> diff --git a/some_file b/some_file
->>> new file mode 100644
->>> index 0000000..357323f
->>> --- /dev/null
->>> +++ b/some_file
->>> @@ -0,0 +1 @@
->>> +<U+FEFF>Hello
->>> \ No newline at end of file
->>>
->>> This example is a simple file encoded in UTF-8 *with BOM*.
->>> On the other hand, the built-in git output shows this:
->>>
->>> $ git --no-pager diff --cached
->>> diff --git a/some_file b/some_file
->>> new file mode 100644
->>> index 0000000..357323f
->>> --- /dev/null
->>> +++ b/some_file
->>> @@ -0,0 +1 @@
->>> +?Hello
->>> \ No newline at end of file
+> Would it make sense to factor out rewriting the to-do file to avoid
+> code duplication in the first place?
+>
+>> While at there, remove a full stop in another error message.
 >>
->> It is your terminal, not git's fault that you get a ? rendered.
+>> Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+>> ---
+>>   sequencer.c | 4 ++--
+>>   1 file changed, 2 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/sequencer.c b/sequencer.c
+>> index e258bb646..b0e6459a5 100644
+>> --- a/sequencer.c
+>> +++ b/sequencer.c
+>> @@ -2948,9 +2948,9 @@ int rearrange_squash(void)
+>>               if (fd < 0)
+>>                       res =3D error_errno(_("could not open '%s'"), todo=
+_file);
+>>               else if (write(fd, buf.buf, buf.len) < 0)
+>> -                     res =3D error_errno(_("could not read '%s'."), tod=
+o_file);
+>> +                     res =3D error_errno(_("could not read '%s'"), todo=
+_file);
+>                                                        ^^^^
+> That should read "write", right?
 >
-> It's your MUA's fault that you get a ?, the mail didn't contain any.
 
-Actually, the original mail contained the special BOM sequence but
-it's generally invisible. His MUA shows it with a '?', mine doesn't
-show anything, neither does Firefox on the mailing list page.
+Sure. I'll send a new version of this patch to fix the messages. Maybe
+someone else picks up the other things. Thanks.
 
-The question remains: could escaping be done?
-
-Joris
+>>               else if (ftruncate(fd, buf.len) < 0)
+>> -                     res =3D error_errno(_("could not finish '%s'"),
+>> +                     res =3D error_errno(_("could not truncate '%s'"),
+>>                                          todo_file);
+>
+> Hmm, why call ftruncate(2) instead of opening the file with O_TRUNC?
+>
+>>               close(fd);
+>>               strbuf_release(&buf);
+>>
