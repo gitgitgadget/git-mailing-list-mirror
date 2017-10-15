@@ -6,43 +6,43 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 42B7420372
-	for <e@80x24.org>; Sun, 15 Oct 2017 22:08:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 26AB120372
+	for <e@80x24.org>; Sun, 15 Oct 2017 22:08:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751725AbdJOWIC (ORCPT <rfc822;e@80x24.org>);
-        Sun, 15 Oct 2017 18:08:02 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:55138 "EHLO
+        id S1751736AbdJOWIF (ORCPT <rfc822;e@80x24.org>);
+        Sun, 15 Oct 2017 18:08:05 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:55166 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751655AbdJOWH5 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 15 Oct 2017 18:07:57 -0400
+        by vger.kernel.org with ESMTP id S1751695AbdJOWIC (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 15 Oct 2017 18:08:02 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 16A3260461;
-        Sun, 15 Oct 2017 22:07:55 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 06B8760464;
+        Sun, 15 Oct 2017 22:08:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1508105275;
-        bh=GLCkjvmy5gTMkurTNskq0yiD7jqLVWVFtR43jIso8Vs=;
+        s=default; t=1508105281;
+        bh=CdR2YaFRsW8nfAFKVC1FPYJ/HwgZxsAY+WYRgydAmxI=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=bc3VeHOGyYlg5f0gGz1t5z+9zKKFOvj1tMC3Kb/6pq/OmRCkNLq2JoWFz8ogRr8bg
-         wKcSSK3MfviAbVINc2Rlz2XYn4P3AqNrt/LjxOMwhkkfIjsqeoesHQNgB8GUlPRSGV
-         ChldpqAI+sfmC5RsabDgM+YYjQ7P1xJfmhhuk1DtjJ4p27W7WRQ1IXR/SSBkoEikfG
-         40dMqavq8VzeEEw2VqcjmzZjGG+wUVQHseyYQNiIHMYp+WHNU2yaaBshbrXDPbXBfn
-         OPzUQy9RAZ39MEFzHTqMWOemTrTbJuZtqGPG4ThMDM1dS8r/jzkEEcBGhbOli1r9bO
-         5ZTzHeqhlHWejpguqUbVvzQSrMwVU+2RXBnAdzQM1aqKPX5vLCU6ql4gA18qSO07cY
-         URi71sveKJgrC8xT7u0hcDiXXH3RwX31yGkPhHHYOl/GoiJmhhY+H2ga/l1dk+1wJ3
-         wJfhVEiAGWKFez5Ok1DzTcbHnx5YlX4JKrU1jaCGGlgs417Txdi
+        b=N0cXcPXyKRUMd/DZV2coSk8z39HENWaCg5X075S9MBjxkGPkpVh2IrDNNhLC1oBe+
+         iEouNHsOl7mfUkutdJerJIIaqDN4+F1+De/ujFE4Hs5ERf3DmFOXcI8LyK2bkFHRPe
+         D8WPOp/Dr/8X2DurSujqHfxyCdSeEFRauBFgtQZjO8RAHLjHlAe8NNaDUdrVLbuH0x
+         wXneHy502z81nQ2ISAFKa3JY40DAwYujbVf6AS+hUSlYmQO8/mm/BG/E1wT7nd5fK3
+         qHJ0XynemWsriDsESVcyowItwsaZQ/KZCIIo7uduDF+Mumf7YoVoUZI8F5cJwiea1d
+         NPwvNJa9Ndhd3WtFCAqFCB0YR6+Ez2XPgIoo3AFk2Os+QM+Eu/IViJeCl710GmPbrX
+         pxs1nPLab7oikZ0jl/ObDeIeqys5jJ4IurDVNttXIxRCJCIm/js6cI3q6fvNuGSjUY
+         3CvAcMcoTQiuPFQasVW5ksGpuyVYqOZlzYeCYJFjR/nSZ7BwrA8
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
         Brandon Williams <bmwill@google.com>,
         Stefan Beller <sbeller@google.com>,
         Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH v3 18/25] sha1_file: convert index_path and index_fd to struct object_id
-Date:   Sun, 15 Oct 2017 22:07:05 +0000
-Message-Id: <20171015220712.97308-19-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 23/25] refs: convert peel_object to struct object_id
+Date:   Sun, 15 Oct 2017 22:07:10 +0000
+Message-Id: <20171015220712.97308-24-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.15.0.rc0.271.g36b669edcc
 In-Reply-To: <20171015220712.97308-1-sandals@crustytoothpaste.net>
 References: <20171015220712.97308-1-sandals@crustytoothpaste.net>
@@ -52,122 +52,107 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert these two functions and the functions that underlie them to take
-pointers to struct object_id.  This is a prerequisite to convert
-resolve_gitlink_ref.  Fix a stray tab in the middle of the index_mem
-call in index_pipe by converting it to a space.
-
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- sha1_file.c | 30 +++++++++++++++---------------
- 1 file changed, 15 insertions(+), 15 deletions(-)
+ refs.c                | 10 +++++-----
+ refs/packed-backend.c |  6 +++---
+ refs/ref-cache.c      |  2 +-
+ refs/refs-internal.h  |  4 ++--
+ 4 files changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/sha1_file.c b/sha1_file.c
-index 10c3a0083d..cd910b2103 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1664,7 +1664,7 @@ static void check_tag(const void *buf, size_t size)
- 		die("corrupt tag");
+diff --git a/refs.c b/refs.c
+index 72c45a513b..6546346b6a 100644
+--- a/refs.c
++++ b/refs.c
+@@ -252,12 +252,12 @@ static int filter_refs(const char *refname, const struct object_id *oid,
+ 	return filter->fn(refname, oid, flags, filter->cb_data);
  }
  
--static int index_mem(unsigned char *sha1, void *buf, size_t size,
-+static int index_mem(struct object_id *oid, void *buf, size_t size,
- 		     enum object_type type,
- 		     const char *path, unsigned flags)
+-enum peel_status peel_object(const unsigned char *name, unsigned char *sha1)
++enum peel_status peel_object(const struct object_id *name, struct object_id *oid)
  {
-@@ -1695,15 +1695,15 @@ static int index_mem(unsigned char *sha1, void *buf, size_t size,
+-	struct object *o = lookup_unknown_object(name);
++	struct object *o = lookup_unknown_object(name->hash);
+ 
+ 	if (o->type == OBJ_NONE) {
+-		int type = sha1_object_info(name, NULL);
++		int type = sha1_object_info(name->hash, NULL);
+ 		if (type < 0 || !object_as_type(o, type, 0))
+ 			return PEEL_INVALID;
  	}
+@@ -269,7 +269,7 @@ enum peel_status peel_object(const unsigned char *name, unsigned char *sha1)
+ 	if (!o)
+ 		return PEEL_INVALID;
  
- 	if (write_object)
--		ret = write_sha1_file(buf, size, typename(type), sha1);
-+		ret = write_sha1_file(buf, size, typename(type), oid->hash);
- 	else
--		ret = hash_sha1_file(buf, size, typename(type), sha1);
-+		ret = hash_sha1_file(buf, size, typename(type), oid->hash);
- 	if (re_allocated)
- 		free(buf);
- 	return ret;
+-	hashcpy(sha1, o->oid.hash);
++	oidcpy(oid, &o->oid);
+ 	return PEEL_PEELED;
  }
  
--static int index_stream_convert_blob(unsigned char *sha1, int fd,
-+static int index_stream_convert_blob(struct object_id *oid, int fd,
- 				     const char *path, unsigned flags)
- {
- 	int ret;
-@@ -1718,22 +1718,22 @@ static int index_stream_convert_blob(unsigned char *sha1, int fd,
+@@ -1714,7 +1714,7 @@ int refs_peel_ref(struct ref_store *refs, const char *refname,
+ 			       RESOLVE_REF_READING, &base, &flag))
+ 		return -1;
  
- 	if (write_object)
- 		ret = write_sha1_file(sbuf.buf, sbuf.len, typename(OBJ_BLOB),
--				      sha1);
-+				      oid->hash);
- 	else
- 		ret = hash_sha1_file(sbuf.buf, sbuf.len, typename(OBJ_BLOB),
--				     sha1);
-+				     oid->hash);
- 	strbuf_release(&sbuf);
- 	return ret;
+-	return peel_object(base.hash, oid->hash);
++	return peel_object(&base, oid);
  }
  
--static int index_pipe(unsigned char *sha1, int fd, enum object_type type,
-+static int index_pipe(struct object_id *oid, int fd, enum object_type type,
- 		      const char *path, unsigned flags)
- {
- 	struct strbuf sbuf = STRBUF_INIT;
- 	int ret;
- 
- 	if (strbuf_read(&sbuf, fd, 4096) >= 0)
--		ret = index_mem(sha1, sbuf.buf, sbuf.len, type,	path, flags);
-+		ret = index_mem(oid, sbuf.buf, sbuf.len, type, path, flags);
- 	else
- 		ret = -1;
- 	strbuf_release(&sbuf);
-@@ -1742,14 +1742,14 @@ static int index_pipe(unsigned char *sha1, int fd, enum object_type type,
- 
- #define SMALL_FILE_SIZE (32*1024)
- 
--static int index_core(unsigned char *sha1, int fd, size_t size,
-+static int index_core(struct object_id *oid, int fd, size_t size,
- 		      enum object_type type, const char *path,
- 		      unsigned flags)
- {
- 	int ret;
- 
- 	if (!size) {
--		ret = index_mem(sha1, "", size, type, path, flags);
-+		ret = index_mem(oid, "", size, type, path, flags);
- 	} else if (size <= SMALL_FILE_SIZE) {
- 		char *buf = xmalloc(size);
- 		ssize_t read_result = read_in_full(fd, buf, size);
-@@ -1760,11 +1760,11 @@ static int index_core(unsigned char *sha1, int fd, size_t size,
- 			ret = error("short read while indexing %s",
- 				    path ? path : "<unknown>");
- 		else
--			ret = index_mem(sha1, buf, size, type, path, flags);
-+			ret = index_mem(oid, buf, size, type, path, flags);
- 		free(buf);
+ int peel_ref(const char *refname, struct object_id *oid)
+diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+index 4ec9fcacdd..b7652738be 100644
+--- a/refs/packed-backend.c
++++ b/refs/packed-backend.c
+@@ -880,7 +880,7 @@ static int packed_ref_iterator_peel(struct ref_iterator *ref_iterator,
+ 	} else if ((iter->base.flags & (REF_ISBROKEN | REF_ISSYMREF))) {
+ 		return -1;
  	} else {
- 		void *buf = xmmap(NULL, size, PROT_READ, MAP_PRIVATE, fd, 0);
--		ret = index_mem(sha1, buf, size, type, path, flags);
-+		ret = index_mem(oid, buf, size, type, path, flags);
- 		munmap(buf, size);
+-		return !!peel_object(iter->oid.hash, peeled->hash);
++		return !!peel_object(&iter->oid, peeled);
  	}
- 	return ret;
-@@ -1802,12 +1802,12 @@ int index_fd(struct object_id *oid, int fd, struct stat *st,
- 	 * die() for large files.
- 	 */
- 	if (type == OBJ_BLOB && path && would_convert_to_git_filter_fd(path))
--		ret = index_stream_convert_blob(oid->hash, fd, path, flags);
-+		ret = index_stream_convert_blob(oid, fd, path, flags);
- 	else if (!S_ISREG(st->st_mode))
--		ret = index_pipe(oid->hash, fd, type, path, flags);
-+		ret = index_pipe(oid, fd, type, path, flags);
- 	else if (st->st_size <= big_file_threshold || type != OBJ_BLOB ||
- 		 (path && would_convert_to_git(&the_index, path)))
--		ret = index_core(oid->hash, fd, xsize_t(st->st_size), type, path,
-+		ret = index_core(oid, fd, xsize_t(st->st_size), type, path,
- 				 flags);
- 	else
- 		ret = index_stream(oid, fd, xsize_t(st->st_size), type, path,
+ }
+ 
+@@ -1220,8 +1220,8 @@ static int write_with_updates(struct packed_ref_store *refs,
+ 			i++;
+ 		} else {
+ 			struct object_id peeled;
+-			int peel_error = peel_object(update->new_oid.hash,
+-						     peeled.hash);
++			int peel_error = peel_object(&update->new_oid,
++						     &peeled);
+ 
+ 			if (write_packed_entry(out, update->refname,
+ 					       update->new_oid.hash,
+diff --git a/refs/ref-cache.c b/refs/ref-cache.c
+index 4f850e1b5c..043eb83748 100644
+--- a/refs/ref-cache.c
++++ b/refs/ref-cache.c
+@@ -493,7 +493,7 @@ static int cache_ref_iterator_advance(struct ref_iterator *ref_iterator)
+ static int cache_ref_iterator_peel(struct ref_iterator *ref_iterator,
+ 				   struct object_id *peeled)
+ {
+-	return peel_object(ref_iterator->oid->hash, peeled->hash);
++	return peel_object(ref_iterator->oid, peeled);
+ }
+ 
+ static int cache_ref_iterator_abort(struct ref_iterator *ref_iterator)
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index 3c4781eb87..54059c1daf 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -120,11 +120,11 @@ enum peel_status {
+ /*
+  * Peel the named object; i.e., if the object is a tag, resolve the
+  * tag recursively until a non-tag is found.  If successful, store the
+- * result to sha1 and return PEEL_PEELED.  If the object is not a tag
++ * result to oid and return PEEL_PEELED.  If the object is not a tag
+  * or is not valid, return PEEL_NON_TAG or PEEL_INVALID, respectively,
+  * and leave sha1 unchanged.
+  */
+-enum peel_status peel_object(const unsigned char *name, unsigned char *sha1);
++enum peel_status peel_object(const struct object_id *name, struct object_id *oid);
+ 
+ /*
+  * Copy the reflog message msg to buf, which has been allocated sufficiently
 -- 
 2.15.0.rc0.271.g36b669edcc
 
