@@ -2,93 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 495C220372
-	for <e@80x24.org>; Sun, 15 Oct 2017 16:05:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9E25220372
+	for <e@80x24.org>; Sun, 15 Oct 2017 16:39:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751578AbdJOQFr (ORCPT <rfc822;e@80x24.org>);
-        Sun, 15 Oct 2017 12:05:47 -0400
-Received: from mout.gmx.net ([212.227.17.20]:57342 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751258AbdJOQFq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 15 Oct 2017 12:05:46 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M24Vr-1dEHMY05FL-00tzxM; Sun, 15
- Oct 2017 18:05:37 +0200
-Date:   Sun, 15 Oct 2017 18:05:35 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Kevin Daudt <me@ikke.info>, git@vger.kernel.org,
-        J Wyman <jwyman@microsoft.com>
-Subject: Re: [PATCH v2 2/3] for-each-ref: let upstream/push optionally remote
- ref name
-In-Reply-To: <xmqqinfiv5u2.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.21.1.1710151804060.40514@virtualbox>
-References: <cover.1506952571.git.johannes.schindelin@gmx.de> <cover.1507205895.git.johannes.schindelin@gmx.de> <7da6c7e2563d14cb7cd7ff2637c79c51896a9788.1507205895.git.johannes.schindelin@gmx.de> <20171013163923.GA5598@alpha.vpn.ikke.info>
- <xmqqinfiv5u2.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751809AbdJOQjr (ORCPT <rfc822;e@80x24.org>);
+        Sun, 15 Oct 2017 12:39:47 -0400
+Received: from mail-oi0-f66.google.com ([209.85.218.66]:33499 "EHLO
+        mail-oi0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751441AbdJOQjq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 15 Oct 2017 12:39:46 -0400
+Received: by mail-oi0-f66.google.com with SMTP id 14so5759421oii.0
+        for <git@vger.kernel.org>; Sun, 15 Oct 2017 09:39:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=0xl403YWozVwPuLG/K4mVUOGwzQbgZeCzkcrMLaYwLk=;
+        b=glMZJpr3oWhqh5NKBAD4oksHPMtHSFC7ZFELyM8NNw1pgrDZRiuxtH/xlLFxbQjhkp
+         TV5YZHtInTQzfmpBIy952L0k7JVrfWntHh/Z9gQ92V1ubPC7ENdYN9ey9DzA0JTyMEP0
+         53wfYP93IiTEkmCK467TAjmKHRVVM9SD7H4c1lXQfEqsQbQmWkysS2wvEt6MYIves8Ie
+         kieSONQnF29A+w/ic4xtcyjSg3YObJ2d5615tztWQczOk5WmAIPS7KOQs0SS6oZ5QGkP
+         n7o89Hj2gtuHEtgKfzs1+69jgL+IgRAttNTVKGJ7AGsCvs6Hqca+uOR28aTtZwHgvsde
+         zZVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=0xl403YWozVwPuLG/K4mVUOGwzQbgZeCzkcrMLaYwLk=;
+        b=RiH/EtY64hRh8iom8xtgNy/svxQu1IYYgkLSlWSg5ixptQY5R57g0KGlIv+1ttb3bI
+         Rsvm7mGrFsc3dsTOJ2XVmXkdTl+t8Y86ttIyYIVaPbJAOgrBFFgNg0xvn9lZE78ovC0a
+         OhnPwP2jLez+cSAP1G9jIc+sDsPhtgH7N5LEN3f/TTDTWfoD03ZCpdS34EohDzuQZ4ka
+         k0Yc8aZJVPu3n/e77viJYyHaKToNcLbpQ8HCQyYX6z0eLIsT0F/cZDynuI6VRrgZ6XIm
+         a/D297mcPu00MazXRRBsz32tbS2+X4CunlXrsVrB9MVMUcK5/77+drGceQ8KRfmQ0oix
+         fDoQ==
+X-Gm-Message-State: AMCzsaVxQavAtw1Q34yUIdTzVWtORCe1jRaD2ovQa7DWPXaH22m33sm7
+        8uSJKRk1dtWLqBTXT1u58C9By4n6H4hn0JnhfD4=
+X-Google-Smtp-Source: ABhQp+TxZZUAfRL5vyN2iMnEqEUpfDSBSFcwzXPa8Vzi+fkZJ8dFWYcFkRRwvvktksey3jAKE2fTDPx83CnSW01XKJI=
+X-Received: by 10.157.91.106 with SMTP id e39mr4622069otj.435.1508085585442;
+ Sun, 15 Oct 2017 09:39:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:sHUHt4xBxc71Tphpp6QMs6rIBqaZa+sP1XbE65aXQns1jsiDI7A
- rYvJmVnlVgCFOSeLNA7RWh9yXivypieLXphbOtupL5qodUvMgl2oQkXET9nvl0Qvsvbchzi
- fjx5jafC3aAboN2nw4SQ8I16jgv7P2+52YKqwGQOTO+0G2Ka0o90ASF8/W/vvFgqyUqy+S5
- LJ8SdWgtcefqk9Dv6c2kw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:KkTwDe3kvJ4=:2UyV+uU+Q5O6oeAa+yuG0E
- MlxIlt/J+OjsW9YfXYjRRzY+Wev04lRZ0lglZSb/4zE8gFUZss7Mqo6wicoW0KqdCGh9c0AHf
- l9P+nU9den0P9/zzuOnK0n7CG65O7+QzdPJgsRhOdHiCDnv4AfkAtsXY8qEBtVygYM4H6tTs8
- fn2LQ1156BugVmty0e9hrR+V/YqG90JOxwEO+qny2cG+Rs9If9MU7r5Sj0owrlrtbD8isfLWw
- 2EHwxOr4HR9VdaTtKCcRXiMkzyfy5P6fGjs0RqBQQlFHGNF43jqs5ukxflVpuzvQ+UC+nemgb
- R6Yh3GXvaaIxQ1ifkO36FMz00kW9XCpq/lpvVtW24sFB1sxf+gsQGR9kKaAKaFK+SWNyLCrqr
- QfCqpSYhBrm+0hxgUzNMuYbE3nbyw/oyEXHBVlyER9oku4+kHBh9uY35VOK3N+XyYWFpv4d/p
- 9/Y99/uELwvC7ow17Hbj2+ovkwuMUj4gPO0g5CyK9SNMsWmm3DVXJWVvMQeLyB/qbgBhKFx6k
- Kgnr6Rzk7EnifBmVLNWwT7vaKAtWH0eoQMI95z5nNlHBH8o5UlFdt/nMunJQGxromGyBTct+Y
- GzBRg3W2Tj/hOCNciKJo3LQ1Xd+XaXjrX6/+m47eRg8OiWXo0reuEycOoH2K68QckknJK+1v4
- uA68PKMuMlXcE9t4f+MM2O4KdUlUHLNLFw5GwbjchRtnbNE1QjsI39JAVcT8SWxi2e7clnWNH
- CxENEG7nuHVVYL7HSKpfeImZ7jyhAMBfryHT/cZdZyyva2rczRd+2Nko3DDHnIJtYz7ZS8Xhd
- 5mCpgmaj8C9LdQLoIYkoGTa1ePmXKrK0hm8xYrvgeN/c8kSGhU=
+Received: by 10.157.4.104 with HTTP; Sun, 15 Oct 2017 09:39:45 -0700 (PDT)
+In-Reply-To: <87zi8sxvkg.fsf@linux-m68k.org>
+References: <CA+o7MD8bhXWxy2M7z++jrq+k85SwzdEV6uwnUjV9=0_X99=VJg@mail.gmail.com>
+ <773EDE3B5FDB48AD8FB0DB048CAEC8DE@blackfat> <87zi8sxvkg.fsf@linux-m68k.org>
+From:   Joris Valette <joris.valette@gmail.com>
+Date:   Sun, 15 Oct 2017 18:39:45 +0200
+Message-ID: <CA+o7MD8fcD5-SFeQsX84Etu68ov7yy48OO4dV=gXMp5xY8s9Rg@mail.gmail.com>
+Subject: Re: Consider escaping special characters like 'less' does
+To:     Andreas Schwab <schwab@linux-m68k.org>
+Cc:     Jason Pyeron <jpyeron@pdinc.us>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+2017-10-15 17:46 GMT+02:00 Andreas Schwab <schwab@linux-m68k.org>:
+> On Okt 15 2017, "Jason Pyeron" <jpyeron@pdinc.us> wrote:
+>
+>>> -----Original Message-----
+>>> From: Joris Valette
+>>> Sent: Sunday, October 15, 2017 9:34 AM
+>>> To: git@vger.kernel.org
+>>> Subject: Consider escaping special characters like 'less' does
+>>>
+>>> The pager 'less' escapes some characters when calling 'git diff'. This
+>>> is what I might get:
+>>>
+>>> $ git diff --cached
+>>> diff --git a/some_file b/some_file
+>>> new file mode 100644
+>>> index 0000000..357323f
+>>> --- /dev/null
+>>> +++ b/some_file
+>>> @@ -0,0 +1 @@
+>>> +<U+FEFF>Hello
+>>> \ No newline at end of file
+>>>
+>>> This example is a simple file encoded in UTF-8 *with BOM*.
+>>> On the other hand, the built-in git output shows this:
+>>>
+>>> $ git --no-pager diff --cached
+>>> diff --git a/some_file b/some_file
+>>> new file mode 100644
+>>> index 0000000..357323f
+>>> --- /dev/null
+>>> +++ b/some_file
+>>> @@ -0,0 +1 @@
+>>> +?Hello
+>>> \ No newline at end of file
+>>
+>> It is your terminal, not git's fault that you get a ? rendered.
+>
+> It's your MUA's fault that you get a ?, the mail didn't contain any.
 
-On Sat, 14 Oct 2017, Junio C Hamano wrote:
+Actually, the original mail contained the special BOM sequence but
+it's generally invisible. His MUA shows it with a '?', mine doesn't
+show anything, neither does Firefox on the mailing list page.
 
-> Kevin Daudt <me@ikke.info> writes:
-> 
-> > On Thu, Oct 05, 2017 at 02:19:15PM +0200, Johannes Schindelin wrote:
-> >> From: J Wyman <jwyman@microsoft.com>
-> >> [..] 
-> >> 
-> >> diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-> >> index 39f50bd53eb..22767025850 100644
-> >> --- a/Documentation/git-for-each-ref.txt
-> >> +++ b/Documentation/git-for-each-ref.txt
-> >> @@ -142,8 +142,9 @@ upstream::
-> >>  	encountered. Append `:track,nobracket` to show tracking
-> >>  	information without brackets (i.e "ahead N, behind M").
-> >>  +
-> >> -Also respects `:remotename` to state the name of the *remote* instead of
-> >> -the ref.
-> >> +Also respects `:remotename` to state the name of the *remote* instead
-> >> +of the ref, and `:remoteref` to state the name of the *reference* as
-> >> +locally known by the remote.
-> >
-> > What does "locally known by the remote" mean in this sentence?
-> 
-> Good question.  I cannot offhand offer a better and concise
-> phrasing, but I think can explain what it wants to describe ;-).
+The question remains: could escaping be done?
 
-Yep, described it well.
-
-Maybe "and `:remoteref` to state the name by which the remote knows the
-*reference*"?
-
-Ciao,
-Dscho
+Joris
