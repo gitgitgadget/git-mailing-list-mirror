@@ -2,86 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D484E20445
-	for <e@80x24.org>; Sun, 15 Oct 2017 15:09:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2EA5520372
+	for <e@80x24.org>; Sun, 15 Oct 2017 15:11:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751441AbdJOPJg (ORCPT <rfc822;e@80x24.org>);
-        Sun, 15 Oct 2017 11:09:36 -0400
-Received: from bsmtp8.bon.at ([213.33.87.20]:31485 "EHLO bsmtp8.bon.at"
+        id S1751788AbdJOPLc (ORCPT <rfc822;e@80x24.org>);
+        Sun, 15 Oct 2017 11:11:32 -0400
+Received: from mout.gmx.net ([212.227.15.19]:56658 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751245AbdJOPJf (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 15 Oct 2017 11:09:35 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp8.bon.at (Postfix) with ESMTPSA id 3yFPxp1JL4z5tlB;
-        Sun, 15 Oct 2017 17:09:34 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 906D3308;
-        Sun, 15 Oct 2017 17:09:33 +0200 (CEST)
-Subject: Re: [PATCH/RFC] git-post: the opposite of git-cherry-pick
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Git Mailing List <git@vger.kernel.org>
-References: <c6b52120-98bf-d685-6dc0-3c83e9e80d30@kdbg.org>
- <CAGZ79kbr=zBc5GEL7hYyCnBcbdE8ZRp65QwxKMUVsQ+qXvRAAw@mail.gmail.com>
- <3d362037-3eb6-83db-a17f-47a984135580@kdbg.org>
- <87wp3zs4la.fsf@evledraar.booking.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <33f7d379-126d-e27e-7dbf-616f5dfbc98a@kdbg.org>
-Date:   Sun, 15 Oct 2017 17:09:32 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.4.0
+        id S1751245AbdJOPLb (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 15 Oct 2017 11:11:31 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MdKkd-1dlFz92JX9-00IVlN; Sun, 15
+ Oct 2017 17:11:28 +0200
+Date:   Sun, 15 Oct 2017 17:11:27 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Steve Hoelzer <shoelzer@gmail.com>
+cc:     git-for-windows@googlegroups.com, git <git@vger.kernel.org>
+Subject: Re: [ANNOUNCE] Git for Windows 2.14.2(3)
+In-Reply-To: <CACbrTHfnph8Cp9G7LrspPa4s-E2ATHWkLqj7WDPFSiLXzOSz7g@mail.gmail.com>
+Message-ID: <alpine.DEB.2.21.1.1710151710340.40514@virtualbox>
+References: <20171012225339.2808-1-johannes.schindelin@gmx.de> <CACbrTHfnph8Cp9G7LrspPa4s-E2ATHWkLqj7WDPFSiLXzOSz7g@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <87wp3zs4la.fsf@evledraar.booking.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:wezLK8rT6tFXVyJl/j38q8l4oejqPP1Q4bc1/MUKBxvXZ3kkGcG
+ FX4bHBIKlZrS0BPjJbTJ8zvc0cFJQQcWEej0Dm0OHZoJBXjoLgge9Z30dSfp0AwVqZsJPYc
+ 4wMJ3tMsfuOp/rzeOKnuynhZKEe0YbRkf4OjsiNkAahtF5nHFMfjEyIDbRQU7QW0npXmEMi
+ LkUsuV0Uw98F8DEdQ+RcA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:B/y7FtJlCRw=:CmAepkuWdNu3F85kEcBHa0
+ FKuYrJ/G++GHQOgXGviEXyhVSPFW3p/UUq8bgyZJwEC3eBRSEbzd+NT7lCZd8uAC3N3Kf/7Td
+ m53ugdxGKy8JChFNzCqsmyKELU34PgFl70fQl0uqhBRdw0KQw4scm/5AeHGEjcGvMcE8PmdTA
+ oYplrs7dGeqjbCcnJKA0uvSU3JYIJv8hxDmHuWDqv7A4eF2uL+EGtozgET2l6polU1xVOOApc
+ 0tZr0+sF9xZUK0g0OYiukWjEh6IJSnBmS5o4wxpCSqrVzi15NT4qBu5l10kjXZrES+qDsZehm
+ vP2djP+SKNgznf44rs+sCZ6e42C+snNjvw1KQidsDGqimNQkyhEZFtlSLNQkYAbBgKA7bIT/0
+ RWxJqQrkLMcHMllQhqUXXCICArAq3qYvzx+oo130otLgC+X6S2OQJXndAff7sJabe25AB/uI0
+ PZw7JrERXqXpV+/n0TGAoWkOQDdO9BBahqMcGTOGZrKeN4xGmMb4P4GO12ml5n589+h1NsgBH
+ XJWmyvwvIMa93ju+l138WcEpmgCeO8BpDTwSdvX6knp4ZX9fgksvjktRqlyCSIqgzJWbi1njx
+ 1mldZq6c7+Vx5w3jKazEoh5Z/bQAkpUmY+UV35lTtlmE0TrB/V4qv0f8KDPJUQNXcL/50iLCx
+ nA6Ax0v9a3TxQnn2brTxT7XZQNazK/ynKe9lkV5aJA1TWs8drzhnyrtQTwrTC1tOnBkMyrrp5
+ 45MnSSOj3kQnZ1zX0uwl2PkiopFSaKrqKlCiFCIVuh2RZCa72KnMeDspzU06rWiVHRHtdjLKl
+ yFRolGZ5omWeoZ2w6jcu+0donkYS5uhtsHQILgO3jX8zd+XdAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 13.10.2017 um 12:51 schrieb Ævar Arnfjörð Bjarmason:
-> On Thu, Oct 05 2017, Johannes Sixt jotted:
->> Am 05.10.2017 um 21:33 schrieb Stefan Beller:
->>> * Is it a good design choice to have a different command, just because the
->>>     target branch is [not] checked out?
->>
->> I would not want to make it a sub-mode of cherry-pick, if that is what
->> you mean, because "cherry picking" is about getting something, not
->> giving something away.
+Hi Steve,
+
+On Fri, 13 Oct 2017, Steve Hoelzer wrote:
+
+> On Thu, Oct 12, 2017 at 5:53 PM, Johannes Schindelin
+> <johannes.schindelin@gmx.de> wrote:
+> >
+> > It is my pleasure to announce that Git for Windows 2.14.2(3) is available from:
+> >
+> >         https://git-for-windows.github.io/
+> >
+> > Changes since Git for Windows v2.14.2(2) (October 5th 2017)
+> >
+> > New Features
+> >
+> >   * Comes with Git LFS v2.3.3.
 > 
-> It occurs to me that a better long-term UI design might be to make
-> git-{cherry-pick,pick) some sort of submodes for git-commit.
-
-I don't quite agree. To commit an index state that is derived from a 
-worktree state is such a common and important operation that it deserves 
-to be its own command. Adding different modi operandi would make it 
-confusing.
-
-> Right now git-commit picks the current index for committing, but "use a
-> patch as the source instead" could be a submode.
+> I just ran "git update" and afterward "git version" reported
+> 2.14.2(3), but "git lfs version" still said 2.3.2.
 > 
-> Right now it commits that change on top of your checked out commit, but
-> "other non-checked-out target commit" could be a mode instead,
-> i.e. exposing more of the power of the underlying git-commit-tree.
+> I also uninstalled/reinstalled Git for Windows and LFS is still 2.3.2.
 
-This is worth discussing, though not my preference. The picture to "pick 
-cherries" has become quite common, and now that we use it for the name 
-of the command, "cherry-pick", the direction of flow is quite obvious 
-and strongly implied: from somewhere else to me (and not to somebody else).
+Ah bummer. I forgot to actually update it in the VM where I build the
+releases :-(
 
-> [Not entirely serious]. Well if cherry-picking is taking a thing and
-> eating it here, maybe git-cherry-puke takes an already digested thing
-> and "throws" it elsewhere ?:)
-> 
-> It's a silly name but it's somewhat symmetric :)
+Will work on it tomorrow.
 
-One of the decisions to be made is whether to begin the new command with 
-"git-cherry-" or not, because it introduces a new abiguity for command 
-line completion.
-
--- Hannes
+Thanks for double-checking,
+Johannes
