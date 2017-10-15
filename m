@@ -2,112 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4B18920372
-	for <e@80x24.org>; Sun, 15 Oct 2017 17:07:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CCC5F20372
+	for <e@80x24.org>; Sun, 15 Oct 2017 17:07:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751763AbdJORHO (ORCPT <rfc822;e@80x24.org>);
-        Sun, 15 Oct 2017 13:07:14 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:46511 "EHLO
+        id S1751865AbdJORHu (ORCPT <rfc822;e@80x24.org>);
+        Sun, 15 Oct 2017 13:07:50 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:46043 "EHLO
         mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751386AbdJORHN (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 15 Oct 2017 13:07:13 -0400
-Received: by mail-wm0-f68.google.com with SMTP id m72so29573847wmc.1
-        for <git@vger.kernel.org>; Sun, 15 Oct 2017 10:07:12 -0700 (PDT)
+        with ESMTP id S1751386AbdJORHq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 15 Oct 2017 13:07:46 -0400
+Received: by mail-wm0-f68.google.com with SMTP id q124so29573620wmb.0
+        for <git@vger.kernel.org>; Sun, 15 Oct 2017 10:07:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=Kd7UzyRhCz++UZNku2fucT5czGpjnHueN8EMuZ782hw=;
-        b=fZYV0AYvNm77sFsLXeuxqJgoKM8TabLLPgndLv7udlrGYL10OHzT4y9M+CyLfMm0sd
-         H7RQACd3XmI+/BhMvyBiP1J0CchJFpxK81qrq81GdqBACTZKG/Le4qe6VDE91SexmfWe
-         IAkxoW2DQu70IG224rJtXhFVZA5nm0XAJP32I+t1A2m1nF2hpOvq1IlB3U3wHBPxKYKI
-         Vso8SDOnaY/cIQN3Og6KJMd6uLY47Jvn4xFAWPgjlR9vRdp9TsaWpObvQ1UZ+o7O3HdH
-         vtbs8dey3j8e2yf+nxxIv6DiU5ayhEcBcfnoXEW5dOAUWuP9W1UyLvyS7Og/a2j9sctn
-         BqKg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=KOok9EBJMwEvNZw53+JqkEQpsUbUXHCCW+25XyFqTNY=;
+        b=qEv1Wa6TLzrBoTDLdxcuS587DRwyFAZH/KKwdRB7z6r5VhTzQuof08XNDdWXNooTtE
+         WFdWsoFMfZLVMsJti2mUAZnrZzZh9zl6td4Ez1pjKyVDm1z2MYGF5+FyV2wHZKCZ4gRp
+         jr/EmS8Su1MeaRZfQIdMVC+s2t6urpW/otHD7eaybaQO9WkciIe2Wgi+lkycRKjpJrxL
+         Mf6C4mfG5VdgY2RjxytBvE0aIfkvKoNd6ZeXRwUjn+nO6jvThOdwhiuCfrZshrJKqXxH
+         ah7EbI1ob8Fws0yeujy11jPZobPZWZEbV9HDCW5hwI0Y0CT7aFQRxz8W3CNG/NlIo8j+
+         5Hbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Kd7UzyRhCz++UZNku2fucT5czGpjnHueN8EMuZ782hw=;
-        b=m+DjCVaPdxQMVkFbk498N+rk+5yyEgL06TFr38DOha1etgnerjVwXdULdCc3tvBDnd
-         t+M5XTYbTR+iZ3JH/ISSaiR6FsoAOH6Af4nXhAcWwJFVucqIPW2dC83arLB6ZINGL66F
-         8e9fKt8yDFlGfZNEQeRWM4F6sYdqrQJy3nMQfLpVDyD1EaeGrmzsr0K5G+DVQPxZ5sCL
-         yaEsFjmN+muTQj/oqw40mC+vN46fYlb76i3xepYh6hQwDnb9rquyaGfvB5PwXUZbsrew
-         BQXeSyH1wrEuRGNppXoBCRea/qnfrYs7z+DnMDW0HjVOXhuTK3g2dhEw3aB8+mkBSw3X
-         b3Gw==
-X-Gm-Message-State: AMCzsaVG5HrjUX1xh3N+nP3ipMky3PG45eKwmpMftunhy/AwT2PYbPVk
-        OsRk32QspTYd8oop2VilsEYhTINtJDDeJFNIlvU=
-X-Google-Smtp-Source: AOwi7QAL8GEpO4pdWKVx7FGgyqidybQQuaGPQ9Rc+v/rIfY6e7yP+Vouhuq+4md0rduvrnri0uI9jWMNYmUm7i2fk5U=
-X-Received: by 10.80.142.212 with SMTP id x20mr10172162edx.285.1508087232194;
- Sun, 15 Oct 2017 10:07:12 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.80.172.225 with HTTP; Sun, 15 Oct 2017 10:07:11 -0700 (PDT)
-In-Reply-To: <58336f0d-366c-6636-1e94-22afbafdfe4c@web.de>
-References: <20171013175157.13634-1-ralf.thielow@gmail.com> <58336f0d-366c-6636-1e94-22afbafdfe4c@web.de>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=KOok9EBJMwEvNZw53+JqkEQpsUbUXHCCW+25XyFqTNY=;
+        b=Xm7qMVT9VoDQlRaBhp0t8l3JriBRkFn7e28fcInVWa6uWQOJfDMhAq7Ttdr6dnxlUT
+         WMatciZKOOKQmewCCGTL5kDU1aMWmLeNgM0DfxDfWWAsDM5vaKuHd/SwwopR8Fiz8mdZ
+         K+OMbx+t4NrVUe/RhH6maw+FVCALG8AwSpviyyYJ0xv1JeIUQ+XEQFTfcxLmihCUp+rv
+         4JGapodirkFQoBSxMWdqzD37h/IL4CGG2wGikLTe35NorXVwZBn7ZsjlINahQg61mraU
+         lFNUg8Q5vvI4Qs5ugrmu5TMwL1qkvKFK/jQT+TpcMNqPB+ohQUrhvT/ttoD9og3AeCYQ
+         98YQ==
+X-Gm-Message-State: AMCzsaXYYGTrh3gcFZT8jESFNJG2zBOk4+vwvGnE43RymYxXM1+ymEMO
+        vMKKtCJpsUT6kxUBeqS25EoLjA==
+X-Google-Smtp-Source: AOwi7QD4A0Lo69oH5Oxtxq1sCGvYalfrFbmE9b9Vje6W1ReFPoStwQUeetrZIijIL35UGEUjhcws8A==
+X-Received: by 10.80.151.22 with SMTP id c22mr10077075edb.247.1508087265159;
+        Sun, 15 Oct 2017 10:07:45 -0700 (PDT)
+Received: from localhost (cable-62-117-26-3.cust.telecolumbus.net. [62.117.26.3])
+        by smtp.gmail.com with ESMTPSA id e14sm4061871edk.95.2017.10.15.10.07.44
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 15 Oct 2017 10:07:44 -0700 (PDT)
 From:   Ralf Thielow <ralf.thielow@gmail.com>
-Date:   Sun, 15 Oct 2017 19:07:11 +0200
-Message-ID: <CAN0XMOKjhoi-_bWqOpF-uTtaF8YrmPfR_0RMDePZSzOxAi2bwQ@mail.gmail.com>
-Subject: Re: [PATCH] sequencer.c: unify error messages
-To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Cc:     git <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Ralf Thielow <ralf.thielow@gmail.com>
+Subject: [PATCH v2] sequencer.c: fix and unify error messages in rearrange_squash()
+Date:   Sun, 15 Oct 2017 19:07:42 +0200
+Message-Id: <20171015170742.8395-1-ralf.thielow@gmail.com>
+X-Mailer: git-send-email 2.15.0.rc0.296.g7b26d72
+In-Reply-To: <20171013175157.13634-1-ralf.thielow@gmail.com>
+References: <20171013175157.13634-1-ralf.thielow@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-2017-10-13 23:12 GMT+02:00 Ren=C3=A9 Scharfe <l.s.r@web.de>:
-> Am 13.10.2017 um 19:51 schrieb Ralf Thielow:
->> When ftruncate() in rearrange_squash() fails, we write
->> that we couldn't finish the operation on the todo file.
->> It is more accurate to write that we couldn't truncate
->> as we do in other calls of ftruncate().
->
-> Would it make sense to factor out rewriting the to-do file to avoid
-> code duplication in the first place?
->
->> While at there, remove a full stop in another error message.
->>
->> Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
->> ---
->>   sequencer.c | 4 ++--
->>   1 file changed, 2 insertions(+), 2 deletions(-)
->>
->> diff --git a/sequencer.c b/sequencer.c
->> index e258bb646..b0e6459a5 100644
->> --- a/sequencer.c
->> +++ b/sequencer.c
->> @@ -2948,9 +2948,9 @@ int rearrange_squash(void)
->>               if (fd < 0)
->>                       res =3D error_errno(_("could not open '%s'"), todo=
-_file);
->>               else if (write(fd, buf.buf, buf.len) < 0)
->> -                     res =3D error_errno(_("could not read '%s'."), tod=
-o_file);
->> +                     res =3D error_errno(_("could not read '%s'"), todo=
-_file);
->                                                        ^^^^
-> That should read "write", right?
->
+When the write opertion fails, we write that we could
+not read. Change the error message to match the operation
+and remove the full stop at the end.
 
-Sure. I'll send a new version of this patch to fix the messages. Maybe
-someone else picks up the other things. Thanks.
+When ftruncate() fails, we write that we couldn't finish
+the operation on the todo file. It is more accurate to write
+that we couldn't truncate as we do in other calls of ftruncate().
 
->>               else if (ftruncate(fd, buf.len) < 0)
->> -                     res =3D error_errno(_("could not finish '%s'"),
->> +                     res =3D error_errno(_("could not truncate '%s'"),
->>                                          todo_file);
->
-> Hmm, why call ftruncate(2) instead of opening the file with O_TRUNC?
->
->>               close(fd);
->>               strbuf_release(&buf);
->>
+Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+---
+ sequencer.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/sequencer.c b/sequencer.c
+index e258bb646..75f5356f6 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -2948,9 +2948,9 @@ int rearrange_squash(void)
+ 		if (fd < 0)
+ 			res = error_errno(_("could not open '%s'"), todo_file);
+ 		else if (write(fd, buf.buf, buf.len) < 0)
+-			res = error_errno(_("could not read '%s'."), todo_file);
++			res = error_errno(_("could not write '%s'"), todo_file);
+ 		else if (ftruncate(fd, buf.len) < 0)
+-			res = error_errno(_("could not finish '%s'"),
++			res = error_errno(_("could not truncate '%s'"),
+ 					   todo_file);
+ 		close(fd);
+ 		strbuf_release(&buf);
+-- 
+2.15.0.rc0.296.g7b26d72
+
