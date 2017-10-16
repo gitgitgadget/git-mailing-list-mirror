@@ -2,110 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8802E20437
-	for <e@80x24.org>; Mon, 16 Oct 2017 18:33:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6498120437
+	for <e@80x24.org>; Mon, 16 Oct 2017 18:35:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754216AbdJPSdn (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Oct 2017 14:33:43 -0400
-Received: from mail-wr0-f176.google.com ([209.85.128.176]:46546 "EHLO
-        mail-wr0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752994AbdJPSdl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Oct 2017 14:33:41 -0400
-Received: by mail-wr0-f176.google.com with SMTP id l1so3879173wrc.3
-        for <git@vger.kernel.org>; Mon, 16 Oct 2017 11:33:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=gNeDO0NI3Pdti3C1tD58w9w69Fvy2nYgDs59DEJHnzU=;
-        b=b6fwm4CwCrouSB4BEAIfQb54Zmv6YO0DU26GfnN4G6eIclfh1oJxTIU9SiBDUczQD/
-         PA/NCXY26mryNjm85zNxVMYI7nMPgne6wOh9jiX6y3Vt400qoZRuGp30+WKZXJFiIIN2
-         tYt/rI8fgINjU3n7LSHB996B3t9rjigylKGiUYgyJem0ZYxQA9Nzo+pnzGqtjIEHSvih
-         O1NUjmy3KWNi92V+lzC0wWzB63BHTuhCd48GBOl5bygmzXZelYp9BiqRtLev6NiNPbYw
-         l3GAXSMzIBo3gotv3g0tOAKMXAP+pgVdm/aI34Is78XbpTtc6xQ32NjSHXaxvdMYb1tf
-         KILw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=gNeDO0NI3Pdti3C1tD58w9w69Fvy2nYgDs59DEJHnzU=;
-        b=soNaeCern6MFEMSvyQXZow4Xs2b3I17NMKqYgWRfuncf6crQ1Y5fu+eSdQYIgZqale
-         sgBfr5iuCzlGVsaTRPyEA47nrnAEkOOWtHOaSgqO2+VFdu/E4d4TBxMeqciv7bwFw/GB
-         KuhlWtt+XKSHIa1BDEZPKCEwv8EKwGHU2SpgpNa87m53LW+bLtLZSp12mEAxvus9UCMD
-         4Wd50obAyDN67rwh65jWW0JAkydH6edUpa69cx8diCnqnxgyvlJBuWizaf1xvkbI+V34
-         S9694Cp7zrfC9Xz0RKG5Idtkpy5Y12dFHIqSBn2onUisg2Xza6azlisKgnrG5q/j47xK
-         uF2w==
-X-Gm-Message-State: AMCzsaW44bzT/dxxBt5+mpniyGhDeGGTuAWh3T4tJ9RCWHyRpA5s87XA
-        dEuUNc0ZGkJ8P252VFAQR6/DEZao
-X-Google-Smtp-Source: ABhQp+Q39JvVF862MjioxugEuxGiWJegOHipNSGn3zHbjOA8El/tMV0vxAhVd9CtiwHQSTYPsVIBTw==
-X-Received: by 10.223.166.181 with SMTP id t50mr1304947wrc.251.1508178820136;
-        Mon, 16 Oct 2017 11:33:40 -0700 (PDT)
-Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
-        by smtp.gmail.com with ESMTPSA id m64sm7132445wmb.10.2017.10.16.11.33.39
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 16 Oct 2017 11:33:39 -0700 (PDT)
-Date:   Mon, 16 Oct 2017 19:34:39 +0100
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
-Cc:     Git Mailing list <git@vger.kernel.org>
-Subject: Re: slight addition to t.gummerer's proposed "git stash" patch
-Message-ID: <20171016183439.GF15399@hank>
-References: <alpine.LFD.2.21.1710110454240.11490@localhost.localdomain>
- <20171011192109.GC15399@hank>
- <alpine.LFD.2.21.1710111523510.4185@localhost.localdomain>
+        id S1756459AbdJPSfp (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Oct 2017 14:35:45 -0400
+Received: from ikke.info ([178.21.113.177]:43894 "EHLO vps892.directvps.nl"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753249AbdJPSfo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Oct 2017 14:35:44 -0400
+Received: by vps892.directvps.nl (Postfix, from userid 182)
+        id C1731440397; Mon, 16 Oct 2017 20:35:42 +0200 (CEST)
+Received: from epsilon.home (unknown [10.8.0.22])
+        by vps892.directvps.nl (Postfix) with ESMTP id 1950644038F;
+        Mon, 16 Oct 2017 20:35:42 +0200 (CEST)
+From:   Kevin Daudt <me@ikke.info>
+To:     git@vger.kernel.org
+Cc:     Kevin Daudt <me@ikke.info>,
+        =?UTF-8?q?Rafael=20Ascens=C3=A3o?= <rafa.almas@gmail.com>,
+        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH v2] column: show auto columns when pager is active
+Date:   Mon, 16 Oct 2017 20:35:11 +0200
+Message-Id: <20171016183511.12528-1-me@ikke.info>
+X-Mailer: git-send-email 2.14.2
+In-Reply-To: <20171011172310.2932-1-me@ikke.info>
+References: <20171011172310.2932-1-me@ikke.info>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.21.1710111523510.4185@localhost.localdomain>
-User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/11, Robert P. J. Day wrote:
-> On Wed, 11 Oct 2017, Thomas Gummerer wrote:
-> 
-> > On 10/11, Robert P. J. Day wrote:
-> > >
-> > >   was perusing thomas gummerer's proposed "git stash" patch here:
-> > >
-> > > https://www.spinics.net/lists/git/msg313993.html
-> > >
-> > > and i'd make one more change -- i'd separate the OPTIONS entries for
-> > > "git stash push" and "git stash save" so they don't end up being
-> > > rendered all crushed together when displaying the man page:
-> >
-> > I for one would like that.  I sent a patch recently [1] that would
-> > show git stash push first on the man page, which didn't seem to get
-> > much traction.  This goes a bit further than that, which I'd be happy
-> > with.
-> >
-> > [1]: https://public-inbox.org/git/20171005201029.4173-1-t.gummerer@gmail.com/
-> 
->   ... snip ...
-> 
-> if you want, just crush my suggestion into your earlier patch and
-> resubmit it.
+When columns are set to automatic for git tag and the output is
+paginated by git, the output is a single column instead of multiple
+columns.
 
-Thanks, before doing that let me see where that discussion goes.  My
-plan was to be a bit more careful and first get rid of mentions of
-'git stash save', and mark it deprecated as a next step.  In which
-case I'd submit a patch with your suggestions in a few cycles.
+Standard behaviour in git is to honor auto values when the pager is
+active, which happens for example with commands like git log showing
+colors when being paged.
 
-> rday
-> 
-> -- 
-> 
-> ========================================================================
-> Robert P. J. Day                                 Ottawa, Ontario, CANADA
->                         http://crashcourse.ca
-> 
-> Twitter:                                       http://twitter.com/rpjday
-> LinkedIn:                               http://ca.linkedin.com/in/rpjday
-> ========================================================================
+Since ff1e72483 (tag: change default of `pager.tag` to "on",
+2017-08-02), the pager has been enabled by default, exposing this
+problem to more people.
+
+finalize_colopts in column.c only checks whether the output is a TTY to
+determine if columns should be enabled with columns set to auto. Also
+check if the pager is active.
+
+Adding a test for git column is possible but requires some care to work
+around a race on stdin. See commit 18d8c2693 (test_terminal: redirect
+child process' stdin to a pty, 2015-08-04). Test git tag instead, since
+that does not involve stdin, and since that was the original motivation
+for this patch.
+
+Helped-by: Rafael Ascensão <rafa.almas@gmail.com>
+Signed-off-by: Kevin Daudt <me@ikke.info>
+---
+Changes since v1:
+
+- Remove redundant -p flag in tests
+- Explain why git tag is being tested instead of the more obvious git
+  column
+
+ column.c         |  3 ++-
+ t/t7006-pager.sh | 14 ++++++++++++++
+ 2 files changed, 16 insertions(+), 1 deletion(-)
+
+diff --git a/column.c b/column.c
+index ff7bdab1a..ded50337f 100644
+--- a/column.c
++++ b/column.c
+@@ -5,6 +5,7 @@
+ #include "parse-options.h"
+ #include "run-command.h"
+ #include "utf8.h"
++#include "pager.c"
+ 
+ #define XY2LINEAR(d, x, y) (COL_LAYOUT((d)->colopts) == COL_COLUMN ? \
+ 			    (x) * (d)->rows + (y) : \
+@@ -224,7 +225,7 @@ int finalize_colopts(unsigned int *colopts, int stdout_is_tty)
+ 		if (stdout_is_tty < 0)
+ 			stdout_is_tty = isatty(1);
+ 		*colopts &= ~COL_ENABLE_MASK;
+-		if (stdout_is_tty)
++		if (stdout_is_tty || pager_in_use())
+ 			*colopts |= COL_ENABLED;
+ 	}
+ 	return 0;
+diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
+index f0f1abd1c..e985b6873 100755
+--- a/t/t7006-pager.sh
++++ b/t/t7006-pager.sh
+@@ -570,4 +570,18 @@ test_expect_success 'command with underscores does not complain' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success TTY 'git tag with auto-columns ' '
++	test_commit one &&
++	test_commit two &&
++	test_commit three &&
++	test_commit four &&
++	test_commit five &&
++	cat >expected <<\EOF &&
++initial  one      two      three    four     five
++EOF
++	test_terminal env PAGER="cat >actual.tag" COLUMNS=80 \
++		git -c column.ui=auto tag --sort=authordate &&
++	test_cmp expected actual.tag
++'
++
+ test_done
+-- 
+2.14.2
+
