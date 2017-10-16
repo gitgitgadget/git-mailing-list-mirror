@@ -2,106 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5D544202A2
-	for <e@80x24.org>; Mon, 16 Oct 2017 23:39:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6CE1B202A2
+	for <e@80x24.org>; Mon, 16 Oct 2017 23:49:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932987AbdJPXjl (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Oct 2017 19:39:41 -0400
-Received: from mail-wm0-f44.google.com ([74.125.82.44]:55799 "EHLO
-        mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932598AbdJPXji (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Oct 2017 19:39:38 -0400
-Received: by mail-wm0-f44.google.com with SMTP id u138so407311wmu.4
-        for <git@vger.kernel.org>; Mon, 16 Oct 2017 16:39:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=meteor-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=HtPPrugtkBIPCHXvasFvY4WI1hFZwrB8MRxc1H/Pg3Q=;
-        b=CISGmdZA5vWgZSu3ldrIRkqHyHaP5VRmSZ6/WKnBrLESV1LXmLn9gfRcqdf/3H97A2
-         hDhGnRguTqhlrPZE0KqIwLqyjGUmr/Tz0LSX5L/4tgcZwHgXjyqlHd+9iKfRtdmNNRJ8
-         1i0bEiClu3xA2SWVl4UoNJAUJc5eNF/0yq2SoIojMixwpbQLZreU9oQCNiaeY116O7i+
-         1AZnoMB+ZE+xlZvzxVv8l0JjEuy++4sdqfwjhnZ6aNHwLKoOcJZc0o8RWstRmg9z+Rm7
-         4r/EkPrQqbun0L38FRfQKRNL4+TEuPGKn1/ABvRznnJgKOxYhf6tMwTlFRyGTsuZP2Oi
-         sjjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=HtPPrugtkBIPCHXvasFvY4WI1hFZwrB8MRxc1H/Pg3Q=;
-        b=AdH/DD4SCC0UJZJE+eUeUHOQD1lZnFBb2WQClGIPhVnno5sqbZBRIlwb+j9pAscL3v
-         BZRNLgVZddnDZchecAviCMHWkoKio+jDrdayGuTVvJCRCN9z43GUGkG30ZzRuggZv+82
-         ERcLQRdOi6UVr2pYOYFXNcoGNAZ6XQwd9kzx5Ytb7HCxiBJ7jJpCAoTqS2Bc5O0WZvGQ
-         rbjgI2KzVSQAbhNm7J4Lk6eU+pq4pJm1pr+LTPfd6umc0z4s2awjyj6ZAqFi5EJCT7FT
-         /A/Je0V0CY6a9IFsKputRTnp1O4IX1+yJulzpwu5nGFc7GO2MAbMv/JH4MDXpzV4r8o0
-         1YpA==
-X-Gm-Message-State: AMCzsaWz+fgqEA2k7nF8PlZbucJ5w/KDd94S43vbOSlMaqnE6E4+EFrB
-        Qov3KqoPqHJFqMNb9PsXGc/6gK8aEzw8VOe8XWzoqlCeyQ==
-X-Google-Smtp-Source: ABhQp+SOzkugV7Oxu9+XPQCgxYl3r37ijeg7VoFDWaquXy5X/rlOyYuRzueVV38lFlN0e2oJOeSLAf24IJ/cCARe/CE=
-X-Received: by 10.28.207.200 with SMTP id f191mr1828617wmg.99.1508197176850;
- Mon, 16 Oct 2017 16:39:36 -0700 (PDT)
+        id S933032AbdJPXtX (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Oct 2017 19:49:23 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:55314 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S932715AbdJPXtV (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 16 Oct 2017 19:49:21 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 16DE960448;
+        Mon, 16 Oct 2017 23:49:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1508197760;
+        bh=10vT9tpZqG1yg4RQnzOAVCYVxqLAYMVVzt/xEw/TxPI=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=y+jK8ARRVpzHQDeBs9h/XRpd4Rk2sJN8LsZvPWxA5K/bPCXif4b8UoSoGom5CIJQn
+         jlqdQuK4nlR6jfUq/CFemWo4bDhHQ2W0wtayMhek2d+AhdCncz4ExZzciIR5n+6sWz
+         hesTe2iggKF/+EpCHxmnIQ5kgNeHRVHCOGPuIjk/Qyy2gPaKBVHuwpeGIDaUVZ3MnY
+         xlSB34am9Fd+TxiVL55r3HK/SAzb2QlIez4HpsbOoAUVx/S5h5cJloRjjNBgwBuSBi
+         O+kXyVE8DpiZNt2Y8uY9GgvTEo4voSuwa78O05+Z3+I/RG69Ncp0nF2zcovczRG/cT
+         8cb9so7YTId3TA/vnvG6ZsoNxqTPHfA1HWTC1D701RYJmdgNnCHOFLxIAlEntSQrHP
+         HWjD8Y5iwmSKsN32lmSOLsr/DA2RnJle4dGYNaI4zn+m1DHacR/Mp+r18rkwTPFZli
+         F+NMmex70C5iQsptriMGzDrN5mow8EmLTk8zC6E7xaaEnWbdfAw
+Date:   Mon, 16 Oct 2017 23:49:13 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Brandon Williams <bmwill@google.com>,
+        Stefan Beller <sbeller@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v3 00/25] object_id part 10
+Message-ID: <20171016234912.6r7fqkxugn43wji5@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
+        Brandon Williams <bmwill@google.com>,
+        Stefan Beller <sbeller@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+References: <20171015220712.97308-1-sandals@crustytoothpaste.net>
+ <xmqq8tgbu9bt.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Received: by 10.28.104.67 with HTTP; Mon, 16 Oct 2017 16:39:16 -0700 (PDT)
-From:   David Glasser <glasser@meteor.com>
-Date:   Mon, 16 Oct 2017 16:39:16 -0700
-Message-ID: <CAOz3OdswGKiWesrjp2P0oaVkTjGONsY3CoYq1B5Jh7Qq8tTPZg@mail.gmail.com>
-Subject: Adding a target prefix to git filter-branch --subdirectory-filter
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="ksd5at24rcniw2j4"
+Content-Disposition: inline
+In-Reply-To: <xmqq8tgbu9bt.fsf@gitster.mtv.corp.google.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.12.0-2-amd64)
+User-Agent: NeoMutt/20170609 (1.8.3)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git filter-branch --subdirectory-filter is really useful and easy to
-use.  It's a commonly used step as part of moving a directory from one
-repo to another.  It lets you move a subdirectory to the root of the
-repo.
 
-I've found that, when moving directories between repos, I often want
-to do a task that is very similar to --subdirectory-filter but not
-quite the same =E2=80=94 I want to put the subdirectory under a prefix (and
-maybe in this case the "subdirectory" should just be the entire repo).
+--ksd5at24rcniw2j4
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Searching the web for <git move directory to new repository> shows
-that wanting to do something like this is pretty common.
+On Mon, Oct 16, 2017 at 11:15:34AM +0900, Junio C Hamano wrote:
+> With a hope that this might help other reviewers, here is the
+> interdiff between "the previous one merged with v2.15-rc1" and "this
+> round applied on v2.15-rc1 directly". =20
+>=20
+> The changes all looked sensible to me.  Thanks.
 
-It's certainly possible to do this with --index-filter or
---tree-filter, and the man page even has an example:
+Is there a reasonably straightforward tool or workflow to generate
+interdiffs?  If so, I can include them in the future.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
+https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: https://keybase.io/bk2204
 
-           git filter-branch --index-filter \
-                   'git ls-files -s | sed "s-\t\"*-&newsubdir/-" |
-                           GIT_INDEX_FILE=3D$GIT_INDEX_FILE.new \
-                                   git update-index --index-info &&
-                    mv "$GIT_INDEX_FILE.new" "$GIT_INDEX_FILE"' HEAD
+--ksd5at24rcniw2j4
+Content-Type: application/pgp-signature; name="signature.asc"
 
-But gosh, this is just a pain to write.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.1 (GNU/Linux)
 
-I'd like to add direct support to git filter-branch for having a
-non-root target for subdirectory-filter.
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlnlRXgACgkQv1NdgR9S
+9ou38g//b4wthjWVTKmMurwtUxRKYGTmjfhlElaPmU4qoX3oK+frFSUm9s3nisRI
+FvHKJ3fv5hlJ4RjUofGJ6u6CIrz78y3nIiOhaDWkCMGZm8ex5ReGFS2+VmNQ6Xpb
+G59Fvu7LS+SjUJ6ekeUJxasmkn+0QGzO1lNvPtDfLDPJuohbKGfJf5vYal5U5zhl
+huv7kE8QjsKbHaa+571xGOkJcbS/KVYeNbzYUrpSRCpgR0GhBTSBEkn13v2dPsnC
+mav3ZX0+Q4IH+icmkb9Dslk2aXxgpX0YY3b6uqUds5zRLH5LmsbCRqgRc6xkbTvk
+9sW63ykIrmjZzHj3XKbW/+omIjs4gUgq9LGJwz4kXT6TsSUDgKTTzPsms0l5nDaU
+2Q7qBdHFfhToPtbmQ9qLAzIC6Bm1qDFMl/8yJAdHPEkXpby9SOzyx0YDsTGb3yoo
+cXaINUa61ViCEH2VT/rCyaM3iF+0uOcB/D8GBobEBK3wiXsGLc2VQRRwj0KW6Qy3
+buHYXEUi3K9N5F7t4/Rt7pZmiOXs68ciqh4vbUw2Xw6MqfXcsICY0recJlUWNtSl
+uPWPJtF5KFnlpZ2IWbsFh0HYDJiyzLe4eYYqUPxLOruEs4kVYoU+BZ6aVYuWIcKE
+QMM2/HqrA6SOICxsFjG9DWmvb0m8A4vK7HW7nkxe9O6QKPBFf5Y=
+=fO2K
+-----END PGP SIGNATURE-----
 
-I have a couple questions:
-
-(1) What interface should this have? I'd lean towards having this just
-be part of --subdirectory-filter as a separate option
---subdirectory-target-prefix.  For the "move root to subdir" you maybe
-would have to type --subdirectory-filter=3D/, or maybe empty
---subdirectory-filter combined with --subdirectory-target-prefix does
-the trick.
-
-Alternatively, it could be a new filter type specific to moving
-subdirectories around, but I don't know that that makes sense.
-
-(2) The way I'd imagine I would implement this would be to replace the
-current `git read-tree -i -m $commit:"$filter_subdir"` with `git
-read-tree --empty && git read-tree --prefix=3DPREFIX/
-$commit:"$filter_subdir"`.  --prefix is incompatible with -m, and I
-don't really understand the importance of the stat reuse that is done
-by `-i -m` single-tree merge. Is it OK to just drop the -i -m?
-
---dave
+--ksd5at24rcniw2j4--
