@@ -1,83 +1,77 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: **
+X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=2.2 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	PI_EMPTY_SUBJ,PI_ZIPFILE_EMPTY_SUBJ,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,ZIPFILE
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 24C7B1FF32
-	for <e@80x24.org>; Mon, 16 Oct 2017 07:45:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 631701FF32
+	for <e@80x24.org>; Mon, 16 Oct 2017 08:24:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751754AbdJPHo6 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Oct 2017 03:44:58 -0400
-Received: from AWBL7-99.qubee.com.bd ([180.234.7.99]:35005 "HELO qubee.com.bd"
-        rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with SMTP
-        id S1751722AbdJPHo6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Oct 2017 03:44:58 -0400
-X-Greylist: delayed 598 seconds by postgrey-1.27 at vger.kernel.org; Mon, 16 Oct 2017 03:44:53 EDT
-Date:   Mon, 16 Oct 2017 07:44:46 -0000
-Content-Type: application/zip; name="5027367.zip"
-Importance: High
-Message-ID: <150813988693.13824.913404994039659419@qubee.com.bd>
-To:     <git@vger.kernel.org>
+        id S1751722AbdJPIYF (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Oct 2017 04:24:05 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62147 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750914AbdJPIYB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Oct 2017 04:24:01 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2F0C09DCB1;
+        Mon, 16 Oct 2017 04:23:54 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=y7hjaBRLnxONN2A8oU9xCIvoQeY=; b=loxFjg
+        p3/QW42bLUny4mmBPWSenpH7P3diMj/DC1cn/+q6ax+UQ7mvZ3ljlU8BfsPQIaTM
+        T7DPN4Pp7hhTk6x2dIxEAgcuR8gSSVcheNAubk5kFTs9E5DqYqZcoz39rMmX1Lub
+        xb3ccYVZ7ul+UurSDTROOmsZ+oe+jEwblq6Zo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=DbmM/+G1R0MOoSING5m6Jul5b5Y/Zcw3
+        rJqBUKEA3m+8MjgZrBncsK7BXz1Y3/c5D9oD8887wiCRa9aHRZuyT7XHBczLpIX5
+        ZD9mKzj4RUM5yLCqqX1HcwEMDaCYd8A91N+17qVW11IbQaoSw4bewOy8RfuhRPmD
+        91g89T7Y2zM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2560B9DCB0;
+        Mon, 16 Oct 2017 04:23:54 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8BDE49DCAF;
+        Mon, 16 Oct 2017 04:23:53 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     noloader@gmail.com, Git List <git@vger.kernel.org>
+Subject: Re: Does Git build things during 'make install"?
+References: <CAH8yC8kx9Td51=UFvLwLAQFPKxUXg0D6KKqWR+JX+-wmTAKYRQ@mail.gmail.com>
+        <0ec353db-428c-bb6f-03fe-303487fde197@kdbg.org>
+Date:   Mon, 16 Oct 2017 17:23:52 +0900
+In-Reply-To: <0ec353db-428c-bb6f-03fe-303487fde197@kdbg.org> (Johannes Sixt's
+        message of "Mon, 16 Oct 2017 07:58:05 +0200")
+Message-ID: <xmqq60bfsdpj.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-From:   <jadebook@bellsouth.net>
-Content-Disposition: attachment
-Content-Transfer-Encoding: base64
-Subject: 
+Content-Type: text/plain
+X-Pobox-Relay-ID: 588B0C92-B24B-11E7-8A67-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-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
+Johannes Sixt <j6t@kdbg.org> writes:
+
+> Yes, running "sudo make install" is a nightmare. sudo clears the path,
+> and the git command is not found by the make invoked with root
+> permissions. This changes the version string that gets compiled into
+> the executable, which finally triggers a complete rebuild under
+> root. Sad...
+
+In the meantime, would it help to intall as yourself under DESTDIR
+set to where you can write into, and then limit the potential
+damange done while pretending to be a privileged user to "cp -R" (or
+"tar cf" in $DESTDIR piped to "tar xf" in /)?
+
+It appears that some dependencies are screwed up around "perl"
+related things, which may want to get fixed.  I agree that "make &&
+make install" that runs two 'make' under the same environment and
+user shouldn't (re)build anything during the latter 'make', but we
+somehow seem to do so.
