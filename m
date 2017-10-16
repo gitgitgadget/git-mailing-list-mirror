@@ -2,85 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	DATE_IN_PAST_03_06,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 25AF220437
-	for <e@80x24.org>; Mon, 16 Oct 2017 18:28:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8802E20437
+	for <e@80x24.org>; Mon, 16 Oct 2017 18:33:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754279AbdJPS2U (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Oct 2017 14:28:20 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:44275 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751609AbdJPS2T (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Oct 2017 14:28:19 -0400
-Received: by mail-wr0-f194.google.com with SMTP id l24so3853916wre.1
-        for <git@vger.kernel.org>; Mon, 16 Oct 2017 11:28:19 -0700 (PDT)
+        id S1754216AbdJPSdn (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Oct 2017 14:33:43 -0400
+Received: from mail-wr0-f176.google.com ([209.85.128.176]:46546 "EHLO
+        mail-wr0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752994AbdJPSdl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Oct 2017 14:33:41 -0400
+Received: by mail-wr0-f176.google.com with SMTP id l1so3879173wrc.3
+        for <git@vger.kernel.org>; Mon, 16 Oct 2017 11:33:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:content-transfer-encoding:subject:message-id:date:to
-         :mime-version;
-        bh=79zk8BADREpZHMQHfWRz32pIKLxn7Wzf/n78BottDv4=;
-        b=Jb6dfTDsgUMNsZHnpUArYqxqAjBSIXCTVwF0AY+jmZDghg6BDpTggURIhzhZBJBigS
-         ynBVhDxH3Vduut3v312kuFfYSkDpNg4GQhavs1lpgeTVeZYUAojL6ZFTJ+3eplp3SRwv
-         8ER8BLneUNN8PEp+Mlz4dzywWkp3GwrID/twwetZjizA+apNsDnOT/NBdKBS4x3O3rYl
-         NIV39lt2/iRAdd2t7C6jvc+ww3Sej1s6j24hZG8vHVC14vyRlnN6Bj2/wAZQqzFVl4LR
-         wAD1/cKDiKLjcd6r+VJU9jLey/vzlk29PQz/gVFqmpjJDCcTkWV2X6pozYxg0ljef0vx
-         uwsg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=gNeDO0NI3Pdti3C1tD58w9w69Fvy2nYgDs59DEJHnzU=;
+        b=b6fwm4CwCrouSB4BEAIfQb54Zmv6YO0DU26GfnN4G6eIclfh1oJxTIU9SiBDUczQD/
+         PA/NCXY26mryNjm85zNxVMYI7nMPgne6wOh9jiX6y3Vt400qoZRuGp30+WKZXJFiIIN2
+         tYt/rI8fgINjU3n7LSHB996B3t9rjigylKGiUYgyJem0ZYxQA9Nzo+pnzGqtjIEHSvih
+         O1NUjmy3KWNi92V+lzC0wWzB63BHTuhCd48GBOl5bygmzXZelYp9BiqRtLev6NiNPbYw
+         l3GAXSMzIBo3gotv3g0tOAKMXAP+pgVdm/aI34Is78XbpTtc6xQ32NjSHXaxvdMYb1tf
+         KILw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:content-transfer-encoding:subject
-         :message-id:date:to:mime-version;
-        bh=79zk8BADREpZHMQHfWRz32pIKLxn7Wzf/n78BottDv4=;
-        b=EjbPNain4WVl5q9+TD794Po7Z4Ze7l360cptT1WOT6QNJ/ihTFZBRSfN4/NtL9UG+Z
-         VQXeZl7FoPWRBcJdj1GYKoBHHI8bdx1Y3UNYZJpfoQ0fEm+qC5bFb8TXCGCimQfglYq+
-         VLEsWYNHjHSiDp1CO+2jaKR/f0GpFtiSiLvqT8bh7QuuwaeFW9PF9cXw5LRwAYFyyjRR
-         TqNnxIhNzE9/gX0nOa+AjCBihtzzjQyhH1mqqNasyjZ957tzcOFKcLZk+iFV7R2m2pEv
-         0ePla5bo9g3E3EH8YbYR3gHCSvudipl86ru281rbGGvHwI1k0yA26k3fSKAPZ4doMrsM
-         tt+w==
-X-Gm-Message-State: AMCzsaWeYJLCXd/tJMSlULIJZ72mDHqFe5LLRBRQ0rw2jkXjNz6Alu+P
-        wNMu7rD/vwz/N2ULciD9ZS/qhnQb
-X-Google-Smtp-Source: ABhQp+TTqiRTMXFJsflaMpAvBv7HT7f7cjfgxOmNfcU7m01Y6nZs6oeVehZXrYFc0VocD8J3xp7u7w==
-X-Received: by 10.223.150.116 with SMTP id c49mr1256107wra.246.1508178498345;
-        Mon, 16 Oct 2017 11:28:18 -0700 (PDT)
-Received: from slxbook4.fritz.box (p5DDB64DC.dip0.t-ipconnect.de. [93.219.100.220])
-        by smtp.gmail.com with ESMTPSA id e132sm9408934wmd.42.2017.10.16.11.28.17
-        for <git@vger.kernel.org>
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 16 Oct 2017 11:28:17 -0700 (PDT)
-From:   Lars Schneider <larsxschneider@gmail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=gNeDO0NI3Pdti3C1tD58w9w69Fvy2nYgDs59DEJHnzU=;
+        b=soNaeCern6MFEMSvyQXZow4Xs2b3I17NMKqYgWRfuncf6crQ1Y5fu+eSdQYIgZqale
+         sgBfr5iuCzlGVsaTRPyEA47nrnAEkOOWtHOaSgqO2+VFdu/E4d4TBxMeqciv7bwFw/GB
+         KuhlWtt+XKSHIa1BDEZPKCEwv8EKwGHU2SpgpNa87m53LW+bLtLZSp12mEAxvus9UCMD
+         4Wd50obAyDN67rwh65jWW0JAkydH6edUpa69cx8diCnqnxgyvlJBuWizaf1xvkbI+V34
+         S9694Cp7zrfC9Xz0RKG5Idtkpy5Y12dFHIqSBn2onUisg2Xza6azlisKgnrG5q/j47xK
+         uF2w==
+X-Gm-Message-State: AMCzsaW44bzT/dxxBt5+mpniyGhDeGGTuAWh3T4tJ9RCWHyRpA5s87XA
+        dEuUNc0ZGkJ8P252VFAQR6/DEZao
+X-Google-Smtp-Source: ABhQp+Q39JvVF862MjioxugEuxGiWJegOHipNSGn3zHbjOA8El/tMV0vxAhVd9CtiwHQSTYPsVIBTw==
+X-Received: by 10.223.166.181 with SMTP id t50mr1304947wrc.251.1508178820136;
+        Mon, 16 Oct 2017 11:33:40 -0700 (PDT)
+Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
+        by smtp.gmail.com with ESMTPSA id m64sm7132445wmb.10.2017.10.16.11.33.39
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 16 Oct 2017 11:33:39 -0700 (PDT)
+Date:   Mon, 16 Oct 2017 19:34:39 +0100
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
+Cc:     Git Mailing list <git@vger.kernel.org>
+Subject: Re: slight addition to t.gummerer's proposed "git stash" patch
+Message-ID: <20171016183439.GF15399@hank>
+References: <alpine.LFD.2.21.1710110454240.11490@localhost.localdomain>
+ <20171011192109.GC15399@hank>
+ <alpine.LFD.2.21.1710111523510.4185@localhost.localdomain>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Subject: Minor man page weirdness?
-Message-Id: <A4E5D8CC-19A7-442A-814C-FD5A46391982@gmail.com>
-Date:   Mon, 16 Oct 2017 07:16:49 -0700
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-X-Mailer: Apple Mail (2.3124)
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.2.21.1710111523510.4185@localhost.localdomain>
+User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On 10/11, Robert P. J. Day wrote:
+> On Wed, 11 Oct 2017, Thomas Gummerer wrote:
+> 
+> > On 10/11, Robert P. J. Day wrote:
+> > >
+> > >   was perusing thomas gummerer's proposed "git stash" patch here:
+> > >
+> > > https://www.spinics.net/lists/git/msg313993.html
+> > >
+> > > and i'd make one more change -- i'd separate the OPTIONS entries for
+> > > "git stash push" and "git stash save" so they don't end up being
+> > > rendered all crushed together when displaying the man page:
+> >
+> > I for one would like that.  I sent a patch recently [1] that would
+> > show git stash push first on the man page, which didn't seem to get
+> > much traction.  This goes a bit further than that, which I'd be happy
+> > with.
+> >
+> > [1]: https://public-inbox.org/git/20171005201029.4173-1-t.gummerer@gmail.com/
+> 
+>   ... snip ...
+> 
+> if you want, just crush my suggestion into your earlier patch and
+> resubmit it.
 
-I just noticed that a space between "-f" and "git" is missing in `man =
-git-branch`.
-The space is present in "Documentation/git-branch.txt", though. I am =
-using `man`
-version 1.6c on macOS.
+Thanks, before doing that let me see where that discussion goes.  My
+plan was to be a bit more careful and first get rid of mentions of
+'git stash save', and mark it deprecated as a next step.  In which
+case I'd submit a patch with your suggestions in a few cycles.
 
--f, --force
-           Reset <branchname> to <startpoint> if <branchname> exists =
-already. Without
-           -fgit branch refuses to change an existing branch. In =
-combination with -d (or
-            ^^
-
-Can you reproduce the "problem"?
-
-Cheers,
-Lars=
+> rday
+> 
+> -- 
+> 
+> ========================================================================
+> Robert P. J. Day                                 Ottawa, Ontario, CANADA
+>                         http://crashcourse.ca
+> 
+> Twitter:                                       http://twitter.com/rpjday
+> LinkedIn:                               http://ca.linkedin.com/in/rpjday
+> ========================================================================
