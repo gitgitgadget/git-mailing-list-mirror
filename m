@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1477C20437
-	for <e@80x24.org>; Mon, 16 Oct 2017 17:55:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E2D6620437
+	for <e@80x24.org>; Mon, 16 Oct 2017 17:55:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754216AbdJPRzw (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Oct 2017 13:55:52 -0400
-Received: from mail-it0-f48.google.com ([209.85.214.48]:46424 "EHLO
-        mail-it0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754176AbdJPRzt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Oct 2017 13:55:49 -0400
-Received: by mail-it0-f48.google.com with SMTP id f187so2275054itb.1
-        for <git@vger.kernel.org>; Mon, 16 Oct 2017 10:55:48 -0700 (PDT)
+        id S1754282AbdJPRz6 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Oct 2017 13:55:58 -0400
+Received: from mail-io0-f179.google.com ([209.85.223.179]:54339 "EHLO
+        mail-io0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753293AbdJPRzx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Oct 2017 13:55:53 -0400
+Received: by mail-io0-f179.google.com with SMTP id e89so9284436ioi.11
+        for <git@vger.kernel.org>; Mon, 16 Oct 2017 10:55:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=cH6zpSSA6F8qlhNVOge2A6AzCxA8Ik1sBTcxpgucoww=;
-        b=qbExJM5a80LXUE8Uo/OZXWANUv9g0ERgaXmf2Lzd8kYVZdb/CDOZwjnqQga2zTg0KW
-         OTLvSuTtOPJIWLwGL0znRCXQ69bPvBb3rPUKrl8MaSATnt5DHdhyc5Ua37JjD1P1QKuD
-         Lx7bp8KqavaAhmXYTHsMVISyb3xcAt1TWJQEVgZN7Xb5DWy2X22NTgk5JIwQgutDzfQI
-         gvaste+UWHfP2k5ZqpTvqXpcTDX/8NLnaXZDxzN84L+gYYdt31r9renaH4xO9T0YAaMo
-         35Loo9a6r6fhnXBmzJXJsuUfsRhBctwQOIEKLXGLuwjFTAg9qmH1p+baCUSNZDQ2DVQX
-         IOjQ==
+        bh=8uSRrxEYpUmfYC5OJKpWTC+gyjIJhnbTN3aY7FkC8Gk=;
+        b=wN9No7JO4DIyLL13J/LcwxhVclNMxUvkl5t+eIVm5ksOfIDKHR6ANOff1B1ZGYbWJQ
+         OXCcxK12s80EtD7E0nhu9ZzDTFS1jHpCEkXH8gkRLhRHuwUHCzFrpY0RuoTruFVmobyG
+         GRee0Kmt1MJ3sp3LfbhwGYaygrPOa2OQNQuMWP09dOIUtUbz9/+eBzuoEJMK5ayBiOeS
+         aCb+E+2u3GiTbnTZCckyc+9VWdpWoxBHxLPqdyLAeKHUHhsFqVtRdl1g+1QUc+auaX9s
+         BVWCnM3eoScVMyL/axRPZLuM8czRZFS+WAvMSDkY97+NZ3+rZ/k8kozPAGgQ/1ZEEwCn
+         kgWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=cH6zpSSA6F8qlhNVOge2A6AzCxA8Ik1sBTcxpgucoww=;
-        b=O37xvR5GCXX8gWOwpwT+JqYy4VcvX2yJaaYnaggCTtDt89M8ET6ZhEKnnNj/IdUxE5
-         94cWP85hiaJNt66+m9u+hQirOWVJwI/Vh09LiuPrNDx+5i5vYLZ288GlSqamN48H5Rs/
-         LHsjwvMfgBV4cbp6dZDFRXvWkkPjYhfe4m6LJT5mOa+2wX7YtLiD7y8UMQ5M67Gu1zrY
-         L/G0FFGFIcKeaZJ7Yi6SS14CaTxt2MpKJQkgjqCoLvjHhrWsXRoj5Dmqf9NYgd8ZGzD6
-         t/vkVyKlbynOxq5Inw1yb/0Vz3spqKQJXC49i2Xi8ucKio2qTQ0C7sut7s0WhS4lxXB8
-         fZow==
-X-Gm-Message-State: AMCzsaUR89x4hBEALQbhwbUmugMEKp91UlKQwsex/7gzc1wJFWMDVGT/
-        BBe5NYK9qA0yNEjyUEMTAYqrAt8xMS8=
-X-Google-Smtp-Source: ABhQp+T7UQdc6HFWc6BlYXEDfWLPWwg45z+jP4wr2PtpVca1ytDBnl3TD0sjpiS5azEkLfKRFxhT1Q==
-X-Received: by 10.36.227.68 with SMTP id d65mr2019351ith.59.1508176547640;
-        Mon, 16 Oct 2017 10:55:47 -0700 (PDT)
+        bh=8uSRrxEYpUmfYC5OJKpWTC+gyjIJhnbTN3aY7FkC8Gk=;
+        b=GTBJbH/ekAfey8pWbnutV7T/HhhNhahDUck7+0MPWsveLJp1myOV3qCg9lul/O6Rmg
+         EyNPAVD1V/9+M6477LFkn6noM1hQcV6T6MkwhErMe5MP3phLWqGIYm+HHfsDPUHJFpX7
+         e96yyoydXVyN2vY9S9A4jNBglT+C1YZWyMpnBwhTP2bk8r3S5GorJZs11D0xw2z6SGwL
+         SpXcd3YJXH1w1IbRHqg/vnQkW+RFkJbFs14SOSF5K+TWBklknF+31z45+Qwq/NKCkQQb
+         ZtdNFZMSCmKhSbcIiNsBbjpXtjej477n8HfRbfw4rmhp9SrxRvWm0C8teLqMjl99Dg3O
+         PX7A==
+X-Gm-Message-State: AMCzsaUyVCVsy1AOn+vU8YehfTzxebJdwt5Dmw10ItKDEdV0LAU+Uoy/
+        NI0/9IRh8z5SXjKj3TZrLJzNKNMDziU=
+X-Google-Smtp-Source: ABhQp+T6oRkk9Z3CWTPz4j2kiIhA2WpfEoKrf9Aq3HGMgin1q7C38heMl1tFLPyuvWo4jYgcYzKqkA==
+X-Received: by 10.107.188.199 with SMTP id m190mr12546255iof.255.1508176552669;
+        Mon, 16 Oct 2017 10:55:52 -0700 (PDT)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id s74sm3813071ita.21.2017.10.16.10.55.46
+        by smtp.gmail.com with ESMTPSA id s74sm3813071ita.21.2017.10.16.10.55.51
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 16 Oct 2017 10:55:46 -0700 (PDT)
+        Mon, 16 Oct 2017 10:55:51 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     martin.agren@gmail.com, simon@ruderich.org, bturner@atlassian.com,
         git@jeffhostetler.com, gitster@pobox.com, jonathantanmy@google.com,
         jrnieder@gmail.com, peff@peff.net, sbeller@google.com,
         Brandon Williams <bmwill@google.com>
-Subject: [PATCH v4 03/11] protocol: introduce protocol extension mechanisms
-Date:   Mon, 16 Oct 2017 10:55:24 -0700
-Message-Id: <20171016175532.73459-4-bmwill@google.com>
+Subject: [PATCH v4 06/11] connect: teach client to recognize v1 server response
+Date:   Mon, 16 Oct 2017 10:55:27 -0700
+Message-Id: <20171016175532.73459-7-bmwill@google.com>
 X-Mailer: git-send-email 2.15.0.rc0.271.g36b669edcc-goog
 In-Reply-To: <20171016175532.73459-1-bmwill@google.com>
 References: <20171003201507.3589-1-bmwill@google.com>
@@ -66,227 +66,76 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Create protocol.{c,h} and provide functions which future servers and
-clients can use to determine which protocol to use or is being used.
-
-Also introduce the 'GIT_PROTOCOL' environment variable which will be
-used to communicate a colon separated list of keys with optional values
-to a server.  Unknown keys and values must be tolerated.  This mechanism
-is used to communicate which version of the wire protocol a client would
-like to use with a server.
+Teach a client to recognize that a server understands protocol v1 by
+looking at the first pkt-line the server sends in response.  This is
+done by looking for the response "version 1" send by upload-pack or
+receive-pack.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- Documentation/config.txt | 17 +++++++++++
- Documentation/git.txt    |  6 ++++
- Makefile                 |  1 +
- cache.h                  |  8 +++++
- protocol.c               | 79 ++++++++++++++++++++++++++++++++++++++++++++++++
- protocol.h               | 33 ++++++++++++++++++++
- 6 files changed, 144 insertions(+)
- create mode 100644 protocol.c
- create mode 100644 protocol.h
+ connect.c | 30 ++++++++++++++++++++++++++----
+ 1 file changed, 26 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index dc4e3f58a..b78747abc 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2517,6 +2517,23 @@ The protocol names currently used by git are:
-     `hg` to allow the `git-remote-hg` helper)
- --
- 
-+protocol.version::
-+	Experimental. If set, clients will attempt to communicate with a
-+	server using the specified protocol version.  If unset, no
-+	attempt will be made by the client to communicate using a
-+	particular protocol version, this results in protocol version 0
-+	being used.
-+	Supported versions:
-++
-+--
-+
-+* `0` - the original wire protocol.
-+
-+* `1` - the original wire protocol with the addition of a version string
-+  in the initial response from the server.
-+
-+--
-+
- pull.ff::
- 	By default, Git does not create an extra merge commit when merging
- 	a commit that is a descendant of the current commit. Instead, the
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 6e3a6767e..7518ea3af 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -697,6 +697,12 @@ of clones and fetches.
- 	which feed potentially-untrusted URLS to git commands.  See
- 	linkgit:git-config[1] for more details.
- 
-+`GIT_PROTOCOL`::
-+	For internal use only.  Used in handshaking the wire protocol.
-+	Contains a colon ':' separated list of keys with optional values
-+	'key[=value]'.  Presence of unknown keys and values must be
-+	ignored.
-+
- Discussion[[Discussion]]
- ------------------------
- 
-diff --git a/Makefile b/Makefile
-index ed4ca438b..9ce68cded 100644
---- a/Makefile
-+++ b/Makefile
-@@ -842,6 +842,7 @@ LIB_OBJS += pretty.o
- LIB_OBJS += prio-queue.o
- LIB_OBJS += progress.o
- LIB_OBJS += prompt.o
-+LIB_OBJS += protocol.o
- LIB_OBJS += quote.o
- LIB_OBJS += reachable.o
- LIB_OBJS += read-cache.o
-diff --git a/cache.h b/cache.h
-index 49b083ee0..c74b73671 100644
---- a/cache.h
-+++ b/cache.h
-@@ -445,6 +445,14 @@ static inline enum object_type object_type(unsigned int mode)
- #define GIT_ICASE_PATHSPECS_ENVIRONMENT "GIT_ICASE_PATHSPECS"
- #define GIT_QUARANTINE_ENVIRONMENT "GIT_QUARANTINE_PATH"
- 
-+/*
-+ * Environment variable used in handshaking the wire protocol.
-+ * Contains a colon ':' separated list of keys with optional values
-+ * 'key[=value]'.  Presence of unknown keys and values must be
-+ * ignored.
-+ */
-+#define GIT_PROTOCOL_ENVIRONMENT "GIT_PROTOCOL"
-+
- /*
-  * This environment variable is expected to contain a boolean indicating
-  * whether we should or should not treat:
-diff --git a/protocol.c b/protocol.c
-new file mode 100644
-index 000000000..43012b7eb
---- /dev/null
-+++ b/protocol.c
-@@ -0,0 +1,79 @@
-+#include "cache.h"
-+#include "config.h"
+diff --git a/connect.c b/connect.c
+index 8e2e276b6..a5e708a61 100644
+--- a/connect.c
++++ b/connect.c
+@@ -12,6 +12,7 @@
+ #include "sha1-array.h"
+ #include "transport.h"
+ #include "strbuf.h"
 +#include "protocol.h"
+ 
+ static char *server_capabilities;
+ static const char *parse_feature_value(const char *, const char *, int *);
+@@ -129,9 +130,23 @@ static int read_remote_ref(int in, char **src_buf, size_t *src_len,
+ 	return len;
+ }
+ 
+-#define EXPECTING_FIRST_REF 0
+-#define EXPECTING_REF 1
+-#define EXPECTING_SHALLOW 2
++#define EXPECTING_PROTOCOL_VERSION 0
++#define EXPECTING_FIRST_REF 1
++#define EXPECTING_REF 2
++#define EXPECTING_SHALLOW 3
 +
-+static enum protocol_version parse_protocol_version(const char *value)
++/* Returns 1 if packet_buffer is a protocol version pkt-line, 0 otherwise. */
++static int process_protocol_version(void)
 +{
-+	if (!strcmp(value, "0"))
-+		return protocol_v0;
-+	else if (!strcmp(value, "1"))
-+		return protocol_v1;
-+	else
-+		return protocol_unknown_version;
-+}
-+
-+enum protocol_version get_protocol_version_config(void)
-+{
-+	const char *value;
-+	if (!git_config_get_string_const("protocol.version", &value)) {
-+		enum protocol_version version = parse_protocol_version(value);
-+
-+		if (version == protocol_unknown_version)
-+			die("unknown value for config 'protocol.version': %s",
-+			    value);
-+
-+		return version;
++	switch (determine_protocol_version_client(packet_buffer)) {
++	case protocol_v1:
++		return 1;
++	case protocol_v0:
++		return 0;
++	default:
++		die("server is speaking an unknown protocol");
 +	}
-+
-+	return protocol_v0;
 +}
-+
-+enum protocol_version determine_protocol_version_server(void)
-+{
-+	const char *git_protocol = getenv(GIT_PROTOCOL_ENVIRONMENT);
-+	enum protocol_version version = protocol_v0;
-+
-+	/*
-+	 * Determine which protocol version the client has requested.  Since
-+	 * multiple 'version' keys can be sent by the client, indicating that
-+	 * the client is okay to speak any of them, select the greatest version
-+	 * that the client has requested.  This is due to the assumption that
-+	 * the most recent protocol version will be the most state-of-the-art.
-+	 */
-+	if (git_protocol) {
-+		struct string_list list = STRING_LIST_INIT_DUP;
-+		const struct string_list_item *item;
-+		string_list_split(&list, git_protocol, ':', -1);
-+
-+		for_each_string_list_item(item, &list) {
-+			const char *value;
-+			enum protocol_version v;
-+
-+			if (skip_prefix(item->string, "version=", &value)) {
-+				v = parse_protocol_version(value);
-+				if (v > version)
-+					version = v;
+ 
+ static void process_capabilities(int *len)
+ {
+@@ -224,12 +239,19 @@ struct ref **get_remote_heads(int in, char *src_buf, size_t src_len,
+ 	 */
+ 	int responded = 0;
+ 	int len;
+-	int state = EXPECTING_FIRST_REF;
++	int state = EXPECTING_PROTOCOL_VERSION;
+ 
+ 	*list = NULL;
+ 
+ 	while ((len = read_remote_ref(in, &src_buf, &src_len, &responded))) {
+ 		switch (state) {
++		case EXPECTING_PROTOCOL_VERSION:
++			if (process_protocol_version()) {
++				state = EXPECTING_FIRST_REF;
++				break;
 +			}
-+		}
-+
-+		string_list_clear(&list, 0);
-+	}
-+
-+	return version;
-+}
-+
-+enum protocol_version determine_protocol_version_client(const char *server_response)
-+{
-+	enum protocol_version version = protocol_v0;
-+
-+	if (skip_prefix(server_response, "version ", &server_response)) {
-+		version = parse_protocol_version(server_response);
-+
-+		if (version == protocol_unknown_version)
-+			die("server is speaking an unknown protocol");
-+		if (version == protocol_v0)
-+			die("protocol error: server explicitly said version 0");
-+	}
-+
-+	return version;
-+}
-diff --git a/protocol.h b/protocol.h
-new file mode 100644
-index 000000000..1b2bc94a8
---- /dev/null
-+++ b/protocol.h
-@@ -0,0 +1,33 @@
-+#ifndef PROTOCOL_H
-+#define PROTOCOL_H
-+
-+enum protocol_version {
-+	protocol_unknown_version = -1,
-+	protocol_v0 = 0,
-+	protocol_v1 = 1,
-+};
-+
-+/*
-+ * Used by a client to determine which protocol version to request be used when
-+ * communicating with a server, reflecting the configured value of the
-+ * 'protocol.version' config.  If unconfigured, a value of 'protocol_v0' is
-+ * returned.
-+ */
-+extern enum protocol_version get_protocol_version_config(void);
-+
-+/*
-+ * Used by a server to determine which protocol version should be used based on
-+ * a client's request, communicated via the 'GIT_PROTOCOL' environment variable
-+ * by setting appropriate values for the key 'version'.  If a client doesn't
-+ * request a particular protocol version, a default of 'protocol_v0' will be
-+ * used.
-+ */
-+extern enum protocol_version determine_protocol_version_server(void);
-+
-+/*
-+ * Used by a client to determine which protocol version the server is speaking
-+ * based on the server's initial response.
-+ */
-+extern enum protocol_version determine_protocol_version_client(const char *server_response);
-+
-+#endif /* PROTOCOL_H */
++			state = EXPECTING_FIRST_REF;
++			/* fallthrough */
+ 		case EXPECTING_FIRST_REF:
+ 			process_capabilities(&len);
+ 			if (process_dummy_ref()) {
 -- 
 2.15.0.rc0.271.g36b669edcc-goog
 
