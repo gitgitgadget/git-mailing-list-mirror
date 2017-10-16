@@ -6,28 +6,28 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8121E20437
-	for <e@80x24.org>; Mon, 16 Oct 2017 13:57:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A174E20437
+	for <e@80x24.org>; Mon, 16 Oct 2017 13:59:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752125AbdJPN5a (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Oct 2017 09:57:30 -0400
-Received: from smtprelay03.ispgateway.de ([80.67.31.37]:39349 "EHLO
-        smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751982AbdJPN5a (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Oct 2017 09:57:30 -0400
+        id S1752442AbdJPN7P (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Oct 2017 09:59:15 -0400
+Received: from smtprelay01.ispgateway.de ([80.67.31.28]:19485 "EHLO
+        smtprelay01.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752284AbdJPN7O (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Oct 2017 09:59:14 -0400
 Received: from [193.96.224.22] (helo=book.hvoigt.net)
-        by smtprelay03.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        by smtprelay01.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
         (Exim 4.89)
         (envelope-from <hvoigt@hvoigt.net>)
-        id 1e45tS-0002Y2-OB; Mon, 16 Oct 2017 15:57:26 +0200
-Date:   Mon, 16 Oct 2017 15:57:15 +0200
+        id 1e45vA-0002Mj-I1; Mon, 16 Oct 2017 15:59:10 +0200
+Date:   Mon, 16 Oct 2017 15:59:05 +0200
 From:   Heiko Voigt <hvoigt@hvoigt.net>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     sbeller@google.com, jrnieder@gmail.com, Jens.Lehmann@web.de,
         bmwill@google.com, git@vger.kernel.org
-Subject: [PATCH v4 1/3] fetch: add test to make sure we stay backwards
- compatible
-Message-ID: <20171016135715.GB12756@book.hvoigt.net>
+Subject: [PATCH v4 3/3] submodule: simplify decision tree whether to or not
+ to fetch
+Message-ID: <20171016135905.GD12756@book.hvoigt.net>
 References: <20171016135623.GA12756@book.hvoigt.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -40,68 +40,108 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The current implementation of submodules supports on-demand fetch if
-there is no .gitmodules entry for a submodule. Let's add a test to
-document this behavior.
+To make extending this logic later easier.
 
 Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
 ---
- t/t5526-fetch-submodules.sh | 42 +++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 41 insertions(+), 1 deletion(-)
+ submodule.c | 74 ++++++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 37 insertions(+), 37 deletions(-)
 
-diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
-index 42251f7f3a..43a22f680f 100755
---- a/t/t5526-fetch-submodules.sh
-+++ b/t/t5526-fetch-submodules.sh
-@@ -478,7 +478,47 @@ test_expect_success "don't fetch submodule when newly recorded commits are alrea
- 		git fetch >../actual.out 2>../actual.err
- 	) &&
- 	! test -s actual.out &&
--	test_i18ncmp expect.err actual.err
-+	test_i18ncmp expect.err actual.err &&
-+	(
-+		cd submodule &&
-+		git checkout -q master
-+	)
-+'
-+
-+test_expect_success "'fetch.recurseSubmodules=on-demand' works also without .gitmodule entry" '
-+	(
-+		cd downstream &&
-+		git fetch --recurse-submodules
-+	) &&
-+	add_upstream_commit &&
-+	head1=$(git rev-parse --short HEAD) &&
-+	git add submodule &&
-+	git rm .gitmodules &&
-+	git commit -m "new submodule without .gitmodules" &&
-+	printf "" >expect.out &&
-+	head2=$(git rev-parse --short HEAD) &&
-+	echo "From $pwd/." >expect.err.2 &&
-+	echo "   $head1..$head2  master     -> origin/master" >>expect.err.2 &&
-+	head -3 expect.err >>expect.err.2 &&
-+	(
-+		cd downstream &&
-+		rm .gitmodules &&
-+		git config fetch.recurseSubmodules on-demand &&
-+		# fake submodule configuration to avoid skipping submodule handling
-+		git config -f .gitmodules submodule.fake.path fake &&
-+		git config -f .gitmodules submodule.fake.url fakeurl &&
-+		git add .gitmodules &&
-+		git config --unset submodule.submodule.url &&
-+		git fetch >../actual.out 2>../actual.err &&
-+		# cleanup
-+		git config --unset fetch.recurseSubmodules &&
-+		git reset --hard
-+	) &&
-+	test_i18ncmp expect.out actual.out &&
-+	test_i18ncmp expect.err.2 actual.err &&
-+	git checkout HEAD^ -- .gitmodules &&
-+	git add .gitmodules &&
-+	git commit -m "new submodule restored .gitmodules"
- '
+diff --git a/submodule.c b/submodule.c
+index 71d1773e2e..82d206eb65 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -1187,6 +1187,31 @@ struct submodule_parallel_fetch {
+ };
+ #define SPF_INIT {0, ARGV_ARRAY_INIT, NULL, NULL, 0, 0, 0, 0}
  
- test_expect_success 'fetching submodules respects parallel settings' '
++static int get_fetch_recurse_config(const struct submodule *submodule,
++				    struct submodule_parallel_fetch *spf)
++{
++	if (spf->command_line_option != RECURSE_SUBMODULES_DEFAULT)
++		return spf->command_line_option;
++
++	if (submodule) {
++		char *key;
++		const char *value;
++
++		int fetch_recurse = submodule->fetch_recurse;
++		key = xstrfmt("submodule.%s.fetchRecurseSubmodules", submodule->name);
++		if (!repo_config_get_string_const(the_repository, key, &value)) {
++			fetch_recurse = parse_fetch_recurse_submodules_arg(key, value);
++		}
++		free(key);
++
++		if (fetch_recurse != RECURSE_SUBMODULES_NONE)
++			/* local config overrules everything except commandline */
++			return fetch_recurse;
++	}
++
++	return spf->default_option;
++}
++
+ static int get_next_submodule(struct child_process *cp,
+ 			      struct strbuf *err, void *data, void **task_cb)
+ {
+@@ -1214,46 +1239,21 @@ static int get_next_submodule(struct child_process *cp,
+ 			}
+ 		}
+ 
+-		default_argv = "yes";
+-		if (spf->command_line_option == RECURSE_SUBMODULES_DEFAULT) {
+-			int fetch_recurse = RECURSE_SUBMODULES_NONE;
+-
+-			if (submodule) {
+-				char *key;
+-				const char *value;
+-
+-				fetch_recurse = submodule->fetch_recurse;
+-				key = xstrfmt("submodule.%s.fetchRecurseSubmodules", submodule->name);
+-				if (!repo_config_get_string_const(the_repository, key, &value)) {
+-					fetch_recurse = parse_fetch_recurse_submodules_arg(key, value);
+-				}
+-				free(key);
+-			}
+-
+-			if (fetch_recurse != RECURSE_SUBMODULES_NONE) {
+-				if (fetch_recurse == RECURSE_SUBMODULES_OFF)
+-					continue;
+-				if (fetch_recurse == RECURSE_SUBMODULES_ON_DEMAND) {
+-					if (!unsorted_string_list_lookup(&changed_submodule_names,
+-									 submodule->name))
+-						continue;
+-					default_argv = "on-demand";
+-				}
+-			} else {
+-				if (spf->default_option == RECURSE_SUBMODULES_OFF)
+-					continue;
+-				if (spf->default_option == RECURSE_SUBMODULES_ON_DEMAND) {
+-					if (!unsorted_string_list_lookup(&changed_submodule_names,
+-									  submodule->name))
+-						continue;
+-					default_argv = "on-demand";
+-				}
+-			}
+-		} else if (spf->command_line_option == RECURSE_SUBMODULES_ON_DEMAND) {
+-			if (!unsorted_string_list_lookup(&changed_submodule_names,
++		switch (get_fetch_recurse_config(submodule, spf))
++		{
++		default:
++		case RECURSE_SUBMODULES_DEFAULT:
++		case RECURSE_SUBMODULES_ON_DEMAND:
++			if (!submodule || !unsorted_string_list_lookup(&changed_submodule_names,
+ 							 submodule->name))
+ 				continue;
+ 			default_argv = "on-demand";
++			break;
++		case RECURSE_SUBMODULES_ON:
++			default_argv = "yes";
++			break;
++		case RECURSE_SUBMODULES_OFF:
++			continue;
+ 		}
+ 
+ 		strbuf_addf(&submodule_path, "%s/%s", spf->work_tree, ce->name);
 -- 
 2.14.1.145.gb3622a4
 
