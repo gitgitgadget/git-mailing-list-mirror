@@ -2,105 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 23A4A1FF32
-	for <e@80x24.org>; Tue, 17 Oct 2017 19:35:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA57C1FF32
+	for <e@80x24.org>; Tue, 17 Oct 2017 20:03:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966005AbdJQTfQ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Oct 2017 15:35:16 -0400
-Received: from mail-io0-f196.google.com ([209.85.223.196]:56494 "EHLO
-        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965952AbdJQTfP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Oct 2017 15:35:15 -0400
-Received: by mail-io0-f196.google.com with SMTP id m81so3491426ioi.13
-        for <git@vger.kernel.org>; Tue, 17 Oct 2017 12:35:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=SHLqroh7ZQWBo/xqL+sJ3re8S4LPxsQ2fCZLymbzoR0=;
-        b=IIzic+PRKr8tz0w9YElUSMOTPAbmJ2BmKrTJDye91t3gLmouVgqTo+6tcDVHsZtduM
-         MYnd4bUv1SVtaVSur4aH7cn7jKYAQj04LC1TFCHBxk8Z4rSMLSJDwporA5cEiqLUubS7
-         OPtzONNzndjoHdmqwVJO8msWRGV7nuwsXiGunPbmo+lRtlHFhTpUElAID2vL48dSPhMz
-         ngj+/WNMwGMIicOi/p+AdP1sqUGTfrbmYXvkU4iMPCL3vBkCCEQKIyYNOyTh3q+ltB/t
-         Uw5zUDjxGCcp3fKd0ykGfzWWWLDWxnVsWnialcpEVXhT099ybHuwuP+rln7s/+a4fFQJ
-         9BHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=SHLqroh7ZQWBo/xqL+sJ3re8S4LPxsQ2fCZLymbzoR0=;
-        b=WgIgqty8iHBm1TQCf6cZ6cnD4wm63pfJmQ2DZfVCRNKqK3r0P8lOnMNtNIIuXdCTqB
-         2cPxKG7JBZSrMDCiFPvVXWZ2lqKbrYoYNbpDLWsJVk9KV+AiY5D0FCPXNjijO16nO8JP
-         cmkfNBMN1H4FkAbDoiZ8hdHo7kTwIjkou5dO6lSxp0Ix4YeRJ+6B4XdUqnyyRTx0U+k+
-         ytN4AYPiwH+snSHORxRTvrgVHKQZbsg5M4kcwo8xSs9b+ccITCVk5e2xIATIp1bGJBAn
-         YYtKb+ccZ9m53/XoGVpbnUQK1dqvtEvbryf7yXOJS2fnbgQVVH0XVN8n4ijPklJHw0fh
-         VS7Q==
-X-Gm-Message-State: AMCzsaXZiwWfno1XGfKAC9Z6eTzd6j0AYsi7lkdPi6UF1v3F47tINp5v
-        zbSdw/5E0qyTfJqJcRcSLZ5qZE8+
-X-Google-Smtp-Source: ABhQp+T1VWK+dK7OU4SPX1hd+uqOTEa+Oy6MCqcdLkOSF55HhrGYEyHSZwqlVmuQurJtR9lrQtGdjA==
-X-Received: by 10.107.13.134 with SMTP id 128mr19419183ion.160.1508268914558;
-        Tue, 17 Oct 2017 12:35:14 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id m12sm5616840ita.10.2017.10.17.12.35.13
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 17 Oct 2017 12:35:13 -0700 (PDT)
-Date:   Tue, 17 Oct 2017 12:35:11 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH] fetch doc: src side of refspec could be full SHA-1
-Message-ID: <20171017193511.szbmrclju22a6p5l@aiede.mtv.corp.google.com>
-References: <xmqqinfepguv.fsf@gitster.mtv.corp.google.com>
+        id S1760171AbdJQUDs (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Oct 2017 16:03:48 -0400
+Received: from mail-out.m-online.net ([212.18.0.10]:42488 "EHLO
+        mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1758070AbdJQUDr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Oct 2017 16:03:47 -0400
+Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
+        by mail-out.m-online.net (Postfix) with ESMTP id 3yGmNK63v4z1qsW7;
+        Tue, 17 Oct 2017 22:03:45 +0200 (CEST)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.70])
+        by mail.m-online.net (Postfix) with ESMTP id 3yGmNK5jLgz1qqkS;
+        Tue, 17 Oct 2017 22:03:45 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.182])
+        by localhost (dynscan1.mail.m-online.net [192.168.6.70]) (amavisd-new, port 10024)
+        with ESMTP id ZSsQjA03_7si; Tue, 17 Oct 2017 22:03:45 +0200 (CEST)
+X-Auth-Info: agmlbvsaPB36iooFhdxYPkuFjTtPScZv0N6Vi5UoZ41hvzxtWo7R80DEkhvmtHtH
+Received: from igel.home (ppp-188-174-154-116.dynamic.mnet-online.de [188.174.154.116])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.mnet-online.de (Postfix) with ESMTPSA;
+        Tue, 17 Oct 2017 22:03:45 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 1000)
+        id 50C2F2C3CB4; Tue, 17 Oct 2017 22:03:44 +0200 (CEST)
+From:   Andreas Schwab <schwab@linux-m68k.org>
+To:     Jeff King <peff@peff.net>
+Cc:     Lars Schneider <larsxschneider@gmail.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Minor man page weirdness?
+References: <A4E5D8CC-19A7-442A-814C-FD5A46391982@gmail.com>
+        <20171016225641.x76jwycb7mcpvrw3@sigill.intra.peff.net>
+        <87d15lu48o.fsf@linux-m68k.org>
+        <20171017163828.igmlsbdynpe6m37w@sigill.intra.peff.net>
+        <878tg9u1o7.fsf@linux-m68k.org>
+        <20171017172930.var7jsodxtgzoz5t@sigill.intra.peff.net>
+        <874lqxu0fw.fsf@linux-m68k.org>
+        <20171017191108.6tcmpbuasbgrb4sk@sigill.intra.peff.net>
+X-Yow:  NOW, I'm supposed to SCRAMBLE two, and HOLD th' MAYO!!
+Date:   Tue, 17 Oct 2017 22:03:44 +0200
+In-Reply-To: <20171017191108.6tcmpbuasbgrb4sk@sigill.intra.peff.net> (Jeff
+        King's message of "Tue, 17 Oct 2017 15:11:08 -0400")
+Message-ID: <87r2u1sfrz.fsf@linux-m68k.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqinfepguv.fsf@gitster.mtv.corp.google.com>
-User-Agent: NeoMutt/20170609 (1.8.3)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On Okt 17 2017, Jeff King <peff@peff.net> wrote:
 
-Junio C Hamano wrote:
-
-> Since a9d34933 ("Merge branch 'fm/fetch-raw-sha1'", 2015-06-01) we
-> allow to fetch by an object name when the other side accepts such a
-> request, but we never updated the documentation to match.
+> One other thing to try:
 >
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  Documentation/pull-fetch-param.txt | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
+>   rm git-branch.1
+>   make NO_MAN_BOLD_LITERAL=1 git-branch.1
 
-Good catch.
+That doesn't help:
 
-> --- a/Documentation/pull-fetch-param.txt
-> +++ b/Documentation/pull-fetch-param.txt
-> @@ -23,9 +23,11 @@ ifdef::git-pull[]
->  endif::git-pull[]
->  +
->  The format of a <refspec> parameter is an optional plus
-> -`+`, followed by the source ref <src>, followed
-> +`+`, followed by the source <src>, followed
->  by a colon `:`, followed by the destination ref <dst>.
-> -The colon can be omitted when <dst> is empty.
-> +The colon can be omitted when <dst> is empty.  <src> is most
-> +typically a ref, but it can also be an fully spelled hex object
-> +name.
+   Reset <branchname> to <startpoint> if <branchname> exists already\&. Without
+   \-f\fIgit branch\fR
+   refuses to change an existing branch\&. In combination with
 
-nits:
+Andreas.
 
-s/most typically/typically/
-s/an fully/a fully/
-
-With those tweaks,
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-
-Thanks.
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
