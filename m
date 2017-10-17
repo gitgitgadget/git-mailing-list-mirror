@@ -2,79 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BA57C1FF32
-	for <e@80x24.org>; Tue, 17 Oct 2017 20:03:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C857F1FF32
+	for <e@80x24.org>; Tue, 17 Oct 2017 20:55:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1760171AbdJQUDs (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Oct 2017 16:03:48 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:42488 "EHLO
-        mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1758070AbdJQUDr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Oct 2017 16:03:47 -0400
-Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
-        by mail-out.m-online.net (Postfix) with ESMTP id 3yGmNK63v4z1qsW7;
-        Tue, 17 Oct 2017 22:03:45 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.70])
-        by mail.m-online.net (Postfix) with ESMTP id 3yGmNK5jLgz1qqkS;
-        Tue, 17 Oct 2017 22:03:45 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
-        by localhost (dynscan1.mail.m-online.net [192.168.6.70]) (amavisd-new, port 10024)
-        with ESMTP id ZSsQjA03_7si; Tue, 17 Oct 2017 22:03:45 +0200 (CEST)
-X-Auth-Info: agmlbvsaPB36iooFhdxYPkuFjTtPScZv0N6Vi5UoZ41hvzxtWo7R80DEkhvmtHtH
-Received: from igel.home (ppp-188-174-154-116.dynamic.mnet-online.de [188.174.154.116])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1757986AbdJQUzW (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Oct 2017 16:55:22 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54816 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754052AbdJQUzV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Oct 2017 16:55:21 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C4E829A60F;
+        Tue, 17 Oct 2017 16:55:20 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=WPL7HbRwj+JEjEOVKN4+BEL4KwE=; b=BXbhCX
+        ssa/EKgE2VeIAVrm+tFxxsJl7t13bP+kkEnWtDuJkFF36zexc98co6GH4eWN/gCy
+        oZhRqTwKK3h66JEQ3ZMqU+5tU655WvZnK4kQyKKgh/mrYWMQ6FMxH0kfn/uAiR/T
+        sHKSGS/1O5MVl1bijleSggwqJEuvFn8u/xt8c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=vK6gfefwVM7qTVyrF84p0kMBsL6BtgyX
+        HdUed+XKQQdgRf7VFYDtGJ9FSdZmI0lHNBKR+69SeKz2HWllvTc2CXuGfHujua9v
+        i6euqsWBINcklyLqYkjTc02ea64QCfaerunsQtW/PJ5DJ1Mv47Gq+jE1a5rgrCNZ
+        m8VKznDO748=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BAC079A60E;
+        Tue, 17 Oct 2017 16:55:20 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by mail.mnet-online.de (Postfix) with ESMTPSA;
-        Tue, 17 Oct 2017 22:03:45 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 1000)
-        id 50C2F2C3CB4; Tue, 17 Oct 2017 22:03:44 +0200 (CEST)
-From:   Andreas Schwab <schwab@linux-m68k.org>
-To:     Jeff King <peff@peff.net>
-Cc:     Lars Schneider <larsxschneider@gmail.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Minor man page weirdness?
-References: <A4E5D8CC-19A7-442A-814C-FD5A46391982@gmail.com>
-        <20171016225641.x76jwycb7mcpvrw3@sigill.intra.peff.net>
-        <87d15lu48o.fsf@linux-m68k.org>
-        <20171017163828.igmlsbdynpe6m37w@sigill.intra.peff.net>
-        <878tg9u1o7.fsf@linux-m68k.org>
-        <20171017172930.var7jsodxtgzoz5t@sigill.intra.peff.net>
-        <874lqxu0fw.fsf@linux-m68k.org>
-        <20171017191108.6tcmpbuasbgrb4sk@sigill.intra.peff.net>
-X-Yow:  NOW, I'm supposed to SCRAMBLE two, and HOLD th' MAYO!!
-Date:   Tue, 17 Oct 2017 22:03:44 +0200
-In-Reply-To: <20171017191108.6tcmpbuasbgrb4sk@sigill.intra.peff.net> (Jeff
-        King's message of "Tue, 17 Oct 2017 15:11:08 -0400")
-Message-ID: <87r2u1sfrz.fsf@linux-m68k.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.3 (gnu/linux)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2619B9A60A;
+        Tue, 17 Oct 2017 16:55:20 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Jeff King <peff@peff.net>, Marko Kungla <marko.kungla@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 3/3] check-ref-format doc: --branch validates and expands <branch>
+References: <20170717172709.GL93855@aiede.mtv.corp.google.com>
+        <20170817102217.3yw7uxnkupdy3lh5@sigill.intra.peff.net>
+        <xmqqinffsibr.fsf@gitster.mtv.corp.google.com>
+        <xmqq1sm3s751.fsf@gitster.mtv.corp.google.com>
+        <20171016224512.6fhtce5anmff577b@sigill.intra.peff.net>
+        <xmqqbml6r2js.fsf@gitster.mtv.corp.google.com>
+        <20171017024203.6hqzy2paed6fyvym@sigill.intra.peff.net>
+        <xmqqo9p6phxg.fsf@gitster.mtv.corp.google.com>
+        <xmqq7evupemj.fsf@gitster.mtv.corp.google.com>
+        <20171017070619.bdgvujmbw4uxvwle@aiede.mtv.corp.google.com>
+        <20171017071234.m6j4rqn6izdvla6d@aiede.mtv.corp.google.com>
+Date:   Wed, 18 Oct 2017 05:55:18 +0900
+In-Reply-To: <20171017071234.m6j4rqn6izdvla6d@aiede.mtv.corp.google.com>
+        (Jonathan Nieder's message of "Tue, 17 Oct 2017 00:12:34 -0700")
+Message-ID: <xmqq60bdo5op.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
+X-Pobox-Relay-ID: 7CA7C998-B37D-11E7-BB32-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Okt 17 2017, Jeff King <peff@peff.net> wrote:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> One other thing to try:
+> From: Junio C Hamano <gitster@pobox.com>
 >
->   rm git-branch.1
->   make NO_MAN_BOLD_LITERAL=1 git-branch.1
+> "git check-ref-format --branch $name" feature was originally
+> introduced (and was advertised) as a way for scripts to take any
+> end-user supplied string (like "master", "@{-1}" etc.) and see if it
+> is usable when Git expects to see a branch name, and also obtain the
+> concrete branch name that the at-mark magic expands to.
+>
+> Emphasize that "see if it is usable" role in the description and
+> clarify that the @{...} expansion only occurs when run from within a
+> repository.
+>
+> [jn: split out from a larger patch]
+>
+> Helped-by: Jeff King <peff@peff.net>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
 
-That doesn't help:
+Missing sign-off, unlike the other two, intended?
 
-   Reset <branchname> to <startpoint> if <branchname> exists already\&. Without
-   \-f\fIgit branch\fR
-   refuses to change an existing branch\&. In combination with
+I'll take these three to replace what I tentatively queued, not
+necessarily because I like the change in 1/3 better, but because
+these are explained much better; besides I prefer a version that at
+least two people deeply looked at.
 
-Andreas.
-
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+Thanks.
