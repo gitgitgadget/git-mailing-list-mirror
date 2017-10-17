@@ -1,216 +1,66 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: *
+X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=1.2 required=3.0 tests=BAYES_50,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DFD1F20446
-	for <e@80x24.org>; Tue, 17 Oct 2017 15:00:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 05DE61FF32
+	for <e@80x24.org>; Tue, 17 Oct 2017 15:21:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933906AbdJQPAT (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Oct 2017 11:00:19 -0400
-Received: from p3nlsmtpcp01-04.prod.phx3.secureserver.net ([184.168.200.145]:53650
-        "EHLO p3nlsmtpcp01-04.prod.phx3.secureserver.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932893AbdJQPAR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Oct 2017 11:00:17 -0400
-X-Greylist: delayed 450 seconds by postgrey-1.27 at vger.kernel.org; Tue, 17 Oct 2017 11:00:17 EDT
-Received: from p3plcpnl0808.prod.phx3.secureserver.net ([50.62.177.121])
-        by : HOSTING RELAY : with SMTP
-        id 4TDdeuFxeVA854TDdePXqk; Tue, 17 Oct 2017 07:51:45 -0700
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=global-datasales.com; s=default; h=Content-Type:MIME-Version:Message-ID:
-        Date:Subject:To:From:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=yIQ7JUnzdcMLtSKgd/SHNpWNkWvGDX83H33Lpt+uClk=; b=K9w1mmz9N32aElBEdV6EK8uW1v
-        KVtqZv1WTBscFUh3SWR508odqdbgDsK/FGtjQzBFX3y5ykcX9conLirrksbxBRylxjt12KHLRlExN
-        XOQDYBibFA7yXLP1zNPCOC7z32Mn1NRKjat0cmDEJuNCixIxt6UOWbsiYkkp+uT712yOlc9geF8Ch
-        qSYmomPF6o/h7PV7mcrfymsryc44gfqmJoxYqktTOmkMqXAnVaUE6Eyli1fY9lCpIYbS0dxpmqTE1
-        N7IdVyMaCHYXTw/CdrTzVFK4cxnGFegjsVDXKL20+i/Ta4dOu434wwwuVN08ERHmNQKGoinPBiXxz
-        79Frimyg==;
-Received: from [122.179.26.124] (port=49421 helo=AdminPC)
-        by p3plcpnl0808.prod.phx3.secureserver.net with esmtpa (Exim 4.88)
-        (envelope-from <donald.charles@global-datasales.com>)
-        id 1e4Swp-0006c5-VD
-        for git@vger.kernel.org; Tue, 17 Oct 2017 07:34:24 -0700
-From:   "Donald Charles" <donald.charles@global-datasales.com>
-To:     <git@vger.kernel.org>
-Subject: Attendees:- Society for Neuroscience - SfN-2017
-Date:   Tue, 17 Oct 2017 10:33:01 -0400
-Message-ID: <!&!AAAAAAAAAAAYAAAAAAAAAADIVAIM/bNItIHBAkyL8crCgAAAEAAAAHII3/gJQHpEh6R27sc2sgoBAAAAAA==@global-datasales.com>
+        id S936280AbdJQPV0 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Oct 2017 11:21:26 -0400
+Received: from mail-qk0-f180.google.com ([209.85.220.180]:50313 "EHLO
+        mail-qk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933923AbdJQPVY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Oct 2017 11:21:24 -0400
+Received: by mail-qk0-f180.google.com with SMTP id o187so2471121qke.7
+        for <git@vger.kernel.org>; Tue, 17 Oct 2017 08:21:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=livid.pp.ru; s=google;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=t4etaLkfYGntHy8puPtmU3zfJ8CZJDxsvcsN3zSmvQA=;
+        b=jGX1/BntqUUy4J4r5te/+A25kSnacMfC3l5JlAX2Kr/7BUPp1F00P11FwOVr2NO9p+
+         Ogj8GU1BNwpGC8/i/+TCE79Irk/gB/JQB/DZvpD/IuypCT+zsxTUW6qFrY6JbMK/ZyX3
+         /Td5th7WozLCbXl5hVgltdLPqEjvgZoJS4vQk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=t4etaLkfYGntHy8puPtmU3zfJ8CZJDxsvcsN3zSmvQA=;
+        b=cc23y7mG6ldFTmHoPXBVsWo6ANGFUWe7xmnx+Ffm3e8Jaxt4FQRjZSnDnNAwvYwSwQ
+         U/d29CZl2KROgyGrnA0952ps33qSDqv76W2uYNdHx2gpXeqJ0C7zzYzuOhiwxIRYMKbE
+         9eGjz6OsXCUnS/0bUH1L4yDPYg02v+oD6cbgQ80Q+unOOthwyNieEIwPx/BwWHGK75jB
+         KMIjygtBbl8LJfZat6McnniBVqxJeYY9LvFh1LEPs6dVRTkxLNEhN96uhUKRmfJFkD0g
+         pBo29aRN9uKfWU/zzZ6G5gQM6DCcYTzVNjzbNHyVK+zgB3feckG2WpyHcekSo4wo5Tqm
+         XTzQ==
+X-Gm-Message-State: AMCzsaV9HIwqydwv6g027uk9cZKjFr1Zm5QW2oGdGTG8fCFUuIT4NgT4
+        6SSJOcpwp0j6w+wHnTCu0YzL5E0G3mH24G8xdQv17s0XhIw=
+X-Google-Smtp-Source: AOwi7QDzpeKweiR4+iInbj6oaECuIBx+zDwjdpB/cKHpwuhhFRu1s12W09CRIE2yW33GrQl5GlJgnynQas3puaL3iAw=
+X-Received: by 10.55.118.7 with SMTP id r7mr19963726qkc.241.1508253683169;
+ Tue, 17 Oct 2017 08:21:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
-        boundary="----=_NextPart_000_0554_01D34733.7FDD4C70"
-X-Mailer: Microsoft Office Outlook 12.0
-Thread-Index: AdNHVKo0iOJKmKCyQGKnc0mXIq2dlw==
-Content-Language: en-us
-X-MS-TNEF-Correlator: 0000000000C854020CFDB348B481C1024C8BF1CA24EE6F00
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - p3plcpnl0808.prod.phx3.secureserver.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - global-datasales.com
-X-Get-Message-Sender-Via: p3plcpnl0808.prod.phx3.secureserver.net: authenticated_id: donald.charles@global-datasales.com
-X-Authenticated-Sender: p3plcpnl0808.prod.phx3.secureserver.net: donald.charles@global-datasales.com
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-CMAE-Envelope: MS4wfGBa6gEXqpsxxQr/CKXDpAks9iJZyXPpIUiF/919qeCRWLi+c1lbgtntdRaR0BTDksMKEKHqHrhuuGs3bE/lLHgS9braBBImoJZWFm93uvO9wDPyesmK
- 2AWMA7A/O34XPRQwt3p4pwLShqfvUTyDrZgLeTQBeWkQqkhi1akTYp5K/V4nO1OGnrFGmxnDUPiDLi/1/DruXvUI93QPh0yxfepeiYC4NC4wMxwrJclLZP63
+Received: by 10.237.53.76 with HTTP; Tue, 17 Oct 2017 08:21:22 -0700 (PDT)
+From:   Nikolay Yakimov <root@livid.pp.ru>
+Date:   Tue, 17 Oct 2017 18:21:22 +0300
+Message-ID: <CA+A=rXEyQ4aQL=p55f_+kbbrnDyDr9ULSq9gqBE2YE9y6+oJ3w@mail.gmail.com>
+Subject: Multiple paths in GIT_EXEC_PATH
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a multipart message in MIME format.
+Hello. After updating to a recent git release (2.14, I believe, but
+possibly earlier), setting GIT_EXEC_PATH to multiple directories
+stopped working. It did work before, and I believe the culprit is
+'git-sh-setup', which uses 'git --exec-path' output directly, while
+most other git components observe PATH syntax, i.e. multiple paths
+with colon separator. Is this intended, or is it an oversight?
 
-------=_NextPart_000_0554_01D34733.7FDD4C70
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-
- 
-
-Hi ,
-
- 
-
-Would you be interested in the "Attendees list of Society for Neuroscience -
-SfN-2017"
-
-Let me know your interest to send you the number of Attendees and cost .
-
- 
-
- 
-
-Regards,
-
-Donald Charles,
-
-If you do not wish to receive future emails from us, please reply as 'leave
-out'.
-
- 
-
- 
-
- 
-
-
-------=_NextPart_000_0554_01D34733.7FDD4C70
-Content-Type: application/ms-tnef;
-	name="winmail.dat"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment;
-	filename="winmail.dat"
-
-eJ8+IhcOAQaQCAAEAAAAAAABAAEAAQeQBgAIAAAA5AQAAAAAAADoAAEIgAcAGAAAAElQTS5NaWNy
-b3NvZnQgTWFpbC5Ob3RlADEIAQgABQAEAAAAAAAAAAAAAQkABAACAAAAAAAAAAEDkAYA7BUAADoA
-AAALAAIAAQAAAAMAJgAAAAAACwApAAEAAAALACsAAAAAAAMALgAAAAAAAgExAAEAAABOAAAAUENE
-RkVCMDkAAQACAAAAAAAAAAAAAAAAABgAAAAAAAAAAMhUAgz9s0i0gcECTIvxysKAAAAQAAAAcgjf
-+AlAekSHpHbuxzayCgEAAAAAAAAeAE0AAQAAAAEAAAAAAAAAHgBwAAEAAAAwAAAAQXR0ZW5kZWVz
-Oi0gU29jaWV0eSBmb3IgTmV1cm9zY2llbmNlIC0gU2ZOLTIwMTcAAgFxAAEAAAAWAAAAAdNHVKo0
-iOJKmKCyQGKnc0mXIq2dlwAACwAXDAAAAAALAAEOAAAAAAIBCg4BAAAAGAAAAAAAAAAAyFQCDP2z
-SLSBwQJMi/HKwoAAAAMAFA4BAAAAHgAoDgEAAABRAAAAMDAwMDAwMWEBZG9uYWxkLmNoYXJsZXNA
-Z2xvYmFsLWRhdGFzYWxlcy5jb20BZG9uYWxkLmNoYXJsZXNAZ2xvYmFsLWRhdGFzYWxlcy5jb20A
-AAAAHgApDgEAAABRAAAAMDAwMDAwMWEBZG9uYWxkLmNoYXJsZXNAZ2xvYmFsLWRhdGFzYWxlcy5j
-b20BZG9uYWxkLmNoYXJsZXNAZ2xvYmFsLWRhdGFzYWxlcy5jb20AAAAAAwDeP59OAAADAPE/CQQA
-AAMAAlkAABYAAwAJWQIAAAADABCAAyAGAAAAAADAAAAAAAAARgAAAAABgQAAAAAAAAUAEYADIAYA
-AAAAAMAAAAAAAABGAAAAAAKBAAAAAAAAAAAAAAMAEoADIAYAAAAAAMAAAAAAAABGAAAAABOBAAAB
-AAAACwAUgAMgBgAAAAAAwAAAAAAAAEYAAAAAHIEAAAAAAAALAB2ACCAGAAAAAADAAAAAAAAARgAA
-AAADhQAAAAAAAAMAHoAIIAYAAAAAAMAAAAAAAABGAAAAABCFAAAAAQAAAwApgAMgBgAAAAAAwAAA
-AAAAAEYAAAAAI4EAAP///38DAEmAAyAGAAAAAADAAAAAAAAARgAAAAAQgQAAAAAAAAMASoADIAYA
-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
-yd9/4I/hn+Kv47/kz+Xf/9Mv8Xe/wA7A7M/rH/Fv7T///0/yD/BvAl/yj7J/9m+0nMA1NDhERDTm
-rwU/9784K/C/+zQLX/4PAa8Ov/cBPxEPsZh1Cpu3YATvBf//BwgdNEjyCo8Wn57/oA+hH/8P3xN/
-HlsVSqNPpF+lbyA//6ePqe8nvyjPq8+In4mvGg8/Fv+yPwf/mw+1Hy5PIEzn6FA5ILpwa276ALoS
-+PB/upa7YDlQMtBAkLoTu3Eg+G51bbpg+PDVsdTHt5+/uK8u9R9AuyCcANWBLhsf/xwvHT8eTx9f
-Iv8kDyUfLy//Jz8pn0c/Km8rfyyPLZ8urw8vvzDPMd8y7yMxRjT4OTdETS9OP7xfvW8gv/9AzyAf
-Tv9QD1EfUi+cf1RP/z0vPj8/T1h/WY9Cf0OPRJ//Ra9Gv0kfa89J70r/TA9NH/9pb1tPXF9dbzM/
-NE9yX1Wf/1avV79k71nfcx90L3U/dk//Xy94b2FPYl9jb3yffa9mn/9nr2i/ac9q320/j+9uD28f
-/3AvcT+Nj39vgH+Bj3aPd58RlnhSZWeNMGRzLP+IT4lfln+Xj5ifma+Cj4Of/5Zvhb+Gz4ffnq+f
-v4sPjB//jS+OP49Pka+x/5J/k4+Un/+lz6+fA58Er6Dvof+jD6QfO1L/t/5EvYC14DxQQ2j/rxC2
-QJ3vqx+gDxH/xJ+7j/+8n72vvr+k78Dfpw+oH6kv/8XfxC+sX61vrn/OX7Cfsv//2P+zz7Tfte+2
-/83fyH/Jj3fKn8uv+BNG5SLfH+AkSTs7YDfyZDeANlA3UHdpDHNoN2I3IGNlaXaxNiBmdXQ2sDYg
-Zd1gjeLQc+jA3mBtIHXC4OwgcN3Q3MBlOa86v+AV2zcg6kB5PCDpkCfqUeih+TgAdCc8zNKPx3/g
-v+HP/+Lf4+/Mz9+fzu/Rf9EP7u//7//UP9VP1l/Xb9h/2t8CP3/br9y/3c/e3//f8b/yyHMAaXpl
-OjkuNXD+dJrk8x/0LvV/CE8JX3o//3tP9+/4//oP+x/8L/0//k///18AbwF/A98eXwSvBbsPj/8c
-PxSPEU8SXyOfFesZfxqP/xufHK8dvyAfLt8g7yH/Iw//JB8lLyY/J08oXylvKn8rj584Xy2vMA8+
-zzRaMTC50fwvZOiQGB8830CPRF80h8Q1OMayb2R5FR5GD7tInzSmN8ax7AIVHTNKJQJ9TXADAA00
-/T+lBgMADzT9P6UGAgEUNAEAAAAQAAAATklUQfm/uAEAqgA32W4AAAIBfwABAAAAMQAAADAwMDAw
-MDAwMDBDODU0MDIwQ0ZEQjM0OEI0ODFDMTAyNEM4QkYxQ0EyNEVFNkYwMAAAAAADAAYQjV40pQMA
-BxDaAAAAAwAQEAAAAAADABEQAgAAAB4ACBABAAAAZQAAAEhJLFdPVUxEWU9VQkVJTlRFUkVTVEVE
-SU5USEUiQVRURU5ERUVTTElTVE9GU09DSUVUWUZPUk5FVVJPU0NJRU5DRS1TRk4tMjAxNyJMRVRN
-RUtOT1dZT1VSSU5URVJFU1RUT1MAAAAAMIg=
-
-------=_NextPart_000_0554_01D34733.7FDD4C70--
-
+For why I need that is another matter. Long story short, I need git to
+look for '.gitignore' in a particular non-standard location, since I
+have multiple git repositories in the same workdir (that workdir being
+$HOME and git repositories being stores for my different configs)
