@@ -2,95 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CCF82202A3
-	for <e@80x24.org>; Tue, 17 Oct 2017 07:34:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C58B620446
+	for <e@80x24.org>; Tue, 17 Oct 2017 08:21:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933136AbdJQHeq (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Oct 2017 03:34:46 -0400
-Received: from mail-io0-f181.google.com ([209.85.223.181]:45283 "EHLO
-        mail-io0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933111AbdJQHeo (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Oct 2017 03:34:44 -0400
-Received: by mail-io0-f181.google.com with SMTP id i38so1221081iod.2
-        for <git@vger.kernel.org>; Tue, 17 Oct 2017 00:34:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=q3CQmxd4qC8WfY+g/cfwH/lGc0VDOggmhmgV/7+sjnU=;
-        b=tOGifmJ3VYK7+D/OacwI1UQb4Es+OgawtjGsvzGQiW8BLIBFsRvZYkmFOsAVTCUixq
-         /JauF4/SvXZzD0g2+m2inOvpcZo5o4BcSOfwGlPeSEz09Ju4E6vpPOgC3wtbH7bNKrbQ
-         o68u477ASDLNKH9BfQ8fjcWWw0r2Tpx5P8ppZVukIypzYkyzyDi98unGQ6vIPTjIeGea
-         rgkxZiDxJb0r95vSqXRCSCvJXkwgXIgNFP1M6Me3bgc/Hp9qZW0/MBUpIWxEjegP6Vfj
-         sa+otfIf/TJPapyOunSDiTKlLrjFM7ANWRAuqOc99yflzmTVQMBTkwurJJFw+/To+bbL
-         xlmA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=q3CQmxd4qC8WfY+g/cfwH/lGc0VDOggmhmgV/7+sjnU=;
-        b=S1Fm6QMG9bOH3hwOJZtSvnFaZ3TINcer52pRkI0hGbXValkv2/xBPqwBVcV8yYOByA
-         PB4ACf1J/PrbzbQF7UtDS7n/goGjWGX6xE6obO7NMDZU/7QzxLE9Q1CZA0PTXdjRsKES
-         L+p8qEDv0bZVqghpWC9tPI0kE2GxMty26a5z7hSiBV2UrzKz2fp5rfdAqhLAlzBttiNh
-         sMiGvSZzPL3tu8ON10teObVDSzC9GAwadhnoy/E6V5ZxN0ZbzCa6cfJlOu8D7XJ4asOK
-         XcgJ8C8iUAOtHHpLo89mvmqOJvtBISYYnWysywDi2P0UI2cGQRjidTxow1ja4/xEYZUy
-         DKgw==
-X-Gm-Message-State: AMCzsaVJURLtZL77Rv4r2TbgigFPzKjRUuGVVpdXjysZxff4pkA+FEVR
-        kcFvmazD4XfZ7/I80J/v2OI=
-X-Google-Smtp-Source: AOwi7QA55ra+M5nu4iusNqKgkGf1JJUYoc7GJ0dbaMs2lQSXM5+l3T5HrnTJvhldEG7nGkb/qsT04g==
-X-Received: by 10.107.46.99 with SMTP id i96mr11953426ioo.8.1508225683876;
-        Tue, 17 Oct 2017 00:34:43 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id j190sm1557589itb.35.2017.10.17.00.34.42
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 17 Oct 2017 00:34:43 -0700 (PDT)
-Date:   Tue, 17 Oct 2017 00:34:41 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
+        id S934413AbdJQIVG (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Oct 2017 04:21:06 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61873 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S934291AbdJQIVD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Oct 2017 04:21:03 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8D873BAB86;
+        Tue, 17 Oct 2017 04:21:02 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=jmSWCdvQOrkWKMn9qzc85EWsXV4=; b=Bj6XSw
+        k9yXUuFln3DJ4CvVRT3/SZRVFvI4E/19d4ALhgVmzeCBHyjR4ZSOxEytVpSI2nqS
+        Pdyc3gdSpIDMsXf6jQQ7mdwlAJSiCsO1nNN4eMXnxgPqqF44XQ0eCS8x1Aar3PqW
+        ufUADD9ZsT9g1Nh8zulSyqyVJ+yyf8ABWvwFk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=OKlMbzQ2pz+Y8Iokd3mOkxP92a0ILJ5j
+        tk38wsWNK4k4RsIOYfsNrmtMQ7wO8tvxjipOSFG3Kph9VwJmlmWpn3tY0TV3L+R1
+        tQrx9y3J5bU17bV/VfKcMnQc5z2HBeTIJBBbwmihBEAY2o2ULY6x9qAtDfd22ZUC
+        MANHJOWvvx0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 848D7BAB85;
+        Tue, 17 Oct 2017 04:21:02 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D16BABAB83;
+        Tue, 17 Oct 2017 04:21:01 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
 Cc:     Jeff King <peff@peff.net>, Marko Kungla <marko.kungla@gmail.com>,
         git@vger.kernel.org
-Subject: Re: [PATCH] check-ref-format: require a repository for --branch
-Message-ID: <20171017073441.ovfhfnh5dsrbpxse@aiede.mtv.corp.google.com>
-References: <CAKY_R-uk9hpR2hbkPsw2cqoMo6bQKoyp6cWTO20L3fOWfLW2-Q@mail.gmail.com>
- <20170714180313.apsnbnw7no2nvtf5@sigill.intra.peff.net>
- <20170714181831.fvi2coppzhm747mk@sigill.intra.peff.net>
- <20170717172709.GL93855@aiede.mtv.corp.google.com>
- <20170817102217.3yw7uxnkupdy3lh5@sigill.intra.peff.net>
- <xmqqinffsibr.fsf@gitster.mtv.corp.google.com>
- <20171017044111.ahe4eiepvokecnkr@aiede.mtv.corp.google.com>
- <xmqqinfentiw.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH 0/3] Re: [PATCH] check-ref-format: require a repository for --branch
+References: <20170817102217.3yw7uxnkupdy3lh5@sigill.intra.peff.net>
+        <xmqqinffsibr.fsf@gitster.mtv.corp.google.com>
+        <xmqq1sm3s751.fsf@gitster.mtv.corp.google.com>
+        <20171016224512.6fhtce5anmff577b@sigill.intra.peff.net>
+        <xmqqbml6r2js.fsf@gitster.mtv.corp.google.com>
+        <20171017024203.6hqzy2paed6fyvym@sigill.intra.peff.net>
+        <xmqqo9p6phxg.fsf@gitster.mtv.corp.google.com>
+        <xmqq7evupemj.fsf@gitster.mtv.corp.google.com>
+        <20171017070619.bdgvujmbw4uxvwle@aiede.mtv.corp.google.com>
+        <xmqqefq2nt7w.fsf@gitster.mtv.corp.google.com>
+        <20171017071758.ltzustqxcbp3yet7@aiede.mtv.corp.google.com>
+Date:   Tue, 17 Oct 2017 17:21:00 +0900
+In-Reply-To: <20171017071758.ltzustqxcbp3yet7@aiede.mtv.corp.google.com>
+        (Jonathan Nieder's message of "Tue, 17 Oct 2017 00:17:58 -0700")
+Message-ID: <xmqqa80qnq1f.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqinfentiw.fsf@gitster.mtv.corp.google.com>
-User-Agent: NeoMutt/20170609 (1.8.3)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1C9C2DC8-B314-11E7-B0B7-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
->> And in that spirit, I think the patch you replied with aims to go in
->> the right direction, by providing the core functionality when in a
->> repository while avoiding breaking such a script outside of one
->> (though I do not understand it fully yet).
+> Junio C Hamano wrote:
+>> Jonathan Nieder <jrnieder@gmail.com> writes:
 >
-> Given that, is it safe for me to ignore this earlier one
+>>> Handles the nongit case in strbuf_check_branch_ref instead of
+>>> introducing a new check_branch_ref_format helper.
+>>
+>> I view that as a regression, actually.  Don't we want a function
+>> that does not require a strbuf when asking a simple question: "I
+>> have a string, and I want to see if that is a valid name"?
 >
->> For what it's worth, I don't agree with this repurposing of
->> "check-ref-format --branch" at all.
->
-> as reacting to the patch without reading what it does?
+> *shrug* I found the change easier to read, and it also sidesteps the
+> which-header question.  It also ensures that other
+> strbuf_check_branch_ref callers are safe without having to audit them.
 
-On second reading, yes, I was reacting to the discussion leading up to
-the patch instead of the patch.  The patch looks good.
+Please ignore the above, which was merely an impression _without_
+and before having received any patch to comment on ;-)
 
-Sorry for the noise,
-Jonathan
+Quite frankly, this is a Meh topic that won't have to hit even
+'next' before the final.  The color.ui=always thing has a lot more
+urgency, and this was merely what I did while waiting for others to
+react to that topic.
