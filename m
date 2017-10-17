@@ -2,93 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DE0B4202A2
-	for <e@80x24.org>; Tue, 17 Oct 2017 02:40:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CC457202A2
+	for <e@80x24.org>; Tue, 17 Oct 2017 02:42:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756262AbdJQCkm (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Oct 2017 22:40:42 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57223 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752925AbdJQCkm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Oct 2017 22:40:42 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 639BFB73E8;
-        Mon, 16 Oct 2017 22:40:41 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=af2GlLSJSSALSSBPYc3k4SuvVck=; b=SuIOcq
-        To+EFHAlLbt6qziJIaE83lDkgvqXaOlpuw5pJp53MIT0Lppo6Oi+PZogGpXFRfct
-        ceN37Z9ywSfUSr/Snvu0YROnaU5a8vTJWAvczulf+smISqOiXpG2sddGa9IhjZcV
-        G1tFij53l9eZoiM+WDqoS8OeMIVeSNwg274xc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=dGxGU09X0XfnBttT4/03rPl6qjmB3I2W
-        m9bSsJCAvELRDbLXCi2eQcSl8i40yjsOXJqgmuhUkEXzvCfYa886OzRrih06iCe9
-        +LZQDC9gwVKyTWfA9DWphtB/nZ26jGOfayaQm94PTnhcwUb59ylJq0093uP5rbVE
-        NUWZ4vV0ti8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5ACFCB73E6;
-        Mon, 16 Oct 2017 22:40:41 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B1690B73C6;
-        Mon, 16 Oct 2017 22:40:18 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Kevin Daudt <me@ikke.info>
-Cc:     Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
+        id S1756446AbdJQCmI (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Oct 2017 22:42:08 -0400
+Received: from cloud.peff.net ([104.130.231.41]:54910 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1756356AbdJQCmG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Oct 2017 22:42:06 -0400
+Received: (qmail 26596 invoked by uid 109); 17 Oct 2017 02:42:06 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 17 Oct 2017 02:42:06 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 19662 invoked by uid 111); 17 Oct 2017 02:42:09 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Mon, 16 Oct 2017 22:42:09 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 16 Oct 2017 22:42:03 -0400
+Date:   Mon, 16 Oct 2017 22:42:03 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
         Marko Kungla <marko.kungla@gmail.com>, git@vger.kernel.org
 Subject: Re: [PATCH] check-ref-format: require a repository for --branch
+Message-ID: <20171017024203.6hqzy2paed6fyvym@sigill.intra.peff.net>
 References: <CAKY_R-uk9hpR2hbkPsw2cqoMo6bQKoyp6cWTO20L3fOWfLW2-Q@mail.gmail.com>
-        <20170714180313.apsnbnw7no2nvtf5@sigill.intra.peff.net>
-        <20170714181831.fvi2coppzhm747mk@sigill.intra.peff.net>
-        <20170717172709.GL93855@aiede.mtv.corp.google.com>
-        <20170817102217.3yw7uxnkupdy3lh5@sigill.intra.peff.net>
-        <xmqqinffsibr.fsf@gitster.mtv.corp.google.com>
-        <xmqq1sm3s751.fsf@gitster.mtv.corp.google.com>
-        <20171017012718.GC19335@alpha.vpn.ikke.info>
-Date:   Tue, 17 Oct 2017 11:40:17 +0900
-In-Reply-To: <20171017012718.GC19335@alpha.vpn.ikke.info> (Kevin Daudt's
-        message of "Tue, 17 Oct 2017 03:27:18 +0200")
-Message-ID: <xmqq376iqyy6.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+ <20170714180313.apsnbnw7no2nvtf5@sigill.intra.peff.net>
+ <20170714181831.fvi2coppzhm747mk@sigill.intra.peff.net>
+ <20170717172709.GL93855@aiede.mtv.corp.google.com>
+ <20170817102217.3yw7uxnkupdy3lh5@sigill.intra.peff.net>
+ <xmqqinffsibr.fsf@gitster.mtv.corp.google.com>
+ <xmqq1sm3s751.fsf@gitster.mtv.corp.google.com>
+ <20171016224512.6fhtce5anmff577b@sigill.intra.peff.net>
+ <xmqqbml6r2js.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8396B8DE-B2E4-11E7-9F8A-575F0C78B957-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqbml6r2js.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Kevin Daudt <me@ikke.info> writes:
+On Tue, Oct 17, 2017 at 10:22:31AM +0900, Junio C Hamano wrote:
 
->> +	setup_git_directory_gently(&nongit);
->> +
->> +	if (!nongit)
->> +		malformed = (strbuf_check_branch_ref(&sb, arg) ||
->> +			     !skip_prefix(sb.buf, "refs/heads/", &name));
->> +	else
->> +		malformed = check_branch_ref_format(arg);
->> +
->
-> Would it make sense to swap the logic and get rid of the double
-> negative (!nongit)?
+> > I like the state this puts us in, but there's one catch: we're
+> > completely changing the meaning of "check-ref-format --branch", aren't
+> > we?
+> >
+> > It is going from "this is how you resolve @{-1}" to "this is how you
+> > check the validity of a potential branch name". Do we need to pick a
+> > different name, and/or have a deprecation period?
+> 
+> That was not my intention.  When used in a repository, it behaves
+> exactly the same as before, including @{-1} resolution part.  And by
+> using strbuf_check_branch_ref(), it has always been checking the
+> validity of a potential branch name, even though it wasn't
+> advertised as such.  The documentation needs to be updated, I would
+> think.
+> 
+> When used outside a repository, @{-1} would not have worked anyway,
+> and @{-1} continues not to work, but the part that checks the
+> validity should continue to work.
+> 
+> At least that is what I wanted to happen in the patch.
 
-I am trying to follow the pattern "handle the normal case that have
-been supported forever first, and then handle new exception next",
-so that it is easier to see that there is no behaviour change in the
-normal case, so I do not think it makes it easier to see to swap the
-if/else cases.
->
->> +	if (malformed)
->>  		die("'%s' is not a valid branch name", arg);
->> -	printf("%s\n", sb.buf + 11);
->> +	printf("%s\n", name);
->> +	strbuf_release(&sb);
->>  	return 0;
->>  }
->>  
+Ah, OK, I did not read carefully enough then. I think that would be OK,
+and probably close to what Jonathan was asking for.
+
+It leaves unresolved the fact that the resolving feature does not belong
+in check-ref-format in the first place, but we can just accept that as a
+historical wart.
+
+I don't think there is any need to prepare it upon my 4d03f955, though.
+I'd think it could simply replace it.
+
+-Peff
