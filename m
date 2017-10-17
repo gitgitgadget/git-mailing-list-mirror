@@ -2,226 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 689DD202A3
-	for <e@80x24.org>; Tue, 17 Oct 2017 06:32:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7857F202A3
+	for <e@80x24.org>; Tue, 17 Oct 2017 06:51:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932822AbdJQGcm (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Oct 2017 02:32:42 -0400
-Received: from mail-qk0-f194.google.com ([209.85.220.194]:52963 "EHLO
-        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756909AbdJQGcl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Oct 2017 02:32:41 -0400
-Received: by mail-qk0-f194.google.com with SMTP id b15so727301qkg.9
-        for <git@vger.kernel.org>; Mon, 16 Oct 2017 23:32:41 -0700 (PDT)
+        id S1756976AbdJQGvG (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Oct 2017 02:51:06 -0400
+Received: from mail-io0-f195.google.com ([209.85.223.195]:55037 "EHLO
+        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756379AbdJQGvF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Oct 2017 02:51:05 -0400
+Received: by mail-io0-f195.google.com with SMTP id e89so1084139ioi.11
+        for <git@vger.kernel.org>; Mon, 16 Oct 2017 23:51:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=g+2rIKphJlBt5mUvUWJ8j5kWz6Jxn6QP4aIwy8Xv4zM=;
-        b=g9f6cXBU0Xq4REXB8mYnZOPwgPXIVIqwu9MMbRcJLClL4osmgDiu6LJ0IF5Kci3tRU
-         Ug6ZnRzhV1XsYADDpZWBHZvfdq3DlteoZtMFxASeN27CpD09UGIoBwufBQLgI8M2+oAd
-         aRXbzGoNgMbevp9NWcUGHChMe86brP+VGMuV305rxIjzalxVPJY4C3q7Ya/vtK8WezSX
-         uSpERivipVnI4cuiivojzEciH0tUgepyAdlkdzu5XhAhmv1FZBe4FR9kQdiw2pkdtTGl
-         pbvDm4HbCNRfHDgG8TNvuqS0gI3W2zjeWRxBSLimPrEY/Il2cZ6Q3mrRUrin6+UEyB0M
-         vhKQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=hubEios7sK4zFJUIyQbgBSnU64k3mOO2EWv4LnmZAdw=;
+        b=ige/b2g866g7wcBwMmaKKqYcY5yXvw99EV8sUu+cTFKEJly8+uV80YZ+V1SACFvo9H
+         wE+4XkOcCKQSE3FHUsonVnqCmV4YFHC2A33bxom5O3PSyu4BlXZJjFD3g4jS/f5jyCcI
+         lr6QT8KY9cD69xwiosbnYbku+0xAiABwZEAkF9naSojFTibQgcL6u5YQxxEe0DrC3FVA
+         Xxg2dvKcvfp9+HNZifKFJNCckUv21PyxbFpaRim+39M8ldeMHG/yY5jeDgNCMvQF/ekk
+         WeC2XjuuXij44u3WkedifyabKolJlJUjGkF6GGjAV3BTAtgGNSq9F7DEHsBkVbSj4qVt
+         FhoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=g+2rIKphJlBt5mUvUWJ8j5kWz6Jxn6QP4aIwy8Xv4zM=;
-        b=Izys1wfm19z/Xg26eROi7T2qPuuPrgcai/+UO4UGdP4srxmLiOs+J16LNmFxSm/Q8W
-         YsaevUNykwzSOHYsjsuNfZHS1vY7wjc3LQKKLRcZtocAozDxc+EgKGD/u9+dLoYPtHij
-         GFoyupOT2v6MbB5uK8P5Vir9Ioqv1ZPyzIm0Cc2OGtp8daP2xucxCy0pt3TCmc5p7C6j
-         RfW6iJLxUB957uQyvm4qHoJRefnf12bIsS71aX417iDbhfuokLrGg9mYUwyLlr6AD65W
-         xWdZ0tvy2UNJXXg9KCIkTvzfdBqwIJZACoI4y3d8psrR77+43L6LpS/pZTn4iel+LG9u
-         TjfA==
-X-Gm-Message-State: AMCzsaV9nq1JccOKXiCrm5nc6ZBvtlTQ2Tsv43o5SshpeNB8ri4WoDJO
-        Sotncz8IvJzmsERNdIcdmG3PEIqLU1GfsX0uyrY=
-X-Google-Smtp-Source: ABhQp+SdrUA8couc7COFNhBQrri5yopc23PmIKn+p6xogKCr/zCgbjKJVacOZya7qOKk1guXgOfSYlTUv1d5gJLOJ2Y=
-X-Received: by 10.55.154.84 with SMTP id c81mr15621827qke.43.1508221960679;
- Mon, 16 Oct 2017 23:32:40 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.140.83.136 with HTTP; Mon, 16 Oct 2017 23:32:40 -0700 (PDT)
-From:   Marius Paliga <marius.paliga@gmail.com>
-Date:   Tue, 17 Oct 2017 08:32:40 +0200
-Message-ID: <CAK7vU=1LGTLrEkRYS=autkDHmJAeq9=qa5jfx=DE+acPLsCqTg@mail.gmail.com>
-Subject: [PATCH] Added support for new configuration parameter push.pushOption
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=hubEios7sK4zFJUIyQbgBSnU64k3mOO2EWv4LnmZAdw=;
+        b=Mdg1S7t125kG+Fr5Dk7zAbm8ukPtVli+bqm3e+hUKbtTRdZWXxvnYbLSUrFCs2KHVa
+         sEFbV5Br/1XTr4ovcJsLBvs5Wb1sD1rsb00HNrMmsAsqxecGjCklTFTaRXuURxpDBupQ
+         8moD8diDm58yZtp69npeymf+HWuQtvsCjPR2vGZ22jwT4PoOZCB8X5VKxuqJ46vvlYa4
+         0fFt75G913Wo1vkMbSaPGzG0OgPgokb4F64mi/iocsR1HEQB5CoD8IhcGh5bviwxfq5E
+         IeTrddIr5S0QMn51b/lY9AHoBzKN7QJhJB3kaQCK/LoD+8pBgimkcXSfjhSefzfTpZie
+         xuJw==
+X-Gm-Message-State: AMCzsaUM+EmUrrqOP3SjgIo16GkNHWOlPI7MtjkCWGXdr3DJjpdBWbrD
+        4BW5POiGhapNcCY0bgUhHtM=
+X-Google-Smtp-Source: AOwi7QBnqgF/E/Lmkrv/GlELmOKdvhc/rehkADrZSsB81QL3vR1Iv9kGgtWqu0aWIsZNeWjrbhTuig==
+X-Received: by 10.107.170.29 with SMTP id t29mr16242073ioe.73.1508223064486;
+        Mon, 16 Oct 2017 23:51:04 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id 16sm1329228itw.38.2017.10.16.23.51.02
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 16 Oct 2017 23:51:03 -0700 (PDT)
+Date:   Mon, 16 Oct 2017 23:51:01 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Thais Diniz <thais.dinizbraz@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: [PATCH 1/2] color: downgrade "always" to "auto" only for on-disk
+ configuration
+Message-ID: <20171017065101.ismnplaynumt5bdh@aiede.mtv.corp.google.com>
+References: <20171012021007.7441-1-gitster@pobox.com>
+ <20171012021007.7441-2-gitster@pobox.com>
+ <20171012123153.i265nun6pklw7kjg@sigill.intra.peff.net>
+ <xmqqinfjykm2.fsf@gitster.mtv.corp.google.com>
+ <20171013014721.d4vesqv4v5j7tmk2@sigill.intra.peff.net>
+ <xmqqzi8vvht6.fsf@gitster.mtv.corp.google.com>
+ <20171013130638.dgc6kawy5mvrbasz@sigill.intra.peff.net>
+ <xmqqshemtoth.fsf@gitster.mtv.corp.google.com>
+ <20171016215311.m72jarmqhjagy6o6@sigill.intra.peff.net>
+ <xmqqo9p6r3ai.fsf@gitster.mtv.corp.google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqo9p6r3ai.fsf@gitster.mtv.corp.google.com>
+User-Agent: NeoMutt/20170609 (1.8.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-builtin/push.c: add push.pushOption config
+Hi,
 
-Currently push options need to be given explicitly, via
-the command line as "git push --push-option".
+Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+>> On Sat, Oct 14, 2017 at 12:01:46PM +0900, Junio C Hamano wrote:
 
-The UX of Git would be enhanced if push options could be
-configured instead of given each time on the command line.
+>>> True.  Let's see what others think.  I know Jonathan is running
+>>> the fork at $work with "downgrade always to auto" patches, and while
+>>> I think both approaches would probably work well in practice, I have
+>>> preference for this "harder but right" approach, so I'd want to see
+>>> different views discussed on the list before we decide.
+>>
+>> After pondering over it, I have a slight preference for that, too. But
+>> I'm also happy to hear more input.
+>
+> OK, so it seems we both have slight preference for the "peel back"
+> approach.  Adding Jonathan to Cc:
 
-Add the config option push.pushOption, which is a multi
-string option, containing push options that are sent by default.
+Which approach is "harder but right" / "peel back"?
 
-When push options are set in the system wide config
-(/etc/gitconfig), they can be unset later in the more specific
-repository config by setting the string to the empty string.
+I agree with the goal of making color.ui=always a synonym for auto in
+file-based config.  Peff found some problems with the warning patch
+(scripted commands produce too many warnings), which are not an issue
+for $dayjob but may be for upstream, so I see the value of holding off
+on the warning for now.
 
-Add tests and documentation as well.
+I'm also fine with "revert the proximate cause of the latest
+complaints" as a stepping stone toward making color.ui=always a
+synonym for auto in file-based config in a later release.
 
-Signed-off-by: Marius Paliga <marius.paliga@gmail.com>
----
- Documentation/git-push.txt |  3 ++
- builtin/push.c             | 12 ++++++++
- t/t5545-push-options.sh    | 77 ++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 92 insertions(+)
+Another issue is diff-files paying attention to this configuration.
+If I'm reading Documentation/config.txt correctly, that was simply a
+bug.  diff-files and diff-index are never supposed to use color,
+regardless of configuration.
 
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index 3e76e99f3..da9b17624 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -161,6 +161,9 @@ already exists on the remote side.
-     Transmit the given string to the server, which passes them to
-     the pre-receive as well as the post-receive hook. The given string
-     must not contain a NUL or LF character.
-+    Default push options can also be specified with configuration
-+    variable `push.pushOption`. String(s) specified here will always
-+    be passed to the server without need to specify it using `--push-option`
+I'm fine with "revert the proximate cause of the latest complaints" as
+a stepping stone toward fixing that, too. :)
 
- --receive-pack=<git-receive-pack>::
- --exec=<git-receive-pack>::
-diff --git a/builtin/push.c b/builtin/push.c
-index 2ac810422..10e520c8f 100644
---- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -32,6 +32,8 @@ static const char **refspec;
- static int refspec_nr;
- static int refspec_alloc;
+Sorry I don't have more detailed advice.  I was planning to look more
+closely at how these features evolved over time and haven't had enough
+time for it yet.
 
-+static struct string_list push_options_from_config = STRING_LIST_INIT_DUP;
-+
- static void add_refspec(const char *ref)
- {
-     refspec_nr++;
-@@ -503,6 +505,14 @@ static int git_push_config(const char *k, const
-char *v, void *cb)
-         int val = git_config_bool(k, v) ?
-             RECURSE_SUBMODULES_ON_DEMAND : RECURSE_SUBMODULES_OFF;
-         recurse_submodules = val;
-+    } else if (!strcmp(k, "push.pushoption")) {
-+        if (v == NULL)
-+            return config_error_nonbool(k);
-+        else
-+            if (v[0] == '\0')
-+                string_list_clear(&push_options_from_config, 0);
-+            else
-+                string_list_append(&push_options_from_config, v);
-     }
-
-     return git_default_config(k, v, NULL);
-@@ -562,6 +572,8 @@ int cmd_push(int argc, const char **argv, const
-char *prefix)
-     packet_trace_identity("push");
-     git_config(git_push_config, &flags);
-     argc = parse_options(argc, argv, prefix, options, push_usage, 0);
-+    if (!push_options.nr)
-+        push_options = push_options_from_config;
-     set_push_cert_flags(&flags, push_cert);
-
-     if (deleterefs && (tags || (flags & (TRANSPORT_PUSH_ALL |
-TRANSPORT_PUSH_MIRROR))))
-diff --git a/t/t5545-push-options.sh b/t/t5545-push-options.sh
-index 90a4b0d2f..463783789 100755
---- a/t/t5545-push-options.sh
-+++ b/t/t5545-push-options.sh
-@@ -140,6 +140,83 @@ test_expect_success 'push options and submodules' '
-     test_cmp expect parent_upstream/.git/hooks/post-receive.push_options
- '
-
-+test_expect_success 'default push option' '
-+    mk_repo_pair &&
-+    git -C upstream config receive.advertisePushOptions true &&
-+    (
-+        cd workbench &&
-+        test_commit one &&
-+        git push --mirror up &&
-+        test_commit two &&
-+        git -c push.pushOption=default push up master
-+    ) &&
-+    test_refs master master &&
-+    echo "default" >expect &&
-+    test_cmp expect upstream/.git/hooks/pre-receive.push_options &&
-+    test_cmp expect upstream/.git/hooks/post-receive.push_options
-+'
-+
-+test_expect_success 'two default push options' '
-+    mk_repo_pair &&
-+    git -C upstream config receive.advertisePushOptions true &&
-+    (
-+        cd workbench &&
-+        test_commit one &&
-+        git push --mirror up &&
-+        test_commit two &&
-+        git -c push.pushOption=default1 -c push.pushOption=default2
-push up master
-+    ) &&
-+    test_refs master master &&
-+    printf "default1\ndefault2\n" >expect &&
-+    test_cmp expect upstream/.git/hooks/pre-receive.push_options &&
-+    test_cmp expect upstream/.git/hooks/post-receive.push_options
-+'
-+
-+test_expect_success 'push option from command line overrides
-from-config push option' '
-+    mk_repo_pair &&
-+    git -C upstream config receive.advertisePushOptions true &&
-+    (
-+        cd workbench &&
-+        test_commit one &&
-+        git push --mirror up &&
-+        test_commit two &&
-+        git -c push.pushOption=default push --push-option=manual up master
-+    ) &&
-+    test_refs master master &&
-+    echo "manual" >expect &&
-+    test_cmp expect upstream/.git/hooks/pre-receive.push_options &&
-+    test_cmp expect upstream/.git/hooks/post-receive.push_options
-+'
-+
-+test_expect_success 'empty value of push.pushOption in config clears
-the list' '
-+    mk_repo_pair &&
-+    git -C upstream config receive.advertisePushOptions true &&
-+    (
-+        cd workbench &&
-+        test_commit one &&
-+        git push --mirror up &&
-+        test_commit two &&
-+        git -c push.pushOption=default1 -c push.pushOption= -c
-push.pushOption=default2 push up master
-+    ) &&
-+    test_refs master master &&
-+    echo "default2" >expect &&
-+    test_cmp expect upstream/.git/hooks/pre-receive.push_options &&
-+    test_cmp expect upstream/.git/hooks/post-receive.push_options
-+'
-+
-+test_expect_success 'invalid push option in config' '
-+    mk_repo_pair &&
-+    git -C upstream config receive.advertisePushOptions true &&
-+    (
-+        cd workbench &&
-+        test_commit one &&
-+        git push --mirror up &&
-+        test_commit two &&
-+        test_must_fail git -c push.pushOption push up master
-+    ) &&
-+    test_refs master HEAD@{1}
+Jonathan
