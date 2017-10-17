@@ -2,82 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6DC6E202A2
-	for <e@80x24.org>; Tue, 17 Oct 2017 03:56:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE5CE202A2
+	for <e@80x24.org>; Tue, 17 Oct 2017 03:58:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752307AbdJQD42 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Oct 2017 23:56:28 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59876 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751329AbdJQD41 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Oct 2017 23:56:27 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A249BB814C;
-        Mon, 16 Oct 2017 23:56:26 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-        :subject:date:message-id:mime-version:content-type; s=sasl; bh=3
-        KjZ2Hx00xjGQa8Mxnwf9y/kklc=; b=IqtIniSCYf9E+Hc3BYQDtkflnoPIcRE0y
-        KnRoeWaHTatBkUkG8Muh0RkzcdcCS41eqoMewFjJS1An1KAPpznZE/2x2s0SqkiS
-        4Qrk06DWsY2svd9sEaT01zjdoRPBH/WZHy+3CyYNB7vGaMVF5IOSG8JsOg9x24EH
-        xiwowRlzJc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-        :date:message-id:mime-version:content-type; q=dns; s=sasl; b=Fxl
-        CMfC0h1gxE8yaIzHsJGLOLBOR1Jd5gPYFriz1BGY0dNqdpAothxHrZsd5yO3ANJ5
-        Ex9UWIDsrSrMTgoVpXizt3mIRqvgJtwEhayZuxydPHWlFWjtab9DGuBlYLWA1TUL
-        aSflH0uBc2RZIV3153zYHZ6NWa+er+98y9MqyZKg=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 999C7B814B;
-        Mon, 16 Oct 2017 23:56:26 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E593EB814A;
-        Mon, 16 Oct 2017 23:56:25 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Subject: [PATCH] fetch doc: src side of refspec could be full SHA-1
-Date:   Tue, 17 Oct 2017 12:56:24 +0900
-Message-ID: <xmqqinfepguv.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1754686AbdJQD6V (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Oct 2017 23:58:21 -0400
+Received: from mail-io0-f171.google.com ([209.85.223.171]:43629 "EHLO
+        mail-io0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753254AbdJQD6U (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Oct 2017 23:58:20 -0400
+Received: by mail-io0-f171.google.com with SMTP id 134so777155ioo.0
+        for <git@vger.kernel.org>; Mon, 16 Oct 2017 20:58:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Qq5fRWTqYpJdD1vHd7qfNO/O6mggsPY2vjC4gGE/lkc=;
+        b=LS3J6Z0UObuN3Reh+MUDXoTAxYdD12GX7MEYSOGF2nGKjllmwfxwz3rwkSZTnaA9hF
+         Bk8YAd9Imy9D4wUP9Pqhv6kFWhIVnEDV7rBFLUKXKEXBTn/VR34ghtZT2fXyzX2n0Ise
+         FlZywZmltYkSIgkCeolvBvxVQlAcohP3fHh1tvuKAPoqrnryXYEECgkGle3KZrjS+JEc
+         Cl2okpCrkM5UTuhXx0Ng0q/tPLUOqDgL4gMS1bt82TXDi4leBXGNOePTDsUoVt9nukV+
+         PkinrKBxFWfPDowxUcbztPji3PsylQ+GLDt4ozWugKNtnDDm+CICkX/LHkK+dZkHbC+Y
+         00mw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Qq5fRWTqYpJdD1vHd7qfNO/O6mggsPY2vjC4gGE/lkc=;
+        b=hxNcSyjj0ozi19OOUAQR02O43FIqZFLS3nWVs3r4P/cjAycFFtFGvIqj/Fy1k9IkLb
+         SdIEebp4AthHfCgtsnCVlMCW8RE/YFupzWDmM/YsM3ljiEJbqQvVvhFLDGBxFINlE2+Q
+         RD8jiGnOh2P+pN0VuxbXvscSfWbGSwiGWYPuoH/F7vqqTAKo7uacWmWryVSvb9klr0fw
+         ntstZe9QJ8/fCLtgrJn+yccyXsJ1zsT3UOljJgWnX1Xq+LZxd1224K5EudLrbjRW8YUf
+         GXr9CAHk1NrC9uI7vSWnb7mD9uzptvslAUyv3LxA8k3gbRxXE1nEPMlYbw1hTjKdqqUy
+         4xDg==
+X-Gm-Message-State: AMCzsaULyOf0FeShY4zjcGHI8T55utxPtkUEOcu0588XNm9bYAcZmDhX
+        LUlQWcrlVSSfej2TL25QyPvHIFlPzZYL5mBjiFI=
+X-Google-Smtp-Source: AOwi7QAx9FSUe4H4KmTOVDJkDHKIs8D/Y3ePqd2hXfBW867JjXLgF/qwnh0FAKmdBtwTldWZDhLdD8C1lmqSScY8GH4=
+X-Received: by 10.107.164.105 with SMTP id n102mr16088439ioe.45.1508212699224;
+ Mon, 16 Oct 2017 20:58:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 25D1EC68-B2EF-11E7-9088-575F0C78B957-77302942!pb-smtp2.pobox.com
+Received: by 10.79.113.81 with HTTP; Mon, 16 Oct 2017 20:58:18 -0700 (PDT)
+In-Reply-To: <xmqqmv4x11y9.fsf@gitster.mtv.corp.google.com>
+References: <CAK7vU=3whGsx4L4KACSC+XDWQEbUWuZZZqTsW2R=CbF8d7rkuQ@mail.gmail.com>
+ <20171011202505.10113-1-thais.dinizbraz@gmail.com> <20171011202505.10113-2-thais.dinizbraz@gmail.com>
+ <xmqqa80x2mb4.fsf@gitster.mtv.corp.google.com> <CAP8UFD3VnVod7SPTM11XG=vHBYD4EwA+xZB563iwpL1Ue4pPnA@mail.gmail.com>
+ <xmqqmv4x11y9.fsf@gitster.mtv.corp.google.com>
+From:   thais braz <thais.dinizbraz@gmail.com>
+Date:   Tue, 17 Oct 2017 01:58:18 -0200
+Message-ID: <CAP2EEmdA9txQa9g32ZJmNr3bRVwEkBF=_RrSEJck+Rf87FRZTA@mail.gmail.com>
+Subject: Re: [PATCH][Outreachy] New git config variable to specify string that
+ will be automatically passed as --push-option
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        marius.paliga@gmail.com, git <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since a9d34933 ("Merge branch 'fm/fetch-raw-sha1'", 2015-06-01) we
-allow to fetch by an object name when the other side accepts such a
-request, but we never updated the documentation to match.
+Just to clarify I did not see Marius patch.
+Did see Marius' comment saying he would look it in the leftoverbits list,
+but since i didn't see any patch i thought i could work on it and did
+so based on Stephan's comment
+(which i suppose Mario also did and that is why the code resulted to
+be similar).
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/pull-fetch-param.txt | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+And sorry send this email as patch. Didn't know how to use git
+send-email just as reply
 
-diff --git a/Documentation/pull-fetch-param.txt b/Documentation/pull-fetch-param.txt
-index 1ebbf1d738..733f932479 100644
---- a/Documentation/pull-fetch-param.txt
-+++ b/Documentation/pull-fetch-param.txt
-@@ -23,9 +23,11 @@ ifdef::git-pull[]
- endif::git-pull[]
- +
- The format of a <refspec> parameter is an optional plus
--`+`, followed by the source ref <src>, followed
-+`+`, followed by the source <src>, followed
- by a colon `:`, followed by the destination ref <dst>.
--The colon can be omitted when <dst> is empty.
-+The colon can be omitted when <dst> is empty.  <src> is most
-+typically a ref, but it can also be an fully spelled hex object
-+name.
- +
- `tag <tag>` means the same as `refs/tags/<tag>:refs/tags/<tag>`;
- it requests fetching everything up to the given tag.
+On Thu, Oct 12, 2017 at 12:26 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Christian Couder <christian.couder@gmail.com> writes:
+>
+>>> Can somebody explain what is going on?
+>>>
+>>> I am guessing that Thais and marius are different people (judging by
+>>> the fact that one CC's a message to the other).  Are you two
+>>> collaborating on this change, or something?
+>>
+>> I guess that Thais decided to work on this, because we ask Outreachy
+>> applicants to search for #leftoverbits mentions in the mailing list
+>> archive to find small tasks they could work on.
+>>
+>> In this case it looks like Marius sent a patch a few hours before
+>> Thais also sent one.
+>
+> ... after seeing Marius's already working on it, I think.
+>
+>> Thais, I am sorry, but as Marius sent a patch first, I think it is
+>> better if you search for another different small task to work on.
+>
+> In general, I do not mind seeing people working together well, and
+> it is one of the more important skills necessary in the open source
+> community.  I however tend to agree with you that this is a bit too
+> small a topic for multiple people to be working on.
+>
+>> Also please keep Peff and me in cc.
+>
+> Yup, that is always a good idea.
+>
+
+
+
 -- 
-2.15.0-rc1-168-g2b9456ab46
-
+Atenciosamente Thais Diniz Braz
