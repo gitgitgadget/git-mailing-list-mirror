@@ -2,126 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2BF33202A2
-	for <e@80x24.org>; Tue, 17 Oct 2017 03:33:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 26D72202A2
+	for <e@80x24.org>; Tue, 17 Oct 2017 03:47:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933401AbdJQDdS (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Oct 2017 23:33:18 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50100 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1754964AbdJQDdR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Oct 2017 23:33:17 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2649FB1145;
-        Mon, 16 Oct 2017 23:33:17 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=jZwA87F/6hnVTt6bDBoyAmq1hUE=; b=EKPB0E
-        Pz2MLFMezMc2r90PBIpGh9xauvhflsB4KBkkMQLTdRpjV6fseT+lQ0aKFYbZJpm4
-        MyN+e8dF2/TKFtLE3jLit6SUUSM1uaVrzjkjfOmjl38ejw1VxnrdTmr17n/U6PfN
-        kY7iNxj74zONGrMiYDaS2m9wi/6rvUPnYJZiI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=aIRSSQtmrVNzf6opcNe/cdI8Zd7wz3Kf
-        +UxNGgKBv8SuIsoovAMVbtNKICRkVECQaO9XjqPKz5Jw+CVripgtUCc7XHFLFmlk
-        t2qpMXmcWSY3yJMFPUkeIciM0tj0r/hooMAohjQqnRyID2kVM+USSL3Gh908uQ/V
-        sq+zZ1szNvA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1CC87B1144;
-        Mon, 16 Oct 2017 23:33:17 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 486B4B1143;
-        Mon, 16 Oct 2017 23:33:16 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Marko Kungla <marko.kungla@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH] check-ref-format: require a repository for --branch
-References: <CAKY_R-uk9hpR2hbkPsw2cqoMo6bQKoyp6cWTO20L3fOWfLW2-Q@mail.gmail.com>
-        <20170714180313.apsnbnw7no2nvtf5@sigill.intra.peff.net>
-        <20170714181831.fvi2coppzhm747mk@sigill.intra.peff.net>
-        <20170717172709.GL93855@aiede.mtv.corp.google.com>
-        <20170817102217.3yw7uxnkupdy3lh5@sigill.intra.peff.net>
-        <xmqqinffsibr.fsf@gitster.mtv.corp.google.com>
-        <xmqq1sm3s751.fsf@gitster.mtv.corp.google.com>
-        <20171016224512.6fhtce5anmff577b@sigill.intra.peff.net>
-        <xmqqbml6r2js.fsf@gitster.mtv.corp.google.com>
-        <20171017024203.6hqzy2paed6fyvym@sigill.intra.peff.net>
-Date:   Tue, 17 Oct 2017 12:33:15 +0900
-In-Reply-To: <20171017024203.6hqzy2paed6fyvym@sigill.intra.peff.net> (Jeff
-        King's message of "Mon, 16 Oct 2017 22:42:03 -0400")
-Message-ID: <xmqqo9p6phxg.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E9876790-B2EB-11E7-BDDA-8EF31968708C-77302942!pb-smtp1.pobox.com
+        id S1755265AbdJQDrw (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Oct 2017 23:47:52 -0400
+Received: from mail-qt0-f194.google.com ([209.85.216.194]:56930 "EHLO
+        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754722AbdJQDrv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Oct 2017 23:47:51 -0400
+Received: by mail-qt0-f194.google.com with SMTP id z28so768299qtz.13
+        for <git@vger.kernel.org>; Mon, 16 Oct 2017 20:47:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=MN8ceoxEI+Y0UVx74OWRvtSBlT2wRE76XNmGe+2Mkko=;
+        b=nf1XR0FwVY9fFvGN1hsA8NiPh36KxQ5EC5N2pP/AplAtzPLVL3K2BUO7+Fw/3LSmE5
+         /uFVJnh1A1iqaZwMQNDungrZFcN0ZGTbJa/deXOdfNskZ/YKgPGxE67O1whJeLxj5ORC
+         3BoUfkKYVSToIHaJEEz/aJriI3328ZLJSt6Q9gTge6KfaUx9ACu0GLdr/PyrinqFMmSd
+         qxxz6s6R53E3AdK0ITYksl8b87viB2y8URswNRy1SR5BYr3XkC741BZQdZg5XczTRmDw
+         yYyd3n73VhRXa5okod0FTWS7j0k3LzYOPg1LvV/RFG1Y486v8TkFfvygTN5+4rg6Evyl
+         1VPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=MN8ceoxEI+Y0UVx74OWRvtSBlT2wRE76XNmGe+2Mkko=;
+        b=AQqJ0HnO8CkbqO4+24UPPhXs0KODq8Jj8Kim6Di/LSXqwROF0Z7UlgMscL5CLeKWAA
+         C1By89y6DUFmgNYvUaUSSECKrqZKNhShsomdGqTHZDdo/Q9JtwhAxWLgdGTl2k9tjGZQ
+         KTSx1aG1Gp+HZ1+41FU+zu0PBLq5+t4fA/f2iFzwHv0AZAJiM58Fl5sVgmvoBjR+EsYB
+         Fqg34pJJu6Owlm5KZ7cUCu1YIUzP0NrOB5z5ZZT3kA8i5JuA6t/gd4gcYf9mKcpMeHy9
+         LyHTMy4QegONMyEHQP/CmgFwuJQkbsi0COQBEVA4DKdzfKigayHFg7SWCvCR3M2iNzlU
+         OyOw==
+X-Gm-Message-State: AMCzsaWIUgc5qRAFP3NsmDnkuT2/t2BCU/XpqpvDgaZUt4cvAOsXuL6U
+        NcZwSIfXQW2S6yJWwHYNkvo=
+X-Google-Smtp-Source: ABhQp+QrhCP6qQmBTsgW0XplXdelilzw8Akww26LMssk52I9pGGJ5psTj4J7l0eGRdbEkjQEEe6lSg==
+X-Received: by 10.200.46.109 with SMTP id s42mr16532056qta.94.1508212070641;
+        Mon, 16 Oct 2017 20:47:50 -0700 (PDT)
+Received: from localhost.localdomain ([187.59.221.64])
+        by smtp.gmail.com with ESMTPSA id f38sm1206550qtf.17.2017.10.16.20.47.47
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 16 Oct 2017 20:47:50 -0700 (PDT)
+From:   Thais Diniz <thais.dinizbraz@gmail.com>
+To:     gitster@pobox.com
+Cc:     christian.couder@gmail.com, git@vger.kernel.org,
+        marius.paliga@gmail.com, peff@peff.net, sbeller@google.com,
+        thais.dinizbraz@gmail.com
+Subject: [PATCH] patch reply
+Date:   Tue, 17 Oct 2017 01:47:43 -0200
+Message-Id: <20171017034743.8418-1-thais.dinizbraz@gmail.com>
+X-Mailer: git-send-email 2.15.0.rc0.39.g2f0e14e.dirty
+In-Reply-To: <xmqqmv4x11y9.fsf@gitster.mtv.corp.google.com>
+References: <xmqqmv4x11y9.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+From: Thais Diniz Braz <thais.dinizbraz@gmail.com>
 
-> On Tue, Oct 17, 2017 at 10:22:31AM +0900, Junio C Hamano wrote:
->
->> > I like the state this puts us in, but there's one catch: we're
->> > completely changing the meaning of "check-ref-format --branch", aren't
->> > we?
->> >
->> > It is going from "this is how you resolve @{-1}" to "this is how you
->> > check the validity of a potential branch name". Do we need to pick a
->> > different name, and/or have a deprecation period?
->>  ...
->> At least that is what I wanted to happen in the patch.
->
-> Ah, OK, I did not read carefully enough then. I think that would be OK,
-> and probably close to what Jonathan was asking for.
->
-> It leaves unresolved the fact that the resolving feature does not belong
-> in check-ref-format in the first place, but we can just accept that as a
-> historical wart.
+---
+ emailReply | 4 ++++
+ 1 file changed, 4 insertions(+)
+ create mode 100644 emailReply
 
-Yup, I actually was in favor of removing that and making it a
-"purely checking validity" feature, but given that it has been
-advertised in the documentation since 604e0cb5 ("Documentation:
-describe check-ref-format --branch", 2009-10-12), it is a bit too
-late to tell users that rev-parse is the right/kosher thing to do.
+diff --git a/emailReply b/emailReply
+new file mode 100644
+index 000000000..2d591b55b
+--- /dev/null
++++ b/emailReply
+@@ -0,0 +1,4 @@
++Just to clarify I did not see Marius patch.
++Did see Marius' comment saying he would look it in the leftoverbits list,
++but since i didn't see any patch i thought i could work on it and did so based on Stephan's comment 
++(which i suppose Mario also did and that is why the code resulted to be similar).
+-- 
+2.15.0.rc0.39.g2f0e14e.dirty
 
-> I don't think there is any need to prepare it upon my 4d03f955,
-> though.  I'd think it could simply replace it.
-
-Yeah, it ended up that way, it seems.  Still it needs a bit of doc
-updates to balance the description.  Right now we stress on @{-n}
-resolution too much.
-
-Perhaps something like this?
-
- Documentation/git-check-ref-format.txt | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/git-check-ref-format.txt b/Documentation/git-check-ref-format.txt
-index 92777cef25..cf0a0b7df2 100644
---- a/Documentation/git-check-ref-format.txt
-+++ b/Documentation/git-check-ref-format.txt
-@@ -77,7 +77,14 @@ reference name expressions (see linkgit:gitrevisions[7]):
- 
- . at-open-brace `@{` is used as a notation to access a reflog entry.
- 
--With the `--branch` option, it expands the ``previous branch syntax''
-+With the `--branch` option, the command takes a name and checks if
-+it can be used as a valid branch name (e.g. when creating a new
-+branch).  The rule `git check-ref-format --branch $name` implements
-+may be stricter than what `git check-ref-format refs/heads/$name`
-+says (e.g. a dash may appear at the beginning of a ref component,
-+but it is explicitly forbidden at the beginning of a branch name).
-+When run with `--branch` option in a repository, the input is first
-+expanded for the ``previous branch syntax''
- `@{-n}`.  For example, `@{-1}` is a way to refer the last branch you
- were on.  This option should be used by porcelains to accept this
- syntax anywhere a branch name is expected, so they can act as if you
