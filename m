@@ -2,87 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 39348202A2
-	for <e@80x24.org>; Tue, 17 Oct 2017 02:45:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 381B7202A2
+	for <e@80x24.org>; Tue, 17 Oct 2017 02:46:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754657AbdJQCpn (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Oct 2017 22:45:43 -0400
-Received: from cloud.peff.net ([104.130.231.41]:54928 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1752981AbdJQCpm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Oct 2017 22:45:42 -0400
-Received: (qmail 26838 invoked by uid 109); 17 Oct 2017 02:45:42 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 17 Oct 2017 02:45:42 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19725 invoked by uid 111); 17 Oct 2017 02:45:46 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Mon, 16 Oct 2017 22:45:46 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 16 Oct 2017 22:45:40 -0400
-Date:   Mon, 16 Oct 2017 22:45:40 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Joris Valette <joris.valette@gmail.com>,
-        Andreas Schwab <schwab@linux-m68k.org>,
-        Jason Pyeron <jpyeron@pdinc.us>, git@vger.kernel.org
-Subject: Re: Consider escaping special characters like 'less' does
-Message-ID: <20171017024540.erccnanmvz6t2aue@sigill.intra.peff.net>
-References: <CA+o7MD8bhXWxy2M7z++jrq+k85SwzdEV6uwnUjV9=0_X99=VJg@mail.gmail.com>
- <773EDE3B5FDB48AD8FB0DB048CAEC8DE@blackfat>
- <87zi8sxvkg.fsf@linux-m68k.org>
- <CA+o7MD8fcD5-SFeQsX84Etu68ov7yy48OO4dV=gXMp5xY8s9Rg@mail.gmail.com>
- <20171015200635.e2u4qkxlz2xwpfov@sigill.intra.peff.net>
- <CA+o7MD84O5uTOz0xAGmd=xL+Hw8UsVCu5v_HEEeMWvAhSRQCeA@mail.gmail.com>
- <20171016221324.stn56gqnliunvcdv@sigill.intra.peff.net>
- <xmqqk1zur2yp.fsf@gitster.mtv.corp.google.com>
+        id S1756262AbdJQCqR (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Oct 2017 22:46:17 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:65226 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1755028AbdJQCqP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Oct 2017 22:46:15 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 11C47B06B0;
+        Mon, 16 Oct 2017 22:46:15 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=m2VBpqA0VT/o8xrpon4X0ueIEPA=; b=kCr1FR
+        SAb6qMN1FRhO8/Hdfer5jmGc3gxTeKPb+Eh8HYJrEAS4KGYl4EkPTzqeI9KMoID2
+        NyaKsUOfOjBmhD5OLDsOLhYVbpDIuHl5tnbX8gAJTKkAF3kCDZS3UudHxp+Gt+my
+        jSrXcKwac0WmLI2fGKJrLQ59c6SnvvcNDdbh4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=VmxDF09KvEldiwgN4LQKgu9sJSKShqpg
+        fLc52jeCAt8HlanbkoLVL6MNGzXVdEToltcsuAKWFlJ6WZK9U5u3llkI+qgLzzxU
+        gXNQdjh9ximRtn74n+PUQa6V24NXuxY7JBnWeUdYPi0RusSztmJQULzJmh+gz+89
+        doL2Oe7Grs4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0A138B06AF;
+        Mon, 16 Oct 2017 22:46:15 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 765ABB06AE;
+        Mon, 16 Oct 2017 22:46:14 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     David Glasser <glasser@meteor.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] doc: list filter-branch subdirectory-filter first
+References: <0102015f277a12fe-c69362e3-b14c-4b5c-abaa-4693fd6632c2-000000@eu-west-1.amazonses.com>
+Date:   Tue, 17 Oct 2017 11:46:13 +0900
+In-Reply-To: <0102015f277a12fe-c69362e3-b14c-4b5c-abaa-4693fd6632c2-000000@eu-west-1.amazonses.com>
+        (David Glasser's message of "Mon, 16 Oct 2017 23:17:12 +0000")
+Message-ID: <xmqqy3oapk3u.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqk1zur2yp.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5798F322-B2E5-11E7-AB06-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 17, 2017 at 10:13:34AM +0900, Junio C Hamano wrote:
+David Glasser <glasser@meteor.com> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > Alternatively, I suppose we could just always escape in
-> > add--interactive. I'm trying to think of a case where somebody would
-> > really want their diffFilter to see the raw bytes (or vice versa, to
-> > show raw bytes produced by their filter), but I'm having trouble coming
-> > up with one.
-> 
-> Your patch below only implements the "tame the raw bytes that come
-> out of their filter", which is quite agreeable.
+> From: David Glasser <glasser@davidglasser.net>
+>
+> The docs claim that filters are applied in the listed order, so
+> subdirectory-filter should come first.
+> ---
+>  Documentation/git-filter-branch.txt | 10 +++++-----
+>  1 file changed, 5 insertions(+), 5 deletions(-)
 
-Yes. I think that is probably OK, especially given that we continue to
-allow terminal escapes (certainly some filters would want to use colors;
-I don't know if any would want to use more exotic control codes).
+Good.  Could you sign it off?
 
-> > I can't help but feel this is the tip of a larger iceberg, though. E.g.,
-> > what about characters outside of the terminal's correct encoding? Or
-> > broken UTF-8 characters?
-> 
-> Hmph.  If you use it as a "built-in" that is a fallback for
-> diffFilter, i.e. use it only when the end user does not have one,
-> then users can override whatever wrong thing the built-in logic does
-> so... ;-)
+Somewhat related tangent is that we may want to also reorder the
+output from "git filter-branch -h" to the order of filter
+application.  For that matter, the order in which the SYNOPSIS
+section lists these command line arguments may want to match, both
+for consistency and as an extra reminder to the users.
 
-Yes, and maybe that is the best way to do it. It just seems like it is
-opening a can of worms about exactly which things should be filtered and
-how.
-
-I also wondered if people would be annoyed that by using a filter, they
-don't get the benefit of the escaping, unless their filter implements it
-separately on top (and the original purpose of the filter option was for
-things like diff-highlight and diff-so-fancy, which do not do such
-escaping).
-
--Peff
