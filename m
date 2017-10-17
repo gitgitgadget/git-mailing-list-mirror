@@ -2,112 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 30DE31FF32
-	for <e@80x24.org>; Tue, 17 Oct 2017 21:03:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BEB8A1FF32
+	for <e@80x24.org>; Tue, 17 Oct 2017 21:06:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1764292AbdJQVDH (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Oct 2017 17:03:07 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:65215 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753735AbdJQVDD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Oct 2017 17:03:03 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 156D7A0B7B;
-        Tue, 17 Oct 2017 17:03:03 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Nt2L6ZmsAUG7PWP0Az9YvJiNsV4=; b=v9zpT4
-        VNxE/WF1nq0NWioWla9QSdK6qXzDSjLysuQQrDH4dcVW5gsbWxonI/RhFFoDxjvc
-        g2VTVmdgqASiiJlQZvHa05aOmQaolx0ALdO21L9qjteG1yOKQzz9GMEWfpyP5+8C
-        AfrFtzLv1mIEAw00bJFuFPiAddSQeyum18gxE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=vQWxeQkOf8pItcbAYzfx4WyG1q/kYj3r
-        ng420ebIZ4UNs8mcbWdWIVE9ZRhO9gVK1dqyqoKm1fg79Cjoqwb0kJXOoHmkDu7o
-        qzVdDP5J0t8pgW7t7z3f0hkHKnM0CPmQQYZMDJWTBGu6R90/eSg+mPNhG6j4T1pu
-        Z9OEJsHcDfI=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0149BA0B7A;
-        Tue, 17 Oct 2017 17:03:03 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 64FE1A0B79;
-        Tue, 17 Oct 2017 17:03:02 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re* Is t5601 flaky for anybody else?
-References: <xmqq376ipdpx.fsf@gitster.mtv.corp.google.com>
-        <20171017171046.GA48544@google.com>
-Date:   Wed, 18 Oct 2017 06:02:59 +0900
-In-Reply-To: <20171017171046.GA48544@google.com> (Brandon Williams's message
-        of "Tue, 17 Oct 2017 10:10:46 -0700")
-Message-ID: <xmqqshehmqrg.fsf_-_@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1760968AbdJQVGM (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Oct 2017 17:06:12 -0400
+Received: from mail-io0-f181.google.com ([209.85.223.181]:50919 "EHLO
+        mail-io0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751961AbdJQVGL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Oct 2017 17:06:11 -0400
+Received: by mail-io0-f181.google.com with SMTP id 97so3778836iok.7
+        for <git@vger.kernel.org>; Tue, 17 Oct 2017 14:06:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=O6JLhPDwO7jF0kk1B6/BburRpOinK5fsv6wMkJhSbnc=;
+        b=qA67BHsSQdIQeQPernXwUVzOLf2tnuJmPc6/yevtY3ptnVBUjRVJAUQrhwuRyDifHX
+         4beMlkShJxhfA9GAV+BQINKlQDtI/um8+9Eduz7JnNgT49om3G7A2Cqc32+5ZmP8u49Y
+         kky1oDz2vSnkLcU3rrckYKy9PsG2EDz+roRK/E5Axfo81dEhOlnSkUQsqjaQNiE7hv/u
+         vB+TDi9rWs6KBoqZNCpmrlj9sdkX4TKkTgU6AW+jmPBxA2EHmSQ2ZhkvNPMtBQORnDTF
+         nc6eQpbUkbJWmRW/5Plnr6CgeoZZLSYO9RlDTWavcN+XnzLgiV9f/yo6IsQzSWBzTUJg
+         BsUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=O6JLhPDwO7jF0kk1B6/BburRpOinK5fsv6wMkJhSbnc=;
+        b=qE98lA/DU5VATNPlJNUPSH1jYM9S1F56CKxKlUs78gX3tTCzmKpPC10zCcIn9Gb+B9
+         jEwxMz0edjuLxH9i08hAi1OuVMqJWp+Mal5Kq1iJNuFqSuL31LIt4mS1sw6BUbGm3RDd
+         S+WUGqoiKlwImBBnNHlzVjOlbLNsIjPhoYQpCRpmPWhAwGtQW8WEU6r0Gq/Xhs2B0YAa
+         97LDyNOtzawazj/e2caWAWnnD3yNVif5yOzD8NHfnp/9eYoYbOeE69JQLQhUJVg6PAK8
+         15KkpRwFBqbCHi4M0z5KCy8ph9ED8a/fHMyIe8NhGJJkJFLCE7GdDhyBpOFAJrqdnHnX
+         HTJg==
+X-Gm-Message-State: AMCzsaWJywjZVHc358dd5m7Ljh+e7AxmzOBCbNN9igi1FQH1yH+yloY3
+        yX39S4SUM46JYFtvwV+lNUo=
+X-Google-Smtp-Source: AOwi7QDM4BTDayrEOhOp1emIw9pOTcXYfMj6ov/yOhIMO98mCOOv+vxzE32J9yFq9PQ0hFf5GkNlhw==
+X-Received: by 10.107.204.1 with SMTP id c1mr17756322iog.72.1508274370664;
+        Tue, 17 Oct 2017 14:06:10 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id 16sm2133014itw.38.2017.10.17.14.06.09
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 17 Oct 2017 14:06:09 -0700 (PDT)
+Date:   Tue, 17 Oct 2017 14:06:07 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Marko Kungla <marko.kungla@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 3/3] check-ref-format doc: --branch validates and expands
+ <branch>
+Message-ID: <20171017210607.rwvaxarkallzahq6@aiede.mtv.corp.google.com>
+References: <xmqqinffsibr.fsf@gitster.mtv.corp.google.com>
+ <xmqq1sm3s751.fsf@gitster.mtv.corp.google.com>
+ <20171016224512.6fhtce5anmff577b@sigill.intra.peff.net>
+ <xmqqbml6r2js.fsf@gitster.mtv.corp.google.com>
+ <20171017024203.6hqzy2paed6fyvym@sigill.intra.peff.net>
+ <xmqqo9p6phxg.fsf@gitster.mtv.corp.google.com>
+ <xmqq7evupemj.fsf@gitster.mtv.corp.google.com>
+ <20171017070619.bdgvujmbw4uxvwle@aiede.mtv.corp.google.com>
+ <20171017071234.m6j4rqn6izdvla6d@aiede.mtv.corp.google.com>
+ <xmqq60bdo5op.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 902EAF9E-B37E-11E7-B154-575F0C78B957-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq60bdo5op.fsf@gitster.mtv.corp.google.com>
+User-Agent: NeoMutt/20170609 (1.8.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brandon Williams <bmwill@google.com> writes:
+Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> I haven't noticed any issues myself but maybe this has something to do
-> with my changes to this test in the 'bw/protocol-v1' topic?
+>> From: Junio C Hamano <gitster@pobox.com>
+>>
+>> "git check-ref-format --branch $name" feature was originally
+>> introduced (and was advertised) as a way for scripts to take any
+>> end-user supplied string (like "master", "@{-1}" etc.) and see if it
+>> is usable when Git expects to see a branch name, and also obtain the
+>> concrete branch name that the at-mark magic expands to.
+>>
+>> Emphasize that "see if it is usable" role in the description and
+>> clarify that the @{...} expansion only occurs when run from within a
+>> repository.
+>>
+>> [jn: split out from a larger patch]
+>>
+>> Helped-by: Jeff King <peff@peff.net>
+>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>> ---
+>
+> Missing sign-off, unlike the other two, intended?
 
-As I've seen this on 'master', too, I suspect the topic has nothing
-to do with it.
+Oops.
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 
-Here is what I have on 'pu'.
+> I'll take these three to replace what I tentatively queued, not
+> necessarily because I like the change in 1/3 better, but because
+> these are explained much better; besides I prefer a version that at
+> least two people deeply looked at.
 
+Okay, thanks.  I'll add the rest of the change as a patch on top. :)
 
--- >8 --
-From: Junio C Hamano <gitster@pobox.com>
-Date: Tue, 17 Oct 2017 14:04:43 +0900
-Subject: [PATCH] t5601: rm the target file of cp that could still be executing
-
-"while sh t5601-clone.sh; do :; done" seems to fail sporadically at
-around test #45 where fake-ssh wrapper is copied create plink.exe,
-with an error message that says the "text is busy".
-
-I have a mild suspicion that the root cause of the bug is that the
-fake SSH process from the previous test is still running by the time
-the next test wants to replace it with a new binary, but in the
-meantime, removing the target that could still be executing before
-copying something else over seems to work it around.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/t5601-clone.sh | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index 9c56f771b6..50e40abb11 100755
---- a/t/t5601-clone.sh
-+++ b/t/t5601-clone.sh
-@@ -308,6 +308,7 @@ test_expect_success 'clone checking out a tag' '
- 
- setup_ssh_wrapper () {
- 	test_expect_success 'setup ssh wrapper' '
-+		rm -f "$TRASH_DIRECTORY/ssh-wrapper$X" &&
- 		cp "$GIT_BUILD_DIR/t/helper/test-fake-ssh$X" \
- 			"$TRASH_DIRECTORY/ssh-wrapper$X" &&
- 		GIT_SSH="$TRASH_DIRECTORY/ssh-wrapper$X" &&
-@@ -318,6 +319,7 @@ setup_ssh_wrapper () {
- }
- 
- copy_ssh_wrapper_as () {
-+	rm -f "${1%$X}$X" &&
- 	cp "$TRASH_DIRECTORY/ssh-wrapper$X" "${1%$X}$X" &&
- 	GIT_SSH="${1%$X}$X" &&
- 	export GIT_SSH
--- 
-2.15.0-rc1-178-ge1264d9eb8
-
+Thanks,
+Jonathan
