@@ -6,106 +6,122 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E9A6C202A2
-	for <e@80x24.org>; Tue, 17 Oct 2017 03:19:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2BF33202A2
+	for <e@80x24.org>; Tue, 17 Oct 2017 03:33:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754964AbdJQDTY (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Oct 2017 23:19:24 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63052 "EHLO
+        id S933401AbdJQDdS (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Oct 2017 23:33:18 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50100 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753664AbdJQDTX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Oct 2017 23:19:23 -0400
+        with ESMTP id S1754964AbdJQDdR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Oct 2017 23:33:17 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B6DC1B0E3F;
-        Mon, 16 Oct 2017 23:19:22 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2649FB1145;
+        Mon, 16 Oct 2017 23:33:17 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=kQPrYCZPG4Z35hib3MElNmKtXm4=; b=TJfxov
-        CnoYF4UuJmT7rxNg0srwulsMS3mwynAj/azaypbpER6nD71BOhwR93B+Yv068cZf
-        WP23re5NzogxbFA8QRFgDZ/4j7gRga34qqcQlq+uMjm4HQiiQxy9RmjkmhVLVAQL
-        VXca3kMO+41wdjQUQzXunMwKptxVPhHUulgPw=
+        :content-type; s=sasl; bh=jZwA87F/6hnVTt6bDBoyAmq1hUE=; b=EKPB0E
+        Pz2MLFMezMc2r90PBIpGh9xauvhflsB4KBkkMQLTdRpjV6fseT+lQ0aKFYbZJpm4
+        MyN+e8dF2/TKFtLE3jLit6SUUSM1uaVrzjkjfOmjl38ejw1VxnrdTmr17n/U6PfN
+        kY7iNxj74zONGrMiYDaS2m9wi/6rvUPnYJZiI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=YG8bkm+eNyXD60LMYzRNImNG7WQvn0Ua
-        4ravVY3sBcl0R8F2KsqcOF9+Osk4QQc/AZgWogM8qDxjJ8LyS+ntsJ6Gis6WN85n
-        nlYZXkoq1rW4iRKDc+NP1DuzD6aG7ONTufHg8LHA9nLIsfP4sHfCxOCtsCj1wdac
-        11R7nOPDY9I=
+        :content-type; q=dns; s=sasl; b=aIRSSQtmrVNzf6opcNe/cdI8Zd7wz3Kf
+        +UxNGgKBv8SuIsoovAMVbtNKICRkVECQaO9XjqPKz5Jw+CVripgtUCc7XHFLFmlk
+        t2qpMXmcWSY3yJMFPUkeIciM0tj0r/hooMAohjQqnRyID2kVM+USSL3Gh908uQ/V
+        sq+zZ1szNvA=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id AD93DB0E3E;
-        Mon, 16 Oct 2017 23:19:22 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1CC87B1144;
+        Mon, 16 Oct 2017 23:33:17 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1D091B0E3D;
-        Mon, 16 Oct 2017 23:19:22 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 486B4B1143;
+        Mon, 16 Oct 2017 23:33:16 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Kevin Daudt <me@ikke.info>
-Cc:     git@vger.kernel.org,
-        Rafael =?utf-8?Q?Ascens=C3=A3o?= <rafa.almas@gmail.com>,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [PATCH v2] column: show auto columns when pager is active
-References: <20171011172310.2932-1-me@ikke.info>
-        <20171016183511.12528-1-me@ikke.info>
-Date:   Tue, 17 Oct 2017 12:19:20 +0900
-In-Reply-To: <20171016183511.12528-1-me@ikke.info> (Kevin Daudt's message of
-        "Mon, 16 Oct 2017 20:35:11 +0200")
-Message-ID: <xmqqtvyypikn.fsf@gitster.mtv.corp.google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Marko Kungla <marko.kungla@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] check-ref-format: require a repository for --branch
+References: <CAKY_R-uk9hpR2hbkPsw2cqoMo6bQKoyp6cWTO20L3fOWfLW2-Q@mail.gmail.com>
+        <20170714180313.apsnbnw7no2nvtf5@sigill.intra.peff.net>
+        <20170714181831.fvi2coppzhm747mk@sigill.intra.peff.net>
+        <20170717172709.GL93855@aiede.mtv.corp.google.com>
+        <20170817102217.3yw7uxnkupdy3lh5@sigill.intra.peff.net>
+        <xmqqinffsibr.fsf@gitster.mtv.corp.google.com>
+        <xmqq1sm3s751.fsf@gitster.mtv.corp.google.com>
+        <20171016224512.6fhtce5anmff577b@sigill.intra.peff.net>
+        <xmqqbml6r2js.fsf@gitster.mtv.corp.google.com>
+        <20171017024203.6hqzy2paed6fyvym@sigill.intra.peff.net>
+Date:   Tue, 17 Oct 2017 12:33:15 +0900
+In-Reply-To: <20171017024203.6hqzy2paed6fyvym@sigill.intra.peff.net> (Jeff
+        King's message of "Mon, 16 Oct 2017 22:42:03 -0400")
+Message-ID: <xmqqo9p6phxg.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: F85BA12A-B2E9-11E7-8EC0-8EF31968708C-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: E9876790-B2EB-11E7-BDDA-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Kevin Daudt <me@ikke.info> writes:
+Jeff King <peff@peff.net> writes:
 
-> When columns are set to automatic for git tag and the output is
-> paginated by git, the output is a single column instead of multiple
-> columns.
+> On Tue, Oct 17, 2017 at 10:22:31AM +0900, Junio C Hamano wrote:
 >
-> Standard behaviour in git is to honor auto values when the pager is
-> active, which happens for example with commands like git log showing
-> colors when being paged.
+>> > I like the state this puts us in, but there's one catch: we're
+>> > completely changing the meaning of "check-ref-format --branch", aren't
+>> > we?
+>> >
+>> > It is going from "this is how you resolve @{-1}" to "this is how you
+>> > check the validity of a potential branch name". Do we need to pick a
+>> > different name, and/or have a deprecation period?
+>>  ...
+>> At least that is what I wanted to happen in the patch.
 >
-> Since ff1e72483 (tag: change default of `pager.tag` to "on",
-> 2017-08-02), the pager has been enabled by default, exposing this
-> problem to more people.
+> Ah, OK, I did not read carefully enough then. I think that would be OK,
+> and probably close to what Jonathan was asking for.
 >
-> finalize_colopts in column.c only checks whether the output is a TTY to
-> determine if columns should be enabled with columns set to auto. Also
-> check if the pager is active.
->
-> Adding a test for git column is possible but requires some care to work
-> around a race on stdin. See commit 18d8c2693 (test_terminal: redirect
-> child process' stdin to a pty, 2015-08-04). Test git tag instead, since
-> that does not involve stdin, and since that was the original motivation
-> for this patch.
+> It leaves unresolved the fact that the resolving feature does not belong
+> in check-ref-format in the first place, but we can just accept that as a
+> historical wart.
 
-Nicely done.
+Yup, I actually was in favor of removing that and making it a
+"purely checking validity" feature, but given that it has been
+advertised in the documentation since 604e0cb5 ("Documentation:
+describe check-ref-format --branch", 2009-10-12), it is a bit too
+late to tell users that rev-parse is the right/kosher thing to do.
 
-> +test_expect_success TTY 'git tag with auto-columns ' '
-> +	test_commit one &&
-> +	test_commit two &&
-> +	test_commit three &&
-> +	test_commit four &&
-> +	test_commit five &&
-> +	cat >expected <<\EOF &&
-> +initial  one      two      three    four     five
-> +EOF
-> +	test_terminal env PAGER="cat >actual.tag" COLUMNS=80 \
-> +		git -c column.ui=auto tag --sort=authordate &&
-> +	test_cmp expected actual.tag
-> +'
+> I don't think there is any need to prepare it upon my 4d03f955,
+> though.  I'd think it could simply replace it.
 
-I'd use <<-\EOF so that here document can be intended like other
-tests, and also use expect vs actual that are used in the other
-tests in the same script, instead of suddenly becoming creative
-in only this single test.  I can do these clean-ups locally when
-queuing so no need to resend only to collect these.
+Yeah, it ended up that way, it seems.  Still it needs a bit of doc
+updates to balance the description.  Right now we stress on @{-n}
+resolution too much.
 
-Thanks, will queue.
+Perhaps something like this?
 
+ Documentation/git-check-ref-format.txt | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
+diff --git a/Documentation/git-check-ref-format.txt b/Documentation/git-check-ref-format.txt
+index 92777cef25..cf0a0b7df2 100644
+--- a/Documentation/git-check-ref-format.txt
++++ b/Documentation/git-check-ref-format.txt
+@@ -77,7 +77,14 @@ reference name expressions (see linkgit:gitrevisions[7]):
+ 
+ . at-open-brace `@{` is used as a notation to access a reflog entry.
+ 
+-With the `--branch` option, it expands the ``previous branch syntax''
++With the `--branch` option, the command takes a name and checks if
++it can be used as a valid branch name (e.g. when creating a new
++branch).  The rule `git check-ref-format --branch $name` implements
++may be stricter than what `git check-ref-format refs/heads/$name`
++says (e.g. a dash may appear at the beginning of a ref component,
++but it is explicitly forbidden at the beginning of a branch name).
++When run with `--branch` option in a repository, the input is first
++expanded for the ``previous branch syntax''
+ `@{-n}`.  For example, `@{-1}` is a way to refer the last branch you
+ were on.  This option should be used by porcelains to accept this
+ syntax anywhere a branch name is expected, so they can act as if you
