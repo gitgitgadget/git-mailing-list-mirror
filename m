@@ -2,119 +2,149 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F539202A3
-	for <e@80x24.org>; Tue, 17 Oct 2017 09:03:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 95F9D202A3
+	for <e@80x24.org>; Tue, 17 Oct 2017 09:45:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756914AbdJQJD4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Oct 2017 05:03:56 -0400
-Received: from mout.gmx.net ([212.227.15.15]:64629 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752936AbdJQJDy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Oct 2017 05:03:54 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lx83d-1dAxqA348H-016hVj; Tue, 17
- Oct 2017 11:03:51 +0200
-Date:   Tue, 17 Oct 2017 11:03:51 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Steve Hoelzer <shoelzer@gmail.com>
-cc:     git-for-windows@googlegroups.com, git <git@vger.kernel.org>
-Subject: Re: [ANNOUNCE] Git for Windows 2.14.2(3)
-In-Reply-To: <CACbrTHcwjGLudp7WQta2bs_kitquj562rLqo8LAmRF5+d_RE=Q@mail.gmail.com>
-Message-ID: <alpine.DEB.2.21.1.1710171101280.40514@virtualbox>
-References: <20171012225339.2808-1-johannes.schindelin@gmx.de> <CACbrTHfnph8Cp9G7LrspPa4s-E2ATHWkLqj7WDPFSiLXzOSz7g@mail.gmail.com> <alpine.DEB.2.21.1.1710151710340.40514@virtualbox> <alpine.DEB.2.21.1.1710161254430.40514@virtualbox>
- <CACbrTHcwjGLudp7WQta2bs_kitquj562rLqo8LAmRF5+d_RE=Q@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1756825AbdJQJpU (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Oct 2017 05:45:20 -0400
+Received: from a7-17.smtp-out.eu-west-1.amazonses.com ([54.240.7.17]:47954
+        "EHLO a7-17.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752929AbdJQJpT (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 17 Oct 2017 05:45:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1508233517;
+        h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+        bh=8vvhbvBddl9ulE/Cu5GMHFT90SDODKChVd7e5m31tJ4=;
+        b=EH8DJsxbmaSVtON2SIFeVfzD7MJ4oiovp8O2mXUukNFU/skg9cnaIdpHWVB+9D7E
+        sOuTbI871BgkG6v6AHmbLMd4IMXx06eDsZ1bs4nBRhnQ8PARjphqzUn8Y6eR2avuIbx
+        Yzpm4zFy9fNO/KW8TqpOiMKhJrFRkLImJwi2eELY=
+From:   David Glasser <glasser@meteor.com>
+To:     git@vger.kernel.org
+Message-ID: <0102015f29b9128b-a8d6e31c-06f5-421c-989a-230a484482d3-000000@eu-west-1.amazonses.com>
+In-Reply-To: <0102015f277a12fe-c69362e3-b14c-4b5c-abaa-4693fd6632c2-000000@eu-west-1.amazonses.com>
+References: <0102015f277a12fe-c69362e3-b14c-4b5c-abaa-4693fd6632c2-000000@eu-west-1.amazonses.com>
+Subject: [PATCH v2] doc: list filter-branch subdirectory-filter first
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:iHQNFoq4MzOdSzVe3CUMzNomEwdr8eCAcRidvAD3GlP72FQrH4F
- hGPAXA8eheJF2FRjFRZHWFYa7YgPSa2ktNAyTu6ciZfpmXBmk3ozHck2bsvD3pwx5O8iHlF
- WJT/fUyd/+wQM086qu0Cna5gBeKL5gi6ouH70UfNE6mdW+oHxk011wfV8C4FaT/iyqN7CmW
- 1ra2WQy3s+KnAr+zi7aGw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:VlIV+lWT2Rw=:6Yr6+4asl+ZAUwI7QCa+bO
- Wx2FPZSvSUk0BWCx7sDwF0mEIWp5HifEVeWCqOzuTTy587nsxR9gAys8pdMZpfJONopAZcsSb
- NN+PIuA8prp5J9xiDjnekG1ZcV6pAg0ozseEVDURcxx5j6/M7KD950Bl6LCn9m5joexQL6Yxx
- 3JX7d81+xa8xbK5oh0L+1DEPYROMIBQpZnTy6zgGPytTMrJiGXhTcY3EIIx03d5/Z4vgDOPcd
- Kb/Y5gtngulS/GqjSZZr1DC1KihY1TUdvbmOZlZMOCfFUf/JrlvIst7MAWjFbsQmtJshxJOMb
- 0mtoYz+dVgsYoNTaaUx1lNNyyWxVDUp9CsHS5nZyKNSJUBB1mFCTUrpOiN6L9zkIsjE6FWXXi
- 49A5R6FHO9FX71F5VsHc5ZABjLaQ8ci1k47legtVl/lfB70n8u69hKUBnoh2ZIzB0JyE7Jr1k
- Kig9zv8LCyaqLZYlVAetEGmY+ry5QmDOMVD6UtV6TkOTTR0XQo4g+xNXdcdJwMIeHYfBlqmpf
- htsVJteDNwQjIV93cEc1R+PoQCLYdHBuSDhXJ0EgJREIq0EfoE5YplP5cQR21W6Fw5Jj3YZN/
- IUgyWEqKMjPb1yG9fCJahFRRTqbQMBBY5Py/KzqFNLTjVSA9qjmOJZUWEbhRpOwLfTVlWvlKu
- y5kdirGOlWUedRDP5UXsxAFduXSE7lInmnLHxgQe5dg78i/ebM4IurtayAUSu66GSj+k/u+A7
- PuOkIERqSDB389IEEgh9na7M9zAZlJIaH9IeeEgmiEitbispMteWxeYl/TrRaBk/1H1EQfULy
- GRl3a752qY3BqWN93GbjoSjOdUIaHL5hTBME5k9YaJUsubYYzA=
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 17 Oct 2017 09:45:15 +0000
+X-SES-Outgoing: 2017.10.17-54.240.7.17
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Steve,
+From: David Glasser <glasser@davidglasser.net>
 
-On Mon, 16 Oct 2017, Steve Hoelzer wrote:
+The docs claim that filters are applied in the listed order, so
+subdirectory-filter should come first.
 
-> On Mon, Oct 16, 2017 at 5:57 AM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> > Hi Steve,
-> >
-> > On Sun, 15 Oct 2017, Johannes Schindelin wrote:
-> >
-> >> On Fri, 13 Oct 2017, Steve Hoelzer wrote:
-> >>
-> >> > On Thu, Oct 12, 2017 at 5:53 PM, Johannes Schindelin
-> >> > <johannes.schindelin@gmx.de> wrote:
-> >> > >
-> >> > > It is my pleasure to announce that Git for Windows 2.14.2(3) is
-> >> > > available from:
-> >> > >
-> >> > >         https://git-for-windows.github.io/
-> >> > >
-> >> > > Changes since Git for Windows v2.14.2(2) (October 5th 2017)
-> >> > >
-> >> > > New Features
-> >> > >
-> >> > >   * Comes with Git LFS v2.3.3.
-> >> >
-> >> > I just ran "git update" and afterward "git version" reported
-> >> > 2.14.2(3), but "git lfs version" still said 2.3.2.
-> >> >
-> >> > I also uninstalled/reinstalled Git for Windows and LFS is still 2.3.2.
-> >>
-> >> Ah bummer. I forgot to actually update it in the VM where I build the
-> >> releases :-(
-> >>
-> >> Will work on it tomorrow.
-> >
-> > I'll actually use this opportunity to revamp a part of Git for Windows'
-> > release engineering process to try to prevent similar things from
-> > happening in the future.
-> >
-> > Also, cURL v7.56.1 is slated to be released in exactly one week, and I
-> > have some important installer work to do this week, so I'll just defer the
-> > new Git for Windows version tentatively to Monday, 23rd.
-> >
-> > Git LFS users can always install Git LFS v2.3.3 specifically in the
-> > meantime, or use Git for Windows' snapshot versions
-> > (https://wingit.blob.core.windows.net/files/index.html).
-> 
-> Sounds like a good plan.
-> 
-> I think I have successfully updated to LFS 2.3.3 by copying the new
-> git-lfs.exe into C:\Program Files\Git\mingw64\bin. Is that right way
-> to do it?
+For consistency, apply the same order to the SYNOPSIS and the script's usage, as
+well as the switch while parsing arguments.
 
-That should be enough in your case, as the config is already written by
-the Git for Windows installer.
+Add missing --prune-empty to the script's usage.
 
-In general, the best way to install a new Git LFS version seems to be to
-download and run the Git LFS installer:
+Signed-off-by: David Glasser <glasser@davidglasser.net>
+---
+ Documentation/git-filter-branch.txt | 20 ++++++++++----------
+ git-filter-branch.sh                | 20 ++++++++++----------
+ 2 files changed, 20 insertions(+), 20 deletions(-)
 
-https://github.com/git-lfs/git-lfs/releases/download/v2.3.3/git-lfs-windows-2.3.3.exe
+diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
+index 9e5169aa64f4f..394f74451a659 100644
+--- a/Documentation/git-filter-branch.txt
++++ b/Documentation/git-filter-branch.txt
+@@ -8,11 +8,11 @@ git-filter-branch - Rewrite branches
+ SYNOPSIS
+ --------
+ [verse]
+-'git filter-branch' [--setup <command>] [--env-filter <command>]
+-	[--tree-filter <command>] [--index-filter <command>]
+-	[--parent-filter <command>] [--msg-filter <command>]
+-	[--commit-filter <command>] [--tag-name-filter <command>]
+-	[--subdirectory-filter <directory>] [--prune-empty]
++'git filter-branch' [--setup <command>] [--subdirectory-filter <directory>]
++	[--env-filter <command>] [--tree-filter <command>]
++	[--index-filter <command>] [--parent-filter <command>]
++	[--msg-filter <command>] [--commit-filter <command>]
++	[--tag-name-filter <command>] [--prune-empty]
+ 	[--original <namespace>] [-d <directory>] [-f | --force]
+ 	[--] [<rev-list options>...]
+ 
+@@ -89,6 +89,11 @@ OPTIONS
+ 	can be used or modified in the following filter steps except
+ 	the commit filter, for technical reasons.
+ 
++--subdirectory-filter <directory>::
++	Only look at the history which touches the given subdirectory.
++	The result will contain that directory (and only that) as its
++	project root. Implies <<Remap_to_ancestor>>.
++
+ --env-filter <command>::
+ 	This filter may be used if you only need to modify the environment
+ 	in which the commit will be performed.  Specifically, you might
+@@ -167,11 +172,6 @@ be removed, buyer beware. There is also no support for changing the
+ author or timestamp (or the tag message for that matter). Tags which point
+ to other tags will be rewritten to point to the underlying commit.
+ 
+---subdirectory-filter <directory>::
+-	Only look at the history which touches the given subdirectory.
+-	The result will contain that directory (and only that) as its
+-	project root. Implies <<Remap_to_ancestor>>.
+-
+ --prune-empty::
+ 	Some filters will generate empty commits that leave the tree untouched.
+ 	This option instructs git-filter-branch to remove such commits if they
+diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+index 3a74602ef3771..b7827e745a92a 100755
+--- a/git-filter-branch.sh
++++ b/git-filter-branch.sh
+@@ -81,12 +81,12 @@ set_ident () {
+ 	finish_ident COMMITTER
+ }
+ 
+-USAGE="[--setup <command>] [--env-filter <command>]
+-	[--tree-filter <command>] [--index-filter <command>]
+-	[--parent-filter <command>] [--msg-filter <command>]
+-	[--commit-filter <command>] [--tag-name-filter <command>]
+-	[--subdirectory-filter <directory>] [--original <namespace>]
+-	[-d <directory>] [-f | --force]
++USAGE="[--setup <command>] [--subdirectory-filter <directory>]
++	[--env-filter <command>] [--tree-filter <command>]
++	[--index-filter <command>] [--parent-filter <command>]
++	[--msg-filter <command>] [--commit-filter <command>]
++	[--tag-name-filter <command>] [--prune-empty]
++	[--original <namespace>] [-d <directory>] [-f | --force]
+ 	[--] [<rev-list options>...]"
+ 
+ OPTIONS_SPEC=
+@@ -153,6 +153,10 @@ do
+ 	--setup)
+ 		filter_setup="$OPTARG"
+ 		;;
++	--subdirectory-filter)
++		filter_subdir="$OPTARG"
++		remap_to_ancestor=t
++		;;
+ 	--env-filter)
+ 		filter_env="$OPTARG"
+ 		;;
+@@ -174,10 +178,6 @@ do
+ 	--tag-name-filter)
+ 		filter_tag_name="$OPTARG"
+ 		;;
+-	--subdirectory-filter)
+-		filter_subdir="$OPTARG"
+-		remap_to_ancestor=t
+-		;;
+ 	--original)
+ 		orig_namespace=$(expr "$OPTARG/" : '\(.*[^/]\)/*$')/
+ 		;;
 
-Ciao,
-Johannes
+--
+https://github.com/git/git/pull/415
