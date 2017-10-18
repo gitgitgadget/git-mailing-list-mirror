@@ -2,90 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 88DB61FF32
-	for <e@80x24.org>; Wed, 18 Oct 2017 01:05:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3399D1FF32
+	for <e@80x24.org>; Wed, 18 Oct 2017 02:34:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758608AbdJRBFR (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Oct 2017 21:05:17 -0400
-Received: from mail-qt0-f176.google.com ([209.85.216.176]:51615 "EHLO
-        mail-qt0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753044AbdJRBFP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Oct 2017 21:05:15 -0400
-Received: by mail-qt0-f176.google.com with SMTP id h4so7560035qtk.8
-        for <git@vger.kernel.org>; Tue, 17 Oct 2017 18:05:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=NHWplVQiT/iQJHp2nw5oXuw1+c4v8j3yQSvjoShaxTA=;
-        b=SS8200FL6Cpb2ky4KdZKquY7zCmFwE7FbQMexPke31CL4R9NqTKZT5liskDERxd/yb
-         Iv3/FKZlY9VBuMJHf5ZtltEFzJvF99BEP3trustoA9dDBwt3Ocg3eg++ZwUL0dEtxrtO
-         Q69+a+BozLJEfMqkpxz4OrQLmgtpcAgS54HMfTDxOsMEn1JaanI3gz5u/YodyrkKCigm
-         FQfAeOh2pOdHrWxWLWVkBlNbsCY11lR68VYY9xAVdSaPTQtosGgAgx7L1trbYuV+svFt
-         GIlc8PO01nhxRkbjEvXEp5PWyXZFjhGIDPCJNDmTffdhEjogOCJRrtcRUnBiK+r5ugSe
-         ZKqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=NHWplVQiT/iQJHp2nw5oXuw1+c4v8j3yQSvjoShaxTA=;
-        b=MEY1BZzU7TMsYa3U/Rl+zkDBS1ON5WpJN1xs4rXt4ygnpS68PBxGsI9WVUPS9zuyDw
-         7Hx2NpLwkItYtosk3YZ6CVGKO+ynwsfyh5GCcSbrKTnX8mlGEXYBgHu8wx2k0GkwA2M3
-         SwT4kX9a0QVpVbPAucpEso9jDWpDhOtH9VjmjrjaugQbqeD8ppeF8W1M20AYimu8TY+a
-         nIOap3YicBnnwmmjKiEsN83DiwGBFMF2xPCPWS8H9435n0sX4jEK8ObWXJPKtUNQ+X44
-         O/UmkGW44KWF/G9Ef52D8ZawLieWMjQEiAmMbIOp1+7UdTylOt+z6BHCoPY46sT9HqVg
-         83/g==
-X-Gm-Message-State: AMCzsaXBXKVGBsS7tladcIcLhBGIhrmbWmMIGYdZyMcNrNFRrQjf1t6r
-        nRQ58BcxDBbqrcuXs20399NSRyrauorjxMnC/w==
-X-Google-Smtp-Source: ABhQp+QuvWQi+cbtHYrpnFtqLb35nE9K/GxMxaS59pqC3dT3L3VpMPtLApO/ywliM/WTnFIyaaXmNOPfOyLwat+DaYI=
-X-Received: by 10.129.119.134 with SMTP id s128mr395346ywc.465.1508288714055;
- Tue, 17 Oct 2017 18:05:14 -0700 (PDT)
+        id S1755306AbdJRCeg (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Oct 2017 22:34:36 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60489 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1755186AbdJRCee (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Oct 2017 22:34:34 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3CA5CA622D;
+        Tue, 17 Oct 2017 22:34:33 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=/dR6wHRfPZm5Uir3IixcKr5Kwa4=; b=ifEPXa
+        eEWJS0TEunhYA1Op4yMbSmTBfQCV/e97zHmHvRinU8gs/lc4mFygRc+Zf9nOUgsG
+        lHFmYRie9D078ZjewN1hurM8wuU1DiW1W0Ibw8U4BDRJF28ml1I61SH3ixLyIpNj
+        WW+pv10/tOX+oXWXyV6GydjqZKso0oc3/IGko=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=NMbDEeTlQDpQQVwMiYABrWrJM+N/tbDy
+        9chwdrd12gRVa/0oCTTdQ0SBFe4Yb4OJZnDDyWWKy57tuDnKPW8tcEMQeUKJsdfa
+        EWAXnQzMhPCBEC+yhhSmOvM2YraLYUF/NXh94N/Urr2Y4jeXkUgeP1+HkIqboigg
+        JSFSPyi1vFw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 30F45A622C;
+        Tue, 17 Oct 2017 22:34:33 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A02BBA622A;
+        Tue, 17 Oct 2017 22:34:32 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Andreas Schwab <schwab@linux-m68k.org>
+Cc:     Jeff King <peff@peff.net>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Minor man page weirdness?
+References: <A4E5D8CC-19A7-442A-814C-FD5A46391982@gmail.com>
+        <20171016225641.x76jwycb7mcpvrw3@sigill.intra.peff.net>
+        <87zi8psli3.fsf@linux-m68k.org>
+        <xmqq1sm1o5k5.fsf@gitster.mtv.corp.google.com>
+Date:   Wed, 18 Oct 2017 11:34:31 +0900
+In-Reply-To: <xmqq1sm1o5k5.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Wed, 18 Oct 2017 05:58:02 +0900")
+Message-ID: <xmqqfuahkwug.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.13.242.195 with HTTP; Tue, 17 Oct 2017 18:04:53 -0700 (PDT)
-In-Reply-To: <xmqqr2u1l1ck.fsf@gitster.mtv.corp.google.com>
-References: <CACjmu29CV_0HgmNaBmNLn-J4ZdUx+jRgweNSibBsB2SOZBWWEg@mail.gmail.com>
- <CACjmu28WBUZMyivR-uvttMURSEtVuCUaYHdtT0mpv4LAffOd5g@mail.gmail.com> <xmqqr2u1l1ck.fsf@gitster.mtv.corp.google.com>
-From:   Gilberto Stankiewicz <kiewic@gmail.com>
-Date:   Tue, 17 Oct 2017 18:04:53 -0700
-Message-ID: <CACjmu28kdmBpe+0nrwWnMWV4fUkZgm3yvJjxsYwj61kq9CegVA@mail.gmail.com>
-Subject: Re: Fwd: Has git-gui repo moved from location?
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: DFB05594-B3AC-11E7-8DF2-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Weird, it was not working for me earlier today, but now it works.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Thank you,
-Gilberto
+> Andreas Schwab <schwab@linux-m68k.org> writes:
+>
+>> On Okt 16 2017, Jeff King <peff@peff.net> wrote:
+>>
+>>> We do have some hacks/workarounds for broken versions of the toolchain.
+>>> You can try tweaking various knobs you find in Documentation/Makefile).
+>>> DOCBOOK_SUPPRESS_SP sounds promising, but I think it actually does the
+>>> opposite (removes extra spaces).
+>>
+>> An easy workaround would be to add a comma between `-f` and 'git
+>> branch'.
+>
+> That sounds like a good idea, regardless of the mark-up issue.
+
+-- >8 --
+branch doc: sprinkle a few commas for readability
+
+The "--force" option can also be used when the named branch does not
+yet exist, and the point of the option is the user can (re)point the
+branch to the named commit even if it does.  Add 'even' before 'if'
+to clarify.  Also, insert another comma after "Without -f" before
+"the command refuses..." to make the text easier to parse.
+
+Incidentally, this change should help certain versions of
+docbook-xsl-stylesheets that renders the original without any
+whitespace between "-f" and "git".
+
+Noticed-by: Lars Schneider <larsxschneider@gmail.com>
+Helped-by: Jeff King <peff@peff.net>
+Helped-by: Andreas Schwab <schwab@suse.de>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/git-branch.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
+index fe029ac6fc..d6587c5e96 100644
+--- a/Documentation/git-branch.txt
++++ b/Documentation/git-branch.txt
+@@ -104,8 +104,8 @@ OPTIONS
+ 
+ -f::
+ --force::
+-	Reset <branchname> to <startpoint> if <branchname> exists
+-	already. Without `-f` 'git branch' refuses to change an existing branch.
++	Reset <branchname> to <startpoint>, even if <branchname> exists
++	already. Without `-f`, 'git branch' refuses to change an existing branch.
+ 	In combination with `-d` (or `--delete`), allow deleting the
+ 	branch irrespective of its merged status. In combination with
+ 	`-m` (or `--move`), allow renaming the branch even if the new
 
 
-On Tue, Oct 17, 2017 at 5:57 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Gilberto Stankiewicz <kiewic@gmail.com> writes:
->
->> I am trying to clone git://repo.or.cz/git-gui.git as described at
->> https://github.com/git/git/blob/master/Documentation/SubmittingPatches
->> but it seems the repo does not exist.
->
-> $ git fetch -v git-gui
-> Looking up repo.or.cz ... done.
-> Connecting to repo.or.cz (port 9418) ... 195.113.20.142 done.
-> From git://repo.or.cz/git-gui
->  = [up to date]            master     -> git-gui/master
->  = [up to date]            pu         -> git-gui/pu
->  = [up to date]            todo       -> git-gui/todo
->
-> $ git fetch -v git://repo.or.cz/git-gui.git
-> Looking up repo.or.cz ... done.
-> Connecting to repo.or.cz (port 9418) ... 195.113.20.142 done.
-> From git://repo.or.cz/git-gui
->  * branch                  HEAD       -> FETCH_HEAD
->
