@@ -2,182 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F066202A3
-	for <e@80x24.org>; Wed, 18 Oct 2017 18:03:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EC04020446
+	for <e@80x24.org>; Wed, 18 Oct 2017 18:35:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751509AbdJRSD2 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Oct 2017 14:03:28 -0400
-Received: from mail-io0-f193.google.com ([209.85.223.193]:47615 "EHLO
-        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751506AbdJRSD0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Oct 2017 14:03:26 -0400
-Received: by mail-io0-f193.google.com with SMTP id h70so7166183ioi.4
-        for <git@vger.kernel.org>; Wed, 18 Oct 2017 11:03:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=EunsCAPvbEn6WMPMLk9f4q2tZIXRsayA2GqS6ezCLdo=;
-        b=u28I/lTvcmRDIr+9B+SSZFoGB7KuiUHGXhDBO8fgidyujT8Kh8bZMP067uYeJ2ronQ
-         FfskwRnh5tf9fcrTLgm6uJfXC8i6P3Q8K8/sJWOcWIW22kJew0khYuRoTBCq6Wug5OdY
-         7p7swsTmBOa15t3lI8A2iXyjCBlP6riIOjLUmmw5fzzpRDm+bKCLIghy1Q/8w0VXb868
-         khgdu762hJBS0VdIHSHM0pZyzs2uQKXuFGTFRrnCokHEea5pdXSNmFy+V9gXBKOKjlsR
-         XNV51j8Bump7kuoCezwfqUWQALyr/zqkG6H1QHHKBAxHXPKDkMVzkDLmrigiHhoPEmCH
-         1/fQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=EunsCAPvbEn6WMPMLk9f4q2tZIXRsayA2GqS6ezCLdo=;
-        b=aj9tfpnsA+FLcKDK+b/AMDKYUk88lVDQgxnOndLGVf7FT+Ck/RIJj9Z5l6+LIaffyZ
-         gF341Wj5pVNiP3iaXpFixvEkXg1G++WAmKVSomXwCf8X2pabb1ZwZ9nrb0LJfux3Xb8w
-         t3sktyUhjszGq21HYpxOoIRQ36Qd3MxswS5oHjZgjToVpQVMeKY05/+QHtvDohLes1GQ
-         JyphFvwYo+HeYJMUzjOsbhLOVXWxBKiIFCdrQEd4I2RASzxEXIdTnKvDwaJtudQKaJPu
-         IwU/cnEr2Ykk1iRQEMJOdvBO3iM1P8etFaiZhB5GSsITXPs7Y+k8TxwASkRnfNTeLC2H
-         dPnA==
-X-Gm-Message-State: AMCzsaVQnqpKGIi4jxZvxSDo84b3VAxbpQ6lUUAXtVhlZaYHPkh3iDyc
-        Tu8e3WJVdl2isFvma9eK1khsiA==
-X-Google-Smtp-Source: AOwi7QCosA/VtIzjLGaXWRIBneglX8oXr3YA0okmG86OhGScwKKyG6LKeAu7HD7JVgv0Wp6KKlfeSw==
-X-Received: by 10.107.169.34 with SMTP id s34mr24098666ioe.103.1508349805249;
-        Wed, 18 Oct 2017 11:03:25 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:550:4cf:a88:68a])
-        by smtp.gmail.com with ESMTPSA id e68sm409321ite.0.2017.10.18.11.03.23
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 18 Oct 2017 11:03:24 -0700 (PDT)
-Date:   Wed, 18 Oct 2017 11:03:22 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Heiko Voigt <hvoigt@hvoigt.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, sbeller@google.com,
-        jrnieder@gmail.com, Jens.Lehmann@web.de, git@vger.kernel.org
-Subject: Re: [PATCH v4 3/3] submodule: simplify decision tree whether to or
- not to fetch
-Message-ID: <20171018180322.GA155019@google.com>
-References: <20171016135623.GA12756@book.hvoigt.net>
- <20171016135905.GD12756@book.hvoigt.net>
+        id S1751738AbdJRSfI (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Oct 2017 14:35:08 -0400
+Received: from cloud.peff.net ([104.130.231.41]:56954 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751637AbdJRSez (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Oct 2017 14:34:55 -0400
+Received: (qmail 4612 invoked by uid 109); 18 Oct 2017 18:34:55 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 18 Oct 2017 18:34:55 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 3092 invoked by uid 111); 18 Oct 2017 18:34:59 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Wed, 18 Oct 2017 14:34:59 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Oct 2017 14:34:53 -0400
+Date:   Wed, 18 Oct 2017 14:34:53 -0400
+From:   Jeff King <peff@peff.net>
+To:     Andrey Okoshkin <a.okoshkin@samsung.com>
+Cc:     git@vger.kernel.org, pclouds@gmail.com, gitster@pobox.com,
+        l.s.r@web.de, avarab@gmail.com, krh@redhat.com, rctay89@gmail.com,
+        Ivan Arishchenko <i.arishchenk@samsung.com>,
+        Mikhail Labiuk <m.labiuk@samsung.com>
+Subject: Re: [PATCH] commit: check result of resolve_ref_unsafe
+Message-ID: <20171018183453.lr67zw455bkdmrlz@sigill.intra.peff.net>
+References: <CGME20171018170047epcas2p4310be357e11e194d6d08ac3bdc478ba3@epcas2p4.samsung.com>
+ <0e396c24-167f-901e-9122-cdc17164ec1e@samsung.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20171016135905.GD12756@book.hvoigt.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <0e396c24-167f-901e-9122-cdc17164ec1e@samsung.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/16, Heiko Voigt wrote:
-> To make extending this logic later easier.
+On Wed, Oct 18, 2017 at 08:00:43PM +0300, Andrey Okoshkin wrote:
 
-This makes things so much clearer, thanks!
+> Add check of the resolved HEAD reference while printing of a commit summary.
+> resolve_ref_unsafe() may return NULL pointer if underlying calls of lstat() or
+> open() fail in files_read_raw_ref().
+> Such situation can be caused by race: file becomes inaccessible to this moment.
 
-> 
-> Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
-> ---
->  submodule.c | 74 ++++++++++++++++++++++++++++++-------------------------------
->  1 file changed, 37 insertions(+), 37 deletions(-)
-> 
-> diff --git a/submodule.c b/submodule.c
-> index 71d1773e2e..82d206eb65 100644
-> --- a/submodule.c
-> +++ b/submodule.c
-> @@ -1187,6 +1187,31 @@ struct submodule_parallel_fetch {
->  };
->  #define SPF_INIT {0, ARGV_ARRAY_INIT, NULL, NULL, 0, 0, 0, 0}
->  
-> +static int get_fetch_recurse_config(const struct submodule *submodule,
-> +				    struct submodule_parallel_fetch *spf)
-> +{
-> +	if (spf->command_line_option != RECURSE_SUBMODULES_DEFAULT)
-> +		return spf->command_line_option;
-> +
-> +	if (submodule) {
-> +		char *key;
-> +		const char *value;
-> +
-> +		int fetch_recurse = submodule->fetch_recurse;
-> +		key = xstrfmt("submodule.%s.fetchRecurseSubmodules", submodule->name);
-> +		if (!repo_config_get_string_const(the_repository, key, &value)) {
-> +			fetch_recurse = parse_fetch_recurse_submodules_arg(key, value);
-> +		}
-> +		free(key);
-> +
-> +		if (fetch_recurse != RECURSE_SUBMODULES_NONE)
-> +			/* local config overrules everything except commandline */
-> +			return fetch_recurse;
-> +	}
-> +
-> +	return spf->default_option;
-> +}
-> +
->  static int get_next_submodule(struct child_process *cp,
->  			      struct strbuf *err, void *data, void **task_cb)
->  {
-> @@ -1214,46 +1239,21 @@ static int get_next_submodule(struct child_process *cp,
->  			}
->  		}
->  
-> -		default_argv = "yes";
-> -		if (spf->command_line_option == RECURSE_SUBMODULES_DEFAULT) {
-> -			int fetch_recurse = RECURSE_SUBMODULES_NONE;
-> -
-> -			if (submodule) {
-> -				char *key;
-> -				const char *value;
-> -
-> -				fetch_recurse = submodule->fetch_recurse;
-> -				key = xstrfmt("submodule.%s.fetchRecurseSubmodules", submodule->name);
-> -				if (!repo_config_get_string_const(the_repository, key, &value)) {
-> -					fetch_recurse = parse_fetch_recurse_submodules_arg(key, value);
-> -				}
-> -				free(key);
-> -			}
-> -
-> -			if (fetch_recurse != RECURSE_SUBMODULES_NONE) {
-> -				if (fetch_recurse == RECURSE_SUBMODULES_OFF)
-> -					continue;
-> -				if (fetch_recurse == RECURSE_SUBMODULES_ON_DEMAND) {
-> -					if (!unsorted_string_list_lookup(&changed_submodule_names,
-> -									 submodule->name))
-> -						continue;
-> -					default_argv = "on-demand";
-> -				}
-> -			} else {
-> -				if (spf->default_option == RECURSE_SUBMODULES_OFF)
-> -					continue;
-> -				if (spf->default_option == RECURSE_SUBMODULES_ON_DEMAND) {
-> -					if (!unsorted_string_list_lookup(&changed_submodule_names,
-> -									  submodule->name))
-> -						continue;
-> -					default_argv = "on-demand";
-> -				}
-> -			}
-> -		} else if (spf->command_line_option == RECURSE_SUBMODULES_ON_DEMAND) {
-> -			if (!unsorted_string_list_lookup(&changed_submodule_names,
-> +		switch (get_fetch_recurse_config(submodule, spf))
-> +		{
-> +		default:
-> +		case RECURSE_SUBMODULES_DEFAULT:
-> +		case RECURSE_SUBMODULES_ON_DEMAND:
-> +			if (!submodule || !unsorted_string_list_lookup(&changed_submodule_names,
->  							 submodule->name))
->  				continue;
->  			default_argv = "on-demand";
-> +			break;
-> +		case RECURSE_SUBMODULES_ON:
-> +			default_argv = "yes";
-> +			break;
-> +		case RECURSE_SUBMODULES_OFF:
-> +			continue;
->  		}
->  
->  		strbuf_addf(&submodule_path, "%s/%s", spf->work_tree, ce->name);
-> -- 
-> 2.14.1.145.gb3622a4
-> 
+Yeah, I think we've had several bugs over the years with not checking
+the result of resolve_ref_unsafe(). Simply because it's so rare for it
+to fail without the READING flag, especially on HEAD, these bugs tend to
+linger.
 
--- 
-Brandon Williams
+But I agree we should be handling this case, and that it could trigger
+in real life because of a race or other weird intermittent failure.
+
+I was able to trigger it by doing this in one terminal:
+
+  while true; do
+    git commit --allow-empty -m foo
+
+    # we may see any of:
+    #  - success
+    #  - not a git repo (because HEAD is broken when we do setup)
+    #  - can't lock HEAD (because it's broken when we take the lock)
+    #  - a segfault (HEAD is broken when we try to print the summary)
+    # but we only care about the last one
+    ret=$?
+    test $ret = 0 || test $ret = 128 || break
+  done
+
+and this in another:
+
+  # pick some valid sha1
+  sha1=$(git rev-parse HEAD)
+
+  # flip back and forth between broken and valid states
+  while true; do
+    echo trash >.git/HEAD
+    echo $sha >.git/HEAD
+  done
+
+Obviously this is silly, but it does eventually trigger the segfault.
+
+> diff --git a/builtin/commit.c b/builtin/commit.c
+> index 1a0da71a4..71a58dea3 100644
+> --- a/builtin/commit.c
+> +++ b/builtin/commit.c
+> @@ -1483,6 +1483,8 @@ static void print_summary(const char *prefix, const struct object_id *oid,
+>  	diff_setup_done(&rev.diffopt);
+>  
+>  	head = resolve_ref_unsafe("HEAD", 0, junk_oid.hash, NULL);
+> +	if (!head)
+> +		BUG("unable to resolve HEAD reference");
+
+Checking !head here is the right thing to do, but I don't think this is
+a BUG(). It's not a logic error in the program, but rather an unexpected
+result. So probably:
+
+  die("unable to resolve HEAD reference");
+
+would be more appropriate. It's also possible that we could simply
+continue. We _did_ make the commit, but we're just failing at the
+informational bits. This should be sufficiently uncommon that I think
+dying is probably fine. We maybe could say:
+
+  die("unable to resolve HEAD after creating commit")
+
+or something so that the user has some clue that the commit did in fact
+happen (depending on the error, further commands may or may not see the
+updated value of HEAD).
+
+Tangential to your patch, I also wondered why we did not pass
+RESOLVE_REF_READING to resolve_ref_unsafe(). I think the answer is that
+for symref lookups, we normally don't pass it so that we can handle
+dangling symrefs. Of course we _just_ wrote HEAD ourselves, so we'd
+expect it to exist, so it shouldn't really matter either way.
+
+-Peff
