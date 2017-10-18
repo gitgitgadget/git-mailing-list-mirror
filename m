@@ -2,62 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.9 required=3.0 tests=BAYES_00,DKIM_ADSP_ALL,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B1F65202A3
-	for <e@80x24.org>; Wed, 18 Oct 2017 19:55:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9722A202A3
+	for <e@80x24.org>; Wed, 18 Oct 2017 19:56:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751398AbdJRTzd (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Oct 2017 15:55:33 -0400
-Received: from a7-20.smtp-out.eu-west-1.amazonses.com ([54.240.7.20]:51182
-        "EHLO a7-20.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751360AbdJRTzd (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 18 Oct 2017 15:55:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1508356531;
-        h=From:To:Message-ID:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=/oALCGcvv44OhiJekXgmb1eDbWPiKji+h6ucvzTv8xw=;
-        b=M/vNHRWVG0+MFRTM3zPGvRi/7fvc1DggHEBL9U71bksQtoipiSCMAmnRt0tnfuGC
-        Qx3Qr+EPMtiAcnN6t69xxbMfjFl46RnU8cHD/pD66YisDy6tAI+ogJorgDCFG5tyjZP
-        RJkxFfWWMBPGNNDtxdC2Gk7tqr/o9+hNiBecEREM=
-From:   Guillaume Castagnino <casta+github@xwing.info>
-To:     git@vger.kernel.org
-Message-ID: <0102015f310e24b9-b96378f3-a029-4110-80dd-e454522e2cb7-000000@eu-west-1.amazonses.com>
-Subject: [PATCH] use filetest pragma to work with ACL
+        id S1751360AbdJRT4G (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Oct 2017 15:56:06 -0400
+Received: from mail-io0-f171.google.com ([209.85.223.171]:49147 "EHLO
+        mail-io0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750932AbdJRT4F (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Oct 2017 15:56:05 -0400
+Received: by mail-io0-f171.google.com with SMTP id j17so7515627iod.5
+        for <git@vger.kernel.org>; Wed, 18 Oct 2017 12:56:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=KclUGp5szB+VW1C9oczEAdfNP2Y25ejP6BiW2I2DjEs=;
+        b=mceTbYNeg1fgCH3gpo9MPATeA5mIjnD4H8A4+XoBL4GkbLgnVNskv8gKpdE+/jEc/r
+         qvYLhJo3fL46WT4IRr8S/Jn9TiFgufo1ccyNysHjoa9E71f7yyUJ6dUsSEePk5QIsF8q
+         r/+wcTT7bqSxM1Lk5L1Bd2x+YTPN8VlDYgOD79C+IKl6LoCDp3AfE/Y+Ml+34oruna4z
+         Nye8XvBf7pf2ByTij2JNt8buPf5wJ251Rhj19e83brnRsKhzm9esxHT19THc/RsrwGpm
+         6rtSlHhAWkjQNaxq/l5I+SdLSdVZgNLi4RekDExZKTfVz/krqNIjUkABAjtOaOY+XQso
+         s/pA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=KclUGp5szB+VW1C9oczEAdfNP2Y25ejP6BiW2I2DjEs=;
+        b=LYPOegMbvcBIeK90IEK1RUEHuuvTRV9bj9Kv0MQnQtB7L2CtlOVrhOVIZAq4mG6HCT
+         +wyEuQP3XPAY18nN8Me/msj2OEYXDKvWVEC1NOZiwl7Y+c1wVN8bwI386wjwilwMqdsW
+         qrPCK2BNyLhxLpBISlVZO6g8LG4/p8b7OTYAMgaQMPBjmQD+x+dYoeAnhZNbciMjMoO6
+         TaPqtun/VhfufpuwCZZ3SC2EAJeU6Znqs8j/zzxONVoqXVDKnh60jOkrduj2wwPA9nKG
+         6yTv5WKFcu1mioawhClfNmxLaFlcrJ4D4wmYQe/IQQquiWDcO16pE1Nwafk025W7tm3U
+         pTIw==
+X-Gm-Message-State: AMCzsaVyacCmBfAcVoCwAKVRGQ+ke4uVsXXTkU9EdbNWKBzZHTy7nYEa
+        Mh/Xsd+Bed7s0fQUhviNr2N/LxJIgGg=
+X-Google-Smtp-Source: ABhQp+RkCspFcVegZa3Tdpxva7p+esCf4mLWpBctFbjhG1yqyEUH5VcJAdi2ePqnNj8eGq/iEhezPA==
+X-Received: by 10.107.181.138 with SMTP id e132mr16905311iof.125.1508356564556;
+        Wed, 18 Oct 2017 12:56:04 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:550:4cf:a88:68a])
+        by smtp.gmail.com with ESMTPSA id o192sm6731138itc.27.2017.10.18.12.56.03
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 18 Oct 2017 12:56:03 -0700 (PDT)
+Date:   Wed, 18 Oct 2017 12:56:02 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     =?utf-8?B?5bCP5bed5oGt5Y+y?= <aiueogawa217@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: How can I debug git source code interactively with debugger like
+ gdb?
+Message-ID: <20171018195602.GB155019@google.com>
+References: <CAC2JkrLR=RUN01AeYGd1YpOPMv=kArm9LWGtMvJ7DS5sz7c3nw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 18 Oct 2017 19:55:31 +0000
-X-SES-Outgoing: 2017.10.18-54.240.7.20
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAC2JkrLR=RUN01AeYGd1YpOPMv=kArm9LWGtMvJ7DS5sz7c3nw@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Guillaume Castagnino <casta@xwing.info>
+On 10/19, 小川恭史 wrote:
+> I wanna learn how daily git command works when I run specific git command.
+> 
+> I wanna know which function is actually called then, how variables
+> changes its value, and how some object is stored into database.
+> 
+> How can I debug git source code interactively with debugger like gdb?
 
-as stated in comment in https://github.com/git/git/commit/46a13857fc036b54ac2ddd0a218e5cc171aa7bd9#diff-00703a794a540acf45e225abd6aeda3b the referenced commit is broken when using ACL and not basic UNIX rights.
-this commit handle ACL too
----
- gitweb/gitweb.perl | 1 +
- 1 file changed, 1 insertion(+)
+I have had to do this in the past when trying to track down particularly
+nasty bugs.  If you build git from source (you may need to turn on
+debugging info) you'll be able to find a script '/bin-wrappers/git'
+which you can use by making sure the environment variable 'GIT_TEST_GDB'
+is set.  This will launch it under gdb.  For example:
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 9208f42ed1753..0ee7f304ce2b1 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -3072,6 +3072,7 @@ sub git_get_projects_list {
- 				# only directories can be git repositories
- 				return unless (-d $_);
- 				# need search permission
-+				use filetest 'access';
- 				return unless (-x $_);
- 				# don't traverse too deep (Find is super slow on os x)
- 				# $project_maxdepth excludes depth of $projectroot
+  GIT_TEST_GDB=1 ./bin-wrappers/git status
 
---
-https://github.com/git/git/pull/416
+-- 
+Brandon Williams
