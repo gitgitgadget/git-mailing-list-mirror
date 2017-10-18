@@ -2,114 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CD043202A3
-	for <e@80x24.org>; Wed, 18 Oct 2017 20:05:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F1AF1FC00
+	for <e@80x24.org>; Wed, 18 Oct 2017 20:27:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751410AbdJRUFK (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Oct 2017 16:05:10 -0400
-Received: from mail-qt0-f181.google.com ([209.85.216.181]:49404 "EHLO
-        mail-qt0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751346AbdJRUFJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Oct 2017 16:05:09 -0400
-Received: by mail-qt0-f181.google.com with SMTP id k31so11828808qta.6
-        for <git@vger.kernel.org>; Wed, 18 Oct 2017 13:05:09 -0700 (PDT)
+        id S1751441AbdJRU1Z (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Oct 2017 16:27:25 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:49962 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751141AbdJRU1Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Oct 2017 16:27:24 -0400
+Received: by mail-wm0-f68.google.com with SMTP id b189so12011136wmd.4
+        for <git@vger.kernel.org>; Wed, 18 Oct 2017 13:27:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=tWxv2FOJ8qv9fUtZemMOJrAXrts6z5+gXbvw9scuKqo=;
-        b=VFbQZ8+ec8FuoNZPIEWYK4EXnFBPQp6Of+CMgH942jp2szhOcjFna+oFuCKh7rVTn5
-         dYq3TnNab272Gu1klXeWhGj0thzzHLb7lQDM3aJj/dq5i4WDtE+3ml1Pwm3MhdBT6mkE
-         LLvqsMHdFNyHDASThrjDkI8WVL1x2sGkgAKCedsfsEdA+V/hgDJxRg3670Jj/cach0ck
-         4NYE+/VmACbWi/JVTxPPwuukTDt9KfJ3H+Okm8TcWziGJJCt5aXqvB7C+HGncXMfjaEA
-         mcwoucTj+ySzxtErFoRNy/qDGFbJeyoNI0fIQbIl1wCU64iRiTr7HYX1YUjnVq3+Tdlq
-         pp7A==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=qiuNo2e3M3fWqMGGrVcU8BylJt3b+PUb0PI9b2kYvVM=;
+        b=vPaBaw5lH1TeHVJA2FSnUhTCWq0WPGeJdYRgJDHwT2G12pikGftynHoSGiavhxlYyM
+         fnwkPTvtlNXX+xFuSSF26qkiB0Vw2lWd/Oj3JSLDnzmAHUBBDKhEKiAFUzvaXPyx3Ylh
+         NEC6HfVQ9d43JUkVkiymGFkl2RELPCrMx8DzcIed5h8F1z9PKnqwBNCPySzT5SgCFmbV
+         l+BTICC5HNacFDKFTVXeStvV7EHsS1HQtR5sCbl3n1D8LGOhSgJhsop8QvyL6ABtvg3v
+         AJwrjQFwrnG7F+1nYxUgOjtaWO8VlgJZC1AGOP+Tw1MNgbWpP4iMdztqX17+14S0/UW2
+         jf9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=tWxv2FOJ8qv9fUtZemMOJrAXrts6z5+gXbvw9scuKqo=;
-        b=EBCqo+f+KSn1CrpCCvBf283eIAhrWe2oqmVyPufLMdex3cufp7Ftu7gSpjK38NhAqq
-         BIiohyvq1p5boqePEeN6oXhdU2rI6X6I6grfRzlHq+X4ezh6hrISnbV5K4Lat/OEkEu2
-         VBu2OcU6+lR0/4Hvqe4mCRikk4wU8sypTOzvzwowkQ6zCe6Pb3dcJDXCnz2nXNrp5PYq
-         LijWQFwjmMnuAtu7Ne6X3MJY1UljAU3C2EE1aeVlmMjBOHAKxRw4RMpkHeC86kLHde0I
-         u9aSINuUTAPWu+DkAZBtwkLTByGpgTKy/t3Wkggmy3NLs/LqGDqLqUI6VQUU8zRp3hW8
-         9+2w==
-X-Gm-Message-State: AMCzsaUrOSyjKjrpISUcQGWzLhLS7skgeqme95yS3LpYOMqxCvm/rlKJ
-        5SsMWt36LIEFvipHnVTAZ5MGMBeLzX4BuWcyRYrBpLAdhqw=
-X-Google-Smtp-Source: ABhQp+SWU/DzIUIbD/t5TWTv1Quf5lB5H52QZBXSALaZr8xOwchJFP1IhlYb6qgJLcYPEfl1R1Pof+kWeHtbJkiB8pY=
-X-Received: by 10.237.53.137 with SMTP id c9mr5278218qte.125.1508357108763;
- Wed, 18 Oct 2017 13:05:08 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.140.102.70 with HTTP; Wed, 18 Oct 2017 13:05:08 -0700 (PDT)
-In-Reply-To: <0102015f310e24b9-b96378f3-a029-4110-80dd-e454522e2cb7-000000@eu-west-1.amazonses.com>
-References: <0102015f310e24b9-b96378f3-a029-4110-80dd-e454522e2cb7-000000@eu-west-1.amazonses.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 18 Oct 2017 13:05:08 -0700
-Message-ID: <CAGZ79kZG=nk+U815mWhSMDHqa=UHSwCc_PbQcaTRBA8DBKoWrw@mail.gmail.com>
-Subject: Re: [PATCH] use filetest pragma to work with ACL
-To:     Guillaume Castagnino <casta+github@xwing.info>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=qiuNo2e3M3fWqMGGrVcU8BylJt3b+PUb0PI9b2kYvVM=;
+        b=lo6W8CWpdUPWBLaA05uEXlIaVallAtIUfz0yHQdKBDmDHdRaZDc1a6px6WFvGvmMNP
+         zDVvJYKgVl5YYNKhrN7KXNsVv/n/RCItpmgrG+psfdDU6rjbChaIQ4f6L4tXoK9Ny3Py
+         3axrfEClRn5lEk1LRcRx0l+R5N7G2ZvAfCm4k7qg+IVunldRnz//cortENoA/FqqtSob
+         A/0SzUwoQ8udqoSBAGWtWkA034EJhAdbN2+77VxxczuAoLTDWHmuFWTCL+iZBtXuG3Bn
+         J29C6y5URJTfYuIxeQFIDFY+kRTAg5slpaD69urIP2pyVbCQ4uNANTY/wVAF4776Xr4o
+         mq4g==
+X-Gm-Message-State: AMCzsaX+yTfxpmmLRgl/z/nyqsTtxzzuqWge52sL9lgbvhgLcd1oGl+/
+        sFgLaJfiScbf4fsXAYhcGLSRq9N0
+X-Google-Smtp-Source: ABhQp+T3hBiIv7fms9oCOOSZ3wAR3/+jMit2RzYnkVg9Lh0v33T5bVM8ZKFcMt2CKVTU5FENMv3gkQ==
+X-Received: by 10.28.51.19 with SMTP id z19mr6818103wmz.18.1508358443541;
+        Wed, 18 Oct 2017 13:27:23 -0700 (PDT)
+Received: from localhost.localdomain (158.82.136.77.rev.sfr.net. [77.136.82.158])
+        by smtp.gmail.com with ESMTPSA id 63sm282381wrb.9.2017.10.18.13.27.22
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 18 Oct 2017 13:27:22 -0700 (PDT)
+From:   PAYRE NATHAN p1508475 <second.payre@gmail.com>
+X-Google-Original-From: PAYRE NATHAN p1508475 <nathan.payre@etu.univ-lyon1.fr>
+To:     git@vger.kernel.org
+Cc:     PAYRE NATHAN p1508475 <nathan.payre@etu.univ-lyon1.fr>,
+        MOY Matthieu <matthieu.moy@univ-lyon1.fr>,
+        Daniel Bensoussan <daniel.bensoussan--bohm@etu.univ-lyon1.fr>,
+        Timothee Albertin <timothee.albertin@etu.univ-lyon1.fr>
+Subject: [PATCH v3] Documentation/git-config.txt: reword missleading sentence
+Date:   Wed, 18 Oct 2017 22:27:16 +0200
+Message-Id: <20171018202716.13313-1-nathan.payre@etu.univ-lyon1.fr>
+X-Mailer: git-send-email 2.14.GIT
+In-Reply-To: <xmqqvajjuudo.fsf@gitster.mtv.corp.google.com>
+References: <xmqqvajjuudo.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 18, 2017 at 12:55 PM, Guillaume Castagnino
-<casta+github@xwing.info> wrote:
-> From: Guillaume Castagnino <casta@xwing.info>
->
-> as stated in comment in https://github.com/git/git/commit/46a13857fc036b54ac2ddd0a218e5cc171aa7bd9#diff-00703a794a540acf45e225abd6aeda3b the referenced commit is broken when using ACL and not basic UNIX rights.
-> this commit handle ACL too
+Change the word "bla" to "section.variable", "bla" is a placeholder
+for a variable name and it wasn't clear for everyone.  This change
+clarify it.
 
-Thanks for contributing to Git!
+Change the appearance of 'git config section.variable {tilde}/' to
+`git config section.variable ~/` to harmonize it with the rest of the
+file, this is a command line then the "`" are necessary.
 
-Please see Documentation/SubmittingPatches for details,
-tl;dr:
-* If you can legally agree with
-   https://developercertificate.org/
-   add a line "Signed-off-by: NAME <email>"
-* Please give a more descriptive commit message.
-  Usually we phrase the commit subject as
-  "area: do thing", you have the "do thing" part,
-  but the area is unclear. Maybe:
-      gitweb: use filetest to allow ACLs
+Replace "git-config" by "git config" because the command is not
+"git-config".
 
-* Keep the message text roughly at 70 characters per line,
-  as that is easier to read in e.g. git-show.
+See discussion at:
+https://public-inbox.org/git/20171002061303.Horde.SL92grZCqTRV9oQkBFPELQ7@crashcourse.ca/
 
-* Instead of linking to github, we usually only refer to the commit, e.g.
+Signed-off-by: MOY Matthieu <matthieu.moy@univ-lyon1.fr>
+Signed-off-by: Daniel Bensoussan <daniel.bensoussan--bohm@etu.univ-lyon1.fr>
+Signed-off-by: Timothee Albertin <timothee.albertin@etu.univ-lyon1.fr>
+Signed-off-by: Nathan Payre <nathan.payre@etu.univ-lyon1.fr>
+Noticed-by: rpjday@crashcourse.ca
+---
 
-   In commit 46a1385 (gitweb: skip unreadable subdirectories, 2017-07-18)
-   we forgot to handle non-unix ACLs as well. Fix this.
+Change since v2: use ~ within backquote instead of {tilde}.
+Backquoting of 'git config', '~', '$HOME' and '~user' for more
+coherence.
 
-* Do we need a test/documentation for this?
+Documentation/git-config.txt | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-Thanks,
-Stefan
+diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
+index 83f86b923..9b5c3a436 100644
+--- a/Documentation/git-config.txt
++++ b/Documentation/git-config.txt
+@@ -174,11 +174,11 @@ See also <<FILES>>.
+ 	either --bool or --int, as described above.
+ 
+ --path::
+-	'git-config' will expand leading '{tilde}' to the value of
+-	'$HOME', and '{tilde}user' to the home directory for the
++	`git config` will expand leading `~` to the value of
++	`$HOME`, and `~user` to the home directory for the
+ 	specified user.  This option has no effect when setting the
+-	value (but you can use 'git config bla {tilde}/' from the
+-	command line to let your shell do the expansion).
++	value (but you can use `git config section.variable ~/`
++	from the command line to let your shell do the expansion).
+ 
+ -z::
+ --null::
+-- 
+2.14.2
 
-> ---
->  gitweb/gitweb.perl | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index 9208f42ed1753..0ee7f304ce2b1 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -3072,6 +3072,7 @@ sub git_get_projects_list {
->                                 # only directories can be git repositories
->                                 return unless (-d $_);
->                                 # need search permission
-> +                               use filetest 'access';
->                                 return unless (-x $_);
->                                 # don't traverse too deep (Find is super slow on os x)
->                                 # $project_maxdepth excludes depth of $projectroot
->
-> --
-> https://github.com/git/git/pull/416
