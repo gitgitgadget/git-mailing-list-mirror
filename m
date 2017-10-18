@@ -2,104 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8025A1FF32
-	for <e@80x24.org>; Wed, 18 Oct 2017 01:04:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 88DB61FF32
+	for <e@80x24.org>; Wed, 18 Oct 2017 01:05:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755192AbdJRBEH (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Oct 2017 21:04:07 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:58996 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1754127AbdJRBEG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Oct 2017 21:04:06 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D69A49EB23;
-        Tue, 17 Oct 2017 21:04:05 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=I5TEqbsMdAvC6KBtqHcfN/uPUhg=; b=IV0tS1
-        cDLY++Qlps9I5lHU+RT0d2YwRC3981wQEITKN8vCgsyCCfaIzAfBf5uB92dWMN2d
-        T7Izwvakwuk2T3CkzwYeB8IcxfRMsgmP48lEjI52oI2rc3b/hyMQo3kkgBfBbYGE
-        A8pKgyvOh33KVepjxxajtVcFpxyUVbxFHpA10=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=RA7tixSp6V9EwCYOJYPp+XPQEECUuv/r
-        UJh1fWBk2BTJcuw81Scb8ylWsszw9lqRaJQTPa/gsXr+Gml5a6iWu5zcMQl5PVHE
-        Bikp+7CMvBVZCA6WF/wKVkq/0JhXqrMamruRLw5N0OBKisD3EVI0bKG+cPRZocZZ
-        AtA3Lc+ogsI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id CD9989EB22;
-        Tue, 17 Oct 2017 21:04:05 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 368499EB21;
-        Tue, 17 Oct 2017 21:04:05 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Marius Paliga <marius.paliga@gmail.com>
-Cc:     Thais Diniz <thais.dinizbraz@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH] Added support for new configuration parameter push.pushOption
-References: <CAK7vU=1LGTLrEkRYS=autkDHmJAeq9=qa5jfx=DE+acPLsCqTg@mail.gmail.com>
-        <xmqqvajdl1hn.fsf@gitster.mtv.corp.google.com>
-Date:   Wed, 18 Oct 2017 10:04:04 +0900
-In-Reply-To: <xmqqvajdl1hn.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Wed, 18 Oct 2017 09:54:12 +0900")
-Message-ID: <xmqqmv4pl117.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1758608AbdJRBFR (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Oct 2017 21:05:17 -0400
+Received: from mail-qt0-f176.google.com ([209.85.216.176]:51615 "EHLO
+        mail-qt0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753044AbdJRBFP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Oct 2017 21:05:15 -0400
+Received: by mail-qt0-f176.google.com with SMTP id h4so7560035qtk.8
+        for <git@vger.kernel.org>; Tue, 17 Oct 2017 18:05:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=NHWplVQiT/iQJHp2nw5oXuw1+c4v8j3yQSvjoShaxTA=;
+        b=SS8200FL6Cpb2ky4KdZKquY7zCmFwE7FbQMexPke31CL4R9NqTKZT5liskDERxd/yb
+         Iv3/FKZlY9VBuMJHf5ZtltEFzJvF99BEP3trustoA9dDBwt3Ocg3eg++ZwUL0dEtxrtO
+         Q69+a+BozLJEfMqkpxz4OrQLmgtpcAgS54HMfTDxOsMEn1JaanI3gz5u/YodyrkKCigm
+         FQfAeOh2pOdHrWxWLWVkBlNbsCY11lR68VYY9xAVdSaPTQtosGgAgx7L1trbYuV+svFt
+         GIlc8PO01nhxRkbjEvXEp5PWyXZFjhGIDPCJNDmTffdhEjogOCJRrtcRUnBiK+r5ugSe
+         ZKqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=NHWplVQiT/iQJHp2nw5oXuw1+c4v8j3yQSvjoShaxTA=;
+        b=MEY1BZzU7TMsYa3U/Rl+zkDBS1ON5WpJN1xs4rXt4ygnpS68PBxGsI9WVUPS9zuyDw
+         7Hx2NpLwkItYtosk3YZ6CVGKO+ynwsfyh5GCcSbrKTnX8mlGEXYBgHu8wx2k0GkwA2M3
+         SwT4kX9a0QVpVbPAucpEso9jDWpDhOtH9VjmjrjaugQbqeD8ppeF8W1M20AYimu8TY+a
+         nIOap3YicBnnwmmjKiEsN83DiwGBFMF2xPCPWS8H9435n0sX4jEK8ObWXJPKtUNQ+X44
+         O/UmkGW44KWF/G9Ef52D8ZawLieWMjQEiAmMbIOp1+7UdTylOt+z6BHCoPY46sT9HqVg
+         83/g==
+X-Gm-Message-State: AMCzsaXBXKVGBsS7tladcIcLhBGIhrmbWmMIGYdZyMcNrNFRrQjf1t6r
+        nRQ58BcxDBbqrcuXs20399NSRyrauorjxMnC/w==
+X-Google-Smtp-Source: ABhQp+QuvWQi+cbtHYrpnFtqLb35nE9K/GxMxaS59pqC3dT3L3VpMPtLApO/ywliM/WTnFIyaaXmNOPfOyLwat+DaYI=
+X-Received: by 10.129.119.134 with SMTP id s128mr395346ywc.465.1508288714055;
+ Tue, 17 Oct 2017 18:05:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3CB960E4-B3A0-11E7-8479-8EF31968708C-77302942!pb-smtp1.pobox.com
+Received: by 10.13.242.195 with HTTP; Tue, 17 Oct 2017 18:04:53 -0700 (PDT)
+In-Reply-To: <xmqqr2u1l1ck.fsf@gitster.mtv.corp.google.com>
+References: <CACjmu29CV_0HgmNaBmNLn-J4ZdUx+jRgweNSibBsB2SOZBWWEg@mail.gmail.com>
+ <CACjmu28WBUZMyivR-uvttMURSEtVuCUaYHdtT0mpv4LAffOd5g@mail.gmail.com> <xmqqr2u1l1ck.fsf@gitster.mtv.corp.google.com>
+From:   Gilberto Stankiewicz <kiewic@gmail.com>
+Date:   Tue, 17 Oct 2017 18:04:53 -0700
+Message-ID: <CACjmu28kdmBpe+0nrwWnMWV4fUkZgm3yvJjxsYwj61kq9CegVA@mail.gmail.com>
+Subject: Re: Fwd: Has git-gui repo moved from location?
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Weird, it was not working for me earlier today, but now it works.
 
-> base to show an incremental improvement, but here is how I would do
-> the "code" part.
+Thank you,
+Gilberto
+
+
+On Tue, Oct 17, 2017 at 5:57 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Gilberto Stankiewicz <kiewic@gmail.com> writes:
 >
->  builtin/push.c | 22 ++++++++++++++++++----
->  1 file changed, 18 insertions(+), 4 deletions(-)
+>> I am trying to clone git://repo.or.cz/git-gui.git as described at
+>> https://github.com/git/git/blob/master/Documentation/SubmittingPatches
+>> but it seems the repo does not exist.
 >
-> diff --git a/builtin/push.c b/builtin/push.c
-> index 03846e8379..89ef029c67 100644
-> --- a/builtin/push.c
-> +++ b/builtin/push.c
-> @@ -32,6 +32,8 @@ static const char **refspec;
->  static int refspec_nr;
->  static int refspec_alloc;
->  
-> +static struct string_list push_options_config = STRING_LIST_INIT_DUP;
-> +
->  static void add_refspec(const char *ref)
->  {
->  	refspec_nr++;
-> @@ -503,6 +505,13 @@ static int git_push_config(const char *k, const char *v, void *cb)
->  		int val = git_config_bool(k, v) ?
->  			RECURSE_SUBMODULES_ON_DEMAND : RECURSE_SUBMODULES_OFF;
->  		recurse_submodules = val;
-> +	} else if (!strcmp(k, "push.pushoption")) {
-> +		if (!v)
-> +			return config_error_nonbool(k);
-> +		else if (!*v)
-> +			string_list_clear(&push_options_config, 0);
-> +		else
-> +			string_list_append(&push_options_config, v);
-
-Here needs to be
-
-		return 0;
-
-as there is no point in falling through to call
-git_default_config().
-
->  	}
->  
->  	return git_default_config(k, v, NULL);
+> $ git fetch -v git-gui
+> Looking up repo.or.cz ... done.
+> Connecting to repo.or.cz (port 9418) ... 195.113.20.142 done.
+> From git://repo.or.cz/git-gui
+>  = [up to date]            master     -> git-gui/master
+>  = [up to date]            pu         -> git-gui/pu
+>  = [up to date]            todo       -> git-gui/todo
+>
+> $ git fetch -v git://repo.or.cz/git-gui.git
+> Looking up repo.or.cz ... done.
+> Connecting to repo.or.cz (port 9418) ... 195.113.20.142 done.
+> From git://repo.or.cz/git-gui
+>  * branch                  HEAD       -> FETCH_HEAD
+>
