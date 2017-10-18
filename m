@@ -2,84 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E15E202A3
-	for <e@80x24.org>; Wed, 18 Oct 2017 21:24:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DC0BC20446
+	for <e@80x24.org>; Wed, 18 Oct 2017 21:25:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751161AbdJRVYy (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Oct 2017 17:24:54 -0400
-Received: from cloud.peff.net ([104.130.231.41]:57066 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750926AbdJRVYx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Oct 2017 17:24:53 -0400
-Received: (qmail 13104 invoked by uid 109); 18 Oct 2017 21:24:53 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 18 Oct 2017 21:24:53 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 4065 invoked by uid 111); 18 Oct 2017 21:24:57 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Wed, 18 Oct 2017 17:24:57 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Oct 2017 17:24:51 -0400
-Date:   Wed, 18 Oct 2017 17:24:51 -0400
-From:   Jeff King <peff@peff.net>
-To:     Guillaume Castagnino <casta+github@xwing.info>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] use filetest pragma to work with ACL
-Message-ID: <20171018212451.goqxu4qq6aqe4tpl@sigill.intra.peff.net>
-References: <0102015f310e24b9-b96378f3-a029-4110-80dd-e454522e2cb7-000000@eu-west-1.amazonses.com>
+        id S1751583AbdJRVZx (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Oct 2017 17:25:53 -0400
+Received: from mail-it0-f65.google.com ([209.85.214.65]:55495 "EHLO
+        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751608AbdJRVZv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Oct 2017 17:25:51 -0400
+Received: by mail-it0-f65.google.com with SMTP id l196so7586169itl.4
+        for <git@vger.kernel.org>; Wed, 18 Oct 2017 14:25:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=omH9Xo1nK3GB1X6aBQdMicX87HPKNpp04C+zWr5XpIc=;
+        b=Trg3MKwmNkqOny8D1XscN/0IprzpgrG2VqcxH/lAi8lpPxaau+a514DNUm0zY7q01r
+         4RgzHBvzVufWsKhmLOMrrkIq0+ekEf/SyPQuEQ7sCzzMxvrzaxKveYgEjh/C8EzyWncy
+         1SKTTGzyxudBe9Xzh03I0OYIaO/xMpO7d68Alsq76C+SBcoTGRRdLTWmTOJRNi0hUVNG
+         9D23DX36GeFs69KbE8GaKldNiDYA6ab6hhtSLn/SI2h//1oeDvFk5a7ORYwk12Mcvi7B
+         X2hBQGNXeK+1bJnlJbPPsj3tG2doE+gnhHi9DkilFq+Xo16vchY8nVMlYI+H3xJMQQms
+         Q4Fw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=omH9Xo1nK3GB1X6aBQdMicX87HPKNpp04C+zWr5XpIc=;
+        b=tGqNOmKXAxIWg1F+kURCfxVxT2ziD76oaKeg3i48fIC/Ub533oo+VYhftpS5PNdkjx
+         o/JytKM1g4lXL8pz2Q/HRpMacucvVyo9A/6PWHwpZr6O9s/uKHcdoJLPoMhM6k5qSG/O
+         O6DrPD67FpqPndF5lA7gR6117LUoRDoNTRu3WUu12OsgaApWCjKIAoXL1tfxSzcrRszR
+         VpXJypfEMQcehkyexRr4YSU1lLvfXGO5J0ktvDsTjFq76IHBFR0hHs8mGCR3O7FKOfDR
+         cz87zXfBlo9ifl06vBTPCw2D+VFca3XQ/0HpaAsrkGyteOtU5CQiAa1jc9GEWpnYqQLI
+         w8Iw==
+X-Gm-Message-State: AMCzsaW1LrJiA9PJK2tkn8HtWqfI7zlyrB/rBr2H0oI48WOk40mhUnBo
+        AuIuC6EVgCusq9o6KYyLORp7JJPeDpxj61eutjen6Q==
+X-Google-Smtp-Source: ABhQp+TNhTEtVxKWtFDX7A+C/lOhe+oxX/w2roGLzghC3kxym1H1xbjQSiCRrRb7fbBR6/mcssnaNQ8Xi2BpQbuW7zo=
+X-Received: by 10.36.205.2 with SMTP id l2mr11381477itg.63.1508361950466; Wed,
+ 18 Oct 2017 14:25:50 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <0102015f310e24b9-b96378f3-a029-4110-80dd-e454522e2cb7-000000@eu-west-1.amazonses.com>
+Received: by 10.79.7.10 with HTTP; Wed, 18 Oct 2017 14:25:49 -0700 (PDT)
+In-Reply-To: <20171018105801.GF19335@alpha.vpn.ikke.info>
+References: <CAP8UFD3tG3fOgftFJAB4mKD2N+uAH0aac4RmFmdXZ=ORHmKzQQ@mail.gmail.com>
+ <0102015eb04f8927-439213ae-a464-4638-affa-f0d6484086c0-000000@eu-west-1.amazonses.com>
+ <20171018105801.GF19335@alpha.vpn.ikke.info>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Wed, 18 Oct 2017 23:25:49 +0200
+Message-ID: <CAP8UFD2D7hUVkE=5bpk7sn8DnUgtwZmj-Q4xHCej279LJvMKyg@mail.gmail.com>
+Subject: Re: [PATCH v2 1/9] perf/run: add '--config' option to the 'run' script
+To:     Kevin Daudt <me@ikke.info>
+Cc:     Christian Couder <chriscool@tuxfamily.org>,
+        git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 18, 2017 at 07:55:31PM +0000, Guillaume Castagnino wrote:
+On Wed, Oct 18, 2017 at 12:58 PM, Kevin Daudt <me@ikke.info> wrote:
+> On Sat, Sep 23, 2017 at 07:55:56PM +0000, Christian Couder wrote:
 
-> From: Guillaume Castagnino <casta@xwing.info>
-> [...]
+>> diff --git a/t/perf/run b/t/perf/run
+>> index beb4acc0e428d..1e7c2a59e45dc 100755
+>> --- a/t/perf/run
+>> +++ b/t/perf/run
+>> @@ -2,9 +2,14 @@
+>>
+>>  case "$1" in
+>>       --help)
+>> -             echo "usage: $0 [other_git_tree...] [--] [test_scripts]"
+>> +             echo "usage: $0 [--config file] [other_git_tree...] [--] [test_scripts]"
+>>               exit 0
+>>               ;;
+>> +     --config)
+>> +             shift
+>> +             GIT_PERF_CONFIG_FILE=$(cd "$(dirname "$1")"; pwd)/$(basename "$1")
+>
+> Is the idea of this construct to do some kind of normalization?
+> Otherwise it seems to just result in $1 again.
 
-Stefan raised a few meta issues, all of which I agree with. But I had
-some questions about the patch itself:
-
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index 9208f42ed1753..0ee7f304ce2b1 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -3072,6 +3072,7 @@ sub git_get_projects_list {
->  				# only directories can be git repositories
->  				return unless (-d $_);
->  				# need search permission
-> +				use filetest 'access';
->  				return unless (-x $_);
-
-This "use" will unconditionally at compile-time (such as "compile" is
-for perl, anyway). Which raises a few questions:
-
-  - would we want to use "require" instead to avoid loading when we
-    don't enter this function?
-
-  - If the answer to the above is "no" (e.g., because we basically
-    always need it; I didn't check), should it go at the top of the
-    script with the other "use" directives?
-
-    I think this is a scoped pragma, so what you have here affects only
-    this particular "-x". But wouldn't other uses of "-x" potentially
-    want the same benefit?
-
-  - Do all relevant versions of perl ship with filetest? According to
-    Module::Corelist, it first shipped with perl 5.6. In general I think
-    we treat that as a minimum for our perl scripts, though I do notice
-    that the gitweb script says "use 5.008". I'm not sure how realistic
-    that is.
-
-    If we can't count on it everywhere, then we probably need to wrap it
-    in an eval, and fall back to the existing "-x".
-
--Peff
+Yeah, the idea is to get a full path when you are given a relative path.
