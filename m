@@ -2,171 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A7858202A2
-	for <e@80x24.org>; Thu, 19 Oct 2017 15:40:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 660FD202A2
+	for <e@80x24.org>; Thu, 19 Oct 2017 16:05:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753905AbdJSPkb (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Oct 2017 11:40:31 -0400
-Received: from smtprelay02.ispgateway.de ([80.67.29.24]:20382 "EHLO
-        smtprelay02.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753457AbdJSPka (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Oct 2017 11:40:30 -0400
-Received: from [84.46.92.130] (helo=book.hvoigt.net)
-        by smtprelay02.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.89)
-        (envelope-from <hvoigt@hvoigt.net>)
-        id 1e5CuI-0007p8-5L; Thu, 19 Oct 2017 17:38:50 +0200
-Date:   Thu, 19 Oct 2017 17:38:44 +0200
-From:   Heiko Voigt <hvoigt@hvoigt.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Brandon Williams <bmwill@google.com>, sbeller@google.com,
-        jrnieder@gmail.com, Jens.Lehmann@web.de, git@vger.kernel.org
-Subject: Re: [PATCH v4 3/3] submodule: simplify decision tree whether to or
- not to fetch
-Message-ID: <20171019153844.GA41283@book.hvoigt.net>
-References: <20171016135623.GA12756@book.hvoigt.net>
- <20171016135905.GD12756@book.hvoigt.net>
- <20171018180322.GA155019@google.com>
- <xmqqshegj7mo.fsf@gitster.mtv.corp.google.com>
+        id S1753616AbdJSQFf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Oct 2017 12:05:35 -0400
+Received: from cloud.peff.net ([104.130.231.41]:57632 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1752213AbdJSQFe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Oct 2017 12:05:34 -0400
+Received: (qmail 25363 invoked by uid 109); 19 Oct 2017 16:05:34 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 19 Oct 2017 16:05:34 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 9056 invoked by uid 111); 19 Oct 2017 16:05:38 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Thu, 19 Oct 2017 12:05:38 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 19 Oct 2017 12:05:32 -0400
+Date:   Thu, 19 Oct 2017 12:05:32 -0400
+From:   Jeff King <peff@peff.net>
+To:     Ben Peart <peartben@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Ben Peart <benpeart@microsoft.com>, git@vger.kernel.org,
+        jeffhost@microsoft.com, t.gummerer@gmail.com, mhagger@alum.mit.edu
+Subject: Re: [PATCH v1] read_index_from(): Skip verification of the cache
+ entry order to speed index loading
+Message-ID: <20171019160532.54teojqnhkeo2yfv@sigill.intra.peff.net>
+References: <20171018142725.10948-1-benpeart@microsoft.com>
+ <xmqq4lqvk8ze.fsf@gitster.mtv.corp.google.com>
+ <db8da340-f8f5-0114-392d-e415b5564993@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqshegj7mo.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.9.0 (2017-09-02)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+In-Reply-To: <db8da340-f8f5-0114-392d-e415b5564993@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 19, 2017 at 09:36:47AM +0900, Junio C Hamano wrote:
-> Brandon Williams <bmwill@google.com> writes:
+On Thu, Oct 19, 2017 at 11:12:03AM -0400, Ben Peart wrote:
+
+> > So, I think I like the direction of getting rid of the order
+> > validation in post_read_index_from(), not only during the normal
+> > operation but also in fsck.  I think it makes more sense to do so
+> > incrementally inside do_read_index() all the time and see how fast
+> > we can make it do so.
 > 
-> > On 10/16, Heiko Voigt wrote:
-> >> To make extending this logic later easier.
-> >
-> > This makes things so much clearer, thanks!
-> 
-> I agree that it is clear to see what the code after the patch does,
-> but the code before the patch is so convoluted to follow that it is
-> a bit hard to see if the code before and after are doing the same
-> thing, though ;-)
+> Unfortunately, all the cost is in the strcmp() - the other tests are
+> negligible so moving it to be done incrementally inside do_read_index()
+> won't reduce the cost, it just moves it and makes it harder to identify.
 
-That is why I would appreciate some extra pairs of eyes on this :) I
-tried to be as careful as possible when refactoring this, but since it
-is quite convoluted something might have slipped through. The testsuite
-does not show anything, but there might be corner cases that are not
-tested I guess.
+It's plausible that doing the strcmp() closer to where we are otherwise
+manipulating the data may show an improvement due to memory cache
+effects.
 
-Will hopefully have time to look into the comments to the main patch of
-this series tomorrow. Did not get around to properly do that yet.
+It should be easy enough to check that; the patch below implements it.
+I couldn't measure any speedup with it running "git ls-files >/dev/null"
+on linux.git (60k files). But nor could I get any by dropping the check
+entirely.
 
-Cheers Heiko
+This is mostly just a curiosity to me. For the record, I have no real
+problem with dropping this kind of on-disk data-structure validation
+when it's expensive. After all, we do not check the sort on pack .idx
+files on each run (nor pack sha1 checksums, etc) because it's too
+expensive to do so.
 
-> >> Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
-> >> ---
-> >>  submodule.c | 74 ++++++++++++++++++++++++++++++-------------------------------
-> >>  1 file changed, 37 insertions(+), 37 deletions(-)
-> >> 
-> >> diff --git a/submodule.c b/submodule.c
-> >> index 71d1773e2e..82d206eb65 100644
-> >> --- a/submodule.c
-> >> +++ b/submodule.c
-> >> @@ -1187,6 +1187,31 @@ struct submodule_parallel_fetch {
-> >>  };
-> >>  #define SPF_INIT {0, ARGV_ARRAY_INIT, NULL, NULL, 0, 0, 0, 0}
-> >>  
-> >> +static int get_fetch_recurse_config(const struct submodule *submodule,
-> >> +				    struct submodule_parallel_fetch *spf)
-> >> +{
-> >> +	if (spf->command_line_option != RECURSE_SUBMODULES_DEFAULT)
-> >> +		return spf->command_line_option;
-> >> +
-> >> +	if (submodule) {
-> >> +		char *key;
-> >> +		const char *value;
-> >> +
-> >> +		int fetch_recurse = submodule->fetch_recurse;
-> >> +		key = xstrfmt("submodule.%s.fetchRecurseSubmodules", submodule->name);
-> >> +		if (!repo_config_get_string_const(the_repository, key, &value)) {
-> >> +			fetch_recurse = parse_fetch_recurse_submodules_arg(key, value);
-> >> +		}
-> >> +		free(key);
-> >> +
-> >> +		if (fetch_recurse != RECURSE_SUBMODULES_NONE)
-> >> +			/* local config overrules everything except commandline */
-> >> +			return fetch_recurse;
-> >> +	}
-> >> +
-> >> +	return spf->default_option;
-> >> +}
-> >> +
-> >>  static int get_next_submodule(struct child_process *cp,
-> >>  			      struct strbuf *err, void *data, void **task_cb)
-> >>  {
-> >> @@ -1214,46 +1239,21 @@ static int get_next_submodule(struct child_process *cp,
-> >>  			}
-> >>  		}
-> >>  
-> >> -		default_argv = "yes";
-> >> -		if (spf->command_line_option == RECURSE_SUBMODULES_DEFAULT) {
-> >> -			int fetch_recurse = RECURSE_SUBMODULES_NONE;
-> >> -
-> >> -			if (submodule) {
-> >> -				char *key;
-> >> -				const char *value;
-> >> -
-> >> -				fetch_recurse = submodule->fetch_recurse;
-> >> -				key = xstrfmt("submodule.%s.fetchRecurseSubmodules", submodule->name);
-> >> -				if (!repo_config_get_string_const(the_repository, key, &value)) {
-> >> -					fetch_recurse = parse_fetch_recurse_submodules_arg(key, value);
-> >> -				}
-> >> -				free(key);
-> >> -			}
-> >> -
-> >> -			if (fetch_recurse != RECURSE_SUBMODULES_NONE) {
-> >> -				if (fetch_recurse == RECURSE_SUBMODULES_OFF)
-> >> -					continue;
-> >> -				if (fetch_recurse == RECURSE_SUBMODULES_ON_DEMAND) {
-> >> -					if (!unsorted_string_list_lookup(&changed_submodule_names,
-> >> -									 submodule->name))
-> >> -						continue;
-> >> -					default_argv = "on-demand";
-> >> -				}
-> >> -			} else {
-> >> -				if (spf->default_option == RECURSE_SUBMODULES_OFF)
-> >> -					continue;
-> >> -				if (spf->default_option == RECURSE_SUBMODULES_ON_DEMAND) {
-> >> -					if (!unsorted_string_list_lookup(&changed_submodule_names,
-> >> -									  submodule->name))
-> >> -						continue;
-> >> -					default_argv = "on-demand";
-> >> -				}
-> >> -			}
-> >> -		} else if (spf->command_line_option == RECURSE_SUBMODULES_ON_DEMAND) {
-> >> -			if (!unsorted_string_list_lookup(&changed_submodule_names,
-> >> +		switch (get_fetch_recurse_config(submodule, spf))
-> >> +		{
-> >> +		default:
-> >> +		case RECURSE_SUBMODULES_DEFAULT:
-> >> +		case RECURSE_SUBMODULES_ON_DEMAND:
-> >> +			if (!submodule || !unsorted_string_list_lookup(&changed_submodule_names,
-> >>  							 submodule->name))
-> >>  				continue;
-> >>  			default_argv = "on-demand";
-> >> +			break;
-> >> +		case RECURSE_SUBMODULES_ON:
-> >> +			default_argv = "yes";
-> >> +			break;
-> >> +		case RECURSE_SUBMODULES_OFF:
-> >> +			continue;
-> >>  		}
-> >>  
-> >>  		strbuf_addf(&submodule_path, "%s/%s", spf->work_tree, ce->name);
-> >> -- 
-> >> 2.14.1.145.gb3622a4
-> >> 
+---
+diff --git a/read-cache.c b/read-cache.c
+index 65f4fe8375..ac8c8d2e93 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1664,25 +1664,19 @@ static struct cache_entry *create_from_disk(struct ondisk_cache_entry *ondisk,
+ 	return ce;
+ }
+ 
+-static void check_ce_order(struct index_state *istate)
+-{
+-	unsigned int i;
+-
+-	for (i = 1; i < istate->cache_nr; i++) {
+-		struct cache_entry *ce = istate->cache[i - 1];
+-		struct cache_entry *next_ce = istate->cache[i];
+-		int name_compare = strcmp(ce->name, next_ce->name);
+-
+-		if (0 < name_compare)
+-			die("unordered stage entries in index");
+-		if (!name_compare) {
+-			if (!ce_stage(ce))
+-				die("multiple stage entries for merged file '%s'",
+-				    ce->name);
+-			if (ce_stage(ce) > ce_stage(next_ce))
+-				die("unordered stage entries for '%s'",
+-				    ce->name);
+-		}
++static void check_ce_order(struct cache_entry *ce, struct cache_entry *next_ce)
++{
++	int name_compare = strcmp(ce->name, next_ce->name);
++
++	if (0 < name_compare)
++		die("unordered stage entries in index");
++	if (!name_compare) {
++		if (!ce_stage(ce))
++			die("multiple stage entries for merged file '%s'",
++			    ce->name);
++		if (ce_stage(ce) > ce_stage(next_ce))
++			die("unordered stage entries for '%s'",
++			    ce->name);
+ 	}
+ }
+ 
+@@ -1720,7 +1714,6 @@ static void tweak_split_index(struct index_state *istate)
+ 
+ static void post_read_index_from(struct index_state *istate)
+ {
+-	check_ce_order(istate);
+ 	tweak_untracked_cache(istate);
+ 	tweak_split_index(istate);
+ }
+@@ -1784,6 +1777,8 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
+ 
+ 		disk_ce = (struct ondisk_cache_entry *)((char *)mmap + src_offset);
+ 		ce = create_from_disk(disk_ce, &consumed, previous_name);
++		if (i > 0)
++			check_ce_order(istate->cache[i - 1], ce);
+ 		set_index_entry(istate, i, ce);
+ 
+ 		src_offset += consumed;
