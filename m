@@ -6,81 +6,94 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 96041202A2
-	for <e@80x24.org>; Thu, 19 Oct 2017 16:13:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D3C66202A2
+	for <e@80x24.org>; Thu, 19 Oct 2017 17:44:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753590AbdJSQNr (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Oct 2017 12:13:47 -0400
-Received: from cloud.peff.net ([104.130.231.41]:57694 "HELO cloud.peff.net"
+        id S1753208AbdJSRo4 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Oct 2017 13:44:56 -0400
+Received: from cloud.peff.net ([104.130.231.41]:57774 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1753123AbdJSQNq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Oct 2017 12:13:46 -0400
-Received: (qmail 25687 invoked by uid 109); 19 Oct 2017 16:13:46 -0000
+        id S1752485AbdJSRoz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Oct 2017 13:44:55 -0400
+Received: (qmail 28881 invoked by uid 109); 19 Oct 2017 17:44:55 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 19 Oct 2017 16:13:46 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 19 Oct 2017 17:44:55 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9393 invoked by uid 111); 19 Oct 2017 16:13:51 -0000
+Received: (qmail 9997 invoked by uid 111); 19 Oct 2017 17:44:59 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Thu, 19 Oct 2017 12:13:51 -0400
+ by peff.net (qpsmtpd/0.94) with SMTP; Thu, 19 Oct 2017 13:44:59 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 19 Oct 2017 12:13:44 -0400
-Date:   Thu, 19 Oct 2017 12:13:44 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 19 Oct 2017 13:44:53 -0400
+Date:   Thu, 19 Oct 2017 13:44:53 -0400
 From:   Jeff King <peff@peff.net>
-To:     Guillaume Castagnino <casta@xwing.info>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] use filetest pragma to work with ACL
-Message-ID: <20171019161344.zmwgb2a2rziorffm@sigill.intra.peff.net>
-References: <0102015f310e24b9-b96378f3-a029-4110-80dd-e454522e2cb7-000000@eu-west-1.amazonses.com>
- <20171018212451.goqxu4qq6aqe4tpl@sigill.intra.peff.net>
- <1508399608.4529.10.camel@xwing.info>
+To:     Andrey Okoshkin <a.okoshkin@samsung.com>
+Cc:     gitster@pobox.com, git@vger.kernel.org, pclouds@gmail.com,
+        l.s.r@web.de, avarab@gmail.com, krh@redhat.com, rctay89@gmail.com,
+        Ivan Arishchenko <i.arishchenk@samsung.com>,
+        Mikhail Labiuk <m.labiuk@samsung.com>
+Subject: Re: [PATCH v2] commit: check result of resolve_ref_unsafe
+Message-ID: <20171019174452.hd3c47ocducddvgr@sigill.intra.peff.net>
+References: <CGME20171018170047epcas2p4310be357e11e194d6d08ac3bdc478ba3@epcas2p4.samsung.com>
+ <0e396c24-167f-901e-9122-cdc17164ec1e@samsung.com>
+ <5fa1f5c6-249e-2aa9-5e9f-c00ebe2c0d9d@samsung.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <1508399608.4529.10.camel@xwing.info>
+In-Reply-To: <5fa1f5c6-249e-2aa9-5e9f-c00ebe2c0d9d@samsung.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 19, 2017 at 09:53:28AM +0200, Guillaume Castagnino wrote:
+On Thu, Oct 19, 2017 at 12:36:50PM +0300, Andrey Okoshkin wrote:
 
-> > This "use" will unconditionally at compile-time (such as "compile" is
-> > for perl, anyway). Which raises a few questions:
-> > 
-> >   - would we want to use "require" instead to avoid loading when we
-> >     don't enter this function?
+> Add check of the resolved HEAD reference while printing of a commit summary.
+> resolve_ref_unsafe() may return NULL pointer if underlying calls of lstat()
+> or
+> open() fail in files_read_raw_ref().
+> Such situation can be caused by race: file becomes inaccessible to this
+> moment.
 > 
-> I was under the impression that as this is a pragma affecting perl
-> “compiler”, you have to always use “use”, not require, as the pragma
-> initialisation has to be done before code is run.
-
-Yeah, I think you're right.
-
-> I quickly grepped the code, I did not see other calls that could
-> benefits from the pragma, but it could be indeed nice to move it at the
-> top to avoid future issues with such tests and POSIX ACL.
-
-Makes sense.
-
-> >   - Do all relevant versions of perl ship with filetest? According to
-> >     Module::Corelist, it first shipped with perl 5.6. In general I
-> > think
-> >     we treat that as a minimum for our perl scripts, though I do
-> > notice
-> >     that the gitweb script says "use 5.008". I'm not sure how
-> > realistic
-> >     that is.
+> Signed-off-by: Andrey Okoshkin <a.okoshkin@samsung.com>
+> ---
+> Thank you for your review.
 > 
-> So the CGI already requires perl 5.8, so it’s fine I think.
+> Changes since the previous patch:
+> * BUG is replaced with die, message;
+> * Message is changed.
 
-Right, I totally forgot about perl's funny version-numbering scheme.
+Thanks, this looks good to me. One other possible minor improvement:
 
-> Attached a cleanup proposal and moving the use at the top.
+>  	head = resolve_ref_unsafe("HEAD", 0, junk_oid.hash, NULL);
+> +	if (!head)
+> +		die(_("unable to resolve HEAD after creating commit"));
 
-Thanks, it looks good to me.
+Should we use die_errno() here to report the value of errno? I think
+resolve_ref_unsafe() should set it consistently (even an internal
+problem, like an illegally-formatted refname, yields EINVAL).
 
-For future reference, we usually prefer patches inline, separated by
-"-- >8 --" scissors if there's other material (like your reply).
+I grepped the code base looking for other instances of the same problem,
+and found four of them. Patches to follow.
+
+Unlike this one, I ended up quietly returning an error in most cases.
+The individual commit messages discuss the reasoning for each case, but
+I do wonder if we ought to simply die() in each case out of an abundance
+of caution (either the repo has a broken symref, or some weird
+filesystem error occurred, but either way it may be best not to
+continue). I dunno.
+
+These are all independent, so can be applied in any order or combination
+with respect to each other and to your patch.
+
+  [1/4]: test-ref-store: avoid passing NULL to printf
+  [2/4]: remote: handle broken symrefs
+  [3/4]: log: handle broken HEAD in decoration check
+  [4/4]: worktree: handle broken symrefs in find_shared_symref()
+
+ builtin/remote.c          | 2 +-
+ log-tree.c                | 2 +-
+ t/helper/test-ref-store.c | 2 +-
+ worktree.c                | 3 ++-
+ 4 files changed, 5 insertions(+), 4 deletions(-)
 
 -Peff
