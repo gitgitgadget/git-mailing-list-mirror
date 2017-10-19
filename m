@@ -6,66 +6,125 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EDF8C202DD
-	for <e@80x24.org>; Thu, 19 Oct 2017 20:23:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E1155202DD
+	for <e@80x24.org>; Thu, 19 Oct 2017 20:24:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753613AbdJSUX3 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Oct 2017 16:23:29 -0400
-Received: from cloud.peff.net ([104.130.231.41]:58140 "HELO cloud.peff.net"
+        id S1753698AbdJSUYG (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Oct 2017 16:24:06 -0400
+Received: from cloud.peff.net ([104.130.231.41]:58156 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1752581AbdJSUX2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Oct 2017 16:23:28 -0400
-Received: (qmail 2620 invoked by uid 109); 19 Oct 2017 20:23:28 -0000
+        id S1752656AbdJSUYF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Oct 2017 16:24:05 -0400
+Received: (qmail 2674 invoked by uid 109); 19 Oct 2017 20:24:05 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 19 Oct 2017 20:23:28 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 19 Oct 2017 20:24:05 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11910 invoked by uid 111); 19 Oct 2017 20:23:33 -0000
+Received: (qmail 11935 invoked by uid 111); 19 Oct 2017 20:24:09 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Thu, 19 Oct 2017 16:23:33 -0400
+ by peff.net (qpsmtpd/0.94) with SMTP; Thu, 19 Oct 2017 16:24:09 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 19 Oct 2017 16:23:26 -0400
-Date:   Thu, 19 Oct 2017 16:23:26 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 19 Oct 2017 16:24:03 -0400
+Date:   Thu, 19 Oct 2017 16:24:03 -0400
 From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
         orgads@gmail.com
-Subject: [PATCH 0/5] fix "diff --color-moved --ignore-space-at-eol"
-Message-ID: <20171019202326.grovyfsragl2d7xx@sigill.intra.peff.net>
-References: <20171012200536.m6oz4zrjcze3yw4i@sigill.intra.peff.net>
- <20171012233322.31203-1-sbeller@google.com>
- <20171013001837.43nx5paeqisbrflq@sigill.intra.peff.net>
- <20171013002057.froqi54olmhmah6b@sigill.intra.peff.net>
- <20171019050459.p2cx63yrxfwq4ta3@sigill.intra.peff.net>
- <20171019052457.gqenoshgyjcw53tb@sigill.intra.peff.net>
- <xmqqzi8niu1r.fsf@gitster.mtv.corp.google.com>
- <20171019054246.jii62lq2druohbpo@sigill.intra.peff.net>
+Subject: [PATCH 1/5] t4015: refactor --color-moved whitespace test
+Message-ID: <20171019202403.7srcpos5xlsvmqrl@sigill.intra.peff.net>
+References: <20171019202326.grovyfsragl2d7xx@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20171019054246.jii62lq2druohbpo@sigill.intra.peff.net>
+In-Reply-To: <20171019202326.grovyfsragl2d7xx@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 19, 2017 at 01:42:46AM -0400, Jeff King wrote:
+In preparation for testing several different whitespace
+options, let's split out the setup and cleanup steps of the
+whitespace test.
 
-> It's late here, so I'll wait for comments from Stefan and then try to
-> wrap it up with a commit message and test tomorrow.
+While we're here, let's also switch to using "<<-" to indent
+our here-documents properly, and use q_to_tab to more
+explicitly mark where we expect whitespace to appear.
 
-Here it is.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ t/t4015-diff-whitespace.sh | 49 +++++++++++++++++++++++++++-------------------
+ 1 file changed, 29 insertions(+), 20 deletions(-)
 
-The fix is in patch 4. The earlier ones are just beefing up the test
-coverage, and the last one is a minor cleanup we can do on top.
+diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
+index 87083f728f..164b502405 100755
+--- a/t/t4015-diff-whitespace.sh
++++ b/t/t4015-diff-whitespace.sh
+@@ -1318,30 +1318,34 @@ test_expect_success 'no effect from --color-moved with --word-diff' '
+ 	test_cmp expect actual
+ '
+ 
+-test_expect_success 'move detection ignoring whitespace ' '
++test_expect_success 'set up whitespace tests' '
+ 	git reset --hard &&
+-	cat <<\EOF >lines.txt &&
+-line 1
+-line 2
+-line 3
+-line 4
+-long line 5
+-long line 6
+-long line 7
+-EOF
+-	git add lines.txt &&
+-	git commit -m "add poetry" &&
+-	cat <<\EOF >lines.txt &&
++	# Note that these lines have no leading or trailing whitespace.
++	cat <<-\EOF >lines.txt &&
++	line 1
++	line 2
++	line 3
++	line 4
+ 	long line 5
+ 	long line 6
+ 	long line 7
+-line 1
+-line 2
+-line 3
+-line 4
+-EOF
+-	test_config color.diff.oldMoved "magenta" &&
+-	test_config color.diff.newMoved "cyan" &&
++	EOF
++	git add lines.txt &&
++	git commit -m "add poetry" &&
++	git config color.diff.oldMoved "magenta" &&
++	git config color.diff.newMoved "cyan"
++'
++
++test_expect_success 'move detection ignoring whitespace ' '
++	q_to_tab <<-\EOF >lines.txt &&
++	Qlong line 5
++	Qlong line 6
++	Qlong line 7
++	line 1
++	line 2
++	line 3
++	line 4
++	EOF
+ 	git diff HEAD --no-renames --color-moved --color |
+ 		grep -v "index" |
+ 		test_decode_color >actual &&
+@@ -1385,6 +1389,11 @@ EOF
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success 'clean up whitespace-test colors' '
++	git config --unset color.diff.oldMoved &&
++	git config --unset color.diff.newMoved
++'
++
+ test_expect_success '--color-moved block at end of diff output respects MIN_ALNUM_COUNT' '
+ 	git reset --hard &&
+ 	>bar &&
+-- 
+2.15.0.rc1.560.g5f0609e481
 
-  [1/5]: t4015: refactor --color-moved whitespace test
-  [2/5]: t4015: check "negative" case for "-w --color-moved"
-  [3/5]: t4015: test the output of "diff --color-moved -b"
-  [4/5]: diff: fix whitespace-skipping with --color-moved
-  [5/5]: diff: handle NULs in get_string_hash()
-
- diff.c                     |  17 ++--
- t/t4015-diff-whitespace.sh | 213 +++++++++++++++++++++++++++++++++++++--------
- 2 files changed, 188 insertions(+), 42 deletions(-)
-
--Peff
