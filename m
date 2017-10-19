@@ -2,138 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.3 required=3.0 tests=BAYES_00,DKIM_ADSP_ALL,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
-	T_DKIM_INVALID shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D627B1FF32
-	for <e@80x24.org>; Thu, 19 Oct 2017 08:01:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 86D341FF32
+	for <e@80x24.org>; Thu, 19 Oct 2017 09:34:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751824AbdJSIBp (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Oct 2017 04:01:45 -0400
-Received: from alderaan.xwing.info ([91.134.139.206]:47258 "EHLO
-        alderaan.xwing.info" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751735AbdJSIBo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Oct 2017 04:01:44 -0400
-X-Greylist: delayed 493 seconds by postgrey-1.27 at vger.kernel.org; Thu, 19 Oct 2017 04:01:43 EDT
-Received: from bespin.xwing.info (iv2-technologies-gw1.ter1.prb.par.cust.as8218.eu [213.152.20.178])
-        by alderaan.xwing.info (Postfix) with ESMTPSA id 1D6EC6135B;
-        Thu, 19 Oct 2017 09:53:29 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=xwing.info; s=mail;
-        t=1508399609; bh=ES5LOx9HdChVHN7lzFBCOGe9XkTHlyyb+ZesG6zvlro=;
-        h=Subject:From:To:Cc:Date:In-Reply-To:References;
-        b=PVS+mZuPWTdRhg6RxuumZwVa7wEjDOWLYAvaASIdNkKd6gnCK75eSOriPL6I+vp7W
-         VObWbzXCXqchQ/PyZsFewVhKXAolmz1SymVmXX25KPH9bdmu6Z5ylHUzA6uTo22hut
-         7w4yjJ/2ET0HtqviPDX3KZ8N7Dk9QyHfK6QFQDpI=
-Message-ID: <1508399608.4529.10.camel@xwing.info>
-Subject: Re: [PATCH] use filetest pragma to work with ACL
-From:   Guillaume Castagnino <casta@xwing.info>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Date:   Thu, 19 Oct 2017 09:53:28 +0200
-In-Reply-To: <20171018212451.goqxu4qq6aqe4tpl@sigill.intra.peff.net>
-References: <0102015f310e24b9-b96378f3-a029-4110-80dd-e454522e2cb7-000000@eu-west-1.amazonses.com>
-         <20171018212451.goqxu4qq6aqe4tpl@sigill.intra.peff.net>
-Content-Type: multipart/mixed; boundary="=-oz9gt1rRIBFLUdaYD720"
-X-Mailer: Evolution 3.24.5 
-Mime-Version: 1.0
+        id S1752493AbdJSJej (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Oct 2017 05:34:39 -0400
+Received: from mailout2.samsung.com ([203.254.224.25]:44748 "EHLO
+        mailout2.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751865AbdJSJdk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Oct 2017 05:33:40 -0400
+Received: from epcas1p3.samsung.com (unknown [182.195.41.47])
+        by mailout2.samsung.com (KnoxPortal) with ESMTP id 20171019093339epoutp02b15c19acc508b227fac57ac63ca7f7be~u7usz7fnP0744407444epoutp02F;
+        Thu, 19 Oct 2017 09:33:39 +0000 (GMT)
+Received: from epsmges1p1.samsung.com (unknown [182.195.42.53]) by
+        epcas1p2.samsung.com (KnoxPortal) with ESMTP id
+        20171019093338epcas1p2ffa52be7f7711f8d3989495338e1443c~u7usb3SrE2606526065epcas1p26;
+        Thu, 19 Oct 2017 09:33:38 +0000 (GMT)
+Received: from epcas1p2.samsung.com ( [182.195.41.46]) by
+        epsmges1p1.samsung.com (Symantec Messaging Gateway) with SMTP id
+        ED.03.04439.27178E95; Thu, 19 Oct 2017 18:33:38 +0900 (KST)
+Received: from epsmgms2p1new.samsung.com (unknown [182.195.42.142]) by
+        epcas1p1.samsung.com (KnoxPortal) with ESMTP id
+        20171019093338epcas1p1ee5a0fb32991500373aa449af670e81e~u7usKHcPP1125811258epcas1p1P;
+        Thu, 19 Oct 2017 09:33:38 +0000 (GMT)
+X-AuditID: b6c32a35-8adff70000001157-13-59e87172079b
+Received: from epmmp1.local.host ( [203.254.227.16]) by
+        epsmgms2p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
+        61.62.06995.27178E95; Thu, 19 Oct 2017 18:33:38 +0900 (KST)
+Received: from [106.109.129.81] by mmp1.samsung.com (Oracle Communications
+        Messaging Server 7.0.5.31.0 64bit (built May  5 2014)) with ESMTPA id
+        <0OY2009PBD7UVT60@mmp1.samsung.com>; Thu, 19 Oct 2017 18:33:38 +0900 (KST)
+Subject: Re: [PATCH] commit: check result of resolve_ref_unsafe
+To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, pclouds@gmail.com, l.s.r@web.de,
+        avarab@gmail.com, krh@redhat.com, rctay89@gmail.com,
+        Ivan Arishchenko <i.arishchenk@samsung.com>,
+        Mikhail Labiuk <m.labiuk@samsung.com>
+From:   Andrey Okoshkin <a.okoshkin@samsung.com>
+Organization: Samsung RnD Institute Russia
+Message-id: <62255b66-67be-e6cf-92e9-bed92c6b2899@samsung.com>
+Date:   Thu, 19 Oct 2017 12:33:30 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+        Thunderbird/52.4.0
+MIME-version: 1.0
+In-reply-to: <20171019024919.ram3bzabt5fra2lc@sigill.intra.peff.net>
+Content-type: text/plain; charset="utf-8"; format="flowed"
+Content-language: en-GB
+Content-transfer-encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA02SWUwTURSGvZ1pZ6hULxXlCIkkNRpsFGniMhplCSTOgw9GTRSN4igjELbS
+        AUJ9UBQxWECwING6ABKC7AlUVpdI3UOBIpBAVYIhbFo3oiBxSzua9O275/z/PflPDk0oW6S+
+        dFxSKq9L4hJUMjnZYlkXuEGXMhUZVP1IzdRPvJYwhoFcCZOZP0AwzfYRxJzr7ZYw3XcLCObL
+        9eckk1vsQMz8+TyCKXnQRoXK2XbTG4qdyL+HWFv/avbTg0EZe8lcg9jZplWsfaKF3EMdku+I
+        5hPi0nndxuBj8tjy4RdIm0tlPPxoozJRv9SAPGjAm8Dyro8wIDmtxG0ISox5MvExh6C+2ogM
+        iHapam6GOw1K3IngezUrakYR3Lf9IpyNZTgEvnaUSZzsjcOgz/yYdIoI/ATB51t21zgZDoTe
+        hULKyUuxGl7N33KZFTgY5hrqXXUSr4HnC6Uu/XJ8EJ5ZqpCo8YL5orekkz1wBNwZeO/yEng7
+        TPzOlorsA09Hh5HI/tBc5yDEmFkUXM1iRY6AhvZBmcjLYOaZmRJD+kH/k51i+Qxk54y7FgE4
+        B8GsqZISGyFgNrTKxP+XwMdveVLRq4CcC0pRwoKtbujf2DCoPWuVistqlcDCUJasEPmb3OKY
+        3CKY3CKY3CKUIbIGreC1QmIML2i0mkCBSxTSkmICTyQnNiHXNak3t6Hint1dCNNI5algiycj
+        lVIuXdAndiGgCZW3InnPVKRSEc3pT/G65ChdWgIvdCE/mlT5KJY3Dh1U4hgulY/neS2v+9+V
+        0B6+mWhL5uK+9QXHixfVxuvPzPQ0VE1fOVo6ab7DbmCte3/ePlwX69UYUPdH3qy3Nvb476vo
+        vFyh/XGgqyHbhy9du82SEmDW1OjtVdbglUGdjpD90RGVNy6OnfQUjNNY87JoPC3qdJyH+kjG
+        LpuufDR4a/gHmgs1ctdwQckWx82RsY52FSnEcho1oRO4v2slEABJAwAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprIIsWRmVeSWpSXmKPExsVy+t9jAd2iwheRBg3vpSzWPrvDZNF1pZvJ
+        oqH3CrPF5tu3GC2azp9hsjiztZ/Z4uPsEywW3VPeMlr8aOlhtpi2bwe7A5fHzll32T2e9e5h
+        9Lh4Sdnj/b6rbB59W1YxenzeJOdx+9k2lgD2KC6blNSczLLUIn27BK6MhTdPMhZ0s1fsf3eR
+        vYHxEmsXIweHhICJxKq5zl2MXBxCAjsZJa40NLBCOA8ZJTZ8vM/SxcjJISxgL/Fp1wImEFtE
+        wFHiwpYjLCBFzALHGSWW/zjODNXOJHHp/zuwKjYBPYnzvyawg9j8AloSl3/MYwaxeQXsJL6v
+        WwsWZxFQlTjxaz4riC0qECHxvPk9K0SNoMSPyffANnMKuEisuPIarJdZwEziy8vDrBC2uMSx
+        +zcZIWx5ic1r3jJPYBSchaR9FpKWWUhaZiFpWcDIsopRMrWgODc9t9iowDAvtVyvODG3uDQv
+        XS85P3cTIzCith3W6tvBeH9J/CFGAQ5GJR5ejynPI4VYE8uKK3MPMUpwMCuJ8OYHvIgU4k1J
+        rKxKLcqPLyrNSS0+xCjNwaIkzns771ikkEB6YklqdmpqQWoRTJaJg1OqgbHritVm41TRKKvM
+        2ytnPXlYI3b7k2vNSmZNPXNl2WUdt+NfnAheWhZ77+eTjTftW1Y9V+PXfDn5EFdu+JWKsvQ5
+        V4Vsktat95cVsmk2dGDmnLR3yj9zs79/bghWnnbq2Js/sZb3iPcTG/YtK4ruLnjVd6z93p4p
+        r3d99HstM1XV+dWHvSxRK6OUWIozEg21mIuKEwGtgnrgpAIAAA==
+X-CMS-MailID: 20171019093338epcas1p1ee5a0fb32991500373aa449af670e81e
+X-Msg-Generator: CA
+X-Sender-IP: 182.195.42.142
+X-Local-Sender: =?UTF-8?B?QW5kcmV5IE9rb3Noa2luG1NSUi1TVyBUb29scyBMYWIb?=
+        =?UTF-8?B?7IK87ISx7KCE7J6QG0xlYWRpbmcgRW5naW5lZXI=?=
+X-Global-Sender: =?UTF-8?B?QW5kcmV5IE9rb3Noa2luG1NSUi1TVyBUb29scyBMYWIbU2Ft?=
+        =?UTF-8?B?c3VuZyBFbGVjdHJvbmljcxtMZWFkaW5nIEVuZ2luZWVy?=
+X-Sender-Code: =?UTF-8?B?QzEwG0NJU0hRG0MxMEdEMDFHRDAxMDE1Nw==?=
+CMS-TYPE: 101P
+X-CMS-RootMailID: 20171018170047epcas2p4310be357e11e194d6d08ac3bdc478ba3
+X-RootMTR: 20171018170047epcas2p4310be357e11e194d6d08ac3bdc478ba3
+References: <CGME20171018170047epcas2p4310be357e11e194d6d08ac3bdc478ba3@epcas2p4.samsung.com>
+        <0e396c24-167f-901e-9122-cdc17164ec1e@samsung.com>
+        <20171018183453.lr67zw455bkdmrlz@sigill.intra.peff.net>
+        <xmqqo9p4j7eu.fsf@gitster.mtv.corp.google.com>
+        <20171019024919.ram3bzabt5fra2lc@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+I also think it's a good idea to record the destination of the updated
+symref. But for now the most simple solution is just to catch the
+unreadable HEAD error.
+Maybe for the future improvement it would be nice to redesign
+print_summary passing some ref_transaction results to it.
 
---=-oz9gt1rRIBFLUdaYD720
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-
-Hi,
-
-Le mercredi 18 octobre 2017 à 17:24 -0400, Jeff King a écrit :
-> On Wed, Oct 18, 2017 at 07:55:31PM +0000, Guillaume Castagnino wrote:
-> 
-> > From: Guillaume Castagnino <casta@xwing.info>
-> > [...]
-> 
-> Stefan raised a few meta issues, all of which I agree with. But I had
-> some questions about the patch itself:
-> 
-> > diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> > index 9208f42ed1753..0ee7f304ce2b1 100755
-> > --- a/gitweb/gitweb.perl
-> > +++ b/gitweb/gitweb.perl
-> > @@ -3072,6 +3072,7 @@ sub git_get_projects_list {
-> >  				# only directories can be git
-> > repositories
-> >  				return unless (-d $_);
-> >  				# need search permission
-> > +				use filetest 'access';
-> >  				return unless (-x $_);
-> 
-> This "use" will unconditionally at compile-time (such as "compile" is
-> for perl, anyway). Which raises a few questions:
-> 
->   - would we want to use "require" instead to avoid loading when we
->     don't enter this function?
-
-I was under the impression that as this is a pragma affecting perl
-“compiler”, you have to always use “use”, not require, as the pragma
-initialisation has to be done before code is run.
-
->   - If the answer to the above is "no" (e.g., because we basically
->     always need it; I didn't check), should it go at the top of the
->     script with the other "use" directives?
-> 
->     I think this is a scoped pragma, so what you have here affects
-> only
->     this particular "-x". But wouldn't other uses of "-x" potentially
->     want the same benefit?
-
-I quickly grepped the code, I did not see other calls that could
-benefits from the pragma, but it could be indeed nice to move it at the
-top to avoid future issues with such tests and POSIX ACL.
-
->   - Do all relevant versions of perl ship with filetest? According to
->     Module::Corelist, it first shipped with perl 5.6. In general I
-> think
->     we treat that as a minimum for our perl scripts, though I do
-> notice
->     that the gitweb script says "use 5.008". I'm not sure how
-> realistic
->     that is.
-
-So the CGI already requires perl 5.8, so it’s fine I think.
-
-Attached a cleanup proposal and moving the use at the top.
-
-Thanks
-Guillaume
+19.10.2017 05:49, Jeff King wrote:
+> TBH, I think the "most right" thing would be to actually capture the ref
+> that HEAD points to when we actually make the commit, remember it, and
+> then report it here (the whole function of this code is just to say "I
+> made a commit on branch X"). But I don't know how much trouble it is
+> worth going to for that. It's buried behind a ref_transaction, and I
+> don't think builtin/commit.c ever sees the real name (though maybe it
+> would be a good feature of the transaction to record the destinations of
+> any symrefs we updated).
 
 -- 
-Guillaume Castagnino
-    casta@xwing.info / guillaume@castagnino.org
---=-oz9gt1rRIBFLUdaYD720
-Content-Disposition: attachment; filename="0001-gitweb-use-filetest-to-allow-ACLs.patch"
-Content-Type: text/x-patch; name="0001-gitweb-use-filetest-to-allow-ACLs.patch";
-	charset="UTF-8"
-Content-Transfer-Encoding: base64
-
-RnJvbSA0ZDVhMDgyOTcwMDYzYjM0ZDNkYmRmNWI5YTU3NzYyNDMxMDA1N2Q2IE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBHdWlsbGF1bWUgQ2FzdGFnbmlubyA8Y2FzdGFAeHdpbmcuaW5m
-bz4KRGF0ZTogVGh1LCAxOSBPY3QgMjAxNyAwOTozMjo0NiArMDIwMApTdWJqZWN0OiBbUEFUQ0hd
-IGdpdHdlYjogdXNlIGZpbGV0ZXN0IHRvIGFsbG93IEFDTHMKCkluIGNvbW1pdCA0NmExMzg1IChn
-aXR3ZWI6IHNraXAgdW5yZWFkYWJsZSBzdWJkaXJlY3RvcmllcywgMjAxNy0wNy0xOCkKd2UgZm9y
-Z290IHRvIGhhbmRsZSBub24tdW5peCBBQ0xzIGFzIHdlbGwuIEZpeCB0aGlzLgoKU2lnbmVkLW9m
-Zi1ieTogR3VpbGxhdW1lIENhc3RhZ25pbm8gPGNhc3RhQHh3aW5nLmluZm8+Ci0tLQogZ2l0d2Vi
-L2dpdHdlYi5wZXJsIHwgMiArKwogMSBmaWxlIGNoYW5nZWQsIDIgaW5zZXJ0aW9ucygrKQoKZGlm
-ZiAtLWdpdCBhL2dpdHdlYi9naXR3ZWIucGVybCBiL2dpdHdlYi9naXR3ZWIucGVybAppbmRleCA5
-MjA4ZjQyZWQuLjZhYzQ5ZWFmMyAxMDA3NTUKLS0tIGEvZ2l0d2ViL2dpdHdlYi5wZXJsCisrKyBi
-L2dpdHdlYi9naXR3ZWIucGVybApAQCAtMTAsNiArMTAsOCBAQAogdXNlIDUuMDA4OwogdXNlIHN0
-cmljdDsKIHVzZSB3YXJuaW5nczsKKyMgaGFuZGxlIEFDTCBpbiBmaWxlIGFjY2VzcyB0ZXN0cwor
-dXNlIGZpbGV0ZXN0ICdhY2Nlc3MnOwogdXNlIENHSSBxdyg6c3RhbmRhcmQgOmVzY2FwZUhUTUwg
-LW5vc3RpY2t5KTsKIHVzZSBDR0k6OlV0aWwgcXcodW5lc2NhcGUpOwogdXNlIENHSTo6Q2FycCBx
-dyhmYXRhbHNUb0Jyb3dzZXIgc2V0X21lc3NhZ2UpOwotLSAKMi4xNC4yCgo=
-
-
---=-oz9gt1rRIBFLUdaYD720--
-
+Best regards,
+Andrey Okoshkin
