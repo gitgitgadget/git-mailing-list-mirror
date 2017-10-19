@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E4F66202A2
-	for <e@80x24.org>; Thu, 19 Oct 2017 16:06:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D75C4202A2
+	for <e@80x24.org>; Thu, 19 Oct 2017 16:06:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754020AbdJSQGV (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Oct 2017 12:06:21 -0400
-Received: from mail-qt0-f196.google.com ([209.85.216.196]:49748 "EHLO
-        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753761AbdJSQGS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Oct 2017 12:06:18 -0400
-Received: by mail-qt0-f196.google.com with SMTP id k31so15061111qta.6
-        for <git@vger.kernel.org>; Thu, 19 Oct 2017 09:06:18 -0700 (PDT)
+        id S1754048AbdJSQGW (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Oct 2017 12:06:22 -0400
+Received: from mail-qk0-f193.google.com ([209.85.220.193]:55335 "EHLO
+        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753570AbdJSQGT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Oct 2017 12:06:19 -0400
+Received: by mail-qk0-f193.google.com with SMTP id x82so10973645qkb.12
+        for <git@vger.kernel.org>; Thu, 19 Oct 2017 09:06:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=g3j1gWYaj3A4RBXY4TmZKvmK97wirY4dSUnx211x14Y=;
-        b=UOOTcwwURZ8kqFid/sG81X0O5Wfa8SNQshtt34JFdpLsb2wKWp2xbbla4Rb+0Pihl6
-         5yMNvMGVag641ZDHMhtB3I6cxalKEV5H/SZT2D9KtAm2ntYwuWjs0Halu5THFQxbmT3M
-         +xWtrmkZ7GmyIhhQX9dgRW6+awBIiDwHlzMWboTgvoF7QfBG9HEbaYMmMeJwf4W7hVbh
-         FA5fgZbI3c0ZxSyHzt8YlDiZBzSlDvMg55iu2tXQ5bsRegHZwCbiSPBvHat/1ncw2NSp
-         +hJxzQZY5eIGxi3NEQvvktvjGstky3njBDB2UOT3flAjCIMSzOH7IkB/FLaDKCcTuYvL
-         ISzQ==
+        bh=wy/Ch3aooRHa29rlWLMfV674hGg6mPZe0jwOrN3dYPo=;
+        b=Ue+wA7fFH/u0oLX6Oy5ScNtoo3O+33LKhQlS7Ytx4nlvH9Rm4Xk0AYusr1qGxQUmwp
+         fzrSaIxHM0VbNwSBiD5XpkVO5P8CD/KZhdrYSzstsOTjO8gVklJ4VWFKt5Tjk+R3myhs
+         5ikO/1LqPh9RZf3dt2nZo1q8VCPciKhGDBK5SWToVCCUdseO5jNabPjj3vDZx0hfyqb5
+         NpnK+0F4l8qHygePa8ahBENLtspkR7qlKjZmgAUghQTlSqtbeTzSfezPH9xnYvteGrfN
+         8U6WYczhj3ZCXAHXCsIpqBClJThOK41Kp0Hv/Ce9ysi2J5D6o56YwpWWlwR+ZadRnb/T
+         zQ/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=g3j1gWYaj3A4RBXY4TmZKvmK97wirY4dSUnx211x14Y=;
-        b=FTqVLxE3VTJDFuhAQ94EhB85Ce4OhmeUDKQZ6G12wYORmHHw7cFp7PlIKHTZQmlEXC
-         h/Vws6x4L6PSmAfKjGVoWAEN2KaqmQDGpqLiQh+HELuJyzTRCld9y+aA6vxjfv/PV+Di
-         oEg7GCCAqBwfL5lfPk8/eRietjnYNqh5PdX1FOaHeitWrtSbghWa0oZN9YwGbi2NB67l
-         hdB4UQX66MJcNVRl6DAxqxxE2+H86JJ8uT9DDNRIohgEQvvjKiGrt8N/nT0lPrh/GDIK
-         Kt/7XBl4viX6Vfmj79YxSeI4X5Pd93vkUSJK7SrWYGmOyCYdBxe9P6NBUmIRaSbqPr8M
-         oDew==
-X-Gm-Message-State: AMCzsaXcJrudYQV+N0n/wLCupJbkjU6iyTTOcFlacw0YJ+FGTvr7x6bk
-        F6ayEH89B8Q7O2xSYxhLZvU=
-X-Google-Smtp-Source: ABhQp+ROPiUkEjS/PI36trjsOm/vr7rttVoXtDRFt+aYIPzDD/LU+jiqOI7z5MPdYPc7gHt4H9NwTg==
-X-Received: by 10.200.34.71 with SMTP id p7mr2951840qtp.81.1508429178193;
-        Thu, 19 Oct 2017 09:06:18 -0700 (PDT)
+        bh=wy/Ch3aooRHa29rlWLMfV674hGg6mPZe0jwOrN3dYPo=;
+        b=gT+xn4/NNzpL59WMxjuPFEbZb4KnRRwSfBs+qN811s3nPhxm+xJ0AoF726eTffMUH9
+         y3YMAo1KknbXLZSsv9uMPUhIm6cFYyyDTv23ypvrP70T5fTNi5NS3pabvEuF8+l5yGQU
+         sMOtf+u2P3OjNNM3fYRvXMilOieFXr9wem7MJTXgoIKdSPm+dQFtrvwFwcAHQfJd57D6
+         bOe9PPkKuIZVzV0zOr+wazA9kRWhnYfGMnXGRYZ0WS8wnZGwlCCQC4lCh7i8gLhoR93c
+         AyN0L9+k2aP3z24q7cf1Wq8my8TLLtx1zlxjt98XH2Flv5K40+1AliCixlIzJdWZgo/y
+         cajw==
+X-Gm-Message-State: AMCzsaXiEewIuqlZ+wxuAdJ3jriiXdGc9v1aUhWlZUokPwo4IbXxFAyF
+        6ZwtnU5zBtLKySEUZjm2kw4=
+X-Google-Smtp-Source: ABhQp+SagwwzblBaOUu6zu8+QEy7VL2r0nmxYJ9yHWYiBPHAM3SE6n35MRC2fCcZNL9n/jG1UZwXKg==
+X-Received: by 10.55.15.139 with SMTP id 11mr2595242qkp.141.1508429179119;
+        Thu, 19 Oct 2017 09:06:19 -0700 (PDT)
 Received: from localhost.corp.microsoft.com ([2001:4898:8010::76e])
-        by smtp.gmail.com with ESMTPSA id c13sm9377085qka.50.2017.10.19.09.06.17
+        by smtp.gmail.com with ESMTPSA id c13sm9377085qka.50.2017.10.19.09.06.18
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 19 Oct 2017 09:06:17 -0700 (PDT)
+        Thu, 19 Oct 2017 09:06:18 -0700 (PDT)
 From:   Jameson Miller <jameson.miller81@gmail.com>
 X-Google-Original-From: Jameson Miller <jamill@microsoft.com>
 To:     jameson.miller81@gmail.com
 Cc:     bmwill@google.com, git@vger.kernel.org, gitster@pobox.com,
         jamill@microsoft.com, peff@peff.net, sbeller@google.com
-Subject: [PATCH v3 2/4] status: report matching ignored and normal untracked
-Date:   Thu, 19 Oct 2017 12:05:59 -0400
-Message-Id: <20171019160601.9382-3-jamill@microsoft.com>
+Subject: [PATCH v3 3/4] status: document options to show matching ignored files
+Date:   Thu, 19 Oct 2017 12:06:00 -0400
+Message-Id: <20171019160601.9382-4-jamill@microsoft.com>
 X-Mailer: git-send-email 2.13.6
 In-Reply-To: <20171019160601.9382-1-jamill@microsoft.com>
 References: <20171005205443.206900-1-jameson.miller81@gmail.com>
@@ -65,52 +65,96 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teach status command to handle `--ignored=matching` with
-`--untracked-files=normal`
-
 Signed-off-by: Jameson Miller <jamill@microsoft.com>
 ---
- dir.c | 20 ++++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
+ Documentation/git-status.txt                      | 21 +++++++++++++++++-
+ Documentation/technical/api-directory-listing.txt | 27 +++++++++++++++++++----
+ 2 files changed, 43 insertions(+), 5 deletions(-)
 
-diff --git a/dir.c b/dir.c
-index b9af87eca9..20457724c0 100644
---- a/dir.c
-+++ b/dir.c
-@@ -1585,6 +1585,7 @@ static enum path_treatment treat_one_path(struct dir_struct *dir,
- {
- 	int exclude;
- 	int has_path_in_index = !!index_file_exists(istate, path->buf, path->len, ignore_case);
-+	enum path_treatment path_treatment;
+diff --git a/Documentation/git-status.txt b/Documentation/git-status.txt
+index 9f3a78a36c..fc282e0a92 100644
+--- a/Documentation/git-status.txt
++++ b/Documentation/git-status.txt
+@@ -97,8 +97,27 @@ configuration variable documented in linkgit:git-config[1].
+ 	(and suppresses the output of submodule summaries when the config option
+ 	`status.submoduleSummary` is set).
  
- 	if (dtype == DT_UNKNOWN)
- 		dtype = get_dtype(de, istate, path->buf, path->len);
-@@ -1631,8 +1632,23 @@ static enum path_treatment treat_one_path(struct dir_struct *dir,
- 		return path_none;
- 	case DT_DIR:
- 		strbuf_addch(path, '/');
--		return treat_directory(dir, istate, untracked, path->buf, path->len,
--				       baselen, exclude, pathspec);
-+		path_treatment = treat_directory(dir, istate, untracked,
-+						 path->buf, path->len,
-+						 baselen, exclude, pathspec);
-+		/*
-+		 * If 1) we only want to return directories that
-+		 * match an exclude pattern and 2) this directory does
-+		 * not match an exclude pattern but all of its
-+		 * contents are excluded, then indicate that we should
-+		 * recurse into this directory (instead of marking the
-+		 * directory itself as an ignored path).
-+		 */
-+		if (!exclude &&
-+		    path_treatment == path_excluded &&
-+		    (dir->flags & DIR_SHOW_IGNORED_TOO) &&
-+		    (dir->flags & DIR_SHOW_IGNORED_TOO_MODE_MATCHING))
-+			return path_recurse;
-+		return path_treatment;
- 	case DT_REG:
- 	case DT_LNK:
- 		return exclude ? path_excluded : path_untracked;
+---ignored::
++--ignored[=<mode>]::
+ 	Show ignored files as well.
+++
++The mode parameter is used to specify the handling of ignored files.
++It is optional: it defaults to 'traditional'.
+++
++The possible options are:
+++
++	- 'traditional' - Shows ignored files and directories, unless
++			  --untracked-files=all is specifed, in which case
++			  individual files in ignored directories are
++			  displayed.
++	- 'no'	        - Show no ignored files.
++	- 'matching'    - Shows ignored files and directories matching an
++			  ignore pattern.
+++
++When 'matching' mode is specified, paths that explicity match an
++ignored pattern are shown. If a directory matches an ignore pattern,
++then it is shown, but not paths contained in the ignored directory. If
++a directory does not match an ignore pattern, but all contents are
++ignored, then the directory is not shown, but all contents are shown.
+ 
+ -z::
+ 	Terminate entries with NUL, instead of LF.  This implies
+diff --git a/Documentation/technical/api-directory-listing.txt b/Documentation/technical/api-directory-listing.txt
+index 6c77b4920c..7fae00f44f 100644
+--- a/Documentation/technical/api-directory-listing.txt
++++ b/Documentation/technical/api-directory-listing.txt
+@@ -22,16 +22,20 @@ The notable options are:
+ 
+ `flags`::
+ 
+-	A bit-field of options (the `*IGNORED*` flags are mutually exclusive):
++	A bit-field of options:
+ 
+ `DIR_SHOW_IGNORED`:::
+ 
+-	Return just ignored files in `entries[]`, not untracked files.
++	Return just ignored files in `entries[]`, not untracked
++	files. This flag is mutually exclusive with
++	`DIR_SHOW_IGNORED_TOO`.
+ 
+ `DIR_SHOW_IGNORED_TOO`:::
+ 
+-	Similar to `DIR_SHOW_IGNORED`, but return ignored files in `ignored[]`
+-	in addition to untracked files in `entries[]`.
++	Similar to `DIR_SHOW_IGNORED`, but return ignored files in
++	`ignored[]` in addition to untracked files in
++	`entries[]`. This flag is mutually exclusive with
++	`DIR_SHOW_IGNORED`.
+ 
+ `DIR_KEEP_UNTRACKED_CONTENTS`:::
+ 
+@@ -39,6 +43,21 @@ The notable options are:
+ 	untracked contents of untracked directories are also returned in
+ 	`entries[]`.
+ 
++`DIR_SHOW_IGNORED_TOO_MODE_MATCHING`:::
++
++	Only has meaning if `DIR_SHOW_IGNORED_TOO` is also set; if
++	this is set, returns ignored files and directories that match
++	an exclude pattern. If a directory matches an exclude pattern,
++	then the directory is returned and the contained paths are
++	not. A directory that does not match an exclude pattern will
++	not be returned even if all of its contents are ignored. In
++	this case, the contents are returned as individual entries.
+++
++If this is set, files and directories that explicity match an ignore
++pattern are reported. Implicity ignored directories (directories that
++do not match an ignore pattern, but whose contents are all ignored)
++are not reported, instead all of the contents are reported.
++
+ `DIR_COLLECT_IGNORED`:::
+ 
+ 	Special mode for git-add. Return ignored files in `ignored[]` and
 -- 
 2.13.6
 
