@@ -2,116 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9D3841FF72
-	for <e@80x24.org>; Thu, 19 Oct 2017 05:25:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C17751FF72
+	for <e@80x24.org>; Thu, 19 Oct 2017 05:30:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750977AbdJSFZA (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Oct 2017 01:25:00 -0400
-Received: from cloud.peff.net ([104.130.231.41]:57266 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750777AbdJSFY7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Oct 2017 01:24:59 -0400
-Received: (qmail 1897 invoked by uid 109); 19 Oct 2017 05:25:00 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 19 Oct 2017 05:25:00 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6218 invoked by uid 111); 19 Oct 2017 05:25:04 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Thu, 19 Oct 2017 01:25:04 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 19 Oct 2017 01:24:57 -0400
-Date:   Thu, 19 Oct 2017 01:24:57 -0400
-From:   Jeff King <peff@peff.net>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org, orgads@gmail.com
+        id S1751087AbdJSFaN (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Oct 2017 01:30:13 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57265 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750947AbdJSFaM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Oct 2017 01:30:12 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 77113B6E3A;
+        Thu, 19 Oct 2017 01:30:11 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=F6UKcdiuI0PrPihAw6mWgxgQEnw=; b=S4uZRA
+        QzYRgSSYJ8ZMwcfLcNvGBCRTXy+89ExlrA3+r0y2CQCGeQydaUlOCXysFPuCUsEu
+        vv6g6Z2Cmrr61Ei/9U2r9QRfR33LUQsRSAjt8i/Aoqp/7Q3w0NPDV19aDS/WVMlQ
+        sXPelKGUpI2Zde0k3LZTtmOEqAi0Za5fKhiZo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=XunOIfcRqmXgj5veuM16N2T4wb5LMFTg
+        lSfKoJea+3JyUqY0M/IZy9lUq3AoTwJsuEBs0reNnfuMjQ5TT67jxOf4U8uE6Q5d
+        UCY1LJssMgqSU5mb5JGBCFfN+j++7QMqZUiCnjDF/qd5vgggVpt4j0zPcCbyGAAR
+        QO8Mmzz2s54=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 68897B6E39;
+        Thu, 19 Oct 2017 01:30:11 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CD136B6E35;
+        Thu, 19 Oct 2017 01:30:09 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
+        orgads@gmail.com
 Subject: Re: [PATCH] diff.c: increment buffer pointer in all code path
-Message-ID: <20171019052457.gqenoshgyjcw53tb@sigill.intra.peff.net>
 References: <20171012200536.m6oz4zrjcze3yw4i@sigill.intra.peff.net>
- <20171012233322.31203-1-sbeller@google.com>
- <20171013001837.43nx5paeqisbrflq@sigill.intra.peff.net>
- <20171013002057.froqi54olmhmah6b@sigill.intra.peff.net>
- <20171019050459.p2cx63yrxfwq4ta3@sigill.intra.peff.net>
+        <20171012233322.31203-1-sbeller@google.com>
+        <20171013001837.43nx5paeqisbrflq@sigill.intra.peff.net>
+        <20171013002057.froqi54olmhmah6b@sigill.intra.peff.net>
+        <20171019050459.p2cx63yrxfwq4ta3@sigill.intra.peff.net>
+        <20171019052457.gqenoshgyjcw53tb@sigill.intra.peff.net>
+Date:   Thu, 19 Oct 2017 14:30:08 +0900
+In-Reply-To: <20171019052457.gqenoshgyjcw53tb@sigill.intra.peff.net> (Jeff
+        King's message of "Thu, 19 Oct 2017 01:24:57 -0400")
+Message-ID: <xmqqzi8niu1r.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20171019050459.p2cx63yrxfwq4ta3@sigill.intra.peff.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 92C15318-B48E-11E7-A0B6-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 19, 2017 at 01:04:59AM -0400, Jeff King wrote:
+Jeff King <peff@peff.net> writes:
 
-> So. That leaves me with:
-> 
->   - I'm unclear on whether next_byte() is meant to return that trailing
->     NUL or not. I don't think it causes any bugs, but it certainly
->     confused me for a function to take a cp/endp pair of pointers, and
->     then dereference endp. It might be worth either fixing or clarifying
->     with a comment.
-> 
->   - Those loops to eat trailing whitespace are doing nothing. I'm not
->     sure if that all works out because next_byte() eats whitespaces or
->     not (I think not, because it doesn't eat whitespace for the
->     IGNORE_WHITESPACE_AT_EOL case). But I'm not quite sure what a test
->     would look like.
+> it does. It just adjusts our "end pointer" to point to the last valid
+> character in the string (rather than one past), which seems to be the
+> convention that those loops (and next_byte) expect.
 
-I had trouble constructing a test at first, but I think my test lines
-just weren't long enough to trigger the movement heuristics. If I switch
-to something besides seq, I can do:
+Yeah I am not sure if I like this comparison at the beginning of the
+function:
 
-  # any input that has reasonably sized lines
-  look e | head -50 >file
-  git add file
-  
-  perl -i -ne '
-    # pick up lines 20-25 to move to line 40, and
-    # add some trailing whitespace to them
-    if ($. >= 20 && $. <= 25) {
-      s/$/     /;
-      $hold .= $_;
-    } else {
-      print $hold if ($. == 40);
-      print;
-    }
-  ' file
+        static int next_byte(const char **cp, const char **endp,
+                             const struct diff_options *diffopt)
+        {
+                int retval;
 
-  git diff --color-moved --ignore-space-at-eol
+                if (*cp > *endp)
+                        return -1;
 
-I think that _should_ show the block as moved, but it doesn't. But if I
-apply this patch:
+but it says endp _is_ part of valid input, contrary to my intuition.
 
-diff --git a/diff.c b/diff.c
-index 93dccd1817..375d9cf447 100644
---- a/diff.c
-+++ b/diff.c
-@@ -743,8 +743,8 @@ static int moved_entry_cmp(const struct diff_options *diffopt,
- 			   const struct moved_entry *b,
- 			   const void *keydata)
- {
--	const char *ap = a->es->line, *ae = a->es->line + a->es->len;
--	const char *bp = b->es->line, *be = b->es->line + b->es->len;
-+	const char *ap = a->es->line, *ae = a->es->line + a->es->len - 1;
-+	const char *bp = b->es->line, *be = b->es->line + b->es->len - 1;
- 
- 	if (!(diffopt->xdl_opts & XDF_WHITESPACE_FLAGS))
- 		return a->es->len != b->es->len  || memcmp(ap, bp, a->es->len);
-@@ -771,7 +771,7 @@ static unsigned get_string_hash(struct emitted_diff_symbol *es, struct diff_opti
- {
- 	if (o->xdl_opts & XDF_WHITESPACE_FLAGS) {
- 		static struct strbuf sb = STRBUF_INIT;
--		const char *ap = es->line, *ae = es->line + es->len;
-+		const char *ap = es->line, *ae = es->line + es->len - 1;
- 		int c;
- 
- 		strbuf_reset(&sb);
+And your change to the initialization of ae/be in moved_entry_cmp()
+makes it consistent with it, I think.
 
-it does. It just adjusts our "end pointer" to point to the last valid
-character in the string (rather than one past), which seems to be the
-convention that those loops (and next_byte) expect.
-
--Peff
+But doesn't it mean ae computation in get_string_hash() also needs a
+massaging?
