@@ -2,73 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 13F0B1FF72
-	for <e@80x24.org>; Thu, 19 Oct 2017 01:55:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D7C961FF72
+	for <e@80x24.org>; Thu, 19 Oct 2017 02:49:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751498AbdJSBzA (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Oct 2017 21:55:00 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52961 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751091AbdJSBy6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Oct 2017 21:54:58 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 86D96B86CA;
-        Wed, 18 Oct 2017 21:54:57 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=bGSUsLGm+72mjEFKmXt6kCkP52M=; b=YKCv+X
-        H83xHEnx1CFYUch5f8KGQpiyEe+5uQUUY6Ez+rkkATscghX3cD6w9/JbqIQ+9ccG
-        m587zGTWyxkMINMx0ephl7hyco8OMh3zcg0v4uoWDlMU4u3lJm8fEjgnmqdIwAAF
-        XKR88AOnT30qex873ywWHFzsoEft+egrQ7E+c=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=giGEKDBykY2ygs3p0EIOqng+6vYBr6TW
-        crUbaxyrYSNoejMqXLGYmqzZCXVlqYs922JqYxYAY4Mf571/rlfT+XgA8uOar/lS
-        aT1Z0btBakb8QAvruXyrC764w6hPVsGx98hCnpdCGq9pVEZ+d4ADZOQTIsRgKdps
-        grtDbMRxuzc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7ECD0B86C9;
-        Wed, 18 Oct 2017 21:54:57 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id ED433B86C8;
-        Wed, 18 Oct 2017 21:54:56 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     orgads@gmail.com
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] name-rev: Fix tag lookup on repository with mixed types of tags
-References: <20171018132420.4577-1-orgads@gmail.com>
-Date:   Thu, 19 Oct 2017 10:54:55 +0900
-In-Reply-To: <20171018132420.4577-1-orgads@gmail.com> (orgads@gmail.com's
-        message of "Wed, 18 Oct 2017 16:24:20 +0300")
-Message-ID: <xmqqefpzkikw.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751649AbdJSCtW (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Oct 2017 22:49:22 -0400
+Received: from cloud.peff.net ([104.130.231.41]:57198 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751643AbdJSCtV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Oct 2017 22:49:21 -0400
+Received: (qmail 28957 invoked by uid 109); 19 Oct 2017 02:49:21 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 19 Oct 2017 02:49:21 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 5506 invoked by uid 111); 19 Oct 2017 02:49:25 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Wed, 18 Oct 2017 22:49:25 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Oct 2017 22:49:19 -0400
+Date:   Wed, 18 Oct 2017 22:49:19 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Andrey Okoshkin <a.okoshkin@samsung.com>, git@vger.kernel.org,
+        pclouds@gmail.com, l.s.r@web.de, avarab@gmail.com, krh@redhat.com,
+        rctay89@gmail.com, Ivan Arishchenko <i.arishchenk@samsung.com>,
+        Mikhail Labiuk <m.labiuk@samsung.com>
+Subject: Re: [PATCH] commit: check result of resolve_ref_unsafe
+Message-ID: <20171019024919.ram3bzabt5fra2lc@sigill.intra.peff.net>
+References: <CGME20171018170047epcas2p4310be357e11e194d6d08ac3bdc478ba3@epcas2p4.samsung.com>
+ <0e396c24-167f-901e-9122-cdc17164ec1e@samsung.com>
+ <20171018183453.lr67zw455bkdmrlz@sigill.intra.peff.net>
+ <xmqqo9p4j7eu.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 82155244-B470-11E7-B722-575F0C78B957-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqo9p4j7eu.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-orgads@gmail.com writes:
+On Thu, Oct 19, 2017 at 09:41:29AM +0900, Junio C Hamano wrote:
 
-> From: Orgad Shaneh <orgads@gmail.com>
->
-> Commit 7550424804 (name-rev: include taggerdate in considering the best
-> name) introduced a bug in name-rev.
-> ...
->  builtin/name-rev.c | 7 ++++---
->  1 file changed, 4 insertions(+), 3 deletions(-)
+> Jeff King <peff@peff.net> writes:
+> 
+> > Tangential to your patch, I also wondered why we did not pass
+> > RESOLVE_REF_READING to resolve_ref_unsafe(). I think the answer is that
+> > for symref lookups, we normally don't pass it so that we can handle
+> > dangling symrefs. Of course we _just_ wrote HEAD ourselves, so we'd
+> > expect it to exist, so it shouldn't really matter either way.
+> 
+> If we do expect it to exist, shouldn't we checking with READING and
+> catching a funny situation if it arises?
 
-Can you update a test to protect the change this patch makes from
-future breakages?  That would also demonstrate how the current code
-is broken and this patch improves the situation, as I am having a
-bit of trouble seeing why this change is needed.
+Maybe. In the normal case it would not matter. If we _do_ find it gone,
+I guess that is a sign that somebody is racing with us and changed HEAD
+after we made the commit.
 
-Thanks.
+TBH, I think the "most right" thing would be to actually capture the ref
+that HEAD points to when we actually make the commit, remember it, and
+then report it here (the whole function of this code is just to say "I
+made a commit on branch X"). But I don't know how much trouble it is
+worth going to for that. It's buried behind a ref_transaction, and I
+don't think builtin/commit.c ever sees the real name (though maybe it
+would be a good feature of the transaction to record the destinations of
+any symrefs we updated).
+
+-Peff
