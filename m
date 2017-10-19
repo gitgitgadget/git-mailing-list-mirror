@@ -2,71 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D6CEB202DD
-	for <e@80x24.org>; Thu, 19 Oct 2017 20:32:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9EBC8202DD
+	for <e@80x24.org>; Thu, 19 Oct 2017 20:54:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753958AbdJSUcw (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Oct 2017 16:32:52 -0400
-Received: from cloud.peff.net ([104.130.231.41]:58230 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1752743AbdJSUcv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Oct 2017 16:32:51 -0400
-Received: (qmail 3131 invoked by uid 109); 19 Oct 2017 20:32:51 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 19 Oct 2017 20:32:51 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12058 invoked by uid 111); 19 Oct 2017 20:32:55 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Thu, 19 Oct 2017 16:32:55 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 19 Oct 2017 16:32:49 -0400
-Date:   Thu, 19 Oct 2017 16:32:49 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Thomas Rikl <trikl@online.de>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [Alt. PATCH] ls-remote: deprecate -h as short for --heads
-Message-ID: <20171019203249.76uu3b6ferquitcr@sigill.intra.peff.net>
-References: <63fe2a84-d991-9165-32c0-8087d8513ce6@online.de>
- <CAN0heSpPWWdWY4d1wCdRH8TjcmD3kAiSffL0-_9kJWkm5P2EkA@mail.gmail.com>
- <4d110305-0826-6fd1-91a5-c1ebd0b1e80b@web.de>
- <774f08bd-3172-0083-1544-e5f68f6798fa@web.de>
- <xmqqk1ztmkbn.fsf@gitster.mtv.corp.google.com>
- <26112a15-f02c-a910-c8bb-794ca84dc1e5@web.de>
+        id S1752483AbdJSUyR (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Oct 2017 16:54:17 -0400
+Received: from mail-qt0-f195.google.com ([209.85.216.195]:50216 "EHLO
+        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752084AbdJSUyQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Oct 2017 16:54:16 -0400
+Received: by mail-qt0-f195.google.com with SMTP id d9so9349564qtd.7
+        for <git@vger.kernel.org>; Thu, 19 Oct 2017 13:54:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=h+g06y1MkrovXJcCJsvFjOgY2fJlK4TrqQdVnp/z7ag=;
+        b=saERWCXGt4q0WkwyB8MZLl17t2UM22li70Zlg15vBwjBngxoJxQqVqPKu0yRmYuBn7
+         qrRDU0mcPQATLMMwiSbJBOhR6WIpiz1welPrDCfAaUfg0zuHw+JwKmPdSlzMSXeel0d8
+         ck8T01R/dPp/zuX+//Kn4BxCBmhL0hTWll1i9CSdlxWs4fEXS/FyuaDOQblLdat6PYfH
+         /CGl0tNjb3t4KM08n5tHN87aAbM063J4JD8Uy0MZrjP3MNEnAx79d/dQlKMs4TljunGn
+         mB/TX6nb3z0cTr+cnMayxpKzoSY90qXet+Cs9bSxW0lVUdfq2z2OMK+BYg5t3AvOmgBH
+         mjEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=h+g06y1MkrovXJcCJsvFjOgY2fJlK4TrqQdVnp/z7ag=;
+        b=IbmHLkyZq7QU/ELlHNTBSphvnSAxAiL/0GcEb32xLsyCp15X92IVIxybmrIpx8xjfn
+         9LRe1PWp/crQnmBtbSL9uK77zTDqlwG+KwuTwPvxSwAhp+kHgOdYV56MmjJhxt9vkBWp
+         4nYvVxWm/QhfadfJLLCyY9MVNv23BTto/fvcUBBaE4Z5aNouhIQHvNG2NIpXFitb3SdE
+         uNmaCSxFjJyseN5QJrzlJXSavAMWSMrsR2DVFrvH6WssIsyOtWCojolQmGOU3a6w9rLj
+         YZlzdO67oUcupT81+8CaEnhejUcfpEcwRxJ9dH5IwLRT7k/Ni0sG+GWUnXLTJivrjrJB
+         D2wQ==
+X-Gm-Message-State: AMCzsaVuQVyy90a3ppzxlF9sOG2FOPyLnR3UUhXMFVU48YmxZMb6qiba
+        LzoHNx1Kq92uMFuVDDxLm93rVJyclZsBih+pcvqxBA==
+X-Google-Smtp-Source: ABhQp+RfoqwdpFn8nlzEPuwRjXyVLH5CzDHy1pLVMB2HPXoXY00Fe9xYrP2pVhbmUeTxg10ad4QTuF5vMfI/c5Ke/hI=
+X-Received: by 10.200.47.77 with SMTP id k13mr3617907qta.298.1508446455859;
+ Thu, 19 Oct 2017 13:54:15 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <26112a15-f02c-a910-c8bb-794ca84dc1e5@web.de>
+Received: by 10.140.102.70 with HTTP; Thu, 19 Oct 2017 13:54:15 -0700 (PDT)
+In-Reply-To: <20171019202556.hkz4r7hq4tlkjhvh@sigill.intra.peff.net>
+References: <20171019202326.grovyfsragl2d7xx@sigill.intra.peff.net> <20171019202556.hkz4r7hq4tlkjhvh@sigill.intra.peff.net>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 19 Oct 2017 13:54:15 -0700
+Message-ID: <CAGZ79kZyx5tezrTN2Y26G=0E4VaXyQSODFK6=19ziSHprfDLsQ@mail.gmail.com>
+Subject: Re: [PATCH 2/5] t4015: check "negative" case for "-w --color-moved"
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Orgad Shaneh <orgads@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 19, 2017 at 08:26:47PM +0200, René Scharfe wrote:
+On Thu, Oct 19, 2017 at 1:25 PM, Jeff King <peff@peff.net> wrote:
+> We test that lines with whitespace changes are not found by
+> "--color-moved" by default, but are found if "-w" is added.
+> Let's add one more twist: a line that has non-whitespace
+> changes should not be marked as a pure move.
+>
+> This is perhaps an obvious case for us to get right (and we
+> do), but as we add more whitespace tests, they will form a
+> pattern of "make sure this case is a move and this other
+> case is not".
+>
+> Note that we have to add a line to our moved block, since
+> having a too-small block doesn't trigger the "moved"
+> heuristics.  And we also add a line of context to ensure
+> that there's more context lines than moved lines (so the
+> diff shows us moving the lines up, rather than moving the
+> context down).
+>
+> Signed-off-by: Jeff King <peff@peff.net>
 
-> diff --git a/Documentation/git-ls-remote.txt b/Documentation/git-ls-remote.txt
-> index 5f2628c8f8..82622e7fbc 100644
-> --- a/Documentation/git-ls-remote.txt
-> +++ b/Documentation/git-ls-remote.txt
-> @@ -29,6 +29,9 @@ OPTIONS
->  	These options are _not_ mutually exclusive; when given
->  	both, references stored in refs/heads and refs/tags are
->  	displayed.
-> ++
-> +*NOTE*: -h without any other parameters shows a short help text instead
-> +of any refs.
+This patch is
+Reviewed-by: Stefan Beller <sbeller@google.com>
 
-Yuck. This "we only treat -h as special in certain cases" rule is
-sufficiently magical that I don't think we want to advertise and lock
-ourselves into it.
-
--Peff
+Thanks!
