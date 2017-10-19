@@ -2,423 +2,163 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 537F7202DD
-	for <e@80x24.org>; Thu, 19 Oct 2017 18:11:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 26930202A2
+	for <e@80x24.org>; Thu, 19 Oct 2017 18:27:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753628AbdJSSLV (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Oct 2017 14:11:21 -0400
-Received: from mail-it0-f67.google.com ([209.85.214.67]:52748 "EHLO
-        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753596AbdJSSLS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Oct 2017 14:11:18 -0400
-Received: by mail-it0-f67.google.com with SMTP id j140so10774647itj.1
-        for <git@vger.kernel.org>; Thu, 19 Oct 2017 11:11:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=vI6/lLIdcw2DBPIF+v0rF5WUqWU971gf5O3Y6yJn5iQ=;
-        b=GNWIadvgEJ6oODKaGV56PKOfU7MlgQIbYjFUDKh3lCVQcl52IQecXkNGpVgWK3OkCh
-         jSBQn613BnddvMVlwxl+GVjX1g6VOVvRXER3lap0k6LeWC6wr20DoOufLTwSLxJg2c/d
-         pOcmtok9tsE+WLOHrC5oCmNAyieVwuxcwcwCkRjoktEnwWsv5ZCjS3tghT8frdRkJ4Hg
-         4kc3qKAFVghUR4Qplx68jhwK5U6/FmGI8Pnhp3sq0kQ4zi17W//TevnaB7Fkam4uT7uA
-         SkIK/sIVZGGnwVzfPGC75WIUevIYoq/Jd4ItBtfbq+nKwGitgWRE51BOFDLse5XrfQko
-         vCsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=vI6/lLIdcw2DBPIF+v0rF5WUqWU971gf5O3Y6yJn5iQ=;
-        b=WReuETW6ApRfyBgjSEMMDQCi6lXKbe36y3R/CwcbP0tTp6nuOsJ07AYqSKH3MySccF
-         ILaCRYBv2WrgSBWHd2mp9ZAJLeAMCEYvX7Ow7kfubiu5FFcr7UgNzYl54EhG7d20HV3/
-         BlzvNvvy3T5g2jR9O8/HPhdpb+0skZgUvIBKNJVhL+0lN/3dy9VkxI1gKIPF2aJkrt+d
-         mf9YlT7qqkvO3IcNUeoAdBk+flMSeprbaYyOG2wFtMa+QwgAryQ0mNzttEnV+NiJsSwp
-         F7M8nr0wg0MhFeGRltoTbh5/34OzVgBtm+y9f374/v9DRfoyXdjmyt12dZXFy3pPypha
-         hmgA==
-X-Gm-Message-State: AMCzsaVfQxghRAfFI7GQMQe378rhO39a+osgRo+v5qmw0dgUHd8/xSHB
-        IClDUEKxjn6Go/QHjThTm2vVRw==
-X-Google-Smtp-Source: ABhQp+SiU/CntRK52p4Cv1mL6C1epuHhpWlNrZ/nTI3yug8fMfpogOVm9+aaUAEg4BKV/VWpNsEoZA==
-X-Received: by 10.36.23.215 with SMTP id 206mr3349397ith.62.1508436676713;
-        Thu, 19 Oct 2017 11:11:16 -0700 (PDT)
-Received: from localhost ([2620:0:100e:422:c825:6c3d:e3fe:7438])
-        by smtp.gmail.com with ESMTPSA id y132sm5627694ioy.69.2017.10.19.11.11.15
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 19 Oct 2017 11:11:15 -0700 (PDT)
-From:   Stefan Beller <sbeller@google.com>
-To:     gitster@pobox.com
-Cc:     Jens.Lehmann@web.de, bmwill@google.com, git@vger.kernel.org,
-        hvoigt@hvoigt.net, jrnieder@gmail.com, sbeller@google.com
-Subject: [PATCH 2/2] fetch, push: keep separate lists of submodules and gitlinks
-Date:   Thu, 19 Oct 2017 11:11:09 -0700
-Message-Id: <20171019181109.27792-2-sbeller@google.com>
-X-Mailer: git-send-email 2.14.0.rc0.3.g6c2e499285
-In-Reply-To: <20171019181109.27792-1-sbeller@google.com>
-References: <xmqqwp3sj7ov.fsf@gitster.mtv.corp.google.com>
- <20171019181109.27792-1-sbeller@google.com>
+        id S1752517AbdJSS1V (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Oct 2017 14:27:21 -0400
+Received: from mout.web.de ([217.72.192.78]:53801 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752069AbdJSS1V (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Oct 2017 14:27:21 -0400
+Received: from [192.168.178.36] ([91.20.51.19]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LtWsC-1d6Vaq48iy-010sx7; Thu, 19
+ Oct 2017 20:26:53 +0200
+Subject: Re: [Alt. PATCH] ls-remote: deprecate -h as short for --heads
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
+        Thomas Rikl <trikl@online.de>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>
+References: <63fe2a84-d991-9165-32c0-8087d8513ce6@online.de>
+ <CAN0heSpPWWdWY4d1wCdRH8TjcmD3kAiSffL0-_9kJWkm5P2EkA@mail.gmail.com>
+ <4d110305-0826-6fd1-91a5-c1ebd0b1e80b@web.de>
+ <774f08bd-3172-0083-1544-e5f68f6798fa@web.de>
+ <xmqqk1ztmkbn.fsf@gitster.mtv.corp.google.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <26112a15-f02c-a910-c8bb-794ca84dc1e5@web.de>
+Date:   Thu, 19 Oct 2017 20:26:47 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
+MIME-Version: 1.0
+In-Reply-To: <xmqqk1ztmkbn.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:9W9nuJGSkMw18d8bgXRM81xsQQCBr/q3bgaqrgsaQtC4e+vfsLb
+ YnuOd+ZWE4hivBg0FpzhTCMu5J2li8OzUK1OfgpoLkkOqP2zQ0r20L+3Lt3591IJ7iI6B0R
+ c/C7fJz8mRuXyCcY9QSZfPo9VwZ16cM89k9wBE1bWv/BwHNadzm+T55bUo34iN2eQ/zHM8R
+ N0um4n+mavZpX6ewJatkA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:os+NmhJwur0=:/6td1Ge8+d3QNsgNnyCab6
+ HcTLGk4yS3KFS0SR7XKXPQ6ZTQcdlxufZRTUDInJv11zTKD4M8EGkkcOsETTFS53tH83zCF0P
+ SrzwydwBSwSxU3tnQszI81x7HXMDze+DHNKzk8IgiX5mJqYrB5G4QDvuB6IytUWwuQP9A+lQ3
+ Z0HyihAZhXYV1DTr0G0TUk1EUiFxRpjnMo3thyJvvPqgaXrik3Z5ZiZrvFnzESol14eQY7pxC
+ QrlUa4p/NbYZfBHnN2AEf63KxeFvFG4nMsZhRlD/OmHN2Q3XxZ4gahK6H1tt0l0zoq/ADjwYp
+ KwQbADRXL/mAWnZ5qGz9d9p+F1+fes67CDKVzYXBzmvyAOjCMFQQIgco1ht5/YsPvDZxEGZNL
+ q3wcchbF9t0sVSwJkCMvyEe6MlbFNLYFpBia4Do5sbzGI2Nto4UlMx7DiIehcYa8tkGhkxedl
+ qn5DRrVHk+iRrNcgWutDwDRRXimrTqdmGimGKy1Xpdu3H68oZ1I1TjUaswfLjs8ue4yomwSlr
+ zjE36l7sfflwYWXfJDPYRHYaiGV3v1lxnZsmkOrJOCs7JZ9TIIPa82aA3+zkNBJyorcCvzKt2
+ AWoHNJG/9z8A1Prc+lHDJcnwab+SiL0WkBBeK7KEe+i0LAZWb9fYTQtVvj6elmoCccp5sLIjv
+ ZxANDZoETVWSxNGybH6IGicA4l3lgBm3NYnjGRCFvKl8F+VwUjNBBkktC3XjTnSyYNrieTt0D
+ aOkPOH3etb+p2sTPOMoFrA5kBA9cSjhvZK559+9O332dsDgGyo95UWedFz8nbN+hJBhsn2BiD
+ 3vzg+L/uZ49JTkJCSxZDdDODdBFJtxd2pfL14DTORVV2Gj+pRE=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently when fetching we collect the names of submodules to be fetched
-in a list. As we also want to support fetching 'gitlinks, that happen to
-have a repo checked out at the right place', we'll just pretend that these
-are submodules. We do that by assuming their path is their name. This in
-turn can yield collisions between the name-namespace and the
-path-namespace. (See the previous test for a demonstration.)
+Am 18.10.2017 um 01:22 schrieb Junio C Hamano:
+> René Scharfe <l.s.r@web.de> writes:
+> 
+>> Stop advertising -h as the short equivalent of --heads, because it's
+>> used for showing a short help text for almost all other git commands.
+>> Since the ba5f28bf79 (ls-remote: use parse-options api) it has only
+>> been working when used together with other parameters anyway.
+>>
+>> Signed-off-by: Rene Scharfe <l.s.r@web.de>
+>> ---
+>> That would be step on the way towards more consistent command line
+>> switches, in the same vein as d69155119 (t0012: test "-h" with
+>> builtins).
+> 
+> Sorry, but I am not sure whom this and the other approach are trying
+> to help.
+> 
+> The rule we have currently seems to be that "git cmd -h" (no other
+> arguments) consistently gives a short help, and if a subcommand
+> supports an option "-h" specific to it that is not about giving a
+> short help, the caller needs to be aware of it to invoke the option,
+> by making sure that there is some other arguments on the command
+> line if "-h" form of that subcommand specific option is used, by
+> doing e.g. "git ls-remote -h origin" or "git ls-remote --head".
+> 
+> I can see that this "alternative" approach makes it less convenent
+> for folks who have followed that rule by hiding "-h" (with the
+> intention of deprecating and possibly removing it in the future) and
+> encouraging (and later foring) "--head" to be used instead.
+> 
+> The other approach burdens new users by changing the rule to "some
+> subcommands that have their own '-h' option cannot be asked for a
+> brief usage with 'git cmd -h'".  But the thing is, these new users
+> who do not know which subcommands do have their own '-h' and which
+> ones do not are the ones that benefit most from the consistent "'git
+> cmd -h' with no other argument gets short help" rule.
 
-This patch rewrites the code such that we treat the 'real submodule' case
-differently from the 'gitlink, but ok' case. This introduces a bit
-of code duplication, but gets rid of the confusing mapping between names
-and paths.
+They would help by aligning documentation and code, at a price.  But
+of course there is another way to do that -- I just didn't see it the
+other day.  We don't have to take anything away:
 
-The test is incomplete as the long term vision is not achieved yet.
-(which would be fetching both the renamed submodule as well as
-the gitlink thing, putting them in place via e.g. git-pull)
+-- >8 --
+Subject: [PATCH] ls-remote: document behavior of lone parameter -h
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
+Reported-by: Thomas Rikl <trikl@online.de>
+Analyzed-by: Martin Ågren <martin.agren@gmail.com>
+Analyzed-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
 ---
+ Documentation/git-ls-remote.txt | 10 ++++++++++
+ builtin/ls-remote.c             |  5 ++++-
+ 2 files changed, 14 insertions(+), 1 deletion(-)
 
- Heiko,
- Junio,
-
- I assumed the code would ease up a lot more, but now I am undecided if
- I want to keep arguing as the code is not stopping to be ugly. :)
+diff --git a/Documentation/git-ls-remote.txt b/Documentation/git-ls-remote.txt
+index 5f2628c8f8..82622e7fbc 100644
+--- a/Documentation/git-ls-remote.txt
++++ b/Documentation/git-ls-remote.txt
+@@ -29,6 +29,9 @@ OPTIONS
+ 	These options are _not_ mutually exclusive; when given
+ 	both, references stored in refs/heads and refs/tags are
+ 	displayed.
+++
++*NOTE*: -h without any other parameters shows a short help text instead
++of any refs.
  
- The idea is to treat submodule and gitlinks separately, with submodules
- supporting renames, and gitlinks as a historic artefact.
+ --refs::
+ 	Do not show peeled tags or pseudorefs like HEAD	in the output.
+@@ -89,6 +92,13 @@ EXAMPLES
+ 	f25a265a342aed6041ab0cc484224d9ca54b6f41	refs/tags/v0.99.1
+ 	c5db5456ae3b0873fc659c19fafdde22313cc441	refs/tags/v0.99.2
+ 	7ceca275d047c90c0c7d5afb13ab97efdf51bd6e	refs/tags/v0.99.3
++	$ git ls-remote -hh
++	From https://git.kernel.org/pub/scm/git/git.git/
++	4c2224e83951a685185bb8c1f83b28e22fee0e27	refs/heads/maint
++	5fe978a5381f1fbad26a80e682ddd2a401966740	refs/heads/master
++	76aedb4517c834be2dc89efb5f9d15908e324422	refs/heads/next
++	c781a84b5204fb294c9ccc79f8b3baceeb32c061	refs/heads/pu
++	5d38b589ccc7a8355c62f1577865df5b8216c00d	refs/heads/todo
  
- Sorry for the noise about code ugliness.
- 
- Thanks,
- Stefan
- 
-
- submodule.c                 | 168 +++++++++++++++++++++-----------------------
- t/t5526-fetch-submodules.sh |   1 -
- 2 files changed, 81 insertions(+), 88 deletions(-)
-
-diff --git a/submodule.c b/submodule.c
-index 82d206eb65..115df82f32 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -22,6 +22,7 @@
- 
- static int config_update_recurse_submodules = RECURSE_SUBMODULES_OFF;
- static struct string_list changed_submodule_names = STRING_LIST_INIT_DUP;
-+static struct string_list changed_gitlink_paths = STRING_LIST_INIT_DUP;
- static int initialized_fetch_ref_tips;
- static struct oid_array ref_tips_before_fetch;
- static struct oid_array ref_tips_after_fetch;
-@@ -674,11 +675,11 @@ const struct submodule *submodule_from_ce(const struct cache_entry *ce)
- }
- 
- static struct oid_array *submodule_commits(struct string_list *submodules,
--					   const char *name)
-+					   const char *key)
- {
- 	struct string_list_item *item;
- 
--	item = string_list_insert(submodules, name);
-+	item = string_list_insert(submodules, key);
- 	if (item->util)
- 		return (struct oid_array *) item->util;
- 
-@@ -688,33 +689,20 @@ static struct oid_array *submodule_commits(struct string_list *submodules,
- }
- 
- struct collect_changed_submodules_cb_data {
--	struct string_list *changed;
--	const struct object_id *commit_oid;
--};
-+	/* used for submodules, supports renames: */
-+	struct string_list *changed_by_name;
- 
--/*
-- * this would normally be two functions: default_name_from_path() and
-- * path_from_default_name(). Since the default name is the same as
-- * the submodule path we can get away with just one function which only
-- * checks whether there is a submodule in the working directory at that
-- * location.
-- */
--static const char *default_name_or_path(const char *path_or_name)
--{
--	int error_code;
-+	/* support old 'gitlink' with repo in-place, no rename support*/
-+	struct string_list *changed_by_path;
- 
--	if (!is_submodule_populated_gently(path_or_name, &error_code))
--		return NULL;
--
--	return path_or_name;
--}
-+	const struct object_id *commit_oid;
-+};
- 
- static void collect_changed_submodules_cb(struct diff_queue_struct *q,
- 					  struct diff_options *options,
- 					  void *data)
- {
- 	struct collect_changed_submodules_cb_data *me = data;
--	struct string_list *changed = me->changed;
- 	const struct object_id *commit_oid = me->commit_oid;
- 	int i;
- 
-@@ -722,42 +710,35 @@ static void collect_changed_submodules_cb(struct diff_queue_struct *q,
- 		struct diff_filepair *p = q->queue[i];
- 		struct oid_array *commits;
- 		const struct submodule *submodule;
--		const char *name;
- 
- 		if (!S_ISGITLINK(p->two->mode))
- 			continue;
- 
- 		submodule = submodule_from_path(commit_oid, p->two->path);
--		if (submodule)
--			name = submodule->name;
--		else {
--			name = default_name_or_path(p->two->path);
--			/* make sure name does not collide with existing one */
--			submodule = submodule_from_name(commit_oid, name);
--			if (submodule) {
--				warning("Submodule in commit %s at path: "
--					"'%s' collides with a submodule named "
--					"the same. Skipping it.",
--					oid_to_hex(commit_oid), name);
--				name = NULL;
--			}
-+		if (submodule) {
-+			commits = submodule_commits(me->changed_by_name, submodule->name);
-+			oid_array_append(commits, &p->two->oid);
-+		} else {
-+			commits = submodule_commits(me->changed_by_path, p->two->path);
-+			oid_array_append(commits, &p->two->oid);
- 		}
--
--		if (!name)
--			continue;
--
--		commits = submodule_commits(changed, name);
--		oid_array_append(commits, &p->two->oid);
- 	}
- }
- 
- /*
-- * Collect the paths of submodules in 'changed' which have changed based on
-- * the revisions as specified in 'argv'.  Each entry in 'changed' will also
-- * have a corresponding 'struct oid_array' (in the 'util' field) which lists
-- * what the submodule pointers were updated to during the change.
-+ * Collect the paths of submodules in 'changed_by_{name, path}' which have
-+ * changed based on the revisions as specified in 'argv'.
-+ *
-+ * Each gitlink/submodule will occur in only one of the list. We'll prefer
-+ * to give it by_name as that allows rename detection. We'll fall back to
-+ * by_path to support gitlinks with no entry in '.gitmodules'.
-+ *
-+ * Each entry in 'changed_*' will also have a corresponding 'struct oid_array'
-+ * (in the 'util' field) which lists what the submodule pointers were updated
-+ * to during the change.
-  */
--static void collect_changed_submodules(struct string_list *changed,
-+static void collect_changed_submodules(struct string_list *changed_by_name,
-+				       struct string_list *changed_by_path,
- 				       struct argv_array *argv)
- {
- 	struct rev_info rev;
-@@ -771,7 +752,8 @@ static void collect_changed_submodules(struct string_list *changed,
- 	while ((commit = get_revision(&rev))) {
- 		struct rev_info diff_rev;
- 		struct collect_changed_submodules_cb_data data;
--		data.changed = changed;
-+		data.changed_by_name = changed_by_name;
-+		data.changed_by_path = changed_by_path;
- 		data.commit_oid = &commit->object.oid;
- 
- 		init_revisions(&diff_rev, NULL);
-@@ -924,8 +906,9 @@ static int submodule_needs_pushing(const char *path, struct oid_array *commits)
- int find_unpushed_submodules(struct oid_array *commits,
- 		const char *remotes_name, struct string_list *needs_pushing)
- {
--	struct string_list submodules = STRING_LIST_INIT_DUP;
--	struct string_list_item *name;
-+	struct string_list submodules_by_name = STRING_LIST_INIT_DUP;
-+	struct string_list gitlinks_by_path = STRING_LIST_INIT_DUP;
-+	struct string_list_item *item;
- 	struct argv_array argv = ARGV_ARRAY_INIT;
- 
- 	/* argv.argv[0] will be ignored by setup_revisions */
-@@ -934,27 +917,33 @@ int find_unpushed_submodules(struct oid_array *commits,
- 	argv_array_push(&argv, "--not");
- 	argv_array_pushf(&argv, "--remotes=%s", remotes_name);
- 
--	collect_changed_submodules(&submodules, &argv);
-+	collect_changed_submodules(&submodules_by_name, &gitlinks_by_path, &argv);
- 
--	for_each_string_list_item(name, &submodules) {
--		struct oid_array *commits = name->util;
-+	for_each_string_list_item(item, &submodules_by_name) {
-+		struct oid_array *commits = item->util;
-+		const char *name = item->string;
- 		const struct submodule *submodule;
--		const char *path = NULL;
-+		const char *path;
- 
--		submodule = submodule_from_name(&null_oid, name->string);
--		if (submodule)
--			path = submodule->path;
--		else
--			path = default_name_or_path(name->string);
-+		submodule = submodule_from_name(&null_oid, name);
-+		if (!submodule)
-+			BUG("submodule name/path mapping corrupt");
-+		path = submodule->path;
- 
--		if (!path)
--			continue;
-+		if (submodule_needs_pushing(path, commits))
-+			string_list_insert(needs_pushing, path);
-+	}
-+
-+	for_each_string_list_item(item, &gitlinks_by_path) {
-+		struct oid_array *commits = item->util;
-+		const char *path = item->string;
- 
- 		if (submodule_needs_pushing(path, commits))
- 			string_list_insert(needs_pushing, path);
- 	}
- 
--	free_submodules_oids(&submodules);
-+	free_submodules_oids(&submodules_by_name);
-+	free_submodules_oids(&gitlinks_by_path);
- 	argv_array_clear(&argv);
- 
- 	return needs_pushing->nr;
-@@ -1106,7 +1095,8 @@ static void calculate_changed_submodule_paths(void)
- {
- 	struct argv_array argv = ARGV_ARRAY_INIT;
- 	struct string_list changed_submodules = STRING_LIST_INIT_DUP;
--	const struct string_list_item *name;
-+	struct string_list changed_gitlinks = STRING_LIST_INIT_DUP;
-+	const struct string_list_item *item;
- 
- 	/* No need to check if there are no submodules configured */
- 	if (!submodule_from_path(NULL, NULL))
-@@ -1123,27 +1113,32 @@ static void calculate_changed_submodule_paths(void)
- 	 * Collect all submodules (whether checked out or not) for which new
- 	 * commits have been recorded upstream in "changed_submodule_names".
- 	 */
--	collect_changed_submodules(&changed_submodules, &argv);
-+	collect_changed_submodules(&changed_submodules, &changed_gitlinks, &argv);
- 
--	for_each_string_list_item(name, &changed_submodules) {
--		struct oid_array *commits = name->util;
--		const struct submodule *submodule;
--		const char *path = NULL;
-+	for_each_string_list_item(item, &changed_submodules) {
-+		struct oid_array *commits = item->util;
-+		const char *name = item->string;
-+		const struct submodule *sub =
-+			submodule_from_name(&null_oid, name);
- 
--		submodule = submodule_from_name(&null_oid, name->string);
--		if (submodule)
--			path = submodule->path;
--		else
--			path = default_name_or_path(name->string);
-+		if (!sub)
-+			BUG("cannot lookup submodule, but we could before?");
- 
--		if (!path)
--			continue;
-+		if (!submodule_has_commits(sub->path, commits))
-+			string_list_append(&changed_submodule_names, name);
-+	}
-+
-+	/* the same for gitnlinks, stored in 'changed_gitlink_paths' */
-+	for_each_string_list_item(item, &changed_gitlinks) {
-+		const char *path = item->string;
-+		struct oid_array *commits = item->util;
- 
- 		if (!submodule_has_commits(path, commits))
--			string_list_append(&changed_submodule_names, name->string);
-+			string_list_append(&changed_gitlink_paths, path);
- 	}
- 
- 	free_submodules_oids(&changed_submodules);
-+	free_submodules_oids(&changed_gitlinks);
- 	argv_array_clear(&argv);
- 	oid_array_clear(&ref_tips_before_fetch);
- 	oid_array_clear(&ref_tips_after_fetch);
-@@ -1154,6 +1149,7 @@ int submodule_touches_in_range(struct object_id *excl_oid,
- 			       struct object_id *incl_oid)
- {
- 	struct string_list subs = STRING_LIST_INIT_DUP;
-+	struct string_list gitlinks = STRING_LIST_INIT_DUP;
- 	struct argv_array args = ARGV_ARRAY_INIT;
- 	int ret;
- 
-@@ -1166,8 +1162,8 @@ int submodule_touches_in_range(struct object_id *excl_oid,
- 	argv_array_push(&args, "--not");
- 	argv_array_push(&args, oid_to_hex(excl_oid));
- 
--	collect_changed_submodules(&subs, &args);
--	ret = subs.nr;
-+	collect_changed_submodules(&subs, &gitlinks, &args);
-+	ret = subs.nr + gitlinks.nr;
- 
- 	argv_array_clear(&args);
- 
-@@ -1225,27 +1221,25 @@ static int get_next_submodule(struct child_process *cp,
- 		const struct cache_entry *ce = active_cache[spf->count];
- 		const char *git_dir, *default_argv;
- 		const struct submodule *submodule;
--		struct submodule default_submodule = SUBMODULE_INIT;
-+		int found = 0;
- 
- 		if (!S_ISGITLINK(ce->ce_mode))
- 			continue;
- 
- 		submodule = submodule_from_path(&null_oid, ce->name);
--		if (!submodule) {
--			const char *name = default_name_or_path(ce->name);
--			if (name) {
--				default_submodule.path = default_submodule.name = name;
--				submodule = &default_submodule;
--			}
--		}
- 
- 		switch (get_fetch_recurse_config(submodule, spf))
- 		{
- 		default:
- 		case RECURSE_SUBMODULES_DEFAULT:
- 		case RECURSE_SUBMODULES_ON_DEMAND:
--			if (!submodule || !unsorted_string_list_lookup(&changed_submodule_names,
--							 submodule->name))
-+
-+			if (submodule)
-+				found |= !!unsorted_string_list_lookup(&changed_submodule_names, submodule->name);
-+
-+			found |= !!unsorted_string_list_lookup(&changed_gitlink_paths, ce->name);
-+
-+			if (!found)
- 				continue;
- 			default_argv = "on-demand";
- 			break;
-diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
-index c82d519e06..d6a6d6a4e1 100755
---- a/t/t5526-fetch-submodules.sh
-+++ b/t/t5526-fetch-submodules.sh
-@@ -638,7 +638,6 @@ test_expect_success "warn on submodule name/path clash, but new commits fetched
- 	(
- 		cd downstream &&
- 		git fetch --recurse-submodules=on-demand 2>err &&
--		grep "collides with a submodule named" err &&
- 		(
- 			cd submodule &&
- 			git rev-parse origin/rename_sub >../../actual
+ GIT
+ ---
+diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
+index c4be98ab9e..0438dfec05 100644
+--- a/builtin/ls-remote.c
++++ b/builtin/ls-remote.c
+@@ -56,7 +56,10 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
+ 			   N_("path of git-upload-pack on the remote host"),
+ 			   PARSE_OPT_HIDDEN },
+ 		OPT_BIT('t', "tags", &flags, N_("limit to tags"), REF_TAGS),
+-		OPT_BIT('h', "heads", &flags, N_("limit to heads"), REF_HEADS),
++		OPT_BIT(0, "heads", &flags, N_("limit to heads"), REF_HEADS),
++		OPT_BIT('h', NULL, &flags,
++			N_("if only parameter: show this help text, otherwise limit to heads"),
++			REF_HEADS),
+ 		OPT_BIT(0, "refs", &flags, N_("do not show peeled tags"), REF_NORMAL),
+ 		OPT_BOOL(0, "get-url", &get_url,
+ 			 N_("take url.<base>.insteadOf into account")),
 -- 
-2.14.0.rc0.3.g6c2e499285
-
+2.14.2
