@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 96EB5202A2
-	for <e@80x24.org>; Thu, 19 Oct 2017 12:30:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 508FF202A2
+	for <e@80x24.org>; Thu, 19 Oct 2017 12:30:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752107AbdJSMav (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Oct 2017 08:30:51 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:43105 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751012AbdJSMao (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Oct 2017 08:30:44 -0400
-Received: by mail-wm0-f66.google.com with SMTP id m72so15974504wmc.0
-        for <git@vger.kernel.org>; Thu, 19 Oct 2017 05:30:44 -0700 (PDT)
+        id S1752127AbdJSMa4 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Oct 2017 08:30:56 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:53208 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751606AbdJSMaj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Oct 2017 08:30:39 -0400
+Received: by mail-wm0-f65.google.com with SMTP id k4so16079162wmc.1
+        for <git@vger.kernel.org>; Thu, 19 Oct 2017 05:30:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=muAtZZZv63d9m0UZO4y+iSO+G+widSXwv6uoSiTqAmE=;
-        b=hVSKf2aWcrxza0POVWVpN3GGQ1f39d3Xa6zOY+2WR6UAMSOriV860N6dmt0hFBE3YE
-         R6epf/KjNU8/eWHVjhiywIayGIpIVf533M6Xp7kIf+QGMLsONEQZ0MHyOGj6QvRYVNWc
-         41UODgLHT8U0EwOtdQAqEV89rejZs9PysfF57GTLSkyLEVooBdgKmGAI5fmEYLJxjVAH
-         eptagV4utRzDWmkaZ+YV7k8sNvVCMQqBhg3KFG5+qfIC4rop8DR5RD73WpqlnXMr8I0y
-         NQshn1xu70Opg0jbgultTNdIpVr7j+Gf0ho0JUfy2a/UkYN+UXY5WuM+WeH7w+q9sxh4
-         TSxQ==
+        bh=uJ2boZk8PVWFfVXPS0tiT9mK89pnL4WPMKOpvlCASQI=;
+        b=K3qwJbLzqM56mguAU+UGkSIHnfdsGpH9SVZKhMXxXOMFaODMLvVkZ5nFBPs7Qke3v/
+         eUV+YT9KBTGld1h/AAt8/RdHSBplTuFRpmQRiaQcGadmJ2R8+1OHMq3OB8d+bXAq4WtV
+         V6Eka92NIk6DtDHZUjxkbjHbzh4KElolX55jMqZkUqP/1TuPVTw8mpmIRALQAjk1vKno
+         FeFbzlzNb7Cc/Ui+BfBmdB6NOHVZrRAj1shzHQaftoq6K9+2x3BXw+UTAEap2CseZK3j
+         +PPLp5PZwOPZBckpfdkf3xMcfd/YzIKNIZQgONr1tThSsTkOZuVsgXeaNlHKpyzYcZT+
+         PgBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=muAtZZZv63d9m0UZO4y+iSO+G+widSXwv6uoSiTqAmE=;
-        b=M4VxTthl6hSsvWeXyO/HYO5z18W+weiNQLbBbsEKsFiSZ+T+n+J4BMdMsQI14E9UjG
-         ZXLo+DnZ/a3d1Nuxy1CcWDSsCkaczYhRG7c6Qt7C0PbHaGfCr6UF2/RZypX8xT+KF7R4
-         Z9jVXO/hOqbTbDC2bQLowGtUEDRwcZwwSLIV/SBICLEkEPi+mypJsihPUZ78ti83pG4T
-         HYZe3hFSXjm++sywklYTFrbFh8cvDTJWG0I8xfM41K6bRHTwv7788O9HmhE5FgVy90B0
-         1JbULNdRXWju3BbEsOelqFTOKiyv//nyBwQtdi/jlLEE2U0gQim0CW/xByYE9FrXHGge
-         3ong==
-X-Gm-Message-State: AMCzsaWroXbrOmbUbrhtx8R2LPDAurV7NaPbz/C9BeKZt1K0Csk+0CKg
-        maSnZIqPGVbrpJdjD0zELP1Z7w==
-X-Google-Smtp-Source: ABhQp+SS7gRLGcPmxDb/qfsRRJFCnVr8/caC1adGUnWb/FfqLO646TcoVHGjGgE6tfiDIt+SCvB1aQ==
-X-Received: by 10.28.209.132 with SMTP id i126mr1475090wmg.65.1508416243184;
-        Thu, 19 Oct 2017 05:30:43 -0700 (PDT)
+        bh=uJ2boZk8PVWFfVXPS0tiT9mK89pnL4WPMKOpvlCASQI=;
+        b=Nsdhm7GsqaPBMFU1Csi1k98ANVUN8iRD5cJlc2CjQIOFXamPDFS5wslUYVKSn+UOu5
+         8ke7aAP2kY2B5J9D+PO0pqfh+yTQ+4/Albn3s0MUoR3a1sUEt/9A3RIfW3mlGwF0jC3W
+         ahMLrDWH+rH94UoN/ydQB7eK5ZuIqOnyxggskh6gOQt+nXIzpAUGimamVyLa/GjgEOD+
+         68oQb1F5XQpxtTXmcVx+lwp4uvAWFGfHYcV9wP1e3RMQsCXl+iZJK3UlRMMl0ZajGwyZ
+         q57ovHmD+jRxu8Tif4S9+KFYZlEvs6S72nG7Uj2SU8XRcLdbcP6lNjQqNQKmmRhxA61p
+         CywA==
+X-Gm-Message-State: AMCzsaXIrZdcOveTK+Y61M7/nAI0m/omB7HYZ53iEl7Z1UfZTLn/bkhy
+        kMVTXxyOYoRawCWlf0eZm+yCEg==
+X-Google-Smtp-Source: ABhQp+Q8peKcU2HGXSvP+wWm667yyrokH/0If6+RbO9+Fs1unRjuxuITiO1dfMnfwkXq6JPRn64nTw==
+X-Received: by 10.28.153.85 with SMTP id b82mr1400258wme.121.1508416238113;
+        Thu, 19 Oct 2017 05:30:38 -0700 (PDT)
 Received: from localhost.localdomain (sud35-h04-89-95-107-230.dsl.sta.abo.bbox.fr. [89.95.107.230])
-        by smtp.gmail.com with ESMTPSA id 25sm12820879wrv.8.2017.10.19.05.30.41
+        by smtp.gmail.com with ESMTPSA id 25sm12820879wrv.8.2017.10.19.05.30.36
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 19 Oct 2017 05:30:42 -0700 (PDT)
+        Thu, 19 Oct 2017 05:30:37 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Lars Schneider <larsxschneider@gmail.com>,
         Eric Wong <e@80x24.org>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 6/6] Add Git/Packet.pm from parts of t0021/rot13-filter.pl
-Date:   Thu, 19 Oct 2017 14:30:30 +0200
-Message-Id: <20171019123030.17338-7-chriscool@tuxfamily.org>
+Subject: [PATCH 2/6] t0021/rot13-filter: improve 'if .. elsif .. else' style
+Date:   Thu, 19 Oct 2017 14:30:26 +0200
+Message-Id: <20171019123030.17338-3-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.15.0.rc1.106.g7e97f58a41
 In-Reply-To: <20171019123030.17338-1-chriscool@tuxfamily.org>
 References: <20171019123030.17338-1-chriscool@tuxfamily.org>
@@ -70,258 +70,119 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-And while at it let's simplify t0021/rot13-filter.pl by
-using Git/Packet.pm.
-
-This will make it possible to reuse packet related
-functions in other test scripts.
+Before further refactoring the "t0021/rot13-filter.pl" script,
+let's modernize the style of its 'if .. elsif .. else' clauses
+to improve its readability by making it more similar to our
+other perl scripts.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- perl/Git/Packet.pm      | 118 ++++++++++++++++++++++++++++++++++++++++++++++++
- t/t0021/rot13-filter.pl |  94 ++------------------------------------
- 2 files changed, 121 insertions(+), 91 deletions(-)
- create mode 100644 perl/Git/Packet.pm
+ t/t0021/rot13-filter.pl | 39 +++++++++++++--------------------------
+ 1 file changed, 13 insertions(+), 26 deletions(-)
 
-diff --git a/perl/Git/Packet.pm b/perl/Git/Packet.pm
-new file mode 100644
-index 0000000000..b1e67477a0
---- /dev/null
-+++ b/perl/Git/Packet.pm
-@@ -0,0 +1,118 @@
-+package Git::Packet;
-+use 5.008;
-+use strict;
-+use warnings;
-+BEGIN {
-+	require Exporter;
-+	if ($] < 5.008003) {
-+		*import = \&Exporter::import;
-+	} else {
-+		# Exporter 5.57 which supports this invocation was
-+		# released with perl 5.8.3
-+		Exporter->import('import');
-+	}
-+}
-+
-+our @EXPORT = qw(
-+			packet_bin_read
-+			packet_txt_read
-+			packet_bin_write
-+			packet_txt_write
-+			packet_flush
-+			packet_initialize
-+			packet_read_capabilities
-+			packet_write_capabilities
-+			packet_read_and_check_capabilities
-+		);
-+our @EXPORT_OK = @EXPORT;
-+
-+sub packet_bin_read {
-+	my $buffer;
-+	my $bytes_read = read STDIN, $buffer, 4;
-+	if ( $bytes_read == 0 ) {
-+		# EOF - Git stopped talking to us!
-+		return ( -1, "" );
-+	} elsif ( $bytes_read != 4 ) {
-+		die "invalid packet: '$buffer'";
-+	}
-+	my $pkt_size = hex($buffer);
-+	if ( $pkt_size == 0 ) {
-+		return ( 1, "" );
-+	} elsif ( $pkt_size > 4 ) {
-+		my $content_size = $pkt_size - 4;
-+		$bytes_read = read STDIN, $buffer, $content_size;
-+		if ( $bytes_read != $content_size ) {
-+			die "invalid packet ($content_size bytes expected; $bytes_read bytes read)";
-+		}
-+		return ( 0, $buffer );
-+	} else {
-+		die "invalid packet size: $pkt_size";
-+	}
-+}
-+
-+sub packet_txt_read {
-+	my ( $res, $buf ) = packet_bin_read();
-+	unless ( $res == -1 or $buf eq '' or $buf =~ s/\n$// ) {
-+		die "A non-binary line MUST be terminated by an LF.\n"
-+		    . "Received: '$buf'";
-+	}
-+	return ( $res, $buf );
-+}
-+
-+sub packet_bin_write {
-+	my $buf = shift;
-+	print STDOUT sprintf( "%04x", length($buf) + 4 );
-+	print STDOUT $buf;
-+	STDOUT->flush();
-+}
-+
-+sub packet_txt_write {
-+	packet_bin_write( $_[0] . "\n" );
-+}
-+
-+sub packet_flush {
-+	print STDOUT sprintf( "%04x", 0 );
-+	STDOUT->flush();
-+}
-+
-+sub packet_initialize {
-+	my ($name, $version) = @_;
-+
-+	( packet_txt_read() eq ( 0, $name . "-client" ) )	|| die "bad initialize";
-+	( packet_txt_read() eq ( 0, "version=" . $version ) )	|| die "bad version";
-+	( packet_bin_read() eq ( 1, "" ) )			|| die "bad version end";
-+
-+	packet_txt_write( $name . "-server" );
-+	packet_txt_write( "version=" . $version );
-+	packet_flush();
-+}
-+
-+sub packet_read_capabilities {
-+	my @cap;
-+	while (1) {
-+		my ( $res, $buf ) = packet_bin_read();
-+		return ( $res, @cap ) if ( $res != 0 );
-+		unless ( $buf =~ s/\n$// ) {
-+			die "A non-binary line MUST be terminated by an LF.\n"
-+			    . "Received: '$buf'";
-+		}
-+		die "bad capability buf: '$buf'" unless ( $buf =~ s/capability=// );
-+		push @cap, $buf;
-+	}
-+}
-+
-+sub packet_read_and_check_capabilities {
-+	my @local_caps = @_;
-+	my @remote_res_caps = packet_read_capabilities();
-+	my $res = shift @remote_res_caps;
-+	my %remote_caps = map { $_ => 1 } @remote_res_caps;
-+	foreach (@local_caps) {
-+		die "'$_' capability not available" unless (exists($remote_caps{$_}));
-+	}
-+	return $res;
-+}
-+
-+sub packet_write_capabilities {
-+	packet_txt_write( "capability=" . $_ ) foreach (@_);
-+	packet_flush();
-+}
 diff --git a/t/t0021/rot13-filter.pl b/t/t0021/rot13-filter.pl
-index ba18b207c6..2e8ad4d496 100644
+index e4495a52f3..82882392ae 100644
 --- a/t/t0021/rot13-filter.pl
 +++ b/t/t0021/rot13-filter.pl
-@@ -30,9 +30,12 @@
- #     to the "list_available_blobs" response.
- #
- 
-+use 5.008;
-+use lib (split(/:/, $ENV{GITPERLLIB}));
- use strict;
- use warnings;
- use IO::File;
-+use Git::Packet;
- 
- my $MAX_PACKET_CONTENT_SIZE = 65516;
- my $log_file                = shift @ARGV;
-@@ -55,97 +58,6 @@ sub rot13 {
- 	return $str;
+@@ -61,23 +61,20 @@ sub packet_bin_read {
+ 	if ( $bytes_read == 0 ) {
+ 		# EOF - Git stopped talking to us!
+ 		return ( -1, "" );
+-	}
+-	elsif ( $bytes_read != 4 ) {
++	} elsif ( $bytes_read != 4 ) {
+ 		die "invalid packet: '$buffer'";
+ 	}
+ 	my $pkt_size = hex($buffer);
+ 	if ( $pkt_size == 0 ) {
+ 		return ( 1, "" );
+-	}
+-	elsif ( $pkt_size > 4 ) {
++	} elsif ( $pkt_size > 4 ) {
+ 		my $content_size = $pkt_size - 4;
+ 		$bytes_read = read STDIN, $buffer, $content_size;
+ 		if ( $bytes_read != $content_size ) {
+ 			die "invalid packet ($content_size bytes expected; $bytes_read bytes read)";
+ 		}
+ 		return ( 0, $buffer );
+-	}
+-	else {
++	} else {
+ 		die "invalid packet size: $pkt_size";
+ 	}
  }
- 
--sub packet_bin_read {
--	my $buffer;
--	my $bytes_read = read STDIN, $buffer, 4;
--	if ( $bytes_read == 0 ) {
--		# EOF - Git stopped talking to us!
--		return ( -1, "" );
--	} elsif ( $bytes_read != 4 ) {
--		die "invalid packet: '$buffer'";
+@@ -165,8 +162,7 @@ while (1) {
+ 		$debug->flush();
+ 		packet_txt_write("status=success");
+ 		packet_flush();
 -	}
--	my $pkt_size = hex($buffer);
--	if ( $pkt_size == 0 ) {
--		return ( 1, "" );
--	} elsif ( $pkt_size > 4 ) {
--		my $content_size = $pkt_size - 4;
--		$bytes_read = read STDIN, $buffer, $content_size;
--		if ( $bytes_read != $content_size ) {
--			die "invalid packet ($content_size bytes expected; $bytes_read bytes read)";
+-	else {
++	} else {
+ 		my ( $pathname ) = packet_txt_read() =~ /^pathname=(.+)$/;
+ 		print $debug " $pathname";
+ 		$debug->flush();
+@@ -205,17 +201,13 @@ while (1) {
+ 		my $output;
+ 		if ( exists $DELAY{$pathname} and exists $DELAY{$pathname}{"output"} ) {
+ 			$output = $DELAY{$pathname}{"output"}
 -		}
--		return ( 0, $buffer );
--	} else {
--		die "invalid packet size: $pkt_size";
--	}
--}
--
--sub packet_txt_read {
--	my ( $res, $buf ) = packet_bin_read();
--	unless ( $res == -1 or $buf eq '' or $buf =~ s/\n$// ) {
--		die "A non-binary line MUST be terminated by an LF.\n"
--		    . "Received: '$buf'";
--	}
--	return ( $res, $buf );
--}
--
--sub packet_bin_write {
--	my $buf = shift;
--	print STDOUT sprintf( "%04x", length($buf) + 4 );
--	print STDOUT $buf;
--	STDOUT->flush();
--}
--
--sub packet_txt_write {
--	packet_bin_write( $_[0] . "\n" );
--}
--
--sub packet_flush {
--	print STDOUT sprintf( "%04x", 0 );
--	STDOUT->flush();
--}
--
--sub packet_initialize {
--	my ($name, $version) = @_;
--
--	( packet_txt_read() eq ( 0, $name . "-client" ) )       || die "bad initialize";
--	( packet_txt_read() eq ( 0, "version=" . $version ) )   || die "bad version";
--	( packet_bin_read() eq ( 1, "" ) )                      || die "bad version end";
--
--	packet_txt_write( $name . "-server" );
--	packet_txt_write( "version=" . $version );
--	packet_flush();
--}
--
--sub packet_read_capabilities {
--	my @cap;
--	while (1) {
--		my ( $res, $buf ) = packet_bin_read();
--		return ( $res, @cap ) if ( $res != 0 );
--		unless ( $buf =~ s/\n$// ) {
--			die "A non-binary line MUST be terminated by an LF.\n"
--			    . "Received: '$buf'";
+-		elsif ( $pathname eq "error.r" or $pathname eq "abort.r" ) {
++		} elsif ( $pathname eq "error.r" or $pathname eq "abort.r" ) {
+ 			$output = "";
 -		}
--		die "bad capability buf: '$buf'" unless ( $buf =~ s/capability=// );
--		push @cap, $buf;
--	}
--}
--
--sub packet_read_and_check_capabilities {
--	my @local_caps = @_;
--	my @remote_res_caps = packet_read_capabilities();
--	my $res = shift @remote_res_caps;
--	my %remote_caps = map { $_ => 1 } @remote_res_caps;
--	foreach (@local_caps) {
--        	die "'$_' capability not available" unless (exists($remote_caps{$_}));
--	}
--	return $res;
--}
--
--sub packet_write_capabilities {
--	packet_txt_write( "capability=" . $_ ) foreach (@_);
--	packet_flush();
--}
--
- print $debug "START\n";
- $debug->flush();
+-		elsif ( $command eq "clean" and grep( /^clean$/, @capabilities ) ) {
++		} elsif ( $command eq "clean" and grep( /^clean$/, @capabilities ) ) {
+ 			$output = rot13($input);
+-		}
+-		elsif ( $command eq "smudge" and grep( /^smudge$/, @capabilities ) ) {
++		} elsif ( $command eq "smudge" and grep( /^smudge$/, @capabilities ) ) {
+ 			$output = rot13($input);
+-		}
+-		else {
++		} else {
+ 			die "bad command '$command'";
+ 		}
  
+@@ -224,25 +216,21 @@ while (1) {
+ 			$debug->flush();
+ 			packet_txt_write("status=error");
+ 			packet_flush();
+-		}
+-		elsif ( $pathname eq "abort.r" ) {
++		} elsif ( $pathname eq "abort.r" ) {
+ 			print $debug "[ABORT]\n";
+ 			$debug->flush();
+ 			packet_txt_write("status=abort");
+ 			packet_flush();
+-		}
+-		elsif ( $command eq "smudge" and
++		} elsif ( $command eq "smudge" and
+ 			exists $DELAY{$pathname} and
+-			$DELAY{$pathname}{"requested"} == 1
+-		) {
++			$DELAY{$pathname}{"requested"} == 1 ) {
+ 			print $debug "[DELAYED]\n";
+ 			$debug->flush();
+ 			packet_txt_write("status=delayed");
+ 			packet_flush();
+ 			$DELAY{$pathname}{"requested"} = 2;
+ 			$DELAY{$pathname}{"output"} = $output;
+-		}
+-		else {
++		} else {
+ 			packet_txt_write("status=success");
+ 			packet_flush();
+ 
+@@ -262,8 +250,7 @@ while (1) {
+ 				print $debug ".";
+ 				if ( length($output) > $MAX_PACKET_CONTENT_SIZE ) {
+ 					$output = substr( $output, $MAX_PACKET_CONTENT_SIZE );
+-				}
+-				else {
++				} else {
+ 					$output = "";
+ 				}
+ 			}
 -- 
 2.15.0.rc1.106.g7e97f58a41
 
