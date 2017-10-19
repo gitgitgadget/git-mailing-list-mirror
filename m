@@ -2,85 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E41F0202DD
-	for <e@80x24.org>; Thu, 19 Oct 2017 20:56:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6EA7C202DD
+	for <e@80x24.org>; Thu, 19 Oct 2017 21:01:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753103AbdJSU45 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Oct 2017 16:56:57 -0400
-Received: from mail-qk0-f182.google.com ([209.85.220.182]:51619 "EHLO
-        mail-qk0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752500AbdJSU44 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Oct 2017 16:56:56 -0400
-Received: by mail-qk0-f182.google.com with SMTP id 17so12022882qkq.8
-        for <git@vger.kernel.org>; Thu, 19 Oct 2017 13:56:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=6+yeC7ddBidtJyk4w0Jp2+ynE5qvb1ZIlFv3K20AWXI=;
-        b=SvZob42CmgId7/VuepjX3U4Zq2zAFzsxrWmze8MK162+bcNq1um8JUsSZmOMWSZsAA
-         Rgtp7MD1RbJ0f66ccWjWBdzXXiDJ6pQJmpG8RbRE80l+RtK0/QP2e2sa9RFbA6rgSUAI
-         /3zLS+J6g/bJcFg3X9T1MVRbQ1M+8CTOuLBlodr4l/pFyzGlYJqAM49/GJ4vh1jn/Gp9
-         DcbM2m0LNZTV/pgKJToWm/xdraS6s5sE2p7k8ZOw0gMU4tSiRVFTACPDV6UCpcqKEbcy
-         uxLNp8sK36YhG7kdJieWQfw9cNua2krJxqSChYEORFfCMb/flEe2hzXsRNMMJcSzk+oa
-         0Khg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=6+yeC7ddBidtJyk4w0Jp2+ynE5qvb1ZIlFv3K20AWXI=;
-        b=tbXYjKwysLBH+qPjBklrXdptSH5OTbtGvt8ujpiLEwzjJ7VGeBx5fG7wFcwWFBRjib
-         +2mHTksfRkwazXEyGzwepvdNdZ2f/wuFnkN1DWnMav/XE9RRB6nVgqEqcnX+4nZWzkdD
-         PkFfH5k/egWOLr0BWpq4LK7zo/mQtvGsEzxg+TYjhfQ7qZ0uxpy3QnKaQc49Rfusp7fc
-         shNZWgLfkUJsYpV8+90z05oOO44J+1tMM1+tbKSfsrz/ADBuXkGrvUV40iojkQHSXbRh
-         usKL5wVPgrnSQDZOJj+rknqVgpbTLdnc9TvCjRvW9wj+WMwostCWMSk/uor/DEUVZqfr
-         Zu4A==
-X-Gm-Message-State: AMCzsaXfv5qj27b7IcdR9TnA4+PI/5MlDfaLilzjdDpFP3yhA/+Z1KRZ
-        +ApEaQHZgtDA6PQWe8FKIa2PhiITMfO1KHMnG7kg4XEe1wM=
-X-Google-Smtp-Source: ABhQp+SdB5F+vwIJLujlR0VhPQ2o3lG2OYszDn7K+Pp45bpOgbGaonAC6GR3vXLuaUBGTml0lykSE9mh4rZMULAdygM=
-X-Received: by 10.55.129.70 with SMTP id c67mr4011636qkd.230.1508446615744;
- Thu, 19 Oct 2017 13:56:55 -0700 (PDT)
+        id S1753458AbdJSVBn (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Oct 2017 17:01:43 -0400
+Received: from cloud.peff.net ([104.130.231.41]:58264 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1753294AbdJSVBm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Oct 2017 17:01:42 -0400
+Received: (qmail 4232 invoked by uid 109); 19 Oct 2017 21:01:42 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 19 Oct 2017 21:01:42 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 12398 invoked by uid 111); 19 Oct 2017 21:01:47 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Thu, 19 Oct 2017 17:01:47 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 19 Oct 2017 17:01:40 -0400
+Date:   Thu, 19 Oct 2017 17:01:40 -0400
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Lars Schneider <larsxschneider@gmail.com>
+Subject: [PATCH 0/3] making test-suite tracing more useful
+Message-ID: <20171019210140.64lb52cqtgdh22ew@sigill.intra.peff.net>
 MIME-Version: 1.0
-Received: by 10.140.102.70 with HTTP; Thu, 19 Oct 2017 13:56:55 -0700 (PDT)
-In-Reply-To: <20171019202403.7srcpos5xlsvmqrl@sigill.intra.peff.net>
-References: <20171019202326.grovyfsragl2d7xx@sigill.intra.peff.net> <20171019202403.7srcpos5xlsvmqrl@sigill.intra.peff.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 19 Oct 2017 13:56:55 -0700
-Message-ID: <CAGZ79kahYb5=BEvr0io-bSJ+JaOfViicyghH4CtRErqmtAXU-g@mail.gmail.com>
-Subject: Re: [PATCH 1/5] t4015: refactor --color-moved whitespace test
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Orgad Shaneh <orgads@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 19, 2017 at 1:24 PM, Jeff King <peff@peff.net> wrote:
+I sometimes run git's test suite as part of an automated testing
+process. I was hoping to add "-x" support to get more details when a
+test fails (since failures are sometimes hard to reproduce). But I hit a
+few small snags:
 
->
-> +test_expect_success 'clean up whitespace-test colors' '
-> +       git config --unset color.diff.oldMoved &&
-> +       git config --unset color.diff.newMoved
-> +'
+  - you have to run with bash, since BASH_XTRACEFD is required to avoid
+    failures in some tests when we capture the stderr of shell functions
+    or subshells (which get polluted with the "set -x" outupt). This
+    requirement isn't a big deal for me, but it showed some other
+    issues.
 
-This could be part of the previous test as
+  - the output with BASH_XTRACEFD is a little confusing; fixed by patch
+    1.
 
-  test_config color.diff.oldMoved "magenta" &&
-  test_config color.diff.newMoved "cyan" &&
+  - there's one test that _only_ fails with BASH_XTRACEFD. That's fixed
+    in patch 2.
 
-in the beginning. (That way we also do not pollute the setup,
-but keeping it test local).
+  - I wanted to use "prove" since the output of "make -j64 test" is
+    unreadable. But that means using "--verbose-log", which was
+    incompatible with "-x". That's patch 3.
 
-With or without this nit, this is
-Reviewed-by: Stefan Beller <sbeller@google.com>
+With these patches, I can now do:
 
-Thanks,
-Stefan
+  make -j64 test \
+    SHELL_PATH=/bin/bash \
+    GIT_TEST_OPTS="--verbose-log -x" \
+    DEFAULT_TEST_TARGET=prove \
+    GIT_PROVE_OPTS=-j64 || {
+          echo "Failing tests:"
+          echo "--------------"
+	  grep -l '[^0]' t/test-results/*.exit |
+	  while read failed; do
+	          base=${failed%.exit}
+		  name=${base#t/test-results/}
+		  echo "==> $name"
+		  cat "$base.out"
+	  done
+	  exit 1
+    }
+
+and get fairly readable output (a nice summary from prove, and then a
+dump of any failing test output).
+
+Johannes, I've seen that you do "-x" in the tests that the
+git-for-windows bot uses to comment on GitHub. You may have seen the
+bogus failure in t5615, which this series should fix (you may also have
+seen the "set +x" cruft at the end of each test, which is fixed here,
+too).
+
+Lars, I think with this it should be possible to turn on "-x" for the
+Travis build.
+
+  [1/3]: test-lib: silence "-x" cleanup under bash
+  [2/3]: t5615: avoid re-using descriptor 4
+  [3/3]: test-lib: make "-x" work with "--verbose-log"
+
+ t/t5615-alternate-env.sh |  6 +++---
+ t/test-lib.sh            | 44 ++++++++++++++++++++++++++++++++------------
+ 2 files changed, 35 insertions(+), 15 deletions(-)
+
+-Peff
