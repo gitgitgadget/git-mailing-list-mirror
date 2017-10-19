@@ -2,135 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.3 required=3.0 tests=BAYES_00,DKIM_ADSP_ALL,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	T_DKIM_INVALID shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3731D1FF72
-	for <e@80x24.org>; Thu, 19 Oct 2017 05:42:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D627B1FF32
+	for <e@80x24.org>; Thu, 19 Oct 2017 08:01:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751570AbdJSFmt (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Oct 2017 01:42:49 -0400
-Received: from cloud.peff.net ([104.130.231.41]:57318 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751558AbdJSFms (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Oct 2017 01:42:48 -0400
-Received: (qmail 2559 invoked by uid 109); 19 Oct 2017 05:42:49 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 19 Oct 2017 05:42:49 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6470 invoked by uid 111); 19 Oct 2017 05:42:53 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Thu, 19 Oct 2017 01:42:53 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 19 Oct 2017 01:42:46 -0400
-Date:   Thu, 19 Oct 2017 01:42:46 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
-        orgads@gmail.com
-Subject: Re: [PATCH] diff.c: increment buffer pointer in all code path
-Message-ID: <20171019054246.jii62lq2druohbpo@sigill.intra.peff.net>
-References: <20171012200536.m6oz4zrjcze3yw4i@sigill.intra.peff.net>
- <20171012233322.31203-1-sbeller@google.com>
- <20171013001837.43nx5paeqisbrflq@sigill.intra.peff.net>
- <20171013002057.froqi54olmhmah6b@sigill.intra.peff.net>
- <20171019050459.p2cx63yrxfwq4ta3@sigill.intra.peff.net>
- <20171019052457.gqenoshgyjcw53tb@sigill.intra.peff.net>
- <xmqqzi8niu1r.fsf@gitster.mtv.corp.google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqzi8niu1r.fsf@gitster.mtv.corp.google.com>
+        id S1751824AbdJSIBp (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Oct 2017 04:01:45 -0400
+Received: from alderaan.xwing.info ([91.134.139.206]:47258 "EHLO
+        alderaan.xwing.info" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751735AbdJSIBo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Oct 2017 04:01:44 -0400
+X-Greylist: delayed 493 seconds by postgrey-1.27 at vger.kernel.org; Thu, 19 Oct 2017 04:01:43 EDT
+Received: from bespin.xwing.info (iv2-technologies-gw1.ter1.prb.par.cust.as8218.eu [213.152.20.178])
+        by alderaan.xwing.info (Postfix) with ESMTPSA id 1D6EC6135B;
+        Thu, 19 Oct 2017 09:53:29 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=xwing.info; s=mail;
+        t=1508399609; bh=ES5LOx9HdChVHN7lzFBCOGe9XkTHlyyb+ZesG6zvlro=;
+        h=Subject:From:To:Cc:Date:In-Reply-To:References;
+        b=PVS+mZuPWTdRhg6RxuumZwVa7wEjDOWLYAvaASIdNkKd6gnCK75eSOriPL6I+vp7W
+         VObWbzXCXqchQ/PyZsFewVhKXAolmz1SymVmXX25KPH9bdmu6Z5ylHUzA6uTo22hut
+         7w4yjJ/2ET0HtqviPDX3KZ8N7Dk9QyHfK6QFQDpI=
+Message-ID: <1508399608.4529.10.camel@xwing.info>
+Subject: Re: [PATCH] use filetest pragma to work with ACL
+From:   Guillaume Castagnino <casta@xwing.info>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Date:   Thu, 19 Oct 2017 09:53:28 +0200
+In-Reply-To: <20171018212451.goqxu4qq6aqe4tpl@sigill.intra.peff.net>
+References: <0102015f310e24b9-b96378f3-a029-4110-80dd-e454522e2cb7-000000@eu-west-1.amazonses.com>
+         <20171018212451.goqxu4qq6aqe4tpl@sigill.intra.peff.net>
+Content-Type: multipart/mixed; boundary="=-oz9gt1rRIBFLUdaYD720"
+X-Mailer: Evolution 3.24.5 
+Mime-Version: 1.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 19, 2017 at 02:30:08PM +0900, Junio C Hamano wrote:
 
-> Jeff King <peff@peff.net> writes:
+--=-oz9gt1rRIBFLUdaYD720
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+
+Hi,
+
+Le mercredi 18 octobre 2017 à 17:24 -0400, Jeff King a écrit :
+> On Wed, Oct 18, 2017 at 07:55:31PM +0000, Guillaume Castagnino wrote:
 > 
-> > it does. It just adjusts our "end pointer" to point to the last valid
-> > character in the string (rather than one past), which seems to be the
-> > convention that those loops (and next_byte) expect.
+> > From: Guillaume Castagnino <casta@xwing.info>
+> > [...]
 > 
-> Yeah I am not sure if I like this comparison at the beginning of the
-> function:
+> Stefan raised a few meta issues, all of which I agree with. But I had
+> some questions about the patch itself:
 > 
->         static int next_byte(const char **cp, const char **endp,
->                              const struct diff_options *diffopt)
->         {
->                 int retval;
+> > diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> > index 9208f42ed1753..0ee7f304ce2b1 100755
+> > --- a/gitweb/gitweb.perl
+> > +++ b/gitweb/gitweb.perl
+> > @@ -3072,6 +3072,7 @@ sub git_get_projects_list {
+> >  				# only directories can be git
+> > repositories
+> >  				return unless (-d $_);
+> >  				# need search permission
+> > +				use filetest 'access';
+> >  				return unless (-x $_);
 > 
->                 if (*cp > *endp)
->                         return -1;
+> This "use" will unconditionally at compile-time (such as "compile" is
+> for perl, anyway). Which raises a few questions:
 > 
-> but it says endp _is_ part of valid input, contrary to my intuition.
+>   - would we want to use "require" instead to avoid loading when we
+>     don't enter this function?
 
-Actually, I think even this function is confused about its convention.
-In the line you quote, we clearly treat *endp as part of the input. But
-later we do:
+I was under the impression that as this is a pragma affecting perl
+“compiler”, you have to always use “use”, not require, as the pragma
+initialisation has to be done before code is run.
 
-  while (*cp < *endp && isspace(**cp))
-	  (*cp)++;
+>   - If the answer to the above is "no" (e.g., because we basically
+>     always need it; I didn't check), should it go at the top of the
+>     script with the other "use" directives?
+> 
+>     I think this is a scoped pragma, so what you have here affects
+> only
+>     this particular "-x". But wouldn't other uses of "-x" potentially
+>     want the same benefit?
 
-meaning that we'd fail to soak up whitespace at *endp. That wouldn't be
-so bad if not for the other bug which fails to eat whitespace at endp in
-the first place. :)
+I quickly grepped the code, I did not see other calls that could
+benefits from the pragma, but it could be indeed nice to move it at the
+top to avoid future issues with such tests and POSIX ACL.
 
-So I think the right fix is this:
+>   - Do all relevant versions of perl ship with filetest? According to
+>     Module::Corelist, it first shipped with perl 5.6. In general I
+> think
+>     we treat that as a minimum for our perl scripts, though I do
+> notice
+>     that the gitweb script says "use 5.008". I'm not sure how
+> realistic
+>     that is.
 
-diff --git a/diff.c b/diff.c
-index 6fd288420b..09081a207c 100644
---- a/diff.c
-+++ b/diff.c
-@@ -712,7 +712,7 @@ static int next_byte(const char **cp, const char **endp,
- {
- 	int retval;
- 
--	if (*cp > *endp)
-+	if (*cp >= *endp)
- 		return -1;
- 
- 	if (isspace(**cp)) {
-@@ -729,7 +729,12 @@ static int next_byte(const char **cp, const char **endp,
- 		if (DIFF_XDL_TST(diffopt, IGNORE_WHITESPACE)) {
- 			while (*cp < *endp && isspace(**cp))
- 				(*cp)++;
--			/* return the first non-ws character via the usual below */
-+			/*
-+			 * return the first non-ws character via the usual
-+			 * below, unless we ate all of the bytes
-+			 */
-+			if (*cp >= *endp)
-+				return -1;
- 		}
- 	}
- 
-@@ -750,9 +755,9 @@ static int moved_entry_cmp(const struct diff_options *diffopt,
- 		return a->es->len != b->es->len  || memcmp(ap, bp, a->es->len);
- 
- 	if (DIFF_XDL_TST(diffopt, IGNORE_WHITESPACE_AT_EOL)) {
--		while (ae > ap && isspace(*ae))
-+		while (ae > ap && isspace(ae[-1]))
- 			ae--;
--		while (be > bp && isspace(*be))
-+		while (be > bp && isspace(be[-1]))
- 			be--;
- 	}
- 
-@@ -775,7 +780,7 @@ static unsigned get_string_hash(struct emitted_diff_symbol *es, struct diff_opti
- 		int c;
- 
- 		strbuf_reset(&sb);
--		while (ae > ap && isspace(*ae))
-+		while (ae > ap && isspace(ae[-1]))
- 			ae--;
- 		while ((c = next_byte(&ap, &ae, o)) > 0)
- 			strbuf_addch(&sb, c);
+So the CGI already requires perl 5.8, so it’s fine I think.
 
-It's late here, so I'll wait for comments from Stefan and then try to
-wrap it up with a commit message and test tomorrow.
+Attached a cleanup proposal and moving the use at the top.
 
--Peff
+Thanks
+Guillaume
+
+-- 
+Guillaume Castagnino
+    casta@xwing.info / guillaume@castagnino.org
+--=-oz9gt1rRIBFLUdaYD720
+Content-Disposition: attachment; filename="0001-gitweb-use-filetest-to-allow-ACLs.patch"
+Content-Type: text/x-patch; name="0001-gitweb-use-filetest-to-allow-ACLs.patch";
+	charset="UTF-8"
+Content-Transfer-Encoding: base64
+
+RnJvbSA0ZDVhMDgyOTcwMDYzYjM0ZDNkYmRmNWI5YTU3NzYyNDMxMDA1N2Q2IE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBHdWlsbGF1bWUgQ2FzdGFnbmlubyA8Y2FzdGFAeHdpbmcuaW5m
+bz4KRGF0ZTogVGh1LCAxOSBPY3QgMjAxNyAwOTozMjo0NiArMDIwMApTdWJqZWN0OiBbUEFUQ0hd
+IGdpdHdlYjogdXNlIGZpbGV0ZXN0IHRvIGFsbG93IEFDTHMKCkluIGNvbW1pdCA0NmExMzg1IChn
+aXR3ZWI6IHNraXAgdW5yZWFkYWJsZSBzdWJkaXJlY3RvcmllcywgMjAxNy0wNy0xOCkKd2UgZm9y
+Z290IHRvIGhhbmRsZSBub24tdW5peCBBQ0xzIGFzIHdlbGwuIEZpeCB0aGlzLgoKU2lnbmVkLW9m
+Zi1ieTogR3VpbGxhdW1lIENhc3RhZ25pbm8gPGNhc3RhQHh3aW5nLmluZm8+Ci0tLQogZ2l0d2Vi
+L2dpdHdlYi5wZXJsIHwgMiArKwogMSBmaWxlIGNoYW5nZWQsIDIgaW5zZXJ0aW9ucygrKQoKZGlm
+ZiAtLWdpdCBhL2dpdHdlYi9naXR3ZWIucGVybCBiL2dpdHdlYi9naXR3ZWIucGVybAppbmRleCA5
+MjA4ZjQyZWQuLjZhYzQ5ZWFmMyAxMDA3NTUKLS0tIGEvZ2l0d2ViL2dpdHdlYi5wZXJsCisrKyBi
+L2dpdHdlYi9naXR3ZWIucGVybApAQCAtMTAsNiArMTAsOCBAQAogdXNlIDUuMDA4OwogdXNlIHN0
+cmljdDsKIHVzZSB3YXJuaW5nczsKKyMgaGFuZGxlIEFDTCBpbiBmaWxlIGFjY2VzcyB0ZXN0cwor
+dXNlIGZpbGV0ZXN0ICdhY2Nlc3MnOwogdXNlIENHSSBxdyg6c3RhbmRhcmQgOmVzY2FwZUhUTUwg
+LW5vc3RpY2t5KTsKIHVzZSBDR0k6OlV0aWwgcXcodW5lc2NhcGUpOwogdXNlIENHSTo6Q2FycCBx
+dyhmYXRhbHNUb0Jyb3dzZXIgc2V0X21lc3NhZ2UpOwotLSAKMi4xNC4yCgo=
+
+
+--=-oz9gt1rRIBFLUdaYD720--
+
