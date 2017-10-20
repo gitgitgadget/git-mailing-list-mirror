@@ -2,126 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F334C1FF72
-	for <e@80x24.org>; Fri, 20 Oct 2017 11:03:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 579C11FF32
+	for <e@80x24.org>; Fri, 20 Oct 2017 12:53:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752787AbdJTLDf (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Oct 2017 07:03:35 -0400
-Received: from mailout4.samsung.com ([203.254.224.34]:13258 "EHLO
-        mailout4.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752774AbdJTLDd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Oct 2017 07:03:33 -0400
-Received: from epcas1p4.samsung.com (unknown [182.195.41.48])
-        by mailout4.samsung.com (KnoxPortal) with ESMTP id 20171020110332epoutp04b676b42f8183408817350e7f0ff58a8c~vQmdrRyrZ0269102691epoutp04O;
-        Fri, 20 Oct 2017 11:03:32 +0000 (GMT)
-Received: from epsmges1p4.samsung.com (unknown [182.195.42.56]) by
-        epcas1p4.samsung.com (KnoxPortal) with ESMTP id
-        20171020110331epcas1p4a3bb3afe19d6b6d223a22e1de91571f4~vQmc1Kjp70632406324epcas1p4Q;
-        Fri, 20 Oct 2017 11:03:31 +0000 (GMT)
-Received: from epcas1p3.samsung.com ( [182.195.41.47]) by
-        epsmges1p4.samsung.com (Symantec Messaging Gateway) with SMTP id
-        C9.D2.04388.308D9E95; Fri, 20 Oct 2017 20:03:31 +0900 (KST)
-Received: from epsmgms2p1new.samsung.com (unknown [182.195.42.142]) by
-        epcas1p2.samsung.com (KnoxPortal) with ESMTP id
-        20171020110330epcas1p20ce56b13897b7a74358946346048457a~vQmcgEZhQ2228922289epcas1p2F;
-        Fri, 20 Oct 2017 11:03:30 +0000 (GMT)
-X-AuditID: b6c32a38-d89ff70000001124-8e-59e9d8038e71
-Received: from epmmp2 ( [203.254.227.17]) by epsmgms2p1new.samsung.com
-        (Symantec Messaging Gateway) with SMTP id 99.07.06995.208D9E95; Fri, 20 Oct
-        2017 20:03:30 +0900 (KST)
-Received: from [106.109.129.81] by mmp2.samsung.com (Oracle Communications
-        Messaging Server 7.0.5.31.0 64bit (built May  5 2014)) with ESMTPA id
-        <0OY400GPRC1SMZC0@mmp2.samsung.com>; Fri, 20 Oct 2017 20:03:30 +0900 (KST)
-Subject: [PATCH v3] commit: check result of resolve_ref_unsafe
-To:     Jeff King <peff@peff.net>, gitster@pobox.com
-Cc:     git@vger.kernel.org, Ivan Arishchenko <i.arishchenk@samsung.com>,
-        Mikhail Labiuk <m.labiuk@samsung.com>
-From:   Andrey Okoshkin <a.okoshkin@samsung.com>
-Organization: Samsung RnD Institute Russia
-Message-id: <c5f72436-df4e-5c51-d58b-8699dfcfd70c@samsung.com>
-Date:   Fri, 20 Oct 2017 14:03:28 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
-        Thunderbird/52.4.0
-MIME-version: 1.0
-In-reply-to: <20171019174452.hd3c47ocducddvgr@sigill.intra.peff.net>
-Content-type: text/plain; charset="utf-8"
-Content-language: en-GB
-Content-transfer-encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupmleLIzCtJLcpLzFFi42LZdlhTX5f5xstIg3WTeSy6rnQzWTT0XmG2
-        2Hz7FqPFx9knWCx+tPQwO7B6POvdw+hx8ZKyR9+WVYwenzfJBbBEcdmkpOZklqUW6dslcGW8
-        +cteMImj4s5yxwbGB2xdjJwcEgImEp+3NjKC2EICOxgljrY7dzFyAdnfGSX+HDzPDlN06+Ur
-        VoiiDYwSC//WQBTdZ5SYff8sWEJYwE7idf85FhBbRMBA4sVDiGZmgVyJV63vwWrYBPQkzv+a
-        ABbnF9CSuPxjHjOIzQvUO/HOf7AaFgFViRVzToJdJyoQIXH88HJGiBpBiR+T74HN5xRwkThz
-        dzHUfE2JF18msUDY4hLH7t9khLDlJTavecsMcqiEwAE2idUb+4AcDiDHReJ3VzXEY8ISr45v
-        YYcIS0tcOmoLEa6XaO14wgbR2sEo8XnWUmhA2Ets6drOBjGfT+Ld1x5WiF5eiY42IYgSD4mL
-        a64xQ9iOEqsbQcEDCqtGJol/K2+zTGCUn4XknVlIXpiF5IVZSF5YwMiyilEstaA4Nz212LDA
-        RK84Mbe4NC9dLzk/dxMjOIloWexg3HPO5xCjAAejEg/vhgsvIoVYE8uKK3MPMUpwMCuJ8Bru
-        fxkpxJuSWFmVWpQfX1Sak1p8iFGag0VJnFd0/bUIIYH0xJLU7NTUgtQimCwTB6dUA+OGz4/X
-        1qwvqdda/YxJfXOaoIJGz4Kjv0+cbr2YJWnbH6z+KO3J/H65fKNz926nebItmB5pdrfQXM29
-        7KKxxpaAok+WV5UTZK3FxPduniTmd3h5XG9m1cvNke//TV6u9TvFOD333xu5lpX7T7zaPDWo
-        VUhg5qZPxrEly4/pz7fYc3vpUYXEvZ1KLMUZiYZazEXFiQBOvLlzHgMAAA==
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrKLMWRmVeSWpSXmKPExsVy+t9jQV2mGy8jDWa8NLboutLNZNHQe4XZ
-        YvPtW4wWH2efYLH40dLD7MDq8ax3D6PHxUvKHn1bVjF6fN4kF8ASxWWTkpqTWZZapG+XwJXx
-        5i97wSSOijvLHRsYH7B1MXJySAiYSNx6+Yq1i5GLQ0hgHaPE5OVbWCCch4wS56bvZQapEhaw
-        k3jdf44FxBYRMJB48fA8O4jNLJArcXzvByaIhmYmiRdXVrGCJNgE9CTO/5oAVsQvoCVx+cc8
-        sEG8QIMm3vkPVsMioCqxYs5JsDNEBSIknje/Z4WoEZT4Mfke2DJOAReJM3cXA83hAFqmLjFl
-        Si7EXnGJY/dvMkLY8hKb17xlnsAoOAtJ9yyEjllIOmYh6VjAyLKKUTK1oDg3PbfYqMAwL7Vc
-        rzgxt7g0L10vOT93EyMw8Lcd1urbwXh/SfwhRgEORiUe3ohzLyKFWBPLiitzDzFKcDArifAa
-        7n8ZKcSbklhZlVqUH19UmpNafIhRmoNFSZz3dt6xSCGB9MSS1OzU1ILUIpgsEwenVAOjwxFF
-        w8vWlelh95etPmv9dLux79/tHh9e7/PPMBT2ljVZ6rl46Q7mlYmaKgcb7k+q3J6+ncVyLXNZ
-        mvKhL7F3V2WcFjf547ntd/UUoXixC8rbvp0V6lh6Inkvv83S4Jmtz65INplvO8gr5nJi+/n8
-        H/7Lph77Zfv1jodinllX2hTxsGMKj32mKbEUZyQaajEXFScCAP9vQrl4AgAA
-X-CMS-MailID: 20171020110330epcas1p20ce56b13897b7a74358946346048457a
-X-Msg-Generator: CA
-X-Sender-IP: 182.195.42.142
-X-Local-Sender: =?UTF-8?B?QW5kcmV5IE9rb3Noa2luG1NSUi1TVyBUb29scyBMYWIb?=
-        =?UTF-8?B?7IK87ISx7KCE7J6QG0xlYWRpbmcgRW5naW5lZXI=?=
-X-Global-Sender: =?UTF-8?B?QW5kcmV5IE9rb3Noa2luG1NSUi1TVyBUb29scyBMYWIbU2Ft?=
-        =?UTF-8?B?c3VuZyBFbGVjdHJvbmljcxtMZWFkaW5nIEVuZ2luZWVy?=
-X-Sender-Code: =?UTF-8?B?QzEwG0NJU0hRG0MxMEdEMDFHRDAxMDE1Nw==?=
-CMS-TYPE: 101P
-X-CMS-RootMailID: 20171018170047epcas2p4310be357e11e194d6d08ac3bdc478ba3
-X-RootMTR: 20171018170047epcas2p4310be357e11e194d6d08ac3bdc478ba3
-References: <CGME20171018170047epcas2p4310be357e11e194d6d08ac3bdc478ba3@epcas2p4.samsung.com>
-        <0e396c24-167f-901e-9122-cdc17164ec1e@samsung.com>
-        <5fa1f5c6-249e-2aa9-5e9f-c00ebe2c0d9d@samsung.com>
-        <20171019174452.hd3c47ocducddvgr@sigill.intra.peff.net>
+        id S1751244AbdJTMxQ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Oct 2017 08:53:16 -0400
+Received: from mout.gmx.net ([212.227.17.22]:61187 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750954AbdJTMxP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Oct 2017 08:53:15 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MXVr0-1dl40Z1fBm-00WU2J; Fri, 20
+ Oct 2017 14:47:57 +0200
+Date:   Fri, 20 Oct 2017 14:47:56 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Stefan Beller <sbeller@google.com>
+cc:     Ben Peart <peartben@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        Ben Peart <benpeart@microsoft.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v1] read_index_from(): Skip verification of the cache
+ entry order to speed index loading
+In-Reply-To: <CAGZ79kZfw7Cb8Qs4BKuESukBL8rCgmYh0=BcNYm9mXJ1LYCg0g@mail.gmail.com>
+Message-ID: <alpine.DEB.2.21.1.1710201444590.40514@virtualbox>
+References: <20171018142725.10948-1-benpeart@microsoft.com> <xmqq4lqvk8ze.fsf@gitster.mtv.corp.google.com> <db8da340-f8f5-0114-392d-e415b5564993@gmail.com> <CAGZ79kZfw7Cb8Qs4BKuESukBL8rCgmYh0=BcNYm9mXJ1LYCg0g@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:8lJHwr3UeyasDM05fNsyNogQVsxGxqEOb5g2OBLNWtptOYzO8M6
+ +JbAZ91uAVUQQnOBRw5/Fz7bm4spcKkGGCclbyV7p7IHM0AOzh7nCg6lirXVVvIsLTK+MAb
+ Y4L4Y6QJhess9S/LYwdVNvs5d3q3OOKxeesAEsJuhHuJ7uZGPG7ha68aOj7/DB2eXjjER1s
+ YBml79FThFr9F2ZHV6tng==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:3+MUyyhkJVE=:l1XdOU9FpS6lnzkmf4Fl+b
+ x7NsTPXXY2iY1WFPzlyqOn81fsckZpqmnN6Yfg0L94oPgcof7jPNpwrr48Mxeujex+DvIIwWI
+ oqmzRNK7hIdHReBFfMV/7kNvXCN6qd8acEO6pZUnzoWscxY0bPc24vnmnQYqyyeBU0wc44C/X
+ Wq2brKMkEiKYJ9zh33zqhzIxcP2YCSYpALcffF9iUAMZQNOIjAVwrPIDpjjMDivrW6rB+8u/k
+ cSLJhGp0OS7BqPaZx/2t3fqFUt0pejXIvOXmx2v6zEikDXEq9ROJrYL5/mrvpsSTyP6EbZuKG
+ 6upDhHWOseApAQ3P+zcZpixigEfyWj8mXIHl2A2UMEQNxrouhvZXnpPRcCgdbA1AgLFJYjk0j
+ YLGuyj6RJYoYN+v+XEOEn1ZRjB92lIbMOaROzBD39i0A7TKGi9xw45Xnsc7k2qLCFanvX4Zc+
+ uVDCOzI3VRDl6Jvq5JZ7Cw96lhvddNRUEplGfbCQ7DYyQYW/vpx20QFkCiuCVVjtxyeaRmSO/
+ a0KJCsLcrGYQvZAYMIotu1tOqT1NxNWmFkez3NYO2TDfPQiF7UdwqBmnXArk7QJG+955HinJd
+ E6jme7M2j1E4+bozXP0n4q81USTrQWsgpbNMSoivYNDIHVNWrnSdWtQr9JBVXmk/NkG6osCtE
+ PjPT9poMMrPXKs2Vo6QyhYILwvw0AVRVFvGZxGHKvHqBcEuf8z4da4ntcGLMsJlle0kc+Pi3G
+ lRLFHhSKpdjmuSEC22OdsIYLGS0m0g0PVJ0QGQ/928vEzHkh5W4er7bNKXlwh9Nyx5UilJpuE
+ F1gWsG2algQG6sai6Ttl53M67OyDeUDDFCA0icLxYKusaDHts37tYlmIWL2FC7ejOorcCzd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add check of the resolved HEAD reference while printing of a commit summary.
-resolve_ref_unsafe() may return NULL pointer if underlying calls of lstat() or
-open() fail in files_read_raw_ref().
-Such situation can be caused by race: file becomes inaccessible to this moment.
+Hi Stefan,
 
-Signed-off-by: Andrey Okoshkin <a.okoshkin@samsung.com>
----
-die_errno fits better here as resolve_ref_unsafe preserves errno value.
+On Thu, 19 Oct 2017, Stefan Beller wrote:
 
-Changes since the previous patch:
-* die is replaced with die_errno.
- builtin/commit.c | 2 ++
- 1 file changed, 2 insertions(+)
+> On Thu, Oct 19, 2017 at 8:12 AM, Ben Peart <peartben@gmail.com> wrote:
+> 
+> > If we are guarding against "git" writing out an invalid index, we can move
+> > this into an assert so that only git developers pay the cost of validating
+> > they haven't created a new bug.  I think this is better than just adding a
+> > new test case as a new test case would not achieve the same coverage.  This
+> > is my preferred solution.
+> >
+> > If we are guarding against "some other application" writing out an invalid
+> > index, then everyone will have to pay the cost as we can't insert the test
+> > into "some other applications."  Without user reports of it happening or any
+> > telemetry saying it has happened I really have no idea if it every actually
+> > happens in the wild anymore and whether the cost on every index load is
+> > still justified.
+> 
+> How well does this play out in the security realm?, c.f.
+> https://public-inbox.org/git/20171002234517.GV19555@aiede.mtv.corp.google.com/
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 1a0da71a4..b52829090 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1483,6 +1483,8 @@ static void print_summary(const char *prefix, const struct object_id *oid,
- 	diff_setup_done(&rev.diffopt);
- 
- 	head = resolve_ref_unsafe("HEAD", 0, junk_oid.hash, NULL);
-+	if (!head)
-+		die_errno(_("unable to resolve HEAD after creating commit"));
- 	if (!strcmp(head, "HEAD"))
- 		head = _("detached HEAD");
- 	else
--- 
-2.14.2
+That link talks about security implications from administrators accessing
+Git repositories with maliciously crafted hooks/pagers.
 
+Ben's original mail talks about integrity checks of the index file, and
+how expensive they get when you talk about any decent-sized index (read:
+*a lot* larger than Git or even Linux developers will see regularly).
+
+The text you quoted talks about our talking out of our rear ends when we
+talk about typical user schenarios because we simply have no telemetry or
+otherwise reliable statistics.
+
+Now, I fail to see any relationship between Jonathan's mail and either of
+Ben's statements.
+
+Care to enlighten me?
+
+Ciao,
+Dscho
