@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 695AC202DD
-	for <e@80x24.org>; Fri, 20 Oct 2017 01:12:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9E61C202DD
+	for <e@80x24.org>; Fri, 20 Oct 2017 01:12:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751414AbdJTBL4 (ORCPT <rfc822;e@80x24.org>);
+        id S1751526AbdJTBMB (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Oct 2017 21:12:01 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:44728 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751399AbdJTBL4 (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 19 Oct 2017 21:11:56 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:43940 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750960AbdJTBLz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Oct 2017 21:11:55 -0400
-Received: by mail-pf0-f195.google.com with SMTP id a8so8576965pfc.0
-        for <git@vger.kernel.org>; Thu, 19 Oct 2017 18:11:55 -0700 (PDT)
+Received: by mail-pf0-f196.google.com with SMTP id x7so8581186pfa.1
+        for <git@vger.kernel.org>; Thu, 19 Oct 2017 18:11:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=dropbox.com; s=corp;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references;
-        bh=WkHYt5rC8Wgfz4VlUqw/4yAClFGOnIOnlWw3sqKNPQc=;
-        b=xwf30upoVUSv+Jc4O5oCumQKziGqalkubuBqxDFLV784aMuQ16qrLdfnX7lsV/CO0g
-         7O00yKX+dK6Io4HeFt+NTtKn632VjX3N2IhMjWVnMWr/3Pp8tRJug9ay8kWLBapahJmT
-         T29Tan+uAKcU+0NzMia7za6W0fxXGAAWf+MXs=
+        bh=H/2OdUdXYFIAO//V33DONaA7mOHDyq4eDKf4Oc37hEk=;
+        b=cJ4gbCi1rL0kRwYpa6JILHn+HYmf2DfbmDFlE+eALyu/jGNV4omCjeoPPA33s5qY4W
+         jKVbgs6leHXMcRbahwrP9TPUBf3t8ih65YKPv1rM91Yfkxu2TDimjBFXCH6T2R/0IZEG
+         ZdQekcXqyVIX3n9QNkTBzBYnWwKpcZpvJ5pKA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references;
-        bh=WkHYt5rC8Wgfz4VlUqw/4yAClFGOnIOnlWw3sqKNPQc=;
-        b=ZCj3qzbB1yu1FF3dGF62rGxlZ56BvALK2zk2RHgkBWTNLgZ9ygpvV96hEMJDP3QzPi
-         4b8YVUOA6iV9oc07xx8E0L1LDzNpjj5ILAdEon0MeLwj0mWqW5+8+kL4ZXupVWFk+KtF
-         J7LHcI+TLvMsN4JpeGIBPKe/X5OY+hX/KwmPIuiX1mpeJ8um86nyXF/FCEStk81KTkvj
-         yKattlFbYp/lNufgMducvj9Obo0DiQYMoj9hBY3uxwXarIkdZLNMIQ//R7jC6BP2mc/9
-         YLzNBeR/sdQypPj7pSQ8on01UjqmLhYMbafPXndEGqG8We/3cJe1TB06WY9778DsPnxc
-         pj1Q==
-X-Gm-Message-State: AMCzsaU+FoKYRxLx+qM4LA59kaTnTyptmjUv5PdZqppokEzjUivLCojp
-        ROs233Z0PqnDoTnTka4El+hKnO4DHCI=
-X-Google-Smtp-Source: ABhQp+RVMOL7/Z1Gd2b/BEPlo7tlw6yZ6Br4MUPT4UbksDa45/0WEPFCVEe7fwM2XN5BqrrBrPVz8Q==
-X-Received: by 10.84.229.1 with SMTP id b1mr2866914plk.405.1508461914699;
-        Thu, 19 Oct 2017 18:11:54 -0700 (PDT)
+        bh=H/2OdUdXYFIAO//V33DONaA7mOHDyq4eDKf4Oc37hEk=;
+        b=K2CA5LdGkDCXjr9mJWfBUQOR3PgkVpWe0QX15g62jsEd0G5F98Z4QQ2I6o44SyjuaJ
+         R0YzIVomnWU0C23RsEgp6cactdF5MZL6fEnojVz9ouvaIdbd9UXVWZnwciT0YjNUEsHO
+         4i7gYpC9WMtJe55tdbTuLqr1qZXbAMjoC+fZxH7sQgxBQ6r4gmYyW0bN2Wsy9Ma4qXrh
+         1Rh1jeikjVvfhOxHJdsQ+ohuuVvEogq8XUH9cQASgQ7EZqm1E6lVOTr0JYxdqNbjK9Cl
+         vm0s/7SX+RZpBpYay02Q6t1Woy1dUrRA0orlUGSfVsBSX5OO4pYlmPolN4yPi90ndIWl
+         FMBA==
+X-Gm-Message-State: AMCzsaV5UAHCpS29XsnSfU2mU87MjRzOtWpgXzaaDA42wNQ7xqAkmh4y
+        HCel+G/4Rf0wYhbydGC3XlQ41mZ59Po=
+X-Google-Smtp-Source: ABhQp+QbuZwdFSSQ5yBgZ9qYYtDnqzUEggjnrcTdiAO4AjNo3Oj/7/iuOBnB0EJNNMn8DwvUy4bM1Q==
+X-Received: by 10.84.235.69 with SMTP id g5mr2900098plt.239.1508461915707;
+        Thu, 19 Oct 2017 18:11:55 -0700 (PDT)
 Received: from alexmv-linux.corp.dropbox.com (V160-vrrp.corp.dropbox.com. [205.189.0.161])
-        by smtp.gmail.com with ESMTPSA id x19sm403583pgc.60.2017.10.19.18.11.53
+        by smtp.gmail.com with ESMTPSA id x19sm403583pgc.60.2017.10.19.18.11.54
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 19 Oct 2017 18:11:53 -0700 (PDT)
+        Thu, 19 Oct 2017 18:11:54 -0700 (PDT)
 From:   Alex Vandiver <alexmv@dropbox.com>
 To:     git@vger.kernel.org
 Cc:     Ben Peart <peartben@gmail.com>, Alex Vandiver <alexmv@dropbox.com>
-Subject: [PATCH 2/4] fsmonitor: Don't bother pretty-printing JSON from watchman
-Date:   Thu, 19 Oct 2017 18:11:34 -0700
-Message-Id: <6887851348e177728849964cc95ae783b0feb971.1508461850.git.alexmv@dropbox.com>
+Subject: [PATCH 3/4] fsmonitor: Document GIT_TRACE_FSMONITOR
+Date:   Thu, 19 Oct 2017 18:11:35 -0700
+Message-Id: <169bbc6117f518ffc9371fea7dfd11439105cc80.1508461850.git.alexmv@dropbox.com>
 X-Mailer: git-send-email 2.15.0.rc1.417.g05670bb6e
 In-Reply-To: <20171020011136.14170-1-alexmv@dropbox.com>
 References: <20171020011136.14170-1-alexmv@dropbox.com>
@@ -62,40 +62,26 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This provides small performance savings.
-
 Signed-off-by: Alex Vandiver <alexmv@dropbox.com>
 ---
- t/t7519/fsmonitor-watchman                 | 2 +-
- templates/hooks--fsmonitor-watchman.sample | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ Documentation/git.txt | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/t/t7519/fsmonitor-watchman b/t/t7519/fsmonitor-watchman
-index 377edc7be..eba46c78b 100755
---- a/t/t7519/fsmonitor-watchman
-+++ b/t/t7519/fsmonitor-watchman
-@@ -51,7 +51,7 @@ launch_watchman();
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index 1fca63634..720db196e 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -594,6 +594,10 @@ into it.
+ Unsetting the variable, or setting it to empty, "0" or
+ "false" (case insensitive) disables trace messages.
  
- sub launch_watchman {
- 
--	my $pid = open2(\*CHLD_OUT, \*CHLD_IN, 'watchman -j')
-+	my $pid = open2(\*CHLD_OUT, \*CHLD_IN, 'watchman -j --no-pretty')
- 	    or die "open2() failed: $!\n" .
- 	    "Falling back to scanning...\n";
- 
-diff --git a/templates/hooks--fsmonitor-watchman.sample b/templates/hooks--fsmonitor-watchman.sample
-index 7df590d29..60eb7e70b 100755
---- a/templates/hooks--fsmonitor-watchman.sample
-+++ b/templates/hooks--fsmonitor-watchman.sample
-@@ -50,7 +50,7 @@ launch_watchman();
- 
- sub launch_watchman {
- 
--	my $pid = open2(\*CHLD_OUT, \*CHLD_IN, 'watchman -j')
-+	my $pid = open2(\*CHLD_OUT, \*CHLD_IN, 'watchman -j --no-pretty')
- 	    or die "open2() failed: $!\n" .
- 	    "Falling back to scanning...\n";
- 
++`GIT_TRACE_FSMONITOR`::
++	Enables trace messages for the filesystem monitor extension.
++	See `GIT_TRACE` for available trace output options.
++
+ `GIT_TRACE_PACK_ACCESS`::
+ 	Enables trace messages for all accesses to any packs. For each
+ 	access, the pack file name and an offset in the pack is
 -- 
 2.15.0.rc1.417.g05670bb6e
 
