@@ -2,230 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D09961FF72
-	for <e@80x24.org>; Fri, 20 Oct 2017 10:47:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F334C1FF72
+	for <e@80x24.org>; Fri, 20 Oct 2017 11:03:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752853AbdJTKq6 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Oct 2017 06:46:58 -0400
-Received: from smtpoutz10.laposte.net ([194.117.213.175]:39885 "EHLO
-        smtp.laposte.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751967AbdJTKq5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Oct 2017 06:46:57 -0400
-X-Greylist: delayed 374 seconds by postgrey-1.27 at vger.kernel.org; Fri, 20 Oct 2017 06:46:56 EDT
-Received: from smtp.laposte.net (localhost [127.0.0.1])
-        by lpn-prd-vrout004 (Postfix) with ESMTP id 0891260B22B
-        for <git@vger.kernel.org>; Fri, 20 Oct 2017 12:40:41 +0200 (CEST)
-Received: from smtp.laposte.net (localhost [127.0.0.1])
-        by lpn-prd-vrout004 (Postfix) with ESMTP id DB58160B239
-        for <git@vger.kernel.org>; Fri, 20 Oct 2017 12:40:40 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=laposte.net; s=mail0;
-        t=1508496040; bh=0stUkVGLDSNjg4400iRn0yz71DnJA5xa4J4SNbBBRZc=;
-        h=Date:From:To:In-Reply-To:Subject;
-        b=ikqTFs6AWz8iqMaH0vRH5puAqiAyAp4Tiv1ZucATzsf3qUS59R4qdCDqHUsign75Z
-         Frl53RWX+9oXKvsj6wgxYueJEMOFydFiolR2wvNRrrE7/Oi3QCLj2mOFhL03UvErYK
-         7UuMEBwrqlCruVJF8gL2EVxf+Uru/N3HV4prQqRLFO9W142W5zLp0i2NjcNA59D47y
-         8ScHTinqezTqRW3g8W6Zs2SLzkA6VrLfsxgYLeOP9tWOc30cgvDR7Qug2/X64zLrbS
-         0m1GN3Puk/GBgm47Ra2iGR2cZ0ZqYwmPKh5YReVsQQwc/U9qU/MDVAPoT+jvVX6F0w
-         GgiOK40EYMl4w==
-Received: from lpn-prd-mstr088.laposte (lpn-prd-mstr088 [10.128.59.114])
-        by lpn-prd-vrout004 (Postfix) with ESMTP id ED45860B22B
-        for <git@vger.kernel.org>; Fri, 20 Oct 2017 12:40:39 +0200 (CEST)
-Date:   Fri, 20 Oct 2017 12:40:39 +0200 (CEST)
-From:   nicolas.mailhot@laposte.net
-To:     git@vger.kernel.org
-Message-ID: <1290947539.4254.1508496039812.JavaMail.zimbra@laposte.net>
-In-Reply-To: <2089146798.216127.1508487262593.JavaMail.zimbra@laposte.net>
-Subject: [RFE] Add minimal universal release management capabilities to GIT
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Originating-IP: [82.232.40.215]
-X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - FF57 (Linux)/La Poste)
-Thread-Topic: Add minimal universal release management capabilities to GIT
-Thread-Index: +MyC/N+4Eu00GB0En3UxTcln/RKxtA==
-X-VR-SrcIP: [82.232.40.215]
-X-VR-FullState: 0
-X-VR-Score: 0
-X-VR-Cause-1: gggruggvucftvghtrhhoucdtuddrgedttddrvddtgdeftdcutefuodetggdotefrodftvfcurfhrohhf
-X-VR-Cause-2: ihhlvgemucfntefrqffuvffgnecuuegrihhlohhuthemucehtddtnecunecujfgurhepfffhvffkjgfu
-X-VR-Cause-3: gggtgfhiofhtsehtqhgttdertdejnecuhfhrohhmpehnihgtohhlrghsrdhmrghilhhhohhtsehlrghp
-X-VR-Cause-4: ohhsthgvrdhnvghtnecuffhomhgrihhnpehlfihnrdhnvghtnecukfhppedutddruddvkedrheelrddu
-X-VR-Cause-5: udegpdekvddrvdefvddrgedtrddvudehnecurfgrrhgrmhepmhhouggvpehsmhhtphhouhhtpdhhvghl
-X-VR-Cause-6: oheplhhpnhdqphhrugdqmhhsthhrtdekkedrlhgrphhoshhtvgdpihhnvghtpedutddruddvkedrheel
-X-VR-Cause-7: rdduudegpdhmrghilhhfrhhomhepnhhitgholhgrshdrmhgrihhlhhhotheslhgrphhoshhtvgdrnhgv
-X-VR-Cause-8: thdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-VR-AvState: No
-X-VR-State: 0
+        id S1752787AbdJTLDf (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Oct 2017 07:03:35 -0400
+Received: from mailout4.samsung.com ([203.254.224.34]:13258 "EHLO
+        mailout4.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752774AbdJTLDd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Oct 2017 07:03:33 -0400
+Received: from epcas1p4.samsung.com (unknown [182.195.41.48])
+        by mailout4.samsung.com (KnoxPortal) with ESMTP id 20171020110332epoutp04b676b42f8183408817350e7f0ff58a8c~vQmdrRyrZ0269102691epoutp04O;
+        Fri, 20 Oct 2017 11:03:32 +0000 (GMT)
+Received: from epsmges1p4.samsung.com (unknown [182.195.42.56]) by
+        epcas1p4.samsung.com (KnoxPortal) with ESMTP id
+        20171020110331epcas1p4a3bb3afe19d6b6d223a22e1de91571f4~vQmc1Kjp70632406324epcas1p4Q;
+        Fri, 20 Oct 2017 11:03:31 +0000 (GMT)
+Received: from epcas1p3.samsung.com ( [182.195.41.47]) by
+        epsmges1p4.samsung.com (Symantec Messaging Gateway) with SMTP id
+        C9.D2.04388.308D9E95; Fri, 20 Oct 2017 20:03:31 +0900 (KST)
+Received: from epsmgms2p1new.samsung.com (unknown [182.195.42.142]) by
+        epcas1p2.samsung.com (KnoxPortal) with ESMTP id
+        20171020110330epcas1p20ce56b13897b7a74358946346048457a~vQmcgEZhQ2228922289epcas1p2F;
+        Fri, 20 Oct 2017 11:03:30 +0000 (GMT)
+X-AuditID: b6c32a38-d89ff70000001124-8e-59e9d8038e71
+Received: from epmmp2 ( [203.254.227.17]) by epsmgms2p1new.samsung.com
+        (Symantec Messaging Gateway) with SMTP id 99.07.06995.208D9E95; Fri, 20 Oct
+        2017 20:03:30 +0900 (KST)
+Received: from [106.109.129.81] by mmp2.samsung.com (Oracle Communications
+        Messaging Server 7.0.5.31.0 64bit (built May  5 2014)) with ESMTPA id
+        <0OY400GPRC1SMZC0@mmp2.samsung.com>; Fri, 20 Oct 2017 20:03:30 +0900 (KST)
+Subject: [PATCH v3] commit: check result of resolve_ref_unsafe
+To:     Jeff King <peff@peff.net>, gitster@pobox.com
+Cc:     git@vger.kernel.org, Ivan Arishchenko <i.arishchenk@samsung.com>,
+        Mikhail Labiuk <m.labiuk@samsung.com>
+From:   Andrey Okoshkin <a.okoshkin@samsung.com>
+Organization: Samsung RnD Institute Russia
+Message-id: <c5f72436-df4e-5c51-d58b-8699dfcfd70c@samsung.com>
+Date:   Fri, 20 Oct 2017 14:03:28 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+        Thunderbird/52.4.0
+MIME-version: 1.0
+In-reply-to: <20171019174452.hd3c47ocducddvgr@sigill.intra.peff.net>
+Content-type: text/plain; charset="utf-8"
+Content-language: en-GB
+Content-transfer-encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupmleLIzCtJLcpLzFFi42LZdlhTX5f5xstIg3WTeSy6rnQzWTT0XmG2
+        2Hz7FqPFx9knWCx+tPQwO7B6POvdw+hx8ZKyR9+WVYwenzfJBbBEcdmkpOZklqUW6dslcGW8
+        +cteMImj4s5yxwbGB2xdjJwcEgImEp+3NjKC2EICOxgljrY7dzFyAdnfGSX+HDzPDlN06+Ur
+        VoiiDYwSC//WQBTdZ5SYff8sWEJYwE7idf85FhBbRMBA4sVDiGZmgVyJV63vwWrYBPQkzv+a
+        ABbnF9CSuPxjHjOIzQvUO/HOf7AaFgFViRVzToJdJyoQIXH88HJGiBpBiR+T74HN5xRwkThz
+        dzHUfE2JF18msUDY4hLH7t9khLDlJTavecsMcqiEwAE2idUb+4AcDiDHReJ3VzXEY8ISr45v
+        YYcIS0tcOmoLEa6XaO14wgbR2sEo8XnWUmhA2Ets6drOBjGfT+Ld1x5WiF5eiY42IYgSD4mL
+        a64xQ9iOEqsbQcEDCqtGJol/K2+zTGCUn4XknVlIXpiF5IVZSF5YwMiyilEstaA4Nz212LDA
+        RK84Mbe4NC9dLzk/dxMjOIloWexg3HPO5xCjAAejEg/vhgsvIoVYE8uKK3MPMUpwMCuJ8Bru
+        fxkpxJuSWFmVWpQfX1Sak1p8iFGag0VJnFd0/bUIIYH0xJLU7NTUgtQimCwTB6dUA+OGz4/X
+        1qwvqdda/YxJfXOaoIJGz4Kjv0+cbr2YJWnbH6z+KO3J/H65fKNz926nebItmB5pdrfQXM29
+        7KKxxpaAok+WV5UTZK3FxPduniTmd3h5XG9m1cvNke//TV6u9TvFOD333xu5lpX7T7zaPDWo
+        VUhg5qZPxrEly4/pz7fYc3vpUYXEvZ1KLMUZiYZazEXFiQBOvLlzHgMAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrKLMWRmVeSWpSXmKPExsVy+t9jQV2mGy8jDWa8NLboutLNZNHQe4XZ
+        YvPtW4wWH2efYLH40dLD7MDq8ax3D6PHxUvKHn1bVjF6fN4kF8ASxWWTkpqTWZZapG+XwJXx
+        5i97wSSOijvLHRsYH7B1MXJySAiYSNx6+Yq1i5GLQ0hgHaPE5OVbWCCch4wS56bvZQapEhaw
+        k3jdf44FxBYRMJB48fA8O4jNLJArcXzvByaIhmYmiRdXVrGCJNgE9CTO/5oAVsQvoCVx+cc8
+        sEG8QIMm3vkPVsMioCqxYs5JsDNEBSIknje/Z4WoEZT4Mfke2DJOAReJM3cXA83hAFqmLjFl
+        Si7EXnGJY/dvMkLY8hKb17xlnsAoOAtJ9yyEjllIOmYh6VjAyLKKUTK1oDg3PbfYqMAwL7Vc
+        rzgxt7g0L10vOT93EyMw8Lcd1urbwXh/SfwhRgEORiUe3ohzLyKFWBPLiitzDzFKcDArifAa
+        7n8ZKcSbklhZlVqUH19UmpNafIhRmoNFSZz3dt6xSCGB9MSS1OzU1ILUIpgsEwenVAOjwxFF
+        w8vWlelh95etPmv9dLux79/tHh9e7/PPMBT2ljVZ6rl46Q7mlYmaKgcb7k+q3J6+ncVyLXNZ
+        mvKhL7F3V2WcFjf547ntd/UUoXixC8rbvp0V6lh6Inkvv83S4Jmtz65INplvO8gr5nJi+/n8
+        H/7Lph77Zfv1jodinllX2hTxsGMKj32mKbEUZyQaajEXFScCAP9vQrl4AgAA
+X-CMS-MailID: 20171020110330epcas1p20ce56b13897b7a74358946346048457a
+X-Msg-Generator: CA
+X-Sender-IP: 182.195.42.142
+X-Local-Sender: =?UTF-8?B?QW5kcmV5IE9rb3Noa2luG1NSUi1TVyBUb29scyBMYWIb?=
+        =?UTF-8?B?7IK87ISx7KCE7J6QG0xlYWRpbmcgRW5naW5lZXI=?=
+X-Global-Sender: =?UTF-8?B?QW5kcmV5IE9rb3Noa2luG1NSUi1TVyBUb29scyBMYWIbU2Ft?=
+        =?UTF-8?B?c3VuZyBFbGVjdHJvbmljcxtMZWFkaW5nIEVuZ2luZWVy?=
+X-Sender-Code: =?UTF-8?B?QzEwG0NJU0hRG0MxMEdEMDFHRDAxMDE1Nw==?=
+CMS-TYPE: 101P
+X-CMS-RootMailID: 20171018170047epcas2p4310be357e11e194d6d08ac3bdc478ba3
+X-RootMTR: 20171018170047epcas2p4310be357e11e194d6d08ac3bdc478ba3
+References: <CGME20171018170047epcas2p4310be357e11e194d6d08ac3bdc478ba3@epcas2p4.samsung.com>
+        <0e396c24-167f-901e-9122-cdc17164ec1e@samsung.com>
+        <5fa1f5c6-249e-2aa9-5e9f-c00ebe2c0d9d@samsung.com>
+        <20171019174452.hd3c47ocducddvgr@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Add check of the resolved HEAD reference while printing of a commit summary.
+resolve_ref_unsafe() may return NULL pointer if underlying calls of lstat() or
+open() fail in files_read_raw_ref().
+Such situation can be caused by race: file becomes inaccessible to this moment.
 
-Git is a wonderful tool, which has transformed how software is created, and=
- made code sharing and reuse, a lot easier (both between human and software=
- tools).
+Signed-off-by: Andrey Okoshkin <a.okoshkin@samsung.com>
+---
+die_errno fits better here as resolve_ref_unsafe preserves errno value.
 
-Unfortunately Git is so good more and more developers start to procrastinat=
-e on any activity that happens outside of GIT, starting with cutting releas=
-es. The meme "one only needs a git commit hash" is going strong, even infec=
-ting institutions like lwn and glibc (https://lwn.net/SubscriberLink/736429=
-/e5a8c8888cc85cc8/)
+Changes since the previous patch:
+* die is replaced with die_errno.
+ builtin/commit.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-However, the properties that make a hash commit terrific at the local devel=
-opment level, also make it suboptimal as a release ID:
-
-=E2=80=93 hashes are not ordered. A human can not guess the sequencing of t=
-wo hashes, nor can a tool, without access to Git history. Just try to handl=
-e "critical security problem in project X, introduced with version Y and fi=
-xed in Z" when all you have is some git hashes. hashing-only introduces sev=
-ere frictions when analysing deployment states.
-
-=E2=80=94 hashes are not ranked. You can not guess, looking at a hash, if i=
-t corresponds to a project stability point, or is in a middle of a refactor=
-ing sequence, where things are expected to break. Evaluating every hash of =
-every project you use quickly becomes prohibitive, with the only possible s=
-trategy being to just use the latest commit at a given time and pray (and i=
-f you are lucky never never update afterwards unless you have lots of fixin=
-g and testing time to waste).
-
-=E2=80=93 commit mixing is broken by design. One can not adapt the user of =
-a piece of code to changes in this piece of code before those changes are c=
-ommitted in the first place. There will always be moments where the latest =
-commit of a project, is incompatible with the latest commit of downsteam us=
-ers of this project. It is not a problem in developer environments and auto=
-mated testers, where you want things to break early and be fixed early. It =
-is a huge problem when you follow the same early commit push strategy for a=
-ctual production code, where failures are not just a red light in a build f=
-arm dashboard, but have real-world consequences. And the more interlinked g=
-it repositories you pile on one another, the higher the probability is two =
-commits won't work with one another with failures cascading down
-
-=E2=80=93 commits are too granular. Even assuming one could build an automa=
-ted regression farm powerful enough to build and test instantaneously every=
- commit, it is not possible to instantaneously push those rebuilds to every=
- instance where this code is deployed (even with infinite bandwidth, infini=
-te network reach and infinite network availability). Computers would be spe=
-nding their time resetting to the latest build of one component or another,=
- with no real work being done. So there will always be a distance, between =
-the latest commit in a git repo, and what is actually deployed. And we've s=
-een bare hashes make evaluating this distance difficult
-
-=E2=80=93 commits are a bad inter-project synchronisation point. There are =
-too many of them, they are not ranked, everyone is choosing a different com=
-mit to deploy, that effectively kills the network effects that helped makin=
-g traditional releases solid (because distributors used the same release st=
-ate, and could share feedback and audit results).
-
-One could mitigate those problems in a Git management overlay (and, indeed,=
- many try). The problem of those overlays is that they have variable maturi=
-ty levels, make incompatible choices, cut corners, are not universal like G=
-it, making building anything on top of them of dubious value, with quick fa=
-llback to commit hashes, which *are* universal among Git repos. Release han=
-dling and versioning really needs to happen in Git itself to be effective.
-
-Please please please add release handling and versioning capabilities to Gi=
-t itself. Without it some enthusiastic Git adopters are on a fast trajector=
-y to unmanageable hash soup states, even if they are not realising it yet, =
-because the deleterious side effects of giving up on releases only get clea=
-r with time.
-
-Here is what such capabilities could look like (people on this list can pro=
-bably invent something better, I don't care as long as something exists).
-
-1. "release versions" are first class objects that can be attached to a com=
-mit (not just freestyle tags that look like versions, but may be something =
-else entirely). Tools can identify release IDs reliably.
-
-2. "release versions" have strong format constrains, that allow humans and =
-tools to deduce their ordering without needing access to something else (fu=
-ll git history or project-specific conventions). The usual string of number=
-s separated by dots is probably simple and universal enough (if you start t=
-o allow letters people will try to use clever schemes like alpha or roman n=
-umerals, that break automation). There needs to be at least two numbers in =
-the string to allow tracking patchlevels.
-
-3. several such objects can be attached to a commit (a project may wish to =
-promote a minor release to major one after it passes QA, versionning histor=
-y should not be lost).
-
-4. absent human intervention the release state of a repo is initialised at =
-0.0, for its first commit (tools can rely on at least one release existing =
-in a repo).
-
-5. a command, such as "git release", allow a human with control of the repo=
- to set an explicit release version to a commit. Git enforces ordering (ref=
-uses versions lower than the latest repo version in git history). The most =
-minor number of the explicit release is necessarily zero.
-
-6. a command, such as "git release" without argument, allows a human to req=
-uest setting of a minor patchlevel release version for the current commit. =
-The computed version is:
-   "last=C2=A0release=C2=A0version=C2=A0in=C2=A0git=C2=A0history=C2=A0excep=
-t=C2=A0most=C2=A0minor=C2=A0number"
- + "."
- + "number=C2=A0of=C2=A0commits=C2=A0in=C2=A0history=C2=A0since=C2=A0this=
-=C2=A0version"
-(patchlevel versioning is predictable and decentralized, credits to Willy T=
-arreau for the idea)
-
-7. a command, such as "git release bump", allows a human to request setting=
- of a new non-patchlevel release version. The computed version is
-   "last release version in git history except most minor number, increment=
-ing the remaining most minor number"
- + "."
- + "0"
-
-8. a command, such as "git release promote", allows a human to request sett=
-ing a new more major release version. The computed version is
-   "last release version in git history except most minor number, increment=
-ing the next-to-remaining-most-minor-and-non-zero number, and resetting the=
- remaining-most-minor-and-non-zero number to zero"
- + "."
- + "0"
-
-9. a command, such as "git release cut", creates a release archive, named r=
-eponame-releaseversion.tar.xz, with a reponame-releaseversion root director=
-y, a reponame-releaseversion/VERSION file containing releaseversion (so aut=
-omation like makefiles can synchronize itself with the release version stat=
-e), removing git metadata (.git tree) from the result. If the current commi=
-t has several release objects attached the highest one in ordering is chose=
-n. If the current commit is lacking a release object a new minor patchlevel=
- release version is autogenerated. Archive compression format can be overri=
-dden in repo config.
-
-10. a command, such as "git release translate", outputs the commit hash ass=
-ociated to the version given in argument if it exists, the version associat=
-ed to the commit hash given in argument if it exists, the version associate=
-d to the current commit without argument. If it is translating commit hashe=
-s with no version it outputs the various versions that could be computed fo=
-r this hash by git release, git release bump, git release promote. This is =
-necessary to bridge developer-oriented tools, that will continue to talk in=
- commit hashes, and release/distribution/security-audit oriented tools, tha=
-t want to manipulate release versions
-
-11. when no releasing has been done in a repo for some time (I'd suggest 3 =
-months to balance freshness with churn, it can be user-overidable in repo c=
-onfig), git reminds its human masters at the next commit events they should=
- think about stabilizing state and cutting a release.
-
-So nothing terribly complex, just a lot a small helpers to make releasing e=
-asier, less tedious, and cheaper for developers, that formalize, automate, =
-and make easier existing practices of mature software projects, making them=
- accessible to smaller projects. They would make releasing more predictable=
- and reliable for people deploying the code, and easier to consume by highe=
-r-level cross-project management tools. That would transform the deployment=
- stage of software just like Git already transformed early code writing and=
- autotest stages.
-
-Best regards,
-
---=20
-Nicolas Mailhot
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 1a0da71a4..b52829090 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1483,6 +1483,8 @@ static void print_summary(const char *prefix, const struct object_id *oid,
+ 	diff_setup_done(&rev.diffopt);
  
+ 	head = resolve_ref_unsafe("HEAD", 0, junk_oid.hash, NULL);
++	if (!head)
++		die_errno(_("unable to resolve HEAD after creating commit"));
+ 	if (!strcmp(head, "HEAD"))
+ 		head = _("detached HEAD");
+ 	else
+-- 
+2.14.2
+
