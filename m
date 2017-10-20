@@ -6,122 +6,88 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C65FB202DD
-	for <e@80x24.org>; Fri, 20 Oct 2017 05:51:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CE0BF202DD
+	for <e@80x24.org>; Fri, 20 Oct 2017 06:04:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751281AbdJTFvB (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Oct 2017 01:51:01 -0400
-Received: from cloud.peff.net ([104.130.231.41]:58694 "HELO cloud.peff.net"
+        id S1751479AbdJTGEq (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Oct 2017 02:04:46 -0400
+Received: from cloud.peff.net ([104.130.231.41]:58708 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750905AbdJTFvA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Oct 2017 01:51:00 -0400
-Received: (qmail 23144 invoked by uid 109); 20 Oct 2017 05:51:01 -0000
+        id S1751441AbdJTGEp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Oct 2017 02:04:45 -0400
+Received: (qmail 23628 invoked by uid 109); 20 Oct 2017 06:04:46 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 20 Oct 2017 05:51:01 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 20 Oct 2017 06:04:46 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15043 invoked by uid 111); 20 Oct 2017 05:51:05 -0000
+Received: (qmail 15072 invoked by uid 111); 20 Oct 2017 06:04:50 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Fri, 20 Oct 2017 01:51:05 -0400
+ by peff.net (qpsmtpd/0.94) with SMTP; Fri, 20 Oct 2017 02:04:50 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 20 Oct 2017 01:50:58 -0400
-Date:   Fri, 20 Oct 2017 01:50:58 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 20 Oct 2017 02:04:43 -0400
+Date:   Fri, 20 Oct 2017 02:04:43 -0400
 From:   Jeff King <peff@peff.net>
 To:     Stefan Beller <sbeller@google.com>
 Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [PATCH 2/3] t5615: avoid re-using descriptor 4
-Message-ID: <20171020055058.s5dgxyfjnqtlxv4d@sigill.intra.peff.net>
-References: <20171019210140.64lb52cqtgdh22ew@sigill.intra.peff.net>
- <20171019210730.sgm4g4tmor2dgjv7@sigill.intra.peff.net>
- <CAGZ79kYTmUnM+fcf222-cvwB3Fg4+J_xy28E7A3AYryx4qDf_w@mail.gmail.com>
- <20171019232337.zfd7occtjboem7f4@sigill.intra.peff.net>
+        Duy Nguyen <pclouds@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: "Cannot fetch git.git" (worktrees at fault? or origin/HEAD) ?
+Message-ID: <20171020060443.l6v74ik4v4jdt4ky@sigill.intra.peff.net>
+References: <CAGZ79kYP0z1G_H3nwfmSHraWHMBOcik5LepUXKj0nveeBrihiw@mail.gmail.com>
+ <20171020031630.44zvzh3d2vlhglv4@sigill.intra.peff.net>
+ <CAGZ79kZc+O9gM97bVZETE3sgkmc-t78Nf_Hq6=K4Gf2yaE79zA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20171019232337.zfd7occtjboem7f4@sigill.intra.peff.net>
+In-Reply-To: <CAGZ79kZc+O9gM97bVZETE3sgkmc-t78Nf_Hq6=K4Gf2yaE79zA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 19, 2017 at 07:23:37PM -0400, Jeff King wrote:
+On Thu, Oct 19, 2017 at 10:27:28PM -0700, Stefan Beller wrote:
 
-> So one trick is that we can't just set it to a higher number. We have to
-> also open and manage that descriptor. It might be enough to do:
+> > If my analysis above is correct, then it's already fixed. You just had
+> > leftover corruption.
 > 
->   if test -n "$BASH_VERSION"
->   then
-> 	exec 999>&4
-> 	BASH_XTRACEFD=999
->   fi
-> [...]
-> I think it might be workable, but I'm worried we're opening a can of
-> worms. Or continuing to dig into the can of worms from the original
-> BASH_XTRACEFD, if you prefer. :)
+> Well fetching yesterday worked and the commit in question is from
+> 8/23, the merge  8a044c7f1d56cef657be342e40de0795d688e882
+> occurred 9/18, so I suspect there is something else at play.
+> (I do not remember having a gc between yesterday and today.
+> Though maybe one in the background?)
 
-So this is the best I came up with (on top of my other patches for
-ease of reading, though I'd re-work them if this is the route we're
-going to go):
+Even a gc between yesterday and today should have used the new code,
+which would have been safe. So yeah, maybe it is something else
+entirely.
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 14fac6d6f2..833ceaefd2 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -377,7 +377,12 @@ fi
- #
- # Note also that we don't need or want to export it. The tracing is local to
- # this shell, and we would not want to influence any shells we exec.
--BASH_XTRACEFD=4
-+if test -n "$BASH_VERSION"
-+then
-+	exec 999>&4
-+	BASH_XTRACEFD=999
-+	silence_trace="999>/dev/null"
-+fi
- 
- test_failure=0
- test_count=0
-@@ -627,14 +632,16 @@ test_eval_ () {
- 	#     be _inside_ the block to avoid polluting the "set -x" output
- 	#
- 
--	test_eval_inner_ "$@" </dev/null >&3 2>&4
--	{
--		test_eval_ret_=$?
--		if want_trace
--		then
--			set +x
--		fi
--	} 2>/dev/null 4>&2
-+	eval '
-+		test_eval_inner_ "$@" </dev/null >&3 2>&4
-+		{
-+			test_eval_ret_=$?
-+			if want_trace
-+			then
-+				set +x
-+			fi
-+		} 2>/dev/null '"$silence_trace"'
-+	'
- 
- 	if test "$test_eval_ret_" != 0 && want_trace
- 	then
+> I am curious how you can have a worktree owned by multiple
+> repositories [1] (?).
 
-I really hate that extra eval, since it adds an extra layer of "+" to
-the tracing output in bash.
+Sorry, I forgot my footnote. I saw this with my "ci" script:
 
-But I can't find a way to make it work without it. The "999>/dev/null"
-is syntactically bogus in non-bash shells, so it _must_ appear as part
-of an eval.  We can't conditionally stick it at the end of the eval run
-by test_eval_inner_, because that one is running the actual test code
-(so it may bail early with "return", for example).
+  https://github.com/peff/git/blob/7905ff395adecdd2bb7ab045a24223dfb103e0e9/ci
 
-TBH, I'm not 100% sure that the initial "exec 999>&4" won't cause
-complaints in some shells. Dash seems to handle it, but others might
-not. That can be worked around with another eval, though.
+I check out the contents of my "meta" branch as "Meta", and it contains
+that script. It basically just waits for ref updates, then walks over
+all the commits and runs "make test" on them in the background (caching
+the results, thanks to the git-test[1] script). So I kick off "Meta/ci"
+in a terminal and forget about it, and magically it builds my commits in
+the background as I work.
 
-So I dunno. It does solve the problem in a way that the individual test
-scripts wouldn't have to care about. But it's a lot of eval trickery.
+It operates in a worktree inside the Meta directory (Meta/tmp-ci), so as
+not to disturb what I'm doing. So far so good.
+
+But I actually have _two_ clones of Git on my system. One on which I do
+most of my work, and then the other which has the fork we use in
+production at GitHub. I symlink the Meta directory from the first into
+the latter, which means they both see the same worktree directory. And
+somehow running "Meta/ci" in the second corrupted things.
+
+I can get some funniness now, but I think it's mostly caused by the
+script being confused about the worktree existing but not having access
+to our branches. That's not a corruption, just a confusion. I _think_ I
+had a bogus HEAD in the worktree at one point, but I may be
+mis-remembering. I can't seem to trigger it now.
 
 -Peff
+
+[1] https://github.com/mhagger/git-test
