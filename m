@@ -2,135 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E4FBD1FF72
-	for <e@80x24.org>; Fri, 20 Oct 2017 08:52:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EC0781FF72
+	for <e@80x24.org>; Fri, 20 Oct 2017 10:41:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752583AbdJTIwa (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Oct 2017 04:52:30 -0400
-Received: from mail-qt0-f172.google.com ([209.85.216.172]:48888 "EHLO
-        mail-qt0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752577AbdJTIw1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Oct 2017 04:52:27 -0400
-Received: by mail-qt0-f172.google.com with SMTP id f8so17596988qta.5
-        for <git@vger.kernel.org>; Fri, 20 Oct 2017 01:52:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=ElaT8C2HW5J7JnuR3JwDlKbau5zi3xQeQWZNgXH1nDU=;
-        b=A7MsFsGIjdCUgmSEbkPQqldInbzdinczqs4zgE/ZBa26s/e7sgXG+WxmscsQjqd901
-         l8Mt9Tel/Wa85zmV6EYbiyf1MdzdH902U9BMhgh4nCw87sW5Gs8zuWQ3PIWyGM01/jHe
-         Cnyb4Ioh8/+mkI6gC8B/zUBrWUX6IGhdrpuv9zBfce4BCz0Hq3yFbwlK28aFQl98hMFj
-         88wlkxU+r0M59QTJsdU3DMZiV6SM/hf3pIlJYrvfULK2YnPBIzPGBbG+RD3oIQkQuAa2
-         6gF4mWtfmwhOHCjFvXfKtJuT4k1y/8xfHIuaRtUzMt1gLKSE3CO62i11IO+RfDE4r/Bn
-         HjNQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=ElaT8C2HW5J7JnuR3JwDlKbau5zi3xQeQWZNgXH1nDU=;
-        b=Nhr12DG+wm/xDrGQ+KIls37oF9B5XiFiEuSsf3GJu+tMZzkKUu3ptVKHoc14WHmw0L
-         nrLalHABiCYNza+8QwAQtd6B7WZhCSEkuQWfR3XYjGDnQQA9SblNeB6+LUVWLZAGzMOv
-         NRDaftpg/ygTbJl5p+QsfdKTkVpL4isNaAGV5gWIT0882OMECWnKEUG8DI1ruNMKNFOz
-         LoWyvQLDKcSiuKm037zde8S8VTl/vmCwPegLX59jJ4tIllKqVioylGKkE9PteeQCY9O3
-         n7bSmmgAzfYgoFDN3c+lHLbLWbxy5fYu2XfXZAbzK/jvPlcEecgfFQNJszRi49CEZSgf
-         BK1w==
-X-Gm-Message-State: AMCzsaWOKDqFSm0jxJ2pgsSJ+qQys+5daG7GbGZRGhva1LAg0WGGhUQq
-        um9+4eOuT27XS94F13/F2W33VZucflO5j3k707s=
-X-Google-Smtp-Source: ABhQp+Q+a+cHBIzPKjkDYcul/Uu9uZFhQmvVKh6zhAMyFqn/iv3DjEuUsDI6PNI4YVL6sysfjOWyfpXLXOVDi833AcA=
-X-Received: by 10.237.58.168 with SMTP id o37mr6463797qte.335.1508489546417;
- Fri, 20 Oct 2017 01:52:26 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.140.83.136 with HTTP; Fri, 20 Oct 2017 01:52:25 -0700 (PDT)
-In-Reply-To: <xmqqy3o6gx4z.fsf@gitster.mtv.corp.google.com>
-References: <xmqqmv4pl117.fsf@gitster.mtv.corp.google.com> <20171019174715.6577-1-marius.paliga@gmail.com>
- <CAGZ79kaSU+w0=zb61=5pEzhtd4U5Hzae4C2bUgpchNHAL_mzMA@mail.gmail.com>
- <xmqqbml2imrj.fsf@gitster.mtv.corp.google.com> <xmqq376eibrw.fsf@gitster.mtv.corp.google.com>
- <xmqqy3o6gx4z.fsf@gitster.mtv.corp.google.com>
-From:   Marius Paliga <marius.paliga@gmail.com>
-Date:   Fri, 20 Oct 2017 10:52:25 +0200
-Message-ID: <CAK7vU=0m6qyFrPb9E7HY79v0Vxwn+So3gyhxJZBPVD1t7vX35A@mail.gmail.com>
-Subject: Re: [PATCH] builtin/push.c: add push.pushOption config
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        Thais Diniz <thais.dinizbraz@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S1753049AbdJTKlE (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Oct 2017 06:41:04 -0400
+Received: from mailout2.samsung.com ([203.254.224.25]:17644 "EHLO
+        mailout2.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752806AbdJTKlC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Oct 2017 06:41:02 -0400
+Received: from epcas2p2.samsung.com (unknown [182.195.41.54])
+        by mailout2.samsung.com (KnoxPortal) with ESMTP id 20171020104101epoutp0277fa0779b3b76017965b524540d86c6b~vQSzYhpdh0676806768epoutp02m;
+        Fri, 20 Oct 2017 10:41:01 +0000 (GMT)
+Received: from epsmges2p1.samsung.com (unknown [182.195.42.69]) by
+        epcas2p4.samsung.com (KnoxPortal) with ESMTP id
+        20171020104100epcas2p47a69a3b62fbae900df855b8b0fb437f9~vQSzRbMy02975929759epcas2p4K;
+        Fri, 20 Oct 2017 10:41:00 +0000 (GMT)
+Received: from epcas2p2.samsung.com ( [182.195.41.54]) by
+        epsmges2p1.samsung.com (Symantec Messaging Gateway) with SMTP id
+        A0.3E.04232.CB2D9E95; Fri, 20 Oct 2017 19:41:00 +0900 (KST)
+Received: from epsmgms2p2new.samsung.com (unknown [182.195.42.143]) by
+        epcas2p4.samsung.com (KnoxPortal) with ESMTP id
+        20171020104100epcas2p4adc7b99b7edbf00d1f3bdebf265f2807~vQSy8gm7q1934119341epcas2p41;
+        Fri, 20 Oct 2017 10:41:00 +0000 (GMT)
+X-AuditID: b6c32a45-d23ff70000001088-20-59e9d2bc6db5
+Received: from epmmp2 ( [203.254.227.17]) by epsmgms2p2new.samsung.com
+        (Symantec Messaging Gateway) with SMTP id 24.44.06856.CB2D9E95; Fri, 20 Oct
+        2017 19:41:00 +0900 (KST)
+Received: from [106.109.129.81] by mmp2.samsung.com (Oracle Communications
+        Messaging Server 7.0.5.31.0 64bit (built May  5 2014)) with ESMTPA id
+        <0OY400GOHAZTMZB0@mmp2.samsung.com>; Fri, 20 Oct 2017 19:41:00 +0900 (KST)
+Subject: Re: [PATCH v2] commit: check result of resolve_ref_unsafe
+To:     Jeff King <peff@peff.net>
+Cc:     gitster@pobox.com, git@vger.kernel.org, pclouds@gmail.com,
+        l.s.r@web.de, avarab@gmail.com, krh@redhat.com, rctay89@gmail.com,
+        Ivan Arishchenko <i.arishchenk@samsung.com>,
+        Mikhail Labiuk <m.labiuk@samsung.com>
+From:   Andrey Okoshkin <a.okoshkin@samsung.com>
+Organization: Samsung RnD Institute Russia
+Message-id: <19dc9ff5-54f3-290a-2dc8-c0be8e4047eb@samsung.com>
+Date:   Fri, 20 Oct 2017 13:40:40 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+        Thunderbird/52.4.0
+MIME-version: 1.0
+In-reply-to: <20171019174452.hd3c47ocducddvgr@sigill.intra.peff.net>
+Content-type: text/plain; charset="utf-8"; format="flowed"
+Content-language: en-GB
+Content-transfer-encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA02SbUhTYRTHeXbv7u5Gy+u0PChlzIIS1Cyrm4RWKN0PRvVNK9KZFxU3HZuK
+        GuRLKmtqCobFBFPMJLXy/S2zmJbla74t08xsttKwULNJL5bbVfDb75zzP+d5/odDYpJWviMZ
+        GR3LqqJlcikhwhs79h12axuaDdr/LO0I/cD0jkdrR7J4dErOCEbXTYwjOm2gl0f3NuRi9ELh
+        S5zOujmP6JX0bIwuaG8WHBcxLbpJAWPKaUPM4JAL8719lGBu1FcgZql2JzNhasTPCs6LjoWx
+        8sh4VuXhEyKKGO3WI2WqOKGnzESkoEciLRKSQHmBOX2Rr0UiUkI1I5humkdcYEbw+Xo+saEa
+        Nk8LuEI1gpK0PzwumEIw8+GNwKKyo07C3bFRa4c9tQPMHTXWURg1hqBntMAqIih3GPiVZ2Ub
+        yhWGV4owC4spH1gq0fEsjFN7oGHRYOVtVCB0dZQjTmMLK/nvcQsLKT/onSy1zsEobzCtZvA5
+        doAXU28Rx85QVzWPWT4B1DUB1BR3rvvxg2+mj3yO7WCuq17AsROYKmoQx8mQoZkhuGYNgiVd
+        2brIF+q1TQT3wlbQdPxdy5NreTFoMiWchIHBKgPG8QmoTO1b33AqD1bvT+B5yFm3yZBukwnd
+        JhO6TSaKEV6BtrNKtSKcVR9QerqrZQp1XHS4++UYRS2yXpSrfzO63R+gRxSJpFvEgf1fgiR8
+        Wbw6UaFHQGJSe7Hn09kgiThMlpjEqmKCVXFyVq1HTiQudRAnNxoCJVS4LJaNYlklq9qo8kih
+        YwrSXii84hIVcegf8p4qy+u7mNt9pmj8lrds7+K9x6n4VOun6dDOzGXb0p8edUphw6vJjB/y
+        fJPHpaTdxq7gkF02sy3yUMY3YUYkPP27epl/KnlO4VYl939dnV15tXXFiy8xBqQcbfa700cs
+        fEVGZ+PBhwnlS9Q5Ay/kiT5+9vlinhRXR8g8XTGVWvYfNIAh3U0DAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprEIsWRmVeSWpSXmKPExsVy+t9jQd09l15GGtyeI2+x9tkdJouuK91M
+        Fg29V5gtNt++xWjRdP4Mk8WZrf3MFh9nn2Cx6J7yltHiR0sPs8W0fTvYHbg8ds66y+7xrHcP
+        o8fFS8oe7/ddZfPo27KK0ePzJjmP28+2sQSwR3HZpKTmZJalFunbJXBlXD11iLGgkbfi9NJn
+        bA2M67m6GDk5JARMJC5/f8jexcjFISSwjlHibf88VgjnIaPEzDs3WUGqhAWcJJbcuMoGYosI
+        yEp8P7yREaSIWeAWo8SC6X+hOpqZJF5cWQXWwSagJ3H+1wR2EJtfQEvi8o95zCA2r4CdxOeF
+        s5hAbBYBVYmtn66B2aICERLPm9+zQtQISvyYfI8FxOYUcJE4c3cx2BxmATOJLy8Ps0LY4hLH
+        7t9khLDlJTavecs8gVFwFpL2WUhaZiFpmYWkZQEjyypGydSC4tz03GKjAqO81HK94sTc4tK8
+        dL3k/NxNjMCY2nZYq38H4+Ml8YcYBTgYlXh4I869iBRiTSwrrsw9xCjBwawkwmu4/2WkEG9K
+        YmVValF+fFFpTmrxIUZpDhYlcV7+/GORQgLpiSWp2ampBalFMFkmDk6pBkb+ya9/SVx2frGs
+        fN2/oI69DmYxbwMvGKYoOzBEu6zi+bLoHPeGQxcD1zYXSWfX+Rb0/dhsNY1nTiBjptw+m1XG
+        ik/3BvD8KbY4wvDvRncR7/+FLpK659pebOve1XWnMmDnud5A/XVF/68c4FaOn3Nj+rn40/lp
+        PXe8FLTDqzMLJ6fYxCx57KHEUpyRaKjFXFScCACvWBiGpQIAAA==
+X-CMS-MailID: 20171020104100epcas2p4adc7b99b7edbf00d1f3bdebf265f2807
+X-Msg-Generator: CA
+X-Sender-IP: 182.195.42.143
+X-Local-Sender: =?UTF-8?B?QW5kcmV5IE9rb3Noa2luG1NSUi1TVyBUb29scyBMYWIb?=
+        =?UTF-8?B?7IK87ISx7KCE7J6QG0xlYWRpbmcgRW5naW5lZXI=?=
+X-Global-Sender: =?UTF-8?B?QW5kcmV5IE9rb3Noa2luG1NSUi1TVyBUb29scyBMYWIbU2Ft?=
+        =?UTF-8?B?c3VuZyBFbGVjdHJvbmljcxtMZWFkaW5nIEVuZ2luZWVy?=
+X-Sender-Code: =?UTF-8?B?QzEwG0NJU0hRG0MxMEdEMDFHRDAxMDE1Nw==?=
+CMS-TYPE: 102P
+X-CMS-RootMailID: 20171018170047epcas2p4310be357e11e194d6d08ac3bdc478ba3
+X-RootMTR: 20171018170047epcas2p4310be357e11e194d6d08ac3bdc478ba3
+References: <CGME20171018170047epcas2p4310be357e11e194d6d08ac3bdc478ba3@epcas2p4.samsung.com>
+        <0e396c24-167f-901e-9122-cdc17164ec1e@samsung.com>
+        <5fa1f5c6-249e-2aa9-5e9f-c00ebe2c0d9d@samsung.com>
+        <20171019174452.hd3c47ocducddvgr@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> --o::
-> ---push-option::
-> +-o <option>::
-> +--push-option=<option>::
->         Transmit the given string to the server, which passes them to
->         the pre-receive as well as the post-receive hook. The given string
->         must not contain a NUL or LF character.
-> -       When no `--push-option <option>` is given from the command
-> +       When no `--push-option=<option>` is given from the command
->         line, the values of configuration variable `push.pushOption`
->         are used instead.
 
-Should we also mention that this option can take multiple values from
-the command line?
+19.10.2017 20:44, Jeff King wrote:
+> On Thu, Oct 19, 2017 at 12:36:50PM +0300, Andrey Okoshkin wrote:
+> 
+> Thanks, this looks good to me. One other possible minor improvement:
+> 
+>>   	head = resolve_ref_unsafe("HEAD", 0, junk_oid.hash, NULL);
+>> +	if (!head)
+>> +		die(_("unable to resolve HEAD after creating commit"));
+> 
+> Should we use die_errno() here to report the value of errno? I think
+> resolve_ref_unsafe() should set it consistently (even an internal
+> problem, like an illegally-formatted refname, yields EINVAL).
+Thanks, sounds relevant.
+Also as an alternative solution it's possible to use warning_errno 
+(instead of die_errno) and continue with 'head' set to something like
+'unreadable|bad HEAD'.
 
--o <option>::
---push-option=<option>::
-        Transmit the given string to the server, which passes them to
-        the pre-receive as well as the post-receive hook. The given string
-        must not contain a NUL or LF character.
-+       Multiple `--push-option=<option>` are allowed on the command line.
-       When no `--push-option=<option>` is given from the command
-        line, the values of configuration variable `push.pushOption`
-        are used instead.
+> I grepped the code base looking for other instances of the same problem,
+> and found four of them. Patches to follow.
+> 
+> Unlike this one, I ended up quietly returning an error in most cases.
+> The individual commit messages discuss the reasoning for each case, but
+> I do wonder if we ought to simply die() in each case out of an abundance
+> of caution (either the repo has a broken symref, or some weird
+> filesystem error occurred, but either way it may be best not to
+> continue). I dunno.
+> 
+> These are all independent, so can be applied in any order or combination
+> with respect to each other and to your patch.
+> 
+>    [1/4]: test-ref-store: avoid passing NULL to printf
+>    [2/4]: remote: handle broken symrefs
+>    [3/4]: log: handle broken HEAD in decoration check
+>    [4/4]: worktree: handle broken symrefs in find_shared_symref()
+Good changes, it's better to apply.
 
-
-
-2017-10-20 8:18 GMT+02:00 Junio C Hamano <gitster@pobox.com>:
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->>>> We'd also want to document how push.pushOption works in
->>>> Documentation/config.txt (that contains all the configs)
->>>
->>> Perhaps.
->>
->> Here is my attempt.
->
-> Another thing I noticed while we are around the area is that unlike
-> all other options in git-push.txt page, this one forgets to say it
-> always takes mandatory string.  Here is a possible fix.
->
->  Documentation/git-push.txt | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
->
-> diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-> index aa78057dc5..a8504e0ae3 100644
-> --- a/Documentation/git-push.txt
-> +++ b/Documentation/git-push.txt
-> @@ -156,12 +156,12 @@ already exists on the remote side.
->         Either all refs are updated, or on error, no refs are updated.
->         If the server does not support atomic pushes the push will fail.
->
-> --o::
-> ---push-option::
-> +-o <option>::
-> +--push-option=<option>::
->         Transmit the given string to the server, which passes them to
->         the pre-receive as well as the post-receive hook. The given string
->         must not contain a NUL or LF character.
-> -       When no `--push-option <option>` is given from the command
-> +       When no `--push-option=<option>` is given from the command
->         line, the values of configuration variable `push.pushOption`
->         are used instead.
->
+-- 
+Best regards,
+Andrey
