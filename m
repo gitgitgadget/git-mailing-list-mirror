@@ -2,92 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CE0BF202DD
-	for <e@80x24.org>; Fri, 20 Oct 2017 06:04:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8725D202DD
+	for <e@80x24.org>; Fri, 20 Oct 2017 06:17:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751479AbdJTGEq (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Oct 2017 02:04:46 -0400
-Received: from cloud.peff.net ([104.130.231.41]:58708 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751441AbdJTGEp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Oct 2017 02:04:45 -0400
-Received: (qmail 23628 invoked by uid 109); 20 Oct 2017 06:04:46 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 20 Oct 2017 06:04:46 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15072 invoked by uid 111); 20 Oct 2017 06:04:50 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Fri, 20 Oct 2017 02:04:50 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 20 Oct 2017 02:04:43 -0400
-Date:   Fri, 20 Oct 2017 02:04:43 -0400
-From:   Jeff King <peff@peff.net>
+        id S1751130AbdJTGRP (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Oct 2017 02:17:15 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58130 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750773AbdJTGRO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Oct 2017 02:17:14 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E0F97A8912;
+        Fri, 20 Oct 2017 02:17:08 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=d1sWyKjVHDppx6BBof0c4dtKZXk=; b=kh/j4b
+        yWAm+9QTZ4i/tBy6mENaqkuHyhu7Lm9qIftdDYxTrbi8cyFIzvWGZw/jfgM0phdC
+        QPmBwBBVsJOa7ie7Ug83q/m/sgM1r9Ald5qWh+Y15rCPEWTF8/DDn++wm5TrTeEu
+        uzCFMQUbLnoIp0KXac6Pmx4CKVfb8k0HouHUw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=nt1C/hUcmw9G6FQydmavKXZUpmBazfqI
+        CT5c0eh86CxVyO22YmSrCtWuH1ozfOOZnE37+D9ick2ZSPngjsJkjAPoTxaWrQB4
+        fU4vtFaIE2favVUg+TxFFwEDqNV+V2llGTjdj2qEqHMGNy4P2B3KU5BaogAterEb
+        1bZCVxq6sng=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D783BA8911;
+        Fri, 20 Oct 2017 02:17:08 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 35701A8910;
+        Fri, 20 Oct 2017 02:17:08 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Stefan Beller <sbeller@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: "Cannot fetch git.git" (worktrees at fault? or origin/HEAD) ?
-Message-ID: <20171020060443.l6v74ik4v4jdt4ky@sigill.intra.peff.net>
-References: <CAGZ79kYP0z1G_H3nwfmSHraWHMBOcik5LepUXKj0nveeBrihiw@mail.gmail.com>
- <20171020031630.44zvzh3d2vlhglv4@sigill.intra.peff.net>
- <CAGZ79kZc+O9gM97bVZETE3sgkmc-t78Nf_Hq6=K4Gf2yaE79zA@mail.gmail.com>
+Cc:     Marius Paliga <marius.paliga@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>, thais.dinizbraz@gmail.com
+Subject: Re: [PATCH] builtin/push.c: add push.pushOption config
+References: <xmqqmv4pl117.fsf@gitster.mtv.corp.google.com>
+        <20171019174715.6577-1-marius.paliga@gmail.com>
+        <CAGZ79kaSU+w0=zb61=5pEzhtd4U5Hzae4C2bUgpchNHAL_mzMA@mail.gmail.com>
+        <xmqqbml2imrj.fsf@gitster.mtv.corp.google.com>
+Date:   Fri, 20 Oct 2017 15:17:07 +0900
+In-Reply-To: <xmqqbml2imrj.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Fri, 20 Oct 2017 11:19:44 +0900")
+Message-ID: <xmqq376eibrw.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kZc+O9gM97bVZETE3sgkmc-t78Nf_Hq6=K4Gf2yaE79zA@mail.gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4D16E870-B55E-11E7-A85D-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 19, 2017 at 10:27:28PM -0700, Stefan Beller wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> > If my analysis above is correct, then it's already fixed. You just had
-> > leftover corruption.
-> 
-> Well fetching yesterday worked and the commit in question is from
-> 8/23, the merge  8a044c7f1d56cef657be342e40de0795d688e882
-> occurred 9/18, so I suspect there is something else at play.
-> (I do not remember having a gc between yesterday and today.
-> Though maybe one in the background?)
+>> We'd also want to document how push.pushOption works in
+>> Documentation/config.txt (that contains all the configs)
+>
+> Perhaps.
 
-Even a gc between yesterday and today should have used the new code,
-which would have been safe. So yeah, maybe it is something else
-entirely.
+Here is my attempt.  I have a feeling that the way http.extraheaders
+is described may be much easier to read and we may want to mimick
+its style.  I dunno.
 
-> I am curious how you can have a worktree owned by multiple
-> repositories [1] (?).
+ Documentation/config.txt | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-Sorry, I forgot my footnote. I saw this with my "ci" script:
-
-  https://github.com/peff/git/blob/7905ff395adecdd2bb7ab045a24223dfb103e0e9/ci
-
-I check out the contents of my "meta" branch as "Meta", and it contains
-that script. It basically just waits for ref updates, then walks over
-all the commits and runs "make test" on them in the background (caching
-the results, thanks to the git-test[1] script). So I kick off "Meta/ci"
-in a terminal and forget about it, and magically it builds my commits in
-the background as I work.
-
-It operates in a worktree inside the Meta directory (Meta/tmp-ci), so as
-not to disturb what I'm doing. So far so good.
-
-But I actually have _two_ clones of Git on my system. One on which I do
-most of my work, and then the other which has the fork we use in
-production at GitHub. I symlink the Meta directory from the first into
-the latter, which means they both see the same worktree directory. And
-somehow running "Meta/ci" in the second corrupted things.
-
-I can get some funniness now, but I think it's mostly caused by the
-script being confused about the worktree existing but not having access
-to our branches. That's not a corruption, just a confusion. I _think_ I
-had a bogus HEAD in the worktree at one point, but I may be
-mis-remembering. I can't seem to trigger it now.
-
--Peff
-
-[1] https://github.com/mhagger/git-test
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 1ac0ae6adb..631ed1172e 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -2621,6 +2621,16 @@ push.gpgSign::
+ 	override a value from a lower-priority config file. An explicit
+ 	command-line flag always overrides this config option.
+ 
++push.pushOption::
++	When no `--push-option=<option>` argument is given from the
++	command line, `git push` behaves as if each <value> of
++	this variable is given as `--push-option=<value>`.
+++
++This is a multi-valued variable, and an empty value can be used in a
++higher priority cofiguration file (e.g. `.git/config` in a
++repository) to clear the values inherited from a lower priority
++configuration files (e.g. `$HOME/.gitconfig`).
++
+ push.recurseSubmodules::
+ 	Make sure all submodule commits used by the revisions to be pushed
+ 	are available on a remote-tracking branch. If the value is 'check'
