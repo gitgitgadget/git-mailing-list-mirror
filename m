@@ -2,68 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A97DB1FF32
-	for <e@80x24.org>; Fri, 20 Oct 2017 13:17:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 54B771FF32
+	for <e@80x24.org>; Fri, 20 Oct 2017 13:19:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751717AbdJTNRQ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Oct 2017 09:17:16 -0400
-Received: from mout.gmx.net ([212.227.15.15]:52250 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751244AbdJTNRP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Oct 2017 09:17:15 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LjZEm-1dU0Yr29EG-00bZYu; Fri, 20
- Oct 2017 15:17:13 +0200
-Date:   Fri, 20 Oct 2017 15:17:12 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Alex Vandiver <alexmv@dropbox.com>
-cc:     git@vger.kernel.org, Ben Peart <peartben@gmail.com>
-Subject: Re: [PATCH 0/4] fsmonitor fixes
-In-Reply-To: <20171020011136.14170-1-alexmv@dropbox.com>
-Message-ID: <alpine.DEB.2.21.1.1710201516320.40514@virtualbox>
+        id S1752041AbdJTNTH (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Oct 2017 09:19:07 -0400
+Received: from mail-qk0-f195.google.com ([209.85.220.195]:47402 "EHLO
+        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751154AbdJTNTG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Oct 2017 09:19:06 -0400
+Received: by mail-qk0-f195.google.com with SMTP id m189so14221682qke.4
+        for <git@vger.kernel.org>; Fri, 20 Oct 2017 06:19:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=BVGjXD0hQs69UpwbeiMk5knfaw0F2j+Zm3OS2GW4sm8=;
+        b=RMe5JtL80uaC+M2QbDF2R+i2nP5pHZeHWt6hx1w9K2U1V/zrLbPqXi4K2C0GaoZ/IU
+         gC3H1csyisqDPPLEJt+LqyFGHJ9mR0AzQWMvW6G6DQcW8hSxmfZ1XIswj575nTFENidO
+         G4nwMM7EHrgpUShv+NCqq1gjlRzkx5uLUvekGkDEvk0OKYPOtThKwj6CxgCWmltYfqCE
+         dE8uOLsHhIjDdhXk1piU/sm4xw6qsPI2HKoXknFgt1k0N0arXbyt7wNfOHeqgwmnShM8
+         gClHc9Jb0pO/GcXRSR9bYCusRKjObwQC8m9Z/TBMF0Lsul1EWxkSWm2Nyb9XSMjdViRj
+         79cg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=BVGjXD0hQs69UpwbeiMk5knfaw0F2j+Zm3OS2GW4sm8=;
+        b=LbmTCwqsn0vR1uRK47IrYvq/3Tz1e9YcWqgWldxGqvzawoQr7zmH6P4xpr3zzIiFR7
+         AV1JBW+rL8TR+2xZsJGXPJZx55U2Zn1TveCSA1Ph0X6y/qf+W/d5ZMp1SG0oomjDakz8
+         ZxOSHRjMonSmmqVQ0n77LCK5W25Bke+3OUkrj1RRNK/+88zFRM87lZ2soeCO87h68WFs
+         8HSgi8s9fn0o85ntL+srp0qXAEQmix1Dq7TfR7/RMy1VLutWZEiMVXZY/xiGNO8+TJUV
+         JAsvhdyUkamO/2pSkI+Ivo+jcBn8HXZ/vBq70G2ReerbwKU46eCibrQ0wc2/vpiYqKFK
+         y5OQ==
+X-Gm-Message-State: AMCzsaVmAf5O/1neMjoXnpxpqMjgoWbtsOA2TTF1Zt8HKTzzN3BxARCG
+        gKE1bRceLQKPefp0/3AxS/Fe2/7H
+X-Google-Smtp-Source: ABhQp+QiBhqRqlInBYyoiq+Ub2rbnMNAu7MVqFzklUA2a7tNb2szuhxZWNa7J0PjXrk+NI+vsdHWIQ==
+X-Received: by 10.55.16.220 with SMTP id 89mr6982772qkq.286.1508505545076;
+        Fri, 20 Oct 2017 06:19:05 -0700 (PDT)
+Received: from [192.168.1.13] ([65.222.173.206])
+        by smtp.gmail.com with ESMTPSA id j129sm564237qkd.32.2017.10.20.06.19.03
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 20 Oct 2017 06:19:04 -0700 (PDT)
+Subject: Re: [PATCH 3/4] fsmonitor: Document GIT_TRACE_FSMONITOR
+To:     Alex Vandiver <alexmv@dropbox.com>, git@vger.kernel.org
 References: <20171020011136.14170-1-alexmv@dropbox.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+ <169bbc6117f518ffc9371fea7dfd11439105cc80.1508461850.git.alexmv@dropbox.com>
+From:   Ben Peart <peartben@gmail.com>
+Message-ID: <2ef8f550-610e-6a9f-32e8-f2fe99b044ff@gmail.com>
+Date:   Fri, 20 Oct 2017 09:19:04 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:PAVByr1X0VJlKQGW24t0ICqcZimNpn59XQa2zRERg3S7Qq+izbX
- YjFga1uTDB7Vp+LwGUtS76cZq7cYEAyFq/L2Qa+82R2/a59WB9Xkcdg8V4dJp0GNkuJBZuZ
- zNh116Whn7HqX5kORNUfMqk3yZMMuDQhwwBqgQrR9dQEs9jybIQksqMq18/lLY6mFaXgMbi
- xuPRW14Cnv/QTtY9+cj/g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ICGpkvD6oq0=:2WTcyBGQKsbaNdEMHA2qB9
- 0f4bS6Qlst6i5MfeVH4tTkjnobDEfdqD9uMZJXbBnMEK+HElIEAtty/RoCZ5nU/TdurF7jhS9
- nWrlfR5mvKQmPdbNeqfKaa9hz0mFABE7MIlwmIEsx8DmcBwi17fO6QLM7ClnMdhad/sjfGB7i
- l+wmU4F/zC5kmjFKTsk73IoPx+Tlil6fSnJ/MtwoxkgyM3hHdyL1XoXIG4ds2tQ3lyEupiATm
- 9k/PD6LGvgXZWXuGHeFjb1dD8WbHl2UbuBI2ivQXCpk9lEjLxp4KDF3gJpdtkM8Q65L1IAG7K
- noCM1Zh3y42QfL1dfbnhYboiEt9lzrKKq6OdmpakJEnmvR/7nL71VTXsTlySR6c7yxZlKmjSt
- /uOPeAcmoPZiqEg+I1KwDcfM0pt0JgXPkuMnr2XoleM+CG8eVKiCzbc9E1X0hlSipYArMNN7y
- VK4t6iXRza/XeJzDthVqD0+fyyRSpmY7JbjXPUAc5o7Fn3ofppilbHQPh8mhl9wZHFcq5frTy
- wBVBkrQSyk/6PPVspNxApr2aBpuJDI/4l16gh9SWvvAPxJvI3elH7RjE0k3qpYE7SvWfC9vfD
- VuU0yC2oVZQShZT/L7PMh4mTThueftU6/O0w/ah/xfw+HPKwTDvORkp8x0IKPeBXsBbQo3mPl
- ozp21UQXFvQwPd+IIypc+7ytI2gB9Lj7DwPFBwMxrDeCkFpoyHCnJOLZzU/bmL9pk7IjYMJtn
- rF3FE24cuUof4HdfHcCqReNexkBftOKVgw1TwCd71wS8i2BgaKlm5mpSmhUcgL+PlyvbgtNhI
- dUpS4aN8WYKW6O6jMdT7PUbFs6cMo7GpxL/LshFH8eCc5s+dB7amlylyA5+A9R2rPjadf20
+In-Reply-To: <169bbc6117f518ffc9371fea7dfd11439105cc80.1508461850.git.alexmv@dropbox.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Alex,
 
-On Thu, 19 Oct 2017, Alex Vandiver wrote:
 
-> A few fixes found from playing around with the fsmonitor branch in
-> next.
+On 10/19/2017 9:11 PM, Alex Vandiver wrote:
+> Signed-off-by: Alex Vandiver <alexmv@dropbox.com>
+> ---
+>   Documentation/git.txt | 4 ++++
+>   1 file changed, 4 insertions(+)
+> 
+> diff --git a/Documentation/git.txt b/Documentation/git.txt
+> index 1fca63634..720db196e 100644
+> --- a/Documentation/git.txt
+> +++ b/Documentation/git.txt
+> @@ -594,6 +594,10 @@ into it.
+>   Unsetting the variable, or setting it to empty, "0" or
+>   "false" (case insensitive) disables trace messages.
+>   
+> +`GIT_TRACE_FSMONITOR`::
+> +	Enables trace messages for the filesystem monitor extension.
+> +	See `GIT_TRACE` for available trace output options.
+> +
+>   `GIT_TRACE_PACK_ACCESS`::
+>   	Enables trace messages for all accesses to any packs. For each
+>   	access, the pack file name and an offset in the pack is
+> 
 
-Thank you for having a look, and even better: for sending a couple of
-improvements on top of Ben's & my work.
-
-I sent a couple of suggestions and hope you will find the useful?
-
-Ciao,
-Johannes
+Looks like a reasonable addition.  Thank you.
