@@ -2,147 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF283202DD
-	for <e@80x24.org>; Fri, 20 Oct 2017 01:44:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9ECE2202DD
+	for <e@80x24.org>; Fri, 20 Oct 2017 02:19:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751659AbdJTBoA (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Oct 2017 21:44:00 -0400
-Received: from mail-qt0-f177.google.com ([209.85.216.177]:56411 "EHLO
-        mail-qt0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751620AbdJTBn7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Oct 2017 21:43:59 -0400
-Received: by mail-qt0-f177.google.com with SMTP id z28so16780703qtz.13
-        for <git@vger.kernel.org>; Thu, 19 Oct 2017 18:43:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=9nJLHB2Jglog/xSdW0mcKPmKOk5JE46JF6S9RHFjmIU=;
-        b=jreMPkWWyNOjKgm63t0pjUZ3tjhk5mL4gTPslY5+tW3hCTnUDPwn/n+TbkYsRSafbv
-         3dDtRZYsXd+oiU8D67JY4YXdAAftdJ6SanzpekkPVyI37Ph3TWOgMTXf35Lt1gWrn7RP
-         B/TcD1drrH9ORK4G92V584IPAg0YPsQCkagoE35uKi2PHNndGytGUdGO4XAbKqp/fp5o
-         AlqUxn0rM3ayrbYt4+49LIQi+b2VkzAv66hVzrLqwP75U9UtHka/JKubhhvigskZYCwT
-         KqA33A/K2IHec/9Ta2wpT7AXXXOi5eoC+E+YfNkiHfUUvnP7MNK5dpk61T5k3Po8pCPr
-         bWdA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=9nJLHB2Jglog/xSdW0mcKPmKOk5JE46JF6S9RHFjmIU=;
-        b=MvKdCTgZmAT3Ermbr3TZsVUU1DQ+v8q09hyhaeyKATFAuj5OWq0Q8mvEHS2OCnOkUK
-         02CzNm2/3I96s4If8htnUh7OzpE5tOFwhzGgMJToWWiE3X6R7NSvGrG6xWQAIudcy/AG
-         TFwLnhGQrNQHEmu1PcNDeDwWrAgipBCU6aKxk1AmItJ+nf61K2KVay6DW8hER2IL1Ujk
-         9QvSzO8HmVfX8BEYeTvL755aTkNnsUP5t+vQH0bArrI5TlxrjJU2f0LvJ+NG55CFYHk9
-         P7jKPtn0bGrRCaEGklCjswaLnjU8DHG4pIR8wdZvu9fUI+Z2Vt/ZKkH7xc86pKJzVW/B
-         HkeQ==
-X-Gm-Message-State: AMCzsaX/+alrFo9HpQq42X3Y0FTapTlhG3AJRYyQKjZq9C5/suu4Byur
-        Con77CVa+CwoEefF+IWgukVRlfC9VeceT0WCFy/TMIF3B7I=
-X-Google-Smtp-Source: ABhQp+T1V1rfhmXxSD096TA0zTwkDutwLJu/3niPH3VRt3yR7yS1Hm7dStncfKUTkN6L8rhTNpAHu210lUw7lwlU3WA=
-X-Received: by 10.200.47.77 with SMTP id k13mr4562223qta.298.1508463838509;
- Thu, 19 Oct 2017 18:43:58 -0700 (PDT)
+        id S1751707AbdJTCTs (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Oct 2017 22:19:48 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52675 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751616AbdJTCTr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Oct 2017 22:19:47 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 809C0A12B8;
+        Thu, 19 Oct 2017 22:19:46 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=fcrlvgVnmrMTgo0kD8bGNN0nIFE=; b=x4ZXMm
+        HC79wDGeLMqJgOEMbllEJxzHXuZ9OfTmVi9Sa+YApa3ZiRP4+d50ZzB66MtH7zQI
+        fFzAo5uRZeH5AZM9cPz1MJCRpze7+NXY9MHENs/fSwugTr7jDmRbM26YCU9M9BWG
+        3G8jeyH9H91Vz21D3gP+gYjwTZ3UNEMMF45Eg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=vIEUOBRXX+AybI8aayEBuJa6uTWyorlh
+        nJpDOZiadRPLCqUD2aCvFZZRkgXAI8STyDCZfSziKo26Zm9Ecvv4nlJMpesAmhod
+        hwy/p4nZ0FUkt1BghG05h5ToCZI5jrX7PzD5/ZbYOXXcbolsaFbKF8QOXutRj62t
+        u6HVyjfvWTo=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 775B7A12B7;
+        Thu, 19 Oct 2017 22:19:46 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CE48BA12B6;
+        Thu, 19 Oct 2017 22:19:45 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Marius Paliga <marius.paliga@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>, thais.dinizbraz@gmail.com
+Subject: Re: [PATCH] builtin/push.c: add push.pushOption config
+References: <xmqqmv4pl117.fsf@gitster.mtv.corp.google.com>
+        <20171019174715.6577-1-marius.paliga@gmail.com>
+        <CAGZ79kaSU+w0=zb61=5pEzhtd4U5Hzae4C2bUgpchNHAL_mzMA@mail.gmail.com>
+Date:   Fri, 20 Oct 2017 11:19:44 +0900
+In-Reply-To: <CAGZ79kaSU+w0=zb61=5pEzhtd4U5Hzae4C2bUgpchNHAL_mzMA@mail.gmail.com>
+        (Stefan Beller's message of "Thu, 19 Oct 2017 12:46:08 -0700")
+Message-ID: <xmqqbml2imrj.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.140.102.70 with HTTP; Thu, 19 Oct 2017 18:43:57 -0700 (PDT)
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 19 Oct 2017 18:43:57 -0700
-Message-ID: <CAGZ79kYP0z1G_H3nwfmSHraWHMBOcik5LepUXKj0nveeBrihiw@mail.gmail.com>
-Subject: "Cannot fetch git.git" (worktrees at fault? or origin/HEAD) ?
-To:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 23F90D86-B53D-11E7-B9CC-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-So I ran "git fetch --all" inside git.git that you are all familiar with.
-All fetches failed with a similar error as:
-Fetching kernelorg
-fatal: bad object HEAD
-error: https://kernel.googlesource.com/pub/scm/git/git did not send
-all necessary objects
+Stefan Beller <sbeller@google.com> writes:
 
-error: Could not fetch kernelorg
+>> @@ -161,6 +161,9 @@ already exists on the remote side.
+>>         Transmit the given string to the server, which passes them to
+>>         the pre-receive as well as the post-receive hook. The given string
+>>         must not contain a NUL or LF character.
+>> +       When no `--push-option <option>` is given from the command
+>> +       line, the values of configuration variable `push.pushOption`
+>> +       are used instead.
+>
+> We'd also want to document how push.pushOption works in
+> Documentation/config.txt (that contains all the configs)
 
-Working with an older version of Git (2.13.0) gives me
+Perhaps.
 
-$ GIT_TRACE=3D/u/trace GIT_TRACE_PACKET=3D/u/out git fetch git://github.com=
-/git/git
-From git://github.com/git/git
- * branch                  HEAD       -> FETCH_HEAD
+> So in the config, we have to explicitly give an empty option to
+> clear the previous options, but on the command line we do not need
+> that, but instead we'd have to repeat any push options that we desire
+> that were configured?
 
-After fiddling around and some printf debugging,
-clean fsck(!)
-I could not make sense of it, so bisecting
+It is not wrong per-se to phrase it like so, but I think that is
+making it unnecessarily confusing by conflating two things.  (1)
+configured values are overridden from the command line, just like
+any other --option/config.variable pair and (2) unlike usual single
+value variables where "last one wins" rule is simple enough to
+explain,, multi-value variables need a way to "forget everything we
+said so far and start from scratch" syntax, especially when multiple
+input files are involved.
 
-$ git bisect bad
-d0c39a49ccb5dfe7feba4325c3374d99ab123c59 is the first bad commit
-commit d0c39a49ccb5dfe7feba4325c3374d99ab123c59
-Author: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
-Date:   Wed Aug 23 19:36:59 2017 +0700
+> Example:
+>
+>   /etc/gitconfig
+>   push.pushoption = a
+>   push.pushoption = b
+>
+>   ~/.gitconfig
+>   push.pushoption = c
+>
+>   repo/.git/config
+>   push.pushoption =
+>   push.pushoption = b
+>
+> will result in only b as a and c are
+> cleared.
 
-    revision.c: --all adds HEAD from all worktrees
+The above is correct, and it might be worth giving it as an example
+in the doc, because not just "give an empty entry to clear what has
+been accumulated so far" but a multi-valued option in general is a
+rather rare thing.
 
-    Unless single_worktree is set, --all now adds HEAD from all worktrees.
+> If I were to run
+>   git -c push.pushOption=d push ... (in repo)
+> it would be b and d, but
+>   git push --push-option=d
+> would be d only?
 
-    Since reachable.c code does not use setup_revisions(), we need to call
-    other_head_refs_submodule() explicitly there to have the same effect on
-    "git prune", so that we won't accidentally delete objects needed by som=
-e
-    other HEADs.
+>> @@ -584,12 +599,13 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+>>                 set_refspecs(argv + 1, argc - 1, repo);
+>>         }
+>>
+>> -       for_each_string_list_item(item, &push_options)
+>> +       for_each_string_list_item(item, push_options)
+>
+> We have to do the same for _cmdline here, too?
 
-    A new FIXME is added because we would need something like
+I do not think so.  The point of these lines that appear before this
+loop:
 
-        int refs_other_head_refs(struct ref_store *, each_ref_fn, cb_data);
+ 	git_config(git_push_config, &flags);
+ 	argc = parse_options(argc, argv, prefix, options, push_usage, 0);
++	push_options = (push_options_cmdline.nr
++		? &push_options_cmdline
++		: &push_options_config);
 
-    in addition to other_head_refs() to handle it, which might require
-
-        int get_submodule_worktrees(const char *submodule, int flags);
-
-    It could be a separate topic to reduce the scope of this one.
-
-    Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-.com>
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
-
-And here we go, I do use worktrees nowadays!
-$ git worktree list
-/usr/local/google/home/sbeller/OSS/git                   117ddefdb4
-(detached HEAD)
-/u/git                                                   d0c39a49cc
-(detached HEAD)
-/usr/local/google/home/sbeller/OSS/git_origin_master     b14f27f917
-(detached HEAD)
-/usr/local/google/home/sbeller/OSS/submodule_remote_dot  3d9025bd69
-(detached HEAD)
-
-$ git show 3d9025bd69
-fatal: ambiguous argument '3d9025bd69': unknown revision or path not
-in the working tree.
-
-ok, so I presume I just delete that working tree to "fix my copy of git"
-sbeller@sbeller:/u/git$ rm -rf
-/usr/local/google/home/sbeller/OSS/submodule_remote_dot
-sbeller@sbeller:/u/git$ git worktree prune
-sbeller@sbeller:/u/git$ git worktree list
-/usr/local/google/home/sbeller/OSS/git                117ddefdb4 (detached =
-HEAD)
-/u/git                                                d0c39a49cc (detached =
-HEAD)
-/usr/local/google/home/sbeller/OSS/git_origin_master  b14f27f917 (detached =
-HEAD)
-$ git bisect reset
-Previous HEAD position was d0c39a49cc... revision.c: --all adds HEAD
-from all worktrees
-HEAD is now at 660fb3dfa8... Sync with maint
-$ make install
-$ git fetch --all
-# works fine!
-
-Any idea which direction we need to heading for a real fix?
+is that the command line overrides configured values, just like any
+other configuration.  Adding _cmdline variant here is doubly wrong
+when command line options are given in that it (1) duplicates what
+was obtained from the command line, and (2) does not clear the
+configured values.
