@@ -2,273 +2,214 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,UNWANTED_LANGUAGE_BODY shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B80B81FF32
-	for <e@80x24.org>; Fri, 20 Oct 2017 17:19:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 31F291FF32
+	for <e@80x24.org>; Fri, 20 Oct 2017 17:52:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753285AbdJTRTV (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Oct 2017 13:19:21 -0400
-Received: from mail-pf0-f179.google.com ([209.85.192.179]:52071 "EHLO
-        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753031AbdJTRTU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Oct 2017 13:19:20 -0400
-Received: by mail-pf0-f179.google.com with SMTP id n14so11939372pfh.8
-        for <git@vger.kernel.org>; Fri, 20 Oct 2017 10:19:20 -0700 (PDT)
+        id S1753508AbdJTRwR (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Oct 2017 13:52:17 -0400
+Received: from mail-wm0-f44.google.com ([74.125.82.44]:55706 "EHLO
+        mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753115AbdJTRwQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Oct 2017 13:52:16 -0400
+Received: by mail-wm0-f44.google.com with SMTP id u138so24247297wmu.4
+        for <git@vger.kernel.org>; Fri, 20 Oct 2017 10:52:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=gZHhI+0dqDPrdnQx4pE3j+LJlZT6TpS9jfSxkp04FZs=;
-        b=SfElimMg/d45Yz7A1DuL+Y6SPAq5BLpOIoCbxKweVMPC0kV5iDCe5Qw73XXSxxn/iy
-         XwROHfs10pbkfjaJAjMx+ZnEC3igVnaT5vY4G1whatXwVHT9LiMJJF4JP4tX1+jSSarp
-         ejeIRA+IclgjRYIsMrNJL+LPK+Vvg89gM40vn980ZgLO7nGaDkX5/oi40SWiFJbGORRm
-         uaotS0lgH+wTcbl3GU5EirUkLD4MzsOJY5wu8A4nOK2k+46E+22Y3zKlm9Z/SP+9Afnh
-         R+PhJZ6JZtkVb4j8FxoWbqMLXJQow0hJMKJcr5Jqrib8E9RZzAqNuDflh00iMEDg/gYu
-         zF5g==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=pF4F8mBsrW8lbtuCUyBYRN8sv1X0JBOovf5rLW64hic=;
+        b=iO8sioK4ukVgYS0kjUJU1Ry+6S1Q4CTEGY28TRD2P/fwgwETqwVZechGIAZsjYppaw
+         XTR5Z4FnUC5FALLKp4/JWi/BbmUhXR5dLV1hZ3JbUvhrNO7uzY/z1Lgr7nHv8y6jck0g
+         xmLf0qy6Xi6MosIyBE6A0OdTyXNvtkBOpsZhdoMGOTNxAV0H1M434TnH0Vljv2e5vQ1s
+         nG7uMpDY3B8hRIFqqonBovGCaQX7gGr6zQodHZ00qiqWUUOQgolg0eY6aAILq9c1p5yt
+         j3SbT2ag1hZ0qB+hh5oeSjfS5ep9tnyMcuPwfvM0b2Hr8nacHHSO7hgV9UbWgb3giPEz
+         TUEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=gZHhI+0dqDPrdnQx4pE3j+LJlZT6TpS9jfSxkp04FZs=;
-        b=HkwSC0HS9c0eVu20Se9vBccet7ZJMQqh7hv7utZdkyR9UArocWj8ANyYhLpknPNmq2
-         zbID6C5OrwFLJXi5nt8XyCczxdxikQftHDYdeDgBn94sZslK39e8kMoCRldoybirnd+M
-         ptye1pT2STgAq/Rt8OJktysE37VSLECDL5ZtcV4w3urGrScs/xkn9NrrOgw0xV85mCS3
-         98hi9dSTQ9f2E2kuVCMKuEgJR2D1vk/DGg8wk6PZJJoW5b18GN2ZKt9Igq5Og5csNPrf
-         e1DAY/+IfNt2d+xcfCjPGWCVjj2vQfUmpVgJnsJrRL4Iws4Kum+kiw/p2X2g40fP6etx
-         i4RA==
-X-Gm-Message-State: AMCzsaUU11ttl2NP7OLYBXxlryunMeLMlRMNs+0UbR4D4e7ArCr5v3mf
-        UlPvtFRusn07E1/cj50yy4DGU7XcF58=
-X-Google-Smtp-Source: ABhQp+QOvh4pSUDFmgC4PSyUIxfCI0rmzTm1s76DbYpD5R5tUOTon+cE0aW0STQbOOxKUvtKA0+P+w==
-X-Received: by 10.99.6.75 with SMTP id 72mr5051509pgg.350.1508519958877;
-        Fri, 20 Oct 2017 10:19:18 -0700 (PDT)
-Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id m9sm2102877pgt.49.2017.10.20.10.19.17
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 20 Oct 2017 10:19:17 -0700 (PDT)
-From:   Brandon Williams <bmwill@google.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=pF4F8mBsrW8lbtuCUyBYRN8sv1X0JBOovf5rLW64hic=;
+        b=gRrBnagwSdOemznc1Ps5fjZglqNeNzOcFID4U15m+KOrukHxaRTbRNC+T4JEtRVj5Z
+         DMDFPYvdUKqKyv3F9XxmfIMgxW7rjlAZdnPMj7Xun9Vocz3AHbaMUAmFd7rA9zOiZu90
+         eSn3quj64OX2Nrx5z1w7lsdWVBTbpNkqIJ2yoOf+PD1zzYC13zY8dRdenD0sjN0No2vE
+         BV6kORk949zg4/X+2/Qq6sg5I5uOQyzyllPi3YcQBGd9a5Hp4D4++ACEQ/zbJoTxmL/F
+         w49drWybJiUqwsp2Ezh8HFJIauaZPXANt4zMC4613gGc061nXh6ejInj4Jgi8L1m0BsQ
+         pzew==
+X-Gm-Message-State: AMCzsaWXRG0g44gifJNYh755m2nq6EXH4nwPG0qr1sE9NhG5PtkHN/90
+        kgjBiP98p/bmUMRpFZHfKYY2YzKm
+X-Google-Smtp-Source: ABhQp+QhgTXBRqHFaAb2Fa8OuRWQBkM3ZCSd9ERS4NlJbDzKgVDkcYa+C7QTufFJAP6EYciOMPg8Pw==
+X-Received: by 10.80.218.202 with SMTP id s10mr7440333edj.212.1508521934900;
+        Fri, 20 Oct 2017 10:52:14 -0700 (PDT)
+Received: from localhost (cable-82-119-19-179.cust.telecolumbus.net. [82.119.19.179])
+        by smtp.gmail.com with ESMTPSA id j18sm1733128edh.36.2017.10.20.10.52.13
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 20 Oct 2017 10:52:13 -0700 (PDT)
+From:   Ralf Thielow <ralf.thielow@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Brandon Williams <bmwill@google.com>, spearce@spearce.org,
-        git@jeffhostetler.com, gitster@pobox.com, jonathantanmy@google.com,
-        jrnieder@gmail.com, peff@peff.net, sbeller@google.com
-Subject: [RFC] protocol version 2
-Date:   Fri, 20 Oct 2017 10:18:39 -0700
-Message-Id: <20171020171839.4188-1-bmwill@google.com>
-X-Mailer: git-send-email 2.15.0.rc1.287.g2b38de12cc-goog
+Cc:     Andre Hinrichs <andre.hinrichs@gmx.de>,
+        Thomas Rast <tr@thomasrast.ch>,
+        =?UTF-8?q?Jan=20Kr=C3=BCger?= <jk@jk.gs>,
+        Christian Stimming <stimming@tuhh.de>,
+        Phillip Szelat <phillip.szelat@gmail.com>,
+        =?UTF-8?q?Matthias=20R=C3=BCster?= <matthias.ruester@gmail.com>,
+        =?UTF-8?q?Magnus=20G=C3=B6rlitz?= <magnus.goerlitz@googlemail.com>,
+        Ralf Thielow <ralf.thielow@gmail.com>
+Subject: [PATCH] l10n: de.po: fix typos
+Date:   Fri, 20 Oct 2017 19:52:11 +0200
+Message-Id: <20171020175211.11161-1-ralf.thielow@gmail.com>
+X-Mailer: git-send-email 2.15.0.rc1.299.gda03b47c3
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
- Objective
-===========
+From: Andre Hinrichs <andre.hinrichs@gmx.de>
 
-Replace Git's current wire protocol with a simpler, less wasteful
-protocol that can evolve over time.
+Signed-off-by: Andre Hinrichs <andre.hinrichs@gmx.de>
+Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+---
+ po/de.po | 28 ++++++++++++++--------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
 
- Background
-============
+diff --git a/po/de.po b/po/de.po
+index 0619c4988..a05aca5f3 100644
+--- a/po/de.po
++++ b/po/de.po
+@@ -2389,7 +2389,7 @@ msgstr "Sie haben Ihren Merge von Notizen nicht abgeschlossen (%s existiert)."
+ #: notes-utils.c:42
+ msgid "Cannot commit uninitialized/unreferenced notes tree"
+ msgstr ""
+-"Kann uninitialisiertes/unreferenzierte Notiz-Verzeichnis nicht committen."
++"Kann uninitialisiertes/unreferenziertes Notiz-Verzeichnis nicht committen."
+ 
+ #: notes-utils.c:101
+ #, c-format
+@@ -4805,7 +4805,7 @@ msgstr "nichts zum Commit vorgemerkt, aber es gibt unversionierte Dateien\n"
+ #, c-format
+ msgid "nothing to commit (create/copy files and use \"git add\" to track)\n"
+ msgstr ""
+-"nichts zu committen (Erstellen/Kopieren Sie Dateien und benutzen\n"
++"nichts zu committen (erstellen/kopieren Sie Dateien und benutzen\n"
+ "Sie \"git add\" zum Versionieren)\n"
+ 
+ #: wt-status.c:1661 wt-status.c:1666
+@@ -7141,7 +7141,7 @@ msgstr "Abstand zum linken Rand"
+ 
+ #: builtin/column.c:32
+ msgid "Padding space on right border"
+-msgstr "Abstand zur rechten Rand"
++msgstr "Abstand zum rechten Rand"
+ 
+ #: builtin/column.c:33
+ msgid "Padding space between columns"
+@@ -7573,7 +7573,7 @@ msgstr "Konnte neu erstellten Commit nicht nachschlagen."
+ 
+ #: builtin/commit.c:1451
+ msgid "could not parse newly created commit"
+-msgstr "Konnte neulich erstellten Commit nicht analysieren."
++msgstr "Konnte neu erstellten Commit nicht analysieren."
+ 
+ #: builtin/commit.c:1496
+ msgid "detached HEAD"
+@@ -8482,7 +8482,7 @@ msgstr "%s hat nicht alle erforderlichen Objekte gesendet\n"
+ #, c-format
+ msgid "reject %s because shallow roots are not allowed to be updated"
+ msgstr ""
+-"%s wurde zurückgewiesen, da Ursprungs-Commits von Repositoriesmit "
++"%s wurde zurückgewiesen, da Ursprungs-Commits von Repositories mit "
+ "unvollständiger Historie (shallow) nicht aktualisiert werden dürfen."
+ 
+ #: builtin/fetch.c:877 builtin/fetch.c:973
+@@ -10539,7 +10539,7 @@ msgstr "--continue erwartet keine Argumente"
+ 
+ #: builtin/merge.c:1192
+ msgid "There is no merge in progress (MERGE_HEAD missing)."
+-msgstr "Es ist keine Merge im Gange (MERGE_HEAD fehlt)."
++msgstr "Es ist kein Merge im Gange (MERGE_HEAD fehlt)."
+ 
+ #: builtin/merge.c:1208
+ msgid ""
+@@ -10917,7 +10917,7 @@ msgstr "nur Tags verwenden, um die Commits zu benennen"
+ 
+ #: builtin/name-rev.c:398
+ msgid "only use refs matching <pattern>"
+-msgstr "nur Referenzen verwenden die <Muster> entsprechen"
++msgstr "nur Referenzen verwenden, die <Muster> entsprechen"
+ 
+ #: builtin/name-rev.c:400
+ msgid "ignore refs matching <pattern>"
+@@ -12395,7 +12395,7 @@ msgstr "alle Tags und verbundene Objekte beim Anfordern importieren"
+ 
+ #: builtin/remote.c:165
+ msgid "or do not fetch any tag at all (--no-tags)"
+-msgstr "oder fordere gar keine Zweige an (--no-tags)"
++msgstr "oder fordere gar keine Tags an (--no-tags)"
+ 
+ #: builtin/remote.c:167
+ msgid "branch(es) to track"
+@@ -12498,7 +12498,7 @@ msgstr[0] ""
+ "gelöscht;\n"
+ "um diesen zu löschen, benutzen Sie:"
+ msgstr[1] ""
+-"Hinweis: Einige Branches außer der refs/remotes/ Hierarchie wurden nicht "
++"Hinweis: Einige Branches außerhalb der refs/remotes/ Hierarchie wurden nicht "
+ "entfernt;\n"
+ "um diese zu entfernen, benutzen Sie:"
+ 
+@@ -14247,7 +14247,7 @@ msgstr "Cache für unversionierte Dateien aktivieren oder deaktivieren"
+ #: builtin/update-index.c:1008
+ msgid "test if the filesystem supports untracked cache"
+ msgstr ""
+-"prüfen ob das Dateisystem einen Cache für unversionierte Dateien unterstützt"
++"prüfen, ob das Dateisystem einen Cache für unversionierte Dateien unterstützt"
+ 
+ #: builtin/update-index.c:1010
+ msgid "enable untracked cache without testing the filesystem"
+@@ -14942,7 +14942,7 @@ msgid ""
+ "Error: Your local changes to the following files would be overwritten by "
+ "merge"
+ msgstr ""
+-"Fehler Ihre lokalen Änderungen in den folgenden Dateien würden durch den "
++"Fehler: Ihre lokalen Änderungen in den folgenden Dateien würden durch den "
+ "Merge\n"
+ "überschrieben werden"
+ 
+@@ -15242,7 +15242,7 @@ msgstr "Konnte den Index nicht aktualisieren."
+ 
+ #: git-stash.sh:568
+ msgid "Cannot apply a stash in the middle of a merge"
+-msgstr "Kann \"stash\" nicht anwenden, solang ein Merge im Gange ist"
++msgstr "Kann \"stash\" nicht anwenden, solange ein Merge im Gange ist"
+ 
+ #: git-stash.sh:576
+ msgid "Conflicts in index. Try without --index."
+@@ -15268,7 +15268,7 @@ msgstr "Index wurde nicht aus dem Stash zurückgeladen."
+ #: git-stash.sh:641
+ msgid "The stash entry is kept in case you need it again."
+ msgstr ""
+-"Der Stash-Eintrag wird behalten, im Falle Sie benötigen diesen nochmal."
++"Der Stash-Eintrag wird für den Fall behalten, dass Sie diesen nochmal benötigen."
+ 
+ #: git-stash.sh:650
+ #, sh-format
+@@ -16468,7 +16468,7 @@ msgstr "Fehlerhafter regulärer Ausdruck für Suche %s: %s\n"
+ 
+ #: git-add--interactive.perl:1505
+ msgid "No hunk matches the given pattern\n"
+-msgstr "Kein Patch-Block entspricht dem angegebenen Pattern\n"
++msgstr "Kein Patch-Block entspricht dem angegebenen Muster\n"
+ 
+ #: git-add--interactive.perl:1517 git-add--interactive.perl:1539
+ msgid "No previous hunk\n"
+-- 
+2.15.0.rc1.299.gda03b47c3
 
-Git's wire protocol is the language used to clone/fetch/push from/to a
-remote git repository.  A detailed explanation of the current protocol
-spec can be found
-[here](https://git.kernel.org/pub/scm/git/git.git/tree/Documentation/technical/pack-protocol.txt).
-Some of the pain points with the current protocol spec are:
-
-  * The server's initial response is the ref advertisement.  This
-    advertisement cannot be omitted and can become an issue due to the
-    sheer number of refs that can be sent with large repositories.  For
-    example, when contacting the internal equivalent of
-    `https://android.googlesource.com/`, the server will send
-    approximately 1 million refs totaling 71MB.  This is data that is
-    sent during each and every fetch and is not scalable.
-
-  * Capabilities were implemented as a hack and are hidden behind a NUL
-    byte after the first ref sent from the server during the ref
-    advertisement:
-
-	<SHA1> <Ref Name>\0<capabilities space separated> <symref> <agent>
-
-    Since they are sent in the context of a pkt-line they are also subject
-    to the same length limitations (1k bytes with old clients).  While we
-    may not be close to hitting this limitation with capabilities alone, it
-    has become a problem when trying to abuse capabilities for other
-    purposes (e.g. [symrefs](https://public-inbox.org/git/20160816161838.klvjhhoxsftvkfmd@x/)).
-
-  * Various other technical debt (e.g. abusing capabilities to
-    communicate agent and symref data, service name set using a query
-    parameter).
-
- Overview
-==========
-
-This document presents a specification for a version 2 of Git's wire
-protocol.  Protocol v2 will improve upon v1 in the following ways:
-
-  * Instead of multiple service names, multiple commands will be
-    supported by a single service
-  * Easily extendable as capabilities are moved into their own section
-    of the protocol, no longer being hidden behind a NUL byte and
-    limited by the size of a pkt-line (as there will be a single
-    capability per pkt-line).
-  * Separate out other information hidden behind NUL bytes (e.g. agent
-    string as a capability and symrefs can be requested using 'ls-ref')
-  * Ref advertisement will be omitted unless explicitly requested
-  * ls-ref command to explicitly request some refs
-
- Detailed Design
-=================
-
-A client can request to speak protocol v2 by sending `version=2` in the
-side-channel `GIT_PROTOCOL` in the initial request to the server.
-
-In protocol v2 communication is command oriented.  When first contacting
-a server a list of capabilities will advertised.  Some of these
-capabilities will be commands which a client can request be executed.
-Once a command has completed, a client can reuse the connection and
-request that other commands be executed
-
- Special Packets
------------------
-
-In protocol v2 these special packets will have the following semantics:
-
-  * '0000' Flush Packet (flush-pkt) - indicates the end of a message
-  * '0001' End-of-List delimiter (delim-pkt) - indicates the end of a list
-
- Capability Advertisement
---------------------------
-
-A server which decides to communicate (based on a request from a client)
-using protocol version 2, notifies the client by sending a version
-string in its initial response followed by an advertisement of its
-capabilities.  Each capability is a key with an optional value.  Clients
-must ignore all unknown keys.  Semantics of unknown values are left to
-the definition of each key.  Some capabilities will describe commands
-which can be requested to be executed by the client.
-
-    capability-advertisement = protocol-version
-                               capability-list
-                               flush-pkt
-
-    protocol-version = PKT-LINE("version 2" LF)
-    capability-list = *capability
-    capability = PKT-LINE(key[=value] LF)
-
-    key = 1*CHAR
-    value = 1*CHAR
-    CHAR = 1*(ALPHA / DIGIT / "-" / "_")
-
-A client then responds to select the command it wants with any
-particular capabilities or arguments.  There is then an optional section
-where the client can provide any command specific parameters or queries.
-
-    command-request = command
-                      capability-list
-                      delim-pkt
-                      (command specific parameters)
-                      flush-pkt
-    command = PKT-LINE("command=" key LF)
-
-The server will then acknowledge the command and requested capabilities
-by echoing them back to the client and then launch into the command.
-
-    acknowledge-request = command
-                          capability-list
-                          delim-pkt
-                          execute-command
-    execute-command = <defined by each command>
-
-
-A particular command can last for as many rounds as are required to
-complete the service (multiple for negotiation during fetch and push or
-no additional trips in the case of ls-refs).
-
-
- Commands in v2
-~~~~~~~~~~~~~~~~
-
-Services are the core actions that a client wants to perform (fetch,
-push, etc).  Each service has its own set of capabilities and its own
-language of commands (think 'want' lines in fetch).  Optionally a
-service can take in initial parameters or data when a client sends it
-service request.
-
- Ls-refs
----------
-
-Ls-refs can be looked at as the equivalent of the current ls-remote as
-it is a way to query a remote for the references that it has.  Unlike
-the current ls-remote, the filtering of the output is done on the server
-side by passing a number of parameters to the server-side command
-instead of the filtering occurring on the client.
-
-Ls-ref takes in the following parameters:
-
-  --head, --tags: Limit to only refs/heads or refs/tags
-  --refs: Do not show peeled tags or pseudorefs like HEAD
-  --symref: In addition to the object pointed by it, show the underlying
-            ref pointed by it when showing a symbolic ref
-  <refspec>: When specified, only references matching the given patterns
-             are displayed.
-
-The output of ls-refs is as follows:
-
-    output = (no-refs / list-of-refs)
-	     *symref
-             *shallow
-             flush-pkt
-
-    no-refs = PKT-LINE(zero-id SP no-refs LF)
-    list-of-refs = *ref
-    ref = PKT-LINE((tip / peeled) LF)
-    tip = obj-id SP refname
-    peeled = obj-id SP refname "^{}"
-
-    symref = PKT-LINE("symref" SP symbolic-ref SP resolved-ref LF)
-    shallow = PKT-LINE("shallow" SP obj-id LF)
-
- Fetch
--------
-
-Fetch will need to be a modified version of the v1 fetch protocol.  Some
-potential areas for improvement are: Ref-in-want, CDN offloading,
-Fetch-options.
-
-Since we'll have an 'ls-ref' service we can eliminate the need of fetch
-to perform a ref-advertisement, instead a client can run the 'ls-refs'
-service first, in order to find out what refs the server has, and then
-request those refs directly using the fetch service.
-
-//TODO Flush out the design
-
- Fetch-object
---------------
-
-This service could be used by partial clones in order to request missing
-objects.
-
-//TODO Flush out the design
-
- Push
-------
-
-Push will need to be a modified version of the v1 push protocol.  Some
-potential areas for improvement are: Fix push-options, Negotiation for
-force push.
-
-One change that will need to happen is to improve how `push-options` are
-sent to the server (so that they aren't sent twice!!).  Also the
-report-status needs to be better than it currently is in v1 so that
-tools like gerrit can explain what it did with the ref-update the client
-sent to it. Maybe have a push-rebase capability or command?
-
-//TODO Flush out the design
-
- Other Considerations
-======================
-
-  * Move away from pkt-line framing?
-  * Have responses structured in well known formats (e.g. JSON)
-  * Eliminate initial round-trip using 'GIT_PROTOCOL' side-channel
-  * Additional commands in a partial clone world (e.g. log, grep)
