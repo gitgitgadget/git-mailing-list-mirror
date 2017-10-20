@@ -2,96 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D636B202DD
-	for <e@80x24.org>; Fri, 20 Oct 2017 05:35:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C65FB202DD
+	for <e@80x24.org>; Fri, 20 Oct 2017 05:51:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751734AbdJTFfj (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Oct 2017 01:35:39 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63676 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750985AbdJTFfj (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Oct 2017 01:35:39 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 320D5A3898;
-        Fri, 20 Oct 2017 01:35:38 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Jhv0OYmlwuAJ2Xiglp2J90J2Ync=; b=v2QQTl
-        1b/aRYwameUt9etypUoJajd2ZLrJBGG9tYvVs5IoZX0R/ouMzPLyK1Y0QKnuLgTM
-        OLIxyfAUn34B0yaAN++3Tl/5g3QLUL1kN4NHsT7T67/FVENe8ZmNWibjzFkoRhz9
-        Od64oiB4L7ac37hTkVpi0B3+5AaVoJABQGYO4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=cK1OiFpAo68JIWtra8cCRqpMkccfevDG
-        3vt1INyzh4HeY5UvOXGd2tBh8QC6ICPR1bTvue5NOp5Pxwrx95xtcYnsEg8SPdiD
-        kkWRg31xTFq4xQqxcmLNJpTkUX1SKhvkpPwWguwgB0x4Gy7zhdwm+yZ7l1yLvEwh
-        vr7lJMXf9aM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 287E8A3897;
-        Fri, 20 Oct 2017 01:35:38 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 90070A3895;
-        Fri, 20 Oct 2017 01:35:37 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Git Mailing List <git@vger.kernel.org>,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Thomas Rikl <trikl@online.de>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [Alt. PATCH] ls-remote: deprecate -h as short for --heads
-References: <63fe2a84-d991-9165-32c0-8087d8513ce6@online.de>
-        <CAN0heSpPWWdWY4d1wCdRH8TjcmD3kAiSffL0-_9kJWkm5P2EkA@mail.gmail.com>
-        <4d110305-0826-6fd1-91a5-c1ebd0b1e80b@web.de>
-        <774f08bd-3172-0083-1544-e5f68f6798fa@web.de>
-        <xmqqk1ztmkbn.fsf@gitster.mtv.corp.google.com>
-        <26112a15-f02c-a910-c8bb-794ca84dc1e5@web.de>
-        <20171019203249.76uu3b6ferquitcr@sigill.intra.peff.net>
-        <xmqqlgk6iq94.fsf@gitster.mtv.corp.google.com>
-        <20171020030524.4xlwrdag7e4gzg7s@sigill.intra.peff.net>
-Date:   Fri, 20 Oct 2017 14:35:36 +0900
-In-Reply-To: <20171020030524.4xlwrdag7e4gzg7s@sigill.intra.peff.net> (Jeff
-        King's message of "Thu, 19 Oct 2017 23:05:25 -0400")
-Message-ID: <xmqq7evqidp3.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751281AbdJTFvB (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Oct 2017 01:51:01 -0400
+Received: from cloud.peff.net ([104.130.231.41]:58694 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1750905AbdJTFvA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Oct 2017 01:51:00 -0400
+Received: (qmail 23144 invoked by uid 109); 20 Oct 2017 05:51:01 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 20 Oct 2017 05:51:01 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 15043 invoked by uid 111); 20 Oct 2017 05:51:05 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Fri, 20 Oct 2017 01:51:05 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 20 Oct 2017 01:50:58 -0400
+Date:   Fri, 20 Oct 2017 01:50:58 -0400
+From:   Jeff King <peff@peff.net>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [PATCH 2/3] t5615: avoid re-using descriptor 4
+Message-ID: <20171020055058.s5dgxyfjnqtlxv4d@sigill.intra.peff.net>
+References: <20171019210140.64lb52cqtgdh22ew@sigill.intra.peff.net>
+ <20171019210730.sgm4g4tmor2dgjv7@sigill.intra.peff.net>
+ <CAGZ79kYTmUnM+fcf222-cvwB3Fg4+J_xy28E7A3AYryx4qDf_w@mail.gmail.com>
+ <20171019232337.zfd7occtjboem7f4@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 808EEA82-B558-11E7-BD97-8EF31968708C-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20171019232337.zfd7occtjboem7f4@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Thu, Oct 19, 2017 at 07:23:37PM -0400, Jeff King wrote:
 
-> <shrug> It seems weird and inconsistent to me that the meaning of "-h"
-> depends on the position and presence of other unrelated options. Maybe
-> it's just me. I know _why_ it's that way, but this seems like one of
-> those weird corners of the interface that end up confusing people and
-> giving Git's interface the reputation of being full of mysterious
-> inconsistencies. I suspect one of the reasons nobody has complained
-> about it is that "ls-remote" is not commonly used, and "ls-remote -h"
-> less so (I didn't even know it was there until this conversation).
+> So one trick is that we can't just set it to a higher number. We have to
+> also open and manage that descriptor. It might be enough to do:
+> 
+>   if test -n "$BASH_VERSION"
+>   then
+> 	exec 999>&4
+> 	BASH_XTRACEFD=999
+>   fi
+> [...]
+> I think it might be workable, but I'm worried we're opening a can of
+> worms. Or continuing to dig into the can of worms from the original
+> BASH_XTRACEFD, if you prefer. :)
 
-Technically, yes, it may be weird.
+So this is the best I came up with (on top of my other patches for
+ease of reading, though I'd re-work them if this is the route we're
+going to go):
 
-I may be biased as every time I think about this one, the first one
-that comes to my mind is how "grep -h" (not "git grep", but GNU
-grep) behaves.  Yes, "-h" means something else, but by itself, the
-command does not make sense, and "ls-remote -h" is an exception to
-the rule: most sane commands do not have a sensible semantics when
-they take only "-h" and nothing else.  And even for ls-remote it is
-true only when you try to be extra lazy and do not say which remote
-you are asking.
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 14fac6d6f2..833ceaefd2 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -377,7 +377,12 @@ fi
+ #
+ # Note also that we don't need or want to export it. The tracing is local to
+ # this shell, and we would not want to influence any shells we exec.
+-BASH_XTRACEFD=4
++if test -n "$BASH_VERSION"
++then
++	exec 999>&4
++	BASH_XTRACEFD=999
++	silence_trace="999>/dev/null"
++fi
+ 
+ test_failure=0
+ test_count=0
+@@ -627,14 +632,16 @@ test_eval_ () {
+ 	#     be _inside_ the block to avoid polluting the "set -x" output
+ 	#
+ 
+-	test_eval_inner_ "$@" </dev/null >&3 2>&4
+-	{
+-		test_eval_ret_=$?
+-		if want_trace
+-		then
+-			set +x
+-		fi
+-	} 2>/dev/null 4>&2
++	eval '
++		test_eval_inner_ "$@" </dev/null >&3 2>&4
++		{
++			test_eval_ret_=$?
++			if want_trace
++			then
++				set +x
++			fi
++		} 2>/dev/null '"$silence_trace"'
++	'
+ 
+ 	if test "$test_eval_ret_" != 0 && want_trace
+ 	then
 
-And that is why I think "'cmd -h" and nothing else consistently
-gives help" may overall be positive in usability, than a rule that
-says "'cmd -h' is for short-help unless -h means something else for
-the command".
+I really hate that extra eval, since it adds an extra layer of "+" to
+the tracing output in bash.
+
+But I can't find a way to make it work without it. The "999>/dev/null"
+is syntactically bogus in non-bash shells, so it _must_ appear as part
+of an eval.  We can't conditionally stick it at the end of the eval run
+by test_eval_inner_, because that one is running the actual test code
+(so it may bail early with "return", for example).
+
+TBH, I'm not 100% sure that the initial "exec 999>&4" won't cause
+complaints in some shells. Dash seems to handle it, but others might
+not. That can be worked around with another eval, though.
+
+So I dunno. It does solve the problem in a way that the individual test
+scripts wouldn't have to care about. But it's a lot of eval trickery.
+
+-Peff
