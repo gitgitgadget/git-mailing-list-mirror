@@ -6,58 +6,62 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 471C9202A2
-	for <e@80x24.org>; Sat, 21 Oct 2017 01:52:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 496D7202A2
+	for <e@80x24.org>; Sat, 21 Oct 2017 01:55:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753314AbdJUBwh (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Oct 2017 21:52:37 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62731 "EHLO
+        id S1753297AbdJUBzv (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Oct 2017 21:55:51 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64789 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753222AbdJUBwg (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Oct 2017 21:52:36 -0400
+        with ESMTP id S1753222AbdJUBzu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Oct 2017 21:55:50 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7F1A2B2B23;
-        Fri, 20 Oct 2017 21:52:35 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C1CB5B5DF8;
+        Fri, 20 Oct 2017 21:55:47 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Fr96MsO1dnNAyZcPilphrcaiwlw=; b=O2Z3rq
-        f1uNM/27lFYORScB9NWau23vrGTVPaMWCVk06HABo7VbslPWSEDMJmXH1nETbhrY
-        2HIKmat9OtxklC1RA80cIi4wQR/1QrkGYnCI6if7gHXIyVJmiCMItZx2610wI3Eo
-        Agegdtb34dNeYO6ap+3rUit+2zsAg/VIUlds0=
+        :content-type; s=sasl; bh=RZ1xfyAzvJDe0ldjMH/uvHkA3CM=; b=VxYgG4
+        /u3rR3CaSEL4JKF5KBBAbwiTPcfzSu0VMLZBK5dgyhbozuN6MqzBQSsv9efeVe4x
+        CkOQJruZJLhhQBCAX/eQW6vCEaqOI9PxENd/loqmEXTUlxElfn1MxjXPo5yw5z4V
+        jxRvg8mnGOLEa5Dg90e9xU0cXri5px554v6CY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=NW63L/6EDQIOdoiqDCTEN09tpPATSGjI
-        cA9LANK/34Tfo6wNkgDbwmAnzTwqmJ0OBdbwSNWM3BqPRXyMStDjXjenT4cUKB3i
-        tWQgapT/0lP01vKcaxlVlgJyqxBgck4yHZg2qioovNbOZUdVlp0/YeKlOtiaeNwP
-        R87vnzG6UZA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 64DEDB2B22;
-        Fri, 20 Oct 2017 21:52:35 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=AI0YvqehlOv3l9NqmztTHSyNy2BYR3l+
+        s4p2zXMX431df+NizpHbtcL2f66496FKY1EOSbmO2jfcgA674oUY9KyZBq17S1a7
+        WAiPfrs8kwHH+woSW15JwUs9BoU4nBboJURHmlkQfNDzAomn5d12mKS16bJBY4GA
+        wgcSfp+XJGE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B9EF8B5DF7;
+        Fri, 20 Oct 2017 21:55:47 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CF44DB2B21;
-        Fri, 20 Oct 2017 21:52:34 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 26926B5DF6;
+        Fri, 20 Oct 2017 21:55:47 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Stefan Beller <sbeller@google.com>
-Cc:     Marius Paliga <marius.paliga@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Ben Peart <peartben@gmail.com>,
+        Ben Peart <benpeart@microsoft.com>,
         "git\@vger.kernel.org" <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>, thais.dinizbraz@gmail.com
-Subject: Re: [PATCH] builtin/push.c: add push.pushOption config
-References: <xmqqmv4pl117.fsf@gitster.mtv.corp.google.com>
-        <20171019174715.6577-1-marius.paliga@gmail.com>
-        <CAGZ79kaSU+w0=zb61=5pEzhtd4U5Hzae4C2bUgpchNHAL_mzMA@mail.gmail.com>
-        <xmqqbml2imrj.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kbEmdJu9a-h07UvPaymMmLJ4Azm+iChSpCBwvvtOW8gog@mail.gmail.com>
-Date:   Sat, 21 Oct 2017 10:52:33 +0900
-In-Reply-To: <CAGZ79kbEmdJu9a-h07UvPaymMmLJ4Azm+iChSpCBwvvtOW8gog@mail.gmail.com>
-        (Stefan Beller's message of "Fri, 20 Oct 2017 12:02:09 -0700")
-Message-ID: <xmqqfuadgtcu.fsf@gitster.mtv.corp.google.com>
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v1] read_index_from(): Skip verification of the cache entry order to speed index loading
+References: <20171018142725.10948-1-benpeart@microsoft.com>
+        <xmqq4lqvk8ze.fsf@gitster.mtv.corp.google.com>
+        <db8da340-f8f5-0114-392d-e415b5564993@gmail.com>
+        <CAGZ79kZfw7Cb8Qs4BKuESukBL8rCgmYh0=BcNYm9mXJ1LYCg0g@mail.gmail.com>
+        <alpine.DEB.2.21.1.1710201444590.40514@virtualbox>
+        <CAGZ79kZ_WjnH-vM84C8cE-jS=V=p4tGSiwXX3cKwbDOUvUs_dA@mail.gmail.com>
+Date:   Sat, 21 Oct 2017 10:55:46 +0900
+In-Reply-To: <CAGZ79kZ_WjnH-vM84C8cE-jS=V=p4tGSiwXX3cKwbDOUvUs_dA@mail.gmail.com>
+        (Stefan Beller's message of "Fri, 20 Oct 2017 11:53:25 -0700")
+Message-ID: <xmqqbml1gt7h.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 8232DB8C-B602-11E7-AEAC-8EF31968708C-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: F4DC74FE-B602-11E7-BC47-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -65,71 +69,24 @@ X-Mailing-List: git@vger.kernel.org
 
 Stefan Beller <sbeller@google.com> writes:
 
->>> So in the config, we have to explicitly give an empty option to
->>> clear the previous options, but on the command line we do not need
->>> that, but instead we'd have to repeat any push options that we desire
->>> that were configured?
->>
->> It is not wrong per-se to phrase it like so, but I think that is
->> making it unnecessarily confusing by conflating two things.  (1)
->> configured values are overridden from the command line, just like
->> any other --option/config.variable pair
+> There was a recent thread (which I assumed was the one I linked), that talked
+> about security implications as soon as we loose the rather strict "git
+> is to be used
+> in a posix world", e.g. sharing your repo over NFS/Dropbox. The
+> specific question
+> that Peff asked was how the internal formats can be exploited. (Can a malicious
+> index file be crafted such that it is not just a segfault, but a
+> 'remote' code execution,
+> given that you deploy the maliciously crafted file via NFS. Removing checks that
+> we already have made me a bit suspicious that it *may* be helping an
+> attacker here,
+> though I have no hard data to show)
 >
-> because they are single value options (usually).
->
->> and (2) unlike usual single
->> value variables where "last one wins" rule is simple enough to
->> explain,, multi-value variables need a way to "forget everything we
->> said so far and start from scratch" syntax, especially when multiple
->> input files are involved.
->
-> ok, my view of how that should be done is clashing once again
-> with the projects established standards. Sorry for the noise.
+> Sorry for the confusion,
 
-I do not think it is a noise.  I was primarily focusing on "have to
-explicitly" part, making it sound as if it was a flaw.  I do think
-it is a good idea to explain a variable and/or an option is
-multi-valued and how multiple instances of them interact with each
-other.  I think the status quo is:
+Thanks for an explanation, as I had the same reaction as Dscho
+initially.  I'd assumed that the worst would be to create a wrong
+state (e.g. the same path registered twice with different contents
+in the index, a malformed tree written out of it, etc.), but that's
+merely an assumption not the result of an audit.
 
-	Both configuration and command line, these multi-valued
-	things accumulate.  The "command line can be used to
-	override things from the configuration" rule applies as any
-	other config/option pair.
-
-	In addition, in the configuration, there is a mechanism to
-	clear the values read so far with the "an empty value
-	clears" rule, because you may not have control over, or it
-	may be cumbersome to modify, lower-priority configuration
-	files.  There is no such thing for command line, as the
-	entirety of the command line for each invocation is under
-	your control.
-
-If somebody has
-
-	[alias] mypush = push -ofoo
-
-then the command line argument for one invocation of "git mypush"
-may *not* be under your control and it might be also convenient if
-there were a mechanism to clear what has been accumulated from the
-command line.  It may be worth considering, but if we were going in
-that direction, I suspect that it is probably a good idea to first
-step back a bit and introduce a mechanism to easily define pairs of
-option/config in a more sysmtematic way [*1*].  Once we have such a
-mechanism, the "clear the previous" syntax for the command line
-would be implemented uniformly in there.
-
-
-[Footnote]
-
-*1* E.g. right now, the fact that "push --push-option" and
-    "push.pushOption" are related, or that "status -u<mode>" and
-    "status.showUntrackedFiles" are related, is only known to the
-    code and the documentation; I am not sure if it is even a good
-    idea to add config to each and every option that exists, but for
-    the ones that do exist, it would be nicer if there were a more
-    uniform and systematic way for parse-options.c and config.c APIs
-    to help our code, instead of writing git_config() callback and
-    options[] array to give to parse_options(), making sure they
-    refer to the same internal variable, and the latter overrides
-    the former.
