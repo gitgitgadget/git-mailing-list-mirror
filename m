@@ -2,67 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E750B202A2
-	for <e@80x24.org>; Sat, 21 Oct 2017 02:31:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9A097202A2
+	for <e@80x24.org>; Sat, 21 Oct 2017 02:32:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752580AbdJUCbt (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Oct 2017 22:31:49 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:51924 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751885AbdJUCbs (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Oct 2017 22:31:48 -0400
-Received: by mail-pf0-f195.google.com with SMTP id n14so13356403pfh.8
-        for <git@vger.kernel.org>; Fri, 20 Oct 2017 19:31:48 -0700 (PDT)
+        id S1752670AbdJUCcX (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Oct 2017 22:32:23 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:48136 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751885AbdJUCcW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Oct 2017 22:32:22 -0400
+Received: by mail-pf0-f196.google.com with SMTP id b79so13383631pfk.5
+        for <git@vger.kernel.org>; Fri, 20 Oct 2017 19:32:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:subject:from:to:cc:in-reply-to:references:date
          :mime-version:content-transfer-encoding;
-        bh=V6DNeQTePQXmtGdwGXRnqpHG6v042aquBikenhYXTeo=;
-        b=ergT1Omn2T8TMQ2rxq1VC+03/F36daCdp70wRw82C0luY62aQ2rArpT3eYSTO9uuBk
-         g74dxNJyZDMFq0wj38reFJDRDn59hU1pG1dC3knCI6I58NidrPnfYJtD2CW3M6rc+Lme
-         ig3WfpdkIettseEUhhLh+hOA1K2nCSQ35Ro1RX+VLMS59DPfF3vRvMy9s2qllo3ityz4
-         ktyLSvm8uBda/n52Ak2cX+xkVG2LJdhkB8uWSChtsY7lyzo/G57OovWjiwXvfR+SjOHT
-         pRnPAmpld7sa92pSszmXpNYhd5DMWlVJJcxOoCDiVy7LxRFrXP5rkrgFKHrIR7OKrauL
-         28pQ==
+        bh=VunGKno9X4wdt7WDv3gAS93CIdUrekKOEUH8RiJ6aNA=;
+        b=J40au+a4wVbAMpkLyTc8LC0k8Lo4o+yIbEQCI422k0cAOFsG35/cunnsP/We+uyhye
+         rPnvUa6Yn+AprF9KBu5JUuTG+dCEQOVqZOtiudNj86Grr7GRJVMJI+769KAaYGqvnkwh
+         4GsKjc2KSnmNapOrD6DgNz0y6M/KnZCPKLRxLzrzFibY2ixAkQyV5cvJHhfOfM6G7iqs
+         tHHrZO74K2G6G7Bj4P3w7E+WCxLImsVvzG1FV3a0SYVDFMHYJi7P9fohZGhe1RaYuESB
+         F8uh+QHU5YVtmncXdFqwcd3AqUXIx93+KLuQ3ahtgtM7pKRv3fNe42tdz/0DWwmVznGu
+         BNMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:subject:from:to:cc:in-reply-to
          :references:date:mime-version:content-transfer-encoding;
-        bh=V6DNeQTePQXmtGdwGXRnqpHG6v042aquBikenhYXTeo=;
-        b=UyEcvNMAW91RVbPXAexSVoqvqPb2maRpVee9zGrssPZgVmYcfKw3hPowqpcvV7YxpD
-         aGHDh7Gd5Zw5DbGspCaj9o409u6hctot/Z1bEboVYTYce+Asv7zCicQEXZWxz58/KvnA
-         8w6a6pEpRzZDOcbFhHPw5GQrrYnGes1q+1xgE4NyMBuIAlZq0OBAknUbS0H68OyHt/o6
-         xUKoAxdKlJrFFxfqSQ3PngdrZthBTK9rEIzEdQrHDC6iuq7by2m3dj970M9nyR9VtoRF
-         hOfq7smGViGdRuxEXdNPm/tvybu9syMtDOJx+wvYVwtt15NoZMS6yaCVYSxn047wfO1a
-         0O0g==
-X-Gm-Message-State: AMCzsaXKwUOstbHhVI9s7DNwXXkSNzZEi3BAbEifPrZTjGj5IveWEGN3
-        1UokAD7Ea4bY4DqqMOYHOrs=
-X-Google-Smtp-Source: ABhQp+Qs91f0jWLUBedPs9kVqdHsIRkr0gOT+lUSHvmdM3AVCQgMR9b2xsaJGEhlhMbdtsQ/oTHQng==
-X-Received: by 10.98.211.220 with SMTP id z89mr6578066pfk.99.1508553108172;
-        Fri, 20 Oct 2017 19:31:48 -0700 (PDT)
-Received: from unique-pc ([14.102.72.147])
-        by smtp.gmail.com with ESMTPSA id b19sm3507352pfd.182.2017.10.20.19.31.44
+        bh=VunGKno9X4wdt7WDv3gAS93CIdUrekKOEUH8RiJ6aNA=;
+        b=KYQLqSQPCaId2VDSIZ2lxRRlTxyYzJQcTwXH1SrViA82WAG9z3VUN/T19XvLb6OmlV
+         g/qVoExd+/AWgrdeu40JpC+6912tmLf5DCEIB3QzQteLod0Elnl0BUmcUhP/XgheNQpC
+         7j21Vj13m/0li1bY95VQwVgTtSQfa393ikasxkatdGuaQvyhsWovFHocOoaRj2oj5P1d
+         WlAIy710i2tWvGKo31P0Ys3cZbhfDEq7Jr1SXO2zVgm722pEli0qfdxwU90dQYfmxQPr
+         Y+mH1bu62Tt2ZCdbZ3AX2VIdi9345IW3trzLYdIA3bk4TtmkWVwVBM7XBq5+GEi8IiYS
+         LMvg==
+X-Gm-Message-State: AMCzsaWorVWTB3qD0yupRfu9EAmtS4X1cgfzHOupbkKx5+8qlmpxyl5/
+        qOoXMxAI6L58pfs0gWTbhi8=
+X-Google-Smtp-Source: ABhQp+SXrsxErqv8W9DijqVH58ZHLOHJWy/cTAERqoyBYzZQHbrf/uChnlN65BJYZo1RhJvG5HKkNw==
+X-Received: by 10.84.128.227 with SMTP id a90mr5598232pla.224.1508553142560;
+        Fri, 20 Oct 2017 19:32:22 -0700 (PDT)
+Received: from unique-pc ([218.248.21.162])
+        by smtp.gmail.com with ESMTPSA id 70sm3467304pfv.97.2017.10.20.19.32.19
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 20 Oct 2017 19:31:47 -0700 (PDT)
-Message-ID: <1508553102.2516.2.camel@gmail.com>
+        Fri, 20 Oct 2017 19:32:21 -0700 (PDT)
+Message-ID: <1508553136.2516.4.camel@gmail.com>
 Subject: Re: [RFC PATCH v2 1/5] branch: improve documentation and naming of
  certain parameters
 From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-To:     Stefan Beller <sbeller@google.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>,
+        Stefan Beller <sbeller@google.com>
 Cc:     Junio C Hamano <gitster@pobox.com>,
         "git@vger.kernel.org" <git@vger.kernel.org>
-In-Reply-To: <CAGZ79kaVUBuHVxaE0opXqiEwCr7MVFZHrt5ERQ0mF_deSHeOSQ@mail.gmail.com>
+In-Reply-To: <CAPig+cS7e2i-eEJV6NcRQ-+aVmn5C7mKONxU4TLAGA7GQBX=aw@mail.gmail.com>
 References: <20170919071525.9404-1-kaarticsivaraam91196@gmail.com>
          <20170925082024.2691-1-kaarticsivaraam91196@gmail.com>
          <20170925082024.2691-2-kaarticsivaraam91196@gmail.com>
          <CAGZ79kaVUBuHVxaE0opXqiEwCr7MVFZHrt5ERQ0mF_deSHeOSQ@mail.gmail.com>
+         <CAPig+cS7e2i-eEJV6NcRQ-+aVmn5C7mKONxU4TLAGA7GQBX=aw@mail.gmail.com>
 Content-Type: text/plain; charset="ISO-8859-15"
-Date:   Sat, 21 Oct 2017 08:01:42 +0530
+Date:   Sat, 21 Oct 2017 08:02:16 +0530
 Mime-Version: 1.0
 X-Mailer: Evolution 3.22.6-1+deb9u1 
 Content-Transfer-Encoding: 7bit
@@ -74,19 +76,20 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 2017-10-20 at 14:33 -0700, Stefan Beller wrote:
-> Up to here ( including the subject line), I have no idea you're talking about
-> 'create_branch'. Maybe
+On Fri, 2017-10-20 at 17:51 -0400, Eric Sunshine wrote:
+> On Mon, Sep 25, 2017 at 1:20 AM, Kaartic Sivaraam
+> <kaartic.sivaraam@gmail.com> wrote:
+> > Documentation for a certain function was incomplete as it didn't say
+> > what certain parameters were used for. Further a parameter name wasn't
+> > very communicative.
+> > 
+> > So, add missing documentation for the sake of completeness and easy
+> > reference. Also, rename the concerned parameter to make it's name more
+> 
+> s/it's/its/
 > 
 
-That's because I didn't want to be explicit.
-
->     branch: improve documentation and naming of parameters for create_branch
-> 
->     The documentation for 'create_branch' was incomplete ...
-> 
-
-Sounds good, will use it.
+Thanks!
 
 -- 
 Kaartic
