@@ -2,75 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 44524202A2
-	for <e@80x24.org>; Sat, 21 Oct 2017 02:07:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E750B202A2
+	for <e@80x24.org>; Sat, 21 Oct 2017 02:31:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753350AbdJUCHg (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Oct 2017 22:07:36 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50879 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753294AbdJUCHf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Oct 2017 22:07:35 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2F147B5F4D;
-        Fri, 20 Oct 2017 22:07:35 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=OftZWr3W9II5Va2Anv5WQyglTtQ=; b=mnLWhd
-        +bUHehLz1XtxSKQxPTH49NuDgo7v5JCAmCz8nWDyfVaG/F+oBW54rvya0pHam7v4
-        tWIaXys6mr0mfyXeWz9ge+qXYjuQrXsx1q8dg48i2vOJm+NWSWQOJoyXYNW4cxRR
-        3ou2bGe/i1/fTrv7GTz9RlvTnsiFILJa+dG+M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=bVVB1FYFv7jJwci7pJnzrxUaPLnFk6GM
-        tqdyW7XqcqwlKa/MITqqv8U5nanHY6XxrjLo7XVjwFe7tTR8NoGCxHXoTLITfaFq
-        3T40xArvIXVLr/kcxYBdE7MojYJRF7zxtlig61Mu+VF5D9a3jgHffzB8hN4nayB7
-        vb/HOqfi86k=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 272A9B5F4C;
-        Fri, 20 Oct 2017 22:07:35 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 994A8B5F4B;
-        Fri, 20 Oct 2017 22:07:34 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Bryan Turner <bturner@atlassian.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Git Users <git@vger.kernel.org>,
-        git-for-windows@googlegroups.com
-Subject: Re: Git for Windows v2.15.0-rc prerelease, was Re: [ANNOUNCE] Git v2.15.0-rc2
-References: <xmqqr2tygvp4.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.21.1.1710210020290.40514@virtualbox>
-        <CAGyf7-HCsTaqa-CC1omtT+O9A4P_SspaNZUf4UbZHcUbh71+OQ@mail.gmail.com>
-Date:   Sat, 21 Oct 2017 11:07:33 +0900
-In-Reply-To: <CAGyf7-HCsTaqa-CC1omtT+O9A4P_SspaNZUf4UbZHcUbh71+OQ@mail.gmail.com>
-        (Bryan Turner's message of "Fri, 20 Oct 2017 16:49:22 -0700")
-Message-ID: <xmqqy3o5fe3e.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9A81F95A-B604-11E7-AE87-575F0C78B957-77302942!pb-smtp2.pobox.com
+        id S1752580AbdJUCbt (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Oct 2017 22:31:49 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:51924 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751885AbdJUCbs (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Oct 2017 22:31:48 -0400
+Received: by mail-pf0-f195.google.com with SMTP id n14so13356403pfh.8
+        for <git@vger.kernel.org>; Fri, 20 Oct 2017 19:31:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:subject:from:to:cc:in-reply-to:references:date
+         :mime-version:content-transfer-encoding;
+        bh=V6DNeQTePQXmtGdwGXRnqpHG6v042aquBikenhYXTeo=;
+        b=ergT1Omn2T8TMQ2rxq1VC+03/F36daCdp70wRw82C0luY62aQ2rArpT3eYSTO9uuBk
+         g74dxNJyZDMFq0wj38reFJDRDn59hU1pG1dC3knCI6I58NidrPnfYJtD2CW3M6rc+Lme
+         ig3WfpdkIettseEUhhLh+hOA1K2nCSQ35Ro1RX+VLMS59DPfF3vRvMy9s2qllo3ityz4
+         ktyLSvm8uBda/n52Ak2cX+xkVG2LJdhkB8uWSChtsY7lyzo/G57OovWjiwXvfR+SjOHT
+         pRnPAmpld7sa92pSszmXpNYhd5DMWlVJJcxOoCDiVy7LxRFrXP5rkrgFKHrIR7OKrauL
+         28pQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:subject:from:to:cc:in-reply-to
+         :references:date:mime-version:content-transfer-encoding;
+        bh=V6DNeQTePQXmtGdwGXRnqpHG6v042aquBikenhYXTeo=;
+        b=UyEcvNMAW91RVbPXAexSVoqvqPb2maRpVee9zGrssPZgVmYcfKw3hPowqpcvV7YxpD
+         aGHDh7Gd5Zw5DbGspCaj9o409u6hctot/Z1bEboVYTYce+Asv7zCicQEXZWxz58/KvnA
+         8w6a6pEpRzZDOcbFhHPw5GQrrYnGes1q+1xgE4NyMBuIAlZq0OBAknUbS0H68OyHt/o6
+         xUKoAxdKlJrFFxfqSQ3PngdrZthBTK9rEIzEdQrHDC6iuq7by2m3dj970M9nyR9VtoRF
+         hOfq7smGViGdRuxEXdNPm/tvybu9syMtDOJx+wvYVwtt15NoZMS6yaCVYSxn047wfO1a
+         0O0g==
+X-Gm-Message-State: AMCzsaXKwUOstbHhVI9s7DNwXXkSNzZEi3BAbEifPrZTjGj5IveWEGN3
+        1UokAD7Ea4bY4DqqMOYHOrs=
+X-Google-Smtp-Source: ABhQp+Qs91f0jWLUBedPs9kVqdHsIRkr0gOT+lUSHvmdM3AVCQgMR9b2xsaJGEhlhMbdtsQ/oTHQng==
+X-Received: by 10.98.211.220 with SMTP id z89mr6578066pfk.99.1508553108172;
+        Fri, 20 Oct 2017 19:31:48 -0700 (PDT)
+Received: from unique-pc ([14.102.72.147])
+        by smtp.gmail.com with ESMTPSA id b19sm3507352pfd.182.2017.10.20.19.31.44
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 20 Oct 2017 19:31:47 -0700 (PDT)
+Message-ID: <1508553102.2516.2.camel@gmail.com>
+Subject: Re: [RFC PATCH v2 1/5] branch: improve documentation and naming of
+ certain parameters
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+In-Reply-To: <CAGZ79kaVUBuHVxaE0opXqiEwCr7MVFZHrt5ERQ0mF_deSHeOSQ@mail.gmail.com>
+References: <20170919071525.9404-1-kaarticsivaraam91196@gmail.com>
+         <20170925082024.2691-1-kaarticsivaraam91196@gmail.com>
+         <20170925082024.2691-2-kaarticsivaraam91196@gmail.com>
+         <CAGZ79kaVUBuHVxaE0opXqiEwCr7MVFZHrt5ERQ0mF_deSHeOSQ@mail.gmail.com>
+Content-Type: text/plain; charset="ISO-8859-15"
+Date:   Sat, 21 Oct 2017 08:01:42 +0530
+Mime-Version: 1.0
+X-Mailer: Evolution 3.22.6-1+deb9u1 
+Content-Transfer-Encoding: 7bit
+X-Cyberoam-smtpxy-version: 1.0.6.3
+X-Cyberoam-AV-Policy: default
+X-CTCH-Error: Unable to connect local ctasd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Bryan Turner <bturner@atlassian.com> writes:
+On Fri, 2017-10-20 at 14:33 -0700, Stefan Beller wrote:
+> Up to here ( including the subject line), I have no idea you're talking about
+> 'create_branch'. Maybe
+> 
 
->> The Git for Windows equivalent is now available from
->>
->>     https://urldefense.proofpoint.com/v2/url?u=https-3A__github.com_git-2Dfor-2Dwindows_git_releases_tag_v2.15.0-2Drc2.windows.1&d=DwIBAg&c=wBUwXtM9sKhff6UeHOQgvw&r=uBedA6EFFVX1HiLgmpdrBrv8bIDAScKjk1yk9LOASBM&m=3DdPEJGQe01zvIuHjX8rNURKuGEY_cPkUXvnur9xlNg&s=ZC45D6NoNiE4A8qs_F1ZDMJlGMdXcQ9DwDIpE1-whrU&e=
->>
->> Please test at your convenience,
->
-> Thanks for publishing this, Johannes. I've run it through our Windows
-> test matrix for Bitbucket Server (~1450 tests) and all pass. I've also
-> added it to our CI build as a canary (pending the final 2.15.0
-> release). I've done the same for 2.15.0-rc2 on Linux as well.
+That's because I didn't want to be explicit.
 
-Thanks, both of you.
+>     branch: improve documentation and naming of parameters for create_branch
+> 
+>     The documentation for 'create_branch' was incomplete ...
+> 
+
+Sounds good, will use it.
+
+-- 
+Kaartic
