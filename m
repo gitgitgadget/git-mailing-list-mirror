@@ -6,75 +6,70 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D255202FC
-	for <e@80x24.org>; Sat, 21 Oct 2017 06:26:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 119CA202DD
+	for <e@80x24.org>; Sat, 21 Oct 2017 06:28:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751146AbdJUG0U (ORCPT <rfc822;e@80x24.org>);
-        Sat, 21 Oct 2017 02:26:20 -0400
-Received: from cloud.peff.net ([104.130.231.41]:59766 "HELO cloud.peff.net"
+        id S1751111AbdJUG2t (ORCPT <rfc822;e@80x24.org>);
+        Sat, 21 Oct 2017 02:28:49 -0400
+Received: from cloud.peff.net ([104.130.231.41]:59782 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750961AbdJUG0T (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Oct 2017 02:26:19 -0400
-Received: (qmail 10118 invoked by uid 109); 21 Oct 2017 06:26:19 -0000
+        id S1750961AbdJUG2s (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Oct 2017 02:28:48 -0400
+Received: (qmail 10205 invoked by uid 109); 21 Oct 2017 06:28:49 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 21 Oct 2017 06:26:19 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 21 Oct 2017 06:28:49 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 22683 invoked by uid 111); 21 Oct 2017 06:26:24 -0000
+Received: (qmail 22705 invoked by uid 111); 21 Oct 2017 06:28:53 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Sat, 21 Oct 2017 02:26:24 -0400
+ by peff.net (qpsmtpd/0.94) with SMTP; Sat, 21 Oct 2017 02:28:53 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 21 Oct 2017 02:26:17 -0400
-Date:   Sat, 21 Oct 2017 02:26:17 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 21 Oct 2017 02:28:46 -0400
+Date:   Sat, 21 Oct 2017 02:28:46 -0400
 From:   Jeff King <peff@peff.net>
 To:     Thomas Gummerer <t.gummerer@gmail.com>
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
         "Robert P . J . Day" <rpjday@crashcourse.ca>
-Subject: Re: [PATCH v2 1/2] replace git stash save with git stash push in the
- documentation
-Message-ID: <20171021062617.yajqusruqanjnicb@sigill.intra.peff.net>
+Subject: Re: [PATCH v2 2/2] mark git stash push deprecated in the man page
+Message-ID: <20171021062846.s6rzo2hxmeqigk3e@sigill.intra.peff.net>
 References: <20171005200049.GF30301@hank>
  <20171019183304.26748-1-t.gummerer@gmail.com>
+ <20171019183304.26748-2-t.gummerer@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20171019183304.26748-1-t.gummerer@gmail.com>
+In-Reply-To: <20171019183304.26748-2-t.gummerer@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 19, 2017 at 07:33:03PM +0100, Thomas Gummerer wrote:
+On Thu, Oct 19, 2017 at 07:33:04PM +0100, Thomas Gummerer wrote:
 
-> diff --git a/git-stash.sh b/git-stash.sh
-> index 8b2ce9afda..16919277ba 100755
-> --- a/git-stash.sh
-> +++ b/git-stash.sh
-> @@ -267,11 +267,11 @@ push_stash () {
->  			# translation of "error: " takes in your language. E.g. in
->  			# English this is:
->  			#
-> -			#    $ git stash save --blah-blah 2>&1 | head -n 2
-> -			#    error: unknown option for 'stash save': --blah-blah
-> -			#           To provide a message, use git stash save -- '--blah-blah'
-> -			eval_gettextln "error: unknown option for 'stash save': \$option
-> -       To provide a message, use git stash save -- '\$option'"
-> +			#    $ git stash push --blah-blah 2>&1 | head -n 2
-> +			#    error: unknown option for 'stash push': --blah-blah
-> +			#           To provide a message, use git stash push -- '--blah-blah'
-> +			eval_gettextln "error: unknown option for 'stash push': \$option
-> +       To provide a message, use git stash push -m '\$option'"
+> 'git stash push' fixes a historical wart in the interface of 'git stash
+> save'.  As 'git stash push' has all functionality of 'git stash save',
+> with a nicer, more consistent user interface deprecate 'git stash
+> save'.  To do this, remove it from the synopsis of the man page, and
+> move it to a separate section, stating that it is deprecated.
 
-The user message is fixed here, but doesn't the message for translators
-need the same treatment?  I guess it's just talking about the spacing,
-so it doesn't need to be completely accurate. But it probably makes
-sense to update it at the same time.
+This looks fine.
 
-As an aside, I do kind of wonder if the right advice for "push" is
-different than for "save" here. I.e., should it say "to provide a
-pathspec that starts with --, use push -- --blah-blah". I'm not sure it
-matters that much. Second-guessing what a user meant seems likely to go
-wrong (e.g., "--icnlude-untracked" would trigger this message, which is
-just silly). But that's largely orthogonal to what you're doing here.
+> @@ -87,6 +84,10 @@ linkgit:git-add[1] to learn how to operate the `--patch` mode.
+>  The `--patch` option implies `--keep-index`.  You can use
+>  `--no-keep-index` to override this.
+>  
+> +save [-p|--patch] [-k|--[no-]keep-index] [-u|--include-untracked] [-a|--all] [-q|--quiet] [<message>]::
+> +
+> +	This option is deprecated in favour of 'git stash push'.
+> +
+
+We could possibly go into more detail, like:
+
+  It differs from "stash push" in that it cannot take pathspecs, and any
+  non-option arguments form the message.
+
+or something. Since we don't want people to use it, it probably doesn't
+matter much. I just wondered if people would peer at the (long) synopsis
+line trying to figure out how it's different.
 
 -Peff
