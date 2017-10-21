@@ -6,117 +6,130 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 415AE202A2
-	for <e@80x24.org>; Sat, 21 Oct 2017 01:33:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 471C9202A2
+	for <e@80x24.org>; Sat, 21 Oct 2017 01:52:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753282AbdJUBd0 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Oct 2017 21:33:26 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57474 "EHLO
+        id S1753314AbdJUBwh (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Oct 2017 21:52:37 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62731 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753065AbdJUBdZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Oct 2017 21:33:25 -0400
+        with ESMTP id S1753222AbdJUBwg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Oct 2017 21:52:36 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9D99CB288D;
-        Fri, 20 Oct 2017 21:33:24 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7F1A2B2B23;
+        Fri, 20 Oct 2017 21:52:35 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=YHgK/sVP3rANKW6nU+u+GAyReDE=; b=Ecr0//
-        MvnEaUsbd4PCry3Vq9qlv0JeJNFWVhYaGAkMcdyz1uUUJaIyjhkfRogzea4KHrzn
-        XBscoeAgpbX8QFLF5fSETeVwMHY7SapqdiN45FsZrX0pLwsN0p4X6yVK6Wub31Ho
-        /YO5dgqlVZUzQ8FPDxFke42xux8s+lnIjhsag=
+        :content-type; s=sasl; bh=Fr96MsO1dnNAyZcPilphrcaiwlw=; b=O2Z3rq
+        f1uNM/27lFYORScB9NWau23vrGTVPaMWCVk06HABo7VbslPWSEDMJmXH1nETbhrY
+        2HIKmat9OtxklC1RA80cIi4wQR/1QrkGYnCI6if7gHXIyVJmiCMItZx2610wI3Eo
+        Agegdtb34dNeYO6ap+3rUit+2zsAg/VIUlds0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=kTg7Sq9Yk5IHbMXRF1ls6nF6F7Bhutjh
-        PMYaRNgmZX8jmc3amdnMMPicBgQ0+EfR6FOU33vi6lRqR7yx2rDBMtPWDKmVGDvs
-        n/Z0cX3vBIJDlV2ecWP9DxKKx+YdGhZTThvEOT8wgzgnQLSsaoGl5OY+jVsF8p3v
-        TR6UfV+bYLY=
+        :content-type; q=dns; s=sasl; b=NW63L/6EDQIOdoiqDCTEN09tpPATSGjI
+        cA9LANK/34Tfo6wNkgDbwmAnzTwqmJ0OBdbwSNWM3BqPRXyMStDjXjenT4cUKB3i
+        tWQgapT/0lP01vKcaxlVlgJyqxBgck4yHZg2qioovNbOZUdVlp0/YeKlOtiaeNwP
+        R87vnzG6UZA=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 891B5B288C;
-        Fri, 20 Oct 2017 21:33:24 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 64DEDB2B22;
+        Fri, 20 Oct 2017 21:52:35 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DD57CB288B;
-        Fri, 20 Oct 2017 21:33:23 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CF44DB2B21;
+        Fri, 20 Oct 2017 21:52:34 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Marius Paliga <marius.paliga@gmail.com>
-Cc:     Stefan Beller <sbeller@google.com>,
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Marius Paliga <marius.paliga@gmail.com>,
         Christian Couder <christian.couder@gmail.com>,
         "git\@vger.kernel.org" <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        Thais Diniz <thais.dinizbraz@gmail.com>
+        Jeff King <peff@peff.net>, thais.dinizbraz@gmail.com
 Subject: Re: [PATCH] builtin/push.c: add push.pushOption config
 References: <xmqqmv4pl117.fsf@gitster.mtv.corp.google.com>
         <20171019174715.6577-1-marius.paliga@gmail.com>
         <CAGZ79kaSU+w0=zb61=5pEzhtd4U5Hzae4C2bUgpchNHAL_mzMA@mail.gmail.com>
         <xmqqbml2imrj.fsf@gitster.mtv.corp.google.com>
-        <xmqq376eibrw.fsf@gitster.mtv.corp.google.com>
-        <xmqqy3o6gx4z.fsf@gitster.mtv.corp.google.com>
-        <CAK7vU=0m6qyFrPb9E7HY79v0Vxwn+So3gyhxJZBPVD1t7vX35A@mail.gmail.com>
-Date:   Sat, 21 Oct 2017 10:33:22 +0900
-In-Reply-To: <CAK7vU=0m6qyFrPb9E7HY79v0Vxwn+So3gyhxJZBPVD1t7vX35A@mail.gmail.com>
-        (Marius Paliga's message of "Fri, 20 Oct 2017 10:52:25 +0200")
-Message-ID: <xmqqlgk5gu8t.fsf@gitster.mtv.corp.google.com>
+        <CAGZ79kbEmdJu9a-h07UvPaymMmLJ4Azm+iChSpCBwvvtOW8gog@mail.gmail.com>
+Date:   Sat, 21 Oct 2017 10:52:33 +0900
+In-Reply-To: <CAGZ79kbEmdJu9a-h07UvPaymMmLJ4Azm+iChSpCBwvvtOW8gog@mail.gmail.com>
+        (Stefan Beller's message of "Fri, 20 Oct 2017 12:02:09 -0700")
+Message-ID: <xmqqfuadgtcu.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: D4385CF2-B5FF-11E7-8B6E-8EF31968708C-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 8232DB8C-B602-11E7-AEAC-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Marius Paliga <marius.paliga@gmail.com> writes:
+Stefan Beller <sbeller@google.com> writes:
 
-> Should we also mention that this option can take multiple values from
-> the command line?
+>>> So in the config, we have to explicitly give an empty option to
+>>> clear the previous options, but on the command line we do not need
+>>> that, but instead we'd have to repeat any push options that we desire
+>>> that were configured?
+>>
+>> It is not wrong per-se to phrase it like so, but I think that is
+>> making it unnecessarily confusing by conflating two things.  (1)
+>> configured values are overridden from the command line, just like
+>> any other --option/config.variable pair
 >
-> -o <option>::
-> --push-option=<option>::
->         Transmit the given string to the server, which passes them to
->         the pre-receive as well as the post-receive hook. The given string
->         must not contain a NUL or LF character.
-> +       Multiple `--push-option=<option>` are allowed on the command line.
->        When no `--push-option=<option>` is given from the command
->         line, the values of configuration variable `push.pushOption`
->         are used instead.
+> because they are single value options (usually).
+>
+>> and (2) unlike usual single
+>> value variables where "last one wins" rule is simple enough to
+>> explain,, multi-value variables need a way to "forget everything we
+>> said so far and start from scratch" syntax, especially when multiple
+>> input files are involved.
+>
+> ok, my view of how that should be done is clashing once again
+> with the projects established standards. Sorry for the noise.
 
-My first reaction was "Do we do that for other options that can be
-given multiple times?  If not, perhaps this is not needed."
+I do not think it is a noise.  I was primarily focusing on "have to
+explicitly" part, making it sound as if it was a flaw.  I do think
+it is a good idea to explain a variable and/or an option is
+multi-valued and how multiple instances of them interact with each
+other.  I think the status quo is:
 
-Then my second reaction was "Do we have that many options that can
-be given multiple times in the first place?  If not, perhaps a
-change like this to highlight these oddball options may not be a bad
-idea."
+	Both configuration and command line, these multi-valued
+	things accumulate.  The "command line can be used to
+	override things from the configuration" rule applies as any
+	other config/option pair.
 
-And my third reaction was "Well, even if we have many such options,
-and even if most of them are not explicitly marked as usable
-multiple times in the current documentation, that's not a reason to
-keep it that way---the readers ought to be able to find out which
-ones can be used multiple times and how these multiple instances
-interact with each other, because the usual rule for single-instance
-options is 'the last one wins' (e.g. 'git status -uall -uno' should
-be the same as 'git status -uno') but to these multi-value options
-that rule does not hold".
+	In addition, in the configuration, there is a mechanism to
+	clear the values read so far with the "an empty value
+	clears" rule, because you may not have control over, or it
+	may be cumbersome to modify, lower-priority configuration
+	files.  There is no such thing for command line, as the
+	entirety of the command line for each invocation is under
+	your control.
 
-So, yes, I think it is a good idea.
+If somebody has
 
-But it opens a tangent #leftoverbits.  Among the most commonly used
-commands listed in "git --help", there indeed are some commands that
-take multiple options of the same kind (even if we do not count an
-obvious exception "--verbose", which everybody understands as the
-number of times it is given indicates the verbosity level).
-Somebody needs to go over their documentation and add "this can be
-given multiple times from the command line, and here is what happens
-to them".
+	[alias] mypush = push -ofoo
 
-In your suggestion for "push -o <value1> -o <value2>", "here is what
-happens" is missing.  Perhaps
+then the command line argument for one invocation of "git mypush"
+may *not* be under your control and it might be also convenient if
+there were a mechanism to clear what has been accumulated from the
+command line.  It may be worth considering, but if we were going in
+that direction, I suspect that it is probably a good idea to first
+step back a bit and introduce a mechanism to easily define pairs of
+option/config in a more sysmtematic way [*1*].  Once we have such a
+mechanism, the "clear the previous" syntax for the command line
+would be implemented uniformly in there.
 
-	When multiple `--push-option=<option>` are given, they are
-	all sent to the other side in the order listed on the
-	command line.
 
-or something like that.
+[Footnote]
 
-Thanks.
+*1* E.g. right now, the fact that "push --push-option" and
+    "push.pushOption" are related, or that "status -u<mode>" and
+    "status.showUntrackedFiles" are related, is only known to the
+    code and the documentation; I am not sure if it is even a good
+    idea to add config to each and every option that exists, but for
+    the ones that do exist, it would be nicer if there were a more
+    uniform and systematic way for parse-options.c and config.c APIs
+    to help our code, instead of writing git_config() callback and
+    options[] array to give to parse_options(), making sure they
+    refer to the same internal variable, and the latter overrides
+    the former.
