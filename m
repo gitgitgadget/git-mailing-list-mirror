@@ -2,94 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9A097202A2
-	for <e@80x24.org>; Sat, 21 Oct 2017 02:32:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 809FA202A2
+	for <e@80x24.org>; Sat, 21 Oct 2017 02:38:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752670AbdJUCcX (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Oct 2017 22:32:23 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:48136 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751885AbdJUCcW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Oct 2017 22:32:22 -0400
-Received: by mail-pf0-f196.google.com with SMTP id b79so13383631pfk.5
-        for <git@vger.kernel.org>; Fri, 20 Oct 2017 19:32:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:cc:in-reply-to:references:date
-         :mime-version:content-transfer-encoding;
-        bh=VunGKno9X4wdt7WDv3gAS93CIdUrekKOEUH8RiJ6aNA=;
-        b=J40au+a4wVbAMpkLyTc8LC0k8Lo4o+yIbEQCI422k0cAOFsG35/cunnsP/We+uyhye
-         rPnvUa6Yn+AprF9KBu5JUuTG+dCEQOVqZOtiudNj86Grr7GRJVMJI+769KAaYGqvnkwh
-         4GsKjc2KSnmNapOrD6DgNz0y6M/KnZCPKLRxLzrzFibY2ixAkQyV5cvJHhfOfM6G7iqs
-         tHHrZO74K2G6G7Bj4P3w7E+WCxLImsVvzG1FV3a0SYVDFMHYJi7P9fohZGhe1RaYuESB
-         F8uh+QHU5YVtmncXdFqwcd3AqUXIx93+KLuQ3ahtgtM7pKRv3fNe42tdz/0DWwmVznGu
-         BNMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:in-reply-to
-         :references:date:mime-version:content-transfer-encoding;
-        bh=VunGKno9X4wdt7WDv3gAS93CIdUrekKOEUH8RiJ6aNA=;
-        b=KYQLqSQPCaId2VDSIZ2lxRRlTxyYzJQcTwXH1SrViA82WAG9z3VUN/T19XvLb6OmlV
-         g/qVoExd+/AWgrdeu40JpC+6912tmLf5DCEIB3QzQteLod0Elnl0BUmcUhP/XgheNQpC
-         7j21Vj13m/0li1bY95VQwVgTtSQfa393ikasxkatdGuaQvyhsWovFHocOoaRj2oj5P1d
-         WlAIy710i2tWvGKo31P0Ys3cZbhfDEq7Jr1SXO2zVgm722pEli0qfdxwU90dQYfmxQPr
-         Y+mH1bu62Tt2ZCdbZ3AX2VIdi9345IW3trzLYdIA3bk4TtmkWVwVBM7XBq5+GEi8IiYS
-         LMvg==
-X-Gm-Message-State: AMCzsaWorVWTB3qD0yupRfu9EAmtS4X1cgfzHOupbkKx5+8qlmpxyl5/
-        qOoXMxAI6L58pfs0gWTbhi8=
-X-Google-Smtp-Source: ABhQp+SXrsxErqv8W9DijqVH58ZHLOHJWy/cTAERqoyBYzZQHbrf/uChnlN65BJYZo1RhJvG5HKkNw==
-X-Received: by 10.84.128.227 with SMTP id a90mr5598232pla.224.1508553142560;
-        Fri, 20 Oct 2017 19:32:22 -0700 (PDT)
-Received: from unique-pc ([218.248.21.162])
-        by smtp.gmail.com with ESMTPSA id 70sm3467304pfv.97.2017.10.20.19.32.19
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 20 Oct 2017 19:32:21 -0700 (PDT)
-Message-ID: <1508553136.2516.4.camel@gmail.com>
-Subject: Re: [RFC PATCH v2 1/5] branch: improve documentation and naming of
- certain parameters
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>,
-        Stefan Beller <sbeller@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-In-Reply-To: <CAPig+cS7e2i-eEJV6NcRQ-+aVmn5C7mKONxU4TLAGA7GQBX=aw@mail.gmail.com>
-References: <20170919071525.9404-1-kaarticsivaraam91196@gmail.com>
-         <20170925082024.2691-1-kaarticsivaraam91196@gmail.com>
-         <20170925082024.2691-2-kaarticsivaraam91196@gmail.com>
-         <CAGZ79kaVUBuHVxaE0opXqiEwCr7MVFZHrt5ERQ0mF_deSHeOSQ@mail.gmail.com>
-         <CAPig+cS7e2i-eEJV6NcRQ-+aVmn5C7mKONxU4TLAGA7GQBX=aw@mail.gmail.com>
-Content-Type: text/plain; charset="ISO-8859-15"
-Date:   Sat, 21 Oct 2017 08:02:16 +0530
-Mime-Version: 1.0
-X-Mailer: Evolution 3.22.6-1+deb9u1 
-Content-Transfer-Encoding: 7bit
-X-Cyberoam-smtpxy-version: 1.0.6.3
-X-Cyberoam-AV-Policy: default
-X-CTCH-Error: Unable to connect local ctasd
+        id S1752955AbdJUCi0 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Oct 2017 22:38:26 -0400
+Received: from lang.hm ([66.167.227.134]:52661 "EHLO bifrost.lang.hm"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752922AbdJUCiZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Oct 2017 22:38:25 -0400
+Received: from dlang-laptop ([10.2.0.162])
+        by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id v9L2c0AU008285;
+        Fri, 20 Oct 2017 19:38:00 -0700
+Date:   Fri, 20 Oct 2017 19:38:00 -0700 (PDT)
+From:   David Lang <david@lang.hm>
+X-X-Sender: dlang@dlang-laptop
+To:     Eric Sunshine <sunshine@sunshineco.com>
+cc:     Jeff King <peff@peff.net>, Jacob Keller <jacob.keller@gmail.com>,
+        David Lang <david@lang.hm>,
+        Git mailing list <git@vger.kernel.org>
+Subject: Re: hot to get file sizes in git log output
+In-Reply-To: <CAPig+cQ56ZNaEOkV+ZCq2KsL-2nTockTrEbqvj=j_wO0YtCx6g@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1710201929210.5973@qynat-yncgbc>
+References: <nycvar.QRO.7.76.6.1710201105351.5973@qynat-yncgbc> <CA+P7+xpdWJbxtxAggRpYR3eE8qjH6TfbYQS_=20aZM7d2RbC0Q@mail.gmail.com> <20171020214312.3kb3ncz2ks7mfxw4@sigill.intra.peff.net>
+ <CAPig+cQ56ZNaEOkV+ZCq2KsL-2nTockTrEbqvj=j_wO0YtCx6g@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII; format=flowed
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 2017-10-20 at 17:51 -0400, Eric Sunshine wrote:
-> On Mon, Sep 25, 2017 at 1:20 AM, Kaartic Sivaraam
-> <kaartic.sivaraam@gmail.com> wrote:
-> > Documentation for a certain function was incomplete as it didn't say
-> > what certain parameters were used for. Further a parameter name wasn't
-> > very communicative.
-> > 
-> > So, add missing documentation for the sake of completeness and easy
-> > reference. Also, rename the concerned parameter to make it's name more
-> 
-> s/it's/its/
-> 
+On Fri, 20 Oct 2017, Eric Sunshine wrote:
 
-Thanks!
+>>> I'm not exactly sure what you mean by size, but if you want to show
+>>> how many lines were added and removed by a given commit for each file,
+>>> you can use the "--stat" option to produce a diffstat. The "size" of
+>>> the files in each commit isn't very meaningful to the commit itself,
+>>> but a stat of how much was removed might be more accurate to what
+>>> you're looking for.
+>>
+>> That's a good suggestion, and hopefully could help David answer his
+>> original question.
+>>
+>> I took the request to mean "walk through history, and for each file that
+>> a commit touches, show its size". Which is a bit harder to do, and I
+>> think you need to script a little:
+>
+> David's mention of "a particular file", suggests to me that something
+> "bad" happened to one file, and he wants to know in which commit that
+> "badness" happened. If so, then it sounds like a job for git-bisect.
 
--- 
-Kaartic
+In this case, I have git store a copy of the state file for chromium (and do a 
+similar thing for firefox), so that if something bad happens and it crashes and 
+looses all 200-400 tabs in a way that it's recovery doesn't work, I can go back 
+to a prior version.
+
+This is done by having the following crontab entries, along with smudge filters 
+that change the one-line json to pretty printed json before the commit.
+
+0 * * * * dlang cd /home/dlang/.config/chromium/Default; git add *Session *Tabs Bookmarks History ; git commit -mupdate > /dev/null 2>&1
+
+0 0 3 * * dlang cd /home/dlang/.config/chromium/Default; git gc --aggressive > /dev/null 2>&1
+
+0 * * * * dlang cd /home/dlang/.mozilla/firefox/bux6mwl1.default/sessionstore-backups; git add *.js ; git commit -mupdate > /dev/null 2>&1
+
+0 0 3 * * dlang cd /home/dlang/.mozilla/firefox/bux6mwl1.default/sessionstore-backups; git gc --aggressive > /dev/null 2>&1
+
+This has saved me many times in the past. But this time I didn't recognize when 
+the problem happened because instead of a crash, it just closed all the tabs 
+except the one that was open. Once I realized all my other tabs were gone, I 
+didn't have time to mess with it for a few days. So the problem could have 
+happened anytime in the last week or two.
+
+I'm sure that when this happened, the files shrunk drastically (from several 
+hundred tabs to a dozen or so will be very obvious).
+
+But I don't have any specific line I can look at, the lines that are there 
+change pretty regularly, and/or would not have changed at the transition.
+
+git whatchanged shows commits like:
+
+commit fb7e54c12ddc7c87c4862806d583f5c6abf3e731
+Author: David Lang <david@lang.hm>
+Date:   Fri Oct 20 11:00:01 2017 -0700
+
+     update
+
+:100644 100644 1a842ca... 290e9dd... M  Default/Bookmarks
+:100644 100644 1cd745c... 388a455... M  Default/Current Session
+:100644 100644 51074ad... c4dce40... M  Default/Current Tabs
+
+If there was a way to add file size to this output, it would be perfect for what 
+I'm needing.
+
+David Lang
