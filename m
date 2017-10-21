@@ -2,84 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C20B6202DD
-	for <e@80x24.org>; Sat, 21 Oct 2017 07:16:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C2634202DD
+	for <e@80x24.org>; Sat, 21 Oct 2017 08:53:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751442AbdJUHQV (ORCPT <rfc822;e@80x24.org>);
-        Sat, 21 Oct 2017 03:16:21 -0400
-Received: from cloud.peff.net ([104.130.231.41]:59822 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751277AbdJUHQV (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Oct 2017 03:16:21 -0400
-Received: (qmail 12019 invoked by uid 109); 21 Oct 2017 07:16:16 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 21 Oct 2017 07:16:16 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 22992 invoked by uid 111); 21 Oct 2017 07:16:21 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Sat, 21 Oct 2017 03:16:21 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 21 Oct 2017 03:16:14 -0400
-Date:   Sat, 21 Oct 2017 03:16:14 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        Git Mailing List <git@vger.kernel.org>,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Thomas Rikl <trikl@online.de>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [Alt. PATCH] ls-remote: deprecate -h as short for --heads
-Message-ID: <20171021071613.yynmigxiixnqggik@sigill.intra.peff.net>
-References: <63fe2a84-d991-9165-32c0-8087d8513ce6@online.de>
- <CAN0heSpPWWdWY4d1wCdRH8TjcmD3kAiSffL0-_9kJWkm5P2EkA@mail.gmail.com>
- <4d110305-0826-6fd1-91a5-c1ebd0b1e80b@web.de>
- <774f08bd-3172-0083-1544-e5f68f6798fa@web.de>
- <xmqqk1ztmkbn.fsf@gitster.mtv.corp.google.com>
- <26112a15-f02c-a910-c8bb-794ca84dc1e5@web.de>
- <20171019203249.76uu3b6ferquitcr@sigill.intra.peff.net>
- <xmqqlgk6iq94.fsf@gitster.mtv.corp.google.com>
- <20171020030524.4xlwrdag7e4gzg7s@sigill.intra.peff.net>
- <xmqq7evqidp3.fsf@gitster.mtv.corp.google.com>
+        id S1753136AbdJUIxB (ORCPT <rfc822;e@80x24.org>);
+        Sat, 21 Oct 2017 04:53:01 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61220 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751668AbdJUIxA (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Oct 2017 04:53:00 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7B6F5B8CD4;
+        Sat, 21 Oct 2017 04:52:57 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=9DtB5fZQVRVrtufrgfx2DyCY85M=; b=ns/PXA
+        av2f9u45mgJWaa73k+To0H8sySEMlJDdPnoJz2uGYzxeN+vYfo7GLp2wUtOJIdyc
+        gbAXRsZOE3okri4KQUfoIx5oJjxCfPiMHOabafJP26vkASv0EPw9lPbDacoFakgh
+        EGZtJG+s6o4cBIX94IwQ2vVh0wOtUh5wftv+g=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=l7l54q1GNjv1HN+DRg7cwuugVQFG/fsH
+        3rNuMW2+fgwE3b2CJCRC5zKdLgqhCkVeVqw1qBZbUE4Yr8DHyIayeMEFBBqy2yHk
+        9kj34dvdIhdicN3SDDmYUoiL+JUOj3d6J8pm6AS1aCoEgXSXhNIxN1VJr6cIO0pM
+        SPEJzUDVEkw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 735F5B8CD3;
+        Sat, 21 Oct 2017 04:52:57 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E1E3FB8CD2;
+        Sat, 21 Oct 2017 04:52:56 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 0/3] a small branch API clean-up
+References: <20171013051132.3973-1-gitster@pobox.com>
+        <1508555222.2516.11.camel@gmail.com>
+Date:   Sat, 21 Oct 2017 17:52:55 +0900
+In-Reply-To: <1508555222.2516.11.camel@gmail.com> (Kaartic Sivaraam's message
+        of "Sat, 21 Oct 2017 08:37:02 +0530")
+Message-ID: <xmqqtvysg9w8.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq7evqidp3.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3BBABF86-B63D-11E7-B598-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 20, 2017 at 02:35:36PM +0900, Junio C Hamano wrote:
+Kaartic Sivaraam <kaartic.sivaraam@gmail.com> writes:
 
-> I may be biased as every time I think about this one, the first one
-> that comes to my mind is how "grep -h" (not "git grep", but GNU
-> grep) behaves.  Yes, "-h" means something else, but by itself, the
-> command does not make sense, and "ls-remote -h" is an exception to
-> the rule: most sane commands do not have a sensible semantics when
-> they take only "-h" and nothing else.  And even for ls-remote it is
-> true only when you try to be extra lazy and do not say which remote
-> you are asking.
+> On Fri, 2017-10-13 at 14:11 +0900, Junio C Hamano wrote:
+>> This started as a little clean-up for a NEEDSWORK comment in
+>> branch.h, but it ended up adding a rather useful safety feature.
+>> 
+>
+> Part of this series seems to duplicate the work done in part of my
+> series that tries to give more useful error messages when renaming a
+> branch.
+>
+> https://public-inbox.org/git/%3C20170919071525.9404-1-kaarticsivaraam91196@gmail.com%3E/
+>
+> Any reasons for this?
 
-Yeah, I have to admit "grep -h" is a lot more compelling, since it
-matches normal grep. And I've used "grep -h" many times without thinking
-about it, simply because the rule just falls out naturally there
-(there's nothing possible to do without a regex argument, so we'd show
-the usage either way).
+Sorry, but I am not sure what you are asking.  
 
-> And that is why I think "'cmd -h" and nothing else consistently
-> gives help" may overall be positive in usability, than a rule that
-> says "'cmd -h' is for short-help unless -h means something else for
-> the command".
+I was looking at the code, noticed NEEDSWORK comment and worked on
+cleaning things up---you seem to feel that I need a reason, or
+perhaps even your permission, when I try improving the codebase?
+That starts to sound a bit ridiculous.
 
-Yeah, I was shooting more for "let's avoid assigning -h to things". But
-that's not really possible if we want to be consistent with upstream
-grep, which is probably more important.
-
-I think you've convinced me.
-
--Peff
+As different developers are multiple people, it just happens that
+areas somebody changes overlap an area somebody else wants to
+change.  It's not like anybody owns a piece of source file when s/he
+expresses an interest to work on something that may or may not
+affect that area.
