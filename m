@@ -6,38 +6,38 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 754811FF72
-	for <e@80x24.org>; Sun, 22 Oct 2017 01:46:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 659AD1FF72
+	for <e@80x24.org>; Sun, 22 Oct 2017 02:04:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932310AbdJVBqG (ORCPT <rfc822;e@80x24.org>);
-        Sat, 21 Oct 2017 21:46:06 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60514 "EHLO
+        id S932319AbdJVCE2 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 21 Oct 2017 22:04:28 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56711 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S932295AbdJVBqF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Oct 2017 21:46:05 -0400
+        with ESMTP id S932295AbdJVCE1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Oct 2017 22:04:27 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1775A9C2DA;
-        Sat, 21 Oct 2017 21:46:04 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B40F19C79D;
+        Sat, 21 Oct 2017 22:04:26 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=rlHVSH85fdIWW66J1mjE3WX6JDM=; b=MG/wD1
-        jo0+X7IorpkcPkbCjT23i4KWojZ2kWsUeje1n22G1Jh4fj1cgNjgXK2loSfjIu+h
-        v34w+JKLvhMch6gX/cxu8VsJUooVgauVK2nnNvLfaGmBOdiW/IyhV3qz5L8gxr8t
-        zKQmecf5X8rV9ZwWyvrrw/bVPz2Vf73z8h+aM=
+        :content-type; s=sasl; bh=a0Td0zc3Lr7hISrHFZxz3eQWHAY=; b=lHGkwV
+        /AkYKA8x+zEwn70+VHXFWsA9SE5GTmR/tyyOgpQ74PUFMwTL2RCRZ9HO/Piy9IDZ
+        S6k/qSJ7x4Wj/pu0WY4uD7wP1Vo3E2GDN9kEiREt2e4K6nyKC5JL3DuIs8svLNyV
+        R6X2dDz2pa/DgQMb1L2SAZEVryGmfn6sxF+rQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=JBDOH1YwrtEPdaqCcicADwxWdG/rFiJX
-        Gy8xdLf53tFEM7ucArDOjJYXHiVyhK7PyelhR2Gf6RBBwWfQ3zX4Nb2b+Na0tLI/
-        +QYV3Pyh9I+DN951uIv+6/zj51rbSHcl2dV/3RIf9RLdmYqI/dGIXprM/GAndXPz
-        2l60fjEJvzo=
+        :content-type; q=dns; s=sasl; b=qljWvvgSZZvB1Zatu4hliuS/MRvMTWxw
+        iMO/5M5EPp7bGys9MsIAZ0nEycf+5w6JcYjzQNc/NiddNElp4lTnkY4vXUjqWYTt
+        HvQV1Io6tjNsbkeAYl+RH7t2uiyl+tSgLPzNEmH8vcxP/MKqKiuidrApdY9jhP+J
+        niCWLZNFjIQ=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0E8299C2D9;
-        Sat, 21 Oct 2017 21:46:04 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id AAC0C9C79C;
+        Sat, 21 Oct 2017 22:04:26 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6F67D9C2D6;
-        Sat, 21 Oct 2017 21:46:03 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 16A1A9C79B;
+        Sat, 21 Oct 2017 22:04:26 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Christian Couder <christian.couder@gmail.com>
 Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
@@ -48,17 +48,16 @@ Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
         Lars Schneider <larsxschneider@gmail.com>,
         Eric Wong <e@80x24.org>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 5/6] t0021/rot13-filter: add capability functions
+Subject: Re: [PATCH 0/6] Create Git/Packet.pm
 References: <20171019123030.17338-1-chriscool@tuxfamily.org>
-        <20171019123030.17338-6-chriscool@tuxfamily.org>
-Date:   Sun, 22 Oct 2017 10:46:02 +0900
-In-Reply-To: <20171019123030.17338-6-chriscool@tuxfamily.org> (Christian
-        Couder's message of "Thu, 19 Oct 2017 14:30:29 +0200")
-Message-ID: <xmqqefpwdkf9.fsf@gitster.mtv.corp.google.com>
+Date:   Sun, 22 Oct 2017 11:04:25 +0900
+In-Reply-To: <20171019123030.17338-1-chriscool@tuxfamily.org> (Christian
+        Couder's message of "Thu, 19 Oct 2017 14:30:24 +0200")
+Message-ID: <xmqq8tg4djkm.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: C35C552A-B6CA-11E7-B65A-8EF31968708C-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 5495A8AA-B6CD-11E7-B4F3-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -66,116 +65,29 @@ X-Mailing-List: git@vger.kernel.org
 
 Christian Couder <christian.couder@gmail.com> writes:
 
-> Add functions to help read and write capabilities.
-> These functions will be reused in following patches.
+> Goal
+> ~~~~
 
-One more thing that is more noteworthy (read: do not forget to
-describe it in the proposed log message) is that the original used
-to require capabilities to come in a fixed order.
+Totally offtopic, but is it only me who finds these "section
+headers" in cover letters from some people irritating and/or
+jarring?  It perhaps is because I view the cover letter more as a
+part of conversation, not a presentation.  And when you walk up to
+somebody and start a conversation, you do not declare section
+headers ;-)  
 
-The new code allows these capabilities to be declared in any order,
-it even allows duplicates (intended? shouldn't we be flagging it as
-an error?), the helper can require a set of capabilities we do want
-to see and fail if the remote doesn't declare any one of them
-(good).
+Saying "I want to be able to do these things in the future, and here
+is to prepare for that future" at the beginning nevertheless is a
+good thing.  It gives us readers an overall vision we can agree to
+(or be against, or offer alternatives) and sets expectations on what
+the series would do and where it stops and leaves the remainder to
+follow-up work.
 
-It does not check if the remote declares any capability we do not
-know about (intended? the original noticed this situation and error
-out---shouldn't the more generalized helper that is meant to be
-reusable allow us to do so, too?).
+> Packet related functions in Perl can be useful to write new filters or
+> to debug or test existing filters. So instead of having them in
+> t0021/rot13-filter.pl, let's extract them into a new Git/Packet.pm
+> module.
 
-	Side note: my answer to the last question is "it is OK and
-	even desirable to ignore the fact that they claim to support
-	a capability we do not know about", but I may be mistaken.
-	The reasoning and the conclusion that is consistent with
-	what the code does should be described in any case.
+I left some comments on individual patches to point out places that
+may need improvements.  I agree with the overall direction.
 
-> +sub packet_read_capabilities {
-> +	my @cap;
-> +	while (1) {
-> +		my ( $res, $buf ) = packet_bin_read();
-> +		return ( $res, @cap ) if ( $res != 0 );
-
-The original had the same "'list eq list' does not do what you may
-think it does" issue.  This one corrects it, which is good.
-
-I am not sure if ($res != 0) is correct though.  What should happen
-when you get an unexpected EOF at this point?  The original would
-have died; this ignores and continues.
-
-> +		unless ( $buf =~ s/\n$// ) {
-> +			die "A non-binary line MUST be terminated by an LF.\n"
-> +			    . "Received: '$buf'";
-> +		}
-
-It may make sense to extract this in a small helper and call it from
-here and from packet_txt_read().
-
-> +		die "bad capability buf: '$buf'" unless ( $buf =~ s/capability=// );
-
-This may merely be a style thing, but I somehow find statement
-modifiers hard to follow, unless its condition is almost always
-true.  If you follow the logic in a loop and see "die" at the
-beginning, a normal thing to expect is that there were conditionals
-that said "continue" (eh, 'next' or 'redo') to catch the normal case
-and the control would reach "die" only under exceptional error
-cases, but hiding a rare error condition after 'unless' statement
-modifier breaks that expectation.
-
-> +		push @cap, $buf;
-> +	}
-> +}
-> +
-> +sub packet_read_and_check_capabilities {
-> +	my @local_caps = @_;
-> +	my @remote_res_caps = packet_read_capabilities();
-> +	my $res = shift @remote_res_caps;
-> +	my %remote_caps = map { $_ => 1 } @remote_res_caps;
-
-FYI:
-
-	my ($res, @remote_caps) = packet_read_capabilities();
-	my %remote_caps = map { $_ => 1 } @remote_caps;
-
-may be more conventional way.
-
-> +	foreach (@local_caps) {
-> +        	die "'$_' capability not available" unless (exists($remote_caps{$_}));
-> +	}
-
-It is good that we can now accept capabilities in any order and
-still enforce all the required capabilities are supported by the
-other side.  It deserves a mention in the proposed log message.
-
-> +	return $res;
-> +}
-> +
-> +sub packet_write_capabilities {
-> +	packet_txt_write( "capability=" . $_ ) foreach (@_);
-> +	packet_flush();
-> +}
-> +
->  print $debug "START\n";
->  $debug->flush();
->  
->  packet_initialize("git-filter", 2);
->  
-> -( packet_txt_read() eq ( 0, "capability=clean" ) )  || die "bad capability";
-> -( packet_txt_read() eq ( 0, "capability=smudge" ) ) || die "bad capability";
-> -( packet_txt_read() eq ( 0, "capability=delay" ) )  || die "bad capability";
-> -( packet_bin_read() eq ( 1, "" ) )                  || die "bad capability end";
-> +packet_read_and_check_capabilities("clean", "smudge", "delay");
-> +packet_write_capabilities(@capabilities);
-
-Neither the original nor the rewrite ensures that @capabilities we
-ask to the other side to activate is a subset of what the other side
-actually declared.
-
-Fixing this is a bit more involved than "refactor what we have", but
-probably is part of "refactor so that we can reuse in other
-situations".  You'd want to return the list of caps received from
-packet_read_and_check_capabilities() and make sure @capabilities is
-a subset of that before writing them out to the other side to
-request.
-
-Thanks.
+Thanks for starting this topic.
