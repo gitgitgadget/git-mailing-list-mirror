@@ -2,68 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D84241FF72
-	for <e@80x24.org>; Sun, 22 Oct 2017 05:06:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5D5DE202FC
+	for <e@80x24.org>; Sun, 22 Oct 2017 09:36:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751066AbdJVFA3 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 22 Oct 2017 01:00:29 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:43434 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750871AbdJVFA2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Oct 2017 01:00:28 -0400
-Received: by mail-pf0-f196.google.com with SMTP id a8so14800520pfc.0
-        for <git@vger.kernel.org>; Sat, 21 Oct 2017 22:00:28 -0700 (PDT)
+        id S1751360AbdJVJgd (ORCPT <rfc822;e@80x24.org>);
+        Sun, 22 Oct 2017 05:36:33 -0400
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:46843 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751346AbdJVJgc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Oct 2017 05:36:32 -0400
+Received: by mail-pg0-f68.google.com with SMTP id k7so9641829pga.3
+        for <git@vger.kernel.org>; Sun, 22 Oct 2017 02:36:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:subject:from:to:cc:in-reply-to:references:date
          :mime-version:content-transfer-encoding;
-        bh=jOtT8MNIZElIvtCyYGFGWj02SKllRe9Ndbjl7wNuC2E=;
-        b=b5lk2Nn5iYI85rtk1gxJq3TO77CpN8L2uqhOW7kUKsHMbi1b5L47wgt7m7+w8k2uGE
-         /vCtZza5Z+14JU+R1sXq6cupXcEHNonIBcBWZ+mODAx+U2UtrJJjER1P0WyzSCht5Sry
-         x5GbQU0D1enwRfpmljX7XFUi6699EKocRN+b8TqhSqKqHGfmgdm3vfKp9Ad24vbDt21C
-         Ora3tg81JJaNxHxHeYeDb6+zULs1OPU7oUj2A34MRQeDvBJrR2QCafdkj0ZoVEX7fb8Q
-         4OT8cf5iFqIcL5eVygeEC3eIC8SZRp+m8ppwWDxhLaM9kl35IQju+zCXr4DvEejq0/WT
-         mXXg==
+        bh=5Aq8s55Hd+m5Nf//45zRnVc+IsJ1Ru1g5X5m05XsbU0=;
+        b=AWeNd2c/+Xzz/7ZbSZ0LACp5grInu8uBflcQYWhGQOLPzoDQS1XB2GSCZLYCeHZV3a
+         IQRugh0wT/GynG9nqVNxfsJRdsmKqRHaC0qFLmlhVD0Mw0x2unpjJKmFydA6giPPCT+v
+         L5Ggzj8Xl8331FQKK13pzrMAxEGDhYHnJ0s2/NFg3DFOV/iQhwMimkn4Io8WXKyVGUIW
+         7sowjdqvav9586gze0fdqKoXWfPK62yKjDlYA0Z7zgXDCU2BX/F4MyjELOnfi/0bqPIC
+         enQkL2HiPie6eRVZ8xp4ElyKM0T+aNcZu5CLeW2g5uAmNvnXhKFcdum/sAWZjilDtGVj
+         GA/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:subject:from:to:cc:in-reply-to
          :references:date:mime-version:content-transfer-encoding;
-        bh=jOtT8MNIZElIvtCyYGFGWj02SKllRe9Ndbjl7wNuC2E=;
-        b=RymGVvrqo7sJyGVxTXHKit8BnVR3rwkcHrM8zmpVcQlGHnH9h4ZilWFbz/sor98fiy
-         VDR1n6D8vLdlDwdSJ30Wy96RYb+2Krt+eO3MhH3tJmXYuEQ/bwx/UoyAbiUDWllXVMro
-         9ZnJOuTnmcUrSMliRgUuDT/J6r5Wyug3ZdyDrGcsgAAXvrnpHWjpTNGtOJMVCKVfUOAu
-         argD5Gpf+Ts/Mt5nGpHk+pytDDlZU9dsdMYjuCiBJ1vzI4iIVbWF1uN+qzLdxa8HUBKX
-         8EHHCV8t/5d9ypz1jei6/05m3im9qj0qK8TMaaZ5xJ4N1upYACsHL1PUPqtauWwwBBPt
-         3xUg==
-X-Gm-Message-State: AMCzsaXP77zWH89kylFVJPj53+md8F8wYGHl69LwMtKTbOE2cm6kgEOk
-        iip+FHd66XwcNAMT/4yR9Ig=
-X-Google-Smtp-Source: ABhQp+QOm3sew2XKyEwqN9mNRKnmyFdJgnJmiPsJkQdIWuR8G1VceTThCGJoYxGQ5RrMHx2DEW5zIg==
-X-Received: by 10.159.252.133 with SMTP id bb5mr5831359plb.415.1508648428063;
-        Sat, 21 Oct 2017 22:00:28 -0700 (PDT)
-Received: from unique-pc ([218.248.21.162])
-        by smtp.gmail.com with ESMTPSA id z8sm7665960pfl.135.2017.10.21.22.00.24
+        bh=5Aq8s55Hd+m5Nf//45zRnVc+IsJ1Ru1g5X5m05XsbU0=;
+        b=tk5XzfyLteTmrMXTBazQnrvKZkWxMXNX28OLAfYcgHnq8VDQmboWsffRa0+BBYDn7u
+         VBtU61YgDBulo5ygLRW6ev0MQ5Y45TQewnKHMhcMegd1dL77K/L4evYxsJMXbEURpsem
+         J8TsnTVOkDy6UZ6wOPPReYkVN8qpIdKOSurVRMGp4VTXhVvc2IsH15Ea/lQxpX/9A0UK
+         nlSLiZ6vUY0SRRnw1kbCrkEPOoRwWtUiv57yRJ2n2eVq/uFgQSVzmm3ENzX0birm8DLL
+         6BggSJr6O7R//wWaH9wPm2oklpwQjxKLiWChNDpi3j22dskGeVbUwQstDG/RVvh8sCMP
+         bClg==
+X-Gm-Message-State: AMCzsaWWGVkBcUQ7xPe1Oe2XucS5pkfPUyrnvRKmhmdqDf6Mwa4vhbSr
+        VfybGCsL0mUDWkb8JZjNWVg=
+X-Google-Smtp-Source: ABhQp+R7Kzd/WuYG8A0PUPvWjSlbXR+Lo5JDDW9qLM4VgbBoUR0TDX4OJBFA9Cc8fUWY9R+p+wQ/QA==
+X-Received: by 10.98.236.16 with SMTP id k16mr9895293pfh.152.1508664992078;
+        Sun, 22 Oct 2017 02:36:32 -0700 (PDT)
+Received: from unique-pc ([14.102.72.147])
+        by smtp.gmail.com with ESMTPSA id 2sm10043855pfn.185.2017.10.22.02.36.28
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 21 Oct 2017 22:00:26 -0700 (PDT)
-Message-ID: <1508648422.2152.7.camel@gmail.com>
-Subject: Re: [PATCH 3/3] branch: forbid refs/heads/HEAD
+        Sun, 22 Oct 2017 02:36:31 -0700 (PDT)
+Message-ID: <1508664986.6715.4.camel@gmail.com>
+Subject: Re: Re* Is t5601 flaky for anybody else?
 From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
-In-Reply-To: <xmqqpo9gg9pa.fsf@gitster.mtv.corp.google.com>
-References: <20171013051132.3973-1-gitster@pobox.com>
-         <20171013051132.3973-4-gitster@pobox.com>
-         <20171013131501.3qarwhanktfvgjqd@sigill.intra.peff.net>
-         <xmqqefq6v5qj.fsf@gitster.mtv.corp.google.com>
-         <xmqqa80uv5b8.fsf@gitster.mtv.corp.google.com>
-         <1508561424.2516.19.camel@gmail.com>
-         <xmqqpo9gg9pa.fsf@gitster.mtv.corp.google.com>
+To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Cc:     Brandon Williams <bmwill@google.com>, git@vger.kernel.org
+In-Reply-To: <20171017210833.n5vgly7z2zi5dhuh@sigill.intra.peff.net>
+References: <xmqq376ipdpx.fsf@gitster.mtv.corp.google.com>
+         <20171017171046.GA48544@google.com>
+         <xmqqshehmqrg.fsf_-_@gitster.mtv.corp.google.com>
+         <20171017210833.n5vgly7z2zi5dhuh@sigill.intra.peff.net>
 Content-Type: text/plain; charset="ISO-8859-15"
-Date:   Sun, 22 Oct 2017 10:30:22 +0530
+Date:   Sun, 22 Oct 2017 15:06:26 +0530
 Mime-Version: 1.0
 X-Mailer: Evolution 3.22.6-1+deb9u1 
 Content-Transfer-Encoding: 7bit
@@ -75,27 +72,16 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, 2017-10-21 at 17:57 +0900, Junio C Hamano wrote:
-> ... The code may already
-> handle it, or there may need even more code to support the rename; I
-> didn't check.
+On Tue, 2017-10-17 at 17:08 -0400, Jeff King wrote:
+> On Wed, Oct 18, 2017 at 06:02:59AM +0900, Junio C Hamano wrote:
+> 
+> FWIW, I can't replicate the problem on either "master" or "pu". I wonder
+> why.
 > 
 
-As far as I could see there the code does seem to already handle the
-rename. This part of builtin/branch.c is what seems to be ensuring
-that,
-
-        if (strbuf_check_branch_ref(&oldref, oldname)) {
-                /*
-                 * Bad name --- this could be an attempt to rename a
-                 * ref that we used to allow to be created by accident.
-                 */
-                if (ref_exists(oldref.buf))
-                        recovery = 1;
-                else
-                        die(_("Invalid branch name: '%s'"), oldname);
-        }
-
+Neither can I. I tried running t5601 on "master" and on "pu" after
+reverting the patch found in this thread. Both ran successfully without
+issues.
 
 -- 
 Kaartic
