@@ -2,86 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5D5DE202FC
-	for <e@80x24.org>; Sun, 22 Oct 2017 09:36:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 60F74202DD
+	for <e@80x24.org>; Sun, 22 Oct 2017 12:27:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751360AbdJVJgd (ORCPT <rfc822;e@80x24.org>);
-        Sun, 22 Oct 2017 05:36:33 -0400
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:46843 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751346AbdJVJgc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Oct 2017 05:36:32 -0400
-Received: by mail-pg0-f68.google.com with SMTP id k7so9641829pga.3
-        for <git@vger.kernel.org>; Sun, 22 Oct 2017 02:36:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:cc:in-reply-to:references:date
-         :mime-version:content-transfer-encoding;
-        bh=5Aq8s55Hd+m5Nf//45zRnVc+IsJ1Ru1g5X5m05XsbU0=;
-        b=AWeNd2c/+Xzz/7ZbSZ0LACp5grInu8uBflcQYWhGQOLPzoDQS1XB2GSCZLYCeHZV3a
-         IQRugh0wT/GynG9nqVNxfsJRdsmKqRHaC0qFLmlhVD0Mw0x2unpjJKmFydA6giPPCT+v
-         L5Ggzj8Xl8331FQKK13pzrMAxEGDhYHnJ0s2/NFg3DFOV/iQhwMimkn4Io8WXKyVGUIW
-         7sowjdqvav9586gze0fdqKoXWfPK62yKjDlYA0Z7zgXDCU2BX/F4MyjELOnfi/0bqPIC
-         enQkL2HiPie6eRVZ8xp4ElyKM0T+aNcZu5CLeW2g5uAmNvnXhKFcdum/sAWZjilDtGVj
-         GA/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:in-reply-to
-         :references:date:mime-version:content-transfer-encoding;
-        bh=5Aq8s55Hd+m5Nf//45zRnVc+IsJ1Ru1g5X5m05XsbU0=;
-        b=tk5XzfyLteTmrMXTBazQnrvKZkWxMXNX28OLAfYcgHnq8VDQmboWsffRa0+BBYDn7u
-         VBtU61YgDBulo5ygLRW6ev0MQ5Y45TQewnKHMhcMegd1dL77K/L4evYxsJMXbEURpsem
-         J8TsnTVOkDy6UZ6wOPPReYkVN8qpIdKOSurVRMGp4VTXhVvc2IsH15Ea/lQxpX/9A0UK
-         nlSLiZ6vUY0SRRnw1kbCrkEPOoRwWtUiv57yRJ2n2eVq/uFgQSVzmm3ENzX0birm8DLL
-         6BggSJr6O7R//wWaH9wPm2oklpwQjxKLiWChNDpi3j22dskGeVbUwQstDG/RVvh8sCMP
-         bClg==
-X-Gm-Message-State: AMCzsaWWGVkBcUQ7xPe1Oe2XucS5pkfPUyrnvRKmhmdqDf6Mwa4vhbSr
-        VfybGCsL0mUDWkb8JZjNWVg=
-X-Google-Smtp-Source: ABhQp+R7Kzd/WuYG8A0PUPvWjSlbXR+Lo5JDDW9qLM4VgbBoUR0TDX4OJBFA9Cc8fUWY9R+p+wQ/QA==
-X-Received: by 10.98.236.16 with SMTP id k16mr9895293pfh.152.1508664992078;
-        Sun, 22 Oct 2017 02:36:32 -0700 (PDT)
-Received: from unique-pc ([14.102.72.147])
-        by smtp.gmail.com with ESMTPSA id 2sm10043855pfn.185.2017.10.22.02.36.28
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 22 Oct 2017 02:36:31 -0700 (PDT)
-Message-ID: <1508664986.6715.4.camel@gmail.com>
-Subject: Re: Re* Is t5601 flaky for anybody else?
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Cc:     Brandon Williams <bmwill@google.com>, git@vger.kernel.org
-In-Reply-To: <20171017210833.n5vgly7z2zi5dhuh@sigill.intra.peff.net>
-References: <xmqq376ipdpx.fsf@gitster.mtv.corp.google.com>
-         <20171017171046.GA48544@google.com>
-         <xmqqshehmqrg.fsf_-_@gitster.mtv.corp.google.com>
-         <20171017210833.n5vgly7z2zi5dhuh@sigill.intra.peff.net>
-Content-Type: text/plain; charset="ISO-8859-15"
-Date:   Sun, 22 Oct 2017 15:06:26 +0530
-Mime-Version: 1.0
-X-Mailer: Evolution 3.22.6-1+deb9u1 
+        id S1750909AbdJVM1Z (ORCPT <rfc822;e@80x24.org>);
+        Sun, 22 Oct 2017 08:27:25 -0400
+Received: from mail.pdinc.us ([67.90.184.27]:55422 "EHLO mail1.pdinc.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750797AbdJVM1Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Oct 2017 08:27:24 -0400
+Received: from blackfat (nsa1.pdinc.us [67.90.184.2])
+        (authenticated bits=0)
+        by mail1.pdinc.us (8.14.4/8.14.4) with ESMTP id v9MCRJtU009289
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Sun, 22 Oct 2017 08:27:19 -0400
+From:   "Jason Pyeron" <jpyeron@pdinc.us>
+To:     "'Jeff King'" <peff@peff.net>,
+        "'Joris Valette'" <joris.valette@gmail.com>
+Cc:     "'Andreas Schwab'" <schwab@linux-m68k.org>, <git@vger.kernel.org>
+References: <CA+o7MD8bhXWxy2M7z++jrq+k85SwzdEV6uwnUjV9=0_X99=VJg@mail.gmail.com> <773EDE3B5FDB48AD8FB0DB048CAEC8DE@blackfat> <87zi8sxvkg.fsf@linux-m68k.org> <CA+o7MD8fcD5-SFeQsX84Etu68ov7yy48OO4dV=gXMp5xY8s9Rg@mail.gmail.com> <20171015200635.e2u4qkxlz2xwpfov@sigill.intra.peff.net> <CA+o7MD84O5uTOz0xAGmd=xL+Hw8UsVCu5v_HEEeMWvAhSRQCeA@mail.gmail.com> <20171016221324.stn56gqnliunvcdv@sigill.intra.peff.net>
+In-Reply-To: <20171016221324.stn56gqnliunvcdv@sigill.intra.peff.net>
+Subject: RE: Consider escaping special characters like 'less' does
+Date:   Sun, 22 Oct 2017 08:27:20 -0400
+Organization: PD Inc
+Message-ID: <37013BB09DFE493BB7E11E66A34657CE@blackfat>
+MIME-Version: 1.0
+Content-Type: text/plain;
+        charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-X-Cyberoam-smtpxy-version: 1.0.6.3
-X-Cyberoam-AV-Policy: default
-X-CTCH-Error: Unable to connect local ctasd
+X-Mailer: Microsoft Office Outlook 11
+Thread-Index: AdNGy//u8MeAJQZWQbyg533+8QmnmwEZPcJQ
+X-MimeOLE: Produced By Microsoft MimeOLE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 2017-10-17 at 17:08 -0400, Jeff King wrote:
-> On Wed, Oct 18, 2017 at 06:02:59AM +0900, Junio C Hamano wrote:
+> -----Original Message-----
+> From: Jeff King
+> Sent: Monday, October 16, 2017 6:13 PM
+> To: Joris Valette
+> Cc: Andreas Schwab; Jason Pyeron; git@vger.kernel.org
+> Subject: Re: Consider escaping special characters like 'less' does
 > 
-> FWIW, I can't replicate the problem on either "master" or "pu". I wonder
-> why.
+<snip/>
+> 
+> I.e., something like this would probably help your case 
+> without hurting
+> anybody:
+> 
+> diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+> index 28b325d754..d44e5ea459 100755
+> --- a/git-add--interactive.perl
+> +++ b/git-add--interactive.perl
+> @@ -714,6 +714,16 @@ sub parse_diff {
+>  		push @{$hunk[-1]{DISPLAY}},
+>  			(@colored ? $colored[$i] : $diff[$i]);
+>  	}
+> +
+> +	foreach my $hunk (@hunk) {
+> +		foreach my $line (@{$hunk->{DISPLAY}}) {
+> +			# all control chars minus newline and 
+> ESC (for color)
+> +			if ($line =~ s/[\000-\011\013-\032\034-\037]/?/g) {
+
+What about CR [0x0D] ?
+
+> +				$hunk->{CONTROLCHARS} = 1;
+> +			}
+> +		}
+> +	}
+> +
+>  	return @hunk;
+>  }
+>  
+> @@ -1407,6 +1417,9 @@ sub patch_update_file {
+>  		if ($hunk[$ix]{TYPE} eq 'hunk') {
+>  			$other .= ',e';
+>  		}
+> +		if ($hunk[$ix]->{CONTROLCHARS}) {
+> +			print "warning: control characters in 
+> hunk have been replaced by '?'\n";
+> +		}
+>  		for (@{$hunk[$ix]{DISPLAY}}) {
+>  			print;
+>  		}
+> 
+> I can't help but feel this is the tip of a larger iceberg, 
+> though. E.g.,
+> what about characters outside of the terminal's correct encoding? Or
+> broken UTF-8 characters?
+> 
+> -Peff
 > 
 
-Neither can I. I tried running t5601 on "master" and on "pu" after
-reverting the patch found in this thread. Both ran successfully without
-issues.
-
--- 
-Kaartic
