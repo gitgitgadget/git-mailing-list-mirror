@@ -7,64 +7,64 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E05ED202DD
-	for <e@80x24.org>; Sun, 22 Oct 2017 16:27:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 13FA5202DD
+	for <e@80x24.org>; Sun, 22 Oct 2017 16:30:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751376AbdJVQ15 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 22 Oct 2017 12:27:57 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:54744 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751264AbdJVQ14 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Oct 2017 12:27:56 -0400
-Received: by mail-wr0-f196.google.com with SMTP id o44so15101047wrf.11
-        for <git@vger.kernel.org>; Sun, 22 Oct 2017 09:27:55 -0700 (PDT)
+        id S1751456AbdJVQaZ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 22 Oct 2017 12:30:25 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:54155 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751264AbdJVQaY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Oct 2017 12:30:24 -0400
+Received: by mail-wr0-f195.google.com with SMTP id u40so9243506wrf.10
+        for <git@vger.kernel.org>; Sun, 22 Oct 2017 09:30:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=8Rs2TVrmDueOHJMjpSgJ5D+iZ0iWkZVfsojeh/OASUE=;
-        b=BOXkSDrGkjDjDOHuwIgGg25lyfKIF84Sdv8mEnq/RMQqOGq7c+vI2TRX4tI5F1Mla5
-         6Px0+2/QDPGxO1DTxOFsRK2jnamftJnFkm1LA3RtsCAihjtL9rioUMXi8gHIAo5+zMcg
-         a52v2VMaTib1HqX2iLkTBlt7qDxQdAuiiWcCUhMB/O8+IHBZ1hOBKh0z2zHTSGxu6jMo
-         2X+qSJFljNtBJ4wBp3SUm4O516oi7w6zEugEbfbqvPgVAmaktNRDh6TWJ8EN+7VOBgEi
-         1aUa6capFDMTUWcMwWXz1hj1FgrI/TLG7LtWE8IspiPMDbvsGU2BzMq2K27J8c1Jkti0
-         zrkQ==
+        bh=fENI4u3CX7l7mFVU0fvbH7fOiJXlmAwL3F9vWI2HlBk=;
+        b=hnRT5cN+E29XDmp/T6xHAG23SgxdKdjB5LTdw02PrXrHiIGCoOgEE29vY57s1Bgqh6
+         NKdaLhmIw6h7Wg7vxCVZNXximWVnhdfzmYVtDSFYtFlMR67RoWkjM1MgdaPMDw+2d7H6
+         rsaRy/Vws9rfVVpBtC91byCLeTW8u4X7LWrVAeEIPjgIeXjTNVT130tNZ7OHW8f9jCt+
+         kMN9C52ksmJY2cVD6JHz0Gn5vI5Ipq3876Yk9A531qDdaGENWUPbL36lvxZzzY8VH46F
+         IXUk1vg6TLyxmR5cr/8LQdYIBRqpD6yPEk8E+HqYoHmS6NrwkXjPofRe+m7KTNR+uq80
+         rcvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=8Rs2TVrmDueOHJMjpSgJ5D+iZ0iWkZVfsojeh/OASUE=;
-        b=BBT3Vt9+Isa2LTvO0qTIK807iDQaWLj3oZHuCqZpJhMWyGvS6kbSPLkSMOdVXhGyqq
-         cbOm8+ykygH/LKTDUO/YdGAIGuegGvzXlc6y0w3ymARX29GxaqJM4qQRsT3eUOvRQQdb
-         wr8fcRqL+jkq2DNF7VtHxaA67dGM94vA4f8E8jrzNIKEz4ETsIyee7Pou1QVpoTgtu0D
-         pGcNZS5j3JgRlZM4dXvGxUhfsjmYkgTPhwukLTfc1t5dzCEnGgcVJUVCpGmT7JS4vKka
-         OKW5Wk0EMDeFbaaJwUUIxaDCf09tWav9Dkk+pRab7/qkcFyosCycowSCyq4hYEEGBA26
-         +Ikw==
-X-Gm-Message-State: AMCzsaXwRadjpBtsi+uUpUxsL01pRYlvt/6uh5sxggx62ilfO2mAqZq8
-        70p21OnLe8ryVI3cYsvv+qg=
-X-Google-Smtp-Source: ABhQp+To5LZ12XByAXYSJIVJgfGzep3FBZEY6v4Vzb9XWBpVmNmHwV/JhvsPPfxa5Y81F9qg1r1jcw==
-X-Received: by 10.223.173.66 with SMTP id p60mr8692165wrc.13.1508689674987;
-        Sun, 22 Oct 2017 09:27:54 -0700 (PDT)
+        bh=fENI4u3CX7l7mFVU0fvbH7fOiJXlmAwL3F9vWI2HlBk=;
+        b=PdOBd3lOXdG27Ni9GclERKBAg0wsapUBiqvlhjPiWG34JlJ8SQpJ3OH33v9skNQm8y
+         mFxJ26Loa0I8IzBJW+j3iezfNIFYEaK1wwkAOtO3v48QJEMaNH7smOf0mhejivBhRS6r
+         Bka99rVkeBFti/rkfnjkFjFKkaKjJu1donlHiF/un4jdgAdEVGK0V1HKhPmIIcd0ubvd
+         fQ9vC/BUIm404CsP6c2//Psy4KVFD3i091CjRFjiZ44hcvNCpf6C6CUMbQn/j7/Qg2y/
+         My1USi3XRadt8ewJvJfNUmmNHp6yaoXJ5ZGBUZW0KMq0A6r1vAfBOvZhOLUiCnnyuETA
+         cwSw==
+X-Gm-Message-State: AMCzsaV3/9mRUzpKUSv6Ta7b8IXYjR6Q27Lj1WLe8zZEVwHMPJSUQq0m
+        X7+blB6Lf/vFRZBPRQLCjYsfbZQ/
+X-Google-Smtp-Source: ABhQp+Tw9HedkcW0UadEOBKp0ZEmFp7nzxVPHow4VkUgbdmOoLuSlia3IkWiJ//Ir74ZZpXGdhuq4w==
+X-Received: by 10.223.133.4 with SMTP id 4mr8613996wrh.56.1508689823135;
+        Sun, 22 Oct 2017 09:30:23 -0700 (PDT)
 Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
-        by smtp.gmail.com with ESMTPSA id i1sm2405005wri.34.2017.10.22.09.27.53
+        by smtp.gmail.com with ESMTPSA id z35sm14506229wrc.9.2017.10.22.09.30.22
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 22 Oct 2017 09:27:53 -0700 (PDT)
-Date:   Sun, 22 Oct 2017 17:28:58 +0100
+        Sun, 22 Oct 2017 09:30:22 -0700 (PDT)
+Date:   Sun, 22 Oct 2017 17:31:27 +0100
 From:   Thomas Gummerer <t.gummerer@gmail.com>
 To:     Jeff King <peff@peff.net>
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
         "Robert P . J . Day" <rpjday@crashcourse.ca>
-Subject: Re: [PATCH v2 1/2] replace git stash save with git stash push in the
- documentation
-Message-ID: <20171022162858.GJ15399@hank>
+Subject: Re: [PATCH v2 2/2] mark git stash push deprecated in the man page
+Message-ID: <20171022163127.GK15399@hank>
 References: <20171005200049.GF30301@hank>
  <20171019183304.26748-1-t.gummerer@gmail.com>
- <20171021062617.yajqusruqanjnicb@sigill.intra.peff.net>
+ <20171019183304.26748-2-t.gummerer@gmail.com>
+ <20171021062846.s6rzo2hxmeqigk3e@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20171021062617.yajqusruqanjnicb@sigill.intra.peff.net>
+In-Reply-To: <20171021062846.s6rzo2hxmeqigk3e@sigill.intra.peff.net>
 User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -72,53 +72,34 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On 10/21, Jeff King wrote:
-> On Thu, Oct 19, 2017 at 07:33:03PM +0100, Thomas Gummerer wrote:
+> On Thu, Oct 19, 2017 at 07:33:04PM +0100, Thomas Gummerer wrote:
 > 
-> > diff --git a/git-stash.sh b/git-stash.sh
-> > index 8b2ce9afda..16919277ba 100755
-> > --- a/git-stash.sh
-> > +++ b/git-stash.sh
-> > @@ -267,11 +267,11 @@ push_stash () {
-> >  			# translation of "error: " takes in your language. E.g. in
-> >  			# English this is:
-> >  			#
-> > -			#    $ git stash save --blah-blah 2>&1 | head -n 2
-> > -			#    error: unknown option for 'stash save': --blah-blah
-> > -			#           To provide a message, use git stash save -- '--blah-blah'
-> > -			eval_gettextln "error: unknown option for 'stash save': \$option
-> > -       To provide a message, use git stash save -- '\$option'"
-> > +			#    $ git stash push --blah-blah 2>&1 | head -n 2
-> > +			#    error: unknown option for 'stash push': --blah-blah
-> > +			#           To provide a message, use git stash push -- '--blah-blah'
-> > +			eval_gettextln "error: unknown option for 'stash push': \$option
-> > +       To provide a message, use git stash push -m '\$option'"
+> > 'git stash push' fixes a historical wart in the interface of 'git stash
+> > save'.  As 'git stash push' has all functionality of 'git stash save',
+> > with a nicer, more consistent user interface deprecate 'git stash
+> > save'.  To do this, remove it from the synopsis of the man page, and
+> > move it to a separate section, stating that it is deprecated.
 > 
-> The user message is fixed here, but doesn't the message for translators
-> need the same treatment?  I guess it's just talking about the spacing,
-> so it doesn't need to be completely accurate. But it probably makes
-> sense to update it at the same time.
+> This looks fine.
+> 
+> > @@ -87,6 +84,10 @@ linkgit:git-add[1] to learn how to operate the `--patch` mode.
+> >  The `--patch` option implies `--keep-index`.  You can use
+> >  `--no-keep-index` to override this.
+> >  
+> > +save [-p|--patch] [-k|--[no-]keep-index] [-u|--include-untracked] [-a|--all] [-q|--quiet] [<message>]::
+> > +
+> > +	This option is deprecated in favour of 'git stash push'.
+> > +
+> 
+> We could possibly go into more detail, like:
+> 
+>   It differs from "stash push" in that it cannot take pathspecs, and any
+>   non-option arguments form the message.
+> 
+> or something. Since we don't want people to use it, it probably doesn't
+> matter much. I just wondered if people would peer at the (long) synopsis
+> line trying to figure out how it's different.
 
-Yeah, I was completely blind here, that should definitely have been
-updated as well.  Thanks for catching.
-
-> As an aside, I do kind of wonder if the right advice for "push" is
-> different than for "save" here. I.e., should it say "to provide a
-> pathspec that starts with --, use push -- --blah-blah". I'm not sure it
-> matters that much. Second-guessing what a user meant seems likely to go
-> wrong (e.g., "--icnlude-untracked" would trigger this message, which is
-> just silly). But that's largely orthogonal to what you're doing here.
-
-The best advice for it might indeed be different for "save" and
-"push".  The slight weirdness we have here is that both "save" and
-"push" are using the same option parsing.
-
-Now that we're deprecating "save", I don't think it's worth the effort
-to try to get rid of this weirdness.
-
-I think using "--" to distinguish the the pathspec from the command
-line options is a common enough pattern that we don't need to give
-advice to the users.  I feel like that second line was mostly there
-because of the weirdness in the user interface for "stash save".
-Maybe we should just get rid of that part alltogether?
+Yeah, feels like it could potentially help somebody.  I'll add that, thanks!
 
 > -Peff
