@@ -2,64 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 894321FF72
-	for <e@80x24.org>; Sun, 22 Oct 2017 04:36:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D84241FF72
+	for <e@80x24.org>; Sun, 22 Oct 2017 05:06:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751078AbdJVEgS (ORCPT <rfc822;e@80x24.org>);
-        Sun, 22 Oct 2017 00:36:18 -0400
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:47820 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751049AbdJVEgQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Oct 2017 00:36:16 -0400
-Received: by mail-pg0-f65.google.com with SMTP id r25so9390400pgn.4
-        for <git@vger.kernel.org>; Sat, 21 Oct 2017 21:36:16 -0700 (PDT)
+        id S1751066AbdJVFA3 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 22 Oct 2017 01:00:29 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:43434 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750871AbdJVFA2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Oct 2017 01:00:28 -0400
+Received: by mail-pf0-f196.google.com with SMTP id a8so14800520pfc.0
+        for <git@vger.kernel.org>; Sat, 21 Oct 2017 22:00:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:subject:from:to:cc:in-reply-to:references:date
          :mime-version:content-transfer-encoding;
-        bh=duxut3wTym20BwsxsfyfVFKuGERje3GEJXHIKgbghOQ=;
-        b=DuhDWJbaGaWQz9RrfW/3qL+MEmd5N8Oelv6AYSn3HOASvPJDUK349xG/4kqn+hSaPI
-         9KlzkmZl9wYoeSyFvG21jF/Om47ZecKumzHlSwDTYDLUru7aFqKfz/fneX2j8LO5lyVU
-         3m3sKvlLFJ7Ds+my+2fejcGr8du4eT+LAMp9iaCntSTLxw09sIUK9f6rgVxGP/AXM0j0
-         oCSilnWqaUdHeeWXj13Kg3xpwEAovgU+o6BeJOatN/o0U04QektbkysAWcqm6k2w0D8c
-         NtIG2heeUP4cr4hwU2SB2ualvKIROP9v08vwxYMMwETFWL0nJ8AAXl/OrcEw66CX79Pr
-         7tUA==
+        bh=jOtT8MNIZElIvtCyYGFGWj02SKllRe9Ndbjl7wNuC2E=;
+        b=b5lk2Nn5iYI85rtk1gxJq3TO77CpN8L2uqhOW7kUKsHMbi1b5L47wgt7m7+w8k2uGE
+         /vCtZza5Z+14JU+R1sXq6cupXcEHNonIBcBWZ+mODAx+U2UtrJJjER1P0WyzSCht5Sry
+         x5GbQU0D1enwRfpmljX7XFUi6699EKocRN+b8TqhSqKqHGfmgdm3vfKp9Ad24vbDt21C
+         Ora3tg81JJaNxHxHeYeDb6+zULs1OPU7oUj2A34MRQeDvBJrR2QCafdkj0ZoVEX7fb8Q
+         4OT8cf5iFqIcL5eVygeEC3eIC8SZRp+m8ppwWDxhLaM9kl35IQju+zCXr4DvEejq0/WT
+         mXXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:subject:from:to:cc:in-reply-to
          :references:date:mime-version:content-transfer-encoding;
-        bh=duxut3wTym20BwsxsfyfVFKuGERje3GEJXHIKgbghOQ=;
-        b=axO2XpbMyr76eTQiIe+KEbeVGgvvdj2T1zKQS8SidyK0Z4hcC/5N8Ek5Vp+FSKxOgu
-         3HPcNA9MV9k4QfhePK3WlZM5G2JKutPmYa3emmt2u24zByLTsBgmLJc7I3+2QgS5pRK/
-         gQ3YSphMXTXBn1dnnPQYSSrzyQIPQqPGi8vsdH8AvySJGi8grgDSot4QB+rekSBazDmX
-         EOxDUdr/BKGjpYHKcXLCJYaHU42of7bUwxRYRCrWlfZMn/LduLVs4OTZsJ14Pi2Tm77E
-         ka1chJCQu2ZwISN+z7INFuXxiyIzjD61Xc4XHDIysIOzMj0XW6I1HGA0dWhpClp7HTOg
-         Qz2w==
-X-Gm-Message-State: AMCzsaX5z6hqmuYIygjnj4/TFUchobn+qmKmauv5NFTm16Bp/t4vqfHv
-        ZZHHMozQvWeWW4vfF0dunX4=
-X-Google-Smtp-Source: ABhQp+TL9lID+IuVN+ZC2Rh2Aj39tIYXI+v5C4dOEULxCphEA4wROaHJo/lSVoeU9VafFIkgJgqakQ==
-X-Received: by 10.98.71.13 with SMTP id u13mr9341650pfa.302.1508646976435;
-        Sat, 21 Oct 2017 21:36:16 -0700 (PDT)
-Received: from unique-pc ([14.102.72.147])
-        by smtp.gmail.com with ESMTPSA id c22sm7891684pfe.177.2017.10.21.21.36.13
+        bh=jOtT8MNIZElIvtCyYGFGWj02SKllRe9Ndbjl7wNuC2E=;
+        b=RymGVvrqo7sJyGVxTXHKit8BnVR3rwkcHrM8zmpVcQlGHnH9h4ZilWFbz/sor98fiy
+         VDR1n6D8vLdlDwdSJ30Wy96RYb+2Krt+eO3MhH3tJmXYuEQ/bwx/UoyAbiUDWllXVMro
+         9ZnJOuTnmcUrSMliRgUuDT/J6r5Wyug3ZdyDrGcsgAAXvrnpHWjpTNGtOJMVCKVfUOAu
+         argD5Gpf+Ts/Mt5nGpHk+pytDDlZU9dsdMYjuCiBJ1vzI4iIVbWF1uN+qzLdxa8HUBKX
+         8EHHCV8t/5d9ypz1jei6/05m3im9qj0qK8TMaaZ5xJ4N1upYACsHL1PUPqtauWwwBBPt
+         3xUg==
+X-Gm-Message-State: AMCzsaXP77zWH89kylFVJPj53+md8F8wYGHl69LwMtKTbOE2cm6kgEOk
+        iip+FHd66XwcNAMT/4yR9Ig=
+X-Google-Smtp-Source: ABhQp+QOm3sew2XKyEwqN9mNRKnmyFdJgnJmiPsJkQdIWuR8G1VceTThCGJoYxGQ5RrMHx2DEW5zIg==
+X-Received: by 10.159.252.133 with SMTP id bb5mr5831359plb.415.1508648428063;
+        Sat, 21 Oct 2017 22:00:28 -0700 (PDT)
+Received: from unique-pc ([218.248.21.162])
+        by smtp.gmail.com with ESMTPSA id z8sm7665960pfl.135.2017.10.21.22.00.24
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 21 Oct 2017 21:36:15 -0700 (PDT)
-Message-ID: <1508646970.2152.2.camel@gmail.com>
-Subject: Re: [PATCH 0/3] a small branch API clean-up
+        Sat, 21 Oct 2017 22:00:26 -0700 (PDT)
+Message-ID: <1508648422.2152.7.camel@gmail.com>
+Subject: Re: [PATCH 3/3] branch: forbid refs/heads/HEAD
 From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-In-Reply-To: <xmqqtvysg9w8.fsf@gitster.mtv.corp.google.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+In-Reply-To: <xmqqpo9gg9pa.fsf@gitster.mtv.corp.google.com>
 References: <20171013051132.3973-1-gitster@pobox.com>
-         <1508555222.2516.11.camel@gmail.com>
-         <xmqqtvysg9w8.fsf@gitster.mtv.corp.google.com>
+         <20171013051132.3973-4-gitster@pobox.com>
+         <20171013131501.3qarwhanktfvgjqd@sigill.intra.peff.net>
+         <xmqqefq6v5qj.fsf@gitster.mtv.corp.google.com>
+         <xmqqa80uv5b8.fsf@gitster.mtv.corp.google.com>
+         <1508561424.2516.19.camel@gmail.com>
+         <xmqqpo9gg9pa.fsf@gitster.mtv.corp.google.com>
 Content-Type: text/plain; charset="ISO-8859-15"
-Date:   Sun, 22 Oct 2017 10:06:10 +0530
+Date:   Sun, 22 Oct 2017 10:30:22 +0530
 Mime-Version: 1.0
 X-Mailer: Evolution 3.22.6-1+deb9u1 
 Content-Transfer-Encoding: 7bit
@@ -71,26 +75,27 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, 2017-10-21 at 17:52 +0900, Junio C Hamano wrote:
+On Sat, 2017-10-21 at 17:57 +0900, Junio C Hamano wrote:
+> ... The code may already
+> handle it, or there may need even more code to support the rename; I
+> didn't check.
 > 
-> Sorry, but I am not sure what you are asking.  
-> 
-> I was looking at the code, noticed NEEDSWORK comment and worked on
-> cleaning things up---you seem to feel that I need a reason, or
-> perhaps even your permission, when I try improving the codebase?
-> That starts to sound a bit ridiculous.
 
-Nothing like that, sorry. I was thinking that you would "remember" the
-fact that I was trying to clean up the NEEDSWORK in the patch series
-mentioned before as you have reviewed/commented on it. So, I thought
-there would be something my patch series was doing wrong which made you
-send another series that cleans up the NEEDSWORK. I just wanted to know
-that specific reason (the reason which made you send a series cleaning
-up the NEEDSWORK when you saw another series doing the same thing)?
+As far as I could see there the code does seem to already handle the
+rename. This part of builtin/branch.c is what seems to be ensuring
+that,
 
-Of course that's assuming that you remembered my series cleaning up the
-NEEDSWORK, in the first place. If that's not the case then there's no
-reason you could give :-)
+        if (strbuf_check_branch_ref(&oldref, oldname)) {
+                /*
+                 * Bad name --- this could be an attempt to rename a
+                 * ref that we used to allow to be created by accident.
+                 */
+                if (ref_exists(oldref.buf))
+                        recovery = 1;
+                else
+                        die(_("Invalid branch name: '%s'"), oldname);
+        }
+
 
 -- 
 Kaartic
