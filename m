@@ -2,120 +2,148 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
-	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F0717202A2
-	for <e@80x24.org>; Mon, 23 Oct 2017 12:26:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF903202A2
+	for <e@80x24.org>; Mon, 23 Oct 2017 12:36:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932167AbdJWM0n (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Oct 2017 08:26:43 -0400
-Received: from smtp-out-3.talktalk.net ([62.24.135.67]:54603 "EHLO
-        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932093AbdJWM0m (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Oct 2017 08:26:42 -0400
-Received: from PhilipOakley ([92.31.218.76])
-        by smtp.talktalk.net with SMTP
-        id 6boVeCoNKlmqO6boVeBUCP; Mon, 23 Oct 2017 13:26:41 +0100
-X-Originating-IP: [92.31.218.76]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=H+Sr+6Qi c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
- a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=8nJEP1OIZ-IA:10 a=ybZZDoGAAAAA:8
- a=pGLkceISAAAA:8 a=eSlMDywwzFMwNr1NtXQA:9 a=wPNLvfGTeEIA:10
- a=0RhZnL1DYvcuLYC8JZ5M:22
-Message-ID: <8F505EA8D16F4A0F890AE9DEEB91434B@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:   "Philip Oakley" <philipoakley@iee.org>
-To:     "Junio C Hamano" <gitster@pobox.com>,
-        "Christian Couder" <christian.couder@gmail.com>
-Cc:     <git@vger.kernel.org>, "Jeff King" <peff@peff.net>,
-        "Ben Peart" <Ben.Peart@microsoft.com>,
-        "Jonathan Tan" <jonathantanmy@google.com>,
-        "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>,
-        "Mike Hommey" <mh@glandium.org>,
-        "Lars Schneider" <larsxschneider@gmail.com>,
-        "Eric Wong" <e@80x24.org>,
-        "Christian Couder" <chriscool@tuxfamily.org>
-References: <20171019123030.17338-1-chriscool@tuxfamily.org> <xmqq8tg4djkm.fsf@gitster.mtv.corp.google.com>
-Subject: Re: [PATCH 0/6] Create Git/Packet.pm
-Date:   Mon, 23 Oct 2017 13:26:41 +0100
-Organization: OPDS
+        id S932286AbdJWMgX (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Oct 2017 08:36:23 -0400
+Received: from mail-qk0-f196.google.com ([209.85.220.196]:55689 "EHLO
+        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932190AbdJWMgW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Oct 2017 08:36:22 -0400
+Received: by mail-qk0-f196.google.com with SMTP id x82so21688596qkb.12
+        for <git@vger.kernel.org>; Mon, 23 Oct 2017 05:36:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=axINMi5Rii86xdZIs2wIFwgWEylUzJTL0UDqfhUpAmE=;
+        b=GM3KIa4WoZG1v/R6acxNScrOia6qk+k9TALJWlXZbhPNqklha3Vt9mH90rDkdVuypx
+         JiLiWAH1t0RjoEAXk3/GpidaQwvZaA6BbU+qrtDVOsyvxQaNivktnqs78ZZxvjx4DPah
+         X69wvk1ImB4krhvi00Faa0HYU4HOEXVGUl5M5wpA6MCzs3HCaE4XH6zdT5b9TIuYj7zW
+         lqEMQTzEcfo81BDz0HR4KaYDVQ3fL/GyJcJaWtTdVyuN3v+5SD8wEZxQ/0P+75FDsKo6
+         AFKUJ911Kz8BmiE/O9LZk+/9MzkbvwudIPrfiau14BexPmGKb+ok/8FHnqXK8trUgTJl
+         oLQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=axINMi5Rii86xdZIs2wIFwgWEylUzJTL0UDqfhUpAmE=;
+        b=KA9sOw9w4Y1x8Nf+BCBpbTJMqshabrNZy1/8inVUAY9DunkyeoA7vZSHLR4PV34hCE
+         EhNDR8Kwgikw/nlohHQOi6BbIrAK3NFeYv41uZAvfiwd6Vzm9csRIJRlgOOzld+7vQoo
+         WiImt2DeYvPoEovbdLOXKaQHgVaqZN1QZ1KioZV9kzbbxz6GgbXtpxuREkBm56MnW2gm
+         TThTO33X5TXsz8iXFME1lHWesJ61ydG0GUqz+Juji7oT3rCe0d10tYdfiS//6jQzwgLD
+         /m255QsIqXB+fu78eryjewegw2e63NE/xE7RE7Vc8rtfcr2HyXOwVpmcjAQ6dwLARdaW
+         9V1w==
+X-Gm-Message-State: AMCzsaUD+OYXE5LbB1+X48xmtCuJ3Lv6RxnOqJc53E5RlQkSIMbailpK
+        VtHiSY1UTIAXUlv+IxMTgX8uXb1W
+X-Google-Smtp-Source: ABhQp+T5/cTgU7/ZfY9Y6vqDWoZmknNP7nwC59TtpEy933VdghdNsa2/mCFAFEAl1Q+0HLgb8O7elg==
+X-Received: by 10.55.24.73 with SMTP id j70mr16786330qkh.310.1508762181438;
+        Mon, 23 Oct 2017 05:36:21 -0700 (PDT)
+Received: from [192.168.1.13] ([65.222.173.206])
+        by smtp.gmail.com with ESMTPSA id p41sm4747166qkp.94.2017.10.23.05.36.19
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 23 Oct 2017 05:36:20 -0700 (PDT)
+Subject: Re: [PATCH 4/4] fsmonitor: Delay updating state until after split
+ index is merged
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>
+Cc:     Alex Vandiver <alexmv@dropbox.com>, git@vger.kernel.org
+References: <20171020011136.14170-1-alexmv@dropbox.com>
+ <05670bb6e3c6378119b1649144c80dd6d72bfe29.1508461850.git.alexmv@dropbox.com>
+ <alpine.DEB.2.21.1.1710201503380.40514@virtualbox>
+ <20171021033534.pgjtyiwlhvheuueo@sigill.intra.peff.net>
+ <alpine.DEB.2.21.1.1710231157030.6482@virtualbox>
+From:   Ben Peart <peartben@gmail.com>
+Message-ID: <541ed27f-3219-fe0a-beb6-99ecb4ed36da@gmail.com>
+Date:   Mon, 23 Oct 2017 08:36:19 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
 MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="iso-8859-1";
-        reply-type=original
+In-Reply-To: <alpine.DEB.2.21.1.1710231157030.6482@virtualbox>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-Antivirus: AVG (VPS 171023-0, 23/10/2017), Outbound message
-X-Antivirus-Status: Clean
-X-CMAE-Envelope: MS4wfD9r7m6DHYs3dR9T4eIw+5eHZBzcgI8TEVWWJK1eP/3NHEZLaQNhCwMt+NXerNgZnW8wT4SKT/iE6R361Btv75eDLrCqfHbfE8SX9avZFMmTDcaFznwu
- GquRs7X7iXa7DhDD4LAV8e3qUGG4axPCt9xhDTfOs3ZvmxIGMx81RpqB9DkF7m5LWBzrXu5WIVD/Y/Gks3jzEZ22rRJJkCBvMMgpWkmu9671ept9tnoqms3A
- qRWJB3v/mFpiM/prT+FckXZQCq5yB6cqIpO6H1gd2ndvNBQpn2tS9TLImlWUfm861sGtvRXhoII3GlwXQmuKpRNWcze7blNq/S3+GfKQj0PWebsGmYKyEiQK
- RbSPdfKL3VWviG4ACkM4EL4+GTwraLsx0zr5j+MwNuE9dTw+finAdwlzZxmkl9SkbpgKFPUuan4YK6l9BkZjknRvDjh71Ch69HNU7cH7Cv5uOFi8S035DHoO
- bgHCpylAEUjukbxQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
 
-From: "Junio C Hamano" <gitster@pobox.com>
-> Christian Couder <christian.couder@gmail.com> writes:
->
->> Goal
->> ~~~~
->
-> Totally offtopic, but is it only me who finds these "section
-> headers" in cover letters from some people irritating and/or
-> jarring?
 
-Personally I find that, for significant patch series, that clearly breaking 
-out these distinct sections is of advantage. At this stage (the very first 
-patch 0/n) there is no specific conversation, so the subject line is a short 
-'hello' to the topic, and then the contributor is (it is to be hoped) 
-setting out their proposal in a clear manner.
+On 10/23/2017 5:57 AM, Johannes Schindelin wrote:
+> Hi Peff,
+> 
+> On Fri, 20 Oct 2017, Jeff King wrote:
+> 
+>> On Fri, Oct 20, 2017 at 03:16:20PM +0200, Johannes Schindelin wrote:
+>>
+>>>>   void tweak_fsmonitor(struct index_state *istate)
+>>>>   {
+>>>> +	int i;
+>>>> +
+>>>> +	if (istate->fsmonitor_dirty) {
+>>>> +		/* Mark all entries valid */
+>>>> +		trace_printf_key(&trace_fsmonitor, "fsmonitor is enabled; cache is %d", istate->cache_nr);
+>>>
+>>> Sadly, a call to trace_printf_key() is not really a noop when tracing is
+>>> disabled. The call to trace_printf_key() hands off to trace_vprintf_fl(),
+>>> which in turn calls prepare_trace_line() which asks trace_want() whether
+>>> we need to trace, which finally calls get_trace_fd(). This last function
+>>> initializes a trace key if needed, and this entire call stack takes time.
+>>
+>> It seems like we could pretty easily turn noop traces into a trivial
+>> conditional, like:
+>>
+>> diff --git a/trace.h b/trace.h
+>> index 179b249c59..c46b92cbde 100644
+>> --- a/trace.h
+>> +++ b/trace.h
+>> @@ -80,8 +80,11 @@ extern void trace_performance_since(uint64_t start, const char *format, ...);
+>>   #define trace_printf(...) \
+>>   	trace_printf_key_fl(TRACE_CONTEXT, __LINE__, NULL, __VA_ARGS__)
+>>   
+>> -#define trace_printf_key(key, ...) \
+>> -	trace_printf_key_fl(TRACE_CONTEXT, __LINE__, key, __VA_ARGS__)
+>> +#define trace_printf_key(key, ...) do { \
+>> +	if (!key->initialized || key->fd) \
+>> +		trace_printf_key_fl(TRACE_CONTEXT, __LINE__, key, __VA_ARGS__) \
+>> +} while(0)
+>> +
+>>   
+>>   #define trace_argv_printf(argv, ...) \
+>>   	trace_argv_printf_fl(TRACE_CONTEXT, __LINE__, argv, __VA_ARGS__)
+>>
+>>
+>> (OK, that's got an OR, but if we are really pinching instructions we
+>> could obviously store a single "I've been initialized and am disabled"
+>> flag).
+> 
+> I'd really like that.
+> 
+>> I don't have an opinion one way or the other on these particular
+>> messages, but in general I'd like to see _more_ tracing in Git, not
+>> less. I've often traced Git with a debugger or other tools like perf,
+>> but there's real value in the author of code annotating high-level
+>> logical events.
+> 
+> Yes, I like that idea, too: to add more tracing.
+> 
+> Thanks,
+> Dscho
+> 
 
-So I do like these headings for larger series, though there is some 
-judgement to be made as to when the subject line alone is sufficient.
+Two big thumbs up.
 
-As a separate follow on, one thing that does annoy me is that in subsequent 
-versions of the various patch series, folk tend to drop all explanation of 
-why the series is of any relevance, leaving just the 'changed since last 
-time' part. This means that new readers who try and pick up / review / 
-contribute to a series later on in its development are not told the purpose. 
-When the list is active it can, accidentally, do a disservice to the 
-potential contributors who may feel that only core contributors are able to 
-contribute.
+I find turning on tracking very informative as I can better see the flow 
+of execution and sometimes am surprised by what I discover. :)
 
-Whether this series needed a Goal heading is separate discussion ;-)
-
-> ..          It perhaps is because I view the cover letter more as a
-> part of conversation, not a presentation.  And when you walk up to
-> somebody and start a conversation, you do not declare section
-> headers ;-)
->
-> Saying "I want to be able to do these things in the future, and here
-> is to prepare for that future" at the beginning nevertheless is a
-> good thing.  It gives us readers an overall vision we can agree to
-> (or be against, or offer alternatives) and sets expectations on what
-> the series would do and where it stops and leaves the remainder to
-> follow-up work.
->
->> Packet related functions in Perl can be useful to write new filters or
->> to debug or test existing filters. So instead of having them in
->> t0021/rot13-filter.pl, let's extract them into a new Git/Packet.pm
->> module.
->
-> I left some comments on individual patches to point out places that
-> may need improvements.  I agree with the overall direction.
->
-> Thanks for starting this topic.
---
-Philip 
-
+I've often added additional tracing while working on a feature only to 
+remove it before submitting the patch because of the performance 
+overhead.  Being able to leave that in would be very helpful.
