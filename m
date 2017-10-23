@@ -2,82 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DC883202A0
-	for <e@80x24.org>; Mon, 23 Oct 2017 19:44:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 586B6202A0
+	for <e@80x24.org>; Mon, 23 Oct 2017 21:28:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751721AbdJWToD (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Oct 2017 15:44:03 -0400
-Received: from mail-qt0-f193.google.com ([209.85.216.193]:48410 "EHLO
-        mail-qt0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751641AbdJWToD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Oct 2017 15:44:03 -0400
-Received: by mail-qt0-f193.google.com with SMTP id f8so27674775qta.5
-        for <git@vger.kernel.org>; Mon, 23 Oct 2017 12:44:02 -0700 (PDT)
+        id S1751349AbdJWV2f (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Oct 2017 17:28:35 -0400
+Received: from mail-it0-f65.google.com ([209.85.214.65]:46919 "EHLO
+        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751299AbdJWV2e (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Oct 2017 17:28:34 -0400
+Received: by mail-it0-f65.google.com with SMTP id f187so7648255itb.1
+        for <git@vger.kernel.org>; Mon, 23 Oct 2017 14:28:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=KbbWSTJ9NV1JkeEDPOJXfdyYkMdIea51CJvA7cMYA4Q=;
-        b=qfqc+927OgV4wv0Ts+uzwV1/4kC7Mie+9LXAF9XxGZc40821mAsiC0ZUUehcHmf89K
-         /e3sAY17riQyr69yFRAjPygz5O4euUeuEfbcbOZ5W1ceUwuCU156j+blWPDhj6/qMCCf
-         92gVhoTeTW4SkYKauFOilQYljWJBVZo680b1rocwuxiPhGW6V42eDswDMn4YA8j/Rjpf
-         4W4b6cmBPmsLSpCu81gMpPtriD9U9pHSVT9xtHFUnCyZtcfgtml0niJDdWGFR8u21EwT
-         m6wSOU1bharRwACqEXFwMTrUiAEE7cFZ0Kzl9yIUwCpi9ZBJdxsIb6Jz8XaTOlnI+73F
-         mXsg==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=2FF6S6Cgza3X3kzMzTlw9p4OvTfp2bPNUKnQgoIrBhc=;
+        b=KrQv19PZrvEZn5UzY02jFxFbHXjkPXOXPb4QY9/6YJ35u05wq0IYKxrQ3Ho4/gpjui
+         bCw2V/8DuDF47h0lRETfs9lhprqYs9Wmb6xEQSb+mX9XxPhRoKJMy7szOjyXy1YNbq4B
+         uxf9EbNWaMe+MPwFXcBvhJz6n8pE124EcTozpiM+wyCmmRQi8E5szRhbMQyPodX+497y
+         7Zucl+kWO/+KFnpdVd/STo9BS+XzOmsxPXTeD8hnGuK9z/qHlc6mAm5s6ouJCahq+hQ1
+         E1BWdyzxYGYqBo+zJUoeDQAPLcZKM9ZgiqbFJCSPv811mpwzVvtRByEhv4EQS2L2aNHz
+         6Q5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=KbbWSTJ9NV1JkeEDPOJXfdyYkMdIea51CJvA7cMYA4Q=;
-        b=nMTeeVERSNawJPFBDSrJR1WG1Cp1HpgjJRoe7eO5hh1ZjArrOyJrbqMeNsak6Ac0QO
-         HL4EM5lJ9vJ4cfcSt7zbw9upo/EVBAddxe77j1ZsGV+c17xzh8Ix+OIKjNPkzDcZB1xs
-         STe2PsgJBWvhhJWQ4Ds0ENmOduOrH0HtVnSJPp9XJ85t38evao43BLoThQOni4UzY5mr
-         abqLnINn9JJUQOk1fi6Bzxj7Ln5/h2p9SFpJcG3Rrz1GqESt3OxpKjbnDxcbIeEbjDYQ
-         KkCfIXcLOu8qZLPFVoPpf18g9EMwJJyBUubVtjk+0h3LSEf7smB+rGuyC/km4xYy093W
-         HdBA==
-X-Gm-Message-State: AMCzsaVyvXvigeQEjf+2xp3202mClzHlhgitZAjce8PRiMllcZeh7/xh
-        RVkpSjaTi4eq3Ywhzz6qCCq6cRoKKnxOpmK90KYUMA==
-X-Google-Smtp-Source: ABhQp+QMe0Pnn7P4UrXbT1oEPycqXYcwIlIl+6fbqJrCYePPFA9X5aeSdtoqlErhJUrCnPmQi1pALzHdA9YyLD+NcxU=
-X-Received: by 10.200.8.53 with SMTP id u50mr22546645qth.260.1508787842317;
- Mon, 23 Oct 2017 12:44:02 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=2FF6S6Cgza3X3kzMzTlw9p4OvTfp2bPNUKnQgoIrBhc=;
+        b=bziICmkCjgFyxJ3M+PkC7IOhZDOIqScjJwkUTagIhLWMK4q7dY+jRe/GtakSUmr6cd
+         kXtOmUGE6xYKdQgSBitoV8CYVW72QJvyYzwrzhovJdkjj/yIpuuReOrkFEAS8ILhU9Re
+         eBxw3X5OSJop1ZKIIOYb6e/l6D2QL31D42gFcrfx3JB6tkr/0WisA0T2NsNSVuguS9Ay
+         8LcD8XIgU7xmeRuRGR6N20WcImKRbbi5Xq1LY0zYcrJ+GS1AEQizyjYDVQNA5Xcbqtej
+         5HpEBBOZBA1XNrXc8GaHvyMbZ/Oik/uA0odkXFFwssKZRDthMyjnKEIab/u1AHW2Hn46
+         ABxg==
+X-Gm-Message-State: AMCzsaXmu82wWsRM+ZS5lLykCJUIyuR5hh9MrF4dmdvtV+5EQEwb4OsO
+        s32tGN5oZ6MWlLRgziUChVc=
+X-Google-Smtp-Source: ABhQp+TUwQ1em8Mazd1pgObQXn9kPdsXR6zFGrpBnNU7pH8qugj+yGMJUQXxn4xNT0pPUM9I1NbuBQ==
+X-Received: by 10.36.123.149 with SMTP id q143mr10445592itc.122.1508794113426;
+        Mon, 23 Oct 2017 14:28:33 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id s17sm3612734ioi.28.2017.10.23.14.28.32
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 23 Oct 2017 14:28:32 -0700 (PDT)
+Date:   Mon, 23 Oct 2017 14:28:21 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, bturner@atlassian.com, git@jeffhostetler.com,
+        gitster@pobox.com, jonathantanmy@google.com, peff@peff.net,
+        sbeller@google.com, William Yan <wyan@google.com>
+Subject: [PATCH 0/5] Coping with unrecognized ssh wrapper scripts in GIT_SSH
+Message-ID: <20171023212740.qodxzsq5w7rn2r6y@aiede.mtv.corp.google.com>
+References: <20170926235627.79606-1-bmwill@google.com>
+ <20171003201507.3589-1-bmwill@google.com>
+ <20171003201507.3589-11-bmwill@google.com>
+ <20171003214206.GY19555@aiede.mtv.corp.google.com>
+ <20171016171812.GA4487@google.com>
 MIME-Version: 1.0
-Received: by 10.140.102.70 with HTTP; Mon, 23 Oct 2017 12:44:01 -0700 (PDT)
-In-Reply-To: <20170925082024.2691-6-kaarticsivaraam91196@gmail.com>
-References: <20170919071525.9404-1-kaarticsivaraam91196@gmail.com>
- <20170925082024.2691-1-kaarticsivaraam91196@gmail.com> <20170925082024.2691-6-kaarticsivaraam91196@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 23 Oct 2017 12:44:01 -0700
-Message-ID: <CAGZ79kZJAYabHArHkPPyqUy7LKQXyk7kqqmrqRcirGXZ4FYHJQ@mail.gmail.com>
-Subject: Re: [RFC PATCH v2 5/5] builtin/branch: give more useful error
- messages when renaming
-To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20171016171812.GA4487@google.com>
+User-Agent: NeoMutt/20170609 (1.8.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 25, 2017 at 1:20 AM, Kaartic Sivaraam
-<kaartic.sivaraam@gmail.com> wrote:
->  builtin/branch.c | 41 +++++++++++++++++++++++++++++++++++------
->  1 file changed, 35 insertions(+), 6 deletions(-)
+Hi,
 
-The code of 4 and 5 looks good to me, though a small nit below.
+Brandon Williams wrote:
+> On 10/03, Jonathan Nieder wrote:
 
-Thanks,
-Stefan
+>> What happens if I specify a ssh://host:port/path URL and the SSH
+>> implementation is of 'simple' type?
+>
+> The port would only be sent if your ssh command supported it.
 
+Thanks again for this patch.  William Yan (cc-ed) ran into this case,
+and based on his experience here are some patches to handle it.
 
-> +static void get_error_msg(struct strbuf* error_msg, const char* oldname, unsigned old_branch_exists,
-> +                         const char* newname, int new_branch_validation_result)
+See patches 3 and 5 for more details.
 
-nit here and in the return of validate_branch_creation:
-It would be clearer if this is not just 'int', but actually spelling
-out that it is the enum.
+Longer term, I hope that wrapper script authors start setting
+GIT_SSH_VARIANT based on the behavior they want (e.g. like (*))
+instead of making us autodetect, but this should be useful as a
+stopgap in the meantime.
+
+These patches are against bw/protocol-v1, which is in "next".
+
+Thoughts of all kinds welcome, as always.
+
+Sincerely,
+Jonathan Nieder (5):
+  connect: split git:// setup into a separate function
+  connect: split ssh command line options into separate function
+  ssh: 'auto' variant to select between 'ssh' and 'simple'
+  ssh: 'simple' variant does not support -4/-6
+  ssh: 'simple' variant does not support --port
+
+ Documentation/config.txt |  17 +--
+ connect.c                | 275 ++++++++++++++++++++++++++++++-----------------
+ t/t5601-clone.sh         |  34 ++++--
+ t/t5603-clone-dirname.sh |   2 +
+ 4 files changed, 214 insertions(+), 114 deletions(-)
