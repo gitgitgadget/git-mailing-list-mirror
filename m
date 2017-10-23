@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4BCFB20437
-	for <e@80x24.org>; Mon, 23 Oct 2017 23:19:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 843D9202A0
+	for <e@80x24.org>; Mon, 23 Oct 2017 23:19:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751297AbdJWXTS (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Oct 2017 19:19:18 -0400
-Received: from mail-io0-f195.google.com ([209.85.223.195]:54989 "EHLO
-        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751123AbdJWXTR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Oct 2017 19:19:17 -0400
-Received: by mail-io0-f195.google.com with SMTP id e89so21917727ioi.11
-        for <git@vger.kernel.org>; Mon, 23 Oct 2017 16:19:17 -0700 (PDT)
+        id S1751278AbdJWXTw (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Oct 2017 19:19:52 -0400
+Received: from mail-it0-f68.google.com ([209.85.214.68]:52351 "EHLO
+        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750835AbdJWXTv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Oct 2017 19:19:51 -0400
+Received: by mail-it0-f68.google.com with SMTP id j140so7939986itj.1
+        for <git@vger.kernel.org>; Mon, 23 Oct 2017 16:19:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=0jfS64FPQeV70qIZHQFjDLPHAW2dSCC4KlAJrkR+YS8=;
-        b=mIuJIom8AJw00HT0zyTSKklwqO3Q51pNDOeikTvj1i3CWHKeX+Cbgvr3fBEws/xlR8
-         1BAIXYw993Be6V3BRPCF6lhkQWdEph7nAbenh+opFoLcISWCKTLV7qHedoSXj4HusWAn
-         PbTEMbEzMH/+fi+IRBkAqZor4+sv8xKNm7UXvTxE3DWBt5HJgnQ2CDHsiezd1C2BNxFi
-         iAH7RBbfkYG0ST9Hw8XQEz5bpGoIqEUKBkiArQr/F1Jtie2w8zsW/4l05RZ+nc80zd/O
-         kgZpBpfpgy98voZiilNMvDUb1/jRqac+nLuqAPm0oYvb4XKit6ZWPp1LUqXB5nfO9mTR
-         nFvg==
+        bh=Ne/M8HWrvyMIZVtXEa/kX5DcfisBQSvpMtOAEoGqo1E=;
+        b=kxXnlqrO3g8ZMOVOpEkeDaXbjjaq4NoM1iOgZrqsR9d2YSGnRSPAlT3AWveOVZQjwC
+         OQWgrHE9mEissj/laOmPlEdHkWqLCHDf0pjDvRcWM1P/kszQtqQ9ATvP4ShLoaM42upP
+         s4k3KAdTEFmx6E3J1NmnIt36S69zBMHITvD0j1GemeqUQzB5NUHJ0R+dWRp+omK/Pztd
+         c9Hjg+STnoCwv1dVsu+Et+uC7MqGa+oCIc5BApVQmbpqCEhvi0Z87pPN0wnjo4uRPzrP
+         d87BxhcGhIKrq2M+Nf3PTPV38KIMPjuNZSCug1Wzi39HPSlJYF/mbQTsclz4z5VKcKsM
+         SbSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=0jfS64FPQeV70qIZHQFjDLPHAW2dSCC4KlAJrkR+YS8=;
-        b=NT/8hY2FROiRz5HutecLVeWodrsRm163p+PbXuXlqyRea8t+mtJ4YMD5ft+pE6WGhO
-         zwfmHTB0le2KQctIXZe/oQ5Ox+iGb1+DTY/B4UGVBTaw292RB8zPJ8JI/MgF05z9xZzM
-         hFilRhk9La18JLWLxXooNc2WDKnJwdwqgOIX808PjFRxuMYLtqtO7UgIKGRhqJ+UZTjh
-         2/fkTGhWThvdpEhXQKuPgseuqVo2px9bTPdt2kezM9lTNt+YWVbuNf4MUBm01uOvXUuA
-         FvKypETVVi28FiYEhTiHP8DyjJAQoYqGj9U5mBhxogVdnrccRoDQSZcfrPt18nHeFh/U
-         Ts6w==
-X-Gm-Message-State: AMCzsaUfIIhnM/dx/78TaISqTMYJM4UeJBQGtS05K4tKHiEaDCLkhyXt
-        DitZgugaWtQn3+rZC+9ph6s=
-X-Google-Smtp-Source: ABhQp+Sq2GeBCfz11Wf+9+mzitzpHEMdV4Ey1RYKnqsIhX+3DeRwllUGkO8VvkLQ3I3CXN2LSouqjA==
-X-Received: by 10.107.69.7 with SMTP id s7mr20013065ioa.108.1508800756825;
-        Mon, 23 Oct 2017 16:19:16 -0700 (PDT)
+        bh=Ne/M8HWrvyMIZVtXEa/kX5DcfisBQSvpMtOAEoGqo1E=;
+        b=thDvnwaP3x5BkUXQvBquy9JvaeW3v1uRF51fzXNEQv7/EA8/ycLoBIcbJ1uTlyTjpD
+         /PtrQs82/2PjE7y09XMZLvxCt9B9kDXCOPGpIxzwds0kTInI+eP6U7fMzjGuk67ckOqB
+         cL2MqdOheh5A+15zCVjeAUU9BnTSZv3swgfXnEVq7edZ0Leupc3HFxpD3Bb524gT679G
+         QVfEvEEBw8d0AqT0276vvxkL1P9kdSdyiuLwwG1cqLCYtvAonnXE04r1uHgMlt1wwvWX
+         FsJ+s1ZdiYaFGJHu3Zy9cUzx8M1VUCX8s/RCpqgbgx/e3VE5ybIISEvV64WfoMw3Q7uX
+         xEzA==
+X-Gm-Message-State: AMCzsaWztH/uKxXXwqoGzxai9ziS51mnWxpVRmO0s3iguE2hstPOQuIi
+        duyE6wZSGjj9wYuGtSmbuJU=
+X-Google-Smtp-Source: ABhQp+Rjp/Oj1J40pXxz8zWm0RhPtDDCXDxfiHvId7Y291sr5YYwalzHoNCfJn/D10a1FTF7SZsmEg==
+X-Received: by 10.36.123.74 with SMTP id q71mr10468413itc.97.1508800790730;
+        Mon, 23 Oct 2017 16:19:50 -0700 (PDT)
 Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id l123sm55932itl.3.2017.10.23.16.19.15
+        by smtp.gmail.com with ESMTPSA id b133sm2869210ioe.73.2017.10.23.16.19.49
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 23 Oct 2017 16:19:16 -0700 (PDT)
-Date:   Mon, 23 Oct 2017 16:19:14 -0700
+        Mon, 23 Oct 2017 16:19:50 -0700 (PDT)
+Date:   Mon, 23 Oct 2017 16:19:48 -0700
 From:   Jonathan Nieder <jrnieder@gmail.com>
 To:     Jonathan Tan <jonathantanmy@google.com>
 Cc:     Brandon Williams <bmwill@google.com>, git@vger.kernel.org,
         gitster@pobox.com, peff@peff.net, sbeller@google.com,
         William Yan <wyan@google.com>
-Subject: [PATCH 4/5] ssh: 'simple' variant does not support -4/-6
-Message-ID: <20171023231914.azmri2cjahmc7obe@aiede.mtv.corp.google.com>
+Subject: [PATCH 5/5] ssh: 'simple' variant does not support --port
+Message-ID: <20171023231948.5jltnftktu5bmny3@aiede.mtv.corp.google.com>
 References: <20171003201507.3589-11-bmwill@google.com>
  <20171003214206.GY19555@aiede.mtv.corp.google.com>
  <20171016171812.GA4487@google.com>
@@ -77,88 +77,97 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If the user passes -4/--ipv4 or -6/--ipv6 to "git fetch" or "git push"
+When trying to connect to an ssh:// URL with port explicitly specified
 and the ssh command configured with GIT_SSH does not support such a
-setting, error out instead of ignoring the option and continuing.
+setting, it is less confusing to error out than to silently suppress
+the port setting and continue.
 
+This requires updating the GIT_SSH setting in t5603-clone-dirname.sh.
+That test is about the directory name produced when cloning various
+URLs.  It uses an ssh wrapper that ignores all its arguments but does
+not declare that it supports a port argument; update it to set
+GIT_SSH_VARIANT=ssh to do so.  (Real-life ssh wrappers that pass a
+port argument to OpenSSH would also support -G and would not require
+such an update.)
+
+Reported-by: William Yan <wyan@google.com>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 Acked-by: Stefan Beller <sbeller@google.com>
 ---
-As before, just rebased.
+That's the end of the series.  Thanks for reading.
 
- connect.c        | 25 ++++++++++++++++++++++---
- t/t5601-clone.sh | 12 ++++++------
- 2 files changed, 28 insertions(+), 9 deletions(-)
+ connect.c                | 15 ++++++++++++---
+ t/t5601-clone.sh         | 10 ++++++++--
+ t/t5603-clone-dirname.sh |  2 ++
+ 3 files changed, 22 insertions(+), 5 deletions(-)
 
 diff --git a/connect.c b/connect.c
-index 0441dcbacf..9c64e8155a 100644
+index 9c64e8155a..06bcd3981e 100644
 --- a/connect.c
 +++ b/connect.c
-@@ -923,11 +923,30 @@ static void push_ssh_options(struct argv_array *args, struct argv_array *env,
- 				 get_protocol_version_config());
- 	}
- 
--	if (variant != VARIANT_SIMPLE) {
--		if (flags & CONNECT_IPV4)
-+	if (flags & CONNECT_IPV4) {
-+		switch (variant) {
-+		case VARIANT_AUTO:
-+			BUG("VARIANT_AUTO passed to push_ssh_options");
-+		case VARIANT_SIMPLE:
-+			die("ssh variant 'simple' does not support -4");
-+		case VARIANT_SSH:
-+		case VARIANT_PLINK:
-+		case VARIANT_PUTTY:
-+		case VARIANT_TORTOISEPLINK:
- 			argv_array_push(args, "-4");
--		else if (flags & CONNECT_IPV6)
-+		}
-+	} else if (flags & CONNECT_IPV6) {
-+		switch (variant) {
-+		case VARIANT_AUTO:
-+			BUG("VARIANT_AUTO passed to push_ssh_options");
-+		case VARIANT_SIMPLE:
-+			die("ssh variant 'simple' does not support -6");
-+		case VARIANT_SSH:
-+		case VARIANT_PLINK:
-+		case VARIANT_PUTTY:
-+		case VARIANT_TORTOISEPLINK:
- 			argv_array_push(args, "-6");
-+		}
- 	}
- 
+@@ -952,11 +952,20 @@ static void push_ssh_options(struct argv_array *args, struct argv_array *env,
  	if (variant == VARIANT_TORTOISEPLINK)
+ 		argv_array_push(args, "-batch");
+ 
+-	if (port && variant != VARIANT_SIMPLE) {
+-		if (variant == VARIANT_SSH)
++	if (port) {
++		switch (variant) {
++		case VARIANT_AUTO:
++			BUG("VARIANT_AUTO passed to push_ssh_options");
++		case VARIANT_SIMPLE:
++			die("ssh variant 'simple' does not support setting port");
++		case VARIANT_SSH:
+ 			argv_array_push(args, "-p");
+-		else
++			break;
++		case VARIANT_PLINK:
++		case VARIANT_PUTTY:
++		case VARIANT_TORTOISEPLINK:
+ 			argv_array_push(args, "-P");
++		}
+ 
+ 		argv_array_push(args, port);
+ 	}
 diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index df9dfafdd8..ea401cec1f 100755
+index ea401cec1f..f9a2ae84c7 100755
 --- a/t/t5601-clone.sh
 +++ b/t/t5601-clone.sh
-@@ -367,9 +367,10 @@ test_expect_success 'OpenSSH variant passes -4' '
- 	expect_ssh "-4 -p 123" myhost src
- '
+@@ -381,12 +381,18 @@ test_expect_success 'variant=auto picks based on basename' '
  
--test_expect_success 'variant can be overriden' '
--	git -c ssh.variant=simple clone -4 "[myhost:123]:src" ssh-simple-clone &&
--	expect_ssh myhost src
-+test_expect_success 'variant can be overridden' '
-+	copy_ssh_wrapper_as "$TRASH_DIRECTORY/putty" &&
-+	git -c ssh.variant=putty clone -4 "[myhost:123]:src" ssh-putty-clone &&
-+	expect_ssh "-4 -P 123" myhost src
- '
- 
- test_expect_success 'variant=auto picks based on basename' '
-@@ -378,10 +379,9 @@ test_expect_success 'variant=auto picks based on basename' '
- 	expect_ssh "-4 -P 123" myhost src
- '
- 
--test_expect_success 'simple is treated as simple' '
-+test_expect_success 'simple does not support -4/-6' '
+ test_expect_success 'simple does not support -4/-6' '
  	copy_ssh_wrapper_as "$TRASH_DIRECTORY/simple" &&
--	git clone -4 "[myhost:123]:src" ssh-bracket-clone-simple &&
--	expect_ssh myhost src
-+	test_must_fail git clone -4 "[myhost:123]:src" ssh-bracket-clone-simple
+-	test_must_fail git clone -4 "[myhost:123]:src" ssh-bracket-clone-simple
++	test_must_fail git clone -4 "myhost:src" ssh-4-clone-simple
++'
++
++test_expect_success 'simple does not support port' '
++	copy_ssh_wrapper_as "$TRASH_DIRECTORY/simple" &&
++	test_must_fail git clone "[myhost:123]:src" ssh-bracket-clone-simple
  '
  
  test_expect_success 'uplink is treated as simple' '
+ 	copy_ssh_wrapper_as "$TRASH_DIRECTORY/uplink" &&
+-	git clone "[myhost:123]:src" ssh-bracket-clone-uplink &&
++	test_must_fail git clone "[myhost:123]:src" ssh-bracket-clone-uplink &&
++	git clone "myhost:src" ssh-clone-uplink &&
+ 	expect_ssh myhost src
+ '
+ 
+diff --git a/t/t5603-clone-dirname.sh b/t/t5603-clone-dirname.sh
+index d5af758129..13b5e5eb9b 100755
+--- a/t/t5603-clone-dirname.sh
++++ b/t/t5603-clone-dirname.sh
+@@ -11,7 +11,9 @@ test_expect_success 'setup ssh wrapper' '
+ 	git upload-pack "$TRASH_DIRECTORY"
+ 	EOF
+ 	GIT_SSH="$TRASH_DIRECTORY/ssh-wrapper" &&
++	GIT_SSH_VARIANT=ssh &&
+ 	export GIT_SSH &&
++	export GIT_SSH_VARIANT &&
+ 	export TRASH_DIRECTORY
+ '
+ 
 -- 
 2.15.0.rc1.287.g2b38de12cc
 
