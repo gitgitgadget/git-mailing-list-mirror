@@ -2,70 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8C8451FF72
-	for <e@80x24.org>; Mon, 23 Oct 2017 11:09:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D6D391FF72
+	for <e@80x24.org>; Mon, 23 Oct 2017 11:27:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751371AbdJWLJ1 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Oct 2017 07:09:27 -0400
-Received: from mout.gmx.net ([212.227.17.20]:49235 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751268AbdJWLJ0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Oct 2017 07:09:26 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MWxtA-1djT9U21lU-00VwDX; Mon, 23
- Oct 2017 13:09:16 +0200
-Date:   Mon, 23 Oct 2017 13:09:11 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Joel Teichroeb <joel@teichroeb.net>
-cc:     git@vger.kernel.org, t.gummerer@gmail.com, peff@peff.net
-Subject: Re: [PATCH v3 0/4] Implement git stash as a builtin command
-In-Reply-To: <20170528165642.14699-1-joel@teichroeb.net>
-Message-ID: <alpine.DEB.2.21.1.1710231308200.6482@virtualbox>
-References: <20170528165642.14699-1-joel@teichroeb.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751514AbdJWL1J (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Oct 2017 07:27:09 -0400
+Received: from mail-wm0-f51.google.com ([74.125.82.51]:50802 "EHLO
+        mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751335AbdJWL1I (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Oct 2017 07:27:08 -0400
+Received: by mail-wm0-f51.google.com with SMTP id u138so8829235wmu.5
+        for <git@vger.kernel.org>; Mon, 23 Oct 2017 04:27:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=+f+OA1ShI4xKi5ppGTis4SiOO19sZyQttoFeWSRHntY=;
+        b=lY53yk2NPVSyr7VPSki8zqxSNARD92ZyYGl8GiaehwlWY+l8BloJxi4B7WIjfltijd
+         mSJTrUxxUEdZ3FQhgeYhbLlvTB6wFk0aue37NYEckmHSSvsXxMAaLI/Aobz932cYTmCk
+         lnTIAbwUzT4CDGY7SSt6XXpHeeTheYQ2VflXcgT5pDfKEb6ndSnuZ5vhaYw2DkzeF59+
+         +oORo3vgJ+Zo3tJ4xBR2w1QZfESim3fD8LWRJfnQQ9NraU3laPIgesHh7Nla4PbzN2Kr
+         5A9ZgRrFqq2H91zhAR8FzlsLNW7ULbA+j8kCstnz3M3W01RQV2ZWqAX2n/qPwZZVwDdc
+         M/hg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=+f+OA1ShI4xKi5ppGTis4SiOO19sZyQttoFeWSRHntY=;
+        b=IuhFyf7PKR+Nvp73K72vWsL+prp2e0Za3I2nsUpMmpwAb+9Hl4wJeeIYRWqkceR6Kz
+         KNNo+hWgJwsxazcaKah6THUTLjqoL3d9cV5fF3cPYKYPIvXg0OpPVN95vGem/6vU1U8c
+         cxrf+Ywwg9aZ447VMI0xfrJN7lethWV9rSvCaRi57ARj1C7XQaZTWfnHw//LRm61coHo
+         WvUKRWVbfCSAX+BgjjNUJwY95J0TrX96PhzlPNzQuxscfG1wV5VrtZl1pOKmCNpWWqXv
+         OdR5YxZwI+2oxw96RVbDn4eZOwdqvApmjcsF0Fy+iSc1P0BdPKoFhHuGfgZdMWBcq2fo
+         WIYg==
+X-Gm-Message-State: AMCzsaU4MNkXmVGBcpU7smmWxIkv3ulklLiZApGNa1u7W3/EIEwjzh4j
+        yyxJkBuSxCiNJoCfFoGLQGzPEEwWU8xZtSxJJg==
+X-Google-Smtp-Source: ABhQp+T2qgM6DqAdhKSN9bfpx3LWFOoL0nWHZMw2SQxAekqIgJY/vlBgylBZ1ZuWewDeJn22hori8Xkw7RwBXhp3nHU=
+X-Received: by 10.80.215.209 with SMTP id m17mr2536947edj.63.1508758027206;
+ Mon, 23 Oct 2017 04:27:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:bdRn8V7H1Or4vVM0b+utfL5zRHvJ23QsyUiBcLSXljf6UPSimKv
- vfyZjMNpTHvAm7FEhCyOfVA/aSpGs2TXoyB7KFVqef3Fsg2C8UsRUqgeBEA6+7aDgXWWTnr
- K8DKNa3qXKO5ZHgCbZDYXCdhyXhShMA9ClJ3cM4b4DmyDzoqCP8+nD+g8/j3d0b8X4/usEN
- AqAqOVCEpGFo2LXgXfg6A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:rd+to8p/je0=:ggOiE52B0UwwBJ0Cg/Pwgq
- dblUxDkSsu3ZWeCZoloMZbKXbe+9+NkOitneMMRZVX5dIHoblqoUaCDB3xru5WKh8f4q9DFNb
- FFPlRijxuYg7rvOu6JZdQ7zZrmlLWv4nTCgwMlCLwviOGtpKbGK/UUuREeuHWbSLbACHnjlk6
- ARDKdS18HM1Tee7iT4S5ClobdYF6fGvFKF9e0ZH0dFk9tWGt3gbIDAu3HkNbXRJ9+OswMCPhF
- MVL5xCkkDt7AL5eTvYNcsohPf2ZfZ2wam5gf1EOeKd1K20hnQdcilnx6d7XOJX0vA1AX2O+RU
- EibT5BRc8nVlNhjM921MB55gNv05svsg/nvqpe1ggYzqCH5jJ8TNThOP/xsfbwbqkNrvA5Hla
- Otz2z34aO7sr0e/f4VgoDa2YFnyl1TBwAmyIhmetWVkVDN2hh4+vnXpJjIAXWCJwDxJ1GSYY3
- PDIDD7GM3b4J+gacmR40+7QUkDC4YENTySmxyt7/MgIKiCcqU419WJBRhRYmEei6zURBUBvN6
- i8lONglAGGWiG8YUWqLLre92h8kQw8dL3DDaPZzptujyYV9HCvRKBQrqqkVfVUalH1eLzQ9ie
- 7Q0zK8vicxOs+vG9piBoJ8ADRltWz8wiilU5Mkf8w+3IFKcNyHxP7QdQz+5BewEvIM1AQKok6
- wi8GaL4uVjqDRSCMsF2Wjg0b5GwL44gQ1ai9Nwf3AowcM7p5Fok6UbIBxFAQrouVsoY9k7sM+
- SDgLojSxX0FLhlG6gU6DqT5aHD4DKZYgK0M1k/QVEXHOG6KPH2kGrdIL5Ki8UeMnnHej9b3Tj
- yjbTyT08udU+bkOq9rnrnfE8ZnEO3Syhzrf5qEzizzuJyqpjtHFLbyrvcgtR3gLdPuzB0hS
+Received: by 10.80.137.123 with HTTP; Mon, 23 Oct 2017 04:27:06 -0700 (PDT)
+From:   Yubin Ruan <ablacktshirt@gmail.com>
+Date:   Mon, 23 Oct 2017 19:27:06 +0800
+Message-ID: <CAJYFCiMJLL-gq5rwHRx1NYZP2iev3g4vXKXh1rDcxW6dCifoJA@mail.gmail.com>
+Subject: checking out from branch A to branch B brings along a folder from A. Why
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Joel,
+Hi,
 
-On Sun, 28 May 2017, Joel Teichroeb wrote:
+I got three branch: master, A, B.
 
-> I've rewritten git stash as a builtin c command. All tests pass,
-> and I've added two new tests. Test coverage is around 95% with the
-> only things missing coverage being error handlers.
+I have a directory in branch A: "/path/to/repo/somefolder" (and that
+folder is in the working tree, not working directory), but that folder
+doesn't exist in either branch B or master. When in branch A, if I do
 
-I am embarrassed to say that I never found the time to have a detailed
-look at this, and it has been 5 months since you sent this. Sorry about
-that.
+    $ git checkout B
 
-Do you have an easy-to-fetch branch with this somewhere?
+that "somefolder" will be brought to branch B (this is weird)
 
-Thanks,
-Dscho
+But when I do
+
+    $ git checkout master
+
+then it will not be brought along (this works as expected)
+
+That is weird because AFAIK checkout out to branch B will not bring
+any file from the working tree from other branch.
+
+I have tried to updated git from 1.5.4.7 to 2.9.
+
+I am in a CI server so there might be some mis-configuration. What
+should I check for? Has anyone ever encountered such a situation?
+
+Yubin
