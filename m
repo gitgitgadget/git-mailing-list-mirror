@@ -2,152 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 76213202A0
-	for <e@80x24.org>; Mon, 23 Oct 2017 22:54:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 95263202A0
+	for <e@80x24.org>; Mon, 23 Oct 2017 22:57:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751242AbdJWWyh (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Oct 2017 18:54:37 -0400
-Received: from mail-it0-f53.google.com ([209.85.214.53]:51529 "EHLO
-        mail-it0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750835AbdJWWyg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Oct 2017 18:54:36 -0400
-Received: by mail-it0-f53.google.com with SMTP id o135so7877676itb.0
-        for <git@vger.kernel.org>; Mon, 23 Oct 2017 15:54:36 -0700 (PDT)
+        id S1751640AbdJWW5Q (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Oct 2017 18:57:16 -0400
+Received: from mail-it0-f54.google.com ([209.85.214.54]:49780 "EHLO
+        mail-it0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751113AbdJWW5P (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Oct 2017 18:57:15 -0400
+Received: by mail-it0-f54.google.com with SMTP id y15so7834674ita.4
+        for <git@vger.kernel.org>; Mon, 23 Oct 2017 15:57:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=HpWf8yy7hQ4oo5aLtpwRZcGV2DbUbsWv2vNOu+odt+U=;
-        b=nSjrlzdy5vESuaMM2HHEe9GNwq8UGe/5KGs239TausKF52fMpJQL+ygfXtUCfBOcoX
-         P7u+AKGmih+69iulYIzPsrdC1kRmfDyfFj2RKPK2CG+qyFPSDCAtrmyZyIeOtCQSOm21
-         wnW4klVJGUtEaPfJVSKiGdbfj0bLHlw6tJgICXwXnWAoQHOMpzj+1uDwZkE2rclKnL28
-         mtWq9jxeDBmc8GmQn5Ps3unwj5imVVHh7S9ssHMFepOPWjEbV0MMqQ3GCGiPfXesd04y
-         2c93uqZDX7r2NQDnTkjz4i3m5rZ6aTZGaDylBPc6/TIoGZNS4fZTN/n/P8IKzgWMbbN1
-         Sq8A==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=uzszl1VqQZEnO3DJoCIWkYJQedNjshnuXQDW/6+h0Qw=;
+        b=XWiBiReCKCHW8zDg5loxcILvaFTFmGq4gZnO1cTcjAgmsH8dfWmIly8RxvxBGwEkg5
+         6ITc34eRwVnw70sbaTUJsGlQeQ8JT9uuGRtfPjPUjJkB3GjKr/u7UwgzcsojPgjTz13d
+         QvHFkLJTYPo96mrBLGRulK+UY9gTZnURPfLBmDWXe7V9oDf/EqXZ3q1eu/Lf8OELVt7X
+         m6c2ndkR1/U8K2dwDtdq5oGCBVqlQ1lNE7gh8f+0brMMkW32Zfw5Cwm1XuOs2Clp1v/m
+         56U0G0N+XgX2oSV45L/BeA5Np8/pZfqZ2gIGA6O4KAn2Qsuvra4kPC7lVDx7A8+/tAHh
+         u6uA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=HpWf8yy7hQ4oo5aLtpwRZcGV2DbUbsWv2vNOu+odt+U=;
-        b=Rit163JsO0zKRwzY1mEV4fwU/PPwtH4ZUU+A2h1/1zX4jfGTmXFCL5Soonu1MJGIdx
-         wRol4LiSAWSztGG6XaNv8xrS1qzM5VZsqlRXVw7OGs+D62FZDi0DqMI+GDA2nujFHIPx
-         E4VqCApaQ/z7rcW8zPLSq+ZSm4ZnkcFW+tCxyWqBjNem6/X1oNGy5e4tyvhPaRmfKKJ/
-         FxyHlEkGgf3HOAejWfGFlNrZcNQNN0PfoPvJf85BTtygOkUHFk1aGTjSrSe6cpMMoAJo
-         i3CwhUlvuZeCdAYxU7a5KJ28osSrH2k7hcmFaRqrsq0c3nfv1WHr/wpVIdSRyqdECOqb
-         reZg==
-X-Gm-Message-State: AMCzsaUQwTHKL3B9L3YbWc7/ym5pKQu4Gj0kYQgOHeEH/N1007Y68N2f
-        fpmIXPh8Rrp+1O0YbZmrWlA=
-X-Google-Smtp-Source: ABhQp+TXQ1YJwJcGQyeA6SxWXSRm0NCU9DMWSH+gwtLxhUZvgkVVHTmyyjfLScqAi6yi9JyTEscDcw==
-X-Received: by 10.36.76.79 with SMTP id a76mr11201228itb.84.1508799275553;
-        Mon, 23 Oct 2017 15:54:35 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id 80sm18765itk.40.2017.10.23.15.54.34
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 23 Oct 2017 15:54:35 -0700 (PDT)
-Date:   Mon, 23 Oct 2017 15:54:32 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Brandon Williams <bmwill@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Bryan Turner <bturner@atlassian.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jeff King <peff@peff.net>, William Yan <wyan@google.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=uzszl1VqQZEnO3DJoCIWkYJQedNjshnuXQDW/6+h0Qw=;
+        b=cm1aPtxzEjGczGcWEGwS6viIUA1/4GKuRLNQ1Repk9nVUfDoFHJzsC/PuzukkxUrH3
+         OUPkQmIPLxI6TQt+S6XBKbEw8vuapsRoBDPg8zm34R1V+s01LexeWKWN9RQ1EkMZCMlA
+         gVyHPHL2InIUED3x35YpVRCK2blLyibS2HLkjDojTKeL2DqGOojZgJxvJw/q0rvdRLUQ
+         QurKrAhhru8IY74011zqJszXD+E2fLNyCpRdXxFytIiViqyUNBUUR33kI3d6yossLZlj
+         jBawJ8kIxXw7WMtAv5XQK6qmg7tr+2Z/cD0Lx3XW9mTR3a3/VqJVjl/z63e0iNTRQk6E
+         I4eA==
+X-Gm-Message-State: AMCzsaVDsH7av1HB0cC6pqUH2Da5qAh3W4gDf1L6xG1Ia4IGgdOgd9s/
+        z0yKxFRp7p9VxEueJe6FqyWwjQ==
+X-Google-Smtp-Source: ABhQp+QdK03g1sofcNSrSzMvFnRx1Qhb89uEjnnCnJne3BqSw+z/6eCtAuWY4ttI0Yy3Mtp7IKC8rQ==
+X-Received: by 10.36.108.81 with SMTP id w78mr11939340itb.140.1508799434545;
+        Mon, 23 Oct 2017 15:57:14 -0700 (PDT)
+Received: from twelve3.mtv.corp.google.com ([2620:0:100e:422:4d18:32f5:4fe3:81f8])
+        by smtp.gmail.com with ESMTPSA id p190sm22384itp.36.2017.10.23.15.57.13
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 23 Oct 2017 15:57:14 -0700 (PDT)
+Date:   Mon, 23 Oct 2017 15:57:13 -0700
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+        bturner@atlassian.com, git@jeffhostetler.com, gitster@pobox.com,
+        peff@peff.net, sbeller@google.com, William Yan <wyan@google.com>
 Subject: Re: [PATCH 3/5] ssh: 'auto' variant to select between 'ssh' and
  'simple'
-Message-ID: <20171023225432.2lj4gaybkvpyhcgm@aiede.mtv.corp.google.com>
+Message-Id: <20171023155713.5055125d7467d8daaee42e32@google.com>
+In-Reply-To: <20171023225106.GA73667@google.com>
 References: <20170926235627.79606-1-bmwill@google.com>
- <20171003201507.3589-1-bmwill@google.com>
- <20171003201507.3589-11-bmwill@google.com>
- <20171003214206.GY19555@aiede.mtv.corp.google.com>
- <20171016171812.GA4487@google.com>
- <20171023212740.qodxzsq5w7rn2r6y@aiede.mtv.corp.google.com>
- <20171023213159.eitrjrqrh277advm@aiede.mtv.corp.google.com>
- <CAGZ79kZTjUvcq_hKHCqTDoaBxt2x+9XcqYc6ao1bhcET2SM-PQ@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kZTjUvcq_hKHCqTDoaBxt2x+9XcqYc6ao1bhcET2SM-PQ@mail.gmail.com>
-User-Agent: NeoMutt/20170609 (1.8.3)
+        <20171003201507.3589-1-bmwill@google.com>
+        <20171003201507.3589-11-bmwill@google.com>
+        <20171003214206.GY19555@aiede.mtv.corp.google.com>
+        <20171016171812.GA4487@google.com>
+        <20171023212740.qodxzsq5w7rn2r6y@aiede.mtv.corp.google.com>
+        <20171023213159.eitrjrqrh277advm@aiede.mtv.corp.google.com>
+        <20171023151929.67165aea67353e5c24a15229@google.com>
+        <20171023224310.o7ftwmbr7n74vvc6@aiede.mtv.corp.google.com>
+        <20171023225106.GA73667@google.com>
+X-Mailer: Sylpheed 3.4.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller wrote:
-> On Mon, Oct 23, 2017 at 2:31 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+On Mon, 23 Oct 2017 15:51:06 -0700
+Brandon Williams <bmwill@google.com> wrote:
 
->>  1. First, check whether $GIT_SSH supports OpenSSH options by running
->>
->>         $GIT_SSH -G <options> <host>
->>
->>     This returns status 0 and prints configuration in OpenSSH if it
->>     recognizes all <options> and returns status 255 if it encounters
->>     an unrecognized option.  A wrapper script like
->>
->>         exec ssh -- "$@"
->>
->>     would fail with
->>
->>         ssh: Could not resolve hostname -g: Name or service not known
->
-> capital -G?
+> On 10/23, Jonathan Nieder wrote:
+> > Separately from how to document it, what do you think a good behavior
+> > would be?  Should the "auto" configuration trigger command line based
+> > detection just like no configuration at all?  Should the "auto" value
+> > for configuration be removed and that behavior restricted to the
+> > no-configuration case?
+> > 
+> > I'm tempted to go with the former, which would look like the following.
+> > What do you think?
+> 
+> As a user having some variant as 'auto' doesn't make much sense, i mean
+> isn't that exactly what the default behavior is?
 
-The actual error message uses lowercase (presumably they use tolower on
-the hostname).
+So you're suggesting the second option ("that behavior restricted to the
+no-configuration case")?
 
->> -       if (variant == VARIANT_TORTOISEPLINK)
->> -               argv_array_push(&conn->args, "-batch");
->> +               detect.use_shell = conn->use_shell;
->
-> Why do we have to use a shell for evaluation of this
-> test balloon?
+I'm leaning towards supporting "auto", actually. At the very least, it
+gives the user a clear way to override an existing config.
 
-If the user set GIT_SSH_COMMAND instead of GIT_SSH then we need to run
-it using a shell.  The above line inherits the use_shell setting so it
-ends up doing whatever conn would do.
+> Check if my ssh
+> command matches existing variants and go with that.  What you are
+> proposing is the make the existing auto detection better (yay!) though I
+> don't know if it warrants adding a new variant all together.
+> 
+> Instead it may be better to stick this new improved detection at the end
+> of the existing variant discovery function 'determine_ssh_variant()' as
+> a last ditch effort to figure out the variant.  That way we don't have
+> an extra variant type that can be configured and eliminates some of the
+> additional code in the switch statements to handle that enum value
+> (though that isn't really that big of a deal).
 
-[...]
->> +               argv_array_push(&detect.args, "-G");
-> ...
->> +               variant = run_command(&detect) ? VARIANT_SIMPLE : VARIANT_SSH;
->
-> What if we have a VARIANT_SIMPLE, that doesn't care about -G
-> but just connects to the remote host (keeping the session open), do we need
-> to kill it after some time to have run_command return eventually?
->
-> Or can we give a command to be executed remotely (e.g. 'false') that
-> we know returns quickly?
+This sounds like what is already being done in the code.
 
-Since stdin is /dev/null, it would presumably return quickly.  But I
-also don't expect this kind of behavior from GIT_SSH commands.  The
-kinds I'd expect are
+> > If this looks good, I can reroll in a moment.
 
- A. The repo case, which forwards to 'ssh' and supports all 'ssh'
-    flags
-
- B. The travis-ci case, which expects a host and command and does
-    not accept any flags
-
- C. More sophisticated wrappers that parse flags but still do not
-    handle -G
-
-For case (A), the detection run would figure out that this accepts
-OpenSSH options. Good.
-
-For case (B), the detection run would figure out that this does not
-accept OpenSSH options. Good.
-
-For case (C), the detection run would think that this does not accept
-OpenSSH options, when it accepts some. But I think that's the best we
-can do for now. Longer term, we need to work with the author of such a
-script to find out what kind of interface they want.
-
-Thanks and hope that helps,
-Jonathan
+Yes, this looks good.
