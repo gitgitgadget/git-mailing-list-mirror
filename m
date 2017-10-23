@@ -2,129 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0367F202A0
-	for <e@80x24.org>; Mon, 23 Oct 2017 22:19:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6DB3D202A0
+	for <e@80x24.org>; Mon, 23 Oct 2017 22:33:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751694AbdJWWTc (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Oct 2017 18:19:32 -0400
-Received: from mail-it0-f68.google.com ([209.85.214.68]:52507 "EHLO
-        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751266AbdJWWTb (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Oct 2017 18:19:31 -0400
-Received: by mail-it0-f68.google.com with SMTP id j140so7807831itj.1
-        for <git@vger.kernel.org>; Mon, 23 Oct 2017 15:19:31 -0700 (PDT)
+        id S1751242AbdJWWdO (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Oct 2017 18:33:14 -0400
+Received: from mail-qt0-f172.google.com ([209.85.216.172]:50499 "EHLO
+        mail-qt0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751113AbdJWWdN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Oct 2017 18:33:13 -0400
+Received: by mail-qt0-f172.google.com with SMTP id d9so21404683qtd.7
+        for <git@vger.kernel.org>; Mon, 23 Oct 2017 15:33:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Py49ucT+PFYUufuUP7JH8KBbJrJlJF03SBnuT5DzJsI=;
-        b=ob51C5k/f0+QzzDPJJjJIVvnKzU8q8Y3YB6Svl7Apl42yi1tLc6mP2JdeLtU32VZPj
-         ie+t4PwaGHpYzya4F8S95ipxpNkr2qYmc3AaL5Pd4Gn9M386nmwvk6GixWOblm1kLn3w
-         7+JA77SKp1LLcxNWqp8uxpaSBBGOrpZCRXhF5CojU+83lGrs1JTp+mBIFBfA/2zHfzRa
-         4LXoj0+glweOA3n1e0ll3jD7/vsYcwVfVQq2BG1H1zUic8idmwyv/1wv8z5WC2jgHMhx
-         3GIFmB9Krcjlg99Tg4QEjYcQvLSLYaV0AMPpbXd0WCN++lblAwXM5R0Gs9TPMt5WdUMQ
-         BfJg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=SPwWheLJGF3DeTLoTchg/CBRog63dhNc+cyukf3Hmrw=;
+        b=hHXBmnFisZWhtSUDF/u4VBKtrou+Aw8tK8EI5mwcH1GK6vML1g/hFT5im8yHYwmOA6
+         8k6ocZlGLahtIMR8Ts/FPGzUlm7NqxSY5eFqPAuo7GhvaIQ/0NiJFJ0AgXpBoB+6xa8k
+         33Q42N+eU/RrPHnSd9xgNeTXnJXFN+weKcFBcOlUqy44Lk3IpOoktswSpDNELBIMgveT
+         1TZNRLt0VFMhhS+le090jc937QvxJizogAGyCAkkvwicUt/dkG/Lus2qpdri0isk7pxQ
+         0a4/1M2vpwMLT9atE3s0UtEJFTxSNBmx/nB0n2rpq+BXWXKmeNagFpKs9waNF3PgUcwm
+         Mwqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Py49ucT+PFYUufuUP7JH8KBbJrJlJF03SBnuT5DzJsI=;
-        b=WCbtLqkB0gYlU2u/LPKdBqMa/2ZHBytURXA/45ziLjAo6aQZFCQROI+8F0FAy8HDbu
-         NOqb4jVP6rUxG8KvMFRe5NGhmM4V0XSokYrlmIhJqOvtjydyvewSF9HtSuy/2obiMf9a
-         GasZGAb0X7++3Gp4jZFOGrmvKqmaCxuc6MYzN1j3JMOnViHs0Sdwo5nl5B7vXRKH9HBs
-         AvYaJjKvuzVNE9rU5u5IcE+ZrHCo4VPp6+ueWhDhmWiOU3q3zU04a9nFySytmFrpgT1D
-         OMQJkmuWzugbUieNZgi6OmgmhYAZZPPCZLd4GRL/pd8qpvVdDRXi68hABgxV1RXZWli4
-         HFQA==
-X-Gm-Message-State: AMCzsaW7W3vcUUa4SEQdiWB4DoDmBV87UMjtvoLt7yGweSD9jRE9Tbj7
-        YFJn4+z2HeVT6G5ymsgpUXsETg==
-X-Google-Smtp-Source: ABhQp+TxMeeOsObo8lrFgow1VfVnuqDBhRLrrIN5/0jvCXmpSMS7+ptY+s0S6dR5C35Os4FpGx72tQ==
-X-Received: by 10.36.14.145 with SMTP id 139mr11071430ite.111.1508797170848;
-        Mon, 23 Oct 2017 15:19:30 -0700 (PDT)
-Received: from twelve3.mtv.corp.google.com ([2620:0:100e:422:4d18:32f5:4fe3:81f8])
-        by smtp.gmail.com with ESMTPSA id x137sm2915072itb.37.2017.10.23.15.19.29
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 23 Oct 2017 15:19:30 -0700 (PDT)
-Date:   Mon, 23 Oct 2017 15:19:29 -0700
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Brandon Williams <bmwill@google.com>, git@vger.kernel.org,
-        bturner@atlassian.com, git@jeffhostetler.com, gitster@pobox.com,
-        peff@peff.net, sbeller@google.com, William Yan <wyan@google.com>
-Subject: Re: [PATCH 3/5] ssh: 'auto' variant to select between 'ssh' and
- 'simple'
-Message-Id: <20171023151929.67165aea67353e5c24a15229@google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=SPwWheLJGF3DeTLoTchg/CBRog63dhNc+cyukf3Hmrw=;
+        b=tHgQcwM4AQS8grpoNmYzc5613chvFGfOmkUpqIv0Bs+hENrpSJKCcogbfwtJltQpHm
+         MNBt2nOqXQJAxRWMPzk94QaIeMifpLHHFdooCvw80hfgn2iuPgSYFRnFLtGDNPH07GzL
+         QWZk81/WCBNA5bAeF5N4nSB330EPLoSPR15yxS6yDcm2GQuI3UCXTPqhTLBcoMIw7iRX
+         ptwTi89nnudAGypTk9TLD4vjF3CVtxokFSwMy0Hxg/vHYuhp3ZrqPFJOztpyomj8AzC4
+         76PVuEy8ouOIFBf/Tgq9HCrYRPxle57PJxJTwJbQvQqJsaosncoGfS4xgO7ZScG6496R
+         9SIQ==
+X-Gm-Message-State: AMCzsaXHhrrnNZV+gFh55EzIOvvgF2Q5Q6K4PjoH1joDPmjpCklF5EIw
+        lAY6gVzubJKxI7LChCigp5F5n+exRkRlhpGGU1TRbg==
+X-Google-Smtp-Source: ABhQp+Rs4Bm7Y/3VKNv9mdqC3eRq/5iGd49jslSYrCD3eDqfmTALqnmFGdohBM53APpflCvum6vQD4gmCLNKXvkFYf8=
+X-Received: by 10.200.40.146 with SMTP id i18mr22016168qti.79.1508797992322;
+ Mon, 23 Oct 2017 15:33:12 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.140.102.70 with HTTP; Mon, 23 Oct 2017 15:33:11 -0700 (PDT)
 In-Reply-To: <20171023213159.eitrjrqrh277advm@aiede.mtv.corp.google.com>
-References: <20170926235627.79606-1-bmwill@google.com>
-        <20171003201507.3589-1-bmwill@google.com>
-        <20171003201507.3589-11-bmwill@google.com>
-        <20171003214206.GY19555@aiede.mtv.corp.google.com>
-        <20171016171812.GA4487@google.com>
-        <20171023212740.qodxzsq5w7rn2r6y@aiede.mtv.corp.google.com>
-        <20171023213159.eitrjrqrh277advm@aiede.mtv.corp.google.com>
-X-Mailer: Sylpheed 3.4.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+References: <20170926235627.79606-1-bmwill@google.com> <20171003201507.3589-1-bmwill@google.com>
+ <20171003201507.3589-11-bmwill@google.com> <20171003214206.GY19555@aiede.mtv.corp.google.com>
+ <20171016171812.GA4487@google.com> <20171023212740.qodxzsq5w7rn2r6y@aiede.mtv.corp.google.com>
+ <20171023213159.eitrjrqrh277advm@aiede.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 23 Oct 2017 15:33:11 -0700
+Message-ID: <CAGZ79kZTjUvcq_hKHCqTDoaBxt2x+9XcqYc6ao1bhcET2SM-PQ@mail.gmail.com>
+Subject: Re: [PATCH 3/5] ssh: 'auto' variant to select between 'ssh' and 'simple'
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Brandon Williams <bmwill@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Bryan Turner <bturner@atlassian.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jeff King <peff@peff.net>, William Yan <wyan@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 23 Oct 2017 14:31:59 -0700
-Jonathan Nieder <jrnieder@gmail.com> wrote:
+On Mon, Oct 23, 2017 at 2:31 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
 
-> @@ -2083,14 +2083,19 @@ visited as a result of a redirection do not participate in matching.
->  ssh.variant::
->  	Depending on the value of the environment variables `GIT_SSH` or
->  	`GIT_SSH_COMMAND`, or the config setting `core.sshCommand`, Git
-> -	auto-detects whether to adjust its command-line parameters for use
-> -	with ssh (OpenSSH), plink or tortoiseplink, as opposed to the default
-> -	(simple).
-> +	auto-detects whether to pass command-line parameters for use
-> +	with a simple wrapper script (simple), OpenSSH (ssh), plink, or
-> +	tortoiseplink.
-> ++
-> +The default is `auto`, which means to auto-detect whether the ssh command
-> +implements OpenSSH options using the `-G` (print configuration) option.
-> +If the ssh command supports OpenSSH options, it then behaves like `ssh`;
-> +otherwise, it behaves like `simple`.
->  +
->  The config variable `ssh.variant` can be set to override this auto-detection;
-> -valid values are `ssh`, `simple`, `plink`, `putty` or `tortoiseplink`. Any
-> -other value will be treated as normal ssh. This setting can be overridden via
-> -the environment variable `GIT_SSH_VARIANT`.
-> +valid values are `ssh`, `simple`, `plink`, `putty`, `tortoiseplink`, and
-> +`auto`.  Any other value will be treated as normal ssh.  This setting can be
-> +overridden via the environment variable `GIT_SSH_VARIANT`.
+>  1. First, check whether $GIT_SSH supports OpenSSH options by running
+>
+>         $GIT_SSH -G <options> <host>
+>
+>     This returns status 0 and prints configuration in OpenSSH if it
+>     recognizes all <options> and returns status 255 if it encounters
+>     an unrecognized option.  A wrapper script like
+>
+>         exec ssh -- "$@"
+>
+>     would fail with
+>
+>         ssh: Could not resolve hostname -g: Name or service not known
 
-The new documentation seems to imply that setting ssh.variant (or
-GIT_SSH_VARIANT) to "auto" is equivalent to not setting it at all, but
-looking at the code, it doesn't seem to be the case (not setting it at
-all invokes checking the first word of core.sshCommand, and only uses
-VARIANT_AUTO if that check is inconclusive, whereas setting
-ssh.variant=auto skips the core.sshCommand check entirely).
+capital -G?
 
-Maybe document ssh.variant as follows:
 
-    If unset, Git will determine the command-line arguments to use based
-    on the basename of the configured SSH command (through the
-    environment variable `GIT_SSH` or `GIT_SSH_COMMAND`, or the config
-    setting `core.sshCommand`). If the basename is unrecognized, Git
-    will attempt to detect support of OpenSSH options by first invoking
-    the configured SSH command with the `-G` (print configuration) flag,
-    and will subsequently use OpenSSH options (upon success) or no
-    options besides the host (upon failure).
+> -       if (variant == VARIANT_TORTOISEPLINK)
+> -               argv_array_push(&conn->args, "-batch");
+> +               detect.use_shell = conn->use_shell;
 
-    If set, Git will not do any auto-detection based on the basename of
-    the configured SSH command. This can be set to `ssh` (OpenSSH
-    options), `plink`, `putty`, `tortoiseplink`, `simple` (no options
-    besides the host), or `auto` (the detection with `-G` as described
-    above). If set to any other value, Git behaves as if this is set to
-    `ssh`.
+Why do we have to use a shell for evaluation of this
+test balloon?
 
-(Patches 1, 2, 4, and 5 seem fine to me.)
+> +               detect.no_stdin = detect.no_stdout = detect.no_stderr = 1;
+
+okay.
+
+...
+> +               argv_array_push(&detect.args, "-G");
+...
+> +               variant = run_command(&detect) ? VARIANT_SIMPLE : VARIANT_SSH;
+
+What if we have a VARIANT_SIMPLE, that doesn't care about -G
+but just connects to the remote host (keeping the session open), do we need
+to kill it after some time to have run_command return eventually?
+
+Or can we give a command to be executed remotely (e.g. 'false') that
+we know returns quickly?
+
+>  '
+>
+> +test_expect_success 'OpenSSH-like uplink is treated as ssh' '
+> +       write_script "$TRASH_DIRECTORY/uplink" <<-EOF &&
+> +       if test "\$1" = "-G"
+
+Reading this test (and the commit message) I realize, we do care
+about the order of options, so this is fine.
