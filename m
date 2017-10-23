@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 290461FF72
-	for <e@80x24.org>; Mon, 23 Oct 2017 11:01:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C6CCF1FF72
+	for <e@80x24.org>; Mon, 23 Oct 2017 11:05:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751407AbdJWLBw (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Oct 2017 07:01:52 -0400
-Received: from mout.gmx.net ([212.227.17.22]:50814 "EHLO mout.gmx.net"
+        id S1751326AbdJWLE7 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Oct 2017 07:04:59 -0400
+Received: from mout.gmx.net ([212.227.15.15]:53101 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751268AbdJWLBw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Oct 2017 07:01:52 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MHXd2-1e3H6M3r1I-003NVB; Mon, 23
- Oct 2017 13:01:47 +0200
-Date:   Mon, 23 Oct 2017 13:01:42 +0200 (CEST)
+        id S1751268AbdJWLE6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Oct 2017 07:04:58 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Ldq9D-1dOlXh3Kh1-00izat; Mon, 23
+ Oct 2017 13:04:54 +0200
+Date:   Mon, 23 Oct 2017 13:04:45 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     Jeff King <peff@peff.net>
 cc:     git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [PATCH 4/3] t/Makefile: introduce TEST_SHELL_PATH
-In-Reply-To: <20171020225340.6qgybldewi7knxvz@sigill.intra.peff.net>
-Message-ID: <alpine.DEB.2.21.1.1710231258451.6482@virtualbox>
-References: <20171019210140.64lb52cqtgdh22ew@sigill.intra.peff.net> <20171020225340.6qgybldewi7knxvz@sigill.intra.peff.net>
+Subject: Re: [PATCH 0/3] making test-suite tracing more useful
+In-Reply-To: <20171019210140.64lb52cqtgdh22ew@sigill.intra.peff.net>
+Message-ID: <alpine.DEB.2.21.1.1710231302480.6482@virtualbox>
+References: <20171019210140.64lb52cqtgdh22ew@sigill.intra.peff.net>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:L7hhZrIU4iyP9Kv2FJ/GMlB30iXvvUeAAtFisbWoDHxu09Byzlp
- /ArpdDT66hUhj6KNDk+ZyjgbjDGke5uD3s0tAVAyw0pyFQoO2HoJBsLOBHwQqLHdfvWWpbn
- eJh8xqUE0Rq9a645vACFdrp1js6hEBVla9GFUn8J4RtqIV75BMZtBAynRZXQoUmED5QDPgG
- 0yP5Mnmss/gQ+/YEeKEzg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:cYFPnkivQfo=:3AbKHZqMjF2nmCRouMs+Xc
- m8S4KhrqQSii9BJRB1wQdLqE5a3ZEKBjWUlApDsMQFc0Rf7n+zDBsOgnYHehND3VMSuGUU0t6
- V23/7kHXYIHNMpxRrrBRg17EnHwr69aRJu7oBK8rhUeFGyFj2+oCnnu0dNRgN76U7o/9LwqGm
- AaV7u9/kqXrfjJ+fFjEn02dzclm1KND/OlqLu9x2SdqGy8qZZPGeLj+OA7tOjZNeYJqZ4lzS0
- yTEwOGMPvB2EYqHIgWOAnyYArY7S/3DizsULsqUEEv+65c+xFAxduPZKmcoJGN1Tyhtpl8Hl/
- qXCxmR1pRSYMkCSU5MN2znNvA8ZI8OTFDSnKz02SWuTzxL3fVDSMjwOU9SdHaxPtGvH5hiNZh
- P5pzunT+Vq8oUtFeh72MqFHLcOmiQIhwC1oqb1WDi5ox5MvWjmR3C8q5ruLzL+jVtwGmy0krH
- cHOOg9oPrWzavDjWpmWxwDrY4sApdsphjzAr8ofCrDSf51ahBnbc7e92/gNqv1ZhuKDVLIkkM
- BhxIaeP9Sj2eUHabgKKUWg2xiehuiqmsk9qZJc63L7UROxhPIz56FQGhMEbr7eCSxajBV9gci
- eEuoiLElNzBwz5CqE2WD5+Qu8QontPDXnKhbdQbQRy5wxW46SC2/U2lza8LEVoOf01wRmH+Yb
- Tj3fTfzbK8KSyTBfBQwzPVk9gVUFiOP/VKc8hUFmnCoRMkSuJjNq8cHSXQ+LJ/8gJ7wxBkRlr
- Hn7yPyugLLgBmKtPjllCNtxDLL+G6Mrv4LGCXIbumdkNiaiujfzu7CWOuXAl1foRhQ/Drl2MM
- 1KAxIUvCvFzSIyjEOinWEzQm7+grwGM/bwrD+CA+iim55ZPAMqZiVayglefsT/htIL2vCRm
+X-Provags-ID: V03:K0:kbvNzXr+97o97v6xIfvlAFYm9VIXvU2gboR/tl+ua/Y/joAUk5T
+ +d6wuhjMqRiAAZfj3utwR/aB8Y3UQ/CgUHx6eFQHY8g6SqwNNVZjH5HpeyrdMcFCHJUXO5M
+ +tIQP35WkqI3B4H8dDCWMwXBQApY+m+dr0DCC3G4WCHjmJeVtrmHFDKDyNFDn8siUm1JBbu
+ 1OOyxvxqQmWBE4Cv3PjNw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:6Bd4c25KWGc=:ackvPkFZf15Rojsa492pOf
+ T++ijRkWpgkiZ9Bxf7/LIDZxO87/9i+FNAYvvHOv/Cp7fuSYTSQJL8FSVVkEE+5WZao4HtP1e
+ eqctQ4X55ar8QviPiZgbMwBSJDNcTrlXF1P+NBlFcVun9trB4a6vcpz48JcdbjzVkFCr1YK50
+ fz0WE6f4htbGnoIr9dSMm+Q4n23jLwyvslwRhgE0U3lw9n0UfSWNlB7wR91uRV0UZJV5CrUga
+ UC+wIpzhg22ylfHLVmEeihSira3WfpbOVLkL4pemOooRm/8MsTX6uFo3dnfVOmkwZ+nVVtomf
+ IwSogPVgU7AvbXbj2iVDF9M7Jl68WIte22xQ7sc18cWe5xKVJ0H02EGb7zya2c91ffKdGz5DJ
+ H8zE9ZwSJpOJsVSXHOtD6tK9y5VTRyVia7GL8tt6FaryHxecGWLKGqIvvVZECHAi/pwQNmk4b
+ yYxRpX0FmbjjDZZchbXtYID5LGSGGotb4N38qXh4W9EnZN/q/P3UORy7rK9IPKgulFrzUSvi8
+ lcpoMccWSx638O6TMXwp7BAH0wCHprNqZTD8PtnO5iCPjJgHKkXCUEOUrMW4PRimOEjKL08J4
+ iNDNfq7FkYFC8ZXrbhNQYEX353eZch0YBE4QDuoGu9x5wk9dVfhKin4KpNq/uIGx8hEhwMka2
+ jPgbutKnQNmulDZc8W+nZrinFnV/p/6Yux0az1+smWDlPlgdasZoTf7EfxRMmzwErDGDP6LIo
+ v+9qPVuHiI+K8AECq178X++WK0ISKh4OZciOsJDxOcIJ7HNDKQzj0W/JVcCx10rxoe0eZyyuB
+ rJxWL98vnHD2GJuAwxWHRE8Aj0Q8Ybg8hwwEBn9di+Hvq0nB8IYXnr/zVswQCAhqOEaFGHZ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -55,24 +55,24 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi Peff,
 
-On Fri, 20 Oct 2017, Jeff King wrote:
+On Thu, 19 Oct 2017, Jeff King wrote:
 
-> @@ -2350,6 +2357,7 @@ GIT-LDFLAGS: FORCE
->  # and the first level quoting from the shell that runs "echo".
->  GIT-BUILD-OPTIONS: FORCE
->  	@echo SHELL_PATH=\''$(subst ','\'',$(SHELL_PATH_SQ))'\' >$@+
-> +	@echo TEST_SHELL_PATH=\''$(subst ','\'',$(TEST_SHELL_PATH_SQ))'\' >$@+
+> I sometimes run git's test suite as part of an automated testing
+> process. I was hoping to add "-x" support to get more details when a
+> test fails (since failures are sometimes hard to reproduce).
 
-Do we really want to force the test shell path to be hardcoded at runtime?
-It may be a better idea not to write this into GIT-BUILD-OPTIONS.
+Thank you for working on this.
 
-Or alternatively we could prefix the assignment by
+> Johannes, I've seen that you do "-x" in the tests that the
+> git-for-windows bot uses to comment on GitHub. You may have seen the
+> bogus failure in t5615, which this series should fix (you may also have
+> seen the "set +x" cruft at the end of each test, which is fixed here,
+> too).
 
-	test -n "$TEST_SHELL_PATH" ||
-
-or use the pattern
-
-	TEST_SHELL_PATH="${TEST_SHELL_PATH:-[...]}"
+Surprisingly enough, I did not see any test failure in that test. I do
+re-run failed tests after the complete test run to make sure that the
+failure is not due to any resource scarcity, and that re-run is performed
+with -x (to double as documentation what really went wrong).
 
 Ciao,
 Dscho
