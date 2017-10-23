@@ -2,196 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 140C0202A0
-	for <e@80x24.org>; Mon, 23 Oct 2017 22:16:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0367F202A0
+	for <e@80x24.org>; Mon, 23 Oct 2017 22:19:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751388AbdJWWQP (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Oct 2017 18:16:15 -0400
-Received: from mail-qk0-f180.google.com ([209.85.220.180]:50576 "EHLO
-        mail-qk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751266AbdJWWQO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Oct 2017 18:16:14 -0400
-Received: by mail-qk0-f180.google.com with SMTP id o187so23977276qke.7
-        for <git@vger.kernel.org>; Mon, 23 Oct 2017 15:16:14 -0700 (PDT)
+        id S1751694AbdJWWTc (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Oct 2017 18:19:32 -0400
+Received: from mail-it0-f68.google.com ([209.85.214.68]:52507 "EHLO
+        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751266AbdJWWTb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Oct 2017 18:19:31 -0400
+Received: by mail-it0-f68.google.com with SMTP id j140so7807831itj.1
+        for <git@vger.kernel.org>; Mon, 23 Oct 2017 15:19:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=TFwqft5JCKi2t3+QCUOlQ08pZhflx6dZoNgft1ZhRLY=;
-        b=MuEk9iwziqgVsPh8d1zWRc59ooM7RpmsLZp1qMDbY2TJwaQrBNriGYyjeCH2R65qHO
-         z2ZDifiglBkwCbyfIXrxZ2gLI+CIlB1CqND+a8kaI7V9m3bNe/ZAwzIJS5v94TBl1aMF
-         qJcr4iMcsnrfwVgv9KD3IvafwVaFziR5OQfBT81bixwYnAI1fER+11VHI9ddOJ5RM/lX
-         +oennVtnP20MiBAmWYP9J5bzx2c2f0PQTwCCJHC6HmifzGyTRQlhOtMD61me5zI/YKWK
-         0Pb1F2X0OHU0ESy4bLl8YWWF68YxsOrPvkdgG9mkgfdz7hM2sEcn6NNk2PjSXOQVYjLf
-         5LLA==
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Py49ucT+PFYUufuUP7JH8KBbJrJlJF03SBnuT5DzJsI=;
+        b=ob51C5k/f0+QzzDPJJjJIVvnKzU8q8Y3YB6Svl7Apl42yi1tLc6mP2JdeLtU32VZPj
+         ie+t4PwaGHpYzya4F8S95ipxpNkr2qYmc3AaL5Pd4Gn9M386nmwvk6GixWOblm1kLn3w
+         7+JA77SKp1LLcxNWqp8uxpaSBBGOrpZCRXhF5CojU+83lGrs1JTp+mBIFBfA/2zHfzRa
+         4LXoj0+glweOA3n1e0ll3jD7/vsYcwVfVQq2BG1H1zUic8idmwyv/1wv8z5WC2jgHMhx
+         3GIFmB9Krcjlg99Tg4QEjYcQvLSLYaV0AMPpbXd0WCN++lblAwXM5R0Gs9TPMt5WdUMQ
+         BfJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=TFwqft5JCKi2t3+QCUOlQ08pZhflx6dZoNgft1ZhRLY=;
-        b=hdzW/H8HSvJ8CkVMgrwvV6OkHqeKcslZmBNB0RlV4xBCqbZSMQtmWwr2jqN6k4r936
-         0QoHV5blbuoDXxWMBSJFJW3cRaEwtXvtvYM6iFSavhRU2fdn1JhID4FAKe4/AuPLowg3
-         fjYmwOMnRw7ln2oq77MHGYmkpM23/RDWC4naOYOABXjUaTdVRLHCX8/9d3PDm8Lh34te
-         NFcIJOiJFR8jCTSF4YXKw2eqG0dVdcdhYTr+FMHJnk6WHTxWnbR9o63rx5X5d2Sq4DRE
-         7mu5UrQpPKtrwNBct5ruMxBSfwzMnFdbwzxkBpthvqLiQoKFaVSIC6yZxlr/GyizWcSo
-         ACGw==
-X-Gm-Message-State: AMCzsaVpIMAeqQaP0Tub/wGb4ox6R74ijrRiB5BWT6I3D7gX1dJepVLV
-        OXlvTwnVpBtnOStpau+X0y6Q3WRPy47RUfirvF2gZg==
-X-Google-Smtp-Source: ABhQp+RuSN8EiYVzWbTjhkf0Y7WxdAWgmlDdZ6egzJTSUjQfhhu55LTFWRt3CWi3mWvtbEdqGFafWKYzGkH1mENPqtk=
-X-Received: by 10.55.175.132 with SMTP id y126mr21948244qke.45.1508796973734;
- Mon, 23 Oct 2017 15:16:13 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.140.102.70 with HTTP; Mon, 23 Oct 2017 15:16:13 -0700 (PDT)
-In-Reply-To: <20171023212916.4aarismli6io4ro6@aiede.mtv.corp.google.com>
-References: <20170926235627.79606-1-bmwill@google.com> <20171003201507.3589-1-bmwill@google.com>
- <20171003201507.3589-11-bmwill@google.com> <20171003214206.GY19555@aiede.mtv.corp.google.com>
- <20171016171812.GA4487@google.com> <20171023212740.qodxzsq5w7rn2r6y@aiede.mtv.corp.google.com>
- <20171023212916.4aarismli6io4ro6@aiede.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 23 Oct 2017 15:16:13 -0700
-Message-ID: <CAGZ79kYwARXNWRS4AgwTP7peZiWiwCBvWFiEr9TbpbWjgysfZA@mail.gmail.com>
-Subject: Re: [PATCH 1/5] connect: split git:// setup into a separate function
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Py49ucT+PFYUufuUP7JH8KBbJrJlJF03SBnuT5DzJsI=;
+        b=WCbtLqkB0gYlU2u/LPKdBqMa/2ZHBytURXA/45ziLjAo6aQZFCQROI+8F0FAy8HDbu
+         NOqb4jVP6rUxG8KvMFRe5NGhmM4V0XSokYrlmIhJqOvtjydyvewSF9HtSuy/2obiMf9a
+         GasZGAb0X7++3Gp4jZFOGrmvKqmaCxuc6MYzN1j3JMOnViHs0Sdwo5nl5B7vXRKH9HBs
+         AvYaJjKvuzVNE9rU5u5IcE+ZrHCo4VPp6+ueWhDhmWiOU3q3zU04a9nFySytmFrpgT1D
+         OMQJkmuWzugbUieNZgi6OmgmhYAZZPPCZLd4GRL/pd8qpvVdDRXi68hABgxV1RXZWli4
+         HFQA==
+X-Gm-Message-State: AMCzsaW7W3vcUUa4SEQdiWB4DoDmBV87UMjtvoLt7yGweSD9jRE9Tbj7
+        YFJn4+z2HeVT6G5ymsgpUXsETg==
+X-Google-Smtp-Source: ABhQp+TxMeeOsObo8lrFgow1VfVnuqDBhRLrrIN5/0jvCXmpSMS7+ptY+s0S6dR5C35Os4FpGx72tQ==
+X-Received: by 10.36.14.145 with SMTP id 139mr11071430ite.111.1508797170848;
+        Mon, 23 Oct 2017 15:19:30 -0700 (PDT)
+Received: from twelve3.mtv.corp.google.com ([2620:0:100e:422:4d18:32f5:4fe3:81f8])
+        by smtp.gmail.com with ESMTPSA id x137sm2915072itb.37.2017.10.23.15.19.29
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 23 Oct 2017 15:19:30 -0700 (PDT)
+Date:   Mon, 23 Oct 2017 15:19:29 -0700
+From:   Jonathan Tan <jonathantanmy@google.com>
 To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Brandon Williams <bmwill@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Bryan Turner <bturner@atlassian.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jeff King <peff@peff.net>, William Yan <wyan@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Brandon Williams <bmwill@google.com>, git@vger.kernel.org,
+        bturner@atlassian.com, git@jeffhostetler.com, gitster@pobox.com,
+        peff@peff.net, sbeller@google.com, William Yan <wyan@google.com>
+Subject: Re: [PATCH 3/5] ssh: 'auto' variant to select between 'ssh' and
+ 'simple'
+Message-Id: <20171023151929.67165aea67353e5c24a15229@google.com>
+In-Reply-To: <20171023213159.eitrjrqrh277advm@aiede.mtv.corp.google.com>
+References: <20170926235627.79606-1-bmwill@google.com>
+        <20171003201507.3589-1-bmwill@google.com>
+        <20171003201507.3589-11-bmwill@google.com>
+        <20171003214206.GY19555@aiede.mtv.corp.google.com>
+        <20171016171812.GA4487@google.com>
+        <20171023212740.qodxzsq5w7rn2r6y@aiede.mtv.corp.google.com>
+        <20171023213159.eitrjrqrh277advm@aiede.mtv.corp.google.com>
+X-Mailer: Sylpheed 3.4.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 23, 2017 at 2:29 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> The git_connect function is growing long.  Split the
-> PROTO_GIT-specific portion to a separate function to make it easier to
-> read.
->
-> No functional change intended.
->
-> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+On Mon, 23 Oct 2017 14:31:59 -0700
+Jonathan Nieder <jrnieder@gmail.com> wrote:
 
-This also looks good to me.
+> @@ -2083,14 +2083,19 @@ visited as a result of a redirection do not participate in matching.
+>  ssh.variant::
+>  	Depending on the value of the environment variables `GIT_SSH` or
+>  	`GIT_SSH_COMMAND`, or the config setting `core.sshCommand`, Git
+> -	auto-detects whether to adjust its command-line parameters for use
+> -	with ssh (OpenSSH), plink or tortoiseplink, as opposed to the default
+> -	(simple).
+> +	auto-detects whether to pass command-line parameters for use
+> +	with a simple wrapper script (simple), OpenSSH (ssh), plink, or
+> +	tortoiseplink.
+> ++
+> +The default is `auto`, which means to auto-detect whether the ssh command
+> +implements OpenSSH options using the `-G` (print configuration) option.
+> +If the ssh command supports OpenSSH options, it then behaves like `ssh`;
+> +otherwise, it behaves like `simple`.
+>  +
+>  The config variable `ssh.variant` can be set to override this auto-detection;
+> -valid values are `ssh`, `simple`, `plink`, `putty` or `tortoiseplink`. Any
+> -other value will be treated as normal ssh. This setting can be overridden via
+> -the environment variable `GIT_SSH_VARIANT`.
+> +valid values are `ssh`, `simple`, `plink`, `putty`, `tortoiseplink`, and
+> +`auto`.  Any other value will be treated as normal ssh.  This setting can be
+> +overridden via the environment variable `GIT_SSH_VARIANT`.
 
-unrelated:
-Patch 2 was very easy to review using "log -p -w --color-moved",
-this one however was not. This is because -w caused the diff machinery
-to generate a completely different diff. (Not showing the new function
-completely but some weird function header trickery. The white space
-mangled output is below; most of it was colored "moved")
+The new documentation seems to imply that setting ssh.variant (or
+GIT_SSH_VARIANT) to "auto" is equivalent to not setting it at all, but
+looking at the code, it doesn't seem to be the case (not setting it at
+all invokes checking the first word of core.sshCommand, and only uses
+VARIANT_AUTO if that check is inconclusive, whereas setting
+ssh.variant=auto skips the core.sshCommand check entirely).
 
-I had to have -w as otherwise --color-moved would not work,
-so maybe we want to have an option to ignore white space for the
-sake of move detection only, not affecting the diff in general;
-maybe '--ignore-white-space-in-move-detection'?
+Maybe document ssh.variant as follows:
 
-I think once this option is given, all we have to do is pay attention to
-this option in diff.c#moved_entry_cmp/next_byte, which is best built
-on top of Peffs recent fixes origin/jk/diff-color-moved-fix.
-Would that be of interest for people?
+    If unset, Git will determine the command-line arguments to use based
+    on the basename of the configured SSH command (through the
+    environment variable `GIT_SSH` or `GIT_SSH_COMMAND`, or the config
+    setting `core.sshCommand`). If the basename is unrecognized, Git
+    will attempt to detect support of OpenSSH options by first invoking
+    the configured SSH command with the `-G` (print configuration) flag,
+    and will subsequently use OpenSSH options (upon success) or no
+    options besides the host (upon failure).
 
-Thanks,
-Stefan
+    If set, Git will not do any auto-detection based on the basename of
+    the configured SSH command. This can be set to `ssh` (OpenSSH
+    options), `plink`, `putty`, `tortoiseplink`, `simple` (no options
+    besides the host), or `auto` (the detection with `-G` as described
+    above). If set to any other value, Git behaves as if this is set to
+    `ssh`.
 
-diff --git a/connect.c b/connect.c
-index 7fbd396b35..068e70caad 100644
---- a/connect.c
-+++ b/connect.c
-@@ -851,36 +851,16 @@ static enum ssh_variant
-determine_ssh_variant(const char *ssh_command,
- }
-
- /*
-- * This returns a dummy child_process if the transport protocol does not
-- * need fork(2), or a struct child_process object if it does.  Once done,
-- * finish the connection with finish_connect() with the value returned from
-- * this function (it is safe to call finish_connect() with NULL to support
-- * the former case).
-+ * Open a connection using Git's native protocol.
-  *
-- * If it returns, the connect is successful; it just dies on errors (this
-- * will hopefully be changed in a libification effort, to return NULL when
-- * the connection failed).
-+ * The caller is responsible for freeing hostandport, but this function may
-+ * modify it (for example, to truncate it to remove the port part).
-  */
--struct child_process *git_connect(int fd[2], const char *url,
--                                  const char *prog, int flags)
-+static struct child_process *git_connect_git(int fd[2], char *hostandport,
-+                                             const char *path, const
-char *prog,
-+                                             int flags)
- {
--        char *hostandport, *path;
-         struct child_process *conn = &no_fork;
--        enum protocol protocol;
--
--        /* Without this we cannot rely on waitpid() to tell
--         * what happened to our children.
--         */
--        signal(SIGCHLD, SIG_DFL);
--
--        protocol = parse_connect_url(url, &hostandport, &path);
--        if ((flags & CONNECT_DIAG_URL) && (protocol != PROTO_SSH)) {
--                printf("Diag: url=%s\n", url ? url : "NULL");
--                printf("Diag: protocol=%s\n", prot_name(protocol));
--                printf("Diag: hostandport=%s\n", hostandport ?
-hostandport : "NULL");
--                printf("Diag: path=%s\n", path ? path : "NULL");
--                conn = NULL;
--        } else if (protocol == PROTO_GIT) {
-         struct strbuf request = STRBUF_INIT;
-         /*
-          * Set up virtual host information based on where we will
-@@ -925,6 +905,41 @@ struct child_process *git_connect(int fd[2],
-const char *url,
-
-         free(target_host);
-         strbuf_release(&request);
-+        return conn;
-+}
-+
-+/*
-+ * This returns a dummy child_process if the transport protocol does not
-+ * need fork(2), or a struct child_process object if it does.  Once done,
-+ * finish the connection with finish_connect() with the value returned from
-+ * this function (it is safe to call finish_connect() with NULL to support
-+ * the former case).
-+ *
-+ * If it returns, the connect is successful; it just dies on errors (this
-+ * will hopefully be changed in a libification effort, to return NULL when
-+ * the connection failed).
-+ */
-+struct child_process *git_connect(int fd[2], const char *url,
-+                                  const char *prog, int flags)
-+{
-+        char *hostandport, *path;
-+        struct child_process *conn = &no_fork;
-+        enum protocol protocol;
-+
-+        /* Without this we cannot rely on waitpid() to tell
-+         * what happened to our children.
-+         */
-+        signal(SIGCHLD, SIG_DFL);
-+
-+        protocol = parse_connect_url(url, &hostandport, &path);
-+        if ((flags & CONNECT_DIAG_URL) && (protocol != PROTO_SSH)) {
-+                printf("Diag: url=%s\n", url ? url : "NULL");
-+                printf("Diag: protocol=%s\n", prot_name(protocol));
-+                printf("Diag: hostandport=%s\n", hostandport ?
-hostandport : "NULL");
-+                printf("Diag: path=%s\n", path ? path : "NULL");
-+                conn = NULL;
-+        } else if (protocol == PROTO_GIT) {
-+                conn = git_connect_git(fd, hostandport, path, prog, flags);
-         } else {
-                 struct strbuf cmd = STRBUF_INIT;
-                 const char *const *var;
+(Patches 1, 2, 4, and 5 seem fine to me.)
