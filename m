@@ -2,87 +2,196 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A00EB202A0
-	for <e@80x24.org>; Mon, 23 Oct 2017 21:52:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 140C0202A0
+	for <e@80x24.org>; Mon, 23 Oct 2017 22:16:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751696AbdJWVww (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Oct 2017 17:52:52 -0400
-Received: from mail-io0-f171.google.com ([209.85.223.171]:56302 "EHLO
-        mail-io0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751405AbdJWVwv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Oct 2017 17:52:51 -0400
-Received: by mail-io0-f171.google.com with SMTP id p186so21704969ioe.12
-        for <git@vger.kernel.org>; Mon, 23 Oct 2017 14:52:51 -0700 (PDT)
+        id S1751388AbdJWWQP (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Oct 2017 18:16:15 -0400
+Received: from mail-qk0-f180.google.com ([209.85.220.180]:50576 "EHLO
+        mail-qk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751266AbdJWWQO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Oct 2017 18:16:14 -0400
+Received: by mail-qk0-f180.google.com with SMTP id o187so23977276qke.7
+        for <git@vger.kernel.org>; Mon, 23 Oct 2017 15:16:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Zzt7r8HxT7St+QllmzEGa5ZbX0AxreQ8mxFasW/UN7s=;
-        b=UeU09t4LpiKJ2ScS5OPo3I+7DwjMYq/AgQurOTVhwOeSigarBbYtS11AxhgY9cb2BF
-         hub+nSgbVfRidvGqva++EWKb16zvjozZ0X8vH7QY5UAypQlTPUMlvZ1KNnquypxw1dQ1
-         vsJC+xV8znbcDOkelnZNEA03SAQ5EeTg6mN8g3Ebs7AL5OxGt1lgZQZoIzvEU96ofw2I
-         XngnZdgrpXCC97kLhvoR31ne7wPe9R+vFWw4IaFR+lnrhEex3ppSQA/15ceDs7+l8spr
-         6YADul3HjK0Y/FY8kB6dx96fXYENiNMLGuLxu0qHkxeaHmzastMlddqfhdDphMNRknO/
-         vmhw==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=TFwqft5JCKi2t3+QCUOlQ08pZhflx6dZoNgft1ZhRLY=;
+        b=MuEk9iwziqgVsPh8d1zWRc59ooM7RpmsLZp1qMDbY2TJwaQrBNriGYyjeCH2R65qHO
+         z2ZDifiglBkwCbyfIXrxZ2gLI+CIlB1CqND+a8kaI7V9m3bNe/ZAwzIJS5v94TBl1aMF
+         qJcr4iMcsnrfwVgv9KD3IvafwVaFziR5OQfBT81bixwYnAI1fER+11VHI9ddOJ5RM/lX
+         +oennVtnP20MiBAmWYP9J5bzx2c2f0PQTwCCJHC6HmifzGyTRQlhOtMD61me5zI/YKWK
+         0Pb1F2X0OHU0ESy4bLl8YWWF68YxsOrPvkdgG9mkgfdz7hM2sEcn6NNk2PjSXOQVYjLf
+         5LLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Zzt7r8HxT7St+QllmzEGa5ZbX0AxreQ8mxFasW/UN7s=;
-        b=Fky+AQkYLWYsdgJoEADAAWNwSrC5N38FyPlgF0/FwXquMUKldD+//FW+mbkLp/L1qm
-         BmdzEuGsmbGFVoGMShm3JGhoPbRjYa+I3k7XHu98fG2MXoRM/JgvdMFzjAaB0s0Xp2Aq
-         vm5mMIIbxUgMZRayWA/lWfe/Oq9bq8MZ6BdcKir30t3sepxRJEyFiibVQenuNQBeO7AV
-         rTOQLMOmOYgg5XAF49m3VHlM8YTlrbhGB4CF9BjmDObVgfENVnOOapr+rIiNCaT3zhMI
-         RC89oM81OqzZYR2WS5CqUyvZ/RolOLbkyO4pAUHCuJmCMlJ/HLj6u7s/2mxpFw5wLz4f
-         h1nw==
-X-Gm-Message-State: AMCzsaX4EhALTlmos9cCR/ncHaXExfInLvZJ0or7EcikpWcuLeQbU5p1
-        aRY3xlnQL6pIJ5gYCpZ0TIe2q1pq
-X-Google-Smtp-Source: ABhQp+RXZ7OabC7JLTcljzukoPO1hfJ1g8ynMEU6lhyThATwxl3+fwcefXoqG7DIykNn6K0gxdfNWQ==
-X-Received: by 10.107.222.17 with SMTP id v17mr19090164iog.283.1508795569096;
-        Mon, 23 Oct 2017 14:52:49 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id h20sm3500885iob.65.2017.10.23.14.52.48
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 23 Oct 2017 14:52:48 -0700 (PDT)
-Date:   Mon, 23 Oct 2017 14:52:46 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Kevin Daudt <me@ikke.info>
-Cc:     git@vger.kernel.org,
-        Rafael =?iso-8859-1?Q?Ascens=E3o?= <rafa.almas@gmail.com>,
-        Martin =?iso-8859-1?Q?=C5gren?= <martin.agren@gmail.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [PATCH v2] column: show auto columns when pager is active
-Message-ID: <20171023215246.r3xevx5jey5pyuuz@aiede.mtv.corp.google.com>
-References: <20171011172310.2932-1-me@ikke.info>
- <20171016183511.12528-1-me@ikke.info>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=TFwqft5JCKi2t3+QCUOlQ08pZhflx6dZoNgft1ZhRLY=;
+        b=hdzW/H8HSvJ8CkVMgrwvV6OkHqeKcslZmBNB0RlV4xBCqbZSMQtmWwr2jqN6k4r936
+         0QoHV5blbuoDXxWMBSJFJW3cRaEwtXvtvYM6iFSavhRU2fdn1JhID4FAKe4/AuPLowg3
+         fjYmwOMnRw7ln2oq77MHGYmkpM23/RDWC4naOYOABXjUaTdVRLHCX8/9d3PDm8Lh34te
+         NFcIJOiJFR8jCTSF4YXKw2eqG0dVdcdhYTr+FMHJnk6WHTxWnbR9o63rx5X5d2Sq4DRE
+         7mu5UrQpPKtrwNBct5ruMxBSfwzMnFdbwzxkBpthvqLiQoKFaVSIC6yZxlr/GyizWcSo
+         ACGw==
+X-Gm-Message-State: AMCzsaVpIMAeqQaP0Tub/wGb4ox6R74ijrRiB5BWT6I3D7gX1dJepVLV
+        OXlvTwnVpBtnOStpau+X0y6Q3WRPy47RUfirvF2gZg==
+X-Google-Smtp-Source: ABhQp+RuSN8EiYVzWbTjhkf0Y7WxdAWgmlDdZ6egzJTSUjQfhhu55LTFWRt3CWi3mWvtbEdqGFafWKYzGkH1mENPqtk=
+X-Received: by 10.55.175.132 with SMTP id y126mr21948244qke.45.1508796973734;
+ Mon, 23 Oct 2017 15:16:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20171016183511.12528-1-me@ikke.info>
-User-Agent: NeoMutt/20170609 (1.8.3)
+Received: by 10.140.102.70 with HTTP; Mon, 23 Oct 2017 15:16:13 -0700 (PDT)
+In-Reply-To: <20171023212916.4aarismli6io4ro6@aiede.mtv.corp.google.com>
+References: <20170926235627.79606-1-bmwill@google.com> <20171003201507.3589-1-bmwill@google.com>
+ <20171003201507.3589-11-bmwill@google.com> <20171003214206.GY19555@aiede.mtv.corp.google.com>
+ <20171016171812.GA4487@google.com> <20171023212740.qodxzsq5w7rn2r6y@aiede.mtv.corp.google.com>
+ <20171023212916.4aarismli6io4ro6@aiede.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 23 Oct 2017 15:16:13 -0700
+Message-ID: <CAGZ79kYwARXNWRS4AgwTP7peZiWiwCBvWFiEr9TbpbWjgysfZA@mail.gmail.com>
+Subject: Re: [PATCH 1/5] connect: split git:// setup into a separate function
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Brandon Williams <bmwill@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Bryan Turner <bturner@atlassian.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jeff King <peff@peff.net>, William Yan <wyan@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Mon, Oct 23, 2017 at 2:29 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> The git_connect function is growing long.  Split the
+> PROTO_GIT-specific portion to a separate function to make it easier to
+> read.
+>
+> No functional change intended.
+>
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 
-Kevin Daudt wrote:
+This also looks good to me.
 
-> --- a/column.c
-> +++ b/column.c
-> @@ -5,6 +5,7 @@
->  #include "parse-options.h"
->  #include "run-command.h"
->  #include "utf8.h"
-> +#include "pager.c"
+unrelated:
+Patch 2 was very easy to review using "log -p -w --color-moved",
+this one however was not. This is because -w caused the diff machinery
+to generate a completely different diff. (Not showing the new function
+completely but some weird function header trickery. The white space
+mangled output is below; most of it was colored "moved")
 
-Should this be pager.h?
+I had to have -w as otherwise --color-moved would not work,
+so maybe we want to have an option to ignore white space for the
+sake of move detection only, not affecting the diff in general;
+maybe '--ignore-white-space-in-move-detection'?
+
+I think once this option is given, all we have to do is pay attention to
+this option in diff.c#moved_entry_cmp/next_byte, which is best built
+on top of Peffs recent fixes origin/jk/diff-color-moved-fix.
+Would that be of interest for people?
 
 Thanks,
-Jonathan
+Stefan
+
+diff --git a/connect.c b/connect.c
+index 7fbd396b35..068e70caad 100644
+--- a/connect.c
++++ b/connect.c
+@@ -851,36 +851,16 @@ static enum ssh_variant
+determine_ssh_variant(const char *ssh_command,
+ }
+
+ /*
+- * This returns a dummy child_process if the transport protocol does not
+- * need fork(2), or a struct child_process object if it does.  Once done,
+- * finish the connection with finish_connect() with the value returned from
+- * this function (it is safe to call finish_connect() with NULL to support
+- * the former case).
++ * Open a connection using Git's native protocol.
+  *
+- * If it returns, the connect is successful; it just dies on errors (this
+- * will hopefully be changed in a libification effort, to return NULL when
+- * the connection failed).
++ * The caller is responsible for freeing hostandport, but this function may
++ * modify it (for example, to truncate it to remove the port part).
+  */
+-struct child_process *git_connect(int fd[2], const char *url,
+-                                  const char *prog, int flags)
++static struct child_process *git_connect_git(int fd[2], char *hostandport,
++                                             const char *path, const
+char *prog,
++                                             int flags)
+ {
+-        char *hostandport, *path;
+         struct child_process *conn = &no_fork;
+-        enum protocol protocol;
+-
+-        /* Without this we cannot rely on waitpid() to tell
+-         * what happened to our children.
+-         */
+-        signal(SIGCHLD, SIG_DFL);
+-
+-        protocol = parse_connect_url(url, &hostandport, &path);
+-        if ((flags & CONNECT_DIAG_URL) && (protocol != PROTO_SSH)) {
+-                printf("Diag: url=%s\n", url ? url : "NULL");
+-                printf("Diag: protocol=%s\n", prot_name(protocol));
+-                printf("Diag: hostandport=%s\n", hostandport ?
+hostandport : "NULL");
+-                printf("Diag: path=%s\n", path ? path : "NULL");
+-                conn = NULL;
+-        } else if (protocol == PROTO_GIT) {
+         struct strbuf request = STRBUF_INIT;
+         /*
+          * Set up virtual host information based on where we will
+@@ -925,6 +905,41 @@ struct child_process *git_connect(int fd[2],
+const char *url,
+
+         free(target_host);
+         strbuf_release(&request);
++        return conn;
++}
++
++/*
++ * This returns a dummy child_process if the transport protocol does not
++ * need fork(2), or a struct child_process object if it does.  Once done,
++ * finish the connection with finish_connect() with the value returned from
++ * this function (it is safe to call finish_connect() with NULL to support
++ * the former case).
++ *
++ * If it returns, the connect is successful; it just dies on errors (this
++ * will hopefully be changed in a libification effort, to return NULL when
++ * the connection failed).
++ */
++struct child_process *git_connect(int fd[2], const char *url,
++                                  const char *prog, int flags)
++{
++        char *hostandport, *path;
++        struct child_process *conn = &no_fork;
++        enum protocol protocol;
++
++        /* Without this we cannot rely on waitpid() to tell
++         * what happened to our children.
++         */
++        signal(SIGCHLD, SIG_DFL);
++
++        protocol = parse_connect_url(url, &hostandport, &path);
++        if ((flags & CONNECT_DIAG_URL) && (protocol != PROTO_SSH)) {
++                printf("Diag: url=%s\n", url ? url : "NULL");
++                printf("Diag: protocol=%s\n", prot_name(protocol));
++                printf("Diag: hostandport=%s\n", hostandport ?
+hostandport : "NULL");
++                printf("Diag: path=%s\n", path ? path : "NULL");
++                conn = NULL;
++        } else if (protocol == PROTO_GIT) {
++                conn = git_connect_git(fd, hostandport, path, prog, flags);
+         } else {
+                 struct strbuf cmd = STRBUF_INIT;
+                 const char *const *var;
