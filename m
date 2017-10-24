@@ -6,30 +6,30 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 435611FF72
-	for <e@80x24.org>; Tue, 24 Oct 2017 18:54:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1666D1FF72
+	for <e@80x24.org>; Tue, 24 Oct 2017 18:54:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751694AbdJXSyC (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Oct 2017 14:54:02 -0400
-Received: from siwi.pair.com ([209.68.5.199]:22463 "EHLO siwi.pair.com"
+        id S932124AbdJXSyd (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Oct 2017 14:54:33 -0400
+Received: from siwi.pair.com ([209.68.5.199]:42881 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751407AbdJXSx6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Oct 2017 14:53:58 -0400
+        id S1751711AbdJXSyD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Oct 2017 14:54:03 -0400
 Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id B59EC84593;
-        Tue, 24 Oct 2017 14:53:57 -0400 (EDT)
+        by siwi.pair.com (Postfix) with ESMTP id 767B1845A3;
+        Tue, 24 Oct 2017 14:54:02 -0400 (EDT)
 Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 23B7484597;
-        Tue, 24 Oct 2017 14:53:57 -0400 (EDT)
+        by siwi.pair.com (Postfix) with ESMTPSA id D831984597;
+        Tue, 24 Oct 2017 14:54:01 -0400 (EDT)
 From:   Jeff Hostetler <git@jeffhostetler.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, jonathantanmy@google.com,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH 01/13] dir: allow exclusions from blob in addition to file
-Date:   Tue, 24 Oct 2017 18:53:20 +0000
-Message-Id: <20171024185332.57261-2-git@jeffhostetler.com>
+Subject: [PATCH 07/13] list-objects-filter-options: common argument parsing
+Date:   Tue, 24 Oct 2017 18:53:26 +0000
+Message-Id: <20171024185332.57261-8-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20171024185332.57261-1-git@jeffhostetler.com>
 References: <20171024185332.57261-1-git@jeffhostetler.com>
@@ -40,117 +40,194 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Refactor add_excludes() to separate the reading of the
-exclude file into a buffer and the parsing of the buffer
-into exclude_list items.
-
-Add add_excludes_from_blob_to_list() to allow an exclude
-file be specified with an OID.
+Create common routines and defines for parsing
+list-objects-filter-related command line arguments and
+pack-protocol fields.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- dir.c | 51 +++++++++++++++++++++++++++++++++++++++++++++++++--
- dir.h |  3 +++
- 2 files changed, 52 insertions(+), 2 deletions(-)
+ Makefile                      |   1 +
+ list-objects-filter-options.c | 101 ++++++++++++++++++++++++++++++++++++++++++
+ list-objects-filter-options.h |  50 +++++++++++++++++++++
+ 3 files changed, 152 insertions(+)
+ create mode 100644 list-objects-filter-options.c
+ create mode 100644 list-objects-filter-options.h
 
-diff --git a/dir.c b/dir.c
-index 1d17b80..d848f2b 100644
---- a/dir.c
-+++ b/dir.c
-@@ -739,6 +739,10 @@ static void invalidate_directory(struct untracked_cache *uc,
- 		dir->dirs[i]->recurse = 0;
- }
- 
-+static int add_excludes_from_buffer(char *buf, size_t size,
-+				    const char *base, int baselen,
-+				    struct exclude_list *el);
+diff --git a/Makefile b/Makefile
+index fc82664..b9ff0b4 100644
+--- a/Makefile
++++ b/Makefile
+@@ -810,6 +810,7 @@ LIB_OBJS += list-objects.o
+ LIB_OBJS += list-objects-filter-blobs-limit.o
+ LIB_OBJS += list-objects-filter-blobs-none.o
+ LIB_OBJS += list-objects-filter-map.o
++LIB_OBJS += list-objects-filter-options.o
+ LIB_OBJS += list-objects-filter-sparse.o
+ LIB_OBJS += ll-merge.o
+ LIB_OBJS += lockfile.o
+diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
+new file mode 100644
+index 0000000..40f48ac
+--- /dev/null
++++ b/list-objects-filter-options.c
+@@ -0,0 +1,101 @@
++#include "cache.h"
++#include "commit.h"
++#include "config.h"
++#include "revision.h"
++#include "list-objects.h"
++#include "list-objects-filter-options.h"
 +
- /*
-  * Given a file with name "fname", read it (either from disk, or from
-  * an index if 'istate' is non-null), parse it and store the
-@@ -754,9 +758,9 @@ static int add_excludes(const char *fname, const char *base, int baselen,
- 			struct sha1_stat *sha1_stat)
- {
- 	struct stat st;
--	int fd, i, lineno = 1;
-+	int fd;
- 	size_t size = 0;
--	char *buf, *entry;
-+	char *buf;
- 
- 	fd = open(fname, O_RDONLY);
- 	if (fd < 0 || fstat(fd, &st) < 0) {
-@@ -813,6 +817,17 @@ static int add_excludes(const char *fname, const char *base, int baselen,
- 		}
- 	}
- 
-+	add_excludes_from_buffer(buf, size, base, baselen, el);
++/*
++ * Parse value of the argument to the "filter" keword.
++ * On the command line this looks like: --filter=<arg>
++ * and in the pack protocol as: filter <arg>
++ *
++ * <arg> ::= blob:none
++ *           blob:limit:<n>[kmg]
++ *           sparse:oid:<oid-expression>
++ *           sparse:path:<pathname>
++ */
++int parse_list_objects_filter(struct list_objects_filter_options *filter_options,
++			      const char *arg)
++{
++	struct object_context oc;
++	struct object_id sparse_oid;
++	const char *v0;
++	const char *v1;
++
++	if (filter_options->choice)
++		die(_("multiple object filter types cannot be combined"));
++
++	/*
++	 * TODO consider rejecting 'arg' if it contains any
++	 * TODO injection characters (since we might send this
++	 * TODO to a sub-command or to the server and we don't
++	 * TODO want to deal with legacy quoting/escaping for
++	 * TODO a new feature).
++	 */
++
++	filter_options->raw_value = strdup(arg);
++
++	if (skip_prefix(arg, "blob:", &v0) || skip_prefix(arg, "blobs:", &v0)) {
++		if (!strcmp(v0, "none")) {
++			filter_options->choice = LOFC_BLOB_NONE;
++			return 0;
++		}
++
++		if (skip_prefix(v0, "limit=", &v1) &&
++		    git_parse_ulong(v1, &filter_options->blob_limit_value)) {
++			filter_options->choice = LOFC_BLOB_LIMIT;
++			return 0;
++		}
++	}
++	else if (skip_prefix(arg, "sparse:", &v0)) {
++		if (skip_prefix(v0, "oid=", &v1)) {
++			filter_options->choice = LOFC_SPARSE_OID;
++			if (!get_oid_with_context(v1, GET_OID_BLOB,
++						  &sparse_oid, &oc)) {
++				/*
++				 * We successfully converted the <oid-expr>
++				 * into an actual OID.  Rewrite the raw_value
++				 * in canonoical form with just the OID.
++				 * (If we send this request to the server, we
++				 * want an absolute expression rather than a
++				 * local-ref-relative expression.)
++				 */
++				free((char *)filter_options->raw_value);
++				filter_options->raw_value =
++					xstrfmt("sparse:oid=%s",
++						oid_to_hex(&sparse_oid));
++				filter_options->sparse_oid_value =
++					oiddup(&sparse_oid);
++			} else {
++				/*
++				 * We could not turn the <oid-expr> into an
++				 * OID.  Leave the raw_value as is in case
++				 * the server can parse it.  (It may refer to
++				 * a branch, commit, or blob we don't have.)
++				 */
++			}
++			return 0;
++		}
++
++		if (skip_prefix(v0, "path=", &v1)) {
++			filter_options->choice = LOFC_SPARSE_PATH;
++			filter_options->sparse_path_value = strdup(v1);
++			return 0;
++		}
++	}
++
++	die(_("invalid filter expression '%s'"), arg);
 +	return 0;
 +}
 +
-+static int add_excludes_from_buffer(char *buf, size_t size,
-+				    const char *base, int baselen,
-+				    struct exclude_list *el)
++int opt_parse_list_objects_filter(const struct option *opt,
++				  const char *arg, int unset)
 +{
-+	int i, lineno = 1;
-+	char *entry;
++	struct list_objects_filter_options *filter_options = opt->value;
 +
- 	el->filebuf = buf;
- 
- 	if (skip_utf8_bom(&buf, size))
-@@ -841,6 +856,38 @@ int add_excludes_from_file_to_list(const char *fname, const char *base,
- 	return add_excludes(fname, base, baselen, el, istate, NULL);
- }
- 
-+int add_excludes_from_blob_to_list(
-+	struct object_id *oid,
-+	const char *base, int baselen,
-+	struct exclude_list *el)
-+{
-+	char *buf;
-+	unsigned long size;
-+	enum object_type type;
++	assert(arg);
++	assert(!unset);
 +
-+	buf = read_sha1_file(oid->hash, &type, &size);
-+	if (!buf)
-+		return -1;
-+
-+	if (type != OBJ_BLOB) {
-+		free(buf);
-+		return -1;
-+	}
-+
-+	if (size == 0) {
-+		free(buf);
-+		return 0;
-+	}
-+
-+	if (buf[size - 1] != '\n') {
-+		buf = xrealloc(buf, st_add(size, 1));
-+		buf[size++] = '\n';
-+	}
-+
-+	add_excludes_from_buffer(buf, size, base, baselen, el);
-+	return 0;
++	return parse_list_objects_filter(filter_options, arg);
 +}
+diff --git a/list-objects-filter-options.h b/list-objects-filter-options.h
+new file mode 100644
+index 0000000..23bd68e
+--- /dev/null
++++ b/list-objects-filter-options.h
+@@ -0,0 +1,50 @@
++#ifndef LIST_OBJECTS_FILTER_OPTIONS_H
++#define LIST_OBJECTS_FILTER_OPTIONS_H
 +
- struct exclude_list *add_exclude_list(struct dir_struct *dir,
- 				      int group_type, const char *src)
- {
-diff --git a/dir.h b/dir.h
-index e371705..1bcf391 100644
---- a/dir.h
-+++ b/dir.h
-@@ -256,6 +256,9 @@ extern struct exclude_list *add_exclude_list(struct dir_struct *dir,
- extern int add_excludes_from_file_to_list(const char *fname, const char *base, int baselen,
- 					  struct exclude_list *el, struct  index_state *istate);
- extern void add_excludes_from_file(struct dir_struct *, const char *fname);
-+extern int add_excludes_from_blob_to_list(struct object_id *oid,
-+					  const char *base, int baselen,
-+					  struct exclude_list *el);
- extern void parse_exclude_pattern(const char **string, int *patternlen, unsigned *flags, int *nowildcardlen);
- extern void add_exclude(const char *string, const char *base,
- 			int baselen, struct exclude_list *el, int srcpos);
++#include "parse-options.h"
++
++/*
++ * Common declarations and utilities for filtering objects (such as omitting
++ * large blobs) in list_objects:traverse_commit_list() and git-rev-list.
++ */
++
++enum list_objects_filter_choice {
++	LOFC_DISABLED = 0,
++	LOFC_BLOB_NONE,
++	LOFC_BLOB_LIMIT,
++	LOFC_SPARSE_OID,
++	LOFC_SPARSE_PATH,
++};
++
++struct list_objects_filter_options {
++	/*
++	 * The raw argument value given on the command line or
++	 * protocol request.  (The part after the "--keyword=".)
++	 */
++	char *raw_value;
++
++	/*
++	 * Parsed values. Only 1 will be set depending on the flags below.
++	 */
++	struct object_id *sparse_oid_value;
++	char *sparse_path_value;
++	unsigned long blob_limit_value;
++
++	enum list_objects_filter_choice choice;
++};
++
++/* Normalized command line arguments */
++#define CL_ARG__FILTER "filter"
++
++int parse_list_objects_filter(struct list_objects_filter_options *filter_options,
++			      const char *arg);
++
++int opt_parse_list_objects_filter(const struct option *opt,
++				  const char *arg, int unset);
++
++#define OPT_PARSE_LIST_OBJECTS_FILTER(fo) \
++	{ OPTION_CALLBACK, 0, CL_ARG__FILTER, fo, N_("args"), \
++	  N_("object filtering"), PARSE_OPT_NONEG, \
++	  opt_parse_list_objects_filter }
++
++#endif /* LIST_OBJECTS_FILTER_OPTIONS_H */
 -- 
 2.9.3
 
