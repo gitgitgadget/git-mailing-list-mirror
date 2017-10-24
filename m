@@ -2,263 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 11FEF20437
-	for <e@80x24.org>; Tue, 24 Oct 2017 10:02:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0A257202DD
+	for <e@80x24.org>; Tue, 24 Oct 2017 10:26:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752237AbdJXKCO (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Oct 2017 06:02:14 -0400
-Received: from smtp-out-3.talktalk.net ([62.24.135.67]:13561 "EHLO
-        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751807AbdJXKCM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Oct 2017 06:02:12 -0400
-Received: from [192.168.2.201] ([92.22.15.39])
-        by smtp.talktalk.net with SMTP
-        id 6w1peEHN8lmqO6w1weCkm8; Tue, 24 Oct 2017 11:02:08 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net; s=1605;
-        t=1508839330; bh=jzwxY/6sE/MozPHg38rUJ4UkpwXDRiRD6Rd8TACA7Ts=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=Cmm8SrNPZmKDuiMT/0GbsWM1jJuxk4fzKLrpfgFc+7B+LC7/2xCZqkYSmYVcYn0rT
-         ZTTjAGh2H8rm7VVHCjKKLIVQafWUdf20jHgDi6XCvArhjKczkpaW6OSVlXmwPKd8Wa
-         +zLCv5JckkMoM4eSFui5+OySSvRPwBzy/62NXoNA=
-X-Originating-IP: [92.22.15.39]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=H+Sr+6Qi c=1 sm=1 tr=0 a=3EVUng5azuUHeJ78rNzxRg==:117
- a=3EVUng5azuUHeJ78rNzxRg==:17 a=IkcTkHD0fZMA:10 a=nN7BH9HXAAAA:8
- a=evINK-nbAAAA:8 a=WCphT0a9x1ASOX0xwoIA:9 a=YiibyFmH85CshXC8:21
- a=pDWqcwFGsno9L7SK:21 a=QEXdDO2ut3YA:10 a=SHUmGpGg8TAA:10
- a=RfR_gqz1fSpA9VikTjo0:22
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [RFC PATCH 2/8] commit: move code to update HEAD to libgit
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <20170925101041.18344-1-phillip.wood@talktalk.net>
- <20170925101041.18344-3-phillip.wood@talktalk.net>
- <xmqqo9pjth92.fsf@gitster.mtv.corp.google.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <7e9318b4-1281-11ce-8144-5f7e4449e2e1@talktalk.net>
-Date:   Tue, 24 Oct 2017 11:01:45 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.4.0
+        id S932408AbdJXK0J (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Oct 2017 06:26:09 -0400
+Received: from mout.gmx.net ([212.227.17.20]:57184 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S932304AbdJXK0I (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Oct 2017 06:26:08 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LpsmR-1daKsL3Wbv-00fkU7; Tue, 24
+ Oct 2017 12:26:06 +0200
+Date:   Tue, 24 Oct 2017 12:26:06 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     git-for-windows@googlegroups.com, git@vger.kernel.org
+Subject: Re: [ANNOUNCE] Git for Windows 2.14.3
+In-Reply-To: <20171024014718.16476-1-johannes.schindelin@gmx.de>
+Message-ID: <alpine.DEB.2.21.1.1710241221010.6482@virtualbox>
+References: <20171024014718.16476-1-johannes.schindelin@gmx.de>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <xmqqo9pjth92.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfOyACIC7a0pUZYCWBgHDVuAMde+LzaqfIRHUl7jBYr/GvGto7wr4dXJIV1o5olQeps1EGcBBdIFcuCABlAZgLaEKS78Nh+inwT8D+hww3T2ps1AUEg/0
- t3s8nV1D9qK8bIDPuqzl/4TVT2EOblcFwYptnGH3a0YQCSD1odsGAN3lvmGNAvPi3A3AiEUCBgMU/btDHESSWXYsPx3cFqZBHqJNgsNXGCQ5/LtmX95pc0g2
- QZIrmXhu5/eqk+bWpvcBbXQlbtE/6XP97xxr3wh4W5dqxzV3dwBPi/DdhKtHcwSR
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:bsaxrLOF4MRPQTqmPa8UnoLUJtMIKq5qCJowm0/M4zfAQ7IHkSl
+ Xb86BMdXOz3jK1jl0xbFhv27mVFh0Zd+GxX69pnjWhR13m9tmFizl1GS7uhLks8Y9kUgi/i
+ c0T7Sz9GLDIxayF52cyVHVK4KDUwtMpjaqD835QqVh/7+L7wdQ+DlRZAqF0dXr5AkVJIU3S
+ TxYUddoLDmYG5mAbXVs2w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:EkqU4spFx3U=:pk6QDZ4mn1e/IAbZcueFhN
+ pviHbm64WZyFHYcfHMYHul6gdZeeZs+4m6xMp2UJe737ZO1/VdI0usi17+yLyVx6pbThQP+07
+ spgvgQZaC7iQHCshcfM125lY/SqsftNOd+/pzlXnl2k6AbMjhNYrOrbtpKeuONnZOSfp1QSVJ
+ Dkuv5F0xwESjjM0n4dAqrvho6hEST2ImzxQsKxXKEYP5GXTO2wU0MWaccZo9BaYJBF+Oa6fpH
+ rENF5sZFRtWi6KBBlf5HLOwT+YPeo77VRsooY4F4Rknrrl0IVvskR46ca/qMpxQ5TV5lGpk0f
+ UrwhSYOAgXlypMu807OnknCP6mr9jfEbE0So2fTNzAUrv7jEWSkAmEeWEGekMLRBPidBqNh9X
+ 6IsOIkw1Czvln4bHbYRDztfT6wAq0p8nflBHxVJfq+BPyjubZzLyR+R6e6UKOm0BHp791js65
+ ynNE4wi7sehJxYzO5ImnsdrFQaWrSb0iKrI2ae/U7hcGINZfWXzOkRdCWs9ZsAtRbmlOTVNMK
+ ZiNozQzyppyflVCYyuSFBKb3KMSn+jOg0H/2vOBMJxUSigzEf44XzywFM9eraBrBQ5G/yxrxp
+ 6U70EXx2c4rlsYO2w7nsO724wGTdeWxxZrme6nWYhHs5ouUFdZyjTnF+6XWtSUbsslEDTnxQt
+ Au6xP58nCZPjs/DpWPZQkko7Aj0BSzjA8e68g5R+mKJxyx2GmljCkPNGv1kv7SxALZb918KrX
+ q8thr0W914Av+kPx829qaS8Xk114GA3Aqx3MhrW0vmos/ICvVv7BPaU93DWvS83Q7jvt2vthR
+ 1Wl47DCwRyepBobH7n/4WL5hDp3TQXq9t0hdKiDtrLfQldyF9dAB2zHNISjQXWy60lqhlAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 07/10/17 10:54, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood@talktalk.net> writes:
+Dear Git users,
+
+On Tue, 24 Oct 2017, Johannes Schindelin wrote:
+
+> Dear Git users,
 > 
->> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->>
->> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
->> ---
+> It is my pleasure to announce that Git for Windows 2.14.3 is available from:
 > 
-> This seems to do a lot more than just moving code, most notably, it
-> uses setenv() to affect what happens in any subprocesses we may
-> spawn, and it is unclear if it was verified that this patch is free
-> of unwanted consequences due to that change (and any others I may
-> have missed while reading this patch, if any).
->
-> I suspect that it would be sufficient to make update_head() helper
-> function take the reflog action message as another parameter
-> instead to fix the above, but there may be other reasons why you
-> chose to do it this way---I cannot read it in your empty log
-> message, though.
+> 	https://git-for-windows.github.io/
 
-Good point, sorry I should have added some explanation about that. I
-went with using setenv() rather than passing a reflog message to
-update_head() as it meant there were no changes needed on the sequencer
-side as it already sets GIT_REFLOG_ACTION. As the sequencer already sets
-GIT_REFLOG_ACTION, and git-commit does not fork any subprocesses I don't
-think this change has any unwanted consequences (I pushed a branch to
-github before submitting the patches and the test suite passes on
-travis). It would however be clearer to add a parameter to update_head()
-for the reflog message as you suggested.
+... and at this point, usually the release notes are repeated. In this
+case, they were not, for a simple reason: I am working very hard on
+automating as much of the release engineering of Git for Windows (first,
+because it is no fun to do it manually, second, it costs a lot of my time,
+third, it is not robust if I can easily forget a step, fourth, it is an
+awfully low bus number, and fifth, it hogs my computer for hours during
+which I could do other work otherwise, when I have a perfectly fine cloud
+available at my fingertips). And despite working on this for the entire
+day (and until almost 4am), a couple of things did not work correctly,
+including the generation of this mail. I will make sure to write a blog
+post about this endeavor, in case anybody is interested in the background
+story.
 
-> 
-> I will not give line-by-line style nitpick but in general we do not
-> leave a SP between function name and the open parenthesis that
-> starts its argument list.  New code in this patch seems to use
-> mixture of styles.
+But in the short run: here are the missing release notes:
 
-Sorry I should have spotted those before I posted this series, I go
-though all the patches and fix them (this would be a good opportunity
-for me to try using git-clang-format from next)
+Changes since Git for Windows v2.14.2(3) (October 12th 2017)
 
-Thanks for looking at this, did you have time to look at the other
-changes in this series or did this patch put you off looking further?
-I'll update and repost probably towards the end of next week. If I
-continue to base these patches on master then I think the patch that
-moves the code to print the commit summary will have (trivial) conflicts
-with the changes in ao/check-resolve-ref-unsafe-result in pu do you want
-the new patches based pu or are you happy with them based on master?
+New Features
 
-Best Wishes
+  * Comes with Git v2.14.3.
+  * Git for Windows now ships with a diff helper for OpenOffice
+    documents.
+  * Comes with Git LFS v2.3.4.
+  * Comes with cURL v7.56.1.
 
-Phillip
+Bug Fixes
 
->> diff --git a/builtin/commit.c b/builtin/commit.c
->> index 0b8c1ef6f57cfed328d12255e6834adb4bda4137..497778ba2c02afdd4a337969a27ca781e8389040 100644
->> --- a/builtin/commit.c
->> +++ b/builtin/commit.c
->> @@ -1578,13 +1578,11 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
->>  	struct strbuf sb = STRBUF_INIT;
->>  	struct strbuf author_ident = STRBUF_INIT;
->>  	const char *index_file, *reflog_msg;
->> -	char *nl;
->>  	struct object_id oid;
->>  	struct commit_list *parents = NULL;
->>  	struct stat statbuf;
->>  	struct commit *current_head = NULL;
->>  	struct commit_extra_header *extra = NULL;
->> -	struct ref_transaction *transaction;
->>  	struct strbuf err = STRBUF_INIT;
->>  
->>  	if (argc == 2 && !strcmp(argv[1], "-h"))
->> @@ -1625,10 +1623,10 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
->>  	reflog_msg = getenv("GIT_REFLOG_ACTION");
->>  	if (!current_head) {
->>  		if (!reflog_msg)
->> -			reflog_msg = "commit (initial)";
->> +			setenv ("GIT_REFLOG_ACTION", "commit (initial)", 1);
->>  	} else if (amend) {
->>  		if (!reflog_msg)
->> -			reflog_msg = "commit (amend)";
->> +			setenv("GIT_REFLOG_ACTION", "commit (amend)", 1);
->>  		parents = copy_commit_list(current_head->parents);
->>  	} else if (whence == FROM_MERGE) {
->>  		struct strbuf m = STRBUF_INIT;
->> @@ -1637,7 +1635,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
->>  		struct commit_list **pptr = &parents;
->>  
->>  		if (!reflog_msg)
->> -			reflog_msg = "commit (merge)";
->> +			setenv("GIT_REFLOG_ACTION", "commit (merge)", 1);
->>  		pptr = commit_list_append(current_head, pptr);
->>  		fp = xfopen(git_path_merge_head(), "r");
->>  		while (strbuf_getline_lf(&m, fp) != EOF) {
->> @@ -1660,9 +1658,9 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
->>  			parents = reduce_heads(parents);
->>  	} else {
->>  		if (!reflog_msg)
->> -			reflog_msg = (whence == FROM_CHERRY_PICK)
->> -					? "commit (cherry-pick)"
->> -					: "commit";
->> +			setenv("GIT_REFLOG_ACTION", (whence == FROM_CHERRY_PICK)
->> +						? "commit (cherry-pick)"
->> +						: "commit", 1);
->>  		commit_list_insert(current_head, &parents);
->>  	}
->>  
->> @@ -1707,25 +1705,10 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
->>  	strbuf_release(&author_ident);
->>  	free_commit_extra_headers(extra);
->>  
->> -	nl = strchr(sb.buf, '\n');
->> -	if (nl)
->> -		strbuf_setlen(&sb, nl + 1 - sb.buf);
->> -	else
->> -		strbuf_addch(&sb, '\n');
->> -	strbuf_insert(&sb, 0, reflog_msg, strlen(reflog_msg));
->> -	strbuf_insert(&sb, strlen(reflog_msg), ": ", 2);
->> -
->> -	transaction = ref_transaction_begin(&err);
->> -	if (!transaction ||
->> -	    ref_transaction_update(transaction, "HEAD", oid.hash,
->> -				   current_head
->> -				   ? current_head->object.oid.hash : null_sha1,
->> -				   0, sb.buf, &err) ||
->> -	    ref_transaction_commit(transaction, &err)) {
->> +	if (update_head (current_head, &oid, &sb, &err)) {
->>  		rollback_index_files();
->>  		die("%s", err.buf);
->>  	}
->> -	ref_transaction_free(transaction);
->>  
->>  	unlink(git_path_cherry_pick_head());
->>  	unlink(git_path_revert_head());
->> diff --git a/sequencer.c b/sequencer.c
->> index 319208afb3de36c97b6c62d4ecf6e641245e7a54..917ad4a16216b30adb2c2c9650217926d8db8ba7 100644
->> --- a/sequencer.c
->> +++ b/sequencer.c
->> @@ -1,10 +1,10 @@
->>  #include "cache.h"
->>  #include "config.h"
->>  #include "lockfile.h"
->> -#include "sequencer.h"
->>  #include "dir.h"
->>  #include "object.h"
->>  #include "commit.h"
->> +#include "sequencer.h"
->>  #include "tag.h"
->>  #include "run-command.h"
->>  #include "exec_cmd.h"
->> @@ -750,6 +750,43 @@ int template_untouched(const struct strbuf *sb, const char *template_file,
->>  	return rest_is_empty(sb, start - sb->buf);
->>  }
->>  
->> +int update_head(const struct commit *old_head, const struct object_id *new_head,
->> +		const struct strbuf *msg, struct strbuf *err)
->> +{
->> +	struct ref_transaction *transaction;
->> +	struct strbuf sb = STRBUF_INIT;
->> +	const char *nl, *reflog_msg;
->> +	int ret = 0;
->> +
->> +	reflog_msg = getenv("GIT_REFLOG_ACTION");
->> +	if (!reflog_msg)
->> +		reflog_msg="";
->> +
->> +	nl = strchr(msg->buf, '\n');
->> +	if (nl) {
->> +		strbuf_add(&sb, msg->buf, nl + 1 - msg->buf);
->> +	} else {
->> +		strbuf_addbuf(&sb, msg);
->> +		strbuf_addch(&sb, '\n');
->> +	}
->> +	strbuf_insert(&sb, 0, reflog_msg, strlen(reflog_msg));
->> +	strbuf_insert(&sb, strlen(reflog_msg), ": ", 2);
->> +
->> +	transaction = ref_transaction_begin(err);
->> +	if (!transaction ||
->> +	    ref_transaction_update(transaction, "HEAD", new_head->hash,
->> +				   old_head
->> +				   ? old_head->object.oid.hash : null_sha1,
->> +				   0, sb.buf, err) ||
->> +	    ref_transaction_commit(transaction, err)) {
->> +		ret = -1;
->> +	}
->> +	ref_transaction_free(transaction);
->> +	strbuf_release(&sb);
->> +
->> +	return ret;
->> +}
->> +
->>  static int is_original_commit_empty(struct commit *commit)
->>  {
->>  	const struct object_id *ptree_oid;
->> diff --git a/sequencer.h b/sequencer.h
->> index dd071cfcd82d165bd23726814b74cbf3384e1a17..87edf40e5274d59f48d5af57678100ea220d2c8a 100644
->> --- a/sequencer.h
->> +++ b/sequencer.h
->> @@ -60,4 +60,6 @@ enum cleanup_mode {
->>  int message_is_empty(const struct strbuf *sb, enum cleanup_mode cleanup_mode);
->>  int template_untouched(const struct strbuf *sb, const char *template_file,
->>  		       enum cleanup_mode cleanup_mode);
->> +int update_head(const struct commit *old_head, const struct object_id *new_head,
->> +		const struct strbuf *msg, struct strbuf *err);
->>  #endif
+  * Git for Windows now handles worktrees at the top-level of a UNC
+    share correctly.
 
+> Filename | SHA-256
+> -------- | -------
+> Git-2.14.3-64-bit.exe | 9610e082b823beb7f0da91a98d9f73e1f3f2430c21b2c4e15517dea4f981be3f
+> Git-2.14.3-32-bit.exe | 6e5a8a939f3014b396f58622954ab394d7982d036c84571394118f2360bdca96
+> PortableGit-2.14.3-64-bit.7z.exe | 2b1d952078795117a8c4549f6384275e047ebd75c10bea77e675f8b672e6d87a
+> PortableGit-2.14.3-32-bit.7z.exe | f2dcb32c3133188d0b7a2c3683adcbebcc10b054467e1754d1b8b7e534a34494
+> MinGit-2.14.3-64-bit.zip | 538294d2b1472e561493b67855f92380d8139011c74be6bf3cdc5b5d321b1345
+> MinGit-2.14.3-32-bit.zip | a91385acb1da220612790807c41d0f304b41093c474b9d7342230ec194a3398e
+> MinGit-2.14.3-busybox-64-bit.zip | b7710c7668d7ad3f1f5f7530b601d9bafbe66fcef5563c8ab74d442ac9478d8e
+> MinGit-2.14.3-busybox-32-bit.zip | 8982fd12c60a9edd1b6f5f8465354534920bae351d38c867a2f4034a807d8231
+> Git-2.14.3-64-bit.tar.bz2 | a5f09850334d5069afa0013249cc6678a7cde52c673823e5386d5cad9df41f10
+> Git-2.14.3-32-bit.tar.bz2 | 644b7d7593e675f68a5a011d19a0a917430b79fb815f6260b807c00651696fa2
+
+Ciao,
+Johannes
