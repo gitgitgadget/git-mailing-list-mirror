@@ -2,76 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A8612202A0
-	for <e@80x24.org>; Tue, 24 Oct 2017 01:47:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EEC07202A0
+	for <e@80x24.org>; Tue, 24 Oct 2017 01:54:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751271AbdJXBra (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Oct 2017 21:47:30 -0400
-Received: from mout.gmx.net ([212.227.15.18]:56543 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751220AbdJXBr3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Oct 2017 21:47:29 -0400
-Received: from localhost.localdomain ([65.55.188.220]) by mail.gmx.com
- (mrgmx003 [212.227.17.190]) with ESMTPSA (Nemesis) id
- 0MPm54-1eAdno1TAw-004zyb; Tue, 24 Oct 2017 03:47:26 +0200
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-To:     git-for-windows@googlegroups.com, git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [ANNOUNCE] Git for Windows 2.14.3
-Date:   Tue, 24 Oct 2017 01:47:18 +0000
-Message-Id: <20171024014718.16476-1-johannes.schindelin@gmx.de>
-X-Mailer: git-send-email 2.14.3.windows.1
-Content-Type: text/plain; charset=UTF-8
+        id S1751295AbdJXByM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Oct 2017 21:54:12 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57867 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751226AbdJXByM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Oct 2017 21:54:12 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 795C396554;
+        Mon, 23 Oct 2017 21:54:11 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=VCR/pADgKJYMHWaQxK0qWYJhpsw=; b=NS6+fm
+        676OJQu5jibhI/EJQ8AE8LAEyA44BCNb0999CxU/fhwhpQNqVl3yeBtvpAQRgl40
+        Sipa8qiXx8fRHC8DLBIQXnc0vBEcmXMa9GxD2lFRmGOBFT2HRCn3Oi8xDVP9pwMZ
+        MwX4ppSme3YcJh358vYo+tAj8pO2oOoO60USI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=yORbt4+c6BmGQyE6Oy2BLIBHM1/gqD5t
+        F2HH0OdkX6hHRIQXxkVkYF8lx9i4NdAfiaOX/ZvAKzGzns0VQbNgvi4zbVPBLTGw
+        0vIO+wPlhTNAzVpvGoZ2e/KPGRXJFlfDHSp2cy2NmDZAKeX4xi99WYl5yNIhIWWu
+        +rjZV4IhRj8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 70E1896553;
+        Mon, 23 Oct 2017 21:54:11 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D697896552;
+        Mon, 23 Oct 2017 21:54:10 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>,
+        Bryan Turner <bturner@atlassian.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jeff King <peff@peff.net>, William Yan <wyan@google.com>
+Subject: Re: [PATCH 1/5] connect: split git:// setup into a separate function
+References: <20170926235627.79606-1-bmwill@google.com>
+        <20171003201507.3589-1-bmwill@google.com>
+        <20171003201507.3589-11-bmwill@google.com>
+        <20171003214206.GY19555@aiede.mtv.corp.google.com>
+        <20171016171812.GA4487@google.com>
+        <20171023212740.qodxzsq5w7rn2r6y@aiede.mtv.corp.google.com>
+        <20171023212916.4aarismli6io4ro6@aiede.mtv.corp.google.com>
+        <CAGZ79kYwARXNWRS4AgwTP7peZiWiwCBvWFiEr9TbpbWjgysfZA@mail.gmail.com>
+Date:   Tue, 24 Oct 2017 10:54:09 +0900
+In-Reply-To: <CAGZ79kYwARXNWRS4AgwTP7peZiWiwCBvWFiEr9TbpbWjgysfZA@mail.gmail.com>
+        (Stefan Beller's message of "Mon, 23 Oct 2017 15:16:13 -0700")
+Message-ID: <xmqqlgk19upq.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Fcc:    Sent
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:ddokFDevZK69yUlMs+tY8mGBK534TcpnIPKkd+sKjGvipjDJOo8
- IZkV0mQ+r1av2UWwYkp3RIE7KFqRLA7hjFyl6l4wroVxZ83Iwd9520/UU3f7phZVgAtPrpp
- ppDFuxaxKm+UIYDLd8unX3ldZPb4cULmTiiPaEPCVTbG5eBLQwjbt17vqk5hlnzKBJ1hzq8
- Y1H1jg3B6YUI/RYJRUiew==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:XZu8+ztyoYM=:uSP9y11ioRlq3cwnWXjpR6
- Bz/TXbeGwjr0NthcjSt9C+v5fixdXEstvUR0kUrsL4oXtPJgQ9Jtye/J32znC1NvpXNWy6p+4
- 6xReWzPEolz5mQFfogNXpLYT6TP/s4LJ5IuC6ksX5phgw4lY0xEi4FpF1XJGVxZIsQ170vjyH
- ulvSmDUyIf7B9ib3IPDRkZQEzj4i+NKabRTF2kqh6x8Xu8UehoVUqgTrHlDiYmosCHLDhmjsQ
- a/AvG9eVSPvAdBxHKOwutMapeJb+EG13IhNZKmCIYXa/Q0kq8Xa8mI2bvQgvLb6lFMvpkWBUl
- MYMisxS9dWMnQdGGDGGi+tD4cdPk+uo9PQZbDj+t0UJll7Tr1j8bqLNio3njFoocyI3sF+Pvi
- x11DoAeOubBBqK58Zv2W9uC+FgfFBsCBocRQb13HPbZrrabvbcZWIl+KWD4eXFzFNX4fzWgmj
- tMD5RBlvWkjAGkhm0JiK6r8qeEeUuIY7mnh/lC8uod6qlSfUKAJYrDBlnqaPtH9mVKdDk9fcL
- s5drgytCbR2FHBTzPdiCPmDwq02RjSbRYNXdePpPnNINJ3R+3gIIc4R45gVdHYSD43ZyUtHdL
- JzLY3ai+bf08hpOALtVwh7+O8CsXAi/pUaNDZ8yafoKZq600gAlqVmNjHosA+IPz4Dxz0Szru
- nxjZ74DEw4xe76sf3yPjg+Omf8fqe9HxN2trw5foEORFkfy6Wn7BYXSRJ/PTFAuQ94KhO5xHG
- tjmCT9fvP0e8N4vvBypXw4EhqDEC5OjXP6tdi81ijIDkf26trvEqKsFUdwI0smWodCB+5I6xj
- fd1Uoa9BZQuPvjH4GbgG0rGbgJ19A6kJbwsZWyWhQueS5ih3D8=
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3AB74FF0-B85E-11E7-AB56-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Git users,
+Stefan Beller <sbeller@google.com> writes:
 
-It is my pleasure to announce that Git for Windows 2.14.3 is available from:
+> I think once this option is given, all we have to do is pay attention to
+> this option in diff.c#moved_entry_cmp/next_byte, which is best built
+> on top of Peffs recent fixes origin/jk/diff-color-moved-fix.
+> Would that be of interest for people?
 
-	https://git-for-windows.github.io/
+Two things and a half.
 
+ * I was hoping that the next_byte() and string_hash() thing, once
+   they are cleaned up, will eventually be shared with the xdiff/
+   code at the lower layer, which needs to do pretty much the same
+   in order to implement various whitespace ignoring options.  I am
+   not sure how well the approach taken by the WIP patch meshes with
+   the needs of the lower layer.
 
+ * I agree that -w that applies only one or the other and not both
+   may sometimes produce a better/readable result, but the more
+   important part is how the user can tell when to exercise the
+   option.  Would it be realistic to expect them to try -w in
+   different combinations and see which looks the best?  What if we
+   have a patch that touch two files, one looks better with -w only
+   for coloring moved and the other looks better with -w for both?
 
-Filename | SHA-256
--------- | -------
-Git-2.14.3-64-bit.exe | 9610e082b823beb7f0da91a98d9f73e1f3f2430c21b2c4e15517dea4f981be3f
-Git-2.14.3-32-bit.exe | 6e5a8a939f3014b396f58622954ab394d7982d036c84571394118f2360bdca96
-PortableGit-2.14.3-64-bit.7z.exe | 2b1d952078795117a8c4549f6384275e047ebd75c10bea77e675f8b672e6d87a
-PortableGit-2.14.3-32-bit.7z.exe | f2dcb32c3133188d0b7a2c3683adcbebcc10b054467e1754d1b8b7e534a34494
-MinGit-2.14.3-64-bit.zip | 538294d2b1472e561493b67855f92380d8139011c74be6bf3cdc5b5d321b1345
-MinGit-2.14.3-32-bit.zip | a91385acb1da220612790807c41d0f304b41093c474b9d7342230ec194a3398e
-MinGit-2.14.3-busybox-64-bit.zip | b7710c7668d7ad3f1f5f7530b601d9bafbe66fcef5563c8ab74d442ac9478d8e
-MinGit-2.14.3-busybox-32-bit.zip | 8982fd12c60a9edd1b6f5f8465354534920bae351d38c867a2f4034a807d8231
-Git-2.14.3-64-bit.tar.bz2 | a5f09850334d5069afa0013249cc6678a7cde52c673823e5386d5cad9df41f10
-Git-2.14.3-32-bit.tar.bz2 | 644b7d7593e675f68a5a011d19a0a917430b79fb815f6260b807c00651696fa2
+ * As moved-lines display is mostly a presentation thing, I wonder
+   if it makes sense to always match loosely wrt whitespace
+   differences.  It is tempting because if it is true, we do not
+   have to worry about the second issue above.
 
-Ciao,
-Johannes
+Thanks.
