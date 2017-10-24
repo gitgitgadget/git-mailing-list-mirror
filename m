@@ -2,112 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 20E161FF72
-	for <e@80x24.org>; Tue, 24 Oct 2017 18:14:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D4DB31FF72
+	for <e@80x24.org>; Tue, 24 Oct 2017 18:26:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751548AbdJXSOU (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Oct 2017 14:14:20 -0400
-Received: from mail-io0-f170.google.com ([209.85.223.170]:53255 "EHLO
-        mail-io0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751407AbdJXSOT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Oct 2017 14:14:19 -0400
-Received: by mail-io0-f170.google.com with SMTP id 189so24850896iow.10
-        for <git@vger.kernel.org>; Tue, 24 Oct 2017 11:14:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=spfDQhBKoOLB2H8Y33M9UxsgpUJUVwoGXwBvxocaGt0=;
-        b=izzBm5dVM4RmGUX/8YWII4ReZj9Z6nISrTFOgK2O3ICzP0e0qm949wtCBorbsOb7qM
-         IS3K2Q8hHdjWdPYSL2x3GVUU8Dd9WT5aOENpFigAgN9NVAXEp9v2PzqvA9rN2MOQpJpD
-         X78g996iFqeqlWwt8sgBjnB/5qRnUoBYD4cmmTXo5J0iqlT4MropgjkgFS3Ox8YWDExU
-         TkoOhP/CiPTnv57BA8V6ajj8fJEgWFaZenE+ri/XFfStAcgYeatrNtFtnhjkofoTnSAS
-         5FdpsjwX1g3g3kVFEMeT+xrU1YhDC51kiJV22BPQL2O1qOlr9Tz/QX9ZH8Q4hSzd2b2U
-         KGKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=spfDQhBKoOLB2H8Y33M9UxsgpUJUVwoGXwBvxocaGt0=;
-        b=IbkGmhwGewKfCdD81LBbw89ctqVAYkhBrDNvk/n8GhQHWWAHDK/w93ai/Ysw8o5SpF
-         w8xswpaKFxYHonYCn13bFFUDAEb1KSvIOjXqiv4dh71PpPyOHxKja7G6TZU1z4ZV3u8W
-         TBYI3A6r0vM/f4HTEWniHuNv4KCrMayC3Ilmsuy8y8Sw0VRxo639qBVvwATsienschj/
-         jes+TwA9A3aSEtRyRaX2/idLb6H2pvLu0e5huv3FxDSTgebgSB9/Hv0f3Xv0De1Njebv
-         sLib+z43u5wF6W93nF4GCZQRnKEdaNsJhoHyD9x4hJHIW9ErQZyLBpUPQtgPB+/+u0YO
-         Q9eA==
-X-Gm-Message-State: AMCzsaUuXOYNMpiDNdi755BUc95TbonNgQnMeRzco/pZiw0bEQgRz5+G
-        EAsvt728QACwJ8MZNrHRgq0=
-X-Google-Smtp-Source: ABhQp+TJ6vCzS33+niscJiSotKSyShC0Fmy3PCkrGuwessVN2cc1jO6aJNuIMnyXe6PR0LKBJao1Uw==
-X-Received: by 10.107.83.22 with SMTP id h22mr24218347iob.40.1508868859073;
-        Tue, 24 Oct 2017 11:14:19 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id b13sm359450iod.16.2017.10.24.11.14.17
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 24 Oct 2017 11:14:18 -0700 (PDT)
-Date:   Tue, 24 Oct 2017 11:14:15 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     git <git@vger.kernel.org>,
-        Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: Consequences of CRLF in index?
-Message-ID: <20171024181415.3tvmc36aqi335v66@aiede.mtv.corp.google.com>
-References: <D0A67AD8-2D63-4683-9F2A-20B0E8E65D4B@gmail.com>
+        id S1751429AbdJXS0y (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Oct 2017 14:26:54 -0400
+Received: from mout.web.de ([212.227.15.14]:49953 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750897AbdJXS0x (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Oct 2017 14:26:53 -0400
+Received: from [192.168.178.36] ([91.20.60.28]) by smtp.web.de (mrweb003
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0LiCrz-1dSYQI3BND-00nPBe; Tue, 24
+ Oct 2017 20:26:45 +0200
+Subject: Re: [Alt. PATCH] ls-remote: deprecate -h as short for --heads
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
+        Thomas Rikl <trikl@online.de>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+References: <63fe2a84-d991-9165-32c0-8087d8513ce6@online.de>
+ <CAN0heSpPWWdWY4d1wCdRH8TjcmD3kAiSffL0-_9kJWkm5P2EkA@mail.gmail.com>
+ <4d110305-0826-6fd1-91a5-c1ebd0b1e80b@web.de>
+ <774f08bd-3172-0083-1544-e5f68f6798fa@web.de>
+ <xmqqk1ztmkbn.fsf@gitster.mtv.corp.google.com>
+ <26112a15-f02c-a910-c8bb-794ca84dc1e5@web.de>
+ <20171019203249.76uu3b6ferquitcr@sigill.intra.peff.net>
+ <xmqqlgk6iq94.fsf@gitster.mtv.corp.google.com>
+ <20171020030524.4xlwrdag7e4gzg7s@sigill.intra.peff.net>
+ <xmqq7evqidp3.fsf@gitster.mtv.corp.google.com>
+ <437f4e47-fcb1-ff8c-3c5a-fa9a5cecedfe@web.de>
+ <xmqqh8usg0cs.fsf@gitster.mtv.corp.google.com>
+ <7c53071a-5154-1246-d2f1-1064e3f923d4@web.de>
+ <xmqqbmkxbc45.fsf@gitster.mtv.corp.google.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <85e7beba-6f37-423b-24f1-2ad9da389846@web.de>
+Date:   Tue, 24 Oct 2017 20:26:44 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <D0A67AD8-2D63-4683-9F2A-20B0E8E65D4B@gmail.com>
-User-Agent: NeoMutt/20170609 (1.8.3)
+In-Reply-To: <xmqqbmkxbc45.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:vQ9lKB7G1xpTs2REHK0Jd3p1VouffphSi6omVYR6/oN/qDSNbEr
+ IlN626P/UCTP0M0wzhArzN1M78hBbI/f1kQixAO1v/Wfvy1Q6LWkSPATpTAYl3GWrt9vDig
+ 2NIocJtY2lhQPAO67wN02JK7R5KK/7C+n9MU3r87qIZW+BMNryWnEwMfUVM3rzQQJ27A8+a
+ 43t8y7ErbsbkHYd//0M0g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Q67FW1mEH7M=:6FYdALDz9VIdnEckdrVnGp
+ MLatk3wlQgVmFF1rquhSQTzVFc0nbqh4WJTOys3UNuLalYqVbW9A2CC9JDQn1S//c1Xx86O2q
+ lWbZ0B7xbmUvX3GmINlGbCiq+RYyXbj1mE9RSEIZh1UAqcNOn00TpI3QzImd7wdasy+KfpXDC
+ KJj40N4EC0v+c6iNyyURCbFAHlK5W3aOFhl0C+nXyNHnAvtmbyV+TafmUQkmF99Z7yLhTEM1J
+ Pt8DQCyQpj/pzhJCI3lO2AYWh8HOsE6Bjxb5J+dBcwCCcbGmHKzaOcTI8ivey0ZIPE6IYzJpt
+ KnSWlNg7ow0M/4/yycy3iGMzay1USjPZV9g5Q/k86Kdo/Cw3+zRMHahyUQcXWD3nx0rHe0huQ
+ h2mLUKjF7QhCCLcd/ZL3lOFOi/2Vese0pN9DQomQNk96u+r41LJACbjk3ncizLMEh6dlln53w
+ EdopkTyJMjgMOjl/j8N1ijP2lb9tkB8LrlC8Q7x64HElFasLciJCgjPO2oTWF2BkvGL/AelTu
+ q7pZMQqt90oVUDSZOfCC/1Z3Dl959opwP8cvQwOU2y7BBzFq8BpxC+QCpTy1bFSK6d9Bm3G47
+ PHpX1jLfWX74XF/KYGbLuJfOUGRK5ksEjUgiwGEYTEZVB2MkwKD+bmveGMed+qq6/kuf0Ymj+
+ QJd7yZ+hZCnPDcGOK35uG5eKzXBCjo4SkEfbueTWbmvN64xTq/tb1CMe68KXVL3qDpQKC5xUE
+ 558XzbC7GiWyv4+zZfYXdiV+c4Pez0QPm301Srsb60OCjM4rH5aw8PypTZ4n/fIElFUtij0mZ
+ VvIB9gwyHXUmp74gwt+vL2L5wTmkX1rb/45K1wZwlOubru0w0c=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Am 24.10.2017 um 02:52 schrieb Junio C Hamano:
+> René Scharfe <l.s.r@web.de> writes:
+> 
+>> Am 21.10.2017 um 14:18 schrieb Junio C Hamano:
+>>> René Scharfe <l.s.r@web.de> writes:
+>>>
+>>>> FWIW, I use "-?" for that everywhere.  I have yet to find a command or
+>>>> environment where it does something dangerous.
+>>>
+>>> Yeah, it would have made the world a better place if we made that
+>>> choice back in 2008.  If we start a transition to make it so right
+>>> now, we might be able to make the world a better place by 2022,
+>>> perhaps.  I am not sure if the pain during the transition is worth
+>>> it, though.
+>>
+>> "-?" works fine with builtins already -- they complain that the option
+>> is unknown and then show the short help text.
+> 
+> Ah, I misunderstood what you meant, then.  I thought you were
+> advocating to move the built-in short-help support to know about and
+> explicitly react to "-?", and somehow forgot that it "works" more or
+> less already.
 
-Lars Schneider wrote:
+I don't mean to advocate here -- it's more like trying to get the
+accounting right.  A little bit of OCD perhaps?
 
-> I've migrated a large repo (110k+ files) with a lot of history (177k commits)
-> and a lot of users (200+) to Git. Unfortunately, all text files in the index
-> of the repo have CRLF line endings. In general this seems not to be a problem
-> as the project is developed exclusively on Windows.
+> The fact that "-?" already works for most things is good, but the
+> transition pain still remains, as what's costly is to transition
+> people's expectation (i.e. "'-?' and not '-h' is the way to get
+> short help from any subcommand"), not the implementation to fill the
+> gaps for those that do not yet support '-?', I am afraid.
 
-Sounds good.
+A minor cost for help-seeking users would be the extra error message at
+the top of the short help text.
 
-> However, I wonder if there are any "hidden consequences" of this setup?
-> If there are consequences, then I see two options. Either I rebase the repo
-> and fix the line endings for all commits or I add a single commit that fixes
-> the line endings for all files. Both actions require coordination with the
-> users to avoid repo trouble/merge conflicts. The "single fixup commit" options
-> would also make diffs into the past look bad. Would a single large commit have
-> any impact on the performance of standard Git operations?
+The main change would cause "git ls-remote -h" to show remote heads and
+"git show-ref -h" to show HEAD.  Confused users would have to resort to
+e.g. man, -help, --help, their search engine of choice, or -?.  I feel
+this could be justified.  It would be different if e.g. reset started
+to take -h as shorthand for --hard, as this would cause data loss.
 
-There are no hidden consequences that I'm aware of.  If you later
-decide that you want to become a cross-platform project, then you may
-want to switch to LF endings, in which case I suggest the "single
-fixup commit" strategy.
+The hard part would probably be allowing the execution of commands with
+unknown arguments outside of repositories to show the help text, even
+if they'd normally (with correct arguments) require one.  Converting
+all commands from RUN_SETUP to RUN_SETUP_GENTLY seems painful.  Showing
+help when a required repo is not found might be possible somehow.
 
-In any event, you also probably want to declare what you're doing
-using .gitattributes.  By checking in the files as CRLF, you are
-declaring that you do *not* want Git to treat them as text files
-(i.e., you do not want Git to change the line endings), so something
-as simple as
+With that I'm going to shut up, as I don't even use the affected
+commands, nor can I imagine being in the place of someone impacted by
+"git <something> -h" not showing a help text.
 
-	* -text
-
-should do the trick.  See gitattributes(5) for details.
-
-I'd be interested to hear what happens when diff-ing across a line
-ending fixup commit.  Is this an area where Git needs some
-improvement?  "git merge" knows an -Xrenormalize option to deal with a
-related problem --- it's possible that "git diff" needs to learn a
-similar trick.
-
-Thanks and hope that helps,
-Jonathan
+René
