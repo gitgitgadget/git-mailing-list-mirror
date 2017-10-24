@@ -2,93 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CBC84202A0
-	for <e@80x24.org>; Tue, 24 Oct 2017 00:26:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E9046202A0
+	for <e@80x24.org>; Tue, 24 Oct 2017 00:53:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751220AbdJXA0T (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Oct 2017 20:26:19 -0400
-Received: from mail-pg0-f44.google.com ([74.125.83.44]:55023 "EHLO
-        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751113AbdJXA0S (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Oct 2017 20:26:18 -0400
-Received: by mail-pg0-f44.google.com with SMTP id l24so13080834pgu.11
-        for <git@vger.kernel.org>; Mon, 23 Oct 2017 17:26:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=netskope.com; s=google;
-        h=from:content-transfer-encoding:subject:message-id:date:to
-         :mime-version;
-        bh=Zh7ANxQNd4yJxtopAIVWlK1fzRaeSUPDbpoa7W1JaNQ=;
-        b=CKt+ovLjMngbDAbIrB3+ODhjwPb7xJijMepKqxcA9L8rb/iLH09N8QGRXNVbldBG18
-         GEf9ed5/q7B2Piy9M993S4r8aLBdYf0g+A4Ihxo6OGMwZrtfsYi1HxYRr2h5sNW3ScqD
-         uKVHNn8SOpAW9+FUkp0LgruDgkV631fpZ14HM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:content-transfer-encoding:subject
-         :message-id:date:to:mime-version;
-        bh=Zh7ANxQNd4yJxtopAIVWlK1fzRaeSUPDbpoa7W1JaNQ=;
-        b=kPomWdc9rBr1yjp50bLg/jeIgBC5SCZmnLSKG5ZXwbi97wW668g7G9169m9bP5D/2M
-         Oi7UCL4mHNu2uGOjuykzbI3/z/YdnHmmBX3s8WByxyWI/fWomBW8gCKdOwIyiCS435Kj
-         pKl8Xww+aY7AbWIhjWh7ZxdFmVhnxTucD5B5YEPz8UT1xnkNJKiJK9uG/VRbX8Do+FOB
-         dDo97HbSSarZ/X02rY9U7dgQ8E3hwwE5no6kvnipJyV1c7t/jLbE+DQJ18nue2uUfQps
-         s5SxJu6r1RKWpuJjjrYAQL9sWwCdnC/z43TPsgqPbqoDxsgKB6B8ec3s0cO2iduhLKbj
-         8W5w==
-X-Gm-Message-State: AMCzsaWYgEHWfeX38jVFpQnb1+vhYmcIuRacf01TZLpZUDie27wzd0yl
-        pFO9PS5yl7HY1vVXnfAM0Z0ZMlBVrt0=
-X-Google-Smtp-Source: ABhQp+THPywrKGQloGklYU/KQuwZzoxZcmISqrzEAd0oaNk3GO0wnxREU8RhVudUjNUbospz77DmoA==
-X-Received: by 10.84.128.9 with SMTP id 9mr11656895pla.332.1508804776685;
-        Mon, 23 Oct 2017 17:26:16 -0700 (PDT)
-Received: from [192.168.65.161] ([216.38.152.90])
-        by smtp.gmail.com with ESMTPSA id m9sm12592271pgt.49.2017.10.23.17.26.15
-        for <git@vger.kernel.org>
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 23 Oct 2017 17:26:16 -0700 (PDT)
-From:   Kai Zhang <kai@netskope.com>
-Content-Type: text/plain; charset=us-ascii
+        id S1751250AbdJXAxC (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Oct 2017 20:53:02 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60860 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751200AbdJXAxB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Oct 2017 20:53:01 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9E4CF9468E;
+        Mon, 23 Oct 2017 20:53:00 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=oRymDBIUeouY
+        H1jVvQPxqvikdC0=; b=ubaAj/Kiha3w9O3ILIZgPceAL9LyljEXBNBLD2qOHJLz
+        ZKH1FA1wy9mfYuvb/HcASSOL6js/k0Go09MkAKaRWmKh8HcCJViV7Jy1QCvfGJVB
+        4HjHiHK53IMQmaWstXy7Di3e8Z83/P/hUyUKeiEWgyeLpmyptA2dHGfsEbmqh1U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=hwHszZ
+        mVIpDfGUY9ElPwLyl65aHV/hBfGvqkQMXj0eK7aUFleROsAGHwTLKB+CR6zmNl/g
+        ur6oXd2/lsYv5T7aMiZOL7f1Ay11fHEqly2tc6ClYIcBx22ySPOq1PsBUw3tHdrR
+        dse6UrVdJ3Fq1WWBGR/Ga38TgdvNfkHfSuhpk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 26FEC9468D;
+        Mon, 23 Oct 2017 20:53:00 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7BF3C9468A;
+        Mon, 23 Oct 2017 20:52:59 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
+        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        Thomas Rikl <trikl@online.de>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [Alt. PATCH] ls-remote: deprecate -h as short for --heads
+References: <63fe2a84-d991-9165-32c0-8087d8513ce6@online.de>
+        <CAN0heSpPWWdWY4d1wCdRH8TjcmD3kAiSffL0-_9kJWkm5P2EkA@mail.gmail.com>
+        <4d110305-0826-6fd1-91a5-c1ebd0b1e80b@web.de>
+        <774f08bd-3172-0083-1544-e5f68f6798fa@web.de>
+        <xmqqk1ztmkbn.fsf@gitster.mtv.corp.google.com>
+        <26112a15-f02c-a910-c8bb-794ca84dc1e5@web.de>
+        <20171019203249.76uu3b6ferquitcr@sigill.intra.peff.net>
+        <xmqqlgk6iq94.fsf@gitster.mtv.corp.google.com>
+        <20171020030524.4xlwrdag7e4gzg7s@sigill.intra.peff.net>
+        <xmqq7evqidp3.fsf@gitster.mtv.corp.google.com>
+        <437f4e47-fcb1-ff8c-3c5a-fa9a5cecedfe@web.de>
+        <xmqqh8usg0cs.fsf@gitster.mtv.corp.google.com>
+        <7c53071a-5154-1246-d2f1-1064e3f923d4@web.de>
+Date:   Tue, 24 Oct 2017 09:52:58 +0900
+In-Reply-To: <7c53071a-5154-1246-d2f1-1064e3f923d4@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Mon, 23 Oct 2017 17:05:23 +0200")
+Message-ID: <xmqqbmkxbc45.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: AE684228-B855-11E7-92DB-8EF31968708C-77302942!pb-smtp1.pobox.com
 Content-Transfer-Encoding: quoted-printable
-Subject: Question about purge git history
-Message-Id: <5E33218C-F943-4400-9F78-399A1DD74738@netskope.com>
-Date:   Mon, 23 Oct 2017 17:26:15 -0700
-To:     git@vger.kernel.org
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi
+Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 
-I have a git repository on server side, and a client keep pulling this =
-repository periodically. After a while this repository gets very big =
-(even after git gc), and since history is not very important to us, a =
-purge strategy is needed.
+> Am 21.10.2017 um 14:18 schrieb Junio C Hamano:
+>> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+>>=20
+>>> FWIW, I use "-?" for that everywhere.  I have yet to find a command o=
+r
+>>> environment where it does something dangerous.
+>>=20
+>> Yeah, it would have made the world a better place if we made that
+>> choice back in 2008.  If we start a transition to make it so right
+>> now, we might be able to make the world a better place by 2022,
+>> perhaps.  I am not sure if the pain during the transition is worth
+>> it, though.
+>
+> "-?" works fine with builtins already -- they complain that the option
+> is unknown and then show the short help text.
 
-I did some research on internet, and found two methods are available to =
-purge history on git repository:
+Ah, I misunderstood what you meant, then.  I thought you were
+advocating to move the built-in short-help support to know about and
+explicitly react to "-?", and somehow forgot that it "works" more or
+less already.
 
-1. Remove .git folder
-    1. Remove .git folder
-    2. Reinit repository
-    3. Commit all existing files
-2.  Create a new branch and remove existing branch
-    1. git checkout --orphan latest_branch
-    2. git add -A
-    3. git commit -am "commit message"
-    4. git branch -D master
-    5. git branch -m master
-    6. git reflog expire --expire=3Dnow --all
-    7. git gc --prune=3Dnow
+The fact that "-?" already works for most things is good, but the
+transition pain still remains, as what's costly is to transition
+people's expectation (i.e. "'-?' and not '-h' is the way to get
+short help from any subcommand"), not the implementation to fill the
+gaps for those that do not yet support '-?', I am afraid.
 
-Here I have two questions:
-1. What would happen if client pulling is executed concurrently with =
-above 2 methods? Would client side repository gets corrupted?
-2. Is there anyway to propagate purged repository to client side?
-
-Thank you so much for your attention.
-
-Best Regards,
-Kai=
