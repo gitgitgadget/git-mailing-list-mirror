@@ -6,30 +6,30 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A5E201FF72
-	for <e@80x24.org>; Tue, 24 Oct 2017 18:54:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E71E71FF72
+	for <e@80x24.org>; Tue, 24 Oct 2017 18:54:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751755AbdJXSyE (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Oct 2017 14:54:04 -0400
-Received: from siwi.pair.com ([209.68.5.199]:10690 "EHLO siwi.pair.com"
+        id S1751878AbdJXSy0 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Oct 2017 14:54:26 -0400
+Received: from siwi.pair.com ([209.68.5.199]:42893 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751573AbdJXSyA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Oct 2017 14:54:00 -0400
+        id S1751742AbdJXSyE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Oct 2017 14:54:04 -0400
 Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 10D18845A3;
-        Tue, 24 Oct 2017 14:54:00 -0400 (EDT)
+        by siwi.pair.com (Postfix) with ESMTP id 0B75F8459D;
+        Tue, 24 Oct 2017 14:54:04 -0400 (EDT)
 Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 6C14184597;
-        Tue, 24 Oct 2017 14:53:59 -0400 (EDT)
+        by siwi.pair.com (Postfix) with ESMTPSA id 671A384597;
+        Tue, 24 Oct 2017 14:54:03 -0400 (EDT)
 From:   Jeff Hostetler <git@jeffhostetler.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, jonathantanmy@google.com,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH 04/13] list-objects-filter-blobs-none: add filter to omit all blobs
-Date:   Tue, 24 Oct 2017 18:53:23 +0000
-Message-Id: <20171024185332.57261-5-git@jeffhostetler.com>
+Subject: [PATCH 09/13] extension.partialclone: introduce partial clone extension
+Date:   Tue, 24 Oct 2017 18:53:28 +0000
+Message-Id: <20171024185332.57261-10-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20171024185332.57261-1-git@jeffhostetler.com>
 References: <20171024185332.57261-1-git@jeffhostetler.com>
@@ -40,147 +40,299 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Create a simple filter for traverse_commit_list_worker() to omit
-all blobs from the result.
+Introduce the ability to have missing objects in a repo.  This
+functionality is guarded by new repository extension options:
+    `extensions.partialcloneremote` and
+    `extensions.partialclonefilter`.
 
-This filter will be used in a future commit by rev-list and pack-objects
-to create a "commits and trees" result.  This is intended for partial
-clone and fetch support.
+See the update to Documentation/technical/repository-version.txt
+in this patch for more information.
+
+This patch is part of a patch originally authored by:
+Jonathan Tan <jonathantanmy@google.com>
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- Makefile                         |  1 +
- list-objects-filter-blobs-none.c | 83 ++++++++++++++++++++++++++++++++++++++++
- list-objects-filter-blobs-none.h | 18 +++++++++
- 3 files changed, 102 insertions(+)
- create mode 100644 list-objects-filter-blobs-none.c
- create mode 100644 list-objects-filter-blobs-none.h
+ Documentation/technical/repository-version.txt | 22 ++++++
+ Makefile                                       |  1 +
+ cache.h                                        |  4 ++
+ config.h                                       |  3 +
+ environment.c                                  |  2 +
+ partial-clone-utils.c                          | 99 ++++++++++++++++++++++++++
+ partial-clone-utils.h                          | 34 +++++++++
+ setup.c                                        | 15 ++++
+ 8 files changed, 180 insertions(+)
+ create mode 100644 partial-clone-utils.c
+ create mode 100644 partial-clone-utils.h
 
+diff --git a/Documentation/technical/repository-version.txt b/Documentation/technical/repository-version.txt
+index 00ad379..9d488db 100644
+--- a/Documentation/technical/repository-version.txt
++++ b/Documentation/technical/repository-version.txt
+@@ -86,3 +86,25 @@ for testing format-1 compatibility.
+ When the config key `extensions.preciousObjects` is set to `true`,
+ objects in the repository MUST NOT be deleted (e.g., by `git-prune` or
+ `git repack -d`).
++
++`partialcloneremote`
++~~~~~~~~~~~~~~~~~~~~
++
++When the config key `extensions.partialcloneremote` is set, it indicates
++that the repo was created with a partial clone (or later performed
++a partial fetch) and that the remote may have omitted sending
++certain unwanted objects.  Such a remote is called a "promisor remote"
++and it promises that all such omitted objects can be fetched from it
++in the future.
++
++The value of this key is the name of the promisor remote.
++
++`partialclonefilter`
++~~~~~~~~~~~~~~~~~~~~
++
++When the config key `extensions.partialclonefilter` is set, it gives
++the initial filter expression used to create the partial clone.
++This value becomed the default filter expression for subsequent
++fetches (called "partial fetches") from the promisor remote.  This
++value may also be set by the first explicit partial fetch following a
++normal clone.
 diff --git a/Makefile b/Makefile
-index e59f12d..7e9d1f4 100644
+index b9ff0b4..38632fb 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -807,6 +807,7 @@ LIB_OBJS += levenshtein.o
- LIB_OBJS += line-log.o
- LIB_OBJS += line-range.o
- LIB_OBJS += list-objects.o
-+LIB_OBJS += list-objects-filter-blobs-none.o
- LIB_OBJS += list-objects-filter-map.o
- LIB_OBJS += ll-merge.o
- LIB_OBJS += lockfile.o
-diff --git a/list-objects-filter-blobs-none.c b/list-objects-filter-blobs-none.c
+@@ -841,6 +841,7 @@ LIB_OBJS += pack-write.o
+ LIB_OBJS += pager.o
+ LIB_OBJS += parse-options.o
+ LIB_OBJS += parse-options-cb.o
++LIB_OBJS += partial-clone-utils.o
+ LIB_OBJS += patch-delta.o
+ LIB_OBJS += patch-ids.o
+ LIB_OBJS += path.o
+diff --git a/cache.h b/cache.h
+index 6440e2b..4b785c0 100644
+--- a/cache.h
++++ b/cache.h
+@@ -860,12 +860,16 @@ extern int grafts_replace_parents;
+ #define GIT_REPO_VERSION 0
+ #define GIT_REPO_VERSION_READ 1
+ extern int repository_format_precious_objects;
++extern char *repository_format_partial_clone_remote;
++extern char *repository_format_partial_clone_filter;
+ 
+ struct repository_format {
+ 	int version;
+ 	int precious_objects;
+ 	int is_bare;
+ 	char *work_tree;
++	char *partial_clone_remote; /* value of extensions.partialcloneremote */
++	char *partial_clone_filter; /* value of extensions.partialclonefilter */
+ 	struct string_list unknown_extensions;
+ };
+ 
+diff --git a/config.h b/config.h
+index a49d264..90544ef 100644
+--- a/config.h
++++ b/config.h
+@@ -34,6 +34,9 @@ struct config_options {
+ 	const char *git_dir;
+ };
+ 
++#define KEY_PARTIALCLONEREMOTE "partialcloneremote"
++#define KEY_PARTIALCLONEFILTER "partialclonefilter"
++
+ typedef int (*config_fn_t)(const char *, const char *, void *);
+ extern int git_default_config(const char *, const char *, void *);
+ extern int git_config_from_file(config_fn_t fn, const char *, void *);
+diff --git a/environment.c b/environment.c
+index 8289c25..2fcf9bb 100644
+--- a/environment.c
++++ b/environment.c
+@@ -27,6 +27,8 @@ int warn_ambiguous_refs = 1;
+ int warn_on_object_refname_ambiguity = 1;
+ int ref_paranoia = -1;
+ int repository_format_precious_objects;
++char *repository_format_partial_clone_remote;
++char *repository_format_partial_clone_filter;
+ const char *git_commit_encoding;
+ const char *git_log_output_encoding;
+ const char *apply_default_whitespace;
+diff --git a/partial-clone-utils.c b/partial-clone-utils.c
 new file mode 100644
-index 0000000..1b548b9
+index 0000000..8c925ae
 --- /dev/null
-+++ b/list-objects-filter-blobs-none.c
-@@ -0,0 +1,83 @@
++++ b/partial-clone-utils.c
+@@ -0,0 +1,99 @@
 +#include "cache.h"
-+#include "dir.h"
-+#include "tag.h"
-+#include "commit.h"
-+#include "tree.h"
-+#include "blob.h"
-+#include "diff.h"
-+#include "tree-walk.h"
-+#include "revision.h"
-+#include "list-objects.h"
-+#include "list-objects-filter-blobs-none.h"
++#include "config.h"
++#include "partial-clone-utils.h"
 +
-+#define DEFAULT_MAP_SIZE (16*1024)
-+
-+/*
-+ * A filter for list-objects to omit ALL blobs from the traversal.
-+ * And to OPTIONALLY collect a list of the omitted OIDs.
-+ */
-+struct filter_blobs_none_data {
-+	struct oidmap *omits;
-+};
-+
-+static list_objects_filter_result filter_blobs_none(
-+	list_objects_filter_type filter_type,
-+	struct object *obj,
-+	const char *pathname,
-+	const char *filename,
-+	void *filter_data_)
++int is_partial_clone_registered(void)
 +{
-+	struct filter_blobs_none_data *filter_data = filter_data_;
++	if (repository_format_partial_clone_remote ||
++	    repository_format_partial_clone_filter)
++		return 1;
 +
-+	switch (filter_type) {
-+	default:
-+		die("unkown filter_type");
-+		return LOFR_ZERO;
-+
-+	case LOFT_BEGIN_TREE:
-+		assert(obj->type == OBJ_TREE);
-+		/* always include all tree objects */
-+		return LOFR_MARK_SEEN | LOFR_SHOW;
-+
-+	case LOFT_END_TREE:
-+		assert(obj->type == OBJ_TREE);
-+		return LOFR_ZERO;
-+
-+	case LOFT_BLOB:
-+		assert(obj->type == OBJ_BLOB);
-+		assert((obj->flags & SEEN) == 0);
-+
-+		if (filter_data->omits)
-+			list_objects_filter_map_insert(
-+				filter_data->omits, &obj->oid, pathname,
-+				obj->type);
-+
-+		return LOFR_MARK_SEEN; /* but not LOFR_SHOW (hard omit) */
-+	}
++	return 0;
 +}
 +
-+void traverse_commit_list__blobs_none(
-+	struct rev_info *revs,
-+	show_commit_fn show_commit,
-+	show_object_fn show_object,
-+	list_objects_filter_map_foreach_cb print_omitted_object,
-+	void *ctx_data)
++void partial_clone_utils_register(
++	const struct list_objects_filter_options *filter_options,
++	const char *remote,
++	const char *cmd_name)
 +{
-+	struct filter_blobs_none_data d;
++	struct strbuf buf = STRBUF_INIT;
 +
-+	memset(&d, 0, sizeof(d));
-+	if (print_omitted_object) {
-+		d.omits = xcalloc(1, sizeof(*d.omits));
-+		oidmap_init(d.omits, DEFAULT_MAP_SIZE);
++	if (is_partial_clone_registered()) {
++		/*
++		 * The original partial-clone or a previous partial-fetch
++		 * already registered the partial-clone settings.
++		 * If we get here, we are in a subsequent partial-* command
++		 * (with explicit filter args on the command line).
++		 *
++		 * For now, we restrict subsequent commands to one
++		 * consistent with the original request.  We may relax
++		 * this later after we get more experience with the
++		 * partial-clone feature.
++		 *
++		 * [] Restrict to same remote because our dynamic
++		 *    object loading only knows how to fetch objects
++		 *    from 1 remote.
++		 */
++		assert(filter_options && filter_options->choice);
++		assert(remote && *remote);
++
++		if (strcmp(remote, repository_format_partial_clone_remote))
++			die("%s --%s currently limited to remote '%s'",
++			    cmd_name, CL_ARG__FILTER,
++			    repository_format_partial_clone_remote);
++
++		/*
++		 * Treat the (possibly new) filter-spec as transient;
++		 * use it for the current command, but do not overwrite
++		 * the default.
++		 */
++		return;
 +	}
 +
-+	traverse_commit_list_worker(revs, show_commit, show_object, ctx_data,
-+				    filter_blobs_none, &d);
++	repository_format_partial_clone_remote = xstrdup(remote);
++	repository_format_partial_clone_filter = xstrdup(filter_options->raw_value);
 +
-+	if (print_omitted_object) {
-+		list_objects_filter_map_foreach(d.omits,
-+						print_omitted_object,
-+						ctx_data);
-+		oidmap_free(d.omits, 1);
-+	}
++	/*
++	 * Force repo version > 0 to enable extensions namespace.
++	 */
++	git_config_set("core.repositoryformatversion", "1");
++
++	/*
++	 * Use the "extensions" namespace in the config to record
++	 * the name of the remote used in the partial clone.
++	 * This will help us return to that server when we need
++	 * to backfill missing objects.
++	 *
++	 * It is also used to indicate that there *MAY* be
++	 * missing objects so that subsequent commands don't
++	 * immediately die if they hit one.
++	 *
++	 * Also remember the initial filter settings used by
++	 * clone as a default for future fetches.
++	 */
++	git_config_set("extensions." KEY_PARTIALCLONEREMOTE,
++		       repository_format_partial_clone_remote);
++	git_config_set("extensions." KEY_PARTIALCLONEFILTER,
++		       repository_format_partial_clone_filter);
++
++	/*
++	 * TODO Do we need to record both partial-clone
++	 * parameters in the extensions namespace and in the
++	 * section for the remote?
++	 *
++	 * Or should we just remember 1 in each, as in:
++	 *     "extension.partialcloneremote=<remote>"
++	 *     "remote.<remote>.filter=<filter-spec>"
++	 * The issue is when can we set both of the
++	 * repository_format_partial_clone_* globals
++	 * durint subsequent startups.
++	 * See setup.c:check_repo_format().
++	 */
++	strbuf_addf(&buf, "remote.%s.%s", remote, KEY_PARTIALCLONEREMOTE);
++	git_config_set(buf.buf, repository_format_partial_clone_remote);
++
++	strbuf_addf(&buf, "remote.%s.%s", remote, KEY_PARTIALCLONEFILTER);
++	git_config_set(buf.buf, repository_format_partial_clone_filter);
++
++	strbuf_release(&buf);
 +}
-diff --git a/list-objects-filter-blobs-none.h b/list-objects-filter-blobs-none.h
+diff --git a/partial-clone-utils.h b/partial-clone-utils.h
 new file mode 100644
-index 0000000..363c9de
+index 0000000..b527570
 --- /dev/null
-+++ b/list-objects-filter-blobs-none.h
-@@ -0,0 +1,18 @@
-+#ifndef LIST_OBJECTS_FILTER_BLOBS_NONE_H
-+#define LIST_OBJECTS_FILTER_BLOBS_NONE_H
++++ b/partial-clone-utils.h
+@@ -0,0 +1,34 @@
++#ifndef PARTIAL_CLONE_UTILS_H
++#define PARTIAL_CLONE_UTILS_H
 +
-+#include "list-objects-filter-map.h"
++#include "list-objects-filter-options.h"
 +
 +/*
-+ * A filter for list-objects to omit ALL blobs
-+ * from the traversal.
++ * Register that partial-clone was used to create the repo and
++ * update the config on disk.
++ *
++ * If nothing else, this indicates that the ODB may have missing
++ * objects and that various commands should handle that gracefully.
++ *
++ * Record the remote used for the clone so that we know where
++ * to get missing objects in the future.
++ *
++ * Also record the filter expression so that we know something
++ * about the missing objects (e.g., size-limit vs sparse).
++ *
++ * May also be used by a partial-fetch following a normal clone
++ * to turn on the above tracking.
++ */ 
++extern void partial_clone_utils_register(
++	const struct list_objects_filter_options *filter_options,
++	const char *remote,
++	const char *cmd_name);
++
++/*
++ * Return 1 if partial-clone was used to create the repo
++ * or a subsequent partial-fetch was used.  This is an
++ * indicator that there may be missing objects.
 + */
-+void traverse_commit_list__blobs_none(
-+	struct rev_info *revs,
-+	show_commit_fn show_commit,
-+	show_object_fn show_object,
-+	list_objects_filter_map_foreach_cb print_omitted_object,
-+	void *ctx_data);
++extern int is_partial_clone_registered(void);
 +
-+#endif /* LIST_OBJECTS_FILTER_BLOBS_NONE_H */
++#endif /* PARTIAL_CLONE_UTILS_H */
+diff --git a/setup.c b/setup.c
+index 03f51e0..bc4133d 100644
+--- a/setup.c
++++ b/setup.c
+@@ -420,6 +420,19 @@ static int check_repo_format(const char *var, const char *value, void *vdata)
+ 			;
+ 		else if (!strcmp(ext, "preciousobjects"))
+ 			data->precious_objects = git_config_bool(var, value);
 +
++		else if (!strcmp(ext, KEY_PARTIALCLONEREMOTE))
++			if (!value)
++				return config_error_nonbool(var);
++			else
++				data->partial_clone_remote = xstrdup(value);
++
++		else if (!strcmp(ext, KEY_PARTIALCLONEFILTER))
++			if (!value)
++				return config_error_nonbool(var);
++			else
++				data->partial_clone_filter = xstrdup(value);
++
+ 		else
+ 			string_list_append(&data->unknown_extensions, ext);
+ 	} else if (strcmp(var, "core.bare") == 0) {
+@@ -463,6 +476,8 @@ static int check_repository_format_gently(const char *gitdir, int *nongit_ok)
+ 	}
+ 
+ 	repository_format_precious_objects = candidate.precious_objects;
++	repository_format_partial_clone_remote = candidate.partial_clone_remote;
++	repository_format_partial_clone_filter = candidate.partial_clone_filter;
+ 	string_list_clear(&candidate.unknown_extensions, 0);
+ 	if (!has_common) {
+ 		if (candidate.is_bare != -1) {
 -- 
 2.9.3
 
