@@ -2,152 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1EA171FF72
-	for <e@80x24.org>; Tue, 24 Oct 2017 20:23:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B13B91FF72
+	for <e@80x24.org>; Tue, 24 Oct 2017 20:42:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751712AbdJXUXs (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Oct 2017 16:23:48 -0400
-Received: from mout.web.de ([212.227.15.14]:63889 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751576AbdJXUXr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Oct 2017 16:23:47 -0400
-Received: from [192.168.178.36] ([91.20.60.28]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0M6QBP-1dHd0n2Wct-00yRrN; Tue, 24
- Oct 2017 22:23:42 +0200
-Subject: Re: [PATCH 3/4] xdiff: use stronger hash function internally
-To:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org
-References: <20171024185917.20515-1-sbeller@google.com>
- <20171024185917.20515-4-sbeller@google.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <16718615-c5df-24dd-fa62-2b42f5d83a02@web.de>
-Date:   Tue, 24 Oct 2017 22:23:42 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.4.0
+        id S1751407AbdJXUma (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Oct 2017 16:42:30 -0400
+Received: from mail-qt0-f171.google.com ([209.85.216.171]:57205 "EHLO
+        mail-qt0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750897AbdJXUm3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Oct 2017 16:42:29 -0400
+Received: by mail-qt0-f171.google.com with SMTP id z28so32160796qtz.13
+        for <git@vger.kernel.org>; Tue, 24 Oct 2017 13:42:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=XHyYmTuDHcTa+o5YUGKZvYznNan9e4kb5b7l3V34jus=;
+        b=pTxcIHSO8kCI0srHeaJuTFX+x2zOjdW9anffZp9MihfQGtkJ485dIL6++5DMd4nx8J
+         nb7MAGsV9J6TD0aWYfQQm0Q4deipebMsENwj3NXFbcffuPFcKp+OaWb51AdO+E5IG/vW
+         2KxzGkDTiVTtIwwJfVZ3FBNSe22hLztKdYA349JtdyIuZ5K3nL7cF1nC57EOwI1o9zXa
+         o62VgVntKfTBvmstPvgFXneD6PKNjPDXUH3PNk+a3Y6Mi0btG6RGFoldt9S2L69FpO4Q
+         ECafvEKfg7cdyzfserydH1P78f5x1cbTEvX0wAiTyfmrANsLnZIzh2dLn84TYZkFxC26
+         kvqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=XHyYmTuDHcTa+o5YUGKZvYznNan9e4kb5b7l3V34jus=;
+        b=plqmbRZ03PsZsw6qEMFNC3IZNy6AqHKtPgEAAIT7AOlw+WsCc0xkMJ2ZPfmP/R5ITO
+         vTZ2NsmfyPZDjLvc8V3YhPdkDVwMOSfcFuSSNKLdlTY3TQJAvon1LmXAvYcbMtjQadzb
+         z+WE5JLDkPfIeUHVidpMg+qjmpqtgYVvLaOmRUZ9LBA5N8qMeHLb/XfeILOIVqq8tK1Q
+         CcGd862sdTevsWVKFaQtKc6AzYenYCWoE3QOXg9+0BBua/GqI8jd1vemVLcWTmyKbJu2
+         T8flzzeGJ4wkPjyJd226TmYDrHWXImaqEN5XTcoaR970Ht41LZkrsS/6w2+ht2ERHy1d
+         qlCA==
+X-Gm-Message-State: AMCzsaW0ROo5RQHMNqG0xchQald9J76Lr759aWdV4LhVsTYsuQO19e39
+        RindPk7ZKw6RmhZS7mitPFfLOgITHf79mWglJS7rlg==
+X-Google-Smtp-Source: ABhQp+QnOg7jYxAPQemsAMnAm8EVLRkB/W/hhm0F7dlFuqH6eeOPPvHspxS+vMilOt1lQperBkwAVtfWThIf+ZL5y5E=
+X-Received: by 10.200.8.53 with SMTP id u50mr28416204qth.260.1508877748814;
+ Tue, 24 Oct 2017 13:42:28 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20171024185917.20515-4-sbeller@google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:bt5rGtlsPSyCN97ao2JV6TxIDFEI9AdvCzb5SRP6whRS9q1aBB7
- ku2CS9eeHjoqMf4R/t+0zuDnyQymh+g/f/5Om/Fya1zzCUHIZxpWdNAjbKL2wXHtDHbSMEU
- NmpwREIfNosVHTavdZEUFEmJQuF/eqDxlXRjwWn08nGoiHtvYZM6YgIjI3HzRIIR64ln5co
- mIxLSMGdJz8ywSKyw+yYw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:bKs9lCNcxZw=:260McKIqlAKSD2HoWOqmQG
- F2tT8JMUNn10bBRwKwwNIo/kIeqoU0DfwaBcgrYS8k7swI9jAfg7q/YJLCZGSSiLQeM6SlWVE
- CetFFIwaWTEDCPNQq+A6UeHjdB2rL0gJBSAA4Ify31ciARfncuElr4hIKF9QTRzWZ556B+N6E
- Ic2JjVYvysk8GOOM4on+nxWm2mX4m5M5MFmhe1h3UFZhWt6L/vplTTjmMlIBQqeQNnw2fU7+c
- +cRIzW6tJ3FYu2xGky8lavLbysbva1q+F707qoKp5UHxzB8YW9vsnfFvRbyDmTb0ikgeMSk9t
- DWhg+uBqlEql/rPw81ZWtfu4jVz+mrsafez+E+59aIH+AKEYddT+XSxO1sU4Vn0leD4PBKmI+
- l4phveVvTsGBSNbIPcvuTV4J/LzT3oXPTavJ2zzOS+8nV/qRo/vaZc5Zapc4REXec+FYkHXt4
- Tf8WSjyVZsXxZSqOoNsG7H2unv2xvO9e5YULTaC/aYq4P6R/Waq2ZxWm3/p45E89LoRD/fjDc
- yfphgO82GAlLPJwOW6cw6BRY42Ts8cqhCNFAFoqN3XfQzHbuLhgog9Iv33Q7TYnEsTm030sd7
- BGrRUhWQhGeS4AlWRNWuNDUFELem7buoqlS485XHDCbeQFGD9kteMAsDeNfZNIKSZUUq5XOhd
- r3H+4Z/r1YLEN2i5YCf/AI2busv3oR5YrJWQuWuV0mQTHRa7kDCHiq2tvIO9myovFuYklS5eZ
- Y2sUMnWmWMzUmq91W3uiW3u3rAL8J3Ne8P08AgXdFPWeTdmMX19yBQVumhIXamFiHgJ/Mhhn1
- 2VOxbYiTBjAHa1akphCK/HY8cORAR0yFdxof2F3+eBtatxtbVs=
+Received: by 10.140.102.70 with HTTP; Tue, 24 Oct 2017 13:42:28 -0700 (PDT)
+In-Reply-To: <9f5c5cd5-9491-3163-60d4-ad36d75981ce@web.de>
+References: <20171024185917.20515-1-sbeller@google.com> <20171024185917.20515-3-sbeller@google.com>
+ <9f5c5cd5-9491-3163-60d4-ad36d75981ce@web.de>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 24 Oct 2017 13:42:28 -0700
+Message-ID: <CAGZ79kbJS68qL0=WTZVBfmSDXCii0HT60TGxx2MSiH_cK_tBCw@mail.gmail.com>
+Subject: Re: [PATCH 2/4] xdiff-interface: export comparing and hashing strings
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 24.10.2017 um 20:59 schrieb Stefan Beller:
-> Instead of using the hash seeded with 5381, and updated via
-> `(hash << 5) ^ new_byte`, use the FNV-1 primitives as offered by
-> hashmap.h, which is seeded with 0x811c9dc5 and computed as
-> `(hash * 0x01000193) ^ new_byte`.
+On Tue, Oct 24, 2017 at 1:23 PM, Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
 
-The hash function you're replacing is called DJB2; I think that's worth
-mentioning.
+> xdl_recmatch() is already exported; why not use it without this
+> wrapper?
 
-Performance test results would be nice.  No idea how to find edge cases,
-though, or better: demonstrate a lack thereof.
+It is exported in xdiff/xutils.h, to be used by various xdiff/*.c files, bu=
+t
+not outside of xdiff/. This one makes it available to the outside, too.
 
-> 
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
->   xdiff/xutils.c | 19 ++++++++-----------
->   1 file changed, 8 insertions(+), 11 deletions(-)
-> 
-> diff --git a/xdiff/xutils.c b/xdiff/xutils.c
-> index 04d7b32e4e..a58a28c687 100644
-> --- a/xdiff/xutils.c
-> +++ b/xdiff/xutils.c
-> @@ -24,7 +24,8 @@
->   #include <assert.h>
->   #include "xinclude.h"
->   
-> -
-> +#include "cache.h"
-> +#include "hashmap.h"
+>> +extern unsigned long xdiff_hash_string(const char *s, size_t len, long =
+flags);
+>
+> Documenting the meaning of their parameters would be nice.
 
-Ouch.  Defining FNV32_BASE and FNV32_PRIME here would be much easier
-overall.  And if that's too much duplication then those definitions
-could be extracted into a new header file (fnv32.h?) included by both
-hashmap.h and xutils.c.
-
->   
->   
->   long xdl_bogosqrt(long n) {
-> @@ -228,7 +229,7 @@ int xdl_recmatch(const char *l1, long s1, const char *l2, long s2, long flags)
->   
->   static unsigned long xdl_hash_record_with_whitespace(char const **data,
->   		char const *top, long flags) {
-> -	unsigned long ha = 5381;
-> +	unsigned long ha = memhash(NULL, 0);
->   	char const *ptr = *data;
->   
->   	for (; ptr < top && *ptr != '\n'; ptr++) {
-> @@ -243,21 +244,18 @@ static unsigned long xdl_hash_record_with_whitespace(char const **data,
->   				; /* already handled */
->   			else if (flags & XDF_IGNORE_WHITESPACE_CHANGE
->   				 && !at_eol) {
-> -				ha += (ha << 5);
-> -				ha ^= (unsigned long) ' ';
-> +				ha = memhash_feed(ha, (unsigned char) ' ');
-
-All the memhash_feed() callers in this file cast to unsigned char.  A
-macro or a function (possibly inline) defined at the top could do
-that for them.
-
->   			}
->   			else if (flags & XDF_IGNORE_WHITESPACE_AT_EOL
->   				 && !at_eol) {
->   				while (ptr2 != ptr + 1) {
-> -					ha += (ha << 5);
-> -					ha ^= (unsigned long) *ptr2;
-> +					ha = memhash_feed(ha, (unsigned char) *ptr2);
->   					ptr2++;
->   				}
->   			}
->   			continue;
->   		}
-> -		ha += (ha << 5);
-> -		ha ^= (unsigned long) *ptr;
-> +		ha = memhash_feed(ha, (unsigned char) *ptr);
->   	}
->   	*data = ptr < top ? ptr + 1: ptr;
->   
-> @@ -265,15 +263,14 @@ static unsigned long xdl_hash_record_with_whitespace(char const **data,
->   }
->   
->   unsigned long xdl_hash_record(char const **data, char const *top, long flags) {
-> -	unsigned long ha = 5381;
-> +	unsigned long ha = memhash(NULL, 0);
->   	char const *ptr = *data;
->   
->   	if (flags & XDF_WHITESPACE_FLAGS)
->   		return xdl_hash_record_with_whitespace(data, top, flags);
->   
->   	for (; ptr < top && *ptr != '\n'; ptr++) {
-> -		ha += (ha << 5);
-> -		ha ^= (unsigned long) *ptr;
-> +		ha = memhash_feed(ha, (unsigned char) *ptr);
->   	}
->   	*data = ptr < top ? ptr + 1: ptr;
->   
-> 
+I'll do that.
