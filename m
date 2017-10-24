@@ -2,131 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 01D371FF72
-	for <e@80x24.org>; Tue, 24 Oct 2017 15:27:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 10C651FF72
+	for <e@80x24.org>; Tue, 24 Oct 2017 15:32:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751759AbdJXP1c (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Oct 2017 11:27:32 -0400
-Received: from mailout1.samsung.com ([203.254.224.24]:41669 "EHLO
-        mailout1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751519AbdJXP1a (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Oct 2017 11:27:30 -0400
-Received: from epcas2p3.samsung.com (unknown [182.195.41.55])
-        by mailout1.samsung.com (KnoxPortal) with ESMTP id 20171024152728epoutp0157de6d2e683d69424fbf2f1474ca7830~wiyDjbgSN0594305943epoutp01A;
-        Tue, 24 Oct 2017 15:27:28 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com 20171024152728epoutp0157de6d2e683d69424fbf2f1474ca7830~wiyDjbgSN0594305943epoutp01A
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1508858848;
-        bh=Ea7E16VDS/MmFIranQgWT8zUy3RlM1PkTZPGOHwK3uY=;
-        h=To:From:Subject:Cc:Date:References:From;
-        b=PbQUOx6m+TRiktpmTLNuuBN+gdbYZbwpX4kUJJ1uUWtrEuX2y4zG3sqX4ORPhM5QG
-         AL5e54az5IA7ZmgIg+XHMZ7PVQyHGuQGSgWV8cgT8Avo3VyP0I9L2oaNYLOrlZjY7g
-         3MfH3GPbc6pYELGHoWJK01xPJfwUlK1+dql5odPc=
-Received: from epsmges2p4.samsung.com (unknown [182.195.42.72]) by
-        epcas2p3.samsung.com (KnoxPortal) with ESMTP id
-        20171024152728epcas2p32eb8843e29d8ed8cb87320e3090a4b03~wiyDJY-hR0427704277epcas2p3P;
-        Tue, 24 Oct 2017 15:27:28 +0000 (GMT)
-Received: from epcas2p4.samsung.com ( [182.195.41.56]) by
-        epsmges2p4.samsung.com (Symantec Messaging Gateway) with SMTP id
-        FD.49.04158.FDB5FE95; Wed, 25 Oct 2017 00:27:27 +0900 (KST)
-Received: from epsmgms2p2new.samsung.com (unknown [182.195.42.143]) by
-        epcas2p4.samsung.com (KnoxPortal) with ESMTP id
-        20171024152727epcas2p4fb7dcf147e44aadf7733098151d469a5~wiyCSqDa70964309643epcas2p4v;
-        Tue, 24 Oct 2017 15:27:27 +0000 (GMT)
-X-AuditID: b6c32a48-905ff7000000103e-df-59ef5bdfba30
-Received: from epmmp1.local.host ( [203.254.227.16]) by
-        epsmgms2p2new.samsung.com (Symantec Messaging Gateway) with SMTP id
-        CC.0F.03859.FDB5FE95; Wed, 25 Oct 2017 00:27:27 +0900 (KST)
-Received: from [106.109.129.81] by mmp1.samsung.com (Oracle Communications
-        Messaging Server 7.0.5.31.0 64bit (built May  5 2014)) with ESMTPA id
-        <0OYC00B3Z2XP5F50@mmp1.samsung.com>; Wed, 25 Oct 2017 00:27:27 +0900 (KST)
-To:     git@vger.kernel.org
-From:   Andrey Okoshkin <a.okoshkin@samsung.com>
-Subject: [PATCH] merge-recursive: check GIT_MERGE_VERBOSITY only once
-Organization: Samsung RnD Institute Russia
-Cc:     vmiklos@frugalware.org, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>
-Message-id: <3aed764b-388c-d163-08fc-32b294c6b9d3@samsung.com>
-Date:   Tue, 24 Oct 2017 18:27:24 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
-        Thunderbird/52.4.0
-MIME-version: 1.0
-Content-type: text/plain; charset="utf-8"
-Content-language: en-GB
-Content-transfer-encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrHIsWRmVeSWpSXmKPExsWy7bCmhe796PeRBi3zbCy6rnQzWTT0XmG2
-        +NHSw2xxpP0zkwOLx5PmHhaPZ717GD0uXlL2+LxJLoAlissmJTUnsyy1SN8ugStj0oaXjAWH
-        uCpOT3jD0sD4kqOLkYNDQsBEYutvwy5GLg4hgR2MEjuXr2aGcL4zSjw938jUxcgJVrTy+R02
-        iMRuRokXmzoZIZz7jBI7VnWwgFSJCIhLvD0+kx3EZhPQkzj/awKYLSzgKvFrcxsbiM0voCVx
-        +cc8ZhCbWSBa4umkA2AbeAXsJB5u+wsWZxFQlWjvnccKYosKREgcP7ycEaJGUOLH5HssEL2a
-        Ei++TIKyxSWO3b/JCGHLS2xe8xbsBQmBBWwSf/93skK84CIxZ8N7NghbWOLV8S3sELa0xLNV
-        Gxkh7HqJ1o4nbBDNHYwSn2cthSqyl9jStZ0NYgOfRMfhv+yQwOOV6GgTgijxkJjw9CA0uBwl
-        jqw5D1YuJBArMfPWJfYJjHKzkPwwC8kPs5D8MAvJDwsYWVYxiqUWFOempxYbFZjoFSfmFpfm
-        pesl5+duYgSnCi2PHYwHzvkcYhTgYFTi4W0wfxcpxJpYVlyZe4hRgoNZSYR3hcn7SCHelMTK
-        qtSi/Pii0pzU4kOM0hwsSuK8dduuRQgJpCeWpGanphakFsFkmTg4pRoYz5rmNYl6hc5Y6bHF
-        Jv7eoSnvTLcucJym92N2bHjbZDOR6Ieexyc++MMe0SCpIuf0+Pn/iZXzjlxsymKbeu/i83v9
-        8TdlA76lCa4J9O+7sJD3zKX41TWyUTcmzQmevGzic7eM/069jEG/X27h+R43sX7LYpHPCmbP
-        nCU5OBI/+updOZnx6PoUeSWW4oxEQy3mouJEALu5tg8RAwAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrJLMWRmVeSWpSXmKPExsVy+t9jAd370e8jDV5f4rToutLNZNHQe4XZ
-        4kdLD7PFkfbPTA4sHk+ae1g8nvXuYfS4eEnZ4/MmuQCWKC6blNSczLLUIn27BK6MSRteMhYc
-        4qo4PeENSwPjS44uRk4OCQETiZXP77B1MXJxCAnsZJT4/ekRM4TzkFFi2Y42NpAqEQFxibfH
-        Z7KD2GwCehLnf00As4UFXCV+bYao4RfQkrj8Yx4ziM0sEC2xcM0RsDivgJ3Ew21/weIsAqoS
-        7b3zWEFsUYEIiefN71khagQlfky+x9LFyAHUqy4xZUouxBhxiWP3bzJC2PISm9e8ZZ7AyD8L
-        SccshI5ZSDpmIelYwMiyilEytaA4Nz232KjAKC+1XK84Mbe4NC9dLzk/dxMjMIC3Hdbq38H4
-        eEn8IUYBDkYlHt4blu8ihVgTy4orcw8xSnAwK4nwrjB5HynEm5JYWZValB9fVJqTWnyIUZqD
-        RUmclz//WKSQQHpiSWp2ampBahFMlomDU6qB8cB5j7C1n6dsCpvql6faaP9bouKgesrOvx3G
-        Rtt6js16t6tm37xdLa8m/Z75LmrW9Hzvnonv9zyMdXA6dcaPf7aKcR6fc+appQfnW8u8WZHb
-        HPu7XDfAUOjb5J4TgspsQl/XJatVT1EtkXbcvbhjd8GB13HLAr03ez48YuhZ/Sc8rfWBRO7a
-        50osxRmJhlrMRcWJAMczjJ9cAgAA
-X-CMS-MailID: 20171024152727epcas2p4fb7dcf147e44aadf7733098151d469a5
-X-Msg-Generator: CA
-CMS-TYPE: 102P
-X-CMS-RootMailID: 20171024152727epcas2p4fb7dcf147e44aadf7733098151d469a5
-X-RootMTR: 20171024152727epcas2p4fb7dcf147e44aadf7733098151d469a5
-References: <CGME20171024152727epcas2p4fb7dcf147e44aadf7733098151d469a5@epcas2p4.samsung.com>
+        id S932141AbdJXPcZ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Oct 2017 11:32:25 -0400
+Received: from mail-yw0-f175.google.com ([209.85.161.175]:48193 "EHLO
+        mail-yw0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751369AbdJXPcY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Oct 2017 11:32:24 -0400
+Received: by mail-yw0-f175.google.com with SMTP id q1so15422716ywh.5
+        for <git@vger.kernel.org>; Tue, 24 Oct 2017 08:32:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=i5YlRHeBvbghO0+qeUQnBsZDVFv9aenVBh6zmoKY/go=;
+        b=Wpwf9gXok0M3N+D//H6hk0zd5B/EKm8fPMUYQIp1EwB3ZVHEAwTy+dAEyfPqvERTk/
+         hPbANeL58QLuYHaKj2jfW6/rZED13BGf9u97dLSDErHj31jsu3lSEEvZRs8uKyKfsG+u
+         35oX+Z9maVi2caxKv7E9LIFcBrD5lW7OsbcsC8IdLeT2hbniJ722SpWR9O6K5Ixp2fev
+         DAZdu+IHFLDvMW1FIu8P6wIus7OPu9jbqD2wDIOHCWk0/0ZlBBVPApakzD9z/xbrVIyl
+         wi5A4voVU8FVbxsP6wINnjF6bcydGGvIr9yb0EojTGGVDN4mEa4jEapXMAf7OdIdDK02
+         2t7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=i5YlRHeBvbghO0+qeUQnBsZDVFv9aenVBh6zmoKY/go=;
+        b=MuKefWcU78/NlcOY8gqQkeYAdspYBjdMNSQOpiF3op053p68KrcUL6QiJsq6QKdITy
+         MX3owOviTtN0ihFlfUzggC8wZqQkDcd3oAGIhe4dVbLbt2RrH+h3rxFK3K7kWQ9G2iYf
+         I0wrVBQVevyzbfNhomBv8Y6LQ+t0pAjbd4+0th9mvNKtxTs2hwQNKRn4Gfa4nRRkihiT
+         43F8AfV+c/7f9sJ/wwBJzIgdNMWeSp7z9myIOcI31yWuLNz+seQRWFnDYpdLkqF51NNo
+         KIagm76mUDMfpCeDqSymIX3YqPbSkUnAw0XCT8WtCQkenUzapZ4+VUg9lgX8cLxTgKAK
+         1xHg==
+X-Gm-Message-State: AMCzsaWQBFPgbPywPJjyBDGjEjGx4ewemNrRN80iYekqJvk/zvO0Y33T
+        OXdie5tmjF0ImxAlun21cCaX8ciJJW8hs+lMXHo=
+X-Google-Smtp-Source: ABhQp+QZr3gqOSSGc0oX+gyjlzKO/jRpwaAjGejy6ATzK7CrB21IwDsUMPVKpSCs6D30IU8bHcrazYtp8MSml97atWI=
+X-Received: by 10.129.83.198 with SMTP id h189mr10906113ywb.260.1508859143703;
+ Tue, 24 Oct 2017 08:32:23 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.37.95.73 with HTTP; Tue, 24 Oct 2017 08:32:03 -0700 (PDT)
+In-Reply-To: <CAFA_24Jov7FDw7AxUtFDV6avOj40LD6ptEVMPpVuSdAo_6L_1A@mail.gmail.com>
+References: <CAFA_24+svnt4uSpx1tjj2t6iAt4G3p9UvrxahEYj=VZWeJxC=A@mail.gmail.com>
+ <CAGZ79kYbeVcpEXsei8Lr=Zw+YgJE_E4mBSRWYcYDqOWz20z5oA@mail.gmail.com> <CAFA_24Jov7FDw7AxUtFDV6avOj40LD6ptEVMPpVuSdAo_6L_1A@mail.gmail.com>
+From:   Max Rothman <max.r.rothman@gmail.com>
+Date:   Tue, 24 Oct 2017 11:32:03 -0400
+X-Google-Sender-Auth: _mzSx62tQNnpH0F2lZvKIrd6cLM
+Message-ID: <CAFA_24JGE=MyRFYwZ_zKsFCt_xFVNqrmagMBQBam3nHhdO6Gzw@mail.gmail.com>
+Subject: Re: No log --no-decorate completion?
+To:     Stefan Beller <sbeller@google.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add check of 'GIT_MERGE_VERBOSITY' environment variable only once in
-init_merge_options().
-Consequential call of getenv() may return NULL pointer and strtol() crashes.
-However the stored pointer to the obtained getenv() result may be invalidated
-by some other getenv() call from another thread as getenv() is not thread-safe.
+Just re-discovered this in my inbox. So is this worth fixing? I could
+(probably) figure out a patch.
 
-Signed-off-by: Andrey Okoshkin <a.okoshkin@samsung.com>
----
- merge-recursive.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Thanks,
+Max
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 1494ffdb8..eaac98145 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -2163,6 +2163,7 @@ static void merge_recursive_config(struct merge_options *o)
- 
- void init_merge_options(struct merge_options *o)
- {
-+	const char *merge_verbosity = getenv("GIT_MERGE_VERBOSITY");
- 	memset(o, 0, sizeof(struct merge_options));
- 	o->verbosity = 2;
- 	o->buffer_output = 1;
-@@ -2171,9 +2172,8 @@ void init_merge_options(struct merge_options *o)
- 	o->renormalize = 0;
- 	o->detect_rename = 1;
- 	merge_recursive_config(o);
--	if (getenv("GIT_MERGE_VERBOSITY"))
--		o->verbosity =
--			strtol(getenv("GIT_MERGE_VERBOSITY"), NULL, 10);
-+	if (merge_verbosity)
-+		o->verbosity = strtol(merge_verbosity, NULL, 10);
- 	if (o->verbosity >= 5)
- 		o->buffer_output = 0;
- 	strbuf_init(&o->obuf, 0);
--- 
-2.14.3
+On Thu, Oct 12, 2017 at 1:41 PM, Max Rothman <max.r.rothman@gmail.com> wrote:
+> To be fair, other --no* options complete, it's just --no-decorate,
+> --no-walk, --no-abbrev-commit, --no-expand-tabs, --no-patch,
+> --no-indent-heuristic, and --no-textconv that's missing.
+>
+> For example:
+> $ git log --no<TAB><TAB>
+> --no-color         --no-max-parents   --no-min-parents   --no-prefix
+>      --not
+> --no-ext-diff      --no-merges        --no-notes         --no-renames
+>      --notes
+>
+> Thanks,
+> Max
+>
+> On Wed, Oct 11, 2017 at 2:09 PM, Stefan Beller <sbeller@google.com> wrote:
+>> On Wed, Oct 11, 2017 at 7:47 AM, Max Rothman <max.r.rothman@gmail.com> wrote:
+>>> I recently noticed that in the git-completion script, there's
+>>> completion for --decorate={full,yes,no} for git log and family, but
+>>> not for --no-decorate. Is that intentional? If not, I *think* I see
+>>> how it could be added.
+>>>
+>>> Thanks,
+>>> Max
+>>
+>> Using git-blame, I found af4e9e8c87 (completion: update am, commit, and log,
+>> 2009-10-07) as well as af16bdaa3f (completion: fix and update 'git log
+>> --decorate='
+>> options, 2015-05-01), both of their commit messages do not discuss leaving out
+>> --no-decorate intentionally.
+>>
+>> If you give --no-<TAB> you'd get more than just the completion to --no-decorate,
+>> but all the negated options, I would assume?
+>>
+>> So maybe that is why no one added the negated options, yet?
+>>
+>> Thanks,
+>> Stefan
