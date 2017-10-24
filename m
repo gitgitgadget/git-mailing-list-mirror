@@ -2,105 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4BE9120437
-	for <e@80x24.org>; Tue, 24 Oct 2017 07:39:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B3BDB202DD
+	for <e@80x24.org>; Tue, 24 Oct 2017 08:12:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751738AbdJXHjG (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Oct 2017 03:39:06 -0400
-Received: from mail-pf0-f177.google.com ([209.85.192.177]:52235 "EHLO
-        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751723AbdJXHjC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Oct 2017 03:39:02 -0400
-Received: by mail-pf0-f177.google.com with SMTP id e64so19055471pfk.9
-        for <git@vger.kernel.org>; Tue, 24 Oct 2017 00:39:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:user-agent:in-reply-to:references:mime-version
-         :content-transfer-encoding:subject:to:cc:from:message-id;
-        bh=dqLdWtSBQy4va+rC5tfimt9DZR+Kq+rTLpSHsq5I2Kc=;
-        b=sZPA/aFBYl7rN/nMIO7BPj/3AhqevZY+5O9PrkrlO6Ithg0Tg/PPzEUvTu1NbS2WZl
-         sIooxYFxvvAypsM9QtOOzukzovIkk/W4Fz9KHxLJ6yKILnWflnyAMqbvhzxMCHH0biVq
-         0zfSyvueKyZvuX11Suel6f6dZ18CTumLlbWPt/t/QcMIRMB/gb7QYNUXDSypjpjWLyT0
-         soef3z8WNIBN5rp64xwhm1+I2bWyx5Y5aZv0RfkGm26CdP+lJddOYea29agjo7qOztrS
-         /ghdbml3B84+HTAJxbJHo2JEopR37N9eRSRWuxF3kbig29Mc6HyWNmaxRs8fKR86IYZI
-         +aGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:user-agent:in-reply-to:references
-         :mime-version:content-transfer-encoding:subject:to:cc:from
-         :message-id;
-        bh=dqLdWtSBQy4va+rC5tfimt9DZR+Kq+rTLpSHsq5I2Kc=;
-        b=rpUcpVHxfRqcftFVEGEe/exxycs8zFR0WDCqdcGNaZeG2Z8/QoW+hwFj6/fPMpitpG
-         O84/AzdbXU5DPLn8duknovs2hXhdR0y7U5FsTog+mENn8M3EfP8kIi03fy7VffJzNskR
-         6YvPGIvsh7gkuxI/xJtxA1e1TDLMVWMLBz5WOQY+1zCz8EO8pHXJ4sRpFeBJmDe6zfZg
-         zau3SKo2QBcRuoDR03N0ghqKhOJECUb8Mf4++Ehhzv74bW4j9Y3f6bkdEniY30gS/Lzm
-         09IwRGOX83x525SVXdSLpXdkYX/jW96kj6fy74/XosWAhF5sdo4xXl5ei4a31PaIa630
-         4I+g==
-X-Gm-Message-State: AMCzsaW9W72IjuvsDXkoIzlvLK5rlqZKOwsJKAI0MDmJDwwhLiPLOvi/
-        kbmNK8754WMEIrRW4hnls5k=
-X-Google-Smtp-Source: ABhQp+Qlqwe8glHjgwqD3Ms0FPMhxCcc2AgX/48MA7ThytJ5OZ2Rbwn9OVK4HaudnF/Ee/lbeOgcIg==
-X-Received: by 10.159.195.7 with SMTP id bd7mr2639815plb.366.1508830741919;
-        Tue, 24 Oct 2017 00:39:01 -0700 (PDT)
-Received: from [192.168.1.126] (50-39-169-152.bvtn.or.frontiernet.net. [50.39.169.152])
-        by smtp.gmail.com with ESMTPSA id k7sm15214280pgc.4.2017.10.24.00.38.59
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 24 Oct 2017 00:39:00 -0700 (PDT)
-Date:   Tue, 24 Oct 2017 00:38:56 -0700
-User-Agent: K-9 Mail for Android
-In-Reply-To: <1760206035.56692.1508594211365.JavaMail.zimbra@laposte.net>
-References: <2089146798.216127.1508487262593.JavaMail.zimbra@laposte.net> <1290947539.4254.1508496039812.JavaMail.zimbra@laposte.net> <CAGZ79kYRq4OugvTfb2WNdk-M5DMAZC0JpJHqC1KSeJY2eNN1=Q@mail.gmail.com> <1760206035.56692.1508594211365.JavaMail.zimbra@laposte.net>
-MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
+        id S1751759AbdJXIMz (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Oct 2017 04:12:55 -0400
+Received: from mail-eopbgr30119.outbound.protection.outlook.com ([40.107.3.119]:22064
+        "EHLO EUR03-AM5-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1751606AbdJXIMw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Oct 2017 04:12:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dnv.onmicrosoft.com;
+ s=selector1-dnvgl-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
+ bh=X2rvfes/fo/VzDsQiyKZGS1zuUUZRDNQicAc8M7dxos=;
+ b=txjsmIlHmBfQq83WF3paoDI4ccQC3rwU9N6aEpqyy8/YmykOmligr4GpvyGrZhRa5xAn60iXc3KOKYoGD3jAg/iDMDJ6MRxk7KEYXmwmQRmH8vdQpjR0yyB9tGxctwz0UcWeSxhWxvfuE2XZGfTaNiBC38AQB9vG8Ym6ZaMbyb0=
+Received: from DB6PR0202MB2807.eurprd02.prod.outlook.com (10.171.72.12) by
+ DB6PR0202MB2808.eurprd02.prod.outlook.com (10.171.72.13) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P256) id
+ 15.20.156.4; Tue, 24 Oct 2017 08:12:49 +0000
+Received: from DB6PR0202MB2807.eurprd02.prod.outlook.com
+ ([fe80::305f:22a8:83ed:a54e]) by DB6PR0202MB2807.eurprd02.prod.outlook.com
+ ([fe80::305f:22a8:83ed:a54e%14]) with mapi id 15.20.0156.007; Tue, 24 Oct
+ 2017 08:12:49 +0000
+From:   "Voie, Per Erlend Torbergsen" <Per.Erlend.Voie@dnvgl.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: git describe returns tags including 'refs/tags/
+Thread-Topic: git describe returns tags including 'refs/tags/
+Thread-Index: AdNMndOza6AU2na4SM6pMSoMXdRpkgAAew6g
+Date:   Tue, 24 Oct 2017 08:12:49 +0000
+Message-ID: <DB6PR0202MB28074CB67408334285264588A4470@DB6PR0202MB2807.eurprd02.prod.outlook.com>
+References: <DB6PR0202MB2807FB243E7D7A574D555F16A4470@DB6PR0202MB2807.eurprd02.prod.outlook.com>
+In-Reply-To: <DB6PR0202MB2807FB243E7D7A574D555F16A4470@DB6PR0202MB2807.eurprd02.prod.outlook.com>
+Accept-Language: nb-NO, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=Per.Erlend.Voie@dnvgl.com; 
+x-originating-ip: [193.161.96.4]
+x-ms-publictraffictype: Email
+x-microsoft-exchange-diagnostics: 1;DB6PR0202MB2808;6:n8EjF+DyYhGZZzBRQ/pExzsA34MfNC5yEB8qaW9bQLLjzY/2z5gGYyezB4WTlTtRj+iN3zCELs7ynbT/SGJnWyRMoCEHbB5BIP77NpXu5fECc+eXg3EhnuNqew66bWStMfbdihRE5GyH69d7eNByVnGCWszqcUryLomKJDjCa6MOOdQFQOqcUuQZHNPo3s+7gfcyA2jTEt6PZo7uuWztymwcnQgNBGzZ9MZFm0xsQL067H6mCAHR2xZy+flFdkujCIlaz/Edh8HIzffh4YcDjpu0EVRYmaCvkJibrrifmexgdqiwxGho7Ta7S2v83gRbQpYJCtHJO6AhTxQsDqAn8w==;5:G4Azmzsq/Kl1Z0wNMdiNtwO/gSGwXGg6pT2N+0OHN1FHtwc2fYYq4fX2t0jPHebt3s6am8QiE921Hes+NbmTVEI4y1MaBW/dOto7FnM5vx109EXLipcWsLejmYfnEQHBGmc4D12Vb7OXrw1KsrDqhQ==;24:56Ya4+nSOBEtRSmXSHZx9d9y82EoIolnMM3jizLsK2xtjCmksKSrbiiXsZbVK39kCJYwnsBIKiH8mZiz8i9TZv2KUqnZiRr8SFgC9gq5cOk=;7:17udmGRhtCTnqTzsqdXg7qIU4b+AX08LvlSRpqqL9Tz7I7E7Semr4zinqU7hmkPerY5FdDppdzIiJJYbWx3+7KOAwOFG0QJW+hzIo/PBjeXG4H12alvZjaI25h7ITEbNL8G2WswsV+9zpYrq62U/axhpw0V8fGURIDm8dSp0sP6siPNOt5BHUnjiKld4qKCiKMAeZJKD+yF/MLAdqNPu8M+FrBD8gNlmeA2yenSyIMg=
+x-ms-exchange-antispam-srfa-diagnostics: SSOS;
+x-ms-office365-filtering-correlation-id: ab816502-d64e-45d0-fad7-08d51ab70460
+x-ms-office365-filtering-ht: Tenant
+x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(22001)(4534020)(4602075)(4627075)(201703031133081)(201702281549075)(48565401081)(2017052603199);SRVR:DB6PR0202MB2808;
+x-ms-traffictypediagnostic: DB6PR0202MB2808:
+x-exchange-antispam-report-test: UriScan:;
+x-microsoft-antispam-prvs: <DB6PR0202MB28089230ACA3266D347BDCCAA4470@DB6PR0202MB2808.eurprd02.prod.outlook.com>
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(100000700101)(100105000095)(100000701101)(100105300095)(100000702101)(100105100095)(6040450)(2401047)(5005006)(8121501046)(3002001)(10201501046)(93006095)(93001095)(3231020)(100000703101)(100105400095)(6055026)(6041248)(20161123562025)(20161123564025)(20161123555025)(20161123560025)(20161123558100)(201703131423075)(201702281528075)(201703061421075)(201703061406153)(6072148)(201708071742011)(100000704101)(100105200095)(100000705101)(100105500095);SRVR:DB6PR0202MB2808;BCL:0;PCL:0;RULEID:(100000800101)(100110000095)(100000801101)(100110300095)(100000802101)(100110100095)(100000803101)(100110400095)(100000804101)(100110200095)(100000805101)(100110500095);SRVR:DB6PR0202MB2808;
+x-forefront-prvs: 047001DADA
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(6009001)(346002)(39860400002)(376002)(189002)(199003)(74316002)(3660700001)(3280700002)(72206003)(5640700003)(3846002)(8936002)(478600001)(6116002)(102836003)(6506006)(6436002)(7736002)(101416001)(86362001)(2940100002)(189998001)(97736004)(2906002)(305945005)(66066001)(14454004)(5660300001)(76176999)(54356999)(7696004)(2351001)(6916009)(81166006)(106356001)(105586002)(81156014)(1730700003)(33656002)(2950100002)(68736007)(50986999)(2900100001)(9686003)(5250100002)(316002)(5890100001)(25786009)(53936002)(8676002)(55016002)(99286003)(2501003);DIR:OUT;SFP:1102;SCL:1;SRVR:DB6PR0202MB2808;H:DB6PR0202MB2807.eurprd02.prod.outlook.com;FPR:;SPF:None;PTR:InfoNoRecords;MX:1;A:1;LANG:en;
+received-spf: None (protection.outlook.com: dnvgl.com does not designate
+ permitted sender hosts)
+spamdiagnosticoutput: 1:99
+spamdiagnosticmetadata: NSPM
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
-Subject: Re: [RFE] Add minimal universal release management capabilities to GIT
-To:     nicolas.mailhot@laposte.net, Stefan Beller <sbeller@google.com>
-CC:     git@vger.kernel.org
-From:   Jacob Keller <jacob.keller@gmail.com>
-Message-ID: <7DC2A15E-0B47-4398-8B62-DC39C5EA1343@gmail.com>
+MIME-Version: 1.0
+X-OriginatorOrg: dnvgl.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: ab816502-d64e-45d0-fad7-08d51ab70460
+X-MS-Exchange-CrossTenant-originalarrivaltime: 24 Oct 2017 08:12:49.5876
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: adf10e2b-b6e9-41d6-be2f-c12bb566019c
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB6PR0202MB2808
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi
 
+I am versioning my python package using git tags and the python-versioneer =
+package.
 
-On October 21, 2017 6:56:51 AM PDT, nicolas=2Emailhot@laposte=2Enet wrote:
->
->
->----- Mail original -----
->De: "Stefan Beller"=20
->
+Basically versioneer gets the version number from git tags using the comman=
+d "git describe --tags --dirty --always --long --match 'tag_prefix*'". I do=
+ not apply a tag prefix, hence tag_prefix=3D''.
 
->> git tags ?
->
->Too loosely defined to be relied on by project-agnostic tools=2E That's
->what most tools won't ever try to use those=2E Anything you will define
->around tags as they stand is unlikely to work on the project of someone
->else
+Now to the problem. My build breaks because the command above returns tags =
+like this "refs/tags/2.12.2" which contains invalid characters. Actually, i=
+t seems that executing the command above reconfigured the way git describe =
+behaves.
 
-I think that this could easily be built by a separate script which provide=
-s git release command line and uses tags under the hood in a well formed wa=
-y=2E I wouldn't say that the method outlined here works for all projects bu=
-t I do agree it's fairly common and could work for many projects
+because, before running the above command "git describe --tags --dirty" ret=
+urned
 
-I think most large projects already use annotated tags and tho they have t=
-heir own format it works pretty well=2E=20
+2.12.2-17-gd8e62f9
 
-Showing a tool that could help projects create more standardized release t=
-ags would be helpful=2E
+After, "git describe --tags --dirty" returns
 
-I think such a tool could already be built, scripted to create annotated t=
-ags with a well formed name=2E I don't think you necessarily need to have t=
-his in core git, tho I do see that your main goal is to piggyback on git it=
-selfs popularity
+warning: tag 'refs/tags/2.12.2' is really '2.12.2' here
+refs/tags/2.12.2-17-gd8e62f9
+
+Is it so that "git describe --tags --dirty --always --long --match 'tag_pre=
+fix*'" changes the way git describe behave or am I missing something? If it=
+ does, how can I reset it?
 
 Thanks
-Jake
---=20
-Sent from my Android device with K-9 Mail=2E Please excuse my brevity=2E
+Per
+
+***************************************************************************=
+***********
+This e-mail and any attachments thereto may contain confidential informatio=
+n and/or information protected by intellectual property rights for the excl=
+usive attention of the intended addressees named above. If you have receive=
+d this transmission in error, please immediately notify the sender by retur=
+n e-mail and delete this message and its attachments. Unauthorized use, cop=
+ying or further full or partial distribution of this e-mail or its contents=
+ is prohibited.
+***************************************************************************=
+***********
