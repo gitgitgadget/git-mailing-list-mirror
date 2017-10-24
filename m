@@ -2,97 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 816D81FF72
-	for <e@80x24.org>; Tue, 24 Oct 2017 12:44:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 989F21FF72
+	for <e@80x24.org>; Tue, 24 Oct 2017 13:19:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932297AbdJXMo3 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Oct 2017 08:44:29 -0400
-Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:43152 "EHLO
-        alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751920AbdJXMo2 (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 24 Oct 2017 08:44:28 -0400
-X-AuditID: 1207440c-7fdff7000000143e-4e-59ef357ea3be
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 35.4D.05182.F753FE95; Tue, 24 Oct 2017 08:43:43 -0400 (EDT)
-Received: from [192.168.69.190] (p57BCCBEA.dip0.t-ipconnect.de [87.188.203.234])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v9OCheZq025984
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-        Tue, 24 Oct 2017 08:43:41 -0400
-Subject: Re: v2.15.0-rc2 ref deletion bug
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-References: <20171024082409.smwsd6pla64jjlua@sigill.intra.peff.net>
- <ea715dae-b410-d4fb-77c7-2e61b764a343@alum.mit.edu>
-Message-ID: <44c489f0-4c72-46a1-61a0-48917d64958b@alum.mit.edu>
-Date:   Tue, 24 Oct 2017 14:43:39 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
+        id S932591AbdJXNTo (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Oct 2017 09:19:44 -0400
+Received: from wp156.webpack.hosteurope.de ([80.237.132.163]:35688 "EHLO
+        wp156.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S933487AbdJXNSa (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 24 Oct 2017 09:18:30 -0400
+Received: from app06-neu.ox.hosteurope.de ([92.51.170.140] helo=null); authenticated
+        by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:ECDHE_RSA_AES_256_CBC_SHA1:256)
+        id 1e6z6B-0001C9-FE; Tue, 24 Oct 2017 15:18:27 +0200
+Date:   Tue, 24 Oct 2017 15:18:27 +0200 (CEST)
+From:   Thomas Braun <thomas.braun@virtuell-zuhause.de>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     git@vger.kernel.org, gitster@pobox.com
+Message-ID: <1989036170.30614.1508851107354@ox.hosteurope.de>
+In-Reply-To: <5bc82075-0fb2-0929-2da7-d9069222a3fe@kdbg.org>
+References: <20171012122059.17242-1-thomas.braun@virtuell-zuhause.de>
+ <5bc82075-0fb2-0929-2da7-d9069222a3fe@kdbg.org>
+Subject: Re: [PATCH v1 1/1] completion: add remaining flags to checkout
 MIME-Version: 1.0
-In-Reply-To: <ea715dae-b410-d4fb-77c7-2e61b764a343@alum.mit.edu>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFuphleLIzCtJLcpLzFFi42IRYndR1F1l+j7SYOozJYuuK91MFg29V5gt
-        frT0MDswezzr3cPocfGSssfnTXIBzFFcNimpOZllqUX6dglcGYtv9LMXHOes2Pj2B1sD4zb2
-        LkZODgkBE4nOGTNYuxi5OIQEdjBJLN+0E8q5wCTR+GYTC0iVsICmxJ5518BsNgFdiUU9zUwg
-        toiAo8SFLUfA4swC4hLr5p4HmyokUCnR0baYDcTmFbCXmN91E6yeRUBV4tLqZ0BxDg5RgQiJ
-        DRv5IUoEJU7OfAI2hlPAQeLrt3ZmiJHqEn/mXWKGGX/ryXwmCFteYvvbOcwTGAVmIWmfhaRl
-        FpKWWUhaFjCyrGKUS8wpzdXNTczMKU5N1i1OTszLSy3SNdTLzSzRS00p3cQICWieHYzf1skc
-        YhTgYFTi4W0wfxcpxJpYVlyZe4hRkoNJSZT333ugEF9SfkplRmJxRnxRaU5q8SFGCQ5mJRHe
-        FSbvI4V4UxIrq1KL8mFS0hwsSuK8qkvU/YQE0hNLUrNTUwtSi2CyMhwcShK8Z0EaBYtS01Mr
-        0jJzShDSTBycIMN5gIY/AxteXJCYW5yZDpE/xajL8Wzm6wZmIZa8/LxUKXHeBSBFAiBFGaV5
-        cHNgiegVozjQW8K8/0GqeIBJDG7SK6AlTEBLZO3fgCwpSURISTUwlvIX5dqZ/hKbsf7oUoXd
-        Jw2q3hzY03VcNfRjmlm0aGmtj0RMeMbLe0d+3ffZrs3+TrLg2OcS3xzW3KdlV6zry/Yk3Em4
-        fnpr1YYdgfqxYUz7j65/3ef7aNqP6Rv+Fvzeku7Ydf3Eq0PL/umr3uXPn7p1im3w2Y65pnxB
-        H59fmh69Wa60NapvtRJLcUaioRZzUXEiAM7luuwfAwAA
+X-Priority: 3
+Importance: Medium
+X-Mailer: Open-Xchange Mailer v7.8.4-Rev14
+X-Originating-Client: open-xchange-appsuite
+X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1508851110;bb4189d2;
+X-HE-SMSGID: 1e6z6B-0001C9-FE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/24/2017 01:05 PM, Michael Haggerty wrote:
-> On 10/24/2017 10:24 AM, Jeff King wrote:
->> I found a potentially serious bug in v2.15.0-rc2 (and earlier release
->> candidates, too) that we may want to deal with before the release.
->>
->> If I do:
->> [...]
->> then at the end we have no refs at all!
+
+> Johannes Sixt <j6t@kdbg.org> hat am 12. Oktober 2017 um 18:50 geschrieben:
 > 
-> That's a serious bug. I'm looking into it right now.
+> 
+> Am 12.10.2017 um 14:20 schrieb Thomas Braun:
+> > In the commits 1d0fa898 (checkout: add --ignore-other-wortrees,
+> > 2015-01-03), 1fc458d9 (builtin/checkout: add --recurse-submodules switch,
+> > 2017-03-14), 870ebdb9 (checkout: add --progress option, 2015-11-01),
+> > 08d595dc (checkout: add --ignore-skip-worktree-bits in sparse checkout
+> > mode, 2013-04-13), 1d0fa898 (checkout: add --ignore-other-wortrees,
+> > 2015-01-03), 32669671 (checkout: introduce --detach synonym for "git
+> > checkout foo^{commit}", 2011-02-08) and db941099 (checkout -f: allow
+> > ignoring unmerged paths when checking out of the index, 2008-08-30)
+> > checkout gained new flags but the completion was not updated, although
+> > these flags are useful completions. Add them.
+> > 
+> > Signed-off-by: Thomas Braun <thomas.braun@virtuell-zuhause.de>
+> > ---
+> >   contrib/completion/git-completion.bash | 4 +++-
+> >   1 file changed, 3 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> > index d934417475..393d4ae230 100644
+> > --- a/contrib/completion/git-completion.bash
+> > +++ b/contrib/completion/git-completion.bash
+> > @@ -1250,7 +1250,9 @@ _git_checkout ()
+> >   	--*)
+> >   		__gitcomp "
+> >   			--quiet --ours --theirs --track --no-track --merge
+> > -			--conflict= --orphan --patch
+> > +			--conflict= --orphan --patch --detach --progress --no-progress
+> > +			--force --ignore-skip-worktree-bits --ignore-other-worktrees
+> 
+> Destructive and dangerous options are typically not offered by command 
+> completion. You should omit all three in the line above, IMO.
+> 
+> Furthermore, --progress and --no-progress are not useful in daily work 
+> on the command line, I think. By offering them, --p<TAB> would not 
+> complete to --patch anymore, you would need --pa<TAB>. You should omit 
+> them, too.
 
-The fix is trivial (see below). But let me add some tests and make sure
-that there are no similar breakages in the area, then submit a full patch.
+Thanks for the review.
 
-Michael
-
------------------------------ refs/files-backend.c
------------------------------
-index 29eb5e826f..fc3f2abcc6 100644
-@@ -2523,15 +2523,15 @@ static int files_transaction_prepare(struct
-ref_store *ref_store,
- 	 */
- 	for (i = 0; i < transaction->nr; i++) {
- 		struct ref_update *update = transaction->updates[i];
-
- 		ret = lock_ref_for_update(refs, update, transaction,
- 					  head_ref, &affected_refnames, err);
- 		if (ret)
--			break;
-+			goto cleanup;
-
- 		if (update->flags & REF_DELETING &&
- 		    !(update->flags & REF_LOG_ONLY) &&
- 		    !(update->flags & REF_ISPRUNING)) {
- 			/*
- 			 * This reference has to be deleted from
- 			 * packed-refs if it exists there.
+I've fixed that for the next reroll.
