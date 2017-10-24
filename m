@@ -6,96 +6,84 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EEC07202A0
-	for <e@80x24.org>; Tue, 24 Oct 2017 01:54:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D0893202A0
+	for <e@80x24.org>; Tue, 24 Oct 2017 02:01:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751295AbdJXByM (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Oct 2017 21:54:12 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57867 "EHLO
+        id S1751280AbdJXCBZ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Oct 2017 22:01:25 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:65137 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751226AbdJXByM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Oct 2017 21:54:12 -0400
+        with ESMTP id S1751226AbdJXCBZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Oct 2017 22:01:25 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 795C396554;
-        Mon, 23 Oct 2017 21:54:11 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 897D496137;
+        Mon, 23 Oct 2017 22:01:24 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=VCR/pADgKJYMHWaQxK0qWYJhpsw=; b=NS6+fm
-        676OJQu5jibhI/EJQ8AE8LAEyA44BCNb0999CxU/fhwhpQNqVl3yeBtvpAQRgl40
-        Sipa8qiXx8fRHC8DLBIQXnc0vBEcmXMa9GxD2lFRmGOBFT2HRCn3Oi8xDVP9pwMZ
-        MwX4ppSme3YcJh358vYo+tAj8pO2oOoO60USI=
+        :content-type; s=sasl; bh=bVFOc0Q6WSlvSPSiefa6wgfXG6o=; b=D0Fk7t
+        v54cfklG8AqSfX1whv/4csTeo974frUq9c17xmX4Imlo4OfJf9srI+gnqP0y2Xzm
+        xRdc7CW+RVeSfJ8krBWQwtwI4a7mgVDve4gq2ARK00BqaCyWa0DE03mTJNfwx3kN
+        nb4XiwgCqwBCwbu8dMJO+dRyiZJkOMgUUywow=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=yORbt4+c6BmGQyE6Oy2BLIBHM1/gqD5t
-        F2HH0OdkX6hHRIQXxkVkYF8lx9i4NdAfiaOX/ZvAKzGzns0VQbNgvi4zbVPBLTGw
-        0vIO+wPlhTNAzVpvGoZ2e/KPGRXJFlfDHSp2cy2NmDZAKeX4xi99WYl5yNIhIWWu
-        +rjZV4IhRj8=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 70E1896553;
-        Mon, 23 Oct 2017 21:54:11 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=XtxEKdWGVecOIIFFkn+28zPysvkcZBGN
+        azp0kFFxMb0lpFINt5rmgXVgYiQ5xp5z/ggFylYwPHWXvasmUvG1VMRQinm/Mmt/
+        d4ByF2s+lm9/1rxUc27qf7UV0PuwEutf22Ck4cxFegE/LEgw2KL9dTCzrh+BXMxE
+        Oo5bbtCJBGw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 816D796136;
+        Mon, 23 Oct 2017 22:01:24 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D697896552;
-        Mon, 23 Oct 2017 21:54:10 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E760296135;
+        Mon, 23 Oct 2017 22:01:23 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Brandon Williams <bmwill@google.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>,
-        Bryan Turner <bturner@atlassian.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jeff King <peff@peff.net>, William Yan <wyan@google.com>
-Subject: Re: [PATCH 1/5] connect: split git:// setup into a separate function
-References: <20170926235627.79606-1-bmwill@google.com>
-        <20171003201507.3589-1-bmwill@google.com>
-        <20171003201507.3589-11-bmwill@google.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        Brandon Williams <bmwill@google.com>, git@vger.kernel.org,
+        peff@peff.net, sbeller@google.com, William Yan <wyan@google.com>
+Subject: Re: [PATCH 2/5] connect: split ssh command line options into separate function
+References: <20171003201507.3589-11-bmwill@google.com>
         <20171003214206.GY19555@aiede.mtv.corp.google.com>
         <20171016171812.GA4487@google.com>
         <20171023212740.qodxzsq5w7rn2r6y@aiede.mtv.corp.google.com>
-        <20171023212916.4aarismli6io4ro6@aiede.mtv.corp.google.com>
-        <CAGZ79kYwARXNWRS4AgwTP7peZiWiwCBvWFiEr9TbpbWjgysfZA@mail.gmail.com>
-Date:   Tue, 24 Oct 2017 10:54:09 +0900
-In-Reply-To: <CAGZ79kYwARXNWRS4AgwTP7peZiWiwCBvWFiEr9TbpbWjgysfZA@mail.gmail.com>
-        (Stefan Beller's message of "Mon, 23 Oct 2017 15:16:13 -0700")
-Message-ID: <xmqqlgk19upq.fsf@gitster.mtv.corp.google.com>
+        <20171023213159.eitrjrqrh277advm@aiede.mtv.corp.google.com>
+        <20171023151929.67165aea67353e5c24a15229@google.com>
+        <20171023224310.o7ftwmbr7n74vvc6@aiede.mtv.corp.google.com>
+        <20171023225106.GA73667@google.com>
+        <20171023155713.5055125d7467d8daaee42e32@google.com>
+        <20171023231625.6mhcyqti7vdg6yot@aiede.mtv.corp.google.com>
+        <20171023231733.tattcu2aws7kgous@aiede.mtv.corp.google.com>
+Date:   Tue, 24 Oct 2017 11:01:22 +0900
+In-Reply-To: <20171023231733.tattcu2aws7kgous@aiede.mtv.corp.google.com>
+        (Jonathan Nieder's message of "Mon, 23 Oct 2017 16:17:33 -0700")
+Message-ID: <xmqqh8up9udp.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 3AB74FF0-B85E-11E7-AB56-8EF31968708C-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 3CD83F82-B85F-11E7-AA18-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> I think once this option is given, all we have to do is pay attention to
-> this option in diff.c#moved_entry_cmp/next_byte, which is best built
-> on top of Peffs recent fixes origin/jk/diff-color-moved-fix.
-> Would that be of interest for people?
+> The git_connect function is growing long.  Split the portion that
+> discovers an ssh command and options it accepts before the service
+> name and path to a separate function to make it easier to read.
+>
+> No functional change intended.
+>
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+> Reviewed-by: Stefan Beller <sbeller@google.com>
+> ---
+> As before, except for the Reviewed-by.
+>
+>  connect.c | 116 +++++++++++++++++++++++++++++++++-----------------------------
+>  1 file changed, 61 insertions(+), 55 deletions(-)
 
-Two things and a half.
-
- * I was hoping that the next_byte() and string_hash() thing, once
-   they are cleaned up, will eventually be shared with the xdiff/
-   code at the lower layer, which needs to do pretty much the same
-   in order to implement various whitespace ignoring options.  I am
-   not sure how well the approach taken by the WIP patch meshes with
-   the needs of the lower layer.
-
- * I agree that -w that applies only one or the other and not both
-   may sometimes produce a better/readable result, but the more
-   important part is how the user can tell when to exercise the
-   option.  Would it be realistic to expect them to try -w in
-   different combinations and see which looks the best?  What if we
-   have a patch that touch two files, one looks better with -w only
-   for coloring moved and the other looks better with -w for both?
-
- * As moved-lines display is mostly a presentation thing, I wonder
-   if it makes sense to always match loosely wrt whitespace
-   differences.  It is tempting because if it is true, we do not
-   have to worry about the second issue above.
+Looks like a straight-forwrd split.  Makes sense.
 
 Thanks.
