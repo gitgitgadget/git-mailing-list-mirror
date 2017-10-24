@@ -2,96 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A1EF81FF72
-	for <e@80x24.org>; Tue, 24 Oct 2017 17:11:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 046E120437
+	for <e@80x24.org>; Tue, 24 Oct 2017 17:48:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751665AbdJXRL3 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Oct 2017 13:11:29 -0400
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:52996 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751511AbdJXRL0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Oct 2017 13:11:26 -0400
-Received: by mail-pg0-f65.google.com with SMTP id a192so15025282pge.9
-        for <git@vger.kernel.org>; Tue, 24 Oct 2017 10:11:25 -0700 (PDT)
+        id S1751550AbdJXRsr (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Oct 2017 13:48:47 -0400
+Received: from mail-wm0-f41.google.com ([74.125.82.41]:49716 "EHLO
+        mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751336AbdJXRsq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Oct 2017 13:48:46 -0400
+Received: by mail-wm0-f41.google.com with SMTP id b189so17150686wmd.4
+        for <git@vger.kernel.org>; Tue, 24 Oct 2017 10:48:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=jaJfmbmlRguGmmlWtVEkUCO1iF+JjSy/+gr9PnALa00=;
-        b=mXjVVbCD8STz1Kpj04eE1mde05wY5dHxGeGuJIXQMl8n3yVlhHrd8U2rTWwGXVKhPi
-         TrsvjrMpPVBSSekLiJM+W9dPVGZK6HzIdBS1sGoQJh7Rh6rrVQt0PhQZsf5rG4wks0p6
-         /Wul5JP17tR2JloBZAyXDoRrf+sCUlPRkMi7YzpbC4fGR0pDv8obXYJRXFBemX1MkJO2
-         5I1Adki0Jkn+TA95QyeL7NpZp2u2gDlY1v948w0w3SR5eXEJEFxI4eqylNcyXJiEauAm
-         JmejF9y0KU/V6gJQ/JCAaF/7FZvsvBig24G3Go0jskf5M9lFqtxhx4PXCZWedHvk6H+s
-         ZF4Q==
+        h=from:content-transfer-encoding:subject:date:message-id:cc:to
+         :mime-version;
+        bh=c7qQSjiYFszPHmVrT0ZbPP3QqivEzfspVdAIfJomaAs=;
+        b=NcjgCst61mDg33ZRUgx4wLs2UmDNEBMI6AuBubxuzxRZanby3mtEb95xLisgD8fL6U
+         Ro9LRi4uYkXM13/h7e81tC/HM/9QLOakGzqAp6Svwpa6xZtYrFqCiz8FQU9t9alFetQD
+         cDQtAdzLneXyT8Kh9tF4Qp/swdsa0D3DeSCmqQmSEjcJ7CdePEUc4RQcTyjmT3XhDwnK
+         LX3FycZf9prOjQX9Ph1pKO4NFDTWbikK2UCQk+bq5H6/6oH/sp+0IBMjSMxST4Xk5Xaj
+         vCTu1K/tqDroj/AqXm3rBOzzY4al90Tv2zW04SnTfhlyk8rFt5GL49gZ6I6Poq6SICEJ
+         qmUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=jaJfmbmlRguGmmlWtVEkUCO1iF+JjSy/+gr9PnALa00=;
-        b=ewHbyga74GQ+VhzvhstfpTZz72mixt13Jg+m5CiM+tC43pusCti6Z/OOwS6dy8DyNa
-         CWVhOPc/Y5Au4eBHM2CPOrxfYegY57SDb+rxqLq7e6xx3RHno45r4cirsP8+3dWicCEz
-         kWCV2F7/OyzgnHvQAhz6vsiVE/WHXukkAxBr1zT/fEMvbmvz9Qc2I6mQ60ImNdK7NsDc
-         6ZvDbmFIgahQpiHpvpujf/uu7DB2J66rDtl2pJJLdvQCMan/sxNrYIEsBvcjapufQj/E
-         DBVMD2ZPoqOKHQNO3/TuRdJ869beLJYc7Qwzga9bz7z12H5BmZfdYZUsa8d2dzQmKyTZ
-         e6Eg==
-X-Gm-Message-State: AMCzsaWi5Vo5GUpJ9OHcOvPO3S1D/x0HXWqg3srAFC00R2rPJsfhnk6s
-        1J044vqsgg+7/NQTGQ+zQbDFWHY0jPGPkDz3BJs=
-X-Google-Smtp-Source: ABhQp+T73E3mXHRU06nBqsXGxyg+Gvk3QZ7GdgHSlajvVVxDuMRDKRK4zAKi14gnTSWBTu6Edd4tFS9vdC2aMhbxLcA=
-X-Received: by 10.84.233.66 with SMTP id k2mr13551173plt.45.1508865085080;
- Tue, 24 Oct 2017 10:11:25 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.100.177.141 with HTTP; Tue, 24 Oct 2017 10:11:24 -0700 (PDT)
-In-Reply-To: <CAPig+cRTL2amjsgdp1=T3GMZLa=favugOfnQw9XjWzC+U=v5Sw@mail.gmail.com>
-References: <CGME20171024152727epcas2p4fb7dcf147e44aadf7733098151d469a5@epcas2p4.samsung.com>
- <3aed764b-388c-d163-08fc-32b294c6b9d3@samsung.com> <CAGZ79kaSZG9WriqX0SLbTnEDRr-4YdFRuK17+9wnxyrftfnMmg@mail.gmail.com>
- <CAPig+cRTL2amjsgdp1=T3GMZLa=favugOfnQw9XjWzC+U=v5Sw@mail.gmail.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Tue, 24 Oct 2017 19:11:24 +0200
-Message-ID: <CAN0heSp7b_6n3y=s4++oWhkPUuM=s9L7LWVx5vn8o=5aH6DKKw@mail.gmail.com>
-Subject: Re: [PATCH] merge-recursive: check GIT_MERGE_VERBOSITY only once
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Andrey Okoshkin <a.okoshkin@samsung.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        vmiklos@frugalware.org, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:content-transfer-encoding:subject:date
+         :message-id:cc:to:mime-version;
+        bh=c7qQSjiYFszPHmVrT0ZbPP3QqivEzfspVdAIfJomaAs=;
+        b=Wip4j4PoYrsHS7oKgjCvco72pLh4zfNS0Q5KGxGDHA8s23BnDlv1irtp1Z1DUB2tfy
+         PbqMOYcSxoiL0r6cmhutMnYSdf0ZlF0XcIqbMhyvxqMqz4/LoeO4ExgahpAzTKgs4Va9
+         Dwnk/JO8R0zIYsArtDln1I9HoRyvZgnKqeWnV+De4xq/EXB/vPMOiHtBEG99EZV9SeLI
+         umiEPXIDxrmIykLXYrQtZyGH3mxI4KCBKCqqn//k+swjLzCebgti52PZDrFRErC7RkU3
+         NaiU2gH+blRCI/hFiLFNvxr1wwIHUQM9g9zg9zhfbsxsC60ng7/ii8nyu226K8NH4JOd
+         x0/Q==
+X-Gm-Message-State: AMCzsaWHaa/NZuV6T5ZypeR4FyOyjTz1SuDa5mTZo5gFNa/gfe30/OIb
+        PmmeUYWFnu6RS0KTsg2WuceN+g0o
+X-Google-Smtp-Source: ABhQp+RG6dnVlXz/NzRO2YKH8YPdB/PYPjv3FDHGvkEhwcmgMBHzm2s+lSi6blvUjgm6XJjqL43WCw==
+X-Received: by 10.28.41.70 with SMTP id p67mr9146761wmp.110.1508867324985;
+        Tue, 24 Oct 2017 10:48:44 -0700 (PDT)
+Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id h4sm748684wre.13.2017.10.24.10.48.43
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 24 Oct 2017 10:48:44 -0700 (PDT)
+From:   Lars Schneider <larsxschneider@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Subject: Consequences of CRLF in index?
+Date:   Tue, 24 Oct 2017 19:48:42 +0200
+Message-Id: <D0A67AD8-2D63-4683-9F2A-20B0E8E65D4B@gmail.com>
+Cc:     =?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+To:     git <git@vger.kernel.org>
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 24 October 2017 at 18:45, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Tue, Oct 24, 2017 at 12:28 PM, Stefan Beller <sbeller@google.com> wrote:
->> On Tue, Oct 24, 2017 at 8:27 AM, Andrey Okoshkin <a.okoshkin@samsung.com> wrote:
->>> Add check of 'GIT_MERGE_VERBOSITY' environment variable only once in
->>> init_merge_options().
->>> Consequential call of getenv() may return NULL pointer and strtol() crashes.
->>> However the stored pointer to the obtained getenv() result may be invalidated
->>> by some other getenv() call from another thread as getenv() is not thread-safe.
+Hi,
 
-I'm having trouble wrapping my head around this. Under which
-circumstances could the second call in the current code return NULL, but
-the code after your patch behave in a well-defined (and correct) way?
+I've migrated a large repo (110k+ files) with a lot of history (177k =
+commits)=20
+and a lot of users (200+) to Git. Unfortunately, all text files in the =
+index
+of the repo have CRLF line endings. In general this seems not to be a =
+problem=20
+as the project is developed exclusively on Windows.
 
-> The distance between getenv() and the point where the value is
-> actually used is a big concern due to not knowing what is or might be
-> going on in called functions between the two points. According to [1],
-> the value returned by getenv() could be invalidated by another call to
-> getenv() (or setenv() or unsetenv() or putenv()), and we don't have
-> guarantee that we're safe from such invalidation considering that this
-> function calls out to others. For instance, after getenv() but before
-> the value is used, init_merge_options() calls merge_recursive_config()
-> which calls git_config() which calls git_xmerge_config(), and so on.
->
-> For this reason, I have difficulty endorsing this change as-is.
+However, I wonder if there are any "hidden consequences" of this setup?
+If there are consequences, then I see two options. Either I rebase the =
+repo=20
+and fix the line endings for all commits or I add a single commit that =
+fixes=20
+the line endings for all files. Both actions require coordination with =
+the=20
+users to avoid repo trouble/merge conflicts. The "single fixup commit" =
+options=20
+would also make diffs into the past look bad. Would a single large =
+commit have
+any impact on the performance of standard Git operations?
 
-Yeah. The call should be immediately before `merge_verbosity` is used.
-Then, if a compiler wants to move the call, it has to do the work and
-prove that it's ok.
+Thanks,
+Lars
+
+
