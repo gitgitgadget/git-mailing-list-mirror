@@ -3,87 +3,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B4A93203F2
-	for <e@80x24.org>; Tue, 24 Oct 2017 23:04:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A8E7D1FAED
+	for <e@80x24.org>; Tue, 24 Oct 2017 23:42:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751576AbdJXXEa (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Oct 2017 19:04:30 -0400
-Received: from mail-it0-f51.google.com ([209.85.214.51]:52999 "EHLO
-        mail-it0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751336AbdJXXE3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Oct 2017 19:04:29 -0400
-Received: by mail-it0-f51.google.com with SMTP id j140so12020243itj.1
-        for <git@vger.kernel.org>; Tue, 24 Oct 2017 16:04:29 -0700 (PDT)
+        id S1751608AbdJXXmp (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Oct 2017 19:42:45 -0400
+Received: from mail-io0-f179.google.com ([209.85.223.179]:44476 "EHLO
+        mail-io0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751323AbdJXXmp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Oct 2017 19:42:45 -0400
+Received: by mail-io0-f179.google.com with SMTP id m16so25758451iod.1
+        for <git@vger.kernel.org>; Tue, 24 Oct 2017 16:42:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=PLBymXbv2hfMWYHkq6qJQtlFUjyWBiyHOdtSWRkpY5A=;
-        b=ikCdotCyVITI47KoWk2Iu2PZ85KL3y215jMcO2dvA6tMCQE6EIPlz/klpLciKCwBII
-         146uDeV7anjsZEUJaUr5fPSCV7ZjRapdO0jUaVKMsPaUNF8ESLx8ddjKuUJt/s8ITimR
-         r42fWRyW6zH6QCh618/Flt+7p2sieklziwEaXO6yPQdDnjpcsrSLSlc6hgpHNOP1DzAR
-         3e2pI0XpTcKsU97CFC1YQCjIdSgfKv/t7xtJ9gbY81zOlnByiCzIa7JrGVWXHuFPlhy2
-         XpqvmXyZ+dwwU9sPKTT6j5ca5yKvCLHsaz3N2UKFw3StCtef8aWKyF4+j+JFf2y/IUhc
-         W1kQ==
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=D88Ywt9R9WMnmXj6yBRSfPPv/bjrpTcWunmAHVySuU8=;
+        b=jEFSwer1ZXz+GNUHq/OqDEolRuktmjVLbZgBIC6tmjo9rBYuthk7lKn0PFKao7bUfg
+         VfQKS9qVuuSryJBnyTQDGkcRIvCcYsGRdBmVQs+D+q3OdDZxi6QXAYHN3ezlp9mRJ8AB
+         A6i/7YDS3FXC5iSdOY33v+1ByBt/NWSrO1dlyJhNGIWyixLKvAoJpEc1UlFIxrPRCFkM
+         cL/mw/1abW8qqz0dylZ733hNZzg9p/tZgbTqBPrt2nLcg0+qSn6KLQCG+msTuudgB46v
+         j+a/X4/nrEEPi9HYHgpbgzQIldmfeZWLLWhcT1NC+22DcDzOYsewgVLrURpSnrsEBpzN
+         FSjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=PLBymXbv2hfMWYHkq6qJQtlFUjyWBiyHOdtSWRkpY5A=;
-        b=AJcXWaSIr3UyJDGIMgeJvPG0S5OnA6HqiroJ1RsfCXvblWw8aHxQfONI9zt/dHTJKK
-         bdgPRcXCbjnHV5ZYVEzuHFrVOe52xwe8V4BSIdm8H/bypVb1Q/8iTwAhv4aSCldxQjHM
-         fxg7jxRaY3+sEFUVFIgpGGrwqHtRAlrYf/w2SoQgVsgl0NdKhLJTGrD6fshqktTkqDfd
-         qvWLVIqH66EM2BOKvtpffbqv6BueHvv9KZyXo4r/rQu2W1/NX3Up0yDZCBW4JO/ijj6y
-         ftK7EBbIDvPX5STN/orpgOBnJMfgE7WMwJLnTF/rQxmh2Uo5SYVPUD6Pphy8soxYPacY
-         Wkuw==
-X-Gm-Message-State: AMCzsaUlAlLmCXfklpEFR79OuHdkVOjY3lqmHoHM6enJRiXUr8p3zyIE
-        hhaayUCoItfI9HxrPF5JiSs=
-X-Google-Smtp-Source: ABhQp+Se0WqissZzxaHyHxOWLZpuo5ysIMp3nwPG35XRgvOF+WQcpoOKU2OuQ154f3fHYNfAoS9LnA==
-X-Received: by 10.36.197.130 with SMTP id f124mr204567itg.99.1508886269004;
-        Tue, 24 Oct 2017 16:04:29 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id l5sm619123ioe.13.2017.10.24.16.04.27
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 24 Oct 2017 16:04:28 -0700 (PDT)
-Date:   Tue, 24 Oct 2017 16:04:13 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 3/4] xdiff: use stronger hash function internally
-Message-ID: <20171024230413.sm2pzlf4qhd2rirk@aiede.mtv.corp.google.com>
-References: <20171024185917.20515-1-sbeller@google.com>
- <20171024185917.20515-4-sbeller@google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20171024185917.20515-4-sbeller@google.com>
-User-Agent: NeoMutt/20170609 (1.8.3)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=D88Ywt9R9WMnmXj6yBRSfPPv/bjrpTcWunmAHVySuU8=;
+        b=l4hGE47BsCR2KmESa81hu2zIFpLkIlwiE7/MPGcWavdt07swl17i3JZ4bxI+Av26OU
+         tIwxVnpAGRsaO9gRBPQWR3n8Lf9HaEQ4/zKaVwnENMGgp1FlfNjo8GPlu5bhRW4yyZtz
+         zmSKpcsrnYBzq/gfX0GNHg5nANmteZokPLC7QtxSMA01jU+obW1V5eWRR96h1v5SPvOA
+         +gVkqxpFtHveG3FFaEGDaRMQ5qBRTOUXBVMcOoJu6XEEesi9oA9CyhCZ1mkE2gRxrXhY
+         SR6FzaHwG1BZ4eD5/P5En9T9RVB1W1xehtIXUKsnsR9AHX6XJlsqzWRThNDGMh+l7Yb2
+         W9EQ==
+X-Gm-Message-State: AMCzsaXp5wC9w0qnvw0bzYRNoTKw7IX/KUM88Xa/lGLW4MicRlRqO0rI
+        N7uDKpmWuLZbjZ66WE9I2qbVwQ==
+X-Google-Smtp-Source: ABhQp+QvFQFbu6kMH/yZ1KxO9qSAYnzrIZq+vrNrXfkiormqLCRrL3djmmEwJjdtbov4LZZ/bGgnEQ==
+X-Received: by 10.107.129.166 with SMTP id l38mr24268009ioi.244.1508888564373;
+        Tue, 24 Oct 2017 16:42:44 -0700 (PDT)
+Received: from localhost ([2620:0:100e:422:24db:446:6fc5:b25b])
+        by smtp.gmail.com with ESMTPSA id v5sm588243iog.78.2017.10.24.16.42.43
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 24 Oct 2017 16:42:43 -0700 (PDT)
+From:   Stefan Beller <sbeller@google.com>
+To:     sbeller@google.com
+Cc:     git@vger.kernel.org, peff@peff.net, jrnieder@gmail.com,
+        l.s.r@web.de
+Subject: [PATCHv2 0/2] (x)diff cleanup: remove duplicate code
+Date:   Tue, 24 Oct 2017 16:42:32 -0700
+Message-Id: <20171024234234.10944-1-sbeller@google.com>
+X-Mailer: git-send-email 2.15.0.rc2.6.g953226eb5f
+In-Reply-To: <CAGZ79kZftQoP-Ht+VRakCZsQxh1tjfu=4DFJn_R6fiKD2MmzMA@mail.gmail.com>
+References: <CAGZ79kZftQoP-Ht+VRakCZsQxh1tjfu=4DFJn_R6fiKD2MmzMA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller wrote:
-
-> --- a/xdiff/xutils.c
-> +++ b/xdiff/xutils.c
-> @@ -24,7 +24,8 @@
->  #include <assert.h>
->  #include "xinclude.h"
->  
-> -
-> +#include "cache.h"
-> +#include "hashmap.h"
-
-#includes like "git-compat-util.h" and "cache.h" can only be used as
-the *first* #include.
-
-Otherwise the feature test macros they set do not take effect, causing
-lots of unpleasant platform-specific breakage.
+v2:
+* I realized that we don't have to change the hashing function of xdiff;
+  we can rather change the hashing function for the move detection,
+  which is less fundamental.
+  (That way I can shrink the series down to 2 patches)
+* commented and renamed function parameters in the exposed xdiff functions.
+* applies on top of jk/diff-color-moved-fix.
 
 Thanks,
-Jonathan
+Stefan
+
+v1:
+Junio wrote:
+
+>  * I was hoping that the next_byte() and string_hash() thing, once
+>    they are cleaned up, will eventually be shared with the xdiff/
+>    code at the lower layer, which needs to do pretty much the same
+>    in order to implement various whitespace ignoring options.  I am
+>    not sure how well the approach taken by the WIP patch meshes with
+>    the needs of the lower layer.
+
+This series does exactly this; although I chose to reuse the code in
+xdiff/xutils.c instead of the new fancy next_byte/string_hash, as that
+code has seen more exercise already (hence I assume it has fewer bugs
+if any as well as its performance implications are well understood).
+
+However to do so, we need to pollute xdiff/xutils.c and include
+hashmap.h there (which also requires cache.h as that header has
+an inline function using BUG()), which I find a bit unfortunate but
+worth the trade off of using better tested code.
+
+Thanks,
+Stefan
+
+
+Stefan Beller (2):
+  xdiff-interface: export comparing and hashing strings
+  diff.c: get rid of duplicate implementation
+
+ diff.c            | 82 +++----------------------------------------------------
+ xdiff-interface.c | 11 ++++++++
+ xdiff-interface.h | 16 +++++++++++
+ 3 files changed, 31 insertions(+), 78 deletions(-)
+
+-- 
+2.15.0.rc2.6.g953226eb5f
+
