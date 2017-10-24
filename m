@@ -2,76 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 79A381FF72
-	for <e@80x24.org>; Tue, 24 Oct 2017 19:52:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BFB1D1FF72
+	for <e@80x24.org>; Tue, 24 Oct 2017 20:12:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751409AbdJXTwY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Oct 2017 15:52:24 -0400
-Received: from cloud.peff.net ([104.130.231.41]:34670 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751330AbdJXTwY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Oct 2017 15:52:24 -0400
-Received: (qmail 30154 invoked by uid 109); 24 Oct 2017 19:52:23 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 24 Oct 2017 19:52:23 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 14982 invoked by uid 111); 24 Oct 2017 19:52:30 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.3)
- by peff.net (qpsmtpd/0.94) with SMTP; Tue, 24 Oct 2017 15:52:30 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 24 Oct 2017 12:52:21 -0700
-Date:   Tue, 24 Oct 2017 12:52:21 -0700
-From:   Jeff King <peff@peff.net>
-To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Stefan Beller <sbeller@google.com>,
-        Andrey Okoshkin <a.okoshkin@samsung.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        vmiklos@frugalware.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] merge-recursive: check GIT_MERGE_VERBOSITY only once
-Message-ID: <20171024195221.gqgtibwjaztgeel6@sigill.intra.peff.net>
-References: <CGME20171024152727epcas2p4fb7dcf147e44aadf7733098151d469a5@epcas2p4.samsung.com>
- <3aed764b-388c-d163-08fc-32b294c6b9d3@samsung.com>
- <CAGZ79kaSZG9WriqX0SLbTnEDRr-4YdFRuK17+9wnxyrftfnMmg@mail.gmail.com>
- <CAPig+cRTL2amjsgdp1=T3GMZLa=favugOfnQw9XjWzC+U=v5Sw@mail.gmail.com>
- <CAN0heSp7b_6n3y=s4++oWhkPUuM=s9L7LWVx5vn8o=5aH6DKKw@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAN0heSp7b_6n3y=s4++oWhkPUuM=s9L7LWVx5vn8o=5aH6DKKw@mail.gmail.com>
+        id S1751432AbdJXUMg (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Oct 2017 16:12:36 -0400
+Received: from mail-wm0-f50.google.com ([74.125.82.50]:50640 "EHLO
+        mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751280AbdJXUMf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Oct 2017 16:12:35 -0400
+Received: by mail-wm0-f50.google.com with SMTP id u138so17906194wmu.5
+        for <git@vger.kernel.org>; Tue, 24 Oct 2017 13:12:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:date:in-reply-to:references:mime-version
+         :content-transfer-encoding;
+        bh=XWH7e2I3vjI6poS1L92EO4EXtQvzWSBGpibqfl3C/Ng=;
+        b=KZ9upFaCxJyEfhaVtMIa0SAeU24WkGRLVI2hAwQ7RpZ810eTo/LxTSL7B4P4MNrqG3
+         y/LqdqsAgwfRYiJex2bFKKuS+X+tClrFoCdOc9gxmxglYiI7ROXtDfhbo3M5LjXmhoJN
+         xuE9C2iNdUPekTfO9e3yz9GpknI6Rg30vjZ/OazYmb3Vh1lShLq58qwsDUmTrEhoswD8
+         soQZTl+e0vwbScnBIolxKwfT8z9gZ+AqD2LUx3JZUy+EmyKa1gUwWpE/Pxhvji5tSkT+
+         NoehUK2oNUeFJ2AQ35BxWbxyDzC+ucjvC3DgRBFAqEY+EdUeGmRKdNPCwCyVXa/xqjbB
+         NcjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=XWH7e2I3vjI6poS1L92EO4EXtQvzWSBGpibqfl3C/Ng=;
+        b=Hbd5AQT6PsGlepzCSeiHgdppZ0pRvRGt8vYdmdR/CAzYPKHNUrs6lrYzhHJD/blbUg
+         Ialdi/6RZps27+u5IDxAStDXNyeEO+xRyu0ZfFBEsBYH1ZIvNoUHgAHRANL2wygzAW+7
+         Ygc16CzIpfeDAdsQxEdGnXXRydR6kZ/SDcpRDSKIzpbAS+ar/JhDLBVneDU2mSYQH6ZK
+         WQBMv6BUqRGACzW3oh+suHURby+otl7L0HrB8gcwE1Mu6198sFhSqwkzXDXB/7mYL40i
+         eohJvn3NSs6g+8J1sAaCfRCesnGOmaINi1ZbVJofO3SSSi+y3trD0G3zzrd0lVrCikr2
+         Xgpw==
+X-Gm-Message-State: AMCzsaXr1xbXmrmoTdR+wVKN+99i555iUihGGuLbO+617MSzstXP721O
+        +mYRB4wECKuwEbP6D8XVWt9ML7j9WA==
+X-Google-Smtp-Source: ABhQp+TMwT6OJL5pArKHf664DJViQAHLPkbvQc95du6zBp24bY6T5iBIVsYuP7cGdq3vA98JSgfnBw==
+X-Received: by 10.80.172.122 with SMTP id w55mr6134139edc.293.1508875954343;
+        Tue, 24 Oct 2017 13:12:34 -0700 (PDT)
+Received: from [192.168.1.80] ([145.129.9.233])
+        by smtp.gmail.com with ESMTPSA id x10sm691969edb.24.2017.10.24.13.12.33
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 24 Oct 2017 13:12:33 -0700 (PDT)
+Message-ID: <1508875952.2750.35.camel@kaarsemaker.net>
+Subject: Re: Multiple paths in GIT_EXEC_PATH
+From:   Dennis Kaarsemaker <dennis@kaarsemaker.net>
+To:     Nikolay Yakimov <root@livid.pp.ru>, git@vger.kernel.org
+Date:   Tue, 24 Oct 2017 22:12:32 +0200
+In-Reply-To: <CA+A=rXEyQ4aQL=p55f_+kbbrnDyDr9ULSq9gqBE2YE9y6+oJ3w@mail.gmail.com>
+References: <CA+A=rXEyQ4aQL=p55f_+kbbrnDyDr9ULSq9gqBE2YE9y6+oJ3w@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.22.6-1ubuntu1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 24, 2017 at 07:11:24PM +0200, Martin Ågren wrote:
+On Tue, 2017-10-17 at 18:21 +0300, Nikolay Yakimov wrote:
+> For why I need that is another matter. Long story short, I need git to
+> look for '.gitignore' in a particular non-standard location, since I
+> have multiple git repositories in the same workdir (that workdir being
+> $HOME and git repositories being stores for my different configs)
 
-> On 24 October 2017 at 18:45, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> > On Tue, Oct 24, 2017 at 12:28 PM, Stefan Beller <sbeller@google.com> wrote:
-> >> On Tue, Oct 24, 2017 at 8:27 AM, Andrey Okoshkin <a.okoshkin@samsung.com> wrote:
-> >>> Add check of 'GIT_MERGE_VERBOSITY' environment variable only once in
-> >>> init_merge_options().
-> >>> Consequential call of getenv() may return NULL pointer and strtol() crashes.
-> >>> However the stored pointer to the obtained getenv() result may be invalidated
-> >>> by some other getenv() call from another thread as getenv() is not thread-safe.
-> 
-> I'm having trouble wrapping my head around this. Under which
-> circumstances could the second call in the current code return NULL, but
-> the code after your patch behave in a well-defined (and correct) way?
+That is solvable without needing multiple directories in
+$GIT_EXEC_PATH. vcsh, which also solves the 'multiple repos with same
+workdir' problem in a very thin wrapper around git, does this by
+setting core.excludesfile in the per repo config to a unique path.
 
-Yeah, it's not at all clear to me this is solving a real problem. I know
-Andrey mentioned playing around with fault injection in an earlier
-thread, so I'm wondering if there is an artificial fault being injected
-into the second getenv() call. Which does not seem like something that
-should be possible in the real world.
+hurricane:~$ vcsh dotfiles config core.excludesfile
+.gitignore.d/dotfiles
+hurricane:~$ vcsh secrets config core.excludesfile
+.gitignore.d/secrets
 
-I definitely agree with the sentiment that as few things as possible
-should happen between calling getenv() and using its result. I've seen
-real bugs there from unexpected invalidation of the static buffer.
-
--Peff
+D.
