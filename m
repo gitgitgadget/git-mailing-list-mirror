@@ -2,65 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 046E120437
-	for <e@80x24.org>; Tue, 24 Oct 2017 17:48:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 20E161FF72
+	for <e@80x24.org>; Tue, 24 Oct 2017 18:14:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751550AbdJXRsr (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Oct 2017 13:48:47 -0400
-Received: from mail-wm0-f41.google.com ([74.125.82.41]:49716 "EHLO
-        mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751336AbdJXRsq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Oct 2017 13:48:46 -0400
-Received: by mail-wm0-f41.google.com with SMTP id b189so17150686wmd.4
-        for <git@vger.kernel.org>; Tue, 24 Oct 2017 10:48:45 -0700 (PDT)
+        id S1751548AbdJXSOU (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Oct 2017 14:14:20 -0400
+Received: from mail-io0-f170.google.com ([209.85.223.170]:53255 "EHLO
+        mail-io0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751407AbdJXSOT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Oct 2017 14:14:19 -0400
+Received: by mail-io0-f170.google.com with SMTP id 189so24850896iow.10
+        for <git@vger.kernel.org>; Tue, 24 Oct 2017 11:14:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:content-transfer-encoding:subject:date:message-id:cc:to
-         :mime-version;
-        bh=c7qQSjiYFszPHmVrT0ZbPP3QqivEzfspVdAIfJomaAs=;
-        b=NcjgCst61mDg33ZRUgx4wLs2UmDNEBMI6AuBubxuzxRZanby3mtEb95xLisgD8fL6U
-         Ro9LRi4uYkXM13/h7e81tC/HM/9QLOakGzqAp6Svwpa6xZtYrFqCiz8FQU9t9alFetQD
-         cDQtAdzLneXyT8Kh9tF4Qp/swdsa0D3DeSCmqQmSEjcJ7CdePEUc4RQcTyjmT3XhDwnK
-         LX3FycZf9prOjQX9Ph1pKO4NFDTWbikK2UCQk+bq5H6/6oH/sp+0IBMjSMxST4Xk5Xaj
-         vCTu1K/tqDroj/AqXm3rBOzzY4al90Tv2zW04SnTfhlyk8rFt5GL49gZ6I6Poq6SICEJ
-         qmUg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=spfDQhBKoOLB2H8Y33M9UxsgpUJUVwoGXwBvxocaGt0=;
+        b=izzBm5dVM4RmGUX/8YWII4ReZj9Z6nISrTFOgK2O3ICzP0e0qm949wtCBorbsOb7qM
+         IS3K2Q8hHdjWdPYSL2x3GVUU8Dd9WT5aOENpFigAgN9NVAXEp9v2PzqvA9rN2MOQpJpD
+         X78g996iFqeqlWwt8sgBjnB/5qRnUoBYD4cmmTXo5J0iqlT4MropgjkgFS3Ox8YWDExU
+         TkoOhP/CiPTnv57BA8V6ajj8fJEgWFaZenE+ri/XFfStAcgYeatrNtFtnhjkofoTnSAS
+         5FdpsjwX1g3g3kVFEMeT+xrU1YhDC51kiJV22BPQL2O1qOlr9Tz/QX9ZH8Q4hSzd2b2U
+         KGKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:content-transfer-encoding:subject:date
-         :message-id:cc:to:mime-version;
-        bh=c7qQSjiYFszPHmVrT0ZbPP3QqivEzfspVdAIfJomaAs=;
-        b=Wip4j4PoYrsHS7oKgjCvco72pLh4zfNS0Q5KGxGDHA8s23BnDlv1irtp1Z1DUB2tfy
-         PbqMOYcSxoiL0r6cmhutMnYSdf0ZlF0XcIqbMhyvxqMqz4/LoeO4ExgahpAzTKgs4Va9
-         Dwnk/JO8R0zIYsArtDln1I9HoRyvZgnKqeWnV+De4xq/EXB/vPMOiHtBEG99EZV9SeLI
-         umiEPXIDxrmIykLXYrQtZyGH3mxI4KCBKCqqn//k+swjLzCebgti52PZDrFRErC7RkU3
-         NaiU2gH+blRCI/hFiLFNvxr1wwIHUQM9g9zg9zhfbsxsC60ng7/ii8nyu226K8NH4JOd
-         x0/Q==
-X-Gm-Message-State: AMCzsaWHaa/NZuV6T5ZypeR4FyOyjTz1SuDa5mTZo5gFNa/gfe30/OIb
-        PmmeUYWFnu6RS0KTsg2WuceN+g0o
-X-Google-Smtp-Source: ABhQp+RG6dnVlXz/NzRO2YKH8YPdB/PYPjv3FDHGvkEhwcmgMBHzm2s+lSi6blvUjgm6XJjqL43WCw==
-X-Received: by 10.28.41.70 with SMTP id p67mr9146761wmp.110.1508867324985;
-        Tue, 24 Oct 2017 10:48:44 -0700 (PDT)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id h4sm748684wre.13.2017.10.24.10.48.43
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 24 Oct 2017 10:48:44 -0700 (PDT)
-From:   Lars Schneider <larsxschneider@gmail.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Subject: Consequences of CRLF in index?
-Date:   Tue, 24 Oct 2017 19:48:42 +0200
-Message-Id: <D0A67AD8-2D63-4683-9F2A-20B0E8E65D4B@gmail.com>
-Cc:     =?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=spfDQhBKoOLB2H8Y33M9UxsgpUJUVwoGXwBvxocaGt0=;
+        b=IbkGmhwGewKfCdD81LBbw89ctqVAYkhBrDNvk/n8GhQHWWAHDK/w93ai/Ysw8o5SpF
+         w8xswpaKFxYHonYCn13bFFUDAEb1KSvIOjXqiv4dh71PpPyOHxKja7G6TZU1z4ZV3u8W
+         TBYI3A6r0vM/f4HTEWniHuNv4KCrMayC3Ilmsuy8y8Sw0VRxo639qBVvwATsienschj/
+         jes+TwA9A3aSEtRyRaX2/idLb6H2pvLu0e5huv3FxDSTgebgSB9/Hv0f3Xv0De1Njebv
+         sLib+z43u5wF6W93nF4GCZQRnKEdaNsJhoHyD9x4hJHIW9ErQZyLBpUPQtgPB+/+u0YO
+         Q9eA==
+X-Gm-Message-State: AMCzsaUuXOYNMpiDNdi755BUc95TbonNgQnMeRzco/pZiw0bEQgRz5+G
+        EAsvt728QACwJ8MZNrHRgq0=
+X-Google-Smtp-Source: ABhQp+TJ6vCzS33+niscJiSotKSyShC0Fmy3PCkrGuwessVN2cc1jO6aJNuIMnyXe6PR0LKBJao1Uw==
+X-Received: by 10.107.83.22 with SMTP id h22mr24218347iob.40.1508868859073;
+        Tue, 24 Oct 2017 11:14:19 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id b13sm359450iod.16.2017.10.24.11.14.17
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 24 Oct 2017 11:14:18 -0700 (PDT)
+Date:   Tue, 24 Oct 2017 11:14:15 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     git <git@vger.kernel.org>,
+        Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>,
         Jeff King <peff@peff.net>,
         Johannes Schindelin <johannes.schindelin@gmx.de>
-To:     git <git@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-X-Mailer: Apple Mail (2.3124)
+Subject: Re: Consequences of CRLF in index?
+Message-ID: <20171024181415.3tvmc36aqi335v66@aiede.mtv.corp.google.com>
+References: <D0A67AD8-2D63-4683-9F2A-20B0E8E65D4B@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <D0A67AD8-2D63-4683-9F2A-20B0E8E65D4B@gmail.com>
+User-Agent: NeoMutt/20170609 (1.8.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -68,28 +71,43 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi,
 
-I've migrated a large repo (110k+ files) with a lot of history (177k =
-commits)=20
-and a lot of users (200+) to Git. Unfortunately, all text files in the =
-index
-of the repo have CRLF line endings. In general this seems not to be a =
-problem=20
-as the project is developed exclusively on Windows.
+Lars Schneider wrote:
 
-However, I wonder if there are any "hidden consequences" of this setup?
-If there are consequences, then I see two options. Either I rebase the =
-repo=20
-and fix the line endings for all commits or I add a single commit that =
-fixes=20
-the line endings for all files. Both actions require coordination with =
-the=20
-users to avoid repo trouble/merge conflicts. The "single fixup commit" =
-options=20
-would also make diffs into the past look bad. Would a single large =
-commit have
-any impact on the performance of standard Git operations?
+> I've migrated a large repo (110k+ files) with a lot of history (177k commits)
+> and a lot of users (200+) to Git. Unfortunately, all text files in the index
+> of the repo have CRLF line endings. In general this seems not to be a problem
+> as the project is developed exclusively on Windows.
 
-Thanks,
-Lars
+Sounds good.
 
+> However, I wonder if there are any "hidden consequences" of this setup?
+> If there are consequences, then I see two options. Either I rebase the repo
+> and fix the line endings for all commits or I add a single commit that fixes
+> the line endings for all files. Both actions require coordination with the
+> users to avoid repo trouble/merge conflicts. The "single fixup commit" options
+> would also make diffs into the past look bad. Would a single large commit have
+> any impact on the performance of standard Git operations?
 
+There are no hidden consequences that I'm aware of.  If you later
+decide that you want to become a cross-platform project, then you may
+want to switch to LF endings, in which case I suggest the "single
+fixup commit" strategy.
+
+In any event, you also probably want to declare what you're doing
+using .gitattributes.  By checking in the files as CRLF, you are
+declaring that you do *not* want Git to treat them as text files
+(i.e., you do not want Git to change the line endings), so something
+as simple as
+
+	* -text
+
+should do the trick.  See gitattributes(5) for details.
+
+I'd be interested to hear what happens when diff-ing across a line
+ending fixup commit.  Is this an area where Git needs some
+improvement?  "git merge" knows an -Xrenormalize option to deal with a
+related problem --- it's possible that "git diff" needs to learn a
+similar trick.
+
+Thanks and hope that helps,
+Jonathan
