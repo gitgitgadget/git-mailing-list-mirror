@@ -7,115 +7,147 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4C6981FF72
-	for <e@80x24.org>; Tue, 24 Oct 2017 20:23:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1EA171FF72
+	for <e@80x24.org>; Tue, 24 Oct 2017 20:23:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751618AbdJXUXl (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Oct 2017 16:23:41 -0400
-Received: from mout.web.de ([212.227.15.4]:56054 "EHLO mout.web.de"
+        id S1751712AbdJXUXs (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Oct 2017 16:23:48 -0400
+Received: from mout.web.de ([212.227.15.14]:63889 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751573AbdJXUXk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Oct 2017 16:23:40 -0400
+        id S1751576AbdJXUXr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Oct 2017 16:23:47 -0400
 Received: from [192.168.178.36] ([91.20.60.28]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MN87U-1e9Jj81wsa-006bjk; Tue, 24
- Oct 2017 22:23:38 +0200
-Subject: Re: [PATCH 2/4] xdiff-interface: export comparing and hashing strings
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0M6QBP-1dHd0n2Wct-00yRrN; Tue, 24
+ Oct 2017 22:23:42 +0200
+Subject: Re: [PATCH 3/4] xdiff: use stronger hash function internally
 To:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org
 References: <20171024185917.20515-1-sbeller@google.com>
- <20171024185917.20515-3-sbeller@google.com>
+ <20171024185917.20515-4-sbeller@google.com>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <9f5c5cd5-9491-3163-60d4-ad36d75981ce@web.de>
-Date:   Tue, 24 Oct 2017 22:23:38 +0200
+Message-ID: <16718615-c5df-24dd-fa62-2b42f5d83a02@web.de>
+Date:   Tue, 24 Oct 2017 22:23:42 +0200
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.4.0
 MIME-Version: 1.0
-In-Reply-To: <20171024185917.20515-3-sbeller@google.com>
+In-Reply-To: <20171024185917.20515-4-sbeller@google.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:51HlirXKeQ1kRbNTGRAh+JIirhCITtnqVeoNvbxzBKmBia3kMgO
- 4KWMFFrhRkfoGZuTSuJiXGSQ4cX5x0ufiOEYgJ//bWPiopVXPUIqZtk1PeFYfk5buNcib5i
- j7gUimLTNNlRsxjzrYRhq4Dr3oL0VoX/zbtTQ2D9E+nkpKBijL2FjWmlyypTw0Dy2l5M82p
- JvzRgw37XJGWhCUYHpGxw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ncG1sYmzZnM=:7Kx12IuLFEbSl/ZwUXVOq4
- 3F+SCmVC+Cr3Wwu7vuf7v00aNvnz/Capgbee7pPzQYD2woB6J1LKDzYFbBkPA3Q/UKlijlYh0
- k4laqE+Rp3B2bKkDkXdvm9rKRL7G1vWP2LpahAodqLGfAD+Yb/E4PalTaLsbjVWttwuZ9TrKf
- Rn8pJ3OgK4VW5hJCPKY/d91lwKtNOn3vVgo8OQMx3oQBfWyzPOf4vn4FISec1noh98RfHH14m
- D9kJIy8ZdQEO27unrW2866giesNvznGFspVKhRQckC9w/nXsrKb+JroRVxMSIRFbjER3qU3JL
- Ga1U0qy3Gmgaj9VyXIwNC1CvhJMM/14h6a+tNcD8KnA71EzXGHnjqr0CMiyV4MXSKfsFi12ge
- XdbuVsiWagbAq6nEEjayrQsvLWNxMDiqYjiy0jhyq5cX9ca1s/ia+LdXGptS7Tc3RqwAGrzha
- f/8F4PvEIfclzY4wbpk4R4g0Ccyw0gBgA1w4kIvH1dga+GWat5LNzjmCF5MzEw46jVtA1YuRF
- VCIIEOHFz76/N2ZHe3Jmyf+QSVpZa/W0pFDSnRsm5mc0yb5t5JRoP5lp8mMCKlZo70Vu3Yxg3
- ddjpm4dMYgSRUoCTCXDuzZVDKggZ/0uRf4kpJyW5fU1t93b0+dECFSbDwgFpvWwj7ojpaBsng
- 8tt2BWSty0VIdO1WdwCPkjD55Rn9dEb6zTKzZ+AvSq7O8d2aVBj+EIwt+4JPyKIvlTaiTAOR2
- DgKdzFTMDVcdr8Vxxgz8ya2wsF1vmSx1agXRuVTi7L1Bg4xj0L+MEx+7htZNpxREB6hGuJrnk
- vu+owvx8NriGDBvUr1CNK02TnCAhYqZiX2AMALU2pouwp39gjA=
+X-Provags-ID: V03:K0:bt5rGtlsPSyCN97ao2JV6TxIDFEI9AdvCzb5SRP6whRS9q1aBB7
+ ku2CS9eeHjoqMf4R/t+0zuDnyQymh+g/f/5Om/Fya1zzCUHIZxpWdNAjbKL2wXHtDHbSMEU
+ NmpwREIfNosVHTavdZEUFEmJQuF/eqDxlXRjwWn08nGoiHtvYZM6YgIjI3HzRIIR64ln5co
+ mIxLSMGdJz8ywSKyw+yYw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:bKs9lCNcxZw=:260McKIqlAKSD2HoWOqmQG
+ F2tT8JMUNn10bBRwKwwNIo/kIeqoU0DfwaBcgrYS8k7swI9jAfg7q/YJLCZGSSiLQeM6SlWVE
+ CetFFIwaWTEDCPNQq+A6UeHjdB2rL0gJBSAA4Ify31ciARfncuElr4hIKF9QTRzWZ556B+N6E
+ Ic2JjVYvysk8GOOM4on+nxWm2mX4m5M5MFmhe1h3UFZhWt6L/vplTTjmMlIBQqeQNnw2fU7+c
+ +cRIzW6tJ3FYu2xGky8lavLbysbva1q+F707qoKp5UHxzB8YW9vsnfFvRbyDmTb0ikgeMSk9t
+ DWhg+uBqlEql/rPw81ZWtfu4jVz+mrsafez+E+59aIH+AKEYddT+XSxO1sU4Vn0leD4PBKmI+
+ l4phveVvTsGBSNbIPcvuTV4J/LzT3oXPTavJ2zzOS+8nV/qRo/vaZc5Zapc4REXec+FYkHXt4
+ Tf8WSjyVZsXxZSqOoNsG7H2unv2xvO9e5YULTaC/aYq4P6R/Waq2ZxWm3/p45E89LoRD/fjDc
+ yfphgO82GAlLPJwOW6cw6BRY42Ts8cqhCNFAFoqN3XfQzHbuLhgog9Iv33Q7TYnEsTm030sd7
+ BGrRUhWQhGeS4AlWRNWuNDUFELem7buoqlS485XHDCbeQFGD9kteMAsDeNfZNIKSZUUq5XOhd
+ r3H+4Z/r1YLEN2i5YCf/AI2busv3oR5YrJWQuWuV0mQTHRa7kDCHiq2tvIO9myovFuYklS5eZ
+ Y2sUMnWmWMzUmq91W3uiW3u3rAL8J3Ne8P08AgXdFPWeTdmMX19yBQVumhIXamFiHgJ/Mhhn1
+ 2VOxbYiTBjAHa1akphCK/HY8cORAR0yFdxof2F3+eBtatxtbVs=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Am 24.10.2017 um 20:59 schrieb Stefan Beller:
-> This will turn out to be useful in a later patch
+> Instead of using the hash seeded with 5381, and updated via
+> `(hash << 5) ^ new_byte`, use the FNV-1 primitives as offered by
+> hashmap.h, which is seeded with 0x811c9dc5 and computed as
+> `(hash * 0x01000193) ^ new_byte`.
+
+The hash function you're replacing is called DJB2; I think that's worth
+mentioning.
+
+Performance test results would be nice.  No idea how to find edge cases,
+though, or better: demonstrate a lack thereof.
+
 > 
 > Signed-off-by: Stefan Beller <sbeller@google.com>
 > ---
->   xdiff-interface.c | 11 +++++++++++
->   xdiff-interface.h |  5 +++++
->   2 files changed, 16 insertions(+)
+>   xdiff/xutils.c | 19 ++++++++-----------
+>   1 file changed, 8 insertions(+), 11 deletions(-)
 > 
-> diff --git a/xdiff-interface.c b/xdiff-interface.c
-> index 018e033089..fd002ebbc2 100644
-> --- a/xdiff-interface.c
-> +++ b/xdiff-interface.c
-> @@ -5,6 +5,7 @@
->   #include "xdiff/xdiffi.h"
->   #include "xdiff/xemit.h"
->   #include "xdiff/xmacros.h"
-> +#include "xdiff/xutils.h"
+> diff --git a/xdiff/xutils.c b/xdiff/xutils.c
+> index 04d7b32e4e..a58a28c687 100644
+> --- a/xdiff/xutils.c
+> +++ b/xdiff/xutils.c
+> @@ -24,7 +24,8 @@
+>   #include <assert.h>
+>   #include "xinclude.h"
 >   
->   struct xdiff_emit_state {
->   	xdiff_emit_consume_fn consume;
-> @@ -296,6 +297,16 @@ void xdiff_clear_find_func(xdemitconf_t *xecfg)
+> -
+> +#include "cache.h"
+> +#include "hashmap.h"
+
+Ouch.  Defining FNV32_BASE and FNV32_PRIME here would be much easier
+overall.  And if that's too much duplication then those definitions
+could be extracted into a new header file (fnv32.h?) included by both
+hashmap.h and xutils.c.
+
+>   
+>   
+>   long xdl_bogosqrt(long n) {
+> @@ -228,7 +229,7 @@ int xdl_recmatch(const char *l1, long s1, const char *l2, long s2, long flags)
+>   
+>   static unsigned long xdl_hash_record_with_whitespace(char const **data,
+>   		char const *top, long flags) {
+> -	unsigned long ha = 5381;
+> +	unsigned long ha = memhash(NULL, 0);
+>   	char const *ptr = *data;
+>   
+>   	for (; ptr < top && *ptr != '\n'; ptr++) {
+> @@ -243,21 +244,18 @@ static unsigned long xdl_hash_record_with_whitespace(char const **data,
+>   				; /* already handled */
+>   			else if (flags & XDF_IGNORE_WHITESPACE_CHANGE
+>   				 && !at_eol) {
+> -				ha += (ha << 5);
+> -				ha ^= (unsigned long) ' ';
+> +				ha = memhash_feed(ha, (unsigned char) ' ');
+
+All the memhash_feed() callers in this file cast to unsigned char.  A
+macro or a function (possibly inline) defined at the top could do
+that for them.
+
+>   			}
+>   			else if (flags & XDF_IGNORE_WHITESPACE_AT_EOL
+>   				 && !at_eol) {
+>   				while (ptr2 != ptr + 1) {
+> -					ha += (ha << 5);
+> -					ha ^= (unsigned long) *ptr2;
+> +					ha = memhash_feed(ha, (unsigned char) *ptr2);
+>   					ptr2++;
+>   				}
+>   			}
+>   			continue;
+>   		}
+> -		ha += (ha << 5);
+> -		ha ^= (unsigned long) *ptr;
+> +		ha = memhash_feed(ha, (unsigned char) *ptr);
 >   	}
+>   	*data = ptr < top ? ptr + 1: ptr;
+>   
+> @@ -265,15 +263,14 @@ static unsigned long xdl_hash_record_with_whitespace(char const **data,
 >   }
 >   
-> +unsigned long xdiff_hash_string(const char *s, size_t len, long flags)
-> +{
-> +	return xdl_hash_record(&s, s + len, flags);
-> +}
-> +
-> +int xdiff_compare_lines(const char *l1, long s1, const char *l2, long s2, long flags)
-> +{
-> +	return xdl_recmatch(l1, s1, l2, s2, flags);
-> +}
-
-xdl_recmatch() is already exported; why not use it without this
-wrapper?
-
-> +
->   int git_xmerge_style = -1;
+>   unsigned long xdl_hash_record(char const **data, char const *top, long flags) {
+> -	unsigned long ha = 5381;
+> +	unsigned long ha = memhash(NULL, 0);
+>   	char const *ptr = *data;
 >   
->   int git_xmerge_config(const char *var, const char *value, void *cb)
-> diff --git a/xdiff-interface.h b/xdiff-interface.h
-> index 6f6ba9095d..d3cb9285c5 100644
-> --- a/xdiff-interface.h
-> +++ b/xdiff-interface.h
-> @@ -29,4 +29,9 @@ extern void xdiff_clear_find_func(xdemitconf_t *xecfg);
->   extern int git_xmerge_config(const char *var, const char *value, void *cb);
->   extern int git_xmerge_style;
+>   	if (flags & XDF_WHITESPACE_FLAGS)
+>   		return xdl_hash_record_with_whitespace(data, top, flags);
 >   
-> +extern int xdiff_compare_lines(const char *l1, long s1,
-> +			       const char *l2, long s2, long flags);
-> +
-> +extern unsigned long xdiff_hash_string(const char *s, size_t len, long flags);
-
-Documenting the meaning of their parameters would be nice.  s and len
-are easy enough to guess, but which flags can be used?  At least a
-pointer to their definition in xdiff/xdiff.h would be helpful.  And
-renaming l1, s1, l2, s2 to a, alen, b, blen or line1, len1, line2, len2
-or similar would leave me less confused, but perhaps that's just me.
-
-> +
->   #endif
+>   	for (; ptr < top && *ptr != '\n'; ptr++) {
+> -		ha += (ha << 5);
+> -		ha ^= (unsigned long) *ptr;
+> +		ha = memhash_feed(ha, (unsigned char) *ptr);
+>   	}
+>   	*data = ptr < top ? ptr + 1: ptr;
+>   
 > 
