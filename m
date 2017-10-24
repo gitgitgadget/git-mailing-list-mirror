@@ -6,31 +6,33 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C2C221FF72
-	for <e@80x24.org>; Tue, 24 Oct 2017 18:54:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 47A4A1FF72
+	for <e@80x24.org>; Tue, 24 Oct 2017 18:54:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751511AbdJXSx6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Oct 2017 14:53:58 -0400
-Received: from siwi.pair.com ([209.68.5.199]:58041 "EHLO siwi.pair.com"
+        id S1751604AbdJXSyA (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Oct 2017 14:54:00 -0400
+Received: from siwi.pair.com ([209.68.5.199]:10690 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751399AbdJXSx5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Oct 2017 14:53:57 -0400
+        id S1751535AbdJXSx7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Oct 2017 14:53:59 -0400
 Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id EE75184594;
-        Tue, 24 Oct 2017 14:53:56 -0400 (EDT)
+        by siwi.pair.com (Postfix) with ESMTP id 7B89C8459B;
+        Tue, 24 Oct 2017 14:53:58 -0400 (EDT)
 Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 5BDB984593;
-        Tue, 24 Oct 2017 14:53:56 -0400 (EDT)
+        by siwi.pair.com (Postfix) with ESMTPSA id DF23484597;
+        Tue, 24 Oct 2017 14:53:57 -0400 (EDT)
 From:   Jeff Hostetler <git@jeffhostetler.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, jonathantanmy@google.com,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH 00/13] WIP Partial clone part 1: object filtering
-Date:   Tue, 24 Oct 2017 18:53:19 +0000
-Message-Id: <20171024185332.57261-1-git@jeffhostetler.com>
+Subject: [PATCH 02/13] list-objects-filter-map: extend oidmap to collect omitted objects
+Date:   Tue, 24 Oct 2017 18:53:21 +0000
+Message-Id: <20171024185332.57261-3-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.9.3
+In-Reply-To: <20171024185332.57261-1-git@jeffhostetler.com>
+References: <20171024185332.57261-1-git@jeffhostetler.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -38,83 +40,134 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-I've been working with Jonathan Tan to combine our partial clone
-proposals.  This patch series represents a first step in that effort
-and introduces an object filtering mechanism to select unwanted
-objects.
+Create helper class to extend oidmap to collect a list of
+omitted or missing objects during traversal.
 
-[1] traverse_commit_list and list-objects is extended to allow
-    various filters.
-[2] rev-list is extended to expose filtering.  This allows testing
-    of the filtering options.  And can be used later to predict
-    missing objects before commands like checkout or merge.
-[3] pack-objects is extended to use filtering parameters and build
-    packfiles that omit unwanted objects.
+This will be used in a later commit by the list-object filtering
+code.
 
-This patch series lays the ground work for subsequent parts which
-will extend clone, fetch, fetch-pack, upload-pack, fsck, and etc.
-
-
-Jeff Hostetler (13):
-  dir: allow exclusions from blob in addition to file
-  list-objects-filter-map: extend oidmap to collect omitted objects
-  list-objects: filter objects in traverse_commit_list
-  list-objects-filter-blobs-none: add filter to omit all blobs
-  list-objects-filter-blobs-limit: add large blob filtering
-  list-objects-filter-sparse: add sparse filter
-  list-objects-filter-options: common argument parsing
-  list-objects: add traverse_commit_list_filtered method
-  extension.partialclone: introduce partial clone extension
-  rev-list: add list-objects filtering support
-  t6112: rev-list object filtering test
-  pack-objects: add list-objects filtering
-  t5317: pack-objects object filtering test
-
- Documentation/git-pack-objects.txt             |   8 +-
- Documentation/git-rev-list.txt                 |   5 +-
- Documentation/rev-list-options.txt             |  30 ++
- Documentation/technical/repository-version.txt |  22 ++
- Makefile                                       |   6 +
- builtin/pack-objects.c                         |  18 +-
- builtin/rev-list.c                             |  84 +++++-
- cache.h                                        |   4 +
- config.h                                       |   3 +
- dir.c                                          |  51 +++-
- dir.h                                          |   3 +
- environment.c                                  |   2 +
- list-objects-filter-blobs-limit.c              | 146 ++++++++++
- list-objects-filter-blobs-limit.h              |  18 ++
- list-objects-filter-blobs-none.c               |  83 ++++++
- list-objects-filter-blobs-none.h               |  18 ++
- list-objects-filter-map.c                      |  63 ++++
- list-objects-filter-map.h                      |  26 ++
- list-objects-filter-options.c                  | 101 +++++++
- list-objects-filter-options.h                  |  50 ++++
- list-objects-filter-sparse.c                   | 241 ++++++++++++++++
- list-objects-filter-sparse.h                   |  30 ++
- list-objects.c                                 | 111 +++++--
- list-objects.h                                 |  43 ++-
- partial-clone-utils.c                          |  99 +++++++
- partial-clone-utils.h                          |  34 +++
- setup.c                                        |  15 +
- t/t5317-pack-objects-filter-objects.sh         | 384 +++++++++++++++++++++++++
- t/t6112-rev-list-filters-objects.sh            | 223 ++++++++++++++
- 29 files changed, 1897 insertions(+), 24 deletions(-)
- create mode 100644 list-objects-filter-blobs-limit.c
- create mode 100644 list-objects-filter-blobs-limit.h
- create mode 100644 list-objects-filter-blobs-none.c
- create mode 100644 list-objects-filter-blobs-none.h
+Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+---
+ Makefile                  |  1 +
+ list-objects-filter-map.c | 63 +++++++++++++++++++++++++++++++++++++++++++++++
+ list-objects-filter-map.h | 26 +++++++++++++++++++
+ 3 files changed, 90 insertions(+)
  create mode 100644 list-objects-filter-map.c
  create mode 100644 list-objects-filter-map.h
- create mode 100644 list-objects-filter-options.c
- create mode 100644 list-objects-filter-options.h
- create mode 100644 list-objects-filter-sparse.c
- create mode 100644 list-objects-filter-sparse.h
- create mode 100644 partial-clone-utils.c
- create mode 100644 partial-clone-utils.h
- create mode 100755 t/t5317-pack-objects-filter-objects.sh
- create mode 100755 t/t6112-rev-list-filters-objects.sh
 
+diff --git a/Makefile b/Makefile
+index cd75985..e59f12d 100644
+--- a/Makefile
++++ b/Makefile
+@@ -807,6 +807,7 @@ LIB_OBJS += levenshtein.o
+ LIB_OBJS += line-log.o
+ LIB_OBJS += line-range.o
+ LIB_OBJS += list-objects.o
++LIB_OBJS += list-objects-filter-map.o
+ LIB_OBJS += ll-merge.o
+ LIB_OBJS += lockfile.o
+ LIB_OBJS += log-tree.o
+diff --git a/list-objects-filter-map.c b/list-objects-filter-map.c
+new file mode 100644
+index 0000000..7e496b3
+--- /dev/null
++++ b/list-objects-filter-map.c
+@@ -0,0 +1,63 @@
++#include "cache.h"
++#include "list-objects-filter-map.h"
++
++int list_objects_filter_map_insert(struct oidmap *map,
++				   const struct object_id *oid,
++				   const char *pathname, enum object_type type)
++{
++	size_t len, size;
++	struct list_objects_filter_map_entry *e;
++
++	if (oidmap_get(map, oid))
++		return 1;
++
++	len = ((pathname && *pathname) ? strlen(pathname) : 0);
++	size = (offsetof(struct list_objects_filter_map_entry, pathname) + len + 1);
++	e = xcalloc(1, size);
++
++	oidcpy(&e->entry.oid, oid);
++	e->type = type;
++	if (pathname && *pathname)
++		strcpy(e->pathname, pathname);
++
++	oidmap_put(map, e);
++	return 0;
++}
++
++static int my_cmp(const void *a, const void *b)
++{
++	const struct oidmap_entry *ea, *eb;
++
++	ea = *(const struct oidmap_entry **)a;
++	eb = *(const struct oidmap_entry **)b;
++
++	return oidcmp(&ea->oid, &eb->oid);
++}
++
++void list_objects_filter_map_foreach(struct oidmap *map,
++				     list_objects_filter_map_foreach_cb cb,
++				     void *cb_data)
++{
++	struct hashmap_iter iter;
++	struct list_objects_filter_map_entry **array;
++	struct list_objects_filter_map_entry *e;
++	int k, nr;
++
++	nr = hashmap_get_size(&map->map);
++	if (!nr)
++		return;
++
++	array = xcalloc(nr, sizeof(*e));
++
++	k = 0;
++	hashmap_iter_init(&map->map, &iter);
++	while ((e = hashmap_iter_next(&iter)))
++		array[k++] = e;
++
++	QSORT(array, nr, my_cmp);
++
++	for (k = 0; k < nr; k++)
++		cb(k, nr, array[k], cb_data);
++
++	free(array);
++}
+diff --git a/list-objects-filter-map.h b/list-objects-filter-map.h
+new file mode 100644
+index 0000000..794fc81
+--- /dev/null
++++ b/list-objects-filter-map.h
+@@ -0,0 +1,26 @@
++#ifndef LIST_OBJECTS_FILTER_MAP_H
++#define LIST_OBJECTS_FILTER_MAP_H
++
++#include "oidmap.h"
++
++struct list_objects_filter_map_entry {
++	struct oidmap_entry entry; /* must be first */
++	enum object_type type;
++	char pathname[FLEX_ARRAY];
++};
++
++extern int list_objects_filter_map_insert(
++	struct oidmap *map,
++	const struct object_id *oid,
++	const char *pathname, enum object_type type);
++
++typedef void (*list_objects_filter_map_foreach_cb)(
++	int i, int i_limit,
++	struct list_objects_filter_map_entry *e, void *cb_data);
++
++extern void list_objects_filter_map_foreach(
++	struct oidmap *map,
++	list_objects_filter_map_foreach_cb cb,
++	void *cb_data);
++
++#endif /* LIST_OBJECTS_FILTER_MAP_H */
 -- 
 2.9.3
 
