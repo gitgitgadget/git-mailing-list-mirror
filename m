@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A82CA20437
-	for <e@80x24.org>; Tue, 24 Oct 2017 18:59:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A616A20437
+	for <e@80x24.org>; Tue, 24 Oct 2017 18:59:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752055AbdJXS7c (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Oct 2017 14:59:32 -0400
-Received: from mail-it0-f67.google.com ([209.85.214.67]:54218 "EHLO
-        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751591AbdJXS73 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Oct 2017 14:59:29 -0400
-Received: by mail-it0-f67.google.com with SMTP id n195so11279468itg.2
-        for <git@vger.kernel.org>; Tue, 24 Oct 2017 11:59:28 -0700 (PDT)
+        id S1752047AbdJXS7f (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Oct 2017 14:59:35 -0400
+Received: from mail-io0-f195.google.com ([209.85.223.195]:55327 "EHLO
+        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751901AbdJXS7b (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Oct 2017 14:59:31 -0400
+Received: by mail-io0-f195.google.com with SMTP id p186so24968714ioe.12
+        for <git@vger.kernel.org>; Tue, 24 Oct 2017 11:59:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=RicbU2FMJhwm6kaSsw/IyAJAKD2PWjWYii9Y6gHsAtk=;
-        b=PDsP/UOJzFT6b7HYjK6v3mJx7xYu52kqdbko/JAi0qjM7HMft8E0aYa+2TxmXT8wvO
-         Ofqx9Ud0tYIt0HnWalUbvY8pF4GLhwTEXnsD2Q7cFArd8rs34jf9j8Tbtwt8UfnIh3wK
-         ZgsuHWB4dflvL8lB97FW3mwfxPtgBnBXRkSeZAqxvxP2QEi5TsKramRwNp96oJK5BgIM
-         U2tWQPsLxzUuCreMrtnz3K0jYMYx9Ep7gbJQemrK3PX265wkD//MzCuXE/qtdpzxDT7H
-         3IkwxITlF4iiKM7aqRdd2g5PT7wNLN8qrmrLxiwH66UO2/hNT66NyXRHHM51+Inje5By
-         53Nw==
+        bh=NBOoA6MnZhrHWdfqLkJ65aapB1TqOi3Sd2UDrdcahZw=;
+        b=U9Yln7j2zaXXwQqs4WNyRBp4w6mMYj6pVem0ViExQ5c3ErxXeO2Wnm5aOdSvrxvxDN
+         ryzXpItj6URBkaM98R3r0KvXwbB7MygbLNpNJF9+Rl0zRCyFmktpnhgaGigXby73qfYi
+         J9zwIbuiyS41XIU1MoAxRzgOJrQBpYdK99O/vj6FywYFtFlbcihcubVNenUomsVsPxeZ
+         +duEclDlDSNMetOg1AqtjrG2oRZe5h9VDw5UkP0HSe9fs8i5/uRyAGsi+y/0CnCiUW9/
+         dwdiFKrcCnCULyEqqPo24NOKtmv7dYvoSpAt+8BFrjw7JCzq8z+FdEC3WJB2gxM/1ILO
+         YVcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=RicbU2FMJhwm6kaSsw/IyAJAKD2PWjWYii9Y6gHsAtk=;
-        b=fKsd1BVfs2n/Q0aQy6BBnLTZUoA5qC1jA1D+spc4CbKG0Reuu1cndpH5uKhvIDM3Bj
-         n4WquYq4w76Z7+WoHKQ57U8zDbQe1zAX17CGM1DJ33jn1pwd+9iq2sVCFHqi1j+oljJ7
-         QHDu36fadWCCnDeDd3cVPN1STb6ADXUPPYFWzg3/XXS1Gcx+MN4O+D1qYVkMFwSf+Cbs
-         9cIi2v1jd+E+KxZThWPgn4mt0jwY3Cdu7DgvfNIq6xazZWnoe5BhoOcc5lwvYvnJ402D
-         /a8f0d+BT5Gfv5jsNdajaPPLwBDkEXiDUZiiQnP4Edz0STsN1Yg5f24tbtxClpZwSHG2
-         JiAQ==
-X-Gm-Message-State: AMCzsaXj92/bktqZNHbLeQMbt1+48VJe+6Wm2IfE0Bg9pRWBZLuyPBmm
-        zCHntQ2OheewKtrp9gQUKMUDvMebKRU=
-X-Google-Smtp-Source: ABhQp+SIOByhvGmcX80q6K4aorL9KZnI64DQCeXZlghhqCAaANZqvwtr5WiALZ4QeGwntl5mWIGQ7g==
-X-Received: by 10.36.185.21 with SMTP id w21mr64022ite.35.1508871567804;
-        Tue, 24 Oct 2017 11:59:27 -0700 (PDT)
+        bh=NBOoA6MnZhrHWdfqLkJ65aapB1TqOi3Sd2UDrdcahZw=;
+        b=SnWAL9C+RDbyAfk9f/fRr8F2miKggxuJ0n7MTiyjMfcpHYhURS6y+k28KGebFjU5DP
+         3IYegDqapp972vgkmBej+bUuU+Hl2SMbIdBDex3E8uHOKh35RpgSnsC9f6MCqfCva1vx
+         36cVUVdO0EA5kUsg0O9OQAv2xFJR0OImImZN19uajz7HobMJ6hDTpC9Le9YbyLloGcFj
+         +uGFV2Wgq5vOEIP7Tb745sOZ7T7Q/7c5oI76jkNVfmkvxsgv0Tjy/9kpLTpRa6lsYoLY
+         9VMBiKT8BcLy7KrhJGHgcmnrC18uG7yFPEDsEcUAWwt+xA29bf10cCtn9GrFQ0rruG32
+         eY+Q==
+X-Gm-Message-State: AMCzsaV3i/clp/aYmM+UZ+Z/aEXW/URQOYVryq+jTt5+aPPSH82Psocd
+        O8aBu42iWEVwkb4mrw6znSpMxfxoECw=
+X-Google-Smtp-Source: ABhQp+SEFJy2jjbRWIh9tEL/PBJL8pDXsoirki4MvfETB7UYTj45ZpCa4SLoVSyBcuqHOPiqBn9vYw==
+X-Received: by 10.107.83.2 with SMTP id h2mr13294491iob.239.1508871569913;
+        Tue, 24 Oct 2017 11:59:29 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:24db:446:6fc5:b25b])
-        by smtp.gmail.com with ESMTPSA id e34sm382760ioj.83.2017.10.24.11.59.26
+        by smtp.gmail.com with ESMTPSA id o29sm391933ioi.29.2017.10.24.11.59.28
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 24 Oct 2017 11:59:26 -0700 (PDT)
+        Tue, 24 Oct 2017 11:59:29 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>
-Subject: [PATCH 3/4] xdiff: use stronger hash function internally
-Date:   Tue, 24 Oct 2017 11:59:16 -0700
-Message-Id: <20171024185917.20515-4-sbeller@google.com>
+Subject: [PATCH 4/4] diff.c: get rid of duplicate implementation
+Date:   Tue, 24 Oct 2017 11:59:17 -0700
+Message-Id: <20171024185917.20515-5-sbeller@google.com>
 X-Mailer: git-send-email 2.15.0.rc2.6.g953226eb5f
 In-Reply-To: <20171024185917.20515-1-sbeller@google.com>
 References: <20171024185917.20515-1-sbeller@google.com>
@@ -62,81 +62,123 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Instead of using the hash seeded with 5381, and updated via
-`(hash << 5) ^ new_byte`, use the FNV-1 primitives as offered by
-hashmap.h, which is seeded with 0x811c9dc5 and computed as
-`(hash * 0x01000193) ^ new_byte`.
+The implementations in diff.c to detect moved lines
+needs to compare strings and hash strings, which is
+implemented in that file, as well as in the xdiff
+library.
+
+Remove the rather recent implementation in diff.c
+and rely on the well exercised code in the xdiff lib.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- xdiff/xutils.c | 19 ++++++++-----------
- 1 file changed, 8 insertions(+), 11 deletions(-)
+ diff.c | 82 ++++--------------------------------------------------------------
+ 1 file changed, 4 insertions(+), 78 deletions(-)
 
-diff --git a/xdiff/xutils.c b/xdiff/xutils.c
-index 04d7b32e4e..a58a28c687 100644
---- a/xdiff/xutils.c
-+++ b/xdiff/xutils.c
-@@ -24,7 +24,8 @@
- #include <assert.h>
- #include "xinclude.h"
+diff --git a/diff.c b/diff.c
+index c4a669ffa8..e6814b9e9c 100644
+--- a/diff.c
++++ b/diff.c
+@@ -707,88 +707,14 @@ struct moved_entry {
+ 	struct moved_entry *next_line;
+ };
  
+-static int next_byte(const char **cp, const char **endp,
+-		     const struct diff_options *diffopt)
+-{
+-	int retval;
 -
-+#include "cache.h"
-+#include "hashmap.h"
- 
- 
- long xdl_bogosqrt(long n) {
-@@ -228,7 +229,7 @@ int xdl_recmatch(const char *l1, long s1, const char *l2, long s2, long flags)
- 
- static unsigned long xdl_hash_record_with_whitespace(char const **data,
- 		char const *top, long flags) {
--	unsigned long ha = 5381;
-+	unsigned long ha = memhash(NULL, 0);
- 	char const *ptr = *data;
- 
- 	for (; ptr < top && *ptr != '\n'; ptr++) {
-@@ -243,21 +244,18 @@ static unsigned long xdl_hash_record_with_whitespace(char const **data,
- 				; /* already handled */
- 			else if (flags & XDF_IGNORE_WHITESPACE_CHANGE
- 				 && !at_eol) {
--				ha += (ha << 5);
--				ha ^= (unsigned long) ' ';
-+				ha = memhash_feed(ha, (unsigned char) ' ');
- 			}
- 			else if (flags & XDF_IGNORE_WHITESPACE_AT_EOL
- 				 && !at_eol) {
- 				while (ptr2 != ptr + 1) {
--					ha += (ha << 5);
--					ha ^= (unsigned long) *ptr2;
-+					ha = memhash_feed(ha, (unsigned char) *ptr2);
- 					ptr2++;
- 				}
- 			}
- 			continue;
- 		}
--		ha += (ha << 5);
--		ha ^= (unsigned long) *ptr;
-+		ha = memhash_feed(ha, (unsigned char) *ptr);
- 	}
- 	*data = ptr < top ? ptr + 1: ptr;
- 
-@@ -265,15 +263,14 @@ static unsigned long xdl_hash_record_with_whitespace(char const **data,
+-	if (*cp >= *endp)
+-		return -1;
+-
+-	if (isspace(**cp)) {
+-		if (DIFF_XDL_TST(diffopt, IGNORE_WHITESPACE_CHANGE)) {
+-			while (*cp < *endp && isspace(**cp))
+-				(*cp)++;
+-			/*
+-			 * After skipping a couple of whitespaces,
+-			 * we still have to account for one space.
+-			 */
+-			return (int)' ';
+-		}
+-
+-		if (DIFF_XDL_TST(diffopt, IGNORE_WHITESPACE)) {
+-			while (*cp < *endp && isspace(**cp))
+-				(*cp)++;
+-			/*
+-			 * return the first non-ws character via the usual
+-			 * below, unless we ate all of the bytes
+-			 */
+-			if (*cp >= *endp)
+-				return -1;
+-		}
+-	}
+-
+-	retval = (unsigned char)(**cp);
+-	(*cp)++;
+-	return retval;
+-}
+-
+ static int moved_entry_cmp(const struct diff_options *diffopt,
+ 			   const struct moved_entry *a,
+ 			   const struct moved_entry *b,
+ 			   const void *keydata)
+ {
+-	const char *ap = a->es->line, *ae = a->es->line + a->es->len;
+-	const char *bp = b->es->line, *be = b->es->line + b->es->len;
+-
+-	if (!(diffopt->xdl_opts & XDF_WHITESPACE_FLAGS))
+-		return a->es->len != b->es->len  || memcmp(ap, bp, a->es->len);
+-
+-	if (DIFF_XDL_TST(diffopt, IGNORE_WHITESPACE_AT_EOL)) {
+-		while (ae > ap && isspace(ae[-1]))
+-			ae--;
+-		while (be > bp && isspace(be[-1]))
+-			be--;
+-	}
+-
+-	while (1) {
+-		int ca, cb;
+-		ca = next_byte(&ap, &ae, diffopt);
+-		cb = next_byte(&bp, &be, diffopt);
+-		if (ca != cb)
+-			return 1;
+-		if (ca < 0)
+-			return 0;
+-	}
+-}
+-
+-static unsigned get_string_hash(struct emitted_diff_symbol *es, struct diff_options *o)
+-{
+-	if (o->xdl_opts & XDF_WHITESPACE_FLAGS) {
+-		static struct strbuf sb = STRBUF_INIT;
+-		const char *ap = es->line, *ae = es->line + es->len;
+-		int c;
+-
+-		strbuf_reset(&sb);
+-		while (ae > ap && isspace(ae[-1]))
+-			ae--;
+-		while ((c = next_byte(&ap, &ae, o)) >= 0)
+-			strbuf_addch(&sb, c);
+-
+-		return memhash(sb.buf, sb.len);
+-	} else {
+-		return memhash(es->line, es->len);
+-	}
++	return !xdiff_compare_lines(a->es->line, a->es->len,
++				    b->es->line, b->es->len,
++				    diffopt->xdl_opts);
  }
  
- unsigned long xdl_hash_record(char const **data, char const *top, long flags) {
--	unsigned long ha = 5381;
-+	unsigned long ha = memhash(NULL, 0);
- 	char const *ptr = *data;
+ static struct moved_entry *prepare_entry(struct diff_options *o,
+@@ -797,7 +723,7 @@ static struct moved_entry *prepare_entry(struct diff_options *o,
+ 	struct moved_entry *ret = xmalloc(sizeof(*ret));
+ 	struct emitted_diff_symbol *l = &o->emitted_symbols->buf[line_no];
  
- 	if (flags & XDF_WHITESPACE_FLAGS)
- 		return xdl_hash_record_with_whitespace(data, top, flags);
- 
- 	for (; ptr < top && *ptr != '\n'; ptr++) {
--		ha += (ha << 5);
--		ha ^= (unsigned long) *ptr;
-+		ha = memhash_feed(ha, (unsigned char) *ptr);
- 	}
- 	*data = ptr < top ? ptr + 1: ptr;
+-	ret->ent.hash = get_string_hash(l, o);
++	ret->ent.hash = xdiff_hash_string(l->line, l->len, o->xdl_opts);
+ 	ret->es = l;
+ 	ret->next_line = NULL;
  
 -- 
 2.15.0.rc2.6.g953226eb5f
