@@ -2,132 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 51508202A0
-	for <e@80x24.org>; Tue, 24 Oct 2017 01:44:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A8612202A0
+	for <e@80x24.org>; Tue, 24 Oct 2017 01:47:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751354AbdJXBoc (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Oct 2017 21:44:32 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56766 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751220AbdJXBo3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Oct 2017 21:44:29 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D4E54963B1;
-        Mon, 23 Oct 2017 21:44:26 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=YpXHYHqMW0sXXoSpGBmuwmoJhEA=; b=wGIBw9
-        Ko1GLcSDZEId9UNcLkQksQG4IbaMC12rpmOrLEKOOxl5q2ZhvjbuVId5XzOMlil/
-        HW0fadloY0o5qYgAGtPtsgC7FBtuM0amnjq7VWP0Uk7BWuzeUMZAoApjKqbVqJmq
-        ZuzWcn4ml8kA6eQcAJRTbh+9q62NcuHmU68Mc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=v89zbDV659cH6/rqWokiUgUOmytxbTk0
-        /X5iWEHU/frL1bJXzOfpVtd2Ket0rfdMtJMrvFmlFDxMyxMmJa1E+43TtmI8ZxGc
-        8tKd5b7jWeQGJSuMPqFHZuj69idR57epCOfY5R/6egZH09qM01XwejhCnUhJ+m2h
-        uEKLQkgU1Xo=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id CBCD6963B0;
-        Mon, 23 Oct 2017 21:44:26 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3724D963AF;
-        Mon, 23 Oct 2017 21:44:26 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Brandon Williams <bmwill@google.com>, git@vger.kernel.org,
-        peff@peff.net, sbeller@google.com, William Yan <wyan@google.com>
-Subject: Re: [PATCH 1/5] connect: split git:// setup into a separate function
-References: <20171003201507.3589-11-bmwill@google.com>
-        <20171003214206.GY19555@aiede.mtv.corp.google.com>
-        <20171016171812.GA4487@google.com>
-        <20171023212740.qodxzsq5w7rn2r6y@aiede.mtv.corp.google.com>
-        <20171023213159.eitrjrqrh277advm@aiede.mtv.corp.google.com>
-        <20171023151929.67165aea67353e5c24a15229@google.com>
-        <20171023224310.o7ftwmbr7n74vvc6@aiede.mtv.corp.google.com>
-        <20171023225106.GA73667@google.com>
-        <20171023155713.5055125d7467d8daaee42e32@google.com>
-        <20171023231625.6mhcyqti7vdg6yot@aiede.mtv.corp.google.com>
-        <20171023231703.f457jp43dh7fddpv@aiede.mtv.corp.google.com>
-Date:   Tue, 24 Oct 2017 10:44:25 +0900
-In-Reply-To: <20171023231703.f457jp43dh7fddpv@aiede.mtv.corp.google.com>
-        (Jonathan Nieder's message of "Mon, 23 Oct 2017 16:17:03 -0700")
-Message-ID: <xmqqpo9d9v5y.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751271AbdJXBra (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Oct 2017 21:47:30 -0400
+Received: from mout.gmx.net ([212.227.15.18]:56543 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751220AbdJXBr3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Oct 2017 21:47:29 -0400
+Received: from localhost.localdomain ([65.55.188.220]) by mail.gmx.com
+ (mrgmx003 [212.227.17.190]) with ESMTPSA (Nemesis) id
+ 0MPm54-1eAdno1TAw-004zyb; Tue, 24 Oct 2017 03:47:26 +0200
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+To:     git-for-windows@googlegroups.com, git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [ANNOUNCE] Git for Windows 2.14.3
+Date:   Tue, 24 Oct 2017 01:47:18 +0000
+Message-Id: <20171024014718.16476-1-johannes.schindelin@gmx.de>
+X-Mailer: git-send-email 2.14.3.windows.1
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: DE3B8076-B85C-11E7-92EE-8EF31968708C-77302942!pb-smtp1.pobox.com
+Fcc:    Sent
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:ddokFDevZK69yUlMs+tY8mGBK534TcpnIPKkd+sKjGvipjDJOo8
+ IZkV0mQ+r1av2UWwYkp3RIE7KFqRLA7hjFyl6l4wroVxZ83Iwd9520/UU3f7phZVgAtPrpp
+ ppDFuxaxKm+UIYDLd8unX3ldZPb4cULmTiiPaEPCVTbG5eBLQwjbt17vqk5hlnzKBJ1hzq8
+ Y1H1jg3B6YUI/RYJRUiew==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:XZu8+ztyoYM=:uSP9y11ioRlq3cwnWXjpR6
+ Bz/TXbeGwjr0NthcjSt9C+v5fixdXEstvUR0kUrsL4oXtPJgQ9Jtye/J32znC1NvpXNWy6p+4
+ 6xReWzPEolz5mQFfogNXpLYT6TP/s4LJ5IuC6ksX5phgw4lY0xEi4FpF1XJGVxZIsQ170vjyH
+ ulvSmDUyIf7B9ib3IPDRkZQEzj4i+NKabRTF2kqh6x8Xu8UehoVUqgTrHlDiYmosCHLDhmjsQ
+ a/AvG9eVSPvAdBxHKOwutMapeJb+EG13IhNZKmCIYXa/Q0kq8Xa8mI2bvQgvLb6lFMvpkWBUl
+ MYMisxS9dWMnQdGGDGGi+tD4cdPk+uo9PQZbDj+t0UJll7Tr1j8bqLNio3njFoocyI3sF+Pvi
+ x11DoAeOubBBqK58Zv2W9uC+FgfFBsCBocRQb13HPbZrrabvbcZWIl+KWD4eXFzFNX4fzWgmj
+ tMD5RBlvWkjAGkhm0JiK6r8qeEeUuIY7mnh/lC8uod6qlSfUKAJYrDBlnqaPtH9mVKdDk9fcL
+ s5drgytCbR2FHBTzPdiCPmDwq02RjSbRYNXdePpPnNINJ3R+3gIIc4R45gVdHYSD43ZyUtHdL
+ JzLY3ai+bf08hpOALtVwh7+O8CsXAi/pUaNDZ8yafoKZq600gAlqVmNjHosA+IPz4Dxz0Szru
+ nxjZ74DEw4xe76sf3yPjg+Omf8fqe9HxN2trw5foEORFkfy6Wn7BYXSRJ/PTFAuQ94KhO5xHG
+ tjmCT9fvP0e8N4vvBypXw4EhqDEC5OjXP6tdi81ijIDkf26trvEqKsFUdwI0smWodCB+5I6xj
+ fd1Uoa9BZQuPvjH4GbgG0rGbgJ19A6kJbwsZWyWhQueS5ih3D8=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Dear Git users,
 
-> The git_connect function is growing long.  Split the
-> PROTO_GIT-specific portion to a separate function to make it easier to
-> read.
->
-> No functional change intended.
->
-> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-> Reviewed-by: Stefan Beller <sbeller@google.com>
-> ---
-> As before, except with sbeller's Reviewed-by.
+It is my pleasure to announce that Git for Windows 2.14.3 is available from:
 
-I found this quite nice, except for one thing.
+	https://git-for-windows.github.io/
 
-> +/*
-> + * Open a connection using Git's native protocol.
-> + *
-> + * The caller is responsible for freeing hostandport, but this function may
-> + * modify it (for example, to truncate it to remove the port part).
-> + */
-> +static struct child_process *git_connect_git(int fd[2], char *hostandport,
-> +					     const char *path, const char *prog,
-> +					     int flags)
-> +{
-> +	struct child_process *conn = &no_fork;
-> +	struct strbuf request = STRBUF_INIT;
 
-As this one decides what "conn" to return, including the fallback
-&no_fork instance,...
 
-> +	...
-> +	return conn;
-> +}
-> +
->  /*
->   * This returns a dummy child_process if the transport protocol does not
->   * need fork(2), or a struct child_process object if it does.  Once done,
-> @@ -881,50 +939,7 @@ struct child_process *git_connect(int fd[2], const char *url,
+Filename | SHA-256
+-------- | -------
+Git-2.14.3-64-bit.exe | 9610e082b823beb7f0da91a98d9f73e1f3f2430c21b2c4e15517dea4f981be3f
+Git-2.14.3-32-bit.exe | 6e5a8a939f3014b396f58622954ab394d7982d036c84571394118f2360bdca96
+PortableGit-2.14.3-64-bit.7z.exe | 2b1d952078795117a8c4549f6384275e047ebd75c10bea77e675f8b672e6d87a
+PortableGit-2.14.3-32-bit.7z.exe | f2dcb32c3133188d0b7a2c3683adcbebcc10b054467e1754d1b8b7e534a34494
+MinGit-2.14.3-64-bit.zip | 538294d2b1472e561493b67855f92380d8139011c74be6bf3cdc5b5d321b1345
+MinGit-2.14.3-32-bit.zip | a91385acb1da220612790807c41d0f304b41093c474b9d7342230ec194a3398e
+MinGit-2.14.3-busybox-64-bit.zip | b7710c7668d7ad3f1f5f7530b601d9bafbe66fcef5563c8ab74d442ac9478d8e
+MinGit-2.14.3-busybox-32-bit.zip | 8982fd12c60a9edd1b6f5f8465354534920bae351d38c867a2f4034a807d8231
+Git-2.14.3-64-bit.tar.bz2 | a5f09850334d5069afa0013249cc6678a7cde52c673823e5386d5cad9df41f10
+Git-2.14.3-32-bit.tar.bz2 | 644b7d7593e675f68a5a011d19a0a917430b79fb815f6260b807c00651696fa2
 
-Each of the if/elseif/ cascade, one of which calls the new helper,
-now makes an explicit assignment to "conn" declared in
-git_connect().
-
-Which means the defaulting of git_connect::conn to &no_fork is now
-unneeded.  One of the things that made the original cascade a bit
-harder to follow than necessary, aside from the physical length of
-the PROTO_GIT part, was that the case where conn remains to point at
-no_fork looked very special and it was buried in that long PROTO_GIT
-part.  Now the main source of that issue is fixed, it would make it
-clear to leave conn uninitialized (or initialize to NULL---but leaving
-it uninitialized would make the intention of the code more clear, I
-would think, that each of the if/elseif/ cascade must assign to it).
-
->  		printf("Diag: path=%s\n", path ? path : "NULL");
->  		conn = NULL;
->  	} else if (protocol == PROTO_GIT) {
-> -		struct strbuf request = STRBUF_INIT;
-> -...
-> +		conn = git_connect_git(fd, hostandport, path, prog, flags);
->  	} else {
->  		struct strbuf cmd = STRBUF_INIT;
->  		const char *const *var;
+Ciao,
+Johannes
