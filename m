@@ -2,99 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 634C81FF72
-	for <e@80x24.org>; Tue, 24 Oct 2017 18:48:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C2C221FF72
+	for <e@80x24.org>; Tue, 24 Oct 2017 18:54:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751514AbdJXSsO (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Oct 2017 14:48:14 -0400
-Received: from mail-io0-f196.google.com ([209.85.223.196]:43510 "EHLO
-        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751277AbdJXSsN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Oct 2017 14:48:13 -0400
-Received: by mail-io0-f196.google.com with SMTP id 134so24958802ioo.0
-        for <git@vger.kernel.org>; Tue, 24 Oct 2017 11:48:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=L4gvpIOr9me+63gdj8uYXyyvS9LgUO76KaTY9Zjj/FQ=;
-        b=XGzOqVuPKpzI8s2rYhvLUy3+ROx5cZMjFQtqcgRqpLIK638M/kYv8/GPmZ82qNVhSV
-         MZbAoQ7bU5khrrPoT3VqCxPyOzN+e61NbfpTMJ3032L7QQ6BTWnUmYUa2tJqdJpiK0nJ
-         dT46wRApDZVeamLsy2JT+LfFn0uUdL1rWBWfsJJKlxMmFpSelR0JP5rDx/5spR1FwP4v
-         B4Rzmobp2EHjr6mKAASpsrVzC8aSUp2xIQYj1PcKZM+3q3YDsz6rdNvEEmgSu5LpyaHR
-         3qCuokKz5zzHi5HwLnr9clFiUL9Go0COVSBiwz03SrpuXxhbZVAhH0gauJS5/8Gc1OIb
-         NOvA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=L4gvpIOr9me+63gdj8uYXyyvS9LgUO76KaTY9Zjj/FQ=;
-        b=hga0HM7gA7vRxDcCHpKLvSTUolP8ni3Mrjnmgv+HH+ymm4I+3l9+M0D8k05LZ/Jf18
-         T8aZBhIB8UVLUfcaZzkNSklfO80ddLQLMjVbcQX2lexUSBxGEG901dpSosr3mKzTZZ5Q
-         lJmokFvG9kcjvStBJ6KFkDjDN8MvL2L/f4kSYBuywAfiYYtQAApLS8h2KEjsUq+WfDQf
-         I41m5uvQNPMJb+EC6WEL9nqwPYXGqBzYKsRCcXXTIdbD6WspAmQYA9qx6WJUWqDVcKJm
-         XqnqihG1HUSOTPlviDXG4bGN02pYIetkZFkOw6LDqXVPn38TifbWaDjUs3dIeZnIDytK
-         NPFQ==
-X-Gm-Message-State: AMCzsaVOS24KFW+yzgy2DXEyh3S+cTFoWHGf6LYeIsu1czPtLutvyfrd
-        HIWTMZB0rWFxSsL+qqQOR22DBA==
-X-Google-Smtp-Source: ABhQp+TvhsIgwBLeQW3TqN94CKkOqxP3Q71VQRgxZvyWNCC/a1CIfHRgD+t93q0DXLMP3WM1oJ6GJQ==
-X-Received: by 10.107.13.134 with SMTP id 128mr22191486ion.160.1508870892274;
-        Tue, 24 Oct 2017 11:48:12 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:89d4:9a95:7fcc:a26])
-        by smtp.gmail.com with ESMTPSA id g84sm355664ioa.82.2017.10.24.11.48.10
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 24 Oct 2017 11:48:11 -0700 (PDT)
-Date:   Tue, 24 Oct 2017 11:48:09 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     bturner@atlassian.com, git@jeffhostetler.com, git@vger.kernel.org,
-        gitster@pobox.com, jonathantanmy@google.com, jrnieder@gmail.com,
-        peff@peff.net, wyan@google.com
-Subject: Re: [WIP PATCH] diff: add option to ignore whitespaces for move
- detection only
-Message-ID: <20171024184809.GC79163@google.com>
-References: <CAGZ79kYwARXNWRS4AgwTP7peZiWiwCBvWFiEr9TbpbWjgysfZA@mail.gmail.com>
- <20171024000931.14814-1-sbeller@google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20171024000931.14814-1-sbeller@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        id S1751511AbdJXSx6 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Oct 2017 14:53:58 -0400
+Received: from siwi.pair.com ([209.68.5.199]:58041 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751399AbdJXSx5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Oct 2017 14:53:57 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id EE75184594;
+        Tue, 24 Oct 2017 14:53:56 -0400 (EDT)
+Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 5BDB984593;
+        Tue, 24 Oct 2017 14:53:56 -0400 (EDT)
+From:   Jeff Hostetler <git@jeffhostetler.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, peff@peff.net, jonathantanmy@google.com,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: [PATCH 00/13] WIP Partial clone part 1: object filtering
+Date:   Tue, 24 Oct 2017 18:53:19 +0000
+Message-Id: <20171024185332.57261-1-git@jeffhostetler.com>
+X-Mailer: git-send-email 2.9.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/23, Stefan Beller wrote:
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
-> 
->  diff.c                     |  10 ++--
->  diff.h                     |   1 +
->  t/t4015-diff-whitespace.sh | 114 ++++++++++++++++++++++++++++++++++++++++++++-
->  
-> See, only 10 lines of code! (and a few more for tests)
-> 
-> We have run out of space in diff_options.flags,touched_flags.
-> as we 1<<U31 as the highest bit. We could reuse 1<<9 that is currently
-> unused (removed in 882749a04f (diff: add --word-diff option that
-> generalizes --color-words, 2010-04-14)). But that postpones the
-> real fix for only a short amount of time.
-> 
-> Ideas welcome how to extend the flag space. (We cannot just make it
-> a long either, as some arcane architecures have 32 bit longs.)
+From: Jeff Hostetler <jeffhost@microsoft.com>
 
-One simple idea would be to convert the single 'flag' into various bit
-fields themselves, that way if you need to add a new flag you would just
-make a new bit field.  I'm unaware of any downsides of doing so (though
-i may be missing something) but doing so would probably cause a bit of
-code churn.
+I've been working with Jonathan Tan to combine our partial clone
+proposals.  This patch series represents a first step in that effort
+and introduces an object filtering mechanism to select unwanted
+objects.
 
+[1] traverse_commit_list and list-objects is extended to allow
+    various filters.
+[2] rev-list is extended to expose filtering.  This allows testing
+    of the filtering options.  And can be used later to predict
+    missing objects before commands like checkout or merge.
+[3] pack-objects is extended to use filtering parameters and build
+    packfiles that omit unwanted objects.
+
+This patch series lays the ground work for subsequent parts which
+will extend clone, fetch, fetch-pack, upload-pack, fsck, and etc.
+
+
+Jeff Hostetler (13):
+  dir: allow exclusions from blob in addition to file
+  list-objects-filter-map: extend oidmap to collect omitted objects
+  list-objects: filter objects in traverse_commit_list
+  list-objects-filter-blobs-none: add filter to omit all blobs
+  list-objects-filter-blobs-limit: add large blob filtering
+  list-objects-filter-sparse: add sparse filter
+  list-objects-filter-options: common argument parsing
+  list-objects: add traverse_commit_list_filtered method
+  extension.partialclone: introduce partial clone extension
+  rev-list: add list-objects filtering support
+  t6112: rev-list object filtering test
+  pack-objects: add list-objects filtering
+  t5317: pack-objects object filtering test
+
+ Documentation/git-pack-objects.txt             |   8 +-
+ Documentation/git-rev-list.txt                 |   5 +-
+ Documentation/rev-list-options.txt             |  30 ++
+ Documentation/technical/repository-version.txt |  22 ++
+ Makefile                                       |   6 +
+ builtin/pack-objects.c                         |  18 +-
+ builtin/rev-list.c                             |  84 +++++-
+ cache.h                                        |   4 +
+ config.h                                       |   3 +
+ dir.c                                          |  51 +++-
+ dir.h                                          |   3 +
+ environment.c                                  |   2 +
+ list-objects-filter-blobs-limit.c              | 146 ++++++++++
+ list-objects-filter-blobs-limit.h              |  18 ++
+ list-objects-filter-blobs-none.c               |  83 ++++++
+ list-objects-filter-blobs-none.h               |  18 ++
+ list-objects-filter-map.c                      |  63 ++++
+ list-objects-filter-map.h                      |  26 ++
+ list-objects-filter-options.c                  | 101 +++++++
+ list-objects-filter-options.h                  |  50 ++++
+ list-objects-filter-sparse.c                   | 241 ++++++++++++++++
+ list-objects-filter-sparse.h                   |  30 ++
+ list-objects.c                                 | 111 +++++--
+ list-objects.h                                 |  43 ++-
+ partial-clone-utils.c                          |  99 +++++++
+ partial-clone-utils.h                          |  34 +++
+ setup.c                                        |  15 +
+ t/t5317-pack-objects-filter-objects.sh         | 384 +++++++++++++++++++++++++
+ t/t6112-rev-list-filters-objects.sh            | 223 ++++++++++++++
+ 29 files changed, 1897 insertions(+), 24 deletions(-)
+ create mode 100644 list-objects-filter-blobs-limit.c
+ create mode 100644 list-objects-filter-blobs-limit.h
+ create mode 100644 list-objects-filter-blobs-none.c
+ create mode 100644 list-objects-filter-blobs-none.h
+ create mode 100644 list-objects-filter-map.c
+ create mode 100644 list-objects-filter-map.h
+ create mode 100644 list-objects-filter-options.c
+ create mode 100644 list-objects-filter-options.h
+ create mode 100644 list-objects-filter-sparse.c
+ create mode 100644 list-objects-filter-sparse.h
+ create mode 100644 partial-clone-utils.c
+ create mode 100644 partial-clone-utils.h
+ create mode 100755 t/t5317-pack-objects-filter-objects.sh
+ create mode 100755 t/t6112-rev-list-filters-objects.sh
 
 -- 
-Brandon Williams
+2.9.3
+
