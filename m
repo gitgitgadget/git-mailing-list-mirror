@@ -2,195 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F7561FF72
-	for <e@80x24.org>; Tue, 24 Oct 2017 15:16:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 01D371FF72
+	for <e@80x24.org>; Tue, 24 Oct 2017 15:27:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752035AbdJXPQt (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Oct 2017 11:16:49 -0400
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:58378 "EHLO
-        alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751805AbdJXPQk (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 24 Oct 2017 11:16:40 -0400
-X-AuditID: 1207440d-853ff70000000f42-96-59ef5954a8ea
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 5F.CE.03906.5595FE95; Tue, 24 Oct 2017 11:16:37 -0400 (EDT)
-Received: from bagpipes.fritz.box (p57BCCBEA.dip0.t-ipconnect.de [87.188.203.234])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v9OFGTox001980
-        (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-        Tue, 24 Oct 2017 11:16:35 -0400
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 2/2] files_transaction_prepare(): fix handling of ref lock failure
-Date:   Tue, 24 Oct 2017 17:16:25 +0200
-Message-Id: <6214107e1232a7fe7ca4b7440733ff496f07e537.1508856679.git.mhagger@alum.mit.edu>
-X-Mailer: git-send-email 2.14.1
-In-Reply-To: <cover.1508856679.git.mhagger@alum.mit.edu>
-References: <cover.1508856679.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrOIsWRmVeSWpSXmKPExsUixO6iqBsW+T7SoPMBq0XXlW4mi4beK8wW
-        t1fMZ7b40dLD7MDi8ff9ByaPZ717GD0uXlL2+LxJLoAlissmJTUnsyy1SN8ugStj5j3fgrn6
-        FZO7bzM2MN5V62Lk5JAQMJE42L6bpYuRi0NIYAeTRNvKb6wQzikmiW2vu5hBqtgEdCUW9TQz
-        gdgiAmoSE9sOsYDYzAIpEh3PuxlBbGGBIImbM6eD1bMIqEr83HYCzOYViJLo/v2HGWKbvMS5
-        B7eBbA4OTgELib/XNEHCQgLmEh8uL2aewMizgJFhFaNcYk5prm5uYmZOcWqybnFyYl5eapGu
-        kV5uZoleakrpJkZIiPDuYPy/TuYQowAHoxIP7w3Ld5FCrIllxZW5hxglOZiURHn/vQcK8SXl
-        p1RmJBZnxBeV5qQWH2KU4GBWEuFdYfI+Uog3JbGyKrUoHyYlzcGiJM6rtkTdT0ggPbEkNTs1
-        tSC1CCYrw8GhJMHbHwHUKFiUmp5akZaZU4KQZuLgBBnOAzScJQxkeHFBYm5xZjpE/hSjPUfH
-        zbt/mDg2gckN3x8AyWczXzcwC7Hk5eelSonz5oQDtQmAtGWU5sFNhsX/K0ZxoEeFeTVADuAB
-        pg642a+A1jIBrZW1fwOytiQRISXVwKixueNBqG+3CFOduUjD7e70pJCLlkLaQkwKH2Y03chf
-        yDe3jfujvLlDuOAJARN3W3aulZWyZh0dvdI1J99pTPwsNHGXhsrOm/xnA6ab8/hJLToQGrFi
-        btnMyvlT/zpaNtj2vpNU85LfNC8hqEBpz17XxUFiSbpeEY9v9pi+fhxdoKgwR05QiaU4I9FQ
-        i7moOBEARzLrs9oCAAA=
+        id S1751759AbdJXP1c (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Oct 2017 11:27:32 -0400
+Received: from mailout1.samsung.com ([203.254.224.24]:41669 "EHLO
+        mailout1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751519AbdJXP1a (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Oct 2017 11:27:30 -0400
+Received: from epcas2p3.samsung.com (unknown [182.195.41.55])
+        by mailout1.samsung.com (KnoxPortal) with ESMTP id 20171024152728epoutp0157de6d2e683d69424fbf2f1474ca7830~wiyDjbgSN0594305943epoutp01A;
+        Tue, 24 Oct 2017 15:27:28 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com 20171024152728epoutp0157de6d2e683d69424fbf2f1474ca7830~wiyDjbgSN0594305943epoutp01A
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1508858848;
+        bh=Ea7E16VDS/MmFIranQgWT8zUy3RlM1PkTZPGOHwK3uY=;
+        h=To:From:Subject:Cc:Date:References:From;
+        b=PbQUOx6m+TRiktpmTLNuuBN+gdbYZbwpX4kUJJ1uUWtrEuX2y4zG3sqX4ORPhM5QG
+         AL5e54az5IA7ZmgIg+XHMZ7PVQyHGuQGSgWV8cgT8Avo3VyP0I9L2oaNYLOrlZjY7g
+         3MfH3GPbc6pYELGHoWJK01xPJfwUlK1+dql5odPc=
+Received: from epsmges2p4.samsung.com (unknown [182.195.42.72]) by
+        epcas2p3.samsung.com (KnoxPortal) with ESMTP id
+        20171024152728epcas2p32eb8843e29d8ed8cb87320e3090a4b03~wiyDJY-hR0427704277epcas2p3P;
+        Tue, 24 Oct 2017 15:27:28 +0000 (GMT)
+Received: from epcas2p4.samsung.com ( [182.195.41.56]) by
+        epsmges2p4.samsung.com (Symantec Messaging Gateway) with SMTP id
+        FD.49.04158.FDB5FE95; Wed, 25 Oct 2017 00:27:27 +0900 (KST)
+Received: from epsmgms2p2new.samsung.com (unknown [182.195.42.143]) by
+        epcas2p4.samsung.com (KnoxPortal) with ESMTP id
+        20171024152727epcas2p4fb7dcf147e44aadf7733098151d469a5~wiyCSqDa70964309643epcas2p4v;
+        Tue, 24 Oct 2017 15:27:27 +0000 (GMT)
+X-AuditID: b6c32a48-905ff7000000103e-df-59ef5bdfba30
+Received: from epmmp1.local.host ( [203.254.227.16]) by
+        epsmgms2p2new.samsung.com (Symantec Messaging Gateway) with SMTP id
+        CC.0F.03859.FDB5FE95; Wed, 25 Oct 2017 00:27:27 +0900 (KST)
+Received: from [106.109.129.81] by mmp1.samsung.com (Oracle Communications
+        Messaging Server 7.0.5.31.0 64bit (built May  5 2014)) with ESMTPA id
+        <0OYC00B3Z2XP5F50@mmp1.samsung.com>; Wed, 25 Oct 2017 00:27:27 +0900 (KST)
+To:     git@vger.kernel.org
+From:   Andrey Okoshkin <a.okoshkin@samsung.com>
+Subject: [PATCH] merge-recursive: check GIT_MERGE_VERBOSITY only once
+Organization: Samsung RnD Institute Russia
+Cc:     vmiklos@frugalware.org, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>
+Message-id: <3aed764b-388c-d163-08fc-32b294c6b9d3@samsung.com>
+Date:   Tue, 24 Oct 2017 18:27:24 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+        Thunderbird/52.4.0
+MIME-version: 1.0
+Content-type: text/plain; charset="utf-8"
+Content-language: en-GB
+Content-transfer-encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrHIsWRmVeSWpSXmKPExsWy7bCmhe796PeRBi3zbCy6rnQzWTT0XmG2
+        +NHSw2xxpP0zkwOLx5PmHhaPZ717GD0uXlL2+LxJLoAlissmJTUnsyy1SN8ugStj0oaXjAWH
+        uCpOT3jD0sD4kqOLkYNDQsBEYutvwy5GLg4hgR2MEjuXr2aGcL4zSjw938jUxcgJVrTy+R02
+        iMRuRokXmzoZIZz7jBI7VnWwgFSJCIhLvD0+kx3EZhPQkzj/awKYLSzgKvFrcxsbiM0voCVx
+        +cc8ZhCbWSBa4umkA2AbeAXsJB5u+wsWZxFQlWjvnccKYosKREgcP7ycEaJGUOLH5HssEL2a
+        Ei++TIKyxSWO3b/JCGHLS2xe8xbsBQmBBWwSf/93skK84CIxZ8N7NghbWOLV8S3sELa0xLNV
+        Gxkh7HqJ1o4nbBDNHYwSn2cthSqyl9jStZ0NYgOfRMfhv+yQwOOV6GgTgijxkJjw9CA0uBwl
+        jqw5D1YuJBArMfPWJfYJjHKzkPwwC8kPs5D8MAvJDwsYWVYxiqUWFOempxYbFZjoFSfmFpfm
+        pesl5+duYgSnCi2PHYwHzvkcYhTgYFTi4W0wfxcpxJpYVlyZe4hRgoNZSYR3hcn7SCHelMTK
+        qtSi/Pii0pzU4kOM0hwsSuK8dduuRQgJpCeWpGanphakFsFkmTg4pRoYz5rmNYl6hc5Y6bHF
+        Jv7eoSnvTLcucJym92N2bHjbZDOR6Ieexyc++MMe0SCpIuf0+Pn/iZXzjlxsymKbeu/i83v9
+        8TdlA76lCa4J9O+7sJD3zKX41TWyUTcmzQmevGzic7eM/069jEG/X27h+R43sX7LYpHPCmbP
+        nCU5OBI/+updOZnx6PoUeSWW4oxEQy3mouJEALu5tg8RAwAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrJLMWRmVeSWpSXmKPExsVy+t9jAd370e8jDV5f4rToutLNZNHQe4XZ
+        4kdLD7PFkfbPTA4sHk+ae1g8nvXuYfS4eEnZ4/MmuQCWKC6blNSczLLUIn27BK6MSRteMhYc
+        4qo4PeENSwPjS44uRk4OCQETiZXP77B1MXJxCAnsZJT4/ekRM4TzkFFi2Y42NpAqEQFxibfH
+        Z7KD2GwCehLnf00As4UFXCV+bYao4RfQkrj8Yx4ziM0sEC2xcM0RsDivgJ3Ew21/weIsAqoS
+        7b3zWEFsUYEIiefN71khagQlfky+x9LFyAHUqy4xZUouxBhxiWP3bzJC2PISm9e8ZZ7AyD8L
+        SccshI5ZSDpmIelYwMiyilEytaA4Nz232KjAKC+1XK84Mbe4NC9dLzk/dxMjMIC3Hdbq38H4
+        eEn8IUYBDkYlHt4blu8ihVgTy4orcw8xSnAwK4nwrjB5HynEm5JYWZValB9fVJqTWnyIUZqD
+        RUmclz//WKSQQHpiSWp2ampBahFMlomDU6qB8cB5j7C1n6dsCpvql6faaP9bouKgesrOvx3G
+        Rtt6js16t6tm37xdLa8m/Z75LmrW9Hzvnonv9zyMdXA6dcaPf7aKcR6fc+appQfnW8u8WZHb
+        HPu7XDfAUOjb5J4TgspsQl/XJatVT1EtkXbcvbhjd8GB13HLAr03ez48YuhZ/Sc8rfWBRO7a
+        50osxRmJhlrMRcWJAMczjJ9cAgAA
+X-CMS-MailID: 20171024152727epcas2p4fb7dcf147e44aadf7733098151d469a5
+X-Msg-Generator: CA
+CMS-TYPE: 102P
+X-CMS-RootMailID: 20171024152727epcas2p4fb7dcf147e44aadf7733098151d469a5
+X-RootMTR: 20171024152727epcas2p4fb7dcf147e44aadf7733098151d469a5
+References: <CGME20171024152727epcas2p4fb7dcf147e44aadf7733098151d469a5@epcas2p4.samsung.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since dc39e09942 (files_ref_store: use a transaction to update packed
-refs, 2017-09-08), failure to lock a reference has been handled
-incorrectly by `files_transaction_prepare()`. If
-`lock_ref_for_update()` fails in the lock-acquisition loop of that
-function, it sets `ret` then breaks out of that loop. Prior to
-dc39e09942, that was OK, because the only thing following the loop was
-the cleanup code. But dc39e09942 added another blurb of code between
-the loop and the cleanup. That blurb sometimes resets `ret` to zero,
-making the cleanup code think that the locking was successful.
+Add check of 'GIT_MERGE_VERBOSITY' environment variable only once in
+init_merge_options().
+Consequential call of getenv() may return NULL pointer and strtol() crashes.
+However the stored pointer to the obtained getenv() result may be invalidated
+by some other getenv() call from another thread as getenv() is not thread-safe.
 
-Specifically, whenever
-
-* One or more reference deletions have been processed successfully in
-  the lock-acquisition loop. (Processing the first such reference
-  causes a packed-ref transaction to be initialized.)
-
-* Then `lock_ref_for_update()` fails for a subsequent reference. Such
-  a failure can happen for a number of reasons, such as the old SHA-1
-  not being correct, lock contention, etc. This causes a `break` out
-  of the lock-acquisition loop.
-
-* The `packed-refs` lock is acquired successfully and
-  `ref_transaction_prepare()` succeeds for the packed-ref transaction.
-  This has the effect of resetting `ret` back to 0, and making the
-  cleanup code think that lock acquisition was successful.
-
-In that case, any reference updates that were processed prior to
-breaking out of the loop would be carried out (loose and packed), but
-the reference that couldn't be locked and any subsequent references
-would silently be ignored.
-
-This can easily cause data loss if, for example, the user was trying
-to push a new name for an existing branch while deleting the old name.
-After the push, the branch could be left unreachable, and could even
-subsequently be garbage-collected.
-
-This problem was noticed in the context of deleting one reference and
-creating another in a single transaction, when the two references D/F
-conflict with each other, like
-
-    git update-ref --stdin <<EOF
-    delete refs/foo
-    create refs/foo/bar HEAD
-    EOF
-
-This triggers the above bug because the deletion is processed
-successfully for `refs/foo`, then the D/F conflict causes
-`lock_ref_for_update()` to fail when `refs/foo/bar` is processed. In
-this case the transaction *should* fail, but instead it causes
-`refs/foo` to be deleted without creating `refs/foo`. This could
-easily result in data loss.
-
-The fix is simple: instead of just breaking out of the loop, jump
-directly to the cleanup code. This fixes some tests in t1404 that were
-added in the previous commit.
-
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+Signed-off-by: Andrey Okoshkin <a.okoshkin@samsung.com>
 ---
- refs/files-backend.c         |  2 +-
- t/t1404-update-ref-errors.sh | 16 ++++++++--------
- 2 files changed, 9 insertions(+), 9 deletions(-)
+ merge-recursive.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 014dabb0bf..8cc1e07fdb 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -2570,7 +2570,7 @@ static int files_transaction_prepare(struct ref_store *ref_store,
- 		ret = lock_ref_for_update(refs, update, transaction,
- 					  head_ref, &affected_refnames, err);
- 		if (ret)
--			break;
-+			goto cleanup;
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 1494ffdb8..eaac98145 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -2163,6 +2163,7 @@ static void merge_recursive_config(struct merge_options *o)
  
- 		if (update->flags & REF_DELETING &&
- 		    !(update->flags & REF_LOG_ONLY) &&
-diff --git a/t/t1404-update-ref-errors.sh b/t/t1404-update-ref-errors.sh
-index 8b5e9a83c5..b7838967b8 100755
---- a/t/t1404-update-ref-errors.sh
-+++ b/t/t1404-update-ref-errors.sh
-@@ -276,11 +276,11 @@ test_expect_success 'D/F conflict prevents add short + delete long' '
- 	df_test refs/df-as-dl --add-del foo foo/bar
- '
- 
--test_expect_failure 'D/F conflict prevents delete long + add short' '
-+test_expect_success 'D/F conflict prevents delete long + add short' '
- 	df_test refs/df-dl-as --del-add foo/bar foo
- '
- 
--test_expect_failure 'D/F conflict prevents delete short + add long' '
-+test_expect_success 'D/F conflict prevents delete short + add long' '
- 	df_test refs/df-ds-al --del-add foo foo/bar
- '
- 
-@@ -292,17 +292,17 @@ test_expect_success 'D/F conflict prevents add short + delete long packed' '
- 	df_test refs/df-as-dlp --pack --add-del foo foo/bar
- '
- 
--test_expect_failure 'D/F conflict prevents delete long packed + add short' '
-+test_expect_success 'D/F conflict prevents delete long packed + add short' '
- 	df_test refs/df-dlp-as --pack --del-add foo/bar foo
- '
- 
--test_expect_failure 'D/F conflict prevents delete short packed + add long' '
-+test_expect_success 'D/F conflict prevents delete short packed + add long' '
- 	df_test refs/df-dsp-al --pack --del-add foo foo/bar
- '
- 
- # Try some combinations involving symbolic refs...
- 
--test_expect_failure 'D/F conflict prevents indirect add long + delete short' '
-+test_expect_success 'D/F conflict prevents indirect add long + delete short' '
- 	df_test refs/df-ial-ds --sym-add --add-del foo/bar foo
- '
- 
-@@ -314,11 +314,11 @@ test_expect_success 'D/F conflict prevents indirect add short + indirect delete
- 	df_test refs/df-ias-idl --sym-add --sym-del --add-del foo foo/bar
- '
- 
--test_expect_failure 'D/F conflict prevents indirect delete long + indirect add short' '
-+test_expect_success 'D/F conflict prevents indirect delete long + indirect add short' '
- 	df_test refs/df-idl-ias --sym-add --sym-del --del-add foo/bar foo
- '
- 
--test_expect_failure 'D/F conflict prevents indirect add long + delete short packed' '
-+test_expect_success 'D/F conflict prevents indirect add long + delete short packed' '
- 	df_test refs/df-ial-dsp --sym-add --pack --add-del foo/bar foo
- '
- 
-@@ -330,7 +330,7 @@ test_expect_success 'D/F conflict prevents add long + indirect delete short pack
- 	df_test refs/df-al-idsp --sym-del --pack --add-del foo/bar foo
- '
- 
--test_expect_failure 'D/F conflict prevents indirect delete long packed + indirect add short' '
-+test_expect_success 'D/F conflict prevents indirect delete long packed + indirect add short' '
- 	df_test refs/df-idlp-ias --sym-add --sym-del --pack --del-add foo/bar foo
- '
- 
+ void init_merge_options(struct merge_options *o)
+ {
++	const char *merge_verbosity = getenv("GIT_MERGE_VERBOSITY");
+ 	memset(o, 0, sizeof(struct merge_options));
+ 	o->verbosity = 2;
+ 	o->buffer_output = 1;
+@@ -2171,9 +2172,8 @@ void init_merge_options(struct merge_options *o)
+ 	o->renormalize = 0;
+ 	o->detect_rename = 1;
+ 	merge_recursive_config(o);
+-	if (getenv("GIT_MERGE_VERBOSITY"))
+-		o->verbosity =
+-			strtol(getenv("GIT_MERGE_VERBOSITY"), NULL, 10);
++	if (merge_verbosity)
++		o->verbosity = strtol(merge_verbosity, NULL, 10);
+ 	if (o->verbosity >= 5)
+ 		o->buffer_output = 0;
+ 	strbuf_init(&o->obuf, 0);
 -- 
-2.14.1
-
+2.14.3
