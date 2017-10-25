@@ -2,69 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=0.6 required=3.0 tests=BAYES_20,FROM_NO_USER,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,TVD_PH_BODY_ACCOUNTS_PRE shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8DC0E202DD
-	for <e@80x24.org>; Wed, 25 Oct 2017 12:02:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4B39B202DD
+	for <e@80x24.org>; Wed, 25 Oct 2017 12:14:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751618AbdJYMCv convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Wed, 25 Oct 2017 08:02:51 -0400
-Received: from ne-mail1.gov.ph ([202.90.153.11]:37608 "EHLO ne-mail1.gov.ph"
+        id S1751036AbdJYMOD (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Oct 2017 08:14:03 -0400
+Received: from mout.gmx.net ([212.227.17.22]:64082 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751576AbdJYMCu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Oct 2017 08:02:50 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-        by ne-mta2.liham.gov.phl (Postfix) with ESMTP id C8D4E649A0DC
-        for <git@vger.kernel.org>; Wed, 25 Oct 2017 18:05:46 +0800 (PHT)
-Received: from ne-mail1.gov.ph ([127.0.0.1])
-        by localhost (ne-mta2.liham.gov.phl [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id l1gv_K9zUOcR for <git@vger.kernel.org>;
-        Wed, 25 Oct 2017 18:05:45 +0800 (PHT)
-Received: from localhost (localhost.localdomain [127.0.0.1])
-        by ne-mta2.liham.gov.phl (Postfix) with ESMTP id 7348163D9799
-        for <git@vger.kernel.org>; Wed, 25 Oct 2017 17:26:19 +0800 (PHT)
-X-Virus-Scanned: amavisd-new at ne-mta2.liham.gov.phl
-Received: from ne-mail1.gov.ph ([127.0.0.1])
-        by localhost (ne-mta2.liham.gov.phl [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id Ftj3aXYzykHj for <git@vger.kernel.org>;
-        Wed, 25 Oct 2017 17:26:19 +0800 (PHT)
-Received: from [10.0.2.15] (unknown [31.108.166.29])
-        by ne-mta2.liham.gov.phl (Postfix) with ESMTPSA id 2978A63D9F92
-        for <git@vger.kernel.org>; Wed, 25 Oct 2017 17:12:18 +0800 (PHT)
-Content-Type: text/plain; charset="iso-8859-1"
+        id S1750957AbdJYMOC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Oct 2017 08:14:02 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Mb8HX-1dspzM451P-00KdGx; Wed, 25
+ Oct 2017 14:13:56 +0200
+Date:   Wed, 25 Oct 2017 14:13:54 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        git <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Subject: Re: Consequences of CRLF in index?
+In-Reply-To: <20171024190234.GA21077@tor.lan>
+Message-ID: <alpine.DEB.2.21.1.1710251412100.6482@virtualbox>
+References: <D0A67AD8-2D63-4683-9F2A-20B0E8E65D4B@gmail.com> <20171024181415.3tvmc36aqi335v66@aiede.mtv.corp.google.com> <20171024190234.GA21077@tor.lan>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8BIT
-Content-Description: Mail message body
-Subject: Attention!
-To:     git@vger.kernel.org
-From:   "Webmail Service" <>
-Date:   Wed, 25 Oct 2017 06:42:16 -0330
-Message-Id: <20171025091219.2978A63D9F92@ne-mta2.liham.gov.phl>
+Content-Type: multipart/mixed; boundary="8323329-1216931068-1508933635=:6482"
+X-Provags-ID: V03:K0:b50e9vc0ICl837cTutozoFJuNm/vJZqRRpVGRYv/ZWACzX2Leal
+ YMPTwPw7/t3c8AjOY9QyurkzldbMWGP2N7+wuRilvhY4KBLGKdX6ATli3tPVhGS+L/U74b9
+ Z8fB74EtXzXG42R17bkW75jz613b2HUypUAAEjfsvc9jylRvIyq+iRYa/gDqtQI5bHZkBfo
+ URhtrgaT8herfPRW44Sog==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:toM1CCeHuNk=:8iglG6ZdK8ZtmFoKC6ssnn
+ ZybaZwB9NRJdTzKFPolVl87fRINFmM97FicEW1L5mUs+75yfMLbG/u/rpEO3ib4iqnPZVYiiR
+ CHv4TAxOKLWpcWR1GpBK1bLC77tQVmOv64W04HwRIK2kLhsGrL2qOuYSl4BE7qMtFHguG5ARq
+ soKSiVRFj/oex9fXCF2F0WwXLXSP2hwo0O1ohzOoZwhkmjJv/7yNnsdTYEB6a/PGVYW7SkMW9
+ Ix8yfMNhQxuvzOr03OcHz6d2T/9we/gCD6IHCy5SmYvAWBqMMeqOtBWUqWwpo918H30y8Ikou
+ 6eXREvtHIEoFYDtcZFUeXGyaV+oRoQm1svqlHgEIDPhdHTbW0fRGL/FrrYEw7ikfzDD9SqXWV
+ K1RM6k+B7DZ4IeeA+eEWq0cvYKz6hBG8ykgrvBqroF3+JFLEYQzCaW1jI+FxBrklPfWaeswLY
+ iDfvaQq/iU6jQWNM5v7cs6XB4keEun+Uohr+oVvEHz0lkf4rlAqdKtEuSuNq+HiLqMGIfX4m7
+ +jZP/X73XMBtRybLWP7dZK7IMIlPqxq35PZSnqqrz0aq9D5ejDk5BG0VXiT4riNhU31j0en41
+ 4g9xLVh3fTrrHymjCHFHCD3TMN3j+qqg/f/Tfi/kIHBzLC9deqTpnwCqSMgRH4GN44PvpFBEL
+ n0SmYUC2ZpkijRK3BL4tYPFLxTZrtKxRkMxS7RWldA0kvwQ/QKu7iC4Kc9CAYksDfFwQfW88q
+ QJli5ETZ76AM0rlnOIiyO6p0g3shOFbNiQTmBs34lGOv5CeVlt6IAQRlz1CNeZbJ4K2uK3qEb
+ D4Q82nUGyckAEcGcEwae65rIbSsd+vV1/UsU3MFj1gGPILbry3HBXi80lM7P4PRoWKdZDUv
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear eMail User,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Your email account is due for upgrade. Kindly click on the
-link below or copy and paste to your browser and follow the
-instruction to upgrade your email Account;
+--8323329-1216931068-1508933635=:6482
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-http://www.surveybrother.com/Technical/ffed6991205189d7b5/do
+Hi,
 
-Our webmail Technical Team will update your account. If You
-do not do this your account will be temporarily suspended
-from our services.
+On Tue, 24 Oct 2017, Torsten B=C3=B6gershausen wrote:
 
-Warning!! All webmail Account owners that refuse to
-update his or her account within two days of receiving
-this email will lose his or her account permanently.
+> The penalty may be low, but Dscho once reported that it [line endings
+> conversion] is measurable & painful on a "big repo".
 
-Thank you for your cooperation!
+Yes, I do not remember the details, but it must have been around 5-15%
+speed improvement to prevent the autoCRLF stuff from doing its thing.
 
-Sincere regards,
-WEB MAIL ADMINISTRATOR
-Copyright @2017 MAIL OFFICE All rights reserved
+At work, we always switch it off, for that reason.
+
+Ciao,
+Dscho
+--8323329-1216931068-1508933635=:6482--
