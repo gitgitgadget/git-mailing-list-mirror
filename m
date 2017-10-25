@@ -2,61 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9FD411FAED
-	for <e@80x24.org>; Wed, 25 Oct 2017 04:05:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DBD9D1FAED
+	for <e@80x24.org>; Wed, 25 Oct 2017 04:05:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750949AbdJYEFU (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Oct 2017 00:05:20 -0400
-Received: from mail-io0-f181.google.com ([209.85.223.181]:48060 "EHLO
-        mail-io0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750763AbdJYEFT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Oct 2017 00:05:19 -0400
-Received: by mail-io0-f181.google.com with SMTP id h70so26169677ioi.4
-        for <git@vger.kernel.org>; Tue, 24 Oct 2017 21:05:19 -0700 (PDT)
+        id S1751309AbdJYEFZ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Oct 2017 00:05:25 -0400
+Received: from mail-qk0-f195.google.com ([209.85.220.195]:44843 "EHLO
+        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750978AbdJYEFW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Oct 2017 00:05:22 -0400
+Received: by mail-qk0-f195.google.com with SMTP id r64so28983106qkc.1
+        for <git@vger.kernel.org>; Tue, 24 Oct 2017 21:05:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=sMqwJfGkf3PjyZLhR5IL9VRLO1wjNm9eMwA/jfV7iaY=;
-        b=b10ZZ1b2ow9+1LjY9vmh2VTqMWjeu0QRU3RO7av0J+BkPwvtzZD9wYimA4GF7UCjst
-         euSxY5fUKHT2Sonl1RhwGRycangDTbSPu9J5Ds5PIKBYA1/tOnZlSDelKUbkUqKK1h0e
-         Ju5BDQhKN8HGDGLo1DvTObhLEhSG/DRheelRFLtNzgm8ckqtTF1/N7s8cYhjC0NnwCFI
-         XqepIDSJ1z3zrf9+cx6qVejVblP0rvTBpyLdzBjp23JPn/GWX3Sf7WUs+znsTtPrQ8to
-         n3Lc9dC+yY958pVPqHVdEnc849P5sRxlCr4hjrfR1kNKMAfEaEG1vss8D8tnmtXROCIf
-         hiVQ==
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=nRkrW5LToQjrWryI7HSu3vCyiTnSxyDLZJYcfD89i8E=;
+        b=Quxu9a5+/CV4gHubb64xNnhgAzyC+KXMYX8S7mbFS78KHBWS7ea6m5eMDga8Je6/m5
+         9PORr2/qYRdjfa0RFE3QrAaolaJBzGjo/gueLPJnnGTNksIUqkgdFr71RDrp8vex7LmY
+         6NCrcU0ehBUQzXrqhshD5ynxjsV7bKfqMHYS7cToP9eV5bWaf86RPBjefTs6gvx3cduw
+         CymQC+CAqF4ieP1jqhW/9uNOQ2TMvbbF62TFBIS3KB88K5uKrvbHOOhUjP1nJzqnqO38
+         hN92ie8+wGTrYtBSX5RuT4CveGF/fJe8H/SaxYpArCm333V4lJnAZ3haX330H60MqZwR
+         x4sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=sMqwJfGkf3PjyZLhR5IL9VRLO1wjNm9eMwA/jfV7iaY=;
-        b=pkALxcl6v0xwiat/sHqhHhHaEI+Djsn/8QOrwsznz8NR5yIIkb78ukg+SToB1N1PcV
-         zSL5wv3fmK+Sxfw8G69bh9tDgfaY+9rWtdzyr2AViPaxDhaTycPiplVf+BBdQyzvq9YI
-         3ZppiPNoFFTjVU5qyjfOeycWqN78RE0vRwhZW+VvEOhSfQeDy6vXW5MqDIWWIBbbzSLq
-         z6AfILBu6RMaakDtzGpCjEW7i1dA+EG8GvjBjwVqb5p0XLEejbMWx40+uWCUTx9A9QeH
-         hQ/mrcPLDLwgwwwlgm6Dkb9MaU/pryMg5orfkaTZJDE22pVQRBy5Dj2HbAcVjH4hpUtV
-         2POw==
-X-Gm-Message-State: AMCzsaVluGur312tK0hj20hCU2KySKeEoMVZ0yj2hbOlhgMuyyNWEtGs
-        HCNQzVy/qPU5bBrAY9+z963QiIQW1tx/2Lppmm55VA==
-X-Google-Smtp-Source: ABhQp+SRqvmRogWMLU4dxNp1Zh5izQ0mCdnYL9qBbpICW5l5SI1/aKQt5YVMvyNG1BIWpDgIHYPIS/2cPU+R4Y61yNE=
-X-Received: by 10.107.212.15 with SMTP id l15mr23191864iog.257.1508904318520;
- Tue, 24 Oct 2017 21:05:18 -0700 (PDT)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=nRkrW5LToQjrWryI7HSu3vCyiTnSxyDLZJYcfD89i8E=;
+        b=LpYUNEpxmmNGpbK1E8C45Ta4YT5vRJQOY70OyGJS3C5mKbIWB1Pk4mXfKJw5Ja9Nh2
+         iM4XQldnyZQGBefe++6bcOu3ESlGS9ujkL4a93zAGvHlm5HzF7NY1LsrlBwa+S5jN5rH
+         U3ikkJe6d0Zco8N7SrzqPAUK745PDfGky85pC/ttZbZAuJaf3Vkr7xVKka9C58WuNNbr
+         mtdgD4h+pKJHpEuGk2feKd60P6Za4bAO6A6w9eAsQLgIqCu3r7fCJbL+Cv3LTB1rpFAc
+         3xX4x18xEjJys27/OYL6V/Adjl8WgmfZx0Cqee+dzLb8xtNxNroX8StTx+ic2T51aliU
+         MUog==
+X-Gm-Message-State: AMCzsaVG0/wrXIF4gnP4sZgOuV/SzJHSpbFCdsJ0rEgHhs0yLyK+7M2H
+        YkMcsQYfLh1hx2QBhyIthp/KFsfAuA1Dq21e4V4=
+X-Google-Smtp-Source: ABhQp+QFn4ZJt7ZgcCut8GBBqmqeqwoVoNQqflvK/PxuWL6xtIsuwR5AaV7eDq2E7mTQtxkuOXI897Ho6QhWH7ZHwcQ=
+X-Received: by 10.55.139.70 with SMTP id n67mr1114077qkd.135.1508904321285;
+ Tue, 24 Oct 2017 21:05:21 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.107.174.66 with HTTP; Tue, 24 Oct 2017 21:05:17 -0700 (PDT)
-In-Reply-To: <20171024185332.57261-4-git@jeffhostetler.com>
-References: <20171024185332.57261-1-git@jeffhostetler.com> <20171024185332.57261-4-git@jeffhostetler.com>
-From:   Jonathan Tan <jonathantanmy@google.com>
-Date:   Tue, 24 Oct 2017 21:05:17 -0700
-Message-ID: <CAGf8dg+_AewifMR8wnrQdJKXK0GuwdhMb8QAMrGoVCJzhysiRw@mail.gmail.com>
-Subject: Re: [PATCH 03/13] list-objects: filter objects in traverse_commit_list
+Received: by 10.12.146.118 with HTTP; Tue, 24 Oct 2017 21:05:20 -0700 (PDT)
+In-Reply-To: <20171024185332.57261-2-git@jeffhostetler.com>
+References: <20171024185332.57261-1-git@jeffhostetler.com> <20171024185332.57261-2-git@jeffhostetler.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 25 Oct 2017 00:05:20 -0400
+X-Google-Sender-Auth: cgQnJgxIUHLmteyOfQavYUpv27U
+Message-ID: <CAPig+cSPwSq1s5EhnQA+K-zQJ_+LrTLJFA9n8fj+W9jtdpA+PQ@mail.gmail.com>
+Subject: Re: [PATCH 01/13] dir: allow exclusions from blob in addition to file
 To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, jonathantanmy@google.com,
         Jeff Hostetler <jeffhost@microsoft.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
@@ -64,68 +64,56 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 24, 2017 at 11:53 AM, Jeff Hostetler <git@jeffhostetler.com> wrote:
-
-> +enum list_objects_filter_result {
-> +       LOFR_ZERO      = 0,
-> +       LOFR_MARK_SEEN = 1<<0,
-
-Probably worth documenting, something like /* Mark this object so that
-it is skipped for the rest of the traversal. */
-
-> +       LOFR_SHOW      = 1<<1,
-
-And something like /* Invoke show_object_fn on this object. This
-object may be revisited unless LOFR_MARK_SEEN is also set. */
-
-> +};
-> +
-> +/* See object.h and revision.h */
-> +#define FILTER_REVISIT (1<<25)
-
-I think this should be declared closer to its use - in the sparse
-filter code or in the file that uses it. Wherever it is, also update
-the chart in object.h to indicate that we're using this 25th bit.
-
-> +
-> +enum list_objects_filter_type {
-> +       LOFT_BEGIN_TREE,
-> +       LOFT_END_TREE,
-> +       LOFT_BLOB
-> +};
-> +
-> +typedef enum list_objects_filter_result list_objects_filter_result;
-> +typedef enum list_objects_filter_type list_objects_filter_type;
-
-I don't think we typedef enums in Git code.
-
-> +
-> +typedef list_objects_filter_result (*filter_object_fn)(
-> +       list_objects_filter_type filter_type,
-> +       struct object *obj,
-> +       const char *pathname,
-> +       const char *filename,
-> +       void *filter_data);
-> +
-> +void traverse_commit_list_worker(
-> +       struct rev_info *,
-> +       show_commit_fn, show_object_fn, void *show_data,
-> +       filter_object_fn filter, void *filter_data);
-
-I think things would be much clearer if a default filter was declared
-(matching the behavior as of this patch when filter == NULL), say:
-static inline default_filter(args) { switch(filter_type) { case
-LOFT_BEGIN_TREE: return LOFR_MARK_SEEN | LOFR_SHOW; case
-LOFT_END_TREE: return LOFT_ZERO; ...
-
-And inline traverse_commit_list() instead of putting it in the .c file.
-
-This would reduce or eliminate the need to document
-traverse_commit_list_worker, including what happens if filter is NULL,
-and explain how a user would make their own filter_object_fn.
-
-> +
-> +#endif /* LIST_OBJECTS_H */
-> --
-> 2.9.3
+On Tue, Oct 24, 2017 at 2:53 PM, Jeff Hostetler <git@jeffhostetler.com> wrote:
+> Refactor add_excludes() to separate the reading of the
+> exclude file into a buffer and the parsing of the buffer
+> into exclude_list items.
 >
+> Add add_excludes_from_blob_to_list() to allow an exclude
+> file be specified with an OID.
+>
+> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+> ---
+> diff --git a/dir.c b/dir.c
+> @@ -841,6 +856,38 @@ int add_excludes_from_file_to_list(const char *fname, const char *base,
+> +int add_excludes_from_blob_to_list(
+> +       struct object_id *oid,
+> +       const char *base, int baselen,
+> +       struct exclude_list *el)
+> +{
+> +       char *buf;
+> +       unsigned long size;
+> +       enum object_type type;
+> +
+> +       buf = read_sha1_file(oid->hash, &type, &size);
+> +       if (!buf)
+> +               return -1;
+> +
+> +       if (type != OBJ_BLOB) {
+> +               free(buf);
+> +               return -1;
+> +       }
+> +
+> +       if (size == 0) {
+> +               free(buf);
+> +               return 0;
+> +       }
+> +
+> +       if (buf[size - 1] != '\n') {
+> +               buf = xrealloc(buf, st_add(size, 1));
+> +               buf[size++] = '\n';
+> +       }
+> +
+> +       add_excludes_from_buffer(buf, size, base, baselen, el);
+
+Seeing all the free()'s above, at first glance, one wonders why 'buf'
+isn't freed here after add_excludes_from_buffer(), however an
+examination of that function shows that 'buf' is assigned to
+el->filebuf and later freed by clear_exclude_list(). Okay.
+
+> +       return 0;
+
+Should this be returning the result of add_excludes_from_buffer()
+rather than unconditionally returning 0?
+
+> +}
