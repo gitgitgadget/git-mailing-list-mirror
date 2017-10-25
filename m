@@ -2,112 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 10749203F2
-	for <e@80x24.org>; Wed, 25 Oct 2017 18:50:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C9F6B203F2
+	for <e@80x24.org>; Wed, 25 Oct 2017 18:58:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932362AbdJYStR (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Oct 2017 14:49:17 -0400
-Received: from mail-pg0-f51.google.com ([74.125.83.51]:47528 "EHLO
-        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932162AbdJYStP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Oct 2017 14:49:15 -0400
-Received: by mail-pg0-f51.google.com with SMTP id r25so683402pgn.4
-        for <git@vger.kernel.org>; Wed, 25 Oct 2017 11:49:15 -0700 (PDT)
+        id S932375AbdJYS6Q (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Oct 2017 14:58:16 -0400
+Received: from mail-pg0-f42.google.com ([74.125.83.42]:56560 "EHLO
+        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932231AbdJYS6P (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Oct 2017 14:58:15 -0400
+Received: by mail-pg0-f42.google.com with SMTP id m18so683847pgd.13
+        for <git@vger.kernel.org>; Wed, 25 Oct 2017 11:58:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=9r9SqYeuYHBCFuVsSf2fbKAehH6jZB+dkBT541Ngr50=;
-        b=rDqwkfc2BlP85MR/KjTf8752YzSpbwVJzIHM8Fr15ybBka2u+xg9WJrEdoVp6cZ5St
-         w1X0k1cMw6W21PQg7VnRQwYFtGe02bDbC7Xj6pSdanFgT/Sn39X/5xwr2w1+cVsyQEHX
-         guUG/SZcRN+jW6ywO6aq3+WJN1wb4KgKKKCD3aor6HkeLBCD2idW8ycynuWMs0sA011j
-         zuZNlZb1AnvTxcWKrlsCO1er1vBi63D7COeW9TTLXaAGzC9PftKPqKzTZsu3k1ix1gNC
-         uUE8Y1cQC/ge5thTIhv3uxmiGpDLVZHAGC+i5UIUyXJf4VAlvycVPohoD8DufUaC/GyQ
-         c5dg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=ShEI1ZafVHfjzJbX11lstfS/mUQj4kHfclFQGdGia70=;
+        b=i94p446zq2/C0IREmWK5rCvc4gdIR/XQCzhE6FeaUxfChMEXLb3lTC1ah9WGpCb9i1
+         +2esS/zNp+e7SLhwcNNe1CiRC62d3RaJ+L37TSCsAshSbWjBP6DNVFYVm6qKSX99lRzl
+         qkxapV+YGzz/g5BDwibdg/NKw59xnFFpUuax5NtALnJaysloUL9Tmq+Gfojh7sVYtFiD
+         UKN7W3+guSuF/Vp8+RuSBAggzJ9IRbMa8ycwcStOCk36qgEP+kVHijY2Y++U2eYt5I83
+         rrvtpuQFAMvGcs5VyyngKzRUVwePuDojyUPChuAyCbEIXVrAq0aWjW6DnN7mLZRXb8Tu
+         NWzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=9r9SqYeuYHBCFuVsSf2fbKAehH6jZB+dkBT541Ngr50=;
-        b=G3hN3XM6U++CrtYb08CcC0j4hO3RujN65014p+1gXHsu6PKV1UukEm+5uTmyMNd3+t
-         FEp+Th8uP3oGAqme0QaxqG0yXnIGtlo45V0a8CsY/S84MO+kqj95M6mBz+WCAE/RV5ZM
-         j/bt/GsVqJ1XL/puIDNU0L2M8CxgCUg3ep9LUXAmJ9PzilBcpRE/UTy+lnBG6Ttv/cMz
-         kopD3O1cJ8Is/81BfLdHRbdgJanavIBQaBd78hTxSPYKViGubYY2nbpp+QMiVThEnbAx
-         nWSIOhvpFXUbshLwDKw0nDU1w6Ne5PGbW2lQELM7qhcvB56fCfr0HDZyNdG+/w0qisJK
-         65gw==
-X-Gm-Message-State: AMCzsaU7bti0YoA8sPGZ67rcJk7GbLjr0g5YBfaT8rKDVCEEopxM1nca
-        eWkfAfFW0mb/SDfDUoy5on0w3Wom0mA=
-X-Google-Smtp-Source: ABhQp+TGf7bXy1IZV4W6qWOMXzDmzwpwYJla85wk/bo3IFz0zOZ+iPV59ZSj5P/Cd89IlbrzUmu6yw==
-X-Received: by 10.98.214.76 with SMTP id r73mr3005929pfg.261.1508957354539;
-        Wed, 25 Oct 2017 11:49:14 -0700 (PDT)
-Received: from localhost ([2620:0:100e:422:4d7b:dd00:69b5:edeb])
-        by smtp.gmail.com with ESMTPSA id x1sm6061308pfh.113.2017.10.25.11.49.13
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=ShEI1ZafVHfjzJbX11lstfS/mUQj4kHfclFQGdGia70=;
+        b=YUsarB0+yjtr+N6tyLenTEgN8DjjNVgjOWHTiKqMrPH6Fst96KXV0i4Z/ld4esyVVR
+         yMwZkrEzXLFzrb6pApska63FUzbUtNwyYMqACN7zS+qkF25AMF79RwduFNVBI10nDgBP
+         ex2vDtl0Bx015VC6a5Mc2GjN3btRGFDAjdKvcITs82UlClcjYprJqteUvNC+ZiDW9SCb
+         3Bgemoz7TvXVSn8yKuHyf2ZgYZHLdPDFVQpD1cn0IUVYRmeoboTX9hXAHTuXBceGmnTd
+         CNZv8HhspU9nje0q/5EnFwgoCIhum8L7psJMf/hGdUQmjxGPzaZCQCIDpUjw648g1oxe
+         cf+w==
+X-Gm-Message-State: AMCzsaXWcQ3DB6jDfFscuJ3/Rsk8V7A0DIr/qglmVLY25hPf9u4G6Zfd
+        pjqjmKLdrralxcBIXJeg6lxkOw==
+X-Google-Smtp-Source: ABhQp+Tr2f9vLU/6VAOZhRldH1tDDIIIhEUxX7mJFA9bXUG39ZSC63mpgLeliGvgTnGmk/30QbsJYA==
+X-Received: by 10.84.216.75 with SMTP id f11mr2503731plj.275.1508957894835;
+        Wed, 25 Oct 2017 11:58:14 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:c01f:5e59:5832:ba3a])
+        by smtp.gmail.com with ESMTPSA id b68sm6466084pfg.171.2017.10.25.11.58.13
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 25 Oct 2017 11:49:13 -0700 (PDT)
-From:   Stefan Beller <sbeller@google.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, jrnieder@gmail.com, l.s.r@web.de,
-        peff@peff.net, sbeller@google.com
-Subject: [PATCHv3 0/2] (x)diff cleanup: remove duplicate code
-Date:   Wed, 25 Oct 2017 11:49:10 -0700
-Message-Id: <20171025184912.21657-1-sbeller@google.com>
-X-Mailer: git-send-email 2.15.0.rc2.6.g953226eb5f
-In-Reply-To: <xmqqinf3izgm.fsf@gitster.mtv.corp.google.com>
-References: <xmqqinf3izgm.fsf@gitster.mtv.corp.google.com>
+        Wed, 25 Oct 2017 11:58:13 -0700 (PDT)
+Date:   Wed, 25 Oct 2017 11:58:12 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Stefan Beller <sbeller@google.com>, bturner@atlassian.com,
+        git@jeffhostetler.com, git@vger.kernel.org,
+        jonathantanmy@google.com, jrnieder@gmail.com, peff@peff.net,
+        wyan@google.com
+Subject: Re: [WIP PATCH] diff: add option to ignore whitespaces for move
+ detection only
+Message-ID: <20171025185812.GB18778@google.com>
+References: <CAGZ79kYwARXNWRS4AgwTP7peZiWiwCBvWFiEr9TbpbWjgysfZA@mail.gmail.com>
+ <20171024000931.14814-1-sbeller@google.com>
+ <20171024184809.GC79163@google.com>
+ <xmqqshe8j9we.fsf@gitster.mtv.corp.google.com>
+ <xmqqo9owj9uz.fsf@gitster.mtv.corp.google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqo9owj9uz.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-V3:
-* changed parameter names back to xdiff standard
+On 10/25, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > Brandon Williams <bmwill@google.com> writes:
+> >
+> >> One simple idea would be to convert the single 'flag' into various bit
+> >> fields themselves, that way if you need to add a new flag you would just
+> >> make a new bit field.  I'm unaware of any downsides of doing so (though
+> >> i may be missing something) but doing so would probably cause a bit of
+> >> code churn.
+> >
+> > The reason why people want to have their own bit in the flags word
+> > is because they want to use DIFF_OPT_{SET,CLR,TST,TOUCHED} but they
+> > do not want to do the work to extend them beyond a single word.  
+> >
+> > I think it is doable by making everything a 1-bit wide bitfield
+> > without affecting existing users.
+> 
+> ... but the "touched" thing may be harder---I haven't thought it
+> through.
 
-v2:
-* I realized that we don't have to change the hashing function of xdiff;
-  we can rather change the hashing function for the move detection,
-  which is less fundamental.
-  (That way I can shrink the series down to 2 patches)
-* commented and renamed function parameters in the exposed xdiff functions.
-* applies on top of jk/diff-color-moved-fix.
-
-Thanks,
-Stefan
-
-v1:
-Junio wrote:
-
->  * I was hoping that the next_byte() and string_hash() thing, once
->    they are cleaned up, will eventually be shared with the xdiff/
->    code at the lower layer, which needs to do pretty much the same
->    in order to implement various whitespace ignoring options.  I am
->    not sure how well the approach taken by the WIP patch meshes with
->    the needs of the lower layer.
-
-This series does exactly this; although I chose to reuse the code in
-xdiff/xutils.c instead of the new fancy next_byte/string_hash, as that
-code has seen more exercise already (hence I assume it has fewer bugs
-if any as well as its performance implications are well understood).
-
-However to do so, we need to pollute xdiff/xutils.c and include
-hashmap.h there (which also requires cache.h as that header has
-an inline function using BUG()), which I find a bit unfortunate but
-worth the trade off of using better tested code.
-
-Thanks,
-Stefan
-
-Stefan Beller (2):
-  xdiff-interface: export comparing and hashing strings
-  diff.c: get rid of duplicate implementation
-
- diff.c            | 82 +++----------------------------------------------------
- xdiff-interface.c | 12 ++++++++
- xdiff-interface.h | 16 +++++++++++
- 3 files changed, 32 insertions(+), 78 deletions(-)
+From what I can tell the 'touched' thing is implemented as a parallel
+flag field so we would just need to have each flag use 2-bits, one
+for the flag itself and one for the 'touched' field.  Then when using
+those macros it would just need to update the corresponding 'touched'
+field as well as what ever happens with the flag itself.  It may be a
+little more involved than the current scheme but it should be doable if
+we need to extend the flag space past 32 bits.
 
 -- 
-2.15.0.rc2.6.g953226eb5f
-
+Brandon Williams
