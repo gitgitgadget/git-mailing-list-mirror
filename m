@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EFC43203F2
-	for <e@80x24.org>; Wed, 25 Oct 2017 18:49:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0F569203F2
+	for <e@80x24.org>; Wed, 25 Oct 2017 18:50:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932379AbdJYStY (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Oct 2017 14:49:24 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:56074 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932211AbdJYStS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Oct 2017 14:49:18 -0400
-Received: by mail-pf0-f195.google.com with SMTP id 17so612787pfn.12
-        for <git@vger.kernel.org>; Wed, 25 Oct 2017 11:49:18 -0700 (PDT)
+        id S932334AbdJYSuq (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Oct 2017 14:50:46 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:52662 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932354AbdJYStR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Oct 2017 14:49:17 -0400
+Received: by mail-pf0-f196.google.com with SMTP id e64so615893pfk.9
+        for <git@vger.kernel.org>; Wed, 25 Oct 2017 11:49:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=qrU2WQ1YEUbYoReGUUyvwRMW9Leyxn205xYxff2It3w=;
-        b=RWqGtc92f9WIHsDOGIl4Db+iSrgPSDCzHBfbevoC+eYqYO3n+m9KR8J0DjKsK9awzg
-         skdb24X/hoeLse88U0woZYPWIcNK7oa9oKKmWx3Rlrn6yTd7mGj55f52ZPQ05ZXAGZYB
-         /6FKB8S5OWMmUoBT3BEKqZ0cSJhixxGLJRb+tFGRThdEAhP2f2YHvustZQxWyesc3bWH
-         5426svXCb+pgZSWOL/vrDo/J4X98nuhX+wkoaBkR8Tuy0+2uAFOPlOTA3ZllQTDsYUnj
-         POOSKQGgJSX5Wch6XkR2uV+Fvi1ezIVKp4GfQJWrWxdgPTyW1mdfHk2pGQlxa4VLiidq
-         6/vQ==
+        bh=oTb6daQqou68Ei13RMC8gfHxdAyjLsB58gO3ITCMqrA=;
+        b=XfnJpMyLD1JTbvQOAVVcE83NTHPX6ckaeMFmrlaIybSWRtwigTCu0ctq1e3ZjgXi8M
+         oMyfFJS5oM9XsroWhyA475PKELxEwnzVDop/pAox91nUrv1C4cy03hi3Gq0e0t0XewV2
+         wcHC2Df/rgQy7L1TB9tGmMc4Kcqai5T2HwMm7wR/ZMQQ3l39ph5LOe8FT+eSaR9/27iO
+         8e0jRe5L5efgHeVm9kYicCUHNCQpM62NI4VV9nCLknoO7tOoyoWFqXXfMJIWcWnGFAMU
+         pUyFTTSPuOHNVNIrMyK4csTSe/1V3Cp//U8FWHY/Fgoilhy+jUoAn4EB5iZuxUY0MC/R
+         4JGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=qrU2WQ1YEUbYoReGUUyvwRMW9Leyxn205xYxff2It3w=;
-        b=T8T8AejZOiGiiHyGPwmdkIm1rmXeL4nFoJyh/88YibWIVgq82YqpyNUO3le0CeLez4
-         mqFzDNl8xLd1kp9uZjcaGvRZ9SBTsT5f+dJDb3rx8iGkpKz9e38xzNhfse4uVPyE4FJt
-         HzsuUytZ9Dnd7Ytxycqb56FM1NE3ZBJlziC5d3yhJMHuUp+uUCNUpDE2+Vvskgdw+Vx5
-         y8TRvHPJmtCXE4UpVuDN/GeIjfcZKO3hBNwqPL/dn4wJxbmeeF+34az/bDcVSufq/+FL
-         3Z/yuEtpE+Iytcw1Fw7iOk+j+SzyGP7gEao4SMYdAOwVkOqcRNOZtV3PyHt9bFmYSBNp
-         p0RA==
-X-Gm-Message-State: AMCzsaUweac1mseDuKxa5LEIzX69KxGcVtzbWq1EpC2COxk6IWMnDi1H
-        8XAv1xv1ohiY/WOzaDIZHscGuQ==
-X-Google-Smtp-Source: ABhQp+TZz0JSy8184A4sPhnZH9Gp0jAW/Jld6E3+g5W2q6+rw0GzkAIp/hsCHp28b601pn6h9w6hag==
-X-Received: by 10.98.62.17 with SMTP id l17mr3087082pfa.210.1508957357735;
-        Wed, 25 Oct 2017 11:49:17 -0700 (PDT)
+        bh=oTb6daQqou68Ei13RMC8gfHxdAyjLsB58gO3ITCMqrA=;
+        b=Aqez9m9TR+DwKc1/UrViJ2tJ2FZNQovolzyCb9NkE3LO04YTow0ShYAWcL9O52kWLW
+         XbO2kNqPlf4Q9sUd8Vwn3HyjSAMV3Mk58QLhiSNxxdhvu3UfikrLK/Wj7gR/t1X84x0K
+         NFLFYenEgRQjX27+S4Uk4K9yzX0Ld9lMtEUrlCeXJ60mXFak8UPfDncZ2K70CuDTwCJL
+         tj5S3qcnclg8RYLGBEzEBDAkMoUyiKBVV6WBJiIO+xg8ghnIL5BGCvB/hXthLPqfeu8/
+         Sy8HqCV5sCtRTUkZ/dQSnhv3ljzsnan0oKPaaSlorO98KgAKJP8AOJ1Pnfz9wrYV7CXx
+         pncw==
+X-Gm-Message-State: AMCzsaWltVTUUv2k41YTB7yof1BHwC/vpI/+BSFoTgVEBNMl0+bbtk6m
+        O5KEKzZU1rf8S0U69D4qsLCpKg==
+X-Google-Smtp-Source: ABhQp+SuF6JShOGVKMyMRVQQ6gnVyJvPgzCN2LcAX00ePRzTKJu52liTK9ab6KyWK2GBQKdl4l/49A==
+X-Received: by 10.98.163.193 with SMTP id q62mr3069864pfl.276.1508957356264;
+        Wed, 25 Oct 2017 11:49:16 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:4d7b:dd00:69b5:edeb])
-        by smtp.gmail.com with ESMTPSA id x11sm6247530pgq.29.2017.10.25.11.49.16
+        by smtp.gmail.com with ESMTPSA id r18sm6026393pfe.99.2017.10.25.11.49.15
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 25 Oct 2017 11:49:17 -0700 (PDT)
+        Wed, 25 Oct 2017 11:49:15 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, jrnieder@gmail.com, l.s.r@web.de,
         peff@peff.net, sbeller@google.com
-Subject: [PATCH 2/2] diff.c: get rid of duplicate implementation
-Date:   Wed, 25 Oct 2017 11:49:12 -0700
-Message-Id: <20171025184912.21657-3-sbeller@google.com>
+Subject: [PATCH 1/2] xdiff-interface: export comparing and hashing strings
+Date:   Wed, 25 Oct 2017 11:49:11 -0700
+Message-Id: <20171025184912.21657-2-sbeller@google.com>
 X-Mailer: git-send-email 2.15.0.rc2.6.g953226eb5f
 In-Reply-To: <20171025184912.21657-1-sbeller@google.com>
 References: <xmqqinf3izgm.fsf@gitster.mtv.corp.google.com>
@@ -64,131 +64,75 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The implementations in diff.c to detect moved lines needs to compare
-strings and hash strings, which is implemented in that file, as well
-as in the xdiff library.
+This will turn out to be useful in a later patch.
 
-Remove the rather recent implementation in diff.c and rely on the well
-exercised code in the xdiff lib.
+xdl_recmatch is exported in xdiff/xutils.h, to be used by various
+xdiff/*.c files, but not outside of xdiff/. This one makes it available
+to the outside, too.
 
-With this change the hash used for bucketing the strings for the moved
-line detection changes from FNV32 (that is provided via the hashmaps
-memhash) to DJB2 (which is used internally in xdiff).  Benchmarks found
-on the web[1] do not indicate that these hashes are different in
-performance for readable strings.
-
-[1] https://softwareengineering.stackexchange.com/questions/49550/which-hashing-algorithm-is-best-for-uniqueness-and-speed
+While at it, add documentation.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- diff.c | 82 ++++--------------------------------------------------------------
- 1 file changed, 4 insertions(+), 78 deletions(-)
+ xdiff-interface.c | 12 ++++++++++++
+ xdiff-interface.h | 16 ++++++++++++++++
+ 2 files changed, 28 insertions(+)
 
-diff --git a/diff.c b/diff.c
-index c4a669ffa8..e6814b9e9c 100644
---- a/diff.c
-+++ b/diff.c
-@@ -707,88 +707,14 @@ struct moved_entry {
- 	struct moved_entry *next_line;
- };
+diff --git a/xdiff-interface.c b/xdiff-interface.c
+index 018e033089..770e1f7f81 100644
+--- a/xdiff-interface.c
++++ b/xdiff-interface.c
+@@ -5,6 +5,7 @@
+ #include "xdiff/xdiffi.h"
+ #include "xdiff/xemit.h"
+ #include "xdiff/xmacros.h"
++#include "xdiff/xutils.h"
  
--static int next_byte(const char **cp, const char **endp,
--		     const struct diff_options *diffopt)
--{
--	int retval;
--
--	if (*cp >= *endp)
--		return -1;
--
--	if (isspace(**cp)) {
--		if (DIFF_XDL_TST(diffopt, IGNORE_WHITESPACE_CHANGE)) {
--			while (*cp < *endp && isspace(**cp))
--				(*cp)++;
--			/*
--			 * After skipping a couple of whitespaces,
--			 * we still have to account for one space.
--			 */
--			return (int)' ';
--		}
--
--		if (DIFF_XDL_TST(diffopt, IGNORE_WHITESPACE)) {
--			while (*cp < *endp && isspace(**cp))
--				(*cp)++;
--			/*
--			 * return the first non-ws character via the usual
--			 * below, unless we ate all of the bytes
--			 */
--			if (*cp >= *endp)
--				return -1;
--		}
--	}
--
--	retval = (unsigned char)(**cp);
--	(*cp)++;
--	return retval;
--}
--
- static int moved_entry_cmp(const struct diff_options *diffopt,
- 			   const struct moved_entry *a,
- 			   const struct moved_entry *b,
- 			   const void *keydata)
- {
--	const char *ap = a->es->line, *ae = a->es->line + a->es->len;
--	const char *bp = b->es->line, *be = b->es->line + b->es->len;
--
--	if (!(diffopt->xdl_opts & XDF_WHITESPACE_FLAGS))
--		return a->es->len != b->es->len  || memcmp(ap, bp, a->es->len);
--
--	if (DIFF_XDL_TST(diffopt, IGNORE_WHITESPACE_AT_EOL)) {
--		while (ae > ap && isspace(ae[-1]))
--			ae--;
--		while (be > bp && isspace(be[-1]))
--			be--;
--	}
--
--	while (1) {
--		int ca, cb;
--		ca = next_byte(&ap, &ae, diffopt);
--		cb = next_byte(&bp, &be, diffopt);
--		if (ca != cb)
--			return 1;
--		if (ca < 0)
--			return 0;
--	}
--}
--
--static unsigned get_string_hash(struct emitted_diff_symbol *es, struct diff_options *o)
--{
--	if (o->xdl_opts & XDF_WHITESPACE_FLAGS) {
--		static struct strbuf sb = STRBUF_INIT;
--		const char *ap = es->line, *ae = es->line + es->len;
--		int c;
--
--		strbuf_reset(&sb);
--		while (ae > ap && isspace(ae[-1]))
--			ae--;
--		while ((c = next_byte(&ap, &ae, o)) >= 0)
--			strbuf_addch(&sb, c);
--
--		return memhash(sb.buf, sb.len);
--	} else {
--		return memhash(es->line, es->len);
--	}
-+	return !xdiff_compare_lines(a->es->line, a->es->len,
-+				    b->es->line, b->es->len,
-+				    diffopt->xdl_opts);
+ struct xdiff_emit_state {
+ 	xdiff_emit_consume_fn consume;
+@@ -296,6 +297,17 @@ void xdiff_clear_find_func(xdemitconf_t *xecfg)
+ 	}
  }
  
- static struct moved_entry *prepare_entry(struct diff_options *o,
-@@ -797,7 +723,7 @@ static struct moved_entry *prepare_entry(struct diff_options *o,
- 	struct moved_entry *ret = xmalloc(sizeof(*ret));
- 	struct emitted_diff_symbol *l = &o->emitted_symbols->buf[line_no];
++unsigned long xdiff_hash_string(const char *s, size_t len, long flags)
++{
++	return xdl_hash_record(&s, s + len, flags);
++}
++
++int xdiff_compare_lines(const char *l1, long s1,
++			const char *l2, long s2, long flags)
++{
++	return xdl_recmatch(l1, s1, l2, s2, flags);
++}
++
+ int git_xmerge_style = -1;
  
--	ret->ent.hash = get_string_hash(l, o);
-+	ret->ent.hash = xdiff_hash_string(l->line, l->len, o->xdl_opts);
- 	ret->es = l;
- 	ret->next_line = NULL;
+ int git_xmerge_config(const char *var, const char *value, void *cb)
+diff --git a/xdiff-interface.h b/xdiff-interface.h
+index 6f6ba9095d..135fc05d72 100644
+--- a/xdiff-interface.h
++++ b/xdiff-interface.h
+@@ -29,4 +29,20 @@ extern void xdiff_clear_find_func(xdemitconf_t *xecfg);
+ extern int git_xmerge_config(const char *var, const char *value, void *cb);
+ extern int git_xmerge_style;
  
++/*
++ * Compare the strings l1 with l2 which are of size s1 and s2 respectively.
++ * Returns 1 if the strings are deemed equal, 0 otherwise.
++ * The `flags` given as XDF_WHITESPACE_FLAGS determine how white spaces
++ * are treated for the comparision.
++ */
++extern int xdiff_compare_lines(const char *l1, long s1,
++			       const char *l2, long s2, long flags);
++
++/*
++ * Returns a hash of the string s of length len.
++ * The `flags` given as XDF_WHITESPACE_FLAGS determine how white spaces
++ * are treated for the hash.
++ */
++extern unsigned long xdiff_hash_string(const char *s, size_t len, long flags);
++
+ #endif
 -- 
 2.15.0.rc2.6.g953226eb5f
 
