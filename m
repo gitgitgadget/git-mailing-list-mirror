@@ -7,91 +7,94 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A964A2055E
-	for <e@80x24.org>; Wed, 25 Oct 2017 20:39:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E896F2055E
+	for <e@80x24.org>; Wed, 25 Oct 2017 20:40:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751993AbdJYUj0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Oct 2017 16:39:26 -0400
-Received: from mout.gmx.net ([212.227.17.22]:54046 "EHLO mout.gmx.net"
+        id S1751998AbdJYUkp (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Oct 2017 16:40:45 -0400
+Received: from mout.gmx.net ([212.227.17.22]:61999 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751775AbdJYUjZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Oct 2017 16:39:25 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MgpmG-1dlNCA1ycq-00M055; Wed, 25
- Oct 2017 22:39:18 +0200
-Date:   Wed, 25 Oct 2017 22:39:17 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+        id S1751775AbdJYUko (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Oct 2017 16:40:44 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LjN0F-1dcFas3anv-00dVdt; Wed, 25
+ Oct 2017 22:40:37 +0200
+Date:   Wed, 25 Oct 2017 22:40:36 +0200 (CEST)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Heiko Voigt <hvoigt@hvoigt.net>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH] status: do not get confused by submodules in excluded
- directories
-In-Reply-To: <20171025140414.GA1368@book.hvoigt.net>
-Message-ID: <alpine.DEB.2.21.1.1710252238390.6482@virtualbox>
-References: <244d71f47336e985ae265573b7d523cd8b3943bd.1508244305.git.johannes.schindelin@gmx.de> <xmqqo9oxkts6.fsf@gitster.mtv.corp.google.com> <20171024121536.GA88363@book.hvoigt.net> <xmqqh8uoj9s6.fsf@gitster.mtv.corp.google.com>
- <20171025140414.GA1368@book.hvoigt.net>
+To:     git@vger.kernel.org
+cc:     Junio C Hamano <gitster@pobox.com>, Kevin Daudt <me@ikke.info>,
+        Heiko Voigt <hvoigt@hvoigt.net>,
+        Stefan Beller <sbeller@google.com>
+Subject: [PATCH v2 0/1] Do not handle submodules in excluded directories as
+ untracked
+In-Reply-To: <244d71f47336e985ae265573b7d523cd8b3943bd.1508244305.git.johannes.schindelin@gmx.de>
+Message-ID: <cover.1508964005.git.johannes.schindelin@gmx.de>
+References: <244d71f47336e985ae265573b7d523cd8b3943bd.1508244305.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:KBdRkAqj5OQnGNHnLuI8vH+x5e3TKEFg43+1xQCRsPDAYdyFA4z
- dtTVlCd5d+IACniauWvjhKUDMIcRhTx6Ij3RVuabM2jPmViMIQXxZyfWGzWUyjsqsk4abTg
- P3Z/kkhG7KdCdyg18uX7iLvCzeTZxleTl2Fl37DH/ZTWj1taZpbS+BAfY54P2k7TCzTdRxl
- +GZTnWnGbvK91Gl6/8qGg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:AanC5H10L/4=:fODarZALo6S5rfuwZ1zS4r
- 0iRvicAiEhWFU4sAInDj73reU06KB0bpjxG6DBz3g7jkfLfAebIveNQA1sucr868J2KtHP4kK
- KIPAL9at4M3cZNyciDwYSBoGsX81XxbA0olxKwVyIY7lr3nIaAyLiOBpg2EXZw3gooDLdkxHb
- X9ztQJ+AMjukkZm4PqvIQaLk2kWkixblsWs+aYKM/EGhKovoWlRdTPceygV2rh2HITMkmGb/3
- aQpsCINM75YqHpXFCnsONxxxNiUY/hsbpJpGsoKdni2AU/HdSVTfJDpVWlI5R4XyYM8efHLGN
- yvx9yOWu1YK9PuPXC+vX+qrTVZpOxLVFw7xnfN4tgUVJZ8jqODk0cnoZV+t2y0M4BpLW0zO41
- s+jV2FkOdXu48LULKzZa9bgB9Pq4YUZzvo7jaNMi83W58agHwac7MXhXxFcQtHlULzu/8kDOt
- G5XmBQrTcT21Wg409igL+3aaAjOcBosCNDbdiOTm+HdAXLtK02ltwfKH01Z71hkrKIXdv8QU8
- bvgNZeY3VL7ZaeeFvXT4N9t0f3itNqJZqEhX+2b1UrStXT23ff60qJ3lqN0yPVr0G8sNUiQyw
- 0QBzng4Fw5/tAA8I6nk8sxdefcooGvadHwQUWB7/XMCI392Xv0aOx9gw3nDmM/agUELYpI5X3
- ve0DPE7tKOj67raHZr0z70i/Wwqsd8ULj3DICWFkIuqKPUZsHRI7UJWfMHfMDjgmCy0kpY316
- 3tTJxBlbMr0O3otGxj+e0IYaudxHQmtQIi0SMDwXhtznOyvCvdx3sNVLIHO2N74KtNgNfy+tY
- PL9YOj0r08iIrALFtSdFJp9P359UN2n2OcszDmRoFQCj2DRw7i/XJTl2tCLjGKKMJ8SdhGS
+X-Provags-ID: V03:K0:6ElCbV9jv/TQXe8L//Rv8GWAcOBPM9hbECzkHX2yxJhkMmqrt1E
+ 9rryAT7oX4jFZ1zPiprFzOoMTGroGN4IWnM476SKFQ0r5YUhhExxJy/01kUe9GNq7t5vnbJ
+ La+ZVqHQFDCNPBpBdjCoFazzNVWkf7YHkcMSn6WYhdEL7nsUSYDymKik5yJ1auwu6qKk6zE
+ qn4zWHpbm8hJ6Eo4gDThg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:TFk0U1vQIxA=:AqDktLxyejapyP1cKd0I4g
+ BFqhsBVQOYBhjb7HBPpHynwvnMxA/xOkGahbg8ZRPKU/D9VD0eYo/Ai+CeqI15MGP8LmI+TtH
+ xv1SkbEizzT9U2RUDzDJP/8uEH1AFt9KrT91LSoYDVriTKXpqnU5Sa2uyncOqviWPjr1fEnvW
+ MaEAoFgdk03FZmS2CVjZyLbYnVukanuING1mzazN9Ttkc5247e7J6nRECVhHNJ5CxS0oQxJ4Y
+ VMCABU8gnQ/ta7Jm2Yck2w0gQK8iYUZYFr+lQoOg4pWkdKcIuTWSAswNWnQC/EfP2zXFhmQ9l
+ oVhq70nt8mXH23a7YIHpWBxhCl3xjcMN/oR3qgmc2els73bI0zFKvs/E76S3NDEbMm2Fq2KW4
+ Vtez+SHKwH+uiL+T0JbNfhIYhxdg4IKTF8rBCSojPqET3kP6gKWwa1a/y2WsAgWyZe1MIp5xp
+ F/JApfTuewgUyvGm3AvlPedGZZRL252RCrlcgv7EncCS6T2nqqZR9SB0W+ey0Ii1x7l3n45YU
+ GK68/jQMl8sjYw9HEhOgMrgTvurYv71G34+j8kow/qUwAWw2vC/gKFvWsc06gPnEVi998gJwA
+ d00Fbc+w9Pirp8P1Bcn/jRnkGnU+bMqkdgXDC483AbwTcZPNuy2laW7p9u8Dx/jrdZzrCFNW4
+ g0LXEHl/grwRokaKDSvoLZkVhcI+LH3GDSShvbaEr9opPVoSZD8vdtWQgAoykGoXnFCKnvkbC
+ HzjAmpR58Ie/kEs3FuAWJjQ+EWO6oCD/Xmo+znw8T0b/tq2kFxGQedWrO24RU9qCskUK247e7
+ 3rVNI7gyJrYZ6+8RidzaD+Fl/F85V1wkWXdUdw9PEoDG8/ESpMevLCooNBcAbL7cXg5rus1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Anything in an excluded directory should be ignored, not only files and
+directories but also submodules.
 
-On Wed, 25 Oct 2017, Heiko Voigt wrote:
+Changes since v1:
 
-> On Wed, Oct 25, 2017 at 10:28:25AM +0900, Junio C Hamano wrote:
-> > Heiko Voigt <hvoigt@hvoigt.net> writes:
-> > 
-> > > On Tue, Oct 24, 2017 at 02:18:49PM +0900, Junio C Hamano wrote:
-> > >> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> > >> 
-> > >> > We meticulously pass the `exclude` flag to the `treat_directory()`
-> > >> > function so that we can indicate that files in it are excluded rather
-> > >> > than untracked when recursing.
-> > >> >
-> > >> > But we did not yet treat submodules the same way.
-> > >> 
-> > >> ... "because of that, we ended up showing <<what incorrect result in
-> > >> what situation>>" would be a nice thing to have here, so that it can
-> > >> be copied to the release notes for the bugfix.  
-> > >
-> > > Yes I agree that would be nice here. It was not immediately obvious that
-> > > this only applies when using both flags: -u and --ignored.
-> > 
-> > Does any of you care to fill in the <<blanks above>> then? ;-)
-> 
-> How about:
-> 
-> Because of that, we ended up showing the submodule as untracked and its
-> content as ignored files when using the --ignored and -u flags with git
-> status.
-> 
-> ? But maybe Dscho also has some more information to add about his
-> situation?
+- simplified the test case, as suggested by Kevin
 
-He has... as part of v2, a substantially more detailed commit message will
-reach your inbox Real Soon Now.
+- added explicit output to the commit message to demonstrate what is fixed
 
-Ciao,
-Dscho
+
+Johannes Schindelin (1):
+  status: do not get confused by submodules in excluded directories
+
+ dir.c                      |  2 +-
+ t/t7061-wtstatus-ignore.sh | 11 +++++++++++
+ 2 files changed, 12 insertions(+), 1 deletion(-)
+
+
+base-commit: ba78f398be65e941b93276680f68a81075716472
+Published-As: https://github.com/dscho/git/releases/tag/submodule-in-excluded-v2
+Fetch-It-Via: git fetch https://github.com/dscho/git submodule-in-excluded-v2
+
+Interdiff vs v1:
+ diff --git a/t/t7061-wtstatus-ignore.sh b/t/t7061-wtstatus-ignore.sh
+ index 8c849a4cd2f..0c394cf995c 100755
+ --- a/t/t7061-wtstatus-ignore.sh
+ +++ b/t/t7061-wtstatus-ignore.sh
+ @@ -278,10 +278,7 @@ EOF
+  
+  test_expect_success 'status ignores submodule in excluded directory' '
+  	git init tracked/submodule &&
+ -	(
+ -		cd tracked/submodule &&
+ -		test_commit initial
+ -	) &&
+ +	test_commit -C tracked/submodule initial &&
+  	git status --porcelain --ignored -u tracked/submodule >actual &&
+  	test_cmp expected actual
+  '
+-- 
+2.14.3.windows.1
+
