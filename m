@@ -2,135 +2,150 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0A3F4202DD
-	for <e@80x24.org>; Wed, 25 Oct 2017 12:52:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6843B202DD
+	for <e@80x24.org>; Wed, 25 Oct 2017 13:03:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751557AbdJYMwD (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Oct 2017 08:52:03 -0400
-Received: from mout.gmx.net ([212.227.17.21]:63289 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750948AbdJYMwC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Oct 2017 08:52:02 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LzXTy-1d3sX43loo-014lwc; Wed, 25
- Oct 2017 14:51:45 +0200
-Date:   Wed, 25 Oct 2017 14:51:38 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Jonathan Nieder <jrnieder@gmail.com>
-cc:     Brandon Williams <bmwill@google.com>, git@vger.kernel.org,
-        bturner@atlassian.com, git@jeffhostetler.com, gitster@pobox.com,
-        jonathantanmy@google.com, peff@peff.net, sbeller@google.com,
-        William Yan <wyan@google.com>
-Subject: Re: [PATCH 3/5] ssh: 'auto' variant to select between 'ssh' and
- 'simple'
-In-Reply-To: <20171023213159.eitrjrqrh277advm@aiede.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.21.1.1710251437090.6482@virtualbox>
-References: <20170926235627.79606-1-bmwill@google.com> <20171003201507.3589-1-bmwill@google.com> <20171003201507.3589-11-bmwill@google.com> <20171003214206.GY19555@aiede.mtv.corp.google.com> <20171016171812.GA4487@google.com> <20171023212740.qodxzsq5w7rn2r6y@aiede.mtv.corp.google.com>
- <20171023213159.eitrjrqrh277advm@aiede.mtv.corp.google.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:eYnOOqE0LyxKnseDaIW/bpwapAQJyrtgiasrH2FXW45zjM824I3
- Jca0lkw/4Urh4ZpJTKdMnNLgMyGO4oJf0A0RpqsFY2+xcBJ100Fcj03lRVD+hpRqEQg2IOO
- r8o4X+b1Sqg1CWlFsm7BoIVivz2HXkqOY7mowW+2DCJAz1RtHtwIGPiwEOJs4E7Bnu6J1cI
- rbvIJuOb9OGjdFZbiP75Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:669mMmyTe+M=:oNRR9XvBsy0LUs3i1YpP7a
- 55DjfS6wych6rsl+PX6BIkveLRqEIUcRwMGaZooG56fybz5bIKE1KbBuFYrZip5P4QHcOGDqQ
- wpybsJZa08lf9ISR5gtjoERNivOkvYRIhGDRhACIRf0jIErnd6XEesvSwHCx+lJZL0IGeX4C4
- AGWdIf6TiOsymc8+OQs6TYbYoEPdnZjqz40G2HV+ugKzCE3vfc7PLc3fZwgd5Eg5fcEcr0hVE
- 8LYECVyAkdKjOHRSe8gNvUQEE7MkNaUjBzrJHLC+ieT2k0aM8dXnwJSmuwN2UJWnCWYhtW2GP
- 97j0mrFjSvwvNARq+25PwL4ecqimV4xHga+vyD0bLRRYjYX6NfJmPPPO7u1JMehh80Ny6wIbi
- ZcCEEdeoS2ZzCmD4kK5PXmlHbEb9FiOYupvDcC1y4Vk5AORucU8Xc4mg7CQFTSUY5B8f18mmb
- E6TPseGXbmYoYtafRxQNaN4NujSOxlNfG5opWvzC8FWBzAkQXKH12/hyoZcd1h1kjhqOAwWHu
- 6dSX9o16drPgH+YZOhXgz98P0nha8FkogvxNPi8PEWvORoqDVPyIoDtiN1brAyG5MdYrk3mg4
- aCcRQfxQ0IK89+lTUl6ViX9T02OC6oAVw+8ThvH6KHyremRFSUQmYubNwGyp/w+rixKLq+kXV
- /49BSlQm+3ZRAcPcYVfGxYgswFUeFoFQq/Lp8AsS0yLayWbuzJpBTKjK0vucDr+YlpnPSw+CE
- o+GJPud4SZiwZB+UQt6mAu2l9tbcC9aD69kOvrjj+VNnG2wo+yir0/uGifgUrlE6qQvHNzWPc
- QDzFQuLUky0VfEYlX3VPcIVrCnyADWFVaUpJ1nA3n2ZjyGp3abmiPRAL1CDTbuylPik1O7R
+        id S1750823AbdJYNDT (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Oct 2017 09:03:19 -0400
+Received: from mailout4.samsung.com ([203.254.224.34]:41477 "EHLO
+        mailout4.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750747AbdJYNDR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Oct 2017 09:03:17 -0400
+Received: from epcas2p3.samsung.com (unknown [182.195.41.55])
+        by mailout4.samsung.com (KnoxPortal) with ESMTP id 20171025130315epoutp0464dda94632e554cf9174b04428e4903c~w0dbePPZW0790707907epoutp042;
+        Wed, 25 Oct 2017 13:03:15 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com 20171025130315epoutp0464dda94632e554cf9174b04428e4903c~w0dbePPZW0790707907epoutp042
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1508936596;
+        bh=3E66ip6coy45MSovC8+h9RFctXxjOlxetC8vU2vp+is=;
+        h=Subject:To:Cc:From:Date:In-reply-to:References:From;
+        b=FnKe/0O6QCT1Pj6cKG/JZulJtDLWeH5nqshAfJX+j475gAQRO3B7CMYj/JXe91wJp
+         YBK/aPisa7MaoiD1P/hqFpR/aKrIhOjiFCUCAe9F4VnosDri3Lticuw29/bkAT6Gfw
+         EMjHKAr5Kvk8jF6DfyG7DWyOfbW9aEPwGQK1PLDU=
+Received: from epsmges2p3.samsung.com (unknown [182.195.42.71]) by
+        epcas2p3.samsung.com (KnoxPortal) with ESMTP id
+        20171025130315epcas2p394859f77d2691a4767babef9d71c2ca4~w0dbCI8hs0186701867epcas2p3W;
+        Wed, 25 Oct 2017 13:03:15 +0000 (GMT)
+Received: from epcas2p2.samsung.com ( [182.195.41.54]) by
+        epsmges2p3.samsung.com (Symantec Messaging Gateway) with SMTP id
+        8D.7F.04140.39B80F95; Wed, 25 Oct 2017 22:03:15 +0900 (KST)
+Received: from epsmgms2p2new.samsung.com (unknown [182.195.42.143]) by
+        epcas2p1.samsung.com (KnoxPortal) with ESMTP id
+        20171025130315epcas2p165c956927d99cabdb9071be47656f0a5~w0da0dVw02199621996epcas2p1v;
+        Wed, 25 Oct 2017 13:03:15 +0000 (GMT)
+X-AuditID: b6c32a47-cd7ff7000000102c-a9-59f08b939d10
+Received: from epmmp1.local.host ( [203.254.227.16]) by
+        epsmgms2p2new.samsung.com (Symantec Messaging Gateway) with SMTP id
+        6F.CE.03859.39B80F95; Wed, 25 Oct 2017 22:03:15 +0900 (KST)
+Received: from [106.109.129.81] by mmp1.samsung.com (Oracle Communications
+        Messaging Server 7.0.5.31.0 64bit (built May  5 2014)) with ESMTPA id
+        <0OYD003GUQXCYP80@mmp1.samsung.com>; Wed, 25 Oct 2017 22:03:14 +0900 (KST)
+Subject: Re: [PATCH v3] merge-recursive: check GIT_MERGE_VERBOSITY only once
+To:     Eric Sunshine <sunshine@sunshineco.com>, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>, vmiklos@frugalware.org
+From:   Andrey Okoshkin <a.okoshkin@samsung.com>
+Organization: Samsung RnD Institute Russia
+Message-id: <bd7eb593-75f9-0dd1-9dff-9dc420532217@samsung.com>
+Date:   Wed, 25 Oct 2017 16:03:06 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+        Thunderbird/52.4.0
+MIME-version: 1.0
+In-reply-to: <CAPig+cRq1AEOgDoXeH-hDMvhEMnfiNK5CuSBbbio-mbHros=QQ@mail.gmail.com>
+Content-type: text/plain; charset="utf-8"
+Content-language: en-GB
+Content-transfer-encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA02Se0hTcRTH+e3ebXezmz+n5mFWwsRCIU0TWxCWIXUJiSgLFXpc8qbifLDr
+        RC3MUHNORcnMGPmILHEI+cIHGpHTVIyWtaQCp4WK6ExNoSGItV0D//uccz78Dt/DjyIUL8VK
+        KiU9i9OmsxqVRE52mwMjjlSXrcYfXTMq1QZrmUhdUGEl1Ft2A1I7isoJdWdnCal+b7+P1EMl
+        66LTUma2sJxk+oxTUqaxQ8fMVwwgZuKTP/N85jyz3nHwojRBfjKR06Rkc9qQyJvy5HlTH8r8
+        6JYz1mBGBWhKZkAUBTgcTGseBiSnFLgXwUDDsMiAZP+KPwg2KsKc7HQ6e5ZIQepH8GtqRCwU
+        0wiWH9WInZYnjgFb0RjpZC+sge2BCYlTInAzgmczdYRzIMHBYNmskjrZHQfBZ0e9q0/jSOhv
+        mnM9ROIAaCt0uPreOA5GzM1IcDzAUW1zLZDhy9BUVeliAgfCwsbDHfaBd9PfkMB+0Nm6TAgR
+        liTwdEIpcDT8qFmVCOwJiyNdUoF9Yd7UjgS+B8X6WVcAwHoE68YXO9Ip6DL0SIQFe0Fv3pIK
+        d6RB/0AhKAxUzb0VCRwFQ60WiXAtixjqiy2iKuRn3JXHuCuDcVcG464MjYg0oX1cJp+WxPFh
+        mceCeTaN16UnBd/KSOtArt8TdK4XdX+IGUSYQqo9NK5diVeI2Ww+N20QAUWovGhKtxqvoBPZ
+        3DxOm3FDq9Nw/CDypUiVD53fPRmnwElsFpfKcZmc9v9URMmUBSjWGlKrap98M646u2KbuLQx
+        Xqfzjqu707A8U7oUX3N7PfLaV/Pr1O+hpT+LUOJxm30gar+dipqxbj6xBrS1bUePun8hDCfy
+        7rZw4lm/8DP5jF+XPGKZVogPXc9JclscLSvpGZXrK7mWwxfqQtBwVkKRPPg3ezWWPrAw/uqx
+        /xUVySezoUGElmf/AnbzgzU5AwAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrHLMWRmVeSWpSXmKPExsVy+t9jAd3J3R8iDT5M4bDoutLNZNHQe4XZ
+        4u+bLkaLHy09zBabN7ezWJx508hocaT9M5MDu8eT5h4Wj52z7rJ7LNhU6vGsdw+jx8VLyh6L
+        H3h5fN4kF8AexWWTkpqTWZZapG+XwJXxbNVOxoIL3BUn5x9mbGC8y9nFyMkhIWAisXn7a5Yu
+        Ri4OIYGdjBJz579jBUkICTxklDiz3RfEFhbwkbjXcpIFxBYRyJHo/HGdCaSBWWA5o8TZbU2M
+        EN0XWSWWTLvIDlLFJqAncf7XBDCbX0BL4vKPecwgNq+AncTuJU/BNrAIqEpsaP4BFhcViJB4
+        3vyeFaJGUOLH5Htg2zgFgiU+fnoHtI0DaJu6xJQpuSBhZgFxiWP3bzJC2PISm9e8ZZ7AKDgL
+        SfcshI5ZSDpmIelYwMiyilEytaA4Nz232KjAKC+1XK84Mbe4NC9dLzk/dxMjMFa2Hdbq38H4
+        eEn8IUYBDkYlHt6Mme8jhVgTy4orcw8xSnAwK4nwcpR+iBTiTUmsrEotyo8vKs1JLT7EKM3B
+        oiTOy59/LFJIID2xJDU7NbUgtQgmy8TBKdXAKL3JS1wtie3SokK2xruyCzgjnFbfvrBd6DWH
+        PNPU974JD2tOfdP5wrh02v2fu5ZHbVFh6P2wPetRjuDePpWn0sanJs9vsPP6nuxqsSlPjPfy
+        D/HT7WmBvbMO1H2SyGF/puvWzRKm4n7uH/MP9X07m6+ITGHYdqf5omTwVnknhtmz27+7btnp
+        rcRSnJFoqMVcVJwIAF1/CH+RAgAA
+X-CMS-MailID: 20171025130315epcas2p165c956927d99cabdb9071be47656f0a5
+X-Msg-Generator: CA
+CMS-TYPE: 102P
+X-CMS-RootMailID: 20171024152727epcas2p4fb7dcf147e44aadf7733098151d469a5
+X-RootMTR: 20171024152727epcas2p4fb7dcf147e44aadf7733098151d469a5
+References: <CGME20171024152727epcas2p4fb7dcf147e44aadf7733098151d469a5@epcas2p4.samsung.com>
+        <3aed764b-388c-d163-08fc-32b294c6b9d3@samsung.com>
+        <CAGZ79kaSZG9WriqX0SLbTnEDRr-4YdFRuK17+9wnxyrftfnMmg@mail.gmail.com>
+        <CAPig+cRTL2amjsgdp1=T3GMZLa=favugOfnQw9XjWzC+U=v5Sw@mail.gmail.com>
+        <CAN0heSp7b_6n3y=s4++oWhkPUuM=s9L7LWVx5vn8o=5aH6DKKw@mail.gmail.com>
+        <20171024195221.gqgtibwjaztgeel6@sigill.intra.peff.net>
+        <xmqq8tg0j8vb.fsf@gitster.mtv.corp.google.com>
+        <CAPig+cSjQd=p1CdizU5oUaz91z=j02UnWLtTguWzvkjS+v6ETA@mail.gmail.com>
+        <20171025072717.7svdq4kqlfxlwszi@sigill.intra.peff.net>
+        <38a80069-abdb-0646-a20c-eca39dd4f519@samsung.com>
+        <CAPig+cRq1AEOgDoXeH-hDMvhEMnfiNK5CuSBbbio-mbHros=QQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jonathan,
+Get 'GIT_MERGE_VERBOSITY' environment variable only once in
+init_merge_options() and store the pointer to its value for the further check.
+No intervening calls to getenv(), putenv(), setenv() or unsetenv() are done
+between the initial getenv() call and the consequential result pass to strtol()
+as these environment related functions could modify the string pointer returned
+by the initial getenv() call.
 
-[I only saw that you replied to 3/5 with v2 after writing this reply, but
-it would apply to v2's 3/5, too]
+Signed-off-by: Andrey Okoshkin <a.okoshkin@samsung.com>
+---
+I tried to rework the commit message.
+ merge-recursive.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-On Mon, 23 Oct 2017, Jonathan Nieder wrote:
-
-> diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-> index 86811a0c35..fd94dd40d2 100755
-> --- a/t/t5601-clone.sh
-> +++ b/t/t5601-clone.sh
-> @@ -384,6 +384,20 @@ test_expect_success 'uplink is treated as simple' '
->  	expect_ssh myhost src
->  '
->  
-> +test_expect_success 'OpenSSH-like uplink is treated as ssh' '
-> +	write_script "$TRASH_DIRECTORY/uplink" <<-EOF &&
-> +	if test "\$1" = "-G"
-> +	then
-> +		exit 0
-> +	fi &&
-> +	exec "\$TRASH_DIRECTORY/ssh$X" "\$@"
-> +	EOF
-> +	GIT_SSH="$TRASH_DIRECTORY/uplink" &&
-> +	export GIT_SSH &&
-> +	git clone "[myhost:123]:src" ssh-bracket-clone-sshlike-uplink &&
-> +	expect_ssh "-p 123" myhost src
-> +'
-> +
->  test_expect_success 'plink is treated specially (as putty)' '
->  	copy_ssh_wrapper_as "$TRASH_DIRECTORY/plink" &&
->  	git clone "[myhost:123]:src" ssh-bracket-clone-plink-0 &&
-
-This breaks on Windows. And it is not immediately obvious how so, so let
-me explain:
-
-As you know, on Windows there is no executable flag. There is the .exe
-file extension to indicate an executable (and .com and .bat and .cmd are
-also handled as executable, at least as executable script).
-
-Now, what happens if you call "abc" in the MSYS2 Bash and there is no
-script called "abc" but an executable called "abc.exe" in the PATH? Why,
-of course we execute that executable. It has to, because if "abc.exe"
-would be renamed into "abc", it would not work any longer.
-
-That is also the reason why that "copy_ssh_wrapper" helper function
-automatically appends that .exe file suffix on Windows: it has to.
-
-Every workaround breaks down at some point, and this workaround is no
-exception. What should the MSYS2 Bash do if asked to overwrite "abc" and
-there is only an "abc.exe"? It actually overwrites "abc.exe" and moves on.
-
-And this is where we are here: the previous test case copied the ssh
-wrapper as "uplink". Except on Windows, it is "uplink.exe". And your newly
-introduced test case overwrites it. And then it tells Git specifically to
-look for "uplink", and Git does *not* append that .exe suffix
-automatically as the MSYS2 Bash would do, because git.exe is not intended
-to work MSYS2-like.
-
-As a consequence, the test fails. Could you please squash in this, to fix
-the test on Windows?
-
--- snipsnap --
-diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index ec4b17bca62..1afcbd00617 100755
---- a/t/t5601-clone.sh
-+++ b/t/t5601-clone.sh
-@@ -393,6 +393,7 @@ test_expect_success 'simple does not support port' '
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 1494ffdb8..60084e3a0 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -2163,6 +2163,7 @@ static void merge_recursive_config(struct merge_options *o)
  
- test_expect_success 'uplink is treated as simple' '
- 	copy_ssh_wrapper_as "$TRASH_DIRECTORY/uplink" &&
-+	test_when_finished "rm \"$TRASH_DIRECTORY/uplink$X\"" &&
- 	test_must_fail git clone "[myhost:123]:src" ssh-bracket-clone-uplink &&
- 	git clone "myhost:src" ssh-clone-uplink &&
- 	expect_ssh myhost src
+ void init_merge_options(struct merge_options *o)
+ {
++	const char *merge_verbosity;
+ 	memset(o, 0, sizeof(struct merge_options));
+ 	o->verbosity = 2;
+ 	o->buffer_output = 1;
+@@ -2171,9 +2172,9 @@ void init_merge_options(struct merge_options *o)
+ 	o->renormalize = 0;
+ 	o->detect_rename = 1;
+ 	merge_recursive_config(o);
+-	if (getenv("GIT_MERGE_VERBOSITY"))
+-		o->verbosity =
+-			strtol(getenv("GIT_MERGE_VERBOSITY"), NULL, 10);
++	merge_verbosity = getenv("GIT_MERGE_VERBOSITY");
++	if (merge_verbosity)
++		o->verbosity = strtol(merge_verbosity, NULL, 10);
+ 	if (o->verbosity >= 5)
+ 		o->buffer_output = 0;
+ 	strbuf_init(&o->obuf, 0);
+-- 
+2.14.3
 
