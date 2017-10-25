@@ -2,86 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E12D1FAED
-	for <e@80x24.org>; Wed, 25 Oct 2017 04:24:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 566491FAED
+	for <e@80x24.org>; Wed, 25 Oct 2017 04:26:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750862AbdJYEY5 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Oct 2017 00:24:57 -0400
-Received: from mail-io0-f169.google.com ([209.85.223.169]:45817 "EHLO
-        mail-io0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750763AbdJYEY4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Oct 2017 00:24:56 -0400
-Received: by mail-io0-f169.google.com with SMTP id i38so26202651iod.2
-        for <git@vger.kernel.org>; Tue, 24 Oct 2017 21:24:56 -0700 (PDT)
+        id S1751902AbdJYE0d (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Oct 2017 00:26:33 -0400
+Received: from mail-qk0-f194.google.com ([209.85.220.194]:51080 "EHLO
+        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751513AbdJYE0c (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Oct 2017 00:26:32 -0400
+Received: by mail-qk0-f194.google.com with SMTP id o187so29004975qke.7
+        for <git@vger.kernel.org>; Tue, 24 Oct 2017 21:26:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=a/MmwyfWntR8m4U1SNu9PGS3yHRpKa3xI+e36JGU3/0=;
-        b=DbGJjvR1RKyyljawUyBenwXQxzaY2npADcnYKwuO33qcncfsYW5HCIZ0DCtLxXPF40
-         GeQWDcKeiMUWxtQAUG4o0nNmXWJDZqFY0t4QtDTdBzrATYPqtslilDjfSx8ltUgPlHFM
-         ES7syY+y6zmr2S2GepUHigVyG5ixd15d4jz7J71/lb0qWApCLGFESJTlHXlPoc4P0DCS
-         4eUVpOnAZEQxNcdNQ/N3FQgICIrW09r/loZE/ejZph6nZ93+ePfWyc9uPA+7w4xCKKRH
-         oUhFDnhVDDmH2L07wWhpl/+xYFtkz7Xy2sjxApDP8JzxxgRY/6P/11W85oGHygtDDqxH
-         KZLg==
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=lfiIM9X92whhLJtltqZ9nKC33CuF4g0w+DrdbI9lSFc=;
+        b=apuoVLP2ApgHHfZHSbApYY2CMX0ZanoPe6oIWMep80uP37iv4ClLXIjZxas+nGFmUZ
+         Ga8wVtcy5YlyonoP1fp8QtxTz2KjKG1LpbDUWPhlyzmHf6GoyAldkYd3jV7eI+Mh+jmn
+         t09aDcf/QIClf5ueeU/fhciEIR+PlDJgw7MM3KNt99JNyt/Ihz87NzMbc18wXIgjEj1t
+         WFbvvDpIicSIKKp6Q4y36Ixy4UF5gY+V0nLpxgOw+ujkwjq9tepyAHJpKrQluCITrWwG
+         eqzEULWsyBc7+QVGbfYHFEMjguJw8IN+TaqwL2FGYO2AzM6QSDgN+/kxNXhoV2A37g7L
+         8kSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=a/MmwyfWntR8m4U1SNu9PGS3yHRpKa3xI+e36JGU3/0=;
-        b=VHenVevYvTZqe0vql/Ng2aZQjR2lz/bqpOOi08HAXugI0ppr1+1dSMLaEUcZ3Uvzrq
-         DuBcfL5fCDGuAbt1iil5+qkPfm2fpFEMOYrl5X1I7BKDoN3RXCuoEk5smzGzIw1xxR2L
-         PfCHno4iu6GL8dtX/ycduztdNL4tEoRu319bfJzLZ2DdjO1JdPzoTilXjvjC1vQOa6lP
-         a70QaNg1QI2hLT/uhDnrzwnGCaAli4Eylss24p9IJa7muSPQ800mjA2zT3NSGMG+5lM2
-         9PmJvsXUBg8qgPlRKz51vWHkdH/kKUDt6JtTvaGW2mo4R1VQyvFNoIcG4uErMuSUrgmB
-         ZBHg==
-X-Gm-Message-State: AMCzsaV/5ligmSaj71vX8BdFMW2cEqaalK2s9zr8Si5jhLSQPxdXzLe7
-        tE0MjI0talIBVq4zCwZ0I3sGvpdt7P3HiR76/GZAxQ==
-X-Google-Smtp-Source: ABhQp+RUujevUws7OjlmlSLF8B6xo/ScNpveF2rm9UmWCIh1HJihE/dSPzVuWrDXFeiCeKC/fouBvppQw3g3L8rEZBU=
-X-Received: by 10.107.53.42 with SMTP id c42mr25205260ioa.254.1508905496106;
- Tue, 24 Oct 2017 21:24:56 -0700 (PDT)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=lfiIM9X92whhLJtltqZ9nKC33CuF4g0w+DrdbI9lSFc=;
+        b=L9PaIalzArSgdn0OluFhZaxKdSMNyiNe3ZrFcYlWzkXFqWMhX+jPmWlKxtlPBTK/Sa
+         wWFqLjfoAb2BMZxj02f093BTS+j/1UCFEht2NHoaQIK58PunlRRXpJl3q7ZmzKXMj6i/
+         JZ/YzRqO8caLH1s4ZWF10VJYhOre2PG/gBDBCclnZAGM0brx2QL9P03k0rWSISnzThfA
+         nyIGQjUaos24Y4tc27UsgY2w7xG8tKVPZu0GHWwHzR/F/fyaNw4+URNxHwClUmNhX9nk
+         O5uKo/qgDvj2ZDimBZvlkM4Xxzmkaj/ihBif80W6m+ruiKCETWNf/EizZ2mNpjk1JlJq
+         GoVQ==
+X-Gm-Message-State: AMCzsaWu6zoV1UftkMwobCmHOVH5397+RVSxwTJR+2QR+Me76D8H7+2L
+        4H3d6BYfJuyKeZXQcdlFi48SuRZT3CpuiOcbr5E=
+X-Google-Smtp-Source: ABhQp+ThNJJ9x242kG5zh6NyqCX/NZGrr0HF6JWdPw8UfRn0HcA3AEvQJTHISz+aHeB53AUZ+VU1d2DLQBQdgOqDJqE=
+X-Received: by 10.55.113.70 with SMTP id m67mr1281986qkc.23.1508905591766;
+ Tue, 24 Oct 2017 21:26:31 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.107.174.66 with HTTP; Tue, 24 Oct 2017 21:24:55 -0700 (PDT)
-In-Reply-To: <20171024185332.57261-9-git@jeffhostetler.com>
-References: <20171024185332.57261-1-git@jeffhostetler.com> <20171024185332.57261-9-git@jeffhostetler.com>
-From:   Jonathan Tan <jonathantanmy@google.com>
-Date:   Tue, 24 Oct 2017 21:24:55 -0700
-Message-ID: <CAGf8dgLU_70vq8JNpr-cihgk9SbC_7GYcaEF6c9NgmJRXPAcmw@mail.gmail.com>
-Subject: Re: [PATCH 08/13] list-objects: add traverse_commit_list_filtered method
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Jeff Hostetler <jeffhost@microsoft.com>
+Received: by 10.12.146.118 with HTTP; Tue, 24 Oct 2017 21:26:31 -0700 (PDT)
+In-Reply-To: <20171024234234.10944-2-sbeller@google.com>
+References: <CAGZ79kZftQoP-Ht+VRakCZsQxh1tjfu=4DFJn_R6fiKD2MmzMA@mail.gmail.com>
+ <20171024234234.10944-1-sbeller@google.com> <20171024234234.10944-2-sbeller@google.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 25 Oct 2017 00:26:31 -0400
+X-Google-Sender-Auth: KGHSN4q0ucxg5rw_sQ9GpBUAbXE
+Message-ID: <CAPig+cR1Lw=JGJ7BoTdvM_PG+sjAoas=GTbs2fkRTYq35Mj2sg@mail.gmail.com>
+Subject: Re: [PATCH 1/2] xdiff-interface: export comparing and hashing strings
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 24, 2017 at 11:53 AM, Jeff Hostetler <git@jeffhostetler.com> wrote:
-> +void traverse_commit_list_filtered(
-> +       struct list_objects_filter_options *filter_options,
-> +       struct rev_info *revs,
-> +       show_commit_fn show_commit,
-> +       show_object_fn show_object,
-> +       list_objects_filter_map_foreach_cb print_omitted_object,
-> +       void *show_data);
+On Tue, Oct 24, 2017 at 7:42 PM, Stefan Beller <sbeller@google.com> wrote:
+> This will turn out to be useful in a later patch.
+>
+> xdl_recmatch is exported in xdiff/xutils.h, to be used by various
+> xdiff/*.c files, but not outside of xdiff/. This one makes it available
+> to the outside, too.
+>
+> While at it, add documentation.
+>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+> diff --git a/xdiff-interface.h b/xdiff-interface.h
+> @@ -29,4 +29,20 @@ extern void xdiff_clear_find_func(xdemitconf_t *xecfg);
+> +/*
+> + * Compare the strings l1 with l2 which are of size s1 and s2 respectively.
+> + * Returns 1 if the strings are deemed equal, 0 otherwise.
+> + * The `flags` given as XDF_WHITESPACE_FLAGS determine how white spaces
+> + * are treated for the comparision.
+> + */
+> +extern int xdiff_compare_lines(const char *a, long len_a,
+> +                              const char *b, long len_b, long flags);
 
-So the function call chain, if we wanted a filtered traversal, is:
-traverse_commit_list_filtered -> traverse_commit_list__sparse_path
-(and friends, and each algorithm is in its own file) ->
-traverse_commit_list_worker
-
-This makes the implementation of each algorithm more easily understood
-(since they are all in their own files), but also increases the number
-of global functions and code files. I personally would combine the
-traverse_commit_list__* functions into one file
-(list-objects-filtered.c), make them static, and also put
-traverse_commit_list_filtered in there, but I understand that other
-people in the Git project may differ on this.
+The comment block talks about 'l1', 'l2', 's1', and 's2', but the
+declaration uses 'a', 'b, 'len_a', 'len_b'. Confusing.
