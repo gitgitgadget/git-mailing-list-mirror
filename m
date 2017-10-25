@@ -2,108 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 97721202A0
-	for <e@80x24.org>; Wed, 25 Oct 2017 11:45:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 244D1202A0
+	for <e@80x24.org>; Wed, 25 Oct 2017 11:53:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932131AbdJYLpY (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Oct 2017 07:45:24 -0400
-Received: from mout.gmx.net ([212.227.15.19]:61969 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932095AbdJYLpX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Oct 2017 07:45:23 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MYfX0-1dcxPZ1ILS-00VNQd; Wed, 25
- Oct 2017 13:45:19 +0200
-Date:   Wed, 25 Oct 2017 13:45:17 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Vaibhav Sood <vaibhav_sood@persistent.com>
-cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Docker image for git
-In-Reply-To: <MAXPR0101MB146810B98D591DDDCA498EEA9B470@MAXPR0101MB1468.INDPRD01.PROD.OUTLOOK.COM>
-Message-ID: <alpine.DEB.2.21.1.1710251330320.6482@virtualbox>
-References: <MAXPR0101MB146810B98D591DDDCA498EEA9B470@MAXPR0101MB1468.INDPRD01.PROD.OUTLOOK.COM>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1750921AbdJYLxJ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Oct 2017 07:53:09 -0400
+Received: from mail-qk0-f193.google.com ([209.85.220.193]:48134 "EHLO
+        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750747AbdJYLxJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Oct 2017 07:53:09 -0400
+Received: by mail-qk0-f193.google.com with SMTP id d67so30116010qkg.5
+        for <git@vger.kernel.org>; Wed, 25 Oct 2017 04:53:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=aa3YjGz/iDb5X2nxs6KsHN1hVLKQ+Sq19gmElDd9/og=;
+        b=hP/ptxgOEGzc5MYF7TWY7EKcsPAcuVvSY/LW4bmDK6d5/r0oL6sPQ41OFcd3oD/Goa
+         ewOERlYiF0W+Pi3tOaqVa30dYNcEWsoIFscjKHyY5Nr8RQ8WUyvuZ+RacL6QWuraMrV4
+         5Y0oWiBXKPrwtMUEvD02pL4MqGI2hx8mcikjGcybMnzutFwJD9Jf7YEVqA9SF+zvO4pA
+         czV5Krfa7tKi5j0FCxsO4JLnRX8h9UjKbx25D95IydvX8tcXYO8TCy9GNxUYr5p6Ek8p
+         FaUuE0G7VSWs3ORYk6mY7Yr++HEi14wownOOntHnkZ/w+2idabWCXRUIGS1SnwFJU8nt
+         PevA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=aa3YjGz/iDb5X2nxs6KsHN1hVLKQ+Sq19gmElDd9/og=;
+        b=W5g8/DjFCkAFNfTa24B7ISPABg/nzvtbJ50DCBzAq0kDT/GyQOEUJZERhCH4kBzE5f
+         zIH1ANXVwrOn89BC+ROX8Bno0yrnkpm3sgpK9G6/djWyXTPGW1hL5OMSzEdCLEhk4Vpl
+         SFsh1SkKCT2QwYetYVQIe91aZ2DuODeI5dR0lOHzrMlBxlGcjledzYGAqK2WVY2Ma2Us
+         ycPVaU+tE77xzuWkrbNjPbf+2+qmxWpdQridjhtWtVfUJrN2ys65yBTX7mXfNlSRGtrC
+         rhx3RwynLCHjp+IuXCMeQo1w7DUPPgX3fcvz8OINy6wrp+ovFCTTVasTrH8yC9jMLUP5
+         LXDA==
+X-Gm-Message-State: AMCzsaXYPxV8RJndfShIg31aduS+LYkP7CjIqF3NJFClTutfy4z1oh2q
+        Hry8ihW+j0ZgJSPghlySWoi/qdrD044XDjaecO4=
+X-Google-Smtp-Source: ABhQp+S2riIxswHpmuvSwYI8sHPD60lrlknN1zINl639ykCUyY400J62O3ODM8fLJPQHJrQDuF2xHgU1oyc+qhdSwVs=
+X-Received: by 10.55.48.142 with SMTP id w136mr2550764qkw.147.1508932388030;
+ Wed, 25 Oct 2017 04:53:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:FP+46kQlhLJWjgBQfXLYe9d4VcjkvxHI3YTnfN00hFldQYdQCiq
- yz+rVJECbhfayKOEWB0/+tboSyNuj+68ABLeD977FGSgiJUuIzfbvmkBmnqPQj+uyeCcr+H
- tBI2J+m/35o377XWReIu/yEGq2tFg2lo1vQdR7hKBBwR5A5fAmfqbJ80vv5CWYoTSrd7paa
- etJ1mMdvWa/8yREBX695w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:6QaEp6vE7yY=:gC2HsF5pO0wFI8blxGHDEJ
- GHvAHs57iZJEyHfHS70ZMgMuQ9K7gOkscI/R5k17RR2PgNGzyDFibzt9GqsA7LCMDs6CiifXa
- sMIM9NtW4clCPOR+dIK5JtB9YrbcLgTmfS7vn3UXxCrgWohqQ54MDFlydbJCuWmPZlSzwZEnr
- WfXUXnV2fIDmb+1zjazlptZMN65EagcpT68CaMo04l0s7fqFNHNlqFs16f43R3JyNLF1uSpI7
- +f7Svsw7MDzPyw/QP5h2RbO4KgeLCoS9dawMuP70odhNymo+FsuZHCCbrtDNqtecY7jLZ26Y0
- LGrFvhSKLUzbKiXKa8DlbgzspaD6cAUvBeoCNiTdv2StTXXPg4hGCS2NoYPKmpBsWA7mmtR+S
- Tw5I0yRXKtNkPe9lGc8NK6seo8PvEcClkhy1gcYv0sqmRSClKYY76Rkt5fJhsmkM/BcKQfNUu
- fX/hCbsAt6zrGXx4vwgKuQmn04QJ1+VS+NkgVkMwO7MDE1NJgkNjtv7cEsgaSeUl1P5pEFTDc
- qU+oeahuyxXtGaPrEYi+gfcnVVpuDsyiav2IIYFD4TPy+3h+SbkwU5UTz/X8BDQCZ6WBv+F/c
- C33aOMomSmXZ2sJRbv96j32L8Uf34i+EW0NficIJNCgrei40EVSV/EYCWLVX1KRPsHkIkUx/1
- WCeKLkr6N1xSwekCl2V2v/O02WxkoiEyVFBDGkShjqAqxTKLrcvcI2tHZBKbr7cwLQcdVqZRP
- m4StAp2WHC0Hb383ezwQV8FudYCedAeUsmPSWPaYJArk35D9EFSlSlAujIsiizgzflKcQXmU+
- Qgpoo3w/2S9vA8MNQvgrpCHwty3W9f27O5xwNq6KtuJO3pz3bttFZtuh9aaiRWK686kfwsm
+Received: by 10.12.146.118 with HTTP; Wed, 25 Oct 2017 04:53:07 -0700 (PDT)
+In-Reply-To: <38a80069-abdb-0646-a20c-eca39dd4f519@samsung.com>
+References: <CGME20171024152727epcas2p4fb7dcf147e44aadf7733098151d469a5@epcas2p4.samsung.com>
+ <3aed764b-388c-d163-08fc-32b294c6b9d3@samsung.com> <CAGZ79kaSZG9WriqX0SLbTnEDRr-4YdFRuK17+9wnxyrftfnMmg@mail.gmail.com>
+ <CAPig+cRTL2amjsgdp1=T3GMZLa=favugOfnQw9XjWzC+U=v5Sw@mail.gmail.com>
+ <CAN0heSp7b_6n3y=s4++oWhkPUuM=s9L7LWVx5vn8o=5aH6DKKw@mail.gmail.com>
+ <20171024195221.gqgtibwjaztgeel6@sigill.intra.peff.net> <xmqq8tg0j8vb.fsf@gitster.mtv.corp.google.com>
+ <CAPig+cSjQd=p1CdizU5oUaz91z=j02UnWLtTguWzvkjS+v6ETA@mail.gmail.com>
+ <20171025072717.7svdq4kqlfxlwszi@sigill.intra.peff.net> <38a80069-abdb-0646-a20c-eca39dd4f519@samsung.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 25 Oct 2017 07:53:07 -0400
+X-Google-Sender-Auth: LcrWleHxuBUetphU2DZM55VDXJQ
+Message-ID: <CAPig+cRq1AEOgDoXeH-hDMvhEMnfiNK5CuSBbbio-mbHros=QQ@mail.gmail.com>
+Subject: Re: [PATCH v2] merge-recursive: check GIT_MERGE_VERBOSITY only once
+To:     Andrey Okoshkin <a.okoshkin@samsung.com>
+Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>, vmiklos@frugalware.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Wed, Oct 25, 2017 at 7:39 AM, Andrey Okoshkin <a.okoshkin@samsung.com> wrote:
+> Check 'GIT_MERGE_VERBOSITY' environment variable only once in
+> init_merge_options().
+> Consequential call of getenv() may return NULL pointer.
 
-On Tue, 24 Oct 2017, Vaibhav Sood wrote:
+It would be particularly nice to have a more detailed explanation in
+the commit message of the potential problem this patch is trying to
+solve. Given the amount of discussion, thus far, surrounding such a
+simple patch, this cryptic warning about getenv() returning NULL upon
+second invocation is insufficient to explain why this patch is
+desirable; it merely leads to a lot of head-scratching.
 
-> Want to check if there is a docker image/Dockerfile for git which is
-> officially supported?
+> However the stored pointer to the obtained getenv() result may be invalidated
+> by some other getenv() call as getenv() is not thread-safe.
 
-No I don't want to ;-)
+This is even more cryptic, as it appears to be arguing for or against
+_something_ (it's not clear what) and it seems to be talking about a
+facet of the existing code, rather than explaining why the updated
+code consumes its 'merge_verbosity' value as early as possible after
+being assigned. Perhaps this part could be reworded something like
+this:
 
-You probably meant to say that you wanted to check that?
+    Instead, call getenv() only once, storing its value and
+    consulting it as many times as needed. This update takes care
+    to consume the value returned by getenv() without any
+    intervening calls to getenv(), setenv(), unsetenv(), or
+    putenv(), any of which might invalidate the pointer returned
+    by the initial call.
 
-> I could not find one under dockerhub official images
-> https://hub.docker.com/explore/
+> Signed-off-by: Andrey Okoshkin <a.okoshkin@samsung.com>
+> Reviewed-by: Stefan Beller <sbeller@google.com>
 
-I do not think that there is one official Git image. You also have to be
-more precise than that: do you mean a Linux-based image or a Windows-based
-one?
+As this patch is semantically quite different from the original to
+which Stefan gave his Reviewed-by: (and which other people argued
+against), it might be better omit this footer and let him re-give it
+if he so desires.
 
-As far as a Docker image with Git in it: I do not think that this image
-itself would be useful. So you can fetch Git repositories? What then?
-
-What most developers do who need Git in their Docker image is to start
-with the other requirements: typically a toolchain such as GCC. Or even a
-stack such as LAMP or MEAN.
-
-Personally, I use Docker images as base for the build agents used to
-perform a few tasks in the Git for Windows project, so they start with the
-bare-bones Windows image, add the Visual Studio Team Services build agent,
-and then take things from there.
-
-So essentially, I do not think that having a base image just with Git
-would be useful. It is much more useful to *add* Git to other base images,
-and that is easily done:
-
-Linux (Ubuntu/Debian):
-
-	sudo apt-get install git
-
-
-Windows:
-
-	$Version = "2.14.3"
-	$Base = "https://github.com/git-for-windows/git/releases/download/v"
-	$Url = $Base + $Version + "MinGit-" + $Version + "-64-bit.zip"
-	$Path = "$HOME\Downloads\MinGit.zip"
-	$Dir = "$HOME\MinGit"
-	$WebClient = New-Object System.Net.WebClient
-	$WebClient.DownloadFile($Url, $Path)
-	Add-Type -AssemblyName System.IO.Compression.FileSystem
-	[System.IO.Compression.ZipFile]::ExtractToDirectory($Path, $Dir)
-
-
-Ciao,
-Johannes
+> ---
+> Changes since the previous patch:
+> * no actions are taken between the merge_verbosity assignment and check.
+>  merge-recursive.c | 7 ++++---
+>  1 file changed, 4 insertions(+), 3 deletions(-)
+>
+> diff --git a/merge-recursive.c b/merge-recursive.c
+> index 1494ffdb8..60084e3a0 100644
+> --- a/merge-recursive.c
+> +++ b/merge-recursive.c
+> @@ -2163,6 +2163,7 @@ static void merge_recursive_config(struct merge_options *o)
+>
+>  void init_merge_options(struct merge_options *o)
+>  {
+> +       const char *merge_verbosity;
+>         memset(o, 0, sizeof(struct merge_options));
+>         o->verbosity = 2;
+>         o->buffer_output = 1;
+> @@ -2171,9 +2172,9 @@ void init_merge_options(struct merge_options *o)
+>         o->renormalize = 0;
+>         o->detect_rename = 1;
+>         merge_recursive_config(o);
+> -       if (getenv("GIT_MERGE_VERBOSITY"))
+> -               o->verbosity =
+> -                       strtol(getenv("GIT_MERGE_VERBOSITY"), NULL, 10);
+> +       merge_verbosity = getenv("GIT_MERGE_VERBOSITY");
+> +       if (merge_verbosity)
+> +               o->verbosity = strtol(merge_verbosity, NULL, 10);
+>         if (o->verbosity >= 5)
+>                 o->buffer_output = 0;
+>         strbuf_init(&o->obuf, 0);
+> --
+> 2.14.3
