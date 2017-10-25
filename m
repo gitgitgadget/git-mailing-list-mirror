@@ -2,77 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3EA831FAED
-	for <e@80x24.org>; Wed, 25 Oct 2017 02:29:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9FD411FAED
+	for <e@80x24.org>; Wed, 25 Oct 2017 04:05:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932170AbdJYC3L (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Oct 2017 22:29:11 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58753 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751672AbdJYC3K (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Oct 2017 22:29:10 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 53DB7AAD33;
-        Tue, 24 Oct 2017 22:29:09 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Vy+MbZSDZI7MiiTA/Ick+n+8pPc=; b=ni7EOs
-        gFUKKoTeX5wnPYhvVnLF1p+M2kHyVUFbKVu5/C2MafkeEQpCq/K0/q2daFSNxbLM
-        /uf7Lo4IX1qExNowYoqBkreebi+eM3yD0q9mXBK7uENr6fjWI9S9DItLthbJ5BB+
-        M6cyEqDdFfKk2g/DMsqLmNTD+tIRzMylxAf6w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=CLq5AHSa8+Igjc9oUkVEC0g/Si+ay9XS
-        93Ia2AJKOzjihxepdBGOfGBv3FdL7gvKiCt3WLXTToqSXp2dzJrlx35unre8HZUA
-        yAh/Dt7+4N5BU+4iHA0ZxzTxPkcyMRbcdrsK+AZTF91+1iXLFEpfK2prqrIf0llq
-        TJlVFQ0W/Ec=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4B2DEAAD31;
-        Tue, 24 Oct 2017 22:29:09 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C0AECAAD2F;
-        Tue, 24 Oct 2017 22:29:08 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Michael Haggerty <mhagger@alum.mit.edu>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: [PATCH 2/2] files_transaction_prepare(): fix handling of ref lock failure
-References: <cover.1508856679.git.mhagger@alum.mit.edu>
-        <6214107e1232a7fe7ca4b7440733ff496f07e537.1508856679.git.mhagger@alum.mit.edu>
-Date:   Wed, 25 Oct 2017 11:29:07 +0900
-In-Reply-To: <6214107e1232a7fe7ca4b7440733ff496f07e537.1508856679.git.mhagger@alum.mit.edu>
-        (Michael Haggerty's message of "Tue, 24 Oct 2017 17:16:25 +0200")
-Message-ID: <xmqqwp3khsek.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1750949AbdJYEFU (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Oct 2017 00:05:20 -0400
+Received: from mail-io0-f181.google.com ([209.85.223.181]:48060 "EHLO
+        mail-io0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750763AbdJYEFT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Oct 2017 00:05:19 -0400
+Received: by mail-io0-f181.google.com with SMTP id h70so26169677ioi.4
+        for <git@vger.kernel.org>; Tue, 24 Oct 2017 21:05:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=sMqwJfGkf3PjyZLhR5IL9VRLO1wjNm9eMwA/jfV7iaY=;
+        b=b10ZZ1b2ow9+1LjY9vmh2VTqMWjeu0QRU3RO7av0J+BkPwvtzZD9wYimA4GF7UCjst
+         euSxY5fUKHT2Sonl1RhwGRycangDTbSPu9J5Ds5PIKBYA1/tOnZlSDelKUbkUqKK1h0e
+         Ju5BDQhKN8HGDGLo1DvTObhLEhSG/DRheelRFLtNzgm8ckqtTF1/N7s8cYhjC0NnwCFI
+         XqepIDSJ1z3zrf9+cx6qVejVblP0rvTBpyLdzBjp23JPn/GWX3Sf7WUs+znsTtPrQ8to
+         n3Lc9dC+yY958pVPqHVdEnc849P5sRxlCr4hjrfR1kNKMAfEaEG1vss8D8tnmtXROCIf
+         hiVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=sMqwJfGkf3PjyZLhR5IL9VRLO1wjNm9eMwA/jfV7iaY=;
+        b=pkALxcl6v0xwiat/sHqhHhHaEI+Djsn/8QOrwsznz8NR5yIIkb78ukg+SToB1N1PcV
+         zSL5wv3fmK+Sxfw8G69bh9tDgfaY+9rWtdzyr2AViPaxDhaTycPiplVf+BBdQyzvq9YI
+         3ZppiPNoFFTjVU5qyjfOeycWqN78RE0vRwhZW+VvEOhSfQeDy6vXW5MqDIWWIBbbzSLq
+         z6AfILBu6RMaakDtzGpCjEW7i1dA+EG8GvjBjwVqb5p0XLEejbMWx40+uWCUTx9A9QeH
+         hQ/mrcPLDLwgwwwlgm6Dkb9MaU/pryMg5orfkaTZJDE22pVQRBy5Dj2HbAcVjH4hpUtV
+         2POw==
+X-Gm-Message-State: AMCzsaVluGur312tK0hj20hCU2KySKeEoMVZ0yj2hbOlhgMuyyNWEtGs
+        HCNQzVy/qPU5bBrAY9+z963QiIQW1tx/2Lppmm55VA==
+X-Google-Smtp-Source: ABhQp+SRqvmRogWMLU4dxNp1Zh5izQ0mCdnYL9qBbpICW5l5SI1/aKQt5YVMvyNG1BIWpDgIHYPIS/2cPU+R4Y61yNE=
+X-Received: by 10.107.212.15 with SMTP id l15mr23191864iog.257.1508904318520;
+ Tue, 24 Oct 2017 21:05:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 478AA1FE-B92C-11E7-B1F2-575F0C78B957-77302942!pb-smtp2.pobox.com
+Received: by 10.107.174.66 with HTTP; Tue, 24 Oct 2017 21:05:17 -0700 (PDT)
+In-Reply-To: <20171024185332.57261-4-git@jeffhostetler.com>
+References: <20171024185332.57261-1-git@jeffhostetler.com> <20171024185332.57261-4-git@jeffhostetler.com>
+From:   Jonathan Tan <jonathantanmy@google.com>
+Date:   Tue, 24 Oct 2017 21:05:17 -0700
+Message-ID: <CAGf8dg+_AewifMR8wnrQdJKXK0GuwdhMb8QAMrGoVCJzhysiRw@mail.gmail.com>
+Subject: Re: [PATCH 03/13] list-objects: filter objects in traverse_commit_list
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     Git mailing list <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+On Tue, Oct 24, 2017 at 11:53 AM, Jeff Hostetler <git@jeffhostetler.com> wrote:
 
-> ... But dc39e09942 added another blurb of code between
-> the loop and the cleanup. That blurb sometimes resets `ret` to zero,
-> making the cleanup code think that the locking was successful.
-> ...
-> The fix is simple: instead of just breaking out of the loop, jump
-> directly to the cleanup code. This fixes some tests in t1404 that were
-> added in the previous commit.
+> +enum list_objects_filter_result {
+> +       LOFR_ZERO      = 0,
+> +       LOFR_MARK_SEEN = 1<<0,
 
-OK.  Now because we do not break and start packed_transaction but
-instead jump over that if statement, we'll leave packed_transation
-instance that we got from transaction_begin() that we called
-add_update() on, but haven't called transaction_prepare() on
-behind.  That instance is pointed by backend_data pointer which is
-part of transaction, so presumably transaction_cleanup() called on
-it in the section labelled "cleanup:" should take care of it?
+Probably worth documenting, something like /* Mark this object so that
+it is skipped for the rest of the traversal. */
 
-Thanks for catching the issue and fixing it quickly.  Will queue.
+> +       LOFR_SHOW      = 1<<1,
+
+And something like /* Invoke show_object_fn on this object. This
+object may be revisited unless LOFR_MARK_SEEN is also set. */
+
+> +};
+> +
+> +/* See object.h and revision.h */
+> +#define FILTER_REVISIT (1<<25)
+
+I think this should be declared closer to its use - in the sparse
+filter code or in the file that uses it. Wherever it is, also update
+the chart in object.h to indicate that we're using this 25th bit.
+
+> +
+> +enum list_objects_filter_type {
+> +       LOFT_BEGIN_TREE,
+> +       LOFT_END_TREE,
+> +       LOFT_BLOB
+> +};
+> +
+> +typedef enum list_objects_filter_result list_objects_filter_result;
+> +typedef enum list_objects_filter_type list_objects_filter_type;
+
+I don't think we typedef enums in Git code.
+
+> +
+> +typedef list_objects_filter_result (*filter_object_fn)(
+> +       list_objects_filter_type filter_type,
+> +       struct object *obj,
+> +       const char *pathname,
+> +       const char *filename,
+> +       void *filter_data);
+> +
+> +void traverse_commit_list_worker(
+> +       struct rev_info *,
+> +       show_commit_fn, show_object_fn, void *show_data,
+> +       filter_object_fn filter, void *filter_data);
+
+I think things would be much clearer if a default filter was declared
+(matching the behavior as of this patch when filter == NULL), say:
+static inline default_filter(args) { switch(filter_type) { case
+LOFT_BEGIN_TREE: return LOFR_MARK_SEEN | LOFR_SHOW; case
+LOFT_END_TREE: return LOFT_ZERO; ...
+
+And inline traverse_commit_list() instead of putting it in the .c file.
+
+This would reduce or eliminate the need to document
+traverse_commit_list_worker, including what happens if filter is NULL,
+and explain how a user would make their own filter_object_fn.
+
+> +
+> +#endif /* LIST_OBJECTS_H */
+> --
+> 2.9.3
+>
