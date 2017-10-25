@@ -6,86 +6,88 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4A441202A0
-	for <e@80x24.org>; Wed, 25 Oct 2017 10:49:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0F8C3202A0
+	for <e@80x24.org>; Wed, 25 Oct 2017 10:49:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932412AbdJYKts (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Oct 2017 06:49:48 -0400
-Received: from mailout3.samsung.com ([203.254.224.33]:49298 "EHLO
-        mailout3.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750862AbdJYKtq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Oct 2017 06:49:46 -0400
-Received: from epcas1p4.samsung.com (unknown [182.195.41.48])
-        by mailout3.samsung.com (KnoxPortal) with ESMTP id 20171025104944epoutp03f51bb53d66e3a22fd8703110daab3518~wyo2eCS8r1696116961epoutp03N;
-        Wed, 25 Oct 2017 10:49:44 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com 20171025104944epoutp03f51bb53d66e3a22fd8703110daab3518~wyo2eCS8r1696116961epoutp03N
+        id S932437AbdJYKt6 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Oct 2017 06:49:58 -0400
+Received: from mailout1.samsung.com ([203.254.224.24]:57470 "EHLO
+        mailout1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932419AbdJYKt4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Oct 2017 06:49:56 -0400
+Received: from epcas1p2.samsung.com (unknown [182.195.41.46])
+        by mailout1.samsung.com (KnoxPortal) with ESMTP id 20171025104954epoutp0136a1c8c8a4cc14ff888b8f2e6077925c~wyo-lfaXb1596415964epoutp016;
+        Wed, 25 Oct 2017 10:49:54 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com 20171025104954epoutp0136a1c8c8a4cc14ff888b8f2e6077925c~wyo-lfaXb1596415964epoutp016
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1508928584;
-        bh=71sNg6wdDaIgCBK3zg2OS1uxR18zemQmYekHf2sHMo4=;
+        s=mail20170921; t=1508928594;
+        bh=YgbgKay+IGZqhGcxrlYUpg60FLQX1DcqOaeT+TSqYdA=;
         h=Subject:To:Cc:From:Date:In-reply-to:References:From;
-        b=SFN7uHppewGVOJUFQLwOn3EpdmrclspY2S83Us6QR7cR7T6NEa3QasDkgYfAPxO4n
-         /lAMRx2hEvafp3yvQNCWMWnuixybRUWi7NblJ3/TqpNJ/SAXRO+Iau0z/p2l2T4Lok
-         EHXrR7+C1wPCKT4BbvsyW3NpVYNJK9PIyKsKEYWk=
-Received: from epsmges1p5.samsung.com (unknown [182.195.42.57]) by
-        epcas1p4.samsung.com (KnoxPortal) with ESMTP id
-        20171025104944epcas1p44ea6c8974ac06930fc65f7f7de4663e7~wyo2PWsIb0599905999epcas1p4l;
-        Wed, 25 Oct 2017 10:49:44 +0000 (GMT)
-Received: from epcas1p2.samsung.com ( [182.195.41.46]) by
-        epsmges1p5.samsung.com (Symantec Messaging Gateway) with SMTP id
-        63.07.04139.84C60F95; Wed, 25 Oct 2017 19:49:44 +0900 (KST)
+        b=r3XOHPRQobvVhKsI0zv5Lh8oE0TOb/cABnTTHUdWRuc4qijkortobbPNJ5eiIvYKy
+         CyUH45y6Ysbcxu8YvSDo1Z2FeNWebF/oLzsRHMdRpRbfaiK02d1/W7ZUFe7/4GxQBS
+         ZFpnxr9PmI4BlYQNlsKkIuA+4qrypzSlKbo3eltE=
+Received: from epsmges1p2.samsung.com (unknown [182.195.42.54]) by
+        epcas1p3.samsung.com (KnoxPortal) with ESMTP id
+        20171025104954epcas1p3d6306de34195d42ec692acf7b877cd8e~wyo-Vcewf0309003090epcas1p34;
+        Wed, 25 Oct 2017 10:49:54 +0000 (GMT)
+Received: from epcas1p4.samsung.com ( [182.195.41.48]) by
+        epsmges1p2.samsung.com (Symantec Messaging Gateway) with SMTP id
+        DE.06.04153.25C60F95; Wed, 25 Oct 2017 19:49:54 +0900 (KST)
 Received: from epsmgms2p1new.samsung.com (unknown [182.195.42.142]) by
         epcas1p2.samsung.com (KnoxPortal) with ESMTP id
-        20171025104944epcas1p2c671544bd1d4f5caa0fbf2319fcc2d0d~wyo11rwbq0654206542epcas1p26;
-        Wed, 25 Oct 2017 10:49:44 +0000 (GMT)
-X-AuditID: b6c32a39-969ff7000000102b-24-59f06c4895b3
+        20171025104953epcas1p23c2cc362d1dc7058b3c3f46162d04cbb~wyo_x8PE91582515825epcas1p2s;
+        Wed, 25 Oct 2017 10:49:53 +0000 (GMT)
+X-AuditID: b6c32a36-325ff70000001039-f1-59f06c52fe3d
 Received: from epmmp1.local.host ( [203.254.227.16]) by
         epsmgms2p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
-        44.B8.04095.74C60F95; Wed, 25 Oct 2017 19:49:43 +0900 (KST)
+        55.B8.04095.15C60F95; Wed, 25 Oct 2017 19:49:53 +0900 (KST)
 Received: from [106.109.129.81] by mmp1.samsung.com (Oracle Communications
         Messaging Server 7.0.5.31.0 64bit (built May  5 2014)) with ESMTPA id
-        <0OYD003FBKQLYP30@mmp1.samsung.com>; Wed, 25 Oct 2017 19:49:43 +0900 (KST)
+        <0OYD003FNKR3YP30@mmp1.samsung.com>; Wed, 25 Oct 2017 19:49:53 +0900 (KST)
 Subject: Re: [PATCH] merge-recursive: check GIT_MERGE_VERBOSITY only once
-To:     Stefan Beller <sbeller@google.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>,
+        Stefan Beller <sbeller@google.com>
 Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
         vmiklos@frugalware.org, Jeff King <peff@peff.net>,
         Junio C Hamano <gitster@pobox.com>
 From:   Andrey Okoshkin <a.okoshkin@samsung.com>
 Organization: Samsung RnD Institute Russia
-Message-id: <b92619c8-8ae1-1270-ba7e-bfd0afd3055f@samsung.com>
-Date:   Wed, 25 Oct 2017 13:49:33 +0300
+Message-id: <41b8510f-d71b-9de6-9199-9e355f373af2@samsung.com>
+Date:   Wed, 25 Oct 2017 13:49:50 +0300
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
         Thunderbird/52.4.0
 MIME-version: 1.0
-In-reply-to: <CAGZ79kaSZG9WriqX0SLbTnEDRr-4YdFRuK17+9wnxyrftfnMmg@mail.gmail.com>
+In-reply-to: <CAPig+cRTL2amjsgdp1=T3GMZLa=favugOfnQw9XjWzC+U=v5Sw@mail.gmail.com>
 Content-type: text/plain; charset="utf-8"
 Content-language: en-GB
 Content-transfer-encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprKKsWRmVeSWpSXmKPExsWy7bCmnq5HzodIg9krZS26rnQzWTT0XmG2
-        +NHSw2yxeXM7i8WR9s9MDqweT5p7WDwWbCr1eNa7h9Hj4iVlj8+b5AJYo7hsUlJzMstSi/Tt
-        Ergy7k1fxVrQwl4xoX8TWwPjedYuRk4OCQETid8PVjN2MXJxCAnsYJRYf/oAE4TznVHi4a3l
-        TDBVl27/ZodI7GaUePy/gQ3Cuc8ocfzVG2aQKmEBT4mlP06D2SICahIzV80GK2IW6GCUmPT9
-        BRtIgk1AT+L8rwnsIDa/gJbE5R/zwBp4BewkppzZCHYUi4CqxNIrH8HqRQUiJI4fXs4IUSMo
-        8WPyPRYQm1MgWOLq7ytgvcwCmhIvvkxigbDFJY7dv8kIYctLbF7zlhnkCAmBM2wS0682MEP8
-        4yLx+tghFghbWOLV8S1AB3EA2dISl47aQoTrJVo7nrBB9AI98HnWUnaIhL3Elq7tbBAL+CTe
-        fe1hhejllehoE4Io8ZCY8PQgNOgcJY6sOQ8NrZuMEn9nrmGewCg/C8k/s5D8MAvJD7OQ/LCA
-        kWUVo1hqQXFuemqxYYGpXnFibnFpXrpecn7uJkZwYtGy3MF47JzPIUYBDkYlHl6B6e8jhVgT
-        y4orcw8xSnAwK4nwLs7+ECnEm5JYWZValB9fVJqTWnyIUZqDRUmcV3T9tQghgfTEktTs1NSC
-        1CKYLBMHp1QDI5dAToTirompP9gSEnSEDJb+tu7d+Mvt7+IzjOf+75pll//XcDIjz/kaR5PE
-        pu8qSvtY//nJXs+Pmmg7cd7pzKLcCdZCF9u3v27YKqmku+ffNdUXzyND779S/6i09398oMFm
-        9dYDi307FRfPZvf6fqdRK//Sq4wF1nx2Z1433rcsVomKNH1sr8RSnJFoqMVcVJwIADJqR/Eo
-        AwAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrNLMWRmVeSWpSXmKPExsVy+t9jAV2PnA+RBr3cFl1XupksGnqvMFv8
-        aOlhtti8uZ3F4kj7ZyYHVo8nzT0sHgs2lXo8693D6HHxkrLH501yAaxRXDYpqTmZZalF+nYJ
-        XBn3pq9iLWhhr5jQv4mtgfE8axcjJ4eEgInEpdu/2bsYuTiEBHYySnTPvcQI4TxklHg76TFY
-        lbCAp8TSH6eZQWwRATWJmatms4EUMQt0MEq8PnoYquM2o8TCtn9MIFVsAnoS539NYAex+QW0
-        JC7/mAfWzStgJzHlzEawqSwCqhJLr3xkA7FFBSIknje/Z4WoEZT4MfkeC4jNKRAssapjOVAN
-        B9A2dYkpU3JBwswC4hLH7t9khLDlJTavecs8gVFwFpLuWQgds5B0zELSsYCRZRWjZGpBcW56
-        brFRgWFearlecWJucWleul5yfu4mRmAUbDus1beD8f6S+EOMAhyMSjy8GTPfRwqxJpYVV+Ye
-        YpTgYFYS4V2c/SFSiDclsbIqtSg/vqg0J7X4EKM0B4uSOO/tvGORQgLpiSWp2ampBalFMFkm
-        Dk6pBsYg8Ym3V0mzOn9acbbGuucGg5PtousWXUnvQ8MCD8fUHuSS1783xXXLjCjR798EH/97
-        1vD9t7pB11KVIk+NqgsTeUv1pvxO9k98pc3t+Pp7Vs2jG8tyhLZtVbxoO/Njd5FPgmnFDlF9
-        Ec70o8syMwXft21bvW7hjyVl5TcursnT2xBl1Dx7+mUlluKMREMt5qLiRAA83n53fgIAAA==
-X-CMS-MailID: 20171025104944epcas1p2c671544bd1d4f5caa0fbf2319fcc2d0d
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprDKsWRmVeSWpSXmKPExsWy7bCmgW5QzodIg57PXBZdV7qZLBp6rzBb
+        /GjpYbbYvLmdxeLMm0ZGiyPtn5kc2DyeNPeweCzYVOrxrHcPo8fFS8oeix94eXzeJBfAFsVl
+        k5Kak1mWWqRvl8CV8br3LFPBYaaKlqkLWRsYG5i6GDk5JARMJI6emcjWxcjFISSwg1Hiyv1v
+        rBDOd0aJn3Pb4apa/v+EqtrNKPH+egeUc59RYs/F4ywgVcICnhJLf5xmBrFFBAIluqdNBhvF
+        LNDBKDHp+ws2kASbgJ7E+V8T2EFsfgEtics/5oE18ArYSczrvQg2iEVAVaL1z15WEFtUIELi
+        +OHljBA1ghI/Jt8DquHg4BQIlrizNgYkzCygKfHiyyQWCFtc4tj9m4wQtrzE5jVvmUFukBC4
+        zSbROX0z1DsuEq//bmSBsIUlXh3fwg4yU0JAWuLSUVuIcL1Ea8cTNoheoPs/z1rKDpGwl9jS
+        tZ0NYgGfxLuvPawQvbwSHW1CECUeEhOeHoRa5ShxZM15sHIhgQVMEu3n3SYwys9C8s0sJC/M
+        QvLCLCQvLGBkWcUollpQnJueWmxYYKRXnJhbXJqXrpecn7uJEZxmtMx2MC4653OIUYCDUYmH
+        V2D6+0gh1sSy4srcQ4wSHMxKIrzv0j5ECvGmJFZWpRblxxeV5qQWH2KU5mBREucVXX8tQkgg
+        PbEkNTs1tSC1CCbLxMEp1cCY+CHBd3WK5Porl+rXX5vv1rnnWt7OnnOCjc0hlhtmHs76tLpr
+        y1GzkzztJWyCYS+uua+Sjvu0LCF7a97EwJ3Nj127LNKbrjtEvj/vn8/LVZjJpfjhwt83udN1
+        eFriv9bxvAwQj1L68ZrnzwWPZukdn/t7loXffef/QPpLV27byS9SpYuWWDkosRRnJBpqMRcV
+        JwIAQ8GhOC8DAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrKLMWRmVeSWpSXmKPExsVy+t9jAd3AnA+RBk0X1Sy6rnQzWTT0XmG2
+        +NHSw2yxeXM7i8WZN42MFkfaPzM5sHk8ae5h8ViwqdTjWe8eRo+Ll5Q9Fj/w8vi8SS6ALYrL
+        JiU1J7MstUjfLoEr43XvWaaCw0wVLVMXsjYwNjB1MXJySAiYSLT8/8nWxcjFISSwk1Hizddz
+        zBDOQ0aJfwvPsIBUCQt4Siz9cZoZxBYR8Jd43L8CrINZoINR4vXRw4wQHYuYJO41LGcDqWIT
+        0JM4/2sCO4jNL6AlcfnHPLBuXgE7iXm9F8GmsgioSrT+2csKYosKREg8b37PClEjKPFj8j2w
+        Gk6BYIk1988CLeAA2qYuMWVKLkiYWUBc4tj9m4wQtrzE5jVvmScwCs5C0j0LoWMWko5ZSDoW
+        MLKsYpRMLSjOTc8tNiowzEst1ytOzC0uzUvXS87P3cQIjIxth7X6djDeXxJ/iFGAg1GJhzdj
+        5vtIIdbEsuLK3EOMEhzMSiK8i7M/RArxpiRWVqUW5ccXleakFh9ilOZgURLnvZ13LFJIID2x
+        JDU7NbUgtQgmy8TBKdXAmHf25ambU+fpqSaWxSW6M3NXLWCMSfnJmuNd5ds385DWPzNvtqAj
+        S7beSf7FPCPstO7HKadXe259yW6rLhf3adV0P3Hex87p2+5E1Iadu1eZweVw3JDNuDnjpfzX
+        Bf4u5/LOZF7tdbbsYN+YH+F8em9YQ3uBuP3/AxWyoafU8ude9ki+u6BGiaU4I9FQi7moOBEA
+        GABp4ogCAAA=
+X-CMS-MailID: 20171025104953epcas1p23c2cc362d1dc7058b3c3f46162d04cbb
 X-Msg-Generator: CA
 CMS-TYPE: 101P
 X-CMS-RootMailID: 20171024152727epcas2p4fb7dcf147e44aadf7733098151d469a5
@@ -93,32 +95,18 @@ X-RootMTR: 20171024152727epcas2p4fb7dcf147e44aadf7733098151d469a5
 References: <CGME20171024152727epcas2p4fb7dcf147e44aadf7733098151d469a5@epcas2p4.samsung.com>
         <3aed764b-388c-d163-08fc-32b294c6b9d3@samsung.com>
         <CAGZ79kaSZG9WriqX0SLbTnEDRr-4YdFRuK17+9wnxyrftfnMmg@mail.gmail.com>
+        <CAPig+cRTL2amjsgdp1=T3GMZLa=favugOfnQw9XjWzC+U=v5Sw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks for your review.
+24.10.2017 19:45, Eric Sunshine wrote:
+> I feel uncomfortable about this change, not due to lack of thread
+> safety, but due to the distance between the getenv() invocation and
+> its point of use. See below for more detail.
 
-24.10.2017 19:28, Stefan Beller wrote:
-> So I think this function is never called from within a threaded environment
-> in git.
-You are right, it's just a hypothetic case.
- 
-> Despite not being in a threaded environment, I wonder if we want to
-> minimize the time between  calling getenv and the use of the result,
-> i.e. declare merge_verbosity here, but assign it later, just before the
-> condition?
-> 
-> (The compiler may shuffle stuff around anyway, so this is a
-> moot suggestion; It gears mostly towards making the code more
-> readable/maintainable when presenting this part of the code
-> to the user.)
-> 
-> With or without this change:
-> Reviewed-by: Stefan Beller <sbeller@google.com>
-Yes, in current situation it's more for readability. And I'll make the usage
-of merge_verbosity just after the assignment.
+Thanks, the usage must be just after the assignment.
 
 -- 
 Best regards,
