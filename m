@@ -2,98 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B6E8F1FAED
-	for <e@80x24.org>; Thu, 26 Oct 2017 06:46:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F09E71FAED
+	for <e@80x24.org>; Thu, 26 Oct 2017 07:01:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751705AbdJZGqG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Oct 2017 02:46:06 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62535 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750974AbdJZGqG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Oct 2017 02:46:06 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1D6539CC01;
-        Thu, 26 Oct 2017 02:46:05 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=FCwS/mkNur3Rus8CUlZRrEszDWU=; b=UPEB2K
-        TruaKvJcCDVDvN4RG65H4hXlNTnjBolb2gLOlGmLo8kH0YTMe/3mv+2USBJorBLp
-        bmllhXSi/mH/in3jCYhoq1xaxpKVMSu6Zcb1xBBvpd0huIh9Ee2T3jCRaOt1sFwW
-        W31P4BJbJw8VJ9NHBKxUyZdjDllQL0+rWDHck=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=C5bVlahrRkDX6uAGzlwc5yRJiWMcpOnZ
-        EAb5c3QNCK8LHTZd0B49EJ91xF//DpAJq/6oIrzSa+wQQ0vpeDXKkUKu2KTG8iNd
-        5w2EPbZYtRdkis1HvmWLzyZyD/ruu4yEMJLGKxPUtkirC8wnHXrgZnn3rNdZYCJV
-        8s23oHd49CM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 157439CC00;
-        Thu, 26 Oct 2017 02:46:05 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8D3D09CBFE;
-        Thu, 26 Oct 2017 02:46:04 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Michael Haggerty <mhagger@alum.mit.edu>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: [PATCH 2/2] files-backend: don't rewrite the `packed-refs` file unnecessarily
-References: <cover.1508924577.git.mhagger@alum.mit.edu>
-        <4c03fc458f619a5f02dd4cae38da8b9b139b850b.1508924577.git.mhagger@alum.mit.edu>
-Date:   Thu, 26 Oct 2017 15:46:03 +0900
-In-Reply-To: <4c03fc458f619a5f02dd4cae38da8b9b139b850b.1508924577.git.mhagger@alum.mit.edu>
-        (Michael Haggerty's message of "Wed, 25 Oct 2017 11:53:21 +0200")
-Message-ID: <xmqqpo9ae79w.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 567AAA9A-BA19-11E7-81A2-575F0C78B957-77302942!pb-smtp2.pobox.com
+        id S1751476AbdJZHBY (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Oct 2017 03:01:24 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:46813 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751228AbdJZHBX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Oct 2017 03:01:23 -0400
+Received: by mail-pf0-f194.google.com with SMTP id p87so1841171pfj.3
+        for <git@vger.kernel.org>; Thu, 26 Oct 2017 00:01:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=w1tXXNkzIA923Cdj5Cd0YAmhXCPnLJVPnOpp6D/eZlo=;
+        b=B7+G4C6IJyh/pbnhOHQnETPlCZ157aOaXaoNUfzpnMH/jSgS0gnHUv5CzWgG5g9rMo
+         Myc627DLUOOX8RWSTTyrzsH0QmVa9lSCBKLnstkFW3r0GDziqbSOBlgN/j1fENn8CKPH
+         JYL9UFunMo/Rdn1siQ76GJFdDEEGiDSlHD7x2EdNgTiq2gdb0o6JS7T2OnpY7tzkB9PE
+         Sij00uaDv+GyPMjKY40XvlxK2k6Jdejbv+PK436c0VARyvVaECQnBGzRWpPww57lOX8a
+         q9PpCCkWGq6aqeXoBfieqVb1h0pfpqanwEALkEUP3m4Lxffts/FYLWAgIW4B2SV+kahs
+         E4ng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=w1tXXNkzIA923Cdj5Cd0YAmhXCPnLJVPnOpp6D/eZlo=;
+        b=jKrndAymJALBLaUuT1b+ZsxW/zN5/YVgpJB00L6BhLMZMJbYmXlqfqKp0AmzNcpxS5
+         Jebipow7NuEXzKUy9JRTeGfZC48cQdQE++OuFveYv5wiy/o6EwfqpuDBGLcXUtnx2BkM
+         Nd5oI74k1qJix89aZaqJgrXbFXUNkn4WQSc9rCbbashLb4dsejTJEVyfOX8JkbDf5WFa
+         l3JAjvVH8cHD48gdaBA8ldYqlRhw3kqtwZJiqpznbVIJe8pxlMihfHqF+UEJ9rdYIcVp
+         khdwI/MKL5B9TkrwPC8ZtsW4ZpcjyWVVbnpT5a161uV+RRoFwg7lIBeOdt6VTPultwEO
+         LGag==
+X-Gm-Message-State: AMCzsaXg5fFAxqdR53Zh2P0JoaNvSHKIMXFbV9ZtGFuSUqXE3JWv8etN
+        m8ZfL6TWk3+HDOnvkC2/b6Z9uQ==
+X-Google-Smtp-Source: ABhQp+SFs6/oCNto2EJhgqgqyf3KcNmijELozJt0wnouNUfkFd8x8JvKpzjAkVFx5+C0yRdUUgdl2Q==
+X-Received: by 10.99.112.82 with SMTP id a18mr4034464pgn.84.1509001283258;
+        Thu, 26 Oct 2017 00:01:23 -0700 (PDT)
+Received: from CLI-30675.office.atlassian.com ([103.233.242.9])
+        by smtp.gmail.com with ESMTPSA id z86sm8280397pfk.34.2017.10.26.00.01.20
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Thu, 26 Oct 2017 00:01:22 -0700 (PDT)
+From:   Isabella Stephens <istephens@atlassian.com>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, sunshine@sunshineco.com, peff@peff.net,
+        bturner@atlassian.com, Isabella Stephens <istephens@atlassian.com>
+Subject: [PATCH v2] blame: prevent error if range ends past end of file
+Date:   Thu, 26 Oct 2017 18:01:08 +1100
+Message-Id: <20171026070108.4185-1-istephens@atlassian.com>
+X-Mailer: git-send-email 2.14.1
+In-Reply-To: <xmqqtvyme8pg.fsf@gitster.mtv.corp.google.com>
+References: <xmqqtvyme8pg.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+If the -L option is used to specify a line range in git blame, and the
+end of the range is past the end of the file, at present git will fail
+with a fatal error. This commit prevents such behaviour - instead the
+blame is display for any existing lines within the specified range.
 
-> Even when we are deleting references, we needn't overwrite the
-> `packed-refs` file if the references that we are deleting are not
-> present in that file. Implement this optimization as follows:
+Signed-off-by: Isabella Stephens <istephens@atlassian.com>
+---
+ builtin/blame.c               | 4 ++--
+ t/t8003-blame-corner-cases.sh | 5 +++--
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
-This goal I can understand.  files-transaction-prepare may see a
-deletion and in order to avoid a deletion of a ref from the
-file-backend to expose a stale entry in the packed-refs file, it
-prepares a transaction to remove the same ref that might exist in
-it.  If it turns out that there is no such ref in the packed-refs
-file, then we can leave the packed-refs file as-is without
-rewriting.
-
-> * Add a function `is_packed_transaction_noop()`, which checks whether
->   a given packed-refs transaction doesn't actually have to do
->   anything. This function must be called while holding the
->   `packed-refs` lock to avoid races.
-
-This checks three things only to cover the most trivial case (I am
-perfectly happy that it punts on more complex cases).  If an update
-
- - checks the old value,
-
- - sets a new value, or
-
- - deletes a ref that is not on the filesystem,
-
-it is not a trivial case.  I can understand the latter two (i.e. We
-are special casing the deletion, and an update with a new value is
-not.  If removing a file from the filesystem is not sufficient to
-delete, we may have to rewrite the packed-refs), but not the first
-one.  Is it because currently we do not say "delete this ref only
-when its current value is X"?
-
-Also it is not immediately obvious how the "is this noop" helper is
-checking the absence of the same-named ref in the current
-packed-refs file, which is what matters for the correctness of the
-optimization.
+diff --git a/builtin/blame.c b/builtin/blame.c
+index 67adaef4d..b5b9db147 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -878,13 +878,13 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+ 				    nth_line_cb, &sb, lno, anchor,
+ 				    &bottom, &top, sb.path))
+ 			usage(blame_usage);
+-		if (lno < top || ((lno || bottom) && lno < bottom))
++		if ((lno || bottom) && lno < bottom)
+ 			die(Q_("file %s has only %lu line",
+ 			       "file %s has only %lu lines",
+ 			       lno), path, lno);
+ 		if (bottom < 1)
+ 			bottom = 1;
+-		if (top < 1)
++		if (top < 1 || lno < top)
+ 			top = lno;
+ 		bottom--;
+ 		range_set_append_unsafe(&ranges, bottom, top);
+diff --git a/t/t8003-blame-corner-cases.sh b/t/t8003-blame-corner-cases.sh
+index 661f9d430..32b3788fe 100755
+--- a/t/t8003-blame-corner-cases.sh
++++ b/t/t8003-blame-corner-cases.sh
+@@ -216,8 +216,9 @@ test_expect_success 'blame -L with invalid start' '
+ '
+ 
+ test_expect_success 'blame -L with invalid end' '
+-	test_must_fail git blame -L1,5 tres 2>errors &&
+-	test_i18ngrep "has only 2 lines" errors
++	git blame -L1,5 tres >out &&
++	cat out &&
++	test $(wc -l < out) -eq 2
+ '
+ 
+ test_expect_success 'blame parses <end> part of -L' '
+-- 
+2.14.1
 
