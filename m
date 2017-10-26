@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D6E64202A0
-	for <e@80x24.org>; Thu, 26 Oct 2017 21:27:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2950A202A0
+	for <e@80x24.org>; Thu, 26 Oct 2017 21:30:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751961AbdJZV1R (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Oct 2017 17:27:17 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:45346 "EHLO
+        id S1751970AbdJZVaI (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Oct 2017 17:30:08 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:52390 "EHLO
         mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751771AbdJZV1R (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Oct 2017 17:27:17 -0400
-Received: by mail-pf0-f193.google.com with SMTP id d28so3417387pfe.2
-        for <git@vger.kernel.org>; Thu, 26 Oct 2017 14:27:16 -0700 (PDT)
+        with ESMTP id S1751771AbdJZVaG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Oct 2017 17:30:06 -0400
+Received: by mail-pf0-f193.google.com with SMTP id e64so3410090pfk.9
+        for <git@vger.kernel.org>; Thu, 26 Oct 2017 14:30:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=dropbox.com; s=corp;
         h=date:from:to:cc:subject:in-reply-to:message-id:references
          :user-agent:mime-version;
-        bh=9rHwH2GwWop9O7zzJdWyWPZJ1UkpOk1+soFz0frcEfE=;
-        b=KaHsGQlOUKwvVgN+D5D/VpbBQYJbeS5pHgV4YAkFcpAEpMSuEb6hUTt3H1wEq57TIG
-         1BjHIw4//Lvpky1DjxS3l9xFNVQh9gF3L6yoJXFPRWFJ4lFNGTi7ghZCXWnpxbdagFTT
-         jxx9wJJcE41djFrACKdWFLkY8sjftkRsV43bY=
+        bh=ySoAxhTZ73uLGEi0pEAD5LDa4VbvHXjJtsrX+B5KifA=;
+        b=fWZX8pKvclKQsIZTNQ7Xscp+R0KqmdapccIVM23S50Y3R99wnC7vBlfFq9/CO6tgMl
+         zJazo/haGV7mKE6vHPvaE84lm5erO+ApCQf66ar+qvwOg0xlA1fUa6He7qkXAodsDK3m
+         ovV8S8qhLHUhC8r1NB//DU3iKypo/slI8kN+I=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:in-reply-to:message-id
          :references:user-agent:mime-version;
-        bh=9rHwH2GwWop9O7zzJdWyWPZJ1UkpOk1+soFz0frcEfE=;
-        b=njVbM0rw53YXP2/l4Xkq47m5vJyqUCMY2PZstZXpJGFpasPZkNVHlg/4vuevR+BRIk
-         hNR+2mAB07Al4jYOvWxZB0wdwbrF771ANKONq0BKcgmwhHH6jn/dOefq9T1BvDti/N0R
-         ikzspb2bjLuEcVMhIJ/822cHuShBseihiwxWwgimDw71/5cbcpDLvKw4AYBJ+9pVqhfC
-         rNWgnSQkleWMNeGrPpcORP//CXLCXaL+N6pcjsZOVBmBuybNhSxlkGLZ+dNiqShILdkI
-         G/k7dQDXOCSLJA+oyiX5mnrF+iOt1sTumtwSAqWtJC9vpnOcpc4EC3paLI+vONwPCc3G
-         Q9hg==
-X-Gm-Message-State: AMCzsaXAICoOACx2aphwggExuVu9YMb6eDWObysTf63BiedmnMDxFro1
-        GxcIxDJZi1jDx0T7aFkKe8hH/g==
-X-Google-Smtp-Source: ABhQp+Rw9zmdi6K0usHrrXChICWjEJ2Fes5YNT+quDwq6B1F7mGaud3n00Ye6QcdNwiwMFdFvYJ+SA==
-X-Received: by 10.101.65.2 with SMTP id w2mr6316209pgp.131.1509053236263;
-        Thu, 26 Oct 2017 14:27:16 -0700 (PDT)
-Received: from alexmv-linux.corp.dropbox.com (v160-sfo11-br01.corp.dropbox.com. [205.189.0.163])
-        by smtp.gmail.com with ESMTPSA id z127sm11052593pfb.63.2017.10.26.14.27.15
+        bh=ySoAxhTZ73uLGEi0pEAD5LDa4VbvHXjJtsrX+B5KifA=;
+        b=pqdwX2UH/6bGXj6xdRL/GvCfLN+mK4F0fBzB3tyXSNimZ13kgXDMPioMEmU4t0AzwV
+         2NB6ne4M7TyFEASySRULTIYyE16ss3HsLpLGninyPNEOAflCLGpym5NeU5iTFdOfLOWZ
+         0eM2xBuyyDYQICL7mNDyuBA2MyVTT3rhG5ehXShe1tMg2PN/pZsqU+ww0FjvQVhxD+J8
+         h4gTyiNCTeAOAcSPLYukMz261cZAJizancgF9FJYamsGUFHPOIMnFGtkbJ93oY9jp3Fk
+         CXDbdLNNnsWbHqa8R7p+LNwFGak2OW8K+8j1vn4NFg1T25nT3xDUtG8SEU31V6amNumG
+         aCsw==
+X-Gm-Message-State: AMCzsaUDlV+25+jRMDOTjwnoi5bIbVIONIHKdHgJgVdZWG1ZOrZVx2y0
+        Gi5C3FxK2uMpL5v19FZWSq3+Xw==
+X-Google-Smtp-Source: ABhQp+SfRUx5gP9MjvekFvjEaAbDlTPq6aUe7ReWjX3ot56oxtG97iPtIgV7Ca6j2vz2joIefg9kXw==
+X-Received: by 10.101.90.73 with SMTP id z9mr6051949pgs.76.1509053405789;
+        Thu, 26 Oct 2017 14:30:05 -0700 (PDT)
+Received: from alexmv-linux.corp.dropbox.com (V160-vrrp.corp.dropbox.com. [205.189.0.161])
+        by smtp.gmail.com with ESMTPSA id u77sm11296381pfd.168.2017.10.26.14.30.05
         (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 26 Oct 2017 14:27:15 -0700 (PDT)
-Date:   Thu, 26 Oct 2017 14:27:07 -0700 (PDT)
+        Thu, 26 Oct 2017 14:30:05 -0700 (PDT)
+Date:   Thu, 26 Oct 2017 14:29:57 -0700 (PDT)
 From:   Alex Vandiver <alexmv@dropbox.com>
 X-X-Sender: alexmv@alexmv-linux
 To:     Ben Peart <peartben@gmail.com>
 cc:     git@vger.kernel.org,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2 1/4] fsmonitor: Set the PWD to the top of the working
- tree
-In-Reply-To: <5a389621-961d-48e3-339a-ef182d3ed628@gmail.com>
-Message-ID: <alpine.DEB.2.10.1710261425390.9817@alexmv-linux>
-References: <20171026013117.30034-1-alexmv@dropbox.com> <9af6d28ef43edbc99a9b7a9c41990de0989bfc76.1508981451.git.alexmv@dropbox.com> <5a389621-961d-48e3-339a-ef182d3ed628@gmail.com>
+Subject: Re: [PATCH v2 2/4] fsmonitor: Don't bother pretty-printing JSON from
+ watchman
+In-Reply-To: <9bd24b15-6232-1afd-abbe-02870c51c7ad@gmail.com>
+Message-ID: <alpine.DEB.2.10.1710261427300.9817@alexmv-linux>
+References: <20171026013117.30034-1-alexmv@dropbox.com> <42fd8bccb78992a2894e711e057230a673891628.1508981451.git.alexmv@dropbox.com> <9bd24b15-6232-1afd-abbe-02870c51c7ad@gmail.com>
 User-Agent: Alpine 2.10 (DEB 1266 2009-07-14)
 MIME-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
@@ -67,23 +67,23 @@ X-Mailing-List: git@vger.kernel.org
 
 On Thu, 26 Oct 2017, Ben Peart wrote:
 > On 10/25/2017 9:31 PM, Alex Vandiver wrote:
-> > diff --git a/fsmonitor.c b/fsmonitor.c
-> > index 7c1540c05..0d26ff34f 100644
-> > --- a/fsmonitor.c
-> > +++ b/fsmonitor.c
-> > @@ -121,6 +121,7 @@ static int query_fsmonitor(int version, uint64_t
-> > last_update, struct strbuf *que
-> >   	argv[3] = NULL;
-> >   	cp.argv = argv;
-> >   	cp.use_shell = 1;
-> > +        cp.dir = get_git_work_tree();
-> >   
->
-> I'm not sure what would trigger this problem but I don't doubt that it is
-> possible.  Better to be safe than sorry. This is a better/faster solution than
-> you're previous patch.  Thank you!
+> > diff --git a/t/t7519/fsmonitor-watchman b/t/t7519/fsmonitor-watchman
+> > index a3e30bf54..79f24325c 100755
+> > --- a/t/t7519/fsmonitor-watchman
+> > +++ b/t/t7519/fsmonitor-watchman
+> > @@ -50,7 +50,7 @@ launch_watchman();
+> >     sub launch_watchman {
+> >   -	my $pid = open2(\*CHLD_OUT, \*CHLD_IN, 'watchman -j')
+> > +	my $pid = open2(\*CHLD_OUT, \*CHLD_IN, 'watchman -j --no-pretty')
+> 
+> Since this is a test script performance isn't critical.  This version of the
+> integration script logs the response to a file in .git/watchman-response.json
+> and is much more human readable without the "--no-pretty."  As such, I'd leave
+> this one pretty.
 
-See my response on the v1 of this series -- I'm curious how you're
-_not_ seeing it, actually.  Can  you not replicate just by running
-`git status` from differing parts of the working tree?
+This would be the first delta between the test file and the template
+file.  It seems quite important to me to attempt to ensure that we're
+testing the _same_ contents that we're suggesting users set up.  In
+fact, it makes more sense to me to just turn this into a symlink to the
+sample template.
  - Alex
