@@ -2,131 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7D59A2055E
-	for <e@80x24.org>; Thu, 26 Oct 2017 00:44:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9030720564
+	for <e@80x24.org>; Thu, 26 Oct 2017 01:00:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751980AbdJZAoV (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Oct 2017 20:44:21 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:51041 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751911AbdJZAoU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Oct 2017 20:44:20 -0400
-Received: by mail-pf0-f193.google.com with SMTP id b6so1223151pfh.7
-        for <git@vger.kernel.org>; Wed, 25 Oct 2017 17:44:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dropbox.com; s=corp;
-        h=date:from:to:cc:subject:in-reply-to:message-id:references
-         :user-agent:mime-version;
-        bh=uu89sQaU/9+A9mRtZ6jPZf/37RD4WnCbLVK4rI5LmSE=;
-        b=bG1hu1A++GpKaH3B25RcMKxnjLE/nzgfKnuvD5wNuaLFNIVHp3zH/ymZv9jSCxgNdh
-         Abf/GrbvftbP2o89PopcCFFR5WYVkh6K0dQBjcl3330gzaOPpMda3o0vTypRLnGa8epE
-         d9i7H/ATmkx3L1jhWOBJL9DQHL9uClUNX4ysY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:in-reply-to:message-id
-         :references:user-agent:mime-version;
-        bh=uu89sQaU/9+A9mRtZ6jPZf/37RD4WnCbLVK4rI5LmSE=;
-        b=dPpthHaH9DVcMt7L7idh0xNr8BzHqbq6t07oZVaH4fM+/H6AvGk3rFcrJ9somRRvlw
-         cFQks81tL3qACMcMVW1AkzIjkT9DxVP9etwrLwaNDBWjZvoet/5ZreEhCjGmsmn7d+cE
-         IfyW9TO7OTP+rVrqtiG0k/aQoDyN2zwCWmEhsAP/xi7HguQ9lAOpER19TI8eIUHk1Bo4
-         YHKqKblKZri28bMSZxlBa6jcM3kOlXHdcjwqRSJHf7FGn2r90iyKysL2aEz8BliybdRn
-         G43ZciOWsh7VDSTPZ6ZwruYiF6AOmBRginlNdX7Sr0/0Ic6jNt/im46hA8Tb7/qeRhq4
-         cIdQ==
-X-Gm-Message-State: AMCzsaWpUF5+unOi3yxLgUidBs3EJvuv4jZ2hmwh6tXzQ7k5uo2tc26v
-        00iw/2NoY/Cmp5xby9x6Hj6AWg==
-X-Google-Smtp-Source: ABhQp+RZ3ER/1jpgJPWh8UQ/Ti30+V/du5OlErWhX7X2J9nmCoZdo0UyeJSbYJiwIQEldEhkuvAMYg==
-X-Received: by 10.98.32.212 with SMTP id m81mr3800518pfj.227.1508978659133;
-        Wed, 25 Oct 2017 17:44:19 -0700 (PDT)
-Received: from alexmv-linux.corp.dropbox.com (V160-vrrp.corp.dropbox.com. [205.189.0.161])
-        by smtp.gmail.com with ESMTPSA id e22sm5850440pgn.28.2017.10.25.17.44.18
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 25 Oct 2017 17:44:18 -0700 (PDT)
-Date:   Wed, 25 Oct 2017 17:44:10 -0700 (PDT)
-From:   Alex Vandiver <alexmv@dropbox.com>
-X-X-Sender: alexmv@alexmv-linux
-To:     Ben Peart <peartben@gmail.com>
-cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 2/4] fsmonitor: Don't bother pretty-printing JSON from
- watchman
-In-Reply-To: <c43315f3-4155-6b07-bde2-5855dceacf80@gmail.com>
-Message-ID: <alpine.DEB.2.10.1710251722310.9817@alexmv-linux>
-References: <20171020011136.14170-1-alexmv@dropbox.com> <6887851348e177728849964cc95ae783b0feb971.1508461850.git.alexmv@dropbox.com> <alpine.DEB.2.21.1.1710201459020.40514@virtualbox> <c43315f3-4155-6b07-bde2-5855dceacf80@gmail.com>
-User-Agent: Alpine 2.10 (DEB 1266 2009-07-14)
+        id S1751984AbdJZBAA (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Oct 2017 21:00:00 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51855 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751868AbdJZA77 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Oct 2017 20:59:59 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1B4D59740B;
+        Wed, 25 Oct 2017 20:59:59 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=blbI5ZDdk2d3g9ZJfQB3EKtQPwQ=; b=ycRq0y
+        0HqzhYExvBT3ZCX/MFVedSlAc4eie1lSfO1gMPdXcLScKqVYny3YvtbJF2mH3xY2
+        xrBC78z8yI9qn04S3n7poZbPCcK/GjtffzLP3OgmJMEPLUO6l/rrGaGCYbMY1bQ0
+        Elb0rYmSzorFy0sV/Ts5GFvHcQAr/ZY7ZCxUw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=LWpD9ZoWUWbL4AKM3z7LTmgH1K4/5gWd
+        49aZCRJ+7wO1oPk3dT8CNTx46q4S20mP5OCtWCEiF6xYmsNcgJkOY+6GOsCEXTFJ
+        ISnvftxr51HJbGbOSQ9vAUuoRWE/F0I665apYvTh3FLOl/Vu1FNb2s9s+Pd553u9
+        qXZTruRqUx4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 10C1E9740A;
+        Wed, 25 Oct 2017 20:59:59 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 66E5697406;
+        Wed, 25 Oct 2017 20:59:58 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, spearce@spearce.org, git@jeffhostetler.com,
+        jonathantanmy@google.com, jrnieder@gmail.com, peff@peff.net,
+        sbeller@google.com
+Subject: Re: [RFC] protocol version 2
+References: <20171020171839.4188-1-bmwill@google.com>
+        <xmqqbmkxkpn9.fsf@gitster.mtv.corp.google.com>
+        <20171024183557.GB79163@google.com>
+Date:   Thu, 26 Oct 2017 09:59:57 +0900
+In-Reply-To: <20171024183557.GB79163@google.com> (Brandon Williams's message
+        of "Tue, 24 Oct 2017 11:35:57 -0700")
+Message-ID: <xmqqbmkuhgfm.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain
+X-Pobox-Relay-ID: FCED161E-B9E8-11E7-8E81-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 20 Oct 2017, Ben Peart wrote:
-> > While I am very much infavor of this change (I was not aware of the
-> > --no-pretty option), I would like to see some statistics on that. Could
-> > you measure the impact, please, and include the results in the commit
-> > message?
-> > 
-> > Ciao,
-> > Johannes
-> > 
-> 
-> I was also unaware of the --no-pretty option. I've tested this on Windows
-> running version 4.9.0 of Watchman and verified that it does work correctly.
-> I'm also curious if it produces any measurable difference in performance.
+Brandon Williams <bmwill@google.com> writes:
 
-On a repository with ~160k files, the following test harness, which
-requests all files inside the repository and parses that output:
+> On 10/24, Junio C Hamano wrote:
+>> Brandon Williams <bmwill@google.com> writes:
+>> 
+>> >   <refspec>: When specified, only references matching the given patterns
+>> >              are displayed.
+>> 
+>> I do not think you meant <refspec> here.
+>> 
+>> The side that is listing what it has has no reason to know what the
+>> recipient plans to do with the result, so you must be only sending
+>> the LHS of a refspec.  If your explanation says "given patterns",
+>> then replace <refspec> with <pattern>.  Do not abuse a term that has
+>> specific and established meaning for something else.
+>
+> Yes, you're right i intended that to mean <pattern> instead so that the
+> client could send "refs/heads/*" or some other such pattern and have the
+> server limit its output.
 
---------------8<-----------
-#!/usr/bin/perl
+Speaking of limiting the bandwidth consumed by the ref
+advertisement, I think another trick that came up in past
+discussions may be worth considering, which is to allow the
+requestor to say, "oh by the way, I made exactly the same request as
+this one earlier to you, and your response hashed down to this
+value".  The responder may choose to give an incremental response
+relative to the known result the requestor claims to have.
 
-use strict;
-use warnings;
-use IPC::Open2;
+So for example, a requestor may have made an earlier ls-refs request
+and can still recall that it got:
 
-my $pid = open2(\*CHLD_OUT, \*CHLD_IN, "watchman -j @ARGV")
-    or die "open2() failed: $!\n" .
-    "Falling back to scanning...\n";
+	refs/heads/maint	ObjectID A
+	refs/heads/master	ObjectID B
+	refs/tags/v1.0		ObjectId C
 
-my $query = qq|["query", "$ENV{PWD}", {}]|;
+Also assume that these three lines together (textually) hashes to Z.
 
-print CHLD_IN $query;
-close CHLD_IN;
-my $response = do {local $/; <CHLD_OUT>};
+When the requestor asks about the two hierarchies, it may say "I know
+you gave a result that hashes to Z" with an additional parameter:
 
-my $json_pkg;
-eval {
-    require JSON::XS;
-    $json_pkg = "JSON::XS";
-    1;
-} or do {
-    require JSON::PP;
-    $json_pkg = "JSON::PP";
-};
+	command=ls-ref
+		refspec=refs/heads/*
+		refspec=refs/tags/*
+		known=Z
 
-my $o = $json_pkg->new->utf8->decode($response);
---------------8<-----------
+If the current response for refs/heads/* and refs/tags/* when fully
+spelt out were like this (i.e. we updated a ref, gained another, and
+lost one):
 
-...run with dumbbench[1], produces:
+	refs/heads/master	ObjectID D
+	refs/tags/v1.0		ObjectId C
+	refs/tags/v1.1		ObjectID E
 
-    $ dumbbench -- ./test.pl
-    cmd: Ran 22 iterations (2 outliers).
-    cmd: Rounded run time per iteration: 5.240e+00 +/- 1.1e-02 (0.2%)
-    $ dumbbench -- ./test.pl --no-pretty
-    cmd: Ran 21 iterations (1 outliers).
-    cmd: Rounded run time per iteration: 4.866e+00 +/- 1.3e-02 (0.3%)
+then the responder can send the fully spelt version, or it can
+choose to say, "It's good that you know the state Z; relative to
+that, refs/heads/maint no loner exists, refs/heads/master is now at
+D and refs/tags/v1.1 at E has been added", if the latter results in
+a shorter response (and if it recognises Z and map it back to the
+set of refs and their values it responded with).
 
-...so a modest 8% speedup.  I note that those numbers are for a perl
-with JSON::XS installed; without it installed, the runtime is so long
-that I gave up waiting for it.
+The "known" request parameter could further be refined (I do not
+think this possibility was discussed in the past) to say "among the
+values I received earlier from you, the ones that match this pattern
+hashes to this", e.g. the earlier example request might become
 
-Anyways, I'll put that in the commit message in the re-roll.
- - Alex
+	command=ls-ref
+		refspec=refs/heads/*
+		refspec=refs/tags/*
+		known=X for refs/heads/*
+		known=Y for refs/tags/*
 
-
-[1] https://metacpan.org/release/Dumbbench
