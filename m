@@ -6,55 +6,55 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 53AC82055E
-	for <e@80x24.org>; Thu, 26 Oct 2017 03:47:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 224582055E
+	for <e@80x24.org>; Thu, 26 Oct 2017 04:12:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932273AbdJZDrj (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Oct 2017 23:47:39 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55924 "EHLO
+        id S1751001AbdJZEM4 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Oct 2017 00:12:56 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56204 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S932205AbdJZDri (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Oct 2017 23:47:38 -0400
+        with ESMTP id S1750884AbdJZEMz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Oct 2017 00:12:55 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7A7259A9F6;
-        Wed, 25 Oct 2017 23:47:37 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 409B09AF4B;
+        Thu, 26 Oct 2017 00:12:55 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=yTTfToxvdlK/vOZmPbydk+w2kYI=; b=vb5yS4
-        6zJRkodHxiIWP66fdJleXsO8ntl5089SqSL0YKbhvFIJD4oq6PXfTCQsyflrgwNi
-        2ydHwrmTynUk01pLgmvdr48ChYVW+CRIL2GTgER0Qlf0M12UCiTuBPu7xcKK9oJg
-        rhs7fncs5kt20cbivfgtk2Z61dDFHj6l7Z06s=
+        :content-type; s=sasl; bh=4swnx5uBNAkmVpOTQFndazrmpis=; b=FEWHus
+        4FwJw70Qn9or5sgdeFd/o6fJkEgAfAGqC4QCg6cXiy7f3njMsIpkNnaE7/+SMF+o
+        v2w8gw+MREJ0Td58Kl/BPBfMSAEDPhHnu7uuiy1deWO/rfLVpJyKCgdIjGaFrou8
+        azQZdF7Syhr4+rO1EMGI4/xXiv/hx/1e9/ONU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=UMRqFawoiq4SESFM0PTinPO7HHPmdcJ5
-        ubg5x4nqaOLS2XVIQ55vBHLEHWJV89zi/y3Az2yL7uN7H2sjYqeTyZO3hfppQaD0
-        Lf8C3OsNuoi6+1u1gcWxwkIWhJymZdvW7rGH5wI38a68i2ithFWFI056WtG+eTVo
-        0hn8JFIaXWM=
+        :content-type; q=dns; s=sasl; b=Z4vpTLCAV6wt2xFP9dNC1lzwWr+FkKjI
+        hrb/KjqLeF+iFIQpacz415b5QmGVQ1GXyyvhHZKeIFHcJ5x8lDQJdCVOmJ4k6bim
+        3SC9P9JEO8vj7I0jNIHeVaxXAkeoiYUGAcVsbdH9e9xhvwypOqybs1VRSJyiklic
+        loHyAT/J3Tw=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7175A9A9F5;
-        Wed, 25 Oct 2017 23:47:37 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 393A49AF49;
+        Thu, 26 Oct 2017 00:12:55 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D96A39A9F4;
-        Wed, 25 Oct 2017 23:47:36 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A6A999AF42;
+        Thu, 26 Oct 2017 00:12:54 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff Hostetler <git@jeffhostetler.com>
 Cc:     git@vger.kernel.org, peff@peff.net, jonathantanmy@google.com,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH 01/13] dir: allow exclusions from blob in addition to file
+Subject: Re: [PATCH 02/13] list-objects-filter-map: extend oidmap to collect omitted objects
 References: <20171024185332.57261-1-git@jeffhostetler.com>
-        <20171024185332.57261-2-git@jeffhostetler.com>
-        <xmqq60b3iv79.fsf@gitster.mtv.corp.google.com>
-        <b063dec4-b9c4-7145-9b57-7df22ccbc655@jeffhostetler.com>
-Date:   Thu, 26 Oct 2017 12:47:35 +0900
-In-Reply-To: <b063dec4-b9c4-7145-9b57-7df22ccbc655@jeffhostetler.com> (Jeff
-        Hostetler's message of "Wed, 25 Oct 2017 10:54:34 -0400")
-Message-ID: <xmqqpo9afu3s.fsf@gitster.mtv.corp.google.com>
+        <20171024185332.57261-3-git@jeffhostetler.com>
+        <xmqqwp3jhfct.fsf@gitster.mtv.corp.google.com>
+        <2f7ad5dc-821e-3fd3-bb7c-205ea5016457@jeffhostetler.com>
+Date:   Thu, 26 Oct 2017 13:12:53 +0900
+In-Reply-To: <2f7ad5dc-821e-3fd3-bb7c-205ea5016457@jeffhostetler.com> (Jeff
+        Hostetler's message of "Wed, 25 Oct 2017 15:22:04 -0400")
+Message-ID: <xmqqefpqfsxm.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 6833B93E-BA00-11E7-98EA-575F0C78B957-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: F0E02986-BA03-11E7-A1D3-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -62,49 +62,109 @@ X-Mailing-List: git@vger.kernel.org
 
 Jeff Hostetler <git@jeffhostetler.com> writes:
 
-> The existing code handles use cases where you want to read the
-> exclusion list from a pathname in the worktree -- or from blob
-> named in the index when the pathname is not populated (presumably
-> because of the skip-worktree bit).
+> Sorry, I meant a later commit in this patch series.  It is used by
+> commits 4, 5, 6, and 10 to actually do the filtering and collect a
+> list of omitted or missing objects.
+
+I know you meant "later commits in the series" ;-).  
+
+It does not change the fact that readers of 02/13 haven't seen them
+yet to understand patch 02/13, if the changes that drove the design
+of this step is in the same series or if they are not yet posted.
+
+> I think of a "set" as a member? or not-member? class.
+> I think of a "map" as a member? or not-member? class but where each
+> member also has a value.  Sometimes map lookups just want to know
+> membership and sometimes the lookup wants the value.
 >
-> I was wanting to add a more general case (and perhaps my commit
-> message should be improved).  I want to be able to read it from
-> a blob not necessarily associated with the current commit or
-> not necessarily available on the local client, but yet known to
-> exist.  
+> Granted, having the key and value data stuffed into the same entry
+> (from hashmap's point of view, rather than a key having a pointer
+> to a value) does kind of blur the line, but I was thinking about
+> a map here.  (And I was building on oidmap which builds on hashmap,
+> so it seemed appropriate.)
 
-Oh, I understand the above two paragraphs perfectly well, and I
-agree with you that such a helper to read from an arbitrary blob is
-a worthy thing to have.  I was merely commenting on the fact that
-such a helper that is meant to be able to handle more general cases
-is not used to help the more specific case that we already have,
-which was a bit curious.
+My question was mostly about "if this is a map, then a caller that
+queries the map with an oid does so because it wants to know the
+data associated to the oid; if this is just a set, it is mostly
+interested in the membership" and "I cannot quite tell which was
+meant without the caller".  
 
-I guess the reason why it is not done is (besides expediency)
-because the model the new helper operates in would not fit well with
-the existing logic flow, where everything is loaded into core
-(either from the filesystem or from a blob) and then a common code
-parses and registers; the helper wants to do the reading (only) from
-the blob, the parsing and the registration all by itself, so there
-is not much that can be shared even if the existing code wanted to
-reuse what the helper offers.
+It seems that some callers do care about the "path" name from your
+response above, so calling this "map" sounds more appropriate.
 
-The new helper mimicks the read_skip_worktree_file_from_index()
-codepath to massage the data it reads from the blob to buf[] but not
-really (e.g. even though it copies and pastes a lot, it forgets to
-call skip_utf8_bom(), for example).  We may still want to see if we
-can share more so that we do not have to worry about these tiny
-differences between codepaths.
+The answer "it can be used to speed up 'is this path excluded?'
+check" is a bit worrisome, though.  A blob can appear at more than
+one path, and unless all the appearances of it are in an excluded
+path, omitting the blob from the repository would lead to an aborted
+"rev-list --objects" run, and this "map" can record at most one path
+per each object; we need to wait until seeing the optimization code
+to actually see how effectively this data helps optimization and
+comment on the code ;-)
 
-> With my "add_excludes_from_blob_to_list()", we can request a
-> blob-ish expression, such as "master:enlistments/foo".  In my
-> later commits associated with clone and fetch, we can use this
-> mechanism to let the client ask the server to filter using the
-> blob associated with this blob-ish.  If the client has the blob
-> (such as during a later fetch) and can resolve it, then it can
-> and send the server the OID, but it can also send the blob-ish
-> to the server and let it resolve it.
+>>> +	len = ((pathname && *pathname) ? strlen(pathname) : 0);
+>>> +	size = (offsetof(struct list_objects_filter_map_entry, pathname) + len + 1);
+>>> +	e = xcalloc(1, size);
+>>> +
+>>> +	oidcpy(&e->entry.oid, oid);
+>>> +	e->type = type;
+>>> +	if (pathname && *pathname)
+>>> +		strcpy(e->pathname, pathname);
+>>> +
+>>> +	oidmap_put(map, e);
+>>> +	return 0;
+>>> +}
+>>
+>> The return value from the function needs to be documented in the
+>> header to help callers.  It is not apparent why "we did already have
+>> one" and "we now newly added" is interesting to the callers, for
+>> example.  An obvious alternative implementation of this function
+>> would return the pointer to an entry that records the object id
+>> (i.e. either the one that was already there, or the one we created
+>> because we saw this object for the first time), so that the caller
+>> can do something interesting to it---again, because the reason why
+>> we want this "filter map" is not explained at this stage, it is hard
+>> to tell what that "sometehing interesting" would be.
+>
+> good point.  thanks.
 
-Security-minded people may want to keep an eye or two open for these
-later patches---extended SHA-1 expressions is a new attack surface
-we would want to carefully polish and protect.
+I am more confused by the response ;-) But as we established that
+this is a map (not a set that borrows the implementation of map),
+where the data recorded in 'e' is quite useful to the caller, it
+probably makes sense to make 'e' available to the caller?  It is
+still unclear if the caller finds "it is the first time I saw the
+object you gave me" vs "I've seen that object before already"
+useful.
+
+>>> +	for (k = 0; k < nr; k++)
+>>> +		cb(k, nr, array[k], cb_data);
+>>
+>> Also it is not clear if you wanted to expose the type of the
+>> entry to the callback function.
+>
+> The thought was that we would sort the OIDs so that things
+> like rev-list could print the omitted/missing objects in OID
+> order.  Not critical that we do it here, but I thought it would
+> help callers.
+
+I can foresee some callers would want sorted, while others do not.
+I was primarily wondering why "my_cmp" is not a parameter that can
+be NULL (in which case we do not sort at all).
+
+>> An obvious alternative
+>>
+>> 	fn(&array[k].entry.oid, cb_data);
+>>
+>> would allow you to keep the type of map-entry private to the map,
+>> and also the callback does not need to know about k or nr.
+>> ...
+> I included the {k, nr} so that the callback could dump header/trailer
+> information when reporting the results or pre-allocate an array.
+> I'll look at refactoring this -- I never quite liked how it turned
+> out anyway -- especially with the oidmap simplifications.
+
+And as we established that this is a map, where the data associated
+with each oid is interesting to the caller, we do not want to hide
+the type of array[] element by passing only &array[k].entry.oid, I
+guess?
+
+Thanks.
