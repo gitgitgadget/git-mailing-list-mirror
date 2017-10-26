@@ -7,67 +7,71 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 23B09202A0
-	for <e@80x24.org>; Thu, 26 Oct 2017 17:04:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3E160202A0
+	for <e@80x24.org>; Thu, 26 Oct 2017 17:12:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932346AbdJZRED (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Oct 2017 13:04:03 -0400
-Received: from mout.web.de ([212.227.17.12]:63318 "EHLO mout.web.de"
+        id S932376AbdJZRMa (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Oct 2017 13:12:30 -0400
+Received: from mout.web.de ([212.227.17.11]:63803 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932137AbdJZREC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Oct 2017 13:04:02 -0400
-Received: from [192.168.178.36] ([91.20.60.28]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0M4I6Z-1dGu0C3TYh-00rmbQ; Thu, 26
- Oct 2017 19:03:59 +0200
-Subject: Re: [PATCH 2/4] xdiff-interface: export comparing and hashing strings
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org
-References: <20171024185917.20515-1-sbeller@google.com>
- <20171024185917.20515-3-sbeller@google.com>
- <9f5c5cd5-9491-3163-60d4-ad36d75981ce@web.de>
- <CAGZ79kbJS68qL0=WTZVBfmSDXCii0HT60TGxx2MSiH_cK_tBCw@mail.gmail.com>
+        id S932137AbdJZRM3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Oct 2017 13:12:29 -0400
+Received: from [192.168.178.36] ([91.20.60.28]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0M3jwL-1dHS673WUL-00rDgV; Thu, 26
+ Oct 2017 19:12:18 +0200
+Subject: Re: [PATCH 1/2] xdiff-interface: export comparing and hashing strings
+To:     Stefan Beller <sbeller@google.com>, gitster@pobox.com
+Cc:     git@vger.kernel.org, jrnieder@gmail.com, peff@peff.net
+References: <xmqqinf3izgm.fsf@gitster.mtv.corp.google.com>
+ <20171025184912.21657-1-sbeller@google.com>
+ <20171025184912.21657-2-sbeller@google.com>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <347a9bca-29f3-9847-2f51-1682d7a6da53@web.de>
-Date:   Thu, 26 Oct 2017 19:03:57 +0200
+Message-ID: <3f656948-273f-e01d-ad52-e460059571da@web.de>
+Date:   Thu, 26 Oct 2017 19:12:15 +0200
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.4.0
 MIME-Version: 1.0
-In-Reply-To: <CAGZ79kbJS68qL0=WTZVBfmSDXCii0HT60TGxx2MSiH_cK_tBCw@mail.gmail.com>
+In-Reply-To: <20171025184912.21657-2-sbeller@google.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:SfTYvYUUa+3eKImpgoaniNnY/BS9ExNdhtjd1aL7LLubRY6XMbW
- vtQmNPva6fbpxDkLYmd3oYm7FmNRhtun/wo/w/lO16IpBM6hSo8K25yEl0aL9csNfVSRh1v
- PNxgO5GFCXwlI7f0+5p8cYKUgk+FOqSU0rhX9TjNh5l9Wor8Ma6hAad583dpVusWQqX/371
- OKp1O1chpBQSXj23j26QQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:1v/M7/wNIaM=:vt5TA7jbpabJEB0GzLFoO8
- usFAlPnlLj+gcX7h8uk9aN3/1oM+BiUMS+DnW7ROxIbAvipVlRiEp0RUFGBFLnMoOjW2IUfCG
- BfER8SOWpcrckv/FDT08ao/xmAtgRKWbndeyp9xhUJ/8pI6o9SgTiCh/TsVTeNtolKWH4YqrN
- NnpEwpIWh+24JlGQxocW6nkTnkDgs3ekxLRNQ6OKGqWxx9TDhwrQ2Wp2w/tV/r9vWdjoTAmLA
- p0CF6jpADir24+H4+sy99InIwJqQ4cJWzwhCStcal4EkSkQXeqdvixvZ6bPNBMykH6HpkGXP9
- Wf3q1UhAPD3YoBPGLbPnheg5QuH0zTUiRBrCRxxnALOjGZkf61Q5wg2trB08E60O2wczcF18m
- sfLu4cjk4Tgnr1AO/f60ISI2wAOgDpb4oUCZtKV+FFNpiy4eqeXGwYYHPHCubufYdDC+QPaRf
- 56BlqMoj6PFGs0h03QIiZmTbm2r3MK4RAWsmBZLSu638oHZ3OecSghnBE8AzOfBVTw/POaC9D
- hRt2HxgKqeZ4jRta+n24gChgurK6Trefx9A0PBVHlU5bj0JpAXJ6E7CCoHrTQ7W+47wqfPXqH
- ce/dBn0n5gsyiRz9Ivl/MLpGVl3n0fF5ePty46BLv8JeUbXlM+/5hFuK6MNDT/vVevArml7WI
- ujj/+2EyAdi7RR2rOeZB45A60wAYBcOVggPu8t53SAr16Uj9JN+Ydd0M4Tv+Ls8SHjdP4gdEI
- MDUVq1Cq1TLWx5F4v91ugxHxQaB1kFyLzP9B2EUUkApWf5hApXlx2gRbGPeuQ5B4phTdA2bjR
- BFQqc1DblTF3Mt/2pmOljI/pX9fea+1MIYvXrMw99e04C+dWyA=
+X-Provags-ID: V03:K0:XYw1YZx1xZttGzSmB3epZ5wHqUDCsu0Ai/A+vLflkkzzxlrdkSX
+ dANGFUxaf3Brhdm3tK+tK+n+MyOiPyPdxPAxWL9vq/jVm2bz46aZseW31drchxPsIYVkhDn
+ 4x/W+Z3D4PH6I0grhvZY6Q2HVEvU4j/16MT77dzimoAr5+qJrYcxtsjfccD/Xqv64ki0sOy
+ iIepUJI6kC+9JjLo2hDbQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Ioe31QQov0E=:SYxy9VhXJjzfaQRAAsC0Lo
+ 9asJ4nymG6Q0Rvj0NGDobQQhRDu/nPXgK/67Ma8LRwYW2p0KPRnUqJ/YxtOP+PbElT8oJvtji
+ RUiycsH85nOWM4BD8kKo/xR8H51zoN23Iq/aLI2UbbgHgSxSBG5G/Ad5R6zRJCaYPcN5URgZi
+ F0p9/ihB10gUvD8ep6xYTlUiNcO3mWrs92K18hFuGMlLOJBEDhKyCRpK5mIqKSe/Rxtc0CKLj
+ 0q5LnPYMneJF6zL2QYMIgQ6IRqSVDFvrXP3zjPM3MHVFmrblUykvzWUmIo/0ZBwOT9x+9GT/4
+ Pw9DGPAH4x9pk+Yl+0AkDJCh1qe5iph5JTWDqUb6ACL79CfTxfFMyc5O1fdas8j7uz1g3aKRT
+ ca1+QpSi5mIEKbIFdmgkL9dAuqBzWnh1wj4dGLwFDZP1mUWH8EX6JYzZ5KHPdQXfpizf+DfXH
+ bfsriGk/KCpebrVjELiGihIrBQ6O5U7XsLMaV1UGW+tZXkdl71XBrPqm5AN7lnT8aVB9JfzlJ
+ H+G39cpxXPiDDG4mPHMKL3LkQtwbSMwCxW0rvKF2RQv9BWyDc2xYZKcgkCH+lg/7edNlGwsqw
+ X2W7SwHX7IrGx89tfIa9mvJwcdu8SG95vnge7ChnFy01Q3g2zHKQmDP8cqx9IUfL3wZshiqJc
+ KpgIDLDw2GyJ+TOcW33cY4pICrP/GTzZ1ZM+kL9fZ1WdNLTFCOBHx/nNae7IV4/nQyo2mvxKp
+ svjj7bJJ7xZXU1Em8pPX0JIYJikAAReWEdFRBe85KtNOyTt8OzWx+9g9unFO8dO4yl30a9XCM
+ R+lYG4MaD/TGD2KrlH4Zgrkz1Ljv03iGdtqjRcj1acyUugKyJE=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 24.10.2017 um 22:42 schrieb Stefan Beller:
-> On Tue, Oct 24, 2017 at 1:23 PM, René Scharfe <l.s.r@web.de> wrote:
-> 
->> xdl_recmatch() is already exported; why not use it without this
->> wrapper?
-> 
-> It is exported in xdiff/xutils.h, to be used by various xdiff/*.c files, but
-> not outside of xdiff/. This one makes it available to the outside, too.
+Am 25.10.2017 um 20:49 schrieb Stefan Beller:
+> +/*
+> + * Compare the strings l1 with l2 which are of size s1 and s2 respectively.
+> + * Returns 1 if the strings are deemed equal, 0 otherwise.
+> + * The `flags` given as XDF_WHITESPACE_FLAGS determine how white spaces
+> + * are treated for the comparision.
+> + */
+> +extern int xdiff_compare_lines(const char *l1, long s1,
+> +			       const char *l2, long s2, long flags);
 
-Ah, right, somehow I mixed that up with xdiff/xdiff.h, which is already
-included by two builtins.
+With the added comment it's OK here.
+
+Still, I find the tendency in libxdiff to use the shortest possible
+variable names to be hard on the eyes.  That math-like notation may have
+its place in that external library, but I think we should be careful
+lest it spreads.
 
 René
