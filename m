@@ -2,106 +2,217 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F2FA8202A0
-	for <e@80x24.org>; Thu, 26 Oct 2017 19:56:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA08F202A0
+	for <e@80x24.org>; Thu, 26 Oct 2017 20:04:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932466AbdJZT4a (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Oct 2017 15:56:30 -0400
-Received: from mail-qk0-f193.google.com ([209.85.220.193]:46390 "EHLO
-        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932394AbdJZT42 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Oct 2017 15:56:28 -0400
-Received: by mail-qk0-f193.google.com with SMTP id k123so5818283qke.3
-        for <git@vger.kernel.org>; Thu, 26 Oct 2017 12:56:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=iuqJv3GIrldbnS0jZ2um5YvJ9DwLLOAdB9ggyajLHCc=;
-        b=acduC1Naze/ILPZRT7pnfjynVx0OFUrsNupm9pM0UZzQ511YZeycw/K9ZOX0Dbsbfz
-         lDvhjc4wYJnPr0VizGf7wk1RCHfjo7iBKCLOBWP0vKkfA0SppoJupJXZrMJ+/HX+1r+o
-         zwLxSE7ObcZIpUoyERrT8Le21OcC+hJ36S54egQ0/oXlRhC/jZfTmSseCu2U6fCUHPxF
-         ds4EHKPrx50E1X1VdktP5tNUzE7BzEVubuJsaoAVUSPEXS3YqbhIqOq7ZMgqOPYQZkUV
-         wL+YNkfPg9K1mCF9yV5OpBfDk4a9VEyFzu5RQ4fU2E9Wl/uc1HDXu3o/1QJ7oUcAb5nU
-         pJJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=iuqJv3GIrldbnS0jZ2um5YvJ9DwLLOAdB9ggyajLHCc=;
-        b=T2o2vK21A/o+apQLdvcjcyIV4uPAV4I48JzJEQSIqvCO6B5i+53e+iv4ObFbiTMVUp
-         AqW2Sec5mwgpnv+AztliX+F6/fXgN9zs09BDOH16a2+qnLIyFwtO9NwawS5wOGGL75cQ
-         6j9rIW2ADdN9eC/k9/qSTW4TmUjyw6ztScBD2VYmAf5FDK9ziO8dM2tHlhPJvLKI3Nnn
-         vS4w/ashqaFVjHlQwpWYCUI/mC2gP4gJfrRwid6PKiv/PK0B7QuWGYQC9zRLP7q2Mv51
-         TZBUW42NbWJA3MxZW3vPNakv2eclp8JaHChoORKpHN1I04H+5240iwc8qnvVxvVmmQcV
-         3v0w==
-X-Gm-Message-State: AMCzsaXLJHyKhvHUXo1inhTwA3DcF/2Vp0UKUJpEc6Tr95gBJqeN/xsd
-        0wRrWru/7Dbuy/ULU2518t8zUlqq
-X-Google-Smtp-Source: ABhQp+TlTJ61OVHfl9ZxBJMHrrDTsOZSvcLY0F7aIWsGoniNuH/KiNC/oarSVaKorRFrwSGWJSwXxQ==
-X-Received: by 10.55.65.22 with SMTP id o22mr10333030qka.272.1509047788160;
-        Thu, 26 Oct 2017 12:56:28 -0700 (PDT)
-Received: from [192.168.1.13] ([65.222.173.206])
-        by smtp.gmail.com with ESMTPSA id 64sm4004944qkz.51.2017.10.26.12.56.25
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 26 Oct 2017 12:56:26 -0700 (PDT)
-Subject: Re: [PATCH v2 1/4] fsmonitor: Set the PWD to the top of the working
- tree
-To:     Alex Vandiver <alexmv@dropbox.com>, git@vger.kernel.org
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <20171026013117.30034-1-alexmv@dropbox.com>
- <9af6d28ef43edbc99a9b7a9c41990de0989bfc76.1508981451.git.alexmv@dropbox.com>
-From:   Ben Peart <peartben@gmail.com>
-Message-ID: <5a389621-961d-48e3-339a-ef182d3ed628@gmail.com>
-Date:   Thu, 26 Oct 2017 15:56:24 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.4.0
-MIME-Version: 1.0
-In-Reply-To: <9af6d28ef43edbc99a9b7a9c41990de0989bfc76.1508981451.git.alexmv@dropbox.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        id S1751909AbdJZUEa (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Oct 2017 16:04:30 -0400
+Received: from smtp-o-1.desy.de ([131.169.56.154]:54338 "EHLO smtp-o-1.desy.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751863AbdJZUE3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Oct 2017 16:04:29 -0400
+X-Greylist: delayed 535 seconds by postgrey-1.27 at vger.kernel.org; Thu, 26 Oct 2017 16:04:28 EDT
+X-Clacks-Overhead: GNU Terry Pratchett
+DKIM-Filter: OpenDKIM Filter v2.11.0 smtp-o-1.desy.de 403652803FD
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=desy.de; s=default;
+        t=1509047732; bh=5bymfIc1H/F+mPeZLwHJNiDcWlrRqv48rZpoEz9K3eU=;
+        h=From:To:Cc:Subject:Date:From;
+        b=EpGI6vaosey4wqHwjsGc0YzxGic4UPrU99OeyAYpQ+qyyFyx+mfhmAS+4N7rWKqK0
+         ABXfQDKPvz2ZEnv84a2yuTqfsHoyM7VsB+AjdSrOGUcpz1np49g87elXHOfsQgQpHp
+         p5IaGj2iPl4mLKRxyPhtFJku4G/qmyFkG9kp+790=
+Received: from smtp-map-1.desy.de (smtp-map-1.desy.de [131.169.56.66])
+        by smtp-o-1.desy.de (DESY-O-1) with ESMTP id 403652803FD
+        for <git@vger.kernel.org>; Thu, 26 Oct 2017 21:55:32 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at desy.de
+Received: from ani.desy.de (zitpcx21033.desy.de [131.169.185.213])
+        by smtp-intra-1.desy.de (DESY-INTRA-1) with ESMTP id F1EBB3E902;
+        Thu, 26 Oct 2017 21:55:31 +0200 (MEST)
+From:   Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>
+To:     git@vger.kernel.org
+Cc:     Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>
+Subject: [PATCH] tag: add tag.gpgSign config option to force all tags be GPG-signed
+Date:   Thu, 26 Oct 2017 21:55:16 +0200
+Message-Id: <20171026195516.3354-1-tigran.mkrtchyan@desy.de>
+X-Mailer: git-send-email 2.13.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+In some workflows we have no control on how git command is executed,
+however a signed tags are required.
 
+The new config-file option tag.gpgSign enforces signed tags. Additional
+command line option --no-gpg-sign is added to disable such behavior if
+needed. E.g.:
 
-On 10/25/2017 9:31 PM, Alex Vandiver wrote:
-> The fsmonitor command inherits the PWD of its caller, which may be
-> anywhere in the working copy.  This makes is difficult for the
-> fsmonitor command to operate on the whole repository.  Specifically,
-> for the watchman integration, this causes each subdirectory to get its
-> own watch entry.
-> 
-> Set the CWD to the top of the working directory, for consistency.
-> 
-> Signed-off-by: Alex Vandiver <alexmv@dropbox.com>
-> ---
->   fsmonitor.c | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/fsmonitor.c b/fsmonitor.c
-> index 7c1540c05..0d26ff34f 100644
-> --- a/fsmonitor.c
-> +++ b/fsmonitor.c
-> @@ -121,6 +121,7 @@ static int query_fsmonitor(int version, uint64_t last_update, struct strbuf *que
->   	argv[3] = NULL;
->   	cp.argv = argv;
->   	cp.use_shell = 1;
-> +        cp.dir = get_git_work_tree();
->   
+    $ git tag -m "commit message"
 
-I'm not sure what would trigger this problem but I don't doubt that it 
-is possible.  Better to be safe than sorry. This is a better/faster 
-solution than you're previous patch.  Thank you!
+will generate a GPG signed tag if tag.gpgSign option is true, while
 
->   	return capture_command(&cp, query_result, 1024);
->   }
-> 
+    $ git tag --no-gpg-sign -m "commit message"
+
+will skip the signing step.
+
+Signed-off-by: Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>
+---
+ Documentation/config.txt               |  4 ++++
+ Documentation/git-tag.txt              |  4 ++++
+ builtin/tag.c                          | 18 +++++++++++++++---
+ contrib/completion/git-completion.bash |  1 +
+ t/t7004-tag.sh                         | 21 +++++++++++++++++++++
+ 5 files changed, 45 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 1ac0ae6ad..fa6694bec 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -3161,6 +3161,10 @@ tag.forceSignAnnotated::
+ 	If `--annotate` is specified on the command line, it takes
+ 	precedence over this option.
+ 
++tag.gpgSign::
++
++	A boolean to specify whether all tags should be GPG signed.
++
+ tag.sort::
+ 	This variable controls the sort ordering of tags when displayed by
+ 	linkgit:git-tag[1]. Without the "--sort=<value>" option provided, the
+diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
+index 956fc019f..1dd43f18b 100644
+--- a/Documentation/git-tag.txt
++++ b/Documentation/git-tag.txt
+@@ -181,6 +181,10 @@ This option is only applicable when listing tags without annotation lines.
+ 	`--create-reflog`, but currently does not negate the setting of
+ 	`core.logAllRefUpdates`.
+ 
++--no-gpg-sign::
++	Countermand `tag.gpgSign` configuration variable that is
++	set to force each and every tag to be signed.
++
+ <tagname>::
+ 	The name of the tag to create, delete, or describe.
+ 	The new tag name must pass all checks defined by
+diff --git a/builtin/tag.c b/builtin/tag.c
+index b38329b59..d9060a404 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -31,6 +31,7 @@ static const char * const git_tag_usage[] = {
+ 
+ static unsigned int colopts;
+ static int force_sign_annotate;
++static int sign_tag;
+ 
+ static int list_tags(struct ref_filter *filter, struct ref_sorting *sorting,
+ 		     struct ref_format *format)
+@@ -141,6 +142,11 @@ static int git_tag_config(const char *var, const char *value, void *cb)
+ 	int status;
+ 	struct ref_sorting **sorting_tail = (struct ref_sorting **)cb;
+ 
++	if (!strcmp(var, "tag.gpgsign")) {
++		sign_tag = git_config_bool(var, value);
++		return 0;
++	}
++
+ 	if (!strcmp(var, "tag.sort")) {
+ 		if (!value)
+ 			return config_error_nonbool(var);
+@@ -372,6 +378,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 	static struct ref_sorting *sorting = NULL, **sorting_tail = &sorting;
+ 	struct ref_format format = REF_FORMAT_INIT;
+ 	int icase = 0;
++	int no_gpg_sign = 0;
+ 	struct option options[] = {
+ 		OPT_CMDMODE('l', "list", &cmdmode, N_("list tag names"), 'l'),
+ 		{ OPTION_INTEGER, 'n', NULL, &filter.lines, N_("n"),
+@@ -393,6 +400,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 					N_("use another key to sign the tag")),
+ 		OPT__FORCE(&force, N_("replace the tag if exists")),
+ 		OPT_BOOL(0, "create-reflog", &create_reflog, N_("create a reflog")),
++		OPT_BOOL(0, "no-gpg-sign", &no_gpg_sign, N_("do not GPG-sign tag")),
+ 
+ 		OPT_GROUP(N_("Tag listing options")),
+ 		OPT_COLUMN(0, "column", &colopts, N_("show tag list in columns")),
+@@ -426,6 +434,10 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 
+ 	argc = parse_options(argc, argv, prefix, options, git_tag_usage, 0);
+ 
++	if (no_gpg_sign) {
++		sign_tag = 0;
++	}
++
+ 	if (keyid) {
+ 		opt.sign = 1;
+ 		set_signing_key(keyid);
+@@ -444,7 +456,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 	if (cmdmode == 'l')
+ 		setup_auto_pager("tag", 1);
+ 
+-	if ((create_tag_object || force) && (cmdmode != 0))
++	if ((create_tag_object || force || no_gpg_sign) && (cmdmode != 0))
+ 		usage_with_options(git_tag_usage, options);
+ 
+ 	finalize_colopts(&colopts, -1);
+@@ -536,8 +548,8 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 
+ 	create_reflog_msg(&object, &reflog_msg);
+ 
+-	if (create_tag_object) {
+-		if (force_sign_annotate && !annotate)
++	if (create_tag_object || sign_tag) {
++		if (sign_tag || (force_sign_annotate && !annotate))
+ 			opt.sign = 1;
+ 		create_tag(&object, tag, &buf, &opt, &prev, &object);
+ 	}
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 0e16f017a..0dbe689a2 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -2648,6 +2648,7 @@ _git_config ()
+ 		status.showUntrackedFiles
+ 		status.submodulesummary
+ 		submodule.
++		tag.gpgSign
+ 		tar.umask
+ 		transfer.unpackLimit
+ 		url.
+diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+index a9af2de99..ccff37733 100755
+--- a/t/t7004-tag.sh
++++ b/t/t7004-tag.sh
+@@ -904,6 +904,27 @@ test_expect_success GPG \
+ 	test_cmp expect actual
+ '
+ 
++get_tag_header gpgsign-enabled $commit commit $time >expect
++echo "A message" >>expect
++echo '-----BEGIN PGP SIGNATURE-----' >>expect
++test_expect_success GPG \
++	'git tag configured tag.gpgsign enables GPG sign' \
++	'test_config tag.gpgsign true &&
++	git tag -m "A message" gpgsign-enabled &&
++	get_tag_msg gpgsign-enabled>actual &&
++	test_cmp expect actual
++'
++
++get_tag_header no-gpg-sign $commit commit $time >expect
++echo "A message" >>expect
++test_expect_success GPG \
++	'git tag --no-gpg-sign configured tag.gpgsign skip GPG sign' \
++	'test_config tag.gpgsign true &&
++	git tag -a --no-gpg-sign -m "A message" no-gpg-sign &&
++	get_tag_msg no-gpg-sign>actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success GPG \
+ 	'trying to create a signed tag with non-existing -F file should fail' '
+ 	! test -f nonexistingfile &&
+-- 
+2.13.6
+
