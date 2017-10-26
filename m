@@ -2,109 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B83E11FAED
-	for <e@80x24.org>; Thu, 26 Oct 2017 08:19:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9059D1FAED
+	for <e@80x24.org>; Thu, 26 Oct 2017 08:28:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932372AbdJZITH (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Oct 2017 04:19:07 -0400
-Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:64140 "EHLO
-        alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932162AbdJZITB (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2017 04:19:01 -0400
-X-AuditID: 12074411-f95ff70000007f0a-be-59f19a73ad40
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 34.AB.32522.37A91F95; Thu, 26 Oct 2017 04:18:59 -0400 (EDT)
-Received: from bagpipes.fritz.box (p57BCCA47.dip0.t-ipconnect.de [87.188.202.71])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v9Q8IuW8030384
-        (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-        Thu, 26 Oct 2017 04:18:58 -0400
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>, Jeff King <peff@peff.net>,
-        git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH] t0000: check whether the shell supports the "local" keyword
-Date:   Thu, 26 Oct 2017 10:18:53 +0200
-Message-Id: <6ecab31e7ed05f5e79ecd454b133a2bfa6ac9ab7.1509005669.git.mhagger@alum.mit.edu>
-X-Mailer: git-send-email 2.14.1
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrLIsWRmVeSWpSXmKPExsUixO6iqFsy62OkwcY8i64r3UwWDb1XmC1u
-        r5jPbPGjpYfZ4sybRkYHVo+/7z8weTzr3cPocfGSssfiB14enzfJBbBGcdmkpOZklqUW6dsl
-        cGWsmLmfueAYf8WtG91sDYyPeboYOTkkBEwkVlx4y9rFyMUhJLCDSeLz9GXMIAkhgZNMEnM+
-        GoPYbAK6Eot6mplAbBEBNYmJbYdYQBqYBXoZJbqe/GABSQgL+EjMOrSXDcRmEVCV+Dn9ECOI
-        zSsQJfH82kcWiG3yEuce3GaewMi1gJFhFaNcYk5prm5uYmZOcWqybnFyYl5eapGuqV5uZole
-        akrpJkZIGAjuYJxxUu4QowAHoxIP74ePHyKFWBPLiitzDzFKcjApifIy7AEK8SXlp1RmJBZn
-        xBeV5qQWH2KU4GBWEuG9M+NjpBBvSmJlVWpRPkxKmoNFSZyXb4m6n5BAemJJanZqakFqEUxW
-        hoNDSYK3bSZQo2BRanpqRVpmTglCmomDE2Q4D9BwaZAa3uKCxNzizHSI/ClGY46Om3f/MHE8
-        m/m6gVmIJS8/L1VKnHcjSKkASGlGaR7cNFgsv2IUB3pOmHchSBUPMA3AzXsFtIoJaFWT6geQ
-        VSWJCCmpBsY4jo0nzhyYuuGjqtKOZtX3S5ky06zUtvxt38g35XaT5/aNBxN3L4zY8c/GUJRB
-        dYKS5uU1P/9/tOGPdVMw2mHxR2yjnaIj7/XthcsM+4ruR2qbPV+TIvb4W0zyMu677ZMezP75
-        UDyrt/r//jPTL3ZYPzmhdab6eMj+43fXHY3nqubreJj7qdlUiaU4I9FQi7moOBEAC37PVsAC
-        AAA=
+        id S932411AbdJZI2x (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Oct 2017 04:28:53 -0400
+Received: from mail-qt0-f193.google.com ([209.85.216.193]:49243 "EHLO
+        mail-qt0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932339AbdJZI2t (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Oct 2017 04:28:49 -0400
+Received: by mail-qt0-f193.google.com with SMTP id k31so3275682qta.6
+        for <git@vger.kernel.org>; Thu, 26 Oct 2017 01:28:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=rdBTgAe1sZGkGr9zlDcjGHkBRFTcV5c6mlEfbkZuUp0=;
+        b=TGC3zoLrhH31/HwB6kBhmOT5nU4dED/TJHhPaY5Y3G9x6shJYijLRBqlMR8+14aRbS
+         InxIc5BstX8TxdPBwpulpe4cKlPss6uTjRyexJFcTvpHgHQoRD6otMd/EpuwBuM8muSl
+         fKeiwbJeeVfW1lGLbD0F32ZIHibRzDuS3ccqjH4ZuCTm30I/WjxXAMiO51G61i2JyP5Y
+         ssYu02U4NtLdcbwGnEWovPWacmF1QDXtIGsisWl7ilQhOMpnW+OLutyzXgdke5bwyJFT
+         +nxI+ErsV6dT4gUMkehQvNlDRNBqWetTxgk0dX6YgtTERkPoMPNwpYI8e3AkckQQmz7h
+         h92w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=rdBTgAe1sZGkGr9zlDcjGHkBRFTcV5c6mlEfbkZuUp0=;
+        b=sAhT93THtoSnqPoNahGAw8L+DrRE3iYvyzMGVHHKaY6+4DAUgTtRRQUFHXeJJ/N6gC
+         D375t9iZGyOp+uQ0WCL0dhZ3mkn/JEBgcLuUqHFwJQ33tGb8HM19/IxnY3g96rdWKZqK
+         aEndaIFr+tZmovLpRUwpaB+60aN0GeJLDOqCnHNYnEB7pj7aPV4SWsBqzSFHUKmXrS6S
+         YmtGihogSNH72mmpgrSbiLXrblwapLkK3up35AUgj1OW7SiQ3BLMNuix2vvnHFjfMmCZ
+         WqBURadQVPn9CHyPoupZA2LmtTzX7Usd6Oyj1jmkotaBPsi2N6tYVUYeAsXfznnh2Zj5
+         23hQ==
+X-Gm-Message-State: AMCzsaXzqSolElaEfeIMdNlTjRHZcuyqbiyxqpJrTB7qcjNZjxPmsuDo
+        adPzONPFW8CzEdDeHmpUdfrN0jntbSXsxW/feEI=
+X-Google-Smtp-Source: ABhQp+SgHicwQAU1uhGOnUrutP6aoacUKWRATptvJE8YxE7sGgZkMYtNhcPKzmvTVa5iMxBrxR5ZaXl58dJcDyy4EaM=
+X-Received: by 10.200.35.248 with SMTP id r53mr32965368qtr.110.1509006529113;
+ Thu, 26 Oct 2017 01:28:49 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.12.146.118 with HTTP; Thu, 26 Oct 2017 01:28:48 -0700 (PDT)
+In-Reply-To: <6ecab31e7ed05f5e79ecd454b133a2bfa6ac9ab7.1509005669.git.mhagger@alum.mit.edu>
+References: <6ecab31e7ed05f5e79ecd454b133a2bfa6ac9ab7.1509005669.git.mhagger@alum.mit.edu>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 26 Oct 2017 04:28:48 -0400
+X-Google-Sender-Auth: KLSGCwV8vjsGiz1qlxLf3__-pkU
+Message-ID: <CAPig+cTv4YW0m0PLH+UucEHjgQkbCsOunPrkKVDrPQXNkd=GAg@mail.gmail.com>
+Subject: Re: [PATCH] t0000: check whether the shell supports the "local" keyword
+To:     Michael Haggerty <mhagger@alum.mit.edu>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a test balloon to see if we get complaints from anybody who is
-using a shell that doesn't support the "local" keyword. If so, this
-test can be reverted. If not, we might want to consider using "local"
-in shell code throughout the git code base.
+On Thu, Oct 26, 2017 at 4:18 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> Add a test balloon to see if we get complaints from anybody who is
+> using a shell that doesn't support the "local" keyword. If so, this
+> test can be reverted. If not, we might want to consider using "local"
+> in shell code throughout the git code base.
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
-This has been discussed on the mailing list [1,2].
+I would guess that the number of people who actually run the Git test
+suite is microscopic compared to the number of people who use Git
+itself. It is not clear, therefore, that lack of reports of failure of
+the new test would imply that "local" can safely be used throughout
+the Git code base. At best, it might indicate that "local" can be used
+in the tests.
 
-Michael
+Or, am I missing something?
 
-[1] https://public-inbox.org/git/CAPig+cRLB=dGD=+Af=yYL3M709LRpeUrtvcDLo9iBKYy2HAW-w@mail.gmail.com/
-[2] https://public-inbox.org/git/20160601163747.GA10721@sigill.intra.peff.net/
-
- t/t0000-basic.sh | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
-
-diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-index 1aa5093f36..7fd87dd544 100755
---- a/t/t0000-basic.sh
-+++ b/t/t0000-basic.sh
-@@ -20,6 +20,31 @@ modification *should* take notice and update the test vectors here.
- 
- . ./test-lib.sh
- 
-+try_local_x () {
-+	local x="local" &&
-+	echo "$x"
-+}
-+
-+# This test is an experiment to check whether any Git users are using
-+# Shells that don't support the "local" keyword. "local" is not
-+# POSIX-standard, but it is very widely supported by POSIX-compliant
-+# shells, and if it doesn't cause problems for people, we would like
-+# to be able to use it in Git code.
-+#
-+# For now, this is the only test that requires "local". If your shell
-+# fails this test, you can ignore the failure, but please report the
-+# problem to the Git mailing list <git@vger.kernel.org>, as it might
-+# convince us to continue avoiding the use of "local".
-+test_expect_success 'verify that the running shell supports "local"' '
-+	x="notlocal" &&
-+	echo "local" >expected1 &&
-+	try_local_x >actual1 &&
-+	test_cmp expected1 actual1 &&
-+	echo "notlocal" >expected2 &&
-+	echo "$x" >actual2 &&
-+	test_cmp expected2 actual2
-+'
-+
- ################################################################
- # git init has been done in an empty repository.
- # make sure it is empty.
--- 
-2.14.1
-
+> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+> ---
+> This has been discussed on the mailing list [1,2].
+>
+> Michael
+>
+> [1] https://public-inbox.org/git/CAPig+cRLB=dGD=+Af=yYL3M709LRpeUrtvcDLo9iBKYy2HAW-w@mail.gmail.com/
+> [2] https://public-inbox.org/git/20160601163747.GA10721@sigill.intra.peff.net/
+>
+>  t/t0000-basic.sh | 25 +++++++++++++++++++++++++
+>  1 file changed, 25 insertions(+)
+>
+> diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
+> index 1aa5093f36..7fd87dd544 100755
+> --- a/t/t0000-basic.sh
+> +++ b/t/t0000-basic.sh
+> @@ -20,6 +20,31 @@ modification *should* take notice and update the test vectors here.
+>
+>  . ./test-lib.sh
+>
+> +try_local_x () {
+> +       local x="local" &&
+> +       echo "$x"
+> +}
+> +
+> +# This test is an experiment to check whether any Git users are using
+> +# Shells that don't support the "local" keyword. "local" is not
+> +# POSIX-standard, but it is very widely supported by POSIX-compliant
+> +# shells, and if it doesn't cause problems for people, we would like
+> +# to be able to use it in Git code.
+> +#
+> +# For now, this is the only test that requires "local". If your shell
+> +# fails this test, you can ignore the failure, but please report the
+> +# problem to the Git mailing list <git@vger.kernel.org>, as it might
+> +# convince us to continue avoiding the use of "local".
+> +test_expect_success 'verify that the running shell supports "local"' '
+> +       x="notlocal" &&
+> +       echo "local" >expected1 &&
+> +       try_local_x >actual1 &&
+> +       test_cmp expected1 actual1 &&
+> +       echo "notlocal" >expected2 &&
+> +       echo "$x" >actual2 &&
+> +       test_cmp expected2 actual2
+> +'
+> +
+>  ################################################################
+>  # git init has been done in an empty repository.
+>  # make sure it is empty.
+> --
+> 2.14.1
