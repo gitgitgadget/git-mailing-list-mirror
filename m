@@ -2,76 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3434D202A0
-	for <e@80x24.org>; Thu, 26 Oct 2017 22:18:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9CA5E202A0
+	for <e@80x24.org>; Thu, 26 Oct 2017 22:28:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932381AbdJZWS3 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Oct 2017 18:18:29 -0400
-Received: from mail-wr0-f179.google.com ([209.85.128.179]:46392 "EHLO
-        mail-wr0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751228AbdJZWS2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Oct 2017 18:18:28 -0400
-Received: by mail-wr0-f179.google.com with SMTP id l1so4567887wrc.3
-        for <git@vger.kernel.org>; Thu, 26 Oct 2017 15:18:27 -0700 (PDT)
+        id S1751305AbdJZW2J (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Oct 2017 18:28:09 -0400
+Received: from mail-qk0-f174.google.com ([209.85.220.174]:50827 "EHLO
+        mail-qk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751228AbdJZW2I (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Oct 2017 18:28:08 -0400
+Received: by mail-qk0-f174.google.com with SMTP id o187so6261252qke.7
+        for <git@vger.kernel.org>; Thu, 26 Oct 2017 15:28:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=jguk-org.20150623.gappssmtp.com; s=20150623;
-        h=to:from:subject:message-id:date:user-agent:mime-version
-         :content-language:content-transfer-encoding;
-        bh=TfsFJoVC+c0CGB2ni2wBDK9N0OcUuYsLurjoThFkmps=;
-        b=dUtVBVhhkg9GXamYkYTYrpvjvAzWoUijVfhD/TwFj8OtkXL6IlbE4QVEnE4Okmvq1E
-         rWOq714KLoZdGeXMQG6FG5JQEfBPVnut2VsAkLR8FXsGQULnoqFX+6BHoOlbGvJOMEDj
-         JRC5i4rBYYul5jZKzXZx1HeVxQZUeleIJtaT+4nQRMkfXi2S+ixo2HES4l7+0TEsVe7/
-         eEtGR9CuJAHKuD1IYznQQMwobbYzEwoXhKOMFjsLpWgPE37uWGG3Lq35n2gryMGAjYPk
-         Qk1w6QMc6H41vPjm3K+Y0i6SFS6l3G720sZoonGDXaZioDzhjTTh/4NDkF1NRImF5sBT
-         a3fA==
+        d=aerotech.com; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=BOQ0L/vtkbTnAM7hvI/OAFwGkiyoADXN+MrSGigz1kc=;
+        b=GkMFOC4ayMPhdGtL7kzsXG/ylSjvCzPOeg0kBNIMUoh8vngGHaHeDhPc1fKzzo+qRx
+         SZ87NA5I2MK0EkMzJ3a17d6I3sz+dMsRukBf84nhELOePSDafvMw2Qo5VHDpCljWpcIC
+         x/Wf6DlkAqvObUK59tIEbiyNralzEpJKE4KrE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
-         :mime-version:content-language:content-transfer-encoding;
-        bh=TfsFJoVC+c0CGB2ni2wBDK9N0OcUuYsLurjoThFkmps=;
-        b=KFvHiw5xtXPqNgZXIgDZ89UHW6J/GNUPoU9N65XfTkAM1rxwDJW0jPSdOFaz8OdDWD
-         mjvxdFwDKO2/uIFEUzZVbpafyK2D9dVWaceQ+R3vI4b62lm7rp3sP+LMaWuvDnPzGsZV
-         IIl2UN9U0rrUrPBiN+upoYp7U8PsNnxojPo66ertCzscwAbOpm+twKzkMQd+hgLTruJs
-         NEfufgMFjz9/YgnBf3CO0WgWF3hdzUb7Vh5nSOgifFJQd+FeqVz0pDvZ78qRUc9fKI7p
-         iWeZ8O4dYxU6h76WZ27zotNTTkK9pT0rM5N2ZKYYU6d4EkM32aZEiZOshHswv5KySnuy
-         UDkQ==
-X-Gm-Message-State: AMCzsaWm/ZxN9v1PPz8Mf7wmCLKt6lAY2NfK7/wyWVkOJKqd5xlUk+nQ
-        Nd9YbgRmMhYk9r7IMN1bUjb3nrOqSw8=
-X-Google-Smtp-Source: ABhQp+SSjmmqJxjEMmSvlRSbrBubD2jSWJGToJH9W5BvbyYot+FzpNtPKVWvIUw8rinWqssgNWwcYQ==
-X-Received: by 10.223.190.14 with SMTP id n14mr7137478wrh.46.1509056306945;
-        Thu, 26 Oct 2017 15:18:26 -0700 (PDT)
-Received: from [192.168.1.214] (42.4.7.51.dyn.plus.net. [51.7.4.42])
-        by smtp.gmail.com with ESMTPSA id o197sm568145wmg.3.2017.10.26.15.18.26
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 26 Oct 2017 15:18:26 -0700 (PDT)
-To:     git@vger.kernel.org
-From:   Jonny Grant <jg@jguk.org>
-Subject: gitk --version and --help
-Message-ID: <e24428eb-ec48-6252-e58d-80f6bd80a78d@jguk.org>
-Date:   Thu, 26 Oct 2017 23:18:25 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.4.0
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=BOQ0L/vtkbTnAM7hvI/OAFwGkiyoADXN+MrSGigz1kc=;
+        b=qBAriQXGdNwZhga/fPNj7UCcqXt5hfPAHwB95sOyvaqZc+IGAU36iJnY2PQvcSHmVk
+         qYlqzbjFF7sm1jO7EL6B6K14P2LPwlLiEfknPKe8UDu/wZOxsdBKHeMJMnEMrBYsnUCq
+         hn+4yX9RxWieyalILd0SUU0XDPmHlSEYCz3GOxMi3k2vDUjTFgCfSRRCpc3nBa7lFNUl
+         esPmuurpKxSMKuMee74Okzz/A5r3TyDcznclQvSStHGlj/7zJc5pLopspwyL2Vdvdfvk
+         3Onq9pfF767ipLrtJx/mChPvDoXBvqYLa/GL+9O1Y56EHihB06lCFfsCmlQi7fJNZCae
+         50Xg==
+X-Gm-Message-State: AMCzsaU41DBkcun3JgsLphsF4piwtEu7UvIDb4cDXyFb83wx6FEJwc1D
+        7oAfWyQka7BfPil535G3R7wDx3tCtQzLNOHfie/nyeowJwo=
+X-Google-Smtp-Source: ABhQp+Ruco5USrVgpSMO9oudwU17ciCF9CiuqTnhu0SnmR8d0n0wiSAd8iVt8usVBQAStIklhnOSEHA05TAmjoRE5MI=
+X-Received: by 10.233.232.14 with SMTP id a14mr10630585qkg.256.1509056887426;
+ Thu, 26 Oct 2017 15:28:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Received: by 10.12.139.153 with HTTP; Thu, 26 Oct 2017 15:27:26 -0700 (PDT)
+In-Reply-To: <f56a02d6-fbf9-188f-d19f-3d48708d9268@kdbg.org>
+References: <D0A67AD8-2D63-4683-9F2A-20B0E8E65D4B@gmail.com>
+ <eda48d5e-a52c-9a39-8e55-a6828efdb3ef@kdbg.org> <alpine.DEB.2.21.1.1710251415040.6482@virtualbox>
+ <5e962f69-f9cb-bd7e-481f-050e6239813f@kdbg.org> <30ED36AB-FAB1-4635-94AF-FCEC6F02CE01@gmail.com>
+ <7a4396e8-7b97-9ec9-d028-c5ad29042c86@kdbg.org> <20171026203046.fu3z5ngnw7hckfrn@aiede.mtv.corp.google.com>
+ <f56a02d6-fbf9-188f-d19f-3d48708d9268@kdbg.org>
+From:   Ross Kabus <rkabus@aerotech.com>
+Date:   Thu, 26 Oct 2017 18:27:26 -0400
+Message-ID: <CAEVs+zbq_zcYjyoCPE=W3LuQxAtRz8G+qLXA31jUiw+b4A4kSg@mail.gmail.com>
+Subject: Re: Consequences of CRLF in index?
+To:     git <git@vger.kernel.org>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+        Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Would be useful if these missing options could be added.
+Is "* -text" in any way different than "-text" (without the * asterisk)? All
+of my .gitattributes files have "-text" (no * asterisk) and I haven't noticed
+any difference but could I be missing something subtle?
 
-Was just checking the version using regular git when I noticed.
-
-$ git --version
-git version 2.7.4
-
-I'm not a member of the list, so please cc me in any replies.
-
-Cheers, Jonny
+~Ross
