@@ -6,53 +6,53 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0954D20560
-	for <e@80x24.org>; Thu, 26 Oct 2017 09:08:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A66F1FAED
+	for <e@80x24.org>; Thu, 26 Oct 2017 09:12:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932345AbdJZJI3 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Oct 2017 05:08:29 -0400
-Received: from mail-ua0-f194.google.com ([209.85.217.194]:55164 "EHLO
-        mail-ua0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932339AbdJZJI1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Oct 2017 05:08:27 -0400
-Received: by mail-ua0-f194.google.com with SMTP id n38so1941892uai.11
-        for <git@vger.kernel.org>; Thu, 26 Oct 2017 02:08:27 -0700 (PDT)
+        id S1751639AbdJZJMz (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Oct 2017 05:12:55 -0400
+Received: from mail-vk0-f53.google.com ([209.85.213.53]:45567 "EHLO
+        mail-vk0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751236AbdJZJMy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Oct 2017 05:12:54 -0400
+Received: by mail-vk0-f53.google.com with SMTP id q13so1705122vkb.2
+        for <git@vger.kernel.org>; Thu, 26 Oct 2017 02:12:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=atlassian-com.20150623.gappssmtp.com; s=20150623;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=DJ6BaP9lc++GLY+XPq+tEZ+3BcBmRXhUjpeKIgJeNxc=;
-        b=vGZW/qBimZ4ZgJ0lxo01WExK6VxEQwbvpTJUGUcO4yfXleqY1xfVSTEwETotMFA78q
-         BiS/qOzVkdVUWRYoGF2gDRA780s8u0ufN+gzVjtIrx2jjsKgyjHXUe00BHZh/GHx429/
-         hHnPM2GGeYvR9L7Bj5HU9jNaOWSp/7o7xmCdBlHSIxof8syjtL+paN5WnJD38amV2/v3
-         hChygzGhiJidffAVKIqCG0puedxLLS33KBzZLpkfqrI/Qnhy0J1UI94ReVoXRh0wfrBC
-         7n7RWfg9VXGw/fuR1bxAhPNKUZK4hZAjn8mgCGH3E+NEVUK6R5lhzsDZVZj5EPlTydsA
-         bBkA==
+        bh=F5GZPgW1WR4/Qqr4DmkAS3rs7pFS6DJbo8jJXum7MgY=;
+        b=fr2ppH/YbV/EzWMD7qAJKVLpDJjN3fHcJ0JDqbxtSC5R7Isa7K13HDV1FITZz2EkS0
+         BgFEf3Dwi1XEdli89RfoAxFx3yvu/Nhl37q+4MT+a653pNPVjVfEEvP3sCQznoH2X6Zn
+         p0Q4l+eRvzrjRmV4IAYWbJ0rGGwjVwyJCGhJMudQz+KexUeY94ESXBHagPLrTDHbypty
+         DLMz1JXihurcvnIHp0aqLFlsYgi5tYbxG0bw4eb6VAH0fMfDjQw811496EPwtLKxqx9c
+         D4YFuggDRMC59F1ZkVFYAJsPrOdbFgh/LRKpRM3y48sExo4efsysWtjsCaQCX4smsFjq
+         /R1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=DJ6BaP9lc++GLY+XPq+tEZ+3BcBmRXhUjpeKIgJeNxc=;
-        b=FaaRilSWa7pMGlMzc4Rt+V9j1/ubHa6bP/xNrf+Zq8PQ3ZLtvqjbzqovznU0TgsTcK
-         cORN8+BOR0RCQ/NqPZ+hgyfov1+2yFx/EqPIlHww1VbSx208IBApvTegmvkav+2pZ04O
-         rshNZzm5SY+MFAx1/tWu57am23KdFNkAAc0k8GPOWS4Vl+nG0SU6rYcORD2+hmiliRAf
-         TbHkg5pJv7tLoWVl8wXEKCf6BK/4NAMN469c3vJk5pGep94LVKuoCAABCr5/L8deJFvs
-         /GBRZd0ePhN6ayioVjyhDtFa3YrFEWB7jlTMnSqXbqNuez5uby44RQxRvcX4q9EDjqeW
-         5o6w==
-X-Gm-Message-State: AMCzsaUykQEXdR5XONuOCNROVEqP1WgXw/yuVuhaV2GaQmZq5p3XHsFU
-        upuNqpVTMLLUJHQtx45PcAkPG+AqGfSUAqNmHn6E3w==
-X-Google-Smtp-Source: ABhQp+So0rbsJf/pFeZUeWa6UNOGuVggvjfvsF4nRA+/ye8+YC9UUxfWDnHt6aeJ0yhVfO2vLw4CC54/tyjNUKrtSWQ=
-X-Received: by 10.159.57.227 with SMTP id p35mr3705114uag.198.1509008906630;
- Thu, 26 Oct 2017 02:08:26 -0700 (PDT)
+        bh=F5GZPgW1WR4/Qqr4DmkAS3rs7pFS6DJbo8jJXum7MgY=;
+        b=PcHRM+Z9lxIvr7HEAvBauaOde3lMbmyCD8bc3gtYboUMU/NRuP340cp5VXhlSTTCBZ
+         Hbn4SvGHQoAxwHJSnPYr1LAKSZTlRvm0UieXJkTe+wPfMM22k3D2mr038Bh7Q79mcyTv
+         NrxtVH1OQlEXT4/nIUseRoRND2yme6WzSaGXuGc49duF0jP1XVxeweKg394KJk4MIccw
+         0sK+bVh9ZP3mFaP0mnMNfrxIAPGa/sLJPAijfQg0Jslrrct67hRt7leBGrOmVW88IEsD
+         Zzo1b+SeGx0RxtAqpBoHkGjN30BpoNjqd5evaV+IE18221QvBCDVxDossAnZJ8hjiBnA
+         kjKQ==
+X-Gm-Message-State: AMCzsaU/zW53G5jnj33cxedcwsXXHYK00Vr5h1lyq+5bVF1cIvj4fVRk
+        Aytjhk6B3iMJMQbGN10p/+j0VEw8FxeGnaqCRDgqFQ==
+X-Google-Smtp-Source: ABhQp+Qs2GtcXx5VH7cXoxMppRD8qNnCPIyl1gNGqGt7rt5RmXEARxgojahIY0wZVWE9g28BBjExuW6ghRWbg9I+mH0=
+X-Received: by 10.31.129.133 with SMTP id c127mr3352889vkd.22.1509009173323;
+ Thu, 26 Oct 2017 02:12:53 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.176.30.139 with HTTP; Thu, 26 Oct 2017 02:08:26 -0700 (PDT)
+Received: by 10.176.30.139 with HTTP; Thu, 26 Oct 2017 02:12:52 -0700 (PDT)
 In-Reply-To: <CA+P7+xpcC7Daw5k3=XFyZRsqiBib6yY2YzLpjYfcS7yqfUzTpg@mail.gmail.com>
 References: <20171019123030.17338-1-chriscool@tuxfamily.org>
  <alpine.DEB.2.21.1.1710260008270.37495@virtualbox> <xmqq4lqmfoy7.fsf@gitster.mtv.corp.google.com>
  <CA+P7+xpcC7Daw5k3=XFyZRsqiBib6yY2YzLpjYfcS7yqfUzTpg@mail.gmail.com>
 From:   Bryan Turner <bturner@atlassian.com>
-Date:   Thu, 26 Oct 2017 02:08:26 -0700
-Message-ID: <CAGyf7-Ho3eY8sE2ME+p-JdR9OUQGFc43TmjHpueJgwCBSznN5w@mail.gmail.com>
+Date:   Thu, 26 Oct 2017 02:12:52 -0700
+Message-ID: <CAGyf7-EjKaHgwkN9trO4mFvba9odbWCzA9Jh0Pk6ZE6FOskOYg@mail.gmail.com>
 Subject: Re: [PATCH 0/6] Create Git/Packet.pm
 To:     Jacob Keller <jacob.keller@gmail.com>
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -115,6 +115,18 @@ On Thu, Oct 26, 2017 at 2:07 AM, Jacob Keller <jacob.keller@gmail.com> wrote:
 >
 > The Env[1] core modules suggests using $Config::Config{path_sep}[2]..
 > maybe we should be using this?
+
+I was testing this recently on the Perl included with Git for Windows
+and it returns : for the path separator even though it's on Windows,
+so I don't think that would work. The Perl in Git for Windows seems to
+want UNIX-style inputs (something Dscho seemed to allude to in his
+response earlier.). I'm not sure why it's that way, but he probably
+knows.
+
+Bryan
+
+(Pardon my previous blank message; Gmail fail.)
+
 >
 > Thanks,
 > Jake
