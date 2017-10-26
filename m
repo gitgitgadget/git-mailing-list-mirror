@@ -2,62 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 575F31FAED
-	for <e@80x24.org>; Thu, 26 Oct 2017 11:53:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AB912202A0
+	for <e@80x24.org>; Thu, 26 Oct 2017 15:08:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751548AbdJZLxk (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Oct 2017 07:53:40 -0400
-Received: from a7-18.smtp-out.eu-west-1.amazonses.com ([54.240.7.18]:49030
-        "EHLO a7-18.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751173AbdJZLxj (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2017 07:53:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1509018818;
-        h=From:To:Message-ID:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=wJ+H4z8sxZdOO8ic5TfHgtrhgmIkeSQl7Ciz5lJjFoI=;
-        b=eo85kUg4VQZgJfFmcjktMG8QhmbcgfpCvR2+sFJJcuydhcfU4+A5p/I3wohenVyc
-        Wbcp18EaLMEcPyc+482fnPPeuImP1BkjU0Pzq6MilEyydR2nSpVKPkCZLmq5XK/2Oy7
-        cgTbZoxt0WCzqgwjS+UXwMDyHSiP2Dek2fhAfzxM=
-From:   Sebastian Schuberth <sschuberth@gmail.com>
-To:     git@vger.kernel.org
-Message-ID: <0102015f5887d349-1fd2949b-700b-4f16-81a5-4e6aad6bd695-000000@eu-west-1.amazonses.com>
-Subject: [PATCH] docs: fix formatting of rev-parse's
- --show-superproject-working-tree
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+        id S932434AbdJZPIR (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Oct 2017 11:08:17 -0400
+Received: from smtprelay0238.hostedemail.com ([216.40.44.238]:40149 "EHLO
+        smtprelay.hostedemail.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S932366AbdJZPIQ (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2017 11:08:16 -0400
+X-Greylist: delayed 313 seconds by postgrey-1.27 at vger.kernel.org; Thu, 26 Oct 2017 11:08:16 EDT
+Received: from smtprelay.hostedemail.com (10.5.19.251.rfc1918.com [10.5.19.251])
+        by smtpgrave08.hostedemail.com (Postfix) with ESMTP id 87517182D5422
+        for <git@vger.kernel.org>; Thu, 26 Oct 2017 15:03:02 +0000 (UTC)
+Received: from filter.hostedemail.com (clb03-v110.bra.tucows.net [216.40.38.60])
+        by smtprelay05.hostedemail.com (Postfix) with ESMTP id C55E01802EB28
+        for <git@vger.kernel.org>; Thu, 26 Oct 2017 15:03:01 +0000 (UTC)
+X-Session-Marker: 6A6F6540706572636865732E636F6D
+X-HE-Tag: ring06_191f87e8fe903
+X-Filterd-Recvd-Size: 892
+Received: from XPS-9350 (unknown [47.151.150.235])
+        (Authenticated sender: joe@perches.com)
+        by omf12.hostedemail.com (Postfix) with ESMTPA
+        for <git@vger.kernel.org>; Thu, 26 Oct 2017 15:02:52 +0000 (UTC)
+Message-ID: <1509030170.10651.59.camel@perches.com>
+Subject: grep vs git grep performance?
+From:   Joe Perches <joe@perches.com>
+To:     git <git@vger.kernel.org>
+Date:   Thu, 26 Oct 2017 08:02:50 -0700
+Content-Type: text/plain; charset="ISO-8859-1"
+X-Mailer: Evolution 3.26.1-1 
+Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Date:   Thu, 26 Oct 2017 11:53:37 +0000
-X-SES-Outgoing: 2017.10.26-54.240.7.18
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Sebastian Schuberth <sschuberth@gmail.com>
----
- Documentation/git-rev-parse.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Comparing a cache warm git grep vs command line grep
+shows significant differences in cpu & wall clock.
 
-diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
-index 0917b8207b9d6..95326b85ff68e 100644
---- a/Documentation/git-rev-parse.txt
-+++ b/Documentation/git-rev-parse.txt
-@@ -264,7 +264,7 @@ print a message to stderr and exit with nonzero status.
- --show-toplevel::
- 	Show the absolute path of the top-level directory.
- 
----show-superproject-working-tree
-+--show-superproject-working-tree::
- 	Show the absolute path of the root of the superproject's
- 	working tree (if exists) that uses the current repository as
- 	its submodule.  Outputs nothing if the current repository is
+Any ideas how to improve this?
 
---
-https://github.com/git/git/pull/418
+$ time git grep "\bseq_.*%p\W" | wc -l
+112
+
+real	0m4.271s
+user	0m15.520s
+sys	0m0.395s
+
+$ time grep -r --include=*.[ch] "\bseq_.*%p\W" * | wc -l
+112
+
+real	0m1.164s
+user	0m0.847s
+sys	0m0.314s
+
+
