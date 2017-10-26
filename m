@@ -2,113 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F09E71FAED
-	for <e@80x24.org>; Thu, 26 Oct 2017 07:01:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D594C20560
+	for <e@80x24.org>; Thu, 26 Oct 2017 07:08:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751476AbdJZHBY (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Oct 2017 03:01:24 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:46813 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751228AbdJZHBX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Oct 2017 03:01:23 -0400
-Received: by mail-pf0-f194.google.com with SMTP id p87so1841171pfj.3
-        for <git@vger.kernel.org>; Thu, 26 Oct 2017 00:01:23 -0700 (PDT)
+        id S1751940AbdJZHIS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Oct 2017 03:08:18 -0400
+Received: from mail-pg0-f42.google.com ([74.125.83.42]:51074 "EHLO
+        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751917AbdJZHIR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Oct 2017 03:08:17 -0400
+Received: by mail-pg0-f42.google.com with SMTP id y5so1980089pgq.7
+        for <git@vger.kernel.org>; Thu, 26 Oct 2017 00:08:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=atlassian-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=w1tXXNkzIA923Cdj5Cd0YAmhXCPnLJVPnOpp6D/eZlo=;
-        b=B7+G4C6IJyh/pbnhOHQnETPlCZ157aOaXaoNUfzpnMH/jSgS0gnHUv5CzWgG5g9rMo
-         Myc627DLUOOX8RWSTTyrzsH0QmVa9lSCBKLnstkFW3r0GDziqbSOBlgN/j1fENn8CKPH
-         JYL9UFunMo/Rdn1siQ76GJFdDEEGiDSlHD7x2EdNgTiq2gdb0o6JS7T2OnpY7tzkB9PE
-         Sij00uaDv+GyPMjKY40XvlxK2k6Jdejbv+PK436c0VARyvVaECQnBGzRWpPww57lOX8a
-         q9PpCCkWGq6aqeXoBfieqVb1h0pfpqanwEALkEUP3m4Lxffts/FYLWAgIW4B2SV+kahs
-         E4ng==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=zCD1TAsdiaHXY9Qm65b0CdJjDyGCF125wDbYL15k1qk=;
+        b=tCecKi7HgsRNBT0Vgppb0BZJgWfvyZQtyi5Z0W6PfYudMIY3tGl75tkaTPwcPQJgnz
+         GlCYhAMjc8y4FeE30PuBtwwcewPv1FWyOr54AtxnItpXBOEhzXcBhmVCnaVGwzmZmNm5
+         pOcUBuYWFfzftEcJQ2zJ/0t/9QXthctkqb91nhFuBqRFYFNupBfwcBc0SSVp8lsqN2z0
+         VsiJ0WSRTbNAwIpcUtZjwailBaK62uupP2hVx8G1t70eli2eunsZJTLsagDJn1VRNax7
+         UXmnQbTEiciY5rdiTdeTmrTlUjJ6ANqiGmNtQHGYRSMbpybko9W3QO569Y9QP29c/I84
+         d5aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=w1tXXNkzIA923Cdj5Cd0YAmhXCPnLJVPnOpp6D/eZlo=;
-        b=jKrndAymJALBLaUuT1b+ZsxW/zN5/YVgpJB00L6BhLMZMJbYmXlqfqKp0AmzNcpxS5
-         Jebipow7NuEXzKUy9JRTeGfZC48cQdQE++OuFveYv5wiy/o6EwfqpuDBGLcXUtnx2BkM
-         Nd5oI74k1qJix89aZaqJgrXbFXUNkn4WQSc9rCbbashLb4dsejTJEVyfOX8JkbDf5WFa
-         l3JAjvVH8cHD48gdaBA8ldYqlRhw3kqtwZJiqpznbVIJe8pxlMihfHqF+UEJ9rdYIcVp
-         khdwI/MKL5B9TkrwPC8ZtsW4ZpcjyWVVbnpT5a161uV+RRoFwg7lIBeOdt6VTPultwEO
-         LGag==
-X-Gm-Message-State: AMCzsaXg5fFAxqdR53Zh2P0JoaNvSHKIMXFbV9ZtGFuSUqXE3JWv8etN
-        m8ZfL6TWk3+HDOnvkC2/b6Z9uQ==
-X-Google-Smtp-Source: ABhQp+SFs6/oCNto2EJhgqgqyf3KcNmijELozJt0wnouNUfkFd8x8JvKpzjAkVFx5+C0yRdUUgdl2Q==
-X-Received: by 10.99.112.82 with SMTP id a18mr4034464pgn.84.1509001283258;
-        Thu, 26 Oct 2017 00:01:23 -0700 (PDT)
-Received: from CLI-30675.office.atlassian.com ([103.233.242.9])
-        by smtp.gmail.com with ESMTPSA id z86sm8280397pfk.34.2017.10.26.00.01.20
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Thu, 26 Oct 2017 00:01:22 -0700 (PDT)
-From:   Isabella Stephens <istephens@atlassian.com>
-To:     gitster@pobox.com
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=zCD1TAsdiaHXY9Qm65b0CdJjDyGCF125wDbYL15k1qk=;
+        b=E5kyK+J1oMCM7FUUNsWkgqmaSlamco52SD6Zkbk8f0u/bMmZCOfeXJcZZLfnX8Om7J
+         t1QCvBqpOfPBh1DDkUp55FS7496gKdgZ68cn7k9QVnE59MJhxY33haaStPmIA39Horjy
+         UvhFWZkzKt/BIeXnTZTr8/JC7PAON5jTpzHftL+tvix02xhorzsJep87BEI2b4R1/A4r
+         3HwDZNo/ATmf1AiIEHACHPUVI6fXJ6v3aqKdp3JbjYwai0/JaKjpxixG06mfp9r7wmhe
+         AoVX3DovvORDOMCl2gqnkLBPLB+LqQWwWNiKs541MOa1Zh4R9dxOqbUpUc9tF4NHHfeV
+         mTQA==
+X-Gm-Message-State: AMCzsaU2uJc+dlXdXAu7MWhJKWvTeZI8fldgw9ds6NylgCcrLULHKvTy
+        BWTfvki0uGxh4j4yGVOpB4666Q==
+X-Google-Smtp-Source: ABhQp+Q9vXhCma3DZ16R43qMLQk8Q+kJtKgQQWYhMMl39PtJ4jkADkUCYAO4MeXZ/UssX9raTVrm7A==
+X-Received: by 10.99.108.132 with SMTP id h126mr4116243pgc.434.1509001697046;
+        Thu, 26 Oct 2017 00:08:17 -0700 (PDT)
+Received: from [172.22.44.87] ([103.233.242.9])
+        by smtp.gmail.com with ESMTPSA id i8sm7368039pgq.67.2017.10.26.00.08.14
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 26 Oct 2017 00:08:16 -0700 (PDT)
+Subject: Re: [PATCH] blame: add --fuzzy-lines command line option
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org, sunshine@sunshineco.com, peff@peff.net,
-        bturner@atlassian.com, Isabella Stephens <istephens@atlassian.com>
-Subject: [PATCH v2] blame: prevent error if range ends past end of file
-Date:   Thu, 26 Oct 2017 18:01:08 +1100
-Message-Id: <20171026070108.4185-1-istephens@atlassian.com>
-X-Mailer: git-send-email 2.14.1
+        bturner@atlassian.com
+References: <20171026021929.1346-1-istephens@atlassian.com>
+ <xmqqtvyme8pg.fsf@gitster.mtv.corp.google.com>
+From:   Isabella Stephens <istephens@atlassian.com>
+Message-ID: <fab198e6-a736-ff2c-1c37-719b07531942@atlassian.com>
+Date:   Thu, 26 Oct 2017 18:08:12 +1100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:52.0)
+ Gecko/20100101 Thunderbird/52.4.0
+MIME-Version: 1.0
 In-Reply-To: <xmqqtvyme8pg.fsf@gitster.mtv.corp.google.com>
-References: <xmqqtvyme8pg.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If the -L option is used to specify a line range in git blame, and the
-end of the range is past the end of the file, at present git will fail
-with a fatal error. This commit prevents such behaviour - instead the
-blame is display for any existing lines within the specified range.
+On 26/10/17 5:15 pm, Junio C Hamano wrote:
+> Isabella Stephens <istephens@atlassian.com> writes:
+> 
+>> If the -L option is used to specify a line range in git blame, and the
+>> end of the range is past the end of the file, git will fail with a fatal
+>> error. It may instead be desirable to perform a git blame for the line
+>> numbers in the intersection of the file and the specified line range.
+> 
+> Even though erroring out upon such input was done as a deliberate
+> design decision, in retrospect, I do not think the design decision
+> made much sense.
+> 
+> The code already takes a nonsense input and tries to make best sense
+> of it, e.g. "-L10,6" is interpreted as "-L6,10" instead of erroring
+> out.  So if we were to do this kind of change, I suspect that it may
+> be better to do so unconditionally without introducing a new option.
+> 
+> Thanks.
+> 
 
-Signed-off-by: Isabella Stephens <istephens@atlassian.com>
----
- builtin/blame.c               | 4 ++--
- t/t8003-blame-corner-cases.sh | 5 +++--
- 2 files changed, 5 insertions(+), 4 deletions(-)
-
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 67adaef4d..b5b9db147 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -878,13 +878,13 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
- 				    nth_line_cb, &sb, lno, anchor,
- 				    &bottom, &top, sb.path))
- 			usage(blame_usage);
--		if (lno < top || ((lno || bottom) && lno < bottom))
-+		if ((lno || bottom) && lno < bottom)
- 			die(Q_("file %s has only %lu line",
- 			       "file %s has only %lu lines",
- 			       lno), path, lno);
- 		if (bottom < 1)
- 			bottom = 1;
--		if (top < 1)
-+		if (top < 1 || lno < top)
- 			top = lno;
- 		bottom--;
- 		range_set_append_unsafe(&ranges, bottom, top);
-diff --git a/t/t8003-blame-corner-cases.sh b/t/t8003-blame-corner-cases.sh
-index 661f9d430..32b3788fe 100755
---- a/t/t8003-blame-corner-cases.sh
-+++ b/t/t8003-blame-corner-cases.sh
-@@ -216,8 +216,9 @@ test_expect_success 'blame -L with invalid start' '
- '
- 
- test_expect_success 'blame -L with invalid end' '
--	test_must_fail git blame -L1,5 tres 2>errors &&
--	test_i18ngrep "has only 2 lines" errors
-+	git blame -L1,5 tres >out &&
-+	cat out &&
-+	test $(wc -l < out) -eq 2
- '
- 
- test_expect_success 'blame parses <end> part of -L' '
--- 
-2.14.1
-
+Thanks for following up. I've sent through a version 2 of the patch 
+without the command line option.
