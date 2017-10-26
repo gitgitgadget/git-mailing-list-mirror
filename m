@@ -7,91 +7,105 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 31E111FAED
-	for <e@80x24.org>; Thu, 26 Oct 2017 08:41:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F4001FAED
+	for <e@80x24.org>; Thu, 26 Oct 2017 08:44:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751913AbdJZIlL (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Oct 2017 04:41:11 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:50203 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751719AbdJZIlI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Oct 2017 04:41:08 -0400
-Received: by mail-wm0-f68.google.com with SMTP id s66so1284093wmf.5
-        for <git@vger.kernel.org>; Thu, 26 Oct 2017 01:41:07 -0700 (PDT)
+        id S1752205AbdJZIos (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Oct 2017 04:44:48 -0400
+Received: from mail-wm0-f45.google.com ([74.125.82.45]:47379 "EHLO
+        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751460AbdJZInS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Oct 2017 04:43:18 -0400
+Received: by mail-wm0-f45.google.com with SMTP id r196so6385408wmf.2
+        for <git@vger.kernel.org>; Thu, 26 Oct 2017 01:43:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=BN8Cyx2HQJZFWEykMxe9WeJ+w8q4kxxBn9hg6AUSe6o=;
-        b=DnRlyRDAkOEGWjyuQLjyrQRUZ9azRQKL7MtdLmiBslQ8cVAfJu/Dj7GGVf/O6Y6r9W
-         oJc5mlqeKy/Z4PpS0kC1bOBfpvRDU06JPX8ev5XtM5iquvxsjYx518kHoIzh3+SoKAC7
-         8J1gdELaSQwhkz2sMPHC7zBjHHhiRSyDj4pjZ1k455BEOmOcS0pQCGARhXbHh2FQ91Ud
-         qnkKPDOhH5Joi2DlmC+3X0ILiILMkIALpad7weLd4kSqo5BBU6JVukhrDXT1B5M1LWau
-         0/NYbHY0OAGI8D0rvtbaj4UFj754HUkmBpnVBIaCDceQM+ug6EJBs3xHFgV9JpqbLiGQ
-         FsHg==
+        bh=fFCZgsLY1FTIhp4x1h2oT527JYyB6NvkZYzqebUDYI0=;
+        b=tFPH3ystVaQ+czMQDwMwWxi2lRxtasSkWcKktovzvdt7fQtUrxkjMfVB7R6j00PzEq
+         /MaT/K9oEhKw8v6oewWbbTukhlAYoi+5KxFNH+S5F95slyhPzDv9gZndX/wvNBpUMXnB
+         xxLtPR7nLYepqeagDTDLmjwsqlDZE/PfPNaZp6nkxLFEUDTSEHVJiyWt3h/levUsr7aB
+         MaNYWgnTHStets3/1aXOXMPEgBM1dS+4bHbrgcDn28HQB90Dk1t+nYMOm200O6qI72EI
+         CQsJ0c80FojM6Pgb0p9BaIjueVthuPZK4vPP528m29i1VIFtwBhqsw3wUj7nSJNEHgTw
+         l5Vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=BN8Cyx2HQJZFWEykMxe9WeJ+w8q4kxxBn9hg6AUSe6o=;
-        b=nkHd9JSZAlzPk2wXW0KzCNuUZF4yNPlY1B1DACRZN8GHx796GFgXslnaAtt2sysKfl
-         3IghCx/ABcHe31Rd/o7K1DwWOUC+OUnBT3wDbgbWniuud0ccoapMirc8RuwE37VEzHmt
-         fejb7ICFS3Dw3rTNIUseicp8tkW7knChRzl6nUJ3yN1RdLywD35/MvV53dv8dgHZm+tQ
-         NW+yIlJj60W3gss6QmVoBr2xmIwmqBN1ozlVzIzTyNmeMgHEMwGZxF56OJ2eX4Y5kJTv
-         85mcEqF4D2VNec2pUTxGhOUBASiTChVZFvPqk7xaDTn1Bs+7XjeoYqx0utQixCQCUyZl
-         PFdQ==
-X-Gm-Message-State: AMCzsaVymmR5UygZhUQ2GFeYa2u6LFOO48BWR0W2LxK/WefTc31Ra6Ja
-        fsQ1B245i7ouxIAHAncPW/qHFF51Ogj9TRMPKys=
-X-Google-Smtp-Source: ABhQp+T6H09Kb4x0UtGAnr4161ojOPnJfH0lYsQ81L87mYVZfrXeJijDyRl6Btiwc75sur9cJWOaqL59juUM8IC5hag=
-X-Received: by 10.80.137.91 with SMTP id f27mr26122471edf.18.1509007266877;
- Thu, 26 Oct 2017 01:41:06 -0700 (PDT)
+        bh=fFCZgsLY1FTIhp4x1h2oT527JYyB6NvkZYzqebUDYI0=;
+        b=B3TeWcFUj0PdGAOdGbAs4hvE3VkcpKV+qhwRGSsVddEwep7KsjcFuKUcPdqezSzaAC
+         Y0G4u53LJOfCv3cG0UqIRPq+BVRErn3KZPQHC5wZDRjnXV4sSudn8xKaA+Eut6hRYseI
+         66PvZvwO8idme1npPqQSjJc/khoM+t6LbTYO5f6jLNidrUyE74JtX1728qodO6Mh98EL
+         D/teNe5HtrDVDS7bNO3JPwNx4H6utlJmo6Ivdy+RP9m6JnPBJ3idTUHgbYwKKmQGG9/C
+         YQ9qwb/+ICMPlWkWvT84xrbOlMgC8cEcDkLN6kQyaIHEsFyqhdDG80oYPy9QLxb5nwaY
+         jerg==
+X-Gm-Message-State: AMCzsaXhWbbBi6KMJDAecJTB+hVpcTpvRviCRXLNkC4WhvxW/frXz18u
+        y+a6SSM6oYNwSDecdTM/TdGe1YuQ5YxsB4STd6w=
+X-Google-Smtp-Source: ABhQp+RRUQoKLEdEMPgUBKDdYr1uG0VVwNKfM4MXYaf+Y4iBU7vwyW8oGcAk0mu09dBIayWvha3VSggpyBjqlAxajLc=
+X-Received: by 10.80.139.65 with SMTP id l59mr27439629edl.187.1509007397434;
+ Thu, 26 Oct 2017 01:43:17 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.80.213.80 with HTTP; Thu, 26 Oct 2017 01:40:46 -0700 (PDT)
-In-Reply-To: <CAPig+cTv4YW0m0PLH+UucEHjgQkbCsOunPrkKVDrPQXNkd=GAg@mail.gmail.com>
-References: <6ecab31e7ed05f5e79ecd454b133a2bfa6ac9ab7.1509005669.git.mhagger@alum.mit.edu>
- <CAPig+cTv4YW0m0PLH+UucEHjgQkbCsOunPrkKVDrPQXNkd=GAg@mail.gmail.com>
+Received: by 10.80.213.80 with HTTP; Thu, 26 Oct 2017 01:42:56 -0700 (PDT)
+In-Reply-To: <20171026072213.p6llaqrbdss7nbu4@ruderich.org>
+References: <20171025224620.27657-1-sbeller@google.com> <20171026072213.p6llaqrbdss7nbu4@ruderich.org>
 From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Thu, 26 Oct 2017 01:40:46 -0700
-Message-ID: <CA+P7+xoCKTaG9kV2T9YUHvagHVzD6v7A=neLzF3Qj1q8Fi0u-w@mail.gmail.com>
-Subject: Re: [PATCH] t0000: check whether the shell supports the "local" keyword
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>
+Date:   Thu, 26 Oct 2017 01:42:56 -0700
+Message-ID: <CA+P7+xp2S9U1y0ENj0Z=B6-DY3XWKCg16xCCzVjHDLwAcMbGZQ@mail.gmail.com>
+Subject: Re: [PATCH 0/2] color-moved: ignore all space changes by default
+To:     Simon Ruderich <simon@ruderich.org>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Git mailing list <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 26, 2017 at 1:28 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Thu, Oct 26, 2017 at 4:18 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
->> Add a test balloon to see if we get complaints from anybody who is
->> using a shell that doesn't support the "local" keyword. If so, this
->> test can be reverted. If not, we might want to consider using "local"
->> in shell code throughout the git code base.
+On Thu, Oct 26, 2017 at 12:22 AM, Simon Ruderich <simon@ruderich.org> wrote:
+> On Wed, Oct 25, 2017 at 03:46:18PM -0700, Stefan Beller wrote:
+>> On Mon, Oct 23, 2017 at 7:52 PM, Stefan Beller wrote[1]:
+>>> On Mon, Oct 23, 2017 at 6:54 PM, Junio C Hamano wrote:
+>>>>
+>>>>  * As moved-lines display is mostly a presentation thing, I wonder
+>>>>    if it makes sense to always match loosely wrt whitespace
+>>>>    differences.
+>>>
+>>> Well, sometimes the user wants to know if it is byte-for-byte identical
+>>> (unlikely to be code, but maybe column oriented data for input;
+>>> think of all our FORTRAN users. ;)
+>>
+>> ... and this is the implementation and the flip of the default setting
+>> to ignore all white space for the move detection.
 >
-> I would guess that the number of people who actually run the Git test
-> suite is microscopic compared to the number of people who use Git
-> itself. It is not clear, therefore, that lack of reports of failure of
-> the new test would imply that "local" can safely be used throughout
-> the Git code base. At best, it might indicate that "local" can be used
-> in the tests.
+> Hello,
 >
-> Or, am I missing something?
+> I'm not sure if this is a good default. I think it's not obvious
+> that moved code gets treated differently than regular changes. I
+> wouldn't expect git diff to ignore whitespace changes (without me
+> telling it to) and so when I see moved code I expect they were
+> moved as is.
 >
+> And there are languages where indentation is relevant (e.g.
+> Python, YAML) and as color-moved is also treated as review tool
+> to detect unwanted changes this new default can be dangerous.
+>
+> The new options sound like a good addition but I don't think the
+> defaults should change. However unrelated to this decision,
+> please add config settings in addition to these new options so
+> users can globally configure the behavior they want.
+>
+> Regards
+> Simon
+> --
 
-I don't think you're missing anything. I think the idea here is: "do
-any users who actively run the test suite care if we start using
-local". I don't think the goal is to allow use of local in non-test
-suite code. At least, that's not how I interpreted it.
+Even languages which are indentation sensitive often move blocks of
+lines between indentation levels a lot. I personally think the default
+could change.
 
-Thus it's fine to be only as part of a test and see if anyone
-complains, since the only people affected would be those which
-actually run the test suite...
-
-Changing our requirement for regular shell scripts we ship seems a lot
-trickier to gauge.
+However, I would suspect the best path forward is leave the default
+"exact match" and allow users who care and know about the feature to
+change their config settings.
 
 Thanks,
 Jake
