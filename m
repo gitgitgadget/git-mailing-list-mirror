@@ -2,217 +2,156 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BA08F202A0
-	for <e@80x24.org>; Thu, 26 Oct 2017 20:04:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 117DD202A0
+	for <e@80x24.org>; Thu, 26 Oct 2017 20:05:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751909AbdJZUEa (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Oct 2017 16:04:30 -0400
-Received: from smtp-o-1.desy.de ([131.169.56.154]:54338 "EHLO smtp-o-1.desy.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751863AbdJZUE3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Oct 2017 16:04:29 -0400
-X-Greylist: delayed 535 seconds by postgrey-1.27 at vger.kernel.org; Thu, 26 Oct 2017 16:04:28 EDT
-X-Clacks-Overhead: GNU Terry Pratchett
-DKIM-Filter: OpenDKIM Filter v2.11.0 smtp-o-1.desy.de 403652803FD
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=desy.de; s=default;
-        t=1509047732; bh=5bymfIc1H/F+mPeZLwHJNiDcWlrRqv48rZpoEz9K3eU=;
-        h=From:To:Cc:Subject:Date:From;
-        b=EpGI6vaosey4wqHwjsGc0YzxGic4UPrU99OeyAYpQ+qyyFyx+mfhmAS+4N7rWKqK0
-         ABXfQDKPvz2ZEnv84a2yuTqfsHoyM7VsB+AjdSrOGUcpz1np49g87elXHOfsQgQpHp
-         p5IaGj2iPl4mLKRxyPhtFJku4G/qmyFkG9kp+790=
-Received: from smtp-map-1.desy.de (smtp-map-1.desy.de [131.169.56.66])
-        by smtp-o-1.desy.de (DESY-O-1) with ESMTP id 403652803FD
-        for <git@vger.kernel.org>; Thu, 26 Oct 2017 21:55:32 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at desy.de
-Received: from ani.desy.de (zitpcx21033.desy.de [131.169.185.213])
-        by smtp-intra-1.desy.de (DESY-INTRA-1) with ESMTP id F1EBB3E902;
-        Thu, 26 Oct 2017 21:55:31 +0200 (MEST)
-From:   Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>
-To:     git@vger.kernel.org
-Cc:     Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>
-Subject: [PATCH] tag: add tag.gpgSign config option to force all tags be GPG-signed
-Date:   Thu, 26 Oct 2017 21:55:16 +0200
-Message-Id: <20171026195516.3354-1-tigran.mkrtchyan@desy.de>
-X-Mailer: git-send-email 2.13.6
+        id S1751917AbdJZUFR (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Oct 2017 16:05:17 -0400
+Received: from mail-qk0-f175.google.com ([209.85.220.175]:47749 "EHLO
+        mail-qk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751863AbdJZUFP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Oct 2017 16:05:15 -0400
+Received: by mail-qk0-f175.google.com with SMTP id m189so5826366qke.4
+        for <git@vger.kernel.org>; Thu, 26 Oct 2017 13:05:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=OqJ/uOgTMykucRYCUcv2Wbab7WupfIJi9C6Bqu9DE24=;
+        b=ukuwl5j/wsB1JJYXgxpZAc9NhRMgrPpPgghOS/OENvDGsHqrlisE2uL/fAM5W7bazz
+         gC0/mjQIwuyTJYrLu0XSDjljXwcnvmQrthLEfZKhPsWil0Abe+yFCeXC6PrmMizHGpN/
+         Fu6lmPUJTbY5CvASlcIdjYqRBZe5AUa4Gs4OzosoIkB/H0DusS04OtjcuQSaKzYebsPf
+         MIQtYbAKD8GpkYNY5ByzGdE/hgJNmsA5zaFc2B87msSFjVd/KgkRp9RS2agL9WXREm18
+         0PbDp8aeLI4Hg0rjKO8BshenJhr4xA8G5ZVyjGZQv9cOvryEyxgYe1C96uJ4jzbDXxzj
+         sv8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=OqJ/uOgTMykucRYCUcv2Wbab7WupfIJi9C6Bqu9DE24=;
+        b=OmJWHKfRSDXOpOcZCjhQZ1uGP5CWfifK2wr/Hz8FocoD0bsWw8VG5lSPvh2153PQ6F
+         QrlA3P3ShK+F6aJrO7SMgYN6U3B7p7ygL24epn1pl81XlpD/v77GYd0n2skUIv6wrHT6
+         gu1Q5TVzqOShcHv0jxQd1F8c7uEURRjFwqulU2e2/7vPqRWfmh3V6KusKIfIdyxkd51a
+         7PtVkHuqjjPqbhV0njv2jCqdfBmKdTfhGgnKMl/ihgFvYWwdJMXE7E1ju7L2Fvl3ilxz
+         i0oapkADwmGBhnc6cXMlOhwU07U74OJ+gY/zD3D6BvRC2lLs2fZ519aVtySDxxsjQPnr
+         XiUQ==
+X-Gm-Message-State: AMCzsaUtv8eDM42reoBdvnVpr0s4mdPtwn/rs51Gr+W3vMju2tGRaLz7
+        hKJxfSaAFZrR8bE+NwU/m4o=
+X-Google-Smtp-Source: ABhQp+QOwgfTtY6kK0lHLi4GlHkjRlr+G8iBYNsJI9uze7K+6BRK4PAmvFW9CaOcPgYkGPttY9MkNA==
+X-Received: by 10.55.128.134 with SMTP id b128mr895493qkd.159.1509048314176;
+        Thu, 26 Oct 2017 13:05:14 -0700 (PDT)
+Received: from [192.168.1.13] ([65.222.173.206])
+        by smtp.gmail.com with ESMTPSA id z75sm3843626qkb.30.2017.10.26.13.05.12
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 26 Oct 2017 13:05:13 -0700 (PDT)
+Subject: Re: [PATCH v2 2/4] fsmonitor: Don't bother pretty-printing JSON from
+ watchman
+To:     Alex Vandiver <alexmv@dropbox.com>, git@vger.kernel.org
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <20171026013117.30034-1-alexmv@dropbox.com>
+ <42fd8bccb78992a2894e711e057230a673891628.1508981451.git.alexmv@dropbox.com>
+From:   Ben Peart <peartben@gmail.com>
+Message-ID: <9bd24b15-6232-1afd-abbe-02870c51c7ad@gmail.com>
+Date:   Thu, 26 Oct 2017 16:05:13 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
+MIME-Version: 1.0
+In-Reply-To: <42fd8bccb78992a2894e711e057230a673891628.1508981451.git.alexmv@dropbox.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In some workflows we have no control on how git command is executed,
-however a signed tags are required.
 
-The new config-file option tag.gpgSign enforces signed tags. Additional
-command line option --no-gpg-sign is added to disable such behavior if
-needed. E.g.:
 
-    $ git tag -m "commit message"
+On 10/25/2017 9:31 PM, Alex Vandiver wrote:
+> This provides modest performance savings.  Benchmarking with the
+> following program, with and without `--no-pretty`, we find savings of
+> 23% (0.316s -> 0.242s) in the git repository, and savings of 8% (5.24s
+> -> 4.86s) on a large repository with 580k files in the working copy.
+> 
 
-will generate a GPG signed tag if tag.gpgSign option is true, while
+Given this patch series is all about speed, it's good to see *any* wins 
+- especially those that don't impact functionality at all.  The 
+performance win of --no-pretty is greater than I expected.
 
-    $ git tag --no-gpg-sign -m "commit message"
+>      #!/usr/bin/perl
+> 
+>      use strict;
+>      use warnings;
+>      use IPC::Open2;
+> 
+>      my $pid = open2(\*CHLD_OUT, \*CHLD_IN, "watchman -j @ARGV")
+>          or die "open2() failed: $!\n" .
+>          "Falling back to scanning...\n";
+> 
+>      my $query = qq|["query", "$ENV{PWD}", {}]|;
+> 
+>      print CHLD_IN $query;
+>      close CHLD_IN;
+>      my $response = do {local $/; <CHLD_OUT>};
+> 
+>      my $json_pkg;
+>      eval {
+>          require JSON::XSomething;
+>          $json_pkg = "JSON::XSomething";
+>          1;
+>      } or do {
+>          require JSON::PP;
+>          $json_pkg = "JSON::PP";
+>      };
+> 
+>      my $o = $json_pkg->new->utf8->decode($response);
+> 
+> Signed-off-by: Alex Vandiver <alexmv@dropbox.com>
+> ---
+>   t/t7519/fsmonitor-watchman                 | 2 +-
+>   templates/hooks--fsmonitor-watchman.sample | 2 +-
+>   2 files changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/t/t7519/fsmonitor-watchman b/t/t7519/fsmonitor-watchman
+> index a3e30bf54..79f24325c 100755
+> --- a/t/t7519/fsmonitor-watchman
+> +++ b/t/t7519/fsmonitor-watchman
+> @@ -50,7 +50,7 @@ launch_watchman();
+>   
+>   sub launch_watchman {
+>   
+> -	my $pid = open2(\*CHLD_OUT, \*CHLD_IN, 'watchman -j')
+> +	my $pid = open2(\*CHLD_OUT, \*CHLD_IN, 'watchman -j --no-pretty')
 
-will skip the signing step.
+Since this is a test script performance isn't critical.  This version of 
+the integration script logs the response to a file in 
+.git/watchman-response.json and is much more human readable without the 
+"--no-pretty."  As such, I'd leave this one pretty.
 
-Signed-off-by: Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>
----
- Documentation/config.txt               |  4 ++++
- Documentation/git-tag.txt              |  4 ++++
- builtin/tag.c                          | 18 +++++++++++++++---
- contrib/completion/git-completion.bash |  1 +
- t/t7004-tag.sh                         | 21 +++++++++++++++++++++
- 5 files changed, 45 insertions(+), 3 deletions(-)
+>   	    or die "open2() failed: $!\n" .
+>   	    "Falling back to scanning...\n";
+>   
+> diff --git a/templates/hooks--fsmonitor-watchman.sample b/templates/hooks--fsmonitor-watchman.sample
+> index 9eba8a740..9a082f278 100755
+> --- a/templates/hooks--fsmonitor-watchman.sample
+> +++ b/templates/hooks--fsmonitor-watchman.sample
+> @@ -49,7 +49,7 @@ launch_watchman();
+>   
+>   sub launch_watchman {
+>   
+> -	my $pid = open2(\*CHLD_OUT, \*CHLD_IN, 'watchman -j')
+> +	my $pid = open2(\*CHLD_OUT, \*CHLD_IN, 'watchman -j --no-pretty')
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 1ac0ae6ad..fa6694bec 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -3161,6 +3161,10 @@ tag.forceSignAnnotated::
- 	If `--annotate` is specified on the command line, it takes
- 	precedence over this option.
- 
-+tag.gpgSign::
-+
-+	A boolean to specify whether all tags should be GPG signed.
-+
- tag.sort::
- 	This variable controls the sort ordering of tags when displayed by
- 	linkgit:git-tag[1]. Without the "--sort=<value>" option provided, the
-diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-index 956fc019f..1dd43f18b 100644
---- a/Documentation/git-tag.txt
-+++ b/Documentation/git-tag.txt
-@@ -181,6 +181,10 @@ This option is only applicable when listing tags without annotation lines.
- 	`--create-reflog`, but currently does not negate the setting of
- 	`core.logAllRefUpdates`.
- 
-+--no-gpg-sign::
-+	Countermand `tag.gpgSign` configuration variable that is
-+	set to force each and every tag to be signed.
-+
- <tagname>::
- 	The name of the tag to create, delete, or describe.
- 	The new tag name must pass all checks defined by
-diff --git a/builtin/tag.c b/builtin/tag.c
-index b38329b59..d9060a404 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -31,6 +31,7 @@ static const char * const git_tag_usage[] = {
- 
- static unsigned int colopts;
- static int force_sign_annotate;
-+static int sign_tag;
- 
- static int list_tags(struct ref_filter *filter, struct ref_sorting *sorting,
- 		     struct ref_format *format)
-@@ -141,6 +142,11 @@ static int git_tag_config(const char *var, const char *value, void *cb)
- 	int status;
- 	struct ref_sorting **sorting_tail = (struct ref_sorting **)cb;
- 
-+	if (!strcmp(var, "tag.gpgsign")) {
-+		sign_tag = git_config_bool(var, value);
-+		return 0;
-+	}
-+
- 	if (!strcmp(var, "tag.sort")) {
- 		if (!value)
- 			return config_error_nonbool(var);
-@@ -372,6 +378,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 	static struct ref_sorting *sorting = NULL, **sorting_tail = &sorting;
- 	struct ref_format format = REF_FORMAT_INIT;
- 	int icase = 0;
-+	int no_gpg_sign = 0;
- 	struct option options[] = {
- 		OPT_CMDMODE('l', "list", &cmdmode, N_("list tag names"), 'l'),
- 		{ OPTION_INTEGER, 'n', NULL, &filter.lines, N_("n"),
-@@ -393,6 +400,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 					N_("use another key to sign the tag")),
- 		OPT__FORCE(&force, N_("replace the tag if exists")),
- 		OPT_BOOL(0, "create-reflog", &create_reflog, N_("create a reflog")),
-+		OPT_BOOL(0, "no-gpg-sign", &no_gpg_sign, N_("do not GPG-sign tag")),
- 
- 		OPT_GROUP(N_("Tag listing options")),
- 		OPT_COLUMN(0, "column", &colopts, N_("show tag list in columns")),
-@@ -426,6 +434,10 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 
- 	argc = parse_options(argc, argv, prefix, options, git_tag_usage, 0);
- 
-+	if (no_gpg_sign) {
-+		sign_tag = 0;
-+	}
-+
- 	if (keyid) {
- 		opt.sign = 1;
- 		set_signing_key(keyid);
-@@ -444,7 +456,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 	if (cmdmode == 'l')
- 		setup_auto_pager("tag", 1);
- 
--	if ((create_tag_object || force) && (cmdmode != 0))
-+	if ((create_tag_object || force || no_gpg_sign) && (cmdmode != 0))
- 		usage_with_options(git_tag_usage, options);
- 
- 	finalize_colopts(&colopts, -1);
-@@ -536,8 +548,8 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 
- 	create_reflog_msg(&object, &reflog_msg);
- 
--	if (create_tag_object) {
--		if (force_sign_annotate && !annotate)
-+	if (create_tag_object || sign_tag) {
-+		if (sign_tag || (force_sign_annotate && !annotate))
- 			opt.sign = 1;
- 		create_tag(&object, tag, &buf, &opt, &prev, &object);
- 	}
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 0e16f017a..0dbe689a2 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2648,6 +2648,7 @@ _git_config ()
- 		status.showUntrackedFiles
- 		status.submodulesummary
- 		submodule.
-+		tag.gpgSign
- 		tar.umask
- 		transfer.unpackLimit
- 		url.
-diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-index a9af2de99..ccff37733 100755
---- a/t/t7004-tag.sh
-+++ b/t/t7004-tag.sh
-@@ -904,6 +904,27 @@ test_expect_success GPG \
- 	test_cmp expect actual
- '
- 
-+get_tag_header gpgsign-enabled $commit commit $time >expect
-+echo "A message" >>expect
-+echo '-----BEGIN PGP SIGNATURE-----' >>expect
-+test_expect_success GPG \
-+	'git tag configured tag.gpgsign enables GPG sign' \
-+	'test_config tag.gpgsign true &&
-+	git tag -m "A message" gpgsign-enabled &&
-+	get_tag_msg gpgsign-enabled>actual &&
-+	test_cmp expect actual
-+'
-+
-+get_tag_header no-gpg-sign $commit commit $time >expect
-+echo "A message" >>expect
-+test_expect_success GPG \
-+	'git tag --no-gpg-sign configured tag.gpgsign skip GPG sign' \
-+	'test_config tag.gpgsign true &&
-+	git tag -a --no-gpg-sign -m "A message" no-gpg-sign &&
-+	get_tag_msg no-gpg-sign>actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success GPG \
- 	'trying to create a signed tag with non-existing -F file should fail' '
- 	! test -f nonexistingfile &&
--- 
-2.13.6
+No human will see this response so the faster --no-pretty option makes 
+sense.
 
+>   	    or die "open2() failed: $!\n" .
+>   	    "Falling back to scanning...\n";
+>   
+> 
