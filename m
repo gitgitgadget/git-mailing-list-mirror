@@ -7,97 +7,154 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0CB28202A0
-	for <e@80x24.org>; Thu, 26 Oct 2017 20:31:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F37B9202A0
+	for <e@80x24.org>; Thu, 26 Oct 2017 20:32:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751548AbdJZUbX (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Oct 2017 16:31:23 -0400
-Received: from mail-io0-f176.google.com ([209.85.223.176]:51807 "EHLO
-        mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751228AbdJZUbW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Oct 2017 16:31:22 -0400
-Received: by mail-io0-f176.google.com with SMTP id b186so8191613iof.8
-        for <git@vger.kernel.org>; Thu, 26 Oct 2017 13:31:22 -0700 (PDT)
+        id S1751771AbdJZUcN (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Oct 2017 16:32:13 -0400
+Received: from mail-qt0-f181.google.com ([209.85.216.181]:50667 "EHLO
+        mail-qt0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751705AbdJZUcM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Oct 2017 16:32:12 -0400
+Received: by mail-qt0-f181.google.com with SMTP id d9so5969136qtd.7
+        for <git@vger.kernel.org>; Thu, 26 Oct 2017 13:32:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=D38e6fccPG8JcA2QVz+Qpet/jxljaKgoZwx1bUq9heM=;
-        b=m2+1KwC/hYoncHUwsqEbJnw9wSDENMorJGEkH/60jM3lX4Rt7rERPKhP6fEnDveL9f
-         tP7ZAAgZnFE6L/GQEicXLydFKMilVcrx/GDMUEkMjX3wANCZx4i2qnfSSUbMeWcVne7I
-         sLh+gPRYjtx/eTc+24BZmIlWTeVAlCw5NhjIFbTNR52/KJd9puAVmPudjjVV3NbIqKVP
-         QDGpCslMUl9JMqTMRwYYCzn7Ksp5+EHG64pQEpRQpLuXDEyoOAnV2itMunW1C3WE3TuX
-         Jzj9fUMytcJFVVzF2yqytvdX52XoFHc92xyq8zoJ2ouMMwteLUlvE7J3LR2P4S0r0OmN
-         1Pyw==
+        h=subject:from:to:cc:references:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=gRNPnRdm4WkIApS9ndiedcFRJC58hGiSjH1//s0uuoM=;
+        b=DAaEJRrFZ3ybXkZJzNNaBIrOBxdt+QOZemN9yyIFktd2Q7v/0J/RToQyksCigsJG6c
+         Y1Io09x57D8dOUSBWMSMzBK72KieNXC4EIQLHNOtVOlY/NU0WQZ4//xjYA+EsEloQKtP
+         blIs3OyU6zsM+RqvJPVNTfehALMbv3SzZa/7Em1LsPUpBuuN3FKEjk6KA3PtK9lJS0tW
+         zuo0bTKGi86iBtJYJ+cXuv0NU9xIlBwcqq1LL90SrieJQM8UEzB067AOQdOd/5cX0eso
+         NeysXlpTubTrG2uYnHZJJBQVuf1naseDtWcwABhoF0dpyB1fRWjXJS3zhiBWRLM+g1WV
+         uJnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=D38e6fccPG8JcA2QVz+Qpet/jxljaKgoZwx1bUq9heM=;
-        b=aCXXjTUa5hqQ+E5rjC1QqhUJBU7+eyPZWXQ6E4rxFNeq05zzmAYMPEM9ebhKYSwtyl
-         2b4mj1BMikFPNPW6FEqVyKD80A/l8FFelIpHJ44vRT+sisBZbdAfE1HnaBxA6cpuUs3p
-         ZA7kMx4pHAz6DBc/skgBRzji3yOy2t7lJQTSly8plGP8fnTycLrq9qlRgj4wf6culY5A
-         WkchO1wQYlfqcasflMw1a7v8g1Iz34Arrn9+NpLLlHuAGO3TKgWnoNfVdjLwacWLWEtw
-         1rNBSrLMQ6Al4zZyflypE55IbeRjpukT3Ac86AokviNNWQJurW7AXnGf5tRFNFJL5Pki
-         SqMg==
-X-Gm-Message-State: AMCzsaV+6f1LNspHAjc7viZ6E0B+CJ8AMI5qEw92cQCG39f8LNg+DF6z
-        HCVD2sTIXhCGymgKuDa5D5o=
-X-Google-Smtp-Source: ABhQp+QWJwGlijcU9z6QTxuqXwgjPp71cgzBbALSy5EKUjAkMwBIBtllAnuM/qNYjcBl2ez8JhlysA==
-X-Received: by 10.107.149.18 with SMTP id x18mr11861742iod.99.1509049882038;
-        Thu, 26 Oct 2017 13:31:22 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id j190sm57489itb.35.2017.10.26.13.31.21
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 26 Oct 2017 13:31:21 -0700 (PDT)
-Date:   Thu, 26 Oct 2017 13:30:47 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Lars Schneider <larsxschneider@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git <git@vger.kernel.org>,
-        Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>,
-        Jeff King <peff@peff.net>
-Subject: Re: Consequences of CRLF in index?
-Message-ID: <20171026203046.fu3z5ngnw7hckfrn@aiede.mtv.corp.google.com>
-References: <D0A67AD8-2D63-4683-9F2A-20B0E8E65D4B@gmail.com>
- <eda48d5e-a52c-9a39-8e55-a6828efdb3ef@kdbg.org>
- <alpine.DEB.2.21.1.1710251415040.6482@virtualbox>
- <5e962f69-f9cb-bd7e-481f-050e6239813f@kdbg.org>
- <30ED36AB-FAB1-4635-94AF-FCEC6F02CE01@gmail.com>
- <7a4396e8-7b97-9ec9-d028-c5ad29042c86@kdbg.org>
+        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=gRNPnRdm4WkIApS9ndiedcFRJC58hGiSjH1//s0uuoM=;
+        b=OWtadqlMUpmj6v1CuLoa+k1eS2xh9uiaWiUY92Yhiok+ScwT+hbDxD8M7Azg59IGwM
+         c47w9PeVqt+WXjJZJmNcyYHPTNSHx/XrI5RI0FQz68lLsOtv+mMnKaamGddCV2mfP+kB
+         NRxnb8hUV2Eq2ll5bcd5+bv1FjinPG3P7aXVMWIhhcJNWRRmisUjav0PlNBX800aJYeC
+         rY3A+0KuJEAATzXs7l/RB8T8hKjIIsYBlyisN5KS6T1Zw3+LSzmZIT64RcfDCh1pgZdh
+         fip/NIjiNbRGvLfeLjBfNpEn6yN2YvjY9ABtP6lC7AaGqydsXM1yZ8Ehx5jfJjPLAQzf
+         fgmg==
+X-Gm-Message-State: AMCzsaWFk/ncFKEnnsfGv7fqP/PxszyJYndeBqRjpynhoCQ3gwTaH1v3
+        eFhrkwRBDAUGoxRh2rwDRrg=
+X-Google-Smtp-Source: ABhQp+S39yK7gCRxi6YuS2/mcJYZ1IMGNVKow/pBtx2QhAZx9baeg+0E0RoxU6j3OT9eGNDpD4ODXA==
+X-Received: by 10.200.8.239 with SMTP id y44mr35529565qth.245.1509049930940;
+        Thu, 26 Oct 2017 13:32:10 -0700 (PDT)
+Received: from [192.168.1.13] ([65.222.173.206])
+        by smtp.gmail.com with ESMTPSA id k43sm4331713qtc.75.2017.10.26.13.32.09
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 26 Oct 2017 13:32:09 -0700 (PDT)
+Subject: Re: [PATCH v2 2/4] fsmonitor: Don't bother pretty-printing JSON from
+ watchman
+From:   Ben Peart <peartben@gmail.com>
+To:     Alex Vandiver <alexmv@dropbox.com>, git@vger.kernel.org
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <20171026013117.30034-1-alexmv@dropbox.com>
+ <42fd8bccb78992a2894e711e057230a673891628.1508981451.git.alexmv@dropbox.com>
+ <9bd24b15-6232-1afd-abbe-02870c51c7ad@gmail.com>
+Message-ID: <e7820a80-eb47-2241-b36a-62a70bbceb5a@gmail.com>
+Date:   Thu, 26 Oct 2017 16:32:10 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <7a4396e8-7b97-9ec9-d028-c5ad29042c86@kdbg.org>
-User-Agent: NeoMutt/20170609 (1.8.3)
+In-Reply-To: <9bd24b15-6232-1afd-abbe-02870c51c7ad@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt wrote:
-> Am 26.10.2017 um 13:01 schrieb Lars Schneider:
 
->> *     -text
->> *.sh   text eol=lf
->
-> Why would that be necessary? I cannot have CRLF in shell scripts etc., not
-> even on Windows. (And in addition I do not mind CR in C++ source code.) All
-> I want is: Git, please, by all means, do not mess with my files, ever. Isn't
-> the simplest way to achieve that to set *nothing* at all? Not even
-> core.autocrlf?
 
-That's why Lars suggests "* -text" in .gitattributes.  That way, if
-some user of the repository *does* set core.autocrlf, you still get
-the "do not mess with my files" semantics you want.
+On 10/26/2017 4:05 PM, Ben Peart wrote:
+> 
+> 
+> On 10/25/2017 9:31 PM, Alex Vandiver wrote:
+>> This provides modest performance savings.  Benchmarking with the
+>> following program, with and without `--no-pretty`, we find savings of
+>> 23% (0.316s -> 0.242s) in the git repository, and savings of 8% (5.24s
+>> -> 4.86s) on a large repository with 580k files in the working copy.
+>>
+> 
+> Given this patch series is all about speed, it's good to see *any* wins 
+> - especially those that don't impact functionality at all.  The 
+> performance win of --no-pretty is greater than I expected.
+> 
+>>      #!/usr/bin/perl
+>>
+>>      use strict;
+>>      use warnings;
+>>      use IPC::Open2;
+>>
+>>      my $pid = open2(\*CHLD_OUT, \*CHLD_IN, "watchman -j @ARGV")
+>>          or die "open2() failed: $!\n" .
+>>          "Falling back to scanning...\n";
+>>
+>>      my $query = qq|["query", "$ENV{PWD}", {}]|;
+>>
+>>      print CHLD_IN $query;
+>>      close CHLD_IN;
+>>      my $response = do {local $/; <CHLD_OUT>};
+>>
+>>      my $json_pkg;
+>>      eval {
+>>          require JSON::XSomething;
+>>          $json_pkg = "JSON::XSomething";
+>>          1;
+>>      } or do {
+>>          require JSON::PP;
+>>          $json_pkg = "JSON::PP";
+>>      };
+>>
+>>      my $o = $json_pkg->new->utf8->decode($response);
+>>
+>> Signed-off-by: Alex Vandiver <alexmv@dropbox.com>
+>> ---
+>>   t/t7519/fsmonitor-watchman                 | 2 +-
+>>   templates/hooks--fsmonitor-watchman.sample | 2 +-
+>>   2 files changed, 2 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/t/t7519/fsmonitor-watchman b/t/t7519/fsmonitor-watchman
+>> index a3e30bf54..79f24325c 100755
+>> --- a/t/t7519/fsmonitor-watchman
+>> +++ b/t/t7519/fsmonitor-watchman
+>> @@ -50,7 +50,7 @@ launch_watchman();
+>>   sub launch_watchman {
+>> -    my $pid = open2(\*CHLD_OUT, \*CHLD_IN, 'watchman -j')
+>> +    my $pid = open2(\*CHLD_OUT, \*CHLD_IN, 'watchman -j --no-pretty')
+> 
+> Since this is a test script performance isn't critical.  This version of 
+> the integration script logs the response to a file in 
+> .git/watchman-response.json and is much more human readable without the 
+> "--no-pretty."  As such, I'd leave this one pretty.
 
-If you control the configuration of all users of the repository, you
-don't need that, but it doesn't hurt, either.
+I didn't see anything (including this) worth another roll so only 
+address it if something else comes up.
 
-With that "* -text", you do not need "*.sh text eol=lf", but maybe
-you'd want it in order to get some warnings when someone changes the
-line endings by mistake without running tests.  (Better to have a
-culture of running tests, you might say.  Fair enough, but as with the
-other .gitattributes line, it doesn't hurt.)
-
-Jonathan
+> 
+>>           or die "open2() failed: $!\n" .
+>>           "Falling back to scanning...\n";
+>> diff --git a/templates/hooks--fsmonitor-watchman.sample 
+>> b/templates/hooks--fsmonitor-watchman.sample
+>> index 9eba8a740..9a082f278 100755
+>> --- a/templates/hooks--fsmonitor-watchman.sample
+>> +++ b/templates/hooks--fsmonitor-watchman.sample
+>> @@ -49,7 +49,7 @@ launch_watchman();
+>>   sub launch_watchman {
+>> -    my $pid = open2(\*CHLD_OUT, \*CHLD_IN, 'watchman -j')
+>> +    my $pid = open2(\*CHLD_OUT, \*CHLD_IN, 'watchman -j --no-pretty')
+> 
+> No human will see this response so the faster --no-pretty option makes 
+> sense.
+> 
+>>           or die "open2() failed: $!\n" .
+>>           "Falling back to scanning...\n";
+>>
