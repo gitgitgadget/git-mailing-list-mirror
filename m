@@ -2,109 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2512F1FAED
-	for <e@80x24.org>; Thu, 26 Oct 2017 08:48:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 60E531FAED
+	for <e@80x24.org>; Thu, 26 Oct 2017 08:48:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751251AbdJZIsF (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Oct 2017 04:48:05 -0400
-Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:54824 "EHLO
-        alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751027AbdJZIsC (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2017 04:48:02 -0400
-X-AuditID: 1207440e-bf9ff70000007085-73-59f1a13f19b6
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id AF.01.28805.041A1F95; Thu, 26 Oct 2017 04:48:00 -0400 (EDT)
-Received: from [192.168.69.190] (p57BCCA47.dip0.t-ipconnect.de [87.188.202.71])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v9Q8luZp031708
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-        Thu, 26 Oct 2017 04:47:58 -0400
-Subject: Re: [PATCH] t0000: check whether the shell supports the "local"
- keyword
-To:     Jacob Keller <jacob.keller@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Git List <git@vger.kernel.org>
-References: <6ecab31e7ed05f5e79ecd454b133a2bfa6ac9ab7.1509005669.git.mhagger@alum.mit.edu>
- <CAPig+cTv4YW0m0PLH+UucEHjgQkbCsOunPrkKVDrPQXNkd=GAg@mail.gmail.com>
- <CA+P7+xoCKTaG9kV2T9YUHvagHVzD6v7A=neLzF3Qj1q8Fi0u-w@mail.gmail.com>
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-Message-ID: <9a900b29-0974-9ec8-d15b-73c22c197327@alum.mit.edu>
-Date:   Thu, 26 Oct 2017 10:47:56 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
+        id S1751661AbdJZIsh (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Oct 2017 04:48:37 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:57169 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751228AbdJZIse (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Oct 2017 04:48:34 -0400
+Received: by mail-wm0-f65.google.com with SMTP id z3so6629491wme.5
+        for <git@vger.kernel.org>; Thu, 26 Oct 2017 01:48:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=+ADMuypZPWRe/zSTd1fFAtnL8/A7n5cMqW0O90GkI0g=;
+        b=NUe7cLfUHJPOGh+VYVAg9m69b6jT7j0vnKVyboNXifd+tzf4/hjXYlfixGbDILqsih
+         x+2Kb1AB5LxWIrqMvo+rbcmxqtAEC+HoAZVG3TPFXSRocSQ3DB0gPQCx4qQA9T5qqWkN
+         DUjpVTRn0R6adqFoBFBBKgf90tNfPLBPY/ZOJtuwMebXtLukhVrwNKTuis4q/3+CUrPy
+         B8cWAMHrafEBChQPUv/+aw1vqYQcYjSDaOvOV3UBTONw9y/XQZFOtzCefozrf0cU7iC4
+         8GrHWp9mBKjQ0Z4Juo6L430VB7xQwbEBadAeSmZv1ykVdAvN/EICfh3P3HFsXzH+lXj5
+         h8XQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=+ADMuypZPWRe/zSTd1fFAtnL8/A7n5cMqW0O90GkI0g=;
+        b=VaBGYpHssuKbwwS1/K81u+4IQ5W9bWoT8tC5cYtHUT7zW6buItq7bk3o56y22EgYeG
+         HdI3z/9L6Ul7W74FP2/EHVDO5zoNUmscwHVzzD6Ohji2mmBUEshgwfAnUqrGaGMPZH6y
+         tZm803H99N8qe620jmK6CfzjAeMb4547Y2jlSZ9aDix1oUI4l8orDjvKHqUozZd5VvDw
+         NRKvEY6sjDK8e4YMX6q3IcYL8FH14J8HXLRR+YTZbicSqwOPRcwQ5RwLam+KlWczri/P
+         6vlcC8kQuFyvi+OSbLse9Fa9EmYjnXpmchhWBlHH6DlvudI9fm74guAhhqUOZgmLuzZH
+         kDZw==
+X-Gm-Message-State: AMCzsaXgVSb4qKVuWkSy8lYluAwflkoovWgGSmNGZt2lRJncPUXfItqW
+        DbhUtRj1DEl/4aVjKftr2dNraMY2ahNrhORkyHg=
+X-Google-Smtp-Source: ABhQp+QeUtMz1hTHaWYQ0v7h0Va0oYJtrN/1Qfln8gFuNGRUNzswwnGSu4+XE2BssMOaUU8d7oeBBFErfFP7Amp4nJ8=
+X-Received: by 10.80.173.210 with SMTP id b18mr27784553edd.148.1509007713462;
+ Thu, 26 Oct 2017 01:48:33 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CA+P7+xoCKTaG9kV2T9YUHvagHVzD6v7A=neLzF3Qj1q8Fi0u-w@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprPKsWRmVeSWpSXmKPExsUixO6iqOu48GOkwY42JouuK91MFg29V5gt
-        di/uZ7b40dLDbHHmTSOjA6vHzll32T2e9e5h9Lh4Sdlj8QMvj8+b5AJYo7hsUlJzMstSi/Tt
-        ErgyXj/ZwliwQ6Di1qfdbA2MzbxdjJwcEgImEhPmPGcFsYUEdjBJPP8p3sXIBWSfZ5JY/ug2
-        C0hCWCBIYsriLkYQW0QgWuLljilgDcwCWRLv/8xnhGh4wSix+8RTsCI2AV2JRT3NTCA2r4C9
-        xO8989lAbBYBVYm1q6YBNXNwiApESGzYyA9RIihxcuYTsF2cAoES99s3sEPMV5f4M+8SM4Qt
-        LnHryXwmCFteYvvbOcwTGAVmIWmfhaRlFpKWWUhaFjCyrGKUS8wpzdXNTczMKU5N1i1OTszL
-        Sy3SNdbLzSzRS00p3cQICXu+HYzt62UOMQpwMCrx8H74+CFSiDWxrLgy9xCjJAeTkigvwx6g
-        EF9SfkplRmJxRnxRaU5q8SFGCQ5mJRHeOzM+RgrxpiRWVqUW5cOkpDlYlMR51Zao+wkJpCeW
-        pGanphakFsFkZTg4lCR4ZRcANQoWpaanVqRl5pQgpJk4OEGG8wAN3zAfZHhxQWJucWY6RP4U
-        oy7Hs5mvG5iFWPLy81KlxHlngRQJgBRllObBzYGlq1eM4kBvCfM6gKzjAaY6uEmvgJYwAS1p
-        Uv0AsqQkESEl1cAYNe9HVmmsoXPpjv16mY8cTofPUjt764envxvXvTUhc7kTT514PMksavGG
-        nyqqMnV9ipb88wKLLtY4rIsW+CRs3c9Y3tjfvklP4MtlM0FFu72vJbN6dtsdFkmRLb4dG/h1
-        vWDw3Z+fudV92l1fLU42OBUnoW81rf3a9xiPrK6qJWJL4rY//q7EUpyRaKjFXFScCADcMj3l
-        MgMAAA==
+Received: by 10.80.213.80 with HTTP; Thu, 26 Oct 2017 01:48:12 -0700 (PDT)
+In-Reply-To: <20171026070108.4185-1-istephens@atlassian.com>
+References: <xmqqtvyme8pg.fsf@gitster.mtv.corp.google.com> <20171026070108.4185-1-istephens@atlassian.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Thu, 26 Oct 2017 01:48:12 -0700
+Message-ID: <CA+P7+xpk+9R9kMGNky4vTRpASf_nXM1xt0KHFjqwn8aB1NzDAQ@mail.gmail.com>
+Subject: Re: [PATCH v2] blame: prevent error if range ends past end of file
+To:     Isabella Stephens <istephens@atlassian.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Jeff King <peff@peff.net>, bturner@atlassian.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/26/2017 10:40 AM, Jacob Keller wrote:
-> On Thu, Oct 26, 2017 at 1:28 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> On Thu, Oct 26, 2017 at 4:18 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
->>> Add a test balloon to see if we get complaints from anybody who is
->>> using a shell that doesn't support the "local" keyword. If so, this
->>> test can be reverted. If not, we might want to consider using "local"
->>> in shell code throughout the git code base.
->>
->> I would guess that the number of people who actually run the Git test
->> suite is microscopic compared to the number of people who use Git
->> itself. It is not clear, therefore, that lack of reports of failure of
->> the new test would imply that "local" can safely be used throughout
->> the Git code base. At best, it might indicate that "local" can be used
->> in the tests.
->>
->> Or, am I missing something?
->>
-> 
-> I don't think you're missing anything. I think the idea here is: "do
-> any users who actively run the test suite care if we start using
-> local". I don't think the goal is to allow use of local in non-test
-> suite code. At least, that's not how I interpreted it.
-> 
-> Thus it's fine to be only as part of a test and see if anyone
-> complains, since the only people affected would be those which
-> actually run the test suite...
-> 
-> Changing our requirement for regular shell scripts we ship seems a lot
-> trickier to gauge.
+On Thu, Oct 26, 2017 at 12:01 AM, Isabella Stephens
+<istephens@atlassian.com> wrote:
+> If the -L option is used to specify a line range in git blame, and the
+> end of the range is past the end of the file, at present git will fail
+> with a fatal error. This commit prevents such behaviour - instead the
+> blame is display for any existing lines within the specified range.
+>
+> Signed-off-by: Isabella Stephens <istephens@atlassian.com>
+> ---
 
-Actually, I would hope that if this experiment is successful that we can
-use "local" in production code, too.
+I like this change. We might want to document L to indicate that an L
+that is outside the range of lines will show all lines that do match.
 
-The proper question isn't "what fraction of Git users run the test
-suite?", because I agree with Eric that that is microscopic. The correct
-question is "on what fraction of platforms where Git will be run has the
-test suite been run by *somebody*?", and I think (I hope!) that that
-fraction is quite high.
+Maybe we also want it to only succeed if at least some lines are
+blamed? Could we make it so that it fails if no lines are within the
+range? (ie: the start point is too far in? or does it already do
+such?)
 
-Really...if you are compiling Git on a platform that is so deviant or
-archaic that it doesn't have a reasonable Shell, and you don't even
-bother running the test suite, you kindof deserve your fate, don't you?
+Thanks,
+Jake
 
-Michael
+>  builtin/blame.c               | 4 ++--
+>  t/t8003-blame-corner-cases.sh | 5 +++--
+>  2 files changed, 5 insertions(+), 4 deletions(-)
+>
+> diff --git a/builtin/blame.c b/builtin/blame.c
+> index 67adaef4d..b5b9db147 100644
+> --- a/builtin/blame.c
+> +++ b/builtin/blame.c
+> @@ -878,13 +878,13 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+>                                     nth_line_cb, &sb, lno, anchor,
+>                                     &bottom, &top, sb.path))
+>                         usage(blame_usage);
+> -               if (lno < top || ((lno || bottom) && lno < bottom))
+> +               if ((lno || bottom) && lno < bottom)
+>                         die(Q_("file %s has only %lu line",
+>                                "file %s has only %lu lines",
+>                                lno), path, lno);
+>                 if (bottom < 1)
+>                         bottom = 1;
+> -               if (top < 1)
+> +               if (top < 1 || lno < top)
+>                         top = lno;
+>                 bottom--;
+>                 range_set_append_unsafe(&ranges, bottom, top);
+> diff --git a/t/t8003-blame-corner-cases.sh b/t/t8003-blame-corner-cases.sh
+> index 661f9d430..32b3788fe 100755
+> --- a/t/t8003-blame-corner-cases.sh
+> +++ b/t/t8003-blame-corner-cases.sh
+> @@ -216,8 +216,9 @@ test_expect_success 'blame -L with invalid start' '
+>  '
+>
+>  test_expect_success 'blame -L with invalid end' '
+> -       test_must_fail git blame -L1,5 tres 2>errors &&
+> -       test_i18ngrep "has only 2 lines" errors
+> +       git blame -L1,5 tres >out &&
+> +       cat out &&
+> +       test $(wc -l < out) -eq 2
+>  '
+>
+>  test_expect_success 'blame parses <end> part of -L' '
+> --
+> 2.14.1
+>
