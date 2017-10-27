@@ -2,115 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D4B4B1FAED
-	for <e@80x24.org>; Fri, 27 Oct 2017 13:56:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 22C0D1FAED
+	for <e@80x24.org>; Fri, 27 Oct 2017 14:51:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751737AbdJ0N4H (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Oct 2017 09:56:07 -0400
-Received: from mail-io0-f178.google.com ([209.85.223.178]:44721 "EHLO
-        mail-io0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751654AbdJ0Nz7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Oct 2017 09:55:59 -0400
-Received: by mail-io0-f178.google.com with SMTP id m16so12875490iod.1
-        for <git@vger.kernel.org>; Fri, 27 Oct 2017 06:55:59 -0700 (PDT)
+        id S1751298AbdJ0OvR (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Oct 2017 10:51:17 -0400
+Received: from mail-qk0-f226.google.com ([209.85.220.226]:44334 "EHLO
+        mail-qk0-f226.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751199AbdJ0OvQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Oct 2017 10:51:16 -0400
+Received: by mail-qk0-f226.google.com with SMTP id r64so8667494qkc.1
+        for <git@vger.kernel.org>; Fri, 27 Oct 2017 07:51:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=Unsjl4emMup9Q6YpzQanRGhqh/Ckl8KyYc6qRxVyPG8=;
-        b=E+/KPV7xsvBG5y2KzYndR+ocMK9p+Bg/Au2W1sv0QwjZ1wPgiq8x5QnhRkfSADvIlA
-         +XQlpKljRcaQutfanN6Oqg4tJy6NMAA3YHbJiIcTRYvT+7mzdhzudruWw+jOpZq94hMj
-         eHfJIsmOQhrfPE2jlUY+o4unZz7Ru3uT/SEu6Xv1ip5DrvV0FwcPHN7ZxjL6cpwKPSDf
-         5y9TbH3isROC6fhn4em90MdormvR1cnl/k26w+ifDF0yN9VvifG/Q00MadpQEJj/ssJQ
-         NUMzQXyLLft4NM+U8hPf3EaCkGwhl8hIPHsgmFbtCZYwIKh3/GQcHB+5ABVFPaYOgwKA
-         DfgA==
+        d=brannerchinese-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:subject:message-id:user-agent:mime-version;
+        bh=UYo+1BxVRPJRKp09B15BKoc9qr6BiHuUhSX0oMzjWd0=;
+        b=QwAQ8zSARS9IM3c/jiTPo3zqOI5tb3oDtA8jDnKOx5lMWVB7TU7SnaHR/bJKEuzsNV
+         oT64AON3SXeebrWahZ3IYhbUZxIuV5bRNPE0XWaMr52+NP4PEsM/sAyHTUZtWNBbiOk6
+         aEUyYWkZQJtcEw7cUX5IqQrvzFHbaYJMuYkV5ALaOgjl4DkP1cRHXhccjKcFGKJMMPc7
+         FziK9CdQg49eqsjDbSxFfE4usra9bVipTnV2U5SIgPn2C2GNs03QWZpmRbuJIndfzI37
+         spAuYZapks/naAVfmoUIHV/yQHJzT0jaeHBGQ/InPJvhpddYn0Q2Lx9UmyWoM6Uj0dh3
+         Wulw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=Unsjl4emMup9Q6YpzQanRGhqh/Ckl8KyYc6qRxVyPG8=;
-        b=FhwrOo0A45Has7Ybq/dc4OfqFC0rSmGgUB5VS1cogeApsJWf40q1xy/TTFYzFhghTe
-         bvumOQMthE7OEcgi0QgMA/ji4/mSzz576bEZik3nqqVqLXNon57bYF5umpIlxc8OS3Dt
-         mjVfUrJVt0NqSYq92dxXYZEUspSLsFQtlmNG52htAdtktkVUcctrSvMMhek1iRlyH4EY
-         i20Y11D/4WNwp+0xGQ/QEreAeuVz4/5IzbsM61qx2JDigKmtfuV6jTuVx+4ICtlaLcLn
-         5zw3IB1FA7qV/LVc9o8buagn64N8X5kISnm/jm5jQvOGopv0uM/Qz0cM/l9TXkwY5CXU
-         8HDQ==
-X-Gm-Message-State: AMCzsaWA9QRtzMRS6ampOsHoYYUs9tCJAEUNP66GbiUWhDv+0uOFz6A6
-        G88J70Xd5GYQNOGWMQqC3ofG6E7ecS2VwdXUhiO9ZiXf
-X-Google-Smtp-Source: ABhQp+QCWn1OM6vRSQhrxIXxQNLTMhaMHyMBe+N3DvJ7D3xC9Y2JaqobUd3ZiZbyX/O/dHW+kLm3/tbqrY7tz+v7y+8=
-X-Received: by 10.36.92.195 with SMTP id q186mr693158itb.57.1509112558794;
- Fri, 27 Oct 2017 06:55:58 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.2.126.89 with HTTP; Fri, 27 Oct 2017 06:55:58 -0700 (PDT)
-From:   Adrian Kappel <atkappel@gmail.com>
-Date:   Fri, 27 Oct 2017 09:55:58 -0400
-Message-ID: <CAEm1wifEZ5CXH7N_cCJpXQN-1dWBRZ1OQ=bJH-X=kR15Bg0Sdw@mail.gmail.com>
-Subject: [Bug Report] [includeIf] does not parse case insensitive -> case
- sensitive symlink gitdir
+        h=x-gm-message-state:date:from:to:subject:message-id:user-agent
+         :mime-version;
+        bh=UYo+1BxVRPJRKp09B15BKoc9qr6BiHuUhSX0oMzjWd0=;
+        b=akirhMzeesuolyOkuZWO426sXUOrwnvvkIQZgZZYAvS9PAeOAwoCBDqoRcsUTvhMdg
+         BcaScRZijUH7YbohzECQhw3nPj+C4TI9ic6hOr2Mjp5gESyzMetGUgJDRsWkEppcGTJj
+         rgi6ZDlMoX2Q0+H52ybjGEAZVzIdrUv0ps5ql8Y+e/+BuFo7Kwob/CT74bpLfqN9bCxO
+         169JR/Qc7alv7DsgUh4L4d9PHIs9sKc8XmH4of5YZjN+rHfRPwV5G8baIMTF5DzwYyUN
+         r18fBXgmRotNuwdlZL0wwOIijlLcdMUyUZSSN8CcYGB5QsIqFKLYqHcPXQChNkSxEIXH
+         Qhuw==
+X-Gm-Message-State: AMCzsaWjyxoniFS35WK8HeEfizAWrQgfzTI5IylF7xFPd6+3TN1eKdpF
+        If/okYu7dtrQWla2wk4zPJ25NSd0v2DlzqAlPoI2IKfWKdWNGA==
+X-Google-Smtp-Source: ABhQp+QIkM37CAjg3Gd0PMdM+eNoOND3LUwZgbVXSOuZQsVc6ew8BtU5mDAlpYUYcD3FIU6f83/xvh9uEySV
+X-Received: by 10.55.207.20 with SMTP id e20mr1182123qkj.1.1509115875219;
+        Fri, 27 Oct 2017 07:51:15 -0700 (PDT)
+Received: from [104.236.53.145] ([104.236.53.145])
+        by smtp-relay.gmail.com with ESMTPS id q74sm1403034qki.12.2017.10.27.07.51.14
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 27 Oct 2017 07:51:15 -0700 (PDT)
+X-Relaying-Domain: brannerchinese.com
+Date:   Fri, 27 Oct 2017 10:51:14 -0400 (EDT)
+From:   David Prager Branner <dpb@brannerchinese.com>
+X-X-Sender: dpb@brannerchinese
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Subject: clarify documentation of leading "**" in gitignore(5) man page
+Message-ID: <alpine.DEB.2.20.1710271043190.1400@brannerchinese>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello all, not sure if the issue I've come across is a known bug or
-addressable, but wanted to report it just in-case.
+I've long been confused by something in the man page for gitignore. I think it's unclear and I'd like to propose a change. The passage is this (source at https://git.kernel.org/pub/scm/git/git-manpages.git/tree/man5/gitignore.5):
 
+> Two consecutive asterisks ("**") in patterns matched against full
+> pathname may have special meaning:
+>
+> o   A leading "**" followed by a slash means match in all directories.
+>     For example, "**/foo" matches file or directory "foo" anywhere, the
+>     same as pattern "foo". "**/foo/bar" matches file or directory "bar"
+>     anywhere that is directly under directory "foo".
+>
+> ...
 
-** Summary
-------------------------------------------------------------------
-Using the [includeIf] configuration statement with a symlink'd gitdir
-will not work if the symlink is on a case insensitive volume and the
-location it references is on a case sensitive volume.
+In the first paragraph, it would be clearer to specify:
 
-** Steps to reproduce
-------------------------------------------------------------------
-1. Create symlink (case insensitive -> case sensitive):
-/Users/usera/dev -> /Volumes/CaseSensitive/dev
-2. Create two files: .gitignore and .gitignore-work, both stored in
-/Users/usera/
+> Two consecutive asterisks ("**"), in patterns matched against a full
+> pathname, are a wildcard representing some arbitrary number of nested
+> directories within that pathname:
 
-.gitconfig
--------------
-[user]
-  name = First Last
+In the second paragraph, I suggest removing the first pattern, "**/foo", since it is completely redundant. There are no circumstances when "**/foo" is necessary in place of plain "foo", and its presence muddies discussion.
 
-  [includeIf "gitdir:~/dev/work"]
-    path = .gitconfig-work
+Leading "**" may represent nested directories in a pathname, but is useful only before a _pattern_ containing nested directories. I suggest making that explicit. Here is how I propose to rewrite it:
 
-.gitconfig-work
---------------------
-[user]
-  email = email@address.com
+> o   A leading "**", followed by a slash and a pattern containing nested
+>     directories, means match that pattern in all pathnames.
+>     For example, "**/foo/bar" matches file or directory "bar"
+>     anywhere that is directly under directory "foo". It would match
+>     "foo/bar", "other/foo/bar", "src/foo/bar/scram/gravy".
 
-3. cd into a subfolder of ~/dev/work that has been git initialized.
-Let's say ~/dev/work/repo
-4. Run git config --includes user.email
-5. See that nothing is output from the command
-6. Update the [includeIf] statement in .gitconfig to be the real
-location i.e. "gitdir:/Volumes/CaseSensitive/dev/work/repo"
-7. Rerun the command from [4]
-8. See that email@address.com is output from the command
+Thanks.
 
-** Other variations that were not tested
-------------------------------------------------------------------
-- symlink on case sensitive volume referencing a location on a case
-insensitive volume
-
-** Environment Information
-------------------------------------------------------------------
-git --version: 2.14.1
-OS: macOS Sierra 10.12.6
-
-
-If a fix is not feasible or likely to be implemented, I would
-recommend that we update the git site's documentation to reflect this
-gotcha. After verification of course.
-
-Best,
-Adrian Kappel
-akappel <https://github.com/akappel/>
+- dpb
