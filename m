@@ -2,130 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6CF711FAED
-	for <e@80x24.org>; Fri, 27 Oct 2017 17:22:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2B74F1FAED
+	for <e@80x24.org>; Fri, 27 Oct 2017 17:29:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932244AbdJ0RW1 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Oct 2017 13:22:27 -0400
-Received: from smtprelay0204.hostedemail.com ([216.40.44.204]:42080 "EHLO
-        smtprelay.hostedemail.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S932190AbdJ0RW0 (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 27 Oct 2017 13:22:26 -0400
-Received: from filter.hostedemail.com (clb03-v110.bra.tucows.net [216.40.38.60])
-        by smtprelay06.hostedemail.com (Postfix) with ESMTP id 93C651822408A;
-        Fri, 27 Oct 2017 17:22:25 +0000 (UTC)
-X-Session-Marker: 6A6F6540706572636865732E636F6D
-X-HE-Tag: spade10_89775501ffd14
-X-Filterd-Recvd-Size: 3074
-Received: from XPS-9350 (unknown [47.151.150.235])
-        (Authenticated sender: joe@perches.com)
-        by omf09.hostedemail.com (Postfix) with ESMTPA;
-        Fri, 27 Oct 2017 17:22:24 +0000 (UTC)
-Message-ID: <1509124942.1914.9.camel@perches.com>
-Subject: Re: grep vs git grep performance?
-From:   Joe Perches <joe@perches.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        git <git@vger.kernel.org>
-Date:   Fri, 27 Oct 2017 10:22:22 -0700
-In-Reply-To: <CAGZ79kYWPunzZ2u=MtCoCadxXu_4etEK5DYnhYXo+CgeHrXQwQ@mail.gmail.com>
-References: <1509030170.10651.59.camel@perches.com>
-         <CAGZ79ka41NdzNxGAvtVW802088KydKkp3yHx=Z5q3Mc9GGa_+g@mail.gmail.com>
-         <1509039696.11245.9.camel@perches.com>
-         <CAGZ79kYWPunzZ2u=MtCoCadxXu_4etEK5DYnhYXo+CgeHrXQwQ@mail.gmail.com>
-Content-Type: text/plain; charset="ISO-8859-1"
-X-Mailer: Evolution 3.26.1-1 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+        id S932329AbdJ0R3D (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Oct 2017 13:29:03 -0400
+Received: from mail-qk0-f178.google.com ([209.85.220.178]:52198 "EHLO
+        mail-qk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932190AbdJ0R3D (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Oct 2017 13:29:03 -0400
+Received: by mail-qk0-f178.google.com with SMTP id 17so9208418qkq.8
+        for <git@vger.kernel.org>; Fri, 27 Oct 2017 10:29:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=vA7gUAorryuts7ITGFHr27bq9F/T5jf31niOKG8aXvU=;
+        b=sHzXHWbs02UTeGKYKfK4pw+EmmLuSdUGbPnEz13uo2gNyrC8AObbSjS1+KE014Ue1y
+         kjjKNw2O/eMlVS7RjqaT+PBWW5uVlp2MBileZzz/aoUhOPqM4GuZAL+Yaws1cHnvkDfz
+         0lV3GiDf9pGwz2DUKo4c7FxIrW/BTXby2wnPg1uYUeSxZSOz0I2GwyaxOLmPbawxsDrR
+         Rg1I3D2X5iuf1OuUT9rmCHfzgXwcI5yqIB7Ye13LIGAb6gluP3VJA4X3XCgqQHtD2wgP
+         /4Ss9SdRa5Qegroal4ad2IOmtfMxg1pNqEqxNfLE7cIow+wISEMTMCDIFAPdrD4ap/DN
+         L0QQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=vA7gUAorryuts7ITGFHr27bq9F/T5jf31niOKG8aXvU=;
+        b=aQWVPmRZMyUcMBEWHwnv0l51CmOJYhPmLdLOT1tfMOgNxUL5HGm0iq/vmGbY2tUF7D
+         zFGk5s+PjYMQwloN3WSrdf8yv9Ecs0CLQNsx24QPNBOQ/lU6IR98JhjoISb3rh17l7dB
+         FT3jPoqEZ/+l+8yp6ExnU6SvqTSek5PMLzQ3d4DW+0qBaGkqzx9NMpru4EBZ9kPlNAwh
+         8wlMVIupVn/A2XcF7IZYhiuRiAoMXn8Q5TJq11WHgnoVDqhiF6tP6KeTQyVsv6pXXdvb
+         ly1amu2kMtKw16tuVr2FlvhMhrSfk5lek5v2WRaSsUgCBoICnZ2VXc4UvcAhh1zOHahd
+         UT+A==
+X-Gm-Message-State: AMCzsaVhsTDALmw9i34cW07JvQveVVa9d7rZKKt9K3F/mXSSlxSOD7At
+        QPmy2lc5OsUuJ9o0hG4gtWgJUCHusPkJdnm16Vo2Zw==
+X-Google-Smtp-Source: ABhQp+ScQpZlRB/REFDMmnxT8pUKDqoXj/fhUdUNFCSwz9odz832PGEK+sDT0akXvp1dcpoNOlFvpHNro6N82m3aCaM=
+X-Received: by 10.55.33.203 with SMTP id f72mr1931747qki.176.1509125341950;
+ Fri, 27 Oct 2017 10:29:01 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.140.102.70 with HTTP; Fri, 27 Oct 2017 10:29:01 -0700 (PDT)
+In-Reply-To: <bd7eb593-75f9-0dd1-9dff-9dc420532217@samsung.com>
+References: <CGME20171024152727epcas2p4fb7dcf147e44aadf7733098151d469a5@epcas2p4.samsung.com>
+ <3aed764b-388c-d163-08fc-32b294c6b9d3@samsung.com> <CAGZ79kaSZG9WriqX0SLbTnEDRr-4YdFRuK17+9wnxyrftfnMmg@mail.gmail.com>
+ <CAPig+cRTL2amjsgdp1=T3GMZLa=favugOfnQw9XjWzC+U=v5Sw@mail.gmail.com>
+ <CAN0heSp7b_6n3y=s4++oWhkPUuM=s9L7LWVx5vn8o=5aH6DKKw@mail.gmail.com>
+ <20171024195221.gqgtibwjaztgeel6@sigill.intra.peff.net> <xmqq8tg0j8vb.fsf@gitster.mtv.corp.google.com>
+ <CAPig+cSjQd=p1CdizU5oUaz91z=j02UnWLtTguWzvkjS+v6ETA@mail.gmail.com>
+ <20171025072717.7svdq4kqlfxlwszi@sigill.intra.peff.net> <38a80069-abdb-0646-a20c-eca39dd4f519@samsung.com>
+ <CAPig+cRq1AEOgDoXeH-hDMvhEMnfiNK5CuSBbbio-mbHros=QQ@mail.gmail.com> <bd7eb593-75f9-0dd1-9dff-9dc420532217@samsung.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 27 Oct 2017 10:29:01 -0700
+Message-ID: <CAGZ79kZ9EV=qaYyuA3kfuQ04EhLWax52MhtkmGJto2Lommc_SQ@mail.gmail.com>
+Subject: Re: [PATCH v3] merge-recursive: check GIT_MERGE_VERBOSITY only once
+To:     Andrey Okoshkin <a.okoshkin@samsung.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>, vmiklos@frugalware.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 2017-10-26 at 10:45 -0700, Stefan Beller wrote:
-> On Thu, Oct 26, 2017 at 10:41 AM, Joe Perches <joe@perches.com> wrote:
-> > On Thu, 2017-10-26 at 09:58 -0700, Stefan Beller wrote:
-> > > + Avar who knows a thing about pcre (I assume the regex compilation
-> > > has impact on grep speed)
-> > > 
-> > > On Thu, Oct 26, 2017 at 8:02 AM, Joe Perches <joe@perches.com> wrote:
-> > > > Comparing a cache warm git grep vs command line grep
-> > > > shows significant differences in cpu & wall clock.
-> > > > 
-> > > > Any ideas how to improve this?
-> > > > 
-> > > > $ time git grep "\bseq_.*%p\W" | wc -l
-> > > > 112
-> > > > 
-> > > > real    0m4.271s
-> > > > user    0m15.520s
-> > > > sys     0m0.395s
-> > > > 
-> > > > $ time grep -r --include=*.[ch] "\bseq_.*%p\W" * | wc -l
-> > > > 112
-> > > > 
-> > > > real    0m1.164s
-> > > > user    0m0.847s
-> > > > sys     0m0.314s
-> > > > 
-> > > 
-> > > I wonder how much is algorithmic advantage vs coding/micro
-> > > optimization that we can do.
-> > 
-> > As do I.  I presume this is libpcre related.
-> > 
-> > For instance, git grep performance is better than grep for:
-> > 
-> > $ time git grep -w "seq_printf" -- "*.[ch]" | wc -l
-> > 8609
-> > 
-> > real    0m0.301s
-> > user    0m0.548s
-> > sys     0m0.372s
-> > 
-> > $ time grep -w -r --include=*.[ch] "seq_printf" * | wc -l
-> > 8609
-> > 
-> > real    0m0.706s
-> > user    0m0.396s
-> > sys     0m0.309s
-> > 
-> 
-> One important piece of information is what version of Git you are running,
-> 
-> 
-> $ git tag --contains origin/ab/pcre-v2
-> v2.14.0
+On Wed, Oct 25, 2017 at 6:03 AM, Andrey Okoshkin <a.okoshkin@samsung.com> wrote:
+> Get 'GIT_MERGE_VERBOSITY' environment variable only once in
+> init_merge_options() and store the pointer to its value for the further check.
+> No intervening calls to getenv(), putenv(), setenv() or unsetenv() are done
+> between the initial getenv() call and the consequential result pass to strtol()
+> as these environment related functions could modify the string pointer returned
+> by the initial getenv() call.
+>
+> Signed-off-by: Andrey Okoshkin <a.okoshkin@samsung.com>
 
-v2.10
-
-> ...
-> 
-> (and the version of pcre, see the numbers)
-> https://git.kernel.org/pub/scm/git/git.git/commit/?id=94da9193a6eb8f1085d611c04ff8bbb4f5ae1e0a
-
-I definitely didn't have that one.
-
-I recompiled git latest (with USE_LIBPCRE2) and reran.
-
-Here are the results
-
-$ git --version
-git version 2.15.0.rc2.48.g4e40fb3
-
-$ time git grep -P "\bseq_.*%p\W" -- "*.[ch]" | wc -l
-112
-
-real	0m0.437s
-user	0m1.008s
-sys	0m0.381s
-
-So, git grep performance has already been
-quite successfully improved.
-
-Thanks.
-
+This is
+Reviewed-by: Stefan Beller <sbeller@google.com>
