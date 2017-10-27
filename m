@@ -2,120 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B84AE2055E
-	for <e@80x24.org>; Fri, 27 Oct 2017 07:12:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7EF1E2055E
+	for <e@80x24.org>; Fri, 27 Oct 2017 07:17:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751483AbdJ0HMO (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Oct 2017 03:12:14 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51125 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751068AbdJ0HMN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Oct 2017 03:12:13 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0D8FFB17B4;
-        Fri, 27 Oct 2017 03:12:13 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=9fQR05itFKoM
-        SXO38ifVTEgUriQ=; b=kV5T1aQYFDhKMvGJPpK4Ja7V/akaPW0N4TZRZu/ZLfM/
-        bQPG+qkx/W8vsa/cxCzza/2ioGU9+6A4883wrcAjl1VAeg4mV5QyW1OJ8p54BW40
-        +7/0kDmJOUIqylPMPzVGwCaeNZ5OsC9S+j53Dj/o94ogx7sWPzMVwaJK1wHnNrQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=YnMla1
-        crfyEHpFAcbUR0BWKFd1pzwYI9r2B88doe4ieNSRtfDOeKcaIXFhwR2osDOYQlCZ
-        X3sAFnPDvrlc5vmsfolJzj4U9AyUd2xLb2nmD/SILvOWJasyJ/p1Gmz534IzHhvX
-        Cd4mDQtpOxDErnPc3Ysw3sKhGExxs3+H1oUpg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 04465B17B3;
-        Fri, 27 Oct 2017 03:12:13 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6A809B17B2;
-        Fri, 27 Oct 2017 03:12:12 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     git@vger.kernel.org, jrnieder@gmail.com, peff@peff.net
-Subject: Re: [PATCH 1/2] xdiff-interface: export comparing and hashing strings
-References: <xmqqinf3izgm.fsf@gitster.mtv.corp.google.com>
-        <20171025184912.21657-1-sbeller@google.com>
-        <20171025184912.21657-2-sbeller@google.com>
-        <3f656948-273f-e01d-ad52-e460059571da@web.de>
-Date:   Fri, 27 Oct 2017 16:12:11 +0900
-In-Reply-To: <3f656948-273f-e01d-ad52-e460059571da@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Thu, 26 Oct 2017 19:12:15 +0200")
-Message-ID: <xmqqefppcbec.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751988AbdJ0HRN (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Oct 2017 03:17:13 -0400
+Received: from smtpoutz11.laposte.net ([194.117.213.174]:54231 "EHLO
+        smtp.laposte.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751072AbdJ0HRG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Oct 2017 03:17:06 -0400
+Received: from smtp.laposte.net (localhost [127.0.0.1])
+        by lpn-prd-vrout003 (Postfix) with ESMTP id 49B9243203CC
+        for <git@vger.kernel.org>; Fri, 27 Oct 2017 09:17:04 +0200 (CEST)
+Received: from smtp.laposte.net (localhost [127.0.0.1])
+        by lpn-prd-vrout003 (Postfix) with ESMTP id 3DE3643203C3
+        for <git@vger.kernel.org>; Fri, 27 Oct 2017 09:17:02 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=laposte.net; s=mail0;
+        t=1509088622; bh=KvmBY+KF6wgkgHNnvymerpAuNEdRGoq4rvslpsmQgiU=;
+        h=Date:From:To:Cc:In-Reply-To:References:Subject;
+        b=T/hn7YO8IFMJgxfoeE/h0ZLAGFMl99LIzTbxJEcl0NRtWog+tLcs0bngKLIM7toJr
+         e+bkWAHMOhtaN5vxINhgx3NxexeT7m07ckK1K+0Di9R8COxhaW313ou+upIw4D+SVl
+         CyLvBGNNBmJ5vRR8MjlWn2gaSH4ZklW3f5uF64GhxU8KGUWmVg6YmtKHluQHvbGtFp
+         g9CSC2Gb2g64ZWsb9wJjdq6HHBDB7zM6I7sp48h6uv5PkrtDX9wTdEbf2Pj9Ep9X8j
+         DmBa6cctIVHvJ5vbjRwjiED6cXj/1ZW7U/wYJ4GTHdLrHk84gjBDiSAiFQQsgIZ6m1
+         XbGXCbb3CjZzw==
+Received: from lpn-prd-mstr088.laposte (lpn-prd-mstr088 [10.128.59.114])
+        by lpn-prd-vrout003 (Postfix) with ESMTP id 9CBE643203AB;
+        Fri, 27 Oct 2017 09:16:57 +0200 (CEST)
+Date:   Fri, 27 Oct 2017 09:16:57 +0200 (CEST)
+From:   nicolas.mailhot@laposte.net
+To:     Jacob Keller <jacob.keller@gmail.com>
+Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org
+Message-ID: <2143560244.170063.1509088617483.JavaMail.zimbra@laposte.net>
+In-Reply-To: <7DC2A15E-0B47-4398-8B62-DC39C5EA1343@gmail.com>
+References: <2089146798.216127.1508487262593.JavaMail.zimbra@laposte.net> <1290947539.4254.1508496039812.JavaMail.zimbra@laposte.net> <CAGZ79kYRq4OugvTfb2WNdk-M5DMAZC0JpJHqC1KSeJY2eNN1=Q@mail.gmail.com> <1760206035.56692.1508594211365.JavaMail.zimbra@laposte.net> <7DC2A15E-0B47-4398-8B62-DC39C5EA1343@gmail.com>
+Subject: Re: [RFE] Add minimal universal release management capabilities to
+ GIT
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 277291C2-BAE6-11E7-9134-8EF31968708C-77302942!pb-smtp1.pobox.com
 Content-Transfer-Encoding: quoted-printable
+X-Originating-IP: [192.196.142.67]
+X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - FF57 (Win)/La Poste)
+Thread-Topic: Add minimal universal release management capabilities to GIT
+Thread-Index: g1heRbNIxt9f90kXtzaTKBpZHxFhiA==
+X-VR-SrcIP: [192.196.142.67]
+X-VR-FullState: 0
+X-VR-Score: -100
+X-VR-Cause-1: gggruggvucftvghtrhhoucdtuddrgedttddrfeefgdduudeiucetufdoteggodetrfdotffvucfrrhho
+X-VR-Cause-2: fhhilhgvmecunfetrffquffvgfenuceurghilhhouhhtmecuhedttdenucesvcftvggtihhpihgvnhht
+X-VR-Cause-3: shculddquddttddmnecujfgurhepfffhvffkjghfufggtgfgihfothesthhqtgdtredtjeenucfhrhho
+X-VR-Cause-4: mhepnhhitgholhgrshdrmhgrihhlhhhotheslhgrphhoshhtvgdrnhgvthenucfkphepuddtrdduvdek
+X-VR-Cause-5: rdehledruddugedpudelvddrudeliedrudegvddrieejnecurfgrrhgrmhepmhhouggvpehsmhhtphho
+X-VR-Cause-6: uhhtpdhhvghloheplhhpnhdqphhrugdqmhhsthhrtdekkedrlhgrphhoshhtvgdpihhnvghtpedutddr
+X-VR-Cause-7: uddvkedrheelrdduudegpdhmrghilhhfrhhomhepnhhitgholhgrshdrmhgrihhlhhhotheslhgrphho
+X-VR-Cause-8: shhtvgdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-VR-AvState: No
+X-VR-State: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
-
-> Am 25.10.2017 um 20:49 schrieb Stefan Beller:
->> +/*
->> + * Compare the strings l1 with l2 which are of size s1 and s2 respect=
-ively.
->> + * Returns 1 if the strings are deemed equal, 0 otherwise.
->> + * The `flags` given as XDF_WHITESPACE_FLAGS determine how white spac=
-es
->> + * are treated for the comparision.
->> + */
->> +extern int xdiff_compare_lines(const char *l1, long s1,
->> +			       const char *l2, long s2, long flags);
->
-> With the added comment it's OK here.
->
-> Still, I find the tendency in libxdiff to use the shortest possible
-> variable names to be hard on the eyes.  That math-like notation may hav=
-e
-> its place in that external library, but I think we should be careful
-> lest it spreads.
-
-Yeah, I tend to agree.  The xdiff-interface is at the (surprise!)
-interface layer, so we could make it follow the style of either one,
-but we seem to have picked up the convention of the lower layer,
-so...
-
-By the way, I was looking at the code around this area while
-reviewing the cr-at-eol thing, and noticed a couple of things:
 
 
- * combine-diff.c special cases only IGNORE_WHITESPACE and
-   IGNORE_WHITESPACE_CHANGE but no other IGNORE_WHITESPACE things; I
-   have a suspicion that this is not because IGNORE_WHITESPACE_AT_EOL
-   does not have to special cased by the codepath, but only because
-   the combine-diff.c refactoring predates the introduction of
-   ws-at-eol thing?
+----- Mail original -----
+De: "Jacob Keller"=20
 
-   The machinery uses its own match_string_spaces() helper; it may
-   make sense to use the same xdiff_compare_lines() in its callers
-   and get rid of this helper function.
-
- * diff_setup_done() sets DIFF_FROM_CONTENTS when any of the
-   IGNORE_WHITESPACE bits is true, to allow "git diff -q
-   --ignore-something" would do the right thing.  We do not however
-   give a similar special case to XDF_IGNORE_BLANK_LINES.
-
-   $ echo >>Makefile && git diff $option --ignore-blank-lines Makefile
-
-   exits with 1 when option=3D--exit-code and it exits with 0 when
-   option=3D-q
+Hi Jacob,
 
 
-For now I'll leve these as #leftoverbits, but I may come back to the
-latter soonish.  I won't come back to the former until Stefan's
-refactor hits 'master', though.
+> I think that this could easily be built by a separate script which provid=
+es git release command line and uses tags under the hood in a=20
+> well formed way.
+
+True, the difficulty is not technical, the whole scheme is basic and KISS.
+
+> I wouldn't say that the method outlined here works for all projects but I=
+ do agree it's fairly common and could work for many projects
+
+I would be very surprised if there was a strong technical reason that stopp=
+ed any project from adopting this scheme. Like I already wrote, Linux packa=
+ging tools work by converting public release naming to this scheme (with so=
+me additional twists, mostly there to help conversion of terminally broken,=
+ tooling-hostile and usually legacy projects, not worth the pain to import =
+in new tooling).
+
+> I think most large projects already use annotated tags and tho they have =
+their own format it works pretty well.=20
+
+Raw tags are useless as release ids for tooling so everyone is forced to in=
+vent something else as soon as the project complexity passes a threshold (t=
+hat's the point were there is no choice but to redefine tags, not the point=
+ were it starts being useful). I've already detailed why their laxity makes=
+ them useless.
+
+> Showing a tool that could help projects create more standardized release =
+tags would be helpful.
+>=20
+> I think such a tool could already be built, scripted to create annotated =
+tags with a well formed name. I don't think you necessarily
+> need to have this in core git, tho I do see that your main goal is to pig=
+gyback on git itselfs popularity
+
+I see little hope for such a tool. Reimplementation is too trivial and conv=
+ention drift only starts to be acutely painful past a certain size. At that=
+ size you're almost certain to have already started using a custom implemen=
+tation, with refactoring costs impeding switching to a generic tool.
+
+Basically, it can only be done with a good probability of success by piggyb=
+acking on something that already federates a large number of Git users:
+=E2=80=93 Git itself, which is the correct most productive and least painfu=
+l place for everyone involved
+=E2=80=93 one of the big Git-based forges, ie GitHub or GitLab. I'd expect =
+it would be very tempting for one of those to make something that would eff=
+ectively be a better Git than upstream Git, the usual embrace and extend ef=
+fect.
+=E2=80=93 development language ecosystems (Python, Ruby, Go, etc). There ar=
+e already many premises of such work since build automation needs ids that =
+can be processed by tools.
+
+The problem with letting forges or language ecosystems sort it is that you'=
+ll end up with functionally equivalent implementations, but divergent imple=
+mentation details that end up wasting everyone's time. Like, decimal separa=
+tor differences, deb vs rpm, car driving side, we humans managed to create =
+the same clusterfuck time and time again. And much swearing every time you =
+have a project that requires bridging those divergences.
+
+It would be worth it if the divergence and competition helped new ground-br=
+eaking schemes to emerge but really, look at it, it's not rocket science. E=
+veryone has been using about this scheme for decades with little changes. T=
+he remaining differences are slowly being eroded by the wish to automate ev=
+erything.
+
+Regards,
+
+--=20
+Nicolas Mailhot
 
