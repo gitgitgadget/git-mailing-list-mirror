@@ -2,70 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 406711FAED
-	for <e@80x24.org>; Fri, 27 Oct 2017 15:32:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 457C71FAED
+	for <e@80x24.org>; Fri, 27 Oct 2017 15:33:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751393AbdJ0Pci (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Oct 2017 11:32:38 -0400
-Received: from mail-qk0-f173.google.com ([209.85.220.173]:55195 "EHLO
-        mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750851AbdJ0Pci (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Oct 2017 11:32:38 -0400
-Received: by mail-qk0-f173.google.com with SMTP id n5so8782590qke.11
-        for <git@vger.kernel.org>; Fri, 27 Oct 2017 08:32:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=IV7tG6UNRkfId+ZlPpvDbaLAAhZT1CUe/c6l6rSpqyI=;
-        b=mACS6cNQpjY5Igsug5GGa/yzQnf0PyhODejjkBZqk0xz6IyUCyWWtfulgrk/qFssoA
-         OlB9XCOVoK8E+HjruLgMkjpDP5GEJafBwo6wi4BI3Y4XtHdRwPAyQBo6pWqEojJOXCTO
-         LMCDPjr4m7DgkMYlgEUzjKjWH37Wc0Mg3gmMfoZ8NW18JfuXkaCaocnMJ02XfpTxelIH
-         37JQ3dvdJ4/HzFQJlRRl2/ZCJf8XSvuo7OOxMPXgTo8AwX6kuX3IVGoNWWlS4XdY8xyX
-         f1IHXW6ibKWMGP0f6YOjmwRCIW9wlbeLdAJjOpKy4T1mz8LGe3HyruQjCgcZI61FPSGa
-         tqHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=IV7tG6UNRkfId+ZlPpvDbaLAAhZT1CUe/c6l6rSpqyI=;
-        b=OoSIbUNvvRJOK6Z527/SN2K/fEUx9mSinemzi5V6T3CxsFFkmGSgFDnyPfIBdHyAnG
-         d+wthemJJSpJ/6j3DpGqG+kJNgsXg6O6qlU2uhO5ahmbHmNmb3eHV0YIr+618/XwNzvX
-         OlKJG+PvC/7Tcpi2Z6RPR1JFzQD/cdbSpRW4c8qIlxNXTyWQvlOVOwd+m8429TD5R+2t
-         R9Tdosa5R799CUofEXhYn/6ttet66nyF9jssbNRttHdpGz387A1ouJBnuQxDD6P57TzX
-         /0QfmE6JBIJpxdmV+VzuCFJWMCxRgkmXxD/sbeYFkw/15aTxEGRdEv49CTc/6Pe15biC
-         LFEA==
-X-Gm-Message-State: AMCzsaX7KNO6nK8rvCCsmPCD8iQqv3yrxvWRU9tHRsws9tWW49qwMdxT
-        WYMONG6JpaECpQDRqn4eRofbI03I8qqKZTRxP/z15g==
-X-Google-Smtp-Source: ABhQp+T6Y+qmNURo25R0PcjBPdp75bPoW2tD/5Ec3fCsU2MgF7lgozTrBKXdavjZOyNw1lAchMKp5ycHG1YdvH4J6FY=
-X-Received: by 10.55.136.67 with SMTP id k64mr1404152qkd.26.1509118357288;
- Fri, 27 Oct 2017 08:32:37 -0700 (PDT)
+        id S1751936AbdJ0Pdk (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Oct 2017 11:33:40 -0400
+Received: from mout.web.de ([212.227.15.4]:56339 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751917AbdJ0Pdj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Oct 2017 11:33:39 -0400
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb001
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MeScR-1doVgd3quN-00QCZ9; Fri, 27
+ Oct 2017 17:33:36 +0200
+Date:   Fri, 27 Oct 2017 17:33:36 +0200
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Adrian Kappel <atkappel@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [Bug Report] [includeIf] does not parse case insensitive -> case
+ sensitive symlink gitdir
+Message-ID: <20171027153336.GA26626@tor.lan>
+References: <CAEm1wifEZ5CXH7N_cCJpXQN-1dWBRZ1OQ=bJH-X=kR15Bg0Sdw@mail.gmail.com>
 MIME-Version: 1.0
-Received: by 10.140.28.246 with HTTP; Fri, 27 Oct 2017 08:32:36 -0700 (PDT)
-In-Reply-To: <0102015f5e5ee171-f30f4868-886f-47a1-a4e4-b4936afc545d-000000@eu-west-1.amazonses.com>
-References: <0102015ecc65d695-22151d3b-752b-4c10-a3a3-b8ef52491664-000000@eu-west-1.amazonses.com>
- <0102015f5e5ee171-f30f4868-886f-47a1-a4e4-b4936afc545d-000000@eu-west-1.amazonses.com>
-From:   Pranit Bauva <pranit.bauva@gmail.com>
-Date:   Fri, 27 Oct 2017 21:02:36 +0530
-Message-ID: <CAFZEwPPxuno5ey9qWVVE9=CU5f-BmBZjhQMrHOXS1tFG6r4LkQ@mail.gmail.com>
-Subject: Re: [PATCH v16 Part II 1/8] bisect--helper: `bisect_reset` shell
- function in C
-To:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAEm1wifEZ5CXH7N_cCJpXQN-1dWBRZ1OQ=bJH-X=kR15Bg0Sdw@mail.gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Provags-ID: V03:K0:BRCHi+0timlWnwhbgapAZgseMqXLOSsziasJcVz7QmZld1MZLlr
+ AzQuvsgESirgm44EjOL1OIyXtP56ScG6IaAi4ifn/HAu2odisisLPZHQX+l9kHvmExmTLMx
+ WaSnjzxeP57Zf844t06F4u3YnD3fmoDUmArOYCYP7ALbe0FtnamxfJSlTrWWrdxOGhKyWOw
+ RdCHO3CmjBqZyUGaMre1Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:al+S7cWQr0M=:aQn1vlAXBhGdLiWR9Pjrio
+ 5RkqHcNp7o5uen1ByJQ8Pq6P/TkH93RPuOLSsXP7AZBTEGPw870PNWskNaDlhU4zoxRVGLEh2
+ pP2uzzDe1nxIEAtv4U7NGp/OKbYV/v80rRA4qf+MWV+UfNnAuVm3Twhekaxm5aWNyomuPQaju
+ KbknY2nBhPWG+b+nuLdFtxfGe9h7xV2nbyVYK05Mg4FsqEr1BwklKszae8C1MkQb1MFrRLKRA
+ 32gYDLtE0mkhItduR/pE44Pu6InAoyq7Dy9OVb3QVu0kheH3Vt9FZ3YZflBXVJwJPjalkRLmD
+ xlKcH/LOIqp+KHxHvcU6VWj2I/d5Zn8kJ3kL0yLNpUBUuPHPK6M8RTvvxaP/Zi2RgjurU832C
+ xXsPo0ypmR7sODCxFDwGDXAwfvehw+Dl1nBPw7lLw9O1uR5I8y0ASd2oUexUiYp9EgxGkqOsM
+ 3iNIW/JbQPZqr5uU938VBwE8FKUyDDRZxmQd/zT+GNly+5CKwFyOu+ZO70469Ki7+ewEbZw6T
+ Dh5QhEppaBn11j9hBFwM5j+Jb55AUbLiHf3xKa87pzqhUeUuj1MMeA9Pa1XHqJMUH3/g+fgf7
+ au8DNGZY7MBY/o1o8D/2b2ATd7gQjWtaM8W2CNwEXLGPb8V5KBxx4XfTZkhFzPMBt9WJIj5My
+ vNSZ6RZTeXNjYyGkMXNMeqL5lWduNWXV+ygyuOzJiOORPCHf+nXbVU28+NMJOv46t47i98l8h
+ CjYDPt6M8tIUv3qbOLwyx/fbjRTYFxdTR7SCdjFlQTkSdzTDaS+RDXKCA9UQVC+RDFE8va8Nw
+ hmjx00kpl6bhUSKEDmFp9QvnDZnvQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey,
+On Fri, Oct 27, 2017 at 09:55:58AM -0400, Adrian Kappel wrote:
+> Hello all, not sure if the issue I've come across is a known bug or
+> addressable, but wanted to report it just in-case.
 
-I forgot to mention. One can find the travis build here[1] which is passing.
+Thanks for the detailed description - my question is inline
 
-[1]: https://travis-ci.org/git/git/builds/293725346
+> 
+> 
+> ** Summary
+> ------------------------------------------------------------------
+> Using the [includeIf] configuration statement with a symlink'd gitdir
+> will not work if the symlink is on a case insensitive volume and the
+> location it references is on a case sensitive volume.
+> 
+> ** Steps to reproduce
+> ------------------------------------------------------------------
+> 1. Create symlink (case insensitive -> case sensitive):
+> /Users/usera/dev -> /Volumes/CaseSensitive/dev
+> 2. Create two files: .gitignore and .gitignore-work, both stored in
+> /Users/usera/
+> 
+> .gitconfig
+> -------------
+> [user]
+>   name = First Last
+> 
+>   [includeIf "gitdir:~/dev/work"]
+>     path = .gitconfig-work
+> 
+> .gitconfig-work
+> --------------------
+> [user]
+>   email = email@address.com
+> 
+> 3. cd into a subfolder of ~/dev/work that has been git initialized.
+> Let's say ~/dev/work/repo
+> 4. Run git config --includes user.email
+> 5. See that nothing is output from the command
+> 6. Update the [includeIf] statement in .gitconfig to be the real
+> location i.e. "gitdir:/Volumes/CaseSensitive/dev/work/repo"
 
-Regards,
-Pranit Bauva
+Didn't you set it up pointing do the real location ?
+That is what is written above:
+> 1. Create symlink (case insensitive -> case sensitive):
+> /Users/usera/dev -> /Volumes/CaseSensitive/dev
+
+(I suspect that people use something like this:
+ /Users/usera/dev -> /Volumes/casesensitive/dev
+ And in this case it would be the file system which says
+ casesensitive != CaseSensitive and Git can't do much about it)
+
+> 7. Rerun the command from [4]
+> 8. See that email@address.com is output from the command
+> 
+> ** Other variations that were not tested
+> ------------------------------------------------------------------
+> - symlink on case sensitive volume referencing a location on a case
+> insensitive volume
+> 
+> ** Environment Information
+> ------------------------------------------------------------------
+> git --version: 2.14.1
+> OS: macOS Sierra 10.12.6
+> 
+> 
+> If a fix is not feasible or likely to be implemented, I would
+> recommend that we update the git site's documentation to reflect this
+> gotcha. After verification of course.
+> 
+> Best,
+> Adrian Kappel
+> akappel <https://github.com/akappel/>
