@@ -2,147 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6294A202A0
-	for <e@80x24.org>; Fri, 27 Oct 2017 00:57:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 75E2C202A0
+	for <e@80x24.org>; Fri, 27 Oct 2017 01:02:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932398AbdJ0A5B (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Oct 2017 20:57:01 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:50033 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751639AbdJ0A5A (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Oct 2017 20:57:00 -0400
-Received: by mail-pf0-f194.google.com with SMTP id i5so3730102pfe.6
-        for <git@vger.kernel.org>; Thu, 26 Oct 2017 17:57:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=1Mft1sqGy2QLR4Gh+jGqtV3RKKLv0heVsQKHZVecyCU=;
-        b=vJ9Yx3jk5cj00UjOD+DetSodTwP3tAa5EroIgAXyGRl+oqfe4nyqx3jXbP6I6qpXUR
-         8+YoU5Of+L10NyDR3Seuejl5GiJjHCL2W4e5I5jl4dWpaM1iSLgsgkBYstcmqAPFzaPK
-         +fU5HssQsw7GFNpPZtuS2fn7rX4vOTtPshpgVIpSiF3+jDAiXsCtuvme0/k0M1BYxyTR
-         fZlfFVyyT7vOdxofcc/QOFmGGl1V1Qp4Ecsws/CnXx6tcSQe26/PZVU/7T2WzrPOKo6S
-         ZWA3sVrGT9lCym0fNqLvuii0mNrXcZ37V6PgeVycylBbR98Ix9LcHTB0BHSsyClrSTlx
-         Cfyg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=1Mft1sqGy2QLR4Gh+jGqtV3RKKLv0heVsQKHZVecyCU=;
-        b=Y60eeh5izI11AOmFnzmn/QIA9kWvISojjxc86Gud1t8zopF3Phxdgrqt9igdEOMjXj
-         HpkfK0GmKfCN08LCIbuv9/2NSnk6isBXdrm2BE062K1IeagEwmQwuhp/aN1frI3elXC9
-         6yfQfpxiXBSSgBpGYEVKQYe+I1kswW0Ry6JH2DkBcJ9IeoNgv8ADOjLmOi32BPpyb/wG
-         bX1VI/d6/tBztBEHBFIb8U24xNf3o47B+vZIxQp0gZY++XhpW9ri/1I7K8AOI0nG1Ihz
-         EDOJtJKDMpANk9z+FxIrTO5GOwTGJ3tU5Z/JOnC9OAOGf0f1JDxiursWXAVSfRII12un
-         83uw==
-X-Gm-Message-State: AMCzsaUdGgkt+16L6NTzH0mSiP73xVTFOcE5kpFYKj8bRELbGeKovOY+
-        fHCBHYrvU+E/ZlMXdsi329KGjg==
-X-Google-Smtp-Source: ABhQp+RkWAa8tvFteceOZr+1h1tQMWraKuArlgn1QFNkxoPNejlSmKcUV1CGui5EcmugQb4TDX8Rqg==
-X-Received: by 10.101.73.136 with SMTP id r8mr6558233pgs.411.1509065820108;
-        Thu, 26 Oct 2017 17:57:00 -0700 (PDT)
-Received: from CLI-30675.office.atlassian.com ([103.233.242.9])
-        by smtp.gmail.com with ESMTPSA id h186sm11170205pfe.66.2017.10.26.17.56.56
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Thu, 26 Oct 2017 17:56:59 -0700 (PDT)
-From:   Isabella Stephens <istephens@atlassian.com>
-To:     szeder.dev@gmail.com
-Cc:     git@vger.kernel.org, sunshine@sunshineco.com, peff@peff.net,
-        bturner@atlassian.com, gitster@pobox.com, jacob.keller@gmail.com,
-        Isabella Stephens <istephens@atlassian.com>
-Subject: [PATCH v3] blame: prevent error if range ends past end of file
-Date:   Fri, 27 Oct 2017 11:56:52 +1100
-Message-Id: <20171027005652.7796-1-istephens@atlassian.com>
-X-Mailer: git-send-email 2.14.1
-In-Reply-To: <20171026153111.21813-1-szeder.dev@gmail.com>
-References: <20171026153111.21813-1-szeder.dev@gmail.com>
+        id S932492AbdJ0BCN (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Oct 2017 21:02:13 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52141 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S932488AbdJ0BCL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Oct 2017 21:02:11 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B9CEDACE3A;
+        Thu, 26 Oct 2017 21:02:10 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ZhZ19BVzRjr/MlTAlaAddkzbFGA=; b=LbFUZ6
+        lruHpE5LGcLyLskXUJpNMAt9ZTdj1Py2NKGxR0YF771S8KPpuV8FgFxjopllt0fF
+        cc9KdACBrHmpdmgWtFjAY4oPi9BdaBblE8Uc4/fsGZ3Z1nDJ9nw6VAgIbRbr/iNz
+        t2Egi6XP+WqoJSDV4Fpd7bqSRvPfofNTtS1uc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=MGADfppvrEsdBe2t8eFseDLk4vBaLW9u
+        HVhGF4ukH4UgP1X3wSkoRz2xV6/NInhfgJtEoAQ5WSvfrj/MROM9jIYxcGtDajst
+        Nnkn/fbwO6YJcyuJC5qnhM6CeVEhcQnZNmpPZtdGG+kma7XFFaSBL2bdYoEN1Vwv
+        5NVPvlI6gOs=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B06CDACE34;
+        Thu, 26 Oct 2017 21:02:10 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 20A05ACE33;
+        Thu, 26 Oct 2017 21:02:10 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     git@vger.kernel.org, Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: What's cooking in git.git (Oct 2017, #05; Tue, 24)
+References: <xmqqk1zlktbc.fsf@gitster.mtv.corp.google.com>
+        <7b40d574-c6e3-d824-5e2f-b7cf18dadeb5@ramsayjones.plus.com>
+Date:   Fri, 27 Oct 2017 10:02:08 +0900
+In-Reply-To: <7b40d574-c6e3-d824-5e2f-b7cf18dadeb5@ramsayjones.plus.com>
+        (Ramsay Jones's message of "Thu, 26 Oct 2017 17:44:54 +0100")
+Message-ID: <xmqqlgjxe73j.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 75CE56BE-BAB2-11E7-AE31-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If the -L option is used to specify a line range in git blame, and the
-end of the range is past the end of the file, at present git will fail
-with a fatal error. This commit prevents such behavior - instead the
-blame is displayed for existing lines within the specified range.
-Blaming a range that is entirely outside the bounds of the file will
-still fail.
+Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
 
-This commit also ammends the relevant test and adds clarification to
-the documentation.
+> On 24/10/17 06:28, Junio C Hamano wrote:
+> [snip]> 
+>> * tg/deprecate-stash-save (2017-10-23) 3 commits
+>>  - stash: remove now superfluos help for "stash push"
+>>  - mark git stash push deprecated in the man page
+>>  - replace git stash save with git stash push in the documentation
+>> 
+>>  "git stash save" has been deprecated in favour of "git stash push".
+>> 
+>>  Will merge to 'next'.
+>
+> If you don't intend to include this in v2.15.0, when re-building
+> the next branch after release (the above is now in 'next'), could
+> we please remember to update one of the commit message subject line.
+>
+> In particular, commit 742d6ce35b ("mark git stash push deprecated
+> in the man page", 22-10-2017), is marking 'git stash *save*' as
+> deprecated, not *push*.
+>
+> [Sorry for not spotting this earlier; I only noticed when doing an
+> 'git log --oneline' display which, naturally, puts focus on the
+> subject lines. ;-) ]
 
-Signed-off-by: Isabella Stephens <istephens@atlassian.com>
----
- Documentation/git-blame.txt   | 10 ++++++++++
- builtin/blame.c               |  4 ++--
- t/t8003-blame-corner-cases.sh |  7 +++----
- 3 files changed, 15 insertions(+), 6 deletions(-)
-
-diff --git a/Documentation/git-blame.txt b/Documentation/git-blame.txt
-index fdc3aea30..8a28b4114 100644
---- a/Documentation/git-blame.txt
-+++ b/Documentation/git-blame.txt
-@@ -154,6 +154,16 @@ Also you can use a regular expression to specify the line range:
- 
- which limits the annotation to the body of the `hello` subroutine.
- 
-+A range that begins or ends outside the bounds of the file will
-+blame the relevant lines. For example:
-+
-+	git blame -L 10,-20 foo
-+	git blame -L 10,+20 foo
-+
-+will respectively blame the first 10 and last 11 lines of a
-+20 line file. However, blaming a line range that is entirely
-+outside the bounds of the file will fail.
-+
- When you are not interested in changes older than version
- v2.6.18, or changes older than 3 weeks, you can use revision
- range specifiers  similar to 'git rev-list':
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 67adaef4d..b5b9db147 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -878,13 +878,13 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
- 				    nth_line_cb, &sb, lno, anchor,
- 				    &bottom, &top, sb.path))
- 			usage(blame_usage);
--		if (lno < top || ((lno || bottom) && lno < bottom))
-+		if ((lno || bottom) && lno < bottom)
- 			die(Q_("file %s has only %lu line",
- 			       "file %s has only %lu lines",
- 			       lno), path, lno);
- 		if (bottom < 1)
- 			bottom = 1;
--		if (top < 1)
-+		if (top < 1 || lno < top)
- 			top = lno;
- 		bottom--;
- 		range_set_append_unsafe(&ranges, bottom, top);
-diff --git a/t/t8003-blame-corner-cases.sh b/t/t8003-blame-corner-cases.sh
-index 661f9d430..728209fa3 100755
---- a/t/t8003-blame-corner-cases.sh
-+++ b/t/t8003-blame-corner-cases.sh
-@@ -216,14 +216,13 @@ test_expect_success 'blame -L with invalid start' '
- '
- 
- test_expect_success 'blame -L with invalid end' '
--	test_must_fail git blame -L1,5 tres 2>errors &&
--	test_i18ngrep "has only 2 lines" errors
-+	git blame -L1,5 tres >out &&
-+	test_line_count = 2 out
- '
- 
- test_expect_success 'blame parses <end> part of -L' '
- 	git blame -L1,1 tres >out &&
--	cat out &&
--	test $(wc -l < out) -eq 1
-+	test_line_count = 1 out
- '
- 
- test_expect_success 'indent of line numbers, nine lines' '
--- 
-2.14.1
+Thanks for spotting.  I can always revert the merge into 'next' and
+then merge a rewritten copy of the series back into 'next' again to
+preserve the fast-forwardness of the integration branch, so that I
+do not have to remember ;-)
 
