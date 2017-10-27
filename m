@@ -6,53 +6,53 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2083620560
-	for <e@80x24.org>; Fri, 27 Oct 2017 22:29:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CC90320560
+	for <e@80x24.org>; Fri, 27 Oct 2017 22:29:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752826AbdJ0W3D (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Oct 2017 18:29:03 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:53826 "EHLO
+        id S932595AbdJ0W3G (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Oct 2017 18:29:06 -0400
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:43195 "EHLO
         mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752748AbdJ0W27 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Oct 2017 18:28:59 -0400
-Received: by mail-pg0-f67.google.com with SMTP id s2so6267002pge.10
-        for <git@vger.kernel.org>; Fri, 27 Oct 2017 15:28:59 -0700 (PDT)
+        with ESMTP id S1752809AbdJ0W3B (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Oct 2017 18:29:01 -0400
+Received: by mail-pg0-f67.google.com with SMTP id s75so6294338pgs.0
+        for <git@vger.kernel.org>; Fri, 27 Oct 2017 15:29:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Z4nNurhPwUrG+M9V80mphR6se1XPrwjz0nt/S0+qjIU=;
-        b=eLkI1pWwMhgb+n0fFhGiJ64APcw/6BBWferpepCVNlEe1m5UjIQCN/eXtlFxljq0wG
-         MHkhLOZ3UujoiZqlnME4yt4UHiPQRAZWbhchYF/KZeCGulEN6BO1hLykfAM7qXq6i/Pi
-         Msww9cHoZATaqQFnM301vC6DBwaEFnlaM7pcLICMrQP5UOlhMHGFwjy2Q4MNJSh04gTS
-         Pc4kyRX5zS0WUhzpQDRFGl4oyhw6anqYsWK5E3DFayt2F865nXts8bYQN4rm04ftUma1
-         3Nkem07CqP8VB9SRDe8vQDPi1nXX6e8sAdnzWJUvTHfKa0j+Sp3Hyvlq5ZDKvZtLcoza
-         b5xA==
+        bh=r63tOxsVcdF+VJb4BerAZ67BT3f4xK9fjSyCIq4ZTvk=;
+        b=MK07cuGY1ZnX9eCFYuSWttd8MdfDEKVNQJlEg0fwvs2FebWs8qWp+S7lep96D+ezx5
+         lEqDK8friQb2y2nMHry2JIKBOH3YB7t1EZPtxp7I4cKRWsmtrbffFLhejNiyPtlw5iiW
+         4WpKBoioJOOOQyogZB06AFR0i84TCgquA+7OCDe1MC50Aa49V7APFBuAdDLFd6zXVSlI
+         MSK8yivHuxqFgOzID2VksncyN4SKnaWfpMpOMWrbnIPFGkyiY19vHB96k1P4mAy8+W7h
+         xOdHUFJ80oeNV+YsjY96dG/3NqFQjkhNjt1cP51mF/wNKbHv3JCEfLLZIhK+WTKbARzX
+         yUUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Z4nNurhPwUrG+M9V80mphR6se1XPrwjz0nt/S0+qjIU=;
-        b=l8EjXSNjDJcX+ByAk8p+EmmmVFKVFrZEdp4/fGUBvTOPbvlUtYcQnJJcfp0weMdpjg
-         KxA9RxKi+337ccfpCy8np+cpu8o9rdm8vW08uXVkmBIXH58YEUdcL46DkIPlkFLKflgo
-         B6FBrW1ZoOfZwEMONHUgDCiAIrq/gyKr4UIw6OuvGnXIx3f9aiuPpAjN0UJNVj0sefTB
-         /vHV+pCsCqaioZ2xV4YvywlUidlqbskSMNgQIyDh66VGwvlKKTA3M8/eM9guqQlsQhoz
-         a3VDIV9MNDGdjyUvANKGrkTPsQacJjTx70jmF6rYHCWxz8mXbXYowxMp1MM2CdeOjXcR
-         DiqQ==
-X-Gm-Message-State: AMCzsaX+D/DfTv2owfkVVCk0JuTof1q3nV+Yk/Sa8rqFadspXUjobB1V
-        uz5ZvWRRDFgljOhmoHEm/GeV0KM7azg=
-X-Google-Smtp-Source: ABhQp+TuThbrrgftKKPWyTHa1Vf6Y/jiyJQ3JijZCZDTySsl8PSsLImaiM4tLwvEMaxsj0A/a4Sr8w==
-X-Received: by 10.84.241.15 with SMTP id a15mr1429142pll.199.1509143338552;
-        Fri, 27 Oct 2017 15:28:58 -0700 (PDT)
+        bh=r63tOxsVcdF+VJb4BerAZ67BT3f4xK9fjSyCIq4ZTvk=;
+        b=fkOnmpD37PuwnczrIV61icc+5q7q3aKR+Rrg6k3pBh2I35WoASJYN0fJVKwEfrlIf5
+         lKmcxJpz6WUv8EO+f0EkG1Pfsly0kVc6e1cFBtagLdxh9xY1Pg3oe7Rfd3YUq8pFkW7h
+         dCqu3PlQJSBBf3nIANQN8rYwL5A7KgxfC/0U9idhZvrLbidxuaT4NUviQf1Hr24vCMd4
+         nrtmurriNVA+0oCHUT0nfv93HRMURVAKShEutEONA7Q8kj0aBgK6bZVVXcohm+UfWpyw
+         w/O6PtH1Wx6kbHb0YIqvimGHRdV15kSbEApGNW117ortSS53XHKawHJsl7goqOH4FEx+
+         /KuA==
+X-Gm-Message-State: AMCzsaXLeGUP7ERnCdXzcyMpdEJsrzvBddobjbGcsimQusDE6nfRXMuK
+        0Z5RfP9kEmFdFs1RVjaQYCDj9KFS8tU=
+X-Google-Smtp-Source: ABhQp+Sfj+gqpy3P3acpERJQ85QEAbiV8NSSaFViLI+PPKI2+NbNcVZTcrOC6AZx+BS6plTUakVUmA==
+X-Received: by 10.84.168.129 with SMTP id f1mr1402835plb.71.1509143339954;
+        Fri, 27 Oct 2017 15:28:59 -0700 (PDT)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id c127sm16486842pga.34.2017.10.27.15.28.57
+        by smtp.gmail.com with ESMTPSA id c127sm16486842pga.34.2017.10.27.15.28.58
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 27 Oct 2017 15:28:57 -0700 (PDT)
+        Fri, 27 Oct 2017 15:28:58 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     Brandon Williams <bmwill@google.com>
-Subject: [PATCH 1/3] add: use DIFF_OPT_SET macro to set a diff flag
-Date:   Fri, 27 Oct 2017 15:28:51 -0700
-Message-Id: <20171027222853.180981-2-bmwill@google.com>
+Subject: [PATCH 2/3] reset: use DIFF_OPT_SET macro to set a diff flag
+Date:   Fri, 27 Oct 2017 15:28:52 -0700
+Message-Id: <20171027222853.180981-3-bmwill@google.com>
 X-Mailer: git-send-email 2.15.0.rc2.357.g7e34df9404-goog
 In-Reply-To: <20171027222853.180981-1-bmwill@google.com>
 References: <20171027222853.180981-1-bmwill@google.com>
@@ -66,22 +66,22 @@ flag, use the 'DIFF_OPT_SET' macro.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- builtin/add.c | 2 +-
+ builtin/reset.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/builtin/add.c b/builtin/add.c
-index a648cf4c5..b70e8a779 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -116,7 +116,7 @@ int add_files_to_cache(const char *prefix,
- 	rev.diffopt.output_format = DIFF_FORMAT_CALLBACK;
- 	rev.diffopt.format_callback = update_callback;
- 	rev.diffopt.format_callback_data = &data;
--	rev.diffopt.flags |= DIFF_OPT_OVERRIDE_SUBMODULE_CONFIG;
-+	DIFF_OPT_SET(&rev.diffopt, OVERRIDE_SUBMODULE_CONFIG);
- 	rev.max_count = 0; /* do not compare unmerged paths with stage #2 */
- 	run_diff_files(&rev, DIFF_RACY_IS_MODIFIED);
- 	clear_pathspec(&rev.prune_data);
+diff --git a/builtin/reset.c b/builtin/reset.c
+index 9cd89b230..ea2fad5a0 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -166,7 +166,7 @@ static int read_from_tree(const struct pathspec *pathspec,
+ 	opt.output_format = DIFF_FORMAT_CALLBACK;
+ 	opt.format_callback = update_index_from_diff;
+ 	opt.format_callback_data = &intent_to_add;
+-	opt.flags |= DIFF_OPT_OVERRIDE_SUBMODULE_CONFIG;
++	DIFF_OPT_SET(&opt, OVERRIDE_SUBMODULE_CONFIG);
+ 
+ 	if (do_diff_cache(tree_oid, &opt))
+ 		return 1;
 -- 
 2.15.0.rc2.357.g7e34df9404-goog
 
