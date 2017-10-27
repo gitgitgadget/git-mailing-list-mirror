@@ -6,79 +6,108 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C70C202A0
-	for <e@80x24.org>; Fri, 27 Oct 2017 01:20:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 474E6202A0
+	for <e@80x24.org>; Fri, 27 Oct 2017 01:29:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751520AbdJ0BU1 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Oct 2017 21:20:27 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52573 "EHLO
+        id S1751646AbdJ0B3c (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Oct 2017 21:29:32 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59267 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751305AbdJ0BU0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Oct 2017 21:20:26 -0400
+        with ESMTP id S1751457AbdJ0B3b (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Oct 2017 21:29:31 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0FAF7AE06E;
-        Thu, 26 Oct 2017 21:20:26 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id AFF70AE1E4;
+        Thu, 26 Oct 2017 21:29:30 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=c6z/XdY/ZR9+qInuhmYjq4GgkNU=; b=ShM2Xs
-        OZCO5pes7ibN0+T3cVbvcudWkF8yt5/DwWNs8rrNBR83QJQoZdSLBs3ylrgWuLmG
-        9jmaZlglcqy4k2BkwFW929k54QWeftnF1ns4Ay+XWyX85LDcpnqJQvEXaCYx6ck/
-        nM/0ln1ov4JoI50Vi7gFokg238KKKhixn8w2g=
+        :content-type:content-transfer-encoding; s=sasl; bh=xNCtlJa99ITi
+        Pk7Rd5lWWN2rfx0=; b=u/Hn3taC7k+Cqlj2SoqrzW+4bjr7s0S0rWTP4yJcuYf5
+        c0ot3sL7f8DsJKVZkJxu62AKn4N+CEI1uS3W7HhZeuQF3wpJxpPLR6DsWMofTcEU
+        kgpv/mG6Q7MExMFLjPEG89REGDD1QDZ9Ilrc1JBCckLmdvVl3QUHk5JapBr4TEA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=GcOGiuNlYXElJlxP5djuTpA0Um9CFU8c
-        rTKUIZ3sH420UpZZGn/ozSkkJorRLIVjFIbfJIK6/9frk6H3qhrLN4jBHCzJ5xjF
-        5EPgRMRHQGZDJkTpyhVwXm1YWbjdIWwArmkfk7uhQGKh22p9iHluWIQMB88uEL2V
-        bmlt4qH2MN0=
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=IX6uVN
+        PX9tqD09EXHAe7sNk73cxCSyKWwC1sfg50G588hqlEF1K5BEnWPpGT5udAfNAGuN
+        rACy/2fbnMgA+BTOVQyZQSlPLg7b7WTGCBFhHUXM4y+2t6Fhq6WIdt7k6Jc/F9/n
+        C/a5Fu3mSf1NtN4JNS8k5x/T5WFJZAN8hH13M=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0762DAE06D;
-        Thu, 26 Oct 2017 21:20:26 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A81C5AE1E3;
+        Thu, 26 Oct 2017 21:29:30 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6D2B1AE06A;
-        Thu, 26 Oct 2017 21:20:25 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 21460AE1E2;
+        Thu, 26 Oct 2017 21:29:30 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     git@vger.kernel.org, peff@peff.net, jonathantanmy@google.com,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH] dir: allow exclusions from blob in addition to file
-References: <20171026180222.39421-1-git@jeffhostetler.com>
-        <20171026180222.39421-2-git@jeffhostetler.com>
-Date:   Fri, 27 Oct 2017 10:20:24 +0900
-In-Reply-To: <20171026180222.39421-2-git@jeffhostetler.com> (Jeff Hostetler's
-        message of "Thu, 26 Oct 2017 18:02:22 +0000")
-Message-ID: <xmqq8tfxe693.fsf@gitster.mtv.corp.google.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] rev-list-options.txt: use correct directional reference
+References: <20171026152637.21629-1-szeder.dev@gmail.com>
+Date:   Fri, 27 Oct 2017 10:29:28 +0900
+In-Reply-To: <20171026152637.21629-1-szeder.dev@gmail.com> ("SZEDER
+ =?utf-8?Q?G=C3=A1bor=22's?=
+        message of "Thu, 26 Oct 2017 17:26:37 +0200")
+Message-ID: <xmqq4lqle5tz.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 02B3E092-BAB5-11E7-AA8B-575F0C78B957-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 47529792-BAB6-11E7-9CD5-575F0C78B957-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff Hostetler <git@jeffhostetler.com> writes:
+SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
 
-> From: Jeff Hostetler <jeffhost@microsoft.com>
+> The descriptions of the options '--parents', '--children' and
+> '--graph' say "see 'History Simplification' below", although the
+> referred section is in fact above the description of these options.
 >
-> Refactor add_excludes() to separate the reading of the
-> exclude file into a buffer and the parsing of the buffer
-> into exclude_list items.
+> Send readers in the right direction by saying "above" instead of
+> "below".
 >
-> Add add_excludes_from_blob_to_list() to allow an exclude
-> file be specified with an OID without assuming a local
-> worktree or index exists.
->
-> Refactor read_skip_worktree_file_from_index() and add
-> do_read_blob() to eliminate duplication of preliminary
-> processing of blob contents.
->
-> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+> Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
 > ---
 
-Yeah, with a separate do_read_blob() helper, this one looks a lot
-easier to follow, at least to me---as the author, you might find the
-earlier one just as easy, I suspect, though ;-)
+Thanks. =20
 
-Thanks.  Will queue.
+It turns out that this is not a recent regression, but was done at
+f98fd436 ("git-log.txt,rev-list-options.txt: put option blocks in
+proper order", 2011-03-08), which moved Commit Formatting and Diff
+Formatting sections, which used to appear very early, to near the
+end of the sequence.
+
+>  Documentation/rev-list-options.txt | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+>
+> diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-lis=
+t-options.txt
+> index 7d860bfca..13501e155 100644
+> --- a/Documentation/rev-list-options.txt
+> +++ b/Documentation/rev-list-options.txt
+> @@ -799,11 +799,11 @@ endif::git-rev-list[]
+> =20
+>  --parents::
+>  	Print also the parents of the commit (in the form "commit parent...")=
+.
+> -	Also enables parent rewriting, see 'History Simplification' below.
+> +	Also enables parent rewriting, see 'History Simplification' above.
+> =20
+>  --children::
+>  	Print also the children of the commit (in the form "commit child...")=
+.
+> -	Also enables parent rewriting, see 'History Simplification' below.
+> +	Also enables parent rewriting, see 'History Simplification' above.
+> =20
+>  ifdef::git-rev-list[]
+>  --timestamp::
+> @@ -846,7 +846,7 @@ you would get an output like this:
+>  	to be drawn properly.
+>  	Cannot be combined with `--no-walk`.
+>  +
+> -This enables parent rewriting, see 'History Simplification' below.
+> +This enables parent rewriting, see 'History Simplification' above.
+>  +
+>  This implies the `--topo-order` option by default, but the
+>  `--date-order` option may also be specified.
