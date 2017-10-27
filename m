@@ -6,108 +6,115 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 474E6202A0
-	for <e@80x24.org>; Fri, 27 Oct 2017 01:29:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1BD04202A0
+	for <e@80x24.org>; Fri, 27 Oct 2017 01:58:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751646AbdJ0B3c (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Oct 2017 21:29:32 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59267 "EHLO
+        id S1751646AbdJ0B6i (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Oct 2017 21:58:38 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62838 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751457AbdJ0B3b (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Oct 2017 21:29:31 -0400
+        with ESMTP id S1751457AbdJ0B6h (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Oct 2017 21:58:37 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id AFF70AE1E4;
-        Thu, 26 Oct 2017 21:29:30 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A727CADB2D;
+        Thu, 26 Oct 2017 21:58:36 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=xNCtlJa99ITi
-        Pk7Rd5lWWN2rfx0=; b=u/Hn3taC7k+Cqlj2SoqrzW+4bjr7s0S0rWTP4yJcuYf5
-        c0ot3sL7f8DsJKVZkJxu62AKn4N+CEI1uS3W7HhZeuQF3wpJxpPLR6DsWMofTcEU
-        kgpv/mG6Q7MExMFLjPEG89REGDD1QDZ9Ilrc1JBCckLmdvVl3QUHk5JapBr4TEA=
+        :content-type; s=sasl; bh=aAO54eqiCv0D9ICK3/s5WXljunA=; b=XzHzLB
+        JYO9+LEkZukCqVANHke/sJ2hrz0aE3mcpAXx6jrFBVgDINkE5Ksu8CDYXAJ0oQi+
+        0Xx+zNALs6s9+G92mcMjvvxUupI2xzqI/GZ/oWzX403xWXsAYZI2JEkTi8IBww/u
+        f502yjrALxq2BJg5X4oHRWoJd6LMutSfICr3g=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=IX6uVN
-        PX9tqD09EXHAe7sNk73cxCSyKWwC1sfg50G588hqlEF1K5BEnWPpGT5udAfNAGuN
-        rACy/2fbnMgA+BTOVQyZQSlPLg7b7WTGCBFhHUXM4y+2t6Fhq6WIdt7k6Jc/F9/n
-        C/a5Fu3mSf1NtN4JNS8k5x/T5WFJZAN8hH13M=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A81C5AE1E3;
-        Thu, 26 Oct 2017 21:29:30 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=bBFz7eeIHM56GlbM96BUqBbywFEL2vjO
+        Y3pg1sYoBH39rBSGLA7HZwrmiwC1NA4P73QSE7Uap3h8kA217SmtQo3weDiT4pca
+        XhtA9Tv+OxMZpJNtZHb0QLJElLWqZjES8psSInjq0jXCoMJXM3QtuEHsjnrCCdZ7
+        igSH0ydXq8Q=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9CE05ADB2C;
+        Thu, 26 Oct 2017 21:58:36 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 21460AE1E2;
-        Thu, 26 Oct 2017 21:29:30 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 02172ADB2B;
+        Thu, 26 Oct 2017 21:58:36 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] rev-list-options.txt: use correct directional reference
-References: <20171026152637.21629-1-szeder.dev@gmail.com>
-Date:   Fri, 27 Oct 2017 10:29:28 +0900
-In-Reply-To: <20171026152637.21629-1-szeder.dev@gmail.com> ("SZEDER
- =?utf-8?Q?G=C3=A1bor=22's?=
-        message of "Thu, 26 Oct 2017 17:26:37 +0200")
-Message-ID: <xmqq4lqle5tz.fsf@gitster.mtv.corp.google.com>
+To:     Isabella Stephens <istephens@atlassian.com>
+Cc:     szeder.dev@gmail.com, git@vger.kernel.org, sunshine@sunshineco.com,
+        peff@peff.net, bturner@atlassian.com, jacob.keller@gmail.com
+Subject: Re: [PATCH v3] blame: prevent error if range ends past end of file
+References: <20171026153111.21813-1-szeder.dev@gmail.com>
+        <20171027005652.7796-1-istephens@atlassian.com>
+Date:   Fri, 27 Oct 2017 10:58:34 +0900
+In-Reply-To: <20171027005652.7796-1-istephens@atlassian.com> (Isabella
+        Stephens's message of "Fri, 27 Oct 2017 11:56:52 +1100")
+Message-ID: <xmqqzi8dcpx1.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 47529792-BAB6-11E7-9CD5-575F0C78B957-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 57FC06E2-BABA-11E7-B0A1-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
+Isabella Stephens <istephens@atlassian.com> writes:
 
-> The descriptions of the options '--parents', '--children' and
-> '--graph' say "see 'History Simplification' below", although the
-> referred section is in fact above the description of these options.
->
-> Send readers in the right direction by saying "above" instead of
-> "below".
->
-> Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
-> ---
+> diff --git a/builtin/blame.c b/builtin/blame.c
+> index 67adaef4d..b5b9db147 100644
+> --- a/builtin/blame.c
+> +++ b/builtin/blame.c
+> @@ -878,13 +878,13 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+>  				    nth_line_cb, &sb, lno, anchor,
+>  				    &bottom, &top, sb.path))
+>  			usage(blame_usage);
+> -		if (lno < top || ((lno || bottom) && lno < bottom))
+> +		if ((lno || bottom) && lno < bottom)
+>  			die(Q_("file %s has only %lu line",
+>  			       "file %s has only %lu lines",
+>  			       lno), path, lno);
+>  		if (bottom < 1)
+>  			bottom = 1;
+> -		if (top < 1)
+> +		if (top < 1 || lno < top)
+>  			top = lno;
 
-Thanks. =20
+This section sanity-checks first and then tweaks the values it
+allowed to pass the check.  Because it wants to later fix up an
+overly large "top" by capping to "lno" (i.e. total line number), the
+patch needs to loosen the early sanity-check.  And the "fixed up"
+values are never checked if they are sane.
 
-It turns out that this is not a recent regression, but was done at
-f98fd436 ("git-log.txt,rev-list-options.txt: put option blocks in
-proper order", 2011-03-08), which moved Commit Formatting and Diff
-Formatting sections, which used to appear very early, to near the
-end of the sequence.
+For example, with an empty file (i.e. lno == 0), you can ask "git
+blame -L1,-4 ("i.e. "at most four lines, ending at line #1") and the
+code silently accepts the input without noticing that the request is
+an utter nonsense; "file X has only 0 lines" error is given a chance
+to kick in.
 
->  Documentation/rev-list-options.txt | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
->
-> diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-lis=
-t-options.txt
-> index 7d860bfca..13501e155 100644
-> --- a/Documentation/rev-list-options.txt
-> +++ b/Documentation/rev-list-options.txt
-> @@ -799,11 +799,11 @@ endif::git-rev-list[]
-> =20
->  --parents::
->  	Print also the parents of the commit (in the form "commit parent...")=
-.
-> -	Also enables parent rewriting, see 'History Simplification' below.
-> +	Also enables parent rewriting, see 'History Simplification' above.
-> =20
->  --children::
->  	Print also the children of the commit (in the form "commit child...")=
-.
-> -	Also enables parent rewriting, see 'History Simplification' below.
-> +	Also enables parent rewriting, see 'History Simplification' above.
-> =20
->  ifdef::git-rev-list[]
->  --timestamp::
-> @@ -846,7 +846,7 @@ you would get an output like this:
->  	to be drawn properly.
->  	Cannot be combined with `--no-walk`.
->  +
-> -This enables parent rewriting, see 'History Simplification' below.
-> +This enables parent rewriting, see 'History Simplification' above.
->  +
->  This implies the `--topo-order` option by default, but the
->  `--date-order` option may also be specified.
+There should be an "is the range sensible?" check after all the
+tweaking to bottom and top are done, I think.
+
+>  		bottom--;
+>  		range_set_append_unsafe(&ranges, bottom, top);
+> diff --git a/t/t8003-blame-corner-cases.sh b/t/t8003-blame-corner-cases.sh
+> index 661f9d430..728209fa3 100755
+> --- a/t/t8003-blame-corner-cases.sh
+> +++ b/t/t8003-blame-corner-cases.sh
+> @@ -216,14 +216,13 @@ test_expect_success 'blame -L with invalid start' '
+>  '
+>  
+>  test_expect_success 'blame -L with invalid end' '
+> -	test_must_fail git blame -L1,5 tres 2>errors &&
+> -	test_i18ngrep "has only 2 lines" errors
+> +	git blame -L1,5 tres >out &&
+> +	test_line_count = 2 out
+>  '
+>  
+>  test_expect_success 'blame parses <end> part of -L' '
+>  	git blame -L1,1 tres >out &&
+> -	cat out &&
+> -	test $(wc -l < out) -eq 1
+> +	test_line_count = 1 out
+>  '
+>  
+>  test_expect_success 'indent of line numbers, nine lines' '
