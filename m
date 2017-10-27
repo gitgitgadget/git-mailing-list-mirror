@@ -2,89 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 59A161FBF4
-	for <e@80x24.org>; Fri, 27 Oct 2017 23:27:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4B4661FBF4
+	for <e@80x24.org>; Fri, 27 Oct 2017 23:27:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932476AbdJ0X1F (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Oct 2017 19:27:05 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:54376 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932352AbdJ0X1D (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Oct 2017 19:27:03 -0400
-Received: by mail-pf0-f193.google.com with SMTP id n89so5945774pfk.11
-        for <git@vger.kernel.org>; Fri, 27 Oct 2017 16:27:02 -0700 (PDT)
+        id S932513AbdJ0X1J (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Oct 2017 19:27:09 -0400
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:54801 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932385AbdJ0X1E (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Oct 2017 19:27:04 -0400
+Received: by mail-pg0-f67.google.com with SMTP id l24so6341920pgu.11
+        for <git@vger.kernel.org>; Fri, 27 Oct 2017 16:27:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=dropbox.com; s=corp;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=VRZODSFcInv9jt3eq3RalrbnPs/HZlBExYJAxJEwXkQ=;
-        b=X5rMbcl+ohMMBKWXMaLKsyc6VBrNd7GeNZaC2SbxnF4WnDYOSv7Itk6wMvaHrMIsqJ
-         rs1NOagOUbfHtwrrt3HgSUWdvwt9vGL5ECoQ6g8EZ2rIrOeQp72JTE9JZbDiqwsSQJeh
-         cdb++SeisQ9YzlNziVSlhz0Rao4CryYpS362g=
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :in-reply-to:references;
+        bh=CRPG+vThFyqW4ZOdLgdpkfUC1dmEPvinlh78Yilsi4E=;
+        b=BUABOw/+mdDTcxNBv1SkxYkBpRhhPUT5ITXB+3x9pBrbBufxBZQrMgftCXzPYMGb+q
+         i2dxPisKIVG/Xx96jqCIozTvWc73hRmr0aUYwxwkNgKfJWOFI/CLq78FlFLOIv88nHN5
+         pYau1cBcmPtmL4f+pYwt3yHHMD5AB8KSdXt9Q=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=VRZODSFcInv9jt3eq3RalrbnPs/HZlBExYJAxJEwXkQ=;
-        b=cPop1/bdeIua0uV/YIekesNYYsnlo70RAuIwb9X78rPwBypDNL4rSI7hDC3/KxPmmR
-         ygoCgW1tZHNYFT1hZEGxT7ypSFbMuC7lPWC9cxdk9iPpbe8fnSEuU15UbzNYYQWipU4F
-         tbS90op5DmwGTfcjKYLeLVSZ4A0jMCviCVSjRfNcXpikRfPuF6Dd1+m/UWEWkPDvIGhi
-         CAdd5OF4sROoSaANDDdGYRXl5BM15LCtcclydOkQi62G8CIZB7s9X4QVevR0f2V+eF8y
-         REMqeMspI2rGmHzr++SSw/XKlZ/a4PQF7F5ilVdGs3bW4lKLIwLR0oIK9h+a7nFZDK1b
-         Ky2g==
-X-Gm-Message-State: AMCzsaUh5xHn4gxXVmRc3waghqUa45vd8TcGkMBB4OTP/xsjO5uFcUQN
-        cAEvpe+H1QJDWthD5dVWj1q2BSgWFS8=
-X-Google-Smtp-Source: ABhQp+T1S5Z11kpz83yHqQKKIqdOqTbE8hKekPi7av7mr85B8qhjqosyLMKUlBCSLYgiYE//WvwGuw==
-X-Received: by 10.99.154.66 with SMTP id e2mr1575671pgo.116.1509146822248;
-        Fri, 27 Oct 2017 16:27:02 -0700 (PDT)
+         :references:in-reply-to:references;
+        bh=CRPG+vThFyqW4ZOdLgdpkfUC1dmEPvinlh78Yilsi4E=;
+        b=A+rBZnsT9SwXFQAJxVmNFGg7ujCf9ljEFEwmnRXxGr/QkiPQv5rop8M46YQma5PJ8f
+         9WyzOOkvo2gWm22ibElSsHkC+qfQ7GfthBNNp2DLwRsVpPshY+pxCK9rLEOVio8r7B/q
+         scjEULJxnhWulfJTgcCvufF91niLR9582W4/iFXyrHPEWXRTDfDO6zLDvXH9TwxJgL7H
+         LaXKxcH6vk4Vr2d8+TEQAeTIcLJs1P7B0Mf7XqNNMQtjRfVF+Ewa5iP16hFoY53RCqvI
+         3mbz0WI48h4k4YfQEDjOv+b3jHfI5Ozlzh19tmOrNgSZ+EYJYIhB1PkJXmw5rvIFCZRW
+         MASA==
+X-Gm-Message-State: AMCzsaVL9O1E7q1MSBqDdRlUdRTRzRI/sBSDYn0QFl2ul/jNvVyC6XRu
+        JOz9DiqXpyMbEBCKzYY9GXF52Az/Wjg=
+X-Google-Smtp-Source: ABhQp+Rv+23eDrr8YWc/ae/+YaUWnmptfAs8valvz3MGNii34rx/OYV9YcyNNRCiqAECHY5cOf5vyg==
+X-Received: by 10.99.126.5 with SMTP id z5mr1494399pgc.371.1509146823295;
+        Fri, 27 Oct 2017 16:27:03 -0700 (PDT)
 Received: from alexmv-linux.corp.dropbox.com (Guest-GW2.corp.dropbox.com. [205.189.0.166])
-        by smtp.gmail.com with ESMTPSA id i129sm15442806pgd.21.2017.10.27.16.27.01
+        by smtp.gmail.com with ESMTPSA id i129sm15442806pgd.21.2017.10.27.16.27.02
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 27 Oct 2017 16:27:01 -0700 (PDT)
+        Fri, 27 Oct 2017 16:27:02 -0700 (PDT)
 From:   Alex Vandiver <alexmv@dropbox.com>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Ben Peart <peartben@gmail.com>
-Subject: [PATCH v3 1/4] fsmonitor: Set the PWD to the top of the working tree
-Date:   Fri, 27 Oct 2017 16:26:34 -0700
-Message-Id: <4b488da5e0710e9699f92d2dabe5e3352f3eb394.1509146542.git.alexmv@dropbox.com>
+Subject: [PATCH v3 2/4] fsmonitor: Don't bother pretty-printing JSON from watchman
+Date:   Fri, 27 Oct 2017 16:26:35 -0700
+Message-Id: <ff7745089999ff3bb2c014d2d4f1659a9de4e859.1509146542.git.alexmv@dropbox.com>
 X-Mailer: git-send-email 2.15.0.rc1.413.g76aedb451
 In-Reply-To: <20171027232637.30395-1-alexmv@dropbox.com>
 References: <20171027232637.30395-1-alexmv@dropbox.com>
+In-Reply-To: <4b488da5e0710e9699f92d2dabe5e3352f3eb394.1509146542.git.alexmv@dropbox.com>
+References: <4b488da5e0710e9699f92d2dabe5e3352f3eb394.1509146542.git.alexmv@dropbox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The fsmonitor command inherits the PWD of its caller, which may be
-anywhere in the working copy.  This makes is difficult for the
-fsmonitor command to operate on the whole repository.  Specifically,
-for the watchman integration, this causes each subdirectory to get its
-own watch entry.
+This provides modest performance savings.  Benchmarking with the
+following program, with and without `--no-pretty`, we find savings of
+23% (0.316s -> 0.242s) in the git repository, and savings of 8% (5.24s
+-> 4.86s) on a large repository with 580k files in the working copy.
 
-Set the CWD to the top of the working directory, for consistency.
+    #!/usr/bin/perl
+
+    use strict;
+    use warnings;
+    use IPC::Open2;
+    use JSON::XS;
+
+    my $pid = open2(\*CHLD_OUT, \*CHLD_IN, "watchman -j @ARGV")
+        or die "open2() failed: $!\n" .
+        "Falling back to scanning...\n";
+
+    my $query = qq|["query", "$ENV{PWD}", {}]|;
+
+    print CHLD_IN $query;
+    close CHLD_IN;
+    my $response = do {local $/; <CHLD_OUT>};
+
+    JSON::XS->new->utf8->decode($response);
 
 Signed-off-by: Alex Vandiver <alexmv@dropbox.com>
 ---
- fsmonitor.c | 1 +
- 1 file changed, 1 insertion(+)
+ templates/hooks--fsmonitor-watchman.sample | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fsmonitor.c b/fsmonitor.c
-index 7c1540c05..4ea44dcc6 100644
---- a/fsmonitor.c
-+++ b/fsmonitor.c
-@@ -121,6 +121,7 @@ static int query_fsmonitor(int version, uint64_t last_update, struct strbuf *que
- 	argv[3] = NULL;
- 	cp.argv = argv;
- 	cp.use_shell = 1;
-+	cp.dir = get_git_work_tree();
+diff --git a/templates/hooks--fsmonitor-watchman.sample b/templates/hooks--fsmonitor-watchman.sample
+index 9eba8a740..9a082f278 100755
+--- a/templates/hooks--fsmonitor-watchman.sample
++++ b/templates/hooks--fsmonitor-watchman.sample
+@@ -49,7 +49,7 @@ launch_watchman();
  
- 	return capture_command(&cp, query_result, 1024);
- }
+ sub launch_watchman {
+ 
+-	my $pid = open2(\*CHLD_OUT, \*CHLD_IN, 'watchman -j')
++	my $pid = open2(\*CHLD_OUT, \*CHLD_IN, 'watchman -j --no-pretty')
+ 	    or die "open2() failed: $!\n" .
+ 	    "Falling back to scanning...\n";
+ 
 -- 
 2.15.0.rc1.413.g76aedb451
 
