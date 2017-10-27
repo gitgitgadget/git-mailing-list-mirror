@@ -2,141 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B721B202A0
-	for <e@80x24.org>; Fri, 27 Oct 2017 02:57:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 174A1202A0
+	for <e@80x24.org>; Fri, 27 Oct 2017 03:36:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932394AbdJ0C5r (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Oct 2017 22:57:47 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53986 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S932334AbdJ0C5q (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Oct 2017 22:57:46 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3D04FAF56E;
-        Thu, 26 Oct 2017 22:57:45 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=2EV9dKOVx2knBxIZLYxBpDKsmQc=; b=aVSGSn
-        SaSeHdp9HPaXEHIe25brgd0/4BsOptlcw0wcxEM5bBi13fI+ia/2i+8A8YpCXTm0
-        46Kcz5EYWQzbw3MSbOpAYwgQqZHvCgr6Byq94lxR+8n67Q/88+0rTIxWXsRWS+VT
-        71dfE0lNvW+gvVDvJV+PqSZxyEdWfBnZOBriE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=eDKGNWO3zPdCjWEVcJFWwyzxnEFD5Tyd
-        IXQNkTnqNKyWDBl+oJcOCysqNN4lTiJi7loywkew8zXoxLMZyyv7mfIbbDT3ay60
-        b9DKp0r5/mRhix39scEFGnLTG46lFJIzdt2v3pP+LkODLvhkSWmGYupgZEiXVl7q
-        cEF5nmKa/Rs=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 34DA0AF56D;
-        Thu, 26 Oct 2017 22:57:45 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 92572AF56C;
-        Thu, 26 Oct 2017 22:57:44 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Ben Peart <Ben.Peart@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Mike Hommey <mh@glandium.org>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Eric Wong <e@80x24.org>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 4/6] t0021/rot13-filter: add packet_initialize()
-References: <20171019123030.17338-1-chriscool@tuxfamily.org>
-        <20171019123030.17338-5-chriscool@tuxfamily.org>
-        <xmqqvaj8dlyz.fsf@gitster.mtv.corp.google.com>
-Date:   Fri, 27 Oct 2017 11:57:43 +0900
-In-Reply-To: <xmqqvaj8dlyz.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Sun, 22 Oct 2017 10:12:36 +0900")
-Message-ID: <xmqqr2tpcn6g.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751483AbdJ0DgQ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Oct 2017 23:36:16 -0400
+Received: from mail-qt0-f182.google.com ([209.85.216.182]:43924 "EHLO
+        mail-qt0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751305AbdJ0DgQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Oct 2017 23:36:16 -0400
+Received: by mail-qt0-f182.google.com with SMTP id j58so6925758qtj.0
+        for <git@vger.kernel.org>; Thu, 26 Oct 2017 20:36:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=Oj79Fi/EG/s/V2y6i7Po3UjLkoDICPCGQ8Zn6vVlsBU=;
+        b=WZtXhuhTnGvDXP0dDf3UIz1gcGBCvrNi8YVEvRpuwznLHyEhFz382yfUX1Z4r+b/cq
+         5YWucX+0LHY5IRqcn9noQw9u1moQOTlak/ZofLiRoWAHsACgKJCYCSFUj+Qd7ewHL+0T
+         OMN4IBM2MYXy5pfN1pISUxdSs/+5ib0tAwizLZf/4hL35CpCHmAZoEdR9etTItTEcxzh
+         kTqPgmVvuOtf+0dGa+TGnBxp0sfK/Gyi6Y/2TYVeK6uqkfNl+x4foIyqbec8KmmCB4Xm
+         peeOhhxgoxGaYuujLFeoFDzGm1KG4In363isUBGDrqohcVz79X+wnbX2+bG0hD2onUeB
+         yXYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=Oj79Fi/EG/s/V2y6i7Po3UjLkoDICPCGQ8Zn6vVlsBU=;
+        b=bjHL2IzwVPDLcC/JcwmgZsPpa4B4N83rmBhGSdjCupCnNrN6RYMzJtKHpX8rciDmAd
+         MICSjnPUwzNxVgpnLjYlC0Cvu9OQ1lTtcGzqAQlO6Vuh9zRmKw5OP9fKOxOWYShh0tXG
+         MaLTe/3TPHEGEuQiwnvkHD7z6BE4bod1P8pAk08gFpPBk9vnDUPeAvgqzhe9bfrZda9e
+         /E/t2edI+zWczGSrRqxAyfsV9C3k0NmSNezJ2iPmeck/I3S+SsulvHTLCMffq5lDnJ82
+         js+Q5OU87oNrYIk9LnjTdi1/lIank8RBJOqquyiQT5ckVIfh51V4WJgFN3zQG6GsaY+D
+         X9kg==
+X-Gm-Message-State: AMCzsaULwVca4nGpIW3BUPUIt9KMZCefgzywz9HhfRvcYzoH7Rsz9fJt
+        Uvsl/NsK1izk9KKIV9UwuAY=
+X-Google-Smtp-Source: ABhQp+Sb+GMOnjE19MjyTDhcEPBQxEFsoMlAUtZ3KJMUvnH42uKgj1FGKFj59wDaAR11bo+Sfamvzw==
+X-Received: by 10.200.25.78 with SMTP id g14mr38775421qtk.225.1509075375179;
+        Thu, 26 Oct 2017 20:36:15 -0700 (PDT)
+Received: from [192.168.1.13] ([65.222.173.206])
+        by smtp.gmail.com with ESMTPSA id a17sm4613363qth.46.2017.10.26.20.36.13
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 26 Oct 2017 20:36:13 -0700 (PDT)
+Subject: Re: [PATCH v2 2/4] fsmonitor: Don't bother pretty-printing JSON from
+ watchman
+To:     Alex Vandiver <alexmv@dropbox.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <20171026013117.30034-1-alexmv@dropbox.com>
+ <42fd8bccb78992a2894e711e057230a673891628.1508981451.git.alexmv@dropbox.com>
+ <9bd24b15-6232-1afd-abbe-02870c51c7ad@gmail.com>
+ <alpine.DEB.2.10.1710261427300.9817@alexmv-linux>
+From:   Ben Peart <peartben@gmail.com>
+Message-ID: <11f3e539-1a4f-0572-a712-9f1c50359389@gmail.com>
+Date:   Thu, 26 Oct 2017 23:36:13 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9B1B5B5A-BAC2-11E7-A292-575F0C78B957-77302942!pb-smtp2.pobox.com
+In-Reply-To: <alpine.DEB.2.10.1710261427300.9817@alexmv-linux>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> It is fine to leave the original code broken at this step while we
-> purely move the lines around, and hopefully this will be corrected
-> in a later step in the series (I am responding as I read on, so I do
-> not yet know at which patch that happens in this series).
 
-Actually, I think you'd probably be better off if you fixed these
-broken comparisions that does (@list1 eq @list2) very early in the
-series, perhaps as [PATCH 0.8/6].  
+On 10/26/2017 5:29 PM, Alex Vandiver wrote:
+> On Thu, 26 Oct 2017, Ben Peart wrote:
+>> On 10/25/2017 9:31 PM, Alex Vandiver wrote:
+>>> diff --git a/t/t7519/fsmonitor-watchman b/t/t7519/fsmonitor-watchman
+>>> index a3e30bf54..79f24325c 100755
+>>> --- a/t/t7519/fsmonitor-watchman
+>>> +++ b/t/t7519/fsmonitor-watchman
+>>> @@ -50,7 +50,7 @@ launch_watchman();
+>>>      sub launch_watchman {
+>>>    -	my $pid = open2(\*CHLD_OUT, \*CHLD_IN, 'watchman -j')
+>>> +	my $pid = open2(\*CHLD_OUT, \*CHLD_IN, 'watchman -j --no-pretty')
+>>
+>> Since this is a test script performance isn't critical.  This version of the
+>> integration script logs the response to a file in .git/watchman-response.json
+>> and is much more human readable without the "--no-pretty."  As such, I'd leave
+>> this one pretty.
+> 
+> This would be the first delta between the test file and the template
+> file.  It seems quite important to me to attempt to ensure that we're
+> testing the _same_ contents that we're suggesting users set up.  In
+> fact, it makes more sense to me to just turn this into a symlink to the
+> sample template.
+>   - Alex
+> 
 
-I am sure Perl experts among us on the list can come up with a
-cleaner and better implementation of compare_lists sub I am adding
-here, but in the meantime, here is what I would start with if I were
-working on this topic.
+If you look closer (actually diff the two files) you will see that the 
+test version includes logging that the sample doesn't include.  I found 
+the logging very helpful during testing of the feature and debugging 
+Watchman issues but don't want end users to pay the performance penalty 
+of the logging.
 
-Thanks.
-
- t/t0021/rot13-filter.pl | 35 ++++++++++++++++++++++++++++-------
- 1 file changed, 28 insertions(+), 7 deletions(-)
-
-diff --git a/t/t0021/rot13-filter.pl b/t/t0021/rot13-filter.pl
-index ad685d92f8..9bf5a756af 100644
---- a/t/t0021/rot13-filter.pl
-+++ b/t/t0021/rot13-filter.pl
-@@ -107,21 +107,42 @@ sub packet_flush {
- 	STDOUT->flush();
- }
- 
-+sub compare_lists {
-+	my ($expect, @result) = @_;
-+	my $ix;
-+	if (scalar @$expect != scalar @result) {
-+		return undef;
-+	}
-+	for ($ix = 0; $ix < $#result; $ix++) {
-+		if ($expect->[$ix] ne $result[$ix]) {
-+			return undef;
-+		}
-+	}
-+	return 1;
-+}
-+
- print $debug "START\n";
- $debug->flush();
- 
--( packet_txt_read() eq ( 0, "git-filter-client" ) ) || die "bad initialize";
--( packet_txt_read() eq ( 0, "version=2" ) )         || die "bad version";
--( packet_bin_read() eq ( 1, "" ) )                  || die "bad version end";
-+compare_lists([0, "git-filter-client"], packet_txt_read()) ||
-+	die "bad initialize";
-+compare_lists([0, "version=2"], packet_txt_read()) ||
-+	die "bad version";
-+compare_lists([1, ""], packet_bin_read()) ||
-+	die "bad version end";
- 
- packet_txt_write("git-filter-server");
- packet_txt_write("version=2");
- packet_flush();
- 
--( packet_txt_read() eq ( 0, "capability=clean" ) )  || die "bad capability";
--( packet_txt_read() eq ( 0, "capability=smudge" ) ) || die "bad capability";
--( packet_txt_read() eq ( 0, "capability=delay" ) )  || die "bad capability";
--( packet_bin_read() eq ( 1, "" ) )                  || die "bad capability end";
-+compare_lists([0, "capability=clean"], packet_txt_read()) ||
-+	die "bad capability";
-+compare_lists([0, "capability=smudge"], packet_txt_read()) ||
-+	die "bad capability";
-+compare_lists([0, "capability=delay"], packet_txt_read()) ||
-+	die "bad capability";
-+compare_lists([1, ""], packet_bin_read()) ||
-+	die "bad capability end";
- 
- foreach (@capabilities) {
- 	packet_txt_write( "capability=" . $_ );
+t/t7519/fsmonitor-watchman isn't actually used by any of the automated 
+tests as they can't assume Watchman is available. It is just provided as 
+a convenience to enable manual testing and debugging.
