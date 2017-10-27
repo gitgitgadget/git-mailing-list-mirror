@@ -2,68 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D009E20560
-	for <e@80x24.org>; Fri, 27 Oct 2017 18:19:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 435B220560
+	for <e@80x24.org>; Fri, 27 Oct 2017 18:50:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752161AbdJ0STk (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Oct 2017 14:19:40 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63025 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751167AbdJ0STj (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Oct 2017 14:19:39 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3D768BA661;
-        Fri, 27 Oct 2017 14:19:39 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=SLpGX3mSV8++aa6peJa2wbIh0fA=; b=eDQJtR
-        OdXVQXCQORketw6e42gn5R5BTq3ZOxWSLWsM5WInFlS5/UbsMcV/eNEnDsK3zAEX
-        23arryLeC/t151w3G9qhobPZSTgR/LoIwgyjinGJ7ZFXoFovsG3/k4nY7ldbSUlF
-        8iG8kko4jmy5JxbUHIUdPD+DRpKfeDlAkrJgU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=P8QWyOjPjGvvkug+4S4BO3uYZm0DGuxQ
-        5ECLlXqX22NgLR/+wfX/ExUbHfCZF+oSnRc3VuNn+CwDjv95chhAQoEqHWVj5Cdu
-        lJfLYURCxU7pWmT/Ksw+3lvUr6Wdi+vvaPgSeRGs5Esl8T10ZEdYf7dI6sE04W0t
-        o0tavQpUIf4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3240ABA660;
-        Fri, 27 Oct 2017 14:19:39 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A91BDBA65F;
-        Fri, 27 Oct 2017 14:19:38 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Pranit Bauva <pranit.bauva@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v16 Part II 2/8] bisect--helper: `bisect_write` shell function in C
-References: <0102015f5e5ee171-f30f4868-886f-47a1-a4e4-b4936afc545d-000000@eu-west-1.amazonses.com>
-        <0102015f5e5ee22c-ea9c3a38-5d42-4dce-a54b-45c59768a70b-000000@eu-west-1.amazonses.com>
-Date:   Sat, 28 Oct 2017 03:19:37 +0900
-In-Reply-To: <0102015f5e5ee22c-ea9c3a38-5d42-4dce-a54b-45c59768a70b-000000@eu-west-1.amazonses.com>
-        (Pranit Bauva's message of "Fri, 27 Oct 2017 15:06:37 +0000")
-Message-ID: <xmqqo9osbghy.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1752218AbdJ0Suv (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Oct 2017 14:50:51 -0400
+Received: from mail-qt0-f172.google.com ([209.85.216.172]:46456 "EHLO
+        mail-qt0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751923AbdJ0Suu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Oct 2017 14:50:50 -0400
+Received: by mail-qt0-f172.google.com with SMTP id 1so9619673qtn.3
+        for <git@vger.kernel.org>; Fri, 27 Oct 2017 11:50:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=qeLijSDWGhDNxqPmFnO0rodJSIPghoOjM0L54T9+XTI=;
+        b=pqpqCncihkOFMzepDh2MlbfFoI3aGplJTrLP49050AM9twi6r0QSZy+eCe6rASLzBZ
+         vICHB5ZRBmiD79UKE7z3c8de4RWhi8hW0RFp88XvynBMlD+Nqb/x5ZVIJcmpzx+2nJCX
+         MOB2QjgkzO0jQXZ0yx806Ny3SKwm1mpXNZPT5jp+zTQ4htbZ0CNspOYTjMnTNoDg4FRk
+         YWkMGXZl9PlO80AgjjDN0aJhI8zirj2ZGgy6hd/Zr38aUF8y8EEdrzy5TIZTO/RvGW3G
+         P6a65vjFXMtTxcnIUfAoBNfc/WKbKCtia7wfMybghALxEMV/3ubRfb/uALP4e0tQQ0Sd
+         bsng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=qeLijSDWGhDNxqPmFnO0rodJSIPghoOjM0L54T9+XTI=;
+        b=ITovVdABlClqQH+NcIu1m/Dp90m/aAmcStqGROcP1RZyDtXqqq47hlFAR9FIzzeaYZ
+         XNtOHq/J6V/yavhr0CFKEi1RDM07etRpZUWOj1RnNWL9Bcnxus2/inRkRzdMNcKtjy59
+         20pOu6QfVXaE7iYUT4rGhxzBeyQ6IuG3rbF7miQxFK17xOR3nTgFxH+GjGdSGGFehrSu
+         PzW0F92cvcDGcxko1SkcR9tjwJh+v0mRGMEO+2Ij4lDqhmwcl7uv3UD0q7nIouTXefAD
+         qFZp0oRj+fHor58DxxAtWbAccHt92oE9IW+uDPXhgiqdVmbTTWDFq4ga44HaUJfNqCxz
+         DmVg==
+X-Gm-Message-State: AMCzsaVnNT0aOUsySR+fKsxJVxXQcwPLQ9WKdXjHJroGHdP//QVapNRt
+        TDvooc8f2SPj8ZxMH6VTIj4WbVRsVvPCplIp84DNXw==
+X-Google-Smtp-Source: ABhQp+TtMUHHxvTYGbpO4ZhnEPQqjOg6DOnmYu+bsqZO+whEVx5X9x+J0wrMCbeUIUE0eRBQnzAkbXRRExr5jLN+l7o=
+X-Received: by 10.237.37.132 with SMTP id x4mr1290966qtc.224.1509130249908;
+ Fri, 27 Oct 2017 11:50:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 64D64650-BB43-11E7-8B0E-575F0C78B957-77302942!pb-smtp2.pobox.com
+Received: by 10.140.102.70 with HTTP; Fri, 27 Oct 2017 11:50:49 -0700 (PDT)
+In-Reply-To: <xmqq7evhc7nw.fsf@gitster.mtv.corp.google.com>
+References: <xmqq7evhc7nw.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 27 Oct 2017 11:50:49 -0700
+Message-ID: <CAGZ79kYUZv0g+3OEMrbT26A7mSLJzeS-yf5Knr-CnARHqVB=aQ@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Oct 2017, #06; Fri, 27)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Pranit Bauva <pranit.bauva@gmail.com> writes:
+> * sb/submodule-recursive-checkout-detach-head (2017-07-28) 2 commits
+>   (merged to 'next' on 2017-10-26 at 30994b4c76)
+>  + Documentation/checkout: clarify submodule HEADs to be detached
+>  + recursive submodules: detach HEAD from new state
+>
+>  "git checkout --recursive" may overwrite and rewind the history of
+>  the branch that happens to be checked out in submodule
+>  repositories, which might not be desirable.  Detach the HEAD but
+>  still allow the recursive checkout to succeed in such a case.
+>
+>  Undecided.
+>  This needs justification in a larger picture; it is unclear why
+>  this is better than rejecting recursive checkout, for example.
 
-> -		bisect_write "$state" "$rev"
-> +		git bisect--helper --bisect-write "$state" "$rev" "$TERM_GOOD" "$TERM_BAD" || exit
+We have been running this patch internally for a couple of weeks now,
+and had no complaints by users.
 
-I can see why two extra "terms" parameters need to be passed to this
-helper at this step; looking at patches around 4/8 and 6/8 where C
-code can directly find out what words are used for GOOD and BAD, we
-should be able to lose these two extra parameters from this helper
-by internally making a call to get_terms() from bisect_write() ;-)
+Detaching the submodule HEAD is in line with the current thinking
+of submodules, though I am about to send out a plan later
+asking if we want to keep it that way long term.
+
+Thanks,
+Stefan
