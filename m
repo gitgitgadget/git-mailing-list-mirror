@@ -2,137 +2,202 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4431C202A0
-	for <e@80x24.org>; Sat, 28 Oct 2017 07:46:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E4F87202A0
+	for <e@80x24.org>; Sat, 28 Oct 2017 09:16:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751486AbdJ1HqB (ORCPT <rfc822;e@80x24.org>);
-        Sat, 28 Oct 2017 03:46:01 -0400
-Received: from mail-wm0-f48.google.com ([74.125.82.48]:53568 "EHLO
-        mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751164AbdJ1HqA (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 28 Oct 2017 03:46:00 -0400
-Received: by mail-wm0-f48.google.com with SMTP id r196so7335115wmf.2
-        for <git@vger.kernel.org>; Sat, 28 Oct 2017 00:46:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=vqX3y6cQCDDV8hiMg1rMqDvdlW6QytoTXZjz1oFahrc=;
-        b=YOYJXJYZvIUJwmN6Pe2ksELBfo1y6T9hs2jZXIM2e+WsS7+CktHd/+PHg4P3qc+fGB
-         WUxQyIssrAcecxMyEbRyM89m2XM//5OoTPpkgAD/mpVKad4eLACijcK4IyBXjoI+0dZo
-         yiFzcBsYZuC/+b2vWftRS8KD+EhfUTxNI5lbc8CVTXrt+n9VmMTwwVBPEjKCUy0xOzPE
-         n0oAYQ1t/V8XIKUadalTZr6oltuqzJakLhxfuHC6PYHrBDoRNmFAFhxp/tvukqN9xOZx
-         poGr8obNZo0KGli1DwKvbdYGnW34CRK8pyGiQH+2wNBSfcppy50CbYaVi9GqWCgkUSy4
-         7Gkw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=vqX3y6cQCDDV8hiMg1rMqDvdlW6QytoTXZjz1oFahrc=;
-        b=JkiF4+WMwItMATzecQiSu7nQF+oru3NN+bTR7Mk1qWRigpeFUmu2RaZIQirj0EOUc/
-         vOJUid6P59To/eOSA+B1aQqUAehTJLIDlW5bTzRNhuVffj1u9FkJ+rrZX1Ye0zxxssAu
-         A31IMg+IUulJ62g/GPiK9RweUE13KMRtwVd0R0U0rek/aqA0faEotdkT3Qvn7fjHpgeY
-         tJ3X5Pn1tZnjrZdHbfXtlCXTRKrUW0vl8sDDyskZVDQadYL9HSDueVUeGZ1+fQIdfm0r
-         liSLGeEV+6LvJXjk3LjdTZYQcCUQCLfkNCaLVfD7VqHZ8UCHrWRKEzsRtdCE4WsCihIc
-         p9rA==
-X-Gm-Message-State: AMCzsaXHU0tBQl/GZTj2cznOY15lN6kC096dCamsgkTKtvIREZnPENUh
-        8dPGPrpDxPQ2mxpdwNNC+dk=
-X-Google-Smtp-Source: ABhQp+Tz6m1adxeXT0zsgsfSbCZywobi5skhxJ2IAF3hv1NE8Y6DIRliQYvxxZQFSZqCPGPWP+dvmw==
-X-Received: by 10.80.173.37 with SMTP id y34mr3634572edc.193.1509176759552;
-        Sat, 28 Oct 2017 00:45:59 -0700 (PDT)
-Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
-        by smtp.gmail.com with ESMTPSA id e56sm7055904edb.72.2017.10.28.00.45.55
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 28 Oct 2017 00:45:56 -0700 (PDT)
-Received: from avar by evledraar with local (Exim 4.89)
-        (envelope-from <avarab@gmail.com>)
-        id 1e8LoZ-0001en-9n; Sat, 28 Oct 2017 09:45:55 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Joe Perches <joe@perches.com>
-Cc:     Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>
-Subject: Re: grep vs git grep performance?
-References: <1509030170.10651.59.camel@perches.com> <CAGZ79ka41NdzNxGAvtVW802088KydKkp3yHx=Z5q3Mc9GGa_+g@mail.gmail.com> <1509039696.11245.9.camel@perches.com> <CAGZ79kYWPunzZ2u=MtCoCadxXu_4etEK5DYnhYXo+CgeHrXQwQ@mail.gmail.com> <1509124942.1914.9.camel@perches.com> <877evgxmu7.fsf@evledraar.booking.com> <1509146542.1914.19.camel@perches.com>
-User-agent: Debian GNU/Linux 9.2 (stretch); Emacs 25.1.1; mu4e 0.9.19
-In-reply-to: <1509146542.1914.19.camel@perches.com>
-Date:   Sat, 28 Oct 2017 09:45:55 +0200
-Message-ID: <8760azyato.fsf@evledraar.booking.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+        id S1751304AbdJ1JQM (ORCPT <rfc822;e@80x24.org>);
+        Sat, 28 Oct 2017 05:16:12 -0400
+Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:51717 "EHLO
+        alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751189AbdJ1JQL (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 28 Oct 2017 05:16:11 -0400
+X-AuditID: 12074414-0d3ff70000006ddf-0e-59f44ada5f95
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id CA.4D.28127.ADA44F95; Sat, 28 Oct 2017 05:16:10 -0400 (EDT)
+Received: from bagpipes.fritz.box (p54AAE7F1.dip0.t-ipconnect.de [84.170.231.241])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v9S9G5TF015456
+        (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+        Sat, 28 Oct 2017 05:16:09 -0400
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Eric Sunshine <sunshine@sunshineco.com>,
+        git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH v2 1/2] t1409: check that `packed-refs` is not rewritten unnecessarily
+Date:   Sat, 28 Oct 2017 11:16:01 +0200
+Message-Id: <aac0252b94120fcfc6ae9c09531f76a252d423cc.1509181545.git.mhagger@alum.mit.edu>
+X-Mailer: git-send-email 2.14.1
+In-Reply-To: <cover.1509181545.git.mhagger@alum.mit.edu>
+References: <cover.1509181545.git.mhagger@alum.mit.edu>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrGIsWRmVeSWpSXmKPExsUixO6iqHvL60ukwYSVChZdV7qZLBp6rzBb
+        3F4xn9niR0sPs8WZN42MDqwef99/YPJ41ruH0ePiJWWPxQ+8PD5vkgtgjeKySUnNySxLLdK3
+        S+DKeLfJtOCQasXfvd2MDYwL5LsYOTkkBEwkPlxdz9TFyMUhJLCDSeLjwzuMEM4pJon7nRfY
+        QarYBHQlFvU0M4HYIgJqEhPbDrGAFDEL9DJKPFr8ihEkISwQJrHxxFawBhYBVYkN9z+DNfAK
+        REn07PjKBLFOXuLcg9vMIDangIXEurb5LCC2kIC5ROP8YywTGHkWMDKsYpRLzCnN1c1NzMwp
+        Tk3WLU5OzMtLLdK10MvNLNFLTSndxAgJHJEdjEdOyh1iFOBgVOLhlcj9HCnEmlhWXJl7iFGS
+        g0lJlHff+U+RQnxJ+SmVGYnFGfFFpTmpxYcYJTiYlUR485y/RArxpiRWVqUW5cOkpDlYlMR5
+        vy1W9xMSSE8sSc1OTS1ILYLJynBwKEnwTvMEahQsSk1PrUjLzClBSDNxcIIM5wEafgCkhre4
+        IDG3ODMdIn+K0Zij4+bdP0wcz2a+bmAWYsnLz0uVEufdC1IqAFKaUZoHNw0W/a8YxYGeE+a9
+        ClLFA0wccPNeAa1iAlqlIQm2qiQRISXVwNiovOXY842N3cpqm4KMql2EflRuSjy3rSNhmauW
+        7spTXEcWtt1cpMDxkufcDYbof1taTpfkf5q/714315qDvV53Ujz2nn6yePaSvTvmfeZXefM/
+        LqOGszE7/rZeyvtNQcoZKY9PMTlVKRve5dg083Ot14qze550BHT0F1064iahmZ3WkKSaz6LE
+        UpyRaKjFXFScCAA9ri2d2QIAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+There is no need to rewrite the `packed-refs` file except for the case
+that we are deleting a reference that has a packed version. Verify
+that `packed-refs` is not rewritten when it shouldn't be.
 
-On Fri, Oct 27 2017, Joe Perches jotted:
+In fact, two of these tests fail:
 
-> On Sat, 2017-10-28 at 00:11 +0200, Ævar Arnfjörð Bjarmason wrote:
->> On Fri, Oct 27 2017, Joe Perches jotted:
-> []
->> > git grep performance has already been
->> > quite successfully improved.
->>
->> ...and I have WIP patches to use the PCRE engine for patterns without -P
->> which I intend to start sending soon after the next release.
->
-> One addition that would be quite nice would be
-> an option to have regex matches span input lines.
->
-> grep v2.54 was the last grep version that allowed
-> this and I keep it around just for that.
->
-> ie:
->
-> $ cat hello.txt
-> Hello
-> World
-> $ grep -P "Hello\s*World" hello.txt
-> $ grep-2.5.4 -P "Hello\s*World" hello.txt
-> Hello
-> World
+* A new (empty) `packed-refs` file is created when deleting any loose
+  reference and no `packed-refs` file previously existed.
 
-I'm unable to build 2.5.4 and can't find anything relevant in the
-release notes at a quick glance around that time saying that this would
-be removed, if you can still build it I'd be interested to see what this
-bisects down to in grep.git.
+* The `packed-refs` file is rewritten unnecessarily when deleting a
+  loose reference that has no packed counterpart.
 
-But aside from that, a feature like this constrains the regex
-implementation a lot since it's going to need to either match the entire
-file as we'd need to do with PCRE, or we'd need to really deeply embed
-the core logic of the regex matcher into our grep implementation.
+Both problems will be fixed in the next commit.
 
-I.e. in this case a more optimal implementation would start by parsing
-this regex down:
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+---
+ t/t1409-avoid-packing-refs.sh | 118 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 118 insertions(+)
+ create mode 100755 t/t1409-avoid-packing-refs.sh
 
-    ((EXACT "Hello")
-     (STAR (POSIXU "\s"))
-     (EXACT "World"))
+diff --git a/t/t1409-avoid-packing-refs.sh b/t/t1409-avoid-packing-refs.sh
+new file mode 100755
+index 0000000000..a2397c7b71
+--- /dev/null
++++ b/t/t1409-avoid-packing-refs.sh
+@@ -0,0 +1,118 @@
++#!/bin/sh
++
++test_description='avoid rewriting packed-refs unnecessarily'
++
++. ./test-lib.sh
++
++# Add an identifying mark to the packed-refs file header line. This
++# shouldn't upset readers, and it should be omitted if the file is
++# ever rewritten.
++mark_packed_refs () {
++	sed -e "s/^\(#.*\)/\1 t1409 /" <.git/packed-refs >.git/packed-refs.new &&
++	mv .git/packed-refs.new .git/packed-refs
++}
++
++# Verify that the packed-refs file is still marked.
++check_packed_refs_marked () {
++	grep -q '^#.* t1409 ' .git/packed-refs
++}
++
++test_expect_success 'setup' '
++	git commit --allow-empty -m "Commit A" &&
++	A=$(git rev-parse HEAD) &&
++	git commit --allow-empty -m "Commit B" &&
++	B=$(git rev-parse HEAD) &&
++	git commit --allow-empty -m "Commit C" &&
++	C=$(git rev-parse HEAD)
++'
++
++test_expect_failure 'do not create packed-refs file gratuitously' '
++	test_must_fail test -f .git/packed-refs &&
++	git update-ref refs/heads/foo $A &&
++	test_must_fail test -f .git/packed-refs &&
++	git update-ref refs/heads/foo $B &&
++	test_must_fail test -f .git/packed-refs &&
++	git update-ref refs/heads/foo $C $B &&
++	test_must_fail test -f .git/packed-refs &&
++	git update-ref -d refs/heads/foo &&
++	test_must_fail test -f .git/packed-refs
++'
++
++test_expect_success 'check that marking the packed-refs file works' '
++	git for-each-ref >expected &&
++	git pack-refs --all &&
++	mark_packed_refs &&
++	check_packed_refs_marked &&
++	git for-each-ref >actual &&
++	test_cmp expected actual &&
++	git pack-refs --all &&
++	test_must_fail check_packed_refs_marked &&
++	git for-each-ref >actual2 &&
++	test_cmp expected actual2
++'
++
++test_expect_success 'leave packed-refs untouched on update of packed' '
++	git update-ref refs/heads/packed-update $A &&
++	git pack-refs --all &&
++	mark_packed_refs &&
++	git update-ref refs/heads/packed-update $B &&
++	check_packed_refs_marked
++'
++
++test_expect_success 'leave packed-refs untouched on checked update of packed' '
++	git update-ref refs/heads/packed-checked-update $A &&
++	git pack-refs --all &&
++	mark_packed_refs &&
++	git update-ref refs/heads/packed-checked-update $B $A &&
++	check_packed_refs_marked
++'
++
++test_expect_success 'leave packed-refs untouched on verify of packed' '
++	git update-ref refs/heads/packed-verify $A &&
++	git pack-refs --all &&
++	mark_packed_refs &&
++	echo "verify refs/heads/packed-verify $A" | git update-ref --stdin &&
++	check_packed_refs_marked
++'
++
++test_expect_success 'touch packed-refs on delete of packed' '
++	git update-ref refs/heads/packed-delete $A &&
++	git pack-refs --all &&
++	mark_packed_refs &&
++	git update-ref -d refs/heads/packed-delete &&
++	test_must_fail check_packed_refs_marked
++'
++
++test_expect_success 'leave packed-refs untouched on update of loose' '
++	git pack-refs --all &&
++	git update-ref refs/heads/loose-update $A &&
++	mark_packed_refs &&
++	git update-ref refs/heads/loose-update $B &&
++	check_packed_refs_marked
++'
++
++test_expect_success 'leave packed-refs untouched on checked update of loose' '
++	git pack-refs --all &&
++	git update-ref refs/heads/loose-checked-update $A &&
++	mark_packed_refs &&
++	git update-ref refs/heads/loose-checked-update $B $A &&
++	check_packed_refs_marked
++'
++
++test_expect_success 'leave packed-refs untouched on verify of loose' '
++	git pack-refs --all &&
++	git update-ref refs/heads/loose-verify $A &&
++	mark_packed_refs &&
++	echo "verify refs/heads/loose-verify $A" | git update-ref --stdin &&
++	check_packed_refs_marked
++'
++
++test_expect_failure 'leave packed-refs untouched on delete of loose' '
++	git pack-refs --all &&
++	git update-ref refs/heads/loose-delete $A &&
++	mark_packed_refs &&
++	git update-ref -d refs/heads/loose-delete &&
++	check_packed_refs_marked
++'
++
++test_done
+-- 
+2.14.1
 
-Then when you open the file you can start searching for the fixed-string
-"Hello", if you don't find that you're done, if you do you can forward
-look-ahead for the fixed "World", and only if you find that do you need
-to match the more complex part in the middle.
-
-Whereas our API for the internal regex matchers now is that we find the
-boundaries of newlines and batch-match a bunch of lines with a match()
-function that takes a string, and if that matches we drill down to what
-specific line matches.
-
-Which is not to say that this can't be done without a potentially
-unacceptable memory trade-off (i.e. matching the entire file in all
-cases), the PCRE2 engine in particular includes some I/O abstractions
-that we're not using but could (but I haven't looked into it).
-
-But right now the entire internal API we have is constrained by catering
-to the lowest common denominator (a regexec that takes a char*), so
-supporting more fancy multi-line matching features can be a PITA since
-we'd need to maintain both codepaths.
-
-Or we could make PCRE a hard dependency, which given the performance
-advantages I'm increasingly willing to make the case for.
