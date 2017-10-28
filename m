@@ -6,42 +6,42 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA0132055E
-	for <e@80x24.org>; Sat, 28 Oct 2017 18:16:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2362F2055E
+	for <e@80x24.org>; Sat, 28 Oct 2017 18:16:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751474AbdJ1SQA (ORCPT <rfc822;e@80x24.org>);
-        Sat, 28 Oct 2017 14:16:00 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:55558 "EHLO
+        id S1751537AbdJ1SQD (ORCPT <rfc822;e@80x24.org>);
+        Sat, 28 Oct 2017 14:16:03 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:55570 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751430AbdJ1SP5 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 28 Oct 2017 14:15:57 -0400
+        by vger.kernel.org with ESMTP id S1751455AbdJ1SP7 (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 28 Oct 2017 14:15:59 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 90F8D6044B;
-        Sat, 28 Oct 2017 18:15:56 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 5A5EE6044D;
+        Sat, 28 Oct 2017 18:15:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1509214557;
-        bh=DOm+cJBgoiNfXzMv7Fl/G6Xl90sSZjl80mh59OXysLg=;
+        s=default; t=1509214558;
+        bh=3eM/tkd1ZFDankicaDvNlYEPvwX5fIY4I9KsBfYuWDE=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=eVkiaWya/zSJlXIgHBrQPrMG2DCTXq2Xm8CqTpaxh0u5arHFr3N3uqn+8WEElVTOg
-         TyvgjZMeicmHYXT8XOm4rH5WCiYi1pTBeeilBMfOaS/YrjJKRDpUbX3YmGlrOOsDxX
-         l8Cd4pIOVyU1n10Bo118Jr8l/BufdCxl7cMf4qWZoVhTIG20uP0afRJPKXLZ5V/zId
-         IUe87kmhn1n2nq1UfaTpcx9zRNfhEK/LcLcaD7VtknyVGqDyB8d9Xs2RaO4fv0Nwj8
-         itPScyVuVKd/Ka0H7dTEt09bMP4eSimdNXGAiZVot3I/j8//GQ4UVVil3jBlhEdErT
-         cKppgIDI88RV4kP0dsIAobkakFLWlMIduJqUSmtBKTdNxB9s1ULGmAUR74OYgECber
-         py7youb/tIa8AFp2X/aG0e9KaH6SMGKOyoOu+pv8vFdz8Sl+zY2qZMcQ0zPGIJ1rBL
-         wWutZUgYAr4o3zKmqFjwpqlPgceHiF8SVl2yY11aTyLg2CdDfpS
+        b=0CRcGwb4zBkYz3+SXKYNi0L0JUiz0gcLKFpRAzdxgCGhYp+sLYyMWH4ynKaIkvIY5
+         fDEZPHJAW86svSuNs2ritwAfiQxL8MeLX/XXVrKrihrGxlBJULn4HOBgMmsx8VCwkm
+         oJDVCSDLG5rPlEOoD4QB3Qv7fI6aKBQu5pQDIrYbfnNlBdvPWSmU9KWJYWQTNYJ4gR
+         TISZOQ5yWWbX7AFvOzz0d6/Abd+WJKEQvepbEYh8f0/kxi/jsR2vNoRA6oBCLVtg6x
+         CvIowfE92z7UysG3amzkFETU9ZVdkjBx2PTpw7WgLCytKbszPN+0K13rtgi/MuL1yv
+         q83C2ngTsQGUhLGQbLTMsZjojjBb7U3Df2XZU2zaa4uvq2wIkNwg7YXMrNI0G7vxEr
+         k3WX8/JOZp9MEVBS8EnrrCYb8f9rKzobFcQFBcuAbROIm/eyjkl1WnTbKoyDJ4Iolk
+         JqRof/gdwop2BsZ6+Pt/UP0+jWIXJUjEB7vOzYq8Ikykx6fOtnT
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jonathan Nieder <jrnieder@gmail.com>,
         Stefan Beller <sbeller@google.com>,
         Brandon Williams <bmwill@google.com>
-Subject: [PATCH v2 1/4] setup: expose enumerated repo info
-Date:   Sat, 28 Oct 2017 18:12:36 +0000
-Message-Id: <20171028181239.59458-2-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 3/4] Integrate hash algorithm support with repo setup
+Date:   Sat, 28 Oct 2017 18:12:38 +0000
+Message-Id: <20171028181239.59458-4-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.15.0.rc2
 In-Reply-To: <20171028181239.59458-1-sandals@crustytoothpaste.net>
 References: <20171028181239.59458-1-sandals@crustytoothpaste.net>
@@ -51,190 +51,136 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We enumerate several different items as part of struct
-repository_format, but then actually set up those values using the
-global variables we've initialized from them.  Instead, let's pass a
-pointer to the structure down to the code where we enumerate these
-values, so we can later on use those values directly to perform setup.
+In future versions of Git, we plan to support an additional hash
+algorithm.  Integrate the enumeration of hash algorithms with repository
+setup, and store a pointer to the enumerated data in struct repository.
+Of course, we currently only support SHA-1, so hard-code this value in
+read_repository_format.  In the future, we'll enumerate this value from
+the configuration.
 
-This technique makes it easier for us to determine additional items
-about the repository format (such as the hash algorithm) and then use
-them for setup later on, without needing to add additional global
-variables.  We can't avoid using the existing global variables since
-they're intricately intertwined with how things work at the moment, but
-this improves things for the future.
+Add a constant, current_hash, which points to the hash_algo structure
+pointer in the repository global.  Note that this is the hash which is
+used to serialize data to disk, not the hash which is used to display
+items to the user.  The transition plan anticipates that these may be
+different.  We can add an additional element in the future (say,
+ui_hash_algo) to provide for this case.
+
+Include repository.h in cache.h since we now need to have access to
+these struct and variable definitions.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- setup.c | 46 +++++++++++++++++++++++++---------------------
- 1 file changed, 25 insertions(+), 21 deletions(-)
+ cache.h      | 4 ++++
+ repository.c | 7 +++++++
+ repository.h | 5 +++++
+ setup.c      | 3 +++
+ 4 files changed, 19 insertions(+)
 
+diff --git a/cache.h b/cache.h
+index 9e9eb08f05..bce57c74c4 100644
+--- a/cache.h
++++ b/cache.h
+@@ -14,6 +14,7 @@
+ #include "hash.h"
+ #include "path.h"
+ #include "sha1-array.h"
++#include "repository.h"
+ 
+ #ifndef platform_SHA_CTX
+ /*
+@@ -132,6 +133,8 @@ struct git_hash_algo {
+ };
+ extern const struct git_hash_algo hash_algos[GIT_HASH_NALGOS];
+ 
++#define current_hash the_repository->hash_algo
++
+ #if defined(DT_UNKNOWN) && !defined(NO_D_TYPE_IN_DIRENT)
+ #define DTYPE(de)	((de)->d_type)
+ #else
+@@ -920,6 +923,7 @@ struct repository_format {
+ 	int version;
+ 	int precious_objects;
+ 	int is_bare;
++	int hash_algo;
+ 	char *work_tree;
+ 	struct string_list unknown_extensions;
+ };
+diff --git a/repository.c b/repository.c
+index bb2fae5446..c63bff05a5 100644
+--- a/repository.c
++++ b/repository.c
+@@ -64,6 +64,11 @@ void repo_set_gitdir(struct repository *repo, const char *path)
+ 	free(old_gitdir);
+ }
+ 
++void repo_set_hash_algo(struct repository *repo, int hash_algo)
++{
++	repo->hash_algo = &hash_algos[hash_algo];
++}
++
+ /*
+  * Attempt to resolve and set the provided 'gitdir' for repository 'repo'.
+  * Return 0 upon success and a non-zero value upon failure.
+@@ -136,6 +141,8 @@ int repo_init(struct repository *repo, const char *gitdir, const char *worktree)
+ 	if (read_and_verify_repository_format(&format, repo->commondir))
+ 		goto error;
+ 
++	repo->hash_algo = &hash_algos[format.hash_algo];
++
+ 	if (worktree)
+ 		repo_set_worktree(repo, worktree);
+ 
+diff --git a/repository.h b/repository.h
+index 7f5e24a0a2..0329e40c7f 100644
+--- a/repository.h
++++ b/repository.h
+@@ -4,6 +4,7 @@
+ struct config_set;
+ struct index_state;
+ struct submodule_cache;
++struct git_hash_algo;
+ 
+ struct repository {
+ 	/* Environment */
+@@ -67,6 +68,9 @@ struct repository {
+ 	 */
+ 	struct index_state *index;
+ 
++	/* Repository's current hash algorithm, as serialized on disk. */
++	const struct git_hash_algo *hash_algo;
++
+ 	/* Configurations */
+ 	/*
+ 	 * Bit used during initialization to indicate if repository state (like
+@@ -86,6 +90,7 @@ extern struct repository *the_repository;
+ 
+ extern void repo_set_gitdir(struct repository *repo, const char *path);
+ extern void repo_set_worktree(struct repository *repo, const char *path);
++extern void repo_set_hash_algo(struct repository *repo, int algo);
+ extern int repo_init(struct repository *repo, const char *gitdir, const char *worktree);
+ extern int repo_submodule_init(struct repository *submodule,
+ 			       struct repository *superproject,
 diff --git a/setup.c b/setup.c
-index 03f51e056c..f0f509fe85 100644
+index f0f509fe85..d99f8a82ff 100644
 --- a/setup.c
 +++ b/setup.c
-@@ -432,16 +432,15 @@ static int check_repo_format(const char *var, const char *value, void *vdata)
- 	return 0;
- }
- 
--static int check_repository_format_gently(const char *gitdir, int *nongit_ok)
-+static int check_repository_format_gently(const char *gitdir, struct repository_format *candidate, int *nongit_ok)
- {
- 	struct strbuf sb = STRBUF_INIT;
- 	struct strbuf err = STRBUF_INIT;
--	struct repository_format candidate;
- 	int has_common;
- 
- 	has_common = get_common_dir(&sb, gitdir);
- 	strbuf_addstr(&sb, "/config");
--	read_repository_format(&candidate, sb.buf);
-+	read_repository_format(candidate, sb.buf);
- 	strbuf_release(&sb);
- 
- 	/*
-@@ -449,10 +448,10 @@ static int check_repository_format_gently(const char *gitdir, int *nongit_ok)
- 	 * we treat a missing config as a silent "ok", even when nongit_ok
- 	 * is unset.
- 	 */
--	if (candidate.version < 0)
-+	if (candidate->version < 0)
- 		return 0;
- 
--	if (verify_repository_format(&candidate, &err) < 0) {
-+	if (verify_repository_format(candidate, &err) < 0) {
- 		if (nongit_ok) {
- 			warning("%s", err.buf);
- 			strbuf_release(&err);
-@@ -462,21 +461,21 @@ static int check_repository_format_gently(const char *gitdir, int *nongit_ok)
- 		die("%s", err.buf);
- 	}
- 
--	repository_format_precious_objects = candidate.precious_objects;
--	string_list_clear(&candidate.unknown_extensions, 0);
-+	repository_format_precious_objects = candidate->precious_objects;
-+	string_list_clear(&candidate->unknown_extensions, 0);
- 	if (!has_common) {
--		if (candidate.is_bare != -1) {
--			is_bare_repository_cfg = candidate.is_bare;
-+		if (candidate->is_bare != -1) {
-+			is_bare_repository_cfg = candidate->is_bare;
- 			if (is_bare_repository_cfg == 1)
- 				inside_work_tree = -1;
+@@ -486,6 +486,7 @@ int read_repository_format(struct repository_format *format, const char *path)
+ 	memset(format, 0, sizeof(*format));
+ 	format->version = -1;
+ 	format->is_bare = -1;
++	format->hash_algo = GIT_HASH_SHA1;
+ 	string_list_init(&format->unknown_extensions, 1);
+ 	git_config_from_file(check_repo_format, path, format);
+ 	return format->version;
+@@ -1111,6 +1112,8 @@ const char *setup_git_directory_gently(int *nongit_ok)
+ 			repo_set_gitdir(the_repository, gitdir);
+ 			setup_git_env();
  		}
--		if (candidate.work_tree) {
-+		if (candidate->work_tree) {
- 			free(git_work_tree_cfg);
--			git_work_tree_cfg = candidate.work_tree;
-+			git_work_tree_cfg = candidate->work_tree;
- 			inside_work_tree = -1;
- 		}
- 	} else {
--		free(candidate.work_tree);
-+		free(candidate->work_tree);
++		if (startup_info->have_repository)
++			repo_set_hash_algo(the_repository, repo_fmt.hash_algo);
  	}
  
- 	return 0;
-@@ -623,6 +622,7 @@ const char *read_gitfile_gently(const char *path, int *return_error_code)
- 
- static const char *setup_explicit_git_dir(const char *gitdirenv,
- 					  struct strbuf *cwd,
-+					  struct repository_format *repo_fmt,
- 					  int *nongit_ok)
- {
- 	const char *work_tree_env = getenv(GIT_WORK_TREE_ENVIRONMENT);
-@@ -648,7 +648,7 @@ static const char *setup_explicit_git_dir(const char *gitdirenv,
- 		die("Not a git repository: '%s'", gitdirenv);
- 	}
- 
--	if (check_repository_format_gently(gitdirenv, nongit_ok)) {
-+	if (check_repository_format_gently(gitdirenv, repo_fmt, nongit_ok)) {
- 		free(gitfile);
- 		return NULL;
- 	}
-@@ -721,9 +721,10 @@ static const char *setup_explicit_git_dir(const char *gitdirenv,
- 
- static const char *setup_discovered_git_dir(const char *gitdir,
- 					    struct strbuf *cwd, int offset,
-+					    struct repository_format *repo_fmt,
- 					    int *nongit_ok)
- {
--	if (check_repository_format_gently(gitdir, nongit_ok))
-+	if (check_repository_format_gently(gitdir, repo_fmt, nongit_ok))
- 		return NULL;
- 
- 	/* --work-tree is set without --git-dir; use discovered one */
-@@ -735,7 +736,7 @@ static const char *setup_discovered_git_dir(const char *gitdir,
- 			gitdir = to_free = real_pathdup(gitdir, 1);
- 		if (chdir(cwd->buf))
- 			die_errno("Could not come back to cwd");
--		ret = setup_explicit_git_dir(gitdir, cwd, nongit_ok);
-+		ret = setup_explicit_git_dir(gitdir, cwd, repo_fmt, nongit_ok);
- 		free(to_free);
- 		return ret;
- 	}
-@@ -767,11 +768,12 @@ static const char *setup_discovered_git_dir(const char *gitdir,
- 
- /* #16.1, #17.1, #20.1, #21.1, #22.1 (see t1510) */
- static const char *setup_bare_git_dir(struct strbuf *cwd, int offset,
-+				      struct repository_format *repo_fmt,
- 				      int *nongit_ok)
- {
- 	int root_len;
- 
--	if (check_repository_format_gently(".", nongit_ok))
-+	if (check_repository_format_gently(".", repo_fmt, nongit_ok))
- 		return NULL;
- 
- 	setenv(GIT_IMPLICIT_WORK_TREE_ENVIRONMENT, "0", 1);
-@@ -783,7 +785,7 @@ static const char *setup_bare_git_dir(struct strbuf *cwd, int offset,
- 		gitdir = offset == cwd->len ? "." : xmemdupz(cwd->buf, offset);
- 		if (chdir(cwd->buf))
- 			die_errno("Could not come back to cwd");
--		return setup_explicit_git_dir(gitdir, cwd, nongit_ok);
-+		return setup_explicit_git_dir(gitdir, cwd, repo_fmt, nongit_ok);
- 	}
- 
- 	inside_git_dir = 1;
-@@ -1024,6 +1026,7 @@ const char *setup_git_directory_gently(int *nongit_ok)
- 	static struct strbuf cwd = STRBUF_INIT;
- 	struct strbuf dir = STRBUF_INIT, gitdir = STRBUF_INIT;
- 	const char *prefix;
-+	struct repository_format repo_fmt;
- 
- 	/*
- 	 * We may have read an incomplete configuration before
-@@ -1051,18 +1054,18 @@ const char *setup_git_directory_gently(int *nongit_ok)
- 		prefix = NULL;
- 		break;
- 	case GIT_DIR_EXPLICIT:
--		prefix = setup_explicit_git_dir(gitdir.buf, &cwd, nongit_ok);
-+		prefix = setup_explicit_git_dir(gitdir.buf, &cwd, &repo_fmt, nongit_ok);
- 		break;
- 	case GIT_DIR_DISCOVERED:
- 		if (dir.len < cwd.len && chdir(dir.buf))
- 			die(_("Cannot change to '%s'"), dir.buf);
- 		prefix = setup_discovered_git_dir(gitdir.buf, &cwd, dir.len,
--						  nongit_ok);
-+						  &repo_fmt, nongit_ok);
- 		break;
- 	case GIT_DIR_BARE:
- 		if (dir.len < cwd.len && chdir(dir.buf))
- 			die(_("Cannot change to '%s'"), dir.buf);
--		prefix = setup_bare_git_dir(&cwd, dir.len, nongit_ok);
-+		prefix = setup_bare_git_dir(&cwd, dir.len, &repo_fmt, nongit_ok);
- 		break;
- 	case GIT_DIR_HIT_CEILING:
- 		prefix = setup_nongit(cwd.buf, nongit_ok);
-@@ -1169,7 +1172,8 @@ int git_config_perm(const char *var, const char *value)
- 
- void check_repository_format(void)
- {
--	check_repository_format_gently(get_git_dir(), NULL);
-+	struct repository_format repo_fmt;
-+	check_repository_format_gently(get_git_dir(), &repo_fmt, NULL);
- 	startup_info->have_repository = 1;
- }
- 
+ 	strbuf_release(&dir);
 -- 
 2.15.0.rc2
 
