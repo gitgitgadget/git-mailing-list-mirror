@@ -2,173 +2,152 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 72D0A2055E
-	for <e@80x24.org>; Sat, 28 Oct 2017 16:43:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ADA652055E
+	for <e@80x24.org>; Sat, 28 Oct 2017 16:57:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751310AbdJ1QnA (ORCPT <rfc822;e@80x24.org>);
-        Sat, 28 Oct 2017 12:43:00 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:55528 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751273AbdJ1Qm6 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 28 Oct 2017 12:42:58 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 173416044A;
-        Sat, 28 Oct 2017 16:42:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1509208977;
-        bh=RD9ErY7lJFuDNr99T40kFSTWWetBRb+SbME64pEfuvc=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=HcB9LcETJzsM2/RsdxnubDsKn51+RisOZhBFR/7o0giDyK8GhC+W6MwKvIBlI4cry
-         nq2yntU7ls85CCL3mmUY2kQAMDvmRMu1FrkXeG2pOBdOBGQazJvv1K+8ZlRSUaYPO2
-         dku+gm2DV69A72iSh6KOHnvXkHLf5vPujlB1IpSF1sAmhzRvvF1d3AMjkZfRPoqc1Z
-         gIwQKPpAH6+DXGhBbsMbWYk/TUHcrYhnPnsKXiSrI22ud3yhCkoQtVbA3vUNZvHKpf
-         /i8znDqS50WIgOQ4Xdo6FRXIPEZjUELlYVPgTgVOI+N0RI2oCLUJanxRnJYUAdZO3T
-         2Cg19DLwk67oFrGRZO8fjLn6W/xxZw87nG79hQ6fSZR69H23vJCr2mw/uVnzyniNNQ
-         I5/+0xyRbAHEKGOKWfq1QK2E0GNUmfhoR6kkqxg9EmulR6L1J8pA0ptOC5n/zAWYDn
-         EKjGOse/Coz2G6ZH/VnK3AgYmgmy87YZz9PYo6HuiV+3Rwt4zd0
-Date:   Sat, 28 Oct 2017 16:42:49 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jeff King <peff@peff.net>
-Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [PATCH 1/2] t1404: add a bunch of tests of D/F conflicts
-Message-ID: <20171028164249.ufro5weobwadfonv@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-References: <cover.1508856679.git.mhagger@alum.mit.edu>
- <be088bd57e61f4ea0dc974a65829a928ecd30534.1508856679.git.mhagger@alum.mit.edu>
- <CAPig+cRLB=dGD=+Af=yYL3M709LRpeUrtvcDLo9iBKYy2HAW-w@mail.gmail.com>
- <20171024194634.pigmvgoqtdexvjhc@sigill.intra.peff.net>
- <e66694a3-98e2-33aa-4cdd-dac41d2a89d5@alum.mit.edu>
- <20171026063250.dckc22ocr3zjmsxv@sigill.intra.peff.net>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="d6jghv4vcronzk53"
-Content-Disposition: inline
-In-Reply-To: <20171026063250.dckc22ocr3zjmsxv@sigill.intra.peff.net>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.13.0-1-amd64)
-User-Agent: NeoMutt/20170609 (1.8.3)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+        id S1751390AbdJ1Q5C (ORCPT <rfc822;e@80x24.org>);
+        Sat, 28 Oct 2017 12:57:02 -0400
+Received: from mail-wr0-f170.google.com ([209.85.128.170]:48037 "EHLO
+        mail-wr0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751230AbdJ1Q5B (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 28 Oct 2017 12:57:01 -0400
+Received: by mail-wr0-f170.google.com with SMTP id y39so8692858wrd.4
+        for <git@vger.kernel.org>; Sat, 28 Oct 2017 09:57:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=oT2gK1/8Vd1e0OV4YYWcGXtKw2pJlnlr5v7PqjayU+M=;
+        b=rzDkpkobRVUDrsAA4wKvgx/OgNEsFI0eXTzKuCcV9HlfY0MqW9rQUgQVzIsgzmQlzl
+         WE2XgiDlyjRxfeayioa9h3PH0z7MKdF4xgk2FnLFcjrHlieK5Nt90//XE02oGNqU4Z9d
+         x8Jd2gzAJk8U+H1+vF/FLYitTv0L4d/uJyvbwSwUSftbb2F+gnftTbxhutp2XZ+Ru+jA
+         UpCzt7CoUb1l2XMueqYJxeSnYFf2k43hJ7pZozIWtkX9uODEiDTQ6HB2gfp0cuTCJFzk
+         Q2Cii22ivpNy06JTsYEZoUrpoyAfVjJP6tc2rranOHYd2py5vTKMf5oyTRGMn3uSy5Pg
+         qyDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=oT2gK1/8Vd1e0OV4YYWcGXtKw2pJlnlr5v7PqjayU+M=;
+        b=WeEugHdyUpggy7dwu1vksMWsEkxC0VeZO8LUa3/ZoL3Y576jY3kg0+zjW2tnM3ELTc
+         eGg3u7LeMbFjv0MTTkBAk1k3apH6JgcfRipJhR2ySNz4jIRLqAZBijghFBU2qeJYPMip
+         LHUcb0uqtFMeV1ie2S6LqkrrJz4odYitwPC/uhPoLhtnxwyYuNPWO+V1lYT2YnHRvEfj
+         UydxjllhAczVHXbjW9O9ez2W/VUf7bsA71+hFqjcU7Gx5vgCfzJX7UVStop+4lmkwmgq
+         BvbGaHDZg0mpnCNxmfHsiQqSg3zxyQU6rzKChE6pq9/WCNSRKQb1PVIqYKNVc9mBLJ63
+         n59w==
+X-Gm-Message-State: AMCzsaUOirp0W6YC8oCWCvFJaDT+tcalcZN7vnLhLPEIyLl6uRVhxJ47
+        GOj6Td1DjWv/SZ52zm9Bljw=
+X-Google-Smtp-Source: ABhQp+Te5vnGmhU+vHAOfRyjtK9Q4uDcsitXN1bk+im3OtFqYIhnqdH1TFg8LxJWHM4dtgahC7qeLQ==
+X-Received: by 10.223.171.6 with SMTP id q6mr3225112wrc.117.1509209820131;
+        Sat, 28 Oct 2017 09:57:00 -0700 (PDT)
+Received: from [10.32.248.84] (adsknateur.autodesk.com. [132.188.32.100])
+        by smtp.gmail.com with ESMTPSA id v8sm8611346wrg.80.2017.10.28.09.56.58
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sat, 28 Oct 2017 09:56:59 -0700 (PDT)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [git-for-windows] Git for Windows v2.15.0-rc prerelease, was Re: [ANNOUNCE] Git v2.15.0-rc2
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <alpine.DEB.2.21.1.1710281838230.6482@virtualbox>
+Date:   Sat, 28 Oct 2017 18:56:57 +0200
+Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
+        git-for-windows <git-for-windows@googlegroups.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <7A5EBFA0-3DC4-4AA1-91DB-450DC89BA8E7@gmail.com>
+References: <xmqqr2tygvp4.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.21.1.1710210020290.40514@virtualbox> <18E24F0C-D518-46B6-A8D5-71B0E1B05DE0@gmail.com> <DC84FB2E-A26E-4957-B5FA-BE6DDEC3411B@gmail.com> <alpine.DEB.2.21.1.1710281838230.6482@virtualbox>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---d6jghv4vcronzk53
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Wed, Oct 25, 2017 at 11:32:51PM -0700, Jeff King wrote:
-> On Wed, Oct 25, 2017 at 10:03:09AM +0200, Michael Haggerty wrote:
+> On 28 Oct 2017, at 18:40, Johannes Schindelin =
+<johannes.schindelin@gmx.de> wrote:
 >=20
-> > > Yeah. It's supported by dash and many other shells, but we do try to
-> > > avoid it[1]. I think in this case we could just drop it (but keep
-> > > setting the "local foo" ones to empty with "foo=3D".
-> >=20
-> > I do wish that we could allow "local", as it avoids a lot of headaches
-> > and potential breakage. According to [1],
+> Hi Lars,
 >=20
-> Agreed.
-
-This would be useful.  Debian requires that all implementations that
-implement /bin/sh support local and a small number of other features.
-
-There is discussion in the Austin Group issue tracker about adding this
-feature to POSIX, but it's gotten bogged down over lexical versus
-dynamic scoping.  Everyone agrees that it's a desirable feature, though.
-
-> > He mentions that ksh93 doesn't support "local", but that it differs from
-> > POSIX in many other ways, too.
+> On Fri, 27 Oct 2017, Lars Schneider wrote:
 >=20
-> Yes, the conclusion we came to in the thread I linked earlier is the
-> same: ksh is affected, but that shell is a problem for other reasons. I
-> don't know if anybody tested with "modern" ksh like mksh, though. Should
-> be easy enough:
+>>> On 27 Oct 2017, at 14:11, Lars Schneider <larsxschneider@gmail.com> =
+wrote:
+>>>=20
+>>>> On 21 Oct 2017, at 00:22, Johannes Schindelin =
+<johannes.schindelin@gmx.de> wrote:
+>>>>=20
+>>>> [cutting linux-kernel]
+>>>>=20
+>>>> On Fri, 20 Oct 2017, Junio C Hamano wrote:
+>>>>=20
+>>>>> A release candidate Git v2.15.0-rc2 is now available for testing
+>>>>> at the usual places.
+>>>>=20
+>>>> The Git for Windows equivalent is now available from
+>>>>=20
+>>>>  =
+https://github.com/git-for-windows/git/releases/tag/v2.15.0-rc2.windows.1
+>>>=20
+>>> I just tested RC2 on Windows and I don't see my "Filtering content:"
+>>> output if I clone a Git repository with Git LFS files (and Git LFS
+>>> 2.3.3+ installed).
+>>>=20
+>>> The feature was introduced in the following commit which is be part =
+of
+>>> your RC2 build commit (b7f8941):
+>>> =
+https://github.com/git/git/commit/52f1d62eb44faf569edca360ec9af9ddd4045fe0=
 
-As far as I can tell, bash, dash, posh, mksh, pdksh, zsh, and busybox sh
-all support local.  From my reading of the documentation, so does sh on
-FreeBSD, NetBSD, and OpenBSD.  Not all of these are good choices for a
-POSIXy sh, though.
-
-ksh93 will support local if you alias it to typeset, but only when
-called from functions defined with "function", not normal shell-style
-functions.  I have a gist[0] that does absurd things to work around
-that, but I wouldn't recommend that for production use.
-
-Solaris 11.1's man page doesn't document local in sh (which is a ksh88
-variant) and ksh is ksh93, so it doesn't appear to support it.  Solaris
-11.3 documents bash, so it's a non-issue there.
-
-It's my understanding that using ksh as a POSIXy sh variant is very
-common on proprietary Unices, so its lack of compatibility may be a
-dealbreaker.  Then again, many of those systems may have bash installed.
-
-> > Perhaps we could slip in a couple of "local" as a compatibility test to
-> > see if anybody complains, like we did with a couple of C features recen=
-tly.
+>>>=20
+>>> On macOS everything works as expcted with RC2:
+>>>   ...
+>>>   remote: Total 15012 (delta 0), reused 0 (delta 0), pack-reused =
+15012
+>>>   Receiving objects: 100% (15012/15012), 2.02 MiB | 753.00 KiB/s, =
+done.
+>>>   Filtering content:  43% (6468/15000), 33.30 KiB | 0 bytes/s
+>>>   ...
+>>>=20
+>>> Do you, or other Windows experts, spot something in the commit =
+linked
+>>> above that could cause trouble on Windows?
+>>=20
+>> Well, it turns out the output works for my real life repos but not =
+for
+>> my Git LFS testing repo.
+>>=20
+>>    git clone https://github.com/larsxschneider/lfstest-manyfiles
+>>=20
+>> ... prints the filtering content output on macOS but not on Windows.
+>> The progress function has some delay feature that suppresses the =
+output
+>> if it is only shown for a second or something. However, in this test =
+case
+>> the output should be visible for several seconds at least...
+>> I am still puzzled.
 >=20
-> That sounds reasonable to me. But from the earlier conversation, beware
-> that:
+> Nothing really strikes me as obvious.
 >=20
->   local x
->   ...
->   x=3D5
->=20
-> is not necessarily enough to notice the problem on broken shells (they
-> may complain that "local" is not a command, and quietly stomp on the
-> global). I think:
->=20
->   local x=3D5
->=20
-> would be enough (though depend on how you use $x, the failure mode might
-> be pretty subtle). Or we could even add an explicit test in t0000 like
-> the example above.
+> Do you do this in Git Bash? If so, maybe you can also test in Git CMD? =
+I
+> do remember having issues with stderr only showing up in time if it =
+was
+> fflush()ed explicitly, but only in Git Bash (i.e. a MinTTY problem).
 
-I'd recommend an explicit test for this.  It's much easier to track down
-that way than seeing other failure scenarios.  People will also usually
-complain about failing tests.
+Same behavior in Git Bash and Git CMD. I also noticed that this seems to
+be a more general problem. Git is supposed to show "Checking out files"
+and I don't see that if I clone the repository linked above.
 
-[0] https://gist.github.com/bk2204/9dd24df0e4499a02a300578ebdca4728
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
+IOW: This is not a Git LFS or Git filtering problem.
 
---d6jghv4vcronzk53
-Content-Type: application/pgp-signature; name="signature.asc"
+I am testing on Windows 8 with Git 2.15 RC2.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.1 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAln0s4kACgkQv1NdgR9S
-9ossfxAAov0BXplysAPxFGnGKuevokxlORrjPfqbZmPPoPilHCJlX6YnxnryBX7N
-j22iDD0p1odnqifkrdSvcGcRxjQYuhK8B1xXoXzmsBIUdk2t8ON/iwNM9epmGUve
-FjYMRNu+NkKzQIohUgbGlbPbENcp4WDiEP5VyRbTxLzNwlrpLnrIVP3UNcTIl7kb
-bVPOuvDTERY+Zu7zlmteuCTWVnun51P7OGW3Bx3uXMEwLL7FKt/tDShcJ6mO1c+I
-cRayH99mxpeh+jfuc3Klxbd7v9t6/WNphr61lnhb/i3NFFPSDzfe9GkyTerv8ciL
-I08al9DY2UdMAY70+mb3Ne/xJCF1oCvvhWQfRzAAnoGh8Drp4JJeu8+1AXECPwLI
-QXocScHcnR9nBE57QA0Z1iKkuzO0/7ewxwbVteJ3DCRWrf21ZDgDRLBqNGeRyTX5
-kxZZQlm9vmT37AyJDxtgIrD33cMrGlyJyQ7qJlH0Y8lpwueEcDIEqpk5CXwZKnOI
-Fb7aJGSLXrUW2+UMAufB7dQaT10lCv6xe/us1YgOOLxL9zeqXTXOdYW2UGUrsG0u
-seqKl1foOiODNPj+yePSf9Vb0HGvz1z3YD7Ci9Jcm5pwZgFDtTZRBvAo57YQ8QTc
-n6Yk5NSRUR9qiCbuGObMAbyTg57ISp/fTdOcR/T2sX6kNTz4tKg=
-=GnUt
------END PGP SIGNATURE-----
-
---d6jghv4vcronzk53--
+Thanks,
+Lars=
