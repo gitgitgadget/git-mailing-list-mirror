@@ -7,48 +7,47 @@ X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 570292055E
-	for <e@80x24.org>; Sat, 28 Oct 2017 17:20:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 803EE2055E
+	for <e@80x24.org>; Sat, 28 Oct 2017 17:32:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751594AbdJ1RUt (ORCPT <rfc822;e@80x24.org>);
-        Sat, 28 Oct 2017 13:20:49 -0400
-Received: from mout.gmx.net ([212.227.17.21]:53305 "EHLO mout.gmx.net"
+        id S1751395AbdJ1RcL (ORCPT <rfc822;e@80x24.org>);
+        Sat, 28 Oct 2017 13:32:11 -0400
+Received: from mout.gmx.net ([212.227.15.19]:59713 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751429AbdJ1RUs (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 28 Oct 2017 13:20:48 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MgsVY-1dmY3g2thQ-00M193; Sat, 28
- Oct 2017 19:20:44 +0200
-Date:   Sat, 28 Oct 2017 19:20:44 +0200 (CEST)
+        id S1751342AbdJ1RcK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 28 Oct 2017 13:32:10 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Mbxdm-1dqPc83PWw-00JMUh; Sat, 28
+ Oct 2017 19:32:06 +0200
+Date:   Sat, 28 Oct 2017 19:32:06 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     Stefan Beller <sbeller@google.com>
 cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/3] revision.h: introduce blob/tree walking in order of
- the commits
-In-Reply-To: <20171028004506.10253-2-sbeller@google.com>
-Message-ID: <alpine.DEB.2.21.1.1710281917260.6482@virtualbox>
-References: <20171028004419.10139-1-sbeller@google.com> <20171028004506.10253-1-sbeller@google.com> <20171028004506.10253-2-sbeller@google.com>
+Subject: Re: [PATCH 3/3] builtin/describe: describe blobs
+In-Reply-To: <20171028004506.10253-3-sbeller@google.com>
+Message-ID: <alpine.DEB.2.21.1.1710281926020.6482@virtualbox>
+References: <20171028004419.10139-1-sbeller@google.com> <20171028004506.10253-1-sbeller@google.com> <20171028004506.10253-3-sbeller@google.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:8nCiOLIAwcThq9QAhnKsGrebmpz5GM/DN2kaqG6DYviGXr+4vW4
- GOKLMMdAtRDFUFawHPm/VJI8U9Ja7BFik2X+j1JF8YgnGZka4sNQoh1EtSFdeSK3SU8jMmI
- KPjXUDgIpfShBtN0YK7C0VxELD4D9fOLK2A1c4pn9mCW1v80n7auSbprUv7V7Z6uIpBG0eu
- bkE0yNCEmYhIjsvcDEmjA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:/R7YgMq2QZo=:AVu9B4h8niWXrKOSTDFsuN
- tA50+1PN0Ahm4JFE3YT1mALt1LDu7Grgaqteubuafur32J9GL9JdBDySDIfV3IRyorK31gvpr
- uWrPHLxsPUHAJbB+5MKGIPUvEQ91LFJNVdmFX4qXqrctZwo22K0WV5d1n/uYthYM4xMrVZ0w8
- ysj58wwbhrYuLyopUq1Ms7RJpyySHwBnIkuUv915i8y7lOV87QY+0KTpmo7FGQyTaIc0ruTBo
- eWzQwy/6SrFwWwmqVQ6ETBWLyDNwFCvp47c6V4xjPSU/g9D2YYiIO/ue+kTvnZnyFHoKKCB0N
- OH6JKikJio5+2b1PzD/sZ5leNuGE+SNSCvJrO0tku1ycgOMPnRmWe7L9mefkgkHf8AyWrXCMO
- eBW8Py7Rj8k2J1Lz+Qb5ilMRk+fF9sOfpGDMCfnBI0FPrEKRJJQtkIxLFLiPeeXEVyMGb2uJ3
- bQ8mBb0AAhh28WT/V/hIzXJpktaDUGMWI3o6UtwNtpMaSL8y36vPAuh7Wki7hTq+Kwa0ciu1w
- ax/nS6ZtsIWo5B9wLONnnL+74meCRcNfMST4XMk1u9v62jaUSp26qJVCnD8C/KojdSDA6GKp4
- s9BCnL80K0ahZ+nzrYiUUDwlpXFW1rgCem0XBLctweFXNlIJOEebbSiJ+LtA+fTA/LQRLPb99
- j4zVf7PAI4czNVxN8eEomnJO+c4umycR5JR2ux3zEu9Lbk1KPFYy7/7BZH6ZX/byzEl0KoBkv
- V2QiJIXxgsxrldcHzPAGzdzCccwQH7NJXGahpxxDPGbrL4SoqpGFu2FFCWgwENlCWODGXKK/k
- uKD7KGW95DoQO5+sbHVIQHlItqBNr+WB0eTj+N07/omlJRKk0Vzy8MCh2eIMJNDqNDQEkMy
+X-Provags-ID: V03:K0:OTpgQAc5bZROlRqsw4lV1cKi4mA3mzI1GBRBIzQxy2BSywoFN5o
+ qGCPR5Kzb4nfFfu0WE7zhh/i+rEBmU/90U+SfZY3HGDc3HRg+cBd2aY14Dn7ldUtXyXl46A
+ u+Q8z5Oo+fcD6QmDnPPSq2r4K6qXZD7kLh8n9amvw5LXbju9PBOlLc8Y19MYsPapUderokr
+ lbz+/a7srAxbO+UARglmA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:7BB436wEkf0=:NKEDDGA4yglcxILPVvaci3
+ 1D3JH//aJTaEKsv00O6VPG+yf1WnOoTtYcnZtLI/Fo/uqGpXkp2/Lr7TBovBHN4Qe8OmSo95b
+ BQglGwPbfm3iWCXKgrASIwQU571/Gm1SSlcTpYLCMnyJUZFXcgHIRU8EDsTnoDMJCC85rzPdu
+ trA+ECZMb43I/m7CH7+SN3GhODG57kEr7kPdoC/ECsUqvoGXPiFNJQpAIrO3B8Q6bnSOMIRqd
+ uPX0ZMrogwz4Aw3byN0Xqn8Ytl711lnFN2scKnldFqZr8AAWRF0ugIXhqX1Tjo1S/7daIVL77
+ PCJVuC4wNNIiRrylE4b7gUVHYFZ2spI2Qv2U5+/m+i38iGvWsJcamXj7yeEVdaLUPhOGzMThY
+ TSACh+3Ix4thGmy87E7Gq2T2GXfOEibyDOkluwCxVV/YxTnDnZeOjsKMeHwgiJWcNb6smy/1T
+ MQdDR9JouHcA0YzHWi78MwM7kZTqXqeEsWebj70ZSPWopGXQTvRkhFHzcJhsKTSU16Q46n2jM
+ TPNiImdkWcMTRWxKn250Na+XDW1krUbUI/LUJitQ1FqSCwcm6zSDdxVQ0Fx4WJjo5AsRZ3hhK
+ Vyv3ar64/twLZGJD3TaVI+TglIN5Wb6hUbYvsCiPkNrtLABhmZanpi2zJ7gP4MXSRszMZbjbF
+ 79kh6clsICChsUBAGGbH0ql+CyscDS4iZIweN+0YOrg6wCW1QH5UDcYP9OXystsOH0fPcEjJZ
+ k0vVeVh5p7VZjnvFggsjywtMv3PGVhQ8xNNuQrndMPN/VQ8nMV0hJbiIbSnVNr4uD9Ag6e3k2
+ zuW/LR0+RrGN6G/6V7Qj21wBlkaLLPdKaoEPZuKv6cbdu+nY9trPYhSqibv1rOJL0T5TqiO
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -58,20 +57,66 @@ Hi Stefan,
 
 On Fri, 27 Oct 2017, Stefan Beller wrote:
 
-> This will be useful shortly.
+> Sometimes users are given a hash of an object and they want to identify
+> it further (ex.: Use verify-pack to find the largest blobs, but what are
+> these? or [1])
+> 
+> The best identification of a blob hash is done via a its path at a
+> given commit, which this implements.
+> 
+> [1] https://stackoverflow.com/questions/223678/which-commit-has-this-blob
 
-Something tells me that I will hate you in the future when I read this
-commit message and lack the context (e.g. when blaming, where I cannot see
-the child commits let alone the comment in the Merge commit).
+I also came up with a script to do that:
+https://github.com/msysgit/msysgit/blob/master/bin/what-made-this-repo-so-large.sh
 
-How about:
+Your method is much more elegant, of course (it describes the commit in the
+same run as it finds the object, and it does not output tons of stuff only
+to be filtered).
 
-	The functionality to list tree objects in the order they were seen
-	while traversing the commits will be used in the next commit,
-	where we teach `git describe` to describe not only commits, but
-	trees and blobs, too.
+> @@ -282,6 +283,50 @@ static void show_suffix(int depth, const struct object_id *oid)
+>  	printf("-%d-g%s", depth, find_unique_abbrev(oid->hash, abbrev));
+>  }
+>  
+> +struct blob_descriptor {
+> +	struct object_id current_commit;
+> +	struct object_id looking_for;
+> +};
 
-The diff itself is amazingly easy to review, and obviously correct.
+Personally, I would call this process_commit_data, but I do not mind too
+much about the name.
 
-Ciao,
+> +static void process_object(struct object *obj, const char *name, void *data)
+> +{
+> +	struct blob_descriptor *bd = data;
+> +
+> +	if (!oidcmp(&bd->looking_for, &obj->oid))
+> +		printf(_("blob %s present at path %s in commit %s\n"),
+> +			oid_to_hex(&bd->looking_for), name,
+> +			oid_to_hex(&bd->current_commit));
+> +}
+
+s/name/path/
+
+> @@ -295,9 +340,14 @@ static void describe(const char *arg, int last_one)
+>  
+>  	if (get_oid(arg, &oid))
+>  		die(_("Not a valid object name %s"), arg);
+> -	cmit = lookup_commit_reference(&oid);
+> -	if (!cmit)
+> -		die(_("%s is not a valid '%s' object"), arg, commit_type);
+> +	cmit = lookup_commit_reference_gently(&oid, 1);
+> +	if (!cmit) {
+> +		if (lookup_blob(&oid))
+> +			describe_blob(oid);
+> +		else
+> +			die(_("%s is not a commit nor blob"), arg);
+
+s/not/neither/
+
+Nicely done, sir!
+
+I wonder whether it would make sense to extend this to tree objects while
+we are at it, but maybe that's an easy up-for-grabs.
+
+Thank you very much!
 Dscho
