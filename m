@@ -7,74 +7,109 @@ X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 64C2F2055E
-	for <e@80x24.org>; Sat, 28 Oct 2017 16:04:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C56C72055E
+	for <e@80x24.org>; Sat, 28 Oct 2017 16:40:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751269AbdJ1QEY (ORCPT <rfc822;e@80x24.org>);
-        Sat, 28 Oct 2017 12:04:24 -0400
-Received: from mout.gmx.net ([212.227.17.22]:63169 "EHLO mout.gmx.net"
+        id S1751486AbdJ1Qku (ORCPT <rfc822;e@80x24.org>);
+        Sat, 28 Oct 2017 12:40:50 -0400
+Received: from mout.gmx.net ([212.227.17.22]:55614 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751189AbdJ1QEX (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 28 Oct 2017 12:04:23 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M8ZtH-1dE3I840f5-00wHOU; Sat, 28
- Oct 2017 18:04:20 +0200
-Date:   Sat, 28 Oct 2017 18:04:19 +0200 (CEST)
+        id S1751385AbdJ1Qkr (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 28 Oct 2017 12:40:47 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LtZfc-1d7gwX0OEW-010sI8; Sat, 28
+ Oct 2017 18:40:41 +0200
+Date:   Sat, 28 Oct 2017 18:40:31 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Stefan Beller <sbeller@google.com>
-cc:     git@vger.kernel.org
-Subject: Re: [RFC PATCH 0/3] git-describe <blob> ?
-In-Reply-To: <20171028004419.10139-1-sbeller@google.com>
-Message-ID: <alpine.DEB.2.21.1.1710281802530.6482@virtualbox>
-References: <20171028004419.10139-1-sbeller@google.com>
+To:     Lars Schneider <larsxschneider@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
+        git-for-windows <git-for-windows@googlegroups.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [git-for-windows] Git for Windows v2.15.0-rc prerelease, was
+ Re: [ANNOUNCE] Git v2.15.0-rc2
+In-Reply-To: <DC84FB2E-A26E-4957-B5FA-BE6DDEC3411B@gmail.com>
+Message-ID: <alpine.DEB.2.21.1.1710281838230.6482@virtualbox>
+References: <xmqqr2tygvp4.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.21.1.1710210020290.40514@virtualbox> <18E24F0C-D518-46B6-A8D5-71B0E1B05DE0@gmail.com> <DC84FB2E-A26E-4957-B5FA-BE6DDEC3411B@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:YiQoS4QfgV7lBT/qwP0FCcYQbKhswjXIgiZydY3xnFMGXsUJSs5
- ruD4+A69vyUC+pXA1w4Uncpeuholsd6c8CYCkgNlSW9811yJWzePy9rpXWCwsGD2ck/TPaN
- Us6hZRIzJCSiK80jDmHDkECCPqpACwSpVgQ5EVqsKvdoMz6rREquEzlzIt6vTDfAmfoQ4vs
- 06jw23xCWk2U8j1/Cf67w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:4iiXo6SfSZE=:Xfr0Z3vH/lvPRar9uV25Qd
- v+bN3cYnM8kj5e92jqYH0Kj9wM9UECV6sGzhcR0XPiUmaF5WNanYxdrSf83O+hP+1OBKaAUMQ
- DyuBxxfOltByzLI2h76g7Sg52IMBDk7wEd43yWDymzRdFazIaquJYY3O4goO1EIkdOjus6K/Z
- p5nAofBh5h+bwTx7ETyoLtmVrgad1InLWzkeUkK5g2BciLrdZOyoqt7oSCUowmbDp0zcHAIEg
- Fen7NWxjY7uYgeLgN9GMQZX15d1Hi90eb+9wc2sxswu4bBiAEa9d7TTJE5S4oHkL+RULy/Ixl
- zGR5LlanezKe2qFN2BfgFLVQZ4BcIfhSWrWCBPZmgGebY2S0ioXA616LXhgyhqCuf7UAcAMb2
- icJFADxEh9mqEJ6CvXdrNZfCqU3BplrImg2Ed2OH0ad9SFFyoGlV+QFmcSO13gjAGorKNiJMW
- +JS+cYqTkagrBGvNp7m/MftDs9jHdvPmYzgRh7cRraRHZ8CgDRAqhbw4P56BpJKiEFuw5Hlf3
- 5nVUjGHIEDyRKUDCnPhQJdtW0JNO8DG8swjpk1NRqepqgHEJPzhkjfJoss0wm9wOv8jiDPfFO
- MTV2DkZ3NjRj7ueBbUCfhkf8cNLp2etUAcnwGCgt2MedAN941gCXzk9az1gfhjDvH/9Cj8pVe
- DXhg9+TvE7KZBCJDNELJxP168eSnODlWvrb4pwvtByX0LNmFuBU31UqCJxAioM6mwHjROosS4
- Ek0eO0JMaljWE77qz7pSr4K6y3h3P3gr7tOjm06cFdmg10XgWZuu7V/799NOhZaD2HdXovM47
- XzFl7/D5DzjogkX5EtQNcFkx8GI/ErvG0TzHnKG2lqLC1I8+74F7VXBIHxlWROJgSDCxjDI
+X-Provags-ID: V03:K0:vwv23BNUIMHsEffVf3BdqAiuEQqCTwuUtnLKKn23/Zlj/IJNML4
+ OIkGG1cFETUPt6hPy8FCMdxGuzi7Sr8jIlefx7CBmW0UW9lqY5a2nMJ3pCGProqngd2KMRm
+ oHdW27sRn0os+f4ypLraMOk4wG6nks1V/BCVLUJ20w/D2Y7BkNJ++lajZXn+tdJaYGiMOBo
+ zaxVTnPt7h0iM9Ueflf2w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:rqE9xKCsQkA=:CFXOXHnijPc9Iww8WZDnbj
+ vgiGWsFumeVyJCflQ27mApFisaNHzg8cVt5hl/NF3mdLbZe5id1R8m+eIUTNP5xNDrAL/G4lf
+ JAOX91QrA7V8b26ki6ahKr+llb80qTkOtT1DiSUcpGxJRDLdOw3UOVJqzzp7FiECuINqAKJU5
+ DZwqgsXRuHBFryDKCn7yI9OiH5BJBfHirhwLU4yoLzgQtvEwLrW2CA8+dzoAY2bEKoHmZv1+s
+ Klw6SRh72f4+oUO6hGBaonz9iwFS+xCml8UCcPsAuWx/HD01R5BxMC61piPaMUoqKBKzfjLbo
+ ywXhWDjL0mA8pgIg0PXUyA8v6SVluKEu+mK1I/qGKVjIV2ulkvFGKk99isXqGUsRVyqp9ZVEz
+ LWapFJW/mOgm8lIFHBuW7WG7fSpqqDW2IwHPF+kXWc8+GI4WuSoBLW01RpqbdhFyhjaxq3eeH
+ USgLtGBrWButuzTbXSdw6V5LTfZ5PizRM+cch/chpNuiSsHFoAMi3rRj82MW8GHdxKfS53Cll
+ ngX588gUNI9Hs8nqwMKL8vhMOzvWXJX6TDCyEhbQ/bSkyZ5ah+aooheUZIXqv5KxFkh4M2DhW
+ vC0jXTp/+pNlc4d3olFfD4hWF6QkQ+k2wdeWuG0jic3fPcMKee6M10bINmibTcHPSeirhfagu
+ ZVu6p0+roluEqatgC+KKzzSGFROXYCotf/i3f7f0EqxajdAfR/dfbaRal9PVFTG1fS7S/LBZ/
+ jv2XivTqaHUh6XySiSjK9Z8YM2RR/YzsczHOxWO2eakyt9r3/s7kgo7DGee+taXC4TGOTwS2d
+ ZwOLV1NGp8za56SBD1u/a5DgbneCokLzd/LuYs2XR2w9eAwaZBd032NsJWSvc/WyvXzSkp/
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stefan,
+Hi Lars,
 
-On Fri, 27 Oct 2017, Stefan Beller wrote:
+On Fri, 27 Oct 2017, Lars Schneider wrote:
 
-> Occasionally a user is given an object hash from a blob as an error message
-> or other output (e.g. [1]).
+> > On 27 Oct 2017, at 14:11, Lars Schneider <larsxschneider@gmail.com> wrote:
+> > 
+> >> On 21 Oct 2017, at 00:22, Johannes Schindelin <johannes.schindelin@gmx.de> wrote:
+> >> 
+> >> [cutting linux-kernel]
+> >> 
+> >> On Fri, 20 Oct 2017, Junio C Hamano wrote:
+> >> 
+> >>> A release candidate Git v2.15.0-rc2 is now available for testing
+> >>> at the usual places.
+> >> 
+> >> The Git for Windows equivalent is now available from
+> >> 
+> >>   https://github.com/git-for-windows/git/releases/tag/v2.15.0-rc2.windows.1
+> > 
+> > I just tested RC2 on Windows and I don't see my "Filtering content:"
+> > output if I clone a Git repository with Git LFS files (and Git LFS
+> > 2.3.3+ installed).
+> > 
+> > The feature was introduced in the following commit which is be part of
+> > your RC2 build commit (b7f8941):
+> > https://github.com/git/git/commit/52f1d62eb44faf569edca360ec9af9ddd4045fe0
+> > 
+> > On macOS everything works as expcted with RC2:
+> >    ...
+> >    remote: Total 15012 (delta 0), reused 0 (delta 0), pack-reused 15012
+> >    Receiving objects: 100% (15012/15012), 2.02 MiB | 753.00 KiB/s, done.
+> >    Filtering content:  43% (6468/15000), 33.30 KiB | 0 bytes/s
+> >    ...
+> > 
+> > Do you, or other Windows experts, spot something in the commit linked
+> > above that could cause trouble on Windows?
 > 
-> It would be useful to get a further description of such a blob, such as
-> the (commit, path) tuple where this blob was introduced.
+> Well, it turns out the output works for my real life repos but not for
+> my Git LFS testing repo.
 > 
-> This implements the answer in builtin/describe, but I am not sure if that
-> is the right place. (One office mate argued it could be a "reverse-blame"
-> that tells you all the trees/commits where the blob is referenced from).
+>     git clone https://github.com/larsxschneider/lfstest-manyfiles
 > 
-> This is RFC for other reasons as well: tests, docs missing.
-> 
-> Any feedback welcome,
+> ... prints the filtering content output on macOS but not on Windows.
+> The progress function has some delay feature that suppresses the output
+> if it is only shown for a second or something. However, in this test case
+> the output should be visible for several seconds at least...
+> I am still puzzled.
 
-As you ask so nicely, I'll just cheer (I do not have time to review it
-right now, but I really, really wanted this, I even started working on the
-name-rev side of things some time ago but eventually had to let things
-slide).
+Nothing really strikes me as obvious.
+
+Do you do this in Git Bash? If so, maybe you can also test in Git CMD? I
+do remember having issues with stderr only showing up in time if it was
+fflush()ed explicitly, but only in Git Bash (i.e. a MinTTY problem).
 
 Ciao,
 Dscho
