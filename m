@@ -2,124 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 73A052055E
-	for <e@80x24.org>; Sat, 28 Oct 2017 22:33:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 257682055E
+	for <e@80x24.org>; Sat, 28 Oct 2017 22:36:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751422AbdJ1WbO (ORCPT <rfc822;e@80x24.org>);
-        Sat, 28 Oct 2017 18:31:14 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:55590 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751304AbdJ1WbN (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 28 Oct 2017 18:31:13 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 8D58F6044A;
-        Sat, 28 Oct 2017 22:31:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1509229870;
-        bh=2zq/h9AOOXSJaDdv8upvwyvV3R76L9mWSZQ1XjYWNMs=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=BJ7oVkOILbwbiSIehBq/fjIvd1wM4zNlBnKs8sK4chZ1S5oELCtXuSCxz3nAKqR3l
-         E5HNZZY7rN8IO8BycmLKhbhQyGsvnYFwKWmrMqbNjE3J9s2Ef5D/nwvYOZYFnw+sko
-         jpgviXipUmKsu4v2WHiejUpuGCfo/Osc3J1NRLAYi5iBWvcK3pjW6lhC+4FEFkKzRX
-         84dy+RmqSrf2V4FB5ghQC4TfnMJgrcLyGVEAFp5NnCEONGgepnU+9Tr3a2GxECD+Nm
-         GyIt0Gyof43JPaIIsRmh3LyEOuJu1HD9VlCjto9A+FLNrAS6aE98XazNStlE0r3hi6
-         mPA4QeY5W123FDYplt+2u9/st/S4wEhI4IDO5/4bNqGvVkxHViQYOCjbr+4FhKbffm
-         25Kj3+e4FV9tJRALseHaPRG1Agyxa0BBxuAPfE1CVvkCfdjkNqvW2XnJie0sJ4bR5K
-         YfCI57mDXw4J7HccQPvyoFeqjMb0bIWv3dbBQgn36OTCNGoD4cm
-Date:   Sat, 28 Oct 2017 22:31:04 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Christopher Jefferson <caj21@st-andrews.ac.uk>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: git rm VERY slow for directories with many files.
-Message-ID: <20171028223103.wevq5zf4rjl7ietd@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Christopher Jefferson <caj21@st-andrews.ac.uk>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-References: <BEEA4A16-5433-4E6C-A7D7-956C85F27DF3@st-andrews.ac.uk>
+        id S1751402AbdJ1WgP (ORCPT <rfc822;e@80x24.org>);
+        Sat, 28 Oct 2017 18:36:15 -0400
+Received: from mail-wm0-f44.google.com ([74.125.82.44]:54336 "EHLO
+        mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751304AbdJ1WgO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 28 Oct 2017 18:36:14 -0400
+Received: by mail-wm0-f44.google.com with SMTP id r68so9609363wmr.3
+        for <git@vger.kernel.org>; Sat, 28 Oct 2017 15:36:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=AkM/tOuJKvvXClRpyG21TGaxp6vMOBkipp3n0RT3GaE=;
+        b=L5BXNkYBPWL8ktgidE62fc7SDA3XS/N+UChsVUPNH0hcaBe4qdCTlVPe5PHVz7d8ZK
+         23s/wjMje5l/HPPBhDg1QBsg7kpBcfDBXaT0xOFSKupOTBF9VopT7Z3+ExCzH6YAtEae
+         Wc6nUPFWcoQi/0CFQeavtthWPnUhbn/Tmlffpz6dQn9A6mm/qPTuVmfkveK/Cav7r0ea
+         W/Qh4/bHMwqRo8UdLUTXJLMDFxeyaywOSn5aX/Mtqh34y2E2GoDeJ3F17/4F4E67w5Qx
+         bDxeJJEohO+COQBXiM7p/swrOZsQpqmJ/OJdQQUobXaLCNlUr23VMKFZdrUlFzNNBqrV
+         Zn9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=AkM/tOuJKvvXClRpyG21TGaxp6vMOBkipp3n0RT3GaE=;
+        b=J29sQMB70yiFlSIq3UzENJOI6mjMlhKd26IHkFQ+lQ8kEqAb+YlphYoYb7+qpmBytD
+         gmrfUIb4J0ITpqCLaWGuW6BfpLMmSpO3STOwuD7YpMG2zeyhOPI8RgSQMc17Jg+NCFEU
+         gGO3JTDeVkDuH8U0+ojnYi4D4teKiLmgQ4bjEFEwPGGhjNqpIpxi/NwfW2wFhJeNLxkJ
+         XuYfppiBg1kE+b7i6syh8LiwRbZD6hP6a4KcpghjtOEC+8FYBn4RbSBg+pbQWMJ9F5p7
+         PLmmlF0QEk/+xP41axolOjDyB9tlRZ5f1UfYNDTD4Wmv8xCDr5DbA16nUE5jH0y02f91
+         VwNg==
+X-Gm-Message-State: AMCzsaVqpO/s7vaOeM6ew6HXzUA71UMHlEheJmx3/oVbwnDuQjPeKfS+
+        VdTcWXJL2t+Qj4KwXiznAQU8Y32y6JcCEYOZU8Q=
+X-Google-Smtp-Source: ABhQp+S+3FMIwhcYdoirXrJ509SDNcLwpW3rnoXbrxNVT0E5//uQzq31sE0lmbk3rk24EQmKc1ggl48lk3wXBRozbDo=
+X-Received: by 10.80.217.15 with SMTP id t15mr6104319edj.217.1509230173540;
+ Sat, 28 Oct 2017 15:36:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="cft6c5tlx2jeupt5"
-Content-Disposition: inline
-In-Reply-To: <BEEA4A16-5433-4E6C-A7D7-956C85F27DF3@st-andrews.ac.uk>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.13.0-1-amd64)
-User-Agent: NeoMutt/20170609 (1.8.3)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+Received: by 10.80.213.80 with HTTP; Sat, 28 Oct 2017 15:35:52 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.21.1.1710281740070.6482@virtualbox>
+References: <20171028000152.2760-1-jacob.e.keller@intel.com> <alpine.DEB.2.21.1.1710281740070.6482@virtualbox>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Sat, 28 Oct 2017 15:35:52 -0700
+Message-ID: <CA+P7+xqvHCi_aARgr0nXs7U_-P42vf8eiY7zPpG_0bp5GxokXQ@mail.gmail.com>
+Subject: Re: [PATCH] rebase: exec leaks GIT_DIR to environment
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Jacob Keller <jacob.e.keller@intel.com>,
+        Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sat, Oct 28, 2017 at 9:00 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi Jake,
+>
+> On Fri, 27 Oct 2017, Jacob Keller wrote:
+>
+>> From: Jacob Keller <jacob.keller@gmail.com>
+>>
+>> I noticed a failure with git rebase interactive mode which causes "exec"
+>> commands to be run with GIT_DIR set. When GIT_DIR is in the environment,
+>> then any command which results in running a git command in
+>> a subdirectory will fail because GIT_DIR=".git".
+>>
+>> This unfortunately breaks one of my project's Makefiles, which uses
+>> git-describe to find the version information, but does so from within
+>> a sub directory.
+>>
+>> I'm in the process of running a bisect to find where this got
+>> introduced, but I suspect it's part of the rebase--helper changes that
+>> happened a while ago.
+>
+> A safe assumption. I do not know how the shell code managed that GIT_DIR
+> reset, though:
+>
+> -- snip from v2.12.0's git-rebase--interactive.sh --
+>         x|"exec")
+>                 read -r command rest < "$todo"
+>                 mark_action_done
+>                 eval_gettextln "Executing: \$rest"
+>                 "${SHELL:-@SHELL_PATH@}" -c "$rest" # Actual execution
+> -- snap --
+>
 
---cft6c5tlx2jeupt5
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>
+> *However*, your test still fails with this, as
+>
 
-On Sat, Oct 28, 2017 at 05:02:02PM +0000, Christopher Jefferson wrote:
-> I stupidly added a directory with many files ( ~450,000 ) to git, and wan=
-t to delete them =E2=80=94 later I plan to rebase/squash various commits to=
- remove the files from the history altogether.
->=20
-> However, =E2=80=98git rm=E2=80=99 is VERY slow. For example, in a directo=
-ry with 10,000 files (on a Mac), git v2.14.2
->=20
-> Git add . : 5.95 secs
-> Git commit : 1.29 secs
-> Git rm -r : 22 secs
->=20
-> 50,000 files
->=20
-> Git add . : 25 secs
-> Git commit : 11 secs
-> Git rm : After 20 minutes, I killed it.
->=20
-> Looking at an optimized profile, all the time seems to be spent in =E2=80=
-=9Cget_tree_entry=E2=80=9D =E2=80=94 I assume there is some huge object rep=
-resenting the directory which is being re-expanded for each file?
+Yea I'm not surprised the test failed, I was in a hurry at the end of
+the workday when I spotted it, but wanted to get something on the
+mailing list before I left.
 
-Yes, there's a tree object that represents each directory.
+> - your added test tries to remove the directory with -ff instead of -rf
+>
+> - it tries to run `git rebase --abort` afterwards, which fails with my fix
+>   because there is no rebase in progress
+>
+> - instead of `cd subdir && ...`, it calls `>cd subdir && ...`, which
+>   causes it to abort with a "subdir: not fonud"
+>
+<snip>
+>
+> I only had time to write these two patches, and to verify that t3404
+> passes now, but not that anything else passes, neither to write a proper
+> commit message.
+>
+> Maybe you can take it from there?
+>
 
-> Is there any way I can speed up removing this directory?
+Yep, thanks for spotting the fix!
 
-First, make sure your working directory is clean with no changes.  Then,
-remove the directory (by hand) or move it somewhere else.  Then, run
-"git add -u".
+Thanks,
+Jake
 
-That should allow you to commit the removal of those files quickly.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
-
---cft6c5tlx2jeupt5
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.1 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAln1BScACgkQv1NdgR9S
-9oum5Q//fBuDByXKxcNpJkbhir24iO/evPr2ILXZA5SIaHWVzZxCb+Dy+H0hanlG
-LuJH2L+if93beJ9PETgofEkKpUIk7X5Nco/C9smyi4I6BqvVCSzotlSZIaNsY0Ho
-0GlMW17XFTNta8Zy0ak2PJk9ateACf1Aw/MdSS1Qqw4b5jSCFamTImGKbS1ct025
-o+HxBNNybsPDvumNfTiFGRDcIocXVcqeoOSWyRzAu3Ih+1FRdk9ygERzqNHVEzUJ
-ahcpUSriQWaECewOKFOAlWnQFb09GLxceCIAqKvqB34UxX9P/FvQ5ElJ4FVQ2UuD
-6ErYCr9nqxZR9pp/m432gSDA2DTKWZqYrj5+F8hYlRAt/V03/U8hQypyPo1Jq3JS
-YadVHWYITeNb1ca+ioPsM9rdgO3D4YXHZSedyAAWTLP5IWFuM9Oiol9zLHwBx84i
-CntvLNeyHIfleuo46UwdZfrgNcOIJ3tedrJzVOl0jMKxzx7NVrylETRPJCvp2y3c
-dI1urLVbqCo7xIGk5wAfcC2i3b5BUh1GrjEhywX9jarJySV9g0AjExGrO27ZVOYy
-r/nfYStYGyKnB1yyC97KQ26y+OszLZFpvBsAlFJcUxQG4Ls0uNFRaRDfuezbmeoF
-GrJzyZXZ5SxkHq+jQsrn6o+RMoLRGtDoSjD+r0Ji649n/9P248I=
-=vl2F
------END PGP SIGNATURE-----
-
---cft6c5tlx2jeupt5--
+> Ciao,
+> Dscho
