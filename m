@@ -2,82 +2,179 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F3B3B2055E
-	for <e@80x24.org>; Sat, 28 Oct 2017 22:47:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4F6202055E
+	for <e@80x24.org>; Sat, 28 Oct 2017 22:57:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751430AbdJ1Wra (ORCPT <rfc822;e@80x24.org>);
-        Sat, 28 Oct 2017 18:47:30 -0400
-Received: from mail-wm0-f49.google.com ([74.125.82.49]:47753 "EHLO
-        mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751304AbdJ1Wra (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 28 Oct 2017 18:47:30 -0400
-Received: by mail-wm0-f49.google.com with SMTP id r196so9146259wmf.2
-        for <git@vger.kernel.org>; Sat, 28 Oct 2017 15:47:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=inLrWCdEcITX4QpMKJMo8JzIq67FCVNbU4u/t9+NE/I=;
-        b=ib6+jphnaNDyT1JoVVc9YXWrRGVe1t1KOMyMtBGEjVkFpomR2VBe+JE9RsosOIzplq
-         TD+UyIZ2pfnx1r5L1syjhUQYTlyfNpO6y8U3Ay5z1jJkWB6J4MdbiADAzaClylmrLLiy
-         Iz8FILunfkJwZc9cQYtIYsZG5M3WZ6QjV3oCYzomjMvvJDzJEJ5Z0GHrtGvQ55LUKfG2
-         5jF085tMiCMAP5jPYMPk6Vv0AWxSMBzX7/Jgl/gbRXX27jmR8gZYHFBbcesb3G234TAU
-         Lumd7qZWEYyTeROfdtCwbJVW/DsDWKC8IAhzhl5MDkJ+uW7f1M9G0lR2ytnKv77/qRBd
-         v6XA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=inLrWCdEcITX4QpMKJMo8JzIq67FCVNbU4u/t9+NE/I=;
-        b=AE5R82QlREcClxQkYPgeF5ywqPPlz3wS4ANmIRpiAihGhFZ9ZiOKSc3n8MTjax3/2d
-         wzzHd9bVD0NpMW5jc6CA6wJvzOU2fsZSga2de3OjnG8CfVjeSXi01XrEB2SBMO3n+TEQ
-         GDYP9Y9qmFie35ZL/6oQ6/H2CgVJsbhODqmzlVbQ67pM4HhVr3+MviL04ERZB6HiyJuC
-         HL4bUR6axoQJX9miiWXN+lLLri+ukcRBGHYMOYEWqXh1PgpXMArERanRI5RdBk348OAy
-         PR0fGeGvdvT+PIXh6wgMoyo+tItu07nmU2l8f02/2Tjsn8Gy0cZPoCg2hsYed5bIawXR
-         i0uQ==
-X-Gm-Message-State: AMCzsaXVMapnE5VeuSc9YtsdwLXzBXRDjyUbVonbMqxzjP1jQr3GY8Dk
-        tzk6xBa6McircT8PgfvCb5qUJZjBEMT+WEIqnqA=
-X-Google-Smtp-Source: ABhQp+QMJHq5aQbtiiaXigAl3ZFiNosXI/j1VOf7tYi/akq9VvMofYJbieQL7HEWaGouBhXCTdYZY/9c5m3M6liNFv4=
-X-Received: by 10.80.182.210 with SMTP id f18mr6069862ede.104.1509230848765;
- Sat, 28 Oct 2017 15:47:28 -0700 (PDT)
+        id S1751447AbdJ1W50 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 28 Oct 2017 18:57:26 -0400
+Received: from smtp-out-1.talktalk.net ([62.24.135.65]:53488 "EHLO
+        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751381AbdJ1W5Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 28 Oct 2017 18:57:25 -0400
+Received: from PhilipOakley ([92.31.218.76])
+        by smtp.talktalk.net with SMTP
+        id 8a2ceSP2NmITa8a2ce5Ei5; Sat, 28 Oct 2017 23:57:24 +0100
+X-Originating-IP: [92.31.218.76]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=W/RIbVek c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
+ a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=8nJEP1OIZ-IA:10 a=1XWaLZrsAAAA:8
+ a=4SDj-MLJHyTqrOITjp4A:9 a=wPNLvfGTeEIA:10
+Message-ID: <223949CCB658443C972AB1AC1820F0CC@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Brandon Williams" <bmwill@google.com>, <git@vger.kernel.org>
+Cc:     "Brandon Williams" <bmwill@google.com>, <spearce@spearce.org>,
+        <git@jeffhostetler.com>, <gitster@pobox.com>,
+        <jonathantanmy@google.com>, <jrnieder@gmail.com>, <peff@peff.net>,
+        <sbeller@google.com>
+References: <20171020171839.4188-1-bmwill@google.com>
+Subject: Re: [RFC] protocol version 2
+Date:   Sat, 28 Oct 2017 23:57:21 +0100
+Organization: OPDS
 MIME-Version: 1.0
-Received: by 10.80.213.80 with HTTP; Sat, 28 Oct 2017 15:47:08 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.21.1.1710281926020.6482@virtualbox>
-References: <20171028004419.10139-1-sbeller@google.com> <20171028004506.10253-1-sbeller@google.com>
- <20171028004506.10253-3-sbeller@google.com> <alpine.DEB.2.21.1.1710281926020.6482@virtualbox>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Sat, 28 Oct 2017 15:47:08 -0700
-Message-ID: <CA+P7+xrtJrN8t=TWMuKCq3OC_YJJkkO66QkerAja=hCp6Vh8sA@mail.gmail.com>
-Subject: Re: [PATCH 3/3] builtin/describe: describe blobs
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+        format=flowed;
+        charset="iso-8859-1";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-Antivirus: AVG (VPS 171028-0, 28/10/2017), Outbound message
+X-Antivirus-Status: Clean
+X-CMAE-Envelope: MS4wfI3Swk3pVbLU+H7xEzfZRlytOqw4dnsLqP4yRpfWDZ2RxBSXykTuZYbN8f16zPVyk9+qmsqSvw0TONev+96P0YAWT4C2ac9/UPZBPzwyO9SEA7j5+pnW
+ C81jKucK8H8GTF+2Q2rWmDffcuJAw49Nogsn6U973hb0oxda1+PoD8Yo3nGWV+xoKxUwBnkAPsA5zDdTbH9DWzmadL9GDEnUHquL000Qe7QdmwYvnkgPCkuD
+ KKI4FbANR3+bUA+JJJt1rIVd2dSZmJv+mHpHrbgiLpLCDNJyrrhVJa8dxGuPwegnguCcgjUv0ax+baoJnc2dsMAu8mL94mZFmOEKADxoAXkvydy75KHgoYaf
+ kyScszRVlqY1wOgmdeOftIdh5mdGF0nDb5YYy7zavgiPHsSOO6PsnOM0Z48tTrksJ4NMu9u0v7mKrDVe/AHLVgjJH+9jDw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Oct 28, 2017 at 10:32 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi Stefan,
+From: "Brandon Williams" <bmwill@google.com>
+Sent: Friday, October 20, 2017 6:18 PM
+> Objective
+> ===========
 >
+> Replace Git's current wire protocol with a simpler, less wasteful
+> protocol that can evolve over time.
 >
-> Nicely done, sir!
->
-> I wonder whether it would make sense to extend this to tree objects while
-> we are at it, but maybe that's an easy up-for-grabs.
->
-> Thank you very much!
-> Dscho
 
-I'd very much like the same ability for trees and gitlinks as well!
-But it does seem it might be fairly easy.
+<snip>
 
-Thanks,
-Jake
+> Capability Advertisement
+> --------------------------
+>
+> A server which decides to communicate (based on a request from a client)
+> using protocol version 2, notifies the client by sending a version
+> string in its initial response followed by an advertisement of its
+> capabilities.  Each capability is a key with an optional value.  Clients
+> must ignore all unknown keys.
+
+>    Semantics of unknown values are left to
+> the definition of each key.
+
+This sounds odd. If the keys are known then their semantics are known. Or 
+the keys are unknown and they and their values are ignored.
+
+Maybe: Capability keys shall define their response to unknown key values.
+
+>  Some capabilities will describe commands
+> which can be requested to be executed by the client.
+>
+<snip>
+
+> Ls-refs
+> ---------
+>
+> Ls-refs can be looked at as the equivalent of the current ls-remote as
+> it is a way to query a remote for the references that it has.  Unlike
+> the current ls-remote, the filtering of the output is done on the server
+> side by passing a number of parameters to the server-side command
+> instead of the filtering occurring on the client.
+>
+> Ls-ref takes in the following parameters:
+>
+>  --head, --tags: Limit to only refs/heads or refs/tags
+>  --refs: Do not show peeled tags or pseudorefs like HEAD
+>  --symref: In addition to the object pointed by it, show the underlying
+>            ref pointed by it when showing a symbolic ref
+>  <refspec>: When specified, only references matching the given patterns
+>             are displayed.
+
+Does the --symref also the pseudorefs?
+
+Isn't there a need somethimes to determine the ref that the remote's HEAD 
+points to. This is an issue with the current clone and bundle code when 
+there is a choice of refs/branches that could be the current HEAD ref and 
+the wrong one is chosen, though this V2 change doesn't affect bundles.
+
+>
+> The output of ls-refs is as follows:
+>
+>    output = (no-refs / list-of-refs)
+>      *symref
+>             *shallow
+>             flush-pkt
+>
+>    no-refs = PKT-LINE(zero-id SP no-refs LF)
+>    list-of-refs = *ref
+>    ref = PKT-LINE((tip / peeled) LF)
+>    tip = obj-id SP refname
+>    peeled = obj-id SP refname "^{}"
+>
+>    symref = PKT-LINE("symref" SP symbolic-ref SP resolved-ref LF)
+>    shallow = PKT-LINE("shallow" SP obj-id LF)
+>
+> Fetch
+> -------
+>
+> Fetch will need to be a modified version of the v1 fetch protocol.  Some
+> potential areas for improvement are: Ref-in-want, CDN offloading,
+> Fetch-options.
+>
+> Since we'll have an 'ls-ref' service we can eliminate the need of fetch
+> to perform a ref-advertisement, instead a client can run the 'ls-refs'
+> service first, in order to find out what refs the server has, and then
+> request those refs directly using the fetch service.
+>
+> //TODO Flush out the design
+>
+> Fetch-object
+> --------------
+>
+> This service could be used by partial clones in order to request missing
+> objects.
+>
+> //TODO Flush out the design
+>
+> Push
+> ------
+>
+> Push will need to be a modified version of the v1 push protocol.  Some
+> potential areas for improvement are: Fix push-options, Negotiation for
+> force push.
+>
+> One change that will need to happen is to improve how `push-options` are
+> sent to the server (so that they aren't sent twice!!).  Also the
+> report-status needs to be better than it currently is in v1 so that
+> tools like gerrit can explain what it did with the ref-update the client
+> sent to it. Maybe have a push-rebase capability or command?
+>
+> //TODO Flush out the design
+>
+> Other Considerations
+> ======================
+>
+>  * Move away from pkt-line framing?
+>  * Have responses structured in well known formats (e.g. JSON)
+>  * Eliminate initial round-trip using 'GIT_PROTOCOL' side-channel
+>  * Additional commands in a partial clone world (e.g. log, grep)
+--
+Philip 
+
