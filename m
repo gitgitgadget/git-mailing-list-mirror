@@ -6,42 +6,42 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A886A2055E
-	for <e@80x24.org>; Sat, 28 Oct 2017 18:16:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 563772055E
+	for <e@80x24.org>; Sat, 28 Oct 2017 18:16:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751489AbdJ1SQD (ORCPT <rfc822;e@80x24.org>);
-        Sat, 28 Oct 2017 14:16:03 -0400
+        id S1751393AbdJ1SQF (ORCPT <rfc822;e@80x24.org>);
+        Sat, 28 Oct 2017 14:16:05 -0400
 Received: from injection.crustytoothpaste.net ([192.241.140.119]:55562 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751327AbdJ1SP6 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 28 Oct 2017 14:15:58 -0400
+        by vger.kernel.org with ESMTP id S1751465AbdJ1SQA (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 28 Oct 2017 14:16:00 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 853746044C;
-        Sat, 28 Oct 2017 18:15:57 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 46D266044B;
+        Sat, 28 Oct 2017 18:15:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1509214557;
-        bh=o8s1YFT3sdoGqTtkrz6A3DhKaMH9qPhX0avu+EAnLJY=;
+        s=default; t=1509214559;
+        bh=WNAInnDDPCZhs1B5DncdDnGrYBfh5WF0gAJE5Xobx2I=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=e7QXSg2RH11uASKfWL5j2goAWU3xxKrcbtJFYaCfyh8WlBAAfCDqvbjCyeWq4bWBU
-         KI5NPYek2u3E53/uqX5HOqdCVvZ0L7BXX5GscDpBkWWjvdujVO9Kqof+bhRWU2Bov5
-         fvwJw/ZCg4GGg6W28OX9Nra6T2E/wpVGM5pfI0GVrwHiDXOr/7TMzSbokP7l3EWGE4
-         idpJStg08cqDBmY9KbnonkZSBikoRXWToP20BkLeqHtXXY84GzXjbFigvc/ODv16AN
-         Nf0O3MqiuIWBHzo3sbXtyi3mCVI1IKBcySOHyInrSzQzxucicJy9E1fzwt8BkpDPmp
-         /wezv2gug0Q6cE1Smk5OrmUDygVaSlT40BisU2tE6V84T/CKyTF9eF0/L18hm52gXY
-         LoTRrQPCYFp+TTYyvhlFH7fWs+auYJ0sdGsBWkrpcq2aytlCAi98zGgpSJfX1Uc2Fz
-         dwEMVnWTtJOkHJ1etltOioZXhRJjGpb3txpbqEbUjE92Pg5G319
+        b=H2mCVfImpntir1qIk5byNS+Sp5wwY7whkXVUyDVpeSR7v75TgDAiYa+dnWzzsjA5Q
+         XeuJoNAnrNyZBtRcHH8DtLpMzQrphpBLPeAPWm+OtSWQDV9TPsqMK3MdYdYzU9Xf5B
+         1yByVIVBz1EzzTHgX3cVHmI5muZyrR/Xb3/Txn4aJhGqIFUOIQwt+TBNqAIVBcYtiM
+         QVCf/7NvPD4ZKjLc5OYfCgUmj09nEo26PFCCBAIXEpEnkWBFIWK3fu3UFJJZ9JO15Y
+         k4fvpHgbVdvdpzfXgNlnQWldF5hSQ/E/kjh3EuPGQudLLpxqBKH6Q01tCk8yv0gXPa
+         DD59Hb4z6CAF9kQp3NRiEkKDKhi0pC/QKX15TJGGu5RTjop0upIrwN3/YdHUVkiLcz
+         dYUGZCn6ijrnTlwWXkSY86JNpFcxCUNpVSzv3K654pmoRjrCjZ1Y5UPMs6es9PzEsX
+         /1BWaK79bFy14EzpeQtkFLYRdK4k/ox+g8uwF+ATCc584DiMC+v
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jonathan Nieder <jrnieder@gmail.com>,
         Stefan Beller <sbeller@google.com>,
         Brandon Williams <bmwill@google.com>
-Subject: [PATCH v2 2/4] Add structure representing hash algorithm
-Date:   Sat, 28 Oct 2017 18:12:37 +0000
-Message-Id: <20171028181239.59458-3-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 4/4] Switch empty tree and blob lookups to use hash abstraction
+Date:   Sat, 28 Oct 2017 18:12:39 +0000
+Message-Id: <20171028181239.59458-5-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.15.0.rc2
 In-Reply-To: <20171028181239.59458-1-sandals@crustytoothpaste.net>
 References: <20171028181239.59458-1-sandals@crustytoothpaste.net>
@@ -51,159 +51,190 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since in the future we want to support an additional hash algorithm, add
-a structure that represents a hash algorithm and all the data that must
-go along with it.  Add a constant to allow easy enumeration of hash
-algorithms.  Implement function typedefs to create an abstract API that
-can be used by any hash algorithm, and wrappers for the existing SHA1
-functions that conform to this API.
-
-Expose a value for hex size as well as binary size.  While one will
-always be twice the other, the two values are both used extremely
-commonly throughout the codebase and providing both leads to improved
-readability.
-
-Don't include an entry in the hash algorithm structure for the null
-object ID.  As this value is all zeros, any suitably sized all-zero
-object ID can be used, and there's no need to store a given one on a
-per-hash basis.
-
-The current hash function transition plan envisions a time when we will
-accept input from the user that might be in SHA-1 or in the NewHash
-format.  Since we cannot know which the user has provided, add a
-constant representing the unknown algorithm to allow us to indicate that
-we must look the correct value up.
+Switch the uses of empty_tree_oid and empty_blob_oid to use the
+current_hash abstraction that represents the current hash algorithm in
+use.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
-I believe I did get the format_id constant for SHA-1 right, but
-sanity-checking would be appreciated.  We don't want another Referer
-mess.
+ builtin/am.c       | 2 +-
+ builtin/checkout.c | 2 +-
+ builtin/diff.c     | 2 +-
+ builtin/pull.c     | 2 +-
+ cache.h            | 8 ++++----
+ diff-lib.c         | 2 +-
+ merge-recursive.c  | 2 +-
+ notes-merge.c      | 2 +-
+ sequencer.c        | 6 +++---
+ submodule.c        | 2 +-
+ 10 files changed, 15 insertions(+), 15 deletions(-)
 
- cache.h     | 55 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
- sha1_file.c | 43 +++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 98 insertions(+)
-
+diff --git a/builtin/am.c b/builtin/am.c
+index d7513f5375..7f71974b79 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -1433,7 +1433,7 @@ static void write_index_patch(const struct am_state *state)
+ 	if (!get_oid_tree("HEAD", &head))
+ 		tree = lookup_tree(&head);
+ 	else
+-		tree = lookup_tree(&empty_tree_oid);
++		tree = lookup_tree(current_hash->empty_tree);
+ 
+ 	fp = xfopen(am_path(state, "patch"), "w");
+ 	init_revisions(&rev_info, NULL);
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index fc4f8fd2ea..e7878fa62e 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -516,7 +516,7 @@ static int merge_working_tree(const struct checkout_opts *opts,
+ 		}
+ 		tree = parse_tree_indirect(old->commit ?
+ 					   &old->commit->object.oid :
+-					   &empty_tree_oid);
++					   current_hash->empty_tree);
+ 		init_tree_desc(&trees[0], tree->buffer, tree->size);
+ 		tree = parse_tree_indirect(&new->commit->object.oid);
+ 		init_tree_desc(&trees[1], tree->buffer, tree->size);
+diff --git a/builtin/diff.c b/builtin/diff.c
+index f5bbd4d757..2419de1770 100644
+--- a/builtin/diff.c
++++ b/builtin/diff.c
+@@ -380,7 +380,7 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
+ 				add_head_to_pending(&rev);
+ 				if (!rev.pending.nr) {
+ 					struct tree *tree;
+-					tree = lookup_tree(&empty_tree_oid);
++					tree = lookup_tree(current_hash->empty_tree);
+ 					add_pending_object(&rev, &tree->object, "HEAD");
+ 				}
+ 				break;
+diff --git a/builtin/pull.c b/builtin/pull.c
+index 6f772e8a22..7bb96cb5a0 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -541,7 +541,7 @@ static int pull_into_void(const struct object_id *merge_head,
+ 	 * index/worktree changes that the user already made on the unborn
+ 	 * branch.
+ 	 */
+-	if (checkout_fast_forward(&empty_tree_oid, merge_head, 0))
++	if (checkout_fast_forward(current_hash->empty_tree, merge_head, 0))
+ 		return 1;
+ 
+ 	if (update_ref("initial pull", "HEAD", merge_head->hash, curr_head->hash, 0, UPDATE_REFS_DIE_ON_ERR))
 diff --git a/cache.h b/cache.h
-index 6440e2bf21..9e9eb08f05 100644
+index bce57c74c4..28906468fa 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -77,6 +77,61 @@ struct object_id {
- 	unsigned char hash[GIT_MAX_RAWSZ];
- };
+@@ -1056,22 +1056,22 @@ extern const struct object_id empty_blob_oid;
  
-+/*
-+ * Note that these constants are suitable for indexing the hash_algos array and
-+ * comparing against each other, but are otherwise arbitrary, so they should not
-+ * be exposed to the user or serialized to disk.  To know whether a
-+ * git_hash_algo struct points to some usable hash function, test the format_id
-+ * field for being non-zero.  Use the name field for user-visible situations and
-+ * the format_id field for fixed-length fields on disk.
-+ */
-+/* An unknown hash function. */
-+#define GIT_HASH_UNKNOWN 0
-+/* SHA-1 */
-+#define GIT_HASH_SHA1 1
-+/* Number of algorithms supported (including unknown). */
-+#define GIT_HASH_NALGOS (GIT_HASH_SHA1 + 1)
-+
-+typedef void (*git_hash_init_fn)(void *ctx);
-+typedef void (*git_hash_update_fn)(void *ctx, const void *in, size_t len);
-+typedef void (*git_hash_final_fn)(unsigned char *hash, void *ctx);
-+
-+struct git_hash_algo {
-+	/*
-+	 * The name of the algorithm, as appears in the config file and in
-+	 * messages.
-+	 */
-+	const char *name;
-+
-+	/* A four-byte version identifier, used in pack indices. */
-+	uint32_t format_id;
-+
-+	/* The size of a hash context (e.g. git_SHA_CTX). */
-+	size_t ctxsz;
-+
-+	/* The length of the hash in binary. */
-+	size_t rawsz;
-+
-+	/* The length of the hash in hex characters. */
-+	size_t hexsz;
-+
-+	/* The hash initialization function. */
-+	git_hash_init_fn init_fn;
-+
-+	/* The hash update function. */
-+	git_hash_update_fn update_fn;
-+
-+	/* The hash finalization function. */
-+	git_hash_final_fn final_fn;
-+
-+	/* The OID of the empty tree. */
-+	const struct object_id *empty_tree;
-+
-+	/* The OID of the empty blob. */
-+	const struct object_id *empty_blob;
-+};
-+extern const struct git_hash_algo hash_algos[GIT_HASH_NALGOS];
-+
- #if defined(DT_UNKNOWN) && !defined(NO_D_TYPE_IN_DIRENT)
- #define DTYPE(de)	((de)->d_type)
- #else
-diff --git a/sha1_file.c b/sha1_file.c
-index 10c3a0083d..77b320126a 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -39,6 +39,49 @@ const struct object_id empty_blob_oid = {
- 	EMPTY_BLOB_SHA1_BIN_LITERAL
- };
+ static inline int is_empty_blob_sha1(const unsigned char *sha1)
+ {
+-	return !hashcmp(sha1, EMPTY_BLOB_SHA1_BIN);
++	return !hashcmp(sha1, current_hash->empty_blob->hash);
+ }
  
-+static inline void git_hash_sha1_init(void *ctx)
-+{
-+	git_SHA1_Init((git_SHA_CTX *)ctx);
-+}
-+
-+static inline void git_hash_sha1_update(void *ctx, const void *data, size_t len)
-+{
-+	git_SHA1_Update((git_SHA_CTX *)ctx, data, len);
-+}
-+
-+static inline void git_hash_sha1_final(unsigned char *hash, void *ctx)
-+{
-+	git_SHA1_Final(hash, (git_SHA_CTX *)ctx);
-+}
-+
-+const struct git_hash_algo hash_algos[GIT_HASH_NALGOS] = {
-+	{
-+		NULL,
-+		0x00000000,
-+		0,
-+		0,
-+		0,
-+		NULL,
-+		NULL,
-+		NULL,
-+		NULL,
-+		NULL,
-+	},
-+	{
-+		"sha-1",
-+		/* "sha1", big-endian */
-+		0x73686131,
-+		sizeof(git_SHA_CTX),
-+		GIT_SHA1_RAWSZ,
-+		GIT_SHA1_HEXSZ,
-+		git_hash_sha1_init,
-+		git_hash_sha1_update,
-+		git_hash_sha1_final,
-+		&empty_tree_oid,
-+		&empty_blob_oid,
-+	},
-+};
-+
- /*
-  * This is meant to hold a *small* number of objects that you would
-  * want read_sha1_file() to be able to return, but yet you do not want
+ static inline int is_empty_blob_oid(const struct object_id *oid)
+ {
+-	return !hashcmp(oid->hash, EMPTY_BLOB_SHA1_BIN);
++	return !oidcmp(oid, current_hash->empty_blob);
+ }
+ 
+ static inline int is_empty_tree_sha1(const unsigned char *sha1)
+ {
+-	return !hashcmp(sha1, EMPTY_TREE_SHA1_BIN);
++	return !hashcmp(sha1, current_hash->empty_tree->hash);
+ }
+ 
+ static inline int is_empty_tree_oid(const struct object_id *oid)
+ {
+-	return !hashcmp(oid->hash, EMPTY_TREE_SHA1_BIN);
++	return !oidcmp(oid, current_hash->empty_tree);
+ }
+ 
+ /* set default permissions by passing mode arguments to open(2) */
+diff --git a/diff-lib.c b/diff-lib.c
+index 4e0980caa8..b5d95ea5c3 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -216,7 +216,7 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
+ 			} else if (revs->diffopt.ita_invisible_in_index &&
+ 				   ce_intent_to_add(ce)) {
+ 				diff_addremove(&revs->diffopt, '+', ce->ce_mode,
+-					       &empty_tree_oid, 0,
++					       current_hash->empty_tree, 0,
+ 					       ce->name, 0);
+ 				continue;
+ 			}
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 1d3f8f0d22..4547e15b8c 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -2081,7 +2081,7 @@ int merge_recursive(struct merge_options *o,
+ 		/* if there is no common ancestor, use an empty tree */
+ 		struct tree *tree;
+ 
+-		tree = lookup_tree(&empty_tree_oid);
++		tree = lookup_tree(current_hash->empty_tree);
+ 		merged_common_ancestors = make_virtual_commit(tree, "ancestor");
+ 	}
+ 
+diff --git a/notes-merge.c b/notes-merge.c
+index 4352c34a6e..aab27121cb 100644
+--- a/notes-merge.c
++++ b/notes-merge.c
+@@ -595,7 +595,7 @@ int notes_merge(struct notes_merge_options *o,
+ 	bases = get_merge_bases(local, remote);
+ 	if (!bases) {
+ 		base_oid = &null_oid;
+-		base_tree_oid = &empty_tree_oid;
++		base_tree_oid = current_hash->empty_tree;
+ 		if (o->verbosity >= 4)
+ 			printf("No merge base found; doing history-less merge\n");
+ 	} else if (!bases->next) {
+diff --git a/sequencer.c b/sequencer.c
+index f2a10cc4f2..b910165a82 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -347,7 +347,7 @@ static int read_oneliner(struct strbuf *buf,
+ 
+ static struct tree *empty_tree(void)
+ {
+-	return lookup_tree(&empty_tree_oid);
++	return lookup_tree(current_hash->empty_tree);
+ }
+ 
+ static int error_dirty_index(struct replay_opts *opts)
+@@ -705,7 +705,7 @@ static int is_original_commit_empty(struct commit *commit)
+ 				oid_to_hex(&parent->object.oid));
+ 		ptree_oid = &parent->tree->object.oid;
+ 	} else {
+-		ptree_oid = &empty_tree_oid; /* commit is root */
++		ptree_oid = current_hash->empty_tree; /* commit is root */
+ 	}
+ 
+ 	return !oidcmp(ptree_oid, &commit->tree->object.oid);
+@@ -958,7 +958,7 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
+ 	} else {
+ 		unborn = get_oid("HEAD", &head);
+ 		if (unborn)
+-			oidcpy(&head, &empty_tree_oid);
++			oidcpy(&head, current_hash->empty_tree);
+ 		if (index_differs_from(unborn ? EMPTY_TREE_SHA1_HEX : "HEAD", 0, 0))
+ 			return error_dirty_index(opts);
+ 	}
+diff --git a/submodule.c b/submodule.c
+index 63e7094e16..218cbf6227 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -587,7 +587,7 @@ void show_submodule_inline_diff(struct diff_options *o, const char *path,
+ 		struct object_id *one, struct object_id *two,
+ 		unsigned dirty_submodule)
+ {
+-	const struct object_id *old = &empty_tree_oid, *new = &empty_tree_oid;
++	const struct object_id *old = current_hash->empty_tree, *new = current_hash->empty_tree;
+ 	struct commit *left = NULL, *right = NULL;
+ 	struct commit_list *merge_bases = NULL;
+ 	struct child_process cp = CHILD_PROCESS_INIT;
 -- 
 2.15.0.rc2
 
