@@ -2,183 +2,154 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0F53020562
-	for <e@80x24.org>; Sat, 28 Oct 2017 14:59:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BAB262055E
+	for <e@80x24.org>; Sat, 28 Oct 2017 15:45:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751435AbdJ1O7F (ORCPT <rfc822;e@80x24.org>);
-        Sat, 28 Oct 2017 10:59:05 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:52211 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751189AbdJ1O7D (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 28 Oct 2017 10:59:03 -0400
-Received: by mail-wr0-f193.google.com with SMTP id j15so8532996wre.8
-        for <git@vger.kernel.org>; Sat, 28 Oct 2017 07:59:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=vcvK0LcKtQ4jskvxnA6Urp73/HAL+5foDvhiur6uon8=;
-        b=do202e84hwSmpxzF1Em6c57pC8Xll2jTWOiOHBLxtTLwMIZ7sLXND/oU8N4cCIoUDh
-         Gpa69287naTcHqUMK/jPz6a+b+/pkCn9dQqFUWNO2U/B5xaODJOKqMuFpCX6GpYfLWu1
-         Qf9+cl8Vg4Eu8l9rJR6JCYAJZVQtvaDXI3WxA6Qz/xxj20NQs79WClzJlkoY9QkMXGm5
-         ZMMFPW/+O6ABIlfHn8H/EArYLwsUp0nreqRTgMII911MD+cSsRyy3A93pQPn5rDeh5c6
-         kBcC3V/OskKoLy2JIvVfJbLDUO9/YJNiI9GtikzO9Ot4FChJx9DULQ17Rg/LBupAwW74
-         95zw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=vcvK0LcKtQ4jskvxnA6Urp73/HAL+5foDvhiur6uon8=;
-        b=reKweNoJA8vLKbD+ZTzch33JQ3D9zXNR+k4NCLJr47SS4TKrpwu60Ha+Q2nWaJw78A
-         w7bX5vu2QxsWwKsIjrtxSmGMN5Rex/Dff/Ly71bjFwakcPOVMZnwnQ/YCxyRUW8tdCBD
-         E09Dlgbl0Xtl/OM36jbLTN5V92lwkjIz0m2yoRMAAMBwiQr0EyzrDfL/Go19YVHhowxD
-         /7psGQB26s9jpk+hSY6Pnfyyfh84Y3a16Nrt7HEJRHz5jBPLBFGN6NEHztEkLkj8vEuU
-         RqDe5JF1Otv6TUJNzXLEzgSfjlxw02Hvsejyb+sFbUeNL5PfyjkGk5GO9sGpoErONKlo
-         lBag==
-X-Gm-Message-State: AMCzsaU2GW1XKKX8O7sIhwvo/PdhxxLie5YVb0wwyJyUoCwLheZlfmlv
-        WW9ITX3Pu1+ubCGSXhQyalI=
-X-Google-Smtp-Source: ABhQp+Q5iex0niAmrcDCXFDV2koAeXjuhYsORq72gR+A8t3UKlGl3CQRcNxlO6j04IlwzRDsiGxl/g==
-X-Received: by 10.223.128.4 with SMTP id 4mr3505040wrk.9.1509202742472;
-        Sat, 28 Oct 2017 07:59:02 -0700 (PDT)
-Received: from slxbook4.fritz.box (p5DDB6664.dip0.t-ipconnect.de. [93.219.102.100])
-        by smtp.gmail.com with ESMTPSA id p23sm18759608wrb.76.2017.10.28.07.59.00
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 28 Oct 2017 07:59:01 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH 4/6] t0021/rot13-filter: add packet_initialize()
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <xmqqr2tpcn6g.fsf@gitster.mtv.corp.google.com>
-Date:   Sat, 28 Oct 2017 16:59:00 +0200
-Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>, Ben Peart <Ben.Peart@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Mike Hommey <mh@glandium.org>, Eric Wong <e@80x24.org>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <09393EDB-19A3-4244-A88F-68EDA8470898@gmail.com>
-References: <20171019123030.17338-1-chriscool@tuxfamily.org> <20171019123030.17338-5-chriscool@tuxfamily.org> <xmqqvaj8dlyz.fsf@gitster.mtv.corp.google.com> <xmqqr2tpcn6g.fsf@gitster.mtv.corp.google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3124)
+        id S1751381AbdJ1Ppx (ORCPT <rfc822;e@80x24.org>);
+        Sat, 28 Oct 2017 11:45:53 -0400
+Received: from li1734-10.members.linode.com ([172.104.124.10]:51946 "EHLO
+        jhelom.anthonywong.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751283AbdJ1Ppw (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 28 Oct 2017 11:45:52 -0400
+Received: from mail-vk0-f43.google.com ([209.85.213.43])
+        by jhelom.anthonywong.net with esmtpsa (TLS1.2:RSA_AES_128_CBC_SHA1:128)
+        (Exim 4.80)
+        (envelope-from <yp@anthonywong.net>)
+        id 1e8TJ0-0008Gt-CU
+        for git@vger.kernel.org; Sat, 28 Oct 2017 23:45:51 +0800
+Received: by mail-vk0-f43.google.com with SMTP id h142so2399427vkf.7
+        for <git@vger.kernel.org>; Sat, 28 Oct 2017 08:45:50 -0700 (PDT)
+X-Gm-Message-State: AMCzsaXZ4mX0o4Dre5m4REb+2ueYU8KebaIBSO/N57uzkfw9KRNUVCUW
+        u0Ze4I0IJq2MGMqcxyAHrHRLo4HEY1xMJXZALWs=
+X-Google-Smtp-Source: ABhQp+QFkstfEopzrSXzrPFOQ3EkhtbQJPClpz3jyhNse7aUnVBfcwI8TTiFH1S+sYhterjISU+QMILitnmjlk4z9Jc=
+X-Received: by 10.31.189.205 with SMTP id n196mr3180807vkf.140.1509205543757;
+ Sat, 28 Oct 2017 08:45:43 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.159.55.165 with HTTP; Sat, 28 Oct 2017 08:45:03 -0700 (PDT)
+From:   Anthony Wong <yp@anthonywong.net>
+Date:   Sat, 28 Oct 2017 23:45:03 +0800
+X-Gmail-Original-Message-ID: <CAC=0FnGyYzOReS4-ZA8E99DHpgnn9waFm6-fc=D8_QghSQQ_cQ@mail.gmail.com>
+Message-ID: <CAC=0FnGyYzOReS4-ZA8E99DHpgnn9waFm6-fc=D8_QghSQQ_cQ@mail.gmail.com>
+Subject: Re: [PATCH] cherry-pick: add --keep-existing-origin option
+To:     Kevin Daudt <me@ikke.info>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 28 October 2017 at 22:21, Kevin Daudt <me@ikke.info> wrote:
+>
+> On Sat, Oct 28, 2017 at 08:04:40PM +0800, Anthony Wong wrote:
+> > When cherry-picking from a commit whose commit message already
+> > contains the "(cherry picked from commit ...)" line, this option will
+> > not add another one. This is useful when you are cherry-picking from a
+> > bunch of commits, some are cherry-picks and already contains the
+> > upstream hash but some do not. Use with -x.
+> >
+> > Signed-off-by: Anthony Wong <yp@anthonywong.net>
+> > ---
+> >  Documentation/git-cherry-pick.txt |  8 ++++++++
+> >  builtin/revert.c                  |  2 ++
+> >  sequencer.c                       | 14 ++++++++------
+> >  sequencer.h                       |  1 +
+> >  4 files changed, 19 insertions(+), 6 deletions(-)
+> >
+> > diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cherry-pick.txt
+> > index d35d771fc..7a074511f 100644
+> > --- a/Documentation/git-cherry-pick.txt
+> > +++ b/Documentation/git-cherry-pick.txt
+> > @@ -71,6 +71,14 @@ OPTIONS
+> >       development branch), adding this information can be
+> >       useful.
+> >
+> > +--keep-existing-origin::
+> > +     This option has to be used with -x to take effect. When
+> > +     cherry-picking from a commit whose commit message already
+> > +     contains the "(cherry picked from commit ...)" line, this
+> > +     option will not add another one. This is useful when you are
+> > +     cherry-picking from a bunch of commits, some are cherry-picks
+> > +     and already contains the upstream hash but some do not.
+> > +
+> >  -r::
+> >       It used to be that the command defaulted to do `-x`
+> >       described above, and `-r` was to disable it.  Now the
+> > diff --git a/builtin/revert.c b/builtin/revert.c
+> > index b9d927eb0..a1900cc1d 100644
+> > --- a/builtin/revert.c
+> > +++ b/builtin/revert.c
+> > @@ -122,6 +122,7 @@ static int run_sequencer(int argc, const char **argv, struct replay_opts *opts)
+> >                       OPT_BOOL(0, "allow-empty", &opts->allow_empty, N_("preserve initially empty commits")),
+> >                       OPT_BOOL(0, "allow-empty-message", &opts->allow_empty_message, N_("allow commits with empty messages")),
+> >                       OPT_BOOL(0, "keep-redundant-commits", &opts->keep_redundant_commits, N_("keep redundant, empty commits")),
+> > +                     OPT_BOOL(0, "keep-existing-origin", &opts->keep_existing_origin, N_("do not add another hash if one already exists, use with -x")),
+> >                       OPT_END(),
+> >               };
+> >               options = parse_options_concat(options, cp_extra);
+> > @@ -157,6 +158,7 @@ static int run_sequencer(int argc, const char **argv, struct replay_opts *opts)
+> >                               "--ff", opts->allow_ff,
+> >                               "--rerere-autoupdate", opts->allow_rerere_auto == RERERE_AUTOUPDATE,
+> >                               "--no-rerere-autoupdate", opts->allow_rerere_auto == RERERE_NOAUTOUPDATE,
+> > +                             "--keep-existing-origin", opts->keep_existing_origin,
+> >                               NULL);
+> >       }
+> >
+> > diff --git a/sequencer.c b/sequencer.c
+> > index f2a10cc4f..c96add16e 100644
+> > --- a/sequencer.c
+> > +++ b/sequencer.c
+> > @@ -1050,12 +1050,14 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
+> >                       strbuf_addstr(&msgbuf, p);
+> >
+> >               if (opts->record_origin) {
+> > -                     strbuf_complete_line(&msgbuf);
+> > -                     if (!has_conforming_footer(&msgbuf, NULL, 0))
+> > -                             strbuf_addch(&msgbuf, '\n');
+> > -                     strbuf_addstr(&msgbuf, cherry_picked_prefix);
+> > -                     strbuf_addstr(&msgbuf, oid_to_hex(&commit->object.oid));
+> > -                     strbuf_addstr(&msgbuf, ")\n");
+> > +                     if (!opts->keep_existing_origin || strstr(msgbuf.buf, cherry_picked_prefix) == NULL) {
+> > +                             strbuf_complete_line(&msgbuf);
+> > +                             if (!has_conforming_footer(&msgbuf, NULL, 0))
+> > +                                     strbuf_addch(&msgbuf, '\n');
+> > +                             strbuf_addstr(&msgbuf, cherry_picked_prefix);
+> > +                             strbuf_addstr(&msgbuf, oid_to_hex(&commit->object.oid));
+> > +                             strbuf_addstr(&msgbuf, ")\n");
+> > +                     }
+> >               }
+> >       }
+> >
+> > diff --git a/sequencer.h b/sequencer.h
+> > index 6f3d3df82..a907c0947 100644
+> > --- a/sequencer.h
+> > +++ b/sequencer.h
+> > @@ -24,6 +24,7 @@ struct replay_opts {
+> >       int allow_empty;
+> >       int allow_empty_message;
+> >       int keep_redundant_commits;
+> > +     int keep_existing_origin;
+> >       int verbose;
+> >
+> >       int mainline;
+> > --
+> > 2.14.1
+> >
+>
+> I'm wondering if it isn't better to detect that there is already an
+> origin present and not add another one.
+>
+> Or are there situations where you do want multiple cherry-pick origins?
 
-> On 27 Oct 2017, at 04:57, Junio C Hamano <gitster@pobox.com> wrote:
->=20
-> Junio C Hamano <gitster@pobox.com> writes:
->=20
->> It is fine to leave the original code broken at this step while we
->> purely move the lines around, and hopefully this will be corrected
->> in a later step in the series (I am responding as I read on, so I do
->> not yet know at which patch that happens in this series).
->=20
-> Actually, I think you'd probably be better off if you fixed these
-> broken comparisions that does (@list1 eq @list2) very early in the
-> series, perhaps as [PATCH 0.8/6]. =20
->=20
-> I am sure Perl experts among us on the list can come up with a
-> cleaner and better implementation of compare_lists sub I am adding
-> here, but in the meantime, here is what I would start with if I were
-> working on this topic.
->=20
-
-Thanks for spotting this! I had some trouble applying the patch in
-this email. I got an error about "corrupt patch at line 54"
-
-BTW: I am using this little snippet to apply patches from the mailing:
-
-    PATCH=3D$(curl -L --silent =
-https://public-inbox.org/git/xmqqr2tpcn6g.fsf@gitster.mtv.corp.google.com/=
-raw);=20
-    ((printf '%s' "$PATCH" | git am -3) || (git am --abort; printf '%s' =
-"$PATCH" | git apply)) &&=20
-    echo && echo "Patch successfully applied"
-
-Does this look sensible to you?
-
-I applied the patch "manually" and the result looks good to me.
-The patch looks good to me, too, but I am by no means a Perl
-expert.
+I don't. But because that's how git behaves now, I don't know if
+anyone is relying on that behaviour so I am reluctant to change that.
 
 Thanks,
-Lars
+Anthony
 
-
-
-
-> Thanks.
->=20
-> t/t0021/rot13-filter.pl | 35 ++++++++++++++++++++++++++++-------
-> 1 file changed, 28 insertions(+), 7 deletions(-)
->=20
-> diff --git a/t/t0021/rot13-filter.pl b/t/t0021/rot13-filter.pl
-> index ad685d92f8..9bf5a756af 100644
-> --- a/t/t0021/rot13-filter.pl
-> +++ b/t/t0021/rot13-filter.pl
-> @@ -107,21 +107,42 @@ sub packet_flush {
-> 	STDOUT->flush();
-> }
->=20
-> +sub compare_lists {
-> +	my ($expect, @result) =3D @_;
-> +	my $ix;
-> +	if (scalar @$expect !=3D scalar @result) {
-> +		return undef;
-> +	}
-> +	for ($ix =3D 0; $ix < $#result; $ix++) {
-> +		if ($expect->[$ix] ne $result[$ix]) {
-> +			return undef;
-> +		}
-> +	}
-> +	return 1;
-> +}
-> +
-> print $debug "START\n";
-> $debug->flush();
->=20
-> -( packet_txt_read() eq ( 0, "git-filter-client" ) ) || die "bad =
-initialize";
-> -( packet_txt_read() eq ( 0, "version=3D2" ) )         || die "bad =
-version";
-> -( packet_bin_read() eq ( 1, "" ) )                  || die "bad =
-version end";
-> +compare_lists([0, "git-filter-client"], packet_txt_read()) ||
-> +	die "bad initialize";
-> +compare_lists([0, "version=3D2"], packet_txt_read()) ||
-> +	die "bad version";
-> +compare_lists([1, ""], packet_bin_read()) ||
-> +	die "bad version end";
->=20
-> packet_txt_write("git-filter-server");
-> packet_txt_write("version=3D2");
-> packet_flush();
->=20
-> -( packet_txt_read() eq ( 0, "capability=3Dclean" ) )  || die "bad =
-capability";
-> -( packet_txt_read() eq ( 0, "capability=3Dsmudge" ) ) || die "bad =
-capability";
-> -( packet_txt_read() eq ( 0, "capability=3Ddelay" ) )  || die "bad =
-capability";
-> -( packet_bin_read() eq ( 1, "" ) )                  || die "bad =
-capability end";
-> +compare_lists([0, "capability=3Dclean"], packet_txt_read()) ||
-> +	die "bad capability";
-> +compare_lists([0, "capability=3Dsmudge"], packet_txt_read()) ||
-> +	die "bad capability";
-> +compare_lists([0, "capability=3Ddelay"], packet_txt_read()) ||
-> +	die "bad capability";
-> +compare_lists([1, ""], packet_bin_read()) ||
-> +	die "bad capability end";
->=20
-> foreach (@capabilities) {
-> 	packet_txt_write( "capability=3D" . $_ );
-
+>
+> Kevin
