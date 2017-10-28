@@ -2,99 +2,183 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D022320562
-	for <e@80x24.org>; Sat, 28 Oct 2017 14:28:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0F53020562
+	for <e@80x24.org>; Sat, 28 Oct 2017 14:59:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751295AbdJ1O17 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 28 Oct 2017 10:27:59 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:56937 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751189AbdJ1O16 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 28 Oct 2017 10:27:58 -0400
-Received: by mail-wm0-f68.google.com with SMTP id z3so8395223wme.5
-        for <git@vger.kernel.org>; Sat, 28 Oct 2017 07:27:58 -0700 (PDT)
+        id S1751435AbdJ1O7F (ORCPT <rfc822;e@80x24.org>);
+        Sat, 28 Oct 2017 10:59:05 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:52211 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751189AbdJ1O7D (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 28 Oct 2017 10:59:03 -0400
+Received: by mail-wr0-f193.google.com with SMTP id j15so8532996wre.8
+        for <git@vger.kernel.org>; Sat, 28 Oct 2017 07:59:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=VG9XvGvqE+KOYtb62/TNyGbHD6+RsuAe8vfYHqRO5GU=;
-        b=mtoe68LSzgKOYEKKm9NWET9ioq5IWUm/zcJbZCEE3+kTGrnkrCPNNmCCf4xsnWcaVl
-         BlRWwZRoZ0uuUfuZXzUDpVuBo5hclBCiCAYN1ysjMw11pAQGu2Y2b725l356HBpv0LGS
-         hnlYMtqpeTFoG1Oxl1namLGMA6zI0erqzfA2tQq84Wl4IO9vKwgW9wFlfzbRP6c+/MVJ
-         k6Rhvoezeuyu2/eGg4oZNTCVoBGJS4x9Wdjox5vBDCP14JL31aX/g7jRuY2AgX8HBaEB
-         uqjlm9NKvfXYzipYf1e/qF3A2gQh0fszCd0hkXbNoxYGkQKFLiqNjaWDGUeRnbWUEgSI
-         sUcA==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=vcvK0LcKtQ4jskvxnA6Urp73/HAL+5foDvhiur6uon8=;
+        b=do202e84hwSmpxzF1Em6c57pC8Xll2jTWOiOHBLxtTLwMIZ7sLXND/oU8N4cCIoUDh
+         Gpa69287naTcHqUMK/jPz6a+b+/pkCn9dQqFUWNO2U/B5xaODJOKqMuFpCX6GpYfLWu1
+         Qf9+cl8Vg4Eu8l9rJR6JCYAJZVQtvaDXI3WxA6Qz/xxj20NQs79WClzJlkoY9QkMXGm5
+         ZMMFPW/+O6ABIlfHn8H/EArYLwsUp0nreqRTgMII911MD+cSsRyy3A93pQPn5rDeh5c6
+         kBcC3V/OskKoLy2JIvVfJbLDUO9/YJNiI9GtikzO9Ot4FChJx9DULQ17Rg/LBupAwW74
+         95zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=VG9XvGvqE+KOYtb62/TNyGbHD6+RsuAe8vfYHqRO5GU=;
-        b=QQ/4634w854Nitwkrz1kc6oUmGkvDLSAZr3Xb7ktiGq9zO0FeUDlqW6AIW1FPrJu+X
-         7mMdH90VK5a9M4iazDxMCLDmbx3ipPIsXx+QxrklYPzBWBLxJtS314+iBtDFNRmGgU4w
-         CT8qR1fsPJNWZ+fvTPlKd59MITgSrsTwY7Pl4/RmVoBoXashF/v83m/6Z3WY9p1TmpBI
-         GSmIT4KpgNyFGVgjwq4yT1x0axubJ+MeOz3QDVAKampD8qBVTXzDGcPOnzA9mg4gE9p4
-         aMj6Hxw3/3aO6TCKN+YsA6ja0gWlX+3fsU7YnXNG7heLfZ6DPgp+8mUbAVR1BmRbnHN5
-         OE9Q==
-X-Gm-Message-State: AMCzsaW+0sDzifcSRuOCBv4Yo9BCY6S7YEijA9/Ul9bKAIxmpPJhmJp+
-        QMAOQO2GfD0Lu49Bb8M1vDwT/O1u
-X-Google-Smtp-Source: ABhQp+Quxp8iifuyVG7Qv/U7F9Pjv530vErT8KW4/cIsw8TPpR2BJ3zPIWEuhzMvxK/q7eklM0ldWA==
-X-Received: by 10.80.134.135 with SMTP id r7mr4865713eda.152.1509200877410;
-        Sat, 28 Oct 2017 07:27:57 -0700 (PDT)
-Received: from [192.168.1.8] (93-87-220-21.dynamic.isp.telekom.rs. [93.87.220.21])
-        by smtp.gmail.com with ESMTPSA id j59sm6627555edd.78.2017.10.28.07.27.56
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 28 Oct 2017 07:27:56 -0700 (PDT)
-Subject: Re: Rules for backup discussion
-To:     Jason Pyeron <jpyeron@pdinc.us>, git@vger.kernel.org
-References: <C29FBE3637EA47B9AEDD7895339AB8C8@blackfat>
-From:   Igor Djordjevic <igor.d.djordjevic@gmail.com>
-Message-ID: <3028f1a1-1311-b9e2-562f-08817a9daa94@gmail.com>
-Date:   Sat, 28 Oct 2017 16:27:51 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.4.0
-MIME-Version: 1.0
-In-Reply-To: <C29FBE3637EA47B9AEDD7895339AB8C8@blackfat>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=vcvK0LcKtQ4jskvxnA6Urp73/HAL+5foDvhiur6uon8=;
+        b=reKweNoJA8vLKbD+ZTzch33JQ3D9zXNR+k4NCLJr47SS4TKrpwu60Ha+Q2nWaJw78A
+         w7bX5vu2QxsWwKsIjrtxSmGMN5Rex/Dff/Ly71bjFwakcPOVMZnwnQ/YCxyRUW8tdCBD
+         E09Dlgbl0Xtl/OM36jbLTN5V92lwkjIz0m2yoRMAAMBwiQr0EyzrDfL/Go19YVHhowxD
+         /7psGQB26s9jpk+hSY6Pnfyyfh84Y3a16Nrt7HEJRHz5jBPLBFGN6NEHztEkLkj8vEuU
+         RqDe5JF1Otv6TUJNzXLEzgSfjlxw02Hvsejyb+sFbUeNL5PfyjkGk5GO9sGpoErONKlo
+         lBag==
+X-Gm-Message-State: AMCzsaU2GW1XKKX8O7sIhwvo/PdhxxLie5YVb0wwyJyUoCwLheZlfmlv
+        WW9ITX3Pu1+ubCGSXhQyalI=
+X-Google-Smtp-Source: ABhQp+Q5iex0niAmrcDCXFDV2koAeXjuhYsORq72gR+A8t3UKlGl3CQRcNxlO6j04IlwzRDsiGxl/g==
+X-Received: by 10.223.128.4 with SMTP id 4mr3505040wrk.9.1509202742472;
+        Sat, 28 Oct 2017 07:59:02 -0700 (PDT)
+Received: from slxbook4.fritz.box (p5DDB6664.dip0.t-ipconnect.de. [93.219.102.100])
+        by smtp.gmail.com with ESMTPSA id p23sm18759608wrb.76.2017.10.28.07.59.00
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sat, 28 Oct 2017 07:59:01 -0700 (PDT)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH 4/6] t0021/rot13-filter: add packet_initialize()
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <xmqqr2tpcn6g.fsf@gitster.mtv.corp.google.com>
+Date:   Sat, 28 Oct 2017 16:59:00 +0200
+Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
+        Jeff King <peff@peff.net>, Ben Peart <Ben.Peart@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Mike Hommey <mh@glandium.org>, Eric Wong <e@80x24.org>,
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <09393EDB-19A3-4244-A88F-68EDA8470898@gmail.com>
+References: <20171019123030.17338-1-chriscool@tuxfamily.org> <20171019123030.17338-5-chriscool@tuxfamily.org> <xmqqvaj8dlyz.fsf@gitster.mtv.corp.google.com> <xmqqr2tpcn6g.fsf@gitster.mtv.corp.google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jason,
 
-On 28/10/2017 14:49, Jason Pyeron wrote:
-> I would like to efficiently backup my project directories.
-> 
-> I am thinking that the backup of a git enabled project should only backup the following sets of files:
-> 
-> Files under .git/
-> The results of git clean -ndx
-> The results of git status
-> 
-> Does this make sense? Is there a less expensive way to calculate the backup file set? I ask because sometime git status takes a long time.
+> On 27 Oct 2017, at 04:57, Junio C Hamano <gitster@pobox.com> wrote:
+>=20
+> Junio C Hamano <gitster@pobox.com> writes:
+>=20
+>> It is fine to leave the original code broken at this step while we
+>> purely move the lines around, and hopefully this will be corrected
+>> in a later step in the series (I am responding as I read on, so I do
+>> not yet know at which patch that happens in this series).
+>=20
+> Actually, I think you'd probably be better off if you fixed these
+> broken comparisions that does (@list1 eq @list2) very early in the
+> series, perhaps as [PATCH 0.8/6]. =20
+>=20
+> I am sure Perl experts among us on the list can come up with a
+> cleaner and better implementation of compare_lists sub I am adding
+> here, but in the meantime, here is what I would start with if I were
+> working on this topic.
+>=20
 
-What do you consider being an "efficient backup", which files are you 
-actually interested in making the backup of...?
+Thanks for spotting this! I had some trouble applying the patch in
+this email. I got an error about "corrupt patch at line 54"
 
-Do you use submodules? If not, and if your backup thoughts show the 
-idea of files you want to keep (committed + untracked + ignored + 
-modified, basically all of them), I think the easiest approach is to 
-just backup the whole project folder - that way you keep committed 
-history (".git" subfolder/repository) plus all additional uncommitted 
-work as well (untracked/ignored/modified files inside the working 
-tree), and no extra calculations are needed.
+BTW: I am using this little snippet to apply patches from the mailing:
 
-In case you don`t care about uncommitted stuff, you can just backup 
-".git" subfolder (the repository), it keeps project`s whole history, 
-with all versions of all the files in it (thus latest included).
+    PATCH=3D$(curl -L --silent =
+https://public-inbox.org/git/xmqqr2tpcn6g.fsf@gitster.mtv.corp.google.com/=
+raw);=20
+    ((printf '%s' "$PATCH" | git am -3) || (git am --abort; printf '%s' =
+"$PATCH" | git apply)) &&=20
+    echo && echo "Patch successfully applied"
 
-Regards,
-Buga
+Does this look sensible to you?
+
+I applied the patch "manually" and the result looks good to me.
+The patch looks good to me, too, but I am by no means a Perl
+expert.
+
+Thanks,
+Lars
+
+
+
+
+> Thanks.
+>=20
+> t/t0021/rot13-filter.pl | 35 ++++++++++++++++++++++++++++-------
+> 1 file changed, 28 insertions(+), 7 deletions(-)
+>=20
+> diff --git a/t/t0021/rot13-filter.pl b/t/t0021/rot13-filter.pl
+> index ad685d92f8..9bf5a756af 100644
+> --- a/t/t0021/rot13-filter.pl
+> +++ b/t/t0021/rot13-filter.pl
+> @@ -107,21 +107,42 @@ sub packet_flush {
+> 	STDOUT->flush();
+> }
+>=20
+> +sub compare_lists {
+> +	my ($expect, @result) =3D @_;
+> +	my $ix;
+> +	if (scalar @$expect !=3D scalar @result) {
+> +		return undef;
+> +	}
+> +	for ($ix =3D 0; $ix < $#result; $ix++) {
+> +		if ($expect->[$ix] ne $result[$ix]) {
+> +			return undef;
+> +		}
+> +	}
+> +	return 1;
+> +}
+> +
+> print $debug "START\n";
+> $debug->flush();
+>=20
+> -( packet_txt_read() eq ( 0, "git-filter-client" ) ) || die "bad =
+initialize";
+> -( packet_txt_read() eq ( 0, "version=3D2" ) )         || die "bad =
+version";
+> -( packet_bin_read() eq ( 1, "" ) )                  || die "bad =
+version end";
+> +compare_lists([0, "git-filter-client"], packet_txt_read()) ||
+> +	die "bad initialize";
+> +compare_lists([0, "version=3D2"], packet_txt_read()) ||
+> +	die "bad version";
+> +compare_lists([1, ""], packet_bin_read()) ||
+> +	die "bad version end";
+>=20
+> packet_txt_write("git-filter-server");
+> packet_txt_write("version=3D2");
+> packet_flush();
+>=20
+> -( packet_txt_read() eq ( 0, "capability=3Dclean" ) )  || die "bad =
+capability";
+> -( packet_txt_read() eq ( 0, "capability=3Dsmudge" ) ) || die "bad =
+capability";
+> -( packet_txt_read() eq ( 0, "capability=3Ddelay" ) )  || die "bad =
+capability";
+> -( packet_bin_read() eq ( 1, "" ) )                  || die "bad =
+capability end";
+> +compare_lists([0, "capability=3Dclean"], packet_txt_read()) ||
+> +	die "bad capability";
+> +compare_lists([0, "capability=3Dsmudge"], packet_txt_read()) ||
+> +	die "bad capability";
+> +compare_lists([0, "capability=3Ddelay"], packet_txt_read()) ||
+> +	die "bad capability";
+> +compare_lists([1, ""], packet_bin_read()) ||
+> +	die "bad capability end";
+>=20
+> foreach (@capabilities) {
+> 	packet_txt_write( "capability=3D" . $_ );
+
