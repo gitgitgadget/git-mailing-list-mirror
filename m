@@ -2,136 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C1F820562
-	for <e@80x24.org>; Sat, 28 Oct 2017 14:21:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D022320562
+	for <e@80x24.org>; Sat, 28 Oct 2017 14:28:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751419AbdJ1OVW (ORCPT <rfc822;e@80x24.org>);
-        Sat, 28 Oct 2017 10:21:22 -0400
-Received: from ikke.info ([178.21.113.177]:53552 "EHLO vps892.directvps.nl"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751189AbdJ1OVW (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 28 Oct 2017 10:21:22 -0400
-Received: by vps892.directvps.nl (Postfix, from userid 1008)
-        id 4E26844039D; Sat, 28 Oct 2017 16:21:20 +0200 (CEST)
-Date:   Sat, 28 Oct 2017 16:21:20 +0200
-From:   Kevin Daudt <me@ikke.info>
-To:     Anthony Wong <anthony.wong@canonical.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] cherry-pick: add --keep-existing-origin option
-Message-ID: <20171028142120.GA12833@alpha.vpn.ikke.info>
-References: <20171028120440.2022-1-yp@anthonywong.net>
+        id S1751295AbdJ1O17 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 28 Oct 2017 10:27:59 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:56937 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751189AbdJ1O16 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 28 Oct 2017 10:27:58 -0400
+Received: by mail-wm0-f68.google.com with SMTP id z3so8395223wme.5
+        for <git@vger.kernel.org>; Sat, 28 Oct 2017 07:27:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=VG9XvGvqE+KOYtb62/TNyGbHD6+RsuAe8vfYHqRO5GU=;
+        b=mtoe68LSzgKOYEKKm9NWET9ioq5IWUm/zcJbZCEE3+kTGrnkrCPNNmCCf4xsnWcaVl
+         BlRWwZRoZ0uuUfuZXzUDpVuBo5hclBCiCAYN1ysjMw11pAQGu2Y2b725l356HBpv0LGS
+         hnlYMtqpeTFoG1Oxl1namLGMA6zI0erqzfA2tQq84Wl4IO9vKwgW9wFlfzbRP6c+/MVJ
+         k6Rhvoezeuyu2/eGg4oZNTCVoBGJS4x9Wdjox5vBDCP14JL31aX/g7jRuY2AgX8HBaEB
+         uqjlm9NKvfXYzipYf1e/qF3A2gQh0fszCd0hkXbNoxYGkQKFLiqNjaWDGUeRnbWUEgSI
+         sUcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=VG9XvGvqE+KOYtb62/TNyGbHD6+RsuAe8vfYHqRO5GU=;
+        b=QQ/4634w854Nitwkrz1kc6oUmGkvDLSAZr3Xb7ktiGq9zO0FeUDlqW6AIW1FPrJu+X
+         7mMdH90VK5a9M4iazDxMCLDmbx3ipPIsXx+QxrklYPzBWBLxJtS314+iBtDFNRmGgU4w
+         CT8qR1fsPJNWZ+fvTPlKd59MITgSrsTwY7Pl4/RmVoBoXashF/v83m/6Z3WY9p1TmpBI
+         GSmIT4KpgNyFGVgjwq4yT1x0axubJ+MeOz3QDVAKampD8qBVTXzDGcPOnzA9mg4gE9p4
+         aMj6Hxw3/3aO6TCKN+YsA6ja0gWlX+3fsU7YnXNG7heLfZ6DPgp+8mUbAVR1BmRbnHN5
+         OE9Q==
+X-Gm-Message-State: AMCzsaW+0sDzifcSRuOCBv4Yo9BCY6S7YEijA9/Ul9bKAIxmpPJhmJp+
+        QMAOQO2GfD0Lu49Bb8M1vDwT/O1u
+X-Google-Smtp-Source: ABhQp+Quxp8iifuyVG7Qv/U7F9Pjv530vErT8KW4/cIsw8TPpR2BJ3zPIWEuhzMvxK/q7eklM0ldWA==
+X-Received: by 10.80.134.135 with SMTP id r7mr4865713eda.152.1509200877410;
+        Sat, 28 Oct 2017 07:27:57 -0700 (PDT)
+Received: from [192.168.1.8] (93-87-220-21.dynamic.isp.telekom.rs. [93.87.220.21])
+        by smtp.gmail.com with ESMTPSA id j59sm6627555edd.78.2017.10.28.07.27.56
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 28 Oct 2017 07:27:56 -0700 (PDT)
+Subject: Re: Rules for backup discussion
+To:     Jason Pyeron <jpyeron@pdinc.us>, git@vger.kernel.org
+References: <C29FBE3637EA47B9AEDD7895339AB8C8@blackfat>
+From:   Igor Djordjevic <igor.d.djordjevic@gmail.com>
+Message-ID: <3028f1a1-1311-b9e2-562f-08817a9daa94@gmail.com>
+Date:   Sat, 28 Oct 2017 16:27:51 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20171028120440.2022-1-yp@anthonywong.net>
-User-Agent: Mutt/1.8.3 (2017-05-23)
+In-Reply-To: <C29FBE3637EA47B9AEDD7895339AB8C8@blackfat>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Oct 28, 2017 at 08:04:40PM +0800, Anthony Wong wrote:
-> When cherry-picking from a commit whose commit message already
-> contains the "(cherry picked from commit ...)" line, this option will
-> not add another one. This is useful when you are cherry-picking from a
-> bunch of commits, some are cherry-picks and already contains the
-> upstream hash but some do not. Use with -x.
-> 
-> Signed-off-by: Anthony Wong <yp@anthonywong.net>
-> ---
->  Documentation/git-cherry-pick.txt |  8 ++++++++
->  builtin/revert.c                  |  2 ++
->  sequencer.c                       | 14 ++++++++------
->  sequencer.h                       |  1 +
->  4 files changed, 19 insertions(+), 6 deletions(-)
-> 
-> diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cherry-pick.txt
-> index d35d771fc..7a074511f 100644
-> --- a/Documentation/git-cherry-pick.txt
-> +++ b/Documentation/git-cherry-pick.txt
-> @@ -71,6 +71,14 @@ OPTIONS
->  	development branch), adding this information can be
->  	useful.
->  
-> +--keep-existing-origin::
-> +	This option has to be used with -x to take effect. When
-> +	cherry-picking from a commit whose commit message already
-> +	contains the "(cherry picked from commit ...)" line, this
-> +	option will not add another one. This is useful when you are
-> +	cherry-picking from a bunch of commits, some are cherry-picks
-> +	and already contains the upstream hash but some do not.
-> +
->  -r::
->  	It used to be that the command defaulted to do `-x`
->  	described above, and `-r` was to disable it.  Now the
-> diff --git a/builtin/revert.c b/builtin/revert.c
-> index b9d927eb0..a1900cc1d 100644
-> --- a/builtin/revert.c
-> +++ b/builtin/revert.c
-> @@ -122,6 +122,7 @@ static int run_sequencer(int argc, const char **argv, struct replay_opts *opts)
->  			OPT_BOOL(0, "allow-empty", &opts->allow_empty, N_("preserve initially empty commits")),
->  			OPT_BOOL(0, "allow-empty-message", &opts->allow_empty_message, N_("allow commits with empty messages")),
->  			OPT_BOOL(0, "keep-redundant-commits", &opts->keep_redundant_commits, N_("keep redundant, empty commits")),
-> +			OPT_BOOL(0, "keep-existing-origin", &opts->keep_existing_origin, N_("do not add another hash if one already exists, use with -x")),
->  			OPT_END(),
->  		};
->  		options = parse_options_concat(options, cp_extra);
-> @@ -157,6 +158,7 @@ static int run_sequencer(int argc, const char **argv, struct replay_opts *opts)
->  				"--ff", opts->allow_ff,
->  				"--rerere-autoupdate", opts->allow_rerere_auto == RERERE_AUTOUPDATE,
->  				"--no-rerere-autoupdate", opts->allow_rerere_auto == RERERE_NOAUTOUPDATE,
-> +				"--keep-existing-origin", opts->keep_existing_origin,
->  				NULL);
->  	}
->  
-> diff --git a/sequencer.c b/sequencer.c
-> index f2a10cc4f..c96add16e 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -1050,12 +1050,14 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
->  			strbuf_addstr(&msgbuf, p);
->  
->  		if (opts->record_origin) {
-> -			strbuf_complete_line(&msgbuf);
-> -			if (!has_conforming_footer(&msgbuf, NULL, 0))
-> -				strbuf_addch(&msgbuf, '\n');
-> -			strbuf_addstr(&msgbuf, cherry_picked_prefix);
-> -			strbuf_addstr(&msgbuf, oid_to_hex(&commit->object.oid));
-> -			strbuf_addstr(&msgbuf, ")\n");
-> +			if (!opts->keep_existing_origin || strstr(msgbuf.buf, cherry_picked_prefix) == NULL) {
-> +				strbuf_complete_line(&msgbuf);
-> +				if (!has_conforming_footer(&msgbuf, NULL, 0))
-> +					strbuf_addch(&msgbuf, '\n');
-> +				strbuf_addstr(&msgbuf, cherry_picked_prefix);
-> +				strbuf_addstr(&msgbuf, oid_to_hex(&commit->object.oid));
-> +				strbuf_addstr(&msgbuf, ")\n");
-> +			}
->  		}
->  	}
->  
-> diff --git a/sequencer.h b/sequencer.h
-> index 6f3d3df82..a907c0947 100644
-> --- a/sequencer.h
-> +++ b/sequencer.h
-> @@ -24,6 +24,7 @@ struct replay_opts {
->  	int allow_empty;
->  	int allow_empty_message;
->  	int keep_redundant_commits;
-> +	int keep_existing_origin;
->  	int verbose;
->  
->  	int mainline;
-> -- 
-> 2.14.1
-> 
+Hi Jason,
 
-I'm wondering if it isn't better to detect that there is already an
-origin present and not add another one. 
+On 28/10/2017 14:49, Jason Pyeron wrote:
+> I would like to efficiently backup my project directories.
+> 
+> I am thinking that the backup of a git enabled project should only backup the following sets of files:
+> 
+> Files under .git/
+> The results of git clean -ndx
+> The results of git status
+> 
+> Does this make sense? Is there a less expensive way to calculate the backup file set? I ask because sometime git status takes a long time.
 
-Or are there situations where you do want multiple cherry-pick origins?
+What do you consider being an "efficient backup", which files are you 
+actually interested in making the backup of...?
 
-Kevin
+Do you use submodules? If not, and if your backup thoughts show the 
+idea of files you want to keep (committed + untracked + ignored + 
+modified, basically all of them), I think the easiest approach is to 
+just backup the whole project folder - that way you keep committed 
+history (".git" subfolder/repository) plus all additional uncommitted 
+work as well (untracked/ignored/modified files inside the working 
+tree), and no extra calculations are needed.
+
+In case you don`t care about uncommitted stuff, you can just backup 
+".git" subfolder (the repository), it keeps project`s whole history, 
+with all versions of all the files in it (thus latest included).
+
+Regards,
+Buga
