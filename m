@@ -2,239 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 563772055E
-	for <e@80x24.org>; Sat, 28 Oct 2017 18:16:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 846432055E
+	for <e@80x24.org>; Sat, 28 Oct 2017 20:43:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751393AbdJ1SQF (ORCPT <rfc822;e@80x24.org>);
-        Sat, 28 Oct 2017 14:16:05 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:55562 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751465AbdJ1SQA (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 28 Oct 2017 14:16:00 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 46D266044B;
-        Sat, 28 Oct 2017 18:15:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1509214559;
-        bh=WNAInnDDPCZhs1B5DncdDnGrYBfh5WF0gAJE5Xobx2I=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-         In-Reply-To:References:Content-Type:Content-Disposition;
-        b=H2mCVfImpntir1qIk5byNS+Sp5wwY7whkXVUyDVpeSR7v75TgDAiYa+dnWzzsjA5Q
-         XeuJoNAnrNyZBtRcHH8DtLpMzQrphpBLPeAPWm+OtSWQDV9TPsqMK3MdYdYzU9Xf5B
-         1yByVIVBz1EzzTHgX3cVHmI5muZyrR/Xb3/Txn4aJhGqIFUOIQwt+TBNqAIVBcYtiM
-         QVCf/7NvPD4ZKjLc5OYfCgUmj09nEo26PFCCBAIXEpEnkWBFIWK3fu3UFJJZ9JO15Y
-         k4fvpHgbVdvdpzfXgNlnQWldF5hSQ/E/kjh3EuPGQudLLpxqBKH6Q01tCk8yv0gXPa
-         DD59Hb4z6CAF9kQp3NRiEkKDKhi0pC/QKX15TJGGu5RTjop0upIrwN3/YdHUVkiLcz
-         dYUGZCn6ijrnTlwWXkSY86JNpFcxCUNpVSzv3K654pmoRjrCjZ1Y5UPMs6es9PzEsX
-         /1BWaK79bFy14EzpeQtkFLYRdK4k/ox+g8uwF+ATCc584DiMC+v
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     git@vger.kernel.org
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Brandon Williams <bmwill@google.com>
-Subject: [PATCH v2 4/4] Switch empty tree and blob lookups to use hash abstraction
-Date:   Sat, 28 Oct 2017 18:12:39 +0000
-Message-Id: <20171028181239.59458-5-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.15.0.rc2
-In-Reply-To: <20171028181239.59458-1-sandals@crustytoothpaste.net>
-References: <20171028181239.59458-1-sandals@crustytoothpaste.net>
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+        id S1751830AbdJ1Umc (ORCPT <rfc822;e@80x24.org>);
+        Sat, 28 Oct 2017 16:42:32 -0400
+Received: from mcgraw.st-andrews.ac.uk ([138.251.8.95]:35379 "EHLO
+        mcgraw.st-andrews.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751823AbdJ1UlI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 28 Oct 2017 16:41:08 -0400
+X-Greylist: delayed 13135 seconds by postgrey-1.27 at vger.kernel.org; Sat, 28 Oct 2017 16:41:07 EDT
+X-StAndrews-MailScanner-From: caj21@st-andrews.ac.uk
+X-StAndrews-MailScanner-SpamCheck: not spam, SpamAssassin (not cached,
+        score=-1.891, required 5, autolearn=not spam, BAYES_00 -1.90,
+        RP_MATCHES_RCVD -0.00, T_DKIM_INVALID 0.01)
+X-StAndrews-MailScanner: No virus detected
+X-StAndrews-MailScanner-ID: v9SH23OE009289
+X-StAndrews-MailScanner-Information: Please contact the ISP for more information
+Received: from unimail.st-andrews.ac.uk (exch13-srv01.st-andrews.ac.uk [138.251.8.22])
+        by mcgraw.st-andrews.ac.uk (8.14.9/8.14.9/Debian-4~bpo0+uos) with ESMTP id v9SH23OE009289
+        (version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NOT)
+        for <git@vger.kernel.org>; Sat, 28 Oct 2017 17:02:04 GMT
+Received: from exch13-srv02.st-andrews.ac.uk (138.251.8.23) by
+ exch13-srv01.st-andrews.ac.uk (138.251.8.22) with Microsoft SMTP Server (TLS)
+ id 15.0.1210.3; Sat, 28 Oct 2017 18:02:03 +0100
+Received: from EUR01-VE1-obe.outbound.protection.outlook.com (213.199.154.240)
+ by exch13-srv02.st-andrews.ac.uk (138.251.8.23) with Microsoft SMTP Server
+ (TLS) id 15.0.1210.3 via Frontend Transport; Sat, 28 Oct 2017 18:02:03 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=UniversityofStAndrews907.onmicrosoft.com; s=selector1-standrews-ac-uk0e;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
+ bh=EkOWSp7YgTqgzEBoDhHORiqRp5wYPLx9uHNY0//hyTg=;
+ b=EF3PLGWVepAQOw/1zBH08yqa8Ko8uEEazwo7N0QQgdpBdU8fQzD9J9KZ3zVF294vS/BhyP+JgO6FA0h9w+P0OekZSQ7dtBMjN0QKmdzrjxbP+cKZHTQBQxAGB5X6HScTgJx7MnqqKE21iJYwmrli7n9wfykYYbpm65Kb+Q8JHUg=
+Received: from DB6PR0602MB2870.eurprd06.prod.outlook.com (10.172.249.15) by
+ DB6PR0602MB2870.eurprd06.prod.outlook.com (10.172.249.15) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P256) id
+ 15.20.178.6; Sat, 28 Oct 2017 17:02:02 +0000
+Received: from DB6PR0602MB2870.eurprd06.prod.outlook.com
+ ([fe80::4ff:96cb:1880:a992]) by DB6PR0602MB2870.eurprd06.prod.outlook.com
+ ([fe80::4ff:96cb:1880:a992%17]) with mapi id 15.20.0178.007; Sat, 28 Oct 2017
+ 17:02:02 +0000
+From:   Christopher Jefferson <caj21@st-andrews.ac.uk>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: git rm VERY slow for directories with many files.
+Thread-Topic: git rm VERY slow for directories with many files.
+Thread-Index: AQHTUA55y5sY19EcTUu8Rkk3YE52cA==
+Date:   Sat, 28 Oct 2017 17:02:02 +0000
+Message-ID: <BEEA4A16-5433-4E6C-A7D7-956C85F27DF3@st-andrews.ac.uk>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=caj21@st-andrews.ac.uk; 
+x-originating-ip: [2.126.28.73]
+x-ms-publictraffictype: Email
+x-microsoft-exchange-diagnostics: 1;DB6PR0602MB2870;6:168hp70NA5+8/auvwtT5t1mz5us8KYiWzH2SHZXha3TmVT60bQnFlUub/93aoHCcjI3lxVxfuNsvznOVPhptMYPdzQfOl4f8tw1wb2efZAky0U3rDTLh5eVCZtC/EtWe7S3oIblGs9UTRVLb74wvQw3V146y/BNYef1jw3FkmD45vlbtHLOQhUPwUiDe2/6PGCnoBz34EKVU/vFsXjm6ho0mA8y1nlK4Bk/F5pmI36LZ519yrCRFHnztOBS96T3czKPr+BwU3Mbbc4LQdXTPnpmkMVkRMVUS1dQa4ouDCUBo0S5r7KacqeZDN7sVc60V7GIhxKj2ri6zzpGfXinslb4Si10AmEC1wWjeUpsDgd0=;5:JSD5/OyL6FaJccPWvG1mH9qrEjlFqFqRyYOIq+rKjMn7NEyg85jyuZu6/SZrfDXhxQcuPsf+wzyuTZoVpz8Q3jd3Eu3EFskRtHMjzeEIxGy92/GQU3LDvkujMIIb/RL3ZthcG7vG0z8W92swXijwrBa+nx8wYhSqgahFeWe+riw=;24:CLoi97UsP9gXYrdcU6mNxuLNuxg4HPPzepkn4DHgijIL2ilGt4NU4wm7VnixenCiffPi44e5DbbFL47h3EBwptFdBBdXL7FS/+4JwHmtGzk=;7:dX63h1lG1RN6C/KqzH0fKObNQ5c+mLrDLVFqZGbHl5dOmWq1jsuXdrcDBqLQt//jK3QfwFRKNKQzrphprQ0LYS8XprYiZ2LXdW4qTfegKuswCgbnwzdNq9dIvT35u34UHa0JG6ADChiav8PxDnzfhoGExexJ+7n7IuLXvUM9iOSi1iHfp03X6Pv0VHPSdx1RSbI7P6OktxXKb1XfmgoY/KW2NMMWdKMCJSmPLCa6x/uzoDNUVjxD1iFX55kNKH96
+x-ms-exchange-antispam-srfa-diagnostics: SSOS;
+x-ms-office365-filtering-correlation-id: 8f058440-5059-455b-7288-08d51e259c25
+x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(22001)(4534020)(4602075)(2017052603199);SRVR:DB6PR0602MB2870;
+x-ms-traffictypediagnostic: DB6PR0602MB2870:
+x-exchange-antispam-report-test: UriScan:;
+x-microsoft-antispam-prvs: <DB6PR0602MB2870BB2C00CD1E9B1DA6E3EDDF5B0@DB6PR0602MB2870.eurprd06.prod.outlook.com>
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(100000700101)(100105000095)(100000701101)(100105300095)(100000702101)(100105100095)(6040450)(2401047)(8121501046)(5005006)(93006095)(93001095)(100000703101)(100105400095)(10201501046)(3231020)(3002001)(6041248)(20161123555025)(20161123560025)(20161123564025)(20161123558100)(20161123562025)(201703131423075)(201702281529075)(201702281528075)(201703061421075)(201703061406153)(6072148)(201708071742011)(100000704101)(100105200095)(100000705101)(100105500095);SRVR:DB6PR0602MB2870;BCL:0;PCL:0;RULEID:(100000800101)(100110000095)(100000801101)(100110300095)(100000802101)(100110100095)(100000803101)(100110400095)(100000804101)(100110200095)(100000805101)(100110500095);SRVR:DB6PR0602MB2870;
+x-forefront-prvs: 04740D25F1
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(6009001)(376002)(346002)(199003)(189002)(478600001)(36756003)(97736004)(2501003)(1730700003)(2351001)(105586002)(5250100002)(33656002)(106356001)(189998001)(8936002)(5640700003)(54356999)(86362001)(50986999)(25786009)(6512007)(786003)(6506006)(6116002)(3280700002)(6436002)(3660700001)(3846002)(99286003)(2906002)(102836003)(101416001)(68736007)(2900100001)(316002)(83716003)(8676002)(81166006)(81156014)(6916009)(42882006)(74482002)(6486002)(305945005)(5660300001)(53936002)(14454004)(82746002)(7736002)(66066001)(42262002);DIR:OUT;SFP:1102;SCL:1;SRVR:DB6PR0602MB2870;H:DB6PR0602MB2870.eurprd06.prod.outlook.com;FPR:;SPF:None;PTR:InfoNoRecords;A:1;MX:1;LANG:en;
+received-spf: None (protection.outlook.com: st-andrews.ac.uk does not
+ designate permitted sender hosts)
+spamdiagnosticoutput: 1:99
+spamdiagnosticmetadata: NSPM
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <0689E515CCEF6F4D88D4F28172F7E4FB@eurprd06.prod.outlook.com>
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8f058440-5059-455b-7288-08d51e259c25
+X-MS-Exchange-CrossTenant-originalarrivaltime: 28 Oct 2017 17:02:02.3866
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: f85626cb-0da8-49d3-aa58-64ef678ef01a
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB6PR0602MB2870
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Switch the uses of empty_tree_oid and empty_blob_oid to use the
-current_hash abstraction that represents the current hash algorithm in
-use.
-
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- builtin/am.c       | 2 +-
- builtin/checkout.c | 2 +-
- builtin/diff.c     | 2 +-
- builtin/pull.c     | 2 +-
- cache.h            | 8 ++++----
- diff-lib.c         | 2 +-
- merge-recursive.c  | 2 +-
- notes-merge.c      | 2 +-
- sequencer.c        | 6 +++---
- submodule.c        | 2 +-
- 10 files changed, 15 insertions(+), 15 deletions(-)
-
-diff --git a/builtin/am.c b/builtin/am.c
-index d7513f5375..7f71974b79 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -1433,7 +1433,7 @@ static void write_index_patch(const struct am_state *state)
- 	if (!get_oid_tree("HEAD", &head))
- 		tree = lookup_tree(&head);
- 	else
--		tree = lookup_tree(&empty_tree_oid);
-+		tree = lookup_tree(current_hash->empty_tree);
- 
- 	fp = xfopen(am_path(state, "patch"), "w");
- 	init_revisions(&rev_info, NULL);
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index fc4f8fd2ea..e7878fa62e 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -516,7 +516,7 @@ static int merge_working_tree(const struct checkout_opts *opts,
- 		}
- 		tree = parse_tree_indirect(old->commit ?
- 					   &old->commit->object.oid :
--					   &empty_tree_oid);
-+					   current_hash->empty_tree);
- 		init_tree_desc(&trees[0], tree->buffer, tree->size);
- 		tree = parse_tree_indirect(&new->commit->object.oid);
- 		init_tree_desc(&trees[1], tree->buffer, tree->size);
-diff --git a/builtin/diff.c b/builtin/diff.c
-index f5bbd4d757..2419de1770 100644
---- a/builtin/diff.c
-+++ b/builtin/diff.c
-@@ -380,7 +380,7 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
- 				add_head_to_pending(&rev);
- 				if (!rev.pending.nr) {
- 					struct tree *tree;
--					tree = lookup_tree(&empty_tree_oid);
-+					tree = lookup_tree(current_hash->empty_tree);
- 					add_pending_object(&rev, &tree->object, "HEAD");
- 				}
- 				break;
-diff --git a/builtin/pull.c b/builtin/pull.c
-index 6f772e8a22..7bb96cb5a0 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -541,7 +541,7 @@ static int pull_into_void(const struct object_id *merge_head,
- 	 * index/worktree changes that the user already made on the unborn
- 	 * branch.
- 	 */
--	if (checkout_fast_forward(&empty_tree_oid, merge_head, 0))
-+	if (checkout_fast_forward(current_hash->empty_tree, merge_head, 0))
- 		return 1;
- 
- 	if (update_ref("initial pull", "HEAD", merge_head->hash, curr_head->hash, 0, UPDATE_REFS_DIE_ON_ERR))
-diff --git a/cache.h b/cache.h
-index bce57c74c4..28906468fa 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1056,22 +1056,22 @@ extern const struct object_id empty_blob_oid;
- 
- static inline int is_empty_blob_sha1(const unsigned char *sha1)
- {
--	return !hashcmp(sha1, EMPTY_BLOB_SHA1_BIN);
-+	return !hashcmp(sha1, current_hash->empty_blob->hash);
- }
- 
- static inline int is_empty_blob_oid(const struct object_id *oid)
- {
--	return !hashcmp(oid->hash, EMPTY_BLOB_SHA1_BIN);
-+	return !oidcmp(oid, current_hash->empty_blob);
- }
- 
- static inline int is_empty_tree_sha1(const unsigned char *sha1)
- {
--	return !hashcmp(sha1, EMPTY_TREE_SHA1_BIN);
-+	return !hashcmp(sha1, current_hash->empty_tree->hash);
- }
- 
- static inline int is_empty_tree_oid(const struct object_id *oid)
- {
--	return !hashcmp(oid->hash, EMPTY_TREE_SHA1_BIN);
-+	return !oidcmp(oid, current_hash->empty_tree);
- }
- 
- /* set default permissions by passing mode arguments to open(2) */
-diff --git a/diff-lib.c b/diff-lib.c
-index 4e0980caa8..b5d95ea5c3 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -216,7 +216,7 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
- 			} else if (revs->diffopt.ita_invisible_in_index &&
- 				   ce_intent_to_add(ce)) {
- 				diff_addremove(&revs->diffopt, '+', ce->ce_mode,
--					       &empty_tree_oid, 0,
-+					       current_hash->empty_tree, 0,
- 					       ce->name, 0);
- 				continue;
- 			}
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 1d3f8f0d22..4547e15b8c 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -2081,7 +2081,7 @@ int merge_recursive(struct merge_options *o,
- 		/* if there is no common ancestor, use an empty tree */
- 		struct tree *tree;
- 
--		tree = lookup_tree(&empty_tree_oid);
-+		tree = lookup_tree(current_hash->empty_tree);
- 		merged_common_ancestors = make_virtual_commit(tree, "ancestor");
- 	}
- 
-diff --git a/notes-merge.c b/notes-merge.c
-index 4352c34a6e..aab27121cb 100644
---- a/notes-merge.c
-+++ b/notes-merge.c
-@@ -595,7 +595,7 @@ int notes_merge(struct notes_merge_options *o,
- 	bases = get_merge_bases(local, remote);
- 	if (!bases) {
- 		base_oid = &null_oid;
--		base_tree_oid = &empty_tree_oid;
-+		base_tree_oid = current_hash->empty_tree;
- 		if (o->verbosity >= 4)
- 			printf("No merge base found; doing history-less merge\n");
- 	} else if (!bases->next) {
-diff --git a/sequencer.c b/sequencer.c
-index f2a10cc4f2..b910165a82 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -347,7 +347,7 @@ static int read_oneliner(struct strbuf *buf,
- 
- static struct tree *empty_tree(void)
- {
--	return lookup_tree(&empty_tree_oid);
-+	return lookup_tree(current_hash->empty_tree);
- }
- 
- static int error_dirty_index(struct replay_opts *opts)
-@@ -705,7 +705,7 @@ static int is_original_commit_empty(struct commit *commit)
- 				oid_to_hex(&parent->object.oid));
- 		ptree_oid = &parent->tree->object.oid;
- 	} else {
--		ptree_oid = &empty_tree_oid; /* commit is root */
-+		ptree_oid = current_hash->empty_tree; /* commit is root */
- 	}
- 
- 	return !oidcmp(ptree_oid, &commit->tree->object.oid);
-@@ -958,7 +958,7 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
- 	} else {
- 		unborn = get_oid("HEAD", &head);
- 		if (unborn)
--			oidcpy(&head, &empty_tree_oid);
-+			oidcpy(&head, current_hash->empty_tree);
- 		if (index_differs_from(unborn ? EMPTY_TREE_SHA1_HEX : "HEAD", 0, 0))
- 			return error_dirty_index(opts);
- 	}
-diff --git a/submodule.c b/submodule.c
-index 63e7094e16..218cbf6227 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -587,7 +587,7 @@ void show_submodule_inline_diff(struct diff_options *o, const char *path,
- 		struct object_id *one, struct object_id *two,
- 		unsigned dirty_submodule)
- {
--	const struct object_id *old = &empty_tree_oid, *new = &empty_tree_oid;
-+	const struct object_id *old = current_hash->empty_tree, *new = current_hash->empty_tree;
- 	struct commit *left = NULL, *right = NULL;
- 	struct commit_list *merge_bases = NULL;
- 	struct child_process cp = CHILD_PROCESS_INIT;
--- 
-2.15.0.rc2
-
+SSBzdHVwaWRseSBhZGRlZCBhIGRpcmVjdG9yeSB3aXRoIG1hbnkgZmlsZXMgKCB+NDUwLDAwMCAp
+IHRvIGdpdCwgYW5kIHdhbnQgdG8gZGVsZXRlIHRoZW0g4oCUIGxhdGVyIEkgcGxhbiB0byByZWJh
+c2Uvc3F1YXNoIHZhcmlvdXMgY29tbWl0cyB0byByZW1vdmUgdGhlIGZpbGVzIGZyb20gdGhlIGhp
+c3RvcnkgYWx0b2dldGhlci4NCg0KSG93ZXZlciwg4oCYZ2l0IHJt4oCZIGlzIFZFUlkgc2xvdy4g
+Rm9yIGV4YW1wbGUsIGluIGEgZGlyZWN0b3J5IHdpdGggMTAsMDAwIGZpbGVzIChvbiBhIE1hYyks
+IGdpdCB2Mi4xNC4yDQoNCkdpdCBhZGQgLiA6IDUuOTUgc2Vjcw0KR2l0IGNvbW1pdCA6IDEuMjkg
+c2Vjcw0KR2l0IHJtIC1yIDogMjIgc2Vjcw0KDQo1MCwwMDAgZmlsZXMNCg0KR2l0IGFkZCAuIDog
+MjUgc2Vjcw0KR2l0IGNvbW1pdCA6IDExIHNlY3MNCkdpdCBybSA6IEFmdGVyIDIwIG1pbnV0ZXMs
+IEkga2lsbGVkIGl0Lg0KDQpMb29raW5nIGF0IGFuIG9wdGltaXplZCBwcm9maWxlLCBhbGwgdGhl
+IHRpbWUgc2VlbXMgdG8gYmUgc3BlbnQgaW4g4oCcZ2V0X3RyZWVfZW50cnnigJ0g4oCUIEkgYXNz
+dW1lIHRoZXJlIGlzIHNvbWUgaHVnZSBvYmplY3QgcmVwcmVzZW50aW5nIHRoZSBkaXJlY3Rvcnkg
+d2hpY2ggaXMgYmVpbmcgcmUtZXhwYW5kZWQgZm9yIGVhY2ggZmlsZT8NCg0KSXMgdGhlcmUgYW55
+IHdheSBJIGNhbiBzcGVlZCB1cCByZW1vdmluZyB0aGlzIGRpcmVjdG9yeT8NCg0KQ2hyaXM=
