@@ -6,80 +6,101 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 15F9A20562
-	for <e@80x24.org>; Sun, 29 Oct 2017 00:14:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E56262055E
+	for <e@80x24.org>; Sun, 29 Oct 2017 00:52:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751469AbdJ2AOc (ORCPT <rfc822;e@80x24.org>);
-        Sat, 28 Oct 2017 20:14:32 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61955 "EHLO
+        id S1751478AbdJ2Av6 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 28 Oct 2017 20:51:58 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55068 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751209AbdJ2AOb (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 28 Oct 2017 20:14:31 -0400
+        with ESMTP id S1751209AbdJ2Av5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 28 Oct 2017 20:51:57 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id AC252AC207;
-        Sat, 28 Oct 2017 20:14:30 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B65EEAC88F;
+        Sat, 28 Oct 2017 20:51:56 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=+1lllziZRL9BcUiK1jiW36IT+Ps=; b=ZXtQOy
-        9i3c6nmNCqgBiRScbYV5aurDrxsUjMEnRXKu39/9S0bYHBYnqz9iNg8vbt+Uwu2b
-        p1J6l+q9cQaJ/lbVwyzCcOw2b3x26JBLlnkQGfx7hBZKP4wwXiHgOBCpCCKEIUre
-        0NYnBcWaLvU0DMSrzuPZI05k++MhAy/MDLGyg=
+        :content-type:content-transfer-encoding; s=sasl; bh=8gkVmwlSWczq
+        /tSLQ/TXmIUiZwk=; b=FqgBHiCPnXeCnUgyOJwvBXaOZF0hyeA5R+wFXztgbBJm
+        HGzZIoXezqyCiAtsgMEkuX2pCioQWCfhffy7+oN7bkoKDxlpLFi0bpOOcXWAvl0F
+        fFyNfS4Qk2EPt4AZjEhDBt201/hzXH9kICeWhBfyGRa/NZU+l9bYoPQ5jnFVslw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Vw/yxUmLZeeCDRM4IQPg/uI+d5Fu0kI/
-        IuNK2F35quJbWRHekK2TLYOsE5sIV/z4L4OFBg1Pqt5lCfSgoIEJQCUVOUXkWnf6
-        1UrPOiiPoULFv4LwQrpm346pvfU1/1iYA1wJoyQg+yXZdM9P2/tx9Ywn7E24b+qQ
-        A12Wdo/RW8A=
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=CVXegF
+        C/+PvmnOlJ0I8uXrcaUhR1Tp2Di0TJmClIeS87B0Ocfx7qf5lfSgUUi2WThOS4I/
+        SDUbu9EQxSF1GpiKjYovKJiAu9/XSZH1oq6TjT11FY3UIh5srr1RkcR2HSW02li8
+        jcRFWqftxIZmuZ/rLiutVSxD0crRK0hNYWC0Q=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A32D8AC206;
-        Sat, 28 Oct 2017 20:14:30 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id AEC5CAC88E;
+        Sat, 28 Oct 2017 20:51:56 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0C218AC205;
-        Sat, 28 Oct 2017 20:14:30 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2A0F2AC88D;
+        Sat, 28 Oct 2017 20:51:56 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>, Ben Peart <Ben.Peart@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Mike Hommey <mh@glandium.org>, Eric Wong <e@80x24.org>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 4/6] t0021/rot13-filter: add packet_initialize()
-References: <20171019123030.17338-1-chriscool@tuxfamily.org>
-        <20171019123030.17338-5-chriscool@tuxfamily.org>
-        <xmqqvaj8dlyz.fsf@gitster.mtv.corp.google.com>
-        <xmqqr2tpcn6g.fsf@gitster.mtv.corp.google.com>
-        <09393EDB-19A3-4244-A88F-68EDA8470898@gmail.com>
-Date:   Sun, 29 Oct 2017 09:14:29 +0900
-In-Reply-To: <09393EDB-19A3-4244-A88F-68EDA8470898@gmail.com> (Lars
-        Schneider's message of "Sat, 28 Oct 2017 16:59:00 +0200")
-Message-ID: <xmqqfua2byje.fsf@gitster.mtv.corp.google.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Christopher Jefferson <caj21@st-andrews.ac.uk>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: git rm VERY slow for directories with many files.
+References: <BEEA4A16-5433-4E6C-A7D7-956C85F27DF3@st-andrews.ac.uk>
+        <20171028223103.wevq5zf4rjl7ietd@genre.crustytoothpaste.net>
+Date:   Sun, 29 Oct 2017 09:51:55 +0900
+In-Reply-To: <20171028223103.wevq5zf4rjl7ietd@genre.crustytoothpaste.net>
+        (brian m. carlson's message of "Sat, 28 Oct 2017 22:31:04 +0000")
+Message-ID: <xmqqbmkqbwt0.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 21EE53EA-BC3E-11E7-B206-8EF31968708C-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 5CAEDD9C-BC43-11E7-8ED5-8EF31968708C-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Lars Schneider <larsxschneider@gmail.com> writes:
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> BTW: I am using this little snippet to apply patches from the mailing:
+>> Looking at an optimized profile, all the time seems to be spent in =E2=
+=80=9Cget_tree_entry=E2=80=9D =E2=80=94 I assume there is some huge objec=
+t representing the directory which is being re-expanded for each file?
 >
->     PATCH=$(curl -L --silent https://public-inbox.org/git/xmqqr2tpcn6g.fsf@gitster.mtv.corp.google.com/raw); 
->     ((printf '%s' "$PATCH" | git am -3) || (git am --abort; printf '%s' "$PATCH" | git apply)) && 
->     echo && echo "Patch successfully applied"
+> Yes, there's a tree object that represents each directory.
 >
-> Does this look sensible to you?
+>> Is there any way I can speed up removing this directory?
+>
+> First, make sure your working directory is clean with no changes.  Then=
+,
+> remove the directory (by hand) or move it somewhere else.  Then, run
+> "git add -u".
+>
+> That should allow you to commit the removal of those files quickly.
 
-Sensible?  I have no answer.  I wouldn't trust printf well enough to
-stuff large value in a shell variable and feeding it myself in the
-first place, but I would not be surprised if you did
+If get_tree_entry() shows up a lot in the profile, it would indicate
+that a lot of cycles are spent in check_local_mod().  Bypassing it
+with "-f" may be the first thing to try ;-)
 
-	VAR=$(command) && printf '%s' "$VAR" >output
+The way "git rm" makes repeated calls to get_tree_entry() with deep
+pathnames would be an easy recipe to get quadratic behaviour like
+the one reported in the first message on this thread, as it always
+goes from the root level, grabs an tree object and scans it to get
+the entry for the next level, and (worse yet) a look-up of a path
+component in each of these tree object must be done as a linear
+scan.
 
-and ended up with a file with an incomplete line at the end.
+I wonder how fast "git diff-index --cached -r HEAD --", with the
+same pathspec used for the problematic "git rm", runs in this same
+50,000 path project. =20
+
+If it runs in a reasonable time, one easy way out may be to revamp
+the codepath to call check_local_mod() to:
+
+ - first before making the call, do the "diff-index --cached" thing
+   internally with the same pathspec to grab the list of paths that
+   have local modifications; save the set of paths in a hashmap or
+   something.
+
+ - pass that hashmap to check_local_mod(), and where the function
+   does the "staged_changes" check, consult the hashmap to see the
+   path in question is different between the HEAD and the index.
 
