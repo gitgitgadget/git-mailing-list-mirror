@@ -2,145 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D6A082055E
-	for <e@80x24.org>; Sun, 29 Oct 2017 03:28:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AB9B12055E
+	for <e@80x24.org>; Sun, 29 Oct 2017 03:43:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751745AbdJ2D24 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 28 Oct 2017 23:28:56 -0400
-Received: from mail-qt0-f193.google.com ([209.85.216.193]:55275 "EHLO
-        mail-qt0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751667AbdJ2D24 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 28 Oct 2017 23:28:56 -0400
-Received: by mail-qt0-f193.google.com with SMTP id z19so12692730qtg.11
-        for <git@vger.kernel.org>; Sat, 28 Oct 2017 20:28:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=1sVjYE01eD0kQwuYGjrz+mC/8BrkDU1Iy43lEAiuRws=;
-        b=QhCP4EEysmyI7irLOPeFysDOBKFw6BYa+ZZpVwctKH2kQNYPQQ4ibqOIpCISdszms8
-         wqu3qFfGaaZAnqU0gODqbPO+5dy+RR6+S4pMsDiw275J2NLroKZKr89PRBqMXVhIr1Ns
-         LTe07CzqzoojC8aEfERO1aZADeAnRey7h3q1ZvouuwMuJXVFm+vdc2QbfBN8Y7RjmH1b
-         gL0Q7LDAdMmYOHLEqLgnvuEeb/Btnd9DouqaAB+2f8Ngnq4mp1tdssNHT3DrW+lxH1fo
-         CgvXg1enqoVNFFDSp7jIeW4WeqYOgXeqUCr4l3alrsoMUdzcIbwF4jQZ+ESZ5Z7lhhmC
-         dIBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=1sVjYE01eD0kQwuYGjrz+mC/8BrkDU1Iy43lEAiuRws=;
-        b=anOb/IJkZOnlGrgcGM/c8ie4ps4FsGTp7atQUV2iwZrtqqpQr2U3yFk14Z8VQzBMVc
-         TxsrWlp6G/s4yk4q4svlEiR2XTS7u2H0NafxuwCiK2db14v99z6NHpKo3jLC6aUs3PGY
-         pgulxr1bBtmNeSmQZNLSa79YueEJLxDn2GcBD5v9+RvEt9eEMbZzViDqEcuA6tjfa73v
-         tbd0znq8BdAHNujdDn5h13aINOZzfM/EHHiAavpsox8ilvHUX3JZqh4tL6dZorVZkO1W
-         ncsQf1PxV2lOnd/B5vxUgPOyKyTGF5Ez4FEBA3C3rjVQVcq8SB2GU7nIcoOQvoiMrUen
-         pYpQ==
-X-Gm-Message-State: AMCzsaUb1ds6SeeDY6Ul6gbIIKgvS2P3v1FyAjEdyMt3Lj1ijOzEu7DJ
-        ESmg0ROgk2q1rXfYwlnEs+6y6Ec+z1b9xgYlxbjJJA==
-X-Google-Smtp-Source: ABhQp+QrHieGQZmfcHfJ1vMICulo0IesnmfuhSOEGF/+bw6egtTozv94lZgttg1hATNWCnnyQEGsYCoWjU3uxjavLVQ=
-X-Received: by 10.200.47.77 with SMTP id k13mr8049403qta.298.1509247735109;
- Sat, 28 Oct 2017 20:28:55 -0700 (PDT)
+        id S1751776AbdJ2DnR (ORCPT <rfc822;e@80x24.org>);
+        Sat, 28 Oct 2017 23:43:17 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58453 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751646AbdJ2DnQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 28 Oct 2017 23:43:16 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id EF0FCAEC11;
+        Sat, 28 Oct 2017 23:43:15 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=qV3ut3RrCzC4NCN9AyZEp8E+ZSA=; b=MOONAm
+        QVy+LAtSLWcn4CQjUrFH1AYqx7h2SCx3PxzqBMhG8b3cnN/L75MgoG/RY33VwPMq
+        UXQtc0hLkf3nH6fmIfKLLQfeLEabchdNRoAhPTmvS2fTTW5pmyEYF/awcvMd40X4
+        zOLXuuovlYuSHXH/JjEB/a9fQ1JJtoKq2vl7I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Qi3rWOX+fiMutonPBttm4pBw7l8bXV3G
+        Oh9kduSapCxetCJuwkDMDEg6+IoP3fBpxz7D0/whsh2xQ+8W3kUpzvAuvChOfS61
+        G0wRAA514p14zYrut//Zpoh62JZIICjGmAGnj0m58BwB0VZfsCRZ3xt2Hm21cFjf
+        i4+wiS3T7dE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E7972AEC10;
+        Sat, 28 Oct 2017 23:43:15 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6321FAEC0F;
+        Sat, 28 Oct 2017 23:43:15 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git <git@vger.kernel.org>
+Subject: Re: [PATCH 2/3] revision.h: introduce blob/tree walking in order of the commits
+References: <20171028004419.10139-1-sbeller@google.com>
+        <20171028004506.10253-1-sbeller@google.com>
+        <20171028004506.10253-2-sbeller@google.com>
+        <alpine.DEB.2.21.1.1710281917260.6482@virtualbox>
+        <CAGZ79kaVqSzzPebHN4=extkAPpyi=VagmjFU8mh_A_tYoJgU8g@mail.gmail.com>
+        <CAGZ79kYEfFkUBZ18s=tDo+Dzo1KEA-MVNTZjLim_HHdZmeMa+A@mail.gmail.com>
+Date:   Sun, 29 Oct 2017 12:43:14 +0900
+In-Reply-To: <CAGZ79kYEfFkUBZ18s=tDo+Dzo1KEA-MVNTZjLim_HHdZmeMa+A@mail.gmail.com>
+        (Stefan Beller's message of "Sat, 28 Oct 2017 20:23:19 -0700")
+Message-ID: <xmqqfua2aab1.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.140.102.70 with HTTP; Sat, 28 Oct 2017 20:28:54 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.21.1.1710281926020.6482@virtualbox>
-References: <20171028004419.10139-1-sbeller@google.com> <20171028004506.10253-1-sbeller@google.com>
- <20171028004506.10253-3-sbeller@google.com> <alpine.DEB.2.21.1.1710281926020.6482@virtualbox>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Sat, 28 Oct 2017 20:28:54 -0700
-Message-ID: <CAGZ79kYpPga-aWmJYXCXT1WyvfeEKnwXEXxq2E0YNYanhUw-Xw@mail.gmail.com>
-Subject: Re: [PATCH 3/3] builtin/describe: describe blobs
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4B9513E2-BC5B-11E7-B8E4-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Oct 28, 2017 at 10:32 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi Stefan,
+Stefan Beller <sbeller@google.com> writes:
+
+> On Sat, Oct 28, 2017 at 8:22 PM, Stefan Beller <sbeller@google.com> wrote:
 >
-> On Fri, 27 Oct 2017, Stefan Beller wrote:
->
->> Sometimes users are given a hash of an object and they want to identify
->> it further (ex.: Use verify-pack to find the largest blobs, but what are
->> these? or [1])
 >>
->> The best identification of a blob hash is done via a its path at a
->> given commit, which this implements.
+>> (Not making excuses, but...) I remembered some other senior members
+>> having such commit messages, so I felt like I had to step up my game.
 >>
->> [1] https://stackoverflow.com/questions/223678/which-commit-has-this-blob
+>> https://public-inbox.org/git/70fbcd573f5c8a78a19a08ffc255437c36e7f49d.1495014840.git.mhagger@alum.mit.edu/
 >
-> I also came up with a script to do that:
-> https://github.com/msysgit/msysgit/blob/master/bin/what-made-this-repo-so-large.sh
->
-> Your method is much more elegant, of course (it describes the commit in the
-> same run as it finds the object, and it does not output tons of stuff only
-> to be filtered).
+> I forgot to note though, that this never made it into the official tree, though.
 
-That was the task I was given. Discussion here turned out that users
-mostly only ever care about commit object names, trees and blobs are
-only useful when specifically given.
+Besides, leading by setting a better example would be the right
+approach to gain seniority (if that is your goal, that is) ;-).
 
-
->
->> @@ -282,6 +283,50 @@ static void show_suffix(int depth, const struct object_id *oid)
->>       printf("-%d-g%s", depth, find_unique_abbrev(oid->hash, abbrev));
->>  }
->>
->> +struct blob_descriptor {
->> +     struct object_id current_commit;
->> +     struct object_id looking_for;
->> +};
->
-> Personally, I would call this process_commit_data, but I do not mind too
-> much about the name.
-
-I'll take any naming suggestion, as this code was assembled in a hurry using
-copy/paste and trial&error as the high-tech methods used.
-
->> +static void process_object(struct object *obj, const char *name, void *data)
->> +{
->> +     struct blob_descriptor *bd = data;
->> +
->> +     if (!oidcmp(&bd->looking_for, &obj->oid))
->> +             printf(_("blob %s present at path %s in commit %s\n"),
->> +                     oid_to_hex(&bd->looking_for), name,
->> +                     oid_to_hex(&bd->current_commit));
->> +}
->
-> s/name/path/
->
->> @@ -295,9 +340,14 @@ static void describe(const char *arg, int last_one)
->>
->>       if (get_oid(arg, &oid))
->>               die(_("Not a valid object name %s"), arg);
->> -     cmit = lookup_commit_reference(&oid);
->> -     if (!cmit)
->> -             die(_("%s is not a valid '%s' object"), arg, commit_type);
->> +     cmit = lookup_commit_reference_gently(&oid, 1);
->> +     if (!cmit) {
->> +             if (lookup_blob(&oid))
->> +                     describe_blob(oid);
->> +             else
->> +                     die(_("%s is not a commit nor blob"), arg);
->
-> s/not/neither/
->
-> Nicely done, sir!
->
-> I wonder whether it would make sense to extend this to tree objects while
-> we are at it, but maybe that's an easy up-for-grabs.
-
-I can look into incorporating that, too. What is the use case though?
-(Is there any error message, common enough that users want to
-identify trees?)
-
-Thanks for the review,
-Stefan
