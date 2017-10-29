@@ -2,101 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2A866202A0
-	for <e@80x24.org>; Sun, 29 Oct 2017 15:12:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1C284202A0
+	for <e@80x24.org>; Sun, 29 Oct 2017 15:18:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751457AbdJ2PMb (ORCPT <rfc822;e@80x24.org>);
-        Sun, 29 Oct 2017 11:12:31 -0400
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:53863 "EHLO
-        out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751324AbdJ2PMa (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 29 Oct 2017 11:12:30 -0400
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
-        by mailout.nyi.internal (Postfix) with ESMTP id 04A7920680;
-        Sun, 29 Oct 2017 11:12:30 -0400 (EDT)
-Received: from frontend1 ([10.202.2.160])
-  by compute2.internal (MEProxy); Sun, 29 Oct 2017 11:12:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dwim.me; h=cc
-        :content-transfer-encoding:content-type:date:from:message-id
-        :mime-version:subject:to:x-me-sender:x-me-sender:x-sasl-enc; s=
-        mesmtp; bh=6iIrmIGEN1xnpYkTrqRAKvgwZ+3TwilE4mIUrumbZKM=; b=elPul
-        hNt/3PHj/d5btZqhaNMCiYkFJefwfmXsc/WCqOqtqMCR2k3XxltlQlptTRNDxb9w
-        KDYWHYl78Owqn1nkdJfTTK82cD1ZCDKhvysELMuVqdx+b9V6na/eBd0kZCRrA3AE
-        1Ka3s0uKfzFdjRtyFvS6u9n4/cZoagAbtr/Vjk=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-transfer-encoding:content-type
-        :date:from:message-id:mime-version:subject:to:x-me-sender
-        :x-me-sender:x-sasl-enc; s=fm1; bh=6iIrmIGEN1xnpYkTrqRAKvgwZ+3Tw
-        ilE4mIUrumbZKM=; b=PpgXxwCsLSm/QFu2H2dUYFzioWztrh+kIWYJ4InuveJM9
-        OCM23JPbCXulEzulr84qQl2Mo2E4WYbfEpT+b5LeQ9LlpgbHvXljV1puLXC6b7f2
-        zBO9x8LkNoVW4d/EvwD1oHx3Zik+yIRjG9+F5dEANNnNuS3f/AcLKCW8OGzkzHMu
-        rLUEd2/rTx+NQvqzFj9wUdWMX4yYLske5TvyXDbpInczYb0AWM3QboPOJ7gvdNHG
-        /emryVtlExhA/4GFsOPegTAkDiJ9o0B0WfGfOVcYrHUlc4kTIH/1T3Kuw6QEv97i
-        Sftn1SiT/FVzDW1t67QCs8BfgS1FSpOOilM4ZsO9w==
-X-ME-Sender: <xms:3e_1WS9ORuCU0eXLzipE14XGGuhZCZBsWy7Rf8QxX6jmrFrzSGVgpw>
-Received: from cmartin.tk (ip5f5bf2d0.dynamic.kabel-deutschland.de [95.91.242.208])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 6F6CD7E13B;
-        Sun, 29 Oct 2017 11:12:29 -0400 (EDT)
-Received: (nullmailer pid 607879 invoked by uid 1000);
-        Sun, 29 Oct 2017 15:12:28 -0000
-From:   =?UTF-8?q?Carlos=20Mart=C3=ADn=20Nieto?= <cmn@dwim.me>
-To:     git@vger.kernel.org
-Cc:     Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH] diff: --indent-heuristic is no longer experimental
-Date:   Sun, 29 Oct 2017 16:12:28 +0100
-Message-Id: <20171029151228.607834-1-cmn@dwim.me>
-X-Mailer: git-send-email 2.15.0.rc2
+        id S1751290AbdJ2PSu (ORCPT <rfc822;e@80x24.org>);
+        Sun, 29 Oct 2017 11:18:50 -0400
+Received: from mout.gmx.net ([212.227.17.21]:60007 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751152AbdJ2PSu (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Oct 2017 11:18:50 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LgNGi-1dL98a3mfU-00nkBt; Sun, 29
+ Oct 2017 16:18:44 +0100
+Date:   Sun, 29 Oct 2017 16:18:43 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Oct 2017, #06; Fri, 27)
+In-Reply-To: <xmqq7eve9gw4.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.21.1.1710291614020.6482@virtualbox>
+References: <xmqq7evhc7nw.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.21.1.1710291409390.6482@virtualbox> <xmqq7eve9gw4.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:MlF2+4kERHh63cnOszOJdj9S31ItM4CVe2g0GyInEXNmn3rdEN1
+ I01aCiJjP9Cia0b8ZIHk1D/CdMRUS3APwPfnbVi6fZglttolyAkQr/3EgUKlWUdMFLGNzE+
+ 9ZFNF3Gu7Pf9glla3cfA9lXFZIlR8XizTrA89c4kZv3d720AAXNHWm0HzOVp14u7EAZzg2m
+ kXvE9nL489cwDBUjIipAQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ChMBUmSL/is=:vGqsdJ71FTnysrQmK4S+Se
+ aw6lJeo3DM/w4cnAwAXOkFfoh4FnEtXovCXMD+/2cws3KILZDm4lz1Ky0PrAHVY4QrROeBBMk
+ jCR2VBIsOeEmx+nLWYHNpkRvcBCa3TZFaS+i0DmIEtHvJjPkzOgrmmQOoh63e0NwomjJSaidR
+ 90BFDHiR4+zi+QZj5eadmohK5+tH1fp2OJZ+OkEO7gC5s5PmqVvoujtFT0sDykAleJDZ5IiyQ
+ IjDR8v8WnMsQtDyWRGGrDvxre3onmnwN5XKw/Y+bRSIfOCimx1sbX1QOVRMSMBRbGLsX69v49
+ 56RxGaSjfN55TPciafw7cxu36Viac2QBdCr3NPMU6ia09kp77gfxGCNulOve5MW67j1+2DLR0
+ FecxXu2ML+jtsrx160YKczyA8xYFJtqPh7f1Z1fKsLIx9ItK3Sas29zFUMXIdfLJbKiQg5hM9
+ xiHoywX588qI65l8GvKX5J7HAsFxNG1pHQ+gXs6JIu6pbYGMg3hMIA0nG6HtxN4Zk/m7ktDb5
+ jC5sWBhQp+XEEcdEUtoVkNGddB+Ieyq4RSrUi7bGDhRyRaCSRcWMeO3jm5oNfDRNW8gMcwPyR
+ 4DUHWR21KKqMayjidSeOYgRJd9eWyfPNsYt7/k73w9U6dlHVabqG3TM+vNQD7HTFmFU4lUFfp
+ kTWftOd+Z0oOFLFIG5HNVA1lS33dBOMzmxPncrCCVlH3Gzq5EJ+fykL8MwngUEhj1kkBcnmxE
+ 37Tvp/R+u1Vl4Fu6YPmPAfeRa/GkZCD6QppCE0nVHPhhsqlTlGwG0pKMGoOV/ccNkNezSzlkU
+ 6cvt+GbPy+60y4xQahpWqnMdrCKFTll+ifK//DM/OYdQMxUlFLfNEojbCluVBMQHZWPdVXJ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This heuristic has been the default since 2.14 so we should not confuse our
-users by saying that it's experimental and off by default.
+Hi Junio,
 
-Signed-off-by: Carlos Martín Nieto <cmn@dwim.me>
----
- Documentation/diff-heuristic-options.txt | 5 -----
- Documentation/diff-options.txt           | 7 ++++++-
- 2 files changed, 6 insertions(+), 6 deletions(-)
- delete mode 100644 Documentation/diff-heuristic-options.txt
+On Sun, 29 Oct 2017, Junio C Hamano wrote:
 
-diff --git a/Documentation/diff-heuristic-options.txt b/Documentation/diff-heuristic-options.txt
-deleted file mode 100644
-index d4f3d95505..0000000000
---- a/Documentation/diff-heuristic-options.txt
-+++ /dev/null
-@@ -1,5 +0,0 @@
----indent-heuristic::
----no-indent-heuristic::
--	These are to help debugging and tuning experimental heuristics
--	(which are off by default) that shift diff hunk boundaries to
--	make patches easier to read.
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index a88c76741e..dd0dba5b1d 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -63,7 +63,12 @@ ifndef::git-format-patch[]
- 	Synonym for `-p --raw`.
- endif::git-format-patch[]
- 
--include::diff-heuristic-options.txt[]
-+--indent-heuristic::
-+	Enable the heuristic that shift diff hunk boundaries to make patches
-+	easier to read. This is the default.
-+
-+--no-indent-heuristic::
-+	Disable the indent heuristic.
- 
- --minimal::
- 	Spend extra time to make sure the smallest possible
--- 
-2.15.0.rc2
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > Would you terribly mind adding a SQUASH??? with my suggested fix for
+> > PERL_NO_MAKEMAKER?
+> > ..
+> > Likewise, this needs a SQUASH??? to remove the uplink$X before
+> > (over-)writing uplink, to pass the test suite on Windows.
+> 
+> Surely I don't mind; please just send me something I can "git am"
+> (or something I can "git apply --index && git commit -m SQAUSH???"
+> would be sufficient) for these; letting me construct and/or type a
+> patch from pieces of discussion messages is a sure way to introduce
+> further issues for Windows, as I don't have a way to test any such
+> change before I push them out.
 
+Let's make this more convenient for *both* of us. You can find one fixup
+in the `jr/ssh-wrappers` branch at https://github.com/dscho/git, and the
+second one at `cc/git-packet-pm`. Both should fast-forward from your
+branches of the same name.
+
+Ciao,
+Dscho
