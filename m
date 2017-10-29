@@ -2,72 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 13882202A0
-	for <e@80x24.org>; Sun, 29 Oct 2017 12:35:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 66B43202A0
+	for <e@80x24.org>; Sun, 29 Oct 2017 13:14:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751304AbdJ2Me6 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 29 Oct 2017 08:34:58 -0400
-Received: from mout.gmx.net ([212.227.15.18]:53666 "EHLO mout.gmx.net"
+        id S1751423AbdJ2NOG (ORCPT <rfc822;e@80x24.org>);
+        Sun, 29 Oct 2017 09:14:06 -0400
+Received: from mout.gmx.net ([212.227.17.20]:57232 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750848AbdJ2Me5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Oct 2017 08:34:57 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M0y47-1dJ9U01f0p-00vAAr; Sun, 29
- Oct 2017 13:34:55 +0100
-Date:   Sun, 29 Oct 2017 13:34:41 +0100 (CET)
+        id S1751080AbdJ2NOF (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Oct 2017 09:14:05 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M7H2Y-1dCpCg1agY-00x0G4; Sun, 29
+ Oct 2017 14:14:00 +0100
+Date:   Sun, 29 Oct 2017 14:13:59 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Alex Vandiver <alexmv@dropbox.com>
-cc:     git@vger.kernel.org, Ben Peart <peartben@gmail.com>
-Subject: Re: [PATCH v3] 0/4 fsmonitor fixes
-In-Reply-To: <20171027232637.30395-1-alexmv@dropbox.com>
-Message-ID: <alpine.DEB.2.21.1.1710291334290.6482@virtualbox>
-References: <20171027232637.30395-1-alexmv@dropbox.com>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Oct 2017, #06; Fri, 27)
+In-Reply-To: <xmqq7evhc7nw.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.21.1.1710291409390.6482@virtualbox>
+References: <xmqq7evhc7nw.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:lA9R6ejpiFoJX+i+FcHZ4jlwg+WjJPOZgkRNXbrBclUZYHEn8xz
- ZbF1YMDyIRCMDMSOPVsSOmMyB4WUVoivv8PS7XkxhkkrsHBPTcvOPuF9qO7nMPm5Yf95/V7
- RpsDURGlrJCXiHDn4sLZasVm1d7JH1kfvdOcfDiuSCnj6bWQC1HdknW8uGHA+hzyRyVTLqU
- SjvJ9bxh2xAN2nIohFu3A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:U0khXfAxcEI=:kv3Hw+V2vKKsP7eYH7wjT7
- wmz27npRgMAwK5t75rxxwiMNVtTidxpKBJGjVnIF7DiWQzl4TtDiq2CIgq4wO1bd96XnbLfKD
- TPADL2CH9F9QVx5qAwlsX1OrJotP32MygnFFRJIdFSjx5v/CUw0wU+AEAP8aUzGuH/jreiSV3
- dIamLsmIT3k85lNzRnaGGG7QvUJvAdBnXnEKrqNTAMvxKK0k1wss2/xM5kSBs9fihouT6LNoB
- X6l568Vhchqc+8VZVxhN1CaoC7Jrs1v7DVioQsw/dX1DPkP7o/GKfup/gqHieTHYTrDn5RWu6
- pKOpcvDPbpa6odg4Akb+a0DHWnQ0fguqnzBncyiMlKKGmLmEGLxyAdCQjTAx9mDQdEsblrYgH
- pQDVVpsYU3uApjuRNclVAPd3Rbw3FhKZgZuJ3VlgHtqzubE1x9ytnYGmZ3CMJbKpFAWe0x3Rd
- bKwdIypf1wtFJnXyotiAqdO2Aj6ih0A/OnDplbxNLNCILfmbznc2IbuGiSacnxBFykQd2XTQg
- kMyn7ifKuBB2dDC0hzYqv7CLVsjUUq9+Ab4+80bMCYRvccUkbEA9qGW2DQXdrHw8vzTdBLH7g
- Pp9LiTQGJNyvsFg2WuDXiJZ7OOCA8vR5jvJdVwjCy5MwW5g287V/hukeKG/xIMHiqHDHLjMBz
- pt9xvL2oBBYqnKt1SEb9o8mFYd/6Zc9USDsUbbrLN6issYTaU9anwCTqwIqwZ+q0OzFq7TxyR
- jSrlQaIROqWYk0neoYkVkPPRHExHQWlK61AuAMc2nj/+CHsjEU+oyy1dbcdVVTtK6bYhW79Wr
- o/pcOOvZQcyQ1sr6mZRvqEMaWu8xFSewPKMiEVuUzjnuRw11JLMi8QRvdy3Xx89eUFkglma
+X-Provags-ID: V03:K0:tKgdqWAIPl8V8iPUT7OBA8r8+WeqR+TsdvjzMapF4+FJnrVowDC
+ acadVWDKoNrTwZ4taDVcsrtBM942ko86k4/1U0dd6RM+RmtME5sJ7qNgwLPLUSFQNgeks0v
+ +8diESus8AXGG2wcBBN32X6TTvOZf1RFw0RIglwYhDCZkEkNNr6xYEbx2n/zXbxHiLIxloL
+ tN32YW1xZc1bdf8/+ARzw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:4vnG5ay5W3k=:LTYC0Pc0x8sB/Z58O51CTF
+ wrgVnV9UNhs/4zTOCnkOBmRfKF8d9ZB+eKv1Vz6lHcWWI13iXQU04YENUTfPynz9Fd1/SfP1u
+ OnfJcXbFpxhs6/EqEA6lwnGm6dUxGf/V+lfZDQDj5PFbb8VBBsFell3D7soRm3nlXse/xGa4r
+ 5H9/ky2DDJm8PlXw0Tryqn/DIdVA1ipScliJM1rkdvnyLR2VJu6lfxFlUhmASGIZnTKUx/8FO
+ Ka4n9aUDNZMe1fT7R3xgjfm/gy2xWqpWzte+ZuDoJSWWyLaA74BmfJJJpnhsPVnTiBO/uJa4f
+ 9kq0GjUqQOM4/nwkOzxUf0KiZ22Y+uC6iGuUDUAIZHdXLmU23B+/rvCrWhmhrMrwLrloycnlq
+ mRNxqwarN1nnA6BJVjUWbRv2T18Ed2D6AB7vNMc0UAetpSMVyOcBk/g4K7ws3QGdzEkTo2l+4
+ OeogFpBR+CipjWDqczKrb0YxHH/C6hEuSVPmwB53nTdiT0PEAZ5yGswKhE+iOjEkHUuUURinK
+ 181vjYZMepTP5QpKaf+OcBTrQO8Yfv+pvvu1/PFgu9gbAUx4xBSk/x1pTy27MySGlQySlOa3B
+ CBjcEmfTfCLDrt7JUb/IKDsVFQMXsBFlZbr6rq+p/yUH8tgFkVHeoFDWoSR6mEzoBJPFnH86P
+ 14iori4/mzp8YMmusqUQ8QD9bZ97BfTjSvLTWGCQkLRw996CtYat5I7Ppqq55b6UOQ4oS3kzH
+ WuSpmE/Nf70N61ndUtbKLBPeJynW7rfuzeMTvGhlkJis1ELb/kb45hGhGW9aMa3Q9Vk/H5lGE
+ dmN+dJkVtijtSBASAx+lclFuTHaeMnpS/MOY2sEmqyrV4Odap9ZKaQmv6U0YSH+aYt3P1H7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Alex,
+Hi Junio,
 
-On Fri, 27 Oct 2017, Alex Vandiver wrote:
+On Fri, 27 Oct 2017, Junio C Hamano wrote:
 
-> Updates since v2:
+> * cc/git-packet-pm (2017-10-22) 6 commits
+>  - Git/Packet.pm: extract parts of t0021/rot13-filter.pl for reuse
+>  - t0021/rot13-filter: add capability functions
+>  - t0021/rot13-filter: add packet_initialize()
+>  - t0021/rot13-filter: improve error message
+>  - t0021/rot13-filter: improve 'if .. elsif .. else' style
+>  - t0021/rot13-filter: refactor packet reading functions
 > 
->  - Fix tab which crept into 1/4
+>  Parts of a test to drive the long-running content filter interface
+>  has been split into its own module, hopefully to eventually become
+>  reusable.
 > 
->  - Fixed the benchmarking code in the commit message in 2/4 to just
->    always load JSON::XS -- the previous version was the version where
->    I'd broken that to force loading of JSON::PP.
-> 
->  - Remove the --no-pretty from the t/ version of query-watchman in
->    2/4; I don't know how I messed up diff'ing the file previously, but
->    if there are already differences, it makes sense to let them slide.
+>  Expecting a reroll.
+>  The original unfortunately is quite broken in error detection
+>  cases to make the result sub-par as a standalone module before it
+>  gets fixed.
 
-Sounds good!
+Would you terribly mind adding a SQUASH??? with my suggested fix for
+PERL_NO_MAKEMAKER?
+
+Otherwise, the Windows build will keep failing for `pu`.
+
+> * jr/ssh-wrappers (2017-10-24) 5 commits
+>  - ssh: 'simple' variant does not support --port
+>  - ssh: 'simple' variant does not support -4/-6
+>  - ssh: 'auto' variant to select between 'ssh' and 'simple'
+>  - connect: split ssh command line options into separate function
+>  - connect: split git:// setup into a separate function
+>  (this branch uses bw/protocol-v1.)
+
+Likewise, this needs a SQUASH??? to remove the uplink$X before
+(over-)writing uplink, to pass the test suite on Windows.
+
+Of course, if we could eventually have Continuous Testing of individual
+*branches* (instead of `pu`), then we would not have to see those test
+failures in every effing single build of `pu`. I mean, there is no need to
+test things after they were tested already, and failed, right?
+
+Ciao,
 Dscho
