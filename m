@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 41836202A0
-	for <e@80x24.org>; Sun, 29 Oct 2017 19:49:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A1A23202A0
+	for <e@80x24.org>; Sun, 29 Oct 2017 20:07:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751666AbdJ2Ttb (ORCPT <rfc822;e@80x24.org>);
-        Sun, 29 Oct 2017 15:49:31 -0400
-Received: from mail-qt0-f170.google.com ([209.85.216.170]:54722 "EHLO
-        mail-qt0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751472AbdJ2Tta (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Oct 2017 15:49:30 -0400
-Received: by mail-qt0-f170.google.com with SMTP id z19so13992142qtg.11
-        for <git@vger.kernel.org>; Sun, 29 Oct 2017 12:49:30 -0700 (PDT)
+        id S1751408AbdJ2UHY (ORCPT <rfc822;e@80x24.org>);
+        Sun, 29 Oct 2017 16:07:24 -0400
+Received: from mail-qt0-f172.google.com ([209.85.216.172]:49413 "EHLO
+        mail-qt0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751315AbdJ2UHX (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Oct 2017 16:07:23 -0400
+Received: by mail-qt0-f172.google.com with SMTP id k31so14041799qta.6
+        for <git@vger.kernel.org>; Sun, 29 Oct 2017 13:07:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:sender:in-reply-to:references:from:date:message-id
          :subject:to:cc:content-transfer-encoding;
-        bh=DDyI63vevwn7aVqrT3Cp1psEgE9Q0ow00/OLxWxgBCA=;
-        b=Ng42n6EJVlkngLHFdrQyHT2Z2k07NfA7dLMrVDLq/IJ8YMNw12i8vzr3SlAXA/7via
-         JLTiXNmNTk8KQdMEWii+DGrTzaIjy+FJN9bsEhiOhX0HcIgDEZfo+24ekP1YLZORQWAq
-         wqfEnvNCYFQkbPlmaRzkI9ngbBdj0Vt1FMl1IvIiiQTM4E8+bsQFirOEdVXsCdD98BZu
-         mymrEePf5wUSwSj8woNAjQEXiPtcqgqwDcNOcp9Ab//gcrSLx7p9hHpB/yRIhZWq+LpZ
-         bt9AciBvnJN47Dhd5PVmxVIP27S5OIpp55xeihSwlpzACGB/PhVdd/AM/EFQfjYDoPfZ
-         TPMw==
+        bh=z2p7qUoj9W7+rvv7Erm0gtrujqz4AVooy5LZ1NeaBX8=;
+        b=Xz608pnPkfv0juCqt0/vHGO12cDgYJV67mIwD5pgoc9REGTHlhQkirKPDRPsq5KDgc
+         XrhZrXfNh8HqMpNzOrrBYbjSVhq88ZXMu+vSJQbeMMl0AaCwCe9VhAGZgyuy6doHpwLH
+         mYWbZreZzhauMMBW6kBMk/r/tM9yGbYEZSPW+TbpjMXNka1yckP4tg+NpbwenDnW/4pw
+         EEST2iqe22wkHQTlUJkV0l1y7AKtCZQLU0gk4MjU6xVe8ogchKzBc1THsauExM8VwTqc
+         0RoMVhzLYs+/p34xlkPob9NXzM/3Z9Et9pn+89pRBciIMmQq+QNbYTYNQSY6O4LWiKMl
+         GemQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
          :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=DDyI63vevwn7aVqrT3Cp1psEgE9Q0ow00/OLxWxgBCA=;
-        b=c2ARIAlSdC6OoGh5QZcKWVfelYvh0yy1unlO8YI3nKvjRN7F4Sso+b79E5f+eCjViK
-         P8g94tiMWYiynAddJ1BPKPkRJhKQqLA0s3tP4zz8d9iDTafNuH3KBIbFBN7DPdwoX/RN
-         D4CnkljBzHrZPbLEW/WdiV7RIEp0u9PnjmQjyQaUO4UKg1nGF0aDytUoMP6WahV9FXWF
-         n8xKF9aYWlz8OuE9/Vk/VBZCr93uecka/wTaxBm5dNqEVPT69noFCAFC+hIAXKkXpoLG
-         7BekGPzoEPrOXezQSg5qO0+72/takhkQoOzssyYFe42OZGzfeIjToXLHdOQ/06pW3BFu
-         LK9g==
-X-Gm-Message-State: AMCzsaWL379Kq3gSxlBTpuW6+NLjwdC4lYY3cbeRzpOZaVYG9jkjwWEy
-        vCUFbtheNcVjseRD1pBSP+DWJW9DJoO6s0jkGXA3og==
-X-Google-Smtp-Source: ABhQp+SDDfbjvO3MkDIW2g4YWduBwhphkoEOG5OLJ+nTp6qnVFWBU0X00BlDqLyGVcnhmZNrqtcwzPCciC75/ssptOM=
-X-Received: by 10.237.34.82 with SMTP id o18mr10330117qtc.19.1509306569331;
- Sun, 29 Oct 2017 12:49:29 -0700 (PDT)
+        bh=z2p7qUoj9W7+rvv7Erm0gtrujqz4AVooy5LZ1NeaBX8=;
+        b=ny/Yz659AUuzr5vzdvRFreRZ226Nh/UPl64Qe6ZnLI7GOUteJyJ3CCRuPgxSUlOY5l
+         Qh/C93D4LgWFYVVdqF1XRvpHNhHZDSOxv5GcYhXgvn9iO1wdNXFqVzH45iHzV8l2tCbg
+         2izReD89CVlTpDRaowZ6lB738xiYfrZymkP+7xER8FuEBcnyKoTpYL+7y4n1sWm8nJhR
+         +R+NhnPPUKHfwWBD7lU+ke4PERBg39vMKcoNpUzoDz3gtYhsRfeo+n0e4UQfsxD4sxNa
+         09Hh1FiY1JTTKjZ78DM3eVbTi7WKIHtvJXSnQk38HujfkKGLCRmnWKKljkVDNZ+Wv8jm
+         ll2w==
+X-Gm-Message-State: AMCzsaX8wm0DtoW4h6wQWKDwCTdXawUeeGpRJklO2qNambzNKTKcVvBt
+        fG0H3q/iKVWd778XqSHAhAXyKxJhYmJqEkiPhtdsLQ==
+X-Google-Smtp-Source: ABhQp+TI2IIrDt2LRN8rZIyTaaEWfo1EdeHyHfKYu5Lp5peQja4gVswuep7DhT5sa41YSi362+/fKK0s9IrLFA4trR8=
+X-Received: by 10.200.53.12 with SMTP id y12mr11561434qtb.84.1509307642220;
+ Sun, 29 Oct 2017 13:07:22 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.12.146.118 with HTTP; Sun, 29 Oct 2017 12:49:28 -0700 (PDT)
-In-Reply-To: <20171029160857.29460-5-anarcat@debian.org>
-References: <20171029160857.29460-1-anarcat@debian.org> <20171029160857.29460-5-anarcat@debian.org>
+Received: by 10.12.146.118 with HTTP; Sun, 29 Oct 2017 13:07:21 -0700 (PDT)
+In-Reply-To: <87a809959p.fsf@curie.anarc.at>
+References: <20171029160857.29460-1-anarcat@debian.org> <20171029160857.29460-2-anarcat@debian.org>
+ <CAPig+cSmfJ2Uv21Q4DgJNoy6Ywj7GWPJa6qq0YL9Kar6Q74a_Q@mail.gmail.com> <87a809959p.fsf@curie.anarc.at>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 29 Oct 2017 15:49:28 -0400
-X-Google-Sender-Auth: 1HT_WrY7m6dR1XaApAP6Y15fLrw
-Message-ID: <CAPig+cSTp1Udo6xXk5-L6MpWBdiy4sPO__NcND03-89EvRgLHQ@mail.gmail.com>
-Subject: Re: [PATCH 4/4] remote-mediawiki: allow using (Main) as a namespace
- and skip special namespaces
+Date:   Sun, 29 Oct 2017 16:07:21 -0400
+X-Google-Sender-Auth: UbrHL8pcmTpEW8YEAUvFvn0XMMg
+Message-ID: <CAPig+cTySXEWGxSUTxQXmHz7rR_nTbf+ALciZahJ2Ks6EmSqzg@mail.gmail.com>
+Subject: Re: [PATCH 1/4] remote-mediawiki: add namespace support
 To:     =?UTF-8?Q?Antoine_Beaupr=C3=A9?= <anarcat@debian.org>
-Cc:     Git List <git@vger.kernel.org>
+Cc:     Git List <git@vger.kernel.org>, Kevin <kevin@ki-ai.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -64,91 +64,78 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Oct 29, 2017 at 12:08 PM, Antoine Beaupr=C3=A9 <anarcat@debian.org>=
- wrote:
-> Subject: remote-mediawiki: allow using (Main) as a namespace and skip spe=
-cial namespaces
+On Sun, Oct 29, 2017 at 2:29 PM, Antoine Beaupr=C3=A9 <anarcat@debian.org> =
+wrote:
+> On 2017-10-29 13:24:03, Eric Sunshine wrote:
+>> On Sun, Oct 29, 2017 at 12:08 PM, Antoine Beaupr=C3=A9 <anarcat@debian.o=
+rg> wrote:
+>> So, the idea is that if the input has form "something:number", then
+>> you want to look up "something" as a namespace name. Anything else
+>> (such as "something:foobar") is not considered a valid page reference.
+>> Right?
+>
+> frankly, i have no idea what's going on here.
+>
+>> The multiple 'return's are a bit messy. Perhaps collapse the entire
+>> function to something like this:
+>>
+>>     sub get_mw_namespace_id_for_page {
+>>         my $arg =3D shift;
+>>         if ($arg =3D~ /^([^:]+):\d+$/) {
+>>             return get_mw_namespace_id($1);
+>>         }
+>>         return undef;
+>>     }
+>>
+>> In fact, it may be that the intent of the original code *was* meant to
+>> do exactly the same as shown in my example above, but that the person
+>> who wrote it accidentally typed:
+>>
+>>     return get_mw_namespace_id($namespace);
+>>
+>> instead of the intended:
+>>
+>>     return get_mw_namespace_id($1);
+>>
+>> So, a minimal fix would be simply to change $namespace to $1.
+>> Tightening the regex as I did in my example would be a bonus (though
+>> probably ought to be a separate patch).
+>
+> so while i'm happy to just copy-paste your code in there, that's kind of
+> a sensitive area of the code, as it was originally used only in the
+> upload procedure, which I haven't tested at all. so i'm hesitant in just
+> merging that in as is.
 
-This patch is more difficult to review than it perhaps ought to be
-since it is making multiple unrelated changes.
+I don't think there's a need to copy/paste my example code. If you
+instead make the minimal suggested fix, then the resulting code will
+be effectively equivalent to my example (minus the tighter regex).
 
-It's not clear from the description what special namespaces are and
-why they need to be skipped. It's also not clear why (Main) is
-special. Perhaps the commit message(s) could explain these issues in
-more detail.
+> i don't understand why or how this even works, to be honest: page names
+> don't necessarily look like numbers, in fact, they generally don't. i
+> don't understand why the patch submitted here even touches that function
+> at all, considering that the function is only used on uploads. I just
+> cargo-culted it from the original issue...
 
-To simplify review and make it easier to gauge what it going on, it
-might make sense to split this patch into at least two: one which
-skips "special namespaces", and one which gives special treatment to
-(Main).
+I, myself, am not familiar with or a user of Mediawiki or with the Git
+bridging, and I don't know what page names look like, but I'm pretty
+well convinced from reading both the existing code and this patch that
+the changes to get_mw_namespace_id_for_page() are really just a bug
+fix to that function. My interpretation is that the function really
+was intended to strip the ":id" portion of "name:id" before calling
+get_mw_namespace_id(); the fact that the original code neglects to do
+so seems just an oversight. The fact that the regex uses capturing
+parentheses implies strongly that it was indeed the intention to use
+$1 in the call to get_mw_namespace_id(). Unlike the "fix" in the patch
+you posted from Kevin, which is perhaps unnecessarily complicated, the
+fix I suggested above is about a minimal as possible. That is,
+changing:
 
-More below...
+     return get_mw_namespace_id($namespace);
 
-> Reviewed-by: Antoine Beaupr=C3=A9 <anarcat@debian.org>
-> Signed-off-by: Antoine Beaupr=C3=A9 <anarcat@debian.org>
-> ---
-> diff --git a/contrib/mw-to-git/git-remote-mediawiki.perl b/contrib/mw-to-=
-git/git-remote-mediawiki.perl
-> @@ -264,16 +264,27 @@ sub get_mw_tracked_categories {
->  sub get_mw_tracked_namespaces {
->      my $pages =3D shift;
-> -    foreach my $local_namespace (@tracked_namespaces) {
-> -        my $mw_pages =3D $mediawiki->list( {
-> -            action =3D> 'query',
-> -            list =3D> 'allpages',
-> -            apnamespace =3D> get_mw_namespace_id($local_namespace),
-> -            aplimit =3D> 'max' } )
-> -            || die $mediawiki->{error}->{code} . ': '
-> -                . $mediawiki->{error}->{details} . "\n";
-> -        foreach my $page (@{$mw_pages}) {
-> -            $pages->{$page->{title}} =3D $page;
-> +    foreach my $local_namespace (sort @tracked_namespaces) {
-> +        my ($mw_pages, $namespace_id);
-> +        if ($local_namespace eq "(Main)") {
-> +            $namespace_id =3D 0;
-> +        } else {
-> +            $namespace_id =3D get_mw_namespace_id($local_namespace);
-> +        }
-> +        if ($namespace_id >=3D 0) {
+to:
 
-This may be problematic since get_mw_namespace_id() may return undef
-rather than a number, in which case Perl will complain. Since the code
-skips the $mediawiki query altogether when it encounters "(Main)", you
-could fix this problem and simplify the code overall by simply
-skipping the bulk of the foreach loop body instead of mucking around
-with $namespace_id. For instance:
+     return get_mw_namespace_id($1);
 
-    foreach my $local_namespace (sort @tracked_namespaces) {
-        next if ($local_namespace eq "(Main)");
-        ...normal processing...
-    }
-
-> +            if ($mw_pages =3D $mediawiki->list( {
-> +                action =3D> 'query',
-> +                list =3D> 'allpages',
-> +                apnamespace =3D> $namespace_id,
-> +                aplimit =3D> 'max' } )) {
-> +                print {*STDERR} "$#{$mw_pages} found in namespace $local=
-_namespace ($namespace_id)\n";
-
-The original code did not emit this diagnostic but the new code does
-so unconditionally. Is this just leftover debugging code or is
-intended that all users should see this information all the time?
-
-> +                foreach my $page (@{$mw_pages}) {
-> +                    $pages->{$page->{title}} =3D $page;
-> +                }
-> +            } else {
-> +                warn $mediawiki->{error}->{code} . ': '
-> +                    . $mediawiki->{error}->{details} . "\n";
-
-I guess this is the part which "skips special namespaces". The
-original code die()'d but this merely warns. Aside from these "special
-namespaces", are there genuine cases when the $mediawiki query would
-return an error, and which should indeed die(), or is warning
-appropriate for all $mediawiki query error cases?
-
-> +            }
->          }
->      }
->      return;
+should achieve the same result. (It could be made more robust by
+tightening the regex as in my example, but that's a separate topic,
+not needed just to get the function to work as intended.)
