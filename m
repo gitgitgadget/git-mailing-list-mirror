@@ -2,179 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
-	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4F6202055E
-	for <e@80x24.org>; Sat, 28 Oct 2017 22:57:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 46C5D2055E
+	for <e@80x24.org>; Sun, 29 Oct 2017 00:05:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751447AbdJ1W50 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 28 Oct 2017 18:57:26 -0400
-Received: from smtp-out-1.talktalk.net ([62.24.135.65]:53488 "EHLO
-        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751381AbdJ1W5Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 28 Oct 2017 18:57:25 -0400
-Received: from PhilipOakley ([92.31.218.76])
-        by smtp.talktalk.net with SMTP
-        id 8a2ceSP2NmITa8a2ce5Ei5; Sat, 28 Oct 2017 23:57:24 +0100
-X-Originating-IP: [92.31.218.76]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=W/RIbVek c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
- a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=8nJEP1OIZ-IA:10 a=1XWaLZrsAAAA:8
- a=4SDj-MLJHyTqrOITjp4A:9 a=wPNLvfGTeEIA:10
-Message-ID: <223949CCB658443C972AB1AC1820F0CC@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:   "Philip Oakley" <philipoakley@iee.org>
-To:     "Brandon Williams" <bmwill@google.com>, <git@vger.kernel.org>
-Cc:     "Brandon Williams" <bmwill@google.com>, <spearce@spearce.org>,
-        <git@jeffhostetler.com>, <gitster@pobox.com>,
-        <jonathantanmy@google.com>, <jrnieder@gmail.com>, <peff@peff.net>,
-        <sbeller@google.com>
-References: <20171020171839.4188-1-bmwill@google.com>
-Subject: Re: [RFC] protocol version 2
-Date:   Sat, 28 Oct 2017 23:57:21 +0100
-Organization: OPDS
+        id S1751460AbdJ2AFu (ORCPT <rfc822;e@80x24.org>);
+        Sat, 28 Oct 2017 20:05:50 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55534 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751209AbdJ2AFt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 28 Oct 2017 20:05:49 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3C74EAC86E;
+        Sat, 28 Oct 2017 20:05:46 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=jtbFfuFi+DOen+r6Vtf8o9EVQGA=; b=YT68Qx
+        Y6CiGBMNNPQf4JYY8yKvsZsInY1dWbXGqp2n60lqKy58abFS38k3k1/GhWyFCyJA
+        rE7OK+7IaV95NS1v1nyuZ8FINz22h+OktczKma9Hb+KQmO/WDOUj849N0VqcaFcA
+        evDit0HoK5Bajshr06qD/6sSkRxWDumFNIhYc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=a5tipShMc9ZCTP1jTNh+BXaNzUE6GNUV
+        hRij6iICzFRIREvpWIZvUfgXM20uDupc9doc706ZqwHOtRhJascgHSrFl4TZ7SY/
+        /lFR8xlg/Jdjr/uYJKGsH+s7zxe8PUfwGiR1FCm0HgpqUCPNawSwu68bMLUEYEdA
+        xTEw+pknF74=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 33B6FAC86D;
+        Sat, 28 Oct 2017 20:05:46 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A9D4DAC86C;
+        Sat, 28 Oct 2017 20:05:45 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [PATCH 1/2] t1404: add a bunch of tests of D/F conflicts
+References: <cover.1508856679.git.mhagger@alum.mit.edu>
+        <be088bd57e61f4ea0dc974a65829a928ecd30534.1508856679.git.mhagger@alum.mit.edu>
+        <CAPig+cRLB=dGD=+Af=yYL3M709LRpeUrtvcDLo9iBKYy2HAW-w@mail.gmail.com>
+        <20171024194634.pigmvgoqtdexvjhc@sigill.intra.peff.net>
+        <e66694a3-98e2-33aa-4cdd-dac41d2a89d5@alum.mit.edu>
+        <20171026063250.dckc22ocr3zjmsxv@sigill.intra.peff.net>
+        <20171028164249.ufro5weobwadfonv@genre.crustytoothpaste.net>
+Date:   Sun, 29 Oct 2017 09:05:44 +0900
+In-Reply-To: <20171028164249.ufro5weobwadfonv@genre.crustytoothpaste.net>
+        (brian m. carlson's message of "Sat, 28 Oct 2017 16:42:49 +0000")
+Message-ID: <xmqqk1zebyxz.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="iso-8859-1";
-        reply-type=original
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-Antivirus: AVG (VPS 171028-0, 28/10/2017), Outbound message
-X-Antivirus-Status: Clean
-X-CMAE-Envelope: MS4wfI3Swk3pVbLU+H7xEzfZRlytOqw4dnsLqP4yRpfWDZ2RxBSXykTuZYbN8f16zPVyk9+qmsqSvw0TONev+96P0YAWT4C2ac9/UPZBPzwyO9SEA7j5+pnW
- C81jKucK8H8GTF+2Q2rWmDffcuJAw49Nogsn6U973hb0oxda1+PoD8Yo3nGWV+xoKxUwBnkAPsA5zDdTbH9DWzmadL9GDEnUHquL000Qe7QdmwYvnkgPCkuD
- KKI4FbANR3+bUA+JJJt1rIVd2dSZmJv+mHpHrbgiLpLCDNJyrrhVJa8dxGuPwegnguCcgjUv0ax+baoJnc2dsMAu8mL94mZFmOEKADxoAXkvydy75KHgoYaf
- kyScszRVlqY1wOgmdeOftIdh5mdGF0nDb5YYy7zavgiPHsSOO6PsnOM0Z48tTrksJ4NMu9u0v7mKrDVe/AHLVgjJH+9jDw==
+Content-Type: text/plain
+X-Pobox-Relay-ID: E9596570-BC3C-11E7-9313-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Brandon Williams" <bmwill@google.com>
-Sent: Friday, October 20, 2017 6:18 PM
-> Objective
-> ===========
->
-> Replace Git's current wire protocol with a simpler, less wasteful
-> protocol that can evolve over time.
->
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-<snip>
+> There is discussion in the Austin Group issue tracker about adding this
+> feature to POSIX, but it's gotten bogged down over lexical versus
+> dynamic scoping.  Everyone agrees that it's a desirable feature, though.
+> ...
 
-> Capability Advertisement
-> --------------------------
->
-> A server which decides to communicate (based on a request from a client)
-> using protocol version 2, notifies the client by sending a version
-> string in its initial response followed by an advertisement of its
-> capabilities.  Each capability is a key with an optional value.  Clients
-> must ignore all unknown keys.
+In short, unless you are a binary packager on a platform whose
+native shell is ksh and who refuses to depend on tools that are not
+default/native on the platform, you'd be OK?
 
->    Semantics of unknown values are left to
-> the definition of each key.
+> I'd recommend an explicit test for this.  It's much easier to track down
+> that way than seeing other failure scenarios.  People will also usually
+> complain about failing tests.
 
-This sounds odd. If the keys are known then their semantics are known. Or 
-the keys are unknown and they and their values are ignored.
+Hopefully.  
 
-Maybe: Capability keys shall define their response to unknown key values.
+Starting from an explicit test, gradually using more "local" in
+tests that cover more important parts of the system, and then start
+using "local" as appropriate in the main tools would be a good way
+forward.  
 
->  Some capabilities will describe commands
-> which can be requested to be executed by the client.
->
-<snip>
-
-> Ls-refs
-> ---------
->
-> Ls-refs can be looked at as the equivalent of the current ls-remote as
-> it is a way to query a remote for the references that it has.  Unlike
-> the current ls-remote, the filtering of the output is done on the server
-> side by passing a number of parameters to the server-side command
-> instead of the filtering occurring on the client.
->
-> Ls-ref takes in the following parameters:
->
->  --head, --tags: Limit to only refs/heads or refs/tags
->  --refs: Do not show peeled tags or pseudorefs like HEAD
->  --symref: In addition to the object pointed by it, show the underlying
->            ref pointed by it when showing a symbolic ref
->  <refspec>: When specified, only references matching the given patterns
->             are displayed.
-
-Does the --symref also the pseudorefs?
-
-Isn't there a need somethimes to determine the ref that the remote's HEAD 
-points to. This is an issue with the current clone and bundle code when 
-there is a choice of refs/branches that could be the current HEAD ref and 
-the wrong one is chosen, though this V2 change doesn't affect bundles.
-
->
-> The output of ls-refs is as follows:
->
->    output = (no-refs / list-of-refs)
->      *symref
->             *shallow
->             flush-pkt
->
->    no-refs = PKT-LINE(zero-id SP no-refs LF)
->    list-of-refs = *ref
->    ref = PKT-LINE((tip / peeled) LF)
->    tip = obj-id SP refname
->    peeled = obj-id SP refname "^{}"
->
->    symref = PKT-LINE("symref" SP symbolic-ref SP resolved-ref LF)
->    shallow = PKT-LINE("shallow" SP obj-id LF)
->
-> Fetch
-> -------
->
-> Fetch will need to be a modified version of the v1 fetch protocol.  Some
-> potential areas for improvement are: Ref-in-want, CDN offloading,
-> Fetch-options.
->
-> Since we'll have an 'ls-ref' service we can eliminate the need of fetch
-> to perform a ref-advertisement, instead a client can run the 'ls-refs'
-> service first, in order to find out what refs the server has, and then
-> request those refs directly using the fetch service.
->
-> //TODO Flush out the design
->
-> Fetch-object
-> --------------
->
-> This service could be used by partial clones in order to request missing
-> objects.
->
-> //TODO Flush out the design
->
-> Push
-> ------
->
-> Push will need to be a modified version of the v1 push protocol.  Some
-> potential areas for improvement are: Fix push-options, Negotiation for
-> force push.
->
-> One change that will need to happen is to improve how `push-options` are
-> sent to the server (so that they aren't sent twice!!).  Also the
-> report-status needs to be better than it currently is in v1 so that
-> tools like gerrit can explain what it did with the ref-update the client
-> sent to it. Maybe have a push-rebase capability or command?
->
-> //TODO Flush out the design
->
-> Other Considerations
-> ======================
->
->  * Move away from pkt-line framing?
->  * Have responses structured in well known formats (e.g. JSON)
->  * Eliminate initial round-trip using 'GIT_PROTOCOL' side-channel
->  * Additional commands in a partial clone world (e.g. log, grep)
---
-Philip 
-
+By that time, we might have a lot less scripted Porcelains, though
+;-)
