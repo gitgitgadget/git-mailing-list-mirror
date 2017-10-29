@@ -7,102 +7,59 @@ X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 12353202A0
-	for <e@80x24.org>; Sun, 29 Oct 2017 12:28:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 49059202A0
+	for <e@80x24.org>; Sun, 29 Oct 2017 12:31:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751270AbdJ2M1h (ORCPT <rfc822;e@80x24.org>);
-        Sun, 29 Oct 2017 08:27:37 -0400
-Received: from mout.gmx.net ([212.227.17.22]:52045 "EHLO mout.gmx.net"
+        id S1751283AbdJ2Mbs (ORCPT <rfc822;e@80x24.org>);
+        Sun, 29 Oct 2017 08:31:48 -0400
+Received: from mout.gmx.net ([212.227.17.22]:53185 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750848AbdJ2M1f (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Oct 2017 08:27:35 -0400
+        id S1750848AbdJ2Mbr (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Oct 2017 08:31:47 -0400
 Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LmOLO-1da0AQ3hrO-00ZvFQ; Sun, 29
- Oct 2017 13:27:32 +0100
-Date:   Sun, 29 Oct 2017 13:27:32 +0100 (CET)
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MJGFi-1eBWZu498M-002naI; Sun, 29
+ Oct 2017 13:31:45 +0100
+Date:   Sun, 29 Oct 2017 13:31:44 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Ben Peart <peartben@gmail.com>
-cc:     Alex Vandiver <alexmv@dropbox.com>, git@vger.kernel.org
-Subject: Re: [PATCH v2 1/4] fsmonitor: Set the PWD to the top of the working
- tree
-In-Reply-To: <16467d0e-b585-17d7-fb22-3eed7efe6747@gmail.com>
-Message-ID: <alpine.DEB.2.21.1.1710291318300.6482@virtualbox>
-References: <20171026013117.30034-1-alexmv@dropbox.com> <9af6d28ef43edbc99a9b7a9c41990de0989bfc76.1508981451.git.alexmv@dropbox.com> <5a389621-961d-48e3-339a-ef182d3ed628@gmail.com> <alpine.DEB.2.10.1710261425390.9817@alexmv-linux>
- <16467d0e-b585-17d7-fb22-3eed7efe6747@gmail.com>
+To:     Alex Vandiver <alexmv@dropbox.com>
+cc:     git@vger.kernel.org, Ben Peart <peartben@gmail.com>
+Subject: Re: [PATCH v2 0/4] fsmonitor fixes
+In-Reply-To: <20171026013117.30034-1-alexmv@dropbox.com>
+Message-ID: <alpine.DEB.2.21.1.1710291331250.6482@virtualbox>
+References: <20171026013117.30034-1-alexmv@dropbox.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:00bpPyltHrtq59bAsxGVaRhr49ifclRTX/K9ioqcz0d2XvW28b+
- eQuUchiTczLKGw07g/srt3oKHES0KZZ84g2wVht3p1tmGJ6brRNPh62mChEtB+SipC3HNX0
- nZdNO2OMmJSSFHclReRRnMEZWlikpxvIS1BtbpNrNWRjbqN4G0mToagOv/LRm9XjLKCIPIS
- nqNYhlp5fpiUfo2izpbMQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:IMYc3vpdK20=:4VGFO075mLfgpLTtsh3Ac6
- S3mFavht0aOjW5TjxxSZkhmKaQWpt3WTHtcHJV7PGFsD6cKlwO0eoaAKJjlnWtjm01A1f6xY2
- 3fP6NhMNe+5fy/SgHBK4IYmBGzPEhBgYe9bx4PKOk9+k2QOWxePTC7A459PltcAhmDu+qv3CP
- Rj50s7Jca8e5Xtqw3NQSRGJJc87iGbo4EVD64RoYx96Fjif9l5G+A+p4oSaph8Lhc3fhf+LXS
- kB4l3FCaF8ihnGjdsnSLfHul/y5yaKjHV1swVmF0BT3T0y7y53tsGOcutTq14w3+/rCJzsiAx
- LTN1F+APkJt/AhVfWHrh+/R1/1BKrK7xt+50lGzDM9v7jUeHUHARXAAnH6CyqKWtk+Y/1/iXB
- vccFOzjaUKAaYmuVcOhzA51DI00MhaIsMM0g1vyjrjpeiMSuG6I3DgXtmb2OWgTk2vcXfS6ds
- nFVmNdjAUSlGjoXCxsklBOaOAbiIdQEXowYeaNjNF2NIoYog95NzyPGovfYzNy1Rz1YrNaEmk
- 9Tl3k6YBYVk6FdYnMowLFWHgyO1nSRcYsQvI8gJP0Wxuuhxcri30yDWdZsvsSXFuhX7NruQZM
- eeulqqbaefAY/an60S4W/vxdyNA2MMQkzBptWFF3M6pJvw+ODB1i+fwThYA3eoRYEN6XfNHfa
- oFBLT2jprZasKbUbCMMnRf6xucXn7eGvAHxFhJjEbWFHSwKnMudNhdIRAvjIgEk7RvwQAjW2a
- SYd9qF0JimVuel3h26SXdK49A4+x2sxCYZ5U9O6oFdsQjLgFOgqGgEQipQv9OZZ4+K+g0VHOb
- 8gyQTscSdEmh7bAenRNxz0d7o+6V+zn2ip+bEb4EA+2CVncJ/YdPUmqhU4dh0dhJaupIpY4
+X-Provags-ID: V03:K0:dfl03hRApvKWJqOMOF6eNn/Xhdm5jHLkW3R2PpS4q1gCVL90p/h
+ NpVNz5E4ccAT4VsW820w5f3FK6C71XdgGxE/tPIKJh2Kuysn+gUGwnGrzhjoMxM/qO/sY5q
+ jRKyzTpdhruc6AzUtHvBMC3/SUd3tyDt1Dz7SKXsZvinY32MxxWGtV/+5nZXTHCwPReG0IX
+ 8GdZg9ckYtnjAqRG2wq+w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:SRmED61uzcw=:uZonvMN8pqFahzMDRuLF0f
+ nWRd7dy9e712kX1N2zHAEgDz8vhTxzJevd79Xz0KS1uY2ol1Kx9BkGPZeoioouP1dA18KpblE
+ I/u1I9j3ek6VqstPPNA+Uc/FFmWzDR1tBnIqQ1KuUtPknYH4eR6HiSwQSOk8rBxOIwC7VFxeg
+ r3FPqIJLcqBxao8aAhDTQxa0jlanIoNTY2qvR2saKeF2TXRIN6YIcfMpvNajfcBlqIFHnDI80
+ BHtp9tM1jVpBZu9WE+2LHr1sZtnpghoQRpV6JHKyo15JZmAf46/G01bSmH5ulZUeVONOxnr/Y
+ gq1yFQQKv7x2WfkEROpxO5dGF88MOybKUzxPRShvgHIlSpIiXq6bxq+4aKs+5m9MU9OQHJZbS
+ dTx+dVo45Wk+BHNSUqRkws0bzz8GUhO+DqbLi2ArJYhdUKD3Ye1M2w24xEklfVFxyHI6H+uXM
+ h51gpEAdLci7qg+JuIX4pRgZahwdAA+oeSKT6V2qfr5VmCT4gzzAcNH3lvwoNNZpFCEKQMsST
+ 6edD9yh7zOgG2BDG8WZjnLkqLYYhHz0ENBxP1w0lIGPyPAQ+8UJMiIKdLZ7ZpDpeLQRwvaKU0
+ 9V3Vg+mJJCxw9hTyyaBFTSufd5zgINT7Uxwv8JpzaOmTYHspp2uUD2qOudDobIAkfDnE49s8Y
+ FXoaraNJiGvoWX7vlTOgbaIterXw+nkLWO3NypMsHqsMHqBUN2NmCFXF4+MXDFSxf2I3NgTTd
+ 7lZVaFvsuUUAbBrbkE7YAgLf4/cO8iiAuX0WMBrKkAAwV9FJsYa4ed9OoSu0T4ty9wQl9pdbu
+ GFJzxgCFe064+O3t8zCXL+tdlIj2HqvfO3jzUkO2VaTBeWMAXNbLiqAkvpGDUEuNot6teXN
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Alex,
 
-On Thu, 26 Oct 2017, Ben Peart wrote:
+On Wed, 25 Oct 2017, Alex Vandiver wrote:
 
-> On 10/26/2017 5:27 PM, Alex Vandiver wrote:
-> > On Thu, 26 Oct 2017, Ben Peart wrote:
-> > > On 10/25/2017 9:31 PM, Alex Vandiver wrote:
-> > > > diff --git a/fsmonitor.c b/fsmonitor.c
-> > > > index 7c1540c05..0d26ff34f 100644
-> > > > --- a/fsmonitor.c
-> > > > +++ b/fsmonitor.c
-> > > > @@ -121,6 +121,7 @@ static int query_fsmonitor(int version, uint64_t
-> > > > last_update, struct strbuf *que
-> > > >     argv[3] = NULL;
-> > > >     cp.argv = argv;
-> > > >     cp.use_shell = 1;
-> > > > +        cp.dir = get_git_work_tree();
-> > > >    
-> > >
-> > > I'm not sure what would trigger this problem but I don't doubt that it is
-> > > possible.  Better to be safe than sorry. This is a better/faster solution
-> > > than
-> > > you're previous patch.  Thank you!
-> > 
-> > See my response on the v1 of this series -- I'm curious how you're
-> > _not_ seeing it, actually.  Can  you not replicate just by running
-> > `git status` from differing parts of the working tree?
-> >   - Alex
-> > 
-> 
-> I saw your response but actually can't replicate it locally.  I've been
-> running with Watchman integration on all my repos for months and my "watchman
-> watch-list" command only shows the root of the various working directories -
-> no subdirectories.
+> Updated based on comments from Dscho and Ben.  Thanks for those!
 
-Indeed, I cannot replicate either. The thing is that "status" is marked
-with GIT_SETUP in git.c:
-
-	https://github.com/git-for-windows/git/blob/v2.14.3.windows.1/git.c#L465
-
-That means that the setup_git_directory() is run, which sets the current
-working directory to the top-level directory.
-
-So there is your explanation why neither Ben nor I saw this.
-
-And I agree with Ben that it is safer to do it the way you suggested, just
-in case that the call path comes from a Git command that was not marked
-with GIT_SETUP.
+Thank you for this excellent improvement.
 
 Ciao,
-Johannes
+Dscho
