@@ -2,87 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
-	UNPARSEABLE_RELAY shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A2830202A0
-	for <e@80x24.org>; Sun, 29 Oct 2017 18:39:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 428A2202A0
+	for <e@80x24.org>; Sun, 29 Oct 2017 19:02:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751516AbdJ2Sjp convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Sun, 29 Oct 2017 14:39:45 -0400
-Received: from marcos.anarc.at ([206.248.172.91]:53024 "EHLO marcos.anarc.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751472AbdJ2Sjo (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Oct 2017 14:39:44 -0400
-X-Greylist: delayed 605 seconds by postgrey-1.27 at vger.kernel.org; Sun, 29 Oct 2017 14:39:44 EDT
-Received: from [127.0.0.1] (localhost [127.0.0.1])      (Authenticated sender: anarcat) with ESMTPSA id 71ABF1A00AD
-From:   =?utf-8?Q?Antoine_Beaupr=C3=A9?= <anarcat@debian.org>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>
-Subject: Re: [PATCH 3/4] remote-mediawiki: show known namespace choices on failure
-In-Reply-To: <CAPig+cSkwD35wK7Z_qZZusKWWBC5CU6AnbF9g_g907uqpeYQsw@mail.gmail.com>
-Organization: Debian
-References: <20171029160857.29460-1-anarcat@debian.org> <20171029160857.29460-4-anarcat@debian.org> <CAPig+cSkwD35wK7Z_qZZusKWWBC5CU6AnbF9g_g907uqpeYQsw@mail.gmail.com>
-Date:   Sun, 29 Oct 2017 14:31:50 -0400
-Message-ID: <877evd9561.fsf@curie.anarc.at>
+        id S1751483AbdJ2TCX (ORCPT <rfc822;e@80x24.org>);
+        Sun, 29 Oct 2017 15:02:23 -0400
+Received: from mail-qk0-f193.google.com ([209.85.220.193]:43802 "EHLO
+        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751437AbdJ2TCW (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Oct 2017 15:02:22 -0400
+Received: by mail-qk0-f193.google.com with SMTP id w134so13758701qkb.0
+        for <git@vger.kernel.org>; Sun, 29 Oct 2017 12:02:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to;
+        bh=eAKn9VE2FPsLfvCsd1J1DXMchV2gHFYmWvBVRXSsWxo=;
+        b=JOFdUugQR4u67sMx8AvFhUHpddnR0RbHQQwawNqF8o4gP6+p6dZHsXvTbBaXQFYe5l
+         GnspP3KuFrKy6/u5NJJjKC3OOxiTVP/tMaVIN3yez+qhlreEjgvAwxWEVJsjEhI+qv3M
+         Ua+3nQWsxwEgAmKvg+jCpw5AAZwu1bjJwpZzdy1WS1B8havTEpdIIE6FY168s7TVCNuu
+         RypZL/Ag8c5wEvo16f0kTl+IzBQYkUBGUeFxw9tEh02dx6/nwKys/0idB3gnSuBNo4Zk
+         P7lDW4I8STjn1fZ4dEqvN20sG6SZ3MzUb/FBFO+yOgCo39hAjmqaWyoUcf/vVocfFJ3w
+         mQ+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to;
+        bh=eAKn9VE2FPsLfvCsd1J1DXMchV2gHFYmWvBVRXSsWxo=;
+        b=fk5ziBkTEfscDatNQbp2qtcvD+rPGT8XNckX/dUvlax74oASfr1wTgJkauNT/2OvEI
+         bULYMFO1P6mDX0WFLAWSCa4iij5Etuf4PC80dUZRDWooB5pKg15LlXpECKu8rUIcCngf
+         uV2SqdhUmfZgsTn5BgtPEiJSaDbONXPzSHE/lNEBnCYVdjDjrXD6OJqPOHkHPRwUHw9c
+         lTCvk8zSItNBrWzTaRV0XkziigWNi91jPiQjHs9fZhtp8PzEsSUXn2tadIYz7P/nrtVK
+         R6wFLmcoWWuD5hTyE6VsRCLTT+G0tdm4lSzB2hXTvubABIOewEMHpy42e9N4vz0hd847
+         zQbA==
+X-Gm-Message-State: AMCzsaVGq/d6JAH8peH2CPnaC9guDNy4rRAbAQEphsAa+ksf05vyMSFa
+        MM0mEJnT3iLoJFiNWLCdk5QZqsRnrj7JNjzXswU=
+X-Google-Smtp-Source: ABhQp+QMeZMmUPVfCNYj5dgKe/IsAeXfIx6dlyX8gK2+ThPnso59npoc08nR0EjqDNx+CB3g+RSKKJDWXXqBdUaNetw=
+X-Received: by 10.55.109.5 with SMTP id i5mr10150668qkc.73.1509303741268; Sun,
+ 29 Oct 2017 12:02:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8BIT
+Received: by 10.12.146.118 with HTTP; Sun, 29 Oct 2017 12:02:20 -0700 (PDT)
+In-Reply-To: <20171029175712.ijqirnghcgeufqae@genre.crustytoothpaste.net>
+References: <20171028181239.59458-1-sandals@crustytoothpaste.net>
+ <20171028181239.59458-4-sandals@crustytoothpaste.net> <CAPig+cTrAxWczJ5qX2qE-hqoo6hA2QCom25HYB7v48rVnPgTow@mail.gmail.com>
+ <20171029175712.ijqirnghcgeufqae@genre.crustytoothpaste.net>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sun, 29 Oct 2017 15:02:20 -0400
+X-Google-Sender-Auth: vMEKN7NKTeghEMHRN3UrTkRP8m4
+Message-ID: <CAPig+cRtexDJYMCUR1rGZjJOBRuDbhxP==US2VdNPhSWzeL6LA@mail.gmail.com>
+Subject: Re: [PATCH v2 3/4] Integrate hash algorithm support with repo setup
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        Brandon Williams <bmwill@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2017-10-29 13:34:31, Eric Sunshine wrote:
-> On Sun, Oct 29, 2017 at 12:08 PM, Antoine Beaupré <anarcat@debian.org> wrote:
->> if we fail to find a requested namespace, we should tell the user
->
-> s/if/If/
-
-fixed.
-
->> which ones we know about, since we already do. this allows users to
->
-> s/this/This/
->
-> Not sure what ", since we already do" means here.
-
-we already have fetched the mapping, fixed.
-
->> feetch all namespaces by specifying a dummy namespace, failing, then
->
-> s/feetch/fetch/
-
-fixed.
-
->> copying the list of namespaces in the config.
+On Sun, Oct 29, 2017 at 1:57 PM, brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+> On Sat, Oct 28, 2017 at 09:44:07PM -0400, Eric Sunshine wrote:
+>> > +#define current_hash the_repository->hash_algo
 >>
->> eventually, we should have a flag that allows fetching all namespaces
->> automatically.
->>
->> Reviewed-by: Antoine Beaupré <anarcat@debian.org>
->> Signed-off-by: Antoine Beaupré <anarcat@debian.org>
->> ---
->> diff --git a/contrib/mw-to-git/git-remote-mediawiki.perl b/contrib/mw-to-git/git-remote-mediawiki.perl
->> @@ -1334,7 +1334,9 @@ sub get_mw_namespace_id {
->>         my $id;
->>
->>         if (!defined $ns) {
->> -               print {*STDERR} "No such namespace ${name} on MediaWiki.\n";
->> +               my @namespaces = sort keys %namespace_id;
->> +               for (@namespaces) { s/ /_/g; }
->> +               print {*STDERR} "No such namespace ${name} on MediaWiki, known namespaces: @namespaces.\n";
+>> The all-lowercase name "current_hash" seems likely to conflict with a
+>> variable name some day; the fact that it is also a #define makes such
+>> a collision even more worrisome. Although it is retrieving the "hash
+>> algorithm", when reading the terse name "current_hash", one may
+>> instead intuitively think it is referring to a hash _value_ (not an
+>> algorithm).
 >
-> Probably want to drop the terminating "." in the error message.
+> I can do CURRENT_HASH_ALGO or CURRENT_HASH instead if you think that's
+> an improvement.  I originally omitted the "algo" portion to keep it
+> short.
 
-meh... i just respected what was already there, but it's true it can be
-error-prone when copy-pasting, so removed.
+I don't have strong feelings about it aside from worrying about a
+"current_hash" name clash or a reader misunderstanding what it
+represents.
 
-a.
--- 
-A ballot is like a bullet. You don't throw your ballots until you see
-a target, and if that target is not within your reach, keep your
-ballot in your pocket.
-                         - Malcom X
+Does "current" need to be in the name? What about HASH_ALGO or REPO_HASH_ALGO?
+
+> Alternatively, we could have a current_hash() (or current_hash_algo())
+> inline function if people like that better.
+
+hash_algo() or repo_hash_algo()?
