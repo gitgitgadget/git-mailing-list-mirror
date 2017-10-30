@@ -2,90 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C1500202DD
-	for <e@80x24.org>; Mon, 30 Oct 2017 19:39:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B40CD202DD
+	for <e@80x24.org>; Mon, 30 Oct 2017 19:46:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752029AbdJ3Tj3 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Oct 2017 15:39:29 -0400
-Received: from mail-io0-f170.google.com ([209.85.223.170]:51063 "EHLO
-        mail-io0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751947AbdJ3Tj2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Oct 2017 15:39:28 -0400
-Received: by mail-io0-f170.google.com with SMTP id 97so29824076iok.7
-        for <git@vger.kernel.org>; Mon, 30 Oct 2017 12:39:27 -0700 (PDT)
+        id S932872AbdJ3Tqx (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Oct 2017 15:46:53 -0400
+Received: from mail-io0-f195.google.com ([209.85.223.195]:54615 "EHLO
+        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932597AbdJ3Tqw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Oct 2017 15:46:52 -0400
+Received: by mail-io0-f195.google.com with SMTP id e89so29829984ioi.11
+        for <git@vger.kernel.org>; Mon, 30 Oct 2017 12:46:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=oPU1K0bluflXbdOtY+hEVVuP5pXn9Q/JwUpdHuRqfdY=;
-        b=gRjYVOIT7scd281beCdrcQA22/iHTbIvt9kEQ3juvbxkuVO9FxY9avXz+UH1aMfOMa
-         wf47yWNbPcLJjH4wxLIE4Xir2ELFsfKTZzIOXSSmnFM97+UVZihE3HLDPwQLSJM+mkMf
-         S4vN22IO9NMgbNeqomnTd2//EVgtquQsIs9kFiO0NN5u+vjU6gAVoNEICzgcipKpcV8z
-         lBBePCrQWLy8jmYm5i+967KdGQSOKpJB0e+X6gKtg++eGMvEyYr0iWEDFkmKR4b22SDh
-         vS7rZlamCwPzoAIGbVQzMH+0NNS/4tznFa7ItmjGtXHi+QwDuoOgjx/g1yI9q5yAjJEN
-         odGw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=X/siDRp3mt2O0JebahXVQC3YLtsz36wU36/HyNE9lXw=;
+        b=uhGbKXdylYGJUBC1wgjY8Nn9NIB+SC8zlcSvKn44Fmf8ICShk+rjkVUz2kWG2MyL3X
+         I+FuDbz9XEHPNCSf5edNoqboPqp6yMyaVfNocbiFf891UOrT7YWo+SOKwiLBq/tYwcNq
+         zrZ85/rJP7sMT8MiYqmJLCyjgBeI9n4U2Gl5Rxus1s1iD1fs0GvzrYizLAxZqW5z51Eh
+         14dkSHg/NT2ixld1uMl2Px+usRxoQonFHRx+enOjFJFGtPqeLp7i+1s5+iwDKhRSdOpv
+         wS/cDo6lgpcwdUe5APpu5Jtx+q0ut16hMkZdLfEoCglxKF6uRKIAGaALmipphF2poke4
+         ywLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=oPU1K0bluflXbdOtY+hEVVuP5pXn9Q/JwUpdHuRqfdY=;
-        b=SGHCsFZqaO3WckaFXfwYv1mJOcWhUgjCtmWeZWw6QtwPTWHCYZ4VuyUy6a6NCeaBPZ
-         S0/tzb1HJBlhJomxFdmPrOTsMpzNWtKm+bYhXF5bw2Jqzll88IiFd/sdMRz7an0bjYoP
-         PVYwOEgzNomDNlPmMFarwXRQiM+W0RuS3/ST+neaajNQwm3RInYUqFzwvjfyrU+b8qqS
-         xPkPxeCec13bubW5jNjGEQU5EMZwHDoC7cnGUBJS+q4llo/HgMItlqvR8rztf7Lf7nVW
-         ljiBPDQm9fOCE5y/sW9dzO5BXt/KhM0UvHuySGGP9bsEwX12h2Dlxm4+HfUr31pAAfkl
-         UfYg==
-X-Gm-Message-State: AMCzsaXPJS/R0isplup1xRJW7e4PP4drZLXOUCpWrPnXzR/j9gbb8Ibb
-        4Cgk32WZ2MwxqbEkSYGsLYUh5w==
-X-Google-Smtp-Source: ABhQp+RASno7eOTCO8taMmTsEA8IkhEDNyO4otn+Dw1f7Fkzk6MmeZNclflxYDNlnozifzQKRh44dQ==
-X-Received: by 10.107.129.11 with SMTP id c11mr12533051iod.258.1509392367373;
-        Mon, 30 Oct 2017 12:39:27 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:9c29:988d:323f:ada0])
-        by smtp.gmail.com with ESMTPSA id e99sm2208440itd.40.2017.10.30.12.39.26
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 30 Oct 2017 12:39:26 -0700 (PDT)
-Date:   Mon, 30 Oct 2017 12:39:24 -0700
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=X/siDRp3mt2O0JebahXVQC3YLtsz36wU36/HyNE9lXw=;
+        b=pRTLkyZpDq1TvcfTk6Q1M+KGpACuJroVMrJh2nnL6oC0AXtpa1FxrPxgbzMgkRQbL0
+         yapUplJx0SV1P736I04trZmqNGmwZH1UqphNhhFjLtQm4kSKtgYQWLHVxp7TNZLcvNhW
+         HL+s4FVOkqC736+JQfrlyRC35kNMIJkFoY2nfXYllycA26EaQCghC1lB4Glnibfo3+nS
+         zpetRX4ASgD2SX56aEfItR/eP6QaEJIMsxIlRLB1MvVnbNMTJ//hdoAHB/z6eSAz6JyX
+         MQYQrMXT5eg1dn15KtX0puAqif5qWljisTow4ElpbIgy3tppk0vCvR4k/FPkoGipMkX3
+         W21g==
+X-Gm-Message-State: AMCzsaVdrk5I89MP9E7M6VZvMhmmx7PYT+gZ3LF01+TmPrdVFmZa56lt
+        KR3UIW0ojf0HNnO5W14K/NTs+jkBrgw=
+X-Google-Smtp-Source: ABhQp+RiS/HXOnCJtYnUVQa8Jkn0uIRgg9rIvzUYpHf70/Abh7o2mNWp9q+l5onMF0tcDFn5DvyOiQ==
+X-Received: by 10.36.86.137 with SMTP id o131mr7656141itb.7.1509392811696;
+        Mon, 30 Oct 2017 12:46:51 -0700 (PDT)
+Received: from roshar.svl.corp.google.com ([100.96.218.30])
+        by smtp.gmail.com with ESMTPSA id g195sm2372805itc.14.2017.10.30.12.46.50
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 30 Oct 2017 12:46:50 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 3/3] diff: convert flags to be stored in bitfields
-Message-ID: <20171030193924.GC125460@google.com>
+To:     git@vger.kernel.org
+Cc:     Brandon Williams <bmwill@google.com>, gitster@pobox.com,
+        sbeller@google.com
+Subject: [PATCH v2 0/4] convert diff flags to be stored in a struct
+Date:   Mon, 30 Oct 2017 12:46:42 -0700
+Message-Id: <20171030194646.27473-1-bmwill@google.com>
+X-Mailer: git-send-email 2.15.0.403.gc27cc4dac6-goog
+In-Reply-To: <20171027222853.180981-1-bmwill@google.com>
 References: <20171027222853.180981-1-bmwill@google.com>
- <20171027222853.180981-4-bmwill@google.com>
- <xmqqk1zeafaq.fsf@gitster.mtv.corp.google.com>
- <xmqqzi898olb.fsf@gitster.mtv.corp.google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqzi898olb.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/30, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > I still haven't brought myself to like the structure being passed by
-> > value and the singleton diff_flags_cleared thing, but I suspect that
-> > we may get used to them once we start using these.  I dunno.
-> 
-> Just bikeshedding, but I just had to prepare an evil merge to add a
-> new use of diff_flags_cleared to a codepath that evolved in a topic
-> still in flight, and realized that I really hate the name.  Perhaps
-> I wouldn't have hated it so much if it were named diff_flags_none or
-> diff_flags_empty, I guess.
+Changes in v2:
+ * removed the diff_flags_cleared singleton 
+ * eliminated the 'touched' parallel flags
+ * pass structs by reference instead of by value
 
-I have a new version of the series I'll send out and i ended up dropping
-it entirely.  Didn't even need a clear function because I was able to
-drop the touched stuff and it would have only been used inside of
-builtin/log.c to clear the touched flags.
+Now that the 'touched' flags have been removed it may be valuable to go ahead
+and remove the macros all together (including making the flags lower case).  If
+that's what we want to do, I can go ahead and send those patches out as a
+follow on to these.
+
+Brandon Williams (4):
+  add, reset: use DIFF_OPT_SET macro to set a diff flag
+  diff: convert flags to be stored in bitfields
+  diff: add flag to indicate textconv was set via cmdline
+  diff: remove touched flags
+
+ builtin/add.c    |  2 +-
+ builtin/commit.c |  7 +++--
+ builtin/log.c    |  3 +-
+ builtin/reset.c  |  2 +-
+ diff-lib.c       |  7 +++--
+ diff.c           | 10 +++---
+ diff.h           | 96 +++++++++++++++++++++++++++++++++-----------------------
+ sequencer.c      |  5 +--
+ 8 files changed, 77 insertions(+), 55 deletions(-)
 
 -- 
-Brandon Williams
+2.15.0.403.gc27cc4dac6-goog
+
