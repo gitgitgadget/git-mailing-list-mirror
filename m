@@ -2,97 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 10D5120562
-	for <e@80x24.org>; Mon, 30 Oct 2017 10:20:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F3C032055E
+	for <e@80x24.org>; Mon, 30 Oct 2017 10:30:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751987AbdJ3KUm (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Oct 2017 06:20:42 -0400
-Received: from smtp-out-5.talktalk.net ([62.24.135.69]:60360 "EHLO
-        smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751546AbdJ3KUl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Oct 2017 06:20:41 -0400
-Received: from [192.168.2.201] ([92.22.30.94])
-        by smtp.talktalk.net with SMTP
-        id 97BMeoj4rpb8r97BOekR5T; Mon, 30 Oct 2017 10:20:39 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net; s=1605;
-        t=1509358839; bh=dm+6O8/7Lo3iNINcikUq7bGMvFQgNaTEyehcDKpjDUU=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=LPWfs2Cmm91d0j0ujwqGzqX/inn2wj1K5xttVqRZly/WazLbajUlf4PTK9nGRqDIu
-         seMdfL0zh4EX/hloTQeJuo6RbfhVV1OunmEB5o3PQ64GGjvT/Qz8aXHQFs7ulmint1
-         DsQaLaaoQjKCt7uQdA+klw5ZvbqkXGQpeqH7q1pc=
-X-Originating-IP: [92.22.30.94]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=ZM2noTzb c=1 sm=1 tr=0 a=lje0BXTe3+PqU+djfnm1WA==:117
- a=lje0BXTe3+PqU+djfnm1WA==:17 a=IkcTkHD0fZMA:10 a=ybZZDoGAAAAA:8
- a=pGLkceISAAAA:8 a=R23-W3mZs7x22hj-XZYA:9 a=QEXdDO2ut3YA:10
- a=0RhZnL1DYvcuLYC8JZ5M:22
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] rebase: exec leaks GIT_DIR to environment
-To:     Jacob Keller <jacob.keller@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jacob Keller <jacob.e.keller@intel.com>,
-        Git mailing list <git@vger.kernel.org>
-References: <20171028000152.2760-1-jacob.e.keller@intel.com>
- <alpine.DEB.2.21.1.1710281740070.6482@virtualbox>
- <4150d979-f653-e79b-563a-1dc43f12468d@talktalk.net>
- <xmqq1sll8j6f.fsf@gitster.mtv.corp.google.com>
- <CA+P7+xrXLcTQpPWgzLwt_yZo=QdfetF36jrc_TtXfqMKR2Hh3w@mail.gmail.com>
- <xmqqo9op71d8.fsf@gitster.mtv.corp.google.com>
- <CA+P7+xo5UgUPQCYU-LaXn+HZZ1qe++KOevTMh2C1sgnzK0SAQA@mail.gmail.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <7026e5be-bbf0-9d55-8901-f920a775879b@talktalk.net>
-Date:   Mon, 30 Oct 2017 10:20:36 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.4.0
+        id S1752346AbdJ3KaJ convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Mon, 30 Oct 2017 06:30:09 -0400
+Received: from mail3-relais-sop.national.inria.fr ([192.134.164.104]:24462
+        "EHLO mail3-relais-sop.national.inria.fr" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751822AbdJ3KaI (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2017 06:30:08 -0400
+X-IronPort-AV: E=Sophos;i="5.44,319,1505772000"; 
+   d="scan'208";a="242808575"
+Received: from orange.lip.ens-lyon.fr ([140.77.14.54])
+  by mail3-relais-sop.national.inria.fr with ESMTP/TLS/AES128-GCM-SHA256; 30 Oct 2017 11:30:07 +0100
+From:   Matthieu Moy <git@matthieu-moy.fr>
+To:     Antoine =?utf-8?Q?Beaupr=C3=A9?= <anarcat@debian.org>
+Cc:     git@vger.kernel.org
+Subject: Re: future of the mediawiki extension?
+In-Reply-To: <87vaix731f.fsf@curie.anarc.at> ("Antoine \=\?utf-8\?Q\?Beaupr\?\=
+ \=\?utf-8\?Q\?\=C3\=A9\=22's\?\= message of
+        "Sun, 29 Oct 2017 23:00:44 -0400")
+References: <87vaix731f.fsf@curie.anarc.at>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+Date:   Mon, 30 Oct 2017 11:29:55 +0100
+Message-ID: <q7h9o9opyllo.fsf@orange.lip.ens-lyon.fr>
 MIME-Version: 1.0
-In-Reply-To: <CA+P7+xo5UgUPQCYU-LaXn+HZZ1qe++KOevTMh2C1sgnzK0SAQA@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfLj7AaG4uev02VjpMQM79w1MNs9JjcXJf+lj/StUjpF9JN4q04X/ENuUK6gURxK3poHOmbmDK5OU+wq18fat0ppsfIR7T09jGXC6XrV8QrflEfDMt+sK
- bdaaOc4EfRbMcrSevCRDbkmtJxjY8IL3Au0U8J8UvIc7ps7Q0z4P2wVBHBgHYwiuTdkWZR58XEENLsrjgLJVP/SZ5CP50HgeA4Jp6B0T7Ue6ojZNXFjnSata
- GHMX797ayJhQy5PmGeDqFvyjami3iPjZSg4zZKG4vx01DkxcwOoqna9ePShI+Dw34ZxNqka61FEHAuQ1zdPu2g==
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 30/10/17 06:26, Jacob Keller wrote:
-> On Sun, Oct 29, 2017 at 8:36 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Jacob Keller <jacob.keller@gmail.com> writes:
->>
->>> I am pretty confident we can fix it....
->>
->> I am sure we can eventually, but 3 hours is not enough soak time.
->>
->> I am inclined to leave the fix for 2.15.1/2.16.0 instead of delaying
->> the release by 10 more days.
-> 
-> That's fair. I'm not even sure it was introduced since the last
-> release (I tried 2.12, but not 2.13 or 2.14 manually). Thus, it likely
-> wasn't noticed for at least a release, meaning it's less important (to
-> me at least) that we provide a fix immediately, since it went
-> unnoticed this long, likely that means few people will be impacted.
+[ Please Cc: me in these discussions ]
 
-It is in 2.14.3, I haven't bisected but I suspect it was introduced by
-311af5266b sequencer (rebase -i): implement the 'exec' command
+Antoine Beaupré <anarcat@debian.org> writes:
 
-Running
-git rebase -x'perl -e '\''$,=$\="\n"; print  grep { /^GIT_/ } sort keys
-%ENV'\' @
-Shows that the rebase--helper version also sets GIT_PREFIX as well as
-GIT_DIR, I suspect the difference is coming from differences in the
-setup for builtin commands vs external commands. The shell version and
-the rebase--helper version set GIT_CHERRY_PICK_HELP, GIT_EDITOR,
-GIT_INTERNAL_GETTEXT_SH_SCHEME, GIT_REFLOG_ACTION
+> I think, however, it would be good to have a discussion about the future
+> of that extension in Git. The extension has a bit of a hybrid presence -
+> it is partly in git core (as a contrib, but still) and partly on GitHub
+> here:
+>
+> https://github.com/Git-Mediawiki/Git-Mediawiki/
 
-Best Wishes
+The initial plan was to use Git's contrib/ subdirectory to get more of
+the Git community involved in its development, and avoid making it a
+personal toy.
 
-Phillip
+Initially, Git-Mediawiki is both a personnal project and a student's
+project (most of the code was written by students as part of an Ensimag
+project under my supervision, with strong interaction with the Git
+community).
 
+It did work well in the first times of the project, there were very
+fruitfull interactions between Git-Mediawiki and Git. Some issues raised
+while developing Git-Mediawiki led to improvements in the remote-helper
+mechanism in Git. Some code written for Git-Mediawiki ended up in Git
+(the Perl layer for the credential helpers at least). I think this would
+have been harder if Git-Mediawiki was a separte project.
 
+However, the rest of the plan did not work that well. I thought having
+the code in contrib/ would help keeping the project alive if I became
+inactive. It's been a while I didn't have enough time-budget to work on
+the project, and the git.git review mechanism has actually blocked a lot
+of contributors. Patches get posted here and there but no one takes time
+for a proper submission here, and when this happens contributors give up
+after the first round of review instead of re-rolling.
+
+So, my conclusion is that a simpler submission mechanism (GitHub's
+pull-requests) and a less picky code review would help Git-Mediawiki.
+
+From previous discussions, I think Junio will agree with that: he's
+reluctant to keeping too much stuff in contrib/ and usally prefers
+external projects.
+
+> It should also be mentioned that this contrib isn't very active: I'm not
+> part of the GitHub organization, yet I'm probably the one that's been
+> the most active with patches in the last year (and I wasn't very active
+> at all).
+
+FYI, I'm no longer using Mediawiki as much as I did, and I don't really
+use Git-Mediawiki anymore.
+
+The main blocking point to revive Git-Mediawiki is to find a new
+maintainer (https://github.com/Git-Mediawiki/Git-Mediawiki/issues/33). I
+believe I just found one ;-).
+
+> Please avoid "mailing list vs GitHub" flamewars and keep to the topic of
+> this specific contrib's future. :)
+
+Note that being a separate project doesn't mean there can't be any
+interaction with this list. Requests for reviews for separate projects
+are usually welcome even though they don't happen often here.
+
+There's also a hybrid solution used by git-multimail: have a copy of the
+code in git.git, but do the development separately. I'm not sure it'd be
+a good idea for Git-Mediawiki, but I'm mentionning it for completeness.
+
+Regards,
+
+-- 
+Matthieu Moy
+https://matthieu-moy.fr/
