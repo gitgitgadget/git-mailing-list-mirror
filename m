@@ -7,112 +7,91 @@ X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C0331FBF4
-	for <e@80x24.org>; Mon, 30 Oct 2017 17:19:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2D4CA1FBF4
+	for <e@80x24.org>; Mon, 30 Oct 2017 17:20:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932482AbdJ3RTu (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Oct 2017 13:19:50 -0400
-Received: from mout.gmx.net ([212.227.17.20]:59657 "EHLO mout.gmx.net"
+        id S932517AbdJ3RUW (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Oct 2017 13:20:22 -0400
+Received: from mout.gmx.net ([212.227.17.21]:62699 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932252AbdJ3RTt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Oct 2017 13:19:49 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MWQSM-1dg0gf3NTm-00Xb7X; Mon, 30
- Oct 2017 18:19:43 +0100
-Date:   Mon, 30 Oct 2017 18:19:42 +0100 (CET)
+        id S932252AbdJ3RUV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Oct 2017 13:20:21 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MY3Ho-1deN3G0CgK-00Ut31; Mon, 30
+ Oct 2017 18:20:06 +0100
+Date:   Mon, 30 Oct 2017 18:20:04 +0100 (CET)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] mingw: include the full version information in the
- resources
-Message-ID: <d6447dddb2a5196c3785ef7b758764d7873e3153.1509383748.git.johannes.schindelin@gmx.de>
+cc:     Junio C Hamano <gitster@pobox.com>, Karsten Blees <blees@dcon.de>,
+        Pat Thoyts <patthoyts@users.sourceforge.net>,
+        David Aguilar <davvid@gmail.com>
+Subject: [PATCH 0/2] wincred: learn to handle "empty credentials"
+Message-ID: <cover.1509383993.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:KHhKWFk6BeQ9hAPNdRuxv4st7J54A7CjY7/S1IX1Ghezfadksta
- AK6aTgbjon75DBSTgb8hcngJ2WOrDYtBjdfbOMYf5GBsANYbY7n+mfLby31DnynSFF6gkI0
- /r/r920nxixIzA/X8Q40+8alhdttjnR2lSoeVXB4u+HeKPaxivYmVxLEHYzCiX/XM+9fPjm
- ILP0Cg8EX2jK9A558oBVQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:aOb2tAQcTqg=:DzWBfq0Ql2W1tirKn1Iyge
- z+K4GLj0UNWfAZBgSJezSOcheefK0RB0sgsRvw4GIZaRaGg8bI09K5u8A2lN5xqZEt0/FyG45
- IyGy+yHbqI/XfzAjY5NNlW12AW0TntEpnASC2VXCif+eXaHinM6RU6zczxc77t6XHs0MW2NwT
- nOugxvby4O3XbCScNDysyaK/TsqtaWTKs94lXuVzRLakcQpqQfEYQpRAPGTY1eF6FW8r4kjP8
- YSSHDEo3LP+CYbZBeHHZdHPrmyEJIDgWOPZjtqD1EjjLxligzssfveijLZM2CA3yDs/K545Lj
- PXaAQyZgeNQllAljov91DJZd0M8l1nGxQeXCfXwFRLDT1HLMmXJqRFRXTW1ZHQy0cNx9u8dUG
- xSHq/vQAKoBfrDbYr+/4gpeRL/y86LTvKZ9X9a/M04USxKj/UNmnLMc1PFFMQCclOzHRNSHS5
- 8WtXQqccrGJFgnnMFIdSfsxhCfsjOkeQA7AkM6KHkhQMdOFyGSEEcfG5Wl99Z36poW2NVzDuJ
- 01w4yp2CNZcgUeWYHsrYV2Qn2q3pMBh0kWA/Zg6ghocZ4fB/egsnYccpJ7XmYdhPZSwEslqeU
- tX2JnOvuXPZc4d6MpL2rsmKXmlagHBbzJfYqROCmh1on5eAPLwSeUH0qkLBS/XrTPderYY7u1
- DHE9SOhtjdB63YAuStcJTBUIEldv9R8YrLR+U1IH/GBJzUGaVP3PmY8QVIQfWzYSWVDl/svbZ
- ZWZ6ch2kLyQKz4OQlXDMT0s9KqhKK9Pwc0gcAaXUrQhP0+9e6fObuto0AQouJV0z/AsgTOtpr
- f1B5CNh1seifxOcXAVXYK6fYRZ4PlULc+YPXmpNtkefgw8hn+9zZdsTVlsbrmCNNNlO+mTI
+Content-Type: multipart/mixed; boundary="8323329-633129972-1509384006=:6482"
+X-Provags-ID: V03:K0:gLjt1tmcZSPSMVdKrL7snw2T0cxvVnmFDppjqgVDGycWk1sUwAd
+ kCaLLdLm3+spgX0P3tXJ6Xh33UUZX7tHgEuMRlmFP6dcjss3o4f9HOwlK8h496M2DkThKqk
+ wcRIZD6LGsw8y5zyAzxCPH2xxQm3lXewk42BI1foWzlvnXu/2EPZ2lerbM5oaZVwSuRxKop
+ oyt9ni6LvPW1DpnWeHcaw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:cl2ZSjhp5vs=:Cgo2KS5z7J2rp951I2eACU
+ lvZOkUXN76fFP0qXv1jMAcoUQj7tU2Kh3ehkkC2UOgJX6rx6MTc4snxNyJnGI1qhHhP6QWhfX
+ 488bNa5yHu/UIy0TpTkC6hATtKBl0TJVdXaPoAMH3Jb18FqOtmWNz+o7ljYi9pxbBZhK/LbWq
+ X9U3hUrURmlh3sdsModpWSmJclMkuiueerd039EaVESdlqiCtrxJ62ljJK1y3qZhx86q6qlBg
+ 9tfnUoZVRW4vqZb/+DhOePlU7wdVnDB3GJxfxLoAh8mH5YG5KzyW0QLLlPElqMe5gnsb+ubpi
+ fsjjx16P+mVlHv9jXctx6w5VvyBoVG3ERZe+4pP8qfzVuRG8UCN6AmcjLiB9skoAcmZ9j/KFj
+ kJ0s9KjZmgRVqn8Ed96oytFDC12Y/U4Uk37LadMMwOteuFQCa+rIB0AliC9a4xm+bslfksTWi
+ WHq+eQ7YFU47xIUY7sIHS6SOuIFdejBSODK7E8ngykpjzhNfXu5X3jd0ZaG8cFr2UiAo4nQsm
+ CwkRhvKccwJLSQTCUdqT/seHD0IYgIdtvXLHT4oZ0KAhHK55a0DwAcCWYkQ4/YEyAQkspohVq
+ 96jikVFCoolAT2W9T4uP4IpGEG4G5jWbbquxTUo7yRDSUSf7/cJ5J9GP81K3FYt3+PrOgFktN
+ K4rZ607IWh9ieSqHIT/u7AP3bMdzcsFa6eddgBIjbFw+L+GmKUXA6DxxGnOzSSm/anMjF4u/u
+ 767pARSG0+Q+sZJ1K+3Vtc57ZqmOrNrCnlAYzQfCr9LC4+oGWHRNnFZwkeYmcqXoQmLmh/pZP
+ BeR75MOIaEOVoNQh3vB3yeWdFz2bUuY/eirAhGE9Hak6LuTFRvdDqLZtY2FzM3Efxglkn2N
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This fixes https://github.com/git-for-windows/git/issues/723
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
+--8323329-633129972-1509384006=:6482
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-	This patch has been carried in Git for Windows in this form since
-	Git for Windows v2.11.0(2). It seems to be ready for prime time.
+As we learned some time ago, NTLM authentication happens by passing
+"empty credentials", i.e. 0-length usernames and passwords.
 
-	I could just imagine *one* change: to use
+However, when saved in the Windows Credential Manager, such usernames
+and passwords come back as null when reading the credential. Let's
+handle this.
 
-		tr -d 0-9 ' '
+This patch series is a tender four years old and has been simmering in
+Git for Windows since version v1.8.4, so it is most likely mature enough
+(even at that young age) to enter core Git.
 
-	instead of
+Note: these days, Git for Windows prefers to use the Git Credential
+Manager for Windows instead, but the wincred code is still carried in
+Git's contrib/ and should be fixed there, too.
 
-		tr '.a-zA-Z-' ' '
 
-	However, I am reluctant to do that, as any character that is not
-	caught by this pattern would be indicative of something really
-	funny going on.
+Jakub Bere=C5=BCa=C5=84ski (2):
+  t0302: check helper can handle empty credentials
+  wincred: handle empty username/password correctly
 
-	Plus, I have had really bad experience with changing a well-tested
-	patch series just to get it into core Git, only to see an
-	immediate breakage introduced to appease reviews. Therefore, this
-	time around I will need to be convinced quite a bit more if I am to
-	risk breakages.
+ contrib/credential/wincred/git-credential-wincred.c | 10 ++++++++--
+ t/lib-credential.sh                                 | 19 +++++++++++++++++=
+++
+ 2 files changed, 27 insertions(+), 2 deletions(-)
 
- Makefile | 3 ++-
- git.rc   | 4 ++--
- 2 files changed, 4 insertions(+), 3 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index cd75985991f..ee9d5eb11ee 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1940,7 +1940,8 @@ $(SCRIPT_LIB) : % : %.sh GIT-SCRIPT-DEFINES
- 
- git.res: git.rc GIT-VERSION-FILE
- 	$(QUIET_RC)$(RC) \
--	  $(join -DMAJOR= -DMINOR=, $(wordlist 1,2,$(subst -, ,$(subst ., ,$(GIT_VERSION))))) \
-+	  $(join -DMAJOR= -DMINOR= -DMICRO= -DPATCHLEVEL=, $(wordlist 1, 4, \
-+	    $(shell echo $(GIT_VERSION) 0 0 0 0 | tr '.a-zA-Z-' ' '))) \
- 	  -DGIT_VERSION="\\\"$(GIT_VERSION)\\\"" -i $< -o $@
- 
- # This makes sure we depend on the NO_PERL setting itself.
-diff --git a/git.rc b/git.rc
-index 33aafb786cf..49002e0d541 100644
---- a/git.rc
-+++ b/git.rc
-@@ -1,6 +1,6 @@
- 1 VERSIONINFO
--FILEVERSION     MAJOR,MINOR,0,0
--PRODUCTVERSION  MAJOR,MINOR,0,0
-+FILEVERSION     MAJOR,MINOR,MICRO,PATCHLEVEL
-+PRODUCTVERSION  MAJOR,MINOR,MICRO,PATCHLEVEL
- BEGIN
-   BLOCK "StringFileInfo"
-   BEGIN
 
 base-commit: cb5918aa0d50f50e83787f65c2ddc3dcb10159fe
--- 
+Published-As: https://github.com/dscho/git/releases/tag/jberezanski/wincred=
+-sso-r2-v1
+Fetch-It-Via: git fetch https://github.com/dscho/git jberezanski/wincred-ss=
+o-r2-v1
+--=20
 2.15.0.windows.1
 
-Published-As: https://github.com/dscho/git/releases/tag/resource-version-v1
-Fetch-It-Via: git fetch https://github.com/dscho/git resource-version-v1
+--8323329-633129972-1509384006=:6482--
