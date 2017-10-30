@@ -2,59 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CCF77202DD
-	for <e@80x24.org>; Mon, 30 Oct 2017 22:20:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E8F32202DD
+	for <e@80x24.org>; Mon, 30 Oct 2017 22:20:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932627AbdJ3WUR (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Oct 2017 18:20:17 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:56935 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932602AbdJ3WUP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Oct 2017 18:20:15 -0400
-Received: by mail-pf0-f194.google.com with SMTP id b85so12118174pfj.13
-        for <git@vger.kernel.org>; Mon, 30 Oct 2017 15:20:15 -0700 (PDT)
+        id S932631AbdJ3WUS (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Oct 2017 18:20:18 -0400
+Received: from mail-pg0-f47.google.com ([74.125.83.47]:47182 "EHLO
+        mail-pg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932530AbdJ3WUO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Oct 2017 18:20:14 -0400
+Received: by mail-pg0-f47.google.com with SMTP id r25so12873932pgn.4
+        for <git@vger.kernel.org>; Mon, 30 Oct 2017 15:20:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ng4WYJZx/vYR6fwWuxCo9YMoTPBA4K2QGBAKGGiZPA8=;
-        b=kWZe9OPCH8JEsAaYA0D7/b11n8MFkPDqts6UhKGQbbsnZrKFSIxEOQxhJgACBe1AsV
-         n8+9grpMd1oesHmkJPTGuBQlF+3dDvz3PDQ69gZpOctdhjdbxVDBzE4Pj0L7czLZ59lB
-         Qe8NTZBSkalD5zUjNJSbCt1wvEBThy98vXEdjlWLZSAYUsJ/LNB3nAALLcdNk8lVz2rE
-         UPh1YMfzet33bo4n/yng2iGohbclseR8/aErpFX8uUTd63DqpXAcsnW5dhrK2B6UIn8w
-         4dEFgPs+6FkA4efkonEwhhqRkd4aDfnOZaPJLK5CRVs1ftmZ73RqaXksdbFvyBHX5Ywh
-         aszg==
+        bh=n0cXTnY7OpY3MztIjDTAt+U3ANyaviF1rGu+j687bPY=;
+        b=G7QSyckQgxYZfMxRdob51hAJrG+lxGE3Kp1/aEu6oeOqOWEp7pSMs1xFPjdx3IAPyR
+         BD+hm6JWhZFI5o0VJt9Y1XE5J2OcnqZvSDqLMi5txkBzbb/kOGQIUGxsz18hFSLeAmKG
+         hZgymLptrIrh6XOddH9ztR2BwcW+rcH7TkBNxYZCpCrpLFPYRA0j5TNOjUHmuwlLXrIJ
+         vlTIQFTRFPfPvuQ5dZ3nxmG/y8QPFlv9oks2AOqM6qEfqU3HwhFdYyShtzb0S6M4D9JD
+         wBsVzfz9g9kFV8UTeMSviC2fI6MgDgXFle3HfpJNOJIqAqmotFqVLkysww/VRWfUegbr
+         sdWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=ng4WYJZx/vYR6fwWuxCo9YMoTPBA4K2QGBAKGGiZPA8=;
-        b=tqdc/1vCkehgohIU6li2S8wcmeAyT+I9rk4zD76MJk2sjLCOS3KXY4ZCz+HK2+s8bl
-         EfsaqwbHzLtCI6EAYnhW3LQDDQZinXQYNlwTIxy2QpB4pE0nJJSl2QMImfe4YgBYWZa+
-         GehOR2syW1vOA84wt48I9I8ZYzR4uF0rvNHtn6ki+pEJzRPIdmEirk+hAyW/uzbY0IMJ
-         bK7nZ8BIuXRBJ7e1ntuQqVIpqs2XD6iupkpNaRcotZuSDi/OJL4tPcVRK0oS+raszB6R
-         9yia/Hq0SMGs7w3tzAgwuSK0l3l+9oorMLUSD2r4BFWoKKyMRMu539hfJLmnvYpCpNRX
-         ecQA==
-X-Gm-Message-State: AMCzsaWeHA1S8/Z7B5cIFaauD1jo5BcBvDzAKyuMCCT/JCFMYQUTL1+b
-        TVcAb7UR0j/CU5QMu75ErfWyUdEOubQ=
-X-Google-Smtp-Source: ABhQp+Q8pgitntR8ovxWKcD+dCw76hOoPiTpz+2BJSQ9hWht8ChHVCdbqCEztYuDvb3yHOOkxTv0uw==
-X-Received: by 10.99.119.3 with SMTP id s3mr9029211pgc.172.1509402014204;
-        Mon, 30 Oct 2017 15:20:14 -0700 (PDT)
+        bh=n0cXTnY7OpY3MztIjDTAt+U3ANyaviF1rGu+j687bPY=;
+        b=JRhSkHifHzMJXYXOjo7sZck3zOlwZ4T/+HNPg0kAxUE72widTPTdexbr2XExJxsRCw
+         wbqO0qiDUau+VesqThh/9eeB99e9kuMESIK/chQ2scIJEkXPCNLr6uJm+p+M0oxi6sHy
+         wofcvCurpjXwPQkqROhvGuH225Gst1Zk9cnwe1jN9JK2t9ZNGyhmUqAtSzKfXo0i+prm
+         e/HZpZT/155awg6pyY+N/cdLevSJX+hQ9McZcsgZgUw7aKnkQSlyj37mN9+3J29gDkGb
+         oDrwS7ppO4q3Dul521rpyBp577pjjje/qBoq1Fm4464gnBxqNZqN9GFMvGUf+uZ+2VcI
+         cpbQ==
+X-Gm-Message-State: AMCzsaUthO5f8PFFPuK7+2DLdwziFMU9GGRYZSQN+3Cq93aShfddZKNX
+        z8FRv7ghgPUcMov8JLCN9xpjCR8+lCs=
+X-Google-Smtp-Source: ABhQp+Sncu4eKAAGm2f+EZCR49RjgNUVQzyAD4sYc9XzY4ZKt80pxA3W3wbN4BmS+Ym7Qvo1vJ6UQA==
+X-Received: by 10.98.213.69 with SMTP id d66mr9969876pfg.221.1509402012953;
+        Mon, 30 Oct 2017 15:20:12 -0700 (PDT)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id g1sm32423031pfg.111.2017.10.30.15.20.13
+        by smtp.gmail.com with ESMTPSA id g1sm32423031pfg.111.2017.10.30.15.20.11
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 30 Oct 2017 15:20:13 -0700 (PDT)
+        Mon, 30 Oct 2017 15:20:12 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, sbeller@google.com,
         Brandon Williams <bmwill@google.com>
-Subject: [PATCH v2 7/4] diff: remove DIFF_OPT_CLR macro
-Date:   Mon, 30 Oct 2017 15:19:55 -0700
-Message-Id: <20171030221956.92466-3-bmwill@google.com>
+Subject: [PATCH v2 6/4] diff: remove DIFF_OPT_SET macro
+Date:   Mon, 30 Oct 2017 15:19:54 -0700
+Message-Id: <20171030221956.92466-2-bmwill@google.com>
 X-Mailer: git-send-email 2.15.0.403.gc27cc4dac6-goog
 In-Reply-To: <20171030221956.92466-1-bmwill@google.com>
 References: <20171030194646.27473-1-bmwill@google.com>
@@ -71,218 +71,739 @@ This conversion is done using the following semantic patch:
 	expression E;
 	identifier fld;
 	@@
-	- DIFF_OPT_CLR(&E, fld)
-	+ E.flags.fld = 0
+	- DIFF_OPT_SET(&E, fld)
+	+ E.flags.fld = 1
 
 	@@
 	type T;
 	T *ptr;
 	identifier fld;
 	@@
-	- DIFF_OPT_CLR(ptr, fld)
-	+ ptr->flags.fld = 0
+	- DIFF_OPT_SET(ptr, fld)
+	+ ptr->flags.fld = 1
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- builtin/blame.c   |  2 +-
- combine-diff.c    |  2 +-
- diff.c            | 30 +++++++++++++++---------------
- diff.h            |  2 --
- merge-recursive.c |  2 +-
- revision.c        |  4 ++--
- submodule.c       |  6 +++---
- 7 files changed, 23 insertions(+), 25 deletions(-)
+ blame.c               |  8 +++----
+ builtin/add.c         |  4 ++--
+ builtin/am.c          |  8 +++----
+ builtin/blame.c       |  4 ++--
+ builtin/diff.c        |  6 ++---
+ builtin/fast-export.c |  2 +-
+ builtin/log.c         | 14 +++++------
+ builtin/reset.c       |  2 +-
+ combine-diff.c        |  2 +-
+ diff-lib.c            |  4 ++--
+ diff-no-index.c       |  6 ++---
+ diff.c                | 66 +++++++++++++++++++++++++--------------------------
+ diff.h                |  1 -
+ merge-recursive.c     |  2 +-
+ notes-merge.c         |  4 ++--
+ patch-ids.c           |  2 +-
+ revision.c            | 16 ++++++-------
+ submodule.c           |  8 +++----
+ tree-diff.c           |  4 ++--
+ wt-status.c           | 18 +++++++-------
+ 20 files changed, 90 insertions(+), 91 deletions(-)
 
+diff --git a/blame.c b/blame.c
+index 7c019bc7c..dc9cc237b 100644
+--- a/blame.c
++++ b/blame.c
+@@ -541,7 +541,7 @@ static struct blame_origin *find_origin(struct commit *parent,
+ 	 * same and diff-tree is fairly efficient about this.
+ 	 */
+ 	diff_setup(&diff_opts);
+-	DIFF_OPT_SET(&diff_opts, RECURSIVE);
++	diff_opts.flags.RECURSIVE = 1;
+ 	diff_opts.detect_rename = 0;
+ 	diff_opts.output_format = DIFF_FORMAT_NO_OUTPUT;
+ 	paths[0] = origin->path;
+@@ -615,7 +615,7 @@ static struct blame_origin *find_rename(struct commit *parent,
+ 	int i;
+ 
+ 	diff_setup(&diff_opts);
+-	DIFF_OPT_SET(&diff_opts, RECURSIVE);
++	diff_opts.flags.RECURSIVE = 1;
+ 	diff_opts.detect_rename = DIFF_DETECT_RENAME;
+ 	diff_opts.output_format = DIFF_FORMAT_NO_OUTPUT;
+ 	diff_opts.single_follow = origin->path;
+@@ -1238,7 +1238,7 @@ static void find_copy_in_parent(struct blame_scoreboard *sb,
+ 		return; /* nothing remains for this target */
+ 
+ 	diff_setup(&diff_opts);
+-	DIFF_OPT_SET(&diff_opts, RECURSIVE);
++	diff_opts.flags.RECURSIVE = 1;
+ 	diff_opts.output_format = DIFF_FORMAT_NO_OUTPUT;
+ 
+ 	diff_setup_done(&diff_opts);
+@@ -1253,7 +1253,7 @@ static void find_copy_in_parent(struct blame_scoreboard *sb,
+ 	if ((opt & PICKAXE_BLAME_COPY_HARDEST)
+ 	    || ((opt & PICKAXE_BLAME_COPY_HARDER)
+ 		&& (!porigin || strcmp(target->path, porigin->path))))
+-		DIFF_OPT_SET(&diff_opts, FIND_COPIES_HARDER);
++		diff_opts.flags.FIND_COPIES_HARDER = 1;
+ 
+ 	if (is_null_oid(&target->commit->object.oid))
+ 		do_diff_cache(&parent->tree->object.oid, &diff_opts);
+diff --git a/builtin/add.c b/builtin/add.c
+index b70e8a779..e1d83b69a 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -116,7 +116,7 @@ int add_files_to_cache(const char *prefix,
+ 	rev.diffopt.output_format = DIFF_FORMAT_CALLBACK;
+ 	rev.diffopt.format_callback = update_callback;
+ 	rev.diffopt.format_callback_data = &data;
+-	DIFF_OPT_SET(&rev.diffopt, OVERRIDE_SUBMODULE_CONFIG);
++	rev.diffopt.flags.OVERRIDE_SUBMODULE_CONFIG = 1;
+ 	rev.max_count = 0; /* do not compare unmerged paths with stage #2 */
+ 	run_diff_files(&rev, DIFF_RACY_IS_MODIFIED);
+ 	clear_pathspec(&rev.prune_data);
+@@ -218,7 +218,7 @@ static int edit_patch(int argc, const char **argv, const char *prefix)
+ 	argc = setup_revisions(argc, argv, &rev, NULL);
+ 	rev.diffopt.output_format = DIFF_FORMAT_PATCH;
+ 	rev.diffopt.use_color = 0;
+-	DIFF_OPT_SET(&rev.diffopt, IGNORE_DIRTY_SUBMODULES);
++	rev.diffopt.flags.IGNORE_DIRTY_SUBMODULES = 1;
+ 	out = open(file, O_CREAT | O_WRONLY, 0666);
+ 	if (out < 0)
+ 		die(_("Could not open '%s' for writing."), file);
+diff --git a/builtin/am.c b/builtin/am.c
+index fc54724cc..015425a0f 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -1157,9 +1157,9 @@ static int index_has_changes(struct strbuf *sb)
+ 		struct diff_options opt;
+ 
+ 		diff_setup(&opt);
+-		DIFF_OPT_SET(&opt, EXIT_WITH_STATUS);
++		opt.flags.EXIT_WITH_STATUS = 1;
+ 		if (!sb)
+-			DIFF_OPT_SET(&opt, QUICK);
++			opt.flags.QUICK = 1;
+ 		do_diff_cache(&head, &opt);
+ 		diffcore_std(&opt);
+ 		for (i = 0; sb && i < diff_queued_diff.nr; i++) {
+@@ -1409,8 +1409,8 @@ static void write_commit_patch(const struct am_state *state, struct commit *comm
+ 	rev_info.show_root_diff = 1;
+ 	rev_info.diffopt.output_format = DIFF_FORMAT_PATCH;
+ 	rev_info.no_commit_id = 1;
+-	DIFF_OPT_SET(&rev_info.diffopt, BINARY);
+-	DIFF_OPT_SET(&rev_info.diffopt, FULL_INDEX);
++	rev_info.diffopt.flags.BINARY = 1;
++	rev_info.diffopt.flags.FULL_INDEX = 1;
+ 	rev_info.diffopt.use_color = 0;
+ 	rev_info.diffopt.file = fp;
+ 	rev_info.diffopt.close_file = 1;
 diff --git a/builtin/blame.c b/builtin/blame.c
-index 76994aa64..79db9e849 100644
+index a29574984..76994aa64 100644
 --- a/builtin/blame.c
 +++ b/builtin/blame.c
-@@ -736,7 +736,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
- parse_done:
- 	no_whole_file_rename = !revs.diffopt.flags.FOLLOW_RENAMES;
- 	xdl_opts |= revs.diffopt.xdl_opts & XDF_INDENT_HEURISTIC;
--	DIFF_OPT_CLR(&revs.diffopt, FOLLOW_RENAMES);
-+	revs.diffopt.flags.FOLLOW_RENAMES = 0;
- 	argc = parse_options_end(&ctx);
+@@ -708,8 +708,8 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+ 	git_config(git_blame_config, &output_option);
+ 	init_revisions(&revs, NULL);
+ 	revs.date_mode = blame_date_mode;
+-	DIFF_OPT_SET(&revs.diffopt, ALLOW_TEXTCONV);
+-	DIFF_OPT_SET(&revs.diffopt, FOLLOW_RENAMES);
++	revs.diffopt.flags.ALLOW_TEXTCONV = 1;
++	revs.diffopt.flags.FOLLOW_RENAMES = 1;
  
- 	if (incremental || (output_option & OUTPUT_PORCELAIN)) {
+ 	save_commit_buffer = 0;
+ 	dashdash_pos = 0;
+diff --git a/builtin/diff.c b/builtin/diff.c
+index 8cbaf4538..ed41eb5a5 100644
+--- a/builtin/diff.c
++++ b/builtin/diff.c
+@@ -350,8 +350,8 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
+ 	rev.diffopt.stat_graph_width = -1;
+ 
+ 	/* Default to let external and textconv be used */
+-	DIFF_OPT_SET(&rev.diffopt, ALLOW_EXTERNAL);
+-	DIFF_OPT_SET(&rev.diffopt, ALLOW_TEXTCONV);
++	rev.diffopt.flags.ALLOW_EXTERNAL = 1;
++	rev.diffopt.flags.ALLOW_TEXTCONV = 1;
+ 
+ 	if (nongit)
+ 		die(_("Not a git repository"));
+@@ -361,7 +361,7 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
+ 		diff_setup_done(&rev.diffopt);
+ 	}
+ 
+-	DIFF_OPT_SET(&rev.diffopt, RECURSIVE);
++	rev.diffopt.flags.RECURSIVE = 1;
+ 
+ 	setup_diff_pager(&rev.diffopt);
+ 
+diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+index 2fb60d6d4..35c8fb65d 100644
+--- a/builtin/fast-export.c
++++ b/builtin/fast-export.c
+@@ -1066,7 +1066,7 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
+ 		die("revision walk setup failed");
+ 	revs.diffopt.format_callback = show_filemodify;
+ 	revs.diffopt.format_callback_data = &paths_of_changed_objects;
+-	DIFF_OPT_SET(&revs.diffopt, RECURSIVE);
++	revs.diffopt.flags.RECURSIVE = 1;
+ 	while ((commit = get_revision(&revs))) {
+ 		if (has_unshown_parent(commit)) {
+ 			add_object_array(&commit->object, NULL, &commits);
+diff --git a/builtin/log.c b/builtin/log.c
+index 2b2d36678..4a24d3e48 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -121,16 +121,16 @@ static void cmd_log_init_defaults(struct rev_info *rev)
+ 	if (fmt_pretty)
+ 		get_commit_format(fmt_pretty, rev);
+ 	if (default_follow)
+-		DIFF_OPT_SET(&rev->diffopt, DEFAULT_FOLLOW_RENAMES);
++		rev->diffopt.flags.DEFAULT_FOLLOW_RENAMES = 1;
+ 	rev->verbose_header = 1;
+-	DIFF_OPT_SET(&rev->diffopt, RECURSIVE);
++	rev->diffopt.flags.RECURSIVE = 1;
+ 	rev->diffopt.stat_width = -1; /* use full terminal width */
+ 	rev->diffopt.stat_graph_width = -1; /* respect statGraphWidth config */
+ 	rev->abbrev_commit = default_abbrev_commit;
+ 	rev->show_root_diff = default_show_root;
+ 	rev->subject_prefix = fmt_patch_subject_prefix;
+ 	rev->show_signature = default_show_signature;
+-	DIFF_OPT_SET(&rev->diffopt, ALLOW_TEXTCONV);
++	rev->diffopt.flags.ALLOW_TEXTCONV = 1;
+ 
+ 	if (default_date_mode)
+ 		parse_date_format(default_date_mode, &rev->date_mode);
+@@ -668,7 +668,7 @@ static void log_setup_revisions_tweak(struct rev_info *rev,
+ {
+ 	if (rev->diffopt.flags.DEFAULT_FOLLOW_RENAMES &&
+ 	    rev->prune_data.nr == 1)
+-		DIFF_OPT_SET(&rev->diffopt, FOLLOW_RENAMES);
++		rev->diffopt.flags.FOLLOW_RENAMES = 1;
+ 
+ 	/* Turn --cc/-c into -p --cc/-c when -p was not given */
+ 	if (!rev->diffopt.output_format && rev->combine_merges)
+@@ -1340,7 +1340,7 @@ static void prepare_bases(struct base_tree_info *bases,
+ 		return;
+ 
+ 	diff_setup(&diffopt);
+-	DIFF_OPT_SET(&diffopt, RECURSIVE);
++	diffopt.flags.RECURSIVE = 1;
+ 	diff_setup_done(&diffopt);
+ 
+ 	oidcpy(&bases->base_commit, &base->object.oid);
+@@ -1511,7 +1511,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 	rev.verbose_header = 1;
+ 	rev.diff = 1;
+ 	rev.max_parents = 1;
+-	DIFF_OPT_SET(&rev.diffopt, RECURSIVE);
++	rev.diffopt.flags.RECURSIVE = 1;
+ 	rev.subject_prefix = fmt_patch_subject_prefix;
+ 	memset(&s_r_opt, 0, sizeof(s_r_opt));
+ 	s_r_opt.def = "HEAD";
+@@ -1613,7 +1613,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 	rev.zero_commit = zero_commit;
+ 
+ 	if (!rev.diffopt.flags.TEXT && !no_binary_diff)
+-		DIFF_OPT_SET(&rev.diffopt, BINARY);
++		rev.diffopt.flags.BINARY = 1;
+ 
+ 	if (rev.show_notes)
+ 		init_display_notes(&rev.notes_opt);
+diff --git a/builtin/reset.c b/builtin/reset.c
+index ea2fad5a0..206819ef1 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -166,7 +166,7 @@ static int read_from_tree(const struct pathspec *pathspec,
+ 	opt.output_format = DIFF_FORMAT_CALLBACK;
+ 	opt.format_callback = update_index_from_diff;
+ 	opt.format_callback_data = &intent_to_add;
+-	DIFF_OPT_SET(&opt, OVERRIDE_SUBMODULE_CONFIG);
++	opt.flags.OVERRIDE_SUBMODULE_CONFIG = 1;
+ 
+ 	if (do_diff_cache(tree_oid, &opt))
+ 		return 1;
 diff --git a/combine-diff.c b/combine-diff.c
-index 204b0dfce..5a3a8b49b 100644
+index 40cb4dd1a..204b0dfce 100644
 --- a/combine-diff.c
 +++ b/combine-diff.c
-@@ -1414,7 +1414,7 @@ void diff_tree_combined(const struct object_id *oid,
+@@ -1413,7 +1413,7 @@ void diff_tree_combined(const struct object_id *oid,
+ 
  	diffopts = *opt;
  	copy_pathspec(&diffopts.pathspec, &opt->pathspec);
- 	diffopts.flags.RECURSIVE = 1;
--	DIFF_OPT_CLR(&diffopts, ALLOW_EXTERNAL);
-+	diffopts.flags.ALLOW_EXTERNAL = 0;
+-	DIFF_OPT_SET(&diffopts, RECURSIVE);
++	diffopts.flags.RECURSIVE = 1;
+ 	DIFF_OPT_CLR(&diffopts, ALLOW_EXTERNAL);
  
  	/* find set of paths that everybody touches
- 	 *
+diff --git a/diff-lib.c b/diff-lib.c
+index d6b711617..b1ec804fe 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -545,8 +545,8 @@ int index_differs_from(const char *def, const struct diff_flags *flags,
+ 	memset(&opt, 0, sizeof(opt));
+ 	opt.def = def;
+ 	setup_revisions(0, NULL, &rev, &opt);
+-	DIFF_OPT_SET(&rev.diffopt, QUICK);
+-	DIFF_OPT_SET(&rev.diffopt, EXIT_WITH_STATUS);
++	rev.diffopt.flags.QUICK = 1;
++	rev.diffopt.flags.EXIT_WITH_STATUS = 1;
+ 	if (flags)
+ 		rev.diffopt.flags = diff_flags_or(&rev.diffopt.flags, flags);
+ 	rev.diffopt.ita_invisible_in_index = ita_invisible_in_index;
+diff --git a/diff-no-index.c b/diff-no-index.c
+index 40d17e42c..a3e194340 100644
+--- a/diff-no-index.c
++++ b/diff-no-index.c
+@@ -276,16 +276,16 @@ void diff_no_index(struct rev_info *revs,
+ 	if (!revs->diffopt.output_format)
+ 		revs->diffopt.output_format = DIFF_FORMAT_PATCH;
+ 
+-	DIFF_OPT_SET(&revs->diffopt, NO_INDEX);
++	revs->diffopt.flags.NO_INDEX = 1;
+ 
+-	DIFF_OPT_SET(&revs->diffopt, RELATIVE_NAME);
++	revs->diffopt.flags.RELATIVE_NAME = 1;
+ 	revs->diffopt.prefix = prefix;
+ 
+ 	revs->max_count = -2;
+ 	diff_setup_done(&revs->diffopt);
+ 
+ 	setup_diff_pager(&revs->diffopt);
+-	DIFF_OPT_SET(&revs->diffopt, EXIT_WITH_STATUS);
++	revs->diffopt.flags.EXIT_WITH_STATUS = 1;
+ 
+ 	if (queue_diff(&revs->diffopt, paths[0], paths[1]))
+ 		exit(1);
 diff --git a/diff.c b/diff.c
-index 16d33c319..0e5abb5ce 100644
+index 924f876fc..16d33c319 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -124,16 +124,16 @@ static int parse_dirstat_params(struct diff_options *options, const char *params
- 	for (i = 0; i < params.nr; i++) {
- 		const char *p = params.items[i].string;
- 		if (!strcmp(p, "changes")) {
--			DIFF_OPT_CLR(options, DIRSTAT_BY_LINE);
--			DIFF_OPT_CLR(options, DIRSTAT_BY_FILE);
-+			options->flags.DIRSTAT_BY_LINE = 0;
-+			options->flags.DIRSTAT_BY_FILE = 0;
+@@ -127,15 +127,15 @@ static int parse_dirstat_params(struct diff_options *options, const char *params
+ 			DIFF_OPT_CLR(options, DIRSTAT_BY_LINE);
+ 			DIFF_OPT_CLR(options, DIRSTAT_BY_FILE);
  		} else if (!strcmp(p, "lines")) {
- 			options->flags.DIRSTAT_BY_LINE = 1;
--			DIFF_OPT_CLR(options, DIRSTAT_BY_FILE);
-+			options->flags.DIRSTAT_BY_FILE = 0;
+-			DIFF_OPT_SET(options, DIRSTAT_BY_LINE);
++			options->flags.DIRSTAT_BY_LINE = 1;
+ 			DIFF_OPT_CLR(options, DIRSTAT_BY_FILE);
  		} else if (!strcmp(p, "files")) {
--			DIFF_OPT_CLR(options, DIRSTAT_BY_LINE);
-+			options->flags.DIRSTAT_BY_LINE = 0;
- 			options->flags.DIRSTAT_BY_FILE = 1;
+ 			DIFF_OPT_CLR(options, DIRSTAT_BY_LINE);
+-			DIFF_OPT_SET(options, DIRSTAT_BY_FILE);
++			options->flags.DIRSTAT_BY_FILE = 1;
  		} else if (!strcmp(p, "noncumulative")) {
--			DIFF_OPT_CLR(options, DIRSTAT_CUMULATIVE);
-+			options->flags.DIRSTAT_CUMULATIVE = 0;
+ 			DIFF_OPT_CLR(options, DIRSTAT_CUMULATIVE);
  		} else if (!strcmp(p, "cumulative")) {
- 			options->flags.DIRSTAT_CUMULATIVE = 1;
+-			DIFF_OPT_SET(options, DIRSTAT_CUMULATIVE);
++			options->flags.DIRSTAT_CUMULATIVE = 1;
  		} else if (isdigit(*p)) {
-@@ -4205,7 +4205,7 @@ void diff_setup_done(struct diff_options *options)
+ 			char *end;
+ 			int permille = strtoul(p, &end, 10) * 10;
+@@ -3447,7 +3447,7 @@ static void builtin_checkdiff(const char *name_a, const char *name_b,
+ 	diff_free_filespec_data(one);
+ 	diff_free_filespec_data(two);
+ 	if (data.status)
+-		DIFF_OPT_SET(o, CHECK_FAILED);
++		o->flags.CHECK_FAILED = 1;
+ }
+ 
+ struct diff_filespec *alloc_filespec(const char *path)
+@@ -4152,7 +4152,7 @@ void diff_setup(struct diff_options *options)
+ 	options->context = diff_context_default;
+ 	options->interhunkcontext = diff_interhunk_context_default;
+ 	options->ws_error_highlight = ws_error_highlight_default;
+-	DIFF_OPT_SET(options, RENAME_EMPTY);
++	options->flags.RENAME_EMPTY = 1;
+ 
+ 	/* pathchange left =NULL by default */
+ 	options->change = diff_change;
+@@ -4203,7 +4203,7 @@ void diff_setup_done(struct diff_options *options)
+ 	if (DIFF_XDL_TST(options, IGNORE_WHITESPACE) ||
+ 	    DIFF_XDL_TST(options, IGNORE_WHITESPACE_CHANGE) ||
  	    DIFF_XDL_TST(options, IGNORE_WHITESPACE_AT_EOL))
- 		options->flags.DIFF_FROM_CONTENTS = 1;
+-		DIFF_OPT_SET(options, DIFF_FROM_CONTENTS);
++		options->flags.DIFF_FROM_CONTENTS = 1;
  	else
--		DIFF_OPT_CLR(options, DIFF_FROM_CONTENTS);
-+		options->flags.DIFF_FROM_CONTENTS = 0;
+ 		DIFF_OPT_CLR(options, DIFF_FROM_CONTENTS);
  
- 	if (options->flags.FIND_COPIES_HARDER)
- 		options->detect_rename = DIFF_DETECT_COPY;
-@@ -4640,7 +4640,7 @@ int diff_opt_parse(struct diff_options *options,
- 	else if (!strcmp(arg, "--rename-empty"))
- 		options->flags.RENAME_EMPTY = 1;
- 	else if (!strcmp(arg, "--no-rename-empty"))
--		DIFF_OPT_CLR(options, RENAME_EMPTY);
-+		options->flags.RENAME_EMPTY = 0;
- 	else if (!strcmp(arg, "--relative"))
- 		options->flags.RELATIVE_NAME = 1;
- 	else if (skip_prefix(arg, "--relative=", &arg)) {
-@@ -4697,8 +4697,8 @@ int diff_opt_parse(struct diff_options *options,
- 	else if (!strcmp(arg, "--follow"))
- 		options->flags.FOLLOW_RENAMES = 1;
- 	else if (!strcmp(arg, "--no-follow")) {
--		DIFF_OPT_CLR(options, FOLLOW_RENAMES);
--		DIFF_OPT_CLR(options, DEFAULT_FOLLOW_RENAMES);
-+		options->flags.FOLLOW_RENAMES = 0;
-+		options->flags.DEFAULT_FOLLOW_RENAMES = 0;
- 	} else if (!strcmp(arg, "--color"))
- 		options->use_color = 1;
- 	else if (skip_prefix(arg, "--color=", &arg)) {
-@@ -4761,13 +4761,13 @@ int diff_opt_parse(struct diff_options *options,
- 	else if (!strcmp(arg, "--ext-diff"))
- 		options->flags.ALLOW_EXTERNAL = 1;
- 	else if (!strcmp(arg, "--no-ext-diff"))
--		DIFF_OPT_CLR(options, ALLOW_EXTERNAL);
-+		options->flags.ALLOW_EXTERNAL = 0;
- 	else if (!strcmp(arg, "--textconv")) {
- 		options->flags.ALLOW_TEXTCONV = 1;
- 		options->flags.TEXTCONV_SET_VIA_CMDLINE = 1;
- 	} else if (!strcmp(arg, "--no-textconv")) {
--		DIFF_OPT_CLR(options, ALLOW_TEXTCONV);
--		DIFF_OPT_CLR(options, TEXTCONV_SET_VIA_CMDLINE);
-+		options->flags.ALLOW_TEXTCONV = 0;
-+		options->flags.TEXTCONV_SET_VIA_CMDLINE = 0;
- 	} else if (!strcmp(arg, "--ignore-submodules")) {
- 		options->flags.OVERRIDE_SUBMODULE_CONFIG = 1;
- 		handle_ignore_submodules_arg(options, "all");
-@@ -4851,7 +4851,7 @@ int diff_opt_parse(struct diff_options *options,
- 	else if (!strcmp(arg, "--function-context"))
- 		options->flags.FUNCCONTEXT = 1;
- 	else if (!strcmp(arg, "--no-function-context"))
--		DIFF_OPT_CLR(options, FUNCCONTEXT);
-+		options->flags.FUNCCONTEXT = 0;
- 	else if ((argcount = parse_long_opt("output", av, &optarg))) {
- 		char *path = prefix_filename(prefix, optarg);
- 		options->file = xfopen(path, "w");
-@@ -5689,7 +5689,7 @@ void diff_flush(struct diff_options *options)
- 		if (options->found_changes)
- 			options->flags.HAS_CHANGES = 1;
- 		else
--			DIFF_OPT_CLR(options, HAS_CHANGES);
-+			options->flags.HAS_CHANGES = 0;
+@@ -4240,18 +4240,18 @@ void diff_setup_done(struct diff_options *options)
+ 				      DIFF_FORMAT_DIRSTAT |
+ 				      DIFF_FORMAT_SUMMARY |
+ 				      DIFF_FORMAT_CHECKDIFF))
+-		DIFF_OPT_SET(options, RECURSIVE);
++		options->flags.RECURSIVE = 1;
+ 	/*
+ 	 * Also pickaxe would not work very well if you do not say recursive
+ 	 */
+ 	if (options->pickaxe)
+-		DIFF_OPT_SET(options, RECURSIVE);
++		options->flags.RECURSIVE = 1;
+ 	/*
+ 	 * When patches are generated, submodules diffed against the work tree
+ 	 * must be checked for dirtiness too so it can be shown in the output
+ 	 */
+ 	if (options->output_format & DIFF_FORMAT_PATCH)
+-		DIFF_OPT_SET(options, DIRTY_SUBMODULES);
++		options->flags.DIRTY_SUBMODULES = 1;
+ 
+ 	if (options->detect_rename && options->rename_limit < 0)
+ 		options->rename_limit = diff_rename_limit_default;
+@@ -4275,7 +4275,7 @@ void diff_setup_done(struct diff_options *options)
+ 	 */
+ 	if (options->flags.QUICK) {
+ 		options->output_format = DIFF_FORMAT_NO_OUTPUT;
+-		DIFF_OPT_SET(options, EXIT_WITH_STATUS);
++		options->flags.EXIT_WITH_STATUS = 1;
  	}
- }
  
-@@ -5861,7 +5861,7 @@ void diffcore_std(struct diff_options *options)
+ 	options->diff_path_counter = 0;
+@@ -4630,7 +4630,7 @@ int diff_opt_parse(struct diff_options *options,
+ 	else if (starts_with(arg, "-C") || starts_with(arg, "--find-copies=") ||
+ 		 !strcmp(arg, "--find-copies")) {
+ 		if (options->detect_rename == DIFF_DETECT_COPY)
+-			DIFF_OPT_SET(options, FIND_COPIES_HARDER);
++			options->flags.FIND_COPIES_HARDER = 1;
+ 		if ((options->rename_score = diff_scoreopt_parse(arg)) == -1)
+ 			return error("invalid argument to -C: %s", arg+2);
+ 		options->detect_rename = DIFF_DETECT_COPY;
+@@ -4638,13 +4638,13 @@ int diff_opt_parse(struct diff_options *options,
+ 	else if (!strcmp(arg, "--no-renames"))
+ 		options->detect_rename = 0;
+ 	else if (!strcmp(arg, "--rename-empty"))
+-		DIFF_OPT_SET(options, RENAME_EMPTY);
++		options->flags.RENAME_EMPTY = 1;
+ 	else if (!strcmp(arg, "--no-rename-empty"))
+ 		DIFF_OPT_CLR(options, RENAME_EMPTY);
+ 	else if (!strcmp(arg, "--relative"))
+-		DIFF_OPT_SET(options, RELATIVE_NAME);
++		options->flags.RELATIVE_NAME = 1;
+ 	else if (skip_prefix(arg, "--relative=", &arg)) {
+-		DIFF_OPT_SET(options, RELATIVE_NAME);
++		options->flags.RELATIVE_NAME = 1;
+ 		options->prefix = arg;
+ 	}
+ 
+@@ -4684,18 +4684,18 @@ int diff_opt_parse(struct diff_options *options,
+ 	/* flags options */
+ 	else if (!strcmp(arg, "--binary")) {
+ 		enable_patch_output(&options->output_format);
+-		DIFF_OPT_SET(options, BINARY);
++		options->flags.BINARY = 1;
+ 	}
+ 	else if (!strcmp(arg, "--full-index"))
+-		DIFF_OPT_SET(options, FULL_INDEX);
++		options->flags.FULL_INDEX = 1;
+ 	else if (!strcmp(arg, "-a") || !strcmp(arg, "--text"))
+-		DIFF_OPT_SET(options, TEXT);
++		options->flags.TEXT = 1;
+ 	else if (!strcmp(arg, "-R"))
+-		DIFF_OPT_SET(options, REVERSE_DIFF);
++		options->flags.REVERSE_DIFF = 1;
+ 	else if (!strcmp(arg, "--find-copies-harder"))
+-		DIFF_OPT_SET(options, FIND_COPIES_HARDER);
++		options->flags.FIND_COPIES_HARDER = 1;
+ 	else if (!strcmp(arg, "--follow"))
+-		DIFF_OPT_SET(options, FOLLOW_RENAMES);
++		options->flags.FOLLOW_RENAMES = 1;
+ 	else if (!strcmp(arg, "--no-follow")) {
+ 		DIFF_OPT_CLR(options, FOLLOW_RENAMES);
+ 		DIFF_OPT_CLR(options, DEFAULT_FOLLOW_RENAMES);
+@@ -4755,24 +4755,24 @@ int diff_opt_parse(struct diff_options *options,
+ 		return argcount;
+ 	}
+ 	else if (!strcmp(arg, "--exit-code"))
+-		DIFF_OPT_SET(options, EXIT_WITH_STATUS);
++		options->flags.EXIT_WITH_STATUS = 1;
+ 	else if (!strcmp(arg, "--quiet"))
+-		DIFF_OPT_SET(options, QUICK);
++		options->flags.QUICK = 1;
+ 	else if (!strcmp(arg, "--ext-diff"))
+-		DIFF_OPT_SET(options, ALLOW_EXTERNAL);
++		options->flags.ALLOW_EXTERNAL = 1;
+ 	else if (!strcmp(arg, "--no-ext-diff"))
+ 		DIFF_OPT_CLR(options, ALLOW_EXTERNAL);
+ 	else if (!strcmp(arg, "--textconv")) {
+-		DIFF_OPT_SET(options, ALLOW_TEXTCONV);
+-		DIFF_OPT_SET(options, TEXTCONV_SET_VIA_CMDLINE);
++		options->flags.ALLOW_TEXTCONV = 1;
++		options->flags.TEXTCONV_SET_VIA_CMDLINE = 1;
+ 	} else if (!strcmp(arg, "--no-textconv")) {
+ 		DIFF_OPT_CLR(options, ALLOW_TEXTCONV);
+ 		DIFF_OPT_CLR(options, TEXTCONV_SET_VIA_CMDLINE);
+ 	} else if (!strcmp(arg, "--ignore-submodules")) {
+-		DIFF_OPT_SET(options, OVERRIDE_SUBMODULE_CONFIG);
++		options->flags.OVERRIDE_SUBMODULE_CONFIG = 1;
+ 		handle_ignore_submodules_arg(options, "all");
+ 	} else if (skip_prefix(arg, "--ignore-submodules=", &arg)) {
+-		DIFF_OPT_SET(options, OVERRIDE_SUBMODULE_CONFIG);
++		options->flags.OVERRIDE_SUBMODULE_CONFIG = 1;
+ 		handle_ignore_submodules_arg(options, arg);
+ 	} else if (!strcmp(arg, "--submodule"))
+ 		options->submodule_format = DIFF_SUBMODULE_LOG;
+@@ -4847,9 +4847,9 @@ int diff_opt_parse(struct diff_options *options,
+ 			 &options->interhunkcontext))
+ 		;
+ 	else if (!strcmp(arg, "-W"))
+-		DIFF_OPT_SET(options, FUNCCONTEXT);
++		options->flags.FUNCCONTEXT = 1;
+ 	else if (!strcmp(arg, "--function-context"))
+-		DIFF_OPT_SET(options, FUNCCONTEXT);
++		options->flags.FUNCCONTEXT = 1;
+ 	else if (!strcmp(arg, "--no-function-context"))
+ 		DIFF_OPT_CLR(options, FUNCCONTEXT);
+ 	else if ((argcount = parse_long_opt("output", av, &optarg))) {
+@@ -5687,7 +5687,7 @@ void diff_flush(struct diff_options *options)
+ 	 */
+ 	if (options->flags.DIFF_FROM_CONTENTS) {
+ 		if (options->found_changes)
+-			DIFF_OPT_SET(options, HAS_CHANGES);
++			options->flags.HAS_CHANGES = 1;
+ 		else
+ 			DIFF_OPT_CLR(options, HAS_CHANGES);
+ 	}
+@@ -5859,7 +5859,7 @@ void diffcore_std(struct diff_options *options)
+ 	diffcore_apply_filter(options);
+ 
  	if (diff_queued_diff.nr && !options->flags.DIFF_FROM_CONTENTS)
- 		options->flags.HAS_CHANGES = 1;
+-		DIFF_OPT_SET(options, HAS_CHANGES);
++		options->flags.HAS_CHANGES = 1;
  	else
--		DIFF_OPT_CLR(options, HAS_CHANGES);
-+		options->flags.HAS_CHANGES = 0;
+ 		DIFF_OPT_CLR(options, HAS_CHANGES);
  
- 	options->found_follow = 0;
+@@ -5953,7 +5953,7 @@ void diff_addremove(struct diff_options *options,
+ 
+ 	diff_queue(&diff_queued_diff, one, two);
+ 	if (!options->flags.DIFF_FROM_CONTENTS)
+-		DIFF_OPT_SET(options, HAS_CHANGES);
++		options->flags.HAS_CHANGES = 1;
  }
+ 
+ void diff_change(struct diff_options *options,
+@@ -5997,7 +5997,7 @@ void diff_change(struct diff_options *options,
+ 	    !diff_filespec_check_stat_unmatch(p))
+ 		return;
+ 
+-	DIFF_OPT_SET(options, HAS_CHANGES);
++	options->flags.HAS_CHANGES = 1;
+ }
+ 
+ struct diff_filepair *diff_unmerge(struct diff_options *options, const char *path)
 diff --git a/diff.h b/diff.h
-index 4c1af4be6..f68fcf737 100644
+index a3656ff5b..4c1af4be6 100644
 --- a/diff.h
 +++ b/diff.h
-@@ -110,8 +110,6 @@ static inline struct diff_flags diff_flags_or(const struct diff_flags *a,
+@@ -110,7 +110,6 @@ static inline struct diff_flags diff_flags_or(const struct diff_flags *a,
  	return out;
  }
  
--#define DIFF_OPT_CLR(opts, flag)	((opts)->flags.flag = 0)
--
+-#define DIFF_OPT_SET(opts, flag)	((opts)->flags.flag = 1)
+ #define DIFF_OPT_CLR(opts, flag)	((opts)->flags.flag = 0)
+ 
  #define DIFF_XDL_TST(opts, flag)    ((opts)->xdl_opts & XDF_##flag)
- #define DIFF_XDL_SET(opts, flag)    ((opts)->xdl_opts |= XDF_##flag)
- #define DIFF_XDL_CLR(opts, flag)    ((opts)->xdl_opts &= ~XDF_##flag)
 diff --git a/merge-recursive.c b/merge-recursive.c
-index e7b3df45c..9752aba4e 100644
+index 1d3f8f0d2..e7b3df45c 100644
 --- a/merge-recursive.c
 +++ b/merge-recursive.c
-@@ -541,7 +541,7 @@ static struct string_list *get_renames(struct merge_options *o,
+@@ -540,7 +540,7 @@ static struct string_list *get_renames(struct merge_options *o,
+ 		return renames;
  
  	diff_setup(&opts);
- 	opts.flags.RECURSIVE = 1;
--	DIFF_OPT_CLR(&opts, RENAME_EMPTY);
-+	opts.flags.RENAME_EMPTY = 0;
+-	DIFF_OPT_SET(&opts, RECURSIVE);
++	opts.flags.RECURSIVE = 1;
+ 	DIFF_OPT_CLR(&opts, RENAME_EMPTY);
  	opts.detect_rename = DIFF_DETECT_RENAME;
  	opts.rename_limit = o->merge_rename_limit >= 0 ? o->merge_rename_limit :
- 			    o->diff_rename_limit >= 0 ? o->diff_rename_limit :
+diff --git a/notes-merge.c b/notes-merge.c
+index 4352c34a6..b50111cf2 100644
+--- a/notes-merge.c
++++ b/notes-merge.c
+@@ -125,7 +125,7 @@ static struct notes_merge_pair *diff_tree_remote(struct notes_merge_options *o,
+ 	       oid_to_hex(base), oid_to_hex(remote));
+ 
+ 	diff_setup(&opt);
+-	DIFF_OPT_SET(&opt, RECURSIVE);
++	opt.flags.RECURSIVE = 1;
+ 	opt.output_format = DIFF_FORMAT_NO_OUTPUT;
+ 	diff_setup_done(&opt);
+ 	diff_tree_oid(base, remote, "", &opt);
+@@ -188,7 +188,7 @@ static void diff_tree_local(struct notes_merge_options *o,
+ 	       len, oid_to_hex(base), oid_to_hex(local));
+ 
+ 	diff_setup(&opt);
+-	DIFF_OPT_SET(&opt, RECURSIVE);
++	opt.flags.RECURSIVE = 1;
+ 	opt.output_format = DIFF_FORMAT_NO_OUTPUT;
+ 	diff_setup_done(&opt);
+ 	diff_tree_oid(base, local, "", &opt);
+diff --git a/patch-ids.c b/patch-ids.c
+index 7a583b301..189869e57 100644
+--- a/patch-ids.c
++++ b/patch-ids.c
+@@ -61,7 +61,7 @@ int init_patch_ids(struct patch_ids *ids)
+ 	memset(ids, 0, sizeof(*ids));
+ 	diff_setup(&ids->diffopts);
+ 	ids->diffopts.detect_rename = 0;
+-	DIFF_OPT_SET(&ids->diffopts, RECURSIVE);
++	ids->diffopts.flags.RECURSIVE = 1;
+ 	diff_setup_done(&ids->diffopts);
+ 	hashmap_init(&ids->patches, patch_id_cmp, &ids->diffopts, 256);
+ 	return 0;
 diff --git a/revision.c b/revision.c
-index f019dd277..6bb873501 100644
+index c893d9166..f019dd277 100644
 --- a/revision.c
 +++ b/revision.c
-@@ -455,7 +455,7 @@ static int rev_compare_tree(struct rev_info *revs,
- 	}
+@@ -410,7 +410,7 @@ static void file_add_remove(struct diff_options *options,
  
- 	tree_difference = REV_TREE_SAME;
--	DIFF_OPT_CLR(&revs->pruning, HAS_CHANGES);
-+	revs->pruning.flags.HAS_CHANGES = 0;
- 	if (diff_tree_oid(&t1->object.oid, &t2->object.oid, "",
- 			   &revs->pruning) < 0)
- 		return REV_TREE_DIFFERENT;
-@@ -471,7 +471,7 @@ static int rev_same_tree_as_empty(struct rev_info *revs, struct commit *commit)
- 		return 0;
+ 	tree_difference |= diff;
+ 	if (tree_difference == REV_TREE_DIFFERENT)
+-		DIFF_OPT_SET(options, HAS_CHANGES);
++		options->flags.HAS_CHANGES = 1;
+ }
  
- 	tree_difference = REV_TREE_SAME;
--	DIFF_OPT_CLR(&revs->pruning, HAS_CHANGES);
-+	revs->pruning.flags.HAS_CHANGES = 0;
- 	retval = diff_tree_oid(NULL, &t1->object.oid, "", &revs->pruning);
+ static void file_change(struct diff_options *options,
+@@ -422,7 +422,7 @@ static void file_change(struct diff_options *options,
+ 		 unsigned old_dirty_submodule, unsigned new_dirty_submodule)
+ {
+ 	tree_difference = REV_TREE_DIFFERENT;
+-	DIFF_OPT_SET(options, HAS_CHANGES);
++	options->flags.HAS_CHANGES = 1;
+ }
  
- 	return retval >= 0 && (tree_difference == REV_TREE_SAME);
+ static int rev_compare_tree(struct rev_info *revs,
+@@ -1403,8 +1403,8 @@ void init_revisions(struct rev_info *revs, const char *prefix)
+ 	revs->abbrev = DEFAULT_ABBREV;
+ 	revs->ignore_merges = 1;
+ 	revs->simplify_history = 1;
+-	DIFF_OPT_SET(&revs->pruning, RECURSIVE);
+-	DIFF_OPT_SET(&revs->pruning, QUICK);
++	revs->pruning.flags.RECURSIVE = 1;
++	revs->pruning.flags.QUICK = 1;
+ 	revs->pruning.add_remove = file_add_remove;
+ 	revs->pruning.change = file_change;
+ 	revs->sort_order = REV_SORT_IN_GRAPH_ORDER;
+@@ -1917,11 +1917,11 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 		die("--unpacked=<packfile> no longer supported.");
+ 	} else if (!strcmp(arg, "-r")) {
+ 		revs->diff = 1;
+-		DIFF_OPT_SET(&revs->diffopt, RECURSIVE);
++		revs->diffopt.flags.RECURSIVE = 1;
+ 	} else if (!strcmp(arg, "-t")) {
+ 		revs->diff = 1;
+-		DIFF_OPT_SET(&revs->diffopt, RECURSIVE);
+-		DIFF_OPT_SET(&revs->diffopt, TREE_IN_RECURSIVE);
++		revs->diffopt.flags.RECURSIVE = 1;
++		revs->diffopt.flags.TREE_IN_RECURSIVE = 1;
+ 	} else if (!strcmp(arg, "-m")) {
+ 		revs->ignore_merges = 0;
+ 	} else if (!strcmp(arg, "-c")) {
+@@ -2066,7 +2066,7 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 		revs->grep_filter.pattern_type_option = GREP_PATTERN_TYPE_ERE;
+ 	} else if (!strcmp(arg, "--regexp-ignore-case") || !strcmp(arg, "-i")) {
+ 		revs->grep_filter.ignore_case = 1;
+-		DIFF_OPT_SET(&revs->diffopt, PICKAXE_IGNORE_CASE);
++		revs->diffopt.flags.PICKAXE_IGNORE_CASE = 1;
+ 	} else if (!strcmp(arg, "--fixed-strings") || !strcmp(arg, "-F")) {
+ 		revs->grep_filter.pattern_type_option = GREP_PATTERN_TYPE_FIXED;
+ 	} else if (!strcmp(arg, "--perl-regexp") || !strcmp(arg, "-P")) {
 diff --git a/submodule.c b/submodule.c
-index 7e7998592..62a93bb88 100644
+index 58da9c668..7e7998592 100644
 --- a/submodule.c
 +++ b/submodule.c
-@@ -402,9 +402,9 @@ const char *submodule_strategy_to_string(const struct submodule_update_strategy
- void handle_ignore_submodules_arg(struct diff_options *diffopt,
- 				  const char *arg)
- {
--	DIFF_OPT_CLR(diffopt, IGNORE_SUBMODULES);
--	DIFF_OPT_CLR(diffopt, IGNORE_UNTRACKED_IN_SUBMODULES);
--	DIFF_OPT_CLR(diffopt, IGNORE_DIRTY_SUBMODULES);
-+	diffopt->flags.IGNORE_SUBMODULES = 0;
-+	diffopt->flags.IGNORE_UNTRACKED_IN_SUBMODULES = 0;
-+	diffopt->flags.IGNORE_DIRTY_SUBMODULES = 0;
+@@ -183,7 +183,7 @@ void set_diffopt_flags_from_submodule_config(struct diff_options *diffopt,
+ 		if (ignore)
+ 			handle_ignore_submodules_arg(diffopt, ignore);
+ 		else if (is_gitmodules_unmerged(&the_index))
+-			DIFF_OPT_SET(diffopt, IGNORE_SUBMODULES);
++			diffopt->flags.IGNORE_SUBMODULES = 1;
+ 	}
+ }
+ 
+@@ -407,11 +407,11 @@ void handle_ignore_submodules_arg(struct diff_options *diffopt,
+ 	DIFF_OPT_CLR(diffopt, IGNORE_DIRTY_SUBMODULES);
  
  	if (!strcmp(arg, "all"))
- 		diffopt->flags.IGNORE_SUBMODULES = 1;
+-		DIFF_OPT_SET(diffopt, IGNORE_SUBMODULES);
++		diffopt->flags.IGNORE_SUBMODULES = 1;
+ 	else if (!strcmp(arg, "untracked"))
+-		DIFF_OPT_SET(diffopt, IGNORE_UNTRACKED_IN_SUBMODULES);
++		diffopt->flags.IGNORE_UNTRACKED_IN_SUBMODULES = 1;
+ 	else if (!strcmp(arg, "dirty"))
+-		DIFF_OPT_SET(diffopt, IGNORE_DIRTY_SUBMODULES);
++		diffopt->flags.IGNORE_DIRTY_SUBMODULES = 1;
+ 	else if (strcmp(arg, "none"))
+ 		die("bad --ignore-submodules argument: %s", arg);
+ }
+diff --git a/tree-diff.c b/tree-diff.c
+index ed0aa6a62..b996a23bb 100644
+--- a/tree-diff.c
++++ b/tree-diff.c
+@@ -608,8 +608,8 @@ static void try_to_follow_renames(const struct object_id *old_oid,
+ 	q->nr = 0;
+ 
+ 	diff_setup(&diff_opts);
+-	DIFF_OPT_SET(&diff_opts, RECURSIVE);
+-	DIFF_OPT_SET(&diff_opts, FIND_COPIES_HARDER);
++	diff_opts.flags.RECURSIVE = 1;
++	diff_opts.flags.FIND_COPIES_HARDER = 1;
+ 	diff_opts.output_format = DIFF_FORMAT_NO_OUTPUT;
+ 	diff_opts.single_follow = opt->pathspec.items[0].match;
+ 	diff_opts.break_opt = opt->break_opt;
+diff --git a/wt-status.c b/wt-status.c
+index 29bc64cc0..59f9f3a0b 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -559,12 +559,12 @@ static void wt_status_collect_changes_worktree(struct wt_status *s)
+ 	init_revisions(&rev, NULL);
+ 	setup_revisions(0, NULL, &rev, NULL);
+ 	rev.diffopt.output_format |= DIFF_FORMAT_CALLBACK;
+-	DIFF_OPT_SET(&rev.diffopt, DIRTY_SUBMODULES);
++	rev.diffopt.flags.DIRTY_SUBMODULES = 1;
+ 	rev.diffopt.ita_invisible_in_index = 1;
+ 	if (!s->show_untracked_files)
+-		DIFF_OPT_SET(&rev.diffopt, IGNORE_UNTRACKED_IN_SUBMODULES);
++		rev.diffopt.flags.IGNORE_UNTRACKED_IN_SUBMODULES = 1;
+ 	if (s->ignore_submodule_arg) {
+-		DIFF_OPT_SET(&rev.diffopt, OVERRIDE_SUBMODULE_CONFIG);
++		rev.diffopt.flags.OVERRIDE_SUBMODULE_CONFIG = 1;
+ 		handle_ignore_submodules_arg(&rev.diffopt, s->ignore_submodule_arg);
+ 	}
+ 	rev.diffopt.format_callback = wt_status_collect_changed_cb;
+@@ -583,7 +583,7 @@ static void wt_status_collect_changes_index(struct wt_status *s)
+ 	opt.def = s->is_initial ? EMPTY_TREE_SHA1_HEX : s->reference;
+ 	setup_revisions(0, NULL, &rev, &opt);
+ 
+-	DIFF_OPT_SET(&rev.diffopt, OVERRIDE_SUBMODULE_CONFIG);
++	rev.diffopt.flags.OVERRIDE_SUBMODULE_CONFIG = 1;
+ 	rev.diffopt.ita_invisible_in_index = 1;
+ 	if (s->ignore_submodule_arg) {
+ 		handle_ignore_submodules_arg(&rev.diffopt, s->ignore_submodule_arg);
+@@ -949,7 +949,7 @@ static void wt_longstatus_print_verbose(struct wt_status *s)
+ 	const char *c = color(WT_STATUS_HEADER, s);
+ 
+ 	init_revisions(&rev, NULL);
+-	DIFF_OPT_SET(&rev.diffopt, ALLOW_TEXTCONV);
++	rev.diffopt.flags.ALLOW_TEXTCONV = 1;
+ 	rev.diffopt.ita_invisible_in_index = 1;
+ 
+ 	memset(&opt, 0, sizeof(opt));
+@@ -2263,8 +2263,8 @@ int has_unstaged_changes(int ignore_submodules)
+ 
+ 	init_revisions(&rev_info, NULL);
+ 	if (ignore_submodules)
+-		DIFF_OPT_SET(&rev_info.diffopt, IGNORE_SUBMODULES);
+-	DIFF_OPT_SET(&rev_info.diffopt, QUICK);
++		rev_info.diffopt.flags.IGNORE_SUBMODULES = 1;
++	rev_info.diffopt.flags.QUICK = 1;
+ 	diff_setup_done(&rev_info.diffopt);
+ 	result = run_diff_files(&rev_info, 0);
+ 	return diff_result_code(&rev_info.diffopt, result);
+@@ -2283,8 +2283,8 @@ int has_uncommitted_changes(int ignore_submodules)
+ 
+ 	init_revisions(&rev_info, NULL);
+ 	if (ignore_submodules)
+-		DIFF_OPT_SET(&rev_info.diffopt, IGNORE_SUBMODULES);
+-	DIFF_OPT_SET(&rev_info.diffopt, QUICK);
++		rev_info.diffopt.flags.IGNORE_SUBMODULES = 1;
++	rev_info.diffopt.flags.QUICK = 1;
+ 	add_head_to_pending(&rev_info);
+ 	diff_setup_done(&rev_info.diffopt);
+ 	result = run_diff_index(&rev_info, 1);
 -- 
 2.15.0.403.gc27cc4dac6-goog
 
