@@ -7,25 +7,25 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	UNPARSEABLE_RELAY shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7059A1FBF4
-	for <e@80x24.org>; Mon, 30 Oct 2017 12:28:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 22AFE1FBF4
+	for <e@80x24.org>; Mon, 30 Oct 2017 12:31:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751433AbdJ3M2L convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Mon, 30 Oct 2017 08:28:11 -0400
-Received: from marcos.anarc.at ([206.248.172.91]:42852 "EHLO marcos.anarc.at"
+        id S1751919AbdJ3MbL convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Mon, 30 Oct 2017 08:31:11 -0400
+Received: from marcos.anarc.at ([206.248.172.91]:42908 "EHLO marcos.anarc.at"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751166AbdJ3M2K (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Oct 2017 08:28:10 -0400
-Received: from [127.0.0.1] (localhost [127.0.0.1])      (Authenticated sender: anarcat) with ESMTPSA id 75EEE1A00AA
+        id S1751878AbdJ3MbL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Oct 2017 08:31:11 -0400
+Received: from [127.0.0.1] (localhost [127.0.0.1])      (Authenticated sender: anarcat) with ESMTPSA id 4B6C01A00AD
 From:   =?utf-8?Q?Antoine_Beaupr=C3=A9?= <anarcat@debian.org>
-To:     Matthieu Moy <git@matthieu-moy.fr>
+To:     Matthieu Moy <Matthieu.Moy@univ-lyon1.fr>
 Cc:     git@vger.kernel.org
-Subject: Re: future of the mediawiki extension?
-In-Reply-To: <q7h9o9opyllo.fsf@orange.lip.ens-lyon.fr>
+Subject: Re: [PATCH v2] remote-mediawiki: limit filenames to legal
+In-Reply-To: <q7h9fua0zzz0.fsf@orange.lip.ens-lyon.fr>
 Organization: Debian
-References: <87vaix731f.fsf@curie.anarc.at> <q7h9o9opyllo.fsf@orange.lip.ens-lyon.fr>
-Date:   Mon, 30 Oct 2017 08:28:09 -0400
-Message-ID: <87mv487rc6.fsf@curie.anarc.at>
+References: <20171029163714.4818-1-anarcat@debian.org> <20171029181034.27707-1-anarcat@debian.org> <q7h9fua0zzz0.fsf@orange.lip.ens-lyon.fr>
+Date:   Mon, 30 Oct 2017 08:31:10 -0400
+Message-ID: <87h8ug7r75.fsf@curie.anarc.at>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8BIT
@@ -34,31 +34,36 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2017-10-30 11:29:55, Matthieu Moy wrote:
->> It should also be mentioned that this contrib isn't very active: I'm not
->> part of the GitHub organization, yet I'm probably the one that's been
->> the most active with patches in the last year (and I wasn't very active
->> at all).
+On 2017-10-30 11:34:11, Matthieu Moy wrote:
+> Antoine Beaupré <anarcat@debian.org> writes:
 >
-> FYI, I'm no longer using Mediawiki as much as I did, and I don't really
-> use Git-Mediawiki anymore.
+>> @@ -52,7 +53,7 @@ sub smudge_filename {
+>>  	$filename =~ s/ /_/g;
+>>  	# Decode forbidden characters encoded in clean_filename
+>>  	$filename =~ s/_%_([0-9a-fA-F][0-9a-fA-F])/sprintf('%c', hex($1))/ge;
+>> -	return $filename;
+>> +	return substr($filename, 0, NAME_MAX-3);
 >
-> The main blocking point to revive Git-Mediawiki is to find a new
-> maintainer (https://github.com/Git-Mediawiki/Git-Mediawiki/issues/33). I
-> believe I just found one ;-).
+> There's a request to allow a configurable extension (.mediawiki would
+> help importing in some wikis, see
+> https://github.com/Git-Mediawiki/Git-Mediawiki/issues/42). You should at
+> least make this stg like length(".mw") so that the next search&replace
+> for ".mw" finds this.
 
-Eh. I assume you mean me here. As I hinted at in another thread, I am
-not sure I can commit to leading the project - just scratching an
-itch. But I may be able to review pull requests and make some releases
-from time to time... I probably won't work on code or features I don't
-need unless someone funds my work or something. ;)
+I believe I did that in v3.
 
-We'll see where the community takes us, I guess... Always better to have
-more than one maintainer, anyways, just for the bus factor... Worst
-case, I'll delegate to a worthy successor. :)
+> Also, note that your solution works for using Git-Mediawiki in a
+> read-only way, but if you start modifying and pushing such files, you'll
+> get into trouble. It probably makes sense to issue a warnign in such
+> case.
+
+True. I didn't consider that, but then again the patch is not a
+regression: you couldn't have pushed those repos in the first place
+anyways...
 
 A.
 
 -- 
-Votre silence ne vous protégera pas.
-                        - Audrey Lorde
+The history of any one part of the earth, like the life of a soldier,
+consists of long periods of boredom and short periods of terror.
+                       - British geologist Derek V. Ager
