@@ -7,24 +7,27 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	UNPARSEABLE_RELAY shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 53BE6202A0
-	for <e@80x24.org>; Mon, 30 Oct 2017 02:52:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2D929202A0
+	for <e@80x24.org>; Mon, 30 Oct 2017 02:52:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751934AbdJ3Cvv (ORCPT <rfc822;e@80x24.org>);
-        Sun, 29 Oct 2017 22:51:51 -0400
-Received: from marcos.anarc.at ([206.248.172.91]:60686 "EHLO marcos.anarc.at"
+        id S1752120AbdJ3CwI (ORCPT <rfc822;e@80x24.org>);
+        Sun, 29 Oct 2017 22:52:08 -0400
+Received: from marcos.anarc.at ([206.248.172.91]:60694 "EHLO marcos.anarc.at"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751673AbdJ3Cvu (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Oct 2017 22:51:50 -0400
-Received: from [127.0.0.1] (localhost [127.0.0.1])      (Authenticated sender: anarcat) with ESMTPSA id DEEA41A00AA
+        id S1751887AbdJ3Cvv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Oct 2017 22:51:51 -0400
+Received: from [127.0.0.1] (localhost [127.0.0.1])      (Authenticated sender: anarcat) with ESMTPSA id E62C51A00AD
 From:   =?UTF-8?q?Antoine=20Beaupr=C3=A9?= <anarcat@debian.org>
 To:     git@vger.kernel.org
-Subject: [PATCH v2 0/7] remote-mediawiki: add namespace support
-Date:   Sun, 29 Oct 2017 22:51:35 -0400
-Message-Id: <20171030025142.19421-1-anarcat@debian.org>
+Cc:     Ingo Ruhnke <grumbel@gmail.com>,
+        =?UTF-8?q?Antoine=20Beaupr=C3=A9?= <anarcat@debian.org>
+Subject: [PATCH 2/7] remote-mediawiki: allow fetching namespaces with spaces
+Date:   Sun, 29 Oct 2017 22:51:37 -0400
+Message-Id: <20171030025142.19421-3-anarcat@debian.org>
 X-Mailer: git-send-email 2.11.0
-In-Reply-To: <20171029160857.29460-2-anarcat@debian.org>
+In-Reply-To: <20171030025142.19421-1-anarcat@debian.org>
 References: <20171029160857.29460-2-anarcat@debian.org>
+ <20171030025142.19421-1-anarcat@debian.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -33,16 +36,30 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patch series tries to integrate all the feedback received in the
-recent review from Eric Sunshine. It completely removes the confusing
-changes to get_mw_namespace_id_for_page() because I believe they are
-unrelated to the namespace support.
+From: Ingo Ruhnke <grumbel@gmail.com>
 
-I also split up the last patch in 4 different patches for clarity and
-fixed the vocabulary (it's "virtual" namespaces, not "special", which
-is a specific namespace).
+we still want to use spaces as separators in the config, but we should
+allow the user to specify namespaces with spaces, so we use underscore
+for this.
 
-I left that die() in there because it makes the code a little cleaner
-and I'm lazy.
+Reviewed-by: Antoine Beaupré <anarcat@debian.org>
+Signed-off-by: Antoine Beaupré <anarcat@debian.org>
+---
+ contrib/mw-to-git/git-remote-mediawiki.perl | 1 +
+ 1 file changed, 1 insertion(+)
 
-Thanks again for the good feedback!
+diff --git a/contrib/mw-to-git/git-remote-mediawiki.perl b/contrib/mw-to-git/git-remote-mediawiki.perl
+index 5ffb57595..a1d783789 100755
+--- a/contrib/mw-to-git/git-remote-mediawiki.perl
++++ b/contrib/mw-to-git/git-remote-mediawiki.perl
+@@ -65,6 +65,7 @@ chomp(@tracked_categories);
+ 
+ # Just like @tracked_categories, but for MediaWiki namespaces.
+ my @tracked_namespaces = split(/[ \n]/, run_git("config --get-all remote.${remotename}.namespaces"));
++for (@tracked_namespaces) { s/_/ /g; }
+ chomp(@tracked_namespaces);
+ 
+ # Import media files on pull
+-- 
+2.11.0
+
