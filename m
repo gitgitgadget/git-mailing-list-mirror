@@ -6,30 +6,29 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 38F7F2055E
-	for <e@80x24.org>; Mon, 30 Oct 2017 10:34:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D96ED2055E
+	for <e@80x24.org>; Mon, 30 Oct 2017 10:40:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752280AbdJ3KeO convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Mon, 30 Oct 2017 06:34:14 -0400
-Received: from mail3-relais-sop.national.inria.fr ([192.134.164.104]:52422
+        id S1751755AbdJ3KkI convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Mon, 30 Oct 2017 06:40:08 -0400
+Received: from mail3-relais-sop.national.inria.fr ([192.134.164.104]:24663
         "EHLO mail3-relais-sop.national.inria.fr" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751777AbdJ3KeN (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2017 06:34:13 -0400
+        by vger.kernel.org with ESMTP id S1751546AbdJ3KkI (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2017 06:40:08 -0400
 X-IronPort-AV: E=Sophos;i="5.44,319,1505772000"; 
-   d="scan'208";a="242809226"
+   d="scan'208";a="242810155"
 Received: from orange.lip.ens-lyon.fr ([140.77.14.54])
-  by mail3-relais-sop.national.inria.fr with ESMTP/TLS/AES128-GCM-SHA256; 30 Oct 2017 11:34:12 +0100
+  by mail3-relais-sop.national.inria.fr with ESMTP/TLS/AES128-GCM-SHA256; 30 Oct 2017 11:40:06 +0100
 From:   Matthieu Moy <Matthieu.Moy@univ-lyon1.fr>
 To:     Antoine =?utf-8?Q?Beaupr=C3=A9?= <anarcat@debian.org>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2] remote-mediawiki: limit filenames to legal
-References: <20171029163714.4818-1-anarcat@debian.org>
-        <20171029181034.27707-1-anarcat@debian.org>
-Date:   Mon, 30 Oct 2017 11:34:11 +0100
-In-Reply-To: <20171029181034.27707-1-anarcat@debian.org> ("Antoine
+Subject: Re: [PATCH 0/4] WIP: git-remote-media wiki namespace support
+References: <20171029160857.29460-1-anarcat@debian.org>
+Date:   Mon, 30 Oct 2017 11:40:06 +0100
+In-Reply-To: <20171029160857.29460-1-anarcat@debian.org> ("Antoine
  \=\?utf-8\?Q\?Beaupr\=C3\=A9\=22's\?\=
-        message of "Sun, 29 Oct 2017 14:10:34 -0400")
-Message-ID: <q7h9fua0zzz0.fsf@orange.lip.ens-lyon.fr>
+        message of "Sun, 29 Oct 2017 12:08:53 -0400")
+Message-ID: <q7h98tfszzp5.fsf@orange.lip.ens-lyon.fr>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -41,25 +40,26 @@ X-Mailing-List: git@vger.kernel.org
 
 Antoine Beaupré <anarcat@debian.org> writes:
 
-> @@ -52,7 +53,7 @@ sub smudge_filename {
->  	$filename =~ s/ /_/g;
->  	# Decode forbidden characters encoded in clean_filename
->  	$filename =~ s/_%_([0-9a-fA-F][0-9a-fA-F])/sprintf('%c', hex($1))/ge;
-> -	return $filename;
-> +	return substr($filename, 0, NAME_MAX-3);
+> Obviously, doing unit tests against a full MediaWiki instance isn't
+> exactly trivial.
 
-There's a request to allow a configurable extension (.mediawiki would
-help importing in some wikis, see
-https://github.com/Git-Mediawiki/Git-Mediawiki/issues/42). You should at
-least make this stg like length(".mw") so that the next search&replace
-for ".mw" finds this.
+Not trivial, but doable: there is all the infrastructure to do so in t/:
+install-wiki.sh to automatically install Mediawiki, and then a testsuite
+that interacts with it.
 
-Also, note that your solution works for using Git-Mediawiki in a
-read-only way, but if you start modifying and pushing such files, you'll
-get into trouble. It probably makes sense to issue a warnign in such
-case.
+This has been written under the assumption that the developer had a
+lighttpd instance running on localhost, but this can probably be adapted
+to run on Travis-CI (install lighttpd & Mediawiki in the install: part,
+and run the tests afterwards), so that anyone can run the tests by just
+submitting a pull-request to Git-Mediawiki.
 
-Regards,
+If you are to work more on Git-Mediawiki, don't underestimate the
+usefullness of the testsuite (for example, Git-Mediawiki was developped
+against a prehistoric version of Mediawiki, the testsuite can help
+ensuring it still works on the lastest version), nor the fun of playing
+with install scripts and CI systems ;-).
+
+Cheers,
 
 -- 
 Matthieu Moy
