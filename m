@@ -2,101 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6F919202DD
-	for <e@80x24.org>; Mon, 30 Oct 2017 19:54:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9F26E202DD
+	for <e@80x24.org>; Mon, 30 Oct 2017 20:41:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932907AbdJ3TyR (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Oct 2017 15:54:17 -0400
-Received: from siwi.pair.com ([209.68.5.199]:39439 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932087AbdJ3TyQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Oct 2017 15:54:16 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 188BC84513;
-        Mon, 30 Oct 2017 15:54:16 -0400 (EDT)
-Received: from [10.160.98.77] (unknown [167.220.148.86])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 9A5988450F;
-        Mon, 30 Oct 2017 15:54:15 -0400 (EDT)
-Subject: Re: What's cooking in git.git (Oct 2017, #07; Mon, 30)
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-References: <xmqqr2tl40pl.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.21.1.1710301830210.6482@virtualbox>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <f12353b6-cfed-722b-1386-d55700f21915@jeffhostetler.com>
-Date:   Mon, 30 Oct 2017 15:54:14 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.4.0
+        id S1752136AbdJ3Ulc (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Oct 2017 16:41:32 -0400
+Received: from mail-qk0-f193.google.com ([209.85.220.193]:43095 "EHLO
+        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751998AbdJ3Ulb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Oct 2017 16:41:31 -0400
+Received: by mail-qk0-f193.google.com with SMTP id w134so17872501qkb.0
+        for <git@vger.kernel.org>; Mon, 30 Oct 2017 13:41:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=azc2cFVeYJJbTjnTuxHuXKyPdmhNnlB2+zMi8VldupU=;
+        b=DNoQA0gdZHTTB6S4iKIke9LNPOmyv62QcVJLHi54xlC8FYZjXfed8YZ2JOCd+SLwbP
+         PaZjcH7YXgAMeQFZ+Dswcog0Fx45wW3M8QH5Zmyhpb2X7lij+pUrHgWTqtjQugFe8nlp
+         VT2Ybpva15xOH/Mg8Ev1adhweyaCFUovKevPQ504DaaF6hjhpFBOp6Dy1cQESdTV7rQr
+         XySkpo/sL4EvqrZTRBOVVQIaIxo/jkiIXi1qjNcMrr87J3QChiMupSKlbNULfJBqC+M5
+         NF2O5nCNjd8hmMBZ7sMNvt+TucqyR3MurmQpipkuA0vwS/6Qzbbo+6UBH0sTTuLMz4mD
+         Y0kQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=azc2cFVeYJJbTjnTuxHuXKyPdmhNnlB2+zMi8VldupU=;
+        b=f52fBDLTwRRpP7m2TVVlp5X6gadtFetuv5fc9qZhmolkjesmtUkKtKwQmtdUNGbEDr
+         X3ZHkC5AZe8mmq+0E5NkYBmf+gil07pC7o8NlT30zggQH6L4MmdKrpZ3U9LXyQpkASpr
+         CIWrwf69Lupgm5PUPbR6DAnwNxioBZqNyqp72SbK5c+Zcff5/haLLCIqnQY7rygQNvEt
+         gIA2Z53rmEF+5Yxayaj5gCLdUjSYnFgQ0r2NOyNvsptr2h2ZwUwklvEnxkQbbD3ZFx34
+         9M+JhZQcrttk4xw8bdepabeTe7r1TpNIF7xDAdDpKiIexG8uMupY7A4tY8MhZh7GQXBM
+         Xw+Q==
+X-Gm-Message-State: AMCzsaX3MwtXN5wep+rG24w5otdrJJ7D0PIONhUoEPgEfn/HQyyih4a6
+        j+Hkr29nxx11mKGGgCyPGYqXCxPe3+q9ADyhtA3EMg==
+X-Google-Smtp-Source: ABhQp+QwWPanh9fhZWJxI4OScfiQsDNvjwlLCPNtPH6o1l7BmyR+cklMNQ/TbMoZyBIf9RK0+78cI9OyzvBKSCYEDco=
+X-Received: by 10.55.129.70 with SMTP id c67mr15779745qkd.230.1509396090253;
+ Mon, 30 Oct 2017 13:41:30 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <alpine.DEB.2.21.1.1710301830210.6482@virtualbox>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Received: by 10.140.102.70 with HTTP; Mon, 30 Oct 2017 13:41:29 -0700 (PDT)
+In-Reply-To: <20171030194646.27473-4-bmwill@google.com>
+References: <20171027222853.180981-1-bmwill@google.com> <20171030194646.27473-1-bmwill@google.com>
+ <20171030194646.27473-4-bmwill@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 30 Oct 2017 13:41:29 -0700
+Message-ID: <CAGZ79kaLX881vi3MJaOCE6h=h_eRGjJ+gYCUEV-2rNSg0exFOw@mail.gmail.com>
+Subject: Re: [PATCH v2 3/4] diff: add flag to indicate textconv was set via cmdline
+To:     Brandon Williams <bmwill@google.com>,
+        Michael J Gruber <git@drmicha.warpmail.net>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, Oct 30, 2017 at 12:46 PM, Brandon Williams <bmwill@google.com> wrote:
+> git-show is unique in that it wants to use textconv by default except
+> for when it is showing blobs.  When asked to show a blob, show doesn't
+> want to use textconv unless the user explicitly requested that it be
+> used by providing the command line flag '--textconv'.
+>
+> Currently this is done by using a parallel set of 'touched' flags which
+> get set every time a particular flag is set or cleared.  In a future
+> patch we want to eliminate this parallel set of flags so instead of
+> relying on if the textconv flag has been touched, add a new flag
+> 'TEXTCONV_SET_VIA_CMDLINE' which is only set if textconv is requested
+> via the command line.
 
+Is it worth mentioning 4197361e39 (Merge branch 'mg/more-textconv',
+2013-10-23), that introduced the touched_flags?
+(+cc Michael Gruber FYI)
 
-On 10/30/2017 1:31 PM, Johannes Schindelin wrote:
-> Hi Junio,
-> 
-> On Mon, 30 Oct 2017, Junio C Hamano wrote:
-> 
->> * jt/partial-clone-lazy-fetch (2017-10-02) 18 commits
->>   - fetch-pack: restore save_commit_buffer after use
->>   - unpack-trees: batch fetching of missing blobs
->>   - clone: configure blobmaxbytes in created repos
->>   - clone: support excluding large blobs
->>   - fetch: support excluding large blobs
->>   - fetch: refactor calculation of remote list
->>   - fetch-pack: support excluding large blobs
->>   - pack-objects: support --blob-max-bytes
->>   - pack-objects: rename want_.* to ignore_.*
->>   - gc: do not repack promisor packfiles
->>   - rev-list: support termination at promisor objects
->>   - sha1_file: support lazily fetching missing objects
->>   - introduce fetch-object: fetch one promisor object
->>   - index-pack: refactor writing of .keep files
->>   - fsck: support promisor objects as CLI argument
->>   - fsck: support referenced promisor objects
->>   - fsck: support refs pointing to promisor objects
->>   - fsck: introduce partialclone extension
->>
->>   A journey for "git clone" and "git fetch" to become "lazier" by
->>   depending more on its remote repository---this is the beginning of
->>   it.
->>
->>   Expecting a reroll.
->>   cf. <CAGf8dgLu-TeK8KbHv-U+18O+L2TxKcGv5vFFHy38J6a_YXRfew@mail.gmail.com>
-> 
-> It was my understanding that Jeff's heavy-lifting produced a shorter,
-> initial patch series with parts of this, that was already reviewed
-> internally by Jonathan.
-> 
-> Am I mistaken?
-> 
-> Ciao,
-> Dscho
-> 
+> Signed-off-by: Brandon Williams <bmwill@google.com>
+> ---
+>  builtin/log.c | 2 +-
+>  diff.c        | 8 +++++---
+>  diff.h        | 1 +
+>  3 files changed, 7 insertions(+), 4 deletions(-)
+>
+> diff --git a/builtin/log.c b/builtin/log.c
+> index dc28d43eb..82131751d 100644
+> --- a/builtin/log.c
+> +++ b/builtin/log.c
+> @@ -485,7 +485,7 @@ static int show_blob_object(const struct object_id *oid, struct rev_info *rev, c
+>         unsigned long size;
+>
+>         fflush(rev->diffopt.file);
+> -       if (!DIFF_OPT_TOUCHED(&rev->diffopt, ALLOW_TEXTCONV) ||
+> +       if (!DIFF_OPT_TST(&rev->diffopt, TEXTCONV_SET_VIA_CMDLINE) ||
+>             !DIFF_OPT_TST(&rev->diffopt, ALLOW_TEXTCONV))
+>                 return stream_blob_to_fd(1, oid, NULL, 0);
+>
+> diff --git a/diff.c b/diff.c
+> index 3ad9c9b31..8b700b1bd 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -4762,11 +4762,13 @@ int diff_opt_parse(struct diff_options *options,
+>                 DIFF_OPT_SET(options, ALLOW_EXTERNAL);
+>         else if (!strcmp(arg, "--no-ext-diff"))
+>                 DIFF_OPT_CLR(options, ALLOW_EXTERNAL);
+> -       else if (!strcmp(arg, "--textconv"))
+> +       else if (!strcmp(arg, "--textconv")) {
+>                 DIFF_OPT_SET(options, ALLOW_TEXTCONV);
+> -       else if (!strcmp(arg, "--no-textconv"))
+> +               DIFF_OPT_SET(options, TEXTCONV_SET_VIA_CMDLINE);
+> +       } else if (!strcmp(arg, "--no-textconv")) {
+>                 DIFF_OPT_CLR(options, ALLOW_TEXTCONV);
 
-Right.  I posted a "part 1" of this last week and am currently
-rerolling that.  I should also have a followup "part 2" patch
-series shortly.
+Also clear TEXTCONV_SET_VIA_CMDLINE here?
+(`git show --textconv --no-textconv` might act funny?)
 
-https://public-inbox.org/git/20171024185332.57261-1-git@jeffhostetler.com/
-
-I've been assuming that the jt/partial-clone-lazy-fetch is a
-placeholder for our next combined patch series.
-
-Jeff
+> -       else if (!strcmp(arg, "--ignore-submodules")) {
+> +               DIFF_OPT_CLR(options, TEXTCONV_SET_VIA_CMDLINE);
+> +       } else if (!strcmp(arg, "--ignore-submodules")) {
+>                 DIFF_OPT_SET(options, OVERRIDE_SUBMODULE_CONFIG);
+>                 handle_ignore_submodules_arg(options, "all");
+>         } else if (skip_prefix(arg, "--ignore-submodules=", &arg)) {
+> diff --git a/diff.h b/diff.h
+> index 47e6d43cb..4eaf9b370 100644
+> --- a/diff.h
+> +++ b/diff.h
+> @@ -83,6 +83,7 @@ struct diff_flags {
+>         unsigned DIRSTAT_CUMULATIVE:1;
+>         unsigned DIRSTAT_BY_FILE:1;
+>         unsigned ALLOW_TEXTCONV:1;
+> +       unsigned TEXTCONV_SET_VIA_CMDLINE:1;
+>         unsigned DIFF_FROM_CONTENTS:1;
+>         unsigned DIRTY_SUBMODULES:1;
+>         unsigned IGNORE_UNTRACKED_IN_SUBMODULES:1;
+> --
+> 2.15.0.403.gc27cc4dac6-goog
+>
