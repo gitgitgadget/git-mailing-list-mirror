@@ -2,91 +2,152 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A0DED2055E
-	for <e@80x24.org>; Mon, 30 Oct 2017 06:27:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BF4EA2055E
+	for <e@80x24.org>; Mon, 30 Oct 2017 07:42:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752153AbdJ3G1S (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Oct 2017 02:27:18 -0400
-Received: from mail-wm0-f51.google.com ([74.125.82.51]:50201 "EHLO
-        mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751540AbdJ3G1R (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Oct 2017 02:27:17 -0400
-Received: by mail-wm0-f51.google.com with SMTP id s66so13395858wmf.5
-        for <git@vger.kernel.org>; Sun, 29 Oct 2017 23:27:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=RIw0W7vtUk+e52bg5zC9m8kCb+s2KlQumhRz2APy440=;
-        b=atLS1N8QbNSdIORcFZ3baHHb2ea7/Njiy6UKen4rrSVUppWN4/jLtFc7F5U/uINZrv
-         1fhE/DyfmpyNhOqDZ8OWfToeQRql3qDgvPWc/TdgIw624QqnH1QmrgMnupsetsvtr3EE
-         r0FzMzTNgTyiAdZPt4++zr5LMZ7kQVwj9gnbDr2gkZVNWj5fcW4EdDachHX7/ckALPjp
-         xc3nf6p3IU85Fo84cYgxDA3ChISvjwtErWoJ8KbFLU5jlr2i0VDyBZ56xv1lIFeObNln
-         8uxfbPX3SYrm1kvWGwhKPMTNdNTMQSJQiimoalygck0lTHHtKoBMnphsXEe2CXMoIFAa
-         we4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=RIw0W7vtUk+e52bg5zC9m8kCb+s2KlQumhRz2APy440=;
-        b=RxGlwpBevHT1RZkkAoAdMOWptZErGtQPP/e2yRDG/xH4fNwKUYqYPQknsUpvXn/Y+I
-         Zg5SZu+E50nJjFKH6G0JlfRYpXghHUw4Ks+hfaaNCcwC7eSffYGirE3nBr11kRrDh9y/
-         xY02rrNS4CsQ7yE2g9NZWdkIEpuTFOLME9ff6rZmK0JBcn+vR0G2bNG9HvW2lpejmM6x
-         nKnoUTW0Wn8wYA59K1P20h/am0VKVAz4PYzfpZDnx7/WO1yIRDTd/hasPl+7UnpRBn14
-         RvBhWYPSKNu0ZVn6OBpsNQmUGY8CAWDlxYgSsHnPzfxqklhLPYWpPwbYxtSILoowZU8d
-         7blw==
-X-Gm-Message-State: AMCzsaUFLShykvvKtBbh/X1MFD7Mo8wGPr2Uil8APeutFOsq/OgwC4Yc
-        5rTx09tfbMdgey8YNVTFaFqLcLUS7pSNexcOURo=
-X-Google-Smtp-Source: ABhQp+TBcfYR2LuR7gF0X01+Lj3pThEASYo74M/+ta+qYvzkyK0Cn6UCKQOkd6Tsfe2IwAJJzulgVIMjIPWwqNcb55c=
-X-Received: by 10.80.217.15 with SMTP id t15mr10706697edj.217.1509344836042;
- Sun, 29 Oct 2017 23:27:16 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.80.213.80 with HTTP; Sun, 29 Oct 2017 23:26:55 -0700 (PDT)
-In-Reply-To: <xmqqo9op71d8.fsf@gitster.mtv.corp.google.com>
-References: <20171028000152.2760-1-jacob.e.keller@intel.com>
- <alpine.DEB.2.21.1.1710281740070.6482@virtualbox> <4150d979-f653-e79b-563a-1dc43f12468d@talktalk.net>
- <xmqq1sll8j6f.fsf@gitster.mtv.corp.google.com> <CA+P7+xrXLcTQpPWgzLwt_yZo=QdfetF36jrc_TtXfqMKR2Hh3w@mail.gmail.com>
- <xmqqo9op71d8.fsf@gitster.mtv.corp.google.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Sun, 29 Oct 2017 23:26:55 -0700
-Message-ID: <CA+P7+xo5UgUPQCYU-LaXn+HZZ1qe++KOevTMh2C1sgnzK0SAQA@mail.gmail.com>
-Subject: Re: [PATCH] rebase: exec leaks GIT_DIR to environment
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Phillip Wood <phillip.wood@talktalk.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jacob Keller <jacob.e.keller@intel.com>,
-        Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        id S1751534AbdJ3Hmn (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Oct 2017 03:42:43 -0400
+Received: from mailout1.samsung.com ([203.254.224.24]:52512 "EHLO
+        mailout1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751221AbdJ3Hmm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Oct 2017 03:42:42 -0400
+Received: from epcas1p2.samsung.com (unknown [182.195.41.46])
+        by mailout1.samsung.com (KnoxPortal) with ESMTP id 20171030074240epoutp014fa77f406d3c7a84ca9bd74be19c33fc~yST8gUAIJ3194931949epoutp016;
+        Mon, 30 Oct 2017 07:42:40 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com 20171030074240epoutp014fa77f406d3c7a84ca9bd74be19c33fc~yST8gUAIJ3194931949epoutp016
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1509349360;
+        bh=2DBaVq6TbMaWMXN5lpEY3SkGqSzXHZ3sLzd5+YwH2cg=;
+        h=Subject:To:Cc:From:Date:In-reply-to:References:From;
+        b=TolbP3AzkYsMyV2s5v5bbhJvbntPRDZL9+viERE8vRCsqrCPtF3dw9N0JsSHh5DcO
+         ILmVXgBbCBDV7cX8ZJvZt2rG4YA8PxaAKJb+tZWjBjp3hX6RPoIItDNn60UV7GvUJh
+         Bkk0l22vGgYGNTu5wDkoVx3kToqT1YRpXehI4YeU=
+Received: from epsmges1p4.samsung.com (unknown [182.195.42.56]) by
+        epcas1p3.samsung.com (KnoxPortal) with ESMTP id
+        20171030074240epcas1p3e5f0151402b00981b10de8eefb737797~yST8XhFIo3134631346epcas1p3O;
+        Mon, 30 Oct 2017 07:42:40 +0000 (GMT)
+Received: from epcas1p3.samsung.com ( [182.195.41.47]) by
+        epsmges1p4.samsung.com (Symantec Messaging Gateway) with SMTP id
+        9E.A3.04510.0F7D6F95; Mon, 30 Oct 2017 16:42:40 +0900 (KST)
+Received: from epsmgms2p1new.samsung.com (unknown [182.195.42.142]) by
+        epcas1p2.samsung.com (KnoxPortal) with ESMTP id
+        20171030074240epcas1p2680fb8a4a93f767d9f94f2b2cbb5d60e~yST8IJXh31992119921epcas1p2N;
+        Mon, 30 Oct 2017 07:42:40 +0000 (GMT)
+X-AuditID: b6c32a38-1edff7000000119e-67-59f6d7f00c87
+Received: from epmmp1.local.host ( [203.254.227.16]) by
+        epsmgms2p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
+        E9.46.04095.0F7D6F95; Mon, 30 Oct 2017 16:42:40 +0900 (KST)
+Received: from [106.109.129.81] by mmp1.samsung.com (Oracle Communications
+        Messaging Server 7.0.5.31.0 64bit (built May  5 2014)) with ESMTPA id
+        <0OYM007P3LEYGY20@mmp1.samsung.com>; Mon, 30 Oct 2017 16:42:40 +0900 (KST)
+Subject: [PATCH v4] merge-recursive: check GIT_MERGE_VERBOSITY only once
+To:     Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>, vmiklos@frugalware.org
+From:   Andrey Okoshkin <a.okoshkin@samsung.com>
+Organization: Samsung RnD Institute Russia
+Message-id: <2b507ce0-0d18-d9d6-11ba-6fb0d4f4a473@samsung.com>
+Date:   Mon, 30 Oct 2017 10:42:33 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+        Thunderbird/52.4.0
+MIME-version: 1.0
+In-reply-to: <CAGZ79kZ9EV=qaYyuA3kfuQ04EhLWax52MhtkmGJto2Lommc_SQ@mail.gmail.com>
+Content-type: text/plain; charset="utf-8"
+Content-language: en-GB
+Content-transfer-encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrGKsWRmVeSWpSXmKPExsWy7bCmvu6H698iDZp7pSy6rnQzWTT0XmG2
+        +Pumi9HiR0sPs8Xmze0sFmfeNDJaHGn/zOTA7vGkuYfFY+esu+weCzaVejzr3cPocfGSssfi
+        B14enzfJBbBHcdmkpOZklqUW6dslcGXcmN7AVvCFu+L+8wuMDYxNXF2MnBwSAiYS/V0bmboY
+        uTiEBHYwSlzdPwfK+c4o8fPaTBaYqutTjkEldjNK9J77wgzh3GeUWPL1LFiVsICHxJYJMxhB
+        bBGBdIn/k/rYQIqYBdYwSmy//wisiE1AT+L8rwnsIDa/gJbE5R/zmEFsXgE7iYa+qUwgNouA
+        KtBRq8FqRAUiJI4fXs4IUSMo8WPyPbA5nALBEpMn3QWzmQU0JV58mQRli0scu3+TEcKWl9i8
+        5i0zxAuv2SRWT0nrYuQAsl0k5j3igAgLS7w6voUdIiwtcemoLUS4XqK14wnY+RICHYwSn2ct
+        ZYdI2Ets6drOBjGeT+Ld1x5WiF5eiY42IYgSD4kJTw8yQdiOEkfWnGeDhNVpNonld7+xTWCU
+        n4Xkm1lIPpiF5INZSD5YwMiyilEstaA4Nz212LDARK84Mbe4NC9dLzk/dxMjOPVoWexg3HPO
+        5xCjAAejEg+vRua3SCHWxLLiytxDjBIczEoivJcuAoV4UxIrq1KL8uOLSnNSiw8xSnOwKInz
+        iq6/FiEkkJ5YkpqdmlqQWgSTZeLglGpg7PvuW8azd87mcyeDmyfeuLn6zUvnY22MfAt/XbJK
+        796hX/HLf8U21kw+nq/vNYQX7xGZuXweU7H9xRua9+sMplm23S6z/bfCvSRBTEor7fBsmawz
+        izu4OQVEsi/IG8398Gz+W32T2Ulyp2Q8ct7pFtUEvSy+83Ln5aZM89j6ws6saf1nN9avUGIp
+        zkg01GIuKk4EAOQsLcI5AwAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrHLMWRmVeSWpSXmKPExsVy+t9jAd0P179FGvzby2nRdaWbyaKh9wqz
+        xd83XYwWP1p6mC02b25nsTjzppHR4kj7ZyYHdo8nzT0sHjtn3WX3WLCp1ONZ7x5Gj4uXlD0W
+        P/Dy+LxJLoA9issmJTUnsyy1SN8ugSvjxvQGtoIv3BX3n19gbGBs4upi5OSQEDCRuD7lGFMX
+        IxeHkMBORon7R/awQjgPGSV2Nb9hBakSFvCQ2DJhBmMXIweHiEC6xLZNwiA1zAJrGCXWzXjL
+        DNFwlk3i+qLJLCANbAJ6Eud/TWAHsfkFtCQu/5jHDGLzCthJNPRNZQKxWQRUJfq7VoPViApE
+        SDxvfs8KUSMo8WPyPbA5nALBEm2rHrODLGYWUJeYMiUXJMwsIC5x7P5NRghbXmLzmrfMExgF
+        ZyHpnoXQMQtJxywkHQsYWVYxSqYWFOem5xYbFRjmpZbrFSfmFpfmpesl5+duYgTGyrbDWn07
+        GO8viT/EKMDBqMTD25D9LVKINbGsuDL3EKMEB7OSCO+li0Ah3pTEyqrUovz4otKc1OJDjNIc
+        LErivLfzjkUKCaQnlqRmp6YWpBbBZJk4OKUaGMtlpvF8+jrXrFRpQqDf8Qd/DCpjRVwe15ld
+        ufZRrHax7psuXdtU4a1S6mutb+Y+sZgct6GsKIZ1gqTRZ7ayBwb3QuJLHtzxVdjT+Sd4599D
+        gU9Ftj5MU2XpvfbT9veHL85aGw+Xnjf6VcS4MzToaUfg7oUPjucW3/RsX1utbVQxL2DV7MtH
+        q5RYijMSDbWYi4oTAT2sZKSRAgAA
+X-CMS-MailID: 20171030074240epcas1p2680fb8a4a93f767d9f94f2b2cbb5d60e
+X-Msg-Generator: CA
+CMS-TYPE: 101P
+X-CMS-RootMailID: 20171024152727epcas2p4fb7dcf147e44aadf7733098151d469a5
+X-RootMTR: 20171024152727epcas2p4fb7dcf147e44aadf7733098151d469a5
+References: <CGME20171024152727epcas2p4fb7dcf147e44aadf7733098151d469a5@epcas2p4.samsung.com>
+        <3aed764b-388c-d163-08fc-32b294c6b9d3@samsung.com>
+        <CAGZ79kaSZG9WriqX0SLbTnEDRr-4YdFRuK17+9wnxyrftfnMmg@mail.gmail.com>
+        <CAPig+cRTL2amjsgdp1=T3GMZLa=favugOfnQw9XjWzC+U=v5Sw@mail.gmail.com>
+        <CAN0heSp7b_6n3y=s4++oWhkPUuM=s9L7LWVx5vn8o=5aH6DKKw@mail.gmail.com>
+        <20171024195221.gqgtibwjaztgeel6@sigill.intra.peff.net>
+        <xmqq8tg0j8vb.fsf@gitster.mtv.corp.google.com>
+        <CAPig+cSjQd=p1CdizU5oUaz91z=j02UnWLtTguWzvkjS+v6ETA@mail.gmail.com>
+        <20171025072717.7svdq4kqlfxlwszi@sigill.intra.peff.net>
+        <38a80069-abdb-0646-a20c-eca39dd4f519@samsung.com>
+        <CAPig+cRq1AEOgDoXeH-hDMvhEMnfiNK5CuSBbbio-mbHros=QQ@mail.gmail.com>
+        <bd7eb593-75f9-0dd1-9dff-9dc420532217@samsung.com>
+        <CAGZ79kZ9EV=qaYyuA3kfuQ04EhLWax52MhtkmGJto2Lommc_SQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Oct 29, 2017 at 8:36 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jacob Keller <jacob.keller@gmail.com> writes:
->
->> I am pretty confident we can fix it....
->
-> I am sure we can eventually, but 3 hours is not enough soak time.
->
-> I am inclined to leave the fix for 2.15.1/2.16.0 instead of delaying
-> the release by 10 more days.
+Get 'GIT_MERGE_VERBOSITY' environment variable only once in
+init_merge_options() and store the pointer to its value for the further check.
+No intervening calls to getenv(), putenv(), setenv() or unsetenv() are done
+between the initial getenv() call and the consequential result pass to strtol()
+as these environment related functions could modify the string pointer returned
+by the initial getenv() call.
 
-That's fair. I'm not even sure it was introduced since the last
-release (I tried 2.12, but not 2.13 or 2.14 manually). Thus, it likely
-wasn't noticed for at least a release, meaning it's less important (to
-me at least) that we provide a fix immediately, since it went
-unnoticed this long, likely that means few people will be impacted.
+Signed-off-by: Andrey Okoshkin <a.okoshkin@samsung.com>
+Reviewed-by: Stefan Beller <sbeller@google.com>
+---
+Added 'reviewed-by' field.
+ merge-recursive.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-As far as I can tell, you'd only be impacted if you attempt to run a
-git command from within a sub directory inside of an exec statement.
-Is there some place we can list it as a known bug in case someone else
-runs into it?
-
-Regards,
-Jake
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 1494ffdb8..60084e3a0 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -2163,6 +2163,7 @@ static void merge_recursive_config(struct merge_options *o)
+ 
+ void init_merge_options(struct merge_options *o)
+ {
++	const char *merge_verbosity;
+ 	memset(o, 0, sizeof(struct merge_options));
+ 	o->verbosity = 2;
+ 	o->buffer_output = 1;
+@@ -2171,9 +2172,9 @@ void init_merge_options(struct merge_options *o)
+ 	o->renormalize = 0;
+ 	o->detect_rename = 1;
+ 	merge_recursive_config(o);
+-	if (getenv("GIT_MERGE_VERBOSITY"))
+-		o->verbosity =
+-			strtol(getenv("GIT_MERGE_VERBOSITY"), NULL, 10);
++	merge_verbosity = getenv("GIT_MERGE_VERBOSITY");
++	if (merge_verbosity)
++		o->verbosity = strtol(merge_verbosity, NULL, 10);
+ 	if (o->verbosity >= 5)
+ 		o->buffer_output = 0;
+ 	strbuf_init(&o->obuf, 0);
+-- 
+2.14.3
