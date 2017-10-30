@@ -2,64 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1000C202A0
-	for <e@80x24.org>; Mon, 30 Oct 2017 04:56:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5F6C6202A0
+	for <e@80x24.org>; Mon, 30 Oct 2017 05:02:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751508AbdJ3E4N (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Oct 2017 00:56:13 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59782 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751302AbdJ3E4N (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Oct 2017 00:56:13 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8A2AC96A38;
-        Mon, 30 Oct 2017 00:56:12 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=qjiTbKsjcBfAUkud8hawrfF5Bpg=; b=HtGIdx
-        9gPIbV8JsZW+yOdOep4gv51PadB0DL7ePVswxLg4FkpFMRd/+e4c2lbtVnQk64Dp
-        aftauCAi+hJURjBQJJiE68wi70r77JBNNt8+WBkTDfGErGPvu2X1v7JjGwKIBKrY
-        04NmD4gmqRZMNZBhjanjwnF65ofKdC2VoNx+M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=H/iBfP0aUEqJw60QMOyzB3u3euCJUJBN
-        t17YuTMgT16MueopwmcVHiGFbOKXkJthHGEfaSMhPcFGsVhzl2TbZPtuKSkS3gDW
-        iWTNPWyk2omdy7WFMZSDdTmycdNLUdFhjgPgkNw5g9PsuR0qZocIptm3Ozy5zvKH
-        tQM8Fu+Ue1A=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 80DE096A37;
-        Mon, 30 Oct 2017 00:56:12 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 004D496A36;
-        Mon, 30 Oct 2017 00:56:11 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Michael Haggerty <mhagger@alum.mit.edu>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
-Subject: Re: [PATCH 6/7] refs: rename constant `REF_NODEREF` to `REF_NO_DEREF`
-References: <cover.1509183413.git.mhagger@alum.mit.edu>
-        <173511d3d5382acf25d6648586347104d2f4886d.1509183413.git.mhagger@alum.mit.edu>
-Date:   Mon, 30 Oct 2017 13:56:10 +0900
-In-Reply-To: <173511d3d5382acf25d6648586347104d2f4886d.1509183413.git.mhagger@alum.mit.edu>
-        (Michael Haggerty's message of "Sat, 28 Oct 2017 11:49:55 +0200")
-Message-ID: <xmqqvaix5j4l.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1752199AbdJ3FCc (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Oct 2017 01:02:32 -0400
+Received: from mail.javad.com ([54.86.164.124]:60849 "EHLO mail.javad.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752501AbdJ3FC3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Oct 2017 01:02:29 -0400
+Received: from osv (unknown [89.175.180.246])
+        by mail.javad.com (Postfix) with ESMTPSA id 6721761003;
+        Mon, 30 Oct 2017 05:02:28 +0000 (UTC)
+Received: from osv by osv with local (Exim 4.84_2)
+        (envelope-from <osv@osv.gnss.ru>)
+        id 1e92DS-0003j6-CJ; Mon, 30 Oct 2017 08:02:26 +0300
+From:   Sergey Organov <sorganov@gmail.com>
+To:     "Philip Oakley" <philipoakley@iee.org>
+Cc:     <git@vger.kernel.org>, "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: How to re-merge paths differently?
+References: <87wp3g61ez.fsf@javad.com>
+        <3655514352684AD398D17E83FF47F986@PhilipOakley>
+Date:   Mon, 30 Oct 2017 08:02:26 +0300
+In-Reply-To: <3655514352684AD398D17E83FF47F986@PhilipOakley> (Philip Oakley's
+        message of "Sat, 28 Oct 2017 18:37:14 +0100")
+Message-ID: <8737615iu5.fsf@javad.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: A6A6C630-BD2E-11E7-BB7E-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+"Philip Oakley" <philipoakley@iee.org> writes:
 
-> Even after working with this code for years, I still see this constant
-> name as "ref node ref". Rename it to make it's meaning clearer.
+> From: "Sergey Organov" <sorganov@gmail.com>
+>> Is there anything like this:
+>>
+>> $ git merge b
+>> [... lot of conflicts ...]
+>> $ git re-merge -X ours -- x/   # Leaves 0 conflicts in x/
+>> $ git re-merge -X theirs -- y/ # Leaves 0 conflicts in y/
+>> [... resolve the rest of conflicts manually ...]
+>> $ git commit
+>>
+>> [*] I do mean '-X' above, not '-s'.
+>>
+>
+> By this I presume you mean that you have paths x and y that ate the
+> ones with conflicts within them following the `git merge b`.
 
-Yay ;-).
+I rather mean huge amount of conflicting paths in 'x' and 'y'
+subdirectories of my working tree after a merge, plus a few conflicting
+paths elsewhere.
+
+>
+> You then want a variant of the `git merge` command that will apply the
+> `-X  ours` policy *specifically to path x* so that its particular set of
+> conflicts is fully resolved in favour of 'ours'.
+
+Almost. I mean to apply 'ours' option to the default 'recursive' policy for
+all the files that reside in the directory 'x' of my working tree and
+all its subdirectories (i.e., all the paths 'x/*')
+
+>
+> You then want to repeat those path specific resolutions, on a path by
+> path basis, to either `-X ours` or `-X theirs` until they are done.
+
+No. I mean to apply '-X ours' to everything under 'x/', and '-X theirs'
+to everything under 'y/'. Avoiding to repeat anything is the intention. 
+
+> You are also expecting that one or two conflicts will require to be
+> fully manually resolved, until finally you can commit the result.
+
+No, I expect no conflicts left in either 'x/' or 'y/' after "re-merge",
+as neither 'theirs' or 'ours' should leave anything unresolved, and all
+the other conflicting paths (left from original merge elsewhere) I mean
+to resolve manually.
+ 
+>
+> Would that be right?
+>
+> Also, how do you intend to identify the 'x' and the 'y' paths, so that
+> you can chose the ours/theirs/manual selection? (e.g. do you pre-know
+> a regex/blob expansion)
+
+All the 'x/*' paths need 'ours', and all the 'y/*' paths need 'theirs'.
+
+>
+> The answer for individual paths is probably in the mergetool of your
+> choice.
+
+There are a lot of files under 'x/' and a lot of them under 'y/'. My
+intention is to automate a lot of manual labor, and I'm not aware of a
+mergetool that provides either '-X ours' or '-X theirs' resolution
+automatically for all the paths specified.
+
+-- Sergey
