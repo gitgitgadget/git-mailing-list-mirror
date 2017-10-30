@@ -7,78 +7,80 @@ X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7F2321FBF4
-	for <e@80x24.org>; Mon, 30 Oct 2017 12:38:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4ED661FBF4
+	for <e@80x24.org>; Mon, 30 Oct 2017 12:38:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751983AbdJ3MiN (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Oct 2017 08:38:13 -0400
-Received: from mout.gmx.net ([212.227.15.19]:62200 "EHLO mout.gmx.net"
+        id S1752089AbdJ3Mik (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Oct 2017 08:38:40 -0400
+Received: from mout.gmx.net ([212.227.17.20]:55827 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751975AbdJ3MiL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Oct 2017 08:38:11 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M6RmV-1dFVhN2qnz-00yT8v; Mon, 30
- Oct 2017 13:37:34 +0100
-Date:   Mon, 30 Oct 2017 13:37:29 +0100 (CET)
+        id S1751988AbdJ3Mi0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Oct 2017 08:38:26 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MO7Ca-1e3d143nUa-005ajX; Mon, 30
+ Oct 2017 13:38:11 +0100
+Date:   Mon, 30 Oct 2017 13:37:58 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Christian Couder <christian.couder@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>, Ben Peart <Ben.Peart@microsoft.com>,
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        Brandon Williams <bmwill@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Bryan Turner <bturner@atlassian.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
         Jonathan Tan <jonathantanmy@google.com>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Mike Hommey <mh@glandium.org>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Eric Wong <e@80x24.org>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 0/6] Create Git/Packet.pm
-In-Reply-To: <CAP8UFD3qjmSrCJ1OE6x=sitbm7LqRB3aSm42aV4h=gAG853PhA@mail.gmail.com>
-Message-ID: <alpine.DEB.2.21.1.1710301336270.6482@virtualbox>
-References: <20171019123030.17338-1-chriscool@tuxfamily.org> <xmqqvaix8o6k.fsf@gitster.mtv.corp.google.com> <CAP8UFD3qjmSrCJ1OE6x=sitbm7LqRB3aSm42aV4h=gAG853PhA@mail.gmail.com>
+        Jeff King <peff@peff.net>, William Yan <wyan@google.com>
+Subject: Re: [PATCH 3/5] ssh: 'auto' variant to select between 'ssh' and
+ 'simple'
+In-Reply-To: <xmqqo9op8o35.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.21.1.1710301337430.6482@virtualbox>
+References: <20170926235627.79606-1-bmwill@google.com>        <20171003201507.3589-1-bmwill@google.com>        <20171003201507.3589-11-bmwill@google.com>        <20171003214206.GY19555@aiede.mtv.corp.google.com>        <20171016171812.GA4487@google.com>   
+     <20171023212740.qodxzsq5w7rn2r6y@aiede.mtv.corp.google.com>        <20171023213159.eitrjrqrh277advm@aiede.mtv.corp.google.com>        <alpine.DEB.2.21.1.1710251437090.6482@virtualbox>        <CAGZ79kYTYg09A7UbhvyiT0QmRQG5ZJV6v1iaQBNCZY8RTj300A@mail.gmail.com>
+        <20171025163243.xmm7szrkwgblpgcc@aiede.mtv.corp.google.com> <xmqqo9op8o35.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:7JC+8MNrLA43d8pp0lobGXhjHCfz22mhPmYJoc3VumombmAKmqQ
- lpnQqNU0sqM31xAQ7m3/xFIRSRvdZcdXW2iYpIc0bJy6mjWs/SS3FdPJX4ZRr+KO0UIkNyY
- AhgA13IRlLE6Sv1nt+EaXK9Y2wD9wMnq0WCAa7dtVrpfsB0y5Y3hEVeB3gg9TpeQfBlrJwt
- m6vybcc4NP+Vv1dDq+UwA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:bnW+NYhGmiY=:5QTViTyqzN5vYsWCeKi5PR
- Hj+KOdhr4l+GNffq+p5xyWBwA8wi4ko/udTnbe8v/FkwnlbVTP3gO+29S6+bfyjvruTUiYr8R
- ihLRPodMHN+byz1dzejoNXSIeZnY0JZgt/E8p6sMdHFZ6+aT3yKKQ/nrqLiujiZC2pBbF+7gv
- qHFqFIj5XNjtH7W6ghTqPTLF7lYR1vMFZAgtsiUL/mHKb65dLsUk92LvguCdts2Xi2F1BBq5F
- wrUqNSohbcGSsWxYUvNHHhV1drESzaziNBPO+tc/uZMAFx1XRjknQtpIaXuGXLumlhqfVwCCL
- NYwtm9gvrCasw6lmZJT2PXdD2Y5k/cH1Xo39po0J79gTepSIVIXtAQlhcBBsJJlb9RSuYY4PJ
- u5TNw4FM6eG6Li8QlO9u6VEIAUEv+vX6JIyHaE/ZCymmOL2SgDNpyeBicR/PZQRYQ7LCNcSAZ
- mjCcKzymfNPZ27eBsK2/BsERsv21wV25KabSrvAw/s2sUFiTJui9SsYdrkp3onbFikdXqkNOz
- GToMhbju2zVzQaJyFWTKRZFZWDEZMf1v22aUtHap95l0che3sOQCQZx1y4SWWac3LB1nuLOvb
- amioIYMmu0UGMq2+es8eAa2dQVOwB74qbGS6Ub3VghDqUgNTeus05hBdTebnJjTlsye1Atz/4
- Oj9XRrbcglaBQBlacoGm+pcpvUm3Tl277W5L0YYWvPkpH0hDQ9xH4pr5wEuwPHYSZ71XD8EKf
- C2bFfq75nKUNIVmLXGIzEJqv/gzAdA2Y+Gqdj4vQqe72vR4O0Uf4tBoqllt0Jd3rnmqRD+YPi
- ukahNtj9pPFG9j86WOEHyoYXd4rMIJdIrcyyoTzMBzwZKJQXPAe0xT1MSVBAUIHoorjQao5
+X-Provags-ID: V03:K0:px9EOxh9uTU+/lJL6DhoNWZEY3XLkzroCpOuqpw1sIm+CExB4kw
+ Af0A1U1Mzcqp7JBW/285CtGU1VWOaMH2SbDK+nzFOBTzLc6cNlt8hk0XjT3SRIz+/uHZCDJ
+ NTobOnZwuZ3OmlthmWmfBgr1knVEYRIVh0piJ4uKd3s5A7wjqMj85K5b69Pwirw/ZVAdz9s
+ iBG3ydeoc5vgWgsja0DQw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:UJwDZ4EJY3o=:sXilg7B8iUdWjWQiQRO3dV
+ 3Crd0VJMBEDyzq5ZwnYeyfHe+ik+wm91cOFFc2Y2mNnp88aYSlGNwDHE/8nzaMs772uQ2RGz0
+ Nt2SKiPw5ayo+QPfnZhamrA2hZezjPFHnyCRjLWASBiqNTIe7aXf9kz1AY/Rh/0KyVJz0aYKU
+ eJnS9liPRH5/sQMJiitICYNTu8VMf6MJrfs6KP71RdghbccVKa+6yCcbtr08kOcNI43o4TWM9
+ WY4mv5uEtBwdJ/tjT6oV2ObD7cyoo547oorkBniVHa3DwEl9JIx+P92UswKG22XrQM/HKsgLy
+ XX2k0l42+sRJHW5x3zvo7ZRZSe/o5G6XepSzo7382AE35Ze401AQziV3fVTZ0Uj86/hrYORIU
+ u3m2ulpPV0IHxaHu8+YU3Q1/0FVl0w/WSDcYuyBC5sg3ke8NT/6xXKF4QO0vU9nbgBBD3ysK0
+ k4adywLaMKfJFMuzeEKXYdZSl4w28wakALlaTP+7pYK3MgKzL7AiXwjcx0Ga2J+1XwAryaTn+
+ vH46Tojxdd6qQfdlJQO8VDbgvAMLUuTtWT804AfH727t6HCTq9kOh5Vt2N2OpaisGXdVHDk5V
+ aTIJHN3deqSGFiDAXujBOH5yUG2l3WRN9YtgEJJxr91N17syTw0RwZXv0cCBpqo+rk8NhXsal
+ phn9GY+3fMn4hc9i4ar0loh7B8IbI7GbvHkyHFvapwuxeaqQgDcTqSXCMmi86HcvjRgqdgFx2
+ JBYZ5aZD8ThcuhArx/U789zC5/QJEbCUgCpWmvAIWqH40eo469USy8+r/HyYHqF1jH5LX3wmS
+ IA8mOhsKrPg9q2eKau/qg6I8imgXkBk2QoXOlecZGDYQGmdKmdQuoYkKW9cmYMXSExmsMGP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Christian & Junio,
+Hi Junio,
 
-On Mon, 30 Oct 2017, Christian Couder wrote:
+On Mon, 30 Oct 2017, Junio C Hamano wrote:
 
-> On Mon, Oct 30, 2017 at 1:38 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> > I've queued this from Dscho; please take it into consideration when
-> > you reroll.
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 > 
-> Yeah, I was planning to add something like that, though in Dscho's
-> first email the patch was adding:
+> > I have other changes to make when rerolling anyway (from Junio's
+> > review), so no need for a followup patch.  Will fix this in the
+> > reroll today.
+> >
+> > Thanks for catching and diagnosing this, Dscho!
 > 
-> +modules += Git/Packet
+> In the meantime, I've queued this from Dscho; please take it into
+> consideration when you reroll.
 > 
-> and now it's adding:
-> 
-> > +modules += Git/SVN/Packet
+> Thanks.
 
-Bah. I should have paid more attention. The original Git/Packet is
-correct, of course. My fixup! commit is bogus.
+Thanks for sending it out as an email.
 
-Sorry for the confusion,
+Ciao,
 Dscho
