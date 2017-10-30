@@ -6,66 +6,95 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 37EEA202A0
-	for <e@80x24.org>; Mon, 30 Oct 2017 00:30:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E399202A0
+	for <e@80x24.org>; Mon, 30 Oct 2017 00:38:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751638AbdJ3A35 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 29 Oct 2017 20:29:57 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50001 "EHLO
+        id S1751856AbdJ3Aiq (ORCPT <rfc822;e@80x24.org>);
+        Sun, 29 Oct 2017 20:38:46 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50545 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751429AbdJ3A35 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Oct 2017 20:29:57 -0400
+        with ESMTP id S1751684AbdJ3Aip (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Oct 2017 20:38:45 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 32DC7B9C7C;
-        Sun, 29 Oct 2017 20:29:54 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 33286B9DCA;
+        Sun, 29 Oct 2017 20:38:45 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=k8JN6k75/+Qa54UBUXKOWwdSi5c=; b=SKIq9m
-        +t05M2SZhs+3apPbhAZ6Yg19a/VQAsN+1zRswj1O9Lo0Ha9P83ka/ryiXX3uveGk
-        nSCvNZRrxn8rsfSLU7hwmdpjaDEB4tbVQjS+AyZz2hvIdJ0f2Yd0GtH/hHSnUSTS
-        +VyHufYs2WEBPb+HYBikTIUAPYGR/+gccqqlg=
+        :content-type; s=sasl; bh=0W58vUOs7CWARXkHqHOo9GVuH78=; b=NHLx32
+        nTcCQYw4xLEPBJQRpYBIBUeKtzNhkCtx2ksr23j+MCydE0VfjlZ5ZII56oHSTrKO
+        OfrUX8YFbnBiqgbDFwsv4uVr/mW47tZUJVmILdg373NeyG78IJdVWmMaPorHngvI
+        3Wb2kttdcfFGsSGXkPRk++ks1ymwYVCe47zYE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=rPUJUUk40Wb7ghNNOrOdMW9gf/a3rrsq
-        Xv7MOE78FtWaT1WSPV7YuGJJtt8swXPQcaOgXiwUXc3zedjxF91cRMSVMuXqglG5
-        RPYo25ZzrtFMtyVsfzfbngxGsenbQ534HLrHfTZHOn4Ma8xTDt4YJTbw1gtZZU8e
-        guxeC9rHZkM=
+        :content-type; q=dns; s=sasl; b=HwZlWS18FYYj6AmetVFcLr1KTSSu5/O9
+        XGS/arxkIe6mC1NqRAJoXkyo5FNqTH19HRWyhjC6HGXg1Y6ZZX83dc/fHMvqS+g1
+        eDmzpvjzRtDyZQRK83AEQjBrJXZxK8HXJ9qnGvqyf2XVLdmM/FzH/m0k80PUd/+y
+        x2uBvaX1w2A=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2A90FB9C7B;
-        Sun, 29 Oct 2017 20:29:54 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 27D6CB9DC9;
+        Sun, 29 Oct 2017 20:38:45 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9F4AAB9C7A;
-        Sun, 29 Oct 2017 20:29:53 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8A19FB9DC8;
+        Sun, 29 Oct 2017 20:38:44 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 3/3] diff: convert flags to be stored in bitfields
-References: <20171027222853.180981-1-bmwill@google.com>
-        <20171027222853.180981-4-bmwill@google.com>
-        <xmqqk1zeafaq.fsf@gitster.mtv.corp.google.com>
-Date:   Mon, 30 Oct 2017 09:29:52 +0900
-In-Reply-To: <xmqqk1zeafaq.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Sun, 29 Oct 2017 10:55:25 +0900")
-Message-ID: <xmqqzi898olb.fsf@gitster.mtv.corp.google.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Ben Peart <Ben.Peart@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Mike Hommey <mh@glandium.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Eric Wong <e@80x24.org>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 0/6] Create Git/Packet.pm
+References: <20171019123030.17338-1-chriscool@tuxfamily.org>
+Date:   Mon, 30 Oct 2017 09:38:43 +0900
+In-Reply-To: <20171019123030.17338-1-chriscool@tuxfamily.org> (Christian
+        Couder's message of "Thu, 19 Oct 2017 14:30:24 +0200")
+Message-ID: <xmqqvaix8o6k.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 72CF5F18-BD09-11E7-A66F-8EF31968708C-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: AF4C644E-BD0A-11E7-A172-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+I've queued this from Dscho; please take it into consideration when
+you reroll.
 
-> I still haven't brought myself to like the structure being passed by
-> value and the singleton diff_flags_cleared thing, but I suspect that
-> we may get used to them once we start using these.  I dunno.
+Thanks.
 
-Just bikeshedding, but I just had to prepare an evil merge to add a
-new use of diff_flags_cleared to a codepath that evolved in a topic
-still in flight, and realized that I really hate the name.  Perhaps
-I wouldn't have hated it so much if it were named diff_flags_none or
-diff_flags_empty, I guess.
+-- >8 --
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Date: Sun, 29 Oct 2017 16:17:06 +0100
+Subject: [PATCH] fixup! Git/Packet.pm: extract parts of t0021/rot13-filter.pl
+ for reuse
+
+The patch introducing Git/Packet.pm forgot the NO_PERL_MAKEMAKER part.
+Breaking the test suite on Windows.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ perl/Makefile | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/perl/Makefile b/perl/Makefile
+index 15d96fcc7a..4a74a493e6 100644
+--- a/perl/Makefile
++++ b/perl/Makefile
+@@ -37,6 +37,7 @@ modules += Git/SVN/Editor
+ modules += Git/SVN/GlobSpec
+ modules += Git/SVN/Log
+ modules += Git/SVN/Migration
++modules += Git/SVN/Packet
+ modules += Git/SVN/Prompt
+ modules += Git/SVN/Ra
+ modules += Git/SVN/Utils
+-- 
+2.15.0-rc2-267-g7d3ed0014a
+
