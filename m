@@ -2,148 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
-	UNPARSEABLE_RELAY shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E583C202A0
-	for <e@80x24.org>; Mon, 30 Oct 2017 02:11:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C259D202A0
+	for <e@80x24.org>; Mon, 30 Oct 2017 02:13:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751454AbdJ3CLD convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Sun, 29 Oct 2017 22:11:03 -0400
-Received: from marcos.anarc.at ([206.248.172.91]:59760 "EHLO marcos.anarc.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751310AbdJ3CLD (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Oct 2017 22:11:03 -0400
-Received: from [127.0.0.1] (localhost [127.0.0.1])      (Authenticated sender: anarcat) with ESMTPSA id 051BA1A00AA
-From:   =?utf-8?Q?Antoine_Beaupr=C3=A9?= <anarcat@debian.org>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>
-Subject: Re: [PATCH 4/4] remote-mediawiki: allow using (Main) as a namespace and skip special namespaces
-In-Reply-To: <CAPig+cSTp1Udo6xXk5-L6MpWBdiy4sPO__NcND03-89EvRgLHQ@mail.gmail.com>
-Organization: Debian
-References: <20171029160857.29460-1-anarcat@debian.org> <20171029160857.29460-5-anarcat@debian.org> <CAPig+cSTp1Udo6xXk5-L6MpWBdiy4sPO__NcND03-89EvRgLHQ@mail.gmail.com>
-Date:   Sun, 29 Oct 2017 22:11:00 -0400
-Message-ID: <874lqh8jwr.fsf@curie.anarc.at>
+        id S1751447AbdJ3CNo (ORCPT <rfc822;e@80x24.org>);
+        Sun, 29 Oct 2017 22:13:44 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55176 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751310AbdJ3CNo (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Oct 2017 22:13:44 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4E033BAC38;
+        Sun, 29 Oct 2017 22:13:43 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=JmnXcBBcvvNw60Mh4TUxGdFKwhc=; b=W2yM6P
+        GDU2GpI3HVHJXc3ZsF4pjIrtxzXy0v/H26Zz3MPfESG5t3Dye7X371DhOyqmLA0t
+        ZsiOCyI/rH6OfvYjAUmclul0YjxcIehe4uTAFEPeqTRgFedqeo36oUUhoKg2Yctg
+        m7GoWrKfcRRz84IZeybVfEVN5iAycxLWwM7Gg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=hgoE+rHaxHUZRbwEnNdcMEC8Khmr+Yb7
+        4n/hrUFA4sbLnLxLfmcZbIGciy4HFHjFOTxkH53dzQC6fGLciK/a51+fYyiwkyul
+        rWMSd7dzQeGJnB4nAWjfLvovo5r9CqH+Bl+L7kZKqYuo7mj7rfA+g3leJcOQHXcJ
+        prwf4alHWYI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4520FBAC37;
+        Sun, 29 Oct 2017 22:13:43 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B3603BAC36;
+        Sun, 29 Oct 2017 22:13:42 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        Brandon Williams <bmwill@google.com>
+Subject: Re: [PATCH v2 3/4] Integrate hash algorithm support with repo setup
+References: <20171028181239.59458-1-sandals@crustytoothpaste.net>
+        <20171028181239.59458-4-sandals@crustytoothpaste.net>
+        <CAPig+cTrAxWczJ5qX2qE-hqoo6hA2QCom25HYB7v48rVnPgTow@mail.gmail.com>
+        <20171029175712.ijqirnghcgeufqae@genre.crustytoothpaste.net>
+        <CAPig+cRtexDJYMCUR1rGZjJOBRuDbhxP==US2VdNPhSWzeL6LA@mail.gmail.com>
+        <20171029193327.uqkj6w3ypfwqwm7b@genre.crustytoothpaste.net>
+Date:   Mon, 30 Oct 2017 11:13:41 +0900
+In-Reply-To: <20171029193327.uqkj6w3ypfwqwm7b@genre.crustytoothpaste.net>
+        (brian m. carlson's message of "Sun, 29 Oct 2017 19:33:28 +0000")
+Message-ID: <xmqq7evd8jsa.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain
+X-Pobox-Relay-ID: F3A2E3D6-BD17-11E7-BF56-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2017-10-29 15:49:28, Eric Sunshine wrote:
-> On Sun, Oct 29, 2017 at 12:08 PM, Antoine Beaupré <anarcat@debian.org> wrote:
->> Subject: remote-mediawiki: allow using (Main) as a namespace and skip special namespaces
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+
+> On Sun, Oct 29, 2017 at 03:02:20PM -0400, Eric Sunshine wrote:
+>> On Sun, Oct 29, 2017 at 1:57 PM, brian m. carlson
+>> <sandals@crustytoothpaste.net> wrote:
+>> > I can do CURRENT_HASH_ALGO or CURRENT_HASH instead if you think that's
+>> > an improvement.  I originally omitted the "algo" portion to keep it
+>> > short.
+>> 
+>> I don't have strong feelings about it aside from worrying about a
+>> "current_hash" name clash or a reader misunderstanding what it
+>> represents.
+>> 
+>> Does "current" need to be in the name? What about HASH_ALGO or REPO_HASH_ALGO?
+>> 
+>> > Alternatively, we could have a current_hash() (or current_hash_algo())
+>> > inline function if people like that better.
+>> 
+>> hash_algo() or repo_hash_algo()?
 >
-> This patch is more difficult to review than it perhaps ought to be
-> since it is making multiple unrelated changes.
->
-> It's not clear from the description what special namespaces are and
-> why they need to be skipped. It's also not clear why (Main) is
-> special. Perhaps the commit message(s) could explain these issues in
-> more detail.
->
-> To simplify review and make it easier to gauge what it going on, it
-> might make sense to split this patch into at least two: one which
-> skips "special namespaces", and one which gives special treatment to
-> (Main).
+> Those are also fine, and shorter to boot.  I'll wait to see if anyone
+> has strong opinions on the direction we should go before making a
+> change.
 
-Agreed, I'll try to do that.
+Is the plan to allow running with multiple hash algorithms in
+parallel?  I thought what we want to see in the future codebase was
+to have the default hash algorithm used for everything except for a
+select few codepaths, and assumed that the way we achieve it is to
 
-> More below...
->
->> Reviewed-by: Antoine Beaupré <anarcat@debian.org>
->> Signed-off-by: Antoine Beaupré <anarcat@debian.org>
->> ---
->> diff --git a/contrib/mw-to-git/git-remote-mediawiki.perl b/contrib/mw-to-git/git-remote-mediawiki.perl
->> @@ -264,16 +264,27 @@ sub get_mw_tracked_categories {
->>  sub get_mw_tracked_namespaces {
->>      my $pages = shift;
->> -    foreach my $local_namespace (@tracked_namespaces) {
->> -        my $mw_pages = $mediawiki->list( {
->> -            action => 'query',
->> -            list => 'allpages',
->> -            apnamespace => get_mw_namespace_id($local_namespace),
->> -            aplimit => 'max' } )
->> -            || die $mediawiki->{error}->{code} . ': '
->> -                . $mediawiki->{error}->{details} . "\n";
->> -        foreach my $page (@{$mw_pages}) {
->> -            $pages->{$page->{title}} = $page;
->> +    foreach my $local_namespace (sort @tracked_namespaces) {
->> +        my ($mw_pages, $namespace_id);
->> +        if ($local_namespace eq "(Main)") {
->> +            $namespace_id = 0;
->> +        } else {
->> +            $namespace_id = get_mw_namespace_id($local_namespace);
->> +        }
->> +        if ($namespace_id >= 0) {
->
-> This may be problematic since get_mw_namespace_id() may return undef
-> rather than a number, in which case Perl will complain. Since the code
-> skips the $mediawiki query altogether when it encounters "(Main)", you
-> could fix this problem and simplify the code overall by simply
-> skipping the bulk of the foreach loop body instead of mucking around
-> with $namespace_id. For instance:
->
->     foreach my $local_namespace (sort @tracked_namespaces) {
->         next if ($local_namespace eq "(Main)");
->         ...normal processing...
->     }
+ - allow very low level helper functions (e.g. read_sha1_file(),
+   write_sha1_file_prepare(), etc.) to take a pointer to the hash
+   algorithm structure;
 
-Ah yes. I see your point but it doesn't actually skip the query when it
-encouters main ($namespace_id >= 0).
+ - have higher level helper functions to call these low level
+   helpers with a fixed singleton instance of hash algorithm
+   structure that represents that default one (SHA2-something?); and
 
->> +            if ($mw_pages = $mediawiki->list( {
->> +                action => 'query',
->> +                list => 'allpages',
->> +                apnamespace => $namespace_id,
->> +                aplimit => 'max' } )) {
->> +                print {*STDERR} "$#{$mw_pages} found in namespace $local_namespace ($namespace_id)\n";
->
-> The original code did not emit this diagnostic but the new code does
-> so unconditionally. Is this just leftover debugging code or is
-> intended that all users should see this information all the time?
+ - a few selected codepaths (e.g. index-pack that reads SHA-1 stream
+   and converts it into NewHash pack/index while building the object
+   name mapping) use an additional singleton instance of hash
+   algorithm structure that represents the SHA-1 hash, and the way
+   they use it is *NOT* by replacing "the current" one with SHA-1,
+   but by explicitly passing the instance to the low level helpers
+   as parameter.
 
-This is a known issue that permeates the whole remote at this point, and
-it is quite annoying.
+So, "current" does indeed sound quite wrong, as it makes it sound as
+if you can swap it anytime and ask "which one is in effect now?".
+If we do not want to call the default instance "SHA-2" because we
+want to prepare for migrating again by not having the name of a
+concrete hash algorithm sprinkled in the codebase all over like we
+currently do, why not call the instance "the_hash_algo"?
 
-https://github.com/Git-Mediawiki/Git-Mediawiki/issues/30
-
-I have, however, considered it useful to include this to show progress
-as it can take a while to fetch all namespace information...
-
-Obviously, once we figure out how to silence this stuff (ie. how to
-recognize -q), it should be silenced like everything else, but until
-then I think it's quite useful.
-
->> +                foreach my $page (@{$mw_pages}) {
->> +                    $pages->{$page->{title}} = $page;
->> +                }
->> +            } else {
->> +                warn $mediawiki->{error}->{code} . ': '
->> +                    . $mediawiki->{error}->{details} . "\n";
->
-> I guess this is the part which "skips special namespaces". The
-> original code die()'d but this merely warns. Aside from these "special
-> namespaces", are there genuine cases when the $mediawiki query would
-> return an error, and which should indeed die(), or is warning
-> appropriate for all $mediawiki query error cases?
-
-Maybe I didn't get the indentation right, but this } else { is for query
-failures, *not* the if ($namespace_id < 0). So < 0 is just silently
-skipped.
-
-The original code was die()'ing on failures, but I think that's a
-mistake: we should fetch what we can and warn on the failures. That
-allows the user to fix multiple problems at once instead of having to
-rerun the script repeatedly.
-
-A.
-
--- 
-Le féminisme n'a jamais tué personne
-Le machisme tue tous les jours.
-                        - Benoîte Groulx
