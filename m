@@ -6,297 +6,825 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 304EC202A0
-	for <e@80x24.org>; Mon, 30 Oct 2017 06:19:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 87A86202A0
+	for <e@80x24.org>; Mon, 30 Oct 2017 06:19:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752327AbdJ3GTR (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Oct 2017 02:19:17 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57422 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752309AbdJ3GTQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Oct 2017 02:19:16 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1781797956;
-        Mon, 30 Oct 2017 02:19:15 -0400 (EDT)
+        id S1752404AbdJ3GT3 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Oct 2017 02:19:29 -0400
+Received: from pb-sasl-trial2.pobox.com ([64.147.108.86]:63498 "EHLO
+        pb-sasl-trial2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752359AbdJ3GTV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Oct 2017 02:19:21 -0400
+Received: from pb-sasl-trial2.pobox.com (localhost.local [127.0.0.1])
+        by pb-sasl-trial2.pobox.com (Postfix) with ESMTP id 4AE8C1F78A;
+        Mon, 30 Oct 2017 02:19:20 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-        :subject:date:message-id:mime-version:content-type; s=sasl; bh=A
-        PqJoofHSOCknkj+sgA6IfWZSlc=; b=NoD9b5TTL4DKZx5WGbCbWLsggaprFL/vp
-        OlmM178Nd0Arhre2WmeehYJpjRdq75IumEnFd1GEoqGf0v7mP0193uBIkVg5YhMk
-        S7i1qNIwbVXpSOMnq3VKNgeUllUK4i3jNzJjZIR8v+ooFijGKfCzBhaDn6++mPMj
-        MEqW2esDII=
+        :subject:date:message-id:mime-version:content-type; s=sasl; bh=z
+        R53G4GyuQK2oOOK0CD9KSumjrw=; b=D5tN7XWQ39a+V2t+qhKN3bOmcEJOsOAqH
+        ncuQsVQgkGVyL0c2Ml9/cxAVPMP5Uq9y13cCgkEQMMIS5/xJleAMvmUnNzrmda5s
+        0ruhuTweKVSM0WvJT4XXviePh0pr6N35GV5YLVCdAPJzThcQb68AQxFFSgtmYKD1
+        0iQVuxTnEo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-        :date:message-id:mime-version:content-type; q=dns; s=sasl; b=B2B
-        pDcyh+psw9X5P7dvBtdVDWpzD2gn4WrdBDqThrjbSO0qXAm/Z3UE+y74w3Vxh5gr
-        3rLrjmwF8BtetdiRZZwLyaz8VKyhW1C/LAezQx1akaj3HT7l5c680LkBrQHsGnkj
-        qgjFNY/Fa5fDNeEyWjY9c4xj98dJR3kgDOl52xYQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0FB6297955;
-        Mon, 30 Oct 2017 02:19:15 -0400 (EDT)
+        :date:message-id:mime-version:content-type; q=dns; s=sasl; b=uk3
+        e5oRGsqavdz5cb4VLj4WPX1yJVhlMaCgmDVWKiOoxkiTKuj/YU422ef5Ni1Mu9Nt
+        jziyqhlEzAOJKj/n1Xn+Lsju01An8LVhMY/4Gfx2gvvGtlzSbqbs9E1l3CZ+Ie45
+        Y8QNYgP+qjYZUUcp1BIVJcV8xWipsXH6iNAfiBZI=
+Received: from pb-smtp1.nyi.icgroup.com (pb-smtp1.pobox.com [10.90.30.53])
+        by pb-sasl-trial2.pobox.com (Postfix) with ESMTP id 259871F789;
+        Mon, 30 Oct 2017 02:19:20 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6E40197954;
-        Mon, 30 Oct 2017 02:19:14 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3337296649;
+        Mon, 30 Oct 2017 02:19:19 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     git@vger.kernel.org
-Subject: A note from the maintainer
-Date:   Mon, 30 Oct 2017 15:19:13 +0900
-Message-ID: <xmqqy3nt40pq.fsf@gitster.mtv.corp.google.com>
+Subject: What's cooking in git.git (Oct 2017, #07; Mon, 30)
+X-master-at: cb5918aa0d50f50e83787f65c2ddc3dcb10159fe
+X-next-at: c27cc4dac6288e7b0a5136f6084655a61518ce60
+Date:   Mon, 30 Oct 2017 15:19:18 +0900
+Message-ID: <xmqqr2tl40pl.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 406BC6C0-BD3A-11E7-B8E1-575F0C78B957-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 434C8244-BD3A-11E7-B2BD-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Welcome to the Git development community.
+Here are the topics that have been cooking.  Commits prefixed with
+'-' are only in 'pu' (proposed updates) while commits prefixed with
+'+' are in 'next'.  The ones marked with '.' do not appear in any of
+the integration branches, but I am still holding onto them.
 
-This message is written by the maintainer and talks about how Git
-project is managed, and how you can work with it.
+You can find the changes described here in the integration branches
+of the repositories listed at
 
-* Mailing list and the community
+    http://git-blame.blogspot.com/p/git-public-repositories.html
 
-The development is primarily done on the Git mailing list. Help
-requests, feature proposals, bug reports and patches should be sent to
-the list address <git@vger.kernel.org>.  You don't have to be
-subscribed to send messages.  The convention on the list is to keep
-everybody involved on Cc:, so it is unnecessary to say "Please Cc: me,
-I am not subscribed".
+--------------------------------------------------
+[New Topics]
 
-Before sending patches, please read Documentation/SubmittingPatches
-and Documentation/CodingGuidelines to familiarize yourself with the
-project convention.
+* bw/diff-opt-impl-to-bitfields (2017-10-29) 3 commits
+ - diff: convert flags to be stored in bitfields
+ - reset: use DIFF_OPT_SET macro to set a diff flag
+ - add: use DIFF_OPT_SET macro to set a diff flag
 
-If you sent a patch and you did not hear any response from anybody for
-several days, it could be that your patch was totally uninteresting,
-but it also is possible that it was simply lost in the noise.  Please
-do not hesitate to send a reminder message in such a case.  Messages
-getting lost in the noise may be a sign that those who can evaluate
-your patch don't have enough mental/time bandwidth to process them
-right at the moment, and it often helps to wait until the list traffic
-becomes calmer before sending such a reminder.
+ A single-word "unsigned flags" in the diff options is being split
+ into a structure with many bitfields.
 
-The list archive is available at a few public sites:
 
-        http://public-inbox.org/git/
-        http://marc.info/?l=git
-        http://www.spinics.net/lists/git/
+* mh/tidy-ref-update-flags (2017-10-28) 8 commits
+ - refs: rename constant `REF_ISPRUNING` to `REF_IS_PRUNING`
+ - refs: rename constant `REF_NODEREF` to `REF_NO_DEREF`
+ - refs: tidy up and adjust visibility of the `ref_update` flags
+ - ref_transaction_add_update(): remove a check
+ - ref_transaction_update(): die on disallowed flags
+ - prune_ref(): call `ref_transaction_add_update()` directly
+ - files_transaction_prepare(): don't leak flags to packed transaction
+ - Merge branch 'bc/object-id' into base
+ (this branch uses bc/object-id.)
 
-For those who prefer to read it over NNTP:
+ Code clean-up in refs API implementation.
 
-        nntp://news.public-inbox.org/inbox.comp.version-control.git
-	nntp://news.gmane.org/gmane.comp.version-control.git
 
-are available.
+* ao/diff-populate-filespec-lstat-errorpath-fix (2017-10-29) 1 commit
+ - diff: fix lstat() error handling in diff_populate_filespec()
 
-When you point at a message in a mailing list archive, using its
-message ID is often the most robust (if not very friendly) way to do
-so, like this:
+ After an error from lstat(), diff_populate_filespec() function
+ sometimes still went ahead and used invalid data in struct stat,
+ which has been fixed.
 
-	http://public-inbox.org/git/Pine.LNX.4.58.0504150753440.7211@ppc970.osdl.org
 
-Often these web interfaces accept the message ID with enclosing <>
-stripped (like the above example to point at one of the most important
-message in the Git list).
+* av/fsmonitor (2017-10-30) 5 commits
+ - SQUASH???
+ - fsmonitor: delay updating state until after split index is merged
+ - fsmonitor: document GIT_TRACE_FSMONITOR
+ - fsmonitor: don't bother pretty-printing JSON from watchman
+ - fsmonitor: set the PWD to the top of the working tree
+ (this branch uses bp/fsmonitor.)
 
-Some members of the development community can sometimes be found on
-the #git and #git-devel IRC channels on Freenode.  Their logs are
-available at:
+ Various fixes to bp/fsmonitor topic.
 
-        http://colabti.org/irclogger/irclogger_log/git
-        http://colabti.org/irclogger/irclogger_log/git-devel
+ What's the status of this one?  I recall that I saw Dscho's "looks
+ good" respose to the cover letter, and Ben sounded positive on most
+ of the patches in the previous series.  Except for the SQUASH??? I
+ had to add to squelch compiler warnings, is this good to go?
 
-There is a volunteer-run newsletter to serve our community ("Git Rev
-News" http://git.github.io/rev_news/rev_news.html).
 
-Git is a member project of software freedom conservancy, a non-profit
-organization (https://sfconservancy.org/).  To reach a committee of
-liaisons to the conservancy, contact them at <git@sfconservancy.org>.
+* bc/submitting-patches-in-asciidoc (2017-10-30) 2 commits
+ - Documentation: convert SubmittingPatches to AsciiDoc
+ - Documentation: enable compat-mode for Asciidoctor
 
+ The SubmittingPatches document has been converted to produce an
+ HTML version via AsciiDoc/Asciidoctor.
 
-* Reporting bugs
 
-When you think git does not behave as you expect, please do not stop
-your bug report with just "git does not work".  "I used git in this
-way, but it did not work" is not much better, neither is "I used git
-in this way, and X happend, which is broken".  It often is that git is
-correct to cause X happen in such a case, and it is your expectation
-that is broken. People would not know what other result Y you expected
-to see instead of X, if you left it unsaid.
+* pb/bisect-helper-2 (2017-10-28) 8 commits
+ - t6030: make various test to pass GETTEXT_POISON tests
+ - bisect--helper: `bisect_start` shell function partially in C
+ - bisect--helper: `get_terms` & `bisect_terms` shell function in C
+ - bisect--helper: `bisect_next_check` shell function in C
+ - bisect--helper: `check_and_set_terms` shell function in C
+ - wrapper: move is_empty_file() and rename it as is_empty_or_missing_file()
+ - bisect--helper: `bisect_write` shell function in C
+ - bisect--helper: `bisect_reset` shell function in C
+ (this branch uses pb/bisect-helper.)
 
-Please remember to always state
+--------------------------------------------------
+[Graduated to "master"]
 
- - what you wanted to achieve;
+* ao/path-use-xmalloc (2017-10-25) 1 commit
+  (merged to 'next' on 2017-10-26 at 4cc04083fb)
+ + path.c: use xmalloc() in add_to_trie()
 
- - what you did (the version of git and the command sequence to reproduce
-   the behavior);
+ A possible oom error is now caught as a fatal error, instead of
+ continuing and dereferencing NULL.
 
- - what you saw happen (X above);
 
- - what you expected to see (Y above); and
+* np/config-path-doc (2017-10-19) 1 commit
+  (merged to 'next' on 2017-10-26 at c17a3daafc)
+ + config doc: clarify "git config --path" example
 
- - how the last two are different.
+ Doc update.
 
-See http://www.chiark.greenend.org.uk/~sgtatham/bugs.html for further
-hints.
 
-If you think you found a security-sensitive issue and want to disclose
-it to us without announcing it to wider public, please contact us at
-our security mailing list <git-security@googlegroups.com>.  This is
-a closed list that is limited to people who need to know early about
-vulnerabilities, including:
+* sb/rev-parse-show-superproject-root (2017-10-27) 1 commit
+  (merged to 'next' on 2017-10-27 at f9a0520cec)
+ + docs: fix formatting of rev-parse's --show-superproject-working-tree
 
-  - people triaging and fixing reported vulnerabilities
-  - people operating major git hosting sites with many users
-  - people packaging and distributing git to large numbers of people
+ Doc markup fix.
 
-where these issues are discussed without risk of the information
-leaking out before we're ready to make public announcements.
-
-
-* Repositories and documentation.
-
-My public git.git repositories are at:
-
-  git://git.kernel.org/pub/scm/git/git.git/
-  https://kernel.googlesource.com/pub/scm/git/git
-  git://repo.or.cz/alt-git.git/
-  https://github.com/git/git/
-  git://git.sourceforge.jp/gitroot/git-core/git.git/
-  git://git-core.git.sourceforge.net/gitroot/git-core/git-core/
-
-This one shows not just the main integration branches, but also
-individual topics broken out:
-
-  git://github.com/gitster/git/
-
-A few web interfaces are found at:
-
-  http://git.kernel.org/cgit/git/git.git
-  https://kernel.googlesource.com/pub/scm/git/git
-  http://repo.or.cz/w/alt-git.git
-
-Preformatted documentation from the tip of the "master" branch can be
-found in:
-
-  git://git.kernel.org/pub/scm/git/git-{htmldocs,manpages}.git/
-  git://repo.or.cz/git-{htmldocs,manpages}.git/
-  https://github.com/gitster/git-{htmldocs,manpages}.git/
-
-The manual pages formatted in HTML for the tip of 'master' can be
-viewed online at:
-
-  https://git.github.io/htmldocs/git.html
-
-
-* How various branches are used.
-
-There are four branches in git.git repository that track the source tree
-of git: "master", "maint", "next", and "pu".
 
-The "master" branch is meant to contain what are very well tested and
-ready to be used in a production setting.  Every now and then, a
-"feature release" is cut from the tip of this branch.  They used to be
-named with three dotted decimal digits (e.g. "1.8.5"), but recently we
-switched the versioning scheme and "feature releases" are named with
-three-dotted decimal digits that ends with ".0" (e.g. "1.9.0").
+* sg/rev-list-doc-reorder-fix (2017-10-27) 1 commit
+  (merged to 'next' on 2017-10-27 at caf49859d7)
+ + rev-list-options.txt: use correct directional reference
 
-The last such release was 2.15 done on Oct 30th, 2017.  You can expect
-that the tip of the "master" branch is always more stable than any of
-the released versions.
+ Doc flow fix.
 
-Whenever a feature release is made, "maint" branch is forked off from
-"master" at that point.  Obvious and safe fixes after a feature
-release are applied to this branch and maintenance releases are cut
-from it.  Usually the fixes are merged to the "master" branch first,
-several days before merged to the "maint" branch, to reduce the chance
-of last-minute issues.  The maintenance releases used to be named with
-four dotted decimal, named after the feature release they are updates
-to (e.g. "1.8.5.1" was the first maintenance release for "1.8.5"
-feature release).  These days, maintenance releases are named by
-incrementing the last digit of three-dotted decimal name (e.g. "2.12.1"
-was the first maintenance release for the "2.12" series).
+--------------------------------------------------
+[Stalled]
 
-New features never go to the 'maint' branch.  This branch is also
-merged into "master" to propagate the fixes forward as needed.
+* mk/use-size-t-in-zlib (2017-08-10) 1 commit
+ . zlib.c: use size_t for size
 
-A new development does not usually happen on "master". When you send a
-series of patches, after review on the mailing list, a separate topic
-branch is forked from the tip of "master" (or somewhere older, especially
-when the topic is about fixing an earlier bug) and your patches are queued
-there, and kept out of "master" while people test it out. The quality of
-topic branches are judged primarily by the mailing list discussions.
+ The wrapper to call into zlib followed our long tradition to use
+ "unsigned long" for sizes of regions in memory, which have been
+ updated to use "size_t".
 
-Topic branches that are in good shape are merged to the "next" branch. In
-general, the "next" branch always contains the tip of "master".  It might
-not be quite rock-solid, but is expected to work more or less without major
-breakage. The "next" branch is where new and exciting things take place. A
-topic that is in "next" is expected to be polished to perfection before it
-is merged to "master".  Please help this process by building & using the
-"next" branch for your daily work, and reporting any new bugs you find to
-the mailing list, before the breakage is merged down to the "master".
+ Needs resurrecting by making sure the fix is good and still applies
+ (or adjusted to today's codebase).
 
-The "pu" (proposed updates) branch bundles all the remaining topic
-branches the maintainer happens to have seen.  There is no guarantee that
-the maintainer has enough bandwidth to pick up any and all topics that
-are remotely promising from the list traffic, so please do not read
-too much into a topic being on (or not on) the "pu" branch.  This
-branch is mainly to remind the maintainer that the topics in them may
-turn out to be interesting when they are polished, nothing more.  The
-topics on this branch aren't usually complete, well tested, or well
-documented and they often need further work.  When a topic that was
-in "pu" proves to be in a testable shape, it is merged to "next".
 
-You can run "git log --first-parent master..pu" to see what topics are
-currently in flight.  Sometimes, an idea that looked promising turns out
-to be not so good and the topic can be dropped from "pu" in such a case.
-The output of the above "git log" talks about a "jch" branch, which is an
-early part of the "pu" branch; that branch contains all topics that
-are in "next" and a bit more (but not all of "pu") and is used by the
-maintainer for his daily work.
+* mg/status-in-progress-info (2017-05-10) 2 commits
+ - status --short --inprogress: spell it as --in-progress
+ - status: show in-progress info for short status
 
-The two branches "master" and "maint" are never rewound, and "next"
-usually will not be either.  After a feature release is made from
-"master", however, "next" will be rebuilt from the tip of "master"
-using the topics that didn't make the cut in the feature release.
+ "git status" learns an option to report various operations
+ (e.g. "merging") that the user is in the middle of.
 
-A natural consequence of how "next" and "pu" bundles topics together
-is that until a topic is merged to "next", updates to it is expected
-by replacing the patch(es) in the topic with an improved version,
-and once a topic is merged to "next", updates to it needs to come as
-incremental patches, pointing out what was wrong in the previous
-patches and how the problem was corrected.
+ cf. <xmqqmvakcdqw.fsf@gitster.mtv.corp.google.com>
 
-Note that being in "next" is not a guarantee to appear in the next
-release, nor even in any future release.  There were cases that topics
-needed reverting a few commits in them before graduating to "master",
-or a topic that already was in "next" was reverted from "next" because
-fatal flaws were found in it after it was merged to "next".
 
+* nd/worktree-move (2017-04-20) 6 commits
+ - worktree remove: new command
+ - worktree move: refuse to move worktrees with submodules
+ - worktree move: accept destination as directory
+ - worktree move: new command
+ - worktree.c: add update_worktree_location()
+ - worktree.c: add validate_worktree()
 
-* Other people's trees.
+ "git worktree" learned move and remove subcommands.
 
-Documentation/SubmittingPatches outlines to whom your proposed changes
-should be sent.  As described in contrib/README, I would delegate fixes
-and enhancements in contrib/ area to the primary contributors of them.
+ Expecting a reroll.
+ cf. <20170420101024.7593-1-pclouds@gmail.com>
+ cf. <20170421145916.mknekgqzhxffu7di@sigill.intra.peff.net>
+ cf. <d0e81b1e-5869-299e-f462-4d43dc997bd1@ramsayjones.plus.com>
 
-Although the following are included in git.git repository, they have their
-own authoritative repository and maintainers:
+--------------------------------------------------
+[Cooking]
 
- - git-gui/ comes from git-gui project, maintained by Pat Thoyts:
+* js/submodule-in-excluded (2017-10-26) 1 commit
+  (merged to 'next' on 2017-10-26 at 2a262e6a0b)
+ + status: do not get confused by submodules in excluded directories
 
-        git://repo.or.cz/git-gui.git
+ "git status --ignored -u" did not stop at a working tree of a
+ separate project that is embedded in an ignored directory and
+ listed files in that other project, instead of just showing the
+ directory itself as ignored.
 
- - gitk-git/ comes from Paul Mackerras's gitk project:
+ Will cook in 'next'.
 
-        git://ozlabs.org/~paulus/gitk
 
- - po/ comes from the localization coordinator, Jiang Xin:
+* tb/complete-checkout (2017-10-25) 1 commit
+  (merged to 'next' on 2017-10-26 at beeaf5b00c)
+ + completion: add remaining flags to checkout
 
-	https://github.com/git-l10n/git-po/
+ Command line completion (in contrib/) update.
 
-When sending proposed updates and fixes to these parts of the system,
-please base your patches on these trees, not git.git (the former two
-even have different directory structures).
+ Will cook in 'next'.
+
+
+* jc/ignore-cr-at-eol (2017-10-27) 2 commits
+ - diff: --ignore-cr-at-eol
+ - xdiff: reassign xpparm_t.flags bits
+
+ The "diff" family of commands learned to ignore differences in
+ carriage return at the end of line.
+
+ Just a lunch-time hack.
+ Lacks tests, docs and proper log message.
+
+
+* sb/diff-color-moved-use-xdl-recmatch (2017-10-26) 2 commits
+  (merged to 'next' on 2017-10-26 at 6711f24498)
+ + diff.c: get rid of duplicate implementation
+ + xdiff-interface: export comparing and hashing strings
+ (this branch uses jk/diff-color-moved-fix.)
+
+ Instead of using custom line comparison and hashing functions to
+ implement "moved lines" coloring in the diff output, use the pair
+ of these functions from lower-layer xdiff/ code.
+
+ Will cook in 'next'.
+
+
+* jh/dir-add-exclude-from-blob (2017-10-27) 1 commit
+ - dir: allow exclusions from blob in addition to file
+
+ The code to read exclusion list from a blob, which is used when the
+ .gitignore file is outside a sparse checkout area, has been
+ refactored so that other codepath can later use it to do the same
+ outside the context of "sparse checkout".
+
+
+* mh/avoid-rewriting-packed-refs (2017-10-30) 2 commits
+ - files-backend: don't rewrite the `packed-refs` file unnecessarily
+ - t1409: check that `packed-refs` is not rewritten unnecessarily
+
+ Recent update to the refs infrastructure implementation started
+ rewriting packed-refs file more often than before; this has been
+ optimized again for most trivial cases.
+
+
+* cc/git-packet-pm (2017-10-30) 7 commits
+ - fixup! Git/Packet.pm: extract parts of t0021/rot13-filter.pl for reuse
+ - Git/Packet.pm: extract parts of t0021/rot13-filter.pl for reuse
+ - t0021/rot13-filter: add capability functions
+ - t0021/rot13-filter: add packet_initialize()
+ - t0021/rot13-filter: improve error message
+ - t0021/rot13-filter: improve 'if .. elsif .. else' style
+ - t0021/rot13-filter: refactor packet reading functions
+
+ Parts of a test to drive the long-running content filter interface
+ has been split into its own module, hopefully to eventually become
+ reusable.
+
+ Expecting a reroll.
+ The original unfortunately is quite broken in error detection
+ cases to make the result sub-par as a standalone module before it
+ gets fixed.
+
+
+* jk/diff-color-moved-fix (2017-10-21) 5 commits
+  (merged to 'next' on 2017-10-26 at eb580e4c8c)
+ + diff: handle NULs in get_string_hash()
+ + diff: fix whitespace-skipping with --color-moved
+ + t4015: test the output of "diff --color-moved -b"
+ + t4015: check "negative" case for "-w --color-moved"
+ + t4015: refactor --color-moved whitespace test
+ (this branch is used by sb/diff-color-moved-use-xdl-recmatch.)
+
+ The experimental "color moved lines differently in diff output"
+ feature was buggy around "ignore whitespace changes" edges, whihch
+ has been corrected.
+
+ Will cook in 'next'.
+ Most of the fixes to the incorrectly implemented custom helpers
+ will go away with sb/diff-color-moved-use-xdl-recmatch topic.
+
+
+* jk/misc-resolve-ref-unsafe-fixes (2017-10-21) 4 commits
+  (merged to 'next' on 2017-10-26 at c327b2ec2f)
+ + worktree: handle broken symrefs in find_shared_symref()
+ + log: handle broken HEAD in decoration check
+ + remote: handle broken symrefs
+ + test-ref-store: avoid passing NULL to printf
+
+ Some codepaths did not check for errors when asking what branch the
+ HEAD points at, which have been fixed.
+
+ Will cook in 'next'.
+
+
+* ao/check-resolve-ref-unsafe-result (2017-10-21) 1 commit
+  (merged to 'next' on 2017-10-26 at 84302ab59a)
+ + commit: check result of resolve_ref_unsafe
+
+ "git commit", after making a commit, did not check for errors when
+ asking on what branch it made the commit, which has been correted.
+
+ Will cook in 'next'.
+
+
+* jm/status-ignored-files-list (2017-10-24) 4 commits
+  (merged to 'next' on 2017-10-26 at 5df1e2354f)
+ + status: test ignored modes
+ + status: document options to show matching ignored files
+ + status: report matching ignored and normal untracked
+ + status: add option to show ignored files differently
+
+ The set of paths output from "git status --ignored" was tied
+ closely with its "--untracked=<mode>" option, but now it can be
+ controlled more flexibly.  Most notably, a directory that is
+ ignored because it is listed to be ignored in the ignore/exclude
+ mechanism can be handled differently from a directory that ends up
+ to be ignored only because all files in it are ignored.
+
+ Will cook in 'next'.
+
+
+* mp/push-pushoption-config (2017-10-24) 1 commit
+  (merged to 'next' on 2017-10-26 at 2c72164d12)
+ + builtin/push.c: add push.pushOption config
+
+ The "--push-option=<string>" option to "git push" now defaults to a
+ list of strings configured via push.pushOption variable.
+
+ Will cook in 'next'.
+
+
+* gc/gitweb-filetest-acl (2017-10-24) 1 commit
+  (merged to 'next' on 2017-10-26 at 5b490f53bf)
+ + gitweb: use filetest to allow ACLs
+
+ "gitweb" checks if a directory is searchable with Perl's "-x"
+ operator, which can be enhanced by using "filetest 'access'"
+ pragma, which now we do.
+
+ Will cook in 'next'.
+
+
+* jn/ssh-wrappers (2017-10-30) 6 commits
+ - fixup! ssh: 'auto' variant to select between 'ssh' and 'simple'
+ - ssh: 'simple' variant does not support --port
+ - ssh: 'simple' variant does not support -4/-6
+ - ssh: 'auto' variant to select between 'ssh' and 'simple'
+ - connect: split ssh command line options into separate function
+ - connect: split git:// setup into a separate function
+ (this branch uses bw/protocol-v1.)
+
+ The ssh-variant 'simple' introduced earlier broke existing
+ installations by not passing --port/-4/-6 and not diagnosing an
+ attempt to pass these as an error.  Instead, default to
+ automatically detect how compatible the GIT_SSH/GIT_SSH_COMMAND is
+ to OpenSSH convention and then error out an invocation to make it
+ easier to diagnose connection errors.
+
+ Expecting a reroll.
+ cf. <20171025163243.xmm7szrkwgblpgcc@aiede.mtv.corp.google.com>
+
+
+* tg/deprecate-stash-save (2017-10-27) 3 commits
+  (merged to 'next' on 2017-10-27 at 73b1edb73b)
+ + stash: remove now superfluos help for "stash push"
+ + stash: mark "git stash save" deprecated in the man page
+ + stash: replace "git stash save" with "git stash push" in the documentation
+
+ "git stash save" has been deprecated in favour of "git stash push".
+
+ Will cook in 'next'.
+
+
+* jc/check-ref-format-oor (2017-10-18) 3 commits
+  (merged to 'next' on 2017-10-18 at 8b17566c80)
+ + check-ref-format doc: --branch validates and expands <branch>
+ + check-ref-format --branch: strip refs/heads/ using skip_prefix
+ + check-ref-format --branch: do not expand @{...} outside repository
+
+ "git check-ref-format --branch @{-1}" bit a "BUG()" when run
+ outside a repository for obvious reasons; clarify the documentation
+ and make sure we do not even try to expand the at-mark magic in
+ such a case, but still call the validation logic for branch names.
+
+ Will cook in 'next'.
+
+
+* kd/auto-col-with-pager-fix (2017-10-24) 2 commits
+  (merged to 'next' on 2017-10-24 at ef3ff0f14b)
+ + column: do not include pager.c
+  (merged to 'next' on 2017-10-18 at fe89ff7e83)
+ + column: show auto columns when pager is active
+
+ "auto" as a value for the columnar output configuration ought to
+ judge "is the output consumed by humans?" with the same criteria as
+ "auto" for coloured output configuration, i.e. either the standard
+ output stream is going to tty, or a pager is in use.  We forgot the
+ latter, which has been fixed.
+
+ Will cook in 'next'.
+
+
+* jc/t5601-copy-workaround (2017-10-17) 1 commit
+  (merged to 'next' on 2017-10-18 at ea1e133968)
+ + t5601: rm the target file of cp that could still be executing
+
+ A (possibly flakey) test fix.
+
+ Will cook in 'next'.
+
+
+* jc/branch-name-sanity (2017-10-14) 3 commits
+  (merged to 'next' on 2017-10-16 at 174646d1c3)
+ + branch: forbid refs/heads/HEAD
+ + branch: split validate_new_branchname() into two
+ + branch: streamline "attr_only" handling in validate_new_branchname()
+
+ "git branch" and "git checkout -b" are now forbidden from creating
+ a branch whose name is "HEAD".
+
+ Will cook in 'next'.
+
+
+* jk/revision-pruning-optim (2017-10-14) 1 commit
+  (merged to 'next' on 2017-10-16 at 2662baa21d)
+ + revision: quit pruning diff more quickly when possible
+
+ Pathspec-limited revision traversal was taught not to keep finding
+ unneeded differences once it knows two trees are different inside
+ given pathspec.
+
+ Will cook in 'next'.
+
+
+* wk/pull-signoff (2017-10-13) 1 commit
+  (merged to 'next' on 2017-10-16 at 5e48f349d9)
+ + pull: pass --signoff/--no-signoff to "git merge"
+
+ "git pull" has been taught to accept "--[no-]signoff" option and
+ pass it down to "git merge".
+
+ Will cook in 'next'.
+
+
+* dm/run-command-ignored-hook-advise (2017-10-10) 1 commit
+  (merged to 'next' on 2017-10-10 at 0827814922)
+ + run-command: add hint when a hook is ignored
+
+ A hook script that is set unexecutable is simply ignored.  Git
+ notifies when such a file is ignored, unless the message is
+ squelched via advice.ignoredHook configuration.
+
+ Will cook in 'next'.
+
+
+* hv/fetch-moved-submodules-on-demand (2017-10-17) 3 commits
+  (merged to 'next' on 2017-10-26 at c446ea3e9a)
+ + submodule: simplify decision tree whether to or not to fetch
+ + implement fetching of moved submodules
+ + fetch: add test to make sure we stay backwards compatible
+
+ "git fetch --recurse-submodules" now knows that submodules can be
+ moved around in the superproject in addition to getting updated,
+ and finds the ones that need to be fetched accordingly.
+
+ Will cook in 'next'.
+
+
+* js/for-each-ref-remote-name-and-ref (2017-10-11) 3 commits
+ - for-each-ref: test :remotename and :remoteref
+ - for-each-ref: let upstream/push optionally report the remote ref name
+ - for-each-ref: let upstream/push optionally report the remote name
+
+ The "--format=..." option "git for-each-ref" takes learned to show
+ the name of the 'remote' repository and the ref at the remote side
+ that is affected for 'upstream' and 'push' via "%(push:remotename)"
+ and friends.
+
+ Needs a bit more work on the documentation part.
+
+
+* pb/bisect-helper (2017-10-06) 6 commits
+  (merged to 'next' on 2017-10-13 at ffc9aefe63)
+ + bisect--helper: `is_expected_rev` & `check_expected_revs` shell function in C
+ + t6030: explicitly test for bisection cleanup
+ + bisect--helper: `bisect_clean_state` shell function in C
+ + bisect--helper: `write_terms` shell function in C
+ + bisect--helper: rewrite `check_term_format` shell function in C
+ + bisect--helper: use OPT_CMDMODE instead of OPT_BOOL
+ (this branch is used by pb/bisect-helper-2.)
+
+ An early part of piece-by-piece rewrite of "git bisect".
+
+ Will cook in 'next'.
+
+
+* bc/object-id (2017-10-16) 25 commits
+  (merged to 'next' on 2017-10-18 at ef8aa2698d)
+ + refs/files-backend: convert static functions to object_id
+ + refs: convert read_raw_ref backends to struct object_id
+ + refs: convert peel_object to struct object_id
+ + refs: convert resolve_ref_unsafe to struct object_id
+ + worktree: convert struct worktree to object_id
+ + refs: convert resolve_gitlink_ref to struct object_id
+ + Convert remaining callers of resolve_gitlink_ref to object_id
+ + sha1_file: convert index_path and index_fd to struct object_id
+ + refs: convert reflog_expire parameter to struct object_id
+ + refs: convert read_ref_at to struct object_id
+ + refs: convert peel_ref to struct object_id
+ + builtin/pack-objects: convert to struct object_id
+ + pack-bitmap: convert traverse_bitmap_commit_list to object_id
+ + refs: convert dwim_log to struct object_id
+ + builtin/reflog: convert remaining unsigned char uses to object_id
+ + refs: convert dwim_ref and expand_ref to struct object_id
+ + refs: convert read_ref and read_ref_full to object_id
+ + refs: convert resolve_refdup and refs_resolve_refdup to struct object_id
+ + Convert check_connected to use struct object_id
+ + refs: update ref transactions to use struct object_id
+ + refs: prevent accidental NULL dereference in write_pseudoref
+ + refs: convert update_ref and refs_update_ref to use struct object_id
+ + refs: convert delete_ref and refs_delete_ref to struct object_id
+ + refs/files-backend: convert struct ref_to_prune to object_id
+ + walker: convert to struct object_id
+ (this branch is used by mh/tidy-ref-update-flags.)
+
+ Conversion from uchar[20] to struct object_id continues.
+
+ Will cook in 'next'.
+
+
+* jc/no-cmd-as-subroutine (2017-10-11) 2 commits
+  (merged to 'next' on 2017-10-16 at 5f4ee919ac)
+ + merge-ours: do not use cmd_*() as a subroutine
+ + describe: do not use cmd_*() as a subroutine
+
+ Calling cmd_foo() as if it is a general purpose helper function is
+ a no-no.  Correct two instances of such to set an example.
+
+ Will cook in 'next'.
+
+
+* jc/merge-symlink-ours-theirs (2017-09-26) 1 commit
+ - merge: teach -Xours/-Xtheirs to symbolic link merge
+
+ "git merge -Xours/-Xtheirs" learned to use our/their version when
+ resolving a conflicting updates to a symbolic link.
+
+ Needs review.
+
+
+* jt/partial-clone-lazy-fetch (2017-10-02) 18 commits
+ - fetch-pack: restore save_commit_buffer after use
+ - unpack-trees: batch fetching of missing blobs
+ - clone: configure blobmaxbytes in created repos
+ - clone: support excluding large blobs
+ - fetch: support excluding large blobs
+ - fetch: refactor calculation of remote list
+ - fetch-pack: support excluding large blobs
+ - pack-objects: support --blob-max-bytes
+ - pack-objects: rename want_.* to ignore_.*
+ - gc: do not repack promisor packfiles
+ - rev-list: support termination at promisor objects
+ - sha1_file: support lazily fetching missing objects
+ - introduce fetch-object: fetch one promisor object
+ - index-pack: refactor writing of .keep files
+ - fsck: support promisor objects as CLI argument
+ - fsck: support referenced promisor objects
+ - fsck: support refs pointing to promisor objects
+ - fsck: introduce partialclone extension
+
+ A journey for "git clone" and "git fetch" to become "lazier" by
+ depending more on its remote repository---this is the beginning of
+ it.
+
+ Expecting a reroll.
+ cf. <CAGf8dgLu-TeK8KbHv-U+18O+L2TxKcGv5vFFHy38J6a_YXRfew@mail.gmail.com>
+
+
+* ma/lockfile-fixes (2017-10-07) 12 commits
+  (merged to 'next' on 2017-10-16 at 19fae5c138)
+ + read_cache: roll back lock in `update_index_if_able()`
+ + read-cache: leave lock in right state in `write_locked_index()`
+ + read-cache: drop explicit `CLOSE_LOCK`-flag
+ + cache.h: document `write_locked_index()`
+ + apply: remove `newfd` from `struct apply_state`
+ + apply: move lockfile into `apply_state`
+ + cache-tree: simplify locking logic
+ + checkout-index: simplify locking logic
+ + tempfile: fix documentation on `delete_tempfile()`
+ + lockfile: fix documentation on `close_lock_file_gently()`
+ + treewide: prefer lockfiles on the stack
+ + sha1_file: do not leak `lock_file`
+
+ An earlier update made it possible to use an on-stack in-core
+ lockfile structure (as opposed to having to deliberately leak an
+ on-heap one).  Many codepaths have been updated to take advantage
+ of this new facility.
+
+ Will cook in 'next'.
+
+
+* ot/mru-on-list (2017-10-01) 1 commit
+  (merged to 'next' on 2017-10-07 at e6ad4a16a2)
+ + mru: use double-linked list from list.h
+
+ The first step to getting rid of mru API and using the
+ doubly-linked list API directly instead.
+
+ Will cook in 'next'.
+
+
+* jm/svn-pushmergeinfo-fix (2017-09-17) 1 commit
+ - git-svn: fix svn.pushmergeinfo handling of svn+ssh usernames.
+
+ "git svn dcommit" did not take into account the fact that a
+ svn+ssh:// URL with a username@ (typically used for pushing) refers
+ to the same SVN repository without the username@ and failed when
+ svn.pushmergeinfo option is set.
+
+ Needs a test, perhaps as a follow-up patch.
+
+
+* mg/merge-base-fork-point (2017-09-17) 3 commits
+ - merge-base: find fork-point outside partial reflog
+ - merge-base: return fork-point outside reflog
+ - t6010: test actual test output
+
+ "merge-base --fork-point $branch $commit" is used to guess on which
+ commit among the commits that were once at the tip of the $branch the
+ $commit was built on top of, and it learns these historical tips from
+ the reflog of the $branch.  When the true fork-point is lost due to
+ pruning of old reflog entries, the command does not give any output,
+ because it has no way to guess correctly and does not want to mislead
+ the user with a wrong guess.
+
+ The command has been updated to give the best but not known to be
+ correct guess, based on a hope that a merge-base between $commit and a
+ virtual merge across all the reflog entries that still are available
+ for $branch may still be a closer to the true fork-point than the
+ merge-base between $commit and the current tip of the $branch.
+
+ This may have to be offered by an additional option, to allow the
+ users that are prepared to see a potentially incorrect guess to opt
+ into the feature, without affecting the current callers that may not
+ be prepared to accept a guess that is not known to be correct.
+
+ What's the doneness of this one?
+
+
+* ds/find-unique-abbrev-optim (2017-10-13) 4 commits
+  (merged to 'next' on 2017-10-16 at 7f4479ac52)
+ + sha1_name: minimize OID comparisons during disambiguation
+ + sha1_name: parse less while finding common prefix
+ + sha1_name: unroll len loop in find_unique_abbrev_r()
+ + p4211-line-log.sh: add log --online --raw --parents perf test
+
+ Optimize the code to find shortest unique prefix of object names.
+
+ Will cook in 'next'.
+
+
+* cc/perf-run-config (2017-09-24) 9 commits
+ - perf: store subsection results in "test-results/$GIT_PERF_SUBSECTION/"
+ - perf/run: show name of rev being built
+ - perf/run: add run_subsection()
+ - perf/run: update get_var_from_env_or_config() for subsections
+ - perf/run: add get_subsections()
+ - perf/run: add calls to get_var_from_env_or_config()
+ - perf/run: add GIT_PERF_DIRS_OR_REVS
+ - perf/run: add get_var_from_env_or_config()
+ - perf/run: add '--config' option to the 'run' script
+
+ Needs review.
+
+
+* bp/fsmonitor (2017-10-05) 15 commits
+  (merged to 'next' on 2017-10-05 at 964a029d13)
+ + fsmonitor: preserve utf8 filenames in fsmonitor-watchman log
+ + fsmonitor: read entirety of watchman output
+ + fsmonitor: MINGW support for watchman integration
+  (merged to 'next' on 2017-10-02 at cf0c67979c)
+ + fsmonitor: add a performance test
+ + fsmonitor: add a sample integration script for Watchman
+ + fsmonitor: add test cases for fsmonitor extension
+ + split-index: disable the fsmonitor extension when running the split index test
+ + fsmonitor: add a test tool to dump the index extension
+ + update-index: add fsmonitor support to update-index
+ + ls-files: Add support in ls-files to display the fsmonitor valid bit
+ + fsmonitor: add documentation for the fsmonitor extension.
+ + fsmonitor: teach git to optionally utilize a file system monitor to speed up detecting new or changed files.
+ + update-index: add a new --force-write-index option
+ + preload-index: add override to enable testing preload-index
+ + bswap: add 64 bit endianness helper get_be64
+ (this branch is used by av/fsmonitor.)
+
+ We learned to talk to watchman to speed up "git status" and other
+ operations that need to see which paths have been modified.
+
+ Will cook in 'next'.
+
+
+* bw/protocol-v1 (2017-10-17) 11 commits
+  (merged to 'next' on 2017-10-18 at 835fe09e50)
+ + Documentation: document Extra Parameters
+ + ssh: introduce a 'simple' ssh variant
+ + i5700: add interop test for protocol transition
+ + http: tell server that the client understands v1
+ + connect: tell server that the client understands v1
+ + connect: teach client to recognize v1 server response
+ + upload-pack, receive-pack: introduce protocol version 1
+ + daemon: recognize hidden request arguments
+ + protocol: introduce protocol extension mechanisms
+ + pkt-line: add packet_write function
+ + connect: in ref advertisement, shallows are last
+ (this branch is used by jn/ssh-wrappers.)
+
+ A new mechanism to upgrade the wire protocol in place is proposed
+ and demonstrated that it works with the older versions of Git
+ without harming them.
+
+ Will cook in 'next'.
+
+
+* pc/submodule-helper (2017-10-07) 3 commits
+  (merged to 'next' on 2017-10-16 at 2b38de12cc)
+ + submodule: port submodule subcommand 'status' from shell to C
+ + submodule--helper: introduce for_each_listed_submodule()
+ + submodule--helper: introduce get_submodule_displaypath()
+
+ GSoC.
+ Will cook in 'next'.
+
+
+* bc/hash-algo (2017-10-30) 4 commits
+ - Switch empty tree and blob lookups to use hash abstraction
+ - Integrate hash algorithm support with repo setup
+ - Add structure representing hash algorithm
+ - setup: expose enumerated repo info
+
+ An infrastructure to define what hash function is used in Git is
+ introduced, and an effort to plumb that throughout various
+ codepaths has been started.
+
+ cf. <20171028181239.59458-1-sandals@crustytoothpaste.net>
+
+
+* jk/drop-ancient-curl (2017-08-09) 5 commits
+ - http: #error on too-old curl
+ - curl: remove ifdef'd code never used with curl >=7.19.4
+ - http: drop support for curl < 7.19.4
+ - http: drop support for curl < 7.16.0
+ - http: drop support for curl < 7.11.1
+
+ Some code in http.c that has bitrot is being removed.
+
+ Will be rerolled after tc/curl-with-backports stabilizes.
+
+
+* sb/submodule-recursive-checkout-detach-head (2017-07-28) 2 commits
+  (merged to 'next' on 2017-10-26 at 30994b4c76)
+ + Documentation/checkout: clarify submodule HEADs to be detached
+ + recursive submodules: detach HEAD from new state
+
+ "git checkout --recursive" may overwrite and rewind the history of
+ the branch that happens to be checked out in submodule
+ repositories, which might not be desirable.  Detach the HEAD but
+ still allow the recursive checkout to succeed in such a case.
+
+ Undecided.
+ This needs justification in a larger picture; it is unclear why
+ this is better than rejecting recursive checkout, for example.
+
+
+* ex/deprecate-empty-pathspec-as-match-all (2017-06-23) 2 commits
+  (merged to 'next' on 2017-08-14 at 24db08a6e8)
+ + pathspec: die on empty strings as pathspec
+ + t0027: do not use an empty string as a pathspec element
+
+ The final step to make an empty string as a pathspec element
+ illegal.  We started this by first deprecating and warning a
+ pathspec that has such an element in 2.11 (Nov 2016).
+
+ Hopefully we can merge this down to the 'master' by the end of the
+ year?  A deprecation warning period that is about 1 year does not
+ sound too bad.
+
+ Will cook in 'next'.
+ As the draft RelNotes says, let's merge this to 'master' after
+ this release cycle.
+
+--------------------------------------------------
+[Discarded]
+
+* jk/ui-color-always-to-auto-maint (2017-10-13) 2 commits
+  (merged to 'next' on 2017-10-13 at bb16e1edc8)
+ + color: document that "git -c color.*=always" is a bit special
+ + color: downgrade "always" to "auto" only for on-disk configuration
+
+ It turns out that "git -c color.ui=always cmd" is relied on by many
+ third-party tools as a way to force coloured output no matter what
+ the end-user configuration is, and a recent attempt to downgrade
+ 'always' to 'auto' to fix the regression to "git add -p" broke it.
+
+ This has been reverted from 'next'.
