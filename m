@@ -2,92 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E6851FBF4
-	for <e@80x24.org>; Mon, 30 Oct 2017 17:27:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 36717202DD
+	for <e@80x24.org>; Mon, 30 Oct 2017 17:28:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932606AbdJ3R1t (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Oct 2017 13:27:49 -0400
-Received: from mail-qt0-f181.google.com ([209.85.216.181]:48137 "EHLO
-        mail-qt0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932356AbdJ3R1s (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Oct 2017 13:27:48 -0400
-Received: by mail-qt0-f181.google.com with SMTP id f8so17382559qta.5
-        for <git@vger.kernel.org>; Mon, 30 Oct 2017 10:27:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=mCDJxhqFkdxzxxUmuQQLcJRPX7KEozFuQigJ4VjobHs=;
-        b=GrUwJOHTYQ9CGTVc/f70MOY1RN6B0q9xGSmtRNxcAI3K7rqhk037vjUV52yeq/7Aao
-         QW5rcuaEcZ5Jvkev8/SEnlGLjRFXZ1tv9bXgwhFedRFyRzznZNmJqnAOWX2meg/KNMFv
-         GLyDeN830P8HXdxdjckJgwLakn4cAfkv+HaYK02aGmAr3cLbF44PlKCMaE9atLp5Kl0J
-         iYL2cdK1CJxbVGjCdj/qW1wfLgP4kMkOFYbp6r6KtRIvFMdxQ3Tnzb1AbNQk8gGQMOZH
-         tFTNI248VWnYX/XTA3utrfE2PaUb/clo7BVPB44unrXdxYnDqZS6RmbMEMw1rBY/Sa1F
-         mkUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=mCDJxhqFkdxzxxUmuQQLcJRPX7KEozFuQigJ4VjobHs=;
-        b=Zzo6awCqYsl7kiPtg6hlT+/AtA+KRzD/BWExK7YMm9GC+H7whBstvbZAnk5a+dHaFP
-         ZAzls50mWffKbKm/i+SoHwPKZw+yANx9u2TKFmQ/RrFe4SAO5+bF7X9fkoIqsTubDorG
-         4kbcxSl+UATd4IGEMoKlIX4JZuJFBaUBZFMnkKgrLbd1pA3okAZtDz8n0WFTgRycbKWc
-         CYZ/ZFB6HsMW/8Ff6C7KxzGwps3Ieu8AiEouMLW0TjOroArSsmBTFRpKcqgOaauOv1vW
-         oiFO2nrusesHgde5ePZ8UTuDE7jTORXl0OrSIsx28u5ObmDPOO+7HoDXsyTww1m4fPwq
-         wvXg==
-X-Gm-Message-State: AMCzsaXjDeiR1F26yzNmEnKLsRmESiV+KSQtzpIaeseb8C/1xu/p2Dd3
-        OZZ7NZ2Zp1li15LWLAB96T1CP8y3rZQ7nnxh4yw=
-X-Google-Smtp-Source: ABhQp+SpU8Kz3DKFVgjLuZazUvRPsawBO9DYJNtkq96AHFwFabut1akPlTAGvpCJRJcvr3/aKIHek0meRmVbNxwwmIg=
-X-Received: by 10.237.59.198 with SMTP id s6mr15502991qte.281.1509384467703;
- Mon, 30 Oct 2017 10:27:47 -0700 (PDT)
+        id S932661AbdJ3R2Y (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Oct 2017 13:28:24 -0400
+Received: from mout.gmx.net ([212.227.15.19]:56822 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S932356AbdJ3R2X (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Oct 2017 13:28:23 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M0PdN-1dJKf83g0z-00udSJ; Mon, 30
+ Oct 2017 18:28:19 +0100
+Date:   Mon, 30 Oct 2017 18:28:19 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Oct 2017, #07; Mon, 30)
+In-Reply-To: <xmqqr2tl40pl.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.21.1.1710301827000.6482@virtualbox>
+References: <xmqqr2tl40pl.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Received: by 10.140.28.246 with HTTP; Mon, 30 Oct 2017 10:27:47 -0700 (PDT)
-In-Reply-To: <7d978e14-2eec-23b9-c25f-e6b361101b03@gmx.net>
-References: <0102015f5e5ee171-f30f4868-886f-47a1-a4e4-b4936afc545d-000000@eu-west-1.amazonses.com>
- <7d978e14-2eec-23b9-c25f-e6b361101b03@gmx.net>
-From:   Pranit Bauva <pranit.bauva@gmail.com>
-Date:   Mon, 30 Oct 2017 22:57:47 +0530
-Message-ID: <CAFZEwPN2GpFy6r1vRpS6oB-qC0r5ymGB_q0AJWueLPyGj7-uvw@mail.gmail.com>
-Subject: Re: [PATCH v16 Part II 1/8] bisect--helper: `bisect_reset` shell
- function in C
-To:     Stephan Beyer <s-beyer@gmx.net>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:a0tnBTPiIDWvJSboi1d2DtNNgJvSvu/aA475Ii5LN2xOtw+Va3h
+ Am00jTkr9V6kVvrtDz6LcY2y0PbessSnN8ufi9AvQ5TTVW+87cXLQwrQgzFtQ6AV12gvWj6
+ yeS1olxCw8oPR588LwLTgRMUb7zXFwgWjxw7wgz7v4O/te9GbjEeUv+t8w3zP5f0qGyEzxj
+ feGMNvCPBh/AQxiouKTAQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:pMUcT0I1O/c=:yy03lf9ymC9WbYK1oHVutS
+ Tcy5fB4VRox4fVo9dN/BPcHFm8+iai2eIX8nZgsoyN4B1hZgTcYpiYe2J5+DVOM7zM75ZSTWf
+ XFqgmaO5+X+S5lVLG88To+XSTYXXvbqjovZHQfuogwfsSMAeD5a/6dJK+velGzciRk/nbpyyW
+ G015Hx3hkisQ8UUMnLPbktBS5QJ2+TwdHmA9k5HUcr1tGkPba3BPeoC8ZLK8M9hJvUPbSHN/m
+ j/IXxP/CmIhNK2d/10qxzPIBl3NWX3nURKPR2aItV5sUlKGYEtHdb5CJy//j+7W6mvtFb9fbP
+ EHIOEP3b84LR4K9kyx4+bmUqqvqjpOT6spfwbJKmWGkIM5n44UvQ0B23gk+6/ZQrJhEtOXfEE
+ rJvyAsjsn8YVqsuIqT8CbDGVbsOFv1msby0S/d8SIK2ORZ4vWx1CpZKzkSKj5TliHL9dqtq2u
+ K5LukcaflTAw2XOaJH4iDfjfCN91YE4wvyj580l4+DLiHdTnH8OFkImxSyMweqhuf1RPBfaIc
+ eDWuu+BPecbl3hWzm4HuqnwPRYH1NNeW2N/F4kp+wN+uIyqN6PUlae66AJs7waR9xXmyPJn+h
+ BeKboAg8r1ZhHcQUGsWOX3vsKp0vyFozfJ6AUIGgcDz9pOj6k4oWjBHMCgbdracmj23W+QHH0
+ bPROvEpCbvitDI8nr6lRp1lIR5qcEs/w5xqcKRthjvWPsw/smE5XpxAuepjGKcOAMhlzWyAvB
+ 4t11txV83B0tCxTBPEoIIQlDOvuvZqoNZ88f5lB6RZh4nci76AcAgCYjaZs1N+Zl17txIkNnd
+ 35uSMG6cK0o2zQlEyFqc2HxQHAWBszOqQaVphQF9QosdHtFrCQIAgh6JoPvzeNgVpNYP8aJ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey Stephan,
+Hi Junio,
 
-On Mon, Oct 30, 2017 at 6:52 PM, Stephan Beyer <s-beyer@gmx.net> wrote:
-> Hi Pranit,
->> +static int bisect_reset(const char *commit)
->> +{
->> +     struct strbuf branch = STRBUF_INIT;
->> +
->> +     if (!commit) {
->> +             if (strbuf_read_file(&branch, git_path_bisect_start(), 0) < 1)
->> +                     return !printf(_("We are not bisecting.\n"));
->
-> This is weird; I had to look up the return value of printf first before
-> I could understand what you are doing ;) I think that it is meant as a
-> shortcut for
->
->         printf(_("We are not bisecting.\n"));
->         return 0;
->
-> but please also express it with these two lines. (Or what is the point
-> of returning a non-zero value only in the case when nothing could be
-> printed?)
+On Mon, 30 Oct 2017, Junio C Hamano wrote:
 
-I was just being a little lazy I suppose. I will stick to doing it in
-two lines and avoiding fancy things.
+> * jc/branch-name-sanity (2017-10-14) 3 commits
+>   (merged to 'next' on 2017-10-16 at 174646d1c3)
+>  + branch: forbid refs/heads/HEAD
+>  + branch: split validate_new_branchname() into two
+>  + branch: streamline "attr_only" handling in validate_new_branchname()
+> 
+>  "git branch" and "git checkout -b" are now forbidden from creating
+>  a branch whose name is "HEAD".
 
-Regards,
-Pranit Bauva
+Question: should we respect core.ignoreCase and if it is true, compare
+case-insensitively? Or should we just keep the comparison
+case-sensitively, in preparation for a (hopefully near) refs backend that
+does not inherit filesystems' case-insensitivity?
+
+Ciao,
+Dscho
