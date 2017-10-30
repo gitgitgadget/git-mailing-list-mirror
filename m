@@ -6,95 +6,110 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E399202A0
-	for <e@80x24.org>; Mon, 30 Oct 2017 00:38:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF2D6202A0
+	for <e@80x24.org>; Mon, 30 Oct 2017 00:40:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751856AbdJ3Aiq (ORCPT <rfc822;e@80x24.org>);
-        Sun, 29 Oct 2017 20:38:46 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50545 "EHLO
+        id S1751673AbdJ3Akt (ORCPT <rfc822;e@80x24.org>);
+        Sun, 29 Oct 2017 20:40:49 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59341 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751684AbdJ3Aip (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Oct 2017 20:38:45 -0400
+        with ESMTP id S1751310AbdJ3Aks (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Oct 2017 20:40:48 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 33286B9DCA;
-        Sun, 29 Oct 2017 20:38:45 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CE47FBAD45;
+        Sun, 29 Oct 2017 20:40:47 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=0W58vUOs7CWARXkHqHOo9GVuH78=; b=NHLx32
-        nTcCQYw4xLEPBJQRpYBIBUeKtzNhkCtx2ksr23j+MCydE0VfjlZ5ZII56oHSTrKO
-        OfrUX8YFbnBiqgbDFwsv4uVr/mW47tZUJVmILdg373NeyG78IJdVWmMaPorHngvI
-        3Wb2kttdcfFGsSGXkPRk++ks1ymwYVCe47zYE=
+        :content-type; s=sasl; bh=Zq82Kq6sJjlNLdyil+kxzSjRXXM=; b=sUwppP
+        wBAFJ0qo3U6M/B+wxtJ2H/XJ8x6zKdK4P+qSk4pw5yMQhvwYGz/EdhzYGhGQ2Fdd
+        NgMghIwmRlZSgF155lpqQSoZnxb203TXzO6Se4uB5J9L18VAI8kaaxHQ4cdKDd3h
+        zpVjTe+TO0afiAK+sF0YYcBrFmKemmOCdqz+Q=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=HwZlWS18FYYj6AmetVFcLr1KTSSu5/O9
-        XGS/arxkIe6mC1NqRAJoXkyo5FNqTH19HRWyhjC6HGXg1Y6ZZX83dc/fHMvqS+g1
-        eDmzpvjzRtDyZQRK83AEQjBrJXZxK8HXJ9qnGvqyf2XVLdmM/FzH/m0k80PUd/+y
-        x2uBvaX1w2A=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 27D6CB9DC9;
-        Sun, 29 Oct 2017 20:38:45 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=WjEEQLdTkM41mgSd4BxAAOgs6msOg9ce
+        NDHiIhOqQYz5e0HU1V2KpE8cVXCZ3/t/oEgHvAJTDWNXWJDBSjb/VL8YkmqnPrl4
+        xy/OLRVlaZxyyu3rFt4rGIYk7zPn0hI/ZgsLW/IBlownDQbmfuHxPBzEp+lpZX+g
+        PozLT9qGDHg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C62E5BAD44;
+        Sun, 29 Oct 2017 20:40:47 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8A19FB9DC8;
-        Sun, 29 Oct 2017 20:38:44 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 34A7EBAD43;
+        Sun, 29 Oct 2017 20:40:47 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Ben Peart <Ben.Peart@microsoft.com>,
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Brandon Williams <bmwill@google.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>,
+        Bryan Turner <bturner@atlassian.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
         Jonathan Tan <jonathantanmy@google.com>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Mike Hommey <mh@glandium.org>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Eric Wong <e@80x24.org>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 0/6] Create Git/Packet.pm
-References: <20171019123030.17338-1-chriscool@tuxfamily.org>
-Date:   Mon, 30 Oct 2017 09:38:43 +0900
-In-Reply-To: <20171019123030.17338-1-chriscool@tuxfamily.org> (Christian
-        Couder's message of "Thu, 19 Oct 2017 14:30:24 +0200")
-Message-ID: <xmqqvaix8o6k.fsf@gitster.mtv.corp.google.com>
+        Jeff King <peff@peff.net>, William Yan <wyan@google.com>
+Subject: Re: [PATCH 3/5] ssh: 'auto' variant to select between 'ssh' and 'simple'
+References: <20170926235627.79606-1-bmwill@google.com>
+        <20171003201507.3589-1-bmwill@google.com>
+        <20171003201507.3589-11-bmwill@google.com>
+        <20171003214206.GY19555@aiede.mtv.corp.google.com>
+        <20171016171812.GA4487@google.com>
+        <20171023212740.qodxzsq5w7rn2r6y@aiede.mtv.corp.google.com>
+        <20171023213159.eitrjrqrh277advm@aiede.mtv.corp.google.com>
+        <alpine.DEB.2.21.1.1710251437090.6482@virtualbox>
+        <CAGZ79kYTYg09A7UbhvyiT0QmRQG5ZJV6v1iaQBNCZY8RTj300A@mail.gmail.com>
+        <20171025163243.xmm7szrkwgblpgcc@aiede.mtv.corp.google.com>
+Date:   Mon, 30 Oct 2017 09:40:46 +0900
+In-Reply-To: <20171025163243.xmm7szrkwgblpgcc@aiede.mtv.corp.google.com>
+        (Jonathan Nieder's message of "Wed, 25 Oct 2017 09:32:43 -0700")
+Message-ID: <xmqqo9op8o35.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: AF4C644E-BD0A-11E7-A172-8EF31968708C-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: F86855F2-BD0A-11E7-BAE2-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I've queued this from Dscho; please take it into consideration when
-you reroll.
+Jonathan Nieder <jrnieder@gmail.com> writes:
+
+> I have other changes to make when rerolling anyway (from Junio's
+> review), so no need for a followup patch.  Will fix this in the
+> reroll today.
+>
+> Thanks for catching and diagnosing this, Dscho!
+
+In the meantime, I've queued this from Dscho; please take it into
+consideration when you reroll.
 
 Thanks.
 
 -- >8 --
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Date: Sun, 29 Oct 2017 16:17:06 +0100
-Subject: [PATCH] fixup! Git/Packet.pm: extract parts of t0021/rot13-filter.pl
- for reuse
+Date: Sun, 29 Oct 2017 16:12:46 +0100
+Subject: [PATCH] fixup! ssh: 'auto' variant to select between 'ssh' and 'simple'
 
-The patch introducing Git/Packet.pm forgot the NO_PERL_MAKEMAKER part.
-Breaking the test suite on Windows.
+This is needed because on Windows, if `uplink.exe` exists, the MSYS2
+Bash will overwrite that when redirecting via `>uplink`.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- perl/Makefile | 1 +
+ t/t5601-clone.sh | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/perl/Makefile b/perl/Makefile
-index 15d96fcc7a..4a74a493e6 100644
---- a/perl/Makefile
-+++ b/perl/Makefile
-@@ -37,6 +37,7 @@ modules += Git/SVN/Editor
- modules += Git/SVN/GlobSpec
- modules += Git/SVN/Log
- modules += Git/SVN/Migration
-+modules += Git/SVN/Packet
- modules += Git/SVN/Prompt
- modules += Git/SVN/Ra
- modules += Git/SVN/Utils
+diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+index f9a2ae84c7..534eb21915 100755
+--- a/t/t5601-clone.sh
++++ b/t/t5601-clone.sh
+@@ -391,6 +391,7 @@ test_expect_success 'simple does not support port' '
+ 
+ test_expect_success 'uplink is treated as simple' '
+ 	copy_ssh_wrapper_as "$TRASH_DIRECTORY/uplink" &&
++	test_when_finished "rm \"$TRASH_DIRECTORY/uplink$X\"" &&
+ 	test_must_fail git clone "[myhost:123]:src" ssh-bracket-clone-uplink &&
+ 	git clone "myhost:src" ssh-clone-uplink &&
+ 	expect_ssh myhost src
 -- 
 2.15.0-rc2-267-g7d3ed0014a
 
