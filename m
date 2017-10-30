@@ -2,126 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 406F2202DD
-	for <e@80x24.org>; Mon, 30 Oct 2017 17:31:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9BC37202DD
+	for <e@80x24.org>; Mon, 30 Oct 2017 17:32:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932564AbdJ3Rbe (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Oct 2017 13:31:34 -0400
-Received: from mail-qt0-f193.google.com ([209.85.216.193]:46974 "EHLO
-        mail-qt0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932476AbdJ3Rbe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Oct 2017 13:31:34 -0400
-Received: by mail-qt0-f193.google.com with SMTP id 1so17401759qtn.3
-        for <git@vger.kernel.org>; Mon, 30 Oct 2017 10:31:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=WYNgVOGpSm3xcF6shpQLAcRttpvGuKSopn/lSsfhrt4=;
-        b=hNjhxYG3bPIZw4RT+1SuMjZe/QW4SiqMkZ5ZwfulgiRlESIhjD0PLMzzDA0Pw/HhyJ
-         LRSOiEKLcr0JXUnrJ5tPdXbe1lcJOO8r1jIwqwlBy54oW5vTJHBccH1NGoYtbisc51FK
-         8RGVked6t2bkBhyfOdJRY9qco8qqjKCPew8KWBvXSIUquq1RFwrE0eMD0xDluNq7+q0h
-         8wBbF7ZO9j8W8SNz7nj8UyY/xpHhnr1te2tiDM2J96QuCuopyiaCrOXGcvEb1RvWv4Kx
-         TBoGzLIOO+BvFdKB/Ft983MObHyOGkGP+h4M+Pl5E5r1fshz8oCl+Zs14BZTjEvJ0KBX
-         Sung==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=WYNgVOGpSm3xcF6shpQLAcRttpvGuKSopn/lSsfhrt4=;
-        b=tp/vxECVDKWZ8+E++6C2BJFFi8i5jKaPAlHdJZXa4gTza5C53ORtQqAhc2vOV4KOef
-         mClc00P65+jhO8U6ZwkcNZKtjDqZ6KuQeVygLmeqGfu16MYS6JD2OO4uSn6//RQe7MKi
-         v8rsnWgQhB8EwjRUx7blB3sEg9ESUyXZggC74hsbDUPuWWTE6kga6s9W5oHr1bxit5Al
-         dJkFTaBiwpJ8MVG1PV+2n3olVwd923a9NctbpCB9FgJq9DqOziYvtmJhBsldLPzNnRae
-         ufGZl0EQgdnpli1MUCuiGfQJPm+T51V2It4Srht0/fKEyby+xvM5Djv5JavK51oRaONk
-         Kkmw==
-X-Gm-Message-State: AMCzsaVNlPKmRp6ByvJctNFZ39PvEP/zG4hGUf+eQJkHfuATMoJ4mPFs
-        /NMsJ7nzqsFPbeKrFiLXGRMSuaJJF5gUumn+pZA=
-X-Google-Smtp-Source: ABhQp+T/td3rPIzlEJyRFlb0c9QKy76Tb9ME4Mo7+H9FLj0wAN3O7cvpXJKy6DaNGnEZfl6lhGhTYlRgcquQF6COP1E=
-X-Received: by 10.237.58.168 with SMTP id o37mr16162263qte.335.1509384693391;
- Mon, 30 Oct 2017 10:31:33 -0700 (PDT)
+        id S932615AbdJ3RcE (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Oct 2017 13:32:04 -0400
+Received: from mout.gmx.net ([212.227.15.15]:60656 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S932476AbdJ3RcD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Oct 2017 13:32:03 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LgptO-1dLIeR0FpW-00oHoi; Mon, 30
+ Oct 2017 18:31:57 +0100
+Date:   Mon, 30 Oct 2017 18:31:56 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Oct 2017, #07; Mon, 30)
+In-Reply-To: <xmqqr2tl40pl.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.21.1.1710301830210.6482@virtualbox>
+References: <xmqqr2tl40pl.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Received: by 10.140.28.246 with HTTP; Mon, 30 Oct 2017 10:31:32 -0700 (PDT)
-In-Reply-To: <af5f503a-6c2c-436f-ae74-cfbb11cb7a7f@gmx.net>
-References: <0102015f5e5ee303-449f1b76-ff53-433c-8973-8b4850466810-000000@eu-west-1.amazonses.com>
- <af5f503a-6c2c-436f-ae74-cfbb11cb7a7f@gmx.net>
-From:   Pranit Bauva <pranit.bauva@gmail.com>
-Date:   Mon, 30 Oct 2017 23:01:32 +0530
-Message-ID: <CAFZEwPMpsJAQP6ZGNUTi+A_27o7_mMRD8p=3RAf0fywjOjY0vA@mail.gmail.com>
-Subject: Re: [PATCH v16 Part II 6/8] bisect--helper: `get_terms` &
- `bisect_terms` shell function in C
-To:     Stephan Beyer <s-beyer@gmx.net>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:ckAIPQTw5BnNlXbjqo+Vm7tx9wZ9dRY43Cdvx0SjxBDniMMtThR
+ ZdgTUUfIb36X/lOJWT6ei7kxZTPgadKL1Wna0aWLcTQ9euLCQAxUJ0+kS0kY69dPXipd+OX
+ INh3BBQqVdL5tkH8kxMVObD3kwVP+/xd8dwhfJt0MuBElcqmnc1Bdypm4rbaoBt8LeFeNLJ
+ jLheVS/9BhgrrsqbzJZyA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:F7pve3OsopE=:BUEYbwoJJHLsBznhPLKBxq
+ oE8wMX86e5ctEdeEb1QvEPNJkmlvw5arCRAzcfyHlQbC1WX2XTzzQSG5nilQoiaL8Z6zPVO+M
+ SDTx2kwDh5xhnRF7eMKT4R4AmRb75B4hxKKMY67faKmZ/yuQgY2G9q1B/TAYKQC78HT8OeF6f
+ NXHaKb+oGO/HSqKgVR5ujwVLkr3zM47hzvN5cMN7AzqrSPtAYC7sFSGdfCuvibVydCnOfYawu
+ ePylxirbRb/yVWF5778FukldA5kxxg11Xkx1noBE+XpmkDn2r+YZRjRgn2LIRU8g3MU9lNEu7
+ loH3kHCuOKf0QEUN7zrROU+xRyJJtDIxOBiG5hv6xIYhV8W3idjL95zMvHwDaNsWG3N7bFBRX
+ 5tPkpZE8//JmbgVONBzszMxMkTkalbWz++S71INrO/ZKlv++9HrzFDw5GJogZOplZ1k1TIKfs
+ BAVbWKTopYoTjxB0kqdb4T1Alhbhsj9rzFnGutJDUMR3/pPTtOGhQDqAkholI6tMWUoDxMXe9
+ 1Dmisz7RD4tfzeNLGh8ylp0NE2tB6mTrDYHagNEa263TjwjOp4XDYh+lakEHmbMfbyT407h2+
+ 9HW2nxLF5u6nYLi1KY2oKtmvolVryCL5nvPwXk+3YOeBKaV8zZLdjLEJ86obyWublQ/EbeXxW
+ UnHDjt9QUh/xZH/dAEN5hZn7PdLNxMCYg9lVR/nOkApzqlhddgaAexz3m/72yzUf90Y80W1lG
+ 3UD1qozB6Trj8Wk1IQLfQkE8v9PDN4/HX48X9z5VZLb56FBjiFAzSUnjhu82pStuNSWwRgg6e
+ pdAbvLMFgyu47ZEMFnlLQdSrzbib33Du/pBW8AHYmi/fixlF3E/KP98n+KGc3lwzV92WCow
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey Stephan,
+Hi Junio,
 
-On Mon, Oct 30, 2017 at 10:04 PM, Stephan Beyer <s-beyer@gmx.net> wrote:
-> On 10/27/2017 05:06 PM, Pranit Bauva wrote:
->> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
->> index 0f9c3e63821b8..ab0580ce0089a 100644
->> --- a/builtin/bisect--helper.c
->> +++ b/builtin/bisect--helper.c
-> [...]
->> +static int bisect_terms(struct bisect_terms *terms, const char **argv, int argc)
->> +{
->> +     int i;
->> +
->> +     if (get_terms(terms))
->> +             return error(_("no terms defined"));
->> +
->> +     if (argc > 1)
->> +             return error(_("--bisect-term requires exactly one argument"));
->> +
->> +     if (argc == 0)
->> +             return !printf(_("Your current terms are %s for the old state\n"
->> +                              "and %s for the new state.\n"),
->> +                              terms->term_good, terms->term_bad);
->
-> Same as in 1/8: you probably want "printf(...); return 0;" except there
-> is a good reason.
+On Mon, 30 Oct 2017, Junio C Hamano wrote:
 
-No good reason. I will make the change.
+> * jt/partial-clone-lazy-fetch (2017-10-02) 18 commits
+>  - fetch-pack: restore save_commit_buffer after use
+>  - unpack-trees: batch fetching of missing blobs
+>  - clone: configure blobmaxbytes in created repos
+>  - clone: support excluding large blobs
+>  - fetch: support excluding large blobs
+>  - fetch: refactor calculation of remote list
+>  - fetch-pack: support excluding large blobs
+>  - pack-objects: support --blob-max-bytes
+>  - pack-objects: rename want_.* to ignore_.*
+>  - gc: do not repack promisor packfiles
+>  - rev-list: support termination at promisor objects
+>  - sha1_file: support lazily fetching missing objects
+>  - introduce fetch-object: fetch one promisor object
+>  - index-pack: refactor writing of .keep files
+>  - fsck: support promisor objects as CLI argument
+>  - fsck: support referenced promisor objects
+>  - fsck: support refs pointing to promisor objects
+>  - fsck: introduce partialclone extension
+> 
+>  A journey for "git clone" and "git fetch" to become "lazier" by
+>  depending more on its remote repository---this is the beginning of
+>  it.
+> 
+>  Expecting a reroll.
+>  cf. <CAGf8dgLu-TeK8KbHv-U+18O+L2TxKcGv5vFFHy38J6a_YXRfew@mail.gmail.com>
 
->> +
->> +     for (i = 0; i < argc; i++) {
->> +             if (!strcmp(argv[i], "--term-good"))
->> +                     printf(_("%s\n"), terms->term_good);
->> +             else if (!strcmp(argv[i], "--term-bad"))
->> +                     printf(_("%s\n"), terms->term_bad);
->
-> The last two printfs: I think there is no point in translating "%s\n",
-> so using "%s\n" instead of _("%s\n") looks more reasonable.
+It was my understanding that Jeff's heavy-lifting produced a shorter,
+initial patch series with parts of this, that was already reviewed
+internally by Jonathan.
 
-Also this probably does weird things with GETTEXT_POISON. I am
-investigating what's happening as Martin pointed out in other thread..
+Am I mistaken?
 
->> +             else
->> +                     error(_("BUG: invalid argument %s for 'git bisect terms'.\n"
->> +                               "Supported options are: "
->> +                               "--term-good|--term-old and "
->> +                               "--term-bad|--term-new."), argv[i]);
->
-> Should this be "return error(...)"?
-
-Yeah. I missed this
-
->> +     }
->> +
->> +     return 0;
->> +}
->> +
->
-> Stephan
-
-Regards,
-Pranit Bauva
+Ciao,
+Dscho
