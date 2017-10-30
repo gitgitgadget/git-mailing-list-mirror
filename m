@@ -2,106 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5F6C6202A0
-	for <e@80x24.org>; Mon, 30 Oct 2017 05:02:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C9CBF202A0
+	for <e@80x24.org>; Mon, 30 Oct 2017 06:18:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752199AbdJ3FCc (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Oct 2017 01:02:32 -0400
-Received: from mail.javad.com ([54.86.164.124]:60849 "EHLO mail.javad.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752501AbdJ3FC3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Oct 2017 01:02:29 -0400
-Received: from osv (unknown [89.175.180.246])
-        by mail.javad.com (Postfix) with ESMTPSA id 6721761003;
-        Mon, 30 Oct 2017 05:02:28 +0000 (UTC)
-Received: from osv by osv with local (Exim 4.84_2)
-        (envelope-from <osv@osv.gnss.ru>)
-        id 1e92DS-0003j6-CJ; Mon, 30 Oct 2017 08:02:26 +0300
-From:   Sergey Organov <sorganov@gmail.com>
-To:     "Philip Oakley" <philipoakley@iee.org>
-Cc:     <git@vger.kernel.org>, "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: How to re-merge paths differently?
-References: <87wp3g61ez.fsf@javad.com>
-        <3655514352684AD398D17E83FF47F986@PhilipOakley>
-Date:   Mon, 30 Oct 2017 08:02:26 +0300
-In-Reply-To: <3655514352684AD398D17E83FF47F986@PhilipOakley> (Philip Oakley's
-        message of "Sat, 28 Oct 2017 18:37:14 +0100")
-Message-ID: <8737615iu5.fsf@javad.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+        id S1752148AbdJ3GSn (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Oct 2017 02:18:43 -0400
+Received: from mail-io0-f181.google.com ([209.85.223.181]:56938 "EHLO
+        mail-io0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750931AbdJ3GSm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Oct 2017 02:18:42 -0400
+Received: by mail-io0-f181.google.com with SMTP id m81so24634085ioi.13
+        for <git@vger.kernel.org>; Sun, 29 Oct 2017 23:18:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=FO1ZkXug7DvZoNerPVjidVk2xhS+ZVuKlRZMPd3y1eE=;
+        b=EiVQYmPqhfq+2B6MOcA+RgHHJrN/HxTflNv13tMHTA2PRRdWWVQUY2Sbrckagm0Vj2
+         Lo/S4QP9+i1NSoQ366j8xOuScJplgZe8+e0DFhLI76MHfPHdM3uqtaqeVTuFY9bSmQ2c
+         zkIlnMC12GvPYgy1cqphhllciuWwFQAbaI2SUsuif94rc9bd4XEtWlkWY40EMAPQthuu
+         EQRFbwrSS38elB0LTT/pg/aeDX75F3DDidBEyisNgC8dDhR6+5h8HJMgAnyMbu7WgGL6
+         d2RjRxK/IwgbXuj2vu+SP71vtaROI1plUJRBlkM0xjC+tzhbPrW0BiHrAuhbPuOsQ789
+         PGGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=FO1ZkXug7DvZoNerPVjidVk2xhS+ZVuKlRZMPd3y1eE=;
+        b=MwhVbr+FsZNNCsVo2wXP/kPk3Yk8L9rNbCs9l/zRBiUzh5LggxpSf+k0ekJlt8awV+
+         wdYthfE5GKB6wwEp+s8NLlRDdJIFfLLzVUjmi5rS7P1ZAcyWehl6S73DgMLLv9nVxErR
+         dqK7mcPPQ8YM2BXCvjjx0Y0/eeOpRq+u2pnVrBoq+/DNFqLGMZ3TnUX/NRrbfWyQ9iLo
+         C2ayn/8JGzm1+n8ovS84fFJgpa3yxzK6VTICHYp/iVAaGe3s5uKUDkXBmYEuWlIlmKQ/
+         wphK1LgXtyJR17mr+MaVQRdSZdCN4LL/L/U79sJjkyk/JA1Ez13FB+tfb+BIT0E7FYG/
+         mUYw==
+X-Gm-Message-State: AMCzsaWBWw7Mwyqeq/3T0anHOTeE8S6SqmI+Uk6zDEZV7RhHgO4D2UxT
+        ToTQ52Q/vhVmWX9PYCEkC/pDTSIoX2wbflm2tQc=
+X-Google-Smtp-Source: ABhQp+QsEH4wtCJKr66ryOmO9U2ZS/4YMyfLTsP8Wl+nYHtzW7tMnL4SuC739ibi+NzcigwxDb3EGn/tDEtIQO9AtGQ=
+X-Received: by 10.36.10.82 with SMTP id 79mr4767139itw.128.1509344321707; Sun,
+ 29 Oct 2017 23:18:41 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.79.7.10 with HTTP; Sun, 29 Oct 2017 23:18:41 -0700 (PDT)
+In-Reply-To: <xmqqvaix8o6k.fsf@gitster.mtv.corp.google.com>
+References: <20171019123030.17338-1-chriscool@tuxfamily.org> <xmqqvaix8o6k.fsf@gitster.mtv.corp.google.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Mon, 30 Oct 2017 07:18:41 +0100
+Message-ID: <CAP8UFD3qjmSrCJ1OE6x=sitbm7LqRB3aSm42aV4h=gAG853PhA@mail.gmail.com>
+Subject: Re: [PATCH 0/6] Create Git/Packet.pm
+To:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Ben Peart <Ben.Peart@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Mike Hommey <mh@glandium.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Eric Wong <e@80x24.org>,
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Philip Oakley" <philipoakley@iee.org> writes:
+Hi,
 
-> From: "Sergey Organov" <sorganov@gmail.com>
->> Is there anything like this:
->>
->> $ git merge b
->> [... lot of conflicts ...]
->> $ git re-merge -X ours -- x/   # Leaves 0 conflicts in x/
->> $ git re-merge -X theirs -- y/ # Leaves 0 conflicts in y/
->> [... resolve the rest of conflicts manually ...]
->> $ git commit
->>
->> [*] I do mean '-X' above, not '-s'.
->>
->
-> By this I presume you mean that you have paths x and y that ate the
-> ones with conflicts within them following the `git merge b`.
+On Mon, Oct 30, 2017 at 1:38 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> I've queued this from Dscho; please take it into consideration when
+> you reroll.
 
-I rather mean huge amount of conflicting paths in 'x' and 'y'
-subdirectories of my working tree after a merge, plus a few conflicting
-paths elsewhere.
+Yeah, I was planning to add something like that, though in Dscho's
+first email the patch was adding:
 
->
-> You then want a variant of the `git merge` command that will apply the
-> `-X  ours` policy *specifically to path x* so that its particular set of
-> conflicts is fully resolved in favour of 'ours'.
++modules += Git/Packet
 
-Almost. I mean to apply 'ours' option to the default 'recursive' policy for
-all the files that reside in the directory 'x' of my working tree and
-all its subdirectories (i.e., all the paths 'x/*')
+and now it's adding:
 
->
-> You then want to repeat those path specific resolutions, on a path by
-> path basis, to either `-X ours` or `-X theirs` until they are done.
+> +modules += Git/SVN/Packet
 
-No. I mean to apply '-X ours' to everything under 'x/', and '-X theirs'
-to everything under 'y/'. Avoiding to repeat anything is the intention. 
+I wonder where the "SVN" directory comes from as in
+https://github.com/dscho/git/commits/cc/git-packet-pm my commit
+(https://github.com/dscho/git/commit/46032e5f55f6e87d22f9a3c952b5d48a5f100a86)
+still creates perl/Git/Packet.pm and not perl/Git/SVN/Packet.pm
 
-> You are also expecting that one or two conflicts will require to be
-> fully manually resolved, until finally you can commit the result.
-
-No, I expect no conflicts left in either 'x/' or 'y/' after "re-merge",
-as neither 'theirs' or 'ours' should leave anything unresolved, and all
-the other conflicting paths (left from original merge elsewhere) I mean
-to resolve manually.
- 
->
-> Would that be right?
->
-> Also, how do you intend to identify the 'x' and the 'y' paths, so that
-> you can chose the ours/theirs/manual selection? (e.g. do you pre-know
-> a regex/blob expansion)
-
-All the 'x/*' paths need 'ours', and all the 'y/*' paths need 'theirs'.
-
->
-> The answer for individual paths is probably in the mergetool of your
-> choice.
-
-There are a lot of files under 'x/' and a lot of them under 'y/'. My
-intention is to automate a lot of manual labor, and I'm not aware of a
-mergetool that provides either '-X ours' or '-X theirs' resolution
-automatically for all the paths specified.
-
--- Sergey
+Thanks both anyway,
+Christian.
