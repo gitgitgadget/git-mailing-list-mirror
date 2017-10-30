@@ -7,55 +7,54 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B5A21202DD
-	for <e@80x24.org>; Mon, 30 Oct 2017 17:28:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 406F2202DD
+	for <e@80x24.org>; Mon, 30 Oct 2017 17:31:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932665AbdJ3R21 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Oct 2017 13:28:27 -0400
-Received: from mail-qt0-f174.google.com ([209.85.216.174]:52430 "EHLO
-        mail-qt0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932663AbdJ3R2Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Oct 2017 13:28:25 -0400
-Received: by mail-qt0-f174.google.com with SMTP id 31so17369071qtz.9
-        for <git@vger.kernel.org>; Mon, 30 Oct 2017 10:28:25 -0700 (PDT)
+        id S932564AbdJ3Rbe (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Oct 2017 13:31:34 -0400
+Received: from mail-qt0-f193.google.com ([209.85.216.193]:46974 "EHLO
+        mail-qt0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932476AbdJ3Rbe (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Oct 2017 13:31:34 -0400
+Received: by mail-qt0-f193.google.com with SMTP id 1so17401759qtn.3
+        for <git@vger.kernel.org>; Mon, 30 Oct 2017 10:31:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=8rt9D2Aek4LIL7c2e29zUYJYJh9cntIWkkX/oIYKY+Q=;
-        b=Ryu1Goj1Y0gk8Eb6ewBG9pG/F04UF3pY9DCY8K2ys7osixOMWDZvXbc+QWVIaF1j/Y
-         WFI1U8oz4k6SQmoskAmeWareKQY+krpak1KfNSIOBg8SzBo7leX9Oxh3RvS+1+z8jLF2
-         O43GfoPboIVPA2QAU2eWbWPF/AS7yR9gdpZL/5R5YVRAJffuDwDizSv3bnbuPkOhC4FC
-         +UxuZZI+KCYLWyoFhY2CbssURHX2Uzbs32SV2Z2NGwR8tV63LPgYDN7eyNI4+KrhkEaU
-         H2vq+4HUb6j2X3dT17LBJouJe/xGVLB/XQPy9EJQ32sJuF0YVU5WY4L/9wXCF5SjaGWa
-         94Pg==
+        bh=WYNgVOGpSm3xcF6shpQLAcRttpvGuKSopn/lSsfhrt4=;
+        b=hNjhxYG3bPIZw4RT+1SuMjZe/QW4SiqMkZ5ZwfulgiRlESIhjD0PLMzzDA0Pw/HhyJ
+         LRSOiEKLcr0JXUnrJ5tPdXbe1lcJOO8r1jIwqwlBy54oW5vTJHBccH1NGoYtbisc51FK
+         8RGVked6t2bkBhyfOdJRY9qco8qqjKCPew8KWBvXSIUquq1RFwrE0eMD0xDluNq7+q0h
+         8wBbF7ZO9j8W8SNz7nj8UyY/xpHhnr1te2tiDM2J96QuCuopyiaCrOXGcvEb1RvWv4Kx
+         TBoGzLIOO+BvFdKB/Ft983MObHyOGkGP+h4M+Pl5E5r1fshz8oCl+Zs14BZTjEvJ0KBX
+         Sung==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=8rt9D2Aek4LIL7c2e29zUYJYJh9cntIWkkX/oIYKY+Q=;
-        b=DobGDFjbtFYL61Dqxjj26T8S8JSbsFESL6JQJ1B1+m74QXCr0XrkAm0/jGkfJoBxNF
-         9RC0NJ7xFxM3gUoVeDl8Kry3/DUwg/W93SnOydwlHbtdssRJEG76z1HyAg4Ybtvcy1RZ
-         Hdru4S8+nducsnDscx1jptX0gIpSG6l/0EMs+sPBWUywT1ySGNV7ZPdmWnwvxfEzy9on
-         svTCNxZB7zHL+K35Tca9Yeg/0K51ci80ObNusQcC51f7Y3+X7esIHXUUN772gqR2FDcc
-         P1pQtNzxCbgQhMcfrsj3mpdJoCJaHsN4RZYB2pHUEoa/wLXRhAWih1auHSbNy5MPnsFh
-         Xklw==
-X-Gm-Message-State: AMCzsaX9jSb6WAkqG+nKGIkpmfViD9fEtwrf3CvHOeaPM9l5r/d8NWPK
-        s3YrlbGJZH9MSG60fV/M6kvpLYTG19cYxXn42G0=
-X-Google-Smtp-Source: ABhQp+Q7KT7W9nH43Qa6GFUZxgd0DlBqR6zBlCWERD7nTxRajXTZdmbCakAOPH2ftXRLftkYQ0cuxf+uXOcfVEGvaRU=
-X-Received: by 10.237.36.225 with SMTP id u30mr15156488qtc.13.1509384504161;
- Mon, 30 Oct 2017 10:28:24 -0700 (PDT)
+        bh=WYNgVOGpSm3xcF6shpQLAcRttpvGuKSopn/lSsfhrt4=;
+        b=tp/vxECVDKWZ8+E++6C2BJFFi8i5jKaPAlHdJZXa4gTza5C53ORtQqAhc2vOV4KOef
+         mClc00P65+jhO8U6ZwkcNZKtjDqZ6KuQeVygLmeqGfu16MYS6JD2OO4uSn6//RQe7MKi
+         v8rsnWgQhB8EwjRUx7blB3sEg9ESUyXZggC74hsbDUPuWWTE6kga6s9W5oHr1bxit5Al
+         dJkFTaBiwpJ8MVG1PV+2n3olVwd923a9NctbpCB9FgJq9DqOziYvtmJhBsldLPzNnRae
+         ufGZl0EQgdnpli1MUCuiGfQJPm+T51V2It4Srht0/fKEyby+xvM5Djv5JavK51oRaONk
+         Kkmw==
+X-Gm-Message-State: AMCzsaVNlPKmRp6ByvJctNFZ39PvEP/zG4hGUf+eQJkHfuATMoJ4mPFs
+        /NMsJ7nzqsFPbeKrFiLXGRMSuaJJF5gUumn+pZA=
+X-Google-Smtp-Source: ABhQp+T/td3rPIzlEJyRFlb0c9QKy76Tb9ME4Mo7+H9FLj0wAN3O7cvpXJKy6DaNGnEZfl6lhGhTYlRgcquQF6COP1E=
+X-Received: by 10.237.58.168 with SMTP id o37mr16162263qte.335.1509384693391;
+ Mon, 30 Oct 2017 10:31:33 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.140.28.246 with HTTP; Mon, 30 Oct 2017 10:28:23 -0700 (PDT)
-In-Reply-To: <c26e1cab-a3d0-8cae-b18b-eaa02ce1240c@gmx.net>
-References: <0102015f5e5ee171-f30f4868-886f-47a1-a4e4-b4936afc545d-000000@eu-west-1.amazonses.com>
- <0102015f5e5ee2f5-3d106a61-7f79-4973-851f-f55a691a6189-000000@eu-west-1.amazonses.com>
- <c26e1cab-a3d0-8cae-b18b-eaa02ce1240c@gmx.net>
+Received: by 10.140.28.246 with HTTP; Mon, 30 Oct 2017 10:31:32 -0700 (PDT)
+In-Reply-To: <af5f503a-6c2c-436f-ae74-cfbb11cb7a7f@gmx.net>
+References: <0102015f5e5ee303-449f1b76-ff53-433c-8973-8b4850466810-000000@eu-west-1.amazonses.com>
+ <af5f503a-6c2c-436f-ae74-cfbb11cb7a7f@gmx.net>
 From:   Pranit Bauva <pranit.bauva@gmail.com>
-Date:   Mon, 30 Oct 2017 22:58:23 +0530
-Message-ID: <CAFZEwPM5-e4DVApGPmeLr95t1YseSaswxitq5zY=EYpnucu-yg@mail.gmail.com>
-Subject: Re: [PATCH v16 Part II 7/8] bisect--helper: `bisect_start` shell
- function partially in C
+Date:   Mon, 30 Oct 2017 23:01:32 +0530
+Message-ID: <CAFZEwPMpsJAQP6ZGNUTi+A_27o7_mMRD8p=3RAf0fywjOjY0vA@mail.gmail.com>
+Subject: Re: [PATCH v16 Part II 6/8] bisect--helper: `get_terms` &
+ `bisect_terms` shell function in C
 To:     Stephan Beyer <s-beyer@gmx.net>
 Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
@@ -66,22 +65,63 @@ X-Mailing-List: git@vger.kernel.org
 
 Hey Stephan,
 
-On Mon, Oct 30, 2017 at 10:21 PM, Stephan Beyer <s-beyer@gmx.net> wrote:
-> Hi,
+On Mon, Oct 30, 2017 at 10:04 PM, Stephan Beyer <s-beyer@gmx.net> wrote:
+> On 10/27/2017 05:06 PM, Pranit Bauva wrote:
+>> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+>> index 0f9c3e63821b8..ab0580ce0089a 100644
+>> --- a/builtin/bisect--helper.c
+>> +++ b/builtin/bisect--helper.c
+> [...]
+>> +static int bisect_terms(struct bisect_terms *terms, const char **argv, int argc)
+>> +{
+>> +     int i;
+>> +
+>> +     if (get_terms(terms))
+>> +             return error(_("no terms defined"));
+>> +
+>> +     if (argc > 1)
+>> +             return error(_("--bisect-term requires exactly one argument"));
+>> +
+>> +     if (argc == 0)
+>> +             return !printf(_("Your current terms are %s for the old state\n"
+>> +                              "and %s for the new state.\n"),
+>> +                              terms->term_good, terms->term_bad);
 >
->> +                     return error(_("unrecognised option: '%s'"), arg);
->
-> Please write "unrecogni_z_ed".
->
-> Since the string for translation changed from
->         "unrecognised option: '$arg'"
-> to
->         "unrecognised option: '%s'"
-> anyway, it does not result in further work for the translators to
-> correct it to
->         "unrecognized option: '%s'"
+> Same as in 1/8: you probably want "printf(...); return 0;" except there
+> is a good reason.
 
-Yeah Sure!
+No good reason. I will make the change.
+
+>> +
+>> +     for (i = 0; i < argc; i++) {
+>> +             if (!strcmp(argv[i], "--term-good"))
+>> +                     printf(_("%s\n"), terms->term_good);
+>> +             else if (!strcmp(argv[i], "--term-bad"))
+>> +                     printf(_("%s\n"), terms->term_bad);
+>
+> The last two printfs: I think there is no point in translating "%s\n",
+> so using "%s\n" instead of _("%s\n") looks more reasonable.
+
+Also this probably does weird things with GETTEXT_POISON. I am
+investigating what's happening as Martin pointed out in other thread..
+
+>> +             else
+>> +                     error(_("BUG: invalid argument %s for 'git bisect terms'.\n"
+>> +                               "Supported options are: "
+>> +                               "--term-good|--term-old and "
+>> +                               "--term-bad|--term-new."), argv[i]);
+>
+> Should this be "return error(...)"?
+
+Yeah. I missed this
+
+>> +     }
+>> +
+>> +     return 0;
+>> +}
+>> +
+>
+> Stephan
 
 Regards,
 Pranit Bauva
