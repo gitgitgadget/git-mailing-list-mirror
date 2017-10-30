@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D75251FBF4
-	for <e@80x24.org>; Mon, 30 Oct 2017 16:08:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 060F320562
+	for <e@80x24.org>; Mon, 30 Oct 2017 16:14:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752449AbdJ3QIX (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Oct 2017 12:08:23 -0400
-Received: from mail-qt0-f174.google.com ([209.85.216.174]:48880 "EHLO
-        mail-qt0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751475AbdJ3QIW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Oct 2017 12:08:22 -0400
-Received: by mail-qt0-f174.google.com with SMTP id f8so17036672qta.5
-        for <git@vger.kernel.org>; Mon, 30 Oct 2017 09:08:22 -0700 (PDT)
+        id S932148AbdJ3QOQ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Oct 2017 12:14:16 -0400
+Received: from mail-qk0-f193.google.com ([209.85.220.193]:55297 "EHLO
+        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752545AbdJ3QOP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Oct 2017 12:14:15 -0400
+Received: by mail-qk0-f193.google.com with SMTP id x82so16781084qkb.12
+        for <git@vger.kernel.org>; Mon, 30 Oct 2017 09:14:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=xpo/MuJz1hLxhPiFdDV3HrmA8A+hLoBDu/6O8VpejY4=;
-        b=ltXcTNGkKr1VuKXi9qSwFtk8WVy6O5Uhj57yw2jFmvpGQg32Uiu4CFTVJWlXwPIwTu
-         8FWdJdjsq1pBkOwawqMIFxK6BeXFASqjRhnfMOCeV1xxWeXLFko99ik9TKArMD14zolM
-         DMTzoOjklBXrZWbEd2fubJ0o0efBWOBFUgKJXiqvcDeQirnQA3j3kwvMLvJkp0uA41Is
-         mV2bGIvlDd5sVqQCAp3Grh3E6BoLdO7YCD308rkwOOl8dP52PR6U8ee/ALmeoUerrjzR
-         +7NVc0NfsE524XjIo4SDPZ+nrAtCaAwMCA2ZDXsfuRcjTau6NPA4cg0AuKgJ9RrHYdpn
-         vU1Q==
+        bh=EBkOaDQJHvqBDxRJvlLLcfKpppaIv7PdECv4b2VOSFs=;
+        b=ax56g1UDODx5ljLwa5PhsBtbGlqqc40cUWnRn1Hibeyo833EhAeCiPrS3hzW0d8v1g
+         Sbok4vQmGaCngKzVsdizLZyYBi83mruc08j+Qg81+WMQhEhT4M0mSBts1FHmym9O4THi
+         +Y0QJbYXUV6oupwxZegd4AmqW8GU7IBHFWuR2PGIQmaMot9S8jiEmtLwGanDAu3fYWgl
+         x8moo0P5vRIzD9tZEcAZRk25Zz12FXTYtgeQUYgIasgqvNCmQf21CvgoHUHy/W4JUYW9
+         rR409IwKbtkhoKYmWR1GJnb0XLtibKEcSMTyuN2CWZS79WMMyLSdNntiXk9460bwZX3n
+         aT7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=xpo/MuJz1hLxhPiFdDV3HrmA8A+hLoBDu/6O8VpejY4=;
-        b=sJi9+ZdvRnrc1n7bd9wJq/FH6n+x9X+JdEZ3hrJDnMcr9IrODh0eeKkZnt4Pi1jMIg
-         uRbvC6R4l7qvPjcxE1RU+mej10YflzqfaQK4xgvRlgYQidmSFlhjoK1KQ/soNOOus70n
-         2UlVkyVtPA/HLMcVqkEFRSo/eePnKdSGrKIvaB0LFofAOiOVNpJv80fr2UeGDMTRdcED
-         USFS9WvM8ATGwWuUvuoPZFCcpEIf5KhgpNEslHoIQmBeKtMkG7bHwUpdVoNpak6Bqd2C
-         2GCcSl8W3yqugbOrS/yYKNNKfgSOl7TU9g40JU+IYcnvV+UW71RdpCc5xsTyYmp881hN
-         2E+A==
-X-Gm-Message-State: AMCzsaWO2+O+a9K1PDvE9wSVZOQ9nCEl7aE6ZuDoiZP7Op+GV6o+kcLW
-        Rg7ZWgWjRQWSBWyOX0f635gcKGH5u59m5Pt2taFFNw==
-X-Google-Smtp-Source: ABhQp+Ra5gt3+sbvNmgjULBxaO+G5C+85xBq22fMvGaTiD0RTasT+fkBhVKcjAv6Uf9LUTuyhu1+SeplE4ZBmBnKnmQ=
-X-Received: by 10.237.53.137 with SMTP id c9mr15812485qte.125.1509379701601;
- Mon, 30 Oct 2017 09:08:21 -0700 (PDT)
+        bh=EBkOaDQJHvqBDxRJvlLLcfKpppaIv7PdECv4b2VOSFs=;
+        b=T8B3kaa+QL/3YIEgNKdq8htGHgGWEvy9MrhzybfR6dwsVmEeqN31EtgHJ37jfR9PRv
+         Oc+8NbLI4oHhqiH4xArd8wLM1I2UtmxKZat0V3zEMsQ6aMeLFjxaQ9i3peZngXn0gsvy
+         gnaLoMq51BXmcYneJjsPn3sJr6GuCeXIkKlQN4bqHxF5/FFIsJfQzlXMUtI09kI1vx65
+         1yTG2NO8wVYk4Ub+sohCStKzfMA1tZFMxg90H3pfpXG/26hCs8Ocm3Vp6qEgd8rgmi0M
+         hC7yPhrKhM+cWrQPIlhgfHcZquWNkjKWJ8Lq85xIkmMiK2aPCvUoLG4PHlKk146X38u5
+         82Rw==
+X-Gm-Message-State: AMCzsaXbT/rupbvsxg5l4K0s6vcC8EHq+BywhljcOP7sg2DsOAo21Bl+
+        yohNHwfSO80LCMwRT5+sAyjnlNAl4vbHNxCJO05kkA==
+X-Google-Smtp-Source: ABhQp+RSx+bil/X9qpUGEd5kj1mTKqcv3zxeDwlKXf4jlms05ZXGf4O+eKGq5mnM61eQssMhosCEH7ed/XgtC10gp0g=
+X-Received: by 10.55.18.165 with SMTP id 37mr13612567qks.352.1509380054748;
+ Mon, 30 Oct 2017 09:14:14 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.140.102.70 with HTTP; Mon, 30 Oct 2017 09:08:20 -0700 (PDT)
-In-Reply-To: <20171028181239.59458-2-sandals@crustytoothpaste.net>
-References: <20171028181239.59458-1-sandals@crustytoothpaste.net> <20171028181239.59458-2-sandals@crustytoothpaste.net>
+Received: by 10.140.102.70 with HTTP; Mon, 30 Oct 2017 09:14:07 -0700 (PDT)
+In-Reply-To: <20171028181239.59458-3-sandals@crustytoothpaste.net>
+References: <20171028181239.59458-1-sandals@crustytoothpaste.net> <20171028181239.59458-3-sandals@crustytoothpaste.net>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 30 Oct 2017 09:08:20 -0700
-Message-ID: <CAGZ79kZdAvP5HWk4XqqUYdkorvEvoWYR32T3frrmnTXetU45Xg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/4] setup: expose enumerated repo info
+Date:   Mon, 30 Oct 2017 09:14:07 -0700
+Message-ID: <CAGZ79kb-+DFz2m-8arh+RDJibBMc_9vjTC5ZoXbojBBcThrBdQ@mail.gmail.com>
+Subject: Re: [PATCH v2 2/4] Add structure representing hash algorithm
 To:     "brian m. carlson" <sandals@crustytoothpaste.net>
 Cc:     git <git@vger.kernel.org>, Jonathan Nieder <jrnieder@gmail.com>,
         Brandon Williams <bmwill@google.com>
@@ -64,20 +64,46 @@ X-Mailing-List: git@vger.kernel.org
 
 On Sat, Oct 28, 2017 at 11:12 AM, brian m. carlson
 <sandals@crustytoothpaste.net> wrote:
-> We enumerate several different items as part of struct
-> repository_format, but then actually set up those values using the
-> global variables we've initialized from them.  Instead, let's pass a
-> pointer to the structure down to the code where we enumerate these
-> values, so we can later on use those values directly to perform setup.
+> Since in the future we want to support an additional hash algorithm, add
+> a structure that represents a hash algorithm and all the data that must
+> go along with it.  Add a constant to allow easy enumeration of hash
+> algorithms.  Implement function typedefs to create an abstract API that
+> can be used by any hash algorithm, and wrappers for the existing SHA1
+> functions that conform to this API.
 >
-> This technique makes it easier for us to determine additional items
-> about the repository format (such as the hash algorithm) and then use
-> them for setup later on, without needing to add additional global
-> variables.  We can't avoid using the existing global variables since
-> they're intricately intertwined with how things work at the moment, but
-> this improves things for the future.
+> Expose a value for hex size as well as binary size.  While one will
+> always be twice the other, the two values are both used extremely
+> commonly throughout the codebase and providing both leads to improved
+> readability.
+>
+> Don't include an entry in the hash algorithm structure for the null
+> object ID.  As this value is all zeros, any suitably sized all-zero
+> object ID can be used, and there's no need to store a given one on a
+> per-hash basis.
+>
+> The current hash function transition plan envisions a time when we will
+> accept input from the user that might be in SHA-1 or in the NewHash
+> format.  Since we cannot know which the user has provided, add a
+> constant representing the unknown algorithm to allow us to indicate that
+> we must look the correct value up.
 
-yup. looks good to me.
+Cool.
 
-Thanks,
-Stefan
+
+> +
+> +const struct git_hash_algo hash_algos[GIT_HASH_NALGOS] = {
+> +       {
+> +               NULL,
+> +               0x00000000,
+> +               0,
+> +               0,
+> +               0,
+> +               NULL,
+> +               NULL,
+> +               NULL,
+> +               NULL,
+> +               NULL,
+
+If we are fancy we could provide an appropriate die() call
+as the function pointers. That way if you call these functions
+by accident, you get a well worded warning instead of a segfault.
