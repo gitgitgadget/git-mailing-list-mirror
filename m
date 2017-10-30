@@ -2,92 +2,301 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C9CBF202A0
-	for <e@80x24.org>; Mon, 30 Oct 2017 06:18:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 304EC202A0
+	for <e@80x24.org>; Mon, 30 Oct 2017 06:19:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752148AbdJ3GSn (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Oct 2017 02:18:43 -0400
-Received: from mail-io0-f181.google.com ([209.85.223.181]:56938 "EHLO
-        mail-io0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750931AbdJ3GSm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Oct 2017 02:18:42 -0400
-Received: by mail-io0-f181.google.com with SMTP id m81so24634085ioi.13
-        for <git@vger.kernel.org>; Sun, 29 Oct 2017 23:18:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=FO1ZkXug7DvZoNerPVjidVk2xhS+ZVuKlRZMPd3y1eE=;
-        b=EiVQYmPqhfq+2B6MOcA+RgHHJrN/HxTflNv13tMHTA2PRRdWWVQUY2Sbrckagm0Vj2
-         Lo/S4QP9+i1NSoQ366j8xOuScJplgZe8+e0DFhLI76MHfPHdM3uqtaqeVTuFY9bSmQ2c
-         zkIlnMC12GvPYgy1cqphhllciuWwFQAbaI2SUsuif94rc9bd4XEtWlkWY40EMAPQthuu
-         EQRFbwrSS38elB0LTT/pg/aeDX75F3DDidBEyisNgC8dDhR6+5h8HJMgAnyMbu7WgGL6
-         d2RjRxK/IwgbXuj2vu+SP71vtaROI1plUJRBlkM0xjC+tzhbPrW0BiHrAuhbPuOsQ789
-         PGGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=FO1ZkXug7DvZoNerPVjidVk2xhS+ZVuKlRZMPd3y1eE=;
-        b=MwhVbr+FsZNNCsVo2wXP/kPk3Yk8L9rNbCs9l/zRBiUzh5LggxpSf+k0ekJlt8awV+
-         wdYthfE5GKB6wwEp+s8NLlRDdJIFfLLzVUjmi5rS7P1ZAcyWehl6S73DgMLLv9nVxErR
-         dqK7mcPPQ8YM2BXCvjjx0Y0/eeOpRq+u2pnVrBoq+/DNFqLGMZ3TnUX/NRrbfWyQ9iLo
-         C2ayn/8JGzm1+n8ovS84fFJgpa3yxzK6VTICHYp/iVAaGe3s5uKUDkXBmYEuWlIlmKQ/
-         wphK1LgXtyJR17mr+MaVQRdSZdCN4LL/L/U79sJjkyk/JA1Ez13FB+tfb+BIT0E7FYG/
-         mUYw==
-X-Gm-Message-State: AMCzsaWBWw7Mwyqeq/3T0anHOTeE8S6SqmI+Uk6zDEZV7RhHgO4D2UxT
-        ToTQ52Q/vhVmWX9PYCEkC/pDTSIoX2wbflm2tQc=
-X-Google-Smtp-Source: ABhQp+QsEH4wtCJKr66ryOmO9U2ZS/4YMyfLTsP8Wl+nYHtzW7tMnL4SuC739ibi+NzcigwxDb3EGn/tDEtIQO9AtGQ=
-X-Received: by 10.36.10.82 with SMTP id 79mr4767139itw.128.1509344321707; Sun,
- 29 Oct 2017 23:18:41 -0700 (PDT)
+        id S1752327AbdJ3GTR (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Oct 2017 02:19:17 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57422 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752309AbdJ3GTQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Oct 2017 02:19:16 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1781797956;
+        Mon, 30 Oct 2017 02:19:15 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+        :subject:date:message-id:mime-version:content-type; s=sasl; bh=A
+        PqJoofHSOCknkj+sgA6IfWZSlc=; b=NoD9b5TTL4DKZx5WGbCbWLsggaprFL/vp
+        OlmM178Nd0Arhre2WmeehYJpjRdq75IumEnFd1GEoqGf0v7mP0193uBIkVg5YhMk
+        S7i1qNIwbVXpSOMnq3VKNgeUllUK4i3jNzJjZIR8v+ooFijGKfCzBhaDn6++mPMj
+        MEqW2esDII=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+        :date:message-id:mime-version:content-type; q=dns; s=sasl; b=B2B
+        pDcyh+psw9X5P7dvBtdVDWpzD2gn4WrdBDqThrjbSO0qXAm/Z3UE+y74w3Vxh5gr
+        3rLrjmwF8BtetdiRZZwLyaz8VKyhW1C/LAezQx1akaj3HT7l5c680LkBrQHsGnkj
+        qgjFNY/Fa5fDNeEyWjY9c4xj98dJR3kgDOl52xYQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0FB6297955;
+        Mon, 30 Oct 2017 02:19:15 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6E40197954;
+        Mon, 30 Oct 2017 02:19:14 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org
+Subject: A note from the maintainer
+Date:   Mon, 30 Oct 2017 15:19:13 +0900
+Message-ID: <xmqqy3nt40pq.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.79.7.10 with HTTP; Sun, 29 Oct 2017 23:18:41 -0700 (PDT)
-In-Reply-To: <xmqqvaix8o6k.fsf@gitster.mtv.corp.google.com>
-References: <20171019123030.17338-1-chriscool@tuxfamily.org> <xmqqvaix8o6k.fsf@gitster.mtv.corp.google.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 30 Oct 2017 07:18:41 +0100
-Message-ID: <CAP8UFD3qjmSrCJ1OE6x=sitbm7LqRB3aSm42aV4h=gAG853PhA@mail.gmail.com>
-Subject: Re: [PATCH 0/6] Create Git/Packet.pm
-To:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Ben Peart <Ben.Peart@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Mike Hommey <mh@glandium.org>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Eric Wong <e@80x24.org>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 406BC6C0-BD3A-11E7-B8E1-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Welcome to the Git development community.
 
-On Mon, Oct 30, 2017 at 1:38 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> I've queued this from Dscho; please take it into consideration when
-> you reroll.
+This message is written by the maintainer and talks about how Git
+project is managed, and how you can work with it.
 
-Yeah, I was planning to add something like that, though in Dscho's
-first email the patch was adding:
+* Mailing list and the community
 
-+modules += Git/Packet
+The development is primarily done on the Git mailing list. Help
+requests, feature proposals, bug reports and patches should be sent to
+the list address <git@vger.kernel.org>.  You don't have to be
+subscribed to send messages.  The convention on the list is to keep
+everybody involved on Cc:, so it is unnecessary to say "Please Cc: me,
+I am not subscribed".
 
-and now it's adding:
+Before sending patches, please read Documentation/SubmittingPatches
+and Documentation/CodingGuidelines to familiarize yourself with the
+project convention.
 
-> +modules += Git/SVN/Packet
+If you sent a patch and you did not hear any response from anybody for
+several days, it could be that your patch was totally uninteresting,
+but it also is possible that it was simply lost in the noise.  Please
+do not hesitate to send a reminder message in such a case.  Messages
+getting lost in the noise may be a sign that those who can evaluate
+your patch don't have enough mental/time bandwidth to process them
+right at the moment, and it often helps to wait until the list traffic
+becomes calmer before sending such a reminder.
 
-I wonder where the "SVN" directory comes from as in
-https://github.com/dscho/git/commits/cc/git-packet-pm my commit
-(https://github.com/dscho/git/commit/46032e5f55f6e87d22f9a3c952b5d48a5f100a86)
-still creates perl/Git/Packet.pm and not perl/Git/SVN/Packet.pm
+The list archive is available at a few public sites:
 
-Thanks both anyway,
-Christian.
+        http://public-inbox.org/git/
+        http://marc.info/?l=git
+        http://www.spinics.net/lists/git/
+
+For those who prefer to read it over NNTP:
+
+        nntp://news.public-inbox.org/inbox.comp.version-control.git
+	nntp://news.gmane.org/gmane.comp.version-control.git
+
+are available.
+
+When you point at a message in a mailing list archive, using its
+message ID is often the most robust (if not very friendly) way to do
+so, like this:
+
+	http://public-inbox.org/git/Pine.LNX.4.58.0504150753440.7211@ppc970.osdl.org
+
+Often these web interfaces accept the message ID with enclosing <>
+stripped (like the above example to point at one of the most important
+message in the Git list).
+
+Some members of the development community can sometimes be found on
+the #git and #git-devel IRC channels on Freenode.  Their logs are
+available at:
+
+        http://colabti.org/irclogger/irclogger_log/git
+        http://colabti.org/irclogger/irclogger_log/git-devel
+
+There is a volunteer-run newsletter to serve our community ("Git Rev
+News" http://git.github.io/rev_news/rev_news.html).
+
+Git is a member project of software freedom conservancy, a non-profit
+organization (https://sfconservancy.org/).  To reach a committee of
+liaisons to the conservancy, contact them at <git@sfconservancy.org>.
+
+
+* Reporting bugs
+
+When you think git does not behave as you expect, please do not stop
+your bug report with just "git does not work".  "I used git in this
+way, but it did not work" is not much better, neither is "I used git
+in this way, and X happend, which is broken".  It often is that git is
+correct to cause X happen in such a case, and it is your expectation
+that is broken. People would not know what other result Y you expected
+to see instead of X, if you left it unsaid.
+
+Please remember to always state
+
+ - what you wanted to achieve;
+
+ - what you did (the version of git and the command sequence to reproduce
+   the behavior);
+
+ - what you saw happen (X above);
+
+ - what you expected to see (Y above); and
+
+ - how the last two are different.
+
+See http://www.chiark.greenend.org.uk/~sgtatham/bugs.html for further
+hints.
+
+If you think you found a security-sensitive issue and want to disclose
+it to us without announcing it to wider public, please contact us at
+our security mailing list <git-security@googlegroups.com>.  This is
+a closed list that is limited to people who need to know early about
+vulnerabilities, including:
+
+  - people triaging and fixing reported vulnerabilities
+  - people operating major git hosting sites with many users
+  - people packaging and distributing git to large numbers of people
+
+where these issues are discussed without risk of the information
+leaking out before we're ready to make public announcements.
+
+
+* Repositories and documentation.
+
+My public git.git repositories are at:
+
+  git://git.kernel.org/pub/scm/git/git.git/
+  https://kernel.googlesource.com/pub/scm/git/git
+  git://repo.or.cz/alt-git.git/
+  https://github.com/git/git/
+  git://git.sourceforge.jp/gitroot/git-core/git.git/
+  git://git-core.git.sourceforge.net/gitroot/git-core/git-core/
+
+This one shows not just the main integration branches, but also
+individual topics broken out:
+
+  git://github.com/gitster/git/
+
+A few web interfaces are found at:
+
+  http://git.kernel.org/cgit/git/git.git
+  https://kernel.googlesource.com/pub/scm/git/git
+  http://repo.or.cz/w/alt-git.git
+
+Preformatted documentation from the tip of the "master" branch can be
+found in:
+
+  git://git.kernel.org/pub/scm/git/git-{htmldocs,manpages}.git/
+  git://repo.or.cz/git-{htmldocs,manpages}.git/
+  https://github.com/gitster/git-{htmldocs,manpages}.git/
+
+The manual pages formatted in HTML for the tip of 'master' can be
+viewed online at:
+
+  https://git.github.io/htmldocs/git.html
+
+
+* How various branches are used.
+
+There are four branches in git.git repository that track the source tree
+of git: "master", "maint", "next", and "pu".
+
+The "master" branch is meant to contain what are very well tested and
+ready to be used in a production setting.  Every now and then, a
+"feature release" is cut from the tip of this branch.  They used to be
+named with three dotted decimal digits (e.g. "1.8.5"), but recently we
+switched the versioning scheme and "feature releases" are named with
+three-dotted decimal digits that ends with ".0" (e.g. "1.9.0").
+
+The last such release was 2.15 done on Oct 30th, 2017.  You can expect
+that the tip of the "master" branch is always more stable than any of
+the released versions.
+
+Whenever a feature release is made, "maint" branch is forked off from
+"master" at that point.  Obvious and safe fixes after a feature
+release are applied to this branch and maintenance releases are cut
+from it.  Usually the fixes are merged to the "master" branch first,
+several days before merged to the "maint" branch, to reduce the chance
+of last-minute issues.  The maintenance releases used to be named with
+four dotted decimal, named after the feature release they are updates
+to (e.g. "1.8.5.1" was the first maintenance release for "1.8.5"
+feature release).  These days, maintenance releases are named by
+incrementing the last digit of three-dotted decimal name (e.g. "2.12.1"
+was the first maintenance release for the "2.12" series).
+
+New features never go to the 'maint' branch.  This branch is also
+merged into "master" to propagate the fixes forward as needed.
+
+A new development does not usually happen on "master". When you send a
+series of patches, after review on the mailing list, a separate topic
+branch is forked from the tip of "master" (or somewhere older, especially
+when the topic is about fixing an earlier bug) and your patches are queued
+there, and kept out of "master" while people test it out. The quality of
+topic branches are judged primarily by the mailing list discussions.
+
+Topic branches that are in good shape are merged to the "next" branch. In
+general, the "next" branch always contains the tip of "master".  It might
+not be quite rock-solid, but is expected to work more or less without major
+breakage. The "next" branch is where new and exciting things take place. A
+topic that is in "next" is expected to be polished to perfection before it
+is merged to "master".  Please help this process by building & using the
+"next" branch for your daily work, and reporting any new bugs you find to
+the mailing list, before the breakage is merged down to the "master".
+
+The "pu" (proposed updates) branch bundles all the remaining topic
+branches the maintainer happens to have seen.  There is no guarantee that
+the maintainer has enough bandwidth to pick up any and all topics that
+are remotely promising from the list traffic, so please do not read
+too much into a topic being on (or not on) the "pu" branch.  This
+branch is mainly to remind the maintainer that the topics in them may
+turn out to be interesting when they are polished, nothing more.  The
+topics on this branch aren't usually complete, well tested, or well
+documented and they often need further work.  When a topic that was
+in "pu" proves to be in a testable shape, it is merged to "next".
+
+You can run "git log --first-parent master..pu" to see what topics are
+currently in flight.  Sometimes, an idea that looked promising turns out
+to be not so good and the topic can be dropped from "pu" in such a case.
+The output of the above "git log" talks about a "jch" branch, which is an
+early part of the "pu" branch; that branch contains all topics that
+are in "next" and a bit more (but not all of "pu") and is used by the
+maintainer for his daily work.
+
+The two branches "master" and "maint" are never rewound, and "next"
+usually will not be either.  After a feature release is made from
+"master", however, "next" will be rebuilt from the tip of "master"
+using the topics that didn't make the cut in the feature release.
+
+A natural consequence of how "next" and "pu" bundles topics together
+is that until a topic is merged to "next", updates to it is expected
+by replacing the patch(es) in the topic with an improved version,
+and once a topic is merged to "next", updates to it needs to come as
+incremental patches, pointing out what was wrong in the previous
+patches and how the problem was corrected.
+
+Note that being in "next" is not a guarantee to appear in the next
+release, nor even in any future release.  There were cases that topics
+needed reverting a few commits in them before graduating to "master",
+or a topic that already was in "next" was reverted from "next" because
+fatal flaws were found in it after it was merged to "next".
+
+
+* Other people's trees.
+
+Documentation/SubmittingPatches outlines to whom your proposed changes
+should be sent.  As described in contrib/README, I would delegate fixes
+and enhancements in contrib/ area to the primary contributors of them.
+
+Although the following are included in git.git repository, they have their
+own authoritative repository and maintainers:
+
+ - git-gui/ comes from git-gui project, maintained by Pat Thoyts:
+
+        git://repo.or.cz/git-gui.git
+
+ - gitk-git/ comes from Paul Mackerras's gitk project:
+
+        git://ozlabs.org/~paulus/gitk
+
+ - po/ comes from the localization coordinator, Jiang Xin:
+
+	https://github.com/git-l10n/git-po/
+
+When sending proposed updates and fixes to these parts of the system,
+please base your patches on these trees, not git.git (the former two
+even have different directory structures).
