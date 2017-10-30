@@ -2,96 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0E90E1FBF4
-	for <e@80x24.org>; Mon, 30 Oct 2017 16:58:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 510221FBF4
+	for <e@80x24.org>; Mon, 30 Oct 2017 17:10:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932515AbdJ3Q6S (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Oct 2017 12:58:18 -0400
-Received: from bitergia.com ([146.255.100.9]:43572 "EHLO bitergia.com"
+        id S932494AbdJ3RK1 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Oct 2017 13:10:27 -0400
+Received: from mout.gmx.net ([212.227.15.18]:49661 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932361AbdJ3Q6Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Oct 2017 12:58:16 -0400
-Received: from [192.168.1.38] (20.red-88-20-62.staticip.rima-tde.net [88.20.62.20])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by bitergia.com (Postfix) with ESMTPSA id C756A25C184;
-        Mon, 30 Oct 2017 17:58:14 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=bitergia.com; s=mail;
-        t=1509382695; bh=+N32iwW9mcR6dEPEHgAbbCLbtSCdQruVtLQyhHvI7cM=;
-        h=Subject:From:To:Cc:Date:In-Reply-To:References:From;
-        b=oA5pR/lUZnJ5I+YgdnImQEZjT6wxoNsl1uN1HlTF4knOkcYaz/17RPkiUkrcJkqXx
-         M1keM2bQ8e7+1AWMNCqRP5cxec+lcU3z1UjA+WZ9XUHOy0Up9otjSv6VJOS0kpowT4
-         5ikVCuovvd6FjGt/8J8KGbvdhNOpgLyxy4U8mgk8=
-Message-ID: <1509382693.27976.15.camel@bitergia.com>
-Subject: Re: Why does fetch-pack not works over http?
-From:   Alvaro del Castillo <acs@bitergia.com>
-To:     Andreas Schwab <schwab@linux-m68k.org>
-Cc:     git@vger.kernel.org, sduenas@bitergia.com
-Date:   Mon, 30 Oct 2017 17:58:13 +0100
-In-Reply-To: <873764bwjd.fsf@linux-m68k.org>
-References: <1509100979.32292.19.camel@bitergia.com>
-         <873764bwjd.fsf@linux-m68k.org>
-Organization: Bitergia
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.18.5.2-0ubuntu3.2 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        id S932291AbdJ3RK0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Oct 2017 13:10:26 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MH0eg-1dvUJr0S7G-00DlIE; Mon, 30
+ Oct 2017 18:10:21 +0100
+Date:   Mon, 30 Oct 2017 18:10:19 +0100 (CET)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     git@vger.kernel.org
+cc:     Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 0/3] mingw: introduce a way to avoid std handle inheritance
+Message-ID: <cover.1509382976.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:DozJkLzlpQeIjqbFMK1Z/C720jQj5nsPdw4yz/O1NDOKfsDkAzX
+ hh21sAkBOCQaL3bMDdJ78uXShIC//07J7uG3H5Ef32Zfrhih10qpJl+oWMvX9zGHXI8BFh9
+ 7kiKoeg9YTHOe4Al8F46uMavAOX+ABAAP7YZTWUnu35NNzD8jFvcyD+FNrR88WBiAmY7LpD
+ g3Y2bHXlPrKCAFpZ0rslg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ZzOsRiqeRJk=:EhSNTqiFpNS7k3r3fNkM3V
+ XK+3CdfILYsNS3RzzwkqAuxk2LLR4cIPOCz4WmFa0IcavWtLlUfWoe/qbvmnrW+J/5scSgjeb
+ 33jjwWRKW+5cwSoO2j5JYOhfKlk7H0jLcClvC39x4pEF5vxFe0osNA4LCaRclPDR82JgTV7z4
+ Yvvwn4tnZp6+T9wDGbjtJZ8/dp/rACdVK5FOYq1Y8WApzsYDLO3/4/R5I0yqgVseYjDPgJ7pA
+ Q/dzqcye31nNG4VDrbzsEuQyDJW4oE3o37mBq0mOgxykCaUja0OJNwSPGPHtNnoa1sHwFspAa
+ n1qj4kg1YSYKjCvT16NrKRcWVc6LrTafKu6dFyVVg1i1arI40BSncAwuSUUBEXGZIgRqPD/lJ
+ zLX3xz1TzhCTAR9nBlVOwVUQHzsrKWwvA8qqbPkxot4v56JIQMKvEtAtMmZYpLeaqqaaUvckg
+ mWEkzVlcXiXS8c4mqLIxiu0PPpnpeHe5gE0ognb8kNlOrttdbRd5LKzGYSC4QuZOaaEX4iKJ4
+ Du6I8/4Npz9xZl3welJdgI1vzvbFtf/QKJNw++iI6SMYfAWvNq1OLj7i9RC0d5amJtY+dHzbE
+ PODku46rT/akZRtAzI0KQNE3qerQpSGZkwtoUdnYVvu2cDhEShcbp3ZISTjcFHxPT3UjKdzaI
+ otc/Lhn56syOThugrbZ7X/GGo+9W66h0MGXxLbUKQ2DSbOxX9da2BhHBNZD5C4ZJuqywa1sKP
+ cKcpjXG9acu/UZ3NznawQnZbBqnw+xgsWIG0fQSTvQ+g0uqncXSOwCHZad7/T1OnkoPWvGKdn
+ vst6OcL6AbdlLIvEBUYteZQNZQMeK8HBFuWxuj5KPJxZ0fGrDY3IwV/gA6VZRucXkdDmY1F
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Andreas,
+Particularly when calling Git from applications, such as Visual Studio,
+it is important that stdin/stdout/stderr are closed properly. However,
+when spawning processes on Windows, those handles must be marked as
+inheritable if we want to use them, but that flag is a global flag and
+may very well be used by other spawned processes which then do not know
+to close those handles.
 
-El vie, 27-10-2017 a las 14:33 +0200, Andreas Schwab escribió:
-> On Okt 27 2017, Alvaro del Castillo <acs@bitergia.com> wrote:
-> 
-> > 
-> > We're wondering why "fetch-pack" (when is running from the command
-> > line) doesn't handle "https://" protocol. It only works with
-> > "git://".
-> > 
-> > For instance, this doesn't work:
-> > 
-> > $ git fetch-pack https://github.com/git/git refs/heads/master
-> > fatal: I don't handle protocol 'https'
-> > 
-> > while this does:
-> > 
-> > $ git fetch-pack git://github.com/git/git refs/heads/master
-> > 
-> > The funny thing is that under the hood, "fetch" calls "fetch-pack"
-> > using "https" procotol. Example of a trace below:
-> > 
-> > 12:03:07.512558 git.c:344               trace: built-in: git
-> > 'fetch-
-> > pack' '--stateless-rpc' '--stdin' '--lock-pack' '--thin' 'https://g
-> > ithu
-> > b.com/git/git/'
-> With --stateless-rpc, fetch-pack doesn't do the connect itself, but
-> expects the caller having set up a pipe to it.  The URL is then
-> actually
-> ignored.
+As a workaround, introduce handling for the environment variables
+GIT_REDIRECT_STD* to read/write from/to named pipes instead
+(conceptually similar to Unix sockets, for you Linux folks). These do
+not need to be marked as inheritable, as the process can simply open the
+named pipe. No global flags. No problems.
 
-Ok, I have understood that reading the git code but, is it possible to
-create this pipe using command line? Or is that something designed to
-be used inside the git execution?
+This feature was introduced as an experimental feature into Git for
+Windows v2.11.0(2) and has been tested ever since. I feel it is
+well-tested enough that it can be integrated into core Git.
 
-Thanks!
+Once it has been reviewed enough, I will gladly remove the
+"experimental" adjectives and warnings.
 
-> 
-> Andreas.
-> 
 
+Johannes Schindelin (3):
+  mingw: add experimental feature to redirect standard handles
+  mingw: special-case GIT_REDIRECT_STDERR=2>&1
+  mingw: document the experimental standard handle redirection
+
+ Documentation/git.txt | 17 +++++++++++++++
+ compat/mingw.c        | 58 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ t/t0001-init.sh       | 12 +++++++++++
+ 3 files changed, 87 insertions(+)
+
+
+base-commit: cb5918aa0d50f50e83787f65c2ddc3dcb10159fe
+Published-As: https://github.com/dscho/git/releases/tag/redirect-std-handles-v1
+Fetch-It-Via: git fetch https://github.com/dscho/git redirect-std-handles-v1
 -- 
-Alvaro del Castillo San Félix
-acs@bitergia.com - Chief Technical Officer (CTO)
-http://www.bitergia.com
-"Software metrics for your peace of mind"
-
-
+2.15.0.windows.1
 
