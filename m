@@ -6,71 +6,97 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B5E4A202A0
-	for <e@80x24.org>; Mon, 30 Oct 2017 01:30:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1347A202A0
+	for <e@80x24.org>; Mon, 30 Oct 2017 01:36:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751216AbdJ3B13 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 29 Oct 2017 21:27:29 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60843 "EHLO
+        id S1751361AbdJ3Bgb (ORCPT <rfc822;e@80x24.org>);
+        Sun, 29 Oct 2017 21:36:31 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60727 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750764AbdJ3B12 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Oct 2017 21:27:28 -0400
+        with ESMTP id S1750764AbdJ3Bga (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Oct 2017 21:36:30 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B5D72BB413;
-        Sun, 29 Oct 2017 21:27:27 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 920B3BA694;
+        Sun, 29 Oct 2017 21:36:29 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=W1IY9k35V1TC81kN/ykzOOdMcrk=; b=SVNtax
-        K5dYyqeTkCoWgsnWMv+i6o9dtxKMraV2J4EGfF4uvGAEeOI7ULt2jOkqoP8h6J1S
-        f9ZecILABBzKig2WAVZe07Uw5vgtonFTD6BAbxUqjpQpKo0vdP7PxAo9MU0cJXsf
-        lYVw56JRAFJH9DIPFk+nZYLL44W6xG10S80us=
+        :content-type; s=sasl; bh=B3qkd/rbx2AVWUheAj8jENk6D+E=; b=a9BAqL
+        5hAoiZFGKhtygQCn4DFVRMVbUXrTgUoiYP3TI4eEztQNcJD5p0h7asqP4JbNcQPs
+        ZvbvuAB+UbzgzV6MO4/SjYpHP2Z9TyiPzDPsBZa8YyKXCaILdez+98B5PvgenGfX
+        Hbm8RcSOFHQwinXMAjxN8CW0hyculawbRoyLw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=psOWVk+r3fq0fWVK6Um/yG9EZoKFNp+d
-        Q3oV8ofCBtqb8pKD0AXAOqmFJ1VK6mqxhjj4SrJnItt5APU4c7Nx1rRUJBdEu0h6
-        OK08uAK02ufpXpYMZlvB934UOje8ZfXy/bUoyuEy39dd6oWc85f5TzG2fXKmbUkE
-        QbSZNid/VI8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id AF0B0BB412;
-        Sun, 29 Oct 2017 21:27:27 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=WNSpM2iuxl1ZbHVdgd3GbUWFjLJXtaix
+        +MzakhF1Qo1/LLk+a4lbNFqYbBjjnTcoBHHY5k20OmeskoRqGZHz+8eFuKftDBLW
+        m8j0gv7veMBO4pByc5rUq+Wic30yJxaMwtmlwDQrpqCoIVK+XXu0MQUjBoZ5Q+UQ
+        /GLUyNB65nI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 88783BA693;
+        Sun, 29 Oct 2017 21:36:29 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2B531BB411;
-        Sun, 29 Oct 2017 21:27:27 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B0177BA692;
+        Sun, 29 Oct 2017 21:36:28 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Oct 2017, #06; Fri, 27)
-References: <xmqq7evhc7nw.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.21.1.1710291409390.6482@virtualbox>
-        <xmqq7eve9gw4.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.21.1.1710291614020.6482@virtualbox>
-Date:   Mon, 30 Oct 2017 10:27:25 +0900
-In-Reply-To: <alpine.DEB.2.21.1.1710291614020.6482@virtualbox> (Johannes
-        Schindelin's message of "Sun, 29 Oct 2017 16:18:43 +0100 (CET)")
-Message-ID: <xmqqfua18lxe.fsf@gitster.mtv.corp.google.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Christopher Jefferson <caj21@st-andrews.ac.uk>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: git rm VERY slow for directories with many files.
+References: <BEEA4A16-5433-4E6C-A7D7-956C85F27DF3@st-andrews.ac.uk>
+        <20171028223103.wevq5zf4rjl7ietd@genre.crustytoothpaste.net>
+        <xmqqbmkqbwt0.fsf@gitster.mtv.corp.google.com>
+        <20171029165244.si4a5furgf6trqe3@genre.crustytoothpaste.net>
+Date:   Mon, 30 Oct 2017 10:36:27 +0900
+In-Reply-To: <20171029165244.si4a5furgf6trqe3@genre.crustytoothpaste.net>
+        (brian m. carlson's message of "Sun, 29 Oct 2017 16:52:44 +0000")
+Message-ID: <xmqqbmkp8lic.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 7D45F3BE-BD11-11E7-8DCC-575F0C78B957-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: C00F6A62-BD12-11E7-BE5E-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> Let's make this more convenient for *both* of us. You can find one fixup
-> in the `jr/ssh-wrappers` branch at https://github.com/dscho/git, and the
-> second one at `cc/git-packet-pm`. Both should fast-forward from your
-> branches of the same name.
+> On Sun, Oct 29, 2017 at 09:51:55AM +0900, Junio C Hamano wrote:
+>> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+>> > First, make sure your working directory is clean with no changes.  Then,
+>> > remove the directory (by hand) or move it somewhere else.  Then, run
+>> > "git add -u".
+>> >
+>> > That should allow you to commit the removal of those files quickly.
+>> 
+>> If get_tree_entry() shows up a lot in the profile, it would indicate
+>> that a lot of cycles are spent in check_local_mod().  Bypassing it
+>> with "-f" may be the first thing to try ;-)
+>
+> That is indeed faster.  I tested my solution by creating a directory
+> with 20,000 files in a temporary repo.  git rm -r took 17.96s, and git
+> rm -rf took .12s.  (This is on an SSD.)
+>
+> That's also a nicer and more intuitive solution than mine.
 
-Thanks.  
+Heh, the above was meant as a joke, though.  "-f" is bypassing an
+important safety valve.  In fact in my early draft of the message,
+the paragraph that followed started with "Jokes aside, ..." ;-)
 
-I didn't follow these lenghthy back-and-forth closely enough to
-notice that they boiled down to one liner each that needs squashing
-;-)
+>> I wonder how fast "git diff-index --cached -r HEAD --", with the
+>> same pathspec used for the problematic "git rm", runs in this same
+>> 50,000 path project.
+>
+> I'll let the original poster answer this one as well, but it was very
+> fast in my test repo.  I'm not very familiar with the code path in
+> question, but it definitely looks like we're avoiding the quadratic
+> behavior in this case.
 
-Fetched, looked at, and signed off before merging them to 'pu'.
-
+Because of the way "diff-index --cached" iterates over the index and
+the tree in parallel, it should be a lot faster than doing
+get_tree_entry() for each and every path you care about.  In
+addition, the "--cached" form is further optimized to take advantage
+of the cached-tree index extension, so you often can tell "all index
+entries in this directory are untouched" without descending into
+deep subdirectories.
