@@ -2,85 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4ED661FBF4
-	for <e@80x24.org>; Mon, 30 Oct 2017 12:38:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 409181FBF4
+	for <e@80x24.org>; Mon, 30 Oct 2017 12:39:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752089AbdJ3Mik (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Oct 2017 08:38:40 -0400
-Received: from mout.gmx.net ([212.227.17.20]:55827 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751988AbdJ3Mi0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Oct 2017 08:38:26 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MO7Ca-1e3d143nUa-005ajX; Mon, 30
- Oct 2017 13:38:11 +0100
-Date:   Mon, 30 Oct 2017 13:37:58 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Brandon Williams <bmwill@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Bryan Turner <bturner@atlassian.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jeff King <peff@peff.net>, William Yan <wyan@google.com>
-Subject: Re: [PATCH 3/5] ssh: 'auto' variant to select between 'ssh' and
- 'simple'
-In-Reply-To: <xmqqo9op8o35.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.21.1.1710301337430.6482@virtualbox>
-References: <20170926235627.79606-1-bmwill@google.com>        <20171003201507.3589-1-bmwill@google.com>        <20171003201507.3589-11-bmwill@google.com>        <20171003214206.GY19555@aiede.mtv.corp.google.com>        <20171016171812.GA4487@google.com>   
-     <20171023212740.qodxzsq5w7rn2r6y@aiede.mtv.corp.google.com>        <20171023213159.eitrjrqrh277advm@aiede.mtv.corp.google.com>        <alpine.DEB.2.21.1.1710251437090.6482@virtualbox>        <CAGZ79kYTYg09A7UbhvyiT0QmRQG5ZJV6v1iaQBNCZY8RTj300A@mail.gmail.com>
-        <20171025163243.xmm7szrkwgblpgcc@aiede.mtv.corp.google.com> <xmqqo9op8o35.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751777AbdJ3MjC (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Oct 2017 08:39:02 -0400
+Received: from mail-qk0-f176.google.com ([209.85.220.176]:48697 "EHLO
+        mail-qk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751988AbdJ3MjB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Oct 2017 08:39:01 -0400
+Received: by mail-qk0-f176.google.com with SMTP id d67so15868160qkg.5
+        for <git@vger.kernel.org>; Mon, 30 Oct 2017 05:39:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=Gd4OZXmJD77qEDadrZ1vb+LRm1TKEQXt+D7yBhcP0EY=;
+        b=jv0qiCTOLWBQz4NnOwZGS4DqanF8lSP1vrxwqzv7EVkePSctyY64sBzRDBEnBMfywC
+         ErOc5rK1S8geb5F5Odba2O7h5JC6nvmPNZ7oSbgVsQ6LjHqxpSWqidaYPetRnQJrnov+
+         ZT+n5ByjdkxUu9h1IlWoRULH3dvGt2TIjZbxAoEf5PpI0J8cttlI5A0kcBoSx4t7G2ta
+         T/AU0Fc9rzZsRMf4bBXHDoFg01laThAhgiZLLz9arRkJg1MXs36JMGpkD72DUGMVb7PG
+         flBtwYsxj+bkLklL711m1RV99BcOF+bHpVy0cSpV2XAB+zy/+xap6k9CJkz87H2JC3re
+         +w8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=Gd4OZXmJD77qEDadrZ1vb+LRm1TKEQXt+D7yBhcP0EY=;
+        b=hK9WEcZ3LS7DPD1DyIcE3DySQdZhFi73mdw1p+CcZY6vEXwoOtCXnniclN2RTYeJPZ
+         KH0HBRAlozAXY22LICn0Uf7QZ/VPm4bRerV0/N1ROWgzZxigEShWDmGDG5GCOlfac9kg
+         DY+PXkxgLhqDiNo71MmABtXGlF80eD/fleEhbZUMrPQ0GYzNiU4SoaRK7nECqyeFoxdR
+         HG2mjhT/1hugjV3vFOHlIQYYtAOR1StxWIiaUlKl2F9rucvAepyFeC9E4uaXMFq2G2Bx
+         vNhU7H5AFdQOrkvZbV4gq0xdJXAnrdvW1fvBORMPSpYRAT1emTLFMRaWSbnRf075kbEK
+         WavQ==
+X-Gm-Message-State: AMCzsaW3rG8OCLFAWcynyp328ed8Huc3Y7jGqWsOj3SRF+bKXxVLgaHM
+        K2OJod6TGOD+iAHArcztELA=
+X-Google-Smtp-Source: ABhQp+RItqzHLTIQ3eBT1uqV8KLvEpntPaA6uYfPRRo3yxgChUJl4ak9ETpbZUjPVH4vDgpxdaJOeQ==
+X-Received: by 10.233.237.193 with SMTP id c184mr11876741qkg.265.1509367140400;
+        Mon, 30 Oct 2017 05:39:00 -0700 (PDT)
+Received: from [192.168.1.13] ([65.222.173.206])
+        by smtp.gmail.com with ESMTPSA id k126sm9217581qkc.69.2017.10.30.05.38.58
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 30 Oct 2017 05:38:59 -0700 (PDT)
+Subject: Re: [PATCH v3] 0/4 fsmonitor fixes
+To:     Alex Vandiver <alexmv@dropbox.com>, git@vger.kernel.org
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <20171027232637.30395-1-alexmv@dropbox.com>
+From:   Ben Peart <peartben@gmail.com>
+Message-ID: <7fc39ba0-d1a3-7e96-8585-e82c54dc3e7c@gmail.com>
+Date:   Mon, 30 Oct 2017 08:38:56 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:px9EOxh9uTU+/lJL6DhoNWZEY3XLkzroCpOuqpw1sIm+CExB4kw
- Af0A1U1Mzcqp7JBW/285CtGU1VWOaMH2SbDK+nzFOBTzLc6cNlt8hk0XjT3SRIz+/uHZCDJ
- NTobOnZwuZ3OmlthmWmfBgr1knVEYRIVh0piJ4uKd3s5A7wjqMj85K5b69Pwirw/ZVAdz9s
- iBG3ydeoc5vgWgsja0DQw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:UJwDZ4EJY3o=:sXilg7B8iUdWjWQiQRO3dV
- 3Crd0VJMBEDyzq5ZwnYeyfHe+ik+wm91cOFFc2Y2mNnp88aYSlGNwDHE/8nzaMs772uQ2RGz0
- Nt2SKiPw5ayo+QPfnZhamrA2hZezjPFHnyCRjLWASBiqNTIe7aXf9kz1AY/Rh/0KyVJz0aYKU
- eJnS9liPRH5/sQMJiitICYNTu8VMf6MJrfs6KP71RdghbccVKa+6yCcbtr08kOcNI43o4TWM9
- WY4mv5uEtBwdJ/tjT6oV2ObD7cyoo547oorkBniVHa3DwEl9JIx+P92UswKG22XrQM/HKsgLy
- XX2k0l42+sRJHW5x3zvo7ZRZSe/o5G6XepSzo7382AE35Ze401AQziV3fVTZ0Uj86/hrYORIU
- u3m2ulpPV0IHxaHu8+YU3Q1/0FVl0w/WSDcYuyBC5sg3ke8NT/6xXKF4QO0vU9nbgBBD3ysK0
- k4adywLaMKfJFMuzeEKXYdZSl4w28wakALlaTP+7pYK3MgKzL7AiXwjcx0Ga2J+1XwAryaTn+
- vH46Tojxdd6qQfdlJQO8VDbgvAMLUuTtWT804AfH727t6HCTq9kOh5Vt2N2OpaisGXdVHDk5V
- aTIJHN3deqSGFiDAXujBOH5yUG2l3WRN9YtgEJJxr91N17syTw0RwZXv0cCBpqo+rk8NhXsal
- phn9GY+3fMn4hc9i4ar0loh7B8IbI7GbvHkyHFvapwuxeaqQgDcTqSXCMmi86HcvjRgqdgFx2
- JBYZ5aZD8ThcuhArx/U789zC5/QJEbCUgCpWmvAIWqH40eo469USy8+r/HyYHqF1jH5LX3wmS
- IA8mOhsKrPg9q2eKau/qg6I8imgXkBk2QoXOlecZGDYQGmdKmdQuoYkKW9cmYMXSExmsMGP
+In-Reply-To: <20171027232637.30395-1-alexmv@dropbox.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
 
-On Mon, 30 Oct 2017, Junio C Hamano wrote:
 
-> Jonathan Nieder <jrnieder@gmail.com> writes:
+On 10/27/2017 7:26 PM, Alex Vandiver wrote:
+> Updates since v2:
 > 
-> > I have other changes to make when rerolling anyway (from Junio's
-> > review), so no need for a followup patch.  Will fix this in the
-> > reroll today.
-> >
-> > Thanks for catching and diagnosing this, Dscho!
+>   - Fix tab which crept into 1/4
 > 
-> In the meantime, I've queued this from Dscho; please take it into
-> consideration when you reroll.
+>   - Fixed the benchmarking code in the commit message in 2/4 to just
+>     always load JSON::XS -- the previous version was the version where
+>     I'd broken that to force loading of JSON::PP.
 > 
-> Thanks.
+>   - Remove the --no-pretty from the t/ version of query-watchman in
+>     2/4; I don't know how I messed up diff'ing the file previously, but
+>     if there are already differences, it makes sense to let them slide.
+> 
 
-Thanks for sending it out as an email.
-
-Ciao,
-Dscho
+Thanks Alex, nice improvements.  This looks good to go.
