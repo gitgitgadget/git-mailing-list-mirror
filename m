@@ -2,621 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 42D8D202A0
-	for <e@80x24.org>; Mon, 30 Oct 2017 06:19:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A0DED2055E
+	for <e@80x24.org>; Mon, 30 Oct 2017 06:27:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752358AbdJ3GTV (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Oct 2017 02:19:21 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64014 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752332AbdJ3GTR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Oct 2017 02:19:17 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 912FA96648;
-        Mon, 30 Oct 2017 02:19:11 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:date:message-id:mime-version:content-type
-        :content-transfer-encoding; s=sasl; bh=7gRW1qLMra8Ekq/rrS7H175N2
-        L8=; b=hGXaAHTpvKz9Fk2XmW9WfScRNCQl6ue7ASC57OmdOAwe+Hpx4Uujw2ryD
-        edFLdhMeDusWlD3gzxCTuCWwH0a5r7YZnnJnbJny00bKRUYp6vhTRzlPz3y+6yoA
-        aUMRhsHKSgHL0A8aWy1L55Oqf8nuJo8zih+GXvyKCV5igGoCFU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:date:message-id:mime-version:content-type
-        :content-transfer-encoding; q=dns; s=sasl; b=SzN1xJTKoRXGqf8N1fo
-        8f+4BVwjJgCzP4hXEfH2Xd3YEjz8YkJADtaRep+9842OdwFwDr49wdNS2l49fwnz
-        Dv+NlQsPsLo1ljQGksA9+9pr2Xy5HB+JIhmk4EpgLrgl1GW+hMLUSdPnxl92kadc
-        MYZNOD6ANZk6ZRzdaoE/D5i4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8650896647;
-        Mon, 30 Oct 2017 02:19:10 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C196096643;
-        Mon, 30 Oct 2017 02:19:09 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Cc:     Linux Kernel <linux-kernel@vger.kernel.org>
-Subject: [ANNOUNCE] Git v2.15.0
-Date:   Mon, 30 Oct 2017 15:19:08 +0900
-Message-ID: <xmqq60ax5fab.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1752153AbdJ3G1S (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Oct 2017 02:27:18 -0400
+Received: from mail-wm0-f51.google.com ([74.125.82.51]:50201 "EHLO
+        mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751540AbdJ3G1R (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Oct 2017 02:27:17 -0400
+Received: by mail-wm0-f51.google.com with SMTP id s66so13395858wmf.5
+        for <git@vger.kernel.org>; Sun, 29 Oct 2017 23:27:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=RIw0W7vtUk+e52bg5zC9m8kCb+s2KlQumhRz2APy440=;
+        b=atLS1N8QbNSdIORcFZ3baHHb2ea7/Njiy6UKen4rrSVUppWN4/jLtFc7F5U/uINZrv
+         1fhE/DyfmpyNhOqDZ8OWfToeQRql3qDgvPWc/TdgIw624QqnH1QmrgMnupsetsvtr3EE
+         r0FzMzTNgTyiAdZPt4++zr5LMZ7kQVwj9gnbDr2gkZVNWj5fcW4EdDachHX7/ckALPjp
+         xc3nf6p3IU85Fo84cYgxDA3ChISvjwtErWoJ8KbFLU5jlr2i0VDyBZ56xv1lIFeObNln
+         8uxfbPX3SYrm1kvWGwhKPMTNdNTMQSJQiimoalygck0lTHHtKoBMnphsXEe2CXMoIFAa
+         we4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=RIw0W7vtUk+e52bg5zC9m8kCb+s2KlQumhRz2APy440=;
+        b=RxGlwpBevHT1RZkkAoAdMOWptZErGtQPP/e2yRDG/xH4fNwKUYqYPQknsUpvXn/Y+I
+         Zg5SZu+E50nJjFKH6G0JlfRYpXghHUw4Ks+hfaaNCcwC7eSffYGirE3nBr11kRrDh9y/
+         xY02rrNS4CsQ7yE2g9NZWdkIEpuTFOLME9ff6rZmK0JBcn+vR0G2bNG9HvW2lpejmM6x
+         nKnoUTW0Wn8wYA59K1P20h/am0VKVAz4PYzfpZDnx7/WO1yIRDTd/hasPl+7UnpRBn14
+         RvBhWYPSKNu0ZVn6OBpsNQmUGY8CAWDlxYgSsHnPzfxqklhLPYWpPwbYxtSILoowZU8d
+         7blw==
+X-Gm-Message-State: AMCzsaUFLShykvvKtBbh/X1MFD7Mo8wGPr2Uil8APeutFOsq/OgwC4Yc
+        5rTx09tfbMdgey8YNVTFaFqLcLUS7pSNexcOURo=
+X-Google-Smtp-Source: ABhQp+TBcfYR2LuR7gF0X01+Lj3pThEASYo74M/+ta+qYvzkyK0Cn6UCKQOkd6Tsfe2IwAJJzulgVIMjIPWwqNcb55c=
+X-Received: by 10.80.217.15 with SMTP id t15mr10706697edj.217.1509344836042;
+ Sun, 29 Oct 2017 23:27:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 3DA5A3DE-BD3A-11E7-9797-8EF31968708C-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Received: by 10.80.213.80 with HTTP; Sun, 29 Oct 2017 23:26:55 -0700 (PDT)
+In-Reply-To: <xmqqo9op71d8.fsf@gitster.mtv.corp.google.com>
+References: <20171028000152.2760-1-jacob.e.keller@intel.com>
+ <alpine.DEB.2.21.1.1710281740070.6482@virtualbox> <4150d979-f653-e79b-563a-1dc43f12468d@talktalk.net>
+ <xmqq1sll8j6f.fsf@gitster.mtv.corp.google.com> <CA+P7+xrXLcTQpPWgzLwt_yZo=QdfetF36jrc_TtXfqMKR2Hh3w@mail.gmail.com>
+ <xmqqo9op71d8.fsf@gitster.mtv.corp.google.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Sun, 29 Oct 2017 23:26:55 -0700
+Message-ID: <CA+P7+xo5UgUPQCYU-LaXn+HZZ1qe++KOevTMh2C1sgnzK0SAQA@mail.gmail.com>
+Subject: Re: [PATCH] rebase: exec leaks GIT_DIR to environment
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Phillip Wood <phillip.wood@talktalk.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jacob Keller <jacob.e.keller@intel.com>,
+        Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The latest feature release Git v2.15.0 is now available at the
-usual places.  It is comprised of 769 non-merge commits since
-v2.14.0, contributed by 91 people, 28 of which are new faces.
-
-The tarballs are found at:
-
-    https://www.kernel.org/pub/software/scm/git/
-
-The following public repositories all have a copy of the 'v2.15.0'
-tag and the 'master' branch that the tag points at:
-
-  url =3D https://kernel.googlesource.com/pub/scm/git/git
-  url =3D git://repo.or.cz/alt-git.git
-  url =3D https://github.com/gitster/git
-
-New contributors whose contributions weren't in v2.14.0 are as follows.
-Welcome to the Git development community!
-
-  Andre Hinrichs, Andrey Okoshkin, Ann T Ropea, Christopher D=C3=ADaz,
-  Christopher D=C3=ADaz Riveros, Daniel Watkins, Derrick Stolee,
-  Dimitrios Christidis, Eric Rannaud, Evan Zacks, Hielke Christian
-  Braun, Ian Campbell, Ilya Kantor, Jameson Miller, Job Snijders,
-  Joel Teichroeb, joernchen, =C5=81ukasz Gryglicki, Manav Rathi,
-  Martin =C3=85gren, Michael Forney, Nathan Payre, Nicolas Cornu,
-  Patryk Obara, Randall S. Becker, Ross Kabus, Taylor Blau,
-  and Urs Thuermann.
-
-Returning contributors who helped this release are as follows.
-Thanks for your continued support.
-
-  Adam Dinwoodie, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason, Alexander Shopo=
-v,
-  Andreas Heiduk, Anthony Sottile, Ben Boeckel, Brandon Casey,
-  Brandon Williams, brian m. carlson, Changwoo Ryu, Christian
-  Couder, David Glasser, Dimitriy Ryazantcev, Eric Blake, Han-Wen
-  Nienhuys, Heiko Voigt, Jean-Noel Avila, Jeff Hostetler, Jeff
-  King, Jiang Xin, Johannes Schindelin, Johannes Sixt, Jonathan
-  Nieder, Jonathan Tan, Jordi Mas, Junio C Hamano, Kaartic
-  Sivaraam, Kevin Daudt, Kevin Willford, Lars Schneider, Martin
-  Koegler, Matthieu Moy, Max Kirillov, Michael Haggerty, Michael J
-  Gruber, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy, Nicolas Morey-Chaise=
-martin,
-  =C3=98ystein Walle, Paolo Bonzini, Pat Thoyts, Peter Krefting,
-  Philip Oakley, Phillip Wood, Ralf Thielow, Raman Gupta, Ramsay
-  Jones, Ray Chen, Ren=C3=A9 Scharfe, Sahil Dua, Santiago Torres,
-  Sebastian Schuberth, Stefan Beller, Stephan Beyer, SZEDER G=C3=A1bor,
-  Takashi Iwai, Thomas Braun, Thomas Gummerer, Todd Zullinger,
-  Tom G. Christensen, Torsten B=C3=B6gershausen, Tr=E1=BA=A7n Ng=E1=BB=8D=
-c Qu=C3=A2n,
-  William Duclot, and W. Trevor King.
-
-----------------------------------------------------------------
-
-Git 2.15 Release Notes
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-Backward compatibility notes and other notable changes.
-
- * Use of an empty string as a pathspec element that is used for
-   'everything matches' is still warned and Git asks users to use a
-   more explicit '.' for that instead.  The hope is that existing
-   users will not mind this change, and eventually the warning can be
-   turned into a hard error, upgrading the deprecation into removal of
-   this (mis)feature.  That is now scheduled to happen in Git v2.16,
-   the next major release after this one.
-
- * Git now avoids blindly falling back to ".git" when the setup
-   sequence said we are _not_ in Git repository.  A corner case that
-   happens to work right now may be broken by a call to BUG().
-   We've tried hard to locate such cases and fixed them, but there
-   might still be cases that need to be addressed--bug reports are
-   greatly appreciated.
-
- * "branch --set-upstream" that has been deprecated in Git 1.8 has
-   finally been retired.
-
-
-Updates since v2.14
--------------------
-
-UI, Workflows & Features
-
- * An example that is now obsolete has been removed from a sample hook,
-   and an old example in it that added a sign-off manually has been
-   improved to use the interpret-trailers command.
-
- * The advice message given when "git rebase" stops for conflicting
-   changes has been improved.
-
- * The "rerere-train" script (in contrib/) learned the "--overwrite"
-   option to allow overwriting existing recorded resolutions.
-
- * "git contacts" (in contrib/) now lists the address on the
-   "Reported-by:" trailer to its output, in addition to those on
-   S-o-b: and other trailers, to make it easier to notify (and thank)
-   the original bug reporter.
-
- * "git rebase", especially when it is run by mistake and ends up
-   trying to replay many changes, spent long time in silence.  The
-   command has been taught to show progress report when it spends
-   long time preparing these many changes to replay (which would give
-   the user a chance to abort with ^C).
-
- * "git merge" learned a "--signoff" option to add the Signed-off-by:
-   trailer with the committer's name.
-
- * "git diff" learned to optionally paint new lines that are the same
-   as deleted lines elsewhere differently from genuinely new lines.
-
- * "git interpret-trailers" learned to take the trailer specifications
-   from the command line that overrides the configured values.
-
- * "git interpret-trailers" has been taught a "--parse" and a few
-   other options to make it easier for scripts to grab existing
-   trailer lines from a commit log message.
-
- * The "--format=3D%(trailers)" option "git log" and its friends take
-   learned to take the 'unfold' and 'only' modifiers to normalize its
-   output, e.g. "git log --format=3D%(trailers:only,unfold)".
-
- * "gitweb" shows a link to visit the 'raw' contents of blbos in the
-   history overview page.
-
- * "[gc] rerereResolved =3D 5.days" used to be invalid, as the variable
-   is defined to take an integer counting the number of days.  It now
-   is allowed.
-
- * The code to acquire a lock on a reference (e.g. while accepting a
-   push from a client) used to immediately fail when the reference is
-   already locked---now it waits for a very short while and retries,
-   which can make it succeed if the lock holder was holding it during
-   a read-only operation.
-
- * "branch --set-upstream" that has been deprecated in Git 1.8 has
-   finally been retired.
-
- * The codepath to call external process filter for smudge/clean
-   operation learned to show the progress meter.
-
- * "git rev-parse" learned "--is-shallow-repository", that is to be
-   used in a way similar to existing "--is-bare-repository" and
-   friends.
-
- * "git describe --match <pattern>" has been taught to play well with
-   the "--all" option.
-
- * "git branch" learned "-c/-C" to create a new branch by copying an
-   existing one.
-
- * Some commands (most notably "git status") makes an opportunistic
-   update when performing a read-only operation to help optimize later
-   operations in the same repository.  The new "--no-optional-locks"
-   option can be passed to Git to disable them.
-
- * "git for-each-ref --format=3D..." learned a new format element,
-   %(trailers), to show only the commit log trailer part of the log
-   message.
-
-
-Performance, Internal Implementation, Development Support etc.
-
- * Conversion from uchar[20] to struct object_id continues.
-
- * Start using selected c99 constructs in small, stable and
-   essentialpart of the system to catch people who care about
-   older compilers that do not grok them.
-
- * The filter-process interface learned to allow a process with long
-   latency give a "delayed" response.
-
- * Many uses of comparision callback function the hashmap API uses
-   cast the callback function type when registering it to
-   hashmap_init(), which defeats the compile time type checking when
-   the callback interface changes (e.g. gaining more parameters).
-   The callback implementations have been updated to take "void *"
-   pointers and cast them to the type they expect instead.
-
- * Because recent Git for Windows do come with a real msgfmt, the
-   build procedure for git-gui has been updated to use it instead of a
-   hand-rolled substitute.
-
- * "git grep --recurse-submodules" has been reworked to give a more
-   consistent output across submodule boundary (and do its thing
-   without having to fork a separate process).
-
- * A helper function to read a single whole line into strbuf
-   mistakenly triggered OOM error at EOF under certain conditions,
-   which has been fixed.
-
- * The "ref-store" code reorganization continues.
-
- * "git commit" used to discard the index and re-read from the filesystem
-   just in case the pre-commit hook has updated it in the middle; this
-   has been optimized out when we know we do not run the pre-commit hook.
-   (merge 680ee550d7 kw/commit-keep-index-when-pre-commit-is-not-run late=
-r to maint).
-
- * Updates to the HTTP layer we made recently unconditionally used
-   features of libCurl without checking the existence of them, causing
-   compilation errors, which has been fixed.  Also migrate the code to
-   check feature macros, not version numbers, to cope better with
-   libCurl that vendor ships with backported features.
-
- * The API to start showing progress meter after a short delay has
-   been simplified.
-   (merge 8aade107dd jc/simplify-progress later to maint).
-
- * Code clean-up to avoid mixing values read from the .gitmodules file
-   and values read from the .git/config file.
-
- * We used to spend more than necessary cycles allocating and freeing
-   piece of memory while writing each index entry out.  This has been
-   optimized.
-
- * Platforms that ship with a separate sha1 with collision detection
-   library can link to it instead of using the copy we ship as part of
-   our source tree.
-
- * Code around "notes" have been cleaned up.
-   (merge 3964281524 mh/notes-cleanup later to maint).
-
- * The long-standing rule that an in-core lockfile instance, once it
-   is used, must not be freed, has been lifted and the lockfile and
-   tempfile APIs have been updated to reduce the chance of programming
-   errors.
-
- * Our hashmap implementation in hashmap.[ch] is not thread-safe when
-   adding a new item needs to expand the hashtable by rehashing; add
-   an API to disable the automatic rehashing to work it around.
-
- * Many of our programs consider that it is OK to release dynamic
-   storage that is used throughout the life of the program by simply
-   exiting, but this makes it harder to leak detection tools to avoid
-   reporting false positives.  Plug many existing leaks and introduce
-   a mechanism for developers to mark that the region of memory
-   pointed by a pointer is not lost/leaking to help these tools.
-
- * As "git commit" to conclude a conflicted "git merge" honors the
-   commit-msg hook, "git merge" that records a merge commit that
-   cleanly auto-merges should, but it didn't.
-
- * The codepath for "git merge-recursive" has been cleaned up.
-
- * Many leaks of strbuf have been fixed.
-
- * "git imap-send" has our own implementation of the protocol and also
-   can use more recent libCurl with the imap protocol support.  Update
-   the latter so that it can use the credential subsystem, and then
-   make it the default option to use, so that we can eventually
-   deprecate and remove the former.
-
- * "make style" runs git-clang-format to help developers by pointing
-   out coding style issues.
-
- * A test to demonstrate "git mv" failing to adjust nested submodules
-   has been added.
-   (merge c514167df2 hv/mv-nested-submodules-test later to maint).
-
- * On Cygwin, "ulimit -s" does not report failure but it does not work
-   at all, which causes an unexpected success of some tests that
-   expect failures under a limited stack situation.  This has been
-   fixed.
-
- * Many codepaths have been updated to squelch -Wimplicit-fallthrough
-   warnings from Gcc 7 (which is a good code hygiene).
-
- * Add a helper for DLL loading in anticipation for its need in a
-   future topic RSN.
-
- * "git status --ignored", when noticing that a directory without any
-   tracked path is ignored, still enumerated all the ignored paths in
-   the directory, which is unnecessary.  The codepath has been
-   optimized to avoid this overhead.
-
- * The final batch to "git rebase -i" updates to move more code from
-   the shell script to C has been merged.
-
- * Operations that do not touch (majority of) packed refs have been
-   optimized by making accesses to packed-refs file lazy; we no longer
-   pre-parse everything, and an access to a single ref in the
-   packed-refs does not touch majority of irrelevant refs, either.
-
- * Add comment to clarify that the style file is meant to be used with
-   clang-5 and the rules are still work in progress.
-
- * Many variables that points at a region of memory that will live
-   throughout the life of the program have been marked with UNLEAK
-   marker to help the leak checkers concentrate on real leaks..
-
- * Plans for weaning us off of SHA-1 has been documented.
-
- * A new "oidmap" API has been introduced and oidset API has been
-   rewritten to use it.
-
-
-Also contains various documentation updates and code clean-ups.
-
-
-Fixes since v2.14
------------------
-
- * "%C(color name)" in the pretty print format always produced ANSI
-   color escape codes, which was an early design mistake.  They now
-   honor the configuration (e.g. "color.ui =3D never") and also tty-ness
-   of the output medium.
-
- * The http.{sslkey,sslCert} configuration variables are to be
-   interpreted as a pathname that honors "~[username]/" prefix, but
-   weren't, which has been fixed.
-
- * Numerous bugs in walking of reflogs via "log -g" and friends have
-   been fixed.
-
- * "git commit" when seeing an totally empty message said "you did not
-   edit the message", which is clearly wrong.  The message has been
-   corrected.
-
- * When a directory is not readable, "gitweb" fails to build the
-   project list.  Work this around by skipping such a directory.
-
- * Some versions of GnuPG fails to kill gpg-agent it auto-spawned
-   and such a left-over agent can interfere with a test.  Work it
-   around by attempting to kill one before starting a new test.
-
- * A recently added test for the "credential-cache" helper revealed
-   that EOF detection done around the time the connection to the cache
-   daemon is torn down were flaky.  This was fixed by reacting to
-   ECONNRESET and behaving as if we got an EOF.
-
- * "git log --tag=3Dno-such-tag" showed log starting from HEAD, which
-   has been fixed---it now shows nothing.
-
- * The "tag.pager" configuration variable was useless for those who
-   actually create tag objects, as it interfered with the use of an
-   editor.  A new mechanism has been introduced for commands to enable
-   pager depending on what operation is being carried out to fix this,
-   and then "git tag -l" is made to run pager by default.
-
- * "git push --recurse-submodules $there HEAD:$target" was not
-   propagated down to the submodules, but now it is.
-
- * Commands like "git rebase" accepted the --rerere-autoupdate option
-   from the command line, but did not always use it.  This has been
-   fixed.
-
- * "git clone --recurse-submodules --quiet" did not pass the quiet
-   option down to submodules.
-
- * Test portability fix for OBSD.
-
- * Portability fix for OBSD.
-
- * "git am -s" has been taught that some input may end with a trailer
-   block that is not Signed-off-by: and it should refrain from adding
-   an extra blank line before adding a new sign-off in such a case.
-
- * "git svn" used with "--localtime" option did not compute the tz
-   offset for the timestamp in question and instead always used the
-   current time, which has been corrected.
-
- * Memory leak in an error codepath has been plugged.
-
- * "git stash -u" used the contents of the committed version of the
-   ".gitignore" file to decide which paths are ignored, even when the
-   file has local changes.  The command has been taught to instead use
-   the locally modified contents.
-
- * bash 4.4 or newer gave a warning on NUL byte in command
-   substitution done in "git stash"; this has been squelched.
-
- * "git grep -L" and "git grep --quiet -L" reported different exit
-   codes; this has been corrected.
-
- * When handshake with a subprocess filter notices that the process
-   asked for an unknown capability, Git did not report what program
-   the offending subprocess was running.  This has been corrected.
-
- * "git apply" that is used as a better "patch -p1" failed to apply a
-   taken from a file with CRLF line endings to a file with CRLF line
-   endings.  The root cause was because it misused convert_to_git()
-   that tried to do "safe-crlf" processing by looking at the index
-   entry at the same path, which is a nonsense---in that mode, "apply"
-   is not working on the data in (or derived from) the index at all.
-   This has been fixed.
-
- * Killing "git merge --edit" before the editor returns control left
-   the repository in a state with MERGE_MSG but without MERGE_HEAD,
-   which incorrectly tells the subsequent "git commit" that there was
-   a squash merge in progress.  This has been fixed.
-
- * "git archive" did not work well with pathspecs and the
-   export-ignore attribute.
-
- * In addition to "cc: <a@dd.re.ss> # cruft", "cc: a@dd.re.ss # cruft"
-   was taught to "git send-email" as a valid way to tell it that it
-   needs to also send a carbon copy to <a@dd.re.ss> in the trailer
-   section.
-
- * "git branch -M a b" while on a branch that is completely unrelated
-   to either branch a or branch b misbehaved when multiple worktree
-   was in use.  This has been fixed.
-   (merge 31824d180d nd/worktree-kill-parse-ref later to maint).
-
- * "git gc" and friends when multiple worktrees are used off of a
-   single repository did not consider the index and per-worktree refs
-   of other worktrees as the root for reachability traversal, making
-   objects that are in use only in other worktrees to be subject to
-   garbage collection.
-
- * A regression to "gitk --bisect" by a recent update has been fixed.
-
- * "git -c submodule.recurse=3Dyes pull" did not work as if the
-   "--recurse-submodules" option was given from the command line.
-   This has been corrected.
-
- * Unlike "git commit-tree < file", "git commit-tree -F file" did not
-   pass the contents of the file verbatim and instead completed an
-   incomplete line at the end, if exists.  The latter has been updated
-   to match the behaviour of the former.
-
- * Many codepaths did not diagnose write failures correctly when disks
-   go full, due to their misuse of write_in_full() helper function,
-   which have been corrected.
-   (merge f48ecd38cb jk/write-in-full-fix later to maint).
-
- * "git help co" now says "co is aliased to ...", not "git co is".
-   (merge b3a8076e0d ks/help-alias-label later to maint).
-
- * "git archive", especially when used with pathspec, stored an empty
-   directory in its output, even though Git itself never does so.
-   This has been fixed.
-
- * API error-proofing which happens to also squelch warnings from GCC.
-
- * The explanation of the cut-line in the commit log editor has been
-   slightly tweaked.
-   (merge 8c4b1a3593 ks/commit-do-not-touch-cut-line later to maint).
-
- * "git gc" tries to avoid running two instances at the same time by
-   reading and writing pid/host from and to a lock file; it used to
-   use an incorrect fscanf() format when reading, which has been
-   corrected.
-
- * The scripts to drive TravisCI has been reorganized and then an
-   optimization to avoid spending cycles on a branch whose tip is
-   tagged has been implemented.
-   (merge 8376eb4a8f ls/travis-scriptify later to maint).
-
- * The test linter has been taught that we do not like "echo -e".
-
- * Code cmp.std.c nitpick.
-
- * A regression fix for 2.11 that made the code to read the list of
-   alternate object stores overrun the end of the string.
-   (merge f0f7bebef7 jk/info-alternates-fix later to maint).
-
- * "git describe --match" learned to take multiple patterns in v2.13
-   series, but the feature ignored the patterns after the first one
-   and did not work at all.  This has been fixed.
-
- * "git filter-branch" cannot reproduce a history with a tag without
-   the tagger field, which only ancient versions of Git allowed to be
-   created.  This has been corrected.
-   (merge b2c1ca6b4b ic/fix-filter-branch-to-handle-tag-without-tagger la=
-ter to maint).
-
- * "git cat-file --textconv" started segfaulting recently, which
-   has been corrected.
-
- * The built-in pattern to detect the "function header" for HTML did
-   not match <H1>..<H6> elements without any attributes, which has
-   been fixed.
-
- * "git mailinfo" was loose in decoding quoted printable and produced
-   garbage when the two letters after the equal sign are not
-   hexadecimal.  This has been fixed.
-
- * The machinery to create xdelta used in pack files received the
-   sizes of the data in size_t, but lost the higher bits of them by
-   storing them in "unsigned int" during the computation, which is
-   fixed.
-
- * The delta format used in the packfile cannot reference data at
-   offset larger than what can be expressed in 4-byte, but the
-   generator for the data failed to make sure the offset does not
-   overflow.  This has been corrected.
-
- * The documentation for '-X<option>' for merges was misleadingly
-   written to suggest that "-s theirs" exists, which is not the case.
-
- * "git fast-export" with -M/-C option issued "copy" instruction on a
-   path that is simultaneously modified, which was incorrect.
-   (merge b3e8ca89cf jt/fast-export-copy-modify-fix later to maint).
-
- * Many codepaths have been updated to squelch -Wsign-compare
-   warnings.
-   (merge 071bcaab64 rj/no-sign-compare later to maint).
-
- * Memory leaks in various codepaths have been plugged.
-   (merge 4d01a7fa65 ma/leakplugs later to maint).
-
- * Recent versions of "git rev-parse --parseopt" did not parse the
-   option specification that does not have the optional flags (*=3D?!)
-   correctly, which has been corrected.
-   (merge a6304fa4c2 bc/rev-parse-parseopt-fix later to maint).
-
- * The checkpoint command "git fast-import" did not flush updates to
-   refs and marks unless at least one object was created since the
-   last checkpoint, which has been corrected, as these things can
-   happen without any new object getting created.
-   (merge 30e215a65c er/fast-import-dump-refs-on-checkpoint later to main=
-t).
-
- * Spell the name of our system as "Git" in the output from
-   request-pull script.
-
- * Fixes for a handful memory access issues identified by valgrind.
-
- * Backports a moral equivalent of 2015 fix to the poll() emulation
-   from the upstream gnulib to fix occasional breakages on HPE NonStop.
-
- * Users with "color.ui =3D always" in their configuration were broken
-   by a recent change that made plumbing commands to pay attention to
-   them as the patch created internally by "git add -p" were colored
-   (heh) and made unusable.  This has been fixed by reverting the
-   offending change.
-
- * In the "--format=3D..." option of the "git for-each-ref" command (and
-   its friends, i.e. the listing mode of "git branch/tag"), "%(atom:)"
-   (e.g. "%(refname:)", "%(body:)" used to error out.  Instead, treat
-   them as if the colon and an empty string that follows it were not
-   there.
-
- * An ancient bug that made Git misbehave with creation/renaming of
-   refs has been fixed.
-
- * "git fetch <there> <src>:<dst>" allows an object name on the <src>
-   side when the other side accepts such a request since Git v2.5, but
-   the documentation was left stale.
-   (merge 83558a412a jc/fetch-refspec-doc-update later to maint).
-
- * Update the documentation for "git filter-branch" so that the filter
-   options are listed in the same order as they are applied, as
-   described in an earlier part of the doc.
-   (merge 07c4984508 dg/filter-branch-filter-order-doc later to maint).
-
- * A possible oom error is now caught as a fatal error, instead of
-   continuing and dereferencing NULL.
-   (merge 55d7d15847 ao/path-use-xmalloc later to maint).
-
- * Other minor doc, test and build updates and code cleanups.
-   (merge f094b89a4d ma/parse-maybe-bool later to maint).
-   (merge 6cdf8a7929 ma/ts-cleanups later to maint).
-   (merge 7560f547e6 ma/up-to-date later to maint).
-   (merge 0db3dc75f3 rs/apply-epoch later to maint).
-   (merge 276d0e35c0 ma/split-symref-update-fix later to maint).
-   (merge f777623514 ks/branch-tweak-error-message-for-extra-args later t=
-o maint).
-   (merge 33f3c683ec ks/verify-filename-non-option-error-message-tweak la=
-ter to maint).
-   (merge 7cbbf9d6a2 ls/filter-process-delayed later to maint).
-   (merge 488aa65c8f wk/merge-options-gpg-sign-doc later to maint).
-   (merge e61cb19a27 jc/branch-force-doc-readability-fix later to maint).
-   (merge 32fceba3fd np/config-path-doc later to maint).
-   (merge e38c681fb7 sb/rev-parse-show-superproject-root later to maint).
-   (merge 4f851dc883 sg/rev-list-doc-reorder-fix later to maint).
+On Sun, Oct 29, 2017 at 8:36 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jacob Keller <jacob.keller@gmail.com> writes:
+>
+>> I am pretty confident we can fix it....
+>
+> I am sure we can eventually, but 3 hours is not enough soak time.
+>
+> I am inclined to leave the fix for 2.15.1/2.16.0 instead of delaying
+> the release by 10 more days.
+
+That's fair. I'm not even sure it was introduced since the last
+release (I tried 2.12, but not 2.13 or 2.14 manually). Thus, it likely
+wasn't noticed for at least a release, meaning it's less important (to
+me at least) that we provide a fix immediately, since it went
+unnoticed this long, likely that means few people will be impacted.
+
+As far as I can tell, you'd only be impacted if you attempt to run a
+git command from within a sub directory inside of an exec statement.
+Is there some place we can list it as a known bug in case someone else
+runs into it?
+
+Regards,
+Jake
