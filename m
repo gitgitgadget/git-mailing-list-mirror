@@ -2,78 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9730D1FBF4
-	for <e@80x24.org>; Mon, 30 Oct 2017 12:35:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7F2321FBF4
+	for <e@80x24.org>; Mon, 30 Oct 2017 12:38:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751550AbdJ3Mfe (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Oct 2017 08:35:34 -0400
-Received: from mout.gmx.net ([212.227.17.22]:65243 "EHLO mout.gmx.net"
+        id S1751983AbdJ3MiN (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Oct 2017 08:38:13 -0400
+Received: from mout.gmx.net ([212.227.15.19]:62200 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751437AbdJ3Mfd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Oct 2017 08:35:33 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MFi1J-1duaZY0LOH-00Eg3T; Mon, 30
- Oct 2017 13:35:21 +0100
-Date:   Mon, 30 Oct 2017 13:35:19 +0100 (CET)
+        id S1751975AbdJ3MiL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Oct 2017 08:38:11 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M6RmV-1dFVhN2qnz-00yT8v; Mon, 30
+ Oct 2017 13:37:34 +0100
+Date:   Mon, 30 Oct 2017 13:37:29 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 2/2] Documentation: convert SubmittingPatches to
- AsciiDoc
-In-Reply-To: <xmqqa8096yzu.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.21.1.1710301333420.6482@virtualbox>
-References: <20171029211308.272673-1-sandals@crustytoothpaste.net>        <20171029211308.272673-3-sandals@crustytoothpaste.net> <xmqqa8096yzu.fsf@gitster.mtv.corp.google.com>
+To:     Christian Couder <christian.couder@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>, Ben Peart <Ben.Peart@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Mike Hommey <mh@glandium.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Eric Wong <e@80x24.org>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH 0/6] Create Git/Packet.pm
+In-Reply-To: <CAP8UFD3qjmSrCJ1OE6x=sitbm7LqRB3aSm42aV4h=gAG853PhA@mail.gmail.com>
+Message-ID: <alpine.DEB.2.21.1.1710301336270.6482@virtualbox>
+References: <20171019123030.17338-1-chriscool@tuxfamily.org> <xmqqvaix8o6k.fsf@gitster.mtv.corp.google.com> <CAP8UFD3qjmSrCJ1OE6x=sitbm7LqRB3aSm42aV4h=gAG853PhA@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:DrEqLnmBzTp5qqUJlDXyM4vyBXXk12JckFjIpyJOKoYDAEsWsex
- CEJGgIhwOZFXtk+9J0Qx2sTc3h27dB/mzJMmHZFDzWGmnQ7mbjLquaOjIG1bNeCq/hpj23y
- a8Qj8htXEEtxzWgoIO27opQf0MQI5UJWxb40n/jaNxL63dtnZhNEhiqOB5l8ePPXHaqprR0
- KoTsI+fMp9XrTvsSySRoQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:LB8qalaWx5U=:aCP+MqlXcLACWZjdTWF/rW
- kN9NKePylp2FoPmG97CgxpooNu+gjZkz4VZc2Pa5p+fcfnINRH3aMTEm4/oPu0gTKT5w5bO0Q
- Qs/HHtRTPw2mI5tC1ZB0ww74ocrpq4gJeYykGFf5B0kuSnU6Ow1aKj4z1FgMB34iz/Nxal1QY
- X0qmqBWx/z/R79oqq74SoqrT98BhmhERHkgf5GHY6CgUO8oH8u5i/2pjsmvkM7so2Hv3nNNrB
- sy1fR1A9ok/WiMC/DiZLsKIiaQg2u1GWEo3CThnEurAhON0sxZ7GPHo20ZadajnjD4dnONqeb
- 5rpdfgS3U3sEoRuAG16u5XkFUKQq8pa33jAsyG95jKQKDBcZB8E8tizF62UYQPnD+gui4cYw8
- MTf8Gqf/D/wFWKqPj6xzlSF/D1/9LuigSJdcFvsUDi4KsZ9MGJOEafW4+Iz9c/JBrLdzNqZYN
- m1j9oqyL5MANP6MXJ6oPe4R2db7sVfiWP1yyrLCnkXbv9nFngKkGMlO1qNHsLcRALfndtkFPt
- ven2jh04aQD6Mz9XiBC7D0nFMvmEiqWtX5FySMFZIzP0nl9wwIsmUmoKJFY1zcIT09ZtyY5Jd
- 86atozJHfhovuWPqFqSQszsGuWjjgnzLhoecR7hxYqXavcus9AiRmktnhDA8PRDWxzIpDpwT3
- AixVe3WFn72cncU9ezQXNwwM1vrpypOCQsdVDM/MTUM77foCgPX7fXXlcxh3ia5sg9a5maF3A
- EsPCq6TE4ym/fo5WTWI1ttoICtEH+bXAfvdvL02qIisFht2sKczQnWMdJ6DE+4Ss98DLUMySW
- Rtly6xm/mKgvDGXCNmDGeeWbian84nzLwxyxc7Ndq57uh/dRJMKEuiSiiL46AxBotWUs8/X
+X-Provags-ID: V03:K0:7JC+8MNrLA43d8pp0lobGXhjHCfz22mhPmYJoc3VumombmAKmqQ
+ lpnQqNU0sqM31xAQ7m3/xFIRSRvdZcdXW2iYpIc0bJy6mjWs/SS3FdPJX4ZRr+KO0UIkNyY
+ AhgA13IRlLE6Sv1nt+EaXK9Y2wD9wMnq0WCAa7dtVrpfsB0y5Y3hEVeB3gg9TpeQfBlrJwt
+ m6vybcc4NP+Vv1dDq+UwA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:bnW+NYhGmiY=:5QTViTyqzN5vYsWCeKi5PR
+ Hj+KOdhr4l+GNffq+p5xyWBwA8wi4ko/udTnbe8v/FkwnlbVTP3gO+29S6+bfyjvruTUiYr8R
+ ihLRPodMHN+byz1dzejoNXSIeZnY0JZgt/E8p6sMdHFZ6+aT3yKKQ/nrqLiujiZC2pBbF+7gv
+ qHFqFIj5XNjtH7W6ghTqPTLF7lYR1vMFZAgtsiUL/mHKb65dLsUk92LvguCdts2Xi2F1BBq5F
+ wrUqNSohbcGSsWxYUvNHHhV1drESzaziNBPO+tc/uZMAFx1XRjknQtpIaXuGXLumlhqfVwCCL
+ NYwtm9gvrCasw6lmZJT2PXdD2Y5k/cH1Xo39po0J79gTepSIVIXtAQlhcBBsJJlb9RSuYY4PJ
+ u5TNw4FM6eG6Li8QlO9u6VEIAUEv+vX6JIyHaE/ZCymmOL2SgDNpyeBicR/PZQRYQ7LCNcSAZ
+ mjCcKzymfNPZ27eBsK2/BsERsv21wV25KabSrvAw/s2sUFiTJui9SsYdrkp3onbFikdXqkNOz
+ GToMhbju2zVzQaJyFWTKRZFZWDEZMf1v22aUtHap95l0che3sOQCQZx1y4SWWac3LB1nuLOvb
+ amioIYMmu0UGMq2+es8eAa2dQVOwB74qbGS6Ub3VghDqUgNTeus05hBdTebnJjTlsye1Atz/4
+ Oj9XRrbcglaBQBlacoGm+pcpvUm3Tl277W5L0YYWvPkpH0hDQ9xH4pr5wEuwPHYSZ71XD8EKf
+ C2bFfq75nKUNIVmLXGIzEJqv/gzAdA2Y+Gqdj4vQqe72vR4O0Uf4tBoqllt0Jd3rnmqRD+YPi
+ ukahNtj9pPFG9j86WOEHyoYXd4rMIJdIrcyyoTzMBzwZKJQXPAe0xT1MSVBAUIHoorjQao5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Christian & Junio,
 
-On Mon, 30 Oct 2017, Junio C Hamano wrote:
+On Mon, 30 Oct 2017, Christian Couder wrote:
 
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+> On Mon, Oct 30, 2017 at 1:38 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> > I've queued this from Dscho; please take it into consideration when
+> > you reroll.
 > 
-> Thanks.  I personally prefer the plain-text original, but I do
-> understand the need to have a version with ids that you can tell
-> others to visit in their browsers.  Assuming that this goes in the
-> right direction, here are a few comments.
+> Yeah, I was planning to add something like that, though in Dscho's
+> first email the patch was adding:
+> 
+> +modules += Git/Packet
+> 
+> and now it's adding:
+> 
+> > +modules += Git/SVN/Packet
 
-If you want to go into the direction of the web, AsciiDoc is actually the
-wrong choice IMO, and Markdown would be the right choice. Basically
-everybody on the web is either supporting Markdown or being asked by users
-to do so.
+Bah. I should have paid more attention. The original Git/Packet is
+correct, of course. My fixup! commit is bogus.
 
-Assuming that *that* is something we want to pursue, I would also suggest
-to move the man pages away from AsciiDoc to Markdown (using e.g.
-[ronn](https://rtomayko.github.io/ronn/ronn.1.html)).
-
-Ciao,
+Sorry for the confusion,
 Dscho
