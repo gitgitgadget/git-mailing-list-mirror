@@ -2,110 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C600420562
-	for <e@80x24.org>; Mon, 30 Oct 2017 18:06:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D20A520562
+	for <e@80x24.org>; Mon, 30 Oct 2017 18:09:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932301AbdJ3SGW (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Oct 2017 14:06:22 -0400
-Received: from mail-io0-f194.google.com ([209.85.223.194]:47350 "EHLO
-        mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752702AbdJ3SGV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Oct 2017 14:06:21 -0400
-Received: by mail-io0-f194.google.com with SMTP id h70so29187093ioi.4
-        for <git@vger.kernel.org>; Mon, 30 Oct 2017 11:06:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=oy6KHxTP1OP8VWhch6vA610jASkGj3CAZ9g603sAJmY=;
-        b=m9a4cJJQE+o8uT9PcHEsc5Ql1EMCGThvwGAXQMLFKMhpP477vOjkx3s51XTjleYZ32
-         tJIDMKw/eIc5zx/wj0gj0jf+5nRvXC25K6lkSNNUlFWg3bbYXoDJZD/DcCH/31fSTigy
-         IkkT0CThDkkUNYRmsTqVli0QMJzNLPLqE1QL5Vs5lBgOAeERFmIY7UH7lNJEorSOK98L
-         2xTzPYCQf3GkXiZqQj108QSiZa512Nh5nEo0ScVXAD+noOH/p3cmkTJOwxNhvsigh7ao
-         31F120cMpXjqOcqr8YyFMKU4bJJ8e2Ng0ck6+V6PQAowzPADaDpIhlN+Km1CViW0N954
-         SStA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=oy6KHxTP1OP8VWhch6vA610jASkGj3CAZ9g603sAJmY=;
-        b=nlWJQnVvof6A/al5A4XOc3IfkKqPUb3YG1PNiuYQjzgIjkhb7ZXjKdlj4mj1qzcjsC
-         weNTV9EkjFGNbg8j9KrCJtBRFWWxJX4fWue3nS8mX5hax2O6MUH5pkQ+pn5YLyKUs/BA
-         xlhs9ay8BJJZK7VGtC9LLGrD85vxyXkK5Ne+2H7tdfh8EAO5dK9LyJ6byw8AoCPB3tqw
-         w9YDXd+tIsEJtk799+cdnzgjoqvl1Jhy9DW2rj34uJpEF7Ru1HmrrxJmQ0ojIYMF2D8m
-         yDwaSjQi7qarYoWHVb0vcV3hPvcuJnsd9uuoHAZlxNSxLgPAxn5NYUsDQinjI8VS9sPW
-         dLvA==
-X-Gm-Message-State: AMCzsaUPWHqT+eAT+ozQ2B8wauJwQmeIe3gDRfQy5z8gUHqfl+vOrf06
-        rPKIoEQjTwxPrGT1h+EwlA/B46hhdXY=
-X-Google-Smtp-Source: ABhQp+RYpDIBD1KjvQLnlojdUXyfA7txeUChanolsJ+vEY0df5pUsPwozxdo6tN2H5vtAjvxYiCvTQ==
-X-Received: by 10.107.12.216 with SMTP id 85mr12125688iom.80.1509386780432;
-        Mon, 30 Oct 2017 11:06:20 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:9c29:988d:323f:ada0])
-        by smtp.gmail.com with ESMTPSA id w186sm2102782itd.12.2017.10.30.11.06.19
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 30 Oct 2017 11:06:19 -0700 (PDT)
-Date:   Mon, 30 Oct 2017 11:06:18 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/3] reset: use DIFF_OPT_SET macro to set a diff flag
-Message-ID: <20171030180618.GB125460@google.com>
-References: <20171027222853.180981-1-bmwill@google.com>
- <20171027222853.180981-3-bmwill@google.com>
- <xmqq1slmbv73.fsf@gitster.mtv.corp.google.com>
+        id S932738AbdJ3SJB (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Oct 2017 14:09:01 -0400
+Received: from cloud.peff.net ([104.130.231.41]:40404 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S932538AbdJ3SJA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Oct 2017 14:09:00 -0400
+Received: (qmail 10101 invoked by uid 109); 30 Oct 2017 18:09:00 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 30 Oct 2017 18:09:00 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 25603 invoked by uid 111); 30 Oct 2017 18:09:08 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Mon, 30 Oct 2017 14:09:08 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 30 Oct 2017 11:08:58 -0700
+Date:   Mon, 30 Oct 2017 11:08:58 -0700
+From:   Jeff King <peff@peff.net>
+To:     Philip Oakley <philipoakley@iee.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        git@vger.kernel.org, Ben Peart <Ben.Peart@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Mike Hommey <mh@glandium.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Eric Wong <e@80x24.org>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH 0/6] Create Git/Packet.pm
+Message-ID: <20171030180858.e6kp5uwac3kkoaae@sigill.intra.peff.net>
+References: <20171019123030.17338-1-chriscool@tuxfamily.org>
+ <xmqq8tg4djkm.fsf@gitster.mtv.corp.google.com>
+ <8F505EA8D16F4A0F890AE9DEEB91434B@PhilipOakley>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqq1slmbv73.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <8F505EA8D16F4A0F890AE9DEEB91434B@PhilipOakley>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/29, Junio C Hamano wrote:
-> Brandon Williams <bmwill@google.com> writes:
-> 
-> > Instead of explicitly setting the 'DIFF_OPT_OVERRIDE_SUBMODULE_CONFIG'
-> > flag, use the 'DIFF_OPT_SET' macro.
-> >
-> > Signed-off-by: Brandon Williams <bmwill@google.com>
-> > ---
-> 
-> Looks good.  It's not like one of 1/3 and 2/3 could be a good idea
-> while the other is not, so it would make a lot more sense to combine
-> them into a single preliminary clean-up patch, though.  
-> 
+On Mon, Oct 23, 2017 at 01:26:41PM +0100, Philip Oakley wrote:
 
-I'll squash them together in v2.
+> > Totally offtopic, but is it only me who finds these "section
+> > headers" in cover letters from some people irritating and/or
+> > jarring?
+> 
+> Personally I find that, for significant patch series, that clearly breaking
+> out these distinct sections is of advantage. At this stage (the very first
+> patch 0/n) there is no specific conversation, so the subject line is a short
+> 'hello' to the topic, and then the contributor is (it is to be hoped)
+> setting out their proposal in a clear manner.
+> 
+> So I do like these headings for larger series, though there is some
+> judgement to be made as to when the subject line alone is sufficient.
 
-> In any case, these two are very good clean-up patches, whose value
-> does not diminish even we do not go ahead with 3/3 yet.  
-> 
-> Nicely spotted; thanks.
-> 
-> 
-> >  builtin/reset.c | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/builtin/reset.c b/builtin/reset.c
-> > index 9cd89b230..ea2fad5a0 100644
-> > --- a/builtin/reset.c
-> > +++ b/builtin/reset.c
-> > @@ -166,7 +166,7 @@ static int read_from_tree(const struct pathspec *pathspec,
-> >  	opt.output_format = DIFF_FORMAT_CALLBACK;
-> >  	opt.format_callback = update_index_from_diff;
-> >  	opt.format_callback_data = &intent_to_add;
-> > -	opt.flags |= DIFF_OPT_OVERRIDE_SUBMODULE_CONFIG;
-> > +	DIFF_OPT_SET(&opt, OVERRIDE_SUBMODULE_CONFIG);
-> >  
-> >  	if (do_diff_cache(tree_oid, &opt))
-> >  		return 1;
+I can live with fancily-formatted cover letters. BUT. I would say if
+your cover letter is getting quite long, you might consider whether some
+of its content ought to be going elsewhere (either into commit messages
+themselves, or into a design document or other place inside the repo).
 
--- 
-Brandon Williams
+> As a separate follow on, one thing that does annoy me is that in subsequent
+> versions of the various patch series, folk tend to drop all explanation of
+> why the series is of any relevance, leaving just the 'changed since last
+> time' part. This means that new readers who try and pick up / review /
+> contribute to a series later on in its development are not told the purpose.
+> When the list is active it can, accidentally, do a disservice to the
+> potential contributors who may feel that only core contributors are able to
+> contribute.
+
+I actually have the opposite opinion. I find it annoying to have to wade
+through the same unchanged content for each round just to find the
+little snippet of "here's what's changed".
+
+I don't mind following a link to the previous iteration to read the
+back-story if I wasn't involved (it's a good idea to do that anyway to
+see what previous reviews have already discussed).
+
+I do often just post my "v2" as a follow-up and assume people can find
+the original by following the thread backwards. But I imagine that not
+everybody can do so. It's probably a good practice to at least put a
+link to the prior version (and also to v1 for the original motivation)
+if you're not going to repeat the cover letter in full.
+
+-Peff
