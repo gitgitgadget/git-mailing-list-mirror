@@ -2,109 +2,149 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AD2B1202A0
-	for <e@80x24.org>; Tue, 31 Oct 2017 07:20:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1ED33202A0
+	for <e@80x24.org>; Tue, 31 Oct 2017 08:13:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753024AbdJaHUK (ORCPT <rfc822;e@80x24.org>);
-        Tue, 31 Oct 2017 03:20:10 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51786 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752992AbdJaHUI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Oct 2017 03:20:08 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 74400AA19A;
-        Tue, 31 Oct 2017 03:20:07 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=DjHe4ZtaH+Yi4F+XtaxYlpwQz6c=; b=gIA539
-        C4BfVnwqqaLn9gFNnuoR9awm225oSp2w0K+KPnZyCYyUOusyOFM2h5YkAGCZVY/E
-        aYpBv8ycul/Hhe4fOo+bHu+durGAnuYejcy92ZTuWupnbHpvgMpT6N4vmpASGH7V
-        vb8ZWfwa2l/q56HXZ++BmlwUNxkxuL0qUNte8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=IjvGVHTCV+txZs54h0SnIjeubI8vF00x
-        U2LpgMv9TNJixm/mJI9HFH4TnNBHAL4B7A5cjTB/hFFgvGggLuy4vF+ifq+UDevV
-        o5uFyLTuxwlTz0q2j6Eg3F9GzbH0L+sIHV/GxtkSLpowrHT1wNm8Mgaf/uC/SLan
-        0r9ANnerfo8=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6BC0CAA199;
-        Tue, 31 Oct 2017 03:20:07 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D4D46AA198;
-        Tue, 31 Oct 2017 03:20:06 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Andrey Okoshkin <a.okoshkin@samsung.com>
-Cc:     Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>,
-        vmiklos@frugalware.org
-Subject: Re: [PATCH v4] merge-recursive: check GIT_MERGE_VERBOSITY only once
-References: <CGME20171024152727epcas2p4fb7dcf147e44aadf7733098151d469a5@epcas2p4.samsung.com>
-        <3aed764b-388c-d163-08fc-32b294c6b9d3@samsung.com>
-        <CAGZ79kaSZG9WriqX0SLbTnEDRr-4YdFRuK17+9wnxyrftfnMmg@mail.gmail.com>
-        <CAPig+cRTL2amjsgdp1=T3GMZLa=favugOfnQw9XjWzC+U=v5Sw@mail.gmail.com>
-        <CAN0heSp7b_6n3y=s4++oWhkPUuM=s9L7LWVx5vn8o=5aH6DKKw@mail.gmail.com>
-        <20171024195221.gqgtibwjaztgeel6@sigill.intra.peff.net>
-        <xmqq8tg0j8vb.fsf@gitster.mtv.corp.google.com>
-        <CAPig+cSjQd=p1CdizU5oUaz91z=j02UnWLtTguWzvkjS+v6ETA@mail.gmail.com>
-        <20171025072717.7svdq4kqlfxlwszi@sigill.intra.peff.net>
-        <38a80069-abdb-0646-a20c-eca39dd4f519@samsung.com>
-        <CAPig+cRq1AEOgDoXeH-hDMvhEMnfiNK5CuSBbbio-mbHros=QQ@mail.gmail.com>
-        <bd7eb593-75f9-0dd1-9dff-9dc420532217@samsung.com>
-        <CAGZ79kZ9EV=qaYyuA3kfuQ04EhLWax52MhtkmGJto2Lommc_SQ@mail.gmail.com>
-        <2b507ce0-0d18-d9d6-11ba-6fb0d4f4a473@samsung.com>
-        <xmqqd1543xfc.fsf@gitster.mtv.corp.google.com>
-        <xmqq37603vek.fsf@gitster.mtv.corp.google.com>
-        <ecb12f21-f26f-6905-1fdc-60d7c282cfe3@samsung.com>
-Date:   Tue, 31 Oct 2017 16:20:05 +0900
-In-Reply-To: <ecb12f21-f26f-6905-1fdc-60d7c282cfe3@samsung.com> (Andrey
-        Okoshkin's message of "Tue, 31 Oct 2017 10:13:00 +0300")
-Message-ID: <xmqqwp3byeai.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1752166AbdJaIN0 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 31 Oct 2017 04:13:26 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:54927 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751905AbdJaINY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Oct 2017 04:13:24 -0400
+Received: by mail-pf0-f196.google.com with SMTP id n89so13159467pfk.11
+        for <git@vger.kernel.org>; Tue, 31 Oct 2017 01:13:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:user-agent:in-reply-to:references:mime-version
+         :content-transfer-encoding:subject:to:cc:from:message-id;
+        bh=mgsBfk42wFAQRCIaIsa2PNegFHKT5A/46voMTdZYbG8=;
+        b=RJACRIHShd/ikD2H8Fn7VSzhYPjWGgdDyFRylgMJoK2fTbzHE4Uiz0llBZieVeZlL2
+         9j6fRkWz9DUPcVmB33UsvS9VUR7KthwsuH8U2e6ys6rv3NvJAYD8cw/CJdWAauM9PNUn
+         Dp6/u0QHQzVp6Nl9xjC1pI+y1vE6Nyc0frh+LXajR5eRxvvhqYwRO4TOkZmeNFLLBt1u
+         waRPR3YxBbz4Vtip7LbhMO1pjgWlo4YCj7sYVz6PfPNikaLJJynQl93Sk39ZwVgIMSsE
+         /5VkYG2KMvet6u8YN0xIjod5fA6TgRhRKb4m+e493TxgwPKsjqgMAXmeVoav21GnGhn/
+         IApg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:user-agent:in-reply-to:references
+         :mime-version:content-transfer-encoding:subject:to:cc:from
+         :message-id;
+        bh=mgsBfk42wFAQRCIaIsa2PNegFHKT5A/46voMTdZYbG8=;
+        b=AQVaKX1Wzf6O47Tq58TJUY03tIxKIgtvwlP2cTcs6iKTCUlS1Hx0R1f2h7zk/tdWjF
+         BXzLyTmOZWSGxqdWsO3TXUbRf4pwBhSTKb6YEIMzAxhUv/4LtwDbjZrVwTsHBucIiFyY
+         V7oaYUwOw7Vl5D4oa4JcIg/u3GVc6EGsFDlu8nBjyypUXzrGZCCd7F3QknBNFBZI6fIT
+         svEphkU957pLPI91kqydaluCd+QERIvb6Hd+KYeBiIl7+98Res5TZMM7kIPhOavjCu/9
+         tlfpX2ZkuELfPviLB9a93Th2WwR6YlC5sCp26jY20ndN8Hjdg/Mfl7edvQ8Joko1Qe59
+         jo5Q==
+X-Gm-Message-State: AMCzsaUj7YgoulWtdzRlO+cgNAbl7gMaoeVEcfExRPXWFZv96sUgTlvE
+        ZjwBUYusSdHgOdG4ojUCHKs=
+X-Google-Smtp-Source: ABhQp+SnNACUj6ceJkaWOjLwa0x1QYySEi30EKFhd9/x4PChv+9OvR9W9hy+JEATDJdYdRJve9b0WA==
+X-Received: by 10.84.245.145 with SMTP id j17mr1116368pll.163.1509437603244;
+        Tue, 31 Oct 2017 01:13:23 -0700 (PDT)
+Received: from [192.168.1.126] (50-39-169-152.bvtn.or.frontiernet.net. [50.39.169.152])
+        by smtp.gmail.com with ESMTPSA id j1sm1882467pfj.108.2017.10.31.01.13.21
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 31 Oct 2017 01:13:21 -0700 (PDT)
+Date:   Tue, 31 Oct 2017 01:13:18 -0700
+User-Agent: K-9 Mail for Android
+In-Reply-To: <alpine.DEB.2.21.1.1710301343000.6482@virtualbox>
+References: <20171028000152.2760-1-jacob.e.keller@intel.com> <alpine.DEB.2.21.1.1710281740070.6482@virtualbox> <4150d979-f653-e79b-563a-1dc43f12468d@talktalk.net> <xmqq1sll8j6f.fsf@gitster.mtv.corp.google.com> <CA+P7+xrXLcTQpPWgzLwt_yZo=QdfetF36jrc_TtXfqMKR2Hh3w@mail.gmail.com> <xmqqo9op71d8.fsf@gitster.mtv.corp.google.com> <CA+P7+xo5UgUPQCYU-LaXn+HZZ1qe++KOevTMh2C1sgnzK0SAQA@mail.gmail.com> <7026e5be-bbf0-9d55-8901-f920a775879b@talktalk.net> <alpine.DEB.2.21.1.1710301343000.6482@virtualbox>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: EBE2367A-BE0B-11E7-8BE1-8EF31968708C-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH] rebase: exec leaks GIT_DIR to environment
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        phillip.wood@dunelm.org.uk
+CC:     Junio C Hamano <gitster@pobox.com>,
+        Jacob Keller <jacob.e.keller@intel.com>,
+        Git mailing list <git@vger.kernel.org>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Message-ID: <A0F486F0-DDA3-4E99-9C0F-371387093C51@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Andrey Okoshkin <a.okoshkin@samsung.com> writes:
 
-> I think, the main benefits are:
-> * Code is more readable, no duplicated calls with the same constant string
-> argument.
-> * Code is potentially safer, the second getenv() call may return another
-> pointer value which could be NULL (and yes, this is an arguable point as it
-> can be done only artificially).
+
+On October 30, 2017 5:46:36 AM PDT, Johannes Schindelin <Johannes=2ESchind=
+elin@gmx=2Ede> wrote:
+>Hi Phillip,
 >
->> For the sake of fairness, I would say that the resulting code may be
->> easier to follow and has one less instance of a constant string that
->> the compiler cannot statically check if we made a typo.  That's the
->> only benefit in this patch as far as I can see.
->> 
->> The original makes a call to see if the result is NULL, and then
->> makes the same call, expecting that we get the same result (not just
->> that it is not NULL, but it is the same verbosity request the end
->> user made via the environment as the one we checked earlier), and I
->> can understand that it feels a bit redundant and ugly.
+>On Mon, 30 Oct 2017, Phillip Wood wrote:
 >
-> Yes, you absolutely right.
+>> On 30/10/17 06:26, Jacob Keller wrote:
+>> > On Sun, Oct 29, 2017 at 8:36 PM, Junio C Hamano <gitster@pobox=2Ecom>
+>wrote:
+>> >> Jacob Keller <jacob=2Ekeller@gmail=2Ecom> writes:
+>> >>
+>> >>> I am pretty confident we can fix it=2E=2E=2E=2E
+>> >>
+>> >> I am sure we can eventually, but 3 hours is not enough soak time=2E
+>> >>
+>> >> I am inclined to leave the fix for 2=2E15=2E1/2=2E16=2E0 instead of
+>delaying
+>> >> the release by 10 more days=2E
+>> >=20
+>> > That's fair=2E I'm not even sure it was introduced since the last
+>> > release (I tried 2=2E12, but not 2=2E13 or 2=2E14 manually)=2E Thus, =
+it
+>likely
+>> > wasn't noticed for at least a release, meaning it's less important
+>(to
+>> > me at least) that we provide a fix immediately, since it went
+>> > unnoticed this long, likely that means few people will be impacted=2E
+>>=20
+>> It is in 2=2E14=2E3, I haven't bisected but I suspect it was introduced
+>by
+>> 311af5266b sequencer (rebase -i): implement the 'exec' command
+>>=20
+>> Running
+>> git rebase -x'perl -e '\''$,=3D$\=3D"\n"; print  grep { /^GIT_/ } sort
+>keys
+>> %ENV'\' @
+>> Shows that the rebase--helper version also sets GIT_PREFIX as well as
+>> GIT_DIR, I suspect the difference is coming from differences in the
+>> setup for builtin commands vs external commands=2E The shell version
+>and
+>> the rebase--helper version set GIT_CHERRY_PICK_HELP, GIT_EDITOR,
+>> GIT_INTERNAL_GETTEXT_SH_SCHEME, GIT_REFLOG_ACTION
+>
+>Indeed, when you look at git_dir_init in git-sh-setup, you will see
+>that
+>Unix shell scripts explicitly get their GIT_DIR turned into an absolute
+>path=2E
+>
+>So my suggested patch is wrong, and it should be more along the lines
+>of
+>
+>	struct strbuf buf =3D STRBUF_INIT;
+>	const char *child_env[] =3D { NULL, NULL };
+>
+>	strbuf_addf(&buf, "GIT_DIR=3D%s", absolute_path(get_git_dir()));
+>	child_env[0] =3D buf=2Ebuf;
+>
+>	=2E=2E=2E
+>
+>	strbuf_release(&buf);
+>
+>Jake, can I still take you up on taking it from here?
+>
+>Ciao,
+>Dscho
 
-I am absolutely right when I say your "code is potentially safer" is
-total BS.  The result from first getenv() call may be pointing at an
-invalid piece of memory by the time it is used, if you are in a
-situation in which not having the second getenv() matters
-(i.e. somebody else is also mucking with getenv() at the same time).
+Yes, I will clean this up and submit something tomorrow once I get to a co=
+mputer=2E I didn't end up having time to work on Git today=2E
 
-So please update the log message so that the patch is not sold on
-that basis.
+Thanks,
+Jake
 
-Thanks.
+--=20
+Sent from my Android device with K-9 Mail=2E Please excuse my brevity=2E
