@@ -2,118 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 587AB20437
-	for <e@80x24.org>; Tue, 31 Oct 2017 17:55:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5865920437
+	for <e@80x24.org>; Tue, 31 Oct 2017 17:56:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932342AbdJaRz0 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 31 Oct 2017 13:55:26 -0400
-Received: from mail-io0-f195.google.com ([209.85.223.195]:43548 "EHLO
-        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751295AbdJaRzZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Oct 2017 13:55:25 -0400
-Received: by mail-io0-f195.google.com with SMTP id 134so649004ioo.0
-        for <git@vger.kernel.org>; Tue, 31 Oct 2017 10:55:25 -0700 (PDT)
+        id S932374AbdJaR4Z (ORCPT <rfc822;e@80x24.org>);
+        Tue, 31 Oct 2017 13:56:25 -0400
+Received: from mail-qt0-f177.google.com ([209.85.216.177]:51633 "EHLO
+        mail-qt0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932356AbdJaR4Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Oct 2017 13:56:24 -0400
+Received: by mail-qt0-f177.google.com with SMTP id h4so21815922qtk.8
+        for <git@vger.kernel.org>; Tue, 31 Oct 2017 10:56:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=+iRUtLdutFks1K4XgSgNhB1DduvQOOzoQMNsDiCMNLY=;
-        b=pFR7ocYcU33wH2zL8Yr2Khdu9NAGWnESPdRXb1D9hU7gjxnYjeNvSbLBWswL1/80lr
-         ZyaAAU68IxlQhsQl3Jm4k43K/b/aH0+Lg+tsZrGjZ3FXmyNGeUDTrmB13KOQ0yqmXfxu
-         51tITZZ6BXMcqRzrzX0bzejO3+nQ0tYj6i2/wpX7lI72Hk3eW48JrTE4kso/T8H6q5d+
-         nDgi5sFdbPEYO3rz9XR3PGk2MdQw7/Ozk3+mnXOJd7SXT7rgoj0af67psGJqU74QYxrH
-         bW4VYysrqFy6ex5qMHRtQR7JSSblr37y9If0wTU/EJL0w0OgamUtSs/2zsklEhDY2UBq
-         3Stw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=1ufyGWGt9SjkcSlqhMuck5zRqVvUa2cC2VzIZzkL2k8=;
+        b=CWZjTcY5vKDsHr8ZUvWl34y1oJz2i3yWcAIQnD4juJv45S5M76fSCAiLuKA6Nb9DyO
+         qfXBfWkCZbcmH88ucnC1YT0AJ7WcQaTzRK3hLTdI2z2J+64HwhUxEMFjXXN/X3M5ch2K
+         ImbPUc17goPY4n8PgWfcuZvpH5DS2AT7d+l4kjP0fJAcmUBbIGM961C9Tv0yPbGMkSkd
+         WnnmgPVL5MpW6QgduVLinfPFnSiRam/etgpG8iqAGSCu14IFv/Zn+EdpokBngTQFf+Q6
+         9IiieGSuJXwd1FyeLAo1BGT9I6McX/SJF3LkWBaiaqfwyMUEvqbESnXJ26QarIBtORoi
+         dQIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=+iRUtLdutFks1K4XgSgNhB1DduvQOOzoQMNsDiCMNLY=;
-        b=eEBcCZq7iOZ62w8p2rV/g0+cPG4EwfpZIxjRBJdrEG1Oi153plcYfUc6taaHwp4jfl
-         9vPKSwN7uPsOc5ViAOyD1o7BaNS5y//8lBAINlyIIiPWVdhdqoKDIF2NWfYXCM7KYfrS
-         PBUduLhrWjxqKQ/Nrf4HjuIcn6pUsf1GVUaBJ3Omr203P0++1arwjQN65COVfGrJucc0
-         DbWpSbPSNQuoeH9HgYyWYTM8gqMVj3IuKVZiOcp+urxJPuSUTvu7tC2iBEfJxjBzYaaC
-         /9ctSLE4FwOlFH4l6DaxW1AlKGEa0YwKgYPnSJfLaZ4QPkbDQDCvH0Kli0YBfHyTZ0Db
-         xQYg==
-X-Gm-Message-State: AMCzsaXA0zhiFlff7qVm3r1IjWrUZWH54Jm5GqNAWBdIJZfV938uZaaa
-        BuExua83HkvukWszACZb7rXN2Q==
-X-Google-Smtp-Source: ABhQp+QZNZZlSHwvlkWqrN2d1IImbcdjNSv15vahjdUAGWxltBX6akaa1J3mgT+lJ7RMbckMl+fDhQ==
-X-Received: by 10.36.172.82 with SMTP id m18mr4252044iti.39.1509472524614;
-        Tue, 31 Oct 2017 10:55:24 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:65da:c046:b1c4:7dde])
-        by smtp.gmail.com with ESMTPSA id w195sm1105519ita.44.2017.10.31.10.55.23
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 31 Oct 2017 10:55:23 -0700 (PDT)
-Date:   Tue, 31 Oct 2017 10:55:22 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, sbeller@google.com
-Subject: Re: [PATCH 3.5/4] diff: set TEXTCONV_VIA_CMDLINE only when it is set
- to true
-Message-ID: <20171031175522.GC94048@google.com>
-References: <20171027222853.180981-1-bmwill@google.com>
- <20171030194646.27473-1-bmwill@google.com>
- <20171030194646.27473-4-bmwill@google.com>
- <xmqqvaiv28n2.fsf_-_@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=1ufyGWGt9SjkcSlqhMuck5zRqVvUa2cC2VzIZzkL2k8=;
+        b=Wbd8YncNvoYtD+mO6/gPxAoRzu3cZVy/8zZ14jfxDiZOuvcRueo+VTxfx+QVq1fyVI
+         +rXxslVy3slRiFDX3IP8Zcd0zmcUTbho40HquNlsvyOrSvvNt3t13BGo6+3oa5cGlb5S
+         K3qfWKHSFaCA4TAzkZit3FiVDPMA9xlDACdmUxV8xK0VUpZeEOoEgK8+M7Q9OHtsE5e7
+         4i9NneNpCpBOtSMOzdLi3vncfswGgo3E/cc2WlLlZBSbTsv/87AWkUf2Ml5XW6RCOA2w
+         2mJMJkl/AsALCNDc0GcRfOZpNLGtxlQhsqginiwmzG5H2l1q+B3AeHmMUKRXDltwWlO3
+         ezoQ==
+X-Gm-Message-State: AMCzsaWj+cWFZFGCtKWVqsjNsIb8aIc/gBLNK63krerjGJjwZucmR+71
+        oNciz2Idit2FkFkwI6N3Tozd2S7NvNTuiXAYIjZwElaHuIM=
+X-Google-Smtp-Source: ABhQp+RkQw27qZfAW4vDrpiTOaXoZmVoLH5LRnzecWRWu+EXrctw6qNM+ZmsjTE04cZDIHuE/zCLndzLc3+xo57CbJY=
+X-Received: by 10.200.8.53 with SMTP id u50mr4377184qth.260.1509472583428;
+ Tue, 31 Oct 2017 10:56:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqvaiv28n2.fsf_-_@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Received: by 10.140.102.70 with HTTP; Tue, 31 Oct 2017 10:56:22 -0700 (PDT)
+In-Reply-To: <5829116.cWPNik6EL4@yoga>
+References: <5829116.cWPNik6EL4@yoga>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 31 Oct 2017 10:56:22 -0700
+Message-ID: <CAGZ79kacD1Gw0tyPWv+1_PtFW-wM8SAjFTg_i2bk7ogPBvYn7Q@mail.gmail.com>
+Subject: Re: Bug/Wish: bash completion for git pull --rebase doesn't include --autostash
+To:     Albert Astals Cid <albert.astals.cid@kdab.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/31, Junio C Hamano wrote:
-> Change the meaning of the bit to "the user explicitly set the
-> allow-textconv bit to true from the command line".
-> 
-> The "touched" mechanism in the old code meant to express "the user
-> explicitly set the allow-textconv bit to something from the command
-> line" and recorded that fact upon "--no-textconv", too, by setting
-> the corresponding touched bit.  The code in the previous step to
-> clear the bit did not make much sense.
-> 
-> Again, this may want be squashed into the previous step, but its log
-> message needs to be adjusted somewhat (e.g. "s/is requested via/is
-> set to true via/").
+On Tue, Oct 31, 2017 at 8:21 AM, Albert Astals Cid
+<albert.astals.cid@kdab.com> wrote:
+> git pull --rebase --autostash
+>
+> is a valid command but the --autostash autocompletion is not suggested af=
+ter
+> typing
+>
+> git pul<TAB> --reb<TAB --au<TAB
+>
+> Would be great if that could be added.
+>
+> Thanks :)
+>
+> Albert
+>
+> P.S: I'm not subscribed CC me if need me to test something
 
-I don't have any opinions on this, but I agree that if we want a more
-true conversion then we would wanted to squash this in, which I'll do
-and update the log message.
+Maybe you can propose a patch for this?
 
-> 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  diff.c | 5 ++---
->  1 file changed, 2 insertions(+), 3 deletions(-)
-> 
-> diff --git a/diff.c b/diff.c
-> index 8b700b1bd2..11fccbd107 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -4765,10 +4765,9 @@ int diff_opt_parse(struct diff_options *options,
->  	else if (!strcmp(arg, "--textconv")) {
->  		DIFF_OPT_SET(options, ALLOW_TEXTCONV);
->  		DIFF_OPT_SET(options, TEXTCONV_SET_VIA_CMDLINE);
-> -	} else if (!strcmp(arg, "--no-textconv")) {
-> +	} else if (!strcmp(arg, "--no-textconv"))
->  		DIFF_OPT_CLR(options, ALLOW_TEXTCONV);
-> -		DIFF_OPT_CLR(options, TEXTCONV_SET_VIA_CMDLINE);
-> -	} else if (!strcmp(arg, "--ignore-submodules")) {
-> +	else if (!strcmp(arg, "--ignore-submodules")) {
->  		DIFF_OPT_SET(options, OVERRIDE_SUBMODULE_CONFIG);
->  		handle_ignore_submodules_arg(options, "all");
->  	} else if (skip_prefix(arg, "--ignore-submodules=", &arg)) {
-> -- 
-> 2.15.0-224-g5109123e6a
-> 
+Rough steps to success:
 
--- 
-Brandon Williams
+  git clone git://git.kernel.org/pub/scm/git/git.git/
+  cd git
+  $EDIT contrib/completion/git-completion.bash
+   (look for _git_pull)
+  git commit -m "my first commit to git"
+  (This is paraphrased, see Documentation/SubmittingPatches
+   for a better idea how to craft commit messages)
+  git format-patch HEAD^
+  git send-email 0001-xxx.patch
+
+
+
+>
+> --
+> Albert Astals Cid | albert.astals.cid@kdab.com | Software Engineer
+> Klar=C3=A4lvdalens Datakonsult AB, a KDAB Group company
+> Tel: Sweden (HQ) +46-563-540090, USA +1-866-777-KDAB(5322)
+> KDAB - The Qt, C++ and OpenGL Experts
