@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 521661FAED
-	for <e@80x24.org>; Tue, 31 Oct 2017 00:34:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 816861FAED
+	for <e@80x24.org>; Tue, 31 Oct 2017 00:34:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753767AbdJaAeT (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Oct 2017 20:34:19 -0400
-Received: from mail-io0-f194.google.com ([209.85.223.194]:49106 "EHLO
-        mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752674AbdJaAeL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Oct 2017 20:34:11 -0400
-Received: by mail-io0-f194.google.com with SMTP id j17so31310534iod.5
-        for <git@vger.kernel.org>; Mon, 30 Oct 2017 17:34:11 -0700 (PDT)
+        id S1753776AbdJaAe3 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Oct 2017 20:34:29 -0400
+Received: from mail-io0-f195.google.com ([209.85.223.195]:50878 "EHLO
+        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753722AbdJaAeF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Oct 2017 20:34:05 -0400
+Received: by mail-io0-f195.google.com with SMTP id 97so31320916iok.7
+        for <git@vger.kernel.org>; Mon, 30 Oct 2017 17:34:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=e2Evyai3KlGaeTLcZ3uGPCXJdzkhiXh455QgONsR78g=;
-        b=rAzHWyy/Upq0ffwZLQEJeJM0a1+I1l+FubFvQj+VoWE/4LbC3ye8yWuuDhqOX9R/ko
-         G1iZ1n25KMLV1d3wx42FZPH1rR/m0P+F66WKI5ig7pPKIa461egmsWtCvGG1dl/u6+zy
-         eQag6ybt3ZhLz0A+lV6UgBuE0qIGr4yDvD3KcB5EEHSzHCxv1nBHYF7bcV0SwN3dZtg9
-         2asqT/VLcLWp/4CtzL2AeFGiqovJsEoiYeJME+bDnTUZubU5HRDKvAtcoAqo7I6AgSK1
-         /s1vTFIvLU7hikW8jRGjlu9mMFgA1SM0DglzcSs15mWyHRNxLoe2AJM2EskHPATQpu3v
-         e1RQ==
+        bh=e0RIBeRodSl7SThuNXST8StLsMyieXD+YpYSVDHXtNA=;
+        b=ZqK0/kd+QklQ1gT+cb0FVFXeFBgsCfUYOykLly2uVP3v+x/rXdNJI3jKpS8pYgXY8e
+         6CNIrCnyxqt4NvY6dcGuRQ4p5UnsKB1AICGPgTpZ+l+F+ESogL4c/YWNu6bXXawDzzcQ
+         uov+xPXmesRS6noZkdlh6HuxWZo0udTX6eP/+PkWLV3XN5CkP9I7rpSrIIpLTbcYy4PO
+         Xxs00OOkYLzXQtmQANTns2S1q4IbJWb900/pUMjyNgsvbFR61u7bL7ObCN3F9BrRWLlW
+         BCu143HuY7IOkICuPrbnSXJl/F/ucQOgc0HeufpoM8eUQ6VYo+FtVpXwCN2OVB0fSjih
+         LSPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=e2Evyai3KlGaeTLcZ3uGPCXJdzkhiXh455QgONsR78g=;
-        b=JwWovU1Mc3lIWPIm/beu9uwB0MFzM/BQGYtdIwO61pzzcOgdRTRT6VzzTrqMVKDb9Z
-         UlLVsoJIe6x0fHiNgJzLU069l4egloTw79tdxMshqDGIkHMo+TxcNSIHBs6yu0prgoT8
-         mw4phrASZt5JOvTRupK78rI9Pw77bFCmZIm0nSe0eXUB6CVAGZC8gLVzSx8HuSYH9a+9
-         azcfXDCXsJ+W2lioCzuaNjU+fvvTINBaF2agVLLWVF5JEc6M8YqPtu2H1rjH/z/hywF9
-         8PbsfNrEaLsqt9HvGpNTwPjrBGcGXTaIfkugp/dIzZHuIE9Hd6q2tLkghc2Ix9cfSfqr
-         k3sg==
-X-Gm-Message-State: AMCzsaXQCrmEixz71mPT7Ti574DaG6aYH7j8gNYGLTQ7+hcJOwDCNYza
-        Xbv2PS6Tv5KlrC4d3ASFKuP0Tw==
-X-Google-Smtp-Source: ABhQp+RdT0qv8ovLNI/stqUqcWvySvsDafWrnbTRI/m4SYKBsIknBHm991GsAT+88GehbSGx1ta9sA==
-X-Received: by 10.36.241.77 with SMTP id q13mr705239iti.123.1509410050777;
-        Mon, 30 Oct 2017 17:34:10 -0700 (PDT)
+        bh=e0RIBeRodSl7SThuNXST8StLsMyieXD+YpYSVDHXtNA=;
+        b=Na1kWGuCNiGvU93uMNa9rGNhpDlbPHj1HH6E1ceXRuJlRMABdDTCpHJ2TooojSUdSN
+         UTV9H4bNDwoK5d5w6Ngp85CqDEUhNRhyU1a8LleWHLc/BObeJ7MX/dyIfrcLBwlAk3Cb
+         N3RJEs6NeeI7L/C4p0PbnBm3fmUybqfB1jM1ycPC+h/MkGieflpvNPxnN4WdgpekDDVR
+         JbANwQiqWzoZwyaVrIIX1OP09v9cNb0PlYEK5Y7+luoBgPDmXoMzCBwSBkSlJIDALw8n
+         khARq1E+Y9M4l7cpT9q9OTpEDUYME/ksnyg3FyzorSsrOriVxA9VSQ4Xfu13J9n6F+38
+         RcXA==
+X-Gm-Message-State: AMCzsaW5CoyeKn71/v4tEC9Ule6YHA1SbHciHrjeNlvb6R/y/TnOPCsp
+        ZCB8C8VRKoAigh55kkGI6oDorw==
+X-Google-Smtp-Source: ABhQp+TeKQ8E2jl7e3dqONV2BAB7bRYjVYnxDv8ou6pIxqXcklArmSq3p9tNzLcYFxCxU8lkRdzWzQ==
+X-Received: by 10.36.55.210 with SMTP id r201mr726150itr.132.1509410044272;
+        Mon, 30 Oct 2017 17:34:04 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:58cb:1473:3cb:a95f])
-        by smtp.gmail.com with ESMTPSA id q1sm263523itc.9.2017.10.30.17.34.09
+        by smtp.gmail.com with ESMTPSA id i130sm245205itf.42.2017.10.30.17.34.03
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 30 Oct 2017 17:34:10 -0700 (PDT)
+        Mon, 30 Oct 2017 17:34:03 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com
 Cc:     git@vger.kernel.org, me@ikke.info, jacob.keller@gmail.com,
         Johannes.Schindelin@gmx.de
-Subject: [PATCH 7/7] t6120: fix typo in test name
-Date:   Mon, 30 Oct 2017 17:33:51 -0700
-Message-Id: <20171031003351.22341-8-sbeller@google.com>
+Subject: [PATCH 3/7] builtin/describe.c: rename `oid` to avoid variable shadowing
+Date:   Mon, 30 Oct 2017 17:33:47 -0700
+Message-Id: <20171031003351.22341-4-sbeller@google.com>
 X-Mailer: git-send-email 2.15.0.rc2.443.gfcc3b81c0a
 In-Reply-To: <20171031003351.22341-1-sbeller@google.com>
 References: <20171028004419.10139-1-sbeller@google.com>
@@ -64,24 +64,45 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+The function `describe` has already a variable named `oid` declared at
+the beginning of the function for an object id.  Do now shadow that
+variable with a pointer to an object id.
+
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- t/t6120-describe.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ builtin/describe.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
-index 3be01316e8..fd329f173a 100755
---- a/t/t6120-describe.sh
-+++ b/t/t6120-describe.sh
-@@ -304,7 +304,7 @@ test_expect_success 'describe chokes on severely broken submodules' '
- 	mv .git/modules/sub1/ .git/modules/sub_moved &&
- 	test_must_fail git describe --dirty
- '
--test_expect_success 'describe ignoring a borken submodule' '
-+test_expect_success 'describe ignoring a broken submodule' '
- 	git describe --broken >out &&
- 	test_when_finished "mv .git/modules/sub_moved .git/modules/sub1" &&
- 	grep broken out
+diff --git a/builtin/describe.c b/builtin/describe.c
+index 29075dbd0f..fd61f463cf 100644
+--- a/builtin/describe.c
++++ b/builtin/describe.c
+@@ -381,9 +381,9 @@ static void describe(const char *arg, int last_one)
+ 	}
+ 
+ 	if (!match_cnt) {
+-		struct object_id *oid = &cmit->object.oid;
++		struct object_id *cmit_oid = &cmit->object.oid;
+ 		if (always) {
+-			printf("%s", find_unique_abbrev(oid->hash, abbrev));
++			printf("%s", find_unique_abbrev(cmit_oid->hash, abbrev));
+ 			if (suffix)
+ 				printf("%s", suffix);
+ 			printf("\n");
+@@ -392,11 +392,11 @@ static void describe(const char *arg, int last_one)
+ 		if (unannotated_cnt)
+ 			die(_("No annotated tags can describe '%s'.\n"
+ 			    "However, there were unannotated tags: try --tags."),
+-			    oid_to_hex(oid));
++			    oid_to_hex(cmit_oid));
+ 		else
+ 			die(_("No tags can describe '%s'.\n"
+ 			    "Try --always, or create some tags."),
+-			    oid_to_hex(oid));
++			    oid_to_hex(cmit_oid));
+ 	}
+ 
+ 	QSORT(all_matches, match_cnt, compare_pt);
 -- 
 2.15.0.rc2.443.gfcc3b81c0a
 
