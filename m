@@ -7,53 +7,52 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CAE1420437
-	for <e@80x24.org>; Tue, 31 Oct 2017 21:44:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2B70F20437
+	for <e@80x24.org>; Tue, 31 Oct 2017 21:46:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753861AbdJaVoC (ORCPT <rfc822;e@80x24.org>);
-        Tue, 31 Oct 2017 17:44:02 -0400
-Received: from mail-qk0-f177.google.com ([209.85.220.177]:43098 "EHLO
-        mail-qk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753854AbdJaVoB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Oct 2017 17:44:01 -0400
-Received: by mail-qk0-f177.google.com with SMTP id w134so567497qkb.0
-        for <git@vger.kernel.org>; Tue, 31 Oct 2017 14:44:01 -0700 (PDT)
+        id S1753668AbdJaVqC (ORCPT <rfc822;e@80x24.org>);
+        Tue, 31 Oct 2017 17:46:02 -0400
+Received: from mail-qt0-f175.google.com ([209.85.216.175]:48797 "EHLO
+        mail-qt0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753067AbdJaVqB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Oct 2017 17:46:01 -0400
+Received: by mail-qt0-f175.google.com with SMTP id f8so558801qta.5
+        for <git@vger.kernel.org>; Tue, 31 Oct 2017 14:46:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=C8cWA067tQ1UMaRDHUegod8RnUMfA6+LvnYg1ss6p9Q=;
-        b=ejHMGnXT6/WiHlF8zVHC4V2op2ZN9SqztdzycMSSoo7d05f6qOfJEwwokLFFFIFPyb
-         +SdMBHRkzeNxbUSqznI8PY9J88uhItJXIcy6w28TU/vAz8I7vdPdDrc7jGkvRIfBoXHR
-         nOmat5E5zGYVs9u+3vnTO9YYt097Ic/zTBUlAaK7kkQJNowM1eMV9lpOWSHN4LwST6IO
-         e6LpTqETxZOsOy+9FuM3sO1iDFm2rMaqiH8h6U+oMprycqGamm36jhJBqcnJ1f7rbS21
-         B70cpV1Fg9c4M+U69ordJnBT6P2McxoVGR3GgFXugKqkrMtbkz7srq1qhj+1a13nikMv
-         Zofw==
+        bh=TbCwL/kI8sfEZRmtyX45v5ii/qHxel/Q8XH/+4lyiSc=;
+        b=RrPM0DIc1f2B1nV5c0Q1ovTeQ3fez9KvAiybt8l8+DRCuFiAimf6t/BSACqnLjklxB
+         lbqxt3YSkOHNYROWCUiJg5ae5S0YT7G/Ce5BR/ugmEjFflAcrHdkDUa1F4M2KpXEipu9
+         43f3GzhVFBRLFkeeoBb6ThViLCGFkvtZxPaSuqsGocUCXaW+TTZRowVQftBjnB2uoq35
+         3/Wy4ujhNS3ZPrQvwoql+nkTKNemALu33e3b2o+GGWZN8TFovnM6PERNpIMKGQcC5L00
+         uVdM6gmmPRLBAwCDbJCJBoGU7FGhPz+AwAPzGgSSMb4OEGovCClY1VHn9ShxVZqj3x6X
+         SbQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=C8cWA067tQ1UMaRDHUegod8RnUMfA6+LvnYg1ss6p9Q=;
-        b=C16s1B/6zDqnR+5rrp3nZdJ7LRkVV4T+cvJPCG5+zD1fbexPFTo3ItP35EDVNAAAi/
-         5D790v0CwKOcoBZkuLAZph7IeZurIWLK/aljXz1hvEhtHLiajrnSfLgG3REYZ13q7m54
-         JJCWcpTAKfBMjRfa0C0ZcqnumbaTkwwRh83p97Dh1b+3arOPrVI9DmpaJdPOPzsJw4NM
-         Rx/F+WYe0MtJucayaZuClNEvzMMtyyVUbfwOrPaomjar1sy+oPgqYA8pTFGBZLnLWGgz
-         XR1AZVaCwPATGugf5LLFo382x92Kw8SLzF7eVxqAM7H/CaA4RzzVq6Jr8nNV9SWGLXI8
-         nezw==
-X-Gm-Message-State: AMCzsaXZYwRrfkJO7LwtiF19LvMlDUtbCbSvNs3xgH7abBsgG2oZGawk
-        VdA+VXYvcW82o2bVepDmIoeuigIiPUPih4o0yT0IEg==
-X-Google-Smtp-Source: ABhQp+SwgYO67zB2mt/xIo8bhPDbVP0wFTUT5Hxg2TLW1WPvkU/kEToqR8iSmwlrhF/FexVJOURn72452unKBRS7xZQ=
-X-Received: by 10.55.175.132 with SMTP id y126mr5212909qke.45.1509486240924;
- Tue, 31 Oct 2017 14:44:00 -0700 (PDT)
+        bh=TbCwL/kI8sfEZRmtyX45v5ii/qHxel/Q8XH/+4lyiSc=;
+        b=qH5WdUeyGG3tZQM8t8hadls58Hvv56PM9Ya9lR0GsXanZqmt7DnJGTTB6ttoYh4RIa
+         HYls6HaUsOA1yqv3qd37nFFt/kaGqk6ZWgCSib0ydBekOmMmWMTQWjBNny6dHYrqGN8R
+         /JQiZfg9oxVSna0G3IP8d2spE7VhSrcGnjsgO06EhWeFABiEVjogvx2m6lEzgEK6kQdR
+         Yu7nm1sgJroiKslwLobwgVAhEEMCGXqYhrPvM4rbo+a2IgSwdFtc6uh8bFM9rn9Qd31J
+         7rxLmSbSEFm8YkIHjjO/6r9MoehNCrITM1qtSGtWimq77aRxCjhIG9pOxySq+wBSvqRQ
+         vDCA==
+X-Gm-Message-State: AMCzsaWMdgt/9guNo/DDZk7jWBcTrpSwrBlPgSN0kWmGH0k+CiA903u0
+        Q3KxY8BpG5/wDCAj6GPYOu+7Nou+QhG4uDDsaGnqCg==
+X-Google-Smtp-Source: ABhQp+TFdLjXyOSMOtZqoxc8rhCWIqmt/mMImmf4Z6h2dA2jjpKyQvf8vHEJ9ePss/ZYIdPiUCFxj1whO1Vkm8w0Gdo=
+X-Received: by 10.237.37.71 with SMTP id w7mr5119291qtc.299.1509486361143;
+ Tue, 31 Oct 2017 14:46:01 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.140.102.70 with HTTP; Tue, 31 Oct 2017 14:44:00 -0700 (PDT)
-In-Reply-To: <20171031181911.42687-8-bmwill@google.com>
+Received: by 10.140.102.70 with HTTP; Tue, 31 Oct 2017 14:46:00 -0700 (PDT)
+In-Reply-To: <20171031181911.42687-1-bmwill@google.com>
 References: <20171030194646.27473-1-bmwill@google.com> <20171031181911.42687-1-bmwill@google.com>
- <20171031181911.42687-8-bmwill@google.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 31 Oct 2017 14:44:00 -0700
-Message-ID: <CAGZ79kbgeVhi46vU9YzSyuvgFLFCZddFatUaopJDG=o=cU6dcw@mail.gmail.com>
-Subject: Re: [PATCH v3 7/8] diff: remove DIFF_OPT_CLR macro
+Date:   Tue, 31 Oct 2017 14:46:00 -0700
+Message-ID: <CAGZ79kZytrzDRsEU8Od3rZBPbWYqJQiQ5w0PE6hxVR-SbE2MqA@mail.gmail.com>
+Subject: Re: [PATCH v3 0/8] convert diff flags to be stored in a struct
 To:     Brandon Williams <bmwill@google.com>
 Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
@@ -63,6 +62,15 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On Tue, Oct 31, 2017 at 11:19 AM, Brandon Williams <bmwill@google.com> wrote:
-> Remove the `DIFF_OPT_SET` macro and instead set the flags directly.
+> Changes in v3:
+>  * Now always pass struct diff_flags by reference and don't return the struct
+>    but rather modify the passed in struct.
+>  * Don't clear TEXTCONV_SET_VIA_CMDLINE when --no-textconv is passed
+>  * added additional patches (set out separately before) to remove the macros
+>    and change the struct members to lowercase
 
- _CLR here
+I have reviewed this version and the functionality introduced
+looks good to me. My only nits were regarding style and typos.
+
+Thanks,
+Stefan
