@@ -2,173 +2,244 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2171C1FAED
-	for <e@80x24.org>; Tue, 31 Oct 2017 00:34:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4842220437
+	for <e@80x24.org>; Tue, 31 Oct 2017 01:27:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753787AbdJaAef (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Oct 2017 20:34:35 -0400
-Received: from mail-io0-f195.google.com ([209.85.223.195]:52098 "EHLO
-        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753724AbdJaAeD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Oct 2017 20:34:03 -0400
-Received: by mail-io0-f195.google.com with SMTP id b186so31329815iof.8
-        for <git@vger.kernel.org>; Mon, 30 Oct 2017 17:34:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=aOv4ngxE26tIqN/GrPrEHukNh+faPKmhiWnXlAk6vFQ=;
-        b=a7O3fcfiC70rqG+Q76jJXg0PK7hK5eiY7WfZxmxkA0vT4CDZUdnFQqaLMnXqRwqJQB
-         yIVCMuCHm1pwf/nfKQOQ1C2zsTWZDDCTDxvkxxW7cZIEBa/izB0WZuFu+YH5T8CSXR8T
-         11OFu79rRHo3eJ+1B67txR4QsDpVCj6Cm/SGJGLcAI79MkeB3QfZJuK2tTqNuMph+UyR
-         718cetrF1hyOXc5DVH4SE7lxM2KoPfpACCsAfGf4PseF6zkLZL+Yz/HSkuODtroCBG8T
-         hqrYtlHrf9amPtiKbPX7CLNTPPpyQR7ezFt5m5JGmXpRiKXEeotPotWQmKzbDL/AZ18V
-         Q4gg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=aOv4ngxE26tIqN/GrPrEHukNh+faPKmhiWnXlAk6vFQ=;
-        b=dJnUMkrrmERuJtoVIVRFOMgGsj8Q/S5Uharfy/2SRmGODb/19DFANbrX+G2S+2MXnv
-         M/Dq726lcljGyDDj0W/dICrYNXKxQ9rzl1ZgMLXYsQMeD2thIrEvmHC+KI6s/xJudTC+
-         TAfMeuHzmtPgyGBwx7m2ptzd9jpNhBGgfD24zF5BtKYDIHLbGizqsNdbvYtAvtZ3dATn
-         xDbmq/y3g4yIyikj4Y23vuS1cdqV9KYneSlXE7/6FI4O7WlkfjWKBA/0XMQ6urbe6CGs
-         DPsAsoQ27tfcNt1tPrxw4x148VuvI81u+9dIV/d2X2mrFSUVFFfUY39GEwvHHeq/Kqn8
-         1FeQ==
-X-Gm-Message-State: AMCzsaWi493GFdf+QqUzsxZZSuet66ZElkmfveIHk59dGvurhmNqH59k
-        VGAriovvgshDNQrWo14nhqVO5Q==
-X-Google-Smtp-Source: ABhQp+SYXba9voEf0OggAPUk7VrE8f2pWRWrW7PdR76+KLcu3eX8G4CBCbbnOl+82WljZydT1FT+yA==
-X-Received: by 10.107.139.144 with SMTP id n138mr198027iod.173.1509410042911;
-        Mon, 30 Oct 2017 17:34:02 -0700 (PDT)
-Received: from localhost ([2620:0:100e:422:58cb:1473:3cb:a95f])
-        by smtp.gmail.com with ESMTPSA id f16sm94844ioi.30.2017.10.30.17.34.02
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 30 Oct 2017 17:34:02 -0700 (PDT)
-From:   Stefan Beller <sbeller@google.com>
-To:     sbeller@google.com
-Cc:     git@vger.kernel.org, me@ikke.info, jacob.keller@gmail.com,
-        Johannes.Schindelin@gmx.de
-Subject: [PATCH 2/7] revision.h: introduce blob/tree walking in order of the commits
-Date:   Mon, 30 Oct 2017 17:33:46 -0700
-Message-Id: <20171031003351.22341-3-sbeller@google.com>
-X-Mailer: git-send-email 2.15.0.rc2.443.gfcc3b81c0a
-In-Reply-To: <20171031003351.22341-1-sbeller@google.com>
-References: <20171028004419.10139-1-sbeller@google.com>
- <20171031003351.22341-1-sbeller@google.com>
+        id S1752407AbdJaB1U (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Oct 2017 21:27:20 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:55724 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751871AbdJaB1T (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2017 21:27:19 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 1B29E6046C;
+        Tue, 31 Oct 2017 01:27:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1509413237;
+        bh=5hYfWs5c/nP5kNm221IUXMv8G5pcNBodLNG9sz5XZ+8=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=acqnEX7ga4X9auG1ycrUiNUTwcW46BSzTkFZ2G+h7dW2W9NMGq6+bKPdF15sPWILW
+         VPQ/pzuJ9Z58gLpCmIYDW9ojIV0I8PCgC2R4X6s/pUnoDb1aQOlZV+xEmK8SNmhXko
+         VTULGjfou5zcYj8aAXc4s97RNUHeQoY/IFQTtLbQURxmJcKyR6W9FM3fJqw9BwCJMi
+         9q2+Zxq4sJdKA9qHpdhgun5tNks6siwmPvRfn2i3VujfD+j+uxa/NBllHdZIaeCSCp
+         8h+5TT29+ZUx2SRf/7IvpnHzxYCsiFNUQ8zTh+Zy7SYzR9L/3TpadrIOVWuQzy/BC/
+         2C16MpMnDGczExGit8TIqqyPiDs78Fa1Val2l37slE4sN5QSxU7rbTZRSQvqWP8O31
+         g+V1ju0KnxGlcbEOpcSLFC1Ms+ibMtD1L82C310wRlafQqZFY6KWMvLQQdjoy9NVU4
+         2CYUqFDHHEYQvmaqx0zim6/gt8+R5kNOW4ywYcTCCFklC4CxLRw
+Date:   Tue, 31 Oct 2017 01:27:11 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 2/2] Documentation: convert SubmittingPatches to AsciiDoc
+Message-ID: <20171031012710.jfemqb6ybiog4sbz@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <20171029211308.272673-1-sandals@crustytoothpaste.net>
+ <20171029211308.272673-3-sandals@crustytoothpaste.net>
+ <xmqqa8096yzu.fsf@gitster.mtv.corp.google.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="pdipjojxtxrzgxi4"
+Content-Disposition: inline
+In-Reply-To: <xmqqa8096yzu.fsf@gitster.mtv.corp.google.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.13.0-1-amd64)
+User-Agent: NeoMutt/20170609 (1.8.3)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The functionality to list tree objects in the order they were seen
-while traversing the commits will be used in the next commit,
-where we teach `git describe` to describe not only commits, but
-trees and blobs, too.
 
-Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- list-objects.c               |  2 ++
- revision.c                   |  2 ++
- revision.h                   |  3 ++-
- t/t6100-rev-list-in-order.sh | 44 ++++++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 50 insertions(+), 1 deletion(-)
- create mode 100755 t/t6100-rev-list-in-order.sh
+--pdipjojxtxrzgxi4
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/list-objects.c b/list-objects.c
-index bf46f80dff..5e114c9a8a 100644
---- a/list-objects.c
-+++ b/list-objects.c
-@@ -237,6 +237,8 @@ void traverse_commit_list(struct rev_info *revs,
- 		if (commit->tree)
- 			add_pending_tree(revs, commit->tree);
- 		show_commit(commit, data);
-+		if (revs->tree_blobs_in_commit_order)
-+			traverse_trees_and_blobs(revs, &base_path, show_object, data);
- 	}
- 	traverse_trees_and_blobs(revs, &base_path, show_object, data);
- 
-diff --git a/revision.c b/revision.c
-index d167223e69..9329d4ebbf 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1845,6 +1845,8 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 		revs->dense = 0;
- 	} else if (!strcmp(arg, "--show-all")) {
- 		revs->show_all = 1;
-+	} else if (!strcmp(arg, "--in-commit-order")) {
-+		revs->tree_blobs_in_commit_order = 1;
- 	} else if (!strcmp(arg, "--remove-empty")) {
- 		revs->remove_empty_trees = 1;
- 	} else if (!strcmp(arg, "--merges")) {
-diff --git a/revision.h b/revision.h
-index 54761200ad..86985d68aa 100644
---- a/revision.h
-+++ b/revision.h
-@@ -121,7 +121,8 @@ struct rev_info {
- 			bisect:1,
- 			ancestry_path:1,
- 			first_parent_only:1,
--			line_level_traverse:1;
-+			line_level_traverse:1,
-+			tree_blobs_in_commit_order:1;
- 
- 	/* Diff flags */
- 	unsigned int	diff:1,
-diff --git a/t/t6100-rev-list-in-order.sh b/t/t6100-rev-list-in-order.sh
-new file mode 100755
-index 0000000000..67ebe815d2
---- /dev/null
-+++ b/t/t6100-rev-list-in-order.sh
-@@ -0,0 +1,44 @@
-+#!/bin/sh
-+
-+test_description='miscellaneous rev-list tests'
-+
-+. ./test-lib.sh
-+
-+
-+test_expect_success 'setup' '
-+	for x in one two three four
-+	do
-+		echo $x >$x &&
-+		git add $x &&
-+		git commit -m "add file $x"
-+	done &&
-+	for x in four three
-+	do
-+		git rm $x
-+		git commit -m "remove $x"
-+	done &&
-+	git rev-list --in-commit-order --objects HEAD >actual.raw &&
-+	cut -c 1-40 > actual < actual.raw &&
-+
-+	>expect &&
-+	git rev-parse HEAD^{commit}       >>expect &&
-+	git rev-parse HEAD^{tree}         >>expect &&
-+	git rev-parse HEAD^{tree}:one     >>expect &&
-+	git rev-parse HEAD^{tree}:two     >>expect &&
-+	git rev-parse HEAD~1^{commit}     >>expect &&
-+	git rev-parse HEAD~1^{tree}       >>expect &&
-+	git rev-parse HEAD~1^{tree}:three >>expect &&
-+	git rev-parse HEAD~2^{commit}     >>expect &&
-+	git rev-parse HEAD~2^{tree}       >>expect &&
-+	git rev-parse HEAD~2^{tree}:four  >>expect &&
-+	git rev-parse HEAD~3^{commit}     >>expect &&
-+	# skip HEAD~3^{tree}
-+	git rev-parse HEAD~4^{commit}     >>expect &&
-+	# skip HEAD~4^{tree}
-+	git rev-parse HEAD~5^{commit}     >>expect &&
-+	git rev-parse HEAD~5^{tree}       >>expect &&
-+
-+	test_cmp expect actual
-+'
-+
-+test_done
--- 
-2.15.0.rc2.443.gfcc3b81c0a
+On Mon, Oct 30, 2017 at 01:28:05PM +0900, Junio C Hamano wrote:
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+>=20
+> Thanks.  I personally prefer the plain-text original, but I do
+> understand the need to have a version with ids that you can tell
+> others to visit in their browsers.  Assuming that this goes in the
+> right direction, here are a few comments.
+>=20
+> > @@ -58,8 +65,9 @@ differs substantially from the prior version, are all=
+ good things
+> >  to have.
+> > =20
+> >  Make sure that you have tests for the bug you are fixing.  See
+> > -t/README for guidance.
+> > +'t/README' for guidance.
+>=20
+> I am guessing that, from the way you updated 'next' to `next'
+> etc. in the previous hunk, you are typesetting in <tt> anything a
+> reader may type literally without substitution.
+>=20
+> Should this be `t/README`, as it is a part of something a reader may
+> type literally (as in "less t/README")?
 
+So this syntax provides italicized paths, but I agree that the <tt> is
+better here.  I'll make those changes throughout, and fix up the
+instances of that you mentioned.
+
+> > -(4) Sending your patches.
+> > +[[send-patches]]
+> > +=3D=3D=3D Sending your patches.
+> > +:1: footnote:[The current maintainer: gitster@pobox.com]
+> > +:2: footnote:[The mailing list: git@vger.kernel.org]
+>=20
+> Having to see these footnotes upfront is somewhat distracting for
+> those of us who prefer to use this file as a text document.  I see
+> these become part of the footnotes section at the very end of the
+> document (as opposed to the end of this section), so even with the
+> rendered output it does not look ideal.
+>=20
+> I am not sure how much these two points matter, though.
+
+AsciiDoc requires that the attributes appear before their references.  I
+can move the attributes just before the paragraph they refer to, or I
+can inline the footnotes.  I could also just turn them into links if
+that works better.
+
+This is actually one thing that I think Markdown does better.
+
+> > @@ -191,7 +212,7 @@ not ready to be applied but it is for discussion, [=
+PATCH v2],
+> > ..
+> >  Send your patch with "To:" set to the mailing list, with "cc:" listing
+> >  people who are involved in the area you are touching (the output from
+> > -"git blame $path" and "git shortlog --no-merges $path" would help to
+> > ++git blame _$path_+ and +git shortlog {litdd}no-merges _$path_+ would =
+help to
+> >  identify them), to solicit comments and reviews.
+>=20
+> The +fixed width with _italics_ mixed in+ mark-up is something not
+> exactly new, but it is rarely used in our documentation set, so I
+> had to double check by actually seeing how it got rendered, and it
+> looked alright.
+
+I thought it provided some hint to the reader that this wasn't meant to
+be typed literally.  It's a preference of mine and I think it aids in
+readability, but it can be changed if we want.
+
+> >  After the list reached a consensus that it is a good idea to apply the
+> > -patch, re-send it with "To:" set to the maintainer [*1*] and "cc:" the
+> > -list [*2*] for inclusion.
+> > +patch, re-send it with "To:" set to the maintainer{1} and "cc:" the
+> > +list{2} for inclusion.
+> > =20
+> >  Do not forget to add trailers such as "Acked-by:", "Reviewed-by:" and
+> >  "Tested-by:" lines as necessary to credit people who helped your
+> >  patch.
+>=20
+> Should these "Foo-by:" all be `Foo-by:`?
+
+I'll make these changes as well.
+
+> > -An ideal patch flow
+> > +[[patch-flow]]
+> > +=3D=3D An ideal patch flow
+> > =20
+> >  Here is an ideal patch flow for this project the current maintainer
+> >  suggests to the contributors:
+> > =20
+> > - (0) You come up with an itch.  You code it up.
+> > +. You come up with an itch.  You code it up.
+> > =20
+> > - (1) Send it to the list and cc people who may need to know about
+> > -     the change.
+> > +. Send it to the list and cc people who may need to know about
+> > +  the change.
+> > ++
+> > +The people who may need to know are the ones whose code you
+> > +are butchering.  These people happen to be the ones who are
+> > +most likely to be knowledgeable enough to help you, but
+> > +they have no obligation to help you (i.e. you ask for help,
+> > +don't demand).  +git log -p {litdd} _$area_you_are_modifying_+ would
+> > +help you find out who they are.
+> > =20
+> > -     The people who may need to know are the ones whose code you
+> > -     are butchering.  These people happen to be the ones who are
+> > -     most likely to be knowledgeable enough to help you, but
+> > -     they have no obligation to help you (i.e. you ask for help,
+> > -     don't demand).  "git log -p -- $area_you_are_modifying" would
+> > -     help you find out who they are.
+> > +. You get comments and suggestions for improvements.  You may
+> > +  even get them in a "on top of your change" patch form.
+> > =20
+> > - (2) You get comments and suggestions for improvements.  You may
+> > -     even get them in a "on top of your change" patch form.
+> > +. Polish, refine, and re-send to the list and the people who
+> > +  spend their time to improve your patch.  Go back to step (2).
+>=20
+> Not a complaint, but it is a shame that we have to spell out (2)
+> even though we are using auto-numbering feature here.
+
+It is.  I'll see if there's a way I can refer to an element of a list,
+but I don't think there is.
+
+> > @@ -452,23 +475,24 @@ should come after the three-dash line that signal=
+s the end of the
+> > ...
+> > +=3D=3D=3D Pine
+> > =20
+> >  (Johannes Schindelin)
+> > =20
+> > +....
+> >  I don't know how many people still use pine, but for those poor
+> >  souls it may be good to mention that the quell-flowed-text is
+> >  needed for recent versions.
+> > =20
+> >  ... the "no-strip-whitespace-before-send" option, too. AFAIK it
+> >  was introduced in 4.60.
+> > +....
+> >  (Linus Torvalds)
+> > =20
+> >  And 4.58 needs at least this.
+>=20
+> This line alone in the entire section for pine is done in regular
+> text, which looked somewhat strange.
+
+Ah, yes.  I misinterpreted that as not being part of Linus's email, but
+I suppose it probably was.
+
+Since these are emails, I can turn them into quote blocks with
+attribution if that makes things more readable.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
+https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: https://keybase.io/bk2204
+
+--pdipjojxtxrzgxi4
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.1 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAln30W4ACgkQv1NdgR9S
+9ovfQhAAg3wc9IL59mij1BWU6WncBXMvf8lkvTmA+4qZxVhFIoZCIUaxH/yC3tXA
+qTKUGcxnyOIhEwaGrJxaYnKMA8s1o3MSBGbw3lMxkJJdh6pFiaeZuBEzHA3Wp1n3
+BkA8svr/qhWGRhxEPZZLF0zRyMksnLYA3I4hr3kaiEISZy5o45y03PyXTOzgBThk
+PlOcQOyNQGGbjFXp5pVpBB3w7b7tcql2Ey5tkn+SwrNRxwbeFo5qNJtIrrJMNGi5
+69GHy6+GqxgaPJ/QSC8xW0929km/jX8AbrTR+njUH4zyr3y+/eLN3G/0FVqumkR5
+EFWuVioXPYcmsNA+pk0l88MT0toZ4jDiSh/njuFpFigqYwrNqUM0Ay5FZmmlxKZW
+jjioMWnikZYnFK3bw6bgPB6fuf+d2f+iXWpuYJEVH1PpFOeTnzbvBYJsRb29geSj
+F3uVDA3nSqTmGOIyQQkoSvmuiI8sbQ3/aQXkI9/7RgMkn3K72neXN0CCSsDMlGqv
+hZ8VoNgf4i0YIW5ysxrM6vjQD2406HefKQP4vXHII/1EMVgjZSfPktHpAYJf4R9m
+eytW3pP1L5l8nrb6ig66hOeUDlJzx0YO+3gkYR4CiXsn1CQKKH9o9DnFHJsHIT2Q
+Ak7MaPkpoLboBq2aCMdBeBFm0RKNkg583VERekfpod8hMZ1gshY=
+=6tq5
+-----END PGP SIGNATURE-----
+
+--pdipjojxtxrzgxi4--
