@@ -2,80 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9CFBB20437
-	for <e@80x24.org>; Tue, 31 Oct 2017 21:31:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 931C620437
+	for <e@80x24.org>; Tue, 31 Oct 2017 21:32:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753744AbdJaVbO (ORCPT <rfc822;e@80x24.org>);
-        Tue, 31 Oct 2017 17:31:14 -0400
-Received: from mail-qt0-f170.google.com ([209.85.216.170]:46349 "EHLO
-        mail-qt0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751943AbdJaVbN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Oct 2017 17:31:13 -0400
-Received: by mail-qt0-f170.google.com with SMTP id 1so530127qtn.3
-        for <git@vger.kernel.org>; Tue, 31 Oct 2017 14:31:13 -0700 (PDT)
+        id S932296AbdJaVcW (ORCPT <rfc822;e@80x24.org>);
+        Tue, 31 Oct 2017 17:32:22 -0400
+Received: from mail-qk0-f195.google.com ([209.85.220.195]:43266 "EHLO
+        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750929AbdJaVcV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Oct 2017 17:32:21 -0400
+Received: by mail-qk0-f195.google.com with SMTP id w134so536717qkb.0
+        for <git@vger.kernel.org>; Tue, 31 Oct 2017 14:32:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=mNhKyFoKMCDjGLafLTyYz33XnTaeWr1brU790EuL4dA=;
-        b=p9ah/AMz2Cnzuveq6VKNfSAZctMcHaJP7RevpCwNV2j2/ggC1AkWEAZWGGoIPWa/iN
-         dBnLXM0vDhcDlVrBsp+HGrWjYoQqrfxObcyAhy6A8b4R7MlrBAdILsQT5VBifVPLcX8g
-         Gbk7pRWiiULP0GtQx75cIIbpwfGcG9Qhhp3Vp0G7bIrj8dQmKFCmbK81MzQT6y8DFNpQ
-         /u9bN21+4Vl2g0MuUZwvUHGsGFWf9fuVIjl4C+N7JlRFPHbOLW1ht7xb50XeApI57a3e
-         9+gCzfXruyBfsRTzy4vLJm70n+fhsNJbSwqG3H7zd50KUDleNWEWBIsJorT9tAKVyzxA
-         hRhg==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=5B//8Vw3K48DDiBRmPUiMYvEgLuAHoRCPSG4dAkn3JQ=;
+        b=jCP3r7CJF0lXVkqWSvfbocoxiNAzNMPcPI2K11d26Uqci4oS3rA3xkkkBPHHl1mhwZ
+         0dGPwRSbVTQKeYm4YoiWaibyi44uHmViiyQUByFGH97nQSpy2t5voX0nksGdizhqAoPQ
+         iGJ5vfTt5lbH/Qz5cgFXOTayflbyJrzjRmQ+M782w4HdLudLjgGW3kWxMvWyYYbzlDTO
+         YIg8nNAtd0spDGyjfaAIDL07bQzee5IWNEfquiU9b5MaOnnOzUySRyFyaktINQKwUW4m
+         7pRaeFhdAwrWq7XVWsSqXB+BqQEAeAzNw8oDxKjlKdFqZNgKtLxEDzHUfc+Edp5+t7Z5
+         UQfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=mNhKyFoKMCDjGLafLTyYz33XnTaeWr1brU790EuL4dA=;
-        b=nJcVuBcPMCMDk1ipJ6/oBHk3009VnYj7fSGgCEDQh+D69ytFq7NncvGN474zRV+EOi
-         iUQ9lqaJWNP3XtHHEOkUlCwRZ6Ly+hhoG8Vcyptv1sbB8xqP8lHmnQRmEc8d+JP2NKP7
-         o9DtlRoQVmORHvwT23FUw9CHEdqnOh+18oLpaZJg990WNsMFm1/UHnlbhFhi3PJAEtNn
-         MuroieQmI1SY/qf5GDyu0U3l8MRon0Xa7vCoRl5U4pDTD/y2CrIqeK/Xnow4EVfRSeyf
-         J+NufHJ2lV/CkH0813Y1VbFLxF/QaxjaR099Kwzpl93/3WZcr76h2DMDKIb4uJ2lrZNq
-         2Trw==
-X-Gm-Message-State: AMCzsaUz8aJg5OKew8glYqEe2JZ2mHwZURxry7Uq89Qfyrnq7HM3zc1H
-        U6UjaGcdLbJPkKR4oZKZIoK/fdxPxay5nyaL9MU=
-X-Google-Smtp-Source: ABhQp+RD1IAuMp85+5IYyxurluXZYZye+PYuxlil42FWJgZ7ST6aQpSaP/RRC4Dc0438//LyC6ss78OC8xtn5oQQHeM=
-X-Received: by 10.200.53.12 with SMTP id y12mr5462246qtb.84.1509485473015;
- Tue, 31 Oct 2017 14:31:13 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=5B//8Vw3K48DDiBRmPUiMYvEgLuAHoRCPSG4dAkn3JQ=;
+        b=no4TwT7bChcfPqMbfr0wYrBOols8NprQj7IwXSgqMhbQjOmieTsFI+wu9LX08fmFqN
+         UEdrkKbGSSZNgahg1JOtsrqvZoTCLldiMgwoGui4Ui/7/lVlBmQl7NQJ+h9nshF/Trag
+         m/L+mjibFNxJWkAV1FUcTUHrxDxL/1n8P2Yo7LoIlDBIsHeaAjN81+vU9LSGfN1zGd17
+         BtyIkwhCadec6fXduFZ7ne7xaMYPnHVfG5LeyISS8TW7elJfMXFIpVECY4f+gFP5A5FF
+         TEGi/m3cAVGN41HesTUNaRqjrUhZDcuuLKhz0t9YuVQwncsms1Tv3bQA/Z+gw0DxuY0h
+         2HNA==
+X-Gm-Message-State: AMCzsaWYV/fch6LeG7VqutdWWt5O+Xdw/i16l6u2r05mZ18qzbHBYqmY
+        efWs2otqxvewl5XTSkLwFZCocIlGT68V9jLskVuV3g==
+X-Google-Smtp-Source: ABhQp+Q1JSgTbFV6DOaUmQu0JtWj5/3WiaPEBC8cWh/cnqIq22AJcprlpVHuO5BgFDEG0z/wzB1VAF4pmpO90G4+zWQ=
+X-Received: by 10.55.125.196 with SMTP id y187mr5238982qkc.180.1509485540843;
+ Tue, 31 Oct 2017 14:32:20 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.12.146.118 with HTTP; Tue, 31 Oct 2017 14:31:12 -0700 (PDT)
-In-Reply-To: <20171031211852.13001-5-sbeller@google.com>
-References: <20171031003351.22341-1-sbeller@google.com> <20171031211852.13001-1-sbeller@google.com>
- <20171031211852.13001-5-sbeller@google.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 31 Oct 2017 17:31:12 -0400
-X-Google-Sender-Auth: H6_wEzMaLh7YioJ--NGjokSyOJ4
-Message-ID: <CAPig+cRZhm-s7eAU_d29=pOPrKRA4DnCARyJ7JsyQ_wqKgPXVg@mail.gmail.com>
-Subject: Re: [PATCHv2 4/7] builtin/describe.c: print debug statements earlier
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Git List <git@vger.kernel.org>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Kevin Daudt <me@ikke.info>
+Received: by 10.140.102.70 with HTTP; Tue, 31 Oct 2017 14:32:20 -0700 (PDT)
+In-Reply-To: <20171031181911.42687-3-bmwill@google.com>
+References: <20171030194646.27473-1-bmwill@google.com> <20171031181911.42687-1-bmwill@google.com>
+ <20171031181911.42687-3-bmwill@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 31 Oct 2017 14:32:20 -0700
+Message-ID: <CAGZ79kajX=FmGacDSv_dDzppE6WBHGqgyCpaG1zDyENcsDbwZg@mail.gmail.com>
+Subject: Re: [PATCH v3 2/8] diff: convert flags to be stored in bitfields
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 31, 2017 at 5:18 PM, Stefan Beller <sbeller@google.com> wrote:
-> For debuggers aid we'd want to print debug statements early, so
-> introduce a new line in the debug output that describes the whole
-> function, and the change the next debug output to describe why we need
-
-s/and the/and/
-...or...
-s/and the/and then/
-
-> to search. Conveniently drop the arg from the second line; which will
-> be useful in a follow up commit, that refactors the describe function.
+On Tue, Oct 31, 2017 at 11:19 AM, Brandon Williams <bmwill@google.com> wrote:
+> We cannot add many more flags to the diff machinery due to the
+> limitations of the number of flags that can be stored in a single
+> unsigned int.  In order to allow for more flags to be added to the diff
+> machinery in the future this patch converts the flags to be stored in
+> bitfields in 'struct diff_flags'.
 >
-> Signed-off-by: Stefan Beller <sbeller@google.com>
+> Signed-off-by: Brandon Williams <bmwill@google.com>
+
+Thanks for this cleanup series!
+Stefan
+
+> +struct diff_flags {
+> +       unsigned RECURSIVE:1;
+
+After some quick research our coding style on bit fields is twofold:
+Most older code is this way and more recent code seems to prefer
+
+    unsigned <FLAGNAME> SP : SP ;
+
+If this turns out to be the only nit, I would ignore it for the sake of
+faster settlement of the series.
+
+
+> +static inline void diff_flags_or(struct diff_flags *a,
+> +                                const struct diff_flags *b)
+> +{
+> +       char *tmp_a = (char *)a;
+> +       const char *tmp_b = (const char *)b;
+> +       int i;
+> +
+> +       for (i = 0; i < sizeof(struct diff_flags); i++)
+
+I think most of the code prefers to put the variable into the sizeof
+argument i.e. 'sizeof(*a)', as that is presumably more maintainable.
+(If the type of 'a' changes, then we don't forget to adapt this place,
+but the compiler can take care of it.
