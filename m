@@ -7,19 +7,19 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C4F5A20437
-	for <e@80x24.org>; Tue, 31 Oct 2017 13:50:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ACAF120437
+	for <e@80x24.org>; Tue, 31 Oct 2017 13:50:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753126AbdJaNuP (ORCPT <rfc822;e@80x24.org>);
-        Tue, 31 Oct 2017 09:50:15 -0400
-Received: from mout.web.de ([217.72.192.78]:62026 "EHLO mout.web.de"
+        id S1753214AbdJaNuW (ORCPT <rfc822;e@80x24.org>);
+        Tue, 31 Oct 2017 09:50:22 -0400
+Received: from mout.web.de ([217.72.192.78]:63714 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753056AbdJaNuO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Oct 2017 09:50:14 -0400
-Received: from [192.168.178.36] ([91.20.50.251]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MT8fq-1dkfl80ha2-00SA3N; Tue, 31
- Oct 2017 14:50:00 +0100
-Subject: [PATCH 2/3] http-push: use hex_to_bytes()
+        id S1753085AbdJaNuV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Oct 2017 09:50:21 -0400
+Received: from [192.168.178.36] ([91.20.50.251]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MGRZc-1dwHOC3wky-00DJ1s; Tue, 31
+ Oct 2017 14:50:09 +0100
+Subject: [PATCH 3/3] sha1_file: use hex_to_bytes()
 To:     Git List <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         "brian m. carlson" <sandals@crustytoothpaste.net>,
@@ -27,8 +27,8 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Thomas Gummerer <t.gummerer@gmail.com>
 References: <508b1b3f-6b55-eee8-110a-c17d572ec27a@web.de>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <31ce5c1c-cab3-80aa-623b-43f91ddd2162@web.de>
-Date:   Tue, 31 Oct 2017 14:49:56 +0100
+Message-ID: <d8f73744-b3f5-0fca-d58c-1f60e79214e0@web.de>
+Date:   Tue, 31 Oct 2017 14:50:06 +0100
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.4.0
 MIME-Version: 1.0
@@ -36,71 +36,92 @@ In-Reply-To: <508b1b3f-6b55-eee8-110a-c17d572ec27a@web.de>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:7GAa/eyXYH2lbC9f+/gpwY1Gxsz+3dhKXKJwKeeE8HSKQoxQO+f
- 58Pc2GbgiveLWBg/dTNViuEpDSMkWWSxjtzKXo6jgEOIyqBRx8N6H76zWpzNMZuwALMx61E
- P2gYnZjus2/pZ+bwgWV6uw6WI7G84nX0YCGawMndy8taLyWXKnFYmlaHhdYup8EctN09mhA
- ICkidrJptoixbPoJuLuOg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:pJVybEE/lro=:ZRLTkiICpT7pc3bSVItcGC
- LTVSz8K6wZOTqs4vd80chHpvI+4cWCKfwqp1SdmXEygMht6gluWy+aGgw2S8pTTtSpT2hDENE
- kpArBWz03AjIawzztr/R1jXp4/ZZW1GkkZ7N8gPT7gyOhlCMrW0gFmD/AHLJbOnFZ6RhQfiP0
- wTa+S8FuMQESM87IrIyW7cFPLU+7J1gYgz9EYmW38X7sTxtPHnlun0xTfcbwvg7f9nVmmG5X8
- tAIOCyX0bcQGTv7oH6NA7Bqxx31Dkdtjy1qys4gg+VxCrdsqJTFRia0f12d3EEUuQzMH2XsaH
- yvd3qbkuQ2JoOllWlot01ANAH/SSFMV8ZT1YTXFVhZT8uoVT7N4SPvDCQArPFMosDSIUrM1Sl
- I3bbu5NtSxWUme/n0Ovwyn7ErN/M5tEwhETANsUhKIDE9iXbzx3Jr/xmXIlF5DDYM8oFlF84k
- wr3chDIZ/UyTZqxfAv/fdOfTQCQwkJkeyfBRm04o4pUKTnx/ZeU1djcqHyeTUacr6rTErM7Vy
- FVzsJ4t+7auvT48zf70+UEbkIEygLRFD5iVej1FuPOGFI8HfnpzrYhf2HC65nVpslmZMBm5hh
- hWtxKkiGdV2t/5ahk0zizcLB5S40866Jh/bqF+NGJ6DJcLqd7A5VV3qUPskbT0rmydfqjslAR
- Ftgr/IFOSJgHgracXqbXON12d7DUYT+M4olIedpS9Q0peUwUpo1b9Q5ke2F3S5rmFXnppJqpk
- WkVDGLXU1dgnMDgEpV5g6N0Leex6SSf86cTZ+puji3hec3WT8f3e/9ZY1mXFbmi/jTeBiqC8C
- AKR8LAeCFQJtmDnxIS+ZWZBVrJqUMkrWF2Soazhs5NFfZiqziA=
+X-Provags-ID: V03:K0:p9J0wB78GaE/M4QcZ12rNThjrh3rQdSMXDCbQjrV8WEGjQuFZg2
+ +TAZxwyx7aGb+1uNiHLJypKEry1BQA7DgfgkMz/HW74Ic4wuzJ/Tl+qCNxghUanc1+88zKi
+ w2dCEu4H2jRJcBD9vcHLj9+XERTcu4kEgVJi492nhtJVit2bfSzrh9AMe0PTVHszxoUMIs3
+ NLYA7u9jWT+a/JY23MaOg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:qRAqNTw1Kd4=:F2aNaMgbgj1/1dd13drIYI
+ 9eMhEU1TjKas8IkCGjw4xU+wS4eB/8M8Y2ZBlJDhAz8CAFLRmBk2mVHKTXelhHfhG2LtZuoEA
+ ov0HPyWqDPHgWon9/xswSg1BKXjdWfakYICotRS6eIeIvclfM6Yb6/U9kAN47ztMJufUlKzoQ
+ JyBAsvWmCGpA4grXUb325rUUyNAZTwW4k6bt+Ad51aSJwRSItPCtrMcoFZENe7bDczYDQgnPf
+ 97g0gvstS5PedFObNTQvMnFCeAYKWkfAPDJ7tyH4pVpgPALixm1688xgAGT+XNJG6OjLJP3GK
+ rQ3ZMUaaPMUdt8rQrAYDxvsbQnfzX+dt5otHygWMFyvK+8aNDriNyDqmOlQBvCcy3Tg4gbOnx
+ Nx6wa36heoCQ4cyKr9/nFGx61Ea/PjKywvOt5SjtcE4TbEgOy7d1kyzQSMWFlZFFbeHiREGKT
+ UYkh+pN5Bn9cILxzTGwA+314Dca556pcQomuzVyJ64mSJQBECRS0kMv3HOzqis0f04YrVCJZp
+ yCRAzDfTWWtdg7q3bnk5NJWZsr8DMFIWYYM47cBOhiSYH9/Iq3NHJLd1Zy/vRplOabgA/IEYU
+ SJUyZsUg73ZD/XCfUT3d8qz7T+VOhTeJt0/gNCl9GXgetnSDZNi/f1NlohS3WMcDWTOK3p0im
+ HLp6sEhaZYp8NafT3xfKtckFHKJ2HjHfbA5YCKJzhDVpbUhXi3mLn5lA3Z/reUQzPf9Zk1pmf
+ D1eDi6P+MsJX/pBuLzN8eLmxgOfmzCz9YWkM3Y4/6d78Vi9W0oNx0LbaJyoyURSgO7WB94/KE
+ jZvEcOVvW9V/neP7iT5t7MNKsKexDFf+bs+701W4jlma0SLqT8=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 The path of a loose object contains its hash value encoded into two
-substrings of hexadecimal digits, separated by a slash.  The current
-code copies the pieces into a temporary buffer to get rid of the slash
-and then uses get_oid_hex() to decode the hash value.
+substrings of 2 and 38 hexadecimal digits separated by a slash.  The
+first part is handed to for_each_file_in_obj_subdir() in decoded form as
+subdir_nr.  The current code builds a full hexadecimal representation of
+the hash in a temporary buffer, then uses get_oid_hex() to decode it.
 
-Avoid the copy by using hex_to_bytes() directly on the substrings.
-That's shorter and easier.
-
-While at it correct the length of the second substring in a comment.
+Avoid the intermediate step by taking subdir_nr as-is and using
+hex_to_bytes() directly on the second substring.  That's shorter and
+easier.
 
 Signed-off-by: Rene Scharfe <l.s.r@web.de>
 ---
- http-push.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ sha1_file.c | 24 +++++++++++-------------
+ 1 file changed, 11 insertions(+), 13 deletions(-)
 
-diff --git a/http-push.c b/http-push.c
-index 493ee7d719..14435ab65d 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -1007,20 +1007,18 @@ static void remote_ls(const char *path, int flags,
- 		      void (*userFunc)(struct remote_ls_ctx *ls),
- 		      void *userData);
+diff --git a/sha1_file.c b/sha1_file.c
+index 10c3a0083d..a3c32d91d1 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1884,6 +1884,7 @@ int for_each_file_in_obj_subdir(unsigned int subdir_nr,
+ 	DIR *dir;
+ 	struct dirent *de;
+ 	int r = 0;
++	struct object_id oid;
  
--/* extract hex from sharded "xx/x{40}" filename */
-+/* extract hex from sharded "xx/x{38}" filename */
- static int get_oid_hex_from_objpath(const char *path, struct object_id *oid)
- {
--	char hex[GIT_MAX_HEXSZ];
+ 	if (subdir_nr > 0xff)
+ 		BUG("invalid loose object subdirectory: %x", subdir_nr);
+@@ -1901,6 +1902,8 @@ int for_each_file_in_obj_subdir(unsigned int subdir_nr,
+ 		return r;
+ 	}
+ 
++	oid.hash[0] = subdir_nr;
++
+ 	while ((de = readdir(dir))) {
+ 		if (is_dot_or_dotdot(de->d_name))
+ 			continue;
+@@ -1908,20 +1911,15 @@ int for_each_file_in_obj_subdir(unsigned int subdir_nr,
+ 		strbuf_setlen(path, baselen);
+ 		strbuf_addf(path, "/%s", de->d_name);
+ 
+-		if (strlen(de->d_name) == GIT_SHA1_HEXSZ - 2)  {
+-			char hex[GIT_MAX_HEXSZ+1];
+-			struct object_id oid;
 -
- 	if (strlen(path) != GIT_SHA1_HEXSZ + 1)
- 		return -1;
+-			xsnprintf(hex, sizeof(hex), "%02x%s",
+-				  subdir_nr, de->d_name);
+-			if (!get_oid_hex(hex, &oid)) {
+-				if (obj_cb) {
+-					r = obj_cb(&oid, path->buf, data);
+-					if (r)
+-						break;
+-				}
+-				continue;
++		if (strlen(de->d_name) == GIT_SHA1_HEXSZ - 2 &&
++		    !hex_to_bytes(oid.hash + 1, de->d_name,
++				  GIT_SHA1_RAWSZ - 1)) {
++			if (obj_cb) {
++				r = obj_cb(&oid, path->buf, data);
++				if (r)
++					break;
+ 			}
++			continue;
+ 		}
  
--	memcpy(hex, path, 2);
-+	if (hex_to_bytes(oid->hash, path, 1))
-+		return -1;
- 	path += 2;
- 	path++; /* skip '/' */
--	memcpy(hex + 2, path, GIT_SHA1_HEXSZ - 2);
- 
--	return get_oid_hex(hex, oid);
-+	return hex_to_bytes(oid->hash + 1, path, GIT_SHA1_RAWSZ - 1);
- }
- 
- static void process_ls_object(struct remote_ls_ctx *ls)
+ 		if (cruft_cb) {
 -- 
 2.15.0
