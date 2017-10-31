@@ -1,127 +1,98 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: *
+X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=1.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,LIST_MIRROR_BCC,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 011CB2055E
-	for <e@80x24.org>; Tue, 31 Oct 2017 17:11:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 782C02055E
+	for <e@80x24.org>; Tue, 31 Oct 2017 17:12:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753867AbdJaRL4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 31 Oct 2017 13:11:56 -0400
-Received: from ikke.info ([178.21.113.177]:35776 "EHLO vps892.directvps.nl"
+        id S1753868AbdJaRMx (ORCPT <rfc822;e@80x24.org>);
+        Tue, 31 Oct 2017 13:12:53 -0400
+Received: from mout.gmx.net ([212.227.15.15]:52773 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752177AbdJaRL4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Oct 2017 13:11:56 -0400
-Received: by vps892.directvps.nl (Postfix, from userid 1008)
-        id E4BDC44038E; Tue, 31 Oct 2017 18:11:54 +0100 (CET)
-Date:   Tue, 31 Oct 2017 17:33:57 +0100
-From:   Kevin Daudt <me@ikke.info>
-To:     =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH 1/2] sequencer: factor out rewrite_file()
-Message-ID: <20171031163357.GA19161@alpha.vpn.ikke.info>
-References: <6150c80b-cb0e-06d4-63a7-a4f4a9107ab2@web.de>
+        id S1753744AbdJaRMv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Oct 2017 13:12:51 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MPV69-1e5TMV41bt-004irk; Tue, 31
+ Oct 2017 18:12:47 +0100
+Date:   Tue, 31 Oct 2017 18:12:46 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Jonathan Nieder <jrnieder@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/3] mingw: introduce a way to avoid std handle
+ inheritance
+In-Reply-To: <20171030205522.hur26cumwusk7wwa@aiede.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.21.1.1710311809570.6482@virtualbox>
+References: <cover.1509382976.git.johannes.schindelin@gmx.de> <20171030205522.hur26cumwusk7wwa@aiede.mtv.corp.google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <6150c80b-cb0e-06d4-63a7-a4f4a9107ab2@web.de>
-User-Agent: Mutt/1.8.3 (2017-05-23)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:p4sm1Y2QELb7gzqNxkVIFqNCPFv7XXKyu0PofJbe0uh/5r5VM/Q
+ Zl3h80nXIxDQpucs4EPN2sBo0RAU9FFOBD6e2nNTLUfN+UHE3X+4MO5mGBEB9BntVLULZLR
+ 6+TvjEAZZlT0Llvz5L+Ggf8dNQcRku5mlzHROoFgFLH2lv3Wp+gkp1oRNKp/8YX6mdcu1WA
+ maxe89U4cdX2ENx8iUktA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ZDiMydaBypQ=:vj7Fkvi7XNA8+kj3El8V9n
+ c3l+Q0y8ZsQVSRhwkt5uh65F3gSQ0aXMEWmMseXobL63EhbpbCnskMQpO1LQd2pDVhLkZH8Lr
+ py7tlQwvEWdxZVvwUkf381IgPPMtNrwyBR+GzHAmhUrLVazTH0Om2x8wZm/WiiBMF2IpjpjPh
+ UmfAeUdSaRfh4+npRa7KNUbblU6tpXYoqDy2I87nSbcPeSAyKap9GmAZ4qcnu0yZFffo0KFIy
+ 0QhCPFfyCO8dF54/0bGsYEMUl8M9YcBskN/UmXhwTVPTLM+xyKw+3+zq+o1xsCLw9ZjfqE8/Z
+ bi48AZZQZmCBpKtCtjKipnEoondwKmP2oitjUqmseGvrubrGly18vXCajjdLAaFpQxUWk3F7N
+ 6Oza5VAsHjWWpO2VO8HN4KOHxmONjCDCDuQUWM+kAGzz34o25KyxNk791tnx7l0gWBQaGxkyI
+ 6E8k5gmWJffHj+KPbRf8pFRxRpZQ0gRhMcCcrQiNO6DqGdlBx4+Jzv1jNlvWar72UdwqTgMXW
+ Ib682al1MwnOYYY1n1M8wVoEJLlc7666nAKVDFrbcZAcdF2xB/P4SDfQ46Lr9Wcvgs0lJfphu
+ DKUczGLhU9XHTMa9+mFnE7xqX9OuJHmlippFq0nQKE52Sv548Ee/hdnyx9ZzpP0dU31Ygtjsm
+ HFabnIEVsPUdYE0EdCxRAIZfPLxLz/zVMIclaIfOvmurtBn0j75u2CMghAjB2sMuHxqJlhpKQ
+ KxFR8oVECGcGvW81DSsua7U1X6IvMBjWu4KI28yZ6DB/vuZm4T5fer7JGhEQEwmxDYX8HGguQ
+ Ug6HF7tEGmQOKUi/KLfCVu6bzHSbzGDbHVo8vy2AMKRiClytcuJ2GGEt0/s1Q9yJZBHO/x5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 31, 2017 at 10:54:21AM +0100, René Scharfe wrote:
-> Reduce code duplication by extracting a function for rewriting an
-> existing file.
+Hi Jonathan,
+
+On Mon, 30 Oct 2017, Jonathan Nieder wrote:
+
+> Johannes Schindelin wrote:
 > 
-> Signed-off-by: Rene Scharfe <l.s.r@web.de>
-> ---
->  sequencer.c | 46 +++++++++++++++++-----------------------------
->  1 file changed, 17 insertions(+), 29 deletions(-)
+> > Particularly when calling Git from applications, such as Visual Studio,
+> > it is important that stdin/stdout/stderr are closed properly. However,
+> > when spawning processes on Windows, those handles must be marked as
+> > inheritable if we want to use them, but that flag is a global flag and
+> > may very well be used by other spawned processes which then do not know
+> > to close those handles.
+> >
+> > As a workaround, introduce handling for the environment variables
+> > GIT_REDIRECT_STD* to read/write from/to named pipes instead
+> > (conceptually similar to Unix sockets, for you Linux folks). These do
+> > not need to be marked as inheritable, as the process can simply open the
+> > named pipe. No global flags. No problems.
+> >
+> > This feature was introduced as an experimental feature into Git for
+> > Windows v2.11.0(2) and has been tested ever since. I feel it is
+> > well-tested enough that it can be integrated into core Git.
 > 
-> diff --git a/sequencer.c b/sequencer.c
-> index f2a10cc4f2..17360eb38a 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -2665,6 +2665,20 @@ int check_todo_list(void)
->  	return res;
->  }
->  
-> +static int rewrite_file(const char *path, const char *buf, size_t len)
-> +{
-> +	int rc = 0;
-> +	int fd = open(path, O_WRONLY);
-> +	if (fd < 0)
-> +		return error_errno(_("could not open '%s' for writing"), path);
-> +	if (write_in_full(fd, buf, len) < 0)
-> +		rc = error_errno(_("could not write to '%s'"), path);
-> +	if (!rc && ftruncate(fd, len) < 0)
-> +		rc = error_errno(_("could not truncate '%s'"), path);
-> +	close(fd);
-> +	return rc;
-> +}
-> +
->  /* skip picking commits whose parents are unchanged */
->  int skip_unnecessary_picks(void)
->  {
-> @@ -2737,29 +2751,11 @@ int skip_unnecessary_picks(void)
->  		}
->  		close(fd);
->  
-> -		fd = open(rebase_path_todo(), O_WRONLY, 0666);
-> -		if (fd < 0) {
-> -			error_errno(_("could not open '%s' for writing"),
-> -				    rebase_path_todo());
-> +		if (rewrite_file(rebase_path_todo(), todo_list.buf.buf + offset,
-> +				 todo_list.buf.len - offset) < 0) {
->  			todo_list_release(&todo_list);
->  			return -1;
->  		}
-> -		if (write_in_full(fd, todo_list.buf.buf + offset,
-> -				todo_list.buf.len - offset) < 0) {
-> -			error_errno(_("could not write to '%s'"),
-> -				    rebase_path_todo());
-> -			close(fd);
-> -			todo_list_release(&todo_list);
+> Can this rationale go in the commit messages?
 
-Is this missing on purpose in the new situation?
+I thought I had done exactly that in 1/3...
 
-> -			return -1;
-> -		}
-> -		if (ftruncate(fd, todo_list.buf.len - offset) < 0) {
-> -			error_errno(_("could not truncate '%s'"),
-> -				    rebase_path_todo());
-> -			todo_list_release(&todo_list);
-> -			close(fd);
-> -			return -1;
-> -		}
-> -		close(fd);
->  
->  		todo_list.current = i;
->  		if (is_fixup(peek_command(&todo_list, 0)))
-> @@ -2944,15 +2940,7 @@ int rearrange_squash(void)
->  			}
->  		}
->  
-> -		fd = open(todo_file, O_WRONLY);
-> -		if (fd < 0)
-> -			res = error_errno(_("could not open '%s'"), todo_file);
-> -		else if (write(fd, buf.buf, buf.len) < 0)
-> -			res = error_errno(_("could not write to '%s'"), todo_file);
-> -		else if (ftruncate(fd, buf.len) < 0)
-> -			res = error_errno(_("could not truncate '%s'"),
-> -					   todo_file);
-> -		close(fd);
-> +		res = rewrite_file(todo_file, buf.buf, buf.len);
->  		strbuf_release(&buf);
->  	}
->  
-> -- 
-> 2.15.0
+> Actually I wouldn't mind if this were all a single patch, with such a
+> rationale in the commit message.
 
-Except for that question, it looks good to me (as a beginner), it makes
-the code better readable.
+Quite honestly, I'd rather not. There is a logical structure to the three
+patches (and I left a Duck in 3/3, to see who bothers to actually read
+what I wrote).
+
+The redirection, for example, is a very special thing that I would like to
+keep in a separate commit, for clarity.
+
+> The patches' concept seems sane.  I haven't looked closely at the
+> implementation.
+
+Thanks,
+Dscho
