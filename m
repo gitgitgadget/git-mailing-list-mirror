@@ -2,125 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF5AB20437
-	for <e@80x24.org>; Tue, 31 Oct 2017 19:16:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7E24520437
+	for <e@80x24.org>; Tue, 31 Oct 2017 21:18:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933116AbdJaTQk (ORCPT <rfc822;e@80x24.org>);
-        Tue, 31 Oct 2017 15:16:40 -0400
-Received: from mail-qk0-f169.google.com ([209.85.220.169]:53118 "EHLO
-        mail-qk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932874AbdJaTQc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Oct 2017 15:16:32 -0400
-Received: by mail-qk0-f169.google.com with SMTP id b15so35681qkg.9
-        for <git@vger.kernel.org>; Tue, 31 Oct 2017 12:16:32 -0700 (PDT)
+        id S1752177AbdJaVS4 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 31 Oct 2017 17:18:56 -0400
+Received: from mail-io0-f171.google.com ([209.85.223.171]:52737 "EHLO
+        mail-io0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751961AbdJaVSz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Oct 2017 17:18:55 -0400
+Received: by mail-io0-f171.google.com with SMTP id f20so1871432ioj.9
+        for <git@vger.kernel.org>; Tue, 31 Oct 2017 14:18:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=E5h2bmBeWReHcDnoNT2MtaQxzTSxf9sAWgdjU2VnJiE=;
-        b=bX1f/8vBZGJEf/dWAcoUq0EDAceSwERl8+FrCPrUCLVEuYw7tVera5B2PcWQRizNPt
-         QMqjozahMTp8umMGRsUBc5oftcOCijCo0rK8ofAQsFVSwt80wEtO+8sP10dBGxIzdGTo
-         MGgktJsHx0/ry1k7/x7c1/SFmfv4/sETBlUyZ682LjaE9LGMjje1M2pxIOsZAAM6OQLW
-         d8eCEDbTc8h3YlKoMXqxoVD51xNrEztZqTpcf0l1tSdERf2ENYtT9E8+Taxufl/wieU4
-         muqoybY0Wv5RC/aNHGBScG30dCLE2Ku9zUA4yJn5vU7Shoc0VLiez2S7oTKWzexUF0x4
-         ggvA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=jldlhEnAsGMqtRUIBfnKsRnF/4stn0kbz77OlmSi49c=;
+        b=dxBeAMeY4aKTUrR1GX8nPvan1L6006OCWH9cpa62N508+xJAi+oM/R5YrIXpuMcEV2
+         PtZY2lFiDPwpA31vjEIRMQnyIpcyBQ6FKyiRHuh3j1p1LH9AhKkRCi56TliSSXyKPZJf
+         1asfh+EjmQ3BSWEyI+i/DAueav9oHiMPBTGPJUCHr46wCnbONdVSTP3tD8TO4YfVFiwr
+         9QQg/awnj9lPcEdwDwe55dZZBwlMn8t+V8h7rjrdVe0u54K5mQ1W4pnb5A1aCaO+yCUF
+         WLM89N8IGsPhXnOUe4WXps7lkVCNTJNpsmYQiwRFJX3kf9iLflhYJj6BCBlqogpEOLQR
+         4LkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=E5h2bmBeWReHcDnoNT2MtaQxzTSxf9sAWgdjU2VnJiE=;
-        b=RiqyCajtvoi3ZgrXTH7TejrJ5xRnYk/cWAubdJe3ITIEeEqM9ouwNsZ3bJHxqreGGT
-         aah3C816az3VnRXoLOaSut9kgPiFy4eTjSITDZF5TlMVgG8lwRmI+GQupNssoTG/97GS
-         N3uAnHn/QwmbfZtLFJ7KOHgxsJgtgLD3cP6k2JUmrif4GngvuAmfjlomt6CRTXy5yLsb
-         3mP2gJaBLFEqkicycBsXE2G4LPcr6nXp08zj+izR9XySoZ4RhoYcU/mKCy2DVe1WiCp2
-         aNJAjax1BAlI19cbD3pX+ANZeT/i5h0rerpGoDh4kfAbt2MRUSfz8+a9W3YWkh8/x9ML
-         MVng==
-X-Gm-Message-State: AMCzsaXkMu7/Nr0suV9MW7x8j2o41T/GTAUx0pXrN7UoUqqkG6yMYPV5
-        vD9tfPGqeDuGg1S8ZI7i5BuI+j3566Frp092F8E5jOCyK0Y=
-X-Google-Smtp-Source: ABhQp+RaHFvoT7gDZLmuif9WASP3BpdfiOd9OwNvvNBfPhio4laJVdzADRVbQ3CPUHaTlKkKBoqdQ6rqCRkmd7PVGYg=
-X-Received: by 10.55.111.3 with SMTP id k3mr4271171qkc.332.1509477391361; Tue,
- 31 Oct 2017 12:16:31 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.140.102.70 with HTTP; Tue, 31 Oct 2017 12:16:30 -0700 (PDT)
-In-Reply-To: <xmqqinevzvel.fsf@gitster.mtv.corp.google.com>
-References: <20171028004419.10139-1-sbeller@google.com> <20171031003351.22341-1-sbeller@google.com>
- <20171031003351.22341-7-sbeller@google.com> <xmqqinevzvel.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=jldlhEnAsGMqtRUIBfnKsRnF/4stn0kbz77OlmSi49c=;
+        b=YjVLLv5hR/7jxPpvVC9RWPAsBzK7NXXJhHcnVMqL0dRNGOatMnpnq7L9St8q682Dny
+         Ia+vdUj7GhQ8OlPdtHZSAviC30e2tl3FCYkQcOufJ3k/KXAXPp4LQ0nLKDwZGvGSd4Xi
+         cdvh20HwJxXJPThGEsUu3y4QF7QPJMu1RUlLIj9A7fuSmOt/65TwjIvMy8HVNYhYGocq
+         Hnw5fodoyVTvXYBBeYIF0QcCzDwNTK6eogILxOp0DbkH5BmnlJ0XmUSmMADOPWRYOGpL
+         mezDNQjFqxtP1O7c4j9Fi3CmGOadDik9CHV+EVACQUXFxXe/8W/yDMW5bDAO8lkgqCNh
+         lHZw==
+X-Gm-Message-State: AMCzsaWESRGScYaVGzq7XHN/rlMLtwtUjCutp89Lh3gCZjY5EmOm9TH3
+        4dlpT/nV1J01EYqsP+bkEXpk4Q==
+X-Google-Smtp-Source: ABhQp+SOTGDm5DDLlCwPPc9xHQSRMHGnS9u3fh3GWSWAzIA43AilSwh1cYaTz20i57Nlrr8rC89CFw==
+X-Received: by 10.107.136.68 with SMTP id k65mr4117402iod.143.1509484734547;
+        Tue, 31 Oct 2017 14:18:54 -0700 (PDT)
+Received: from localhost ([2620:0:100e:422:55a5:57f1:5248:2d32])
+        by smtp.gmail.com with ESMTPSA id e89sm4570366itd.3.2017.10.31.14.18.53
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 31 Oct 2017 14:18:53 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 31 Oct 2017 12:16:30 -0700
-Message-ID: <CAGZ79kYO=4SWzfKY6bU8Spn5Ubw39ghOH6wanFhFEsKD8q9vrA@mail.gmail.com>
-Subject: Re: [PATCH 6/7] builtin/describe.c: describe a blob
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>, Kevin Daudt <me@ikke.info>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+To:     sbeller@google.com
+Cc:     Johannes.Schindelin@gmx.de, git@vger.kernel.org,
+        jacob.keller@gmail.com, me@ikke.info
+Subject: [PATCHv2 0/7] git describe blob
+Date:   Tue, 31 Oct 2017 14:18:45 -0700
+Message-Id: <20171031211852.13001-1-sbeller@google.com>
+X-Mailer: git-send-email 2.15.0.rc2.443.gfcc3b81c0a
+In-Reply-To: <20171031003351.22341-1-sbeller@google.com>
+References: <20171031003351.22341-1-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 30, 2017 at 11:25 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> diff --git a/Documentation/git-describe.txt b/Documentation/git-describe.txt
->> index c924c945ba..3d618b2445 100644
->> --- a/Documentation/git-describe.txt
->> +++ b/Documentation/git-describe.txt
->> @@ -3,7 +3,7 @@ git-describe(1)
->>
->>  NAME
->>  ----
->> -git-describe - Describe a commit using the most recent tag reachable from it
->> +git-describe - Describe a commit or blob using the most recent tag reachable from it
->
-> If I am not mistaken, this series is about describing a blob as a
-> tuple of a recent commit-ish and a path in the tree in it.  Blob
-> never reaches anything, so "desribing blob using X reachable from
-> it" is a mere nonsense.
+v2:
 
-Agreed, though the commitish used for the blob description may refer to a tag.
+* other variable names in patch v1, the commit message explains the
+  unusual strategy for the scratch pad variable, + assert
+* less ugly test in p2
+* typofix in p3 commit msg
+* patch 4 (debug printing) unchanged, awaiting discussion to start/settle.
+* rephrased the man page in p6.
 
-> The original is not great in that it ignores the "--contains" mode
-> and referring to "tagged commit" merely as "tag" for brevity, but
-> at least it made some sense.
+Thanks,
+Stefan
 
-Maybe
+v1:
+This is not an RFC any more, but a serious series.
 
-  "git-describe - Describe a blob or commit using graph relations"
+Occasionally a user is given an object hash from a blob as an error message
+or other output (e.g. [1]).
 
-though that sounds too generic, but it is accurate as all we do is
-a heuristic for graph walk ways.
+It would be useful to get a further description of such a blob, such as
+the (commit, path) tuple where this blob was introduced.
 
+This implements the answer in builtin/describe,
+however the heuristics are weak. See patch 6 for details.
 
->> @@ -24,6 +24,16 @@ By default (without --all or --tags) `git describe` only shows
->>  annotated tags.  For more information about creating annotated tags
->>  see the -a and -s options to linkgit:git-tag[1].
->>
->> +If the given `<commit-ish>` refers to a blob, it will be described
->
-> Perhaps this step should update the SYNOPSIS so that the command
-> takes not just commit-ish but a blob too.
+Any feedback welcome,
 
-That is a good idea, as the --contains would not work for blobs currently.
+Thanks,
+Stefan
 
->  Given the difficulty in
-> coming up with the single-liner description of what it does we saw
-> above, I suspect that splitting SYNOPSIS out into two very distinct
-> operating mode might make it easier to read.
->
->     SYNOPSIS
->     --------
->     [verse]
->     'git describe' [--all] [--tags] [--contains] [--abbrev=<n>] [<commit-ish>...]
->    +'git describe' [<options>...] <blob>...
->
-> Then this additional paragraph can say "When describin a <blob>",
-> without using a (technically nonsense) phrase "if <commit-ish>
-> refers to a blob", which is never true.
->
+Stefan Beller (7):
+  list-objects.c: factor out traverse_trees_and_blobs
+  revision.h: introduce blob/tree walking in order of the commits
+  builtin/describe.c: rename `oid` to avoid variable shadowing
+  builtin/describe.c: print debug statements earlier
+  builtin/describe.c: factor out describe_commit
+  builtin/describe.c: describe a blob
+  t6120: fix typo in test name
 
-ok, do we know about 'blob-ish' as a term?
+ Documentation/git-describe.txt     |  13 +++-
+ Documentation/rev-list-options.txt |   5 ++
+ builtin/describe.c                 | 125 ++++++++++++++++++++++++++++---------
+ list-objects.c                     |  52 +++++++++------
+ revision.c                         |   2 +
+ revision.h                         |   3 +-
+ t/t6100-rev-list-in-order.sh       |  46 ++++++++++++++
+ t/t6120-describe.sh                |  17 ++++-
+ 8 files changed, 213 insertions(+), 50 deletions(-)
+ create mode 100755 t/t6100-rev-list-in-order.sh
+
+-- 
+2.15.0.rc2.443.gfcc3b81c0a
+
