@@ -2,118 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B8BD32055E
-	for <e@80x24.org>; Tue, 31 Oct 2017 17:28:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2BFE92055E
+	for <e@80x24.org>; Tue, 31 Oct 2017 17:32:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753864AbdJaR2m (ORCPT <rfc822;e@80x24.org>);
-        Tue, 31 Oct 2017 13:28:42 -0400
-Received: from mail-yw0-f173.google.com ([209.85.161.173]:45802 "EHLO
-        mail-yw0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752335AbdJaR2l (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Oct 2017 13:28:41 -0400
-Received: by mail-yw0-f173.google.com with SMTP id j4so15424725ywb.2
-        for <git@vger.kernel.org>; Tue, 31 Oct 2017 10:28:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=tprg-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=U1t6257psOirczMxUFmyRb7r5TfMcFXZ/e3iclfpkQ0=;
-        b=msc3Yb49Bm7nXDQPUTMWWeELvLVf/eifbRLcUoGhhfb9Mp2gvNApPC0t/GDPKuT9YU
-         3QPG5Sm/0wctPwrH5LOsy9cf4o9luQwnpkdlDnJsKa1ablUbl0XYWg5X0TvjD9KMSQ9g
-         c9vUJ8WcWdKCxMUflpGQ9ulgFXIbPq1JrmA/3Kx1GOfco9fDiylgteYQoQ+PfuTY6BWN
-         WxV4iAZ4ZcXt3NmEPDFCu8oeDsBeuTSqCTmkHavzmNswAbhbhoAFeCok88VR46BtshQH
-         YGHjkbunbc1ywPfj33Gpz8CCWXvbRKRIWIApzIQIa1ZVCQY48bsXsyoutQOZh8s4WijM
-         JKuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=U1t6257psOirczMxUFmyRb7r5TfMcFXZ/e3iclfpkQ0=;
-        b=jsyJ729OvM7O+QSCdaTgcrh9/xEcTy1vgCnYbd9xJeNbukTX1L9EiDkiYa8Q2HF7Do
-         5f4uWVpAg9IWo2Lxgf/AiQdQga5Lhz7oECzRc10qYdEMpvz3701Dw5aFCTAqdltE4hKC
-         L6/EQ1aIZCM/JmVrGvNbxqm5Nywj6ZTZPEB93Ve3wvI2XZ8YBbA9T9w5aTcbXXrKBbgY
-         TYJNjxIprMgYiqCAMVjhvmebC18xoS9X7g8HH5k+/SLydc2xKG761dtG5UlMfNm+pUG1
-         V3D7NdDB9nLSXBc5Yl0QyfFDTAdC8MDquv12uwioRH25mKMLEvhhazYVXY8aw05LJmt2
-         KVig==
-X-Gm-Message-State: AMCzsaVWWkFJ2813REratSXr/7ghK7l9rUZHC3L/fVRa2UeBbMzc++zL
-        peucfTTFggWsk4hWZQVvU0asP5qPUP3nXY9jBWbEhTW9NXDeRrWQHin3a1iMH0qY70j2dDkP3DK
-        WW+4i/6SUDaW5oM070tqi5v4+ySA=
-X-Google-Smtp-Source: ABhQp+RgOaMv/D5ZswwPk9uQL9bNLKa6AwTDj8DdHHRNPENWws+P0E+v9RRcx4fUri41DJhI4QztM9QsYB24421BN/8=
-X-Received: by 10.129.201.6 with SMTP id o6mr1679913ywi.443.1509470920933;
- Tue, 31 Oct 2017 10:28:40 -0700 (PDT)
+        id S1753929AbdJaRb7 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 31 Oct 2017 13:31:59 -0400
+Received: from mout.gmx.net ([212.227.17.22]:62837 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753918AbdJaRb6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Oct 2017 13:31:58 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LbyUS-1dSWLd1B6C-00jEzn; Tue, 31
+ Oct 2017 18:31:53 +0100
+Date:   Tue, 31 Oct 2017 18:31:52 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Alex Vandiver <alexmv@dropbox.com>, git@vger.kernel.org,
+        Ben Peart <peartben@gmail.com>
+Subject: Re: [PATCH v3 4/4] fsmonitor: Delay updating state until after split
+ index is merged
+In-Reply-To: <xmqqa80728lo.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.21.1.1710311830330.6482@virtualbox>
+References: <20171027232637.30395-1-alexmv@dropbox.com> <4b488da5e0710e9699f92d2dabe5e3352f3eb394.1509146542.git.alexmv@dropbox.com> <5cb81a33c31ffa585861f0d3f5a7c7eef5bd8fe0.1509146542.git.alexmv@dropbox.com> <xmqqa80728lo.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Received: by 10.37.161.103 with HTTP; Tue, 31 Oct 2017 10:28:40 -0700 (PDT)
-From:   Eyjolfur Eyjolfsson <eyjolfureyjolfsson@tprg.com>
-Date:   Tue, 31 Oct 2017 17:28:40 +0000
-Message-ID: <CAO-WtQhAPjoWnWyMPi5SkCSUM_y8A=hsbLk-MUfnCSBvWnBRNQ@mail.gmail.com>
-Subject: Is it possible to convert a Json file to xml file with Git
-To:     git@vger.kernel.org
-X-tprg-gsuite: true
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:uuuIHPBZ08kh6/81yHm3pH4Dtg2boLShaF97JA1w5cOVuuKjgjm
+ wBVOIwONXySW+O3Z4RbtgSi2+kX83lU6Y10AxcrE5gaqMxCQKxP8uLJS7fatTg/IPBsRUmJ
+ ttWNe1pKVaXKqJiB0Aph1g8E4weoncmlLxGmp5cGj3/VfubAtQ9VXVvWMXNdmM5XOWpztPV
+ KjkiGL+zdqyWuyXEALw1Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:lkxkdnfCL8k=:C4+ugax6gjwt2wcvvmV4by
+ HlUotdA8sbIXPw8wd8vbHXpMsvmqxe96bfBCE4ybi9ovrZMKDLtObw0MqZmKt5Hzlnwt9DuT3
+ NWGN/3CA1kKqMrHI9dZjsXwYpo4Xho6eLev0vjwvKErjCxfubVdCLSmdk3AQswAFVraFK0sde
+ i2gEv1ZZIyQ9nQtqQh9RV5PHybyW7kfevtkp1Q6LT1LCtXRoY0junySUkvQR7nLTemdQzUZnp
+ ZjTR4tYlTO5BRDVeMETYeErRJkkaBsA3wu9eMsKcoTuiclc+DQnBTFHRKu7n7XeESi+g/wqDW
+ pMMX6eg2/xzpwv96SEdxTPLGkQMVc6H+S1Ks0Nl9EkX9VWfrh8TkwUbvcCsPQs2pjyuXqGkzH
+ UdOUQFoFYRDPimhEokEjofBgRi6OuvoaKT9AqRc3bDDPHAHG4xaT5Nj5ivdLkI4OrIcRONSZO
+ V1oCCu2h/t6RRKCJ3oe0lDq+xFeQbOtUXEOmuibmVyJWXVVPdl1Vi0v3Mf0pqranYRE0fo9pC
+ Pdt+5DAXRZaPkS23f7OB+ys2i+81cDs0GWX4PrV8DhFpfbfz4A+sm4GAWyi6vhlPDK80PaHQa
+ Pfx0HbcI4opzytXNiExICT21wONFsM4EoD7UOo7piZJv4VC5GXueCULH0wNHby9oDi5VKQ7iZ
+ GVyzOSH2FlhgkhddfCc1uW25dzQw1GlqCm4Q/9XyW3OynRFqS4zADlDtDa/0gpFHRDeLXykHB
+ Zm6IyDYZrMLLpEWbrbUvuBZcGnf/Mwz6kqm2svPp834VyP3D1ik3Bn1bf+Xd6qxgQdLFz/Qh5
+ Gi0eUvHoCi1igjM4/+7Z0deD51KBrr8cItPTk9kfxT1cRr9CpxQhQQWbdj8GYmgwQG3Ksp9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi
+Hi,
 
-I have a question.
-Is it possible to convert a Json file to XML with Git
+On Tue, 31 Oct 2017, Junio C Hamano wrote:
 
-Best regards
+> Alex Vandiver <alexmv@dropbox.com> writes:
+> 
+> > diff --git a/fsmonitor.c b/fsmonitor.c
+> > index 4ea44dcc6..417759224 100644
+> > --- a/fsmonitor.c
+> > +++ b/fsmonitor.c
+> > @@ -49,20 +49,7 @@ int read_fsmonitor_extension(struct index_state *istate, const void *data,
+> >  		ewah_free(fsmonitor_dirty);
+> >  		return error("failed to parse ewah bitmap reading fsmonitor index extension");
+> >  	}
+> > -
+> > -	if (git_config_get_fsmonitor()) {
+> > -		/* Mark all entries valid */
+> > -		for (i = 0; i < istate->cache_nr; i++)
+> > -			istate->cache[i]->ce_flags |= CE_FSMONITOR_VALID;
+> > -
+> > -		/* Mark all previously saved entries as dirty */
+> > -		ewah_each_bit(fsmonitor_dirty, fsmonitor_ewah_callback, istate);
+> > -
+> > -		/* Now mark the untracked cache for fsmonitor usage */
+> > -		if (istate->untracked)
+> > -			istate->untracked->use_fsmonitor = 1;
+> > -	}
+> > -	ewah_free(fsmonitor_dirty);
+> > +	istate->fsmonitor_dirty = fsmonitor_dirty;
+> 
+> This makes local variable "int i;" in this function unused and gets
+> compiler warning.
 
-Eyjolfur Eyjolfsson
+... to which end we introduced the DEVELOPER flag to catch these: if you
+call
 
-(e) eyjolfureyjolfsson@tprg.com
-(w) tpretailgroup.com
+	make DEVELOPER=1
 
---=20
-This email and any files transmitted with it are confidential and intended=
-=20
-for the sole use of the individual or entity to whom they are addressed.=20
- Any unauthorised dissemination or copying of this email or its attachments=
-=20
-or disclosure of any information contained in them is strictly prohibited.=
-=20
- If you have received the email in error, please notify the sender by email=
-=20
-immediately and delete it from your system.  The content of the email does=
-=20
-not necessarily represent Theo Paphitis Retail Group and associated=20
-companies and any views or opinions presented are solely those of the=20
-author.  Whilst we check communications we send for virus infection, you=20
-should check this email and any attachments to it for viruses as we accept=
-=20
-no responsibility for any loss or damage caused by any virus transmitted by=
-=20
-this email.  Email transmission cannot be guaranteed secure or error-free.
+and compile with GCC or Clang, it will elevate such warnings to errors,
+and we highly encourage contributors to build their patched source code
+with said flag.
 
-Theo Paphitis Retail Group is the collective name for Ryman Group Limited,=
-=20
-registered in England and Wales, Company Number 02714395, VAT Number=20
-672523729,  Registered Office: Ryman House, Savoy Road, Crewe, Cheshire,=20
-CW1 6NA; Ryman Limited, registered in England and Wales, Company Number=20
-3007166, VAT Number 672523729,  Registered Office: Ryman House, Savoy Road,=
-=20
-Crewe, Cheshire, CW1 6NA;  Robert Dyas Holdings Limited, registered in=20
-England and Wales, Company Number 4041884; VAT number 742720153, Registered=
-=20
-Office:  1 St George=E2=80=99s Road, Wimbledon, London, SW19 4DR;  Boux Ave=
-nue=20
-Limited, registered in England and Wales, Company Number 7191520, VAT=20
-Number 125504638,  Registered Office: 1 St George=E2=80=99s Road, Wimbledon=
-,=20
-London, SW19 4DR;  Boux Avenue International Limited, registered in England=
-=20
-and Wales, Company Number 8047333, VAT Number 125504638, Registered office:=
-=20
-1 St George=E2=80=99s Road, Wimbledon, London, SW19 4DR; and London Graphic=
- Centre=20
-Limited, registered in England and Wales, Company Number 6062021,  VAT=20
-Number 251820524, Registered Office:  Ryman House, Savoy Road, Crewe,=20
-Cheshire, CW1 6NA.
+Thanks,
+Johannes
