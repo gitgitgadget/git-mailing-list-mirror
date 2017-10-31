@@ -2,71 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1ED33202A0
-	for <e@80x24.org>; Tue, 31 Oct 2017 08:13:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 01103202A0
+	for <e@80x24.org>; Tue, 31 Oct 2017 08:15:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752166AbdJaIN0 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 31 Oct 2017 04:13:26 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:54927 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751905AbdJaINY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Oct 2017 04:13:24 -0400
-Received: by mail-pf0-f196.google.com with SMTP id n89so13159467pfk.11
-        for <git@vger.kernel.org>; Tue, 31 Oct 2017 01:13:23 -0700 (PDT)
+        id S1752764AbdJaIP3 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 31 Oct 2017 04:15:29 -0400
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:47336 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751969AbdJaIP1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Oct 2017 04:15:27 -0400
+Received: by mail-pg0-f67.google.com with SMTP id r25so14006973pgn.4
+        for <git@vger.kernel.org>; Tue, 31 Oct 2017 01:15:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:user-agent:in-reply-to:references:mime-version
          :content-transfer-encoding:subject:to:cc:from:message-id;
-        bh=mgsBfk42wFAQRCIaIsa2PNegFHKT5A/46voMTdZYbG8=;
-        b=RJACRIHShd/ikD2H8Fn7VSzhYPjWGgdDyFRylgMJoK2fTbzHE4Uiz0llBZieVeZlL2
-         9j6fRkWz9DUPcVmB33UsvS9VUR7KthwsuH8U2e6ys6rv3NvJAYD8cw/CJdWAauM9PNUn
-         Dp6/u0QHQzVp6Nl9xjC1pI+y1vE6Nyc0frh+LXajR5eRxvvhqYwRO4TOkZmeNFLLBt1u
-         waRPR3YxBbz4Vtip7LbhMO1pjgWlo4YCj7sYVz6PfPNikaLJJynQl93Sk39ZwVgIMSsE
-         /5VkYG2KMvet6u8YN0xIjod5fA6TgRhRKb4m+e493TxgwPKsjqgMAXmeVoav21GnGhn/
-         IApg==
+        bh=X2bgwu4aLWJzWcXsKrbth61EvWDigUf59MV6QVA8C3w=;
+        b=RAxZvTOgsTqP78uc//YwkZWKZaM1mxpVGY/BtERtBLjreHkGIVMtUTMC1bsUMbBwan
+         Ei+EAs28/719apC2Vh4r24MroOauRxBww3mt6D+DP8iZrIwKzHSboI41JMAj3eCH9UzQ
+         jDftSE+94uHK4Ea/oKkmE0MUiKQYAfJKbuoe40eK23EA0astyI6ejuL2pueI5pQVSsfI
+         AYq1KkdtNjiAo6U8iMuoDDl+/WHcKV0Br1yCGgyypQne3ItAV/ZLxAaHNX8Q49ljlyci
+         4rA6b8YNhVVT1RUAR9kQ7Qt0Ovm2TijWJAwXYr5PJH8eefuWzPHRzgw51xFVQ8DJ6yuf
+         1aWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:user-agent:in-reply-to:references
          :mime-version:content-transfer-encoding:subject:to:cc:from
          :message-id;
-        bh=mgsBfk42wFAQRCIaIsa2PNegFHKT5A/46voMTdZYbG8=;
-        b=AQVaKX1Wzf6O47Tq58TJUY03tIxKIgtvwlP2cTcs6iKTCUlS1Hx0R1f2h7zk/tdWjF
-         BXzLyTmOZWSGxqdWsO3TXUbRf4pwBhSTKb6YEIMzAxhUv/4LtwDbjZrVwTsHBucIiFyY
-         V7oaYUwOw7Vl5D4oa4JcIg/u3GVc6EGsFDlu8nBjyypUXzrGZCCd7F3QknBNFBZI6fIT
-         svEphkU957pLPI91kqydaluCd+QERIvb6Hd+KYeBiIl7+98Res5TZMM7kIPhOavjCu/9
-         tlfpX2ZkuELfPviLB9a93Th2WwR6YlC5sCp26jY20ndN8Hjdg/Mfl7edvQ8Joko1Qe59
-         jo5Q==
-X-Gm-Message-State: AMCzsaUj7YgoulWtdzRlO+cgNAbl7gMaoeVEcfExRPXWFZv96sUgTlvE
-        ZjwBUYusSdHgOdG4ojUCHKs=
-X-Google-Smtp-Source: ABhQp+SnNACUj6ceJkaWOjLwa0x1QYySEi30EKFhd9/x4PChv+9OvR9W9hy+JEATDJdYdRJve9b0WA==
-X-Received: by 10.84.245.145 with SMTP id j17mr1116368pll.163.1509437603244;
-        Tue, 31 Oct 2017 01:13:23 -0700 (PDT)
+        bh=X2bgwu4aLWJzWcXsKrbth61EvWDigUf59MV6QVA8C3w=;
+        b=LusYq8R++YSOEXzcP7Gm6ezwtAS9nX59qSQ3F2UkQOefEpJtNmPqXXoKIikWGzL5hn
+         Ww61lZOBESHUlEqVn1iwNgaj8IEa2sUcHdUfTpq4mU0S9oQJqaGLIgSzQ7ODup6ZfREL
+         Y7mxkWyIfj7a6zqWB+k/hhJJInuKd71EMwR7ZN8oz+vEQJ2Q/Rw4I3bIEeQ71SzY24rj
+         82Ggtv0seUhe15UpJxlitQWRLl0fzm4cAYdzovI3d9dRuQ586wQSPwYzo0mJc1eyvlvc
+         OEZUR6G9BnSKXjT3MP06eRj0CBBLeK6deb65BP+QjPjuSsYGzmMBq2Q6DLwO9sBsK742
+         HXQg==
+X-Gm-Message-State: AMCzsaWmVKID7Ic273YGk/Iyrzu2yQAnwEU8kgvj4CkjErBTVDQS3xsT
+        hGygJp6mFfD+iKCE3UYX67GPLewl
+X-Google-Smtp-Source: ABhQp+ScWbOPNL+6PBdrX1o/WWrYdPPtMF7+en82Hv/EfFCLoIxxOPR/M8H/pUQK+VkFPjSXGCEXPw==
+X-Received: by 10.84.173.4 with SMTP id o4mr1135231plb.266.1509437727014;
+        Tue, 31 Oct 2017 01:15:27 -0700 (PDT)
 Received: from [192.168.1.126] (50-39-169-152.bvtn.or.frontiernet.net. [50.39.169.152])
-        by smtp.gmail.com with ESMTPSA id j1sm1882467pfj.108.2017.10.31.01.13.21
+        by smtp.gmail.com with ESMTPSA id n62sm1997374pfh.95.2017.10.31.01.15.25
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 31 Oct 2017 01:13:21 -0700 (PDT)
-Date:   Tue, 31 Oct 2017 01:13:18 -0700
+        Tue, 31 Oct 2017 01:15:26 -0700 (PDT)
+Date:   Tue, 31 Oct 2017 01:15:22 -0700
 User-Agent: K-9 Mail for Android
-In-Reply-To: <alpine.DEB.2.21.1.1710301343000.6482@virtualbox>
-References: <20171028000152.2760-1-jacob.e.keller@intel.com> <alpine.DEB.2.21.1.1710281740070.6482@virtualbox> <4150d979-f653-e79b-563a-1dc43f12468d@talktalk.net> <xmqq1sll8j6f.fsf@gitster.mtv.corp.google.com> <CA+P7+xrXLcTQpPWgzLwt_yZo=QdfetF36jrc_TtXfqMKR2Hh3w@mail.gmail.com> <xmqqo9op71d8.fsf@gitster.mtv.corp.google.com> <CA+P7+xo5UgUPQCYU-LaXn+HZZ1qe++KOevTMh2C1sgnzK0SAQA@mail.gmail.com> <7026e5be-bbf0-9d55-8901-f920a775879b@talktalk.net> <alpine.DEB.2.21.1.1710301343000.6482@virtualbox>
+In-Reply-To: <20171031003351.22341-4-sbeller@google.com>
+References: <20171028004419.10139-1-sbeller@google.com> <20171031003351.22341-1-sbeller@google.com> <20171031003351.22341-4-sbeller@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH] rebase: exec leaks GIT_DIR to environment
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        phillip.wood@dunelm.org.uk
-CC:     Junio C Hamano <gitster@pobox.com>,
-        Jacob Keller <jacob.e.keller@intel.com>,
-        Git mailing list <git@vger.kernel.org>
+Subject: Re: [PATCH 3/7] builtin/describe.c: rename `oid` to avoid variable shadowing
+To:     Stefan Beller <sbeller@google.com>, sbeller@google.com
+CC:     git@vger.kernel.org, me@ikke.info, Johannes.Schindelin@gmx.de
 From:   Jacob Keller <jacob.keller@gmail.com>
-Message-ID: <A0F486F0-DDA3-4E99-9C0F-371387093C51@gmail.com>
+Message-ID: <DD1C140E-E5AE-4BD9-86CF-46B828BF4289@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -74,77 +70,51 @@ X-Mailing-List: git@vger.kernel.org
 
 
 
-On October 30, 2017 5:46:36 AM PDT, Johannes Schindelin <Johannes=2ESchind=
-elin@gmx=2Ede> wrote:
->Hi Phillip,
->
->On Mon, 30 Oct 2017, Phillip Wood wrote:
->
->> On 30/10/17 06:26, Jacob Keller wrote:
->> > On Sun, Oct 29, 2017 at 8:36 PM, Junio C Hamano <gitster@pobox=2Ecom>
->wrote:
->> >> Jacob Keller <jacob=2Ekeller@gmail=2Ecom> writes:
->> >>
->> >>> I am pretty confident we can fix it=2E=2E=2E=2E
->> >>
->> >> I am sure we can eventually, but 3 hours is not enough soak time=2E
->> >>
->> >> I am inclined to leave the fix for 2=2E15=2E1/2=2E16=2E0 instead of
->delaying
->> >> the release by 10 more days=2E
->> >=20
->> > That's fair=2E I'm not even sure it was introduced since the last
->> > release (I tried 2=2E12, but not 2=2E13 or 2=2E14 manually)=2E Thus, =
-it
->likely
->> > wasn't noticed for at least a release, meaning it's less important
->(to
->> > me at least) that we provide a fix immediately, since it went
->> > unnoticed this long, likely that means few people will be impacted=2E
->>=20
->> It is in 2=2E14=2E3, I haven't bisected but I suspect it was introduced
->by
->> 311af5266b sequencer (rebase -i): implement the 'exec' command
->>=20
->> Running
->> git rebase -x'perl -e '\''$,=3D$\=3D"\n"; print  grep { /^GIT_/ } sort
->keys
->> %ENV'\' @
->> Shows that the rebase--helper version also sets GIT_PREFIX as well as
->> GIT_DIR, I suspect the difference is coming from differences in the
->> setup for builtin commands vs external commands=2E The shell version
->and
->> the rebase--helper version set GIT_CHERRY_PICK_HELP, GIT_EDITOR,
->> GIT_INTERNAL_GETTEXT_SH_SCHEME, GIT_REFLOG_ACTION
->
->Indeed, when you look at git_dir_init in git-sh-setup, you will see
->that
->Unix shell scripts explicitly get their GIT_DIR turned into an absolute
->path=2E
->
->So my suggested patch is wrong, and it should be more along the lines
->of
->
->	struct strbuf buf =3D STRBUF_INIT;
->	const char *child_env[] =3D { NULL, NULL };
->
->	strbuf_addf(&buf, "GIT_DIR=3D%s", absolute_path(get_git_dir()));
->	child_env[0] =3D buf=2Ebuf;
->
->	=2E=2E=2E
->
->	strbuf_release(&buf);
->
->Jake, can I still take you up on taking it from here?
->
->Ciao,
->Dscho
+On October 30, 2017 5:33:47 PM PDT, Stefan Beller <sbeller@google=2Ecom> w=
+rote:
+>The function `describe` has already a variable named `oid` declared at
+>the beginning of the function for an object id=2E  Do now shadow that
 
-Yes, I will clean this up and submit something tomorrow once I get to a co=
-mputer=2E I didn't end up having time to work on Git today=2E
+Nit, s/now/not/
 
-Thanks,
-Jake
+>variable with a pointer to an object id=2E
+>
+>Signed-off-by: Stefan Beller <sbeller@google=2Ecom>
+>---
+> builtin/describe=2Ec | 8 ++++----
+> 1 file changed, 4 insertions(+), 4 deletions(-)
+>
+>diff --git a/builtin/describe=2Ec b/builtin/describe=2Ec
+>index 29075dbd0f=2E=2Efd61f463cf 100644
+>--- a/builtin/describe=2Ec
+>+++ b/builtin/describe=2Ec
+>@@ -381,9 +381,9 @@ static void describe(const char *arg, int last_one)
+> 	}
+>=20
+> 	if (!match_cnt) {
+>-		struct object_id *oid =3D &cmit->object=2Eoid;
+>+		struct object_id *cmit_oid =3D &cmit->object=2Eoid;
+> 		if (always) {
+>-			printf("%s", find_unique_abbrev(oid->hash, abbrev));
+>+			printf("%s", find_unique_abbrev(cmit_oid->hash, abbrev));
+> 			if (suffix)
+> 				printf("%s", suffix);
+> 			printf("\n");
+>@@ -392,11 +392,11 @@ static void describe(const char *arg, int
+>last_one)
+> 		if (unannotated_cnt)
+> 			die(_("No annotated tags can describe '%s'=2E\n"
+> 			    "However, there were unannotated tags: try --tags=2E"),
+>-			    oid_to_hex(oid));
+>+			    oid_to_hex(cmit_oid));
+> 		else
+> 			die(_("No tags can describe '%s'=2E\n"
+> 			    "Try --always, or create some tags=2E"),
+>-			    oid_to_hex(oid));
+>+			    oid_to_hex(cmit_oid));
+> 	}
+>=20
+> 	QSORT(all_matches, match_cnt, compare_pt);
 
 --=20
 Sent from my Android device with K-9 Mail=2E Please excuse my brevity=2E
