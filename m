@@ -2,86 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 029A420437
-	for <e@80x24.org>; Tue, 31 Oct 2017 17:01:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 914BA20437
+	for <e@80x24.org>; Tue, 31 Oct 2017 17:09:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753298AbdJaRBY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 31 Oct 2017 13:01:24 -0400
-Received: from cloud.peff.net ([104.130.231.41]:41460 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1753551AbdJaRBX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Oct 2017 13:01:23 -0400
-Received: (qmail 32278 invoked by uid 109); 31 Oct 2017 17:01:23 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 31 Oct 2017 17:01:23 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3178 invoked by uid 111); 31 Oct 2017 17:01:31 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Tue, 31 Oct 2017 13:01:31 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 31 Oct 2017 13:01:20 -0400
-Date:   Tue, 31 Oct 2017 13:01:20 -0400
-From:   Jeff King <peff@peff.net>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH 0/2] Re* Consequences of CRLF in index?
-Message-ID: <20171031170120.3tg3mrenyhmp5uwc@sigill.intra.peff.net>
-References: <xmqqinf1ce3i.fsf_-_@gitster.mtv.corp.google.com>
- <20171027170745.2125-1-sbeller@google.com>
- <CAGZ79kbNMWqPkk9PGDH44YYPC=Mgqk4+sTmRwQUGKF_JCmbpLA@mail.gmail.com>
- <xmqqpo942fzk.fsf@gitster.mtv.corp.google.com>
- <CAGZ79kaSQzLEjmD3+YgQOz5cety9Y3MZmUo7EkKA-JdQRt_Diw@mail.gmail.com>
+        id S1753634AbdJaRJL (ORCPT <rfc822;e@80x24.org>);
+        Tue, 31 Oct 2017 13:09:11 -0400
+Received: from mout.gmx.net ([212.227.15.19]:52071 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752177AbdJaRJK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Oct 2017 13:09:10 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M08eS-1dHbR11UUO-00uM9M; Tue, 31
+ Oct 2017 18:08:59 +0100
+Date:   Tue, 31 Oct 2017 18:08:57 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Eric Sunshine <sunshine@sunshineco.com>
+cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/3] mingw: document the experimental standard handle
+ redirection
+In-Reply-To: <CAPig+cQs+6xCn=OR_Mw8vbEwEJ0c=sqnaEChOxuVw=kV4PQwsw@mail.gmail.com>
+Message-ID: <alpine.DEB.2.21.1.1710311807420.6482@virtualbox>
+References: <cover.1509382976.git.johannes.schindelin@gmx.de> <436f0fb010709fe0d90460dc7bc1b3482237b192.1509382976.git.johannes.schindelin@gmx.de> <CAPig+cQs+6xCn=OR_Mw8vbEwEJ0c=sqnaEChOxuVw=kV4PQwsw@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kaSQzLEjmD3+YgQOz5cety9Y3MZmUo7EkKA-JdQRt_Diw@mail.gmail.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:kBDvFzaPhuRjU478GKnVE+uPlrYsWKbWqt0JVJ5/de6xMIn9jn1
+ E8SLjVrQARg5xkrzWS266cEfq1oCvEwSy0yrVnPCDSy8FNW5egrbMI/f8KDkbPcvDURUeXI
+ moqIxShXxY3hWrt9PmIGh8GEQ9fYj2dpvkHDTpE66ujMdr2tep/vNoHiUOQcystCAGKEXKH
+ qnBzG2DFQglqj36MHiYcg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:LlNSMdkLIY0=:LCiZk5jk4s7IijRX5IKLyY
+ 8J8qAYIGEDEkT40o2SPYVnnFWiF/1GoC/DYs2o6PFjCWoSdgsTtdhPyr7vv2FnuTVF7Amjv15
+ hZjMKlHTbG4PpRYTMW3g65w61EZOm4XtNd54FwrSJXLEwjW0nBM35U9rs7bou0HxiKdea7aPL
+ gW50YG9xVstMYn1t1uDdYT60eIyMg6HcQaFj/lsPivOoZhZRp+QkrEr3tReZhSqjUsbxw94FB
+ OWn7dmX+aTVGwZv1v+78M0naRAoyTorhSDJERMgKk7DMRyGF1AOr9QxV0mWY7N11kgYsmtL11
+ b39J0Z5VR+kUhbiuLTTsQEaGaK6ECaRhvMP9EZeFtMHbAxPAri6qFwijCUJilkGqC5pG45Nlv
+ 4QxcYHlNV70K6UZYghjpxpQM3uVmU++JiGwIqj9RcqcRDCE8++wxwYSVrAEUK9LVWs06wi1FN
+ N8IMD18WoTeyPrjTZcCR65ZIeMInvTDyPWhKFEAptiWYivKJzSbz07F5iyEYdLwzJexpzwbuZ
+ VNkeNuYHUH/S1ZTrMcE/IHtpedG0JXfKU7469bdjvS8ChSsfZtEnIr39mM1MTF8kMxT2r4ymX
+ guQIsCOS/v7f6N4oXF935LU7VI0uZTgSQR1DfXdsYpwwpUaMrHbyID3Wac7jlmZmuMeFIxdSf
+ UTF8It7OoqMTVWx1GXb2Z28l/8oADcjK3Qr31wOM5c6M/PoAcHzWMSyWOHKabyGrVQ2Jkv58r
+ TMQukyK4XAPzl0P4DscznE9vfVtKlLI1rPl7RdMQx8qTY1HFYZJpdRFqQ8ivIvFEhgC/h6zXo
+ 502VGhirjfKCfOGbu8uWTrSpcgjKd0u5mw/wVb3dHs16y0krH87Fw2I6wOGff+eDhsnjcqF
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 31, 2017 at 09:41:25AM -0700, Stefan Beller wrote:
+Hi Eric,
 
-> On Mon, Oct 30, 2017 at 7:44 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> > Stefan Beller <sbeller@google.com> writes:
+On Mon, 30 Oct 2017, Eric Sunshine wrote:
+
+> On Mon, Oct 30, 2017 at 1:10 PM, Johannes Schindelin
+> <johannes.schindelin@gmx.de> wrote:
+> > This feature is still highly experimental and has not even been
+> > contributed to the Git mailing list yet: the feature still needs to be
+> > battle-tested more.
 > >
-> >> (I note this as you regard your patches as a lunch time hack
-> >> in the cooking email; I am serious about these patches though.)
-> >
-> > We do not want to touch borrowed code unnecessarily.  Are these
-> > lines and bits hampering further progress we are actively trying to
-> > make right now?
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> > +`GIT_REDIRECT_STDIN`::
+> > +`GIT_REDIRECT_STDOUT`::
+> > +`GIT_REDIRECT_STDERR`::
+> > +       (EXPERIMENTAL) Windows-only: allow redirecting the standard
+> > +       input/output/error handles. This is particularly useful in
+> > +       multi-threaded applications where the canonical way to pass
+> > +       standard handles via `CreateProcess()` is not an option because
+> > +       it would require the handles to be marked inheritable (and
+> > +       consequently *every* spawned process would inherit them, possibly
+> > +       blocking regular Git operations). The primary intended use case
+> > +       is to use named pipes for communication.
+> > ++
+> > +Two special values are supported: `off` will simply close the
+> > +corresponding standard handle, and if `GIT_REDIRECT_STDERR` is
+> > +`2>&1`, standard error will be redirected to the same handle as
+> > +standard output.
 > 
-> No they are not, you are correct.
-> 
-> I differ in opinion on 'borrowed code'. The latest release of xdiff
-> (v0.23) was in Nov 13, 2008 according to http://freecode.com/projects/xdiff-lib
-> or on March 23, 2006 according to https://directory.fsf.org/wiki/LibXDiff
-> and given that we incorporated so many changes already to xdiff,
-> I would argue it is sufficiently different from the original, we'll probably
-> never import another upstream version (if there will be a release at all).
-> 
-> So the code was rather taken and now we are the bag holders in
-> maintaining it, so we can make it pretty even only for the sake of
-> pleasing ourselves (or rather: not confusing ourselves with too
-> many unused flags).
+> Consistent with the Unixy special-case for '2>&1', I wonder if the
+> 'off' case would be more intuitively stated as '>/dev/null' or just
+> '/dev/null'...
 
-Yes, I'd agree. For what it's worth both sides of this argument played
-out in my head when I saw your patches, and I ended up at the same "we
-are the bag holders" place. And there's certainly precedent for touching
-that code and cleaning it up to make it easier to work with (just look
-at at "git log -p xdiff").
+I feel this is the wrong way round. `>/dev/null` may sound very intuitive
+to you, but this feature is Windows only. Guess three times how intuitive
+it sounds to Windows developers to write `>/dev/null` if you want to
+suppress output...
 
-I don't know that I would support a full-scale rewrite (for the same
-reason that I wouldn't on the rest of the code base -- avoiding churn).
-But deleting unused bits seems like an easy win for readability.
+:0)
 
--Peff
+Ciao,
+Dscho
