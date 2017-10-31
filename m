@@ -2,119 +2,153 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 01103202A0
-	for <e@80x24.org>; Tue, 31 Oct 2017 08:15:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 10D8A202A0
+	for <e@80x24.org>; Tue, 31 Oct 2017 09:09:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752764AbdJaIP3 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 31 Oct 2017 04:15:29 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:47336 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751969AbdJaIP1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Oct 2017 04:15:27 -0400
-Received: by mail-pg0-f67.google.com with SMTP id r25so14006973pgn.4
-        for <git@vger.kernel.org>; Tue, 31 Oct 2017 01:15:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:user-agent:in-reply-to:references:mime-version
-         :content-transfer-encoding:subject:to:cc:from:message-id;
-        bh=X2bgwu4aLWJzWcXsKrbth61EvWDigUf59MV6QVA8C3w=;
-        b=RAxZvTOgsTqP78uc//YwkZWKZaM1mxpVGY/BtERtBLjreHkGIVMtUTMC1bsUMbBwan
-         Ei+EAs28/719apC2Vh4r24MroOauRxBww3mt6D+DP8iZrIwKzHSboI41JMAj3eCH9UzQ
-         jDftSE+94uHK4Ea/oKkmE0MUiKQYAfJKbuoe40eK23EA0astyI6ejuL2pueI5pQVSsfI
-         AYq1KkdtNjiAo6U8iMuoDDl+/WHcKV0Br1yCGgyypQne3ItAV/ZLxAaHNX8Q49ljlyci
-         4rA6b8YNhVVT1RUAR9kQ7Qt0Ovm2TijWJAwXYr5PJH8eefuWzPHRzgw51xFVQ8DJ6yuf
-         1aWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:user-agent:in-reply-to:references
-         :mime-version:content-transfer-encoding:subject:to:cc:from
-         :message-id;
-        bh=X2bgwu4aLWJzWcXsKrbth61EvWDigUf59MV6QVA8C3w=;
-        b=LusYq8R++YSOEXzcP7Gm6ezwtAS9nX59qSQ3F2UkQOefEpJtNmPqXXoKIikWGzL5hn
-         Ww61lZOBESHUlEqVn1iwNgaj8IEa2sUcHdUfTpq4mU0S9oQJqaGLIgSzQ7ODup6ZfREL
-         Y7mxkWyIfj7a6zqWB+k/hhJJInuKd71EMwR7ZN8oz+vEQJ2Q/Rw4I3bIEeQ71SzY24rj
-         82Ggtv0seUhe15UpJxlitQWRLl0fzm4cAYdzovI3d9dRuQ586wQSPwYzo0mJc1eyvlvc
-         OEZUR6G9BnSKXjT3MP06eRj0CBBLeK6deb65BP+QjPjuSsYGzmMBq2Q6DLwO9sBsK742
-         HXQg==
-X-Gm-Message-State: AMCzsaWmVKID7Ic273YGk/Iyrzu2yQAnwEU8kgvj4CkjErBTVDQS3xsT
-        hGygJp6mFfD+iKCE3UYX67GPLewl
-X-Google-Smtp-Source: ABhQp+ScWbOPNL+6PBdrX1o/WWrYdPPtMF7+en82Hv/EfFCLoIxxOPR/M8H/pUQK+VkFPjSXGCEXPw==
-X-Received: by 10.84.173.4 with SMTP id o4mr1135231plb.266.1509437727014;
-        Tue, 31 Oct 2017 01:15:27 -0700 (PDT)
-Received: from [192.168.1.126] (50-39-169-152.bvtn.or.frontiernet.net. [50.39.169.152])
-        by smtp.gmail.com with ESMTPSA id n62sm1997374pfh.95.2017.10.31.01.15.25
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 31 Oct 2017 01:15:26 -0700 (PDT)
-Date:   Tue, 31 Oct 2017 01:15:22 -0700
-User-Agent: K-9 Mail for Android
-In-Reply-To: <20171031003351.22341-4-sbeller@google.com>
-References: <20171028004419.10139-1-sbeller@google.com> <20171031003351.22341-1-sbeller@google.com> <20171031003351.22341-4-sbeller@google.com>
-MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH 3/7] builtin/describe.c: rename `oid` to avoid variable shadowing
-To:     Stefan Beller <sbeller@google.com>, sbeller@google.com
-CC:     git@vger.kernel.org, me@ikke.info, Johannes.Schindelin@gmx.de
-From:   Jacob Keller <jacob.keller@gmail.com>
-Message-ID: <DD1C140E-E5AE-4BD9-86CF-46B828BF4289@gmail.com>
+        id S1752079AbdJaJJV (ORCPT <rfc822;e@80x24.org>);
+        Tue, 31 Oct 2017 05:09:21 -0400
+Received: from mailout3.samsung.com ([203.254.224.33]:17399 "EHLO
+        mailout3.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751920AbdJaJJT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Oct 2017 05:09:19 -0400
+Received: from epcas1p4.samsung.com (unknown [182.195.41.48])
+        by mailout3.samsung.com (KnoxPortal) with ESMTP id 20171031090917epoutp0386a561fb89fc02df9cd56b7328cc30e8~ynI3Fwh-B2149721497epoutp036;
+        Tue, 31 Oct 2017 09:09:17 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com 20171031090917epoutp0386a561fb89fc02df9cd56b7328cc30e8~ynI3Fwh-B2149721497epoutp036
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1509440957;
+        bh=ATi/qkeKp62CUkK1XNzRyyO3Wkg/PchiX5670fyfOaA=;
+        h=Subject:To:Cc:From:Date:In-reply-to:References:From;
+        b=X1mh/pxbflk+p/4m7tyukSUOK+tHFSzj+xBwTnvqA5YDG9vV2VwUcpPR8PQzXao92
+         zVqZTt9zjyiD3+FJl9nRQF2DcuB1vlkp2ft5ISmBHO3QznC4UEz9fNwyIz7ZqZcglY
+         /IACFna4AL/dniVpdBlcrHp8oCTr/TIgoAussKUA=
+Received: from epsmges1p5.samsung.com (unknown [182.195.42.57]) by
+        epcas1p4.samsung.com (KnoxPortal) with ESMTP id
+        20171031090917epcas1p4ec87a613f69d28472e5f852d63882b5d~ynI28SkR81666216662epcas1p4T;
+        Tue, 31 Oct 2017 09:09:17 +0000 (GMT)
+Received: from epcas1p4.samsung.com ( [182.195.41.48]) by
+        epsmges1p5.samsung.com (Symantec Messaging Gateway) with SMTP id
+        76.A7.04139.DBD38F95; Tue, 31 Oct 2017 18:09:17 +0900 (KST)
+Received: from epsmgms2p1new.samsung.com (unknown [182.195.42.142]) by
+        epcas1p3.samsung.com (KnoxPortal) with ESMTP id
+        20171031090917epcas1p39087e30e2877442613daaa15075b0749~ynI2srx3Z2812628126epcas1p3E;
+        Tue, 31 Oct 2017 09:09:17 +0000 (GMT)
+X-AuditID: b6c32a39-969ff7000000102b-6b-59f83dbd1b79
+Received: from epmmp1.local.host ( [203.254.227.16]) by
+        epsmgms2p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
+        B3.2B.04095.DBD38F95; Tue, 31 Oct 2017 18:09:17 +0900 (KST)
+Received: from [106.109.129.81] by mmp1.samsung.com (Oracle Communications
+        Messaging Server 7.0.5.31.0 64bit (built May  5 2014)) with ESMTPA id
+        <0OYO00DFUK3EUL20@mmp1.samsung.com>; Tue, 31 Oct 2017 18:09:16 +0900 (KST)
+Subject: [PATCH v5] merge-recursive: check GIT_MERGE_VERBOSITY only once
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>, vmiklos@frugalware.org
+From:   Andrey Okoshkin <a.okoshkin@samsung.com>
+Organization: Samsung RnD Institute Russia
+Message-id: <f0d63948-80f3-b2d8-8623-49ae13ca87bf@samsung.com>
+Date:   Tue, 31 Oct 2017 12:09:13 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+        Thunderbird/52.4.0
+MIME-version: 1.0
+In-reply-to: <xmqqwp3byeai.fsf@gitster.mtv.corp.google.com>
+Content-type: text/plain; charset="utf-8"
+Content-language: en-GB
+Content-transfer-encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrOKsWRmVeSWpSXmKPExsWy7bCmge5e2x+RBsuOqlt0XelmsmjovcJs
+        8fdNF6PFj5YeZovNm9tZLM68aWS0ONL+mcmB3eNJcw+Lx85Zd9k9Fmwq9XjWu4fR4+IlZY/F
+        D7w8Pm+SC2CP4rJJSc3JLEst0rdL4Mrov7iDpWA1V8Wna3/ZGhivcXQxcnJICJhILOmdwNTF
+        yMUhJLCDUeLr4YXsEM53RolZ60+ww1Qt/zGBDSKxm1HiffMMZpCEkMB9Rollq31BbGEBD4lH
+        7XPYQGwRATWJiW2HWEAamAXeMkpM2XKSESTBJqAncf7XBLCp/AJaEpd/zAMbxCtgJ/Hz53ow
+        m0VAVeLM2hawelGBCInjh5czQtQISvyYfI8FxOYUsJZ4dPwAWJxZQFPixZdJLBC2uMSx+zeh
+        4vISm9e8ZQY5QkLgNZvE/e+bWCDecZHYN/UFG4QtLPHq+BaggziAbGmJS0dtIcL1Eq0dT9gg
+        ejsYJT7PWgoNCnuJLV3b2SAW8Em8+9rDCtHLK9HRJgRR4iEx4elBJgjbUeLImvPQkDvDLnFt
+        0mqWCYzys5D8MwvJD7OQ/DALyQ8LGFlWMYqlFhTnpqcWGxaY6hUn5haX5qXrJefnbmIEJx8t
+        yx2Mx875HGIU4GBU4uF1iP8eKcSaWFZcmXuIUYKDWUmEV+gjUIg3JbGyKrUoP76oNCe1+BCj
+        NAeLkjiv6PprEUIC6YklqdmpqQWpRTBZJg5OqQbGeo2Jf15H3727sf+6yVq1PkVPX8bo+QFN
+        nqvbVzrf23BEyuDqm4+1tW/+RvC+eMl1y8ay37OOvdBfpWZN+HQFZe5X0+8WBUgHrhJTWfIv
+        d+uLI01egVHC7iGd/yNr1cp/JR+5Gjkp/v7HS/sOTHIt0UkVvly3sUbWaOoxBcUFLmfXq+y8
+        8G+bEktxRqKhFnNRcSIAURu3cToDAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrPLMWRmVeSWpSXmKPExsVy+t9jAd29tj8iDTZeFrLoutLNZNHQe4XZ
+        4u+bLkaLHy09zBabN7ezWJx508hocaT9M5MDu8eT5h4Wj52z7rJ7LNhU6vGsdw+jx8VLyh6L
+        H3h5fN4kF8AexWWTkpqTWZZapG+XwJXRf3EHS8FqropP1/6yNTBe4+hi5OSQEDCRWP5jAlsX
+        IxeHkMBORomZW3exQzgPGSW6n85nB6kSFvCQeNQ+hw3EFhFQk5jYdogFpIhZ4C2jxLzbMxkh
+        Os6xS6xa8wasik1AT+L8rwlg3fwCWhKXf8xjBrF5Bewkfv5cD2azCKhKnFnbwghiiwpESDxv
+        fs8KUSMo8WPyPRYQm1PAWuLR8QNANRxA29QlpkzJBQkzC4hLHLt/kxHClpfYvOYt8wRGwVlI
+        umchdMxC0jELSccCRpZVjJKpBcW56bnFRgWGeanlesWJucWleel6yfm5mxiB0bLtsFbfDsb7
+        S+IPMQpwMCrx8M5I/B4pxJpYVlyZe4hRgoNZSYRX6CNQiDclsbIqtSg/vqg0J7X4EKM0B4uS
+        OO/tvGORQgLpiSWp2ampBalFMFkmDk6pBkZ57wKDq1GeW38LXz6/4fluv6W7b2l1FT0vM5W6
+        XqseIL74ZOOi6TYnEzrZ8u5JdkSyrdb8uzxj/v24z20/lF5eufj/F5/rzXnuLyK14r8ZBWfN
+        0lrGNPvQJxFZm90Btr+6c2p+nr0k8dZ4iui1WOn/l7O0Xq/ISU40OVAsvZxtVZurhdCdCbeU
+        WIozEg21mIuKEwHm4qd9kgIAAA==
+X-CMS-MailID: 20171031090917epcas1p39087e30e2877442613daaa15075b0749
+X-Msg-Generator: CA
+CMS-TYPE: 101P
+X-CMS-RootMailID: 20171024152727epcas2p4fb7dcf147e44aadf7733098151d469a5
+X-RootMTR: 20171024152727epcas2p4fb7dcf147e44aadf7733098151d469a5
+References: <CGME20171024152727epcas2p4fb7dcf147e44aadf7733098151d469a5@epcas2p4.samsung.com>
+        <CAPig+cRTL2amjsgdp1=T3GMZLa=favugOfnQw9XjWzC+U=v5Sw@mail.gmail.com>
+        <CAN0heSp7b_6n3y=s4++oWhkPUuM=s9L7LWVx5vn8o=5aH6DKKw@mail.gmail.com>
+        <20171024195221.gqgtibwjaztgeel6@sigill.intra.peff.net>
+        <xmqq8tg0j8vb.fsf@gitster.mtv.corp.google.com>
+        <CAPig+cSjQd=p1CdizU5oUaz91z=j02UnWLtTguWzvkjS+v6ETA@mail.gmail.com>
+        <20171025072717.7svdq4kqlfxlwszi@sigill.intra.peff.net>
+        <38a80069-abdb-0646-a20c-eca39dd4f519@samsung.com>
+        <CAPig+cRq1AEOgDoXeH-hDMvhEMnfiNK5CuSBbbio-mbHros=QQ@mail.gmail.com>
+        <bd7eb593-75f9-0dd1-9dff-9dc420532217@samsung.com>
+        <CAGZ79kZ9EV=qaYyuA3kfuQ04EhLWax52MhtkmGJto2Lommc_SQ@mail.gmail.com>
+        <2b507ce0-0d18-d9d6-11ba-6fb0d4f4a473@samsung.com>
+        <xmqqd1543xfc.fsf@gitster.mtv.corp.google.com>
+        <xmqq37603vek.fsf@gitster.mtv.corp.google.com>
+        <ecb12f21-f26f-6905-1fdc-60d7c282cfe3@samsung.com>
+        <xmqqwp3byeai.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Get rid of the duplicated getenv('GIT_MERGE_VERBOSITY') calls with the same
+constant string argument. This makes code more readable and prevents typo in
+the further development.
 
+Signed-off-by: Andrey Okoshkin <a.okoshkin@samsung.com>
+Reviewed-by: Stefan Beller <sbeller@google.com>
+---
+Commit message is reworked according to the feedback.
+ merge-recursive.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-On October 30, 2017 5:33:47 PM PDT, Stefan Beller <sbeller@google=2Ecom> w=
-rote:
->The function `describe` has already a variable named `oid` declared at
->the beginning of the function for an object id=2E  Do now shadow that
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 1494ffdb8..60084e3a0 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -2163,6 +2163,7 @@ static void merge_recursive_config(struct merge_options *o)
+ 
+ void init_merge_options(struct merge_options *o)
+ {
++	const char *merge_verbosity;
+ 	memset(o, 0, sizeof(struct merge_options));
+ 	o->verbosity = 2;
+ 	o->buffer_output = 1;
+@@ -2171,9 +2172,9 @@ void init_merge_options(struct merge_options *o)
+ 	o->renormalize = 0;
+ 	o->detect_rename = 1;
+ 	merge_recursive_config(o);
+-	if (getenv("GIT_MERGE_VERBOSITY"))
+-		o->verbosity =
+-			strtol(getenv("GIT_MERGE_VERBOSITY"), NULL, 10);
++	merge_verbosity = getenv("GIT_MERGE_VERBOSITY");
++	if (merge_verbosity)
++		o->verbosity = strtol(merge_verbosity, NULL, 10);
+ 	if (o->verbosity >= 5)
+ 		o->buffer_output = 0;
+ 	strbuf_init(&o->obuf, 0);
+-- 
+2.14.3
 
-Nit, s/now/not/
-
->variable with a pointer to an object id=2E
->
->Signed-off-by: Stefan Beller <sbeller@google=2Ecom>
->---
-> builtin/describe=2Ec | 8 ++++----
-> 1 file changed, 4 insertions(+), 4 deletions(-)
->
->diff --git a/builtin/describe=2Ec b/builtin/describe=2Ec
->index 29075dbd0f=2E=2Efd61f463cf 100644
->--- a/builtin/describe=2Ec
->+++ b/builtin/describe=2Ec
->@@ -381,9 +381,9 @@ static void describe(const char *arg, int last_one)
-> 	}
->=20
-> 	if (!match_cnt) {
->-		struct object_id *oid =3D &cmit->object=2Eoid;
->+		struct object_id *cmit_oid =3D &cmit->object=2Eoid;
-> 		if (always) {
->-			printf("%s", find_unique_abbrev(oid->hash, abbrev));
->+			printf("%s", find_unique_abbrev(cmit_oid->hash, abbrev));
-> 			if (suffix)
-> 				printf("%s", suffix);
-> 			printf("\n");
->@@ -392,11 +392,11 @@ static void describe(const char *arg, int
->last_one)
-> 		if (unannotated_cnt)
-> 			die(_("No annotated tags can describe '%s'=2E\n"
-> 			    "However, there were unannotated tags: try --tags=2E"),
->-			    oid_to_hex(oid));
->+			    oid_to_hex(cmit_oid));
-> 		else
-> 			die(_("No tags can describe '%s'=2E\n"
-> 			    "Try --always, or create some tags=2E"),
->-			    oid_to_hex(oid));
->+			    oid_to_hex(cmit_oid));
-> 	}
->=20
-> 	QSORT(all_matches, match_cnt, compare_pt);
-
---=20
-Sent from my Android device with K-9 Mail=2E Please excuse my brevity=2E
