@@ -6,112 +6,87 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9400820281
+	by dcvr.yhbt.net (Postfix) with ESMTP id A906920281
 	for <e@80x24.org>; Tue, 31 Oct 2017 05:23:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753028AbdJaFXj (ORCPT <rfc822;e@80x24.org>);
-        Tue, 31 Oct 2017 01:23:39 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60116 "EHLO
+        id S1753103AbdJaFXw (ORCPT <rfc822;e@80x24.org>);
+        Tue, 31 Oct 2017 01:23:52 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:63459 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752874AbdJaFXi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Oct 2017 01:23:38 -0400
+        with ESMTP id S1753094AbdJaFXw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Oct 2017 01:23:52 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 12366A8DF3;
-        Tue, 31 Oct 2017 01:23:38 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 879D0AB0A8;
+        Tue, 31 Oct 2017 01:23:51 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=Zuavdso8FD8uGeiu5+XVt/Dy3U8=; b=BxswPfJcJv2Xi8HzCYy3
-        WODEoLOd2gf65Tp3Wmv98DjyaL27m64pj6pQDzAxm8jch9aVeD+y48EJ5h41rRNH
-        cTO0KmwXj08/EW/ZvZGtYaz2PONvBZqiYEaw1ZRMQL+OetskLO5ER26UQDiRC8Fx
-        lI+McE83xLmMZP+dPFS082s=
+        :subject:references:date:message-id:mime-version:content-type
+        :content-transfer-encoding; s=sasl; bh=a2xnf4ey628l65KI4XiLL8blT
+        zs=; b=AsrFR5i1nqOnG9b4P1UYzlfOQg2zD2a9yG8IA2UsaLg9TYRgyscbPz1aK
+        iSNSggNrCr2aYTnT3yl/xl+cj0Crv0ajjWplSA1N9a3EmoPBFNSJ4G8oI/FJ3p5r
+        WEnAqaukai/8s9gfWZUPxSYdMWTiv2GqBg4AHsZrGL550Q6x00=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         q=dns; s=sasl; b=A4/IZ/Oc2qM+iGURQeGqH2jlLI8TmsNnbhVyVtOrk14uFf
-        NpJgYEtO0aXAS1c2lENCfF6sdIuAw1B07udBwDZx7JEbWPzvCu4vz/zUI7ItxET0
-        j/hzzdWU7CpJMhLRHQD3cH39/NxFGirOmQ2RVVjQRy2pe3x3N6yxxrAzcgkQ4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0A8D8A8DF2;
-        Tue, 31 Oct 2017 01:23:38 -0400 (EDT)
+        :subject:references:date:message-id:mime-version:content-type
+        :content-transfer-encoding; q=dns; s=sasl; b=Nrw5lCyobcqTpKcZBHe
+        9N9fXBO6QUxKcFCx8UAOLZmC/ax3ZN0e9fDdzGkvSPQJkP8W9hz8TjwcBhaVB0VY
+        QJvNosNPa0VAsdhrLzOT61QH+ZoGESFHsLLTRbBLut2I8VniYQlWSH+L2bb234uZ
+        QJRPL5ac9jmv0Qi5c30ShFjU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7F730AB0A7;
+        Tue, 31 Oct 2017 01:23:51 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7CB80A8DF1;
-        Tue, 31 Oct 2017 01:23:37 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id EC070AB0A6;
+        Tue, 31 Oct 2017 01:23:50 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, sbeller@google.com
-Subject: [PATCH 2.5/4] diff: avoid returning a struct by value from diff_flags_or()
-References: <20171027222853.180981-1-bmwill@google.com>
-        <20171030194646.27473-1-bmwill@google.com>
-        <20171030194646.27473-3-bmwill@google.com>
-Date:   Tue, 31 Oct 2017 14:23:36 +0900
-Message-ID: <xmqqo9on28mf.fsf@gitster.mtv.corp.google.com>
+To:     Antoine =?utf-8?Q?Beaupr=C3=A9?= <anarcat@debian.org>
+Cc:     Matthieu Moy <git@matthieu-moy.fr>, git@vger.kernel.org
+Subject: Re: future of the mediawiki extension?
+References: <87vaix731f.fsf@curie.anarc.at>
+        <q7h9o9opyllo.fsf@orange.lip.ens-lyon.fr>
+        <87mv487rc6.fsf@curie.anarc.at>
+Date:   Tue, 31 Oct 2017 14:23:49 +0900
+Message-ID: <xmqqh8uf28m2.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A5DCF7E2-BDFB-11E7-9265-8EF31968708C-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: ADE25DBA-BDFB-11E7-BF52-575F0C78B957-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-That is more in line with the design decision made in the previous
-step to pass struct by reference.
+Antoine Beaupr=C3=A9 <anarcat@debian.org> writes:
 
-We may want to squash this into the previous patch eventually.
+> On 2017-10-30 11:29:55, Matthieu Moy wrote:
+>>> It should also be mentioned that this contrib isn't very active: I'm =
+not
+>>> part of the GitHub organization, yet I'm probably the one that's been
+>>> the most active with patches in the last year (and I wasn't very acti=
+ve
+>>> at all).
+>>
+>> FYI, I'm no longer using Mediawiki as much as I did, and I don't reall=
+y
+>> use Git-Mediawiki anymore.
+>>
+>> The main blocking point to revive Git-Mediawiki is to find a new
+>> maintainer (https://github.com/Git-Mediawiki/Git-Mediawiki/issues/33).=
+ I
+>> believe I just found one ;-).
+>
+> Eh. I assume you mean me here. As I hinted at in another thread, I am
+> not sure I can commit to leading the project - just scratching an
+> itch. But I may be able to review pull requests and make some releases
+> from time to time... I probably won't work on code or features I don't
+> need unless someone funds my work or something. ;)
+>
+> We'll see where the community takes us, I guess... Always better to hav=
+e
+> more than one maintainer, anyways, just for the bus factor... Worst
+> case, I'll delegate to a worthy successor. :)
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
-
- * I am OK either way as long as things are consistent; as you took
-   time to change the code to pass the struct by reference, let's
-   unify the API in that direction.
-
- diff-lib.c |  2 +-
- diff.h     | 12 ++++--------
- 2 files changed, 5 insertions(+), 9 deletions(-)
-
-diff --git a/diff-lib.c b/diff-lib.c
-index 6c1c05c5b0..ed37f24c68 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -547,7 +547,7 @@ int index_differs_from(const char *def, const struct diff_flags *flags,
- 	DIFF_OPT_SET(&rev.diffopt, QUICK);
- 	DIFF_OPT_SET(&rev.diffopt, EXIT_WITH_STATUS);
- 	if (flags)
--		rev.diffopt.flags = diff_flags_or(&rev.diffopt.flags, flags);
-+		diff_flags_or(&rev.diffopt.flags, flags);
- 	rev.diffopt.ita_invisible_in_index = ita_invisible_in_index;
- 	run_diff_index(&rev, 1);
- 	object_array_clear(&rev.pending);
-diff --git a/diff.h b/diff.h
-index 47e6d43cbc..e512cf44d0 100644
---- a/diff.h
-+++ b/diff.h
-@@ -94,19 +94,15 @@ struct diff_flags {
- 	unsigned DEFAULT_FOLLOW_RENAMES:1;
- };
- 
--static inline struct diff_flags diff_flags_or(const struct diff_flags *a,
--					      const struct diff_flags *b)
-+static inline void diff_flags_or(struct diff_flags *a,
-+				 const struct diff_flags *b)
- {
--	struct diff_flags out;
- 	char *tmp_a = (char *)a;
--	char *tmp_b = (char *)b;
--	char *tmp_out = (char *)&out;
-+	const char *tmp_b = (const char *)b;
- 	int i;
- 
- 	for (i = 0; i < sizeof(struct diff_flags); i++)
--		tmp_out[i] = tmp_a[i] | tmp_b[i];
--
--	return out;
-+		tmp_a[i] |= tmp_b[i];
- }
- 
- #define DIFF_OPT_TST(opts, flag)	((opts)->flags.flag)
--- 
-2.15.0-224-g5109123e6a
+Heh, when you are talking about going from effectively 0 to 1 (or a
+halftime), you are way too early to worry about the bus factor ;-)
 
