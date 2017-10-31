@@ -2,136 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0CD0D20437
-	for <e@80x24.org>; Tue, 31 Oct 2017 18:12:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C941F20437
+	for <e@80x24.org>; Tue, 31 Oct 2017 18:19:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753997AbdJaSMz (ORCPT <rfc822;e@80x24.org>);
-        Tue, 31 Oct 2017 14:12:55 -0400
-Received: from mail-qk0-f177.google.com ([209.85.220.177]:52182 "EHLO
-        mail-qk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753270AbdJaSMw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Oct 2017 14:12:52 -0400
-Received: by mail-qk0-f177.google.com with SMTP id 17so21590445qkq.8
-        for <git@vger.kernel.org>; Tue, 31 Oct 2017 11:12:52 -0700 (PDT)
+        id S932413AbdJaSTS (ORCPT <rfc822;e@80x24.org>);
+        Tue, 31 Oct 2017 14:19:18 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:56648 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753270AbdJaSTR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Oct 2017 14:19:17 -0400
+Received: by mail-pf0-f193.google.com with SMTP id b85so14368688pfj.13
+        for <git@vger.kernel.org>; Tue, 31 Oct 2017 11:19:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=3B5bMNZ+nh+1/ivERwdQBX2Z+WqAf2he+vKI6c8VSUY=;
-        b=aEItWhLfigZNFcMwc3expGdRgeL693s6Js5n8f8dls9NhAhpIqP1nEIihOugtEip2m
-         ID2syjy4ua+7MVZwrd2y9pFFoQ2H5QTSlXq/N0TwqE6LZQzID/8CAytzXDPPXoIQ4my5
-         3RR74vQ7fSPTQ5ZxvwwiiA/lJpWEQH8JYVfC8tu7jYEs7pHzrmV9ojX99LMkptHdMsgu
-         8KApv6F21nCWu09xgQ6urY2Wso2pywIzfw+n3uef77WrVYF0TuKhSOfYfeJle/OITrbj
-         wyUl+W3Of+81M65kCTOcYtdJ4qb8VEAnuQhS8ybwy02kem0lbDsYCOoYJt41AzUKzhgO
-         34cQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=hZ7BQBCP5FjsbHWX/Xn9Q4MZTwxg6rm+DadDcij3VE8=;
+        b=EA39HsfGkXUGeAVNjbJ1eBZh+tZLISD4VQowx2i22hQBGKKU40IruBC5QaC4JFPqX2
+         IU5aodiNOUBseQ0LrxpfoNDSNMCDIuelyD6XMcXgdTKXt0Gl1XIKxO9ZIV7DN0Ysbj2l
+         yxrA834J+iY9Lp08FvU11MyJ6etbokwlBCiEMO6pQrQpS+XFGzo7sSWTHwtN2aM9DZGi
+         tqYUGSEKo+1TGIitfihD7VgeQk9xBxIYc44PKbibYN8pMJy/NPuMZJUAeIno3oDImtgg
+         P9BkLSQEqtDzGkU+Ba/tcAjKdKR7hsPpfqqu4CpXefqyySESh6CRPwE53FeYnbHuRWUT
+         KiGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=3B5bMNZ+nh+1/ivERwdQBX2Z+WqAf2he+vKI6c8VSUY=;
-        b=cwI+d6H7np7vjb6kD4adUizOlcjCunJHrQvTzey+v1mtuvj/MzxeiryT4K+dTFx/HP
-         5kNGsjIhUKj0wdjH1eMfzRFeAX5MgZm2OYKfKUIoO202E5F0h+dAabo3F7M8gKZ9W1Bn
-         M6TZsjJnIRUSvv1NsF8lcezlbqbOHJO7hEkWVgMn48zpyrz29URRqyLo4qcrDzHOIOms
-         Hcrfv3nxoaG0/9Hqi91Ukg3VoN/y83gc4L8yJ4YBuqjztrORPjcf5+eCqir2HxUonMpz
-         IzWnsQtrN7P5S75WwlSJTub0U8Q/LnkJcLXHmgFZWI3Be88ObPo89/6QXlgbtXWoQSE8
-         OnIw==
-X-Gm-Message-State: AMCzsaUu1EY/7LJTAuRzqyTsKPvb6Z+5grdVvqNiny0pUVH9dAxn2pVq
-        qlyKcSB2180FF9s4IMupro1qlT+J9vL7fdXfeFPoDg==
-X-Google-Smtp-Source: ABhQp+SdYDQHRRLSLw2vOGN/Ad//C3rA0Vb9YQ0A4DS8v7s5N5/I9ymPhuie6QBwYXf90M6G8zKiZdBQAk6uBH8zURk=
-X-Received: by 10.55.129.70 with SMTP id c67mr4296365qkd.230.1509473571499;
- Tue, 31 Oct 2017 11:12:51 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.140.102.70 with HTTP; Tue, 31 Oct 2017 11:12:50 -0700 (PDT)
-In-Reply-To: <xmqqa807ztx4.fsf@gitster.mtv.corp.google.com>
-References: <20171028004419.10139-1-sbeller@google.com> <20171031003351.22341-1-sbeller@google.com>
- <20171031003351.22341-3-sbeller@google.com> <xmqqa807ztx4.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 31 Oct 2017 11:12:50 -0700
-Message-ID: <CAGZ79kayAgLc7Wju0h39ee7eB37ZgHR8OotX3Uima6QGZ+5n1Q@mail.gmail.com>
-Subject: Re: [PATCH 2/7] revision.h: introduce blob/tree walking in order of
- the commits
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>, Kevin Daudt <me@ikke.info>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=hZ7BQBCP5FjsbHWX/Xn9Q4MZTwxg6rm+DadDcij3VE8=;
+        b=rBrxpkYNQ65rDZT5aM385vDLnE5WFrEVcQuwcelh5caJmbcQ/oJuP5grf1ZDaIHYhe
+         UwpChR86kGMnynE+HS3+2F4AhkvnsZKQfkbR+OWdbB4QbQ+1K07NAIH5wsHUR3879UoU
+         yqaRy4IGHymEXH9Svb4SRVbnACH+0b1J8fVRJhrFmkKuDtfLZbLUjAY3M/oeNEiOBOVP
+         jyHmthAfPRABBNVzYLqm0ZAk173Ed0eEEWni74AGNERAoymrVEpKpxS9I6NzKfBbAT5F
+         EeiisbtoAN5ujvNh8AWgMnalv29g/Q+zTw34c0j0PErQQ0TJyrKHs9jcPMobsJcNc2q1
+         4NvA==
+X-Gm-Message-State: AMCzsaVEagrLGwsq+ZUiFEgzv17izU+L8eQsWXNqtLZvNkmxJ4B1/6Bn
+        1rMFomT5wjyTwkvLYgrfNrPWc4+hYnw=
+X-Google-Smtp-Source: ABhQp+TDO7tAJ3M/H8tJKTseA8J7gGSmd3Saznrx+pc3PAh7MSIvhpuDHmQDf+YpyESl4qxeYRj3Ow==
+X-Received: by 10.98.87.207 with SMTP id i76mr2936507pfj.134.1509473956126;
+        Tue, 31 Oct 2017 11:19:16 -0700 (PDT)
+Received: from roshar.svl.corp.google.com ([100.96.218.30])
+        by smtp.gmail.com with ESMTPSA id a78sm4308985pfl.122.2017.10.31.11.19.14
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 31 Oct 2017 11:19:15 -0700 (PDT)
+From:   Brandon Williams <bmwill@google.com>
+To:     git@vger.kernel.org
+Cc:     sbeller@google.com, gitster@pobox.com,
+        Brandon Williams <bmwill@google.com>
+Subject: [PATCH v3 0/8] convert diff flags to be stored in a struct
+Date:   Tue, 31 Oct 2017 11:19:03 -0700
+Message-Id: <20171031181911.42687-1-bmwill@google.com>
+X-Mailer: git-send-email 2.15.0.403.gc27cc4dac6-goog
+In-Reply-To: <20171030194646.27473-1-bmwill@google.com>
+References: <20171030194646.27473-1-bmwill@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 30, 2017 at 11:57 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> diff --git a/list-objects.c b/list-objects.c
->> index bf46f80dff..5e114c9a8a 100644
->> --- a/list-objects.c
->> +++ b/list-objects.c
->> @@ -237,6 +237,8 @@ void traverse_commit_list(struct rev_info *revs,
->>               if (commit->tree)
->>                       add_pending_tree(revs, commit->tree);
->>               show_commit(commit, data);
->> +             if (revs->tree_blobs_in_commit_order)
->> +                     traverse_trees_and_blobs(revs, &base_path, show_object, data);
->>       }
->>       traverse_trees_and_blobs(revs, &base_path, show_object, data);
->
-> This one is interesting.  While we walk the ancestry chain, we may
-> add the tree for each commit that we discover to the "pending.  We
-> used to sweep the pending array at the end after we run out of the
-> commits, but now we do the sweeping as we process each commit.
->
-> Would this make the last call to traverse_trees_and_blobs() always a
-> no-op?
+Changes in v3:
+ * Now always pass struct diff_flags by reference and don't return the struct
+   but rather modify the passed in struct.
+ * Don't clear TEXTCONV_SET_VIA_CMDLINE when --no-textconv is passed
+ * added additional patches (set out separately before) to remove the macros
+   and change the struct members to lowercase
 
-That is my understanding of the code, the important part of the previous patch
-was the move of 'object_array_clear(&revs->pending);' into the
-`traverse_trees_and_blobs` function.
+Brandon Williams (8):
+  add, reset: use DIFF_OPT_SET macro to set a diff flag
+  diff: convert flags to be stored in bitfields
+  diff: add flag to indicate textconv was set via cmdline
+  diff: remove touched flags
+  diff: remove DIFF_OPT_TST macro
+  diff: remove DIFF_OPT_SET macro
+  diff: remove DIFF_OPT_CLR macro
+  diff: make struct diff_flags members lowercase
 
->  I am not suggesting to add a new conditional in front of it;
-> I am just asking for curiosity's sake.
+ blame.c               |  16 ++---
+ builtin/add.c         |   4 +-
+ builtin/am.c          |  10 +--
+ builtin/blame.c       |  10 +--
+ builtin/commit.c      |   7 +-
+ builtin/diff.c        |   8 +--
+ builtin/fast-export.c |   2 +-
+ builtin/log.c         |  27 ++++----
+ builtin/reset.c       |   2 +-
+ builtin/rev-list.c    |   2 +-
+ combine-diff.c        |  10 +--
+ diff-lib.c            |  30 +++++----
+ diff-no-index.c       |   8 +--
+ diff.c                | 175 +++++++++++++++++++++++++-------------------------
+ diff.h                |  88 ++++++++++++++-----------
+ diffcore-pickaxe.c    |   8 +--
+ diffcore-rename.c     |   6 +-
+ log-tree.c            |   2 +-
+ merge-recursive.c     |   4 +-
+ notes-merge.c         |   4 +-
+ patch-ids.c           |   2 +-
+ revision.c            |  24 +++----
+ sequencer.c           |   5 +-
+ submodule.c           |  16 ++---
+ tree-diff.c           |  16 ++---
+ wt-status.c           |  18 +++---
+ 26 files changed, 259 insertions(+), 245 deletions(-)
 
-Thanks for being clear on that. I have the same taste for this.
+-- 
+2.15.0.403.gc27cc4dac6-goog
 
-(Though for a split second I wondered if we can pull some esoteric trick
-to skip this, but I could not find any that is sane as well as readable.)
-
->> +test_expect_success 'setup' '
->> +     for x in one two three four
->> +     do
->> +             echo $x >$x &&
->> +             git add $x &&
->> +             git commit -m "add file $x"
->> +     done &&
->> +     for x in four three
->> +     do
->> +             git rm $x
->> +             git commit -m "remove $x"
->> +     done &&
->
-> There is break in &&-chain in the second loop, but in any case, for
-> loops and &&-chains do not mix very well unless done carefully.
-> Imagine what happens if "git commit" in the first loop failed when
-> x is two; it won't stop and keep going to create three and four and
-> nobody would noice any error.
->
-
-I'll fix that.
-
-
-> Even though we do not have --stdin for rev-parse, you can still do:
->
->         git cat-file --batch-check='%(objectname)' >expect <<-\EOF &&
->         HEAD^{commit}
->         HEAD^{tree}
->         HEAD:one
->         HEAD:two
->         ...
->         EOF
-
-sounds better than the current implementation.
