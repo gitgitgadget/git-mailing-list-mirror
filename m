@@ -7,63 +7,63 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C832F20437
-	for <e@80x24.org>; Tue, 31 Oct 2017 17:51:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 587AB20437
+	for <e@80x24.org>; Tue, 31 Oct 2017 17:55:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932485AbdJaRvX (ORCPT <rfc822;e@80x24.org>);
-        Tue, 31 Oct 2017 13:51:23 -0400
-Received: from mail-io0-f194.google.com ([209.85.223.194]:50005 "EHLO
-        mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932362AbdJaRvW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Oct 2017 13:51:22 -0400
-Received: by mail-io0-f194.google.com with SMTP id n137so573993iod.6
-        for <git@vger.kernel.org>; Tue, 31 Oct 2017 10:51:22 -0700 (PDT)
+        id S932342AbdJaRz0 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 31 Oct 2017 13:55:26 -0400
+Received: from mail-io0-f195.google.com ([209.85.223.195]:43548 "EHLO
+        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751295AbdJaRzZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Oct 2017 13:55:25 -0400
+Received: by mail-io0-f195.google.com with SMTP id 134so649004ioo.0
+        for <git@vger.kernel.org>; Tue, 31 Oct 2017 10:55:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=74cS1QOEu89LIanPngLOCcEx9Rz5uHVwxfe5v2Nf/cE=;
-        b=er6kXxrTAiU+A/8Uo9sY1rpLZDrjLr0YmARfVo+ZgcPHQ/hxu0z6QFMTGYPl65Zd06
-         mDRrzz8OZ4OYPA8Co09oXRVoVfPIChy5ItA5PnDhnlqL+BlLnIpH4fc+I55DldcmV66c
-         KA55KdPnA7IhSUD+daeugGn8dRlEMq5RpOWaCGz71iqUDqF8h/MDk4UYtBiIgkuWZk0f
-         Y5YLW9ZiFaVINT06xVcscX9mI+fxt4o2o7pB+MSImI+w01Jc4H18CFhFooZyKK0HYxW8
-         kqE3sRaDMirWdtdRcSPJ3I70TOpXEooDMYrl+Tvy/1XQcKmeNCZFS9VHSQOH2o66kCHN
-         30mg==
+        bh=+iRUtLdutFks1K4XgSgNhB1DduvQOOzoQMNsDiCMNLY=;
+        b=pFR7ocYcU33wH2zL8Yr2Khdu9NAGWnESPdRXb1D9hU7gjxnYjeNvSbLBWswL1/80lr
+         ZyaAAU68IxlQhsQl3Jm4k43K/b/aH0+Lg+tsZrGjZ3FXmyNGeUDTrmB13KOQ0yqmXfxu
+         51tITZZ6BXMcqRzrzX0bzejO3+nQ0tYj6i2/wpX7lI72Hk3eW48JrTE4kso/T8H6q5d+
+         nDgi5sFdbPEYO3rz9XR3PGk2MdQw7/Ozk3+mnXOJd7SXT7rgoj0af67psGJqU74QYxrH
+         bW4VYysrqFy6ex5qMHRtQR7JSSblr37y9If0wTU/EJL0w0OgamUtSs/2zsklEhDY2UBq
+         3Stw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=74cS1QOEu89LIanPngLOCcEx9Rz5uHVwxfe5v2Nf/cE=;
-        b=AakGJNMS33PKqsqNcGQKcW+r2U2t015pgamORDinbVusXu7x2XU1jQKemLDGPImDsv
-         6iIhmSFkX9z/elNsyiuR7nk3vjkBX6Ir/rA7FzeBcopVMZRQUrdey17jTpr8XggQP6H3
-         f91yEEZBL37nqwrqQ9EKw1zAeEDWiFt0ebq1WO2j+eIbZQCAahQqwzMWGxUVOEXPVg5s
-         6iMr0jQvBI1iaQ4B3GGKr5XSeh/8pUNV1Gz2VstFz2deB2ICAJn26FZGXFLurVWN057R
-         aVK4I9JXuSpsKCY0HWKkO/wCvc6YdWyMIB48VhxhLvoEFQRCLeyiohiz0xL3g6c2H6AA
-         1OTA==
-X-Gm-Message-State: AMCzsaUy3nj6Lrb0ut168Eg85uQZIghXqe45OEZ2mkFV20keMLXLO44s
-        hCRM+0mCrmg+AF2KUTIc3e2UMw==
-X-Google-Smtp-Source: ABhQp+SG7CiR7H3qfyKW2MPLcvNITUIsFdjwMO6zJrbYBhQQ+jOXcOWstfeJWAt78HsH3Nk4Kzpq6Q==
-X-Received: by 10.36.37.148 with SMTP id g142mr4212877itg.38.1509472281674;
-        Tue, 31 Oct 2017 10:51:21 -0700 (PDT)
+        bh=+iRUtLdutFks1K4XgSgNhB1DduvQOOzoQMNsDiCMNLY=;
+        b=eEBcCZq7iOZ62w8p2rV/g0+cPG4EwfpZIxjRBJdrEG1Oi153plcYfUc6taaHwp4jfl
+         9vPKSwN7uPsOc5ViAOyD1o7BaNS5y//8lBAINlyIIiPWVdhdqoKDIF2NWfYXCM7KYfrS
+         PBUduLhrWjxqKQ/Nrf4HjuIcn6pUsf1GVUaBJ3Omr203P0++1arwjQN65COVfGrJucc0
+         DbWpSbPSNQuoeH9HgYyWYTM8gqMVj3IuKVZiOcp+urxJPuSUTvu7tC2iBEfJxjBzYaaC
+         /9ctSLE4FwOlFH4l6DaxW1AlKGEa0YwKgYPnSJfLaZ4QPkbDQDCvH0Kli0YBfHyTZ0Db
+         xQYg==
+X-Gm-Message-State: AMCzsaXA0zhiFlff7qVm3r1IjWrUZWH54Jm5GqNAWBdIJZfV938uZaaa
+        BuExua83HkvukWszACZb7rXN2Q==
+X-Google-Smtp-Source: ABhQp+QZNZZlSHwvlkWqrN2d1IImbcdjNSv15vahjdUAGWxltBX6akaa1J3mgT+lJ7RMbckMl+fDhQ==
+X-Received: by 10.36.172.82 with SMTP id m18mr4252044iti.39.1509472524614;
+        Tue, 31 Oct 2017 10:55:24 -0700 (PDT)
 Received: from google.com ([2620:0:100e:422:65da:c046:b1c4:7dde])
-        by smtp.gmail.com with ESMTPSA id h97sm889416iod.87.2017.10.31.10.51.20
+        by smtp.gmail.com with ESMTPSA id w195sm1105519ita.44.2017.10.31.10.55.23
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 31 Oct 2017 10:51:20 -0700 (PDT)
-Date:   Tue, 31 Oct 2017 10:51:19 -0700
+        Tue, 31 Oct 2017 10:55:23 -0700 (PDT)
+Date:   Tue, 31 Oct 2017 10:55:22 -0700
 From:   Brandon Williams <bmwill@google.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org, sbeller@google.com
-Subject: Re: [PATCH 2.5/4] diff: avoid returning a struct by value from
- diff_flags_or()
-Message-ID: <20171031175119.GB94048@google.com>
+Subject: Re: [PATCH 3.5/4] diff: set TEXTCONV_VIA_CMDLINE only when it is set
+ to true
+Message-ID: <20171031175522.GC94048@google.com>
 References: <20171027222853.180981-1-bmwill@google.com>
  <20171030194646.27473-1-bmwill@google.com>
- <20171030194646.27473-3-bmwill@google.com>
- <xmqqo9on28mf.fsf@gitster.mtv.corp.google.com>
+ <20171030194646.27473-4-bmwill@google.com>
+ <xmqqvaiv28n2.fsf_-_@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqo9on28mf.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <xmqqvaiv28n2.fsf_-_@gitster.mtv.corp.google.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -71,68 +71,46 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On 10/31, Junio C Hamano wrote:
-> That is more in line with the design decision made in the previous
-> step to pass struct by reference.
+> Change the meaning of the bit to "the user explicitly set the
+> allow-textconv bit to true from the command line".
 > 
-> We may want to squash this into the previous patch eventually.
+> The "touched" mechanism in the old code meant to express "the user
+> explicitly set the allow-textconv bit to something from the command
+> line" and recorded that fact upon "--no-textconv", too, by setting
+> the corresponding touched bit.  The code in the previous step to
+> clear the bit did not make much sense.
+> 
+> Again, this may want be squashed into the previous step, but its log
+> message needs to be adjusted somewhat (e.g. "s/is requested via/is
+> set to true via/").
 
-Looks good to me.  I was on the fence with what to do since I was
-already moving to pass by reference.  This is probably the better move
-so I can squash this one into the previous.
+I don't have any opinions on this, but I agree that if we want a more
+true conversion then we would wanted to squash this in, which I'll do
+and update the log message.
 
 > 
 > Signed-off-by: Junio C Hamano <gitster@pobox.com>
 > ---
+>  diff.c | 5 ++---
+>  1 file changed, 2 insertions(+), 3 deletions(-)
 > 
->  * I am OK either way as long as things are consistent; as you took
->    time to change the code to pass the struct by reference, let's
->    unify the API in that direction.
-> 
->  diff-lib.c |  2 +-
->  diff.h     | 12 ++++--------
->  2 files changed, 5 insertions(+), 9 deletions(-)
-> 
-> diff --git a/diff-lib.c b/diff-lib.c
-> index 6c1c05c5b0..ed37f24c68 100644
-> --- a/diff-lib.c
-> +++ b/diff-lib.c
-> @@ -547,7 +547,7 @@ int index_differs_from(const char *def, const struct diff_flags *flags,
->  	DIFF_OPT_SET(&rev.diffopt, QUICK);
->  	DIFF_OPT_SET(&rev.diffopt, EXIT_WITH_STATUS);
->  	if (flags)
-> -		rev.diffopt.flags = diff_flags_or(&rev.diffopt.flags, flags);
-> +		diff_flags_or(&rev.diffopt.flags, flags);
->  	rev.diffopt.ita_invisible_in_index = ita_invisible_in_index;
->  	run_diff_index(&rev, 1);
->  	object_array_clear(&rev.pending);
-> diff --git a/diff.h b/diff.h
-> index 47e6d43cbc..e512cf44d0 100644
-> --- a/diff.h
-> +++ b/diff.h
-> @@ -94,19 +94,15 @@ struct diff_flags {
->  	unsigned DEFAULT_FOLLOW_RENAMES:1;
->  };
->  
-> -static inline struct diff_flags diff_flags_or(const struct diff_flags *a,
-> -					      const struct diff_flags *b)
-> +static inline void diff_flags_or(struct diff_flags *a,
-> +				 const struct diff_flags *b)
->  {
-> -	struct diff_flags out;
->  	char *tmp_a = (char *)a;
-> -	char *tmp_b = (char *)b;
-> -	char *tmp_out = (char *)&out;
-> +	const char *tmp_b = (const char *)b;
->  	int i;
->  
->  	for (i = 0; i < sizeof(struct diff_flags); i++)
-> -		tmp_out[i] = tmp_a[i] | tmp_b[i];
-> -
-> -	return out;
-> +		tmp_a[i] |= tmp_b[i];
->  }
->  
->  #define DIFF_OPT_TST(opts, flag)	((opts)->flags.flag)
+> diff --git a/diff.c b/diff.c
+> index 8b700b1bd2..11fccbd107 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -4765,10 +4765,9 @@ int diff_opt_parse(struct diff_options *options,
+>  	else if (!strcmp(arg, "--textconv")) {
+>  		DIFF_OPT_SET(options, ALLOW_TEXTCONV);
+>  		DIFF_OPT_SET(options, TEXTCONV_SET_VIA_CMDLINE);
+> -	} else if (!strcmp(arg, "--no-textconv")) {
+> +	} else if (!strcmp(arg, "--no-textconv"))
+>  		DIFF_OPT_CLR(options, ALLOW_TEXTCONV);
+> -		DIFF_OPT_CLR(options, TEXTCONV_SET_VIA_CMDLINE);
+> -	} else if (!strcmp(arg, "--ignore-submodules")) {
+> +	else if (!strcmp(arg, "--ignore-submodules")) {
+>  		DIFF_OPT_SET(options, OVERRIDE_SUBMODULE_CONFIG);
+>  		handle_ignore_submodules_arg(options, "all");
+>  	} else if (skip_prefix(arg, "--ignore-submodules=", &arg)) {
 > -- 
 > 2.15.0-224-g5109123e6a
 > 
