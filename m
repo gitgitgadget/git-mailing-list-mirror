@@ -2,143 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4C27F20281
-	for <e@80x24.org>; Wed,  1 Nov 2017 06:40:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B50E220281
+	for <e@80x24.org>; Wed,  1 Nov 2017 07:14:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751274AbdKAGkH (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Nov 2017 02:40:07 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54273 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750904AbdKAGkG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Nov 2017 02:40:06 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 00742997AF;
-        Wed,  1 Nov 2017 02:40:04 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=6nM6LWUakmoavDrSUi5Gftn9XjQ=; b=O0mnrX
-        Fbl5960SCWlYhDIDry3EY6GjyTNcbD6HPHn626TMYagr5jxZS4sJC5xQ4Ytg4Nks
-        yvTcNIeF5do+GU0Zz7NYD04iOUB2cunCAAKcEMWDw2WWlKxqQ2icHjSjzTkkGaER
-        yNTo4PRHy+5zdgXTwjOhAiG6GW7vyLlh87XLk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=jiAnL6wqy2nh65n9waKciuobGcNWj+Um
-        CwnSzdP1bhFWX/ri7qP17Os7cmGQF1hrU/LA3aqa08eHbdXCZfFgtdGn4xY6YtT5
-        IX6gAy8ulSqMhyt/IHNQCSKiUXRqr6FZ4M9u1rgPwtFvub49TsxFcKRA2tE0QDXu
-        yhDTgUcRps8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id F301B997A7;
-        Wed,  1 Nov 2017 02:40:03 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5651C9979F;
-        Wed,  1 Nov 2017 02:40:02 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Payre Nathan <second.payre@gmail.com>
-Cc:     git@vger.kernel.org, matthieu.moy@univ-lyon1.fr,
-        timothee.albertin@etu.univ-lyon1.fr,
-        daniel.bensoussan--bohm@etu.univ-lyon1.fr,
-        Tom Russello <tom.russello@grenoble-inp.org>
-Subject: Re: [PATCH 2/2] send-email: quote-email quotes the message body
-References: <20171030223444.5052-1-nathan.payre@etu.univ-lyon1.fr>
-        <20171030223444.5052-3-nathan.payre@etu.univ-lyon1.fr>
-Date:   Wed, 01 Nov 2017 15:40:00 +0900
-In-Reply-To: <20171030223444.5052-3-nathan.payre@etu.univ-lyon1.fr> (Payre
-        Nathan's message of "Mon, 30 Oct 2017 23:34:44 +0100")
-Message-ID: <xmqqa806tscf.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1754169AbdKAHOb (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Nov 2017 03:14:31 -0400
+Received: from cloud.peff.net ([104.130.231.41]:42104 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1754152AbdKAHOa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Nov 2017 03:14:30 -0400
+Received: (qmail 29831 invoked by uid 109); 1 Nov 2017 07:14:24 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 01 Nov 2017 07:14:24 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 8286 invoked by uid 111); 1 Nov 2017 07:14:33 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Wed, 01 Nov 2017 03:14:33 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 01 Nov 2017 03:14:22 -0400
+Date:   Wed, 1 Nov 2017 03:14:22 -0400
+From:   Jeff King <peff@peff.net>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Philip Oakley <philipoakley@iee.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        git <git@vger.kernel.org>, Ben Peart <Ben.Peart@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Mike Hommey <mh@glandium.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Eric Wong <e@80x24.org>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: On the nature of cover letters [WAS Re: [PATCH 0/6] Create
+ Git/Packet.pm]
+Message-ID: <20171101071422.c2k4plhntlgpdnbk@sigill.intra.peff.net>
+References: <CAGZ79kbHwXpWXhUkokA9=XGN9D1YZevO_8MhbOztMXpkkHMFbg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 7D1677BE-BECF-11E7-8ADD-575F0C78B957-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kbHwXpWXhUkokA9=XGN9D1YZevO_8MhbOztMXpkkHMFbg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Payre Nathan <second.payre@gmail.com> writes:
+On Mon, Oct 30, 2017 at 11:29:37AM -0700, Stefan Beller wrote:
 
-> From: Tom Russello <tom.russello@grenoble-inp.org>
->
-> ---
->  Documentation/git-send-email.txt |  4 +-
->  git-send-email.perl              | 80 ++++++++++++++++++++++++++++++++++++++--
->  t/t9001-send-email.sh            | 19 +++++++++-
->  3 files changed, 97 insertions(+), 6 deletions(-)
->
-> diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-> index 710b5ff32..329af66af 100644
-> --- a/Documentation/git-send-email.txt
-> +++ b/Documentation/git-send-email.txt
-> @@ -107,7 +107,9 @@ Only necessary if --compose is also set.  If --compose
->  is not set, this will be prompted for.
->  
->  --quote-email=<email_file>::
-> -	Fill appropriately header fields for the reply to the given email.
-> +	Fill appropriately header fields for the reply to the given email and quote
-> +	the message body in the cover letter if `--compose` is set or otherwise
-> +	after the triple-dash in the first patch given.
+> > I can live with fancily-formatted cover letters. BUT. I would say if
+> > your cover letter is getting quite long, you might consider whether some
+> > of its content ought to be going elsewhere (either into commit messages
+> > themselves, or into a design document or other place inside the repo).
+> 
+> I am of the opinion that in an ideal workflow the cover letter would be
+> part of the merge commit message. It may even be editorialized or
+> annotated by the maintainer performing the merge, but not necessarily so.
+> 
+> Currently I rarely pay attention to merges, because they are not exciting
+> (in a good way). I mostly know the texts that Junio puts into the merge
+> message[1] from the cooking email, and otherwise there is not much
+> information added there.
 
-Hmmm.  I have a strong suspicion that people want an option to
-trigger the feature from just 1/2 but not 2/2 some of the time.
-Sure, removing the unwanted lines in the compose editor may be easy,
-but it feels wasteful use of user's time to include the lines of
-text from the original only to have them removed.
+Yes, I'd agree that for some topics it would be nice for the merge
+message to give any "big picture" details that wouldn't have made sense
+inside a single commit message.
 
-Also, if you are not offering these two as separate features, there
-isn't much point splitting them into two patches.
+> However looking at *what* Junio puts there, is "why is this worthwhile
+> to merge from the *projects* point of view?", whereas the cover letter
+> most of the time talks about "Why the *contributor* wants this merged".
+> Often these are subtly different, so it would be nice to have these
+> two competing views around.
 
-> @@ -743,6 +768,9 @@ if ($compose) {
->  	my $tpl_sender = $sender || $repoauthor || $repocommitter || '';
->  	my $tpl_subject = $initial_subject || '';
->  	my $tpl_reply_to = $initial_reply_to || '';
-> +	my $tpl_quote = $message_quoted &&
-> +		"\nGIT: Please, trim down irrelevant sections in the quoted message\n".
-> +		"GIT: to keep your email concise.\n" . $message_quoted || '';
->  
->  	print $c <<EOT1, Git::prefix_lines("GIT: ", __ <<EOT2), <<EOT3;
->  From $tpl_sender # This line is ignored.
-> @@ -756,7 +784,7 @@ EOT2
->  From: $tpl_sender
->  Subject: $tpl_subject
->  In-Reply-To: $tpl_reply_to
-> -
-> +$tpl_quote
->  EOT3
+Yes, there's really no reason we couldn't have both (e.g., Junio's
+maintainer synopsis followed by a marker, and then the original author's
+cover letter).
 
-OK, by emitting it into $compose_filename as part of the front
-matter, you get the "do we have to do mime?" etc. for free, which
-sort-of makes sense.
+The workflow within git is a little awkward, though. You'd want to pick
+up the cover letter information via "git am" when the branch is applied.
+But it doesn't go into a commit message until the merge. So where is it
+stored in the meantime? You'd need a branch->msg key/value store of some
+kind.
 
-> @@ -821,9 +849,53 @@ EOT3
->  		$compose = -1;
->  	}
->  } elsif ($annotate) {
-> -	do_edit(@files);
-> +	if ($quote_email) {
-> +		my $quote_email_filename = ($repo ?
-> +			tempfile(".gitsendemail.msg.XXXXXX",
-> +				DIR => $repo->repo_path()) :
-> +			tempfile(".gitsendemail.msg.XXXXXX",
-> +				DIR => "."))[1];
-> +
-> +		# Insertion in a temporary file to keep the original file clean
-> +		# in case of cancellation/error.
-> +		do_insert_quoted_message($quote_email_filename, $files[0]);
-> +
-> +		my $tmp = $files[0];
-> +		$files[0] = $quote_email_filename;
-> +
-> +		do_edit(@files);
-> +
-> +		# Erase the original patch if the edition went well
-> +		move($quote_email_filename, $tmp);
-> +		$files[0] = $tmp;
-> +	} else {
-> +		do_edit(@files);
-> +	}
->  }
+Junio's workflow now actually uses the "pu" merges as the storage
+location while a topic is working its way up. But there's a period
+between "am" and running the integration cycle where it would need to go
+somewhere else.
+
+One other consideration is that the cover letter may get updated between
+rounds (e.g., because you changed patches in response to review, or even
+to discuss alternatives that came up and were rejected). That places a
+burden on the maintainer to update the prospective merge-message.
+
+So it may make more sense just to cross-reference those merges with the
+topics that spawned them on the mailing list. I.e., instead of copying
+the cover letter contents, just record the message-id (and update it
+whenever a new iteration of a topic is picked up via "git am"). That
+lets you get the cover letter information _and_ see any discussion
+or review around the patch. (But it has the same "where does this
+message-id go until the merge-commit is created" question).
+
+> > I actually have the opposite opinion. I find it annoying to have to wade
+> > through the same unchanged content for each round just to find the
+> > little snippet of "here's what's changed".
+> 
+> Would you be happier if the "What changed?" goes first[2]?
+
+Yes, I think that would help. And marking the start of "old" information
+clearly so that the reader knows when they can stop looking.
+
+But then links do that pretty well, too (it's easy to choose whether to
+follow them or not).
+
+-Peff
