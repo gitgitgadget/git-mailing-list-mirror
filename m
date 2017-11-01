@@ -2,214 +2,193 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EE1E020281
-	for <e@80x24.org>; Wed,  1 Nov 2017 09:03:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 334CD20281
+	for <e@80x24.org>; Wed,  1 Nov 2017 10:09:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754105AbdKAJDu (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Nov 2017 05:03:50 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:50095 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751721AbdKAJDr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Nov 2017 05:03:47 -0400
-Received: by mail-wr0-f196.google.com with SMTP id g90so1343355wrd.6
-        for <git@vger.kernel.org>; Wed, 01 Nov 2017 02:03:46 -0700 (PDT)
+        id S1751332AbdKAKJh (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Nov 2017 06:09:37 -0400
+Received: from mail-yw0-f173.google.com ([209.85.161.173]:44307 "EHLO
+        mail-yw0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750928AbdKAKJf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Nov 2017 06:09:35 -0400
+Received: by mail-yw0-f173.google.com with SMTP id k11so1415552ywh.1
+        for <git@vger.kernel.org>; Wed, 01 Nov 2017 03:09:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=xJwWaI2OHXMFcnET2e8VPFBwGFHxAa2ISU5ZkkKoAtE=;
-        b=nWgQxumt9DJOvDP6pFUHxU3ExC+kcrX6HrFb0aZxMFwugTB79TfmPZq5f7tEwzM8D5
-         PH5Rg3mA5OAv/umvyI99Tj9XBiq+lNqXo2hihF0lXoa5nuRhichLwcIwK19Ev0d7antF
-         n91ihTsBdkbmuyRKwvPUNTLgniZzYQxCwFyLM8WQXAskOFavsUPNU9oReqFsChipOvDK
-         6eo1GOGhUTIAeZWQ2MHs0t53g6wcAJSVHKrVMEajm4sSn4UCoUocIe8cx1wgp6eVxVED
-         I3AmRDLFvi8UiuMGediKOFUJPJ3HQtjBPOvXRV7m74RkgirCYju3mUix2jouXGLQy8IN
-         FCUg==
+        d=tprg-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=T2CQYL+Hc2KnYUbHfAzK7S9926d9LjNx/j88MJ4Ma1I=;
+        b=M4fGxw41TINo2Nh7GsZeykMy48r579h74m/3zyXsOPTN+guzqwLyv1kAXvuXh5UTBE
+         akrLOCCiKrzZwuk/QugwEf/LKMs7zt5DLMoETypIGrNR69jb1NWhN1AupmZ9nzL7u/+B
+         ldAcMr/ieHvwytzz7wvJiAgl3QC00kIG1qyhU/Zc/61MB8SLQJhZznQZUR0/955cWC9J
+         zXGJr3ZOYnDl2k9rFOEkI4CouxwuhVxz4UEqFmlkAmYeONpgYuxqCGSGnKjJNOiRnczg
+         0VK6R0TO2XcQlam8sK5EbwMIdiAICNsXyW4STOaImJrLZNlz0TkmSAVMDR2PmrkjMYn6
+         w7SA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=xJwWaI2OHXMFcnET2e8VPFBwGFHxAa2ISU5ZkkKoAtE=;
-        b=CMj8h/ZAnbb87kY+H1VzCV8ej2UitExnsk4fRUOFHdVf6zo0RktdhJufRcHAYPBnkA
-         U98ayQce/VY0mxb228Et4A+oFACpDK2IDr8ySN/Qm+8hzD8VqUSNcV1M9bGJA/ziITBM
-         4MZ9ehUcwIY3uPe1f29fc6v8lgVMwMmNP71HD+gZNhwH5dlCrglW2efo3mPblizr+JKI
-         XvwY1/GC34dJCG4vP9kUxQm6T0hPVUInIrcU3CB9FXsxMuJvufHljPOXmzn1FFtilvrY
-         +ClzNZz0XPXORXwBu2CIPM1zBUQHbJFTE8uHDYHJ2Nhrm+8CPO+++KzKeZ73MdQXP1DQ
-         TQSA==
-X-Gm-Message-State: AMCzsaX/QyG6WEuuyRi8dkF22D/ZvdSFe9eBTscC65euhFUEnq/qTSAH
-        gaIX3ypR0s1IPy30w4WYkKr9JbC2
-X-Google-Smtp-Source: ABhQp+RHF1GUd+zMLLb6pNqnx9HVfoBFI3N5U9E/XpNjtNBwt11fzUBG0JtOiIHtDwRhaEEcJf24Aw==
-X-Received: by 10.223.176.176 with SMTP id i45mr4554308wra.240.1509527025659;
-        Wed, 01 Nov 2017 02:03:45 -0700 (PDT)
-Received: from localhost.localdomain ([2a02:aa16:5782:c100:c938:fbb7:46f8:2405])
-        by smtp.gmail.com with ESMTPSA id e6sm329478wrg.53.2017.11.01.02.03.44
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 01 Nov 2017 02:03:44 -0700 (PDT)
-From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-To:     git@vger.kernel.org
-Subject: [PATCH] reduce_heads: fix memory leaks
-Date:   Wed,  1 Nov 2017 10:03:26 +0100
-Message-Id: <20171101090326.8091-1-martin.agren@gmail.com>
-X-Mailer: git-send-email 2.15.0.415.gac1375d7e
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=T2CQYL+Hc2KnYUbHfAzK7S9926d9LjNx/j88MJ4Ma1I=;
+        b=Uo1BBWoJWkmGtnRB3RPmIlPG4JMKh0Fn+FkjBodwyac6doizMCNJGZM8IwONzKzcMy
+         mA3W7/BneEeb9lb5RtnAmQlI+ahr7ySY693NLlPoMeB1Omk/DlMo3SgJHHp9ZgOI35PN
+         SV0srYsgSUujrRQyUm1Rc8kFeG4kxA3kvleHswkOhLKGp3Iam/emQ1Uusp4iz/3J+NDH
+         c7TNQDu0oGd4ec7yxt2/U9hMBwYbV7YWAvQYqjDorXlRZyqFfvQDJtaXo5K+V6c1aDXZ
+         ouvLuIkLiDbJ8N43I3gFnZ6Gw+WCIr/Z+nosSuf1LYIpQfREfnQ60D1BF4pssrRDaJEw
+         ozKQ==
+X-Gm-Message-State: AMCzsaUOumZofoULteYvuVqtaQqcTLhNBsGEdU6T9uLYn8wTzpfyOTTz
+        jzV2WaEQoUj72vr54vJ9FlNgjSfuImsb8xdRsG4cEgsoeV5Deu+4eK+j2PFQm1nQ+LI12+ZK0IW
+        598w66xD65Yid2g1cVy2vU8lZXIc=
+X-Google-Smtp-Source: ABhQp+QRo4WHuQvSyYSsUr363ns3vWc36AQKnOoyXS8+lBJ8xF43XoSEBSq/ihx12vGkIzNSIRo4Zz6uB39aW7IGhQ4=
+X-Received: by 10.129.85.202 with SMTP id j193mr2998522ywb.342.1509530975094;
+ Wed, 01 Nov 2017 03:09:35 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.37.161.103 with HTTP; Wed, 1 Nov 2017 03:09:34 -0700 (PDT)
+In-Reply-To: <001801d35292$9871bd10$c9553730$@nexbridge.com>
+References: <CAO-WtQhAPjoWnWyMPi5SkCSUM_y8A=hsbLk-MUfnCSBvWnBRNQ@mail.gmail.com>
+ <20171031212251.GB7777@alpha.vpn.ikke.info> <001801d35292$9871bd10$c9553730$@nexbridge.com>
+From:   Eyjolfur Eyjolfsson <eyjolfureyjolfsson@tprg.com>
+Date:   Wed, 1 Nov 2017 10:09:34 +0000
+Message-ID: <CAO-WtQheY-cpBwEp1TGbRAT4t7Ao7qDdGdinMBb2eB6AOeuKBA@mail.gmail.com>
+Subject: Re: Is it possible to convert a Json file to xml file with Git
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>
+Cc:     Kevin Daudt <me@ikke.info>, git@vger.kernel.org
+X-tprg-gsuite: true
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We currently have seven callers of `reduce_heads(foo)`. Six of them do
-not use the original list `foo` again, and actually, all six of those
-end up leaking it.
+Hi
 
-Introduce and use `reduce_heads_replace(&foo)` as a leak-free version of
-`foo = reduce_heads(foo)` to fix several of these. Fix the remaining
-leaks using `free_commit_list()`.
+Thank you for your response and help. I am new to Git.
+The reason for my question is that I am using Git or Bash.exe  (cURl)
+to call a REST web service (open for test) and retrieving  Json
+from the web service and storing it into file.
+This works fine from the Git Bash command line . My Git Command:
+$ curl https://jsonplaceholder.typicode.com/posts -o c:\temper.txt
 
-While we're here, document `reduce_heads()` and mark it as `extern`.
+I will look into the smudge filter.
 
-Signed-off-by: Martin Ågren <martin.agren@gmail.com>
----
- builtin/commit.c        |  2 +-
- builtin/fmt-merge-msg.c |  2 +-
- builtin/merge-base.c    |  6 +++++-
- builtin/merge.c         |  1 +
- builtin/pull.c          |  4 +++-
- commit.c                |  7 +++++++
- commit.h                | 18 +++++++++++++++++-
- 7 files changed, 35 insertions(+), 5 deletions(-)
+One more question is there a possibility to call Git Bash with a
+parameter like example
+C:\Git\Git\git-bash.exe  curl
+https://jsonplaceholder.typicode.com/posts -o c:\temper.txt
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index d75b3805e..11c474018 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1728,7 +1728,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 				allow_fast_forward = 0;
- 		}
- 		if (allow_fast_forward)
--			parents = reduce_heads(parents);
-+			reduce_heads_replace(&parents);
- 	} else {
- 		if (!reflog_msg)
- 			reflog_msg = (whence == FROM_CHERRY_PICK)
-diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
-index e99b5ddbf..27a2361e9 100644
---- a/builtin/fmt-merge-msg.c
-+++ b/builtin/fmt-merge-msg.c
-@@ -571,7 +571,7 @@ static void find_merge_parents(struct merge_parents *result,
- 	head_commit = lookup_commit(head);
- 	if (head_commit)
- 		commit_list_insert(head_commit, &parents);
--	parents = reduce_heads(parents);
-+	reduce_heads_replace(&parents);
- 
- 	while (parents) {
- 		struct commit *cmit = pop_commit(&parents);
-diff --git a/builtin/merge-base.c b/builtin/merge-base.c
-index 6dbd167d3..b1b7590c4 100644
---- a/builtin/merge-base.c
-+++ b/builtin/merge-base.c
-@@ -59,6 +59,8 @@ static int handle_independent(int count, const char **args)
- 		commit_list_insert(get_commit_reference(args[i]), &revs);
- 
- 	result = reduce_heads(revs);
-+	free_commit_list(revs);
-+
- 	if (!result)
- 		return 1;
- 
-@@ -78,7 +80,9 @@ static int handle_octopus(int count, const char **args, int show_all)
- 	for (i = count - 1; i >= 0; i--)
- 		commit_list_insert(get_commit_reference(args[i]), &revs);
- 
--	result = reduce_heads(get_octopus_merge_bases(revs));
-+	result = get_octopus_merge_bases(revs);
-+	free_commit_list(revs);
-+	reduce_heads_replace(&result);
- 
- 	if (!result)
- 		return 1;
-diff --git a/builtin/merge.c b/builtin/merge.c
-index ab5ffe85e..fbbf2a9e5 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -999,6 +999,7 @@ static struct commit_list *reduce_parents(struct commit *head_commit,
- 
- 	/* Find what parents to record by checking independent ones. */
- 	parents = reduce_heads(remoteheads);
-+	free_commit_list(remoteheads);
- 
- 	remoteheads = NULL;
- 	remotes = &remoteheads;
-diff --git a/builtin/pull.c b/builtin/pull.c
-index 6f772e8a2..5eeaa8c68 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -745,8 +745,10 @@ static int get_octopus_merge_base(struct object_id *merge_base,
- 	if (!is_null_oid(fork_point))
- 		commit_list_insert(lookup_commit_reference(fork_point), &revs);
- 
--	result = reduce_heads(get_octopus_merge_bases(revs));
-+	result = get_octopus_merge_bases(revs);
- 	free_commit_list(revs);
-+	reduce_heads_replace(&result);
-+
- 	if (!result)
- 		return 1;
- 
-diff --git a/commit.c b/commit.c
-index 1e0e63379..cab8d4455 100644
---- a/commit.c
-+++ b/commit.c
-@@ -1090,6 +1090,13 @@ struct commit_list *reduce_heads(struct commit_list *heads)
- 	return result;
- }
- 
-+void reduce_heads_replace(struct commit_list **heads)
-+{
-+	struct commit_list *result = reduce_heads(*heads);
-+	free_commit_list(*heads);
-+	*heads = result;
-+}
-+
- static const char gpg_sig_header[] = "gpgsig";
- static const int gpg_sig_header_len = sizeof(gpg_sig_header) - 1;
- 
-diff --git a/commit.h b/commit.h
-index 6d769590f..99a3fea68 100644
---- a/commit.h
-+++ b/commit.h
-@@ -313,7 +313,23 @@ extern int interactive_add(int argc, const char **argv, const char *prefix, int
- extern int run_add_interactive(const char *revision, const char *patch_mode,
- 			       const struct pathspec *pathspec);
- 
--struct commit_list *reduce_heads(struct commit_list *heads);
-+/*
-+ * Takes a list of commits and returns a new list where those
-+ * have been removed that can be reached from other commits in
-+ * the list. It is useful for, e.g., reducing the commits
-+ * randomly thrown at the git-merge command and removing
-+ * redundant commits that the user shouldn't have given to it.
-+ *
-+ * This function destroys the STALE bit of the commit objects'
-+ * flags.
-+ */
-+extern struct commit_list *reduce_heads(struct commit_list *heads);
-+
-+/*
-+ * Like `reduce_heads()`, except it replaces the list. Use this
-+ * instead of `foo = reduce_heads(foo);` to avoid memory leaks.
-+ */
-+extern void reduce_heads_replace(struct commit_list **heads);
- 
- struct commit_extra_header {
- 	struct commit_extra_header *next;
--- 
-2.15.0.415.gac1375d7e
+The reason I am asking this is that I am using NAV 2009 Classic Client
+and want to lunch the Git Bash with
+ the command  $ curl https://jsonplaceholder.typicode.com/posts -o c:\tempe=
+r.txt
 
+
+Best regards
+
+(e) eyjolfureyjolfsson@tprg.com
+(w) tpretailgroup.com
+
+
+On 31 October 2017 at 21:52, Randall S. Becker <rsbecker@nexbridge.com> wro=
+te:
+>> On October 31, 2017 5:23 PM, Kevin Daudt wrote:
+>> > On Tue, Oct 31, 2017 at 05:28:40PM +0000, Eyjolfur Eyjolfsson wrote:
+>> > I have a question.
+>> > Is it possible to convert a Json file to XML with Git
+>>
+>> git is a version control system, which is mostly content agnostic. It
+> knows
+>> nothing about json or xml, let alone how to convert them.
+>>
+>> You might want to use some kind of programming language to do the
+>> conversion.
+>
+> Speculating... one possible reason to do this is during a protocol
+> conversion effort, where definitions are moving from XML to JSON form. In
+> legacy VCS systems, keeping interface definitions in one file and convert=
+ing
+> the content may be important. However, in git, with its concept of atomic=
+ity
+> (multiple files are committed in a single version across the whole
+> repository), dropping one file (e.g., XML) and adding another (e.g., JSON=
+),
+> can be done in one commit, and never lost or confused as to what is
+> intended. This makes git ideal for modernization and evolutionary project=
+s.
+>
+> If, however, there is an application or systemic requirement to change th=
+e
+> content of a file from XML to JSON without changing the name - I've seen =
+it
+> happen - you may want to consider building a smudge filter that understan=
+ds
+> the difference and maps between the two, to allow git diff operations
+> between old and new formats. I would not recommend using this approach
+> except as a last possible resort. Make a new file as Kevin intimated.
+>
+> Just Musing on the Topic,
+> Randall
+>
+> -- Brief whoami: NonStop&UNIX developer since approximately
+> UNIX(421664400)/NonStop(211288444200000000)
+> -- In my real life, I talk too much.
+>
+>
+>
+
+
+
+--=20
+Eyjolfur Eyjolfsson
+
+(e) eyjolfureyjolfsson@tprg.com
+(w) tpretailgroup.com
+
+--=20
+This email and any files transmitted with it are confidential and intended=
+=20
+for the sole use of the individual or entity to whom they are addressed.=20
+ Any unauthorised dissemination or copying of this email or its attachments=
+=20
+or disclosure of any information contained in them is strictly prohibited.=
+=20
+ If you have received the email in error, please notify the sender by email=
+=20
+immediately and delete it from your system.  The content of the email does=
+=20
+not necessarily represent Theo Paphitis Retail Group and associated=20
+companies and any views or opinions presented are solely those of the=20
+author.  Whilst we check communications we send for virus infection, you=20
+should check this email and any attachments to it for viruses as we accept=
+=20
+no responsibility for any loss or damage caused by any virus transmitted by=
+=20
+this email.  Email transmission cannot be guaranteed secure or error-free.
+
+Theo Paphitis Retail Group is the collective name for Ryman Group Limited,=
+=20
+registered in England and Wales, Company Number 02714395, VAT Number=20
+672523729,  Registered Office: Ryman House, Savoy Road, Crewe, Cheshire,=20
+CW1 6NA; Ryman Limited, registered in England and Wales, Company Number=20
+3007166, VAT Number 672523729,  Registered Office: Ryman House, Savoy Road,=
+=20
+Crewe, Cheshire, CW1 6NA;  Robert Dyas Holdings Limited, registered in=20
+England and Wales, Company Number 4041884; VAT number 742720153, Registered=
+=20
+Office:  1 St George=E2=80=99s Road, Wimbledon, London, SW19 4DR;  Boux Ave=
+nue=20
+Limited, registered in England and Wales, Company Number 7191520, VAT=20
+Number 125504638,  Registered Office: 1 St George=E2=80=99s Road, Wimbledon=
+,=20
+London, SW19 4DR;  Boux Avenue International Limited, registered in England=
+=20
+and Wales, Company Number 8047333, VAT Number 125504638, Registered office:=
+=20
+1 St George=E2=80=99s Road, Wimbledon, London, SW19 4DR; and London Graphic=
+ Centre=20
+Limited, registered in England and Wales, Company Number 6062021,  VAT=20
+Number 251820524, Registered Office:  Ryman House, Savoy Road, Crewe,=20
+Cheshire, CW1 6NA.
