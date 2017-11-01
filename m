@@ -2,88 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D0EB32055E
-	for <e@80x24.org>; Wed,  1 Nov 2017 21:58:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3E50E202A0
+	for <e@80x24.org>; Wed,  1 Nov 2017 22:00:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755373AbdKAV6Z (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Nov 2017 17:58:25 -0400
-Received: from mout.gmx.net ([212.227.15.15]:57463 "EHLO mout.gmx.net"
+        id S1755449AbdKAWAO (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Nov 2017 18:00:14 -0400
+Received: from mout.web.de ([212.227.17.11]:52793 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753175AbdKAV6X (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Nov 2017 17:58:23 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LnPGI-1dUvyN0Z4Q-00hden; Wed, 01
- Nov 2017 22:58:21 +0100
-Date:   Wed, 1 Nov 2017 22:58:20 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Matthew Orres <matthew.orres@gmail.com>
-cc:     git@vger.kernel.org
-Subject: Re: Git 2.15.0 on OSX 10.12.6: gui multi-select stage
-In-Reply-To: <CAKbB5OwxQ4XtLXuu2w3QmuKryA=3iHupz=y0m2E1NH+Dwzd8Xw@mail.gmail.com>
-Message-ID: <alpine.DEB.2.21.1.1711012254380.6482@virtualbox>
-References: <CAKbB5OwxQ4XtLXuu2w3QmuKryA=3iHupz=y0m2E1NH+Dwzd8Xw@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1755289AbdKAWAM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Nov 2017 18:00:12 -0400
+Received: from [192.168.178.36] ([91.20.50.251]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LZeZU-1dR6SU0Dtc-00lYyG; Wed, 01
+ Nov 2017 22:59:54 +0100
+Subject: Re: [PATCH 2/3] http-push: use hex_to_bytes()
+To:     Jeff King <peff@peff.net>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Thomas Gummerer <t.gummerer@gmail.com>
+References: <508b1b3f-6b55-eee8-110a-c17d572ec27a@web.de>
+ <31ce5c1c-cab3-80aa-623b-43f91ddd2162@web.de>
+ <20171101195530.odscytks7jvgukbs@sigill.intra.peff.net>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <0e7f821a-94ae-3946-fb99-c508a06a6847@web.de>
+Date:   Wed, 1 Nov 2017 22:59:49 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:pukuCdRIORVvUeuiUynZLl/sqOsdLYaCD6RIcYGoC/hnSlbREO1
- VAqaFoN1PzBVjJKE+r5agG6DMWrKp89h+8Fs+rYLpTgzcuTvRG4dutNOsBWDaQwdcAFDiLO
- eNZWW+FtDWEkW/HZpR+vUSoSONuvgQQveZiKUs/rsjV5ay0k4bW3cjGbW0g82fDVBrzMA8W
- 9jt2GLEyocwTCVYVaOFAw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:/3/uK1m2zPo=:88TIrWW23an/B56ucgAR5C
- IROj4nfUpImq+RQMOaer21XmEVOcHBTR1Fve5Mi5NbEAVpF1exDk3DhHgpOQ7YCzVveCclEuM
- aC8wd5zv6ISnVBJfbQthmAgcBxZKtpUqTXF1bCFOK3ZWFE56+/0YqbSbM74FJtnJc8wbidSVh
- 825h/ojVvazqDs+3Va3i6FgKqCBNI0mkK2ojnAhUZl415BoBDYMTJuUSyU/JMUYHR6l0QNu6V
- rSJcJuWuF+7DwepqHakqAjEsXYtuURHdDoW+/fgxhi3RsX20UnXxtoN8dGHT8UIHLz9nlMjw5
- TWromMeHhaZtfpIqGpYoqSjnANCAu7wFsw0NhRM9qxcdIAl9bxlYzOiDz6VaaLZy6losv8ouK
- NLhQX3E3KaTpO2Rmj047i77UnABQcwA/vgw9hsASdep7ed9nQl0z/tmfy/KuEQn5fXuJZlHT8
- f2bgNT5NB2oc3xH8beefycHNrfhDp4fOk9sEjS4z/AZU7tbHmnWDgygOVTIMxCdbfI6IaqG1o
- Q2GkAqCb4JnXfkcbCCrPpA6LD8BMlcy39cE5H46vSAv0FcyW3uPAgXInjf+sYnD0k83ARJJl9
- Vi4jHt3KDUNAym3Eq8MKbcpk4dMS5fJQe9EFnYoJJD3rW+DyzNbv8CE1YpGnBBlohUqKT37Pw
- wdimxRZME+9K7rAhj01XkTGVD0hpPPuHXa4qPYAXQ2509/nT+EBUtT5577VswlFs+t/9FDM6A
- eo3R/rps/DlE+GPok7vNxzirq9wnUx3iRu299EEpZ1pLf7au6jJfgXoNTjvWDvJXWB58VAR0D
- +ohHlsExZvYxuyicE9VG0R4x9Dqpg012O3ZOYuf0B/C/n7im1c=
+In-Reply-To: <20171101195530.odscytks7jvgukbs@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:jddOvcc8Nz461rqiYLj3/GSEnJgn+vSVHdlQ27qC0htYA0GqnTp
+ vJYcuWBScOZ98Q0jELOXBkZwWiA4tfIs+E6a5Ra7eB0yHh6KMY0bgtH4zYglsbWqvso4p3j
+ bgXZS02CFb14Im0QcyWBUhmJv93JLnV+gYSfzr6CpySKYBB3YX9tkU0pLcZ81yZp9nk7VSm
+ A1VwNmug9Lts1xe1MuIVA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:bBoj9YKhdU4=:S4crrqM2a2DRCCdxv6Qwsc
+ bVIB6TKlRmcSDSlC5Cpz7eQgvBohQ5eTTKcH/N/vbSbqz6dt6+WSIP9q+CkwfN6FQij/gWwAO
+ oLSXgeqLWYhmtm4Go3eSJ8/VSsDhYpKzWp46S4JIG/BoFt48aoAVVQvGP0xNYgJH1bKvNvHsC
+ u2AHWN/AV84nbLF331z8O70XLbyQieLfQMPEnR74cz7Tvfg1HQym4Osy1ce8K/YTkwdhw1+rM
+ 2+R6anQvsdOtyWVtkuj0g57MKH2avvGTNRdrjsqmjd6Y6svqau7jzd9i9h1ZirpJPj7bgkTum
+ gonfRFtAwyAPsrraVvEW+SJx4uFXHqLBBOQF71v0ehAPmd2pSC50QzpJJWvVmVwDguhOq9w5x
+ BFwDzst8TTimrNT+GaMJwewa88plDx/ijAGeoSIg8yz6BpOuz3prfYMuHIcV8t1O+et9gmrpV
+ fRnj3E4WKtE2mYpHzEqIeWLKvkBXDQD0ekptGuzGk8XD8VH4Xvtn/qjrbN+Na/fWjuj7muqRS
+ znUBUak2EcUSaXygtJjJUdJ3t/DyRSRpSkZFsJk+mqd0SweQpGtlieFk5Ey8ywkJ4x0qjgi1C
+ eWLC63nEMUHcXSrWxCC4tOnRrK6X/OL3rzBHHcgRz/k/w7wuvii8L1KiztU/UjJIxzYeD54vj
+ cErJ4MGzp3xQNRrdO6+gd+nWz3YzRPdr9A0TKqaSsaNnoo5NVZculSIFJab9f/msDy5YdqwSO
+ tl90NrUMTvOcshCj3rE/tp5Z386WODaqCNRkatAWKw7ge5wJYdyK5RpHCO6695lmDdABQ0gfn
+ db1SNaFrLW/Wn0T06LAKYuuf5S3DOCNX5bWk0cJFnLFmdgnjf0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Matthew,
-
-On Wed, 1 Nov 2017, Matthew Orres wrote:
-
-> Using 2.15.0 on OSX 10.12.6, when I open git gui, and then attempt to
-> stage multiple files as such:
+Am 01.11.2017 um 20:55 schrieb Jeff King:
+> On Tue, Oct 31, 2017 at 02:49:56PM +0100, René Scharfe wrote:
 > 
-> * Left click first file
-> * CMD+Shift+Click last file to multi-select all files
-> * CMT+T (shortcut for Stage to Commit)
+>> The path of a loose object contains its hash value encoded into two
+>> substrings of hexadecimal digits, separated by a slash.  The current
+>> code copies the pieces into a temporary buffer to get rid of the slash
+>> and then uses get_oid_hex() to decode the hash value.
+>>
+>> Avoid the copy by using hex_to_bytes() directly on the substrings.
+>> That's shorter and easier.
+>>
+>> While at it correct the length of the second substring in a comment.
 > 
-> Only the file I selected with the first Left Click is staged and my
-> selection disappears.
+> I think the patch is correct, but I wonder if this approach will bite us
+> later on when we start dealing with multiple lengths of hashes.
 > 
-> I'd be happy to provide more system-level info if there's issues with
-> reproducing this on other machines.
+> The hex_to_bytes() function requires that the caller make sure they have
+> the right number of bytes. But for many callers, I think they'd want to
+> say "parse this oid, which might be truncated; I can't tell what the
+> length is supposed to be".
 
-Maybe you'll be also happy to test things?
+I'm confused by the word "many".  After this series there are three
+callers of hex_to_bytes() and I don't expect that number to grow.
 
-I believe that we carry a fix for this in Git for Windows:
-https://github.com/git-for-windows/git/commit/3a5640fd3f0aa57edecc8dab455a97c5a15e6626
+Would loose objects be stored at paths containing only a subset of their
+new hash value?  If they won't then there will be two acceptable lengths
+instead of the one we have today, which should be easy to handle.
 
-The easiest way to test this would be to simply build Git from the
-`master` branch of https://github.com/git-for-windows/git (I try to keep
-it building and passing the test suite at all times not only on Windows,
-but also on Linux, it should also work on macOS).
+> I.e., I wonder if the right primitive is really something like
+> parse_oid_hex(), but with a flag to say "skip over interior slashes".
 
-Ciao,
-Johannes
+Hmm, ignoring any slashes is an interesting idea.  Is that too loose, I
+wonder?  And I don't think it makes for a good primitive, as slashes
+only need to be ignored in a single place so far (here in http-push.c).
+Collecting special cases in a central place, guarded by flags, doesn't
+reduce the overall complexity.
 
-P.S.: If you test this, and can confirm that it fixes your issue, I'll get
-this patch submitted properly to the Git mailing list (sadly, it seems
-that the https://github.com/patthoyts/git-gui project is sleeping beauty
-mode for a while now, otherwise I would add PRs there).
+> We don't need to deal with that eventuality yet, but I'm on the fence on
+> whether this patch is making that harder down the road or not. The
+> current strategy of "stuff it into a buffer without slashes" would be
+> easier to convert, I think.
+
+How so?  If you have a buffer then you need to know the size of the
+data to copy into it as well, or you'll learn it in the process.
+
+The call sites of hex_to_bytes() have to be modified along with the
+functions in hex.c to support longer hashes, with or without this
+series.
+
+René
