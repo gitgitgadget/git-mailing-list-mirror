@@ -2,119 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 26BC2202A0
-	for <e@80x24.org>; Wed,  1 Nov 2017 22:12:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 457FC202A0
+	for <e@80x24.org>; Wed,  1 Nov 2017 22:15:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933490AbdKAWMx (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Nov 2017 18:12:53 -0400
-Received: from mout.gmx.net ([212.227.17.20]:60759 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S933402AbdKAWMv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Nov 2017 18:12:51 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MYbFe-1deeSm3Yvq-00VQut; Wed, 01
- Nov 2017 23:12:42 +0100
-Date:   Wed, 1 Nov 2017 23:12:40 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Jacob Keller <jacob.keller@gmail.com>
-cc:     Stefan Beller <sbeller@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        git <git@vger.kernel.org>, Kevin Daudt <me@ikke.info>
-Subject: Re: [PATCHv2 6/7] builtin/describe.c: describe a blob
-In-Reply-To: <EF573E5E-EA72-4DEE-822C-B44265FD581B@gmail.com>
-Message-ID: <alpine.DEB.2.21.1.1711012310250.6482@virtualbox>
-References: <20171031003351.22341-1-sbeller@google.com> <20171031211852.13001-1-sbeller@google.com> <20171031211852.13001-7-sbeller@google.com> <xmqqbmkmvdrq.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.21.1.1711011329300.6482@virtualbox>
- <CAGZ79kZPNiNnSJd6CNYb7XkTVsT2ONLQLhwAQxt6_SPFTSwMcw@mail.gmail.com> <EF573E5E-EA72-4DEE-822C-B44265FD581B@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S933416AbdKAWPp (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Nov 2017 18:15:45 -0400
+Received: from cloud.peff.net ([104.130.231.41]:43298 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S933294AbdKAWPo (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Nov 2017 18:15:44 -0400
+Received: (qmail 29806 invoked by uid 109); 1 Nov 2017 22:15:44 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 01 Nov 2017 22:15:44 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 16004 invoked by uid 111); 1 Nov 2017 22:15:53 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Wed, 01 Nov 2017 18:15:53 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 01 Nov 2017 18:15:42 -0400
+Date:   Wed, 1 Nov 2017 18:15:42 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: [PATCH 2/3] http-push: use hex_to_bytes()
+Message-ID: <20171101221541.6dwezd4t4hweuis2@sigill.intra.peff.net>
+References: <508b1b3f-6b55-eee8-110a-c17d572ec27a@web.de>
+ <31ce5c1c-cab3-80aa-623b-43f91ddd2162@web.de>
+ <20171101195530.odscytks7jvgukbs@sigill.intra.peff.net>
+ <0e7f821a-94ae-3946-fb99-c508a06a6847@web.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:uwAqZQjpEYi90OQqdPR7REw7RDYMQ4nHMYcao4zs8BqJBNLmcoZ
- hzgXY94qWpk+9My56a2yqdhXkUrYv6MzTmn60nqYWVLMbBxVW+urULNUadz2vtCzMFfwgLM
- QHxJoh5RNGKbVLM/egBLGl/3CzlwDYchoDcrvb9tmDaORT2UoMFhugFrbCwIq6XX0zIYF5z
- W4G18HT+/v69ynUwRBCnA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:/SpJE0/JNcg=:xoE92pu677hJdjM/udAoRv
- n02nc9Sky9Usyj0JWC3wAFJhLleSHHIW1fs+dYflXhqz1jFaFTjtfAFvSp0TXA2ggFwXmKvCu
- 0qV2NuiiP5Nj9OzpS4py8KLdkty0T6UhDcJnmc0LnKMtZgG+gJesNPj6xwF1CvsMkTVRk7+F+
- N0xqABqzGm49GmkKbVLF/eiOfTjPATAfEXAs8AU7vr1mRiyZYgfmV9Qxi6Bfo7fdv7LHz9mI5
- O/nVeQRerCwqIIr65zwvrybpih3OpxOODKnltN+VNnaHePuRS4JtT9ZVfBJOlNR6L3txxpOHB
- ulvDLxgpcW1/pUCRhNPV221OfnhNU7aPGxP5RicRQYwNsxcrZLrCdph2iXLXGRubyes8uhN+M
- 7OdeVTRGKghNW+wHw69tv9XVyBbnNy/tSnxyWQWwhZytB6+WU9/7GoV7vluUDgL3NeIJiXPaZ
- iPjdHTG+TLYujtfHZzl/mcuvPcgIaNz+DAJ27eJGOOPmWcbnzR96icspqsq6q99Nfkf5Y/YSo
- XTGgX2vyoBKj12b8Jz4YrW9FGXK0pnf2Opf0uLRhGLF1MWTk73OFQTNcKweb68k1eaz7K7Who
- vgd4MvW3jKRm8ILeYEUsl1nEe1/smb5oG6RtjRYawc00KIGrnk89iffUaiq1LIEenj9qZZJON
- UkeETkgAHZt7016MY/ZQQ4FQygR97Zw5MwbMsPCRJSi9zspl1ZshN1oBtvTWW/D+CAJTNZJbN
- yNihNaBAl0NOzr0FZts/q9/J8hfrY0MPYQWcK0EH7QnnIAQJKECWEk/fjZBEf3Bx4nYsPiEK2
- h13y6WWxlDmnTcIDHMgs/38gy83uO/Ub9ut2LooGwH7XtpLBO0=
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <0e7f821a-94ae-3946-fb99-c508a06a6847@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Wed, Nov 01, 2017 at 10:59:49PM +0100, René Scharfe wrote:
 
-On Wed, 1 Nov 2017, Jacob Keller wrote:
-
-> On November 1, 2017 10:59:08 AM PDT, Stefan Beller <sbeller@google.com> wrote:
-> >>> Does the code describe a9dbc3f12c as v2.15.0:GIT-VERSION-GEN, or
-> >>> would it always be <commit>:<path>?
-> >>
-> >> As the blob is described using this function:
-> >>
-> >> static void process_object(struct object *obj, const char *path, void
-> >*data)
-> >> {
-> >>        struct process_commit_data *pcd = data;
-> >>
-> >>        if (!oidcmp(&pcd->looking_for, &obj->oid) && !pcd->dst->len) {
-> >>                reset_revision_walk();
-> >>                describe_commit(&pcd->current_commit, pcd->dst);
-> >>                strbuf_addf(pcd->dst, ":%s", path);
-> >>        }
-> >> }
-> >>
-> >> i.e. as `describe_commit()` is used on the commit part, the answer to
-> >your
-> >> question is: the former. I guess that is why Stefan wrote
-> >`commit-ish`
-> >> instead of `commit` ;-)
-> >
-> >$ ./git describe a9dbc3f12c
-> >warning: reflog of 'HEAD' references pruned commits
-> >v2.15.0-7-g980e40477f:GIT-VERSION-GEN
-> >
-> >So as noted below, this output is less than ideal, but technically
-> >correct as
-> >v2.15.0-7-g980e40477f contains that blob as well (you don't have these;
-> >it is this very series consisting of 7 patches on top of 2.15, none of
-> >them
-> >touching GIT-VERSION-GEN, hence that blob stays intact.)
-> >
-> >The way Junio asked, we actually may prefer the commit-ish to give
-> >that commit that introduced the blob for the first time, i.e. add the
-> >--reverse to the graph walking.
+> > The hex_to_bytes() function requires that the caller make sure they have
+> > the right number of bytes. But for many callers, I think they'd want to
+> > say "parse this oid, which might be truncated; I can't tell what the
+> > length is supposed to be".
 > 
-> I know id prefer the first commit that introduced the blob. That's what
-> describing a commit does, it finds the oldest tag prior to the commit,
-> while --contains finds the first tag that contains the commit as an
-> ancestor.
+> I'm confused by the word "many".  After this series there are three
+> callers of hex_to_bytes() and I don't expect that number to grow.
 
-It is very easy to wish for "the oldest commit introducing a blob". But
-since we're in a DAG, this question is not necessarily easy to answer:
+I meant only that most callers that parse oids, both in-file and not,
+would want to stop knowing about the length ahead of time. I think
+parse_oid_hex() solves that problem for most callers.
 
-- A - B - C
-    \   /
-      D
+> Would loose objects be stored at paths containing only a subset of their
+> new hash value?  If they won't then there will be two acceptable lengths
+> instead of the one we have today, which should be easy to handle.
 
-Let's assume that all commits except A have the blob, and that B and D
-(for some reason) have the same author/committer dates.
+I don't know. TBH, I'm not sure anyone has much interest in making
+http-push work with new hashes. I'd be OK if it simply doesn't until
+somebody interested shows up to change that.
 
-Do you identify B or D as the commit introducing the blob?
+> > We don't need to deal with that eventuality yet, but I'm on the fence on
+> > whether this patch is making that harder down the road or not. The
+> > current strategy of "stuff it into a buffer without slashes" would be
+> > easier to convert, I think.
+> 
+> How so?  If you have a buffer then you need to know the size of the
+> data to copy into it as well, or you'll learn it in the process.
+> 
+> The call sites of hex_to_bytes() have to be modified along with the
+> functions in hex.c to support longer hashes, with or without this
+> series.
 
-Ciao,
-Dscho
+You have to know how big the data you have is, but you don't necessarily
+know whether that makes a complete hash or not. With a "remove slashes
+and then parse" strategy, you can do the removing without worrying about
+how big things are _supposed_ to be, and then the parser can tell you if
+you have a valid oid or not. The logic for what a hash looks like _and_
+how big it must be are both in the parser.
+
+With the new code you have here, we have to be a bit more intimate with
+SHA1_HEXSZ in the calling code. It knows that the hash consists of a
+certain number of hex bytes.
+
+I'm perfectly willing to punt on it for now. I'm not sure we know 100%
+yet what "new"-style hashes will look like, nor how their loose-object
+filenames would look.
+
+-Peff
