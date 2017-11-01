@@ -7,146 +7,209 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C94332055E
-	for <e@80x24.org>; Wed,  1 Nov 2017 08:19:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE1E020281
+	for <e@80x24.org>; Wed,  1 Nov 2017 09:03:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754305AbdKAIS6 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Nov 2017 04:18:58 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:51195 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754230AbdKAISy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Nov 2017 04:18:54 -0400
-Received: by mail-wm0-f65.google.com with SMTP id s66so3197233wmf.5
-        for <git@vger.kernel.org>; Wed, 01 Nov 2017 01:18:53 -0700 (PDT)
+        id S1754105AbdKAJDu (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Nov 2017 05:03:50 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:50095 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751721AbdKAJDr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Nov 2017 05:03:47 -0400
+Received: by mail-wr0-f196.google.com with SMTP id g90so1343355wrd.6
+        for <git@vger.kernel.org>; Wed, 01 Nov 2017 02:03:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=8/NE8oX8qktufOiHCQ+IuCCOGMD/TbxQGgCaAo4QArg=;
-        b=tC4eXjGKGJQxKn9xaKjb1TEvVTtAX0ukLiVvyE1oIMLTX7AEQJ+wJZbcfenWd6FfMP
-         cppylZcnZNK1G4BH0t3gQorGQWgzMbTJyddr4qFHnjM4qqhwtDO5jcypm9NDtri6xTI9
-         f6TZAyoV7BbJCj8l0ag1uu4h/ZRcVbS40+rrhKiq4BZyQdpL6G6sIOdy2FZgArS/sy1V
-         0ysBLChiKV0u6gLdBhwmzOUW93PQmtGj2V6LXvRB0R3nHBl2SkOcE5qg/KrhLXXEvfqu
-         HdqtoFMdPSOLmaw4jzqerWCofozrj2DbFxs6jv8uC9u709IrZoIB/8gTG9xVNi9jZN2I
-         FgEg==
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=xJwWaI2OHXMFcnET2e8VPFBwGFHxAa2ISU5ZkkKoAtE=;
+        b=nWgQxumt9DJOvDP6pFUHxU3ExC+kcrX6HrFb0aZxMFwugTB79TfmPZq5f7tEwzM8D5
+         PH5Rg3mA5OAv/umvyI99Tj9XBiq+lNqXo2hihF0lXoa5nuRhichLwcIwK19Ev0d7antF
+         n91ihTsBdkbmuyRKwvPUNTLgniZzYQxCwFyLM8WQXAskOFavsUPNU9oReqFsChipOvDK
+         6eo1GOGhUTIAeZWQ2MHs0t53g6wcAJSVHKrVMEajm4sSn4UCoUocIe8cx1wgp6eVxVED
+         I3AmRDLFvi8UiuMGediKOFUJPJ3HQtjBPOvXRV7m74RkgirCYju3mUix2jouXGLQy8IN
+         FCUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=8/NE8oX8qktufOiHCQ+IuCCOGMD/TbxQGgCaAo4QArg=;
-        b=gbNbSxygec9QTbPWcNJ89WU+EoKky+T33CSGKuRFz0kdiNEbXaa/QwizUsfM4nOvGF
-         wroohmFjgb+mugmlk4h534tCC+PMYxFupddh86tSEQ+KE1S15fixVIZYzBEDjlhJHNyV
-         cFsqrcbqcZAZ0G3ZGAkiPgiES4Jz7h7rDqEnqLVLIopqamj1gzJ2HCN72jPIk+R/C+BZ
-         8EN9nQ9eewR9VjSxQEhXYOMLsZEVI4+wCXB4hXwRf4iiiZ2gJV69Iv+e6x7A3JdoEnnW
-         EKUvwNlFP5KG+loEINE5FsyhSooisY/LwL/QlpM0Nw52czS4XQd1gRJjI3sn7S94Ure/
-         cb0A==
-X-Gm-Message-State: AMCzsaVLGRDnnl/X9gZM5YhG+Smu2LGKoUHWH1BoyoW0HN6gv7/dVerz
-        z9ViYlMKOMDX8cPN61NTC48=
-X-Google-Smtp-Source: ABhQp+QvFH02f0rP8FQfN2EpQ/PjLb75WrmpIUOws0k3AIn3qMHTWRXz5TPY7/JHw7soWODHNOq9AA==
-X-Received: by 10.28.103.4 with SMTP id b4mr4459199wmc.70.1509524332563;
-        Wed, 01 Nov 2017 01:18:52 -0700 (PDT)
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=xJwWaI2OHXMFcnET2e8VPFBwGFHxAa2ISU5ZkkKoAtE=;
+        b=CMj8h/ZAnbb87kY+H1VzCV8ej2UitExnsk4fRUOFHdVf6zo0RktdhJufRcHAYPBnkA
+         U98ayQce/VY0mxb228Et4A+oFACpDK2IDr8ySN/Qm+8hzD8VqUSNcV1M9bGJA/ziITBM
+         4MZ9ehUcwIY3uPe1f29fc6v8lgVMwMmNP71HD+gZNhwH5dlCrglW2efo3mPblizr+JKI
+         XvwY1/GC34dJCG4vP9kUxQm6T0hPVUInIrcU3CB9FXsxMuJvufHljPOXmzn1FFtilvrY
+         +ClzNZz0XPXORXwBu2CIPM1zBUQHbJFTE8uHDYHJ2Nhrm+8CPO+++KzKeZ73MdQXP1DQ
+         TQSA==
+X-Gm-Message-State: AMCzsaX/QyG6WEuuyRi8dkF22D/ZvdSFe9eBTscC65euhFUEnq/qTSAH
+        gaIX3ypR0s1IPy30w4WYkKr9JbC2
+X-Google-Smtp-Source: ABhQp+RHF1GUd+zMLLb6pNqnx9HVfoBFI3N5U9E/XpNjtNBwt11fzUBG0JtOiIHtDwRhaEEcJf24Aw==
+X-Received: by 10.223.176.176 with SMTP id i45mr4554308wra.240.1509527025659;
+        Wed, 01 Nov 2017 02:03:45 -0700 (PDT)
 Received: from localhost.localdomain ([2a02:aa16:5782:c100:c938:fbb7:46f8:2405])
-        by smtp.gmail.com with ESMTPSA id p128sm204522wmb.1.2017.11.01.01.18.51
+        by smtp.gmail.com with ESMTPSA id e6sm329478wrg.53.2017.11.01.02.03.44
+        for <git@vger.kernel.org>
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 01 Nov 2017 01:18:51 -0700 (PDT)
+        Wed, 01 Nov 2017 02:03:44 -0700 (PDT)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-To:     Michael Haggerty <mhagger@alum.mit.edu>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 5/7] refs: tidy up and adjust visibility of the `ref_update` flags
-Date:   Wed,  1 Nov 2017 09:18:08 +0100
-Message-Id: <20171101081808.5962-1-martin.agren@gmail.com>
+To:     git@vger.kernel.org
+Subject: [PATCH] reduce_heads: fix memory leaks
+Date:   Wed,  1 Nov 2017 10:03:26 +0100
+Message-Id: <20171101090326.8091-1-martin.agren@gmail.com>
 X-Mailer: git-send-email 2.15.0.415.gac1375d7e
-In-Reply-To: <da4974c47a7fd72e41513218e0c824d4d6377b8c.1509183413.git.mhagger@alum.mit.edu>
-References: <da4974c47a7fd72e41513218e0c824d4d6377b8c.1509183413.git.mhagger@alum.mit.edu>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 28 October 2017 at 11:49, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> The constants used for `ref_update::flags` were rather disorganized:
+We currently have seven callers of `reduce_heads(foo)`. Six of them do
+not use the original list `foo` again, and actually, all six of those
+end up leaking it.
 
-> * The documentation wasn't very consistent and partly still referred
->   to sha1s rather than oids.
+Introduce and use `reduce_heads_replace(&foo)` as a leak-free version of
+`foo = reduce_heads(foo)` to fix several of these. Fix the remaining
+leaks using `free_commit_list()`.
 
-> @@ -478,22 +462,23 @@ struct ref_transaction *ref_transaction_begin(struct strbuf *err);
->   *
->   *     refname -- the name of the reference to be affected.
->   *
-> - *     new_sha1 -- the SHA-1 that should be set to be the new value of
-> + *     new_oid -- the SHA-1 that should be set to be the new value of
->   *         the reference. Some functions allow this parameter to be
->   *         NULL, meaning that the reference is not changed, or
-> - *         null_sha1, meaning that the reference should be deleted. A
-> + *         null_oid, meaning that the reference should be deleted. A
->   *         copy of this value is made in the transaction.
->   *
-> - *     old_sha1 -- the SHA-1 value that the reference must have before
-> + *     old_oid -- the SHA-1 value that the reference must have before
+While we're here, document `reduce_heads()` and mark it as `extern`.
 
-You still refer to "SHA-1" twice in this hunk. Maybe squash this in, at
-least partially? This addresses all remaining "sha"/"SHA" in refs.h.
+Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+---
+ builtin/commit.c        |  2 +-
+ builtin/fmt-merge-msg.c |  2 +-
+ builtin/merge-base.c    |  6 +++++-
+ builtin/merge.c         |  1 +
+ builtin/pull.c          |  4 +++-
+ commit.c                |  7 +++++++
+ commit.h                | 18 +++++++++++++++++-
+ 7 files changed, 35 insertions(+), 5 deletions(-)
 
-Martin
-
--- >8 --
-diff --git a/refs.h b/refs.h
-index f0958e5bf..18582a408 100644
---- a/refs.h
-+++ b/refs.h
-@@ -126,7 +126,7 @@ int peel_ref(const char *refname, struct object_id *oid);
- /**
-  * Resolve refname in the nested "gitlink" repository in the specified
-  * submodule (which must be non-NULL). If the resolution is
-- * successful, return 0 and set sha1 to the name of the object;
-+ * successful, return 0 and set oid to the name of the object;
-  * otherwise, return a non-zero value.
-  */
- int resolve_gitlink_ref(const char *submodule, const char *refname,
-@@ -260,7 +260,7 @@ struct ref_transaction;
+diff --git a/builtin/commit.c b/builtin/commit.c
+index d75b3805e..11c474018 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1728,7 +1728,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 				allow_fast_forward = 0;
+ 		}
+ 		if (allow_fast_forward)
+-			parents = reduce_heads(parents);
++			reduce_heads_replace(&parents);
+ 	} else {
+ 		if (!reflog_msg)
+ 			reflog_msg = (whence == FROM_CHERRY_PICK)
+diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
+index e99b5ddbf..27a2361e9 100644
+--- a/builtin/fmt-merge-msg.c
++++ b/builtin/fmt-merge-msg.c
+@@ -571,7 +571,7 @@ static void find_merge_parents(struct merge_parents *result,
+ 	head_commit = lookup_commit(head);
+ 	if (head_commit)
+ 		commit_list_insert(head_commit, &parents);
+-	parents = reduce_heads(parents);
++	reduce_heads_replace(&parents);
  
- /*
-  * The signature for the callback function for the for_each_*()
-- * functions below.  The memory pointed to by the refname and sha1
-+ * functions below.  The memory pointed to by the refname and oid
-  * arguments is only guaranteed to be valid for the duration of a
-  * single callback invocation.
-  */
-@@ -354,7 +354,7 @@ int reflog_exists(const char *refname);
+ 	while (parents) {
+ 		struct commit *cmit = pop_commit(&parents);
+diff --git a/builtin/merge-base.c b/builtin/merge-base.c
+index 6dbd167d3..b1b7590c4 100644
+--- a/builtin/merge-base.c
++++ b/builtin/merge-base.c
+@@ -59,6 +59,8 @@ static int handle_independent(int count, const char **args)
+ 		commit_list_insert(get_commit_reference(args[i]), &revs);
  
- /*
-  * Delete the specified reference. If old_oid is non-NULL, then
-- * verify that the current value of the reference is old_sha1 before
-+ * verify that the current value of the reference is old_oid before
-  * deleting it. If old_oid is NULL, delete the reference if it
-  * exists, regardless of its old value. It is an error for old_oid to
-  * be null_oid. msg and flags are passed through to
-@@ -462,13 +462,13 @@ struct ref_transaction *ref_transaction_begin(struct strbuf *err);
-  *
-  *     refname -- the name of the reference to be affected.
-  *
-- *     new_oid -- the SHA-1 that should be set to be the new value of
-- *         the reference. Some functions allow this parameter to be
-+ *     new_oid -- the object ID that should be set to be the new value
-+ *         of the reference. Some functions allow this parameter to be
-  *         NULL, meaning that the reference is not changed, or
-  *         null_oid, meaning that the reference should be deleted. A
-  *         copy of this value is made in the transaction.
-  *
-- *     old_oid -- the SHA-1 value that the reference must have before
-+ *     old_oid -- the object ID that the reference must have before
-  *         the update. Some functions allow this parameter to be NULL,
-  *         meaning that the old value of the reference is not checked,
-  *         or null_oid, meaning that the reference must not exist
-@@ -633,7 +633,7 @@ int ref_transaction_abort(struct ref_transaction *transaction,
-  * It is a bug to call this function when there might be other
-  * processes accessing the repository or if there are existing
-  * references that might conflict with the ones being created. All
-- * old_sha1 values must either be absent or NULL_SHA1.
-+ * old_oid values must either be absent or null_oid.
-  */
- int initial_ref_transaction_commit(struct ref_transaction *transaction,
- 				   struct strbuf *err);
+ 	result = reduce_heads(revs);
++	free_commit_list(revs);
++
+ 	if (!result)
+ 		return 1;
+ 
+@@ -78,7 +80,9 @@ static int handle_octopus(int count, const char **args, int show_all)
+ 	for (i = count - 1; i >= 0; i--)
+ 		commit_list_insert(get_commit_reference(args[i]), &revs);
+ 
+-	result = reduce_heads(get_octopus_merge_bases(revs));
++	result = get_octopus_merge_bases(revs);
++	free_commit_list(revs);
++	reduce_heads_replace(&result);
+ 
+ 	if (!result)
+ 		return 1;
+diff --git a/builtin/merge.c b/builtin/merge.c
+index ab5ffe85e..fbbf2a9e5 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -999,6 +999,7 @@ static struct commit_list *reduce_parents(struct commit *head_commit,
+ 
+ 	/* Find what parents to record by checking independent ones. */
+ 	parents = reduce_heads(remoteheads);
++	free_commit_list(remoteheads);
+ 
+ 	remoteheads = NULL;
+ 	remotes = &remoteheads;
+diff --git a/builtin/pull.c b/builtin/pull.c
+index 6f772e8a2..5eeaa8c68 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -745,8 +745,10 @@ static int get_octopus_merge_base(struct object_id *merge_base,
+ 	if (!is_null_oid(fork_point))
+ 		commit_list_insert(lookup_commit_reference(fork_point), &revs);
+ 
+-	result = reduce_heads(get_octopus_merge_bases(revs));
++	result = get_octopus_merge_bases(revs);
+ 	free_commit_list(revs);
++	reduce_heads_replace(&result);
++
+ 	if (!result)
+ 		return 1;
+ 
+diff --git a/commit.c b/commit.c
+index 1e0e63379..cab8d4455 100644
+--- a/commit.c
++++ b/commit.c
+@@ -1090,6 +1090,13 @@ struct commit_list *reduce_heads(struct commit_list *heads)
+ 	return result;
+ }
+ 
++void reduce_heads_replace(struct commit_list **heads)
++{
++	struct commit_list *result = reduce_heads(*heads);
++	free_commit_list(*heads);
++	*heads = result;
++}
++
+ static const char gpg_sig_header[] = "gpgsig";
+ static const int gpg_sig_header_len = sizeof(gpg_sig_header) - 1;
+ 
+diff --git a/commit.h b/commit.h
+index 6d769590f..99a3fea68 100644
+--- a/commit.h
++++ b/commit.h
+@@ -313,7 +313,23 @@ extern int interactive_add(int argc, const char **argv, const char *prefix, int
+ extern int run_add_interactive(const char *revision, const char *patch_mode,
+ 			       const struct pathspec *pathspec);
+ 
+-struct commit_list *reduce_heads(struct commit_list *heads);
++/*
++ * Takes a list of commits and returns a new list where those
++ * have been removed that can be reached from other commits in
++ * the list. It is useful for, e.g., reducing the commits
++ * randomly thrown at the git-merge command and removing
++ * redundant commits that the user shouldn't have given to it.
++ *
++ * This function destroys the STALE bit of the commit objects'
++ * flags.
++ */
++extern struct commit_list *reduce_heads(struct commit_list *heads);
++
++/*
++ * Like `reduce_heads()`, except it replaces the list. Use this
++ * instead of `foo = reduce_heads(foo);` to avoid memory leaks.
++ */
++extern void reduce_heads_replace(struct commit_list **heads);
+ 
+ struct commit_extra_header {
+ 	struct commit_extra_header *next;
 -- 
 2.15.0.415.gac1375d7e
 
