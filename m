@@ -2,64 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AFD31202A0
-	for <e@80x24.org>; Wed,  1 Nov 2017 22:16:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DA882202A0
+	for <e@80x24.org>; Wed,  1 Nov 2017 22:18:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933434AbdKAWQV (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Nov 2017 18:16:21 -0400
-Received: from cloud.peff.net ([104.130.231.41]:43316 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S933294AbdKAWQV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Nov 2017 18:16:21 -0400
-Received: (qmail 29828 invoked by uid 109); 1 Nov 2017 22:16:21 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 01 Nov 2017 22:16:21 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16025 invoked by uid 111); 1 Nov 2017 22:16:29 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Wed, 01 Nov 2017 18:16:29 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 01 Nov 2017 18:16:18 -0400
-Date:   Wed, 1 Nov 2017 18:16:18 -0400
-From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Ralf Thielow <ralf.thielow@gmail.com>
-Subject: Re: [PATCH 1/2] sequencer: factor out rewrite_file()
-Message-ID: <20171101221618.4ioog7jlp7n2nd53@sigill.intra.peff.net>
-References: <6150c80b-cb0e-06d4-63a7-a4f4a9107ab2@web.de>
- <20171101194732.fn4n46wppl35e2z2@sigill.intra.peff.net>
- <alpine.DEB.2.21.1.1711012240500.6482@virtualbox>
+        id S933427AbdKAWSH (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Nov 2017 18:18:07 -0400
+Received: from mout.gmx.net ([212.227.15.18]:53550 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S933402AbdKAWSG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Nov 2017 18:18:06 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MUZG7-1djJgP02YV-00RIeG; Wed, 01
+ Nov 2017 23:18:02 +0100
+Date:   Wed, 1 Nov 2017 23:18:01 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Nov 2017, #01; Wed, 1)
+In-Reply-To: <xmqqvaiutuyw.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.21.1.1711012317390.6482@virtualbox>
+References: <xmqqvaiutuyw.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.21.1.1711012240500.6482@virtualbox>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:02q4K5ZhNpU8jY+WhXzX/pIdbC4PdMF2gMyu9/cU2JRRmSK0Op0
+ 43oPmIiwvxAy0yqQgJUPav0Zh4nPYUrgWJrYiBG+rdGddxgG0mJA8frAEfTzbR9cznCdozc
+ DLi1SKO8W4FhPOcCsLwrbd+dOVs609T9QaxcedBkwPU7WUhjwBTzUArRKBVOccu+D0KzU7d
+ 7Im/dsbGTYzzE+CG0HExA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:xWJj6vys5Fw=:jjdMHGruDHqaQD1QefL2U7
+ Ps+QjcQjhYK0yhqBIP3pZAXxr2acTOvipfAe0KjZchVgVaTSw5Mve+8MV7GwY48G+cVsok8wV
+ 1e2uoNeQHNXjJ3PuMqHQiuIMoh/A4Z7zN8/XyJ5rr1+HH/Vmin0QipYCDzDjSP+6+Sc6PsjvP
+ Uc0vZ3zvMSGUHQYPqOtObpRaq3/ivKx3c/74QsmINgpLOEq0LTLTouwnq6TQc1fKi7k6qmne4
+ +7rfKzYsTZnWz7g6nfoJ2RWwayxrVCV3e4XiGkkt6xwb0CAImItRR1Y+uEWyzIDeOzoUJoEO8
+ dMyDUeCKPgr0BZXOetXGUXrDgYxR7DOriYjFGciD9GWtvhACOnxE+GdWpBgM1+AmY2Qvd2cxj
+ YivpTJr3QunaL0Ick0oPaE5HAH8BMf9B2ZJQLeIsVyIqLy/9el89OL/D0bakeIw9rnWpCf0sz
+ O4McT+9nuPSRwkEjRaf3d2buPgHnF1xbw5ASd8HpmrAF8z4ZJfLX3tlMGLf8jn+SV45MaL//5
+ /VL9pxMRz0Mmzh6LdOUzaQeZkpovQUyizMwNPqqvXzMNN0Qau7E5zGmHwPNJxkHeKoENOsbFq
+ D80fKThLtYa5+nPinF3Cd4nQhJTJVGAIfxHxDVINTd38iJQb0TLBWOuHi89R/6aCR82RAU1Ry
+ xj+8sa2sfn2x7gNY/y8VBYTbPA2cNAO0xKjl2sFoTDoE51lIffg1blB+KUJd0N0FoRRyHAVPy
+ dB0m0f+RulCyxKAytUp8G+4RHvDWzPRC27mkzOYog2Sc5Ymbhp8EPiGtYzjRFSf3tLSGA2lhq
+ LMi4Rn0K4EZCYmmHCVT/rifIRvnJG7o9vvBciPgJ4HmrqgtX/w=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 01, 2017 at 10:46:14PM +0100, Johannes Schindelin wrote:
+Hi Junio,
 
-> >   - it calls die() rather than returning an error. Looking at the
-> >     callsites, I'm inclined to say that would be fine. Failing to write
-> >     to the todo file is essentially a fatal error for sequencer code.
+On Wed, 1 Nov 2017, Junio C Hamano wrote:
+
+> * jk/rebase-i-exec-gitdir-fix (2017-11-01) 1 commit
+>  - sequencer: pass absolute GIT_DIR to exec commands
 > 
-> I spent substantial time on making the sequencer code libified (it was far
-> from it). That die() call may look okay now, but it is not at all okay if
-> we want to make Git's source code cleaner and more reusable. And I want
-> to.
+>  A recent regression in "git rebase -i" that broke execution of git
+>  commands from subdirectories via "exec" insn has been fixed.
 > 
-> So my suggestion is to clean up write_file_buf() first, to stop behaving
-> like a drunk lemming, and to return an error value already, and only then
-> use it in sequencer.c.
+>  Ack from Dscho would be nice.
 
-That would be fine with me, too.
-
--Peff
+You got it.
+Dscho
