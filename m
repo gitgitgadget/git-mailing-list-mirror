@@ -2,75 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D6DEB202A0
-	for <e@80x24.org>; Wed,  1 Nov 2017 15:34:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CDC4E202A0
+	for <e@80x24.org>; Wed,  1 Nov 2017 15:50:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754676AbdKAPeR (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Nov 2017 11:34:17 -0400
-Received: from mout.gmx.net ([212.227.15.15]:59096 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753815AbdKAPeQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Nov 2017 11:34:16 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LeuUB-1dMXVc21z5-00qfBS; Wed, 01
- Nov 2017 16:34:11 +0100
-Date:   Wed, 1 Nov 2017 16:34:10 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Ralf Thielow <ralf.thielow@gmail.com>
-Subject: Re: [PATCH 2/2] sequencer: use O_TRUNC to truncate files
-In-Reply-To: <6b8e2a79-302e-7e69-00bd-f4643d5195af@web.de>
-Message-ID: <alpine.DEB.2.21.1.1711011633520.6482@virtualbox>
-References: <6150c80b-cb0e-06d4-63a7-a4f4a9107ab2@web.de> <6b8e2a79-302e-7e69-00bd-f4643d5195af@web.de>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1754794AbdKAPuD (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Nov 2017 11:50:03 -0400
+Received: from mail-ua0-f180.google.com ([209.85.217.180]:48661 "EHLO
+        mail-ua0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754560AbdKAPuC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Nov 2017 11:50:02 -0400
+Received: by mail-ua0-f180.google.com with SMTP id z4so1849776uaz.5
+        for <git@vger.kernel.org>; Wed, 01 Nov 2017 08:50:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=MsB0Ls8C5OcQquADwHubStWNrJpQS9uvpyfKL1v1T9Y=;
+        b=ou0OHFtVtoynle227VWv+66np5/i/zDaPr59QMaLs4Y5v9jJZEsE1nxo5ZDTFpJlQN
+         GcY/KPR7RjEaE2NFa6ePl8unGJqnsOLI6WrlwfnqHy1VmKrdajMu2w5gXa1fCJtUvOSH
+         GobIFRQ9U1/ZnOrhMpUF7kHJFIhtgKlzvxf2jsZU1jC1q96vyMvv1e3kmAx6WBEoKCKq
+         mMnH8JqeZkBiaJjf8VUh08cDKuRL23dv7FXaovWEGcZ8dYBH7nmNO0BKP+W6oUMirvH6
+         Ubb/JSJn4BYxlXwWAMf7GbQ8C87WSwbhmIBascMw6ybfoEuVjN0wt+X0hsEOAB6/528t
+         jg0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=MsB0Ls8C5OcQquADwHubStWNrJpQS9uvpyfKL1v1T9Y=;
+        b=hp6zDE95Ei2MeP/xVWUncwwX7DDlFUb6TcCZG9iBjiUm5UrAmJS75Gmm2aMwZs5b5G
+         hB+/4mnJFJ1Qj6hPWhU6/zqGIsnUpt6LjIqn1AO+L62HszyV/wxWDaDTZDTSg1YGnP7Q
+         8LsDwqDVUehYF6RO/dHUFQFVEEO3F7ekYI1+kEcDu2GwAO7a27DbzuC+vJTDGFwgPzoN
+         EBQcwR1F8cwexY3/moMrgXAIsGuBcOtPvtDW7RURwmmWqYv5pVo1PXE779b0eUMywKq7
+         Ijhv2xOmxrS0n7LZpeVgHheD/XlzfWZfZGjco5gDpjEsNUoTodi/f+Afn80iqIQRJp6y
+         LCjQ==
+X-Gm-Message-State: AMCzsaW/NV62OtUJ5p/P68NHg0HdntIzNnDMgtsSBNvEfPDMbmFUNE7u
+        y6t0Hzi2jvRltFL7y6CL8fyO+rdeWJmBdU2CzpWXjg==
+X-Google-Smtp-Source: ABhQp+RKnFTf5rhQXG+Sfamm8RtF2eH4gtxocqv9PCd+aSIwCcu0gKMUpCZW+5zo+OZSGRPm9gR+lgxu3kWbqGl8LuQ=
+X-Received: by 10.176.3.46 with SMTP id 43mr220661uat.55.1509551401448; Wed,
+ 01 Nov 2017 08:50:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323329-1614614047-1509550451=:6482"
-X-Provags-ID: V03:K0:UOKeOjS8F8Ainuxea3Vyd9/M+m96MALP3VswkNK7XjV952Rnb9R
- KNIn3qL4XBdXNtUwPkJTCjqIL3v2/fUZ8Rzi9qb1kQwcTWRVPBWn9t6Dm+LEaDm7yav5y7k
- e3zGl2Y5yV1HR12FJJTcyeGB/9nssCJ4RBXQEGmUsxlxqfX305GulsJdGe7SXb4QXf17qGw
- MzH6femY7/JT1frgNAP7w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:n0k/RHp5CJU=:5B2iGG5Bz4hR6a+qzBteAh
- UUfLxYzPYj7amlxBGO6VhM3NSLnA8+80yhuQQs9QtglPtZ65JynbMsbQv7O949MQo6jrvMva4
- qj3kQ5pURDvEWeEVL5HorLl/a+1D5XYIulpU6OGPm+TL34hWHdoxd/G0lwUUwsWrKO8FQT1hn
- BZMKgFhyOWDOMfiuPTf8xeONb30Nbbkj61hw2jQ2jxHEVt8inBWV3apDPgXEFqrk7CoLWPHzD
- xuBiDVj2B4xwbnjVVm18jHm6b9Z2FsF+tozq6j9VmZ582l6VWhBoF81IYr2xORFXaghIytj7L
- UFXpY0qwadrxI9M/BOGKPOuLspHLrdu4TKSP2gqsupLuadp8Z303rojKJo08nDFH9Oh0wT0oJ
- Ji0Pbngll64iZlYAcC+DtX/2skfJ/w0D137UrjJqRY5J3Ps3xwUKovApBb/gXcr130T8vkn9a
- Tv3riFPwoOyGE2W37CEmKbgPfonK1EWeq/o/WNSwPte7QAIHec7KFF1UBIzhzJ8Zc2kuJDOXo
- 4M/KBzrT8BY2ACxtpahvsPmtmKolSYrqpA26w+5I7E3E0cCEwbPBZ2Glm9yfeOSJ6Fa7S/lm3
- Q5ITlLe8qiN78a1WMiDPeQyg2m6mb6I/sgMhyjGjHziHq3pEgOQ7UazjefCvFJAMGqis1+bfx
- qomjAfSYLIoYWdTFsz8FTAga+zxJ3EyaOdkxmQh7nS0JaJmJuQ+dRWGnwDFB4PBkRC05H8yVO
- 1LLYXv3PuaI21PEcAi8XSQlkuD5YkwOGIUgRmeA+z1auBhcqAzFducz/Ov6DFigXRqzHp8/BS
- BXLmTgk3ITZs+cL0cRn6Icy2JS25lJjAZmszzUSS40CXDCy+D6WRqyDjijYG4b6ly79a6rt
+Received: by 10.176.67.33 with HTTP; Wed, 1 Nov 2017 08:50:00 -0700 (PDT)
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 1 Nov 2017 08:50:00 -0700
+Message-ID: <CABPp-BF5Aitu05X83Lbm+8rWKojOnNNec_4bf5PRy+hKZGPPHw@mail.gmail.com>
+Subject: Contribution licensing question(s)
+To:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi,
 
---8323329-1614614047-1509550451=:6482
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+My employer has a new-ish open-source-contribution process, and is
+curious about some licensing question(s) before I submit a few patch
+series.
 
-Hi Ren=C3=A9,
+Background: git's README.md file points out that some parts of git are
+under a license other than GPLv2 (while still GPLv2-compatible),
+though it doesn't state which one(s) or what a contributor might want
+to do if they want to grant permission under one of those more
+permissive license(s). Also, I seem to recall that years ago there
+were requests to make code available under a slightly more permissive
+license to allow re-usage in jgit and perhaps other projects, though I
+can't find any trace of this in the codebase.  git's COPYING file has
+wording suggesting how to make a license transition (to GPLv3) easier,
+but only considers completely new files as opposed to (significant)
+modifications to existing files.
 
-On Tue, 31 Oct 2017, Ren=C3=A9 Scharfe wrote:
-
-> Cut off any previous content of the file to be rewritten by passing the
-> flag O_TRUNC to open(2) instead of calling ftruncate(2) at the end.
-> That's easier and shorter.
-
-Sure.
+I'm not sure whether my specific git contributions would matter to
+jgit (which we also use internally, both directly and indirectly), but
+generally, is contributing under a more permissive GPLv2-compatible
+license to permit re-usage in other projects like jgit (or for easing
+future license switches) still relevant?  If so, which license(s) have
+folks gravitated towards for these contributions, and how would one
+mark their submitted patches?
 
 Thanks,
-Dscho
---8323329-1614614047-1509550451=:6482--
+Elijah
