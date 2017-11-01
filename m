@@ -2,122 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 90DC2202A0
-	for <e@80x24.org>; Wed,  1 Nov 2017 19:56:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D1B93202A0
+	for <e@80x24.org>; Wed,  1 Nov 2017 19:58:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755167AbdKAT4x (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Nov 2017 15:56:53 -0400
-Received: from mail-qt0-f174.google.com ([209.85.216.174]:53159 "EHLO
-        mail-qt0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755157AbdKAT4w (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Nov 2017 15:56:52 -0400
-Received: by mail-qt0-f174.google.com with SMTP id 31so4130673qtz.9
-        for <git@vger.kernel.org>; Wed, 01 Nov 2017 12:56:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=DPIqt8qSrKiP6Ip81ndu7DpIGr8v4RYfB99sEpUh6lc=;
-        b=enosQH0X0sqFQCTTEOO3NLMjqtgSS1LDCaY+tuvTvWetGGY4ChlrXAF8yHnnbL6q+U
-         kkNZnM/3aaDbu2JmHYizUeqthkFOhAUK21JN/Fy1X+suVJofU9IQp/SL4ebU14Ab70wm
-         hHJYu/3e3Oko3Bcb4U3bJZTtMldj6zGzCQE04BA4Q0hXsH3A3A9FRK+TVnqMbWQV28HZ
-         vGdHlFsekOoHPjz7L/Lh/SZO/Z1jZEOxxJinTpZSAeVNDX/FSpdldAUg/5YgEwzmPnw5
-         mlnsbIHxMTA4ACvfeJJ6qdxQkJ7lnsxu60z6LBFWXVMupvN+HEebA8KtJbRi9J5WDrl5
-         tfQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=DPIqt8qSrKiP6Ip81ndu7DpIGr8v4RYfB99sEpUh6lc=;
-        b=ib7/7rTzL7xLviEC+RtXsPkrVqkZFq4LKZLHL0+jHEqy+aOrl3TuA3ar5aT+o8SZxd
-         ifCw6Xjrnbb6Or59tTev8g8jLXstJNNsZqqAoV//aHLpjXWD89MMZ2RQ1JdIqzP8uhGF
-         0oNGFVJLXInSPQnzjuydzspCXhgsPi3sKOo0nBrrxalssiw4UPzCLsxjBDTJ5dST6NRC
-         gUvk/hZJrP38B/7Jwl/xMxLhg3bf/xzQYugVgjrPd51GtGASKXLH4wy4XBcfX01JiFDZ
-         lUppgIsJLTl2uv84qRguKY7nj9cAv9lQqTIoQ5OgX948eI36M4c1oPEt8qDATsEc12VA
-         p6+w==
-X-Gm-Message-State: AMCzsaVQ1o23slklo/mDoGmCvj/zZrCrIhv7e1gPKc4xBbLlZV9D+ftR
-        ukHFtfeYdPKIkxHGIWe9QhDvvCcbEov5C/WG3To=
-X-Google-Smtp-Source: ABhQp+RvO+HqaVG7RbMhDCTkSe3zdW8ZREsN032BW/4ot6DYvl/Bv6hV/Ec2S87BlAc26KeehTKaBKnZLBOOQJwPlzE=
-X-Received: by 10.200.53.12 with SMTP id y12mr1787029qtb.84.1509566211771;
- Wed, 01 Nov 2017 12:56:51 -0700 (PDT)
+        id S932209AbdKAT64 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Nov 2017 15:58:56 -0400
+Received: from cloud.peff.net ([104.130.231.41]:43084 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1755208AbdKAT6z (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Nov 2017 15:58:55 -0400
+Received: (qmail 24928 invoked by uid 109); 1 Nov 2017 19:58:55 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 01 Nov 2017 19:58:55 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 14850 invoked by uid 111); 1 Nov 2017 19:59:04 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Wed, 01 Nov 2017 15:59:04 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 01 Nov 2017 15:58:53 -0400
+Date:   Wed, 1 Nov 2017 15:58:53 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: [PATCH 3/3] sha1_file: use hex_to_bytes()
+Message-ID: <20171101195853.tu7wfpzo5cqoqwbo@sigill.intra.peff.net>
+References: <508b1b3f-6b55-eee8-110a-c17d572ec27a@web.de>
+ <d8f73744-b3f5-0fca-d58c-1f60e79214e0@web.de>
 MIME-Version: 1.0
-Received: by 10.12.146.118 with HTTP; Wed, 1 Nov 2017 12:56:51 -0700 (PDT)
-In-Reply-To: <20171030025142.19421-6-anarcat@debian.org>
-References: <20171029160857.29460-2-anarcat@debian.org> <20171030025142.19421-1-anarcat@debian.org>
- <20171030025142.19421-6-anarcat@debian.org>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 1 Nov 2017 15:56:51 -0400
-X-Google-Sender-Auth: YNp5BtJK6_BiK0vJwYJ8sjXhEe0
-Message-ID: <CAPig+cTX1kBCk-phodTanU1dmwjM_2TNevKyGvdCWonqhEU5Dg@mail.gmail.com>
-Subject: Re: [PATCH 5/7] remote-mediawiki: support fetching from (Main) namespace
-To:     =?UTF-8?Q?Antoine_Beaupr=C3=A9?= <anarcat@debian.org>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <d8f73744-b3f5-0fca-d58c-1f60e79214e0@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Oct 29, 2017 at 10:51 PM, Antoine Beaupr=C3=A9 <anarcat@debian.org>=
- wrote:
-> When we specify a list of namespaces to fetch from, by default the MW
-> API will not fetch from the default namespace, refered to as "(Main)"
-> in the documentation:
->
-> https://www.mediawiki.org/wiki/Manual:Namespace#Built-in_namespaces
->
-> I haven't found a way to address that "(Main)" namespace when getting
-> the namespace ids: indeed, when listing namespaces, there is no
-> "canonical" field for the main namespace, although there is a "*"
-> field that is set to "" (empty). So in theory, we could specify the
-> empty namespace to get the main namespace, but that would make
-> specifying namespaces harder for the user: we would need to teach
-> users about the "empty" default namespace. It would also make the code
-> more complicated: we'd need to parse quotes in the configuration.
->
-> So we simply override the query here and allow the user to specify
-> "(Main)" since that is the publicly documented name.
+On Tue, Oct 31, 2017 at 02:50:06PM +0100, René Scharfe wrote:
 
-Thanks, this explanation makes the patch a lot clearer. More below...
+> The path of a loose object contains its hash value encoded into two
+> substrings of 2 and 38 hexadecimal digits separated by a slash.  The
+> first part is handed to for_each_file_in_obj_subdir() in decoded form as
+> subdir_nr.  The current code builds a full hexadecimal representation of
+> the hash in a temporary buffer, then uses get_oid_hex() to decode it.
+> 
+> Avoid the intermediate step by taking subdir_nr as-is and using
+> hex_to_bytes() directly on the second substring.  That's shorter and
+> easier.
 
-> Signed-off-by: Antoine Beaupr=C3=A9 <anarcat@debian.org>
-> ---
-> diff --git a/contrib/mw-to-git/git-remote-mediawiki.perl b/contrib/mw-to-=
-git/git-remote-mediawiki.perl
-> @@ -264,9 +264,14 @@ sub get_mw_tracked_categories {
->  sub get_mw_tracked_namespaces {
->      my $pages =3D shift;
->      foreach my $local_namespace (@tracked_namespaces) {
-> -        my $namespace_id =3D get_mw_namespace_id($local_namespace);
-> +        my ($namespace_id, $mw_pages);
-> +        if ($local_namespace eq "(Main)") {
-> +            $namespace_id =3D 0;
-> +        } else {
-> +            $namespace_id =3D get_mw_namespace_id($local_namespace);
-> +        }
+This raises some of the same questions as the previous one on whether
+hex_to_bytes() is the ideal abstraction. But as before, I'm on the
+fence.
 
-I meant to ask this in the previous round, but with the earlier patch
-mixing several distinct changes into one, I plumb forgot: Would it
-make sense to move this "(Main)" special case into
-get_mw_namespace_id() itself? After all, that function is all about
-determining an ID associated with a name, and "(Main)" is a name.
+> @@ -1908,20 +1911,15 @@ int for_each_file_in_obj_subdir(unsigned int subdir_nr,
+>  		strbuf_setlen(path, baselen);
+>  		strbuf_addf(path, "/%s", de->d_name);
+>  
+> -		if (strlen(de->d_name) == GIT_SHA1_HEXSZ - 2)  {
+> -			char hex[GIT_MAX_HEXSZ+1];
+> -			struct object_id oid;
+> -
+> -			xsnprintf(hex, sizeof(hex), "%02x%s",
+> -				  subdir_nr, de->d_name);
+> -			if (!get_oid_hex(hex, &oid)) {
+> -				if (obj_cb) {
+> -					r = obj_cb(&oid, path->buf, data);
+> -					if (r)
+> -						break;
+> -				}
+> -				continue;
+> +		if (strlen(de->d_name) == GIT_SHA1_HEXSZ - 2 &&
+> +		    !hex_to_bytes(oid.hash + 1, de->d_name,
+> +				  GIT_SHA1_RAWSZ - 1)) {
+> +			if (obj_cb) {
+> +				r = obj_cb(&oid, path->buf, data);
+> +				if (r)
+> +					break;
+>  			}
+> +			continue;
+>  		}
+>  
+>  		if (cruft_cb) {
 
->          next if $namespace_id < 0; # virtual namespaces don't support al=
-lpages
-> -        my $mw_pages =3D $mediawiki->list( {
-> +        $mw_pages =3D $mediawiki->list( {
+Now that this is one big conditional for "is this a valid object
+filename", I think we could get rid of the "continue" in favor of:
 
-Why did the "my" of $my_pages get moved up to the top of the foreach
-loop? I can't seem to see any reason for it. Is this an unrelated
-change accidentally included in this patch?
+  if (...looks like an object...)
+          ...call obj_cb...
+  else if (cruft_cb)
+          ...call cruft_cb...
 
->              action =3D> 'query',
->              list =3D> 'allpages',
->              apnamespace =3D> $namespace_id,
-> --
+Not a big deal, but it may make the flow more clear (the original had to
+use a continue because there were multiple independent steps to
+determining it was an object file, so we had to "break out" from the
+inner conditional).
+
+-Peff
