@@ -6,87 +6,114 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3140A20450
-	for <e@80x24.org>; Wed,  1 Nov 2017 06:09:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B7A152055E
+	for <e@80x24.org>; Wed,  1 Nov 2017 06:14:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751165AbdKAGJl (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Nov 2017 02:09:41 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64549 "EHLO
+        id S1750918AbdKAGOY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Nov 2017 02:14:24 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59356 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750716AbdKAGJk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Nov 2017 02:09:40 -0400
+        with ESMTP id S1750716AbdKAGOX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Nov 2017 02:14:23 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 818379917A;
-        Wed,  1 Nov 2017 02:09:39 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7AD659405E;
+        Wed,  1 Nov 2017 02:14:22 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=3r1cH2I76s13Zt4wZkx/SSNcZIw=; b=n405Yr1EfXUBR7VXhHA8
-        7+9rIlpkT/6CoBwhFxdP/D8Eq0xwXI3vTu+SjPUXHq3me72eJoMiCuvhIpmPPUHc
-        BlvgQcjfp/myyZSGSHaU9rSwjwqgI8usPQpQlN5TO3RvQjjwcvXQhiuPU2gDlbIb
-        rvW0wZrPqqr7dNJdHH/45Lc=
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=BtZCF4GD8qZB
+        tgaGhA1/fVwj3dE=; b=GWfCKr5ZX+Rs7n+aREQ9F4P27KoMOrNCHuSNa/x3u8Nk
+        +oPwr1lijjYtwcczRocSZPFjQl4eCJBByu4Wo7hHDIApCx7Xql6s9FhVmbSiuR/h
+        WeEzqgy+Oz2fHYlJ9NjEr0WSAdRsd+vSCWZm5ai+NOWx96zcG+mnix7JMKEfLcc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         q=dns; s=sasl; b=K1JF4dscIhxOPKbQ/5EFUVxDz2+uWuYsaRNpcz6Ko3b89R
-        UCMiHGs45nHtECjTz0YxI1sBec9ik0FAXsk4kMw7wiwgfUQeC6pZmR1ucfl1qyP+
-        VOV30CWZLgN5OGPEhEb9+uctdurvTfVuTShzeMs72pxJElSlI1ojjhD+Ty4Sw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7975399177;
-        Wed,  1 Nov 2017 02:09:39 -0400 (EDT)
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=EWUSpR
+        d9BbvcbcU+wmemiVtmcojhQpfNDqD/dJmJ/DHv0531Y05ed/93fIyMImvThMw/CC
+        q5GJ8gmoYEk7hK4w5iDUuFkL/pItBh3GxNx7PbsCCec38Zk3CBYPO67nyhGvRlvD
+        3ZWeTy0R/Qgndr0kZ9SPJry2KmTH3475uwug4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 71F3E9405D;
+        Wed,  1 Nov 2017 02:14:22 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DC8A899176;
-        Wed,  1 Nov 2017 02:09:38 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DB83B94058;
+        Wed,  1 Nov 2017 02:14:21 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Ben Peart <peartben@gmail.com>, Alex Vandiver <alexmv@dropbox.com>,
-        Ben Peart <benpeart@microsoft.com>, git@vger.kernel.org,
-        chriscool@tuxfamily.org, t.gummerer@gmail.com, l.s.r@web.de,
-        jsorianopastor@gmail.com,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2] read_index_from(): Skip verification of the cache entry order to speed index loading
-References: <20171018142725.10948-1-benpeart@microsoft.com>
-        <20171024144544.7544-1-benpeart@microsoft.com>
-        <11666ccf-6406-d585-f519-7a1934c2973a@gmail.com>
-        <20171030180334.ddursnmj5wqgimqu@sigill.intra.peff.net>
-        <alpine.DEB.2.10.1710301727160.10801@alexmv-linux>
-        <f671ea09-d4aa-64aa-8225-c1fbf2eac175@gmail.com>
-        <20171031171058.vs5aau5x26ebx7kq@sigill.intra.peff.net>
-Date:   Wed, 01 Nov 2017 15:09:37 +0900
-Message-ID: <xmqqo9omttr2.fsf@gitster.mtv.corp.google.com>
+To:     Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@dwim.me>
+Cc:     git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH] diff: --indent-heuristic is no longer experimental
+References: <20171029151228.607834-1-cmn@dwim.me>
+        <xmqq1sljzt2i.fsf@gitster.mtv.corp.google.com>
+Date:   Wed, 01 Nov 2017 15:14:20 +0900
+In-Reply-To: <xmqq1sljzt2i.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Tue, 31 Oct 2017 16:15:33 +0900")
+Message-ID: <xmqqk1zattj7.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3E3BCC96-BECB-11E7-BB7E-575F0C78B957-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: E6DF8752-BECB-11E7-BDF9-8EF31968708C-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On Tue, Oct 31, 2017 at 09:01:45AM -0400, Ben Peart wrote:
+> Carlos Mart=C3=ADn Nieto <cmn@dwim.me> writes:
 >
->> > > But what we probably _do_ need is to make sure that "git fsck" would
->> > > detect such an out-of-order index. So that developers and users alike
->> > > can diagnose suspected problems.
->> > 
->> > Agree -- that seems like a better home for this logic.
->> 
->> That is how version 1 of this patch worked but the feedback to that patch
->> was to remove it "not only during the normal operation but also in fsck."
+>> This heuristic has been the default since 2.14 so we should not confus=
+e our
+>> users by saying that it's experimental and off by default.
+>>
+>> Signed-off-by: Carlos Mart=C3=ADn Nieto <cmn@dwim.me>
+>> ---
+>>  Documentation/diff-heuristic-options.txt | 5 -----
+>>  Documentation/diff-options.txt           | 7 ++++++-
+>>  2 files changed, 6 insertions(+), 6 deletions(-)
+>>  delete mode 100644 Documentation/diff-heuristic-options.txt
 >
-> Sorry for the mixed messages (I think they are mixed between different
-> people, and not mixed _just_ from me ;) ).
->
-> For what it's worth, I like your v1, but can live with either approach.
+> I suspect that this patch is incomplete.  The build procedure barfs
+> and dies while making git-annotate.html, claiming that it wants to
+> find diff-heuristic-options.txt that no longer exists.
 
-I agree that v1 is the less bad one between the two.
+The fix is obvious once you have time to sip your tea and look at
+the output from "git grep" ;-)
 
-To be honest, if the original code were done in that way (i.e. the
-state with v1 applied), I probably would have had a very hard time
-to justify accepting a patch to "make it safer by always checking at
-runtime" (i.e. a reverse of v1 patch).
+Subject: [PATCH] SQUASH???
 
-So, let's go with v1.  Thanks, all.
+---
+ Documentation/git-annotate.txt | 1 -
+ Documentation/git-blame.txt    | 2 --
+ 2 files changed, 3 deletions(-)
+
+diff --git a/Documentation/git-annotate.txt b/Documentation/git-annotate.=
+txt
+index 94be4b85e0..05fd482b74 100644
+--- a/Documentation/git-annotate.txt
++++ b/Documentation/git-annotate.txt
+@@ -23,7 +23,6 @@ familiar command name for people coming from other SCM =
+systems.
+ OPTIONS
+ -------
+ include::blame-options.txt[]
+-include::diff-heuristic-options.txt[]
+=20
+ SEE ALSO
+ --------
+diff --git a/Documentation/git-blame.txt b/Documentation/git-blame.txt
+index fdc3aea30a..16323eb80e 100644
+--- a/Documentation/git-blame.txt
++++ b/Documentation/git-blame.txt
+@@ -89,8 +89,6 @@ include::blame-options.txt[]
+ 	abbreviated object name, use <n>+1 digits. Note that 1 column
+ 	is used for a caret to mark the boundary commit.
+=20
+-include::diff-heuristic-options.txt[]
+-
+=20
+ THE PORCELAIN FORMAT
+ --------------------
+--=20
+2.15.0-206-g5fb43f7f39
 
