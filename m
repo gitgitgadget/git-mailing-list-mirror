@@ -2,104 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3BDE4202A0
-	for <e@80x24.org>; Wed,  1 Nov 2017 16:36:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4E267202A0
+	for <e@80x24.org>; Wed,  1 Nov 2017 16:37:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754708AbdKAQg0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Nov 2017 12:36:26 -0400
-Received: from mail-wm0-f47.google.com ([74.125.82.47]:45193 "EHLO
-        mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754089AbdKAQgZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Nov 2017 12:36:25 -0400
-Received: by mail-wm0-f47.google.com with SMTP id y80so5886624wmd.0
-        for <git@vger.kernel.org>; Wed, 01 Nov 2017 09:36:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=zX7wGSk/JvZdXbIU2l36hOYXnVuE9u0buJANXUEJkZk=;
-        b=LSWBOHnluQW9DGG86dxwW5jDJYf3Elg6QzSUUmecY+KWZdh9kzAd2Zr7SdDlpPAQLe
-         dSrqVJRWlfnY/yIy7pGl54HXMZwKUPb9+Td+6deADoye2mqM6+rbdarnkhxClt/Yx0dj
-         isONJzZqqV/bnZ/NsGtHxlnnJmmN+B0MSNZ2cmAzklMNnHZKSbixBG6Bdb26TM4hklz9
-         r+WIbkzDbExV8kHiIBI1qobtM4N+vlUeuuhfbeK1q/XBeQ+TIfx/IssEmxm2EVslGhkm
-         fi9nkSV4txRNiAVxqpmPMrsCt//+MjxdAh+pjxoLSiZ7p972OCFm4l2VCCVx7L+Rrycm
-         7n1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=zX7wGSk/JvZdXbIU2l36hOYXnVuE9u0buJANXUEJkZk=;
-        b=V8ZdqJpxH4DqfSDYOnEJ+lk89ARh70OjcJ8kWPGQ8mC+d1aIUH552bm3oDikdUv75s
-         reTpE+//CHhtsjkLeBIe6tov4fCy9oer40ZTh5zJcVsQATqP3XZJ9gCMTUwzk7ExvsvU
-         i0PeDJywpNTL0apezHxfH79wmNQNd8Ew6/QYo3DkEHjjnwl1ZVHPKAZbmdnR7t0PeFTB
-         IbRKP0fiYFnsOxrNFMe8CcJETbl0+scJbsf2y/l6MICV/pZlL3JvXTHiM5J245mMVDc5
-         ek9j6HCR6ErR++30G9fRKKmycPj8QYfrQTTXtf5yOJvdrOqHasVIjE/UUQHNxPJBGSov
-         ymoQ==
-X-Gm-Message-State: AMCzsaVArWYGTH1KTOStCgwRpGOBTaYSDi8OpVID3rPWzBeeQStXMtgU
-        ziruHv3K27FAuEePnowaO64+y90W4646cJDxZ1T4lLfj
-X-Google-Smtp-Source: ABhQp+RRFPtxjlRwWiOCkr/bGPD2O0CzlETibtvGGfEUKQ26paPYEgOk4wx2edPcEckDKZUINLChG0DTkps0fLuVggM=
-X-Received: by 10.80.182.118 with SMTP id c51mr1062632ede.204.1509554184440;
- Wed, 01 Nov 2017 09:36:24 -0700 (PDT)
+        id S1754674AbdKAQhZ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Nov 2017 12:37:25 -0400
+Received: from mout.gmx.net ([212.227.17.21]:60331 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754089AbdKAQhY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Nov 2017 12:37:24 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MPIvU-1e5WA13MWG-004TBf; Wed, 01
+ Nov 2017 17:37:09 +0100
+Date:   Wed, 1 Nov 2017 17:37:05 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [PATCH 3/3] mingw: document the experimental standard handle
+ redirection
+In-Reply-To: <xmqq4lqevbmk.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.21.1.1711011726030.6482@virtualbox>
+References: <cover.1509382976.git.johannes.schindelin@gmx.de> <436f0fb010709fe0d90460dc7bc1b3482237b192.1509382976.git.johannes.schindelin@gmx.de> <CAPig+cQs+6xCn=OR_Mw8vbEwEJ0c=sqnaEChOxuVw=kV4PQwsw@mail.gmail.com> <alpine.DEB.2.21.1.1710311807420.6482@virtualbox>
+ <xmqq4lqevbmk.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Received: by 10.80.132.232 with HTTP; Wed, 1 Nov 2017 09:36:24 -0700 (PDT)
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-Date:   Wed, 1 Nov 2017 16:36:24 +0000
-Message-ID: <CALgYhfO=6WfdzfGYwgw+cp2Tb58Yzx6YYvBtMCPNcJto5rMUCg@mail.gmail.com>
-Subject: Git Open Source Weekend London 11th/12th November
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     hkleynhans@bloomberg.net, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:xiv8YFYI/0G1Ky6LGXkxgRD4lte543w7vNl7CRF7kiRVEHnvX0Q
+ N/Y4jzGaNXF0kBR1Wb1PWLK8c5LEfTWONkedHjIODU4pQzPP+IUvVxyDU8P3rWJopL5iTJQ
+ m//6iOlyAjP+FGAkZrP3uLoSkNRM4bmxYwClkhXC+C592iZ4wB4iFewNGZv3jHVLvM+hejT
+ PpS2AdjC9h/WgKbd5F9mQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:CIRhUA3UHD8=:dD261DLmnLoTiWL8g9zKci
+ /wStASyWTdUFMJ1o8gFRfuj8DBIvY3sKWg96cCt47lKP7yX2bNYxqjfVHI4rCSiE2m0GN7vCh
+ us2Jf4tfjCbGaFQ4hjz/aX7/GHikPNjDiwIihbdH8DsyxQPgPdyCpV4hNUw6RFkBXlOLtf/j6
+ ZdlGJ+o9DJz4/AXE7K4v7nL+C9ORfRMjYCJeAP+MXToQP/fasETcfpaakJegVQDoomKVO7L+7
+ UpT9nSAzazeyg61nusuZXQ/akTF0cNslj3dQvsdOTWgP05dyxPBZ5ocovMmEGLi7cuHYLI1wM
+ coK9kUZFX72EgYcIIXtVTMvwcyPbkT7qkJqqmuhK01rcbAkeXoVLSxwiT7o55qnl5vlsCeFyd
+ uaL2DaZBBIZ/OSG2blQJ5jiW9F7np+oviRUQ04V+/gJ1+sXbvvDkIL/KKF3hwnVgJwf4U6kbT
+ qd7TmR1HAt0pKQCpiUEqOoIK3cahP7pkGRpio7K0rZfOyH1vdFrIYRKyR2SorB2l9CJFVFjCA
+ tO+5IluWHzHiHHb4BiESveNVNIJ0YqvF+uEikRGsZNT8+HlPtMqF+kzBhRMgTWfxWkiYhLxPj
+ sHH7EIMEsgnPXBqhK9iyEKG1SBIAES4Y+Bbnh89rmjLLWVHQradFYOkW23EzUtbW5P8EjTmIY
+ NpEpvD21dbdZ31dPNx1Th+e+SoJdqxgBhWCTwHfoKrLAAkmQCSCGqQuo1NoxUqDx0zZi6iial
+ Vr5SYz2+6QHxWXXanaLHf8/Axz7aCRgnbrcbuLcIZGVReX8bwaEvDWw6uBUgEpDkssw29iFv7
+ /tINQy573rtGNsTsfqtULE927BK2NXXXPWFZrrthZ7/7FfPEsBeh1QB9+mXncVUbmsgNTAe
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Junio,
 
-Bloomberg is hosting an Open Source Weekend in London on the 11th
-& 12th November 2017 to contribute to the Git project.  We have
-also confirmed that Peff will be amongst the mentors on hand to
-guide attendees through their efforts!
+On Wed, 1 Nov 2017, Junio C Hamano wrote:
 
-Some of you may notice that we tried to organize this earlier in the
-year, but unfortunately had to postpone it.  For this time around we
-are further along in planning, and it's definitely happening :)
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> >> > +Two special values are supported: `off` will simply close the
+> >> > +corresponding standard handle, and if `GIT_REDIRECT_STDERR` is
+> >> > +`2>&1`, standard error will be redirected to the same handle as
+> >> > +standard output.
+> >> 
+> >> Consistent with the Unixy special-case for '2>&1', I wonder if the
+> >> 'off' case would be more intuitively stated as '>/dev/null' or just
+> >> '/dev/null'...
+> >
+> > I feel this is the wrong way round. `>/dev/null` may sound very intuitive
+> > to you, but this feature is Windows only. Guess three times how intuitive
+> > it sounds to Windows developers to write `>/dev/null` if you want to
+> > suppress output...
+> 
+> It would be just as intuitive to write '2>&1' for dup-redirection,
 
-For those unfamiliar with Bloomberg Open Source weekends: These
-events provide a great way for those who love working on code to
-give back to the community. Come and help make difference to a
-great project!
+No. You misunderstand. I was mainly concerned with the `/dev/null`. Every
+Windows developer knows what `>file.txt` means, and many know what
+`2>error.txt` means. But `/dev/null` is not Windows, period. It is so not
+Windows that Git itself translates it to `NUL` (which you Linux die-hards
+won't have a clue about, I would wager a bet).
 
-There will be tasks provided by the mentors, or bring your own if
-you already have a great idea.  Also if you can't attend the weekend
-and can think of a project which you would like tackled at this
-event please let me know.  Obviously the projects should be
-completable inside a weekend.
+> Perhaps "dup-to-stdout" or even just "stdout".
 
-Normally attendees work in small groups on a specific task to
-prevent anyone from getting stuck. Per usual, Bloomberg will
-provide the venue, mentors, snacks and drinks.  Bring your
-enthusiasm (and your laptop!) and come share in the fun!  The
-event is also open to everyone, so feel free to pass on the
-invite!
+No. The value is a path. I can special-case values that are not even valid
+Windows file names (such as `2>&1`). I cannot special-case values that are
+perfectly valid paths.
 
-The event is free of charge, but please ensure that you are able
-to attend the event before registering.  That will greatly help
-us with accurate numbers for catering so that we don't create
-unwanted waste!
+> By the way, the description talks about "special values", but it
+> leaves it completely unclear what their normal values mean.
 
-You can register for the event here:
+True. Fixed. I also threw in an example for a pipe.
 
-https://go.bloomberg.com/attend/invite/git-sprint-hosted-bloomberg/
-
-Whether you already are a contributor (as probably most people on
-this list are) or interested in starting to contribute to git or
-have some friends that you'd like to get to contribute to git, it
-would be great to see you at the event.
-
-If you have any further questions feel free to get in touch.
-
-- Thomas
+Ciao,
+Dscho
