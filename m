@@ -2,108 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C5265202A0
-	for <e@80x24.org>; Wed,  1 Nov 2017 20:58:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 53756202A0
+	for <e@80x24.org>; Wed,  1 Nov 2017 21:05:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933035AbdKAU65 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Nov 2017 16:58:57 -0400
-Received: from mail-qk0-f177.google.com ([209.85.220.177]:47718 "EHLO
-        mail-qk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751922AbdKAU64 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Nov 2017 16:58:56 -0400
-Received: by mail-qk0-f177.google.com with SMTP id m189so4377297qke.4
-        for <git@vger.kernel.org>; Wed, 01 Nov 2017 13:58:56 -0700 (PDT)
+        id S933359AbdKAVFu (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Nov 2017 17:05:50 -0400
+Received: from mail-pg0-f52.google.com ([74.125.83.52]:53494 "EHLO
+        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933306AbdKAVFr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Nov 2017 17:05:47 -0400
+Received: by mail-pg0-f52.google.com with SMTP id s2so3132702pge.10
+        for <git@vger.kernel.org>; Wed, 01 Nov 2017 14:05:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=LE29MbSXmba4b7DhI0553WywIm/1KPwOR1tVNyCjiOc=;
-        b=bEDe2rTse0wuvIX65rbdHkOxerHn2CZyedaCgvpfTG135T8BT3ZuSJIIUecvJ+0o5W
-         /VZb4mntMBl0a5e0WNhPAEwhaJH9dHb97dlXUq8zT5KW+HHcaPD2QlVXX1pj+7nCGkFg
-         agnivknj2kICEuXgKJ+x0CtWGUapY/GPSYcjTflJeedD9FoKUwCvZsoj32yN48j3+7jL
-         FdgFQeERWUmPVbOH7PZ9B2slQkUtJgyImwoDFAWbOMnTY1fm2yP8ZEggPlRouw9agMFk
-         LdGZOpBWfKYa3oiHY0g1CPVg/+G5QqoGN8eFTIAlK+sQWEoB+jxBeEE6jGA8VMrKAH5S
-         58eQ==
+        d=gmail.com; s=20161025;
+        h=date:user-agent:in-reply-to:references:mime-version
+         :content-transfer-encoding:subject:to:cc:from:message-id;
+        bh=gSTRJJTCuZwQ6VkKJlJH8lnYQtIKJebuHuR6r6M1JuA=;
+        b=tbfOC3RcitoQh0TJFiu6HNtUkyTjKuISTOFaIk2CaQKRQ0uGjyTq4noOvIOxMIstz8
+         7GVPueQ+9wqgQYtWRJ8sxYmUKVlVIxOu6oqG7VBBdtAHf2Uo/TFq2SmobVVTAz0AntC0
+         bUfHxXSh+Cvbb5AOmh8BBmW+UurK3N59+FlmIwzZTNT81L8qNzmE+trvB2UtGW7Vc0mJ
+         3QAUkHbO0z+gwXY/n3ZLSuVKWBOSv+jgl2LnXMKbW5IRPaqNcphGH+Ntna6xxhkiWOVo
+         9rFMvcAptwsxDpbqzkZhMqGHt6miNViy3RPC5PRrL8fI411gyKqe1nWpCQ0Axxr1N7yd
+         3FZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=LE29MbSXmba4b7DhI0553WywIm/1KPwOR1tVNyCjiOc=;
-        b=Z1dG9upVOCPGwz4RIiVv4LERzNh0GRhEb/zPerxiP4l8FSGQ5wZJFapNBMnqKm7Gi2
-         qPurKk9acJTW1WzptDAdLbJf+ofMzKwR4jAjsfymAnuyRinC1hOnzNmtPNSG7anB87Tm
-         /HM0A8B3qFdHK5+PubnAl/xal4x79LUGwSJSZSxY38dxdadwLLZnavARKVuSrLVRvnYN
-         t6YlHrFR2QcwkMW2j8o2xqPCZHkDc9GTE4N+JJ8a8Nc12ld/zjoRewb9wIob0wOekEPA
-         6Hl8so3N8jCw7MjMu7CE7k7oxXKPnkQ0TujMEBht2HJWU5Jq43l6YZkmSuBszxt8rrc1
-         NdDg==
-X-Gm-Message-State: AJaThX5Z3mHcdnYUw+5fzQlBoQ725DfguzcSxCbhX5BQHnYD55JAUBRv
-        AdPE0OB05bkPSpR1OjJE7R5vKPENQs5Q9H1/ATjytA==
-X-Google-Smtp-Source: ABhQp+SsbS75wOq1Y+OohQTK8yv2D2NQE0xPrJx6Knh2iUiw74+y+3BxOf/onhBGWOvkCIrBJ9CEM+PP7Z5i5qAZEgg=
-X-Received: by 10.233.239.140 with SMTP id d134mr1836491qkg.308.1509569935530;
- Wed, 01 Nov 2017 13:58:55 -0700 (PDT)
+        h=x-gm-message-state:date:user-agent:in-reply-to:references
+         :mime-version:content-transfer-encoding:subject:to:cc:from
+         :message-id;
+        bh=gSTRJJTCuZwQ6VkKJlJH8lnYQtIKJebuHuR6r6M1JuA=;
+        b=E2c3YciwXKYqYFiPNUJ7wSaaG702f8I3vw9enN5LGfnhhrmdBk0bCJO8AUBLZLrKXM
+         34PtZVo2TgqOOzRpWWbo+T5m4JrTwbcsJ3bctNMoo4Jmy5wF5eUp/+7N2u+Co0rNgrKW
+         SupIFTGo1UddMi42/Lpo5+1d13PmW2aZDzwNzTIx/htplxQqC0aEyHCaNkJ74vc5JpNV
+         Lg/q4Tb3UohFvUPpHMMfuT2bqk10j0X0qug/3x0jVZGfYSAdKOHBoh5YD5FtCdpVBCiY
+         +INS9WkO2mEZ4UhaYizfbBuK/8Yt3a2a3oWFC9vMEhH6NeqQtiQmziSgONbjnu8+lHit
+         tmXA==
+X-Gm-Message-State: AMCzsaU8BJ4yV2buMfduiYCcCJIWFwuBVwySUDLvBBf68h49rF6RbUZN
+        sCuaxCreYHl/2BqEeat1AcM=
+X-Google-Smtp-Source: ABhQp+TOvaE5QW2oxvWXS3PGcYdF+Pc2gud5RqYTgsIUtauYCRmCoPKEWxkU6OGiIhjPNL44FuLItg==
+X-Received: by 10.99.171.6 with SMTP id p6mr1207490pgf.30.1509570346234;
+        Wed, 01 Nov 2017 14:05:46 -0700 (PDT)
+Received: from [192.168.1.126] (50-39-169-152.bvtn.or.frontiernet.net. [50.39.169.152])
+        by smtp.gmail.com with ESMTPSA id r16sm2500633pgt.72.2017.11.01.14.05.44
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 01 Nov 2017 14:05:44 -0700 (PDT)
+Date:   Wed, 01 Nov 2017 14:05:41 -0700
+User-Agent: K-9 Mail for Android
+In-Reply-To: <CAGZ79kZPNiNnSJd6CNYb7XkTVsT2ONLQLhwAQxt6_SPFTSwMcw@mail.gmail.com>
+References: <20171031003351.22341-1-sbeller@google.com> <20171031211852.13001-1-sbeller@google.com> <20171031211852.13001-7-sbeller@google.com> <xmqqbmkmvdrq.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.21.1.1711011329300.6482@virtualbox> <CAGZ79kZPNiNnSJd6CNYb7XkTVsT2ONLQLhwAQxt6_SPFTSwMcw@mail.gmail.com>
 MIME-Version: 1.0
-Received: by 10.140.102.70 with HTTP; Wed, 1 Nov 2017 13:58:54 -0700 (PDT)
-In-Reply-To: <xmqq4lqewu2b.fsf@gitster.mtv.corp.google.com>
-References: <20171028004419.10139-1-sbeller@google.com> <20171031003351.22341-1-sbeller@google.com>
- <20171031003351.22341-7-sbeller@google.com> <xmqqinevzvel.fsf@gitster.mtv.corp.google.com>
- <CAGZ79kYO=4SWzfKY6bU8Spn5Ubw39ghOH6wanFhFEsKD8q9vrA@mail.gmail.com> <xmqq4lqewu2b.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 1 Nov 2017 13:58:54 -0700
-Message-ID: <CAGZ79kYC4=rDSWC7WCGVL4n4OC8BpvMJFwxx+LV9GqoGnSHFSA@mail.gmail.com>
-Subject: Re: [PATCH 6/7] builtin/describe.c: describe a blob
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>, Kevin Daudt <me@ikke.info>,
-        Jacob Keller <jacob.keller@gmail.com>,
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCHv2 6/7] builtin/describe.c: describe a blob
+To:     Stefan Beller <sbeller@google.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+CC:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
+        Kevin Daudt <me@ikke.info>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Message-ID: <EF573E5E-EA72-4DEE-822C-B44265FD581B@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 31, 2017 at 8:34 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->>>  Given the difficulty in
->>> coming up with the single-liner description of what it does we saw
->>> above, I suspect that splitting SYNOPSIS out into two very distinct
->>> operating mode might make it easier to read.
->>>
->>>     SYNOPSIS
->>>     --------
->>>     [verse]
->>>     'git describe' [--all] [--tags] [--contains] [--abbrev=<n>] [<commit-ish>...]
->>>    +'git describe' [<options>...] <blob>...
->>>
->>> Then this additional paragraph can say "When describin a <blob>",
->>> without using a (technically nonsense) phrase "if <commit-ish>
->>> refers to a blob", which is never true.
+
+
+On November 1, 2017 10:59:08 AM PDT, Stefan Beller <sbeller@google=2Ecom> =
+wrote:
+>>> Does the code describe a9dbc3f12c as v2=2E15=2E0:GIT-VERSION-GEN, or
+>>> would it always be <commit>:<path>?
 >>
->> ok, do we know about 'blob-ish' as a term?
+>> As the blob is described using this function:
+>>
+>> static void process_object(struct object *obj, const char *path, void
+>*data)
+>> {
+>>        struct process_commit_data *pcd =3D data;
+>>
+>>        if (!oidcmp(&pcd->looking_for, &obj->oid) && !pcd->dst->len) {
+>>                reset_revision_walk();
+>>                describe_commit(&pcd->current_commit, pcd->dst);
+>>                strbuf_addf(pcd->dst, ":%s", path);
+>>        }
+>> }
+>>
+>> i=2Ee=2E as `describe_commit()` is used on the commit part, the answer =
+to
+>your
+>> question is: the former=2E I guess that is why Stefan wrote
+>`commit-ish`
+>> instead of `commit` ;-)
 >
-> No, and I do not think there is any need to say -ish at all for this
-> use case.
+>$ =2E/git describe a9dbc3f12c
+>warning: reflog of 'HEAD' references pruned commits
+>v2=2E15=2E0-7-g980e40477f:GIT-VERSION-GEN
 >
-> After all, when we accept a <commit> when a <tree-ish> is called
-> for, that is only because there is only one way to use the commit in
-> place of the wanted <tree>; we take the top-level tree contained in
-> it.  You cannot say you take <blob-ish> and take a <tree>, as it is
-> unclear which entry in the <tree> can act as the substitute for the
-> wanted <blob>.
+>So as noted below, this output is less than ideal, but technically
+>correct as
+>v2=2E15=2E0-7-g980e40477f contains that blob as well (you don't have thes=
+e;
+>it is this very series consisting of 7 patches on top of 2=2E15, none of
+>them
+>touching GIT-VERSION-GEN, hence that blob stays intact=2E)
+>
+>The way Junio asked, we actually may prefer the commit-ish to give
+>that commit that introduced the blob for the first time, i=2Ee=2E add the
+>--reverse to the graph walking=2E
 
-But now we have a path as well, the notation of
-<commit-ish> COLON <path>
-is not a unique description of the blob, because
-* there can be multiple <commit-ish>s depending on the tags and walking
-* in boilerplate code cases, we might even have the blob at different
-  places (e.g. pristine copies of a license file in subdirectories)
+I know id prefer the first commit that introduced the blob=2E That's what =
+describing a commit does, it finds the oldest tag prior to the commit, whil=
+e --contains finds the first tag that contains the commit as an ancestor=2E
 
-When calling for a tree-ish, we also accept commits and tags
-plus walking directions.
+Neither of these things is a perfect match for blobs since we want to only=
+ find an exact commit that still has that blob=2E I think finding the first=
+ commit to introduce a blob is generally more useful=2E Finding the last co=
+mmit from some branch before the blob was changed also might be useful but =
+I don't know if that's exactly what you implemented here=2E=2E=2E
 
-So I find it hard to think we have to take in exact blob names, but
-we would also accept blob-ishs (i.e. commit+path)
+In either respect, unless it's super easy to implement, going with what yo=
+u have now is better than nothing and we can improve it in the future shoul=
+d someone wish to take up the work=2E
+
+-Jake
+--=20
+Sent from my Android device with K-9 Mail=2E Please excuse my brevity=2E
