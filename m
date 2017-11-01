@@ -2,193 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 334CD20281
-	for <e@80x24.org>; Wed,  1 Nov 2017 10:09:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C13D820281
+	for <e@80x24.org>; Wed,  1 Nov 2017 10:17:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751332AbdKAKJh (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Nov 2017 06:09:37 -0400
-Received: from mail-yw0-f173.google.com ([209.85.161.173]:44307 "EHLO
-        mail-yw0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750928AbdKAKJf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Nov 2017 06:09:35 -0400
-Received: by mail-yw0-f173.google.com with SMTP id k11so1415552ywh.1
-        for <git@vger.kernel.org>; Wed, 01 Nov 2017 03:09:35 -0700 (PDT)
+        id S1751286AbdKAKRM (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Nov 2017 06:17:12 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:47111 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750729AbdKAKRL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Nov 2017 06:17:11 -0400
+Received: by mail-wr0-f196.google.com with SMTP id y39so1507925wrd.4
+        for <git@vger.kernel.org>; Wed, 01 Nov 2017 03:17:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=tprg-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=T2CQYL+Hc2KnYUbHfAzK7S9926d9LjNx/j88MJ4Ma1I=;
-        b=M4fGxw41TINo2Nh7GsZeykMy48r579h74m/3zyXsOPTN+guzqwLyv1kAXvuXh5UTBE
-         akrLOCCiKrzZwuk/QugwEf/LKMs7zt5DLMoETypIGrNR69jb1NWhN1AupmZ9nzL7u/+B
-         ldAcMr/ieHvwytzz7wvJiAgl3QC00kIG1qyhU/Zc/61MB8SLQJhZznQZUR0/955cWC9J
-         zXGJr3ZOYnDl2k9rFOEkI4CouxwuhVxz4UEqFmlkAmYeONpgYuxqCGSGnKjJNOiRnczg
-         0VK6R0TO2XcQlam8sK5EbwMIdiAICNsXyW4STOaImJrLZNlz0TkmSAVMDR2PmrkjMYn6
-         w7SA==
+        d=dinwoodie.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=dU8Pg8Mnhc9aM9ykonvB6AZSbFh2LDwESRvgC3lyc00=;
+        b=gef2kgZXNNTYj681x6peMYigBhGVpL/YVxQpThn3s95pRlvSnof31gx292yUd7OUhO
+         g2fTY1LyzeT3LlSVu+uMuPQ0CKZVVZbXTAnyY3tjbcd9YWbuH+uPDikeQo7StknZ4W5s
+         idK4dF6pZxu8cEX46ugu8hrgSiAWSmDRrXrUA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=T2CQYL+Hc2KnYUbHfAzK7S9926d9LjNx/j88MJ4Ma1I=;
-        b=Uo1BBWoJWkmGtnRB3RPmIlPG4JMKh0Fn+FkjBodwyac6doizMCNJGZM8IwONzKzcMy
-         mA3W7/BneEeb9lb5RtnAmQlI+ahr7ySY693NLlPoMeB1Omk/DlMo3SgJHHp9ZgOI35PN
-         SV0srYsgSUujrRQyUm1Rc8kFeG4kxA3kvleHswkOhLKGp3Iam/emQ1Uusp4iz/3J+NDH
-         c7TNQDu0oGd4ec7yxt2/U9hMBwYbV7YWAvQYqjDorXlRZyqFfvQDJtaXo5K+V6c1aDXZ
-         ouvLuIkLiDbJ8N43I3gFnZ6Gw+WCIr/Z+nosSuf1LYIpQfREfnQ60D1BF4pssrRDaJEw
-         ozKQ==
-X-Gm-Message-State: AMCzsaUOumZofoULteYvuVqtaQqcTLhNBsGEdU6T9uLYn8wTzpfyOTTz
-        jzV2WaEQoUj72vr54vJ9FlNgjSfuImsb8xdRsG4cEgsoeV5Deu+4eK+j2PFQm1nQ+LI12+ZK0IW
-        598w66xD65Yid2g1cVy2vU8lZXIc=
-X-Google-Smtp-Source: ABhQp+QRo4WHuQvSyYSsUr363ns3vWc36AQKnOoyXS8+lBJ8xF43XoSEBSq/ihx12vGkIzNSIRo4Zz6uB39aW7IGhQ4=
-X-Received: by 10.129.85.202 with SMTP id j193mr2998522ywb.342.1509530975094;
- Wed, 01 Nov 2017 03:09:35 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=dU8Pg8Mnhc9aM9ykonvB6AZSbFh2LDwESRvgC3lyc00=;
+        b=QdAwiUEE94sm78+QiaVHUz+9ZVEgwYmeEquBd1mmeQvZg2npWVrVdblyDhZJc3ytSC
+         YJdAvA1OqT9F6xUySSuBlGuEwtSH4DSVgKCIj3Kp2J4ht9tPtMK8ywYNW3rXwDsaS9V+
+         9GHwZoKLGKtSOfTKFfPuJ/Kel3BtDBTKyWbzI1RpbsURHiGcmjKn8R1FFb0w2QX+adeE
+         KNBeLvNZQ8WBYeIouUhHpLWH0W7pw4EGg+dO4vMsUgjMBQbyzZNpWUBpLYpF6CQ3PPaP
+         aw06cxcvi4FmkfZhlPXZI9ajNQTfAaIJYRFHyt1VYV9p9Iv0OpOFDzu8obZeaOlFrX4r
+         rOQQ==
+X-Gm-Message-State: AMCzsaX0vbMYBST5p1OoxocF+6VYJr3mhz64/bTaE8/ExN/mcEm16npl
+        apefZ5w+ZPBxvHQowGcbASHVzCVkgfU=
+X-Google-Smtp-Source: ABhQp+RMRok8wThze3xXA+fopM7T3GtpENyg3VqEJtzc3jB50qp7N+2W3sEXXiLlZ67TcP2EumRRSQ==
+X-Received: by 10.223.161.25 with SMTP id o25mr4324259wro.265.1509531429816;
+        Wed, 01 Nov 2017 03:17:09 -0700 (PDT)
+Received: from dinwoodie.org ([2001:ba8:0:1c0::9:1])
+        by smtp.gmail.com with ESMTPSA id a13sm154801wrf.48.2017.11.01.03.17.08
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 01 Nov 2017 03:17:09 -0700 (PDT)
+Date:   Wed, 1 Nov 2017 10:17:07 +0000
+From:   Adam Dinwoodie <adam@dinwoodie.org>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH] t5580: add Cygwin support
+Message-ID: <20171101101707.GD20681@dinwoodie.org>
+References: <20171031131903.10496-1-adam@dinwoodie.org>
+ <xmqq1sliydqh.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Received: by 10.37.161.103 with HTTP; Wed, 1 Nov 2017 03:09:34 -0700 (PDT)
-In-Reply-To: <001801d35292$9871bd10$c9553730$@nexbridge.com>
-References: <CAO-WtQhAPjoWnWyMPi5SkCSUM_y8A=hsbLk-MUfnCSBvWnBRNQ@mail.gmail.com>
- <20171031212251.GB7777@alpha.vpn.ikke.info> <001801d35292$9871bd10$c9553730$@nexbridge.com>
-From:   Eyjolfur Eyjolfsson <eyjolfureyjolfsson@tprg.com>
-Date:   Wed, 1 Nov 2017 10:09:34 +0000
-Message-ID: <CAO-WtQheY-cpBwEp1TGbRAT4t7Ao7qDdGdinMBb2eB6AOeuKBA@mail.gmail.com>
-Subject: Re: Is it possible to convert a Json file to xml file with Git
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>
-Cc:     Kevin Daudt <me@ikke.info>, git@vger.kernel.org
-X-tprg-gsuite: true
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq1sliydqh.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi
+On Wed, Nov 01, 2017 at 10:44:22AM +0900, Junio C Hamano wrote:
+> Adam Dinwoodie <adam@dinwoodie.org> writes:
+> 
+> > t5580 tests that specifying Windows UNC paths works with Git.  Cygwin
+> > supports UNC paths, albeit only using forward slashes, not backslashes,
+> > so run the compatible tests on Cygwin as well as MinGW.
+> >
+> > The only complication is Cygwin's `pwd`, which returns a *nix-style
+> > path, and that's not suitable for calculating the UNC path to the
+> > current directory.  Instead use Cygwin's `cygpath` utility to get the
+> > Windows-style path.
+> >
+> > Signed-off-by: Adam Dinwoodie <adam@dinwoodie.org>
+> > ---
+> >  t/t5580-clone-push-unc.sh | 12 ++++++++----
+> >  1 file changed, 8 insertions(+), 4 deletions(-)
+> >
+> > diff --git a/t/t5580-clone-push-unc.sh b/t/t5580-clone-push-unc.sh
+> > index b322c2f72..47a9a7cda 100755
+> > --- a/t/t5580-clone-push-unc.sh
+> > +++ b/t/t5580-clone-push-unc.sh
+> > @@ -3,12 +3,16 @@
+> >  test_description='various Windows-only path tests'
+> >  . ./test-lib.sh
+> >  
+> > -if ! test_have_prereq MINGW; then
+> > +if test_have_prereq CYGWIN; then
+> > +	alias winpwd='cygpath -aw .'
+> > +elif test_have_prereq MINGW; then
+> > +	alias winpwd=pwd
+> > +else
+> >  	skip_all='skipping Windows-only path tests'
+> >  	test_done
+> >  fi
+> 
+> The fact that UNCPATH matters only on windows-related platforms
+> justifies the name used for this alias, I guess ;-)
 
-Thank you for your response and help. I am new to Git.
-The reason for my question is that I am using Git or Bash.exe  (cURl)
-to call a REST web service (open for test) and retrieving  Json
-from the web service and storing it into file.
-This works fine from the Git Bash command line . My Git Command:
-$ curl https://jsonplaceholder.typicode.com/posts -o c:\temper.txt
-
-I will look into the smudge filter.
-
-One more question is there a possibility to call Git Bash with a
-parameter like example
-C:\Git\Git\git-bash.exe  curl
-https://jsonplaceholder.typicode.com/posts -o c:\temper.txt
-
-The reason I am asking this is that I am using NAV 2009 Classic Client
-and want to lunch the Git Bash with
- the command  $ curl https://jsonplaceholder.typicode.com/posts -o c:\tempe=
-r.txt
-
-
-Best regards
-
-(e) eyjolfureyjolfsson@tprg.com
-(w) tpretailgroup.com
-
-
-On 31 October 2017 at 21:52, Randall S. Becker <rsbecker@nexbridge.com> wro=
-te:
->> On October 31, 2017 5:23 PM, Kevin Daudt wrote:
->> > On Tue, Oct 31, 2017 at 05:28:40PM +0000, Eyjolfur Eyjolfsson wrote:
->> > I have a question.
->> > Is it possible to convert a Json file to XML with Git
->>
->> git is a version control system, which is mostly content agnostic. It
-> knows
->> nothing about json or xml, let alone how to convert them.
->>
->> You might want to use some kind of programming language to do the
->> conversion.
->
-> Speculating... one possible reason to do this is during a protocol
-> conversion effort, where definitions are moving from XML to JSON form. In
-> legacy VCS systems, keeping interface definitions in one file and convert=
-ing
-> the content may be important. However, in git, with its concept of atomic=
-ity
-> (multiple files are committed in a single version across the whole
-> repository), dropping one file (e.g., XML) and adding another (e.g., JSON=
-),
-> can be done in one commit, and never lost or confused as to what is
-> intended. This makes git ideal for modernization and evolutionary project=
-s.
->
-> If, however, there is an application or systemic requirement to change th=
-e
-> content of a file from XML to JSON without changing the name - I've seen =
-it
-> happen - you may want to consider building a smudge filter that understan=
-ds
-> the difference and maps between the two, to allow git diff operations
-> between old and new formats. I would not recommend using this approach
-> except as a last possible resort. Make a new file as Kevin intimated.
->
-> Just Musing on the Topic,
-> Randall
->
-> -- Brief whoami: NonStop&UNIX developer since approximately
-> UNIX(421664400)/NonStop(211288444200000000)
-> -- In my real life, I talk too much.
->
->
->
-
-
-
---=20
-Eyjolfur Eyjolfsson
-
-(e) eyjolfureyjolfsson@tprg.com
-(w) tpretailgroup.com
-
---=20
-This email and any files transmitted with it are confidential and intended=
-=20
-for the sole use of the individual or entity to whom they are addressed.=20
- Any unauthorised dissemination or copying of this email or its attachments=
-=20
-or disclosure of any information contained in them is strictly prohibited.=
-=20
- If you have received the email in error, please notify the sender by email=
-=20
-immediately and delete it from your system.  The content of the email does=
-=20
-not necessarily represent Theo Paphitis Retail Group and associated=20
-companies and any views or opinions presented are solely those of the=20
-author.  Whilst we check communications we send for virus infection, you=20
-should check this email and any attachments to it for viruses as we accept=
-=20
-no responsibility for any loss or damage caused by any virus transmitted by=
-=20
-this email.  Email transmission cannot be guaranteed secure or error-free.
-
-Theo Paphitis Retail Group is the collective name for Ryman Group Limited,=
-=20
-registered in England and Wales, Company Number 02714395, VAT Number=20
-672523729,  Registered Office: Ryman House, Savoy Road, Crewe, Cheshire,=20
-CW1 6NA; Ryman Limited, registered in England and Wales, Company Number=20
-3007166, VAT Number 672523729,  Registered Office: Ryman House, Savoy Road,=
-=20
-Crewe, Cheshire, CW1 6NA;  Robert Dyas Holdings Limited, registered in=20
-England and Wales, Company Number 4041884; VAT number 742720153, Registered=
-=20
-Office:  1 St George=E2=80=99s Road, Wimbledon, London, SW19 4DR;  Boux Ave=
-nue=20
-Limited, registered in England and Wales, Company Number 7191520, VAT=20
-Number 125504638,  Registered Office: 1 St George=E2=80=99s Road, Wimbledon=
-,=20
-London, SW19 4DR;  Boux Avenue International Limited, registered in England=
-=20
-and Wales, Company Number 8047333, VAT Number 125504638, Registered office:=
-=20
-1 St George=E2=80=99s Road, Wimbledon, London, SW19 4DR; and London Graphic=
- Centre=20
-Limited, registered in England and Wales, Company Number 6062021,  VAT=20
-Number 251820524, Registered Office:  Ryman House, Savoy Road, Crewe,=20
-Cheshire, CW1 6NA.
+I think I was going for "Windows-style pwd" or similar, given in both
+cases the alias produces something that looks like "C:\path\to\dir".
