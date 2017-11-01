@@ -2,108 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4FADC202A0
-	for <e@80x24.org>; Wed,  1 Nov 2017 13:52:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 89B67202A0
+	for <e@80x24.org>; Wed,  1 Nov 2017 14:44:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754567AbdKANwL (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Nov 2017 09:52:11 -0400
-Received: from mail-qk0-f194.google.com ([209.85.220.194]:49611 "EHLO
-        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753474AbdKANwL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Nov 2017 09:52:11 -0400
-Received: by mail-qk0-f194.google.com with SMTP id q83so2734846qke.6
-        for <git@vger.kernel.org>; Wed, 01 Nov 2017 06:52:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=08trqGELJ4GZGPN9uLHWf0zK2lI51BjWtrn2K155gXs=;
-        b=R9uR5FOekU/ZZXoJkwMVWTAo2oOUai7JIEX5g9n2f/TUa7+TXyZUDlCERl/N7s5TmR
-         XtE2euhmVa1MmyeS/Zb4UHIHJkjBNHECaRpydiP5if18xEMxW/YX7pPZhBACEgDyYzME
-         UPrMPG1Xo1u6OkBRDO9PvJHfThnImC3RQxcupul0wh46bmryMRh//PklQry5I1GhvdUS
-         nzk/6tNcBqhDeAL5wLb50rj90V8/UfgdIlHNlBrcP7ci4wVMcZ6RMAHWHXvDUg8AIshI
-         zZzU0FKipH3rN6+oZzRb/DSnZ7Ez/f4DH9nmHDmMM14pqYSG/mb9AHO6IHL+QpNUzvW+
-         WLdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=08trqGELJ4GZGPN9uLHWf0zK2lI51BjWtrn2K155gXs=;
-        b=AmKgar1Yf08a1SFnYxtPxSDd/wVyC6yBSFQpPZGADPWH2Ui2ZkaGldLJEozI5nVVyW
-         M6gnh3cNT4uJsH2Oxe7qQSeh/8p/eIpJ792P0fc1tXRHld8KM1x+tdu8Psv0D4vB0W/v
-         zvRTEeK9UKx02tCfE3h1SFY5XvNDd6yFQGdK9f1ssZ5wPM68WqCPK1yk1KB8wCNqh85S
-         zofvo6UsRZQQCpMPBWUiYqW6IlOs1LumaaxaoTHToUTI+wwLBmF8GzXd6Fypai1RCV+x
-         5CYojQwI0nc+NziBMaIcKGrtSgDaFdBvnuxM7EO3kSnMJkjXkSj3t2YHby/hp2oUKeKi
-         sw3w==
-X-Gm-Message-State: AJaThX7JQqKdACaFbU6SBt+n3RDOFQvSzIS0YwDuiOgZ6qPqUCw6FyGF
-        3WmEVeMQqEUg1ML2RBI3sCW1dOByk9pOWVpEYUU=
-X-Google-Smtp-Source: ABhQp+RCrK1/cnpL1fpIFGFwVPn9/iAeYtXVRjAfM0c5RH/0FDxNaUDnWci5BD6hgX4TsH7hhh0QWsyEfcTY3Y/J4lE=
-X-Received: by 10.55.109.5 with SMTP id i5mr7998239qkc.73.1509544330318; Wed,
- 01 Nov 2017 06:52:10 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.12.146.118 with HTTP; Wed, 1 Nov 2017 06:52:09 -0700 (PDT)
-In-Reply-To: <20171030025142.19421-5-anarcat@debian.org>
-References: <20171029160857.29460-2-anarcat@debian.org> <20171030025142.19421-1-anarcat@debian.org>
- <20171030025142.19421-5-anarcat@debian.org>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 1 Nov 2017 09:52:09 -0400
-X-Google-Sender-Auth: E1MgpvCXiswcHdvisLL5T3V5SF4
-Message-ID: <CAPig+cSRrXj9BdgM6Q2OdBZtYJOVOnfo4BaG30C-_ug3QunPfQ@mail.gmail.com>
-Subject: Re: [PATCH 4/7] remote-mediawiki: skip virtual namespaces
-To:     =?UTF-8?Q?Antoine_Beaupr=C3=A9?= <anarcat@debian.org>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        id S1754706AbdKAOor (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Nov 2017 10:44:47 -0400
+Received: from zucker2.schokokeks.org ([178.63.68.90]:44337 "EHLO
+        zucker2.schokokeks.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751853AbdKAOoq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Nov 2017 10:44:46 -0400
+Received: from localhost ([::1])
+  (AUTH: PLAIN simon@ruderich.org, TLS: TLSv1/SSLv3,256bits,ECDHE-RSA-AES256-GCM-SHA384)
+  by zucker.schokokeks.org with ESMTPSA; Wed, 01 Nov 2017 15:44:45 +0100
+  id 000000000000000D.0000000059F9DDDD.000079F2
+Date:   Wed, 1 Nov 2017 15:44:44 +0100
+From:   Simon Ruderich <simon@ruderich.org>
+To:     =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Ralf Thielow <ralf.thielow@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH 1/2] wrapper.c: consistently quote filenames in error messages
+Message-ID: <32c515d01d4257c1532004d0bf21b2c330f6b81b.1509547231.git.simon@ruderich.org>
+References: <22afeefa-cdd5-cd32-0a7c-6bad4de79f05@web.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+In-Reply-To: <22afeefa-cdd5-cd32-0a7c-6bad4de79f05@web.de>
+User-Agent: NeoMutt/20170609 (1.8.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Oct 29, 2017 at 10:51 PM, Antoine Beaupr=C3=A9 <anarcat@debian.org>=
- wrote:
-> Virtual namespaces do not correspond to pages in the database and are
-> automatically generated by MediaWiki. It makes little sense,
-> therefore, to fetch pages from those namespaces and the MW API doesn't
-> support listing those pages.
->
-> According to the documentation, those virtual namespaces are currently
-> "Special" (-1) and "Media" (-2) but we treat all negative namespaces
-> as "virtual" as a future-proofing mechanism.
+All other error messages in the file use quotes around the file name.
 
-This patch makes more sense now with the additional commentary.
-Thanks. More below.
+This change removes two translations as "could not write to '%s'" and
+"could not close '%s'" are already translated and these two are the only
+occurrences without quotes.
 
-> Signed-off-by: Antoine Beaupr=C3=A9 <anarcat@debian.org>
-> ---
-> diff --git a/contrib/mw-to-git/git-remote-mediawiki.perl b/contrib/mw-to-=
-git/git-remote-mediawiki.perl
-> index e7616e1a2..5c85e64b6 100755
-> --- a/contrib/mw-to-git/git-remote-mediawiki.perl
-> +++ b/contrib/mw-to-git/git-remote-mediawiki.perl
-> @@ -264,10 +264,12 @@ sub get_mw_tracked_categories {
->  sub get_mw_tracked_namespaces {
->      my $pages =3D shift;
->      foreach my $local_namespace (@tracked_namespaces) {
-> +        my $namespace_id =3D get_mw_namespace_id($local_namespace);
-> +        next if $namespace_id < 0; # virtual namespaces don't support al=
-lpages
+Signed-off-by: Simon Ruderich <simon@ruderich.org>
+---
+ wrapper.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-Since (it appears) that get_mw_namespace_id() can return undef, you
-probably still need to take that into account before performing a
-numeric comparison:
+diff --git a/wrapper.c b/wrapper.c
+index 61aba0b5c..d20356a77 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -569,7 +569,7 @@ static int warn_if_unremovable(const char *op, const char *file, int rc)
+ 	if (!rc || errno == ENOENT)
+ 		return 0;
+ 	err = errno;
+-	warning_errno("unable to %s %s", op, file);
++	warning_errno("unable to %s '%s'", op, file);
+ 	errno = err;
+ 	return rc;
+ }
+@@ -583,7 +583,7 @@ int unlink_or_msg(const char *file, struct strbuf *err)
+ 	if (!rc || errno == ENOENT)
+ 		return 0;
+ 
+-	strbuf_addf(err, "unable to unlink %s: %s",
++	strbuf_addf(err, "unable to unlink '%s': %s",
+ 		    file, strerror(errno));
+ 	return -1;
+ }
+@@ -653,9 +653,9 @@ void write_file_buf(const char *path, const char *buf, size_t len)
+ {
+ 	int fd = xopen(path, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+ 	if (write_in_full(fd, buf, len) < 0)
+-		die_errno(_("could not write to %s"), path);
++		die_errno(_("could not write to '%s'"), path);
+ 	if (close(fd))
+-		die_errno(_("could not close %s"), path);
++		die_errno(_("could not close '%s'"), path);
+ }
+ 
+ void write_file(const char *path, const char *fmt, ...)
+-- 
+2.15.0
 
-    next if !$namespace_id || $namespace_id < 0;
-
->          my $mw_pages =3D $mediawiki->list( {
->              action =3D> 'query',
->              list =3D> 'allpages',
-> -            apnamespace =3D> get_mw_namespace_id($local_namespace),
-> +            apnamespace =3D> $namespace_id,
->              aplimit =3D> 'max' } )
->              || die $mediawiki->{error}->{code} . ': '
->                  . $mediawiki->{error}->{details} . "\n";
+-- 
++ privacy is necessary
++ using gnupg http://gnupg.org
++ public key id: 0x92FEFDB7E44C32F9
