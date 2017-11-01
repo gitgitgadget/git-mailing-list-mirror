@@ -2,79 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CC6C720281
-	for <e@80x24.org>; Wed,  1 Nov 2017 11:12:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F264220281
+	for <e@80x24.org>; Wed,  1 Nov 2017 11:55:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752351AbdKALMH (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Nov 2017 07:12:07 -0400
-Received: from mail2-relais-roc.national.inria.fr ([192.134.164.83]:28146 "EHLO
-        mail2-relais-roc.national.inria.fr" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751638AbdKALMH (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 1 Nov 2017 07:12:07 -0400
-X-IronPort-AV: E=Sophos;i="5.44,327,1505772000"; 
-   d="scan'208";a="298858198"
-Received: from orange.lip.ens-lyon.fr ([140.77.14.54])
-  by mail2-relais-roc.national.inria.fr with ESMTP/TLS/AES128-GCM-SHA256; 01 Nov 2017 12:12:05 +0100
-From:   Matthieu Moy <Matthieu.Moy@univ-lyon1.fr>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Payre Nathan <second.payre@gmail.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>,
-        ALBERTIN TIMOTHEE p1514771 
-        <timothee.albertin@etu.univ-lyon1.fr>,
-        BENSOUSSAN--BOHM DANIEL p1507430 
-        <daniel.bensoussan--bohm@etu.univ-lyon1.fr>,
-        Tom Russello <tom.russello@grenoble-inp.org>
-Subject: Re: [PATCH 2/2] send-email: quote-email quotes the message body
-References: <20171030223444.5052-1-nathan.payre@etu.univ-lyon1.fr>
-        <20171030223444.5052-3-nathan.payre@etu.univ-lyon1.fr>
-        <0db6387ef95b4fafbd70068be9e4f7c5@BPMBX2013-01.univ-lyon1.fr>
-Date:   Wed, 01 Nov 2017 12:12:05 +0100
-In-Reply-To: <0db6387ef95b4fafbd70068be9e4f7c5@BPMBX2013-01.univ-lyon1.fr>
-        (Junio C. Hamano's message of "Wed, 1 Nov 2017 06:40:00 +0000")
-Message-ID: <q7h9shdyw8vu.fsf@orange.lip.ens-lyon.fr>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+        id S1754639AbdKALzu (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Nov 2017 07:55:50 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:53363 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754517AbdKALzs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Nov 2017 07:55:48 -0400
+Received: by mail-wm0-f67.google.com with SMTP id r196so4433131wmf.2
+        for <git@vger.kernel.org>; Wed, 01 Nov 2017 04:55:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Bh7mKptnR9pIyKcef7J9TV8Jcydiww+WsyoomXKXP8c=;
+        b=PjBxZyCpiTN8Mfv8A3cc2/xYvkGqTWIUYgNNnq2uJUT7I8yfEpjdJ71uTJoxI3gKtt
+         8bafdACSHmpRQgO4q2xtYJmHTH09lq1Sv+RP90TEO6Vjbzgj4XLljSv/FkGzp8dKaqQZ
+         EUMGeRM5WnmV9lRXW+w3nWYJCbS1hpDodufO5Iyla0uXD6wV8Zr6xVrFMERaD/TflWwl
+         3pAWXIbN7huOPIWanuGceYC+5DbTajMgf4loKruIyaCW/NYVTSF2N4NoLtD1FhFbnz/5
+         KIhEwOlben7ljL2uI61ZFzD/UuDr9Zpwmqy/cDHj3z9FvGxcW82v0zLEc+buQdKX80Ru
+         5TvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Bh7mKptnR9pIyKcef7J9TV8Jcydiww+WsyoomXKXP8c=;
+        b=mann1Jy6nnM1ILDGWgc2NRCJGzUKo9APfBzD8VqihZL9qwU7ni2xsoMKbGtfPpmXAP
+         pOVcDa6Y/xDdy151zmZD/txw/jO7TeWoz9ji/ZnX/Vf2p2LZLrd51NSIJII02MaK9h9A
+         UqDZ7RhcSYoZW+YW4GHnfzbiIzK+w5A2pvFpww48xEI6UInqb/Rv+A2sZq+qwGZaq+iX
+         3U6Ru4ASjijdfBrFz/g2ZgekkNUGhgUNupRJkwLcP09G9dvwC79y3n4ewYMxB+T5DRk1
+         61wwq/xqq3fzhPfmoS/wun708HytNQBs3n7ctWA0BK22XP3tSLU2vPJL1VsMDim9NZDE
+         YatA==
+X-Gm-Message-State: AMCzsaVVGWXKUysDqkbvv0wFZZ17KSVLBI6u4n39PQqX8DjL+TC+terb
+        puCUpGW/ihCMh8YJm29a15OSrA==
+X-Google-Smtp-Source: ABhQp+QSPz3RKxeYRg7hCFz26Btj7bv3GYk+MDZJrlFU8odGIasVRIDddZ5wk7JqfbbqD607cTzlkw==
+X-Received: by 10.28.178.205 with SMTP id b196mr30052wmf.103.1509537346904;
+        Wed, 01 Nov 2017 04:55:46 -0700 (PDT)
+Received: from localhost.localdomain (x590d9c13.dyn.telefonica.de. [89.13.156.19])
+        by smtp.gmail.com with ESMTPSA id o7sm232930wrf.31.2017.11.01.04.55.45
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 01 Nov 2017 04:55:46 -0700 (PDT)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     Lars Schneider <larsxschneider@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH] travis-ci: fix running P4 and Git LFS tests in Linux build jobs
+Date:   Wed,  1 Nov 2017 12:55:35 +0100
+Message-Id: <20171101115535.15074-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.15.0.67.gb67a46776
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Linux build jobs on Travis CI skip the P4 and Git LFS tests since
+commit 657343a60 (travis-ci: move Travis CI code into dedicated
+scripts, 2017-09-10), claiming there are no P4 or Git LFS installed.
 
-> Hmmm.  I have a strong suspicion that people want an option to
-> trigger the feature from just 1/2 but not 2/2 some of the time.
-> Sure, removing the unwanted lines in the compose editor may be easy,
-> but it feels wasteful use of user's time to include the lines of
-> text from the original only to have them removed.
+The reason is that P4 and Git LFS binaries are not installed to a
+directory in the default $PATH, but their directories are prepended to
+$PATH.  This worked just fine before said commit, because $PATH was
+set in a scriptlet embedded in our '.travis.yml', thus its new value
+was visible during the rest of the build job.  However, after these
+embedded scriptlets were moved into dedicated scripts executed in
+separate shell processes, any variable set in one of those scripts is
+only visible in that single script but not in any of the others.  In
+this case, 'ci/install-dependencies.sh' downloads P4 and Git LFS and
+modifies $PATH, but to no effect, because 'ci/run-tests.sh' only sees
+Travis CI's default $PATH.
 
-So, that could be
+Move adjusting $PATH to 'ci/lib-travisci.sh', which is sourced in all
+other 'ci/' scripts, so all those scripts will see the updated $PATH
+value.
 
-  git send-email --in-reply-to=message-id  # message-id is not a file
-  => existing behavior
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+---
+ ci/install-dependencies.sh | 10 ++++------
+ ci/lib-travisci.sh         |  8 ++++++++
+ 2 files changed, 12 insertions(+), 6 deletions(-)
 
-  git send-email --in-reply-to=file
-  => populate To:, Cc:, In-Reply-To: and References:
-
-  git send-email --in-reply-to=file --quote
-  => in addition to the above, include the quoted message in the body
-
-(perhaps --quote should be --cite, I'm not sure which one looks best for
-a native speaker)
-
-This also leaves room for
-
-  git send-email --in-reply-to=message-id --fetch [--quote]
-  => download the message body from e.g. public-inbox and do the same as
-     for --in-reply-to=file
-
-(which doesn't have to be implemented now, but would be a nice-to-have
-in the future)
-
+diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
+index a29246af3..5bd06fe90 100755
+--- a/ci/install-dependencies.sh
++++ b/ci/install-dependencies.sh
+@@ -12,20 +12,18 @@ case "${TRAVIS_OS_NAME:-linux}" in
+ linux)
+ 	export GIT_TEST_HTTPD=YesPlease
+ 
+-	mkdir --parents custom/p4
+-	pushd custom/p4
++	mkdir --parents "$P4_PATH"
++	pushd "$P4_PATH"
+ 		wget --quiet "$P4WHENCE/bin.linux26x86_64/p4d"
+ 		wget --quiet "$P4WHENCE/bin.linux26x86_64/p4"
+ 		chmod u+x p4d
+ 		chmod u+x p4
+-		export PATH="$(pwd):$PATH"
+ 	popd
+-	mkdir --parents custom/git-lfs
+-	pushd custom/git-lfs
++	mkdir --parents "$GIT_LFS_PATH"
++	pushd "$GIT_LFS_PATH"
+ 		wget --quiet "$LFSWHENCE/git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz"
+ 		tar --extract --gunzip --file "git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz"
+ 		cp git-lfs-$LINUX_GIT_LFS_VERSION/git-lfs .
+-		export PATH="$(pwd):$PATH"
+ 	popd
+ 	;;
+ osx)
+diff --git a/ci/lib-travisci.sh b/ci/lib-travisci.sh
+index b3ed0a0dd..ac05f1f46 100755
+--- a/ci/lib-travisci.sh
++++ b/ci/lib-travisci.sh
+@@ -26,3 +26,11 @@ skip_branch_tip_with_tag () {
+ set -e
+ 
+ skip_branch_tip_with_tag
++
++case "${TRAVIS_OS_NAME:-linux}" in
++linux)
++	P4_PATH="$(pwd)/custom/p4"
++	GIT_LFS_PATH="$(pwd)/custom/git-lfs"
++	export PATH="$GIT_LFS_PATH:$P4_PATH:$PATH"
++	;;
++esac
 -- 
-Matthieu Moy
-https://matthieu-moy.fr/
+2.15.0.67.gb67a46776
+
