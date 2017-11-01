@@ -6,84 +6,80 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9AF9920450
-	for <e@80x24.org>; Wed,  1 Nov 2017 01:21:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1979920450
+	for <e@80x24.org>; Wed,  1 Nov 2017 01:21:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752859AbdKABVL (ORCPT <rfc822;e@80x24.org>);
-        Tue, 31 Oct 2017 21:21:11 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62998 "EHLO
+        id S1753990AbdKABVY (ORCPT <rfc822;e@80x24.org>);
+        Tue, 31 Oct 2017 21:21:24 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58076 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752175AbdKABVK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Oct 2017 21:21:10 -0400
+        with ESMTP id S1753875AbdKABVX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Oct 2017 21:21:23 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B00D7B8EBB;
-        Tue, 31 Oct 2017 21:21:09 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A0831BB6DE;
+        Tue, 31 Oct 2017 21:21:22 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=wIjaQPT1vPZsZ2jBgtRnTON+6Xg=; b=npOGcy
-        +8xhTY4ZQrSquZxYMMbDJv/BmTkTh6Dnu+78DKXoXqtDesqKPE9c2FX2Vva8Lkx0
-        4L5DZCTIK/jh/BFg630LPlMvniqDSiELPnEtZu/BA+3lB54M8xhXEAroGX7ZmIKe
-        elvAtuo+qRWH3gy5F8qBMECLII7CKZerBRJnw=
+        :content-type; s=sasl; bh=aI1w/jb7LnSlCSI82q+CvMx+/I4=; b=HAXlAC
+        PDd1Yy+6RJw2b0vtStFMGGF2iT++38nIasZ63e9XzEKQUaAUzcy3zzAcZTnFALMO
+        wXwRuKlXS26W6JyTlgc7LdihA/cBjX+totj/f2pULW2zyJMZGiK+qIpwF/v4lsGl
+        gLbnd0bGW2Pfc7KI2jfhJjrazPZV8EPL07Pko=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=gTUWbLuUptVYrgjbkMp9MZPXBAjJpz7r
-        tiJMlIX6cb4II6c3/xPNiAoRaTCwCR41VALLV5DFoVv+gSlbcTtB1555sEWbHR0Y
-        KFqituQUL121PnKuI3h2Hr/BBv2DEUrviKIv9+Z4w6573UWBZ+i3z4eeILMBiS0K
-        s0kpoiMfh50=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A8F83B8EBA;
-        Tue, 31 Oct 2017 21:21:09 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=oUrWZRoXeBQPlejRGYDQqoA5aYQXJ1cN
+        4S5t2RZJUbs4hgkKk5CvI3HeGMmmiuK4hCnOQmpI8c57COLQbMbPqqEaN6sU2j3U
+        rAsQHAP5FsjNaXjmfFaPWoeAQUUq90arpO9TMDj5/A3IyVQKC5iEFTpWexK3DetA
+        tED7kuxWbmA=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 97047BB6DD;
+        Tue, 31 Oct 2017 21:21:22 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2C783B8EB9;
-        Tue, 31 Oct 2017 21:21:09 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 09A41BB6DC;
+        Tue, 31 Oct 2017 21:21:21 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org, me@ikke.info, jacob.keller@gmail.com,
-        Johannes.Schindelin@gmx.de
-Subject: Re: [PATCH 7/7] t6120: fix typo in test name
-References: <20171028004419.10139-1-sbeller@google.com>
-        <20171031003351.22341-1-sbeller@google.com>
-        <20171031003351.22341-8-sbeller@google.com>
-Date:   Wed, 01 Nov 2017 10:21:07 +0900
-In-Reply-To: <20171031003351.22341-8-sbeller@google.com> (Stefan Beller's
-        message of "Mon, 30 Oct 2017 17:33:51 -0700")
-Message-ID: <xmqqh8ueyet8.fsf@gitster.mtv.corp.google.com>
+To:     Jeff Hostetler <Jeff.Hostetler@microsoft.com>
+Cc:     Jeff Hostetler <git@jeffhostetler.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: What's cooking in git.git (Oct 2017, #07; Mon, 30)
+References: <xmqqr2tl40pl.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.21.1.1710301830210.6482@virtualbox>
+        <f12353b6-cfed-722b-1386-d55700f21915@jeffhostetler.com>
+        <xmqqtvyg2g6y.fsf@gitster.mtv.corp.google.com>
+        <SN4PR2101MB07369D19A150418D5ACB858B8A5E0@SN4PR2101MB0736.namprd21.prod.outlook.com>
+Date:   Wed, 01 Nov 2017 10:21:20 +0900
+In-Reply-To: <SN4PR2101MB07369D19A150418D5ACB858B8A5E0@SN4PR2101MB0736.namprd21.prod.outlook.com>
+        (Jeff Hostetler's message of "Tue, 31 Oct 2017 13:14:08 +0000")
+Message-ID: <xmqqd152yesv.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: F0CBCF42-BEA2-11E7-AAB6-8EF31968708C-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: F8761AA4-BEA2-11E7-ADDE-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Jeff Hostetler <Jeff.Hostetler@microsoft.com> writes:
 
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
->  t/t6120-describe.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-
-Good.  I am guessing that you are sending this as the last/optional
-one because this was found _after_ you worked on other parts of the
-series, but I think it is easier to reason about if this were marked
-as a preliminary clean-up and moved to the front of the series.
+> From: Junio C Hamano [mailto:gitster@pobox.com] 
+> Subject: Re: What's cooking in git.git (Oct 2017, #07; Mon, 30)
+>
+>> Jeff Hostetler <git@jeffhostetler.com> writes:
+>> 
+>>> I've been assuming that the jt/partial-clone-lazy-fetch is a 
+>>> placeholder for our next combined patch series.
+>>
+>> Yes, that, together with the expectation that I will hear from both you and JTan 
+>> once the result of combined effort becomes ready to replace this placeholder, 
+>> matches my assumption.
+>> 
+>> Is that happening now?
+>
+> Yes, I'm merging our them now and hope to have a version to
+> send to Jonathan and/or the list sometime this week.
 
 Thanks.
-
->
-> diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
-> index 3be01316e8..fd329f173a 100755
-> --- a/t/t6120-describe.sh
-> +++ b/t/t6120-describe.sh
-> @@ -304,7 +304,7 @@ test_expect_success 'describe chokes on severely broken submodules' '
->  	mv .git/modules/sub1/ .git/modules/sub_moved &&
->  	test_must_fail git describe --dirty
->  '
-> -test_expect_success 'describe ignoring a borken submodule' '
-> +test_expect_success 'describe ignoring a broken submodule' '
->  	git describe --broken >out &&
->  	test_when_finished "mv .git/modules/sub_moved .git/modules/sub1" &&
->  	grep broken out
