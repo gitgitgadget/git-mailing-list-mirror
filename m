@@ -2,84 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7121D202A0
-	for <e@80x24.org>; Wed,  1 Nov 2017 14:45:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A36FE202A0
+	for <e@80x24.org>; Wed,  1 Nov 2017 15:33:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754737AbdKAOpo (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Nov 2017 10:45:44 -0400
-Received: from zucker2.schokokeks.org ([178.63.68.90]:44337 "EHLO
-        zucker2.schokokeks.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751853AbdKAOpn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Nov 2017 10:45:43 -0400
-Received: from localhost ([::1])
-  (AUTH: PLAIN simon@ruderich.org, TLS: TLSv1/SSLv3,256bits,ECDHE-RSA-AES256-GCM-SHA384)
-  by zucker.schokokeks.org with ESMTPSA; Wed, 01 Nov 2017 15:45:42 +0100
-  id 000000000000000D.0000000059F9DE16.00007C1D
-Date:   Wed, 1 Nov 2017 15:45:42 +0100
-From:   Simon Ruderich <simon@ruderich.org>
-To:     =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Ralf Thielow <ralf.thielow@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH 2/2] sequencer.c: check return value of close() in
- rewrite_file()
-Message-ID: <06c33d3cfa35c0524ede2970ee3169d6c62eb5c1.1509547231.git.simon@ruderich.org>
-References: <22afeefa-cdd5-cd32-0a7c-6bad4de79f05@web.de>
+        id S1754748AbdKAPdi (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Nov 2017 11:33:38 -0400
+Received: from mout.gmx.net ([212.227.17.21]:58784 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754266AbdKAPdg (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Nov 2017 11:33:36 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lj4xG-1da22G3Igo-00dHc6; Wed, 01
+ Nov 2017 16:33:30 +0100
+Date:   Wed, 1 Nov 2017 16:33:29 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Ralf Thielow <ralf.thielow@gmail.com>
+Subject: Re: [PATCH 1/2] sequencer: factor out rewrite_file()
+In-Reply-To: <6150c80b-cb0e-06d4-63a7-a4f4a9107ab2@web.de>
+Message-ID: <alpine.DEB.2.21.1.1711011631490.6482@virtualbox>
+References: <6150c80b-cb0e-06d4-63a7-a4f4a9107ab2@web.de>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <22afeefa-cdd5-cd32-0a7c-6bad4de79f05@web.de>
-User-Agent: NeoMutt/20170609 (1.8.3)
+Content-Type: multipart/mixed; boundary="8323329-938305533-1509550410=:6482"
+X-Provags-ID: V03:K0:3+ts9pnC82uSjvbhvMu13bJ6+gkGZdnlMqDeMlrVBn/89NODlBs
+ 7MwXHU4Cs8qDFUA9358nJolHx8lC/kfaOFFlBXSOJb9C3CaUeI51NCQu3Itfqv0JMJ22Qh8
+ g+TOwEMNsc10L6GHOIfom2WD2ItTXCP14tmp+A0BpokL8pU9nDsLNLnJPNYSV2sso9TDZOw
+ QBUkFwr+8AAYxjmjeaUvg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:WLvwrf/IunQ=:1/y+7HulvND7D/hTIif3sQ
+ xaKgfRe8yhncoPoEz5zNfkyFWOEUS4i9bomr+B9yPyqQSHJMoYsbwHELv6GPZ2zMWuEnmMSeC
+ 2Uwh/P7DkmNlDoW3NBYtCeNGDVN2ox7qe/qNFiITS1ELo6sYbgWuDgTGHaPqsqqpi4GmaK/N+
+ 32dqQVZpaFes+TSDn6Kqwc85goAk3JrLQx/6Z3jICsWbGrghCB81bpLZ/+E4hRbjVltVwps7Z
+ g+3eAlNwStJyDjtvQ8lsqkk2B6k2luHTljSkso43Xkf0JylVd4SK1qiuc+VcxyoFk4ROgr03D
+ ptS1KhuxB02nc3cDQHdhGMm4kb45qPcoFu98u/RQoOQ0axoxxFqj9LvmBAqDuqxr5SeUrw/hu
+ ChHLJ8NLCeyYBB2PPBomvLBA3cxl/HHpL5kYbJEXhGAw+4eDKPyEZySZEnKArTMB/cYw8yktm
+ b586zkfw/RWgcYL5hQ1omNKihRG7vM4OPUK/uXMdzc0yMrQle9kwjZwyFDL2dYmOsy26X4psr
+ 1yfCc3jX/rAfkkBT0lK2X6hg7fxJfPaKtciayhlkVKC56Xr+s425Fs5rqee3ObqnbMH8x5dOx
+ mxk6KTywtyaod2YjoodddPbYdWUBD2rh0M9FkV1lY6nLm/VSQgGfIaHL7GEGHr3jTBb+pJOA0
+ /EfftG2Wh8nfk5rpGC+udy/OxHXqxK7Ym51r1OnJ2yDt7jthlV8ewVdBzBzVmwzmwmO2TV4DB
+ v/eQFI0AiNhjkMNqRaymVk5xkvH1wcAxGScU6a3X1HMsSZL1rRbo8vPXwKJY8nO4ATU24ohNR
+ iBI4Dx4t6FQOONRhTuy1jxSH2ftv1jocnjskX5QKQGSSl1v8OkbjTYi7cB05enaRDwm3q5C
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Not checking close(2) can hide errors as not all errors are reported
-during the write(2).
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Signed-off-by: Simon Ruderich <simon@ruderich.org>
----
+--8323329-938305533-1509550410=:6482
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-On Wed, Nov 01, 2017 at 02:00:11PM +0100, René Scharfe wrote:
-> Most calls are not checked, but that doesn't necessarily mean they need
-> to (or should) stay that way.  The Linux man-page of close(2) spends
-> multiple paragraphs recommending to check its return value..  Care to
-> send a follow-up patch?
+Hi Ren=C3=A9,
 
-Hello,
+On Tue, 31 Oct 2017, Ren=C3=A9 Scharfe wrote:
 
-Sure, here is it.
+> Reduce code duplication by extracting a function for rewriting an
+> existing file.
 
-Regards
-Simon
-
- sequencer.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/sequencer.c b/sequencer.c
-index f93b60f61..e0cc2f777 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -2673,7 +2673,8 @@ static int rewrite_file(const char *path, const char *buf, size_t len)
- 		return error_errno(_("could not open '%s' for writing"), path);
- 	if (write_in_full(fd, buf, len) < 0)
- 		rc = error_errno(_("could not write to '%s'"), path);
--	close(fd);
-+	if (close(fd) && !rc)
-+		rc = error_errno(_("could not close '%s'"), path);
- 	return rc;
- }
- 
--- 
-2.15.0
-
--- 
-+ privacy is necessary
-+ using gnupg http://gnupg.org
-+ public key id: 0x92FEFDB7E44C32F9
+Fine by me. Thanks,
+Dscho
+--8323329-938305533-1509550410=:6482--
