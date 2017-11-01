@@ -7,116 +7,91 @@ X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8A1732055E
-	for <e@80x24.org>; Wed,  1 Nov 2017 17:10:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 00C932055E
+	for <e@80x24.org>; Wed,  1 Nov 2017 17:10:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754879AbdKARKl (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Nov 2017 13:10:41 -0400
-Received: from mout.gmx.net ([212.227.15.18]:64050 "EHLO mout.gmx.net"
+        id S1754907AbdKARKv (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Nov 2017 13:10:51 -0400
+Received: from mout.gmx.net ([212.227.17.22]:58027 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754818AbdKARKk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Nov 2017 13:10:40 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MFuWk-1dxLtJ1C0E-00Esc6; Wed, 01
- Nov 2017 18:10:31 +0100
-Date:   Wed, 1 Nov 2017 18:10:30 +0100 (CET)
+        id S1754818AbdKARKu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Nov 2017 13:10:50 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MMTZa-1e3vSR1exy-008Lc7; Wed, 01
+ Nov 2017 18:10:41 +0100
+Date:   Wed, 1 Nov 2017 18:10:33 +0100 (CET)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH v2 2/3] mingw: optionally redirect stderr/stdout via the same
- handle
+Subject: [PATCH v2 3/3] mingw: document the standard handle redirection
 In-Reply-To: <cover.1509556153.git.johannes.schindelin@gmx.de>
-Message-ID: <d98f6a9a6eeb01f68f4bc853952ca675e97940bd.1509556153.git.johannes.schindelin@gmx.de>
+Message-ID: <80b58f364375a72d7efd547a90f284accfeab877.1509556153.git.johannes.schindelin@gmx.de>
 References: <cover.1509382976.git.johannes.schindelin@gmx.de> <cover.1509556153.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:I3/c1DsqXp7/6iIOOftSoBA/dut0eyoW3ja7aKfbTmUQE7GzYdI
- E3U4nFOtHAwegTWk3FoUV5zNl9TMed+aGz+r4aRLWKr+HJC4ZDFteasBw8+cLNn/+dMao4f
- W0zPPH9qiL/7IhjOKLPLtunR48kCHbPNc5P9uBXp8ad0HROL6CVCyOr3vGD34Jq6kZ3bDMf
- 834KKD+vDOjb7ahP7XdfQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:GJuYWJDLVeI=:Fm69CQge1zLzFS/moqnD32
- Eiz0uWtqWRU41mM58rE6NOtX0k6DmUT/OnY9WQ1De9HERrMtIYK6Vq1mzCur1TQBvB9GzB8Se
- Aar7cYqFTRhaZNRCXca60UFMB2oHqYZLxRa3bdw6B0UolxYyX8foCZbeG+ciSuyT/1XWyVlwO
- cqC4QUiJtPcucfRl/hbanO/GmffWv6O8xODLr7JfTD+7hCuPkjpd3EqXd+gNwcERJ8aVf39tX
- mzzehDDuUyFiqx+Fa4RIxUbJOiDNStmn/lR+YOXJ3q6StJ5f50/tG64mgNE0w6wm1ViwAroVk
- rdO+q8evjbvfZndjBJjHDFUXA3yOGHTRIReqn8GaCIu7uHVhwAEfZJ4CvDU9G5DhJSJ75/Kf2
- H9O3N3nH6232NTHfs9+bawLxtRa3B4k+jlEFX8EFiRKcl8b1q4UPuwn+qWwzMn6tow/iZDAyk
- km2a2qMOeGxDuhJJ4hC1bU0yCkk5GfzOMM5nEVIH6p6lV3AVMB+nRvut7uAeC6pxm9ebzd6mA
- b4lJ4IDOFj9EOyrtUY7QdPd45MKLcqBg/cvCv7NucT8h+78TijzXl+J/i2ToURYUS0a09M0UP
- DwEyZqHrloXStX/xwKU7hSEQqpXvMC90Y1Et/ssmHor+fECkFZ0hoMcad4BzYAckEuAuFthO0
- GcKMAKPXvm0cdSOj9P6pX2QV76tL2e2jCNsuiePmcOq47L+4f5PuxPeTASrNTZOfEkjeMYcTY
- jijQvaYjNUewqv8b3X7Z8RYzfV0ClEVyyJpxIKdaW3DAavuIaSPnPGR4XRofs4a+YPgsVE0Ps
- 9OPfNs7ttIU9zYKe5KXFC6guRbCGLUvDiKEpIoJ1a4fbNGSVhPKOxCYBB5xYU2meoyoGHmk
+X-Provags-ID: V03:K0:pEZ9YNTRA2Loj3pCLaMjFdzy4D8u/KWk9sIVk2vfY/g+t7tjWvo
+ FWvs5PknFQy6MfnH8Ir6JI+6i+rjtjqqz6Rb7hJsnMNDudHI+Fh0ZnIyfUk4TQ9fCmeh14R
+ 9MQKV6ToKMDxMbXbmlJNOTAoton8c96u6vgw5L6bYE+Xim197q2RYmsZNQt8vOOjKQ/TIuu
+ 5r8vutGpg4SSGC+36eI3A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:qWFzPWS5ZJM=:5Y9p6CgQRVdxyfQvwzrTkd
+ Y7CGLlS0BhuBKNodXa7CPV7h32aFGi9AM8tYT71y3kRlEbNKnSBHr4pLCX6aggr40fI2lglv8
+ YX2Rmsi0criL27lSE/V59eVlYTPgpIX1Zp/7+ZcI/x0wC977A9d5LMX7RRTinzejYtha+/zQX
+ YcPC/cTjRM1l2nD4K1WrU8ORxz08Yt+CRAeg56d1czRvKJRhxP68+hhJ1OzSEpfGKghnnLjKP
+ T97cJ130oTxMpFrAYxxP0YQBirWEYIWM5Yg0r6Kt+pCpy43WRV3n+rmkN/ecXTJrSIJDrHiWj
+ aSn5IvRC4s3JXkOpe5ghiGwTG8yxNxVoms063Tz9vLh76d+chff6NTQ652hCg49Mo7ySFoxb1
+ WazKQMLVM8sl5nf7HPi0TNEHI15drSjyitut63/YScz2OBynmu8AM4+YP/GAAQPl+M7AKcVrl
+ sM1/YXhLdc4ndXYYDYtQhtCpFxaPuAg1/3h7I4OKhyA9aQLuySt4RPRV6al8Zzx9GZwrEka3c
+ EuF0lVfYsDM1zw8yahFPmvQ0XhNCKcYrwaQtnU8eiafksogdsTvmLDW/VkZCUONOB3DpjmJCB
+ nSJ+dSrmPWA/pRCdAbZw9+Nz8+1f2EoTr9j9h4hOIc7nbhkFx2kNz1Ayj0WdJ4vc9JXqE5F5S
+ BhXEvqqAK7V9cUC3XgAt8P6K6rH01qUEQRnelp74ot9Jp1z25Qe0s4Xin+c7MkcaHb1JQrUPG
+ eRCwHnX6QotW4BJt62uYojwJzEzreNKXE7Tjet4k0M0foOqy/DHCjupL8bkWGBi3KtlK7N81S
+ scrfds/fWr0ZwDbZgc/HMBNIvUgc2Z+T8m24I3RAjE/W3ExhvOrQEl7EY8fXJ+s9n0qZOrI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The "2>&1" notation in Powershell and in Unix shells implies that stderr
-is redirected to the same handle into which stdout is already written.
-
-Let's use this special value to allow the same trick with
-GIT_REDIRECT_STDERR and GIT_REDIRECT_STDOUT: if the former's value is
-`2>&1`, then stderr will simply be written to the same handle as stdout.
-
-The functionality was suggested by Jeff Hostetler.
+This feature has been in Git for Windows since v2.11.0(2), as an
+experimental option. Now it is considered mature, and it is high time to
+document it properly.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/mingw.c  | 15 +++++++++++++++
- t/t0001-init.sh |  8 +++++++-
- 2 files changed, 22 insertions(+), 1 deletion(-)
+ Documentation/git.txt | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 6c6c7795a70..2d44d21aca8 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -2160,6 +2160,21 @@ static void maybe_redirect_std_handle(const wchar_t *key, DWORD std_id, int fd,
- 			CloseHandle(handle);
- 		return;
- 	}
-+	if (std_id == STD_ERROR_HANDLE && !wcscmp(buf, L"2>&1")) {
-+		handle = GetStdHandle(STD_OUTPUT_HANDLE);
-+		if (handle == INVALID_HANDLE_VALUE) {
-+			close(fd);
-+			handle = GetStdHandle(std_id);
-+			if (handle != INVALID_HANDLE_VALUE)
-+				CloseHandle(handle);
-+		} else {
-+			int new_fd = _open_osfhandle((intptr_t)handle, O_BINARY);
-+			SetStdHandle(std_id, handle);
-+			dup2(new_fd, fd);
-+			/* do *not* close the new_fd: that would close stdout */
-+		}
-+		return;
-+	}
- 	handle = CreateFileW(buf, desired_access, 0, NULL, create_flag,
- 			     flags, NULL);
- 	if (handle != INVALID_HANDLE_VALUE) {
-diff --git a/t/t0001-init.sh b/t/t0001-init.sh
-index 0fd2fc45385..c413bff9cf1 100755
---- a/t/t0001-init.sh
-+++ b/t/t0001-init.sh
-@@ -456,7 +456,13 @@ test_expect_success 're-init from a linked worktree' '
- test_expect_success MINGW 'redirect std handles' '
- 	GIT_REDIRECT_STDOUT=output.txt git rev-parse --git-dir &&
- 	test .git = "$(cat output.txt)" &&
--	test -z "$(GIT_REDIRECT_STDOUT=off git rev-parse --git-dir)"
-+	test -z "$(GIT_REDIRECT_STDOUT=off git rev-parse --git-dir)" &&
-+	test_must_fail env \
-+		GIT_REDIRECT_STDOUT=output.txt \
-+		GIT_REDIRECT_STDERR="2>&1" \
-+		git rev-parse --git-dir --verify refs/invalid &&
-+	printf ".git\nfatal: Needed a single revision\n" >expect &&
-+	test_cmp expect output.txt
- '
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index 7a1d629ca06..463b0eb0f5c 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -709,6 +709,24 @@ of clones and fetches.
+ 	the background which do not want to cause lock contention with
+ 	other operations on the repository.  Defaults to `1`.
  
- test_done
++`GIT_REDIRECT_STDIN`::
++`GIT_REDIRECT_STDOUT`::
++`GIT_REDIRECT_STDERR`::
++	Windows-only: allow redirecting the standard input/output/error
++	handles to paths specified by the environment variables. This is
++	particularly useful in multi-threaded applications where the
++	canonical way to pass standard handles via `CreateProcess()` is
++	not an option because it would require the handles to be marked
++	inheritable (and consequently *every* spawned process would
++	inherit them, possibly blocking regular Git operations). The
++	primary intended use case is to use named pipes for communication
++	(e.g. `\\.\pipe\my-git-stdin-123`).
+++
++Two special values are supported: `off` will simply close the
++corresponding standard handle, and if `GIT_REDIRECT_STDERR` is
++`2>&1`, standard error will be redirected to the same handle as
++standard output.
++
+ Discussion[[Discussion]]
+ ------------------------
+ 
 -- 
 2.15.0.windows.1
-
-
