@@ -2,113 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E32B0202A0
-	for <e@80x24.org>; Wed,  1 Nov 2017 17:03:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E9593202A0
+	for <e@80x24.org>; Wed,  1 Nov 2017 17:07:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933224AbdKARDc (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Nov 2017 13:03:32 -0400
-Received: from mout.web.de ([217.72.192.78]:58385 "EHLO mout.web.de"
+        id S1754845AbdKARHe (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Nov 2017 13:07:34 -0400
+Received: from mout.gmx.net ([212.227.17.20]:55059 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S933216AbdKARDa (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Nov 2017 13:03:30 -0400
-Received: from [192.168.178.36] ([91.20.50.251]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0LbJ4A-1dQ71S0s3O-00kuyn; Wed, 01
- Nov 2017 18:03:24 +0100
-X-Mozilla-News-Host: news://news.public-inbox.org:119
-To:     Git List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] imap-send: handle NULL return of next_arg()
-Message-ID: <2d466b78-77fc-fa2c-c5e1-7b8737a00958@web.de>
-Date:   Wed, 1 Nov 2017 18:03:20 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.4.0
+        id S1752395AbdKARHd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Nov 2017 13:07:33 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LeRKD-1dLy5b3Od3-00q8ps; Wed, 01
+ Nov 2017 18:07:26 +0100
+Date:   Wed, 1 Nov 2017 18:07:25 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Jonathan Nieder <jrnieder@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/3] mingw: introduce a way to avoid std handle
+ inheritance
+In-Reply-To: <20171031180933.styinoik4npmd53b@aiede.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.21.1.1711011737460.6482@virtualbox>
+References: <cover.1509382976.git.johannes.schindelin@gmx.de> <20171030205522.hur26cumwusk7wwa@aiede.mtv.corp.google.com> <alpine.DEB.2.21.1.1710311809570.6482@virtualbox> <20171031180933.styinoik4npmd53b@aiede.mtv.corp.google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:YnLx3QipkdU8xj99pK8QfzN1IjqhOVWhrCiRWeaRfc4sgsTrHIL
- tXd89ihlBrzAGfQYnZ9moePbIayzRIPrRvJVyXjtZ1WybsNtGTq7attu7sCsQxt+Z0/iXF3
- 6sqCfYkZZV8khXLQLF4eQCZy7AvuyKFLyYo+3ts71KYvGCkChftiTbBKy9JcB/3kYM6ApS9
- 3CVH5SGGZYrw20brMEBVA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:BiIt8y3dnn0=:KgG5lzNPyGudO3iQXNa+Jy
- WfdQzhYCiNGrqZvd9cfo9qg8WNLHcOqT9+SwKAwQ8aiwh1PTGIaC5hXkL7xRIdJ9X6nVqirEc
- zOeSWL0G5ErOmEeyMR//kYxKuc21Zgncu1wKr9jCsuELODzFHSWm8RWnfwCdG+OkMwDTLthy4
- EuIs+sGJTx+b1zkrAjqNnL3KFWUv89q0TXdjajgluNuXFNkS68zOXqgaOQfJGa6vbInWcJZ7c
- xJXDPQIT0he2BrCpnWj/ne1zCsZJTAuPArIlyhWpFBDcnxHd1gqQ/CmWODinb8IpYvzsk0ARr
- u8sW4GqxTii+DGP6F+5crySQAFyan380s4dVikxwEWhUoXrcupcKIlcwClj/bC9/pTlLypWeH
- VHuX3mvDm9WVvoa4uyY+YpGrXLL4RhejRIv5VcVKCAOJgR5+atVJ1WzLR2Swh7axMiu2851zi
- /b0hiffW436iCeHpJExU99ly7ZUOq0SS2p2K/JUeNHuOtgTlWNoffnfe/ceqO2NwmRa3pujs7
- 6EG3RAhufq54Q8w6uOFPNK7kV214VxrUTxq2zLOl9Loz/ywwbw7JCMqpVH98+FmngYlFa1+OS
- tAnJg3aZ9tpuEDSGC9uWbSfWB6MXhsoT8Tvwr8HJxIhHaRi/HF7rA50K8UFmQxJF1793ZQp23
- FDzbgnpSw81ljNEehRj+Ub4I2cxeL6J777DHosp2HEvKkSMQoZcI3tl36LB6WDyFanzIjcGq9
- iV4QUOHt8hdCRFalYhd0Jqm+alqn+gtzBR6LiwFyPfC2LGKz/h5FWNs9IwalBYAh18QM1Bgxm
- z0cO9QRL7iCVvaMbutmIU0Ge76ghuZN4+0A29iE2ZxqaQ5K/BA=
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:gyE+CmpErLv9eM/vLCRqWXbMLsCeRqzfzon+Ig4+zGxvtckFukb
+ 9Ls00+fcTHT7SLoVn3fqkLkNGhlX+xTaNbLQYgVMP328Cfpsh3T6WiLHqc0mRM2iP5T9kXC
+ SEcb8h52m0mCM5F4jgkzy3SeKc5TTmn4Y/IkVjr46iJyYN5iTkAU058ROWZX1gctw309+aZ
+ Bcs0jUfceNyPP0eRwJ4GA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:SvvqUf1VsGE=:3YgUFAONWky43sYxYoD6x0
+ ZhoCYJk4KW4AGoeheI0abG4foMef8kPrWMpI/E6f0n8x5sCjc7oD3akGpD/3rjvI/6c6k0RCT
+ UFd0s2lSl6QnNUJSB/nJYxTLA27kmIqHDLf4abRav7FQCfX0XGxlvqIB7L6ZG1+zhl2wiNLh7
+ H5qzWU6W/1JtE7WQZuPNhUFkHr3PYT/hcoNEtR4Iv+sOOivPN8VtrzarG5iAMWYMZ+XzeVz0V
+ i4iu1q8wrVuRLhoHLuuUEQkGDGNE8TAua9brsaGuQBFuODt0Iwb/pndZ/3i5KB1riH2v2PEBA
+ vtyb73rozX3xsYif5NlzGUNllF5dmsIDjEUxuDe8Co5ab+nIel6pEralX03tW6W19Ukqdr+BG
+ GJobL9DH93g/5vIejOIu3rcSmj2gDZX6DsQMRlOq8+t/7N7f8REXmeP7kVAd7sYyl4YNaxuwx
+ RuhMO/gqj0T90RQOUZwYsHXxdOaOAefMOotPhvOPdK/kmse2wj4kALzbigF3JC09Qfh/26ZIZ
+ CgoZHBnMWI+xIc2EpeIFbFBiwagQjqMv1KVpH3Vk3EN4dDDPSfDGPeDTCb+NkNuaheL1CzaS5
+ +xY3MkwsaG1lg/oDsSsfmmMLWMMqwAOYM5SMdrlpnNc/h9wGQYTWmvkrceqdIWAZurQ7pzKxR
+ ZHpNpTm40uNdJyAV/lbb6cwHT8Mq9J/GU27hHpoXKcbFtblx5AovjrH/uhhnKoojcpRw38S7G
+ AMmYiiqrBRsNRFNatV2QIVrFDgXAcaDw97Bo0a1u72x0dMGEjg3RFS+q/S+ICHeATK/p6Ri0t
+ 9W1J+QI5cGSpx1QUWBgokywG6Lr4AYNoJilI3OIMWFJj4EnRKxgnpLiGDh/dfElo7srHA6l
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-next_arg() returns NULL if it runs out of arguments.  Most call sites
-already handle that gracefully.  Check in the remaining cases as well.
-Replace the NULL pointer with an empty string at the bottom of
-get_cmd_result() -- it's nicely reported as an unexpected response a
-few lines down.  Error out explicitly at the remaining sites.
+Hi Jonahtan,
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
- imap-send.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+On Tue, 31 Oct 2017, Jonathan Nieder wrote:
 
-diff --git a/imap-send.c b/imap-send.c
-index 8c785f3ca2..0031566309 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -693,6 +693,10 @@ static int parse_response_code(struct imap_store *ctx, struct imap_cmd_cb *cb,
- 	}
- 	*p++ = 0;
- 	arg = next_arg(&s);
-+	if (!arg) {
-+		fprintf(stderr, "IMAP error: empty response code\n");
-+		return RESP_BAD;
-+	}
- 	if (!strcmp("UIDVALIDITY", arg)) {
- 		if (!(arg = next_arg(&s)) || !(ctx->uidvalidity = atoi(arg))) {
- 			fprintf(stderr, "IMAP error: malformed UIDVALIDITY status\n");
-@@ -725,7 +729,8 @@ static int get_cmd_result(struct imap_store *ctx, struct imap_cmd *tcmd)
- {
- 	struct imap *imap = ctx->imap;
- 	struct imap_cmd *cmdp, **pcmdp;
--	char *cmd, *arg, *arg1;
-+	char *cmd;
-+	const char *arg, *arg1;
- 	int n, resp, resp2, tag;
- 
- 	for (;;) {
-@@ -733,6 +738,10 @@ static int get_cmd_result(struct imap_store *ctx, struct imap_cmd *tcmd)
- 			return RESP_BAD;
- 
- 		arg = next_arg(&cmd);
-+		if (!arg) {
-+			fprintf(stderr, "IMAP error: empty response\n");
-+			return RESP_BAD;
-+		}
- 		if (*arg == '*') {
- 			arg = next_arg(&cmd);
- 			if (!arg) {
-@@ -807,6 +816,8 @@ static int get_cmd_result(struct imap_store *ctx, struct imap_cmd *tcmd)
- 			if (cmdp->cb.cont || cmdp->cb.data)
- 				imap->literal_pending = 0;
- 			arg = next_arg(&cmd);
-+			if (!arg)
-+				arg = "";
- 			if (!strcmp("OK", arg))
- 				resp = DRV_OK;
- 			else {
--- 
-2.15.0
+> Johannes Schindelin wrote:
+> > On Mon, 30 Oct 2017, Jonathan Nieder wrote:
+> 
+> >> Can this rationale go in the commit messages?
+> >
+> > I thought I had done exactly that in 1/3...
+> 
+> Okay, I'll be more specific.  This cover letter includes some
+> information about the rationale and motivation for the series.  That's
+> great: it makes reading the patches easier.  But TBH I'd rather that
+> it hadn't included that information at all, since if it said "see
+> patch 1/3 for rationale" then I could save the trouble of reading the
+> same information twice.
+
+Alas, I am the exact opposite. You see, I am seriously short on time, and
+if the cover letter of a patch series leaves everything about the changes
+unclear, I throw my laptop out the window (actually, I suppress the urge
+and just delete the mail thread in my mail reader) and move to the next
+mail.
+
+It sounds a bit stupid to cater to myself in patches *I* submit, but I
+refuse to believe that there are many people with more time on their hands
+than myself (last time I tried to research this, it looked as everybody
+has the same 86,400 seconds per day available, give or take the occasional
+leap second).
+
+> And unfortunately much of the relevant information is not repeated
+> there.  The cover letter mentions:
+> 
+> - that Visual Studio is a motivating example
+
+That was actually on purpose. Personally, I want to read the motivation in
+the cover letter, and not get distracted by it when reading the commit
+logs.
+
+To make you happy, I added this, though.
+
+> - that this is conceptually similar to Unix sockets
+
+To make you happy, I added this, too.
+
+> - that those do not need to be marked as inheritable, as the process
+>   can simply open the named pipe. No global flags. No problems.
+
+I just added "(and therefore no inherited handles need to be closed)" to
+the last sentence of 1/3's commit message that already mentioned this.
+
+> - that this has already seem some testing in Git for Windows (i.e.
+>   analagous information to what a Tested-by footer would say)
+
+I mentioned this twice, in 1/3's and in 3/3's commit message.
+
+> It is also just more readable than patch 1/3's commit message.  That's
+> to be expected, since it was written later.  My second draft of
+> something is often clearer than the first draft.
+
+I took your cue and simply replaced the first paragraph of 1/3's commit
+message by the first paragraph of the cover letter.
+
+Ciao,
+Dscho
