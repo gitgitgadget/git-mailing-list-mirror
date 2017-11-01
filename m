@@ -2,117 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 737D020437
-	for <e@80x24.org>; Tue, 31 Oct 2017 23:07:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 66E7520450
+	for <e@80x24.org>; Wed,  1 Nov 2017 00:27:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932423AbdJaXHg (ORCPT <rfc822;e@80x24.org>);
-        Tue, 31 Oct 2017 19:07:36 -0400
-Received: from mga04.intel.com ([192.55.52.120]:6119 "EHLO mga04.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753881AbdJaXHf (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Oct 2017 19:07:35 -0400
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 31 Oct 2017 16:07:35 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.44,326,1505804400"; 
-   d="scan'208";a="169684826"
-Received: from jekeller-desk.amr.corp.intel.com ([134.134.177.230])
-  by fmsmga005.fm.intel.com with ESMTP; 31 Oct 2017 16:07:35 -0700
-From:   Jacob Keller <jacob.e.keller@intel.com>
-To:     git@vger.kernel.org
-Cc:     Jacob Keller <jacob.keller@gmail.com>
-Subject: [PATCH] sequencer: pass absolute GIT_DIR to exec commands
-Date:   Tue, 31 Oct 2017 16:07:33 -0700
-Message-Id: <20171031230733.18949-1-jacob.e.keller@intel.com>
-X-Mailer: git-send-email 2.11.1.4.gad8c7cd
+        id S1751909AbdKAA1H (ORCPT <rfc822;e@80x24.org>);
+        Tue, 31 Oct 2017 20:27:07 -0400
+Received: from smtp-out-3.talktalk.net ([62.24.135.67]:63739 "EHLO
+        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750764AbdKAA1G (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Oct 2017 20:27:06 -0400
+Received: from PhilipOakley ([92.31.218.76])
+        by smtp.talktalk.net with SMTP
+        id 9gs4eVHFnlmqO9gs4eJpHg; Wed, 01 Nov 2017 00:27:05 +0000
+X-Originating-IP: [92.31.218.76]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=H+Sr+6Qi c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
+ a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=8nJEP1OIZ-IA:10 a=ybZZDoGAAAAA:8
+ a=pGLkceISAAAA:8 a=5rxgeBVgAAAA:8 a=1XWaLZrsAAAA:8 a=wa-yz7NzkRbO4_WDCWAA:9
+ a=wPNLvfGTeEIA:10 a=0RhZnL1DYvcuLYC8JZ5M:22 a=PwKx63F5tFurRwaNxrlG:22
+Message-ID: <2A1B66E868594FC984FED8F0EDEAF900@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Yubin Ruan" <ablacktshirt@gmail.com>
+Cc:     <git@vger.kernel.org>, "Junio C Hamano" <gitster@pobox.com>
+References: <ab9b5c63-ca38-6157-6732-78aa5d5f291f@gmail.com> <xmqqd1542b5r.fsf@gitster.mtv.corp.google.com>
+Subject: Re: Meaning of two commit-ish hash in git diff
+Date:   Wed, 1 Nov 2017 00:27:02 -0000
+Organization: OPDS
+MIME-Version: 1.0
+Content-Type: text/plain;
+        format=flowed;
+        charset="iso-8859-1";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-Antivirus: AVG (VPS 171031-4, 31/10/2017), Outbound message
+X-Antivirus-Status: Clean
+X-CMAE-Envelope: MS4wfBACQjoznBp6Jy2HabU0YoGZGYkFmagZbZNNJEmaPudOoZCF7fp87Z5BAVki3yNWg5uC7KIJE0BjnkjZyIafYv+Ba/A0B6SLtNKe8AyPhquw6SZOOfep
+ 7L+DnmTfGMrLSNk9/CTpjIotYxI2k7HASF3U/Ns8Puo65sJ+PWWzIP4erlvSJHba9WQ3hYoNOP0CJG+RlUg8ClaAMGkp7SYMMHARyC8c+mV+44kn8H30lGRr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jacob Keller <jacob.keller@gmail.com>
+Yubin ,
 
-When we replaced the old shell script based interactive rebase in
-commmit 18633e1a22a6 ("rebase -i: use the rebase--helper builtin",
-2017-02-09) we introduced a regression of functionality in that the
-GIT_DIR would be sent to the environment of the exec command as-is.
+From: "Junio C Hamano" <gitster@pobox.com>
+> Yubin Ruan <ablacktshirt@gmail.com> writes:
+>
+>> diff --git a/path/somefile b/path/somefile
+>> index f8886b4..a1c96df 100644
+>> --- a/path/somefile
+>> +++ b/path/somefile
+>> <snip>
+>>
+>> This is output by a `git diff` between two adjacent commits but they are
+>> not any commit hash. I grep through the whole $(git log) but still cannot
+>> find those hash.
+>
+> The f8886b4 you see on the left is the name of the blob object on
+> the left hand side of the comparison that produced this output;
+> similarly a1c96df is the name of the blob object on the right hand
+> side of the comparison.
+>
+> IOW, if you have the contents of the blob whose object name is
+> f8886b4, by applying this patch, you will get a blob whose object
+> name is a1c96df.
+>
+> The information is used by "git am -3" when the patch does not apply
+> cleanly to fall back to the 3-way merge.
 
-This generally meant that it would be passed as "GIT_DIR=.git", which
-causes problems for any exec command that wants to run git commands in
-a subdirectory.
+The ability to 'git describe` those blob object IDs is currently the subject 
+of a patch series
+https://public-inbox.org/git/20171031211852.13001-1-sbeller@google.com/
 
-This isn't a very large regression, since it is not that likely that the
-exec command will run a git command, and even less likely that it will
-need to do so in a subdir. This regression was discovered by a build
-system which uses git-describe to find the current version of the build
-system, and happened to do so from the src/ sub directory of the
-project.
+Maybe see if would have helped ;-)
 
-Fix this by passing in the absolute path of the git directory into the
-child environment.
-
-Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
----
- sequencer.c                   |  7 ++++++-
- t/t3404-rebase-interactive.sh | 11 +++++++++++
- 2 files changed, 17 insertions(+), 1 deletion(-)
-
-diff --git a/sequencer.c b/sequencer.c
-index f2a10cc4f24c..332a383b037d 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -1862,12 +1862,15 @@ static int error_failed_squash(struct commit *commit,
- 
- static int do_exec(const char *command_line)
- {
-+	struct argv_array child_env = ARGV_ARRAY_INIT;
- 	const char *child_argv[] = { NULL, NULL };
- 	int dirty, status;
- 
- 	fprintf(stderr, "Executing: %s\n", command_line);
- 	child_argv[0] = command_line;
--	status = run_command_v_opt(child_argv, RUN_USING_SHELL);
-+	argv_array_pushf(&child_env, "GIT_DIR=%s", absolute_path(get_git_dir()));
-+	status = run_command_v_opt_cd_env(child_argv, RUN_USING_SHELL, NULL,
-+					  child_env.argv);
- 
- 	/* force re-reading of the cache */
- 	if (discard_cache() < 0 || read_cache() < 0)
-@@ -1897,6 +1900,8 @@ static int do_exec(const char *command_line)
- 		status = 1;
- 	}
- 
-+	argv_array_clear(&child_env);
-+
- 	return status;
- }
- 
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index 3704dbb2ecf6..6a82d1ed876d 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -108,6 +108,17 @@ test_expect_success 'rebase -i with the exec command runs from tree root' '
- 	rm -fr subdir
- '
- 
-+test_expect_success 'rebase -i with exec allows git commands in subdirs' '
-+	test_when_finished "rm -rf subdir" &&
-+	test_when_finished "git rebase --abort ||:" &&
-+	git checkout master &&
-+	mkdir subdir && (cd subdir &&
-+	set_fake_editor &&
-+	FAKE_LINES="1 exec_cd_subdir_&&_git_rev-parse_--is-inside-work-tree" \
-+		git rebase -i HEAD^
-+	)
-+'
-+
- test_expect_success 'rebase -i with the exec command checks tree cleanness' '
- 	git checkout master &&
- 	set_fake_editor &&
--- 
-2.11.1.4.gad8c7cd
+Philip 
 
