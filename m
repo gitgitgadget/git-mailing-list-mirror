@@ -2,120 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E9593202A0
-	for <e@80x24.org>; Wed,  1 Nov 2017 17:07:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0E56D2055E
+	for <e@80x24.org>; Wed,  1 Nov 2017 17:10:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754845AbdKARHe (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Nov 2017 13:07:34 -0400
-Received: from mout.gmx.net ([212.227.17.20]:55059 "EHLO mout.gmx.net"
+        id S1752396AbdKARJ7 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Nov 2017 13:09:59 -0400
+Received: from mout.web.de ([212.227.17.11]:57437 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752395AbdKARHd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Nov 2017 13:07:33 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LeRKD-1dLy5b3Od3-00q8ps; Wed, 01
- Nov 2017 18:07:26 +0100
-Date:   Wed, 1 Nov 2017 18:07:25 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Jonathan Nieder <jrnieder@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/3] mingw: introduce a way to avoid std handle
- inheritance
-In-Reply-To: <20171031180933.styinoik4npmd53b@aiede.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.21.1.1711011737460.6482@virtualbox>
-References: <cover.1509382976.git.johannes.schindelin@gmx.de> <20171030205522.hur26cumwusk7wwa@aiede.mtv.corp.google.com> <alpine.DEB.2.21.1.1710311809570.6482@virtualbox> <20171031180933.styinoik4npmd53b@aiede.mtv.corp.google.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751428AbdKARJ6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Nov 2017 13:09:58 -0400
+Received: from [192.168.178.36] ([91.20.50.251]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LvSU3-1dANRS233j-010bOv; Wed, 01
+ Nov 2017 18:09:53 +0100
+Subject: Re: [PATCH 2/2] sequencer.c: check return value of close() in
+ rewrite_file()
+To:     Simon Ruderich <simon@ruderich.org>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Ralf Thielow <ralf.thielow@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <22afeefa-cdd5-cd32-0a7c-6bad4de79f05@web.de>
+ <06c33d3cfa35c0524ede2970ee3169d6c62eb5c1.1509547231.git.simon@ruderich.org>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <44fa927f-d4bc-9396-0a50-bc2366d4fadc@web.de>
+Date:   Wed, 1 Nov 2017 18:09:49 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:gyE+CmpErLv9eM/vLCRqWXbMLsCeRqzfzon+Ig4+zGxvtckFukb
- 9Ls00+fcTHT7SLoVn3fqkLkNGhlX+xTaNbLQYgVMP328Cfpsh3T6WiLHqc0mRM2iP5T9kXC
- SEcb8h52m0mCM5F4jgkzy3SeKc5TTmn4Y/IkVjr46iJyYN5iTkAU058ROWZX1gctw309+aZ
- Bcs0jUfceNyPP0eRwJ4GA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:SvvqUf1VsGE=:3YgUFAONWky43sYxYoD6x0
- ZhoCYJk4KW4AGoeheI0abG4foMef8kPrWMpI/E6f0n8x5sCjc7oD3akGpD/3rjvI/6c6k0RCT
- UFd0s2lSl6QnNUJSB/nJYxTLA27kmIqHDLf4abRav7FQCfX0XGxlvqIB7L6ZG1+zhl2wiNLh7
- H5qzWU6W/1JtE7WQZuPNhUFkHr3PYT/hcoNEtR4Iv+sOOivPN8VtrzarG5iAMWYMZ+XzeVz0V
- i4iu1q8wrVuRLhoHLuuUEQkGDGNE8TAua9brsaGuQBFuODt0Iwb/pndZ/3i5KB1riH2v2PEBA
- vtyb73rozX3xsYif5NlzGUNllF5dmsIDjEUxuDe8Co5ab+nIel6pEralX03tW6W19Ukqdr+BG
- GJobL9DH93g/5vIejOIu3rcSmj2gDZX6DsQMRlOq8+t/7N7f8REXmeP7kVAd7sYyl4YNaxuwx
- RuhMO/gqj0T90RQOUZwYsHXxdOaOAefMOotPhvOPdK/kmse2wj4kALzbigF3JC09Qfh/26ZIZ
- CgoZHBnMWI+xIc2EpeIFbFBiwagQjqMv1KVpH3Vk3EN4dDDPSfDGPeDTCb+NkNuaheL1CzaS5
- +xY3MkwsaG1lg/oDsSsfmmMLWMMqwAOYM5SMdrlpnNc/h9wGQYTWmvkrceqdIWAZurQ7pzKxR
- ZHpNpTm40uNdJyAV/lbb6cwHT8Mq9J/GU27hHpoXKcbFtblx5AovjrH/uhhnKoojcpRw38S7G
- AMmYiiqrBRsNRFNatV2QIVrFDgXAcaDw97Bo0a1u72x0dMGEjg3RFS+q/S+ICHeATK/p6Ri0t
- 9W1J+QI5cGSpx1QUWBgokywG6Lr4AYNoJilI3OIMWFJj4EnRKxgnpLiGDh/dfElo7srHA6l
+In-Reply-To: <06c33d3cfa35c0524ede2970ee3169d6c62eb5c1.1509547231.git.simon@ruderich.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:rp+TpPQXQIdr4FQWUbUHROJOTnNAIavIQHHFknaa/LH9EoYSAOp
+ KWw8RfgpY0OT4A1Uyw3ui+DNqTjvxFsLXJhjWu8dTKnN647Obq7rb+fZtEuM5H/aSeL4fEC
+ N16b+jOGd/2Ek7hBkq9aRYRvQhejQhcrA5GOa0n6/YCY/J9GCj7zzBb1WXz5HUlWUI5BC2L
+ Oqhg1kvwNvXmWF8dpFgmg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:glv0howuFY4=:UZW7Ov4+gtc2FqyhOanOCk
+ u8RI6XF0AKU3x5lBGQl36ZZWnuAUgD/ro1e7tWcXMLj1omTyixVsP87728QrtVTxKCuWiFSpm
+ kwTbjioHWG53AmUnAli/NF/0cKn9l9B7wfUaCepFyuUPW6yEloea/nymjn2SdZoqRIyYed5sL
+ pado1KfBl6TrhnIsD/KWxx/U7WkJXqnDZDMdUIOvb0IVa5pR3VRv8w+cqp/4D7/qqFoSYWv9P
+ AF+FV2Sk8c05R+3XQF3qdcUutPe4mqK38Ztg5zbrqADwfg6hNmkLSN0PklBJxyip8NAa+uIbM
+ Uny/BvImSQkQR2zXh0y9ty/etluT6vlApQ6NZfpQFG2UWQup0x+tV/kUWyPsYxVV/F0qwEKpI
+ IkOMLpyQWKYe0fByYcKiL+kCy3cetSRN6PoAgL8oZoXdnH5Zuo6EsC11AyYgh7GMVnOAoSdR/
+ dO4LltS1PMCslOJ1xFBnG0r3Lu/SWYwixOu+bJRL268UOHORCTBnASdeh4/nMKXrBZ7MpY8Xw
+ 1FjB702P4NqhH1B37zLukL7agfweWOSDfsIp0waWJs/6/Y/y1PCvXWkJf3Xbo+659+4L71tcz
+ wveRYkS1A/vWmBmJBj1dH51Ak3NKC4+lEL7QPJvveBN5ciWq8J81Th1rynrUmQhcSmNcuP0LY
+ 5GNNM243tT9BEMdX3wSxWlOxgH4/hem29QN6LIj1KzyfvPSBBs1N6wwMsEqjsetX9ElYlDt3v
+ yg55Jjx3KDcWCYlyBJ5ghTilmdz8GzDCwXkUSkWtWuTA6teYfd8W8n5bK2Lx4Lq19jcAQXKAG
+ EhvohkiCBjZnpgJJPqaDQuNG7eHWo4DKkNDi97dieLdN9lcafA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jonahtan,
-
-On Tue, 31 Oct 2017, Jonathan Nieder wrote:
-
-> Johannes Schindelin wrote:
-> > On Mon, 30 Oct 2017, Jonathan Nieder wrote:
+Am 01.11.2017 um 15:45 schrieb Simon Ruderich:
+> Not checking close(2) can hide errors as not all errors are reported
+> during the write(2).
 > 
-> >> Can this rationale go in the commit messages?
-> >
-> > I thought I had done exactly that in 1/3...
+> Signed-off-by: Simon Ruderich <simon@ruderich.org>
+> ---
 > 
-> Okay, I'll be more specific.  This cover letter includes some
-> information about the rationale and motivation for the series.  That's
-> great: it makes reading the patches easier.  But TBH I'd rather that
-> it hadn't included that information at all, since if it said "see
-> patch 1/3 for rationale" then I could save the trouble of reading the
-> same information twice.
-
-Alas, I am the exact opposite. You see, I am seriously short on time, and
-if the cover letter of a patch series leaves everything about the changes
-unclear, I throw my laptop out the window (actually, I suppress the urge
-and just delete the mail thread in my mail reader) and move to the next
-mail.
-
-It sounds a bit stupid to cater to myself in patches *I* submit, but I
-refuse to believe that there are many people with more time on their hands
-than myself (last time I tried to research this, it looked as everybody
-has the same 86,400 seconds per day available, give or take the occasional
-leap second).
-
-> And unfortunately much of the relevant information is not repeated
-> there.  The cover letter mentions:
+> On Wed, Nov 01, 2017 at 02:00:11PM +0100, René Scharfe wrote:
+>> Most calls are not checked, but that doesn't necessarily mean they need
+>> to (or should) stay that way.  The Linux man-page of close(2) spends
+>> multiple paragraphs recommending to check its return value..  Care to
+>> send a follow-up patch?
 > 
-> - that Visual Studio is a motivating example
+> Hello,
+> 
+> Sure, here is it.
+> 
+> Regards
+> Simon
+> 
+>   sequencer.c | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/sequencer.c b/sequencer.c
+> index f93b60f61..e0cc2f777 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -2673,7 +2673,8 @@ static int rewrite_file(const char *path, const char *buf, size_t len)
+>   		return error_errno(_("could not open '%s' for writing"), path);
+>   	if (write_in_full(fd, buf, len) < 0)
+>   		rc = error_errno(_("could not write to '%s'"), path);
+> -	close(fd);
+> +	if (close(fd) && !rc)
+> +		rc = error_errno(_("could not close '%s'"), path);
+>   	return rc;
+>   }
+>   
+> 
 
-That was actually on purpose. Personally, I want to read the motivation in
-the cover letter, and not get distracted by it when reading the commit
-logs.
+Looks good to me, thank you!
 
-To make you happy, I added this, though.
-
-> - that this is conceptually similar to Unix sockets
-
-To make you happy, I added this, too.
-
-> - that those do not need to be marked as inheritable, as the process
->   can simply open the named pipe. No global flags. No problems.
-
-I just added "(and therefore no inherited handles need to be closed)" to
-the last sentence of 1/3's commit message that already mentioned this.
-
-> - that this has already seem some testing in Git for Windows (i.e.
->   analagous information to what a Tested-by footer would say)
-
-I mentioned this twice, in 1/3's and in 3/3's commit message.
-
-> It is also just more readable than patch 1/3's commit message.  That's
-> to be expected, since it was written later.  My second draft of
-> something is often clearer than the first draft.
-
-I took your cue and simply replaced the first paragraph of 1/3's commit
-message by the first paragraph of the cover letter.
-
-Ciao,
-Dscho
+René
