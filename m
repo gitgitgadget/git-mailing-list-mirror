@@ -2,201 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A0215202A0
-	for <e@80x24.org>; Wed,  1 Nov 2017 21:43:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2403C2055E
+	for <e@80x24.org>; Wed,  1 Nov 2017 21:46:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934268AbdKAV2d (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Nov 2017 17:28:33 -0400
-Received: from mail-qt0-f193.google.com ([209.85.216.193]:54446 "EHLO
-        mail-qt0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934256AbdKAV23 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Nov 2017 17:28:29 -0400
-Received: by mail-qt0-f193.google.com with SMTP id z19so4418824qtg.11
-        for <git@vger.kernel.org>; Wed, 01 Nov 2017 14:28:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=0th0yyhfxnTOlZEBDDKEPgpqNzWoRHwEwAKWDnKGlq8=;
-        b=e98kJe2TAWCyx+MNlAxY25c5gIaJedR+XeW+NyeiKMLM2eA1aW19Fdfw+wDfwR9THe
-         X8We4cpEHLym/Hicm84DwYaMRpol62c+ay24qY9AAJWTWlPIEp4WE6ggj0gdXzKVOo3v
-         Wd34YPX2huDcMjAZQKpsIsgF/1aLFTCncnxBT3gqRJklKftSQkfSMBkwvmc9eHK3PyCi
-         LdJsPkOAZ0xqhdNK/+BLGQH4+RySMdAcHm0qrd/fHZSaxJt466JipgEN1vUkg5ozYL20
-         23mIyirK0a25cWr1dUhGg/ycASNwP5GyEiyZweKWcUF5FG/0kQtBaIc95KdFG4nkQWAY
-         +e4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=0th0yyhfxnTOlZEBDDKEPgpqNzWoRHwEwAKWDnKGlq8=;
-        b=nJ1TrcBR9E0yD5X6nw0NFlU/0AzTGcOY8jfJLo8I2usHvMPs0kp7nZLHitX0CyGIzu
-         N8wNkGEs6XMHIs2n8YCc5OMESIXLd6CixYnBDSsqQ1mHOtSJ1EDs6qk+0bRsbMpOnvbI
-         rpmuJ+0XOtRZHovyfVzKnxCpWADrhBo538q6b0DFd7hKUTz2DrXOtnfg3wTLHI/GrUZ+
-         qb4VKWsY4e7r2kYfOzpPZp/6+VBTV6UYIF31Bnzu180nywmfYGeW6STLrjtI3rjNr26E
-         xzBx0NgdeRJ3MwEOwUJLbTPOdNVvVlT17302g6V6GZsUuv5XiZpelfDYlsp5A+5W0ukJ
-         FsgQ==
-X-Gm-Message-State: AMCzsaUhUwJH4f/ZnHD5pHkEHXyl1GG0K1H6pbisK11ldQqpe0muq+rF
-        45ySE1/Rf5civixPr/CS3KP/mns/PMDCZcUXbTQJLg==
-X-Google-Smtp-Source: ABhQp+QgtTs3u/n3YeUtOLXlNQoimwNHFEBXpoqjhdm1XbI7twDV/LRoTnXG0lFPVnQ3KtU9yeMZhrhu9Xl4goUXRk8=
-X-Received: by 10.237.37.132 with SMTP id x4mr1954386qtc.224.1509571708378;
- Wed, 01 Nov 2017 14:28:28 -0700 (PDT)
+        id S934301AbdKAVq3 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Nov 2017 17:46:29 -0400
+Received: from mout.gmx.net ([212.227.15.19]:61588 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S934258AbdKAVq0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Nov 2017 17:46:26 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M8NBi-1dEM0z3dUA-00vwKJ; Wed, 01
+ Nov 2017 22:46:15 +0100
+Date:   Wed, 1 Nov 2017 22:46:14 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Jeff King <peff@peff.net>
+cc:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Ralf Thielow <ralf.thielow@gmail.com>
+Subject: Re: [PATCH 1/2] sequencer: factor out rewrite_file()
+In-Reply-To: <20171101194732.fn4n46wppl35e2z2@sigill.intra.peff.net>
+Message-ID: <alpine.DEB.2.21.1.1711012240500.6482@virtualbox>
+References: <6150c80b-cb0e-06d4-63a7-a4f4a9107ab2@web.de> <20171101194732.fn4n46wppl35e2z2@sigill.intra.peff.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Received: by 10.140.102.70 with HTTP; Wed, 1 Nov 2017 14:28:27 -0700 (PDT)
-In-Reply-To: <xmqqbmkmvdrq.fsf@gitster.mtv.corp.google.com>
-References: <20171031003351.22341-1-sbeller@google.com> <20171031211852.13001-1-sbeller@google.com>
- <20171031211852.13001-7-sbeller@google.com> <xmqqbmkmvdrq.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 1 Nov 2017 14:28:27 -0700
-Message-ID: <CAGZ79kbVWWo4YAK74hrJHAtwfMxYMixe1ypdcyaeWEMs8SHQpA@mail.gmail.com>
-Subject: Re: [PATCHv2 6/7] builtin/describe.c: describe a blob
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git <git@vger.kernel.org>, Jacob Keller <jacob.keller@gmail.com>,
-        Kevin Daudt <me@ikke.info>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/mixed; boundary="8323329-799530968-1509572775=:6482"
+X-Provags-ID: V03:K0:HLAh1JqolanaDqi0zAYhJMjEjARrfx4vRrgW/btiZcSzN40P0Ab
+ 389/NdWHbVwL+UIPtgo/oPTuN4vqN0H+5l+tjb8BQQGcSH7PX5eV80i6FLu035SyKuYO9jt
+ HEMklgDt8R51pOZwNatnWJA4ySv0gYDUYZGf/x+0mHMvDNnAIkN20CdrCvOvJGcGGiACA9W
+ K+2otneJHcvm4JjcEM++g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:dt32C9mOhjE=:rod63NN9aH4vaieg/iQU2u
+ tQ7CQ14yqaxliUafacgY7keeUZxtJK7KRZejRg6HjoDbxP0+0ExFIU+boFcbfa3jRxZoPR8UB
+ UfXGcCXi4bFRVCSWqrnKFWoV26KqXgYUXwTmlpWxlb8QHtW6nG5cZJCWtuWLPbmFH+xXzlaPg
+ t4sDim93hFXb39WzYz5xDf+auWhWWUYk1DD/y1doWKfMIzsyt62e3znSMTEOKyN7z/MHD5hda
+ 209G/rX0inNy+ezNbYZmkXys0/V/JZAxXeE3O0S2XA1kelR+KieNCWCIn/D90uIkl6eYc3xyN
+ C7+Jcqw9z3+27IuBdjsh56oxD1O4Klm96WtUL/YvKNr3+Ur+sRVRwe82LLQFL227PD/ab96Lm
+ rns7WniRf4zl6LJ3LmRJb4uCcRaUeZxVsOCK27y+0sIGqwBPZCR2NyvK+UucOCvE+Z8v4HJlg
+ bMbXIEsSN0EHpFWt7HS/dVddZG58Smg12dean89kLM4+015a7BgYqwdpOQN+LLdRhXOTp3TNg
+ PixEHWM8NdTEPzYcC5UG4JJEXNBwSm8dGxzPgWD+LbaMIPrYADTqisTQ5mIFpXqe5k6mGkJYI
+ uoZ1OzUf7zVHIrxWQ7fJHP5jeJ3xkW1KO1LZHS2LXsrBuKZM9rDlhG47N3KaG4CDYz60uTwYW
+ Sd6STR56awnv4aXV82RnJoByNtI4clSUzv9cyFVMYRFcyFci2u1gz9DTWXDtf9UJ7ZBWcyy4o
+ dS8r7kYLhYN93glyTjJSxCJmAZEAeNX29c9wSMO84/RkA2u+XfJan1sdP2Qgs4hbZ36J+/7kx
+ O/8r9t1S+a9clppOwhcJ9oHpQrsi3td96mNMd+HkEfesjTb9VA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 31, 2017 at 9:11 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> +If the given object refers to a blob, it will be described
->> +as `<commit-ish>:<path>`, such that the blob can be found
->> +at `<path>` in the `<commit-ish>`. Note, that the commit is likely
->
-> Does the code describe a9dbc3f12c as v2.15.0:GIT-VERSION-GEN, or
-> would it always be <commit>:<path>?
->
->> +not the commit that introduced the blob, but the one that was found
->> +first; to find the commit that introduced the blob, you need to find
->
-> Because we do not want to descend into the same tree object we saw
-> earlier, this "we show the name we happened to find first without
-> attempting to refine it for a better name" is a rather fundamental
-> limitation of this approach.  Hopefully we can later improve it with
-> more thought, but for now it is better than nothing (and much better
-> than "git log --raw | grep").
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-ok.
+--8323329-799530968-1509572775=:6482
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
+Hi Peff,
 
->
->> +the commit that last touched the path, e.g.
->> +`git log <commit-description> -- <path>`.
->> +As blobs do not point at the commits they are contained in,
->> +describing blobs is slow as we have to walk the whole graph.
->
-> Is it true that we walk the "whole graph", or do we stop immediately
-> we find a path to the blob?  The former makes it sound like
-> completely useless.
+On Wed, 1 Nov 2017, Jeff King wrote:
 
-Unfortunately we walk the whole graph, as I have not figured out how to
-stop the walking from the callback in 'traverse_commit_list'.
+> On Tue, Oct 31, 2017 at 10:54:21AM +0100, Ren=C3=A9 Scharfe wrote:
+>=20
+> > Reduce code duplication by extracting a function for rewriting an
+> > existing file.
+>=20
+> These patches look like an improvement on their own, but I wonder if we
+> shouldn't just be using the existing write_file_buf() for this?
+>=20
+> Compared to your new function:
+>=20
+> > +static int rewrite_file(const char *path, const char *buf, size_t len)
+> > +{
+> > +=09int rc =3D 0;
+> > +=09int fd =3D open(path, O_WRONLY);
+> > +=09if (fd < 0)
+> > +=09=09return error_errno(_("could not open '%s' for writing"), path);
+> > +=09if (write_in_full(fd, buf, len) < 0)
+> > +=09=09rc =3D error_errno(_("could not write to '%s'"), path);
+> > +=09if (!rc && ftruncate(fd, len) < 0)
+> > +=09=09rc =3D error_errno(_("could not truncate '%s'"), path);
+> > +=09close(fd);
+> > +=09return rc;
+> > +}
+>=20
+>   - write_file_buf() uses O_TRUNC instead of ftruncate (but you end up
+>     there in your second patch)
+>=20
+>   - it uses O_CREAT, which I think would be OK (we do not expect to
+>     create the file, but it would work fine when the file does exist).
+>=20
+>   - it calls die() rather than returning an error. Looking at the
+>     callsites, I'm inclined to say that would be fine. Failing to write
+>     to the todo file is essentially a fatal error for sequencer code.
 
-I assume I have to modify the struct rev_info that we operate on,
-clearing any pending commits?
+I spent substantial time on making the sequencer code libified (it was far
+from it). That die() call may look okay now, but it is not at all okay if
+we want to make Git's source code cleaner and more reusable. And I want
+to.
 
->
->> -#define SEEN         (1u << 0)
->
-> Interesting.  Now we include revision.h this becomes redundant.
->
+So my suggestion is to clean up write_file_buf() first, to stop behaving
+like a drunk lemming, and to return an error value already, and only then
+use it in sequencer.c.
 
-Correct. In a way this small part is a revert of 8713ab3079
-(Improve git-describe performance by reducing revision listing., 2007-01-13)
+Ciao,
+Dscho
 
-
->> +     argv_array_pushl(&args, "internal: The first arg is not parsed",
->> +             "--all", "--reflog", /* as many starting points as possible */
->
-> Interesting.
->
-> Do we also search in the reflog in the normal "describe" operation?
-> If not, perhaps we should?  I wonder what's the performance
-> implications would be.
-
-"normal" git describe doesn't need to walk the whole graph
-as we only walk down from the given commit-ish until a land mark
-is found.
-
-For --contains, this might be an interesting though, as there we
-also have to "walk backwards without pointers to follow".
-
->
-> That tangent aside, as "describe blob" is most likely a "what
-> reaches and is holding onto this blob?" query, finding something
-> that can only be reached from a reflog entry would make it more
-> helpful than without the option.
-
-Yeah that is my reasoning as well.
-
->
->> +             /* NEEDSWORK: --all is incompatible with worktrees for now: */
->
-> What's that last colon about?
-
-will replace with a dot, it ought to hint at the line that follows,
-the --single-worktree flag.
-
->
->> +             "--single-worktree",
->> +             "--objects",
->> +             "--in-commit-order",
->> +             NULL);
->> +
->> +     init_revisions(&revs, NULL);
->> +     if (setup_revisions(args.argc, args.argv, &revs, NULL) > 1)
->> +             BUG("setup_revisions could not handle all args?");
->> +
->> +     if (prepare_revision_walk(&revs))
->> +             die("revision walk setup failed");
->> +
->> +     traverse_commit_list(&revs, process_commit, process_object, &pcd);
->> +     reset_revision_walk();
->> +}
->> +
->
-> OK.
->
->> diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
->> index 1c0e8659d9..3be01316e8 100755
->> --- a/t/t6120-describe.sh
->> +++ b/t/t6120-describe.sh
->> @@ -310,6 +310,21 @@ test_expect_success 'describe ignoring a borken submodule' '
->>       grep broken out
->>  '
->>
->> +test_expect_success 'describe a blob at a tag' '
->> +     echo "make it a unique blob" >file &&
->> +     git add file && git commit -m "content in file" &&
->> +     git tag -a -m "latest annotated tag" unique-file &&
->> +     git describe HEAD:file >actual &&
->> +     echo "unique-file:file" >expect &&
->> +     test_cmp expect actual
->> +'
->> +
->> +test_expect_success 'describe a surviving blob' '
->> +     git commit --allow-empty -m "empty commit" &&
->> +     git describe HEAD:file >actual &&
->> +     grep unique-file-1-g actual
->> +'
->> +
->
-> I am not sure what "surviving" means in this context.
-
-Maybe "unchanged", "still kept around" ?
-
-
-> The word
-> hinted that the test would be finding a blob that only appears in a
-> commit that only appears as a reflog entry, but that wasn't the
-> case, which was a bit disappointing.
-
-oh!
+P.S.: The existing callers of write_file_buf() don't care because they are
+builtins, and for some reason we deem it okay for code in builtins to
+simply die() deep in the call chains, without any way for callers to give
+advice how to get out of the current mess.
+--8323329-799530968-1509572775=:6482--
