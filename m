@@ -2,96 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 00C932055E
-	for <e@80x24.org>; Wed,  1 Nov 2017 17:10:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 736AE2055E
+	for <e@80x24.org>; Wed,  1 Nov 2017 17:11:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754907AbdKARKv (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Nov 2017 13:10:51 -0400
-Received: from mout.gmx.net ([212.227.17.22]:58027 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754818AbdKARKu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Nov 2017 13:10:50 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MMTZa-1e3vSR1exy-008Lc7; Wed, 01
- Nov 2017 18:10:41 +0100
-Date:   Wed, 1 Nov 2017 18:10:33 +0100 (CET)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH v2 3/3] mingw: document the standard handle redirection
-In-Reply-To: <cover.1509556153.git.johannes.schindelin@gmx.de>
-Message-ID: <80b58f364375a72d7efd547a90f284accfeab877.1509556153.git.johannes.schindelin@gmx.de>
-References: <cover.1509382976.git.johannes.schindelin@gmx.de> <cover.1509556153.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1752629AbdKARLO (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Nov 2017 13:11:14 -0400
+Received: from mail-qt0-f181.google.com ([209.85.216.181]:54019 "EHLO
+        mail-qt0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751584AbdKARLN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Nov 2017 13:11:13 -0400
+Received: by mail-qt0-f181.google.com with SMTP id n61so3497384qte.10
+        for <git@vger.kernel.org>; Wed, 01 Nov 2017 10:11:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=G9Yl3ISNlLrZka1RYwrOgWZwes5ccN2uMSgSpQpmDGY=;
+        b=cElDxAr8+kG6JK37heCVrJLdTy4T7c/faFjvMOVn/sj/PGyZTZ9CT/0WhpwlWMLcIZ
+         Y8ocawx/RFpFMv5WOD50yPYkzpLiylZAdWeA0cCkqPBR/4LpXbWP2jC2bVhNhvrU+l67
+         rLD3f67xGOo/QK1MOutqe9t8CEdrx6P4c9+XyCbgdIbleEEcOIYueI+lQOQJrCnfctRx
+         UNoucEBfgOy8NSw7QNMXYGCu+wcpO3U5TEQQL+LWBvsq7vEkhL098K3tF/aDDeQy3oPv
+         +hBCqtVMIxYot6pM+pEKUxQTarNzHYANviEC9VgwcdLrR+rKliglvUSwm6C+ZX3heL30
+         81Wg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=G9Yl3ISNlLrZka1RYwrOgWZwes5ccN2uMSgSpQpmDGY=;
+        b=UVsIUpjPXeevudcqjzKHI0jR/5exODoiewbKEDhf+6kCKg05WWheAerKwE5TfzRfxs
+         AzBR1+J5Ev+wJmDoc7MvwRB0og4p+fQZ7vNPNToz/PZI7tUT8JVwfwTzc8Ha84AXSLkK
+         NppgxLRvyfKqFWlUN+aJxVCXWipVSBOY/bLxf0JT4hZFUGmUVOgHN1/30iO/5r8xf/Yi
+         G7Bw4fkCFyfaYCBpd1geQ1iVpNaCkrg6hA8YJstxlOPia632FaZoqPKbh11kDD3rP6d+
+         C1s4ZlQl2uHitabTqAnOe1olMU4voOiIWyRALuhP6C2j68IaclAga0WBQL7H8F7mH5N/
+         gd0A==
+X-Gm-Message-State: AMCzsaUcnsBLdPqW1SVK4VR/M/GS0HvS2P23sjPveLif3EC9Lo+mJtYA
+        8qvPpmT6A8niSEEnoQs9nuNjOE+kbp4/uFyo3Sp4Lg==
+X-Google-Smtp-Source: ABhQp+Q3hMb+k/r3ThyfC5ToeygxsApIY7YUYKXcAmBm4T5QwtADh4BexY59+Xt9KuBngvF4anzCdPJk46P3uauCH+4=
+X-Received: by 10.200.8.53 with SMTP id u50mr934245qth.260.1509556272695; Wed,
+ 01 Nov 2017 10:11:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:pEZ9YNTRA2Loj3pCLaMjFdzy4D8u/KWk9sIVk2vfY/g+t7tjWvo
- FWvs5PknFQy6MfnH8Ir6JI+6i+rjtjqqz6Rb7hJsnMNDudHI+Fh0ZnIyfUk4TQ9fCmeh14R
- 9MQKV6ToKMDxMbXbmlJNOTAoton8c96u6vgw5L6bYE+Xim197q2RYmsZNQt8vOOjKQ/TIuu
- 5r8vutGpg4SSGC+36eI3A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:qWFzPWS5ZJM=:5Y9p6CgQRVdxyfQvwzrTkd
- Y7CGLlS0BhuBKNodXa7CPV7h32aFGi9AM8tYT71y3kRlEbNKnSBHr4pLCX6aggr40fI2lglv8
- YX2Rmsi0criL27lSE/V59eVlYTPgpIX1Zp/7+ZcI/x0wC977A9d5LMX7RRTinzejYtha+/zQX
- YcPC/cTjRM1l2nD4K1WrU8ORxz08Yt+CRAeg56d1czRvKJRhxP68+hhJ1OzSEpfGKghnnLjKP
- T97cJ130oTxMpFrAYxxP0YQBirWEYIWM5Yg0r6Kt+pCpy43WRV3n+rmkN/ecXTJrSIJDrHiWj
- aSn5IvRC4s3JXkOpe5ghiGwTG8yxNxVoms063Tz9vLh76d+chff6NTQ652hCg49Mo7ySFoxb1
- WazKQMLVM8sl5nf7HPi0TNEHI15drSjyitut63/YScz2OBynmu8AM4+YP/GAAQPl+M7AKcVrl
- sM1/YXhLdc4ndXYYDYtQhtCpFxaPuAg1/3h7I4OKhyA9aQLuySt4RPRV6al8Zzx9GZwrEka3c
- EuF0lVfYsDM1zw8yahFPmvQ0XhNCKcYrwaQtnU8eiafksogdsTvmLDW/VkZCUONOB3DpjmJCB
- nSJ+dSrmPWA/pRCdAbZw9+Nz8+1f2EoTr9j9h4hOIc7nbhkFx2kNz1Ayj0WdJ4vc9JXqE5F5S
- BhXEvqqAK7V9cUC3XgAt8P6K6rH01qUEQRnelp74ot9Jp1z25Qe0s4Xin+c7MkcaHb1JQrUPG
- eRCwHnX6QotW4BJt62uYojwJzEzreNKXE7Tjet4k0M0foOqy/DHCjupL8bkWGBi3KtlK7N81S
- scrfds/fWr0ZwDbZgc/HMBNIvUgc2Z+T8m24I3RAjE/W3ExhvOrQEl7EY8fXJ+s9n0qZOrI
+Received: by 10.140.102.70 with HTTP; Wed, 1 Nov 2017 10:11:12 -0700 (PDT)
+In-Reply-To: <xmqq8tfqyejq.fsf@gitster.mtv.corp.google.com>
+References: <20171030194646.27473-1-bmwill@google.com> <20171031181911.42687-1-bmwill@google.com>
+ <20171031181911.42687-3-bmwill@google.com> <CAGZ79kajX=FmGacDSv_dDzppE6WBHGqgyCpaG1zDyENcsDbwZg@mail.gmail.com>
+ <xmqq8tfqyejq.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 1 Nov 2017 10:11:12 -0700
+Message-ID: <CAGZ79ka+WK2rtR0_LtWPWM7k-_Bs0aJLvVJ9CJx-u6eenp4FwA@mail.gmail.com>
+Subject: Re: [PATCH v3 2/8] diff: convert flags to be stored in bitfields
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Brandon Williams <bmwill@google.com>, git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This feature has been in Git for Windows since v2.11.0(2), as an
-experimental option. Now it is considered mature, and it is high time to
-document it properly.
+On Tue, Oct 31, 2017 at 6:26 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
+>
+>> After some quick research our coding style on bit fields is twofold:
+>> Most older code is this way and more recent code seems to prefer
+>>
+>>     unsigned <FLAGNAME> SP : SP ;
+>
+> Yes, we are very inconsistent.  What does the clang format rules
+> Brandon came up with have to say on this?  FWIW, checkpatch.pl is
+> unhappy without spaces on both side.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- Documentation/git.txt | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+clang-format --style file diff.h
 
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 7a1d629ca06..463b0eb0f5c 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -709,6 +709,24 @@ of clones and fetches.
- 	the background which do not want to cause lock contention with
- 	other operations on the repository.  Defaults to `1`.
- 
-+`GIT_REDIRECT_STDIN`::
-+`GIT_REDIRECT_STDOUT`::
-+`GIT_REDIRECT_STDERR`::
-+	Windows-only: allow redirecting the standard input/output/error
-+	handles to paths specified by the environment variables. This is
-+	particularly useful in multi-threaded applications where the
-+	canonical way to pass standard handles via `CreateProcess()` is
-+	not an option because it would require the handles to be marked
-+	inheritable (and consequently *every* spawned process would
-+	inherit them, possibly blocking regular Git operations). The
-+	primary intended use case is to use named pipes for communication
-+	(e.g. `\\.\pipe\my-git-stdin-123`).
-++
-+Two special values are supported: `off` will simply close the
-+corresponding standard handle, and if `GIT_REDIRECT_STDERR` is
-+`2>&1`, standard error will be redirected to the same handle as
-+standard output.
-+
- Discussion[[Discussion]]
- ------------------------
- 
--- 
-2.15.0.windows.1
+...
+#define DIFF_FLAGS_INIT \
+{               \
+                0       \
+}
+struct diff_flags {
+        unsigned recursive : 1;
+        unsigned tree_in_recursive : 1;
+        unsigned binary : 1;
+        unsigned text : 1;
+...
+
+
+>>> +       for (i = 0; i < sizeof(struct diff_flags); i++)
+>>
+>> I think most of the code prefers to put the variable into the sizeof
+>> argument i.e. 'sizeof(*a)', as that is presumably more maintainable.
+>> (If the type of 'a' changes, then we don't forget to adapt this place,
+>> but the compiler can take care of it.
+>
+> Yup, but in this case we won't change the type, no?
+
+Most likely. If we were to change the type we'd have to rename the function
+and probably rewrite the body, too. I just mentioned it from a consistency
+point of view. (exceptions are both a mental burden to humans as well
+as to machines using .clang-format et al. The fewer "this time is different"
+calls we have, the better)
