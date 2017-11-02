@@ -2,92 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8C8A020281
-	for <e@80x24.org>; Thu,  2 Nov 2017 22:31:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CB46A20281
+	for <e@80x24.org>; Thu,  2 Nov 2017 22:43:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934511AbdKBWbH (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Nov 2017 18:31:07 -0400
-Received: from mail-wr0-f174.google.com ([209.85.128.174]:55617 "EHLO
-        mail-wr0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932201AbdKBWbG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Nov 2017 18:31:06 -0400
-Received: by mail-wr0-f174.google.com with SMTP id l8so930085wre.12
-        for <git@vger.kernel.org>; Thu, 02 Nov 2017 15:31:05 -0700 (PDT)
+        id S934638AbdKBWnD (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Nov 2017 18:43:03 -0400
+Received: from mail-qk0-f175.google.com ([209.85.220.175]:53542 "EHLO
+        mail-qk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934438AbdKBWnB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Nov 2017 18:43:01 -0400
+Received: by mail-qk0-f175.google.com with SMTP id y23so1230456qkb.10
+        for <git@vger.kernel.org>; Thu, 02 Nov 2017 15:43:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=ZsxBm06yzgw7rXOQnpMB3SBGi2JGW87cfbjej5q8JO0=;
-        b=KGaE3IUjDIQm3Ni2IXws5OkwtHA/nXxU32fwOvfpdvcs48lgSZTz4s/1W/1qYg7r0e
-         PEahuBXJzOqGo5RDz40RBrB08gdX6JCS1XU3/kADeZ3EfdcROj/OxV9H9c//B99ll+MN
-         +41qywQ9cOBV2Z/qXNRLm4bbE/eDj3dvNiF9CGanyq8NeJKKjlODB2H0TWQWefZX1uE8
-         WO4CXrWE9WrZziUU1Rpn9iBvTHUvDt6V+7HI3JYC6DaysERTpDYnVyBkkjmzCqSml20E
-         4L3sxSTch7s/C8/B0SegeFn9Y7L/7fp+FzPfb9jMpLBiMusyIk87+FlSfdhKvXbKn0/5
-         MXnQ==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=M1KelZEEK4vvAl+op7y6JgV5sYShxCKWJKm4KgHCLuc=;
+        b=fnMCedXSa8FHaawhcu/vieVxOFCWPeXIST/NiYmrx8IzDP0h75aCbGPvmb7wPQVpck
+         v0SccD+cMraIeGiKjjat7L0Z5pwtTKLxnqA/G3dAdywn2/5ePUh1kedqXkiyEnZuX3Pq
+         WwyyJys+ieS5i/Tyc0JyNT8g/B46JP9kWY6NE+fvfK2kfZw/cyJRuZeZjMhomBjTmC+K
+         nfwsP/VkohFweSkpSFz9xHy8bWzVCQOLe0R6rVKImAI/3pJqOQ37rdAsnpuOU6J+KwS1
+         oY3cu/gxR0TdYsw+WEJDnp/Wu9OsMXNpIU/HkCP1R6VAY6vmV32FbP/MgrrEb2OQ9zFk
+         y1wQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=ZsxBm06yzgw7rXOQnpMB3SBGi2JGW87cfbjej5q8JO0=;
-        b=tcyEgxNiuqGFBVR7/WQaRXlTytqdTqhI73URevQHkRJRWmmqCtgV2nVQcrPn5yvyC+
-         zMaRc+AFWW17Q2wwmt6uYxQNYx6Tstos5lr2MfSUOpDVsCEqb9tCoBX7zfJ+SgG+QVbK
-         d2AbGBPa4l4sQKVWs/zsT4zgyXe2qH4Xh1UDOmEsp0+Nz/+zlCsiyMFLV4NnUtYyFLuu
-         6xp2+Bc3gU6GjKXV8Ou9WkSHJ9UnbVEtPaIoFfQF8lOBPL4MaesrtpuY+KFe7QKPfeth
-         qL79e8u4jfRTds1bdICxIA02YMJBghhDg2PVN4KwVcQS+ukK3RHACKY5PS0dd/+5RHuo
-         +/eA==
-X-Gm-Message-State: AMCzsaWI2TqssBLfn4jFkPHkqBKiTAs05jLwkJ3rN2/AdgNO8SY6nq1m
-        kyBRMt0wwZLQwqZE7kjrMgT7dX6d
-X-Google-Smtp-Source: ABhQp+THx8cwSjN2xS/ju1a755ZKWu9Mgt0f9nNdYf4LMJb+PFdP0K045sEbx1h9/pkJ/6u4L5pqyQ==
-X-Received: by 10.223.195.131 with SMTP id p3mr4522244wrf.89.1509661864818;
-        Thu, 02 Nov 2017 15:31:04 -0700 (PDT)
-Received: from laptop.local (host-78-145-151-122.as13285.net. [78.145.151.122])
-        by smtp.gmail.com with ESMTPSA id k13sm8086800wrd.95.2017.11.02.15.31.03
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 02 Nov 2017 15:31:03 -0700 (PDT)
-Date:   Thu, 2 Nov 2017 22:31:02 +0000
-From:   Thomas Adam <thomas@xteddy.org>
-To:     Antoine =?iso-8859-1?Q?Beaupr=E9?= <anarcat@debian.org>
-Cc:     Thomas Adam <thomas@xteddy.org>, git@vger.kernel.org
-Subject: Re: [PATCH v3 7/7] remote-mediawiki: show progress while fetching
- namespaces
-Message-ID: <20171102223102.j3niifmupcs77p3r@laptop.local>
-References: <20171030025142.19421-1-anarcat@debian.org>
- <20171102212518.1601-1-anarcat@debian.org>
- <20171102212518.1601-8-anarcat@debian.org>
- <20171102221807.juon446b6zfw64cq@laptop.local>
- <87vais48rg.fsf@curie.anarc.at>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=M1KelZEEK4vvAl+op7y6JgV5sYShxCKWJKm4KgHCLuc=;
+        b=qpOoymGqh9FkOLvjayO3bw6UEz3WKxfK0WSmvDPGzjCposI+iEV6WB3BIw/ZTKDkB0
+         SzWP4GExzoDheHTSRg1gxayPJd1IHoIzT9XJvXCon4VTQWdztXBGaL2RAPT/oBzmKVNu
+         nrbeZZIvMHV/nVL8JiTf5hoWO+2DavjAVYqxyB0u2CVBeYzaMK1aOYiQg+389WuARpuE
+         1+gY40D4SVXZ8OVhD63YtoBvGv4m52h3BaFg7DarhATCN5hTho6yr6tl51EcQYJKjHn0
+         hcM1wtyQP9gohBppQfvmZK7N42whqBR2IuiCq/dJg7A+1C7i23sDNTaHsWYZyI4OPZJE
+         012g==
+X-Gm-Message-State: AJaThX7cL0iwvtazldaY/iAsFf6RBGpXNuOlR3dW+/ZovMPz2ES8M4Am
+        dTXrn9yTpRuEgNjHFh55ccaISOboo7Sbt58pnvM=
+X-Google-Smtp-Source: ABhQp+SJN0WpURm1yd2KY1OyeTFVH+mZQK5x/xtTfXpTXGT79EVJVJbZjGL2t7+HEZr7FY4k+xXrb4pWd2A3bBvh+nM=
+X-Received: by 10.55.139.70 with SMTP id n67mr6721406qkd.135.1509662581107;
+ Thu, 02 Nov 2017 15:43:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87vais48rg.fsf@curie.anarc.at>
-User-Agent: NeoMutt/20170714-87-e4144b (1.8.3)
+Received: by 10.12.146.118 with HTTP; Thu, 2 Nov 2017 15:43:00 -0700 (PDT)
+In-Reply-To: <20171102212518.1601-5-anarcat@debian.org>
+References: <20171030025142.19421-1-anarcat@debian.org> <20171102212518.1601-1-anarcat@debian.org>
+ <20171102212518.1601-5-anarcat@debian.org>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 2 Nov 2017 18:43:00 -0400
+X-Google-Sender-Auth: tcD9iyn9vi7HHkSZC4EdFwggAOA
+Message-ID: <CAPig+cR0jG65LbopxqPpidaaNUSTRq9tboZpv0RPWyWUkSEGUw@mail.gmail.com>
+Subject: Re: [PATCH v3 4/7] remote-mediawiki: skip virtual namespaces
+To:     =?UTF-8?Q?Antoine_Beaupr=C3=A9?= <anarcat@debian.org>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 02, 2017 at 06:26:43PM -0400, Antoine Beaupré wrote:
-> On 2017-11-02 22:18:07, Thomas Adam wrote:
-> > Hi,
-> >
-> > On Thu, Nov 02, 2017 at 05:25:18PM -0400, Antoine Beaupré wrote:
-> >> +        print {*STDERR} "$#{$mw_pages} found in namespace $local_namespace ($namespace_id)\n";
-> >
-> > How is this any different to using warn()?  I appreciate you're using a
-> > globbed filehandle, but it seems superfluous to me.
-> 
-> It's what is used everywhere in the module, I'm just tagging along.
-> 
-> This was discussed before: there's an issue about cleaning up the
-> messaging in that module, that can be fixed separately.
+On Thu, Nov 2, 2017 at 5:25 PM, Antoine Beaupr=C3=A9 <anarcat@debian.org> w=
+rote:
+> Virtual namespaces do not correspond to pages in the database and are
+> automatically generated by MediaWiki. It makes little sense,
+> therefore, to fetch pages from those namespaces and the MW API doesn't
+> support listing those pages.
+>
+> According to the documentation, those virtual namespaces are currently
+> "Special" (-1) and "Media" (-2) but we treat all negative namespaces
+> as "virtual" as a future-proofing mechanism.
+>
+> Reviewed-by: Eric Sunshine <sunshine@sunshineco.com>
 
-Understood.  That should happen sooner rather than later.
+It probably would be best to omit this Reviewed-by: since it was not
+provided explicitly. More importantly, I'm neither a user of nor
+familiar with MediaWiki or its API, so a Reviewed-by: from me has
+little or no value. Probably best would be for someone such as
+Matthieu to give his Reviewed-by: if he so desires.
 
--- Thomas Adam
+> Signed-off-by: Antoine Beaupr=C3=A9 <anarcat@debian.org>
