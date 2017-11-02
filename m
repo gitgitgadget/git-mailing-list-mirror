@@ -2,96 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BE66820450
-	for <e@80x24.org>; Thu,  2 Nov 2017 07:22:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9A00120450
+	for <e@80x24.org>; Thu,  2 Nov 2017 07:23:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752549AbdKBHWl (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Nov 2017 03:22:41 -0400
-Received: from cloud.peff.net ([104.130.231.41]:43668 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750907AbdKBHWk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Nov 2017 03:22:40 -0400
-Received: (qmail 16810 invoked by uid 109); 2 Nov 2017 07:22:39 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 02 Nov 2017 07:22:39 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18832 invoked by uid 111); 2 Nov 2017 07:22:49 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Thu, 02 Nov 2017 03:22:49 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 02 Nov 2017 03:22:37 -0400
-Date:   Thu, 2 Nov 2017 03:22:37 -0400
-From:   Jeff King <peff@peff.net>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Philip Oakley <philipoakley@iee.org>,
+        id S1754513AbdKBHXz (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Nov 2017 03:23:55 -0400
+Received: from mail-out.m-online.net ([212.18.0.9]:45358 "EHLO
+        mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752237AbdKBHXz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Nov 2017 03:23:55 -0400
+Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
+        by mail-out.m-online.net (Postfix) with ESMTP id 3ySGm81Sv3z1r195;
+        Thu,  2 Nov 2017 08:23:52 +0100 (CET)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.70])
+        by mail.m-online.net (Postfix) with ESMTP id 3ySGm80z7Yz1qqkM;
+        Thu,  2 Nov 2017 08:23:52 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.182])
+        by localhost (dynscan1.mail.m-online.net [192.168.6.70]) (amavisd-new, port 10024)
+        with ESMTP id q62n6_RKmadI; Thu,  2 Nov 2017 08:23:51 +0100 (CET)
+X-Auth-Info: mJJxNSXQvhBBM9+2e8xfmERFZdIUnadvOz7YvNwcOrBLrA9RPowJ7EsQ4xWUPt80
+Received: from localhost (ppp-188-174-149-98.dynamic.mnet-online.de [188.174.149.98])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.mnet-online.de (Postfix) with ESMTPSA;
+        Thu,  2 Nov 2017 08:23:51 +0100 (CET)
+Received: by localhost (Postfix, from userid 1000)
+        id 1BA3F2C1133; Thu,  2 Nov 2017 08:23:49 +0100 (CET)
+From:   Andreas Schwab <schwab@linux-m68k.org>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
         Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        git <git@vger.kernel.org>, Ben Peart <Ben.Peart@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Mike Hommey <mh@glandium.org>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Eric Wong <e@80x24.org>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: On the nature of cover letters [WAS Re: [PATCH 0/6] Create
- Git/Packet.pm]
-Message-ID: <20171102072237.wbmrzrgfyxdb3m3v@sigill.intra.peff.net>
-References: <CAGZ79kbHwXpWXhUkokA9=XGN9D1YZevO_8MhbOztMXpkkHMFbg@mail.gmail.com>
- <20171101071422.c2k4plhntlgpdnbk@sigill.intra.peff.net>
- <CAGZ79kYKK69Xw0-2OxFpo9Q=Kv1hvw8D7YkfhMFFcgzTuevTCQ@mail.gmail.com>
- <CAGZ79kYghF6=AzL1N96fe2zixHCERXu=RpxHw2-kdUrU+j4CXw@mail.gmail.com>
+        git <git@vger.kernel.org>, Kevin Daudt <me@ikke.info>
+Subject: Re: [PATCHv2 6/7] builtin/describe.c: describe a blob
+References: <20171031003351.22341-1-sbeller@google.com>
+        <20171031211852.13001-1-sbeller@google.com>
+        <20171031211852.13001-7-sbeller@google.com>
+        <xmqqbmkmvdrq.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.21.1.1711011329300.6482@virtualbox>
+        <CAGZ79kZPNiNnSJd6CNYb7XkTVsT2ONLQLhwAQxt6_SPFTSwMcw@mail.gmail.com>
+        <EF573E5E-EA72-4DEE-822C-B44265FD581B@gmail.com>
+        <alpine.DEB.2.21.1.1711012310250.6482@virtualbox>
+        <CAGZ79kbOEM_W65Rym4yiDNHpFGTNWMYdh=aVPjThNWjEHPQong@mail.gmail.com>
+        <alpine.DEB.2.21.1.1711012340290.6482@virtualbox>
+X-Yow:  I have a TINY BOWL in my HEAD
+Date:   Thu, 02 Nov 2017 08:23:49 +0100
+In-Reply-To: <alpine.DEB.2.21.1.1711012340290.6482@virtualbox> (Johannes
+        Schindelin's message of "Wed, 1 Nov 2017 23:41:45 +0100 (CET)")
+Message-ID: <871slhm9dm.fsf@linux-m68k.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kYghF6=AzL1N96fe2zixHCERXu=RpxHw2-kdUrU+j4CXw@mail.gmail.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 01, 2017 at 03:31:42PM -0700, Stefan Beller wrote:
+On Nov 01 2017, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
 
-> On Wed, Nov 1, 2017 at 9:42 AM, Stefan Beller <sbeller@google.com> wrote:
-> 
-> >> So it may make more sense just to cross-reference those merges with the
-> >> topics that spawned them on the mailing list. I.e., instead of copying
-> >> the cover letter contents, just record the message-id (and update it
-> >> whenever a new iteration of a topic is picked up via "git am"). That
-> >> lets you get the cover letter information _and_ see any discussion
-> >> or review around the patch.
-> >
-> > That sounds good.
-> 
-> Actually I just found out about `am.messageId`, which adds the individual
-> message id as a footer. Maybe that is good enough? (Though it would
-> clutter every commit, not just the merge commits)
+> Sure, but it is still a tricky thing. Imagine
+>
+> - A1 - B1 - A2 - B2 - B3
+>
+> where all the B* commits have the blob. Do you really want to report B1
+> rather than B2 as the commit introducing the blob? (I would prefer B2...)
 
-It also means digging around to find the apex of the thread (though
-generally that can be done automatically with sufficiently smart
-tooling; I think public-inbox can do it pretty easily).
+What if B3 renames or copies the blob?
 
-I also like the idea that I could read "log --first-parent" to get an
-overview of the topics (with links). But probably associating a message
-id with each patch smooths out a lot of corner cases (it sidesteps the
-"where do you store it until the commit is made" question, and it
-works when there's no cover letter). And it gives enough hint for other
-software to figure out everything else.
+Andreas.
 
-If the clutter is too much, it could also go into a git-notes ref
-(that's not already implemented, but it seems like it would be pretty
-easy to teach "git am" to do that).
-
-For a while, Thomas Rast used a script to heuristically create that
-mapping via git-notes after the fact. But if "git am" just did it
-automatically on behalf of Junio, that would be more robust.
-
-I will admit that I found I didn't use the mapping generated by Thomas's
-script all that much. But I do keep a local mailing list index and often
-search for the commit's subject as a mail subject, which roughly
-accomplishes the same thing.
-
--Peff
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
