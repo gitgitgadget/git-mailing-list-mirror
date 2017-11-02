@@ -6,30 +6,30 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A37D320281
-	for <e@80x24.org>; Thu,  2 Nov 2017 20:32:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 180FB20281
+	for <e@80x24.org>; Thu,  2 Nov 2017 20:32:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934541AbdKBUcB (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Nov 2017 16:32:01 -0400
-Received: from siwi.pair.com ([209.68.5.199]:14642 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S934526AbdKBUb5 (ORCPT <rfc822;git@vger.kernel.org>);
+        id S934534AbdKBUb5 (ORCPT <rfc822;e@80x24.org>);
         Thu, 2 Nov 2017 16:31:57 -0400
+Received: from siwi.pair.com ([209.68.5.199]:14629 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S934526AbdKBUb4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Nov 2017 16:31:56 -0400
 Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 6D9C9845AF;
-        Thu,  2 Nov 2017 16:31:57 -0400 (EDT)
+        by siwi.pair.com (Postfix) with ESMTP id 916E6845AB;
+        Thu,  2 Nov 2017 16:31:55 -0400 (EDT)
 Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 7100E845AC;
-        Thu,  2 Nov 2017 16:31:56 -0400 (EDT)
+        by siwi.pair.com (Postfix) with ESMTPSA id 79781845AC;
+        Thu,  2 Nov 2017 16:31:54 -0400 (EDT)
 From:   Jeff Hostetler <git@jeffhostetler.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, jonathantanmy@google.com,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH 14/14] index-pack: silently assume missing objects are promisor
-Date:   Thu,  2 Nov 2017 20:31:29 +0000
-Message-Id: <20171102203129.59417-15-git@jeffhostetler.com>
+Subject: [PATCH 12/14] unpack-trees: batch fetching of missing blobs
+Date:   Thu,  2 Nov 2017 20:31:27 +0000
+Message-Id: <20171102203129.59417-13-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20171102203129.59417-1-git@jeffhostetler.com>
 References: <20171102203129.59417-1-git@jeffhostetler.com>
@@ -38,56 +38,201 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff Hostetler <jeffhost@microsoft.com>
+From: Jonathan Tan <jonathantanmy@google.com>
 
-Teach index-pack to not complain about missing objects
-when the --promisor flag is given.  The assumption is that
-index-pack is currently building the idx and promisor data
-and the is_promisor_object() query would fail anyway.
+When running checkout, first prefetch all blobs that are to be updated
+but are missing. This means that only one pack is downloaded during such
+operations, instead of one per missing blob.
 
+This operates only on the blob level - if a repository has a missing
+tree, they are still fetched one at a time.
+
+This does not use the delayed checkout mechanism introduced in commit
+2841e8f ("convert: add "status=delayed" to filter process protocol",
+2017-06-30) due to significant conceptual differences - in particular,
+for partial clones, we already know what needs to be fetched based on
+the contents of the local repo alone, whereas for status=delayed, it is
+the filter process that tells us what needs to be checked in the end.
+
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- builtin/index-pack.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ fetch-object.c   | 27 +++++++++++++++++++++++----
+ fetch-object.h   |  5 +++++
+ t/t5601-clone.sh | 52 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ unpack-trees.c   | 22 ++++++++++++++++++++++
+ 4 files changed, 102 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 31cd5ba..51693dc 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -82,6 +82,7 @@ static int verbose;
- static int show_resolving_progress;
- static int show_stat;
- static int check_self_contained_and_connected;
-+static int arg_promisor_given;
+diff --git a/fetch-object.c b/fetch-object.c
+index 369b61c..21b4dfa 100644
+--- a/fetch-object.c
++++ b/fetch-object.c
+@@ -3,12 +3,12 @@
+ #include "pkt-line.h"
+ #include "strbuf.h"
+ #include "transport.h"
++#include "fetch-object.h"
  
- static struct progress *progress;
+-void fetch_object(const char *remote_name, const unsigned char *sha1)
++static void fetch_refs(const char *remote_name, struct ref *ref)
+ {
+ 	struct remote *remote;
+ 	struct transport *transport;
+-	struct ref *ref;
+ 	int original_fetch_if_missing = fetch_if_missing;
  
-@@ -223,10 +224,11 @@ static unsigned check_object(struct object *obj)
- 		unsigned long size;
- 		int type = sha1_object_info(obj->oid.hash, &size);
+ 	fetch_if_missing = 0;
+@@ -17,10 +17,29 @@ void fetch_object(const char *remote_name, const unsigned char *sha1)
+ 		die(_("Remote with no URL"));
+ 	transport = transport_get(remote, remote->url[0]);
  
--		if (type <= 0) {
-+		if (type <= 0 && arg_promisor_given) {
- 			/*
--			 * TODO Use the promisor code to conditionally
--			 * try to fetch this object -or- assume it is ok.
-+			 * Assume this missing object is promised.  We can't
-+			 * confirm it because we are indexing the packfile
-+			 * that omitted it.
- 			 */
- 			obj->flags |= FLAG_CHECKED;
- 			return 0;
-@@ -1717,8 +1719,10 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
- 				keep_msg = arg + 7;
- 			} else if (!strcmp(arg, "--promisor")) {
- 				promisor_msg = "";
-+				arg_promisor_given = 1;
- 			} else if (starts_with(arg, "--promisor=")) {
- 				promisor_msg = arg + strlen("--promisor=");
-+				arg_promisor_given = 1;
- 			} else if (starts_with(arg, "--threads=")) {
- 				char *end;
- 				nr_threads = strtoul(arg+10, &end, 0);
+-	ref = alloc_ref(sha1_to_hex(sha1));
+-	hashcpy(ref->old_oid.hash, sha1);
+ 	transport_set_option(transport, TRANS_OPT_FROM_PROMISOR, "1");
+ 	transport_set_option(transport, TRANS_OPT_NO_HAVES, "1");
+ 	transport_fetch_refs(transport, ref);
+ 	fetch_if_missing = original_fetch_if_missing;
+ }
++
++void fetch_object(const char *remote_name, const unsigned char *sha1)
++{
++	struct ref *ref = alloc_ref(sha1_to_hex(sha1));
++	hashcpy(ref->old_oid.hash, sha1);
++	fetch_refs(remote_name, ref);
++}
++
++void fetch_objects(const char *remote_name, const struct oid_array *to_fetch)
++{
++	struct ref *ref = NULL;
++	int i;
++
++	for (i = 0; i < to_fetch->nr; i++) {
++		struct ref *new_ref = alloc_ref(oid_to_hex(&to_fetch->oid[i]));
++		oidcpy(&new_ref->old_oid, &to_fetch->oid[i]);
++		new_ref->next = ref;
++		ref = new_ref;
++	}
++	fetch_refs(remote_name, ref);
++}
+diff --git a/fetch-object.h b/fetch-object.h
+index f371300..4b269d0 100644
+--- a/fetch-object.h
++++ b/fetch-object.h
+@@ -1,6 +1,11 @@
+ #ifndef FETCH_OBJECT_H
+ #define FETCH_OBJECT_H
+ 
++#include "sha1-array.h"
++
+ extern void fetch_object(const char *remote_name, const unsigned char *sha1);
+ 
++extern void fetch_objects(const char *remote_name,
++			  const struct oid_array *to_fetch);
++
+ #endif
+diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+index 567161e..3211f86 100755
+--- a/t/t5601-clone.sh
++++ b/t/t5601-clone.sh
+@@ -611,6 +611,58 @@ test_expect_success 'partial clone: warn if server does not support object filte
+ 	test_i18ngrep "filtering not recognized by server" err
+ '
+ 
++test_expect_success 'batch missing blob request during checkout' '
++	rm -rf server client &&
++
++	test_create_repo server &&
++	echo a >server/a &&
++	echo b >server/b &&
++	git -C server add a b &&
++
++	git -C server commit -m x &&
++	echo aa >server/a &&
++	echo bb >server/b &&
++	git -C server add a b &&
++	git -C server commit -m x &&
++
++	test_config -C server uploadpack.allowfilter 1 &&
++	test_config -C server uploadpack.allowanysha1inwant 1 &&
++
++	git clone --filter=blobs:limit=0 "file://$(pwd)/server" client &&
++
++	# Ensure that there is only one negotiation by checking that there is
++	# only "done" line sent. ("done" marks the end of negotiation.)
++	GIT_TRACE_PACKET="$(pwd)/trace" git -C client checkout HEAD^ &&
++	grep "git> done" trace >done_lines &&
++	test_line_count = 1 done_lines
++'
++
++test_expect_success 'batch missing blob request does not inadvertently try to fetch gitlinks' '
++	rm -rf server client &&
++
++	test_create_repo repo_for_submodule &&
++	test_commit -C repo_for_submodule x &&
++
++	test_create_repo server &&
++	echo a >server/a &&
++	echo b >server/b &&
++	git -C server add a b &&
++	git -C server commit -m x &&
++
++	echo aa >server/a &&
++	echo bb >server/b &&
++	# Also add a gitlink pointing to an arbitrary repository
++	git -C server submodule add "$(pwd)/repo_for_submodule" c &&
++	git -C server add a b c &&
++	git -C server commit -m x &&
++
++	test_config -C server uploadpack.allowfilter 1 &&
++	test_config -C server uploadpack.allowanysha1inwant 1 &&
++
++	# Make sure that it succeeds
++	git clone --filter=blobs:limit=0 "file://$(pwd)/server" client
++'
++
+ . "$TEST_DIRECTORY"/lib-httpd.sh
+ start_httpd
+ 
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 71b70cc..c18c21a 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -14,6 +14,7 @@
+ #include "dir.h"
+ #include "submodule.h"
+ #include "submodule-config.h"
++#include "fetch-object.h"
+ 
+ /*
+  * Error messages expected by scripts out of plumbing commands such as
+@@ -369,6 +370,27 @@ static int check_updates(struct unpack_trees_options *o)
+ 		load_gitmodules_file(index, &state);
+ 
+ 	enable_delayed_checkout(&state);
++	if (repository_format_partial_clone_remote && o->update && !o->dry_run) {
++		/*
++		 * Prefetch the objects that are to be checked out in the loop
++		 * below.
++		 */
++		struct oid_array to_fetch = OID_ARRAY_INIT;
++		int fetch_if_missing_store = fetch_if_missing;
++		fetch_if_missing = 0;
++		for (i = 0; i < index->cache_nr; i++) {
++			struct cache_entry *ce = index->cache[i];
++			if ((ce->ce_flags & CE_UPDATE) &&
++			    !S_ISGITLINK(ce->ce_mode)) {
++				if (!has_object_file(&ce->oid))
++					oid_array_append(&to_fetch, &ce->oid);
++			}
++		}
++		if (to_fetch.nr)
++			fetch_objects(repository_format_partial_clone_remote,
++				      &to_fetch);
++		fetch_if_missing = fetch_if_missing_store;
++	}
+ 	for (i = 0; i < index->cache_nr; i++) {
+ 		struct cache_entry *ce = index->cache[i];
+ 
 -- 
 2.9.3
 
