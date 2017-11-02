@@ -2,370 +2,168 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 40FE720281
-	for <e@80x24.org>; Thu,  2 Nov 2017 20:21:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C30D520281
+	for <e@80x24.org>; Thu,  2 Nov 2017 20:25:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S964883AbdKBUVf (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Nov 2017 16:21:35 -0400
-Received: from siwi.pair.com ([209.68.5.199]:50414 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S934362AbdKBUVK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Nov 2017 16:21:10 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 28AED844EC;
-        Thu,  2 Nov 2017 16:21:10 -0400 (EDT)
-Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 428A9845A7;
-        Thu,  2 Nov 2017 16:21:08 -0400 (EDT)
-From:   Jeff Hostetler <git@jeffhostetler.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net, jonathantanmy@google.com,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH 2/9] fsck: introduce partialclone extension
-Date:   Thu,  2 Nov 2017 20:20:45 +0000
-Message-Id: <20171102202052.58762-3-git@jeffhostetler.com>
-X-Mailer: git-send-email 2.9.3
-In-Reply-To: <20171102202052.58762-1-git@jeffhostetler.com>
-References: <20171102202052.58762-1-git@jeffhostetler.com>
+        id S964832AbdKBUZh (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Nov 2017 16:25:37 -0400
+Received: from mail-yw0-f173.google.com ([209.85.161.173]:46642 "EHLO
+        mail-yw0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934408AbdKBUZg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Nov 2017 16:25:36 -0400
+Received: by mail-yw0-f173.google.com with SMTP id t71so686831ywc.3
+        for <git@vger.kernel.org>; Thu, 02 Nov 2017 13:25:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=LdmPCtLnJrpezJu3xSvzC++NCzg0hZ/38EeWOnQ6wlg=;
+        b=uFP6JZRezOjMrQm0at+24iinKlNfxn0krj7ug1AYZmYL8qt20zZ3ke/mV9T55EMNoU
+         hJmyc6CjxFaBg3uxb8XoVGBEuzGTDTg/TkspkCtOYZ3AXUx1j2C+oDGnCQJNjzVMJDzw
+         9x97ugqXpVBhQDv3WzKx6A0hqjT/5OV++z0/tSp04eU3exZk6hwx9wkKojzqP37tNNAy
+         iT2ALHAy7RjWcSGJLjbmUZhGrCXb25KrUFWkAJhko+kaBcbIq0YFVbSnjsJT3yJtBCLV
+         UXykfXFQ3yd+igcUyZm1Q1DNbtstMUcRH+93w7J5MJvrC2pfeuma5XNOTvuqRR1cEp8o
+         BqmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=LdmPCtLnJrpezJu3xSvzC++NCzg0hZ/38EeWOnQ6wlg=;
+        b=CEU8W5KhuSIi+Q3LXxLY09t0NNlRHjWsp76JOzil12NAz0DHl/8R6fooO3qapjJpre
+         41BDTC9NHBiX5YnX74PlTQxACyDb2jsk5qKI/jOXILo3Mg2gDIsS2uH08neZ1qJXWPB/
+         RoNFMOVN31Ejj9wPAenmIHx/oN6/U6eH5zCY1jAjSz2WT7otXQ5xTvvvVRHqUTW/63FB
+         cX4b3cI3To3U5nLuyo/jj7MLsIozpD+fB26edb+7jsTykQBizDQV37bzYIu3t9QOo7+v
+         H7ryxN6lnVls5TZhGEI7+rukZqV/tFJPYdY7f0ydmb5NAdOuMVbKZPSVeXO8EryIVhkx
+         CxNg==
+X-Gm-Message-State: AMCzsaVrjTSAeqkYWjoRyg6KsT+IQYxJqYdU2lQ5Koqm7U5wvMFXf4r/
+        EifIy4wr+im99vB47Ak6ZubFpXPXfzxxA1fxtMM=
+X-Google-Smtp-Source: ABhQp+Ta3T/eCB269FqGndd1u3CwnX/lZPHBn9NXLoxAohBvRNuo5mVNGoykNl0ctulnwVjFqH0hqg7+HngZyQMyAfU=
+X-Received: by 10.37.179.40 with SMTP id l40mr3209727ybj.487.1509654335687;
+ Thu, 02 Nov 2017 13:25:35 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.37.65.194 with HTTP; Thu, 2 Nov 2017 13:25:15 -0700 (PDT)
+In-Reply-To: <CAGZ79kZHapHLXDM-iU9T_BU5qoYAAAS+yKWLVvfUhxMmp+6mxg@mail.gmail.com>
+References: <CAFA_24+svnt4uSpx1tjj2t6iAt4G3p9UvrxahEYj=VZWeJxC=A@mail.gmail.com>
+ <CAGZ79kYbeVcpEXsei8Lr=Zw+YgJE_E4mBSRWYcYDqOWz20z5oA@mail.gmail.com>
+ <CAFA_24Jov7FDw7AxUtFDV6avOj40LD6ptEVMPpVuSdAo_6L_1A@mail.gmail.com>
+ <CAFA_24K99LkeJBKV7+a-m-m9PUZik49cOd40+cEn-6zCvGmMsQ@mail.gmail.com> <CAGZ79kZHapHLXDM-iU9T_BU5qoYAAAS+yKWLVvfUhxMmp+6mxg@mail.gmail.com>
+From:   Max Rothman <max.r.rothman@gmail.com>
+Date:   Thu, 2 Nov 2017 16:25:15 -0400
+X-Google-Sender-Auth: QtKUmckbpEUJy02t10wrmsKl8WI
+Message-ID: <CAFA_24JXc=qJw1-_aJJUMPhW9DaBofxSb6hkVD6n4MWyeT5UOQ@mail.gmail.com>
+Subject: Re: No log --no-decorate completion?
+To:     Stefan Beller <sbeller@google.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jonathan Tan <jonathantanmy@google.com>
+No problem! Let me know if I've done something wrong with this patch,
+I'm new to git's contributor process.
 
-Currently, Git does not support repos with very large numbers of objects
-or repos that wish to minimize manipulation of certain blobs (for
-example, because they are very large) very well, even if the user
-operates mostly on part of the repo, because Git is designed on the
-assumption that every referenced object is available somewhere in the
-repo storage. In such an arrangement, the full set of objects is usually
-available in remote storage, ready to be lazily downloaded.
+completion: add missing completions for log, diff, show
 
-Introduce the ability to have missing objects in a repo.  This
-functionality is guarded behind a new repository extension option
-`extensions.partialcloneremote`.
-See Documentation/technical/repository-version.txt for more information.
-
-Teach fsck about the new state of affairs. In this commit, teach fsck
-that missing promisor objects referenced from the reflog are not an
-error case; in future commits, fsck will be taught about other cases.
-
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+* Add bash completion for the missing --no-* options on git log
+* Add bash completion for --textconv and --indent-heuristic families to
+  git diff and all commands that use diff's options
+* Add bash completion for --no-abbrev-commit, --expand-tabs, and
+  --no-expand-tabs to git show
 ---
- builtin/fsck.c           |  2 +-
- cache.h                  |  3 +-
- packfile.c               | 78 ++++++++++++++++++++++++++++++++++++++++++++--
- packfile.h               | 13 ++++++++
- setup.c                  |  3 --
- t/t0410-partial-clone.sh | 81 ++++++++++++++++++++++++++++++++++++++++++++++++
- 6 files changed, 172 insertions(+), 8 deletions(-)
- create mode 100755 t/t0410-partial-clone.sh
+ contrib/completion/git-completion.bash | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 56afe40..2934299 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -398,7 +398,7 @@ static void fsck_handle_reflog_oid(const char *refname, struct object_id *oid,
- 					xstrfmt("%s@{%"PRItime"}", refname, timestamp));
- 			obj->flags |= USED;
- 			mark_object_reachable(obj);
--		} else {
-+		} else if (!is_promisor_object(oid)) {
- 			error("%s: invalid reflog entry %s", refname, oid_to_hex(oid));
- 			errors_found |= ERROR_REACHABLE;
- 		}
-diff --git a/cache.h b/cache.h
-index 4b785c0..5f84103 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1589,7 +1589,8 @@ extern struct packed_git {
- 	unsigned pack_local:1,
- 		 pack_keep:1,
- 		 freshened:1,
--		 do_not_close:1;
-+		 do_not_close:1,
-+		 pack_promisor:1;
- 	unsigned char sha1[20];
- 	struct revindex_entry *revindex;
- 	/* something like ".git/objects/pack/xxxxx.pack" */
-diff --git a/packfile.c b/packfile.c
-index 4a5fe7a..b015a54 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -8,6 +8,12 @@
- #include "list.h"
- #include "streaming.h"
- #include "sha1-lookup.h"
-+#include "commit.h"
-+#include "object.h"
-+#include "tag.h"
-+#include "tree-walk.h"
-+#include "tree.h"
-+#include "partial-clone-utils.h"
- 
- char *odb_pack_name(struct strbuf *buf,
- 		    const unsigned char *sha1,
-@@ -643,10 +649,10 @@ struct packed_git *add_packed_git(const char *path, size_t path_len, int local)
- 		return NULL;
- 
- 	/*
--	 * ".pack" is long enough to hold any suffix we're adding (and
-+	 * ".promisor" is long enough to hold any suffix we're adding (and
- 	 * the use xsnprintf double-checks that)
- 	 */
--	alloc = st_add3(path_len, strlen(".pack"), 1);
-+	alloc = st_add3(path_len, strlen(".promisor"), 1);
- 	p = alloc_packed_git(alloc);
- 	memcpy(p->pack_name, path, path_len);
- 
-@@ -654,6 +660,10 @@ struct packed_git *add_packed_git(const char *path, size_t path_len, int local)
- 	if (!access(p->pack_name, F_OK))
- 		p->pack_keep = 1;
- 
-+	xsnprintf(p->pack_name + path_len, alloc - path_len, ".promisor");
-+	if (!access(p->pack_name, F_OK))
-+		p->pack_promisor = 1;
-+
- 	xsnprintf(p->pack_name + path_len, alloc - path_len, ".pack");
- 	if (stat(p->pack_name, &st) || !S_ISREG(st.st_mode)) {
- 		free(p);
-@@ -781,7 +791,8 @@ static void prepare_packed_git_one(char *objdir, int local)
- 		if (ends_with(de->d_name, ".idx") ||
- 		    ends_with(de->d_name, ".pack") ||
- 		    ends_with(de->d_name, ".bitmap") ||
--		    ends_with(de->d_name, ".keep"))
-+		    ends_with(de->d_name, ".keep") ||
-+		    ends_with(de->d_name, ".promisor"))
- 			string_list_append(&garbage, path.buf);
- 		else
- 			report_garbage(PACKDIR_FILE_GARBAGE, path.buf);
-@@ -1889,6 +1900,9 @@ int for_each_packed_object(each_packed_object_fn cb, void *data, unsigned flags)
- 	for (p = packed_git; p; p = p->next) {
- 		if ((flags & FOR_EACH_OBJECT_LOCAL_ONLY) && !p->pack_local)
- 			continue;
-+		if ((flags & FOR_EACH_OBJECT_PROMISOR_ONLY) &&
-+		    !p->pack_promisor)
-+			continue;
- 		if (open_pack_index(p)) {
- 			pack_errors = 1;
- 			continue;
-@@ -1899,3 +1913,61 @@ int for_each_packed_object(each_packed_object_fn cb, void *data, unsigned flags)
- 	}
- 	return r ? r : pack_errors;
- }
-+
-+static int add_promisor_object(const struct object_id *oid,
-+			       struct packed_git *pack,
-+			       uint32_t pos,
-+			       void *set_)
-+{
-+	struct oidset *set = set_;
-+	struct object *obj = parse_object(oid);
-+	if (!obj)
-+		return 1;
-+
-+	oidset_insert(set, oid);
-+
-+	/*
-+	 * If this is a tree, commit, or tag, the objects it refers
-+	 * to are also promisor objects. (Blobs refer to no objects.)
-+	 */
-+	if (obj->type == OBJ_TREE) {
-+		struct tree *tree = (struct tree *)obj;
-+		struct tree_desc desc;
-+		struct name_entry entry;
-+		if (init_tree_desc_gently(&desc, tree->buffer, tree->size))
-+			/*
-+			 * Error messages are given when packs are
-+			 * verified, so do not print any here.
-+			 */
-+			return 0;
-+		while (tree_entry_gently(&desc, &entry))
-+			oidset_insert(set, entry.oid);
-+	} else if (obj->type == OBJ_COMMIT) {
-+		struct commit *commit = (struct commit *) obj;
-+		struct commit_list *parents = commit->parents;
-+
-+		oidset_insert(set, &commit->tree->object.oid);
-+		for (; parents; parents = parents->next)
-+			oidset_insert(set, &parents->item->object.oid);
-+	} else if (obj->type == OBJ_TAG) {
-+		struct tag *tag = (struct tag *) obj;
-+		oidset_insert(set, &tag->tagged->oid);
-+	}
-+	return 0;
-+}
-+
-+int is_promisor_object(const struct object_id *oid)
-+{
-+	static struct oidset promisor_objects;
-+	static int promisor_objects_prepared;
-+
-+	if (!promisor_objects_prepared) {
-+		if (is_partial_clone_registered()) {
-+			for_each_packed_object(add_promisor_object,
-+					       &promisor_objects,
-+					       FOR_EACH_OBJECT_PROMISOR_ONLY);
-+		}
-+		promisor_objects_prepared = 1;
-+	}
-+	return oidset_contains(&promisor_objects, oid);
-+}
-diff --git a/packfile.h b/packfile.h
-index 0cdeb54..a7fca59 100644
---- a/packfile.h
-+++ b/packfile.h
-@@ -1,6 +1,8 @@
- #ifndef PACKFILE_H
- #define PACKFILE_H
- 
-+#include "oidset.h"
-+
- /*
-  * Generate the filename to be used for a pack file with checksum "sha1" and
-  * extension "ext". The result is written into the strbuf "buf", overwriting
-@@ -125,6 +127,11 @@ extern int has_sha1_pack(const unsigned char *sha1);
- extern int has_pack_index(const unsigned char *sha1);
- 
- /*
-+ * Only iterate over packs obtained from the promisor remote.
-+ */
-+#define FOR_EACH_OBJECT_PROMISOR_ONLY 2
-+
-+/*
-  * Iterate over packed objects in both the local
-  * repository and any alternates repositories (unless the
-  * FOR_EACH_OBJECT_LOCAL_ONLY flag, defined in cache.h, is set).
-@@ -135,4 +142,10 @@ typedef int each_packed_object_fn(const struct object_id *oid,
- 				  void *data);
- extern int for_each_packed_object(each_packed_object_fn, void *, unsigned flags);
- 
-+/*
-+ * Return 1 if an object in a promisor packfile is or refers to the given
-+ * object, 0 otherwise.
-+ */
-+extern int is_promisor_object(const struct object_id *oid);
-+
- #endif
-diff --git a/setup.c b/setup.c
-index bc4133d..ebfb34c 100644
---- a/setup.c
-+++ b/setup.c
-@@ -420,19 +420,16 @@ static int check_repo_format(const char *var, const char *value, void *vdata)
- 			;
- 		else if (!strcmp(ext, "preciousobjects"))
- 			data->precious_objects = git_config_bool(var, value);
--
- 		else if (!strcmp(ext, KEY_PARTIALCLONEREMOTE))
- 			if (!value)
- 				return config_error_nonbool(var);
- 			else
- 				data->partial_clone_remote = xstrdup(value);
--
- 		else if (!strcmp(ext, KEY_PARTIALCLONEFILTER))
- 			if (!value)
- 				return config_error_nonbool(var);
- 			else
- 				data->partial_clone_filter = xstrdup(value);
--
- 		else
- 			string_list_append(&data->unknown_extensions, ext);
- 	} else if (strcmp(var, "core.bare") == 0) {
-diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
-new file mode 100755
-index 0000000..52347fb
---- /dev/null
-+++ b/t/t0410-partial-clone.sh
-@@ -0,0 +1,81 @@
-+#!/bin/sh
-+
-+test_description='partial clone'
-+
-+. ./test-lib.sh
-+
-+delete_object () {
-+	rm $1/.git/objects/$(echo $2 | sed -e 's|^..|&/|')
-+}
-+
-+pack_as_from_promisor () {
-+	HASH=$(git -C repo pack-objects .git/objects/pack/pack) &&
-+	>repo/.git/objects/pack/pack-$HASH.promisor
-+}
-+
-+test_expect_success 'missing reflog object, but promised by a commit, passes fsck' '
-+	test_create_repo repo &&
-+	test_commit -C repo my_commit &&
-+
-+	A=$(git -C repo commit-tree -m a HEAD^{tree}) &&
-+	C=$(git -C repo commit-tree -m c -p $A HEAD^{tree}) &&
-+
-+	# Reference $A only from reflog, and delete it
-+	git -C repo branch my_branch "$A" &&
-+	git -C repo branch -f my_branch my_commit &&
-+	delete_object repo "$A" &&
-+
-+	# State that we got $C, which refers to $A, from promisor
-+	printf "$C\n" | pack_as_from_promisor &&
-+
-+	# Normally, it fails
-+	test_must_fail git -C repo fsck &&
-+
-+	# But with the extension, it succeeds
-+	git -C repo config core.repositoryformatversion 1 &&
-+	git -C repo config extensions.partialcloneremote "arbitrary string" &&
-+	git -C repo fsck
-+'
-+
-+test_expect_success 'missing reflog object, but promised by a tag, passes fsck' '
-+	rm -rf repo &&
-+	test_create_repo repo &&
-+	test_commit -C repo my_commit &&
-+
-+	A=$(git -C repo commit-tree -m a HEAD^{tree}) &&
-+	git -C repo tag -a -m d my_tag_name $A &&
-+	T=$(git -C repo rev-parse my_tag_name) &&
-+	git -C repo tag -d my_tag_name &&
-+
-+	# Reference $A only from reflog, and delete it
-+	git -C repo branch my_branch "$A" &&
-+	git -C repo branch -f my_branch my_commit &&
-+	delete_object repo "$A" &&
-+
-+	# State that we got $T, which refers to $A, from promisor
-+	printf "$T\n" | pack_as_from_promisor &&
-+
-+	git -C repo config core.repositoryformatversion 1 &&
-+	git -C repo config extensions.partialcloneremote "arbitrary string" &&
-+	git -C repo fsck
-+'
-+
-+test_expect_success 'missing reflog object alone fails fsck, even with extension set' '
-+	rm -rf repo &&
-+	test_create_repo repo &&
-+	test_commit -C repo my_commit &&
-+
-+	A=$(git -C repo commit-tree -m a HEAD^{tree}) &&
-+	B=$(git -C repo commit-tree -m b HEAD^{tree}) &&
-+
-+	# Reference $A only from reflog, and delete it
-+	git -C repo branch my_branch "$A" &&
-+	git -C repo branch -f my_branch my_commit &&
-+	delete_object repo "$A" &&
-+
-+	git -C repo config core.repositoryformatversion 1 &&
-+	git -C repo config extensions.partialcloneremote "arbitrary string" &&
-+	test_must_fail git -C repo fsck
-+'
-+
-+test_done
--- 
-2.9.3
+diff --git a/contrib/completion/git-completion.bash
+b/contrib/completion/git-completion.bash
+index 0e16f017a4144..252a6c8c0c80c 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1412,6 +1412,8 @@ __git_diff_common_options="--stat --numstat
+--shortstat --summary
+                        --dirstat-by-file= --cumulative
+                        --diff-algorithm=
+                        --submodule --submodule=
++                       --indent-heuristic --no-indent-heuristic
++                       --textconv --no-textconv
+ "
 
+ _git_diff ()
+@@ -1752,6 +1754,10 @@ _git_log ()
+                __gitcomp "$__git_diff_submodule_formats" ""
+"${cur##--submodule=}"
+                return
+                ;;
++       --no-walk=*)
++               __gitcomp "sorted unsorted" "" "${cur##--no-walk=}"
++               return
++               ;;
+        --*)
+                __gitcomp "
+                        $__git_log_common_options
+@@ -1759,16 +1765,19 @@ _git_log ()
+                        $__git_log_gitk_options
+                        --root --topo-order --date-order --reverse
+                        --follow --full-diff
+-                       --abbrev-commit --abbrev=
++                       --abbrev-commit --no-abbrev-commit --abbrev=
+                        --relative-date --date=
+                        --pretty= --format= --oneline
+                        --show-signature
+                        --cherry-mark
+                        --cherry-pick
+                        --graph
+-                       --decorate --decorate=
++                       --decorate --decorate= --no-decorate
+                        --walk-reflogs
++                       --no-walk --no-walk= --do-walk
+                        --parents --children
++                       --expand-tabs --expand-tabs= --no-expand-tabs
++                       --patch
+                        $merge
+                        $__git_diff_common_options
+                        --pickaxe-all --pickaxe-regex
+@@ -2816,8 +2825,9 @@ _git_show ()
+                return
+                ;;
+        --*)
+-               __gitcomp "--pretty= --format= --abbrev-commit --oneline
+-                       --show-signature
++               __gitcomp "--pretty= --format= --abbrev-commit
+--no-abbrev-commit
++                       --oneline --show-signature --patch
++                       --expand-tabs --expand-tabs= --no-expand-tabs
+                        $__git_diff_common_options
+                        "
+                return
+
+On Tue, Oct 24, 2017 at 11:32 AM, Stefan Beller <sbeller@google.com> wrote:
+> On Tue, Oct 24, 2017 at 8:15 AM, Max Rothman <max.r.rothman@gmail.com> wrote:
+>> Just re-discovered this in my inbox. So is this worth fixing? I could
+>> (probably) figure out a patch.
+>>
+>> Thanks,
+>> Max
+>>
+>
+> $ git log -- <TAB>
+> Display all 100 possibilities? (y or n)
+>
+> I guess adding one more option is no big deal, so go for it!
+> We also have a couple --no-options already (as you said earlier),
+> which I think makes it even more viable.
+>
+> Tangent:
+> I wonder if we can cascade the completion by common
+> prefixes, e.g. --no- or --ignore- occurs a couple of times,
+> such that we could only show these --no- once and only
+> if you try autocompleting thereafter you get all --no- options.
+>
+> Thanks for reviving this thread!
+> Stefan
