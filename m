@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BE5FD20281
-	for <e@80x24.org>; Thu,  2 Nov 2017 19:42:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2141E20281
+	for <e@80x24.org>; Thu,  2 Nov 2017 19:42:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934376AbdKBTmC (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Nov 2017 15:42:02 -0400
-Received: from mail-io0-f196.google.com ([209.85.223.196]:51787 "EHLO
+        id S964786AbdKBTmE (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Nov 2017 15:42:04 -0400
+Received: from mail-io0-f196.google.com ([209.85.223.196]:55249 "EHLO
         mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934365AbdKBTmA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Nov 2017 15:42:00 -0400
-Received: by mail-io0-f196.google.com with SMTP id b186so1466874iof.8
-        for <git@vger.kernel.org>; Thu, 02 Nov 2017 12:42:00 -0700 (PDT)
+        with ESMTP id S934345AbdKBTmC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Nov 2017 15:42:02 -0400
+Received: by mail-io0-f196.google.com with SMTP id e89so1445842ioi.11
+        for <git@vger.kernel.org>; Thu, 02 Nov 2017 12:42:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=a/Fk6BnUQrnIF+1wvcn2d9XY7RxyKpW07hVGH3hWLM4=;
-        b=faApPJ/qner74Yt9mMyIl9sKm1DM0IUbwBeK0fxGCNPhxQMvkv6YZhgeIDHitUQs41
-         7+0mJYR7P7HAgGgrecGgKmxlpjAU9ShafY3avtFYf6cxmYWfSIIx3q8Cl7zvgMJnu6AX
-         6eHLbK5Nxy3t9wkOJnlDBnq86n1Yhwk0hsx+S/KM+a5kls9v9JZhIyiSKLm74wotKFvv
-         l8V1HBXNTnx8gY0L9HLzSuDSyx1mjykwa73S86fm5F11Gl5bnJ6/vGsxBTsgXk1umgBe
-         KNHYW3DR3ZbeZ0CPDQjjXJuuXtmL1zhrYTs3qbih8zzga3mJzzxMd+jcPho6YUgu9ivy
-         J/sQ==
+        bh=hl0+Zb/texquj9BHFW0mcm/coTuxAB6WF5vARA6U47E=;
+        b=UmkHu4srBQYcxlBZm/yRCSo7h3NwlEBwvQct4oJzE4SuXJkdxoHBv4S04lew58BYR+
+         3fo+Ns9RRme8xIdmejj0imaI9R0mfrh9pLJo9YrIJAQw5vfCvb0dPKDyIRZ8F0FDf1w9
+         dIlVkJ0V6crc/TPtPFlrCqd53Ery8SY3EMjZvdjF2A0FhoV93PMV7r4O0YBz6/bfTeqf
+         3cZ5e/bkKQggjGfIlXo7JiIBMuICBoHanPX/hQjTlJo7lwy9fZMDFUVKl0QFK/lk590x
+         +BpUmj6Zr4phbvD9+ue0Q8i2jDkr9HSv4zOk7F3cD+RY2Ok1sKrBqfYFq4mKHCwOKpum
+         gw/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=a/Fk6BnUQrnIF+1wvcn2d9XY7RxyKpW07hVGH3hWLM4=;
-        b=X0pEkhMbQ9mcvHJr9kWaBb9drHMkT4k/pyaNwZHYTvW7/zPwhRA3bONpSl/c5CWVqT
-         rg91Ri6KHXIIDi5cn6Ej0ZHELk6VRObfOznyBhwdHr637WwX5bM15BbLjfABHyPD6kSw
-         aOdYOkiSAMFgWZ/Hs2Ibt4aVaMMgL+UG3dAkAKvsU1y4um811w0ciqVsIfnlttk9Povk
-         S8QrBvIfkWkoiFvqvPkpBaa9zkFd8Gj6lvcT+UnqVYrQ2DfsxuxaE6X6k3qvLrMlYeuw
-         cDCxiZItBqp3PdMfVk/Rmd00uVXrv891TQRIDPiHYQq78IIrOPjaywoQUR5sOJhHEKfA
-         snEg==
-X-Gm-Message-State: AJaThX7+s24PrTZkLy5Y7Si2zUp0U+Z3jQGZTDI9uAxTOy3odAeeBPn9
-        5JXoWwEbClQWMx2JniGrIvGo+Q==
-X-Google-Smtp-Source: ABhQp+S/87eHWWMyHLzD3+gHu3BdaeYIvBPkUxp9O6nMaDCeKk7b4g7jMSIQy3dyuXpZEc3uyT28jw==
-X-Received: by 10.107.142.131 with SMTP id q125mr6073720iod.71.1509651719169;
-        Thu, 02 Nov 2017 12:41:59 -0700 (PDT)
+        bh=hl0+Zb/texquj9BHFW0mcm/coTuxAB6WF5vARA6U47E=;
+        b=k2c34QFaK3FN5iIWdkB4WC6PhtkyOhkXCbHl23feCW95TuBu8xOnulB8gIQDGKrbrj
+         AM26pqQeUeed27RHeyuerekFqWNWgAjMUMhTWyat8lcd7CZjmwMND94X5ETFiQRxHlhJ
+         llm7KiZfDk4mhE4UI2lhldTTX5VsajYLonBxObnYsW6xsOj01aqxdiHQUL2ox5C7xpjN
+         2tKEyPxfwmM65g0hJ6C/KAq+hBk1XJHpqKClmIwycgIucA91NypwA98f8dKSKykNuJ/C
+         toQNVySMDZMpQwHw6Nek1isK4are722wYjDxC29tVsJSxBSjwtXqYhSInKnXfidXdp15
+         B+OA==
+X-Gm-Message-State: AMCzsaW3HE+fJuaa69LF7IG3GZUwgezy+qHyHU+ko0M/ouUbiRp3YSY5
+        uiW2PFIiLC/4cK7V3NO467pk9A==
+X-Google-Smtp-Source: ABhQp+SgTOA+x19EQP0yVc0ORHpeFNlheUbhlOmIjdB7o03ttCvnPynW2AyMH9+kn0j8NNo4iXAraw==
+X-Received: by 10.107.97.1 with SMTP id v1mr5769253iob.263.1509651720878;
+        Thu, 02 Nov 2017 12:42:00 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:1093:e9fc:3ec5:201d])
-        by smtp.gmail.com with ESMTPSA id e34sm1865550ioj.83.2017.11.02.12.41.58
+        by smtp.gmail.com with ESMTPSA id w8sm1861259iod.26.2017.11.02.12.41.59
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 02 Nov 2017 12:41:58 -0700 (PDT)
+        Thu, 02 Nov 2017 12:42:00 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com
 Cc:     Johannes.Schindelin@gmx.de, git@vger.kernel.org,
         jacob.keller@gmail.com, me@ikke.info, schwab@linux-m68k.org
-Subject: [PATCHv3 2/7] list-objects.c: factor out traverse_trees_and_blobs
-Date:   Thu,  2 Nov 2017 12:41:43 -0700
-Message-Id: <20171102194148.2124-3-sbeller@google.com>
+Subject: [PATCHv3 3/7] revision.h: introduce blob/tree walking in order of the commits
+Date:   Thu,  2 Nov 2017 12:41:44 -0700
+Message-Id: <20171102194148.2124-4-sbeller@google.com>
 X-Mailer: git-send-email 2.15.0.7.g980e40477f
 In-Reply-To: <20171102194148.2124-1-sbeller@google.com>
 References: <20171031211852.13001-1-sbeller@google.com>
@@ -64,100 +64,130 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-With traverse_trees_and_blobs factored out of the main traverse function,
-the next patch can introduce an in-order revision walking with ease.
-
-In the next patch we'll call `traverse_trees_and_blobs` from within the
-loop walking the commits, such that we'll have one invocation of that
-function per commit.  That is why we do not want to have memory allocations
-in that function, such as we'd have if we were to use a strbuf locally.
-Pass a strbuf from traverse_commit_list into the blob and tree traversing
-function as a scratch pad that only needs to be allocated once.
+The functionality to list tree objects in the order they were seen
+while traversing the commits will be used in the next commit,
+where we teach `git describe` to describe not only commits, but
+trees and blobs, too.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- list-objects.c | 50 +++++++++++++++++++++++++++++++-------------------
- 1 file changed, 31 insertions(+), 19 deletions(-)
+ Documentation/rev-list-options.txt |  5 ++++
+ list-objects.c                     |  2 ++
+ revision.c                         |  2 ++
+ revision.h                         |  3 ++-
+ t/t6100-rev-list-in-order.sh       | 47 ++++++++++++++++++++++++++++++++++++++
+ 5 files changed, 58 insertions(+), 1 deletion(-)
+ create mode 100755 t/t6100-rev-list-in-order.sh
 
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index 13501e1556..9066e0c777 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -686,6 +686,11 @@ ifdef::git-rev-list[]
+ 	all object IDs which I need to download if I have the commit
+ 	object _bar_ but not _foo_''.
+ 
++--in-commit-order::
++	Print tree and blob ids in order of the commits. The tree
++	and blob ids are printed after they are first referenced
++	by a commit.
++
+ --objects-edge::
+ 	Similar to `--objects`, but also print the IDs of excluded
+ 	commits prefixed with a ``-'' character.  This is used by
 diff --git a/list-objects.c b/list-objects.c
-index b3931fa434..7c2ce9c4bd 100644
+index 7c2ce9c4bd..07a92f35fe 100644
 --- a/list-objects.c
 +++ b/list-objects.c
-@@ -183,25 +183,15 @@ static void add_pending_tree(struct rev_info *revs, struct tree *tree)
- 	add_pending_object(revs, &tree->object, "");
- }
- 
--void traverse_commit_list(struct rev_info *revs,
--			  show_commit_fn show_commit,
--			  show_object_fn show_object,
--			  void *data)
-+static void traverse_trees_and_blobs(struct rev_info *revs,
-+				     struct strbuf *base,
-+				     show_object_fn show_object,
-+				     void *data)
- {
- 	int i;
--	struct commit *commit;
--	struct strbuf base;
- 
--	strbuf_init(&base, PATH_MAX);
--	while ((commit = get_revision(revs)) != NULL) {
--		/*
--		 * an uninteresting boundary commit may not have its tree
--		 * parsed yet, but we are not going to show them anyway
--		 */
--		if (commit->tree)
--			add_pending_tree(revs, commit->tree);
--		show_commit(commit, data);
--	}
-+	assert(base->len == 0);
-+
- 	for (i = 0; i < revs->pending.nr; i++) {
- 		struct object_array_entry *pending = revs->pending.objects + i;
- 		struct object *obj = pending->item;
-@@ -218,17 +208,39 @@ void traverse_commit_list(struct rev_info *revs,
- 			path = "";
- 		if (obj->type == OBJ_TREE) {
- 			process_tree(revs, (struct tree *)obj, show_object,
--				     &base, path, data);
-+				     base, path, data);
- 			continue;
- 		}
- 		if (obj->type == OBJ_BLOB) {
- 			process_blob(revs, (struct blob *)obj, show_object,
--				     &base, path, data);
-+				     base, path, data);
- 			continue;
- 		}
- 		die("unknown pending object %s (%s)",
- 		    oid_to_hex(&obj->oid), name);
+@@ -239,6 +239,8 @@ void traverse_commit_list(struct rev_info *revs,
+ 		if (commit->tree)
+ 			add_pending_tree(revs, commit->tree);
+ 		show_commit(commit, data);
++		if (revs->tree_blobs_in_commit_order)
++			traverse_trees_and_blobs(revs, &csp, show_object, data);
  	}
- 	object_array_clear(&revs->pending);
--	strbuf_release(&base);
-+}
+ 	traverse_trees_and_blobs(revs, &csp, show_object, data);
+ 
+diff --git a/revision.c b/revision.c
+index d167223e69..9329d4ebbf 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1845,6 +1845,8 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 		revs->dense = 0;
+ 	} else if (!strcmp(arg, "--show-all")) {
+ 		revs->show_all = 1;
++	} else if (!strcmp(arg, "--in-commit-order")) {
++		revs->tree_blobs_in_commit_order = 1;
+ 	} else if (!strcmp(arg, "--remove-empty")) {
+ 		revs->remove_empty_trees = 1;
+ 	} else if (!strcmp(arg, "--merges")) {
+diff --git a/revision.h b/revision.h
+index 54761200ad..86985d68aa 100644
+--- a/revision.h
++++ b/revision.h
+@@ -121,7 +121,8 @@ struct rev_info {
+ 			bisect:1,
+ 			ancestry_path:1,
+ 			first_parent_only:1,
+-			line_level_traverse:1;
++			line_level_traverse:1,
++			tree_blobs_in_commit_order:1;
+ 
+ 	/* Diff flags */
+ 	unsigned int	diff:1,
+diff --git a/t/t6100-rev-list-in-order.sh b/t/t6100-rev-list-in-order.sh
+new file mode 100755
+index 0000000000..d4d539b0da
+--- /dev/null
++++ b/t/t6100-rev-list-in-order.sh
+@@ -0,0 +1,47 @@
++#!/bin/sh
 +
-+void traverse_commit_list(struct rev_info *revs,
-+			  show_commit_fn show_commit,
-+			  show_object_fn show_object,
-+			  void *data)
-+{
-+	struct commit *commit;
-+	struct strbuf csp; /* callee's scratch pad */
-+	strbuf_init(&csp, PATH_MAX);
++test_description='rev-list testing in-commit-order'
 +
-+	while ((commit = get_revision(revs)) != NULL) {
-+		/*
-+		 * an uninteresting boundary commit may not have its tree
-+		 * parsed yet, but we are not going to show them anyway
-+		 */
-+		if (commit->tree)
-+			add_pending_tree(revs, commit->tree);
-+		show_commit(commit, data);
-+	}
-+	traverse_trees_and_blobs(revs, &csp, show_object, data);
++. ./test-lib.sh
 +
-+	strbuf_release(&csp);
- }
++test_expect_success 'rev-list --in-commit-order' '
++	for x in one two three four
++	do
++		echo $x >$x &&
++		git add $x &&
++		git commit -m "add file $x" ||
++		return 1
++	done &&
++	for x in four three
++	do
++		git rm $x &&
++		git commit -m "remove $x" ||
++		return 1
++	done &&
++	git rev-list --in-commit-order --objects HEAD >actual.raw &&
++	cut -c 1-40 >actual <actual.raw &&
++
++	git cat-file --batch-check="%(objectname)" >expect.raw <<-\EOF &&
++		HEAD^{commit}
++		HEAD^{tree}
++		HEAD^{tree}:one
++		HEAD^{tree}:two
++		HEAD~1^{commit}
++		HEAD~1^{tree}
++		HEAD~1^{tree}:three
++		HEAD~2^{commit}
++		HEAD~2^{tree}
++		HEAD~2^{tree}:four
++		HEAD~3^{commit}
++		# HEAD~3^{tree} skipped, same as HEAD~1^{tree}
++		HEAD~4^{commit}
++		# HEAD~4^{tree} skipped, same as HEAD^{tree}
++		HEAD~5^{commit}
++		HEAD~5^{tree}
++	EOF
++	grep -v "#" >expect <expect.raw &&
++
++	test_cmp expect actual
++'
++
++test_done
 -- 
 2.15.0.7.g980e40477f
 
