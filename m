@@ -2,91 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1A788202A0
-	for <e@80x24.org>; Wed,  1 Nov 2017 22:53:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 87B87202A0
+	for <e@80x24.org>; Thu,  2 Nov 2017 00:07:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933685AbdKAWxZ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Nov 2017 18:53:25 -0400
-Received: from mail-qt0-f178.google.com ([209.85.216.178]:45545 "EHLO
-        mail-qt0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933336AbdKAWxY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Nov 2017 18:53:24 -0400
-Received: by mail-qt0-f178.google.com with SMTP id p1so4662589qtg.2
-        for <git@vger.kernel.org>; Wed, 01 Nov 2017 15:53:24 -0700 (PDT)
+        id S933001AbdKBAHa (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Nov 2017 20:07:30 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:56968 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932433AbdKBAH3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Nov 2017 20:07:29 -0400
+Received: by mail-wr0-f196.google.com with SMTP id r79so3403894wrb.13
+        for <git@vger.kernel.org>; Wed, 01 Nov 2017 17:07:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=JFuslRQcsN8ZHYxokPuNjk9ZoJ//FSq6QBIMbf523l8=;
-        b=uszEo72sXADQAcW8kFa4Z/BQqpwy7JF8f2GHj+3wG0oTRZBcI+bgZvVQC58ZTVrJAl
-         jcCFWJXO36r4p5ma95VDpOOVzGP/YigkIwQok6QU16KSWbTFkMutTW+fc2WP55f3+eqW
-         VUpORZzMwb1/kI5mMqjo5pgCh4EJu/OoGypnsNxGKI8SuWU6TcvxjnDBekilD6vsygBe
-         CAQNyCfUnc9ifXCWhwwipXZZjfj+sCq1sZ7guTwrJnT7oeG5dtkx0/8uSGDUqaMdqzu2
-         wIOoa+J5DzJi8kooJFKG2GunCeukIb0lTobYvDn7UvR18n8elwsAAo9awUg6JxlHh5n3
-         spoQ==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:mime-version
+         :content-transfer-encoding;
+        bh=k/Bs2H3pXS0ZpecMHT4JYyIUi/99G0bYpz7oARm6pdc=;
+        b=GJ/Z6eQoai2Rcmi0+vWiwLxBKEkMM/AnFn3d2ABCerAYR7vF/RgNCKMmfc8MdLmV4G
+         ekwq4c53/38nBnfDrAZVP8t7263OTIf5lDebMcfCN8T7EO55bm7wh4GSgPeKEAknRMHQ
+         ke2A+u/nd2k4cmZvLvHwQHr0bsCeUfbeNmXtlnA1CgjdHTD4e8g+ZSJERDgvjZerpTcR
+         pSpoSzwEE50//t1Jtl1bHBfcYsloUwEWbvjllb43VsXhGJ1G4eFp4fBLxrCKG7hJI5ES
+         PTbLMkC6DGo6B1hTuj8ao3OfjJfnuWdD8iU25HG8O4863XDC/AHiT/ZQ0J7K3Acdoohm
+         XcVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=JFuslRQcsN8ZHYxokPuNjk9ZoJ//FSq6QBIMbf523l8=;
-        b=XGLs/Fz+ITiGb2VVwT6RvAWI8L200rYwAi36UAY3rYJ98LyUeILhk95WfoKndojDTh
-         yyX79AMPMSI+B+fjSMgxElS1xDAYgydkUXxPOxrMDc9bOJXKoJLY7Xh7qrirafPXkh/A
-         DmbjfywhQjHmrrjww27vvqJ0aVbZsqdREzySD7kHcXcrtbPY2QxP5OktQ6fH3Qd757nw
-         btSihPM29H5r3z7Mar9c0qvAIgTduXjyTEXSikPuXzPpyRSCD+IIAJ+ZA3XXsPp01zp1
-         2umy9PYXatn4AClDK/V6pObtwlLUnWDZjhTa/bXmY+5TCM3C/KGj1vonx4MozQRs0gxn
-         JPeA==
-X-Gm-Message-State: AMCzsaVTIxuGT16VpPgqcOoIWN3BIaOoAdQHbQpufvcKkheY6oyZ3lWN
-        vpwk1ElHjQ4kON7Kzt2cyr1YjeJ82qsNvN8kyCA30eQG
-X-Google-Smtp-Source: ABhQp+STXtbaXk1qN4aY/12LkHGYBUU7TtkSIuhWux3sKq4a85OVINUpz5QB93/KMYS/zdNQ+xchqtsGBcjnOzOo7eQ=
-X-Received: by 10.200.40.146 with SMTP id i18mr2349539qti.79.1509576803400;
- Wed, 01 Nov 2017 15:53:23 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :mime-version:content-transfer-encoding;
+        bh=k/Bs2H3pXS0ZpecMHT4JYyIUi/99G0bYpz7oARm6pdc=;
+        b=DZWS+8LUiAydZgSrD6s5lueMlDNcOsseqFEMbsgWwsNJoV671DIMEAqNL0o1rWjH3K
+         fWCCOWTQAKMwya3PEz7m5s46YY6RIzCTfb8jVbinKZj3iVlUpbd3blsbDXQpomPCIfNp
+         oZDg7Oi35iWnX6c0ZMLm/KR4JyT8yktLvsHIN7JBMxlaHnB6OmTrL0cJpTE21m7HGsnP
+         qXKxXmzQ97cEnjMHWs8tHjWwYE9mdIZ5cz3YGZpjhDMZ323RdVxgsN2AMzh0YkuNiWqS
+         y4sashi8qeKXTJ/2EXd2VwCeb3+leNYVqECeJ4q+rQCSPqf2IH3ssNWY6H/qwNpaXJ5S
+         IRyg==
+X-Gm-Message-State: AMCzsaWkPx+of83IT0ACOSOgIbkHdSbG2FAjicJAGJHvaogBu0Go1mtg
+        Je65Hm7XAyu7cvtlWnVxlZc=
+X-Google-Smtp-Source: ABhQp+TWA1SVsM4cxn+qyxluiJv/6TZq76iz+MYLnN6eCzPjLqupISLy5ntPWU9zBldKQ9HSrozt3w==
+X-Received: by 10.223.197.69 with SMTP id s5mr1272509wrf.120.1509581248156;
+        Wed, 01 Nov 2017 17:07:28 -0700 (PDT)
+Received: from localhost.localdomain (x590d9c13.dyn.telefonica.de. [89.13.156.19])
+        by smtp.gmail.com with ESMTPSA id q4sm1367377wmd.19.2017.11.01.17.07.26
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 01 Nov 2017 17:07:27 -0700 (PDT)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] config: document blame configuration
+Date:   Thu,  2 Nov 2017 01:07:22 +0100
+Message-Id: <20171102000722.1503-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.15.0.67.gb67a46776
+In-Reply-To: <20171101223234.14527-1-sbeller@google.com>
 MIME-Version: 1.0
-Received: by 10.140.102.70 with HTTP; Wed, 1 Nov 2017 15:53:22 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.21.1.1711012340290.6482@virtualbox>
-References: <20171031003351.22341-1-sbeller@google.com> <20171031211852.13001-1-sbeller@google.com>
- <20171031211852.13001-7-sbeller@google.com> <xmqqbmkmvdrq.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.21.1.1711011329300.6482@virtualbox> <CAGZ79kZPNiNnSJd6CNYb7XkTVsT2ONLQLhwAQxt6_SPFTSwMcw@mail.gmail.com>
- <EF573E5E-EA72-4DEE-822C-B44265FD581B@gmail.com> <alpine.DEB.2.21.1.1711012310250.6482@virtualbox>
- <CAGZ79kbOEM_W65Rym4yiDNHpFGTNWMYdh=aVPjThNWjEHPQong@mail.gmail.com> <alpine.DEB.2.21.1.1711012340290.6482@virtualbox>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 1 Nov 2017 15:53:22 -0700
-Message-ID: <CAGZ79ka2Taie+SVjw6poi=ejFMRV5MSBUGBUnCtn+KTdXRzGbg@mail.gmail.com>
-Subject: Re: [PATCHv2 6/7] builtin/describe.c: describe a blob
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Jacob Keller <jacob.keller@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        git <git@vger.kernel.org>, Kevin Daudt <me@ikke.info>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 1, 2017 at 3:41 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
+> The options are currently only referenced by the git-blame man page,
+> also explain them in git-config, which is the canonical page to
+> contain all config options.
 
->> The current implementation gives C, though.
->> (assuming C is HEAD, and A is ancient)
->>
->> With the --reverse flag one of B or D is given (not sure which,
->> depends on the exact order).
->
-> Sure, but it is still a tricky thing. Imagine
->
-> - A1 - B1 - A2 - B2 - B3
->
-> where all the B* commits have the blob. Do you really want to report B1
-> rather than B2 as the commit introducing the blob? (I would prefer B2...)
+Good idea.
 
-You are correct, that B2 is also important to find.
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  Documentation/config.txt | 17 +++++++++++++++++
+>  1 file changed, 17 insertions(+)
+> 
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 1ac0ae6adb..b18cead6aa 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -949,6 +949,23 @@ apply.whitespace::
+>  	Tells 'git apply' how to handle whitespaces, in the same way
+>  	as the `--whitespace` option. See linkgit:git-apply[1].
+>  
+> +blame.root::
 
-Ideally you want a list of all adjacent commit groups, but that is too
-tricky to implement for now, deferring it to another contribution in the future.
+This is blame.showRoot, isn't it?
 
-The current proposal would give you B3, such that `git log B3 -- path` will find
-you B2.
+> +	Do not treat root commits as boundaries in `git-blame`.
+
+You consistently write `git-blame`, i.e. with dash and between
+backticks.  The patch context mentions five git commands: two of them
+are linkgit macros, but the other three are all written without dash
+and between single quotes.  I think it should be written without dash,
+but I'm not sure about single quotes vs. backticks.  grep tells me
+they are both widespread for enclosing git commands.
+
+> +	This option defaults to false.
+> +
+> +blame.blankboundary::
+
+Config variables are usually written in camelCase in the
+documentation, see e.g. branch.autoSetupMerge in the patch context
+below.
+
+> +	Show blank SHA-1 for boundary commits in `git-blame`.
+
+Perhaps "Show blank object ID", since we're moving away from SHA-1?
+
+> +	This option defaults to false.
+> +
+> +blame.showemail::
+
+Again camelCase.
+
+> +	Show the author email instead of author name in `git-blame`.
+> +	This option defaults to false.
+> +
+> +blame.date::
+> +	Specifies the format used to output dates in `git-blame`.
+> +	If unset the iso format is used. For supported values,
+> +	see the discussion of the --date option at linkgit:git-log[1].
+
+Should '--date' be enclosed in... single quotes or backticks?  I don't
+know.
+
+> +
+>  branch.autoSetupMerge::
+>  	Tells 'git branch' and 'git checkout' to set up new branches
+>  	so that linkgit:git-pull[1] will appropriately merge from the
+> -- 
+> 2.15.0.7.g980e40477f
+> 
+> 
