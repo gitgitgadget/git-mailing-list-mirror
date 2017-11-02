@@ -2,73 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 139E820450
-	for <e@80x24.org>; Thu,  2 Nov 2017 06:55:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BE66820450
+	for <e@80x24.org>; Thu,  2 Nov 2017 07:22:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755008AbdKBGzN (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Nov 2017 02:55:13 -0400
-Received: from mail-io0-f196.google.com ([209.85.223.196]:46782 "EHLO
-        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752141AbdKBGzK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Nov 2017 02:55:10 -0400
-Received: by mail-io0-f196.google.com with SMTP id 101so11581739ioj.3
-        for <git@vger.kernel.org>; Wed, 01 Nov 2017 23:55:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:in-reply-to:references:date:mime-version
-         :content-transfer-encoding;
-        bh=gCTZCAY5xbd2H0A5jBnHfK6/KxOljr5jZmElaukM1+o=;
-        b=kbVSvF6PGzTFQUF/wlcRMmENRMe7brlPEXnq6RkEYONS89pLfgD320qiMc/ZQwcVrq
-         uVUosOAhCJCy8rUWdm+r5Gy0coA+TiD9rMibp2IXVvgvEWP81yq3VDPkzJnRnMIarcR+
-         cIT54BFq8mn0cfmCvUZnI5uiawkNgvQw5G4GwTPT2AG4dR4AtAq8JZnbuxtnwyx6d5vj
-         tflPrAFXVSs9HvlQhEES3QoMBUUzMvr8iggfOQ+S4wsnr6SCwwFqOfyM0iGyvuroAkOV
-         sAIVQmKC360gAmhsR/i1Qmoit0K2qcf/peE6s/qJZhgGtCOH8iBzDacXy+JuRPDOWpfC
-         fNEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:in-reply-to
-         :references:date:mime-version:content-transfer-encoding;
-        bh=gCTZCAY5xbd2H0A5jBnHfK6/KxOljr5jZmElaukM1+o=;
-        b=qZT5oNgAjT+iCIJYQAWXKmeQuCbQUZFxq3SqShvHPPd4X5gysXuGK9jkH4o7HVGNqs
-         jvhZBVYw6cDyfKiDUyLYtqUpJ8cqIQtK3Q6apGed5kC3VsdNCQlKvnXu45ezVhW+GKCO
-         z5NIQtToH3mj2MTDVY/7H8YEygM9Bc57w2A/KOpcWzdJgGDQrLbtLNm0e2172T8tWPSu
-         et8jc4CIU18FfIx+dqxEdcSpZXfHoOyUGAqZuXtBAbYfEKH8rY0pOL0Xz0/xUGFNUGDr
-         Zc/ASpT3g2v438F715PFr6B81eILiTWcU9bCXQzYjEiKkLVveym7vRUObITwOPDiCJE8
-         hwwg==
-X-Gm-Message-State: AMCzsaUuIAsyWD/pUyyRDbTsG9RSj6H/iEd5QbOJ5MlUC7ErcYZCVjPH
-        4VQryhxU9UGoRSIpuZDU6amUbv7EDyg=
-X-Google-Smtp-Source: ABhQp+TXASnD873pkxDT8vJfA7Me9hzQHkEvO5G7veef+DE1gYC2vYMiv1PsVoPTddIsw/66gSDNnA==
-X-Received: by 10.36.68.13 with SMTP id o13mr1219823ita.56.1509605710004;
-        Wed, 01 Nov 2017 23:55:10 -0700 (PDT)
-Received: from unique-pc ([117.245.109.9])
-        by smtp.gmail.com with ESMTPSA id t69sm1468827itt.37.2017.11.01.23.55.07
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 01 Nov 2017 23:55:09 -0700 (PDT)
-Message-ID: <1509605703.9254.13.camel@gmail.com>
-Subject: Re: [RFC PATCH v3 0/4] give more useful error messages while
- renaming branch
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-To:     git@vger.kernel.org
-In-Reply-To: <20171102065242.25299-1-kaartic.sivaraam@gmail.com>
-References: <20171102065242.25299-1-kaartic.sivaraam@gmail.com>
-Content-Type: text/plain; charset="ISO-8859-15"
-Date:   Thu, 02 Nov 2017 12:25:03 +0530
-Mime-Version: 1.0
-X-Mailer: Evolution 3.22.6-1+deb9u1 
-Content-Transfer-Encoding: 7bit
+        id S1752549AbdKBHWl (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Nov 2017 03:22:41 -0400
+Received: from cloud.peff.net ([104.130.231.41]:43668 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1750907AbdKBHWk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Nov 2017 03:22:40 -0400
+Received: (qmail 16810 invoked by uid 109); 2 Nov 2017 07:22:39 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 02 Nov 2017 07:22:39 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 18832 invoked by uid 111); 2 Nov 2017 07:22:49 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Thu, 02 Nov 2017 03:22:49 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 02 Nov 2017 03:22:37 -0400
+Date:   Thu, 2 Nov 2017 03:22:37 -0400
+From:   Jeff King <peff@peff.net>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Philip Oakley <philipoakley@iee.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        git <git@vger.kernel.org>, Ben Peart <Ben.Peart@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Mike Hommey <mh@glandium.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Eric Wong <e@80x24.org>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: On the nature of cover letters [WAS Re: [PATCH 0/6] Create
+ Git/Packet.pm]
+Message-ID: <20171102072237.wbmrzrgfyxdb3m3v@sigill.intra.peff.net>
+References: <CAGZ79kbHwXpWXhUkokA9=XGN9D1YZevO_8MhbOztMXpkkHMFbg@mail.gmail.com>
+ <20171101071422.c2k4plhntlgpdnbk@sigill.intra.peff.net>
+ <CAGZ79kYKK69Xw0-2OxFpo9Q=Kv1hvw8D7YkfhMFFcgzTuevTCQ@mail.gmail.com>
+ <CAGZ79kYghF6=AzL1N96fe2zixHCERXu=RpxHw2-kdUrU+j4CXw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kYghF6=AzL1N96fe2zixHCERXu=RpxHw2-kdUrU+j4CXw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sorry, ignore this mails. I actually have re-sent it to the correct
-thread.
- 
--- 
-Kaartic
+On Wed, Nov 01, 2017 at 03:31:42PM -0700, Stefan Beller wrote:
+
+> On Wed, Nov 1, 2017 at 9:42 AM, Stefan Beller <sbeller@google.com> wrote:
+> 
+> >> So it may make more sense just to cross-reference those merges with the
+> >> topics that spawned them on the mailing list. I.e., instead of copying
+> >> the cover letter contents, just record the message-id (and update it
+> >> whenever a new iteration of a topic is picked up via "git am"). That
+> >> lets you get the cover letter information _and_ see any discussion
+> >> or review around the patch.
+> >
+> > That sounds good.
+> 
+> Actually I just found out about `am.messageId`, which adds the individual
+> message id as a footer. Maybe that is good enough? (Though it would
+> clutter every commit, not just the merge commits)
+
+It also means digging around to find the apex of the thread (though
+generally that can be done automatically with sufficiently smart
+tooling; I think public-inbox can do it pretty easily).
+
+I also like the idea that I could read "log --first-parent" to get an
+overview of the topics (with links). But probably associating a message
+id with each patch smooths out a lot of corner cases (it sidesteps the
+"where do you store it until the commit is made" question, and it
+works when there's no cover letter). And it gives enough hint for other
+software to figure out everything else.
+
+If the clutter is too much, it could also go into a git-notes ref
+(that's not already implemented, but it seems like it would be pretty
+easy to teach "git am" to do that).
+
+For a while, Thomas Rast used a script to heuristically create that
+mapping via git-notes after the fact. But if "git am" just did it
+automatically on behalf of Junio, that would be more robust.
+
+I will admit that I found I didn't use the mapping generated by Thomas's
+script all that much. But I do keep a local mailing list index and often
+search for the commit's subject as a mail subject, which roughly
+accomplishes the same thing.
+
+-Peff
