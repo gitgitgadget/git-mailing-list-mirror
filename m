@@ -2,129 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 301B2202A0
-	for <e@80x24.org>; Thu,  2 Nov 2017 06:05:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 11A8220450
+	for <e@80x24.org>; Thu,  2 Nov 2017 06:53:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750913AbdKBGFX (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Nov 2017 02:05:23 -0400
-Received: from mail-wm0-f52.google.com ([74.125.82.52]:47480 "EHLO
-        mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750786AbdKBGFW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Nov 2017 02:05:22 -0400
-Received: by mail-wm0-f52.google.com with SMTP id r196so8557138wmf.2
-        for <git@vger.kernel.org>; Wed, 01 Nov 2017 23:05:21 -0700 (PDT)
+        id S1751628AbdKBGxA (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Nov 2017 02:53:00 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:43655 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750883AbdKBGw7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Nov 2017 02:52:59 -0400
+Received: by mail-pf0-f193.google.com with SMTP id a8so3901690pfc.0
+        for <git@vger.kernel.org>; Wed, 01 Nov 2017 23:52:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=rqPoa9nmh6ViwmQfUiPdC8UjYtnfYnNyOZnRZQTJTM0=;
-        b=nDm8YxOcuWfChaA9FWElR7rtZmYp+jaAYeHO2h6HN0TEn9NjlKraicolzJduVcEml8
-         L5iez3GhWvqYwXncntVAAFewGAv5aRJfUrlKNWMgJdt7tz1NhHBqvFeKH4qvr35vMDxs
-         yc0rR4XsjaJOjCOPctgg9RpnV7MLHeZq0tpSCFnoh6XLgD5bOWnfLFevPLuHmmqa8vny
-         bSBc5QVzIl1tSKc68fEymj/kP6ugHMMLqeW7mF2iRrz7t9EIhQ6fb/uoKmjKrA6fMX+A
-         XXPfQQ6dikd8nzXT1TeeJ2L9NHkRbUNGy9S05Daj/tADg63cGRs5Q7yf7ImugatgNeTd
-         8IOw==
+        h=from:to:subject:date:message-id;
+        bh=YM3cHX8aNmyjdCCM1EWhk5BHOZ9nwIvKNj24Yhi2ulk=;
+        b=X+rjEvxUYp0yqGhzIr7I66C+Gira1Df0T8+2Ir2HaqmhtojoltyC7ZmM+7yAkRoa9U
+         tdYe2U/+pvro9lnOid3iJOxM5YcuxXQv5h6Mgvo+w9CCpPYbpATVwAFbSzP5QKIJz8/O
+         A6WnwZVLm/2JyjdZCHtau1q0aGTyes+wND4MZrdQNOI5+8YK9Cd+d6V6kfIQ8m4Hh195
+         3SCTRdR8YHxM8wmc9U8Zbd9/SFfEBYSMG8VzG9GgI70ZlLMXUGonFw6IfJlgBXkvfLfB
+         u1TGqXyGGF/z4Q3C5y3hPBXNU52rRgxNNKm8QqVd44yB+JEriujf5E5z+W1P9v32vqRw
+         sRXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=rqPoa9nmh6ViwmQfUiPdC8UjYtnfYnNyOZnRZQTJTM0=;
-        b=TpoSZMdq19jyLGuhvOE+tWSxTZD6DQoy7vjxjQSJB7L5kH76Z5mEr93hTByZyCBuHF
-         +c4GtXz6HlvaTpRlLMY5tnvQSV23mSiJMwi0UpbAevrtgZx+NR6+g3vDjLwKKdGA4esk
-         b72z+PmgE8VN9FfwAMaH70IS6+gcSR3dbs8f9Rszc7giQ7wvSwfrxNN4clNZJFKqdmi7
-         XKft7jTnwc2eaQ84ugE3IFclgaRiTatLlRvuCccVD3fF2zLAOkvqsWX5ZkSuNfhfQTXn
-         2bLG+fHTF4yw+wSxzH34LVZ3Lq6V42fMiEyxbZE/rXeieZgY1b4HESZNFEcxzwRUUEwb
-         f/Zg==
-X-Gm-Message-State: AMCzsaWuyBV5Gv1f8QVK4PXw9sJPCSIqpHPq25XBDxVBiHeuh9zIvCuf
-        9D2baUml6h2lhWFMRuhmOzB5as+ig2dMhdaoXFA=
-X-Google-Smtp-Source: ABhQp+Q0/Q+cNDTFRc19ptuQiLrY+1Xckcf9Inqo7GEryu5E7NB8tYgkLe6mRbu8babjg5oLFEw3tvf/BX9IMEdvJtY=
-X-Received: by 10.80.208.222 with SMTP id g30mr2931736edf.246.1509602720962;
- Wed, 01 Nov 2017 23:05:20 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.80.213.80 with HTTP; Wed, 1 Nov 2017 23:05:00 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.21.1.1711012340290.6482@virtualbox>
-References: <20171031003351.22341-1-sbeller@google.com> <20171031211852.13001-1-sbeller@google.com>
- <20171031211852.13001-7-sbeller@google.com> <xmqqbmkmvdrq.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.21.1.1711011329300.6482@virtualbox> <CAGZ79kZPNiNnSJd6CNYb7XkTVsT2ONLQLhwAQxt6_SPFTSwMcw@mail.gmail.com>
- <EF573E5E-EA72-4DEE-822C-B44265FD581B@gmail.com> <alpine.DEB.2.21.1.1711012310250.6482@virtualbox>
- <CAGZ79kbOEM_W65Rym4yiDNHpFGTNWMYdh=aVPjThNWjEHPQong@mail.gmail.com> <alpine.DEB.2.21.1.1711012340290.6482@virtualbox>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Wed, 1 Nov 2017 23:05:00 -0700
-Message-ID: <CA+P7+xqw9zKNUkn9P-qA57ADSB5G_7Sd0JCc6SaK6bBf9-Jhtg@mail.gmail.com>
-Subject: Re: [PATCHv2 6/7] builtin/describe.c: describe a blob
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        git <git@vger.kernel.org>, Kevin Daudt <me@ikke.info>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:subject:date:message-id;
+        bh=YM3cHX8aNmyjdCCM1EWhk5BHOZ9nwIvKNj24Yhi2ulk=;
+        b=NpaqoW7es9yc/1GCEr7Q9FZclzU/r294IMg96c3rghSOULebqnnr3A8Dh9lTPHSkYQ
+         5XN0S0JUwTpPH0b6PnS7sebNAt6byRgi0uj4+NcEES3hZtJpB+ZpXJLxh6iJ6j47tFz6
+         PYsovOK3pNnz10wT2IYjgN6lHY1K644eu8zLHVOx0fOZMEEMpSLQQAq7BSMiwIM6201L
+         euP5DUgyaG45w/vTE8OO/3V5HFCefIzIc1J4WU9cH9RK5bx4w8DfKkAByPQzY5GL2LdI
+         fCKTwoQpF652hnA+UDDNrtRG6WP3kD3LazxP8kXuieTniZUlpecJo3lz0hczl3wOjzW1
+         YxQw==
+X-Gm-Message-State: AMCzsaVHZ6NDCcgjLaPwaAti+dE27rkEg09V4ay9yOkelBRg4Mv4Sa+Q
+        7WQiOoiLtfuQ0/rTM3uQwhcR2Vx1
+X-Google-Smtp-Source: ABhQp+TdRMRYleJE1EpmAFmCi6dMQmWQPaPeDHJZ2s0rHwaa1+W3hiFAPPQ0FTP1B/k3iKfBdZsFJQ==
+X-Received: by 10.99.127.89 with SMTP id p25mr2516793pgn.196.1509605579029;
+        Wed, 01 Nov 2017 23:52:59 -0700 (PDT)
+Received: from localhost.localdomain ([117.245.109.9])
+        by smtp.gmail.com with ESMTPSA id p4sm3879871pga.58.2017.11.01.23.52.55
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 01 Nov 2017 23:52:57 -0700 (PDT)
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+To:     git@vger.kernel.org
+Subject: [RFC PATCH v3 0/4] give more useful error messages while renaming branch
+Date:   Thu,  2 Nov 2017 12:22:38 +0530
+Message-Id: <20171102065242.25299-1-kaartic.sivaraam@gmail.com>
+X-Mailer: git-send-email 2.15.0.461.gf957c703b.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 1, 2017 at 3:41 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi Stefan,
->
-> On Wed, 1 Nov 2017, Stefan Beller wrote:
->
->> >> I know id prefer the first commit that introduced the blob. That's
->> >> what describing a commit does, it finds the oldest tag prior to the
->> >> commit, while --contains finds the first tag that contains the commit
->> >> as an ancestor.
->> >
->> > It is very easy to wish for "the oldest commit introducing a blob". But
->> > since we're in a DAG, this question is not necessarily easy to answer:
->> >
->> > - A - B - C
->> >     \   /
->> >       D
->> >
->> > Let's assume that all commits except A have the blob, and that B and D
->> > (for some reason) have the same author/committer dates.
->> >
->> > Do you identify B or D as the commit introducing the blob?
->>
->> The current implementation gives C, though.
->> (assuming C is HEAD, and A is ancient)
->>
->> With the --reverse flag one of B or D is given (not sure which,
->> depends on the exact order).
->
-> Sure, but it is still a tricky thing. Imagine
->
-> - A1 - B1 - A2 - B2 - B3
->
-> where all the B* commits have the blob. Do you really want to report B1
-> rather than B2 as the commit introducing the blob? (I would prefer B2...)
->
-> Ciao,
-> Dscho
+In builtin/branch, the error messages weren't handled directly by the branch
+renaming function and was left to the other function. Though this avoids
+redundancy this gave unclear error messages in some cases. So, make builtin/branch
+give more useful error messages.
 
-Yes, but I'd rather we find either B1 or B2, rather than B3, or in the
-first case, I'd rather we *at least* provide B or D, rather than C.
+Changes in v3:
 
-Or:
+	Incorporated suggestions from v2 to improve code and commit message. To
+	be more precise about the code part,
 
-A - B1 - C -E - ... - Z
-  \ B2 /
+	In 2/4 slightly re-ordered the parameters to move the flag parameters to
+	the end.
 
-In this example, if everything except a had the blob, we'd find z,
-which I think isn't as useful as finding one of B or D.
+	In 3/4, changed the return type of the branchname validation functions to
+	be the enum (whose values they return) as suggested by Stefan.
 
-Sure we can't find a perfect answer, but I'd rather find a commit
-which introduced as blob as one that adds the blob, rather than one
-that happens to point to it because it has history which includes it.
+	Dropped the PATCH 3/5 of v2 as there was another series[1] that did the
+	refactor and got merged to 'next'. I have now re-rolled the series over
+	'next' [pointing at 273055501 (Sync with master, 2017-10-24)].
+ 
+	This has made the code in 3/4 a little clumsy (at least to me) as I
+	tried to achieve to achieve what the previous patches did with the new
+	validate*_branchname functionS. Let me know, if it looks too bad.
 
-I think both questions are valuable, the first is "which commit last
-had this blob", the second  is "which commit first introduced this
-blob", neither of which can always give a definitive answer. It really
-depends on what question you're asking up front.
+So this could go on top of 'next' without any conflicts but in case I
+missed something, let me know. The series could be found in my fork[2].
+
+
+Any feedback welcome.
 
 Thanks,
-Jake
+Kaartic
+
+[1] : https://public-inbox.org/git/20171013051132.3973-1-gitster@pobox.com
+
+[2] : https://github.com/sivaraam/git/tree/work/branch-revamp
+
+
+Kaartic Sivaraam (4):
+  branch: improve documentation and naming of 'create_branch()'
+  branch: re-order function arguments to group related arguments
+  branch: introduce dont_fail parameter for branchname validation
+  builtin/branch: give more useful error messages when renaming
+
+ branch.c           | 63 ++++++++++++++++++++++++++++++------------------------
+ branch.h           | 57 ++++++++++++++++++++++++++++++++++++++----------
+ builtin/branch.c   | 49 ++++++++++++++++++++++++++++++++++--------
+ builtin/checkout.c | 11 +++++-----
+ 4 files changed, 127 insertions(+), 53 deletions(-)
+
+-- 
+2.15.0.rc2.401.g3db9995f9
