@@ -6,30 +6,30 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A01F92055E
-	for <e@80x24.org>; Thu,  2 Nov 2017 20:31:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CC93F20281
+	for <e@80x24.org>; Thu,  2 Nov 2017 20:32:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934539AbdKBUb6 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Nov 2017 16:31:58 -0400
-Received: from siwi.pair.com ([209.68.5.199]:14636 "EHLO siwi.pair.com"
+        id S934537AbdKBUb5 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Nov 2017 16:31:57 -0400
+Received: from siwi.pair.com ([209.68.5.199]:14620 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S934531AbdKBUb4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Nov 2017 16:31:56 -0400
+        id S934516AbdKBUbz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Nov 2017 16:31:55 -0400
 Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 4D8CD845AE;
-        Thu,  2 Nov 2017 16:31:56 -0400 (EDT)
+        by siwi.pair.com (Postfix) with ESMTP id 554D4845AD;
+        Thu,  2 Nov 2017 16:31:54 -0400 (EDT)
 Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id AF0DD845AC;
-        Thu,  2 Nov 2017 16:31:55 -0400 (EDT)
+        by siwi.pair.com (Postfix) with ESMTPSA id EFA2D845AC;
+        Thu,  2 Nov 2017 16:31:52 -0400 (EDT)
 From:   Jeff Hostetler <git@jeffhostetler.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, jonathantanmy@google.com,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH 13/14] fetch-pack: restore save_commit_buffer after use
-Date:   Thu,  2 Nov 2017 20:31:28 +0000
-Message-Id: <20171102203129.59417-14-git@jeffhostetler.com>
+Subject: [PATCH 11/14] t5500: more tests for partial clone and fetch
+Date:   Thu,  2 Nov 2017 20:31:26 +0000
+Message-Id: <20171102203129.59417-12-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20171102203129.59417-1-git@jeffhostetler.com>
 References: <20171102203129.59417-1-git@jeffhostetler.com>
@@ -40,58 +40,103 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jonathan Tan <jonathantanmy@google.com>
 
-In fetch-pack, the global variable save_commit_buffer is set to 0, but
-not restored to its original value after use.
-
-In particular, if show_log() (in log-tree.c) is invoked after
-fetch_pack() in the same process, show_log() will return before printing
-out the commit message (because the invocation to
-get_cached_commit_buffer() returns NULL, because the commit buffer was
-not saved). I discovered this when attempting to run "git log -S" in a
-partial clone, triggering the case where revision walking lazily loads
-missing objects.
-
-Therefore, restore save_commit_buffer to its original value after use.
-
-An alternative to solve the problem I had is to replace
-get_cached_commit_buffer() with get_commit_buffer(). That invocation was
-introduced in commit a97934d ("use get_cached_commit_buffer where
-appropriate", 2014-06-13) to replace "commit->buffer" introduced in
-commit 3131b71 ("Add "--show-all" revision walker flag for debugging",
-2008-02-13). In the latter commit, the commit author seems to be
-deciding between not showing an unparsed commit at all and showing an
-unparsed commit without the message (which is what the commit does), and
-did not mention parsing the unparsed commit, so I prefer to preserve the
-existing behavior.
-
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- fetch-pack.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ t/t5500-fetch-pack.sh | 60 +++++++++++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 56 insertions(+), 4 deletions(-)
 
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 895e8f9..121f03e 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -717,6 +717,7 @@ static int everything_local(struct fetch_pack_args *args,
- {
- 	struct ref *ref;
- 	int retval;
-+	int old_save_commit_buffer = save_commit_buffer;
- 	timestamp_t cutoff = 0;
+diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
+index 7c8339f..86cf653 100755
+--- a/t/t5500-fetch-pack.sh
++++ b/t/t5500-fetch-pack.sh
+@@ -782,7 +782,7 @@ test_expect_success 'filtering by size has no effect if support for it is not ad
+ 	test_i18ngrep "filtering not recognized by server" err
+ '
  
- 	save_commit_buffer = 0;
-@@ -784,6 +785,9 @@ static int everything_local(struct fetch_pack_args *args,
- 		print_verbose(args, _("already have %s (%s)"), oid_to_hex(remote),
- 			      ref->name);
- 	}
+-fetch_blob_max_bytes () {
++setup_blob_max_bytes () {
+ 		      SERVER="$1"
+ 		      URL="$2"
+ 
+@@ -794,7 +794,11 @@ fetch_blob_max_bytes () {
+ 	git clone "$URL" client &&
+ 	test_config -C client extensions.partialcloneremote origin &&
+ 
+-	test_commit -C "$SERVER" two &&
++	test_commit -C "$SERVER" two
++}
 +
-+	save_commit_buffer = old_save_commit_buffer;
-+
- 	return retval;
++do_blob_max_bytes() {
++	SERVER="$1" &&
+ 
+ 	git -C client fetch --filter=blobs:limit=0 origin HEAD:somewhere &&
+ 
+@@ -805,14 +809,62 @@ fetch_blob_max_bytes () {
  }
  
+ test_expect_success 'fetch with filtering' '
+-		     fetch_blob_max_bytes server server
++	setup_blob_max_bytes server server &&
++	do_blob_max_bytes server
++'
++
++test_expect_success 'fetch respects configured filtering' '
++	setup_blob_max_bytes server server &&
++
++	test_config -C client extensions.partialclonefilter blobs:limit=0 &&
++
++	git -C client fetch origin HEAD:somewhere &&
++
++	# Ensure that commit is fetched, but blob is not
++	test_config -C client extensions.partialcloneremote "arbitrary string" &&
++	git -C client cat-file -e $(git -C server rev-parse two) &&
++	test_must_fail git -C client cat-file -e $(git hash-object server/two.t)
++'
++
++test_expect_success 'pull respects configured filtering' '
++	setup_blob_max_bytes server server &&
++
++	# Hide two.t from tip so that client does not load it upon the
++	# automatic checkout that pull performs
++	git -C server rm two.t &&
++	test_commit -C server three &&
++
++	test_config -C server uploadpack.allowanysha1inwant 1 &&
++	test_config -C client extensions.partialclonefilter blobs:limit=0 &&
++
++	git -C client pull origin &&
++
++	# Ensure that commit is fetched, but blob is not
++	test_config -C client extensions.partialcloneremote "arbitrary string" &&
++	git -C client cat-file -e $(git -C server rev-parse two) &&
++	test_must_fail git -C client cat-file -e $(git hash-object server/two.t)
++'
++
++test_expect_success 'clone configures filtering' '
++	rm -rf server client &&
++	test_create_repo server &&
++	test_commit -C server one &&
++	test_commit -C server two &&
++	test_config -C server uploadpack.allowanysha1inwant 1 &&
++
++	git clone --filter=blobs:limit=12345 server client &&
++
++	# Ensure that we can, for example, checkout HEAD^
++	rm -rf client/.git/objects/* &&
++	git -C client checkout HEAD^
+ '
+ 
+ . "$TEST_DIRECTORY"/lib-httpd.sh
+ start_httpd
+ 
+ test_expect_success 'fetch with filtering and HTTP' '
+-		     fetch_blob_max_bytes "$HTTPD_DOCUMENT_ROOT_PATH/server" "$HTTPD_URL/smart/server"
++	setup_blob_max_bytes "$HTTPD_DOCUMENT_ROOT_PATH/server" "$HTTPD_URL/smart/server" &&
++	do_blob_max_bytes "$HTTPD_DOCUMENT_ROOT_PATH/server"
+ '
+ 
+ stop_httpd
 -- 
 2.9.3
 
