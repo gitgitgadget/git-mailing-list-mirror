@@ -7,23 +7,22 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	UNPARSEABLE_RELAY shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 50EB520281
-	for <e@80x24.org>; Thu,  2 Nov 2017 21:25:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B1CED20281
+	for <e@80x24.org>; Thu,  2 Nov 2017 21:25:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S964971AbdKBVZk (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Nov 2017 17:25:40 -0400
-Received: from marcos.anarc.at ([206.248.172.91]:35074 "EHLO marcos.anarc.at"
+        id S964976AbdKBVZl (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Nov 2017 17:25:41 -0400
+Received: from marcos.anarc.at ([206.248.172.91]:35086 "EHLO marcos.anarc.at"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S964867AbdKBVZj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Nov 2017 17:25:39 -0400
-Received: from [127.0.0.1] (localhost [127.0.0.1])      (Authenticated sender: anarcat) with ESMTPSA id 7D7151A00AD
+        id S964968AbdKBVZk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Nov 2017 17:25:40 -0400
+Received: from [127.0.0.1] (localhost [127.0.0.1])      (Authenticated sender: anarcat) with ESMTPSA id A77101A00AE
 From:   =?UTF-8?q?Antoine=20Beaupr=C3=A9?= <anarcat@debian.org>
 To:     git@vger.kernel.org
-Cc:     Ingo Ruhnke <grumbel@gmail.com>,
-        =?UTF-8?q?Antoine=20Beaupr=C3=A9?= <anarcat@debian.org>
-Subject: [PATCH v3 2/7] remote-mediawiki: allow fetching namespaces with spaces
-Date:   Thu,  2 Nov 2017 17:25:13 -0400
-Message-Id: <20171102212518.1601-3-anarcat@debian.org>
+Cc:     =?UTF-8?q?Antoine=20Beaupr=C3=A9?= <anarcat@debian.org>
+Subject: [PATCH v3 3/7] remote-mediawiki: show known namespace choices on failure
+Date:   Thu,  2 Nov 2017 17:25:14 -0400
+Message-Id: <20171102212518.1601-4-anarcat@debian.org>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20171102212518.1601-1-anarcat@debian.org>
 References: <20171030025142.19421-1-anarcat@debian.org>
@@ -36,30 +35,35 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Ingo Ruhnke <grumbel@gmail.com>
+If we fail to find a requested namespace, we should tell the user
+which ones we know about, since those were already fetched. This
+allows users to fetch all namespaces by specifying a dummy namespace,
+failing, then copying the list of namespaces in the config.
 
-we still want to use spaces as separators in the config, but we should
-allow the user to specify namespaces with spaces, so we use underscore
-for this.
+Eventually, we should have a flag that allows fetching all namespaces
+automatically.
 
 Reviewed-by: Antoine Beaupré <anarcat@debian.org>
 Signed-off-by: Antoine Beaupré <anarcat@debian.org>
 ---
- contrib/mw-to-git/git-remote-mediawiki.perl | 1 +
- 1 file changed, 1 insertion(+)
+ contrib/mw-to-git/git-remote-mediawiki.perl | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/contrib/mw-to-git/git-remote-mediawiki.perl b/contrib/mw-to-git/git-remote-mediawiki.perl
-index 5ffb57595..a1d783789 100755
+index a1d783789..e7616e1a2 100755
 --- a/contrib/mw-to-git/git-remote-mediawiki.perl
 +++ b/contrib/mw-to-git/git-remote-mediawiki.perl
-@@ -65,6 +65,7 @@ chomp(@tracked_categories);
+@@ -1334,7 +1334,9 @@ sub get_mw_namespace_id {
+ 	my $id;
  
- # Just like @tracked_categories, but for MediaWiki namespaces.
- my @tracked_namespaces = split(/[ \n]/, run_git("config --get-all remote.${remotename}.namespaces"));
-+for (@tracked_namespaces) { s/_/ /g; }
- chomp(@tracked_namespaces);
- 
- # Import media files on pull
+ 	if (!defined $ns) {
+-		print {*STDERR} "No such namespace ${name} on MediaWiki.\n";
++		my @namespaces = sort keys %namespace_id;
++		for (@namespaces) { s/ /_/g; }
++		print {*STDERR} "No such namespace ${name} on MediaWiki, known namespaces: @namespaces\n";
+ 		$ns = {is_namespace => 0};
+ 		$namespace_id{$name} = $ns;
+ 	}
 -- 
 2.11.0
 
