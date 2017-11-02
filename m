@@ -6,29 +6,30 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3920120281
-	for <e@80x24.org>; Thu,  2 Nov 2017 20:32:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 871D520281
+	for <e@80x24.org>; Thu,  2 Nov 2017 20:32:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934547AbdKBUcS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Nov 2017 16:32:18 -0400
-Received: from siwi.pair.com ([209.68.5.199]:54009 "EHLO siwi.pair.com"
+        id S934501AbdKBUbl (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Nov 2017 16:31:41 -0400
+Received: from siwi.pair.com ([209.68.5.199]:60021 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S934415AbdKBUbn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Nov 2017 16:31:43 -0400
+        id S934362AbdKBUbk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Nov 2017 16:31:40 -0400
 Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id D27C5845AF;
-        Thu,  2 Nov 2017 16:31:42 -0400 (EDT)
+        by siwi.pair.com (Postfix) with ESMTP id DBBBC845AD;
+        Thu,  2 Nov 2017 16:31:39 -0400 (EDT)
 Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 47064845AC;
-        Thu,  2 Nov 2017 16:31:41 -0400 (EDT)
+        by siwi.pair.com (Postfix) with ESMTPSA id 4B6F1845AC;
+        Thu,  2 Nov 2017 16:31:38 -0400 (EDT)
 From:   Jeff Hostetler <git@jeffhostetler.com>
 To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net, jonathantanmy@google.com
-Subject: [PATCH 03/14] fetch: refactor calculation of remote list
-Date:   Thu,  2 Nov 2017 20:31:18 +0000
-Message-Id: <20171102203129.59417-4-git@jeffhostetler.com>
+Cc:     gitster@pobox.com, peff@peff.net, jonathantanmy@google.com,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: [PATCH 01/14] upload-pack: add object filtering for partial clone
+Date:   Thu,  2 Nov 2017 20:31:16 +0000
+Message-Id: <20171102203129.59417-2-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20171102203129.59417-1-git@jeffhostetler.com>
 References: <20171102203129.59417-1-git@jeffhostetler.com>
@@ -37,70 +38,169 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jonathan Tan <jonathantanmy@google.com>
+From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Separate out the calculation of remotes to be fetched from and the
-actual fetching. This will allow us to include an additional step before
-the actual fetching in a subsequent commit.
+Teach upload-pack to negotiate object filtering over the protocol and
+to send filter parameters to pack-objects.  This is intended for partial
+clone and fetch.
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+The idea to make upload-pack configurable using uploadpack.allowFilter
+comes from Jonathan Tan's work in [1].
+
+[1] https://public-inbox.org/git/f211093280b422c32cc1b7034130072f35c5ed51.1506714999.git.jonathantanmy@google.com/
+
+Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- builtin/fetch.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ Documentation/config.txt                          |  4 ++++
+ Documentation/technical/pack-protocol.txt         |  8 ++++++++
+ Documentation/technical/protocol-capabilities.txt |  8 ++++++++
+ upload-pack.c                                     | 20 +++++++++++++++++++-
+ 4 files changed, 39 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 225c734..1b1f039 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1322,7 +1322,7 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- {
- 	int i;
- 	struct string_list list = STRING_LIST_INIT_DUP;
--	struct remote *remote;
-+	struct remote *remote = NULL;
- 	int result = 0;
- 	struct argv_array argv_gc_auto = ARGV_ARRAY_INIT;
- 
-@@ -1367,17 +1367,14 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 		else if (argc > 1)
- 			die(_("fetch --all does not make sense with refspecs"));
- 		(void) for_each_remote(get_one_remote_for_fetch, &list);
--		result = fetch_multiple(&list);
- 	} else if (argc == 0) {
- 		/* No arguments -- use default remote */
- 		remote = remote_get(NULL);
--		result = fetch_one(remote, argc, argv);
- 	} else if (multiple) {
- 		/* All arguments are assumed to be remotes or groups */
- 		for (i = 0; i < argc; i++)
- 			if (!add_remote_or_group(argv[i], &list))
- 				die(_("No such remote or remote group: %s"), argv[i]);
--		result = fetch_multiple(&list);
- 	} else {
- 		/* Single remote or group */
- 		(void) add_remote_or_group(argv[0], &list);
-@@ -1385,14 +1382,19 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 			/* More than one remote */
- 			if (argc > 1)
- 				die(_("Fetching a group and specifying refspecs does not make sense"));
--			result = fetch_multiple(&list);
- 		} else {
- 			/* Zero or one remotes */
- 			remote = remote_get(argv[0]);
--			result = fetch_one(remote, argc-1, argv+1);
-+			argc--;
-+			argv++;
- 		}
- 	}
- 
-+	if (remote)
-+		result = fetch_one(remote, argc, argv);
-+	else
-+		result = fetch_multiple(&list);
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 1ac0ae6..e528210 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -3268,6 +3268,10 @@ uploadpack.packObjectsHook::
+ 	was run. I.e., `upload-pack` will feed input intended for
+ 	`pack-objects` to the hook, and expects a completed packfile on
+ 	stdout.
 +
- 	if (!result && (recurse_submodules != RECURSE_SUBMODULES_OFF)) {
- 		struct argv_array options = ARGV_ARRAY_INIT;
++uploadpack.allowFilter::
++	If this option is set, `upload-pack` will advertise partial
++	clone and partial fetch object filtering.
+ +
+ Note that this configuration variable is ignored if it is seen in the
+ repository-level config (this is a safety measure against fetching from
+diff --git a/Documentation/technical/pack-protocol.txt b/Documentation/technical/pack-protocol.txt
+index ed1eae8..a43a113 100644
+--- a/Documentation/technical/pack-protocol.txt
++++ b/Documentation/technical/pack-protocol.txt
+@@ -212,6 +212,7 @@ out of what the server said it could do with the first 'want' line.
+   upload-request    =  want-list
+ 		       *shallow-line
+ 		       *1depth-request
++		       [filter-request]
+ 		       flush-pkt
  
+   want-list         =  first-want
+@@ -227,6 +228,8 @@ out of what the server said it could do with the first 'want' line.
+   additional-want   =  PKT-LINE("want" SP obj-id)
+ 
+   depth             =  1*DIGIT
++
++  filter-request    =  PKT-LINE("filter" SP filter-spec)
+ ----
+ 
+ Clients MUST send all the obj-ids it wants from the reference
+@@ -249,6 +252,11 @@ complete those commits. Commits whose parents are not received as a
+ result are defined as shallow and marked as such in the server. This
+ information is sent back to the client in the next step.
+ 
++The client can optionally request that pack-objects omit various
++objects from the packfile using one of several filtering techniques.
++These are intended for use with partial clone and partial fetch
++operations.  See `rev-list` for possible "filter-spec" values.
++
+ Once all the 'want's and 'shallow's (and optional 'deepen') are
+ transferred, clients MUST send a flush-pkt, to tell the server side
+ that it is done sending the list.
+diff --git a/Documentation/technical/protocol-capabilities.txt b/Documentation/technical/protocol-capabilities.txt
+index 26dcc6f..332d209 100644
+--- a/Documentation/technical/protocol-capabilities.txt
++++ b/Documentation/technical/protocol-capabilities.txt
+@@ -309,3 +309,11 @@ to accept a signed push certificate, and asks the <nonce> to be
+ included in the push certificate.  A send-pack client MUST NOT
+ send a push-cert packet unless the receive-pack server advertises
+ this capability.
++
++filter
++------
++
++If the upload-pack server advertises the 'filter' capability,
++fetch-pack may send "filter" commands to request a partial clone
++or partial fetch and request that the server omit various objects
++from the packfile.
+diff --git a/upload-pack.c b/upload-pack.c
+index e25f725..64a57a4 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -10,6 +10,8 @@
+ #include "diff.h"
+ #include "revision.h"
+ #include "list-objects.h"
++#include "list-objects-filter.h"
++#include "list-objects-filter-options.h"
+ #include "run-command.h"
+ #include "connect.h"
+ #include "sigchain.h"
+@@ -64,6 +66,10 @@ static int advertise_refs;
+ static int stateless_rpc;
+ static const char *pack_objects_hook;
+ 
++static int filter_capability_requested;
++static int filter_advertise;
++static struct list_objects_filter_options filter_options;
++
+ static void reset_timeout(void)
+ {
+ 	alarm(timeout);
+@@ -131,6 +137,7 @@ static void create_pack_file(void)
+ 		argv_array_push(&pack_objects.args, "--delta-base-offset");
+ 	if (use_include_tag)
+ 		argv_array_push(&pack_objects.args, "--include-tag");
++	arg_format_list_objects_filter(&pack_objects.args, &filter_options);
+ 
+ 	pack_objects.in = -1;
+ 	pack_objects.out = -1;
+@@ -794,6 +801,12 @@ static void receive_needs(void)
+ 			deepen_rev_list = 1;
+ 			continue;
+ 		}
++		if (skip_prefix(line, "filter ", &arg)) {
++			if (!filter_capability_requested)
++				die("git upload-pack: filtering capability not negotiated");
++			parse_list_objects_filter(&filter_options, arg);
++			continue;
++		}
+ 		if (!skip_prefix(line, "want ", &arg) ||
+ 		    get_oid_hex(arg, &oid_buf))
+ 			die("git upload-pack: protocol error, "
+@@ -821,6 +834,8 @@ static void receive_needs(void)
+ 			no_progress = 1;
+ 		if (parse_feature_request(features, "include-tag"))
+ 			use_include_tag = 1;
++		if (parse_feature_request(features, "filter"))
++			filter_capability_requested = 1;
+ 
+ 		o = parse_object(&oid_buf);
+ 		if (!o) {
+@@ -940,7 +955,7 @@ static int send_ref(const char *refname, const struct object_id *oid,
+ 		struct strbuf symref_info = STRBUF_INIT;
+ 
+ 		format_symref_info(&symref_info, cb_data);
+-		packet_write_fmt(1, "%s %s%c%s%s%s%s%s agent=%s\n",
++		packet_write_fmt(1, "%s %s%c%s%s%s%s%s%s agent=%s\n",
+ 			     oid_to_hex(oid), refname_nons,
+ 			     0, capabilities,
+ 			     (allow_unadvertised_object_request & ALLOW_TIP_SHA1) ?
+@@ -949,6 +964,7 @@ static int send_ref(const char *refname, const struct object_id *oid,
+ 				     " allow-reachable-sha1-in-want" : "",
+ 			     stateless_rpc ? " no-done" : "",
+ 			     symref_info.buf,
++			     filter_advertise ? " filter" : "",
+ 			     git_user_agent_sanitized());
+ 		strbuf_release(&symref_info);
+ 	} else {
+@@ -1027,6 +1043,8 @@ static int upload_pack_config(const char *var, const char *value, void *unused)
+ 	} else if (current_config_scope() != CONFIG_SCOPE_REPO) {
+ 		if (!strcmp("uploadpack.packobjectshook", var))
+ 			return git_config_string(&pack_objects_hook, var, value);
++	} else if (!strcmp("uploadpack.allowfilter", var)) {
++		filter_advertise = git_config_bool(var, value);
+ 	}
+ 	return parse_hide_refs_config(var, value, "uploadpack");
+ }
 -- 
 2.9.3
 
