@@ -2,136 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 87B87202A0
-	for <e@80x24.org>; Thu,  2 Nov 2017 00:07:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2239B202A0
+	for <e@80x24.org>; Thu,  2 Nov 2017 01:13:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933001AbdKBAHa (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Nov 2017 20:07:30 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:56968 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932433AbdKBAH3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Nov 2017 20:07:29 -0400
-Received: by mail-wr0-f196.google.com with SMTP id r79so3403894wrb.13
-        for <git@vger.kernel.org>; Wed, 01 Nov 2017 17:07:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:mime-version
-         :content-transfer-encoding;
-        bh=k/Bs2H3pXS0ZpecMHT4JYyIUi/99G0bYpz7oARm6pdc=;
-        b=GJ/Z6eQoai2Rcmi0+vWiwLxBKEkMM/AnFn3d2ABCerAYR7vF/RgNCKMmfc8MdLmV4G
-         ekwq4c53/38nBnfDrAZVP8t7263OTIf5lDebMcfCN8T7EO55bm7wh4GSgPeKEAknRMHQ
-         ke2A+u/nd2k4cmZvLvHwQHr0bsCeUfbeNmXtlnA1CgjdHTD4e8g+ZSJERDgvjZerpTcR
-         pSpoSzwEE50//t1Jtl1bHBfcYsloUwEWbvjllb43VsXhGJ1G4eFp4fBLxrCKG7hJI5ES
-         PTbLMkC6DGo6B1hTuj8ao3OfjJfnuWdD8iU25HG8O4863XDC/AHiT/ZQ0J7K3Acdoohm
-         XcVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :mime-version:content-transfer-encoding;
-        bh=k/Bs2H3pXS0ZpecMHT4JYyIUi/99G0bYpz7oARm6pdc=;
-        b=DZWS+8LUiAydZgSrD6s5lueMlDNcOsseqFEMbsgWwsNJoV671DIMEAqNL0o1rWjH3K
-         fWCCOWTQAKMwya3PEz7m5s46YY6RIzCTfb8jVbinKZj3iVlUpbd3blsbDXQpomPCIfNp
-         oZDg7Oi35iWnX6c0ZMLm/KR4JyT8yktLvsHIN7JBMxlaHnB6OmTrL0cJpTE21m7HGsnP
-         qXKxXmzQ97cEnjMHWs8tHjWwYE9mdIZ5cz3YGZpjhDMZ323RdVxgsN2AMzh0YkuNiWqS
-         y4sashi8qeKXTJ/2EXd2VwCeb3+leNYVqECeJ4q+rQCSPqf2IH3ssNWY6H/qwNpaXJ5S
-         IRyg==
-X-Gm-Message-State: AMCzsaWkPx+of83IT0ACOSOgIbkHdSbG2FAjicJAGJHvaogBu0Go1mtg
-        Je65Hm7XAyu7cvtlWnVxlZc=
-X-Google-Smtp-Source: ABhQp+TWA1SVsM4cxn+qyxluiJv/6TZq76iz+MYLnN6eCzPjLqupISLy5ntPWU9zBldKQ9HSrozt3w==
-X-Received: by 10.223.197.69 with SMTP id s5mr1272509wrf.120.1509581248156;
-        Wed, 01 Nov 2017 17:07:28 -0700 (PDT)
-Received: from localhost.localdomain (x590d9c13.dyn.telefonica.de. [89.13.156.19])
-        by smtp.gmail.com with ESMTPSA id q4sm1367377wmd.19.2017.11.01.17.07.26
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 01 Nov 2017 17:07:27 -0700 (PDT)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] config: document blame configuration
-Date:   Thu,  2 Nov 2017 01:07:22 +0100
-Message-Id: <20171102000722.1503-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.15.0.67.gb67a46776
-In-Reply-To: <20171101223234.14527-1-sbeller@google.com>
+        id S1755289AbdKBBNe (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Nov 2017 21:13:34 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55098 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751988AbdKBBNd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Nov 2017 21:13:33 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 28536AC1D8;
+        Wed,  1 Nov 2017 21:13:32 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=iDah5THYXZ2zmvC0qurGlqFXWiA=; b=wjO9hO
+        TMg/+eA6frW2axXj4k1NptbzsrJ8OmiMu1R1Vfm0hRpaBsIRffL1Wg2iDg9pMwWe
+        0uDWyWtvpTzDrO7vtRCjjJgCExyBkeWJ02auScaKqPhY6xZXdDcJuqcs2v1NJwX/
+        Ng+5uxJ295PierDXrCDUqSNoNU+FKV9fChfBk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=RqPmBCVRJc/Eo50yvlwqQ+J1D6bcZ3fE
+        YapfNw2oUksoKF95SAiMfKc4VP2F49NEGrZUKEdc2Rtojf3jtB336XRT4btAiU4X
+        /iPd9TqHfxuLqMVnBDlehpjHFqITFJvEWySkn7cienoygtFEtJ7k3hJX4lskT3WG
+        kLlLOGEdyEI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 200B3AC1D6;
+        Wed,  1 Nov 2017 21:13:32 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 95437AC1D4;
+        Wed,  1 Nov 2017 21:13:31 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     Jeff Hostetler <Jeff.Hostetler@microsoft.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: What's cooking in git.git (Oct 2017, #07; Mon, 30)
+References: <xmqqr2tl40pl.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.21.1.1710301830210.6482@virtualbox>
+        <f12353b6-cfed-722b-1386-d55700f21915@jeffhostetler.com>
+        <xmqqtvyg2g6y.fsf@gitster.mtv.corp.google.com>
+        <SN4PR2101MB07369D19A150418D5ACB858B8A5E0@SN4PR2101MB0736.namprd21.prod.outlook.com>
+        <xmqqd152yesv.fsf@gitster.mtv.corp.google.com>
+        <20171101105833.dddaadec0640b7e01962f900@google.com>
+Date:   Thu, 02 Nov 2017 10:13:30 +0900
+In-Reply-To: <20171101105833.dddaadec0640b7e01962f900@google.com> (Jonathan
+        Tan's message of "Wed, 1 Nov 2017 10:58:33 -0700")
+Message-ID: <xmqq4lqdtrd1.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0A7A3D0C-BF6B-11E7-9BBB-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> The options are currently only referenced by the git-blame man page,
-> also explain them in git-config, which is the canonical page to
-> contain all config options.
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-Good idea.
+> Junio, would you prefer that the combined effort be in one single patch
+> series or separated out into 3? The way I see it, there are two
+> independent patch series - this one (object filter support in rev-list
+> and pack-objects) and my one (repo extension for partial clone, fsck,
+> and gc), and one patch series that depends on these two.
 
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
->  Documentation/config.txt | 17 +++++++++++++++++
->  1 file changed, 17 insertions(+)
-> 
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 1ac0ae6adb..b18cead6aa 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -949,6 +949,23 @@ apply.whitespace::
->  	Tells 'git apply' how to handle whitespaces, in the same way
->  	as the `--whitespace` option. See linkgit:git-apply[1].
->  
-> +blame.root::
+I agree with the general 3-way split "here is how you systematically
+omit objects from enumeration (so that you an later use it to
+produce incomplete packs for transferring)", "here is how you deal
+with missing objects by treating them as non-errors when they are
+anchored by objects you got from the promisor", and "now both pieces
+are in there, let's plumb through the omitting enumeration code to
+pack generator used for object transfer, and add a mechanism for the
+two sides to communicate the parameter for object omission".
 
-This is blame.showRoot, isn't it?
+I agree that Jeff's (what should we call it?  the "object-filter"
+topic?) is interesting on its own and it is a good idea to have it
+as a separate topic.
 
-> +	Do not treat root commits as boundaries in `git-blame`.
+If you remove the "size based filtering" from your series (again,
+what should we call it?), however, does the remainder still have
+enough to demonstrate and exercise the features needed for "partial
+clone", though?
 
-You consistently write `git-blame`, i.e. with dash and between
-backticks.  The patch context mentions five git commands: two of them
-are linkgit macros, but the other three are all written without dash
-and between single quotes.  I think it should be written without dash,
-but I'm not sure about single quotes vs. backticks.  grep tells me
-they are both widespread for enclosing git commands.
+The resulting repository will not lack any object that needs to be
+anchored by objects you obtained from your promisor unless you have
+some filtering capability in the series, which means bugs in that
+series will long lay undetected until the third step that depend on
+the two series starts working, and at that time, we would have to
+sift bugs we find to see if they were bugs in the code added by the
+second topic or new bugs in the third topic, reducing the value we
+might gain by keeping these separate topics.
 
-> +	This option defaults to false.
-> +
-> +blame.blankboundary::
+That's the one thing that worries me.
 
-Config variables are usually written in camelCase in the
-documentation, see e.g. branch.autoSetupMerge in the patch context
-below.
-
-> +	Show blank SHA-1 for boundary commits in `git-blame`.
-
-Perhaps "Show blank object ID", since we're moving away from SHA-1?
-
-> +	This option defaults to false.
-> +
-> +blame.showemail::
-
-Again camelCase.
-
-> +	Show the author email instead of author name in `git-blame`.
-> +	This option defaults to false.
-> +
-> +blame.date::
-> +	Specifies the format used to output dates in `git-blame`.
-> +	If unset the iso format is used. For supported values,
-> +	see the discussion of the --date option at linkgit:git-log[1].
-
-Should '--date' be enclosed in... single quotes or backticks?  I don't
-know.
-
-> +
->  branch.autoSetupMerge::
->  	Tells 'git branch' and 'git checkout' to set up new branches
->  	so that linkgit:git-pull[1] will appropriately merge from the
-> -- 
-> 2.15.0.7.g980e40477f
-> 
-> 
