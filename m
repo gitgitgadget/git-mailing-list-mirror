@@ -2,81 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9A00120450
-	for <e@80x24.org>; Thu,  2 Nov 2017 07:23:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A11420450
+	for <e@80x24.org>; Thu,  2 Nov 2017 07:48:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754513AbdKBHXz (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Nov 2017 03:23:55 -0400
-Received: from mail-out.m-online.net ([212.18.0.9]:45358 "EHLO
-        mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752237AbdKBHXz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Nov 2017 03:23:55 -0400
-Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
-        by mail-out.m-online.net (Postfix) with ESMTP id 3ySGm81Sv3z1r195;
-        Thu,  2 Nov 2017 08:23:52 +0100 (CET)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.70])
-        by mail.m-online.net (Postfix) with ESMTP id 3ySGm80z7Yz1qqkM;
-        Thu,  2 Nov 2017 08:23:52 +0100 (CET)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
-        by localhost (dynscan1.mail.m-online.net [192.168.6.70]) (amavisd-new, port 10024)
-        with ESMTP id q62n6_RKmadI; Thu,  2 Nov 2017 08:23:51 +0100 (CET)
-X-Auth-Info: mJJxNSXQvhBBM9+2e8xfmERFZdIUnadvOz7YvNwcOrBLrA9RPowJ7EsQ4xWUPt80
-Received: from localhost (ppp-188-174-149-98.dynamic.mnet-online.de [188.174.149.98])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1752075AbdKBHst (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Nov 2017 03:48:49 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57126 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750836AbdKBHss (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Nov 2017 03:48:48 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3ECA0AFF31;
+        Thu,  2 Nov 2017 03:48:47 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=94TziDt2b/JvUxbLAc4O6jJrMzo=; b=RgfZI/
+        jbAPO9g3PNh2UDLNmteQc5ZAyx8E+/SkXLybuzz4pGzQnZtoMMfK9K5b0pvrDr//
+        hVgWHsAnZjZ5mAAdY/5qOyQQ1QuyzY6koSynjfP+OU3l2PTt7Qs9DwppVAsa9GWi
+        M614ckdEn9Pyy3OD4HP3uTyyVVfMZETOEeuYY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=IxIVf8BRfz0thj5rzkSsvqDpSRi0jzdr
+        qyyb+mRozn76wnDMe5x3kg/JyvtYd5Z54Rj9zL0UuPKd/cMcx04ZwpKV4VHck4vV
+        EnJNRvux+QFCcnFDWHTlLX0SXfeIFBfwRnZOR9LipPoohizN6GZhShTJTTugiuk+
+        Tol25MV/YoQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 35682AFF30;
+        Thu,  2 Nov 2017 03:48:47 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by mail.mnet-online.de (Postfix) with ESMTPSA;
-        Thu,  2 Nov 2017 08:23:51 +0100 (CET)
-Received: by localhost (Postfix, from userid 1000)
-        id 1BA3F2C1133; Thu,  2 Nov 2017 08:23:49 +0100 (CET)
-From:   Andreas Schwab <schwab@linux-m68k.org>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A1EC0AFF2F;
+        Thu,  2 Nov 2017 03:48:46 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
 Cc:     Stefan Beller <sbeller@google.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        git <git@vger.kernel.org>, Kevin Daudt <me@ikke.info>
-Subject: Re: [PATCHv2 6/7] builtin/describe.c: describe a blob
-References: <20171031003351.22341-1-sbeller@google.com>
-        <20171031211852.13001-1-sbeller@google.com>
-        <20171031211852.13001-7-sbeller@google.com>
-        <xmqqbmkmvdrq.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.21.1.1711011329300.6482@virtualbox>
-        <CAGZ79kZPNiNnSJd6CNYb7XkTVsT2ONLQLhwAQxt6_SPFTSwMcw@mail.gmail.com>
-        <EF573E5E-EA72-4DEE-822C-B44265FD581B@gmail.com>
-        <alpine.DEB.2.21.1.1711012310250.6482@virtualbox>
-        <CAGZ79kbOEM_W65Rym4yiDNHpFGTNWMYdh=aVPjThNWjEHPQong@mail.gmail.com>
-        <alpine.DEB.2.21.1.1711012340290.6482@virtualbox>
-X-Yow:  I have a TINY BOWL in my HEAD
-Date:   Thu, 02 Nov 2017 08:23:49 +0100
-In-Reply-To: <alpine.DEB.2.21.1.1711012340290.6482@virtualbox> (Johannes
-        Schindelin's message of "Wed, 1 Nov 2017 23:41:45 +0100 (CET)")
-Message-ID: <871slhm9dm.fsf@linux-m68k.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.3 (gnu/linux)
+        Philip Oakley <philipoakley@iee.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        git <git@vger.kernel.org>, Ben Peart <Ben.Peart@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Mike Hommey <mh@glandium.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Eric Wong <e@80x24.org>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: On the nature of cover letters [WAS Re: [PATCH 0/6] Create Git/Packet.pm]
+References: <CAGZ79kbHwXpWXhUkokA9=XGN9D1YZevO_8MhbOztMXpkkHMFbg@mail.gmail.com>
+        <20171101071422.c2k4plhntlgpdnbk@sigill.intra.peff.net>
+        <CAGZ79kYKK69Xw0-2OxFpo9Q=Kv1hvw8D7YkfhMFFcgzTuevTCQ@mail.gmail.com>
+        <CAGZ79kYghF6=AzL1N96fe2zixHCERXu=RpxHw2-kdUrU+j4CXw@mail.gmail.com>
+        <20171102072237.wbmrzrgfyxdb3m3v@sigill.intra.peff.net>
+Date:   Thu, 02 Nov 2017 16:48:45 +0900
+In-Reply-To: <20171102072237.wbmrzrgfyxdb3m3v@sigill.intra.peff.net> (Jeff
+        King's message of "Thu, 2 Nov 2017 03:22:37 -0400")
+Message-ID: <xmqqh8udqfxe.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
+X-Pobox-Relay-ID: 41C93484-BFA2-11E7-8A2C-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Nov 01 2017, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+Jeff King <peff@peff.net> writes:
 
-> Sure, but it is still a tricky thing. Imagine
->
-> - A1 - B1 - A2 - B2 - B3
->
-> where all the B* commits have the blob. Do you really want to report B1
-> rather than B2 as the commit introducing the blob? (I would prefer B2...)
+> If the clutter is too much, it could also go into a git-notes ref
+> (that's not already implemented, but it seems like it would be pretty
+> easy to teach "git am" to do that).
 
-What if B3 renames or copies the blob?
-
-Andreas.
-
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+FWIW, that is what I use a notes ref "amlog" for.
