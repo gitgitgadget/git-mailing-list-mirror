@@ -6,30 +6,30 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ED21020281
-	for <e@80x24.org>; Thu,  2 Nov 2017 20:32:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4ED3920281
+	for <e@80x24.org>; Thu,  2 Nov 2017 20:32:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934523AbdKBUbw (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Nov 2017 16:31:52 -0400
-Received: from siwi.pair.com ([209.68.5.199]:14605 "EHLO siwi.pair.com"
+        id S934544AbdKBUcN (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Nov 2017 16:32:13 -0400
+Received: from siwi.pair.com ([209.68.5.199]:14577 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S934520AbdKBUbv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Nov 2017 16:31:51 -0400
+        id S934510AbdKBUbr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Nov 2017 16:31:47 -0400
 Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 3DD39845AE;
-        Thu,  2 Nov 2017 16:31:51 -0400 (EDT)
+        by siwi.pair.com (Postfix) with ESMTP id 9741E845AD;
+        Thu,  2 Nov 2017 16:31:46 -0400 (EDT)
 Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 5503A845AC;
-        Thu,  2 Nov 2017 16:31:50 -0400 (EDT)
+        by siwi.pair.com (Postfix) with ESMTPSA id 046A4845AC;
+        Thu,  2 Nov 2017 16:31:45 -0400 (EDT)
 From:   Jeff Hostetler <git@jeffhostetler.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, jonathantanmy@google.com,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH 09/14] t5500: add fetch-pack tests for partial clone
-Date:   Thu,  2 Nov 2017 20:31:24 +0000
-Message-Id: <20171102203129.59417-10-git@jeffhostetler.com>
+Subject: [PATCH 06/14] pack-objects: test support for blob filtering
+Date:   Thu,  2 Nov 2017 20:31:21 +0000
+Message-Id: <20171102203129.59417-7-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20171102203129.59417-1-git@jeffhostetler.com>
 References: <20171102203129.59417-1-git@jeffhostetler.com>
@@ -40,57 +40,98 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jonathan Tan <jonathantanmy@google.com>
 
+As part of an effort to improve Git support for very large repositories
+in which clients typically have only a subset of all version-controlled
+blobs, test pack-objects support for --filter=blobs:limit=<n>, packing only
+blobs not exceeding that size unless the blob corresponds to a file
+whose name starts with ".git". upload-pack will eventually be taught to
+use this new parameter if needed to exclude certain blobs during a fetch
+or clone, potentially drastically reducing network consumption when
+serving these very large repositories.
+
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- t/t5500-fetch-pack.sh | 36 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 36 insertions(+)
+ t/t5300-pack-object.sh  | 45 +++++++++++++++++++++++++++++++++++++++++++++
+ t/test-lib-functions.sh | 12 ++++++++++++
+ 2 files changed, 57 insertions(+)
 
-diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
-index fdb98a8..7c8339f 100755
---- a/t/t5500-fetch-pack.sh
-+++ b/t/t5500-fetch-pack.sh
-@@ -782,4 +782,40 @@ test_expect_success 'filtering by size has no effect if support for it is not ad
- 	test_i18ngrep "filtering not recognized by server" err
+diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
+index 9c68b99..0739a07 100755
+--- a/t/t5300-pack-object.sh
++++ b/t/t5300-pack-object.sh
+@@ -457,6 +457,51 @@ test_expect_success !PTHREADS,C_LOCALE_OUTPUT 'pack-objects --threads=N or pack.
+ 	grep -F "no threads support, ignoring pack.threads" err
  '
  
-+fetch_blob_max_bytes () {
-+		      SERVER="$1"
-+		      URL="$2"
-+
-+	rm -rf "$SERVER" client &&
-+	test_create_repo "$SERVER" &&
-+	test_commit -C "$SERVER" one &&
-+	test_config -C "$SERVER" uploadpack.allowfilter 1 &&
-+
-+	git clone "$URL" client &&
-+	test_config -C client extensions.partialcloneremote origin &&
-+
-+	test_commit -C "$SERVER" two &&
-+
-+	git -C client fetch --filter=blobs:limit=0 origin HEAD:somewhere &&
-+
-+	# Ensure that commit is fetched, but blob is not
-+	test_config -C client extensions.partialcloneremote "arbitrary string" &&
-+	git -C client cat-file -e $(git -C "$SERVER" rev-parse two) &&
-+	test_must_fail git -C client cat-file -e $(git hash-object "$SERVER/two.t")
++lcut () {
++	perl -e '$/ = undef; $_ = <>; s/^.{'$1'}//s; print $_'
 +}
 +
-+test_expect_success 'fetch with filtering' '
-+		     fetch_blob_max_bytes server server
++test_expect_success 'filtering by size works with multiple excluded' '
++	rm -rf server &&
++	git init server &&
++	printf a > server/a &&
++	printf b > server/b &&
++	printf c-very-long-file > server/c &&
++	printf d-very-long-file > server/d &&
++	git -C server add a b c d &&
++	git -C server commit -m x &&
++
++	git -C server rev-parse HEAD >objects &&
++	git -C server pack-objects --revs --stdout --filter=blobs:limit=10 <objects >my.pack &&
++
++	# Ensure that only the small blobs are in the packfile
++	git index-pack my.pack &&
++	git verify-pack -v my.idx >objectlist &&
++	grep $(git hash-object server/a) objectlist &&
++	grep $(git hash-object server/b) objectlist &&
++	! grep $(git hash-object server/c) objectlist &&
++	! grep $(git hash-object server/d) objectlist
 +'
 +
-+. "$TEST_DIRECTORY"/lib-httpd.sh
-+start_httpd
++test_expect_success 'filtering by size never excludes special files' '
++	rm -rf server &&
++	git init server &&
++	printf a-very-long-file > server/a &&
++	printf a-very-long-file > server/.git-a &&
++	printf b-very-long-file > server/b &&
++	git -C server add a .git-a b &&
++	git -C server commit -m x &&
 +
-+test_expect_success 'fetch with filtering and HTTP' '
-+		     fetch_blob_max_bytes "$HTTPD_DOCUMENT_ROOT_PATH/server" "$HTTPD_URL/smart/server"
++	git -C server rev-parse HEAD >objects &&
++	git -C server pack-objects --revs --stdout --filter=blobs:limit=10 <objects >my.pack &&
++
++	# Ensure that the .git-a blob is in the packfile, despite also
++	# appearing as a non-.git file
++	git index-pack my.pack &&
++	git verify-pack -v my.idx >objectlist &&
++	grep $(git hash-object server/a) objectlist
 +'
 +
-+stop_httpd
+ #
+ # WARNING!
+ #
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 1701fe2..07b79c7 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -1020,3 +1020,15 @@ nongit () {
+ 		"$@"
+ 	)
+ }
 +
++# Converts big-endian pairs of hexadecimal digits into bytes. For example,
++# "printf 61620d0a | hex_pack" results in "ab\r\n".
++hex_pack () {
++	perl -e '$/ = undef; $input = <>; print pack("H*", $input)'
++}
 +
- test_done
++# Converts bytes into big-endian pairs of hexadecimal digits. For example,
++# "printf 'ab\r\n' | hex_unpack" results in "61620d0a".
++hex_unpack () {
++	perl -e '$/ = undef; $input = <>; print unpack("H2" x length($input), $input)'
++}
 -- 
 2.9.3
 
