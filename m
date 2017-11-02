@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2141E20281
-	for <e@80x24.org>; Thu,  2 Nov 2017 19:42:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DFBCF20281
+	for <e@80x24.org>; Thu,  2 Nov 2017 19:42:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S964786AbdKBTmE (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Nov 2017 15:42:04 -0400
-Received: from mail-io0-f196.google.com ([209.85.223.196]:55249 "EHLO
-        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934345AbdKBTmC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Nov 2017 15:42:02 -0400
-Received: by mail-io0-f196.google.com with SMTP id e89so1445842ioi.11
-        for <git@vger.kernel.org>; Thu, 02 Nov 2017 12:42:01 -0700 (PDT)
+        id S964817AbdKBTmJ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Nov 2017 15:42:09 -0400
+Received: from mail-io0-f195.google.com ([209.85.223.195]:55558 "EHLO
+        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934378AbdKBTmG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Nov 2017 15:42:06 -0400
+Received: by mail-io0-f195.google.com with SMTP id p186so1435436ioe.12
+        for <git@vger.kernel.org>; Thu, 02 Nov 2017 12:42:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=hl0+Zb/texquj9BHFW0mcm/coTuxAB6WF5vARA6U47E=;
-        b=UmkHu4srBQYcxlBZm/yRCSo7h3NwlEBwvQct4oJzE4SuXJkdxoHBv4S04lew58BYR+
-         3fo+Ns9RRme8xIdmejj0imaI9R0mfrh9pLJo9YrIJAQw5vfCvb0dPKDyIRZ8F0FDf1w9
-         dIlVkJ0V6crc/TPtPFlrCqd53Ery8SY3EMjZvdjF2A0FhoV93PMV7r4O0YBz6/bfTeqf
-         3cZ5e/bkKQggjGfIlXo7JiIBMuICBoHanPX/hQjTlJo7lwy9fZMDFUVKl0QFK/lk590x
-         +BpUmj6Zr4phbvD9+ue0Q8i2jDkr9HSv4zOk7F3cD+RY2Ok1sKrBqfYFq4mKHCwOKpum
-         gw/g==
+        bh=/SEzNkuC/nYYk9t7RRhK86AcyRxbngPzy4XnnS+wjSY=;
+        b=sgj+6qeQFw2fx3AMGgozZZHe9grE1oLZTzeqmhcQz9Dc24aTz1vMCc8BS+WhfPO7Dt
+         o2Tyk0ueG1GbroJBZ3wyRNKlk9ghSOUywLKMCrEXFR84jXicjcAs5mOTBnW8Oqb7WfLr
+         wNAw4yO7jVMOndtaGAKiDwjVYkkk0QB6pr1XSQ/mSEXXQuZW9kr9OijHcI8GmO2PovBX
+         9L2rL9vYkwh7hH8ISdP7UHUOK5EmLqNtK+Wy2SPO7NTfL6NO/UUp91Wo2PwDpugkyxA1
+         K7/ATlZLZwFfWDe4Gm0Fir+VX1TWud0odtnHd3xUAA8YjqLUym0ZxHQcMnUCNHswOs+x
+         8xSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=hl0+Zb/texquj9BHFW0mcm/coTuxAB6WF5vARA6U47E=;
-        b=k2c34QFaK3FN5iIWdkB4WC6PhtkyOhkXCbHl23feCW95TuBu8xOnulB8gIQDGKrbrj
-         AM26pqQeUeed27RHeyuerekFqWNWgAjMUMhTWyat8lcd7CZjmwMND94X5ETFiQRxHlhJ
-         llm7KiZfDk4mhE4UI2lhldTTX5VsajYLonBxObnYsW6xsOj01aqxdiHQUL2ox5C7xpjN
-         2tKEyPxfwmM65g0hJ6C/KAq+hBk1XJHpqKClmIwycgIucA91NypwA98f8dKSKykNuJ/C
-         toQNVySMDZMpQwHw6Nek1isK4are722wYjDxC29tVsJSxBSjwtXqYhSInKnXfidXdp15
-         B+OA==
-X-Gm-Message-State: AMCzsaW3HE+fJuaa69LF7IG3GZUwgezy+qHyHU+ko0M/ouUbiRp3YSY5
-        uiW2PFIiLC/4cK7V3NO467pk9A==
-X-Google-Smtp-Source: ABhQp+SgTOA+x19EQP0yVc0ORHpeFNlheUbhlOmIjdB7o03ttCvnPynW2AyMH9+kn0j8NNo4iXAraw==
-X-Received: by 10.107.97.1 with SMTP id v1mr5769253iob.263.1509651720878;
-        Thu, 02 Nov 2017 12:42:00 -0700 (PDT)
+        bh=/SEzNkuC/nYYk9t7RRhK86AcyRxbngPzy4XnnS+wjSY=;
+        b=W3YYdEQXcpkoY4xiVy8bfquOiE00QBy9nv+Ee1dbn+VilewJI7j6BPl8Ha9sBDIwhg
+         vpNULpFFEmcJKudX+erzO6tltpti6yFKxmLEp0G7rKU3It8jWD2mhR7EujSArNrRQDrI
+         GF7Im3cjxTAixpNiY2BohRb7R6rrjUy+CTgD1bpRZ3U8DUrKgsftlb/JuYe5dt6765CH
+         q1vjhM5a56DsJDyj50RHcHNZfzJxD/6w1Z35yV/OVWpd+Tq9SYt/edBqejCO+c7zwzJX
+         S77xX8pfGAQO9jccP1AsEqrXBJAH8zNzQjvZ0DTOPHwVd4nyipZpEzTbcNEppII+W0Ak
+         c92g==
+X-Gm-Message-State: AMCzsaXDUcV/WtLhdhvvgMG9TUagEGjUXWFi5oqo0AcfVHTsTXxqF0+J
+        mPhNpx+GoYSJxFFqQp45NJcVtA==
+X-Google-Smtp-Source: ABhQp+R19yzHzcpDgGdmqtphhPjUYs9oc0kNqY7byDLPrLNEXwuxwyLB9NoW3KOtsNkKZOQmwiNnGQ==
+X-Received: by 10.36.81.21 with SMTP id s21mr4329760ita.144.1509651725050;
+        Thu, 02 Nov 2017 12:42:05 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:1093:e9fc:3ec5:201d])
-        by smtp.gmail.com with ESMTPSA id w8sm1861259iod.26.2017.11.02.12.41.59
+        by smtp.gmail.com with ESMTPSA id r16sm1877967ioi.61.2017.11.02.12.42.04
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 02 Nov 2017 12:42:00 -0700 (PDT)
+        Thu, 02 Nov 2017 12:42:04 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com
 Cc:     Johannes.Schindelin@gmx.de, git@vger.kernel.org,
         jacob.keller@gmail.com, me@ikke.info, schwab@linux-m68k.org
-Subject: [PATCHv3 3/7] revision.h: introduce blob/tree walking in order of the commits
-Date:   Thu,  2 Nov 2017 12:41:44 -0700
-Message-Id: <20171102194148.2124-4-sbeller@google.com>
+Subject: [PATCHv3 6/7] builtin/describe.c: factor out describe_commit
+Date:   Thu,  2 Nov 2017 12:41:47 -0700
+Message-Id: <20171102194148.2124-7-sbeller@google.com>
 X-Mailer: git-send-email 2.15.0.7.g980e40477f
 In-Reply-To: <20171102194148.2124-1-sbeller@google.com>
 References: <20171031211852.13001-1-sbeller@google.com>
@@ -64,130 +64,143 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The functionality to list tree objects in the order they were seen
-while traversing the commits will be used in the next commit,
-where we teach `git describe` to describe not only commits, but
-trees and blobs, too.
+In the next patch we'll learn how to describe more than just commits,
+so factor out describing commits into its own function.  That will make
+the next patches easy as we still need to describe a commit as part of
+describing blobs.
+
+While factoring out the functionality to describe_commit, make sure
+that any output to stdout is put into a strbuf, which we can print
+afterwards, using puts which also adds the line ending.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- Documentation/rev-list-options.txt |  5 ++++
- list-objects.c                     |  2 ++
- revision.c                         |  2 ++
- revision.h                         |  3 ++-
- t/t6100-rev-list-in-order.sh       | 47 ++++++++++++++++++++++++++++++++++++++
- 5 files changed, 58 insertions(+), 1 deletion(-)
- create mode 100755 t/t6100-rev-list-in-order.sh
+ builtin/describe.c | 63 ++++++++++++++++++++++++++++++++----------------------
+ 1 file changed, 37 insertions(+), 26 deletions(-)
 
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index 13501e1556..9066e0c777 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -686,6 +686,11 @@ ifdef::git-rev-list[]
- 	all object IDs which I need to download if I have the commit
- 	object _bar_ but not _foo_''.
+diff --git a/builtin/describe.c b/builtin/describe.c
+index 3136efde31..9e9a5ed5d4 100644
+--- a/builtin/describe.c
++++ b/builtin/describe.c
+@@ -256,7 +256,7 @@ static unsigned long finish_depth_computation(
+ 	return seen_commits;
+ }
  
-+--in-commit-order::
-+	Print tree and blob ids in order of the commits. The tree
-+	and blob ids are printed after they are first referenced
-+	by a commit.
-+
- --objects-edge::
- 	Similar to `--objects`, but also print the IDs of excluded
- 	commits prefixed with a ``-'' character.  This is used by
-diff --git a/list-objects.c b/list-objects.c
-index 7c2ce9c4bd..07a92f35fe 100644
---- a/list-objects.c
-+++ b/list-objects.c
-@@ -239,6 +239,8 @@ void traverse_commit_list(struct rev_info *revs,
- 		if (commit->tree)
- 			add_pending_tree(revs, commit->tree);
- 		show_commit(commit, data);
-+		if (revs->tree_blobs_in_commit_order)
-+			traverse_trees_and_blobs(revs, &csp, show_object, data);
+-static void display_name(struct commit_name *n)
++static void append_name(struct commit_name *n, struct strbuf *dst)
+ {
+ 	if (n->prio == 2 && !n->tag) {
+ 		n->tag = lookup_tag(&n->oid);
+@@ -272,19 +272,18 @@ static void display_name(struct commit_name *n)
  	}
- 	traverse_trees_and_blobs(revs, &csp, show_object, data);
  
-diff --git a/revision.c b/revision.c
-index d167223e69..9329d4ebbf 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1845,6 +1845,8 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 		revs->dense = 0;
- 	} else if (!strcmp(arg, "--show-all")) {
- 		revs->show_all = 1;
-+	} else if (!strcmp(arg, "--in-commit-order")) {
-+		revs->tree_blobs_in_commit_order = 1;
- 	} else if (!strcmp(arg, "--remove-empty")) {
- 		revs->remove_empty_trees = 1;
- 	} else if (!strcmp(arg, "--merges")) {
-diff --git a/revision.h b/revision.h
-index 54761200ad..86985d68aa 100644
---- a/revision.h
-+++ b/revision.h
-@@ -121,7 +121,8 @@ struct rev_info {
- 			bisect:1,
- 			ancestry_path:1,
- 			first_parent_only:1,
--			line_level_traverse:1;
-+			line_level_traverse:1,
-+			tree_blobs_in_commit_order:1;
+ 	if (n->tag)
+-		printf("%s", n->tag->tag);
++		strbuf_addstr(dst, n->tag->tag);
+ 	else
+-		printf("%s", n->path);
++		strbuf_addstr(dst, n->path);
+ }
  
- 	/* Diff flags */
- 	unsigned int	diff:1,
-diff --git a/t/t6100-rev-list-in-order.sh b/t/t6100-rev-list-in-order.sh
-new file mode 100755
-index 0000000000..d4d539b0da
---- /dev/null
-+++ b/t/t6100-rev-list-in-order.sh
-@@ -0,0 +1,47 @@
-+#!/bin/sh
+-static void show_suffix(int depth, const struct object_id *oid)
++static void append_suffix(int depth, const struct object_id *oid, struct strbuf *dst)
+ {
+-	printf("-%d-g%s", depth, find_unique_abbrev(oid->hash, abbrev));
++	strbuf_addf(dst, "-%d-g%s", depth, find_unique_abbrev(oid->hash, abbrev));
+ }
+ 
+-static void describe(const char *arg, int last_one)
++static void describe_commit(struct object_id *oid, struct strbuf *dst)
+ {
+-	struct object_id oid;
+ 	struct commit *cmit, *gave_up_on = NULL;
+ 	struct commit_list *list;
+ 	struct commit_name *n;
+@@ -293,26 +292,18 @@ static void describe(const char *arg, int last_one)
+ 	unsigned long seen_commits = 0;
+ 	unsigned int unannotated_cnt = 0;
+ 
+-	if (debug)
+-		fprintf(stderr, _("describe %s\n"), arg);
+-
+-	if (get_oid(arg, &oid))
+-		die(_("Not a valid object name %s"), arg);
+-	cmit = lookup_commit_reference(&oid);
+-	if (!cmit)
+-		die(_("%s is not a valid '%s' object"), arg, commit_type);
++	cmit = lookup_commit_reference(oid);
+ 
+ 	n = find_commit_name(&cmit->object.oid);
+ 	if (n && (tags || all || n->prio == 2)) {
+ 		/*
+ 		 * Exact match to an existing ref.
+ 		 */
+-		display_name(n);
++		append_name(n, dst);
+ 		if (longformat)
+-			show_suffix(0, n->tag ? &n->tag->tagged->oid : &oid);
++			append_suffix(0, n->tag ? &n->tag->tagged->oid : oid, dst);
+ 		if (suffix)
+-			printf("%s", suffix);
+-		printf("\n");
++			strbuf_addstr(dst, suffix);
+ 		return;
+ 	}
+ 
+@@ -386,10 +377,9 @@ static void describe(const char *arg, int last_one)
+ 	if (!match_cnt) {
+ 		struct object_id *cmit_oid = &cmit->object.oid;
+ 		if (always) {
+-			printf("%s", find_unique_abbrev(cmit_oid->hash, abbrev));
++			strbuf_addstr(dst, find_unique_abbrev(cmit_oid->hash, abbrev));
+ 			if (suffix)
+-				printf("%s", suffix);
+-			printf("\n");
++				strbuf_addstr(dst, suffix);
+ 			return;
+ 		}
+ 		if (unannotated_cnt)
+@@ -437,15 +427,36 @@ static void describe(const char *arg, int last_one)
+ 		}
+ 	}
+ 
+-	display_name(all_matches[0].name);
++	append_name(all_matches[0].name, dst);
+ 	if (abbrev)
+-		show_suffix(all_matches[0].depth, &cmit->object.oid);
++		append_suffix(all_matches[0].depth, &cmit->object.oid, dst);
+ 	if (suffix)
+-		printf("%s", suffix);
+-	printf("\n");
++		strbuf_addstr(dst, suffix);
++}
 +
-+test_description='rev-list testing in-commit-order'
++static void describe(const char *arg, int last_one)
++{
++	struct object_id oid;
++	struct commit *cmit;
++	struct strbuf sb = STRBUF_INIT;
 +
-+. ./test-lib.sh
++	if (debug)
++		fprintf(stderr, _("describe %s\n"), arg);
 +
-+test_expect_success 'rev-list --in-commit-order' '
-+	for x in one two three four
-+	do
-+		echo $x >$x &&
-+		git add $x &&
-+		git commit -m "add file $x" ||
-+		return 1
-+	done &&
-+	for x in four three
-+	do
-+		git rm $x &&
-+		git commit -m "remove $x" ||
-+		return 1
-+	done &&
-+	git rev-list --in-commit-order --objects HEAD >actual.raw &&
-+	cut -c 1-40 >actual <actual.raw &&
++	if (get_oid(arg, &oid))
++		die(_("Not a valid object name %s"), arg);
++	cmit = lookup_commit_reference(&oid);
++	if (!cmit)
++		die(_("%s is not a valid '%s' object"), arg, commit_type);
 +
-+	git cat-file --batch-check="%(objectname)" >expect.raw <<-\EOF &&
-+		HEAD^{commit}
-+		HEAD^{tree}
-+		HEAD^{tree}:one
-+		HEAD^{tree}:two
-+		HEAD~1^{commit}
-+		HEAD~1^{tree}
-+		HEAD~1^{tree}:three
-+		HEAD~2^{commit}
-+		HEAD~2^{tree}
-+		HEAD~2^{tree}:four
-+		HEAD~3^{commit}
-+		# HEAD~3^{tree} skipped, same as HEAD~1^{tree}
-+		HEAD~4^{commit}
-+		# HEAD~4^{tree} skipped, same as HEAD^{tree}
-+		HEAD~5^{commit}
-+		HEAD~5^{tree}
-+	EOF
-+	grep -v "#" >expect <expect.raw &&
++	describe_commit(&oid, &sb);
 +
-+	test_cmp expect actual
-+'
++	puts(sb.buf);
+ 
+ 	if (!last_one)
+ 		clear_commit_marks(cmit, -1);
 +
-+test_done
++	strbuf_release(&sb);
+ }
+ 
+ int cmd_describe(int argc, const char **argv, const char *prefix)
 -- 
 2.15.0.7.g980e40477f
 
