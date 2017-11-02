@@ -7,22 +7,22 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	UNPARSEABLE_RELAY shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2CE9720281
-	for <e@80x24.org>; Thu,  2 Nov 2017 21:25:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A8F2120281
+	for <e@80x24.org>; Thu,  2 Nov 2017 21:25:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S964985AbdKBVZq (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Nov 2017 17:25:46 -0400
-Received: from marcos.anarc.at ([206.248.172.91]:35108 "EHLO marcos.anarc.at"
+        id S964987AbdKBVZs (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Nov 2017 17:25:48 -0400
+Received: from marcos.anarc.at ([206.248.172.91]:35146 "EHLO marcos.anarc.at"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S964968AbdKBVZn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Nov 2017 17:25:43 -0400
-Received: from [127.0.0.1] (localhost [127.0.0.1])      (Authenticated sender: anarcat) with ESMTPSA id 5A94F1A00AA
+        id S964980AbdKBVZq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Nov 2017 17:25:46 -0400
+Received: from [127.0.0.1] (localhost [127.0.0.1])      (Authenticated sender: anarcat) with ESMTPSA id 236151A00AE
 From:   =?UTF-8?q?Antoine=20Beaupr=C3=A9?= <anarcat@debian.org>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Antoine=20Beaupr=C3=A9?= <anarcat@debian.org>
-Subject: [PATCH v3 5/7] remote-mediawiki: support fetching from (Main) namespace
-Date:   Thu,  2 Nov 2017 17:25:16 -0400
-Message-Id: <20171102212518.1601-6-anarcat@debian.org>
+Subject: [PATCH v3 7/7] remote-mediawiki: show progress while fetching namespaces
+Date:   Thu,  2 Nov 2017 17:25:18 -0400
+Message-Id: <20171102212518.1601-8-anarcat@debian.org>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20171102212518.1601-1-anarcat@debian.org>
 References: <20171030025142.19421-1-anarcat@debian.org>
@@ -35,48 +35,31 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When we specify a list of namespaces to fetch from, by default the MW
-API will not fetch from the default namespace, refered to as "(Main)"
-in the documentation:
+Without this, the fetch process seems hanged while we fetch page
+listings across the namespaces. Obviously, it should be possible to
+silence this with -q, but that's an issue already present everywhere
+in the code and should be fixed separately:
 
-https://www.mediawiki.org/wiki/Manual:Namespace#Built-in_namespaces
-
-I haven't found a way to address that "(Main)" namespace when getting
-the namespace ids: indeed, when listing namespaces, there is no
-"canonical" field for the main namespace, although there is a "*"
-field that is set to "" (empty). So in theory, we could specify the
-empty namespace to get the main namespace, but that would make
-specifying namespaces harder for the user: we would need to teach
-users about the "empty" default namespace. It would also make the code
-more complicated: we'd need to parse quotes in the configuration.
-
-So we simply override the query here and allow the user to specify
-"(Main)" since that is the publicly documented name.
+https://github.com/Git-Mediawiki/Git-Mediawiki/issues/30
 
 Reviewed-by: Eric Sunshine <sunshine@sunshineco.com>
 Signed-off-by: Antoine Beaupré <anarcat@debian.org>
 ---
- contrib/mw-to-git/git-remote-mediawiki.perl | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ contrib/mw-to-git/git-remote-mediawiki.perl | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/contrib/mw-to-git/git-remote-mediawiki.perl b/contrib/mw-to-git/git-remote-mediawiki.perl
-index 21fb2e302..898541a9f 100755
+index f53e638cf..dc43a950b 100755
 --- a/contrib/mw-to-git/git-remote-mediawiki.perl
 +++ b/contrib/mw-to-git/git-remote-mediawiki.perl
-@@ -264,7 +264,12 @@ sub get_mw_tracked_categories {
- sub get_mw_tracked_namespaces {
-     my $pages = shift;
-     foreach my $local_namespace (@tracked_namespaces) {
--        my $namespace_id = get_mw_namespace_id($local_namespace);
-+        my $namespace_id;
-+        if ($local_namespace eq "(Main)") {
-+            $namespace_id = 0;
-+        } else {
-+            $namespace_id = get_mw_namespace_id($local_namespace);
-+        }
-         # virtual namespaces don't support allpages
-         next if !defined($namespace_id) || $namespace_id < 0;
-         my $mw_pages = $mediawiki->list( {
+@@ -279,6 +279,7 @@ sub get_mw_tracked_namespaces {
+             aplimit => 'max' } )
+             || die $mediawiki->{error}->{code} . ': '
+                 . $mediawiki->{error}->{details} . "\n";
++        print {*STDERR} "$#{$mw_pages} found in namespace $local_namespace ($namespace_id)\n";
+         foreach my $page (@{$mw_pages}) {
+             $pages->{$page->{title}} = $page;
+         }
 -- 
 2.11.0
 
