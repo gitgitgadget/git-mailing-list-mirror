@@ -6,30 +6,30 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 021F720281
-	for <e@80x24.org>; Thu,  2 Nov 2017 20:21:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 23E7520281
+	for <e@80x24.org>; Thu,  2 Nov 2017 20:21:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S964882AbdKBUVY (ORCPT <rfc822;e@80x24.org>);
+        id S964880AbdKBUVY (ORCPT <rfc822;e@80x24.org>);
         Thu, 2 Nov 2017 16:21:24 -0400
-Received: from siwi.pair.com ([209.68.5.199]:17005 "EHLO siwi.pair.com"
+Received: from siwi.pair.com ([209.68.5.199]:36099 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S964861AbdKBUVP (ORCPT <rfc822;git@vger.kernel.org>);
+        id S964866AbdKBUVP (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 2 Nov 2017 16:21:15 -0400
 Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 56131844EC;
-        Thu,  2 Nov 2017 16:21:14 -0400 (EDT)
+        by siwi.pair.com (Postfix) with ESMTP id 27413845A7;
+        Thu,  2 Nov 2017 16:21:15 -0400 (EDT)
 Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id C0628845A7;
-        Thu,  2 Nov 2017 16:21:13 -0400 (EDT)
+        by siwi.pair.com (Postfix) with ESMTPSA id 7DBCB845A5;
+        Thu,  2 Nov 2017 16:21:14 -0400 (EDT)
 From:   Jeff Hostetler <git@jeffhostetler.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, jonathantanmy@google.com,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH 6/9] index-pack: refactor writing of .keep files
-Date:   Thu,  2 Nov 2017 20:20:49 +0000
-Message-Id: <20171102202052.58762-7-git@jeffhostetler.com>
+Subject: [PATCH 7/9] introduce fetch-object: fetch one promisor object
+Date:   Thu,  2 Nov 2017 20:20:50 +0000
+Message-Id: <20171102202052.58762-8-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20171102202052.58762-1-git@jeffhostetler.com>
 References: <20171102202052.58762-1-git@jeffhostetler.com>
@@ -40,178 +40,331 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jonathan Tan <jonathantanmy@google.com>
 
-In a subsequent commit, index-pack will be taught to write ".promisor"
-files which are similar to the ".keep" files it knows how to write.
-Refactor the writing of ".keep" files, so that the implementation of
-writing ".promisor" files becomes easier.
+Introduce fetch-object, providing the ability to fetch one object from a
+promisor remote.
+
+This uses fetch-pack. To do this, the transport mechanism has been
+updated with 2 flags, "from-promisor" to indicate that the resulting
+pack comes from a promisor remote (and thus should be annotated as such
+by index-pack), and "no-haves" to suppress the sending of "have" lines.
+
+This will be tested in a subsequent commit.
+
+NEEDSWORK: update this when we have more information about protocol v2,
+which should allow a way to suppress the ref advertisement and
+officially allow any object type to be "want"-ed.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- builtin/index-pack.c | 99 ++++++++++++++++++++++++++++------------------------
- 1 file changed, 53 insertions(+), 46 deletions(-)
+ Documentation/gitremote-helpers.txt |  2 ++
+ Makefile                            |  1 +
+ builtin/fetch-pack.c                |  8 ++++++++
+ builtin/index-pack.c                | 16 +++++++++++++---
+ fetch-object.c                      | 23 +++++++++++++++++++++++
+ fetch-object.h                      |  6 ++++++
+ fetch-pack.c                        |  8 ++++++--
+ fetch-pack.h                        |  2 ++
+ remote-curl.c                       | 17 ++++++++++++++++-
+ transport.c                         |  8 ++++++++
+ transport.h                         |  8 ++++++++
+ 11 files changed, 93 insertions(+), 6 deletions(-)
+ create mode 100644 fetch-object.c
+ create mode 100644 fetch-object.h
 
+diff --git a/Documentation/gitremote-helpers.txt b/Documentation/gitremote-helpers.txt
+index 4a584f3..6da3f41 100644
+--- a/Documentation/gitremote-helpers.txt
++++ b/Documentation/gitremote-helpers.txt
+@@ -466,6 +466,8 @@ set by Git if the remote helper has the 'option' capability.
+ 	Transmit <string> as a push option. As the push option
+ 	must not contain LF or NUL characters, the string is not encoded.
+ 
++TODO document 'option from-promisor' and 'option no-haves' ?
++
+ SEE ALSO
+ --------
+ linkgit:git-remote[1]
+diff --git a/Makefile b/Makefile
+index 12d141a..7a0679a 100644
+--- a/Makefile
++++ b/Makefile
+@@ -792,6 +792,7 @@ LIB_OBJS += ewah/ewah_bitmap.o
+ LIB_OBJS += ewah/ewah_io.o
+ LIB_OBJS += ewah/ewah_rlw.o
+ LIB_OBJS += exec_cmd.o
++LIB_OBJS += fetch-object.o
+ LIB_OBJS += fetch-pack.o
+ LIB_OBJS += fsck.o
+ LIB_OBJS += gettext.o
+diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
+index 366b9d1..9f303cf 100644
+--- a/builtin/fetch-pack.c
++++ b/builtin/fetch-pack.c
+@@ -143,6 +143,14 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
+ 			args.update_shallow = 1;
+ 			continue;
+ 		}
++		if (!strcmp("--from-promisor", arg)) {
++			args.from_promisor = 1;
++			continue;
++		}
++		if (!strcmp("--no-haves", arg)) {
++			args.no_haves = 1;
++			continue;
++		}
+ 		usage(fetch_pack_usage);
+ 	}
+ 	if (deepen_not.nr)
 diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 8ec459f..4f305a7 100644
+index 4f305a7..24c2f05 100644
 --- a/builtin/index-pack.c
 +++ b/builtin/index-pack.c
-@@ -1389,15 +1389,58 @@ static void fix_unresolved_deltas(struct sha1file *f)
- 	free(sorted_by_pos);
+@@ -1429,14 +1429,16 @@ static void write_special_file(const char *suffix, const char *msg,
+ 		if (close(fd) != 0)
+ 			die_errno(_("cannot close written %s file '%s'"),
+ 				  suffix, filename);
+-		*report = suffix;
++		if (report)
++			*report = suffix;
+ 	}
+ 	strbuf_release(&name_buf);
  }
  
-+static const char *derive_filename(const char *pack_name, const char *suffix,
-+				   struct strbuf *buf)
-+{
-+	size_t len;
-+	if (!strip_suffix(pack_name, ".pack", &len))
-+		die(_("packfile name '%s' does not end with '.pack'"),
-+		    pack_name);
-+	strbuf_add(buf, pack_name, len);
-+	strbuf_addch(buf, '.');
-+	strbuf_addstr(buf, suffix);
-+	return buf->buf;
-+}
-+
-+static void write_special_file(const char *suffix, const char *msg,
-+			       const char *pack_name, const unsigned char *sha1,
-+			       const char **report)
-+{
-+	struct strbuf name_buf = STRBUF_INIT;
-+	const char *filename;
-+	int fd;
-+	int msg_len = strlen(msg);
-+
-+	if (pack_name)
-+		filename = derive_filename(pack_name, suffix, &name_buf);
-+	else
-+		filename = odb_pack_name(&name_buf, sha1, suffix);
-+
-+	fd = odb_pack_keep(filename);
-+	if (fd < 0) {
-+		if (errno != EEXIST)
-+			die_errno(_("cannot write %s file '%s'"),
-+				  suffix, filename);
-+	} else {
-+		if (msg_len > 0) {
-+			write_or_die(fd, msg, msg_len);
-+			write_or_die(fd, "\n", 1);
-+		}
-+		if (close(fd) != 0)
-+			die_errno(_("cannot close written %s file '%s'"),
-+				  suffix, filename);
-+		*report = suffix;
-+	}
-+	strbuf_release(&name_buf);
-+}
-+
  static void final(const char *final_pack_name, const char *curr_pack_name,
  		  const char *final_index_name, const char *curr_index_name,
--		  const char *keep_name, const char *keep_msg,
--		  unsigned char *sha1)
-+		  const char *keep_msg, unsigned char *sha1)
+-		  const char *keep_msg, unsigned char *sha1)
++		  const char *keep_msg, const char *promisor_msg,
++		  unsigned char *sha1)
  {
  	const char *report = "pack";
  	struct strbuf pack_name = STRBUF_INIT;
- 	struct strbuf index_name = STRBUF_INIT;
--	struct strbuf keep_name_buf = STRBUF_INIT;
- 	int err;
- 
- 	if (!from_stdin) {
-@@ -1409,28 +1452,9 @@ static void final(const char *final_pack_name, const char *curr_pack_name,
- 			die_errno(_("error while closing pack file"));
- 	}
- 
--	if (keep_msg) {
--		int keep_fd, keep_msg_len = strlen(keep_msg);
--
--		if (!keep_name)
--			keep_name = odb_pack_name(&keep_name_buf, sha1, "keep");
--
--		keep_fd = odb_pack_keep(keep_name);
--		if (keep_fd < 0) {
--			if (errno != EEXIST)
--				die_errno(_("cannot write keep file '%s'"),
--					  keep_name);
--		} else {
--			if (keep_msg_len > 0) {
--				write_or_die(keep_fd, keep_msg, keep_msg_len);
--				write_or_die(keep_fd, "\n", 1);
--			}
--			if (close(keep_fd) != 0)
--				die_errno(_("cannot close written keep file '%s'"),
--					  keep_name);
--			report = "keep";
--		}
--	}
-+	if (keep_msg)
-+		write_special_file("keep", keep_msg, final_pack_name, sha1,
-+				   &report);
+@@ -1455,6 +1457,9 @@ static void final(const char *final_pack_name, const char *curr_pack_name,
+ 	if (keep_msg)
+ 		write_special_file("keep", keep_msg, final_pack_name, sha1,
+ 				   &report);
++	if (promisor_msg)
++		write_special_file("promisor", promisor_msg, final_pack_name,
++				   sha1, NULL);
  
  	if (final_pack_name != curr_pack_name) {
  		if (!final_pack_name)
-@@ -1472,7 +1496,6 @@ static void final(const char *final_pack_name, const char *curr_pack_name,
- 
- 	strbuf_release(&index_name);
- 	strbuf_release(&pack_name);
--	strbuf_release(&keep_name_buf);
- }
- 
- static int git_index_pack_config(const char *k, const char *v, void *cb)
-@@ -1615,26 +1638,13 @@ static void show_pack_info(int stat_only)
- 	}
- }
- 
--static const char *derive_filename(const char *pack_name, const char *suffix,
--				   struct strbuf *buf)
--{
--	size_t len;
--	if (!strip_suffix(pack_name, ".pack", &len))
--		die(_("packfile name '%s' does not end with '.pack'"),
--		    pack_name);
--	strbuf_add(buf, pack_name, len);
--	strbuf_addstr(buf, suffix);
--	return buf->buf;
--}
--
- int cmd_index_pack(int argc, const char **argv, const char *prefix)
- {
- 	int i, fix_thin_pack = 0, verify = 0, stat_only = 0;
+@@ -1644,6 +1649,7 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
  	const char *curr_index;
  	const char *index_name = NULL, *pack_name = NULL;
--	const char *keep_name = NULL, *keep_msg = NULL;
--	struct strbuf index_name_buf = STRBUF_INIT,
--		      keep_name_buf = STRBUF_INIT;
-+	const char *keep_msg = NULL;
-+	struct strbuf index_name_buf = STRBUF_INIT;
+ 	const char *keep_msg = NULL;
++	const char *promisor_msg = NULL;
+ 	struct strbuf index_name_buf = STRBUF_INIT;
  	struct pack_idx_entry **idx_objects;
  	struct pack_idx_option opts;
- 	unsigned char pack_sha1[20];
-@@ -1745,9 +1755,7 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
- 	if (from_stdin && !startup_info->have_repository)
- 		die(_("--stdin requires a git repository"));
- 	if (!index_name && pack_name)
--		index_name = derive_filename(pack_name, ".idx", &index_name_buf);
--	if (keep_msg && !keep_name && pack_name)
--		keep_name = derive_filename(pack_name, ".keep", &keep_name_buf);
-+		index_name = derive_filename(pack_name, "idx", &index_name_buf);
- 
- 	if (verify) {
- 		if (!index_name)
-@@ -1795,13 +1803,12 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
+@@ -1693,6 +1699,10 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
+ 				keep_msg = "";
+ 			} else if (starts_with(arg, "--keep=")) {
+ 				keep_msg = arg + 7;
++			} else if (!strcmp(arg, "--promisor")) {
++				promisor_msg = "";
++			} else if (starts_with(arg, "--promisor=")) {
++				promisor_msg = arg + strlen("--promisor=");
+ 			} else if (starts_with(arg, "--threads=")) {
+ 				char *end;
+ 				nr_threads = strtoul(arg+10, &end, 0);
+@@ -1803,7 +1813,7 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
  	if (!verify)
  		final(pack_name, curr_pack,
  		      index_name, curr_index,
--		      keep_name, keep_msg,
-+		      keep_msg,
+-		      keep_msg,
++		      keep_msg, promisor_msg,
  		      pack_sha1);
  	else
  		close(input_fd);
- 	free(objects);
- 	strbuf_release(&index_name_buf);
--	strbuf_release(&keep_name_buf);
- 	if (pack_name == NULL)
- 		free((void *) curr_pack);
- 	if (index_name == NULL)
+diff --git a/fetch-object.c b/fetch-object.c
+new file mode 100644
+index 0000000..f89dbba
+--- /dev/null
++++ b/fetch-object.c
+@@ -0,0 +1,23 @@
++#include "cache.h"
++#include "packfile.h"
++#include "pkt-line.h"
++#include "strbuf.h"
++#include "transport.h"
++
++void fetch_object(const char *remote_name, const unsigned char *sha1)
++{
++	struct remote *remote;
++	struct transport *transport;
++	struct ref *ref;
++
++	remote = remote_get(remote_name);
++	if (!remote->url[0])
++		die(_("Remote with no URL"));
++	transport = transport_get(remote, remote->url[0]);
++
++	ref = alloc_ref(sha1_to_hex(sha1));
++	hashcpy(ref->old_oid.hash, sha1);
++	transport_set_option(transport, TRANS_OPT_FROM_PROMISOR, "1");
++	transport_set_option(transport, TRANS_OPT_NO_HAVES, "1");
++	transport_fetch_refs(transport, ref);
++}
+diff --git a/fetch-object.h b/fetch-object.h
+new file mode 100644
+index 0000000..f371300
+--- /dev/null
++++ b/fetch-object.h
+@@ -0,0 +1,6 @@
++#ifndef FETCH_OBJECT_H
++#define FETCH_OBJECT_H
++
++extern void fetch_object(const char *remote_name, const unsigned char *sha1);
++
++#endif
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 008b25d..4640b4e 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -450,6 +450,8 @@ static int find_common(struct fetch_pack_args *args,
+ 
+ 	flushes = 0;
+ 	retval = -1;
++	if (args->no_haves)
++		goto done;
+ 	while ((oid = get_rev())) {
+ 		packet_buf_write(&req_buf, "have %s\n", oid_to_hex(oid));
+ 		print_verbose(args, "have %s", oid_to_hex(oid));
+@@ -832,7 +834,7 @@ static int get_pack(struct fetch_pack_args *args,
+ 		argv_array_push(&cmd.args, alternate_shallow_file);
+ 	}
+ 
+-	if (do_keep) {
++	if (do_keep || args->from_promisor) {
+ 		if (pack_lockfile)
+ 			cmd.out = -1;
+ 		cmd_name = "index-pack";
+@@ -842,7 +844,7 @@ static int get_pack(struct fetch_pack_args *args,
+ 			argv_array_push(&cmd.args, "-v");
+ 		if (args->use_thin_pack)
+ 			argv_array_push(&cmd.args, "--fix-thin");
+-		if (args->lock_pack || unpack_limit) {
++		if (do_keep && (args->lock_pack || unpack_limit)) {
+ 			char hostname[HOST_NAME_MAX + 1];
+ 			if (xgethostname(hostname, sizeof(hostname)))
+ 				xsnprintf(hostname, sizeof(hostname), "localhost");
+@@ -852,6 +854,8 @@ static int get_pack(struct fetch_pack_args *args,
+ 		}
+ 		if (args->check_self_contained_and_connected)
+ 			argv_array_push(&cmd.args, "--check-self-contained-and-connected");
++		if (args->from_promisor)
++			argv_array_push(&cmd.args, "--promisor");
+ 	}
+ 	else {
+ 		cmd_name = "unpack-objects";
+diff --git a/fetch-pack.h b/fetch-pack.h
+index b6aeb43..84904c3 100644
+--- a/fetch-pack.h
++++ b/fetch-pack.h
+@@ -29,6 +29,8 @@ struct fetch_pack_args {
+ 	unsigned cloning:1;
+ 	unsigned update_shallow:1;
+ 	unsigned deepen:1;
++	unsigned from_promisor:1;
++	unsigned no_haves:1;
+ };
+ 
+ /*
+diff --git a/remote-curl.c b/remote-curl.c
+index 0053b09..41e8a42 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -33,7 +33,9 @@ struct options {
+ 		thin : 1,
+ 		/* One of the SEND_PACK_PUSH_CERT_* constants. */
+ 		push_cert : 2,
+-		deepen_relative : 1;
++		deepen_relative : 1,
++		from_promisor : 1,
++		no_haves : 1;
+ };
+ static struct options options;
+ static struct string_list cas_options = STRING_LIST_INIT_DUP;
+@@ -157,6 +159,15 @@ static int set_option(const char *name, const char *value)
+ 			return -1;
+ 		return 0;
+ #endif /* LIBCURL_VERSION_NUM >= 0x070a08 */
++
++	} else if (!strcmp(name, "from-promisor")) {
++		options.from_promisor = 1;
++		return 0;
++
++	} else if (!strcmp(name, "no-haves")) {
++		options.no_haves = 1;
++		return 0;
++
+ 	} else {
+ 		return 1 /* unsupported */;
+ 	}
+@@ -822,6 +833,10 @@ static int fetch_git(struct discovery *heads,
+ 				 options.deepen_not.items[i].string);
+ 	if (options.deepen_relative && options.depth)
+ 		argv_array_push(&args, "--deepen-relative");
++	if (options.from_promisor)
++		argv_array_push(&args, "--from-promisor");
++	if (options.no_haves)
++		argv_array_push(&args, "--no-haves");
+ 	argv_array_push(&args, url.buf);
+ 
+ 	for (i = 0; i < nr_heads; i++) {
+diff --git a/transport.c b/transport.c
+index f1e2f61..8211f82 100644
+--- a/transport.c
++++ b/transport.c
+@@ -160,6 +160,12 @@ static int set_git_option(struct git_transport_options *opts,
+ 	} else if (!strcmp(name, TRANS_OPT_DEEPEN_RELATIVE)) {
+ 		opts->deepen_relative = !!value;
+ 		return 0;
++	} else if (!strcmp(name, TRANS_OPT_FROM_PROMISOR)) {
++		opts->from_promisor = !!value;
++		return 0;
++	} else if (!strcmp(name, TRANS_OPT_NO_HAVES)) {
++		opts->no_haves = !!value;
++		return 0;
+ 	}
+ 	return 1;
+ }
+@@ -228,6 +234,8 @@ static int fetch_refs_via_pack(struct transport *transport,
+ 		data->options.check_self_contained_and_connected;
+ 	args.cloning = transport->cloning;
+ 	args.update_shallow = data->options.update_shallow;
++	args.from_promisor = data->options.from_promisor;
++	args.no_haves = data->options.no_haves;
+ 
+ 	if (!data->got_remote_heads) {
+ 		connect_setup(transport, 0);
+diff --git a/transport.h b/transport.h
+index bc55715..67428f6 100644
+--- a/transport.h
++++ b/transport.h
+@@ -15,6 +15,8 @@ struct git_transport_options {
+ 	unsigned self_contained_and_connected : 1;
+ 	unsigned update_shallow : 1;
+ 	unsigned deepen_relative : 1;
++	unsigned from_promisor : 1;
++	unsigned no_haves : 1;
+ 	int depth;
+ 	const char *deepen_since;
+ 	const struct string_list *deepen_not;
+@@ -210,6 +212,12 @@ void transport_check_allowed(const char *type);
+ /* Send push certificates */
+ #define TRANS_OPT_PUSH_CERT "pushcert"
+ 
++/* Indicate that these objects are being fetched by a promisor */
++#define TRANS_OPT_FROM_PROMISOR "from-promisor"
++
++/* Do not send "have" lines */
++#define TRANS_OPT_NO_HAVES "no-haves"
++
+ /**
+  * Returns 0 if the option was used, non-zero otherwise. Prints a
+  * message to stderr if the option is not used.
 -- 
 2.9.3
 
