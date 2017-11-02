@@ -7,71 +7,84 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3FF0420281
-	for <e@80x24.org>; Thu,  2 Nov 2017 18:35:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 639F320281
+	for <e@80x24.org>; Thu,  2 Nov 2017 18:42:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933431AbdKBSfw (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Nov 2017 14:35:52 -0400
-Received: from mail-wm0-f48.google.com ([74.125.82.48]:47655 "EHLO
-        mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752128AbdKBSfv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Nov 2017 14:35:51 -0400
-Received: by mail-wm0-f48.google.com with SMTP id r196so802730wmf.2
-        for <git@vger.kernel.org>; Thu, 02 Nov 2017 11:35:51 -0700 (PDT)
+        id S933640AbdKBSmT (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Nov 2017 14:42:19 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:50359 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933207AbdKBSmS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Nov 2017 14:42:18 -0400
+Received: by mail-wm0-f67.google.com with SMTP id s66so795476wmf.5
+        for <git@vger.kernel.org>; Thu, 02 Nov 2017 11:42:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=xBgCnyUDgR6ExHZLAdLJjNkIx2bHdSizQazkg/B2a9s=;
-        b=SuP4v1fvIaoKVJ7xI7RwIKfeN//i7WVdTWFCsFowbxUYQUOdBEZNjebXMKjIIR5+RF
-         33GSqr85Ag+l/zibsxWTn+Kj2BQO29VXaM+hLEKS1v3pzZUpPUn1nFRR74RLBtzs0JOQ
-         +4Yt9bSQPEbMH0vhvgdK70S145CrvdUndZZ8TdjQzKVmNfva6w+5sFjOgvL3xLETNEWg
-         tuyGfx2JyQFJqrIbwbmOKr3YT+/lx69lZIbctDmQPwk8JaqfR85WW3473frEhKjADcbP
-         iFiLgyIy0QDkjUoiGkDszldU9F69Dg95Eefu/flntdVMdhQBqeK0xGdtTtZkjEPP8HQn
-         1KXg==
+        bh=PETWm9jSOgYKYZ0skxnP5CG+ziUssQF1podSkoGstS0=;
+        b=Atl5lVF3NQOdOGLeHLW40vT5p9A+UOm+ThJCgdxMzmsXqJKWEyTIRvy3HhnWIHbN78
+         DxcLctdCxXvIKafLK0KpYoDiR2RtYHwp5UiqBPekE/fSTxTGk93wLiDh9rSFSHy0nwR1
+         f7JLbM5EVpios15StP1jDvMn7jefWNFa+6Z4zPDRFFv4tIsxfMAByjTwyCicUJ5Uw/7e
+         5E5YLXiCslRf034nTeN4TnN03VXEuyzLJLaDBFVoaJFlRyrTeeER2+UzgWu5FGcs+QeQ
+         5qUVlw1BXNxaPpbNd5Dw66wSvepj/AJBUoteozisG10ORaoFcWYh6r7hlslky7oTamb0
+         6+HQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=xBgCnyUDgR6ExHZLAdLJjNkIx2bHdSizQazkg/B2a9s=;
-        b=tVgaX1mf4BmoBuV7b55xbvIOqRcbfAxqRQg7awmQKP3in6rAwAZj9s+LaEYitGLqlk
-         fAARZedcmnV7Ht+YwoS6XcowLmffMkE1k6qgKfMV7UThITWIWysGWNaNffLiuE8bbEkL
-         MxF94sCgdn4OMrBxH4QuqXwAEGbN943rL0PJuSK8PaP+gvlCVxTF9i+L1RexXHheese1
-         SMTh0vv6469lYZL2+CEx0x5oXP8NQmDlYG2JpevOEb6kSMDoowGc2A0JPkRSsRORnr94
-         HsmccDWvf+mPMHkDa0GmN2qKpwB24/c0CkDuaJKUqpyKL3VNBxMoHoXP79vGbE0JH98M
-         gsRA==
-X-Gm-Message-State: AMCzsaXNkXkfzVV1H8TcDL/0mEkxxCOZSvytevXCu0uuEzzsLyBgADSm
-        XMpQxIZU/Wj1NE7u0xY6QIJhWwgCCWssLH/ordtgIw==
-X-Google-Smtp-Source: ABhQp+S5nlFnjIpNiMsyl+Th8IOyk3eQQgDOySGMv3Ao6pg+zu4YcDR0vOo67v3rGFp0yOksm09SA4KUG4HmIVqZwjI=
-X-Received: by 10.28.208.2 with SMTP id h2mr2256310wmg.13.1509647749993; Thu,
- 02 Nov 2017 11:35:49 -0700 (PDT)
+        bh=PETWm9jSOgYKYZ0skxnP5CG+ziUssQF1podSkoGstS0=;
+        b=qUCxigNMwSCLYpElsR266A1ARlKcqihQBhmllXEPfvNWDD0G0pOgTuUgRAlkIFDPLJ
+         1tvkaituF5kxPrgrlj0rb+g6KdrlMYbe/XLIbpxXGiF1PYuKr6nC2C8bT/cl/o8xsCfL
+         0r0y08Ck4/WqxNoz8lmyjP5ReM+KQ30hdl9w7GD5CDPOYohS4VVNRoeylQ1nvxS/Zqm1
+         kAt241RfxS/3Hfchu/0jOAqCyfDY/uBof8BiNRKIFCPW7Sm/4/q4ICJfbRW2Ncx5i8yL
+         De04NkA7Vsf/9KPdP+GXvpQuy9NNp5Ifd0mG0h7uKfYWNYPmMVs2yar8FTb5M41kQA+J
+         aA+g==
+X-Gm-Message-State: AMCzsaVq2dtJrRaJTsEWPARtOMnimlnpnJ6UoxvedrkzEMVL9jhSf1gj
+        9ue7XdJAkluUae8NbYMrbS7dgPkSCkj+33HWq7Ighg==
+X-Google-Smtp-Source: ABhQp+SANLeNC89fIv8kc/BsgkZ+6HFJNzt7W7xm/5afFBY6GqEJ6Yoe/VOcYaryIM2Gg1DTTobtYrpf0lobrEDe/f4=
+X-Received: by 10.28.208.2 with SMTP id h2mr2267609wmg.13.1509648136671; Thu,
+ 02 Nov 2017 11:42:16 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.223.195.125 with HTTP; Thu, 2 Nov 2017 11:35:49 -0700 (PDT)
-In-Reply-To: <CAOAxMp-vAM7mCWuanj69coM09zF-Sxe=G=-XMd_RmaAne8qFvw@mail.gmail.com>
-References: <CAOAxMp-vAM7mCWuanj69coM09zF-Sxe=G=-XMd_RmaAne8qFvw@mail.gmail.com>
+Received: by 10.223.195.125 with HTTP; Thu, 2 Nov 2017 11:42:16 -0700 (PDT)
+In-Reply-To: <e8a600d4-880b-4fb8-6901-78acbd720261@gmail.com>
+References: <20170925082024.2691-1-kaarticsivaraam91196@gmail.com>
+ <20171102065407.25404-1-kaartic.sivaraam@gmail.com> <20171102065407.25404-4-kaartic.sivaraam@gmail.com>
+ <e8a600d4-880b-4fb8-6901-78acbd720261@gmail.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 2 Nov 2017 11:35:49 -0700
-Message-ID: <CAGZ79kaDB+nnTZVw-7msVa12RQa3sHn_zFKQ2-5i2eosuHutxQ@mail.gmail.com>
-Subject: Re: Git libsecret No Unlock Dialog Issue
-To:     Yaroslav Sapozhnyk <yaroslav.sapozhnik@gmail.com>
-Cc:     git <git@vger.kernel.org>
+Date:   Thu, 2 Nov 2017 11:42:16 -0700
+Message-ID: <CAGZ79kY-1PLf2aOeNOkPz_MNSPtJHTtj=9eC-xdbbLq+WZbkwg@mail.gmail.com>
+Subject: Re: [RFC PATCH v3 3/4] branch: introduce dont_fail parameter for
+ branchname validation
+To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 2, 2017 at 9:00 AM, Yaroslav Sapozhnyk
-<yaroslav.sapozhnik@gmail.com> wrote:
-> When using Git on Fedora with locked password store
-> credential-libsecret asks for username/password instead of displaying
-> the unlock dialog.
-
-Git as packaged by Fedora or upstream Git (which version)?
-
-> If the store is unlocked credential helper gets the credentials from
-> the store though.
+On Thu, Nov 2, 2017 at 1:39 AM, Kaartic Sivaraam
+<kaartic.sivaraam@gmail.com> wrote:
+> On Thursday 02 November 2017 12:24 PM, Kaartic Sivaraam wrote:
+>>
+>> Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+>> Signed-off-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
 >
-> --
-> Regards,
-> Yaroslav Sapozhnyk
+>
+> I just now saw this small glitch as a consequence of recently
+> changing my email address. I would prefer to keep the second one
+> but as the other patches have the first one it's better to keep
+> the first one for now.
+
+If you prefer one of them, you may have incentive to
+add an entry into .mailmap file, otherwise I'd kindly ask you
+to. :) (c.f. `git log --no-merges -- .mailmap`)
+
+> But wait, it seems that this commit also has a different author
+> identity (the email adress part). If this is a big enough issue,
+> I'll fix that and send a v4 (possibly with any other suggested
+> changes) else I'll leave it as it is.
+>
+> BTW, I added the Ccs to this mail which I forgot to do when
+> sending the patches, hope it's not an issue.
