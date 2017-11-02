@@ -6,30 +6,29 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4ED3920281
-	for <e@80x24.org>; Thu,  2 Nov 2017 20:32:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3920120281
+	for <e@80x24.org>; Thu,  2 Nov 2017 20:32:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934544AbdKBUcN (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Nov 2017 16:32:13 -0400
-Received: from siwi.pair.com ([209.68.5.199]:14577 "EHLO siwi.pair.com"
+        id S934547AbdKBUcS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Nov 2017 16:32:18 -0400
+Received: from siwi.pair.com ([209.68.5.199]:54009 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S934510AbdKBUbr (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Nov 2017 16:31:47 -0400
+        id S934415AbdKBUbn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Nov 2017 16:31:43 -0400
 Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 9741E845AD;
-        Thu,  2 Nov 2017 16:31:46 -0400 (EDT)
+        by siwi.pair.com (Postfix) with ESMTP id D27C5845AF;
+        Thu,  2 Nov 2017 16:31:42 -0400 (EDT)
 Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 046A4845AC;
-        Thu,  2 Nov 2017 16:31:45 -0400 (EDT)
+        by siwi.pair.com (Postfix) with ESMTPSA id 47064845AC;
+        Thu,  2 Nov 2017 16:31:41 -0400 (EDT)
 From:   Jeff Hostetler <git@jeffhostetler.com>
 To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net, jonathantanmy@google.com,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH 06/14] pack-objects: test support for blob filtering
-Date:   Thu,  2 Nov 2017 20:31:21 +0000
-Message-Id: <20171102203129.59417-7-git@jeffhostetler.com>
+Cc:     gitster@pobox.com, peff@peff.net, jonathantanmy@google.com
+Subject: [PATCH 03/14] fetch: refactor calculation of remote list
+Date:   Thu,  2 Nov 2017 20:31:18 +0000
+Message-Id: <20171102203129.59417-4-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20171102203129.59417-1-git@jeffhostetler.com>
 References: <20171102203129.59417-1-git@jeffhostetler.com>
@@ -40,98 +39,68 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jonathan Tan <jonathantanmy@google.com>
 
-As part of an effort to improve Git support for very large repositories
-in which clients typically have only a subset of all version-controlled
-blobs, test pack-objects support for --filter=blobs:limit=<n>, packing only
-blobs not exceeding that size unless the blob corresponds to a file
-whose name starts with ".git". upload-pack will eventually be taught to
-use this new parameter if needed to exclude certain blobs during a fetch
-or clone, potentially drastically reducing network consumption when
-serving these very large repositories.
+Separate out the calculation of remotes to be fetched from and the
+actual fetching. This will allow us to include an additional step before
+the actual fetching in a subsequent commit.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- t/t5300-pack-object.sh  | 45 +++++++++++++++++++++++++++++++++++++++++++++
- t/test-lib-functions.sh | 12 ++++++++++++
- 2 files changed, 57 insertions(+)
+ builtin/fetch.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
-index 9c68b99..0739a07 100755
---- a/t/t5300-pack-object.sh
-+++ b/t/t5300-pack-object.sh
-@@ -457,6 +457,51 @@ test_expect_success !PTHREADS,C_LOCALE_OUTPUT 'pack-objects --threads=N or pack.
- 	grep -F "no threads support, ignoring pack.threads" err
- '
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 225c734..1b1f039 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1322,7 +1322,7 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ {
+ 	int i;
+ 	struct string_list list = STRING_LIST_INIT_DUP;
+-	struct remote *remote;
++	struct remote *remote = NULL;
+ 	int result = 0;
+ 	struct argv_array argv_gc_auto = ARGV_ARRAY_INIT;
  
-+lcut () {
-+	perl -e '$/ = undef; $_ = <>; s/^.{'$1'}//s; print $_'
-+}
+@@ -1367,17 +1367,14 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 		else if (argc > 1)
+ 			die(_("fetch --all does not make sense with refspecs"));
+ 		(void) for_each_remote(get_one_remote_for_fetch, &list);
+-		result = fetch_multiple(&list);
+ 	} else if (argc == 0) {
+ 		/* No arguments -- use default remote */
+ 		remote = remote_get(NULL);
+-		result = fetch_one(remote, argc, argv);
+ 	} else if (multiple) {
+ 		/* All arguments are assumed to be remotes or groups */
+ 		for (i = 0; i < argc; i++)
+ 			if (!add_remote_or_group(argv[i], &list))
+ 				die(_("No such remote or remote group: %s"), argv[i]);
+-		result = fetch_multiple(&list);
+ 	} else {
+ 		/* Single remote or group */
+ 		(void) add_remote_or_group(argv[0], &list);
+@@ -1385,14 +1382,19 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 			/* More than one remote */
+ 			if (argc > 1)
+ 				die(_("Fetching a group and specifying refspecs does not make sense"));
+-			result = fetch_multiple(&list);
+ 		} else {
+ 			/* Zero or one remotes */
+ 			remote = remote_get(argv[0]);
+-			result = fetch_one(remote, argc-1, argv+1);
++			argc--;
++			argv++;
+ 		}
+ 	}
+ 
++	if (remote)
++		result = fetch_one(remote, argc, argv);
++	else
++		result = fetch_multiple(&list);
 +
-+test_expect_success 'filtering by size works with multiple excluded' '
-+	rm -rf server &&
-+	git init server &&
-+	printf a > server/a &&
-+	printf b > server/b &&
-+	printf c-very-long-file > server/c &&
-+	printf d-very-long-file > server/d &&
-+	git -C server add a b c d &&
-+	git -C server commit -m x &&
-+
-+	git -C server rev-parse HEAD >objects &&
-+	git -C server pack-objects --revs --stdout --filter=blobs:limit=10 <objects >my.pack &&
-+
-+	# Ensure that only the small blobs are in the packfile
-+	git index-pack my.pack &&
-+	git verify-pack -v my.idx >objectlist &&
-+	grep $(git hash-object server/a) objectlist &&
-+	grep $(git hash-object server/b) objectlist &&
-+	! grep $(git hash-object server/c) objectlist &&
-+	! grep $(git hash-object server/d) objectlist
-+'
-+
-+test_expect_success 'filtering by size never excludes special files' '
-+	rm -rf server &&
-+	git init server &&
-+	printf a-very-long-file > server/a &&
-+	printf a-very-long-file > server/.git-a &&
-+	printf b-very-long-file > server/b &&
-+	git -C server add a .git-a b &&
-+	git -C server commit -m x &&
-+
-+	git -C server rev-parse HEAD >objects &&
-+	git -C server pack-objects --revs --stdout --filter=blobs:limit=10 <objects >my.pack &&
-+
-+	# Ensure that the .git-a blob is in the packfile, despite also
-+	# appearing as a non-.git file
-+	git index-pack my.pack &&
-+	git verify-pack -v my.idx >objectlist &&
-+	grep $(git hash-object server/a) objectlist
-+'
-+
- #
- # WARNING!
- #
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 1701fe2..07b79c7 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -1020,3 +1020,15 @@ nongit () {
- 		"$@"
- 	)
- }
-+
-+# Converts big-endian pairs of hexadecimal digits into bytes. For example,
-+# "printf 61620d0a | hex_pack" results in "ab\r\n".
-+hex_pack () {
-+	perl -e '$/ = undef; $input = <>; print pack("H*", $input)'
-+}
-+
-+# Converts bytes into big-endian pairs of hexadecimal digits. For example,
-+# "printf 'ab\r\n' | hex_unpack" results in "61620d0a".
-+hex_unpack () {
-+	perl -e '$/ = undef; $input = <>; print unpack("H2" x length($input), $input)'
-+}
+ 	if (!result && (recurse_submodules != RECURSE_SUBMODULES_OFF)) {
+ 		struct argv_array options = ARGV_ARRAY_INIT;
+ 
 -- 
 2.9.3
 
