@@ -2,110 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 59B7020281
-	for <e@80x24.org>; Thu,  2 Nov 2017 18:10:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5B1D820281
+	for <e@80x24.org>; Thu,  2 Nov 2017 18:18:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933374AbdKBSKz (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Nov 2017 14:10:55 -0400
-Received: from mail-io0-f196.google.com ([209.85.223.196]:46258 "EHLO
-        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933025AbdKBSKy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Nov 2017 14:10:54 -0400
-Received: by mail-io0-f196.google.com with SMTP id 101so946518ioj.3
-        for <git@vger.kernel.org>; Thu, 02 Nov 2017 11:10:54 -0700 (PDT)
+        id S933839AbdKBSS1 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Nov 2017 14:18:27 -0400
+Received: from mail-qt0-f170.google.com ([209.85.216.170]:56438 "EHLO
+        mail-qt0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933807AbdKBSS0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Nov 2017 14:18:26 -0400
+Received: by mail-qt0-f170.google.com with SMTP id z28so471587qtz.13
+        for <git@vger.kernel.org>; Thu, 02 Nov 2017 11:18:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=i1oaJ1m+JWMKDzxnV7QRVzSnG8KQ+iJbIatG/G5JPqw=;
-        b=d2Aw92qg5SCDPC2fZ5U7p/lYcJH6Q8DdCQqKD+lVJzsA/cbCeBu/sOxJSeMqjtzvO/
-         eS4ATEoAH1xIvsLfSuRH7Xk/4Ve9RocwdCjEcleZ4hjJvUbVQj8NQEkxv36QCJLwBsBA
-         lWVwnoaFkdWxMc856ax2aPAt7/+DzFwaVY3LdgnnoUoAFwc5Uht5pDPeheFZTGhnTC4s
-         H1bowL3yClvxPSMcVHDgbKv65CHJYK3d0MNK6vjWRJzgWlLxQEw35j6iLjuMNBfzdCUx
-         46TI+0U+zS+lZjtyk1sjUdxkUMNgKFrucE8Ka2GGaP8E4UGaGEMXb3Wtn+6uXY868oM2
-         JLVQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=SO7YOWm4Z/9Y/Ml7O3ISOH1iqvytvhJW3HU41i6A8VY=;
+        b=UMaIqRFhHvtRPeRNURUGSZP6eiBo7dJxX7D1MbSF2ZYEMvf/bLO8S7NGBdztDX6Gs1
+         UFh+SbmixXhRrDnM/51rHDuX4nhggldJap5hHYy8n7IRM4028ZhaZuXvEWxVsugHmXHr
+         hDd+nqAJv81986jL1tVgBnPv+DCU3wnqRBYT2MCWtSkykbCg0D/8IR8HTCZH4VcoegMw
+         joubIoquhZnApuFzKxEbQDGMiIEQiyNN4e4toJegm/tWo4O0dS8Il0UFSWUC8u7zaJxq
+         TvYCWW0UWc/s5/5BaImn+Xfcu4VfedQqSYIASfKDhIW0Eu+cXEL/RFBR4r/r4P5J7qgl
+         jQKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=i1oaJ1m+JWMKDzxnV7QRVzSnG8KQ+iJbIatG/G5JPqw=;
-        b=UQPA5kvFm91G8x09IPJY7hnpuXUiThcBXcTlHJ1eX5hZqTwzyfetW2OoW7PNPUPBST
-         0HEKxlOcT8qDcX6Pgv6dRD2jz4QbjVc7CjCF9o7NKC+N3VEARD7I6QtXFyO/aWRvLJJV
-         ZmdhuQWshfi3oZNZhj6VA0BxX2N9GOiGxXw8N2Xb5NR5iBA1f6A9Ih4kGcUzfU0vXGib
-         Y2jRIJGxThFo8DC97i2EEn70y/f4P7v9NEKO9sqcE/omPigqStoQME7m1kkG2J0ucd4i
-         Vf5hkL6UHUvA9FzWnB+ULCA/ymonvNMDpguieH1AY6VWSDuXY3ESTvU5iJ+fi6xvl/e4
-         fjDA==
-X-Gm-Message-State: AMCzsaXQINLxkWjP1xKfNaCHM/ZwUEeOtUV0bQuv7jUJMlnbXo5AGjQ1
-        BPegD0qMFc+hz2EeKipGzBcLwQ==
-X-Google-Smtp-Source: ABhQp+QJzZ1aOzRrTVUibz5MgyorBTmp63BmDiHo6FMvYRh8fPTPIZf8utuSV8Knf8keKB4BLbK34w==
-X-Received: by 10.107.11.27 with SMTP id v27mr5487926ioi.179.1509646251909;
-        Thu, 02 Nov 2017 11:10:51 -0700 (PDT)
-Received: from localhost ([2620:0:100e:422:1093:e9fc:3ec5:201d])
-        by smtp.gmail.com with ESMTPSA id m137sm107108itg.21.2017.11.02.11.10.51
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 02 Nov 2017 11:10:51 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=SO7YOWm4Z/9Y/Ml7O3ISOH1iqvytvhJW3HU41i6A8VY=;
+        b=CeSb6UjbnUA+VnCjxbg5G2QOY2Uj4NB+3kq2GPSAFo1R8So/b6M6ZCtAFfh4aqbD/m
+         VOiwIaBh+LPXcWz21TWBTHWoWXkOstMxl37y/zbUiuTUmBJyeqB80oECE9O6H+MavbRT
+         BxHaFxm3l44mCibprk2V1/7ffxRGIX6851c2R0JsjTBXzmvm6HJLjvZMEFagrj7HQkhQ
+         wilXN8B3OFieMWfxGKPv1wzybiuVAn3nhIVt+1ubHXwk1GiAL++jtqqqdBV/afU/LrJK
+         NvElS62FTDFHwlQeJsw8kZsejNm7oqm/5vAR7PZnNj9iAHkZEsUnwn5KP8UqtkEx7L/H
+         B6Xg==
+X-Gm-Message-State: AJaThX6HBmR5h0I24HTh1tyvIowHD+yM0brZl7N9tYBOqLUeQ1p7I/M6
+        tGsyRqG/U32lIKUDKleDDC0veXmXFGEUh29q2G6lVUku
+X-Google-Smtp-Source: ABhQp+San/bKIBBpYa2zRllwXZi+1z29t/CbaVS1w0VSltxGi1EtmOIHKXZycJ0001g4m+ZYZPMdSE81GEg4BA8jmL8=
+X-Received: by 10.237.34.201 with SMTP id q9mr6368145qtc.198.1509646705206;
+ Thu, 02 Nov 2017 11:18:25 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.140.102.70 with HTTP; Thu, 2 Nov 2017 11:18:24 -0700 (PDT)
+In-Reply-To: <871slhm9dm.fsf@linux-m68k.org>
+References: <20171031003351.22341-1-sbeller@google.com> <20171031211852.13001-1-sbeller@google.com>
+ <20171031211852.13001-7-sbeller@google.com> <xmqqbmkmvdrq.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.21.1.1711011329300.6482@virtualbox> <CAGZ79kZPNiNnSJd6CNYb7XkTVsT2ONLQLhwAQxt6_SPFTSwMcw@mail.gmail.com>
+ <EF573E5E-EA72-4DEE-822C-B44265FD581B@gmail.com> <alpine.DEB.2.21.1.1711012310250.6482@virtualbox>
+ <CAGZ79kbOEM_W65Rym4yiDNHpFGTNWMYdh=aVPjThNWjEHPQong@mail.gmail.com>
+ <alpine.DEB.2.21.1.1711012340290.6482@virtualbox> <871slhm9dm.fsf@linux-m68k.org>
 From:   Stefan Beller <sbeller@google.com>
-To:     szeder.dev@gmail.com
-Cc:     git@vger.kernel.org, sbeller@google.com
-Subject: [PATCHv2] config: document blame configuration
-Date:   Thu,  2 Nov 2017 11:10:48 -0700
-Message-Id: <20171102181048.16417-1-sbeller@google.com>
-X-Mailer: git-send-email 2.15.0.7.g980e40477f
-In-Reply-To: <20171102000722.1503-1-szeder.dev@gmail.com>
-References: <20171102000722.1503-1-szeder.dev@gmail.com>
+Date:   Thu, 2 Nov 2017 11:18:24 -0700
+Message-ID: <CAGZ79kZXLpwCyWs3_mfj7kL1qmM965V7vZZ2UH4-hqrfF5f+8g@mail.gmail.com>
+Subject: Re: [PATCHv2 6/7] builtin/describe.c: describe a blob
+To:     Andreas Schwab <schwab@linux-m68k.org>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        git <git@vger.kernel.org>, Kevin Daudt <me@ikke.info>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The options are currently only referenced by the git-blame man page,
-also explain them in git-config, which is the canonical page to
-contain all config options.
+On Thu, Nov 2, 2017 at 12:23 AM, Andreas Schwab <schwab@linux-m68k.org> wrote:
+> On Nov 01 2017, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>
+>> Sure, but it is still a tricky thing. Imagine
+>>
+>> - A1 - B1 - A2 - B2 - B3
+>>
+>> where all the B* commits have the blob. Do you really want to report B1
+>> rather than B2 as the commit introducing the blob? (I would prefer B2...)
+>
+> What if B3 renames or copies the blob?
+>
+> Andreas.
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
+With the current proposed patch you'd find B3, and then use the diff machinery
+to digg deeper from there (renames/copies ought to be easy to detect already?)
 
- * correct option to blame.showRoot
- * camelCased other options
- * use linkgit:git-<command>[1] instead of `git-cmd` as that
-   is correct, but maybe overused.
- * --date is `backticked` now.
+So with a copy B3 might be a better start than B1, as starting from B1 you
+would not find B3 easily.
 
- Documentation/config.txt | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+For a rename, I would think a reverse log/blame on B1:path may help.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 1ac0ae6adb..ba0156b1e8 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -949,6 +949,23 @@ apply.whitespace::
- 	Tells 'git apply' how to handle whitespaces, in the same way
- 	as the `--whitespace` option. See linkgit:git-apply[1].
- 
-+blame.showRoot::
-+	Do not treat root commits as boundaries in linkgit:git-blame[1].
-+	This option defaults to false.
-+
-+blame.blankBoundary::
-+	Show blank SHA-1 for boundary commits in linkgit:git-blame[1].
-+	This option defaults to false.
-+
-+blame.showEmail::
-+	Show the author email instead of author name in linkgit:git-blame[1].
-+	This option defaults to false.
-+
-+blame.date::
-+	Specifies the format used to output dates in linkgit:git-blame[1].
-+	If unset the iso format is used. For supported values,
-+	see the discussion of the `--date` option at linkgit:git-log[1].
-+
- branch.autoSetupMerge::
- 	Tells 'git branch' and 'git checkout' to set up new branches
- 	so that linkgit:git-pull[1] will appropriately merge from the
--- 
-2.15.0.7.g980e40477f
+With that said, I think I'll just reroll the series with the current logic
+fixing the other minor issues that were brought up as B3 seems to
+be the most versatile (though not optimal) answer for many use cases.
 
+Thanks for that thought,
+Stefan
