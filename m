@@ -2,93 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3272120281
-	for <e@80x24.org>; Thu,  2 Nov 2017 23:41:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F3E442055E
+	for <e@80x24.org>; Thu,  2 Nov 2017 23:45:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S964916AbdKBXlk (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Nov 2017 19:41:40 -0400
-Received: from mail-pg0-f47.google.com ([74.125.83.47]:56087 "EHLO
-        mail-pg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934431AbdKBXli (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Nov 2017 19:41:38 -0400
-Received: by mail-pg0-f47.google.com with SMTP id 15so949180pgc.12
-        for <git@vger.kernel.org>; Thu, 02 Nov 2017 16:41:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=wY0c3ItGOTkoi5ZUQfpKLLPIolGASzxGxbz19gT8hnY=;
-        b=LoEq3OIu/rSktJfTbSJTNspztsKqCFaZJ1mD+9X9a1oD3GzyNyqGg67HwXcTmlgwnc
-         /2Wc3+An5+42QVB9C7a9vRlxlMZZJRSKChd4SWPlCh3ieIdhcIZ95UavVYRZnribYcS1
-         +dtwEHC8d5HuN7jDVsdnzVzG/Cl7iHchaQHEJ/OGMoY3a4mURHykHSQ2aMiLoYBk2tqC
-         rcybGnU0OXn84KOKlrjfP/G2JyLx4VYiN7v4vjMrD42xa9UgnFvSXjn+yO0ssY0NJ9kg
-         rRY5fpfqpOLvTKCHJ8DjdlyXIiA6Bg4rj5dcdNgPAi/+kZPsjqEFNja6bit5zUbrMQgH
-         Hrsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=wY0c3ItGOTkoi5ZUQfpKLLPIolGASzxGxbz19gT8hnY=;
-        b=JOxNBg41wKelQoumE2EKC13lXjBZF9v3xBaXrL7OwTgvoD6CFnF2W6hDsi+gW5dR8E
-         7at1o5OQwKezGJ89eo6TbIx07S3uGHFYXP7NW/o7JufrkKt9xE1vnN3a8L2oVBj98wZC
-         T9rdWZ4xaYMXgqR52/+IrQdWRNwUK8NhV4THbIGV3uhK3eHCwNo5j4lsKU4LIBYJTdCV
-         rncRHhvYdwweTA2xGgD34/Ad3pkP2Z2ZrFiieO9asLldZF2iYoGO8/9kXdFgNFAf/urp
-         +lucxCf4ksgrdpjV7k7qpyOMVALYPxhtB1pvO4qkRNhYDPQXIhhoe9AuyjIHvnX7WnEn
-         L+FQ==
-X-Gm-Message-State: AMCzsaVXGkbM6SZwK8E8q6lzGyy45fo46k8gOStske59BSvtPxzoNyql
-        YX/HUHLz1TeTJ6+empWlh3C5YQ==
-X-Google-Smtp-Source: ABhQp+RqllYUuams2K4zg5E7p1NMiChXq8UiWvtU18FpwG6YgR7YuEwGEhGdz7MIHEzqv0Bbu/L7gw==
-X-Received: by 10.101.98.131 with SMTP id f3mr5210406pgv.366.1509666097309;
-        Thu, 02 Nov 2017 16:41:37 -0700 (PDT)
-Received: from twelve3.mtv.corp.google.com ([2620:0:100e:422:2131:f64d:d486:a16f])
-        by smtp.gmail.com with ESMTPSA id g13sm7460324pfm.130.2017.11.02.16.41.35
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 02 Nov 2017 16:41:36 -0700 (PDT)
-Date:   Thu, 2 Nov 2017 16:41:35 -0700
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH 00/14] WIP Partial clone part 3: clone, fetch,
- fetch-pack, upload-pack, and tests
-Message-Id: <20171102164135.435c05e07f71dcaf34149c2e@google.com>
-In-Reply-To: <20171102203129.59417-1-git@jeffhostetler.com>
-References: <20171102203129.59417-1-git@jeffhostetler.com>
-X-Mailer: Sylpheed 3.4.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+        id S934469AbdKBXp6 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Nov 2017 19:45:58 -0400
+Received: from mail-sn1nam02on0105.outbound.protection.outlook.com ([104.47.36.105]:18349
+        "EHLO NAM02-SN1-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S932201AbdKBXp4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Nov 2017 19:45:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
+ bh=EYkYCHXGwejGeef4NTbafTRECJp32ImQgUWvCOAqVPs=;
+ b=OXn94HTq1tgXLBiTyUoSMohKGB5WQaSZoQHGv2bGdqlKegvrgCppOtUKKxj2VwevLc/hvj49l4oltim+splPed9pvP6Ry6GorWZkZfixFvRsgoKEI8PjyHcEse7jlVXebYjK3XKMXXjgO6AIciPeD/JxcvY+RZD1UlEavjRcVds=
+Received: from MWHPR21MB0159.namprd21.prod.outlook.com (10.173.52.17) by
+ MWHPR21MB0192.namprd21.prod.outlook.com (10.173.52.138) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id
+ 15.20.218.3; Thu, 2 Nov 2017 23:45:55 +0000
+Received: from MWHPR21MB0159.namprd21.prod.outlook.com ([10.173.52.17]) by
+ MWHPR21MB0159.namprd21.prod.outlook.com ([10.173.52.17]) with mapi id
+ 15.20.0218.005; Thu, 2 Nov 2017 23:45:55 +0000
+From:   Andrew Baumann <Andrew.Baumann@microsoft.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: git tries to stat //HEAD when searching for a repo, leading to huge
+ delays on Cygwin
+Thread-Topic: git tries to stat //HEAD when searching for a repo, leading to
+ huge delays on Cygwin
+Thread-Index: AdNUM3ISgxjYKsv8QeOBPtagpoPRBw==
+Date:   Thu, 2 Nov 2017 23:45:55 +0000
+Message-ID: <MWHPR21MB0159089DB91A30E5E5CFCB479E5C0@MWHPR21MB0159.namprd21.prod.outlook.com>
+Accept-Language: en-AU, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=True;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Owner=baumann@microsoft.com;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2017-11-02T23:45:52.6250871Z;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=General;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Application=Microsoft Azure
+ Information Protection;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Extended_MSFT_Method=Automatic;
+ Sensitivity=General
+x-originating-ip: [2001:4898:80e8:1::12]
+x-ms-publictraffictype: Email
+x-microsoft-exchange-diagnostics: 1;MWHPR21MB0192;6:KRyuINO/d9QnY5Lx14xNxnFggU+EjJ+ytwwSq/f0nWi4vhobp02CiCZX06ythyoS5AZqNqpAL5JtndWgt2d8qe7uz7qniy8kKe8eruYz2tVzMpGbHQJnFWXUIN7v7oQzpedvsmJoTeZGFB3xVAiXm+99aLMxR1P4WA0DGbE+p3wjwfashl1t2AFG1l44KZtK1Rd2Cd8gz04ISH5LZ/Jv7S9tcX6XG+2pMe2Su2zyikYityaYs4DtECu42aNgIjVNBGkz2A+ya3hC1ScBq1G3DROkhS/tOisWptbgNeDGQ5jHBc6OxcP/tvQ/ZAHgB6UmOjyK8sLGYH/2i+2x6M1CsqBOBVwEc0k19fLLZrUu5tY=;5:E118BLoVkYdX9sxjBl0P8X8FEcFWoXNw1d7x5Dx7KRgg18d6uFq5YykZN0fieyjW5SKwr6PD03XD8azcdthiLWT44upyU1V7HhmRvJBz7u/H5XG4SexoRATSjV313Gh8Lo+xjETnYg7LSK4iqwOsd+6xdYNJCYkORyFc05aA9Yw=;24:rE1FEIGzo1JVNQ+Pm/NHeUAkacN7bpu7sjRmzuafwbkHdXoXs/SU3hvN7KfvizTgr5+MOtMmIHycMnMEdsQVXQukreR/3nZpz+UzaxqW3mk=;7:qbe5nLS54RIAx50qIcSLLmsdgaXwA6iq/XX/6HEvvjO/IHDyORvOCqv1c6QQvx7/6b1KddBvGEtK0hgAqYCPcWWlfPdk8tKUYLPhs3gMN5eKwtDl2047CcVQhXYt8OeNgf/JBsOczIPY4FfDRaJaqd29jMyYQVBnEtxzoCQerOokn7Augky83eITKzmC+5DH3t5zfsPTBaVp2UBAhCK1c5ufFxaQRxwt84Ng/ZPZy//bLl2nI+BYbC7ZfklKA5BX
+x-ms-exchange-antispam-srfa-diagnostics: SSOS;
+x-ms-office365-filtering-correlation-id: 361f043c-f954-4dd0-7ac7-08d5224bdc1c
+x-ms-office365-filtering-ht: Tenant
+x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(22001)(48565401081)(4534020)(4602075)(4627115)(201703031133081)(201702281549075)(2017052603238);SRVR:MWHPR21MB0192;
+x-ms-traffictypediagnostic: MWHPR21MB0192:
+x-exchange-antispam-report-test: UriScan:(158342451672863)(185212123834332)(211171220733660)(17755550239193);
+x-microsoft-antispam-prvs: <MWHPR21MB0192128B39569AC756AAA2A39E5C0@MWHPR21MB0192.namprd21.prod.outlook.com>
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(100000700101)(100105000095)(100000701101)(100105300095)(100000702101)(100105100095)(61425038)(6040450)(2401047)(5005006)(8121501046)(93006095)(93001095)(100000703101)(100105400095)(3231020)(3002001)(10201501046)(6055026)(61426038)(61427038)(6041248)(201703131423075)(201702281528075)(201703061421075)(201703061406153)(20161123564025)(20161123555025)(20161123562025)(20161123560025)(20161123558100)(6072148)(201708071742011)(100000704101)(100105200095)(100000705101)(100105500095);SRVR:MWHPR21MB0192;BCL:0;PCL:0;RULEID:(100000800101)(100110000095)(100000801101)(100110300095)(100000802101)(100110100095)(100000803101)(100110400095)(100000804101)(100110200095)(100000805101)(100110500095);SRVR:MWHPR21MB0192;
+x-forefront-prvs: 047999FF16
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(6009001)(39860400002)(346002)(376002)(47760400005)(199003)(189002)(50986999)(6506006)(102836003)(189998001)(99286004)(6116002)(6916009)(3660700001)(10290500003)(6436002)(2351001)(478600001)(25786009)(8676002)(5640700003)(1730700003)(97736004)(2900100001)(72206003)(68736007)(3280700002)(14454004)(966005)(8990500004)(54356999)(7696004)(10090500001)(74316002)(2501003)(105586002)(86362001)(5660300001)(77096006)(8936002)(106356001)(7736002)(316002)(81156014)(101416001)(81166006)(2906002)(9686003)(305945005)(55016002)(53936002)(6306002)(22452003)(33656002)(86612001)(51383001)(14583001);DIR:OUT;SFP:1102;SCL:1;SRVR:MWHPR21MB0192;H:MWHPR21MB0159.namprd21.prod.outlook.com;FPR:;SPF:None;PTR:InfoNoRecords;A:1;MX:1;LANG:en;
+received-spf: None (protection.outlook.com: microsoft.com does not designate
+ permitted sender hosts)
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=Andrew.Baumann@microsoft.com; 
+spamdiagnosticoutput: 1:99
+spamdiagnosticmetadata: NSPM
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-OriginatorOrg: microsoft.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 361f043c-f954-4dd0-7ac7-08d5224bdc1c
+X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Nov 2017 23:45:55.1351
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHPR21MB0192
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu,  2 Nov 2017 20:31:15 +0000
-Jeff Hostetler <git@jeffhostetler.com> wrote:
+Hi,
 
-> From: Jeff Hostetler <jeffhost@microsoft.com>
-> 
-> This is part 3 of 3 for partial clone.
-> It assumes that part 1 [1] and part 2 [2] are in place.
-> 
-> Part 3 is concerned with the commands: clone, fetch, upload-pack, fetch-pack,
-> remote-curl, index-pack, and the pack-protocol.
-> 
-> Jonathan and I independently started on this task.  This is a first
-> pass at merging those efforts.  So there are several places that need
-> refactoring and cleanup.  In particular, the test cases should be
-> squashed and new tests added.
+I have a workaround for this, but someone on stack overflow [1] suggested r=
+eporting it upstream, so here you go:
 
-Thanks. What are your future plans with this patch set? In particular, the
-tests don't pass at HEAD^.
+I have a fancy shell prompt that executes "git rev-parse --is-inside-work-t=
+ree" to determine whether we're currently inside a working directory. This =
+causes git to walk up the directory hierarchy looking for a containing git =
+repo. For example, when invoked from my home directory, it stats the follow=
+ing paths, in order:
 
-I took a quick glance to see if there were any issues that I could
-immediately spot, but couldn't find any. I thought of fetch_if_missing,
-but it seems that it is indeed used in this patch set (as expected).
+/home/me/.git
+/home/me/.git/HEAD
+/home/me/HEAD
+/home
+/home/.git
+/home/.git/HEAD
+/home/HEAD
+/
+/.git
+/.git/HEAD
+//HEAD
 
-I'll look at it more thorougly, and feel free to let me know if there is
-anything in particular you would like comments on.
+The last name (//HEAD) interacts badly with Cygwin, which interprets it as =
+a UNC file share, and so demand-loads a bunch of extra DLLs and attempts to=
+ resolve/contact the server named HEAD. This obviously doesn't work too wel=
+l, especially over a slow network link.
+
+I've tested with the latest Cygwin git (2.15.0); this was also present in a=
+ prior version.
+
+Cheers,
+Andrew
+
+[1] https://stackoverflow.com/questions/47084672
