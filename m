@@ -7,67 +7,65 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 753AB2055E
-	for <e@80x24.org>; Fri,  3 Nov 2017 02:41:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 613D420281
+	for <e@80x24.org>; Fri,  3 Nov 2017 02:59:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965024AbdKCCla (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Nov 2017 22:41:30 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:53805 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S964918AbdKCCl3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Nov 2017 22:41:29 -0400
-Received: by mail-pf0-f194.google.com with SMTP id t188so1143393pfd.10
-        for <git@vger.kernel.org>; Thu, 02 Nov 2017 19:41:29 -0700 (PDT)
+        id S934746AbdKCC7H (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Nov 2017 22:59:07 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:54516 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751507AbdKCC7G (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Nov 2017 22:59:06 -0400
+Received: by mail-pf0-f195.google.com with SMTP id n89so1173315pfk.11
+        for <git@vger.kernel.org>; Thu, 02 Nov 2017 19:59:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=JxduuSmcG5FBrZz/YHHFInEYHVWmS+f4skSrbJ5SNkw=;
-        b=SZqs7pDcU6Afp85syScJ4JYuOxiasDlBaGrsq2SmYs8inyQSk6X8YPu3XNgvLPLV4L
-         +Vumj1VtMQ1AHGoIgshlw7dtViJhpGLknz7PjJyPUEC7Nznc4QY9sj6uLHEtECnj9eg3
-         8xn8L88Msx17w+NtqgmYj9f9TzXzXOZLfrECrP/AsaWHiyT2z0qhWCtkRon62HuYxx8A
-         AvCgruHBy9r9qYrkMeWNqhdspy+m7Yk7MjSXNiGlqZIO7MMQylizqmQA1lZ+UsUk+jGv
-         jeWpIkSSBc1ctod5RrbECim+qVFdhXZVqZBSeGryoe3yYKkorgFDZMlF8yul2POtWwSb
-         BSFg==
+        bh=DvelL2UelBV7cctiy1S5eBvWt1OpaHvUb7R5NjSqP/w=;
+        b=N+uAMjMDratA3FUYY3jLhpjBXvclstNyPHwzhX0/czF4thrpxHPXfyEx0PzrhQSkaW
+         bOAe9ywYbBo4kB/gNAS43qzEAAkC90YhA7PYMTRtLGEn7trZ1bsASIpPLSzn6WSzCWu2
+         S6i9JWRV7Uw3k4rLFGVY3enuVVLA1nubgTwcA7P4h/iHF1O7PlrGFLuKzD2kXgwb4s+K
+         OE+X75KHNODfkC29kZy+6VAc2AoVluPcIFl/o9oTgzirNeZB9eswuDziifLs/eeWmtHj
+         gXhdLqT/zu0qOooDMvZfqzbbTVVYMniLCpnMh6SlZTSqSWww4f71OrlCSgnY53YlI5k/
+         HGkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=JxduuSmcG5FBrZz/YHHFInEYHVWmS+f4skSrbJ5SNkw=;
-        b=b1KOaoXr+vYzz7aPVSVtwCCVwjDhscfny9PjyPT++N3czcCDAtN5PjkLMZ2N3y6yov
-         IvUWjWvjdpENHGgSJAq3EG4NinvvesxNyP1TaYhUXl7fI1dkPxRL0kmAw9uZzY+XL8AG
-         WoUgQln1wsBDkIGqc4mi23aX0bkKrvfJX0wcxL2EQYfnK29IkTLc47AxkOZHxjs7/kRw
-         KLuBYR0ok9rXQjpP1PMsMhlkntiq+MdB/W13zKmwYVNm9oWpxUnJHmKlH+gzzTIr0nk5
-         VFoAWGsANw3KhqRbd1p1d83taoJTOM91YQIJovST+uw7kvf2VY29QsRgIkKc9L3D90a4
-         lKGg==
-X-Gm-Message-State: AMCzsaVtyXmaESUdyiMW+6Bbyh/IspgWyGgZ7cS3ywM8yTzPI6b08DO7
-        bWg8TuqWyHojVwsQOC8McfE=
-X-Google-Smtp-Source: ABhQp+RtdeA1R3EZSCRsc1Ay8W3qSrRv/29q+ku7AUTs7zMIe2uU1pw9JvgDJLVYpbfuP6IP45R+Zg==
-X-Received: by 10.98.204.150 with SMTP id j22mr6039895pfk.3.1509676888876;
-        Thu, 02 Nov 2017 19:41:28 -0700 (PDT)
+        bh=DvelL2UelBV7cctiy1S5eBvWt1OpaHvUb7R5NjSqP/w=;
+        b=ftIao8BIFaSnm8IbSNPMNJ8eX/nqNkyQw4vrASDXl6b+Dz2hGSjjyBApNPmUMFSu4x
+         eAUr0SasTQZ2ed3mxPxmKyvAWtG2FUJJ86CcgAVxQf8UyY9Xu6FDOmfNUTBX9P7RWfQY
+         0YS+PeNXwE2gkaKgBYHtE8N9dnVKH+XTGyqNrCFT8Ge5rwM2Zp1KKbwkVjg9IJeO2uRj
+         oOKV+FhKHJ4hP7E5oO5o+G2oyiKLMcB8w+g2nDTC3iSVguYEA4ALq78CePqtdceath5N
+         2U4V1n3jT1YSnSJ1fPeInF5Rnrd8o5A6Qp0DwopwuMP7bSd4G+OzEzuwMQI/+uN/neUv
+         jHvg==
+X-Gm-Message-State: AMCzsaWvFMFHxcKnFQwkprSquE8bIC9R6jTakmzEB9vcqhSmO6S6RQYr
+        9GTMiq3esJzjSyz/mrjJQK/d0fBw
+X-Google-Smtp-Source: ABhQp+Q4wZKHevj3BPck0VGiSPuSlpuIrGZvPATDV2hca04HNrgbs4l8ExUoK6K78bog5JJ70Ovigg==
+X-Received: by 10.99.123.94 with SMTP id k30mr5719710pgn.33.1509677945274;
+        Thu, 02 Nov 2017 19:59:05 -0700 (PDT)
 Received: from [192.168.43.71] ([117.249.180.49])
-        by smtp.gmail.com with ESMTPSA id u76sm9034137pfk.181.2017.11.02.19.41.25
+        by smtp.gmail.com with ESMTPSA id o22sm9262871pfi.85.2017.11.02.19.59.02
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 02 Nov 2017 19:41:27 -0700 (PDT)
-Subject: Re: [RFC PATCH v3 4/4] builtin/branch: give more useful error
- messages when renaming
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Junio C Hamano <gitster@pobox.com>
+        Thu, 02 Nov 2017 19:59:04 -0700 (PDT)
+Subject: Re: [RFC PATCH v3 3/4] branch: introduce dont_fail parameter for
+ branchname validation
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
 References: <20170925082024.2691-1-kaarticsivaraam91196@gmail.com>
  <20171102065407.25404-1-kaartic.sivaraam@gmail.com>
- <20171102065407.25404-5-kaartic.sivaraam@gmail.com>
- <CAPig+cRJDiHXoz-81EMtsbFfqaZz76eo1msUQW+eBP=wUsm6JA@mail.gmail.com>
+ <20171102065407.25404-4-kaartic.sivaraam@gmail.com>
+ <e8a600d4-880b-4fb8-6901-78acbd720261@gmail.com>
+ <CAGZ79kY-1PLf2aOeNOkPz_MNSPtJHTtj=9eC-xdbbLq+WZbkwg@mail.gmail.com>
 From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Message-ID: <59d4a08d-7165-9e56-5ddc-4f97d4a9d4d4@gmail.com>
-Date:   Fri, 3 Nov 2017 08:11:21 +0530
+Message-ID: <2aba29d1-3c6c-f04d-b284-991dbe15be54@gmail.com>
+Date:   Fri, 3 Nov 2017 08:28:56 +0530
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.3.0
 MIME-Version: 1.0
-In-Reply-To: <CAPig+cRJDiHXoz-81EMtsbFfqaZz76eo1msUQW+eBP=wUsm6JA@mail.gmail.com>
+In-Reply-To: <CAGZ79kY-1PLf2aOeNOkPz_MNSPtJHTtj=9eC-xdbbLq+WZbkwg@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -76,50 +74,30 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thursday 02 November 2017 07:51 PM, Eric Sunshine wrote:
+On Friday 03 November 2017 12:12 AM, Stefan Beller wrote:
+> On Thu, Nov 2, 2017 at 1:39 AM, Kaartic Sivaraam
+> <kaartic.sivaraam@gmail.com> wrote:
+>> On Thursday 02 November 2017 12:24 PM, Kaartic Sivaraam wrote:
+>>>
+>>> Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+>>> Signed-off-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+>>
+>>
+>> I just now saw this small glitch as a consequence of recently
+>> changing my email address. I would prefer to keep the second one
+>> but as the other patches have the first one it's better to keep
+>> the first one for now.
 > 
-> Nicely explained; easily understood.
->
+> If you prefer one of them, you may have incentive to
+> add an entry into .mailmap file, otherwise I'd kindly ask you
+> to. :) (c.f. `git log --no-merges -- .mailmap`)
+> 
 
-Good to hear that.
-
-
-> 
-> Translators can correct me, but this smells like "sentence lego"[1],
-> which we'd like to avoid. Translators lack full context when presented
-> with bits and pieces of a sentence like this, thus the translation may
-> be of poor quality; it may even be entirely incorrect since they don't
-> necessarily know how you will be composing the various pieces.
-> 
-> You _might_ be able to able to resolve this by dropping "and" from:
-> 
->      "foo is moo, and bar is boo"
-> 
-> to turn the error messages into independent clauses:
-> 
->      "foo is moo; bar is boo"
-> > but I'm no translator, and even that may fail the lego sniff test.
-> 
-Though I can't be very sure that the one you suggested will pass the 
-"lego sniff test", its better than the "and" I used. Further, my 
-instinct says it wouldn't qualify as sentence lego (it's just a ";").
-
-
-> A sure-fire way to avoid lego construction would be simply to emit
-> each messages on its own line:
-> 
->      fatal: branch 'tset' doesn't exist
->      fatal: branch 'master' already exists
-> 
-> (though, you might consider that too ugly).
->
-
-Though it might not look that ugly, I don't know how you could make 
-'git' die() twice (or am I missing something)! Of course we could use 
-'error()' to report the errors and then 'die()' with a message like 
-"Branch rename failed" but I find that to be a little too verbose and 
-further using the connector ";" instead of "and" does seem to reduce the 
-possibilities for the above program fragment to pass the "lego sniff test".
+Sure, I'll do that. My intuition says this doesn't remove the duplicated 
+  sign-off line. Anyways, there's for sure a v4 that's going to update 
+the connector string in [4/4] and another update. I'll be careful to 
+address these issues in v4.
 
 ---
 Kaartic
+
