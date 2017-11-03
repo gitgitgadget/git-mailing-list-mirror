@@ -7,59 +7,58 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 56AD720450
-	for <e@80x24.org>; Fri,  3 Nov 2017 20:32:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA29B20450
+	for <e@80x24.org>; Fri,  3 Nov 2017 20:38:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752045AbdKCUcd (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Nov 2017 16:32:33 -0400
-Received: from mail-io0-f173.google.com ([209.85.223.173]:54937 "EHLO
-        mail-io0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751451AbdKCUcc (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Nov 2017 16:32:32 -0400
-Received: by mail-io0-f173.google.com with SMTP id e89so8862279ioi.11
-        for <git@vger.kernel.org>; Fri, 03 Nov 2017 13:32:31 -0700 (PDT)
+        id S1754510AbdKCUis (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Nov 2017 16:38:48 -0400
+Received: from mail-io0-f169.google.com ([209.85.223.169]:49715 "EHLO
+        mail-io0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753178AbdKCUir (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Nov 2017 16:38:47 -0400
+Received: by mail-io0-f169.google.com with SMTP id n137so8928142iod.6
+        for <git@vger.kernel.org>; Fri, 03 Nov 2017 13:38:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=UzZ4LAxu+dT7sM5ttsgS5M4wLqwOE32YD7eAg2qtqSw=;
-        b=NZuHXoD+y+kf9+Zz92Z+HoRczDq7nyMV3cpL1DV9LoYVgVcok/C1Ap+Ud/BmjKtXsx
-         8+M2ljpWCpKL4bwVxTHgayGOx7o2k4gMwnlG6TiOcqzzCtwq5EElHQTZus6bo3mqcG5B
-         u8nQyEelrfSL1BIxDRW0xBfzWBUSFeIVs58fvo3oJv2xgpNHJnukJpDCQVa7LsO23KxJ
-         cp9wUc5mGG6pLfvDtpBUdlVQVkRJwpWqhm2mPy+prmeTtokKCgiNyJaiJoQNUQYJnPq1
-         LqAZ6dbCydlcsVfCVTLJLk5oMC43y14KB26zTU6idw376ftOZAfM1HgVUnZq8dwj518T
-         vDyw==
+        bh=Wz0HoLeVKg8YmcedA1XXhBry7vqgBY/hdkC/QpmaKtQ=;
+        b=K5CHus8FJJWeShoM7Pp7/R5eZ9sSkvrgT7fnSMk8WvslAebKtpeSr38JnFMS97uIgx
+         0mP7ajQ3y1iTd0PqxQoLMZm2pJyMQTM6Ba//SpBdUSZC3JxX59QLTPE3nC/JFMm5ALVl
+         le5Qf3yPqbI0sKn+Gwv7jCBmhPdp8Ti0+KzEOU6koh7AS72Oah+N+djuGsaaV76jQbVB
+         YtKrh7kHTvjNp8CX3XJw8RJYTCmDXS70OsQAu0SkvsygeIEHqtwUAWvFlcsYX5dHAgld
+         XVq27JK7yCWzxyNOKimLSHd8r0LN6hq2PYtvTNwsSYqQVEUw+KXkRBglrqpWADI12Bav
+         ArcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=UzZ4LAxu+dT7sM5ttsgS5M4wLqwOE32YD7eAg2qtqSw=;
-        b=m55JcbVlSm85z795lAhMFvgeqI7vivnzp+xhEVunsT8Cp/QXyBvlE3HMpuHdr/miCf
-         6huK7dXZSl8qMNIzJD1paOHHZKoa+x57nrDyk92nLUbVFblIuvokh62KoW9TDprq8tmp
-         Q60E/DX11XH47hnfZJCYPe7S39EfoQ8Q7uPdkId8LCkRCW0JpKKbucpk1sDV8mibULcK
-         s7YMMnP0vTOagRX7uNPjk+/4y6jpAfZbgTSJqhhjg+IUHacfm6ogLio7HkmhxbGIHCph
-         TzDDwBLbRLCeBxrDCRt3GeSKi6M6HmhVay9Nxm7+dyS6z4im/qlAabva6SdywBZCzkDF
-         C37g==
-X-Gm-Message-State: AJaThX6P1zXFOlVw0XBn2EUuKqy52MgEtSC8mt+0sAWKcbHDDKIWRqsy
-        6vBeMdsojXn84f6zxWGR98uoM+hC9nU=
-X-Google-Smtp-Source: ABhQp+S9V4WC/wt9M+y0Y7VwQLdqxgbLWoJMCMq7RJrunE37qSqLeWNuNOYgpf29Y2+sKyqVuuz8eA==
-X-Received: by 10.107.29.138 with SMTP id d132mr10763571iod.201.1509741151053;
-        Fri, 03 Nov 2017 13:32:31 -0700 (PDT)
+        bh=Wz0HoLeVKg8YmcedA1XXhBry7vqgBY/hdkC/QpmaKtQ=;
+        b=dNm/Ui24Qs9zQiSlfotgzUTHjADfwt/r4bd1s6EZwu1vlviffNiOFT1NYdAm3nzOt/
+         pf2zFCiozLSesUFu6WcozZq0D1y5rPj1lR6mKZNGvn4vpuVYMoBppHG9NHJeQji1qZqj
+         9yfUyOpY1pdX3HIIGVyUAF9JI4iXkfMj4eRXVfFuZXo9Ebez2yXOah8ZqkT/wYZbdO0G
+         D8jfx/dBD5oHoBaxJ4VbUEQkGLvrlwTwCbD9aVm8XsoYIHz7ZbIrQYUbbrlUNn7bZdLE
+         ORUXwKEAWVSKmWOtCTbdHGmIgdRHl9mwCSo6iEfzug7gWw6Ft3iouJvqdTznkfcwxzYB
+         T2vg==
+X-Gm-Message-State: AMCzsaU/qLV40YLqynFxjfMbQJR35UaP3tJHQh1DVONlPf1ZFMth2Myf
+        +gXEa6vlX6JH9AE8EDCKg7wD9w==
+X-Google-Smtp-Source: ABhQp+SRnPp9d2OrAJQaKHj8l5Rqtip6h/dzcVbveEHLChURCEGimfzIgALAwkD7OYtUjbSkHmhmqg==
+X-Received: by 10.107.163.15 with SMTP id m15mr10880014ioe.61.1509741526476;
+        Fri, 03 Nov 2017 13:38:46 -0700 (PDT)
 Received: from twelve3.mtv.corp.google.com ([2620:0:100e:422:5949:10b2:8e2d:2f6])
-        by smtp.gmail.com with ESMTPSA id 81sm1606593itl.20.2017.11.03.13.32.30
+        by smtp.gmail.com with ESMTPSA id i63sm3134698ioi.68.2017.11.03.13.38.45
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 03 Nov 2017 13:32:30 -0700 (PDT)
-Date:   Fri, 3 Nov 2017 13:32:29 -0700
+        Fri, 03 Nov 2017 13:38:45 -0700 (PDT)
+Date:   Fri, 3 Nov 2017 13:38:45 -0700
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     Jeff Hostetler <git@jeffhostetler.com>
 Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH 02/14] clone, fetch-pack, index-pack, transport: partial
- clone
-Message-Id: <20171103133229.1612a60560469af53c380a76@google.com>
-In-Reply-To: <20171102203129.59417-3-git@jeffhostetler.com>
+Subject: Re: [PATCH 04/14] fetch: add object filtering for partial fetch
+Message-Id: <20171103133845.b270485dd04c6c6c1b47d42a@google.com>
+In-Reply-To: <20171102203129.59417-5-git@jeffhostetler.com>
 References: <20171102203129.59417-1-git@jeffhostetler.com>
-        <20171102203129.59417-3-git@jeffhostetler.com>
+        <20171102203129.59417-5-git@jeffhostetler.com>
 X-Mailer: Sylpheed 3.4.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
@@ -69,52 +68,88 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu,  2 Nov 2017 20:31:17 +0000
+I did some of my own investigation and have a working (i.e. passing
+tests) version of this patch here:
+
+https://github.com/jonathantanmy/git/commits/pc20171103
+
+If you want, you can use that, or incorporate the changes therein here.
+I'll also remark on my findings inline.
+
+On Thu,  2 Nov 2017 20:31:19 +0000
 Jeff Hostetler <git@jeffhostetler.com> wrote:
 
-> From: Jeff Hostetler <jeffhost@microsoft.com>
-> 
-> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
-> ---
->  builtin/clone.c      |  9 +++++++++
->  builtin/fetch-pack.c |  4 ++++
->  builtin/index-pack.c | 10 ++++++++++
->  fetch-pack.c         | 13 +++++++++++++
->  fetch-pack.h         |  2 ++
->  transport-helper.c   |  5 +++++
->  transport.c          |  4 ++++
->  transport.h          |  5 +++++
->  8 files changed, 52 insertions(+)
+> @@ -754,6 +757,7 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
+>  	const char *filename = dry_run ? "/dev/null" : git_path_fetch_head();
+>  	int want_status;
+>  	int summary_width = transport_summary_width(ref_map);
+> +	struct check_connected_options opt = CHECK_CONNECTED_INIT;
+>  
+>  	fp = fopen(filename, "a");
+>  	if (!fp)
+> @@ -765,7 +769,7 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
+>  		url = xstrdup("foreign");
+>  
+>  	rm = ref_map;
+> -	if (check_connected(iterate_ref_map, &rm, NULL)) {
+> +	if (check_connected(iterate_ref_map, &rm, &opt)) {
 
-I managed to take a look at some of these patches. Firstly, consider
-separating out the clone part, since it will not be tested until a few
-patches later.
+opt here is unchanged from CHECK_CONNECTED_INIT, so this change is unnecessary.
 
-> diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-> index a0a35e6..31cd5ba 100644
-> --- a/builtin/index-pack.c
-> +++ b/builtin/index-pack.c
-> @@ -222,6 +222,16 @@ static unsigned check_object(struct object *obj)
->  	if (!(obj->flags & FLAG_CHECKED)) {
->  		unsigned long size;
->  		int type = sha1_object_info(obj->oid.hash, &size);
+>  		rc = error(_("%s did not send all necessary objects\n"), url);
+>  		goto abort;
+>  	}
+> @@ -1044,6 +1048,9 @@ static struct transport *prepare_transport(struct remote *remote, int deepen)
+>  		set_option(transport, TRANS_OPT_DEEPEN_RELATIVE, "yes");
+>  	if (update_shallow)
+>  		set_option(transport, TRANS_OPT_UPDATE_SHALLOW, "yes");
+> +	if (filter_options.choice)
+> +		set_option(transport, TRANS_OPT_LIST_OBJECTS_FILTER,
+> +			   filter_options.raw_value);
+
+You'll also need to set TRANS_OPT_FROM_PROMISOR.
+
+> @@ -1242,6 +1249,20 @@ static int fetch_multiple(struct string_list *list)
+>  	int i, result = 0;
+>  	struct argv_array argv = ARGV_ARRAY_INIT;
+>  
+> +	if (filter_options.choice) {
+> +		/*
+> +		 * We currently only support partial-fetches to the remote
+> +		 * used for the partial-clone because we only support 1
+> +		 * promisor remote, so we DO NOT allow explicit command
+> +		 * line filter arguments.
+> +		 *
+> +		 * Note that the loop below will spawn background fetches
+> +		 * for each remote and one of them MAY INHERIT the proper
+> +		 * partial-fetch settings, so everything is consistent.
+> +		 */
+> +		die(_("partial-fetch is not supported on multiple remotes"));
+> +	}
 > +
-> +		if (type <= 0) {
-> +			/*
-> +			 * TODO Use the promisor code to conditionally
-> +			 * try to fetch this object -or- assume it is ok.
-> +			 */
-> +			obj->flags |= FLAG_CHECKED;
-> +			return 0;
-> +		}
-> +
->  		if (type <= 0)
->  			die(_("did not receive expected object %s"),
->  			      oid_to_hex(&obj->oid));
+>  	if (!append && !dry_run) {
+>  		int errcode = truncate_fetch_head();
+>  		if (errcode)
 
-This causes some repo corruption tests to fail.
+My intention in doing the "fetch: refactor calculation of remote list"
+patch is so that the interaction between the provided list of remotes
+and the specification of the filter can be handled using the following
+diff:
 
-If I remove this and rebase the fetch-pack tests on top [1], the tests
-pass, so this might not be necessary (for now, at least).
+    -	if (remote)
+    +	if (remote) {
+    +		if (filter_options.choice &&
+    +		    strcmp(remote->name, repository_format_partial_clone_remote))
+    +			die(_("--blob-max-bytes can only be used with the remote configured in core.partialClone"));
+     		result = fetch_one(remote, argc, argv);
+    -	else
+    +	} else {
+    +		if (filter_options.choice)
+    +			die(_("--blob-max-bytes can only be used with the remote configured in core.partialClone"));
+     		result = fetch_multiple(&list);
+    +	}
 
-[1] https://github.com/jonathantanmy/git/commits/pc20171103
+(Ignore the "blob-max-bytes" in the error message - that needs to be
+updated.)
+
+The GitHub link I provided above has this diff, and it seems to work.
