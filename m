@@ -2,118 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 41AB1202A0
-	for <e@80x24.org>; Fri,  3 Nov 2017 06:55:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AA5D62055E
+	for <e@80x24.org>; Fri,  3 Nov 2017 09:23:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755467AbdKCGz5 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Nov 2017 02:55:57 -0400
-Received: from mail-wm0-f42.google.com ([74.125.82.42]:47516 "EHLO
-        mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755445AbdKCGzy (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Nov 2017 02:55:54 -0400
-Received: by mail-wm0-f42.google.com with SMTP id r196so2965978wmf.2
-        for <git@vger.kernel.org>; Thu, 02 Nov 2017 23:55:53 -0700 (PDT)
+        id S1754141AbdKCJXp (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Nov 2017 05:23:45 -0400
+Received: from mail-io0-f193.google.com ([209.85.223.193]:51537 "EHLO
+        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752469AbdKCJXn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Nov 2017 05:23:43 -0400
+Received: by mail-io0-f193.google.com with SMTP id b186so4870492iof.8
+        for <git@vger.kernel.org>; Fri, 03 Nov 2017 02:23:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=WngErvIdyI51beliMMK3QBjr5Z72yQtawJTvXHx7XEk=;
-        b=ffuzYZh23PIl/a41M7MTOOyyZneKAdJ3Oulr+oc12OaexdPNMeAzxKOzZ8JrJrYUSx
-         EICVAPryAK2kSPLHdq1FWDvw5T7INIXSjuaOP3TnhBK3sSOE0kFnl+1CJIf+sIgbnvQ1
-         iLgTL/9tudt5dn2PnOtXPp6rb0pd2n05YnPdbNJ38psTwIEEg5pvjj/0dN0p74kyb5h2
-         pYULiawtmMv4mAOu4v8vWdgkuXRyrAJQbmtL+McO6sFSsAHV+W9FLgNfM1vdpZ7fYQ1e
-         3V4WOluLPd3jWxX2bJSVAoLpavJd3kzoYMumoNo+K412zGHluuvocznXetMz1/E4ghMX
-         nh7g==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=tj348eB+7K2yU1q14K+Lymyx9yxvKaVAkWNUAhJCoj4=;
+        b=bHrSbyzY0wS+98wvqVqmhN65/RGrWJz/jSeZNllf4jUTV77SJLmdSBzU6Onb8JDlot
+         feibsmvSrlKVEmZU84vyVyb1+l+YIbOV0VadPAH0sdtoxzI6T3PvIFxyDzfVJReUB/TJ
+         AOc6LZMiQZsmNj8CDlw7VcT0tczluvQwWlXgqcTgwsq1RzSk3OuTUszXW2RIHzEmbb1/
+         9e0Ns0LYEqRR21NbhGT2o+1CO7OxFmTFLiAS6Fx3aswJmDshlV4gUsa85IalFUc6hE6c
+         kv6EeYGLx2ZevkXwYltqcxTZTg+8JMrr4UyJHoUGn5OMHLTF64JTfKePd10gL5FK0rww
+         nPPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=WngErvIdyI51beliMMK3QBjr5Z72yQtawJTvXHx7XEk=;
-        b=pfYPtgFEjKCsdh8SBrjyd+EJvJkfw/nRe/8ZjSiJApnYN1tXcx+dH2ggdBh3htW/2F
-         LklRY2d9pfjv3Mo8QauibUDSTZjjTEODet4zpKeg2niSOOSl4/bh5/Ca1uhiXaG5kjxe
-         cqcyP0e1bZV39CTJPQ7NmhH7KqEoBwL4RArNUqiimpkOHtV4EXQKSyBDqalBB6Y2+0c6
-         UtHJzl0O0/CMdjg2BU0wVJDpjFaJstKEzdLe7d/+MvQ4QkX+z0OFhCGpr8S3E6d/hmR6
-         I1p24P4JK90Hhhs5ARAMShRLyLKD4cK86sqUiMDEamSKz1VIFUBD6kk4FONme+CZunT2
-         fUOg==
-X-Gm-Message-State: AMCzsaXlaRetpGXl1ZNTKBBaqORfOeFUV0smaLmgEn6xPRrbjmEcRHJJ
-        e4hjfqyOFOYo97eAbDMfhTTam+In04aFi8QTzog=
-X-Google-Smtp-Source: ABhQp+RbqxG1R9vuUILCYM/rlDFUx0H7t8aNvKXwjnbu24Zwcpx5een5UGfmqPjVLxhgwJPbbN2ClJGBou4v6Ufye9M=
-X-Received: by 10.80.172.122 with SMTP id w55mr7390066edc.293.1509692152829;
- Thu, 02 Nov 2017 23:55:52 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.80.213.80 with HTTP; Thu, 2 Nov 2017 23:55:32 -0700 (PDT)
-In-Reply-To: <xmqqtvycos7z.fsf@gitster.mtv.corp.google.com>
-References: <20171031003351.22341-1-sbeller@google.com> <20171031211852.13001-1-sbeller@google.com>
- <20171031211852.13001-7-sbeller@google.com> <xmqqbmkmvdrq.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.21.1.1711011329300.6482@virtualbox> <CAGZ79kZPNiNnSJd6CNYb7XkTVsT2ONLQLhwAQxt6_SPFTSwMcw@mail.gmail.com>
- <EF573E5E-EA72-4DEE-822C-B44265FD581B@gmail.com> <alpine.DEB.2.21.1.1711012310250.6482@virtualbox>
- <CAGZ79kbOEM_W65Rym4yiDNHpFGTNWMYdh=aVPjThNWjEHPQong@mail.gmail.com>
- <alpine.DEB.2.21.1.1711012340290.6482@virtualbox> <CA+P7+xqw9zKNUkn9P-qA57ADSB5G_7Sd0JCc6SaK6bBf9-Jhtg@mail.gmail.com>
- <xmqqtvycos7z.fsf@gitster.mtv.corp.google.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Thu, 2 Nov 2017 23:55:32 -0700
-Message-ID: <CA+P7+xrRgzGLFMZ+iaomQifOUXqANKD0v9XGoR+==0kVmyVL5Q@mail.gmail.com>
-Subject: Re: [PATCHv2 6/7] builtin/describe.c: describe a blob
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=tj348eB+7K2yU1q14K+Lymyx9yxvKaVAkWNUAhJCoj4=;
+        b=OxBciYN69g0JmmS8MA8rVdcxUn/zq/8ArRPQtzDN8KczX2i1fYa9eEChfbPiPeFjeq
+         8plw/SWvDjgKUaQXopc8Mn5u7z6FcChEd6iEaz/dsb8qGtPaQ5DcGgG10YTzIQaIlDSK
+         WiYNMHYRupc0MSfe3LKHsrIKF4DHbr+vKdiNK8klvv8S5RcAWo+wQxVIPz5k2Fe7MU9f
+         RkzvqEcZfPJzTBesLzOPE+jHHxWuBr/izEswrZVLncvAIBCKLQ/19awuHQsfCaEe7E1n
+         WoywkX28KeFwUtzRMeHF9U4igpaKWJDxWRMSvI/TOtfX70kRGWh6SUPFDGKsbSnXYJwc
+         oQqQ==
+X-Gm-Message-State: AMCzsaV0R6dyP4PgjOQQ+xkhO5ukgM/C+R/JYvWZ7csjdVI1K+5giHXP
+        cuV8uP8ptJTNAjqrFuH7zL3fXgeN
+X-Google-Smtp-Source: ABhQp+TtURyhKmVx0uL6Fey+aF9f14WIXkUvFxV2RQDte5xuXoD9r3k9ImfO7sCiF9zQa0G9o9mg4A==
+X-Received: by 10.36.163.140 with SMTP id p134mr6475762ite.46.1509701022752;
+        Fri, 03 Nov 2017 02:23:42 -0700 (PDT)
+Received: from [192.168.42.176] ([117.251.239.143])
+        by smtp.gmail.com with ESMTPSA id j63sm2566858ioe.25.2017.11.03.02.23.40
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 03 Nov 2017 02:23:42 -0700 (PDT)
+Subject: Re: [BUG] Incosistent repository state when trying to rename HEAD in
+ the middle of a rebase
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>,
-        Kevin Daudt <me@ikke.info>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     git@vger.kernel.org
+References: <1509209933.2256.4.camel@gmail.com>
+ <1509600814.9254.6.camel@gmail.com>
+ <xmqqd151qft5.fsf@gitster.mtv.corp.google.com>
+From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+Message-ID: <49563f7c-354e-334e-03a6-c3a40884b6d0@gmail.com>
+Date:   Fri, 3 Nov 2017 14:53:37 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
+MIME-Version: 1.0
+In-Reply-To: <xmqqd151qft5.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 2, 2017 at 10:18 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jacob Keller <jacob.keller@gmail.com> writes:
+On Thursday 02 November 2017 01:21 PM, Junio C Hamano wrote:
+> Kaartic Sivaraam <kaarticsivaraam91196@gmail.com> writes:
+> 
+>> I was able to spare some time to dig into this and found a few things.
+>>
+>> First, it seems that the issue is more generic and the BUG kicks in
+>> whenever HEAD is not a symbolic ref.
+> 
+> Interesting.
 >
->> I think both questions are valuable, the first is "which commit last
->> had this blob", the second  is "which commit first introduced this
->> blob", neither of which can always give a definitive answer. It really
->> depends on what question you're asking up front.
->
-> Given that "describe" is about giving an object _a_ name that is
-> plausibly useful to refer to it, it is not a good match for the
-> above query that wants to know where it came from, how long it
-> remains in the tree and where it ceases to be relevant.  In order to
-> support that use case, a totally different and possibly more useful
-> avenue would be to think how this can be hooked into "git log"
-> machinery.
->
-> A refresher for how "git log [--options] <pathspec>" works may be
-> beneficial.  We walk history and compare the tree of the commit we
-> are looking at with the tree of its parent commits.  If everything
-> within <pathspec> is the same, we mark the transition between the
-> parent and our commit TREESAME (other commits, i.e. the ones that
-> have meaningful change within <pathspec>, are !TREESAME).  Then the
-> output routine presents the set of commits that includes commits
-> that are !TREESAME, within the constraints of the --options given
-> (e.g. with --full-history, sides of a merge that is TREESAME may
-> still be shown to preserve connectedness of the resulting graph).
->
-> It is easy to imagine that we can restrict "git log" traversal with
-> a "--blobchange=<blob>" option instead of (or in addition to) the
-> limitation <pathspec> gives us.  Instead of treating a commit whose
-> diff against its parent commit has any filepair that is different
-> within <pathspec> as "!TREESAME", we can treat a commit whose diff
-> against its parent commit has a filepair that has the <blob> on
-> either side of the filepair as "!TREESAME" (in other words, we
-> ignore a transition that is not about introducing or forgetting the
-> <blob> we are looking for as an "interesting change").  That would
-> give you a commit history graph in which only (and all) such commits
-> that either adds or removes the <blob> in it.
->
-> Hmm?
 
-This seems quite useful in the context of figuring out how a file got
-to such a state. This is useful to me, since if I know the state of a
-file (ie: it's exact contents) I can determine the blob name, and then
-use that to lookup where it was introduced.
+Let me detail a little more about my observations just for the sake of 
+completeness. The change that forbid refs/heads/HEAD caused issues only 
+when HEAD wasn't a symbolic link because of the following reasons,
 
-Thanks,
-Jake
+1) The change resulted in 'strbuf_check_branch_ref' returning with 
+failure when the name it received (sb) was HEAD *without* interpreting 
+it as "refs/heads/HEAD" into 'ref'. This resulted in the violation of 
+the expectation of it's callers that it would have interpret 'ref' which 
+was the major cause of the issue.
+
+It wouldn't have been an issue if we had checked for the existence of a 
+"branch" (refs/heads/) rather than checking for the existence of a "ref" 
+(which allowed HEAD to pass the test).
+
+
+2) This did not cause issues when HEAD was a symbolic ref because there 
+was a check for attempting to rename in a symbolic ref in 
+'files_copy_or_rename_ref'. The check throws an error when trying to 
+rename a symbolic ref which resulted in suspicious error message I got.
+
+So, IIUC the issue doesn't occur when 'ref' is intrepreted before the 
+check for 'HEAD'. That's possibly why the diff patch I sent in the 
+previous mail fixed the issue.
+
+Also, it would be nice if we check for the existence of a "branch" when 
+we want to know whether a branch exists rather than simply doing a 
+'ref_exists' on the interpreted ref.
+
+
+> Shortly we'll be rewinding the tip of 'next', and it is a good
+> opportunity to kick any not-so-well-cooked topic back to 'pu',
+> so let's figure out what is going on after that happens (at which
+> point let's eject the "branch name sanity" topic out of 'next').
+
+Does the above explanation give an idea about what's happening?
+
+
+---
+Kaartic
