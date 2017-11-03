@@ -7,96 +7,158 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B6F3320450
-	for <e@80x24.org>; Fri,  3 Nov 2017 12:05:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D8FD720450
+	for <e@80x24.org>; Fri,  3 Nov 2017 12:32:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753007AbdKCMFj (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Nov 2017 08:05:39 -0400
-Received: from mout.gmx.net ([212.227.15.19]:61769 "EHLO mout.gmx.net"
+        id S933038AbdKCMc4 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Nov 2017 08:32:56 -0400
+Received: from mout.gmx.net ([212.227.17.21]:62745 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750857AbdKCMFi (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Nov 2017 08:05:38 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MPE7E-1e6Ask0w8u-004Rid; Fri, 03
- Nov 2017 13:05:30 +0100
-Date:   Fri, 3 Nov 2017 13:05:27 +0100 (CET)
+        id S1750826AbdKCMcz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Nov 2017 08:32:55 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MXZNq-1dfAcY0C9O-00WVCq; Fri, 03
+ Nov 2017 13:32:48 +0100
+Date:   Fri, 3 Nov 2017 13:32:26 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Stefan Beller <sbeller@google.com>
-cc:     Andreas Schwab <schwab@linux-m68k.org>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        git <git@vger.kernel.org>, Kevin Daudt <me@ikke.info>
-Subject: Re: [PATCHv2 6/7] builtin/describe.c: describe a blob
-In-Reply-To: <CAGZ79kZXLpwCyWs3_mfj7kL1qmM965V7vZZ2UH4-hqrfF5f+8g@mail.gmail.com>
-Message-ID: <alpine.DEB.2.21.1.1711031300010.6482@virtualbox>
-References: <20171031003351.22341-1-sbeller@google.com> <20171031211852.13001-1-sbeller@google.com> <20171031211852.13001-7-sbeller@google.com> <xmqqbmkmvdrq.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.21.1.1711011329300.6482@virtualbox>
- <CAGZ79kZPNiNnSJd6CNYb7XkTVsT2ONLQLhwAQxt6_SPFTSwMcw@mail.gmail.com> <EF573E5E-EA72-4DEE-822C-B44265FD581B@gmail.com> <alpine.DEB.2.21.1.1711012310250.6482@virtualbox> <CAGZ79kbOEM_W65Rym4yiDNHpFGTNWMYdh=aVPjThNWjEHPQong@mail.gmail.com>
- <alpine.DEB.2.21.1.1711012340290.6482@virtualbox> <871slhm9dm.fsf@linux-m68k.org> <CAGZ79kZXLpwCyWs3_mfj7kL1qmM965V7vZZ2UH4-hqrfF5f+8g@mail.gmail.com>
+To:     Jeff King <peff@peff.net>
+cc:     Andrew Baumann <Andrew.Baumann@microsoft.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: git tries to stat //HEAD when searching for a repo, leading to
+ huge delays on Cygwin
+In-Reply-To: <20171103010300.3jwme4d6nbxnj6od@sigill.intra.peff.net>
+Message-ID: <alpine.DEB.2.21.1.1711031324110.6482@virtualbox>
+References: <MWHPR21MB0159089DB91A30E5E5CFCB479E5C0@MWHPR21MB0159.namprd21.prod.outlook.com> <20171103010300.3jwme4d6nbxnj6od@sigill.intra.peff.net>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:CMtmRLvsvj/Mk7fAZJ35Dxokr1RpIWmtEjVLt1+UJYD9+CBADgc
- rh1OUVny1IsNEVv9Oo8vpmr69zvHQEFK7RsGrk4/X9iAiewgGGZSPh/MCqjxwgsqMn4xyXR
- OMZfJBSxcUqmTrqJrEfGSvfXAbJah6gdk6YCmNU2zwdWIEc59pCz0log3bzhw8otc/Bw6xo
- vrkElWikGPnegGk+PiSjw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:GGuOLoOAjjw=:GSADwbb1d6c9cITFyDSaiH
- pfybQVb43WlkW0qLLEKgqu3o2QrsbZ8Z2sv1xPxPpZri/smRM0yn7Cwin2MGAJM/lXl/PMGYF
- YGi7qCd+sxtX2o7P53iD9bqcARl0VT/VFYlxDBT0L8XaRlQ+ViOWPHSXiuT3Huo9yVKsfa4zi
- diaiYxLaynilBKjlOjS4/YMNxRliTr6Z//I34+3275yLNQ/zPCq2i5pJtcAa56fcMr6rnq66x
- I+qPlwTuYAbEgUa46wboL9QxKHkZ1LqbMACF4SdUyVlKyi8Rxg/8Op8ha4cnVNwXKYbXgQ2+x
- 0eY4M9YAvLUhlEIGWIhNv4uR485lLnnTD+0KpTAakVHhXQhSVcvis4/Y16IJQ6m/8qr2amJti
- uvxi2iKA7hg9mMTgxRO3nxtlnLtu2KMo4rDsmfji4lcYGBfhA2Sw4ucedeljbTikMCB0CU1Tj
- Iq1/RdhuFaDMHPkpk43Gr6QPL7CsCwbAbf5Sxzi7xfIf46bSXOsWyZCKNXTM25jI/pcg/DKVM
- zLdhP5cvYcRPRq+ycVUZMW6xX597+fOHNjE3rJ13hLNKQFipVzRDUvSndR8VVz6u3JKB7/aH3
- UcWrV4qv1Kbunz7F8QB5bCfIwkZJai5cvN8zaquzafZ2wa20VSnxC101cKO8nYPuwIXD+bUNu
- Qz/sslKhKqhmGI4DQ8mBhapNnh8XAizci5XwqwucNwLfoVXEbdMswvuUNbGBmI36BTL/5JnjZ
- 5vg5N/qSGsXJznZeTel9uNCThV4kNgfkZa4vjIA77U702vqkIsJMJalMTo9Qpa4vmslDSwpvV
- FSAcGVIMtZD8J1b9+jkE4wjL2VPwc9I9pkbwbABbt8fpXGaUTI=
+X-Provags-ID: V03:K0:WrJH35/zbhacaJJwQuJEbBjzcjVUZZ6qm8VZF74YjoneLbT45D3
+ KO0bKQXsMzkblnExGJ5/e4ntQ27vhkeIudPe6AYdtxAaKwnHvggdOPnlfS+WKc9ab6UYt9b
+ yWyaXbMrBhQqVMDxOOLPBG/ATphbGfqGRvpohW8i9uS8SB4Lpr0pZXDlggPORS5sCQZ3PVv
+ VmuXd3oUuu+TTuMKMRdCw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:tpOsmDGpUoc=:VOkS2twPLEDg8tOQt8+77l
+ RFxg0+jD+aKCshmJgDa2B3aDQNLifkoZrksYyaEZJdsaDHAe4hgs9T2z0PzVHVXtINpPlW82u
+ ZcSARdX54Mb0C9i9Y19qBqye+3YcwLcLmqaHQmZYP/GaIVQRpxl2GwIQsVorQ17ILkqxt4dmF
+ LVplAdGhgk0nOG5bRrMuRZlnQxuy/BoewpPDwcP+y5EFg0td6Qs4Xo/hg5caNan3lDS4xz5il
+ iHZOsVbHHExwYoLzoQ7i0qCI5o0A6HuJ5+0STJWO8pOCEpT3JWRSESO6yhhfjcaTdxQYn8lV5
+ m/u6v27BJXLbBi6amcwPD5lDM3q8dQ6/he5nNsqMpUeLvLvSFLAt2zCPG+f4A6fNAKo1QDLXs
+ tN6/muB8GSBGAe5cCTFGwoeMPIgfks2w5pzudotBlUtZYSod8bzOf+CUI4PsPBGri0FyJ/coJ
+ IZ/5dONKCdbD4L4lIH/cOGXVBcy/SUSx8AsPGaTh1op0Vrgt1O8mHRp7KKgBYBET8jZuDvbIJ
+ sdQBNPJ71XlUD6McbRjv1cBg5e/4LBn8aFy5tw7Gl1DD3hyaNP5pi4rG7goHp0UoFBh9Ald2+
+ JYtlG4Wvu/g8gzUoVcHvasVURo2ZnlGdnSgylMJbVEZfuirN6Iq0e3DolxhdEfdn2+H6Jo/Ho
+ C2GuVqaKTEdT5EZpQ6yPoXgjzmQUMEx7CcrBYv/lcNLWEQ2VmOksjjnpWTKN62wPJrUSW2nPb
+ 5DtvxfxlGuJm4T0X0Hj4pdHHq92lECWOl3Pwa3UGxTUrlLWjBrGZx44fimQLiZ6GsmF1ZqREu
+ +TSwFQc/0LS5byt7IOLd/NPH09oM6MKAShrUI3AkrQAMWgoouw=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stefan,
+Hi Peff,
 
-On Thu, 2 Nov 2017, Stefan Beller wrote:
 
-> On Thu, Nov 2, 2017 at 12:23 AM, Andreas Schwab <schwab@linux-m68k.org> wrote:
-> > On Nov 01 2017, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> >
-> >> Sure, but it is still a tricky thing. Imagine
-> >>
-> >> - A1 - B1 - A2 - B2 - B3
-> >>
-> >> where all the B* commits have the blob. Do you really want to report B1
-> >> rather than B2 as the commit introducing the blob? (I would prefer B2...)
-> >
-> > What if B3 renames or copies the blob?
-> >
-> > Andreas.
+On Thu, 2 Nov 2017, Jeff King wrote:
+
+> On Thu, Nov 02, 2017 at 11:45:55PM +0000, Andrew Baumann wrote:
 > 
-> With the current proposed patch you'd find B3, and then use the diff machinery
-> to digg deeper from there (renames/copies ought to be easy to detect already?)
+> > I have a workaround for this, but someone on stack overflow [1]
+> > suggested reporting it upstream, so here you go:
+> > 
+> > I have a fancy shell prompt that executes "git rev-parse
+> > --is-inside-work-tree" to determine whether we're currently inside a
+> > working directory. This causes git to walk up the directory hierarchy
+> > looking for a containing git repo. For example, when invoked from my
+> > home directory, it stats the following paths, in order:
+> > 
+> > /home/me/.git
+> > /home/me/.git/HEAD
+> > /home/me/HEAD
+> > /home
+> > /home/.git
+> > /home/.git/HEAD
+> > /home/HEAD
+> > /
+> > /.git
+> > /.git/HEAD
+> > //HEAD
+> > 
+> > The last name (//HEAD) interacts badly with Cygwin, which interprets
+> > it as a UNC file share, and so demand-loads a bunch of extra DLLs and
+> > attempts to resolve/contact the server named HEAD. This obviously
+> > doesn't work too well, especially over a slow network link.
+> > 
+> > I've tested with the latest Cygwin git (2.15.0); this was also present
+> > in a prior version.
 > 
-> So with a copy B3 might be a better start than B1, as starting from B1 you
-> would not find B3 easily.
+> Interesting. I can reproduce on Linux (but of course "//HEAD" is cheap
+> to look at there). It bisects to ce9b8aab5d (setup_git_directory_1():
+> avoid changing global state, 2017-03-13). Before that, the end of the
+> strace for "git rev-parse --git-dir" looks like:
 > 
-> For a rename, I would think a reverse log/blame on B1:path may help.
+>   chdir("..")                             = 0
+>   stat(".git", 0x7fffba398e00)            = -1 ENOENT (No such file or directory)
+>   lstat(".git/HEAD", 0x7fffba398dd0)      = -1 ENOENT (No such file or directory)
+>   lstat("./HEAD", 0x7fffba398dd0)         = -1 ENOENT (No such file or directory)
+>   write(2, "fatal: Not a git repository (or "..., 69) = 69
 > 
-> With that said, I think I'll just reroll the series with the current logic
-> fixing the other minor issues that were brought up as B3 seems to
-> be the most versatile (though not optimal) answer for many use cases.
+> and after:
+> 
+>   stat("/.git", 0x7ffdb28b7eb0)           = -1 ENOENT (No such file or directory)
+>   lstat("/.git/HEAD", 0x7ffdb28b7e80)     = -1 ENOENT (No such file or directory)
+>   lstat("//HEAD", 0x7ffdb28b7e80)         = -1 ENOENT (No such file or directory)
+>   write(2, "fatal: Not a git repository (or "..., 69) = 69
+> 
+> Switching to using absolute paths rather than chdir-ing around is
+> intentional for that commit, but it looks like we just need to
+> special-case the construction of the root path.
+> 
+> Like this, perhaps:
+> 
+> diff --git a/setup.c b/setup.c
+> index 27a31de33f..5d0b6a88e3 100644
+> --- a/setup.c
+> +++ b/setup.c
+> @@ -283,7 +283,9 @@ int is_git_directory(const char *suspect)
+>  	size_t len;
+>  
+>  	/* Check worktree-related signatures */
+> -	strbuf_addf(&path, "%s/HEAD", suspect);
+> +	strbuf_addstr(&path, suspect);
+> +	strbuf_complete(&path, '/');
+> +	strbuf_addstr(&path, "HEAD");
+>  	if (validate_headref(path.buf))
+>  		goto done;
 
-I know this is a bit of semantics, but I disagree that B3 is the most
-versatile. For my use cases, `git describe` comes in handy relatively
-rarely, and usually only when I want to know what version some work was
-based on. In that respect, B2 would be the most versatile answer.
+Yes, that would work around the issue. TBH I expected `/` to not be a
+valid bare repository path (and therefore I thought that `suspect` could
+never be just a single slash), but people do all kinds of crazy stuff, right?
 
-However, if you say that B3 is the easiest answer to explain, I
-whole-heartedly agree. Any other answer would be necessarily more
-complicated to reason about, given that we're operating on a DAG, i.e. not
-always on a linear history.
+I note also that there are tons of `strbuf_addstr(...);
+strbuf_complete(..., '/');` patterns in our code, as well as
+`strbuf("%s/blub", dir)`, which probably should all be condensed into
+single function calls both for semantic clarity as well as to avoid double
+slashes in the middle of paths.
 
-Ciao,
-Dscho
+In the short run, though, let's take your patch. Maybe with a commit
+message like this?
+
+-- snipsnap --
+setup: avoid double slashes when looking for HEAD
+
+Andrew Baumann reported that when called outside of any Git worktree, `git
+rev-parse --is-inside-work-tree` eventually tries to access `//HEAD`, i.e.
+any `HEAD` file in the root directory, but with a double slash.
+
+This double slash is not only unintentional, but is allowed by the POSIX
+standard to have a special meaning. And most notably on Windows, it does,
+where it refers to a UNC path of the form `//server/share/`.
+
+As a consequence, afore-mentioned `rev-parse` call not only looks for the
+wrong thing, but it also causes serious delays, as Windows will try to
+access a server called `HEAD`.
+
+Let's simply avoid the unintended double slash.
+
+Signed-off-by: Jeff King <peff@peff.net>
+Acked-by: Johannes Schindelin <johannes.schindelin@gmx.de>
