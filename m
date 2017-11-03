@@ -7,82 +7,97 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AD03D20450
-	for <e@80x24.org>; Fri,  3 Nov 2017 12:36:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ADD5720450
+	for <e@80x24.org>; Fri,  3 Nov 2017 12:58:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752684AbdKCMgv (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Nov 2017 08:36:51 -0400
-Received: from mout.gmx.net ([212.227.15.18]:52398 "EHLO mout.gmx.net"
+        id S1755981AbdKCM62 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Nov 2017 08:58:28 -0400
+Received: from mout.gmx.net ([212.227.15.19]:56751 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750826AbdKCMgu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Nov 2017 08:36:50 -0400
+        id S1753142AbdKCM61 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Nov 2017 08:58:27 -0400
 Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MVvB2-1ddWXG11Z2-00X4Mc; Fri, 03
- Nov 2017 13:36:46 +0100
-Date:   Fri, 3 Nov 2017 13:36:45 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0McEI3-1dsecv0UBb-00JehH; Fri, 03
+ Nov 2017 13:58:18 +0100
+Date:   Fri, 3 Nov 2017 13:58:02 +0100 (CET)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-cc:     Andrew Baumann <Andrew.Baumann@microsoft.com>, git@vger.kernel.org
-Subject: Re: [PATCH] setup.c: don't try to access '//HEAD' during repo
- discovery
-In-Reply-To: <20171103010645.25499-1-szeder.dev@gmail.com>
-Message-ID: <alpine.DEB.2.21.1.1711031334000.6482@virtualbox>
-References: <MWHPR21MB0159089DB91A30E5E5CFCB479E5C0@MWHPR21MB0159.namprd21.prod.outlook.com> <20171103010645.25499-1-szeder.dev@gmail.com>
+To:     git@vger.kernel.org
+cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Andrew Baumann <Andrew.Baumann@microsoft.com>
+Subject: [PATCH] setup: avoid double slashes when looking for HEAD
+Message-ID: <9322728aaa3010c0b71574eb5876548487d66885.1509713589.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323329-404204253-1509712606=:6482"
-X-Provags-ID: V03:K0:yJ/YGLfZ6IrRnkfuMT0182quNd/nZe5iN9j/cOD4K6rN0Umgsxp
- 0JYdRzT6UGBr/rznxP37+GF2c9SOXJ+u8zzvyflSsbioalA8QQcehZHrpRlXIxdZfHYaWHZ
- A7jiF19lI5KHAAC1jZ6IBGvPKuyzMA7Xnke26rzd3tSaCkxgUeaJuVSx4XRdS05FvtQFOMO
- s19PYJVEH3XFqdW11TrMg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:bm+rFKUla7A=:t+dryzJO7fj4041xA/qP8X
- KaRWGOkRWMTk3zo7YY44EbDjk9wcQ51yUAyF86TgvOhJj3fgGk8RBigOOop21kA1wCFi1SEZ5
- FNWsSeZEut0xMQGBi3BkJguEaVJRp2EgPl13xRUgCyZt8wLO6qW2gRQUgKFTqqEJFDmoyY86F
- lrC4P6dCxiQoHqnbBcmWY2RZHhmS2auLx9jXc9uqNyNYx4QLeh09jtz53CbsytPKmDWCI+Yal
- jfjlQs0DFtSs2Kq+zkcYZ6b3NjgGa1Q+HSrh5p7v80dKNLaXH4bvR6ZATursKAz2BZcrHbSGl
- QbqA+tlGsI4wSYRgOn6l8VxzE7N/YEYBGjAeBOBRqNTMEtveyvfhKGpnNE7qn8WB1KNzHt67m
- 4yK4qqmxwj0rJ9ueDj93sQlosZou5JGqhTcZrn2ZhPyztSLaq7b7E9/X6ElUvULNDgToIeArY
- Ot8HspywBuiaaSlYYJPv1ZsMur5t+FSceowryDPWX7n03gS4D6Br6Pe11wUFFI3cnjXnZwLKp
- frQ1lVHsihoPTd3BD7K0G//eRbRnwYrgR7Ux4MAEha3T8rrQRwlU/MxVlImf8KRcfHA25GhcU
- oyDxfB5P2BOh2tnFc3zulbFNfCMIVYNUUh6zCIqgBsELT16GcqLzjyckyF5e0jIk6ZGCM/s5i
- XWL+8D0RitVSwdsTvx0Lv6DnKNi0WYFD59b9ToMt9g7WZ6j1zBa7Q+KYWSN1fASbSxDtosG6d
- X/OKmlizIbNQ6JEN4q6rK+tjv/BX5/3aLT8NUiMst9Undr9vyN9zb4RcNYAS36I2XyhcyohKH
- MfUvRDH9H3yGdz2Ua5X96CFAzPpdhruMbsKcZXjHazggJgJ/bc=
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:yktnci8RKbQ7eq2iiXmkqBlBo7rTXn0nVNU4ovohTg9DmFj1WY1
+ JETIhGJzhZ9nFq6OzqJI4b/t4z2/sx4S1DNe6YdWbD/H0OEeI/3ENnbpeDZzjeePpdc8Tnk
+ GzT++B/pmF2JgPZ634aqdqbqs5KXJwCxZWLuh1NDwxojq/EI157euAHHNWCb0KcWsew5wuw
+ 99bnvrINsOMoQNNdTTAdw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:l+MAswD15AY=:1SsppucMTIJpfoV6/bKnwB
+ FJP7rUrAMKgM3xVjpZC+orqv7e+MehmWIn1QhZcs3WAQwH72IueES5WC5tiJ111DlaZLB8xKG
+ QqRof2T+gsuH9XiFLnrr0QBf1gFq5id6NyOMOU1T74E7b8wzGZVnm9+oOQpgRBfsQ4ShCWh/D
+ 8TTjtUplnWttfsxSF1BklPvX2UfIJJKkaRtLd9t6q0Iw83apXpsQiSDqo7ArpnJVEiIa3sotK
+ Y5u+Ftndotp9Ou6O5vPHAAIL6jXzZ8Z0nBzqnww8C39tbr6gk8wYqgzeavyv5yi1QKZMTSpgn
+ 1YVmkr1mbSADcCV1B/WRSYbMRx7jivHxSdHFsBre/Aw65HkI63WoA58DX+rYc9Ltiiezezl3H
+ SvoPW3an3mjp1S6cjiE0Uk/5nKKx+Yfj8ahUV81oFfiN3izQnaAUk0mWVjxG5ADDl2QOkruCZ
+ 13uMISsl7G9QPE0SjRmpuCFGUXBg9sfE6ccNbo+7/yWh2k4MHAd+lzmL2GksGtK45Un8F+G/I
+ pXnSj+cHZ8ofWlYyzJpfq24dE7DaeWPyFYTTAM5PtfkLzq+gJLTTFHqtHvsfpQuEdwq2LHT4I
+ GMXcXznV5keEDjXKjtfRYsxbTKUu+BPl4EdWkHfPTpdJiub6Zqtf+Wt2B9NMa5xY/zye+QvOl
+ KWENPLvj693qrCmJll97FUeBUnuObeCgzTXfEz5v8GmSh3nU/w3dvkbhpgw/l4/tLMJVOCCGp
+ YX/7LwK4VVfxYoW6zFdbVsy6yR37aOVv/acGXhhlL/aMT9cU27o8+CbsJJNt0/WpFp5SrNz63
+ tpM0Hn836Q9NThL6f6ioxV0s7gvbhTqln3o3vfYiK0GX/CB5vE=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+From: Jeff King <peff@peff.net>
 
---8323329-404204253-1509712606=:6482
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Andrew Baumann reported that when called outside of any Git worktree,
+`git rev-parse --is-inside-work-tree` eventually tries to access
+`//HEAD`, i.e.  any `HEAD` file in the root directory, but with a double
+slash.
 
-Hi G=C3=A1bor,
+This double slash is not only unintentional, but is allowed by the POSIX
+standard to have a special meaning. And most notably on Windows, it
+does, where it refers to a UNC path of the form `//server/share/`.
 
-On Fri, 3 Nov 2017, SZEDER G=C3=A1bor wrote:
+As a consequence, afore-mentioned `rev-parse` call not only looks for
+the wrong thing, but it also causes serious delays, as Windows will try
+to access a server called `HEAD`.  Let's simply avoid the unintended
+double slash.
 
-> Commit ce9b8aab5 (setup_git_directory_1(): avoid changing global state,
-> 2017-03-13) changed how the git directory is discovered, and as a side
-> effect when the discovery reaches the root directory Git tries to
-> access paths like '//HEAD' and '//objects'.  This interacts badly with
-> Cygwin, which interprets it as a UNC file share, and so demand-loads a
-> bunch of extra DLLs and attempts to resolve/contact the server named
-> HEAD.  This obviously doesn't work too well, especially over a slow
-> network link.
->=20
-> Special case the root directory in is_git_directory() to prevent
-> accessing paths with leading double slashes.
+Signed-off-by: Jeff King <peff@peff.net>
+Acked-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+Published-As: https://github.com/dscho/git/releases/tag/double-slash-HEAD-v1
+Fetch-It-Via: git fetch https://github.com/dscho/git double-slash-HEAD-v1
 
-I would rather not special-case the (Unix) root directory. The underlying
-problem, as Peff pointed out, is that an extra slash is appended if the
-directory. And as `is_git_directory()` is not marked as static, we must
-assume that there are other callers that may pass in directory paths
-ending in a slash already.
+	And here it is, as a proper, easy-to-pull branch, and also in the
+	form Junio prefers.
 
-Ciao,
-Dscho
---8323329-404204253-1509712606=:6482--
+ setup.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/setup.c b/setup.c
+index 03f51e056cd..94768512b79 100644
+--- a/setup.c
++++ b/setup.c
+@@ -312,7 +312,9 @@ int is_git_directory(const char *suspect)
+ 	size_t len;
+ 
+ 	/* Check worktree-related signatures */
+-	strbuf_addf(&path, "%s/HEAD", suspect);
++	strbuf_addstr(&path, suspect);
++	strbuf_complete(&path, '/');
++	strbuf_addstr(&path, "HEAD");
+ 	if (validate_headref(path.buf))
+ 		goto done;
+ 
+
+base-commit: cb5918aa0d50f50e83787f65c2ddc3dcb10159fe
+-- 
+2.15.0.windows.1
