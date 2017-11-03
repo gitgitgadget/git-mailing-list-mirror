@@ -2,76 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F273320450
-	for <e@80x24.org>; Fri,  3 Nov 2017 13:37:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E6BBA2055E
+	for <e@80x24.org>; Fri,  3 Nov 2017 13:42:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933257AbdKCNhs (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Nov 2017 09:37:48 -0400
-Received: from siwi.pair.com ([209.68.5.199]:48641 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932201AbdKCNhs (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Nov 2017 09:37:48 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 6804B84559;
-        Fri,  3 Nov 2017 09:37:45 -0400 (EDT)
-Received: from [10.160.98.77] (unknown [167.220.148.86])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 1B6BA84515;
-        Fri,  3 Nov 2017 09:37:44 -0400 (EDT)
-Subject: Re: [PATCH v2 4/6] list-objects: filter objects in
- traverse_commit_list
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
-        Jeff Hostetler <jeffhost@microsoft.com>
-References: <20171102175013.3371-1-git@jeffhostetler.com>
- <20171102175013.3371-5-git@jeffhostetler.com>
- <20171102123245.0f768968703ec4e35d3d1f81@google.com>
- <alpine.DEB.2.21.1.1711031254280.6482@virtualbox>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <0dd48f07-6174-1a4e-c1f0-bae5b18cebd1@jeffhostetler.com>
-Date:   Fri, 3 Nov 2017 09:37:43 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.4.0
+        id S1756256AbdKCNm0 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Nov 2017 09:42:26 -0400
+Received: from mail-qt0-f173.google.com ([209.85.216.173]:43197 "EHLO
+        mail-qt0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756220AbdKCNmY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Nov 2017 09:42:24 -0400
+Received: by mail-qt0-f173.google.com with SMTP id j58so3265583qtj.0
+        for <git@vger.kernel.org>; Fri, 03 Nov 2017 06:42:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=IhRqxNoTJWpbX+niDYDv1cEdenJhzqLUDxtIxHJl4lI=;
+        b=HICblNTZlXOvxXQ1Sf7w8JCnvRvwYOIBIeIXamBLIuwJpyn58FILEtSjebCQ63MskR
+         e16P8VdCLYeBEwWmFwb8HU8Nr0e9c8NfRX99gP372hRvMbD+zdtmA8a3DQu4hOncNk2S
+         O0/i7mAfwgQVeLU+MzJEiphyNA0OokdGUPwQuZgEOUp/vcHR2NxsTMWN+gF7NWN5V4lq
+         mqm1DOVfP1QIkE667Nm3XGyui9nl4f7cAJF67/PYX8V3FbNwcK34Szain49k1/dUYAA+
+         XkWdK0P+dQ3uPY6D2SmFRjSE6NDUghxSKy26N2DJn6P4WTEZQ5pmoZO63k8vLRoi3J83
+         xGuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=IhRqxNoTJWpbX+niDYDv1cEdenJhzqLUDxtIxHJl4lI=;
+        b=j5ZZ0h2AMZ9XuQdqon9ineQO5fREy1CB930NopQs8PutzZM0hkiFaClzsFmKgwSbox
+         kUQQgcn+io3NgdAPomOWaaGUmnt9991KkmchVhGWTTRSGe9BkU0kfywsKR0IpZpn2hhK
+         2UsYCBjPljGX0mlQcjUh0VDv/KVUWB/uqtAfuS8uGQVBEGMADypdzH776eWjW53tiGPM
+         znxCIVstCxmdrXcSH4CCxkpY86IajFWCtg2Q7dgCvCuQVlIrAN/u4+jOSfjmp2PwSuXA
+         4TGzbonfbotFHOTrbogWX3vrstBws0nX2zicxJo0WUHwffyDB0gThPIPtERK16YfIpv8
+         j8nw==
+X-Gm-Message-State: AMCzsaW6k0sNZVAbYxMEDdp3xan4WNAAcgwPlDdEIokwjvXuEX2h9411
+        0yvSZgLeKAbx84EtvUg/TCZF6z0spfOi65A1AdoYePi2
+X-Google-Smtp-Source: ABhQp+TkSTP693ulw4qnMahmnx1GPHlIPyrw9K0QLsivUoSJQ6kCnHbjKhdIr7kKvEKP++mbzgCNUkfKecPAHpTrGh8=
+X-Received: by 10.200.51.41 with SMTP id t38mr10471413qta.241.1509716543903;
+ Fri, 03 Nov 2017 06:42:23 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <alpine.DEB.2.21.1.1711031254280.6482@virtualbox>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Received: by 10.12.147.227 with HTTP; Fri, 3 Nov 2017 06:42:23 -0700 (PDT)
+From:   gregory grey <ror6ax@gmail.com>
+Date:   Fri, 3 Nov 2017 14:42:23 +0100
+Message-ID: <CACYWVif=zSiXpqVL0td+Mgu-Wz=AzDL50kREcXJY2Dtf_4_y_g@mail.gmail.com>
+Subject: submodule using revision
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi guys.
+
+Currently git submodule only works with branch of the submodule in
+question. Adding a functionality to work with a revision would be
+great from my point of view.
+
+Proposed syntax is as follows:
+git submodule add -r commit_sha git://some_repository.git
 
 
-On 11/3/2017 7:54 AM, Johannes Schindelin wrote:
-> Hi Jonathan,
-> 
-> On Thu, 2 Nov 2017, Jonathan Tan wrote:
-> 
->> On Thu,  2 Nov 2017 17:50:11 +0000
->> Jeff Hostetler <git@jeffhostetler.com> wrote:
->>
->>> +int parse_list_objects_filter(struct list_objects_filter_options *filter_options,
->>> +			      const char *arg)
->>
->> Returning void is fine, I think. It seems that all your code paths
->> either return 0 or die.
-> 
-> Can we please start to encourage libified code, rather than discourage it?
+Thanks!
 
 
-I did that so that I could call it from the opt_parse_... version below
-it that is used by the OPT_ macros.
+-- 
 
-And Johannes is right, it bothers me that there doesn't seem to be a hard
-line where one should or should not call die() vs returning an error code.
-
-Jeff
-
+http://ror6ax.github.io/
