@@ -2,215 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DDA7A20450
-	for <e@80x24.org>; Fri,  3 Nov 2017 15:12:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 29B7320450
+	for <e@80x24.org>; Fri,  3 Nov 2017 16:07:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754718AbdKCPM3 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Nov 2017 11:12:29 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63828 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752122AbdKCPM2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Nov 2017 11:12:28 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E35E5A62E9;
-        Fri,  3 Nov 2017 11:12:27 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=qa7pZJRFf0AaVXX3MNgZdBHCOAI=; b=HIrINL
-        sBWk5SSt9n7AwxXbjhNKuayGZZ36yq2tREXTj8kfOCiZRtu88ZyHoByL5F3RH9c6
-        TXqGaIRH4cD7HO11tZ+sJKDJ/CVR6pSI6+poQyUAVpTWt+rYJ3Fe2tEzVvUg0Nsy
-        0AYZ/WxSHoK+fAxa6A+N4Kpy9cbA2bI3JNl94=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=fto0IGp90FgCRY4G34gqY5J0HPQfSOf4
-        Fnz9FVEuapK5L93QzRVXnPiVag7Ys0T7Xh+Yp5ivi4Wnp/Fa/1XNNuvjhfy3bP8t
-        LCsxpWtOJbMZaPW1BNPRPkfbJ1F/iHkqZc9OiYGso9Fcj/xlhITOvvo029VW/ZDA
-        9PsPdjaip5A=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D9D5EA62E7;
-        Fri,  3 Nov 2017 11:12:27 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 41FE3A62E6;
-        Fri,  3 Nov 2017 11:12:27 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     git@vger.kernel.org, peff@peff.net, jonathantanmy@google.com,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 00/14] WIP Partial clone part 3: clone, fetch, fetch-pack, upload-pack, and tests
-References: <20171102203129.59417-1-git@jeffhostetler.com>
-Date:   Sat, 04 Nov 2017 00:12:25 +0900
-In-Reply-To: <20171102203129.59417-1-git@jeffhostetler.com> (Jeff Hostetler's
-        message of "Thu, 2 Nov 2017 20:31:15 +0000")
-Message-ID: <xmqqy3nno0py.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1752323AbdKCQHE (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Nov 2017 12:07:04 -0400
+Received: from mout.gmx.net ([212.227.15.18]:60744 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751736AbdKCQHD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Nov 2017 12:07:03 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M0Ppl-1dGlgm2tX3-00ucM2; Fri, 03
+ Nov 2017 17:07:01 +0100
+Date:   Fri, 3 Nov 2017 17:06:41 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Orgad Shaneh <orgads@gmail.com>
+cc:     git <git@vger.kernel.org>
+Subject: Re: Regression[2.14.3->2.15]: Interactive rebase fails if submodule
+ is modified
+In-Reply-To: <CAGHpTBJTm=3f_VCnNLeE=V4CwvC6dM8qCmGRPDap6rszcpb65A@mail.gmail.com>
+Message-ID: <alpine.DEB.2.21.1.1711031658190.6482@virtualbox>
+References: <CAGHpTBJTm=3f_VCnNLeE=V4CwvC6dM8qCmGRPDap6rszcpb65A@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 67516BE2-C0A9-11E7-985B-575F0C78B957-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:Uao5s3erGKVHZGI1ZxdeOTCHFvHqQhgE5+wwGyG6jg14xPOzro5
+ LWkz0GF1pu+G0IkmJ36raEHvcp3MCPh2HnOkbcv8M8hqUj6a3Nx3rl2ouRAXF/fH2psKmwI
+ aaQqMLKt4g/xvKgWY+VPn9vpZ+urqHzLckbX36iWfaz2Kf1zZ7xo6FAHD771cJE9jZhF+Ta
+ 9JmPUq8/8i4V54k+bGDGQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:lyt6ElTLTzo=:TV2igPFoR8Me9jIIq/kaag
+ 52dQ1FI7azAhl2Ggr7F0IYIklkFwL96s7qOVdsQ+1noEo/s8OuiTXQp8i404V41mpjCYThOYZ
+ iUo2OOVzEmo0oqFgBWLLkFZ1E2El+n6WyVPllvRJD70qId7UHxyfYh5So7Sc/KxqquBnOj4nE
+ LUBX+9vR+S/djkATwPbO1BxPQ5DWUgv4snpCAW2fnCWFsvRlCFzViVZyClC0ZUJcRx5Ejt0Ze
+ Xv+DfycbLOEshNAs32eHzoG0Gz2nK68Sei3IWWvSQkvaJHig3Vc7E6fsFOhPR0TDDcQA4Huid
+ dCiMx13HLmOC2yZcDK+g9W6ara+6UBgyqd5atfn6dOrXBCXaaFwYH5LpzqJw7qexqGsOVeXb1
+ KubJVLIB4gSg0XLu4hIXxPDxQzuI0Ll1iPfEFQX1LrSlJw5Rm7Stz1pUlpxhoKPokB3f6tsqP
+ V1Vj6Yyky/uC281uWJNGeqLbxHXfyV1MTKo7JbI8FUWX4fWhQIF4yHmzujln2e0ztMFdUoslb
+ JbA1IfG//B8GCMLxqY+4NGBvMN29y0apQpKTQ67ozJ+PAufvt3a9VniExTv0yZAxR9KYU98FP
+ BgT6JU8S/r+ixF1A45xO50FqRgR3/AUGf/uDygS1+CQBiRS4k+DjXcYOg7WgAqanSx4EsGJKt
+ PVqS4Qoysm9TEOuG+ffBfrB9V9ZrdJEJOS8ilScmMWdtvtilv2lfOv3mtFhVFUoVfiOR1LArt
+ zHcWBuOf/sjAv6qLzy/+TNfEqWHT8sef3j7fz+tMPjjtLpjp92Z49NT70SCBIK1iFeOfLbg0c
+ oNVZ611JH1GeR833+gvqqHMul3XJJHa/28mHKUVaV5WpmZN40g=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff Hostetler <git@jeffhostetler.com> writes:
+Hi Orgad,
 
-> From: Jeff Hostetler <jeffhost@microsoft.com>
->
-> This is part 3 of 3 for partial clone.
-> It assumes that part 1 [1] and part 2 [2] are in place.
+On Thu, 2 Nov 2017, Orgad Shaneh wrote:
 
-Thanks.  As planned these replaced the partial clone with size
-filter thing from Jonathan.  The resulting integration passed the
-tests locally so I pushed it out.
+> I can't reproduce this with a minimal example, but it happens in my project.
+> 
+> What I tried to do for reproducing is:
+> rm -rf super sub
+> mkdir sub; cd sub; git init
+> git commit --allow-empty -m 'Initial commit'
+> mkdir ../super; cd ../super
+> git init
+> git submodule add ../sub
+> touch foo; git add foo sub
+> git commit -m 'Initial commit'
+> touch a; git add a; git commit -m 'a'
+> touch b; git add b; git commit -m 'b'
+> cd sub; git commit --allow-empty -m 'New commit'; cd ..
+> git rebase -i HEAD^^
+> 
+> Then drop a.
+> 
+> In my project I get:
+> error: cannot rebase: You have unstaged changes.
+> 
+> This works fine with 2.14.3.
 
-By the way, the enhancement in this series made to list-objects.c
-had a bit of interaction with the last round of Stefan's "describe
-blob" topic when both were merged to 'pu'.  I think I resolved it
-correctly, but the merge resolution can use extra sets of eyes.
+I tried to turn this into a regression test, but I cannot make it fail:
 
-diff --cc list-objects.c
-index 5390a7440d,07a92f35fe..e05de01af1
---- a/list-objects.c
-+++ b/list-objects.c
-@@@ -220,32 -183,20 +220,22 @@@ static void add_pending_tree(struct rev
-  	add_pending_object(revs, &tree->object, "");
-  }
-  
-- static void do_traverse(struct rev_info *revs,
-- 			show_commit_fn show_commit,
-- 			show_object_fn show_object,
-- 			void *show_data,
-- 			filter_object_fn filter_fn,
-- 			void *filter_data)
-+ static void traverse_trees_and_blobs(struct rev_info *revs,
-+ 				     struct strbuf *base,
-+ 				     show_object_fn show_object,
- -				     void *data)
-++				     void *show_data,
-++				     filter_object_fn filter_fn,
-++				     void *filter_data)
-  {
-  	int i;
-- 	struct commit *commit;
-- 	struct strbuf base;
-  
-- 	strbuf_init(&base, PATH_MAX);
-- 	while ((commit = get_revision(revs)) != NULL) {
-- 		/*
-- 		 * an uninteresting boundary commit may not have its tree
-- 		 * parsed yet, but we are not going to show them anyway
-- 		 */
-- 		if (commit->tree)
-- 			add_pending_tree(revs, commit->tree);
-- 		show_commit(commit, show_data);
-- 	}
- -	assert(base->len == 0);
- -
-++	assert(!base->len);
-  	for (i = 0; i < revs->pending.nr; i++) {
-  		struct object_array_entry *pending = revs->pending.objects + i;
-  		struct object *obj = pending->item;
-  		const char *name = pending->name;
-  		const char *path = pending->path;
-++
-  		if (obj->flags & (UNINTERESTING | SEEN))
-  			continue;
-  		if (obj->type == OBJ_TAG) {
-@@@ -257,47 -208,41 +247,76 @@@
-  			path = "";
-  		if (obj->type == OBJ_TREE) {
-  			process_tree(revs, (struct tree *)obj, show_object,
-- 				     &base, path, show_data,
- -				     base, path, data);
-++				     base, path, show_data,
- +				     filter_fn, filter_data);
-  			continue;
-  		}
-  		if (obj->type == OBJ_BLOB) {
-  			process_blob(revs, (struct blob *)obj, show_object,
-- 				     &base, path, show_data,
- -				     base, path, data);
-++				     base, path, show_data,
- +				     filter_fn, filter_data);
-  			continue;
-  		}
-  		die("unknown pending object %s (%s)",
-  		    oid_to_hex(&obj->oid), name);
-  	}
-  	object_array_clear(&revs->pending);
-- 	strbuf_release(&base);
-+ }
-+ 
- -void traverse_commit_list(struct rev_info *revs,
- -			  show_commit_fn show_commit,
- -			  show_object_fn show_object,
- -			  void *data)
-++static void do_traverse(struct rev_info *revs,
-++			show_commit_fn show_commit,
-++			show_object_fn show_object,
-++			void *show_data,
-++			filter_object_fn filter_fn,
-++			void *filter_data)
-+ {
-+ 	struct commit *commit;
-+ 	struct strbuf csp; /* callee's scratch pad */
- -	strbuf_init(&csp, PATH_MAX);
-+ 
-++	strbuf_init(&csp, PATH_MAX);
-+ 	while ((commit = get_revision(revs)) != NULL) {
-+ 		/*
-+ 		 * an uninteresting boundary commit may not have its tree
-+ 		 * parsed yet, but we are not going to show them anyway
-+ 		 */
-+ 		if (commit->tree)
-+ 			add_pending_tree(revs, commit->tree);
- -		show_commit(commit, data);
-++		show_commit(commit, show_data);
-+ 		if (revs->tree_blobs_in_commit_order)
- -			traverse_trees_and_blobs(revs, &csp, show_object, data);
-++			traverse_trees_and_blobs(revs, &csp,
-++						 show_object, show_data,
-++						 filter_fn, filter_data);
-+ 	}
- -	traverse_trees_and_blobs(revs, &csp, show_object, data);
- -
-++	traverse_trees_and_blobs(revs, &csp,
-++				 show_object, show_data,
-++				 filter_fn, filter_data);
-+ 	strbuf_release(&csp);
-  }
- +
- +void traverse_commit_list(struct rev_info *revs,
- +			  show_commit_fn show_commit,
- +			  show_object_fn show_object,
- +			  void *show_data)
- +{
- +	do_traverse(revs, show_commit, show_object, show_data, NULL, NULL);
- +}
- +
- +void traverse_commit_list_filtered(
- +	struct list_objects_filter_options *filter_options,
- +	struct rev_info *revs,
- +	show_commit_fn show_commit,
- +	show_object_fn show_object,
- +	void *show_data,
- +	struct oidset *omitted)
- +{
- +	filter_object_fn filter_fn = NULL;
- +	filter_free_fn filter_free_fn = NULL;
- +	void *filter_data = NULL;
- +
- +	filter_data = list_objects_filter__init(omitted, filter_options,
- +						&filter_fn, &filter_free_fn);
- +	do_traverse(revs, show_commit, show_object, show_data,
- +		    filter_fn, filter_data);
- +	if (filter_data && filter_free_fn)
- +		filter_free_fn(filter_data);
- +}
+-- snip --
+diff --git a/t/t3426-rebase-submodule.sh b/t/t3426-rebase-submodule.sh
+index ebf4f5e4b2c..55aebe53191 100755
+--- a/t/t3426-rebase-submodule.sh
++++ b/t/t3426-rebase-submodule.sh
+@@ -20,7 +20,7 @@ git_rebase () {
+ 	git rebase "$1"
+ }
+ 
+-test_submodule_switch "git_rebase"
++#test_submodule_switch "git_rebase"
+ 
+ git_rebase_interactive () {
+ 	git status -su >expect &&
+@@ -38,6 +38,27 @@ git_rebase_interactive () {
+ 	git rebase -i "$1"
+ }
+ 
+-test_submodule_switch "git_rebase_interactive"
++#test_submodule_switch "git_rebase_interactive"
++
++test_expect_success '123' '
++	git init sub &&
++	test_commit -C sub init-submodule &&
++	git init super &&
++	git -C super submodule add ../sub &&
++	(
++		cd super &&
++		test_tick &&
++		touch foo &&
++		git add sub foo &&
++		git commit -m initial &&
++		test_commit a &&
++		test_commit b &&
++		test_commit -C sub new &&
++		set_fake_editor &&
++		FAKE_LINES=2 &&
++		export FAKE_LINES &&
++		git rebase -i HEAD^^
++	)
++'
+ 
+ test_done
+-- snap --
+
+Can you help me spot what I did wrong?
+
+Ciao,
+Dscho
