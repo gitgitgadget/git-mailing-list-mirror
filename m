@@ -7,121 +7,138 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9AE11202A0
-	for <e@80x24.org>; Fri,  3 Nov 2017 09:33:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2EFEB202A0
+	for <e@80x24.org>; Fri,  3 Nov 2017 09:43:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754742AbdKCJdA (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Nov 2017 05:33:00 -0400
-Received: from mail-io0-f196.google.com ([209.85.223.196]:44649 "EHLO
-        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752756AbdKCJc7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Nov 2017 05:32:59 -0400
-Received: by mail-io0-f196.google.com with SMTP id m16so4985804iod.1
-        for <git@vger.kernel.org>; Fri, 03 Nov 2017 02:32:58 -0700 (PDT)
+        id S1752281AbdKCJnF (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Nov 2017 05:43:05 -0400
+Received: from mail-yw0-f181.google.com ([209.85.161.181]:48254 "EHLO
+        mail-yw0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750883AbdKCJnE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Nov 2017 05:43:04 -0400
+Received: by mail-yw0-f181.google.com with SMTP id q1so1910285ywh.5
+        for <git@vger.kernel.org>; Fri, 03 Nov 2017 02:43:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=29U1QbwtJeqhqAq6NM2Ccg3aEUPmQihBQo42LL+V42k=;
-        b=rGybqYU+FxVTjezcziaqNir2A5xTraSlu42PLEhRbTxWiCpW2G3f83CXg/zOfK+gms
-         MWKeKGD17utuDjFoxQY2Z7mB2frt2MG/HRefWv548WQZK2DtngLsew2ZMaD7vF0z8H4f
-         5lNXCIFWy9npjQBfpO1Une3ONMohyDL/aCODt/ioV96GC4nMNfS30rzbIZrtKcuq/iF1
-         SW97gyrU9HiJ6p0X68kX3hrLAYfkHr8BDVGXlPQvU3lR8es0QfHrUO8xIYDozYFQkQ1l
-         1B1SceIMBS2ylAtuBVcHM5zf85ySWnwv7dVpvv33WrbwwllLJXsih1A6xK0dhaaTvDIA
-         z9pA==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=V+AA1eJjWZRGWTKfa9V4WKnH1gSC5NgtZBLXuQCk7rA=;
+        b=KKI9MIifJV+Y8tkUTPXK55EvgIx3gHL+gAiDuJUsaPd/kLZbPLmaQVOL9BybNj0pZJ
+         jpoHZ590HAOcy8FfTrYXoyw2fQQCGCw8Dh+sgAVQofC9WvWq7vVX/Wo5X7/GgxfYdTq2
+         VBwSLDNhy71b1/xcojlcLx8ZVSwgIms1W+g6EhLLoI5oW2t2R4tPUSOzWd6kW/WN9SCs
+         zNE4yuGXhwytD2g30tdtxETmNocJJ5WQbaN273cnrPbOnqGqxzSsPuFHPg59DtE6NGNL
+         IjsHcWg/7VPF2efqHv27m4wMmNdQtQFUzxr55ASgQj+lgExKJlC1OIjoqoC9z7gijzXt
+         /8YA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=29U1QbwtJeqhqAq6NM2Ccg3aEUPmQihBQo42LL+V42k=;
-        b=T+bAN2H461CCbkTOyOqkOdShdMGFsvU0/DG9rc7ePAh+CNGGWxn95zb0vRHFaW5H5m
-         yuiOfVrf2JHeTVD/yTXlrBxlt2GRzpLJOOqXRm9RRQ0sVfHbmzd7l8erBeCaoVN/Mz55
-         Du3CrfFh/btSrE6gC/T3QhAcS1iN0PKFwhFpYv1CtAGVrROU7tagnle36qTb6kviosZB
-         dOe4sOCSmUN259bOM+kaHnmDgL9xP9E1Vvh1klRMPoaGlJwmUoSa6ilRx1Qz4MPck0L0
-         /+mGhryTVHzQzo+43leyIbPpy2XCcsxxAdKEtR+rnPuYcKjLTYJqPZ4M7TqFUDM2E4l1
-         QXGg==
-X-Gm-Message-State: AMCzsaWOnbuoLqwtsI+MYx1S1nP2wWU6KrD3OmNyX2k3+xh3FwmmeLWb
-        5Nfz6ICAO0+/Utpu94NnMlY=
-X-Google-Smtp-Source: ABhQp+TnRZlyevYgBjfix1Q9xz7aoa60Zj+WjesouE4SzlgaluJImfknJNFgGR2f3FNloRB2IQRm3A==
-X-Received: by 10.36.76.1 with SMTP id a1mr6604185itb.94.1509701578542;
-        Fri, 03 Nov 2017 02:32:58 -0700 (PDT)
-Received: from [192.168.42.176] ([117.251.239.143])
-        by smtp.gmail.com with ESMTPSA id z201sm2604998iod.6.2017.11.03.02.32.54
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 03 Nov 2017 02:32:57 -0700 (PDT)
-Subject: Re: "Cannot fetch git.git" (worktrees at fault? or origin/HEAD) ?
-To:     Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-References: <CAGZ79kYP0z1G_H3nwfmSHraWHMBOcik5LepUXKj0nveeBrihiw@mail.gmail.com>
- <20171020031630.44zvzh3d2vlhglv4@sigill.intra.peff.net>
- <CAGZ79kZc+O9gM97bVZETE3sgkmc-t78Nf_Hq6=K4Gf2yaE79zA@mail.gmail.com>
- <20171020060443.l6v74ik4v4jdt4ky@sigill.intra.peff.net>
- <CAGZ79kaeJsahVuWgFsJfyGahciT4xBeM3m59F5crGy4+ZRJMCw@mail.gmail.com>
- <1508682297.6715.15.camel@gmail.com>
- <20171023003647.4pvzmhk7v5t6zqm5@sigill.intra.peff.net>
- <CAGZ79kYAn0Hi0qaG8P5zvVOFTsfXYrtvrR7oiT0KwwWeKLqZgw@mail.gmail.com>
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Message-ID: <0f1f8317-9d82-5e61-5332-f877ca886056@gmail.com>
-Date:   Fri, 3 Nov 2017 15:02:52 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=V+AA1eJjWZRGWTKfa9V4WKnH1gSC5NgtZBLXuQCk7rA=;
+        b=nWL1aTQeEAZJsLNFX241hf//34xiIsswRQAn1KvxYNsgQWyudYZCkB16l7OBJQZVv+
+         tGFo7BGK6pE5foGfREEma7g4OBOrmoyLgIrAqV+OOcIOmIpcr2jZfJlo7HwOEF8W2l+p
+         QLkLE46k5st6J59caM64LnG5pgnM2jyo0MbwaK2W/CyZj5aTpDcLQfCtTH+w5mMwinMO
+         rpptNwj4NlVdgPtQ1zRBRrjQiYW1S+7oZvvHKFaFvN/1s3y+R5YfLPcia3sNOwW1W3s9
+         tBXzI1okcgeJGW6eKDT7DE0WCoEbX2BZOYbllQ1QOu9HE/WmxpSGdeBRLDZYebPOnSv5
+         gQZw==
+X-Gm-Message-State: AMCzsaULb/aqO8vGz8z1lA4P4vtYSqBokXbA3e1geF31rSbsZqRKZRAQ
+        W4F9HrYfM5GkquxN/ad+UuU7J3hroB2L7wmEnxPIRg==
+X-Google-Smtp-Source: ABhQp+Rf95zZ7KzBUl2/7OLRby9Ph7tk4nTKygHwkR6Mz6uv/EvJNH0WLnKIBevwc6ka6kSSRL9Au6Q4ZCJ9V9OlYag=
+X-Received: by 10.129.92.198 with SMTP id q189mr4287168ywb.417.1509702183638;
+ Fri, 03 Nov 2017 02:43:03 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAGZ79kYAn0Hi0qaG8P5zvVOFTsfXYrtvrR7oiT0KwwWeKLqZgw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Received: by 10.37.44.21 with HTTP; Fri, 3 Nov 2017 02:43:03 -0700 (PDT)
+From:   Vladimir Nikishkin <lockywolf@gmail.com>
+Date:   Fri, 3 Nov 2017 17:43:03 +0800
+Message-ID: <CA+A2iZZ5srHcAaaTv2kzdvWRLr3ffn61BB75Kuz0JoqfKCjwsg@mail.gmail.com>
+Subject: Documentation for git-diff is very difficult to understand for a layman.
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Monday 23 October 2017 11:07 PM, Stefan Beller wrote:
-> Exactly. By memory I mean volatile RAM (as opposed to
-> memory on a spinning disk).
-> 
-> Using GIT_TEST_OPTS has had some issues (I remember vaguely
-> there was an inconsistency between the output of `make test` and prove),
-> so I put my entire working tree on a tmpfs, I run roughly this script
-> after booting my computer:
-> 
->    sudo mount -t tmpfs -o size=16g tmpfs /u
->    mkdir /u/git
->    echo "gitdir:
-> /usr/local/google/home/sbeller/OSS/git/.git/worktrees/git"
->> /u/git/.git
->    git -C /u/git checkout -f HEAD
-> 
->    cat <<EOF >/u/config.mak
->    DEVELOPER=1
->    DEVELOPERS=1
->    CFLAGS += -g -O2
->    CFLAGS += -DFLEX_ARRAY=2048
->    #CFLAGS += -Wno-unused-value
->    EOF
+Hello, honourable GIT developers.
 
-Did I thank you for a good explanation? If not, thanks that was 
-interesting and enlightening.
+I would like to kindly ask you to do something with the git-diff
+manpage. (https://git-scm.com/docs/git-diff)
 
-> The test suite (excluding t9*) runs in less than 50 seconds on the ram
-> disk.
-> 
+In fact, I wasn't able to understand it even after reading it a few times.
 
-BTW, this is what I call _way way_ faster. Unfortunately due to the 
-limited configuration of my system, the test suite has following timing
+In my case, I was trying to understand, what the command actually
+prints, but the man page doesn't really tell that.
 
-     real    3m14.482s
-     user    2m10.556s
-     sys     1m12.328s
+1)I mean, there is a section:
 
-Anyways it's better than the timing I get for running it on a spinning 
-disk which takes
+"https://git-scm.com/docs/git-diff#_combined_diff_format", but at the
+very end of the manpage, so presumably, only aimed at advanced users.
+And the first thing it says is
 
-     real    4m37.585s
-     user    2m17.244s
-     sys     1m37.136s
+"Any diff-generating command can take the -c or --cc option to produce
+a combined diff when showing a merge. This is the default format when
+showing merges with git-diff[1] ".
 
-Thanks,
-Kaartic
+This line is confusing, because I am already actually running git-diff
+(!). So am I really seeing a 'combined diff' or some other diff? Is
+'git-diff' any different from 'git-diff -c' or 'git-diff -cc' ?
+
+Could something be added to or rewritten in the manpage to clarify?
+
+2)Also, in point 3 of the same section:
+
+'index <hash>,<hash>..<hash>
+mode <mode>,<mode>..<mode>
+new file mode <mode>
+deleted file mode <mode>,<mode>'
+
+What do 'mode' and 'index' mean? Which values may this macros contain?
+What do two dots '..' between two hashes mean? What are this hashes
+of?
+(Same question for <mode>.)
+
+3)Same section, after point 4.
+
+'Unlike the traditional unified diff format'. What is the 'traditional
+unified diff'? Is it the diff produced by GNU diff, POSIX diff or
+unidiff? Or, maybe there is some other diff in other parts of GIT?
+
+4)There is also a section called 'other diff formats':
+https://git-scm.com/docs/git-diff#_other_diff_formats
+
+But it doesn't actually tell anything about other diff formats, it
+just describes some other options to git-diff.
+
+Maybe I am asking something trivial, but I believe, I am not the only
+novice trying to read the documentation of git. (I found the man page
+reference at the ProGIT book.)
+
+5)Also, there is a contradiction in the documentation.
+
+The first lines at the 'options'
+(https://git-scm.com/docs/git-diff#_options) section say:
+
+-p
+-u
+--patch
+
+Generate patch (see section on generating patches). This is the default.
+
+But at the 'combined diff' section:
+(https://git-scm.com/docs/git-diff#_combined_diff_format)
+
+The lines at the point 4 say:
+
+"Chunk header format is modified to prevent people from accidentally
+feeding it to patch -p1."
+
+So what is in reality the behaviour of git-diff? Is it to create a
+patch, or to prevent the creation of a patch?
+
+
+I would be happy if some of the developers could (if not simplify the
+man page), at least add some references at any manuals written in a
+more newbie-friendly way.
+
+Thank you in advance!
+
+
+-- 
+Yours sincerely, Vladimir Nikishkin
