@@ -2,138 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0FFD820450
-	for <e@80x24.org>; Fri,  3 Nov 2017 19:11:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 242F020450
+	for <e@80x24.org>; Fri,  3 Nov 2017 19:13:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752259AbdKCTLq (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Nov 2017 15:11:46 -0400
-Received: from mail-qk0-f195.google.com ([209.85.220.195]:51530 "EHLO
-        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751878AbdKCTLp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Nov 2017 15:11:45 -0400
-Received: by mail-qk0-f195.google.com with SMTP id 17so4454839qkq.8
-        for <git@vger.kernel.org>; Fri, 03 Nov 2017 12:11:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=AoSipzHoEcW8aC1ocTqx/A9XLT8mer05rXGz4pt+5HM=;
-        b=LMZySB73doE0mUoAdjRc1p+3x/wd/msiEGG7u5M/JUvHXtPOvwHGcdMT7mzGcW6Dtq
-         zJXPdUveUxxb2EShvT3ZjogalLxPcTPg7Qrf2RV3gk1qK1QsYLkDBdXqvgKQrt2RveMH
-         b7SoaIKEmXcVCfXPiLM0PrI4gUgd33M482R07HgB2ajKo1Xm2r45Ix9Jq/vZcVkux9M/
-         9pmGbe+CA5vMsyvN6F3MLyt2vkhZ5vSvBfphyNlVjgQBc9dWYexvhHcHwtuAYWAD1/Zu
-         r8UXeFFSP5mMi5F8/5pxT/hIPraokzFlMsbLrHY8egE8siU1nynkpQI2swdOfaw2/w8v
-         MFPQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=AoSipzHoEcW8aC1ocTqx/A9XLT8mer05rXGz4pt+5HM=;
-        b=eqPcZuGHkPHe9tr4NJqPWkkLYg3dhLGd1vcTpx89hXNxZuvt9umaBL7TA9Gl1mC04y
-         ymb7ygmefRhjec0ujCQgJ7dHZlFXJ2vyvYnIHEd2N1cDkbdH26y/avdWpQB0nyKDmeCz
-         paDnYZF9w1ct9ZfNcnmxW4pvTviLvmYldbkdXNEKm3KyAif8n1uDgp4eptkeuXPUp+f6
-         dHn77EtFtu2KjxYbtQCByLZx56rjFynR9gM3yivTqZY2OANXc9dtYWe2ZMGzZ+5Y2g94
-         eV2fINtZCfg/jsCf95DrUY1FOdEC2Y3l+x7EM8pYGhrPQagUuF4jkemUXd2tkrvLoiFb
-         RY/w==
-X-Gm-Message-State: AMCzsaVuVcBFnlX2FKzA/hhqJqJFX7lvpZmyC0eckYSsalbvUys3aR9a
-        az+nCFaDfpCWI4N1A7iH98V/KFAngw5PiUCQAwx47w==
-X-Google-Smtp-Source: ABhQp+SAIlMNavuhYYnczI8Wz4QcBQaL0C83yWf+tO7j/+LiLnpVz8HpTiG+uou9GOURGknSSVxbXoEkqiAd/7o3OAc=
-X-Received: by 10.55.125.196 with SMTP id y187mr11874403qkc.180.1509736304832;
- Fri, 03 Nov 2017 12:11:44 -0700 (PDT)
+        id S1752291AbdKCTNO (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Nov 2017 15:13:14 -0400
+Received: from cloud.peff.net ([104.130.231.41]:45806 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751415AbdKCTNN (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Nov 2017 15:13:13 -0400
+Received: (qmail 1310 invoked by uid 109); 3 Nov 2017 19:13:13 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 03 Nov 2017 19:13:13 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 4060 invoked by uid 111); 3 Nov 2017 19:13:22 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Fri, 03 Nov 2017 15:13:22 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 03 Nov 2017 15:13:10 -0400
+Date:   Fri, 3 Nov 2017 15:13:10 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Simon Ruderich <simon@ruderich.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        Git List <git@vger.kernel.org>,
+        Ralf Thielow <ralf.thielow@gmail.com>
+Subject: Re: [PATCH 1/2] sequencer: factor out rewrite_file()
+Message-ID: <20171103191309.sth4zjokgcupvk2e@sigill.intra.peff.net>
+References: <6150c80b-cb0e-06d4-63a7-a4f4a9107ab2@web.de>
+ <20171101194732.fn4n46wppl35e2z2@sigill.intra.peff.net>
+ <alpine.DEB.2.21.1.1711012240500.6482@virtualbox>
+ <20171101221618.4ioog7jlp7n2nd53@sigill.intra.peff.net>
+ <20171103103248.4p45r4klojk5cf2g@ruderich.org>
+ <xmqqpo8zpjdj.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Received: by 10.140.102.70 with HTTP; Fri, 3 Nov 2017 12:11:43 -0700 (PDT)
-In-Reply-To: <0f1f8317-9d82-5e61-5332-f877ca886056@gmail.com>
-References: <CAGZ79kYP0z1G_H3nwfmSHraWHMBOcik5LepUXKj0nveeBrihiw@mail.gmail.com>
- <20171020031630.44zvzh3d2vlhglv4@sigill.intra.peff.net> <CAGZ79kZc+O9gM97bVZETE3sgkmc-t78Nf_Hq6=K4Gf2yaE79zA@mail.gmail.com>
- <20171020060443.l6v74ik4v4jdt4ky@sigill.intra.peff.net> <CAGZ79kaeJsahVuWgFsJfyGahciT4xBeM3m59F5crGy4+ZRJMCw@mail.gmail.com>
- <1508682297.6715.15.camel@gmail.com> <20171023003647.4pvzmhk7v5t6zqm5@sigill.intra.peff.net>
- <CAGZ79kYAn0Hi0qaG8P5zvVOFTsfXYrtvrR7oiT0KwwWeKLqZgw@mail.gmail.com> <0f1f8317-9d82-5e61-5332-f877ca886056@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 3 Nov 2017 12:11:43 -0700
-Message-ID: <CAGZ79kY+R_Kd7BbmnRb0C1H94HvZ3TGRvWKFOX8XEStjBQMB-A@mail.gmail.com>
-Subject: Re: "Cannot fetch git.git" (worktrees at fault? or origin/HEAD) ?
-To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc:     Jeff King <peff@peff.net>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqpo8zpjdj.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 3, 2017 at 2:32 AM, Kaartic Sivaraam
-<kaartic.sivaraam@gmail.com> wrote:
-> On Monday 23 October 2017 11:07 PM, Stefan Beller wrote:
->>
->> Exactly. By memory I mean volatile RAM (as opposed to
->> memory on a spinning disk).
->>
->> Using GIT_TEST_OPTS has had some issues (I remember vaguely
->> there was an inconsistency between the output of `make test` and prove),
->> so I put my entire working tree on a tmpfs, I run roughly this script
->> after booting my computer:
->>
->>    sudo mount -t tmpfs -o size=16g tmpfs /u
->>    mkdir /u/git
->>    echo "gitdir:
->> /usr/local/google/home/sbeller/OSS/git/.git/worktrees/git"
->>>
->>> /u/git/.git
->>
->>    git -C /u/git checkout -f HEAD
->>
->>    cat <<EOF >/u/config.mak
->>    DEVELOPER=1
->>    DEVELOPERS=1
->>    CFLAGS += -g -O2
->>    CFLAGS += -DFLEX_ARRAY=2048
->>    #CFLAGS += -Wno-unused-value
->>    EOF
->
->
-> Did I thank you for a good explanation? If not, thanks that was interesting
-> and enlightening.
->
->> The test suite (excluding t9*) runs in less than 50 seconds on the ram
->> disk.
->>
+On Fri, Nov 03, 2017 at 10:44:08PM +0900, Junio C Hamano wrote:
 
-Just tested again, I meant to say 70s instead of 50s.
+> Simon Ruderich <simon@ruderich.org> writes:
+> 
+> > I tried looking into this by adding a new write_file_buf_gently()
+> > (or maybe renaming write_file_buf to write_file_buf_or_die) and
+> > using it from write_file_buf() but I don't know the proper way to
+> > handle the error-case in write_file_buf(). Just calling
+> > die("write_file_buf") feels ugly, as the real error was already
+> > printed on screen by error_errno() and I didn't find any function
+> > to just exit without writing a message (which still respects
+> > die_routine). Suggestions welcome.
+> 
+> How about *not* printing the error at the place where you notice the
+> error, and instead return an error code to the caller to be noticed
+> which dies with an error message?
+
+That ends up giving less-specific errors. It might be an OK tradeoff
+here.
+
+I think we've been gravitating towards error strbufs, which would make
+it something like:
+
+diff --git a/wrapper.c b/wrapper.c
+index 61aba0b5c1..08eb5d1cb8 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -649,13 +649,34 @@ int xsnprintf(char *dst, size_t max, const char *fmt, ...)
+ 	return len;
+ }
+ 
++int write_file_buf_gently(const char *path, const char *buf, size_t len,
++			  struct strbuf *err)
++{
++	int fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0666);
++	if (fd < 0) {
++		strbuf_addf(err, _("could not open '%s' for writing: %s"),
++			    path, strerror(errno));
++		return -1;
++	}
++	if (write_in_full(fd, buf, len) < 0) {
++		strbuf_addf(err, _("could not write to %s: %s"),
++			    path, strerror(errno));
++		close(fd);
++		return -1;
++	}
++	if (close(fd)) {
++		strbuf_addf(err, _("could not close %s: %s"),
++			    path, strerror(errno));
++		return -1;
++	}
++	return 0;
++}
++
+ void write_file_buf(const char *path, const char *buf, size_t len)
+ {
+-	int fd = xopen(path, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+-	if (write_in_full(fd, buf, len) < 0)
+-		die_errno(_("could not write to %s"), path);
+-	if (close(fd))
+-		die_errno(_("could not close %s"), path);
++	struct strbuf err = STRBUF_INIT;
++	if (write_file_buf_gently(path, buf, len, &err) < 0)
++		die("%s", err.buf);
+ }
+ 
+ void write_file(const char *path, const char *fmt, ...)
 
 
-> BTW, this is what I call _way way_ faster. Unfortunately due to the limited
-> configuration of my system, the test suite has following timing
->
->     real    3m14.482s
->     user    2m10.556s
->     sys     1m12.328s
+I'm not excited that the amount of error-handling code is now double the
+amount of code that actually does something useful. Maybe this function
+simply isn't large/complex enough to merit flexible error handling, and
+we should simply go with René's original near-duplicate.
 
-This sounds to me as if it is running with just one thread
-(because sys+user = real); I usually run with
+OTOH, if we went all-in on flexible error handling contexts, you could
+imagine this function becoming:
 
-    cd t
-    prove --jobs 25 t[0-8][0-9]*.sh
+  void write_file_buf(const char *path, const char *buf, size_t len,
+                      struct error_context *err)
+  {
+	int fd = xopen(path, err, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+	if (fd < 0)
+		return -1;
+	if (write_in_full(fd, buf, len, err) < 0)
+		return -1;
+	if (xclose(fd, err) < 0)
+		return -1;
+	return 0;
+  }
 
-The multithreading can be seen in the timing as well
-    real 1m9.913s
-    user 1m50.796s
-    sys 0m54.092s
-as user > real already.
+Kind of gross, in that we're adding a layer on top of all system calls.
+But if used consistently, it makes error-reporting a lot more pleasant,
+and makes all of our "whoops, we forgot to save errno" bugs go away.
 
-If you run tests via 'make test' or 'cd t && make', you can also give
-a --jobs <n>
-to make it faster. I have no good answer for how many, but I have the impression
-overloading the system is no big deal. (I only have a few cores in this machine,
-4 or 6, but still run with --jobs 25; 'git grep sleep' returns a
-couple of lines,
-and such threads sleeping definitely don't need a CPU)
-
-Thanks,
-Stefan
+-Peff
