@@ -2,100 +2,190 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B573F202A0
-	for <e@80x24.org>; Sat,  4 Nov 2017 12:17:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 63122202A0
+	for <e@80x24.org>; Sat,  4 Nov 2017 17:15:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932516AbdKDMQ6 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 4 Nov 2017 08:16:58 -0400
-Received: from mail-qt0-f195.google.com ([209.85.216.195]:50007 "EHLO
-        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932345AbdKDMQ5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Nov 2017 08:16:57 -0400
-Received: by mail-qt0-f195.google.com with SMTP id k31so6136973qta.6
-        for <git@vger.kernel.org>; Sat, 04 Nov 2017 05:16:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=jeancarlomachado-com-br.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=1rPp9bvk4IICqYuSToXcaX84i3tUR4iurvj8kbOmhf8=;
-        b=Oxcd+lwlg9mHkxBDRQ6XuH23Gdt/soAUbON4nYbaEGB2pxq82RG2z/vJcIZ8gMeLiM
-         pyUsMxq/4RuNVEwnkxo7BXfxbnNvuZNF2+CeZdnZPUpt4gcGDjdYzYJ27EBPTKDKuo4B
-         XrXIYoG8gjJmR1jKHCM11PzR5os4FksSHjxLofb5xxOl985kfrf+pc5UrgxLlI0JOvWK
-         0RKJWKKo3+fpTelZobDX9+JQVwtlWnP0bMiZxc/x38nzACf+zgDhPXYb/bUFb3ldt3iU
-         MBAiRf/KcTOTtpOo4RMUDIdCqnJ0ZzDOVC2nI75sjQ0CNmnwn+XhkbTVI1ZUKm52fo8a
-         roBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=1rPp9bvk4IICqYuSToXcaX84i3tUR4iurvj8kbOmhf8=;
-        b=RcorxJN5qjpN3ryDCWVr5ymUV5p6qaTdvT+86C58589SIX8eMwnTepTIkaNWpOkBPR
-         4zl/GE6fE/tPdO2pI0CBDlLM/2GExkXkr9oUQ6HECpy99gT6SW61qkvz72YDyaPJnaLP
-         ZEoaTGyn0o1ea+b7fokNCiggFp8CwBg+eAk9JO6FCx+BZ9Ao0q3Ce6UlqWgpR3mAugIe
-         qUMVyzAjj/JLm5swe4i1EYpmE+TGLHrVVBhBDcxl3q0K90f3xieOIe1D4m/+6ipo3hEV
-         DRgRbD8pom8tzwVvVcISuNkXcWU0cKFocNTFdyne+d81WPBB/d5allsRlbZzNpk8vqEN
-         +vLQ==
-X-Gm-Message-State: AMCzsaU7AIrHmc6EmlFCr4O7O1xVHOHY8YUmUmDIwFaGbdF+SEAhhDiJ
-        LLjDW/SRdupThMICPt2MY6g1AQ==
-X-Google-Smtp-Source: ABhQp+S2d/auMicrEGMeFL349A8oQF82hQg3DXvP1DWCBb3GO3W8+Pgpukjh/eOOpllPeHq2pqZ5qQ==
-X-Received: by 10.200.6.136 with SMTP id f8mr14863125qth.265.1509797816816;
-        Sat, 04 Nov 2017 05:16:56 -0700 (PDT)
-Received: from localhost.localdomain ([200.18.122.31])
-        by smtp.gmail.com with ESMTPSA id d5sm5173817qkf.44.2017.11.04.05.16.55
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 04 Nov 2017 05:16:56 -0700 (PDT)
-From:   Jean Carlo Machado <contato@jeancarlomachado.com.br>
-To:     jrnieder@gmail.com
-Cc:     contato@jeancarlomachado.com.br, git@vger.kernel.org
-Subject: [PATCH] fix typos in 2.15.0 release notes
-Date:   Sat,  4 Nov 2017 10:16:16 -0200
-Message-Id: <20171104121616.22264-2-contato@jeancarlomachado.com.br>
-X-Mailer: git-send-email 2.15.0
-In-Reply-To: <20171104121616.22264-1-contato@jeancarlomachado.com.br>
-References: <20171103232831.yrfi6qdq4q4zul4e@aiede.mtv.corp.google.com>
- <20171104121616.22264-1-contato@jeancarlomachado.com.br>
+        id S932220AbdKDRPS (ORCPT <rfc822;e@80x24.org>);
+        Sat, 4 Nov 2017 13:15:18 -0400
+Received: from smtp-out-6.talktalk.net ([62.24.135.70]:61205 "EHLO
+        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752565AbdKDRPR (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Nov 2017 13:15:17 -0400
+Received: from PhilipOakley ([92.31.218.56])
+        by smtp.talktalk.net with SMTP
+        id B22NeaaqMbjdZB22NexmMj; Sat, 04 Nov 2017 17:15:15 +0000
+X-Originating-IP: [92.31.218.56]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=ONFX5WSB c=1 sm=1 tr=0 a=pug4yzhvgUEES/+WXIksbw==:117
+ a=pug4yzhvgUEES/+WXIksbw==:17 a=IkcTkHD0fZMA:10 a=PKzvZo6CAAAA:8
+ a=5rxgeBVgAAAA:8 a=BzkkzcY4AAAA:8 a=NEAV23lmAAAA:8 a=ewZY5grrU-EFgEj4EX4A:9
+ a=QEXdDO2ut3YA:10 a=q92HNjYiIAC_jH7JDaYf:22 a=PwKx63F5tFurRwaNxrlG:22
+ a=pvJmhOK_uGPH7DBVCMoM:22
+Message-ID: <F8E398C660874CFEA872CDB6F841376B@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Jeff King" <peff@peff.net>,
+        "Thomas Gummerer" <t.gummerer@gmail.com>
+Cc:     "Git Mailing List" <git@vger.kernel.org>,
+        <hkleynhans@bloomberg.net>
+References: <CALgYhfO=6WfdzfGYwgw+cp2Tb58Yzx6YYvBtMCPNcJto5rMUCg@mail.gmail.com> <20171104092850.5fthdgvnihd3y4fm@sigill.intra.peff.net>
+Subject: Re: Git Open Source Weekend London 11th/12th November
+Date:   Sat, 4 Nov 2017 17:15:08 -0000
+Organization: OPDS
+MIME-Version: 1.0
+Content-Type: text/plain;
+        format=flowed;
+        charset="utf-8";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-Antivirus: AVG (VPS 171104-0, 04/11/2017), Outbound message
+X-Antivirus-Status: Clean
+X-CMAE-Envelope: MS4wfDnLQt67VMgqT8mv9/M7aA0rFvlI+25EpMw/VicOCXzUn9uiO9zrwBQmrMPA6hucr8hw60T8ePTDQNWIUaYWEiml7J7X2rFZfmdnBmhCdAalGhq5dbbA
+ bPtkiYbnC+Xo5wjm5cwpuwT1M4ccnFO4wm8789jMCWWlvbE8N5KVA/ovTFQKl5eQQk2ZDIdmwUtGWCyfyW8KAL3A2AnteJQY/S7g2VKKChcACsvr8hSvkgAb
+ 4QdY3hOQcJrpNJctWfTTpQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Jean Carlo Machado <contato@jeancarlomachado.com.br>
----
- Documentation/RelNotes/2.15.0.txt | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+From: "Jeff King" <peff@peff.net>
+> On Wed, Nov 01, 2017 at 04:36:24PM +0000, Thomas Gummerer wrote:
+>
+>> Normally attendees work in small groups on a specific task to
+>> prevent anyone from getting stuck. Per usual, Bloomberg will
+>> provide the venue, mentors, snacks and drinks.  Bring your
+>> enthusiasm (and your laptop!) and come share in the fun!  The
+>> event is also open to everyone, so feel free to pass on the
+>> invite!
+>
+> I think it will help if the experienced members of the community (both
+> those who will be at the event and not) can come up with some possible
+> topics to work on (though of course I'd be glad for participants to come
+> with their own itch to scratch).
+>
+> We've started using the #leftoverbits tag to allow searching in the
+> archive:
+>
+>  https://public-inbox.org/git/?q=leftoverbits
+>
+> Some of those have since been completed, but others are left open.
+> There's not really a master list, but it's a potential source for
+> digging for gold (well, if you want to call leftover bugs gold :) ).
+>
+> I started a list over the summer of larger items that people might want
+> to pick up. Here it is in no particular order:
+>
+> - the pager.<cmd> config is mis-designed, because our config keys
+>   cannot represent all possible command names (e.g., case folding and
+>   illegal characters). This should be pager.<cmd>.enable or similar.
+>   Some discussion in (this message and the surrounding thread):
+>
+>
+> https://public-inbox.org/git/20170711101942.h2uwxtgzvgguzivu@sigill.intra.peff.net/
+>
+>   But I think you could find more by searching the archive.
+>
+> - ditto for alias.* config, which has the same syntax problems.
+>
+> - auto-gc is sometimes over-anxious to run if you have a lot of
+>   unreachable loose objects. We should pack unreachables into a single
+>   pack. That solves the --auto problem, and is also way more efficient.
+>   The catch is expiration. Some discussion here (and especially
+>   down-thread):
+>
+>
+> https://public-inbox.org/git/20170711101942.h2uwxtgzvgguzivu@sigill.intra.peff.net/
+>
+> - git-config's "--get-color" is unlike all the other types in that it
+>   takes a "default" value if the config key isn't set. This makes it
+> annoyingly
+>   inconsistent, but there's also no way to ask Git to interpret other
+>   values (e.g., you might want it to expand "--path" or an "--int"). It
+>   would be nice to have a general "--default" option so you could do:
+>
+>     # same as git config --get-color color.diff.old red
+>     git config --default red --color color.diff.old
+>
+>   or
+>
+>     # not currently possible to ask git to interpret "10k"
+>     git config --default 10k --int some.integer.key
+>
+> - git's internal config can parse expiration dates (see
+>   parse_expiry_date()), but you can't do so from git-config. It should
+>   probably have a type for "--expiry-date" (which would of course be
+>   more useful with the --default option above).
+>
+> - there's no efficient way to ask git-config for several keys with a
+>   specific type (or even multiple different types).  You can use
+>   "--list" to get their strings, but you can't get any interpretation
+>   (like colors, integers, etc). Invoking git-config many times can have
+>   a noticeable speed impact for a script. There should probably be a
+>   "--stdin" mode (or maybe "--get-stdin" if we would one day want to
+>   have a "--set-stdin") that takes a list of keys, optional types, and
+>   optional defaults (that "--default" again!) and outputs them to
+>   stdout.
+>
+>
+> Those were just sitting on my ideas list. I'm happy to go into more
+> detail if anybody's interested in discussing any of them. Some of them
+> may be half-baked.
+>
+> And of course I'd be happy if people wanted to contribute more items to
+> the list.
+>
 
-diff --git a/Documentation/RelNotes/2.15.0.txt b/Documentation/RelNotes/2.15.0.txt
-index 248ba70c3..cdd761bcc 100644
---- a/Documentation/RelNotes/2.15.0.txt
-+++ b/Documentation/RelNotes/2.15.0.txt
-@@ -65,7 +65,7 @@ UI, Workflows & Features
-    learned to take the 'unfold' and 'only' modifiers to normalize its
-    output, e.g. "git log --format=%(trailers:only,unfold)".
- 
-- * "gitweb" shows a link to visit the 'raw' contents of blbos in the
-+ * "gitweb" shows a link to visit the 'raw' contents of blobs in the
-    history overview page.
- 
-  * "[gc] rerereResolved = 5.days" used to be invalid, as the variable
-@@ -109,13 +109,13 @@ Performance, Internal Implementation, Development Support etc.
-  * Conversion from uchar[20] to struct object_id continues.
- 
-  * Start using selected c99 constructs in small, stable and
--   essentialpart of the system to catch people who care about
-+   essential part of the system to catch people who care about
-    older compilers that do not grok them.
- 
-  * The filter-process interface learned to allow a process with long
-    latency give a "delayed" response.
- 
-- * Many uses of comparision callback function the hashmap API uses
-+ * Many uses of comparison callback function the hashmap API uses
-    cast the callback function type when registering it to
-    hashmap_init(), which defeats the compile time type checking when
-    the callback interface changes (e.g. gaining more parameters).
--- 
-2.15.0
+A few I've seen recently are:
+
+* The provison of a `git resolve -X <ours|theirs> -- <pathspec>` command to
+simplify the manual resolution of remaining conflicts.
+https://public-inbox.org/git/8737615iu5.fsf@javad.com/  Sergey Organov: How
+to re-merge paths differently?
+
+* (Git for Windows/HFS): Detect directory capitalisation changes when
+switching branches, and rename them correctly on case preserving, case
+insensitive file systems. Optimisation: If the underlying tree is identical
+then do not update the modified dates.
+https://github.com/git-for-windows/git/issues/1333 Chuck Lu: Folder name
+should be case sensitive when switch branches.
+
+* (Git for Windows/HFS) (long standing):
+detect branch name capitalisation issues
+- may need a struct to carry both the filename and pathname down the
+different parts of the code base so that the FS name of the requested
+ref/heads/ can be checked and warned.
+e.g. https://github.com/git-for-windows/git/issues/852 "`git checkout head`
+inconsistent behavior"
+- ('head' finds 'HEAD', but also 'branch' finds 'Branch');
+https://github.com/git-for-windows/git/issues/852#issuecomment-239675187 ->
+"rambling notes" for partial analysis.
+
+https://github.com/git-for-windows/git/issues/752 "git checkout creating
+tracking branch using case-insensitive match?"
+- Is this part of the same problem?
+
+* Documentation:
+
+There's always the newby role at the hackathon of collating
+all the "what does this command do/mean?" questions that could be resolved
+by simple updates, or capturing locally written explanations to improve the
+manual pages. (easy patch practice)
+
+Perhaps see how `git rerere` could be better explained and integrated onto
+the other man pages so that more folk naturally know of it and use it. (see
+also the `git resolve` question above)
+
+Also for case sensitivity documentation
+https://github.com/git-for-windows/git/issues/908#issuecomment-325116189
+
+--
+Philip
 
