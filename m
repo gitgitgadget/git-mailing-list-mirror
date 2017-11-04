@@ -2,91 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6616220281
-	for <e@80x24.org>; Sat,  4 Nov 2017 09:35:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C992520281
+	for <e@80x24.org>; Sat,  4 Nov 2017 09:57:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756594AbdKDJfm (ORCPT <rfc822;e@80x24.org>);
-        Sat, 4 Nov 2017 05:35:42 -0400
-Received: from cloud.peff.net ([104.130.231.41]:46282 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1756478AbdKDJfl (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Nov 2017 05:35:41 -0400
-Received: (qmail 1657 invoked by uid 109); 4 Nov 2017 09:35:40 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 04 Nov 2017 09:35:40 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 7896 invoked by uid 111); 4 Nov 2017 09:35:51 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Sat, 04 Nov 2017 05:35:51 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 04 Nov 2017 05:35:38 -0400
-Date:   Sat, 4 Nov 2017 05:35:38 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Simon Ruderich <simon@ruderich.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Git List <git@vger.kernel.org>,
-        Ralf Thielow <ralf.thielow@gmail.com>
-Subject: Re: [PATCH 1/2] sequencer: factor out rewrite_file()
-Message-ID: <20171104093537.glucmbljnjlw3htq@sigill.intra.peff.net>
-References: <6150c80b-cb0e-06d4-63a7-a4f4a9107ab2@web.de>
- <20171101194732.fn4n46wppl35e2z2@sigill.intra.peff.net>
- <alpine.DEB.2.21.1.1711012240500.6482@virtualbox>
- <20171101221618.4ioog7jlp7n2nd53@sigill.intra.peff.net>
- <20171103103248.4p45r4klojk5cf2g@ruderich.org>
- <xmqqpo8zpjdj.fsf@gitster.mtv.corp.google.com>
- <20171103191309.sth4zjokgcupvk2e@sigill.intra.peff.net>
- <b074d6fa-8778-ea0d-d53b-7cc35bc4264a@web.de>
+        id S1756526AbdKDJ5p (ORCPT <rfc822;e@80x24.org>);
+        Sat, 4 Nov 2017 05:57:45 -0400
+Received: from mail-wm0-f54.google.com ([74.125.82.54]:52292 "EHLO
+        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756243AbdKDJ5o (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Nov 2017 05:57:44 -0400
+Received: by mail-wm0-f54.google.com with SMTP id t139so5747533wmt.1
+        for <git@vger.kernel.org>; Sat, 04 Nov 2017 02:57:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=nhypVrSmVHtPCbqqc3NjVmB2rPX1BCVU/N1VOsbv2tI=;
+        b=Ws73EWkmoL6Y1iKvUy1gTrzXtNSbQCsXnWi4wQkCX7byq7QEJrB6PmADAMUAWBA0dY
+         /rim0sC1PJPlVMuS5nfnAKibpygOwy1mXaaETfMTyTIhf1/ABcI1BPGsKKkq8rQ6Ek0Q
+         ZDARaCipLLhk9brSZagysGyd6L5wCteRcPSExT8uk6xi3pgziVg22+MR9LFpmWmWQMxN
+         rrQC4Z96Qmlj219AK1jemvsBdBq3oWMiQjcOBKW9epAmyfkw1tOFRq+jYS98Ozjgn7pz
+         8aXDz39Cw/dHGNZUdr1vTDDV8YUKLBkeHTVtlX+G/9YhYxVNjd8Au4bZ87vwBAQCYIT2
+         +3Sw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=nhypVrSmVHtPCbqqc3NjVmB2rPX1BCVU/N1VOsbv2tI=;
+        b=NHiWAIdDLrGbDEytMbMpdIamzGHPh2PtYihYMkXh/Ojo7RAIo+XyMWqcNlkurICfwQ
+         3P2Iie8BaTf0QzSVGuBN/HlLE+JxN4iQEfXBYPeF1n4ng5fgNgijDRxWKrZhJzvYsAcj
+         tZ4EjB3w1JHdIEutkSzlAyFr3X5i2gQBiJbP4WuqpOZTFX3qkCCDMMv/wZYMqMAGbS6+
+         hek1RkgU518ll4+vBvxa9WiqO5xc3RJ+DRHO1KnjwiuPcWVmjehdbJdPpgY4igzUO6hE
+         oV4xqMJ9rWiLqBCVmEMgkZaqA9vsnGfQjbS8Kcy6WDNZyquHf1z1zAt7xSnJzKL1dqfL
+         453A==
+X-Gm-Message-State: AJaThX6yhIqYEEp6eFY4PbO7yGVvkLe9Y/G8Ish8OzYKYUR88adEJ2A9
+        fVrt2dMtCRQvnNikKSwVR9Vb1KfD
+X-Google-Smtp-Source: ABhQp+Rq3UjXr09bo9do0oNu0cfWKQrzvfuzbx5JsgKfKUK/M5Bw7bc51UWhPF5GrvfQ0YHvStyC/A==
+X-Received: by 10.28.125.206 with SMTP id y197mr1268273wmc.85.1509789463021;
+        Sat, 04 Nov 2017 02:57:43 -0700 (PDT)
+Received: from laptop.local (host-78-145-151-122.as13285.net. [78.145.151.122])
+        by smtp.gmail.com with ESMTPSA id 50sm6952225wry.84.2017.11.04.02.57.41
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 04 Nov 2017 02:57:42 -0700 (PDT)
+Date:   Sat, 4 Nov 2017 09:57:40 +0000
+From:   Thomas Adam <thomas@xteddy.org>
+To:     Antoine =?iso-8859-1?Q?Beaupr=E9?= <anarcat@debian.org>
+Cc:     Thomas Adam <thomas@xteddy.org>, git@vger.kernel.org
+Subject: Re: [PATCH v3 7/7] remote-mediawiki: show progress while fetching
+ namespaces
+Message-ID: <20171104095740.hhdgcqgtyjejmqjm@laptop.local>
+References: <20171030025142.19421-1-anarcat@debian.org>
+ <20171102212518.1601-1-anarcat@debian.org>
+ <20171102212518.1601-8-anarcat@debian.org>
+ <20171102221807.juon446b6zfw64cq@laptop.local>
+ <87vais48rg.fsf@curie.anarc.at>
+ <20171102223102.j3niifmupcs77p3r@laptop.local>
+ <87o9ok46qu.fsf@curie.anarc.at>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <b074d6fa-8778-ea0d-d53b-7cc35bc4264a@web.de>
+In-Reply-To: <87o9ok46qu.fsf@curie.anarc.at>
+User-Agent: NeoMutt/20170714-87-e4144b (1.8.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Nov 04, 2017 at 10:05:43AM +0100, RenÃ© Scharfe wrote:
+On Thu, Nov 02, 2017 at 07:10:17PM -0400, Antoine Beaupré wrote:
+> Actually, is there a standard way to do this in git with Perl
+> extensions? I know about "option verbosity N" but how should I translate
+> this into Perl? Carp? Warn? Log::Any? Log4perl?
 
-> >> How about *not* printing the error at the place where you notice the
-> >> error, and instead return an error code to the caller to be noticed
-> >> which dies with an error message?
-> > 
-> > That ends up giving less-specific errors.
-> 
-> Not necessarily.  Function could return different codes for different
-> errors, e.g. -1 for an open(2) error and -2 for a write(2) error, and
-> the caller could use that to select the message to show.
-> 
-> Basically all of the messages in wrapper.c consist of some text mixed
-> with the affected path path and a strerror(3) string, so they're
-> compatible in that way.  A single function (get_path_error_format()?)
-> could thus be used and callers would be able to combine its result with
-> die(), error(), or warning().
+No, not really.  From a quick glance at some of the existing perl code in git,
+a lot of it continues to use "print STDERR" -- but then to be fair, a lot of
+the perl code also reads like it has been written by C programmers...
 
-I think we've had this discussion before, a while ago. Yes, returning an
-integer error code is nice because you don't have pass in an extra
-parameter. But I think there are two pitfalls:
+While there's nothing wrong with using "print STDERR", it's probably wiser to
+transition this to using Carp in the long run -- it would decrease the
+round-trip time to debugging should there be a situation where that was
+needed, and hence I would recommend using "warn" for less-severe
+errors/debugging.
 
-  1. Integers may not be descriptive enough to cover all cases, which is
-     how we ended up with the strbuf-passing strategy in the ref code.
-     Certainly you could add an integer for every possible bespoke
-     message, but then I'm not sure it's buying that much over having
-     the function simply fill in a strbuf.
-
-  2. For complex functions there may be multiple errors that need to
-     stack. I think the refs code has cases like this, where a syscall
-     fails, which causes a fundamental ref operation to fail, which
-     causes a higher-level operation to fail. It's only the caller of
-     the higher-level operation that knows how to report the error.
-
-Certainly an integer error code would work for _this_ function, but I'd
-rather see us grow towards consistent error handling.
-
--Peff
+-- Thomas Adam
