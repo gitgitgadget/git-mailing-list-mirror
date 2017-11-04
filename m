@@ -2,151 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4AACC202A0
-	for <e@80x24.org>; Sat,  4 Nov 2017 18:30:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8C3C2202A0
+	for <e@80x24.org>; Sat,  4 Nov 2017 18:36:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752517AbdKDSaE (ORCPT <rfc822;e@80x24.org>);
-        Sat, 4 Nov 2017 14:30:04 -0400
-Received: from mail-qt0-f171.google.com ([209.85.216.171]:48266 "EHLO
-        mail-qt0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751990AbdKDSaD (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Nov 2017 14:30:03 -0400
-Received: by mail-qt0-f171.google.com with SMTP id f8so6776320qta.5
-        for <git@vger.kernel.org>; Sat, 04 Nov 2017 11:30:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=Mq8HcsQIivlj336RKXcGEtOyihrJakz8N5uHR801DBk=;
-        b=coNVEx57QQu+3O5yVYeAG7Cx4Le1z6/Xz3p3Br2Dc1eneDlE4ulpwtV6adBqKJdyAK
-         MnMYSiWBXN02M/Knk1H+GHxh++m/i8EUjmvHUVhrHiOxb5V0fDVJEM4ppxdSNQvUKbWD
-         SzMG5tYVFKxR8IhPsSxBIybn0qSc2VpTgymd1hTT+UFZDIFG5B2h0mdK8G9qCMFEOq0s
-         n9RrsS8MKq1SlV1PROaD5Q+RMJcSOImM3+R78T8//JW7A4y36Su4/jJQ0OrA005IThzT
-         V0qj8lPHJH1ifLcdb/4XWZ8nABwm+ORXqV5bQGsbKdexNdTm/1qHallKjKzJKFQzn2sm
-         2Abw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=Mq8HcsQIivlj336RKXcGEtOyihrJakz8N5uHR801DBk=;
-        b=LrdqWMOJwMxtVdCo2rAKPW+3BlOGCW6fzUT9K6oF4DT2jMlJlWGK0pfZqB5Cw1Yi3o
-         yuCSvHwF4/7l+DKcNH+SYVOfZqjub/4sZvmE7Fh0WUufYgp3SoekU6JahGjci+TlFFRw
-         QK3bwrEu37Nyozf/nbHU99N9cA4NCfrg3/4CqMkyTSaNlqa+/4LUlh4TzZCI2KPLS33u
-         7eBHCdzsWCajOu3NXr2VrZ8yEhsdBLi+mTiBXU47KT/8qCsH5J5QEyR9K9KeJ5/1YkfW
-         E4KGz5jtegIYIk/eqDbwaDRZO45zVXSTOovELNmtYSychKM4V8HSqGGJJxebYu41rQds
-         JfQA==
-X-Gm-Message-State: AJaThX5E/kjcgvhwROXJyqS1tQYzfrEWS+gtIQ0NC3OMChMU/uUUDJ3z
-        548i6shnnev0EeDsnmhX6vYD3ROzFUtA/PvFutUwjg==
-X-Google-Smtp-Source: ABhQp+SFThEy1FykuxjeHbZ99+oBjaPaxvCfM2uFo/CsNHs8SzoglcTMRJ8tXDrum7jh2OAy1z8oE1ptWB5KrxH3dSM=
-X-Received: by 10.200.24.241 with SMTP id o46mr16202058qtk.208.1509820202244;
- Sat, 04 Nov 2017 11:30:02 -0700 (PDT)
+        id S1752626AbdKDSgp (ORCPT <rfc822;e@80x24.org>);
+        Sat, 4 Nov 2017 14:36:45 -0400
+Received: from zucker2.schokokeks.org ([178.63.68.90]:55165 "EHLO
+        zucker2.schokokeks.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752552AbdKDSgp (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Nov 2017 14:36:45 -0400
+Received: from localhost ([::1])
+  (AUTH: PLAIN simon@ruderich.org, TLS: TLSv1/SSLv3,256bits,ECDHE-RSA-AES256-GCM-SHA384)
+  by zucker.schokokeks.org with ESMTPSA; Sat, 04 Nov 2017 19:36:43 +0100
+  id 0000000000000045.0000000059FE08BB.00005F80
+Date:   Sat, 4 Nov 2017 19:36:43 +0100
+From:   Simon Ruderich <simon@ruderich.org>
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>,
+        Git List <git@vger.kernel.org>,
+        Ralf Thielow <ralf.thielow@gmail.com>
+Subject: Re: [PATCH 1/2] sequencer: factor out rewrite_file()
+Message-ID: <20171104183643.akaazwswysphzuoq@ruderich.org>
+References: <6150c80b-cb0e-06d4-63a7-a4f4a9107ab2@web.de>
+ <20171101194732.fn4n46wppl35e2z2@sigill.intra.peff.net>
+ <alpine.DEB.2.21.1.1711012240500.6482@virtualbox>
+ <20171101221618.4ioog7jlp7n2nd53@sigill.intra.peff.net>
+ <20171103103248.4p45r4klojk5cf2g@ruderich.org>
+ <xmqqpo8zpjdj.fsf@gitster.mtv.corp.google.com>
+ <20171103191309.sth4zjokgcupvk2e@sigill.intra.peff.net>
 MIME-Version: 1.0
-Received: by 10.12.172.66 with HTTP; Sat, 4 Nov 2017 11:30:01 -0700 (PDT)
-From:   patrick keshishian <pkeshish@gmail.com>
-Date:   Sat, 4 Nov 2017 11:30:01 -0700
-Message-ID: <CAN0yQBo+yHfNAudYCSG1Xbfn1Kf4wWP9MGXxApatSaxZB898sA@mail.gmail.com>
-Subject: [PATCH] Git-cvsimport Improvement
-To:     git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="001a1148431ed47f56055d2c688e"
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20171103191309.sth4zjokgcupvk2e@sigill.intra.peff.net>
+User-Agent: NeoMutt/20170609 (1.8.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---001a1148431ed47f56055d2c688e
-Content-Type: text/plain; charset="UTF-8"
+On Fri, Nov 03, 2017 at 03:13:10PM -0400, Jeff King wrote:
+> I think we've been gravitating towards error strbufs, which would make
+> it something like:
 
-Greetings,
+I like this approach to store the error in a separate variable
+and let the caller handle it. This provides proper error messages
+and is cleaner than printing the error on the error site (what
+error_errno does).
 
-I am attempting to improve CVS -> CVSps -> Git-cvsimport process.
+However I wouldn't use strbuf directly and instead add a new
+struct error which provides a small set of helper functions.
+Using a separate type also makes it clear to the reader that is
+not a normal string and is more extendable in the future.
 
-The part involving Git-cvsimport has to do with parsing of CVSps
-PatchSet file. Consider what happens if a CVS log/commit message
-includes lines which start with "Members:", say from copy-and-paste
-[2].
+> I'm not excited that the amount of error-handling code is now double the
+> amount of code that actually does something useful. Maybe this function
+> simply isn't large/complex enough to merit flexible error handling, and
+> we should simply go with René's original near-duplicate.
 
-To avoid this issue, I have proposed that CVSps append the "Log:" tag
-with line count of original CVS log/commit message [1].
+A separate struct (and helper functions) would help in this case
+and could look like this, which is almost equal (in code size) to
+the original solution using error_errno:
 
+    int write_file_buf_gently2(const char *path, const char *buf, size_t len, struct error *err)
+    {
+            int rc = 0;
+            int fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+            if (fd < 0)
+                    return error_addf_errno(err, _("could not open '%s' for writing"), path);
+            if (write_in_full(fd, buf, len) < 0)
+                    rc = error_addf_errno(err, _("could not write to '%s'"), path);
+            if (close(fd) && !rc)
+                    rc = error_addf_errno(err, _("could not close '%s'"), path);
+            return rc;
+    }
 
-The idea is if line-count is found after "Log:", that many (CVS log
-message) lines get consumed before advancing $state to look for
-"^Members:"
+(I didn't touch write_in_full here, but it could also take the
+err and then the code would get a little shorter, however would
+lose the "path" information, but see below.)
 
-Current Git-cvsimport isn't strict in matching the "Log:" tag
-(fortunately) and my proposed change to Git-cvsimport should be fully
-backward compatible.
+And in the caller:
 
-See attached patch.
+    void write_file_buf(const char *path, const char *buf, size_t len)
+    {
+            struct error err = ERROR_INIT;
+            if (write_file_buf_gently2(path, buf, len, &err) < 0)
+                    error_die(&err);
+    }
 
-Cheers,
---patrick
+For now struct error just contains the strbuf, but one could add
+the call location (by using a macro for error_addf_errno) or the
+original errno or more information in the future.
 
-p.s., For reference: Why I'm doing this and RFC sent to CVS list:
-	http://lists.nongnu.org/archive/html/info-cvs/2017-11/msg00000.html
+error_addf_errno() could also prepend the error the buffer so
+that the caller can add more information if necessary and we get
+something like: "failed to write file 'foo': write failed: errno
+text" in the write_file_buf case (the first error string is from
+write_file_buf_gently2, the second from write_in_full). However
+I'm not sure how well this works with translations.
 
-[1] https://github.com/andreyvit/cvsps/pull/4
+We could also store the error condition in the error struct and
+don't use the return value to indicate and error like this:
 
-[2]  Example PatchSet with "Members:" line in original CVS commit message:
----------------------
-PatchSet 3
-Date: 2017/10/30 23:25:20
-Author: catbert
-Branch: HEAD
-Tag: (none)
-Log:
-This will confuse git-cvsimport's parser
+    void write_file_buf(const char *path, const char *buf, size_t len)
+    {
+            struct error err = ERROR_INIT;
+            write_file_buf_gently2(path, buf, len, &err);
+            if (err.error)
+                    error_die(&err);
+    }
 
-Members:
-	somefile.c:1.1->1.2
-	another.h:1.7->1.8
-	foo.mk:1.22->1.23
+> OTOH, if we went all-in on flexible error handling contexts, you could
+> imagine this function becoming:
+>
+>   void write_file_buf(const char *path, const char *buf, size_t len,
+>                       struct error_context *err)
+>   {
+> 	int fd = xopen(path, err, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+> 	if (fd < 0)
+> 		return -1;
+> 	if (write_in_full(fd, buf, len, err) < 0)
+> 		return -1;
+> 	if (xclose(fd, err) < 0)
+> 		return -1;
+> 	return 0;
+>   }
 
-Imagine these were lines pasted to note something
+This looks interesting as well, but it misses the feature of
+custom error messages which is really useful.
 
-Members:
-	ABC:1.1->1.2
-
---001a1148431ed47f56055d2c688e
-Content-Type: text/plain; charset="US-ASCII"; name="git-cvsimport_perl.patch.txt"
-Content-Disposition: attachment; filename="git-cvsimport_perl.patch.txt"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: file0
-
-Y29tbWl0IGMzZTQwNmM1NGI4Y2QzYTJiYmYwYWE3MjlmZWYyMDFlMjBmYTZkZjUKQXV0aG9yOiBw
-YXRyaWNrIGtlc2hpc2hpYW4gPHBrZXNoaXNoQGdtYWlsLmNvbT4KRGF0ZTogICBTYXQgTm92IDQg
-MDg6NDI6MTIgMjAxNyAtMDcwMAoKICAgIE9wdGlvbmFsbHkgcGFyc2UgbGluZSBjb3VudCBvdXQg
-b2YgUGF0Y2hTZXRzIHdpdGggIkxvZzogY291bnQiCiAgICAKICAgIFRoaXMgaXMgYSBjaGFuZ2Ug
-YmVpbmcgc3VnZ2VzdGVkIHRvIENWU3BzIHdoZXJlIHRoZSBsaW5lIGNvdW50IG9mIHRoZQogICAg
-Y29tbWl0IG1lc3NhZ2UgZ2V0cyBhZGRlZCB0byB0aGUgIkxvZzoiIHRhZyB0byBoZWxwIEdpdCBj
-dnNpbXBvcnQgbm90CiAgICBnZXQgY29uZnVzZWQgaWYgdGhlIENWUyBsb2cvY29tbWl0IG1lc3Nh
-Z2UgaW5jbHVkZWQgbGluZXMgc3RhcnRpbmcgd2l0aAogICAgYW55IG9mIHRoZSB0YWdzIGZvdW5k
-IGluIENWU3BzIFBhdGNoU2V0LCBlLmcuLCBNZW1iZXJzOgogICAgCiAgICBUaGlzIGlzIHBhcnQg
-b2YgYSBsYXJnZXIgY2hhbmdlIHRvIG1ha2UgQ1ZTIHRvIEdpdCBpbXBvcnQgbW9yZSByb2J1c3Qu
-CgpkaWZmIC0tZ2l0IGEvZ2l0LWN2c2ltcG9ydC5wZXJsIGIvZ2l0LWN2c2ltcG9ydC5wZXJsCmlu
-ZGV4IDM2OTI5OTIxZS4uNWQ3OGM1ZTg3IDEwMDc1NQotLS0gYS9naXQtY3ZzaW1wb3J0LnBlcmwK
-KysrIGIvZ2l0LWN2c2ltcG9ydC5wZXJsCkBAIC03ODYsNiArNzg2LDEzIEBAIG9wZW4oQ1ZTLCAi
-PCRjdnNwc2ZpbGUiKSBvciBkaWUgJCE7CiAjCiAjLS0tLS0tLS0tLS0tLS0tLS0tLS0tCiAKKyMg
-Tk9URToKKyMjIHBrLCAyMDE3LzEwLzMwCisjIHBhdGNoZWQgY3ZzcHMgd2lsbCBvdXRwdXQgXkxv
-ZzogbGluZSB3aXRoIG51bWJlciBvZiBsaW5lcyBvZiBsb2cKKyMgd2hpY2ggYXJlIHRvIGZvbGxv
-dy4gVGhpcyBtYWtlcyBwYXJzaW5nIHJvYnVzdCBmb3IgY2FzZXMgd2hlcmUgdGhlCisjIGxvZyBt
-ZXNzYWdlIGNvbnRhaW5zIF5NZW1iZXJzOiBsaW5lcyEgSGFwcGVucyBpbiBPcGVuQlNEIHNvdXJj
-ZXM6CisjIGUuZy4sIFNlZSBzcmMvdXNyLnNiaW4vYmdwZC9yZGUuYworCiBteSAkc3RhdGUgPSAw
-OwogCiBzdWIgdXBkYXRlX2luZGV4IChcQFxAKSB7CkBAIC04MTYsNyArODIzLDcgQEAgc3ViIHdy
-aXRlX3RyZWUgKCkgewogCXJldHVybiAkdHJlZTsKIH0KIAotbXkgKCRwYXRjaHNldCwkZGF0ZSwk
-YXV0aG9yX25hbWUsJGF1dGhvcl9lbWFpbCwkYXV0aG9yX3R6LCRicmFuY2gsJGFuY2VzdG9yLCR0
-YWcsJGxvZ21zZyk7CitteSAoJHBhdGNoc2V0LCRkYXRlLCRhdXRob3JfbmFtZSwkYXV0aG9yX2Vt
-YWlsLCRhdXRob3JfdHosJGJyYW5jaCwkYW5jZXN0b3IsJHRhZywkbG9nbXNnLCRsb2dsaW5lcyk7
-CiBteSAoQG9sZCxAbmV3LEBza2lwcGVkLCVpZ25vcmVicmFuY2gsQGNvbW1pdF9yZXZpc2lvbnMp
-OwogCiAjIGNvbW1pdHMgdGhhdCBjdnNwcyBjYW5ub3QgcGxhY2UgYW55d2hlcmUuLi4KQEAgLTEw
-MDUsOCArMTAxMiwxMyBAQCB3aGlsZSAoPENWUz4pIHsKIAkJCSR0YWcgPSAkXzsKIAkJfQogCQkk
-c3RhdGUgPSA3OwotCX0gZWxzaWYgKCRzdGF0ZSA9PSA3IGFuZCAvXkxvZzovKSB7CisJfSBlbHNp
-ZiAoJHN0YXRlID09IDcgYW5kIC9eTG9nOlxzKihcZCspPyQvKSB7CisJCSRsb2dsaW5lcyA9ICQx
-IC8vIC0xOwogCQkkbG9nbXNnID0gIiI7CisJCXdoaWxlICgkbG9nbGluZXMtLSA+IDAgJiYgKCRf
-ID0gPENWUz4pKSB7CisJCQljaG9tcDsKKwkJCSRsb2dtc2cgLj0gIiRfXG4iOworCQl9CiAJCSRz
-dGF0ZSA9IDg7CiAJfSBlbHNpZiAoJHN0YXRlID09IDggYW5kIC9eTWVtYmVyczovKSB7CiAJCSRi
-cmFuY2ggPSAkb3B0X28gaWYgJGJyYW5jaCBlcSAiSEVBRCI7Cg==
---001a1148431ed47f56055d2c688e--
+Regards
+Simon
+-- 
++ privacy is necessary
++ using gnupg http://gnupg.org
++ public key id: 0x92FEFDB7E44C32F9
