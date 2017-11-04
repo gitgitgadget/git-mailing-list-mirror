@@ -2,151 +2,199 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3EF6720450
-	for <e@80x24.org>; Sat,  4 Nov 2017 00:46:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5C95B20450
+	for <e@80x24.org>; Sat,  4 Nov 2017 02:27:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754036AbdKDAqa (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Nov 2017 20:46:30 -0400
-Received: from mail-by2nam01on0091.outbound.protection.outlook.com ([104.47.34.91]:45335
-        "EHLO NAM01-BY2-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1751805AbdKDAq3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Nov 2017 20:46:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=w1Ce4lQGw9UzzRUmujwGSakhThyjtA8p01aIPp250l4=;
- b=AyfPDPPd3LpiamlkVWfaj9jqw0uobajF6v5X9dPuP4TDh/HJ5/j7aGJRL/opFnOsDtBnfNebtdF9dNiOZrNhu1QoeRujsOKzy/P6s6dQsD7rhsw5PGkG7u7tORWPs4F3aZ1s79jhX/T61hvf4Xd6713GWVkDtfB8yvMIjbZwCFo=
-Received: from BN6PR21MB0114.namprd21.prod.outlook.com (10.173.199.140) by
- BN6PR21MB0116.namprd21.prod.outlook.com (10.173.199.142) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id
- 15.20.239.0; Sat, 4 Nov 2017 00:46:27 +0000
-Received: from BN6PR21MB0114.namprd21.prod.outlook.com ([10.173.199.140]) by
- BN6PR21MB0114.namprd21.prod.outlook.com ([10.173.199.140]) with mapi id
- 15.20.0239.000; Sat, 4 Nov 2017 00:46:26 +0000
-From:   "Billy O'Neal (VC LIBS)" <bion@microsoft.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-CC:     "Stephan T. Lavavej" <stl@exchange.microsoft.com>,
-        Cody Miller <codym@microsoft.com>
-Subject: Bug report: git reset --hard does not fix submodule worktree
-Thread-Topic: Bug report: git reset --hard does not fix submodule worktree
-Thread-Index: AQHTVQWYrZ3IvwcUiU2/W/51w87YVw==
-Date:   Sat, 4 Nov 2017 00:46:26 +0000
-Message-ID: <BN6PR21MB0114B8ECD6E8A158FB4A6FBFCB520@BN6PR21MB0114.namprd21.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [2001:4898:80e8:e::32a]
-x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1;BN6PR21MB0116;6:kik8K8yLYxsXEYSgQzP+xnr/FFmJuLCn4xegXGlv4mMf50MQuLe11cay+GD6Pdq6o99RAQEljFfk4qZuJ6SSpzdDMDt+zf6DA3LOS/Xihjiu9kZfM/+hJ/GfYTKF24t8XdHasdaP+NrONmTKppTZRpe8Sfx+sZi8cUJj+ElBsHozfADzDNdkiHJJcdVU/bfT1h7rLR710Jz2LFlzM5IcfKAn/89Q01E1t8nuyODZ+fveFAF/c/hg80wL51+5oRGoCeyJ6+8ztcFol7ImITT4Qv60MBPHLX/wE3IFeQ6KcYEIZtxF6EIRqwRbkZjrgkACVwP3Z/hEktlqY3WXE/pkQPJVvzBJ5k4fjup8OYg3OSc=;5:DCjTOZ/WkN4k7ZJDJcQZRKo55el2J7v5WBmY3L7vVcmdHF1J2zfBtgAT+dI2A4S23MAlIE493Nul6+vs/senq+uA4t77Cnl5ps8JIV8He94Y9XTA0qzHYF+/foeHxHZi9QMlVQQ6GlwtplCIot9N4FZ6cbVntrkpNAtlt4aWTZM=;24:FBPi8T+5xq9jN/A8riv45BRIfKRnUUsrGuvnDpnvwT+Go+L8qIjbj+G7FEoHrGTgYGl8Kg3k9216tIdoWumyR+/JbGo67sPWj6lz76jrCWE=;7:klgeJKXcdOYehTO0fdEIFhLaKUQJ9mXokyfP9iAjKKVmOFJH3FBAamiMC8/I5XwfxJ0fKPHD2y2vLdeZLsH+lNuvK3JnAqBCiLjVkrbFhFfFdXV8cAJQlBKHuDbaWimnY7OIiDv+LbY7LadBCHXzwfj8iU4Ur5ZeXdeK5wSLDAAZ+O8INKnInUNJCaZLujF0bu442NX+fPoKlMNJoKcbSxlwNDVNj82Xra0U0rhjotD7TV6H9JhSqRzMD9ZKFz3V
-x-ms-exchange-antispam-srfa-diagnostics: SSOS;SSOR;
-x-forefront-antispam-report: SFV:SKI;SCL:-1;SFV:NSPM;SFS:(10019020)(6009001)(346002)(376002)(39860400002)(47760400005)(199003)(189002)(74316002)(6916009)(7696004)(8676002)(86362001)(305945005)(77096006)(2351001)(6506006)(2501003)(7736002)(102836003)(4326008)(86612001)(99286004)(8990500004)(68736007)(8936002)(81166006)(81156014)(1730700003)(5660300001)(97736004)(3280700002)(3660700001)(33656002)(54356999)(50986999)(22452003)(106356001)(107886003)(2906002)(54906003)(316002)(6116002)(2900100001)(478600001)(5640700003)(25786009)(105586002)(9686003)(53936002)(10090500001)(6436002)(14454004)(10290500003)(55016002)(189998001)(101416001);DIR:OUT;SFP:1102;SCL:1;SRVR:BN6PR21MB0116;H:BN6PR21MB0114.namprd21.prod.outlook.com;FPR:;SPF:None;PTR:InfoNoRecords;A:1;MX:1;LANG:en;
-x-ms-office365-filtering-correlation-id: 8bc074dc-c375-4921-45c7-08d5231d7af8
-x-ms-office365-filtering-ht: Tenant
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(22001)(48565401081)(4534020)(4602075)(4627115)(201703031133081)(201702281549075)(2017052603243);SRVR:BN6PR21MB0116;
-x-ms-traffictypediagnostic: BN6PR21MB0116:
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=bion@microsoft.com; 
-x-exchange-antispam-report-test: UriScan:;
-x-microsoft-antispam-prvs: <BN6PR21MB0116922F886A2D0F267F7BAFCB520@BN6PR21MB0116.namprd21.prod.outlook.com>
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(100000700101)(100105000095)(100000701101)(100105300095)(100000702101)(100105100095)(61425038)(6040450)(2401047)(8121501046)(5005006)(3231021)(10201501046)(93006095)(93001095)(100000703101)(100105400095)(3002001)(6055026)(61426038)(61427038)(6041248)(20161123562025)(20161123564025)(20161123558100)(20161123555025)(201703131423075)(201702281528075)(201703061421075)(201703061406153)(20161123560025)(6072148)(201708071742011)(100000704101)(100105200095)(100000705101)(100105500095);SRVR:BN6PR21MB0116;BCL:0;PCL:0;RULEID:(100000800101)(100110000095)(100000801101)(100110300095)(100000802101)(100110100095)(100000803101)(100110400095)(100000804101)(100110200095)(100000805101)(100110500095);SRVR:BN6PR21MB0116;
-x-forefront-prvs: 048111149A
-received-spf: None (protection.outlook.com: microsoft.com does not designate
- permitted sender hosts)
-spamdiagnosticoutput: 1:99
-spamdiagnosticmetadata: NSPM
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+        id S1751735AbdKDC1n (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Nov 2017 22:27:43 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55023 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751216AbdKDC1l (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Nov 2017 22:27:41 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E7C05B273A;
+        Fri,  3 Nov 2017 22:27:40 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=e7GkpdTYBqMi
+        8IY0cF+TqnZss3A=; b=PNaKW7V7fw/O/MwbSQYXnGtmPV+d/SVJrcryytjQe0eP
+        EmpYE4ZPwvhd6BlcQBhkpDocaxXrXrh59IIEjISZeVFBMSWK0uqnX6aRG/D6hgyR
+        I/R834JGr6rUSfS7pveZpKWWS5Yc/4fGDKx+ef+qRrAN3bkA2rUuyJ2ABlvAX3k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=DBIbVr
+        hswd6svt5f5R+aqIGlkxjV73U4O2bJ+zMADGnRpeJy7lzDeaWMlvfSXMOQc2O4je
+        FvXNbs8pJGoQBak4FyucrqnLuyJp0Pik/EAx1epMnYI5sdHB4IYIxW8aNHcgfPvM
+        5XDgZnygjMHAeFzzV1ZYkC/8mrf3LdByB9dd0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id DF744B2739;
+        Fri,  3 Nov 2017 22:27:40 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4D969B2738;
+        Fri,  3 Nov 2017 22:27:40 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Rafael =?utf-8?Q?Ascens=C3=A3o?= <rafa.almas@gmail.com>
+Cc:     git@vger.kernel.org, me@ikke.info, hjemli@gmail.com,
+        mhagger@alum.mit.edu, pclouds@gmail.com,
+        ilari.liusvaara@elisanet.fi
+Subject: Re: [PATCH v1 1/2] refs: extract function to normalize partial refs
+References: <20171104004144.5975-1-rafa.almas@gmail.com>
+        <20171104004144.5975-2-rafa.almas@gmail.com>
+Date:   Sat, 04 Nov 2017 11:27:39 +0900
+In-Reply-To: <20171104004144.5975-2-rafa.almas@gmail.com> ("Rafael
+ =?utf-8?Q?Ascens=C3=A3o=22's?=
+        message of "Sat, 4 Nov 2017 00:41:43 +0000")
+Message-ID: <xmqqo9oiok10.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8bc074dc-c375-4921-45c7-08d5231d7af8
-X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Nov 2017 00:46:26.5814
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN6PR21MB0116
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: BAF9BE80-C107-11E7-9777-575F0C78B957-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello, Git folks. I managed to accidentally break the our test lab by attem=
-pting to git mv=A0a directory with a submodule inside. It seems like if a r=
-eset does an undo on a mv, the workfold entry should be fixed to put the su=
-bmodule in its old location. Consider the following sequence of commands:
+Rafael Ascens=C3=A3o <rafa.almas@gmail.com> writes:
 
-Setup a git repo with a submodule:
-mkdir metaproject
-mkdir upstream
-cd metaproject
-git init
-cd ..\upstream
-git init
-echo hello > test.txt
-git add -A
-git commit -m "an example commit"
-cd ..\metapoject
-mkdir start
-git submodule add ../upstream start/upstream
-git add -A
-git commit -m "Add submodule in start/upstream."
+> `for_each_glob_ref_in` has some code built into it that converts
+> partial refs like 'heads/master' to their full qualified form
 
-Move the directory containing the submodule:
-git mv start target
-git add -A
-git commit -m "Moved submodule parent directory."
+s/full/&y/ (read: that "full" needs "y" at the end).
 
-Check that the worktree got correctly fixed by git mv; this output is as ex=
-pected:
-type .git\modules\start\upstream\config
-[core]
-        repositoryformatversion =3D 0
-        filemode =3D false
-        bare =3D false
-        logallrefupdates =3D true
-        symlinks =3D false
-        ignorecase =3D true
-        worktree =3D ../../../../target/upstream
-[remote "origin"]
-        url =3D C:/Users/bion/Desktop/upstream
-        fetch =3D +refs/heads/*:refs/remotes/origin/*
-[branch "master"]
-        remote =3D origin
-        merge =3D refs/heads/master
+> 'refs/heads/master'. It also assume a trailing '/*' if no glob
 
-Now try to go back to the previous commit using git reset --hard:
-git log --oneline
- 1f560be (HEAD -> master) Moved submodule parent directory.
- a5977ce Add submodule in start/upstream.
-git reset --hard a5977ce
- warning: unable to rmdir target/upstream: Directory not empty
- HEAD is now at a5977ce Add submodule in start/upstream.
+s/assume/&s/
 
-Check that the worktree got fixed correctly; it did not:
-type .git\modules\start\upstream\config
-[core]
-        repositoryformatversion =3D 0
-        filemode =3D false
-        bare =3D false
-        logallrefupdates =3D true
-        symlinks =3D false
-        ignorecase =3D true
-        worktree =3D ../../../../target/upstream
-[remote "origin"]
-        url =3D C:/Users/bion/Desktop/upstream
-        fetch =3D +refs/heads/*:refs/remotes/origin/*
-[branch "master"]
-        remote =3D origin
-        merge =3D refs/heads/master
+> characters are present in the pattern.
+>
+> Extract that logic to its own function which can be reused elsewhere
+> where the same behaviour is needed, and add an ENSURE_GLOB flag
+> to toggle if a trailing '/*' is to be appended to the result.
+>
+> Signed-off-by: Kevin Daudt <me@ikke.info>
+> Signed-off-by: Rafael Ascens=C3=A3o <rafa.almas@gmail.com>
 
-Is git reset intended to put the submodule in the right place? If not, is t=
-here a command we can run before/after reset to restore consistency?
+Could you explain Kevin's sign-off we see above?  It is a bit
+unusual (I am not yet saying it is wrong---I cannot judge until I
+find out why it is there) to see a patch from person X with sign off
+from person Y and then person X in that order.  It is normal for a
+patch authored by person X to have sign-off by X and then Y if X
+wrote it, signed it off and passed to Y, and then Y resent it after
+signing it off (while preserving the authorship of X by adding an
+in-body From: header), but I do not think that is what we have here.
 
-Thanks folks!
+It could be that you did pretty much all the work on this patch
+and Kevin helped you to polish this patch off-list, in which case
+the usual thing to do is to use "Helped-by: Kevin" instead.
 
-Billy O'Neal
+> ---
+>  refs.c | 34 ++++++++++++++++++++--------------
+>  refs.h | 16 ++++++++++++++++
+>  2 files changed, 36 insertions(+), 14 deletions(-)
+>
+> diff --git a/refs.c b/refs.c
+> index c590a992f..1e74b48e6 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -369,32 +369,38 @@ int head_ref_namespaced(each_ref_fn fn, void *cb_=
+data)
+>  	return ret;
+>  }
+> =20
+> -int for_each_glob_ref_in(each_ref_fn fn, const char *pattern,
+> -	const char *prefix, void *cb_data)
+> +void normalize_glob_ref(struct strbuf *normalized_pattern, const char =
+*prefix,
+> +		const char *pattern, int flags)
 
+It is better to use "unsigned" for a single word "flags" used as a
+collection of bits.  In older parts of the codebase, we have
+codepaths that pass signed int as a flags word, simply because we
+didn't know better, but we do not have to spread that practice to
+new code.
+
+>  {
+> -	struct strbuf real_pattern =3D STRBUF_INIT;
+> -	struct ref_filter filter;
+> -	int ret;
+> -
+>  	if (!prefix && !starts_with(pattern, "refs/"))
+> -		strbuf_addstr(&real_pattern, "refs/");
+> +		strbuf_addstr(normalized_pattern, "refs/");
+>  	else if (prefix)
+> -		strbuf_addstr(&real_pattern, prefix);
+> -	strbuf_addstr(&real_pattern, pattern);
+> +		strbuf_addstr(normalized_pattern, prefix);
+> +	strbuf_addstr(normalized_pattern, pattern);
+> =20
+> -	if (!has_glob_specials(pattern)) {
+> +	if (!has_glob_specials(pattern) && (flags & ENSURE_GLOB)) {
+>  		/* Append implied '/' '*' if not present. */
+> -		strbuf_complete(&real_pattern, '/');
+> +		strbuf_complete(normalized_pattern, '/');
+>  		/* No need to check for '*', there is none. */
+> -		strbuf_addch(&real_pattern, '*');
+> +		strbuf_addch(normalized_pattern, '*');
+>  	}
+> +}
+
+The above looks like a pure and regression-free code movement (plus
+a small new feature) that is faithful to the original, which is good.
+
+I however notice that addition of /* to the tail is trying to be
+careful by using strbuf_complete('/'), but prefixing with "refs/"
+does not and we would end up with a double-slash if pattern begins
+with a slash.  The contract between the caller of this function (or
+its original, which is for_each_glob_ref_in()) and the callee is
+that prefix must not begin with '/', so it may be OK, but we might
+want to add "if (*pattern =3D=3D '/') BUG(...)" at the beginning. =20
+
+I dunno.  In any case, that is totally outside the scope of this two
+patch series.
+
+> diff --git a/refs.h b/refs.h
+> index a02b628c8..9f9a8bb27 100644
+> --- a/refs.h
+> +++ b/refs.h
+> @@ -312,6 +312,22 @@ int for_each_namespaced_ref(each_ref_fn fn, void *=
+cb_data);
+>  int refs_for_each_rawref(struct ref_store *refs, each_ref_fn fn, void =
+*cb_data);
+>  int for_each_rawref(each_ref_fn fn, void *cb_data);
+> =20
+> +/*
+> + * Normalizes partial refs to their full qualified form.
+
+s/full/&y/;
+
+> + * If prefix is NULL, will prepend 'refs/' to the pattern if it doesn'=
+t start
+> + * with 'refs/'. Results in refs/<pattern>
+> + *
+> + * If prefix is not NULL will result in <prefix>/<pattern>
+
+s/NULL/&,/;
+
+> + *
+> + * If ENSURE_GLOB is set and no glob characters are found in the
+> + * pattern, a trailing </><*> will be appended to the result.
+> + * (<> characters to avoid breaking C comment syntax)
+> + */
+> +
+> +#define ENSURE_GLOB 1
+> +void normalize_glob_ref (struct strbuf *normalized_pattern, const char=
+ *prefix,
+> +				const char *pattern, int flags);
+> +
+>  static inline const char *has_glob_specials(const char *pattern)
+>  {
+>  	return strpbrk(pattern, "?*[");
+
+Thanks.  Other than the above minor points, looks good to me.
