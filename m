@@ -2,322 +2,246 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 169DE20281
-	for <e@80x24.org>; Sat,  4 Nov 2017 07:34:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EDA7020281
+	for <e@80x24.org>; Sat,  4 Nov 2017 08:39:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751751AbdKDHeX (ORCPT <rfc822;e@80x24.org>);
-        Sat, 4 Nov 2017 03:34:23 -0400
-Received: from mail-wm0-f45.google.com ([74.125.82.45]:47737 "EHLO
-        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751686AbdKDHeX (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Nov 2017 03:34:23 -0400
-Received: by mail-wm0-f45.google.com with SMTP id r196so5141633wmf.2
-        for <git@vger.kernel.org>; Sat, 04 Nov 2017 00:34:22 -0700 (PDT)
+        id S1752314AbdKDIjD (ORCPT <rfc822;e@80x24.org>);
+        Sat, 4 Nov 2017 04:39:03 -0400
+Received: from mail-io0-f177.google.com ([209.85.223.177]:54040 "EHLO
+        mail-io0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751532AbdKDIjA (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Nov 2017 04:39:00 -0400
+Received: by mail-io0-f177.google.com with SMTP id 189so10912625iow.10
+        for <git@vger.kernel.org>; Sat, 04 Nov 2017 01:38:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=qc/IODqq4sBwi5WsPOjGLGOD5fZZ8FUv37PIbTS1vh4=;
-        b=qiziyfkJZMgDxBkIGDp11KpfxMjJYVMAE1p/gCxZdGiBKY8o0HngH2zJchioYzOEB2
-         kRQG6wZ7oaTRyBrYbbm8i6DWiA6veYvBu9H/67C2DIJH7GBr2XKl+UYdlVh2CQwTg2cC
-         s27T3jYx1f2/NkDXqf7frL6GHTSpZNRhlAgPcNIM58JeECzlut1xzT43S3Ak7tYSaFUk
-         t+47zbF5ImLty98uM+UdI3ZcM0PMdMg3I7BfKy0/yw8083WgprHIuTCXcdq9xdSaRZyY
-         9PWk9J7RseCKbRnoBNd45b9yBTRGmBf5INp5CAePZ9t2RnoqXF5J0Npoo+2L5byeJabd
-         +QDA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=8rSsaIT3QIURlZHiGya6xQjyDN9jcIrsmZ8r/J0D+RE=;
+        b=POSvihx6n0fezIzPfm0s7bZILFCgVGzHFtiqHYsI09gnUHuz8/Dx+9T2CHJg7YhKAd
+         BduSsOOpTI59njXXgRnjQIq+VRGCO9UY0JsILVzluR/Xte3Zu4n7Azb/jbOUAAR89Gpl
+         z6bUEbWP9VFQdrErBrPaqjuXbuMXH4YwCiY7EllaTYSdci08s0b7F0MmfD9+3IYeR4AN
+         2YBXIRSxsxwpVk0c7pHDYpBW3bgEvCsfYNd/vjb+fdyXqH4NiH+IHtbctwjv/kaJKWJu
+         C/3AjuV8ORHtdQABD3gIavbTUT4YZSozwQP/lyE+gTVJiY9WhJKRtQKQLxFh0tF7POEV
+         jqhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=qc/IODqq4sBwi5WsPOjGLGOD5fZZ8FUv37PIbTS1vh4=;
-        b=ixRaOiE9ohJI4CD0JlZjwPaBn1Q/ZIED05oAjJsdzJWQVmrDdxdKFztDauLIIxuuNo
-         Znl2b3f0YkteTzoO6hBh4vyrmJ1vVwuaOr+7C8mk7ww4IyrB21HVskKfdhFQES97dBP2
-         4f9Tee62YZbI18gPH4+OqKEEpTw6CX1K9dLChAX5b51OpIylCYX8y+Gjlh5qEk//3297
-         sfnvnpwuq5BSFHc6MUXPn8j30FvgWH1C/QlH92hheapo10ryNU40OtqqVM00gMKOZzit
-         rhfztGKtNzhIPKQLyKD6Bjhi2QewCgrIWe0fVrALQX6/HmXcfBCq9SFa5Ke42g8couCR
-         kGeQ==
-X-Gm-Message-State: AJaThX702Bk3RnC1E9/gEgEgFlGopn08vQy7F0KdFC99VwjUqr0PFfAG
-        9Af8k/04eVBWtkOT+MiRh2w=
-X-Google-Smtp-Source: ABhQp+Qs2fxQpLIF8rcSh9as1VPiXiJNA4Z2MV+ZQaxZ92JKzx5ERlcdaXDveTsuMOy59z2Des/AfQ==
-X-Received: by 10.80.164.196 with SMTP id x4mr3035342edb.191.1509780861666;
-        Sat, 04 Nov 2017 00:34:21 -0700 (PDT)
-Received: from [192.168.1.22] (101.154.108.93.rev.vodafone.pt. [93.108.154.101])
-        by smtp.gmail.com with ESMTPSA id d30sm7577238ede.10.2017.11.04.00.34.20
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 04 Nov 2017 00:34:21 -0700 (PDT)
-Subject: Re: [PATCH v1 2/2] log: add option to choose which refs to decorate
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, me@ikke.info, hjemli@gmail.com,
-        mhagger@alum.mit.edu, pclouds@gmail.com,
-        ilari.liusvaara@elisanet.fi
-References: <20171104004144.5975-1-rafa.almas@gmail.com>
- <20171104004144.5975-3-rafa.almas@gmail.com>
- <xmqq60aqn1ok.fsf@gitster.mtv.corp.google.com>
-From:   =?UTF-8?Q?Rafael_Ascens=c3=a3o?= <rafa.almas@gmail.com>
-Message-ID: <b0e3856b-e627-0d22-90da-3da1781f98b3@gmail.com>
-Date:   Sat, 4 Nov 2017 07:34:20 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.4.0
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=8rSsaIT3QIURlZHiGya6xQjyDN9jcIrsmZ8r/J0D+RE=;
+        b=uIFA+YHA3VN4HJg2cOqh/ywLkXrH9rJWpHA/WiZBlLaywZiuKDjDS/FeawCr+dwTyz
+         1LVZRAGWawgI81+lXG0Sjy3T/NhyhIgqNv6GhkZK/Os2CQSCeTN0JxTY2T4inDMIA6hp
+         ef7RV7qQ/seH2D4BqyXAWKH5xiE+YZXAxZubuoyQU9aKgWHRBszxUWGIfYARIA0fc752
+         xB+YISiymwM5H9rj85+gVF8rYLq2ovLV3ul/bcyNW6XE25+YtpUwub2Xtfowmw67ndub
+         sV/rgiZGAq9kDR3LsQeMOzeIjZO/WF3zAR/YIXWySj7HwIXi14gsS2zcMsSA9rLg+Aw8
+         lwhg==
+X-Gm-Message-State: AMCzsaXlFC28QmuUM0i0ah1wHV6XKfUDd2KAGQmKv9HA4avO+Av5FVVP
+        wU0CCqXt43u8mnwVx6IsABMRw19sunfpzNuliPs=
+X-Google-Smtp-Source: ABhQp+SxMwbsftFDVfyGnGDDptg5rFz2R7DOhrkOM0e2G1o8/mXLcvPxAOEzQzRXKZaNgD6bI+pEpVbeQ4kCgORZiXU=
+X-Received: by 10.107.180.20 with SMTP id d20mr12666139iof.116.1509784739165;
+ Sat, 04 Nov 2017 01:38:59 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <xmqq60aqn1ok.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Received: by 10.79.7.10 with HTTP; Sat, 4 Nov 2017 01:38:58 -0700 (PDT)
+In-Reply-To: <xmqqefpwdkf9.fsf@gitster.mtv.corp.google.com>
+References: <20171019123030.17338-1-chriscool@tuxfamily.org>
+ <20171019123030.17338-6-chriscool@tuxfamily.org> <xmqqefpwdkf9.fsf@gitster.mtv.corp.google.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Sat, 4 Nov 2017 09:38:58 +0100
+Message-ID: <CAP8UFD0MppGwD5iXNjs8y+qxpFGc2NbYE9gcqe2pmJWAt6CZfg@mail.gmail.com>
+Subject: Re: [PATCH 5/6] t0021/rot13-filter: add capability functions
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Ben Peart <Ben.Peart@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Mike Hommey <mh@glandium.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Eric Wong <e@80x24.org>,
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 04/11/17 03:49, Junio C Hamano wrote:
-> Rafael Ascensão <rafa.almas@gmail.com> writes:
-> 
->> Using `--exclude=<pattern>` can help mitigate that verboseness by
->> removing unnecessary 'branches' from the output. However, if the tip of
->> an excluded ref points to an ancestor of a non-excluded ref, git will
->> decorate it regardless.
-> 
-> Is this even relevant?  I think the above would only serve to
-> confuse the readers.  --exclude, --branches, etc. are ways to
-> specify what starting points "git log" history traversal should
-> begin and has nothing to do with what set of refs are to be used to
-> decorate the commits that are shown.  But the paragraph makes
-> readers wonder if it might have any effect in some circumstances.
-> 
->> With `--decorate-refs=<pattern>`, only refs that match <pattern> are
->> decorated while `--decorate-refs-exclude=<pattern>` allows to do the
->> reverse, remove ref decorations that match <pattern>
-> 
-> And "Only refs that match ... are decorated" is also confusing.  The
-> thing is, refs are never decorated, they are used for decorating
-> commits in the output from "git log".  For example, if you have 
-> 
-> 	---A---B---C---D
-> 
-> and B is at the tip of the 'master' branch, the output from "git log
-> D" would decorate B with 'master', even if you do not say 'master'
-> on the command line as the commit to start the traversal from. >
-> Perhaps drop the irrelevant paragraph about "--exclude" and write
-> something like this instead?
-> 
-> 	When "--decorate-refs=<pattern>" is given, only the refs
-> 	that match the pattern is used in decoration.  The refs that
-> 	match the pattern, when "--decorate-refs-exclude=<pattern>"
-> 	is given, are never used in decoration.
-> 
+On Sun, Oct 22, 2017 at 3:46 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Christian Couder <christian.couder@gmail.com> writes:
+>
+>> Add functions to help read and write capabilities.
+>> These functions will be reused in following patches.
+>
+> One more thing that is more noteworthy (read: do not forget to
+> describe it in the proposed log message) is that the original used
+> to require capabilities to come in a fixed order.
+>
+> The new code allows these capabilities to be declared in any order,
 
-What you explained was the reason I mentioned that. Because some users 
-were wrongfully trying to remove decorations by trying to exclude the 
-starting points. But I agree this adds little value and can generate 
-further confusion. I will remove that section.
+Yeah and I think it is good.
 
->> Both can be used together but --decorate-refs-exclude patterns have
->> precedence over --decorate-refs patterns.
-> 
-> A reasonable and an easy-to-explain way to mix zero or more positive
-> and zero or more negagive patterns that follows the convention used
-> elsewhere in the system (e.g. how negative pathspecs work) is
-> 
->   (1) if there is no positive pattern given, pretend as if an
->       inclusive default positive pattern was given;
-> 
->   (2) for each candidate, reject it if it matches no positive
->       pattern, or if it matches any one of negative patterns.
-> 
-> For pathspecs, we use "everything" as the inclusive default positive
-> pattern, I think, and for the set of refs used for decoration, a
-> reasonable choice would also be to use "everything", which matches
-> the current behaviour.
-> 
+> it even allows duplicates (intended? shouldn't we be flagging it as
+> an error?),
 
-That's a nice explanation that fits the current "--decorate-refs" behavior.
+I think allowing duplicates is ok, as we allow duplicates in many
+cases already, like duplicate command line options.
+Or perhaps we should just warn?
 
->> The pattern follows similar rules as `--glob` except it doesn't assume a
->> trailing '/*' if glob characters are missing.
-> 
-> Why should this be a special case that burdens users to remember one
-> more rule?  Wouldn't users find "--decorate-refs=refs/tags" useful
-> and it woulld be shorter and nicer than having to say "refs/tags/*"?
-> 
+> the helper can require a set of capabilities we do want
+> to see and fail if the remote doesn't declare any one of them
+> (good).
 
-I wanted to allow exact patterns like:
-"--decorate-refs=refs/heads/master" and for that I disabled the flag 
-that adds the trailing '/*' if no globs are found. As a side effect, I 
-lost the shortcut.
+Yeah.
 
-Is adding a yet another flag that appends '/*' only if the pattern 
-equals "refs/{heads,remotes,tags}" a good idea?
+> It does not check if the remote declares any capability we do not
+> know about (intended? the original noticed this situation and error
+> out---shouldn't the more generalized helper that is meant to be
+> reusable allow us to do so, too?).
 
-Because changing the default behavior of that function has implications 
-on multiple commands which I think shouldn't change. But at the same 
-time, would be nice to have the logic that deals with glob-ref patterns 
-all in one place.
+I think that it is ok in general to just ignore capabilities we don't
+know (as long as we don't advertise them). The protocol should work
+using only the capabilities that both ends support.
 
-What's the sane way to do this?
+Now if we just talk about testing, we might sometimes want to check
+that one end sends only some specific capabilities. So in this case it
+could be good if we could error out. On the other hand, if we test how
+Git behaves when we advertise some specific capabilities, it might not
+be a good idea to error out as it would break tests when Git learns a
+new capability and advertise it.
 
->> diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
->> index 32246fdb0..314417d89 100644
->> --- a/Documentation/git-log.txt
->> +++ b/Documentation/git-log.txt
->> @@ -38,6 +38,18 @@ OPTIONS
->>   	are shown as if 'short' were given, otherwise no ref names are
->>   	shown. The default option is 'short'.
->>   
->> +--decorate-refs=<pattern>::
->> +	Only print ref names that match the specified pattern. Uses the same
->> +	rules as `git rev-list --glob` except it doesn't assume a trailing a
->> +	trailing '/{asterisk}' if pattern lacks '?', '{asterisk}', or '['.
->> +	`--decorate-refs-exlclude` has precedence.
+In the specific case of rot13-filter.pl I think we are more in the
+later case than in the former.
+
+So I think it is ok to wait until we would really want to check that
+one end sends only some specific capabilities, before we improve the
+Packet.pm module to make it support that.
+
+>         Side note: my answer to the last question is "it is OK and
+>         even desirable to ignore the fact that they claim to support
+>         a capability we do not know about", but I may be mistaken.
+
+Yeah I agree.
+
+>         The reasoning and the conclusion that is consistent with
+>         what the code does should be described in any case.
+
+Ok I will document all the above in the commit message.
+
+>> +sub packet_read_capabilities {
+>> +     my @cap;
+>> +     while (1) {
+>> +             my ( $res, $buf ) = packet_bin_read();
+>> +             return ( $res, @cap ) if ( $res != 0 );
+>
+> The original had the same "'list eq list' does not do what you may
+> think it does" issue.  This one corrects it, which is good.
+>
+> I am not sure if ($res != 0) is correct though.  What should happen
+> when you get an unexpected EOF at this point?  The original would
+> have died; this ignores and continues.
+
+Well if there is an unexpected EOF, then packet_bin_read() returns
+(-1, ""), so packet_read_capabilities() returns (-1, @cap) where @cap
+contains the capabilities already received. Then
+packet_read_and_check_capabilities() checks that we received all the
+capabilities we expect and dies if that is not the case. If we did
+receive all the capabilities, then
+packet_read_and_check_capabilities() still returns -1, so the caller
+may check that and die.
+
+But yeah we could also just die in packet_read_capabilities() if $res
+is -1. I will make this change.
+
+>> +             unless ( $buf =~ s/\n$// ) {
+>> +                     die "A non-binary line MUST be terminated by an LF.\n"
+>> +                         . "Received: '$buf'";
+>> +             }
+>
+> It may make sense to extract this in a small helper and call it from
+> here and from packet_txt_read().
+
+Ok, I have done this in my current version, that I plan to send soon.
+
+>> +             die "bad capability buf: '$buf'" unless ( $buf =~ s/capability=// );
+>
+> This may merely be a style thing, but I somehow find statement
+> modifiers hard to follow, unless its condition is almost always
+> true.  If you follow the logic in a loop and see "die" at the
+> beginning, a normal thing to expect is that there were conditionals
+> that said "continue" (eh, 'next' or 'redo') to catch the normal case
+> and the control would reach "die" only under exceptional error
+> cases, but hiding a rare error condition after 'unless' statement
+> modifier breaks that expectation.
+
+Ok, I will use:
+
+unless ( $buf =~ s/capability=// ) {
+        die "bad capability buf: '$buf'" ;
+}
+
+>> +             push @cap, $buf;
+>> +     }
+>> +}
 >> +
->> +--decorate-refs-exclude=<pattern>::
->> +	Do not print ref names that match the specified pattern. Uses the same
->> +	rules as `git rev-list --glob` except it doesn't assume a trailing a
->> +	trailing '/{asterisk}' if pattern lacks '?', '{asterisk}', or '['.
->> +	Has precedence over `--decorate-refs`.
+>> +sub packet_read_and_check_capabilities {
+>> +     my @local_caps = @_;
+>> +     my @remote_res_caps = packet_read_capabilities();
+>> +     my $res = shift @remote_res_caps;
+>> +     my %remote_caps = map { $_ => 1 } @remote_res_caps;
+>
+> FYI:
+>
+>         my ($res, @remote_caps) = packet_read_capabilities();
+>         my %remote_caps = map { $_ => 1 } @remote_caps;
+>
+> may be more conventional way.
 
-> These two may be technically correct, but I wonder if we can make it
-> easier to understand (I found "precedence" bit hard to follow, as in
-> my mind, these are ANDed conditions and between (A & ~B), there is
-> no "precedence").  Also we'd want to clarify what happens when only
-> "--decorate-refs-exclude"s are given, which in turn necessitates us
-> to describe what happens when only "--decorate-refs"s are given.
+Yeah I will use what you suggest.
 
-I believe the same explanation mentioned earlier fits nicely here too.
+>> +     foreach (@local_caps) {
+>> +             die "'$_' capability not available" unless (exists($remote_caps{$_}));
+>> +     }
+>
+> It is good that we can now accept capabilities in any order and
+> still enforce all the required capabilities are supported by the
+> other side.  It deserves a mention in the proposed log message.
 
->> diff --git a/log-tree.c b/log-tree.c
->> index cea056234..8efc7ac3d 100644
->> --- a/log-tree.c
->> +++ b/log-tree.c
->> @@ -94,9 +94,33 @@ static int add_ref_decoration(const char *refname, const struct object_id *oid,
->>   {
->>   	struct object *obj;
->>   	enum decoration_type type = DECORATION_NONE;
->> +	struct ref_include_exclude_list *filter = (struct ref_include_exclude_list *)cb_data;
->> +	struct string_list_item *item;
->> +	struct strbuf real_pattern = STRBUF_INIT;
+Ok, will add one.
+
+>> +     return $res;
+>> +}
 >> +
->> +	if(filter && filter->exclude->nr > 0) {
-> 
-> Have SP before '('.
-> 
->> +		/* if current ref is on the exclude list skip */
->> +		for_each_string_list_item(item, filter->exclude) {
->> +			strbuf_reset(&real_pattern);
->> +			normalize_glob_ref(&real_pattern, NULL, item->string, 0);
->> +			if (!wildmatch(real_pattern.buf, refname, 0))
->> +				goto finish;
->> +		}
->> +	}
->>   
->> -	assert(cb_data == NULL);
->> +	if (filter && filter->include->nr > 0) {
->> +		/* if current ref is present on the include jump to decorate */
->> +		for_each_string_list_item(item, filter->include) {
->> +			strbuf_reset(&real_pattern);
->> +			normalize_glob_ref(&real_pattern, NULL, item->string, 0);
->> +			if (!wildmatch(real_pattern.buf, refname, 0))
->> +				goto decorate;
->> +		}
->> +		/* Filter was given, but no match was found, skip */
->> +		goto finish;
->> +	}
-> 
-> The above seems to implement the natural mixing of negative and
-> positive patterns, which is good.
-> 
-> Unless I am missing something, I think these normalize_grob_ref()
-> calls should be removed from this function; add_ref_decoration() is
-> called once for EVERY ref the repository has, so you are normalizing
-> a handful of patterns you got from the user over and over to get the
-> same normalization, possibly thousands of times in a repository of a
-> project with long history.
-> 
-> You have finished collecting patterns on filter->{exclude,include}
-> list from the user by the time "for_each_ref(add_ref_decoration)" is
-> called in load_ref_decorations(), and these patterns never changes
-> after that.
-> 
-> Perhaps normalize the patterns inside load_ref_decorations() only
-> once and have the normalized patterns in the filter lists?
-> 
-This would be what a sane person would do. This detail went over my 
-head. Will move it to load_ref_decorations()
-
->> +decorate:
->>   	if (starts_with(refname, git_replace_ref_base)) {
->>   		struct object_id original_oid;
->>   		if (!check_replace_refs)
->> @@ -136,6 +160,9 @@ static int add_ref_decoration(const char *refname, const struct object_id *oid,
->>   			parse_object(&obj->oid);
->>   		add_name_decoration(DECORATION_REF_TAG, refname, obj);
->>   	}
+>> +sub packet_write_capabilities {
+>> +     packet_txt_write( "capability=" . $_ ) foreach (@_);
+>> +     packet_flush();
+>> +}
 >> +
->> +finish:
->> +	strbuf_release(&real_pattern);
->>   	return 0;
->>   }
->>   
->> @@ -148,15 +175,15 @@ static int add_graft_decoration(const struct commit_graft *graft, void *cb_data)
->>   	return 0;
->>   }
->>   
->> -void load_ref_decorations(int flags)
->> +void load_ref_decorations(int flags, struct ref_include_exclude_list *data)
->>   {
->>   	if (!decoration_loaded) {
->>   
->>   		decoration_loaded = 1;
->>   		decoration_flags = flags;
->> -		for_each_ref(add_ref_decoration, NULL);
->> -		head_ref(add_ref_decoration, NULL);
->> -		for_each_commit_graft(add_graft_decoration, NULL);
->> +		for_each_ref(add_ref_decoration, data);
->> +		head_ref(add_ref_decoration, data);
->> +		for_each_commit_graft(add_graft_decoration, data);
-> 
-> Don't name that variable "data".
-> 
-> for_each_*() and friends that take a callback with callback specific
-> data MUST call the callback specific data as generic, e.g. cb_data,
-> because they do not know what they are passing.  The callers of
-> these functions, like this one, however, know what they are passing.
-> Also load_ref_decorations() itself knows what its second parameter
-> is.
-> 
->      void load_ref_decorations(int flags, struct decoration_filter *filter)
-> 
-> or something (see below).
-> 
->>   	}
->>   }
->>   
->> diff --git a/log-tree.h b/log-tree.h
->> index 48f11fb74..66563af88 100644
->> --- a/log-tree.h
->> +++ b/log-tree.h
->> @@ -7,6 +7,10 @@ struct log_info {
->>   	struct commit *commit, *parent;
->>   };
->>   
->> +struct ref_include_exclude_list {
->> +	struct string_list *include, *exclude;
->> +};
-> 
-> The "decoration" is not the only thing related to "ref" in the
-> log-tree API; calling this structure that filters what refs to be
-> used for decoration with the above name without saying that this is
-> about "decoration" is too selfish and unmaintainable.
-> 
-> How about "struct decoration_filter" and rename the fields to say
-> "{include,exclude}_ref_pattern" or something like that?  The
-> renaming of the fields to include "ref" somewhere is coming from the
-> same concern---it will be selfish and narrow-minded to imagine that
-> the ways to filter refs used for decoration will stay forever only
-> based on refnames and nothing else, which would be the reason not to
-> have "ref" somewhere in the names.
-> 
-I will make the corrections. Thanks for the feedback.
+>>  print $debug "START\n";
+>>  $debug->flush();
+>>
+>>  packet_initialize("git-filter", 2);
+>>
+>> -( packet_txt_read() eq ( 0, "capability=clean" ) )  || die "bad capability";
+>> -( packet_txt_read() eq ( 0, "capability=smudge" ) ) || die "bad capability";
+>> -( packet_txt_read() eq ( 0, "capability=delay" ) )  || die "bad capability";
+>> -( packet_bin_read() eq ( 1, "" ) )                  || die "bad capability end";
+>> +packet_read_and_check_capabilities("clean", "smudge", "delay");
+>> +packet_write_capabilities(@capabilities);
+>
+> Neither the original nor the rewrite ensures that @capabilities we
+> ask to the other side to activate is a subset of what the other side
+> actually declared.
+>
+> Fixing this is a bit more involved than "refactor what we have", but
+> probably is part of "refactor so that we can reuse in other
+> situations".  You'd want to return the list of caps received from
+> packet_read_and_check_capabilities() and make sure @capabilities is
+> a subset of that before writing them out to the other side to
+> request.
+
+Ok, I will add that too.
+
+Thanks.
