@@ -7,58 +7,60 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D6D6B20450
-	for <e@80x24.org>; Sat,  4 Nov 2017 00:42:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B552420450
+	for <e@80x24.org>; Sat,  4 Nov 2017 00:42:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756342AbdKDAmj (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Nov 2017 20:42:39 -0400
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:49377 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756007AbdKDAmh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Nov 2017 20:42:37 -0400
-Received: by mail-wr0-f195.google.com with SMTP id g90so3884759wrd.6
-        for <git@vger.kernel.org>; Fri, 03 Nov 2017 17:42:37 -0700 (PDT)
+        id S1756385AbdKDAmp (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Nov 2017 20:42:45 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:51338 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756007AbdKDAml (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Nov 2017 20:42:41 -0400
+Received: by mail-wm0-f67.google.com with SMTP id b9so4601109wmh.0
+        for <git@vger.kernel.org>; Fri, 03 Nov 2017 17:42:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=CK+Z1TGKwhj7PuVgqUf5gN+gmocNFFHgmXvmoMpyMVw=;
-        b=rjAkSAW9JfIUeedQ4AWsLid3Jhn/dIvr0ylP+omRvW5nZuSnWbsD2gYM4uFaio+1Sa
-         p5LJ1WJ6FyrNBUAnj4SZltyat28g8M4jG7xnJyFbDmjrGrj8du5yp5le6lLgKIU1PLee
-         OHz47p0fwoB2epTKsoQLxRrnjnCNxJqjo/CJpu690Yk1DYVsvHOL9otzhz8eus2X7Zg5
-         BedBUxPntvfs/yYwAFoYYIz9NdInRLm3TMgkwUyr105OPpXTjMN4qIdFfmNsqVLoqnAy
-         mtZZRcpNMf7adoOUYxa8PTHDt7gQIVNE3eHmzo6ig68s6YEDOYvCSOtwzXrXAG/OHhef
-         /ZTw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Dr0fYC9iOB5h49CV2ylFGT9MnI16QdTDmpK4Sx28Qvo=;
+        b=lNhJ0QI4c4oqIFULd92GwZafESL2naIejIdo9+HcuS13wJF0miH4ZU7Y2dFGY5C/2z
+         LLCF2wdHsHrqFnPFTbbO0OHrclmU7qYoJYK1JIWSCI9ZQAD8BWinR1iYdhlppoBI2uzg
+         lZtE+iihTSB+s9abNWMF5DqHY+/ciz/i+PPgelfIdFOawg9x4EIyU6dGnlfzaYOxRTg7
+         +9mDoDPogStOPtsOdr6IirrZvq3aCEAQKV2FcF+RuavryD53b/hxbLhFEwXWIWG2r3s1
+         lMNyfKBxt/Wb6ocidk7LpQmHOqoY+KidAhHnPal663Cl8xDqirYTxk6o6Y3PBHpX2u7X
+         xOmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=CK+Z1TGKwhj7PuVgqUf5gN+gmocNFFHgmXvmoMpyMVw=;
-        b=KZOQMVy3Vlz9vrg9gPJ7BvX0ESBRDzDtyX73do9YagmCWu9I/w1pidm9r8IVN14Jj2
-         AnUql7Hl/t/CAB61TKsSyPn6dHPipHPmHNkDdKaJdESY1brcFan7VMVHwWkLFxGQ4N25
-         pi0ppi2AjGtXY1VCkkaCTfJIuuCrH6oLm63kcQZfyAm9np/7AUxqo2YboDYzJw9f4OmQ
-         ZerB48XvXjoaLVpoloQrtSaJlUAZ+9aLy5AGeHuikrzokywnODMNgOfH1vmEi7LYxclf
-         PDlcnDI06FpQxqUJJEeQ7YVKxF6mglffnHil8YV3HnaXpNUilzUHwyx0gQnE3h3h/FUH
-         2Y1A==
-X-Gm-Message-State: AMCzsaW4wWgkZYMdXeKcb0MYKGPOEeesFaiixTiAJdnS4LwqNJXaFmd/
-        PmZ/SScYzoK6msEjFAPEKukQuQIOk2w=
-X-Google-Smtp-Source: ABhQp+TNNW7rRaa+62GIBzZD9RTJoQzbZpemV18VtGVmIz49GZv8yHeZDBjhpO5igTUyI4TPNDFsNQ==
-X-Received: by 10.223.167.65 with SMTP id e1mr7786983wrd.280.1509756156127;
-        Fri, 03 Nov 2017 17:42:36 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Dr0fYC9iOB5h49CV2ylFGT9MnI16QdTDmpK4Sx28Qvo=;
+        b=E+mhfwRI2Q8vvIBAITNDpqFs109LH5DLC1Z5kGWYDMDFB3V86vUSxMRsKLFnNNR3+0
+         pmOe+5wi2cfs9GCNSVEpouFT2nBparADx2nE6aTrsIeeDMSXaUYoTRYqZ3OwwZAS/hWO
+         7/QPzKBIfP2u7234t7cJ0LW12P+YNBswkPG7oy+GkVEfqzhTYlCZORxzKB0lh3Rt0ZJ8
+         PAuuMEUeZHiKoV7f4yS5StTFE2puJ4c41OF7NNOIAJTVOYYCM1XcphO4h+eE7+iGsvG1
+         uvkcux6/W8YnSt4gaOSy028yeFpwFSy4M8ePUorsYCNSDK5drgYRMurAzUjtBih2Eol6
+         k8wA==
+X-Gm-Message-State: AJaThX4Vk/xW2RYbkJec19koSFRY8sx21b71QJNWgfk4YP8i4M815enO
+        TEhePOCV+rb3RL0TUabiuik1IcXyPu4=
+X-Google-Smtp-Source: ABhQp+S4qNjX/58/ZT48lPiWz/myMAtJb+SoAjv8WZGizvlh0PlAEYygT6NlEgDbBYpDFRHANGguUQ==
+X-Received: by 10.28.174.78 with SMTP id x75mr479980wme.27.1509756159988;
+        Fri, 03 Nov 2017 17:42:39 -0700 (PDT)
 Received: from rigel.lan (101.154.108.93.rev.vodafone.pt. [93.108.154.101])
-        by smtp.gmail.com with ESMTPSA id o8sm11956418wrc.10.2017.11.03.17.42.34
+        by smtp.gmail.com with ESMTPSA id o8sm11956418wrc.10.2017.11.03.17.42.38
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 03 Nov 2017 17:42:35 -0700 (PDT)
+        Fri, 03 Nov 2017 17:42:39 -0700 (PDT)
 From:   =?UTF-8?q?Rafael=20Ascens=C3=A3o?= <rafa.almas@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Rafael=20Ascens=C3=A3o?= <rafa.almas@gmail.com>,
         me@ikke.info, gitster@pobox.com, hjemli@gmail.com,
         mhagger@alum.mit.edu, pclouds@gmail.com,
         ilari.liusvaara@elisanet.fi
-Subject: [PATCH v1 0/2] Add option to git log to choose which refs receive decoration
-Date:   Sat,  4 Nov 2017 00:41:42 +0000
-Message-Id: <20171104004144.5975-1-rafa.almas@gmail.com>
+Subject: [PATCH v1 1/2] refs: extract function to normalize partial refs
+Date:   Sat,  4 Nov 2017 00:41:43 +0000
+Message-Id: <20171104004144.5975-2-rafa.almas@gmail.com>
 X-Mailer: git-send-email 2.15.0
+In-Reply-To: <20171104004144.5975-1-rafa.almas@gmail.com>
+References: <20171104004144.5975-1-rafa.almas@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,52 +69,106 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As suggested by Documentation/SubmittingPatches
-Hi, this is my first patch.\n
+`for_each_glob_ref_in` has some code built into it that converts
+partial refs like 'heads/master' to their full qualified form
+'refs/heads/master'. It also assume a trailing '/*' if no glob
+characters are present in the pattern.
 
-I basically stumbled on the same issue mentioned here:
-https://public-inbox.org/git/xmqqzim1pp4m.fsf@gitster.mtv.corp.google.com/
+Extract that logic to its own function which can be reused elsewhere
+where the same behaviour is needed, and add an ENSURE_GLOB flag
+to toggle if a trailing '/*' is to be appended to the result.
 
-This patch implements two new command line options for `git log`:
-`--decorate-refs=<pattern>` and `--decorate-refs-exlcude=<pattern>`
-
-Both options accept a glob pattern which determines what decorations
-commits receive.
-
-At first I considered adding '--trim-decoration', that would filter refs
-based on values passed to '--branches=' '--remotes=' '--tags=' and
-'--exclude='.
-
-After reading the email, I think it's better to have those two
-behaviours decoupled.
-
-I also had plans to add:
-(Not sure if others deserve having their own command)
---decorate-branches=
---decorate-remotes=
---decorate-tags=
-
-But was not sure if a 'niche' function like this is worth 5+ command
-line options. I personally find that those two are enough.
-
+Signed-off-by: Kevin Daudt <me@ikke.info>
+Signed-off-by: Rafael Ascensão <rafa.almas@gmail.com>
 ---
-Rafael Ascensão
+ refs.c | 34 ++++++++++++++++++++--------------
+ refs.h | 16 ++++++++++++++++
+ 2 files changed, 36 insertions(+), 14 deletions(-)
 
-Rafael Ascensão (2):
-  refs: extract function to normalize partial refs
-  log: add option to choose which refs to decorate
-
- Documentation/git-log.txt |  12 ++++++
- builtin/log.c             |  10 ++++-
- log-tree.c                |  37 ++++++++++++++---
- log-tree.h                |   6 ++-
- pretty.c                  |   4 +-
- refs.c                    |  34 +++++++++-------
- refs.h                    |  16 ++++++++
- revision.c                |   2 +-
- t/t4202-log.sh            | 101 ++++++++++++++++++++++++++++++++++++++++++++++
- 9 files changed, 198 insertions(+), 24 deletions(-)
-
+diff --git a/refs.c b/refs.c
+index c590a992f..1e74b48e6 100644
+--- a/refs.c
++++ b/refs.c
+@@ -369,32 +369,38 @@ int head_ref_namespaced(each_ref_fn fn, void *cb_data)
+ 	return ret;
+ }
+ 
+-int for_each_glob_ref_in(each_ref_fn fn, const char *pattern,
+-	const char *prefix, void *cb_data)
++void normalize_glob_ref(struct strbuf *normalized_pattern, const char *prefix,
++		const char *pattern, int flags)
+ {
+-	struct strbuf real_pattern = STRBUF_INIT;
+-	struct ref_filter filter;
+-	int ret;
+-
+ 	if (!prefix && !starts_with(pattern, "refs/"))
+-		strbuf_addstr(&real_pattern, "refs/");
++		strbuf_addstr(normalized_pattern, "refs/");
+ 	else if (prefix)
+-		strbuf_addstr(&real_pattern, prefix);
+-	strbuf_addstr(&real_pattern, pattern);
++		strbuf_addstr(normalized_pattern, prefix);
++	strbuf_addstr(normalized_pattern, pattern);
+ 
+-	if (!has_glob_specials(pattern)) {
++	if (!has_glob_specials(pattern) && (flags & ENSURE_GLOB)) {
+ 		/* Append implied '/' '*' if not present. */
+-		strbuf_complete(&real_pattern, '/');
++		strbuf_complete(normalized_pattern, '/');
+ 		/* No need to check for '*', there is none. */
+-		strbuf_addch(&real_pattern, '*');
++		strbuf_addch(normalized_pattern, '*');
+ 	}
++}
++
++int for_each_glob_ref_in(each_ref_fn fn, const char *pattern,
++	const char *prefix, void *cb_data)
++{
++	struct strbuf normalized_pattern = STRBUF_INIT;
++	struct ref_filter filter;
++	int ret;
++
++	normalize_glob_ref(&normalized_pattern, prefix, pattern, ENSURE_GLOB);
+ 
+-	filter.pattern = real_pattern.buf;
++	filter.pattern = normalized_pattern.buf;
+ 	filter.fn = fn;
+ 	filter.cb_data = cb_data;
+ 	ret = for_each_ref(filter_refs, &filter);
+ 
+-	strbuf_release(&real_pattern);
++	strbuf_release(&normalized_pattern);
+ 	return ret;
+ }
+ 
+diff --git a/refs.h b/refs.h
+index a02b628c8..9f9a8bb27 100644
+--- a/refs.h
++++ b/refs.h
+@@ -312,6 +312,22 @@ int for_each_namespaced_ref(each_ref_fn fn, void *cb_data);
+ int refs_for_each_rawref(struct ref_store *refs, each_ref_fn fn, void *cb_data);
+ int for_each_rawref(each_ref_fn fn, void *cb_data);
+ 
++/*
++ * Normalizes partial refs to their full qualified form.
++ * If prefix is NULL, will prepend 'refs/' to the pattern if it doesn't start
++ * with 'refs/'. Results in refs/<pattern>
++ *
++ * If prefix is not NULL will result in <prefix>/<pattern>
++ *
++ * If ENSURE_GLOB is set and no glob characters are found in the
++ * pattern, a trailing </><*> will be appended to the result.
++ * (<> characters to avoid breaking C comment syntax)
++ */
++
++#define ENSURE_GLOB 1
++void normalize_glob_ref (struct strbuf *normalized_pattern, const char *prefix,
++				const char *pattern, int flags);
++
+ static inline const char *has_glob_specials(const char *pattern)
+ {
+ 	return strpbrk(pattern, "?*[");
 -- 
 2.15.0
 
