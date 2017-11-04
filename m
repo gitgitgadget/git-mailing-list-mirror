@@ -2,144 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8C3C2202A0
-	for <e@80x24.org>; Sat,  4 Nov 2017 18:36:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5C862202A0
+	for <e@80x24.org>; Sat,  4 Nov 2017 19:10:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752626AbdKDSgp (ORCPT <rfc822;e@80x24.org>);
-        Sat, 4 Nov 2017 14:36:45 -0400
-Received: from zucker2.schokokeks.org ([178.63.68.90]:55165 "EHLO
-        zucker2.schokokeks.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752552AbdKDSgp (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Nov 2017 14:36:45 -0400
-Received: from localhost ([::1])
-  (AUTH: PLAIN simon@ruderich.org, TLS: TLSv1/SSLv3,256bits,ECDHE-RSA-AES256-GCM-SHA384)
-  by zucker.schokokeks.org with ESMTPSA; Sat, 04 Nov 2017 19:36:43 +0100
-  id 0000000000000045.0000000059FE08BB.00005F80
-Date:   Sat, 4 Nov 2017 19:36:43 +0100
-From:   Simon Ruderich <simon@ruderich.org>
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>,
-        Git List <git@vger.kernel.org>,
-        Ralf Thielow <ralf.thielow@gmail.com>
-Subject: Re: [PATCH 1/2] sequencer: factor out rewrite_file()
-Message-ID: <20171104183643.akaazwswysphzuoq@ruderich.org>
-References: <6150c80b-cb0e-06d4-63a7-a4f4a9107ab2@web.de>
- <20171101194732.fn4n46wppl35e2z2@sigill.intra.peff.net>
- <alpine.DEB.2.21.1.1711012240500.6482@virtualbox>
- <20171101221618.4ioog7jlp7n2nd53@sigill.intra.peff.net>
- <20171103103248.4p45r4klojk5cf2g@ruderich.org>
- <xmqqpo8zpjdj.fsf@gitster.mtv.corp.google.com>
- <20171103191309.sth4zjokgcupvk2e@sigill.intra.peff.net>
+        id S1751618AbdKDTKl (ORCPT <rfc822;e@80x24.org>);
+        Sat, 4 Nov 2017 15:10:41 -0400
+Received: from smtp-out-2.talktalk.net ([62.24.135.66]:28131 "EHLO
+        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751442AbdKDTKl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Nov 2017 15:10:41 -0400
+Received: from PhilipOakley ([92.29.14.162])
+        by smtp.talktalk.net with SMTP
+        id B3q3efe0g3CyHB3q3ewD9q; Sat, 04 Nov 2017 19:10:39 +0000
+X-Originating-IP: [92.29.14.162]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=Zo+dE5zG c=1 sm=1 tr=0 a=NXc+vVEgz70gitWznrz3ig==:117
+ a=NXc+vVEgz70gitWznrz3ig==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
+ a=eCaPR_ZZXJV7MJ17OSMA:9 a=QEXdDO2ut3YA:10
+Message-ID: <34068C1EF5694EBC8B86E1FF44B134FF@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Robert Dailey" <rcdailey.lists@gmail.com>,
+        "Git" <git@vger.kernel.org>
+References: <CAHd499AsY30b8LuCvjap-mZyzBEVsjK__We6Yh-y=5GqijObhw@mail.gmail.com>
+Subject: Re: How to resolve mixture of modified and deleted conflicts easily in git?
+Date:   Sat, 4 Nov 2017 19:10:33 -0000
+Organization: OPDS
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20171103191309.sth4zjokgcupvk2e@sigill.intra.peff.net>
-User-Agent: NeoMutt/20170609 (1.8.3)
+Content-Type: text/plain;
+        format=flowed;
+        charset="utf-8";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-Antivirus: AVG (VPS 171104-0, 04/11/2017), Outbound message
+X-Antivirus-Status: Clean
+X-CMAE-Envelope: MS4wfAGyuSa4Ib9gS27wAP+8Mby5F8cQRMk6glD3psmxYfVN85Y3An4DKJfl9KPKezIfz6IHpRVxqkKCzWQy4p0uP86jHAJz0ukYMP5Mp77EJPARqL3BscWY
+ 1UvVZa7rpCkimhSCxwTY9GBrmFfZEfutyjZIXM0WGqZkCszz5KLgt3dRaHBZoCLuQlh55nUILvKERB4z/xUIRycE+inVKtjz4DM=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 03, 2017 at 03:13:10PM -0400, Jeff King wrote:
-> I think we've been gravitating towards error strbufs, which would make
-> it something like:
-
-I like this approach to store the error in a separate variable
-and let the caller handle it. This provides proper error messages
-and is cleaner than printing the error on the error site (what
-error_errno does).
-
-However I wouldn't use strbuf directly and instead add a new
-struct error which provides a small set of helper functions.
-Using a separate type also makes it clear to the reader that is
-not a normal string and is more extendable in the future.
-
-> I'm not excited that the amount of error-handling code is now double the
-> amount of code that actually does something useful. Maybe this function
-> simply isn't large/complex enough to merit flexible error handling, and
-> we should simply go with René's original near-duplicate.
-
-A separate struct (and helper functions) would help in this case
-and could look like this, which is almost equal (in code size) to
-the original solution using error_errno:
-
-    int write_file_buf_gently2(const char *path, const char *buf, size_t len, struct error *err)
-    {
-            int rc = 0;
-            int fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0666);
-            if (fd < 0)
-                    return error_addf_errno(err, _("could not open '%s' for writing"), path);
-            if (write_in_full(fd, buf, len) < 0)
-                    rc = error_addf_errno(err, _("could not write to '%s'"), path);
-            if (close(fd) && !rc)
-                    rc = error_addf_errno(err, _("could not close '%s'"), path);
-            return rc;
-    }
-
-(I didn't touch write_in_full here, but it could also take the
-err and then the code would get a little shorter, however would
-lose the "path" information, but see below.)
-
-And in the caller:
-
-    void write_file_buf(const char *path, const char *buf, size_t len)
-    {
-            struct error err = ERROR_INIT;
-            if (write_file_buf_gently2(path, buf, len, &err) < 0)
-                    error_die(&err);
-    }
-
-For now struct error just contains the strbuf, but one could add
-the call location (by using a macro for error_addf_errno) or the
-original errno or more information in the future.
-
-error_addf_errno() could also prepend the error the buffer so
-that the caller can add more information if necessary and we get
-something like: "failed to write file 'foo': write failed: errno
-text" in the write_file_buf case (the first error string is from
-write_file_buf_gently2, the second from write_in_full). However
-I'm not sure how well this works with translations.
-
-We could also store the error condition in the error struct and
-don't use the return value to indicate and error like this:
-
-    void write_file_buf(const char *path, const char *buf, size_t len)
-    {
-            struct error err = ERROR_INIT;
-            write_file_buf_gently2(path, buf, len, &err);
-            if (err.error)
-                    error_die(&err);
-    }
-
-> OTOH, if we went all-in on flexible error handling contexts, you could
-> imagine this function becoming:
+From: "Robert Dailey" <rcdailey.lists@gmail.com>
+> When doing a rebase, sometimes I will get `DU` and `UU` conflicts
+> (locally deleted and locally modified, respectively). Furthermore, in
+> some of these cases, I want to take "ours" for all conflicts,
+> including ones where the local file is deleted. Ideally, it's just one
+> command:
 >
->   void write_file_buf(const char *path, const char *buf, size_t len,
->                       struct error_context *err)
->   {
-> 	int fd = xopen(path, err, O_WRONLY | O_CREAT | O_TRUNC, 0666);
-> 	if (fd < 0)
-> 		return -1;
-> 	if (write_in_full(fd, buf, len, err) < 0)
-> 		return -1;
-> 	if (xclose(fd, err) < 0)
-> 		return -1;
-> 	return 0;
->   }
+>    $ git checkout --ours .
+>
+> However, this fails for the locally deleted conflicts:
+>
+>    error: path 'foo.xml' does not have our version
+>
+> Even more annoyingly, the fact that these failures occur prevents the
+> `UU` conflicts from being resolved. The whole operation fails
+> atomically. I am not aware of a straightforward and uniform way to
+> resolve conflicts with "ours" during a rebase when locally deleted
+> files exist in the list of conflicts. What is the most elegant
+> solution in this situation?
+>
+> I'm running Git for Windows v2.13.1.
 
-This looks interesting as well, but it misses the feature of
-custom error messages which is really useful.
+Can you give the example commands and response?
 
-Regards
-Simon
--- 
-+ privacy is necessary
-+ using gnupg http://gnupg.org
-+ public key id: 0x92FEFDB7E44C32F9
+In particular note the comment in the rebase command that the ours/theirs 
+viewpoints are swapped, so you may find your stated "ours" should be (mid 
+rebase) seen as "theirs".
+--
+Philip 
+
