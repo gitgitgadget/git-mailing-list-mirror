@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6B9AE20281
-	for <e@80x24.org>; Sun,  5 Nov 2017 20:25:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 69F0C20281
+	for <e@80x24.org>; Sun,  5 Nov 2017 20:25:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750933AbdKEUZ2 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 5 Nov 2017 15:25:28 -0500
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:54182 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750857AbdKEUZY (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Nov 2017 15:25:24 -0500
-Received: by mail-wm0-f68.google.com with SMTP id r196so10453685wmf.2
-        for <git@vger.kernel.org>; Sun, 05 Nov 2017 12:25:24 -0800 (PST)
+        id S1750973AbdKEUZb (ORCPT <rfc822;e@80x24.org>);
+        Sun, 5 Nov 2017 15:25:31 -0500
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:55897 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750904AbdKEUZ0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Nov 2017 15:25:26 -0500
+Received: by mail-wm0-f66.google.com with SMTP id y83so10391568wmc.4
+        for <git@vger.kernel.org>; Sun, 05 Nov 2017 12:25:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=tsGGFd4ZIOJefB255n0dIPg/kHHTq7F5pwW7vAGftfQ=;
-        b=IPeXpLQRrYCT4LddLxOeddKKUfEXW5DvTkLnzF6VY1LYzihpfg1IbEisN1FNj5EyAi
-         o7pg4SLGdCB9ShmGv2ljTPRtjibm8WtnlZUU1zB22wfvpyziblyx5qE1UxjsdttOP2H3
-         Auhb5yCLl3dudfbnT3xVOyeHuAYFzL1nZVdyKno4IRBB/zVTuXMfzszoedJK8uvnVPBQ
-         pKT6bFOBJiNdO2nBewnYrbcWiNPNnlaPKn/Pp8m35KdcrxLQbrUczxDTMcya8SSNZyE1
-         1Y3W8oa1rs/c0timL11bnT3I+ZtJXnEn1CT2fBE8ClzpSex+x/E1mHqz6a0yZ62w7uoX
-         JZKg==
+        bh=G6qL1xCjqw+CHwIm+Id48qA8t6oXT52m8PGLx9Q6lDA=;
+        b=UGgtKnzzqaf509EEaXE+BPqtYFVEd2QWYHjyKKv6iRzPeAcWGzoQ2WuZ6BhaZQGeDe
+         40tqvukfsPxRiX+y50JKA9lpEjWr/t+/VWWBi867ShVaTKNgm2aUx3DcSYW3arEG9lG0
+         QyY4Gc0OYSgkPvvk5wXqxQge1BkR+ax6e0CjGT/8dGg+uy/2S/MJ7EbpQq2LY0CZcj6E
+         4GJnvnzLMnq/0tq1mP2FmsnGccd3WMnV9h0vqJjOjoW85g6Nl3c28AQ614qgEznmWrEK
+         tFwTsLTApNyu7RcBz9wz3Yom4Mh8Ste6WmApevbIQRkzEMZqpjjUbs5VCmikCV/WAiLI
+         rGVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=tsGGFd4ZIOJefB255n0dIPg/kHHTq7F5pwW7vAGftfQ=;
-        b=FciDWOF2cKeHyF45x0n5C90ltC2RPsZ1jiRx1Jk+uTtYjqfyFmhaTzix5fd6nNKo/q
-         U+e3x4XF6UIPckprWFrdR+PtJA518zwK+pwi7R26NA1IsWivbidssyQFxEcxssYjFOZ0
-         /IsATyH8OdRrO72Wlv2Xt0A0hf8hJY9HU3dKfNqtfLeYJjn+yb9iqBpGF428Kld4GXvK
-         LCOzUKGpHxzVKvcxAgTALHX1U9XDY+BLkNRGb5FWAM7xb1uIiczA0jv2stdHQ9gohaWm
-         QXQs0nEi5dvypNfUMox/QZAS+FX+VdY67k7FeIYTTnsoh4wQgAzgXSAMOWgjeNgRiuZk
-         O0Cw==
-X-Gm-Message-State: AJaThX5fNhRSM7vS0nmRfmnEYT7MbriAiefWS3d0xFskyVuB0yrI01Pn
-        5K2uCQED0Ph8BZCa5iinb0h4JHyR
-X-Google-Smtp-Source: ABhQp+QSUr1we9CyuXUuFGhnDpWPm1NyJsAocruritV60JhdET3eo7lYIqioGUgPzk+974iXZBMAMw==
-X-Received: by 10.28.151.137 with SMTP id z131mr4093702wmd.153.1509913523305;
-        Sun, 05 Nov 2017 12:25:23 -0800 (PST)
+        bh=G6qL1xCjqw+CHwIm+Id48qA8t6oXT52m8PGLx9Q6lDA=;
+        b=VgPwhrb+pEemhF5UVorvy6OTkLUmv6uDSUfEAeCY6PkcTYM8j5ztiFYjAdfUX7YZFL
+         vNOgZJPAm8lbiRjHY7XJF5TCRgWtUqAvEWYN9QMf50p+B08kAvHxpc2SLUspj9xPvmb3
+         DmVyR1f7EPqowSBfAIyDkoU+6wletRYSsZgtv9JPr05P/mNh6h4ehVZgm/zIzR7U3HEC
+         MXSWlKf3GWFqJ8QfM95j/7DY3Fq48gBs0IUjAtg7vgxTtE0cl/xolP2z8ZkVAIevS9lx
+         jRiREqaKvqjHbZR2SHV8aZYr+YkxNObATtC5j8L4OMquBKz+jQP5OvQZtdiLVwWP4uRy
+         toUA==
+X-Gm-Message-State: AJaThX4pZJ2eJiMZfc96EQut02pOaiQApHPAQSpuBWnUEM7zz0u+1n8+
+        h/PmajQRVq+4jipoHPrLSMd8vDKj
+X-Google-Smtp-Source: ABhQp+SATj/08wbOApTNH+GxV18z7BPJigaGVnG4lMOb61RJlRcInswf6e/H36yF6npXZttMLxndRg==
+X-Received: by 10.28.216.5 with SMTP id p5mr4105789wmg.155.1509913525249;
+        Sun, 05 Nov 2017 12:25:25 -0800 (PST)
 Received: from localhost.localdomain ([2a02:aa16:5782:c100:c938:fbb7:46f8:2405])
-        by smtp.gmail.com with ESMTPSA id 71sm12917543wmg.0.2017.11.05.12.25.22
+        by smtp.gmail.com with ESMTPSA id 71sm12917543wmg.0.2017.11.05.12.25.24
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 05 Nov 2017 12:25:22 -0800 (PST)
+        Sun, 05 Nov 2017 12:25:24 -0800 (PST)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v2 3/4] bisect: fix off-by-one error in `best_bisection_sorted()`
-Date:   Sun,  5 Nov 2017 21:24:30 +0100
-Message-Id: <9e49e4ada1d1ede05b74c63b6e09c8891eba55d5.1509906092.git.martin.agren@gmail.com>
+Subject: [PATCH v2 4/4] bisect: fix memory leak when returning best element
+Date:   Sun,  5 Nov 2017 21:24:31 +0100
+Message-Id: <106187fd063f3eb21ec979d8a59f662d77c4b2f4.1509906092.git.martin.agren@gmail.com>
 X-Mailer: git-send-email 2.15.0.415.gac1375d7e
 In-Reply-To: <cover.1509906092.git.martin.agren@gmail.com>
 References: <CAN0heSoBeG_8zLwS-71_ZVBF-HsVGKY1W1QiTSQ_ybwWCPauog@mail.gmail.com> <cover.1509906092.git.martin.agren@gmail.com>
@@ -67,47 +67,34 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-After we have sorted the `cnt`-many commits that we have selected, we
-place them into the commit list. We then set `p->next` to NULL, but as
-we do so, `p` is already pointing one beyond item number `cnt`. Indeed,
-we check whether `p` is NULL before dereferencing it.
-
-This only matters if there are TREESAME-commits. Since they should be
-skipped, they are not included in `cnt` and we will hit the situation
-where we set `p->next` to NULL. As a result, the list will be one longer
-than it should be. The last commit in the list will be one which occurs
-earlier, or which shouldn't be included.
-
-Do not update `p` the very last round in the loop. This ensures that
-after the loop, `p->next` points to the remainder of the list, and we
-can set it to NULL. While we're here, free that remainder to fix a
-memory leak.
+When `find_bisection()` returns a single list entry, it leaks the other
+entries. Move the to-be-returned item to the front and free the
+remainder.
 
 Signed-off-by: Martin Ågren <martin.agren@gmail.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- bisect.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ bisect.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/bisect.c b/bisect.c
-index 2f4321767..b1941505b 100644
+index b1941505b..3756f127b 100644
 --- a/bisect.c
 +++ b/bisect.c
-@@ -226,10 +226,11 @@ static struct commit_list *best_bisection_sorted(struct commit_list *list, int n
- 		add_name_decoration(DECORATION_NONE, buf.buf, obj);
- 
- 		p->item = array[i].commit;
--		p = p->next;
-+		if (i < cnt - 1)
-+			p = p->next;
+@@ -399,8 +399,12 @@ void find_bisection(struct commit_list **commit_list, int *reaches,
+ 	/* Do the real work of finding bisection commit. */
+ 	best = do_find_bisection(list, nr, weights, find_all);
+ 	if (best) {
+-		if (!find_all)
++		if (!find_all) {
++			list->item = best->item;
++			free_commit_list(list->next);
++			best = list;
+ 			best->next = NULL;
++		}
+ 		*reaches = weight(best);
  	}
--	if (p)
--		p->next = NULL;
-+	free_commit_list(p->next);
-+	p->next = NULL;
- 	strbuf_release(&buf);
- 	free(array);
- 	return list;
+ 	free(weights);
 -- 
 2.15.0.415.gac1375d7e
 
