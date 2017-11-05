@@ -6,140 +6,105 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CBC0E2055E
-	for <e@80x24.org>; Sun,  5 Nov 2017 08:42:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 197332055E
+	for <e@80x24.org>; Sun,  5 Nov 2017 08:42:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752744AbdKEImb (ORCPT <rfc822;e@80x24.org>);
-        Sun, 5 Nov 2017 03:42:31 -0500
-Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:56864 "EHLO
-        alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752732AbdKEIm3 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 5 Nov 2017 03:42:29 -0500
-X-AuditID: 12074413-38bff70000007929-11-59fecef2126d
+        id S1752768AbdKEImd (ORCPT <rfc822;e@80x24.org>);
+        Sun, 5 Nov 2017 03:42:33 -0500
+Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:49011 "EHLO
+        alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752410AbdKEIma (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 5 Nov 2017 03:42:30 -0500
+X-AuditID: 1207440c-7e5ff7000000143e-79-59fecef4c55d
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
         (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
         (Client did not present a certificate)
-        by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 9E.71.31017.2FECEF95; Sun,  5 Nov 2017 03:42:26 -0500 (EST)
+        by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 93.48.05182.4FECEF95; Sun,  5 Nov 2017 03:42:29 -0500 (EST)
 Received: from bagpipes.fritz.box (p4FC6E019.dip0.t-ipconnect.de [79.198.224.25])
         (authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id vA58gCCw018723
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id vA58gCCx018723
         (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-        Sun, 5 Nov 2017 03:42:25 -0500
+        Sun, 5 Nov 2017 03:42:26 -0500
 From:   Michael Haggerty <mhagger@alum.mit.edu>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org,
         Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 7/9] refs: rename constant `REF_ISPRUNING` to `REF_IS_PRUNING`
-Date:   Sun,  5 Nov 2017 09:42:07 +0100
-Message-Id: <1b94c9a3897c0f1ff7d55272942ec85f948a3109.1509870243.git.mhagger@alum.mit.edu>
+Subject: [PATCH v2 8/9] write_packed_entry(): take `object_id` arguments
+Date:   Sun,  5 Nov 2017 09:42:08 +0100
+Message-Id: <e397d73256373c319ff79b16ef5fb4a4813d8ff9.1509870243.git.mhagger@alum.mit.edu>
 X-Mailer: git-send-email 2.14.1
 In-Reply-To: <cover.1509870243.git.mhagger@alum.mit.edu>
 References: <cover.1509870243.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrMIsWRmVeSWpSXmKPExsUixO6iqPvp3L9Ig7mvtSy6rnQzWTT0XmG2
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrOIsWRmVeSWpSXmKPExsUixO6iqPv13L9Ig7U7ZCy6rnQzWTT0XmG2
         +Pumi9Hi9or5zBZn3jQyOrB6/H3/gclj56y77B4XLyl7LH7g5fF5k1wAaxSXTUpqTmZZapG+
-        XQJXxvWbOxkLWqUrWnp2sjcwXhXtYuTkkBAwkWjaNo2ti5GLQ0hgB5NES98EFgjnBJPE1mez
-        2EGq2AR0JRb1NDOB2CICahIT2w6BFTELbGWU+NvdzAySEBYIlPg14ypYA4uAqsSSvvUsIDav
-        QJTEzC23mCDWyUuce3AbrJ5TwELiz8d5bCC2kIC5xKdPO1knMPIsYGRYxSiXmFOaq5ubmJlT
-        nJqsW5ycmJeXWqRrrpebWaKXmlK6iRESOsI7GHedlDvEKMDBqMTDe8LjX6QQa2JZcWXuIUZJ
-        DiYlUd4rL/9ECvEl5adUZiQWZ8QXleakFh9ilOBgVhLhDVoMVM6bklhZlVqUD5OS5mBREudV
-        W6LuJySQnliSmp2aWpBaBJPV4OAQuLukdwOjFEtefl6qkgSvADB2hASLUtNTK9Iyc0oQSpk4
-        OEEW8QAtigKp4S0uSMwtzkyHyJ9iNOZ4NvN1AzPHtKutTcxCYOOkxHndQEoFQEozSvPgpsHS
-        witGcaBHhXmnnQWq4gGmFLh5r4BWMQGtms3xB2RVSSJCSqqBMeH0sasLnreY5l7wdLdOlpLa
-        Z3lVZfr8/4tDJJOuR2l65U9ewFj9a8K225p+y59+VM2SmLMgZmK4zKzt91aan8zsrBURMqle
-        pnlATGOm9M+8p3Mm/rVbZjl1rrfnh+NOorLrppp/XzfRaKnHstMy2mfzuERuSQTErdnEcFMg
-        Pt1e8aDzqoNeBUosxRmJhlrMRcWJAFno/GnmAgAA
+        XQJXxv2+i+wF+/gqpl04z97A+Jeri5GTQ0LAROL7uaPMXYxcHEICO5gk2vbsZ4NwTjBJbLrw
+        hhWkik1AV2JRTzMTiC0ioCYxse0QC0gRs8BWRom/3c3MIAlhAQ+JZfPvgtksAqoSOw5cZAGx
+        eQWiJA5c2soIsU5e4tyD22A1nAIWEn8+zmMDsYUEzCU+fdrJOoGRZwEjwypGucSc0lzd3MTM
+        nOLUZN3i5MS8vNQiXUO93MwSvdSU0k2MkNDh2cH4bZ3MIUYBDkYlHt4THv8ihVgTy4orcw8x
+        SnIwKYnyXnn5J1KILyk/pTIjsTgjvqg0J7X4EKMEB7OSCG/QYqBy3pTEyqrUonyYlDQHi5I4
+        r+oSdT8hgfTEktTs1NSC1CKYrAwHh5IE77WzQI2CRanpqRVpmTklCGkmDk6Q4TxAwx+D1PAW
+        FyTmFmemQ+RPMRpzPJv5uoGZY9rV1iZmIZa8/LxUKXHeYyClAiClGaV5cNNg8f+KURzoOWFe
+        eWAyEOIBpg64ea+AVjEBrZrN8QdkVUkiQkqqgbF0zhz+zIiehnPfrq89sSXpWP3O3eKKBcL1
+        /hxRzocka53/vP6X9F0hrOzbBLFPhUra/PHFbLFZps+f87B6frWftyH2l6b2xl82TbKnUpMO
+        X37hH/E2ZmXNQ1khYcuV5g68AvWuB3gM+QJ/3pF3sOPfVHqVQfNyfMOFiJ9TJOTDJ77suat5
+        QomlOCPRUIu5qDgRAKFv0ZjaAgAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Underscores are cheap, and help readability.
+Change `write_packed_entry()` to take `struct object_id *` rather than
+`unsigned char *` arguments.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs/files-backend.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ refs/packed-backend.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 71e088e811..bb10b715a8 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -14,7 +14,7 @@
-  * This backend uses the following flags in `ref_update::flags` for
-  * internal bookkeeping purposes. Their numerical values must not
-  * conflict with REF_NO_DEREF, REF_FORCE_CREATE_REFLOG, REF_HAVE_NEW,
-- * REF_HAVE_OLD, or REF_ISPRUNING, which are also stored in
-+ * REF_HAVE_OLD, or REF_IS_PRUNING, which are also stored in
-  * `ref_update::flags`.
+diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+index 74f1dea0f4..43ad74fc5a 100644
+--- a/refs/packed-backend.c
++++ b/refs/packed-backend.c
+@@ -961,11 +961,11 @@ static struct ref_iterator *packed_ref_iterator_begin(
+  * by the failing call to `fprintf()`.
   */
+ static int write_packed_entry(FILE *fh, const char *refname,
+-			      const unsigned char *sha1,
+-			      const unsigned char *peeled)
++			      const struct object_id *oid,
++			      const struct object_id *peeled)
+ {
+-	if (fprintf(fh, "%s %s\n", sha1_to_hex(sha1), refname) < 0 ||
+-	    (peeled && fprintf(fh, "^%s\n", sha1_to_hex(peeled)) < 0))
++	if (fprintf(fh, "%s %s\n", oid_to_hex(oid), refname) < 0 ||
++	    (peeled && fprintf(fh, "^%s\n", oid_to_hex(peeled)) < 0))
+ 		return -1;
  
-@@ -22,7 +22,7 @@
-  * Used as a flag in ref_update::flags when a loose ref is being
-  * pruned. This flag must only be used when REF_NO_DEREF is set.
-  */
--#define REF_ISPRUNING (1 << 4)
-+#define REF_IS_PRUNING (1 << 4)
+ 	return 0;
+@@ -1203,8 +1203,8 @@ static int write_with_updates(struct packed_ref_store *refs,
+ 			int peel_error = ref_iterator_peel(iter, &peeled);
  
- /*
-  * Flag passed to lock_ref_sha1_basic() telling it to tolerate broken
-@@ -1044,7 +1044,7 @@ static void prune_ref(struct files_ref_store *refs, struct ref_to_prune *r)
- 		goto cleanup;
- 	ref_transaction_add_update(
- 			transaction, r->name,
--			REF_NO_DEREF | REF_HAVE_NEW | REF_HAVE_OLD | REF_ISPRUNING,
-+			REF_NO_DEREF | REF_HAVE_NEW | REF_HAVE_OLD | REF_IS_PRUNING,
- 			&null_oid, &r->oid, NULL);
- 	if (ref_transaction_commit(transaction, &err))
- 		goto cleanup;
-@@ -2177,7 +2177,7 @@ static int split_head_update(struct ref_update *update,
- 	struct ref_update *new_update;
+ 			if (write_packed_entry(out, iter->refname,
+-					       iter->oid->hash,
+-					       peel_error ? NULL : peeled.hash))
++					       iter->oid,
++					       peel_error ? NULL : &peeled))
+ 				goto write_error;
  
- 	if ((update->flags & REF_LOG_ONLY) ||
--	    (update->flags & REF_ISPRUNING) ||
-+	    (update->flags & REF_IS_PRUNING) ||
- 	    (update->flags & REF_UPDATE_VIA_HEAD))
- 		return 0;
+ 			if ((ok = ref_iterator_advance(iter)) != ITER_OK)
+@@ -1224,8 +1224,8 @@ static int write_with_updates(struct packed_ref_store *refs,
+ 						     &peeled);
  
-@@ -2564,16 +2564,16 @@ static int files_transaction_prepare(struct ref_store *ref_store,
- 	 * split_symref_update() or split_head_update(), those
- 	 * functions will check that the new updates don't have the
- 	 * same refname as any existing ones.) Also fail if any of the
--	 * updates use REF_ISPRUNING without REF_NO_DEREF.
-+	 * updates use REF_IS_PRUNING without REF_NO_DEREF.
- 	 */
- 	for (i = 0; i < transaction->nr; i++) {
- 		struct ref_update *update = transaction->updates[i];
- 		struct string_list_item *item =
- 			string_list_append(&affected_refnames, update->refname);
+ 			if (write_packed_entry(out, update->refname,
+-					       update->new_oid.hash,
+-					       peel_error ? NULL : peeled.hash))
++					       &update->new_oid,
++					       peel_error ? NULL : &peeled))
+ 				goto write_error;
  
--		if ((update->flags & REF_ISPRUNING) &&
-+		if ((update->flags & REF_IS_PRUNING) &&
- 		    !(update->flags & REF_NO_DEREF))
--			BUG("REF_ISPRUNING set without REF_NO_DEREF");
-+			BUG("REF_IS_PRUNING set without REF_NO_DEREF");
- 
- 		/*
- 		 * We store a pointer to update in item->util, but at
-@@ -2632,7 +2632,7 @@ static int files_transaction_prepare(struct ref_store *ref_store,
- 
- 		if (update->flags & REF_DELETING &&
- 		    !(update->flags & REF_LOG_ONLY) &&
--		    !(update->flags & REF_ISPRUNING)) {
-+		    !(update->flags & REF_IS_PRUNING)) {
- 			/*
- 			 * This reference has to be deleted from
- 			 * packed-refs if it exists there.
-@@ -2749,7 +2749,7 @@ static int files_transaction_finish(struct ref_store *ref_store,
- 		struct ref_update *update = transaction->updates[i];
- 		if (update->flags & REF_DELETING &&
- 		    !(update->flags & REF_LOG_ONLY) &&
--		    !(update->flags & REF_ISPRUNING)) {
-+		    !(update->flags & REF_IS_PRUNING)) {
- 			strbuf_reset(&sb);
- 			files_reflog_path(refs, &sb, update->refname);
- 			if (!unlink_or_warn(sb.buf))
+ 			i++;
 -- 
 2.14.1
 
