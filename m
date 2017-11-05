@@ -2,114 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 27EAE20450
-	for <e@80x24.org>; Sun,  5 Nov 2017 07:31:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5BDB32055E
+	for <e@80x24.org>; Sun,  5 Nov 2017 08:42:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752133AbdKEHa6 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 5 Nov 2017 02:30:58 -0500
-Received: from mail-vk0-f44.google.com ([209.85.213.44]:44117 "EHLO
-        mail-vk0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751917AbdKEHa5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Nov 2017 02:30:57 -0500
-Received: by mail-vk0-f44.google.com with SMTP id x65so4066089vkx.1
-        for <git@vger.kernel.org>; Sun, 05 Nov 2017 00:30:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Fxi7DDzlVrD4n8xN6CLK7utcXS3jTH08JNFDMf1dmIY=;
-        b=O8KZJhKF3mG1xw98GrbJXUEQPrngPiTtR63n8xH7V1r2j98wdGDPFiW+E7u0RVsGcD
-         wXR9JDGGAm5wohAUTCJ2lVQjqEpu5CeWYwaccBhwlNVaMIzN7gZ70OfckOYq3Taik+mB
-         aZ+5UXL7D3hKNVbI1tFCWldetZ5eShY+m71fmXuvN/28aehrsaQ7QvA8rS1fQY2dw22Q
-         9VYCkgvwHxVLYxkdUD4vwKGK+AwGcksFZ7V/5Lh6gz3zQUcfNq7L59Ao3spcmmi+MXHK
-         8BltRO3ZqB5vceyZkKb8N3guyZCBlke4oE7i/WFIX+c37nqbo+GnWxBZgs6LdOU4yS0F
-         NKCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Fxi7DDzlVrD4n8xN6CLK7utcXS3jTH08JNFDMf1dmIY=;
-        b=Cdv0j/O2U6ASbIYq3Fn1qCekLBZ7mcsrZ3iCVq8yMY7f7XPp2S7et+0I5JyCC84DxX
-         VbMUr80WuI7LizCuqtHOa7wY9fkAqbp7J3qZMGX0XHkLFFowdzYDQf7w1HrM0MWN1HWm
-         t4Kq35/R1Yf42ad48gnf/hX0oAysOuKENZMj54Fs5fqu8tCHMKKlXPTjiGvojuHUsY/2
-         9X0uj4++XOGTxcXgcDbqdSunonBiDegvvKxsBb6ISMF7ssY7LCY2e73C3It3hUvlkCBW
-         ahOiikzFbQZLAWi4SDSN3ku2mf6VTFmAezAf2IDeW574tUIL10wOkYcIyw9U58sgSqXI
-         BzVw==
-X-Gm-Message-State: AMCzsaVM2RmIwNqWz7kZ5hnY/u60ebLJQ7B1pIW58SzCkbEbjXxf+cZK
-        t878OA/G/k8ay/YFoGSRfWaIsPDu+alEVnTxMV8=
-X-Google-Smtp-Source: ABhQp+QXE2bAq6a0zk8cHScuJ+7VaZI+n1P/wXeuPBeQZOm0qOjRsv+b0WB245m2YUhwvto0E0yeUgxaZkKiiXAy4mw=
-X-Received: by 10.31.16.35 with SMTP id g35mr9460468vki.131.1509867056951;
- Sun, 05 Nov 2017 00:30:56 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.159.56.100 with HTTP; Sun, 5 Nov 2017 00:30:56 -0700 (PDT)
-In-Reply-To: <CAGHpTB+23H=iC_uv0K=GajnCBHSVRsUYgGFUn9-bAdcX=azL-w@mail.gmail.com>
-References: <CAGHpTBJTm=3f_VCnNLeE=V4CwvC6dM8qCmGRPDap6rszcpb65A@mail.gmail.com>
- <alpine.DEB.2.21.1.1711031658190.6482@virtualbox> <alpine.DEB.2.21.1.1711031711530.6482@virtualbox>
- <CAGHpTB+23H=iC_uv0K=GajnCBHSVRsUYgGFUn9-bAdcX=azL-w@mail.gmail.com>
-From:   Orgad Shaneh <orgads@gmail.com>
-Date:   Sun, 5 Nov 2017 09:30:56 +0200
-Message-ID: <CAGHpTBJFR2Y+Sg-xQzBpC6qu+NKPDSYyMwSe9Py9FtD2-bRAXg@mail.gmail.com>
-Subject: Re: Regression[2.14.3->2.15]: Interactive rebase fails if submodule
- is modified
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        id S1752733AbdKEIm2 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 5 Nov 2017 03:42:28 -0500
+Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:48125 "EHLO
+        alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752367AbdKEImV (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 5 Nov 2017 03:42:21 -0500
+X-AuditID: 12074411-f7dff70000007f0a-ea-59fecee74c1e
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id A7.40.32522.7EECEF95; Sun,  5 Nov 2017 03:42:15 -0500 (EST)
+Received: from bagpipes.fritz.box (p4FC6E019.dip0.t-ipconnect.de [79.198.224.25])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id vA58gCCp018723
+        (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+        Sun, 5 Nov 2017 03:42:14 -0500
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org,
+        Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH v2 0/9] Tidy up the constants related to ref_update::flags
+Date:   Sun,  5 Nov 2017 09:42:00 +0100
+Message-Id: <cover.1509870243.git.mhagger@alum.mit.edu>
+X-Mailer: git-send-email 2.14.1
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrPIsWRmVeSWpSXmKPExsUixO6iqPv83L9Ig0OPrS26rnQzWTT0XmG2
+        +Pumi9Hi9or5zBZn3jQyOrB6/H3/gclj56y77B4XLyl7LH7g5fF5k1wAaxSXTUpqTmZZapG+
+        XQJXxtc/fawFb/krPp5oZmlgnMPTxcjJISFgInHj4k72LkYuDiGBHUwSM35/Y4NwTjBJ9Lxa
+        xAxSxSagK7Gop5kJxBYRUJOY2HaIBaSIWWAro8Tf7mawImEBL4lvn5+D2SwCqhL3z/cygti8
+        AuYSC69fZIJYJy9x7sFt5gmMXAsYGVYxyiXmlObq5iZm5hSnJusWJyfm5aUW6Zrq5WaW6KWm
+        lG5ihISC4A7GGSflDjEKcDAq8fCe8PgXKcSaWFZcmXuIUZKDSUmU98rLP5FCfEn5KZUZicUZ
+        8UWlOanFhxglOJiVRHiDFgOV86YkVlalFuXDpKQ5WJTEefmWqPsJCaQnlqRmp6YWpBbBZGU4
+        OJQkeK+dBWoULEpNT61Iy8wpQUgzcXCCDOcBGv4YpIa3uCAxtzgzHSJ/itGY49nM1w3MHNOu
+        tjYxC7Hk5eelSonzHgMpFQApzSjNg5sGi+dXjOJAzwnzygOjW4gHmArg5r0CWsUEtGo2xx+Q
+        VSWJCCmpBsbtbVu94qZtf1f4ylJ6SfqEWF+L74c0jv39rsFT/pJLTkPh1uuLh94u2+qgpeY8
+        fZrXkU1pc1d+4Hj+vzP3YMi75wtWn3B8oyCwRfzezeMdL05/3rtcdI7O94BDfFfuutauuymR
+        9OjKnKBJ/X3/JoUfKp+lr7sn40fXyqhVy8XYU54oFDg+/JgcqMRSnJFoqMVcVJwIAAdHI1bC
+        AgAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Nov 4, 2017 at 8:04 PM, Orgad Shaneh <orgads@gmail.com> wrote:
-> On Fri, Nov 3, 2017 at 6:20 PM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
->> Hi Orgad,
->>
->> On Fri, 3 Nov 2017, Johannes Schindelin wrote:
->>
->>> On Thu, 2 Nov 2017, Orgad Shaneh wrote:
->>>
->>> > I can't reproduce this with a minimal example, but it happens in my project.
->>
->> Whoa, I somehow overlooked the "can't". Sorry.
->>
->> I inserted a `git diff-files` here, and it printed exactly what I
->> expected:
->>
->> ++ git diff-files
->> :160000 160000 62cab94c8d8cf047bbb60c12def559339300efa4 0000000000000000000000000000000000000000 M      sub
->>
->>> +             git rebase -i HEAD^^
->>> +     )
->>> +'
->>
->> There must be something else going wrong that we did not replicate here.
->> Maybe the `error: cannot rebase: You have unstaged changes.` message was
->> caused not by a change in the submodule? Could you run `git diff-files`
->> before the rebase?
->
-> It's the same before and during the rebase:
-> $ git diff-files
-> :160000 160000 c840225a7cf6bb2ec64da9d35d2c29210bc5e5e8
-> 0000000000000000000000000000000000000000 M      sub
->
->
->>
->> This does *not* refresh the index, but maybe that is what is going wrong;
->> you could call `git update-index --refresh` before the rebase and see
->> whether that works around the issue?
->
-> Nope.
->
-> If I run git submodule update, then rebase --continue works fine, so
-> it's definitely somehow caused by the submodule.
+This is a reroll of a patch series that tidies up some stuff around
+the ref_update::flags constants. Thanks to Junio and Martin for their
+comments about v1 [1].
 
-I just checked out v2.15.0.windows.1 and reverted ff6f1f564c - it
-solves the problem. I still have no idea how to minimally reproduce
-(in my project it's easily reproducible) :)
+Relative to v1, this version:
 
-- Orgad
+* In patch 5, cleans up the touched comments to refer to OIDs rather
+  than SHA-1s.
+
+* Adds a patch 8, which changes `write_packed_entry()` to take
+  `object_id` arguments.
+
+* Adds a patch 9, which cleans up some remaining comments across all
+  of the refs-related files to refer to OIDs rather than SHA-1s.
+
+This patch series depends on bc/object-id. The patches are also
+available from my GitHub fork as branch `tidy-ref-update-flags` [2].
+
+Michael
+
+[1] https://public-inbox.org/git/cover.1509183413.git.mhagger@alum.mit.edu/
+[2] https://github.com/mhagger/git
+
+Michael Haggerty (9):
+  files_transaction_prepare(): don't leak flags to packed transaction
+  prune_ref(): call `ref_transaction_add_update()` directly
+  ref_transaction_update(): die on disallowed flags
+  ref_transaction_add_update(): remove a check
+  refs: tidy up and adjust visibility of the `ref_update` flags
+  refs: rename constant `REF_NODEREF` to `REF_NO_DEREF`
+  refs: rename constant `REF_ISPRUNING` to `REF_IS_PRUNING`
+  write_packed_entry(): take `object_id` arguments
+  refs: update some more docs to use "oid" rather than "sha1"
+
+ builtin/am.c           |   2 +-
+ builtin/branch.c       |   2 +-
+ builtin/checkout.c     |   2 +-
+ builtin/clone.c        |   4 +-
+ builtin/notes.c        |   2 +-
+ builtin/remote.c       |   6 +--
+ builtin/symbolic-ref.c |   2 +-
+ builtin/update-ref.c   |   4 +-
+ refs.c                 |   8 ++-
+ refs.h                 |  77 ++++++++++++++++-------------
+ refs/files-backend.c   | 132 +++++++++++++++++++++++++++++++++++--------------
+ refs/packed-backend.c  |  18 +++----
+ refs/ref-cache.c       |   4 +-
+ refs/refs-internal.h   |  81 +++++++++---------------------
+ sequencer.c            |   6 +--
+ 15 files changed, 188 insertions(+), 162 deletions(-)
+
+-- 
+2.14.1
+
