@@ -7,58 +7,57 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 69F0C20281
-	for <e@80x24.org>; Sun,  5 Nov 2017 20:25:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 259B720281
+	for <e@80x24.org>; Sun,  5 Nov 2017 20:26:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750973AbdKEUZb (ORCPT <rfc822;e@80x24.org>);
-        Sun, 5 Nov 2017 15:25:31 -0500
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:55897 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750904AbdKEUZ0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Nov 2017 15:25:26 -0500
-Received: by mail-wm0-f66.google.com with SMTP id y83so10391568wmc.4
-        for <git@vger.kernel.org>; Sun, 05 Nov 2017 12:25:26 -0800 (PST)
+        id S1751041AbdKEU0v (ORCPT <rfc822;e@80x24.org>);
+        Sun, 5 Nov 2017 15:26:51 -0500
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:52474 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751007AbdKEU0u (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Nov 2017 15:26:50 -0500
+Received: by mail-wr0-f194.google.com with SMTP id j23so2591496wra.9
+        for <git@vger.kernel.org>; Sun, 05 Nov 2017 12:26:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=G6qL1xCjqw+CHwIm+Id48qA8t6oXT52m8PGLx9Q6lDA=;
-        b=UGgtKnzzqaf509EEaXE+BPqtYFVEd2QWYHjyKKv6iRzPeAcWGzoQ2WuZ6BhaZQGeDe
-         40tqvukfsPxRiX+y50JKA9lpEjWr/t+/VWWBi867ShVaTKNgm2aUx3DcSYW3arEG9lG0
-         QyY4Gc0OYSgkPvvk5wXqxQge1BkR+ax6e0CjGT/8dGg+uy/2S/MJ7EbpQq2LY0CZcj6E
-         4GJnvnzLMnq/0tq1mP2FmsnGccd3WMnV9h0vqJjOjoW85g6Nl3c28AQ614qgEznmWrEK
-         tFwTsLTApNyu7RcBz9wz3Yom4Mh8Ste6WmApevbIQRkzEMZqpjjUbs5VCmikCV/WAiLI
-         rGVA==
+        bh=KdWil0Mw5jNbof/JQSgIuuFkPZpBKIOt8//xKlQ7b6o=;
+        b=PEf6Dom3zfObgfVDtFr4UsRKVKp1eSs53+gP/32GJQVmlIr7pw7Be4cRBDsPeeJXml
+         SwAVrHOVc8hQrP1knaPgKOtixO9kxfdTe/6e2hl1qaBwlmoBI2+7q9GZCzlNhDweY1jD
+         u+PfWtIj7Udmhu+DuShT5jUXNEePZhEENokobIGc9cuP4ZnX7PIiGmnvf9ttTsXeszDt
+         QAFlSkdlTPbzUmXe8D+2LftctZx0vKNZrP50vTlmEHBzHX2tYjzhuSmj0mwRyc+sANbg
+         /PQt7WCIVtbF1/CFwVfbubGu4l+o4/OwU9qR3UVZBtDL/l6dfk+HDCxJzdUxGMRDGF9P
+         rfeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=G6qL1xCjqw+CHwIm+Id48qA8t6oXT52m8PGLx9Q6lDA=;
-        b=VgPwhrb+pEemhF5UVorvy6OTkLUmv6uDSUfEAeCY6PkcTYM8j5ztiFYjAdfUX7YZFL
-         vNOgZJPAm8lbiRjHY7XJF5TCRgWtUqAvEWYN9QMf50p+B08kAvHxpc2SLUspj9xPvmb3
-         DmVyR1f7EPqowSBfAIyDkoU+6wletRYSsZgtv9JPr05P/mNh6h4ehVZgm/zIzR7U3HEC
-         MXSWlKf3GWFqJ8QfM95j/7DY3Fq48gBs0IUjAtg7vgxTtE0cl/xolP2z8ZkVAIevS9lx
-         jRiREqaKvqjHbZR2SHV8aZYr+YkxNObATtC5j8L4OMquBKz+jQP5OvQZtdiLVwWP4uRy
-         toUA==
-X-Gm-Message-State: AJaThX4pZJ2eJiMZfc96EQut02pOaiQApHPAQSpuBWnUEM7zz0u+1n8+
-        h/PmajQRVq+4jipoHPrLSMd8vDKj
-X-Google-Smtp-Source: ABhQp+SATj/08wbOApTNH+GxV18z7BPJigaGVnG4lMOb61RJlRcInswf6e/H36yF6npXZttMLxndRg==
-X-Received: by 10.28.216.5 with SMTP id p5mr4105789wmg.155.1509913525249;
-        Sun, 05 Nov 2017 12:25:25 -0800 (PST)
+        bh=KdWil0Mw5jNbof/JQSgIuuFkPZpBKIOt8//xKlQ7b6o=;
+        b=kzsqWLoi+OU657fFTIdO1ydg4aTUDzWF6UmEOVKI4L6itXgaG33N7dWpwMpNR7oz2p
+         doEPn3YyJZdvuUqDkWvKYz2jlSuG/DBMazMi/4wozQQi0L5uq8ZWJ9QawyQrjPWRJi3Y
+         qVvEnpsDkFXP2AwzlH0AIzGWe5vZLGtt8ZWDQrlje8z3w5LXo3gQ9rbgSTHWPhFXol/Z
+         6d4aAx/+dtC4TU8FNyxx2C+5zrKdVrCsg+3eKoYSG/QFu3vfetDoEEckPiOMDBypfkdF
+         CGQmGiLx0BF1fANZCXsljnG1JY56TRFzfU0YbkgHJcojqUWGwYvbetvP0yyBso4coBwM
+         mmrg==
+X-Gm-Message-State: AMCzsaV1RzBVxhW6CX76SKgQvB5LQIas5Zmv758MEV5lhA2Oha+XtFiL
+        fAGdIjol6SfeWPaJVnU8BLFaVuRw
+X-Google-Smtp-Source: ABhQp+S0MdjVkNyRXeSGM0+v8fFA6I7oicx9xqlWxa4vUIC4MBiAbQtl3UOBFpEgd23C3KKx0QVV9g==
+X-Received: by 10.223.133.174 with SMTP id 43mr11313763wrt.17.1509913608985;
+        Sun, 05 Nov 2017 12:26:48 -0800 (PST)
 Received: from localhost.localdomain ([2a02:aa16:5782:c100:c938:fbb7:46f8:2405])
-        by smtp.gmail.com with ESMTPSA id 71sm12917543wmg.0.2017.11.05.12.25.24
+        by smtp.gmail.com with ESMTPSA id u138sm11573033wmd.17.2017.11.05.12.26.47
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 05 Nov 2017 12:25:24 -0800 (PST)
+        Sun, 05 Nov 2017 12:26:48 -0800 (PST)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v2 4/4] bisect: fix memory leak when returning best element
-Date:   Sun,  5 Nov 2017 21:24:31 +0100
-Message-Id: <106187fd063f3eb21ec979d8a59f662d77c4b2f4.1509906092.git.martin.agren@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 0/2] Re: reduce_heads: fix memory leaks
+Date:   Sun,  5 Nov 2017 21:26:29 +0100
+Message-Id: <cover.1509908607.git.martin.agren@gmail.com>
 X-Mailer: git-send-email 2.15.0.415.gac1375d7e
-In-Reply-To: <cover.1509906092.git.martin.agren@gmail.com>
-References: <CAN0heSoBeG_8zLwS-71_ZVBF-HsVGKY1W1QiTSQ_ybwWCPauog@mail.gmail.com> <cover.1509906092.git.martin.agren@gmail.com>
+In-Reply-To: <CAN0heSpgUBy4a6iok4MoDqJ__hZtrXvfApcxjHuS0vOBKSuShg@mail.gmail.com>
+References: <CAN0heSpgUBy4a6iok4MoDqJ__hZtrXvfApcxjHuS0vOBKSuShg@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,34 +66,30 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When `find_bisection()` returns a single list entry, it leaks the other
-entries. Move the to-be-returned item to the front and free the
-remainder.
+Since v1 [1], I've added a preparatory patch to UNLEAK some variables.
+That sets the stage slightly better for patch 2.
 
-Signed-off-by: Martin Ågren <martin.agren@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- bisect.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+Junio, you placed v1 on maint. Because UNLEAK is not in maint, this is
+based on master and maint misses out on this v2. If you have any advice
+for how I should (not) do series with UNLEAK in them, I'm all ears.
 
-diff --git a/bisect.c b/bisect.c
-index b1941505b..3756f127b 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -399,8 +399,12 @@ void find_bisection(struct commit_list **commit_list, int *reaches,
- 	/* Do the real work of finding bisection commit. */
- 	best = do_find_bisection(list, nr, weights, find_all);
- 	if (best) {
--		if (!find_all)
-+		if (!find_all) {
-+			list->item = best->item;
-+			free_commit_list(list->next);
-+			best = list;
- 			best->next = NULL;
-+		}
- 		*reaches = weight(best);
- 	}
- 	free(weights);
+Martin
+
+[1] https://public-inbox.org/git/20171101090326.8091-1-martin.agren@gmail.com/
+
+Martin Ågren (2):
+  builtin/merge-base: UNLEAK commit lists
+  reduce_heads: fix memory leaks
+
+ commit.h                | 18 +++++++++++++++++-
+ builtin/commit.c        |  2 +-
+ builtin/fmt-merge-msg.c |  2 +-
+ builtin/merge-base.c    | 40 +++++++++++++++++++++-------------------
+ builtin/merge.c         |  1 +
+ builtin/pull.c          |  5 ++++-
+ commit.c                |  7 +++++++
+ 7 files changed, 52 insertions(+), 23 deletions(-)
+
 -- 
 2.15.0.415.gac1375d7e
 
