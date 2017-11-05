@@ -7,58 +7,58 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9019920450
-	for <e@80x24.org>; Sun,  5 Nov 2017 11:58:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BFE3720450
+	for <e@80x24.org>; Sun,  5 Nov 2017 11:58:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751024AbdKEL6f (ORCPT <rfc822;e@80x24.org>);
-        Sun, 5 Nov 2017 06:58:35 -0500
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:55286 "EHLO
+        id S1751409AbdKEL6j (ORCPT <rfc822;e@80x24.org>);
+        Sun, 5 Nov 2017 06:58:39 -0500
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:55557 "EHLO
         mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750725AbdKEL6e (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Nov 2017 06:58:34 -0500
-Received: by mail-wr0-f193.google.com with SMTP id o44so6083183wrf.11
-        for <git@vger.kernel.org>; Sun, 05 Nov 2017 03:58:33 -0800 (PST)
+        with ESMTP id S1751184AbdKEL6i (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Nov 2017 06:58:38 -0500
+Received: by mail-wr0-f193.google.com with SMTP id l8so6082119wre.12
+        for <git@vger.kernel.org>; Sun, 05 Nov 2017 03:58:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=3fkqZq0Qf6i45WwZ+a8cj6BZXLWcdsCQv0QsT/PVFQU=;
-        b=dLGnT9Hf94EoICwaeTGa4h4Badm2u0kAgvvPY3FqNtmpn0o280Xca/NMEhBTigxYi5
-         Aw3TVh16GhYbzWwA+uh+pNxiPh3nb73OyF23sekUCJenS3Gn0xQXIFh4mURNJVSUMbgR
-         2w+vXqbri8EAynUzQP+UFP2Tq4gXiBUc3fgZ7CCvf3KySbw8Qbu1IHWhk/dcs8zWbTgg
-         UuIGM2VIOOe3BzlpKzX8eM+H5wUNafRwuTDw5sdglCZ5fW9ikwtDYFTyEOAMfkTQ23Ck
-         kde8u7Doyc3ImJAa/b6UOkSOq63971F/KGHR3h6quB2l1VK7lk1Tz8NoKtItBmD8cBoA
-         hvAw==
+        bh=Cu8Alcr1ppba5cFOC7fdLzfPT6FVoKj6pMc9qgnYe94=;
+        b=g+kIzQYVuTVDgwNutuXYhc7Dzblp5aVTivV09ddZJhsOFpNnJhD0LjUsyRFMpjMZc7
+         toDdv6XYfdcJ0Zi2iBTR0vJbPwiEquEbpbD0C+2c8ov0CHsni2W3xPriadEdzrM2XZVo
+         lKmHIkZkXjdIdIAEH2tS39LQtMeG+lVnR9xk0tnzcvPYlHtiUZJecfYuqVW3SoluNCMv
+         A6RMuH3+HhdL4xR3y89GADZWPbSanjOnG9T/46qAJzBhVP2rMrY5p7raIfNmM6tIeLox
+         IsUDIJJ7ZBjNFCo0OfQ7VALWsw9lnraaR1GqxrBal/laVB2Ex092Yj8CYUZ9ecM10/tF
+         TJfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=3fkqZq0Qf6i45WwZ+a8cj6BZXLWcdsCQv0QsT/PVFQU=;
-        b=K/gRYrf2iN4jjWT7rU3HgVU9GfEbHXFFa390Y6fhg6tlAN56ZH6rvGvSMxygg1teON
-         YLMnNOh+yn0cvwVzGWoO2+lgjIMB3wPt/QzjzGPRW2NMzzCO3EmMvzVZGm4gEPHmWMp8
-         sFScBuA2cNiP1wwb0s0Md9LfUz0qxUdP4hq8cGJj7Bj40uquVmRvtigeC6HXftaLmlu/
-         /CArlo9x3B8Jic9N3ngymwJaY6ODGcQ2+XjpAOw/Ete9xau/4xKzRi10lqXZ5UkgamkZ
-         zLvo4UFG6tCDiyKNvSU7xcoGZdqddRWK8P1Xi7pNgePqxIFsR+KKJKQziMqx9Mi5j9jU
-         RXEg==
-X-Gm-Message-State: AMCzsaUeitCKaaFux7liSHTjt1fIINA6WBAhR+lus/4vQbLQ1cBEkddF
-        zymtt6P/qN3vGrVYEWC2AFw=
-X-Google-Smtp-Source: ABhQp+Sxe5/CDjMRkn2hGIJnl4o2dU20oNdtfmSd7eJUqdIgF/KLM8NrZBWOX5ivyFmKXQkYy2WVYw==
-X-Received: by 10.223.129.228 with SMTP id 91mr10660447wra.233.1509883113015;
-        Sun, 05 Nov 2017 03:58:33 -0800 (PST)
+        bh=Cu8Alcr1ppba5cFOC7fdLzfPT6FVoKj6pMc9qgnYe94=;
+        b=eWj77GUPRipPjyhp/YRpG9fskCbnumnZ872h40Vb07ycclNfH1mgj1ekc5p6sbNh4Z
+         04Feu/Nc1QRPYiz/9fqYamRUFur9saN7NruOmvcD0s9AYy2dW8QFWIFiOaTbgdikD0rq
+         qy+AGNyskG9QdVahVM6DFgCWN0JPQELnfegmTQGtmHcB2uXiTCpeUJUV35MmEb48GK9b
+         yYyL39J58K8bLLnMEDV2SYN1YOJBaz2kPzyovaXFtdxgRFHD3q+fv3sQ7q3cAh3Ybc/S
+         0bW7tO1aOMezZrz8dJkG9DcqSwZpn0cNY2i/aCdyX/dTw3pizG9WCbk69z1bbgjTaBaB
+         qApg==
+X-Gm-Message-State: AMCzsaUJ9eCMN2k8N2vVLA5PCfe9XmTesO+sJH3zFK7RF20RDXKikfNh
+        HJkrYn0sV95CnLe221Sqw/U=
+X-Google-Smtp-Source: ABhQp+Tx4WZm1nv+vLbx8ZqXCBywi3QNzHtrYJhxADj6bseFnB438FJzl3G7JuAmqsnKatOlB6WZPQ==
+X-Received: by 10.223.160.86 with SMTP id l22mr9871001wrl.187.1509883117030;
+        Sun, 05 Nov 2017 03:58:37 -0800 (PST)
 Received: from localhost.localdomain ([2a02:aa16:5782:c100:c938:fbb7:46f8:2405])
-        by smtp.gmail.com with ESMTPSA id u18sm14391450wrg.94.2017.11.05.03.58.31
+        by smtp.gmail.com with ESMTPSA id u18sm14391450wrg.94.2017.11.05.03.58.35
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 05 Nov 2017 03:58:31 -0800 (PST)
+        Sun, 05 Nov 2017 03:58:36 -0800 (PST)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     Jeff King <peff@peff.net>
 Cc:     git@vger.kernel.org, hkleynhans@bloomberg.net,
         Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH/DONOTAPPLY 0/4] first steps towards pager.foo.{command,enable}
-Date:   Sun,  5 Nov 2017 12:58:18 +0100
-Message-Id: <cover.1509879269.git.martin.agren@gmail.com>
+Subject: [PATCH 1/4] t7006: document that `pager.foo` can be partially preserved
+Date:   Sun,  5 Nov 2017 12:58:19 +0100
+Message-Id: <a785966f0ffa966661e4022c077f81c46db3bb98.1509879269.git.martin.agren@gmail.com>
 X-Mailer: git-send-email 2.15.0.415.gac1375d7e
-In-Reply-To: <20171104092850.5fthdgvnihd3y4fm@sigill.intra.peff.net>
-References: <20171104092850.5fthdgvnihd3y4fm@sigill.intra.peff.net>
+In-Reply-To: <cover.1509879269.git.martin.agren@gmail.com>
+References: <20171104092850.5fthdgvnihd3y4fm@sigill.intra.peff.net> <cover.1509879269.git.martin.agren@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,59 +67,59 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I'm not posting this for inclusion (yet), but because I read this:
+Assuming a blank slate, consider the following configuration:
 
-On 4 November 2017 at 10:28, Jeff King <peff@peff.net> wrote:
->  - the pager.<cmd> config is mis-designed, because our config keys
->    cannot represent all possible command names (e.g., case folding and
->    illegal characters). This should be pager.<cmd>.enable or similar.
->    Some discussion in (this message and the surrounding thread):
->
->      https://public-inbox.org/git/20170711101942.h2uwxtgzvgguzivu@sigill.intra.peff.net/
->
->    But I think you could find more by searching the archive.
+[pager]
+	foo = some-command
+	foo = false
 
-I'm posting four patches I have on this to save others from redoing my
-work and findings. These patches feel a bit incomplete, which is why I
-put them to the side some time ago (and eventually forgot about them).
+Now `git -c pager.foo=true foo` will page using `some-command`. This
+might have been intended, or is perhaps just a side-effect of the
+implementation. In any case, it could be useful and someone might rely
+on it, either knowingly (as above) or not (if these lines are spread out
+across the configuration).
 
-In particular, they do not teach `--paginate` to use the pager
-configured by `pager.foo.command`. It is already now possible to use
-`pager.foo` to say "I don't want you to page, but if I later give you
-`pager.foo=true`, this is the pager I want you to use". That does not
-work with `--paginate`, but this can all be explained -- indeed, we
-document that `--paginate` overrules `pager.foo`.
+However, `git --paginate foo` will *not* use `some-command`. That
+matches the documentation (Documentation/git.txt).
 
-If we teach `--paginate` to respect `pager.foo.command`, it seems that
-we would either 1) introduce a small (and possibly hard to understand
-and explain) difference between the old-style and the new-style
-pager-configuration or 2) knowingly change the behavior of `--paginate`
-with `pager.foo` or 3) knowingly change the behavior of
-`pager.foo=false` as documented in the first patch.
+Upcoming commits will expand on how paging for `git foo` can be
+configured. Those commits mustn't change how `pager.foo` behaves, so add
+tests for these two cases.
 
-I think there's great value to being able to say "this is the same as
-this, and that is the same as that", but that might get muddied by "oh,
-except if you use `--paginate`".
+Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+---
+ t/t7006-pager.sh | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-If someone wants to pick these up and bring them to completion, great!
-If not and if I or someone else feels confident about which way to go,
-then I can revisit these.
-
-Martin
-
-Martin Ågren (4):
-  t7006: document that `pager.foo` can be partially preserved
-  pager: refactor `pager_command_config()`
-  pager: introduce `pager.*.command` and `.enable`
-  pager: make `pager.foo.command` imply `.enable=true`
-
- Documentation/config.txt  | 19 +++++++++
- Documentation/git-tag.txt |  3 +-
- Documentation/git.txt     |  2 +-
- t/t7006-pager.sh          | 98 +++++++++++++++++++++++++++++++++++++++++++++++
- pager.c                   | 16 +++++++-
- 5 files changed, 134 insertions(+), 4 deletions(-)
-
+diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
+index f0f1abd1c..e890b2f64 100755
+--- a/t/t7006-pager.sh
++++ b/t/t7006-pager.sh
+@@ -117,6 +117,24 @@ test_expect_success TTY 'git config uses a pager if configured to' '
+ 	test -e paginated.out
+ '
+ 
++test_expect_success TTY 'configuration remembers pager across boolean changes' '
++	echo paging >expected &&
++	test_unconfig pager.config &&
++	test_terminal git -c pager.config="echo paging" \
++			  -c pager.config=false \
++			  -c pager.config \
++			  config --list >actual &&
++	test_cmp expected actual
++'
++
++test_expect_success TTY '--paginate does not respect inactivated pager' '
++	rm -f paginated.out &&
++	test_terminal git -c pager.config=bad \
++			  -c pager.config=false \
++			  --paginate config --list &&
++	test -e paginated.out
++'
++
+ test_expect_success TTY 'configuration can enable pager (from subdir)' '
+ 	rm -f paginated.out &&
+ 	mkdir -p subdir &&
 -- 
 2.15.0.415.gac1375d7e
 
