@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9880420281
-	for <e@80x24.org>; Sun,  5 Nov 2017 20:26:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 13B5F20281
+	for <e@80x24.org>; Sun,  5 Nov 2017 20:27:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751088AbdKEU0y (ORCPT <rfc822;e@80x24.org>);
-        Sun, 5 Nov 2017 15:26:54 -0500
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:49566 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751058AbdKEU0x (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Nov 2017 15:26:53 -0500
-Received: by mail-wr0-f193.google.com with SMTP id g90so6770721wrd.6
-        for <git@vger.kernel.org>; Sun, 05 Nov 2017 12:26:52 -0800 (PST)
+        id S1751097AbdKEU1A (ORCPT <rfc822;e@80x24.org>);
+        Sun, 5 Nov 2017 15:27:00 -0500
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:49574 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751073AbdKEU04 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Nov 2017 15:26:56 -0500
+Received: by mail-wr0-f195.google.com with SMTP id g90so6770809wrd.6
+        for <git@vger.kernel.org>; Sun, 05 Nov 2017 12:26:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=1pBOtVfCmiJe019sSJ43Rc067FzGZS6jwt9ofSkgnLI=;
-        b=KsSuL/pMnwb3Vwh0oCp7oorQYYQ0UFuJoqN7Hz60HGjIA5rbPhgu6n9cC3sBEldUnS
-         +X5Hn9aW9dGDGN55x8HQeitfaiLinqiTjAQDLHVkLKX0xHhq28up5fKUbBqHTSqR3ntp
-         TDCiFLtnyE1GmEMifUdE3BumfKHNh9JJccnRZ5YSlQfLTV8OmQuOdLC582feL7Y+/9CH
-         lRuLGQOH46A4kWdJSzyQjOFcXNbGPLEUSUfRBz5/WC/o3A0ZzuiypyNzrjfE/zGiqQw1
-         xHql19BXHyrFL/S4UjPqK2E2C+gQUvr8KLahlUH3CMyHz5O/+sQMwvP+K8Y5C+effd6D
-         Cx3w==
+        bh=wPZHyKjlqiLhhj6IvG/mpp/FqGjUC0zkFK6dJ6RCFHY=;
+        b=uRt6h2PhmJr0zwzNXRemMEnuZ6V8p5swLBfOYkbNv1H1MtqYEIK8ssdJ848inBjru4
+         PyDOO6T2PP0gR80RVaD4xTxpmDqtt/GiOuwiQssM3phnx253zt+KMp8R8cPUV+KV6BYy
+         oxdRptQXk0NoDeOlt1IY1TFKYXosyQqG7Ho92/8iu1S5DsHXhjKaIZHEZriXWxohJqS9
+         Q8RD5AwyqwsUA74i/gQNY2HVE+D8Mb7FVc3dB44eNov1KSQ2FssuY7BXqYaXVLnQuZCW
+         xGOmP6djQHurywwjrFdoOEM/dLdv484JyUjUO33XGEppYS0W1e6fUSS5Ki5Q8VIgzdOn
+         1HmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=1pBOtVfCmiJe019sSJ43Rc067FzGZS6jwt9ofSkgnLI=;
-        b=ceAFiEW9od2ArkfbgecfoqApdY1jW4CE8UAiFPQ5xglAyk87+4ui5xxpqnYE4F8AEg
-         JSJWSBtrziyGOzzDiykcEiiAQqiBULUSB9VVdS2nTNpfSgTvr7e3uqQ9WKwSGELw2JJT
-         ASBOTiXlSL3vS2mzIbtx+IphVsyuWf+yYvrtL9watdY7/gd/kqKDQo6VYUZfRP0fzFpZ
-         igCghWHMqDq7BQ77MdUrQcc3cozlIjswBx83zeLWJeXEfY5vKJdnqqnXO2aFL1nO9h2L
-         A+IuT+c2iCuCY3Xhiyi5Dm05iIwc/h26seZGRyMeGTVIlT4psyMzlNii1R1lb3YD5olM
-         kxWg==
-X-Gm-Message-State: AMCzsaXhlaMfgLGAfH3LbFCi7XHVkmjU0F9On445nm3S4mAGEp98Jusd
-        PECCnOT6c+KMvsiNjXZcw3Ff7VJO
-X-Google-Smtp-Source: ABhQp+QWXKu+w2DUpPTxZtt1ReqXXfEOUFnXOYPX95Y9qlQIcu12iixQxci2XKfDYY4gf9dViIvmDQ==
-X-Received: by 10.223.163.143 with SMTP id l15mr10483429wrb.65.1509913611940;
-        Sun, 05 Nov 2017 12:26:51 -0800 (PST)
+        bh=wPZHyKjlqiLhhj6IvG/mpp/FqGjUC0zkFK6dJ6RCFHY=;
+        b=e8GtE+FWNq647OfyhVior8V29eWcSuPagEp5l3C7cankK+IF/4w4CLPSJZJmdJUHGQ
+         jLzYNb42uXfaBN1v0p+r4BNrS89OZmyfdkeLW7W4Mqp5ieDhKwaAjiDEOnLkK7egaIr0
+         B5nD3Cnu8X7fHqkpeyvr1vVHhaPljreFW2h/YRL2+3oKK4a2jaauttvcOonkO8C8e09f
+         Euh5+RWVfokTVYq/faMivXBzSBXjoOsI69E5AMi14Pv87CV6w7RxOnTLlm66Y6seZAEn
+         7GIjPIw6dnh2IHodHZXUt7CIIVV9ogUOBetUH2dAw299mq129yY4n0SZOmIecpii84A4
+         eosg==
+X-Gm-Message-State: AMCzsaUMWMaYKuknwJ7WkROuIqylg0aW3t03LRTvtlJIu/i2XE26HJHw
+        3Eclbczfyha4fzrp7WC1V/oKzD6J
+X-Google-Smtp-Source: ABhQp+TApQ5N/a+iI82T5IDKL4lXRwp7bDsL4hQO4lifhThwK6YdqsDoBYk9GkaSAjvNoec6el9kXg==
+X-Received: by 10.223.152.149 with SMTP id w21mr10890195wrb.274.1509913615156;
+        Sun, 05 Nov 2017 12:26:55 -0800 (PST)
 Received: from localhost.localdomain ([2a02:aa16:5782:c100:c938:fbb7:46f8:2405])
-        by smtp.gmail.com with ESMTPSA id u138sm11573033wmd.17.2017.11.05.12.26.50
+        by smtp.gmail.com with ESMTPSA id u138sm11573033wmd.17.2017.11.05.12.26.54
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 05 Nov 2017 12:26:51 -0800 (PST)
+        Sun, 05 Nov 2017 12:26:54 -0800 (PST)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 1/2] builtin/merge-base: UNLEAK commit lists
-Date:   Sun,  5 Nov 2017 21:26:30 +0100
-Message-Id: <b06f593d3f8b0ad53754eeb394f77e7c3ee916bd.1509908607.git.martin.agren@gmail.com>
+Subject: [PATCH v2 2/2] reduce_heads: fix memory leaks
+Date:   Sun,  5 Nov 2017 21:26:31 +0100
+Message-Id: <e67b7c112b4b7b59e75e0b67e78c0f7f7ea06d84.1509908607.git.martin.agren@gmail.com>
 X-Mailer: git-send-email 2.15.0.415.gac1375d7e
 In-Reply-To: <cover.1509908607.git.martin.agren@gmail.com>
 References: <CAN0heSpgUBy4a6iok4MoDqJ__hZtrXvfApcxjHuS0vOBKSuShg@mail.gmail.com> <cover.1509908607.git.martin.agren@gmail.com>
@@ -66,116 +66,156 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In several functions, we iterate through a commit list by assigning
-`result = result->next`. As a consequence, we lose the original pointer
-and eventually leak the list.
+We currently have seven callers of `reduce_heads(foo)`. Six of them do
+not use the original list `foo` again, and actually, all six of those
+end up leaking it.
 
-These are immediate helpers to `cmd_merge_base()` which is just about to
-return, so we can use UNLEAK. For example, we could `UNLEAK(result)`
-before we start iterating. That would be a one-liner change per
-function. Instead, leave the lists alone and iterate using a dedicated
-pointer. Then UNLEAK immediately before returning.
+Introduce and use `reduce_heads_replace(&foo)` as a leak-free version of
+`foo = reduce_heads(foo)` to fix several of these. Fix the remaining
+leaks using `free_commit_list()`.
 
-After this change, it is clearer that the leaks happen as we return, and
-not as we process the list. That is, we could just as well have used
-`free_commit_list()`. Also, leaving a "result" unchanged as we display
-it feels (marginally) better.
-
-In `handle_independent()` we can drop `result` while we're here and
-reuse the `revs`-variable instead. That matches several other users of
-`reduce_heads()`. The memory-leak that this hides will be addressed in
-the next commit.
+While we're here, document `reduce_heads()` and mark it as `extern`.
 
 Signed-off-by: Martin Ågren <martin.agren@gmail.com>
 ---
- builtin/merge-base.c | 36 ++++++++++++++++++------------------
- 1 file changed, 18 insertions(+), 18 deletions(-)
+ commit.h                | 18 +++++++++++++++++-
+ builtin/commit.c        |  2 +-
+ builtin/fmt-merge-msg.c |  2 +-
+ builtin/merge-base.c    |  6 ++++--
+ builtin/merge.c         |  1 +
+ builtin/pull.c          |  5 ++++-
+ commit.c                |  7 +++++++
+ 7 files changed, 35 insertions(+), 6 deletions(-)
 
+diff --git a/commit.h b/commit.h
+index 6d769590f..99a3fea68 100644
+--- a/commit.h
++++ b/commit.h
+@@ -313,7 +313,23 @@ extern int interactive_add(int argc, const char **argv, const char *prefix, int
+ extern int run_add_interactive(const char *revision, const char *patch_mode,
+ 			       const struct pathspec *pathspec);
+ 
+-struct commit_list *reduce_heads(struct commit_list *heads);
++/*
++ * Takes a list of commits and returns a new list where those
++ * have been removed that can be reached from other commits in
++ * the list. It is useful for, e.g., reducing the commits
++ * randomly thrown at the git-merge command and removing
++ * redundant commits that the user shouldn't have given to it.
++ *
++ * This function destroys the STALE bit of the commit objects'
++ * flags.
++ */
++extern struct commit_list *reduce_heads(struct commit_list *heads);
++
++/*
++ * Like `reduce_heads()`, except it replaces the list. Use this
++ * instead of `foo = reduce_heads(foo);` to avoid memory leaks.
++ */
++extern void reduce_heads_replace(struct commit_list **heads);
+ 
+ struct commit_extra_header {
+ 	struct commit_extra_header *next;
+diff --git a/builtin/commit.c b/builtin/commit.c
+index d75b3805e..11c474018 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1728,7 +1728,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 				allow_fast_forward = 0;
+ 		}
+ 		if (allow_fast_forward)
+-			parents = reduce_heads(parents);
++			reduce_heads_replace(&parents);
+ 	} else {
+ 		if (!reflog_msg)
+ 			reflog_msg = (whence == FROM_CHERRY_PICK)
+diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
+index e99b5ddbf..27a2361e9 100644
+--- a/builtin/fmt-merge-msg.c
++++ b/builtin/fmt-merge-msg.c
+@@ -571,7 +571,7 @@ static void find_merge_parents(struct merge_parents *result,
+ 	head_commit = lookup_commit(head);
+ 	if (head_commit)
+ 		commit_list_insert(head_commit, &parents);
+-	parents = reduce_heads(parents);
++	reduce_heads_replace(&parents);
+ 
+ 	while (parents) {
+ 		struct commit *cmit = pop_commit(&parents);
 diff --git a/builtin/merge-base.c b/builtin/merge-base.c
-index 6dbd167d3..fd0eba14b 100644
+index fd0eba14b..0178ca772 100644
 --- a/builtin/merge-base.c
 +++ b/builtin/merge-base.c
-@@ -9,20 +9,20 @@
- 
- static int show_merge_base(struct commit **rev, int rev_nr, int show_all)
- {
--	struct commit_list *result;
-+	struct commit_list *result, *r;
- 
- 	result = get_merge_bases_many_dirty(rev[0], rev_nr - 1, rev + 1);
- 
- 	if (!result)
- 		return 1;
- 
--	while (result) {
--		printf("%s\n", oid_to_hex(&result->item->object.oid));
-+	for (r = result; r; r = r->next) {
-+		printf("%s\n", oid_to_hex(&r->item->object.oid));
- 		if (!show_all)
--			return 0;
--		result = result->next;
-+			break;
- 	}
- 
-+	UNLEAK(result);
- 	return 0;
- }
- 
-@@ -51,28 +51,28 @@ static struct commit *get_commit_reference(const char *arg)
- 
- static int handle_independent(int count, const char **args)
- {
--	struct commit_list *revs = NULL;
--	struct commit_list *result;
-+	struct commit_list *revs = NULL, *rev;
- 	int i;
- 
+@@ -57,7 +57,7 @@ static int handle_independent(int count, const char **args)
  	for (i = count - 1; i >= 0; i--)
  		commit_list_insert(get_commit_reference(args[i]), &revs);
  
--	result = reduce_heads(revs);
--	if (!result)
-+	revs = reduce_heads(revs);
-+
-+	if (!revs)
+-	revs = reduce_heads(revs);
++	reduce_heads_replace(&revs);
+ 
+ 	if (!revs)
  		return 1;
- 
--	while (result) {
--		printf("%s\n", oid_to_hex(&result->item->object.oid));
--		result = result->next;
--	}
-+	for (rev = revs; rev; rev = rev->next)
-+		printf("%s\n", oid_to_hex(&rev->item->object.oid));
-+
-+	UNLEAK(revs);
- 	return 0;
- }
- 
- static int handle_octopus(int count, const char **args, int show_all)
- {
- 	struct commit_list *revs = NULL;
--	struct commit_list *result;
-+	struct commit_list *result, *rev;
- 	int i;
- 
+@@ -78,7 +78,9 @@ static int handle_octopus(int count, const char **args, int show_all)
  	for (i = count - 1; i >= 0; i--)
-@@ -83,13 +83,13 @@ static int handle_octopus(int count, const char **args, int show_all)
+ 		commit_list_insert(get_commit_reference(args[i]), &revs);
+ 
+-	result = reduce_heads(get_octopus_merge_bases(revs));
++	result = get_octopus_merge_bases(revs);
++	free_commit_list(revs);
++	reduce_heads_replace(&result);
+ 
+ 	if (!result)
+ 		return 1;
+diff --git a/builtin/merge.c b/builtin/merge.c
+index ab5ffe85e..fbbf2a9e5 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -999,6 +999,7 @@ static struct commit_list *reduce_parents(struct commit *head_commit,
+ 
+ 	/* Find what parents to record by checking independent ones. */
+ 	parents = reduce_heads(remoteheads);
++	free_commit_list(remoteheads);
+ 
+ 	remoteheads = NULL;
+ 	remotes = &remoteheads;
+diff --git a/builtin/pull.c b/builtin/pull.c
+index 6f772e8a2..4edab228e 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -745,12 +745,15 @@ static int get_octopus_merge_base(struct object_id *merge_base,
+ 	if (!is_null_oid(fork_point))
+ 		commit_list_insert(lookup_commit_reference(fork_point), &revs);
+ 
+-	result = reduce_heads(get_octopus_merge_bases(revs));
++	result = get_octopus_merge_bases(revs);
+ 	free_commit_list(revs);
++	reduce_heads_replace(&result);
++
  	if (!result)
  		return 1;
  
--	while (result) {
--		printf("%s\n", oid_to_hex(&result->item->object.oid));
-+	for (rev = result; rev; rev = rev->next) {
-+		printf("%s\n", oid_to_hex(&rev->item->object.oid));
- 		if (!show_all)
--			return 0;
--		result = result->next;
-+			break;
- 	}
- 
-+	UNLEAK(result);
+ 	oidcpy(merge_base, &result->item->object.oid);
++	free_commit_list(result);
  	return 0;
  }
+ 
+diff --git a/commit.c b/commit.c
+index 1e0e63379..cab8d4455 100644
+--- a/commit.c
++++ b/commit.c
+@@ -1090,6 +1090,13 @@ struct commit_list *reduce_heads(struct commit_list *heads)
+ 	return result;
+ }
+ 
++void reduce_heads_replace(struct commit_list **heads)
++{
++	struct commit_list *result = reduce_heads(*heads);
++	free_commit_list(*heads);
++	*heads = result;
++}
++
+ static const char gpg_sig_header[] = "gpgsig";
+ static const int gpg_sig_header_len = sizeof(gpg_sig_header) - 1;
  
 -- 
 2.15.0.415.gac1375d7e
