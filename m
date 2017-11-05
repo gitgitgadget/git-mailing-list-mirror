@@ -7,117 +7,143 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 874ED20281
-	for <e@80x24.org>; Sun,  5 Nov 2017 16:28:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CB78D20281
+	for <e@80x24.org>; Sun,  5 Nov 2017 16:28:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750782AbdKEQ2n (ORCPT <rfc822;e@80x24.org>);
-        Sun, 5 Nov 2017 11:28:43 -0500
-Received: from mout.gmx.net ([212.227.17.21]:49966 "EHLO mout.gmx.net"
+        id S1750807AbdKEQ26 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 5 Nov 2017 11:28:58 -0500
+Received: from mout.gmx.net ([212.227.15.18]:51483 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750731AbdKEQ2m (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Nov 2017 11:28:42 -0500
+        id S1750731AbdKEQ25 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Nov 2017 11:28:57 -0500
 Received: from bedhanger.strangled.net ([188.192.144.31]) by mail.gmx.com
- (mrgmx101 [212.227.17.168]) with ESMTPSA (Nemesis) id
- 0LwW8p-1d3PLs2jHz-018MFn; Sun, 05 Nov 2017 17:28:07 +0100
+ (mrgmx002 [212.227.17.190]) with ESMTPSA (Nemesis) id
+ 0MBFgr-1e1AdG04Kz-00ABkp; Sun, 05 Nov 2017 17:28:23 +0100
 From:   Ann T Ropea <bedhanger@gmx.de>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Daniel Barkalow <barkalow@iabervon.org>,
         Ann T Ropea <bedhanger@gmx.de>
-Subject: [PATCH 1/3] checkout: describe_detached_head: remove 3dots after committish
-Date:   Sun,  5 Nov 2017 17:27:28 +0100
-Message-Id: <20171105162730.31405-1-bedhanger@gmx.de>
+Subject: [PATCH 2/3] Documentation: user-manual: limit potentially confusing usage of 3dots (and 2dots)
+Date:   Sun,  5 Nov 2017 17:27:29 +0100
+Message-Id: <20171105162730.31405-2-bedhanger@gmx.de>
 X-Mailer: git-send-email 2.13.6
-X-Provags-ID: V03:K0:faPqug/6NZylse3xnkd/fMfKJNyqQsUFZXJG62B5TAk9cZrqlVh
- lprbDvPGXlXReyIbsC1o4shXOQcMLfeCI6Nkgta7v6ga4Xtq2PN0LjwUjBye5WcnXhB1tv0
- pHhdoLTbJKT5qtHTBH7ReJc76R0QG7nYvXcDHwfPi/CUxe5iaMGhvfLCMWPRx8NV01CqD+G
- XbxYTQ8q7gdEeIBLrcGwQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:CcYkz7jA0hw=:KJ5a6j9xqop8rSaGdEhfTk
- CBgXjbZHr1Nemo+QQZ60bKtgEMHgW0oDb1HsAlqmikVUsih7eRTxm/6X09YKfxdfGifA4GxFh
- NaptwNKEFlKCjL2/jgR+P4mdp/L91k3OGFTomhJwHP6pSDjPG7wewcl2cdsK9B2dQX9Y18F4O
- dy4GFhIgM4sZbxrHAOUAapeVFAmBjeH0WzSaw9ODrd/jsMoXZsWo6IvEHgQw9wwgkEYvqw0jn
- +zp0bXaVm/w0t1lAMfkG3JRA1mr7Iqnww5FXOMz2olrQR73tWrSwAesi0/cOuHleBzk6cumLj
- Th86yb9yDPEzPA2QjzxrNxiRUm6N7D4x/9t58NA7QXR/9fYrDj0QdodJKFuazLpFwn3kTCql9
- i6N3TToAIDCWEpgDMI5YqklFvxrjg+HG0v0HalvQNUD6A5++5kSKOaIa3M2srbXMk67G3w04B
- k2eEeHrDzQAzp9BZ5v0Q7UItI2X1x6IaCjun+HtTmym3wRCcsnMijbZGI/r99Z/nq6GnH4mb2
- mf4NU94lZB4//Q9bI9f0h8GP3xIw77F0CY6Je5e+VgF3e79QFz3hXWk02JuJNbPwxrr6hNwrV
- JmGkjgaqSinJcEmpoKeE/Ug0AvVPzNV0UpVkiDNh0a4+ssAr9CTPdy2FXZxnhQPqrneaxUQWs
- GlWc6YVcbK8DT2m2vks3PJzV32d1cG3UO77aLzHANZODdFACON8ooa7SMC1pg67T5/XU98y7E
- wn41RXNditv2qdho9rq/LzJ6KvWEp322r7qIiMrldySIxCIbPtBoS/R94+itkxe4ItX6rB4hd
- iKXG8GOLRxXUkcSrHiKptz2AgL6XQ==
+In-Reply-To: <20171105162730.31405-1-bedhanger@gmx.de>
+References: <20171105162730.31405-1-bedhanger@gmx.de>
+X-Provags-ID: V03:K0:dfwtLhfoY0eOZe1Z6Y/Di2xJ6v0oiut1DgW/RToeaGXuca2yKkV
+ 6+koZzTy1An8/sla9OMaMuL8AfhCmxRyMMmoi8LbTCWi0n52E1dkA0sKpGyf1qzQ9eqhRjD
+ nw9aNdWHGu+qBhER31pPPor/M69CvvCjBmNxCLEPuoLhBa3qmKAsxJy/X5+KKeMsUjvegfO
+ rM/yVel2U35/MQ79PbTBw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:JABhHowYytY=:yS5hpIBc3fdGMSlwgYReJL
+ OFcR4xNgKIrtcUsOG4Ci8TI8CumGvDxxYdwunDM7yP7yvjLvan+oVrYdmt9zfVdZNN0+r4dy0
+ wHFAr3sPMUcHejv6fZq0v18Xo3X3qXV6A0Pa5b8UI2S7jNqlS+fxuVi+S138ptczCW96+iofQ
+ 1idoxL6bOjYfNDxvrNRoVGvwZyPuBmRK7rt0ajkastBMD38HnH+SxrRps9Kx4mJJBiHeTsHt4
+ YmOcP3ygQgXgQNGV2P8p+DrowH3a7vOw3DBmcLpoLZJPTBOMRy5AgYjL9hiWP00Rvea5wFENk
+ Ptz4hUCmNZ3KH43pVT7FPgSjVTTaGG/Sw0puoxmydrsx+s+mRKClD9OUbBXu1fqkKlrwZuGD7
+ dkQZLZoVPdyCDLHvstOGzBJFlsgEcv4B1UKdaz56rhu/A3zc9Tqflh8d4kKeaP+hL+bDMg1bQ
+ U0rJQpqCd7daRedBUd1yq+/durPIuqxwzOFCCAlCMRtfLJ9Q9GUyyQxKL8EOntlcEycvPAfRE
+ fzW6b8EYWuD0Qmmc/jy80sLN5nyiFYotLlD91Y4Ls3GaJEBQG3TkwAWA3Gd9ZzR7W3NEVKxmJ
+ 4Pd8S/ZZ3wD3Bc/kOgy7R2mKI18QzHakmZV16hP15Rzx+NrUCycUcHg8CFc5T7gx5EbiHPAIM
+ +Se9xguwBOJTI2lQxo8CnlsmHl6Jq3MSKENrj0nvCiHj1pHkbDWmyIqJRDOeK503VnryIm5mM
+ mU8koR+a2mhficoMhg+PKHq8MF3HgJ3PQadoY29SPPMMapgpdJdMDf6Z5msCjog+AnzpZthbQ
+ GS9kj1JxZEd0RcgSEUQ+KFXr9lGrA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When a committish, C, is immediately followed by 3dots (...) which are,
-in turn, not followed by another committish, we are usually asking for
-the revision range C...HEAD, which is known as the symmetric difference
-of C and HEAD.
+Using them as continuation indications for abbreviated SHA-1 values
+bears the risk that they are mistaken for the dotted range operators.
 
-When describe_detached_head is invoked, it prints the committish
-followed by 3dots as elaborated above when it indicates the current and
-previous HEAD positions.  For example:
+Commands which expect a single commit will fail when given a range of
+commits.
 
-   # Randomly check out one of the first seven git.git commits
-   # (Starting with a detached HEAD already)
-   $ git checkout $(git rev-list master | tail -7 | shuf | head -1)
-   Previous HEAD position was bfcf2d7874f7... checkout: describe_detached_head: remove 3dots after committish
-   HEAD is now at 19b2860cba57... Use "-Wall -O2" for the compiler to get more warnings.
-
-"Evaluating" this displayed pseudo-range for the current HEAD indication
-resolves to the empty range (C...HEAD, where C equals HEAD).
-
-For the previous HEAD indication, the results of the "evaluation" are
-somewhat more difficult to predict: previous here refers to what the
-reflog dictates (this is not necessarily the topological ancestor in the
-DAG, i.e., HEAD^).  In the example above, the "range" resolves to almost
-all commits in the author's clone of git.git.  Running the command again
-causes the then previous to current HEAD position "range" to be a lot
-smaller.
-
-This could be confusing not only for novices; in either case, no range
-should be insinuated by describe_detached_head.
-
-Granted, this "evaluation" is at the moment, if at all, only performed
-in the mind of the observer.  And, to be sure, the 3dots *are* intended
-as a continuation indication for the abbreviated SHA-1 value.
-Nevertheless, we should get rid of them, for the following reasons:
-
-   * they would still be displayed if someone had their core.abbrev
-     config value set to the max
-
-   * when the built-in version of checkout was introduced by commit
-
-        782c2d65c240 ("Build in checkout", 2008-02-07)
-
-     no 3dots were present in the legacy git-checkout.sh (see
-     contrib/examples/git-checkout.sh)
-
-   * when git-reset causes a new HEAD line to be printed (during a hard
-     reset), neither builtin/reset.c nor contrib/examples/git-reset.sh
-     mention 3dots
-
-Lest we confuse the meticulous observer, we ought to retire the 3dots in
-the circumstances described above.
+Also, add a note that sometimes, 3dots are just continuation
+indications.
 
 Signed-off-by: Ann T Ropea <bedhanger@gmx.de>
 ---
- builtin/checkout.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/user-manual.txt | 20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index fc4f8fd2ea29..59cc52e55855 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -404,7 +404,7 @@ static void describe_detached_head(const char *msg, struct commit *commit)
- 	struct strbuf sb = STRBUF_INIT;
- 	if (!parse_commit(commit))
- 		pp_commit_easy(CMIT_FMT_ONELINE, commit, &sb);
--	fprintf(stderr, "%s %s... %s\n", msg,
-+	fprintf(stderr, "%s %s %s\n", msg,
- 		find_unique_abbrev(commit->object.oid.hash, DEFAULT_ABBREV), sb.buf);
- 	strbuf_release(&sb);
- }
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+index b4d88af133e8..bdb44b067399 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -319,7 +319,7 @@ do so (now or later) by using -b with the checkout command again. Example:
+ 
+   git checkout -b new_branch_name
+ 
+-HEAD is now at 427abfa... Linux v2.6.17
++HEAD is now at 427abfa Linux v2.6.17
+ ------------------------------------------------
+ 
+ The HEAD then refers to the SHA-1 of the commit instead of to a branch,
+@@ -508,7 +508,7 @@ Bisecting: 3537 revisions left to test after this
+ 
+ If you run `git branch` at this point, you'll see that Git has
+ temporarily moved you in "(no branch)". HEAD is now detached from any
+-branch and points directly to a commit (with commit id 65934...) that
++branch and points directly to a commit (with commit id 65934) that
+ is reachable from "master" but not from v2.6.18. Compile and test it,
+ and see whether it crashes. Assume it does crash. Then:
+ 
+@@ -549,14 +549,14 @@ says "bisect".  Choose a safe-looking commit nearby, note its commit
+ id, and check it out with:
+ 
+ -------------------------------------------------
+-$ git reset --hard fb47ddb2db...
++$ git reset --hard fb47ddb2db
+ -------------------------------------------------
+ 
+ then test, run `bisect good` or `bisect bad` as appropriate, and
+ continue.
+ 
+ Instead of `git bisect visualize` and then `git reset --hard
+-fb47ddb2db...`, you might just want to tell Git that you want to skip
++fb47ddb2db`, you might just want to tell Git that you want to skip
+ the current commit:
+ 
+ -------------------------------------------------
+@@ -3426,6 +3426,8 @@ Date:
+ ...
+ :100644 100644 oldsha... 4b9458b... M somedirectory/myfile
+ ------------------------------------------------
++(Note that in the above, the "..." are used as continuation
++indications, not as symmetric difference operators!)
+ 
+ This tells you that the immediately following version of the file was
+ "newsha", and that the immediately preceding version was "oldsha".
+@@ -3449,7 +3451,7 @@ and your repository is good again!
+ $ git log --raw --all
+ ------------------------------------------------
+ 
+-and just looked for the sha of the missing object (4b9458b..) in that
++and just looked for the sha of the missing object (4b9458b) in that
+ whole thing. It's up to you--Git does *have* a lot of information, it is
+ just missing one particular blob version.
+ 
+@@ -4114,9 +4116,9 @@ program, e.g.  `diff3`, `merge`, or Git's own merge-file, on
+ the blob objects from these three stages yourself, like this:
+ 
+ ------------------------------------------------
+-$ git cat-file blob 263414f... >hello.c~1
+-$ git cat-file blob 06fa6a2... >hello.c~2
+-$ git cat-file blob cc44c73... >hello.c~3
++$ git cat-file blob 263414f >hello.c~1
++$ git cat-file blob 06fa6a2 >hello.c~2
++$ git cat-file blob cc44c73 >hello.c~3
+ $ git merge-file hello.c~2 hello.c~1 hello.c~3
+ ------------------------------------------------
+ 
+@@ -4374,7 +4376,7 @@ $ git log --no-merges t/
+ ------------------------
+ 
+ In the pager (`less`), just search for "bundle", go a few lines back,
+-and see that it is in commit 18449ab0...  Now just copy this object name,
++and see that it is in commit 18449ab0.  Now just copy this object name,
+ and paste it into the command line
+ 
+ -------------------
 -- 
 2.13.6
 
