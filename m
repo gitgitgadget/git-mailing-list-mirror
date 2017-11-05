@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6812F20281
-	for <e@80x24.org>; Sun,  5 Nov 2017 21:39:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9C71420281
+	for <e@80x24.org>; Sun,  5 Nov 2017 21:39:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751186AbdKEViv (ORCPT <rfc822;e@80x24.org>);
-        Sun, 5 Nov 2017 16:38:51 -0500
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:56415 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751073AbdKEVir (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Nov 2017 16:38:47 -0500
-Received: by mail-wm0-f65.google.com with SMTP id z3so10585998wme.5
-        for <git@vger.kernel.org>; Sun, 05 Nov 2017 13:38:46 -0800 (PST)
+        id S1751324AbdKEVjH (ORCPT <rfc822;e@80x24.org>);
+        Sun, 5 Nov 2017 16:39:07 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:56429 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751073AbdKEViw (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Nov 2017 16:38:52 -0500
+Received: by mail-wm0-f67.google.com with SMTP id z3so10586210wme.5
+        for <git@vger.kernel.org>; Sun, 05 Nov 2017 13:38:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=aGCi+z6F8H6GC8FmLT54koF17X2MyWTGRi2ZuIGoIiE=;
-        b=G/6b52Xm5Pm2vyv+lfvC6zSiOTM93r9udAWRnr2961fGrGPe2C2DFC9l8hMzKQPXvz
-         o5PXREQj0wibojJxDBiwI9ZGAam9+uWpG2J4ZD8TJnxquiLWHfHvb+i/jykPKLMY/91A
-         /6VLRjtA2Gqs0m7zrTqfFRYT3aSzOK5aLK4RJyPA8FMERiZf/qrY6vxCfEq29JBKNM/q
-         B83TD0wJsN8G6vY3ALpzS4Cqi/8l0ZxLkeg24fJQ66XH77d026iCHQxd1lAy3b/SBPJ3
-         b5zJrprhoeGgm7rzAs4vXL4ZYjwgH6cHhfgxnLGnDJ6YfOqccpxwLAsz3G/HDwdzyHrL
-         34BQ==
+        bh=G2pKQdXV0MNzOC6cWO1YuB9J89KFxKo0DsXB46QDlok=;
+        b=nw3IgCb7Z/VSCxMOdpBSEFrskE517u+Ye6ByWpXorUgXOH3RxSPSwUEC4RdSPbIDrD
+         RvwkudGUKRbvj8j/xqCFmsoXigcsl6mdBlC9dfDqBXa2081x3E/ws8ajFyDVNOuTy6jQ
+         NPC2rDv+aeCEn16j8j9/Axx6ou2MSImzd/hhezYQ2Tg4ddXhtchWOSfZnQ6c/mv9qLQ/
+         zKBj421Qm4pmXIQ34o8EkFMH9iVtoA82YBqqBK5he93DevD4sadSAfRL8h+XYkIeP5SG
+         OI+DgCs8CyjmKNXRY4uPuAsGwhEHIBfJv/yztabvAbNPdPQf+8RuUdo9b90+PmVsolqZ
+         j/Gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=aGCi+z6F8H6GC8FmLT54koF17X2MyWTGRi2ZuIGoIiE=;
-        b=pV7uV+gXmJ2UmTUBufVctAyGII0ibza49n3F6obd/T65TK322apXhrap8hJH/30BeG
-         U2LqGv+hakP9UPkRB4UGb+rBAhnUFcvqZ4UanrGXmhY6DjvG8nCZcug3P5O4jOtBWDWb
-         ntGORL60a2om4jY5j6+BTcwGJhHgNdK4yVmnBIOf4KTl8/KpBEgDSJgnP25EfMy3tNeP
-         AQ6czYjwh7fdgb+74A8RjjFWoTIeetLDFqZQkIKLAFw+410fG9gkWDSv/mLqz+KoNJx9
-         bdTMdlmoohXD3eTmEj34WxyuMLhWXU2GPg83jUbrCgpj91/jfmZcq8kJ4CDb8UhmKeFi
-         kUxw==
-X-Gm-Message-State: AJaThX6P8P8r+/52aD53mV5ZjAJRJSgs50CtKjXhix3L6MLeZm6+UwQB
-        R+ijbVAevhx+gcOlG0ZJUsJIss2n
-X-Google-Smtp-Source: ABhQp+S72BI5cA3R2ntivkp7WXDDZglJhGmoMTdccNYCmNV/RmI0fGE7aGmBuZxh0k/gAqxiuYCAKA==
-X-Received: by 10.28.207.200 with SMTP id f191mr3300168wmg.99.1509917925688;
-        Sun, 05 Nov 2017 13:38:45 -0800 (PST)
+        bh=G2pKQdXV0MNzOC6cWO1YuB9J89KFxKo0DsXB46QDlok=;
+        b=fg9LxPRxDhA7W2W0FHykoQpOOOEFIMXQtxMjFGj7m1Yr2sMsMIjZrnY7USMsUQT9il
+         c9eLv8OgFcQP8y4m99ZGQ7NDu6Z6PtJO/WewBOf6hD6pfN4czLTE6ZWzkHekCUWjPw3G
+         8lXs7aotBYcxN4++EAkLYpARA1NTXyoKP8Lwj1vWUR9z5yG4eZ77B9dnBqJiK15bwvye
+         5X0KJIgF7tEpceV3zcNnF+RnXG2oaCMdOaIWBo0n1HXBhFFcD0i0Rgu8lbj6yLKBcjPi
+         Olo78HFfEIy9G+KK13/JNjdDWoJiPvcin6j+dkxFKr31GUlUvc55vnCMWN2czPlLNWOa
+         Q1Eg==
+X-Gm-Message-State: AJaThX4Zn/rZKTSsScf1BUAVqxEFlekqmqYF7QLbvZKkVstmTONToGj6
+        s4buQ/RjBDfkHdbSHKcx7Uj8uHoL
+X-Google-Smtp-Source: ABhQp+SA5T4CWZ1ZuQUpCxkIqTUVDHidRXM+LJJ7fPvlgAD2sMLaKDNddIw0XaHmUBGwAVjkE7473A==
+X-Received: by 10.28.223.132 with SMTP id w126mr4048062wmg.39.1509917930997;
+        Sun, 05 Nov 2017 13:38:50 -0800 (PST)
 Received: from localhost.localdomain (sud35-h04-89-95-107-230.dsl.sta.abo.bbox.fr. [89.95.107.230])
-        by smtp.gmail.com with ESMTPSA id h2sm5147323wrf.47.2017.11.05.13.38.44
+        by smtp.gmail.com with ESMTPSA id h2sm5147323wrf.47.2017.11.05.13.38.49
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 05 Nov 2017 13:38:45 -0800 (PST)
+        Sun, 05 Nov 2017 13:38:50 -0800 (PST)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Lars Schneider <larsxschneider@gmail.com>,
         Eric Wong <e@80x24.org>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v2 3/8] t0021/rot13-filter: improve 'if .. elsif .. else' style
-Date:   Sun,  5 Nov 2017 22:38:31 +0100
-Message-Id: <20171105213836.11717-4-chriscool@tuxfamily.org>
+Subject: [PATCH v2 7/8] t0021/rot13-filter: add capability functions
+Date:   Sun,  5 Nov 2017 22:38:35 +0100
+Message-Id: <20171105213836.11717-8-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.15.0.8.g15d566f848
 In-Reply-To: <20171105213836.11717-1-chriscool@tuxfamily.org>
 References: <20171105213836.11717-1-chriscool@tuxfamily.org>
@@ -70,119 +70,105 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Before further refactoring the "t0021/rot13-filter.pl" script,
-let's modernize the style of its 'if .. elsif .. else' clauses
-to improve its readability by making it more similar to our
-other perl scripts.
+These function help read and write capabilities.
+
+To make them more generic and make it easy to reuse them,
+the following changes are made:
+
+- we don't require capabilities to come in a fixed order,
+- we allow duplicates,
+- we check that the remote supports the capabilities we
+  advertise,
+- we don't check if the remote declares any capability we
+  don't know about.
+
+The reason behind the last change is that the protocol
+should work using only the capabilities that both ends
+support, and it should not stop working if one end starts
+to advertise a new capability.
+
+Despite those changes, we can still require a set of
+capabilities, and die if one of them is not supported.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- t/t0021/rot13-filter.pl | 39 +++++++++++++--------------------------
- 1 file changed, 13 insertions(+), 26 deletions(-)
+ t/t0021/rot13-filter.pl | 58 ++++++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 45 insertions(+), 13 deletions(-)
 
 diff --git a/t/t0021/rot13-filter.pl b/t/t0021/rot13-filter.pl
-index c025518c0a..37cecd8654 100644
+index d47b7f5666..f919d798a6 100644
 --- a/t/t0021/rot13-filter.pl
 +++ b/t/t0021/rot13-filter.pl
-@@ -75,23 +75,20 @@ sub packet_bin_read {
- 	if ( $bytes_read == 0 ) {
- 		# EOF - Git stopped talking to us!
- 		return ( -1, "" );
--	}
--	elsif ( $bytes_read != 4 ) {
-+	} elsif ( $bytes_read != 4 ) {
- 		die "invalid packet: '$buffer'";
- 	}
- 	my $pkt_size = hex($buffer);
- 	if ( $pkt_size == 0 ) {
- 		return ( 1, "" );
--	}
--	elsif ( $pkt_size > 4 ) {
-+	} elsif ( $pkt_size > 4 ) {
- 		my $content_size = $pkt_size - 4;
- 		$bytes_read = read STDIN, $buffer, $content_size;
- 		if ( $bytes_read != $content_size ) {
- 			die "invalid packet ($content_size bytes expected; $bytes_read bytes read)";
- 		}
- 		return ( 0, $buffer );
--	}
--	else {
-+	} else {
- 		die "invalid packet size: $pkt_size";
- 	}
+@@ -150,24 +150,56 @@ sub packet_initialize {
+ 	packet_flush();
  }
-@@ -195,8 +192,7 @@ while (1) {
- 		$debug->flush();
- 		packet_txt_write("status=success");
- 		packet_flush();
--	}
--	else {
-+	} else {
- 		my ( $res, $pathname ) = packet_required_key_val_read("pathname");
- 		if ( $res == -1 ) {
- 			die "unexpected EOF while expecting pathname";
-@@ -240,17 +236,13 @@ while (1) {
- 		my $output;
- 		if ( exists $DELAY{$pathname} and exists $DELAY{$pathname}{"output"} ) {
- 			$output = $DELAY{$pathname}{"output"}
--		}
--		elsif ( $pathname eq "error.r" or $pathname eq "abort.r" ) {
-+		} elsif ( $pathname eq "error.r" or $pathname eq "abort.r" ) {
- 			$output = "";
--		}
--		elsif ( $command eq "clean" and grep( /^clean$/, @capabilities ) ) {
-+		} elsif ( $command eq "clean" and grep( /^clean$/, @capabilities ) ) {
- 			$output = rot13($input);
--		}
--		elsif ( $command eq "smudge" and grep( /^smudge$/, @capabilities ) ) {
-+		} elsif ( $command eq "smudge" and grep( /^smudge$/, @capabilities ) ) {
- 			$output = rot13($input);
--		}
--		else {
-+		} else {
- 			die "bad command '$command'";
- 		}
  
-@@ -259,25 +251,21 @@ while (1) {
- 			$debug->flush();
- 			packet_txt_write("status=error");
- 			packet_flush();
--		}
--		elsif ( $pathname eq "abort.r" ) {
-+		} elsif ( $pathname eq "abort.r" ) {
- 			print $debug "[ABORT]\n";
- 			$debug->flush();
- 			packet_txt_write("status=abort");
- 			packet_flush();
--		}
--		elsif ( $command eq "smudge" and
-+		} elsif ( $command eq "smudge" and
- 			exists $DELAY{$pathname} and
--			$DELAY{$pathname}{"requested"} == 1
--		) {
-+			$DELAY{$pathname}{"requested"} == 1 ) {
- 			print $debug "[DELAYED]\n";
- 			$debug->flush();
- 			packet_txt_write("status=delayed");
- 			packet_flush();
- 			$DELAY{$pathname}{"requested"} = 2;
- 			$DELAY{$pathname}{"output"} = $output;
--		}
--		else {
-+		} else {
- 			packet_txt_write("status=success");
- 			packet_flush();
++sub packet_read_capabilities {
++	my @cap;
++	while (1) {
++		my ( $res, $buf ) = packet_bin_read();
++		if ( $res == -1 ) {
++			die "unexpected EOF when reading capabilities";
++		}
++		return ( $res, @cap ) if ( $res != 0 );
++		$buf = remove_final_lf_or_die($buf);
++		unless ( $buf =~ s/capability=// ) {
++			die "bad capability buf: '$buf'";
++		}
++		push @cap, $buf;
++	}
++}
++
++# Read remote capabilities and check them against capabilities we require
++sub packet_read_and_check_capabilities {
++	my @required_caps = @_;
++	my ($res, @remote_caps) = packet_read_capabilities();
++	my %remote_caps = map { $_ => 1 } @remote_caps;
++	foreach (@required_caps) {
++		unless (exists($remote_caps{$_})) {
++			die "required '$_' capability not available from remote" ;
++		}
++	}
++	return %remote_caps;
++}
++
++# Check our capabilities we want to advertise against the remote ones
++# and then advertise our capabilities
++sub packet_check_and_write_capabilities {
++	my ($remote_caps, @our_caps) = @_;
++	foreach (@our_caps) {
++		unless (exists($remote_caps->{$_})) {
++			die "our capability '$_' is not available from remote"
++		}
++		packet_txt_write( "capability=" . $_ );
++	}
++	packet_flush();
++}
++
+ print $debug "START\n";
+ $debug->flush();
  
-@@ -297,8 +285,7 @@ while (1) {
- 				print $debug ".";
- 				if ( length($output) > $MAX_PACKET_CONTENT_SIZE ) {
- 					$output = substr( $output, $MAX_PACKET_CONTENT_SIZE );
--				}
--				else {
-+				} else {
- 					$output = "";
- 				}
- 			}
+ packet_initialize("git-filter", 2);
+ 
+-packet_compare_lists([0, "capability=clean"], packet_txt_read()) ||
+-	die "bad capability";
+-packet_compare_lists([0, "capability=smudge"], packet_txt_read()) ||
+-	die "bad capability";
+-packet_compare_lists([0, "capability=delay"], packet_txt_read()) ||
+-	die "bad capability";
+-packet_compare_lists([1, ""], packet_bin_read()) ||
+-	die "bad capability end";
+-
+-foreach (@capabilities) {
+-	packet_txt_write( "capability=" . $_ );
+-}
+-packet_flush();
++my %remote_caps = packet_read_and_check_capabilities("clean", "smudge", "delay");
++packet_check_and_write_capabilities(\%remote_caps, @capabilities);
++
+ print $debug "init handshake complete\n";
+ $debug->flush();
+ 
 -- 
 2.15.0.7.ga9ff306ed9.dirty
 
