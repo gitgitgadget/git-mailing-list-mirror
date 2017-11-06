@@ -6,45 +6,45 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E278202A0
-	for <e@80x24.org>; Mon,  6 Nov 2017 11:29:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 16AAE202A0
+	for <e@80x24.org>; Mon,  6 Nov 2017 11:29:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753061AbdKFL3S (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Nov 2017 06:29:18 -0500
-Received: from smtp-out-2.talktalk.net ([62.24.135.66]:10561 "EHLO
+        id S1753118AbdKFL3j (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Nov 2017 06:29:39 -0500
+Received: from smtp-out-2.talktalk.net ([62.24.135.66]:15362 "EHLO
         smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752997AbdKFL3Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Nov 2017 06:29:16 -0500
+        with ESMTP id S932186AbdKFL3h (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Nov 2017 06:29:37 -0500
 Received: from lindisfarne.localdomain ([92.22.30.94])
         by smtp.talktalk.net with SMTP
-        id BfYqeiZ2C3CyHBfaMewtww; Mon, 06 Nov 2017 11:29:08 +0000
+        id BfYqeiZ2C3CyHBfaYewtxT; Mon, 06 Nov 2017 11:29:31 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net; s=1605;
-        t=1509967748; bh=kPWlFkrCUpRUgz+PygXzTedPXt0SdWeRGQUzNDUbP+M=;
+        t=1509967771; bh=atRwJjEtOjtVm6Ix3RtZ9Aubgl+wBtSWKDIppLL6Adw=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:Reply-To;
-        b=D0SOldrZwZrqKiXk/wPNBpLd/FEVuF6rQsrImGHKpA0zmYNKAP6uBtNgzGrvMJPmo
-         nvQQwoiKLqHU5BLDaYMqgRUukzie+rm8NPRsFfndTx26Ci2f8HZw2D5hceo6Rv4Wrq
-         CxxrFy96COAAmlFXa8czVrsOnmBgZr5kxU+8CvJk=
+        b=dlgwZAW39aYtMKBKpkLlCMjQg+snhcSjC5bdP4CBjQUvA8RwXfj4boNs0gN+ia968
+         Sy6vDXbQ04EzPyl3Pil/aXYq6TG9i2sQU75/uchIyctiUpgNH/G2W0n8TQ/hVH00pX
+         Us9rJAmsj4jFugw/5y0TeOnUPv/e4ykWDj0JxRW8=
 X-Originating-IP: [92.22.30.94]
 X-Spam: 0
 X-OAuthority: v=2.2 cv=Zo+dE5zG c=1 sm=1 tr=0 a=lje0BXTe3+PqU+djfnm1WA==:117
- a=lje0BXTe3+PqU+djfnm1WA==:17 a=evINK-nbAAAA:8 a=LPvblEiyalS0-xaKrEMA:9
- a=HkobT9auY8qRQhDe:21 a=xAt_lYRgs9lS18oS:21 a=RfR_gqz1fSpA9VikTjo0:22
+ a=lje0BXTe3+PqU+djfnm1WA==:17 a=evINK-nbAAAA:8 a=qo_IBofmjA8VuP4PJYkA:9
+ a=boGxNzeRQ_6-pxMY:21 a=x326BpXhDvg8PScu:21 a=RfR_gqz1fSpA9VikTjo0:22
 From:   Phillip Wood <phillip.wood@talktalk.net>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH v1 5/8] sequencer: don't die in print_commit_summary()
-Date:   Mon,  6 Nov 2017 11:27:06 +0000
-Message-Id: <20171106112709.2121-6-phillip.wood@talktalk.net>
+Subject: [PATCH v1 6/8] sequencer: simplify adding Signed-off-by: trailer
+Date:   Mon,  6 Nov 2017 11:27:07 +0000
+Message-Id: <20171106112709.2121-7-phillip.wood@talktalk.net>
 X-Mailer: git-send-email 2.14.3
 In-Reply-To: <20171106112709.2121-1-phillip.wood@talktalk.net>
 References: <20170925101041.18344-1-phillip.wood@talktalk.net>
  <20171106112709.2121-1-phillip.wood@talktalk.net>
 Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
-X-CMAE-Envelope: MS4wfEvSdctq9rpqC9qRM5W5SIQiqe3jQ2BMk9ua5boepLcIGKk4CDhntNWBPfPfWj15aQaXnzPzArFd+oTaGfT8aZh+vCKZPjCeEMTaYd5F6oUx46W9T5Z5
- 3OmHuJUz0ObEPE+hFloQCDl+zrImfMx1uy4YIovi0h27tAyAvuePqDhMINtPK0eXAES5gZ84g+h2NF9eKJUtsfuqeq9Y22xqdizZSkqg0aBKgxrjGUrN3nU6
- 6l0+2C3autQx0nKAUmIJfQKjlfFLbv0L02MLPeGYvXoFSocgDnI7X7JLOBVb9xdT
+X-CMAE-Envelope: MS4wfEWhVHPBZMx4unjpyTSwf8FJcLhoy0Q5+ivnsXa5/GqHUfLM8AObV+0OVQ9yFbMexX0kjPAX+J6AhTRWupx+4/XnxBy/Mrr9Cn3KnSJh9atu2ozEteNT
+ tsD1lHW8p3Ryku3kYOqHsVfKW7GdqCvvT7uLSUzOHlv7YaA8+37CoyePPfy9HH+Ao+T1fey5UlsZoQX/by/6vd54EReDs7BPHxXKk5MuRx2Oava27nAgaXmF
+ 9pfSIIARQEYNCyH8Lv8B8bTxUoga3lptZdTWqkahI1w+BSFf9zjMSKv8YR6jt+6Q
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -52,97 +52,52 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Return an error rather than dying so that the sequencer can exit
-cleanly once it starts committing without forking 'git commit'
+Add the Signed-off-by: trailer in one place rather than adding it to
+the message when doing a recursive merge and specifying '--signoff'
+when running 'git commit'. This means that if there are conflicts when
+merging with a strategy other than 'recursive' the Signed-off-by:
+trailer will be added if the user commits the resolution themselves
+without passing '--signoff' to 'git commit'. It also simplifies the
+in-process commit that is about to be added to the sequencer.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- builtin/commit.c |  3 ++-
- sequencer.c      | 17 +++++++++++------
- sequencer.h      |  4 ++--
- 3 files changed, 15 insertions(+), 9 deletions(-)
+ sequencer.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index b109feaca11e3e43b1a59dee1868244824eaf345..c924cbac9e0d55941e984b3cce3c1e565cd8cf3c 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1612,7 +1612,8 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 			flags |= SUMMARY_INITIAL_COMMIT;
- 		if (author_date_is_interesting())
- 			flags |= SUMMARY_SHOW_AUTHOR_DATE;
--		print_commit_summary(prefix, &oid, flags);
-+		if (print_commit_summary(prefix, &oid, flags))
-+			exit(128);
- 	}
- 
- 	UNLEAK(err);
 diff --git a/sequencer.c b/sequencer.c
-index d4f77a5f24c89479a4a18c2b89a3cd4e7ba7ba6c..ae24405c23d021ed7916e5e2d9df6de27f867a2e 100644
+index ae24405c23d021ed7916e5e2d9df6de27f867a2e..3e4c3bbb265db58df22cfcb5a321fb74d822327e 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -875,8 +875,8 @@ static const char *implicit_ident_advice(void)
+@@ -477,9 +477,6 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
+ 			_(action_name(opts)));
+ 	rollback_lock_file(&index_lock);
  
- }
+-	if (opts->signoff)
+-		append_signoff(msgbuf, 0, 0);
+-
+ 	if (!clean)
+ 		append_conflicts_hint(msgbuf);
  
--void print_commit_summary(const char *prefix, const struct object_id *oid,
--			  int flags)
-+int print_commit_summary(const char *prefix, const struct object_id *oid,
-+			 int flags)
- {
- 	struct rev_info rev;
- 	struct commit *commit;
-@@ -885,12 +885,13 @@ void print_commit_summary(const char *prefix, const struct object_id *oid,
- 	struct pretty_print_context pctx = {0};
- 	struct strbuf author_ident = STRBUF_INIT;
- 	struct strbuf committer_ident = STRBUF_INIT;
-+	int ret = 0;
- 
- 	commit = lookup_commit(oid);
- 	if (!commit)
--		die(_("couldn't look up newly created commit"));
-+		return error(_("couldn't look up newly created commit"));
- 	if (parse_commit(commit))
--		die(_("could not parse newly created commit"));
-+		return error(_("could not parse newly created commit"));
- 
- 	strbuf_addstr(&format, "format:%h] %s");
- 
-@@ -934,8 +935,10 @@ void print_commit_summary(const char *prefix, const struct object_id *oid,
- 	diff_setup_done(&rev.diffopt);
- 
- 	head = resolve_ref_unsafe("HEAD", 0, NULL, NULL);
--	if (!head)
--		die_errno(_("unable to resolve HEAD after creating commit"));
-+	if (!head) {
-+		ret = error_errno(_("unable to resolve HEAD after creating commit"));
-+		goto out;
-+	}
- 	if (!strcmp(head, "HEAD"))
- 		head = _("detached HEAD");
- 	else
-@@ -948,7 +951,9 @@ void print_commit_summary(const char *prefix, const struct object_id *oid,
- 		log_tree_commit(&rev, commit);
+@@ -657,8 +654,6 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
+ 		argv_array_push(&cmd.args, "--amend");
+ 	if (opts->gpg_sign)
+ 		argv_array_pushf(&cmd.args, "-S%s", opts->gpg_sign);
+-	if (opts->signoff)
+-		argv_array_push(&cmd.args, "-s");
+ 	if (defmsg)
+ 		argv_array_pushl(&cmd.args, "-F", defmsg, NULL);
+ 	if ((flags & CLEANUP_MSG))
+@@ -1347,6 +1342,9 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
+ 		}
  	}
  
-+out:
- 	strbuf_release(&format);
-+	return ret;
- }
- 
- static int is_original_commit_empty(struct commit *commit)
-diff --git a/sequencer.h b/sequencer.h
-index c7989f93fcf08f979f5869cd4ec27f0dd0b88c82..0e3c2c9fd416349fb704a7ebc72c93a9b9a67703 100644
---- a/sequencer.h
-+++ b/sequencer.h
-@@ -76,6 +76,6 @@ void commit_post_rewrite(const struct commit *current_head,
- 
- #define SUMMARY_INITIAL_COMMIT   (1 << 0)
- #define SUMMARY_SHOW_AUTHOR_DATE (1 << 1)
--void print_commit_summary(const char *prefix, const struct object_id *oid,
--			  int flags);
-+int print_commit_summary(const char *prefix, const struct object_id *oid,
-+			 int flags);
- #endif
++	if (opts->signoff)
++		append_signoff(&msgbuf, 0, 0);
++
+ 	if (is_rebase_i(opts) && write_author_script(msg.message) < 0)
+ 		res = -1;
+ 	else if (!opts->strategy || !strcmp(opts->strategy, "recursive") || command == TODO_REVERT) {
 -- 
 2.14.3
 
