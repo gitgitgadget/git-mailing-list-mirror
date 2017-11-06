@@ -2,102 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E922120450
-	for <e@80x24.org>; Mon,  6 Nov 2017 16:13:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 462D120A10
+	for <e@80x24.org>; Mon,  6 Nov 2017 17:32:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932603AbdKFQNS (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Nov 2017 11:13:18 -0500
-Received: from zucker2.schokokeks.org ([178.63.68.90]:55031 "EHLO
-        zucker2.schokokeks.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932588AbdKFQNQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Nov 2017 11:13:16 -0500
-Received: from localhost ([::1])
-  (AUTH: PLAIN simon@ruderich.org, TLS: TLSv1/SSLv3,256bits,ECDHE-RSA-AES256-GCM-SHA384)
-  by zucker.schokokeks.org with ESMTPSA; Mon, 06 Nov 2017 17:13:15 +0100
-  id 0000000000000043.000000005A008A1B.000055C8
-Date:   Mon, 6 Nov 2017 17:13:15 +0100
-From:   Simon Ruderich <simon@ruderich.org>
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>,
-        Git List <git@vger.kernel.org>,
-        Ralf Thielow <ralf.thielow@gmail.com>
-Subject: Re: Improved error handling (Was: [PATCH 1/2] sequencer: factor out
- rewrite_file())
-Message-ID: <20171106161315.dmftp6ktk6bu7cah@ruderich.org>
-References: <6150c80b-cb0e-06d4-63a7-a4f4a9107ab2@web.de>
- <20171101194732.fn4n46wppl35e2z2@sigill.intra.peff.net>
- <alpine.DEB.2.21.1.1711012240500.6482@virtualbox>
- <20171101221618.4ioog7jlp7n2nd53@sigill.intra.peff.net>
- <20171103103248.4p45r4klojk5cf2g@ruderich.org>
- <xmqqpo8zpjdj.fsf@gitster.mtv.corp.google.com>
- <20171103191309.sth4zjokgcupvk2e@sigill.intra.peff.net>
- <20171104183643.akaazwswysphzuoq@ruderich.org>
- <20171105020700.2p4nguemzdrwiila@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+        id S1753454AbdKFRcr (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Nov 2017 12:32:47 -0500
+Received: from siwi.pair.com ([209.68.5.199]:12346 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753430AbdKFRcr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Nov 2017 12:32:47 -0500
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 58199844F2;
+        Mon,  6 Nov 2017 12:32:46 -0500 (EST)
+Received: from [10.160.98.77] (unknown [167.220.148.86])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id EAF76844F0;
+        Mon,  6 Nov 2017 12:32:45 -0500 (EST)
+Subject: Re: [PATCH 1/9] extension.partialclone: introduce partial clone
+ extension
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
+        Jeff Hostetler <jeffhost@microsoft.com>
+References: <20171102202052.58762-1-git@jeffhostetler.com>
+ <20171102202052.58762-2-git@jeffhostetler.com>
+ <20171102152427.32544b3d6149e7a7bfe840c8@google.com>
+ <1db01a45-85c4-6243-c43f-9f5e50e9a6a8@jeffhostetler.com>
+ <20171103113919.396807c82dbfdecff7f19c41@google.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <99b7c61b-f8ab-43a0-0707-62ac1db4d080@jeffhostetler.com>
+Date:   Mon, 6 Nov 2017 12:32:45 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
+MIME-Version: 1.0
+In-Reply-To: <20171103113919.396807c82dbfdecff7f19c41@google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
-In-Reply-To: <20171105020700.2p4nguemzdrwiila@sigill.intra.peff.net>
-User-Agent: NeoMutt/20170609 (1.8.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Nov 04, 2017 at 10:07:00PM -0400, Jeff King wrote:
-> Yes, I think what you've written here (and below) is quite close to the
-> error_context patches I linked elsewhere in the thread. In other
-> words, I think it's a sane approach.
 
-In contrast to error_context I'd like to keep all exiting
-behavior (die, ignore, etc.) in the hand of the caller and not
-use any callbacks as that makes the control flow much harder to
-follow.
 
-> I agree it might be nice for the error context to have a positive "there
-> was an error" flag. It's probably worth making it redundant with the
-> return code, though, so callers can use whichever style is most
-> convenient for them.
+On 11/3/2017 2:39 PM, Jonathan Tan wrote:
+> On Fri, 3 Nov 2017 09:57:18 -0400
+> Jeff Hostetler <git@jeffhostetler.com> wrote:
+> 
+>> On 11/2/2017 6:24 PM, Jonathan Tan wrote:
+>>> On Thu,  2 Nov 2017 20:20:44 +0000
+>>> Jeff Hostetler <git@jeffhostetler.com> wrote:
+>>>
+>>>> From: Jeff Hostetler <jeffhost@microsoft.com>
+>>>>
+>>>> Introduce the ability to have missing objects in a repo.  This
+>>>> functionality is guarded by new repository extension options:
+>>>>       `extensions.partialcloneremote` and
+>>>>       `extensions.partialclonefilter`.
+>>>
+>>> With this, it is unclear what happens if extensions.partialcloneremote
+>>> is not set but extensions.partialclonefilter is set. For something as
+>>> significant as a repository extension (which Git uses to determine if it
+>>> will even attempt to interact with a repo), I think - I would prefer
+>>> just extensions.partialclone (or extensions.partialcloneremote, though I
+>>> prefer the former) which determines the remote (the important part,
+>>> which controls the dynamic object fetching), and have another option
+>>> "core.partialclonefilter" which is only useful if
+>>> "extensions.partialclone" is set.
+>>
+>> Yes, that is a point I wanted to ask about.  I renamed the
+>> extensions.partialclone that you created and then I moved your
+>> remote.<name>.blob-max-bytes setting to be in extensions too.
+>> Moving it to core.partialclonefilter is fine.
+> 
+> OK - in that case, it might be easier to just reuse my first patch in
+> its entirety. "core.partialclonefilter" is not used until the
+> fetching/cloning part anyway.
+> 
 
-Agreed.
+Good point.  I'll take a look at refactoring that.
+If it looks like the result will be mostly/effectively
+your original patches, I'll let you know and hand part 2
+back to you.
 
-Regarding the API, should it be allowed to pass NULL as error
-pointer to request no additional error handling or should the
-error functions panic on NULL? Allowing NULL makes partial
-conversions possible (e.g. for write_in_full) where old callers
-just pass NULL and check the return values and converted callers
-can use the error struct.
+> I agree that "core.partialclonefilter" (or another place not in
+> "remote") instead of "remote.<name>.blob-max-bytes" is a good idea - in
+> the future, we might want to reuse the same filter setting for
+> non-fetching functionality.
+> 
 
-How should translations get handled? Appending ": %s" for
-strerror(errno) might be problematic. Same goes for "outer
-message: inner message" where the helper function just inserts ":
-" between the messages. Is _("%s: %s") (with appropriate
-translator comments) enough to handle these cases?
-
-Suggestions how to name the struct and the corresponding
-functions? My initial idea was struct error and to use error_ as
-prefix, but I'm not sure if struct error is too broad and may
-introduce conflicts with system headers. Also error_ is a little
-long and could be shorted to just err_ but I don't know if that's
-clear enough. The error_ prefix doesn't conflict with many git
-functions, but there are some in usage.c (error_errno, error,
-error_routine).
-
-And as general question, is this approach to error handling
-something we should pursue or are there objections? If there's
-consensus that this might be a good idea I'll look into
-converting some parts of the git code (maybe refs.c) to see how
-it pans out.
-
-Regards
-Simon
--- 
-+ privacy is necessary
-+ using gnupg http://gnupg.org
-+ public key id: 0x92FEFDB7E44C32F9
+Jeff
