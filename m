@@ -2,99 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EB1AA202A0
-	for <e@80x24.org>; Mon,  6 Nov 2017 09:54:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C38D4202A0
+	for <e@80x24.org>; Mon,  6 Nov 2017 10:31:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753382AbdKFJyA (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Nov 2017 04:54:00 -0500
-Received: from mail-pf0-f180.google.com ([209.85.192.180]:48514 "EHLO
-        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753380AbdKFJx6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Nov 2017 04:53:58 -0500
-Received: by mail-pf0-f180.google.com with SMTP id b79so7352821pfk.5
-        for <git@vger.kernel.org>; Mon, 06 Nov 2017 01:53:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=r4tHy3ccCKDL/12jXcTsUIsBsHtkq0Z+XLtIoAcvvGc=;
-        b=BeZEzgF6f8DAiImmkENvigc7tDZ601/f63Qtim7diEjy6Zldic/Y30xjn73I8dVBB3
-         3icJUoyewdxaN7tNvQRC7jkRRaYO9pv63ryt/ldoN7qdyfLhojgYWzMeZJA+y4gTLRWx
-         dLvRhlShC3idbHY2k4RxUVBMbegj7KVWpPPKsw35AvKsIMSxB24s2d+w7SmNHAw9OSsF
-         QU2de9F35D/sVBp6vXoDcKnj/rnduxGRjnj1I1vbQ5+ZYeLTpjVcORcpVyXLggomc3+Z
-         Cqs44Grcflj9STsvOITVkFQfqQURhD1iy560rUY7B/bPiZAPuymHbqMkPdPGukkSJLJC
-         QVpA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=r4tHy3ccCKDL/12jXcTsUIsBsHtkq0Z+XLtIoAcvvGc=;
-        b=oIQ8fpscCU4BDbPdJ6Y0F3S2zv8zZYw2c+99SOU9NXpMqlVKzkadzYNGk8Bqtmq8Z0
-         nV/GzS1oLW0AKFHDLn1a9WJMBHXWEiSk06Bfnyhg1lyYKfHbD8wDSe1ZaZfpKWBeN5zm
-         ElyMtXBAcPNYloEfmbmctyYt14djc9i24qetQenOErILD27XwmbRKiBPZLEtUoZUpm2l
-         eegkvKQ8CNh5pPK27SKcP6nAUGYMa/rvKKa9wkkok5b/KPo506nv04hxc0eRSWxxeo3r
-         xSijotMoChzkZEO6Mi5bqktwAOJ96GlyFgdJfhEu5nTkddaN1ZfyY/nRM8l0JPUz9H8X
-         1sxA==
-X-Gm-Message-State: AMCzsaUj7Eqj/ci+sRm6Y29gf2n5XWMPPCt0ELGVIsqcsxo52UZYzyMR
-        2EQkntBfoIOZiamZoDtGO5jlelIkbOm8h8t8URY=
-X-Google-Smtp-Source: ABhQp+SlYIADWOjCpz/tTIm94s/Lo/erDjS/J9H+dCpH0PEsAqnL/lUCTalDbGn4N22RbJXO3ZYsTtPn8Ydt2BQwQLk=
-X-Received: by 10.99.165.25 with SMTP id n25mr14781964pgf.294.1509962037821;
- Mon, 06 Nov 2017 01:53:57 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.236.170.1 with HTTP; Mon, 6 Nov 2017 01:53:42 -0800 (PST)
-In-Reply-To: <20171103204449.5268-1-dennis@kaarsemaker.net>
-References: <CAOAxMp9H6M+t5RvYiem+kXrY920ZDYvyyYt4GZ7ZnkpXVA_c0g@mail.gmail.com>
- <20171103204449.5268-1-dennis@kaarsemaker.net>
-From:   =?UTF-8?Q?Mantas_Mikul=C4=97nas?= <grawity@gmail.com>
-Date:   Mon, 6 Nov 2017 11:53:42 +0200
-Message-ID: <CAPWNY8WUo8n903AcUPQ-EsfmtjoKRJDGXp0Wy4KoBSbrOhrR0A@mail.gmail.com>
-Subject: Re: [PATCH] credential-libsecret: unlock locked secrets
-To:     Dennis Kaarsemaker <dennis@kaarsemaker.net>
+        id S1751691AbdKFKbe (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Nov 2017 05:31:34 -0500
+Received: from cloud.peff.net ([104.130.231.41]:47438 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751054AbdKFKbd (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Nov 2017 05:31:33 -0500
+Received: (qmail 19616 invoked by uid 109); 6 Nov 2017 10:31:28 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 06 Nov 2017 10:31:28 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 19648 invoked by uid 111); 6 Nov 2017 10:31:38 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Mon, 06 Nov 2017 05:31:38 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 06 Nov 2017 05:31:26 -0500
+Date:   Mon, 6 Nov 2017 05:31:26 -0500
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?0JTQuNC70Y/QvSDQn9Cw0LvQsNGD0LfQvtCy?= 
+        <dilyan.palauzov@aegee.org>
 Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Subject: Re: git grep -P fatal: pcre_exec failed with error code -8
+Message-ID: <20171106103125.fwtrxv6zycrbihcv@sigill.intra.peff.net>
+References: <635a9bd4-2aa9-4415-2756-b82370c55798@aegee.org>
+ <20171105021623.yi46w2awwy7p3q6e@sigill.intra.peff.net>
+ <4e2bc579-429f-9927-4502-5929e5235740@aegee.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <4e2bc579-429f-9927-4502-5929e5235740@aegee.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 3, 2017 at 10:44 PM, Dennis Kaarsemaker
-<dennis@kaarsemaker.net> wrote:
-> Credentials exposed by the secret service DBUS interface may be locked.
-> Setting the SECRET_SEARCH_UNLOCK flag will make the secret service
-> unlock these secrets, possibly prompting the user for credentials to do
-> so. Without this flag, the secret is simply not loaded.
->
-> Signed-off-by: Dennis Kaarsemaker <dennis@kaarsemaker.net>
-> ---
->  contrib/credential/libsecret/git-credential-libsecret.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/contrib/credential/libsecret/git-credential-libsecret.c b/co=
-ntrib/credential/libsecret/git-credential-libsecret.c
-> index 4c56979d8a..b4750c9ee8 100644
-> --- a/contrib/credential/libsecret/git-credential-libsecret.c
-> +++ b/contrib/credential/libsecret/git-credential-libsecret.c
-> @@ -104,7 +104,7 @@ static int keyring_get(struct credential *c)
->         items =3D secret_service_search_sync(service,
->                                            SECRET_SCHEMA_COMPAT_NETWORK,
->                                            attributes,
-> -                                          SECRET_SEARCH_LOAD_SECRETS,
-> +                                          SECRET_SEARCH_LOAD_SECRETS | S=
-ECRET_SEARCH_UNLOCK,
->                                            NULL,
->                                            &error);
->         g_hash_table_unref(attributes);
-> --
-> 2.15.0-rc2-464-gb5de734
->
+On Sun, Nov 05, 2017 at 10:41:17AM +0100, Дилян Палаузов wrote:
 
-Looks okay. (It seems that's what all other programs do, too...)
+> I understand that the PCRE's stack can get exhausted for some files, but in
+> such cases, git grep shall proceed with the other files, and print at the
+> end/stderr for which files the pattern was not applied.  Such behaviour
+> would be more usefull than the current one.
 
---=20
-Mantas Mikul=C4=97nas <grawity@gmail.com>
+Yes, I had a similar thought. It does feel a little funny for us to
+basically treat an error as "no match" for non-interactive use, but then
+the current behavior works out to be more or less the same (we return an
+error code which most shell scripts would interpret as failure).
+
+IOW, I think something like this is probably the right direction:
+
+diff --git a/grep.c b/grep.c
+index ce6a48e634..2c152e5908 100644
+--- a/grep.c
++++ b/grep.c
+@@ -427,7 +427,7 @@ static int pcre1match(struct grep_pat *p, const char *line, const char *eol,
+ 	}
+ 
+ 	if (ret < 0 && ret != PCRE_ERROR_NOMATCH)
+-		die("pcre_exec failed with error code %d", ret);
++		warning("pcre_exec failed with error code %d", ret);
+ 	if (ret > 0) {
+ 		ret = 0;
+ 		match->rm_so = ovector[0];
+
+but possibly:
+
+  1. It would be nice to report the filename that we couldn't match on.
+     But we don't know it at this level of the code (and it might not be
+     a file at all that we are matching). So probably we'd want to pass
+     the error much further up the call stack. This is tricky as there
+     are multiple regex libraries we can use, and the return value gets
+     normalized to 1/0 for hit/not-hit long before we get as far as
+     something that knows the filename.
+
+     We might need to do something invasive like adding an extra
+     parameter to hold the error message, and passing it through the
+     whole stack.
+
+  2. We should still try to exit with an exit code other than "1" to
+     indicate we hit an error besides "no lines were found".
+
+  3. Other regex libraries might need similar treatment. Probably
+     pcre2match() needs it. It doesn't look like regexec() can ever
+     return an error besides REG_NOMATCH.
+
+-Peff
