@@ -2,116 +2,396 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
-	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 50BC420A10
-	for <e@80x24.org>; Mon,  6 Nov 2017 23:50:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 547C520A10
+	for <e@80x24.org>; Mon,  6 Nov 2017 23:50:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755099AbdKFXuJ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Nov 2017 18:50:09 -0500
-Received: from smtp-out-4.talktalk.net ([62.24.135.68]:40457 "EHLO
-        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754356AbdKFXuH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Nov 2017 18:50:07 -0500
-Received: from PhilipOakley ([92.29.14.162])
-        by smtp.talktalk.net with SMTP
-        id Br9Yek485Ap17Br9ZeNuTp; Mon, 06 Nov 2017 23:50:05 +0000
-X-Originating-IP: [92.29.14.162]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=EsGilWUA c=1 sm=1 tr=0 a=NXc+vVEgz70gitWznrz3ig==:117
- a=NXc+vVEgz70gitWznrz3ig==:17 a=8nJEP1OIZ-IA:10 a=ybZZDoGAAAAA:8
- a=xtxXYLxNAAAA:8 a=JS-1R52wtdgw_pkmB2EA:9 a=7Zwj6sZBwVKJAoWSPKxL6X1jA+E=:19
- a=wPNLvfGTeEIA:10 a=0RhZnL1DYvcuLYC8JZ5M:22 a=xts0dhWdiJbonKbuqhAr:22
-Message-ID: <D199FB1260C4462ABFC1F0F77D26EF06@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:   "Philip Oakley" <philipoakley@iee.org>
-To:     "Junio C Hamano" <gitster@pobox.com>,
-        "Stefan Beller" <sbeller@google.com>
-Cc:     "git" <git@vger.kernel.org>, "Kevin Daudt" <me@ikke.info>,
-        "Jacob Keller" <jacob.keller@gmail.com>,
-        "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-References: <20171028004419.10139-1-sbeller@google.com>        <20171031003351.22341-1-sbeller@google.com>        <20171031003351.22341-7-sbeller@google.com>        <xmqqinevzvel.fsf@gitster.mtv.corp.google.com>        <CAGZ79kYO=4SWzfKY6bU8Spn5Ubw39ghOH6wanFhFEsKD8q9vrA@mail.gmail.com>        <xmqq4lqewu2b.fsf@gitster.mtv.corp.google.com>        <CAGZ79kYC4=rDSWC7WCGVL4n4OC8BpvMJFwxx+LV9GqoGnSHFSA@mail.gmail.com>        <xmqqinetsayr.fsf@gitster.mtv.corp.google.com>        <xmqq375xs3zr.fsf@gitster.mtv.corp.google.com>        <BFE987312194406AAAEA8DAC7EC5BFF5@PhilipOakley> <xmqqlgjlkzmm.fsf@gitster.mtv.corp.google.com>
-Subject: Re: [PATCH 6/7] builtin/describe.c: describe a blob
-Date:   Mon, 6 Nov 2017 23:50:03 -0000
-Organization: OPDS
-MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="iso-8859-1";
-        reply-type=original
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-Antivirus: AVG (VPS 171106-2, 06/11/2017), Outbound message
-X-Antivirus-Status: Clean
-X-CMAE-Envelope: MS4wfMopnKq5f2QVkLly/6G16ET8Ua2vo0iL4XqpBwT69GcsxQfwALVIOIG9lJn0Qwlvqd12zlDxZGXrCpoaDfKvyWCYUU06e/Zmcq7awgv3E3yiyhQ2WVC2
- 9Bgzz947+gOs0zj1LUryPQmvOq2h6RHAZt48+TIz11F+Ba1DQFhAhpVLdthG4bCI6c3R5zqKlmH/mpfBMZMsBLSnTtjJrx2w/hyszpwZm/luiDR7OO61AnX4
- 1Ko4mk+u+AiXKeBQVK2ZBkJe9nfQogkz/JXM6CvSG82TZAWPBlxlwS2wp3fpLOaEPfYbCqVRAmx0zYEZ9gkAKw==
+        id S1754927AbdKFXuf (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Nov 2017 18:50:35 -0500
+Received: from mail-it0-f42.google.com ([209.85.214.42]:56758 "EHLO
+        mail-it0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754991AbdKFXud (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Nov 2017 18:50:33 -0500
+Received: by mail-it0-f42.google.com with SMTP id r127so254992itb.5
+        for <git@vger.kernel.org>; Mon, 06 Nov 2017 15:50:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=Gjza0T71XAq1TIu5Njzd6RiiDF15y8Sw0wh6uThb7K4=;
+        b=S2Hztzy9VaBE2G+JWFca18QQ+KD8riGeBU7ycu5cTm/72aLiYgDR4/Bd9saYYNscjk
+         YO4fCLx2RZYhoN3Blxy3XvNyMhRp5xNWT+y2bXu+uWzvWu4XaK/PcMc4UBAyUmLaFpd/
+         EVL984g8skPG+7knlFMmODmGPiv348dDJrHeSxgcA4QCHij6HacEz+gsWZ9Rg9pKpclU
+         2i+yYokqVlrxzhYsAvv352WrKSuh6/IbW4uwo4kG545aHdHjAc/uEzkh6BcX9f24Vn2A
+         xWBsySggboz5F5Rd/Ov0qTq0jbq81+igpX78X6+3NiSvEdWSVwiB09ya4ZDFJOd+qlbT
+         xjkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=Gjza0T71XAq1TIu5Njzd6RiiDF15y8Sw0wh6uThb7K4=;
+        b=CxhuN6G/Rt0uii3Lubn0aNu0QN7IdmVONxGAlja10SqqjzcnfWllfmhk8zvCpNPwy1
+         L5EnKvf74bhtbzCpJv2WgYyhBzo/bHKZq7bbxo6xjL1WDQDZuo6bpS9mHrsio6NlMZvy
+         pfd+yTPTrJtW3pN7GcdDlLWvhHaxSHRWZNgsRtWEV/LepbkPFyQvAOuii8wMU2mYdu5s
+         +N+ijqsEBSaSfwhTCxKMV8QbbWX4hB4PqjpCA+6JynNBYvrau9AzYjBTbIkW8PadVkDC
+         L9A7NsXLeabrDVL9wYDcBYwDFDNjmNRhbtlYwENnthdDxfm3WS/xwa1/QxVGJX6CciC4
+         pQxQ==
+X-Gm-Message-State: AJaThX6rfsPLT8ymTmWL1/oyWGJH+Q9Ih+iMyGvw8U2Gy76ZCulTrEg7
+        K5GG2SoAWqXlKSudy9Xv4+t/WcGj+vw=
+X-Google-Smtp-Source: ABhQp+TBmdZElta27j8OjffEjmHCKHN3ruXEtPzvj9x8EJ12/njbdptnwL5z6O8+eG9y9jTbniq7hg==
+X-Received: by 10.36.249.73 with SMTP id l70mr11479467ith.70.1510012232039;
+        Mon, 06 Nov 2017 15:50:32 -0800 (PST)
+Received: from twelve3.mtv.corp.google.com ([100.96.218.44])
+        by smtp.gmail.com with ESMTPSA id 196sm6291552ioe.66.2017.11.06.15.50.31
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 06 Nov 2017 15:50:31 -0800 (PST)
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     sbeller@google.com, Jonathan Tan <jonathantanmy@google.com>
+Subject: [PATCH] Tests: document test_submodule_{,forced_}switch()
+Date:   Mon,  6 Nov 2017 15:50:21 -0800
+Message-Id: <20171106235021.113358-1-jonathantanmy@google.com>
+X-Mailer: git-send-email 2.15.0.7.g764aa4b28.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Junio C Hamano" <gitster@pobox.com>
-Sent: Sunday, November 05, 2017 6:28 AM
-> "Philip Oakley" <philipoakley@iee.org> writes:
->
->> Is this not also an alternative case, relative to the user, for the
->> scenario where the user has an oid/sha1 value but does not know what
->> it is, and would like to find its source and type relative to the
->> `describe` command.
->
-> I am not sure what you wanted to say with "source and type RELATIVE TO
-> the describe command".
+Factor out the commonalities from test_submodule_switch() and
+test_submodule_forced_switch() in lib-submodule-update.sh, and document
+their usage.
 
-The 'relative to' was meaning the user's expectation about this particular 
-command. For a non-expert user, who may not have come across cat-file yet, 
-their world view may not extend beyond 'Git describe <this>' for me.
+This also makes explicit (through the KNOWN_FAILURE_FORCED_SWITCH_TESTS
+variable) the fact that, currently, all functionality tested using
+test_submodule_forced_switch() do not correctly handle the situation in
+which a submodule is replaced with an ordinary directory.
 
->
-> The first thing the combination of the user and the describe command
-> would do when the user has a 40-hex string would be to do the
-> equivalent of "cat-file -t" to learn if it even exists and what its
-> type is.  With Stefan's patch, that is what describe command does in
-> order to choose quite a different codeflow from the traditional mode
-> when it learns that it was given a blob.
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+I find tests that use lib-submodule-update.sh difficult to understand
+due to the lack of clarity of what test_submodule_switch() and others do
+with their argument - I hope this will make things easier for future
+readers.
+---
+ t/lib-submodule-update.sh | 250 +++++++++-------------------------------------
+ 1 file changed, 46 insertions(+), 204 deletions(-)
 
-I realised, after sending, that this was probably the method for 
-non-ambiguous shortened oid's. Thanks for the reminder.
->
->> IIUC the existing `describe` command only accepts <commit-ish> values,
->> and here we are extending that to be even more inclusive, but at the
->> same time the options become more restricted.
->
-> Do you mean that the command should check if it was given an option
-> that would not be applicable to the "find a commit that has the
-> blob" mode, once it learns that it was given a blob and needs to go
-> in that codepath?  I think that would make sense.
-
-Correct, it was the option selection aspect.
->
->> Or have I misunderstood how the fast commit search and the slower
->> potentially-a-blob searching are disambiguated?
->
-> I do not think so.  We used to barf when we got anything but
-> commit-ish, but Stefan's new code kicks in if the object turns out
-> to be a blob---I think that is what you mean by the disambiguation.
-
-Correct. We ask to describe an object, but then the option choices may vary 
-by type.
-
-The new [blob] synopys only lists <options>, while the old [commit-ish] 
-shows specifics. It wasn't clear if the options are the same for both. I 
-quess they are the same once the cat-file -t has done its bit. Its only the 
-speed that's affected.
-
-As a side note, the commit message example don't show any pathspec that is 
-not in the top level directory.
-
---
-Philip 
+diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
+index 2d26f8680..ca428fdc9 100755
+--- a/t/lib-submodule-update.sh
++++ b/t/lib-submodule-update.sh
+@@ -306,9 +306,9 @@ test_submodule_content () {
+ # to protect the history!
+ #
+ 
+-# Test that submodule contents are currently not updated when switching
+-# between commits that change a submodule.
+-test_submodule_switch () {
++# Internal function; use test_submodule_switch() or
++# test_submodule_forced_switch() instead.
++test_submodule_switch_common() {
+ 	command="$1"
+ 	######################### Appearing submodule #########################
+ 	# Switching to a commit letting a submodule appear creates empty dir ...
+@@ -332,7 +332,7 @@ test_submodule_switch () {
+ 			test_submodule_content sub1 origin/add_sub1
+ 		)
+ 	'
+-	# ... and doesn't care if it already exists ...
++	# ... and doesn't care if it already exists.
+ 	test_expect_$RESULT "$command: added submodule leaves existing empty directory alone" '
+ 		prolog &&
+ 		reset_work_tree_to no_submodule &&
+@@ -347,19 +347,6 @@ test_submodule_switch () {
+ 			test_submodule_content sub1 origin/add_sub1
+ 		)
+ 	'
+-	# ... unless there is an untracked file in its place.
+-	test_expect_success "$command: added submodule doesn't remove untracked unignored file with same name" '
+-		prolog &&
+-		reset_work_tree_to no_submodule &&
+-		(
+-			cd submodule_update &&
+-			git branch -t add_sub1 origin/add_sub1 &&
+-			>sub1 &&
+-			test_must_fail $command add_sub1 &&
+-			test_superproject_content origin/no_submodule &&
+-			test_must_be_empty sub1
+-		)
+-	'
+ 	# Replacing a tracked file with a submodule produces an empty
+ 	# directory ...
+ 	test_expect_$RESULT "$command: replace tracked file with submodule creates empty directory" '
+@@ -441,6 +428,11 @@ test_submodule_switch () {
+ 		# submodule files with the newly checked out ones in the
+ 		# directory of the same name while it shouldn't.
+ 		RESULT="failure"
++	elif test "$KNOWN_FAILURE_FORCED_SWITCH_TESTS" = 1
++	then
++		# All existing tests that use test_submodule_forced_switch()
++		# require this.
++		RESULT="failure"
+ 	else
+ 		RESULT="success"
+ 	fi
+@@ -522,7 +514,6 @@ test_submodule_switch () {
+ 			test_submodule_content sub1 origin/modify_sub1
+ 		)
+ 	'
+-
+ 	# Updating a submodule to an invalid sha1 doesn't update the
+ 	# submodule's work tree, subsequent update will fail
+ 	test_expect_$RESULT "$command: modified submodule does not update submodule work tree to invalid commit" '
+@@ -538,59 +529,53 @@ test_submodule_switch () {
+ 			test_submodule_content sub1 origin/add_sub1
+ 		)
+ 	'
+-	# Updating a submodule from an invalid sha1 doesn't update the
+-	# submodule's work tree, subsequent update will succeed
+-	test_expect_$RESULT "$command: modified submodule does not update submodule work tree from invalid commit" '
+-		prolog &&
+-		reset_work_tree_to invalid_sub1 &&
+-		(
+-			cd submodule_update &&
+-			git branch -t valid_sub1 origin/valid_sub1 &&
+-			$command valid_sub1 &&
+-			test_superproject_content origin/valid_sub1 &&
+-			test_dir_is_empty sub1 &&
+-			git submodule update --init --recursive &&
+-			test_submodule_content sub1 origin/valid_sub1
+-		)
+-	'
+ }
+ 
+-# Test that submodule contents are currently not updated when switching
+-# between commits that change a submodule, but throwing away local changes in
+-# the superproject is allowed.
+-test_submodule_forced_switch () {
++# Declares and invokes several tests that, in various situations, checks that
++# the provided transition function:
++#  - succeeds in updating the worktree and index of a superproject to a target
++#    commit, or fails atomically (depending on the test situation)
++#  - if succeeds, the contents of submodule directories are unchanged
++#  - if succeeds, once "git submodule update" is invoked, the contents of
++#    submodule directories are updated
++#
++# Use as follows:
++#
++# my_func () {
++#   target=$1
++#   # Do something here that updates the worktree and index to match target,
++#   # but not any submodule directories.
++# }
++# test_submodule_switch "my_func"
++test_submodule_switch () {
+ 	command="$1"
+-	######################### Appearing submodule #########################
+-	# Switching to a commit letting a submodule appear creates empty dir ...
+-	test_expect_success "$command: added submodule creates empty directory" '
+-		prolog &&
+-		reset_work_tree_to no_submodule &&
+-		(
+-			cd submodule_update &&
+-			git branch -t add_sub1 origin/add_sub1 &&
+-			$command add_sub1 &&
+-			test_superproject_content origin/add_sub1 &&
+-			test_dir_is_empty sub1 &&
+-			git submodule update --init --recursive &&
+-			test_submodule_content sub1 origin/add_sub1
+-		)
+-	'
+-	# ... and doesn't care if it already exists ...
+-	test_expect_success "$command: added submodule leaves existing empty directory alone" '
++	test_submodule_switch_common "$command"
++
++	# An empty directory does not prevent the creation of a submodule of
++	# the same name, but a file does.
++	test_expect_success "$command: added submodule doesn't remove untracked unignored file with same name" '
+ 		prolog &&
+ 		reset_work_tree_to no_submodule &&
+ 		(
+ 			cd submodule_update &&
+ 			git branch -t add_sub1 origin/add_sub1 &&
+-			mkdir sub1 &&
+-			$command add_sub1 &&
+-			test_superproject_content origin/add_sub1 &&
+-			test_dir_is_empty sub1 &&
+-			git submodule update --init --recursive &&
+-			test_submodule_content sub1 origin/add_sub1
++			>sub1 &&
++			test_must_fail $command add_sub1 &&
++			test_superproject_content origin/no_submodule &&
++			test_must_be_empty sub1
+ 		)
+ 	'
+-	# ... unless there is an untracked file in its place.
++}
++
++# Same as test_submodule_switch(), except that throwing away local changes in
++# the superproject is allowed.
++test_submodule_forced_switch () {
++	command="$1"
++	KNOWN_FAILURE_FORCED_SWITCH_TESTS=1
++	test_submodule_switch_common "$command"
++
++	# When forced, a file in the superproject does not prevent creating a
++	# submodule of the same name.
+ 	test_expect_success "$command: added submodule does remove untracked unignored file with same name when forced" '
+ 		prolog &&
+ 		reset_work_tree_to no_submodule &&
+@@ -603,150 +588,7 @@ test_submodule_forced_switch () {
+ 			test_dir_is_empty sub1
+ 		)
+ 	'
+-	# Replacing a tracked file with a submodule produces an empty
+-	# directory ...
+-	test_expect_success "$command: replace tracked file with submodule creates empty directory" '
+-		prolog &&
+-		reset_work_tree_to replace_sub1_with_file &&
+-		(
+-			cd submodule_update &&
+-			git branch -t replace_file_with_sub1 origin/replace_file_with_sub1 &&
+-			$command replace_file_with_sub1 &&
+-			test_superproject_content origin/replace_file_with_sub1 &&
+-			test_dir_is_empty sub1 &&
+-			git submodule update --init --recursive &&
+-			test_submodule_content sub1 origin/replace_file_with_sub1
+-		)
+-	'
+-	# ... as does removing a directory with tracked files with a
+-	# submodule.
+-	test_expect_success "$command: replace directory with submodule" '
+-		prolog &&
+-		reset_work_tree_to replace_sub1_with_directory &&
+-		(
+-			cd submodule_update &&
+-			git branch -t replace_directory_with_sub1 origin/replace_directory_with_sub1 &&
+-			$command replace_directory_with_sub1 &&
+-			test_superproject_content origin/replace_directory_with_sub1 &&
+-			test_dir_is_empty sub1 &&
+-			git submodule update --init --recursive &&
+-			test_submodule_content sub1 origin/replace_directory_with_sub1
+-		)
+-	'
+ 
+-	######################## Disappearing submodule #######################
+-	# Removing a submodule doesn't remove its work tree ...
+-	test_expect_success "$command: removed submodule leaves submodule directory and its contents in place" '
+-		prolog &&
+-		reset_work_tree_to add_sub1 &&
+-		(
+-			cd submodule_update &&
+-			git branch -t remove_sub1 origin/remove_sub1 &&
+-			$command remove_sub1 &&
+-			test_superproject_content origin/remove_sub1 &&
+-			test_submodule_content sub1 origin/add_sub1
+-		)
+-	'
+-	# ... especially when it contains a .git directory.
+-	test_expect_success "$command: removed submodule leaves submodule containing a .git directory alone" '
+-		prolog &&
+-		reset_work_tree_to add_sub1 &&
+-		(
+-			cd submodule_update &&
+-			git branch -t remove_sub1 origin/remove_sub1 &&
+-			replace_gitfile_with_git_dir sub1 &&
+-			$command remove_sub1 &&
+-			test_superproject_content origin/remove_sub1 &&
+-			test_git_directory_is_unchanged sub1 &&
+-			test_submodule_content sub1 origin/add_sub1
+-		)
+-	'
+-	# Replacing a submodule with files in a directory must fail as the
+-	# submodule work tree isn't removed ...
+-	test_expect_failure "$command: replace submodule with a directory must fail" '
+-		prolog &&
+-		reset_work_tree_to add_sub1 &&
+-		(
+-			cd submodule_update &&
+-			git branch -t replace_sub1_with_directory origin/replace_sub1_with_directory &&
+-			test_must_fail $command replace_sub1_with_directory &&
+-			test_superproject_content origin/add_sub1 &&
+-			test_submodule_content sub1 origin/add_sub1
+-		)
+-	'
+-	# ... especially when it contains a .git directory.
+-	test_expect_failure "$command: replace submodule containing a .git directory with a directory must fail" '
+-		prolog &&
+-		reset_work_tree_to add_sub1 &&
+-		(
+-			cd submodule_update &&
+-			git branch -t replace_sub1_with_directory origin/replace_sub1_with_directory &&
+-			replace_gitfile_with_git_dir sub1 &&
+-			test_must_fail $command replace_sub1_with_directory &&
+-			test_superproject_content origin/add_sub1 &&
+-			test_git_directory_is_unchanged sub1 &&
+-			test_submodule_content sub1 origin/add_sub1
+-		)
+-	'
+-	# Replacing it with a file must fail as it could throw away any local
+-	# work tree changes ...
+-	test_expect_failure "$command: replace submodule with a file must fail" '
+-		prolog &&
+-		reset_work_tree_to add_sub1 &&
+-		(
+-			cd submodule_update &&
+-			git branch -t replace_sub1_with_file origin/replace_sub1_with_file &&
+-			test_must_fail $command replace_sub1_with_file &&
+-			test_superproject_content origin/add_sub1 &&
+-			test_submodule_content sub1 origin/add_sub1
+-		)
+-	'
+-	# ... or even destroy unpushed parts of submodule history if that
+-	# still uses a .git directory.
+-	test_expect_failure "$command: replace submodule containing a .git directory with a file must fail" '
+-		prolog &&
+-		reset_work_tree_to add_sub1 &&
+-		(
+-			cd submodule_update &&
+-			git branch -t replace_sub1_with_file origin/replace_sub1_with_file &&
+-			replace_gitfile_with_git_dir sub1 &&
+-			test_must_fail $command replace_sub1_with_file &&
+-			test_superproject_content origin/add_sub1 &&
+-			test_git_directory_is_unchanged sub1 &&
+-			test_submodule_content sub1 origin/add_sub1
+-		)
+-	'
+-
+-	########################## Modified submodule #########################
+-	# Updating a submodule sha1 doesn't update the submodule's work tree
+-	test_expect_success "$command: modified submodule does not update submodule work tree" '
+-		prolog &&
+-		reset_work_tree_to add_sub1 &&
+-		(
+-			cd submodule_update &&
+-			git branch -t modify_sub1 origin/modify_sub1 &&
+-			$command modify_sub1 &&
+-			test_superproject_content origin/modify_sub1 &&
+-			test_submodule_content sub1 origin/add_sub1 &&
+-			git submodule update &&
+-			test_submodule_content sub1 origin/modify_sub1
+-		)
+-	'
+-	# Updating a submodule to an invalid sha1 doesn't update the
+-	# submodule's work tree, subsequent update will fail
+-	test_expect_success "$command: modified submodule does not update submodule work tree to invalid commit" '
+-		prolog &&
+-		reset_work_tree_to add_sub1 &&
+-		(
+-			cd submodule_update &&
+-			git branch -t invalid_sub1 origin/invalid_sub1 &&
+-			$command invalid_sub1 &&
+-			test_superproject_content origin/invalid_sub1 &&
+-			test_submodule_content sub1 origin/add_sub1 &&
+-			test_must_fail git submodule update &&
+-			test_submodule_content sub1 origin/add_sub1
+-		)
+-	'
+ 	# Updating a submodule from an invalid sha1 doesn't update the
+ 	# submodule's work tree, subsequent update will succeed
+ 	test_expect_success "$command: modified submodule does not update submodule work tree from invalid commit" '
+-- 
+2.15.0.403.gc27cc4dac6-goog
 
