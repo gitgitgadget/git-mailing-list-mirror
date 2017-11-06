@@ -6,90 +6,85 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 33D8D20281
-	for <e@80x24.org>; Mon,  6 Nov 2017 00:38:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2BF1320281
+	for <e@80x24.org>; Mon,  6 Nov 2017 01:03:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751002AbdKFAiN (ORCPT <rfc822;e@80x24.org>);
-        Sun, 5 Nov 2017 19:38:13 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57119 "EHLO
+        id S1750971AbdKFBDv (ORCPT <rfc822;e@80x24.org>);
+        Sun, 5 Nov 2017 20:03:51 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62995 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750819AbdKFAiM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Nov 2017 19:38:12 -0500
+        with ESMTP id S1750750AbdKFBDu (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Nov 2017 20:03:50 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 534E4B3073;
-        Sun,  5 Nov 2017 19:38:11 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C8AF1B4DCB;
+        Sun,  5 Nov 2017 20:03:49 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=P0jzIilzNUeG
-        yhk1ZMKa8bgwVkw=; b=LHZhV1YFuk2Cnwpakh7+B9Q1YUM/WgY1/3mJE5KOLHY1
-        G/pBsr8KvjIo1F3HqDeZsqyLHm1Z1uT5NZqhM/HGNov4JqplDCO/kEQM1ZMq4uqw
-        Rm0v8LYEoChsbP1/EgpJIdlZdmv6nGcy9zhvtEcByoDy0W/fhe/fmubXPlhF96w=
+        :content-type:content-transfer-encoding; s=sasl; bh=Py8/Dbj4Az5l
+        SlMnV/J9INX/CLQ=; b=XTEknG142Xc0kdxX4N+hfRQVy5SLj9Brn69ZK30IoKFY
+        bjFD0R+qzP04+j1YlCeeYxMBsXGTxSNW/yWgmfvLmtBMno+DTEmjECYAkRXkDwqK
+        9x/I7I1HUAmpIt92+E2Zz9RUwsHUf+VLwfcNHRAofuTFrzKkpLYWtlKBhXkK4WU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=ZlF9ws
-        PvIPWGNgxaSa2BRVvfZh6i/J8Pj8S5eUYYfYkV/uektbTnVuUZDfg/Z1dvq9LXw1
-        Lljv/mVtNWD4QzZ/ut85GbyPn0r1t2CyOrDVE6k7xLg4GqD4aJvz4ADUZuaxfipq
-        gP1ZrQVbV3jPn05trAPk00dFWVm8zgzZ1fwRk=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 49869B3072;
-        Sun,  5 Nov 2017 19:38:11 -0500 (EST)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=CoywEt
+        uXTfWr8SoFjhpA30mD+pg62uHOW120kg2Dh5usBLJ7DIqVpvv0cIg7qIDkV+wb46
+        4GrJHAAnMTi5lcl7GpUEq5XaE2nJnpI0xRgAxYVc70af0Ny/VYJZuF806Lm0CpbB
+        2ui/5Uddo2mG72lUjezNOln4OkbS1oD3vTzyk=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id BFAF4B4DCA;
+        Sun,  5 Nov 2017 20:03:49 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BDD5EB3071;
-        Sun,  5 Nov 2017 19:38:10 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1471AB4DC5;
+        Sun,  5 Nov 2017 20:03:49 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Antoine =?utf-8?Q?Beaupr=C3=A9?= <anarcat@debian.org>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [PATCH 4/7] remote-mediawiki: skip virtual namespaces
-References: <20171029160857.29460-2-anarcat@debian.org>
-        <20171030025142.19421-1-anarcat@debian.org>
-        <20171030025142.19421-5-anarcat@debian.org>
-        <CAPig+cSRrXj9BdgM6Q2OdBZtYJOVOnfo4BaG30C-_ug3QunPfQ@mail.gmail.com>
-        <87wp3a54nj.fsf@curie.anarc.at>
-        <xmqqvaitsc9z.fsf@gitster.mtv.corp.google.com>
-        <87375w5qdw.fsf@curie.anarc.at>
-Date:   Mon, 06 Nov 2017 09:38:09 +0900
-In-Reply-To: <87375w5qdw.fsf@curie.anarc.at> ("Antoine =?utf-8?Q?Beaupr?=
- =?utf-8?Q?=C3=A9=22's?= message of
-        "Thu, 02 Nov 2017 17:20:43 -0400")
-Message-ID: <xmqqh8u8kzri.fsf@gitster.mtv.corp.google.com>
+To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] builtin/merge-base: UNLEAK commit lists
+References: <CAN0heSpgUBy4a6iok4MoDqJ__hZtrXvfApcxjHuS0vOBKSuShg@mail.gmail.com>
+        <cover.1509908607.git.martin.agren@gmail.com>
+        <b06f593d3f8b0ad53754eeb394f77e7c3ee916bd.1509908607.git.martin.agren@gmail.com>
+Date:   Mon, 06 Nov 2017 10:03:47 +0900
+In-Reply-To: <b06f593d3f8b0ad53754eeb394f77e7c3ee916bd.1509908607.git.martin.agren@gmail.com>
+        ("Martin =?utf-8?Q?=C3=85gren=22's?= message of "Sun, 5 Nov 2017 21:26:30
+ +0100")
+Message-ID: <xmqqa800kyks.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: C40378AC-C28A-11E7-8010-8EF31968708C-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 58EAC580-C28E-11E7-B4BE-575F0C78B957-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Antoine Beaupr=C3=A9 <anarcat@debian.org> writes:
+Martin =C3=85gren <martin.agren@gmail.com> writes:
 
-> On 2017-11-02 10:24:40, Junio C Hamano wrote:
->> Antoine Beaupr=C3=A9 <anarcat@debian.org> writes:
->>
->>> It might still worth fixing this, but I'm not sure what the process i=
-s
->>> here - in the latest "what's cooking" Junio said this patchset would =
-be
->>> merged in "next". Should I reroll the patchset to fix this or not?
->>
->> The process is for you (the contributor of the topic) to yell at me,
->> "don't merge it yet, there still are updates to come".
+> In several functions, we iterate through a commit list by assigning
+> `result =3D result->next`. As a consequence, we lose the original point=
+er
+> and eventually leak the list.
 >
-> YELL! "don't merge it yet, there still are updates to come". :)
+> These are immediate helpers to `cmd_merge_base()` which is just about t=
+o
+> return, so we can use UNLEAK. For example, we could `UNLEAK(result)`
+> before we start iterating. That would be a one-liner change per
+> function. Instead, leave the lists alone and iterate using a dedicated
+> pointer. Then UNLEAK immediately before returning.
 
-Thanks; heard you loud and clear.
+Hmm, I cannot shake this feeling that this goes somewhat opposite to
+the spirit of UNLEAK(), which I view as "It is too cumbersome and
+makes the resulting code ugly if we try to make everything properly
+freed, so mark what we know we will leak upfront".  The result of
+this patch feels more like "Even though we took pains to restructure
+the code so that we could call free_commit_list() to properly free
+things, we use UNLEAK() and do not actually bother to free."
 
->> That message _may_ come to late, in which case we may have to go
->> incremental, but I usually try to leave at least a few days between
->> the time I mark a topic as "will merge" and the time I actually do
->> the merge, for this exact reason.
->
-> Awesome, thanks for the update.
->
-> i'll roll a v4 with the last tweaks, hopefully that will be the last.
-
-Thanks.
+Havin said that, I do not think the resulting code has become uglier
+or the conversion process (both writing and reviewing) were too
+cumbersome for this particular case, and marking where we could call
+free_commit_list() with UNLEAK() like this patch does may make
+sense.  If somebody someday wants to call some of these helpers in
+other contexts repeatedly, they may have an easier time.
