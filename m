@@ -2,257 +2,151 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.1 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7DB48202A0
-	for <e@80x24.org>; Mon,  6 Nov 2017 11:35:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 52C71202A0
+	for <e@80x24.org>; Mon,  6 Nov 2017 11:50:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752611AbdKFLfy (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Nov 2017 06:35:54 -0500
-Received: from smtp-out-2.talktalk.net ([62.24.135.66]:10561 "EHLO
-        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752397AbdKFL2C (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Nov 2017 06:28:02 -0500
-Received: from lindisfarne.localdomain ([92.22.30.94])
-        by smtp.talktalk.net with SMTP
-        id BfYqeiZ2C3CyHBfZCewttb; Mon, 06 Nov 2017 11:27:55 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net; s=1605;
-        t=1509967675; bh=7iNf2sQCZsnff5FfmupcEQ4eKCgnbrsFbfKU/ANAGto=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:Reply-To;
-        b=fYbsRu/pXfp6J8VrCd2K6RGUboXFr6HTQjgPBCB+RD4sLYIMT8CdXS/coVSdGjySJ
-         hN5lPMRHFwsDN7NUcZbhn/QZikpX6Y0eTHlMgSO6euoLOcCAPNau2NAGh7sGiyGzq3
-         Cav/R6kflxLZ3p/JfNZumvyjQsMEAlBNPu4C8r70=
-X-Originating-IP: [92.22.30.94]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=Zo+dE5zG c=1 sm=1 tr=0 a=lje0BXTe3+PqU+djfnm1WA==:117
- a=lje0BXTe3+PqU+djfnm1WA==:17 a=evINK-nbAAAA:8 a=uGhzjvUkAXt2G3G7hqYA:9
- a=Wo9-lOUy9q14dEp_:21 a=hh9gD8s9WGRriRvp:21 a=RfR_gqz1fSpA9VikTjo0:22
-From:   Phillip Wood <phillip.wood@talktalk.net>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH v1 1/8] commit: move empty message checks to libgit
-Date:   Mon,  6 Nov 2017 11:27:02 +0000
-Message-Id: <20171106112709.2121-2-phillip.wood@talktalk.net>
-X-Mailer: git-send-email 2.14.3
-In-Reply-To: <20171106112709.2121-1-phillip.wood@talktalk.net>
-References: <20170925101041.18344-1-phillip.wood@talktalk.net>
- <20171106112709.2121-1-phillip.wood@talktalk.net>
-Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
-X-CMAE-Envelope: MS4wfEkLZQpbRgy7j+O1KBmsc2vVx0e8BI1oHTI7qbwTNI/B0ndFatDYU9iKwKFDKX+n2K0xgz/7iyiXAROlGA+/SflxoLCACiinVAQM+00OS069UfXYXUmA
- rWIe8NY4s2JiJCbxCS8UqCqC05QQ4bvJtplHTXcv7TQXqWAU9q9H2b4te/KU8oKb/FH/rE+wt5Fq8Qesu9zMDNBCKrS7ihaCiZiP4qWOcrEep3Cc6FkpGKh7
- H+PJ+5CHQFva7cGjKhxLnG7lN+uE3LLuFF0O4NDLdLw0SMm4fO4GWT4rxcurPVM/
+        id S1752193AbdKFLuu (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Nov 2017 06:50:50 -0500
+Received: from mail-wm0-f54.google.com ([74.125.82.54]:45950 "EHLO
+        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751966AbdKFLut (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Nov 2017 06:50:49 -0500
+Received: by mail-wm0-f54.google.com with SMTP id y80so13154827wmd.0
+        for <git@vger.kernel.org>; Mon, 06 Nov 2017 03:50:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=6hwygJ8MEwplr9UBDy/XNkiSwRsZUTBp1lRo0EUiPi0=;
+        b=MnkLht7CPsWof3Z2rZlx1ckPhbcxwm2CZEjQ3fAjSUGCyASoP33KyTQwwXC21UAv+G
+         PteBTGunK6ple3ueNwl9zELNoswI3Gxg/62EOZkn3mcJCCxJNNl+pn0tr011oY3AZt84
+         YPrQkkC5Rbr91TSZVJ0R2EP7uIZw8gqZDkBMixrPTeZyFJy0LKFEvtEJJdrDhvinjyJr
+         zJvEAodDYZQAYhIiKixmc4SWZsZWBPfoifp/hHY0vPzskrQGJle5iTG1bqPiL20yFXfV
+         LL6/mMgOP2ECrw4yy4/L0P5Pf6zzmqrial4ibYnMPgG4J2FX7rUt0d9UvL39o2A9R4/+
+         l7gg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=6hwygJ8MEwplr9UBDy/XNkiSwRsZUTBp1lRo0EUiPi0=;
+        b=pDR18rT+yViEWuiCTE+DtJdhWkrlEITVXXyFemzKqDUc+LlRG4wd2gkCKVbQKF9HEb
+         ZE6hsQMmmDivTlgax5A0bIxl9w0iLvBmb6INd2raIHCzmya7j7K8SoP0uCh9YkXRYzzl
+         1l46gXg35Bs0IjONbnGO+i6rWT6368qxzqHY5xiKciUAyziIQsH36b3IpTB3HYROBIm4
+         FvgNNQHCV78i67/e0O4XB3+NbmJdpun3fhVQ6jiYJSxpbeF5a4p+Z00Xe/yfYIad830Y
+         Cf9RPxbpujEkH+MYDnssuu8/EpqwyuGV4eQnb57UznS5TqR2Hg8UeTcD3RkNdk6G0fGd
+         RJpQ==
+X-Gm-Message-State: AJaThX7AaUZlMj9ZBq184iQbIb/O8uL41CHN2sukjNkOhtwCyyklpDGe
+        vkxWHYd1VxqN0kMFHQmJGaOld7RT
+X-Google-Smtp-Source: ABhQp+SUaIddOuOus+6utMUPJFubu6wIMNscLdhFKkq8YSTfIqeaTH+8f2qV9MYtxqQv2Z7EGCffrQ==
+X-Received: by 10.28.141.194 with SMTP id p185mr5282097wmd.149.1509969047877;
+        Mon, 06 Nov 2017 03:50:47 -0800 (PST)
+Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
+        by smtp.gmail.com with ESMTPSA id h3sm1852464wre.63.2017.11.06.03.50.46
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 06 Nov 2017 03:50:46 -0800 (PST)
+Received: from avar by evledraar with local (Exim 4.89)
+        (envelope-from <avarab@gmail.com>)
+        id 1eBfvS-0006XP-18; Mon, 06 Nov 2017 12:50:46 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?0JTQuNC70Y/QvSDQn9Cw0LvQsNGD0LfQvtCy?= 
+        <dilyan.palauzov@aegee.org>, git@vger.kernel.org
+Subject: Re: git grep -P fatal: pcre_exec failed with error code -8
+References: <635a9bd4-2aa9-4415-2756-b82370c55798@aegee.org> <20171105021623.yi46w2awwy7p3q6e@sigill.intra.peff.net> <4e2bc579-429f-9927-4502-5929e5235740@aegee.org> <20171106103125.fwtrxv6zycrbihcv@sigill.intra.peff.net>
+User-agent: Debian GNU/Linux 9.2 (stretch); Emacs 25.1.1; mu4e 0.9.19
+In-reply-to: <20171106103125.fwtrxv6zycrbihcv@sigill.intra.peff.net>
+Date:   Mon, 06 Nov 2017 12:50:45 +0100
+Message-ID: <878tfj62y2.fsf@evledraar.booking.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Move the functions that check for empty messages from bulitin/commit.c
-to sequencer.c so they can be shared with other commands. The
-functions are refactored to take an explicit cleanup mode and template
-filename passed by the caller.
+On Mon, Nov 06 2017, Jeff King jotted:
 
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
- builtin/commit.c | 70 +++-----------------------------------------------------
- sequencer.c      | 60 ++++++++++++++++++++++++++++++++++++++++++++++++
- sequencer.h      | 10 ++++++++
- 3 files changed, 73 insertions(+), 67 deletions(-)
+> On Sun, Nov 05, 2017 at 10:41:17AM +0100, Дилян Палаузов wrote:
+>
+>> I understand that the PCRE's stack can get exhausted for some files, but in
+>> such cases, git grep shall proceed with the other files, and print at the
+>> end/stderr for which files the pattern was not applied.  Such behaviour
+>> would be more usefull than the current one.
+>
+> Yes, I had a similar thought. It does feel a little funny for us to
+> basically treat an error as "no match" for non-interactive use, but then
+> the current behavior works out to be more or less the same (we return an
+> error code which most shell scripts would interpret as failure).
+>
+> IOW, I think something like this is probably the right direction:
+>
+> diff --git a/grep.c b/grep.c
+> index ce6a48e634..2c152e5908 100644
+> --- a/grep.c
+> +++ b/grep.c
+> @@ -427,7 +427,7 @@ static int pcre1match(struct grep_pat *p, const char *line, const char *eol,
+>  	}
+>
+>  	if (ret < 0 && ret != PCRE_ERROR_NOMATCH)
+> -		die("pcre_exec failed with error code %d", ret);
+> +		warning("pcre_exec failed with error code %d", ret);
+>  	if (ret > 0) {
+>  		ret = 0;
+>  		match->rm_so = ovector[0];
+>
+> but possibly:
+>
+>   1. It would be nice to report the filename that we couldn't match on.
+>      But we don't know it at this level of the code (and it might not be
+>      a file at all that we are matching). So probably we'd want to pass
+>      the error much further up the call stack. This is tricky as there
+>      are multiple regex libraries we can use, and the return value gets
+>      normalized to 1/0 for hit/not-hit long before we get as far as
+>      something that knows the filename.
+>
+>      We might need to do something invasive like adding an extra
+>      parameter to hold the error message, and passing it through the
+>      whole stack.
+>
+>   2. We should still try to exit with an exit code other than "1" to
+>      indicate we hit an error besides "no lines were found".
+>
+>   3. Other regex libraries might need similar treatment. Probably
+>      pcre2match() needs it. It doesn't look like regexec() can ever
+>      return an error besides REG_NOMATCH.
+>
+> -Peff
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 06ab495ae1d2baa5eef6b42eb61909883c681f4c..fab512b668af07a1fa927f713eca71c9f783b422 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -128,12 +128,7 @@ static char *sign_commit;
-  * if editor is used, and only the whitespaces if the message
-  * is specified explicitly.
-  */
--static enum {
--	CLEANUP_SPACE,
--	CLEANUP_NONE,
--	CLEANUP_SCISSORS,
--	CLEANUP_ALL
--} cleanup_mode;
-+static enum cleanup_mode cleanup_mode;
- static const char *cleanup_arg;
- 
- static enum commit_whence whence;
-@@ -983,65 +978,6 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 	return 1;
- }
- 
--static int rest_is_empty(struct strbuf *sb, int start)
--{
--	int i, eol;
--	const char *nl;
--
--	/* Check if the rest is just whitespace and Signed-off-by's. */
--	for (i = start; i < sb->len; i++) {
--		nl = memchr(sb->buf + i, '\n', sb->len - i);
--		if (nl)
--			eol = nl - sb->buf;
--		else
--			eol = sb->len;
--
--		if (strlen(sign_off_header) <= eol - i &&
--		    starts_with(sb->buf + i, sign_off_header)) {
--			i = eol;
--			continue;
--		}
--		while (i < eol)
--			if (!isspace(sb->buf[i++]))
--				return 0;
--	}
--
--	return 1;
--}
--
--/*
-- * Find out if the message in the strbuf contains only whitespace and
-- * Signed-off-by lines.
-- */
--static int message_is_empty(struct strbuf *sb)
--{
--	if (cleanup_mode == CLEANUP_NONE && sb->len)
--		return 0;
--	return rest_is_empty(sb, 0);
--}
--
--/*
-- * See if the user edited the message in the editor or left what
-- * was in the template intact
-- */
--static int template_untouched(struct strbuf *sb)
--{
--	struct strbuf tmpl = STRBUF_INIT;
--	const char *start;
--
--	if (cleanup_mode == CLEANUP_NONE && sb->len)
--		return 0;
--
--	if (!template_file || strbuf_read_file(&tmpl, template_file, 0) <= 0)
--		return 0;
--
--	strbuf_stripspace(&tmpl, cleanup_mode == CLEANUP_ALL);
--	if (!skip_prefix(sb->buf, tmpl.buf, &start))
--		start = sb->buf;
--	strbuf_release(&tmpl);
--	return rest_is_empty(sb, start - sb->buf);
--}
--
- static const char *find_author_by_nickname(const char *name)
- {
- 	struct rev_info revs;
-@@ -1772,12 +1708,12 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 	if (cleanup_mode != CLEANUP_NONE)
- 		strbuf_stripspace(&sb, cleanup_mode == CLEANUP_ALL);
- 
--	if (message_is_empty(&sb) && !allow_empty_message) {
-+	if (message_is_empty(&sb, cleanup_mode) && !allow_empty_message) {
- 		rollback_index_files();
- 		fprintf(stderr, _("Aborting commit due to empty commit message.\n"));
- 		exit(1);
- 	}
--	if (template_untouched(&sb) && !allow_empty_message) {
-+	if (template_untouched(&sb, template_file, cleanup_mode) && !allow_empty_message) {
- 		rollback_index_files();
- 		fprintf(stderr, _("Aborting commit; you did not edit the message.\n"));
- 		exit(1);
-diff --git a/sequencer.c b/sequencer.c
-index 1eb2c4669d529485a045de66d6711039d19a2442..f4a04c913c0d60adbf78d68ca87db739c8e3a280 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -691,6 +691,66 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
- 	return run_command(&cmd);
- }
- 
-+static int rest_is_empty(const struct strbuf *sb, int start)
-+{
-+	int i, eol;
-+	const char *nl;
-+
-+	/* Check if the rest is just whitespace and Signed-off-by's. */
-+	for (i = start; i < sb->len; i++) {
-+		nl = memchr(sb->buf + i, '\n', sb->len - i);
-+		if (nl)
-+			eol = nl - sb->buf;
-+		else
-+			eol = sb->len;
-+
-+		if (strlen(sign_off_header) <= eol - i &&
-+		    starts_with(sb->buf + i, sign_off_header)) {
-+			i = eol;
-+			continue;
-+		}
-+		while (i < eol)
-+			if (!isspace(sb->buf[i++]))
-+				return 0;
-+	}
-+
-+	return 1;
-+}
-+
-+/*
-+ * Find out if the message in the strbuf contains only whitespace and
-+ * Signed-off-by lines.
-+ */
-+int message_is_empty(const struct strbuf *sb, enum cleanup_mode cleanup_mode)
-+{
-+	if (cleanup_mode == CLEANUP_NONE && sb->len)
-+		return 0;
-+	return rest_is_empty(sb, 0);
-+}
-+
-+/*
-+ * See if the user edited the message in the editor or left what
-+ * was in the template intact
-+ */
-+int template_untouched(const struct strbuf *sb, const char *template_file,
-+		       enum cleanup_mode cleanup_mode)
-+{
-+	struct strbuf tmpl = STRBUF_INIT;
-+	const char *start;
-+
-+	if (cleanup_mode == CLEANUP_NONE && sb->len)
-+		return 0;
-+
-+	if (!template_file || strbuf_read_file(&tmpl, template_file, 0) <= 0)
-+		return 0;
-+
-+	strbuf_stripspace(&tmpl, cleanup_mode == CLEANUP_ALL);
-+	if (!skip_prefix(sb->buf, tmpl.buf, &start))
-+		start = sb->buf;
-+	strbuf_release(&tmpl);
-+	return rest_is_empty(sb, start - sb->buf);
-+}
-+
- static int is_original_commit_empty(struct commit *commit)
- {
- 	const struct object_id *ptree_oid;
-diff --git a/sequencer.h b/sequencer.h
-index 6f3d3df82c0ade64b7b125acd49bf3f5e15c53af..65a4b0c25185d7ad5115035abb766d1b95df9a62 100644
---- a/sequencer.h
-+++ b/sequencer.h
-@@ -58,4 +58,14 @@ extern const char sign_off_header[];
- void append_signoff(struct strbuf *msgbuf, int ignore_footer, unsigned flag);
- void append_conflicts_hint(struct strbuf *msgbuf);
- 
-+enum cleanup_mode {
-+	CLEANUP_SPACE,
-+	CLEANUP_NONE,
-+	CLEANUP_SCISSORS,
-+	CLEANUP_ALL
-+};
-+
-+int message_is_empty(const struct strbuf *sb, enum cleanup_mode cleanup_mode);
-+int template_untouched(const struct strbuf *sb, const char *template_file,
-+		       enum cleanup_mode cleanup_mode);
- #endif
--- 
-2.14.3
+Some replies to the thread in general, didn't want to spread this out
+into different replies.
 
+ * Yes this sucks.
+
+ * Just emitting a warning without an appropriate exit code would suck
+   more, would break batch jobs & whatnot that expcept certain results
+   from grep.
+
+ * As you point out it would be nice to print out the file name we
+   didn't match on, we'd need to pass the grep_source struct down
+   further, it goes as far as grep_source_1 but stops there and isn't
+   passed to e.g. look_ahead(), which calls patmatch() which calls the
+   engine-specific matcher and would need to report the error. We could
+   just do this, would slow down things a bit (probably trivally) but we
+   could emit better error messages in genreal.
+
+ * You can adjust these limts in PCRE in Git, although it doesn't help
+   in this case, you just add (*LIMIT_MATCH=NUM) or
+   (*LIMIT_RECURSION=NUM) (or both) to the start of the pattern. See
+   pcresyntax(3) or pcre2syntax(3) man pages depending on what version
+   you have installed.
+
+ * While regexec() won't return an error its version of dealing with
+   this is (at least under glibc) to balloon CPU/memory use until the
+   OOMkiller kills git (although not on this particular pattern).
