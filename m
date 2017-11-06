@@ -6,72 +6,110 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5A77020281
-	for <e@80x24.org>; Mon,  6 Nov 2017 03:51:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5F70920281
+	for <e@80x24.org>; Mon,  6 Nov 2017 04:35:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751134AbdKFDvR (ORCPT <rfc822;e@80x24.org>);
-        Sun, 5 Nov 2017 22:51:17 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63579 "EHLO
+        id S1750848AbdKFEe7 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 5 Nov 2017 23:34:59 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:63201 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750844AbdKFDvQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Nov 2017 22:51:16 -0500
+        with ESMTP id S1750766AbdKFEe5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Nov 2017 23:34:57 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D14A2B756C;
-        Sun,  5 Nov 2017 22:51:15 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 35A06B7EBB;
+        Sun,  5 Nov 2017 23:34:57 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=SvUUFDpgzOtW
-        K+tUoLdW/0QYDPM=; b=EKXEBW1+azV1JwSjXQaY2jNNDM1xXeVoTl86iBbgVaQK
-        3Ibc/nQv7Kio4PIsD7iv+C4eDYZxM/EoEA6cKjwPkzMCO3U/MTOAbNDxsxrPKCKv
-        9RhIN1no/sNnU2QZRZZ7K/L8RRi2DljqEb8dCmXebFIJbne2HBpPMEDl0DzWPzI=
+        :content-type; s=sasl; bh=FbDkrP2ULNDbtgCcfa17W48rZvc=; b=KXZDD4
+        +s/rH7HEhisFa/Ihc6RB7BjvRdH5wXjmUNlhYKKqOi5zOjn/Bx8aHv1xtjZCZoeY
+        Qc/m6D9ylfH8ywONS2383CgqmJ5oCKdexCM3/fQTsBGq1C/tgwHu3/XPCNIDEW2l
+        Q0ja90OJ4B6BayMpKZvKHflOQLB0+lYI4bWj8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=GfJ3P5
-        bG/7KWSht/HITa+g017k63mDXYPXZ18urcIkJGoxAAsFff+DJT3usu0MdGKrQfyD
-        eYnULW3lkLsAUcOVoZ1IuTYYkN2rZKQZH5UPS7MzjZi+CvtoME7ZLYrVM+1q1Zai
-        Drm24Js/GmYssNtIRbDlpF+ax8I4uHYwiTp5E=
+        :content-type; q=dns; s=sasl; b=I4+fgs2/VHkhCUPcc8FGhPVbW00cG2zY
+        dq4ZaiZAI/5xd1rGQFObvncYT4QmCjSqHUgPDnaYNzJVScc03dHpZSabyVZmbJwU
+        zlyjATl/6xRfj6xZQb7uJTpPLN6GFQDcuo4wAMmWhzyLARZ0u7m4KGgDMp/U/lU0
+        5RBwvUE1VTU=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C82ABB756B;
-        Sun,  5 Nov 2017 22:51:15 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2D23CB7EBA;
+        Sun,  5 Nov 2017 23:34:57 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 399C4B756A;
-        Sun,  5 Nov 2017 22:51:15 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A7E2CB7EB9;
+        Sun,  5 Nov 2017 23:34:56 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Rafael =?utf-8?Q?Ascens=C3=A3o?= <rafa.almas@gmail.com>
-Cc:     git@vger.kernel.org, me@ikke.info, hjemli@gmail.com,
-        mhagger@alum.mit.edu, pclouds@gmail.com,
-        ilari.liusvaara@elisanet.fi
-Subject: Re: [PATCH v1 2/2] log: add option to choose which refs to decorate
-References: <20171104004144.5975-1-rafa.almas@gmail.com>
-        <20171104004144.5975-3-rafa.almas@gmail.com>
-        <xmqq60aqn1ok.fsf@gitster.mtv.corp.google.com>
-        <b0e3856b-e627-0d22-90da-3da1781f98b3@gmail.com>
-        <xmqq1sldmqms.fsf@gitster.mtv.corp.google.com>
-        <xmqqshdtl057.fsf@gitster.mtv.corp.google.com>
-        <9168f7b8-3b9d-a933-e542-ae5b741cb824@gmail.com>
-Date:   Mon, 06 Nov 2017 12:51:14 +0900
-In-Reply-To: <9168f7b8-3b9d-a933-e542-ae5b741cb824@gmail.com> ("Rafael
-        =?utf-8?Q?Ascens=C3=A3o=22's?= message of "Mon, 6 Nov 2017 03:24:02 +0000")
-Message-ID: <xmqqpo8whxot.fsf@gitster.mtv.corp.google.com>
+To:     Ann T Ropea <bedhanger@gmx.de>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH 3/3] Documentation: revisions: add note about 3dots usages as continuation indications
+References: <20171105162730.31405-1-bedhanger@gmx.de>
+        <20171105162730.31405-3-bedhanger@gmx.de>
+Date:   Mon, 06 Nov 2017 13:34:55 +0900
+In-Reply-To: <20171105162730.31405-3-bedhanger@gmx.de> (Ann T. Ropea's message
+        of "Sun, 5 Nov 2017 17:27:30 +0100")
+Message-ID: <xmqqk1z4hvo0.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: BCED7890-C2A5-11E7-8B44-575F0C78B957-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: D7653180-C2AB-11E7-AEF6-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rafael Ascens=C3=A3o <rafa.almas@gmail.com> writes:
+Ann T Ropea <bedhanger@gmx.de> writes:
 
-> Would checking the output of ref_exists() make sense here?
-> By that I mean, only add a trailing '/*' if the ref doesn't exist.
+> Also, fix typo: "three dot" ---> "three-dot" (align with "two-dot").
+>
+> Signed-off-by: Ann T Ropea <bedhanger@gmx.de>
+> ---
+>  Documentation/revisions.txt | 11 ++++++++++-
+>  1 file changed, 10 insertions(+), 1 deletion(-)
+>
+> diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
+> index 61277469c874..d1b126427177 100644
+> --- a/Documentation/revisions.txt
+> +++ b/Documentation/revisions.txt
+> @@ -271,7 +271,7 @@ The '..' (two-dot) Range Notation::
+>   for commits that are reachable from r2 excluding those that are reachable
+>   from r1 by '{caret}r1 r2' and it can be written as 'r1..r2'.
+>  
+> -The '...' (three dot) Symmetric Difference Notation::
+> +The '...' (three-dot) Symmetric Difference Notation::
+>   A similar notation 'r1\...r2' is called symmetric difference
+>   of 'r1' and 'r2' and is defined as
+>   'r1 r2 --not $(git merge-base --all r1 r2)'.
+> @@ -285,6 +285,15 @@ is a shorthand for 'HEAD..origin' and asks "What did the origin do since
+>  I forked from them?"  Note that '..' would mean 'HEAD..HEAD' which is an
+>  empty range that is both reachable and unreachable from HEAD.
+>  
+> +However, there are instances where '<sha1>...' is *not*
+> +equivalent to '<sha1>...HEAD'.  See the "RAW OUTPUT FORMAT"
+> +section of linkgit:git-diff[1]: the three-dot notations used
+> +there are simply continuation indications for the abbreviated
+> +SHA-1 values.  The ones encountered there are usually
+> +associated with file/index/tree contents rather than with commit
+> +objects, and the range operators described above are only
+> +applicable to commit objects (i.e., 'r1' and 'r2').
+> +
+>  Other <rev>{caret} Parent Shorthand Notations
+>  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>  Three other shorthands exist, particularly useful for merge commits,
 
-I do not think it would hurt, but it is not immediately obvious if
-the benefit of doing so outweighs the cost of having to make an
-extra call to ref_exists().
+I actually have a mild suspicion that this is going in a wrong
+direction.  In very early days of Git, we wanted to make sure that
+people can tell if a long hex string is a truncated object name or a
+full one (mostly because some lower-level commands insisted to be
+fed only full object name).
+
+These days, everybody knows when they see 79ec0be62a that it is
+*not* a full object name and will no longer be confused unlike early
+days and there is no strong reason to waste six output columns of
+"git diff --raw" output by using these three dots.  
+
+I wonder if we can come up with a solution in line with the patch
+1/3 in this series, which got rid of the "..." that indicated that
+the hexstring was not a full object name.
 
 
