@@ -2,166 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F365E20450
-	for <e@80x24.org>; Mon,  6 Nov 2017 14:04:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E922120450
+	for <e@80x24.org>; Mon,  6 Nov 2017 16:13:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753336AbdKFOEG (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Nov 2017 09:04:06 -0500
-Received: from mail-wm0-f54.google.com ([74.125.82.54]:46649 "EHLO
-        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753316AbdKFOEF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Nov 2017 09:04:05 -0500
-Received: by mail-wm0-f54.google.com with SMTP id r68so14054455wmr.1
-        for <git@vger.kernel.org>; Mon, 06 Nov 2017 06:04:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=jZTQCZAA/Jbgq/D3TT7IH7HD2V/xc5qfTdNOA1EsVqI=;
-        b=buSFfHicbyYDVCXft489kknLXtTfKMNFpT0L+ZFXER49AsQfZMezfzNorIOYc1OCfm
-         mF4SJGQ6nKUXSXsFnH6+RNCWPL3tb0RpEFHxKaOdtZViUqPln6NY72f0gmOjNV7SW9SZ
-         bc40BdQVCGLmY6KpfXaY4Y4aCqDpolpAh4UtsuMJefEdOqE0OC8CUlb0EKRagIHemPWq
-         HkBroBWHDjRtnLKKos9YcJG4JplgK+I0scAHy3HusycS2/pKiAs/gNsLY2xD83Z74jWR
-         lBHpyta1yQg8E5PEFxO/TNjbajfx3xIcV2B1ct+JALRg8f81NogoRwwNlrdmipEFGZjG
-         ccZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=jZTQCZAA/Jbgq/D3TT7IH7HD2V/xc5qfTdNOA1EsVqI=;
-        b=OzeDarSiydWiyT73FSKleb2jVPBLIPAD7m6XBOREUzEV404xoR2ET+rZVV04RkSGNR
-         DN/AH0P6K++hKrqR7//gQomSKtyEW14zi1fFtqe5MzMYkfUPREfU2J0B4fqHvg6V/Zyl
-         rP8gFTOSPJfJ5tbCIFimMOV9pyx87i4ic7tbTbxJE7hFEneK/UQO7LAvDnLn7ysW7MBu
-         SdrDmBdK2QxlVYJxjjL5e4ZNh3QNfD+Ct8HxrSdjLhAiKXx6iU2zO+TAFrqHj1FC2QR/
-         O5fY4KhKQJL3siQsqwHR9ZERT+HUOFxdMmPSN2IzAmeTBl2CjN1US+LnRg60Y46GbaO6
-         h5KA==
-X-Gm-Message-State: AMCzsaXoY2nHKOxAPSx9Nr4P84cD+/llBht2A/SlWy0d2ooHPeGfGoBl
-        nzbvadvCWhjFK0hrxNi00Po=
-X-Google-Smtp-Source: ABhQp+RoheUS3/weyXvtjumsyIY4ESvByL/zt6WHCoghP4HWGQQLkFY1wfb0s3B0Gn8+G3oPGxt10w==
-X-Received: by 10.80.130.67 with SMTP id 61mr20639595edf.3.1509977044156;
-        Mon, 06 Nov 2017 06:04:04 -0800 (PST)
-Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
-        by smtp.gmail.com with ESMTPSA id f27sm10597528edj.82.2017.11.06.06.04.02
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 06 Nov 2017 06:04:03 -0800 (PST)
-Received: from avar by evledraar with local (Exim 4.89)
-        (envelope-from <avarab@gmail.com>)
-        id 1eBi0Q-0000r7-FI; Mon, 06 Nov 2017 15:04:02 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+        id S932603AbdKFQNS (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Nov 2017 11:13:18 -0500
+Received: from zucker2.schokokeks.org ([178.63.68.90]:55031 "EHLO
+        zucker2.schokokeks.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932588AbdKFQNQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Nov 2017 11:13:16 -0500
+Received: from localhost ([::1])
+  (AUTH: PLAIN simon@ruderich.org, TLS: TLSv1/SSLv3,256bits,ECDHE-RSA-AES256-GCM-SHA384)
+  by zucker.schokokeks.org with ESMTPSA; Mon, 06 Nov 2017 17:13:15 +0100
+  id 0000000000000043.000000005A008A1B.000055C8
+Date:   Mon, 6 Nov 2017 17:13:15 +0100
+From:   Simon Ruderich <simon@ruderich.org>
 To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?0JTQuNC70Y/QvSDQn9Cw0LvQsNGD0LfQvtCy?= 
-        <dilyan.palauzov@aegee.org>, git@vger.kernel.org
-Subject: Re: git grep -P fatal: pcre_exec failed with error code -8
-References: <635a9bd4-2aa9-4415-2756-b82370c55798@aegee.org> <20171105021623.yi46w2awwy7p3q6e@sigill.intra.peff.net> <4e2bc579-429f-9927-4502-5929e5235740@aegee.org> <20171106103125.fwtrxv6zycrbihcv@sigill.intra.peff.net> <878tfj62y2.fsf@evledraar.booking.com> <20171106122411.dhi2ltyegzquebhk@sigill.intra.peff.net>
-User-agent: Debian GNU/Linux 9.2 (stretch); Emacs 25.1.1; mu4e 0.9.19
-In-reply-to: <20171106122411.dhi2ltyegzquebhk@sigill.intra.peff.net>
-Date:   Mon, 06 Nov 2017 15:04:02 +0100
-Message-ID: <877ev35wrx.fsf@evledraar.booking.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>,
+        Git List <git@vger.kernel.org>,
+        Ralf Thielow <ralf.thielow@gmail.com>
+Subject: Re: Improved error handling (Was: [PATCH 1/2] sequencer: factor out
+ rewrite_file())
+Message-ID: <20171106161315.dmftp6ktk6bu7cah@ruderich.org>
+References: <6150c80b-cb0e-06d4-63a7-a4f4a9107ab2@web.de>
+ <20171101194732.fn4n46wppl35e2z2@sigill.intra.peff.net>
+ <alpine.DEB.2.21.1.1711012240500.6482@virtualbox>
+ <20171101221618.4ioog7jlp7n2nd53@sigill.intra.peff.net>
+ <20171103103248.4p45r4klojk5cf2g@ruderich.org>
+ <xmqqpo8zpjdj.fsf@gitster.mtv.corp.google.com>
+ <20171103191309.sth4zjokgcupvk2e@sigill.intra.peff.net>
+ <20171104183643.akaazwswysphzuoq@ruderich.org>
+ <20171105020700.2p4nguemzdrwiila@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+In-Reply-To: <20171105020700.2p4nguemzdrwiila@sigill.intra.peff.net>
+User-Agent: NeoMutt/20170609 (1.8.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sat, Nov 04, 2017 at 10:07:00PM -0400, Jeff King wrote:
+> Yes, I think what you've written here (and below) is quite close to the
+> error_context patches I linked elsewhere in the thread. In other
+> words, I think it's a sane approach.
 
-On Mon, Nov 06 2017, Jeff King jotted:
+In contrast to error_context I'd like to keep all exiting
+behavior (die, ignore, etc.) in the hand of the caller and not
+use any callbacks as that makes the control flow much harder to
+follow.
 
-> On Mon, Nov 06, 2017 at 12:50:45PM +0100, Ævar Arnfjörð Bjarmason wrote:
->
->> Some replies to the thread in general, didn't want to spread this out
->> into different replies.
->>
->>  * Yes this sucks.
->>
->>  * Just emitting a warning without an appropriate exit code would suck
->>    more, would break batch jobs & whatnot that expcept certain results
->>    from grep.
->
-> That was my first thought, too, but something that does:
->
->   git grep foo && echo found
->
-> would behave basically the same. Do you mean here scripts that actually
-> do:
->
->   git grep foo
->   case "$?" in
->   0) echo found ;;
->   1) echo not found ;;
->   *) echo wtf? ;;
->   esac
->
-> I agree it would be nice to at least have _some_ way to distinguish
-> between those final two cases.
+> I agree it might be nice for the error context to have a positive "there
+> was an error" flag. It's probably worth making it redundant with the
+> return code, though, so callers can use whichever style is most
+> convenient for them.
 
-Maybe we should emit a different exit code, but I just had in mind that
-we could continue but the same non-zero as when the grep fails now, but
-with an additional warning.
+Agreed.
 
-> Though something like "git log --grep" is even more complicated. We
-> perhaps _would_ want to distinguish between:
->
->   - match (in which case we print the commit)
->
->   - no match (in which case we do not)
->
->   - error (in which case we do not print, but also mark the exit code as
->     failing)
->
->>  * As you point out it would be nice to print out the file name we
->>    didn't match on, we'd need to pass the grep_source struct down
->>    further, it goes as far as grep_source_1 but stops there and isn't
->>    passed to e.g. look_ahead(), which calls patmatch() which calls the
->>    engine-specific matcher and would need to report the error. We could
->>    just do this, would slow down things a bit (probably trivally) but we
->>    could emit better error messages in genreal.
->
-> I'm not sure if the grep_source has enough information for all cases.
-> E.g., if you hit an error while grepping in commit headers, you'd
-> probably want to mention the oid of the commit. There's an "identifier"
-> field in the grep_source, but it's opaque.
->
-> The caller may also want to do more things than just print an error
-> (like the exit code adjustment I mentioned above). Which implies to me
-> we should be passing the error information up, not trying to bring the
-> context down.
+Regarding the API, should it be allowed to pass NULL as error
+pointer to request no additional error handling or should the
+error functions panic on NULL? Allowing NULL makes partial
+conversions possible (e.g. for write_in_full) where old callers
+just pass NULL and check the return values and converted callers
+can use the error struct.
 
-Indeed, I was just thinking of the case where we're grepping a file in
-the tree, not when the engine is used for --grep et al.
+How should translations get handled? Appending ": %s" for
+strerror(errno) might be problematic. Same goes for "outer
+message: inner message" where the helper function just inserts ":
+" between the messages. Is _("%s: %s") (with appropriate
+translator comments) enough to handle these cases?
 
->>  * You can adjust these limts in PCRE in Git, although it doesn't help
->>    in this case, you just add (*LIMIT_MATCH=NUM) or
->>    (*LIMIT_RECURSION=NUM) (or both) to the start of the pattern. See
->>    pcresyntax(3) or pcre2syntax(3) man pages depending on what version
->>    you have installed.
->
-> I saw that in the pcre manual, but I had the impression you can't
-> actually raise the limits above the defaults with that, only lower them.
+Suggestions how to name the struct and the corresponding
+functions? My initial idea was struct error and to use error_ as
+prefix, but I'm not sure if struct error is too broad and may
+introduce conflicts with system headers. Also error_ is a little
+long and could be shorted to just err_ but I don't know if that's
+clear enough. The error_ prefix doesn't conflict with many git
+functions, but there are some in usage.c (error_errno, error,
+error_routine).
 
-You can, you just can't set them to anything less conservative than
-limits already set via the C API, but we don't set any of those.
+And as general question, is this approach to error handling
+something we should pursue or are there objections? If there's
+consensus that this might be a good idea I'll look into
+converting some parts of the git code (maybe refs.c) to see how
+it pans out.
 
-I.e. PCRE allows you to say expose a regex field in a web form (as we do
-with gitweb) with really conservative settings that can't be overriden
-via a (*LIMIT) set in the pattern.
-
-But since we don't use that C API PCRE runs in a mode where the user
-gets set whatever limit they want in the pattern (or other
-pattern-altering switch), which makes sense for interactive git-grep
-use.
-
->>  * While regexec() won't return an error its version of dealing with
->>    this is (at least under glibc) to balloon CPU/memory use until the
->>    OOMkiller kills git (although not on this particular pattern).
->
-> So in a sense our current behavior with pcre is the same. We just have
-> to provoke the death ourselves. ;)
-
-Indeed :)
+Regards
+Simon
+-- 
++ privacy is necessary
++ using gnupg http://gnupg.org
++ public key id: 0x92FEFDB7E44C32F9
