@@ -2,96 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 56AAB20A10
-	for <e@80x24.org>; Mon,  6 Nov 2017 19:16:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 86D7320A10
+	for <e@80x24.org>; Mon,  6 Nov 2017 20:10:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932519AbdKFTQp (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Nov 2017 14:16:45 -0500
-Received: from mail-it0-f46.google.com ([209.85.214.46]:54658 "EHLO
-        mail-it0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753748AbdKFTQo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Nov 2017 14:16:44 -0500
-Received: by mail-it0-f46.google.com with SMTP id 72so6355571itk.3
-        for <git@vger.kernel.org>; Mon, 06 Nov 2017 11:16:44 -0800 (PST)
+        id S1753791AbdKFUKs (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Nov 2017 15:10:48 -0500
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:47274 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751958AbdKFUKr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Nov 2017 15:10:47 -0500
+Received: by mail-pf0-f195.google.com with SMTP id z11so8534304pfk.4
+        for <git@vger.kernel.org>; Mon, 06 Nov 2017 12:10:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=2HJiJb2DXqK5cYaFDCTCbRH2zvaG+dNjFfQMqeqwc0g=;
-        b=tVLgVSMknQjzXNtvoH1SVuRk/IlW72WVm9OyNProf31h/WxmFHJFZfpD/U48GSsP9q
-         4YN+7CjsACsr4vBsdmUh8nAiHlu4yJw29/2nUuOsge2wWwITE5igoCMyyqVyHBdqoKa2
-         qIU0ONWCQCb61jqoZT3INeClK9B/LtkfE4j2He8VEU7TBsBrfLSlXNcafRvClVHm80f0
-         oMFfh5q+c38g93FZyXAKuiKMA1VtYlAYe2/Vvmeg5TvTVIcOdewHf5f56ZjU1zQDoF5v
-         Wom1Ynqxnp3KnGncbNJtizmwdiuNrlJz1/vZNxcExkw9pzgdOyGINMn2NaeTzZBlZx0l
-         QEDA==
+        d=gmail.com; s=20161025;
+        h=date:user-agent:in-reply-to:references:mime-version
+         :content-transfer-encoding:subject:to:cc:from:message-id;
+        bh=NVdKvlTrIYBHvkyCe96VKgLimmKbfpOUbkRmPpQeuOo=;
+        b=CXj3Di54mcNoS3qpSe8PXJP2VkP68nPsqyw92irhYfC2mBVhLu9H9OALQmiaLsWJmu
+         f+7MPMVpK87kFpTn9jmDWU6uYOzblxgmTECnlKoTY3ut06veWrx6gORrLN1wThBQlaRe
+         em2iE6Pc/TfNsYCPwmUTwIpqynVOdLMiyBKyliTsvRWUEi8tZlATd/BCLJA285qg0uAJ
+         Lu3Zl324Xc0m7lujDFSOIApPf5Lx5V+zMaxwtFUZoxoKLLywp+ig4AM/yuwgRiEJAQhu
+         cyO7Pk7bm/xsa9A/QMxS0ZkpAq9g2hzDzKQBtOr8QryObxn9x6QT688ic5ta8Ij3qds/
+         vdIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=2HJiJb2DXqK5cYaFDCTCbRH2zvaG+dNjFfQMqeqwc0g=;
-        b=RaeLFWVrob84AUqgNdzd8V6TbXZhVrpEVeCM0/KmPaJimqKgT3+a4657EqDI/T6QJh
-         ld2jUc1KzSYbOD1CVS3IsJGP6XYBYX3C3zDmzR7hdyAunjGWhzkwJn8GRil8IgyZd4Xo
-         mrSTllL754XjqPLaBI1wcpsADvg1o51DUUiM9fFR5KLlCpx7bFkyyrhWPKcBT945zmii
-         VuTDVd8nwYqYd2+em12zK5LV9Zo4u3PEips1n4ErEfSsuUynQylyP0i+tLRXPt6vt16f
-         rrPh6ejJ8GDB38d83EG0oBqhfVL0yitW0FqmrO57SBLqqW1kHsGTSZjMhAqKHFzRcyPc
-         imrQ==
-X-Gm-Message-State: AJaThX4vcAjJ6atGqX9Y33F0SaXRmXjgZHqbQPwpxvNDQTvG40KzW3tu
-        3+4g/qGcDEsralWmA+G4dtTkZU+U6nk=
-X-Google-Smtp-Source: ABhQp+SNBag2ZpwoPTJ/audlW2OOYoUk6CvzNQhn4l7jUOC/nMz/dx8cvOjYKUSSO+83niqUCdO4IA==
-X-Received: by 10.36.213.213 with SMTP id a204mr10874679itg.51.1509995803505;
-        Mon, 06 Nov 2017 11:16:43 -0800 (PST)
-Received: from twelve3.mtv.corp.google.com ([2620:0:100e:422:b9ff:79e6:288e:1217])
-        by smtp.gmail.com with ESMTPSA id r15sm5905747iod.12.2017.11.06.11.16.42
+        h=x-gm-message-state:date:user-agent:in-reply-to:references
+         :mime-version:content-transfer-encoding:subject:to:cc:from
+         :message-id;
+        bh=NVdKvlTrIYBHvkyCe96VKgLimmKbfpOUbkRmPpQeuOo=;
+        b=DB31Q6AXMZ3+ZdhlP+UxUY87ECu0kwIjhG/Lg+GUuV32mzfE9M0J0ABTPN704oSbay
+         RwAp6UVYcBE8FphdDqeiuew1slLVvGFznpJ8TvFaP7i35fH6gKr8bK1LxmQmkk8QClRx
+         WO7GxT39nYDUD7cNSODqppWBQ2FzKpYdtV09iqrwxOVcEjBx6PU0Chzd29FjsPRCST6c
+         2Rtd/ViWPgVmuVdBpop53kSAHWTO+SkaoImXjLjH3uwN4MdmtiI7z/oo77QjIYh+4CIj
+         fSCdZy42OtlZsILEjGuO+jaEsYctXlIeFWgvJAs1zahYuvi6CAowCQeYwv9wh1aBXv0T
+         fsIQ==
+X-Gm-Message-State: AMCzsaUKODUuM1+XnDmKLZU+sBq9o0Nre+l7X5zBB8q1CrxQts7MHh9Q
+        O8aB/FVUJuPlS8OhcHF1OBo=
+X-Google-Smtp-Source: ABhQp+S8cjtLCr2Ri0NctlFDtqTfuZM32D9hjEJENVi0PvNeuxphDr/vbbKIhi1nY8izt0QBq2/R2A==
+X-Received: by 10.159.206.132 with SMTP id bg4mr15956753plb.129.1509999046455;
+        Mon, 06 Nov 2017 12:10:46 -0800 (PST)
+Received: from [192.168.1.126] (50-39-169-152.bvtn.or.frontiernet.net. [50.39.169.152])
+        by smtp.gmail.com with ESMTPSA id y10sm22537360pfl.186.2017.11.06.12.10.44
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 06 Nov 2017 11:16:43 -0800 (PST)
-Date:   Mon, 6 Nov 2017 11:16:42 -0800
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH 1/9] extension.partialclone: introduce partial clone
- extension
-Message-Id: <20171106111642.696a006e802cf0259098b44f@google.com>
-In-Reply-To: <99b7c61b-f8ab-43a0-0707-62ac1db4d080@jeffhostetler.com>
-References: <20171102202052.58762-1-git@jeffhostetler.com>
-        <20171102202052.58762-2-git@jeffhostetler.com>
-        <20171102152427.32544b3d6149e7a7bfe840c8@google.com>
-        <1db01a45-85c4-6243-c43f-9f5e50e9a6a8@jeffhostetler.com>
-        <20171103113919.396807c82dbfdecff7f19c41@google.com>
-        <99b7c61b-f8ab-43a0-0707-62ac1db4d080@jeffhostetler.com>
-X-Mailer: Sylpheed 3.4.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+        Mon, 06 Nov 2017 12:10:44 -0800 (PST)
+Date:   Mon, 06 Nov 2017 12:10:40 -0800
+User-Agent: K-9 Mail for Android
+In-Reply-To: <xmqq60aqn1ok.fsf@gitster.mtv.corp.google.com>
+References: <20171104004144.5975-1-rafa.almas@gmail.com> <20171104004144.5975-3-rafa.almas@gmail.com> <xmqq60aqn1ok.fsf@gitster.mtv.corp.google.com>
+MIME-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH v1 2/2] log: add option to choose which refs to decorate
+To:     Junio C Hamano <gitster@pobox.com>,
+        =?ISO-8859-1?Q?Rafael_Ascens=E3o?= <rafa.almas@gmail.com>
+CC:     git@vger.kernel.org, me@ikke.info, hjemli@gmail.com,
+        mhagger@alum.mit.edu, pclouds@gmail.com,
+        ilari.liusvaara@elisanet.fi
+From:   Jacob Keller <jacob.keller@gmail.com>
+Message-ID: <B24042DB-BB27-41DE-82B7-5F3ED502D7D0@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 6 Nov 2017 12:32:45 -0500
-Jeff Hostetler <git@jeffhostetler.com> wrote:
 
-> >> Yes, that is a point I wanted to ask about.  I renamed the
-> >> extensions.partialclone that you created and then I moved your
-> >> remote.<name>.blob-max-bytes setting to be in extensions too.
-> >> Moving it to core.partialclonefilter is fine.
-> > 
-> > OK - in that case, it might be easier to just reuse my first patch in
-> > its entirety. "core.partialclonefilter" is not used until the
-> > fetching/cloning part anyway.
-> > 
-> 
-> Good point.  I'll take a look at refactoring that.
-> If it looks like the result will be mostly/effectively
-> your original patches, I'll let you know and hand part 2
-> back to you.
 
-Sounds good. I uploaded the result of rebasing my part 2 patches on top
-of your part 1 patches here, if you would like it as a reference:
+On November 3, 2017 8:49:15 PM PDT, Junio C Hamano <gitster@pobox=2Ecom> w=
+rote:
+>Rafael Ascens=C3=A3o <rafa=2Ealmas@gmail=2Ecom> writes:
+>
+>Why should this be a special case that burdens users to remember one
+>more rule?  Wouldn't users find "--decorate-refs=3Drefs/tags" useful
+>and it woulld be shorter and nicer than having to say "refs/tags/*"?
+>
 
-https://github.com/jonathantanmy/git/commits/pc20171106
+Actually, I would expect these to behave more like git describes match and=
+ exclude which don't have an extra /*=2E It seems natural to me that glob w=
+ould always add an extra glob, but=2E=2E I don't recall if match and exlude=
+ do so=2E
+
+That being said, if we think the extra glob would not cause problems and g=
+enerally do what people mean=2E=2E=2E I guess consistent with --glob would =
+be good=2E=2E=2E But it's definitely not what I'd expect at first glance=2E
+--=20
+Sent from my Android device with K-9 Mail=2E Please excuse my brevity=2E
