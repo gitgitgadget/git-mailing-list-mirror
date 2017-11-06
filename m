@@ -7,23 +7,23 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	UNPARSEABLE_RELAY shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1F89220A10
-	for <e@80x24.org>; Mon,  6 Nov 2017 21:20:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D13C820A10
+	for <e@80x24.org>; Mon,  6 Nov 2017 21:20:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751651AbdKFVUC (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Nov 2017 16:20:02 -0500
-Received: from marcos.anarc.at ([206.248.172.91]:49388 "EHLO marcos.anarc.at"
+        id S1751733AbdKFVUD (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Nov 2017 16:20:03 -0500
+Received: from marcos.anarc.at ([206.248.172.91]:49400 "EHLO marcos.anarc.at"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751416AbdKFVUA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Nov 2017 16:20:00 -0500
-Received: from [127.0.0.1] (localhost [127.0.0.1])      (Authenticated sender: anarcat) with ESMTPSA id 2F2101A00AC
+        id S1750922AbdKFVUC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Nov 2017 16:20:02 -0500
+Received: from [127.0.0.1] (localhost [127.0.0.1])      (Authenticated sender: anarcat) with ESMTPSA id 42A131A00AE
 From:   =?UTF-8?q?Antoine=20Beaupr=C3=A9?= <anarcat@debian.org>
 To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, Kevin <kevin@ki-ai.org>,
+Cc:     gitster@pobox.com,
         =?UTF-8?q?Antoine=20Beaupr=C3=A9?= <anarcat@debian.org>
-Subject: [PATCH v4 1/7] remote-mediawiki: add namespace support
-Date:   Mon,  6 Nov 2017 16:19:47 -0500
-Message-Id: <20171106211953.27910-2-anarcat@debian.org>
+Subject: [PATCH v4 3/7] remote-mediawiki: show known namespace choices on failure
+Date:   Mon,  6 Nov 2017 16:19:49 -0500
+Message-Id: <20171106211953.27910-4-anarcat@debian.org>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20171106211953.27910-1-anarcat@debian.org>
 References: <20171102212518.1601-1-anarcat@debian.org>
@@ -36,67 +36,33 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Kevin <kevin@ki-ai.org>
+If we fail to find a requested namespace, we should tell the user
+which ones we know about, since those were already fetched. This
+allows users to fetch all namespaces by specifying a dummy namespace,
+failing, then copying the list of namespaces in the config.
 
-This introduces a new remote.origin.namespaces argument that is a
-space-separated list of namespaces. The list of pages extract is then
-taken from all the specified namespaces.
+Eventually, we should have a flag that allows fetching all namespaces
+automatically.
 
 Reviewed-by: Antoine Beaupré <anarcat@debian.org>
 Signed-off-by: Antoine Beaupré <anarcat@debian.org>
 ---
- contrib/mw-to-git/git-remote-mediawiki.perl | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ contrib/mw-to-git/git-remote-mediawiki.perl | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/contrib/mw-to-git/git-remote-mediawiki.perl b/contrib/mw-to-git/git-remote-mediawiki.perl
-index e7f857c1a..5ffb57595 100755
+index a1d783789..6364d4e91 100755
 --- a/contrib/mw-to-git/git-remote-mediawiki.perl
 +++ b/contrib/mw-to-git/git-remote-mediawiki.perl
-@@ -63,6 +63,10 @@ chomp(@tracked_pages);
- my @tracked_categories = split(/[ \n]/, run_git("config --get-all remote.${remotename}.categories"));
- chomp(@tracked_categories);
+@@ -1334,7 +1334,8 @@ sub get_mw_namespace_id {
+ 	my $id;
  
-+# Just like @tracked_categories, but for MediaWiki namespaces.
-+my @tracked_namespaces = split(/[ \n]/, run_git("config --get-all remote.${remotename}.namespaces"));
-+chomp(@tracked_namespaces);
-+
- # Import media files on pull
- my $import_media = run_git("config --get --bool remote.${remotename}.mediaimport");
- chomp($import_media);
-@@ -256,6 +260,23 @@ sub get_mw_tracked_categories {
- 	return;
- }
- 
-+sub get_mw_tracked_namespaces {
-+    my $pages = shift;
-+    foreach my $local_namespace (@tracked_namespaces) {
-+        my $mw_pages = $mediawiki->list( {
-+            action => 'query',
-+            list => 'allpages',
-+            apnamespace => get_mw_namespace_id($local_namespace),
-+            aplimit => 'max' } )
-+            || die $mediawiki->{error}->{code} . ': '
-+                . $mediawiki->{error}->{details} . "\n";
-+        foreach my $page (@{$mw_pages}) {
-+            $pages->{$page->{title}} = $page;
-+        }
-+    }
-+    return;
-+}
-+
- sub get_mw_all_pages {
- 	my $pages = shift;
- 	# No user-provided list, get the list of pages from the API.
-@@ -319,6 +340,10 @@ sub get_mw_pages {
- 		$user_defined = 1;
- 		get_mw_tracked_categories(\%pages);
- 	}
-+	if (@tracked_namespaces) {
-+		$user_defined = 1;
-+		get_mw_tracked_namespaces(\%pages);
-+	}
- 	if (!$user_defined) {
- 		get_mw_all_pages(\%pages);
+ 	if (!defined $ns) {
+-		print {*STDERR} "No such namespace ${name} on MediaWiki.\n";
++		my @namespaces = map { s/ /_/g; $_; } sort keys %namespaces_id;
++		print {*STDERR} "No such namespace ${name} on MediaWiki, known namespaces: @namespaces\n";
+ 		$ns = {is_namespace => 0};
+ 		$namespace_id{$name} = $ns;
  	}
 -- 
 2.11.0
