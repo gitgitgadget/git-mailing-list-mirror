@@ -6,77 +6,125 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B2700202A0
-	for <e@80x24.org>; Mon,  6 Nov 2017 07:00:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7E804202A0
+	for <e@80x24.org>; Mon,  6 Nov 2017 07:10:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751418AbdKFHAj (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Nov 2017 02:00:39 -0500
-Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:64334 "EHLO
-        alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1750928AbdKFHAi (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 6 Nov 2017 02:00:38 -0500
-X-AuditID: 1207440e-be1ff70000007085-50-5a000893b2f2
+        id S1751774AbdKFHKD (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Nov 2017 02:10:03 -0500
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:65324 "EHLO
+        alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751092AbdKFHKC (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 6 Nov 2017 02:10:02 -0500
+X-AuditID: 12074413-3a3ff70000007929-f8-5a000ac9caf3
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
         (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
         (Client did not present a certificate)
-        by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 8B.B9.28805.398000A5; Mon,  6 Nov 2017 02:00:36 -0500 (EST)
+        by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 40.A5.31017.9CA000A5; Mon,  6 Nov 2017 02:10:01 -0500 (EST)
 Received: from [192.168.69.190] (p57BCCA7E.dip0.t-ipconnect.de [87.188.202.126])
         (authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id vA670UEB012876
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id vA679wr3013305
         (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-        Mon, 6 Nov 2017 02:00:33 -0500
-Subject: Re: [PATCH v1 1/2] refs: extract function to normalize partial refs
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?Q?Rafael_Ascens=c3=a3o?= <rafa.almas@gmail.com>,
-        git@vger.kernel.org, me@ikke.info, hjemli@gmail.com,
-        pclouds@gmail.com, ilari.liusvaara@elisanet.fi
+        Mon, 6 Nov 2017 02:09:59 -0500
+Subject: Re: [PATCH v1 2/2] log: add option to choose which refs to decorate
+To:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?Rafael_Ascens=c3=a3o?= <rafa.almas@gmail.com>,
+        git@vger.kernel.org
+Cc:     me@ikke.info, hjemli@gmail.com, pclouds@gmail.com,
+        ilari.liusvaara@elisanet.fi
 References: <20171104004144.5975-1-rafa.almas@gmail.com>
- <20171104004144.5975-2-rafa.almas@gmail.com>
- <4dc4eefc-56b9-1b13-ae46-83a3af9c7ee3@alum.mit.edu>
- <xmqqwp34jj3h.fsf@gitster.mtv.corp.google.com>
+ <20171104004144.5975-3-rafa.almas@gmail.com>
+ <xmqq60aqn1ok.fsf@gitster.mtv.corp.google.com>
+ <b0e3856b-e627-0d22-90da-3da1781f98b3@gmail.com>
+ <xmqq1sldmqms.fsf@gitster.mtv.corp.google.com>
+ <xmqqshdtl057.fsf@gitster.mtv.corp.google.com>
 From:   Michael Haggerty <mhagger@alum.mit.edu>
-Message-ID: <1ae0c199-f0fe-4468-1481-c7217ef6cc11@alum.mit.edu>
-Date:   Mon, 6 Nov 2017 08:00:29 +0100
+Message-ID: <c1b9cb69-0fdf-a58c-62cc-343a6abdbb84@alum.mit.edu>
+Date:   Mon, 6 Nov 2017 08:09:57 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.4.0
 MIME-Version: 1.0
-In-Reply-To: <xmqqwp34jj3h.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <xmqqshdtl057.fsf@gitster.mtv.corp.google.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrIKsWRmVeSWpSXmKPExsUixO6iqDuFgyHK4OASTYuuK91MFg29V5gt
-        ls56w2ixcs0eZotXHe2MFt1T3jJafDp4k8WB3WPl2VqPnbPusnv8uvuSzePiJWWPz5vkAlij
-        uGxSUnMyy1KL9O0SuDI2vN7CVLCIteJX01LWBsY5LF2MnBwSAiYS7ZfXs3cxcnEICexgkrjY
-        1c8C4Zxnkvi1ewobSJWwgI/E3QndYLaIgJrExLZDYN3MApsYJd7ezoRoOMco8WPDZ0aQBJuA
-        rsSinmYmEJtXwF7i99bnrCA2i4CKxJSu2ewgtqhAhMTz5vesEDWCEidnPgEbyilgLdHfMYkN
-        YoG6xJ95l5ghbHGJW0/mM0HY8hLb385hnsAoMAtJ+ywkLbOQtMxC0rKAkWUVo1xiTmmubm5i
-        Zk5xarJucXJiXl5qka6xXm5miV5qSukmRkg88O1gbF8vc4hRgINRiYd3wZz/kUKsiWXFlbmH
-        GCU5mJREea+8/BMpxJeUn1KZkVicEV9UmpNafIhRgoNZSYTXmYUhSog3JbGyKrUoHyYlzcGi
-        JM6rtkTdT0ggPbEkNTs1tSC1CCYrw8GhJMErxQbUKFiUmp5akZaZU4KQZuLgBBnOAzT8BSvI
-        8OKCxNzizHSI/ClGY44bD6//YeJ4NvN1A7MQS15+XqqUOO8ekFIBkNKM0jy4abCU9opRHOg5
-        Yd4AkKU8wHQIN+8V0ComoFWzOYB+5C0uSURISTUwli0N4d548uTyI0VztJdOf7ee+zSv7NsT
-        PLu+6Yokx52S7tnDbfD1NWdhXbvXWZ8VDQva2Lbyr8qRs3jSnFJ8e8bXx4xq+9u9su/u9WH9
-        x8tnGsi51ty232T3a7W6OXWJfBs+/ly85byGmJxXAM+KJ9zChQtTey16OC+c/ezRF3uNNcz/
-        y6L1SizFGYmGWsxFxYkAfvQ/SUQDAAA=
+Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrFKsWRmVeSWpSXmKPExsUixO6iqHuSiyHKYGq/rEXXlW4mi4beK8wW
+        S2e9YbRYuWYPs8WrjnZGi+4pbxktPh28yeLA7rHybK3Hzll32T1+3X3J5nHxkrLH501yAaxR
+        XDYpqTmZZalF+nYJXBlnLx5hK7giVtH9ZSN7A+MUoS5GTg4JAROJS69XsHQxcnEICexgkji5
+        YRMzhHOeSeL1maNsXYwcHMICPhKz5yqBxEUEOhgllvbuYgXpZhaIlni9ci8TRMNaJonezr3s
+        IAk2AV2JRT3NTCDNvAL2En3XwLaxCKhIHN72jA3EFhWIkHje/B5sDq+AoMTJmU9YQGxOAWuJ
+        kw8eMkLMV5f4M+8SM4QtLnHryXwmCFteonnrbOYJjAKzkLTPQtIyC0nLLCQtCxhZVjHKJeaU
+        5urmJmbmFKcm6xYnJ+blpRbpmuvlZpbopaaUbmKERIPwDsZdJ+UOMQpwMCrx8C6Y8z9SiDWx
+        rLgy9xCjJAeTkijvlZd/IoX4kvJTKjMSizPii0pzUosPMUpwMCuJ8DqzMEQJ8aYkVlalFuXD
+        pKQ5WJTEedWWqPsJCaQnlqRmp6YWpBbBZGU4OJQkeKXYgBoFi1LTUyvSMnNKENJMHJwgw3mA
+        hr9gBRleXJCYW5yZDpE/xajL8Wzm6wZmIZa8/LxUKXHePSBFAiBFGaV5cHNgSewVozjQW8K8
+        YiDreIAJEG7SK6AlTEBLZnMAfcdbXJKIkJJqYEx/cl9oXrSve1PP2w1rX2zwXTav4cCfiX3/
+        nWe/jSrUfi90tI/5s+y+ik7Rsnuxfcu4FypM0j5auiLuzs+HuoY/l3z4YmZvklzW/XfFoYnM
+        y/P3fdbZl9JWlx4bNMVs9dWNTbmnxJc4Pk4sTLzNlv6K6WTgr5UKfXyrFybKF3sa6Kp8Ypny
+        cbISS3FGoqEWc1FxIgBM4Ds4PQMAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/06/2017 02:23 AM, Junio C Hamano wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
+On 11/05/2017 07:17 AM, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>> Rafael Ascensão <rafa.almas@gmail.com> writes:
+>> ...
+>>> Because changing the default behavior of that function has
+>>> implications on multiple commands which I think shouldn't change. But
+>>> at the same time, would be nice to have the logic that deals with
+>>> glob-ref patterns all in one place.
+>>>
+>>> What's the sane way to do this?
+>>
+>> Learn to type "--decorate-refs="refs/heads/[m]aster", and not twewak
+>> the code at all, perhaps.  The users of existing "with no globbing,
+>> /* is appended" interface are already used to that way and they do
+>> not have to learn a new and inconsistent interface.
+>>
+>> After all, "I only want to see 'git log' output with 'master'
+>> decorated" (i.e. not specifying "this class of refs I can glob by
+>> using the naming convention I am using" and instead enumerating the
+>> ones you care about) does not sound like a sensible thing people
+>> often want to do, so making it follow the other codepath so that
+>> people can say "refs/tags" to get "refs/tags/*", while still allowing
+>> such a rare but specific and exact one possible, may not sound too
+>> bad to me.
 > 
->> [1] I say "almost entirely" because putting them in one function means
->> that only `pattern` needs to be scanned for glob characters. But that is
->> an unimportant detail.
+> Having said all that, I can imagine another way out might be to
+> change the behaviour of this "normalize" thing to add two patterns,
+> the original pattern in addition to the original pattern plus "/*",
+> when it sees a pattern without any glob.  Many users who relied on
+> the current behaviour fed "refs/tags" knowing that it will match
+> everything under "refs/tags" i.e. "refs/tags/*", and they cannot
+> have a ref that is exactly "refs/tags", so adding the original
+> pattern without an extra trailing "/*" would not hurt them.  And
+> this will allow you to say "refs/heads/master" when you know you
+> want that exact ref, and in such a repository where that original
+> pattern without trailing "/*" would be useful, because you cannot
+> have "refs/heads/master/one" at the same time, having an extra
+> pattern that is the original plus "/*" would not hurt you, either.
 > 
-> That could actually be an important detail, in that even if prefix
-> has wildcard, we'd still append the trailing "/*" as long as the
-> pattern does not, right?
+> This however needs a bit of thought to see if there are corner cases
+> that may result in unexpected and unwanted fallout, and something I
+> am reluctant to declare unilaterally that it is a better way to go.
 
-That's correct, but I was assuming that the prefix would always be a
-hard-coded string like "refs/tags/" or maybe "refs/". (That is the case
-now.) It doesn't seem very useful to use a prefix like "refs/*/".
+There's some glob-matching code (somewhere? I don't know if it's allowed
+everywhere) that allows "**" to mean "zero or one path components. If
+"refs/tags" were massaged to be "refs/tags/**", then it would match not only
+
+    refs/tags
+    refs/tags/foo
+
+but also
+
+    refs/tags/foo/bar
+
+, which is probably another thing that the user would expect to see.
+
+There's at least some precedent for this kind of expansion: `git
+for-each-ref refs/remotes` lists *all* references under that prefix,
+even if they have multiple levels.
 
 Michael
