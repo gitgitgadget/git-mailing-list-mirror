@@ -2,101 +2,149 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E199F20A10
-	for <e@80x24.org>; Tue,  7 Nov 2017 02:54:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2542320A10
+	for <e@80x24.org>; Tue,  7 Nov 2017 02:56:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753424AbdKGCyM (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Nov 2017 21:54:12 -0500
-Received: from mout.gmx.net ([212.227.17.22]:51166 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753223AbdKGCyL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Nov 2017 21:54:11 -0500
-Received: from bedhanger.strangled.net ([188.192.144.31]) by mail.gmx.com
- (mrgmx103 [212.227.17.168]) with ESMTPSA (Nemesis) id
- 0LxPgU-1fIqfu3mYM-016wzq; Tue, 07 Nov 2017 03:53:33 +0100
-From:   Ann T Ropea <bedhanger@gmx.de>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Philip Oakley <philipoakley@iee.org>
+        id S1753930AbdKGC41 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Nov 2017 21:56:27 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56354 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750941AbdKGC40 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Nov 2017 21:56:26 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id F22C0A6967;
+        Mon,  6 Nov 2017 21:56:24 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=EQ40Y6eBeHmWBZDqJHH8+ILPgVc=; b=xtbzOn
+        cyRk20+PWi0Q5YJgyDq9nnPENA00lkcPfqJZBPhCM4R4ptE2wju6E8GHUTpo+LGH
+        egXfzjDXYNh4MeDNejAO/oWChMtz+L2LVbNIWzCDwq719E/dI+dJBpV4Awco5mCM
+        LpqyO+rIbWdQ1bS4TJnJUvKAl517dZ72gqniQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=DwSE2+5KYq5Pz8+3Uh2/T97dqhuvxV+L
+        jk3cV7yea9x1G22HA2VdpiofM3/pCHVHcSObUEv1Dt4AfJWnDgeU+XcK3OsUcKrg
+        h8s7jqjC9SwUIDWeE4YUiFM278Ammfx0uBEhvZMu8zgm0Lne2mD59ckajW57nlfq
+        luD8CW1L8oY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id EAA04A6966;
+        Mon,  6 Nov 2017 21:56:24 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6C67CA6965;
+        Mon,  6 Nov 2017 21:56:24 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Phillip Wood <phillip.wood@talktalk.net>
 Cc:     Git Mailing List <git@vger.kernel.org>,
-        Daniel Barkalow <barkalow@iabervon.org>,
-        Ann T Ropea <bedhanger@gmx.de>
-Subject: Re: [PATCH 1/3] checkout: describe_detached_head: remove 3dots after committish
-Date:   Tue,  7 Nov 2017 03:53:21 +0100
-Message-Id: <20171107025321.31028-1-bedhanger@gmx.de>
-X-Mailer: git-send-email 2.13.6
-References: <20171105162730.31405-1-bedhanger@gmx.de>
-In-Reply-To: <20171105162730.31405-1-bedhanger@gmx.de>
-X-Provags-ID: V03:K0:lPajf5wE3Oo+vSBNfzNHHeFiWQIASyDviO6lWG4BQrD8fr8QfLD
- mD+zCHzMufy+RbqfunBGWTKaIiUcKPkPdInmREA4LM+qPz+QK06hyKrI6Jb3dCSK0vGPPN4
- 5xqY9XpylrXwn9yYiOJ1FvyOCn1e14IkMFEt8d3plgjj6bv8h5oVyzVrk1Uj/+9RLMYnHET
- MB2Wbh7N76YqMR+UPJ2pQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:sAYppOgwMMQ=:gCCSAcpbFNjoh9J7ePgPuH
- 6hcHoiahHF3uo5r4TUefi+hYl5OqZQNvWxgHpmILUhUGq8drbClaA6hP2nSExS9vQmLrYOvLh
- PbMwGCsQJV7kVqzJz5p8TJR8utv/zjwO529hzZFgL5O35qlBAmbmN9lofg5ZiTl1hk2g76GRY
- gM+NFm4tgWGjnaJdEymFU5hniyv3iGhO8vV9wnoD4wsuEE1G1c6QecU74IrlfljfVBjCvhdUM
- OROThCV2Jw/OTlcg6zrWeSC0FU7m1+/4PHx4EXj2bA/bguFXXCdRaLJEF0lHacv6veGhEDtr6
- I0lZ1OuC6xP7UmSrs/xmBpIcXkct/SHdr2Xyru/aDkiEC9U0KkWaIqQ41jDZwu1fcLSYLIyw4
- 5rtD/0FEToS5ZVPW9lNSI/8vCkFhm71Vqz5WffXemZneIu8dwhqRi+qZdFSb+65vsIUiRp2nB
- PlUmFYVCHmrL2rciLLGn+FBUksaU2nJOCSjcbGpx81sDPNUsplYJbAu33Or4tKd8oWMPZ6Lxu
- I6aA0ghs3mTeDTzxCOqtufsLBuYvEAFXDLLSWOiS7W9Xhj73vCbYNpduXH4hBtNCud3WSt7Hx
- kg+gunyZOktYS9H5+W3EKpJ5jDiO+OJ+JY6BbXhplcb8Pbu7lBMP/1xtyLohoaSMleHs2K0fg
- QdxTDeZq/O2NA/pWJ7fFdpbb3uYug3gmzisRqFS/pyYFgNicVB/f10/MLhs+GkCe5U/FGgiDQ
- DL3RPRhrFBn/NO11+IJ/e/w8aArrvsfdkO+Bq/Z+sCBnhm/J9TekNjk28wr/J5kfEzdaKzGtK
- 0bmiDdokB6GDSgeN9Pa0xgZM8B04g==
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v1 2/8] Add a function to update HEAD after creating a commit
+References: <20170925101041.18344-1-phillip.wood@talktalk.net>
+        <20171106112709.2121-1-phillip.wood@talktalk.net>
+        <20171106112709.2121-3-phillip.wood@talktalk.net>
+Date:   Tue, 07 Nov 2017 11:56:23 +0900
+In-Reply-To: <20171106112709.2121-3-phillip.wood@talktalk.net> (Phillip Wood's
+        message of "Mon, 6 Nov 2017 11:27:03 +0000")
+Message-ID: <xmqqtvy6g5k8.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3DD623AA-C367-11E7-AFC5-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks for all the feedback provided!
+Phillip Wood <phillip.wood@talktalk.net> writes:
 
-I'd like to summarise what consensus we have reached so far and
-then propose a way forward:
+> @@ -1735,25 +1733,10 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+>  	strbuf_release(&author_ident);
+>  	free_commit_extra_headers(extra);
+>  
+> -	nl = strchr(sb.buf, '\n');
+> -	if (nl)
+> -		strbuf_setlen(&sb, nl + 1 - sb.buf);
+> -	else
+> -		strbuf_addch(&sb, '\n');
+> -	strbuf_insert(&sb, 0, reflog_msg, strlen(reflog_msg));
+> -	strbuf_insert(&sb, strlen(reflog_msg), ": ", 2);
 
-   * we'll use the term "ellipsis (pl. ellipses)" for what's
-     been referred to as "3dots", "n-dots", "many dots" and so
-     forth
+The old code treated sb (which has the log message we gave to
+commit_tree_extended() to create the commit) as expendable at this
+point and (1) truncated it to the title line, and (2) prepended the
+reflog action prefix, so that it can pass it to the ref transaction
+code to use it as the reflog message.
 
-   * we would like to use ellipses when attached to SHA-1
-     values only for the purpose of specifying a symmetric
-     difference (as per gitrevisions(7))
+Which was quite ugly X-<.
 
-   * the usage of ellipses as a "here we truncated something
-     longer" is a relic which should be phased out
+> -	transaction = ref_transaction_begin(&err);
+> -	if (!transaction ||
+> -	    ref_transaction_update(transaction, "HEAD", &oid,
+> -				   current_head
+> -				   ? &current_head->object.oid : &null_oid,
+> -				   0, sb.buf, &err) ||
+> -	    ref_transaction_commit(transaction, &err)) {
+> +	if (update_head(current_head, &oid, reflog_msg, &sb, &err)) {
+>  		rollback_index_files();
+>  		die("%s", err.buf);
+>  	}
 
-To get there, preventing describe_detached_head from appending
-an ellipsis to the SHA-1 values it prints is one important step.
+> @@ -751,6 +751,42 @@ int template_untouched(const struct strbuf *sb, const char *template_file,
+>  	return rest_is_empty(sb, start - sb->buf);
+>  }
+>  
+> +int update_head(const struct commit *old_head, const struct object_id *new_head,
+> +		const char *action, const struct strbuf *msg,
+> +		struct strbuf *err)
+> +{
+> +	struct ref_transaction *transaction;
+> +	struct strbuf sb = STRBUF_INIT;
 
-This change does not cause any test to fall over.
+It no longer is necessary to call this variable "sb"; the original
+had a single instance of strbuf that was reused for different
+purposes and could not give it a more specific name, but we can
+afford to call this one reflog_message or something.
 
-The other important step is dealing with the "git diff --raw"
-output which features ellipses in the relic-fashion no longer
-desired.
+> +	const char *nl;
+> +	int ret = 0;
+> +
+> +	if (action) {
+> +		strbuf_addstr(&sb, action);
+> +		strbuf_addstr(&sb, ": ");
+> +	}
+> +
+> +	nl = strchr(msg->buf, '\n');
+> +	if (nl) {
+> +		strbuf_add(&sb, msg->buf, nl + 1 - msg->buf);
+> +	} else {
+> +		strbuf_addbuf(&sb, msg);
+> +		strbuf_addch(&sb, '\n');
+> +	}
 
-It would appear that simplifying diff.c's diff_aligned_abbrev
-routine to something like:
+The updated code is a lot more natural and straight-forward.  I
+quite like it.
 
-	/* Do we want all 40 hex characters?
-	 */
-	if (len == GIT_SHA1_HEXSZ)
-		return oid_to_hex(oid);
+I however do not think update_head() is such a good name for a
+helper function in the global scope.  builtin/clone.c has a static
+one that has quite different semantics with the same name (I am not
+saying that builtin/clone.c will in the future start including the
+sequencer.h header file; I am pointing out that update_head() is not
+a good global name that will be understood by everybody).
 
-	/* An abbreviated value is fine.
-	 */
-	return diff_abbrev_oid(oid, len);
-
-does do the trick.
-
-This change causes quite a few tests to fall over; however, they
-all have truncated-something-longer-ellipses in their
-raw-diff-output expected sections, and removing the ellipses
-from there makes the tests pass again, :-)
-
-If we can agree that this is a way forward, i'll create & send
-v2 of the patch series to the mailing list (it'll include the
-fixed tests) and we'll see where we go from there.
+> diff --git a/sequencer.h b/sequencer.h
+> index 65a4b0c25185d7ad5115035abb766d1b95df9a62..1db06caea35bed556dfaabca1c6be8a80857ed5e 100644
+> --- a/sequencer.h
+> +++ b/sequencer.h
+> @@ -68,4 +68,7 @@ enum cleanup_mode {
+>  int message_is_empty(const struct strbuf *sb, enum cleanup_mode cleanup_mode);
+>  int template_untouched(const struct strbuf *sb, const char *template_file,
+>  		       enum cleanup_mode cleanup_mode);
+> +int update_head(const struct commit *old_head, const struct object_id *new_head,
+> +		const char* action, const struct strbuf *msg,
+> +		struct strbuf *err);
+>  #endif
