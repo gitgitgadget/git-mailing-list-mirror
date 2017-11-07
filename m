@@ -2,109 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E7A3202A0
-	for <e@80x24.org>; Tue,  7 Nov 2017 14:10:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3E849202A0
+	for <e@80x24.org>; Tue,  7 Nov 2017 14:24:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755450AbdKGOK1 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Nov 2017 09:10:27 -0500
-Received: from mout.gmx.net ([212.227.17.21]:58115 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755406AbdKGOK0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Nov 2017 09:10:26 -0500
-Received: from virtualbox ([95.208.59.171]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LmNHK-1elgFM2xyU-00ZyI7; Tue, 07
- Nov 2017 15:10:18 +0100
-Date:   Tue, 7 Nov 2017 15:09:31 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v1 8/8] sequencer: try to commit without forking 'git
- commit'
-In-Reply-To: <1975badb-7728-45fe-3e8a-8755d85da89a@talktalk.net>
-Message-ID: <alpine.DEB.2.21.1.1711071509120.6482@virtualbox>
-References: <20170925101041.18344-1-phillip.wood@talktalk.net> <20171106112709.2121-1-phillip.wood@talktalk.net> <20171106112709.2121-9-phillip.wood@talktalk.net> <alpine.DEB.2.21.1.1711070203230.6482@virtualbox>
- <1975badb-7728-45fe-3e8a-8755d85da89a@talktalk.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1752850AbdKGOY5 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Nov 2017 09:24:57 -0500
+Received: from smtp-out-5.talktalk.net ([62.24.135.69]:44248 "EHLO
+        smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751764AbdKGOY4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Nov 2017 09:24:56 -0500
+Received: from [192.168.2.201] ([92.22.30.94])
+        by smtp.talktalk.net with SMTP
+        id C4o9e5eunpb8rC4o9epwo9; Tue, 07 Nov 2017 14:24:54 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1510064694;
+        bh=OwDZBslLpBxjAI1i2VkthWLa+cuvsvBUZcpEI4dcnXI=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=cIz7BSny8uDvTM985Y/HG5d7VrvP2Rt792CosjG+5TycZG4TF9UMfTzyLMFo7LPJi
+         RBNDIgb6n3vigzQXntSUIY+F2kn1BMHgPRHx7KS31kqUpDFzftm2jJm/4Mh48mSta6
+         JLmmguOGFaYaTRjKAITCV5kliRZSH7fXV/BDj4V0=
+X-Originating-IP: [92.22.30.94]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=ZM2noTzb c=1 sm=1 tr=0 a=lje0BXTe3+PqU+djfnm1WA==:117
+ a=lje0BXTe3+PqU+djfnm1WA==:17 a=IkcTkHD0fZMA:10 a=evINK-nbAAAA:8
+ a=z--0miu0g-leITsC8MwA:9 a=hHTIS6bp7xTyj1Qc:21 a=ne-cJOXglnOt1-G7:21
+ a=QEXdDO2ut3YA:10 a=RfR_gqz1fSpA9VikTjo0:22
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v1 1/8] commit: move empty message checks to libgit
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <20170925101041.18344-1-phillip.wood@talktalk.net>
+ <20171106112709.2121-1-phillip.wood@talktalk.net>
+ <20171106112709.2121-2-phillip.wood@talktalk.net>
+ <alpine.DEB.2.21.1.1711070141110.6482@virtualbox>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <4f35fa04-c0a0-2e1f-5a59-7e18154242e9@talktalk.net>
+Date:   Tue, 7 Nov 2017 14:24:53 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:Wt2Of6Gpn+xASqAkcDbA73ma1yxtD7od4ulcOT8keUAV+y/kr1i
- jairQga7prVpJ9CCBUd7km19ovGIdKE+50Dw88xeaAtgX/sI0D1Qp7WPtsOveU6nZVY+8mo
- t9aTDK0UMDPzzB66f/aqj4yLzdT9TAt+Lpeq0x/uiGvwTuIiguq0jK++bjcd9IwCOg1AFLn
- sGbmg17i1JSdJzFbFdOcg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ldYsT7KMHHU=:Vg+dhnxM4xqQwRPPW3eQFB
- 8qw/Dh4cdbCCzY6X0iMUOrq4e42B7PathvjKh4HN8i1dVZpRe9KJIFl5QEx2Jaq8cHeu71M/5
- LmdG8MEk1wbF8OQ+I4kehiegdCOngcbT6EPDL3wXPTH06OxDzADEP5tl5l3loF1P2ZcmzF+pf
- L9KNUmIlVLT5+tPvHGwrmj4rspHA0BuXwixlvmoSAivI9bDCx0R+pRZiDZ44h06LrcFqHjQQv
- K3fbiA7irTsx6o/mlqLWJxjxKMqvgJCRlvrj+YC2z5oRtvcBUemcjTKd0e1qrdYQzScPo3bZH
- 6DqchiDujILwnHSmTb4jA8/Z1qF8A75zaKlMLc0pYuJkjR5nS+oW+SWHXhtDDFz/KOXShrHEb
- 8kfpyyx6d4x6ESeqf87SiAN9oYnftbm/QCarlIOZb8MvQI4U/GAhivh9pq5grn71snj4YF20s
- bv1D4MPpW8k8n9xKDo36Wo8rhMKAwU5oI2Vfe1HUCwvayGdffFxExZJd7g/JbwwpiH2pzfB4M
- zP+VLVuAIvXiP7yq8VImWXcemygrPplQtrDHd1JjYWj8yNDLGsNeKPUvyiIhdKEhTNfmjbitX
- 0pOituvksChWuHmgorapWHou04WLZecEPw4Ggf7Tm9QQ2tJZYSJ+kV14N5NLoJvAtcEN8amhV
- thm5aMfQk7HXqf37bh6Q7lQ4xNgokvNkOn5SMED+7SIMSzf/dkpU71u4ubn+Lc7bEQqG+ZDMv
- tml+VvNi7f71W2TI0H3F7iMDwe9hEPuAc60CpZGZcg4HHSsFNoAFy4WlMPqY0NH57UAUoE/lM
- SzHgrvzIKS4eRxg43xiZDlEU0++lDT7mlDlxKAulDOjo8UoNHA8xOq26emLw50tiE1DT+5t
+In-Reply-To: <alpine.DEB.2.21.1.1711070141110.6482@virtualbox>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfBh0RgcRf70n3bYL7zY60IjLxGN0Lcqmi0Qbwt6pE5y/hVrreHTd6fLtqNHspEy8XqdXudIjySFohIVTMaPow/heF6YafiHNvVgknqe5aoNqc1XX5/mP
+ BtxIul8Chcqhi6jNj01B2t9j0JJQfMaC626QD8vA1cbRZz9AFhbEe3kHy9sMpcrEgwq3zf3M5Fs15q/0FYSH03mVUvGbdWra7YbjRUvucY/KLW8eRJ+Jq+It
+ /wrq9PtRHpuOQxYgodFllX/F74fhmuZH80ko1QkgoG9KHZppGvsRrAihlB6TpYvg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
-
-On Tue, 7 Nov 2017, Phillip Wood wrote:
-
-> On 07/11/17 01:36, Johannes Schindelin wrote:
-> > 
-> > On Mon, 6 Nov 2017, Phillip Wood wrote:
-> > 
-> >> From: Phillip Wood <phillip.wood@dunelm.org.uk>
-> >>
-> >> +static int try_to_commit(struct strbuf *msg, const char *author,
-> >> +			 struct replay_opts *opts, unsigned int flags,
-> >> +			 struct object_id *oid)
-> > 
-> > Since this is a file-local function, i.e. not in any way tied to a
-> > process exit status, it should probably return -1 in the case of errors,
-> > as Git does elsewhere, too.
+On 07/11/17 00:43, Johannes Schindelin wrote:
+> Hi Phillip,
 > 
-> It returns -1 in case of error and 1 if it wants git commit to be run.
-
-Ah, that explains a lot! I would like to ask for a code comment above the
-`try_to_commit()` function to explain that, so that future me will avoid
-confusion when staring at this code. I would also like to ask for a code
-comment at the `return 1;` statements, saying e.g. We could not commit
-in-process, caller should try forking `git commit`.
-
-> >> +	if (flags & AMEND_MSG) {
-> >> +		const char *exclude_gpgsig[2] = { "gpgsig", NULL };
-> > 
-> > Git's current source code seems to prefer to infer the array length; The
-> > `2` is unnecessary here.
+> On Mon, 6 Nov 2017, Phillip Wood wrote:
 > 
-> Right, I copied it from builtin/commit.c but I can change it
-
-Sorry about that. It still would be good to change it, I just wish that
-you had better code at your fingertips to copy/edit ;-)
-
-> >> +	if (commit_tree_extended(msg->buf, msg->len, tree.hash, parents,
-> >> +				 oid->hash, author, gpg_sign, extra)) {
-> >> +		res = error(_("failed to write commit object"));
-> >> +		goto out;
-> >> +	}
+>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>>
+>> Move the functions that check for empty messages from bulitin/commit.c
+>> to sequencer.c so they can be shared with other commands. The
+>> functions are refactored to take an explicit cleanup mode and template
+>> filename passed by the caller.
+>>
+>> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 > 
-> Looking more deeply, this can die in write_loose_object(), hopefully
-> that is unlikely. git am commits without forking as well so I think it
-> is subject to the same problem.
+> Good rationale. Just one thing:
+> 
+>> diff --git a/sequencer.h b/sequencer.h
+>> index 6f3d3df82c0ade64b7b125acd49bf3f5e15c53af..65a4b0c25185d7ad5115035abb766d1b95df9a62 100644
+>> --- a/sequencer.h
+>> +++ b/sequencer.h
+>> @@ -58,4 +58,14 @@ extern const char sign_off_header[];
+>>  void append_signoff(struct strbuf *msgbuf, int ignore_footer, unsigned flag);
+>>  void append_conflicts_hint(struct strbuf *msgbuf);
+>>  
+>> +enum cleanup_mode {
+>> +	CLEANUP_SPACE,
+>> +	CLEANUP_NONE,
+>> +	CLEANUP_SCISSORS,
+>> +	CLEANUP_ALL
+>> +};
+> 
+> When it was file-local, `cleanup_mode` was okay (although far from great).
+> Now that we want to make it more widely available, I fear we have to make
+> the name much longer, e.g. `commit_msg_cleanup_mode`.
 
-Yes. We will have to address those die() issues. But not necessarily in
-your patch series; as I said before, this mess is not your fault.
+That's certainly less ambiguous! I'll bite the bullet and extend the name.
 
-Thanks,
-Dscho
