@@ -2,157 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2C4DD20A36
-	for <e@80x24.org>; Tue,  7 Nov 2017 20:48:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9856220A36
+	for <e@80x24.org>; Tue,  7 Nov 2017 20:53:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933466AbdKGUsQ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Nov 2017 15:48:16 -0500
-Received: from mail-qt0-f171.google.com ([209.85.216.171]:43779 "EHLO
-        mail-qt0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933456AbdKGUsP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Nov 2017 15:48:15 -0500
-Received: by mail-qt0-f171.google.com with SMTP id j58so758925qtj.0
-        for <git@vger.kernel.org>; Tue, 07 Nov 2017 12:48:14 -0800 (PST)
+        id S933084AbdKGUx2 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Nov 2017 15:53:28 -0500
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:43474 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932298AbdKGUx1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Nov 2017 15:53:27 -0500
+Received: by mail-pg0-f68.google.com with SMTP id s75so425610pgs.0
+        for <git@vger.kernel.org>; Tue, 07 Nov 2017 12:53:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=qYGS08W/6O2VnZ/NCMdscURssYDhQuzRMFACDsw+xyI=;
-        b=j3zPqWblkz7WS6KluoFOmBmsRBfltWp6DWwYOJE2wNwL2Vt7fJzlquBPwFNxH1NBQy
-         2Sd5PGhWOGrHz3vtNg3deb0N9XmSJWIdewRh/+FNjh33z+nvd5r2tFQygnYyzWDl2ZCY
-         Rzyt0B9MCukTJtRGVZ8w5jCWdYNh5mJasSwzVQa4wdRjOxo/ZCmR23TvLV73dvOkJn9B
-         hWu6YqEq1DvDKHohntQUaoPD7ZQ5f7c0oWRXjEa/AZ2tg3NE5jsXkCRE49PMiaz2kPXD
-         mkoG0kElG3EXOXNkLvBr3d88v8gM4GD1VYjePVA/eG2F+JlgmQ1Rig5DL4TqJaI9kC2Y
-         hJoQ==
+        bh=MtL7fgxXmN9BOg4kc9uOl1WfFUBZ3aDf7QCR8zlidyQ=;
+        b=S058EdrT4l4A4yDBbAfBqV42RjUNBk8ZhJeZ+BVC3MhAc1pRxmn1m2Tw32twAVR96O
+         EewWCfGDujBXsFn07N+pbh/xNMKfaSOSKqZJ4DhsAbB++csrZr6MyQKJ5P9SsGlJBHkl
+         Lp2/kWRxg/MC/+D1KrISmChhnXXun2yYM+Wmfo0YvoPAn+yTZwjYGv3Sbnlo+0fmXKjj
+         aJFiftWeLHs7O/CpE00pYojSDXB478KQdaLq4R/qZlB4SJb9+HJc+aOa+NQzH0j2Grn5
+         u5m1jf9EU6oMRvJ5stc0aP49q/4cjoCWJTeh0iCowdVJSKK5+XViEwIgM3QR0xxoaVc0
+         5riQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=qYGS08W/6O2VnZ/NCMdscURssYDhQuzRMFACDsw+xyI=;
-        b=CJHiQOCiBwsD7NqOytp5C0VQEYFiMmycP2IY4zg0jW1V1wtm9muRVa5mDrhPST7gZi
-         atQYEbolunwFATnscjGWC4jhSdCDAuyBfirLiFUJA+m65qkK/YRdTD83lYBc7gg2iTer
-         cBGtL/qhWVkQb0o7+Z2pNCsSY9VTZrTSxzEg81FzerIZDOGbwkacKqgT6pkHwI3S+IEi
-         OAFRM0W3vg37Jdfwze7Gf+yYKbQyJ7gvKHirr1DTkM83BJQojNjI1iKq3URpKlu1j4Vs
-         Il6di4gdmdVM20u21opfJvx622zFWF09iP684vPy2zGZZcIIfigrLDIPgLoMqDAkBcSs
-         8cZA==
-X-Gm-Message-State: AJaThX4/NIHVMBZwHdhVgwa8h1YD7cC0P1WNfqjOhWXBJJ8uhOmiAO7L
-        hkk+Nyt8phqS05WnuIbYs69oKItTmc0S6gYxFLBddJmNJdg=
-X-Google-Smtp-Source: ABhQp+Qgx0E0SFeyNbnlo1ErnmRH86dopx1jjBzazjWQdzOx0AdhqqoUW1ocwDsWfJ3f33xgojTUDhRnlmwQuXaSxh0=
-X-Received: by 10.200.8.53 with SMTP id u50mr47562qth.260.1510087694138; Tue,
- 07 Nov 2017 12:48:14 -0800 (PST)
+        bh=MtL7fgxXmN9BOg4kc9uOl1WfFUBZ3aDf7QCR8zlidyQ=;
+        b=rdMvK8ztTcfFtl9AE/bKvf/Ptv41At7xSSuxEYz9k/9tSfweHJv/IR5qKKqJd/yqFB
+         deHBn9drxWicpPqNyzJtgbH965b3hHGdz0EK22UC+c3OzXKPSNOjHmBv71LDkQpgJf3u
+         bQtvQ0fzPj8+qKAtr8FkAyz7cN92uan9wmjei+iej80MlCf9DWOd4D8w8ghXpnwDqFW3
+         8yJeFQ1rjeAMx6PR7WgZoGG0maOndcZBN7Nx2fLhFc/HWKlnPBkiK7VWxw4PcnuXI5Zn
+         VGeRwZvthbTTKFc8WAEMvHgjYYQ7KpZXysJy+UwDu5V9vKMlhqBltnK1940/3raoBFRN
+         KNcw==
+X-Gm-Message-State: AJaThX4EHfKN6Cti3DNVagwll0kcGkkGGxagEXkoQbMR7pqad+NHmn6H
+        q7Por/AZv/uqaMnSlkRKZJB2om5cWZpqJZVsDw4=
+X-Google-Smtp-Source: ABhQp+SKCC6AQRzUyl+NUWXADTHMSPDBdtfS1r6tIW+xt90q9JWsr6zR37ewLNYzuYtMdIkKjgTAr5Za+iAhkd3JS3A=
+X-Received: by 10.159.198.131 with SMTP id g3mr7536plo.337.1510088007191; Tue,
+ 07 Nov 2017 12:53:27 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.140.102.70 with HTTP; Tue, 7 Nov 2017 12:48:13 -0800 (PST)
-In-Reply-To: <CAFA_24L5nTUhO=PbMB9SdnCB1Lj+5rmOHmMJwkuLGWgy-ooxBA@mail.gmail.com>
-References: <CAFA_24+svnt4uSpx1tjj2t6iAt4G3p9UvrxahEYj=VZWeJxC=A@mail.gmail.com>
- <CAGZ79kYbeVcpEXsei8Lr=Zw+YgJE_E4mBSRWYcYDqOWz20z5oA@mail.gmail.com>
- <CAFA_24Jov7FDw7AxUtFDV6avOj40LD6ptEVMPpVuSdAo_6L_1A@mail.gmail.com>
- <CAFA_24K99LkeJBKV7+a-m-m9PUZik49cOd40+cEn-6zCvGmMsQ@mail.gmail.com>
- <CAGZ79kZHapHLXDM-iU9T_BU5qoYAAAS+yKWLVvfUhxMmp+6mxg@mail.gmail.com>
- <CAFA_24JXc=qJw1-_aJJUMPhW9DaBofxSb6hkVD6n4MWyeT5UOQ@mail.gmail.com>
- <CAGZ79kbWEe=TyqPFSc+D8HCRh3cOkGbkqFKZbpkdisjvkfiaFg@mail.gmail.com> <CAFA_24L5nTUhO=PbMB9SdnCB1Lj+5rmOHmMJwkuLGWgy-ooxBA@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 7 Nov 2017 12:48:13 -0800
-Message-ID: <CAGZ79kYKfZC1CzoGE_6G1b2vD+MCw1_rY7J_LeWyT8rp6CAuDw@mail.gmail.com>
-Subject: Re: No log --no-decorate completion?
-To:     Max Rothman <max.r.rothman@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Received: by 10.100.177.141 with HTTP; Tue, 7 Nov 2017 12:53:26 -0800 (PST)
+In-Reply-To: <10901328af1e6e04e8c7c7b39977ec85f6c58142.1509870243.git.mhagger@alum.mit.edu>
+References: <cover.1509870243.git.mhagger@alum.mit.edu> <10901328af1e6e04e8c7c7b39977ec85f6c58142.1509870243.git.mhagger@alum.mit.edu>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Tue, 7 Nov 2017 21:53:26 +0100
+Message-ID: <CAN0heSpOpfCmf8k8kZz1L-1qb-5mDHMLbQYaLPKE=twOhgyi8A@mail.gmail.com>
+Subject: Re: [PATCH v2 3/9] ref_transaction_update(): die on disallowed flags
+To:     Michael Haggerty <mhagger@alum.mit.edu>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Thomas Gummerer <t.gummerer@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 7, 2017 at 12:31 PM, Max Rothman <max.r.rothman@gmail.com> wrote:
-> Thanks for the feedback!
+On 5 November 2017 at 09:42, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> Callers shouldn't be passing disallowed flags into
+> `ref_transaction_update()`. So instead of masking them off, treat it
+> as a bug if any are set.
 >
->>> * Add bash completion for the missing --no-* options on git log
->>> * Add bash completion for --textconv and --indent-heuristic families to
->>>   git diff and all commands that use diff's options
->>> * Add bash completion for --no-abbrev-commit, --expand-tabs, and
->>>   --no-expand-tabs to git show
->>
->> This describes what happens in this patch, but not why, which helps
->> future readers of commit message more than the "what".
+> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+> ---
+>  refs.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 >
-> How about:
+> diff --git a/refs.c b/refs.c
+> index 62a7621025..7c1e206e08 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -940,7 +940,8 @@ int ref_transaction_update(struct ref_transaction *transaction,
+>                 return -1;
+>         }
 >
->> Teach git-log tab completion about the --no-* options for ease of use
->> at the command line.
->>
->> Similarly, teach git-show tab completion about the --no-abbrev-commit,
->> --expand-tabs, and --no-expand-tabs options.
->>
->> Also, teach git-diff (and all commands that use its options) tab
->> completion about the --textconv and --indent-heuristic families of
->> options. --indent-heuristic is no longer experimental, so there's no
->> reason it should be left out of tab completion any more, and textconv
->> seems to have simply been missed.
-
-Sounds good to me.
-
-
->> At the end of a commit message, the Git project requires a sign off.
->> (See section (5) in Documentation/SubmittingPatches;
->> tl;dr: add Signed-off-by: NAME <EMAIL> if you can agree to
->> https://developercertificate.org/)
+> -       flags &= REF_TRANSACTION_UPDATE_ALLOWED_FLAGS;
+> +       if (flags & ~REF_TRANSACTION_UPDATE_ALLOWED_FLAGS)
+> +               BUG("illegal flags 0x%x passed to ref_transaction_update()", flags);
 >
-> So the sign-off should include my name and email? I thought it was
-> supposed to be the person who approved the patch, but I must've gotten
-> confused.
+>         flags |= (new_oid ? REF_HAVE_NEW : 0) | (old_oid ? REF_HAVE_OLD : 0);
 
-Anyone touching the patch needs to sign off on it. So when you write it,
-you sign off (thereby certifying that you are legally allowed to write
-the patch.
-For example you may be employed and the work contract requires you to
-not work on side projects, or the intellectual property belongs to the employer
-or such).
+The masking out is for sanity, but also partly to squelch a
+compiler-warning. Thomas reported [1] that dieing does not make the
+warning go away, but that masking out does. Of course, avoiding warnings
+is not the ultimate goal, and -Wnonnull is not part of DEVELOPER_CFLAGS.
+Thomas reluctantly suggested that one could do your check and then do
+the masking...
 
-Hypothetically you could send it to Git-for-Windows which happens to
-be a fork of git. The maintainer of GfW would gladly accept your patch,
-(and also sign it off, thereby certifying he can touch it legally).
-Thereafter someone such as a regular contributor from the git project
-could spot the difference in GfW and git, and they would want to bring it
-to "the real git", so they would make a patch out of the commit in GfW.
-Additionally to the 2 sign offs, this contributor would also need to sign
-off on the patch, saying it is legal what they do. And then that patch could
-be picked up by the maintainer for the regular git. After that journey the
-patch would have 4 sign offs, indicating the way of travel, i.e. how
-it reached git finally.
+Maybe it would be worth a note in the commit message. But blaming these
+lines quickly leads to c788c54cd (refs: strip out not allowed flags from
+ref_transaction_update, 2017-09-12), which describes this already. OTOH,
+since the warning does not hit these lines, but a bit below, maybe it's
+even worth a comment in the code.
 
-An example of a longer sign off chain is  89dd32aedc
-(check-ref-format doc: --branch validates and expands <branch>, 2017-10-17)
-and apparently Jeff helped Junio to author a patch; Jonathan took that
-patch and changed a thing, only to send it back to Junio, who then applied
-it to git.
+I'm not saying we should sprinkle comments for each warning we hit...
+Anyway, those were the thoughts than ran through my mind.
 
-
->> The patch looks good, but doesn't apply because the email contains
->> white spaces instead of tabs. Maybe try https://submitgit.herokuapp.com/
->> (or fix/change your email client to send a patch; the gmail web interface
->> doesn't work. I personally got 'git send-email' up and running;
->> The Documentation/SubmittingPatches has a section on email clients, too)
->
-> Yeah, I was using the gmail interface. I'll give the heroku app a go.
-> It has an option for sending a message in reply to another, and I
-> assume I should send it in reply to this thread. Do you know how to
-> tell what the appropriate ID to use is? Looking through the raw email,
-> I see several, so it's not obvious to me which to use.
-
-In gmail, there is a "show original" in the menu near reply, which will
-show Message ID<CAFA_24L5nTUhO=PbMB9SdnCB1Lj+5rmOHmMJwkuLGWgy-ooxBA@mail.gmail.com>
-for the email that I am responding to.
-
-Another way to explore the message ids is public-inbox, as that uses
-the message ids as keys, i.e.
-
-  https://public-inbox.org/git/CAFA_24L5nTUhO=PbMB9SdnCB1Lj+5rmOHmMJwkuLGWgy-ooxBA@mail.gmail.com
-
-is your email there.
-
-Thanks,
-Stefan
+[1] https://public-inbox.org/git/20170924204541.GA2853@hank/
