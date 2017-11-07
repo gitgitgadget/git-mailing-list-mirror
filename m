@@ -7,79 +7,97 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	UNPARSEABLE_RELAY shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5C383202A0
-	for <e@80x24.org>; Tue,  7 Nov 2017 16:03:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5CC13202A0
+	for <e@80x24.org>; Tue,  7 Nov 2017 16:07:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753287AbdKGQDF convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Tue, 7 Nov 2017 11:03:05 -0500
-Received: from marcos.anarc.at ([206.248.172.91]:36738 "EHLO marcos.anarc.at"
+        id S1754283AbdKGQHI (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Nov 2017 11:07:08 -0500
+Received: from marcos.anarc.at ([206.248.172.91]:36818 "EHLO marcos.anarc.at"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752418AbdKGQDF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Nov 2017 11:03:05 -0500
-Received: from [127.0.0.1] (localhost [127.0.0.1])      (Authenticated sender: anarcat) with ESMTPSA id 066961A00AA
-From:   =?utf-8?Q?Antoine_Beaupr=C3=A9?= <anarcat@debian.org>
-To:     Thomas Adam <thomas@xteddy.org>
-Cc:     git@vger.kernel.org, gitster@pobox.com,
-        Ingo Ruhnke <grumbel@gmail.com>
-Subject: Re: [PATCH v4 2/7] remote-mediawiki: allow fetching namespaces with spaces
-In-Reply-To: <20171107070808.q7zz4i73mkffomcb@laptop.local>
-Organization: Debian
-References: <20171102212518.1601-1-anarcat@debian.org> <20171106211953.27910-1-anarcat@debian.org> <20171106211953.27910-3-anarcat@debian.org> <20171107070808.q7zz4i73mkffomcb@laptop.local>
-Date:   Tue, 07 Nov 2017 11:03:03 -0500
-Message-ID: <87efpa2i14.fsf@curie.anarc.at>
+        id S1754043AbdKGQHG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Nov 2017 11:07:06 -0500
+Received: from [127.0.0.1] (localhost [127.0.0.1])      (Authenticated sender: anarcat) with ESMTPSA id 3B9981A00AC
+From:   =?UTF-8?q?Antoine=20Beaupr=C3=A9?= <anarcat@debian.org>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, Kevin <kevin@ki-ai.org>,
+        =?UTF-8?q?Antoine=20Beaupr=C3=A9?= <anarcat@debian.org>
+Subject: [PATCH v5 1/7] remote-mediawiki: add namespace support
+Date:   Tue,  7 Nov 2017 11:06:55 -0500
+Message-Id: <20171107160701.24202-2-anarcat@debian.org>
+X-Mailer: git-send-email 2.11.0
+In-Reply-To: <20171107160701.24202-1-anarcat@debian.org>
+References: <20171102212518.1601-1-anarcat@debian.org>
+ <20171107160701.24202-1-anarcat@debian.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2017-11-07 07:08:08, Thomas Adam wrote:
-> On Mon, Nov 06, 2017 at 04:19:48PM -0500, Antoine Beaupré wrote:
->> From: Ingo Ruhnke <grumbel@gmail.com>
->> 
->> we still want to use spaces as separators in the config, but we should
->> allow the user to specify namespaces with spaces, so we use underscore
->> for this.
->> 
->> Reviewed-by: Antoine Beaupré <anarcat@debian.org>
->> Signed-off-by: Antoine Beaupré <anarcat@debian.org>
->> ---
->>  contrib/mw-to-git/git-remote-mediawiki.perl | 1 +
->>  1 file changed, 1 insertion(+)
->> 
->> diff --git a/contrib/mw-to-git/git-remote-mediawiki.perl b/contrib/mw-to-git/git-remote-mediawiki.perl
->> index 5ffb57595..a1d783789 100755
->> --- a/contrib/mw-to-git/git-remote-mediawiki.perl
->> +++ b/contrib/mw-to-git/git-remote-mediawiki.perl
->> @@ -65,6 +65,7 @@ chomp(@tracked_categories);
->>  
->>  # Just like @tracked_categories, but for MediaWiki namespaces.
->>  my @tracked_namespaces = split(/[ \n]/, run_git("config --get-all remote.${remotename}.namespaces"));
->> +for (@tracked_namespaces) { s/_/ /g; }
->>  chomp(@tracked_namespaces);
->
-> Depending on the number if namespaces returned, it might be easier to convert
-> this to the following:
->
->     my @tracked_namespaces = map {
->     	chomp; s/_/ /g; $_;
->     } split(/[ \n]/, run_git("config --get-all remote.${remotename}.namespaces"));
->
-> This would, once again, avoid creating @tracked_namespaces, and iterating over
-> it.
->
-> Note that this isn't about trying to 'golf' this; it's a performance
-> consideration.
+From: Kevin <kevin@ki-ai.org>
 
-I'm not sure it's worth it. Mediawiki has only about 10 default
-namespaces, and the user needs to specify them by hand here. I wouldn't
-be concerned about the performance.
+This introduces a new remote.origin.namespaces argument that is a
+space-separated list of namespaces. The list of pages extract is then
+taken from all the specified namespaces.
 
-A.
+Reviewed-by: Antoine Beaupré <anarcat@debian.org>
+Signed-off-by: Antoine Beaupré <anarcat@debian.org>
+---
+ contrib/mw-to-git/git-remote-mediawiki.perl | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
+diff --git a/contrib/mw-to-git/git-remote-mediawiki.perl b/contrib/mw-to-git/git-remote-mediawiki.perl
+index e7f857c1a..5ffb57595 100755
+--- a/contrib/mw-to-git/git-remote-mediawiki.perl
++++ b/contrib/mw-to-git/git-remote-mediawiki.perl
+@@ -63,6 +63,10 @@ chomp(@tracked_pages);
+ my @tracked_categories = split(/[ \n]/, run_git("config --get-all remote.${remotename}.categories"));
+ chomp(@tracked_categories);
+ 
++# Just like @tracked_categories, but for MediaWiki namespaces.
++my @tracked_namespaces = split(/[ \n]/, run_git("config --get-all remote.${remotename}.namespaces"));
++chomp(@tracked_namespaces);
++
+ # Import media files on pull
+ my $import_media = run_git("config --get --bool remote.${remotename}.mediaimport");
+ chomp($import_media);
+@@ -256,6 +260,23 @@ sub get_mw_tracked_categories {
+ 	return;
+ }
+ 
++sub get_mw_tracked_namespaces {
++    my $pages = shift;
++    foreach my $local_namespace (@tracked_namespaces) {
++        my $mw_pages = $mediawiki->list( {
++            action => 'query',
++            list => 'allpages',
++            apnamespace => get_mw_namespace_id($local_namespace),
++            aplimit => 'max' } )
++            || die $mediawiki->{error}->{code} . ': '
++                . $mediawiki->{error}->{details} . "\n";
++        foreach my $page (@{$mw_pages}) {
++            $pages->{$page->{title}} = $page;
++        }
++    }
++    return;
++}
++
+ sub get_mw_all_pages {
+ 	my $pages = shift;
+ 	# No user-provided list, get the list of pages from the API.
+@@ -319,6 +340,10 @@ sub get_mw_pages {
+ 		$user_defined = 1;
+ 		get_mw_tracked_categories(\%pages);
+ 	}
++	if (@tracked_namespaces) {
++		$user_defined = 1;
++		get_mw_tracked_namespaces(\%pages);
++	}
+ 	if (!$user_defined) {
+ 		get_mw_all_pages(\%pages);
+ 	}
 -- 
-Education is the most powerful weapon which we can use to change the
-world.
-                       - Nelson Mandela
+2.11.0
+
