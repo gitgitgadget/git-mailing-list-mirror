@@ -2,292 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7940720A10
-	for <e@80x24.org>; Tue,  7 Nov 2017 05:50:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BE65820281
+	for <e@80x24.org>; Tue,  7 Nov 2017 06:34:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753831AbdKGFud (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Nov 2017 00:50:33 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54604 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753828AbdKGFuc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Nov 2017 00:50:32 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A2A5DA0334;
-        Tue,  7 Nov 2017 00:50:31 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=2Bic7QrP40dy
-        vQ20HFZMEllayt0=; b=HSki9SohD29lYtEdQ7TaTM3ElhoYlJr6oqDTiZ6r3XDw
-        UsLJgkmjOHW/ejX/iJnU/b9H4nD7KFpyDKAICZXjnD38t8AsWtc5yx4h7Oze2xln
-        eega0zbznLmgwoh0x3YDPwVRF60Ws+8+gUHYGJ7VM4y1AQTk4OfQL9ELDJBSRf0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=wV3oyo
-        Wk/K/GOrAT9vni6OfgglgMHaDsuhPisM2jI9m/bSi0mjWQgSn7mcYIfzfwC//Tuo
-        /0V8tlJqjm1OuDPQB4bnD7OpgSC1XqajMjgkzFG9aygyaQE1GHSlR3hah3VkCEbK
-        Nmh4leY+7pLC18ZyKXjQ5L9OL7rPpwsgL9Jqk=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 99EE2A0330;
-        Tue,  7 Nov 2017 00:50:31 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 06FA8A032E;
-        Tue,  7 Nov 2017 00:50:30 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     tboegi@web.de
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 1/1] Introduce git add --renormalize .
-References: <xmqqshejq9mn.fsf@gitster.mtv.corp.google.com>
-        <20171030162913.23164-1-tboegi@web.de>
-Date:   Tue, 07 Nov 2017 14:50:29 +0900
-In-Reply-To: <20171030162913.23164-1-tboegi@web.de> (tboegi@web.de's message
-        of "Mon, 30 Oct 2017 17:29:13 +0100")
-Message-ID: <xmqqvaimeixm.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1754783AbdKGGeu (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Nov 2017 01:34:50 -0500
+Received: from mail-io0-f177.google.com ([209.85.223.177]:57266 "EHLO
+        mail-io0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753323AbdKGGet (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Nov 2017 01:34:49 -0500
+Received: by mail-io0-f177.google.com with SMTP id m81so969065ioi.13
+        for <git@vger.kernel.org>; Mon, 06 Nov 2017 22:34:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=DC95NHp2jU7Ifvg83g2KIBZNAPfIi+Sy7RQ5/p4MIzA=;
+        b=N22AXKYlk2sepn0PfBjml9zxulAYqAwlcmicAnZUc0OxwP81YYxKhdF52/DWqVoyy5
+         sQjHqqjrF28Ynya0aYF+c8jEeKsOiBq3OIfqZ1dfxt6pT7xtM4NK3XyeBRyEbgW51lau
+         qeJRbjHg+qTf2y+8NnElcRo1wOVCUadLULFUIx4VuVCFCXTRdTuj/rudWDK4NXErv4XI
+         +OLxQJqWePjZTrimJCG2U4VyGeBa9iGVHOKdOUeSBPq3uqFzvgE2cwavcnD5u36QLbmm
+         N5+xTlN6FYw3wdsfcXjw1DstokJnZYvPDCwOoqaV4aNV5XmQRVzUj//qSRp/pive8Q8M
+         /2/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=DC95NHp2jU7Ifvg83g2KIBZNAPfIi+Sy7RQ5/p4MIzA=;
+        b=dpNdW6IRNuqhdQHvCvwojIMRGL6/JI56wyX/92qTydTshwUUA8mRyu8P0onpmDINGN
+         mDo/LhNBnmGcyI5PULN5Cfn8Iu9u7ehdCIlWvBCNxVg7H0z2ykqn21k5pm86Guanbhdn
+         NvTqzeNQ8qj+avnvTbcfixJwkFqdjyEvN8FUYniAiArTkhnedKJxFexTG7h7ZQ7Y0SSH
+         DadUvnoM3sCWrrxfveNbD/MdVFMvSBOeqc1Xt7B6aZmQALMJN6Pl9GQE4oUwde0S+Mwo
+         oVqL+D3TagwM7jlJBp6rQHuz6bTNhQm52tBWkx0JDC2EHKECSn3FjVmqouNI8x68U/n9
+         BXRQ==
+X-Gm-Message-State: AMCzsaUG14g4j/QfsSzAqY4U5rDgG62Fg/KvCpeR7tE3ng2WC5ljOcq3
+        cooUTBZ0nDmpVe9j8SqO+iZemRUk4YvKWLfU06s=
+X-Google-Smtp-Source: ABhQp+Qsmu1Uml6rS5fxepdrB3lKk7BvVlGAg1fAZx2xs94pk8axoFJdhUW9myMfTtbEPQHEKQ9oQAz8L/d+M9tnSeI=
+X-Received: by 10.107.180.20 with SMTP id d20mr23074827iof.116.1510036488547;
+ Mon, 06 Nov 2017 22:34:48 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 907CFC60-C37F-11E7-BEAD-8EF31968708C-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Received: by 10.79.28.137 with HTTP; Mon, 6 Nov 2017 22:34:48 -0800 (PST)
+In-Reply-To: <xmqqo9oehotn.fsf@gitster.mtv.corp.google.com>
+References: <20171105213836.11717-1-chriscool@tuxfamily.org>
+ <20171105213836.11717-3-chriscool@tuxfamily.org> <xmqqo9oehotn.fsf@gitster.mtv.corp.google.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Tue, 7 Nov 2017 07:34:48 +0100
+Message-ID: <CAP8UFD2vk4jV7jEBx3Axd-dhfcsGSJVFFt+pumdT1j8GD_oM_w@mail.gmail.com>
+Subject: Re: [PATCH v2 2/8] t0021/rot13-filter: refactor packet reading functions
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Ben Peart <Ben.Peart@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Mike Hommey <mh@glandium.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Eric Wong <e@80x24.org>,
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-tboegi@web.de writes:
-
-> From: Torsten B=C3=B6gershausen <tboegi@web.de>
+On Tue, Nov 7, 2017 at 2:15 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Christian Couder <christian.couder@gmail.com> writes:
 >
-> Make it safer to normalize the line endings in a repository:
-> Files that had been commited with CRLF will be commited with LF.
-> ...
-> Helped-By: Junio C Hamano <gitster@pobox.com>
-> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
-> ---
+>> +sub packet_required_key_val_read {
+>> +     my ( $key ) = @_;
+>> +     my ( $res, $buf ) = packet_txt_read();
+>> +     unless ( $res == -1 or ( $buf =~ s/^$key=// and $buf ne '' ) ) {
+>> +             die "bad $key: '$buf'";
+>> +     }
+>> +     return ( $res, $buf );
+>> +}
+>
+> The function calls itself "required", but it does not die when it
+> sees an unexpected EOF or an empty line.
 
-Nicely explained.
+If $res is not -1, it will die if $buf is empty.
 
-> @@ -175,6 +175,12 @@ for "git add --no-all <pathspec>...", i.e. ignored=
- removed files.
->  	warning (e.g., if you are manually performing operations on
->  	submodules).
-> =20
-> +--renormalize::
-> +	Normalizes the line endings from CRLF to LF of tracked files.
-> +	This applies to files which are either "text" or "text=3Dauto"
-> +	in .gitattributes (or core.autocrlf is true or input)
-> +	--renormalize implies -u
-> +
+> Neither of these cases
+> gives it a key (nor val), but it is not treated as an error.
+>
+> That is curious, isn't it?
 
-OK.
+Yeah it is a bit strange for the unexpected EOF case.
+I think I will remove "required" from the name and add a comment
+before the function.
 
-> +static int renormalize_tracked_files(const struct pathspec *pathspec, =
-int flags)
-> +{
-> +	int i, retval =3D 0;
-> +
-> +	for (i =3D 0; i < active_nr; i++) {
-> +		struct cache_entry *ce =3D active_cache[i];
-> +
-> +		if (ce_stage(ce))
-> +			continue; /* do not touch unmerged paths */
-> +		if (!S_ISREG(ce->ce_mode) && !S_ISLNK(ce->ce_mode))
-> +			continue; /* do not touch non blobs */
-> +		if (pathspec && !ce_path_match(ce, pathspec, NULL))
-> +			continue;
-> +		retval |=3D add_file_to_cache(ce->name, flags | HASH_RENORMALIZE);
+> By the way, is it just me who finds this "unless" even less
+> unerstandable than the original in packet_txt_read() you modeled
+> this one after?  The original depended on packet_bin_read() to die
+> on an unexpected EOF, so its "unless" made some sense (we know we
+> got some input, and it is an error for the input not to end with LF
+> unless it is an empty string).  Negating the condition and making it
+> "if" may make it easier to understand, perhaps.  I dunno.
 
-We are removing the entry and then adding the same entry under the
-same name, and iteration over the active_cache[] from 0 through
-active_nr should be safe, I guess.
+I can remove the "unless" and make it easier to understand like this:
 
-> ...
-> -	add_new_files =3D !take_worktree_changes && !refresh_only;
-> +	add_new_files =3D !take_worktree_changes && !refresh_only && !add_ren=
-ormalize;
+  if ( $res == -1 ) {
+          return ( $res, $buf );
+  }
+  if ( $buf =~ s/^$key=// and $buf ne '' ) ) {
+          return ( $res, $buf );
+  }
+  die "bad $key: '$buf'";
 
-If renormalize is given, we will *not* take new files, good.
+Or to keep it short just:
 
-> @@ -500,7 +521,10 @@ int cmd_add(int argc, const char **argv, const cha=
-r *prefix)
-> =20
->  	plug_bulk_checkin();
-> =20
-> -	exit_status |=3D add_files_to_cache(prefix, &pathspec, flags);
-> +	if (add_renormalize)
-> +		exit_status |=3D renormalize_tracked_files(&pathspec, flags);
-> +	else
-> +		exit_status |=3D add_files_to_cache(prefix, &pathspec, flags);
-> =20
->  	if (add_new_files)
->  		exit_status |=3D add_files(&dir, flags);
-
-OK.
-
-> ...
->  	int add_option =3D (ADD_CACHE_OK_TO_ADD|ADD_CACHE_OK_TO_REPLACE|
->  			  (intent_only ? ADD_CACHE_NEW_ONLY : 0));
-> +	int newflags =3D HASH_WRITE_OBJECT;
-> +
-> +	if (flags & HASH_RENORMALIZE)
-> +		newflags |=3D HASH_RENORMALIZE;
-> ...
-> @@ -678,19 +682,23 @@ int add_to_index(struct index_state *istate, cons=
-t char *path, struct stat *st,
->  	if (ignore_case) {
->  		adjust_dirname_case(istate, ce->name);
->  	}
-> +	if (!(flags & HASH_RENORMALIZE)) {
-> +		alias =3D index_file_exists(istate, ce->name,
-> +					  ce_namelen(ce), ignore_case);
-> +		if (alias &&
-> +		    !ce_stage(alias) &&
-> +		    !ie_match_stat(istate, alias, st, ce_option)) {
-> +			/* Nothing changed, really */
-> +			if (!S_ISGITLINK(alias->ce_mode))
-> +				ce_mark_uptodate(alias);
-> +			alias->ce_flags |=3D CE_ADDED;
-
-OK, so RENORMALIZE option forces the code to skip the "does the path
-exist already?  maybe we can do without adding it?" check.
-
->  	if (!intent_only) {
-> -		if (index_path(&ce->oid, path, st, HASH_WRITE_OBJECT)) {
-> +		if (index_path(&ce->oid, path, st, newflags)) {
-
-And then we do hash it.  We later do add_index_entry() on this thing
-and we have OK_TO_REPLACE bit in the add_option, so we are good to go.
-
-> diff --git a/sha1_file.c b/sha1_file.c
-> index 10c3a0083d..15abb184c2 100644
-> --- a/sha1_file.c
-> +++ b/sha1_file.c
-> @@ -74,6 +74,18 @@ static struct cached_object *find_cached_object(cons=
-t unsigned char *sha1)
->  	return NULL;
->  }
-> =20
-> +
-> +static enum safe_crlf get_safe_crlf(unsigned flags)
-> +{
-> +	if (flags & HASH_RENORMALIZE)
-> +		return SAFE_CRLF_RENORMALIZE;
-> +	else if (flags & HASH_WRITE_OBJECT)
-> +		return safe_crlf;
-> +	else
-> +		return SAFE_CRLF_FALSE;
-> +}
-> +
-> +
->  int mkdir_in_gitdir(const char *path)
->  {
->  	if (mkdir(path, 0777)) {
-> @@ -1680,7 +1692,7 @@ static int index_mem(unsigned char *sha1, void *b=
-uf, size_t size,
->  	if ((type =3D=3D OBJ_BLOB) && path) {
->  		struct strbuf nbuf =3D STRBUF_INIT;
->  		if (convert_to_git(&the_index, path, buf, size, &nbuf,
-> -				   write_object ? safe_crlf : SAFE_CRLF_FALSE)) {
-> +				   get_safe_crlf(flags))) {
->  			buf =3D strbuf_detach(&nbuf, &size);
->  			re_allocated =3D 1;
->  		}
-> @@ -1714,7 +1726,7 @@ static int index_stream_convert_blob(unsigned cha=
-r *sha1, int fd,
->  	assert(would_convert_to_git_filter_fd(path));
-> =20
->  	convert_to_git_filter_fd(&the_index, path, fd, &sbuf,
-> -				 write_object ? safe_crlf : SAFE_CRLF_FALSE);
-> +				 get_safe_crlf(flags));
-> =20
->  	if (write_object)
->  		ret =3D write_sha1_file(sbuf.buf, sbuf.len, typename(OBJ_BLOB),
-
-OK.  We used to force CRLF_FALSE when we are not writing it out; now
-we have three choices, and a new helper helps us isolating the logic
-to make that choice.
-
-> diff --git a/t/t0025-crlf-renormalize.sh b/t/t0025-crlf-renormalize.sh
-> new file mode 100755
-> index 0000000000..fb1ed631d2
-> --- /dev/null
-> +++ b/t/t0025-crlf-renormalize.sh
-> @@ -0,0 +1,30 @@
-> +#!/bin/sh
-> +
-> +test_description=3D'CRLF renormalization'
-> +
-> +. ./test-lib.sh
-> +
-> +test_expect_success setup '
-> +	git config core.autocrlf false &&
-> +	printf "LINEONE\nLINETWO\nLINETHREE"     >LF.txt &&
-> +	printf "LINEONE\r\nLINETWO\r\nLINETHREE" >CRLF.txt &&
-> +	printf "LINEONE\r\nLINETWO\nLINETHREE"   >CRLF_mix_LF.txt &&
-
-Did you mean to make all these files end with an incomplete line?  I
-think it does not hurt but it is misleading---the reader would try
-to see if the incomplete lines are significant and necessary part of
-the test, which is not, and would end up wasting time, no?
-
-> +	git add . &&
-> +	git commit -m initial
-> +'
-> +
-> +test_expect_success 'renormalize CRLF in repo' '
-> +	echo "*.txt text=3Dauto" >.gitattributes &&
-> +	git add --renormalize "*.txt" &&
-> +cat >expect <<EOF &&
-> +i/lf w/crlf attr/text=3Dauto CRLF.txt
-> +i/lf w/lf attr/text=3Dauto LF.txt
-> +i/lf w/mixed attr/text=3Dauto CRLF_mix_LF.txt
-> +EOF
-
-Perhaps use the <<-\EOF pattern?
-
-I'd suggest squashing this in (or I can do so myself if there is no
-other change needed).
-
-Thanks.  Looks mostly good.
-
- t/t0025-crlf-renormalize.sh | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
-
-diff --git a/t/t0025-crlf-renormalize.sh b/t/t0025-crlf-renormalize.sh
-index fb1ed631d2..ea4f82ea27 100755
---- a/t/t0025-crlf-renormalize.sh
-+++ b/t/t0025-crlf-renormalize.sh
-@@ -6,9 +6,9 @@ test_description=3D'CRLF renormalization'
-=20
- test_expect_success setup '
- 	git config core.autocrlf false &&
--	printf "LINEONE\nLINETWO\nLINETHREE"     >LF.txt &&
--	printf "LINEONE\r\nLINETWO\r\nLINETHREE" >CRLF.txt &&
--	printf "LINEONE\r\nLINETWO\nLINETHREE"   >CRLF_mix_LF.txt &&
-+	printf "LINEONE\nLINETWO\nLINETHREE\n"       >LF.txt &&
-+	printf "LINEONE\r\nLINETWO\r\nLINETHREE\r\n" >CRLF.txt &&
-+	printf "LINEONE\r\nLINETWO\nLINETHREE\n"     >CRLF_mix_LF.txt &&
- 	git add . &&
- 	git commit -m initial
- '
-@@ -16,11 +16,11 @@ test_expect_success setup '
- test_expect_success 'renormalize CRLF in repo' '
- 	echo "*.txt text=3Dauto" >.gitattributes &&
- 	git add --renormalize "*.txt" &&
--cat >expect <<EOF &&
--i/lf w/crlf attr/text=3Dauto CRLF.txt
--i/lf w/lf attr/text=3Dauto LF.txt
--i/lf w/mixed attr/text=3Dauto CRLF_mix_LF.txt
--EOF
-+	cat >expect <<-\EOF &&
-+	i/lf w/crlf attr/text=3Dauto CRLF.txt
-+	i/lf w/lf attr/text=3Dauto LF.txt
-+	i/lf w/mixed attr/text=3Dauto CRLF_mix_LF.txt
-+	EOF
- 	git ls-files --eol |
- 	sed -e "s/	/ /g" -e "s/  */ /g" |
- 	sort >actual &&
+  if ( $res == -1 or ( $buf =~ s/^$key=// and $buf ne '' ) ) {
+          return ( $res, $buf );
+  }
+  die "bad $key: '$buf'";
