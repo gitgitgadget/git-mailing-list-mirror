@@ -2,105 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 13B89202A0
-	for <e@80x24.org>; Tue,  7 Nov 2017 16:31:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 630C6202A0
+	for <e@80x24.org>; Tue,  7 Nov 2017 17:05:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754894AbdKGQbU (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Nov 2017 11:31:20 -0500
-Received: from mout.gmx.net ([212.227.17.20]:64768 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752763AbdKGQbT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Nov 2017 11:31:19 -0500
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M1SLt-1f4c4w3vjN-00tWQi; Tue, 07
- Nov 2017 17:31:16 +0100
-Date:   Tue, 7 Nov 2017 17:31:14 +0100 (CET)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>, Kevin Daudt <me@ikke.info>
-Subject: [PATCH v3 3/3] for-each-ref: test :remotename and :remoteref
-In-Reply-To: <cover.1510072200.git.johannes.schindelin@gmx.de>
-Message-ID: <bf51292cfefd495ff813fdf638c51f6b7acfe646.1510072200.git.johannes.schindelin@gmx.de>
-References: <cover.1507205895.git.johannes.schindelin@gmx.de> <cover.1510072200.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751580AbdKGRFy (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Nov 2017 12:05:54 -0500
+Received: from mail-qt0-f175.google.com ([209.85.216.175]:43870 "EHLO
+        mail-qt0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751473AbdKGRFx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Nov 2017 12:05:53 -0500
+Received: by mail-qt0-f175.google.com with SMTP id j58so16118405qtj.0
+        for <git@vger.kernel.org>; Tue, 07 Nov 2017 09:05:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=2OLSIzmDV2xyv/uhEFLUGaSCTlqVfWe5li640Hy5cA8=;
+        b=BhOclZEG9OVVqFa9+0sFTryw8Ld82/UfIQd6nNBPJlOKHC2RcEvAuMeIJExpw85Loe
+         RgpmGPbyHOAbVTu4aHXwSwxTh4qKbsdD8d9KKYqyHz1wpdcCha8N3urn/qTKjqJVv4R5
+         P4fy+L0zKGgIHmGT7uJ+FhayU0dnrIuUeAEMaqofu3gGQIrVwII1DPc5XO7VpYpNxQdv
+         xLpQDZNofvDr+d0em/3Zw+DRW/3g8bOl6ccY0SsbRSLK37pQwk8jvG9gZ9KWcuf1Cvnk
+         fWtwCUgVaK+c0p6qKoedfn4ZhD1HOIGHpoKkWLQ3v/cLB2x+wJjSS0SOIoOzZujiJH3r
+         syDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=2OLSIzmDV2xyv/uhEFLUGaSCTlqVfWe5li640Hy5cA8=;
+        b=BJL1mF5v+k90L2C6XY2ZgBn0ELj//mNqdgrgGeheFxalAU08jTZgj6n4aaRykVvsDn
+         DEj2KOjIXxUvi31hkOaG03vVk+snCj3S+fee7Gfmvd2Adpj8QEio7RwzC9pzlGxgRZKq
+         c4iZFq3v7yZ0I3Q1XDnZU6sXeIGvZU3QN4ZTRJc5coC7veiP+03wEcWD3ysZLcDhbOSm
+         o+C4K1QCCkkCcg3k+GHfX7BPJ9RT5MyZshU/x9zxU1t5UHhewSAFBSqhYMYBimd7xhAO
+         FOViPe6HhyGkSBuEq+vzXSwiWLrbgnjzu/sbcvO3yO4fwZQAQ5k5pg1gkJjGCGygNDQZ
+         MEig==
+X-Gm-Message-State: AJaThX4uU5wI8TA1YF5Rm6xge2ZaTPf0Ux33AtceLyexwhHS+Tjm2lS/
+        nz8DTCJ4Hxc78KY3UNqN2oeDFA6CGSlWBIV2UMZLNQ==
+X-Google-Smtp-Source: ABhQp+TQCDRNlQesK/ehtrftmRlr4m7O5MFb8qss9qrLv5/6RGol8bFfdu+6GCuK90kYQeZ0E+ca7vHrrjPJ8IM9hVg=
+X-Received: by 10.237.53.137 with SMTP id c9mr31189912qte.125.1510074352310;
+ Tue, 07 Nov 2017 09:05:52 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:lkdnC7sjValG0RZFW25QZSGrEANZaxJbrDWM21zQJynkbm2LMcv
- TJTYQQlH/ozixaY8GpOl/zGDB9zrYJWiy1UAOj9TILziQrI2atAOFpc0AuUMGBGsX+6JMzd
- Kxo1NGboeu4yGKfW1v7z3cGVo0861VQHnNdzhjYJK586PhOoRCFZaosU+2qEYRF+tL7Zph4
- jGGPigkfskYBxfwJ/JgSw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:bR479DqMFY4=:e6k3glqkSZ6/ItVBJ7kk2d
- 4Iaxg3ICOFBf4ZLS1g5Jxn0ItLypkHUdUrUMDn/FniBmELF7gMfL251Tsivp3T6/OT0BdlWmb
- j5+21yDCsZjI8AYJVwK5EzNf1rILBZXPkyMl2VcCDOJpwjbyKOhtkvr4Nt0xaXZH1yRpUCGb0
- lBCt7zB4ZyaWFz1m9rIYyYsvtjGZGlIBz099RDqwdyW30GAgbzCbH5NTthrzXwLjpeQjWnYKW
- IJsO7OwRTxQUuqfJQeYWL4QNxayy03W6/nJXvsXwhU11/iFN4OnOxTVdLt0Z3Rq219bjT8Bho
- 5/2pSuwH0dybZvexOlLb2o9X6sHitIns5cpHPCWS0eJ811w/hAbmvb4jSk/A4Dl2IyVc4SzRg
- 4l6D+pbuUg1pYKb2yQZ0Y27k7z1TlQPFFDiBKZf7Iq3HUAbEjryk1/mv+wHLF5oSj0smDsKtv
- h8FcoPPJfHtmc4MGWZCeHZ/EwQ73xYpNhd4nKbo9rM4AyUQG3JZ9WVay8kX6gl0pbGr1fNl9u
- 46gXotmfFm7UcyGPvGiD4q6IeTZnwb0hhv0L2/nSZrg8nPgkFX+ue+KBRnNvWDdvYkt+feK9c
- TZfWQvVfkF5+P7A3Qa6M49r+KSzPM4kmPE7oP+TGa/zhr4wluDH+MGD7ClvCBDrwi5q0Ia5nC
- kTCuT9iEuD0tIOCjjEU56FMvFXZs0zfW0admWqdNvJjKw28KlpctE6YwFCNHphgbxmqVl68nW
- PYrwMA2qSxdI+32gxcWDO8OOBq3DGzRq5AhMKwwKNjtSwX2LdkoZYcN/bYcY3p0j8K3260N3R
- 9ZY2mct3VTV/b7JSXEyjIA+9YV4wLtjbbbGa9kRbR08s4PLGLg=
+Received: by 10.140.102.70 with HTTP; Tue, 7 Nov 2017 09:05:51 -0800 (PST)
+In-Reply-To: <xmqq4lq6hmp2.fsf_-_@gitster.mtv.corp.google.com>
+References: <xmqq7evhc7nw.fsf@gitster.mtv.corp.google.com> <CAGZ79kYUZv0g+3OEMrbT26A7mSLJzeS-yf5Knr-CnARHqVB=aQ@mail.gmail.com>
+ <xmqq4lq6hmp2.fsf_-_@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 7 Nov 2017 09:05:51 -0800
+Message-ID: <CAGZ79kY=WWTzwyz8t21RghEWAgPphhvUO5ut0O+rL0YhbqeGxQ@mail.gmail.com>
+Subject: Re: sb/submodule-recursive-checkout-detach-head
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This not only prevents regressions, but also serves as documentation
-what this new feature is expected to do.
+On Mon, Nov 6, 2017 at 6:00 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
+>
+>>> * sb/submodule-recursive-checkout-detach-head (2017-07-28) 2 commits
+>>>   (merged to 'next' on 2017-10-26 at 30994b4c76)
+>>>  + Documentation/checkout: clarify submodule HEADs to be detached
+>>>  + recursive submodules: detach HEAD from new state
+>>>
+>>>  "git checkout --recursive" may overwrite and rewind the history of
+>>>  the branch that happens to be checked out in submodule
+>>>  repositories, which might not be desirable.  Detach the HEAD but
+>>>  still allow the recursive checkout to succeed in such a case.
+>>>
+>>>  Undecided.
+>>>  This needs justification in a larger picture; it is unclear why
+>>>  this is better than rejecting recursive checkout, for example.
+>> ...
+>> Detaching the submodule HEAD is in line with the current thinking
+>> of submodules, though I am about to send out a plan later
+>> asking if we want to keep it that way long term.
+>
+> Did this "send out a plan" ever happen?
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- t/t6300-for-each-ref.sh | 32 ++++++++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+No. (Not yet?)
 
-diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index 3aa534933e0..c128dfc5790 100755
---- a/t/t6300-for-each-ref.sh
-+++ b/t/t6300-for-each-ref.sh
-@@ -766,4 +766,36 @@ test_expect_success 'Verify usage of %(symref:rstrip) atom' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success ':remotename and :remoteref' '
-+	git init remote-tests &&
-+	(
-+		cd remote-tests &&
-+		test_commit initial &&
-+		git remote add from fifth.coffee:blub &&
-+		git config branch.master.remote from &&
-+		git config branch.master.merge refs/heads/stable &&
-+		git remote add to southridge.audio:repo &&
-+		git config remote.to.push "refs/heads/*:refs/heads/pushed/*" &&
-+		git config branch.master.pushRemote to &&
-+		for pair in "%(upstream)=refs/remotes/from/stable" \
-+			"%(upstream:remotename)=from" \
-+			"%(upstream:remoteref)=refs/heads/stable" \
-+			"%(push)=refs/remotes/to/pushed/master" \
-+			"%(push:remotename)=to" \
-+			"%(push:remoteref)=refs/heads/pushed/master"
-+		do
-+			echo "${pair#*=}" >expect &&
-+			git for-each-ref --format="${pair%=*}" \
-+				refs/heads/master >actual &&
-+			test_cmp expect actual
-+		done &&
-+		git branch push-simple &&
-+		git config branch.push-simple.pushRemote from &&
-+		actual="$(git for-each-ref \
-+			--format="%(push:remotename),%(push:remoteref)" \
-+			refs/heads/push-simple)" &&
-+		test from, = "$actual"
-+	)
-+'
-+
- test_done
--- 
-2.15.0.windows.1
+>  I am about to rewind 'next'
+> and rebuild on top of v2.15, and wondering if I should keep the
+> topic or kick it back to 'pu' so that a better justification can be
+> given.
+
+Feel free to kick back to 'pu'.
+
+Thanks,
+Stefan
