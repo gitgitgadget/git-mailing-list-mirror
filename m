@@ -2,100 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.7 required=3.0 tests=AWL,BAYES_00,
+	DATE_IN_PAST_06_12,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2694F20281
-	for <e@80x24.org>; Tue,  7 Nov 2017 07:46:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4A62420281
+	for <e@80x24.org>; Tue,  7 Nov 2017 09:59:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755960AbdKGHqa (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Nov 2017 02:46:30 -0500
-Received: from mut-mta1-se01a-zose1-fr.yulpa.io ([185.49.21.248]:52348 "EHLO
-        mut-mta1-se01a-zose1-fr.yulpa.io" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1755341AbdKGHq3 (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 7 Nov 2017 02:46:29 -0500
-Received: from zose-mx-out01.web4all.fr ([185.49.20.46] helo=zose-mta-hub-out-web-01.w4a.fr)
-        by mut-mta1-se01b-fr.yulpa.io with esmtps (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.89)
-        (envelope-from <matthieu.moy@matthieu-moy.fr>)
-        id 1eByaW-000NKL-Pe; Tue, 07 Nov 2017 08:46:25 +0100
-Received: from localhost (localhost [127.0.0.1])
-        by zose-mta-hub-out-web-01.w4a.fr (Postfix) with ESMTP id 6C6391C1BEC;
-        Tue,  7 Nov 2017 08:43:34 +0100 (CET)
-Received: from zose-mta-hub-out-web-01.w4a.fr ([127.0.0.1])
-        by localhost (zose-mta-hub-out-web-01.w4a.fr [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id HSl-xBteRPJV; Tue,  7 Nov 2017 08:43:33 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-        by zose-mta-hub-out-web-01.w4a.fr (Postfix) with ESMTP id C9C4D1C1BFA;
-        Tue,  7 Nov 2017 08:43:33 +0100 (CET)
-X-Virus-Scanned: amavisd-new at zose1.web4all.fr
-Received: from zose-mta-hub-out-web-01.w4a.fr ([127.0.0.1])
-        by localhost (zose-mta-hub-out-web-01.w4a.fr [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id Kveel0FJwDrS; Tue,  7 Nov 2017 08:43:33 +0100 (CET)
-Received: from zose-store11.web4all.fr (zose-store11.web4all.fr [10.101.13.41])
-        by zose-mta-hub-out-web-01.w4a.fr (Postfix) with ESMTP id B37811C1BEC;
-        Tue,  7 Nov 2017 08:43:33 +0100 (CET)
-Date:   Tue, 7 Nov 2017 08:46:22 +0100 (CET)
-From:   Matthieu Moy <git@matthieu-moy.fr>
+        id S933889AbdKGJ7F (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Nov 2017 04:59:05 -0500
+Received: from mout.gmx.net ([212.227.15.19]:65369 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752715AbdKGJ67 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Nov 2017 04:58:59 -0500
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MZTP3-1eWiIe0Smz-00LIJO; Tue, 07
+ Nov 2017 10:58:49 +0100
+Date:   Tue, 7 Nov 2017 04:02:26 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Antoine =?utf-8?Q?Beaupr=C3=A9?= <anarcat@debian.org>,
-        Git Mailing List <git@vger.kernel.org>
-Message-ID: <158227903.238854.1510040782947.JavaMail.zimbra@matthieu-moy.fr>
-In-Reply-To: <xmqqh8ug3xnq.fsf@gitster.mtv.corp.google.com>
-References: <87vaix731f.fsf@curie.anarc.at> <q7h9o9opyllo.fsf@orange.lip.ens-lyon.fr> <xmqqh8ug3xnq.fsf@gitster.mtv.corp.google.com>
-Subject: Re: future of the mediawiki extension?
+cc:     Phillip Wood <phillip.wood@talktalk.net>,
+        Git Mailing List <git@vger.kernel.org>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v1 2/8] Add a function to update HEAD after creating a
+ commit
+In-Reply-To: <xmqqtvy6g5k8.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.21.1.1711070400160.6482@virtualbox>
+References: <20170925101041.18344-1-phillip.wood@talktalk.net> <20171106112709.2121-1-phillip.wood@talktalk.net> <20171106112709.2121-3-phillip.wood@talktalk.net> <xmqqtvy6g5k8.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Mailer: Zimbra 8.7.6_GA_1776 (ZimbraWebClient - FF56 (Linux)/8.7.6_GA_1776)
-Thread-Topic: future of the mediawiki extension?
-Thread-Index: lmOjY+cTZrHXf2/auIjWwu4DtC6gcg==
-X-Originating-IP: 185.49.20.46
-X-SpamExperts-Domain: zose1.web4all.fr
-X-SpamExperts-Username: 185.49.20.46
-Authentication-Results: yulpa.io; auth=pass smtp.auth=185.49.20.46@zose1.web4all.fr
-X-SpamExperts-Outgoing-Class: ham
-X-SpamExperts-Outgoing-Evidence: Combined (0.14)
-X-Recommended-Action: accept
-X-Filter-ID: EX5BVjFpneJeBchSMxfU5gKJsusU9QE+OeSCPwhYo4vj1g3/PwYZaTCzSym8uE9HzZVFz83oxfZw
- gF51d29GBPAkKzKn8KKR+UkX2hNuFnGGDezsDliyQek9DPjUEYe8t8C9mOBdONdnsxgsk1D2p0xz
- WtzhzyBN1YerwuYDObHmGhzfQQd/+ERpqFpTRpkREjv5y2rnmjelpd3x9GEx5ZnKFuvyAkdfwy1u
- mvgKKTs4fKUuiw0//V1gitb2uGgmfCUjjViAv8TVvNLK7a6WuO0Eidzv7xUmtfqhhPMNuJ6rVfyb
- bVdIi4I10mtMCtuhUAsAEp7he0osUq/5XwU41W6noxJ1R+JPOFQkdVRSeviFcFhO9Ph08zfxywcA
- n5TefPIhX8qVP08ys/I/rdWjsbfvXhSC6LmBRcNHjwXR9mIDuONzMRaL3IMJceeVmuMY+GQ66azi
- oBnt+leQ7P/PJXsa6kI3nyUAc5M3bR7tdxzGLxsTFnT1LoeNMOi6+XYAhFUzRbSScvHdASYFh+p0
- 2dqoJxKV5sDANUfywIGK+xoamUdylUIKhf3z2GAHxH7IEyMvAaTgeppldXdmgNheT/zZuKV7bhhI
- SyCeq42d3n97954VyRD0Rk7XKbVteTmNUq1s7ujLAhTBbgjB+bVHnEWs8Qn0wY3unR8jmSQqEyl+
- f0531F3vI5/gHngSB9kHMxpBHvBo9FmImCHhS15U2/Z/iBkIA9EaXBYLrnMiqc3ri9CpzVfoKELd
- zQ6gRENfMfm2hDHkR+8M+G+5sXVO0nL/Y72q89sKGK7s/1oP7NZPYuXyLSgrjLvmIVBvINgsNQs7
- R2TcKDcGsKZkKJWspsOpyKA69LF1Ge2GaGfxmfrOOu3PgMpcSTmRL7Lqr9O/C+ZF275+pg/S1hHt
- JCWUqylLPYnCOJnLyxCukf480PTElXFEC/Z6FtDtg8bDChIkBaBldjaj1+vhII7uaMy67ZK+8i+n
- 0KYJ0NLwWPW/Aqv7tBpNIaqvfByt1A4sG74ZSGhKuPazVyS28Zfdod+irA==
-X-Report-Abuse-To: spam@mut-mta1-se01a-fr.yulpa.io
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:CafDhQfH0ztaiE3V1lt8/e1UJ1lyB6hiobIS1q6yTeGmhfrgQ+M
+ xjztBdqGap1A9fhRd66LZFadCa7QUYKUx9UrG2cxSWDRR5z5ERLs1gE3n7clqeHTQheB+P+
+ b/qOHO8t67ooTF9SYrfSgO217uS+e0e0uGUDLmHZS/SeVM6Q4Iihg/ahblieHcSTAKFP/9n
+ tejZGD4twZBKpfhV1pYFA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:heLNB00sE7I=:uD3exTs4Lvrr3BE4QXTUgE
+ E9mPC3Yzj9vT7qOq9qNs1smUjuKJOzA2aS2l2Tkj4S0DFKIIvixZ4jxpKqH7/UiehgCcIW/uw
+ k6gA1pRJqAAQlxD3vRqDgsbGWEiQyIpjjo2vTpf9emYL4lIL8u4dgH3COcqexCYc8ZIZdNY/r
+ /O7am4ICNjGGBMpE18V9ao2nRZDcBJmlYwvhkdUad8AVO3/lEQIaFa1PgDSyVrzx9mA+OiHv9
+ D/Ifp70pMR/5B6D/7gTJhLwbzJUyWLMWE7lymTOrBn2lUyRiI9hg5XXgFyqN0CSTVBrgNtVnu
+ 3/8RJPItbtfIV3DPU+BlIQpTfovaZVDiQan9si4MZs8UsXx70i/GxE+E/x9NRQ6qZC7HvLVDu
+ xQ1A0I4y52jih7lRX93iygc6AZqFWfnBoxBxSh3dIeGFgamgxJ0MbiLb/IbYL/9lCSTnLcAK1
+ BPT6a7eMi7WnuuX+Ifiz4kb2ES2Q7VC8/lz1ULVsi9E7+uBmxjMwQiXLqzRqdyWsKmwpgS+L+
+ z0FJUJ8nC6/dI6ykKKb6Ru+24EhdX9VO3jcwrPAW7WZ29D+vnWpWmqztZLy0T9tZAR1sGjk5Z
+ BB037gWHWcIKEArWO74m6fGWasZV+wnG8gw1tSoiTEBNBGyWc14NPO7XpdecY4vGGv1eAcwCH
+ j7pRVRhtlOVZVz96FguNcYNIxn68FRUO3CgAHXYKZt3CONQ5h6jfD/1xvoViEXW5ppJa8fN83
+ feZMLX8+Pu2K3UH75IwdHC9bVn84Xz+Cfzf6RY63gLZR+13YmlVKf/MOjEMhdK6iVXYSBtkL9
+ XZokan2PRqVA2+tw/atbovfSO+pTpI6DP1MuPW9r0/jLlBurTU=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Junio C Hamano" <gitster@pobox.com> wrote:
+Hi Junio,
 
-> I think the plan was to make code drop from time to time at major
-> release points of git-multimail, but I do not think we've seen many
-> updates recently.
+On Tue, 7 Nov 2017, Junio C Hamano wrote:
 
-I realize I didn't answer this point. The reason you didn't see any
-update recently is just that there haven't been any release and
-actually not much development for a while on git-multimail.
+> Phillip Wood <phillip.wood@talktalk.net> writes:
+> 
+> > @@ -751,6 +751,42 @@ int template_untouched(const struct strbuf *sb, const char *template_file,
+> >  	return rest_is_empty(sb, start - sb->buf);
+> >  }
+> >  
+> > +int update_head(const struct commit *old_head, const struct object_id *new_head,
+> > +		const char *action, const struct strbuf *msg,
+> > +		struct strbuf *err)
+> > +{
+> 
+> [...]
+>
+> I however do not think update_head() is such a good name for a
+> helper function in the global scope.  builtin/clone.c has a static
+> one that has quite different semantics with the same name (I am not
+> saying that builtin/clone.c will in the future start including the
+> sequencer.h header file; I am pointing out that update_head() is not
+> a good global name that will be understood by everybody).
 
-I still have a list of "would be nice to have" features, but it seems
-users are essentially happy with git-multimail as it is (or at least,
-aren't unhappy enough to send patches or discuss interesting issues),
-I haven't received any bug report or pull-requests for a long time.
+Please try to always accompany a "Don't Do That" by a "How About This
+Instead".
 
-But I still do maintain git-multimail and I will continue updating it
-in git.git.
+In this case, I could imagine that `update_head_with_reflog()` would be a
+better name. If you disagree, I invite you to propose an alternative that
+strikes your liking.
 
--- 
-Matthieu Moy
-https://matthieu-moy.fr/
+Ciao,
+Dscho
