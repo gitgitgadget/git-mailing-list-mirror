@@ -2,120 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BE65820281
-	for <e@80x24.org>; Tue,  7 Nov 2017 06:34:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6F9F520281
+	for <e@80x24.org>; Tue,  7 Nov 2017 06:40:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754783AbdKGGeu (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Nov 2017 01:34:50 -0500
-Received: from mail-io0-f177.google.com ([209.85.223.177]:57266 "EHLO
-        mail-io0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753323AbdKGGet (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Nov 2017 01:34:49 -0500
-Received: by mail-io0-f177.google.com with SMTP id m81so969065ioi.13
-        for <git@vger.kernel.org>; Mon, 06 Nov 2017 22:34:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=DC95NHp2jU7Ifvg83g2KIBZNAPfIi+Sy7RQ5/p4MIzA=;
-        b=N22AXKYlk2sepn0PfBjml9zxulAYqAwlcmicAnZUc0OxwP81YYxKhdF52/DWqVoyy5
-         sQjHqqjrF28Ynya0aYF+c8jEeKsOiBq3OIfqZ1dfxt6pT7xtM4NK3XyeBRyEbgW51lau
-         qeJRbjHg+qTf2y+8NnElcRo1wOVCUadLULFUIx4VuVCFCXTRdTuj/rudWDK4NXErv4XI
-         +OLxQJqWePjZTrimJCG2U4VyGeBa9iGVHOKdOUeSBPq3uqFzvgE2cwavcnD5u36QLbmm
-         N5+xTlN6FYw3wdsfcXjw1DstokJnZYvPDCwOoqaV4aNV5XmQRVzUj//qSRp/pive8Q8M
-         /2/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=DC95NHp2jU7Ifvg83g2KIBZNAPfIi+Sy7RQ5/p4MIzA=;
-        b=dpNdW6IRNuqhdQHvCvwojIMRGL6/JI56wyX/92qTydTshwUUA8mRyu8P0onpmDINGN
-         mDo/LhNBnmGcyI5PULN5Cfn8Iu9u7ehdCIlWvBCNxVg7H0z2ykqn21k5pm86Guanbhdn
-         NvTqzeNQ8qj+avnvTbcfixJwkFqdjyEvN8FUYniAiArTkhnedKJxFexTG7h7ZQ7Y0SSH
-         DadUvnoM3sCWrrxfveNbD/MdVFMvSBOeqc1Xt7B6aZmQALMJN6Pl9GQE4oUwde0S+Mwo
-         oVqL+D3TagwM7jlJBp6rQHuz6bTNhQm52tBWkx0JDC2EHKECSn3FjVmqouNI8x68U/n9
-         BXRQ==
-X-Gm-Message-State: AMCzsaUG14g4j/QfsSzAqY4U5rDgG62Fg/KvCpeR7tE3ng2WC5ljOcq3
-        cooUTBZ0nDmpVe9j8SqO+iZemRUk4YvKWLfU06s=
-X-Google-Smtp-Source: ABhQp+Qsmu1Uml6rS5fxepdrB3lKk7BvVlGAg1fAZx2xs94pk8axoFJdhUW9myMfTtbEPQHEKQ9oQAz8L/d+M9tnSeI=
-X-Received: by 10.107.180.20 with SMTP id d20mr23074827iof.116.1510036488547;
- Mon, 06 Nov 2017 22:34:48 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.79.28.137 with HTTP; Mon, 6 Nov 2017 22:34:48 -0800 (PST)
-In-Reply-To: <xmqqo9oehotn.fsf@gitster.mtv.corp.google.com>
-References: <20171105213836.11717-1-chriscool@tuxfamily.org>
- <20171105213836.11717-3-chriscool@tuxfamily.org> <xmqqo9oehotn.fsf@gitster.mtv.corp.google.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Tue, 7 Nov 2017 07:34:48 +0100
-Message-ID: <CAP8UFD2vk4jV7jEBx3Axd-dhfcsGSJVFFt+pumdT1j8GD_oM_w@mail.gmail.com>
-Subject: Re: [PATCH v2 2/8] t0021/rot13-filter: refactor packet reading functions
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Ben Peart <Ben.Peart@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Mike Hommey <mh@glandium.org>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Eric Wong <e@80x24.org>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
+        id S1754804AbdKGGkO (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Nov 2017 01:40:14 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62551 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754796AbdKGGkN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Nov 2017 01:40:13 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 21809A91DA;
+        Tue,  7 Nov 2017 01:40:13 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+        :subject:date:message-id:in-reply-to:references; s=sasl; bh=Vbgi
+        J0M722KOvQyfVkI5zI2r3uc=; b=neurJX5Y1vDz/0ESBy9KSVkw3uKh5GVYHAZC
+        KdKm8IpUgou/0KZoRTpA8spui74YVxnmc2nlkvrLFBcDlku13sRevWxQvyucXEUU
+        a5EisvddfBBhBCNn4IutXLgLNpKAV6hPIDnfIuJ6Ayw3zgYsp6rXK1XL/Ri/+fcg
+        8xzyrvw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+        :date:message-id:in-reply-to:references; q=dns; s=sasl; b=yB3SlU
+        JlSvs46IVJ3n0k6NODMWT19lC8tkiN5hmHGDypWsU26C5G00totTAZyCOMwpzASC
+        C7nf2rwKxKpKnhOKBWPwhhJ4LWglKw/aV+p3AA0C4bmtgy9CVCI6NIsXnsH9vpWL
+        nSjmSQGfpJYw7o4t/FA/F+p4mAx11jJSANAiU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 183B4A91D9;
+        Tue,  7 Nov 2017 01:40:13 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7FA3DA91D7;
+        Tue,  7 Nov 2017 01:40:12 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org
+Subject: [PATCH v2 0/2] Teach "diff" to ignore only CR at EOL
+Date:   Tue,  7 Nov 2017 15:40:09 +0900
+Message-Id: <20171107064011.18399-1-gitster@pobox.com>
+X-Mailer: git-send-email 2.15.0-263-g47cc852023
+In-Reply-To: <xmqqshe7j0af.fsf@gitster.mtv.corp.google.com>
+References: <xmqqshe7j0af.fsf@gitster.mtv.corp.google.com>
+X-Pobox-Relay-ID: 81983316-C386-11E7-93D4-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 7, 2017 at 2:15 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Christian Couder <christian.couder@gmail.com> writes:
->
->> +sub packet_required_key_val_read {
->> +     my ( $key ) = @_;
->> +     my ( $res, $buf ) = packet_txt_read();
->> +     unless ( $res == -1 or ( $buf =~ s/^$key=// and $buf ne '' ) ) {
->> +             die "bad $key: '$buf'";
->> +     }
->> +     return ( $res, $buf );
->> +}
->
-> The function calls itself "required", but it does not die when it
-> sees an unexpected EOF or an empty line.
+This time with doc updates and tests.  The previous one is at 
 
-If $res is not -1, it will die if $buf is empty.
+https://public-inbox.org/git/xmqqshe7j0af.fsf@gitster.mtv.corp.google.com
 
-> Neither of these cases
-> gives it a key (nor val), but it is not treated as an error.
->
-> That is curious, isn't it?
+A change that is supposed to only change the end-of-line convention
+between LF <-> CRLF and nothing else can be verified with "diff -b"
+or "diff --ignore-space-at-eol" in practice, but these hide changes
+in whitespaces other than the carriage return at the end of the lines.
 
-Yeah it is a bit strange for the unexpected EOF case.
-I think I will remove "required" from the name and add a comment
-before the function.
+These two patches introduce a new --ignore-cr-at-eol option so that
+only CR at eol and no other whitespace changes are ignored while
+making a comparison, to allow a stricter validation.
 
-> By the way, is it just me who finds this "unless" even less
-> unerstandable than the original in packet_txt_read() you modeled
-> this one after?  The original depended on packet_bin_read() to die
-> on an unexpected EOF, so its "unless" made some sense (we know we
-> got some input, and it is an error for the input not to end with LF
-> unless it is an empty string).  Negating the condition and making it
-> "if" may make it easier to understand, perhaps.  I dunno.
+I am not sure how much practical value the new option has.  The
+preliminary clean-up patch to shuffle the bis assignment for flags
+does have values, though ;-).
 
-I can remove the "unless" and make it easier to understand like this:
+Junio C Hamano (2):
+  xdiff: reassign xpparm_t.flags bits
+  diff: --ignore-cr-at-eol
 
-  if ( $res == -1 ) {
-          return ( $res, $buf );
-  }
-  if ( $buf =~ s/^$key=// and $buf ne '' ) ) {
-          return ( $res, $buf );
-  }
-  die "bad $key: '$buf'";
+ Documentation/diff-options.txt     |  3 +++
+ Documentation/merge-strategies.txt |  5 +++--
+ diff.c                             |  6 +++---
+ merge-recursive.c                  |  2 ++
+ t/t4015-diff-whitespace.sh         | 28 ++++++++++++++++++++++++++++
+ xdiff/xdiff.h                      | 26 ++++++++++++++++----------
+ xdiff/xutils.c                     | 38 ++++++++++++++++++++++++++++++++++++--
+ 7 files changed, 91 insertions(+), 17 deletions(-)
 
-Or to keep it short just:
+-- 
+2.15.0-263-g47cc852023
 
-  if ( $res == -1 or ( $buf =~ s/^$key=// and $buf ne '' ) ) {
-          return ( $res, $buf );
-  }
-  die "bad $key: '$buf'";
