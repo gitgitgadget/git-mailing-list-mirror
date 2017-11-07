@@ -2,135 +2,162 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0481E20A36
-	for <e@80x24.org>; Tue,  7 Nov 2017 22:06:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2B93020A36
+	for <e@80x24.org>; Tue,  7 Nov 2017 23:20:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752846AbdKGWGb (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Nov 2017 17:06:31 -0500
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:50345 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751417AbdKGWGa (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Nov 2017 17:06:30 -0500
-Received: by mail-wr0-f195.google.com with SMTP id p96so632983wrb.7
-        for <git@vger.kernel.org>; Tue, 07 Nov 2017 14:06:29 -0800 (PST)
+        id S1757528AbdKGXUi (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Nov 2017 18:20:38 -0500
+Received: from mail-it0-f43.google.com ([209.85.214.43]:46269 "EHLO
+        mail-it0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753000AbdKGXUh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Nov 2017 18:20:37 -0500
+Received: by mail-it0-f43.google.com with SMTP id f187so4604154itb.1
+        for <git@vger.kernel.org>; Tue, 07 Nov 2017 15:20:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=HJk50Bya+ldP8TlOYfw54cjz/6ZLe3CuUaag+prPe1U=;
-        b=er90pjj7jbzljYTRms2ONcM3q0B4z5lYqsjCLnUoBS7HWw9NMTYl34LCBNbQ2v1P7/
-         Lba0SzkOsGjkdfc1mx6hteSAbV1utD0yzKx6ps4P9zfRbNl11cWD82ojZvP+X25oQs0m
-         oqKzNQUNHn9m7fc3gd3CQTWuad9MmZHx0CfG/hXRdte+A2Zqho3v9UbA4eWG0ofYm/9I
-         SJHlWtE579/KFWFvlA6o4BiV+f1zvv6aZRHDvpx80f3elFtoO1Cm/oya7ltlylXSL0Ns
-         JERsNlyN0lIlnwxupQyDFyZj7wMIn1MzCKbxCZ9E3/ZEjHE7rpFJimlgZSCT5sq9W/Al
-         Zb4A==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=31xNwPyHCgWRCT+9Kz7HRZxSE7BTL641fhmsgT1yeKE=;
+        b=iicrH7WHO4/+XNMCoTLa5ibHw6omAVHeGuJzZuDmrjflPS6ATguEZyLDVzq60SkdyC
+         96C8QgAcQ5+nt3ijiSVczu/an6r477ZjHpBppWEs7moxgHjXU1ddvVGd8Cc8fKWjVohp
+         Up2HwkeAgP3jAsxuFGqmwu7mlwB5AZIfNSIGbNHKGoPwlO28aWS9COf4hT1LHX5WE8qI
+         cWUHVw3tX7kaktxwBkxJdkPbPATrlMVcfZnsc6chiVRPW2bRdNXCBhBPP/azuWg2A3uz
+         6/lcVWkgyY8dse44DAsNff8KFlU5HIm7krMq84oCOpJXsJc/Y3exDKkVM8vcTL5xOT7B
+         BfgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=HJk50Bya+ldP8TlOYfw54cjz/6ZLe3CuUaag+prPe1U=;
-        b=cvmpXOLSW6MCXRusdr1RwQpxCqJcd08YNTJwnrG8gugtmIZpJQqEWXW+7KZAwFg85h
-         PPKHy2npOM1ePBaxtH1cuRLMBVNgwNrW8vYHxSs2D43H0UhsV4CGqAjIrNtsA75wwByU
-         /HMUzT9L7e4ZyEnymFir+hu4gi2kIGBR7eAoAH2KnhmxXtqwr2RLWJOFsBUoG6/rkKfL
-         GRm7ozPElAlwQ0J0h5kYVkwQkfnoN54P/7gpn090KXnm2+y7HjKKHodEH/rkFXGzYssr
-         SjgPxHt7UVKkZl2/81k7kew5QcHIxsBBBkuC4ZQMZ8/uonnc/PHyEggSkqsRb6gXZqvh
-         OL6g==
-X-Gm-Message-State: AJaThX7DtzLTXPsaxjK2AVJO7TgAcKNsU+9sKVhRl/XtJjq4jCX++Lav
-        3Gy5brqgwhcrlUuPPMZVQFY=
-X-Google-Smtp-Source: ABhQp+RZ5O1QGUXvLkTLEXET5QARj8ncFZHl1sSZiSE6i6Bcuit6cVInid7vJTskvKvVqF2DmDzZqg==
-X-Received: by 10.223.157.141 with SMTP id p13mr171913wre.92.1510092389158;
-        Tue, 07 Nov 2017 14:06:29 -0800 (PST)
-Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
-        by smtp.gmail.com with ESMTPSA id r63sm2159552wmg.13.2017.11.07.14.06.27
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 07 Nov 2017 14:06:27 -0800 (PST)
-Date:   Tue, 7 Nov 2017 22:07:48 +0000
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Martin =?iso-8859-1?Q?=C5gren?= <martin.agren@gmail.com>
-Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v2 3/9] ref_transaction_update(): die on disallowed flags
-Message-ID: <20171107220748.GA19775@hank>
-References: <cover.1509870243.git.mhagger@alum.mit.edu>
- <10901328af1e6e04e8c7c7b39977ec85f6c58142.1509870243.git.mhagger@alum.mit.edu>
- <CAN0heSpOpfCmf8k8kZz1L-1qb-5mDHMLbQYaLPKE=twOhgyi8A@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAN0heSpOpfCmf8k8kZz1L-1qb-5mDHMLbQYaLPKE=twOhgyi8A@mail.gmail.com>
-User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=31xNwPyHCgWRCT+9Kz7HRZxSE7BTL641fhmsgT1yeKE=;
+        b=Tg1jffo2O/IlxLKn3MiRwXVSFN6Fj8Qc6sYUr8/O3JrZtoVS40zCkgB7Tn+fyhBKdz
+         OXkNLy8Bn3FDWKo8bN5wbeURGaAVt7SFILLRcbuJ3yQFQ9XRq42AKmVYue2iQMD/Ln0P
+         YwCvbUYatQ5Zdqe5lPHWdkIXQjfmz2qy9uNSQXhnJQP4wrTbLxep11k14dMGFUlvQnZg
+         8LP/d+MxOU2SPLgZxDHK5FawctguGgnskk6dSyXjFgIHhaotXo+afmp85jlTg2J7nvTw
+         V7ZNQKHvsMV+jcGsafd2nyLIvj8e86lNTw8YhDHr84Y+/A01VzSW4c7IzMk5wP3qBwrl
+         sYnw==
+X-Gm-Message-State: AJaThX59tkLg0iE6AEmeah82Rku+MN9mq30iKyFoxjfMi9oFBUMTnv+C
+        FJ9HoPnZ73SyegSKTsBVLNJWhg==
+X-Google-Smtp-Source: ABhQp+T0DlA3Bye+NoUjnC/Yk/znuO6vFXCa2wV1oZSf3mtWG4wTlI0vEI8DshDgbs/gLoQ99TFG6g==
+X-Received: by 10.36.33.71 with SMTP id e68mr1180369ita.111.1510096836481;
+        Tue, 07 Nov 2017 15:20:36 -0800 (PST)
+Received: from twelve3.mtv.corp.google.com ([2620:0:100e:422:8df4:1665:e9bb:1ae7])
+        by smtp.gmail.com with ESMTPSA id h20sm1086719iob.65.2017.11.07.15.20.34
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 07 Nov 2017 15:20:35 -0800 (PST)
+Date:   Tue, 7 Nov 2017 15:20:34 -0800
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v3 4/6] list-objects: filter objects in
+ traverse_commit_list
+Message-Id: <20171107152034.47686f6ece72ea3d43005b12@google.com>
+In-Reply-To: <20171107193546.10017-5-git@jeffhostetler.com>
+References: <20171107193546.10017-1-git@jeffhostetler.com>
+        <20171107193546.10017-5-git@jeffhostetler.com>
+X-Mailer: Sylpheed 3.4.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/07, Martin Ågren wrote:
-> On 5 November 2017 at 09:42, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> > Callers shouldn't be passing disallowed flags into
-> > `ref_transaction_update()`. So instead of masking them off, treat it
-> > as a bug if any are set.
-> >
-> > Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
-> > ---
-> >  refs.c | 3 ++-
-> >  1 file changed, 2 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/refs.c b/refs.c
-> > index 62a7621025..7c1e206e08 100644
-> > --- a/refs.c
-> > +++ b/refs.c
-> > @@ -940,7 +940,8 @@ int ref_transaction_update(struct ref_transaction *transaction,
-> >                 return -1;
-> >         }
-> >
-> > -       flags &= REF_TRANSACTION_UPDATE_ALLOWED_FLAGS;
-> > +       if (flags & ~REF_TRANSACTION_UPDATE_ALLOWED_FLAGS)
-> > +               BUG("illegal flags 0x%x passed to ref_transaction_update()", flags);
-> >
-> >         flags |= (new_oid ? REF_HAVE_NEW : 0) | (old_oid ? REF_HAVE_OLD : 0);
-> 
-> The masking out is for sanity, but also partly to squelch a
-> compiler-warning. Thomas reported [1] that dieing does not make the
-> warning go away, but that masking out does. Of course, avoiding warnings
-> is not the ultimate goal, and -Wnonnull is not part of DEVELOPER_CFLAGS.
-> Thomas reluctantly suggested that one could do your check and then do
-> the masking...
+On Tue,  7 Nov 2017 19:35:44 +0000
+Jeff Hostetler <git@jeffhostetler.com> wrote:
 
-Thanks for doing the digging and cc'ing me here.
+> +/*
+> + * Reject the arg if it contains any characters that might
+> + * require quoting or escaping when handing to a sub-command.
+> + */
+> +static int reject_injection_chars(const char *arg)
+> +{
+[snip]
+> +}
 
-Interestingly enough  my compiler no longer complains about this.
-Looking at what changed, gcc got upgraded to 7.2.0 (from 7.1.1) in
-between then and now, but I can still reproduce this if I base this
-patch on top of the old commit.
+Someone pointed me to quote.{c,h}, which is probably sufficient to
+ensure shell safety if we do invoke subcommands through the shell. If
+that is so, we probably don't need a blacklist.
 
-So bisecting leads me to 89f3bbdd3b ("refs: update ref transactions to
-use struct object_id", 2017-10-15).  It's too late for me to dig in to
-what in this made the compiler warning go away, but it seems
-reasonable enough.
+Having said that, though, it might be safer to still introduce one, and
+relax it later if necessary - it is much easier to relax a constraint
+than to increase one.
 
-With that said I think the patch we have here is definitely an
-improvement, I would have prefered to do it this way in the first
-place, but the compiler was standing in my way :)
+> +	} else if (skip_prefix(arg, "sparse:", &v0)) {
+> +
+> +		if (skip_prefix(v0, "oid=", &v1)) {
+> +			struct object_context oc;
+> +			struct object_id sparse_oid;
+> +			filter_options->choice = LOFC_SPARSE_OID;
+> +			if (!get_oid_with_context(v1, GET_OID_BLOB,
+> +						  &sparse_oid, &oc))
+> +				filter_options->sparse_oid_value =
+> +					oiddup(&sparse_oid);
+> +			return 0;
+> +		}
 
-Thanks Michael for cleaning this up!
+In your recent e-mail [1], you said that you will change it to always pass
+the original expression - is that still the plan?
 
-> Maybe it would be worth a note in the commit message. But blaming these
-> lines quickly leads to c788c54cd (refs: strip out not allowed flags from
-> ref_transaction_update, 2017-09-12), which describes this already. OTOH,
-> since the warning does not hit these lines, but a bit below, maybe it's
-> even worth a comment in the code.
-> 
-> I'm not saying we should sprinkle comments for each warning we hit...
-> Anyway, those were the thoughts than ran through my mind.
-> 
-> [1] https://public-inbox.org/git/20170924204541.GA2853@hank/
+[1] https://public-inbox.org/git/f698d5a8-bf31-cea1-a8da-88b755b0b7af@jeffhostetler.com/
+
+> +/* Remember to update object flag allocation in object.h */
+
+You probably can delete this line.
+
+> +/*
+> + * FILTER_SHOWN_BUT_REVISIT -- we set this bit on tree objects
+> + * that have been shown, but should be revisited if they appear
+> + * in the traversal (until we mark it SEEN).  This is a way to
+> + * let us silently de-dup calls to show() in the caller.
+
+This is unclear to me at first reading. Maybe something like:
+
+  FILTER_SHOWN_BUT_REVISIT -- we set this bit on tree objects that have
+  been shown, but should not be skipped over if they reappear in the
+  traversal. This ensures that the tree's descendants are re-processed
+  if the tree reappears subsequently, and that the tree is not shown
+  twice.
+
+> + * This
+> + * is subtly different from the "revision.h:SHOWN" and the
+> + * "sha1_name.c:ONELINE_SEEN" bits.  And also different from
+> + * the non-de-dup usage in pack-bitmap.c
+> + */
+
+Optional: I'm not sure if this comparison is useful. (Maybe it is useful
+to others, though.)
+
+> +/*
+> + * A filter driven by a sparse-checkout specification to only
+> + * include blobs that a sparse checkout would populate.
+> + *
+> + * The sparse-checkout spec can be loaded from a blob with the
+> + * given OID or from a local pathname.  We allow an OID because
+> + * the repo may be bare or we may be doing the filtering on the
+> + * server.
+> + */
+> +struct frame {
+> +	/*
+> +	 * defval is the usual default include/exclude value that
+> +	 * should be inherited as we recurse into directories based
+> +	 * upon pattern matching of the directory itself or of a
+> +	 * containing directory.
+> +	 */
+> +	int defval;
+
+Can this be an "unsigned defval : 1" as well? In the function below, I
+see that you assign to an "int val" first (which can take -1, 0, and 1)
+before assigning to this, so that is fine.
+
+Also, maybe a better name would be "exclude", with the documentation:
+
+  1 if the directory is excluded, 0 otherwise. Excluded directories will
+  still be recursed through, because an "include" rule for an object
+  might override an "exclude" rule for one of its ancestors.
