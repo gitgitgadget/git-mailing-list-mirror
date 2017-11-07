@@ -2,102 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1BA9720A10
-	for <e@80x24.org>; Tue,  7 Nov 2017 01:01:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C954A20A10
+	for <e@80x24.org>; Tue,  7 Nov 2017 01:02:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934917AbdKGBBB (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Nov 2017 20:01:01 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51734 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S932512AbdKGBA6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Nov 2017 20:00:58 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 412399AC99;
-        Mon,  6 Nov 2017 20:00:58 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=2QGG0KQtUV0AEkEvtiojslrPLMQ=; b=CnlO+s
-        D4Pnzx34Fzau3XsOo+yL1HvqahOgwMLWyukdL26u10kiU5DYqaaUBT8hkaNAeY8s
-        E7LufknjDlZd92b1xASKzfUGL/pLqzJ7yqoaAqjO3w/cAKPycVxU/9usHx+ZKzXv
-        ph83XZ3fh0AAgw4tJ7tNgizToaKRZPKWo8Lnc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=mMTd1sYuMEiXpDC6kbKMokIqIL/fiYoJ
-        CDhBKUnZJCz01vbjtDdiWAbd6+Jk7CusF/OKo30TPWPrOVORJ1Y+elAGO71NJldn
-        KcAVXu99bUsCgee1yWn8RT7anD+mky8DJefDECE3RC6P06zeDzkgdfiA5Vwpxun+
-        p2O4RF+14Jo=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 369329AC98;
-        Mon,  6 Nov 2017 20:00:58 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8280F9AC94;
-        Mon,  6 Nov 2017 20:00:57 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Ben Peart <Ben.Peart@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Mike Hommey <mh@glandium.org>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Eric Wong <e@80x24.org>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v2 1/8] t0021/rot13-filter: fix list comparison
-References: <20171105213836.11717-1-chriscool@tuxfamily.org>
-        <20171105213836.11717-2-chriscool@tuxfamily.org>
-Date:   Tue, 07 Nov 2017 10:00:56 +0900
-In-Reply-To: <20171105213836.11717-2-chriscool@tuxfamily.org> (Christian
-        Couder's message of "Sun, 5 Nov 2017 22:38:29 +0100")
-Message-ID: <xmqqvaimhph3.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S933663AbdKGBCx (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Nov 2017 20:02:53 -0500
+Received: from mout.gmx.net ([212.227.15.15]:56886 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S932751AbdKGBCt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Nov 2017 20:02:49 -0500
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MDyFr-1eShen19jz-00HKLW; Tue, 07
+ Nov 2017 02:02:42 +0100
+Date:   Tue, 7 Nov 2017 02:02:08 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Phillip Wood <phillip.wood@dunelm.org.uk>
+cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v1 7/8] sequencer: load commit related config
+In-Reply-To: <20171106112709.2121-8-phillip.wood@talktalk.net>
+Message-ID: <alpine.DEB.2.21.1.1711070202040.6482@virtualbox>
+References: <20170925101041.18344-1-phillip.wood@talktalk.net> <20171106112709.2121-1-phillip.wood@talktalk.net> <20171106112709.2121-8-phillip.wood@talktalk.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1D1E83F6-C357-11E7-BE78-8EF31968708C-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:ET6MwBdIrEc0IcU+lKC6XQBNMUDOlqR0gPG+csB22RWYgViDU8g
+ CUTQcRXCCpkfydeQmkh46o2u4vJ+74fHHJOK1IZ6Vc4thueFdsdI7H8CU6lTKXGNeKMXuzq
+ WmE7az+v9duduaqLnB28tdMEdSFZHJmtjbocjzErfnP5RRPWQa81isZuuGnjJEDZlVeH56A
+ pJdNqVVddqKHklAWh8lZQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:qCuWrUnaQRo=:nhkBISlX00LLs46gpQiTo8
+ cyZ5Y7rQBRKIlJgqxcYzI6h6b0i4wvPwRzVYZJfcIcjKHH8R11ZXa/TtedfCbTb0JJf+yedVR
+ QfdSZmoLL/PqWv89oirvTmlHl7DZruMpG6lbLPuZVQ5GjVcC25Lw9Fup9b0UXkHOMVfr3Wfwd
+ 1s6xJfykXC+HBriUmjjVGhUlGySTEsypotZljvn2tSLTekErDUFeaHA5hBA1j2LLhPHEMWz1n
+ V9pj9yjYaCqhESBJdBRwdkl18TqDUGV8gA7gqt7xwLlz8Wf7Tv8tu0AkcOdQo7hYwaUayhJcu
+ u6BQvjuLHtLU97XSchLUUipZCu8x8h8yo2xjtsfqUc4aYtwnHPcVCnxcns2r82e57LVIwHHNB
+ oHkRdp9yzB+FHoof+B4f1Mo+KJx47XXkfrQslgiwGnsAE6hLLO+qTkgRhG6kfS2LmFyJE7Cwy
+ Aa2nZJF8fOu4ufDqha43s0lrf8AHnVAubf5RfsPxfzcVvgQmHV6TsBALc+LgHOuxNHsKwRciJ
+ eby/KvL1p1SL/bKn2MBum9dmz6Zu1qwTXGfvYhOd9ooyyMsyZgxLWeKjYqrjd5fNY4cdbTv0E
+ l9fMDBbm0UO+JIskXcI3pcS3U5dTUrW7LntZ4mXzm34nZ1Q9CpQ8pS+MMvAriR/rpCPQW0dbP
+ EtnpiDrt2HACWtu9P6+9FaF6PKZgOSYZtpAopXBMyZ9O8IrKxl/fKkgIpNV1wnKsmKVCppFCu
+ 7SnjALQvhvmsNeHL/TMLvH4tilUcjvAt8vokyK8j8gZPqptXcSjCA0dQke3bRrIh90CXyHOYY
+ wyR3ixca3nUAhZNxsocDPCN2b4DmtXyh4AIMFyQg3CwFi/QLNM=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> writes:
+Hi Phillip,
 
-> +sub packet_compare_lists {
-> +	my ($expect, @result) = @_;
-> +	my $ix;
-> +	if (scalar @$expect != scalar @result) {
-> +		return undef;
-> +	}
-> +	for ($ix = 0; $ix < $#result; $ix++) {
-> +		if ($expect->[$ix] ne $result[$ix]) {
-> +			return undef;
-> +		}
-> +	}
-> +	return 1;
-> +}
-> +
->  sub packet_bin_read {
->  	my $buffer;
->  	my $bytes_read = read STDIN, $buffer, 4;
-> @@ -110,18 +124,25 @@ sub packet_flush {
->  print $debug "START\n";
->  $debug->flush();
+On Mon, 6 Nov 2017, Phillip Wood wrote:
+
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+> 
+> Load default values for message cleanup and gpg signing of commits in
+> preparation for committing without forking 'git commit'.
+
+Nicely explained.
+
+> diff --git a/builtin/rebase--helper.c b/builtin/rebase--helper.c
+> index f8519363a393862b6857acab037e74367c7f2134..68194d3aed950f327a8bc624fa1991478dfea01e 100644
+> --- a/builtin/rebase--helper.c
+> +++ b/builtin/rebase--helper.c
+> @@ -9,6 +9,17 @@ static const char * const builtin_rebase_helper_usage[] = {
+>  	NULL
+>  };
 >  
-> -( packet_txt_read() eq ( 0, "git-filter-client" ) ) || die "bad initialize";
-> -( packet_txt_read() eq ( 0, "version=2" ) )         || die "bad version";
-> -( packet_bin_read() eq ( 1, "" ) )                  || die "bad version end";
-> +packet_compare_lists([0, "git-filter-client"], packet_txt_read()) ||
-> +	die "bad initialize";
+> +static int git_rebase_helper_config(const char *k, const char *v, void *cb)
+> +{
+> +	int status;
+> +
+> +	status = git_sequencer_config(k, v, NULL);
+> +	if (status)
+> +		return status;
+> +
+> +	return git_default_config(k, v, NULL);
 
-For now this should do, but the "packet_compare_lists" may later
-want to become more specific to the needs of these callers.  It
-tries to be a generic comparison function for list of strings, but
-what these callers feed is always two-element tuple, whose first
-element is an integer (not just a random thing that can be made into
-a string to be compared with "ne") and whose second element is a
-string.
+It's more a matter of taste than anything else, but this one would be a
+little bit shorter:
 
+	return git_sequencer_config(k, v, NULL) ||
+		git_default_config(k, v, NULL);
+
+A more important question would be whether this `git_default_config()`
+call could be folded into `git_sequencer_config()` right away, so that the
+same pattern does not have to be repeated in rebase--helper as well as in
+revert/cherry-pick.
+
+> diff --git a/builtin/revert.c b/builtin/revert.c
+> index b9d927eb09c9ed87c84681df1396f4e6d9b13c97..b700dc7f7fd8657ed8cd2450a8537fe98371783f 100644
+> --- a/builtin/revert.c
+> +++ b/builtin/revert.c
+> @@ -31,6 +31,17 @@ static const char * const cherry_pick_usage[] = {
+>  	NULL
+>  };
+>  
+> +static int git_revert_config(const char *k, const char *v, void *cb)
+
+Seeing as it is used also by `cmd_cherry_pick()`, and that it is
+file-local anyway, maybe `common_config()` is a better name?
+
+This point is moot if we can call `git_default_config()` in
+`git_sequencer_config()` directly, though.
+
+> diff --git a/sequencer.c b/sequencer.c
+> index 3e4c3bbb265db58df22cfcb5a321fb74d822327e..b8cf679751449591d6f97102904e060ebee9d7a1 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -688,6 +688,39 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
+>  	return run_command(&cmd);
+>  }
+>  
+> +static enum cleanup_mode default_msg_cleanup = CLEANUP_NONE;
+> +static char *default_gpg_sign;
+
+I was ready to shout about global state not meshing well with libified
+code, but as long as we're sure that these values are set only while Git
+executes single-threaded, still, it is the correct way to do it: these
+settings reflect the config, and therefore *are* kinda global (at least
+until the day when the submodule fans try to call `git commit` in a
+submodule using the `struct repository` data structure).
+
+In short: this code is good (and I was just describing a little bit of my
+thinking, to demonstrate that I tried to be a diligent reviewer :-)).
+
+Thanks,
+Dscho
