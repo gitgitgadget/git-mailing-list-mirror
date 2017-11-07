@@ -2,400 +2,197 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E6796202A0
-	for <e@80x24.org>; Tue,  7 Nov 2017 18:45:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9499B202A0
+	for <e@80x24.org>; Tue,  7 Nov 2017 18:54:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932845AbdKGSpR (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Nov 2017 13:45:17 -0500
-Received: from mail-io0-f182.google.com ([209.85.223.182]:57170 "EHLO
-        mail-io0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932727AbdKGSpQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Nov 2017 13:45:16 -0500
-Received: by mail-io0-f182.google.com with SMTP id m81so3193409ioi.13
-        for <git@vger.kernel.org>; Tue, 07 Nov 2017 10:45:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=UUCGasi1Rg7snLNaHxAZTBtRA3bseOBJIJ+of0GA/RI=;
-        b=uRetSKRvTfsLKN5b65hAO5ylhSTbxiJeOBBHPDyof8t2/uTLI4G3w+4GRXY6STgAPz
-         rnpyXcQbzEo8PIllxrpOwaT4qWEtITyW4tk7lLoGDgwFsmct4WasUJkA2vbjkEMOPjbQ
-         YtSybegWOJoSxMOAroBStCeLiyoT0iFkhSw1y2MPrksoEi+C2n44AmWQuqVJhbpPsGnv
-         wnONoVHtytIR0zfS2v1Z1NXhq6GUqzq7M3K5r0O0ofGsLy6Bl3S+vEChzkQYIhjgUdWN
-         NRn8LMpbJWsghJlNX4VPDX8XxBrjVTGClhhg1UbyIqLimUwsdJaCF5gz5kVlmFbR7MY9
-         xByw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=UUCGasi1Rg7snLNaHxAZTBtRA3bseOBJIJ+of0GA/RI=;
-        b=HiXxCNDkuhepVr8duFZhDsb4p6MHs+0EAiQRyQM2jwRVUq4ihqokGE+JrKnVqdq6Px
-         4kOl/CCBwnqqbgbjI8U25EnjefBvebizfZ6tzZZZBPBwonROoglPRpFl9nEufOGmSQim
-         GZLOf1WFS92DdzU6uy0uNfIBC91ri1e+o4YFQqfUnf4dN+JfFZ7XlBFqZS4wS8tg8AFq
-         aCtiHvTWyOsY9AYlZt6+j71JqrRfiG7MbelC4Ty03FTnChKHFzKg8/8QO3DHrpBYixyk
-         ogbpoGFpammu+eL31JfF9nDj/un0pkYWAJE233SKssF81ltegfQf9AEemxyKTecFHDw8
-         uWsg==
-X-Gm-Message-State: AJaThX7QZMsXLAbaxlpGb/oChXaECRdXHKncSI6saouv5MVArDUfLj1W
-        CBM9iDi/ouAv+4oUlPmHP8xZjw==
-X-Google-Smtp-Source: ABhQp+Szojc++jHtZ4OPnoc3WXy/K0wVp/Hss8Io8YGT3O5vPTF0AAJHlVRKZnBAPbb3pS7WPF6K0g==
-X-Received: by 10.107.146.86 with SMTP id u83mr25057316iod.37.1510080315647;
-        Tue, 07 Nov 2017 10:45:15 -0800 (PST)
-Received: from twelve3.mtv.corp.google.com ([100.96.218.44])
-        by smtp.gmail.com with ESMTPSA id 196sm879408ioe.66.2017.11.07.10.45.14
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 07 Nov 2017 10:45:14 -0800 (PST)
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     gitster@pobox.com, git@vger.kernel.org
-Cc:     jonathantanmy@google.com, sbeller@google.com
-Subject: [PATCH v2] Tests: clean up and document submodule helpers
-Date:   Tue,  7 Nov 2017 10:45:08 -0800
-Message-Id: <20171107184509.136564-1-jonathantanmy@google.com>
-X-Mailer: git-send-email 2.15.0.1.g989a7cb82.dirty
-In-Reply-To: <xmqq8tfihn3a.fsf@gitster.mtv.corp.google.com>
-References: <xmqq8tfihn3a.fsf@gitster.mtv.corp.google.com>
+        id S1756365AbdKGSyX (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Nov 2017 13:54:23 -0500
+Received: from siwi.pair.com ([209.68.5.199]:19143 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752612AbdKGSyW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Nov 2017 13:54:22 -0500
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id D2CBA844F3;
+        Tue,  7 Nov 2017 13:54:21 -0500 (EST)
+Received: from [10.160.98.77] (unknown [167.220.148.86])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 63128844F1;
+        Tue,  7 Nov 2017 13:54:21 -0500 (EST)
+Subject: Re: [PATCH v2 4/6] list-objects: filter objects in
+ traverse_commit_list
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
+        Jeff Hostetler <jeffhost@microsoft.com>
+References: <20171102175013.3371-1-git@jeffhostetler.com>
+ <20171102175013.3371-5-git@jeffhostetler.com>
+ <20171102123245.0f768968703ec4e35d3d1f81@google.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <f698d5a8-bf31-cea1-a8da-88b755b0b7af@jeffhostetler.com>
+Date:   Tue, 7 Nov 2017 13:54:20 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
+MIME-Version: 1.0
+In-Reply-To: <20171102123245.0f768968703ec4e35d3d1f81@google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Factor out the commonalities from test_submodule_switch() and
-test_submodule_forced_switch() in lib-submodule-update.sh, and document
-their usage.
 
-This also makes explicit (through the KNOWN_FAILURE_FORCED_SWITCH_TESTS
-variable) the fact that, currently, all functionality tested using
-test_submodule_forced_switch() do not correctly handle the situation in
-which a submodule is replaced with an ordinary directory.
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
-Thanks for the review.
+On 11/2/2017 3:32 PM, Jonathan Tan wrote:
+> On Thu,  2 Nov 2017 17:50:11 +0000
+> Jeff Hostetler <git@jeffhostetler.com> wrote:
+> 
+>> +		if (skip_prefix(v0, "oid=", &v1)) {
+>> +			filter_options->choice = LOFC_SPARSE_OID;
+>> +			if (!get_oid_with_context(v1, GET_OID_BLOB,
+>> +						  &sparse_oid, &oc)) {
+>> +				/*
+>> +				 * We successfully converted the <oid-expr>
+>> +				 * into an actual OID.  Rewrite the raw_value
+>> +				 * in canonoical form with just the OID.
+>> +				 * (If we send this request to the server, we
+>> +				 * want an absolute expression rather than a
+>> +				 * local-ref-relative expression.)
+>> +				 */
+> 
+> I think this would lead to confusing behavior - for example, a fetch
+> with "--filter=oid=mybranch:sparseconfig" would have different results
+> depending on whether "mybranch" refers to a valid object locally.
+> 
+> The way I see it, this should either (i) only accept full 40-character
+> OIDs or (ii) retain the raw string to be interpreted only when the
+> filtering is done. (i) is simpler and safer, but is not so useful. In
+> both cases, if the user really wants client-side interpretation, they
+> can still use "$(git rev-parse foo)" to make it explicit.
 
-Change from v1:
+Good point. I'll change it to always pass the original expression
+so that it is evaluated wherever the filtering is actually performed.
 
-- changed commit message title
-- moved a test to the common function, so that it runs both on
-  test_submodule_switch and test_submodule_forced_switch
----
- t/lib-submodule-update.sh | 251 +++++++++-------------------------------------
- 1 file changed, 46 insertions(+), 205 deletions(-)
 
-diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
-index 2d26f8680..bb94c2320 100755
---- a/t/lib-submodule-update.sh
-+++ b/t/lib-submodule-update.sh
-@@ -306,9 +306,9 @@ test_submodule_content () {
- # to protect the history!
- #
- 
--# Test that submodule contents are currently not updated when switching
--# between commits that change a submodule.
--test_submodule_switch () {
-+# Internal function; use test_submodule_switch() or
-+# test_submodule_forced_switch() instead.
-+test_submodule_switch_common() {
- 	command="$1"
- 	######################### Appearing submodule #########################
- 	# Switching to a commit letting a submodule appear creates empty dir ...
-@@ -332,7 +332,7 @@ test_submodule_switch () {
- 			test_submodule_content sub1 origin/add_sub1
- 		)
- 	'
--	# ... and doesn't care if it already exists ...
-+	# ... and doesn't care if it already exists.
- 	test_expect_$RESULT "$command: added submodule leaves existing empty directory alone" '
- 		prolog &&
- 		reset_work_tree_to no_submodule &&
-@@ -347,19 +347,6 @@ test_submodule_switch () {
- 			test_submodule_content sub1 origin/add_sub1
- 		)
- 	'
--	# ... unless there is an untracked file in its place.
--	test_expect_success "$command: added submodule doesn't remove untracked unignored file with same name" '
--		prolog &&
--		reset_work_tree_to no_submodule &&
--		(
--			cd submodule_update &&
--			git branch -t add_sub1 origin/add_sub1 &&
--			>sub1 &&
--			test_must_fail $command add_sub1 &&
--			test_superproject_content origin/no_submodule &&
--			test_must_be_empty sub1
--		)
--	'
- 	# Replacing a tracked file with a submodule produces an empty
- 	# directory ...
- 	test_expect_$RESULT "$command: replace tracked file with submodule creates empty directory" '
-@@ -441,6 +428,11 @@ test_submodule_switch () {
- 		# submodule files with the newly checked out ones in the
- 		# directory of the same name while it shouldn't.
- 		RESULT="failure"
-+	elif test "$KNOWN_FAILURE_FORCED_SWITCH_TESTS" = 1
-+	then
-+		# All existing tests that use test_submodule_forced_switch()
-+		# require this.
-+		RESULT="failure"
- 	else
- 		RESULT="success"
- 	fi
-@@ -522,7 +514,6 @@ test_submodule_switch () {
- 			test_submodule_content sub1 origin/modify_sub1
- 		)
- 	'
--
- 	# Updating a submodule to an invalid sha1 doesn't update the
- 	# submodule's work tree, subsequent update will fail
- 	test_expect_$RESULT "$command: modified submodule does not update submodule work tree to invalid commit" '
-@@ -555,42 +546,51 @@ test_submodule_switch () {
- 	'
- }
- 
--# Test that submodule contents are currently not updated when switching
--# between commits that change a submodule, but throwing away local changes in
--# the superproject is allowed.
--test_submodule_forced_switch () {
-+# Declares and invokes several tests that, in various situations, checks that
-+# the provided transition function:
-+#  - succeeds in updating the worktree and index of a superproject to a target
-+#    commit, or fails atomically (depending on the test situation)
-+#  - if succeeds, the contents of submodule directories are unchanged
-+#  - if succeeds, once "git submodule update" is invoked, the contents of
-+#    submodule directories are updated
-+#
-+# Use as follows:
-+#
-+# my_func () {
-+#   target=$1
-+#   # Do something here that updates the worktree and index to match target,
-+#   # but not any submodule directories.
-+# }
-+# test_submodule_switch "my_func"
-+test_submodule_switch () {
- 	command="$1"
--	######################### Appearing submodule #########################
--	# Switching to a commit letting a submodule appear creates empty dir ...
--	test_expect_success "$command: added submodule creates empty directory" '
--		prolog &&
--		reset_work_tree_to no_submodule &&
--		(
--			cd submodule_update &&
--			git branch -t add_sub1 origin/add_sub1 &&
--			$command add_sub1 &&
--			test_superproject_content origin/add_sub1 &&
--			test_dir_is_empty sub1 &&
--			git submodule update --init --recursive &&
--			test_submodule_content sub1 origin/add_sub1
--		)
--	'
--	# ... and doesn't care if it already exists ...
--	test_expect_success "$command: added submodule leaves existing empty directory alone" '
-+	test_submodule_switch_common "$command"
-+
-+	# An empty directory does not prevent the creation of a submodule of
-+	# the same name, but a file does.
-+	test_expect_success "$command: added submodule doesn't remove untracked unignored file with same name" '
- 		prolog &&
- 		reset_work_tree_to no_submodule &&
- 		(
- 			cd submodule_update &&
- 			git branch -t add_sub1 origin/add_sub1 &&
--			mkdir sub1 &&
--			$command add_sub1 &&
--			test_superproject_content origin/add_sub1 &&
--			test_dir_is_empty sub1 &&
--			git submodule update --init --recursive &&
--			test_submodule_content sub1 origin/add_sub1
-+			>sub1 &&
-+			test_must_fail $command add_sub1 &&
-+			test_superproject_content origin/no_submodule &&
-+			test_must_be_empty sub1
- 		)
- 	'
--	# ... unless there is an untracked file in its place.
-+}
-+
-+# Same as test_submodule_switch(), except that throwing away local changes in
-+# the superproject is allowed.
-+test_submodule_forced_switch () {
-+	command="$1"
-+	KNOWN_FAILURE_FORCED_SWITCH_TESTS=1
-+	test_submodule_switch_common "$command"
-+
-+	# When forced, a file in the superproject does not prevent creating a
-+	# submodule of the same name.
- 	test_expect_success "$command: added submodule does remove untracked unignored file with same name when forced" '
- 		prolog &&
- 		reset_work_tree_to no_submodule &&
-@@ -603,165 +603,6 @@ test_submodule_forced_switch () {
- 			test_dir_is_empty sub1
- 		)
- 	'
--	# Replacing a tracked file with a submodule produces an empty
--	# directory ...
--	test_expect_success "$command: replace tracked file with submodule creates empty directory" '
--		prolog &&
--		reset_work_tree_to replace_sub1_with_file &&
--		(
--			cd submodule_update &&
--			git branch -t replace_file_with_sub1 origin/replace_file_with_sub1 &&
--			$command replace_file_with_sub1 &&
--			test_superproject_content origin/replace_file_with_sub1 &&
--			test_dir_is_empty sub1 &&
--			git submodule update --init --recursive &&
--			test_submodule_content sub1 origin/replace_file_with_sub1
--		)
--	'
--	# ... as does removing a directory with tracked files with a
--	# submodule.
--	test_expect_success "$command: replace directory with submodule" '
--		prolog &&
--		reset_work_tree_to replace_sub1_with_directory &&
--		(
--			cd submodule_update &&
--			git branch -t replace_directory_with_sub1 origin/replace_directory_with_sub1 &&
--			$command replace_directory_with_sub1 &&
--			test_superproject_content origin/replace_directory_with_sub1 &&
--			test_dir_is_empty sub1 &&
--			git submodule update --init --recursive &&
--			test_submodule_content sub1 origin/replace_directory_with_sub1
--		)
--	'
--
--	######################## Disappearing submodule #######################
--	# Removing a submodule doesn't remove its work tree ...
--	test_expect_success "$command: removed submodule leaves submodule directory and its contents in place" '
--		prolog &&
--		reset_work_tree_to add_sub1 &&
--		(
--			cd submodule_update &&
--			git branch -t remove_sub1 origin/remove_sub1 &&
--			$command remove_sub1 &&
--			test_superproject_content origin/remove_sub1 &&
--			test_submodule_content sub1 origin/add_sub1
--		)
--	'
--	# ... especially when it contains a .git directory.
--	test_expect_success "$command: removed submodule leaves submodule containing a .git directory alone" '
--		prolog &&
--		reset_work_tree_to add_sub1 &&
--		(
--			cd submodule_update &&
--			git branch -t remove_sub1 origin/remove_sub1 &&
--			replace_gitfile_with_git_dir sub1 &&
--			$command remove_sub1 &&
--			test_superproject_content origin/remove_sub1 &&
--			test_git_directory_is_unchanged sub1 &&
--			test_submodule_content sub1 origin/add_sub1
--		)
--	'
--	# Replacing a submodule with files in a directory must fail as the
--	# submodule work tree isn't removed ...
--	test_expect_failure "$command: replace submodule with a directory must fail" '
--		prolog &&
--		reset_work_tree_to add_sub1 &&
--		(
--			cd submodule_update &&
--			git branch -t replace_sub1_with_directory origin/replace_sub1_with_directory &&
--			test_must_fail $command replace_sub1_with_directory &&
--			test_superproject_content origin/add_sub1 &&
--			test_submodule_content sub1 origin/add_sub1
--		)
--	'
--	# ... especially when it contains a .git directory.
--	test_expect_failure "$command: replace submodule containing a .git directory with a directory must fail" '
--		prolog &&
--		reset_work_tree_to add_sub1 &&
--		(
--			cd submodule_update &&
--			git branch -t replace_sub1_with_directory origin/replace_sub1_with_directory &&
--			replace_gitfile_with_git_dir sub1 &&
--			test_must_fail $command replace_sub1_with_directory &&
--			test_superproject_content origin/add_sub1 &&
--			test_git_directory_is_unchanged sub1 &&
--			test_submodule_content sub1 origin/add_sub1
--		)
--	'
--	# Replacing it with a file must fail as it could throw away any local
--	# work tree changes ...
--	test_expect_failure "$command: replace submodule with a file must fail" '
--		prolog &&
--		reset_work_tree_to add_sub1 &&
--		(
--			cd submodule_update &&
--			git branch -t replace_sub1_with_file origin/replace_sub1_with_file &&
--			test_must_fail $command replace_sub1_with_file &&
--			test_superproject_content origin/add_sub1 &&
--			test_submodule_content sub1 origin/add_sub1
--		)
--	'
--	# ... or even destroy unpushed parts of submodule history if that
--	# still uses a .git directory.
--	test_expect_failure "$command: replace submodule containing a .git directory with a file must fail" '
--		prolog &&
--		reset_work_tree_to add_sub1 &&
--		(
--			cd submodule_update &&
--			git branch -t replace_sub1_with_file origin/replace_sub1_with_file &&
--			replace_gitfile_with_git_dir sub1 &&
--			test_must_fail $command replace_sub1_with_file &&
--			test_superproject_content origin/add_sub1 &&
--			test_git_directory_is_unchanged sub1 &&
--			test_submodule_content sub1 origin/add_sub1
--		)
--	'
--
--	########################## Modified submodule #########################
--	# Updating a submodule sha1 doesn't update the submodule's work tree
--	test_expect_success "$command: modified submodule does not update submodule work tree" '
--		prolog &&
--		reset_work_tree_to add_sub1 &&
--		(
--			cd submodule_update &&
--			git branch -t modify_sub1 origin/modify_sub1 &&
--			$command modify_sub1 &&
--			test_superproject_content origin/modify_sub1 &&
--			test_submodule_content sub1 origin/add_sub1 &&
--			git submodule update &&
--			test_submodule_content sub1 origin/modify_sub1
--		)
--	'
--	# Updating a submodule to an invalid sha1 doesn't update the
--	# submodule's work tree, subsequent update will fail
--	test_expect_success "$command: modified submodule does not update submodule work tree to invalid commit" '
--		prolog &&
--		reset_work_tree_to add_sub1 &&
--		(
--			cd submodule_update &&
--			git branch -t invalid_sub1 origin/invalid_sub1 &&
--			$command invalid_sub1 &&
--			test_superproject_content origin/invalid_sub1 &&
--			test_submodule_content sub1 origin/add_sub1 &&
--			test_must_fail git submodule update &&
--			test_submodule_content sub1 origin/add_sub1
--		)
--	'
--	# Updating a submodule from an invalid sha1 doesn't update the
--	# submodule's work tree, subsequent update will succeed
--	test_expect_success "$command: modified submodule does not update submodule work tree from invalid commit" '
--		prolog &&
--		reset_work_tree_to invalid_sub1 &&
--		(
--			cd submodule_update &&
--			git branch -t valid_sub1 origin/valid_sub1 &&
--			$command valid_sub1 &&
--			test_superproject_content origin/valid_sub1 &&
--			test_dir_is_empty sub1 &&
--			git submodule update --init --recursive &&
--			test_submodule_content sub1 origin/valid_sub1
--		)
--	'
- }
- 
- # Test that submodule contents are correctly updated when switching
--- 
-2.15.0.403.gc27cc4dac6-goog
+> 
+>> +				free((char *)filter_options->raw_value);
+>> +				filter_options->raw_value =
+>> +					xstrfmt("sparse:oid=%s",
+>> +						oid_to_hex(&sparse_oid));
+>> +				filter_options->sparse_oid_value =
+>> +					oiddup(&sparse_oid);
+>> +			} else {
+>> +				/*
+>> +				 * We could not turn the <oid-expr> into an
+>> +				 * OID.  Leave the raw_value as is in case
+>> +				 * the server can parse it.  (It may refer to
+>> +				 * a branch, commit, or blob we don't have.)
+>> +				 */
+>> +			}
+>> +			return 0;
+>> +		}
+>> +
+>> +		if (skip_prefix(v0, "path=", &v1)) {
+>> +			filter_options->choice = LOFC_SPARSE_PATH;
+>> +			filter_options->sparse_path_value = strdup(v1);
+>> +			return 0;
+>> +		}
+>> +	}
+>> +
+>> +	die(_("invalid filter expression '%s'"), arg);
+>> +	return 0;
+>> +}
+> 
+> [snip]
+> 
+>> +void arg_format_list_objects_filter(
+>> +	struct argv_array *argv_array,
+>> +	const struct list_objects_filter_options *filter_options)
+> 
+> Is this function used anywhere (in this patch or subsequent patches)?
 
+It is used in upload-pack.c in part 3.  I'll remove it from part 1
+and revisit in part 3.
+  
+
+
+>> diff --git a/list-objects-filter.c b/list-objects-filter.c
+>> +/* See object.h and revision.h */
+>> +#define FILTER_REVISIT (1<<25)
+> 
+> Looking later in the code, this flag indicates that a tree has been
+> SHOWN, so it might be better to just call this FILTER_SHOWN.
+
+I'll amend this. There are already several SHOWN bits that behave
+slightly differently.  I'll update and document this better.  Thanks.
+
+
+> 
+> [snip]
+> 
+>> +struct frame {
+>> +	int defval;
+> 
+> Document this variable?
+> 
+>> +	int child_prov_omit : 1;
+> 
+> I think it's clearer if we use "unsigned" here. Also, document this
+> (e.g. "1 if any descendant of this tree object was provisionally
+> omitted").
+
+got it. thanks.
+
+
+>> +enum list_objects_filter_type {
+>> +	LOFT_BEGIN_TREE,
+>> +	LOFT_END_TREE,
+>> +	LOFT_BLOB
+>> +};
+> 
+> Optional: probably a better name would be list_objects_filter_situation.
+
+got it. thanks.
+
+  
+>> +void traverse_commit_list_filtered(
+>> +	struct list_objects_filter_options *filter_options,
+>> +	struct rev_info *revs,
+>> +	show_commit_fn show_commit,
+>> +	show_object_fn show_object,
+>> +	void *show_data,
+>> +	struct oidset *omitted)
+>> +{
+>> +	filter_object_fn filter_fn = NULL;
+>> +	filter_free_fn filter_free_fn = NULL;
+>> +	void *filter_data = NULL;
+>> +
+>> +	filter_data = list_objects_filter__init(omitted, filter_options,
+>> +						&filter_fn, &filter_free_fn);
+>> +	do_traverse(revs, show_commit, show_object, show_data,
+>> +		    filter_fn, filter_data);
+>> +	if (filter_data && filter_free_fn)
+>> +		filter_free_fn(filter_data);
+>> +}
+> 
+> This function traverse_commit_list_filtered() is in list-objects.c but
+> in list-objects-filter.h, if I'm reading the diff correctly?
+
+oops.  thanks.
+
+
+> 
+> Overall, this looks like a good change. Object traversal was upgraded
+> with the behaviors of MARK_SEEN and SHOW independently controllable and
+> with the ability to do things post-tree (in addition to pre-tree and
+> blob), and this was used to support a few types of filtering, which
+> subsequent patches will allow the user to invoke through "--filter=".
+> 
+
+thanks
+Jeff
