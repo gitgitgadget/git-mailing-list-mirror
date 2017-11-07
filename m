@@ -6,79 +6,91 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 90546202A0
-	for <e@80x24.org>; Tue,  7 Nov 2017 14:28:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4225F202A0
+	for <e@80x24.org>; Tue,  7 Nov 2017 14:32:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755122AbdKGO2x (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Nov 2017 09:28:53 -0500
-Received: from smtp-out-5.talktalk.net ([62.24.135.69]:24006 "EHLO
+        id S933867AbdKGOcn (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Nov 2017 09:32:43 -0500
+Received: from smtp-out-5.talktalk.net ([62.24.135.69]:17404 "EHLO
         smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755046AbdKGO2w (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Nov 2017 09:28:52 -0500
+        with ESMTP id S932844AbdKGOcm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Nov 2017 09:32:42 -0500
 Received: from [192.168.2.201] ([92.22.30.94])
         by smtp.talktalk.net with SMTP
-        id C4rze5fIhpb8rC4rzepwvz; Tue, 07 Nov 2017 14:28:51 +0000
+        id C4vge5ffNpb8rC4vgepx2r; Tue, 07 Nov 2017 14:32:40 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1510064931;
-        bh=S4/Xt4IwTRop21jLB8VEdLOr+fAqxcfoVchVXhKM5kE=;
+        s=cmr1711; t=1510065160;
+        bh=MffgBvXPRmgeKaWtdT3sMUdZg7oIYBPEwZ8JV7kfZ1k=;
         h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=GsUqhdyyhdneVTu+TTQU1Oj0gqJnq/u+3bHFLQwjRPzNtoCiggAfgRlHDG4EYciE0
-         ijXYebZ5SISyNCM2wIuid4NTGet+Xs4BKYMJTgtRDWEDEY7m6rVY9Hw9dm4qhTrsOW
-         6cU5otH7+uL6012l/S3fp1gqlislj47l9bi75RrY=
+        b=I8uamx1H9mzOs5tEbwkXFh7llo6OK5vGAe6OB9zapCvX2MkbqVR2lsJpNRYIpx+A7
+         7Tm/rw8DkypBkbWc935GwT1M2R4JavQV0kQXjA87dOUuon8bgcjP38se1fnFil6ZAM
+         WKr3qSiW98clbPiv8F9WQsiWH6v90C4jAKNWOo1A=
 X-Originating-IP: [92.22.30.94]
 X-Spam: 0
 X-OAuthority: v=2.2 cv=ZM2noTzb c=1 sm=1 tr=0 a=lje0BXTe3+PqU+djfnm1WA==:117
  a=lje0BXTe3+PqU+djfnm1WA==:17 a=IkcTkHD0fZMA:10 a=nN7BH9HXAAAA:8
- a=evINK-nbAAAA:8 a=ALxn1UI8Cdqh-BuCW3MA:9 a=QEXdDO2ut3YA:10 a=SHUmGpGg8TAA:10
+ a=evINK-nbAAAA:8 a=0hRNfuDKx-M2hwCfPbMA:9 a=QEXdDO2ut3YA:10 a=SHUmGpGg8TAA:10
  a=RfR_gqz1fSpA9VikTjo0:22
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v1 3/8] commit: move post-rewrite code to libgit
+Subject: Re: [PATCH v1 4/8] commit: move print_commit_summary() to libgit
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Phillip Wood <phillip.wood@dunelm.org.uk>
 References: <20170925101041.18344-1-phillip.wood@talktalk.net>
  <20171106112709.2121-1-phillip.wood@talktalk.net>
- <20171106112709.2121-4-phillip.wood@talktalk.net>
- <xmqqpo8ug587.fsf@gitster.mtv.corp.google.com>
+ <20171106112709.2121-5-phillip.wood@talktalk.net>
+ <xmqqlgjig3lv.fsf@gitster.mtv.corp.google.com>
 From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <a3d29ea7-1939-1595-0978-08a418b2b324@talktalk.net>
-Date:   Tue, 7 Nov 2017 14:28:50 +0000
+Message-ID: <7849f0e9-24eb-89db-3524-dffdb00d82ad@talktalk.net>
+Date:   Tue, 7 Nov 2017 14:32:40 +0000
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.4.0
 MIME-Version: 1.0
-In-Reply-To: <xmqqpo8ug587.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <xmqqlgjig3lv.fsf@gitster.mtv.corp.google.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfNtYLQUjGNuRVGJNWwQzVOa4oHOVMn8JdbIKNE8pRf2ehG3EJJJQYin/jhrxiC8juqE/tyEalNbb2agJo488Nxda4LGomlruV7hMdYQPJ5tf4xWDZFt9
- BZOA0f758zPZcyzMK39tyCPtoz35STZgZBSroSIOo1TU/ktFhNxKQz8J9itOkSuCafVW4WRXqnN1aL0rPcobsdHNuu41JMKRgyVKZqML1bfVuiqCfr1L99+c
- Z28gechyLrs9F439ZHepop39DPrT2zRldbFOxoTcGMCX53XeE/rBi+qBu/HCU5FU
+X-CMAE-Envelope: MS4wfHEYpSef1B6w4LyCSSUZg/yza14OHiixNFd1dT1yPId2XsE9oGhfrgDgcxcS+oRarGIl/TL8h6HUrQn1ZttLSsqERFEjibRjqLiI5svzEcoD8vbh/ZsJ
+ ub2EWCPk9tUFX7GZ1DpTnReQlo4TBKLMB0uI0FdjF1U0cA1qGFYLjOxp6T7YyDqz9Gla+D3kpYXI4HDETtsSwKZp5xorovN3huOwEygmmkgszkLKySdHgYms
+ teKcVMXzK2oZTRsuQaest/0j9Zj3kmdy5Y9nLpSJ4IcTPYDD9c6CKpzVSzQ229Ab
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 07/11/17 03:03, Junio C Hamano wrote:
+On 07/11/17 03:38, Junio C Hamano wrote:
 > Phillip Wood <phillip.wood@talktalk.net> writes:
 > 
 >> From: Phillip Wood <phillip.wood@dunelm.org.uk>
 >>
->> Move run_rewrite_hook() from bulitin/commit.c to sequencer.c so it can
->> be shared with other commands and add a new function
->> commit_post_rewrite() based on the code in builtin/commit.c that
->> encapsulates rewriting notes and running the post-rewrite hook.
+>> Move print_commit_summary() from builtin/commit.c to sequencer.c so it
+>> can be shared with other commands. The function is modified by
+>> changing the last argument to a flag so callers can specify whether
+>> they want to show the author date in addition to specifying if this is
+>> an initial commit.
 > 
-> This, especially the part that rips out the notes rewriting from
-> builtin/commit.c and moves it to elsewhere, is a bit curious
-> separation of labor.  I guess we'll see why in later steps in the
-> series.
+> A movement of a long function like this one really is easier if you
+> did not make any other unnecessary change in the same patch and then
+> made the change as a follow-up.
 
-It's so the sequencer can have a built in version of 'git commit
---amend' when processing fixup/squash commands. I'll expand the commit
-message to explain why this is needed later.
+I'm not sure what you mean by unnecessary, the original code called a
+file-local function author_date_is_interesting(). That had to be changed
+in order to move the code, I guess it would have been clearer to make
+that change first and then move the modified code to sequencer.c in a
+separate commit.
 
-
-> The change itself looks like a regression-free no-op, which is good.
+> The end result seemed sane.  
+> 
+> Do not use signed int as a collection of bits "flags", as it makes
+> readers wonder if you are going to do some clever thing by treating
+> the topmost bit somewhat special (e.g. "if (flags < 0)").  Unless
+> you are indeed doing something clever like that, use "unsigned int"
+> instead.
 > 
 
+Thanks, I'll change it to an unsigned int.
+
+Best Wishes
+
+Phillip
