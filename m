@@ -2,98 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
-	UNPARSEABLE_RELAY shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF45F20A10
-	for <e@80x24.org>; Tue,  7 Nov 2017 02:33:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E199F20A10
+	for <e@80x24.org>; Tue,  7 Nov 2017 02:54:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756297AbdKGCdt convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Mon, 6 Nov 2017 21:33:49 -0500
-Received: from marcos.anarc.at ([206.248.172.91]:53610 "EHLO marcos.anarc.at"
+        id S1753424AbdKGCyM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Nov 2017 21:54:12 -0500
+Received: from mout.gmx.net ([212.227.17.22]:51166 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1756293AbdKGCds (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Nov 2017 21:33:48 -0500
-Received: from [127.0.0.1] (localhost [127.0.0.1])      (Authenticated sender: anarcat) with ESMTPSA id C34121A00AA
-From:   =?utf-8?Q?Antoine_Beaupr=C3=A9?= <anarcat@debian.org>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Matthieu Moy <git@matthieu-moy.fr>, git@vger.kernel.org
-Subject: Re: future of the mediawiki extension?
-In-Reply-To: <xmqq7ev2j4to.fsf@gitster.mtv.corp.google.com>
-Organization: Debian
-References: <87vaix731f.fsf@curie.anarc.at> <q7h9o9opyllo.fsf@orange.lip.ens-lyon.fr> <xmqqh8ug3xnq.fsf@gitster.mtv.corp.google.com> <874lqg83u9.fsf@curie.anarc.at> <xmqq7ev2j4to.fsf@gitster.mtv.corp.google.com>
-Date:   Mon, 06 Nov 2017 21:33:44 -0500
-Message-ID: <87vaim3jhz.fsf@curie.anarc.at>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8BIT
+        id S1753223AbdKGCyL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Nov 2017 21:54:11 -0500
+Received: from bedhanger.strangled.net ([188.192.144.31]) by mail.gmx.com
+ (mrgmx103 [212.227.17.168]) with ESMTPSA (Nemesis) id
+ 0LxPgU-1fIqfu3mYM-016wzq; Tue, 07 Nov 2017 03:53:33 +0100
+From:   Ann T Ropea <bedhanger@gmx.de>
+To:     Junio C Hamano <gitster@pobox.com>,
+        Philip Oakley <philipoakley@iee.org>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Daniel Barkalow <barkalow@iabervon.org>,
+        Ann T Ropea <bedhanger@gmx.de>
+Subject: Re: [PATCH 1/3] checkout: describe_detached_head: remove 3dots after committish
+Date:   Tue,  7 Nov 2017 03:53:21 +0100
+Message-Id: <20171107025321.31028-1-bedhanger@gmx.de>
+X-Mailer: git-send-email 2.13.6
+References: <20171105162730.31405-1-bedhanger@gmx.de>
+In-Reply-To: <20171105162730.31405-1-bedhanger@gmx.de>
+X-Provags-ID: V03:K0:lPajf5wE3Oo+vSBNfzNHHeFiWQIASyDviO6lWG4BQrD8fr8QfLD
+ mD+zCHzMufy+RbqfunBGWTKaIiUcKPkPdInmREA4LM+qPz+QK06hyKrI6Jb3dCSK0vGPPN4
+ 5xqY9XpylrXwn9yYiOJ1FvyOCn1e14IkMFEt8d3plgjj6bv8h5oVyzVrk1Uj/+9RLMYnHET
+ MB2Wbh7N76YqMR+UPJ2pQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:sAYppOgwMMQ=:gCCSAcpbFNjoh9J7ePgPuH
+ 6hcHoiahHF3uo5r4TUefi+hYl5OqZQNvWxgHpmILUhUGq8drbClaA6hP2nSExS9vQmLrYOvLh
+ PbMwGCsQJV7kVqzJz5p8TJR8utv/zjwO529hzZFgL5O35qlBAmbmN9lofg5ZiTl1hk2g76GRY
+ gM+NFm4tgWGjnaJdEymFU5hniyv3iGhO8vV9wnoD4wsuEE1G1c6QecU74IrlfljfVBjCvhdUM
+ OROThCV2Jw/OTlcg6zrWeSC0FU7m1+/4PHx4EXj2bA/bguFXXCdRaLJEF0lHacv6veGhEDtr6
+ I0lZ1OuC6xP7UmSrs/xmBpIcXkct/SHdr2Xyru/aDkiEC9U0KkWaIqQ41jDZwu1fcLSYLIyw4
+ 5rtD/0FEToS5ZVPW9lNSI/8vCkFhm71Vqz5WffXemZneIu8dwhqRi+qZdFSb+65vsIUiRp2nB
+ PlUmFYVCHmrL2rciLLGn+FBUksaU2nJOCSjcbGpx81sDPNUsplYJbAu33Or4tKd8oWMPZ6Lxu
+ I6aA0ghs3mTeDTzxCOqtufsLBuYvEAFXDLLSWOiS7W9Xhj73vCbYNpduXH4hBtNCud3WSt7Hx
+ kg+gunyZOktYS9H5+W3EKpJ5jDiO+OJ+JY6BbXhplcb8Pbu7lBMP/1xtyLohoaSMleHs2K0fg
+ QdxTDeZq/O2NA/pWJ7fFdpbb3uYug3gmzisRqFS/pyYFgNicVB/f10/MLhs+GkCe5U/FGgiDQ
+ DL3RPRhrFBn/NO11+IJ/e/w8aArrvsfdkO+Bq/Z+sCBnhm/J9TekNjk28wr/J5kfEzdaKzGtK
+ 0bmiDdokB6GDSgeN9Pa0xgZM8B04g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2017-11-07 09:44:03, Junio C Hamano wrote:
-> Antoine Beaupré <anarcat@debian.org> writes:
->
->> On 2017-10-31 10:37:29, Junio C Hamano wrote:
->>>> There's also a hybrid solution used by git-multimail: have a copy of the
->>>> code in git.git, but do the development separately. I'm not sure it'd be
->>>> a good idea for Git-Mediawiki, but I'm mentionning it for completeness.
->>>
->>> I think the plan was to make code drop from time to time at major
->>> release points of git-multimail, but I do not think we've seen many
->>> updates recently.
->>
->> I'd be okay with a hybrid as well. It would require minimal work on
->> Git's side at this stage: things can just stay as is until there's a new
->> "release" of the mediawiki extension and at that point you can decide if
->> you merge it all in or if you drop it in favor of the contrib.
->>
->> I think it's also fine to punt it completely out to the community.
->>
->> Either way, I may have time to do some of that work in the coming month,
->> so let me know what you prefer, I guess you two have the last word
->> here. The community, on Mediawiki's side, seem to mostly favor GitHub.
->
-> I guess I shouldn't leave this thread hanging.
->
-> As contrib/README says, the "owners" of an area in contrib/ has the
-> ultimate say and control over the area, and for contrib/mw-to-git,
-> the "owners" have always been Matthieu, at least to me.
->
-> As he made it clear earlier in this thread that (1) he sees you as a
-> steady hand that can help guide the tool forward as its new "owner",
-> and (2) he thinks Git-Mediawiki will be helped by being an
-> independent project hosted at GitHub, now you have the say ;-)
->
-> A few topics from you that are already on list may want to go
-> through to 'master' as any other topics, but from there on, I am
-> fine with the development of Git-Mediawiki primarily done as a
-> separate project, optionally giving contrib/mw-to-git/ occasional
-> update dumps.  You could even choose to remove contrib/mw-to-git/*
-> except for git-remote-mediawiki.txt that says that the tool's main
-> development effort happens at GitHub to redirect people, if you
-> think that would reduce potential confusion.
->
-> I am also OK to serve as a patch monkey and keep going; I won't be
-> picking up patches to contrib/mw-to-git/ unless you (and others)
-> review them, though.
+Thanks for all the feedback provided!
 
-Makes sense. I think that, for now, I'll keep some sort of status quo
-and "copy" (as opposed to "move") development over to GitHub. We can
-then make dumps when new releases are done over there. If that proves
-impractical because of changes in the build system or some other reason,
-I'll send patches to clear the code from core and replace it with the
-suggested .txt file.
+I'd like to summarise what consensus we have reached so far and
+then propose a way forward:
 
-Thanks!
+   * we'll use the term "ellipsis (pl. ellipses)" for what's
+     been referred to as "3dots", "n-dots", "many dots" and so
+     forth
 
-A.
+   * we would like to use ellipses when attached to SHA-1
+     values only for the purpose of specifying a symmetric
+     difference (as per gitrevisions(7))
 
--- 
-Like slavery and apartheid, poverty is not natural. It is man-made and
-it can be overcome and eradicated by the actions of human
-beings. Overcoming poverty is not a gesture of charity. It is an act
-of justice.             - Nelson Mandela
+   * the usage of ellipses as a "here we truncated something
+     longer" is a relic which should be phased out
+
+To get there, preventing describe_detached_head from appending
+an ellipsis to the SHA-1 values it prints is one important step.
+
+This change does not cause any test to fall over.
+
+The other important step is dealing with the "git diff --raw"
+output which features ellipses in the relic-fashion no longer
+desired.
+
+It would appear that simplifying diff.c's diff_aligned_abbrev
+routine to something like:
+
+	/* Do we want all 40 hex characters?
+	 */
+	if (len == GIT_SHA1_HEXSZ)
+		return oid_to_hex(oid);
+
+	/* An abbreviated value is fine.
+	 */
+	return diff_abbrev_oid(oid, len);
+
+does do the trick.
+
+This change causes quite a few tests to fall over; however, they
+all have truncated-something-longer-ellipses in their
+raw-diff-output expected sections, and removing the ellipses
+from there makes the tests pass again, :-)
+
+If we can agree that this is a way forward, i'll create & send
+v2 of the patch series to the mailing list (it'll include the
+fixed tests) and we'll see where we go from there.
