@@ -2,132 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5DA6520281
-	for <e@80x24.org>; Tue,  7 Nov 2017 06:40:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3FF9B20281
+	for <e@80x24.org>; Tue,  7 Nov 2017 07:08:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754813AbdKGGkV (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Nov 2017 01:40:21 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51315 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1754806AbdKGGkU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Nov 2017 01:40:20 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9DA72A0B47;
-        Tue,  7 Nov 2017 01:40:14 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-        :subject:date:message-id:in-reply-to:references; s=sasl; bh=Rr38
-        0I64aW9wsjfrBAfGvr3m+Bs=; b=s7MkhmNfo+oMZI7AHMPb6RKFEyxyECz4u/DE
-        hGd7Vkd4XfLapk5g8ACrldm4d2uri7p6YCnpy/nBLtEb0sZetap3W3sBzUdbqAQg
-        yGwa2VsMEhWYf22CnjsrQ1svn7rAjowQww8GlzfloGEpIkckW3GXT6/of8oU9XE0
-        5d/veW0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-        :date:message-id:in-reply-to:references; q=dns; s=sasl; b=Tt0GTj
-        BjjzqmbL5Ky58pfI/LyTKsaN9PUCshZv9+tbOduc0UEZYsbAbSWm7eZtMYONJinC
-        0xZ6ytX/qUviASnGVznkozAXoMICro5ewN1xV0AtpbcXg2vDBnksaAz62AJIZZjF
-        iNEIB0YzHYdpQDvarXuaygfmqPQvA3TlQMUDY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 958A6A0B46;
-        Tue,  7 Nov 2017 01:40:14 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 11E32A0B45;
-        Tue,  7 Nov 2017 01:40:14 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Subject: [PATCH v2 1/2] xdiff: reassign xpparm_t.flags bits
-Date:   Tue,  7 Nov 2017 15:40:10 +0900
-Message-Id: <20171107064011.18399-2-gitster@pobox.com>
-X-Mailer: git-send-email 2.15.0-263-g47cc852023
-In-Reply-To: <20171107064011.18399-1-gitster@pobox.com>
-References: <xmqqshe7j0af.fsf@gitster.mtv.corp.google.com>
- <20171107064011.18399-1-gitster@pobox.com>
-X-Pobox-Relay-ID: 8284C078-C386-11E7-B806-8EF31968708C-77302942!pb-smtp1.pobox.com
+        id S1754425AbdKGHIM (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Nov 2017 02:08:12 -0500
+Received: from mail-wr0-f170.google.com ([209.85.128.170]:49122 "EHLO
+        mail-wr0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752141AbdKGHIM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Nov 2017 02:08:12 -0500
+Received: by mail-wr0-f170.google.com with SMTP id 15so10882317wrb.5
+        for <git@vger.kernel.org>; Mon, 06 Nov 2017 23:08:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=PWMEONFLJCAGcIpiO7VsjX6XapdXwZilV52b9OUstG4=;
+        b=dACq/aHQ8iy0YUc0O/BCsqraZD0MYoXdJCpt9oYFT9gqtKOF/V9X3zLLh7rQjQyoDh
+         fa0wkTV0R/jqr6qtI1aihlEw0LrZxkCY1QSeF5DdSZs3wZSbVi30J5TVbrFR0GgKO7na
+         tQfnV5QB++4UE+9p4d1YeFRHHLXukBmiMYH2RxQPiwemnoI/Z43YxRLim1hpTGEB5hmJ
+         ZVJX7XD10n0iOPPcym/SzX7oqTseV54QeKCPa7/cnGmzOZRs42PIP0Ccm389I30IukJ6
+         E3THiitGSXrzR29j5MdqOCJIGtfF2i6DKLEGoH24/LcMNaVDAUasy2aOhMLpCuI5G7ew
+         vNdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=PWMEONFLJCAGcIpiO7VsjX6XapdXwZilV52b9OUstG4=;
+        b=sL2OOlz39Yjvu1+1B8g7fC0Dg2a5JQ5QphZZiEFAXknTsvZBPPHoPdOjlvHCNkB0v5
+         t2gUFxYzJuI2NeAHojXcwYb2rapb45mynRHX20ho14ggn144PhY8tTFmH8LpddqJWPTV
+         8hGjTCteWiHAcJCq2MH1ItsqQXU+un0Kli79Vr5cHYguhCQ3gx7Zoxbyfy4ZKUHkg3c4
+         6V6LlakO76sDRPnq8SHbI90QywNcKfP5EPwC4WSU/8VrMx4DNgatpHAWS1fBGrJqmhrE
+         v/x0cU/uuY6SljNuGheUrxy9Cq+QOGTmiXQf6fJTnjdqxYe2oIAMCvCKhshv652tmWGT
+         VrZA==
+X-Gm-Message-State: AMCzsaUzdX37pgeXAK3YLC07E9xIvVvVyMs1dAVnhvdZjWJuOSKbFLRK
+        uLjRjng7BwZQNAm0AGCGjGs=
+X-Google-Smtp-Source: ABhQp+SBKue0XPPKhWPOCxhgc6NneLQSiCY4XP7/1XaGK9x8Q+gVgtITeZF1Y+GjTGMOan2vxdpa7w==
+X-Received: by 10.223.184.230 with SMTP id c35mr14097233wrg.18.1510038490951;
+        Mon, 06 Nov 2017 23:08:10 -0800 (PST)
+Received: from laptop.local (host-78-145-151-122.as13285.net. [78.145.151.122])
+        by smtp.gmail.com with ESMTPSA id n14sm874575wmh.37.2017.11.06.23.08.08
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 06 Nov 2017 23:08:09 -0800 (PST)
+Date:   Tue, 7 Nov 2017 07:08:08 +0000
+From:   Thomas Adam <thomas@xteddy.org>
+To:     Antoine =?iso-8859-1?Q?Beaupr=E9?= <anarcat@debian.org>
+Cc:     git@vger.kernel.org, gitster@pobox.com,
+        Ingo Ruhnke <grumbel@gmail.com>
+Subject: Re: [PATCH v4 2/7] remote-mediawiki: allow fetching namespaces with
+ spaces
+Message-ID: <20171107070808.q7zz4i73mkffomcb@laptop.local>
+References: <20171102212518.1601-1-anarcat@debian.org>
+ <20171106211953.27910-1-anarcat@debian.org>
+ <20171106211953.27910-3-anarcat@debian.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20171106211953.27910-3-anarcat@debian.org>
+User-Agent: NeoMutt/20170714-87-e4144b (1.8.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We have packed the bits too tightly in such a way that it is not
-easy to add a new type of whitespace ignoring option, a new type
-of LCS algorithm, or a new type of post-cleanup heuristics.
+On Mon, Nov 06, 2017 at 04:19:48PM -0500, Antoine Beaupré wrote:
+> From: Ingo Ruhnke <grumbel@gmail.com>
+> 
+> we still want to use spaces as separators in the config, but we should
+> allow the user to specify namespaces with spaces, so we use underscore
+> for this.
+> 
+> Reviewed-by: Antoine Beaupré <anarcat@debian.org>
+> Signed-off-by: Antoine Beaupré <anarcat@debian.org>
+> ---
+>  contrib/mw-to-git/git-remote-mediawiki.perl | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/contrib/mw-to-git/git-remote-mediawiki.perl b/contrib/mw-to-git/git-remote-mediawiki.perl
+> index 5ffb57595..a1d783789 100755
+> --- a/contrib/mw-to-git/git-remote-mediawiki.perl
+> +++ b/contrib/mw-to-git/git-remote-mediawiki.perl
+> @@ -65,6 +65,7 @@ chomp(@tracked_categories);
+>  
+>  # Just like @tracked_categories, but for MediaWiki namespaces.
+>  my @tracked_namespaces = split(/[ \n]/, run_git("config --get-all remote.${remotename}.namespaces"));
+> +for (@tracked_namespaces) { s/_/ /g; }
+>  chomp(@tracked_namespaces);
 
-Reorder bits a bit to give room for these three classes of options
-to grow.  Also make use of XDF_WHITESPACE_FLAGS macro where we check
-any of these bits are on, instead of using DIFF_XDL_TST() macro on
-individual possibilities.  That way, the "is any of the bits on?"
-code does not have to change when we add more ways to ignore
-whitespaces.
+Depending on the number if namespaces returned, it might be easier to convert
+this to the following:
 
-While at it, add a comment in front of the bit definitions to
-clarify in which structure these defined bits may appear.
+    my @tracked_namespaces = map {
+    	chomp; s/_/ /g; $_;
+    } split(/[ \n]/, run_git("config --get-all remote.${remotename}.namespaces"));
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- diff.c        |  4 +---
- xdiff/xdiff.h | 24 ++++++++++++++----------
- 2 files changed, 15 insertions(+), 13 deletions(-)
+This would, once again, avoid creating @tracked_namespaces, and iterating over
+it.
 
-diff --git a/diff.c b/diff.c
-index 74283d9001..790250fe86 100644
---- a/diff.c
-+++ b/diff.c
-@@ -3434,9 +3434,7 @@ void diff_setup_done(struct diff_options *options)
- 	 * inside contents.
- 	 */
- 
--	if (DIFF_XDL_TST(options, IGNORE_WHITESPACE) ||
--	    DIFF_XDL_TST(options, IGNORE_WHITESPACE_CHANGE) ||
--	    DIFF_XDL_TST(options, IGNORE_WHITESPACE_AT_EOL))
-+	if ((options->xdl_opts & XDF_WHITESPACE_FLAGS))
- 		DIFF_OPT_SET(options, DIFF_FROM_CONTENTS);
- 	else
- 		DIFF_OPT_CLR(options, DIFF_FROM_CONTENTS);
-diff --git a/xdiff/xdiff.h b/xdiff/xdiff.h
-index b090ad8eac..cbf5d8e166 100644
---- a/xdiff/xdiff.h
-+++ b/xdiff/xdiff.h
-@@ -27,22 +27,26 @@
- extern "C" {
- #endif /* #ifdef __cplusplus */
- 
-+/* xpparm_t.flags */
-+#define XDF_NEED_MINIMAL (1 << 0)
- 
--#define XDF_NEED_MINIMAL (1 << 1)
--#define XDF_IGNORE_WHITESPACE (1 << 2)
--#define XDF_IGNORE_WHITESPACE_CHANGE (1 << 3)
--#define XDF_IGNORE_WHITESPACE_AT_EOL (1 << 4)
--#define XDF_WHITESPACE_FLAGS (XDF_IGNORE_WHITESPACE | XDF_IGNORE_WHITESPACE_CHANGE | XDF_IGNORE_WHITESPACE_AT_EOL)
-+#define XDF_IGNORE_WHITESPACE (1 << 1)
-+#define XDF_IGNORE_WHITESPACE_CHANGE (1 << 2)
-+#define XDF_IGNORE_WHITESPACE_AT_EOL (1 << 3)
-+#define XDF_WHITESPACE_FLAGS (XDF_IGNORE_WHITESPACE | \
-+			      XDF_IGNORE_WHITESPACE_CHANGE | \
-+			      XDF_IGNORE_WHITESPACE_AT_EOL)
- 
--#define XDF_PATIENCE_DIFF (1 << 5)
--#define XDF_HISTOGRAM_DIFF (1 << 6)
-+#define XDF_IGNORE_BLANK_LINES (1 << 7)
-+
-+#define XDF_PATIENCE_DIFF (1 << 14)
-+#define XDF_HISTOGRAM_DIFF (1 << 15)
- #define XDF_DIFF_ALGORITHM_MASK (XDF_PATIENCE_DIFF | XDF_HISTOGRAM_DIFF)
- #define XDF_DIFF_ALG(x) ((x) & XDF_DIFF_ALGORITHM_MASK)
- 
--#define XDF_IGNORE_BLANK_LINES (1 << 7)
--
--#define XDF_INDENT_HEURISTIC (1 << 8)
-+#define XDF_INDENT_HEURISTIC (1 << 23)
- 
-+/* xdemitconf_t.flags */
- #define XDL_EMIT_FUNCNAMES (1 << 0)
- #define XDL_EMIT_FUNCCONTEXT (1 << 2)
- 
--- 
-2.15.0-263-g47cc852023
+Note that this isn't about trying to 'golf' this; it's a performance
+consideration.
 
+Kindly,
+Thomas Adam
