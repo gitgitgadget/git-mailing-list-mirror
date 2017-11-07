@@ -2,52 +2,52 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E411320A10
-	for <e@80x24.org>; Tue,  7 Nov 2017 12:45:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5B646202A0
+	for <e@80x24.org>; Tue,  7 Nov 2017 13:23:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751924AbdKGMpF (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Nov 2017 07:45:05 -0500
-Received: from mout.gmx.net ([212.227.15.18]:53089 "EHLO mout.gmx.net"
+        id S934126AbdKGNXR (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Nov 2017 08:23:17 -0500
+Received: from mout.gmx.net ([212.227.17.21]:52927 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750704AbdKGMpE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Nov 2017 07:45:04 -0500
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LmbVT-1elNvs00Z9-00aCcE; Tue, 07
- Nov 2017 13:44:59 +0100
-Date:   Tue, 7 Nov 2017 13:44:44 +0100 (CET)
+        id S933608AbdKGNXQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Nov 2017 08:23:16 -0500
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MCL6r-1eKY9f3kZ7-009BDe; Tue, 07
+ Nov 2017 14:23:11 +0100
+Date:   Tue, 7 Nov 2017 14:23:00 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     Junio C Hamano <gitster@pobox.com>
 cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] xdiff: reassign xpparm_t.flags bits
-In-Reply-To: <20171107064011.18399-2-gitster@pobox.com>
-Message-ID: <alpine.DEB.2.21.1.1711071336120.6482@virtualbox>
-References: <xmqqshe7j0af.fsf@gitster.mtv.corp.google.com> <20171107064011.18399-1-gitster@pobox.com> <20171107064011.18399-2-gitster@pobox.com>
+Subject: Re: [PATCH v2 2/2] diff: --ignore-cr-at-eol
+In-Reply-To: <20171107064011.18399-3-gitster@pobox.com>
+Message-ID: <alpine.DEB.2.21.1.1711071345430.6482@virtualbox>
+References: <xmqqshe7j0af.fsf@gitster.mtv.corp.google.com> <20171107064011.18399-1-gitster@pobox.com> <20171107064011.18399-3-gitster@pobox.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:RRQnZC9O+ZbgXakQX0WKKL4sDFifV8zCxdyj0BkD53pKCr9PTHq
- sGDSDEBUUvaKngvxmkiqBzlERIFbd/paIBljNrTVZdRTdkdp4VhstiC1kzUlfaiHZIDwbFB
- O8+cC3e00LZMG1kePrHQ0XK1XwvbWGXuTPE2J44Kwk9FJHJ7DmRmj46nm0ZfD2PiIg9Qjbp
- 0Z6BLdKlg8yJC33EgYsGw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:iZcx66m9yNo=:U3c2Lm2L/OCNCgrU/wVhHx
- Mmqi1BCStSddzwHlsyW/nxy4SC8ea6m4OFTAd4GDG7ZAWlSWQJiaFgmkMNjdEu3+UBf4VMD4P
- sK4xELwwAqLkFZlPiCd7ULrSoxjupUGqNHc7WqUuVSsFN+nqNOYq6N7cOviSEkkaWw+4cUXDE
- IN8N9gKVclWKNZgHuAefI2h1Yq65p1UiRzKUYT1+vPN027MoiR3PCD5vspUtFcQn44mM3DuGE
- sEJtHS/QoRaGDdjzTvJXa7uOw5bUv7Jz0SU5nDCQCCw0W9L+0PsnzBPgwtAsnfPEh71BjPxDt
- bHB4RVdCoPWRHlJdPkhQOhINe1NhIK858rU5kiPN5pJa3Ik4etfivq7fxKqPKHhOASpMgreFG
- e2uEud6Jh799YARWsqAEa61xeG1DvsvlTL1wvxhvV4iv/RJTM0Ksu/LZ+wNPKhkQ8ofRPzLGv
- QzlP7U4LwlyNqfS7p9EGk4LCc7lVUrEiQYgOf7QsDJ8H9tPY7Vv8WP91eTj1A41DjJQoSuNS7
- 6oSZyDAOKKcdTPsBwKybuUWq/x6PegKQE8lGFi5+9dEpdNLjWh+E3DuiYBJz3nGqoNBmDuS/t
- lKV8EUDKruHeVzdsXhruvAsIftntGvtDgmdEOUX7DMVQTA6Tr070QM3RwgfONySud3yQ4yhFS
- 0APXoXYQ2oll+0zpxRhG7DmTPlDM7rvsAf/Y6Wd7zw6U7+p4xyfww5T88fR/hpydOolvzoLij
- hiN7zBxKeh7k6u10pZVY8XyKMLYOO0MC1RwTWNf93+M/Bum7pVMSyPDv1hxPaZa/XMrkfGhSK
- NHcqQhoEET1xhnnRupzgXRzyo8J2BEjc4lVE0ccxEO0EQD9yTM=
+X-Provags-ID: V03:K0:A1Z80ifJzYDcq9zkY0BfqyjfW39xIfi1cTYyYa2FGK2ZIk9A4Qo
+ Bs51z6OGqvqVhiNPVHpsR6bi0mhfjIFxlYCmNo0VxXPvTUzOPzaFR4WeDEGDR7rv2Y4V11/
+ 4xAcWwjJCcXdswhdc7B+AZe7wF16JMf89qYv09hfi7hBAbeGkjjWwN+p13plxVfDpz5gmG4
+ I/TWKaKL0Jb6z0sLzo+gA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:wrhjzQep/co=:XAZQfiPeCOkPucLZYKO2bs
+ /vhAKtrBa1MefimAvWCMECy7jfWkQzwT1xgSfV03Pri4uidr/TbhUILFSTE+WoBp3dJ6V1tgq
+ dZDu5DohLnLzjPz4l/CFq3Nb8ZG2FND68Ejuv8hmbs/wtD81f9iXO2DQP9tqnlsbg3V4VeyfJ
+ RLWSu0uHAXhyySPzbmMnGghGUtODF0LPKF2RkhLlQ580eXw9gSAXFxKMNec+VndRFIxwRXxMU
+ GMxUNf/Uvnix4P5G5KjstkbZPNrs0njG0NpqNl1SQIrM2gX7jmtTs/OmJq6KZ7U9khtPE9zJZ
+ AbHWnrXMqU67JkScF26i7YRrmT4nZOldmYYfSncrlAxS1UNGB/HahCpk7hqrMvyjWn4Ix5Ns2
+ BZbqqo0jS1fkixGf0d6rJ/gK/shPfdcDqCvh/zeywxDaxvm1OZjnr8PrnjG/OTuv59W0PTx+W
+ fh3GYByWobYRcd820/ceO93s5mbqGUl+2wnOfHMEUgJ+Ke7GOvezaC3vOko5WInzeALNIsieh
+ gOeRDjigam7+DfcvLPlhnj4cyBXgj8zoGamb2sQaa+B7jLw5dAKtEH7nMUCarot2OU7O31g6O
+ Xh9+nwglDnChnNF9KjEjpGZ/vtiA6UsXPOWSmVfj2MGh2vMoG3Svy5anja508r+hrakIOSHRM
+ vVq6N7hmtVCQ4KH1rKgEPjbk+jlnqTdIXxEFkUoAgP33yiCzaPEaFkak8Rc6ilaerN0RdZUs6
+ MtoIN48WDoSvi/wdvnyv7XXy9rU3uBKxzFjEG/bD3HXlIGwdqdaewJFTaLwKDMC2bzCxJOQOg
+ SdYDgSPRUGXjDeY7wzFxadKMYur9oXyZlUp5YDuT3BwTcxd1u0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -57,96 +57,126 @@ Hi Junio,
 
 On Tue, 7 Nov 2017, Junio C Hamano wrote:
 
-> We have packed the bits too tightly in such a way that it is not
-> easy to add a new type of whitespace ignoring option, a new type
-> of LCS algorithm, or a new type of post-cleanup heuristics.
+> A new option --ignore-cr-at-eol tells the diff machinery to treat a
+> carriage-return at the end of a (complete) line as if it does not
+> exist.
 > 
-> Reorder bits a bit to give room for these three classes of options
-> to grow.  Also make use of XDF_WHITESPACE_FLAGS macro where we check
-> any of these bits are on, instead of using DIFF_XDL_TST() macro on
-> individual possibilities.  That way, the "is any of the bits on?"
-> code does not have to change when we add more ways to ignore
-> whitespaces.
-> 
-> While at it, add a comment in front of the bit definitions to
-> clarify in which structure these defined bits may appear.
+> This would make it easier to review a change whose only effect is to
+> turn line endings from CRLF to LF or the other way around.
 
-Makes sense.
+If the goal is to make CR/LF -> LF conversions easier to review (or for
+that matter, LF -> CR/LF), then this option may not be *completely*
+satisfactory, as it would hide mixed changes (i.e. where some lines are
+converted from CR/LF to LF and others are converted in the other direction
+*in the same patch*).
 
-> diff --git a/diff.c b/diff.c
-> index 74283d9001..790250fe86 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -3434,9 +3434,7 @@ void diff_setup_done(struct diff_options *options)
->  	 * inside contents.
->  	 */
+I wonder whether it would make this patch series even more useful if you
+would instead introduce --hide-crlf-to-lf and --hide-lf-to-crlf options
+(not even necessarily mutually exclusive, in case the reviewer really
+wants to ignore all line ending conversions).
+
+> diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+> index 89cc0f48de..aa2c0ff74d 100644
+> --- a/Documentation/diff-options.txt
+> +++ b/Documentation/diff-options.txt
+> @@ -519,6 +519,9 @@ endif::git-format-patch[]
+>  --text::
+>  	Treat all files as text.
 >  
-> -	if (DIFF_XDL_TST(options, IGNORE_WHITESPACE) ||
-> -	    DIFF_XDL_TST(options, IGNORE_WHITESPACE_CHANGE) ||
-> -	    DIFF_XDL_TST(options, IGNORE_WHITESPACE_AT_EOL))
-> +	if ((options->xdl_opts & XDF_WHITESPACE_FLAGS))
+> +--ignore-cr-at-eol::
+> +	Ignore carrige-return at the end of line when doing a comparison.
 
-Not only shorter now, but a lot clearer, too: nobody needs to wonder now
-whether one whitespace flag was excluded on purpose.
+I am not a native speaker, either, yet I have the impression that "do a
+comparison" may be more colloquial than not. Also, it is a carriage-return
+(as in Sinatra's famous song about Love and Marriage) not a carrige-return.
 
->  		DIFF_OPT_SET(options, DIFF_FROM_CONTENTS);
->  	else
->  		DIFF_OPT_CLR(options, DIFF_FROM_CONTENTS);
-> diff --git a/xdiff/xdiff.h b/xdiff/xdiff.h
-> index b090ad8eac..cbf5d8e166 100644
-> --- a/xdiff/xdiff.h
-> +++ b/xdiff/xdiff.h
-> @@ -27,22 +27,26 @@
->  extern "C" {
->  #endif /* #ifdef __cplusplus */
+How about "Hide changed line endings"?
+
+> diff --git a/xdiff/xutils.c b/xdiff/xutils.c
+> index 04d7b32e4e..b2cbcc818f 100644
+> --- a/xdiff/xutils.c
+> +++ b/xdiff/xutils.c
+> @@ -156,6 +156,24 @@ int xdl_blankline(const char *line, long size, long flags)
+>  	return (i == size);
+>  }
 >  
-> +/* xpparm_t.flags */
-> +#define XDF_NEED_MINIMAL (1 << 0)
->  
-> -#define XDF_NEED_MINIMAL (1 << 1)
-
-This change makes me wonder whether the least significant bit was omitted
-on purpose originally. You probably looked at that? May be worth
-mentioning in the commit message.
-
-> -#define XDF_IGNORE_WHITESPACE (1 << 2)
-> -#define XDF_IGNORE_WHITESPACE_CHANGE (1 << 3)
-> -#define XDF_IGNORE_WHITESPACE_AT_EOL (1 << 4)
-> -#define XDF_WHITESPACE_FLAGS (XDF_IGNORE_WHITESPACE | XDF_IGNORE_WHITESPACE_CHANGE | XDF_IGNORE_WHITESPACE_AT_EOL)
-> +#define XDF_IGNORE_WHITESPACE (1 << 1)
-> +#define XDF_IGNORE_WHITESPACE_CHANGE (1 << 2)
-> +#define XDF_IGNORE_WHITESPACE_AT_EOL (1 << 3)
-> +#define XDF_WHITESPACE_FLAGS (XDF_IGNORE_WHITESPACE | \
-> +			      XDF_IGNORE_WHITESPACE_CHANGE | \
-> +			      XDF_IGNORE_WHITESPACE_AT_EOL)
->  
-> -#define XDF_PATIENCE_DIFF (1 << 5)
-> -#define XDF_HISTOGRAM_DIFF (1 << 6)
-> +#define XDF_IGNORE_BLANK_LINES (1 << 7)
+> +/*
+> + * Have we eaten everything on the line, except for an optional
+> + * CR at the very end?
+> + */
+> +static int ends_with_optional_cr(const char *l, long s, long i)
+> +{
+> +	int complete = s && l[s-1] == '\n';
 > +
-> +#define XDF_PATIENCE_DIFF (1 << 14)
-> +#define XDF_HISTOGRAM_DIFF (1 << 15)
->  #define XDF_DIFF_ALGORITHM_MASK (XDF_PATIENCE_DIFF | XDF_HISTOGRAM_DIFF)
->  #define XDF_DIFF_ALG(x) ((x) & XDF_DIFF_ALGORITHM_MASK)
->  
-> -#define XDF_IGNORE_BLANK_LINES (1 << 7)
-> -
-> -#define XDF_INDENT_HEURISTIC (1 << 8)
-> +#define XDF_INDENT_HEURISTIC (1 << 23)
->  
-> +/* xdemitconf_t.flags */
->  #define XDL_EMIT_FUNCNAMES (1 << 0)
->  #define XDL_EMIT_FUNCCONTEXT (1 << 2)
+> +	if (complete)
+> +		s--;
+> +	if (s == i)
+> +		return 1;
 
-It is a pity that this diff is not easier to review, but it shows how much
-it was in need of cleaning up. Looks much nicer now.
+What is the role of `s`, what of `i`? Maybe `length` and `current_offset`?
 
-I wonder, however, what your guiding principle was in determining the
-gaps? I would have expected consecutive bits, except for the one gap to
-make room for the upcoming flag, of course.
+> +	/* do not ignore CR at the end of an incomplete line */
+> +	if (complete && s == i + 1 && l[i] == '\r')
+> +		return 1;
 
-Future patch series could always start by making room for new flags, as
-needed, after all.
+This made me scratch my head: too many negations. The comment may better
+read "ignore CR only at the end of a complete line".
+
+And now I understand even less why `1` is returned if `s == i`? Is this
+not an empty line (complete or incomplete) *without* a CR?
+
+> @@ -204,6 +223,14 @@ int xdl_recmatch(const char *l1, long s1, const char *l2, long s2, long flags)
+>  			i1++;
+>  			i2++;
+>  		}
+> +	} else if (flags & XDF_IGNORE_CR_AT_EOL) {
+> +		/* Find the first difference and see how the line ends */
+> +		while (i1 < s1 && i2 < s2 && l1[i1] == l2[i2]) {
+> +			i1++;
+> +			i2++;
+> +		}
+> +		return (ends_with_optional_cr(l1, s1, i1) &&
+> +			ends_with_optional_cr(l2, s2, i2));
+
+There are extra parentheses around the `return` expression.
+
+To accommodate the tentative --hide-crlf-to-lf and --hide-lf-to-crlf
+options that I suggested earlier, this would simply become something like
+this:
+
+	} else if (flags & (XDF_IGNORE_CRLF_TO_LF | XDF_IGNORE_LF_TO_CRLF)) {
+		/* Early exit: length must be equal or differ by 1 */
+		if (s1 - i1 != s2 - i2 &&
+		    s1 - i1 != s2 + 1 - i2 && s1 + 1 - i1 != s2 - i2)
+			return 0;
+
+		/* Early exit: skip incomplete lines */
+		if (!s1 || !s2 || l1[s1-1] != '\n' || l2[s2-1] != '\n')
+			return 0;
+
+		/* Find the first difference and see how the line ends */
+		while (i1 < s1 && i2 < s2 && l1[i1] == l2[i2]) {
+			i1++;
+			i2++;
+		}
+
+		/* Lines must be identical or have the indicated EOL change */
+		return ((i1 == s1 && i2 == s2) ||
+			((flags & XDF_IGNORE_CRLF_TO_LF) &&
+			 i1 + 2 == s1 && l1[i1] == '\r' && i2 + 1 == s2) ||
+			((flags & XDF_IGNORE_LF_TO_CRLF) &&
+			 i1 + 1 == s1 && i2 + 2 == s2 && l2[i2] == '\r');
+
+Note: I do not even know whether the code in this function has to assume
+that the lines can be byte-wise identical or not, I just erred on the side
+of caution. I also do not know whether the return value 0 indicates a
+mistmatch, I just assumed it did. I really wish that I could have reviewed
+the real code, not a patch in a mail program that lacks the context.
+
+Caveat emptor: my proposed code change has been written in the mail
+program (if we had a more code-centric review process, you would have a PR
+with a suggested alternative already, I am really sorry for the
+inconvenience).
 
 Ciao,
 Dscho
