@@ -2,95 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 07940202A0
-	for <e@80x24.org>; Tue,  7 Nov 2017 17:27:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7520320A10
+	for <e@80x24.org>; Tue,  7 Nov 2017 17:42:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758500AbdKGR1p (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Nov 2017 12:27:45 -0500
-Received: from mail-qt0-f174.google.com ([209.85.216.174]:45446 "EHLO
-        mail-qt0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1758386AbdKGR1o (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Nov 2017 12:27:44 -0500
-Received: by mail-qt0-f174.google.com with SMTP id p1so16202611qtg.2
-        for <git@vger.kernel.org>; Tue, 07 Nov 2017 09:27:44 -0800 (PST)
+        id S1753671AbdKGRmd (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Nov 2017 12:42:33 -0500
+Received: from mail-qt0-f195.google.com ([209.85.216.195]:44551 "EHLO
+        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753660AbdKGRma (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Nov 2017 12:42:30 -0500
+Received: by mail-qt0-f195.google.com with SMTP id 8so33260qtv.1
+        for <git@vger.kernel.org>; Tue, 07 Nov 2017 09:42:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=m7XEEcMqqwb4kwPU4OHPvI4OaYEURLqKeuKiwyELPfg=;
-        b=exuJzHpJA/uL9QqXgcg0lCzzw4HhGAtCJPASbeMyCT2/RHxsUooArl6fkSyg9B3IDq
-         Z2ZUYDeCijTaP5a5/AjxaJDMZAK3RAY3ax0+A7utDOmOMKl8qb8yB7lAfwfnr31sH+96
-         jV7BSh7MqmaL0EIY/dlC+3yerpb4cQ/eYKKhiD8mv6SRsWdPd0iOwRxK+j/Ic5yeanp1
-         sS7UO3wQtEXM/J7BCFv2XloJDvHZusnV0bbF3s5c2NoUPH/eEvigRa8uWOcfspigrWeT
-         Na1ocxvy534dpTTqFvzIj9n8p16Fh+QcaWy16d6eZM4ClAXtk4ECNjkc5EhZU3KPJ+dh
-         HALw==
+        bh=tedhhgKEaohBZTmgZFRkZtYb8ZiqOBNAVRqslPS46D4=;
+        b=rdzwA6x0d1HYt9ZyMRwO+5gIjObIylXbkmWlyWswW5093QYVAkKJAmZ7QK4TYgzarS
+         cULmrN8j5b6/qXtCQjWkiEUhXM383pgq0CTc4SUArDiLCYlL1SxmVETFyOqt2I38RPcF
+         uVSeBLeJ/GDUB2jV3ez85GWPtO1no/MkKYReBRqEjCDWeUtRczKumpOzePHV/yywR3Vf
+         9OiKoXlyrc0OV9wY9h8PanAF3JUtkgst9v3TFVulbf6glBHrSUpB5qquA/unstmqb/Wo
+         1Ts/LS+4+RwyG9RXXRGco9m5rgKYZkKcP77/1lx0fncDoeiqOD+YJtqIpZZler2l+Fea
+         OEiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=m7XEEcMqqwb4kwPU4OHPvI4OaYEURLqKeuKiwyELPfg=;
-        b=EU75/iMQNhbspHhowkYyvu3n6iu0Rq3mR9YCizE253HLQhpd8u7fqlug+3pifvvDsD
-         nq7jNCdsp2kb62nGQORWsTgVdPMw0snEQ6qgKzzJ7UzjeKD+9VwWkaonjd/HXiDawr92
-         b6ch+77nYlZcnBcY6iS7RXDBYsa0+d532TkbgEwaeAJAqel+Zex7ZuRptHPAlFkniayv
-         NZHsOjEe00hp20GOfsTWUuhpLOYMr+126f8TQ6icV/gXnW/Z14Kk0vwUthxaH9LhyMcM
-         Le3otBy8+mAzDZKIfuv8A/i0ugPwkvRxDcATLAdG3FFlbu5OY8AcgPUShdP5EjoDITTJ
-         e5Pg==
-X-Gm-Message-State: AJaThX740hHYqFcSro5Dv//wtBp849qs8l1UoJkmGK+83x9zfpqigp59
-        p+l5m5okqA05pfovC2T0TqwyNUVdAah/Jty7Zz/hcubo
-X-Google-Smtp-Source: ABhQp+TL+bs1NI+/p47Clr5tNtaGezV4SE6VUX+DyLbMao8DPYpS66PN+GErElCipqA+hqcnELOyHa9cyt6Y6YBLsv0=
-X-Received: by 10.237.34.201 with SMTP id q9mr29273609qtc.198.1510075663755;
- Tue, 07 Nov 2017 09:27:43 -0800 (PST)
+        bh=tedhhgKEaohBZTmgZFRkZtYb8ZiqOBNAVRqslPS46D4=;
+        b=NCYKZV9fNPryAZSvMHYTdkMF0via1tE+1+wKkr32M310oBzjDTKFOi1JJxr+SrcVh2
+         JVXmNy9sKxcTuVTj6lHCnpaX1M2fRpuT8D79MuDJdupyGAU4qvp66T13wQGRCAgQyO/K
+         sOvn6Pb7Rul/wclAgn31n9pQqGIy7x+ozOIRla5bwamj0i9s7j7RSFWyciXt5hqjDv8v
+         f2b+5jTH9nn9arp6vP7hFTlYUn02K9LgdjEHDlICz5tMlTJh/It6gP2CZoVyFILIBxZI
+         +oNzI5f268hAMeIs+T8hZtz+ZCbItLsPs/i2oMm3322yI+xhnDw9iNd/MLvnemwRHqLs
+         c2qQ==
+X-Gm-Message-State: AMCzsaXymQyKaJ/q1Rk7EmgvVDXFAsQNNC5wbr87pfgliTDgg5n6kOPT
+        xCK6iUUEM7RMrmZi2Rx746bFpt4Q+bTLbySr3fn5Tg==
+X-Google-Smtp-Source: ABhQp+TUUGdUBOZzNZQgOMMZdtY2tNKn7EPzZFsRNIyBx9e+5VPZAvMvf3CZ/4tCSv16mCAJnXZQ4UoO3Avik4l5r68=
+X-Received: by 10.237.37.132 with SMTP id x4mr27526713qtc.224.1510076549407;
+ Tue, 07 Nov 2017 09:42:29 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.140.102.70 with HTTP; Tue, 7 Nov 2017 09:27:43 -0800 (PST)
-In-Reply-To: <xmqq8tfihn3a.fsf@gitster.mtv.corp.google.com>
-References: <20171106235021.113358-1-jonathantanmy@google.com> <xmqq8tfihn3a.fsf@gitster.mtv.corp.google.com>
+Received: by 10.140.102.70 with HTTP; Tue, 7 Nov 2017 09:42:28 -0800 (PST)
+In-Reply-To: <xmqqinemdsxm.fsf@gitster.mtv.corp.google.com>
+References: <xmqqshe7j0af.fsf@gitster.mtv.corp.google.com> <20171107064011.18399-1-gitster@pobox.com>
+ <alpine.DEB.2.21.1.1711071329280.6482@virtualbox> <xmqqinemdsxm.fsf@gitster.mtv.corp.google.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 7 Nov 2017 09:27:43 -0800
-Message-ID: <CAGZ79kZ3yaKGh2g2QosdzDigi4uXsuRs_v2imL8kPEo8a+qeXg@mail.gmail.com>
-Subject: Re: [PATCH] Tests: document test_submodule_{,forced_}switch()
+Date:   Tue, 7 Nov 2017 09:42:28 -0800
+Message-ID: <CAGZ79kY3OH_o9w0XqcxevuKTqNWDpjVPn3P8gttO_DgcDekFSw@mail.gmail.com>
+Subject: Re: [PATCH v2 0/2] Teach "diff" to ignore only CR at EOL
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git <git@vger.kernel.org>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 6, 2017 at 5:52 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jonathan Tan <jonathantanmy@google.com> writes:
+On Tue, Nov 7, 2017 at 7:12 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 >
->> Factor out the commonalities from test_submodule_switch() and
->> test_submodule_forced_switch() in lib-submodule-update.sh, and document
->> their usage.
+>> Good. I was wishing for such a feature in the past.
 >>
->> This also makes explicit (through the KNOWN_FAILURE_FORCED_SWITCH_TESTS
->> variable) the fact that, currently, all functionality tested using
->> test_submodule_forced_switch() do not correctly handle the situation in
->> which a submodule is replaced with an ordinary directory.
->>
->> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
->> ---
->> I find tests that use lib-submodule-update.sh difficult to understand
->> due to the lack of clarity of what test_submodule_switch() and others do
->> with their argument - I hope this will make things easier for future
->> readers.
->> ---
->>  t/lib-submodule-update.sh | 250 +++++++++-------------------------------------
->>  1 file changed, 46 insertions(+), 204 deletions(-)
+>> However, the short and sweet `-b` or `-w` switches are really, really
+>> nice. `--ignore-cr-at-eol` is just very cumbersome to type out. So I think
+>> you will want to add this patch to your patch series:
 >
-> I suspect that the benefit of this is a lot larger than "document" a
-> test helper function or two ;-)  "document & clean-up", perhaps?
-
-It is.
-
+> Yeah, I should probably have added that to 2/2 from the beginning.
 >
-> I didn't compare the before-and-after with fine toothed comb, but
-> a cursory look didn't find anything glaringly questionable other
-> than the above.
->
+>> -- snipsnap --
+>> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+>> index 0e16f017a41..b7a45e8df29 100644
+>> --- a/contrib/completion/git-completion.bash
+>> +++ b/contrib/completion/git-completion.bash
+>> @@ -1400,7 +1400,7 @@ __git_diff_common_options="--stat --numstat --shortstat --summary
+>>                       --patch-with-stat --name-only --name-status --color
+>>                       --no-color --color-words --no-renames --check
+>>                       --full-index --binary --abbrev --diff-filter=
+>> -                     --find-copies-harder
+>> +                     --find-copies-harder --ignore-cr-at-eol
+>>                       --text --ignore-space-at-eol --ignore-space-change
+>>                       --ignore-all-space --ignore-blank-lines --exit-code
+>>                       --quiet --ext-diff --no-ext-diff
 
-I have reviewed the patch and thinks it withstands the test of a fine comb.
+That series, with this squash, looks good to me.
