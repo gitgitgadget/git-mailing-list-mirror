@@ -2,113 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D2C7E20A10
-	for <e@80x24.org>; Tue,  7 Nov 2017 00:44:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2FDA920A10
+	for <e@80x24.org>; Tue,  7 Nov 2017 00:52:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933650AbdKGAoI (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Nov 2017 19:44:08 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64426 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S933582AbdKGAoG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Nov 2017 19:44:06 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1E2A7A4C26;
-        Mon,  6 Nov 2017 19:44:06 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=S/3f2HZ473x9
-        4p0tR9orBdGWr2M=; b=w3ygTlOAnNFRvJdEY87kEDXvIGq62GzocFbDWpT7BniD
-        oRF7XJ8WpQV+2sB7mwvgvTwjWEatjMGkoMVDSVm+x8z3DXe+r7d90a8mzrhUka7H
-        5GCVo8b2aGKf3OXu4hduljZsYMB7p//3Bf4GN7Y/hz5V/3C54l7ISOa7hixTrVE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=F8Sb6n
-        8hujI7tdB20qi022CR+JifioCNrPJQd+POdo8as/vok3fYhDOARHSAuvnaXOeoSR
-        W9J5wbKGQE8W+HlkhNDfgHSvD/XElYzBHcNeOr3K6PF/WthFwgR5UDyvaGtQeMZb
-        qg56a+y686L5mJSgXvFwUoHULfxcrAml4Q6Hk=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1609BA4C25;
-        Mon,  6 Nov 2017 19:44:06 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 89185A4C24;
-        Mon,  6 Nov 2017 19:44:05 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Antoine =?utf-8?Q?Beaupr=C3=A9?= <anarcat@debian.org>
-Cc:     Matthieu Moy <git@matthieu-moy.fr>, git@vger.kernel.org
-Subject: Re: future of the mediawiki extension?
-References: <87vaix731f.fsf@curie.anarc.at>
-        <q7h9o9opyllo.fsf@orange.lip.ens-lyon.fr>
-        <xmqqh8ug3xnq.fsf@gitster.mtv.corp.google.com>
-        <874lqg83u9.fsf@curie.anarc.at>
-Date:   Tue, 07 Nov 2017 09:44:03 +0900
-In-Reply-To: <874lqg83u9.fsf@curie.anarc.at> ("Antoine =?utf-8?Q?Beaupr?=
- =?utf-8?Q?=C3=A9=22's?= message of
-        "Mon, 30 Oct 2017 22:10:22 -0400")
-Message-ID: <xmqq7ev2j4to.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S934792AbdKGAwx (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Nov 2017 19:52:53 -0500
+Received: from mout.gmx.net ([212.227.15.15]:56206 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S934704AbdKGAws (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Nov 2017 19:52:48 -0500
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MNIi1-1eIDmV1I7d-006zjS; Tue, 07
+ Nov 2017 01:52:42 +0100
+Date:   Tue, 7 Nov 2017 01:52:41 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Phillip Wood <phillip.wood@dunelm.org.uk>
+cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v1 6/8] sequencer: simplify adding Signed-off-by:
+ trailer
+In-Reply-To: <20171106112709.2121-7-phillip.wood@talktalk.net>
+Message-ID: <alpine.DEB.2.21.1.1711070149490.6482@virtualbox>
+References: <20170925101041.18344-1-phillip.wood@talktalk.net> <20171106112709.2121-1-phillip.wood@talktalk.net> <20171106112709.2121-7-phillip.wood@talktalk.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: C1E4EA4A-C354-11E7-8BEA-575F0C78B957-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:UXSduzCkSaep3M5QENF75Azx/lxx0f/cClvjDQA4Vo8VPzE7UIN
+ AV6YO57mfSmhodjVwxJUTXCtX87os2rIOn1vBC4mffNaK1IiI4uZwr/V8bWEVGJuCyL3/J0
+ CgYwWP1Ay6qtaIw0ZB3dKheOh6q+v8nNFdv59K+AkW1vkWMRobLR5IDbdLDJQzPQcDpR7HD
+ EMVjeQSR8mE1bLDlV+fmw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:tAWRRsUZCwI=:pWF0RHIlKiNFV3W4p4g5kX
+ oQ7rHC5vyBvwmcp+EEVnlznSDwP2PUnldDgxJ9kyP8uUfRmbj6j7as+eOkN5QORRvsHIWFBlM
+ a8INHfdRossHzwcmldWz5bymGq0stLt05tvH5PhGxTcDCsKHLp9Btjvl+fsOtdnFqS5EU39IY
+ AEdf4y9dj5IQjFL0r7c22/t9g+HQOgNUi0OldkxSKaCfSiwdR3Tq5ytnUxn9lE7J9Wbt7tNCo
+ If5TyHU2d+ZZOBqGmEp/9aAf4WN1hX5jkuc+A9CxEsATYUAScHAeIsCd6PHWrBJvoR2rPdVl3
+ UGCR5qNH+BFM6nFMu/79lmdS5Dwkd31THGFYs0ExBN072RvgerE6pG6gltKuJnyzLLkui0SdL
+ q34qt6VPcJu8dopD0CR2OZD7LJ0FEwfYoYjFfaELfJNGrmbEUtHCZdMpVsP8Grx5kd2Xz549i
+ CMAmQ/KJok1xeJcfZsi+0OHxzYeodvEcG4z6B5+jQWsGclDeyxyXvHvHsKRkw1hoIPUI5zBQD
+ vd24GsE0PdRJWzoteD2B6um3mqigZEkIXA7zql9sVqvMpPDVcjkmBvQHInRCEyLPYuZxcCXGF
+ OUHtA5x8rHoLV8psG3bMgVmtxeipsAevSvRrNYDh9UySNsb3+34q/Ga+x2pVL/NwEMARFiJMd
+ lgBDOXSM2LSCBZh/i69IDMsWcDM9MrAsHM7Jo+miNj4jicYeltbS+dY9pzTts3/1zuym2C4UC
+ UJRaXvcpMp66AlpaV20MlkGZkiAoghRHQQBjUqoI80e8HR9U1xHnwYoyKu+kz3HBLx6saDgD4
+ HkEE9GKseP9NP/tgneGPcZtiYiXMw+Q2g9yv0V+SAuVIEdzi7Q=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Antoine Beaupr=C3=A9 <anarcat@debian.org> writes:
+Hi Phillip,
 
-> On 2017-10-31 10:37:29, Junio C Hamano wrote:
->>> There's also a hybrid solution used by git-multimail: have a copy of =
-the
->>> code in git.git, but do the development separately. I'm not sure it'd=
- be
->>> a good idea for Git-Mediawiki, but I'm mentionning it for completenes=
-s.
->>
->> I think the plan was to make code drop from time to time at major
->> release points of git-multimail, but I do not think we've seen many
->> updates recently.
->
-> I'd be okay with a hybrid as well. It would require minimal work on
-> Git's side at this stage: things can just stay as is until there's a ne=
-w
-> "release" of the mediawiki extension and at that point you can decide i=
-f
-> you merge it all in or if you drop it in favor of the contrib.
->
-> I think it's also fine to punt it completely out to the community.
->
-> Either way, I may have time to do some of that work in the coming month=
-,
-> so let me know what you prefer, I guess you two have the last word
-> here. The community, on Mediawiki's side, seem to mostly favor GitHub.
+On Mon, 6 Nov 2017, Phillip Wood wrote:
 
-I guess I shouldn't leave this thread hanging.
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+> 
+> Add the Signed-off-by: trailer in one place rather than adding it to
+> the message when doing a recursive merge and specifying '--signoff'
+> when running 'git commit'.
 
-As contrib/README says, the "owners" of an area in contrib/ has the
-ultimate say and control over the area, and for contrib/mw-to-git,
-the "owners" have always been Matthieu, at least to me.
+I would find this slightly easier to understand if it was written like
+this (and separated into its own paragraph):
 
-As he made it clear earlier in this thread that (1) he sees you as a
-steady hand that can help guide the tool forward as its new "owner",
-and (2) he thinks Git-Mediawiki will be helped by being an
-independent project hosted at GitHub, now you have the say ;-)
+	Add the Signed-off-by: trailer by passing the `--signoff` option
+	to `git commit` instead of adding the trailer manually (and only
+	when the `recursive` merge strategy is in effect).
 
-A few topics from you that are already on list may want to go
-through to 'master' as any other topics, but from there on, I am
-fine with the development of Git-Mediawiki primarily done as a
-separate project, optionally giving contrib/mw-to-git/ occasional
-update dumps.  You could even choose to remove contrib/mw-to-git/*
-except for git-remote-mediawiki.txt that says that the tool's main
-development effort happens at GitHub to redirect people, if you
-think that would reduce potential confusion.
+> This means that if there are conflicts when merging with a strategy
+> other than 'recursive' the Signed-off-by: trailer will be added if the
+> user commits the resolution themselves without passing '--signoff' to
+> 'git commit'.
 
-I am also OK to serve as a patch monkey and keep going; I won't be
-picking up patches to contrib/mw-to-git/ unless you (and others)
-review them, though.
+Nice!
+
+> It also simplifies the in-process commit that is about to be added to
+> the sequencer.
+
+Also nice!
+
+Thanks,
+Dscho
