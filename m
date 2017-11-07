@@ -2,162 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2B93020A36
-	for <e@80x24.org>; Tue,  7 Nov 2017 23:20:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7340720A36
+	for <e@80x24.org>; Tue,  7 Nov 2017 23:25:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757528AbdKGXUi (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Nov 2017 18:20:38 -0500
-Received: from mail-it0-f43.google.com ([209.85.214.43]:46269 "EHLO
-        mail-it0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753000AbdKGXUh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Nov 2017 18:20:37 -0500
-Received: by mail-it0-f43.google.com with SMTP id f187so4604154itb.1
-        for <git@vger.kernel.org>; Tue, 07 Nov 2017 15:20:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=31xNwPyHCgWRCT+9Kz7HRZxSE7BTL641fhmsgT1yeKE=;
-        b=iicrH7WHO4/+XNMCoTLa5ibHw6omAVHeGuJzZuDmrjflPS6ATguEZyLDVzq60SkdyC
-         96C8QgAcQ5+nt3ijiSVczu/an6r477ZjHpBppWEs7moxgHjXU1ddvVGd8Cc8fKWjVohp
-         Up2HwkeAgP3jAsxuFGqmwu7mlwB5AZIfNSIGbNHKGoPwlO28aWS9COf4hT1LHX5WE8qI
-         cWUHVw3tX7kaktxwBkxJdkPbPATrlMVcfZnsc6chiVRPW2bRdNXCBhBPP/azuWg2A3uz
-         6/lcVWkgyY8dse44DAsNff8KFlU5HIm7krMq84oCOpJXsJc/Y3exDKkVM8vcTL5xOT7B
-         BfgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=31xNwPyHCgWRCT+9Kz7HRZxSE7BTL641fhmsgT1yeKE=;
-        b=Tg1jffo2O/IlxLKn3MiRwXVSFN6Fj8Qc6sYUr8/O3JrZtoVS40zCkgB7Tn+fyhBKdz
-         OXkNLy8Bn3FDWKo8bN5wbeURGaAVt7SFILLRcbuJ3yQFQ9XRq42AKmVYue2iQMD/Ln0P
-         YwCvbUYatQ5Zdqe5lPHWdkIXQjfmz2qy9uNSQXhnJQP4wrTbLxep11k14dMGFUlvQnZg
-         8LP/d+MxOU2SPLgZxDHK5FawctguGgnskk6dSyXjFgIHhaotXo+afmp85jlTg2J7nvTw
-         V7ZNQKHvsMV+jcGsafd2nyLIvj8e86lNTw8YhDHr84Y+/A01VzSW4c7IzMk5wP3qBwrl
-         sYnw==
-X-Gm-Message-State: AJaThX59tkLg0iE6AEmeah82Rku+MN9mq30iKyFoxjfMi9oFBUMTnv+C
-        FJ9HoPnZ73SyegSKTsBVLNJWhg==
-X-Google-Smtp-Source: ABhQp+T0DlA3Bye+NoUjnC/Yk/znuO6vFXCa2wV1oZSf3mtWG4wTlI0vEI8DshDgbs/gLoQ99TFG6g==
-X-Received: by 10.36.33.71 with SMTP id e68mr1180369ita.111.1510096836481;
-        Tue, 07 Nov 2017 15:20:36 -0800 (PST)
-Received: from twelve3.mtv.corp.google.com ([2620:0:100e:422:8df4:1665:e9bb:1ae7])
-        by smtp.gmail.com with ESMTPSA id h20sm1086719iob.65.2017.11.07.15.20.34
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 07 Nov 2017 15:20:35 -0800 (PST)
-Date:   Tue, 7 Nov 2017 15:20:34 -0800
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v3 4/6] list-objects: filter objects in
- traverse_commit_list
-Message-Id: <20171107152034.47686f6ece72ea3d43005b12@google.com>
-In-Reply-To: <20171107193546.10017-5-git@jeffhostetler.com>
-References: <20171107193546.10017-1-git@jeffhostetler.com>
-        <20171107193546.10017-5-git@jeffhostetler.com>
-X-Mailer: Sylpheed 3.4.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+        id S1757674AbdKGXZK (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Nov 2017 18:25:10 -0500
+Received: from smtp-out-6.talktalk.net ([62.24.135.70]:54030 "EHLO
+        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754724AbdKGXZG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Nov 2017 18:25:06 -0500
+Received: from PhilipOakley ([92.29.14.162])
+        by smtp.talktalk.net with SMTP
+        id CDEtejrJ2bjdZCDEue03KG; Tue, 07 Nov 2017 23:25:04 +0000
+X-Originating-IP: [92.29.14.162]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=ONFX5WSB c=1 sm=1 tr=0 a=NXc+vVEgz70gitWznrz3ig==:117
+ a=NXc+vVEgz70gitWznrz3ig==:17 a=8nJEP1OIZ-IA:10 a=WsYSNgmE4I-lTSgAepIA:9
+ a=wPNLvfGTeEIA:10
+Message-ID: <83D263E58ABD46188756D41FE311E469@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Ann T Ropea" <bedhanger@gmx.de>,
+        "Junio C Hamano" <gitster@pobox.com>
+Cc:     "Git Mailing List" <git@vger.kernel.org>,
+        "Daniel Barkalow" <barkalow@iabervon.org>,
+        "Ann T Ropea" <bedhanger@gmx.de>
+References: <20171105162730.31405-1-bedhanger@gmx.de> <20171107025321.31028-1-bedhanger@gmx.de>
+Subject: Re: [PATCH 1/3] checkout: describe_detached_head: remove 3dots after committish
+Date:   Tue, 7 Nov 2017 23:25:02 -0000
+Organization: OPDS
+MIME-Version: 1.0
+Content-Type: text/plain;
+        format=flowed;
+        charset="iso-8859-1";
+        reply-type=original
 Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-Antivirus: AVG (VPS 171107-0, 07/11/2017), Outbound message
+X-Antivirus-Status: Clean
+X-CMAE-Envelope: MS4wfJbHpQ13gN6leUOLRWV0Lm3ANZP/84iOxqU6JxkYPPnnU98/I7kD7rrJTQL4h3NUMrimh/C8l0VXVoUcgdAZBzQwkY9wjYpSN9N1bHFTBAij1j9GDxoT
+ KZE7Agw/kr8HIikCVvPhTZ3NTH06FnXVu5elIG2h9xrixedWXflxYiT56Y4QryM5xoTrJxGbFYK8RdmKC4rF/YwDKjTNMitcONARLUIVX1CopNe4c3SOthdy
+ KAEYKuDCpOnXieqp6J7RoP1i/no+eCFstbGjNShO/8D5YdyTkfn8KTlZ66+/d6w2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue,  7 Nov 2017 19:35:44 +0000
-Jeff Hostetler <git@jeffhostetler.com> wrote:
+From: "Ann T Ropea" <bedhanger@gmx.de>
+> Thanks for all the feedback provided!
+>
+> I'd like to summarise what consensus we have reached so far and
+> then propose a way forward:
+>
+>   * we'll use the term "ellipsis (pl. ellipses)" for what's
+>     been referred to as "3dots", "n-dots", "many dots" and so
+>     forth
 
-> +/*
-> + * Reject the arg if it contains any characters that might
-> + * require quoting or escaping when handing to a sub-command.
-> + */
-> +static int reject_injection_chars(const char *arg)
-> +{
-[snip]
-> +}
+Using a consistent  term for the *display* of shortened oid's is good.
 
-Someone pointed me to quote.{c,h}, which is probably sufficient to
-ensure shell safety if we do invoke subcommands through the shell. If
-that is so, we probably don't need a blacklist.
+>
+>   * we would like to use ellipses when attached to SHA-1
+>     values only for the purpose of specifying a symmetric
+>     difference (as per gitrevisions(7))
 
-Having said that, though, it might be safer to still introduce one, and
-relax it later if necessary - it is much easier to relax a constraint
-than to increase one.
+The symetric difference (three-dots) is a specific Git *cli* notation that 
+is distinct from the use of ellipsis for displaying oid's
 
-> +	} else if (skip_prefix(arg, "sparse:", &v0)) {
-> +
-> +		if (skip_prefix(v0, "oid=", &v1)) {
-> +			struct object_context oc;
-> +			struct object_id sparse_oid;
-> +			filter_options->choice = LOFC_SPARSE_OID;
-> +			if (!get_oid_with_context(v1, GET_OID_BLOB,
-> +						  &sparse_oid, &oc))
-> +				filter_options->sparse_oid_value =
-> +					oiddup(&sparse_oid);
-> +			return 0;
-> +		}
+>
+>   * the usage of ellipses as a "here we truncated something
+>     longer" is a relic which should be phased out.
 
-In your recent e-mail [1], you said that you will change it to always pass
-the original expression - is that still the plan?
+I think that is true.
 
-[1] https://public-inbox.org/git/f698d5a8-bf31-cea1-a8da-88b755b0b7af@jeffhostetler.com/
+>
+> To get there, preventing describe_detached_head from appending
+> an ellipsis to the SHA-1 values it prints is one important step.
+>
+> This change does not cause any test to fall over.
 
-> +/* Remember to update object flag allocation in object.h */
+But...
+>
+> The other important step is dealing with the "git diff --raw"
+> output which features ellipses in the relic-fashion no longer
+> desired.
+>
+> It would appear that simplifying diff.c's diff_aligned_abbrev
+> routine to something like:
+>
+> /* Do we want all 40 hex characters?
+> */
+> if (len == GIT_SHA1_HEXSZ)
+> return oid_to_hex(oid);
+>
+> /* An abbreviated value is fine.
+> */
+> return diff_abbrev_oid(oid, len);
+>
+> does do the trick.
+>
+> This change causes quite a few tests to fall over; however, they
+> all have truncated-something-longer-ellipses in their
+> raw-diff-output expected sections, and removing the ellipses
+> from there makes the tests pass again, :-)
 
-You probably can delete this line.
+The number of failures you report in the test suit suggests that someone 
+somewhere will be expecting that notation, and that we may need a 
+deprecation period, perhaps with an 'ellipsis' config variable whose default 
+value can later be flipped, though that leaves a config value needing 
+support forever!
 
-> +/*
-> + * FILTER_SHOWN_BUT_REVISIT -- we set this bit on tree objects
-> + * that have been shown, but should be revisited if they appear
-> + * in the traversal (until we mark it SEEN).  This is a way to
-> + * let us silently de-dup calls to show() in the caller.
+Junio should be able to better advise on his preferred approach.
 
-This is unclear to me at first reading. Maybe something like:
+>
+> If we can agree that this is a way forward, i'll create & send
+> v2 of the patch series to the mailing list (it'll include the
+> fixed tests) and we'll see where we go from there.
 
-  FILTER_SHOWN_BUT_REVISIT -- we set this bit on tree objects that have
-  been shown, but should not be skipped over if they reappear in the
-  traversal. This ensures that the tree's descendants are re-processed
-  if the tree reappears subsequently, and that the tree is not shown
-  twice.
+--
+Philip 
 
-> + * This
-> + * is subtly different from the "revision.h:SHOWN" and the
-> + * "sha1_name.c:ONELINE_SEEN" bits.  And also different from
-> + * the non-de-dup usage in pack-bitmap.c
-> + */
-
-Optional: I'm not sure if this comparison is useful. (Maybe it is useful
-to others, though.)
-
-> +/*
-> + * A filter driven by a sparse-checkout specification to only
-> + * include blobs that a sparse checkout would populate.
-> + *
-> + * The sparse-checkout spec can be loaded from a blob with the
-> + * given OID or from a local pathname.  We allow an OID because
-> + * the repo may be bare or we may be doing the filtering on the
-> + * server.
-> + */
-> +struct frame {
-> +	/*
-> +	 * defval is the usual default include/exclude value that
-> +	 * should be inherited as we recurse into directories based
-> +	 * upon pattern matching of the directory itself or of a
-> +	 * containing directory.
-> +	 */
-> +	int defval;
-
-Can this be an "unsigned defval : 1" as well? In the function below, I
-see that you assign to an "int val" first (which can take -1, 0, and 1)
-before assigning to this, so that is fine.
-
-Also, maybe a better name would be "exclude", with the documentation:
-
-  1 if the directory is excluded, 0 otherwise. Excluded directories will
-  still be recursed through, because an "include" rule for an object
-  might override an "exclude" rule for one of its ancestors.
