@@ -2,153 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7DA89202A0
-	for <e@80x24.org>; Tue,  7 Nov 2017 14:46:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 17984202A0
+	for <e@80x24.org>; Tue,  7 Nov 2017 15:02:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934330AbdKGOqp (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Nov 2017 09:46:45 -0500
-Received: from smtp-out-5.talktalk.net ([62.24.135.69]:5326 "EHLO
-        smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933972AbdKGOqn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Nov 2017 09:46:43 -0500
-Received: from [192.168.2.201] ([92.22.30.94])
-        by smtp.talktalk.net with SMTP
-        id C59Fe5gyYpb8rC59FepxWU; Tue, 07 Nov 2017 14:46:42 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1510066002;
-        bh=wxAlB+4BmiVOqTHlUkMHO1q3yikP+U5JOQu8hPc9lzc=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=UABBE0lLFbuFcJZGerM/Ap5eAvJVFpHI3Pq4F17lv2hLoZZcM2oBz8ifx/denmQ8V
-         yQGVEqFO8x/PbZl3/b71j2hL9PTz8gzqn0BUJk4fkrSFH3umPC3ZeuyhdhT3hDGRTv
-         eCBX/zQprLZYc9cAsL7K7nXnnnjGfu240PRMo1MY=
-X-Originating-IP: [92.22.30.94]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=ZM2noTzb c=1 sm=1 tr=0 a=lje0BXTe3+PqU+djfnm1WA==:117
- a=lje0BXTe3+PqU+djfnm1WA==:17 a=IkcTkHD0fZMA:10 a=nN7BH9HXAAAA:8
- a=HWEGUTuIDwarB2gwtasA:9 a=QEXdDO2ut3YA:10
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v1 6/8] sequencer: simplify adding Signed-off-by: trailer
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <20170925101041.18344-1-phillip.wood@talktalk.net>
- <20171106112709.2121-1-phillip.wood@talktalk.net>
- <20171106112709.2121-7-phillip.wood@talktalk.net>
- <xmqq375qg071.fsf@gitster.mtv.corp.google.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <b205b5ac-782b-1bf2-793d-fec0b7e29ebd@talktalk.net>
-Date:   Tue, 7 Nov 2017 14:46:41 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.4.0
+        id S934209AbdKGPCn (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Nov 2017 10:02:43 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56385 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S933751AbdKGPCm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Nov 2017 10:02:42 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 45BEDAF5BA;
+        Tue,  7 Nov 2017 10:02:35 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=9Ale7fT8jjsYiSJfuGHBpIt6eEA=; b=yOecNG
+        gB4a6KNUNo6f6SYmdXTCqVa4qhMyLgor3wP8TnGX5P1cFlfSlNrmtyCgeQGQt5Le
+        hCLk6PtbIUI+XAK6i6FMn1S//V8nIAlOFCDdolABU6JulHVUg5IuVXRSaGuiQgiV
+        p+Z43dIel3eZRhI5xe+9efup8tYQ4b+N0Od0s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ciBN/qUTLLMJoRnX7WpUyFiYajcHUBlP
+        YcXVPJ/nnZEyqN0ZFrhRXpJm+Mn3FMaOSe5kJoNQqqhZUxB2nlBxdij8dwDlWhkt
+        GFLua9oz0qf2D9KR9NQ5MUYHrqzcuZZkAVL/COD9/IUvZH/oFi/C4OtsapKX6on6
+        F6ieS+QuQfs=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3CE00AF5B9;
+        Tue,  7 Nov 2017 10:02:35 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A54C4AF5B8;
+        Tue,  7 Nov 2017 10:02:34 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] xdiff: reassign xpparm_t.flags bits
+References: <xmqqshe7j0af.fsf@gitster.mtv.corp.google.com>
+        <20171107064011.18399-1-gitster@pobox.com>
+        <20171107064011.18399-2-gitster@pobox.com>
+        <alpine.DEB.2.21.1.1711071336120.6482@virtualbox>
+Date:   Wed, 08 Nov 2017 00:02:33 +0900
+In-Reply-To: <alpine.DEB.2.21.1.1711071336120.6482@virtualbox> (Johannes
+        Schindelin's message of "Tue, 7 Nov 2017 13:44:44 +0100 (CET)")
+Message-ID: <xmqqr2tadtdi.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqq375qg071.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfCF73lZgkHT3aGxbIl6eYc9RYsDkU6KY+3r6uGxgyfI1Q8cAdOFTX1uKLIXpInqBWFY5W8Jx33J0DaazFCpudorY6HOuJDtClccKAdySf0G9EC7ft4im
- OU03DFvevfREw2Bi+MFM/g4BkvFKYyUDOsTgjRPU/M07YZfFkJ8irQ/QAn8wDwLIAC57PacQw0SNYUxAa8VJGE60YepAk+0k/CdKulGV0knjK2m9kXTaAMy+
- JXVxnHaEtw6MrgdSx5iZI7vEDg3bsxKgQSHdyeRuTfT0kBC2KiaAtN2aAzgOqmY/
+Content-Type: text/plain
+X-Pobox-Relay-ID: AFB90DC4-C3CC-11E7-993A-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 07/11/17 04:52, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood@talktalk.net> writes:
-> 
->> diff --git a/sequencer.c b/sequencer.c
->> index ae24405c23d021ed7916e5e2d9df6de27f867a2e..3e4c3bbb265db58df22cfcb5a321fb74d822327e 100644
->> --- a/sequencer.c
->> +++ b/sequencer.c
->> @@ -477,9 +477,6 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
->>  			_(action_name(opts)));
->>  	rollback_lock_file(&index_lock);
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+
+>> diff --git a/xdiff/xdiff.h b/xdiff/xdiff.h
+>> index b090ad8eac..cbf5d8e166 100644
+>> --- a/xdiff/xdiff.h
+>> +++ b/xdiff/xdiff.h
+>> @@ -27,22 +27,26 @@
+>>  extern "C" {
+>>  #endif /* #ifdef __cplusplus */
 >>  
->> -	if (opts->signoff)
->> -		append_signoff(msgbuf, 0, 0);
->> -
->>  	if (!clean)
->>  		append_conflicts_hint(msgbuf);
+>> +/* xpparm_t.flags */
+>> +#define XDF_NEED_MINIMAL (1 << 0)
 >>  
-> 
-> This function is called from only one place,  do_pick_commit(), and
-> then the message returned from here in msgbuf is written to
-> merge_msg(), even when the merge conflicted.
-> 
-> And when the merge conflicts, sequencer would stop and gives the
-> control back to you---the MERGE_MSG file would have had the sign-off
-> when you conclude the conflict resolution.
-> 
-> With the new code, we instead add the sign-off before calling the
-> function to compensate for the above change, so MERGE_MSG file would
-> have the sign-off as before, when the sequencer stops.
-> 
->> @@ -657,8 +654,6 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
->>  		argv_array_push(&cmd.args, "--amend");
->>  	if (opts->gpg_sign)
->>  		argv_array_pushf(&cmd.args, "-S%s", opts->gpg_sign);
->> -	if (opts->signoff)
->> -		argv_array_push(&cmd.args, "-s");
->>  	if (defmsg)
->>  		argv_array_pushl(&cmd.args, "-F", defmsg, NULL);
->>  	if ((flags & CLEANUP_MSG))
-> 
-> This has two callers.  
-> 
-> The caller in do_pick_commit() is a bit curious; as we saw already,
-> the message file should already have the sign-off and then we used
-> to give another "-s" here.  Were we depending on "-s" to become
-> no-op when the last sign-off is by the same person, I wonder?  In
-> any case, the removal of "-s" from here won't hurt that caller.
-
-That was more or less the conclusion I came to as well, though if the
-user specifies a merge strategy other than recursive, then we were
-relying on the "-s" passed to 'git commit' to add the sign-off. Now we
-add the sign-off to the message ourselves in that case.
-
-> The other caller is commit_staged_changes() which is called when
-> doing "rebase -i continue".  I am not quite sure where the contents
-> stored in the file rebase_path_message() comes from.  The function
-> error_failed_squash() moves SQUASH_MSG to it and then makes a copy
-> of it to MERGE_MSG, but that should only be relevant for squashed
-> commit and no other cases, so...?
-
-The interactive version of rebase does not support '--signoff' so this
-is moot at the moment. I think that for conflicts with pick/edit/reword
-then the sign-off is added to MERGE_MSG  and that file is then picked up
-by 'git commit'. For squash/fixup then the sign-off should have already
-been added to the commit whose message is used for the first message in
-SQUASH_MSG, but that will not be at the end of the message where we
-expect Signed-off-by: to be. I'd need to check properly but I suspect we
-also end up with a Signed-off-by: added at the end of SQUASH_MSG as well.
-
-> 
-> I need to block a bit more time to read the relevant code to comment
-> on this step, especially on this removal.
-> 
-> Thanks for working on this, anyway.
-
-Thanks for looking at these patches and your comments on them, I'll get
-on with making the changes you and Johannes have suggested and wait to
-hear from you about this one.
-
-Best Wishes
-
-Phillip
-> 
->> @@ -1347,6 +1342,9 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
->>  		}
->>  	}
+>> -#define XDF_NEED_MINIMAL (1 << 1)
+>
+> This change makes me wonder whether the least significant bit was omitted
+> on purpose originally. You probably looked at that? May be worth
+> mentioning in the commit message.
+>
+>> -#define XDF_IGNORE_WHITESPACE (1 << 2)
+>> -#define XDF_IGNORE_WHITESPACE_CHANGE (1 << 3)
+>> -#define XDF_IGNORE_WHITESPACE_AT_EOL (1 << 4)
+>> -#define XDF_WHITESPACE_FLAGS (XDF_IGNORE_WHITESPACE | XDF_IGNORE_WHITESPACE_CHANGE | XDF_IGNORE_WHITESPACE_AT_EOL)
+>> +#define XDF_IGNORE_WHITESPACE (1 << 1)
+>> +#define XDF_IGNORE_WHITESPACE_CHANGE (1 << 2)
+>> +#define XDF_IGNORE_WHITESPACE_AT_EOL (1 << 3)
+>> +#define XDF_WHITESPACE_FLAGS (XDF_IGNORE_WHITESPACE | \
+>> +			      XDF_IGNORE_WHITESPACE_CHANGE | \
+>> +			      XDF_IGNORE_WHITESPACE_AT_EOL)
 >>  
->> +	if (opts->signoff)
->> +		append_signoff(&msgbuf, 0, 0);
+>> -#define XDF_PATIENCE_DIFF (1 << 5)
+>> -#define XDF_HISTOGRAM_DIFF (1 << 6)
+>> +#define XDF_IGNORE_BLANK_LINES (1 << 7)
 >> +
->>  	if (is_rebase_i(opts) && write_author_script(msg.message) < 0)
->>  		res = -1;
->>  	else if (!opts->strategy || !strcmp(opts->strategy, "recursive") || command == TODO_REVERT) {
+>> +#define XDF_PATIENCE_DIFF (1 << 14)
+>> +#define XDF_HISTOGRAM_DIFF (1 << 15)
+>>  #define XDF_DIFF_ALGORITHM_MASK (XDF_PATIENCE_DIFF | XDF_HISTOGRAM_DIFF)
+>>  #define XDF_DIFF_ALG(x) ((x) & XDF_DIFF_ALGORITHM_MASK)
+>>  
+>> -#define XDF_IGNORE_BLANK_LINES (1 << 7)
+>> -
+>> -#define XDF_INDENT_HEURISTIC (1 << 8)
+>> +#define XDF_INDENT_HEURISTIC (1 << 23)
+>>  
+>> +/* xdemitconf_t.flags */
+>>  #define XDL_EMIT_FUNCNAMES (1 << 0)
+>>  #define XDL_EMIT_FUNCCONTEXT (1 << 2)
+>
+> It is a pity that this diff is not easier to review, but it shows how much
+> it was in need of cleaning up. Looks much nicer now.
+>
+> I wonder, however, what your guiding principle was in determining the
+> gaps? I would have expected consecutive bits, except for the one gap to
+> make room for the upcoming flag, of course.
 
+There wasn't that deep a thought went into it, actually.  
+
+I wanted to give room for each "groupsof bits" to grow, and gave
+each group a byte.  Whitespace bits sits in the first byte (but
+ignore-blank-lines work quite different so it grabs the bit from the
+other end), fundamental choices of LCS algos is another group that
+sits in the second byte, then hunk shifting and other heuristics as
+another group.  I guess that the "need minimal" thing could have
+been thrown into the last group, but somehow I didn't think it would
+grow that much, so I left it at the lowest place.
