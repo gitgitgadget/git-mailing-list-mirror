@@ -2,92 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BA6D320A10
-	for <e@80x24.org>; Tue,  7 Nov 2017 00:43:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D2C7E20A10
+	for <e@80x24.org>; Tue,  7 Nov 2017 00:44:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755541AbdKGAnT (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Nov 2017 19:43:19 -0500
-Received: from mout.gmx.net ([212.227.17.20]:56470 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754703AbdKGAnR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Nov 2017 19:43:17 -0500
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M0yaB-1f6Sdk1WQB-00v4LW; Tue, 07
- Nov 2017 01:43:11 +0100
-Date:   Tue, 7 Nov 2017 01:43:09 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Phillip Wood <phillip.wood@talktalk.net>
-cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v1 1/8] commit: move empty message checks to libgit
-In-Reply-To: <20171106112709.2121-2-phillip.wood@talktalk.net>
-Message-ID: <alpine.DEB.2.21.1.1711070141110.6482@virtualbox>
-References: <20170925101041.18344-1-phillip.wood@talktalk.net> <20171106112709.2121-1-phillip.wood@talktalk.net> <20171106112709.2121-2-phillip.wood@talktalk.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S933650AbdKGAoI (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Nov 2017 19:44:08 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64426 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S933582AbdKGAoG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Nov 2017 19:44:06 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1E2A7A4C26;
+        Mon,  6 Nov 2017 19:44:06 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=S/3f2HZ473x9
+        4p0tR9orBdGWr2M=; b=w3ygTlOAnNFRvJdEY87kEDXvIGq62GzocFbDWpT7BniD
+        oRF7XJ8WpQV+2sB7mwvgvTwjWEatjMGkoMVDSVm+x8z3DXe+r7d90a8mzrhUka7H
+        5GCVo8b2aGKf3OXu4hduljZsYMB7p//3Bf4GN7Y/hz5V/3C54l7ISOa7hixTrVE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=F8Sb6n
+        8hujI7tdB20qi022CR+JifioCNrPJQd+POdo8as/vok3fYhDOARHSAuvnaXOeoSR
+        W9J5wbKGQE8W+HlkhNDfgHSvD/XElYzBHcNeOr3K6PF/WthFwgR5UDyvaGtQeMZb
+        qg56a+y686L5mJSgXvFwUoHULfxcrAml4Q6Hk=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1609BA4C25;
+        Mon,  6 Nov 2017 19:44:06 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 89185A4C24;
+        Mon,  6 Nov 2017 19:44:05 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Antoine =?utf-8?Q?Beaupr=C3=A9?= <anarcat@debian.org>
+Cc:     Matthieu Moy <git@matthieu-moy.fr>, git@vger.kernel.org
+Subject: Re: future of the mediawiki extension?
+References: <87vaix731f.fsf@curie.anarc.at>
+        <q7h9o9opyllo.fsf@orange.lip.ens-lyon.fr>
+        <xmqqh8ug3xnq.fsf@gitster.mtv.corp.google.com>
+        <874lqg83u9.fsf@curie.anarc.at>
+Date:   Tue, 07 Nov 2017 09:44:03 +0900
+In-Reply-To: <874lqg83u9.fsf@curie.anarc.at> ("Antoine =?utf-8?Q?Beaupr?=
+ =?utf-8?Q?=C3=A9=22's?= message of
+        "Mon, 30 Oct 2017 22:10:22 -0400")
+Message-ID: <xmqq7ev2j4to.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:Rz79AooHqj+4hmmUV8/2+ZSAENP2Jd9DjGx73AMOqdcuUv0Weig
- TBCOJYmizUys672t4xD2X3weA17M4K5e+oHdRk05Pv+x/H+HOLR30NRO/gIeKiHxB2skASm
- 2mVSRPXm++D1YpfJwa5Gv2E/mzvSrToRzwi+p1NShmS1du8OVhZUpiM33elRWhVsKCDdqha
- ghWLgMo3MBV461g0A8LxA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:vG+jarsm3hs=:VjqGyKwj/C1r/SgTauRk6q
- flCwHbIvGHNcRuQ+yYNcmnVJ+3hP636RXaFJTRoJ66or4qQyvNrYKqAYoSDDZEuMqbIysJndD
- b47GCBC9BB6xjaJeSj4Hx84Qn5XwvFmArVYT3tgt9Z1o4KvltYb7CCSJONxw7WpNsouTWuCkN
- eJyQGqOtIDKKcpOJNdRHZKg2aXXkjR4p4R84D6+cmVj8JtTnGSaaDYs1h14fyUNNiRwFI3f50
- 3HgoKzcwRqe0+5+xUjosdXnbLbP+UQ7tzBC66J8D8gmIjbJryNYcq59dtAzX0qnz+ZTU3bauM
- 7vkgHwsUGxnj7hupczHZjeXhjfQiUUn8cIflsSG5lVUPAJsOO9t0zZawjOXDtCOQCCI22sxbi
- JvGy4SKGpmypfnEiF0VgpEsIdBRA73bnG7CzgF0Ibc6OLbwgrdSUzTPCehREhpn+cvPoBBW95
- Aff7vlwYC2JHdEfYG9X5pxKM7PbQllI5LBoIwyGH0awOEsA0ipJS5pokbpcu/3RHxW3l2ou87
- Re4GOakmNBSzE6Oxa1wY845bRRIInF6y2RG99TlpQTnA1BAZMGf7oDfGatOn1vzztqRCRCRCG
- oyRAUTndsQ90BDYIRhDq2xXctVqw38dbfAQXCliAxGloVX4zSkh89TyDwtg/2ftgF+3rMsCWr
- 0BAP5jI5J+3PfQv00CftnfVbCQkv4kDSFnJvP5dJIwHYFoX5vkDGEddov3MD3N4uX9IiNVBy3
- mqnrzNqAYkWsaqO16GrhbjntPPMIrAsYh0TU08jCMCwL/LrIW3FH1dNhef/N2+cfggo/Xfwgw
- XGQvfqaZki6OzxmsPN+KcGg+mfLOjuJ9fjUYvxtTGt9Oc3tPtA=
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: C1E4EA4A-C354-11E7-8BEA-575F0C78B957-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
+Antoine Beaupr=C3=A9 <anarcat@debian.org> writes:
 
-On Mon, 6 Nov 2017, Phillip Wood wrote:
+> On 2017-10-31 10:37:29, Junio C Hamano wrote:
+>>> There's also a hybrid solution used by git-multimail: have a copy of =
+the
+>>> code in git.git, but do the development separately. I'm not sure it'd=
+ be
+>>> a good idea for Git-Mediawiki, but I'm mentionning it for completenes=
+s.
+>>
+>> I think the plan was to make code drop from time to time at major
+>> release points of git-multimail, but I do not think we've seen many
+>> updates recently.
+>
+> I'd be okay with a hybrid as well. It would require minimal work on
+> Git's side at this stage: things can just stay as is until there's a ne=
+w
+> "release" of the mediawiki extension and at that point you can decide i=
+f
+> you merge it all in or if you drop it in favor of the contrib.
+>
+> I think it's also fine to punt it completely out to the community.
+>
+> Either way, I may have time to do some of that work in the coming month=
+,
+> so let me know what you prefer, I guess you two have the last word
+> here. The community, on Mediawiki's side, seem to mostly favor GitHub.
 
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
-> 
-> Move the functions that check for empty messages from bulitin/commit.c
-> to sequencer.c so they can be shared with other commands. The
-> functions are refactored to take an explicit cleanup mode and template
-> filename passed by the caller.
-> 
-> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+I guess I shouldn't leave this thread hanging.
 
-Good rationale. Just one thing:
+As contrib/README says, the "owners" of an area in contrib/ has the
+ultimate say and control over the area, and for contrib/mw-to-git,
+the "owners" have always been Matthieu, at least to me.
 
-> diff --git a/sequencer.h b/sequencer.h
-> index 6f3d3df82c0ade64b7b125acd49bf3f5e15c53af..65a4b0c25185d7ad5115035abb766d1b95df9a62 100644
-> --- a/sequencer.h
-> +++ b/sequencer.h
-> @@ -58,4 +58,14 @@ extern const char sign_off_header[];
->  void append_signoff(struct strbuf *msgbuf, int ignore_footer, unsigned flag);
->  void append_conflicts_hint(struct strbuf *msgbuf);
->  
-> +enum cleanup_mode {
-> +	CLEANUP_SPACE,
-> +	CLEANUP_NONE,
-> +	CLEANUP_SCISSORS,
-> +	CLEANUP_ALL
-> +};
+As he made it clear earlier in this thread that (1) he sees you as a
+steady hand that can help guide the tool forward as its new "owner",
+and (2) he thinks Git-Mediawiki will be helped by being an
+independent project hosted at GitHub, now you have the say ;-)
 
-When it was file-local, `cleanup_mode` was okay (although far from great).
-Now that we want to make it more widely available, I fear we have to make
-the name much longer, e.g. `commit_msg_cleanup_mode`.
+A few topics from you that are already on list may want to go
+through to 'master' as any other topics, but from there on, I am
+fine with the development of Git-Mediawiki primarily done as a
+separate project, optionally giving contrib/mw-to-git/ occasional
+update dumps.  You could even choose to remove contrib/mw-to-git/*
+except for git-remote-mediawiki.txt that says that the tool's main
+development effort happens at GitHub to redirect people, if you
+think that would reduce potential confusion.
 
-Ciao,
-Dscho
+I am also OK to serve as a patch monkey and keep going; I won't be
+picking up patches to contrib/mw-to-git/ unless you (and others)
+review them, though.
