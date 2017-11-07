@@ -2,104 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3BD8D202A0
-	for <e@80x24.org>; Tue,  7 Nov 2017 19:32:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5004020A10
+	for <e@80x24.org>; Tue,  7 Nov 2017 19:36:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757368AbdKGTcT (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Nov 2017 14:32:19 -0500
-Received: from kitenet.net ([66.228.36.95]:51458 "EHLO kitenet.net"
+        id S1751578AbdKGTf6 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Nov 2017 14:35:58 -0500
+Received: from siwi.pair.com ([209.68.5.199]:42054 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753696AbdKGTcS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Nov 2017 14:32:18 -0500
-X-Greylist: delayed 571 seconds by postgrey-1.27 at vger.kernel.org; Tue, 07 Nov 2017 14:32:18 EST
-X-Question: 42
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=joeyh.name; s=mail;
-        t=1510082559; bh=l3Z/ePAWb6X2v5uJXtOyiWnBRFDJpgV/RXnK2rEswmo=;
-        h=Date:From:To:Subject:From;
-        b=iu7jO3mIeOkDa5lVI6bnmm3HYaeOsv1IoUFmUZ9/Z53Ci+PrLyWHahe60UP/iZqD7
-         X+uNajij3r1nmpJtwNA9rVZIpE18AcDQqkhChdTm0W1rfwVhiw2ROB6z0qb1RC1pA2
-         L7+WifdTdZpLE4KcN82l8c9u6TXQ5vg/S1Pf5/+k=
-Date:   Tue, 7 Nov 2017 15:22:39 -0400
-From:   Joey Hess <id@joeyh.name>
-To:     Git Mailing List <git@vger.kernel.org>
-Subject: use of PWD
-Message-ID: <20171107192239.6hinu235hfpwqpv6@kitenet.net>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="hveq7faqybwllkif"
-Content-Disposition: inline
-User-Agent: NeoMutt/20170609 (1.8.3)
+        id S1750830AbdKGTf6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Nov 2017 14:35:58 -0500
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id D5C698453B;
+        Tue,  7 Nov 2017 14:35:57 -0500 (EST)
+Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 4A7A384537;
+        Tue,  7 Nov 2017 14:35:57 -0500 (EST)
+From:   Jeff Hostetler <git@jeffhostetler.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, peff@peff.net, jonathantanmy@google.com,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: [PATCH v3 0/6] Partial clone part 1: object filtering
+Date:   Tue,  7 Nov 2017 19:35:40 +0000
+Message-Id: <20171107193546.10017-1-git@jeffhostetler.com>
+X-Mailer: git-send-email 2.9.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Jeff Hostetler <jeffhost@microsoft.com>
 
---hveq7faqybwllkif
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Here is V3 of the list-object filtering.  This addresses the
+comments on the mailing list for the V2 series as well as the
+various TODO items I left in the code.  I also documented some
+of the bit flags and fields that I added.
 
-In strbuf_add_absolute_path, git uses PWD if set when making relative
-paths absolute, otherwise it falls back to getcwd(3). Using PWD may not
-be a good idea. Here's one case where it confuses git badly:
+In the blob size filter, I removed the ".git*" pattern matching
+for special files.  I don't think we need it any more and it
+simplifies the code.  This patch series does not support
+traverse_bitmap_commit_list() and the --use-bitmap-index feature
+in rev-list, but by removing the ".git*" pattern matching now
+we should be able allow filtering and bitmaps to be used
+together in a future effort.  (That is beyond the scope of
+the current partial-clone effort.)
 
-joey@darkstar:/>sudo ln -s /media/hd/repo hd
-joey@darkstar:/>cd /hd/repo
-joey@darkstar:/hd/repo>git --git-dir=3D../../../home/joey/tmp/repo/.git cat=
--file -t HEAD
-fatal: unable to normalize object directory: /hd/repo/../../../home/joey/tm=
-p/repo/.git/objects
-joey@darkstar:/hd/repo>ls -d ../../../home/joey/tmp/repo/.git
-=2E./../../home/joey/tmp/repo/.git/
+With this patch series, I think part 1 is complete unless there
+are further comments or questions.
 
-In that situation where cd has followed a symlink to a different
-depth, there seems to be no way to give git a relative path that works.
-Other numbers of ../ also don't work.
 
-What does work is to unset PWD:
+Jeff Hostetler (6):
+  dir: allow exclusions from blob in addition to file
+  oidmap: add oidmap iterator methods
+  oidset: add iterator methods to oidset
+  list-objects: filter objects in traverse_commit_list
+  rev-list: add list-objects filtering support
+  pack-objects: add list-objects filtering
 
-joey@darkstar:/hd/repo>PWD=3D git --git-dir=3D../../../home/joey/tmp/repo/.=
-git cat-file -t HEAD
-commit
+ Documentation/git-pack-objects.txt     |  12 +-
+ Documentation/git-rev-list.txt         |   6 +-
+ Documentation/rev-list-options.txt     |  34 +++
+ Makefile                               |   2 +
+ builtin/pack-objects.c                 |  28 ++-
+ builtin/rev-list.c                     |  75 +++++-
+ dir.c                                  | 132 ++++++++---
+ dir.h                                  |   3 +
+ list-objects-filter-options.c          | 148 ++++++++++++
+ list-objects-filter-options.h          |  50 ++++
+ list-objects-filter.c                  | 401 +++++++++++++++++++++++++++++++++
+ list-objects-filter.h                  |  77 +++++++
+ list-objects.c                         |  95 ++++++--
+ list-objects.h                         |  13 +-
+ object.h                               |   1 +
+ oidmap.h                               |  22 ++
+ oidset.c                               |  10 +
+ oidset.h                               |  36 +++
+ t/t5317-pack-objects-filter-objects.sh | 369 ++++++++++++++++++++++++++++++
+ t/t6112-rev-list-filters-objects.sh    | 225 ++++++++++++++++++
+ 20 files changed, 1686 insertions(+), 53 deletions(-)
+ create mode 100644 list-objects-filter-options.c
+ create mode 100644 list-objects-filter-options.h
+ create mode 100644 list-objects-filter.c
+ create mode 100644 list-objects-filter.h
+ create mode 100755 t/t5317-pack-objects-filter-objects.sh
+ create mode 100755 t/t6112-rev-list-filters-objects.sh
 
-So why does git use PWD at all? Some shell code used pwd earlier
-(leading to similar bugs like the one fixed in v1.5.1.5), but in
-the C code, it was first introduced in commit
-1b9a9467f8b9a8da2fe58d10ae16779492aa7737, which speaks of the "user's
-view of the current directory", which is what PWD is. The use of PWD in
-that commit may be ok.
+-- 
+2.9.3
 
-Then in commit 10c4c881c4d2cb0ece0508e7142e189e68445257,=20
-the limited use of PWD broadened a lot, seemingly without
-intending to look at the "user's view of the current directory"
-anymore, due to reusing the code from the earlier commit.
-
---=20
-see shy jo
-
---hveq7faqybwllkif
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEKKUAw1IH6rcvbA8l2xLbD/BfjzgFAloCB/0ACgkQ2xLbD/Bf
-jzj8sw/8D8MQzKBltD0xueJjC2ORBbWROHC9RmrkqwIsPagT9ilgI9ecgllYEYqd
-MR5nr86ibTIkpP14MFX9ZnZLN0rRGqMsozDqu0U+0lLMbQuGAlgG2PwB0AFoA/eu
-3Kske9J+OS/DsdfbwYtGJta6Hm8KZW3yzJFdH0yKjG5SfIU0gVMMX5ztkyTUGSEp
-WB280F+7Xt4ECUTclhflLo7ttU1HyMaMAjZNlBa6GAmczzRMvMHQio1AVR7TJiPe
-wPbOiefNgMhYqVzilsBhxjU6wcRMuIM4OTpezEpPYh6VYXiLhK+nfMHZCnrXoMLy
-LDA3NdXrZCkZpIdEq7amo6WBdz3oh6GepCInPiJbtKufj2MMWI4+mOETrarLzMbT
-qfcAtNZgkwMNADzQcl2zKvi23Lu3X+oLPCRz9rVZ6iqPkrqXygwOujv+3lRKh13L
-O3S/nyAyYEh1uJEDJyCIK+WLz2OTvuE8f0xxxufl8LsBvHtxdjkEZKO2fZ5XqucN
-tuQ3LikY+6peey4j9jAvSBOCpAad04IfgfwY3HShnISFgUHtZNTJ9frPR1t3vG9R
-02UmJrQvd2JS75xp9cTEs6WEKYZFyLKu+zsbyNLYrLVU2uGEUHTvTSPo19H7Jz5b
-Nn3rlJ863MPcAXDG/UXxuyzzbjBEkMS9H3FWH1Qtm2lkfjhcB2c=
-=/bnl
------END PGP SIGNATURE-----
-
---hveq7faqybwllkif--
