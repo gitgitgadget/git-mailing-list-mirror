@@ -2,145 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	UNPARSEABLE_RELAY shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 505A71F442
-	for <e@80x24.org>; Wed,  8 Nov 2017 07:53:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5C2551F442
+	for <e@80x24.org>; Wed,  8 Nov 2017 09:02:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751261AbdKHHxj (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Nov 2017 02:53:39 -0500
-Received: from cloud.peff.net ([104.130.231.41]:49942 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750983AbdKHHxi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Nov 2017 02:53:38 -0500
-Received: (qmail 4936 invoked by uid 109); 8 Nov 2017 07:53:37 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 08 Nov 2017 07:53:37 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12202 invoked by uid 111); 8 Nov 2017 07:53:49 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Wed, 08 Nov 2017 02:53:49 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 08 Nov 2017 02:53:36 -0500
-Date:   Wed, 8 Nov 2017 02:53:36 -0500
-From:   Jeff King <peff@peff.net>
-To:     Joey Hess <id@joeyh.name>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: use of PWD
-Message-ID: <20171108075336.is4awgyw53dohf7y@sigill.intra.peff.net>
-References: <20171107192239.6hinu235hfpwqpv6@kitenet.net>
+        id S1751587AbdKHJCF convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Wed, 8 Nov 2017 04:02:05 -0500
+Received: from relay-ff112.magwien.gv.at ([217.149.228.140]:42722 "EHLO
+        relay-ff112.magwien.gv.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751306AbdKHJCD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Nov 2017 04:02:03 -0500
+X-Greylist: delayed 568 seconds by postgrey-1.27 at vger.kernel.org; Wed, 08 Nov 2017 04:02:02 EST
+Received: from localhost (localhost [127.0.0.1])
+        by relay-ff112.magwien.gv.at (Postfix) with ESMTP id 4813C2063B;
+        Wed,  8 Nov 2017 09:55:30 +0100 (CET)
+X-Virus-Scanned: by amavisd-new using Sophie and ClamAV at magwien.gv.at
+Received: from relay11.host.magwien.gv.at (relay11.host.magwien.gv.at [--])
+        (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by relay-ff112.magwien.gv.at (Postfix) with ESMTPS id 2187420570;
+        Wed,  8 Nov 2017 09:55:30 +0100 (CET)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+        by relay11.host.magwien.gv.at (Postfix) with ESMTP id 6DDF7166A30;
+        Wed,  8 Nov 2017 09:52:32 +0100 (CET)
+Received: from mail.fsw.at (sfsww2k12ex02.intern.fsw.at [--])
+        (using TLSv1 with cipher AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by relay11.host.magwien.gv.at (Postfix) with ESMTP id 2D5DA166A20;
+        Wed,  8 Nov 2017 09:52:31 +0100 (CET)
+Received: from SFSWW2K12EX02.intern.fsw.at (--) by
+ SFSWW2K12EX02.intern.fsw.at (--) with Microsoft SMTP Server (TLS)
+ id 15.0.1293.2; Wed, 8 Nov 2017 09:52:31 +0100
+Received: from SFSWW2K12EX02.intern.fsw.at ([fe80::a1d5:6bb5:fb11:2572]) by
+ SFSWW2K12EX02.intern.fsw.at ([fe80::a1d5:6bb5:fb11:2572%15]) with mapi id
+ 15.00.1293.002; Wed, 8 Nov 2017 09:52:31 +0100
+From:   Ekelhart Jakob <jakob.ekelhart@fsw.at>
+To:     "Junio C Hamano  *EXTERN*" <gitster@pobox.com>,
+        Michael J Gruber <git@grubix.eu>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Matthias Lischka <matthias.lischka@fsw.at>
+Subject: RE: [PATCH 2/3] merge-base: return fork-point outside reflog
+Thread-Topic: [PATCH 2/3] merge-base: return fork-point outside reflog
+Thread-Index: AQHTPA2qwa68IIz8OE+EjGcZawC3PaMKZVEg
+Date:   Wed, 8 Nov 2017 08:52:31 +0000
+Message-ID: <b9c2c978a6d3407c8c26509fc82b3920@SFSWW2K12EX02.intern.fsw.at>
+References: <68633b20-9e2b-ae23-2ede-8728283250f0@grubix.eu>
+        <cover.1505394278.git.git@grubix.eu>
+        <5513a1415d11517c28158d9b4212d383a233182f.1505394278.git.git@grubix.eu>
+        <xmqq60ckzng7.fsf@gitster.mtv.corp.google.com>
+        <cd97bb1b-13f3-0856-a250-8f4921b9f6d8@grubix.eu>
+        <xmqqshfnx1kl.fsf@gitster.mtv.corp.google.com>
+        <xmqqshfgk1mr.fsf@gitster.mtv.corp.google.com>
+        <5a2fca1d-4edf-965f-4840-58c924c91051@grubix.eu>
+        <xmqqzi9nlcyw.fsf@gitster.mtv.corp.google.com>
+        <4a14c35c-88b0-7bc3-0a6e-c69ed9ec7ee7@grubix.eu>
+        <xmqqa81njds0.fsf@gitster.mtv.corp.google.com>
+ <xmqq7ewckbpk.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <xmqq7ewckbpk.fsf@gitster.mtv.corp.google.com>
+Accept-Language: en-US, de-AT
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20171107192239.6hinu235hfpwqpv6@kitenet.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 07, 2017 at 03:22:39PM -0400, Joey Hess wrote:
+Thank you for all the effort to fix this issue. Unfortunately, we are still suffering from this and our workaround just stopped being sufficient.
 
-> In strbuf_add_absolute_path, git uses PWD if set when making relative
-> paths absolute, otherwise it falls back to getcwd(3). Using PWD may not
-> be a good idea. Here's one case where it confuses git badly:
-> 
-> joey@darkstar:/>sudo ln -s /media/hd/repo hd
-> joey@darkstar:/>cd /hd/repo
-> joey@darkstar:/hd/repo>git --git-dir=../../../home/joey/tmp/repo/.git cat-file -t HEAD
-> fatal: unable to normalize object directory: /hd/repo/../../../home/joey/tmp/repo/.git/objects
-> joey@darkstar:/hd/repo>ls -d ../../../home/joey/tmp/repo/.git
-> ../../../home/joey/tmp/repo/.git/
-> 
-> In that situation where cd has followed a symlink to a different
-> depth, there seems to be no way to give git a relative path that works.
-> Other numbers of ../ also don't work.
+We were wondering if there is any way to tell when this fix will be released?
 
-I wondered if:
+BR Jakob
 
-  git --git-dir=../../home/joey/tmp/repo.git
+-----Original Message-----
+From: Junio C Hamano *EXTERN* [mailto:gitster@pobox.com] 
+Sent: Dienstag, 3. Oktober 2017 08:06
+To: Michael J Gruber <git@grubix.eu>
+Cc: git@vger.kernel.org; Ekelhart Jakob <jakob.ekelhart@fsw.at>; Jeff King <peff@peff.net>; Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 2/3] merge-base: return fork-point outside reflog
 
-would work. But interestingly we _do_ resolve the relative git-dir using
-the physical path, so that fails with "not a git repository". IOW,
-there's no relative path that could possibly work.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Also interestingly, your case "worked" until my 670c359da3
-(link_alt_odb_entry: handle normalize_path errors, 2016-10-03). But
-that's only because we quietly generated a broken nonsense path, which
-turned out not to matter because there are no alternates to link.
+> Michael J Gruber <git@grubix.eu> writes:
+>
+>> I'm still trying to understand what the original intent was: If we 
+>> abstract from the implementation (as we should, as you rightly
+>> emphasize) and talk about historical tips then we have to ask ourselves:
+>> - What is "historical"?
+>> - What is tip?
+>> - Tip of what, i.e. what is a "branch"?
+>
+> The feature was meant to be a solution for "upstream rebased the 
+> branch I based my work on."
+> ...
 
-So totally orthogonal to your bug, I wonder if we ought to be doing:
+So, what is the status of this thing?
 
-diff --git a/sha1_file.c b/sha1_file.c
-index 057262d46e..0b76233aa7 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -530,11 +530,11 @@ void prepare_alt_odb(void)
- 	if (alt_odb_tail)
- 		return;
- 
--	alt = getenv(ALTERNATE_DB_ENVIRONMENT);
--	if (!alt) alt = "";
--
- 	alt_odb_tail = &alt_odb_list;
--	link_alt_odb_entries(alt, strlen(alt), PATH_SEP, NULL, 0);
-+
-+	alt = getenv(ALTERNATE_DB_ENVIRONMENT);
-+	if (alt)
-+		link_alt_odb_entries(alt, strlen(alt), PATH_SEP, NULL, 0);
- 
- 	read_info_alternates(get_object_directory(), 0);
- }
+While I think 1/3 and 3/3 of these three definitely make sense, I do not think "fork-point outside reflog" does as-is If it is not even part of the commits that were known to be at the tip some time in the past (including "right now"---which is the fix you made with 3/3 is about), then the patch may make the command return something in more situations, and these extra things that it returns might even be improvements, but they are definitely not "fork-points".
 
-to avoid hitting link_alt_odb_entries() at all when there are no
-entries.
+To be quite honest, I am not convinced that the extra output you would get out of the command by removing the latter half of "which are the ancestors that were known to be at the tip?" would always give better commit to use as the beginning of the topic to be rebased, as I do not see any reasoning behind why, unlike the filtered case where there _is_ a strong reasoning (with explained
+limitation) behind it.
 
-Anyway, back on topic.
+As long as the code misidentifies and picks a commits deeper than necessary, which will force the user to say "rebase --skip", I think we are OK.  What we want to absolutely avoid is the opposite; somehow the code misidentifies a commit that is part of the work you want to rebase as a recommended fork-point, which would cause the rebase to silently lose changes.  I do not think I saw why it won't happen explained in the log message of 2/3 at all.
 
-> So why does git use PWD at all? Some shell code used pwd earlier
-> (leading to similar bugs like the one fixed in v1.5.1.5), but in
-> the C code, it was first introduced in commit
-> 1b9a9467f8b9a8da2fe58d10ae16779492aa7737, which speaks of the "user's
-> view of the current directory", which is what PWD is. The use of PWD in
-> that commit may be ok.
-> 
-> Then in commit 10c4c881c4d2cb0ece0508e7142e189e68445257, 
-> the limited use of PWD broadened a lot, seemingly without
-> intending to look at the "user's view of the current directory"
-> anymore, due to reusing the code from the earlier commit.
-
-I had trouble finding anything definite in the list archive. I suspect
-it was mostly about trying to make things look "nice" to the user in
-messages, etc. But as you noticed, while it works some of the time, it
-definitely doesn't always.
-
-Interestingly, ripping it out and just using getcwd() causes t1305 to
-fail. The test does:
-
-  ln -s foo bar
-  cd bar
-  git config includeIf.gitdir:bar/.key value
-
-and expects that condition to trigger.
-
-That's somewhat convenient, but it's also slightly crazy that the config
-might or might not trigger for the same repo depending on how you
-happened to "cd" there.
-
-This was added by 0624c63ce6 (config: match both symlink & realpath
-versions in IncludeIf.gitdir:*, 2017-05-16) which makes it clear that
-this behavior is very intentional.
-
-Ideally we would instead be canonicalizing both the cwd and the
-directory mentioned in the config file, and then comparing those
-results.  But I suspect that may be tricky since what's in the config is
-actually a globbing pattern. I guess you'd have to expand the glob and
-then `real_path` the results.
-
-Or we can leave the minor weirdness (which AFAIK nobody is complaining
-about), and just let that matching code use its own custom
-$PWD-respecting implementation. And change strbuf_add_absolute_path() to
-do the more robust physical-path matching.
-
--Peff
