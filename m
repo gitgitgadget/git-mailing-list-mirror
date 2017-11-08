@@ -2,83 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E67AF1F43C
-	for <e@80x24.org>; Wed,  8 Nov 2017 16:50:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D7F461F43C
+	for <e@80x24.org>; Wed,  8 Nov 2017 16:58:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752717AbdKHQuh (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Nov 2017 11:50:37 -0500
-Received: from mail-wm0-f45.google.com ([74.125.82.45]:50377 "EHLO
-        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752256AbdKHQug (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Nov 2017 11:50:36 -0500
-Received: by mail-wm0-f45.google.com with SMTP id s66so11671954wmf.5
-        for <git@vger.kernel.org>; Wed, 08 Nov 2017 08:50:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dinwoodie.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=oKhgoulMkQAgibAaTldP2XVZwxJBDy9HoNKJPmdzNWc=;
-        b=O3jIANvWyPqL5WgImwDuaADVkjOJSg++7YmniYL3Zu21zFuWvf576vW6gxFa/l1zQx
-         6/mG6FD9HuMk1Iw7Ga9oMeVHCNmnZDFQpZWE03DGnob/TrcX46XiaakT7HNhTNc98C89
-         WW/4e9xxI/i1Oj/hnYWR1bVhxwfqtxi5WkyWg=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=oKhgoulMkQAgibAaTldP2XVZwxJBDy9HoNKJPmdzNWc=;
-        b=H4ylU7sYbzYufPhPpPXHod/DGozX2P0qsCSmfHa3vkHaG8O4kAYkhpyTw6jIadhHZy
-         u3iHbdS57m82exbqCpRsHyBxm5cQ15qBeeDdfXsCZuhnprmcTJfWCoaWwSzsGobck4lB
-         pclL/BK08FPb/6o+JgoLzwIwwob7bsa7aNMt15ntUmq7s6+/BSxIxOPkiFyOLzciY/Ta
-         Trw5XWB1crxWyl4dhd0+cESzEkdFrOFsWrzgXsJdL7azHM/vh68Ek5y4IXtgveMfFyfo
-         eua+SaXCz3BlnXjtIMpmw9Ow4NdfokNwizbYulOf1pcGj7JcbYAN84n7Iz3M44eHgiQx
-         oQcQ==
-X-Gm-Message-State: AJaThX6JmXlVU2FPxjvu+OGguNss542ZhGClMdqiaJrU5tsKfJhrlbAS
-        eV/cVaD0prqOhkxszT+CzNb7fg==
-X-Google-Smtp-Source: ABhQp+REOfZt5RCUbMENnQY3AkWNu5nXqS1g4e5QkOzy7eIR27HzYAyuZ7HCS/rZOeMCK+HVRtUd2Q==
-X-Received: by 10.28.37.195 with SMTP id l186mr990503wml.144.1510159835583;
-        Wed, 08 Nov 2017 08:50:35 -0800 (PST)
-Received: from dinwoodie.org ([2001:ba8:0:1c0::9:1])
-        by smtp.gmail.com with ESMTPSA id v8sm2150749wrg.80.2017.11.08.08.50.34
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 08 Nov 2017 08:50:34 -0800 (PST)
-Date:   Wed, 8 Nov 2017 16:50:33 +0000
-From:   Adam Dinwoodie <adam@dinwoodie.org>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git <git@vger.kernel.org>
-Subject: Re: [RFC PATCH] rebisect: add script for easier bisect log editing
-Message-ID: <20171108165033.GF20681@dinwoodie.org>
-References: <20171108135931.166880-1-adam@dinwoodie.org>
- <CAP8UFD015i76L4BgSZdr2k2TZk+C0vRAqOsj4DaqtNYuJjtNxQ@mail.gmail.com>
- <CAP8UFD35yFTB5_D6=WyXN47Lgo3PvLJi3yWfzTAK5aYjE9YjNg@mail.gmail.com>
+        id S1752699AbdKHQ6Z (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Nov 2017 11:58:25 -0500
+Received: from a27-143.smtp-out.us-west-2.amazonses.com ([54.240.27.143]:45526
+        "EHLO a27-143.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752364AbdKHQ6Y (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 8 Nov 2017 11:58:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=hsbnp7p3ensaochzwyq5wwmceodymuwv; d=amazonses.com; t=1510160304;
+        h=Content-Type:From:To:Subject:Message-ID:Date:Content-Transfer-Encoding:MIME-Version:Feedback-ID;
+        bh=edzGhSrOAvWF71heTcdsexJqkT6JbiwsZXr3AjBzDDk=;
+        b=cF7rVz9nkYdPtOXOXAmfQarsVmMbfD0K4CJVtfKe01aHe1SiVfgYdHp9fjqxnDYt
+        Nrf0tpVRNklel+E+josmLBdiFxVzHSSzyg1QbHbZ6l8kzVbmtLBcMjt4Qa9InfhuHcN
+        ymOYXGgvbq4AxEqq4K3giTYwoULfKjvJoIAXAb5Q=
+Content-Type: text/plain
+From:   mqudsi@neosmart.net
+To:     git@vger.kernel.org
+Subject: Invalid memory access in `git apply`
+Message-ID: <0101015f9c91871f-2f750aec-6877-4e29-9c15-c8399670dd48-000000@us-west-2.amazonses.com>
+Date:   Wed, 8 Nov 2017 16:58:23 +0000
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAP8UFD35yFTB5_D6=WyXN47Lgo3PvLJi3yWfzTAK5aYjE9YjNg@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+X-SES-Outgoing: 2017.11.08-54.240.27.143
+Feedback-ID: 1.us-west-2.PCEy91/Vd+GU67P48MglE9FKtQG6qQD9MhgwC/YKQRM=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wednesday 08 November 2017 at 05:15 pm +0100, Christian Couder wrote:
-> >> +git bisect replay "$GIT_BISECT_LOG_TMP"
-> >> +rm -f "$GIT_BISECT_LOG_TMP"
-> 
-> While at it, is there a reason for the -f option above?
+**Resending as it seems that the attachments caused the last email to wind =
+up
+in a black hole**
 
-I was following the lead of git-bisect.sh, which has used `rm -f` for
-such things ever since it was first introduced[^1], although it appears
-that, since v2.15.0, all the `rm`s in that script have been moved to the
-C code[^2].
+There seems to be bug in the `git apply` that leads =
+to out-of-bounds memory
+access when --ignore-space-change is combined with =
+--inaccurate-eof and
+applying a patch.
 
-Actually applying thought, rather than just following existing
-precedent, I suspect having `-f` is useful because it means the command
-will work even if the shell has picked up that `rm` should otherwise
-have a `-i` argument from somewhere.
+On occasion, this can lead to error=
+ output like the following:
 
-[^1]: 8cc6a0831 ("[PATCH] Making it easier to find which change introduced a bug", 2005-07-30)
-[^2]: fb71a3299 ("bisect--helper: `bisect_clean_state` shell function in C", 2017-09-29)
+	 mqudsi@ZBook ~> git apply =
+--ignore-space-change --ignore-whitespace
+	 --allow-overlap =
+--inaccurate-eof without_whitespace.diff
+	 *** Error in `git': malloc(): =
+memory corruption: 0x0000000002543530 ***
+	 =3D=3D=3D=3D=3D=3D=3D =
+Backtrace: =3D=3D=3D=3D=3D=3D=3D=3D=3D
+	 /lib/x86_64-linux-gnu/libc.so.=
+6(+0x777e5)[0x7fdda79c77e5]
+	 /lib/x86_64-linux-gnu/libc.so.=
+6(+0x8213e)[0x7fdda79d213e]
+	 /lib/x86_64-linux-gnu/libc.so.=
+6(__libc_malloc+0x54)[0x7fdda79d4184]
+	 /lib/x86_64-linux-gnu/libc.so.=
+6(_IO_file_doallocate+0x55)[0x7fdda79bd1d5]
+	 /lib/x86_64-linux-gnu/libc.so=
+.6(_IO_doallocbuf+0x34)[0x7fdda79cb594]
+	 /lib/x86_64-linux-gnu/libc.so.=
+6(_IO_file_overflow+0x1c8)[0x7fdda79ca8f8]
+	 /lib/x86_64-linux-gnu/libc.so.=
+6(_IO_file_xsputn+0xad)[0x7fdda79c928d]
+	 /lib/x86_64-linux-gnu/libc.so.=
+6(fputs+0x98)[0x7fdda79be0c8]
+	 git[0x5386cd]
+	 git[0x538714]
+	 git[0x538940]
+	 git[0x40e220]
+	 git[0x410a10]
+	 git[0x41256e]
+	 git[0x412df7]
+	 git[0x415935]
+	 git[0x406436]
+	 git[0x40555c]
+
+The original file being patched (clipboard.vim) and the patch file that I =
+had
+attempted to apply (without_whitespace.diff) are attached, along with =
+the
+full, unabridged output of the memory map as a result of the =
+out-of-bounds
+access (memory_map.txt).
+
+The memory map output was generated=
+ under git 2.7.4; repeated attempts to
+reproduce the memory map dump with =
+both 2.7.4 and 2.15 produce the following
+output:
+
+	 mqudsi@ZBook ~/.=
+c/nvim> git apply --ignore-space-change  --inaccurate-eof
+	 --whitespace=3Dfix without_whitespace.diff
+	 fatal: BUG: caller =
+miscounted postlen: asked 248, orig =3D 251, used =3D 249
+
+Mahmoud Al-Qudsi
+NeoSmart Technologies
+
+--Attachments--
+
+* clipboard.vim: http://termbin.=
+com/u25t
+* without_whitespace.diff: http://termbin.com/bu9y
+* memory_map.txt: http://termbin.com/cboz
+
+
