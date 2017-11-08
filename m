@@ -2,97 +2,248 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9210C1F43C
-	for <e@80x24.org>; Wed,  8 Nov 2017 22:36:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 26D8E1F43C
+	for <e@80x24.org>; Wed,  8 Nov 2017 22:55:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752856AbdKHWgt (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Nov 2017 17:36:49 -0500
-Received: from mail-io0-f179.google.com ([209.85.223.179]:56652 "EHLO
-        mail-io0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752718AbdKHWgs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Nov 2017 17:36:48 -0500
-Received: by mail-io0-f179.google.com with SMTP id m81so7716074ioi.13
-        for <git@vger.kernel.org>; Wed, 08 Nov 2017 14:36:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=/DfaDlxtqWL9gH8KwSralxVDvV+oDeatr8UW+ndSxAY=;
-        b=kvX//mdM0GmNyKQo20EYFyFYbfqKo6QJlVsLbJusk5GWu7uI+WfgerwCBFfQpWJSX5
-         GhhRm+uK4cyg3AaGNSqfrFQid/HFgwG7dS8VQ9Kq4nhvOtrLiMIpHu0d9LBnYrFgU9DU
-         VLLb9/MG6y+IGct+0zKgNQ6jIgi3qdhCvbX6ZugI3oIBBcnpmBSi6fjDmXiVK+2LZasD
-         mHGg7+ZfOihlttQ7CSJztxBV7976sJhZOPDqsYhh0tmWnxxsAccHdBu6re8TxoG8+lPy
-         pl2HPUInTtpoyKJIOjeUDn+n5fFQ/YVySKv7O57DH1/ocYGH0CXybpp/5+UT6/xZ8NHt
-         kL3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=/DfaDlxtqWL9gH8KwSralxVDvV+oDeatr8UW+ndSxAY=;
-        b=SYk+sJRshkv3/fSvWOdaRWLon1qUpidWqkS+Iyy0VIZeKX6MVWkRA2/DHtb061Bh0k
-         IiYGpbWQIRwxXRBtClzt82YAel+DZVEvjDzU28C1jwC6Sysb+rGOMjAwuLF7nk3PjPaA
-         GTW2SFnFxHR5ew3IagaPXqNscxOWW+RVEsU2MmgmuUvx196BbhHonBfs0Vp+TGHqmrC+
-         h2e4pe2e74FKTjo2VMqlU02foyivYFMIQfD10LUfuRIaj+MVN1I2zTXzl8pNaeUzjLHf
-         p15zxgSWWUKv8zYG0QyIV3bIPMnH2oNNCK5Se67ZyiMD2K3WpWIn+15toB0IUeGbjmgM
-         dJkQ==
-X-Gm-Message-State: AJaThX5V1bHmMEC6i7uFc599vR4Tb3f3tBQ1lZJXHk/88KJyEcP5SXyN
-        bYEhvOGAPAtCp7ipEUCnHgfDywg5rdg=
-X-Google-Smtp-Source: ABhQp+Riw6k7xot+flPeIhzqgh4vntixNlssVMGUzVF7YTf26qQE91oXHvbwTny/atuOmPcXrXMw2A==
-X-Received: by 10.107.175.28 with SMTP id y28mr2787898ioe.216.1510180607635;
-        Wed, 08 Nov 2017 14:36:47 -0800 (PST)
-Received: from twelve3.mtv.corp.google.com ([2620:0:100e:422:8df4:1665:e9bb:1ae7])
-        by smtp.gmail.com with ESMTPSA id f184sm2737421ith.2.2017.11.08.14.36.46
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 08 Nov 2017 14:36:47 -0800 (PST)
-Date:   Wed, 8 Nov 2017 14:36:46 -0800
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC PATCH 0/4] git-status reports relation to superproject
-Message-Id: <20171108143646.2e1870a82360072557094e01@google.com>
-In-Reply-To: <20171108195509.7839-1-sbeller@google.com>
-References: <20171108195509.7839-1-sbeller@google.com>
-X-Mailer: Sylpheed 3.4.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+        id S1752868AbdKHWzm (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Nov 2017 17:55:42 -0500
+Received: from avasout04.plus.net ([212.159.14.19]:38275 "EHLO
+        avasout04.plus.net.plus.net" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1752534AbdKHWzk (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 8 Nov 2017 17:55:40 -0500
+Received: from [10.0.2.15] ([80.189.70.158])
+        by smtp with ESMTPA
+        id CZFwe5CYQzbmWCZFye3Iz7; Wed, 08 Nov 2017 22:55:38 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=P6pKvmIu c=1 sm=1 tr=0
+ a=bpDj9VLvXCYHU65eeb/Fiw==:117 a=bpDj9VLvXCYHU65eeb/Fiw==:17
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=5rxgeBVgAAAA:8 a=1XWaLZrsAAAA:8
+ a=A1X0JdhQAAAA:8 a=UJGXVSz7gd6jF7HModwA:9 a=QEXdDO2ut3YA:10
+ a=yJM6EZoI5SlJf8ks9Ge_:22 a=PwKx63F5tFurRwaNxrlG:22 a=Df3jFdWbhGDLdZNm0fyq:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: Test failures on 'pu' branch
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+References: <cf38b57d-1424-0776-b67f-8cfd24e087bb@ramsayjones.plus.com>
+ <CAGZ79kb3NpuWW=BpTjF_DrdVhXHh3d_8aF77Jdpi+8yTxtAbVw@mail.gmail.com>
+ <e2d10701-2deb-4f03-f4ce-3da7d48effa3@ramsayjones.plus.com>
+Message-ID: <d4eb2005-aaf0-0ae4-e719-5dae25e7a254@ramsayjones.plus.com>
+Date:   Wed, 8 Nov 2017 22:55:36 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
+MIME-Version: 1.0
+In-Reply-To: <e2d10701-2deb-4f03-f4ce-3da7d48effa3@ramsayjones.plus.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfJlxT0yhY8fSIoExjRD5DqYyz9VHVElW8KJcYtc3N/JFeVrizPPM7EvXbMRsuVAIs9bKNhD/XAl0wiDjs/kB7MZ0zEyFk98TAWDzad+oswE3tmO8E7hY
+ 78GokWo6XYkYAKJccWWs25gJVhBJjNretfOSWAQO4osayz3N5rq0emE9KGcNEjWgpRqymkBXx067jw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed,  8 Nov 2017 11:55:05 -0800
-Stefan Beller <sbeller@google.com> wrote:
 
->   $ git -c status.superprojectinfo status
->   HEAD detached at v2.15-rc2
->   superproject is 6 commits behind HEAD 7070ce2..5e6d0fb
->   nothing to commit, working tree clean
-> 
-> How cool is that?
-> 
-> This series side steps the questions raised in
-> https://public-inbox.org/git/xmqq4lq6hmp2.fsf_-_@gitster.mtv.corp.google.com/
-> which I am also putting together albeit slowly.
-> 
-> This series just reports the relationship between the superprojects gitlink
-> (if any) to HEAD. I think that is useful information in the current
-> world of submodules.
 
-The relationship is indeed currently useful, but if the long term plan
-is to strongly discourage detached submodule HEAD, then I would think
-that these patches are in the wrong direction. (If the long term plan is
-to end up supporting both detached and linked submodule HEAD, then these
-patches are fine, of course.) So I think that the plan referenced in
-Junio's email (that you linked above) still needs to be discussed.
+On 08/11/17 22:34, Ramsay Jones wrote:
+> 
+> 
+> On 08/11/17 20:36, Stefan Beller wrote:
+>> On Wed, Nov 8, 2017 at 12:28 PM, Ramsay Jones
+>> <ramsay@ramsayjones.plus.com> wrote:
+>>
+>>> t5300-pack-object.sh                             (Wstat: 256 Tests: 40 Failed: 2)
+>>
+>>> t5500-fetch-pack.sh                              (Wstat: 256 Tests: 355 Failed: 6)
+>>
+>> These are series
+>>
+>>> t5601-clone.sh                                   (Wstat: 256 Tests: 102 Failed: 4)
+>>
+>> This one is a spurious test. I had that flake on me once in the last weeks, too.
+>> But upon investigation I could not reproduce.
+>> See https://public-inbox.org/git/xmqq376ipdpx.fsf@gitster.mtv.corp.google.com/
+>>
+> 
+> No, this is not related to that. In fact several tests start
+> working if I change the '--filter=blobs:limit=0' to instead
+> read '--filter=blob:limit=0' (ie. change blob_s_ to blob).
+> 
+> In fact t5601 now works with the following patch:
 
-About the patches themselves, they look OK to me. Some minor things off
-the top of my head are to retain the "ours" and "theirs" (instead of
-"one" and "two"), and to replicate the language in remote.c more closely
-("This submodule is (ahead of/behind) the superproject by %d commit(s)")
-instead of inventing your own.
+OK, so the patch given below fixes all tests except t5300.37.
+All the patch does is change 'blobs' to 'blob' in the --filter
+parameters.
+
+The single failure looks like:
+
+  $ ./t5300-pack-object.sh -i -v
+  ...
+  Initialized empty Git repository in /home/ramsay/git/t/trash   directory.t5300-pack-object/server/.git/
+  [master (root-commit) a72904c] x
+   Author: A U Thor <author@example.com>
+   3 files changed, 3 insertions(+)
+   create mode 100644 .git-a
+   create mode 100644 a
+   create mode 100644 b
+  Counting objects: 2, done.
+  Compressing objects: 100% (2/2), done.
+  Total 2 (delta 0), reused 0 (delta 0)
+  ad26794874784493dafa81f1644b3dcfad05d843
+  not ok 37 - filtering by size never excludes special files
+  #	
+  #		rm -rf server &&
+  #		git init server &&
+  #		printf a-very-long-file > server/a &&
+  #		printf a-very-long-file > server/.git-a &&
+  #		printf b-very-long-file > server/b &&
+  #		git -C server add a .git-a b &&
+  #		git -C server commit -m x &&
+  #	
+  #		git -C server rev-parse HEAD >objects &&
+  #		git -C server pack-objects --revs --stdout --filter=blob:limit=10 <objects >my.pack &&
+  #	
+  #		# Ensure that the .git-a blob is in the packfile, despite also
+  #		# appearing as a non-.git file
+  #		git index-pack my.pack &&
+  #		git verify-pack -v my.idx >objectlist &&
+  #		grep $(git hash-object server/a) objectlist
+  #	
+  $ 
+
+Hope that helps.
+
+ATB,
+Ramsay Jones
+
+-- >8 --
+diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
+index 0739a0796..17c9ffdca 100755
+--- a/t/t5300-pack-object.sh
++++ b/t/t5300-pack-object.sh
+@@ -472,7 +472,7 @@ test_expect_success 'filtering by size works with multiple excluded' '
+ 	git -C server commit -m x &&
+ 
+ 	git -C server rev-parse HEAD >objects &&
+-	git -C server pack-objects --revs --stdout --filter=blobs:limit=10 <objects >my.pack &&
++	git -C server pack-objects --revs --stdout --filter=blob:limit=10 <objects >my.pack &&
+ 
+ 	# Ensure that only the small blobs are in the packfile
+ 	git index-pack my.pack &&
+@@ -493,7 +493,7 @@ test_expect_success 'filtering by size never excludes special files' '
+ 	git -C server commit -m x &&
+ 
+ 	git -C server rev-parse HEAD >objects &&
+-	git -C server pack-objects --revs --stdout --filter=blobs:limit=10 <objects >my.pack &&
++	git -C server pack-objects --revs --stdout --filter=blob:limit=10 <objects >my.pack &&
+ 
+ 	# Ensure that the .git-a blob is in the packfile, despite also
+ 	# appearing as a non-.git file
+diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
+index 86cf65323..08b7a32c7 100755
+--- a/t/t5500-fetch-pack.sh
++++ b/t/t5500-fetch-pack.sh
+@@ -762,7 +762,7 @@ test_expect_success 'filtering by size' '
+ 	test_config -C server uploadpack.allowfilter 1 &&
+ 
+ 	test_create_repo client &&
+-	git -C client fetch-pack --filter=blobs:limit=0 ../server HEAD &&
++	git -C client fetch-pack --filter=blob:limit=0 ../server HEAD &&
+ 
+ 	# Ensure that object is not inadvertently fetched
+ 	test_must_fail git -C client cat-file -e $(git hash-object server/one.t)
+@@ -774,7 +774,7 @@ test_expect_success 'filtering by size has no effect if support for it is not ad
+ 	test_commit -C server one &&
+ 
+ 	test_create_repo client &&
+-	git -C client fetch-pack --filter=blobs:limit=0 ../server HEAD 2> err &&
++	git -C client fetch-pack --filter=blob:limit=0 ../server HEAD 2> err &&
+ 
+ 	# Ensure that object is fetched
+ 	git -C client cat-file -e $(git hash-object server/one.t) &&
+@@ -800,7 +800,7 @@ setup_blob_max_bytes () {
+ do_blob_max_bytes() {
+ 	SERVER="$1" &&
+ 
+-	git -C client fetch --filter=blobs:limit=0 origin HEAD:somewhere &&
++	git -C client fetch --filter=blob:limit=0 origin HEAD:somewhere &&
+ 
+ 	# Ensure that commit is fetched, but blob is not
+ 	test_config -C client extensions.partialcloneremote "arbitrary string" &&
+@@ -816,7 +816,7 @@ test_expect_success 'fetch with filtering' '
+ test_expect_success 'fetch respects configured filtering' '
+ 	setup_blob_max_bytes server server &&
+ 
+-	test_config -C client extensions.partialclonefilter blobs:limit=0 &&
++	test_config -C client extensions.partialclonefilter blob:limit=0 &&
+ 
+ 	git -C client fetch origin HEAD:somewhere &&
+ 
+@@ -835,7 +835,7 @@ test_expect_success 'pull respects configured filtering' '
+ 	test_commit -C server three &&
+ 
+ 	test_config -C server uploadpack.allowanysha1inwant 1 &&
+-	test_config -C client extensions.partialclonefilter blobs:limit=0 &&
++	test_config -C client extensions.partialclonefilter blob:limit=0 &&
+ 
+ 	git -C client pull origin &&
+ 
+@@ -852,7 +852,7 @@ test_expect_success 'clone configures filtering' '
+ 	test_commit -C server two &&
+ 	test_config -C server uploadpack.allowanysha1inwant 1 &&
+ 
+-	git clone --filter=blobs:limit=12345 server client &&
++	git clone --filter=blob:limit=12345 server client &&
+ 
+ 	# Ensure that we can, for example, checkout HEAD^
+ 	rm -rf client/.git/objects/* &&
+diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+index f18d9454a..0074690f7 100755
+--- a/t/t5601-clone.sh
++++ b/t/t5601-clone.sh
+@@ -630,7 +630,7 @@ partial_clone () {
+ 	test_config -C "$SERVER" uploadpack.allowfilter 1 &&
+ 	test_config -C "$SERVER" uploadpack.allowanysha1inwant 1 &&
+ 
+-	git clone --filter=blobs:limit=0 "$URL" client &&
++	git clone --filter=blob:limit=0 "$URL" client &&
+ 
+ 	git -C client fsck &&
+ 
+@@ -651,7 +651,7 @@ test_expect_success 'partial clone: warn if server does not support object filte
+ 		     test_create_repo server &&
+ 		     test_commit -C server one &&
+ 
+-	git clone --filter=blobs:limit=0 "file://$(pwd)/server" client 2> err &&
++	git clone --filter=blob:limit=0 "file://$(pwd)/server" client 2> err &&
+ 
+ 	test_i18ngrep "filtering not recognized by server" err
+ '
+@@ -673,7 +673,7 @@ test_expect_success 'batch missing blob request during checkout' '
+ 	test_config -C server uploadpack.allowfilter 1 &&
+ 	test_config -C server uploadpack.allowanysha1inwant 1 &&
+ 
+-	git clone --filter=blobs:limit=0 "file://$(pwd)/server" client &&
++	git clone --filter=blob:limit=0 "file://$(pwd)/server" client &&
+ 
+ 	# Ensure that there is only one negotiation by checking that there is
+ 	# only "done" line sent. ("done" marks the end of negotiation.)
+@@ -705,7 +705,7 @@ test_expect_success 'batch missing blob request does not inadvertently try to fe
+ 	test_config -C server uploadpack.allowanysha1inwant 1 &&
+ 
+ 	# Make sure that it succeeds
+-	git clone --filter=blobs:limit=0 "file://$(pwd)/server" client
++	git clone --filter=blob:limit=0 "file://$(pwd)/server" client
+ '
+ 
+ . "$TEST_DIRECTORY"/lib-httpd.sh
+-- 8< --
+
