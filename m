@@ -2,92 +2,160 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 45E771F42B
-	for <e@80x24.org>; Wed,  8 Nov 2017 00:54:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A3B71F42B
+	for <e@80x24.org>; Wed,  8 Nov 2017 00:59:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933109AbdKHAys (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Nov 2017 19:54:48 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59520 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1759011AbdKHAyr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Nov 2017 19:54:47 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B7F0FB7A8B;
-        Tue,  7 Nov 2017 19:54:46 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=YXIgWZbsD1VjbrE1zVQgrGuMRBw=; b=Gy4Knx
-        NN7v92FDHM9DKq95KmKT3jnhlHugIsBB0A9SB0aSonpsD6GHhKOf5733amLnIPLz
-        zeog4de9ME5ZCpt3+pA2QD5IiJToTEQ+gUTf9M43u9CgAfg2hlqUwVml3fAzn2zw
-        4eTTWiBOZjPEpTpA1Sf2Rx5DmkuZ4w03jU0kM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=RwFHRT3FNaCpo0h7UGUHn3QiNtxVh2FX
-        8LdVPOHPEnqfyb0CdD5qhxd60d1i675aS1IyS8GuemPo4uditJLGbrPjEHKL0jqi
-        muBC3731YDuQoGabnI5rQ6rsVt0My8Ar0rQq3EcCtPwQcdDEtrxeLqXRNp7YvTm5
-        Mf3zixyMa9k=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id AD734B7A8A;
-        Tue,  7 Nov 2017 19:54:46 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2821EB7A89;
-        Tue,  7 Nov 2017 19:54:46 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     Jeff Hostetler <git@jeffhostetler.com>, git@vger.kernel.org,
-        peff@peff.net, Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v2 0/6] Partial clone part 1: object filtering
-References: <20171102175013.3371-1-git@jeffhostetler.com>
-        <20171102124445.fbffd43521cd35f6a71e1851@google.com>
-        <bd41699f-19c7-02a0-0af1-8f22b3277a1b@jeffhostetler.com>
-        <xmqq7ev7pfln.fsf@gitster.mtv.corp.google.com>
-        <97585434-6d57-dad4-d7aa-e48dacec1b3f@jeffhostetler.com>
-        <20171107164118.97cc65c4030de0922b19ddd6@google.com>
-Date:   Wed, 08 Nov 2017 09:54:44 +0900
-In-Reply-To: <20171107164118.97cc65c4030de0922b19ddd6@google.com> (Jonathan
-        Tan's message of "Tue, 7 Nov 2017 16:41:18 -0800")
-Message-ID: <xmqq8tfhoai3.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1752905AbdKHA7D (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Nov 2017 19:59:03 -0500
+Received: from avasout04.plus.net ([212.159.14.19]:35974 "EHLO
+        avasout04.plus.net.plus.net" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1752539AbdKHA7C (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 7 Nov 2017 19:59:02 -0500
+Received: from [10.0.2.15] ([80.189.70.158])
+        by smtp with ESMTPA
+        id CEhoe1tOKzbmWCEhpe2S7X; Wed, 08 Nov 2017 00:59:01 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=P6pKvmIu c=1 sm=1 tr=0
+ a=bpDj9VLvXCYHU65eeb/Fiw==:117 a=bpDj9VLvXCYHU65eeb/Fiw==:17
+ a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8 a=dIu3SnmMAAAA:8 a=DibueHh8FKHO1FA6kHAA:9
+ a=QEXdDO2ut3YA:10 a=Ua9G7VpiFza3u12uuhVB:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH v16 Part II 6/8] bisect--helper: `get_terms` &
+ `bisect_terms` shell function in C
+To:     Pranit Bauva <pranit.bauva@gmail.com>, git@vger.kernel.org
+References: <0102015f5e5ee171-f30f4868-886f-47a1-a4e4-b4936afc545d-000000@eu-west-1.amazonses.com>
+ <0102015f5e5ee303-449f1b76-ff53-433c-8973-8b4850466810-000000@eu-west-1.amazonses.com>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <aacc7970-6952-206e-5ef0-10e0cf3d7373@ramsayjones.plus.com>
+Date:   Wed, 8 Nov 2017 00:59:00 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 6A231A36-C41F-11E7-9541-575F0C78B957-77302942!pb-smtp2.pobox.com
+In-Reply-To: <0102015f5e5ee303-449f1b76-ff53-433c-8973-8b4850466810-000000@eu-west-1.amazonses.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfKor+XuZyVJaW10xY4DyCyWTs/fNEFuUbzy6pLvXPBZiFLZ/yylg1W/bdIUHZDx/tpbhbHSHyvnKQft1PjBe8xGaUSThMpvfQIpRgzbe2wWfz9grPlDg
+ 462MEmPEXqw/DUL36l9UChtrTJW/SyJqbnpB2aL7HJhpsJgqucqY9vlLy2WP7ahTA7BLmQIOFvC3Tg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
 
-> I can see some use for this parameter - for example, when doing a report
-> for statistical purposes (percentage of objects missing, for example) or
-> for a background task that downloads missing objects into a cache. Also,
-> power users who know what they're doing (or normal users in an
-> emergency) can use this option when they have no network connection if
-> they really need to find something out from the local repo.
->
-> In these cases, the promisor check (after detecting that the object is
-> missing) is indeed not so useful, I think. (Or we can do the
-> --exclude=missing and --exclude=promisor idea that Jeff mentioned -
-> --exclude=missing now, and --exclude=promisor after we add promisor
-> support.)
 
-This sounds like a reasonable thing to have in the endgame state to
-me.
+On 27/10/17 16:06, Pranit Bauva wrote:
+> Reimplement the `get_terms` and `bisect_terms` shell function in C and
+> add `bisect-terms` subcommand to `git bisect--helper` to call it from
+> git-bisect.sh .
+> 
+> Using `--bisect-terms` subcommand is a temporary measure to port shell
+> function in C so as to use the existing test suite. As more functions
+> are ported, this subcommand will be retired but its implementation will
+> be called by some other methods.
+> 
+> Also use error() to report "no terms defined" and accordingly change the
+> test in t6030.
+> 
+> Mentored-by: Lars Schneider <larsxschneider@gmail.com>
+> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+> Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+> ---
+>  builtin/bisect--helper.c    | 69 +++++++++++++++++++++++++++++++++++++++++++--
+>  git-bisect.sh               | 35 ++---------------------
+>  t/t6030-bisect-porcelain.sh |  2 +-
+>  3 files changed, 70 insertions(+), 36 deletions(-)
+> 
+> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+> index 0f9c3e63821b8..ab0580ce0089a 100644
+> --- a/builtin/bisect--helper.c
+> +++ b/builtin/bisect--helper.c
+> @@ -23,6 +23,7 @@ static const char * const git_bisect_helper_usage[] = {
+>  	N_("git bisect--helper --bisect-write <state> <revision> <good_term> <bad_term> [<nolog>]"),
+>  	N_("git bisect--helper --bisect-check-and-set-terms <command> <good_term> <bad_term>"),
+>  	N_("git bisect--helper --bisect-next-check [<term>] <good_term> <bad_term>"),
+> +	N_("git bisect--helper --bisect-terms [--term-good | --term-old | --term-bad | --term-new]"),
+>  	NULL
+>  };
+>  
+> @@ -344,6 +345,62 @@ static int bisect_next_check(const struct bisect_terms *terms,
+>  	return retval;
+>  }
+>  
+> +static int get_terms(struct bisect_terms *terms)
+> +{
+> +	struct strbuf str = STRBUF_INIT;
+> +	FILE *fp = NULL;
+> +	int res = 0;
+> +
+> +	fp = fopen(git_path_bisect_terms(), "r");
+> +	if (!fp)
+> +		goto fail;
+> +
+> +	free_terms(terms);
+> +	strbuf_getline_lf(&str, fp);
+> +	terms->term_bad = strbuf_detach(&str, NULL);
+> +	strbuf_getline_lf(&str, fp);
+> +	terms->term_good = strbuf_detach(&str, NULL);
+> +	goto finish;
+> +
+> +fail:
+> +	res = -1;
+> +finish:
+> +	if (fp)
+> +		fclose(fp);
+> +	strbuf_release(&str);
+> +	return res;
+> +}
+> +
+> +static int bisect_terms(struct bisect_terms *terms, const char **argv, int argc)
+> +{
+> +	int i;
+> +
+> +	if (get_terms(terms))
+> +		return error(_("no terms defined"));
+> +
+> +	if (argc > 1)
+> +		return error(_("--bisect-term requires exactly one argument"));
+> +
+> +	if (argc == 0)
+> +		return !printf(_("Your current terms are %s for the old state\n"
+> +				 "and %s for the new state.\n"),
+> +				 terms->term_good, terms->term_bad);
 
-> Having said that, I would be OK if we didn't have tolerance (and/or
-> reporting) of missing objects right now. As far as I know, for the
-> initial implementation of partial clone, only the server performs any
-> filtering, and we assume that the server possesses all objects (so it
-> does not need to filter out any missing objects).
+Again, I don't think you want to do this. :-D
 
-True.  It does not have to exist in an early part, but I do not
-think we would terribly mind if it does, if only to help debugging
-and development.
+> +
+> +	for (i = 0; i < argc; i++) {
+> +		if (!strcmp(argv[i], "--term-good"))> +			printf(_("%s\n"), terms->term_good);
+> +		else if (!strcmp(argv[i], "--term-bad"))
+> +			printf(_("%s\n"), terms->term_bad);
+> +		else
 
-Thanks for thinking it through.
+Here, you want to check for the pairs "--term-{good,old}" and
+"--term-{bad,new}", so maybe this instead:
+
++		if (one_of(argv[i], "--term-good", "--term-old", NULL))
++			printf("%s\n", terms->term_good);
++		else if (one_of(argv[i], "--term-bad", "--term-new", NULL))
++			printf("%s\n", terms->term_bad);
++		else
+
+> +			error(_("BUG: invalid argument %s for 'git bisect terms'.\n"
+> +				  "Supported options are: "
+> +				  "--term-good|--term-old and "
+> +				  "--term-bad|--term-new."), argv[i]);
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+
+ATB,
+Ramsay Jones
+
+
