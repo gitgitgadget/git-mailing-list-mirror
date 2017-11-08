@@ -2,101 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0C4E51F43C
-	for <e@80x24.org>; Wed,  8 Nov 2017 14:00:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C9F251F43C
+	for <e@80x24.org>; Wed,  8 Nov 2017 14:10:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752488AbdKHOAc (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Nov 2017 09:00:32 -0500
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:45962 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752376AbdKHOAc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Nov 2017 09:00:32 -0500
-Received: by mail-wr0-f195.google.com with SMTP id y9so2520025wrb.2
-        for <git@vger.kernel.org>; Wed, 08 Nov 2017 06:00:31 -0800 (PST)
+        id S1752628AbdKHOK3 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Nov 2017 09:10:29 -0500
+Received: from mail-qt0-f175.google.com ([209.85.216.175]:50419 "EHLO
+        mail-qt0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752627AbdKHOK2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Nov 2017 09:10:28 -0500
+Received: by mail-qt0-f175.google.com with SMTP id d9so3421398qtd.7
+        for <git@vger.kernel.org>; Wed, 08 Nov 2017 06:10:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dinwoodie.org; s=google;
-        h=from:to:subject:date:message-id;
-        bh=sTLrovGSqUfDiC2+2dral+WPyir5igUBxvzMkwHAyjo=;
-        b=uCYOY0XheKsKO4mlI/bC8GW5N1MgSW6QmbSaJG5eA3dhhcXs81cnjZEhPjkYFG+vNT
-         qjCDORJ6Pf7Eq6RHSseE26KcSYLylEC0HR4hIi0rkIlMbFRYpixUv0CrmcxPaSJfvsRx
-         Cvc15ePcccDnAvJSiXcUnfKHWbqHjEu2w3NFI=
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=cNJnl9xSzPU1wAA6gwX+5/uyi23dbvIE5zP/iV3h5/w=;
+        b=J1n1qfVKHOUauXO1bU9af53U5xykty0qxFgXxcbF3GrAJnzTU4xGdVYcFl5iispfK/
+         HhGJf8C8A0lPL56i/4r6y0llXaQsyMt4Wqx0Hp0EmPGdoBvHyVUIO5RxFMiS8+kIurfq
+         gu6ax+iimRr+BAgs12Hewrwly/AJS2o3eaqbGXAO6eGMnG2bmdptiHFbcFsmJuEzn2RR
+         cEXYJeQaDE09I5JSh2ufo/g10WAe2GmA2sUBKC9nb5pS0MXvPpM+1ZBjQ6aA968xAcwO
+         BdwCf8wFX8Kre/9UE/Wac6CEKgUm3//BdwcMU+FYlGSm6xdNqBbTS2YHw3UpJb8SwAMT
+         jvgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id;
-        bh=sTLrovGSqUfDiC2+2dral+WPyir5igUBxvzMkwHAyjo=;
-        b=UlHFYTxzZOINgMXunhgKsN6EWF0MmXYfP6oj5qcSKk8pZFoIJeHSvK9B4E3KbyPsVn
-         avWHuYTgO6yUNR78PNL7j6rbkqd1dKQYyZjHnlHTe2aHVHR3Gqk3AyOVTmZkJb238ZRs
-         bnowSbUeVtvUQwrl691AzEKa5Zy3lQOYih4c7uOs65wRPEq9yviGwTkmh0uk2seEoKOJ
-         kPjPoD3oL1jgDfH8XxAVxL0IkAFW7jkoABnZDgZYGv0Zg+OIhefQ7sze0onApurf+kSv
-         aePJNoyP/kxT2FDb4ZC1ei30pukRPE5tMsbXRwSC05A4NGgiP+Qf7jyaG3juu1Kvy6ng
-         qDKg==
-X-Gm-Message-State: AJaThX7+j9TugcMh5c/+puV3+YWivd79Ea+C4S8Wr5vL5K5vXPG1z+Oq
-        kbUAHx+O+D3MQkNK1F9PmQUqYvypAwM=
-X-Google-Smtp-Source: ABhQp+R7WCJs7yOTc4TnK+zDCaFBD/Wtm0TS5sGtHghk/12EkPinOEylyXE9ShztQukiN1Xt/Liw0A==
-X-Received: by 10.223.176.8 with SMTP id f8mr628554wra.80.1510149630548;
-        Wed, 08 Nov 2017 06:00:30 -0800 (PST)
-Received: from PC5175.ad.datcon.co.uk ([2620:104:4001:73:a407:552d:75e4:4516])
-        by smtp.gmail.com with ESMTPSA id g99sm6093199wrd.72.2017.11.08.06.00.29
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 08 Nov 2017 06:00:29 -0800 (PST)
-From:   Adam Dinwoodie <adam@dinwoodie.org>
-To:     git@vger.kernel.org
-Subject: [RFC PATCH] rebisect: add script for easier bisect log editing
-Date:   Wed,  8 Nov 2017 13:59:31 +0000
-Message-Id: <20171108135931.166880-1-adam@dinwoodie.org>
-X-Mailer: git-send-email 2.14.3
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=cNJnl9xSzPU1wAA6gwX+5/uyi23dbvIE5zP/iV3h5/w=;
+        b=VOiUD08OLYJ1ylpPxF5RtgNNo2S+PsHEXoJfHkiguC8dU1JGDpYQbnURYt1sr4h6LJ
+         whnFTiOMqPmQSpil8vHlT5U2KjDlk4mm8wC9OxJtsPHWah6lmpsjktPNKBvvXGFjmuiO
+         H5AT7p+CyFNYDiISlbIjFAAmJ1aJnvv2zMkUqzRWWJ0QRHH+HfmHKah9zcDSC+nOCxEJ
+         LQCHXYrnW2ZC0caybvOqsNJ886JhQ5TaNTm7517PcZ07fLl8Sh2IrmjM7FOlEdzlzvoV
+         8PGLgT6U2+Av5ANQ7UDha5ymcRrN9wlAD7LXxjO5jWt0a2DOdzK4uDUGKVt0u3Zfni3g
+         ZMLA==
+X-Gm-Message-State: AJaThX6YqwZaTCDz3AyFxZrKi0do1s6rokmoC+zC//QeXfaf+O7LQVU9
+        jrJb2rkSL+0+49yTUHhfszZ3B6qACvaiHq61vJQ=
+X-Google-Smtp-Source: ABhQp+TMdyOX7qu2luxsxe7zxRJ/AyFzuvsA5Pa7MA8Mvtz3U+LmA0q4w/gmF6jk1wciS+X1v5K+2q9I1Ft719S7srM=
+X-Received: by 10.200.53.12 with SMTP id y12mr1053710qtb.84.1510150227590;
+ Wed, 08 Nov 2017 06:10:27 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.12.146.118 with HTTP; Wed, 8 Nov 2017 06:10:27 -0800 (PST)
+In-Reply-To: <20171108134752.214056-1-adam@dinwoodie.org>
+References: <20171108131601.280992-1-adam@dinwoodie.org> <20171108134752.214056-1-adam@dinwoodie.org>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 8 Nov 2017 09:10:27 -0500
+X-Google-Sender-Auth: qIgGfS49a3-IgQZTWpih6aJ8AF0
+Message-ID: <CAPig+cRaygrQ9_J1UHr_rynPsUn2J0--RHRvP2mFQbVQhWEm-Q@mail.gmail.com>
+Subject: Re: [PATCH v2] doc/SubmittingPatches: correct subject guidance
+To:     Adam Dinwoodie <adam@dinwoodie.org>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Josh Triplett <josh@joshtriplett.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a short script, vaguely inspired by `git rebase --interactive`, to
-ease the process described in the `git bisect` documentation of saving
-off a bisect log, editing it, then replaying it.
+On Wed, Nov 8, 2017 at 8:47 AM, Adam Dinwoodie <adam@dinwoodie.org> wrote:
+> The examples and common practice for adding markers such as "RFC" or
+> "v2" to the subject of patch emails is to have them within the same
+> brackets as the "PATCH" text, not after the closing bracket.  Further,
+> the practice of `git format-patch` and the like, as well as what appears
+> to be the more common pratice on the mailing list, is to use "[RFC
+> PATCH]", not "[PATCH/RFC]".
+>
+> Update the SubmittingPatches article to match.
+>
+> Signed-off-by: Adam Dinwoodie <adam@dinwoodie.org>
+> ---
+> diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+> @@ -184,12 +184,14 @@ lose tabs that way if you are not careful.
+>  It is a common convention to prefix your subject line with
+>  [PATCH].  This lets people easily distinguish patches from other
+> -e-mail discussions.  Use of additional markers after PATCH and
+> -the closing bracket to mark the nature of the patch is also
+> -encouraged.  E.g. [PATCH/RFC] is often used when the patch is
+> -not ready to be applied but it is for discussion, [PATCH v2],
+> -[PATCH v3] etc. are often seen when you are sending an update to
+> -what you have previously sent.
+> +e-mail discussions.  Use of markers in addition to PATCH within
+> +the brackets to describe the nature of the patch is also
+> +encouraged.  E.g. [RFC PATCH] is often used when the patch is not
+> +ready to be applied but it is for discussion, and can be added
+> +with the `--rfc` argument to `git format-patch` or `git
+> +send-email`, while [PATCH v2], [PATCH v3] etc.  are often seen
 
-Signed-off-by: Adam Dinwoodie <adam@dinwoodie.org>
----
+It has become a bit of a run-on sentence, but aside from that and the
+unnecessary extra whitespace between "etc." and "are", it looks good
+to me.
 
-When I'm bisecting, I find I need to semi-regularly go back and change
-my good/bad/skip response for some commits.  The bisect documentation
-describes doing this by saving `git bisect log` output, editing it, then
-using `git bisect replay`.  Which is a perfectly fine technique, but
-automation is A Good Thing(TM).  The below script is a short proof of
-concept for changing this process to be a single command.
-
-Ideally (at least from my perspective), this function would be rolled
-into the main `git bisect` tool, as `git bisect edit` or similar.
-Before I start working on that, however, I wanted to see what the list
-thought of the idea.
-
- contrib/git-rebisect.sh | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
- create mode 100755 contrib/git-rebisect.sh
-
-diff --git a/contrib/git-rebisect.sh b/contrib/git-rebisect.sh
-new file mode 100755
-index 000000000..60f20b278
---- /dev/null
-+++ b/contrib/git-rebisect.sh
-@@ -0,0 +1,12 @@
-+#!/bin/sh
-+
-+GIT_EDITOR="$(git var GIT_EDITOR)"
-+GIT_DIR="$(git rev-parse --git-dir)"
-+GIT_BISECT_LOG_TMP="${GIT_DIR}/BISECT_LOG_EDIT"
-+
-+git bisect log >"$GIT_BISECT_LOG_TMP"
-+"$GIT_EDITOR" "$GIT_BISECT_LOG_TMP"
-+git bisect reset HEAD
-+git bisect start
-+git bisect replay "$GIT_BISECT_LOG_TMP"
-+rm -f "$GIT_BISECT_LOG_TMP"
--- 
-2.14.3
-
+> +when you are sending an update to what you have previously sent,
+> +and can be added with the `-v <n>` arguments to the same commands.
