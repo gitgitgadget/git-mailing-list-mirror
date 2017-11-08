@@ -2,117 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D7F461F43C
-	for <e@80x24.org>; Wed,  8 Nov 2017 16:58:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2CF171F43C
+	for <e@80x24.org>; Wed,  8 Nov 2017 17:28:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752699AbdKHQ6Z (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Nov 2017 11:58:25 -0500
-Received: from a27-143.smtp-out.us-west-2.amazonses.com ([54.240.27.143]:45526
-        "EHLO a27-143.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752364AbdKHQ6Y (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 8 Nov 2017 11:58:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=hsbnp7p3ensaochzwyq5wwmceodymuwv; d=amazonses.com; t=1510160304;
-        h=Content-Type:From:To:Subject:Message-ID:Date:Content-Transfer-Encoding:MIME-Version:Feedback-ID;
-        bh=edzGhSrOAvWF71heTcdsexJqkT6JbiwsZXr3AjBzDDk=;
-        b=cF7rVz9nkYdPtOXOXAmfQarsVmMbfD0K4CJVtfKe01aHe1SiVfgYdHp9fjqxnDYt
-        Nrf0tpVRNklel+E+josmLBdiFxVzHSSzyg1QbHbZ6l8kzVbmtLBcMjt4Qa9InfhuHcN
-        ymOYXGgvbq4AxEqq4K3giTYwoULfKjvJoIAXAb5Q=
-Content-Type: text/plain
-From:   mqudsi@neosmart.net
-To:     git@vger.kernel.org
-Subject: Invalid memory access in `git apply`
-Message-ID: <0101015f9c91871f-2f750aec-6877-4e29-9c15-c8399670dd48-000000@us-west-2.amazonses.com>
-Date:   Wed, 8 Nov 2017 16:58:23 +0000
-Content-Transfer-Encoding: quoted-printable
+        id S1752150AbdKHR2K convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Wed, 8 Nov 2017 12:28:10 -0500
+Received: from mail1.bemta12.messagelabs.com ([216.82.251.4]:36534 "EHLO
+        mail1.bemta12.messagelabs.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751370AbdKHR2J (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 8 Nov 2017 12:28:09 -0500
+Received: from [216.82.251.43] by server-4.bemta-12.messagelabs.com id 8E/1D-02223-8AE330A5; Wed, 08 Nov 2017 17:28:08 +0000
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprDKsWRWlGSWpSXmKPExsXiVbjvie4KO+Y
+  og8M3xC26rnQzOTB6fN4kF8AYxZqZl5RfkcCacffHFdaC32wVM97NYGpgfMTaxcjFISRwjFHi
+  ++3JbBDOO0aJaW3nmSGcnYwS744+ZYJw1jNKzPizD6iHk4NNQFui7eds9i5GDg4RAX2JvguiI
+  GFhAV2Jm1cmM4HYIgJ6Ev/X/2GFsI0k5jfdB7NZBFQkbu9aywrSyivgJbFkkTFImFFATOL7qT
+  VgrcwC4hK3nswHsyUEBCSW7AG5B8QWlXj5+B8rhG0gsXXpPhYIW17i/cllbBC9ehI3pk6BsrU
+  lli18DdbLKyAocXLmE6h6O4k/e/ewQdg6Eos/bmSbwCg2C8nqWUhGzUIyahaSUQsYWVYxahSn
+  FpWlFukaWeolFWWmZ5TkJmbm6BoaGunlphYXJ6an5iQmFesl5+duYgTGUT0DA+MOxn9ffA8xS
+  nIwKYnyPnjFFCXEl5SfUpmRWJwRX1Sak1p8iFGGg0NJgveXDXOUkGBRanpqRVpmDjCiYdISHD
+  xKIrzitkBp3uKCxNzizHSI1ClGY44bD6//YeJ4NvN1A7MQS15+XqqUOO8VkEkCIKUZpXlwg2C
+  J5hKjrJQwLyMDA4MQT0FqUW5mCar8K0ZxDkYlYV55kIU8mXklcPteAZ3CBHTK/hAGkFNKEhFS
+  Ug2Mu5p8X0zmVZt6o8/xinLJgdf/Z23ovOy9XvLoNpXpXjNKmjz5L3w996VwyndBAcUjUrwFz
+  3Z3mWiZ9PbNya+y/twkNF1g0b1d963rHZx5Hbz9drfs8T7yaebFn4bBDIqZ/uGTOD76Z3d1lI
+  R67XMtDs5NmHo4VScnTuCh3rb44m5GE1O9zElKLMUZiYZazEXFiQD+ekWuLwMAAA==
+X-Env-Sender: josephst@bhphoto.com
+X-Msg-Ref: server-16.tower-196.messagelabs.com!1510162087!140827645!1
+X-Originating-IP: [74.113.190.228]
+X-StarScan-Received: 
+X-StarScan-Version: 9.4.45; banners=-,-,-
+X-VirusChecked: Checked
+Received: (qmail 41172 invoked from network); 8 Nov 2017 17:28:08 -0000
+Received: from unknown (HELO dc2-mx7.bnh.com) (74.113.190.228)
+  by server-16.tower-196.messagelabs.com with DHE-RSA-AES256-GCM-SHA384 encrypted SMTP; 8 Nov 2017 17:28:08 -0000
+Received: from DC2-DLPMTA1 (lb-fmg-svc.bhphoto.net [10.50.8.10])
+        by dc2-mx7.bnh.com (8.15.1+Sun/8.14.9) with ESMTP id vA8HRVjc011929
+        for <git@vger.kernel.org>; Wed, 8 Nov 2017 12:27:31 -0500 (EST)
+Received: from [10.150.2.237] (helo=GTB)
+        by DC2-DLPMTA1 with esmtps (TLSv1.2:ECDHE-RSA-AES256-SHA384:256)
+        (Exim 4.88)
+        (envelope-from <josephst@bhphoto.com>)
+        id 1eCU8L-000GkR-Gf
+        for git@vger.kernel.org; Wed, 08 Nov 2017 12:27:25 -0500
+Received: from EXMBX01B.bhphotovideo.local (10.150.2.236) by
+ EXMBX02B.bhphotovideo.local (10.150.2.237) with Microsoft SMTP Server (TLS)
+ id 15.0.1178.4; Wed, 8 Nov 2017 12:27:26 -0500
+Received: from EXMBX01B.bhphotovideo.local ([::1]) by
+ EXMBX01B.bhphotovideo.local ([fe80::25f4:bb1:4552:838b%14]) with mapi id
+ 15.00.1178.000; Wed, 8 Nov 2017 12:27:25 -0500
+From:   Joseph Strauss <josephst@bhphoto.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: RE: Bug - Status - Space in Filename
+Thread-Topic: Bug - Status - Space in Filename
+Thread-Index: AdNYtjH+1q6di6aQTuO9RF9GIpihrQAAGAYw
+Date:   Wed, 8 Nov 2017 17:27:24 +0000
+Message-ID: <655aaa9d2abf4be1b6ade0574d88c999@EXMBX01B.bhphotovideo.local>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [10.150.0.10]
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: 8BIT
 MIME-Version: 1.0
-X-SES-Outgoing: 2017.11.08-54.240.27.143
-Feedback-ID: 1.us-west-2.PCEy91/Vd+GU67P48MglE9FKtQG6qQD9MhgwC/YKQRM=:AmazonSES
+X-MTA-device-Scanned: Yes (on DC2-DLPMTA1) 910 bytes in 0 secs
+X-UOID: E437107A-6179-4C22-8CDC-78E719B5EF31
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-**Resending as it seems that the attachments caused the last email to wind =
-up
-in a black hole**
+I believe I have found a bug in the way git status -s lists filenames.
 
-There seems to be bug in the `git apply` that leads =
-to out-of-bounds memory
-access when --ignore-space-change is combined with =
---inaccurate-eof and
-applying a patch.
+According to the documentation:
+  The fields (including the ->) are separated from each other by a single space. If a filename contains whitespace or other nonprintable characters,   that field will be quoted in the manner of a C string literal: surrounded by ASCII double quote (34) characters, and with interior special characters backslash-escaped.
 
-On occasion, this can lead to error=
- output like the following:
+While this is true in most situations, it does not seem to apply to merge conflicts. When a file has merge conflicts I am getting the following:
+ $ git status -s
+ UU some/path/with space/in/the/name
+ M  "another/path/with space/in/the/name "
 
-	 mqudsi@ZBook ~> git apply =
---ignore-space-change --ignore-whitespace
-	 --allow-overlap =
---inaccurate-eof without_whitespace.diff
-	 *** Error in `git': malloc(): =
-memory corruption: 0x0000000002543530 ***
-	 =3D=3D=3D=3D=3D=3D=3D =
-Backtrace: =3D=3D=3D=3D=3D=3D=3D=3D=3D
-	 /lib/x86_64-linux-gnu/libc.so.=
-6(+0x777e5)[0x7fdda79c77e5]
-	 /lib/x86_64-linux-gnu/libc.so.=
-6(+0x8213e)[0x7fdda79d213e]
-	 /lib/x86_64-linux-gnu/libc.so.=
-6(__libc_malloc+0x54)[0x7fdda79d4184]
-	 /lib/x86_64-linux-gnu/libc.so.=
-6(_IO_file_doallocate+0x55)[0x7fdda79bd1d5]
-	 /lib/x86_64-linux-gnu/libc.so=
-.6(_IO_doallocbuf+0x34)[0x7fdda79cb594]
-	 /lib/x86_64-linux-gnu/libc.so.=
-6(_IO_file_overflow+0x1c8)[0x7fdda79ca8f8]
-	 /lib/x86_64-linux-gnu/libc.so.=
-6(_IO_file_xsputn+0xad)[0x7fdda79c928d]
-	 /lib/x86_64-linux-gnu/libc.so.=
-6(fputs+0x98)[0x7fdda79be0c8]
-	 git[0x5386cd]
-	 git[0x538714]
-	 git[0x538940]
-	 git[0x40e220]
-	 git[0x410a10]
-	 git[0x41256e]
-	 git[0x412df7]
-	 git[0x415935]
-	 git[0x406436]
-	 git[0x40555c]
+I found the same problem for the following versions:
+. git version 2.15.0.windows.1
+. git version 2.10.0
 
-The original file being patched (clipboard.vim) and the patch file that I =
-had
-attempted to apply (without_whitespace.diff) are attached, along with =
-the
-full, unabridged output of the memory map as a result of the =
-out-of-bounds
-access (memory_map.txt).
 
-The memory map output was generated=
- under git 2.7.4; repeated attempts to
-reproduce the memory map dump with =
-both 2.7.4 and 2.15 produce the following
-output:
 
-	 mqudsi@ZBook ~/.=
-c/nvim> git apply --ignore-space-change  --inaccurate-eof
-	 --whitespace=3Dfix without_whitespace.diff
-	 fatal: BUG: caller =
-miscounted postlen: asked 248, orig =3D 251, used =3D 249
-
-Mahmoud Al-Qudsi
-NeoSmart Technologies
-
---Attachments--
-
-* clipboard.vim: http://termbin.=
-com/u25t
-* without_whitespace.diff: http://termbin.com/bu9y
-* memory_map.txt: http://termbin.com/cboz
-
+Joseph Kalman Strauss
+Lifecycle Management Engineer
+B&H Photo
+212-239-7500 x2212
+josephst@bhphoto.com
 
