@@ -2,116 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
-	UNPARSEABLE_RELAY shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5C2551F442
-	for <e@80x24.org>; Wed,  8 Nov 2017 09:02:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DBC371F442
+	for <e@80x24.org>; Wed,  8 Nov 2017 09:33:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751587AbdKHJCF convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Wed, 8 Nov 2017 04:02:05 -0500
-Received: from relay-ff112.magwien.gv.at ([217.149.228.140]:42722 "EHLO
-        relay-ff112.magwien.gv.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751306AbdKHJCD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Nov 2017 04:02:03 -0500
-X-Greylist: delayed 568 seconds by postgrey-1.27 at vger.kernel.org; Wed, 08 Nov 2017 04:02:02 EST
-Received: from localhost (localhost [127.0.0.1])
-        by relay-ff112.magwien.gv.at (Postfix) with ESMTP id 4813C2063B;
-        Wed,  8 Nov 2017 09:55:30 +0100 (CET)
-X-Virus-Scanned: by amavisd-new using Sophie and ClamAV at magwien.gv.at
-Received: from relay11.host.magwien.gv.at (relay11.host.magwien.gv.at [--])
-        (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by relay-ff112.magwien.gv.at (Postfix) with ESMTPS id 2187420570;
-        Wed,  8 Nov 2017 09:55:30 +0100 (CET)
-Received: from localhost (localhost.localdomain [127.0.0.1])
-        by relay11.host.magwien.gv.at (Postfix) with ESMTP id 6DDF7166A30;
-        Wed,  8 Nov 2017 09:52:32 +0100 (CET)
-Received: from mail.fsw.at (sfsww2k12ex02.intern.fsw.at [--])
-        (using TLSv1 with cipher AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by relay11.host.magwien.gv.at (Postfix) with ESMTP id 2D5DA166A20;
-        Wed,  8 Nov 2017 09:52:31 +0100 (CET)
-Received: from SFSWW2K12EX02.intern.fsw.at (--) by
- SFSWW2K12EX02.intern.fsw.at (--) with Microsoft SMTP Server (TLS)
- id 15.0.1293.2; Wed, 8 Nov 2017 09:52:31 +0100
-Received: from SFSWW2K12EX02.intern.fsw.at ([fe80::a1d5:6bb5:fb11:2572]) by
- SFSWW2K12EX02.intern.fsw.at ([fe80::a1d5:6bb5:fb11:2572%15]) with mapi id
- 15.00.1293.002; Wed, 8 Nov 2017 09:52:31 +0100
-From:   Ekelhart Jakob <jakob.ekelhart@fsw.at>
-To:     "Junio C Hamano  *EXTERN*" <gitster@pobox.com>,
-        Michael J Gruber <git@grubix.eu>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        id S1751104AbdKHJd5 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Nov 2017 04:33:57 -0500
+Received: from mout.kundenserver.de ([217.72.192.75]:60574 "EHLO
+        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750817AbdKHJdz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Nov 2017 04:33:55 -0500
+Received: from [130.75.46.4] ([130.75.46.4]) by mrelayeu.kundenserver.de
+ (mreue103 [212.227.15.183]) with ESMTPSA (Nemesis) id
+ 0McyCA-1eTLMK1ku2-00IH8r; Wed, 08 Nov 2017 10:33:42 +0100
+Subject: Re: [PATCH 2/3] merge-base: return fork-point outside reflog
+To:     Ekelhart Jakob <jakob.ekelhart@fsw.at>,
+        Junio C Hamano *EXTERN* <gitster@pobox.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
         Jeff King <peff@peff.net>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
         Matthias Lischka <matthias.lischka@fsw.at>
-Subject: RE: [PATCH 2/3] merge-base: return fork-point outside reflog
-Thread-Topic: [PATCH 2/3] merge-base: return fork-point outside reflog
-Thread-Index: AQHTPA2qwa68IIz8OE+EjGcZawC3PaMKZVEg
-Date:   Wed, 8 Nov 2017 08:52:31 +0000
-Message-ID: <b9c2c978a6d3407c8c26509fc82b3920@SFSWW2K12EX02.intern.fsw.at>
 References: <68633b20-9e2b-ae23-2ede-8728283250f0@grubix.eu>
-        <cover.1505394278.git.git@grubix.eu>
-        <5513a1415d11517c28158d9b4212d383a233182f.1505394278.git.git@grubix.eu>
-        <xmqq60ckzng7.fsf@gitster.mtv.corp.google.com>
-        <cd97bb1b-13f3-0856-a250-8f4921b9f6d8@grubix.eu>
-        <xmqqshfnx1kl.fsf@gitster.mtv.corp.google.com>
-        <xmqqshfgk1mr.fsf@gitster.mtv.corp.google.com>
-        <5a2fca1d-4edf-965f-4840-58c924c91051@grubix.eu>
-        <xmqqzi9nlcyw.fsf@gitster.mtv.corp.google.com>
-        <4a14c35c-88b0-7bc3-0a6e-c69ed9ec7ee7@grubix.eu>
-        <xmqqa81njds0.fsf@gitster.mtv.corp.google.com>
+ <cover.1505394278.git.git@grubix.eu>
+ <5513a1415d11517c28158d9b4212d383a233182f.1505394278.git.git@grubix.eu>
+ <xmqq60ckzng7.fsf@gitster.mtv.corp.google.com>
+ <cd97bb1b-13f3-0856-a250-8f4921b9f6d8@grubix.eu>
+ <xmqqshfnx1kl.fsf@gitster.mtv.corp.google.com>
+ <xmqqshfgk1mr.fsf@gitster.mtv.corp.google.com>
+ <5a2fca1d-4edf-965f-4840-58c924c91051@grubix.eu>
+ <xmqqzi9nlcyw.fsf@gitster.mtv.corp.google.com>
+ <4a14c35c-88b0-7bc3-0a6e-c69ed9ec7ee7@grubix.eu>
+ <xmqqa81njds0.fsf@gitster.mtv.corp.google.com>
  <xmqq7ewckbpk.fsf@gitster.mtv.corp.google.com>
-In-Reply-To: <xmqq7ewckbpk.fsf@gitster.mtv.corp.google.com>
-Accept-Language: en-US, de-AT
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
+ <b9c2c978a6d3407c8c26509fc82b3920@SFSWW2K12EX02.intern.fsw.at>
+From:   Michael J Gruber <git@grubix.eu>
+Message-ID: <1a375938-a3dc-d670-dd41-de524ac0f93d@grubix.eu>
+Date:   Wed, 8 Nov 2017 10:33:41 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
 MIME-Version: 1.0
+In-Reply-To: <b9c2c978a6d3407c8c26509fc82b3920@SFSWW2K12EX02.intern.fsw.at>
+Content-Type: text/plain; charset=utf-8
+Content-Language: de-DE
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:2/McskV4d2JgeHleybTHO0tq3cIQlZ4K2t5uIw7k0YN4Du+9Jys
+ OXyXow3U9uDesT7aB+2+RTAYmyMulrkOyJgKwsffnuAKioquTBp2ZLKmt9ElPDfN1BLoj6N
+ CdrneJZjdkwCmHU1V1ynHKzfvh7CdbDVN6cw6mxrIFNvWqGNW5LD8Q/dZ+o1gNsC9K9XX/v
+ Q366fL1jYGLbNpenVwyGw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:dzQOn0RZzNE=:IFkNLbsqtLTekO24WLVAAZ
+ cEzkr5pgn6j6M03+ysOqemYS6RR6LbHuxWqwtZmtoY3hYzpYqKdZC5eVd6OggbhiVo64F+pE2
+ B7ndNals1f4XS1Pa1fd5OPrFGe+tcE9PzDiT1OMToYCJzsDGkH3CM3wDE7b7fEaxAmMM60Gm+
+ kCt3gmYQnVYxOIvmr8qsGjQoe4Uc2sHxmoK2+1p2tP5TBjSRnpltD/pqfJMSmc+U0PF9V9eD6
+ hB0UDhaSyvn5aRj6QpDUwPYn8hUMTtfi+VddFOYz1ISOPKpEDKZQkqoDs295BAqz7HK2x8Sza
+ jnhzaQBRZ8mV0A6um0gzm9fhH2RubzPPBQacVILppzMYaj75t/QLJ+BwW/DCgRf4Z2tIQ0QaX
+ LaKHMh5SgNP2uH+WmIV7oHPRkDsy9bKnaKJ/XyL1U5J0k+njRxqd8zfQKqxnBsJwkaBd8mHzA
+ BGREBYXPWNRtj0aDdAGzdMBfrqEuSmMa3X0RFxJmztmFXxoNXjlyhHg3VoF7TEFm1BGNr4YlG
+ AoDKIVeCaVbjuYfCsHdJETC0LKMJq9VVPUCJJqukVGaiYHhabgNaqgT67BhZzeiAq46agFvDq
+ UwA/DmeF3EbcvG7o/6FHXTX06Zr7UvqeVgwMSuDj0IcDRY23fYx2qJ1xPEmmyL00rjEXzFG5u
+ BDNf12FM08Xyg54u60RYP6UEmnTa20fEUS9ov/2RbHLHekmq6L7cCJyOEAqXEaoYNhBAN7X6A
+ h1xUFBmC8iICw/nvxCSq5IpAD6Q51XvDAkj7KiNv7tfFc5vTn4l2cZKEye4=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thank you for all the effort to fix this issue. Unfortunately, we are still suffering from this and our workaround just stopped being sufficient.
+Ekelhart Jakob venit, vidit, dixit 08.11.2017 09:52:
+> Thank you for all the effort to fix this issue. Unfortunately, we are still suffering from this and our workaround just stopped being sufficient.
+> 
+> We were wondering if there is any way to tell when this fix will be released?
+> 
+> BR Jakob
 
-We were wondering if there is any way to tell when this fix will be released?
+Soon (TM) :)
 
-BR Jakob
+Term start kept me busy, but I'll try and resume dangling topics this
+week or next.
 
------Original Message-----
-From: Junio C Hamano *EXTERN* [mailto:gitster@pobox.com] 
-Sent: Dienstag, 3. Oktober 2017 08:06
-To: Michael J Gruber <git@grubix.eu>
-Cc: git@vger.kernel.org; Ekelhart Jakob <jakob.ekelhart@fsw.at>; Jeff King <peff@peff.net>; Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 2/3] merge-base: return fork-point outside reflog
+It seems the consensus was that current functionality is as designed but
+not necessarily as expected, and another mode "--fork-base" (that does
+what I suggested as "fix") would meet these expectations. I would reuse
+the documentation of the current mode as a description of the new mode
+and add documentation for the existing mode ;)
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Michael J Gruber <git@grubix.eu> writes:
->
->> I'm still trying to understand what the original intent was: If we 
->> abstract from the implementation (as we should, as you rightly
->> emphasize) and talk about historical tips then we have to ask ourselves:
->> - What is "historical"?
->> - What is tip?
->> - Tip of what, i.e. what is a "branch"?
->
-> The feature was meant to be a solution for "upstream rebased the 
-> branch I based my work on."
-> ...
-
-So, what is the status of this thing?
-
-While I think 1/3 and 3/3 of these three definitely make sense, I do not think "fork-point outside reflog" does as-is If it is not even part of the commits that were known to be at the tip some time in the past (including "right now"---which is the fix you made with 3/3 is about), then the patch may make the command return something in more situations, and these extra things that it returns might even be improvements, but they are definitely not "fork-points".
-
-To be quite honest, I am not convinced that the extra output you would get out of the command by removing the latter half of "which are the ancestors that were known to be at the tip?" would always give better commit to use as the beginning of the topic to be rebased, as I do not see any reasoning behind why, unlike the filtered case where there _is_ a strong reasoning (with explained
-limitation) behind it.
-
-As long as the code misidentifies and picks a commits deeper than necessary, which will force the user to say "rebase --skip", I think we are OK.  What we want to absolutely avoid is the opposite; somehow the code misidentifies a commit that is part of the work you want to rebase as a recommended fork-point, which would cause the rebase to silently lose changes.  I do not think I saw why it won't happen explained in the log message of 2/3 at all.
-
+Michael
