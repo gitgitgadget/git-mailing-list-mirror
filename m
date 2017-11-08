@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 90FE81F43C
-	for <e@80x24.org>; Wed,  8 Nov 2017 14:50:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 07BE91F43C
+	for <e@80x24.org>; Wed,  8 Nov 2017 14:51:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752533AbdKHOuo (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Nov 2017 09:50:44 -0500
-Received: from mail-qk0-f194.google.com ([209.85.220.194]:55305 "EHLO
-        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752491AbdKHOun (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Nov 2017 09:50:43 -0500
-Received: by mail-qk0-f194.google.com with SMTP id x195so3574420qkb.12
-        for <git@vger.kernel.org>; Wed, 08 Nov 2017 06:50:42 -0800 (PST)
+        id S1752566AbdKHOvI (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Nov 2017 09:51:08 -0500
+Received: from mail-qk0-f196.google.com ([209.85.220.196]:45951 "EHLO
+        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752491AbdKHOvH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Nov 2017 09:51:07 -0500
+Received: by mail-qk0-f196.google.com with SMTP id c16so3612466qke.2
+        for <git@vger.kernel.org>; Wed, 08 Nov 2017 06:51:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=BmGi9Udsg5c8mfmLyVcsawSiYBEpDXzXoZG9wigGf48=;
-        b=cHkvJh6lP1NeZ+a6wx1smBsFr5MKijY4fmwUdFer3h5EozF1ocSouq5lJGpEX4layc
-         UhTTeeY5v4vNGxzzGq9G04qWBs+869SPZ1nv308QApgEfAp4kJ0uI10g6/T25sg+ga5a
-         3hJ1Vh36lgzJJdV8vkiHjB3zP0WWFMRAcbQIT04sPZgJez8OUipvwtZKfhTR5t8P9XvB
-         aNjQPxC/v7SRByex74ty+83932ukf3sXyL7PEMP7Q4VpF0f6pG2goZ089mBbBajLCB6W
-         /GRA1tCBT3T0tFLzPECjgtpdl40/W5ATUvAuLEEzSCN51Kxa3JtCT6uOHj5b1yC7GK5S
-         muqQ==
+        bh=et8UraZQaahdgdo2Xe7J/EA8ShQ8dSJy0Yj3zqMhmUI=;
+        b=Q5/jRwg84k9xJ5ixGZZTfIMZs+QWablHuTlWsZE9IwDA0nfc2LhwZMgf+rxeiz4qhx
+         JDTGcyxCk98dr2hcr9ZTywP8/MvFHBgTQ/ODfgniTgdcWSFXBQucAgdWr0ZaebIhRDpe
+         XZAu6lcCDNSArNQ5npiw45xheWVqSoK1mdElssr0RnqmyhN3YAOu8IaybpWpejKDu+1S
+         JdgcygNulzOGa7BVLUpYj4n0+3r2lRtuHhKMBxYxsWSBHxaoqn3x7863x32BQm7EZiNi
+         Isbb7J0VrbiG323mFEMzWjsGvPTiWgx6iyB0V3uXlxSCHIpdg6geTXZL75yQe9wpLTF9
+         IrUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=BmGi9Udsg5c8mfmLyVcsawSiYBEpDXzXoZG9wigGf48=;
-        b=TTCxO41Rvw77S0oH6204KXFsq0RyIHhictSYTPL/bME5/K+LkCkqk5h7gxDWZYBvl0
-         T+ZoNR+fAt242lj7rM+owNVF23jsn57zBsxTktuII34jEU14hJJyOtq6c8Oipr/C6Pvy
-         0xkkZkZsgOC+645fjk5ElhFM71d1JEZ43UmjTqrLLBdPVVuh1JmBnPHc+jFJ1OR9AatQ
-         rB2S3QbJWtQM3oOjJ+YGyscCik7820k3wf+O1d9dlzvJ+EwuD8soPBTymzbXNjlwX3v4
-         8ApPj7rfCWA3gke1GY+XLjxytpBl7yrLaGA0UDXAsGKSktJdClrU1jyzdJIjjrsE1GEA
-         auYg==
-X-Gm-Message-State: AJaThX5uQ2Q5aeV6i1PTS3YdKBrgYMzdb6QULBu7vvdcj1HgDnALiCdw
-        92huqmC+iAZm+vbJEl8yxrXxwNjs
-X-Google-Smtp-Source: ABhQp+R1XTuivksa7YWSq4+6UlFvYKu/tF59xQIapSDjkWepZm4SE363biV4F0oB5rqpQkRm+NaKaQ==
-X-Received: by 10.55.120.131 with SMTP id t125mr1128802qkc.63.1510152641529;
-        Wed, 08 Nov 2017 06:50:41 -0800 (PST)
+        bh=et8UraZQaahdgdo2Xe7J/EA8ShQ8dSJy0Yj3zqMhmUI=;
+        b=QKrWbYtvZuJHxuJ6NT25VdQxdaAKLRns3HtLh8xySLScxQrf9G6bB2YZfc/YSThtaK
+         e+PKdyFxcDTKm08E1K3AOxYzRwfbDolqt6mydjZqnbKxQC/klTqPkTYFFAjTeRZE+/BW
+         IitC2DH2eHF0LB4HDgvf3pwoHrYSe1g6kkr99R5ihJxM3ATLlPWObuXoCLGrGRzm5Se2
+         BOEjWqzwuPJlzr8X1EzpaJ4/0F8acKAaW27H9JH6jZ4l5aWX2syufsQlaH4DvY/EQrBR
+         X8ZVvKqLFma6bP4r5fPqGbSdaBQrdOqPTZkJQ63lIgwhInShBL2lmmEcGJlB5I1OrPTn
+         LVSQ==
+X-Gm-Message-State: AJaThX4xrBVeN0ct2jFxPbsqbTY4cawRZeTrqWVTd/zOQ4JIdeY1P1sT
+        5wOgDd1URclxWrlxqNKUGgs=
+X-Google-Smtp-Source: AGs4zMaUF2zGMxEPpiFpxw9ReYWV5aSx8DirGNCn+sHyJiuX3FAqldfTyJztCjJ0AqXcyUxZr9LykA==
+X-Received: by 10.55.72.75 with SMTP id v72mr1159423qka.92.1510152665749;
+        Wed, 08 Nov 2017 06:51:05 -0800 (PST)
 Received: from [192.168.1.13] ([65.222.173.206])
-        by smtp.gmail.com with ESMTPSA id y192sm2875716qky.62.2017.11.08.06.50.39
+        by smtp.gmail.com with ESMTPSA id c8sm2769925qkg.4.2017.11.08.06.51.03
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 08 Nov 2017 06:50:40 -0800 (PST)
+        Wed, 08 Nov 2017 06:51:04 -0800 (PST)
 Subject: Re: [RFC] fastindex: parallelize index load
 To:     Ben Peart <benpeart@microsoft.com>, git@vger.kernel.org
 Cc:     gitster@pobox.com, pclouds@gmail.com, jeffhost@microsoft.com,
         chriscool@tuxfamily.org, alexmv@dropbox.com, peff@peff.net
 References: <20171108144253.34428-1-benpeart@microsoft.com>
 From:   Ben Peart <peartben@gmail.com>
-Message-ID: <dcd4a9e6-dbaa-25ec-c898-d4242a8ce544@gmail.com>
-Date:   Wed, 8 Nov 2017 09:50:38 -0500
+Message-ID: <8906812f-ae06-8540-8fd0-6c740441126c@gmail.com>
+Date:   Wed, 8 Nov 2017 09:51:03 -0500
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.4.0
 MIME-Version: 1.0
@@ -89,7 +89,6 @@ test            count   files   TRUE    FALSE     Savings
 ------------------------------------------------------------------------
 test-read-cache 500     100K    6.39    8.33      23.36%
 test-read-cache 100     1M      12.49   18.68     33.12%
-
 
 
 On 11/8/2017 9:42 AM, Ben Peart wrote:
