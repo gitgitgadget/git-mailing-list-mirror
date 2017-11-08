@@ -2,91 +2,186 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F14141F42B
-	for <e@80x24.org>; Wed,  8 Nov 2017 00:47:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E960D1F42B
+	for <e@80x24.org>; Wed,  8 Nov 2017 00:49:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934192AbdKHApZ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Nov 2017 19:45:25 -0500
-Received: from mail-io0-f171.google.com ([209.85.223.171]:51338 "EHLO
-        mail-io0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934172AbdKHApV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Nov 2017 19:45:21 -0500
-Received: by mail-io0-f171.google.com with SMTP id b186so4145802iof.8
-        for <git@vger.kernel.org>; Tue, 07 Nov 2017 16:45:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=TflB2ZdMXMStDYbimj1We4Ijc0Yn+06P4alZLjL9L4g=;
-        b=WCiqVqVYe8v35U7rzprflMSSn6IC+8Cw6EIZJ9J4SU7n9CHcoLw4Bfitvj83tmo53D
-         //FN5rgVLihi9MjqrCLgyE0RNNfP8tYh57o3+fSmMupm0t68h81OBwCYsSjaYXrkbqZ3
-         jjm+hPau+ka5TAQhXKcIMo/1wXqkD/uzoAqZScOdzb8K/ULQrHMDpeoR3HnBBhhxM4iG
-         wU/dAP1L2DsAD14/KA2HFUriiNEHcUfgp0Cg8Y+JnAUu6NTsMjQfbs1MnBOp4EHqxtkh
-         EmXBXgTPrd2QCLrRiLLM1j4+7eMtfFsfrKOI0kBtQMW5N5Fn6BLaR30Olx7BDi5wNsui
-         ILzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=TflB2ZdMXMStDYbimj1We4Ijc0Yn+06P4alZLjL9L4g=;
-        b=C7ElP/FZzEZOpGlXmL3mxoKL2rrLJ/b6pNA0dklx6DD0VCvhIeBR9luIyBVNar9D5Q
-         Nh0pDQJ0frlAzV4ZgTCPFSOdLbiua8v0Dr22sKT04md05prMviIQ7PzXW/uRBTbF0jKQ
-         MY+CakBqBbjYG813Zt13SwUmB52EmvwJc2nAmtI4OTVgJ3iA5FMLxEUsIGqxKc4BWpHr
-         WrclLpmOoZszdRZsS/XpOTAAPrE4XU2U9WiLratjaG9cbKeTLp1lnHq6dVIEV02FlJ84
-         GUrqVOREgvApuaM8TvYUaCrFAWWRm4p1c1MSRlLLQ59IB5CHj43wsQjZvVoUWGdlFi8K
-         ROTg==
-X-Gm-Message-State: AJaThX6hhjMpN0OlZH5CcXzhVmGV1uJLmg9qavJ1XGZN747vgNcGtO3J
-        6uxxUomqDp9E1wiNg4W/X370VQ==
-X-Google-Smtp-Source: AGs4zMacore11XYZ+3ZbBcHRiA6PP6+ct7Tn2FbA+l4C5QL9MKeb8DfQyZ2o96vi/QVOZKXBi3Uw/w==
-X-Received: by 10.107.151.19 with SMTP id z19mr789597iod.248.1510101920901;
-        Tue, 07 Nov 2017 16:45:20 -0800 (PST)
-Received: from twelve3.mtv.corp.google.com ([2620:0:100e:422:8df4:1665:e9bb:1ae7])
-        by smtp.gmail.com with ESMTPSA id u187sm1180208iod.22.2017.11.07.16.45.20
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 07 Nov 2017 16:45:20 -0800 (PST)
-Date:   Tue, 7 Nov 2017 16:45:19 -0800
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v3 6/6] pack-objects: add list-objects filtering
-Message-Id: <20171107164519.eb49377ce11a6b31ab09bf83@google.com>
-In-Reply-To: <20171107193546.10017-7-git@jeffhostetler.com>
-References: <20171107193546.10017-1-git@jeffhostetler.com>
-        <20171107193546.10017-7-git@jeffhostetler.com>
-X-Mailer: Sylpheed 3.4.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+        id S1758979AbdKHAtB (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Nov 2017 19:49:01 -0500
+Received: from avasout04.plus.net ([212.159.14.19]:35623 "EHLO
+        avasout04.plus.net.plus.net" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1752720AbdKHAs7 (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 7 Nov 2017 19:48:59 -0500
+Received: from [10.0.2.15] ([80.189.70.158])
+        by smtp with ESMTPA
+        id CEY5e1sE7zbmWCEY6e2Rix; Wed, 08 Nov 2017 00:48:58 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=P6pKvmIu c=1 sm=1 tr=0
+ a=bpDj9VLvXCYHU65eeb/Fiw==:117 a=bpDj9VLvXCYHU65eeb/Fiw==:17
+ a=IkcTkHD0fZMA:10 a=VVlED5B4AAAA:8 a=pGLkceISAAAA:8 a=dIu3SnmMAAAA:8
+ a=1GEu0c_66gakO7CShGgA:9 a=QEXdDO2ut3YA:10 a=Ua9G7VpiFza3u12uuhVB:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH v16 Part II 5/8] bisect--helper: `bisect_next_check` shell
+ function in C
+To:     Pranit Bauva <pranit.bauva@gmail.com>, git@vger.kernel.org
+References: <0102015f5e5ee171-f30f4868-886f-47a1-a4e4-b4936afc545d-000000@eu-west-1.amazonses.com>
+ <0102015f5e5ee2ca-bf824205-86e6-4259-b7d7-a68e2fbb087d-000000@eu-west-1.amazonses.com>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <8d59ede3-043d-6a48-b290-bf4d49e650f1@ramsayjones.plus.com>
+Date:   Wed, 8 Nov 2017 00:48:57 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
+MIME-Version: 1.0
+In-Reply-To: <0102015f5e5ee2ca-bf824205-86e6-4259-b7d7-a68e2fbb087d-000000@eu-west-1.amazonses.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfM0m4/aJiOjeXYL+jfnm/Hs7XW8Z6KDM8QuppOoDa6N0fUd5nWQXBhwazRWf/qYUCQm84/tUaLqGkh+qTZ9zalRXq1dM7RmIPsmzhu7oay+GOxArt8GT
+ 89ERxEslt0rbtBtMyKjk6cGDKLevgRm0BBf6zIE0KZYloiD9R7N7JboeWzRu/rmp6HQvs2yIuOIQgg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue,  7 Nov 2017 19:35:46 +0000
-Jeff Hostetler <git@jeffhostetler.com> wrote:
 
-> +--filter-ignore-missing:
-> +	Ignore missing objects without error.  This may be used with
-> +	or without and of the above filtering.
 
-There is a discussion about this parameter (and the corresponding ones
-in patch 5/6), to which I have just replied:
-
-https://public-inbox.org/git/20171107164118.97cc65c4030de0922b19ddd6@google.com/
-
-> @@ -3028,6 +3048,12 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
->  	if (!rev_list_all || !rev_list_reflog || !rev_list_index)
->  		unpack_unreachable_expiration = 0;
+On 27/10/17 16:06, Pranit Bauva wrote:
+> Reimplement `bisect_next_check` shell function in C and add
+> `bisect-next-check` subcommand to `git bisect--helper` to call it from
+> git-bisect.sh .
+> 
+> `bisect_voc` shell function is no longer useful now and is replaced by
+> using a char *[] of "new|bad" and "good|old" values.
+> 
+> Using `--bisect-next-check` is a temporary measure to port shell
+> function to C so as to use the existing test suite. As more functions
+> are ported, this subcommand will be retired but its implementation will
+> be called by some other methods.
+> 
+> Helped-by: Stephan Beyer <s-beyer@gmx.net>
+> Mentored-by: Lars Schneider <larsxschneider@gmail.com>
+> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+> Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+> ---
+>  builtin/bisect--helper.c | 91 +++++++++++++++++++++++++++++++++++++++++++++++-
+>  git-bisect.sh            | 60 +++----------------------------
+>  2 files changed, 94 insertions(+), 57 deletions(-)
+> 
+> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+> index 65abf8a70c6d9..0f9c3e63821b8 100644
+> --- a/builtin/bisect--helper.c
+> +++ b/builtin/bisect--helper.c
+> @@ -6,6 +6,7 @@
+>  #include "dir.h"
+>  #include "argv-array.h"
+>  #include "run-command.h"
+> +#include "prompt.h"
 >  
-> +	if (filter_options.choice) {
-> +		if (!pack_to_stdout)
-> +			die("cannot use filtering with an indexable pack.");
+>  static GIT_PATH_FUNC(git_path_bisect_terms, "BISECT_TERMS")
+>  static GIT_PATH_FUNC(git_path_bisect_expected_rev, "BISECT_EXPECTED_REV")
+> @@ -21,6 +22,7 @@ static const char * const git_bisect_helper_usage[] = {
+>  	N_("git bisect--helper --bisect-reset [<commit>]"),
+>  	N_("git bisect--helper --bisect-write <state> <revision> <good_term> <bad_term> [<nolog>]"),
+>  	N_("git bisect--helper --bisect-check-and-set-terms <command> <good_term> <bad_term>"),
+> +	N_("git bisect--helper --bisect-next-check [<term>] <good_term> <bad_term>"),
+>  	NULL
+>  };
+>  
+> @@ -44,6 +46,11 @@ static void set_terms(struct bisect_terms *terms, const char *bad,
+>  	terms->term_bad = xstrdup(bad);
+>  }
+>  
+> +static const char *voc[] = {
+> +	"bad|new",
+> +	"good|old"
+> +};
+> +
+In my version I had this instead:
 
-I'm not sure what an "indexable pack" is - probably a better message is
-"cannot use --filter without --stdout".
++static const char *vocab_bad = "bad|new";
++static const char *vocab_good = "good|old";
++
+
+which I prefer, because ...
+
+>  /*
+>   * Check whether the string `term` belongs to the set of strings
+>   * included in the variable arguments.
+> @@ -264,6 +271,79 @@ static int check_and_set_terms(struct bisect_terms *terms, const char *cmd)
+>  	return 0;
+>  }
+>  
+> +static int mark_good(const char *refname, const struct object_id *oid,
+> +		     int flag, void *cb_data)
+> +{
+> +	int *m_good = (int *)cb_data;
+> +	*m_good = 0;
+> +	return 1;
+> +}
+> +
+> +static int bisect_next_check(const struct bisect_terms *terms,
+> +			     const char *current_term)
+> +{
+> +	int missing_good = 1, missing_bad = 1, retval = 0;
+> +	const char *bad_ref = xstrfmt("refs/bisect/%s", terms->term_bad);
+> +	const char *good_glob = xstrfmt("%s-*", terms->term_good);
+> +
+> +	if (ref_exists(bad_ref))
+> +		missing_bad = 0;
+> +
+> +	for_each_glob_ref_in(mark_good, good_glob, "refs/bisect/",
+> +			     (void *) &missing_good);
+> +
+> +	if (!missing_good && !missing_bad)
+> +		goto finish;
+> +
+> +	if (!current_term)
+> +		goto fail;
+> +
+> +	if (missing_good && !missing_bad && current_term &&
+> +	    !strcmp(current_term, terms->term_good)) {
+> +		char *yesno;
+> +		/*
+> +		 * have bad (or new) but not good (or old). We could bisect
+> +		 * although this is less optimum.
+> +		 */
+> +		fprintf(stderr, _("Warning: bisecting only with a %s commit\n"),
+> +			terms->term_bad);
+> +		if (!isatty(0))
+> +			goto finish;
+> +		/*
+> +		 * TRANSLATORS: Make sure to include [Y] and [n] in your
+> +		 * translation. The program will only accept English input
+> +		 * at this point.
+> +		 */
+> +		yesno = git_prompt(_("Are you sure [Y/n]? "), PROMPT_ECHO);
+> +		if (starts_with(yesno, "N") || starts_with(yesno, "n"))
+> +			goto fail;
+> +
+> +		goto finish;
+> +	}
+> +	if (!is_empty_or_missing_file(git_path_bisect_start())) {
+> +		error(_("You need to give me at least one %s and "
+> +			"%s revision. You can use \"git bisect %s\" "
+> +			"and \"git bisect %s\" for that.\n"),
+> +			voc[0], voc[1], voc[0], voc[1]);
+
+... this is (arguably) easier to read:
++			vocab_bad, vocab_good, vocab_bad, vocab_good);
+
+> +		goto fail;
+> +	} else {
+> +		error(_("You need to start by \"git bisect start\". You "
+> +			"then need to give me at least one %s and %s "
+> +			"revision. You can use \"git bisect %s\" and "
+> +			"\"git bisect %s\" for that.\n"),
+> +			voc[1], voc[0], voc[1], voc[0]);
+
+ditto
+
+ATB,
+Ramsay Jones
+
