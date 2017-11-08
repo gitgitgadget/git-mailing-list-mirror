@@ -2,91 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D6A9F1F43C
-	for <e@80x24.org>; Wed,  8 Nov 2017 20:32:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 205B51F43C
+	for <e@80x24.org>; Wed,  8 Nov 2017 20:36:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752434AbdKHUcZ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Nov 2017 15:32:25 -0500
-Received: from siwi.pair.com ([209.68.5.199]:60519 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751770AbdKHUcY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Nov 2017 15:32:24 -0500
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 04F0E8457D;
-        Wed,  8 Nov 2017 15:32:24 -0500 (EST)
-Received: from [10.160.98.77] (unknown [167.220.148.86])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 605238457C;
-        Wed,  8 Nov 2017 15:32:23 -0500 (EST)
-Subject: Re: [PATCH 1/9] extension.partialclone: introduce partial clone
- extension
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
-        Jeff Hostetler <jeffhost@microsoft.com>
-References: <20171102202052.58762-1-git@jeffhostetler.com>
- <20171102202052.58762-2-git@jeffhostetler.com>
- <20171102152427.32544b3d6149e7a7bfe840c8@google.com>
- <1db01a45-85c4-6243-c43f-9f5e50e9a6a8@jeffhostetler.com>
- <20171103113919.396807c82dbfdecff7f19c41@google.com>
- <99b7c61b-f8ab-43a0-0707-62ac1db4d080@jeffhostetler.com>
- <20171106111642.696a006e802cf0259098b44f@google.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <515130bd-6fd8-2c53-e935-e811330f8512@jeffhostetler.com>
-Date:   Wed, 8 Nov 2017 15:32:21 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.4.0
+        id S1752574AbdKHUgD (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Nov 2017 15:36:03 -0500
+Received: from mail-qk0-f177.google.com ([209.85.220.177]:44054 "EHLO
+        mail-qk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752546AbdKHUgC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Nov 2017 15:36:02 -0500
+Received: by mail-qk0-f177.google.com with SMTP id v137so5052070qkb.1
+        for <git@vger.kernel.org>; Wed, 08 Nov 2017 12:36:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=BPmglLIB/r9do3j4ouVKl9Vxr6pKO8M/alix2pZ22M0=;
+        b=DE5vS95g1TTUFVVwlfug97J1Fg7aPi0JqKiVbPQTTohaO1yGzyXfR5yq2TBWsdG7BU
+         XD/zTQZn+u6+yjkNDinTqUCD+3DCjv2n2e8onuUMUBod+LnNhsq+olBplJllWx/1lfA2
+         atq1M2yaJWcitz+jVVzvp79vmifg8TdJr51cRgrrtF/0Tt3OhykV8rzu1Trlvw69RtrO
+         roL/jr/nmycKF/CZ4quXk+Bz+WnebLtw6NLHZBWTkTRrzDYJ14tEsTuNggm+MhRQgfib
+         llXcDl5R/i9t2bFg7kN5b/oa16L5wfOAoEuFjfj4OQBESLO0mEsTBfK3oAJLBns3Qr4v
+         dyMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=BPmglLIB/r9do3j4ouVKl9Vxr6pKO8M/alix2pZ22M0=;
+        b=d1p0jAW5E+T/G2VxBS5sxqmPYScxdIWCh3hg20hL5JEkkgQzD66g3Kjm3LgPDuM6RM
+         YS6T/y6ntiI/cgFU5Z/ZQJzjt0qy8CG9WI2zs9C4GS76NIbLEL9l3M65Li1TjVG3kY/a
+         ZrGT9bRF+1vqbR/P0gpCg/KwR6CXWEEhtwygyz0V1bTFe2NKTSTd361wBiDvFwYm3kPH
+         yFpuuKFh21IqjxK58BeOyIweU3FJdZ8/OOQzBSDAZVacktJ/h6DuspJTk94aBQK3WY/N
+         YsvLU4AP/1HRrvaMfIK54NZnKqmp4K50WOY0ZenguFBX6uqjEipE/fnAJdqj9e99B0z6
+         817w==
+X-Gm-Message-State: AJaThX6CBPVFd8G6sa4G+W9g3Sf6QtlZ+lpEvdJKsF7eQWum73iX0Nse
+        5zyaLGeVk+uIltzJtIMJSBVCZpu7qQ8qIKkDZnpn7g==
+X-Google-Smtp-Source: AGs4zMZacZQ1c4wI+XT6CotHlKv3+vi7xkojvzL7UO718B+nsykfC2pL61KcGb1K9fzSal+hsxIGlC+4FhTnbYdDp4o=
+X-Received: by 10.55.111.3 with SMTP id k3mr2728609qkc.332.1510173362122; Wed,
+ 08 Nov 2017 12:36:02 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20171106111642.696a006e802cf0259098b44f@google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Received: by 10.140.102.70 with HTTP; Wed, 8 Nov 2017 12:36:01 -0800 (PST)
+In-Reply-To: <cf38b57d-1424-0776-b67f-8cfd24e087bb@ramsayjones.plus.com>
+References: <cf38b57d-1424-0776-b67f-8cfd24e087bb@ramsayjones.plus.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 8 Nov 2017 12:36:01 -0800
+Message-ID: <CAGZ79kb3NpuWW=BpTjF_DrdVhXHh3d_8aF77Jdpi+8yTxtAbVw@mail.gmail.com>
+Subject: Re: Test failures on 'pu' branch
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, Nov 8, 2017 at 12:28 PM, Ramsay Jones
+<ramsay@ramsayjones.plus.com> wrote:
 
+> t5300-pack-object.sh                             (Wstat: 256 Tests: 40 Failed: 2)
 
-On 11/6/2017 2:16 PM, Jonathan Tan wrote:
-> On Mon, 6 Nov 2017 12:32:45 -0500
-> Jeff Hostetler <git@jeffhostetler.com> wrote:
-> 
->>>> Yes, that is a point I wanted to ask about.  I renamed the
->>>> extensions.partialclone that you created and then I moved your
->>>> remote.<name>.blob-max-bytes setting to be in extensions too.
->>>> Moving it to core.partialclonefilter is fine.
->>>
->>> OK - in that case, it might be easier to just reuse my first patch in
->>> its entirety. "core.partialclonefilter" is not used until the
->>> fetching/cloning part anyway.
->>>
->>
->> Good point.  I'll take a look at refactoring that.
->> If it looks like the result will be mostly/effectively
->> your original patches, I'll let you know and hand part 2
->> back to you.
-> 
-> Sounds good. I uploaded the result of rebasing my part 2 patches on top
-> of your part 1 patches here, if you would like it as a reference:
-> 
-> https://github.com/jonathantanmy/git/commits/pc20171106
-> 
+> t5500-fetch-pack.sh                              (Wstat: 256 Tests: 355 Failed: 6)
 
-Thanks Jonathan.
+These are series
 
-I moved my version of part 2 on top of yesterday's part 1.
-There are a few changes between my version and yours. Could
-you take a quick look at them and see if they make sense?
-(I'll spare the mailing list another patch series until after
-I attend to the feed back on part 1.)
+> t5601-clone.sh                                   (Wstat: 256 Tests: 102 Failed: 4)
 
-https://github.com/jeffhostetler/git/commits/core/pc3_p2
-
-Thanks
-Jeff
-
+This one is a spurious test. I had that flake on me once in the last weeks, too.
+But upon investigation I could not reproduce.
+See https://public-inbox.org/git/xmqq376ipdpx.fsf@gitster.mtv.corp.google.com/
