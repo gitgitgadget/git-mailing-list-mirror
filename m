@@ -2,129 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
-	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7340720A36
-	for <e@80x24.org>; Tue,  7 Nov 2017 23:25:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7B74E1F42B
+	for <e@80x24.org>; Wed,  8 Nov 2017 00:07:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757674AbdKGXZK (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Nov 2017 18:25:10 -0500
-Received: from smtp-out-6.talktalk.net ([62.24.135.70]:54030 "EHLO
-        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754724AbdKGXZG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Nov 2017 18:25:06 -0500
-Received: from PhilipOakley ([92.29.14.162])
-        by smtp.talktalk.net with SMTP
-        id CDEtejrJ2bjdZCDEue03KG; Tue, 07 Nov 2017 23:25:04 +0000
-X-Originating-IP: [92.29.14.162]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=ONFX5WSB c=1 sm=1 tr=0 a=NXc+vVEgz70gitWznrz3ig==:117
- a=NXc+vVEgz70gitWznrz3ig==:17 a=8nJEP1OIZ-IA:10 a=WsYSNgmE4I-lTSgAepIA:9
- a=wPNLvfGTeEIA:10
-Message-ID: <83D263E58ABD46188756D41FE311E469@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:   "Philip Oakley" <philipoakley@iee.org>
-To:     "Ann T Ropea" <bedhanger@gmx.de>,
-        "Junio C Hamano" <gitster@pobox.com>
-Cc:     "Git Mailing List" <git@vger.kernel.org>,
-        "Daniel Barkalow" <barkalow@iabervon.org>,
-        "Ann T Ropea" <bedhanger@gmx.de>
-References: <20171105162730.31405-1-bedhanger@gmx.de> <20171107025321.31028-1-bedhanger@gmx.de>
-Subject: Re: [PATCH 1/3] checkout: describe_detached_head: remove 3dots after committish
-Date:   Tue, 7 Nov 2017 23:25:02 -0000
-Organization: OPDS
+        id S1758453AbdKHAHN (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Nov 2017 19:07:13 -0500
+Received: from avasout04.plus.net ([212.159.14.19]:33812 "EHLO
+        avasout04.plus.net.plus.net" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1751566AbdKHAHN (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 7 Nov 2017 19:07:13 -0500
+Received: from [10.0.2.15] ([80.189.70.158])
+        by smtp with ESMTPA
+        id CDtee1o0CzbmWCDtfe2QgO; Wed, 08 Nov 2017 00:07:11 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=P6pKvmIu c=1 sm=1 tr=0
+ a=bpDj9VLvXCYHU65eeb/Fiw==:117 a=bpDj9VLvXCYHU65eeb/Fiw==:17
+ a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8 a=dIu3SnmMAAAA:8 a=UsysoTnl0L_OJJCZmwgA:9
+ a=QEXdDO2ut3YA:10 a=Ua9G7VpiFza3u12uuhVB:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH v16 Part II 1/8] bisect--helper: `bisect_reset` shell
+ function in C
+To:     Pranit Bauva <pranit.bauva@gmail.com>, git@vger.kernel.org
+References: <0102015ecc65d695-22151d3b-752b-4c10-a3a3-b8ef52491664-000000@eu-west-1.amazonses.com>
+ <0102015f5e5ee171-f30f4868-886f-47a1-a4e4-b4936afc545d-000000@eu-west-1.amazonses.com>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <272aaa88-99c2-83a8-7343-c65797566a14@ramsayjones.plus.com>
+Date:   Wed, 8 Nov 2017 00:07:10 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
 MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="iso-8859-1";
-        reply-type=original
+In-Reply-To: <0102015f5e5ee171-f30f4868-886f-47a1-a4e4-b4936afc545d-000000@eu-west-1.amazonses.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-Antivirus: AVG (VPS 171107-0, 07/11/2017), Outbound message
-X-Antivirus-Status: Clean
-X-CMAE-Envelope: MS4wfJbHpQ13gN6leUOLRWV0Lm3ANZP/84iOxqU6JxkYPPnnU98/I7kD7rrJTQL4h3NUMrimh/C8l0VXVoUcgdAZBzQwkY9wjYpSN9N1bHFTBAij1j9GDxoT
- KZE7Agw/kr8HIikCVvPhTZ3NTH06FnXVu5elIG2h9xrixedWXflxYiT56Y4QryM5xoTrJxGbFYK8RdmKC4rF/YwDKjTNMitcONARLUIVX1CopNe4c3SOthdy
- KAEYKuDCpOnXieqp6J7RoP1i/no+eCFstbGjNShO/8D5YdyTkfn8KTlZ66+/d6w2
+X-CMAE-Envelope: MS4wfLkKVNqEYD3wDeOeCZ6r4NaHJnd4lDgeJrso+b9joVJsIna18cx3hD5gdmmKj9V1CDStyehC8ueokQlo45keoJrtY7gQH3Hz/s/u5Syirikk/CbtBLj8
+ p1+TAqgcFadt8bV5SznM94NneojGZIDY8IU+N6uhj2ioNh2DsN1dumwtCmM837MdXGYT+SMjDE89ZA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Ann T Ropea" <bedhanger@gmx.de>
-> Thanks for all the feedback provided!
->
-> I'd like to summarise what consensus we have reached so far and
-> then propose a way forward:
->
->   * we'll use the term "ellipsis (pl. ellipses)" for what's
->     been referred to as "3dots", "n-dots", "many dots" and so
->     forth
 
-Using a consistent  term for the *display* of shortened oid's is good.
 
->
->   * we would like to use ellipses when attached to SHA-1
->     values only for the purpose of specifying a symmetric
->     difference (as per gitrevisions(7))
+On 27/10/17 16:06, Pranit Bauva wrote:
+> Reimplement `bisect_reset` shell function in C and add a `--bisect-reset`
+> subcommand to `git bisect--helper` to call it from git-bisect.sh .
+> 
+> Using `bisect_reset` subcommand is a temporary measure to port shell
+> functions to C so as to use the existing test suite. As more functions
+> are ported, this subcommand would be retired but its implementation will
+> be called by some other method.
+> 
+> Note: --bisect-clean-state subcommand has not been retired as there are
+> still a function namely `bisect_start()` which still uses this
+> subcommand.
+> 
+> Mentored-by: Lars Schneider <larsxschneider@gmail.com>
+> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+> Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+> 
+> ---
+[snip]
 
-The symetric difference (three-dots) is a specific Git *cli* notation that 
-is distinct from the use of ellipsis for displaying oid's
+Sorry for not responding sooner, I've been a bit busy.
 
->
->   * the usage of ellipses as a "here we truncated something
->     longer" is a relic which should be phased out.
+Unfortunately, I have only had time to skim the patches, but
+I haven't noticed anything too serious.
 
-I think that is true.
+>  builtin/bisect--helper.c | 49 +++++++++++++++++++++++++++++++++++++++++++++++-
+>  git-bisect.sh            | 28 ++-------------------------
+>  2 files changed, 50 insertions(+), 27 deletions(-)
+> 
+> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+> index 35d2105f941c6..12754448f7b6a 100644
+> --- a/builtin/bisect--helper.c
+> +++ b/builtin/bisect--helper.c
+> @@ -3,15 +3,21 @@
+>  #include "parse-options.h"
+>  #include "bisect.h"
+>  #include "refs.h"
+> +#include "dir.h"
+> +#include "argv-array.h"
+> +#include "run-command.h"
+>  
+>  static GIT_PATH_FUNC(git_path_bisect_terms, "BISECT_TERMS")
+>  static GIT_PATH_FUNC(git_path_bisect_expected_rev, "BISECT_EXPECTED_REV")
+>  static GIT_PATH_FUNC(git_path_bisect_ancestors_ok, "BISECT_ANCESTORS_OK")
+> +static GIT_PATH_FUNC(git_path_bisect_start, "BISECT_START")
+> +static GIT_PATH_FUNC(git_path_bisect_head, "BISECT_HEAD")
+>  
+>  static const char * const git_bisect_helper_usage[] = {
+>  	N_("git bisect--helper --next-all [--no-checkout]"),
+>  	N_("git bisect--helper --write-terms <bad_term> <good_term>"),
+>  	N_("git bisect--helper --bisect-clean-state"),
+> +	N_("git bisect--helper --bisect-reset [<commit>]"),
+>  	NULL
+>  };
+>  
+> @@ -106,13 +112,48 @@ static void check_expected_revs(const char **revs, int rev_nr)
+>  	}
+>  }
+>  
+> +static int bisect_reset(const char *commit)
+> +{
+> +	struct strbuf branch = STRBUF_INIT;
+> +
+> +	if (!commit) {
+> +		if (strbuf_read_file(&branch, git_path_bisect_start(), 0) < 1)
+> +			return !printf(_("We are not bisecting.\n"));
 
->
-> To get there, preventing describe_detached_head from appending
-> an ellipsis to the SHA-1 values it prints is one important step.
->
-> This change does not cause any test to fall over.
+I've no idea what this is about! If printf encounters an error, then
+this will be equivalent to !-1. If printf does not encounter an error,
+then this will be !<length of output> (whatever that may be, given that
+the string is marked for translation).
 
-But...
->
-> The other important step is dealing with the "git diff --raw"
-> output which features ellipses in the relic-fashion no longer
-> desired.
->
-> It would appear that simplifying diff.c's diff_aligned_abbrev
-> routine to something like:
->
-> /* Do we want all 40 hex characters?
-> */
-> if (len == GIT_SHA1_HEXSZ)
-> return oid_to_hex(oid);
->
-> /* An abbreviated value is fine.
-> */
-> return diff_abbrev_oid(oid, len);
->
-> does do the trick.
->
-> This change causes quite a few tests to fall over; however, they
-> all have truncated-something-longer-ellipses in their
-> raw-diff-output expected sections, and removing the ellipses
-> from there makes the tests pass again, :-)
+I would suggest that you don't want to do that. ;-)
 
-The number of failures you report in the test suit suggests that someone 
-somewhere will be expecting that notation, and that we may need a 
-deprecation period, perhaps with an 'ellipsis' config variable whose default 
-value can later be flipped, though that leaves a config value needing 
-support forever!
-
-Junio should be able to better advise on his preferred approach.
-
->
-> If we can agree that this is a way forward, i'll create & send
-> v2 of the patch series to the mailing list (it'll include the
-> fixed tests) and we'll see where we go from there.
-
---
-Philip 
+ATB,
+Ramsay Jones
 
