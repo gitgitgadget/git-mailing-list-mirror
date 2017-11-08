@@ -2,51 +2,49 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF5041F43C
-	for <e@80x24.org>; Wed,  8 Nov 2017 22:11:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 457F81F43C
+	for <e@80x24.org>; Wed,  8 Nov 2017 22:34:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752729AbdKHWLi (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Nov 2017 17:11:38 -0500
-Received: from siwi.pair.com ([209.68.5.199]:47961 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751245AbdKHWLi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Nov 2017 17:11:38 -0500
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 971268457C;
-        Wed,  8 Nov 2017 17:11:37 -0500 (EST)
-Received: from [10.160.98.77] (unknown [167.220.148.86])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 32E2384570;
-        Wed,  8 Nov 2017 17:11:37 -0500 (EST)
-Subject: Re: [PATCH 1/9] extension.partialclone: introduce partial clone
- extension
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
-        Jeff Hostetler <jeffhost@microsoft.com>
-References: <20171102202052.58762-1-git@jeffhostetler.com>
- <20171102202052.58762-2-git@jeffhostetler.com>
- <20171102152427.32544b3d6149e7a7bfe840c8@google.com>
- <1db01a45-85c4-6243-c43f-9f5e50e9a6a8@jeffhostetler.com>
- <20171103113919.396807c82dbfdecff7f19c41@google.com>
- <99b7c61b-f8ab-43a0-0707-62ac1db4d080@jeffhostetler.com>
- <20171106111642.696a006e802cf0259098b44f@google.com>
- <515130bd-6fd8-2c53-e935-e811330f8512@jeffhostetler.com>
- <20171108135116.f96c58500caa302583bb2810@google.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <37378ccd-c369-3bb2-7a88-fd7f632ac01d@jeffhostetler.com>
-Date:   Wed, 8 Nov 2017 17:11:36 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+        id S1752701AbdKHWex (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Nov 2017 17:34:53 -0500
+Received: from avasout04.plus.net ([212.159.14.19]:37255 "EHLO
+        avasout04.plus.net.plus.net" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1751245AbdKHWew (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 8 Nov 2017 17:34:52 -0500
+Received: from [10.0.2.15] ([80.189.70.158])
+        by smtp with ESMTPA
+        id CYvpe58zpzbmWCYvqe3ISO; Wed, 08 Nov 2017 22:34:51 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=P6pKvmIu c=1 sm=1 tr=0
+ a=bpDj9VLvXCYHU65eeb/Fiw==:117 a=bpDj9VLvXCYHU65eeb/Fiw==:17
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=5rxgeBVgAAAA:8 a=1XWaLZrsAAAA:8
+ a=swdN5p_dyQG13G2yY1cA:9 a=QEXdDO2ut3YA:10 a=yJM6EZoI5SlJf8ks9Ge_:22
+ a=PwKx63F5tFurRwaNxrlG:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: Test failures on 'pu' branch
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+References: <cf38b57d-1424-0776-b67f-8cfd24e087bb@ramsayjones.plus.com>
+ <CAGZ79kb3NpuWW=BpTjF_DrdVhXHh3d_8aF77Jdpi+8yTxtAbVw@mail.gmail.com>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <e2d10701-2deb-4f03-f4ce-3da7d48effa3@ramsayjones.plus.com>
+Date:   Wed, 8 Nov 2017 22:34:49 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.4.0
 MIME-Version: 1.0
-In-Reply-To: <20171108135116.f96c58500caa302583bb2810@google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+In-Reply-To: <CAGZ79kb3NpuWW=BpTjF_DrdVhXHh3d_8aF77Jdpi+8yTxtAbVw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfGvU6dzX5TpXFJv/3kNbF/aa3M1tL/OkynWLuOcrERuB1jNUkR7T0HqbO0Mp2ry9x+hhT1zixQu5s2oOQ9vipjNUs6qClUX/2DOB5BcMKJeXYPFZMG8G
+ gjM7mUkyYaEOkcumcPKbS9ll6PZlYsT97hZ5wViRGrWcUCogTmtheh61
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -54,39 +52,77 @@ X-Mailing-List: git@vger.kernel.org
 
 
 
-On 11/8/2017 4:51 PM, Jonathan Tan wrote:
-> On Wed, 8 Nov 2017 15:32:21 -0500
-> Jeff Hostetler <git@jeffhostetler.com> wrote:
+On 08/11/17 20:36, Stefan Beller wrote:
+> On Wed, Nov 8, 2017 at 12:28 PM, Ramsay Jones
+> <ramsay@ramsayjones.plus.com> wrote:
 > 
->> Thanks Jonathan.
->>
->> I moved my version of part 2 on top of yesterday's part 1.
->> There are a few changes between my version and yours. Could
->> you take a quick look at them and see if they make sense?
->> (I'll spare the mailing list another patch series until after
->> I attend to the feed back on part 1.)
->>
->> https://github.com/jeffhostetler/git/commits/core/pc3_p2
+>> t5300-pack-object.sh                             (Wstat: 256 Tests: 40 Failed: 2)
 > 
-> Thanks - the differences are quite minor, and they generally make sense.
-> The main one is that finish_object() in builtin/rev-list.c now returns
-> int instead of void, but that makes sense.
+>> t5500-fetch-pack.sh                              (Wstat: 256 Tests: 355 Failed: 6)
 > 
-> Other than that:
+> These are series
 > 
->   - I think you accidentally squashed the rev-list commit into
->     "sha1_file: support lazily fetching missing objects".
->   - The documentation for --exclude-promisor-objects in
->     git-pack-objects.txt should be "Omit objects that are known to be in
->     the promisor remote". (This option has the purpose of operating only
->     on locally created objects, so that when we repack, we still maintain
->     a distinction between locally created objects [without .promisor] and
->     objects from the promisor remote [with .promisor].)
->   - The transport options in gitremote-helpers.txt could have the same
->     documentation as in transport.h.
+>> t5601-clone.sh                                   (Wstat: 256 Tests: 102 Failed: 4)
+> 
+> This one is a spurious test. I had that flake on me once in the last weeks, too.
+> But upon investigation I could not reproduce.
+> See https://public-inbox.org/git/xmqq376ipdpx.fsf@gitster.mtv.corp.google.com/
 > 
 
-thanks for the quick turn around.  i'll get these into my next
-version next week.
+No, this is not related to that. In fact several tests start
+working if I change the '--filter=blobs:limit=0' to instead
+read '--filter=blob:limit=0' (ie. change blob_s_ to blob).
 
-Jeff
+In fact t5601 now works with the following patch:
+
+-- >8 --
+diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+index f18d9454a..0074690f7 100755
+--- a/t/t5601-clone.sh
++++ b/t/t5601-clone.sh
+@@ -630,7 +630,7 @@ partial_clone () {
+ 	test_config -C "$SERVER" uploadpack.allowfilter 1 &&
+ 	test_config -C "$SERVER" uploadpack.allowanysha1inwant 1 &&
+ 
+-	git clone --filter=blobs:limit=0 "$URL" client &&
++	git clone --filter=blob:limit=0 "$URL" client &&
+ 
+ 	git -C client fsck &&
+ 
+@@ -651,7 +651,7 @@ test_expect_success 'partial clone: warn if server does not support object filte
+ 		     test_create_repo server &&
+ 		     test_commit -C server one &&
+ 
+-	git clone --filter=blobs:limit=0 "file://$(pwd)/server" client 2> err &&
++	git clone --filter=blob:limit=0 "file://$(pwd)/server" client 2> err &&
+ 
+ 	test_i18ngrep "filtering not recognized by server" err
+ '
+@@ -673,7 +673,7 @@ test_expect_success 'batch missing blob request during checkout' '
+ 	test_config -C server uploadpack.allowfilter 1 &&
+ 	test_config -C server uploadpack.allowanysha1inwant 1 &&
+ 
+-	git clone --filter=blobs:limit=0 "file://$(pwd)/server" client &&
++	git clone --filter=blob:limit=0 "file://$(pwd)/server" client &&
+ 
+ 	# Ensure that there is only one negotiation by checking that there is
+ 	# only "done" line sent. ("done" marks the end of negotiation.)
+@@ -705,7 +705,7 @@ test_expect_success 'batch missing blob request does not inadvertently try to fe
+ 	test_config -C server uploadpack.allowanysha1inwant 1 &&
+ 
+ 	# Make sure that it succeeds
+-	git clone --filter=blobs:limit=0 "file://$(pwd)/server" client
++	git clone --filter=blob:limit=0 "file://$(pwd)/server" client
+ '
+ 
+ . "$TEST_DIRECTORY"/lib-httpd.sh
+-- 8< --
+
+A similar patch to 't/t5300-pack-object.sh' gets one of the two
+failing tests working. I haven't looked at 't/t5500-fetch-pack.sh'
+yet.
+
+ATB,
+Ramsay Jones
+
+
