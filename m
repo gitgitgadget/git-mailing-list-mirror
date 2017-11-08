@@ -2,95 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E17261F42B
-	for <e@80x24.org>; Wed,  8 Nov 2017 00:43:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F14141F42B
+	for <e@80x24.org>; Wed,  8 Nov 2017 00:47:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752994AbdKHAnp (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Nov 2017 19:43:45 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61492 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751792AbdKHAno (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Nov 2017 19:43:44 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7C58EAF743;
-        Tue,  7 Nov 2017 19:43:44 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=nUFy4g1xf/+FJlI2X+YcM9dT05o=; b=m0cJU9
-        VtO5QNifD0SFxkgX2OdJvUVyCvKAS1jKTlCHv4uitIw/FdlxeF/2jyjsbl0GOUsy
-        7DsmmJ0CoN5JK5je1nUd+/PJVb6rDHaryyynUhP2UzF6wt1pfsmR41/oYUCDwEJJ
-        su0IHj8mpX2kebY48knWknKFqQuzzloXoh5io=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=w8qDEL3tBklqgPWF/Y9po9G/7hnIxF3I
-        WsAgNJKTGB1aCvrDNxQLc3DA2L6tSpeUURvrYQ/5NCDHC1PxFtgvcZxfsfJZyIqR
-        eWk//hJd69gY1I92RarYnqlsugeZGg7a/XbMAervzcriy61SUb8/u6LwMY/y4eoP
-        GmWQhDKoyjw=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 73C7EAF742;
-        Tue,  7 Nov 2017 19:43:44 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D5C8DAF741;
-        Tue,  7 Nov 2017 19:43:43 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] diff: --ignore-cr-at-eol
-References: <xmqqshe7j0af.fsf@gitster.mtv.corp.google.com>
-        <20171107064011.18399-1-gitster@pobox.com>
-        <20171107064011.18399-3-gitster@pobox.com>
-        <alpine.DEB.2.21.1.1711071345430.6482@virtualbox>
-Date:   Wed, 08 Nov 2017 09:43:42 +0900
-In-Reply-To: <alpine.DEB.2.21.1.1711071345430.6482@virtualbox> (Johannes
-        Schindelin's message of "Tue, 7 Nov 2017 14:23:00 +0100 (CET)")
-Message-ID: <xmqqh8u5ob0h.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: DF62A318-C41D-11E7-84EF-8EF31968708C-77302942!pb-smtp1.pobox.com
+        id S934192AbdKHApZ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Nov 2017 19:45:25 -0500
+Received: from mail-io0-f171.google.com ([209.85.223.171]:51338 "EHLO
+        mail-io0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934172AbdKHApV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Nov 2017 19:45:21 -0500
+Received: by mail-io0-f171.google.com with SMTP id b186so4145802iof.8
+        for <git@vger.kernel.org>; Tue, 07 Nov 2017 16:45:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=TflB2ZdMXMStDYbimj1We4Ijc0Yn+06P4alZLjL9L4g=;
+        b=WCiqVqVYe8v35U7rzprflMSSn6IC+8Cw6EIZJ9J4SU7n9CHcoLw4Bfitvj83tmo53D
+         //FN5rgVLihi9MjqrCLgyE0RNNfP8tYh57o3+fSmMupm0t68h81OBwCYsSjaYXrkbqZ3
+         jjm+hPau+ka5TAQhXKcIMo/1wXqkD/uzoAqZScOdzb8K/ULQrHMDpeoR3HnBBhhxM4iG
+         wU/dAP1L2DsAD14/KA2HFUriiNEHcUfgp0Cg8Y+JnAUu6NTsMjQfbs1MnBOp4EHqxtkh
+         EmXBXgTPrd2QCLrRiLLM1j4+7eMtfFsfrKOI0kBtQMW5N5Fn6BLaR30Olx7BDi5wNsui
+         ILzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=TflB2ZdMXMStDYbimj1We4Ijc0Yn+06P4alZLjL9L4g=;
+        b=C7ElP/FZzEZOpGlXmL3mxoKL2rrLJ/b6pNA0dklx6DD0VCvhIeBR9luIyBVNar9D5Q
+         Nh0pDQJ0frlAzV4ZgTCPFSOdLbiua8v0Dr22sKT04md05prMviIQ7PzXW/uRBTbF0jKQ
+         MY+CakBqBbjYG813Zt13SwUmB52EmvwJc2nAmtI4OTVgJ3iA5FMLxEUsIGqxKc4BWpHr
+         WrclLpmOoZszdRZsS/XpOTAAPrE4XU2U9WiLratjaG9cbKeTLp1lnHq6dVIEV02FlJ84
+         GUrqVOREgvApuaM8TvYUaCrFAWWRm4p1c1MSRlLLQ59IB5CHj43wsQjZvVoUWGdlFi8K
+         ROTg==
+X-Gm-Message-State: AJaThX6hhjMpN0OlZH5CcXzhVmGV1uJLmg9qavJ1XGZN747vgNcGtO3J
+        6uxxUomqDp9E1wiNg4W/X370VQ==
+X-Google-Smtp-Source: AGs4zMacore11XYZ+3ZbBcHRiA6PP6+ct7Tn2FbA+l4C5QL9MKeb8DfQyZ2o96vi/QVOZKXBi3Uw/w==
+X-Received: by 10.107.151.19 with SMTP id z19mr789597iod.248.1510101920901;
+        Tue, 07 Nov 2017 16:45:20 -0800 (PST)
+Received: from twelve3.mtv.corp.google.com ([2620:0:100e:422:8df4:1665:e9bb:1ae7])
+        by smtp.gmail.com with ESMTPSA id u187sm1180208iod.22.2017.11.07.16.45.20
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 07 Nov 2017 16:45:20 -0800 (PST)
+Date:   Tue, 7 Nov 2017 16:45:19 -0800
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v3 6/6] pack-objects: add list-objects filtering
+Message-Id: <20171107164519.eb49377ce11a6b31ab09bf83@google.com>
+In-Reply-To: <20171107193546.10017-7-git@jeffhostetler.com>
+References: <20171107193546.10017-1-git@jeffhostetler.com>
+        <20171107193546.10017-7-git@jeffhostetler.com>
+X-Mailer: Sylpheed 3.4.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Tue,  7 Nov 2017 19:35:46 +0000
+Jeff Hostetler <git@jeffhostetler.com> wrote:
 
-> On Tue, 7 Nov 2017, Junio C Hamano wrote:
->
->> A new option --ignore-cr-at-eol tells the diff machinery to treat a
->> carriage-return at the end of a (complete) line as if it does not
->> exist.
->> 
->> This would make it easier to review a change whose only effect is to
->> turn line endings from CRLF to LF or the other way around.
->
-> If the goal is to make CR/LF -> LF conversions easier to review (or for
-> that matter, LF -> CR/LF), then this option may not be *completely*
-> satisfactory, as it would hide mixed changes (i.e. where some lines are
-> converted from CR/LF to LF and others are converted in the other direction
-> *in the same patch*).
+> +--filter-ignore-missing:
+> +	Ignore missing objects without error.  This may be used with
+> +	or without and of the above filtering.
 
-You are 100% right.
+There is a discussion about this parameter (and the corresponding ones
+in patch 5/6), to which I have just replied:
 
-This feature is not about helping to review a patch that wanted to
-do CRLF-to-LF (or the other way around) conversion at all.  Just
-like the --ignore-space-at-eol is not a feature to make sure that
-the only thing you did was to remove trailing whitespaces---it will
-also ignore lines you added trailing whitespaces as irrelevant and
-uninteresting.
+https://public-inbox.org/git/20171107164118.97cc65c4030de0922b19ddd6@google.com/
 
-In general, selling these "--ignore-*" whitespace options as a tool
-for such a verification is incorrect.
+> @@ -3028,6 +3048,12 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+>  	if (!rev_list_all || !rev_list_reflog || !rev_list_index)
+>  		unpack_unreachable_expiration = 0;
+>  
+> +	if (filter_options.choice) {
+> +		if (!pack_to_stdout)
+> +			die("cannot use filtering with an indexable pack.");
 
-These "--ignore-*" whitespace options are to help reviewing _other_
-changes without getting distracted by the class of changes these
-options represent.  I guess I may have to update the log message (I
-do not think I wrote anything like that in the documentation update).
-
-Thanks for pointing it out.
+I'm not sure what an "indexable pack" is - probably a better message is
+"cannot use --filter without --stdout".
