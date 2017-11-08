@@ -2,113 +2,165 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 144101F42B
-	for <e@80x24.org>; Wed,  8 Nov 2017 02:40:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 019341F42B
+	for <e@80x24.org>; Wed,  8 Nov 2017 03:30:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751629AbdKHCkV (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Nov 2017 21:40:21 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62601 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750947AbdKHCkU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Nov 2017 21:40:20 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2A2EDB8CB0;
-        Tue,  7 Nov 2017 21:40:19 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=V90cYut7jfZV
-        uFz2FPfZZg2Bx6Y=; b=P685F6ar7XJrO2IBFwqpJbCEAjeRpYe+tueVplEg/1LE
-        bdzjUsHCD1Vk5wZAUSxGEG3UHLzDEVxNRkMSGYqWUY2NvQQw7niaa9Xkc9abkl83
-        a8lCBQKFOebZMD455ZUpAsh2HJLZEjByCg3yOwCS2RhxFd1ZcFafLcWEqQ9huCE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=ourMFE
-        0lsaib1mSYDsRc10dRs7bWxK1AmDrpa8k0BUGypgV8OE4eJkVZejaMdGDv1ieESo
-        2HRkxg1uksLgfc4xX9nFwMMtecYSI1T3WhegfnFazWOVgz/4ZehDkAu3abEZxW6R
-        pkMNsXPZE1LTG/kUjQ0vDD5Tm02irWszM0ojY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 21CD3B8CAF;
-        Tue,  7 Nov 2017 21:40:19 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8EA59B8CAD;
-        Tue,  7 Nov 2017 21:40:18 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 1/2] builtin/merge-base: free commit lists
-References: <20171106110549.dkv725bjikcms3aj@sigill.intra.peff.net>
-        <a5f5a259f4cbe3661eb1960e83e9bcce5080b580.1510083859.git.martin.agren@gmail.com>
-Date:   Wed, 08 Nov 2017 11:40:17 +0900
-In-Reply-To: <a5f5a259f4cbe3661eb1960e83e9bcce5080b580.1510083859.git.martin.agren@gmail.com>
-        ("Martin =?utf-8?Q?=C3=85gren=22's?= message of "Tue, 7 Nov 2017 21:39:44
- +0100")
-Message-ID: <xmqqzi7xlcha.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751730AbdKHDa1 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Nov 2017 22:30:27 -0500
+Received: from mail-yw0-f170.google.com ([209.85.161.170]:54103 "EHLO
+        mail-yw0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753989AbdKHDa0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Nov 2017 22:30:26 -0500
+Received: by mail-yw0-f170.google.com with SMTP id q126so1190517ywq.10
+        for <git@vger.kernel.org>; Tue, 07 Nov 2017 19:30:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=tSZcCmYn1dw/Rk5xiL+B9pr5dFlE/vrHQ0NZBor69/o=;
+        b=G9o6LE26IqiNPgQzRAHX5wlg+ibG3PyR9/Nn+x/SU365X1nIxafkh9YFuBr/bRBlPM
+         3HPSPHZQi5PaXDMiODh+PCkLEtQL0jAT89NSPH+fckDib+eMrIij6QurGmU+FaO/Xftj
+         2DBGQzrkMFa3YMvVcNkA6qeh8WHbw5W5hSokHoumRdmOVLPbN8G5fJDVxhW0e9l8HcQI
+         bCMP/6QRMcBUZVVL0TMY6XfEHjLUm/Ub3hgkSqJZBYMDKFRJkis0A7ltIYTKypRVicIu
+         C2uA4k/F7GlSBQIO0kyBDrHlRr+JKoUgsza/tk9v0sTF4cPbaBQnlJ/LZL4azC+/QhAl
+         aAbw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=tSZcCmYn1dw/Rk5xiL+B9pr5dFlE/vrHQ0NZBor69/o=;
+        b=D7yYyE4HTZP8OJkHMljDGt799Ub/p+O8kmLKCfI7e0v+7oAqEHIHKvm3tXKZgtHxeu
+         HhJUJUsLXVX9h9HolOuKv7A8AN3x3XYYskueXFZaVp94psILkzpFF4Hy0zBurBh9Jn9n
+         OwRN3KUFhsjsGHYC0MiUZ7RFnhLGoYd6Jt7aNfWpACPvxdWwzoZLponxYY5KJe/PbAnX
+         7FCLpFoctvq8gb7564T8CiIZ8xU2R/BvK2RvvyNsDUNyG6qEzjq29XaaxfEX4oZI4Zqk
+         awAvuB8TQEvhUbonC4Ees5IhdOLSdsoD+/1SvlBJQ0+0FvjecGlkCB2CGjZUtPMCN4m0
+         w56Q==
+X-Gm-Message-State: AJaThX6ZgP9QxFghAKqMTF06u1JIezdgdPt9QvlVKvKAWGmzx60GDMRu
+        V4EfmwKsp+/Y+UZWV170ejRGljYZWCxVT4OfuYc=
+X-Google-Smtp-Source: ABhQp+T+YizMacOXvyJ/7FxzRXtyqbn3GP5vv52hJbM4ATKtNkfTf1WnQaGivWbFrmZo14iNlvHk0fdR9qYABHjHRGM=
+X-Received: by 10.37.124.70 with SMTP id x67mr485141ybc.405.1510111825917;
+ Tue, 07 Nov 2017 19:30:25 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 288D695A-C42E-11E7-9CCA-575F0C78B957-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Received: by 10.37.65.194 with HTTP; Tue, 7 Nov 2017 19:30:05 -0800 (PST)
+In-Reply-To: <xmqq7ev1mrdi.fsf@gitster.mtv.corp.google.com>
+References: <CAGZ79kYKfZC1CzoGE_6G1b2vD+MCw1_rY7J_LeWyT8rp6CAuDw@mail.gmail.com>
+ <0102015f985d387e-f50183c4-4b49-4a9f-b365-2a86ba24bbed-000000@eu-west-1.amazonses.com>
+ <xmqq7ev1mrdi.fsf@gitster.mtv.corp.google.com>
+From:   Max Rothman <max.r.rothman@gmail.com>
+Date:   Tue, 7 Nov 2017 22:30:05 -0500
+X-Google-Sender-Auth: scVXJ_04SExsqrlkWuGgkQ7hY-I
+Message-ID: <CAFA_24+bhK5i1Rbp+04+g1Zo6Z8zpmobb5DcJBEtuG1NMBZ8-A@mail.gmail.com>
+Subject: Re: [PATCH] completion: add missing completions for log, diff, show
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Martin =C3=85gren <martin.agren@gmail.com> writes:
-
-> In several functions, we iterate through a commit list by assigning
-> `result =3D result->next`. As a consequence, we lose the original point=
-er
-> and eventually leak the list.
+>> Teach git-log tab completion about the --no-* options for ease of use
+>> at the command line.
+>>
+>> Similarly, teach git-show tab completion about the --no-abbrev-commit,
+>> --expand-tabs, and --no-expand-tabs options.
+>>
+>> Also, teach git-diff (and all commands that use its options) tab
+>> completion about the --textconv and --indent-heuristic families of
+>> options. --indent-heuristic is no longer experimental, so there's no
+>> reason it should be left out of tab completion any more, and textconv
+>> seems to have simply been missed.
 >
-> Rewrite the loops so that we keep the original pointers, then call
-> `free_commit_list()`. Various alternatives were considered:
+> A couple of things that I found questionable in the above
+> descriptions are:
+>
+>  * We do not write git subcommand names like git-foo these days, as
+>    nobody type them like so.
 
-So, the reader expects to see a list of alternatives that we
-considered but did not use in this solution to follow.
+My bad, that's still how they're named when using manpages, so that's
+what my muscle memory did.
 
 >
-> 1) Use `UNLEAK(result)` before the loop. Simple change, but not very
-> pretty. These would definitely be new lows among our usages of UNLEAK.
+>  * The patch is not teaching git-foo about completing its options.
+>    It teaches the bash completion about options for git subcommands
+>    it did not know about.
+>
+> So perhaps
+>
+>         The bash completion script knows some options to the "git
+>         log" only in the positive form (e.g. "--abbrev-commit") but
+>         not in their negated form (e.g. "--no-abbrev-commit").  Add
+>         them.
+>
+> and similar?
 
-I am not sure if I agree with the judgment, but we did reject it, so
-describing it as a candidate is good.
+How about this:
 
-> 2) Use `pop_commit()` when looping. Slightly less simple change, but it
-> feels slightly preferable to first display the list, then free it.
+The bash completion script knows some options to "git log" and
+"git show" only in the positive form, (e.g. "--abbrev-commit"), but not
+in their negative form (e.g. "--no-abbrev-commit"). Adds them.
 
-OK.
+Also, the bash completion script is missing some other options to
+"git diff", and "git show" (and thus, all other commands that take
+"git diff"'s options). Adds them. Of note, since "--indent-heuristic" is
+no longer experimental, adds that too.
 
-> 3) As in this patch, but with `UNLEAK()` instead of freeing. We'd still
-> go through all the trouble of refactoring the loop, and because it's no=
-t
-> super-obvious that we're about to exit, let's just free the lists -- it
-> probably doesn't affect the runtime much.
+>
+>> ---
+>
+> Missed sign-off?
 
-That does include what we did, too.  A rejected alternative is only
-the first 3/4 of what this says.
+Whoops, there doesn't seem to be a way to add that separately from the
+commit message in the submitGit interface. I'll try adding it, but
+gmail might turn all the tabs into spaces, so if it does, I'll try to
+figure out how to resubmit.
 
-    3) As in this patch, but with `UNLEAK()` instead of freeing. We'd
-       still go through all the trouble of refactoring the loop, and the
-       use of UNLEAK() is left questionable because it's not very obvious
-       that we're about to exit.
+>
+>> @@ -1759,16 +1765,19 @@ _git_log ()
+>> ...
+>> -                     --decorate --decorate=
+>> +                     --decorate --decorate= --no-decorate
+>> ...
+>> @@ -2816,8 +2825,9 @@ _git_show ()
+>>               return
+>>               ;;
+>>       --*)
+>> -             __gitcomp "--pretty= --format= --abbrev-commit --oneline
+>> -                     --show-signature
+>> +             __gitcomp "--pretty= --format= --abbrev-commit --no-abbrev-commit
+>> +                     --oneline --show-signature --patch
+>> +                     --expand-tabs --expand-tabs= --no-expand-tabs
+>>                       $__git_diff_common_options
+>>                       "
+>>               return
+>
+> It's a bit sad that the completion support does not know that "git
+> show" belongs to the "git log" family of commands.  A consequence of
+> this is that "git show --no-decorate" is perfectly acceptable but
+> needs to be taught separately to _git_show if we wanted to.
+>
+> Perhaps some selected options _git_log understands may need to be
+> split $__git_log_ui_common_options [*1*], like we do for "git diff"
+> family with $__git_diff_common_options, and shared between _git_log
+> and _git_show.
+>
+> I am mentioning this primarily as #leftoverbits and I do not want to
+> see such a change mixed into this patch, as it is totally outside
+> the scope of it.  It is (if you are inclined to do so) OK to make
+> this into two patch series, with 1/2 doing such a refactoring
+> without changing any externally visible functionality (i.e. just
+> move the ones _git_show knows about to $__git_log_ui_common_options,
+> and have _git_show and _git_log use it), and 2/2 adding more options
+> to that list to achieve what you wanted to do with this patch, though.
 
-and then you can begin a separate paragraph, after the above lists,
-e.g.
+I think I'll stick with this patch for now (it's my first!), but I
+might come around and do refactoring in a second pass.
 
-    Let's just free the lists -- it probably doesn't affect the
-    runtime much.
-
-> In `handle_independent()` we can drop `result` while we're here and
-> reuse the `revs`-variable instead. That matches several other users of
-> `reduce_heads()`. The memory-leak that this hides will be addressed in
-> the next commit.
-
-The patch text looks agreeable.
-
-Thanks.
+Thanks,
+Max
