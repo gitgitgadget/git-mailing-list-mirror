@@ -2,127 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 457F81F43C
-	for <e@80x24.org>; Wed,  8 Nov 2017 22:34:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9210C1F43C
+	for <e@80x24.org>; Wed,  8 Nov 2017 22:36:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752701AbdKHWex (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Nov 2017 17:34:53 -0500
-Received: from avasout04.plus.net ([212.159.14.19]:37255 "EHLO
-        avasout04.plus.net.plus.net" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1751245AbdKHWew (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 8 Nov 2017 17:34:52 -0500
-Received: from [10.0.2.15] ([80.189.70.158])
-        by smtp with ESMTPA
-        id CYvpe58zpzbmWCYvqe3ISO; Wed, 08 Nov 2017 22:34:51 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=P6pKvmIu c=1 sm=1 tr=0
- a=bpDj9VLvXCYHU65eeb/Fiw==:117 a=bpDj9VLvXCYHU65eeb/Fiw==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=5rxgeBVgAAAA:8 a=1XWaLZrsAAAA:8
- a=swdN5p_dyQG13G2yY1cA:9 a=QEXdDO2ut3YA:10 a=yJM6EZoI5SlJf8ks9Ge_:22
- a=PwKx63F5tFurRwaNxrlG:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: Test failures on 'pu' branch
+        id S1752856AbdKHWgt (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Nov 2017 17:36:49 -0500
+Received: from mail-io0-f179.google.com ([209.85.223.179]:56652 "EHLO
+        mail-io0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752718AbdKHWgs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Nov 2017 17:36:48 -0500
+Received: by mail-io0-f179.google.com with SMTP id m81so7716074ioi.13
+        for <git@vger.kernel.org>; Wed, 08 Nov 2017 14:36:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=/DfaDlxtqWL9gH8KwSralxVDvV+oDeatr8UW+ndSxAY=;
+        b=kvX//mdM0GmNyKQo20EYFyFYbfqKo6QJlVsLbJusk5GWu7uI+WfgerwCBFfQpWJSX5
+         GhhRm+uK4cyg3AaGNSqfrFQid/HFgwG7dS8VQ9Kq4nhvOtrLiMIpHu0d9LBnYrFgU9DU
+         VLLb9/MG6y+IGct+0zKgNQ6jIgi3qdhCvbX6ZugI3oIBBcnpmBSi6fjDmXiVK+2LZasD
+         mHGg7+ZfOihlttQ7CSJztxBV7976sJhZOPDqsYhh0tmWnxxsAccHdBu6re8TxoG8+lPy
+         pl2HPUInTtpoyKJIOjeUDn+n5fFQ/YVySKv7O57DH1/ocYGH0CXybpp/5+UT6/xZ8NHt
+         kL3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=/DfaDlxtqWL9gH8KwSralxVDvV+oDeatr8UW+ndSxAY=;
+        b=SYk+sJRshkv3/fSvWOdaRWLon1qUpidWqkS+Iyy0VIZeKX6MVWkRA2/DHtb061Bh0k
+         IiYGpbWQIRwxXRBtClzt82YAel+DZVEvjDzU28C1jwC6Sysb+rGOMjAwuLF7nk3PjPaA
+         GTW2SFnFxHR5ew3IagaPXqNscxOWW+RVEsU2MmgmuUvx196BbhHonBfs0Vp+TGHqmrC+
+         h2e4pe2e74FKTjo2VMqlU02foyivYFMIQfD10LUfuRIaj+MVN1I2zTXzl8pNaeUzjLHf
+         p15zxgSWWUKv8zYG0QyIV3bIPMnH2oNNCK5Se67ZyiMD2K3WpWIn+15toB0IUeGbjmgM
+         dJkQ==
+X-Gm-Message-State: AJaThX5V1bHmMEC6i7uFc599vR4Tb3f3tBQ1lZJXHk/88KJyEcP5SXyN
+        bYEhvOGAPAtCp7ipEUCnHgfDywg5rdg=
+X-Google-Smtp-Source: ABhQp+Riw6k7xot+flPeIhzqgh4vntixNlssVMGUzVF7YTf26qQE91oXHvbwTny/atuOmPcXrXMw2A==
+X-Received: by 10.107.175.28 with SMTP id y28mr2787898ioe.216.1510180607635;
+        Wed, 08 Nov 2017 14:36:47 -0800 (PST)
+Received: from twelve3.mtv.corp.google.com ([2620:0:100e:422:8df4:1665:e9bb:1ae7])
+        by smtp.gmail.com with ESMTPSA id f184sm2737421ith.2.2017.11.08.14.36.46
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 08 Nov 2017 14:36:47 -0800 (PST)
+Date:   Wed, 8 Nov 2017 14:36:46 -0800
+From:   Jonathan Tan <jonathantanmy@google.com>
 To:     Stefan Beller <sbeller@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        GIT Mailing-list <git@vger.kernel.org>
-References: <cf38b57d-1424-0776-b67f-8cfd24e087bb@ramsayjones.plus.com>
- <CAGZ79kb3NpuWW=BpTjF_DrdVhXHh3d_8aF77Jdpi+8yTxtAbVw@mail.gmail.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <e2d10701-2deb-4f03-f4ce-3da7d48effa3@ramsayjones.plus.com>
-Date:   Wed, 8 Nov 2017 22:34:49 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.4.0
-MIME-Version: 1.0
-In-Reply-To: <CAGZ79kb3NpuWW=BpTjF_DrdVhXHh3d_8aF77Jdpi+8yTxtAbVw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC PATCH 0/4] git-status reports relation to superproject
+Message-Id: <20171108143646.2e1870a82360072557094e01@google.com>
+In-Reply-To: <20171108195509.7839-1-sbeller@google.com>
+References: <20171108195509.7839-1-sbeller@google.com>
+X-Mailer: Sylpheed 3.4.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfGvU6dzX5TpXFJv/3kNbF/aa3M1tL/OkynWLuOcrERuB1jNUkR7T0HqbO0Mp2ry9x+hhT1zixQu5s2oOQ9vipjNUs6qClUX/2DOB5BcMKJeXYPFZMG8G
- gjM7mUkyYaEOkcumcPKbS9ll6PZlYsT97hZ5wViRGrWcUCogTmtheh61
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed,  8 Nov 2017 11:55:05 -0800
+Stefan Beller <sbeller@google.com> wrote:
 
-
-On 08/11/17 20:36, Stefan Beller wrote:
-> On Wed, Nov 8, 2017 at 12:28 PM, Ramsay Jones
-> <ramsay@ramsayjones.plus.com> wrote:
+>   $ git -c status.superprojectinfo status
+>   HEAD detached at v2.15-rc2
+>   superproject is 6 commits behind HEAD 7070ce2..5e6d0fb
+>   nothing to commit, working tree clean
 > 
->> t5300-pack-object.sh                             (Wstat: 256 Tests: 40 Failed: 2)
+> How cool is that?
 > 
->> t5500-fetch-pack.sh                              (Wstat: 256 Tests: 355 Failed: 6)
+> This series side steps the questions raised in
+> https://public-inbox.org/git/xmqq4lq6hmp2.fsf_-_@gitster.mtv.corp.google.com/
+> which I am also putting together albeit slowly.
 > 
-> These are series
-> 
->> t5601-clone.sh                                   (Wstat: 256 Tests: 102 Failed: 4)
-> 
-> This one is a spurious test. I had that flake on me once in the last weeks, too.
-> But upon investigation I could not reproduce.
-> See https://public-inbox.org/git/xmqq376ipdpx.fsf@gitster.mtv.corp.google.com/
-> 
+> This series just reports the relationship between the superprojects gitlink
+> (if any) to HEAD. I think that is useful information in the current
+> world of submodules.
 
-No, this is not related to that. In fact several tests start
-working if I change the '--filter=blobs:limit=0' to instead
-read '--filter=blob:limit=0' (ie. change blob_s_ to blob).
+The relationship is indeed currently useful, but if the long term plan
+is to strongly discourage detached submodule HEAD, then I would think
+that these patches are in the wrong direction. (If the long term plan is
+to end up supporting both detached and linked submodule HEAD, then these
+patches are fine, of course.) So I think that the plan referenced in
+Junio's email (that you linked above) still needs to be discussed.
 
-In fact t5601 now works with the following patch:
-
--- >8 --
-diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index f18d9454a..0074690f7 100755
---- a/t/t5601-clone.sh
-+++ b/t/t5601-clone.sh
-@@ -630,7 +630,7 @@ partial_clone () {
- 	test_config -C "$SERVER" uploadpack.allowfilter 1 &&
- 	test_config -C "$SERVER" uploadpack.allowanysha1inwant 1 &&
- 
--	git clone --filter=blobs:limit=0 "$URL" client &&
-+	git clone --filter=blob:limit=0 "$URL" client &&
- 
- 	git -C client fsck &&
- 
-@@ -651,7 +651,7 @@ test_expect_success 'partial clone: warn if server does not support object filte
- 		     test_create_repo server &&
- 		     test_commit -C server one &&
- 
--	git clone --filter=blobs:limit=0 "file://$(pwd)/server" client 2> err &&
-+	git clone --filter=blob:limit=0 "file://$(pwd)/server" client 2> err &&
- 
- 	test_i18ngrep "filtering not recognized by server" err
- '
-@@ -673,7 +673,7 @@ test_expect_success 'batch missing blob request during checkout' '
- 	test_config -C server uploadpack.allowfilter 1 &&
- 	test_config -C server uploadpack.allowanysha1inwant 1 &&
- 
--	git clone --filter=blobs:limit=0 "file://$(pwd)/server" client &&
-+	git clone --filter=blob:limit=0 "file://$(pwd)/server" client &&
- 
- 	# Ensure that there is only one negotiation by checking that there is
- 	# only "done" line sent. ("done" marks the end of negotiation.)
-@@ -705,7 +705,7 @@ test_expect_success 'batch missing blob request does not inadvertently try to fe
- 	test_config -C server uploadpack.allowanysha1inwant 1 &&
- 
- 	# Make sure that it succeeds
--	git clone --filter=blobs:limit=0 "file://$(pwd)/server" client
-+	git clone --filter=blob:limit=0 "file://$(pwd)/server" client
- '
- 
- . "$TEST_DIRECTORY"/lib-httpd.sh
--- 8< --
-
-A similar patch to 't/t5300-pack-object.sh' gets one of the two
-failing tests working. I haven't looked at 't/t5500-fetch-pack.sh'
-yet.
-
-ATB,
-Ramsay Jones
-
-
+About the patches themselves, they look OK to me. Some minor things off
+the top of my head are to retain the "ours" and "theirs" (instead of
+"one" and "two"), and to replicate the language in remote.c more closely
+("This submodule is (ahead of/behind) the superproject by %d commit(s)")
+instead of inventing your own.
