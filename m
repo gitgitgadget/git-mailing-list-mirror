@@ -2,99 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C9F251F43C
-	for <e@80x24.org>; Wed,  8 Nov 2017 14:10:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 906AD1F43C
+	for <e@80x24.org>; Wed,  8 Nov 2017 14:39:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752628AbdKHOK3 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Nov 2017 09:10:29 -0500
-Received: from mail-qt0-f175.google.com ([209.85.216.175]:50419 "EHLO
-        mail-qt0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752627AbdKHOK2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Nov 2017 09:10:28 -0500
-Received: by mail-qt0-f175.google.com with SMTP id d9so3421398qtd.7
-        for <git@vger.kernel.org>; Wed, 08 Nov 2017 06:10:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=cNJnl9xSzPU1wAA6gwX+5/uyi23dbvIE5zP/iV3h5/w=;
-        b=J1n1qfVKHOUauXO1bU9af53U5xykty0qxFgXxcbF3GrAJnzTU4xGdVYcFl5iispfK/
-         HhGJf8C8A0lPL56i/4r6y0llXaQsyMt4Wqx0Hp0EmPGdoBvHyVUIO5RxFMiS8+kIurfq
-         gu6ax+iimRr+BAgs12Hewrwly/AJS2o3eaqbGXAO6eGMnG2bmdptiHFbcFsmJuEzn2RR
-         cEXYJeQaDE09I5JSh2ufo/g10WAe2GmA2sUBKC9nb5pS0MXvPpM+1ZBjQ6aA968xAcwO
-         BdwCf8wFX8Kre/9UE/Wac6CEKgUm3//BdwcMU+FYlGSm6xdNqBbTS2YHw3UpJb8SwAMT
-         jvgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=cNJnl9xSzPU1wAA6gwX+5/uyi23dbvIE5zP/iV3h5/w=;
-        b=VOiUD08OLYJ1ylpPxF5RtgNNo2S+PsHEXoJfHkiguC8dU1JGDpYQbnURYt1sr4h6LJ
-         whnFTiOMqPmQSpil8vHlT5U2KjDlk4mm8wC9OxJtsPHWah6lmpsjktPNKBvvXGFjmuiO
-         H5AT7p+CyFNYDiISlbIjFAAmJ1aJnvv2zMkUqzRWWJ0QRHH+HfmHKah9zcDSC+nOCxEJ
-         LQCHXYrnW2ZC0caybvOqsNJ886JhQ5TaNTm7517PcZ07fLl8Sh2IrmjM7FOlEdzlzvoV
-         8PGLgT6U2+Av5ANQ7UDha5ymcRrN9wlAD7LXxjO5jWt0a2DOdzK4uDUGKVt0u3Zfni3g
-         ZMLA==
-X-Gm-Message-State: AJaThX6YqwZaTCDz3AyFxZrKi0do1s6rokmoC+zC//QeXfaf+O7LQVU9
-        jrJb2rkSL+0+49yTUHhfszZ3B6qACvaiHq61vJQ=
-X-Google-Smtp-Source: ABhQp+TMdyOX7qu2luxsxe7zxRJ/AyFzuvsA5Pa7MA8Mvtz3U+LmA0q4w/gmF6jk1wciS+X1v5K+2q9I1Ft719S7srM=
-X-Received: by 10.200.53.12 with SMTP id y12mr1053710qtb.84.1510150227590;
- Wed, 08 Nov 2017 06:10:27 -0800 (PST)
+        id S1752617AbdKHOji (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Nov 2017 09:39:38 -0500
+Received: from siwi.pair.com ([209.68.5.199]:63180 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751839AbdKHOjh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Nov 2017 09:39:37 -0500
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id C3FB384557;
+        Wed,  8 Nov 2017 09:39:36 -0500 (EST)
+Received: from [10.160.98.77] (unknown [167.220.148.86])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 61EC184556;
+        Wed,  8 Nov 2017 09:39:35 -0500 (EST)
+Subject: Re: [PATCH v2 0/6] Partial clone part 1: object filtering
+To:     Junio C Hamano <gitster@pobox.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, peff@peff.net,
+        Jeff Hostetler <jeffhost@microsoft.com>
+References: <20171102175013.3371-1-git@jeffhostetler.com>
+ <20171102124445.fbffd43521cd35f6a71e1851@google.com>
+ <bd41699f-19c7-02a0-0af1-8f22b3277a1b@jeffhostetler.com>
+ <xmqq7ev7pfln.fsf@gitster.mtv.corp.google.com>
+ <97585434-6d57-dad4-d7aa-e48dacec1b3f@jeffhostetler.com>
+ <20171107164118.97cc65c4030de0922b19ddd6@google.com>
+ <xmqq8tfhoai3.fsf@gitster.mtv.corp.google.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <de392bf3-bd53-1c17-3a43-c2e1604cbd59@jeffhostetler.com>
+Date:   Wed, 8 Nov 2017 09:39:35 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
 MIME-Version: 1.0
-Received: by 10.12.146.118 with HTTP; Wed, 8 Nov 2017 06:10:27 -0800 (PST)
-In-Reply-To: <20171108134752.214056-1-adam@dinwoodie.org>
-References: <20171108131601.280992-1-adam@dinwoodie.org> <20171108134752.214056-1-adam@dinwoodie.org>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 8 Nov 2017 09:10:27 -0500
-X-Google-Sender-Auth: qIgGfS49a3-IgQZTWpih6aJ8AF0
-Message-ID: <CAPig+cRaygrQ9_J1UHr_rynPsUn2J0--RHRvP2mFQbVQhWEm-Q@mail.gmail.com>
-Subject: Re: [PATCH v2] doc/SubmittingPatches: correct subject guidance
-To:     Adam Dinwoodie <adam@dinwoodie.org>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Josh Triplett <josh@joshtriplett.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <xmqq8tfhoai3.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 8, 2017 at 8:47 AM, Adam Dinwoodie <adam@dinwoodie.org> wrote:
-> The examples and common practice for adding markers such as "RFC" or
-> "v2" to the subject of patch emails is to have them within the same
-> brackets as the "PATCH" text, not after the closing bracket.  Further,
-> the practice of `git format-patch` and the like, as well as what appears
-> to be the more common pratice on the mailing list, is to use "[RFC
-> PATCH]", not "[PATCH/RFC]".
->
-> Update the SubmittingPatches article to match.
->
-> Signed-off-by: Adam Dinwoodie <adam@dinwoodie.org>
-> ---
-> diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-> @@ -184,12 +184,14 @@ lose tabs that way if you are not careful.
->  It is a common convention to prefix your subject line with
->  [PATCH].  This lets people easily distinguish patches from other
-> -e-mail discussions.  Use of additional markers after PATCH and
-> -the closing bracket to mark the nature of the patch is also
-> -encouraged.  E.g. [PATCH/RFC] is often used when the patch is
-> -not ready to be applied but it is for discussion, [PATCH v2],
-> -[PATCH v3] etc. are often seen when you are sending an update to
-> -what you have previously sent.
-> +e-mail discussions.  Use of markers in addition to PATCH within
-> +the brackets to describe the nature of the patch is also
-> +encouraged.  E.g. [RFC PATCH] is often used when the patch is not
-> +ready to be applied but it is for discussion, and can be added
-> +with the `--rfc` argument to `git format-patch` or `git
-> +send-email`, while [PATCH v2], [PATCH v3] etc.  are often seen
 
-It has become a bit of a run-on sentence, but aside from that and the
-unnecessary extra whitespace between "etc." and "are", it looks good
-to me.
 
-> +when you are sending an update to what you have previously sent,
-> +and can be added with the `-v <n>` arguments to the same commands.
+On 11/7/2017 7:54 PM, Junio C Hamano wrote:
+> Jonathan Tan <jonathantanmy@google.com> writes:
+> 
+>> I can see some use for this parameter - for example, when doing a report
+>> for statistical purposes (percentage of objects missing, for example) or
+>> for a background task that downloads missing objects into a cache. Also,
+>> power users who know what they're doing (or normal users in an
+>> emergency) can use this option when they have no network connection if
+>> they really need to find something out from the local repo.
+>>
+>> In these cases, the promisor check (after detecting that the object is
+>> missing) is indeed not so useful, I think. (Or we can do the
+>> --exclude=missing and --exclude=promisor idea that Jeff mentioned -
+>> --exclude=missing now, and --exclude=promisor after we add promisor
+>> support.)
+> 
+> This sounds like a reasonable thing to have in the endgame state to
+> me.
+
+OK thanks, I'll change it to --exclude=missing in my next version.
+  
+> 
+>> Having said that, I would be OK if we didn't have tolerance (and/or
+>> reporting) of missing objects right now. As far as I know, for the
+>> initial implementation of partial clone, only the server performs any
+>> filtering, and we assume that the server possesses all objects (so it
+>> does not need to filter out any missing objects).
+> 
+> True.  It does not have to exist in an early part, but I do not
+> think we would terribly mind if it does, if only to help debugging
+> and development.
+> 
+> Thanks for thinking it through.
+> 
+
+Right, it could come later, but having it here in part 1 as part
+of the initial series completes the pre-promisor portion of these
+commands.  Having a print-missing option lets rev-list -- as is --
+be used in a bulk-fetch-object pre-checkout hook or as part of a
+"give me what I need before I go offline" command.  This is useful
+by itself.  It does augment the dynamic fetch-object code added in
+part 2 and the unpack-trees changes in part 3 to call fetch-object.
+
+Jeff
+
+
