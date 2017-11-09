@@ -2,95 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C59191F442
-	for <e@80x24.org>; Thu,  9 Nov 2017 18:47:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 37DE91F442
+	for <e@80x24.org>; Thu,  9 Nov 2017 19:14:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754236AbdKISrK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Nov 2017 13:47:10 -0500
-Received: from mout.web.de ([212.227.15.4]:56331 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753293AbdKISrF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Nov 2017 13:47:05 -0500
-Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MX0q4-1egcbp2NLI-00W1ss; Thu, 09
- Nov 2017 19:47:01 +0100
-Date:   Thu, 9 Nov 2017 19:47:01 +0100
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 1/1] Introduce git add --renormalize .
-Message-ID: <20171109184700.GA27635@tor.lan>
-References: <xmqqshejq9mn.fsf@gitster.mtv.corp.google.com>
- <20171030162913.23164-1-tboegi@web.de>
- <xmqqvaimeixm.fsf@gitster.mtv.corp.google.com>
- <20171107172659.GA11119@tor.lan>
- <xmqqlgjhobb4.fsf@gitster.mtv.corp.google.com>
+        id S1753214AbdKITOr (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Nov 2017 14:14:47 -0500
+Received: from mail-qt0-f182.google.com ([209.85.216.182]:55287 "EHLO
+        mail-qt0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752622AbdKITOq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Nov 2017 14:14:46 -0500
+Received: by mail-qt0-f182.google.com with SMTP id c36so2842415qtc.11
+        for <git@vger.kernel.org>; Thu, 09 Nov 2017 11:14:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=whF+6robA97+MvJNyRfOZ7UnInYBJWAOaCZ6x8jWphI=;
+        b=sXpT2QQYmJJA2FB+amZndcpx0npWR4XTFb3RW7UKHI6z68ckCJoAOcJl9wiwKZHk7f
+         oY+aUT8T0GPRxTZw5DUdiM7UNh365XKn3rmDxMckJZ6KsuCvKQBbnRfIxgkamQnEycz6
+         vvc34qdUqeCxmqv5Jx0AEr1GprysqBqbtbmJ6Eq/C/hO0B+IVNn50q/MwskUWnuwOm+n
+         bsxlWw2BMJ4fJJCRxjDd8e+AbGk1XGF0QOpVr892zNgiNHA/AD7lP8Ov2r/gV1hdAu4i
+         sNBlpPXuKod2wChDYRjmhc1I+TRhCn4uESiZpbHYXw+xeEK9MuSBuOii4SGfYiyHs/Ip
+         3j7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=whF+6robA97+MvJNyRfOZ7UnInYBJWAOaCZ6x8jWphI=;
+        b=OAf6y4SWjQBT0wkwjkHuhyjp+zPQqvieYsyNcP0iiF/uxieug05vfzCngbEyODI9ca
+         eWi7kcPrKcffBvsAWQ3/0HdTK3a5A5ypKaC15scG24el0ivt0lGqqCH2mlxdYYgbfRsy
+         FK94brhd0tHYIv0bouox1Eo/4d0NUuy2AQOcT7Akw9BnYGZ64nSol30fpdoBQsedoUf4
+         cnMz4n3t/9QpKVSsE51N3nGqIcvFtBuBuvDp/cHS/r0JWLO5lXpQFRg105QTPi+hE2dI
+         OdEs9YQpL4wvVoWZydK6m8BoAoq1jg7lmmcJzEP7RcxxpUGGppknVxvxvn678yyGzIkv
+         bE5A==
+X-Gm-Message-State: AJaThX6uf/hTCoC2bQLMAeomUi0y6GOx7wwDw+2hRsj+TN70gV2I3Yx5
+        5/AZrez2mudMYBaLge5z51mRrwV7EALgtCfNbASONw==
+X-Google-Smtp-Source: AGs4zMZ4OdxCSqkiyh0R/LCnuVcD5MPVDz+MJcC2fGLFAGJvLuyP5r8SaiwjK6Kx5XTiF+8QepvxBIDUS/SzsZaTues=
+X-Received: by 10.237.37.71 with SMTP id w7mr2564086qtc.299.1510254885882;
+ Thu, 09 Nov 2017 11:14:45 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqlgjhobb4.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Provags-ID: V03:K0:1/m/DD0YZ6JwfkjLHhMpaDGGM04zh+3nu4To8vzIREtZs3szeBd
- C0/MHixHQGZDewPUOucWC2exFfbgY5p570vMv6uLnYHi/9EGlUP+W0dUKqvvmmlUMVhnogS
- Y3ZPFQvP+qNER6AsHIezASAQH+SVo1o9mg0EMOO7HqS1VWevJG9kQltigymmaSe/tdVr8kX
- 92DBYW1Xa3/QprBSuewMQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:jRdrQVErBio=:MXLHqAVgXi3jCMYuocrR48
- 1ZhTJHWFvIU+YN8v6EWt0Pz33ULVkeG130zAYGdpQDTuF2DTNCOF8FvcjCyKzY4Jb0bMHc09b
- TMkhjnVreeAS7dQH8i6E+UKQw3hfmtqP2raxsVqS3ETCJWzzBfXlJpYMRyKDRZd8ZmoVxEwk9
- cszZQH4lXilVyFHBhV+4ceWn13Z/omLj8JWDI1Sp5azxkUwLw+2UZCQTnYFJaZ9nRPOBt5yhh
- em6JhF0VF0LiO2c+tX/KfPbAHtmVs+MREeOkw+Ux3bRyKdUwNtxmd/zt/8r9CI7lfg2tff5Qw
- RgZZanrk4fOS6+uzXMcd+7F3prdQFredj8+v4pXeZW+R0WYKglkDTdvO3pe+Ma3ntGzZNqpxS
- ZPEdWqGCSTeUpSrAgHaO2mqARPoq7veD1BTcDGTPoSvgfYRnFii8a7cJZ/oJG/LLmJXF0JpX+
- RLMBGEyYW/IdXZPQQgJ+1lZjfpynbAaJtvDzBcBSrXP0buj2aF0baXtg8rtild50P2HalSEv6
- tnAGTLgKqG2PlyGgm9RI/EI5+a/whDg3sYnpF+Fe1Ws3SxpEdbOyCNj1g3cRLakp6Mku+qMsd
- 45ganEKmk0nj8QwU3nv/DGUGxVi3gHU152/VjNjD9Zl+zYlbsLiYd9bT5T8fDHHl3PGWwTq2I
- G14qQOFovCAhSS//4lo9y5bEka160UvOd70sGv7Pf1JdhtU9CpExJhcKk2wYjCzITPL4K1PsM
- 8VAaaTObTdLEslCcSJzbVRyfzoiiqmFROsJ2hxFTGURVrXrD9NMEtS7Rn4j3C0jLU+7vNhdzR
- NYdrfD+uDsWfz1+nxx2CSNzxip59w==
+Received: by 10.140.102.70 with HTTP; Thu, 9 Nov 2017 11:14:45 -0800 (PST)
+In-Reply-To: <CAKohponsPQC6qTw99+xh1RSu0bZNDSo5TbbZZcYmup3NOW6QmA@mail.gmail.com>
+References: <CAKohponsPQC6qTw99+xh1RSu0bZNDSo5TbbZZcYmup3NOW6QmA@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 9 Nov 2017 11:14:45 -0800
+Message-ID: <CAGZ79ka9VnzYTYgtWgGAhvgn2LRpP_BCQyVvQ8iC1w9XJnRxEw@mail.gmail.com>
+Subject: Re: [Query] Separate hooks for Git worktrees
+To:     Viresh Kumar <viresh.kumar@linaro.org>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Vincent Guittot <vincent.guittot@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-[]
-> 
-> If we had such a term in Documentation/glossary-contents.txt, we
-> could even say
-> 
-> 	Add contents of all paths to the index by freshly applying
-> 	the "clean" process, even to the ones Git may think are
-> 	unmodified in the working tree since they were added the
-> 	last time (based on the file timestamps etc.).  This is
-> 	often useful after updating settings like `core.autocrlf` in
-> 	the `.git/config` file and the `text` attributes in the
-> 	`.gitattributes` file to correct the index entries that
-> 	records lines with CRLF to use LF instead, or changing what
-> 	the `clean` filter does.  This option implies `-u`.
-> 
-> The point is to express that the CRLF/LF is a consequence (even
-> though it may be the most prominent one from end-users' point of
-> view) of a larger processing.
+On Thu, Nov 9, 2017 at 2:58 AM, Viresh Kumar <viresh.kumar@linaro.org> wrote:
+> Hi,
+>
+> I have a typical use case, where I am using the same
+> repository for both Android and Linux kernel branches.
+>
+> Android needs us to keep a special hook "commit-msg"
+> which adds a "Change-Id" to every commit we create.
 
-Here is a somwhat shorter description:
+The standard hook for Gerrit can be {en,dis}-abled via
+  git config gerrit.createChangeId {true, false}
 
-Apply the "clean" process freshly to all tracked files.
-This is useful after changing `core.autocrlf` or the `text`
-attributes in the `.gitattributes` file because
-Git may not consider these files as changed.
-Correct the files that had been commited with CRLF,
-they will from now on have LF instead.
-Re-run what the `clean` filter does.
-This option implies `-u`.
+> While this works fine with Android, the behavior doesn't change
+> by simply changing to a upstream kernel branch and eventually
+> by mistake I may end up sending patch with Change-Id to upstream
+> kernel as well. And I want to avoid that.
+>
+> I am looking at ways to make this configuration work for me by
+> applying the hook only for Android branches.
+>
+> I tried using the "git worktrees" command to create a separate
+> linked tree for my android branch, but it doesn't have a .git directory
+> but just a file linking to the main repository.
 
+We have no worktree specific config yet, though patches for
+this were floated on the mailing list.
 
-> 
-> > [snip the TC. Adding line endings is good)
-> 
-> What is TC in this context?
+Though recent versions of git learned to conditionally include
+config files. (look for includeIf in man git-config), which I think
+could be used to set the option gerrit.createChangeId  depending
+on the worktree you are in.
 
-Sorry for confusion: TC means test case.
+> Any idea how I can get around this problem without having separate
+> repositories for kernel and android ?
+
+The proposed approach above might be hacky but sounds as if
+it should work?
+
+Thanks,
+Stefan
