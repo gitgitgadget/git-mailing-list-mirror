@@ -2,81 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 998E61F442
-	for <e@80x24.org>; Thu,  9 Nov 2017 16:18:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C59191F442
+	for <e@80x24.org>; Thu,  9 Nov 2017 18:47:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753136AbdKIQSg (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Nov 2017 11:18:36 -0500
-Received: from mail-qk0-f169.google.com ([209.85.220.169]:55641 "EHLO
-        mail-qk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752570AbdKIQSC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Nov 2017 11:18:02 -0500
-Received: by mail-qk0-f169.google.com with SMTP id x195so8324993qkb.12
-        for <git@vger.kernel.org>; Thu, 09 Nov 2017 08:18:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=XX2BEfWPXZUYuWSvKzJ1q9yc3gGBIHLdmZFKdjQu1PY=;
-        b=P4Mhap7f4Yy/TQl/obaOq87KDsE/hj0NGs4tZiWOOv5TpZlnglM3h4WAsosJfbfSyR
-         dz1M+atJWphRMD/UdeW+4+FjiFYqzLdHLQS1KAEcl7+XVbDS3KVByV0cQ7Sx7fp02RnE
-         /1c1DkosOXRqYZ1PY6+XzkOHRWgYnbpdGe+8+0Of/00/1wfFH+kaB2HYh+NQmteAxHrJ
-         xRQ6RL0HV5CXo27sp0HUlioiiRoI5g4eVb9dnzn0MXKkkD6qgT9A+eFk7+yoAfWUe0lM
-         6/dA5elourVPTrnqiWW7Bem6RgLt3erbrSfBhi18sg/qyWxI2SmRZA1Epa9UxVDCLkPK
-         Y0yg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=XX2BEfWPXZUYuWSvKzJ1q9yc3gGBIHLdmZFKdjQu1PY=;
-        b=KcZP1gGOzfckbyHg1fXJk9jVlYTWzOnYaBHB9EmHRea9sB02Pn8Lko9lt+K4yOQE7f
-         FqKIolhcrLY1Uh8FZSGr4qZ+zXdICXR+6SSusDQZsAedp2gqwPRGnmYt3fHmGQ5WjPG2
-         X9dasJKoqcQTxkEv3GohpjP/cw3y5vCUJTlX6u1UPbZZt9pB3BqlkdzzZY++35erlUln
-         m5wKjfl23xiZ8blYYMeFGDGmcpoF9tO+NQNTaD5CIiRhIQZKfRcsZbmkf3WSwJyBpBJo
-         1UcWeSVxBYi5SYx/3ylkAvG6zhTRKPQi+wq7T7zwHg2y4moZkCrc6iGni+G8V3rPrMn0
-         UTWg==
-X-Gm-Message-State: AJaThX6JasKMgEuVBmg3HZURUlC61f3/ofSsS2JGNznXUabOO7auKe95
-        XLO2wcHbQeMGibsGuXHG20YhAAMbD+aa5aMQyzA=
-X-Google-Smtp-Source: AGs4zMaJnX34WZBVf4PNyKFhTZqCe1eFuZNHNTffP4e4Ic6VNwIAwPyR+Rlb1tairxdyssly6kOpsBTwjVlvvxXa4fs=
-X-Received: by 10.55.77.214 with SMTP id a205mr1557867qkb.196.1510244282206;
- Thu, 09 Nov 2017 08:18:02 -0800 (PST)
+        id S1754236AbdKISrK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Nov 2017 13:47:10 -0500
+Received: from mout.web.de ([212.227.15.4]:56331 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753293AbdKISrF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Nov 2017 13:47:05 -0500
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb002
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MX0q4-1egcbp2NLI-00W1ss; Thu, 09
+ Nov 2017 19:47:01 +0100
+Date:   Thu, 9 Nov 2017 19:47:01 +0100
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 1/1] Introduce git add --renormalize .
+Message-ID: <20171109184700.GA27635@tor.lan>
+References: <xmqqshejq9mn.fsf@gitster.mtv.corp.google.com>
+ <20171030162913.23164-1-tboegi@web.de>
+ <xmqqvaimeixm.fsf@gitster.mtv.corp.google.com>
+ <20171107172659.GA11119@tor.lan>
+ <xmqqlgjhobb4.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Received: by 10.12.146.118 with HTTP; Thu, 9 Nov 2017 08:18:01 -0800 (PST)
-In-Reply-To: <20171109134617.65244-1-adam@dinwoodie.org>
-References: <20171109134617.65244-1-adam@dinwoodie.org>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 9 Nov 2017 11:18:01 -0500
-X-Google-Sender-Auth: 8wB09oJyGM50Dc2BflZjcZ31JNQ
-Message-ID: <CAPig+cRq7thrPtzS0V6o-wMhHyYWKeWg-xOQhnWCO5sLE=kDcw@mail.gmail.com>
-Subject: Re: [PATCH] notes: add `rm` and `delete` commands
-To:     Adam Dinwoodie <adam@dinwoodie.org>
-Cc:     Git List <git@vger.kernel.org>, Johan Herland <johan@herland.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqlgjhobb4.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Provags-ID: V03:K0:1/m/DD0YZ6JwfkjLHhMpaDGGM04zh+3nu4To8vzIREtZs3szeBd
+ C0/MHixHQGZDewPUOucWC2exFfbgY5p570vMv6uLnYHi/9EGlUP+W0dUKqvvmmlUMVhnogS
+ Y3ZPFQvP+qNER6AsHIezASAQH+SVo1o9mg0EMOO7HqS1VWevJG9kQltigymmaSe/tdVr8kX
+ 92DBYW1Xa3/QprBSuewMQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:jRdrQVErBio=:MXLHqAVgXi3jCMYuocrR48
+ 1ZhTJHWFvIU+YN8v6EWt0Pz33ULVkeG130zAYGdpQDTuF2DTNCOF8FvcjCyKzY4Jb0bMHc09b
+ TMkhjnVreeAS7dQH8i6E+UKQw3hfmtqP2raxsVqS3ETCJWzzBfXlJpYMRyKDRZd8ZmoVxEwk9
+ cszZQH4lXilVyFHBhV+4ceWn13Z/omLj8JWDI1Sp5azxkUwLw+2UZCQTnYFJaZ9nRPOBt5yhh
+ em6JhF0VF0LiO2c+tX/KfPbAHtmVs+MREeOkw+Ux3bRyKdUwNtxmd/zt/8r9CI7lfg2tff5Qw
+ RgZZanrk4fOS6+uzXMcd+7F3prdQFredj8+v4pXeZW+R0WYKglkDTdvO3pe+Ma3ntGzZNqpxS
+ ZPEdWqGCSTeUpSrAgHaO2mqARPoq7veD1BTcDGTPoSvgfYRnFii8a7cJZ/oJG/LLmJXF0JpX+
+ RLMBGEyYW/IdXZPQQgJ+1lZjfpynbAaJtvDzBcBSrXP0buj2aF0baXtg8rtild50P2HalSEv6
+ tnAGTLgKqG2PlyGgm9RI/EI5+a/whDg3sYnpF+Fe1Ws3SxpEdbOyCNj1g3cRLakp6Mku+qMsd
+ 45ganEKmk0nj8QwU3nv/DGUGxVi3gHU152/VjNjD9Zl+zYlbsLiYd9bT5T8fDHHl3PGWwTq2I
+ G14qQOFovCAhSS//4lo9y5bEka160UvOd70sGv7Pf1JdhtU9CpExJhcKk2wYjCzITPL4K1PsM
+ 8VAaaTObTdLEslCcSJzbVRyfzoiiqmFROsJ2hxFTGURVrXrD9NMEtS7Rn4j3C0jLU+7vNhdzR
+ NYdrfD+uDsWfz1+nxx2CSNzxip59w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 9, 2017 at 8:46 AM, Adam Dinwoodie <adam@dinwoodie.org> wrote:
-> Add `git notes rm` and `git notes delete` as alternative ways of saying
-> `git notes remove`.
+[]
+> 
+> If we had such a term in Documentation/glossary-contents.txt, we
+> could even say
+> 
+> 	Add contents of all paths to the index by freshly applying
+> 	the "clean" process, even to the ones Git may think are
+> 	unmodified in the working tree since they were added the
+> 	last time (based on the file timestamps etc.).  This is
+> 	often useful after updating settings like `core.autocrlf` in
+> 	the `.git/config` file and the `text` attributes in the
+> 	`.gitattributes` file to correct the index entries that
+> 	records lines with CRLF to use LF instead, or changing what
+> 	the `clean` filter does.  This option implies `-u`.
+> 
+> The point is to express that the CRLF/LF is a consequence (even
+> though it may be the most prominent one from end-users' point of
+> view) of a larger processing.
 
-The justification for this change seems to be missing from the commit message.
+Here is a somwhat shorter description:
 
-One can formulate arguments for the change:
+Apply the "clean" process freshly to all tracked files.
+This is useful after changing `core.autocrlf` or the `text`
+attributes in the `.gitattributes` file because
+Git may not consider these files as changed.
+Correct the files that had been commited with CRLF,
+they will from now on have LF instead.
+Re-run what the `clean` filter does.
+This option implies `-u`.
 
-    - "rm" & "delete" more intuitive for Unix and DOS users
-    - for consistency with git-<fill-in-blank> command(s)
-    - ...
 
-or against the change:
+> 
+> > [snip the TC. Adding line endings is good)
+> 
+> What is TC in this context?
 
-    - synonym bloat; balloons documentation
-    - steals command verbs from potential future features
-    - ...
-
-> Signed-off-by: Adam Dinwoodie <adam@dinwoodie.org>
+Sorry for confusion: TC means test case.
