@@ -7,80 +7,109 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2E1FC1F442
-	for <e@80x24.org>; Thu,  9 Nov 2017 12:47:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C286A1F442
+	for <e@80x24.org>; Thu,  9 Nov 2017 13:09:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754495AbdKIMrT (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Nov 2017 07:47:19 -0500
-Received: from mail-wr0-f180.google.com ([209.85.128.180]:48592 "EHLO
-        mail-wr0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754450AbdKIMrS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Nov 2017 07:47:18 -0500
-Received: by mail-wr0-f180.google.com with SMTP id 15so5487300wrb.5
-        for <git@vger.kernel.org>; Thu, 09 Nov 2017 04:47:17 -0800 (PST)
+        id S1754676AbdKINJF (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Nov 2017 08:09:05 -0500
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:44142 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754600AbdKINJC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Nov 2017 08:09:02 -0500
+Received: by mail-wr0-f193.google.com with SMTP id u97so5569309wrc.1
+        for <git@vger.kernel.org>; Thu, 09 Nov 2017 05:09:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=dinwoodie.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=ZQz4O4CQ6kew9oCrroMdMzQFqvstfTO2OhT4XBKx/go=;
-        b=Do0OFiI1/9deOPFmO+UK4+vnCNbQ3KsfGAQjFvhl6JQw2G2myyTeV0FqZTswkaMw33
-         e6GdRrywOM8CYRdoyKPcA7h7S69TN/aACSioCTdAQIl69vMPArux84fRm7M52MGKob7a
-         Qo0V/8BlFknio859jTnQ9i59+DDA2n3PPF7Hs=
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=oYtheyn6W3T3U2HrNLQEBFPvcx4tOjFWN3MVHDG5ka0=;
+        b=n6z2dOl3FIpbBtPv9Fvzj7ZJZRHNRnCr5S/c1LwaQrlx0jrZB4XmxBB+kWx83vssCB
+         hxCk98SuRNP0Q13iSJu/XbOyUfh9hqYpJr8FNvy8BOuDFA/Z1gSTVu0Wue+THYlx+vpX
+         EAGXBNNewqTH8v4FKWOi5shJRQhlP6lLUbSJk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ZQz4O4CQ6kew9oCrroMdMzQFqvstfTO2OhT4XBKx/go=;
-        b=Vtg0+z9mbUxXIo45WbAW2BaN/4mzNVXWMAPxfacHIkbW9AhfBJ2RYV74fTRfjB+hHX
-         qxUHkc1rx4sk9EMEwdBLnWo7kSecSagtj2CWl2ej1Xrw+88eTWFXkLkAu9wnXlQbyzgI
-         EJdzehGSdFE3oMgAW3uHOcrYzxECh7EdHHDzYBEtYkcYQ9O1P0djrh24D6/KwQ1oSiZ6
-         HcW5qhGzZN62Y3m9cvOFz3kSh0E4CBN2IJlm1qP0e8AuJ6YBBny+k8onV2YSrV+oWBHv
-         jh3InSThfudLMv6vBfs9Tv69svbAGpgsOds0cnAhe2BIWjoSKHOsqa+IayoVb1nWHl3D
-         FCSw==
-X-Gm-Message-State: AJaThX5Wsp/YyoP13xpnCiXldsu8qf+zXzvxcJdmFuL501dOgPBzfFao
-        xNEA4dECmSw75wGxpEZ3KwRXAc7Q49w=
-X-Google-Smtp-Source: ABhQp+SLy6W7JkAV2DcDNMfy8yuqHjX02ayJvaHgxGsIC+EoXOhenuv+4UsapSvNICHOrXAczhVKPw==
-X-Received: by 10.223.135.143 with SMTP id b15mr326644wrb.278.1510231636723;
-        Thu, 09 Nov 2017 04:47:16 -0800 (PST)
-Received: from dinwoodie.org ([2001:ba8:0:1c0::9:1])
-        by smtp.gmail.com with ESMTPSA id p23sm12974224wrb.76.2017.11.09.04.47.15
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=oYtheyn6W3T3U2HrNLQEBFPvcx4tOjFWN3MVHDG5ka0=;
+        b=IaELI8yN3Oc5ZjlMP9G4plvRCMpxQioJhELmIEX6tOCACp0972g1dEQ++6Ae1uPu6+
+         5bMgpLJ5Io/QuAVV0ReC+dICWHROBfyLkikrKZHrL9nXXJPJK/Ztbwd8PCbvZNFzjdVK
+         RUdL5df18Yeswf3qXkZHhWeYfaLnqZQ9l5YRpzXs6LaeqkAW8oJMVdZRTnW8H+1xkgaV
+         vggsBY+z3yWh8Gz1bnTf4N/MqQz5MedULp6uh/7fPo0Z/R9Gj6Vb2eES5RlCOl5/atZt
+         DkZbyo9it0Rln2EMtq4iDPsA7ySUxoKvcut+TwFN5wjD0AqGtW37Cxttcm7RQ52ooIHZ
+         R0Ng==
+X-Gm-Message-State: AJaThX7ZNuqdNwDoiAFDyQLSm0K6r7C5+Vnu/e4yA3WJgCI0SKozQxA3
+        ZbQdM6mumy/1cEtPjvxTFLe+VQwfDJg=
+X-Google-Smtp-Source: ABhQp+SBqO/PvIiAko4M0SIqsa7uPwGmEVwdCUgUMnHb64M6hO0b282AHbZI3JvLikuusWrYhEGRYQ==
+X-Received: by 10.223.157.11 with SMTP id k11mr404620wre.281.1510232940629;
+        Thu, 09 Nov 2017 05:09:00 -0800 (PST)
+Received: from PC5175.ad.datcon.co.uk ([2620:104:4001:73:993:9a1f:de68:e37a])
+        by smtp.gmail.com with ESMTPSA id j125sm13056947wmf.24.2017.11.09.05.08.59
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 09 Nov 2017 04:47:15 -0800 (PST)
-Date:   Thu, 9 Nov 2017 12:47:14 +0000
+        Thu, 09 Nov 2017 05:08:59 -0800 (PST)
 From:   Adam Dinwoodie <adam@dinwoodie.org>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+To:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
         Josh Triplett <josh@joshtriplett.org>
-Subject: Re: [PATCH v2] doc/SubmittingPatches: correct subject guidance
-Message-ID: <20171109124714.GH20681@dinwoodie.org>
-References: <20171108131601.280992-1-adam@dinwoodie.org>
- <20171108134752.214056-1-adam@dinwoodie.org>
- <CAPig+cRaygrQ9_J1UHr_rynPsUn2J0--RHRvP2mFQbVQhWEm-Q@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAPig+cRaygrQ9_J1UHr_rynPsUn2J0--RHRvP2mFQbVQhWEm-Q@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Subject: [PATCH v3] doc/SubmittingPatches: correct subject guidance
+Date:   Thu,  9 Nov 2017 13:08:26 +0000
+Message-Id: <20171109130826.52132-1-adam@dinwoodie.org>
+X-Mailer: git-send-email 2.14.3
+In-Reply-To: <20171109124714.GH20681@dinwoodie.org>
+References: <20171109124714.GH20681@dinwoodie.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wednesday 08 November 2017 at 09:10 am -0500, Eric Sunshine wrote:
-> On Wed, Nov 8, 2017 at 8:47 AM, Adam Dinwoodie <adam@dinwoodie.org> wrote:
-> > +e-mail discussions.  Use of markers in addition to PATCH within
-> > +the brackets to describe the nature of the patch is also
-> > +encouraged.  E.g. [RFC PATCH] is often used when the patch is not
-> > +ready to be applied but it is for discussion, and can be added
-> > +with the `--rfc` argument to `git format-patch` or `git
-> > +send-email`, while [PATCH v2], [PATCH v3] etc.  are often seen
-> 
-> It has become a bit of a run-on sentence, but aside from that and the
-> unnecessary extra whitespace between "etc." and "are", it looks good
-> to me.
+The examples and common practice for adding markers such as "RFC" or
+"v2" to the subject of patch emails is to have them within the same
+brackets as the "PATCH" text, not after the closing bracket.  Further,
+the practice of `git format-patch` and the like, as well as what appears
+to be the more common pratice on the mailing list, is to use "[RFC
+PATCH]", not "[PATCH/RFC]".
 
-Both good points, thank you!  I suspect the extra whitespace was a
-result of Vim being "helpful" when reflowing the text.
+Update the SubmittingPatches article to match, and to reference the
+`format-patch` helper arguments.
 
-I'll re-spin now with fixed whitespace and breaking up the sentence a
-bit.
+Signed-off-by: Adam Dinwoodie <adam@dinwoodie.org>
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+---
+ Documentation/SubmittingPatches | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
+
+diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+index 558d465b6..ae59fd9d0 100644
+--- a/Documentation/SubmittingPatches
++++ b/Documentation/SubmittingPatches
+@@ -184,21 +184,25 @@ lose tabs that way if you are not careful.
+ 
+ It is a common convention to prefix your subject line with
+ [PATCH].  This lets people easily distinguish patches from other
+-e-mail discussions.  Use of additional markers after PATCH and
+-the closing bracket to mark the nature of the patch is also
+-encouraged.  E.g. [PATCH/RFC] is often used when the patch is
++e-mail discussions.  Use of markers in addition to PATCH within
++the brackets to describe the nature of the patch is also
++encouraged.  E.g. [RFC PATCH] is often used when the patch is
+ not ready to be applied but it is for discussion, [PATCH v2],
+ [PATCH v3] etc. are often seen when you are sending an update to
+ what you have previously sent.
+ 
+-"git format-patch" command follows the best current practice to
++The "git format-patch" command follows the best current practice to
+ format the body of an e-mail message.  At the beginning of the
+ patch should come your commit message, ending with the
+ Signed-off-by: lines, and a line that consists of three dashes,
+ followed by the diffstat information and the patch itself.  If
+ you are forwarding a patch from somebody else, optionally, at
+ the beginning of the e-mail message just before the commit
+ message starts, you can put a "From: " line to name that person.
++To change the bracketed text at the start of the subject, use
++`git format-patch --subject-prefix=<text>`.  As a shortcut, you
++can use `--rfc` instead of `--subject-prefix="RFC PATCH"`, or
++`-v <n>` instead of `--subject-prefix="PATCH v<n>"`.
+ 
+ You often want to add additional explanation about the patch,
+ other than the commit message itself.  Place such "cover letter"
+-- 
+2.14.3
+
