@@ -2,109 +2,150 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E3A0D1F442
-	for <e@80x24.org>; Thu,  9 Nov 2017 13:29:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2BCB01F442
+	for <e@80x24.org>; Thu,  9 Nov 2017 13:47:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754750AbdKIN3m (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Nov 2017 08:29:42 -0500
-Received: from cloud.peff.net ([104.130.231.41]:51052 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1754685AbdKIN3l (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Nov 2017 08:29:41 -0500
-Received: (qmail 27464 invoked by uid 109); 9 Nov 2017 13:29:41 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 09 Nov 2017 13:29:41 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 23696 invoked by uid 111); 9 Nov 2017 13:29:52 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Thu, 09 Nov 2017 08:29:52 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 09 Nov 2017 08:29:39 -0500
-Date:   Thu, 9 Nov 2017 08:29:39 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Joseph Strauss <josephst@bhphoto.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Bug - Status - Space in Filename
-Message-ID: <20171109132939.3v2z6sf22b4tnwpq@sigill.intra.peff.net>
-References: <655aaa9d2abf4be1b6ade0574d88c999@EXMBX01B.bhphotovideo.local>
- <xmqqvaikjfoj.fsf@gitster.mtv.corp.google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqvaikjfoj.fsf@gitster.mtv.corp.google.com>
+        id S1754738AbdKINrT (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Nov 2017 08:47:19 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:53299 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754268AbdKINrS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Nov 2017 08:47:18 -0500
+Received: by mail-wm0-f67.google.com with SMTP id s66so2011144wmf.2
+        for <git@vger.kernel.org>; Thu, 09 Nov 2017 05:47:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=dinwoodie.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=+GJMd0KMVRApBaW4NbcaqhFsXLlP7jQGQ8O8+h7KwE0=;
+        b=q9m8fxSi1ZTob29FzBZi8CfvMjewA2q9ZAB4cJPovdkXxNk+IFD/rZSQrZyH6mXnWg
+         huT5qNs3soNnn+F6a/Fi4gjsSNxGz4vjHSlkPq8L7LEeb5tfB11BUGGeDwVg8sSxoUNk
+         Qj2zo7zOBLT54UD86yeKesZIFhg+O3hlLn1MM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=+GJMd0KMVRApBaW4NbcaqhFsXLlP7jQGQ8O8+h7KwE0=;
+        b=NaDPpPeOFR05hpHoEZVW8J0otm0jT5YBUPTsNrtWmheK5Lyn5LibCzZ+jbpy/L2oQR
+         XoTigMeGF4+PdOzcDyiyyPog4jgUSs0Q2NfJr1aKicA/b+v6o98XCeStRgI0QjUltFhu
+         0/zEcVP5bT0Ld5EZyoRimIcK2IduhWIwc0GdgJZc/IUPfAbAWBioWGWPpWYXn2wBk1/D
+         8TrmbafCCLz5kA1OtR8nZbfThlgqORhoDe7ABYcIVovake9qYOlhuthQqpbIrVo04uja
+         Kk0m5R93qxcabVFD229Uh99A/8p/a1y+aztYM2eRC+2Q89fvNWOKeSJkEa3g4Iydz/dq
+         dEvQ==
+X-Gm-Message-State: AJaThX61YBv0m1nEL55pzC4RjAj5rv/5F89hz/LVGBpfXoGxlaFImx81
+        gGpFNJe9p0ZDAbZWsjjuKzztU/OZgSc=
+X-Google-Smtp-Source: AGs4zMbbyycqbsXr4VstnFC0R6aNUWvFdPiUDujcA9HIWgD+OInOhzSLXRkVsr/ehj1VhWj2FEZakg==
+X-Received: by 10.28.8.145 with SMTP id 139mr430760wmi.115.1510235236427;
+        Thu, 09 Nov 2017 05:47:16 -0800 (PST)
+Received: from PC5175.ad.datcon.co.uk ([2620:104:4001:73:993:9a1f:de68:e37a])
+        by smtp.gmail.com with ESMTPSA id 56sm3263400wrx.2.2017.11.09.05.47.15
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 09 Nov 2017 05:47:15 -0800 (PST)
+From:   Adam Dinwoodie <adam@dinwoodie.org>
+To:     git@vger.kernel.org
+Cc:     Johan Herland <johan@herland.net>
+Subject: [PATCH] notes: add `rm` and `delete` commands
+Date:   Thu,  9 Nov 2017 13:46:17 +0000
+Message-Id: <20171109134617.65244-1-adam@dinwoodie.org>
+X-Mailer: git-send-email 2.14.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 09, 2017 at 12:26:20PM +0900, Junio C Hamano wrote:
+Add `git notes rm` and `git notes delete` as alternative ways of saying
+`git notes remove`.
 
-> The difference in d->head_path part is dealing about renames, which
-> is irrelevant for showing unmerged paths, but the key difference is
-> that the _unmerged() forgets to add the enclosing "" around the
-> result of quote_path().
-> 
-> It seems that wt_shortstatus_other() shares the same issue.  Perhaps
-> this will "fix" it?
-> 
-> Having said all that, the whole "quote path using c-style" was
-> designed very deliberately to treat SP (but not other kind of
-> whitespaces like HT) as something we do *not* have to quote (and
-> more importantly, do not *want* to quote, as pathnames with SP in it
-> are quite common for those who are used to "My Documents/" etc.), so
-> it is arguably that what is broken and incorrect is the extra
-> quoting with dq done in wt_shortstatus_status().  It of course is
-> too late to change the rules this late in the game, though.
+Signed-off-by: Adam Dinwoodie <adam@dinwoodie.org>
+---
+ Documentation/git-notes.txt | 4 +++-
+ builtin/notes.c             | 8 +++++---
+ t/t3301-notes.sh            | 6 +++---
+ 3 files changed, 11 insertions(+), 7 deletions(-)
 
-Yeah, I think the original sin is using " -> " in the --porcelain output
-(which just got it from --short). That should have been a HT all along
-to match the rest of the diff code. The --porcelain=v2 format gets this
-right.
+diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
+index 43677297f..b1059dc85 100644
+--- a/Documentation/git-notes.txt
++++ b/Documentation/git-notes.txt
+@@ -17,7 +17,7 @@ SYNOPSIS
+ 'git notes' merge [-v | -q] [-s <strategy> ] <notes-ref>
+ 'git notes' merge --commit [-v | -q]
+ 'git notes' merge --abort [-v | -q]
+-'git notes' remove [--ignore-missing] [--stdin] [<object>...]
++'git notes' (remove|rm|delete) [--ignore-missing] [--stdin] [<object>...]
+ 'git notes' prune [-n | -v]
+ 'git notes' get-ref
+ 
+@@ -110,6 +110,8 @@ When done, the user can either finalize the merge with
+ 'git notes merge --abort'.
+ 
+ remove::
++rm::
++delete::
+ 	Remove the notes for given objects (defaults to HEAD). When
+ 	giving zero or one object from the command line, this is
+ 	equivalent to specifying an empty note message to
+diff --git a/builtin/notes.c b/builtin/notes.c
+index 12afdf190..cedb37535 100644
+--- a/builtin/notes.c
++++ b/builtin/notes.c
+@@ -32,7 +32,7 @@ static const char * const git_notes_usage[] = {
+ 	N_("git notes [--ref <notes-ref>] merge [-v | -q] [-s <strategy>] <notes-ref>"),
+ 	N_("git notes merge --commit [-v | -q]"),
+ 	N_("git notes merge --abort [-v | -q]"),
+-	N_("git notes [--ref <notes-ref>] remove [<object>...]"),
++	N_("git notes [--ref <notes-ref>] (remove|rm|delete) [<object>...]"),
+ 	N_("git notes [--ref <notes-ref>] prune [-n | -v]"),
+ 	N_("git notes [--ref <notes-ref>] get-ref"),
+ 	NULL
+@@ -77,7 +77,7 @@ static const char * const git_notes_merge_usage[] = {
+ };
+ 
+ static const char * const git_notes_remove_usage[] = {
+-	N_("git notes remove [<object>]"),
++	N_("git notes (remove|rm|delete) [<object>]"),
+ 	NULL
+ };
+ 
+@@ -1012,7 +1012,9 @@ int cmd_notes(int argc, const char **argv, const char *prefix)
+ 		result = show(argc, argv, prefix);
+ 	else if (!strcmp(argv[0], "merge"))
+ 		result = merge(argc, argv, prefix);
+-	else if (!strcmp(argv[0], "remove"))
++	else if (!strcmp(argv[0], "remove") ||
++		 !strcmp(argv[0], "rm") ||
++		 !strcmp(argv[0], "delete"))
+ 		result = remove_cmd(argc, argv, prefix);
+ 	else if (!strcmp(argv[0], "prune"))
+ 		result = prune(argc, argv, prefix);
+diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
+index 2d200fdf3..50df9a3f9 100755
+--- a/t/t3301-notes.sh
++++ b/t/t3301-notes.sh
+@@ -353,9 +353,9 @@ test_expect_success 'create note with combination of -m and -F' '
+ 	test_cmp expect-combine_m_and_F actual
+ '
+ 
+-test_expect_success 'remove note with "git notes remove"' '
++test_expect_success 'remove note with "git notes remove/rm"' '
+ 	git notes remove HEAD^ &&
+-	git notes remove &&
++	git notes rm &&
+ 	cat >expect-rm-remove <<-EOF &&
+ 		commit 7f9ad8836c775acb134c0a055fc55fb4cd1ba361
+ 		Author: A U Thor <author@example.com>
+@@ -390,7 +390,7 @@ test_expect_success 'removing more than one' '
+ 	# We have only two -- add another and make sure it stays
+ 	git notes add -m "extra" &&
+ 	git notes list HEAD >after-removal-expect &&
+-	git notes remove HEAD^^ HEAD^^^ &&
++	git notes delete HEAD^^ HEAD^^^ &&
+ 	git notes list | sed -e "s/ .*//" >actual &&
+ 	test_cmp after-removal-expect actual
+ '
+-- 
+2.14.3
 
-> Perhaps a better approach is to refactor the extra quoting I moved
-> to this emit_with_optional_dq() helper into quote_path() which
-> currently is just aliased to quote_path_relative().  It also is
-> possible that we may want to extend the "no_dq" parameter that is
-> given to quote_c_style() helper from a boolean to a set of flag
-> bits, and allow callers to request "I want SP added to the set of
-> bytes that triggers the quoting".
-
-Yeah, I had the same thought upon digging into the code.
-
-That said, if this is the only place that has this funny quoting, it may
-not be worth polluting the rest of the code with the idea that quoting
-spaces is a good thing to do.
-
-> diff --git a/wt-status.c b/wt-status.c
-> index bedef256ce..472d53d596 100644
-> --- a/wt-status.c
-> +++ b/wt-status.c
-> @@ -1671,6 +1671,20 @@ static void wt_longstatus_print(struct wt_status *s)
->  		wt_longstatus_print_stash_summary(s);
->  }
->  
-> +static const char *emit_with_optional_dq(const char *in, const char *prefix, 
-> +					  struct strbuf *out)
-> +{
-> +	const char *one;
-> +
-> +	one = quote_path(in, prefix, out);
-> +	if (*one != '"' && strchr(one, ' ') != NULL) {
-> +		putchar('"');
-> +		strbuf_addch(out, '"');
-> +		one = out->buf;
-> +	}
-> +	return one;
-> +}
-
-This puts part of its output to stdout, and the other part into a
-strbuf. That works for these callers, but maybe just emitting the whole
-thing to stdout would be less confusing (and I suspect would clean up
-the callers a bit, who would not have to worry about the strbuf at all).
-
--Peff
