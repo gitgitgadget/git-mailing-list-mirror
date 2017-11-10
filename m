@@ -2,129 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7D72C1F42B
-	for <e@80x24.org>; Fri, 10 Nov 2017 19:21:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7CF831F42B
+	for <e@80x24.org>; Fri, 10 Nov 2017 20:01:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753660AbdKJTVx (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Nov 2017 14:21:53 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64088 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753581AbdKJTVx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Nov 2017 14:21:53 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 57D1FBEA7F;
-        Fri, 10 Nov 2017 14:21:52 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=4Tr5+1M5FyMuQ8Cns677MiH+Li8=; b=rKQfTGAc5QWZkwdM2C8o
-        VJPb2Mdiwl6PXamrXBKHJHBQGyQIMGVlHqT+eHhWWP265EdMfCcX2i+orjmRfi0q
-        Xmg5WbQ1DhWXBBftFLl9X1q4VqElHB94UsMJC092dnPbIQn4wDcmaeRHkIIfnCVz
-        50rEgHp5sQKPDwI/2KTazCo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         q=dns; s=sasl; b=ef0FBspXEng6eWjQqhIGQoBjLNiXZ40l+86xu/wDpgkvtk
-        uYTQpI1mDja7XTRZ7anHCZ1cZuW9vsbW4um0/5nom7f+ljvSwgqZGJ/18YRhuUWD
-        lazZ/G2JELnrkaC8FvOIEdcDmcfczNFBGYqhuBySpgkcr9UUvaHAo7VwA6ibI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4E4D3BEA7E;
-        Fri, 10 Nov 2017 14:21:52 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BFC89BEA7C;
-        Fri, 10 Nov 2017 14:21:51 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Phillip Wood <phillip.wood@talktalk.net>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v2 0/9] sequencer: dont't fork git commit
-References: <20170925101041.18344-1-phillip.wood@talktalk.net>
-        <20171110110949.328-1-phillip.wood@talktalk.net>
-Date:   Sat, 11 Nov 2017 04:21:50 +0900
-Message-ID: <xmqqo9oadjn5.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1753312AbdKJUBm (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Nov 2017 15:01:42 -0500
+Received: from mail-qk0-f182.google.com ([209.85.220.182]:54755 "EHLO
+        mail-qk0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751133AbdKJUBl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Nov 2017 15:01:41 -0500
+Received: by mail-qk0-f182.google.com with SMTP id l69so6712784qkl.11
+        for <git@vger.kernel.org>; Fri, 10 Nov 2017 12:01:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=cQQmg7cAoZuFuCTCF7pF0/jLAWQf5BrCpB3+ryQlWM0=;
+        b=Y3I6KOeW6OYrixLpEIrzZly0NOg4bBEFn2jD2mcyflYMPN/gaFsBj5wrPsx4Lwxoxq
+         hyYWbkC/gguNxDB0cLuZjPrY9UDxze/ZOqcljMLWIsCBSPlPSGjVuy5HuOCCIAEL2HyI
+         0nn9pZuvK8r4JbQT6eLBz/nkH0XUAkCGea0yfI8rEvgvahIqkoMguVRUI1jL41FyJa0Q
+         bTBWULdn8T09HUtfhQF6IPUWoqTzhdEU5HpAHnXYAdy67LFQaZdp0Q2/VG1vaUoZlPxh
+         CFSWoA57bIweuXaPUTKlQqVFmlerRFRQJGyse+ICxhIKEf4o1RIQ7y+yuHC/A+qP32Op
+         OCsA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=cQQmg7cAoZuFuCTCF7pF0/jLAWQf5BrCpB3+ryQlWM0=;
+        b=ixgzrGMqv+k7nIMO/USG1I4K9jNAABd2ArJ3sKD7i89efMVyhhXtQ/MIT/MVkg/Ot+
+         l0t7S/AjInhvxv8qWq8MnifgHTgz8f0/y+30A74uz+DUd9JyqxJ81IOyWqOe3g3a8W6b
+         Ce9iLTUw5bo+YfMCVuxTk20g+MKTdmRnoaLpDbRVDvVnq8ioDgEj2MibHVniOC7wFzKN
+         skniyn8uWtaTZX4nMle4tBK22lhiHWVKAGaw2A9vQMpvxz5AfJex7DyF+rOh19hytu0I
+         UY/b1BICp7PBrCy0IBRW0FQmbU9lfcNgq0h2rzaydvwTtJQBk7JZCOZP1EVrkiONfNGm
+         0oHQ==
+X-Gm-Message-State: AJaThX4uFAk4EfDju4+lNOmVyOKrvG4Sgyu6x68gBm6h9WetayaRziKP
+        2y32LUAndS8j1e6qV3336dppbWfmtXM3nbBKaTK7RA==
+X-Google-Smtp-Source: AGs4zMY7oJf9npRxocSPB+B5Z//moGQEfmtu1kqYPgBm7H1HABCq6rJhADc7jMUxzNweXG1/pmHTGzorgQhX2eV9sL4=
+X-Received: by 10.55.33.13 with SMTP id h13mr2486945qkh.176.1510344100347;
+ Fri, 10 Nov 2017 12:01:40 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 67B80AC0-C64C-11E7-A723-8EF31968708C-77302942!pb-smtp1.pobox.com
+Received: by 10.140.102.70 with HTTP; Fri, 10 Nov 2017 12:01:39 -0800 (PST)
+In-Reply-To: <CA+P7+xoA5KNW7PEiW0wZp-aohsKbnH8AGAvkk3Y3Ghv=Jhp+hw@mail.gmail.com>
+References: <20171108143646.2e1870a82360072557094e01@google.com>
+ <20171109001007.11894-1-sbeller@google.com> <CA+P7+xpTCHHNG1tAhysOFV5jFHpXdzRk5zfYNHUUVdYiGY55cA@mail.gmail.com>
+ <CAGZ79kZAvMKQUjbqWZkhy39sE5e9k1DmkiA42ywiw2NgY1+Xig@mail.gmail.com> <CA+P7+xoA5KNW7PEiW0wZp-aohsKbnH8AGAvkk3Y3Ghv=Jhp+hw@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 10 Nov 2017 12:01:39 -0800
+Message-ID: <CAGZ79kbBypJfDn28j2Z_SCFG9iCZnx-sWmH6D2vqnS+tNKpnBw@mail.gmail.com>
+Subject: Re: [RFD] Long term plan with submodule refs?
+To:     Jacob Keller <jacob.keller@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood <phillip.wood@talktalk.net> writes:
+>
+>>> Basically, a workflow where it's easier to have each submodule checked
+>>> out at master, and we can still keep track of historical relationship
+>>> of what commit was the submodule at some time ago, but without causing
+>>> some of these headaches.
+>>
+>> So essentially a repo or otherwise parallel workflow just with the versioning
+>> happening magically behind your back?
+>
+> Ideally, my developers would like to just have each submodule checked
+> out at master.
+>
+> Ideally, I'd like to be able to checkout an old version of the parent
+> project and have it recorded what version of the shared submodule was
+> at at the time.
 
-> Here's the summary from the previous version
-> These patches teach the sequencer to create commits without forking
-> git commit when the commit message does not need to be edited. This
-> speeds up cherry picking 10 commits by 26% and picking 10 commits with
-> rebase --continue by 44%. The first few patches move bits of
-> builtin/commit.c to sequencer.c. The last two patches actually
-> implement creating commits in sequencer.c.
+This sounds as if a "passive superproject" would work best for you, i.e.
+each commit in a submodule is bubbled up into the superproject,
+making a commit potentially even behind the scenes, such that the
+user interaction with the superproject would be none.
 
-Thanks.  The changes since the initial iteration seems quite small
-and I didn't find much objectionable.
+However this approach also sounds careless, as there is no precondition
+that e.g. the superproject builds with all the submodules as is; it is a mere
+tracking of "at this time we have the submodules arranged as such",
+whereas for the versioning aspect, you would want to have commit messages
+in the superproject saying *why* you bumped up a specific submodule.
+The user may not like to give such an explanation as they already wrote
+a commit message for the individual project.
 
-Here are some style fixes I needed to add on top to make the output
-of "diff master HEAD" checkpatch.pl-clean.  I think 3/9 and 9/9 are
-the culprits.
+Also this approach sounds like a local approach, as it is not clear to me,
+why you'd want to share the superproject history.
 
-diff --git a/sequencer.c b/sequencer.c
-index 1f65e82696..a989588ee5 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -592,7 +592,7 @@ static int read_env_script(struct argv_array *env)
- 	return 0;
- }
- 
--static char *get_author(const char* message)
-+static char *get_author(const char *message)
- {
- 	size_t len;
- 	const char *a;
-@@ -1104,7 +1104,7 @@ static int try_to_commit(struct strbuf *msg, const char *author,
- 	}
- 
- 	if (update_head_with_reflog(current_head, oid,
--				    getenv("GIT_REFLOG_ACTION"), msg, &err)){
-+				    getenv("GIT_REFLOG_ACTION"), msg, &err)) {
- 		res = error("%s", err.buf);
- 		goto out;
- 	}
-@@ -1121,7 +1121,7 @@ static int try_to_commit(struct strbuf *msg, const char *author,
- 	return res;
- }
- 
--static int do_commit(const char *msg_file, const char* author,
-+static int do_commit(const char *msg_file, const char *author,
- 		     struct replay_opts *opts, unsigned int flags)
- {
- 	int res = 1;
-@@ -1521,7 +1521,7 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
- 			strbuf_addstr(&msgbuf, oid_to_hex(&commit->object.oid));
- 			strbuf_addstr(&msgbuf, ")\n");
- 		}
--		if (!is_fixup (command))
-+		if (!is_fixup(command))
- 			author = get_author(msg.message);
- 	}
- 
-diff --git a/sequencer.h b/sequencer.h
-index 27f34be400..e0be354301 100644
---- a/sequencer.h
-+++ b/sequencer.h
-@@ -72,7 +72,7 @@ int template_untouched(const struct strbuf *sb, const char *template_file,
- 		       enum commit_msg_cleanup_mode cleanup_mode);
- int update_head_with_reflog(const struct commit *old_head,
- 			    const struct object_id *new_head,
--			    const char* action, const struct strbuf *msg,
-+			    const char *action, const struct strbuf *msg,
- 			    struct strbuf *err);
- void commit_post_rewrite(const struct commit *current_head,
- 			 const struct object_id *new_head);
-
-
+> Ideally, my developers don't want to have to worry about knowing that
+> they shouldn't "git add -a" or "git commit -a" when they have a
+> submodule checked out at a different location from the parent projects
+> gitlink.
+>
+> Thanks,
+> Jake
+>
