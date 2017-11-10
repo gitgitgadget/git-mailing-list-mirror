@@ -2,40 +2,40 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2FABD1F42B
-	for <e@80x24.org>; Fri, 10 Nov 2017 19:07:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC0F41F42B
+	for <e@80x24.org>; Fri, 10 Nov 2017 19:07:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753877AbdKJTGI (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Nov 2017 14:06:08 -0500
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:48752 "EHLO
+        id S1753786AbdKJTHd (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Nov 2017 14:07:33 -0500
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:51728 "EHLO
         mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753694AbdKJTGC (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 10 Nov 2017 14:06:02 -0500
-Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id vAAJ4GGa002780;
-        Fri, 10 Nov 2017 11:06:01 -0800
+        by vger.kernel.org with ESMTP id S1753669AbdKJTGB (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 10 Nov 2017 14:06:01 -0500
+Received: from pps.filterd (m0096528.ppops.net [127.0.0.1])
+        by mx0a-00153501.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id vAAJ31Fs017725;
+        Fri, 10 Nov 2017 11:06:00 -0800
 Authentication-Results: palantir.com;
         spf=softfail smtp.mailfrom=newren@gmail.com
 Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2e53631bgv-1;
-        Fri, 10 Nov 2017 11:06:01 -0800
-Received: from mxw1.palantir.com (smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id 1B2EF22F6293;
-        Fri, 10 Nov 2017 11:06:01 -0800 (PST)
+        by mx0a-00153501.pphosted.com with ESMTP id 2e535n1cd9-1;
+        Fri, 10 Nov 2017 11:05:59 -0800
+Received: from mxw1.palantir.com (new-smtp.yojoe.local [172.19.0.45])
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id CF58922F6282;
+        Fri, 10 Nov 2017 11:05:59 -0800 (PST)
 Received: from newren2-linux.yojoe.local (newren2-linux.dyn.yojoe.local [10.100.68.32])
-        by smtp.yojoe.local (Postfix) with ESMTP id 1214F2CDEE5;
-        Fri, 10 Nov 2017 11:06:01 -0800 (PST)
+        by smtp.yojoe.local (Postfix) with ESMTP id BA7FD2CDEB4;
+        Fri, 10 Nov 2017 11:05:59 -0800 (PST)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Elijah Newren <newren@gmail.com>
-Subject: [PATCH 20/30] merge-recursive: Add a new hashmap for storing directory renames
-Date:   Fri, 10 Nov 2017 11:05:40 -0800
-Message-Id: <20171110190550.27059-21-newren@gmail.com>
+Subject: [PATCH 02/30] merge-recursive: Fix logic ordering issue
+Date:   Fri, 10 Nov 2017 11:05:22 -0800
+Message-Id: <20171110190550.27059-3-newren@gmail.com>
 X-Mailer: git-send-email 2.15.0.5.g9567be9905
 In-Reply-To: <20171110190550.27059-1-newren@gmail.com>
 References: <20171110190550.27059-1-newren@gmail.com>
@@ -53,69 +53,41 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This just adds dir_rename_entry and the associated functions; code using
-these will be added in subsequent commits.
+merge_trees() did a variety of work, including:
+  * Calling get_unmerged() to get unmerged entries
+  * Calling record_df_conflict_files() with all unmerged entries to
+    do some work to ensure we could handle D/F conflicts correctly
+  * Calling get_renames() to check for renames.
+
+An easily overlooked issue is that get_renames() can create more
+unmerged entries and add them to the list, which have the possibility of
+being involved in D/F conflicts.  So the call to
+record_df_conflict_files() should really be moved after all the rename
+detection.  I didn't come up with any testcases demonstrating any bugs
+with the old ordering, but I suspect there were some for both normal
+renames and for directory renames.  Fix the ordering.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-recursive.c | 24 ++++++++++++++++++++++++
- merge-recursive.h |  8 ++++++++
- 2 files changed, 32 insertions(+)
+ merge-recursive.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/merge-recursive.c b/merge-recursive.c
-index 8c9543d85c..89a9b32635 100644
+index 1d3f8f0d22..52521faf09 100644
 --- a/merge-recursive.c
 +++ b/merge-recursive.c
-@@ -49,6 +49,30 @@ static unsigned int path_hash(const char *path)
- 	return ignore_case ? strihash(path) : strhash(path);
- }
+@@ -1981,10 +1981,10 @@ int merge_trees(struct merge_options *o,
+ 		get_files_dirs(o, merge);
  
-+static struct dir_rename_entry *dir_rename_find_entry(struct hashmap *hashmap, char *dir)
-+{
-+	struct dir_rename_entry key;
-+
-+	if (dir == NULL)
-+		return NULL;
-+	hashmap_entry_init(&key, strhash(dir));
-+	key.dir = dir;
-+	return hashmap_get(hashmap, &key, NULL);
-+}
-+
-+static int dir_rename_cmp(void *unused_cmp_data,
-+			  const struct dir_rename_entry *e1,
-+			  const struct dir_rename_entry *e2,
-+			  const void *unused_keydata)
-+{
-+	return strcmp(e1->dir, e2->dir);
-+}
-+
-+static void dir_rename_init(struct hashmap *map)
-+{
-+	hashmap_init(map, (hashmap_cmp_fn) dir_rename_cmp, NULL, 0);
-+}
-+
- static void flush_output(struct merge_options *o)
- {
- 	if (o->buffer_output < 2 && o->obuf.len) {
-diff --git a/merge-recursive.h b/merge-recursive.h
-index 80d69d1401..a024949739 100644
---- a/merge-recursive.h
-+++ b/merge-recursive.h
-@@ -29,6 +29,14 @@ struct merge_options {
- 	struct string_list df_conflict_file_set;
- };
- 
-+struct dir_rename_entry {
-+	struct hashmap_entry ent; /* must be the first member! */
-+	char *dir;
-+	unsigned non_unique_new_dir:1;
-+	char *new_dir;
-+	struct string_list possible_new_dirs;
-+};
-+
- /* merge_trees() but with recursive ancestor consolidation */
- int merge_recursive(struct merge_options *o,
- 		    struct commit *h1,
+ 		entries = get_unmerged();
+-		record_df_conflict_files(o, entries);
+ 		re_head  = get_renames(o, head, common, head, merge, entries);
+ 		re_merge = get_renames(o, merge, common, head, merge, entries);
+ 		clean = process_renames(o, re_head, re_merge);
++		record_df_conflict_files(o, entries);
+ 		if (clean < 0)
+ 			goto cleanup;
+ 		for (i = entries->nr-1; 0 <= i; i--) {
 -- 
 2.15.0.5.g9567be9905
 
