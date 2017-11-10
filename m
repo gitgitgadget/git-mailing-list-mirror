@@ -2,165 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DD1A91F43C
-	for <e@80x24.org>; Fri, 10 Nov 2017 10:24:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CD8411F43C
+	for <e@80x24.org>; Fri, 10 Nov 2017 10:34:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752365AbdKJKYr (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Nov 2017 05:24:47 -0500
-Received: from mx2.suse.de ([195.135.220.15]:53181 "EHLO mx2.suse.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751406AbdKJKYq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Nov 2017 05:24:46 -0500
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay2.suse.de (charybdis-ext.suse.de [195.135.220.254])
-        by mx2.suse.de (Postfix) with ESMTP id 788E4AAC8
-        for <git@vger.kernel.org>; Fri, 10 Nov 2017 10:24:45 +0000 (UTC)
-From:   Nicolas Morey-Chaisemartin <NMoreyChaisemartin@suse.de>
-Subject: [RFC] cover-at-tip
-To:     git@vger.kernel.org
-Openpgp: preference=signencrypt
-Message-ID: <357e8afb-4814-c950-1530-530bb6dd5f5a@suse.de>
-Date:   Fri, 10 Nov 2017 11:24:44 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101
- Thunderbird/56.0
+        id S1752314AbdKJKe3 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Nov 2017 05:34:29 -0500
+Received: from mail-wr0-f171.google.com ([209.85.128.171]:54913 "EHLO
+        mail-wr0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751404AbdKJKe2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Nov 2017 05:34:28 -0500
+Received: by mail-wr0-f171.google.com with SMTP id l22so8168378wrc.11
+        for <git@vger.kernel.org>; Fri, 10 Nov 2017 02:34:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=Ja2BtXvosgyH0G5/6bb1B50E52ByBEsQokOTZIDL8zY=;
+        b=TaQcCx6Jj1uG30PBzOI5lJ66G7ELGPoo8dOnA3ni+JE/Rp1qQ4ifAVZk2oLV8NUH/z
+         wGv3+euZ4Hs8a94b185vBqJX7jWRGwOXmhdgYLwA08nLpR9VE52fq1b4ulB0mk4joS2Z
+         /OBoVm0FmwmH/zzS1AbwbJldMOdzqy4UO8XbtMdxJtLq9irIRCjhcrlVob/zI8YYtJgH
+         HMFCdHPGkxn3bBNHjZW9Uu4P4iE/MneOujurTN94qaAWYKzVLfxKkGkvlyMAFaqydNKt
+         SogONMvQUQDPIV/Jkm90yZCHhA0qBqdpLzHA9/bSZCeH2o4nh8huw8IUOXnt87fDQ+R4
+         WSiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=Ja2BtXvosgyH0G5/6bb1B50E52ByBEsQokOTZIDL8zY=;
+        b=DLRqZ614IHNzhF/g00uQoJWSZiOgv/gsDaG03a6UqWqgU8i3rA8XP1qUPTFRjXznsL
+         fukjaW/11yAZ/M3w0/eXnLOVjXnBdrBpz/YdLbpwkglT9gOKJKS658vV9zYACZVSshnq
+         7D12DThNamhjMuzRa8en+DW0qCrve6BjTVNm1kv2QkbbYivWilOij482l0VvUBysKZSP
+         SX254wZtFdJhZeM6qLMb/VngCImKxZLnng9x3eoCBxhsJdYfmmldesgpTaxQ6vhcNt8u
+         rFO4R2OyZRLlnl6wbTNMueGjyjw3myHMOvMX3w8k7/SG6S2DyqZF0yQcxFazZVLKQPmH
+         dDFA==
+X-Gm-Message-State: AJaThX47+XFNt9ZFNhkWPNbqV9F1Dhgm+oL2IlgQfm6PcnhlT5bCD1gd
+        kmJar2EnWkpB1aXTLQdlCSM/K+YrF+MPKzAD2b6+8w==
+X-Google-Smtp-Source: ABhQp+S1cNjQLYyAzzMB13Nw4RUMBYJpfVfiOIMrBn5dl2eA/U55mmEKQmDmPX7gt+VulpQu00mTg9vfbi/+Em8kCkc=
+X-Received: by 10.223.174.142 with SMTP id y14mr2672915wrc.222.1510310067019;
+ Fri, 10 Nov 2017 02:34:27 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Received: by 10.223.164.154 with HTTP; Fri, 10 Nov 2017 02:34:26 -0800 (PST)
+From:   Sergey Sharybin <sergey.vfx@gmail.com>
+Date:   Fri, 10 Nov 2017 11:34:26 +0100
+Message-ID: <CAErtv26OrSVch=X8pi1Yf3s79B8SKD6fqfxhsEyMtt8B=TaqMg@mail.gmail.com>
+Subject: `git commit -a` stages ignored submodules?
+To:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hello everyone,
 
-I'm starting to look into the cover-at-tip topic that I found in the leftover bits (http://www.spinics.net/lists/git/msg259573.html)
+There seems to be a difference how Git 2.15.0 handles submodules in
+comparison with 2.14.2.
 
-Here's a first draft of a patch that adds support for format-patch --cover-at-tip. It compiles and works in my nice and user firnedly test case.
-Just wanted to make sure I was going roughly in the right direction here.
+In Git 2.14.2 `git commit -a` will not stage submodules which has
+`ignore = all` set in their .gitmodule section. However, in Git 2.15.0
+`git commit -a` will stage all submodules no matter what their
+"ignore" setting is set to, and also no matter if submodule path is in
+.gitignore.
 
+Didn't see anything explicit about this in release logs. Is it an
+expected new behavior?It is till possible to keep `git commit -a` to
+ignore submodules which are configured to be ignored?
 
-I was wondering where is the right place to put a commit_is_cover_at_tip() as the test will be needed in other place as the feature is extended to git am/merge/pull.
-
-Feel free to comment. I know the help is not clear at this point and there's still some work to do on option handling (add a config option, probably have --cover-at-tip imply --cover-letter, etc) and
-some testing :)
-
-
----
- Documentation/git-format-patch.txt |  4 ++++
- builtin/log.c                      | 38 +++++++++++++++++++++++++++++++-------
- 2 files changed, 35 insertions(+), 7 deletions(-)
-
-diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-index 6cbe462a7..0ac9d4b71 100644
---- a/Documentation/git-format-patch.txt
-+++ b/Documentation/git-format-patch.txt
-@@ -228,6 +228,10 @@ feeding the result to `git send-email`.
- 	containing the branch description, shortlog and the overall diffstat.  You can
- 	fill in a description in the file before sending it out.
- 
-+--[no-]cover-letter-at-tip::
-+	Use the tip of the series as a cover letter if it is an empty commit.
-+    If no cover-letter is to be sent, the tip is ignored.
-+
- --notes[=<ref>]::
- 	Append the notes (see linkgit:git-notes[1]) for the commit
- 	after the three-dash line.
-diff --git a/builtin/log.c b/builtin/log.c
-index 6c1fa896a..a0e9e61a3 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -986,11 +986,11 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
- 			      struct commit *origin,
- 			      int nr, struct commit **list,
- 			      const char *branch_name,
--			      int quiet)
-+			      int quiet,
-+			      struct commit *cover_at_tip_commit)
- {
- 	const char *committer;
- 	const char *body = "*** SUBJECT HERE ***\n\n*** BLURB HERE ***\n";
--	const char *msg;
- 	struct shortlog log;
- 	struct strbuf sb = STRBUF_INIT;
- 	int i;
-@@ -1021,14 +1021,18 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
- 	if (!branch_name)
- 		branch_name = find_branch_name(rev);
- 
--	msg = body;
- 	pp.fmt = CMIT_FMT_EMAIL;
- 	pp.date_mode.type = DATE_RFC2822;
- 	pp.rev = rev;
- 	pp.print_email_subject = 1;
--	pp_user_info(&pp, NULL, &sb, committer, encoding);
--	pp_title_line(&pp, &msg, &sb, encoding, need_8bit_cte);
--	pp_remainder(&pp, &msg, &sb, 0);
-+
-+	if (!cover_at_tip_commit) {
-+		pp_user_info(&pp, NULL, &sb, committer, encoding);
-+		pp_title_line(&pp, &body, &sb, encoding, need_8bit_cte);
-+		pp_remainder(&pp, &body, &sb, 0);
-+	} else {
-+		pretty_print_commit(&pp, cover_at_tip_commit, &sb);
-+	}
- 	add_branch_description(&sb, branch_name);
- 	fprintf(rev->diffopt.file, "%s\n", sb.buf);
- 
-@@ -1409,6 +1413,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 	int just_numbers = 0;
- 	int ignore_if_in_upstream = 0;
- 	int cover_letter = -1;
-+	int cover_at_tip = -1;
-+	struct commit *cover_at_tip_commit = NULL;
- 	int boundary_count = 0;
- 	int no_binary_diff = 0;
- 	int zero_commit = 0;
-@@ -1437,6 +1443,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 			    N_("print patches to standard out")),
- 		OPT_BOOL(0, "cover-letter", &cover_letter,
- 			    N_("generate a cover letter")),
-+		OPT_BOOL(0, "cover-at-tip", &cover_at_tip,
-+			    N_("fill the cover letter with the tip of the branch")),
- 		OPT_BOOL(0, "numbered-files", &just_numbers,
- 			    N_("use simple number sequence for output file names")),
- 		OPT_STRING(0, "suffix", &fmt_patch_suffix, N_("sfx"),
-@@ -1698,6 +1706,21 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 		if (ignore_if_in_upstream && has_commit_patch_id(commit, &ids))
- 			continue;
- 
-+		if (!nr && cover_at_tip == 1 && !cover_at_tip_commit) {
-+			/* Check that it is a candidate to be a cover at tip
-+			 * Meaning:
-+			 * - a single parent (merge commits are not eligible)
-+			 * - tree oid == parent->tree->oid (no diff to the tree)
-+			 */
-+			if (commit->parents && !commit->parents->next &&
-+			    !oidcmp(&commit->tree->object.oid,
-+				    &commit->parents->item->tree->object.oid)) {
-+				cover_at_tip_commit = commit;
-+				continue;
-+			} else {
-+				cover_at_tip = 0;
-+			}
-+		}
- 		nr++;
- 		REALLOC_ARRAY(list, nr);
- 		list[nr - 1] = commit;
-@@ -1748,7 +1771,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 		if (thread)
- 			gen_message_id(&rev, "cover");
- 		make_cover_letter(&rev, use_stdout,
--				  origin, nr, list, branch_name, quiet);
-+				  origin, nr, list, branch_name, quiet,
-+				  cover_at_tip_commit);
- 		print_bases(&bases, rev.diffopt.file);
- 		print_signature(rev.diffopt.file);
- 		total++;
 -- 
-2.15.0.rc0.1.g69b4f6344.dirty
-
+With best regards, Sergey Sharybin
