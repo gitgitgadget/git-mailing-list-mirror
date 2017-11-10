@@ -2,105 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF1DA1F42B
-	for <e@80x24.org>; Fri, 10 Nov 2017 18:28:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B457E1F42B
+	for <e@80x24.org>; Fri, 10 Nov 2017 18:36:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753486AbdKJS22 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Nov 2017 13:28:28 -0500
-Received: from mail-io0-f170.google.com ([209.85.223.170]:46046 "EHLO
-        mail-io0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751142AbdKJS21 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Nov 2017 13:28:27 -0500
-Received: by mail-io0-f170.google.com with SMTP id q81so3724609ioi.2
-        for <git@vger.kernel.org>; Fri, 10 Nov 2017 10:28:27 -0800 (PST)
+        id S1753604AbdKJSgU (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Nov 2017 13:36:20 -0500
+Received: from mail-ua0-f169.google.com ([209.85.217.169]:51383 "EHLO
+        mail-ua0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753546AbdKJSgT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Nov 2017 13:36:19 -0500
+Received: by mail-ua0-f169.google.com with SMTP id 65so7447200uaq.8
+        for <git@vger.kernel.org>; Fri, 10 Nov 2017 10:36:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=vWrIAmgKmryR7+ArbUM0VvgR4YxfdFCXvyZPhMWrhSg=;
-        b=nKp2duQGt41ldHa+UUku2Q3GXgupwwQi4+MszUW0n8nWxaSMeA4xbtBbeGQYalF9Of
-         bekz0kKtT+Tpw4STQrzmD+R/mtOjlOIz5y5tapKFSaZH5czWCmqgkDSioeO8HLItJHdd
-         784eaafKu0vm8KKH2rlB9lMynN6CNM6oVbuh1u9sPxIlKL5U1NSXPlPtwALUyK7ACdYa
-         6sKXxuMnGR6Ibgn83ITt3vkCDm74VVuwS2dKeEh0kd3Le5GNbuI9QThigArLvA4agWlz
-         bLHhzNb2zkxoAfkg1sTIciQoZOjkHTtDEnazQu5A7l3rOg24k/qZajvg2x0V/qMrMQIz
-         Rkfw==
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=8TLT0Xx8vhYdC/Pib/y6VqMgmH7+eNIDx63XlKuFTE8=;
+        b=ZrfiqHTxLq/mcKv8do24QRWKuKXLsNcm+x7I7xO/3bCZy6qAKmLdPaEEgreBSPKzfC
+         0/2sfGiilBLoMW7wVBEqwk1I6zhAZzeoKK/VJl/0Shhp8ZmFkahYVvljT9Zs4oNeG7Lo
+         Moav51210OO2Eq5lazH+J8Kr9u2hNzeH11G4U1SUxd0xkM+BtFvmFuVJmJbUu8L/DMNw
+         I+TeBoUdgt3VyzoJJNM/k/V/H+PhDIW0BCfFtwscxllhj4YWflZBl1r6qlsSMX3uyEha
+         /qqkA2LB+P6GnVNHexB8mUxMfRP2Gd3KmA3gjz7htFvbB48V/o1HxS43yzdoQpDZ/sz7
+         HxyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=vWrIAmgKmryR7+ArbUM0VvgR4YxfdFCXvyZPhMWrhSg=;
-        b=tNGRHER0jrAuG/tDuOqFTWEnhG+Qgj8LlRi7eq3eghRysXamMDfFF9tUvKQ9UoJ5o8
-         bel4g5UtIucOSsphB39BRi0TJSLbduqHKO/LAiMV6YCAzWHpU6kcR9tIPrRJpz0rtUQn
-         PXFjrIq09mLX1njAptGcM2BhWFFJt0MdhVs3VkCqIHs07CAeSFHMMEpvcHC7aIEW0ck7
-         eIhfcFitJWERMZhKtG4eeV9If7OZKPT/5hPgm0Fkg3De5v4dMYrUn/2jJPwnmrI9+W1H
-         wfQ3I8BFrGfWXeAtvKvWWQUpHzMhg/aB+W+YwvMJPj5607yMDyG1ahXPqB1OGQblPFWD
-         chqQ==
-X-Gm-Message-State: AJaThX4E9D99iYXHyNWioqN4zB/+KT8vPdRuKriLjf5kAkxLpkl+fvdr
-        Cs2WI1tsohj8JaTB2eD7nix6Wg==
-X-Google-Smtp-Source: AGs4zMZe/EyYmTHBxgG+W28XBoYv7GzEdJ3nWNOMJ3g6KuakeZbwdQrhkrOEe605Khr8iJgZppqPxw==
-X-Received: by 10.107.6.140 with SMTP id f12mr1414804ioi.4.1510338506390;
-        Fri, 10 Nov 2017 10:28:26 -0800 (PST)
-Received: from twelve3.mtv.corp.google.com ([2620:0:100e:422:b965:842e:5afa:853e])
-        by smtp.gmail.com with ESMTPSA id a29sm1195407itj.8.2017.11.10.10.28.25
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 10 Nov 2017 10:28:25 -0800 (PST)
-Date:   Fri, 10 Nov 2017 10:28:25 -0800
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Nicolas Morey-Chaisemartin <NMoreyChaisemartin@suse.de>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC] cover-at-tip
-Message-Id: <20171110102825.ae7ccb37a13c5904d252faa1@google.com>
-In-Reply-To: <e1d3ab5b-82e6-8490-8f2e-00c1359c6deb@suse.de>
-References: <357e8afb-4814-c950-1530-530bb6dd5f5a@suse.de>
-        <e1d3ab5b-82e6-8490-8f2e-00c1359c6deb@suse.de>
-X-Mailer: Sylpheed 3.4.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=8TLT0Xx8vhYdC/Pib/y6VqMgmH7+eNIDx63XlKuFTE8=;
+        b=cicOtHKag7bVfQPSWtCTLq0ZESL2mJ+JR6mqA3Dxu+QnvZDwnP4F3VL2SzwjGZGSMh
+         7zMyDhRK49UF0RcNO61/RSLNjX+D5Dk8ezD88sm81KfljmJN6wKjFkfRSL8A4co3SSEV
+         SAC8W//iciKEyrFP4+XAPIpBTSq50eGFciH/WwPsKxeznvDDTUMqB9C3IYDjhTKybK8r
+         EfqGGWAtaLPp6URRBWfbmoZ5RHxVGEawc3fbHswDdsD/pnii24S/9cHzR6EsTC4MI5T9
+         u5pxuPE7ChzcrpnyR58jkOpw4s7/mgDajuQyTJNWQTVA5hhsN9W6MlMFP3UDww0oV0Jz
+         JDoQ==
+X-Gm-Message-State: AJaThX5v9ikJcqk5gxtx+SDixA26bM+RMIsRZ7k+B8gyFpXT+EbjK6Vp
+        VFU+tzBmx9kANjs8FhMoPymgMtdxihkph17PqrQ=
+X-Google-Smtp-Source: AGs4zMYlON5X1oVkXlG4/FxpTfDpfUtIJXsJlttEhZZ8msR+1EOjzQIrSccd4vB29+y24ULl2UAys3W9eUEuj14eldQ=
+X-Received: by 10.176.23.19 with SMTP id j19mr1104724uaf.87.1510338978290;
+ Fri, 10 Nov 2017 10:36:18 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.176.67.33 with HTTP; Fri, 10 Nov 2017 10:36:17 -0800 (PST)
+In-Reply-To: <CAGZ79kbqxA9U7EsU6_i895vgrTUwmqv8f02NCoUqPS1_nD2PtA@mail.gmail.com>
+References: <20171110173956.25105-1-newren@gmail.com> <20171110173956.25105-3-newren@gmail.com>
+ <CAGZ79kbqxA9U7EsU6_i895vgrTUwmqv8f02NCoUqPS1_nD2PtA@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 10 Nov 2017 10:36:17 -0800
+Message-ID: <CABPp-BGwoduH_T7U4uN5A-h43wREfXdQgV8YCVWf8w5N09cYSw@mail.gmail.com>
+Subject: Re: [PATCH 2/4] Remove silent clamp of renameLimit
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 10 Nov 2017 16:37:49 +0100
-Nicolas Morey-Chaisemartin <NMoreyChaisemartin@suse.de> wrote:
+Thanks for taking a look!
 
-> > Hi,
-> >
-> > I'm starting to look into the cover-at-tip topic that I found in the leftover bits (http://www.spinics.net/lists/git/msg259573.html)
+On Fri, Nov 10, 2017 at 10:26 AM, Stefan Beller <sbeller@google.com> wrote:
+<snip>
+>> -       if (rename_limit <= 0 || rename_limit > 32767)
+>> -               rename_limit = 32767;
+>>         if ((num_create <= rename_limit || num_src <= rename_limit) &&
+>> -           (num_create * num_src <= rename_limit * rename_limit))
+>> +           ((double)num_create * (double)num_src
+>> +            <= (double)rename_limit * (double)rename_limit))
+>>                 return 0;
+>
+> From a technical perspective, I would think that if
+> (num_create <= rename_limit || num_src <= rename_limit)
+> holds true, that the double-cast condition would also be always true?
+> Could we just remove that last check?
 
-Thanks - I personally would find this very useful.
+Not necessarily.  For example, if num_create = rename_limit-1 and
+num_src = rename_limit+2, then the first condition will be satisfied
+but the second won't.  If it was && rather than ||, then the second
+condition would be superfluous.
 
-> > Here's a first draft of a patch that adds support for format-patch --cover-at-tip. It compiles and works in my nice and user firnedly test case.
-> > Just wanted to make sure I was going roughly in the right direction here.
-> >
-> >
-> > I was wondering where is the right place to put a commit_is_cover_at_tip() as the test will be needed in other place as the feature is extended to git am/merge/pull.
+> Or phrased differently, if we can cast to double and extend the check
+> here, do we have to adapt code at other places as well?
 
-I think you can put this in (root)/commit.c, especially since that test
-operates on a "struct commit *".
+Good point, and yes.  Perhaps I should have re-ordered my patch series
+because I came back to it later and realized that the progress code
+was broken due to overflow/wraparound, and a patch 3 fixed that.
 
-> > Feel free to comment. I know the help is not clear at this point and there's still some work to do on option handling (add a config option, probably have --cover-at-tip imply --cover-letter, etc) and
-> > some testing :)
-
-Both are good ideas. You should probably use a
---cover-letter={no,auto,yes} instead of the current boolean, so that the
-config can use the same options and configuring it to "auto" (to use a
-cover letter if the tip is empty and singly-parented, and not to use a
-cover letter otherwise) is meaningful.
-
-> The proposed patch for format-patch does not output any "---" to signal the end of the commit log and the begining of the patch in the cover letter.
-> This means that the log summary, the diffstat and the git footer ( --\n<git version>) is seen as part of the commit log. Which is just wrong.
-> 
-> Removing them would solve the issue but I feel they bring some useful info (or they would not be here).
-> Adding a "---" between the commit log and those added infos poses another problem: git am does not see an empty patch anymore.
-> I would need to add "some" level of parsing to am.c to make sure the patch content is just garbage and that there are no actual hunks for that.
-
-Could you just take the message from the commit and put that in the
-cover letter? The summary and diffstat do normally have useful info, but
-if the commit is specifically made to be used only for the cover letter,
-I think that is no longer true.
+Further, the later patch used uint64_t instead of double.  While
+double works, perhaps I should change the double here to uint64_t for
+consistency?
