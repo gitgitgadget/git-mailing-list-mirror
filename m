@@ -2,76 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8F3AC1F42B
-	for <e@80x24.org>; Fri, 10 Nov 2017 17:49:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 11CC61F42B
+	for <e@80x24.org>; Fri, 10 Nov 2017 17:53:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753347AbdKJRtY (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Nov 2017 12:49:24 -0500
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:38776 "EHLO
-        mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752625AbdKJRtY (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 10 Nov 2017 12:49:24 -0500
-Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id vAAHcefq009800
-        for <git@vger.kernel.org>; Fri, 10 Nov 2017 09:39:57 -0800
-Authentication-Results: palantir.com;
-        spf=softfail smtp.mailfrom=newren@gmail.com
-Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2e536317d5-1
-        for <git@vger.kernel.org>; Fri, 10 Nov 2017 09:39:57 -0800
-Received: from mxw1.palantir.com (smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id 6DCB322F444C
-        for <git@vger.kernel.org>; Fri, 10 Nov 2017 09:39:57 -0800 (PST)
-Received: from newren2-linux.yojoe.local (newren2-linux.dyn.yojoe.local [10.100.68.32])
-        by smtp.yojoe.local (Postfix) with ESMTP id 66DF12CDE6A
-        for <git@vger.kernel.org>; Fri, 10 Nov 2017 09:39:57 -0800 (PST)
-From:   Elijah Newren <newren@gmail.com>
-To:     git@vger.kernel.org
-Subject: [PATCH 4/4] sequencer: Show rename progress during cherry picks
-Date:   Fri, 10 Nov 2017 09:39:56 -0800
-Message-Id: <20171110173956.25105-5-newren@gmail.com>
-X-Mailer: git-send-email 2.15.0.5.g9567be9905
-In-Reply-To: <20171110173956.25105-1-newren@gmail.com>
-References: <20171110173956.25105-1-newren@gmail.com>
-X-Proofpoint-SPF-Result: softfail
-X-Proofpoint-SPF-Record: v=spf1 redirect=_spf.google.com
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,, definitions=2017-11-10_08:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1034 lowpriorityscore=0 impostorscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.0.1-1707230000
- definitions=main-1711100246
+        id S1753260AbdKJRxG (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Nov 2017 12:53:06 -0500
+Received: from relay6-d.mail.gandi.net ([217.70.183.198]:57005 "EHLO
+        relay6-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753231AbdKJRxF (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Nov 2017 12:53:05 -0500
+X-Originating-IP: 172.56.42.40
+Received: from s (unknown [172.56.42.40])
+        (Authenticated sender: josh@joshtriplett.org)
+        by relay6-d.mail.gandi.net (Postfix) with ESMTPSA id E9045FB8B3;
+        Fri, 10 Nov 2017 18:53:01 +0100 (CET)
+Date:   Fri, 10 Nov 2017 09:52:58 -0800
+From:   Josh Triplett <josh@joshtriplett.org>
+To:     Adam Dinwoodie <adam@dinwoodie.org>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4] doc/SubmittingPatches: correct subject guidance
+Message-ID: <20171110175257.elceafddaebm55uk@s>
+References: <CAPig+cRADknKB7KxqcZVinwP9vmGh1tmUrySUND3hMTi7a+bag@mail.gmail.com>
+ <20171110150250.8896-1-adam@dinwoodie.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20171110150250.8896-1-adam@dinwoodie.org>
+User-Agent: NeoMutt/20170609 (1.8.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When trying to cherry-pick a change that has lots of renames, it is
-somewhat unsettling to wait a really long time without any feedback.
+On Fri, Nov 10, 2017 at 03:02:50PM +0000, Adam Dinwoodie wrote:
+> The examples and common practice for adding markers such as "RFC" or
+> "v2" to the subject of patch emails is to have them within the same
+> brackets as the "PATCH" text, not after the closing bracket.  Further,
+> the practice of `git format-patch` and the like, as well as what appears
+> to be the more common pratice on the mailing list, is to use "[RFC
+> PATCH]", not "[PATCH/RFC]".
+> 
+> Update the SubmittingPatches article to match and to reference the
+> `format-patch` helper arguments, and also make some minor text
+> clarifications in the area.
+> 
+> Signed-off-by: Adam Dinwoodie <adam@dinwoodie.org>
+> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- sequencer.c | 1 +
- 1 file changed, 1 insertion(+)
+This looks great! Thank you for updating this documentation.
 
-diff --git a/sequencer.c b/sequencer.c
-index 2b4cecb617..247d93f363 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -448,6 +448,7 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
- 	o.branch2 = next ? next_label : "(empty tree)";
- 	if (is_rebase_i(opts))
- 		o.buffer_output = 2;
-+	o.show_rename_progress = 1;
- 
- 	head_tree = parse_tree_indirect(head);
- 	next_tree = next ? next->tree : empty_tree();
--- 
-2.15.0.5.g9567be9905
+Reviewed-by: Josh Triplett <josh@joshtriplett.org>
 
+> ---
+> 
+> Notes:
+>     Changes since v3:
+>     - Clarified meaning of "RFC" per Eric's suggestion
+>     - Made the impact of --subject-prefix and friends clearer per Eric's
+>       suggestion
+>     
+>     Thank you for your nitpicking, Eric, it's useful and very much
+>     appreciated :)
+> 
+>  Documentation/SubmittingPatches | 19 ++++++++++++-------
+>  1 file changed, 12 insertions(+), 7 deletions(-)
+> 
+> diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+> index 558d465b6..89f239071 100644
+> --- a/Documentation/SubmittingPatches
+> +++ b/Documentation/SubmittingPatches
+> @@ -184,21 +184,26 @@ lose tabs that way if you are not careful.
+>  
+>  It is a common convention to prefix your subject line with
+>  [PATCH].  This lets people easily distinguish patches from other
+> -e-mail discussions.  Use of additional markers after PATCH and
+> -the closing bracket to mark the nature of the patch is also
+> -encouraged.  E.g. [PATCH/RFC] is often used when the patch is
+> -not ready to be applied but it is for discussion, [PATCH v2],
+> -[PATCH v3] etc. are often seen when you are sending an update to
+> -what you have previously sent.
+> +e-mail discussions.  Use of markers in addition to PATCH within
+> +the brackets to describe the nature of the patch is also
+> +encouraged.  E.g. [RFC PATCH] (where RFC stands for "request for
+> +comments") is often used to indicate a patch needs further
+> +discussion before being accepted, [PATCH v2], [PATCH v3] etc.
+> +are often seen when you are sending an update to what you have
+> +previously sent.
+>  
+> -"git format-patch" command follows the best current practice to
+> +The "git format-patch" command follows the best current practice to
+>  format the body of an e-mail message.  At the beginning of the
+>  patch should come your commit message, ending with the
+>  Signed-off-by: lines, and a line that consists of three dashes,
+>  followed by the diffstat information and the patch itself.  If
+>  you are forwarding a patch from somebody else, optionally, at
+>  the beginning of the e-mail message just before the commit
+>  message starts, you can put a "From: " line to name that person.
+> +To change the default "[PATCH]" in the subject to "[<text>]", use
+> +`git format-patch --subject-prefix=<text>`.  As a shortcut, you
+> +can use `--rfc` instead of `--subject-prefix="RFC PATCH"`, or
+> +`-v <n>` instead of `--subject-prefix="PATCH v<n>"`.
+>  
+>  You often want to add additional explanation about the patch,
+>  other than the commit message itself.  Place such "cover letter"
+> -- 
+> 2.14.3
+> 
