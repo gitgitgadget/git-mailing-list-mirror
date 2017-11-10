@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C0FA51F42B
-	for <e@80x24.org>; Fri, 10 Nov 2017 13:22:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 13D161F42B
+	for <e@80x24.org>; Fri, 10 Nov 2017 13:22:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752585AbdKJNW2 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Nov 2017 08:22:28 -0500
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:40774 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752411AbdKJNW1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Nov 2017 08:22:27 -0500
-Received: by mail-wm0-f68.google.com with SMTP id b9so2709878wmh.5
-        for <git@vger.kernel.org>; Fri, 10 Nov 2017 05:22:26 -0800 (PST)
+        id S1752794AbdKJNWe (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Nov 2017 08:22:34 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:55981 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752411AbdKJNWd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Nov 2017 08:22:33 -0500
+Received: by mail-wm0-f67.google.com with SMTP id b189so2697536wmd.4
+        for <git@vger.kernel.org>; Fri, 10 Nov 2017 05:22:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=SUWsmMrrVZMEMyDjDfgFuoBvIJqwhzHotoFP2YzW1uw=;
-        b=jHuN4qlgzrhSIYW7iIDNZrpqAbqQEn27O0bWUslf0UaWRlSjWlClOAZCsVbaMM8QL4
-         PV+68SZU7FiPmAZ+qYIt+aQmCFrm2C/H+Pp1HDytCdjQWyJKwLM0sMWOqmKcwlWAZCaY
-         A4/VVspUztaA5G8aNwoJ4ggjWl786pGy344JvA2DNG+iu3IbixRhC8vHxTYf9FRAjmlD
-         VKxREFa7Su9tZ8It/walbWFhX8EjCI2sLjcVKdq+dQU37DSocssGAudrrFFucSVMORfb
-         UFzJ1ZGjD/WPSCiesgml4ham8YfuCo01YdO5lqi2inYBVk03dx4FdNInX9tVQhb793Pe
-         Nq6Q==
+        bh=T3aNZT9kYUESgKHyJM3uN5l/DzTxzbSo84nH4+wkWXI=;
+        b=BujoXhGjh1ECrdgCs+M3Z6MUdZhckCTmvf7uYyEOpwJbydCb4ld4o15vfWxsKub0yJ
+         JCOBcFqWWvDbIWapJyEaZ2LbcZ3LmpU52Hb38xhR2SjTVspfHeCRhnFdxNDJB1rd26FD
+         hSxhEuUbmSf7ijArNABsfIcUFf8YuZrumuj6NWmLKBd5OPu78a6JKA/PnV6Vm9fc2fDe
+         ORzjad6aONJzgPDjX0LfD8Gtt+Vqaw57evKri1BIYzx84S49W/rKZFjt4ua8E5679Mh+
+         gXl66RGColkf5DSh0VyUO1D0AXINit8IYgS/IB43N8Ojl2CPJWilVV7m0YlHCTcSFIcx
+         f4ZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=SUWsmMrrVZMEMyDjDfgFuoBvIJqwhzHotoFP2YzW1uw=;
-        b=qN5UceLnCBIZhfPGte3KM5XSfIgTSQIBV/YylG9S2u4QZN46O9eC/WCV2aU30M67LG
-         2vy/YCcSJ372VRvy+0hfp1WPfaOE2TfM4OhpmAjI/d9aPvn52rNOcAPw/g57hiOgm8je
-         QbeQYJR/awfM1R0mtvncmYgKR+KldsQzbs1eDkNncJ/cY9FWfyYwkCf94gNKIFKRk5ml
-         2zUVSCIvT1h+lDkyc398AXJSYlU3tnVuVfDBMVuPBFnQ/c1StIdlrCxEQWjjX587kYzf
-         7FczqRUpSyMip7TMCJm2lzHm9Rjv9Fmx8v60ZtHuzLjNUZopVB5CKccHBVfmI9G3hLIH
-         DbfQ==
-X-Gm-Message-State: AJaThX7bBXOBGc+nz0vVBqiXjfl2VV8Uudt79gR/XPeBHIYbNRe3DGZb
-        JUyqvyv7DtPe5nquhw4HNOw+d/E9
-X-Google-Smtp-Source: AGs4zMYBePvFOuOakG4tSa47kIEbujbQqM9SNXHiZ+4mv3O/CTMORG0p/BbGSeX+/638qvSew6BWUg==
-X-Received: by 10.28.54.89 with SMTP id d86mr209816wma.101.1510320145474;
-        Fri, 10 Nov 2017 05:22:25 -0800 (PST)
+        bh=T3aNZT9kYUESgKHyJM3uN5l/DzTxzbSo84nH4+wkWXI=;
+        b=qNVP3/yrZJixbZKFNX7zqhYGFOv3gBiyzexcgAbYhqruVbBrDGFcz6GGfkDoKvN1ye
+         1IuM6YT580Oi6IgZxORk4KDr1o8+yOVIzpTXuQ37Le0phHzjFRWj4iUV7ti7QX2egAMx
+         PFDU+rPUJym+PhsqBU2Aatr7u6VUMLaOvoitbO1VmDCRiJMOcxraIoDjF/fFX8gJ7cd+
+         2mfmpCdjnRn6PGHoeIp8pVbN2I5RXCHokNjN3ApxG1bzKJlvm/ucGLUC9Fty7DefbUu8
+         CaarFbA4DEilEyCbYes+Spuo3xVjlGWwzYZDyQjT+Fy3GD7EQYrLp/oZVAYFrf7ttc4R
+         7TNQ==
+X-Gm-Message-State: AJaThX5beb8A5wrnpgqNmxZQLvmO+Kx4KystKtOPOTaU6vxfTyBBv5qK
+        HP3diw19IwoVq9XrUOqle4SWx+Un
+X-Google-Smtp-Source: AGs4zMaAffdJv7k+kn4JRhyVvXCrwrCdoUV68r6qhSVFkMqbYs7uJ7rAQxx04E/1mVFq9vnGhRyxnQ==
+X-Received: by 10.28.131.200 with SMTP id f191mr235696wmd.39.1510320151556;
+        Fri, 10 Nov 2017 05:22:31 -0800 (PST)
 Received: from christian-Latitude-E6330.register.onboard.eurostar.com ([82.113.183.179])
-        by smtp.gmail.com with ESMTPSA id 19sm2232731wmn.15.2017.11.10.05.22.19
+        by smtp.gmail.com with ESMTPSA id 19sm2232731wmn.15.2017.11.10.05.22.25
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 10 Nov 2017 05:22:24 -0800 (PST)
+        Fri, 10 Nov 2017 05:22:30 -0800 (PST)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Lars Schneider <larsxschneider@gmail.com>,
         Eric Wong <e@80x24.org>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v3 1/8] t0021/rot13-filter: fix list comparison
-Date:   Fri, 10 Nov 2017 14:21:53 +0100
-Message-Id: <20171110132200.7871-2-chriscool@tuxfamily.org>
+Subject: [PATCH v3 2/8] t0021/rot13-filter: refactor packet reading functions
+Date:   Fri, 10 Nov 2017 14:21:54 +0100
+Message-Id: <20171110132200.7871-3-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.15.0.132.g7ad97d78be
 In-Reply-To: <20171110132200.7871-1-chriscool@tuxfamily.org>
 References: <20171110132200.7871-1-chriscool@tuxfamily.org>
@@ -70,81 +70,117 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since edcc8581 ("convert: add filter.<driver>.process
-option", 2016-10-16) when t0021/rot13-filter.pl was created, list
-comparison in this perl script have been quite broken.
+To make it possible in a following commit to move packet
+reading and writing functions into a Packet.pm module,
+let's refactor these functions, so they don't handle
+printing debug output and exiting.
 
-packet_txt_read() returns a 2-element list, and the right hand
-side of "eq" also has a list with (two, elements), but "eq" takes
-the last element of the list on each side, and compares them. The
-first elements (0 or 1) on the right hand side lists do not matter,
-which means we do not require to see a flush at the end of the
-version -- a simple empty string or an EOF would do, which is
-definitely not what we want.
+While at it let's create packet_key_val_read()
+to still handle erroring out in a common case.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- t/t0021/rot13-filter.pl | 35 ++++++++++++++++++++++++++++-------
- 1 file changed, 28 insertions(+), 7 deletions(-)
+ t/t0021/rot13-filter.pl | 43 +++++++++++++++++++++++++++++++------------
+ 1 file changed, 31 insertions(+), 12 deletions(-)
 
 diff --git a/t/t0021/rot13-filter.pl b/t/t0021/rot13-filter.pl
-index ad685d92f8..4b2d9087d4 100644
+index 4b2d9087d4..b1909699f4 100644
 --- a/t/t0021/rot13-filter.pl
 +++ b/t/t0021/rot13-filter.pl
-@@ -55,6 +55,20 @@ sub rot13 {
- 	return $str;
- }
+@@ -74,8 +74,7 @@ sub packet_bin_read {
+ 	my $bytes_read = read STDIN, $buffer, 4;
+ 	if ( $bytes_read == 0 ) {
+ 		# EOF - Git stopped talking to us!
+-		print $debug "STOP\n";
+-		exit();
++		return ( -1, "" );
+ 	}
+ 	elsif ( $bytes_read != 4 ) {
+ 		die "invalid packet: '$buffer'";
+@@ -99,10 +98,20 @@ sub packet_bin_read {
  
-+sub packet_compare_lists {
-+	my ($expect, @result) = @_;
-+	my $ix;
-+	if (scalar @$expect != scalar @result) {
-+		return undef;
+ sub packet_txt_read {
+ 	my ( $res, $buf ) = packet_bin_read();
+-	unless ( $buf eq '' or $buf =~ s/\n$// ) {
+-		die "A non-binary line MUST be terminated by an LF.";
++	if ( $res == -1 or $buf eq '' or $buf =~ s/\n$// ) {
++		return ( $res, $buf );
 +	}
-+	for ($ix = 0; $ix < $#result; $ix++) {
-+		if ($expect->[$ix] ne $result[$ix]) {
-+			return undef;
-+		}
-+	}
-+	return 1;
++	die "A non-binary line MUST be terminated by an LF.";
 +}
 +
- sub packet_bin_read {
- 	my $buffer;
- 	my $bytes_read = read STDIN, $buffer, 4;
-@@ -110,18 +124,25 @@ sub packet_flush {
- print $debug "START\n";
++# Read a text line and check that it is in the form "key=value"
++sub packet_key_val_read {
++	my ( $key ) = @_;
++	my ( $res, $buf ) = packet_txt_read();
++	if ( $res == -1 or ( $buf =~ s/^$key=// and $buf ne '' ) ) {
++		return ( $res, $buf );
+ 	}
+-	return ( $res, $buf );
++	die "bad $key: '$buf'";
+ }
+ 
+ sub packet_bin_write {
+@@ -152,13 +161,18 @@ print $debug "init handshake complete\n";
  $debug->flush();
  
--( packet_txt_read() eq ( 0, "git-filter-client" ) ) || die "bad initialize";
--( packet_txt_read() eq ( 0, "version=2" ) )         || die "bad version";
--( packet_bin_read() eq ( 1, "" ) )                  || die "bad version end";
-+packet_compare_lists([0, "git-filter-client"], packet_txt_read()) ||
-+	die "bad initialize";
-+packet_compare_lists([0, "version=2"], packet_txt_read()) ||
-+	die "bad version";
-+packet_compare_lists([1, ""], packet_bin_read()) ||
-+	die "bad version end";
+ while (1) {
+-	my ( $command ) = packet_txt_read() =~ /^command=(.+)$/;
++	my ( $res, $command ) = packet_key_val_read("command");
++	if ( $res == -1 ) {
++		print $debug "STOP\n";
++		exit();
++	}
+ 	print $debug "IN: $command";
+ 	$debug->flush();
  
- packet_txt_write("git-filter-server");
- packet_txt_write("version=2");
- packet_flush();
+ 	if ( $command eq "list_available_blobs" ) {
+ 		# Flush
+-		packet_bin_read();
++		packet_compare_lists([1, ""], packet_bin_read()) ||
++			die "bad list_available_blobs end";
  
--( packet_txt_read() eq ( 0, "capability=clean" ) )  || die "bad capability";
--( packet_txt_read() eq ( 0, "capability=smudge" ) ) || die "bad capability";
--( packet_txt_read() eq ( 0, "capability=delay" ) )  || die "bad capability";
--( packet_bin_read() eq ( 1, "" ) )                  || die "bad capability end";
-+packet_compare_lists([0, "capability=clean"], packet_txt_read()) ||
-+	die "bad capability";
-+packet_compare_lists([0, "capability=smudge"], packet_txt_read()) ||
-+	die "bad capability";
-+packet_compare_lists([0, "capability=delay"], packet_txt_read()) ||
-+	die "bad capability";
-+packet_compare_lists([1, ""], packet_bin_read()) ||
-+	die "bad capability end";
+ 		foreach my $pathname ( sort keys %DELAY ) {
+ 			if ( $DELAY{$pathname}{"requested"} >= 1 ) {
+@@ -184,14 +198,13 @@ while (1) {
+ 		packet_flush();
+ 	}
+ 	else {
+-		my ( $pathname ) = packet_txt_read() =~ /^pathname=(.+)$/;
++		my ( $res, $pathname ) = packet_key_val_read("pathname");
++		if ( $res == -1 ) {
++			die "unexpected EOF while expecting pathname";
++		}
+ 		print $debug " $pathname";
+ 		$debug->flush();
  
- foreach (@capabilities) {
- 	packet_txt_write( "capability=" . $_ );
+-		if ( $pathname eq "" ) {
+-			die "bad pathname '$pathname'";
+-		}
+-
+ 		# Read until flush
+ 		my ( $done, $buffer ) = packet_txt_read();
+ 		while ( $buffer ne '' ) {
+@@ -205,6 +218,9 @@ while (1) {
+ 
+ 			( $done, $buffer ) = packet_txt_read();
+ 		}
++		if ( $done == -1 ) {
++			die "unexpected EOF after pathname '$pathname'";
++		}
+ 
+ 		my $input = "";
+ 		{
+@@ -215,6 +231,9 @@ while (1) {
+ 				( $done, $buffer ) = packet_bin_read();
+ 				$input .= $buffer;
+ 			}
++			if ( $done == -1 ) {
++				die "unexpected EOF while reading input for '$pathname'";
++			}			
+ 			print $debug " " . length($input) . " [OK] -- ";
+ 			$debug->flush();
+ 		}
 -- 
 2.15.0.132.g7ad97d78be
 
