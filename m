@@ -2,123 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 074031F42B
-	for <e@80x24.org>; Fri, 10 Nov 2017 18:00:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B28D81F42B
+	for <e@80x24.org>; Fri, 10 Nov 2017 18:06:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753524AbdKJSAx (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Nov 2017 13:00:53 -0500
-Received: from mail-qk0-f174.google.com ([209.85.220.174]:56061 "EHLO
-        mail-qk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753503AbdKJSAw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Nov 2017 13:00:52 -0500
-Received: by mail-qk0-f174.google.com with SMTP id x195so12876727qkb.12
-        for <git@vger.kernel.org>; Fri, 10 Nov 2017 10:00:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=wKkOj7DbAW4XXAQgmuTp4Td8e6qHPkY02KnQI0oMiEA=;
-        b=D4JM6DTta8aa3rCu6czq7+fd21sED01GtKOFCGHhuZh+jTb3ufovxYDQHv09EdlCNC
-         5BGiyxGk4H2nSu8c5zQnzHUUqLM9a2PK3Rpsvol2Gg5zIGk/wrW7hKc54s3SKt2eyIAR
-         ZOzGZAoQSPVekD1tfuP2LJeCjcUeQkPO0Ps083WZXsAmL/zSjGcY6n45/xnuAqcGlxur
-         qsnfX1yG3Y5Avs5s8sDfPEW8H3+81BSivvMqISpghfuW5ovI7jTNOrwAS6ZQP9Kn8y+g
-         4fqBZhyaEWBAk3PbiaeO7oILTQCvJhbp2l4ZKKOMMan6pKqtcZGq35JhheIv6kYNe2al
-         +/HA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=wKkOj7DbAW4XXAQgmuTp4Td8e6qHPkY02KnQI0oMiEA=;
-        b=Su4OfeV9oA1vVqpSqlUd14ict1Fidc5af+MNpKTNSLd0tSkbYZ+W4xciylInpRwjC8
-         24bwyTkGDfSko1EYDMA/scE0m+J3eKpeYRRrf10OKrHk9rxSaUnhwcAG3lx/D1h+gtzD
-         cCs3Xh+U1iDy2FG4JHM+1Q0TiFACZ9pbzURQ1dSJp+bnURwgeg+eYWYzsDWMfuIXZzYW
-         KqxS8+JWBP8U22JFAAFKLc6mePhWGw3peBzEh4oZihSLxJsWq7c5AwfYi8GGAs/ZSoDh
-         tbVBt0UsgDlOr+AcRwr2wdyHMmoBpxreKbe3dyqHcASErcCe+4KLpXsYb+ULgNDFW+f0
-         neDw==
-X-Gm-Message-State: AJaThX6Awt1QFYZqgOhWNng12nSgSnwrZFG9Ox0XcXVYcMF5Ngfdg41u
-        bDV3U5kWA9j0ZCWhdYcignM4WoGhhm/3Mt8jXy5VOQ==
-X-Google-Smtp-Source: AGs4zMab17PTBeap/TnDbnmO3d/JuXUSMjSRB9PmKJTIV2cBMwKcrtJuO8Jt7kFQJpEAxFG7bMpbBxsto7xNQ/ro0H0=
-X-Received: by 10.55.175.132 with SMTP id y126mr1915466qke.45.1510336851676;
- Fri, 10 Nov 2017 10:00:51 -0800 (PST)
+        id S1753180AbdKJSGI (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Nov 2017 13:06:08 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57233 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752625AbdKJSGI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Nov 2017 13:06:08 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7D6869E5C7;
+        Fri, 10 Nov 2017 13:06:07 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=N55c1RBAcOQcZpAUKp0xnerG6jg=; b=aXa/j3
+        FZT8KElGxqYOys/kGwsAkFJ0cX+IEqJbU8sUGs98r2xdjDjNa0sC1fR2W36jr0gv
+        ev4+K4fIEIT5n1rK9OQUXdzdYhIVss0MYpMut4LFqOyPQvdqlGrUE9+Cv814oyYD
+        Hl9ZAt6EaMyPAlpFGwkFpZhS2BpcvHEB5v4XE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=sHw/7m2I6x+BHsWHZFjIM1eH1Haex2/J
+        tIyb4q4uSiH+pgdiAkJi/K9egiiRbZbi9oeCCebZ6eTx+Z2tj6i23rid4iYiitxd
+        uEvTCBzTr73PbSI1epgeB78uyf9sOnY0YiMoO54GQ9Z30ZbEj4nUZ3TKeSbhN0Dw
+        aOSCewTP+3U=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 751209E5C6;
+        Fri, 10 Nov 2017 13:06:07 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9857E9E5BE;
+        Fri, 10 Nov 2017 13:06:01 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Phillip Wood <phillip.wood@talktalk.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v1 5/8] sequencer: don't die in print_commit_summary()
+References: <20170925101041.18344-1-phillip.wood@talktalk.net>
+        <20171106112709.2121-1-phillip.wood@talktalk.net>
+        <20171106112709.2121-6-phillip.wood@talktalk.net>
+        <xmqq8tfig1rr.fsf@gitster.mtv.corp.google.com>
+        <xmqq7ev2dsv2.fsf@gitster.mtv.corp.google.com>
+        <072b0edb-7a30-77f3-2ac5-893c28c0a695@talktalk.net>
+Date:   Sat, 11 Nov 2017 03:05:59 +0900
+In-Reply-To: <072b0edb-7a30-77f3-2ac5-893c28c0a695@talktalk.net> (Phillip
+        Wood's message of "Fri, 10 Nov 2017 14:53:01 +0000")
+Message-ID: <xmqqk1yyf1q0.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.140.102.70 with HTTP; Fri, 10 Nov 2017 10:00:51 -0800 (PST)
-In-Reply-To: <xmqq60aihgod.fsf@gitster.mtv.corp.google.com>
-References: <CAKohponsPQC6qTw99+xh1RSu0bZNDSo5TbbZZcYmup3NOW6QmA@mail.gmail.com>
- <CAGZ79ka9VnzYTYgtWgGAhvgn2LRpP_BCQyVvQ8iC1w9XJnRxEw@mail.gmail.com> <xmqq60aihgod.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 10 Nov 2017 10:00:51 -0800
-Message-ID: <CAGZ79kZ8PKBwe+aWTUOgPwV2tNQS7+dUrLTVsWhzemj-e35kaA@mail.gmail.com>
-Subject: Re: [Query] Separate hooks for Git worktrees
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Viresh Kumar <viresh.kumar@linaro.org>,
-        Git Mailing List <git@vger.kernel.org>,
-        Vincent Guittot <vincent.guittot@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: CFC13F34-C641-11E7-BC1D-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 9, 2017 at 9:00 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> We have no worktree specific config yet, though patches for
->> this were floated on the mailing list.
->>
->> Though recent versions of git learned to conditionally include
->> config files. (look for includeIf in man git-config), which I think
->> could be used to set the option gerrit.createChangeId  depending
->> on the worktree you are in.
->>
->>> Any idea how I can get around this problem without having separate
->>> repositories for kernel and android ?
->>
->> The proposed approach above might be hacky but sounds as if
->> it should work?
->
-> If you meant "conditional include" by "proposed approach above", I
-> do not see which part you found possibly hacky.
+Phillip Wood <phillip.wood@talktalk.net> writes:
 
-Compared to a per-worktree configuration that you can setup via
+> On 07/11/17 15:13, Junio C Hamano wrote:
+> ...
+>> Another possibility perhaps is that the function is safe to reuse
+>> already even without this patch, of course ;-).
+>> 
+> Hmm, maybe it is. Looking at pick_commits() and do_pick_commit() if the
+> sequencer dies in print_commit_summary() (which can only happen when
+> cherry-picking or reverting) then neither the todo list or the abort
+> safety file are updated to reflect the commit that was just made.
+> 
+> As I understand it print_commit_summary() dies because: (i) it cannot
+> resolve HEAD either because some other process is updating it (which is
+> bad news in the middle of a cherry-pick); (ii) because something went
+> wrong HEAD is corrupt; or (iii) log_tree_commit() cannot read some
+> objects. In all those cases dying will leave the sequencer in a sane
+> state for aborting - 'git cherry-pick --abort' will rewind HEAD to the
+> last successful commit before there was a problem with HEAD or the
+> object database. If the user somehow fixes the problem and runs 'git
+> cherry-pick --continue' then the sequencer will try and pick the same
+> commit again which may or may not be what the user wants depending on
+> what caused print_commit_summary() to die.
 
-    git config --for-worktree=X key value
+The above is all good analysis---thanks for your diligence.  Perhaps
+some if not all of it can go to the log message?
 
-the setup using conditional includes seems hacky to me.
-(I just realize that these conditional includes can be set using
-regular git-config, so maybe it is not as hacky as I thought.)
-
->  It is to allow
-> different set of configurations to apply depending on where you are
-> working at, which I think was invented exactly for something like
-> this.
-
-From a UX perspective, I can imagine a way easier workflow,
-but the data model seems to make sense.
-
-> It certainly is not any hackier than using the same repository to
-> house separately manged projects even if they may be related
-> projects.
-
-Well it is the same project with different upstream workflows.
-For example I would imagine that Viresh wants to cherry-pick
-from one branch to another, or even send the same patch
-(just with different commit messages, with or without the
-ChangeId) to the different upstreams?
-
-> Where does the aversion of "having separate repositories" primarily
-> come from?  Is it bad due to disk consumption?  Is it bad because
-> you cannot do "git diff android-branch kernel-branch"?  Something
-> else?
-
-Yeah, that is an interesting question!
-(I suspect workflow related things, diff/cherry-pick)
-
-> If it is purely disk consumption that is an issue, perhaps the real
-> solution is to make it easier to maintain separate repositories
-> while sharing as much disk space as possible.  GC may have to be
-> made a lot more robust in the presense of alternate object stores,
-> for example.
