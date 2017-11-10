@@ -2,74 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8AEAA1F43C
-	for <e@80x24.org>; Fri, 10 Nov 2017 11:51:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 186591F42B
+	for <e@80x24.org>; Fri, 10 Nov 2017 12:37:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752171AbdKJLvw (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Nov 2017 06:51:52 -0500
-Received: from mail-qt0-f182.google.com ([209.85.216.182]:52483 "EHLO
-        mail-qt0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751033AbdKJLvt (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Nov 2017 06:51:49 -0500
-Received: by mail-qt0-f182.google.com with SMTP id 31so11439368qtz.9
-        for <git@vger.kernel.org>; Fri, 10 Nov 2017 03:51:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=cLzUnjFAdU1EyrVw5eH0jy1MT7hS45qJAoLfnjbg9cM=;
-        b=Yx7c2o1nfgGcd2CIJh5GLfp8T0IbyAWXF94Yf66Hoh2+1XmueybERkN4auWhCIqG64
-         L5tw2QbpWIE2QZjVIGl5F4wdvVVQ0stkQzg3MXtVX/j8BpNPgXarFs+AHV+Wj1NHun+u
-         +cylOOMaVPUaNUsB2AHvdsUd2vWg+ygdpRScCWHjQgMxVjKGg2C2Lh1t0EEibfG6BTUl
-         9gRFQJ9Qndlj4+elTx1cpBPOLXqHU4CDfx+Vuj+f4hH6YJ9mOBYkOBZEycMSaRVCheht
-         d8QG1Wv4+o6HvCLDOcXousVtaQC9L2cBihSlRNUcFK+H5t0HsaRY1H1EVOYd20qJkrG8
-         o/Dw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=cLzUnjFAdU1EyrVw5eH0jy1MT7hS45qJAoLfnjbg9cM=;
-        b=paTmmDPdpLJ8F7HRsjlhQwgJoIcxCkXH8Mu1Pj+cj7KIWYeOKG/03nf19GVuvXGUsv
-         ENaD2csrDDlVM66pN90W97QNlm9R/T9eBBdcO//+I50OiLXJuEfuQ+efwrcgwmkqRodZ
-         MZshPFSikkrYDCVYQHW3qBP70NdSmM/sI1b45uZIcohgZAIXLFcsxTJ7A/Trc5mjQ3KG
-         OI1AVXcOplhweVTiMYSuUAWg7gCOGCk5w4+zV+AmjbLNMD6ozKXLgLTM1dN+KZWud6oX
-         6GUN2yKYhpxqjraTqSqS/pU7mJKQJ61Xx5kSKGr9aXeGC8wjL50kEalbXJm1q4Ezze9C
-         90Vg==
-X-Gm-Message-State: AJaThX607C7uHySSAg20Gml/HtDimnB/Gb9Gelj49H2iDy/SVBkUB+lL
-        iFhRTZ9fyoAgKvEA/FJfMbYhqCzNaxEaKJxq44I=
-X-Google-Smtp-Source: AGs4zMa75+jzakJ7dK0HyyartT1tT8P2sYcX3C7GijBYwolehPz/KwV5W0nw8+KzZAco/0+v/aKguTqPD9xfs8lPtUA=
-X-Received: by 10.200.43.167 with SMTP id m36mr110854qtm.174.1510314709035;
- Fri, 10 Nov 2017 03:51:49 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.200.62.25 with HTTP; Fri, 10 Nov 2017 03:51:48 -0800 (PST)
-In-Reply-To: <20171108042219.xfx7tevgkwzrqdtd@sigill.intra.peff.net>
-References: <0102015ec7a3424b-529be659-bdb6-42c4-a48f-db264f33d53a-000000@eu-west-1.amazonses.com>
- <0102015ed3e9b1a8-74821a55-aa9a-4e5a-b267-c3d2462e3eed-000000@eu-west-1.amazonses.com>
- <20171002082020.c7ravpwgz45osrmz@sigill.intra.peff.net> <xmqqshdpmtm9.fsf@gitster.mtv.corp.google.com>
- <20171108042219.xfx7tevgkwzrqdtd@sigill.intra.peff.net>
-From:   =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>
-Date:   Fri, 10 Nov 2017 14:51:48 +0300
-Message-ID: <CAL21Bm=+p0bTc7R5mHbrSevkGc6vw4FT=U-ghCZCNB7OoU7Kdw@mail.gmail.com>
-Subject: Re: [PATCH v2 Outreachy] mru: use double-linked list from list.h
+        id S1751327AbdKJMhR (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Nov 2017 07:37:17 -0500
+Received: from upper-gw.cixit.se ([92.43.32.133]:33441 "EHLO mail.cixit.se"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1751085AbdKJMhQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Nov 2017 07:37:16 -0500
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+        by mail.cixit.se (8.14.3/8.14.3/Debian-9.4) with ESMTP id vAACbDGc011997
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+        Fri, 10 Nov 2017 13:37:13 +0100
+Received: from localhost (peter@localhost)
+        by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id vAACbCwu011994;
+        Fri, 10 Nov 2017 13:37:12 +0100
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+Date:   Fri, 10 Nov 2017 13:37:12 +0100 (CET)
+From:   Peter Krefting <peter@softwolves.pp.se>
 To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: cherry-pick very slow on big repository
+In-Reply-To: <20171110102011.yqtka6a3wmgcvkl6@sigill.intra.peff.net>
+Message-ID: <alpine.DEB.2.00.1711101333030.2391@ds9.cixit.se>
+References: <alpine.DEB.2.00.1711100959300.2391@ds9.cixit.se> <20171110102011.yqtka6a3wmgcvkl6@sigill.intra.peff.net>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+Organization: /universe/earth/europe/norway/oslo
+MIME-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.3.7 (mail.cixit.se [127.0.0.1]); Fri, 10 Nov 2017 13:37:13 +0100 (CET)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> We hung back on it to leave it as low-hanging fruit for other Outreachy
-> applicants. Perhaps Olga would like to pick it up now that the
-> application period is over.
+Jeff King:
 
-It's absolutely not a problem for me, I can do that as one more
-warm-up exercise in the beginning of the internship.
+> Can you get a backtrace? I'd do something like:
 
-Thanks!
+Seems that it spends most time in diffcore_count_changes(), that is 
+where it hits whenever I hit Ctrl+C (various line numbers 199-207 in 
+diffcore-delta.c; this is on the v2.15.0 tag).
+
+(gdb) bt
+#0  diffcore_count_changes (src=src@entry=0x55555db99970,
+     dst=dst@entry=0x55555d6a4810,
+     src_count_p=src_count_p@entry=0x55555db99998,
+     dst_count_p=dst_count_p@entry=0x55555d6a4838,
+     src_copied=src_copied@entry=0x7fffffffd3e0,
+     literal_added=literal_added@entry=0x7fffffffd3f0)
+     at diffcore-delta.c:203
+#1  0x00005555556dee1a in estimate_similarity (minimum_score=30000,
+     dst=0x55555d6a4810, src=0x55555db99970) at diffcore-rename.c:193
+#2  diffcore_rename (options=options@entry=0x7fffffffd4f0)
+     at diffcore-rename.c:560
+#3  0x0000555555623d83 in diffcore_std (
+     options=options@entry=0x7fffffffd4f0) at diff.c:5846
+#4  0x000055555564ab46 in get_renames (o=o@entry=0x7fffffffd850,
+     tree=tree@entry=0x5555559d1b98,
+     o_tree=o_tree@entry=0x5555559d1bc0,
+     a_tree=a_tree@entry=0x5555559d1b98,
+     b_tree=b_tree@entry=0x5555559d1b70,
+     entries=entries@entry=0x555559351d20) at merge-recursive.c:554
+#5  0x000055555564e7d9 in merge_trees (o=o@entry=0x7fffffffd850,
+     head=head@entry=0x5555559d1b98, merge=<optimized out>,
+     merge@entry=0x5555559d1b70, common=<optimized out>,
+     common@entry=0x5555559d1bc0, result=result@entry=0x7fffffffd830)
+     at merge-recursive.c:1985
+#6  0x000055555569b2cc in do_recursive_merge (opts=0x7fffffffdf70,
+     msgbuf=0x7fffffffd810, head=0x7fffffffd7f0,
+     next_label=<optimized out>, base_label=<optimized out>,
+     next=<optimized out>, base=0x5555559c1ba0) at sequencer.c:459
+#7  do_pick_commit (command=TODO_PICK,
+     commit=commit@entry=0x5555559c1b60,
+     opts=opts@entry=0x7fffffffdf70, final_fixup=final_fixup@entry=0)
+     at sequencer.c:1088
+#8  0x000055555569e324 in single_pick (opts=0x7fffffffdf70,
+     cmit=0x5555559c1b60) at sequencer.c:2306
+#9  sequencer_pick_revisions (opts=0x7fffffffdf70)
+     at sequencer.c:2355
+#10 0x00005555555d4097 in run_sequencer (argc=1, argc@entry=3,
+     argv=argv@entry=0x7fffffffe320, opts=<optimized out>,
+     opts@entry=0x7fffffffdf70) at builtin/revert.c:200
+#11 0x00005555555d449a in cmd_cherry_pick (argc=3,
+     argv=0x7fffffffe320, prefix=<optimized out>)
+     at builtin/revert.c:225
+#12 0x0000555555567a38 in run_builtin (argv=<optimized out>,
+     argc=<optimized out>, p=<optimized out>) at git.c:346
+#13 handle_builtin (argc=3, argv=0x7fffffffe320) at git.c:554
+#14 0x0000555555567cf6 in run_argv (argv=0x7fffffffe0e0,
+     argcp=0x7fffffffe0ec) at git.c:606
+#15 cmd_main (argc=<optimized out>, argv=<optimized out>)
+     at git.c:683
+#16 0x0000555555566e01 in main (argc=4, argv=0x7fffffffe318)
+     at common-main.c:43
+
+-- 
+\\// Peter - http://www.softwolves.pp.se/
