@@ -2,99 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2CC61201C8
-	for <e@80x24.org>; Fri, 10 Nov 2017 00:52:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ECD6E201C8
+	for <e@80x24.org>; Fri, 10 Nov 2017 01:10:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755206AbdKJAwT (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Nov 2017 19:52:19 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64186 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752494AbdKJAwS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Nov 2017 19:52:18 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 203E9B26F6;
-        Thu,  9 Nov 2017 19:52:18 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=gcnrCxdP46TKc3rAJknYcrdSPno=; b=rYl6+C
-        dNeDW1uo3ro3tVuiUh8fd6uICYx4bhO9LtXh1R8qn3pP0oNd/0oKok+miZN32+Zh
-        kun20K3dePF6/Doa/HBNZaUvWiROjkv9KrEX2ar9AA73lsTw/AkXjtujq3L4nqvL
-        NTTMMUJhgnZFAk5ZggcHX3NSYc4398RG7MqSo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=lTv3g2xANzNAehwz1oI9ULlkv3AMT3RH
-        mdit/bA14Iq2c4XxfLXC+Fi9Cw81zN9mZyngIpqUdmwJZ+dNNWR68rjusGHHM93k
-        b0sj98OtVRJb75Co3s6MKqVJQcoMePp2ukU4//DUszfdg4jPLmx36/b3QCEKlRpE
-        EphoTkodFo0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1888DB26F5;
-        Thu,  9 Nov 2017 19:52:18 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 89407B26F3;
-        Thu,  9 Nov 2017 19:52:17 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Joseph Strauss <josephst@bhphoto.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Bug - Status - Space in Filename
-References: <655aaa9d2abf4be1b6ade0574d88c999@EXMBX01B.bhphotovideo.local>
-        <xmqqvaikjfoj.fsf@gitster.mtv.corp.google.com>
-        <20171109132939.3v2z6sf22b4tnwpq@sigill.intra.peff.net>
-Date:   Fri, 10 Nov 2017 09:52:16 +0900
-In-Reply-To: <20171109132939.3v2z6sf22b4tnwpq@sigill.intra.peff.net> (Jeff
-        King's message of "Thu, 9 Nov 2017 08:29:39 -0500")
-Message-ID: <xmqqvaijhs5b.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 66638CBC-C5B1-11E7-AAC4-8EF31968708C-77302942!pb-smtp1.pobox.com
+        id S1755430AbdKJBKL (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Nov 2017 20:10:11 -0500
+Received: from mail-it0-f68.google.com ([209.85.214.68]:45983 "EHLO
+        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755317AbdKJBKJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Nov 2017 20:10:09 -0500
+Received: by mail-it0-f68.google.com with SMTP id u132so10072626ita.0
+        for <git@vger.kernel.org>; Thu, 09 Nov 2017 17:10:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=d9bSILvoQ1txpE++Rpiiwrf0OyyXcnsD+r+hCKxuieY=;
+        b=kkrvgKMistQ3noO5Eb2szMaqEzsikf1lSvzWL9JFAo4Qmg6UKa2yHeYMT5KcBo6ojv
+         6quYJFkm+/zbRzy+1eESsxVtpex2htru87y3nmEtBKgeFf1pyQziSokmAfRJfDqP+AvH
+         58nSbZfjqY1q3dWEzP1WfsmMFcuzB9l7TWktye6xfhrZnOzavYsBZf49OUw+FxSFtPcd
+         6ZQXZiBvphkOnYcVxouhmWj+Nk7UaPlRDEI0AWGg65Cub32guRkukjuiT+x6PBrQ3RiH
+         lRH5Luh1MXEWmtTpe5RCyC/fqKzBufcvVeq0Dmuj8keHhmxJmHKD2GjGViRKiDKSLayN
+         hBIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=d9bSILvoQ1txpE++Rpiiwrf0OyyXcnsD+r+hCKxuieY=;
+        b=Oy4qExQfD+J0noCekW0jYbjt8fEqBer4xfbzHU067dXFkbb1579dw4gQe9mgh+KuhI
+         X8v+FSe++kHSzyTGk4ubCyWoWsl9g6uMOqGVyDkRSsSGCyx42vEiTUd4P6DfH+JKRPHo
+         MbN1Gm/yspPN9QXwT/IgpM4lgwZ3/blz8hYjwH3vFtoMggWWjHzomvq3m3r+JjGllGNH
+         mqckrxak8LHhD5eFzYF13userATWXlH9q6Cef6fDo61Prpv/FU9Rle22ErfeNxlSFWoi
+         0svrLp+iEomjbv2/LcF+Ta1hM7+2B608aIyqVtBJEi0uqThFyCK2VJb8VSS5AhLwntWJ
+         Gfnw==
+X-Gm-Message-State: AJaThX7TxdKC9zzNe2dFB4mh1TOasS0SvQEwR/HL+wmnxlGprBOsQAv3
+        nJc7Bkoe2r399/xjBV9GwNvusrqhbjE=
+X-Google-Smtp-Source: ABhQp+QEv5sogaaIM9xtTil3jRdwuH+vbqs1U0jUINaLOnQvjc4f+ynVmIkj77VyBY9MvoRRp008Eg==
+X-Received: by 10.36.40.132 with SMTP id h126mr2289459ith.24.1510276208519;
+        Thu, 09 Nov 2017 17:10:08 -0800 (PST)
+Received: from localhost ([2620:0:100e:422:3816:f49a:2bf0:e33c])
+        by smtp.gmail.com with ESMTPSA id t70sm4015143ioi.72.2017.11.09.17.10.07
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 09 Nov 2017 17:10:07 -0800 (PST)
+From:   Stefan Beller <sbeller@google.com>
+To:     git@vger.kernel.org
+Cc:     Stefan Beller <sbeller@google.com>
+Subject: [RFC PATCH 0/4] blame: (dim rep. metadata lines or fields, decay date coloring)
+Date:   Thu,  9 Nov 2017 17:09:58 -0800
+Message-Id: <20171110011002.10179-1-sbeller@google.com>
+X-Mailer: git-send-email 2.15.0.128.gcadd42da22
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+This is picking up [1], but presenting it in another approach,
+as I realized these are orthogonal features:
+* dimming repeated lines/fields of information
+* giving a quick visual information how old (as a proxy for 'well tested')
+  a line of code is.
+  
+Both features are configurable.
 
-> Yeah, I think the original sin is using " -> " in the --porcelain output
-> (which just got it from --short). That should have been a HT all along
-> to match the rest of the diff code. The --porcelain=v2 format gets this
-> right.
+Any feedback welcome.
 
-So we at lesat did something right, which is a consolation.
+Thanks,
+Stefan
 
->> Perhaps a better approach is to refactor the extra quoting I moved
->> to this emit_with_optional_dq() helper into quote_path() which
->> currently is just aliased to quote_path_relative().  It also is
->> possible that we may want to extend the "no_dq" parameter that is
->> given to quote_c_style() helper from a boolean to a set of flag
->> bits, and allow callers to request "I want SP added to the set of
->> bytes that triggers the quoting".
->
-> Yeah, I had the same thought upon digging into the code.
->
-> That said, if this is the only place that has this funny quoting, it may
-> not be worth polluting the rest of the code with the idea that quoting
-> spaces is a good thing to do.
+[1] https://public-inbox.org/git/20170613023151.9688-1-sbeller@google.com/
 
-Sounds sane.  We can probably use a helper like this:
+Stefan Beller (4):
+  color.h: modernize header
+  builtin/blame: dim uninteresting metadata
+  builtin/blame: add option to color metadata fields separately
+  builtin/blame: highlight recently changed lines
 
-static char *quote_path_with_sp(const char *in, const char *prefix, struct strbuf *out)
-{
-	const char dq = '"';
+ Documentation/config.txt |  25 ++++++
+ builtin/blame.c          | 216 ++++++++++++++++++++++++++++++++++++++++++-----
+ color.c                  |   2 -
+ color.h                  |  49 ++++++++---
+ t/t8012-blame-colors.sh  |  56 ++++++++++++
+ 5 files changed, 313 insertions(+), 35 deletions(-)
+ create mode 100755 t/t8012-blame-colors.sh
 
-	quote_path(in, prefix, out);
-	if (out->buf[0] != dq && strchr(out->buf, ' ') != NULL) {
-		strbuf_insert(out, 0, &dq, 1);
-		strbuf_addch(out, dq);
-	}
-	return out->buf;
-}
+-- 
+2.15.0.128.gcadd42da22
 
-which allows the current users like shortstatus_status() to become a
-lot shorter.
