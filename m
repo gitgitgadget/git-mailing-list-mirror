@@ -2,40 +2,40 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E2281F42B
-	for <e@80x24.org>; Fri, 10 Nov 2017 19:06:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4CCCB1F42B
+	for <e@80x24.org>; Fri, 10 Nov 2017 19:06:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753837AbdKJTGU (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Nov 2017 14:06:20 -0500
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:48750 "EHLO
+        id S1753813AbdKJTGS (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Nov 2017 14:06:18 -0500
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:51766 "EHLO
         mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753758AbdKJTGC (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 10 Nov 2017 14:06:02 -0500
-Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id vAAJ4HCx002784;
+        by vger.kernel.org with ESMTP id S1753784AbdKJTGD (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 10 Nov 2017 14:06:03 -0500
+Received: from pps.filterd (m0096528.ppops.net [127.0.0.1])
+        by mx0a-00153501.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id vAAJ31Ft017725;
         Fri, 10 Nov 2017 11:06:01 -0800
 Authentication-Results: palantir.com;
         spf=softfail smtp.mailfrom=newren@gmail.com
 Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2e53631bgr-3;
-        Fri, 10 Nov 2017 11:06:00 -0800
+        by mx0a-00153501.pphosted.com with ESMTP id 2e535n1cdg-1;
+        Fri, 10 Nov 2017 11:06:01 -0800
 Received: from mxw1.palantir.com (new-smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id DA72422F6280;
-        Fri, 10 Nov 2017 11:06:00 -0800 (PST)
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id 2C21322F6294;
+        Fri, 10 Nov 2017 11:06:01 -0800 (PST)
 Received: from newren2-linux.yojoe.local (newren2-linux.dyn.yojoe.local [10.100.68.32])
-        by smtp.yojoe.local (Postfix) with ESMTP id D14992CDEB4;
-        Fri, 10 Nov 2017 11:06:00 -0800 (PST)
+        by smtp.yojoe.local (Postfix) with ESMTP id 25B092CDE6A;
+        Fri, 10 Nov 2017 11:06:01 -0800 (PST)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Elijah Newren <newren@gmail.com>
-Subject: [PATCH 15/30] merge-recursive: Move the get_renames() function
-Date:   Fri, 10 Nov 2017 11:05:35 -0800
-Message-Id: <20171110190550.27059-16-newren@gmail.com>
+Subject: [PATCH 22/30] merge-recursive: Check for directory level conflicts
+Date:   Fri, 10 Nov 2017 11:05:42 -0800
+Message-Id: <20171110190550.27059-23-newren@gmail.com>
 X-Mailer: git-send-email 2.15.0.5.g9567be9905
 In-Reply-To: <20171110190550.27059-1-newren@gmail.com>
 References: <20171110190550.27059-1-newren@gmail.com>
@@ -53,171 +53,153 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I want to re-use some other functions in the file without moving those other
-functions or dealing with a handful of annoying split function declarations
-and definitions.
+Before trying to apply directory renames to paths within the given
+directories, we want to make sure that there aren't conflicts at the
+directory level.  There will be additional checks at the individual
+file level too, which will be added later.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-recursive.c | 138 +++++++++++++++++++++++++++---------------------------
- 1 file changed, 69 insertions(+), 69 deletions(-)
+ merge-recursive.c | 112 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 112 insertions(+)
 
 diff --git a/merge-recursive.c b/merge-recursive.c
-index 3526c8d0b8..382016508b 100644
+index b5770d3d7f..3633be0123 100644
 --- a/merge-recursive.c
 +++ b/merge-recursive.c
-@@ -540,75 +540,6 @@ struct rename {
- 	unsigned processed:1;
- };
- 
--/*
-- * Get information of all renames which occurred between 'o_tree' and
-- * 'tree'. We need the three trees in the merge ('o_tree', 'a_tree' and
-- * 'b_tree') to be able to associate the correct cache entries with
-- * the rename information. 'tree' is always equal to either a_tree or b_tree.
-- */
--static struct string_list *get_renames(struct merge_options *o,
--				       struct tree *tree,
--				       struct tree *o_tree,
--				       struct tree *a_tree,
--				       struct tree *b_tree,
--				       struct string_list *entries)
--{
--	int i;
--	struct string_list *renames;
--	struct diff_options opts;
--
--	renames = xcalloc(1, sizeof(struct string_list));
--	if (!o->detect_rename)
--		return renames;
--
--	diff_setup(&opts);
--	DIFF_OPT_SET(&opts, RECURSIVE);
--	DIFF_OPT_CLR(&opts, RENAME_EMPTY);
--	opts.detect_rename = DIFF_DETECT_RENAME;
--	opts.rename_limit = o->merge_rename_limit >= 0 ? o->merge_rename_limit :
--			    o->diff_rename_limit >= 0 ? o->diff_rename_limit :
--			    1000;
--	opts.rename_score = o->rename_score;
--	opts.show_rename_progress = o->show_rename_progress;
--	opts.output_format = DIFF_FORMAT_NO_OUTPUT;
--	diff_setup_done(&opts);
--	diff_tree_oid(&o_tree->object.oid, &tree->object.oid, "", &opts);
--	diffcore_std(&opts);
--	if (opts.needed_rename_limit > o->needed_rename_limit)
--		o->needed_rename_limit = opts.needed_rename_limit;
--	for (i = 0; i < diff_queued_diff.nr; ++i) {
--		struct string_list_item *item;
--		struct rename *re;
--		struct diff_filepair *pair = diff_queued_diff.queue[i];
--		if (pair->status != 'R') {
--			diff_free_filepair(pair);
--			continue;
--		}
--		re = xmalloc(sizeof(*re));
--		re->processed = 0;
--		re->pair = pair;
--		item = string_list_lookup(entries, re->pair->one->path);
--		if (!item)
--			re->src_entry = insert_stage_data(re->pair->one->path,
--					o_tree, a_tree, b_tree, entries);
--		else
--			re->src_entry = item->util;
--
--		item = string_list_lookup(entries, re->pair->two->path);
--		if (!item)
--			re->dst_entry = insert_stage_data(re->pair->two->path,
--					o_tree, a_tree, b_tree, entries);
--		else
--			re->dst_entry = item->util;
--		item = string_list_insert(renames, pair->one->path);
--		item->util = re;
--	}
--	opts.output_format = DIFF_FORMAT_NO_OUTPUT;
--	diff_queued_diff.nr = 0;
--	diff_flush(&opts);
--	return renames;
--}
--
- static int update_stages(struct merge_options *opt, const char *path,
- 			 const struct diff_filespec *o,
- 			 const struct diff_filespec *a,
-@@ -1383,6 +1314,75 @@ static int conflict_rename_rename_2to1(struct merge_options *o,
+@@ -1376,6 +1376,15 @@ static struct diff_queue_struct *get_diffpairs(struct merge_options *o,
  	return ret;
  }
  
-+/*
-+ * Get information of all renames which occurred between 'o_tree' and
-+ * 'tree'. We need the three trees in the merge ('o_tree', 'a_tree' and
-+ * 'b_tree') to be able to associate the correct cache entries with
-+ * the rename information. 'tree' is always equal to either a_tree or b_tree.
-+ */
-+static struct string_list *get_renames(struct merge_options *o,
-+				       struct tree *tree,
-+				       struct tree *o_tree,
-+				       struct tree *a_tree,
-+				       struct tree *b_tree,
-+				       struct string_list *entries)
++static int tree_has_path(struct tree *tree, const char *path)
 +{
-+	int i;
-+	struct string_list *renames;
-+	struct diff_options opts;
++	unsigned char hashy[20];
++	unsigned mode_o;
 +
-+	renames = xcalloc(1, sizeof(struct string_list));
-+	if (!o->detect_rename)
-+		return renames;
-+
-+	diff_setup(&opts);
-+	DIFF_OPT_SET(&opts, RECURSIVE);
-+	DIFF_OPT_CLR(&opts, RENAME_EMPTY);
-+	opts.detect_rename = DIFF_DETECT_RENAME;
-+	opts.rename_limit = o->merge_rename_limit >= 0 ? o->merge_rename_limit :
-+			    o->diff_rename_limit >= 0 ? o->diff_rename_limit :
-+			    1000;
-+	opts.rename_score = o->rename_score;
-+	opts.show_rename_progress = o->show_rename_progress;
-+	opts.output_format = DIFF_FORMAT_NO_OUTPUT;
-+	diff_setup_done(&opts);
-+	diff_tree_oid(&o_tree->object.oid, &tree->object.oid, "", &opts);
-+	diffcore_std(&opts);
-+	if (opts.needed_rename_limit > o->needed_rename_limit)
-+		o->needed_rename_limit = opts.needed_rename_limit;
-+	for (i = 0; i < diff_queued_diff.nr; ++i) {
-+		struct string_list_item *item;
-+		struct rename *re;
-+		struct diff_filepair *pair = diff_queued_diff.queue[i];
-+		if (pair->status != 'R') {
-+			diff_free_filepair(pair);
-+			continue;
-+		}
-+		re = xmalloc(sizeof(*re));
-+		re->processed = 0;
-+		re->pair = pair;
-+		item = string_list_lookup(entries, re->pair->one->path);
-+		if (!item)
-+			re->src_entry = insert_stage_data(re->pair->one->path,
-+					o_tree, a_tree, b_tree, entries);
-+		else
-+			re->src_entry = item->util;
-+
-+		item = string_list_lookup(entries, re->pair->two->path);
-+		if (!item)
-+			re->dst_entry = insert_stage_data(re->pair->two->path,
-+					o_tree, a_tree, b_tree, entries);
-+		else
-+			re->dst_entry = item->util;
-+		item = string_list_insert(renames, pair->one->path);
-+		item->util = re;
-+	}
-+	opts.output_format = DIFF_FORMAT_NO_OUTPUT;
-+	diff_queued_diff.nr = 0;
-+	diff_flush(&opts);
-+	return renames;
++	return !get_tree_entry(tree->object.oid.hash, path,
++			       hashy, &mode_o);
 +}
 +
- static int process_renames(struct merge_options *o,
- 			   struct string_list *a_renames,
- 			   struct string_list *b_renames)
+ static void get_renamed_dir_portion(const char *old_path, const char *new_path,
+ 				    char **old_dir, char **new_dir) {
+ 	*old_dir = NULL;
+@@ -1425,6 +1434,105 @@ static void get_renamed_dir_portion(const char *old_path, const char *new_path,
+ 	}
+ }
+ 
++/*
++ * There are a couple things we want to do at the directory level:
++ *   1. Check for both sides renaming to the same thing, in order to avoid
++ *      implicit renaming of files that should be left in place.  (See
++ *      testcase 6b in t6043 for details.)
++ *   2. Prune directory renames if there are still files left in the
++ *      the original directory.  These represent a partial directory rename,
++ *      i.e. a rename where only some of the files within the directory
++ *      were renamed elsewhere.  (Technically, this could be done earlier
++ *      in get_directory_renames(), except that would prevent us from
++ *      doing the previous check and thus failing testcase 6b.)
++ *   3. Check for rename/rename(1to2) conflicts (at the directory level).
++ *      In the future, we could potentially record this info as well and
++ *      omit reporting rename/rename(1to2) conflicts for each path within
++ *      the affected directories, thus cleaning up the merge output.
++ *   NOTE: We do NOT check for rename/rename(2to1) conflicts at the
++ *         directory level, because merging directories is fine.  If it
++ *         causes conflicts for files within those merged directories, then
++ *         that should be detected at the individual path level.
++ */
++static void handle_directory_level_conflicts(struct merge_options *o,
++					     struct hashmap *dir_re_head,
++					     struct tree *head,
++					     struct hashmap *dir_re_merge,
++					     struct tree *merge)
++{
++	struct hashmap_iter iter;
++	struct dir_rename_entry *head_ent;
++	struct dir_rename_entry *merge_ent;
++	int i;
++
++	struct string_list remove_from_head = STRING_LIST_INIT_NODUP;
++	struct string_list remove_from_merge = STRING_LIST_INIT_NODUP;
++
++	hashmap_iter_init(dir_re_head, &iter);
++	while ((head_ent = hashmap_iter_next(&iter))) {
++		merge_ent = dir_rename_find_entry(dir_re_merge, head_ent->dir);
++		if (merge_ent &&
++		    !head_ent->non_unique_new_dir &&
++		    !merge_ent->non_unique_new_dir &&
++		    !strcmp(head_ent->new_dir, merge_ent->new_dir)) {
++			/* 1. Renamed identically; remove it from both sides */
++			string_list_append(&remove_from_head,
++					   head_ent->dir)->util = head_ent;
++			free(head_ent->new_dir);
++			string_list_append(&remove_from_merge,
++					   merge_ent->dir)->util = merge_ent;
++			free(merge_ent->new_dir);
++		} else if (tree_has_path(head, head_ent->dir)) {
++			/* 2. This wasn't a directory rename after all */
++			string_list_append(&remove_from_head,
++					   head_ent->dir)->util = head_ent;
++			free(head_ent->new_dir);
++		}
++	}
++
++	hashmap_iter_init(dir_re_merge, &iter);
++	while ((merge_ent = hashmap_iter_next(&iter))) {
++		head_ent = dir_rename_find_entry(dir_re_head, merge_ent->dir);
++		if (tree_has_path(merge, merge_ent->dir)) {
++			/* 2. This wasn't a directory rename after all */
++			string_list_append(&remove_from_merge,
++					   merge_ent->dir)->util = merge_ent;
++		} else if (head_ent &&
++			   !head_ent->non_unique_new_dir &&
++			   !merge_ent->non_unique_new_dir) {
++			/* 3. rename/rename(1to2) */
++			/* We can assume it's not rename/rename(1to1) because
++			 * that was case (1), already checked above.  But
++			 * quickly test that assertion, just because.
++			 */
++			assert(strcmp(head_ent->new_dir, merge_ent->new_dir));
++			output(o, 1, _("CONFLICT (rename/rename): "
++				       "Rename directory %s->%s in %s. "
++				       "Rename directory %s->%s in %s"),
++			       head_ent->dir, head_ent->new_dir, o->branch1,
++			       head_ent->dir, merge_ent->new_dir, o->branch2);
++			string_list_append(&remove_from_head,
++					   head_ent->dir)->util = head_ent;
++			free(head_ent->new_dir);
++			string_list_append(&remove_from_merge,
++					   merge_ent->dir)->util = merge_ent;
++			free(merge_ent->new_dir);
++		}
++	}
++
++	for (i = 0; i < remove_from_head.nr; i++) {
++		head_ent = remove_from_head.items[i].util;
++		hashmap_remove(dir_re_head, head_ent, NULL);
++	}
++	for (i = 0; i < remove_from_merge.nr; i++) {
++		merge_ent = remove_from_merge.items[i].util;
++		hashmap_remove(dir_re_merge, merge_ent, NULL);
++	}
++
++	string_list_clear(&remove_from_head, 0);
++	string_list_clear(&remove_from_merge, 0);
++}
++
+ static struct hashmap *get_directory_renames(struct diff_queue_struct *pairs,
+ 					     struct tree *tree) {
+ 	struct hashmap *dir_renames;
+@@ -1827,6 +1935,10 @@ static struct rename_info *handle_renames(struct merge_options *o,
+ 	dir_re_head = get_directory_renames(head_pairs, head);
+ 	dir_re_merge = get_directory_renames(merge_pairs, merge);
+ 
++	handle_directory_level_conflicts(o,
++					 dir_re_head, head,
++					 dir_re_merge, merge);
++
+ 	rei->head_renames  = get_renames(o, head_pairs, head,
+ 					 common, head, merge, entries);
+ 	rei->merge_renames = get_renames(o, merge_pairs, merge,
 -- 
 2.15.0.5.g9567be9905
 
