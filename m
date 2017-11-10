@@ -2,100 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1AF2B1F42B
-	for <e@80x24.org>; Fri, 10 Nov 2017 19:07:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7D72C1F42B
+	for <e@80x24.org>; Fri, 10 Nov 2017 19:21:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753740AbdKJTHb (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Nov 2017 14:07:31 -0500
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:51734 "EHLO
-        mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753687AbdKJTGB (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 10 Nov 2017 14:06:01 -0500
-Received: from pps.filterd (m0096528.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id vAAJ2vPJ017477;
-        Fri, 10 Nov 2017 11:06:00 -0800
-Authentication-Results: palantir.com;
-        spf=softfail smtp.mailfrom=newren@gmail.com
-Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2e535n1cda-1;
-        Fri, 10 Nov 2017 11:05:59 -0800
-Received: from mxw1.palantir.com (new-smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id D8F3722F6285;
-        Fri, 10 Nov 2017 11:05:59 -0800 (PST)
-Received: from newren2-linux.yojoe.local (newren2-linux.dyn.yojoe.local [10.100.68.32])
-        by smtp.yojoe.local (Postfix) with ESMTP id D06782CDE6A;
-        Fri, 10 Nov 2017 11:05:59 -0800 (PST)
-From:   Elijah Newren <newren@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>
-Subject: [PATCH 03/30] merge-recursive: Add explanation for src_entry and dst_entry
-Date:   Fri, 10 Nov 2017 11:05:23 -0800
-Message-Id: <20171110190550.27059-4-newren@gmail.com>
-X-Mailer: git-send-email 2.15.0.5.g9567be9905
-In-Reply-To: <20171110190550.27059-1-newren@gmail.com>
-References: <20171110190550.27059-1-newren@gmail.com>
-X-Proofpoint-SPF-Result: softfail
-X-Proofpoint-SPF-Record: v=spf1 redirect=_spf.google.com
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,, definitions=2017-11-10_09:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1034 lowpriorityscore=0 impostorscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.0.1-1707230000
- definitions=main-1711100261
+        id S1753660AbdKJTVx (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Nov 2017 14:21:53 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64088 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1753581AbdKJTVx (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Nov 2017 14:21:53 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 57D1FBEA7F;
+        Fri, 10 Nov 2017 14:21:52 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=4Tr5+1M5FyMuQ8Cns677MiH+Li8=; b=rKQfTGAc5QWZkwdM2C8o
+        VJPb2Mdiwl6PXamrXBKHJHBQGyQIMGVlHqT+eHhWWP265EdMfCcX2i+orjmRfi0q
+        Xmg5WbQ1DhWXBBftFLl9X1q4VqElHB94UsMJC092dnPbIQn4wDcmaeRHkIIfnCVz
+        50rEgHp5sQKPDwI/2KTazCo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         q=dns; s=sasl; b=ef0FBspXEng6eWjQqhIGQoBjLNiXZ40l+86xu/wDpgkvtk
+        uYTQpI1mDja7XTRZ7anHCZ1cZuW9vsbW4um0/5nom7f+ljvSwgqZGJ/18YRhuUWD
+        lazZ/G2JELnrkaC8FvOIEdcDmcfczNFBGYqhuBySpgkcr9UUvaHAo7VwA6ibI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4E4D3BEA7E;
+        Fri, 10 Nov 2017 14:21:52 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BFC89BEA7C;
+        Fri, 10 Nov 2017 14:21:51 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Phillip Wood <phillip.wood@talktalk.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v2 0/9] sequencer: dont't fork git commit
+References: <20170925101041.18344-1-phillip.wood@talktalk.net>
+        <20171110110949.328-1-phillip.wood@talktalk.net>
+Date:   Sat, 11 Nov 2017 04:21:50 +0900
+Message-ID: <xmqqo9oadjn5.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 67B80AC0-C64C-11E7-A723-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If I have to walk through the debugger and inspect the values found in
-here in order to figure out their meaning, despite having known these
-things inside and out some years back, then they probably need a comment
-for the casual reader to explain their purpose.
+Phillip Wood <phillip.wood@talktalk.net> writes:
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- merge-recursive.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+> Here's the summary from the previous version
+> These patches teach the sequencer to create commits without forking
+> git commit when the commit message does not need to be edited. This
+> speeds up cherry picking 10 commits by 26% and picking 10 commits with
+> rebase --continue by 44%. The first few patches move bits of
+> builtin/commit.c to sequencer.c. The last two patches actually
+> implement creating commits in sequencer.c.
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 52521faf09..3526c8d0b8 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -513,6 +513,28 @@ static void record_df_conflict_files(struct merge_options *o,
+Thanks.  The changes since the initial iteration seems quite small
+and I didn't find much objectionable.
+
+Here are some style fixes I needed to add on top to make the output
+of "diff master HEAD" checkpatch.pl-clean.  I think 3/9 and 9/9 are
+the culprits.
+
+diff --git a/sequencer.c b/sequencer.c
+index 1f65e82696..a989588ee5 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -592,7 +592,7 @@ static int read_env_script(struct argv_array *env)
+ 	return 0;
+ }
  
- struct rename {
- 	struct diff_filepair *pair;
-+	/*
-+	 * Because I keep forgetting every few years what src_entry and
-+	 * dst_entry are and have to walk through a debugger and puzzle
-+	 * through it to remind myself...
-+	 *
-+	 * If 'before' is renamed to 'after' then src_entry will contain
-+	 * the versions of 'before' from the merge_base, HEAD, and MERGE in
-+	 * stages 1, 2, and 3; dst_entry will contain the versions of
-+	 * 'after' from the merge_base, HEAD, and MERGE in stages 1, 2, and
-+	 * 3.  Thus, we have a total of six modes and oids, though some
-+	 * will be null.  (Stage 0 is ignored; we're interested in handling
-+	 * conflicts.)
-+	 *
-+	 * Since we don't turn on break-rewrites by default, neither
-+	 * src_entry nor dst_entry can have all three of their stages have
-+	 * non-null oids, meaning at most four of the six will be non-null.
-+	 * Also, since this is a rename, both src_entry and dst_entry will
-+	 * have at least one non-null oid, meaning at least two will be
-+	 * non-null.  Of the six oids, a typical rename will have three be
-+	 * non-null.  Only two implies a rename/delete, and four implies a
-+	 * rename/add.
-+	 */
- 	struct stage_data *src_entry;
- 	struct stage_data *dst_entry;
- 	unsigned processed:1;
--- 
-2.15.0.5.g9567be9905
+-static char *get_author(const char* message)
++static char *get_author(const char *message)
+ {
+ 	size_t len;
+ 	const char *a;
+@@ -1104,7 +1104,7 @@ static int try_to_commit(struct strbuf *msg, const char *author,
+ 	}
+ 
+ 	if (update_head_with_reflog(current_head, oid,
+-				    getenv("GIT_REFLOG_ACTION"), msg, &err)){
++				    getenv("GIT_REFLOG_ACTION"), msg, &err)) {
+ 		res = error("%s", err.buf);
+ 		goto out;
+ 	}
+@@ -1121,7 +1121,7 @@ static int try_to_commit(struct strbuf *msg, const char *author,
+ 	return res;
+ }
+ 
+-static int do_commit(const char *msg_file, const char* author,
++static int do_commit(const char *msg_file, const char *author,
+ 		     struct replay_opts *opts, unsigned int flags)
+ {
+ 	int res = 1;
+@@ -1521,7 +1521,7 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
+ 			strbuf_addstr(&msgbuf, oid_to_hex(&commit->object.oid));
+ 			strbuf_addstr(&msgbuf, ")\n");
+ 		}
+-		if (!is_fixup (command))
++		if (!is_fixup(command))
+ 			author = get_author(msg.message);
+ 	}
+ 
+diff --git a/sequencer.h b/sequencer.h
+index 27f34be400..e0be354301 100644
+--- a/sequencer.h
++++ b/sequencer.h
+@@ -72,7 +72,7 @@ int template_untouched(const struct strbuf *sb, const char *template_file,
+ 		       enum commit_msg_cleanup_mode cleanup_mode);
+ int update_head_with_reflog(const struct commit *old_head,
+ 			    const struct object_id *new_head,
+-			    const char* action, const struct strbuf *msg,
++			    const char *action, const struct strbuf *msg,
+ 			    struct strbuf *err);
+ void commit_post_rewrite(const struct commit *current_head,
+ 			 const struct object_id *new_head);
+
 
