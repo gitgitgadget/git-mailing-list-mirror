@@ -2,84 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6C9561F42B
-	for <e@80x24.org>; Fri, 10 Nov 2017 23:33:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9DC1E1F42B
+	for <e@80x24.org>; Fri, 10 Nov 2017 23:42:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753913AbdKJXdA (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Nov 2017 18:33:00 -0500
-Received: from mail-ua0-f196.google.com ([209.85.217.196]:50590 "EHLO
-        mail-ua0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751038AbdKJXc7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Nov 2017 18:32:59 -0500
-Received: by mail-ua0-f196.google.com with SMTP id v27so7896157uav.7
-        for <git@vger.kernel.org>; Fri, 10 Nov 2017 15:32:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=bKuzUYyloT9Wjf9+L7z2/RC43eAy5IzZs5NPFA+8HcA=;
-        b=VudD9yabIG6aohhTZu0v5USZBryZ+pXa7xlMHcVXWtLNosniZljcVQUfVqauCvhXrC
-         t4/clVZDPzuDDqxbXi3T0nJDMKU+puNmRebOSIw20X3A5EQtgNxGjJHb1EbJx19pk7le
-         aA7KvYLrT4zAcsGxf4Y4tAxuMF7x6yfznO0NlzwqoLpO2rv2I7fwCWUXKrG4/k0bd9DT
-         7qx/1/Etf8bcMjdgjuFL80Nzyh8bw8RxtkqaWZSZuqsb78RhEe6kxur3tPI3VK4RIPmz
-         tvtw+elqRRhGpCPCmtedZQbLeTEVRyHlcLVGsuIvBJE7mE5nXDaQk0EmiGeDtbg/AYiF
-         OJJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=bKuzUYyloT9Wjf9+L7z2/RC43eAy5IzZs5NPFA+8HcA=;
-        b=e2XLH3JeY9U2uRfgCOE8Fgzby+e+HtxNHLxAVJbcVdZO3CVV6RWiO46XUY66OO78qH
-         OCJ5mAgSwsL21msE059od4ItolhdtmrazGmwQQgOLU2Ht/ZAPrTR30Vo1wTy9eVwtoEx
-         lLGGzVEiKCuMLQv1FktCV6XCavB9J5XTTyamrIf2qW0+mCGwVZS6+5jPmnEPQR9oMlZ5
-         ylpTi1Sv3iurM5Y7fuP4W4mhXnZlAlkt8mtoNesDqURkOs62mq3LUPcLdaBMAX9r7PK1
-         nxt7qjY7MTrARBNppfc0VROCc0jPRZBVIz/+pWisqG98yN+WDKRwuG97jwsSle4KWlVj
-         Fb8A==
-X-Gm-Message-State: AJaThX54zCnmTjz0u6SdYm8UFbWm3V+vZ6W6dBB8AoAHnEUfbbJyXUHJ
-        k2/oU2TU4XiRTFLWelPy4eS3eF1+PnTx9hZStTg=
-X-Google-Smtp-Source: AGs4zMYzyZ0VHyAgbNUNgBYP5/4v8iqkv1Oy2y24Z6NLJap9JBmW4vm3odpBx3nAEfett24BjYNVpTUKde8ehGou1TE=
-X-Received: by 10.176.82.110 with SMTP id j43mr1762938uaa.9.1510356778239;
- Fri, 10 Nov 2017 15:32:58 -0800 (PST)
+        id S1754032AbdKJXmV (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Nov 2017 18:42:21 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:55914 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1753960AbdKJXmU (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 10 Nov 2017 18:42:20 -0500
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 7F8FF60475;
+        Fri, 10 Nov 2017 23:42:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1510357337;
+        bh=JP0KFCXmB73wE7i2v0DonZmi/+1L0VqhTRYrU/edkWY=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=lxiEzuLbb3hpeTsR6c08IepO2gCl8uVvrKOZHThyKoWVS6W8dn7VoIHHiOzmDc09H
+         SiPoGHRK2a7h3L5wmKKYP4eh5v2RTPHX8sxBhIEsONLGGDF5+dzvXoRXnIk1Oeo0Dh
+         O9kjGY3Gc1UweGn+OBcxSF5g+zUeJAMpP8M8aF+jx198JSFO/zUl7q8HiCbEHQOzt0
+         WBVUaJnt/nimZrZey43cCGXViVpnsKZvxiwZh6FwNnSrDgSPdpp37djS6knLxzUxR+
+         29bMeDN05jSIXwv+3tXLB+H/205Tsf84K9TWUO6yI1PiqtTCTUuJjK2OdUSY7UEkAh
+         9WtRTtNkd0Bo/B8A63VEOB/8hOwP5+B/x26x7EVEkTK97uBHU4DYl3QXzs4FmRZVkV
+         gie8Wwh0VH2SjnD/wftIOQs3YJ9ie7Cf4E6SSGLATwHtAmLMEsoDreFbrHjt9AvzaM
+         xvu++fwUsOlDk3olMoo0cXPzfKqdfFUXgN7zNtmPJY+bBO/jjGf
+Date:   Fri, 10 Nov 2017 23:42:11 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>
+Subject: Re: [PATCH 2/4] Remove silent clamp of renameLimit
+Message-ID: <20171110234210.lojdat5zofhrdlgi@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Elijah Newren <newren@gmail.com>,
+        Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>
+References: <20171110173956.25105-1-newren@gmail.com>
+ <20171110173956.25105-3-newren@gmail.com>
+ <CAGZ79kbqxA9U7EsU6_i895vgrTUwmqv8f02NCoUqPS1_nD2PtA@mail.gmail.com>
+ <CABPp-BGwoduH_T7U4uN5A-h43wREfXdQgV8YCVWf8w5N09cYSw@mail.gmail.com>
 MIME-Version: 1.0
-Received: by 10.176.67.33 with HTTP; Fri, 10 Nov 2017 15:32:57 -0800 (PST)
-In-Reply-To: <alpine.DEB.2.00.1711101436270.2391@ds9.cixit.se>
-References: <alpine.DEB.2.00.1711100959300.2391@ds9.cixit.se>
- <20171110102011.yqtka6a3wmgcvkl6@sigill.intra.peff.net> <alpine.DEB.2.00.1711101333030.2391@ds9.cixit.se>
- <7e242038-50e5-2cfc-e810-401af78b8cdc@gmail.com> <alpine.DEB.2.00.1711101436270.2391@ds9.cixit.se>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 10 Nov 2017 15:32:57 -0800
-Message-ID: <CABPp-BEu_DOg5t0qHnyLYSok+J+onGFPoFBbgp9P-S5JfhcRjw@mail.gmail.com>
-Subject: Re: cherry-pick very slow on big repository
-To:     Peter Krefting <peter@softwolves.pp.se>
-Cc:     Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="opquyub4p3ov53wn"
+Content-Disposition: inline
+In-Reply-To: <CABPp-BGwoduH_T7U4uN5A-h43wREfXdQgV8YCVWf8w5N09cYSw@mail.gmail.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.12.0-2-amd64)
+User-Agent: NeoMutt/20170609 (1.8.3)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 10, 2017 at 6:05 AM, Peter Krefting <peter@softwolves.pp.se> wrote:
-> Derrick Stolee:
->
->> Git is spending time detecting renames, which implies you probably renamed
->> a folder or added and deleted a large number of files. This rename detection
->> is quadratic (# adds times # deletes).
->
-> Yes, a couple of directories with a lot of template files have been renamed
-> (and some removed, some added) between the current development branch and
-> this old maintenance branch. I get the "Performing inexact rename detection"
-> a lot when merging changes in the other direction.
->
-> However, none of them applies to these particular commits, which only
-> touches files that are in the exact same location on both branches.
 
-I would be very interested to hear how my rename detection performance
-patches work for you; this kind of usecase was the exact one it was
-designed to help the most.  See
-https://public-inbox.org/git/20171110222156.23221-1-newren@gmail.com/
+--opquyub4p3ov53wn
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Fri, Nov 10, 2017 at 10:36:17AM -0800, Elijah Newren wrote:
+> Thanks for taking a look!
+>=20
+> On Fri, Nov 10, 2017 at 10:26 AM, Stefan Beller <sbeller@google.com> wrot=
+e:
+> > From a technical perspective, I would think that if
+> > (num_create <=3D rename_limit || num_src <=3D rename_limit)
+> > holds true, that the double-cast condition would also be always true?
+> > Could we just remove that last check?
+>=20
+> Not necessarily.  For example, if num_create =3D rename_limit-1 and
+> num_src =3D rename_limit+2, then the first condition will be satisfied
+> but the second won't.  If it was && rather than ||, then the second
+> condition would be superfluous.
+>=20
+> > Or phrased differently, if we can cast to double and extend the check
+> > here, do we have to adapt code at other places as well?
+>=20
+> Good point, and yes.  Perhaps I should have re-ordered my patch series
+> because I came back to it later and realized that the progress code
+> was broken due to overflow/wraparound, and a patch 3 fixed that.
+>=20
+> Further, the later patch used uint64_t instead of double.  While
+> double works, perhaps I should change the double here to uint64_t for
+> consistency?
+
+I'm wondering if maybe you want to use size_t.  If you end up using an
+unsigned type, you might be able to leverage unsigned_mult_overflows to
+avoid having to write this by hand.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
+https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: https://keybase.io/bk2204
+
+--opquyub4p3ov53wn
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.2 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAloGOVIACgkQv1NdgR9S
+9ouJGhAAtGiQmjHthoYDkXDjmYYEp45edNcUxn3WMtu5Kyo+a5L3e3Epj+yNRP2w
+Awx16ntnZ2pAwaMTIaWZ9SdFa54EjfzVy0r3GMNNkzBh7LChLngMl23vaw7eilqX
+nzHTRSaVSLAc7Z3IpQj6iKdPY5Ng1JqC0gPV1PGHVFdWUJsDAYWLgNSrkPkQZS3Z
+gLHPz/YLAS3efNUSW/Io0lOPhgXv2ionGcTp0R2WfA1J46BbAok/8CvO/K/J6fGl
+9W9tBq+Glkg/6cYgWd5S40BXQRt7EWSL2QaW79XteR1nRl18vLRxj1LQbXzG90XQ
+hkAEjIW2bctgcklAVeKaBv7R4ZMA7Lr1ddOSHvpdPNVsdTRy3nkiNUSSzGhNNMkb
+5nHEOBQiaQGfJ3cixaPwbSgs+gLeSu+K4fOKGQqD3ih+xKe75du3/7wQCFckZPAE
+WDYj6u1dfxmlVdpviZaH4WXPxiczshQipYcjGC5SAiMmBV6pR9whj7m/iqnW86Zp
+8EXzC5NbuPJ+Pcaf14eyVChUx+ttPe0fuF9chnlqsUzABP+MVR09v7XKqDFIpYpX
+Hh2IuZgluKAUrHAaCQikQ3vsUZl54Lv9xLUZMLpowTi4NYhnajE04mneE5aRNsjS
+cIvtrWuchJGpOtMM83dyJ2SIPT05oOqWDBn8jFxvD3ZLmM0xLyI=
+=ZI/h
+-----END PGP SIGNATURE-----
+
+--opquyub4p3ov53wn--
