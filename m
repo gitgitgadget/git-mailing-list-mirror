@@ -6,28 +6,27 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA59C1F42B
-	for <e@80x24.org>; Fri, 10 Nov 2017 16:11:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0E9E41F42B
+	for <e@80x24.org>; Fri, 10 Nov 2017 16:32:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751572AbdKJQLi (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Nov 2017 11:11:38 -0500
-Received: from cpanel2.indieserve.net ([199.212.143.6]:59277 "EHLO
+        id S1753193AbdKJQcw (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Nov 2017 11:32:52 -0500
+Received: from cpanel2.indieserve.net ([199.212.143.6]:54116 "EHLO
         cpanel2.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751142AbdKJQLi (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Nov 2017 11:11:38 -0500
-Received: from 69-196-158-250.dsl.teksavvy.com ([69.196.158.250]:47200 helo=DESKTOP-1GPMCEJ)
+        with ESMTP id S1752241AbdKJQcv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Nov 2017 11:32:51 -0500
+Received: from 69-196-158-250.dsl.teksavvy.com ([69.196.158.250]:47224 helo=DESKTOP-1GPMCEJ)
         by cpanel2.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
         (Exim 4.89)
         (envelope-from <rpjday@crashcourse.ca>)
-        id 1eDBu5-0005II-LW
-        for git@vger.kernel.org; Fri, 10 Nov 2017 11:11:37 -0500
-Date:   Fri, 10 Nov 2017 11:11:14 -0500 (EST)
+        id 1eDCEd-0002TY-7X
+        for git@vger.kernel.org; Fri, 10 Nov 2017 11:32:51 -0500
+Date:   Fri, 10 Nov 2017 11:32:30 -0500 (EST)
 From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
 X-X-Sender: rpjday@DESKTOP-1GPMCEJ
 To:     Git Mailing list <git@vger.kernel.org>
-Subject: proper patch prefix for tweaking both git-bisect.sh and
- git-bisect.txt?
-Message-ID: <alpine.LFD.2.21.1711101056440.5836@DESKTOP-1GPMCEJ>
+Subject: [PATCH] bisect: mention "view" as an alternative to "visualize"
+Message-ID: <alpine.LFD.2.21.1711101123280.6717@DESKTOP-1GPMCEJ>
 User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
@@ -46,47 +45,121 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Tweak a number of files to mention "view" as an alternative to
+"visualize":
 
-  digging through both git-bisect.sh and git-bisect.txt, and it seems
-pretty clear they're both a bit out of date WRT documenting the newer
-alternatives "old"/"new" as opposed to the older "good"/"bad" terms,
-and a few other things.
+ Documentation/git-bisect.txt           | 9 ++++-----
+ Documentation/user-manual.txt          | 3 ++-
+ builtin/bisect--helper.c               | 2 +-
+ contrib/completion/git-completion.bash | 2 +-
+ git-bisect.sh                          | 4 ++--
+ 5 files changed, 10 insertions(+), 10 deletions(-)
 
-  first, trivially, neither the script nor the man page mention "view"
-as an alternative to "visualize", but that's easy to fix. however,
-most of the inconsistency involves that good/bad/old/new stuff.
+Signed-off-by: Robert P. J. Day <rpjday@crashcourse.ca>
 
-  the man page reads (in part):
+---
 
-  git bisect (bad|new|<term-new>) [<rev>]
-  git bisect (good|old|<term-old>) [<rev>...]
+  here's hoping i have the right format for this patch ... are there
+any parts of this that are inappropriate, such as extending the bash
+completion?
 
-which i assume should actually read:
-
-  git bisect (bad|new|<term-bad>|<term-new>) [<rev>]
-  git bisect (good|old|<term-good>|<term-old>) [<rev>...]
-
-unless there's some implicit assumption that isn't mentioned there.
-
-  also from the man page, i'm guessing that:
-
+diff --git a/Documentation/git-bisect.txt b/Documentation/git-bisect.txt
+index 6c42abf07..89e6f9667 100644
+--- a/Documentation/git-bisect.txt
++++ b/Documentation/git-bisect.txt
+@@ -23,7 +23,7 @@ on the subcommand:
   git bisect terms [--term-good | --term-bad]
+  git bisect skip [(<rev>|<range>)...]
+  git bisect reset [<commit>]
+- git bisect visualize
++ git bisect visualize|view
+  git bisect replay <logfile>
+  git bisect log
+  git bisect run <cmd>...
+@@ -196,15 +196,14 @@ of `git bisect good` and `git bisect bad` to mark commits.
+ Bisect visualize
+ ~~~~~~~~~~~~~~~~
 
-might need to say:
+-To see the currently remaining suspects in 'gitk', issue the following
+-command during the bisection process:
++To see the currently remaining suspects in 'gitk', issue either of the
++following equivalent commands during the bisection process:
 
-  git bisect terms [--term-good | --term-bad | --term-new | --term-old]
+ ------------
+ $ git bisect visualize
++$ git bisect view
+ ------------
 
-and so on, and so on (again, unless the generality of those terms is
-understood).
+-`view` may also be used as a synonym for `visualize`.
+-
+ If the `DISPLAY` environment variable is not set, 'git log' is used
+ instead.  You can also give command-line options such as `-p` and
+ `--stat`.
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+index 3a03e63eb..55ec58986 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -538,10 +538,11 @@ Note that the version which `git bisect` checks out for you at each
+ point is just a suggestion, and you're free to try a different
+ version if you think it would be a good idea.  For example,
+ occasionally you may land on a commit that broke something unrelated;
+-run
++run either of the equivalent commands
 
-  so given that all of that is, technically, documentation (even the
-usage message in the script), if one submits a patch to change both
-files appropriately, what is the subject line prefix to use?
+ -------------------------------------------------
+ $ git bisect visualize
++$ git bisect view
+ -------------------------------------------------
 
-  anyway, maybe i'll do this in bite-size pieces to keep it
-manageable. my first patch to the code base ... whoo hoo!
+ which will run gitk and label the commit it chose with a marker that
+diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+index 35d2105f9..4b5fadcbe 100644
+--- a/builtin/bisect--helper.c
++++ b/builtin/bisect--helper.c
+@@ -46,7 +46,7 @@ static int check_term_format(const char *term, const char *orig_term)
+ 		return error(_("'%s' is not a valid term"), term);
 
-rday
+ 	if (one_of(term, "help", "start", "skip", "next", "reset",
+-			"visualize", "replay", "log", "run", "terms", NULL))
++			"visualize", "view", "replay", "log", "run", "terms", NULL))
+ 		return error(_("can't use the builtin command '%s' as a term"), term);
+
+ 	/*
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index fdd984d34..52f68c922 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1162,7 +1162,7 @@ _git_bisect ()
+ {
+ 	__git_has_doubledash && return
+
+-	local subcommands="start bad good skip reset visualize replay log run"
++	local subcommands="start bad good skip reset visualize view replay log run"
+ 	local subcommand="$(__git_find_on_cmdline "$subcommands")"
+ 	if [ -z "$subcommand" ]; then
+ 		__git_find_repo_path
+diff --git a/git-bisect.sh b/git-bisect.sh
+index 0138a8860..e8b622a47 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -1,6 +1,6 @@
+ #!/bin/sh
+
+-USAGE='[help|start|bad|good|new|old|terms|skip|next|reset|visualize|replay|log|run]'
++USAGE='[help|start|bad|good|new|old|terms|skip|next|reset|visualize|view|replay|log|run]'
+ LONG_USAGE='git bisect help
+ 	print this long help message.
+ git bisect start [--term-{old,good}=<term> --term-{new,bad}=<term>]
+@@ -20,7 +20,7 @@ git bisect next
+ 	find next bisection to test and check it out.
+ git bisect reset [<commit>]
+ 	finish bisection search and go back to commit.
+-git bisect visualize
++git bisect visualize|view
+ 	show bisect status in gitk.
+ git bisect replay <logfile>
+ 	replay bisection log.
+
 
 -- 
 
