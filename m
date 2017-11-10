@@ -2,108 +2,228 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 22F091F42B
-	for <e@80x24.org>; Fri, 10 Nov 2017 13:00:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DD9F71F42B
+	for <e@80x24.org>; Fri, 10 Nov 2017 13:22:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751410AbdKJNAA (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Nov 2017 08:00:00 -0500
-Received: from mail-qt0-f170.google.com ([209.85.216.170]:50154 "EHLO
-        mail-qt0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751288AbdKJM77 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Nov 2017 07:59:59 -0500
-Received: by mail-qt0-f170.google.com with SMTP id p44so1214778qtj.6
-        for <git@vger.kernel.org>; Fri, 10 Nov 2017 04:59:59 -0800 (PST)
+        id S1752102AbdKJNWW (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Nov 2017 08:22:22 -0500
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:33548 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751455AbdKJNWV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Nov 2017 08:22:21 -0500
+Received: by mail-wm0-f66.google.com with SMTP id r68so5868462wmr.0
+        for <git@vger.kernel.org>; Fri, 10 Nov 2017 05:22:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=zd1kj9C6ge2c9/XgrnGM9ExE+CXmjEVil8X0bOAYPxI=;
-        b=Vd04RVCf8J0FsQSczfiw0XV9/MrgaORg+AgoUS+BfIysoJmdIixLfBlpDMieQ8ARaw
-         VWQBzzcqxInvuxEUMUpS8tb1LVvg1TFjiCDGuFLOrbEwmP/MTikWBxru/+tHJfae1dTk
-         e8TcDncuWWLqX8ChV94DRCOJjJ8YAVbgwU4fXz8EN01wR+icictnOi4QfX+1eNYvzOZe
-         b3aRS/sJxY5A4PQ0H2GePTkkL6RYweVWRU/RzI6eWqqs7SdJs0HY7TL0f9ZRFgsj41Kj
-         wuLoAmVwQzLZ37qqtd4b0W8Vrf20kjXxWNA6veb0QaURG42gmAjN/rdrXSEVbEva6wVh
-         gjrg==
+        h=from:to:cc:subject:date:message-id;
+        bh=75/ULDbIy8/rgiPf2p2ayHpeYgAStzl9wCVZAapB3dw=;
+        b=BDgyFxTPFRqAxE2v3jaSV4CEdMpFbNnbBfXR7SNR95tfmH7UNJfKa8rtC8W8KBhw5d
+         tWaHBQE6RGnBMmfvL83uhixXXLPISGuxx+4uoV59FqyEBb6zneV5JJfImzA0EDACkMoJ
+         DXosIANvMyA/ZRdkvtYU+rLP+GO2nnkmcJ7/snhSH2VmFlrLor0EeSQXnR3kwrRWKVSY
+         dM7dCB5f6KBekVweUZ5v5RYkZY+Xh7MISVZKTT5ytRzGnEqQkbD+yxLjtaYw/gJQpmkH
+         Ggz+5F7r2tXMlkAvIgvLc3vPA0JAk7PjQFC92r69lnP5vjDxX+LvP2oMxOjpuTMHbggp
+         FQuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=zd1kj9C6ge2c9/XgrnGM9ExE+CXmjEVil8X0bOAYPxI=;
-        b=R8jYOWtnCjjTUt3p/kulSIb2dEptGLkTa5zbIjcWWt8EbB/NN+6pzyyWREiKMwDa4V
-         8inC3a+MXUdW0i5TviXJvbpKG6IGD28j9mjtXB/kMUxFpgpxdVu6x4jLZ5FGweT4gCUN
-         HKMMDqBuR5KOlToE4AM+mkJYw+eiQw7sP/lMlvKyWTqmAOUZ27x3iF9VmFhjN0idkzej
-         DX8yXPhP9nqmjsxobMWDQxYLeCghoEWUT58FrwntTZ04FM/ORLSsS4IfPNRJc9hmY/qI
-         tWZpfueYn8TI7pnKjDxk5yevZ6R5325qlSsHsDUZ9E+wNYj0SYaTD5fwkcHu9bn9brU/
-         X61g==
-X-Gm-Message-State: AJaThX5ail4p+WiN2I+n7K6KB3ggC6YRIi78YX5uDIIBMyg2FXxJiIJj
-        dNrHy4eWCn55jtinf/CXWhzo+cmL
-X-Google-Smtp-Source: AGs4zMbvgpnM/EZj6JL5rS7DH5qLWc3hH4ZSSQExJyHara8xAE/+IyrdRIqg+jetv6SV2cPSwMgITQ==
-X-Received: by 10.237.39.155 with SMTP id a27mr438708qtd.136.1510318798225;
-        Fri, 10 Nov 2017 04:59:58 -0800 (PST)
-Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010::7cc])
-        by smtp.gmail.com with ESMTPSA id t16sm6282864qtt.92.2017.11.10.04.59.56
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 10 Nov 2017 04:59:56 -0800 (PST)
-Subject: Re: cherry-pick very slow on big repository
-To:     Peter Krefting <peter@softwolves.pp.se>, Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>
-References: <alpine.DEB.2.00.1711100959300.2391@ds9.cixit.se>
- <20171110102011.yqtka6a3wmgcvkl6@sigill.intra.peff.net>
- <alpine.DEB.2.00.1711101333030.2391@ds9.cixit.se>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <7e242038-50e5-2cfc-e810-401af78b8cdc@gmail.com>
-Date:   Fri, 10 Nov 2017 07:59:55 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.4.0
-MIME-Version: 1.0
-In-Reply-To: <alpine.DEB.2.00.1711101333030.2391@ds9.cixit.se>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=75/ULDbIy8/rgiPf2p2ayHpeYgAStzl9wCVZAapB3dw=;
+        b=spJWdXRNBKVA+RD5IeGfnJPitOk1vPpv03n3OtWneG7rawFwWAYKjY5aOKgHjkdA6B
+         iGjxmPeN7D5pUAw8N9JMMDNr7DdlSvMMdY9p4YqcrS+k4SR40yUlRXV/sYMJvJ2c16On
+         nTJicHW693wTp1Ogluj81GMXE/ZDrGKqGfPyLbPIKCwQSjILoRBpnkmOu4Z6rd0vmgrj
+         nnfN9s5wm/481HoO9Rmn44Okv58VvM5RoRsuyHaX5Tk9D6QbKzsdDwUZA3RTNdxzv8/d
+         W2Pi4SUxNqEO5AX6SbVSebsxQNNHq12DS+qWe7BircJDNJLrF81DoQctQP7GLtBqBjgJ
+         qmTA==
+X-Gm-Message-State: AJaThX5xDTglnAJ2txfhjTOFLshBXraNiuULS3ZIByArlLkqRL+FwLiJ
+        ySazJhkmRkHjiPRwRsLwR9fZoxgK
+X-Google-Smtp-Source: AGs4zMZrq255X+YhMUTl/2j0BV6Jncmp4EkzjxAO3vzCAceTf3/SbngQk3EsrCjfIDHWgJS5fkIHYw==
+X-Received: by 10.28.131.200 with SMTP id f191mr235185wmd.39.1510320139567;
+        Fri, 10 Nov 2017 05:22:19 -0800 (PST)
+Received: from christian-Latitude-E6330.register.onboard.eurostar.com ([82.113.183.179])
+        by smtp.gmail.com with ESMTPSA id 19sm2232731wmn.15.2017.11.10.05.22.11
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 10 Nov 2017 05:22:18 -0800 (PST)
+From:   Christian Couder <christian.couder@gmail.com>
+X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Ben Peart <Ben.Peart@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Mike Hommey <mh@glandium.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Eric Wong <e@80x24.org>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH v3 0/8] Create Git/Packet.pm
+Date:   Fri, 10 Nov 2017 14:21:52 +0100
+Message-Id: <20171110132200.7871-1-chriscool@tuxfamily.org>
+X-Mailer: git-send-email 2.15.0.132.g7ad97d78be
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/10/2017 7:37 AM, Peter Krefting wrote:
-> Jeff King:
->
->> Can you get a backtrace? I'd do something like:
->
-> Seems that it spends most time in diffcore_count_changes(), that is 
-> where it hits whenever I hit Ctrl+C (various line numbers 199-207 in 
-> diffcore-delta.c; this is on the v2.15.0 tag).
->
-> (gdb) bt
-> #0  diffcore_count_changes (src=src@entry=0x55555db99970,
->     dst=dst@entry=0x55555d6a4810,
->     src_count_p=src_count_p@entry=0x55555db99998,
->     dst_count_p=dst_count_p@entry=0x55555d6a4838,
->     src_copied=src_copied@entry=0x7fffffffd3e0,
->     literal_added=literal_added@entry=0x7fffffffd3f0)
->     at diffcore-delta.c:203
-> #1  0x00005555556dee1a in estimate_similarity (minimum_score=30000,
->     dst=0x55555d6a4810, src=0x55555db99970) at diffcore-rename.c:193
-> #2  diffcore_rename (options=options@entry=0x7fffffffd4f0)
->     at diffcore-rename.c:560
-> #3  0x0000555555623d83 in diffcore_std (
->     options=options@entry=0x7fffffffd4f0) at diff.c:5846
-> ...
+Goal
+~~~~
 
-Git is spending time detecting renames, which implies you probably 
-renamed a folder or added and deleted a large number of files. This 
-rename detection is quadratic (# adds times # deletes).
+Packet related functions in Perl can be useful to write new filters or
+to debug or test existing filters. They might also in the future be
+used by other software using the same packet line protocol. So instead
+of having them in t0021/rot13-filter.pl, let's extract them into a new
+Git/Packet.pm module.
 
-You can remove this rename detection by running your cherry-pick with 
-`git -c diff.renameLimit=1 cherry-pick ...`
+Changes since the previous version
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-See https://git-scm.com/docs/diff-config#diff-config-diffrenameLimit
+There are only a few small changes compared to v2:
 
-Thanks,
--Stolee
+Patch 2/8 has the following change:
+
+  - packet_required_key_val_read() is renamed packet_key_val_read()
+    and a comment is added before the function,
+
+Patch 2/8 and 6/8 have the following change:
+
+  - "if" is used instead of "unless" to make the logic easier to
+    understand
+
+The diff with the previous version is:
+
+diff --git a/perl/Git/Packet.pm b/perl/Git/Packet.pm
+index 255b28c098..1682403ffc 100644
+--- a/perl/Git/Packet.pm
++++ b/perl/Git/Packet.pm
+@@ -17,7 +17,7 @@ our @EXPORT = qw(
+                        packet_compare_lists
+                        packet_bin_read
+                        packet_txt_read
+-                       packet_required_key_val_read
++                       packet_key_val_read
+                        packet_bin_write
+                        packet_txt_write
+                        packet_flush
+@@ -68,28 +68,29 @@ sub packet_bin_read {
+ 
+ sub remove_final_lf_or_die {
+        my $buf = shift;
+-       unless ( $buf =~ s/\n$// ) {
+-               die "A non-binary line MUST be terminated by an LF.\n"
+-                   . "Received: '$buf'";
++       if ( $buf =~ s/\n$// ) {
++               return $buf;
+        }
+-       return $buf;
++       die "A non-binary line MUST be terminated by an LF.\n"
++           . "Received: '$buf'";
+ }
+
+ sub packet_txt_read {
+        my ( $res, $buf ) = packet_bin_read();
+-       unless ( $res == -1 or $buf eq '' ) {
++       if ( $res != -1 and $buf ne '' ) {
+                $buf = remove_final_lf_or_die($buf);
+        }
+        return ( $res, $buf );
+ }
+ 
+-sub packet_required_key_val_read {
++# Read a text line and check that it is in the form "key=value"
++sub packet_key_val_read {
+        my ( $key ) = @_;
+        my ( $res, $buf ) = packet_txt_read();
+-       unless ( $res == -1 or ( $buf =~ s/^$key=// and $buf ne '' ) ) {
+-               die "bad $key: '$buf'";
++       if ( $res == -1 or ( $buf =~ s/^$key=// and $buf ne '' ) ) {
++               return ( $res, $buf );
+        }
+-       return ( $res, $buf );
++       die "bad $key: '$buf'";
+ }
+ 
+ sub packet_bin_write {
+diff --git a/t/t0021/rot13-filter.pl b/t/t0021/rot13-filter.pl
+index 6fd7fa476b..f1678851de 100644
+--- a/t/t0021/rot13-filter.pl
++++ b/t/t0021/rot13-filter.pl
+@@ -70,7 +70,7 @@ print $debug "init handshake complete\n";
+ $debug->flush();
+ 
+ while (1) {
+-       my ( $res, $command ) = packet_required_key_val_read("command");
++       my ( $res, $command ) = packet_key_val_read("command");
+        if ( $res == -1 ) {
+                print $debug "STOP\n";
+                exit();
+@@ -106,7 +106,7 @@ while (1) {
+                packet_txt_write("status=success");
+                packet_flush();
+        } else {
+-               my ( $res, $pathname ) = packet_required_key_val_read("pathname");
++               my ( $res, $pathname ) = packet_key_val_read("pathname");
+                if ( $res == -1 ) {
+                        die "unexpected EOF while expecting pathname";
+                }
+
+Links
+~~~~~
+
+This patch series is on the following branch:
+
+https://github.com/chriscool/git/commits/gl-prep-external-odb
+
+Version 1 and 2 of this patch series are on the mailing list here:
+
+https://public-inbox.org/git/20171019123030.17338-1-chriscool@tuxfamily.org/
+https://public-inbox.org/git/20171105213836.11717-1-chriscool@tuxfamily.org/
+
+They are also available in the following branch:
+
+https://github.com/chriscool/git/commits/gl-prep-external-odb1
+https://github.com/chriscool/git/commits/gl-prep-external-odb14
+
+This patch series was extracted from previous "Add initial
+experimental external ODB support" patch series.
+
+Version 1, 2, 3, 4, 5 and 6 of this previous series are on the mailing
+list here:
+
+https://public-inbox.org/git/20160613085546.11784-1-chriscool@tuxfamily.org/
+https://public-inbox.org/git/20160628181933.24620-1-chriscool@tuxfamily.org/
+https://public-inbox.org/git/20161130210420.15982-1-chriscool@tuxfamily.org/
+https://public-inbox.org/git/20170620075523.26961-1-chriscool@tuxfamily.org/
+https://public-inbox.org/git/20170803091926.1755-1-chriscool@tuxfamily.org/
+https://public-inbox.org/git/20170916080731.13925-1-chriscool@tuxfamily.org/
+
+They are also available in the following branches:
+
+https://github.com/chriscool/git/commits/gl-external-odb12
+https://github.com/chriscool/git/commits/gl-external-odb22
+https://github.com/chriscool/git/commits/gl-external-odb61
+https://github.com/chriscool/git/commits/gl-external-odb239
+https://github.com/chriscool/git/commits/gl-external-odb373
+https://github.com/chriscool/git/commits/gl-external-odb411
+
+
+Christian Couder (8):
+  t0021/rot13-filter: fix list comparison
+  t0021/rot13-filter: refactor packet reading functions
+  t0021/rot13-filter: improve 'if .. elsif .. else' style
+  t0021/rot13-filter: improve error message
+  t0021/rot13-filter: add packet_initialize()
+  t0021/rot13-filter: refactor checking final lf
+  t0021/rot13-filter: add capability functions
+  Add Git/Packet.pm from parts of t0021/rot13-filter.pl
+
+ perl/Git/Packet.pm      | 169 ++++++++++++++++++++++++++++++++++++++++++++++++
+ perl/Makefile           |   1 +
+ t/t0021/rot13-filter.pl | 127 ++++++++++--------------------------
+ 3 files changed, 203 insertions(+), 94 deletions(-)
+ create mode 100644 perl/Git/Packet.pm
+
+-- 
+2.15.0.132.g7ad97d78be
+
