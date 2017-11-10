@@ -6,130 +6,62 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 57DCA1F43C
-	for <e@80x24.org>; Fri, 10 Nov 2017 09:58:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1E0B71F43C
+	for <e@80x24.org>; Fri, 10 Nov 2017 10:20:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752424AbdKJJ6N (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Nov 2017 04:58:13 -0500
-Received: from cloud.peff.net ([104.130.231.41]:52200 "HELO cloud.peff.net"
+        id S1752289AbdKJKUQ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Nov 2017 05:20:16 -0500
+Received: from cloud.peff.net ([104.130.231.41]:52228 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751496AbdKJJ6M (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Nov 2017 04:58:12 -0500
-Received: (qmail 17707 invoked by uid 109); 10 Nov 2017 09:58:12 -0000
+        id S1751063AbdKJKUP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Nov 2017 05:20:15 -0500
+Received: (qmail 18715 invoked by uid 109); 10 Nov 2017 10:20:15 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 10 Nov 2017 09:58:12 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 10 Nov 2017 10:20:15 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 473 invoked by uid 111); 10 Nov 2017 09:58:23 -0000
+Received: (qmail 709 invoked by uid 111); 10 Nov 2017 10:20:26 -0000
 Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.3)
- by peff.net (qpsmtpd/0.94) with SMTP; Fri, 10 Nov 2017 04:58:23 -0500
+ by peff.net (qpsmtpd/0.94) with SMTP; Fri, 10 Nov 2017 05:20:26 -0500
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 10 Nov 2017 09:58:09 +0000
-Date:   Fri, 10 Nov 2017 09:58:09 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 10 Nov 2017 10:20:12 +0000
+Date:   Fri, 10 Nov 2017 10:20:12 +0000
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Joseph Strauss <josephst@bhphoto.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Bug - Status - Space in Filename
-Message-ID: <20171110095808.igydpwweyceu6qcf@sigill.intra.peff.net>
-References: <655aaa9d2abf4be1b6ade0574d88c999@EXMBX01B.bhphotovideo.local>
- <xmqqvaikjfoj.fsf@gitster.mtv.corp.google.com>
- <20171109132939.3v2z6sf22b4tnwpq@sigill.intra.peff.net>
- <xmqqvaijhs5b.fsf@gitster.mtv.corp.google.com>
+To:     Peter Krefting <peter@softwolves.pp.se>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: cherry-pick very slow on big repository
+Message-ID: <20171110102011.yqtka6a3wmgcvkl6@sigill.intra.peff.net>
+References: <alpine.DEB.2.00.1711100959300.2391@ds9.cixit.se>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqvaijhs5b.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <alpine.DEB.2.00.1711100959300.2391@ds9.cixit.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 10, 2017 at 09:52:16AM +0900, Junio C Hamano wrote:
+On Fri, Nov 10, 2017 at 10:39:39AM +0100, Peter Krefting wrote:
 
-> > That said, if this is the only place that has this funny quoting, it may
-> > not be worth polluting the rest of the code with the idea that quoting
-> > spaces is a good thing to do.
+> Running strace, it seems like it is doing lstat(), open(), mmap(), close()
+> and munmap() on every single file in the repository, which takes a lot of
+> time.
 > 
-> Sounds sane.  We can probably use a helper like this:
-> 
-> static char *quote_path_with_sp(const char *in, const char *prefix, struct strbuf *out)
-> {
-> 	const char dq = '"';
-> 
-> 	quote_path(in, prefix, out);
-> 	if (out->buf[0] != dq && strchr(out->buf, ' ') != NULL) {
-> 		strbuf_insert(out, 0, &dq, 1);
-> 		strbuf_addch(out, dq);
-> 	}
-> 	return out->buf;
-> }
-> 
-> which allows the current users like shortstatus_status() to become a
-> lot shorter.
+> I thought it was just updating the status, but "git status" returns
+> immediately, while cherry-picking takes several minutes for every
+> cherry-pick I do.
 
-Are there callers who don't just print the result? If not, we could just
-always emit. That's slightly more efficient since it drops the expensive
-strbuf_insert (though there are already so many copies going on in
-quote_path_relative that it hardly matters). But it also drops the need
-for the caller to know about the strbuf at all.
+It kind of sounds like a temporary index is being refreshed that doesn't
+have the proper stat information.
 
-Like:
-diff --git a/wt-status.c b/wt-status.c
-index 937a87bbd5..4f4706a6e2 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -1703,6 +1703,18 @@ static void wt_shortstatus_unmerged(struct string_list_item *it,
- 	}
- }
- 
-+static void emit_path(const char *in, const char *prefix)
-+{
-+	struct strbuf buf = STRBUF_INIT;
-+	quote_path(in, prefix, &buf);
-+	if (buf.buf[0] != '"' && strchr(buf.buf, ' ') != NULL) {
-+		putchar('"');
-+		strbuf_addch(&buf, '"');
-+	}
-+	fwrite(buf.buf, 1, buf.len, stdout);
-+	strbuf_release(&buf);
-+}
-+
- static void wt_shortstatus_status(struct string_list_item *it,
- 			 struct wt_status *s)
- {
-@@ -1722,26 +1734,12 @@ static void wt_shortstatus_status(struct string_list_item *it,
- 		if (d->head_path)
- 			fprintf(stdout, "%s%c", d->head_path, 0);
- 	} else {
--		struct strbuf onebuf = STRBUF_INIT;
--		const char *one;
- 		if (d->head_path) {
--			one = quote_path(d->head_path, s->prefix, &onebuf);
--			if (*one != '"' && strchr(one, ' ') != NULL) {
--				putchar('"');
--				strbuf_addch(&onebuf, '"');
--				one = onebuf.buf;
--			}
--			printf("%s -> ", one);
--			strbuf_release(&onebuf);
-+			emit_path(d->head_path, s->prefix);
-+			printf(" -> ");
- 		}
--		one = quote_path(it->string, s->prefix, &onebuf);
--		if (*one != '"' && strchr(one, ' ') != NULL) {
--			putchar('"');
--			strbuf_addch(&onebuf, '"');
--			one = onebuf.buf;
--		}
--		printf("%s\n", one);
--		strbuf_release(&onebuf);
-+		emit_path(it->string, s->prefix);
-+		putchar('\n');
- 	}
- }
- 
+Can you get a backtrace? I'd do something like:
 
-Though really I am fine with any solution that puts this pattern into a
-helper function rather than repeating it inline.
+  - gdb --args git cherry-pick ...
+  - 'r' to run
+  - give it a few seconds to hit the CPU heavy part, then ^C
+  - 'bt' to generate the backtrace
+
+which should give a sense of which code path is leading to the slowdown
+(or of course use real profiling tools, but if the slow path is taking 6
+minutes, you'll be likely to stop in the middle of it ;) ).
 
 -Peff
