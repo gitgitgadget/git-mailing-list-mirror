@@ -2,40 +2,40 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DD5F41F42B
-	for <e@80x24.org>; Fri, 10 Nov 2017 19:07:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4A9EE1F42B
+	for <e@80x24.org>; Fri, 10 Nov 2017 19:07:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753910AbdKJTGP (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Nov 2017 14:06:15 -0500
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:51762 "EHLO
+        id S1753780AbdKJTGO (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Nov 2017 14:06:14 -0500
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:48760 "EHLO
         mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753773AbdKJTGD (ORCPT
+        by vger.kernel.org with ESMTP id S1753775AbdKJTGD (ORCPT
         <rfc822;git@vger.kernel.org>); Fri, 10 Nov 2017 14:06:03 -0500
-Received: from pps.filterd (m0096528.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id vAAJ2vmu017416;
+Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
+        by mx0a-00153501.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id vAAJ4Gr7002777;
         Fri, 10 Nov 2017 11:06:01 -0800
 Authentication-Results: palantir.com;
         spf=softfail smtp.mailfrom=newren@gmail.com
 Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2e535n1cdc-3;
+        by mx0a-00153501.pphosted.com with ESMTP id 2e53631bgu-1;
         Fri, 10 Nov 2017 11:06:01 -0800
-Received: from mxw1.palantir.com (new-smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id 09ED422F6281;
+Received: from mxw1.palantir.com (smtp.yojoe.local [172.19.0.45])
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id 014FA22F628D;
         Fri, 10 Nov 2017 11:06:01 -0800 (PST)
 Received: from newren2-linux.yojoe.local (newren2-linux.dyn.yojoe.local [10.100.68.32])
-        by smtp.yojoe.local (Postfix) with ESMTP id 00F412CDEE6;
-        Fri, 10 Nov 2017 11:06:01 -0800 (PST)
+        by smtp.yojoe.local (Postfix) with ESMTP id E3F602CDEED;
+        Fri, 10 Nov 2017 11:06:00 -0800 (PST)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Elijah Newren <newren@gmail.com>
-Subject: [PATCH 18/30] merge-recursive: Make !o->detect_rename codepath more obvious
-Date:   Fri, 10 Nov 2017 11:05:38 -0800
-Message-Id: <20171110190550.27059-19-newren@gmail.com>
+Subject: [PATCH 17/30] merge-recursive: Fix leaks of allocated renames and diff_filepairs
+Date:   Fri, 10 Nov 2017 11:05:37 -0800
+Message-Id: <20171110190550.27059-18-newren@gmail.com>
 X-Mailer: git-send-email 2.15.0.5.g9567be9905
 In-Reply-To: <20171110190550.27059-1-newren@gmail.com>
 References: <20171110190550.27059-1-newren@gmail.com>
@@ -44,7 +44,7 @@ X-Proofpoint-SPF-Record: v=spf1 redirect=_spf.google.com
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,, definitions=2017-11-10_09:,,
  signatures=0
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=13 phishscore=0 bulkscore=0 spamscore=0
+ malwarescore=0 suspectscore=15 phishscore=0 bulkscore=0 spamscore=0
  clxscore=1034 lowpriorityscore=0 impostorscore=0 adultscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.0.1-1707230000
  definitions=main-1711100261
@@ -53,50 +53,45 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Previously, if !o->detect_rename then get_renames() would return an
-empty string_list, and then process_renames() would have nothing to
-iterate over.  It seems more straightforward to simply avoid calling
-either function in that case.
+get_renames() has always zero'ed out diff_queued_diff.nr while only
+manually free'ing diff_filepairs that did not correspond to renames.
+Further, it allocated struct renames that were tucked away in the
+return string_list.  Make sure all of these are deallocated when we
+are done with them.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-recursive.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ merge-recursive.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
 diff --git a/merge-recursive.c b/merge-recursive.c
-index 7a3402e50c..f40c70990c 100644
+index 49710c0964..7a3402e50c 100644
 --- a/merge-recursive.c
 +++ b/merge-recursive.c
-@@ -1332,8 +1332,6 @@ static struct string_list *get_renames(struct merge_options *o,
- 	struct diff_options opts;
+@@ -1661,10 +1661,21 @@ static struct rename_info *handle_renames(struct merge_options *o,
  
- 	renames = xcalloc(1, sizeof(struct string_list));
--	if (!o->detect_rename)
--		return renames;
- 
- 	diff_setup(&opts);
- 	DIFF_OPT_SET(&opts, RECURSIVE);
-@@ -1652,6 +1650,10 @@ static struct rename_info *handle_renames(struct merge_options *o,
+ static void cleanup_renames(struct rename_info *re_info)
  {
- 	struct rename_info *rei = xcalloc(1, sizeof(struct rename_info));
+-	string_list_clear(re_info->head_renames, 0);
+-	string_list_clear(re_info->merge_renames, 0);
++	const struct rename *re;
++	int i;
  
-+	*clean = 1;
-+	if (!o->detect_rename)
-+		return NULL;
++	for (i = 0; i < re_info->head_renames->nr; i++) {
++		re = re_info->head_renames->items[i].util;
++		diff_free_filepair(re->pair);
++	}
++	string_list_clear(re_info->head_renames, 1);
+ 	free(re_info->head_renames);
 +
- 	rei->head_renames  = get_renames(o, head, common, head, merge, entries);
- 	rei->merge_renames = get_renames(o, merge, common, head, merge, entries);
- 	*clean = process_renames(o, rei->head_renames, rei->merge_renames);
-@@ -1664,6 +1666,9 @@ static void cleanup_renames(struct rename_info *re_info)
- 	const struct rename *re;
- 	int i;
++	for (i = 0; i < re_info->merge_renames->nr; i++) {
++		re = re_info->merge_renames->items[i].util;
++		diff_free_filepair(re->pair);
++	}
++	string_list_clear(re_info->merge_renames, 1);
+ 	free(re_info->merge_renames);
  
-+	if (!re_info)
-+		return;
-+
- 	for (i = 0; i < re_info->head_renames->nr; i++) {
- 		re = re_info->head_renames->items[i].util;
- 		diff_free_filepair(re->pair);
+ 	free(re_info);
 -- 
 2.15.0.5.g9567be9905
 
