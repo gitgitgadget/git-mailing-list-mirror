@@ -2,122 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
-	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C97D9201C8
-	for <e@80x24.org>; Thu,  9 Nov 2017 23:15:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A762201C8
+	for <e@80x24.org>; Fri, 10 Nov 2017 00:22:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754273AbdKIXPM (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Nov 2017 18:15:12 -0500
-Received: from smtp-out-6.talktalk.net ([62.24.135.70]:47194 "EHLO
-        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753850AbdKIXPL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Nov 2017 18:15:11 -0500
-Received: from PhilipOakley ([92.29.14.162])
-        by smtp.talktalk.net with SMTP
-        id Cw2Oery7mbjdZCw2Oe2H94; Thu, 09 Nov 2017 23:15:09 +0000
-X-Originating-IP: [92.29.14.162]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=ONFX5WSB c=1 sm=1 tr=0 a=NXc+vVEgz70gitWznrz3ig==:117
- a=NXc+vVEgz70gitWznrz3ig==:17 a=8nJEP1OIZ-IA:10 a=ybZZDoGAAAAA:8
- a=xtxXYLxNAAAA:8 a=qX0ueMBeGtnBRC8gHW8A:9 a=bANY1TUM1s0iwQze:21
- a=sk7XHJPs6GDoXEyE:21 a=wPNLvfGTeEIA:10 a=0RhZnL1DYvcuLYC8JZ5M:22
- a=xts0dhWdiJbonKbuqhAr:22
-Message-ID: <EA775C6AB4684B7A86A88C733C132827@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:   "Philip Oakley" <philipoakley@iee.org>
-To:     "Junio C Hamano" <gitster@pobox.com>
-Cc:     "Ann T Ropea" <bedhanger@gmx.de>,
-        "Git Mailing List" <git@vger.kernel.org>,
-        "Daniel Barkalow" <barkalow@iabervon.org>
-References: <20171105162730.31405-1-bedhanger@gmx.de>        <20171107025321.31028-1-bedhanger@gmx.de>        <83D263E58ABD46188756D41FE311E469@PhilipOakley> <xmqqfu9pmsx3.fsf@gitster.mtv.corp.google.com>
-Subject: Re: [PATCH 1/3] checkout: describe_detached_head: remove 3dots after committish
-Date:   Thu, 9 Nov 2017 23:15:06 -0000
-Organization: OPDS
+        id S1755484AbdKJAWR (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Nov 2017 19:22:17 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54732 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1755161AbdKJAWP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Nov 2017 19:22:15 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6C9EDB6F4A;
+        Thu,  9 Nov 2017 19:22:12 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=axLG+smX+Y9C
+        H/rB2VaVRYBVBO4=; b=EWzadQWWSpuoiMUZU2Gr651Z5mMt4PEKSE3NNZsrFZKZ
+        /tV26RjXhwdzyCkRp/Vp3OPfHyKWkiqBZ1N2otSazjcQiCqnAxYO6au0MhmxKqrl
+        coD+gzF//n5+59VNRe1lTjMtYDN2hXBVTtICy9fWYL4rndo37oQxL6jArfMFKMw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=jJwpXw
+        O/xoev+PCDNK439IzZiVuAQQWTyLIOIw1yPyeHcBjZ89OzJh229XSzcThNygynvQ
+        oFd7hokXJgIoYv9PZ5YOA+flVkGv0n9HgHeEdV68bmtgD13uq/BJ7ldTQj5bTQ2Y
+        VN9XKCg/JZnKzOVoQ+B50ngjvjlfa/3FQY3XU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 62808B6F49;
+        Thu,  9 Nov 2017 19:22:12 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D14B6B6F48;
+        Thu,  9 Nov 2017 19:22:11 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 1/1] Introduce git add --renormalize .
+References: <xmqqshejq9mn.fsf@gitster.mtv.corp.google.com>
+        <20171030162913.23164-1-tboegi@web.de>
+        <xmqqvaimeixm.fsf@gitster.mtv.corp.google.com>
+        <20171107172659.GA11119@tor.lan>
+        <xmqqlgjhobb4.fsf@gitster.mtv.corp.google.com>
+        <20171109184700.GA27635@tor.lan>
+Date:   Fri, 10 Nov 2017 09:22:10 +0900
+In-Reply-To: <20171109184700.GA27635@tor.lan> ("Torsten =?utf-8?Q?B=C3=B6g?=
+ =?utf-8?Q?ershausen=22's?=
+        message of "Thu, 9 Nov 2017 19:47:01 +0100")
+Message-ID: <xmqq1sl7j83x.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="iso-8859-1";
-        reply-type=original
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-Antivirus: AVG (VPS 171109-2, 09/11/2017), Outbound message
-X-Antivirus-Status: Clean
-X-CMAE-Envelope: MS4wfP/7CypjH+qE/a3qpnWtiObjhxw35X0lP54Dnl6+j3JlTScKMsZlNtSivOSwicosPh07DWQJUdZNfYB1i9SgkHgeyMdDZ5j0XzAiwx34zo2dDfONcvjS
- anEJ5h7uxdL8ULaehuZAei11cahdc2G78xA1miCkAZwYWBHfbV3N6MXjSt4tiV+Z18JhrPiShK3pKtM1vcuIGG9nrWUGJS/YET5aXqLPRRhJ1LTHaaUmLLne
- QUC0tp5DvDhPFo8PPpah3A==
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 321ADDB0-C5AD-11E7-9BB4-575F0C78B957-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Junio C Hamano" <gitster@pobox.com>
-Sent: Wednesday, November 08, 2017 1:59 AM
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
+> Here is a somwhat shorter description:
+>
+> Apply the "clean" process freshly to all tracked files.
+> This is useful after changing `core.autocrlf` or the `text`
+> attributes in the `.gitattributes` file because
+> Git may not consider these files as changed.
 
-> "Philip Oakley" <philipoakley@iee.org> writes:
->
->> But...
->>> ...
->>> This change causes quite a few tests to fall over; however, they
->>> all have truncated-something-longer-ellipses in their
->>> raw-diff-output expected sections, and removing the ellipses
->>> from there makes the tests pass again, :-)
->>
->> The number of failures you report in the test suit suggests that
->> someone somewhere will be expecting that notation, and that we may
->> need a deprecation period, perhaps with an 'ellipsis' config variable
->> whose default value can later be flipped, though that leaves a config
->> value needing support forever!
->
-> Hmmm, never thought about that.
->
-> I have been assuming that tools reading "--raw" output that is
-> abbreviated would be crazy, because they have to strip the dots and
-> the number of dots may not always be three [*1*].
->
-> But you are right.  It would be very unlikely that there is no such
-> crazy tools, so it deserves consideration if we would be breaking
-> such tools.
->
-> On the other hand, if such a crazy tool was still written correctly
-> (it is debatable what the definition of "correct" is, though), it
-> would be stripping any number dots at the end, not just insisting on
-> seeing exactly three dots, and splitting these fields at SP.
-> Otherwise they would already be broken as they cannot handle
-> occasional object names that have less than three dots because they
-> happen to be longer than the more common abbreviation length used by
-> other objects.  So in practice it might not be _too_ bad.
->
-Thinking on this, I'd suggest that the patch series does remove the ellipsis 
-dots immediately, but retains a config option that can be set to get back 
-the old 'dots' display for those who have badly written scripts that maybe 
-haven't failed yet. i.e. no deprecation period, just a fall back option; and 
-if nobody shouts then remove the config option after a respectable period.
+I think it is OK to omit .git/config for brevity (I am assuming that
+your justification is because you thought it was obvious it is a
+configuration variable); but then it is equally obvious (if not
+more) that `text` attribute comes from .gitattributes (notice we do
+not mention core.autocrlf is a configuration variable in the above,
+but we do say `text` is an attribute) so it can also be omitted for
+brevity.
 
-It would also mean the existing tests can be re-used...
+> Correct the files that had been commited with CRLF,
+> they will from now on have LF instead.
 
->
-> [Footnote]
->
-> *1* When we ask for --abbrev=7, we allocate 10 places and fill the
-> rest with necessary number of dots after the result of
-> find_unique_abbrev(), so if an object name turns out to require 8
-> hexdigits to make it unique, we'll append only two dots to it to
-> make it 10 so that it aligns nicely with others) and they would
-> always be reading the full, non abbreviated output.  The story does
-> not change that much when we do not explicitly ask for a specific
-> abbreviation length in that we add variable number of dots for
-> aligning in that case, too.
+Reading this as a single sentence immediately after the above
+paragraph leaves me feel confused.  First of all, this would not
+happen unless the user corrects core.autocrlf/text like described
+above.  In fact, updating these settings is done as in order to do
+that correction.  So I'd say it should not be split.
 
-The --abbrev=7 does cater for many smaller repo's, so there is a possiblity 
-that the bad script issue hasn't been hit yet by those repos.
---
+> Re-run what the `clean` filter does.
 
-Philip 
+This again looks out of place just like the previous sentence.  In
+fact, provided if "the clean process" is understood by the end user,
+this is redundant.
 
+> This option implies `-u`.
+
+Taking these altogether, perhaps
+
+    Apply the "clean" process freshly to all tracked files to
+    forcibly add them again to the index.  This is useful after
+    changing `core.autocrlf` configuration or the `text` attribute
+    in order to correct files added with wrong CRLF/LF line endings.
+    This option implies `-u`.
+
+Thanks.
