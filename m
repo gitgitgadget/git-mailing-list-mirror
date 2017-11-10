@@ -7,34 +7,34 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B0DF31F42B
-	for <e@80x24.org>; Fri, 10 Nov 2017 17:46:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8F3AC1F42B
+	for <e@80x24.org>; Fri, 10 Nov 2017 17:49:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753353AbdKJRqC (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Nov 2017 12:46:02 -0500
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:41192 "EHLO
+        id S1753347AbdKJRtY (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Nov 2017 12:49:24 -0500
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:38776 "EHLO
         mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752625AbdKJRqA (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 10 Nov 2017 12:46:00 -0500
-Received: from pps.filterd (m0096528.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id vAAHbogc020021
+        by vger.kernel.org with ESMTP id S1752625AbdKJRtY (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 10 Nov 2017 12:49:24 -0500
+Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
+        by mx0a-00153501.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id vAAHcefq009800
         for <git@vger.kernel.org>; Fri, 10 Nov 2017 09:39:57 -0800
 Authentication-Results: palantir.com;
         spf=softfail smtp.mailfrom=newren@gmail.com
 Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2e535n18ca-1
+        by mx0a-00153501.pphosted.com with ESMTP id 2e536317d5-1
         for <git@vger.kernel.org>; Fri, 10 Nov 2017 09:39:57 -0800
 Received: from mxw1.palantir.com (smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id 4DBCA22F4446
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id 6DCB322F444C
         for <git@vger.kernel.org>; Fri, 10 Nov 2017 09:39:57 -0800 (PST)
 Received: from newren2-linux.yojoe.local (newren2-linux.dyn.yojoe.local [10.100.68.32])
-        by smtp.yojoe.local (Postfix) with ESMTP id 45F862CDEB4
+        by smtp.yojoe.local (Postfix) with ESMTP id 66DF12CDE6A
         for <git@vger.kernel.org>; Fri, 10 Nov 2017 09:39:57 -0800 (PST)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
-Subject: [PATCH 1/4] sequencer: Warn when internal merge may be suboptimal due to renameLimit
-Date:   Fri, 10 Nov 2017 09:39:53 -0800
-Message-Id: <20171110173956.25105-2-newren@gmail.com>
+Subject: [PATCH 4/4] sequencer: Show rename progress during cherry picks
+Date:   Fri, 10 Nov 2017 09:39:56 -0800
+Message-Id: <20171110173956.25105-5-newren@gmail.com>
 X-Mailer: git-send-email 2.15.0.5.g9567be9905
 In-Reply-To: <20171110173956.25105-1-newren@gmail.com>
 References: <20171110173956.25105-1-newren@gmail.com>
@@ -52,11 +52,8 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Having renamed files silently treated as deleted/modified conflicts
-instead of correctly resolving the renamed/modified case has caused lots
-of pain for some users.  Eventually, some of them figured out to set
-merge.renameLimit to something higher, but without feedback about what
-value it should have, they were just repeatedly guessing and retrying.
+When trying to cherry-pick a change that has lots of renames, it is
+somewhat unsettling to wait a really long time without any feedback.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
@@ -64,17 +61,17 @@ Signed-off-by: Elijah Newren <newren@gmail.com>
  1 file changed, 1 insertion(+)
 
 diff --git a/sequencer.c b/sequencer.c
-index f2a10cc4f2..2b4cecb617 100644
+index 2b4cecb617..247d93f363 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -462,6 +462,7 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
- 	if (is_rebase_i(opts) && clean <= 0)
- 		fputs(o.obuf.buf, stdout);
- 	strbuf_release(&o.obuf);
-+	diff_warn_rename_limit("merge.renamelimit", o.needed_rename_limit, 0);
- 	if (clean < 0)
- 		return clean;
+@@ -448,6 +448,7 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
+ 	o.branch2 = next ? next_label : "(empty tree)";
+ 	if (is_rebase_i(opts))
+ 		o.buffer_output = 2;
++	o.show_rename_progress = 1;
  
+ 	head_tree = parse_tree_indirect(head);
+ 	next_tree = next ? next->tree : empty_tree();
 -- 
 2.15.0.5.g9567be9905
 
