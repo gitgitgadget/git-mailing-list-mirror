@@ -6,75 +6,92 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4B9A81F42B
-	for <e@80x24.org>; Fri, 10 Nov 2017 15:38:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A72091F42B
+	for <e@80x24.org>; Fri, 10 Nov 2017 16:09:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752990AbdKJPia convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Fri, 10 Nov 2017 10:38:30 -0500
-Received: from mx2.suse.de ([195.135.220.15]:57959 "EHLO mx2.suse.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753260AbdKJPhv (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Nov 2017 10:37:51 -0500
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay1.suse.de (charybdis-ext.suse.de [195.135.220.254])
-        by mx2.suse.de (Postfix) with ESMTP id DBDC8AB5D
-        for <git@vger.kernel.org>; Fri, 10 Nov 2017 15:37:49 +0000 (UTC)
-Subject: Re: [RFC] cover-at-tip
-From:   Nicolas Morey-Chaisemartin <NMoreyChaisemartin@suse.de>
+        id S1751455AbdKJQJ2 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Nov 2017 11:09:28 -0500
+Received: from bran.ispras.ru ([83.149.199.196]:31620 "EHLO smtp.ispras.ru"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1751142AbdKJQJ2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Nov 2017 11:09:28 -0500
+X-Greylist: delayed 540 seconds by postgrey-1.27 at vger.kernel.org; Fri, 10 Nov 2017 11:09:27 EST
+Received: from [10.10.14.117] (real.intra.ispras.ru [10.10.14.117])
+        by smtp.ispras.ru (Postfix) with ESMTP id A5D31203C7
+        for <git@vger.kernel.org>; Fri, 10 Nov 2017 19:00:25 +0300 (MSK)
 To:     git@vger.kernel.org
-References: <357e8afb-4814-c950-1530-530bb6dd5f5a@suse.de>
-Openpgp: preference=signencrypt
-Message-ID: <e1d3ab5b-82e6-8490-8f2e-00c1359c6deb@suse.de>
-Date:   Fri, 10 Nov 2017 16:37:49 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101
- Thunderbird/56.0
+From:   =?UTF-8?B?0JXRhNC40LzQvtCyINCS0LDRgdC40LvQuNC5?= <real@ispras.ru>
+Subject: Bug: cherry-pick & submodule
+Message-ID: <c48bf9f3-10b2-dfac-a207-74a57e66b848@ispras.ru>
+Date:   Fri, 10 Nov 2017 19:00:25 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
 MIME-Version: 1.0
-In-Reply-To: <357e8afb-4814-c950-1530-530bb6dd5f5a@suse.de>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 8BIT
-Content-Language: en-US
+Content-Type: multipart/mixed;
+ boundary="------------BB1C1433F49F6F28DBA2EE31"
+Content-Language: en-GB
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This is a multi-part message in MIME format.
+--------------BB1C1433F49F6F28DBA2EE31
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
+I faced an unexpected behaviour during cherry-picking
+a commit to a branch with a submodule.
 
-Le 10/11/2017 à 11:24, Nicolas Morey-Chaisemartin a écrit :
-> Hi,
->
-> I'm starting to look into the cover-at-tip topic that I found in the leftover bits (http://www.spinics.net/lists/git/msg259573.html)
->
-> Here's a first draft of a patch that adds support for format-patch --cover-at-tip. It compiles and works in my nice and user firnedly test case.
-> Just wanted to make sure I was going roughly in the right direction here.
->
->
-> I was wondering where is the right place to put a commit_is_cover_at_tip() as the test will be needed in other place as the feature is extended to git am/merge/pull.
->
-> Feel free to comment. I know the help is not clear at this point and there's still some work to do on option handling (add a config option, probably have --cover-at-tip imply --cover-letter, etc) and
-> some testing :)
->
->
-> ---
+Git graph:
 
-Leaving some more updates and questions before the week end:
+A -- B [master]
+  \
+   `- C -- D [test]
 
-I started on git am --cover-at-tip.
+Both branches have a file with name `a_file`.
+It has been added by commit A.
+Commits B and C add a folder with name `a_submodule` to the respective 
+branches.
+Commit C does it regularly by adding a file with name `a_submodule/content`.
+Commit B adds a submodule with name `a_submodule`.
+Commit D only modifies `a_file`.
+Note that `a_file` and `a_submodule` are not related.
 
-The proposed patch for format-patch does not output any "---" to signal the end of the commit log and the begining of the patch in the cover letter.
-This means that the log summary, the diffstat and the git footer ( --\n<git version>) is seen as part of the commit log. Which is just wrong.
+[repo]
+   |- a_file
+   `- a_submodule
 
-Removing them would solve the issue but I feel they bring some useful info (or they would not be here).
-Adding a "---" between the commit log and those added infos poses another problem: git am does not see an empty patch anymore.
-I would need to add "some" level of parsing to am.c to make sure the patch content is just garbage and that there are no actual hunks for that.
+When I trying to cherry pick commit D on commit B, I got
+a conflict with `a_submodule`. Changes of `a_file` are
+successfully cherry-picked.
 
-I did not find any public API that would allow me to do that, although apply_path/parse_chunk would fit the bill.
-Is that the right way to approach this ?
+I expected, that there would be no conflicts.
 
-My branch is here if anyone want to give a look: https://github.com/nmorey/git/tree/dev/cover-at-tip
+A bash script reproducing the bug is attached.
 
-Nicolas
+Vasily.
 
+--------------BB1C1433F49F6F28DBA2EE31
+Content-Type: application/x-shellscript;
+ name="bug.sh"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment;
+ filename="bug.sh"
 
-
-
+IyEvYmluL2Jhc2gKCnJtIC1yZiBhX3N1Ym1vZHVsZSBhX3JlcG8KCm1rZGlyIGFfc3VibW9k
+dWxlCmNkIGFfc3VibW9kdWxlCmdpdCBpbml0CnRvdWNoIGFfZmlsZV9pbl9hX3N1Ym1vZHVs
+ZQpnaXQgYWRkIGFfZmlsZV9pbl9hX3N1Ym1vZHVsZQpnaXQgY29tbWl0IC1tICJhZGQgYSBm
+aWxlIGluIGEgc3VibW9kdWxlIgpjZCAuLgoKbWtkaXIgYV9yZXBvCmNkIGFfcmVwbwpnaXQg
+aW5pdAoKdG91Y2ggYV9maWxlCmdpdCBhZGQgYV9maWxlCmdpdCBjb21taXQgLW0gImFkZCBh
+IGZpbGUiCgpnaXQgYnJhbmNoIHRlc3QKZ2l0IGNoZWNrb3V0IHRlc3QKCm1rZGlyIGFfc3Vi
+bW9kdWxlCnRvdWNoIGFfc3VibW9kdWxlL2NvbnRlbnQKZ2l0IGFkZCBhX3N1Ym1vZHVsZS9j
+b250ZW50CmdpdCBjb21taXQgLW0gImFkZCBhIHJlZ3VsYXIgZm9sZGVyIHdpdGggbmFtZSBh
+X3N1Ym1vZHVsZSIKCmVjaG8gIjEyMyIgPiBhX2ZpbGUKZ2l0IGFkZCBhX2ZpbGUKZ2l0IGNv
+bW1pdCAtbSAibW9kaWZ5IGEgZmlsZSIKCmdpdCBjaGVja291dCBtYXN0ZXIKCmdpdCBzdWJt
+b2R1bGUgYWRkIC4uL2Ffc3VibW9kdWxlIGFfc3VibW9kdWxlCmdpdCBzdWJtb2R1bGUgdXBk
+YXRlIGFfc3VibW9kdWxlCmdpdCBjb21taXQgLW0gImFkZCBhIHN1Ym1vZHVsZSBpbmZvIGZv
+bGRlciB3aXRoIG5hbWUgYV9zdWJtb2R1bGUiCgojIFRyeWluZyB0byBjaGVycnktcGljayBt
+b2RpZmljYXRpb24gb2YgYSBmaWxlIGZyb20gdGVzdCBicmFuY2guCmdpdCBjaGVycnktcGlj
+ayB0ZXN0CgojIHNvbWUgZGVidWcKZ2l0IHN0YXR1cwoKZ2l0ayAtLWFsbAo=
+--------------BB1C1433F49F6F28DBA2EE31--
