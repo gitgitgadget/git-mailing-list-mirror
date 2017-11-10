@@ -6,46 +6,46 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 496DC2021B
-	for <e@80x24.org>; Fri, 10 Nov 2017 11:10:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 863BC1F43C
+	for <e@80x24.org>; Fri, 10 Nov 2017 11:10:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752796AbdKJLKM (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Nov 2017 06:10:12 -0500
-Received: from smtp-out-1.talktalk.net ([62.24.135.65]:46249 "EHLO
+        id S1752763AbdKJLKL (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Nov 2017 06:10:11 -0500
+Received: from smtp-out-1.talktalk.net ([62.24.135.65]:50347 "EHLO
         smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752695AbdKJLKG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Nov 2017 06:10:06 -0500
+        with ESMTP id S1752713AbdKJLKH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Nov 2017 06:10:07 -0500
 Received: from lindisfarne.localdomain ([92.22.30.94])
         by smtp.talktalk.net with SMTP
-        id D7C7etmv6mITaD7CHeDJl9; Fri, 10 Nov 2017 11:10:05 +0000
+        id D7C7etmv6mITaD7CHeDJlE; Fri, 10 Nov 2017 11:10:06 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1510312205;
-        bh=SoVtLVNJfeZQLsd4XYAhnSokGmWG2Vn01i3lSCtrUyY=;
+        s=cmr1711; t=1510312206;
+        bh=WMTcmtOl0cYbjscAX+k+bsKJnX6bR2bShaDiqc0zxCg=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:Reply-To;
-        b=aFWST7+MCZhpHNQUPDoHqdRuJlLnBykK3uJrfuR2r4dfFefFfj8ofblja6KeTU+1U
-         6ee7zosCX9uAb/Oh2Ybtoy9Iz4HkWHR/XpO40dqPNu4i/c9Cy+s4Pj+48N9woR18H7
-         3HPp7DKJAWxiJrYCZr5to/r9rmYauAjpZgSQ88RI=
+        b=aaGWcSueXbcTcEUNgmEU8g7OtXQ/9GebIlNL2qHgCLReLXH99XwQ5iyyW/puqQh9l
+         PE2glYqZHylhRREb/FLoJCS8w/VLZMYmhDNINqX+4FNABEAWzghkCMh1iRjRSftpVy
+         B4m4r8NV7yeabC3/STAwaYevQ2a6YrY+7cDl1waM=
 X-Originating-IP: [92.22.30.94]
 X-Spam: 0
 X-OAuthority: v=2.2 cv=W/RIbVek c=1 sm=1 tr=0 a=lje0BXTe3+PqU+djfnm1WA==:117
- a=lje0BXTe3+PqU+djfnm1WA==:17 a=evINK-nbAAAA:8 a=2KFHKmnFOLNn0y6cwGoA:9
- a=X0cjHmx7Z1TIIcT3:21 a=PaGmMcDjFQlOUU4Q:21 a=RfR_gqz1fSpA9VikTjo0:22
+ a=lje0BXTe3+PqU+djfnm1WA==:17 a=evINK-nbAAAA:8 a=swPmyTYr8vmIW86sC0sA:9
+ a=eF08Hd-Nvrz8L7cY:21 a=DzFob3GGma4QAaSY:21 a=RfR_gqz1fSpA9VikTjo0:22
 From:   Phillip Wood <phillip.wood@talktalk.net>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH v2 3/9] Add a function to update HEAD after creating a commit
-Date:   Fri, 10 Nov 2017 11:09:43 +0000
-Message-Id: <20171110110949.328-4-phillip.wood@talktalk.net>
+Subject: [PATCH v2 4/9] commit: move post-rewrite code to libgit
+Date:   Fri, 10 Nov 2017 11:09:44 +0000
+Message-Id: <20171110110949.328-5-phillip.wood@talktalk.net>
 X-Mailer: git-send-email 2.15.0
 In-Reply-To: <20171110110949.328-1-phillip.wood@talktalk.net>
 References: <20170925101041.18344-1-phillip.wood@talktalk.net>
  <20171110110949.328-1-phillip.wood@talktalk.net>
 Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
-X-CMAE-Envelope: MS4wfC7HBmRWvkUeHbcT6KjewOYTLBXEFPfqk8uESRrhpaAvj7kpw/CAn+wngYGUx/uG9EZrOaI/jYM/23wg8b4aFPo0w5LDNMDhyZDrs4fEcTnPlJTNJ1WH
- 391NYMYUE1q4esN2a7hTPvnEBmRVVKxhVHwMr8uMXJ7oTZikN5/tYnk+XUSj9Y5sOiwozTOXplr6nJFmj1/iwhJzXVE3gkIDYdSvyXNcTgFLVouQLz4y4/Vc
- zoWlHpjpVkbNKum/d0yADhHRqnaX4MGeBlm3zT6msbccRh+/iQmfcyAQaiZs4n1V
+X-CMAE-Envelope: MS4wfDfMdYoJ+Watv73npg17nNmdtzPUIJadoN0JNv5M5T/aeM92i3ON7tqSOOaqJj0EeHY43YJNBMf/kqYzTTBuIbQbupsUMesCaIzAPpxtM1XWdS8F+dxs
+ eYwwgQtVYF0VNe4p9xsBdw0b4BiwTX075wu5Bl6m5W1tVXqOT36Nyytb1w75j4ONAJohc1m3et9dmH1yMbh41pbHI8bDzPb+o56b4O3ngsmqB+iFQL4TR3cN
+ vgfO2c39AE8MqkuqFoHKgMSoAhSqv32vpD6T3+V0lLdmoJOU0JYSjAWscxLdmFfP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -53,140 +53,168 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Add update_head() based on the code that updates HEAD after committing
-in builtin/commit.c that can be called by 'git commit' and other
-commands.
+Move run_rewrite_hook() from bulitin/commit.c to sequencer.c so it can
+be shared with other commands and add a new function
+commit_post_rewrite() based on the code in builtin/commit.c that
+encapsulates rewriting notes and running the post-rewrite hook. Once
+the sequencer learns how to create commits without forking 'git
+commit' these functions will be used when squashing commits.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
 
 Notes:
     changes since v1:
-     - rename update_head() to update_head_with_reflog()
+     - reword commit message to explain why the code is being moved
 
- builtin/commit.c | 20 ++------------------
- sequencer.c      | 39 ++++++++++++++++++++++++++++++++++++++-
- sequencer.h      |  4 ++++
- 3 files changed, 44 insertions(+), 19 deletions(-)
+ builtin/commit.c | 42 +-----------------------------------------
+ sequencer.c      | 47 +++++++++++++++++++++++++++++++++++++++++++++++
+ sequencer.h      |  2 ++
+ 3 files changed, 50 insertions(+), 41 deletions(-)
 
 diff --git a/builtin/commit.c b/builtin/commit.c
-index dbc160c525e7a9249b7c7df2180495a4c7102296..7c28144446644a665f7b7d8f4b6c0a5855aef01b 100644
+index 7c28144446644a665f7b7d8f4b6c0a5855aef01b..3bc5dff2c00c9556e6c032381d5baf18246bf8dc 100644
 --- a/builtin/commit.c
 +++ b/builtin/commit.c
-@@ -1591,13 +1591,11 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 	struct strbuf sb = STRBUF_INIT;
- 	struct strbuf author_ident = STRBUF_INIT;
- 	const char *index_file, *reflog_msg;
--	char *nl;
- 	struct object_id oid;
- 	struct commit_list *parents = NULL;
- 	struct stat statbuf;
- 	struct commit *current_head = NULL;
- 	struct commit_extra_header *extra = NULL;
--	struct ref_transaction *transaction;
- 	struct strbuf err = STRBUF_INIT;
+@@ -31,9 +31,7 @@
+ #include "gpg-interface.h"
+ #include "column.h"
+ #include "sequencer.h"
+-#include "notes-utils.h"
+ #include "mailmap.h"
+-#include "sigchain.h"
  
- 	if (argc == 2 && !strcmp(argv[1], "-h"))
-@@ -1720,25 +1718,11 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 	strbuf_release(&author_ident);
- 	free_commit_extra_headers(extra);
- 
--	nl = strchr(sb.buf, '\n');
--	if (nl)
--		strbuf_setlen(&sb, nl + 1 - sb.buf);
--	else
--		strbuf_addch(&sb, '\n');
--	strbuf_insert(&sb, 0, reflog_msg, strlen(reflog_msg));
--	strbuf_insert(&sb, strlen(reflog_msg), ": ", 2);
--
--	transaction = ref_transaction_begin(&err);
--	if (!transaction ||
--	    ref_transaction_update(transaction, "HEAD", &oid,
--				   current_head
--				   ? &current_head->object.oid : &null_oid,
--				   0, sb.buf, &err) ||
--	    ref_transaction_commit(transaction, &err)) {
-+	if (update_head_with_reflog(current_head, &oid, reflog_msg, &sb,
-+				    &err)) {
- 		rollback_index_files();
- 		die("%s", err.buf);
- 	}
--	ref_transaction_free(transaction);
- 
- 	unlink(git_path_cherry_pick_head());
- 	unlink(git_path_revert_head());
-diff --git a/sequencer.c b/sequencer.c
-index 23c250f16cfb7620215bb9c99b8e12d726dc9191..fcd8e92531a3fb1f0bc1294925e87b3624ada909 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -1,10 +1,10 @@
- #include "cache.h"
- #include "config.h"
- #include "lockfile.h"
--#include "sequencer.h"
- #include "dir.h"
- #include "object.h"
- #include "commit.h"
-+#include "sequencer.h"
- #include "tag.h"
- #include "run-command.h"
- #include "exec_cmd.h"
-@@ -752,6 +752,43 @@ int template_untouched(const struct strbuf *sb, const char *template_file,
- 	return rest_is_empty(sb, start - sb->buf);
+ static const char * const builtin_commit_usage[] = {
+ 	N_("git commit [<options>] [--] <pathspec>..."),
+@@ -1478,37 +1476,6 @@ static int git_commit_config(const char *k, const char *v, void *cb)
+ 	return git_status_config(k, v, s);
  }
  
-+int update_head_with_reflog(const struct commit *old_head,
-+			    const struct object_id *new_head,
-+			    const char *action, const struct strbuf *msg,
-+			    struct strbuf *err)
+-static int run_rewrite_hook(const struct object_id *oldoid,
+-			    const struct object_id *newoid)
+-{
+-	struct child_process proc = CHILD_PROCESS_INIT;
+-	const char *argv[3];
+-	int code;
+-	struct strbuf sb = STRBUF_INIT;
+-
+-	argv[0] = find_hook("post-rewrite");
+-	if (!argv[0])
+-		return 0;
+-
+-	argv[1] = "amend";
+-	argv[2] = NULL;
+-
+-	proc.argv = argv;
+-	proc.in = -1;
+-	proc.stdout_to_stderr = 1;
+-
+-	code = start_command(&proc);
+-	if (code)
+-		return code;
+-	strbuf_addf(&sb, "%s %s\n", oid_to_hex(oldoid), oid_to_hex(newoid));
+-	sigchain_push(SIGPIPE, SIG_IGN);
+-	write_in_full(proc.in, sb.buf, sb.len);
+-	close(proc.in);
+-	strbuf_release(&sb);
+-	sigchain_pop(SIGPIPE);
+-	return finish_command(&proc);
+-}
+-
+ int run_commit_hook(int editor_is_used, const char *index_file, const char *name, ...)
+ {
+ 	struct argv_array hook_env = ARGV_ARRAY_INIT;
+@@ -1739,14 +1706,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 	rerere(0);
+ 	run_commit_hook(use_editor, get_index_file(), "post-commit", NULL);
+ 	if (amend && !no_post_rewrite) {
+-		struct notes_rewrite_cfg *cfg;
+-		cfg = init_copy_notes_for_rewrite("amend");
+-		if (cfg) {
+-			/* we are amending, so current_head is not NULL */
+-			copy_note_for_rewrite(cfg, &current_head->object.oid, &oid);
+-			finish_copy_notes_for_rewrite(cfg, "Notes added by 'git commit --amend'");
+-		}
+-		run_rewrite_hook(&current_head->object.oid, &oid);
++		commit_post_rewrite(current_head, &oid);
+ 	}
+ 	if (!quiet)
+ 		print_summary(prefix, &oid, !current_head);
+diff --git a/sequencer.c b/sequencer.c
+index fcd8e92531a3fb1f0bc1294925e87b3624ada909..5529e5df1cbe9045b000ecbff6c28a0bee736ccc 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -21,6 +21,8 @@
+ #include "log-tree.h"
+ #include "wt-status.h"
+ #include "hashmap.h"
++#include "notes-utils.h"
++#include "sigchain.h"
+ 
+ #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
+ 
+@@ -789,6 +791,51 @@ int update_head_with_reflog(const struct commit *old_head,
+ 	return ret;
+ }
+ 
++static int run_rewrite_hook(const struct object_id *oldoid,
++			    const struct object_id *newoid)
 +{
-+	struct ref_transaction *transaction;
++	struct child_process proc = CHILD_PROCESS_INIT;
++	const char *argv[3];
++	int code;
 +	struct strbuf sb = STRBUF_INIT;
-+	const char *nl;
-+	int ret = 0;
 +
-+	if (action) {
-+		strbuf_addstr(&sb, action);
-+		strbuf_addstr(&sb, ": ");
-+	}
++	argv[0] = find_hook("post-rewrite");
++	if (!argv[0])
++		return 0;
 +
-+	nl = strchr(msg->buf, '\n');
-+	if (nl) {
-+		strbuf_add(&sb, msg->buf, nl + 1 - msg->buf);
-+	} else {
-+		strbuf_addbuf(&sb, msg);
-+		strbuf_addch(&sb, '\n');
-+	}
++	argv[1] = "amend";
++	argv[2] = NULL;
 +
-+	transaction = ref_transaction_begin(err);
-+	if (!transaction ||
-+	    ref_transaction_update(transaction, "HEAD", new_head,
-+				   old_head ? &old_head->object.oid : &null_oid,
-+				   0, sb.buf, err) ||
-+	    ref_transaction_commit(transaction, err)) {
-+		ret = -1;
-+	}
-+	ref_transaction_free(transaction);
++	proc.argv = argv;
++	proc.in = -1;
++	proc.stdout_to_stderr = 1;
++
++	code = start_command(&proc);
++	if (code)
++		return code;
++	strbuf_addf(&sb, "%s %s\n", oid_to_hex(oldoid), oid_to_hex(newoid));
++	sigchain_push(SIGPIPE, SIG_IGN);
++	write_in_full(proc.in, sb.buf, sb.len);
++	close(proc.in);
 +	strbuf_release(&sb);
++	sigchain_pop(SIGPIPE);
++	return finish_command(&proc);
++}
 +
-+	return ret;
++void commit_post_rewrite(const struct commit *old_head,
++			 const struct object_id *new_head)
++{
++	struct notes_rewrite_cfg *cfg;
++
++	cfg = init_copy_notes_for_rewrite("amend");
++	if (cfg) {
++		/* we are amending, so old_head is not NULL */
++		copy_note_for_rewrite(cfg, &old_head->object.oid, new_head);
++		finish_copy_notes_for_rewrite(cfg, "Notes added by 'git commit --amend'");
++	}
++	run_rewrite_hook(&old_head->object.oid, new_head);
 +}
 +
  static int is_original_commit_empty(struct commit *commit)
  {
  	const struct object_id *ptree_oid;
 diff --git a/sequencer.h b/sequencer.h
-index 82e57713a2940c5d65ccac013c3f42c55cc12baf..82035ced129d35ff8ba64710477531a9a713b631 100644
+index 82035ced129d35ff8ba64710477531a9a713b631..6a69e4a7a42551cbc798b8eb93e447c0f50b234f 100644
 --- a/sequencer.h
 +++ b/sequencer.h
-@@ -69,4 +69,8 @@ int message_is_empty(const struct strbuf *sb,
- 		     enum commit_msg_cleanup_mode cleanup_mode);
- int template_untouched(const struct strbuf *sb, const char *template_file,
- 		       enum commit_msg_cleanup_mode cleanup_mode);
-+int update_head_with_reflog(const struct commit *old_head,
-+			    const struct object_id *new_head,
-+			    const char* action, const struct strbuf *msg,
-+			    struct strbuf *err);
+@@ -73,4 +73,6 @@ int update_head_with_reflog(const struct commit *old_head,
+ 			    const struct object_id *new_head,
+ 			    const char* action, const struct strbuf *msg,
+ 			    struct strbuf *err);
++void commit_post_rewrite(const struct commit *current_head,
++			 const struct object_id *new_head);
  #endif
 -- 
 2.15.0
