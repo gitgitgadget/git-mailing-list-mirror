@@ -6,123 +6,105 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 320BA201C8
-	for <e@80x24.org>; Fri, 10 Nov 2017 01:24:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AE878201C8
+	for <e@80x24.org>; Fri, 10 Nov 2017 03:14:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755572AbdKJBYU (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Nov 2017 20:24:20 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54993 "EHLO
+        id S1755922AbdKJDOv (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Nov 2017 22:14:51 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56439 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1755255AbdKJBYS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Nov 2017 20:24:18 -0500
+        with ESMTP id S1755887AbdKJDOs (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Nov 2017 22:14:48 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 73C41B7AF1;
-        Thu,  9 Nov 2017 20:24:17 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id DA5E5B41CA;
+        Thu,  9 Nov 2017 22:14:45 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=4YwjTDk98xPEvuRefIbrZ3Rz5xo=; b=aiKGBL
-        mZHn61s1NLU0+O7TH1IjjSQ3IvcKwfe6xM1NoN2kr93eMgfUHtlHcDiQ+MX/tDN9
-        Q7zFTQ7fIJ82Z2SgYTv45k1sIkaxI8lV9HMfk8V4dukmCUsTrT1KBQOx9gqSktnh
-        li2XVeMoeWwgbMro1u3MOzKlkkxNVSwC/tkRk=
+        :content-type; s=sasl; bh=xpfO7DosF7jADyDbLWge2S/XhpU=; b=J/ch9f
+        e5VVZo2AJABt5jlsRbLAwgz2aRRaV2RLZ3OtSMJgafWM6NylITH7KHL3kRkiSf0P
+        a7BMpkuUaI6jfEVYUD10du8KBiYDFVtjlPT1vqbbYXQo7GUr2m5r7dqpIYhEMYQY
+        QcnaAXeUUlqBA/L5QG/nlsVZn+Qas8sXK5+Kc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Q+YJ/Sto5NZWdw+Sd5Gv94fOzHXbGH26
-        lTdlje/un1wJKaC2iUES67fEa2U58WRPQyJm/ngWT96Kolatet1Z2mEq/zzsPbWL
-        V3uoU2LKx8x4URATM+cNMJRSMSESxj58DMFXlSvJLgfQoF1ABIo4MqtQ7TQA9qCn
-        QW73CfxQ7pY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5CCBAB7AF0;
-        Thu,  9 Nov 2017 20:24:17 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=trQDezOOi2tp6p2ZwKIJHriy96TXm3Gx
+        D6rwm8Xx0vsjrINhdNbt+mLbd2O1+Kh2ha0+LpOhI5G6EKeIpj2vTfg3dMdwDBrx
+        NG2w1S5IOku+C5lKBKa87aPgub5tJe50UtrKF51IhgP0cnm+ZzJf60MayxnE5iEl
+        iozpdaHqZJM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D319DB41C8;
+        Thu,  9 Nov 2017 22:14:45 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AFE55B7AEF;
-        Thu,  9 Nov 2017 20:24:16 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4B814B41C7;
+        Thu,  9 Nov 2017 22:14:45 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Philip Oakley" <philipoakley@iee.org>
-Cc:     "Stefan Beller" <sbeller@google.com>, "git" <git@vger.kernel.org>,
-        "Kevin Daudt" <me@ikke.info>,
-        "Jacob Keller" <jacob.keller@gmail.com>,
-        "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 6/7] builtin/describe.c: describe a blob
-References: <20171028004419.10139-1-sbeller@google.com>
-        <20171031003351.22341-1-sbeller@google.com>
-        <20171031003351.22341-7-sbeller@google.com>
-        <xmqqinevzvel.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kYO=4SWzfKY6bU8Spn5Ubw39ghOH6wanFhFEsKD8q9vrA@mail.gmail.com>
-        <xmqq4lqewu2b.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kYC4=rDSWC7WCGVL4n4OC8BpvMJFwxx+LV9GqoGnSHFSA@mail.gmail.com>
-        <xmqqinetsayr.fsf@gitster.mtv.corp.google.com>
-        <xmqq375xs3zr.fsf@gitster.mtv.corp.google.com>
-        <BFE987312194406AAAEA8DAC7EC5BFF5@PhilipOakley>
-        <xmqqlgjlkzmm.fsf@gitster.mtv.corp.google.com>
-        <D199FB1260C4462ABFC1F0F77D26EF06@PhilipOakley>
-        <CAGZ79kYRunzS9vDO=Zk1jQk1BvwJomN5+=1gQi0aDau_qbamew@mail.gmail.com>
-        <54073F7B0C9E49C4BA55CA97A605A724@PhilipOakley>
-Date:   Fri, 10 Nov 2017 10:24:15 +0900
-In-Reply-To: <54073F7B0C9E49C4BA55CA97A605A724@PhilipOakley> (Philip Oakley's
-        message of "Fri, 10 Nov 2017 00:25:27 -0000")
-Message-ID: <xmqqo9obhqo0.fsf@gitster.mtv.corp.google.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Adam Dinwoodie <adam@dinwoodie.org>,
+        Git List <git@vger.kernel.org>,
+        Johan Herland <johan@herland.net>
+Subject: Re: [PATCH] notes: add `rm` and `delete` commands
+References: <20171109134617.65244-1-adam@dinwoodie.org>
+        <CAPig+cRq7thrPtzS0V6o-wMhHyYWKeWg-xOQhnWCO5sLE=kDcw@mail.gmail.com>
+Date:   Fri, 10 Nov 2017 12:14:44 +0900
+In-Reply-To: <CAPig+cRq7thrPtzS0V6o-wMhHyYWKeWg-xOQhnWCO5sLE=kDcw@mail.gmail.com>
+        (Eric Sunshine's message of "Thu, 9 Nov 2017 11:18:01 -0500")
+Message-ID: <xmqq1sl6j04b.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: DE4BD438-C5B5-11E7-AEC2-575F0C78B957-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 4D3EFB18-C5C5-11E7-AB14-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Philip Oakley" <philipoakley@iee.org> writes:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> From: "Stefan Beller" <sbeller@google.com>
->> Rereading this discussion, there is currently no urgent thing to address?
+> or against the change:
 >
-> True.
->
->> Then the state as announced by the last cooking email, to just cook
->> it, seems
->> about right and we'll wait for further feedback.
+>     - synonym bloat; balloons documentation
+>     - steals command verbs from potential future features
+>     - ...
 
-A shiny new toy that is not a fix for a grave bug is rarely urgent,
-so with that criterion, we'd end up with hundreds of topics not in
-'next' but in 'pu' waiting for the original contributor to get out
-of his or her procrastination, which certainly is not what I want to
-see, as I'd have to throw them into the Stalled bin and then
-eventually discard them, while having to worry about possible
-mismerges with remaining good topics caused by these topics
-appearing and disappearing from 'pu'.
+I tend to agree with these two (and if I were to replace the "..."
+with something concrete, this change is not desirable because it
+will force us to add all these three when we introduce "remove"
+elsewhere in the system).
 
-I'd rather see any topic that consumed reviewers' time to be
-polished enough to get into 'next' while we all recall the issues
-raised during previous reviews.  I consider the process to further
-incrementally polish it after that happens a true "cooking".
+Having said that, this remids me of an age-old topic we discussed in
+a distant past but stalled due to lack of strong drive, which is:
 
-For this topic, aside from "known issues" that we decided to punt
-for now, my impression was that the code is in good enough shape,
-and we need a bit of documentation polishes before I can mark it
-as "Will merge to 'next'".
+    Some git subcommands take command verb (e.g. "git notes 'remove'")
+    while others take command mode flags (e.g. "git branch --delete"),
+    and the users need to remember them, which is not ideal.
 
-> Possibly only checking the documenation aspects, so folks don't fall
-> into the same trap as me.. ;-)
+I think the consensus back then, if we were to aim for consistency
+by uniformly using only one of the two, is to use the command mode
+flags, simply because existing commands that have the primary mode
+and take an optional command mode flag [*1*] cannot be migrated to
+the command verb UI safely and sanely.
 
-Yup, so let's resolve that documentation thing while we remember
-that the topic has that issue, and what part of the documentation
-we find needs improvement.
-
-I am not sure what "trap: you fell into, though.  Are you saying
-that giving
-
-	git describe [<option to describe a commit>...] <commit-ish>
-	git describe [<option to describe a blob>...] <blob>
-
-in the synopsis is not helpful, because the user may not know what
-kind of object s/he has, and cannot decide from which set of options
-to pick?  Then an alternative would be to list
-
-	git describe [<option>...] <object>
-
-in the synopsis, say upfront that most options are applicable only
-when describing a commit-ish, and when describing a blob, we do
-quite different thing and a separate set of options apply, perhaps?
+And then, if we are not careful when we standardize all subcommands
+to take command mode flags, we might end up with a situation where
+some subcommand say "--remove" while other say "--delete", and some
+users will wish to rectify that situation by adding an alias defined
+for these flags---I view this patch as a part of that possible
+future topic ;-).
 
 
+[Footnote]
+
+*1* For example, "git branch" by default is in the branch creation
+    mode, but it can be told to work in its branch deletion mode
+    with "--delete".
+
+    If we were to standardize on command verbs, is "git branch
+    delete" a deprecated relic from the old world that wants to
+    create a branch whose name is 'delete', or is it done by a
+    script in the new world that collected names of branches to
+    delete and asked "git branch delete $to_delete" to delete all of
+    them, where the $to_delete variable happened to end up empty?
+
+    With command mode flags, we do not have to worry about such an
+    ambiguity during and after transition.
