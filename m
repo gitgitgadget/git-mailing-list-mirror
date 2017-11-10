@@ -2,75 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C33971F43C
-	for <e@80x24.org>; Fri, 10 Nov 2017 09:45:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 57DCA1F43C
+	for <e@80x24.org>; Fri, 10 Nov 2017 09:58:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752126AbdKJJp0 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Nov 2017 04:45:26 -0500
-Received: from upper-gw.cixit.se ([92.43.32.133]:32999 "EHLO mail.cixit.se"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1751944AbdKJJpY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Nov 2017 04:45:24 -0500
-X-Greylist: delayed 343 seconds by postgrey-1.27 at vger.kernel.org; Fri, 10 Nov 2017 04:45:24 EST
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-        by mail.cixit.se (8.14.3/8.14.3/Debian-9.4) with ESMTP id vAA9ddgm005585
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-        Fri, 10 Nov 2017 10:39:39 +0100
-Received: from localhost (peter@localhost)
-        by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id vAA9ddIB005582;
-        Fri, 10 Nov 2017 10:39:39 +0100
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
-Date:   Fri, 10 Nov 2017 10:39:39 +0100 (CET)
-From:   Peter Krefting <peter@softwolves.pp.se>
-To:     Git Mailing List <git@vger.kernel.org>
-Subject: cherry-pick very slow on big repository
-Message-ID: <alpine.DEB.2.00.1711100959300.2391@ds9.cixit.se>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-Organization: /universe/earth/europe/norway/oslo
+        id S1752424AbdKJJ6N (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Nov 2017 04:58:13 -0500
+Received: from cloud.peff.net ([104.130.231.41]:52200 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751496AbdKJJ6M (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Nov 2017 04:58:12 -0500
+Received: (qmail 17707 invoked by uid 109); 10 Nov 2017 09:58:12 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 10 Nov 2017 09:58:12 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 473 invoked by uid 111); 10 Nov 2017 09:58:23 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.3)
+ by peff.net (qpsmtpd/0.94) with SMTP; Fri, 10 Nov 2017 04:58:23 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 10 Nov 2017 09:58:09 +0000
+Date:   Fri, 10 Nov 2017 09:58:09 +0000
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Joseph Strauss <josephst@bhphoto.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Bug - Status - Space in Filename
+Message-ID: <20171110095808.igydpwweyceu6qcf@sigill.intra.peff.net>
+References: <655aaa9d2abf4be1b6ade0574d88c999@EXMBX01B.bhphotovideo.local>
+ <xmqqvaikjfoj.fsf@gitster.mtv.corp.google.com>
+ <20171109132939.3v2z6sf22b4tnwpq@sigill.intra.peff.net>
+ <xmqqvaijhs5b.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.3.7 (mail.cixit.se [127.0.0.1]); Fri, 10 Nov 2017 10:39:39 +0100 (CET)
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqvaijhs5b.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi!
+On Fri, Nov 10, 2017 at 09:52:16AM +0900, Junio C Hamano wrote:
 
-On a big repository (57000 files, 2,5 gigabytes in .git/objects), git 
-cherry-pick is very slow for me (v2.15.0). This is cherry-picking a 
-one-file change, where the file is in the same place on both branches, 
-and which applies cleanly (I am backporting a few fixes to a 
-maintenance version):
+> > That said, if this is the only place that has this funny quoting, it may
+> > not be worth polluting the rest of the code with the idea that quoting
+> > spaces is a good thing to do.
+> 
+> Sounds sane.  We can probably use a helper like this:
+> 
+> static char *quote_path_with_sp(const char *in, const char *prefix, struct strbuf *out)
+> {
+> 	const char dq = '"';
+> 
+> 	quote_path(in, prefix, out);
+> 	if (out->buf[0] != dq && strchr(out->buf, ' ') != NULL) {
+> 		strbuf_insert(out, 0, &dq, 1);
+> 		strbuf_addch(out, dq);
+> 	}
+> 	return out->buf;
+> }
+> 
+> which allows the current users like shortstatus_status() to become a
+> lot shorter.
 
-$ time git cherry-pick -x 717eb328940ca2e33f14ed27576e656327854b7b
-[redacted 391454f16d] Redacted
-  Author: Redacted <redacted>
-  Date: Mon Oct 16 15:58:05 2017 +0200
-  1 file changed, 2 insertions(+), 2 deletions(-)
+Are there callers who don't just print the result? If not, we could just
+always emit. That's slightly more efficient since it drops the expensive
+strbuf_insert (though there are already so many copies going on in
+quote_path_relative that it hardly matters). But it also drops the need
+for the caller to know about the strbuf at all.
 
-real    6m9,054s
-user    5m49,432s
-sys     0m2,292s
+Like:
+diff --git a/wt-status.c b/wt-status.c
+index 937a87bbd5..4f4706a6e2 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -1703,6 +1703,18 @@ static void wt_shortstatus_unmerged(struct string_list_item *it,
+ 	}
+ }
+ 
++static void emit_path(const char *in, const char *prefix)
++{
++	struct strbuf buf = STRBUF_INIT;
++	quote_path(in, prefix, &buf);
++	if (buf.buf[0] != '"' && strchr(buf.buf, ' ') != NULL) {
++		putchar('"');
++		strbuf_addch(&buf, '"');
++	}
++	fwrite(buf.buf, 1, buf.len, stdout);
++	strbuf_release(&buf);
++}
++
+ static void wt_shortstatus_status(struct string_list_item *it,
+ 			 struct wt_status *s)
+ {
+@@ -1722,26 +1734,12 @@ static void wt_shortstatus_status(struct string_list_item *it,
+ 		if (d->head_path)
+ 			fprintf(stdout, "%s%c", d->head_path, 0);
+ 	} else {
+-		struct strbuf onebuf = STRBUF_INIT;
+-		const char *one;
+ 		if (d->head_path) {
+-			one = quote_path(d->head_path, s->prefix, &onebuf);
+-			if (*one != '"' && strchr(one, ' ') != NULL) {
+-				putchar('"');
+-				strbuf_addch(&onebuf, '"');
+-				one = onebuf.buf;
+-			}
+-			printf("%s -> ", one);
+-			strbuf_release(&onebuf);
++			emit_path(d->head_path, s->prefix);
++			printf(" -> ");
+ 		}
+-		one = quote_path(it->string, s->prefix, &onebuf);
+-		if (*one != '"' && strchr(one, ' ') != NULL) {
+-			putchar('"');
+-			strbuf_addch(&onebuf, '"');
+-			one = onebuf.buf;
+-		}
+-		printf("%s\n", one);
+-		strbuf_release(&onebuf);
++		emit_path(it->string, s->prefix);
++		putchar('\n');
+ 	}
+ }
+ 
 
-Something is not how it should be here. The repo shares objects 
-(.git/objects/info/alternates) with another repository (I have run 
-"git gc" on both repositories).
+Though really I am fine with any solution that puts this pattern into a
+helper function rather than repeating it inline.
 
-Running strace, it seems like it is doing lstat(), open(), mmap(), 
-close() and munmap() on every single file in the repository, which 
-takes a lot of time.
-
-I thought it was just updating the status, but "git status" returns 
-immediately, while cherry-picking takes several minutes for every 
-cherry-pick I do.
-
--- 
-\\// Peter - http://www.softwolves.pp.se/
+-Peff
