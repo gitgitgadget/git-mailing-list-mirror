@@ -2,40 +2,40 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1E6B91F42B
-	for <e@80x24.org>; Fri, 10 Nov 2017 19:06:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D2F731F42B
+	for <e@80x24.org>; Fri, 10 Nov 2017 19:06:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753935AbdKJTGX (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Nov 2017 14:06:23 -0500
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:51754 "EHLO
+        id S1753843AbdKJTGW (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Nov 2017 14:06:22 -0500
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:48744 "EHLO
         mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753725AbdKJTGC (ORCPT
+        by vger.kernel.org with ESMTP id S1753738AbdKJTGC (ORCPT
         <rfc822;git@vger.kernel.org>); Fri, 10 Nov 2017 14:06:02 -0500
-Received: from pps.filterd (m0096528.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id vAAJ2vmt017416;
-        Fri, 10 Nov 2017 11:06:00 -0800
+Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
+        by mx0a-00153501.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id vAAJ4GGZ002780;
+        Fri, 10 Nov 2017 11:06:01 -0800
 Authentication-Results: palantir.com;
         spf=softfail smtp.mailfrom=newren@gmail.com
 Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2e535n1cdc-2;
+        by mx0a-00153501.pphosted.com with ESMTP id 2e53631bgt-1;
         Fri, 10 Nov 2017 11:06:00 -0800
 Received: from mxw1.palantir.com (smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id 7913622F6281;
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id CFA8B22F628A;
         Fri, 10 Nov 2017 11:06:00 -0800 (PST)
 Received: from newren2-linux.yojoe.local (newren2-linux.dyn.yojoe.local [10.100.68.32])
-        by smtp.yojoe.local (Postfix) with ESMTP id 69AFD2CDE6A;
+        by smtp.yojoe.local (Postfix) with ESMTP id BDC182CDEC3;
         Fri, 10 Nov 2017 11:06:00 -0800 (PST)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Elijah Newren <newren@gmail.com>
-Subject: [PATCH 10/30] directory rename detection: more involved edge/corner testcases
-Date:   Fri, 10 Nov 2017 11:05:30 -0800
-Message-Id: <20171110190550.27059-11-newren@gmail.com>
+Subject: [PATCH 14/30] directory rename detection: tests for handling overwriting dirty files
+Date:   Fri, 10 Nov 2017 11:05:34 -0800
+Message-Id: <20171110190550.27059-15-newren@gmail.com>
 X-Mailer: git-send-email 2.15.0.5.g9567be9905
 In-Reply-To: <20171110190550.27059-1-newren@gmail.com>
 References: <20171110190550.27059-1-newren@gmail.com>
@@ -55,59 +55,49 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- t/t6043-merge-rename-directories.sh | 347 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 347 insertions(+)
+ t/t6043-merge-rename-directories.sh | 401 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 401 insertions(+)
 
 diff --git a/t/t6043-merge-rename-directories.sh b/t/t6043-merge-rename-directories.sh
-index 157299105f..115d0d2622 100755
+index 7af8962512..4066b08767 100755
 --- a/t/t6043-merge-rename-directories.sh
 +++ b/t/t6043-merge-rename-directories.sh
-@@ -1336,4 +1336,351 @@ test_expect_success '6e-check: Add/add from one side' '
- 	test $(git rev-parse HEAD:z/d) = $(git rev-parse C:z/d)
+@@ -2873,4 +2873,405 @@ test_expect_failure '10e-check: Does git complain about untracked file that is n
+ 	test "random" = "$(cat z/c)"
  '
  
-+
 +###########################################################################
-+# SECTION 7: More involved Edge/Corner cases
++# SECTION 11: Handling dirty (not up-to-date) files
 +#
-+# The ruleset we have generated in the above sections seems to provide
-+# well-defined merges.  But can we find edge/corner cases that either (a)
-+# are harder for users to understand, or (b) have a resolution that is
-+# non-intuitive or suboptimal?
-+#
-+# The testcases in this section dive into cases that I've tried to craft in
-+# a way to find some that might be surprising to users or difficult for
-+# them to understand (the next section will look at non-intuitive or
-+# suboptimal merge results).  Some of the testcases are similar to ones
-+# from past sections, but have been simplified to try to highlight error
-+# messages using a "modified" path (due to the directory rename).  Are
-+# users okay with these?
-+#
-+# In my opinion, testcases that are difficult to understand from this
-+# section is due to difficulty in the testcase rather than the directory
-+# renaming (similar to how t6042 and t6036 have difficult resolutions due
-+# to the problem setup itself being complex).  And I don't think the
-+# error messages are a problem.
-+#
-+# On the other hand, the testcases in section 8 worry me slightly more...
++# unpack_trees(), upon which the recursive merge algorithm is based, aborts
++# the operation if untracked or dirty files would be deleted or overwritten
++# by the merge.  Unfortunately, unpack_trees() does not understand renames,
++# and if it doesn't abort, then it muddies up the working directory before
++# we even get to the point of detecting renames, so we need some special
++# handling.  This was true even of normal renames, but there are additional
++# codepaths that need special handling with directory renames.  Add
++# testcases for both renamed-by-directory-rename-detection and standard
++# rename cases.
 +###########################################################################
 +
-+# Testcase 7a, rename-dir vs. rename-dir (NOT split evenly) PLUS add-other-file
-+#   Commit A: z/{b,c}
-+#   Commit B: y/{b,c}
-+#   Commit C: w/b, x/c, z/d
-+#   Expected: y/d, CONFLICT(rename/rename for both z/b and z/c)
-+#   NOTE: There's a rename of z/ here, y/ has more renames, so z/d -> y/d.
++# Testcase 11a, Avoid losing dirty contents with simple rename
++#   Commit A: z/{a,b_v1},
++#   Commit B: z/{a,c_v1}, and z/c_v1 has uncommitted mods
++#   Commit C: z/{a,b_v2}
++#   Expected: ERROR_MSG(Refusing to lose dirty file at z/c) +
++#             z/a, staged version of z/c has sha1sum matching C:z/b_v2,
++#             z/c~HEAD with contents of C:z/b_v2,
++#             z/c with uncommitted mods on top of B:z/c_v1
 +
-+test_expect_success '7a-setup: rename-dir vs. rename-dir (NOT split evenly) PLUS add-other-file' '
++test_expect_success '11a-setup: Avoid losing dirty contents with simple rename' '
 +	git rm -rf . &&
 +	git clean -fdqx &&
 +	rm -rf .git &&
 +	git init &&
 +
 +	mkdir z &&
-+	echo b >z/b &&
-+	echo c >z/c &&
++	echo a >z/a &&
++	test_seq 1 10 >z/b &&
 +	git add z &&
 +	test_tick &&
 +	git commit -m "A" &&
@@ -117,69 +107,57 @@ index 157299105f..115d0d2622 100755
 +	git branch C &&
 +
 +	git checkout B &&
-+	git mv z y &&
++	git mv z/b z/c &&
 +	test_tick &&
 +	git commit -m "B" &&
 +
 +	git checkout C &&
-+	mkdir w &&
-+	mkdir x &&
-+	git mv z/b w/ &&
-+	git mv z/c x/ &&
-+	echo d > z/d &&
-+	git add z/d &&
++	echo 11 >>z/b &&
++	git add z/b &&
 +	test_tick &&
 +	git commit -m "C"
 +'
 +
-+test_expect_failure '7a-check: rename-dir vs. rename-dir (NOT split evenly) PLUS add-other-file' '
++test_expect_failure '11a-check: Avoid losing dirty contents with simple rename' '
 +	git checkout B^0 &&
++	echo stuff >>z/c &&
 +
-+	test_must_fail git merge -s recursive C^0 >out &&
-+	test_i18ngrep "CONFLICT (rename/rename).*z/b.*y/b.*w/b" out &&
-+	test_i18ngrep "CONFLICT (rename/rename).*z/c.*y/c.*x/c" out &&
++	test_must_fail git merge -s recursive C^0 >out 2>err &&
++	test_i18ngrep "Refusing to lose dirty file at z/c" out &&
 +
-+	test 7 -eq $(git ls-files -s | wc -l) &&
-+	test 6 -eq $(git ls-files -u | wc -l) &&
-+	test 1 -eq $(git ls-files -o | wc -l) &&
++	test_seq 1 10 >expected &&
++	echo stuff >>expected &&
 +
-+	test $(git rev-parse :0:y/d) = $(git rev-parse C:z/d) &&
++	test 2 -eq $(git ls-files -s | wc -l) &&
++	test 1 -eq $(git ls-files -u | wc -l) &&
++	test 4 -eq $(git ls-files -o | wc -l) &&
 +
-+	test $(git rev-parse :1:z/b) = $(git rev-parse A:z/b) &&
-+	test $(git rev-parse :2:y/b) = $(git rev-parse A:z/b) &&
-+	test $(git rev-parse :3:w/b) = $(git rev-parse A:z/b) &&
++	test $(git rev-parse :0:z/a) = $(git rev-parse A:z/a) &&
++	test $(git rev-parse :2:z/c) = $(git rev-parse C:z/b) &&
 +
-+	test $(git rev-parse :1:z/c) = $(git rev-parse A:z/c) &&
-+	test $(git rev-parse :2:y/c) = $(git rev-parse A:z/c) &&
-+	test $(git rev-parse :3:x/c) = $(git rev-parse A:z/c) &&
-+
-+	test $(git hash-object y/b) = $(git rev-parse A:z/b) &&
-+	test $(git hash-object w/b) = $(git rev-parse A:z/b) &&
-+	test $(git hash-object y/c) = $(git rev-parse A:z/c) &&
-+	test $(git hash-object x/c) = $(git rev-parse A:z/c)
++	test "$(git hash-object z/c~HEAD)" = $(git rev-parse C:z/b) &&
++	test_cmp expected z/c
 +'
 +
-+# Testcase 7b, rename/rename(2to1), but only due to transitive rename
-+#   (Related to testcase 1d)
-+#   Commit A: z/{b,c},     x/d_1, w/d_2
-+#   Commit B: y/{b,c,d_2}, x/d_1
-+#   Commit C: z/{b,c,d_1},        w/d_2
-+#   Expected: y/{b,c}, CONFLICT(rename/rename(2to1): x/d_1, w/d_2 -> y_d)
++# Testcase 11b, Avoid losing dirty file involved in directory rename
++#   Commit A: z/a,         x/{b,c_v1}
++#   Commit B: z/{a,c_v1},  x/b,       and z/c_v1 has uncommitted mods
++#   Commit C: y/a,         x/{b,c_v2}
++#   Expected: y/{a,c_v2}, x/b, z/c_v1 with uncommited mods untracked,
++#             ERROR_MSG(Refusing to lose dirty file at z/c)
 +
-+test_expect_success '7b-setup: rename/rename(2to1), but only due to transitive rename' '
++
++test_expect_success '11b-setup: Avoid losing dirty file involved in directory rename' '
 +	git rm -rf . &&
 +	git clean -fdqx &&
 +	rm -rf .git &&
 +	git init &&
 +
-+	mkdir z &&
-+	mkdir x &&
-+	mkdir w &&
-+	echo b >z/b &&
-+	echo c >z/c &&
-+	echo d1 > x/d &&
-+	echo d2 > w/d &&
-+	git add z x w &&
++	mkdir z x &&
++	echo a >z/a &&
++	echo b >x/b &&
++	test_seq 1 10 >x/c &&
++	git add z x &&
 +	test_tick &&
 +	git commit -m "A" &&
 +
@@ -188,229 +166,305 @@ index 157299105f..115d0d2622 100755
 +	git branch C &&
 +
 +	git checkout B &&
-+	git mv z y &&
-+	git mv w/d y/ &&
++	git mv x/c z/c &&
 +	test_tick &&
 +	git commit -m "B" &&
 +
 +	git checkout C &&
-+	git mv x/d z/ &&
-+	rmdir x &&
++	git mv z y &&
++	echo 11 >>x/c &&
++	git add x/c &&
 +	test_tick &&
 +	git commit -m "C"
 +'
 +
-+test_expect_failure '7b-check: rename/rename(2to1), but only due to transitive rename' '
++test_expect_failure '11b-check: Avoid losing dirty file involved in directory rename' '
 +	git checkout B^0 &&
++	echo stuff >>z/c &&
 +
-+	test_must_fail git merge -s recursive C^0 >out &&
++	git merge -s recursive C^0 >out 2>err &&
++	test_i18ngrep "Refusing to lose dirty file at z/c" out &&
++
++	grep -q stuff */* &&
++	test_seq 1 10 >expected &&
++	echo stuff >>expected &&
++
++	test 3 -eq $(git ls-files -s | wc -l) &&
++	test 0 -eq $(git ls-files -u | wc -l) &&
++	test 0 -eq $(git ls-files -m | wc -l) &&
++	test 4 -eq $(git ls-files -o | wc -l) &&
++
++	test $(git rev-parse :0:x/b) = $(git rev-parse A:x/b) &&
++	test $(git rev-parse :0:y/a) = $(git rev-parse A:z/a) &&
++	test $(git rev-parse :0:y/c) = $(git rev-parse C:x/c) &&
++
++	test "$(git hash-object y/c)" = $(git rev-parse C:x/c) &&
++	test_cmp expected z/c
++'
++
++# Testcase 11c, Avoid losing not-up-to-date with rename + D/F conflict
++#   Commit A: y/a,         x/{b,c_v1}
++#   Commit B: y/{a,c_v1},  x/b,       and y/c_v1 has uncommitted mods
++#   Commit C: y/{a,c/d},   x/{b,c_v2}
++#   Expected: Abort_msg("following files would be overwritten by merge") +
++#             y/c left untouched (still has uncommitted mods)
++
++test_expect_success '11c-setup: Avoid losing not-uptodate with rename + D/F conflict' '
++	git rm -rf . &&
++	git clean -fdqx &&
++	rm -rf .git &&
++	git init &&
++
++	mkdir y x &&
++	echo a >y/a &&
++	echo b >x/b &&
++	test_seq 1 10 >x/c &&
++	git add y x &&
++	test_tick &&
++	git commit -m "A" &&
++
++	git branch A &&
++	git branch B &&
++	git branch C &&
++
++	git checkout B &&
++	git mv x/c y/c &&
++	test_tick &&
++	git commit -m "B" &&
++
++	git checkout C &&
++	mkdir y/c &&
++	echo d >y/c/d &&
++	echo 11 >>x/c &&
++	git add x/c y/c/d &&
++	test_tick &&
++	git commit -m "C"
++'
++
++test_expect_success '11c-check: Avoid losing not-uptodate with rename + D/F conflict' '
++	git checkout B^0 &&
++	echo stuff >>y/c &&
++
++	test_must_fail git merge -s recursive C^0 >out 2>err &&
++	test_i18ngrep "following files would be overwritten by merge" err &&
++
++	grep -q stuff */* &&
++	test_seq 1 10 >expected &&
++	echo stuff >>expected &&
++
++	test 3 -eq $(git ls-files -s | wc -l) &&
++	test 0 -eq $(git ls-files -u | wc -l) &&
++	test 1 -eq $(git ls-files -m | wc -l) &&
++	test 3 -eq $(git ls-files -o | wc -l) &&
++
++	test $(git rev-parse HEAD) = $(git rev-parse B) &&
++	test_cmp expected y/c
++'
++
++# Testcase 11d, Avoid losing not-up-to-date with rename + D/F conflict
++#   Commit A: z/a,         x/{b,c_v1}
++#   Commit B: z/{a,c_v1},  x/b,       and z/c_v1 has uncommitted mods
++#   Commit C: y/{a,c/d},   x/{b,c_v2}
++#   Expected: D/F: y/c_v2 vs y/c/d) +
++#             Warning_Msg("Refusing to lose dirty file at z/c) +
++#             y/{a,c~HEAD,c/d}, x/b, now-untracked z/c_v1 with uncommited mods
++
++test_expect_success '11d-setup: Avoid losing not-uptodate with rename + D/F conflict' '
++	git rm -rf . &&
++	git clean -fdqx &&
++	rm -rf .git &&
++	git init &&
++
++	mkdir z x &&
++	echo a >z/a &&
++	echo b >x/b &&
++	test_seq 1 10 >x/c &&
++	git add z x &&
++	test_tick &&
++	git commit -m "A" &&
++
++	git branch A &&
++	git branch B &&
++	git branch C &&
++
++	git checkout B &&
++	git mv x/c z/c &&
++	test_tick &&
++	git commit -m "B" &&
++
++	git checkout C &&
++	git mv z y &&
++	mkdir y/c &&
++	echo d >y/c/d &&
++	echo 11 >>x/c &&
++	git add x/c y/c/d &&
++	test_tick &&
++	git commit -m "C"
++'
++
++test_expect_failure '11d-check: Avoid losing not-uptodate with rename + D/F conflict' '
++	git checkout B^0 &&
++	echo stuff >>z/c &&
++
++	test_must_fail git merge -s recursive C^0 >out 2>err &&
++	test_i18ngrep "Refusing to lose dirty file at z/c" out &&
++
++	grep -q stuff */* &&
++	test_seq 1 10 >expected &&
++	echo stuff >>expected &&
++
++	test 4 -eq $(git ls-files -s | wc -l) &&
++	test 1 -eq $(git ls-files -u | wc -l) &&
++	test 5 -eq $(git ls-files -o | wc -l) &&
++
++	test $(git rev-parse :0:x/b) = $(git rev-parse A:x/b) &&
++	test $(git rev-parse :0:y/a) = $(git rev-parse A:z/a) &&
++	test $(git rev-parse :0:y/c/d) = $(git rev-parse C:y/c/d) &&
++	test $(git rev-parse :3:y/c) = $(git rev-parse C:x/c) &&
++
++	test "$(git hash-object y/c~HEAD)" = $(git rev-parse C:x/c) &&
++	test_cmp expected z/c
++'
++
++# Testcase 11e, Avoid deleting not-up-to-date with dir rename/rename(1to2)/add
++#   Commit A: z/{a,b},      x/{c_1,d}
++#   Commit B: y/{a,b,c_2},  x/d, w/c_1, and y/c_2 has uncommitted mods
++#   Commit C: z/{a,b,c_1},  x/d
++#   Expected: Failed Merge; y/{a,b} + x/d +
++#             CONFLICT(rename/rename) x/c_1 -> w/c_1 vs y/c_1 +
++#             ERROR_MSG(Refusing to lose dirty file at y/c)
++#             y/c~C^0 has A:x/c_1 contents
++#             y/c~HEAD has B:y/c_2 contents
++#             y/c has dirty file from before merge
++
++test_expect_success '11e-setup: Avoid deleting not-uptodate with dir rename/rename(1to2)/add' '
++	git rm -rf . &&
++	git clean -fdqx &&
++	rm -rf .git &&
++	git init &&
++
++	mkdir z x &&
++	echo a >z/a &&
++	echo b >z/b &&
++	echo c >x/c &&
++	echo d >x/d &&
++	git add z x &&
++	test_tick &&
++	git commit -m "A" &&
++
++	git branch A &&
++	git branch B &&
++	git branch C &&
++
++	git checkout B &&
++	git mv z/ y/ &&
++	echo different >y/c &&
++	mkdir w &&
++	git mv x/c w/ &&
++	git add y/c &&
++	test_tick &&
++	git commit -m "B" &&
++
++	git checkout C &&
++	git mv x/c z/ &&
++	test_tick &&
++	git commit -m "C"
++'
++
++test_expect_failure '11e-check: Avoid deleting not-uptodate with dir rename/rename(1to2)/add' '
++	git checkout B^0 &&
++	echo mods >>y/c &&
++
++	test_must_fail git merge -s recursive C^0 >out 2>err &&
 +	test_i18ngrep "CONFLICT (rename/rename)" out &&
++	test_i18ngrep "Refusing to lose dirty file at y/c" out &&
++
++	test 7 -eq $(git ls-files -s | wc -l) &&
++	test 4 -eq $(git ls-files -u | wc -l) &&
++	test 4 -eq $(git ls-files -o | wc -l) &&
++
++	echo different >expected &&
++	echo mods >>expected &&
++
++	test $(git rev-parse :0:y/a) = $(git rev-parse A:z/a) &&
++	test $(git rev-parse :0:y/b) = $(git rev-parse A:z/b) &&
++	test $(git rev-parse :0:x/d) = $(git rev-parse A:x/d) &&
++
++	test $(git rev-parse :1:x/c) = $(git rev-parse A:x/c) &&
++	test $(git rev-parse :2:w/c) = $(git rev-parse A:x/c) &&
++	test $(git rev-parse :2:y/c) = $(git rev-parse B:y/c) &&
++	test $(git rev-parse :3:y/c) = $(git rev-parse A:x/c) &&
++
++	test "$(git hash-object y/c~C^0)" = $(git rev-parse A:x/c) &&
++	test "$(git hash-object y/c~HEAD)" = $(git rev-parse B:y/c) &&
++	test_cmp expected y/c
++'
++
++# Testcase 11f, Avoid deleting not-up-to-date w/ dir rename/rename(2to1)
++#   Commit A: z/{a,b},        x/{c_1,d_2}
++#   Commit B: y/{a,b,wham_1}, x/d_2, except y/wham has uncommitted mods
++#   Commit C: z/{a,b,wham_2}, x/c_1
++#   Expected: Failed Merge; y/{a,b} + untracked y/{wham~C^0,wham~C^HEAD} +
++#             y/wham with dirty changes from before merge +
++#             CONFLICT(rename/rename) x/c vs x/d -> y/wham
++#             ERROR_MSG(Refusing to lose dirty file at y/wham)
++
++test_expect_success '11f-setup: Avoid deleting not-uptodate with dir rename/rename(2to1)' '
++	git rm -rf . &&
++	git clean -fdqx &&
++	rm -rf .git &&
++	git init &&
++
++	mkdir z x &&
++	echo a >z/a &&
++	echo b >z/b &&
++	test_seq 1 10 >x/c &&
++	echo d >x/d &&
++	git add z x &&
++	test_tick &&
++	git commit -m "A" &&
++
++	git branch A &&
++	git branch B &&
++	git branch C &&
++
++	git checkout B &&
++	git mv z/ y/ &&
++	git mv x/c y/wham &&
++	test_tick &&
++	git commit -m "B" &&
++
++	git checkout C &&
++	git mv x/d z/wham &&
++	test_tick &&
++	git commit -m "C"
++'
++
++test_expect_failure '11f-check: Avoid deleting not-uptodate with dir rename/rename(2to1)' '
++	git checkout B^0 &&
++	echo important >>y/wham &&
++
++	test_must_fail git merge -s recursive C^0 >out 2>err &&
++	test_i18ngrep "CONFLICT (rename/rename)" out &&
++	test_i18ngrep "Refusing to lose dirty file at y/wham" out &&
 +
 +	test 4 -eq $(git ls-files -s | wc -l) &&
 +	test 2 -eq $(git ls-files -u | wc -l) &&
-+	test 3 -eq $(git ls-files -o | wc -l) &&
++	test 4 -eq $(git ls-files -o | wc -l) &&
 +
++	test_seq 1 10 >expected &&
++	echo important >>expected &&
++
++	test $(git rev-parse :0:y/a) = $(git rev-parse A:z/a) &&
 +	test $(git rev-parse :0:y/b) = $(git rev-parse A:z/b) &&
-+	test $(git rev-parse :0:y/c) = $(git rev-parse A:z/c) &&
 +
-+	test $(git rev-parse :2:y/d) = $(git rev-parse A:w/d) &&
-+	test $(git rev-parse :3:y/d) = $(git rev-parse A:x/d) &&
++	test_must_fail git rev-parse :1:y/wham &&
++	test $(git rev-parse :2:y/wham) = $(git rev-parse A:x/c) &&
++	test $(git rev-parse :3:y/wham) = $(git rev-parse A:x/d) &&
 +
-+	test ! -f y/d &&
-+	test -f y/d~HEAD &&
-+	test -f y/d~C^0 &&
-+
-+	test $(git hash-object y/d~HEAD) = $(git rev-parse A:w/d) &&
-+	test $(git hash-object y/d~C^0) = $(git rev-parse A:x/d)
-+'
-+
-+# Testcase 7c, rename/rename(1to...2or3); transitive rename may add complexity
-+#   (Related to testcases 3b and 5c)
-+#   Commit A: z/{b,c}, x/d
-+#   Commit B: y/{b,c}, w/d
-+#   Commit C: z/{b,c,d}
-+#   Expected: y/{b,c}, CONFLICT(x/d -> w/d vs. y/d)
-+#   NOTE: z/ was renamed to y/ so we do not want to report
-+#         either CONFLICT(x/d -> w/d vs. z/d)
-+#         or CONFLiCT x/d -> w/d vs. y/d vs. z/d)
-+
-+test_expect_success '7c-setup: rename/rename(1to...2or3); transitive rename may add complexity' '
-+	git rm -rf . &&
-+	git clean -fdqx &&
-+	rm -rf .git &&
-+	git init &&
-+
-+	mkdir z &&
-+	echo b >z/b &&
-+	echo c >z/c &&
-+	mkdir x &&
-+	echo d >x/d &&
-+	git add z x &&
-+	test_tick &&
-+	git commit -m "A" &&
-+
-+	git branch A &&
-+	git branch B &&
-+	git branch C &&
-+
-+	git checkout B &&
-+	git mv z y &&
-+	git mv x w &&
-+	test_tick &&
-+	git commit -m "B" &&
-+
-+	git checkout C &&
-+	git mv x/d z/ &&
-+	rmdir x &&
-+	test_tick &&
-+	git commit -m "C"
-+'
-+
-+test_expect_failure '7c-check: rename/rename(1to...2or3); transitive rename may add complexity' '
-+	git checkout B^0 &&
-+
-+	test_must_fail git merge -s recursive C^0 >out &&
-+	test_i18ngrep "CONFLICT (rename/rename).*x/d.*w/d.*y/d" out &&
-+
-+	test 5 -eq $(git ls-files -s | wc -l) &&
-+	test 3 -eq $(git ls-files -u | wc -l) &&
-+	test 1 -eq $(git ls-files -o | wc -l) &&
-+
-+	test $(git rev-parse :0:y/b) = $(git rev-parse A:z/b) &&
-+	test $(git rev-parse :0:y/c) = $(git rev-parse A:z/c) &&
-+
-+	test $(git rev-parse :1:x/d) = $(git rev-parse A:x/d) &&
-+	test $(git rev-parse :2:w/d) = $(git rev-parse A:x/d) &&
-+	test $(git rev-parse :3:y/d) = $(git rev-parse A:x/d)
-+'
-+
-+# Testcase 7d, transitive rename involved in rename/delete; how is it reported?
-+#   (Related somewhat to testcases 5b and 8d)
-+#   Commit A: z/{b,c}, x/d
-+#   Commit B: y/{b,c}
-+#   Commit C: z/{b,c,d}
-+#   Expected: y/{b,c}, CONFLICT(delete x/d vs rename to y/d)
-+#   NOTE: z->y so NOT CONFLICT(delete x/d vs rename to z/d)
-+
-+test_expect_success '7d-setup: transitive rename involved in rename/delete; how is it reported?' '
-+	git rm -rf . &&
-+	git clean -fdqx &&
-+	rm -rf .git &&
-+	git init &&
-+
-+	mkdir z &&
-+	echo b >z/b &&
-+	echo c >z/c &&
-+	mkdir x &&
-+	echo d >x/d &&
-+	git add z x &&
-+	test_tick &&
-+	git commit -m "A" &&
-+
-+	git branch A &&
-+	git branch B &&
-+	git branch C &&
-+
-+	git checkout B &&
-+	git mv z y &&
-+	git rm -rf x &&
-+	test_tick &&
-+	git commit -m "B" &&
-+
-+	git checkout C &&
-+	git mv x/d z/ &&
-+	rmdir x &&
-+	test_tick &&
-+	git commit -m "C"
-+'
-+
-+test_expect_failure '7d-check: transitive rename involved in rename/delete; how is it reported?' '
-+	git checkout B^0 &&
-+
-+	test_must_fail git merge -s recursive C^0 >out &&
-+	test_i18ngrep "CONFLICT (rename/delete).*x/d.*y/d" out &&
-+
-+	test 3 -eq $(git ls-files -s | wc -l) &&
-+	test 1 -eq $(git ls-files -u | wc -l) &&
-+	test 1 -eq $(git ls-files -o | wc -l) &&
-+
-+	test $(git rev-parse :0:y/b) = $(git rev-parse A:z/b) &&
-+	test $(git rev-parse :0:y/c) = $(git rev-parse A:z/c) &&
-+	test $(git rev-parse :3:y/d) = $(git rev-parse A:x/d)
-+'
-+
-+# Testcase 7e, transitive rename in rename/delete AND dirs in the way
-+#   (Very similar to 'both rename source and destination involved in D/F conflict' from t6022-merge-rename.sh)
-+#   (Also related to testcases 9c and 9d)
-+#   Commit A: z/{b,c},     x/d_1
-+#   Commit B: y/{b,c,d/g}, x/d/f
-+#   Commit C: z/{b,c,d_1}
-+#   Expected: rename/delete(x/d_1->y/d_1 vs. None) + D/F conflict on y/d
-+#             y/{b,c,d/g}, y/d_1~C^0, x/d/f
-+#   NOTE: x/d/f may be slightly confusing here.  x/d_1 -> z/d_1 implies
-+#         there is a directory rename from x/ -> z/, performed by commit C.
-+#         However, on the side of commit B, it renamed z/ -> y/, thus
-+#         making a rename from x/ -> z/ when it was getting rid of z/ seems
-+#         non-sensical.  Further, putting x/d/f into y/d/f also doesn't
-+#         make a lot of sense because commit B did the renaming of z to y
-+#         and it created x/d/f, and it clearly made these things separate,
-+#         so it doesn't make much sense to push these together.
-+
-+test_expect_success '7e-setup: transitive rename in rename/delete AND dirs in the way' '
-+	git rm -rf . &&
-+	git clean -fdqx &&
-+	rm -rf .git &&
-+	git init &&
-+
-+	mkdir z &&
-+	echo b >z/b &&
-+	echo c >z/c &&
-+	mkdir x &&
-+	echo d1 >x/d &&
-+	git add z x &&
-+	test_tick &&
-+	git commit -m "A" &&
-+
-+	git branch A &&
-+	git branch B &&
-+	git branch C &&
-+
-+	git checkout B &&
-+	git mv z y &&
-+	git rm x/d &&
-+	mkdir -p x/d &&
-+	mkdir -p y/d &&
-+	echo f >x/d/f &&
-+	echo g >y/d/g &&
-+	git add x/d/f y/d/g &&
-+	test_tick &&
-+	git commit -m "B" &&
-+
-+	git checkout C &&
-+	git mv x/d z/ &&
-+	rmdir x &&
-+	test_tick &&
-+	git commit -m "C"
-+'
-+
-+test_expect_failure '7e-check: transitive rename in rename/delete AND dirs in the way' '
-+	git checkout B^0 &&
-+
-+	test_must_fail git merge -s recursive C^0 >out &&
-+	test_i18ngrep "CONFLICT (rename/delete).*x/d.*y/d" out &&
-+
-+	test 5 -eq $(git ls-files -s | wc -l) &&
-+	test 1 -eq $(git ls-files -u | wc -l) &&
-+	test 2 -eq $(git ls-files -o | wc -l) &&
-+
-+	test $(git rev-parse :0:x/d/f) = $(git rev-parse B:x/d/f) &&
-+	test $(git rev-parse :0:y/d/g) = $(git rev-parse B:y/d/g) &&
-+
-+	test $(git rev-parse :0:y/b) = $(git rev-parse A:z/b) &&
-+	test $(git rev-parse :0:y/c) = $(git rev-parse A:z/c) &&
-+	test $(git rev-parse :3:y/d) = $(git rev-parse A:x/d) &&
-+
-+	test $(git hash-object y/d~C^0) = $(git rev-parse A:x/d)
++	test_cmp expected y/wham &&
++	test $(git hash-object y/wham~C^0)  = $(git rev-parse A:x/d) &&
++	test $(git hash-object y/wham~HEAD) = $(git rev-parse A:x/c)
 +'
 +
  test_done
