@@ -2,147 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 48CFD1F42B
-	for <e@80x24.org>; Fri, 10 Nov 2017 22:22:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 81C3B1F42B
+	for <e@80x24.org>; Fri, 10 Nov 2017 22:27:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754551AbdKJWWF (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Nov 2017 17:22:05 -0500
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:50364 "EHLO
-        mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1754198AbdKJWWF (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 10 Nov 2017 17:22:05 -0500
-Received: from pps.filterd (m0096528.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id vAAMCaqx030101;
-        Fri, 10 Nov 2017 14:22:03 -0800
-Authentication-Results: palantir.com;
-        spf=softfail smtp.mailfrom=newren@gmail.com
-Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2e535n1nd6-1;
-        Fri, 10 Nov 2017 14:22:03 -0800
-Received: from mxw1.palantir.com (smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id 8C3A022F94D5;
-        Fri, 10 Nov 2017 14:22:03 -0800 (PST)
-Received: from newren2-linux.yojoe.local (newren2-linux.dyn.yojoe.local [10.100.68.32])
-        by smtp.yojoe.local (Postfix) with ESMTP id 8152D2CDE6A;
-        Fri, 10 Nov 2017 14:22:03 -0800 (PST)
-From:   Elijah Newren <newren@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>
-Subject: [RFC PATCH 1/9] diffcore-rename: No point trying to find a match better than exact
-Date:   Fri, 10 Nov 2017 14:21:48 -0800
-Message-Id: <20171110222156.23221-2-newren@gmail.com>
-X-Mailer: git-send-email 2.15.0.46.g41dca04efb
-In-Reply-To: <20171110222156.23221-1-newren@gmail.com>
-References: <20171110222156.23221-1-newren@gmail.com>
-X-Proofpoint-SPF-Result: softfail
-X-Proofpoint-SPF-Record: v=spf1 redirect=_spf.google.com
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,, definitions=2017-11-10_11:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=13 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1034 lowpriorityscore=0 impostorscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.0.1-1707230000
- definitions=main-1711100306
+        id S1754478AbdKJW1P (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Nov 2017 17:27:15 -0500
+Received: from smtp-out-6.talktalk.net ([62.24.135.70]:4476 "EHLO
+        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754215AbdKJW1O (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Nov 2017 17:27:14 -0500
+Received: from PhilipOakley ([92.29.14.162])
+        by smtp.talktalk.net with SMTP
+        id DHlZeuj6wbjdZDHlZe32px; Fri, 10 Nov 2017 22:27:13 +0000
+X-Originating-IP: [92.29.14.162]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=ONFX5WSB c=1 sm=1 tr=0 a=NXc+vVEgz70gitWznrz3ig==:117
+ a=NXc+vVEgz70gitWznrz3ig==:17 a=8nJEP1OIZ-IA:10 a=pGLkceISAAAA:8
+ a=NEAV23lmAAAA:8 a=tkCzZDENlpICL8MLVJEA:9 a=wPNLvfGTeEIA:10
+Message-ID: <3076EE0E678D43B286F86E622CB9F06E@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Elijah Newren" <newren@gmail.com>, <git@vger.kernel.org>
+Cc:     "Elijah Newren" <newren@gmail.com>
+References: <20171110190550.27059-1-newren@gmail.com>
+Subject: Re: [PATCH 00/30] Add directory rename detection to git
+Date:   Fri, 10 Nov 2017 22:27:11 -0000
+Organization: OPDS
+MIME-Version: 1.0
+Content-Type: text/plain;
+        format=flowed;
+        charset="iso-8859-1";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-Antivirus: AVG (VPS 171110-0, 10/11/2017), Outbound message
+X-Antivirus-Status: Clean
+X-CMAE-Envelope: MS4wfMMUB1TCjJtJSCN4T/2cqrDPPC3XmD51DHOm60WigTYlISI+HR5WF2qVGA+4iK3s+o7Em1lK1pkEWi/TseN1xurB864+uOITXuDWeq+97xbFlZe8HM8w
+ N2rUC2m+jTQIwma8yBCCIMvOKBq6Kbb2CPazJhylGVQVvstGA6Ekun6LbZpXRwHMfbSLDRIAm+PwdPjB9xEO0herhm6DWnffGI98MvkJmqAAfsGuQ1BHwGX2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-diffcore_rename() had some code to avoid having destination paths that
-already had an exact rename detected from being re-checked for other
-renames.  Source paths, however, were re-checked because we wanted to
-allow the possibility of detecting copies.  But if copy detection isn't
-turned on, then this merely amounts to attempting to find a
-better-than-exact match, which naturally ends up being an expensive
-no-op.  In particular, copy detection is never turned on by the merge
-recursive machinery.
+From: "Elijah Newren" <newren@gmail.com>
+> [This series is entirely independent of my rename detection limits series.
+> However, I have a separate rename detection performance series that 
+> depends
+> on both this series and the rename detection limits series.]
+>
+> In this patchset, I introduce directory rename detection to 
+> merge-recursive,
+> predominantly so that when files are added to directories on one side of
+> history and those directories are renamed on the other side of history, 
+> the
+> files will end up in the proper location after a merge or cherry-pick.
+>
+> However, this isn't limited to that simplistic case.  More interesting
+> possibilities exist, such as:
+>
+>  * a file being renamed into a directory which is renamed on the other
+>    side of history, causing the need for a transitive rename.
+>
 
-In a large repository (~50k files, about 60% of which was java) that had
-a number of high level directories involved in renames, this cut the time
-necessary for a cherry-pick down by about 50% (from around 9 minutes to
-4.5 minutes).
+How does this cope with the case insensitive case preserving file systems on 
+Mac and Windows, esp when core.ignorecase is true. If it's a bigger problem 
+that the series already covers, would the likely changes be reasonably 
+localised?
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- diffcore-rename.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+This came up recently on GfW for `git checkout` of a branch where the case 
+changed ("Test" <-> "test"), but git didn't notice that it needed to rename 
+the directories on such an file system. 
+https://github.com/git-for-windows/git/issues/1333
 
-diff --git a/diffcore-rename.c b/diffcore-rename.c
-index 6ba6157c61..c0517058b0 100644
---- a/diffcore-rename.c
-+++ b/diffcore-rename.c
-@@ -377,11 +377,10 @@ static void record_if_better(struct diff_score m[], struct diff_score *o)
-  * 1 if we need to disable inexact rename detection;
-  * 2 if we would be under the limit if we were given -C instead of -C -C.
-  */
--static int too_many_rename_candidates(int num_create,
-+static int too_many_rename_candidates(int num_create, int num_src,
- 				      struct diff_options *options)
- {
- 	int rename_limit = options->rename_limit;
--	int num_src = rename_src_nr;
- 	int i;
- 
- 	options->needed_rename_limit = 0;
-@@ -446,7 +445,7 @@ void diffcore_rename(struct diff_options *options)
- 	struct diff_queue_struct outq;
- 	struct diff_score *mx;
- 	int i, j, rename_count, skip_unmodified = 0;
--	int num_create, dst_cnt;
-+	int num_create, dst_cnt, num_src;
- 	struct progress *progress = NULL;
- 
- 	if (!minimum_score)
-@@ -512,12 +511,14 @@ void diffcore_rename(struct diff_options *options)
- 	 * files still remain as options for rename/copies!)
- 	 */
- 	num_create = (rename_dst_nr - rename_count);
-+	num_src = (detect_rename == DIFF_DETECT_COPY ?
-+		   rename_src_nr : rename_src_nr - rename_count);
- 
- 	/* All done? */
- 	if (!num_create)
- 		goto cleanup;
- 
--	switch (too_many_rename_candidates(num_create, options)) {
-+	switch (too_many_rename_candidates(num_create, num_src, options)) {
- 	case 1:
- 		goto cleanup;
- 	case 2:
-@@ -531,7 +532,7 @@ void diffcore_rename(struct diff_options *options)
- 	if (options->show_rename_progress) {
- 		progress = start_delayed_progress(
- 				_("Performing inexact rename detection"),
--				(uint64_t)rename_dst_nr * (uint64_t)rename_src_nr);
-+				(uint64_t)num_create * (uint64_t)num_src);
- 	}
- 
- 	mx = xcalloc(st_mult(NUM_CANDIDATE_PER_DST, num_create), sizeof(*mx));
-@@ -550,6 +551,10 @@ void diffcore_rename(struct diff_options *options)
- 			struct diff_filespec *one = rename_src[j].p->one;
- 			struct diff_score this_src;
- 
-+			if (one->rename_used &&
-+			    detect_rename != DIFF_DETECT_COPY)
-+				continue;
-+
- 			if (skip_unmodified &&
- 			    diff_unmodified_pair(rename_src[j].p))
- 				continue;
-@@ -568,7 +573,7 @@ void diffcore_rename(struct diff_options *options)
- 			diff_free_filespec_blob(two);
- 		}
- 		dst_cnt++;
--		display_progress(progress, (uint64_t)(i+1)*(uint64_t)rename_src_nr);
-+		display_progress(progress, (uint64_t)dst_cnt*(uint64_t)num_src);
- 	}
- 	stop_progress(&progress);
- 
--- 
-2.15.0.46.g41dca04efb
+<snip>
+
+--
+Philip 
 
