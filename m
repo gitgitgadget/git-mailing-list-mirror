@@ -6,27 +6,27 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2181F201C8
-	for <e@80x24.org>; Sat, 11 Nov 2017 11:22:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EAACA201C8
+	for <e@80x24.org>; Sat, 11 Nov 2017 11:43:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751413AbdKKLWn (ORCPT <rfc822;e@80x24.org>);
-        Sat, 11 Nov 2017 06:22:43 -0500
-Received: from cpanel2.indieserve.net ([199.212.143.6]:40414 "EHLO
+        id S1753382AbdKKLnS (ORCPT <rfc822;e@80x24.org>);
+        Sat, 11 Nov 2017 06:43:18 -0500
+Received: from cpanel2.indieserve.net ([199.212.143.6]:36878 "EHLO
         cpanel2.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750877AbdKKLWn (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 Nov 2017 06:22:43 -0500
-Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:48050 helo=localhost.localdomain)
+        with ESMTP id S1752877AbdKKLnS (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 11 Nov 2017 06:43:18 -0500
+Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:48176 helo=localhost.localdomain)
         by cpanel2.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
         (Exim 4.89)
         (envelope-from <rpjday@crashcourse.ca>)
-        id 1eDTs2-0001bP-Ax
-        for git@vger.kernel.org; Sat, 11 Nov 2017 06:22:42 -0500
-Date:   Sat, 11 Nov 2017 06:22:17 -0500 (EST)
+        id 1eDUBx-0005rJ-HU
+        for git@vger.kernel.org; Sat, 11 Nov 2017 06:43:17 -0500
+Date:   Sat, 11 Nov 2017 06:42:53 -0500 (EST)
 From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
 X-X-Sender: rpjday@localhost.localdomain
 To:     Git Mailing list <git@vger.kernel.org>
-Subject: "git bisect" takes exactly one bad commit and one or more good?
-Message-ID: <alpine.LFD.2.21.1711110612290.5087@localhost.localdomain>
+Subject: should "git bisect" support "git bisect next?"
+Message-ID: <alpine.LFD.2.21.1711110639120.5632@localhost.localdomain>
 User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
@@ -46,33 +46,56 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-  more on "git bisect" ... the man page seems to make it clear that
-bisection takes *precisely* one "bad" commit, and one *or more* good
-commits, is that correct? seems that way, given the ellipses in the
-commands below:
+  the man page for "git bisect" makes no mention of "git bisect next",
+but the script git-bisect.sh does:
 
-  git bisect start [--term-{old,good}=<term> --term-{new,bad}=<term>]
-                   [--no-checkout] [<bad> [<good>...]] [--] [<paths>...]
-  git bisect (bad|new|<term-new>) [<rev>]
-  git bisect (good|old|<term-old>) [<rev>...]
+#!/bin/sh
 
-however, other parts of the man page seem less clear. just below
-that, a description that bisection takes "a" good commit:
+USAGE='[help|start|bad|good|new|old|terms|skip|next|reset|visualize|replay|log|run]'
+                                               ^^^^
+LONG_USAGE='git bisect help
+        print this long help message.
+git bisect start [--term-{old,good}=<term> --term-{new,bad}=<term>]
+                 [--no-checkout] [<bad> [<good>...]] [--] [<pathspec>...]
+        reset bisect state and start bisection.
+git bisect (bad|new) [<rev>]
+        mark <rev> a known-bad revision/
+                a revision after change in a given property.
+git bisect (good|old) [<rev>...]
+        mark <rev>... known-good revisions/
+                revisions before change in a given property.
+git bisect terms [--term-good | --term-bad]
+        show the terms used for old and new commits (default: bad, good)
+git bisect skip [(<rev>|<range>)...]
+        mark <rev>... untestable revisions.
+git bisect next
+        find next bisection to test and check it out.
 
-"You use it by first telling it a "bad" commit that is known to
-contain the bug, and a "good" commit that is known to be before the
-bug was introduced."
+  ... snip ...
 
-and a bit lower, we read "at least one bad ...", which some people
-might interpret as one or more *bad* commits:
+case "$#" in
+0)
+        usage ;;
+*)
+        cmd="$1"
+        get_terms
+        shift
+        case "$cmd" in
+        help)
+                git bisect -h ;;
+        start)
+                bisect_start "$@" ;;
+        bad|good|new|old|"$TERM_BAD"|"$TERM_GOOD")
+                bisect_state "$cmd" "$@" ;;
+        skip)
+                bisect_skip "$@" ;;
+        next)
+                # Not sure we want "next" at the UI level anymore.
+                bisect_next "$@" ;;
 
-"Once you have specified at least one bad and one good commit, git
-bisect selects a commit in the middle of that range of history, checks
-it out, and outputs something similar to the following:"
+  ... snip ...
 
-  if the rules are exactly one bad commit and one or more good, i'll
-submit a patch to reword at least the above, and possibly more if
-necessary.
+so, is it supported or not? should be consistent.
 
 rday
 
