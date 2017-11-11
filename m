@@ -7,92 +7,112 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF4D11F42B
-	for <e@80x24.org>; Sat, 11 Nov 2017 02:50:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3E04C1F42B
+	for <e@80x24.org>; Sat, 11 Nov 2017 05:34:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754532AbdKKCuu (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Nov 2017 21:50:50 -0500
-Received: from mail-wr0-f169.google.com ([209.85.128.169]:50125 "EHLO
-        mail-wr0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750857AbdKKCut (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Nov 2017 21:50:49 -0500
-Received: by mail-wr0-f169.google.com with SMTP id o88so10048732wrb.6
-        for <git@vger.kernel.org>; Fri, 10 Nov 2017 18:50:49 -0800 (PST)
+        id S1750886AbdKKFZe (ORCPT <rfc822;e@80x24.org>);
+        Sat, 11 Nov 2017 00:25:34 -0500
+Received: from mail-wm0-f50.google.com ([74.125.82.50]:37918 "EHLO
+        mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750848AbdKKFZd (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 11 Nov 2017 00:25:33 -0500
+Received: by mail-wm0-f50.google.com with SMTP id p75so6141891wmg.3
+        for <git@vger.kernel.org>; Fri, 10 Nov 2017 21:25:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=DsDVGN7zGdCDg9vCAE2h0b/t6aE/vQDORxs5RTovBgA=;
-        b=FR6BCLjzeJNRcWJkIfzShEhwxPqZHeBOP0hvjLR+oqci3qSmj1vzeTqsYT/IrCNKDI
-         EWnULvU7epm3BmFL6kzLONT1oF4KmNjkQvShngiA5OzEtjmgLGgLgiNmz5ipjqhed9vR
-         MQPHzyynF4aeukY1S2heJ/jkT96rLI+EmOo7kSewjcWrB66Ci69BQTurKBOH/hjXOVTx
-         +oX50LA7LUpW1HUAbbOc7wcGlml/2Quk12Kt4jd4Td2vo5bh9irY6OCMa7QCMCCxmQPA
-         JbXzQ+PAggD+qHyiFpy4iQXMxNiSOpAiShE6HtgNJEXLomRDmuucul6623MvRcAi6Hx3
-         JMFg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=CNOEwolecSnFICOuWsl2ZHmV3kXTBY09oUj2lWl2tMc=;
+        b=qidPgZxVZGXrDkMaOEqttORFd1It1DoQJyfNkevae8nJE7ejoyUOqHiToyusJtwnoz
+         p8sMyNK2i2hPtc9UXCmZUAFmsmQHdeJtgcpykrvGldHlQVhvYTnpKssLx9yru3Vp5goy
+         PgaOewEUGc+3cc4E7dCDI44+fK9ga6PDycHtZUzhaazkqeJvR8gihiGCEClir96Ryv+I
+         nvtyi0YoCPDGX7SihtUvg95taMxAVPNTYZPvnEvYtNN9Q2Kc/W/c4nc8n/jLr0eYMCPj
+         XdgSW06vAuWHt2abClal1QOzw4kQMEuz0Rh+Q4Y8u3h9JOzCYq7CEoWBIPFkDDyZyCUB
+         tbJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=DsDVGN7zGdCDg9vCAE2h0b/t6aE/vQDORxs5RTovBgA=;
-        b=JMnhE4fJl6KhI3STsJ6eNixIzOZuT6s8O7mHk3tZNQ+3IBhaG1XfjzUyaEdABaocu8
-         kr4RIaPiJEmlyol+BfzHVyrUZEoAly2KnW/eohpMJqCbxZCtbYeeKJVPTZAHIsG92mWE
-         MS4S/CxTETGH5NA3t6sN6mhJ/Wmw4yDsthuXQC81HB5SFCumwWFPybU2sxn4CwXLfMbs
-         ZbSyXOBF8iXLwWg85kVwCYjgh8vS1FqUNQ7kOMHcQqs5dslZzO9frVqY6AI46F21QnTM
-         iBjDXBEB4WPiulGlNc91izHEb9xnAaIS6TXuWjbhvJlSwsdIjC9j9v+7A5GS3OLEXbi5
-         yxew==
-X-Gm-Message-State: AJaThX6mdr0XJW4UsjAFz2cqXw6swFcxV8s5K4/Umk3r4CxUIzjrBoEG
-        r1eTk4e0MQYzBcq21XD0DMBxEzEF0Hc=
-X-Google-Smtp-Source: AGs4zMZ3QAqqX2yCXS0cmiTdSjanhe2r1CgZI///gbBHiiCaZF6t0PWE5pmv2HVt4rjWO6KW+9hPsQ==
-X-Received: by 10.223.135.143 with SMTP id b15mr1694860wrb.278.1510368648525;
-        Fri, 10 Nov 2017 18:50:48 -0800 (PST)
-Received: from [192.168.1.8] (93-87-220-139.dynamic.isp.telekom.rs. [93.87.220.139])
-        by smtp.gmail.com with ESMTPSA id g4sm7632779wrh.19.2017.11.10.18.50.47
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 10 Nov 2017 18:50:47 -0800 (PST)
-Subject: Re: Unify annotated and non-annotated tags
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     anatoly techtonik <techtonik@gmail.com>, git@vger.kernel.org
-References: <CAPkN8x+MELCnttE+xptKzYXsYPWqbiE59LABrwNBhFroayc+wQ@mail.gmail.com>
- <ec4be1c2-a0cc-cec8-a566-06c11c8abe06@gmail.com>
- <xmqqh8u1efh5.fsf@gitster.mtv.corp.google.com>
-From:   Igor Djordjevic <igor.d.djordjevic@gmail.com>
-Message-ID: <59bd5e13-01a5-6c39-04bf-c60cab4004e5@gmail.com>
-Date:   Sat, 11 Nov 2017 03:50:46 +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.4.0
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=CNOEwolecSnFICOuWsl2ZHmV3kXTBY09oUj2lWl2tMc=;
+        b=G+mrHmSAkz1/1Jfft37vYQ0wz93iQ966o1PHfijcqWnDI6NjmYiKo0iU6nlIuhJy1O
+         e5hpZ5cMiZFTSggpGPP93vucSR7jJ8WaK2Oi5pfbXrUGBoXBamdlXPKg7SAw3e3E3bOe
+         GASqphJJkjrqFcp4hf9vWBO+HMkGHiI5f1Jxqs9+tMONWm95w/sApE3+3o+vhSYdQkHQ
+         vDN0pmpg0ZsriBaUyImeqBI+thLHsgv9az/vjDXc4QKAAfHeNgkYFQyrEi7Dg9IEBB3E
+         Zd+QyTRREfw1quE8XO0pzWlIjEEG3iHP0F/t6SYCc3KjJZA2ORDlzWw74PRo1jOJxpmN
+         LCNQ==
+X-Gm-Message-State: AJaThX64GKtImDuo75gZN9Dx5vgAy6Dg3XZReUes06po/8h3z9/tZGYu
+        YzqxlpleFb7yhtNTsb121H1SXDL0e8eXeY+Ht2Y=
+X-Google-Smtp-Source: AGs4zMYWYs/Ez8SL6BzRRpg5248Fg8z2H0sspaDJUFLvQv46sVCOhPOw3oNBzpFP+GfdBN8r7+CZxMenGZnTw5hlAOo=
+X-Received: by 10.80.181.90 with SMTP id z26mr3576561edd.76.1510377931938;
+ Fri, 10 Nov 2017 21:25:31 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <xmqqh8u1efh5.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Received: by 10.80.136.103 with HTTP; Fri, 10 Nov 2017 21:25:11 -0800 (PST)
+In-Reply-To: <CAGZ79kbBypJfDn28j2Z_SCFG9iCZnx-sWmH6D2vqnS+tNKpnBw@mail.gmail.com>
+References: <20171108143646.2e1870a82360072557094e01@google.com>
+ <20171109001007.11894-1-sbeller@google.com> <CA+P7+xpTCHHNG1tAhysOFV5jFHpXdzRk5zfYNHUUVdYiGY55cA@mail.gmail.com>
+ <CAGZ79kZAvMKQUjbqWZkhy39sE5e9k1DmkiA42ywiw2NgY1+Xig@mail.gmail.com>
+ <CA+P7+xoA5KNW7PEiW0wZp-aohsKbnH8AGAvkk3Y3Ghv=Jhp+hw@mail.gmail.com> <CAGZ79kbBypJfDn28j2Z_SCFG9iCZnx-sWmH6D2vqnS+tNKpnBw@mail.gmail.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Fri, 10 Nov 2017 21:25:11 -0800
+Message-ID: <CA+P7+xp64ESHnQgt-9odhGKeCA6VurOozbFa6Qi2sQKmcQtZwQ@mail.gmail.com>
+Subject: Re: [RFD] Long term plan with submodule refs?
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/11/2017 03:06, Junio C Hamano wrote:
+On Fri, Nov 10, 2017 at 12:01 PM, Stefan Beller <sbeller@google.com> wrote:
+>>
+>>>> Basically, a workflow where it's easier to have each submodule checked
+>>>> out at master, and we can still keep track of historical relationship
+>>>> of what commit was the submodule at some time ago, but without causing
+>>>> some of these headaches.
+>>>
+>>> So essentially a repo or otherwise parallel workflow just with the versioning
+>>> happening magically behind your back?
+>>
+>> Ideally, my developers would like to just have each submodule checked
+>> out at master.
+>>
+>> Ideally, I'd like to be able to checkout an old version of the parent
+>> project and have it recorded what version of the shared submodule was
+>> at at the time.
+>
+> This sounds as if a "passive superproject" would work best for you, i.e.
+> each commit in a submodule is bubbled up into the superproject,
+> making a commit potentially even behind the scenes, such that the
+> user interaction with the superproject would be none.
+>
+> However this approach also sounds careless, as there is no precondition
+> that e.g. the superproject builds with all the submodules as is; it is a mere
+> tracking of "at this time we have the submodules arranged as such",
+> whereas for the versioning aspect, you would want to have commit messages
+> in the superproject saying *why* you bumped up a specific submodule.
+> The user may not like to give such an explanation as they already wrote
+> a commit message for the individual project.
+>
+> Also this approach sounds like a local approach, as it is not clear to me,
+> why you'd want to share the superproject history.
+>
+>> Ideally, my developers don't want to have to worry about knowing that
+>> they shouldn't "git add -a" or "git commit -a" when they have a
+>> submodule checked out at a different location from the parent projects
+>> gitlink.
+>>
+>> Thanks,
+>> Jake
+>>
 
-> Igor Djordjevic <igor.d.djordjevic@gmail.com> writes:
-> 
->> If you would like to mimic output of "git show-ref", repeating 
->> commits for each tag pointing to it and showing full tag name as 
->> well, you could do something like this, for example:
->>
->> 	for tag in $(git for-each-ref --format="%(refname)" refs/tags)
->> 	do
->> 		printf '%s %s\n' "$(git rev-parse $tag^0)" "$tag"
->> 	done
->>
->>
->> Hope that helps a bit.
-> 
-> If you use for-each-ref's --format option, you could do something
-> like (pardon a long line):
-> 
-> git for-each-ref --format='%(if)%(*objectname)%(then)%(*objectname)%(else)%(objectname)%(end) %(refname)' refs/tags
-> 
-> without any loop, I would think.
 
-... and I did have a feeling it should be possible in a single Git 
-command :P Thanks.
+It doesn't need to be totally passive, in that some (or one
+maintainer) can manage when the submodule pointer is actually updated,
+but ideally other users don't have to worry about that and can
+"pretend" to always keep each submodule at master, as they have always
+done in the past.
+
+Thanks,
+Jake
