@@ -2,79 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 77B171F43C
-	for <e@80x24.org>; Sat, 11 Nov 2017 14:38:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5F8511F43C
+	for <e@80x24.org>; Sat, 11 Nov 2017 15:28:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750899AbdKKOic (ORCPT <rfc822;e@80x24.org>);
-        Sat, 11 Nov 2017 09:38:32 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51214 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750818AbdKKOib (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 Nov 2017 09:38:31 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 27C53ADC5C;
-        Sat, 11 Nov 2017 09:38:25 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Zyzbc6fJz6H1LJYqyXa/r+RlNNU=; b=nwmw4U
-        BgEAaRxgB74xtjW5Xf1dWdEHpotPvD0gMSk0ypo19z5/Q4y7qsMReF2kSiQsfO5K
-        P5fAxgYUN59VovNisH4fqs9aaKcviLJIS0ZXxX/Y6SCkVONSh4olZ8QALmFOHNbS
-        Nnt6FGK3vq12OLoKLQFjdzSP+cCQwUorPrfJI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=DeJ1AMarrZWysIn6VbEGg4BOUjvzbe7j
-        zhVeTUWi5ED88RB48ua1SD9vFX9wRhUcMjh75EheTbvDN49WcGM7eHKVphoy9SvM
-        LonTQgtEEXXrSLbn0Li63PRDRRrLrM7pXRrRBMnhx3odzrnxliLQ4tEYYeeNtBg3
-        tvEMtr4Xapo=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1F3DFADC5B;
-        Sat, 11 Nov 2017 09:38:25 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 89FCBADC5A;
-        Sat, 11 Nov 2017 09:38:24 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     "Robert P. J. Day" <rpjday@crashcourse.ca>,
-        Git Mailing list <git@vger.kernel.org>,
-        Stephan Beyer <s-beyer@gmx.net>
-Subject: Re: should "git bisect" support "git bisect next?"
-References: <alpine.LFD.2.21.1711110639120.5632@localhost.localdomain>
-        <CAP8UFD3az17BpB0nA+35p3BP95sBuOY0Yvce3cgbh0L3YH7+rQ@mail.gmail.com>
-Date:   Sat, 11 Nov 2017 23:38:23 +0900
-In-Reply-To: <CAP8UFD3az17BpB0nA+35p3BP95sBuOY0Yvce3cgbh0L3YH7+rQ@mail.gmail.com>
-        (Christian Couder's message of "Sat, 11 Nov 2017 15:07:55 +0100")
-Message-ID: <xmqq4lq0ev8g.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751181AbdKKP2M (ORCPT <rfc822;e@80x24.org>);
+        Sat, 11 Nov 2017 10:28:12 -0500
+Received: from cpanel2.indieserve.net ([199.212.143.6]:43489 "EHLO
+        cpanel2.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750954AbdKKP2L (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 11 Nov 2017 10:28:11 -0500
+Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:50432 helo=localhost.localdomain)
+        by cpanel2.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.89)
+        (envelope-from <rpjday@crashcourse.ca>)
+        id 1eDXha-00045W-F7; Sat, 11 Nov 2017 10:28:10 -0500
+Date:   Sat, 11 Nov 2017 10:27:45 -0500 (EST)
+From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
+X-X-Sender: rpjday@localhost.localdomain
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Christian Couder <christian.couder@gmail.com>,
+        Git Mailing list <git@vger.kernel.org>
+Subject: Re: "git bisect" takes exactly one bad commit and one or more
+ good?
+In-Reply-To: <xmqq8tfcevev.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.LFD.2.21.1711111024470.10756@localhost.localdomain>
+References: <alpine.LFD.2.21.1711110612290.5087@localhost.localdomain> <CAP8UFD1=idL51XDzE_RKc_7z9NghTd7GHoZ-T61y0rQ8ZYXomw@mail.gmail.com> <xmqq8tfcevev.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F90994F2-C6ED-11E7-B35E-575F0C78B957-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel2.indieserve.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - crashcourse.ca
+X-Get-Message-Sender-Via: cpanel2.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: cpanel2.indieserve.net: rpjday@crashcourse.ca
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> writes:
+On Sat, 11 Nov 2017, Junio C Hamano wrote:
 
-> On Sat, Nov 11, 2017 at 12:42 PM, Robert P. J. Day
-> <rpjday@crashcourse.ca> wrote:
->>
->>   the man page for "git bisect" makes no mention of "git bisect next",
->> but the script git-bisect.sh does:
+> Christian Couder <christian.couder@gmail.com> writes:
 >
-> Yeah the following patch was related:
+> >> "You use it by first telling it a "bad" commit that is known to
+> >> contain the bug, and a "good" commit that is known to be before
+> >> the bug was introduced."
+> >
+> > Yeah, 'and at least a "good" commit' would be better.
 >
-> https://public-inbox.org/git/1460294354-7031-2-git-send-email-s-beyer@gmx.net/
+> Make it "at least one" instead, perhaps?
 >
-> You might want to discuss with Stephan (cc'ed).
+> I somehow thought that you technically could force bisection with 0
+> good commit, even though no sane person would do so.  For the
+> matter, in practice nobody starts with more than one good commit,
+> and for that reason, I doubt that the proposed change to overstress
+> the fact that you could give two or more "good" ones when starting
+> has that much practical value.  The tradeoff of losing the clarity
+> coming from giving only the simplest usage pattern for trying to be
+> technically more correct that is proposed by this change does not
+> sound too good, but it may be just me (who prefers white lies in the
+> end-user docs when it buys us more simplicity and clarity). .
 
-Thanks for saving me time to explain why 'next' is still a very
-important command but the end users do not actually need to be
-strongly aware of it, because most commands automatically invokes it
-as their final step due to the importance of what it does ;-)
+  i realize that one of each commit is the simplest use case, but the
+scenario that occurred to me is a bunch of branches being merged and,
+suddenly, you have a bug, and you're not sure where it came from so
+you identify a number of good commits, one per merged branch, and go
+from there.
 
+  also, making it clear you can have more than one good commit is
+consistent with the synopses, which use ellipses to represent that
+very thing.
+
+rday
+
+-- 
+
+========================================================================
+Robert P. J. Day                                 Ottawa, Ontario, CANADA
+                        http://crashcourse.ca
+
+Twitter:                                       http://twitter.com/rpjday
+LinkedIn:                               http://ca.linkedin.com/in/rpjday
+========================================================================
