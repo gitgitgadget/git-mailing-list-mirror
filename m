@@ -2,87 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0CC101F42B
-	for <e@80x24.org>; Sat, 11 Nov 2017 02:13:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CF4D11F42B
+	for <e@80x24.org>; Sat, 11 Nov 2017 02:50:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754883AbdKKCNZ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Nov 2017 21:13:25 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50677 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1754653AbdKKCNX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Nov 2017 21:13:23 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 44F5B95201;
-        Fri, 10 Nov 2017 21:13:23 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ZtjyHPEIqk8DB3+zx4ArJVdBO80=; b=IGhzrf
-        /7KcwoG1h2K3ZMAvqanOvyPBhbWJ6RFzDWfM7fmTv2YTuUIfAw6DNmHSoRCYdbr7
-        EforOdTKq5FbIie7Pn9pJ3iDTt+PfCBd6ZRpbtYS4aJGR9moOotAbiYVkdj8uK4S
-        9mwjNWn0QzGfc5U9L2xKm5iTdjcFs11BUnouw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=A8188eW/lpz3K8im6AkaxP1TP2ZDLjYi
-        jMFjREehnfG+bSlPR12pN06KOJqZuIJj+dd+scuxo4wWRy1Z9nIgcxMCJDRtpqBE
-        exPmkqpPN/xc96rAyE4l4NRHmfXfC+eGve+I2YEch0n7EJxoec5byNuemko/2EIE
-        msGJMYjXOUA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3E17F95200;
-        Fri, 10 Nov 2017 21:13:23 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B57A7951FF;
-        Fri, 10 Nov 2017 21:13:22 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Joey Hess <id@joeyh.name>, Git Mailing List <git@vger.kernel.org>
-Subject: Re: use of PWD
-References: <20171107192239.6hinu235hfpwqpv6@kitenet.net>
-        <20171108075336.is4awgyw53dohf7y@sigill.intra.peff.net>
-Date:   Sat, 11 Nov 2017 11:13:21 +0900
-In-Reply-To: <20171108075336.is4awgyw53dohf7y@sigill.intra.peff.net> (Jeff
-        King's message of "Wed, 8 Nov 2017 02:53:36 -0500")
-Message-ID: <xmqqd14pef5q.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1754532AbdKKCuu (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Nov 2017 21:50:50 -0500
+Received: from mail-wr0-f169.google.com ([209.85.128.169]:50125 "EHLO
+        mail-wr0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750857AbdKKCut (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Nov 2017 21:50:49 -0500
+Received: by mail-wr0-f169.google.com with SMTP id o88so10048732wrb.6
+        for <git@vger.kernel.org>; Fri, 10 Nov 2017 18:50:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=DsDVGN7zGdCDg9vCAE2h0b/t6aE/vQDORxs5RTovBgA=;
+        b=FR6BCLjzeJNRcWJkIfzShEhwxPqZHeBOP0hvjLR+oqci3qSmj1vzeTqsYT/IrCNKDI
+         EWnULvU7epm3BmFL6kzLONT1oF4KmNjkQvShngiA5OzEtjmgLGgLgiNmz5ipjqhed9vR
+         MQPHzyynF4aeukY1S2heJ/jkT96rLI+EmOo7kSewjcWrB66Ci69BQTurKBOH/hjXOVTx
+         +oX50LA7LUpW1HUAbbOc7wcGlml/2Quk12Kt4jd4Td2vo5bh9irY6OCMa7QCMCCxmQPA
+         JbXzQ+PAggD+qHyiFpy4iQXMxNiSOpAiShE6HtgNJEXLomRDmuucul6623MvRcAi6Hx3
+         JMFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=DsDVGN7zGdCDg9vCAE2h0b/t6aE/vQDORxs5RTovBgA=;
+        b=JMnhE4fJl6KhI3STsJ6eNixIzOZuT6s8O7mHk3tZNQ+3IBhaG1XfjzUyaEdABaocu8
+         kr4RIaPiJEmlyol+BfzHVyrUZEoAly2KnW/eohpMJqCbxZCtbYeeKJVPTZAHIsG92mWE
+         MS4S/CxTETGH5NA3t6sN6mhJ/Wmw4yDsthuXQC81HB5SFCumwWFPybU2sxn4CwXLfMbs
+         ZbSyXOBF8iXLwWg85kVwCYjgh8vS1FqUNQ7kOMHcQqs5dslZzO9frVqY6AI46F21QnTM
+         iBjDXBEB4WPiulGlNc91izHEb9xnAaIS6TXuWjbhvJlSwsdIjC9j9v+7A5GS3OLEXbi5
+         yxew==
+X-Gm-Message-State: AJaThX6mdr0XJW4UsjAFz2cqXw6swFcxV8s5K4/Umk3r4CxUIzjrBoEG
+        r1eTk4e0MQYzBcq21XD0DMBxEzEF0Hc=
+X-Google-Smtp-Source: AGs4zMZ3QAqqX2yCXS0cmiTdSjanhe2r1CgZI///gbBHiiCaZF6t0PWE5pmv2HVt4rjWO6KW+9hPsQ==
+X-Received: by 10.223.135.143 with SMTP id b15mr1694860wrb.278.1510368648525;
+        Fri, 10 Nov 2017 18:50:48 -0800 (PST)
+Received: from [192.168.1.8] (93-87-220-139.dynamic.isp.telekom.rs. [93.87.220.139])
+        by smtp.gmail.com with ESMTPSA id g4sm7632779wrh.19.2017.11.10.18.50.47
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 10 Nov 2017 18:50:47 -0800 (PST)
+Subject: Re: Unify annotated and non-annotated tags
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     anatoly techtonik <techtonik@gmail.com>, git@vger.kernel.org
+References: <CAPkN8x+MELCnttE+xptKzYXsYPWqbiE59LABrwNBhFroayc+wQ@mail.gmail.com>
+ <ec4be1c2-a0cc-cec8-a566-06c11c8abe06@gmail.com>
+ <xmqqh8u1efh5.fsf@gitster.mtv.corp.google.com>
+From:   Igor Djordjevic <igor.d.djordjevic@gmail.com>
+Message-ID: <59bd5e13-01a5-6c39-04bf-c60cab4004e5@gmail.com>
+Date:   Sat, 11 Nov 2017 03:50:46 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E4AD10E6-C685-11E7-A4D9-8EF31968708C-77302942!pb-smtp1.pobox.com
+In-Reply-To: <xmqqh8u1efh5.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On 11/11/2017 03:06, Junio C Hamano wrote:
 
-> So totally orthogonal to your bug, I wonder if we ought to be doing:
->
-> diff --git a/sha1_file.c b/sha1_file.c
-> index 057262d46e..0b76233aa7 100644
-> --- a/sha1_file.c
-> +++ b/sha1_file.c
-> @@ -530,11 +530,11 @@ void prepare_alt_odb(void)
->  	if (alt_odb_tail)
->  		return;
->  
-> -	alt = getenv(ALTERNATE_DB_ENVIRONMENT);
-> -	if (!alt) alt = "";
-> -
->  	alt_odb_tail = &alt_odb_list;
-> -	link_alt_odb_entries(alt, strlen(alt), PATH_SEP, NULL, 0);
-> +
-> +	alt = getenv(ALTERNATE_DB_ENVIRONMENT);
-> +	if (alt)
-> +		link_alt_odb_entries(alt, strlen(alt), PATH_SEP, NULL, 0);
->  
->  	read_info_alternates(get_object_directory(), 0);
->  }
->
-> to avoid hitting link_alt_odb_entries() at all when there are no
-> entries.
+> Igor Djordjevic <igor.d.djordjevic@gmail.com> writes:
+> 
+>> If you would like to mimic output of "git show-ref", repeating 
+>> commits for each tag pointing to it and showing full tag name as 
+>> well, you could do something like this, for example:
+>>
+>> 	for tag in $(git for-each-ref --format="%(refname)" refs/tags)
+>> 	do
+>> 		printf '%s %s\n' "$(git rev-parse $tag^0)" "$tag"
+>> 	done
+>>
+>>
+>> Hope that helps a bit.
+> 
+> If you use for-each-ref's --format option, you could do something
+> like (pardon a long line):
+> 
+> git for-each-ref --format='%(if)%(*objectname)%(then)%(*objectname)%(else)%(objectname)%(end) %(refname)' refs/tags
+> 
+> without any loop, I would think.
 
-Sounds sane.
+... and I did have a feeling it should be possible in a single Git 
+command :P Thanks.
