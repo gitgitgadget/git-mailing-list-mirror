@@ -2,109 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EAACA201C8
-	for <e@80x24.org>; Sat, 11 Nov 2017 11:43:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BFFF8201C8
+	for <e@80x24.org>; Sat, 11 Nov 2017 12:01:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753382AbdKKLnS (ORCPT <rfc822;e@80x24.org>);
-        Sat, 11 Nov 2017 06:43:18 -0500
-Received: from cpanel2.indieserve.net ([199.212.143.6]:36878 "EHLO
-        cpanel2.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752877AbdKKLnS (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 Nov 2017 06:43:18 -0500
-Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:48176 helo=localhost.localdomain)
-        by cpanel2.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.89)
-        (envelope-from <rpjday@crashcourse.ca>)
-        id 1eDUBx-0005rJ-HU
-        for git@vger.kernel.org; Sat, 11 Nov 2017 06:43:17 -0500
-Date:   Sat, 11 Nov 2017 06:42:53 -0500 (EST)
-From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
-X-X-Sender: rpjday@localhost.localdomain
-To:     Git Mailing list <git@vger.kernel.org>
-Subject: should "git bisect" support "git bisect next?"
-Message-ID: <alpine.LFD.2.21.1711110639120.5632@localhost.localdomain>
-User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+        id S1753514AbdKKMBp (ORCPT <rfc822;e@80x24.org>);
+        Sat, 11 Nov 2017 07:01:45 -0500
+Received: from mail-io0-f175.google.com ([209.85.223.175]:55889 "EHLO
+        mail-io0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752877AbdKKMBo (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 11 Nov 2017 07:01:44 -0500
+Received: by mail-io0-f175.google.com with SMTP id p186so16139485ioe.12
+        for <git@vger.kernel.org>; Sat, 11 Nov 2017 04:01:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=EiyTAF67k5M2ObcWi7m9RYX3TH2Ir1QlxV2PbJpV+eM=;
+        b=eCzSVyPvkfvez/iwY8LoEUKkq5cDFFh78aYk/QxSQ9vWLQ1+H6Ay/sb1iIBHcjiUGi
+         k/HluvkTHXLRkWpD4JdL8BFhDeqtfRVfQK7aI1tu9VraS/wihvmsK70JTAkBrB/ZsOjq
+         E764baOS5c1DWCVqFIy8KgPz0OfubB+2g8rJqz7wCxlXo/J5EsUC0DuCXp6lJmrggz/8
+         wzBXKqaXdnuAQRxZ7m2q7eGtBdTL7j9GiWzUu5VG6fodRBexKBLNRQIF1IhI1YXPIvbI
+         3hqgk4HCdUbOilnPIPF3TXQCk62yZzmNEO6bdYdP0kbHsY72xmuW87gDkVHcLBD2TRPB
+         9KxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=EiyTAF67k5M2ObcWi7m9RYX3TH2Ir1QlxV2PbJpV+eM=;
+        b=KjJiHnWb8BcfX6067U9ZsvXeqVgmsktWXsvs5hbt9YrkEnlRti9cW6hFrSjf5ARsaS
+         3xJs23HRUoU58L6h0TW1uT0a5fc5HMb59RZywsyFUNNG1FUWIavMOoR9z16mpp2eF0ga
+         dTLNXeQM0iBF1n8sx2Us7BtD4IgXXD/1qgbj1wxcz2xMGFnt6FHlmWn2Sqnu2d80zEZ+
+         nsvl/hdG/z8jQQdqvtW2LpxyuBE7gUFkZVT/MYngl/aielzf8vxzBR3USYDNHwDiSx/T
+         CGgOzHm/1d/FFmK2Qx78NvObV26OijnpfIdAC0g0acutET8e1qcBTqizhgLSxxp4ym0u
+         TC5w==
+X-Gm-Message-State: AJaThX6NwZUxhk0tgPE3U+PZtJwIOLYBOjwwy7qg8WLYud3Z1V5C7PWM
+        Q7T2miBARLHAHxiGgQY33MTqH6M7dhgnIXZWgDI=
+X-Google-Smtp-Source: AGs4zMbOvJRtCqe3DH+ddhPCypXWpLPXUTqANtmWtvfvq+fQDgMEaiATBu45ge4SmWh7t7OsdgRDoD9IOmBcS727ghc=
+X-Received: by 10.107.47.17 with SMTP id j17mr3563984ioo.96.1510401703979;
+ Sat, 11 Nov 2017 04:01:43 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cpanel2.indieserve.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - crashcourse.ca
-X-Get-Message-Sender-Via: cpanel2.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
-X-Authenticated-Sender: cpanel2.indieserve.net: rpjday@crashcourse.ca
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+Received: by 10.79.28.137 with HTTP; Sat, 11 Nov 2017 04:01:43 -0800 (PST)
+In-Reply-To: <alpine.LFD.2.21.1711110612290.5087@localhost.localdomain>
+References: <alpine.LFD.2.21.1711110612290.5087@localhost.localdomain>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Sat, 11 Nov 2017 13:01:43 +0100
+Message-ID: <CAP8UFD1=idL51XDzE_RKc_7z9NghTd7GHoZ-T61y0rQ8ZYXomw@mail.gmail.com>
+Subject: Re: "git bisect" takes exactly one bad commit and one or more good?
+To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
+Cc:     Git Mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sat, Nov 11, 2017 at 12:22 PM, Robert P. J. Day
+<rpjday@crashcourse.ca> wrote:
+>
+>   more on "git bisect" ... the man page seems to make it clear that
+> bisection takes *precisely* one "bad" commit, and one *or more* good
+> commits, is that correct?
 
-  the man page for "git bisect" makes no mention of "git bisect next",
-but the script git-bisect.sh does:
+Yeah, that's true.
 
-#!/bin/sh
+> seems that way, given the ellipses in the
+> commands below:
+>
+>   git bisect start [--term-{old,good}=<term> --term-{new,bad}=<term>]
+>                    [--no-checkout] [<bad> [<good>...]] [--] [<paths>...]
+>   git bisect (bad|new|<term-new>) [<rev>]
+>   git bisect (good|old|<term-old>) [<rev>...]
 
-USAGE='[help|start|bad|good|new|old|terms|skip|next|reset|visualize|replay|log|run]'
-                                               ^^^^
-LONG_USAGE='git bisect help
-        print this long help message.
-git bisect start [--term-{old,good}=<term> --term-{new,bad}=<term>]
-                 [--no-checkout] [<bad> [<good>...]] [--] [<pathspec>...]
-        reset bisect state and start bisection.
-git bisect (bad|new) [<rev>]
-        mark <rev> a known-bad revision/
-                a revision after change in a given property.
-git bisect (good|old) [<rev>...]
-        mark <rev>... known-good revisions/
-                revisions before change in a given property.
-git bisect terms [--term-good | --term-bad]
-        show the terms used for old and new commits (default: bad, good)
-git bisect skip [(<rev>|<range>)...]
-        mark <rev>... untestable revisions.
-git bisect next
-        find next bisection to test and check it out.
+Yeah indeed.
 
-  ... snip ...
+> however, other parts of the man page seem less clear. just below
+> that, a description that bisection takes "a" good commit:
+>
+> "You use it by first telling it a "bad" commit that is known to
+> contain the bug, and a "good" commit that is known to be before the
+> bug was introduced."
 
-case "$#" in
-0)
-        usage ;;
-*)
-        cmd="$1"
-        get_terms
-        shift
-        case "$cmd" in
-        help)
-                git bisect -h ;;
-        start)
-                bisect_start "$@" ;;
-        bad|good|new|old|"$TERM_BAD"|"$TERM_GOOD")
-                bisect_state "$cmd" "$@" ;;
-        skip)
-                bisect_skip "$@" ;;
-        next)
-                # Not sure we want "next" at the UI level anymore.
-                bisect_next "$@" ;;
+Yeah, 'and at least a "good" commit' would be better.
 
-  ... snip ...
+> and a bit lower, we read "at least one bad ...", which some people
+> might interpret as one or more *bad* commits:
+>
+> "Once you have specified at least one bad and one good commit, git
+> bisect selects a commit in the middle of that range of history, checks
+> it out, and outputs something similar to the following:"
 
-so, is it supported or not? should be consistent.
+Yeah, 'Once you have specified one bad and at least one good commit'
+would be better.
 
-rday
+>   if the rules are exactly one bad commit and one or more good, i'll
+> submit a patch to reword at least the above, and possibly more if
+> necessary.
 
--- 
-
-========================================================================
-Robert P. J. Day                                 Ottawa, Ontario, CANADA
-                        http://crashcourse.ca
-
-Twitter:                                       http://twitter.com/rpjday
-LinkedIn:                               http://ca.linkedin.com/in/rpjday
-========================================================================
+Sure, thanks,
+Christian.
