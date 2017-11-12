@@ -2,165 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 21D47201C8
-	for <e@80x24.org>; Sun, 12 Nov 2017 20:47:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A79DF201C8
+	for <e@80x24.org>; Sun, 12 Nov 2017 20:48:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750951AbdKLUrN (ORCPT <rfc822;e@80x24.org>);
-        Sun, 12 Nov 2017 15:47:13 -0500
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:40554 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750921AbdKLUrM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Nov 2017 15:47:12 -0500
-Received: by mail-wm0-f65.google.com with SMTP id b189so4534554wmd.5
-        for <git@vger.kernel.org>; Sun, 12 Nov 2017 12:47:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=PpwX3w4AFvuOtuWcXBinfuVT+s76Ep0kTLC0my7GjUo=;
-        b=JDQwoigc0YufdsHa7EibhrhSlLIp62/wyOrBrOwH/2iyeX5XwGSO1RpMtNtT971cQ9
-         OPbCu6+YrU4H9PpLBUjCXVMbkbcM2lFS8DIA0zoL6Lbi7UiSPa1XDAfRhQDqf4UQgPzU
-         GMQtz99s56WtdIrPOgomxQXtnXRSc+iuOAcLu57fgvfg1AJKrk1HUpmniTdoopafWg/v
-         gVg+DLJE3d3HhX20wMDJ61ZhbxSwLYyu3qawsLOI99cqCiuHmQFw1J2NReOc3NYuQIG1
-         cI2upGh+wpBwysTE9CzcYvD85NNQTBuJtHOoycr9++kqygidA771Spbm7VbGQOQ2/0nA
-         Chyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=PpwX3w4AFvuOtuWcXBinfuVT+s76Ep0kTLC0my7GjUo=;
-        b=AaYzrv4O5ITWPuqmToeB0VZxP7zT5TV5OD4T7Kq0I/irgzvOLb0G7h/WfZ5jZ7Hu6z
-         NEfTky3IdFUP3Co63WTFbflTzvXTrWL7f/I2LwF00+SlBKq/H+vhbHGllI2ysJ6F6q6d
-         f2sixynYgTLuiOq6rKHLbWz6Mzj51pzON2hr58gHiU4Xiwvm3Vmt/JS6HmTAbFyvbbBy
-         JkDCg7sihUNTrP6a/t01gC95Uk14mAltNRRXlF1+6nzB4sJJXSzQ7h9WXgfPkV6P0pb8
-         I8rN9XWyyi0cx/Dzyxeg51pAo7//X9Oek0NvIJqWGwMUY+9gr+4T18xf6QhBam+xboLg
-         rj1g==
-X-Gm-Message-State: AJaThX5aRAXdp2Q/98IsrMFDfbzv/kF5BLpno+l+O5ZbiYXY0y372NpJ
-        d/x9CF5pLWl3eF3dRViCmOQ=
-X-Google-Smtp-Source: AGs4zMatzrPElIzccjyISw356RuvqHr1cJhRsOkct5mLB+z68EKL4KtXp/OkGbZZprwW4YWr6LZM8w==
-X-Received: by 10.80.163.101 with SMTP id 92mr9867423edn.100.1510519631198;
-        Sun, 12 Nov 2017 12:47:11 -0800 (PST)
-Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
-        by smtp.gmail.com with ESMTPSA id e24sm12054989edc.9.2017.11.12.12.47.09
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 12 Nov 2017 12:47:09 -0800 (PST)
-Received: from avar by evledraar with local (Exim 4.89)
-        (envelope-from <avarab@gmail.com>)
-        id 1eDz9o-0005dd-PK; Sun, 12 Nov 2017 21:47:08 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Charles Bailey <charles@hashpling.org>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Fix NO_LIBPCRE1_JIT to fully disable JIT
-References: <20171112165938.8787-1-charles@hashpling.org>
-User-agent: Debian GNU/Linux 9.2 (stretch); Emacs 25.1.1; mu4e 0.9.19
-In-reply-to: <20171112165938.8787-1-charles@hashpling.org>
-Date:   Sun, 12 Nov 2017 21:47:08 +0100
-Message-ID: <87tvxzxm0j.fsf@evledraar.booking.com>
+        id S1751081AbdKLUsg (ORCPT <rfc822;e@80x24.org>);
+        Sun, 12 Nov 2017 15:48:36 -0500
+Received: from cpanel2.indieserve.net ([199.212.143.6]:41244 "EHLO
+        cpanel2.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750929AbdKLUsf (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Nov 2017 15:48:35 -0500
+Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:58776 helo=localhost.localdomain)
+        by cpanel2.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.89)
+        (envelope-from <rpjday@crashcourse.ca>)
+        id 1eDzBD-0001xx-5T
+        for git@vger.kernel.org; Sun, 12 Nov 2017 15:48:35 -0500
+Date:   Sun, 12 Nov 2017 15:48:10 -0500 (EST)
+From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
+X-X-Sender: rpjday@localhost.localdomain
+To:     Git Mailing list <git@vger.kernel.org>
+Subject: aesthetic standard for synopsis line of man pages?
+Message-ID: <alpine.LFD.2.21.1711121537440.7324@localhost.localdomain>
+User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/mixed; boundary="8323328-472592034-1510519692=:7324"
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel2.indieserve.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - crashcourse.ca
+X-Get-Message-Sender-Via: cpanel2.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: cpanel2.indieserve.net: rpjday@crashcourse.ca
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Sun, Nov 12 2017, Charles Bailey jotted:
+--8323328-472592034-1510519692=:7324
+Content-Type: text/plain; charset=ISO-8859-7
+Content-Transfer-Encoding: 8BIT
 
-> From: Charles Bailey <cbailey32@bloomberg.net>
->
-> If you have a pcre1 library which is compiled with JIT enabled then
-> PCRE_STUDY_JIT_COMPILE will be defined whether or not the
-> NO_LIBPCRE1_JIT configuration is set.
->
-> This means that we enable JIT functionality when calling pcre_study
-> even if NO_LIBPCRE1_JIT has been explicitly set and we just use plain
-> pcre_exec later.
->
-> Fix this by using own macro (GIT_PCRE_STUDY_JIT_COMPILE) which we set to
-> PCRE_STUDY_JIT_COMPILE only if NO_LIBPCRE1_JIT is not set and define to
-> 0 otherwise, as before.
-> ---
->
-> I was bisecting an issue with the PCRE support that was causing a test
-> suite failure on our Solaris builds and reached fbaceaac47 ("grep: add
-> support for the PCRE v1 JIT API"). It appeared to be a misaligned memory
-> access somewhere inside the libpcre code. I tried disabling the use of
-> JIT with NO_LIBPCRE1_JIT but it turned out that even with this set we
-> were still triggering the JIT code path in the call to pcre_study.
->
-> Yes, we probably should fix our PCRE1 library build on Solaris or move
-> to PCRE2, but really NO_LIBPCRE1_JIT should have prevented us from
-> triggering this crash.
->
->  grep.c | 2 +-
->  grep.h | 5 +++--
->  2 files changed, 4 insertions(+), 3 deletions(-)
->
-> diff --git a/grep.c b/grep.c
-> index ce6a48e..d0b9b6c 100644
-> --- a/grep.c
-> +++ b/grep.c
-> @@ -387,7 +387,7 @@ static void compile_pcre1_regexp(struct grep_pat *p, const struct grep_opt *opt)
->  	if (!p->pcre1_regexp)
->  		compile_regexp_failed(p, error);
->
-> -	p->pcre1_extra_info = pcre_study(p->pcre1_regexp, PCRE_STUDY_JIT_COMPILE, &error);
-> +	p->pcre1_extra_info = pcre_study(p->pcre1_regexp, GIT_PCRE_STUDY_JIT_COMPILE, &error);
->  	if (!p->pcre1_extra_info && error)
->  		die("%s", error);
->
-> diff --git a/grep.h b/grep.h
-> index 52aecfa..399381c 100644
-> --- a/grep.h
-> +++ b/grep.h
-> @@ -7,11 +7,12 @@
->  #if PCRE_MAJOR >= 8 && PCRE_MINOR >= 32
->  #ifndef NO_LIBPCRE1_JIT
->  #define GIT_PCRE1_USE_JIT
-> +#define GIT_PCRE_STUDY_JIT_COMPILE PCRE_STUDY_JIT_COMPILE
->  #endif
->  #endif
->  #endif
-> -#ifndef PCRE_STUDY_JIT_COMPILE
-> -#define PCRE_STUDY_JIT_COMPILE 0
-> +#ifndef GIT_PCRE_STUDY_JIT_COMPILE
-> +#define GIT_PCRE_STUDY_JIT_COMPILE 0
->  #endif
->  #if PCRE_MAJOR <= 8 && PCRE_MINOR < 20
->  typedef int pcre_jit_stack;
 
-[CC-ing Junio]
+  yet more aesthetic nitpickery ... was just perusing the man pages of
+both "git clean" and "git rm", and noticed some striking
+inconsistency.
 
-Thanks a lot. This patch looks good to me.
+  from "man git-clean":
 
-I could have sworn I was handling this already, but looking at this now
-I wasn't really.
+  SYNOPSIS
+       git clean [-d] [-f] [-i] [-n] [-q] [-e <pattern>] [-x | -X] [--] <path>...
 
-However, as a bit of extra info I *did* test this, and it works just
-fine for me, i.e. if I compile PCRE 8.32 now (as I did at the time)
---without-jit it'll error with just USE_LIBPCRE=YesPlease as expected,
-but add NO_LIBPCRE1_JIT=UnfortunatelyYes and it works just fine without
-your patch.
+note how, in that sypnosis, even those options that are represented by
+both a short form option (-f) and a corresponding long form (--force)
+use only the short form in the synopsis, i'm assuming for brevity,
+which makes perfect sense.
 
-However, as your patch shows (and as I've independently verified)
-PCRE_STUDY_JIT_COMPILE will still be defined in that case, since PCRE
-will be exposing the same headers. This is the logic error in my initial
-patch.
+  "man git-rm" is a different beast entirely, with a hodge podge of
+short forms and long forms with no apparent pattern:
 
-*But* for some reason you still get away with that on Linux. I don't
-know why, but I assume the compiler toolchain is more lax for some
-reason than on Solaris.
+  SYNOPSIS
+       git rm [-f | --force] [-n] [-r] [--cached] [--ignore-unmatch] [--quiet] [--] <file>...
 
-All of which is a roundabout way of saying that we should apply this
-patch, but that I still have no idea why this worked on Linux before ,
-but it does.
+  ... snip ...
 
-But that we should take it anyway regardless of that since it'll *also*
-work on Linux with your patch, and this logic makes some sense whereas
-the other one clearly didn't and just worked by pure accident of some
-toolchain semantics that I haven't figured out yet.
+  OPTIONS
+
+       -f, --force
+           Override the up-to-date check.
+
+       -n, --dry-run
+           Don¢t actually remove any file(s). Instead, just show if
+           they exist in the index and would otherwise be removed by
+           the command.
+
+       -r
+           Allow recursive removal when a leading directory name is
+           given.
+
+       --
+           This option can be used to separate command-line options
+           from the list of files, (useful when filenames might be
+           mistaken for command-line options).
+
+       --cached
+           Use this option to unstage and remove paths only from the
+           index. Working tree files, whether modified or not, will
+           be left alone.
+
+       --ignore-unmatch
+           Exit with a zero status even if no files matched.
+
+       -q, --quiet
+           git rm normally outputs one line (in the form of an rm
+           command) for each file removed. This option suppresses
+           that output.
+
+
+  the strangeness above?
+
+1) the synopsis itself lists the alternatives "[-f | --force]", which
+seems unnecessary, as both forms are listed under OPTIONS
+
+2) this is followed by *only* the short form (-n) of --dry-run, so
+that's inconsistent
+
+3) the SYNOPSIS weirdly includes *only* the long form (--quiet) rather
+than the short form (-q)
+
+4) is it standard to explain the "--" separator in a man page? i
+don't recall seeing that in any other man page, but maybe i wasn't
+paying attention. it seems unnecessary.
+
+  in short, "man git-clean" seems reasonable, while "man git-rm"
+appears somewhat disorganized.
+
+rday
+
+-- 
+
+========================================================================
+Robert P. J. Day                                 Ottawa, Ontario, CANADA
+                        http://crashcourse.ca
+
+Twitter:                                       http://twitter.com/rpjday
+LinkedIn:                               http://ca.linkedin.com/in/rpjday
+========================================================================
+--8323328-472592034-1510519692=:7324--
