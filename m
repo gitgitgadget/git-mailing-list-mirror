@@ -2,149 +2,155 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A2A98201C8
+	by dcvr.yhbt.net (Postfix) with ESMTP id B9895201C8
 	for <e@80x24.org>; Sun, 12 Nov 2017 17:32:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750952AbdKLRcO (ORCPT <rfc822;e@80x24.org>);
-        Sun, 12 Nov 2017 12:32:14 -0500
-Received: from mail-io0-f194.google.com ([209.85.223.194]:44400 "EHLO
-        mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750855AbdKLRcN (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Nov 2017 12:32:13 -0500
-Received: by mail-io0-f194.google.com with SMTP id q101so896169ioi.1
-        for <git@vger.kernel.org>; Sun, 12 Nov 2017 09:32:12 -0800 (PST)
+        id S1751022AbdKLRcq (ORCPT <rfc822;e@80x24.org>);
+        Sun, 12 Nov 2017 12:32:46 -0500
+Received: from mail-qt0-f195.google.com ([209.85.216.195]:46657 "EHLO
+        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750941AbdKLRcp (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Nov 2017 12:32:45 -0500
+Received: by mail-qt0-f195.google.com with SMTP id 1so17095090qtn.3
+        for <git@vger.kernel.org>; Sun, 12 Nov 2017 09:32:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=J68oeWpRKc45YtYHl4E5pWqUw0MmfScYK4XuiB+ZdC4=;
-        b=Eh8W6S4+i9jdJJkAOrvbFgdzKvaPaA6c8YkCbUVIlwzMhWNdqOynuIsDWeGJsdWjTe
-         gS8tGa/ejrpmEaYpMs4N3veYiJ9mZ8opga24pUEUjCFzCCyVMMcBP9fSLPxPp2mu2f+P
-         S/uovHqUqmqjsNBQGwFnpJyFH65lRBBYMlozFtKp/wWuxYuURG6OabNlOoWY3dYXzzmK
-         rG+YV9L/UWPeo+AejZ21uvQeLh16AWI23GN9sEpj4lOsqu16yF1Nbe894k1JqK0ndDT3
-         0W5HWf1yC2ENYzQwRnToWYsRWJeeHm2O9MWOu4grekOrn83AAnCzWh+qSn9lVdWnOncb
-         /O5g==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=mPP646vvyqJrT9g/if9SdMmqFoXevduw4VmXyiXPXLY=;
+        b=lhGQVahMHxe8nlxP64M6csge+2TFnjbMW4tHu3NWq+FERVaUo2ARtdYzANkSAah9N+
+         WDXOCUFHu/vtcVmB/TaSHa7HHLeqyZlL5MK7fiYzzaui1MBcC+8BjLVwSUuy5md2oWn9
+         mYTexdPnMWXUUV9FEZFtzdvNMg57M4DrJHFXzT7qKBWEenJgn6NXdiiWzryz62YNRydY
+         k3Ejco8K+Q3Ba4APWLlw6w45O/lzbRxAO361bwiW0Xgthj6MMSyUnk/mH9HWIIrlI/HM
+         vA8y23jI6oYUoD11srz0srYAWKjA2eDldI9aVDg3n+Dx/AfEtQ54FVv/WFaqrwJZfOb6
+         O0IQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=J68oeWpRKc45YtYHl4E5pWqUw0MmfScYK4XuiB+ZdC4=;
-        b=CiEqyQJfn7r2CL34IN26YmongJ/QXUpGYHgnQJDxuzLxRX0+PJxxGENHWP36tGtAjV
-         cHIp/9oumGaehCzAilQYLWwsUMkPUmHpKRX8IGPEqhJLeKJrJRGktbRguGMurn+elqKX
-         4eijvYCtW7Z24/hRPZ22g4dg/CZbtve6y2vDA79OuObjV+BJ5nyjLmmqCSgj0E6eo5Rq
-         UPX8qR+Xvkrpdvby54gpBlmvjzx1i6eEkFey24pr0Xrw0FE1J/YG/oK0ni9oyHLjLAtw
-         wCI+Q3Jk6RRnZ5ULzdlpuggS7WHxBcdhHSKgTm21GrQ/pDgz7fEQLYLjTpjB+RjwENXL
-         jfMw==
-X-Gm-Message-State: AJaThX4vxgpJEPiP5jSfZPGRSoI/sHITmCKkdbria9YrIdJTyE9Jdks5
-        xDqAo+z3lgnpxygTmdDPCEKLRhFllX4RYTkqkI8=
-X-Google-Smtp-Source: AGs4zMZ7VBEz+iOVgZLrhpnK6LM/ZEum1Bl8fEV7yfNl+CrmNEW44rVgHx13poqkPyIl11T30mYwGYR8XAcNFqpDU1s=
-X-Received: by 10.107.39.206 with SMTP id n197mr6912932ion.180.1510507932189;
- Sun, 12 Nov 2017 09:32:12 -0800 (PST)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=mPP646vvyqJrT9g/if9SdMmqFoXevduw4VmXyiXPXLY=;
+        b=VMq/ydQdKvaBp0Q/esrJVYGzRdlhIITF7Zf/LLHIuM5qDfQ3FVcTUsnP5px72q5IY5
+         DrpxxDCwzSu/KIjwn7MHgzK60G1Hdoki7FoFjw2fAzl/MMZhoDDXsOTPInPwLs1GcKBu
+         jkvTJQZJ8hifXXDX0InTGmLwBWWLJbQUku5oaNvKNPzP00usmN8OlG72ci9qTRODbWZ5
+         KSKi4xgj3IvCkyCF9c9Nt9LWMx71fvEZ++YVoWdRSUuty2LaRImJTxDVPJ2bPez3DX6l
+         t9qjHusQ8pObWXN1VEr+MSHV6O2XQHCdZsU+bBHykFnENcN0MT1oOraD4SMN6v1BxqKu
+         j9mQ==
+X-Gm-Message-State: AJaThX6JOlMMw8xi+1u5giGttDeZXATJwFsq7R9YWDyK94BQaZBJ0UyO
+        Cy7AT8sHfwjoTqiDezhx/5UUtQVBYy4srT9yoKA=
+X-Google-Smtp-Source: AGs4zMZS3IL620MAkX3e1LoleDy+0P3NFtplGSPXb4lqQISoSvBG6U0ayfMxYenyQrCv7rKIKaPB3QTeKFtxS9Ml0wM=
+X-Received: by 10.200.43.26 with SMTP id 26mr11300657qtu.51.1510507964335;
+ Sun, 12 Nov 2017 09:32:44 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.79.28.137 with HTTP; Sun, 12 Nov 2017 09:32:11 -0800 (PST)
-In-Reply-To: <20171112115725.c2pjhpwpcjeh4xbr@sigill.intra.peff.net>
-References: <b6b12040-100f-5965-6dfd-344c84dddf96@teddy.ch>
- <20170813045813.i42mgwn3dmm6u52o@sigill.intra.peff.net> <20171112115725.c2pjhpwpcjeh4xbr@sigill.intra.peff.net>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sun, 12 Nov 2017 18:32:11 +0100
-Message-ID: <CAP8UFD2gKTourXUdB_9_FZ3AEECTDc1Fx1NFKzeaTZDWHC3jxA@mail.gmail.com>
-Subject: Re: NO_MSGFMT
-To:     Jeff King <peff@peff.net>
-Cc:     "Dominik Mahrer (Teddy)" <teddy@teddy.ch>,
-        git <git@vger.kernel.org>
+Received: by 10.12.155.209 with HTTP; Sun, 12 Nov 2017 09:32:43 -0800 (PST)
+In-Reply-To: <20171112130710.16000-1-jerzy.kozera@gmail.com>
+References: <20171112130710.16000-1-jerzy.kozera@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sun, 12 Nov 2017 12:32:43 -0500
+X-Google-Sender-Auth: N3zgwGb7Dn8pG6MVM18-FhGUxVw
+Message-ID: <CAPig+cSR_GGog2vATwGgMWDofVzkgDE7K=VvZ4GEyrzYC1t-GQ@mail.gmail.com>
+Subject: Re: [PATCH v2] gpg-interface: strip CR chars for Windows gpg2
+To:     Jerzy Kozera <jerzy.kozera@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Nov 12, 2017 at 12:57 PM, Jeff King <peff@peff.net> wrote:
-> On Sun, Aug 13, 2017 at 12:58:13AM -0400, Jeff King wrote:
->
->> On Sat, Aug 12, 2017 at 03:44:17PM +0200, Dominik Mahrer (Teddy) wrote:
->>
->> > Hi all
->> >
->> > I'm compiling git from source code on a mashine without msgfmt. This leads
->> > to compile errors. To be able to compile git I created a patch that at least
->> > works for me:
->>
->> Try:
->>
->>   make NO_MSGFMT=Nope NO_GETTEXT=Nope
->>
->> This also works:
->>
->>   make NO_GETTEXT=Nope NO_TCLTK=Nope
->>
->> The flags to avoid gettext/msgfmt are sadly different between git itself
->> and git-gui/gitk, which we include as a subproject. It would be a useful
->> patch to harmonize though (probably by accepting both in all places for
->> compatibility).
->
-> I saw somebody else today run into problems about gettext, so I thought
-> I'd revisit this and write that patch. It turns out the situation is
-> slightly different than I thought. So no patch, but I wanted to report
-> here what I found.
->
-> It's true that the option is called NO_GETTEXT in git.git, but NO_MSGFMT
-> in the tcl programs we pull in. So I figured to start with a patch that
-> turns on NO_MSGFMT automatically when NO_GETTEXT is set. But it's
-> not necessary.
->
-> The gitk and git-gui tests actually check that msgfmt is available.
-> If it isn't, they automatically fall back to using a pure-tcl
-> implementation. So there's generally no need to set NO_MSGFMT at
-> all.
->
-> But that fallback is implemented using tcl. So if you _also_ don't have
-> tcl installed (and I don't), you get quite a confusing output from make:
->
->   $ make -j1
->     SUBDIR git-gui
->     MSGFMT po/pt_pt.msg Makefile:252: recipe for target 'po/pt_pt.msg' failed
-> make[1]: *** [po/pt_pt.msg] Error 127
->
-> If you run with V=1, you can see that it's not running msgfmt at all,
-> but:
->
->   tclsh po/po2msg.sh --statistics --tcl -l pt_pt -d po/ po/pt_pt.po
->
-> So my takeaways are:
->
->   1. You should never need to set NO_MSGFMT; it falls back
->      automatically.
->
->   2. If you don't have gettext, you should set NO_GETTEXT to tell the
->      rest of git not to use it.
->
->   3. If you see msgfmt errors even after NO_GETTEXT, try NO_TCLTK.
+Thanks for the re-roll...
 
-I wonder if something like following patch could help, as anyway the
-build will fail if Tcl/Tk is not installed and people often prefer
-builds failing at the beginning rather than towards the end.
+On Sun, Nov 12, 2017 at 8:07 AM, Jerzy Kozera <jerzy.kozera@gmail.com> wrote:
+> This fixes the issue with newlines being \r\n and not being displayed
+> correctly when using gpg2 for Windows, as reported at
+> https://github.com/git-for-windows/git/issues/1249
 
-diff --git a/Makefile b/Makefile
-index ee9d5eb11e..9789027739 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1636,6 +1636,13 @@ ifeq ($(TCLTK_PATH),)
- NO_TCLTK = NoThanks
- endif
+It's still not clear from this description what "not being displayed
+correctly" means. Ideally, the commit message should stand on its own,
+explaining exactly what problem the patch is solving, without the
+reader having to chase URLs to pages (which might disappear). If you
+could summarize the problem and solution in your own words in such a
+way that your description itself conveys enough information for
+someone not familiar with that problem report to understand the
+problem, then that would likely make a good commit message.
 
-+ifndef NO_TCLTK
-+       has_tcltk := $(shell type $(TCLTK_PATH) 2>/dev/null)
-+       ifndef has_tcltk
-+$(error "Tcl/Tk is not installed ('$(TCLTK_PATH)' not found).
-Consider setting NO_TCLTK or installing it")
-+       endif
-+endif
-+
- ifeq ($(PERL_PATH),)
- NO_PERL = NoThanks
- endif
+More below...
+
+> Issues with non-ASCII characters remain for further investigation.
+>
+> Signed-off-by: Jerzy Kozera <jerzy.kozera@gmail.com>
+> ---
+> diff --git a/gpg-interface.c b/gpg-interface.c
+> @@ -145,6 +145,20 @@ const char *get_signing_key(void)
+> +/* Strip CR from the CRLF line endings, in case we are on Windows. */
+> +static void strip_cr(struct strbuf *buffer, size_t bottom) {
+
+It's not at all clear what 'bottom' means. In the original, when the
+code was inline, the surrounding context would likely have given a
+good clue to the meaning of 'bottom', but here stand-alone, it conveys
+little or nothing. Perhaps a better name for this argument would be
+'start_at' or 'from' or something.
+
+> +       size_t i, j;
+> +       for (i = j = bottom; i < buffer->len; i++)
+> +               if (!(i < buffer->len - 1 &&
+> +                               buffer->buf[i] == '\r' &&
+> +                               buffer->buf[i + 1] == '\n')) {
+
+Hmm, was this tested? If I'm reading this correctly, this strips out
+the entire CRLF pair, whereas the original code only stripped the CR
+and left what followed it (typically LF) alone. Junio's suggestion was
+to enhance this to be more careful and strip CR only when followed
+immediately by LF (but to leave the LF intact). Therefore, this seems
+like a regression.
+
+> +                       if (i != j)
+> +                               buffer->buf[j] = buffer->buf[i];
+> +                       j++;
+> +               }
+> +       strbuf_setlen(buffer, j);
+> +}
+> +
+>  /*
+>   * Create a detached signature for the contents of "buffer" and append
+>   * it after "signature"; "buffer" and "signature" can be the same
+> @@ -155,7 +169,7 @@ int sign_buffer(struct strbuf *buffer, struct strbuf *signature, const char *sig
+>  {
+>         struct child_process gpg = CHILD_PROCESS_INIT;
+>         int ret;
+> -       size_t i, j, bottom;
+> +       size_t bottom;
+>         struct strbuf gpg_status = STRBUF_INIT;
+>
+>         argv_array_pushl(&gpg.args,
+> @@ -180,14 +194,7 @@ int sign_buffer(struct strbuf *buffer, struct strbuf *signature, const char *sig
+>         if (ret)
+>                 return error(_("gpg failed to sign the data"));
+>
+> -       /* Strip CR from the line endings, in case we are on Windows. */
+> -       for (i = j = bottom; i < signature->len; i++)
+> -               if (signature->buf[i] != '\r') {
+> -                       if (i != j)
+> -                               signature->buf[j] = signature->buf[i];
+> -                       j++;
+> -               }
+> -       strbuf_setlen(signature, j);
+> +       strip_cr(signature, bottom);
+>
+>         return 0;
+>  }
+> @@ -230,6 +237,8 @@ int verify_signed_buffer(const char *payload, size_t payload_size,
+>         sigchain_push(SIGPIPE, SIG_IGN);
+>         ret = pipe_command(&gpg, payload, payload_size,
+>                            gpg_status, 0, gpg_output, 0);
+> +       strip_cr(gpg_status, 0);
+> +       strip_cr(gpg_output, 0);
+>         sigchain_pop(SIGPIPE);
+>
+>         delete_tempfile(&temp);
+> --
+> 2.14.2.windows.3
