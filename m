@@ -2,63 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,PI_EMPTY_SUBJ,RCVD_IN_DNSWL_HI,
-	RCVD_NUMERIC_HELO,RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AABF51F42B
-	for <e@80x24.org>; Sun, 12 Nov 2017 11:31:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 580331F42B
+	for <e@80x24.org>; Sun, 12 Nov 2017 11:57:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750860AbdKLLbT (ORCPT <rfc822;e@80x24.org>);
-        Sun, 12 Nov 2017 06:31:19 -0500
-Received: from cp-27.webhostbox.net ([208.91.198.76]:60497 "EHLO
-        cp-27.webhostbox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750732AbdKLLbS (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Nov 2017 06:31:18 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=unimetic.com; s=default; h=Message-ID:Subject:To:From:Date:
-        Content-Transfer-Encoding:Content-Type:MIME-Version:Sender:Reply-To:Cc:
-        Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-        Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:References:List-Id:
-        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-         bh=a67+Xn2ScPIinix0jYfRqCmskGmMpaGSAycuaim21OI=; b=ND6nNjGF5fYdoYaOCGAUA4rmW
-        skCPGceN6YV1JVUI0QG+IqgqE0JVumv+PFuSPBwzf/MHK0I3GFPTWJMWEhTFNaGcs2S2Ok0i2qp2v
-        4oTz/Tf+bCshdyndWzHK73WUiVkNfn3pcTZ5c58aRAYe7PA34G5dC01DKErBV24oMu9UBVXa2kNDf
-        Sfg3dr6iJnTP3PZbAKLZEU5cuy8zVBvDJYQToNZyQNVr2okNiT3sfczXlRJvs1/0usJlBGGIi7q8O
-        +IS4MbgAis+pS6rbPt2lS2DQRI1YNRhaTS7Uf82guvLsDbfkMwBB70eeQWf5uKJ42xV5vJEnLT9gE
-        TYiYOMW6w==;
-Received: from [127.0.0.1] (port=51655 helo=208.91.198.76)
-        by cp-27.webhostbox.net with esmtpa (Exim 4.89)
-        (envelope-from <hsed@unimetic.com>)
-        id 1eDqTu-003UBx-Dt
-        for git@vger.kernel.org; Sun, 12 Nov 2017 11:31:18 +0000
+        id S1750780AbdKLL53 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 12 Nov 2017 06:57:29 -0500
+Received: from cloud.peff.net ([104.130.231.41]:53828 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1750735AbdKLL52 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Nov 2017 06:57:28 -0500
+Received: (qmail 24252 invoked by uid 109); 12 Nov 2017 11:57:29 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 12 Nov 2017 11:57:29 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 14406 invoked by uid 111); 12 Nov 2017 11:57:41 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (62.189.9.201)
+ by peff.net (qpsmtpd/0.94) with ESMTPA; Sun, 12 Nov 2017 06:57:41 -0500
+Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 12 Nov 2017 11:57:26 +0000
+Date:   Sun, 12 Nov 2017 11:57:25 +0000
+From:   Jeff King <peff@peff.net>
+To:     "Dominik Mahrer (Teddy)" <teddy@teddy.ch>
+Cc:     git@vger.kernel.org
+Subject: Re: NO_MSGFMT
+Message-ID: <20171112115725.c2pjhpwpcjeh4xbr@sigill.intra.peff.net>
+References: <b6b12040-100f-5965-6dfd-344c84dddf96@teddy.ch>
+ <20170813045813.i42mgwn3dmm6u52o@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Sun, 12 Nov 2017 11:31:18 +0000
-From:   hsed@unimetic.com
-To:     git@vger.kernel.org
-Subject: 
-Message-ID: <3c66bf7d408e22e49865323c65c313ee@unimetic.com>
-X-Sender: hsed@unimetic.com
-User-Agent: Roundcube Webmail/1.2.3
-X-Authenticated_sender: hsed@unimetic.com
-X-OutGoing-Spam-Status: No, score=-1.0
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cp-27.webhostbox.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - unimetic.com
-X-Get-Message-Sender-Via: cp-27.webhostbox.net: authenticated_id: hsed@unimetic.com
-X-Authenticated-Sender: cp-27.webhostbox.net: hsed@unimetic.com
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20170813045813.i42mgwn3dmm6u52o@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-subscribe git
+On Sun, Aug 13, 2017 at 12:58:13AM -0400, Jeff King wrote:
+
+> On Sat, Aug 12, 2017 at 03:44:17PM +0200, Dominik Mahrer (Teddy) wrote:
+> 
+> > Hi all
+> > 
+> > I'm compiling git from source code on a mashine without msgfmt. This leads
+> > to compile errors. To be able to compile git I created a patch that at least
+> > works for me:
+> 
+> Try:
+> 
+>   make NO_MSGFMT=Nope NO_GETTEXT=Nope
+> 
+> This also works:
+> 
+>   make NO_GETTEXT=Nope NO_TCLTK=Nope
+> 
+> The flags to avoid gettext/msgfmt are sadly different between git itself
+> and git-gui/gitk, which we include as a subproject. It would be a useful
+> patch to harmonize though (probably by accepting both in all places for
+> compatibility).
+
+I saw somebody else today run into problems about gettext, so I thought
+I'd revisit this and write that patch. It turns out the situation is
+slightly different than I thought. So no patch, but I wanted to report
+here what I found.
+
+It's true that the option is called NO_GETTEXT in git.git, but NO_MSGFMT
+in the tcl programs we pull in. So I figured to start with a patch that
+turns on NO_MSGFMT automatically when NO_GETTEXT is set. But it's
+not necessary.
+
+The gitk and git-gui tests actually check that msgfmt is available.
+If it isn't, they automatically fall back to using a pure-tcl
+implementation. So there's generally no need to set NO_MSGFMT at
+all.
+
+But that fallback is implemented using tcl. So if you _also_ don't have
+tcl installed (and I don't), you get quite a confusing output from make:
+
+  $ make -j1 
+    SUBDIR git-gui
+    MSGFMT po/pt_pt.msg Makefile:252: recipe for target 'po/pt_pt.msg' failed
+make[1]: *** [po/pt_pt.msg] Error 127
+
+If you run with V=1, you can see that it's not running msgfmt at all,
+but:
+
+  tclsh po/po2msg.sh --statistics --tcl -l pt_pt -d po/ po/pt_pt.po 
+
+So my takeaways are:
+
+  1. You should never need to set NO_MSGFMT; it falls back
+     automatically.
+
+  2. If you don't have gettext, you should set NO_GETTEXT to tell the
+     rest of git not to use it.
+
+  3. If you see msgfmt errors even after NO_GETTEXT, try NO_TCLTK.
+
+-Peff
