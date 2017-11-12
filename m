@@ -2,104 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C37EB201C8
-	for <e@80x24.org>; Sun, 12 Nov 2017 17:07:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 70E38201C8
+	for <e@80x24.org>; Sun, 12 Nov 2017 17:22:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751479AbdKLRHM (ORCPT <rfc822;e@80x24.org>);
-        Sun, 12 Nov 2017 12:07:12 -0500
-Received: from avasout05.plus.net ([84.93.230.250]:44635 "EHLO
-        avasout05.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751389AbdKLRHM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Nov 2017 12:07:12 -0500
-X-Greylist: delayed 451 seconds by postgrey-1.27 at vger.kernel.org; Sun, 12 Nov 2017 12:07:11 EST
-Received: from hashpling.plus.com ([212.159.69.125])
-        by smtp with ESMTP
-        id Dvbee8W182du7DvbfebJNw; Sun, 12 Nov 2017 16:59:39 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=a6FAzQaF c=1 sm=1 tr=0
- a=wpJ/2au8Z6V/NgdivHIBow==:117 a=wpJ/2au8Z6V/NgdivHIBow==:17 a=BNFp--SqAAAA:8
- a=orGbg3ZDba64v-sq4BQA:9 a=wCHOS_8tIzIYXQCUOVd6:22
-From:   Charles Bailey <charles@hashpling.org>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH] Fix NO_LIBPCRE1_JIT to fully disable JIT
-Date:   Sun, 12 Nov 2017 16:59:38 +0000
-Message-Id: <20171112165938.8787-1-charles@hashpling.org>
-X-Mailer: git-send-email 2.10.2
-X-CMAE-Envelope: MS4wfKU1QDNlqfnBrkrfgrMIKhCXOOk+W4JL2mliVaJ12coCqSyTUpaimI/Jghas+9LUXgLWF+HJv/H5tSCdcOzAr4HIR2Lj7v65CAbUQ1GRO7hHUE45ueH7
- jHt+HbecmQPiaTf77XurntadwEFNKmcb6WKY0YWJ1X5Qb/gmUiy/vkFIypYeU3Gc0wLXKfaC7D8vVA==
+        id S1750857AbdKLRWO (ORCPT <rfc822;e@80x24.org>);
+        Sun, 12 Nov 2017 12:22:14 -0500
+Received: from mail-yw0-f182.google.com ([209.85.161.182]:50965 "EHLO
+        mail-yw0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750792AbdKLRWN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Nov 2017 12:22:13 -0500
+Received: by mail-yw0-f182.google.com with SMTP id i198so11722201ywe.7
+        for <git@vger.kernel.org>; Sun, 12 Nov 2017 09:22:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=WnyMlxKqFQngtiXLjmz59rV8CWR8E6AUSBqvgbh9PQw=;
+        b=jaFsf4trLU19PXK10elP5inmONtyhsf0ndnsBE6qCBnyBjWSSjHoOuEAjHYkyfp1qq
+         YTzyb1cHY88H2qV+s+Wx7a6w+1caO4phZJ/KMDLiysMbyuU/pvCc56nzOXdXJ0MFw9yS
+         RlZJYKu9EyBUzgE7P6fE7dw76E5VXIQ8Burx7aUxKz9iBPlC0IpkrQxss8nc8pj26uaf
+         5QpoLn8c2uW8lo2VFG64bx3+qTkFHSRhcxwAGu7le1HEi18t5RhaM8Tl1PREP+t3Ef90
+         1FZdGsYIcsKU+QR43Y/VUgI388ut7ZW9VRTZ3XMBfSCectl8RsC7hyWrhDXR2pVkPukl
+         8x3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=WnyMlxKqFQngtiXLjmz59rV8CWR8E6AUSBqvgbh9PQw=;
+        b=m2SnxwTRIZjPDWlhAzRlILFSoiYD2Bb/6dr5LgJBSjBb64SH+PuXEr+bYdmGXI6+fx
+         ZOowbos+BgjNTsffmbna6I2Tvt3lVZhs/ragUMw4dw/8ERIbpniZdKqcKDm4LdhUT+xO
+         laJYxetu6zUzKnuIG2KI4x5Ca3wsaDXH24atcULnyaQ4rBwSyU4wLHd2UdVdPkgt1fC3
+         DwE7Kvgx6gUUaHAmfdNSZws9FVaZLKwMMy0+NCbFkhtVZn7LPBKF3fveEIw0/CYWBtL1
+         h/hjec0dmqcE3T8evcSwJZT8A6BPNiqJZ2PbKMiEtrZE1lkNgaI72VAkUYuLVAh9ViK6
+         fRlA==
+X-Gm-Message-State: AJaThX44oivZ8cNCIlBbpHVRa3MFGKRLhgPg04bE03euqT79y5QOLdLf
+        BwQh1YXsTwTomjHL4Ys8lRN5fCVMtYqh05NscYc=
+X-Google-Smtp-Source: AGs4zMZ+tyDSzsQ7vxtRSODp2RoEtcnqx+raLO4nc7Wt2OqnYINhT7nEyT8TwIKITWMDYwYahguEVjcqNqSiH9wMGro=
+X-Received: by 10.37.56.211 with SMTP id f202mr4055523yba.135.1510507332692;
+ Sun, 12 Nov 2017 09:22:12 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.37.196.68 with HTTP; Sun, 12 Nov 2017 09:21:52 -0800 (PST)
+In-Reply-To: <20171112152741.GA15767@hank.wfi.bloomberg.com>
+References: <20171110231314.30711-1-joel@teichroeb.net> <20171110231314.30711-3-joel@teichroeb.net>
+ <20171112152741.GA15767@hank.wfi.bloomberg.com>
+From:   Joel Teichroeb <joel@teichroeb.net>
+Date:   Sun, 12 Nov 2017 09:21:52 -0800
+X-Google-Sender-Auth: q1T4DM_vlk0EIontCzBrNb7A9ic
+Message-ID: <CA+CzEk_0XQoncz6sW3dQPCdxRCgo=BFHxJWr-MQSLxkVPJz8eg@mail.gmail.com>
+Subject: Re: [PATCH 2/2] stash: implement builtin stash helper
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Charles Bailey <cbailey32@bloomberg.net>
-
-If you have a pcre1 library which is compiled with JIT enabled then
-PCRE_STUDY_JIT_COMPILE will be defined whether or not the
-NO_LIBPCRE1_JIT configuration is set.
-
-This means that we enable JIT functionality when calling pcre_study
-even if NO_LIBPCRE1_JIT has been explicitly set and we just use plain
-pcre_exec later.
-
-Fix this by using own macro (GIT_PCRE_STUDY_JIT_COMPILE) which we set to
-PCRE_STUDY_JIT_COMPILE only if NO_LIBPCRE1_JIT is not set and define to
-0 otherwise, as before.
----
-
-I was bisecting an issue with the PCRE support that was causing a test
-suite failure on our Solaris builds and reached fbaceaac47 ("grep: add
-support for the PCRE v1 JIT API"). It appeared to be a misaligned memory
-access somewhere inside the libpcre code. I tried disabling the use of
-JIT with NO_LIBPCRE1_JIT but it turned out that even with this set we
-were still triggering the JIT code path in the call to pcre_study.
-
-Yes, we probably should fix our PCRE1 library build on Solaris or move
-to PCRE2, but really NO_LIBPCRE1_JIT should have prevented us from
-triggering this crash.
-
- grep.c | 2 +-
- grep.h | 5 +++--
- 2 files changed, 4 insertions(+), 3 deletions(-)
-
-diff --git a/grep.c b/grep.c
-index ce6a48e..d0b9b6c 100644
---- a/grep.c
-+++ b/grep.c
-@@ -387,7 +387,7 @@ static void compile_pcre1_regexp(struct grep_pat *p, const struct grep_opt *opt)
- 	if (!p->pcre1_regexp)
- 		compile_regexp_failed(p, error);
- 
--	p->pcre1_extra_info = pcre_study(p->pcre1_regexp, PCRE_STUDY_JIT_COMPILE, &error);
-+	p->pcre1_extra_info = pcre_study(p->pcre1_regexp, GIT_PCRE_STUDY_JIT_COMPILE, &error);
- 	if (!p->pcre1_extra_info && error)
- 		die("%s", error);
- 
-diff --git a/grep.h b/grep.h
-index 52aecfa..399381c 100644
---- a/grep.h
-+++ b/grep.h
-@@ -7,11 +7,12 @@
- #if PCRE_MAJOR >= 8 && PCRE_MINOR >= 32
- #ifndef NO_LIBPCRE1_JIT
- #define GIT_PCRE1_USE_JIT
-+#define GIT_PCRE_STUDY_JIT_COMPILE PCRE_STUDY_JIT_COMPILE
- #endif
- #endif
- #endif
--#ifndef PCRE_STUDY_JIT_COMPILE
--#define PCRE_STUDY_JIT_COMPILE 0
-+#ifndef GIT_PCRE_STUDY_JIT_COMPILE
-+#define GIT_PCRE_STUDY_JIT_COMPILE 0
- #endif
- #if PCRE_MAJOR <= 8 && PCRE_MINOR < 20
- typedef int pcre_jit_stack;
--- 
-2.10.2
-
+Thanks for your comments! I've incorporated them all for the next patch set.
