@@ -6,43 +6,43 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3AA85201C8
-	for <e@80x24.org>; Sun, 12 Nov 2017 21:29:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 55D24201C8
+	for <e@80x24.org>; Sun, 12 Nov 2017 21:29:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751075AbdKLV3O (ORCPT <rfc822;e@80x24.org>);
+        id S1751059AbdKLV3O (ORCPT <rfc822;e@80x24.org>);
         Sun, 12 Nov 2017 16:29:14 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:55988 "EHLO
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:55980 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751021AbdKLV3J (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 12 Nov 2017 16:29:09 -0500
+        by vger.kernel.org with ESMTP id S1750991AbdKLV3I (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 12 Nov 2017 16:29:08 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id CB0C1604A4;
-        Sun, 12 Nov 2017 21:29:07 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id DC0F5604A0;
+        Sun, 12 Nov 2017 21:29:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1510522148;
-        bh=89ojWd93HD4xINbTfB4JJEJZVsXOafrsMtIFGihj8I4=;
+        s=default; t=1510522147;
+        bh=YeDX4gD3I+ogMS5lROcj4j29pAfvY8k3T7nt6fS0JpE=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=Ugz4HJbCYFABBUpHw+u01dX5lSSPYyEFPZJ7ri67T3mgVrlrY9+hY0pehfc9pgwyn
-         i8FqTPxp3pOZU+8UgNBQtm2WcA3H2K4kXWU6ud6YoGDKsqmP0Rfadx2kmUaURHVNl3
-         hBtl5eI1ke81Jq8rPn6bcZyPwY/lBD6NHP6XnDxq439WR9MjzKcVY6PRY9mzWPUnIc
-         rWrrN9MUxJU+lhs8aKCzW4okrrL8z4RE7AuxB7o+uQveClAkAvsqS83ocTIAXJBOZM
-         PVVcZnUFqT/QMZvkLLgliF6D5QeC4VjMmf5CrVmCZZsEgF59MPcStQr9mFdzj/WeAM
-         zWXF1BhmYH/2QUYfTp9kqL4qHBpER06KLwyJnRzlP9AeKgb+O97fSpxzKnMg3vtIIi
-         ZPmUaMMHLROBrg4SmJy5v7ftM6g13X8XbBH9aEboa0AxLX2MSfsIGuClNEcAfpz3Lo
-         sn8Ep8iMT47vMSu20LCNl/Yyww14QHP9/o/f0dunC4y9zFnrtDK
+        b=Qh7W0HrLWZPfkA+rVQxS1OYB+ihsipO93Gkoz3MBIvMbGDpvl4TEGGQ6B4scC8MCi
+         gffw/gDSFCZtMNKB+cFWbdFTdRexDdvqUDzo8vL+AcWDd+RrgPjy2E4pRZqr46pkC8
+         NM2wNqu57NC04KYkkfOON1jCcuX85Yywtj7Yxu0lI1eO1FYyLYl570xkyh5c1Ph339
+         WH73PkBJcrY915P60Fdb5wIsRsQ7DGEotx7r4wScI4vyzm1F2aQ1cMZGClJ2KuLv63
+         EA7T4RK0QLtMUqx3FQBPHZ10gMUg2SA2eYZHweu3GrmgHKM3v6Xc5kR5Q1XANaaP5O
+         wABrUGEbb5GLpcgLBYSY39MgYrOMe7LLJLZFQayxaiEqJ1lLqXI+5lfPAs3hCje3LX
+         W8TqNHtIOpjVYPgYh8LqqBD12HkpV1saixYpPRv2GnEvGnrSe36SaLKJu7E6BBMupt
+         UJsoJXc2hoMndMcC9FQS05FrRkEFEGIvKtn9DlEy/7ZiD+kwfzm
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jonathan Nieder <jrnieder@gmail.com>,
         Brandon Williams <bmwill@google.com>,
         Stefan Beller <sbeller@google.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v3 4/4] Switch empty tree and blob lookups to use hash abstraction
-Date:   Sun, 12 Nov 2017 21:28:54 +0000
-Message-Id: <20171112212854.791179-5-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 3/4] Integrate hash algorithm support with repo setup
+Date:   Sun, 12 Nov 2017 21:28:53 +0000
+Message-Id: <20171112212854.791179-4-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.15.0.448.gf294e3d99a
 In-Reply-To: <20171112212854.791179-1-sandals@crustytoothpaste.net>
 References: <20171112212854.791179-1-sandals@crustytoothpaste.net>
@@ -52,187 +52,133 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Switch the uses of empty_tree_oid and empty_blob_oid to use the
-current_hash abstraction that represents the current hash algorithm in
-use.
+In future versions of Git, we plan to support an additional hash
+algorithm.  Integrate the enumeration of hash algorithms with repository
+setup, and store a pointer to the enumerated data in struct repository.
+Of course, we currently only support SHA-1, so hard-code this value in
+read_repository_format.  In the future, we'll enumerate this value from
+the configuration.
+
+Add a constant, the_hash_algo, which points to the hash_algo structure
+pointer in the repository global.  Note that this is the hash which is
+used to serialize data to disk, not the hash which is used to display
+items to the user.  The transition plan anticipates that these may be
+different.  We can add an additional element in the future (say,
+ui_hash_algo) to provide for this case.
+
+Include repository.h in cache.h since we now need to have access to
+these struct and variable definitions.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/am.c       | 2 +-
- builtin/checkout.c | 2 +-
- builtin/diff.c     | 2 +-
- builtin/pull.c     | 2 +-
- cache.h            | 8 ++++----
- diff-lib.c         | 2 +-
- merge-recursive.c  | 2 +-
- notes-merge.c      | 2 +-
- sequencer.c        | 6 +++---
- submodule.c        | 2 +-
- 10 files changed, 15 insertions(+), 15 deletions(-)
+ cache.h      | 4 ++++
+ repository.c | 7 +++++++
+ repository.h | 5 +++++
+ setup.c      | 3 +++
+ 4 files changed, 19 insertions(+)
 
-diff --git a/builtin/am.c b/builtin/am.c
-index 92c4853505..99dbde3e85 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -1433,7 +1433,7 @@ static void write_index_patch(const struct am_state *state)
- 	if (!get_oid_tree("HEAD", &head))
- 		tree = lookup_tree(&head);
- 	else
--		tree = lookup_tree(&empty_tree_oid);
-+		tree = lookup_tree(the_hash_algo->empty_tree);
- 
- 	fp = xfopen(am_path(state, "patch"), "w");
- 	init_revisions(&rev_info, NULL);
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 6c2b4cd419..2b64805f35 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -514,7 +514,7 @@ static int merge_working_tree(const struct checkout_opts *opts,
- 		}
- 		tree = parse_tree_indirect(old->commit ?
- 					   &old->commit->object.oid :
--					   &empty_tree_oid);
-+					   the_hash_algo->empty_tree);
- 		init_tree_desc(&trees[0], tree->buffer, tree->size);
- 		tree = parse_tree_indirect(&new->commit->object.oid);
- 		init_tree_desc(&trees[1], tree->buffer, tree->size);
-diff --git a/builtin/diff.c b/builtin/diff.c
-index 9808d062a8..16bfb22f73 100644
---- a/builtin/diff.c
-+++ b/builtin/diff.c
-@@ -379,7 +379,7 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
- 				add_head_to_pending(&rev);
- 				if (!rev.pending.nr) {
- 					struct tree *tree;
--					tree = lookup_tree(&empty_tree_oid);
-+					tree = lookup_tree(the_hash_algo->empty_tree);
- 					add_pending_object(&rev, &tree->object, "HEAD");
- 				}
- 				break;
-diff --git a/builtin/pull.c b/builtin/pull.c
-index a28f0ffadd..3d26f8ff32 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -545,7 +545,7 @@ static int pull_into_void(const struct object_id *merge_head,
- 	 * index/worktree changes that the user already made on the unborn
- 	 * branch.
- 	 */
--	if (checkout_fast_forward(&empty_tree_oid, merge_head, 0))
-+	if (checkout_fast_forward(the_hash_algo->empty_tree, merge_head, 0))
- 		return 1;
- 
- 	if (update_ref("initial pull", "HEAD", merge_head, curr_head, 0, UPDATE_REFS_DIE_ON_ERR))
 diff --git a/cache.h b/cache.h
-index c238688f6c..d68895b45f 100644
+index cb7fb7c004..c238688f6c 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -1024,22 +1024,22 @@ extern const struct object_id empty_blob_oid;
+@@ -14,6 +14,7 @@
+ #include "hash.h"
+ #include "path.h"
+ #include "sha1-array.h"
++#include "repository.h"
  
- static inline int is_empty_blob_sha1(const unsigned char *sha1)
- {
--	return !hashcmp(sha1, EMPTY_BLOB_SHA1_BIN);
-+	return !hashcmp(sha1, the_hash_algo->empty_blob->hash);
+ #ifndef platform_SHA_CTX
+ /*
+@@ -77,6 +78,8 @@ struct object_id {
+ 	unsigned char hash[GIT_MAX_RAWSZ];
+ };
+ 
++#define the_hash_algo the_repository->hash_algo
++
+ #if defined(DT_UNKNOWN) && !defined(NO_D_TYPE_IN_DIRENT)
+ #define DTYPE(de)	((de)->d_type)
+ #else
+@@ -888,6 +891,7 @@ struct repository_format {
+ 	int version;
+ 	int precious_objects;
+ 	int is_bare;
++	int hash_algo;
+ 	char *work_tree;
+ 	struct string_list unknown_extensions;
+ };
+diff --git a/repository.c b/repository.c
+index bb2fae5446..c6ceb9f9e4 100644
+--- a/repository.c
++++ b/repository.c
+@@ -64,6 +64,11 @@ void repo_set_gitdir(struct repository *repo, const char *path)
+ 	free(old_gitdir);
  }
  
- static inline int is_empty_blob_oid(const struct object_id *oid)
- {
--	return !hashcmp(oid->hash, EMPTY_BLOB_SHA1_BIN);
-+	return !oidcmp(oid, the_hash_algo->empty_blob);
- }
++void repo_set_hash_algo(struct repository *repo, int hash_algo)
++{
++	repo->hash_algo = &hash_algos[hash_algo];
++}
++
+ /*
+  * Attempt to resolve and set the provided 'gitdir' for repository 'repo'.
+  * Return 0 upon success and a non-zero value upon failure.
+@@ -136,6 +141,8 @@ int repo_init(struct repository *repo, const char *gitdir, const char *worktree)
+ 	if (read_and_verify_repository_format(&format, repo->commondir))
+ 		goto error;
  
- static inline int is_empty_tree_sha1(const unsigned char *sha1)
- {
--	return !hashcmp(sha1, EMPTY_TREE_SHA1_BIN);
-+	return !hashcmp(sha1, the_hash_algo->empty_tree->hash);
- }
++	repo_set_hash_algo(repo, format.hash_algo);
++
+ 	if (worktree)
+ 		repo_set_worktree(repo, worktree);
  
- static inline int is_empty_tree_oid(const struct object_id *oid)
- {
--	return !hashcmp(oid->hash, EMPTY_TREE_SHA1_BIN);
-+	return !oidcmp(oid, the_hash_algo->empty_tree);
- }
+diff --git a/repository.h b/repository.h
+index 7f5e24a0a2..0329e40c7f 100644
+--- a/repository.h
++++ b/repository.h
+@@ -4,6 +4,7 @@
+ struct config_set;
+ struct index_state;
+ struct submodule_cache;
++struct git_hash_algo;
  
- /* set default permissions by passing mode arguments to open(2) */
-diff --git a/diff-lib.c b/diff-lib.c
-index 731f0886d6..893fee432c 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -217,7 +217,7 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
- 			} else if (revs->diffopt.ita_invisible_in_index &&
- 				   ce_intent_to_add(ce)) {
- 				diff_addremove(&revs->diffopt, '+', ce->ce_mode,
--					       &empty_tree_oid, 0,
-+					       the_hash_algo->empty_tree, 0,
- 					       ce->name, 0);
- 				continue;
- 			}
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 2ca8444c65..f89cc751e1 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -2081,7 +2081,7 @@ int merge_recursive(struct merge_options *o,
- 		/* if there is no common ancestor, use an empty tree */
- 		struct tree *tree;
+ struct repository {
+ 	/* Environment */
+@@ -67,6 +68,9 @@ struct repository {
+ 	 */
+ 	struct index_state *index;
  
--		tree = lookup_tree(&empty_tree_oid);
-+		tree = lookup_tree(the_hash_algo->empty_tree);
- 		merged_common_ancestors = make_virtual_commit(tree, "ancestor");
++	/* Repository's current hash algorithm, as serialized on disk. */
++	const struct git_hash_algo *hash_algo;
++
+ 	/* Configurations */
+ 	/*
+ 	 * Bit used during initialization to indicate if repository state (like
+@@ -86,6 +90,7 @@ extern struct repository *the_repository;
+ 
+ extern void repo_set_gitdir(struct repository *repo, const char *path);
+ extern void repo_set_worktree(struct repository *repo, const char *path);
++extern void repo_set_hash_algo(struct repository *repo, int algo);
+ extern int repo_init(struct repository *repo, const char *gitdir, const char *worktree);
+ extern int repo_submodule_init(struct repository *submodule,
+ 			       struct repository *superproject,
+diff --git a/setup.c b/setup.c
+index cf1b22cd30..50c6b2ab11 100644
+--- a/setup.c
++++ b/setup.c
+@@ -488,6 +488,7 @@ int read_repository_format(struct repository_format *format, const char *path)
+ 	memset(format, 0, sizeof(*format));
+ 	format->version = -1;
+ 	format->is_bare = -1;
++	format->hash_algo = GIT_HASH_SHA1;
+ 	string_list_init(&format->unknown_extensions, 1);
+ 	git_config_from_file(check_repo_format, path, format);
+ 	return format->version;
+@@ -1113,6 +1114,8 @@ const char *setup_git_directory_gently(int *nongit_ok)
+ 			repo_set_gitdir(the_repository, gitdir);
+ 			setup_git_env();
+ 		}
++		if (startup_info->have_repository)
++			repo_set_hash_algo(the_repository, repo_fmt.hash_algo);
  	}
  
-diff --git a/notes-merge.c b/notes-merge.c
-index 4a83b0ebd5..0f6573cb17 100644
---- a/notes-merge.c
-+++ b/notes-merge.c
-@@ -595,7 +595,7 @@ int notes_merge(struct notes_merge_options *o,
- 	bases = get_merge_bases(local, remote);
- 	if (!bases) {
- 		base_oid = &null_oid;
--		base_tree_oid = &empty_tree_oid;
-+		base_tree_oid = the_hash_algo->empty_tree;
- 		if (o->verbosity >= 4)
- 			printf("No merge base found; doing history-less merge\n");
- 	} else if (!bases->next) {
-diff --git a/sequencer.c b/sequencer.c
-index 6d027b06c8..2c191aeb36 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -347,7 +347,7 @@ static int read_oneliner(struct strbuf *buf,
- 
- static struct tree *empty_tree(void)
- {
--	return lookup_tree(&empty_tree_oid);
-+	return lookup_tree(the_hash_algo->empty_tree);
- }
- 
- static int error_dirty_index(struct replay_opts *opts)
-@@ -705,7 +705,7 @@ static int is_original_commit_empty(struct commit *commit)
- 				oid_to_hex(&parent->object.oid));
- 		ptree_oid = &parent->tree->object.oid;
- 	} else {
--		ptree_oid = &empty_tree_oid; /* commit is root */
-+		ptree_oid = the_hash_algo->empty_tree; /* commit is root */
- 	}
- 
- 	return !oidcmp(ptree_oid, &commit->tree->object.oid);
-@@ -958,7 +958,7 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
- 	} else {
- 		unborn = get_oid("HEAD", &head);
- 		if (unborn)
--			oidcpy(&head, &empty_tree_oid);
-+			oidcpy(&head, the_hash_algo->empty_tree);
- 		if (index_differs_from(unborn ? EMPTY_TREE_SHA1_HEX : "HEAD",
- 				       NULL, 0))
- 			return error_dirty_index(opts);
-diff --git a/submodule.c b/submodule.c
-index 3ee4a0caa7..ec269a6fc0 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -587,7 +587,7 @@ void show_submodule_inline_diff(struct diff_options *o, const char *path,
- 		struct object_id *one, struct object_id *two,
- 		unsigned dirty_submodule)
- {
--	const struct object_id *old = &empty_tree_oid, *new = &empty_tree_oid;
-+	const struct object_id *old = the_hash_algo->empty_tree, *new = the_hash_algo->empty_tree;
- 	struct commit *left = NULL, *right = NULL;
- 	struct commit_list *merge_bases = NULL;
- 	struct child_process cp = CHILD_PROCESS_INIT;
+ 	strbuf_release(&dir);
