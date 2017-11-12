@@ -2,119 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D10D9201C8
-	for <e@80x24.org>; Sun, 12 Nov 2017 15:32:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 25345201C8
+	for <e@80x24.org>; Sun, 12 Nov 2017 15:37:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751253AbdKLPc5 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 12 Nov 2017 10:32:57 -0500
-Received: from avasout06.plus.net ([212.159.14.18]:54858 "EHLO
-        avasout06.plus.net.plus.net" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1751012AbdKLPc4 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 12 Nov 2017 10:32:56 -0500
-X-Greylist: delayed 450 seconds by postgrey-1.27 at vger.kernel.org; Sun, 12 Nov 2017 10:32:56 EST
-Received: from hashpling.plus.com ([212.159.69.125])
-        by smtp with ESMTP
-        id Du8ReQOcKFv8cDu8SeQvwd; Sun, 12 Nov 2017 15:25:25 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=Ful1xyjq c=1 sm=1 tr=0
- a=wpJ/2au8Z6V/NgdivHIBow==:117 a=wpJ/2au8Z6V/NgdivHIBow==:17 a=BNFp--SqAAAA:8
- a=D44XyuJtSjERKikMyhAA:9 a=wCHOS_8tIzIYXQCUOVd6:22
-From:   Charles Bailey <charles@hashpling.org>
-To:     git@vger.kernel.org
-Subject: [PATCH] Make t4201-shortlog.sh test more robust
-Date:   Sun, 12 Nov 2017 15:25:23 +0000
-Message-Id: <20171112152523.7186-1-charles@hashpling.org>
-X-Mailer: git-send-email 2.10.2
-X-CMAE-Envelope: MS4wfHvQPMXp0q8R0l5BoiJvObM9PJYFrlwuSbIYCzFxyhgeyl5KJ3t3xO/zmt9L9Ta0uSj4Kmf3ucfuGTwLqw5YT7ecxFha0nHIgUyXW1SX3yTZlFsc75Yk
- WUvBaKgjbRubi28KIXnDnHy2civv3/u3AZTZUu0bl7r3UwKOurmf3413uViomP5YkB9NlFUEQgjK0g==
+        id S1751311AbdKLPhC (ORCPT <rfc822;e@80x24.org>);
+        Sun, 12 Nov 2017 10:37:02 -0500
+Received: from cloud.peff.net ([104.130.231.41]:54026 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751012AbdKLPhC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Nov 2017 10:37:02 -0500
+Received: (qmail 4258 invoked by uid 109); 12 Nov 2017 15:37:03 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 12 Nov 2017 15:37:03 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 15463 invoked by uid 111); 12 Nov 2017 15:37:14 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (62.189.9.201)
+ by peff.net (qpsmtpd/0.94) with ESMTPA; Sun, 12 Nov 2017 10:37:14 -0500
+Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 12 Nov 2017 15:37:00 +0000
+Date:   Sun, 12 Nov 2017 15:37:00 +0000
+From:   Jeff King <peff@peff.net>
+To:     Soukaina NAIT HMID <nhsoukaina@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [add-default-config 2/5] adding default to color
+Message-ID: <20171112153659.lt77rn6h6faeqfpb@sigill.intra.peff.net>
+References: <0102015fb0bf2f74-cb456171-fe65-4d83-8784-b553c7c9e584-000000@eu-west-1.amazonses.com>
+ <0102015fb0bf3002-3462777a-2363-40cf-af37-80e26c0db65b-000000@eu-west-1.amazonses.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <0102015fb0bf3002-3462777a-2363-40cf-af37-80e26c0db65b-000000@eu-west-1.amazonses.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Charles Bailey <cbailey32@bloomberg.net>
+On Sun, Nov 12, 2017 at 03:00:40PM +0000, Soukaina NAIT HMID wrote:
 
-The test for '--abbrev' in t4201-shortlog.sh assumes that the commits
-generated in the test can always be uniquely abbreviated to 5 hex digits
-but this is not always the case. If you were unlucky and happened to run
-the test at (say) Thu Jun 22 03:04:49 2017 +0000, you would find that
-the first commit generated would collide with a tree object created
-later in the same test.
+> diff --git a/builtin/config.c b/builtin/config.c
+> index 124a682d50fa8..9df2d9c43bcad 100644
+> --- a/builtin/config.c
+> +++ b/builtin/config.c
+> @@ -30,6 +30,7 @@ static int end_null;
+>  static int respect_includes_opt = -1;
+>  static struct config_options config_options;
+>  static int show_origin;
+> +static const char *default_value;
+> [...]
+> +	OPT_STRING(0, "default", &default_value, N_("default-value"), N_("sets default for bool/int/path/color when no value is returned from config")),
 
-This can be simulated in the version of t4201-shortlog.sh prior to this
-commit by setting GIT_COMMITTER_DATE and GIT_AUTHOR_DATE to 1498100689
-after sourcing test-lib.sh.
+These hunks make sense. We're adding a new "--default" option that would
+kick in when you try to look up a key and it isn't present.
 
-Change the test to test --abbrev=35 instead of --abbrev=5 to almost
-completely avoid the possibility of a partial collision and add a call
-to test_tick in the setup to make the test repeatable.
+I think we can skip the "bool/int/path/color" thing in the help string.
+We would want this to kick in for every type, right?  The only
+constraint is that we are doing a "get" operation. It wouldn't make any
+sense to use "--default" when setting a variable, listing, etc. Should
+we catch these cases and return an error?
 
-Signed-off-by: Charles Bailey <cbailey32@bloomberg.net>
----
- t/t4201-shortlog.sh | 5 +++--
- t/test-lib.sh       | 7 ++++---
- 2 files changed, 7 insertions(+), 5 deletions(-)
+We'd also want to mention this in Documentation/git-config.txt.
 
-diff --git a/t/t4201-shortlog.sh b/t/t4201-shortlog.sh
-index 9df054b..da10478 100755
---- a/t/t4201-shortlog.sh
-+++ b/t/t4201-shortlog.sh
-@@ -9,6 +9,7 @@ test_description='git shortlog
- . ./test-lib.sh
- 
- test_expect_success 'setup' '
-+	test_tick &&
- 	echo 1 >a1 &&
- 	git add a1 &&
- 	tree=$(git write-tree) &&
-@@ -59,7 +60,7 @@ fuzz() {
- 	file=$1 &&
- 	sed "
- 			s/$_x40/OBJECT_NAME/g
--			s/$_x05/OBJID/g
-+			s/$_x35/OBJID/g
- 			s/^ \{6\}[CTa].*/      SUBJECT/g
- 			s/^ \{8\}[^ ].*/        CONTINUATION/g
- 		" <"$file" >"$file.fuzzy" &&
-@@ -81,7 +82,7 @@ test_expect_success 'pretty format' '
- 
- test_expect_success '--abbrev' '
- 	sed s/SUBJECT/OBJID/ expect.template >expect &&
--	git shortlog --format="%h" --abbrev=5 HEAD >log &&
-+	git shortlog --format="%h" --abbrev=35 HEAD >log &&
- 	fuzz log >log.predictable &&
- 	test_cmp expect log.predictable
- '
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 9b61f16..116bd6a 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -175,9 +175,10 @@ esac
- 
- # Convenience
- #
--# A regexp to match 5 and 40 hexdigits
-+# A regexp to match 5, 35 and 40 hexdigits
- _x05='[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]'
--_x40="$_x05$_x05$_x05$_x05$_x05$_x05$_x05$_x05"
-+_x35="$_x05$_x05$_x05$_x05$_x05$_x05$_x05"
-+_x40="$_x35$_x05"
- 
- # Zero SHA-1
- _z40=0000000000000000000000000000000000000000
-@@ -193,7 +194,7 @@ LF='
- # when case-folding filenames
- u200c=$(printf '\342\200\214')
- 
--export _x05 _x40 _z40 LF u200c EMPTY_TREE EMPTY_BLOB
-+export _x05 _x35 _x40 _z40 LF u200c EMPTY_TREE EMPTY_BLOB
- 
- # Each test should start with something like this, after copyright notices:
- #
--- 
-2.10.2
+> @@ -47,6 +48,7 @@ static int show_origin;
+>  #define ACTION_GET_COLOR (1<<13)
+>  #define ACTION_GET_COLORBOOL (1<<14)
+>  #define ACTION_GET_URLMATCH (1<<15)
+> +#define ACTION_GET_COLORORDEFAULT (1<<16)
 
+I'm not sure I understand this part, though. Providing a default should
+be something that goes along with a "get" action, but isn't its own
+action.
+
+> +static void get_color_default(const char *var)
+> +{
+> +	get_color(var, default_value);
+> +}
+> +
+
+And here we're just applying --default to colors, but we'd eventually
+want them for everything. I think that's fixed later in the series, so
+I'll keep reading. But I'd expect a function like get_value() to be
+detecting the case where we got no hits and filling in the default_value
+there, as if we had read it from the config file.
+
+-Peff
