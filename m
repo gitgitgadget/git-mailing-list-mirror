@@ -2,91 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A542D201C8
-	for <e@80x24.org>; Sun, 12 Nov 2017 20:09:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 219D8201C8
+	for <e@80x24.org>; Sun, 12 Nov 2017 20:25:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751035AbdKLUJg (ORCPT <rfc822;e@80x24.org>);
-        Sun, 12 Nov 2017 15:09:36 -0500
-Received: from mout.gmx.net ([212.227.15.19]:61821 "EHLO mout.gmx.net"
+        id S1751087AbdKLUZL (ORCPT <rfc822;e@80x24.org>);
+        Sun, 12 Nov 2017 15:25:11 -0500
+Received: from mout.web.de ([212.227.15.3]:58036 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750910AbdKLUJg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Nov 2017 15:09:36 -0500
-Received: from [192.168.178.43] ([92.76.226.11]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MK0ur-1eFM8G30XV-001Rqi; Sun, 12
- Nov 2017 21:08:37 +0100
-Subject: Re: should "git bisect" support "git bisect next?"
-To:     Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>
-Cc:     "Robert P. J. Day" <rpjday@crashcourse.ca>,
-        Git Mailing list <git@vger.kernel.org>,
-        Pranit Bauva <pranit.bauva@gmail.com>
-References: <alpine.LFD.2.21.1711110639120.5632@localhost.localdomain>
- <CAP8UFD3az17BpB0nA+35p3BP95sBuOY0Yvce3cgbh0L3YH7+rQ@mail.gmail.com>
- <xmqq4lq0ev8g.fsf@gitster.mtv.corp.google.com>
-From:   Stephan Beyer <s-beyer@gmx.net>
-Message-ID: <cc11ab35-a219-8cab-313e-f716723409e4@gmx.net>
-Date:   Sun, 12 Nov 2017 21:08:35 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
+        id S1750910AbdKLUZK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Nov 2017 15:25:10 -0500
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb002
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MVtqS-1egcZt2QwK-00X7m7; Sun, 12
+ Nov 2017 21:25:05 +0100
+Date:   Sun, 12 Nov 2017 21:25:05 +0100
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Jerzy Kozera <jerzy.kozera@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH v2] gpg-interface: strip CR chars for Windows gpg2
+Message-ID: <20171112202505.GB2677@tor.lan>
+References: <20171112130710.16000-1-jerzy.kozera@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqq4lq0ev8g.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:pOmsDBMAyZ8pNsT2fIwVQqXu/7M5R32uEgJZA3vbyIxej5N4q0w
- Kh26stAsFWRV73SzoaupoGV0NxjrgwfJwCzEvgipjOL9GAPyR1BbkSUpI8opld7303AvM6t
- wb7cACLlNwtgA4A9LhSWnw+W3KJ6AdZiRT+JkBtsT68dIPs170yMtJNsDgv3NAs2rcOq29j
- KUcvkwbtVOMQiOtFOJ/NA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:tBh4TDel++w=:L0Sw3+C2OqFYKX56LHr7Ur
- mYDqEXuQhOVz2Pn35Lj8k2V7tyXEv0KhKBdl7X8jk/Nb2ntb81n7NdiB4xpXgRXYua8hQGrnI
- Lnuyl8mKvztP0F7MISzlJN5xwslEHq9WLps/SZGpe/tuTt8Y8kscqHhC7PJUwPZtyHa3K3dvH
- qzdUci/ZyareQ8NqwdTGb+cEWudc3icruEPPxbxs5cQIPn+wUkcKFgWKR+J91F8/9jkGrBa/x
- H+2huvNFRuD2vzc7SyyHwnpEA6uPj5RAfcK8gYBGMUdkvRolkM8nP/2y87Kwi78MIHjOJgnfe
- 8LEQKC4msZDAcvYFjoYsPb1RZtlWop7IKM+UM5fc3pkzsGYTM4G7osnUl1iWzZDiZrIjMub+U
- jusJpUBJ+yrmzqynxm0Gg2MMWiy08ouvz5WPGuPRmxwNkvSvOtQOivf46F9irtDgebNhegEhZ
- XGe4vmMyL2MnEcC+1rmubXMnMAJ1lc5TYiH608dS/YNG0DTeSVWuyYRP8OaY2RJ7P5ls9otmq
- gCSmwTMRi1QbvV7njGDvKLz4TyW6zlYBsE1g+1oILHlQov3jmGnTIV51Z335NLIeomvmDsxJP
- 9O8fSXmE9L78bvlSRM5DR22ZjMn3bfzGQMTPlcncZ8twSh4ivj/kGihX/+bkyYO3+O6di9YjH
- J+xU+OoYA+vYLsZHNc05K7YH745sAhGNxuvrntJK7oQnnJn1n/OTUWGSlmZ5n4WHy5AlTubvb
- Q96VvBQQTj7+MOgBW8WHgDZ5pLA9ToiFB7hYTGuKaNJpzg13d/EhRR7VvDC4SiyqucJ+YOOXs
- 7BmuHdJXDuvfC/af8DtPipoyS99Q+iBSMv/rva4bTJ0XVsjoX4=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20171112130710.16000-1-jerzy.kozera@gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Provags-ID: V03:K0:cfHWej74RRr934m3h7m61eTsTDlb09HMR/EyBBSU8pc7MRCxxNE
+ LmU1pXGJum37QJUEfbLUJbLu1ljplOhaGuLUD6+Lr9m0dfTIlzNlKCXoZB1dxyfdXDq5X+9
+ JQyxVmUhQQ4/ZIZ2Ws9fI/UhQ4HYUug1ojQ8kTMASxKmkCZlXVhE/7IbW3C6q59Rj55dwcl
+ GufsJSr9uigPirSmJ9f4g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:s6P9DXfqEWk=:lJNNZbtTF2iwa76NrHEuFA
+ 9luTMq5Pwh8LNwnbFGujoxeM4AOBx61+nLR5v7jNd5650xKjb6sqjex9xAZWeLbf33MTOQ4PH
+ 4GU02ek+b1ERZQnU1U/Mns608dJY6g4/6eoXrobLmspoxYpogK++4t4FIuN2rLtCCnma0eDes
+ mG5GfoMYxWT0JBCobp+QlIt/NPmPjYLE2GOa7oC6rA7cqE3K537Q/2uDldZ83KKcG8y87Qb+7
+ IubtCckuW2mZu4QqnkHKxV6POffXuzqwSfnrAZBwZfODS9iSQ6SV6AMF6SdECC9f9cqkvVnIQ
+ kL0RwyoEtc5+Kok0DvGf79BCsO0IzTFMloKxPXFMsDL3G3RAsLF+q2PMgpNsTHF72AAtUEP8d
+ R9nXOIL/hbxnvjfdY4xWsIUWnaSO5kVMCR/ZKUVd51rRGaiWd3xCvKsvkXO5o9gIUMBgpyDuL
+ HT6mb4K//b+dOV6W2jpvG6bHmO8PIVe2r4E+hpQLeETdxjM8C0Jg7kRdGloKRJxmhFAcN7hJG
+ wYeRDY1N7yGd7RbttN9AjUcxc8utFCFsdhEKbJQvydPG3afBaA1MTXmByYVjL+iTBZiZTZHne
+ 4q8X/YROU90OnTwxtfXcdPojobLDyFArrEVoa1zrCiEsRUv6wP9LbMMV8mQcYlvc5OCVFW3Dl
+ YTCTVKwyI2FZHZoAGuSN8egJKLfS50mmJnKL9qBHjPP9OGOOqgWuNHVQgJr9umXN/WoP9OKs9
+ VNfrQjPoEDy0v+Jbjq127uXusiPGXYZ0D+6S6jKA1TtTOpPhyMbkRqaxKtOvmV1PhT6W0opdi
+ 5VYY01k82y0wtaXLqJqi0Yt4H/30g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-On 11/11/2017 03:38 PM, Junio C Hamano wrote:
-> Christian Couder <christian.couder@gmail.com> writes:
+On Sun, Nov 12, 2017 at 01:07:10PM +0000, Jerzy Kozera wrote:
+> This fixes the issue with newlines being \r\n and not being displayed
+> correctly when using gpg2 for Windows, as reported at
+> https://github.com/git-for-windows/git/issues/1249
 > 
->> On Sat, Nov 11, 2017 at 12:42 PM, Robert P. J. Day
->> <rpjday@crashcourse.ca> wrote:
->>>
->>>   the man page for "git bisect" makes no mention of "git bisect next",
->>> but the script git-bisect.sh does:
->>
->> Yeah the following patch was related:
->>
->> https://public-inbox.org/git/1460294354-7031-2-git-send-email-s-beyer@gmx.net/
->>
->> You might want to discuss with Stephan (cc'ed).
+> Issues with non-ASCII characters remain for further investigation.
 > 
-> Thanks for saving me time to explain why 'next' is still a very
-> important command but the end users do not actually need to be
-> strongly aware of it, because most commands automatically invokes it
-> as their final step due to the importance of what it does ;-)
+> Signed-off-by: Jerzy Kozera <jerzy.kozera@gmail.com>
+> ---
+> 
+> Addressed comments by Junio C Hamano (check for following \n, and
+> updated the commit description).
+> 
+>  gpg-interface.c | 27 ++++++++++++++++++---------
+>  1 file changed, 18 insertions(+), 9 deletions(-)
+> 
+> diff --git a/gpg-interface.c b/gpg-interface.c
+> index 4feacf16e5..ab592af7f2 100644
+> --- a/gpg-interface.c
+> +++ b/gpg-interface.c
+> @@ -145,6 +145,20 @@ const char *get_signing_key(void)
+>  	return git_committer_info(IDENT_STRICT|IDENT_NO_DATE);
+>  }
+>  
+> +/* Strip CR from the CRLF line endings, in case we are on Windows. */
+> +static void strip_cr(struct strbuf *buffer, size_t bottom) {
+> +	size_t i, j;
 
-I will nonetheless re-roll the patch (that Christian linked to)
-after Pranit's bisect part II series is in good shape. I think the
-documentation change in the patch shows why the user should be aware of
-it (although not strongly).
+It is not wrong to say "Strip CR from the CRLF".
+In Git we often talk about "convert CRLF into LF",
 
-Best
-Stephan
+The comment somewhat different to the function name.
+The function namd and the name of the parameters can be more in
+in line with existing strbuf functions:
+(And the opening '{' should go into it's own line:
 
+static void convert_crlf_to_lf(struct strbuf *sb, size_t len)
+{
+	size_t i, j;
+
+An even more generic approach (could be done in a seperate commit)
+would be to move the whole function into strbuf.c/strbuf.h,
+and it may be called like this.
+
+void strbuf_crlf_to_lf(struct strbuf *sb, size_t len)
+{
+  /* I would even avoid "i" and "j", and use src and dst or so) */
+  size_t src_pos, dst_idx;
+}
+
+Thanks for working on this.
+
+[]
