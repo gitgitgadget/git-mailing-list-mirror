@@ -2,74 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1AF3D201C8
-	for <e@80x24.org>; Sun, 12 Nov 2017 20:08:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A542D201C8
+	for <e@80x24.org>; Sun, 12 Nov 2017 20:09:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751101AbdKLUId (ORCPT <rfc822;e@80x24.org>);
-        Sun, 12 Nov 2017 15:08:33 -0500
-Received: from mout.web.de ([212.227.15.3]:49330 "EHLO mout.web.de"
+        id S1751035AbdKLUJg (ORCPT <rfc822;e@80x24.org>);
+        Sun, 12 Nov 2017 15:09:36 -0500
+Received: from mout.gmx.net ([212.227.15.19]:61821 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750977AbdKLUIc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Nov 2017 15:08:32 -0500
-Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb001
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MHYHE-1eCs5e3hlM-003KPy; Sun, 12
- Nov 2017 21:08:26 +0100
-Date:   Sun, 12 Nov 2017 21:08:26 +0100
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 1/1] Introduce git add --renormalize .
-Message-ID: <20171112200826.GA2677@tor.lan>
-References: <xmqqshejq9mn.fsf@gitster.mtv.corp.google.com>
- <20171030162913.23164-1-tboegi@web.de>
- <xmqqvaimeixm.fsf@gitster.mtv.corp.google.com>
- <20171107172659.GA11119@tor.lan>
- <xmqqlgjhobb4.fsf@gitster.mtv.corp.google.com>
- <20171109184700.GA27635@tor.lan>
- <xmqq1sl7j83x.fsf@gitster.mtv.corp.google.com>
+        id S1750910AbdKLUJg (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Nov 2017 15:09:36 -0500
+Received: from [192.168.178.43] ([92.76.226.11]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MK0ur-1eFM8G30XV-001Rqi; Sun, 12
+ Nov 2017 21:08:37 +0100
+Subject: Re: should "git bisect" support "git bisect next?"
+To:     Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>
+Cc:     "Robert P. J. Day" <rpjday@crashcourse.ca>,
+        Git Mailing list <git@vger.kernel.org>,
+        Pranit Bauva <pranit.bauva@gmail.com>
+References: <alpine.LFD.2.21.1711110639120.5632@localhost.localdomain>
+ <CAP8UFD3az17BpB0nA+35p3BP95sBuOY0Yvce3cgbh0L3YH7+rQ@mail.gmail.com>
+ <xmqq4lq0ev8g.fsf@gitster.mtv.corp.google.com>
+From:   Stephan Beyer <s-beyer@gmx.net>
+Message-ID: <cc11ab35-a219-8cab-313e-f716723409e4@gmx.net>
+Date:   Sun, 12 Nov 2017 21:08:35 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq1sl7j83x.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Provags-ID: V03:K0:XbuXZ0lB1wzF6EwYt/xHqnc1f9B19FLQ/0b7zxx0YFyh9CMBQBc
- mlf0+Fs6IE9GT4Tf/PrLDMFYBkik6WGPJpMY75RYrqIK4bPgoZKCjKSw6kqg+akmt22QdFD
- iusrYgjLxFdTUNn+2zVYxE3Domb+SbNyQySPZL+0djlZ2NaC+UBGMsDaps6dWBMLwI02MF+
- KQ49/oFj5xih2hCBZUhug==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:8sTrVwN8H2o=:dCxxwM/efbgc5qawEJ++zf
- 1sBLD3j6BMOCAWITV4Gz9qgM8t0tlsGeTDjVhKCM+F9AhkXqTYNV9t3pB9GfUNp2uqJbQoCdv
- w4SQfiduLaeVF3lHd5PhTV8rskpOu2yN11W91Z3nY+BKbdbVBPqvIksqK4F0k5zrpUJJRtWUV
- XYas23oExq6I8VqsTQpu3eYNIU2e4BL8BuBztvLIizsZHFutQvdBArdJfNlR1u2fSUMA7aL3t
- ey1P94HvVLmcaR2yySNY0bl/86jO1maCQijl8pEPFcoofuLFMRH1EY+DBoyRxOAWI9FqyUCwc
- JROCkjuuZH7EKhT44vC7rkwZQ1InZSit+MZn8pqC8fh8PpI2uMJyIiZP3hAH/tlc/2dZ0GKi0
- o2RVmhL9CYthE24RRr+u73b/j8CWpGoCj50m6wbFnw46Hg57YPbPv2LO65/xNerkGdzaLJGH2
- JngUjIjuPO0SghILpOzk4KDW5xAHqMA3EWKtGns4iGSmQMkFVHMmJqgQtZqD2HmdiQC0FRwG0
- CZVlX/6HOdqDEV9NCNIVKxpRvC6xT7Ugwwzs6h8rhR7iwFQeofWj+51mokQzFqds7pqtn5oQ4
- JbyAcGhcWOF/u5djjbE64S5zGXdFWLCdghK7+5kWJGvZzEX6tIsroWGtmPLZprqU3RUKmgZQd
- a579GuBHR0CuI5mU5c4kXl0HzVrP6k2lpsCK/0pbdveR2geBgQgweB169QU6LPM8WhsAquABm
- JlcdBquYT3KCtZ312+4ZI8ROmIdLRCJBp/Bh4NoIzyWXF1t7h47FeG+MGs8WsrILuAaWRykF+
- CF+E5mcwiPKHvGzE9PLLfNHL27VwA==
+In-Reply-To: <xmqq4lq0ev8g.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:pOmsDBMAyZ8pNsT2fIwVQqXu/7M5R32uEgJZA3vbyIxej5N4q0w
+ Kh26stAsFWRV73SzoaupoGV0NxjrgwfJwCzEvgipjOL9GAPyR1BbkSUpI8opld7303AvM6t
+ wb7cACLlNwtgA4A9LhSWnw+W3KJ6AdZiRT+JkBtsT68dIPs170yMtJNsDgv3NAs2rcOq29j
+ KUcvkwbtVOMQiOtFOJ/NA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:tBh4TDel++w=:L0Sw3+C2OqFYKX56LHr7Ur
+ mYDqEXuQhOVz2Pn35Lj8k2V7tyXEv0KhKBdl7X8jk/Nb2ntb81n7NdiB4xpXgRXYua8hQGrnI
+ Lnuyl8mKvztP0F7MISzlJN5xwslEHq9WLps/SZGpe/tuTt8Y8kscqHhC7PJUwPZtyHa3K3dvH
+ qzdUci/ZyareQ8NqwdTGb+cEWudc3icruEPPxbxs5cQIPn+wUkcKFgWKR+J91F8/9jkGrBa/x
+ H+2huvNFRuD2vzc7SyyHwnpEA6uPj5RAfcK8gYBGMUdkvRolkM8nP/2y87Kwi78MIHjOJgnfe
+ 8LEQKC4msZDAcvYFjoYsPb1RZtlWop7IKM+UM5fc3pkzsGYTM4G7osnUl1iWzZDiZrIjMub+U
+ jusJpUBJ+yrmzqynxm0Gg2MMWiy08ouvz5WPGuPRmxwNkvSvOtQOivf46F9irtDgebNhegEhZ
+ XGe4vmMyL2MnEcC+1rmubXMnMAJ1lc5TYiH608dS/YNG0DTeSVWuyYRP8OaY2RJ7P5ls9otmq
+ gCSmwTMRi1QbvV7njGDvKLz4TyW6zlYBsE1g+1oILHlQov3jmGnTIV51Z335NLIeomvmDsxJP
+ 9O8fSXmE9L78bvlSRM5DR22ZjMn3bfzGQMTPlcncZ8twSh4ivj/kGihX/+bkyYO3+O6di9YjH
+ J+xU+OoYA+vYLsZHNc05K7YH745sAhGNxuvrntJK7oQnnJn1n/OTUWGSlmZ5n4WHy5AlTubvb
+ Q96VvBQQTj7+MOgBW8WHgDZ5pLA9ToiFB7hYTGuKaNJpzg13d/EhRR7VvDC4SiyqucJ+YOOXs
+ 7BmuHdJXDuvfC/af8DtPipoyS99Q+iBSMv/rva4bTJ0XVsjoX4=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 10, 2017 at 09:22:10AM +0900, Junio C Hamano wrote:
+Hi,
 
+On 11/11/2017 03:38 PM, Junio C Hamano wrote:
+> Christian Couder <christian.couder@gmail.com> writes:
 > 
-> Taking these altogether, perhaps
+>> On Sat, Nov 11, 2017 at 12:42 PM, Robert P. J. Day
+>> <rpjday@crashcourse.ca> wrote:
+>>>
+>>>   the man page for "git bisect" makes no mention of "git bisect next",
+>>> but the script git-bisect.sh does:
+>>
+>> Yeah the following patch was related:
+>>
+>> https://public-inbox.org/git/1460294354-7031-2-git-send-email-s-beyer@gmx.net/
+>>
+>> You might want to discuss with Stephan (cc'ed).
 > 
->     Apply the "clean" process freshly to all tracked files to
->     forcibly add them again to the index.  This is useful after
->     changing `core.autocrlf` configuration or the `text` attribute
->     in order to correct files added with wrong CRLF/LF line endings.
->     This option implies `-u`.
-> 
-> Thanks.
+> Thanks for saving me time to explain why 'next' is still a very
+> important command but the end users do not actually need to be
+> strongly aware of it, because most commands automatically invokes it
+> as their final step due to the importance of what it does ;-)
 
-OK with the text - I can send a new version the next days.
+I will nonetheless re-roll the patch (that Christian linked to)
+after Pranit's bisect part II series is in good shape. I think the
+documentation change in the patch shows why the user should be aware of
+it (although not strongly).
+
+Best
+Stephan
+
