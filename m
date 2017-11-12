@@ -2,104 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 580331F42B
-	for <e@80x24.org>; Sun, 12 Nov 2017 11:57:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9F84D201C8
+	for <e@80x24.org>; Sun, 12 Nov 2017 12:14:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750780AbdKLL53 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 12 Nov 2017 06:57:29 -0500
-Received: from cloud.peff.net ([104.130.231.41]:53828 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750735AbdKLL52 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Nov 2017 06:57:28 -0500
-Received: (qmail 24252 invoked by uid 109); 12 Nov 2017 11:57:29 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 12 Nov 2017 11:57:29 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 14406 invoked by uid 111); 12 Nov 2017 11:57:41 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (62.189.9.201)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Sun, 12 Nov 2017 06:57:41 -0500
-Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 12 Nov 2017 11:57:26 +0000
-Date:   Sun, 12 Nov 2017 11:57:25 +0000
-From:   Jeff King <peff@peff.net>
-To:     "Dominik Mahrer (Teddy)" <teddy@teddy.ch>
-Cc:     git@vger.kernel.org
-Subject: Re: NO_MSGFMT
-Message-ID: <20171112115725.c2pjhpwpcjeh4xbr@sigill.intra.peff.net>
-References: <b6b12040-100f-5965-6dfd-344c84dddf96@teddy.ch>
- <20170813045813.i42mgwn3dmm6u52o@sigill.intra.peff.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170813045813.i42mgwn3dmm6u52o@sigill.intra.peff.net>
+        id S1750865AbdKLMOm (ORCPT <rfc822;e@80x24.org>);
+        Sun, 12 Nov 2017 07:14:42 -0500
+Received: from mail-pg0-f42.google.com ([74.125.83.42]:44868 "EHLO
+        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750735AbdKLMOl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Nov 2017 07:14:41 -0500
+Received: by mail-pg0-f42.google.com with SMTP id 4so1817601pge.1
+        for <git@vger.kernel.org>; Sun, 12 Nov 2017 04:14:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:subject:from:to:cc:in-reply-to:references:date
+         :mime-version:content-transfer-encoding;
+        bh=5HnPE2ZbTVqsjCVkct3Lc7h8tSJvMsKjgCE9ztyu57A=;
+        b=P/p0POy0bBcM76KdynRMSLG7XE8LfyDkNRfinFb9GmNFZFMa4oLoXYT1sf+bdF3U82
+         SG8iCUjwNbUUWI3+5FH7YlBmmVCcnYdYBRACQNmAgTBJ/xgRc7C+Ls0lPgWUc/ImAzCX
+         Ws106gkEewKQiQ4L2vkd4U6aZIwqzT5ZHHc+4OpSEEcRrl0ZMN6G7/wI4Vy7Cyd9sVTz
+         wQOXVUJ+4p63tCJ9zteLUrx7f5qLKkMBCm4/qxhAQCfqr5HmNQ6WDb9dHcCwAygm66k9
+         j0hEzPMxK2+o9gveMtmkJCCR6a4fz+91XtYkgjEN5s5nR3EhWTsEAzyJVbhnI/juATAL
+         EhyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:subject:from:to:cc:in-reply-to
+         :references:date:mime-version:content-transfer-encoding;
+        bh=5HnPE2ZbTVqsjCVkct3Lc7h8tSJvMsKjgCE9ztyu57A=;
+        b=d+Zkcmd6zEnvAFl9eQDJLbJ1YIVYHUf1pPK84Y/YJLjpISMCQL/PrdoMF3i8Ub5pAY
+         8iRbsW3odXyxq5B1BI0hKRU57oaQkk0jPb8tqb2Hcr0aoNpmE3ntoDcKntqYSk/SUw4g
+         CYaCwDNJaCiTDRB3dt/eUmYaH+fMkFTLumanqtN6CWFZCwTnPn2QekdBOAUQeZ0RmcO5
+         vsjM7CKTUY9q+ATMfBmStHLQKfaygbCOPbOJ0TsmNrfRSZIebCIdXTmHMHKduFTg1pbT
+         3PFXpRAtnU8yQGAuKkpRpjSYFd9jQYG7RAj+PdmZl8hZqMUC2tNHIyHI3f8HVuDROpp6
+         pxQw==
+X-Gm-Message-State: AJaThX6i0U4JVzwuIu7XDVfXRLISNNx+nt9mrIZpptqWW6/NpXXTXj5V
+        DgixAspfNefJz4R308/gZLY=
+X-Google-Smtp-Source: AGs4zMY+FqgVfkb3hiS/vIq4l6Dmr16guAm3vyHd23zpY1RtulHxnS9GjdYp+pGxYcVia6dML3CzlA==
+X-Received: by 10.99.126.6 with SMTP id z6mr4183625pgc.126.1510488881246;
+        Sun, 12 Nov 2017 04:14:41 -0800 (PST)
+Received: from unique-pc ([117.249.159.102])
+        by smtp.gmail.com with ESMTPSA id f7sm642000pfa.133.2017.11.12.04.14.38
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 12 Nov 2017 04:14:40 -0800 (PST)
+Message-ID: <1510488875.2683.3.camel@gmail.com>
+Subject: Re: "git bisect" takes exactly one bad commit and one or more good?
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+To:     "Robert P. J. Day" <rpjday@crashcourse.ca>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Git Mailing list <git@vger.kernel.org>
+In-Reply-To: <alpine.LFD.2.21.1711111024470.10756@localhost.localdomain>
+References: <alpine.LFD.2.21.1711110612290.5087@localhost.localdomain>
+         <CAP8UFD1=idL51XDzE_RKc_7z9NghTd7GHoZ-T61y0rQ8ZYXomw@mail.gmail.com>
+         <xmqq8tfcevev.fsf@gitster.mtv.corp.google.com>
+         <alpine.LFD.2.21.1711111024470.10756@localhost.localdomain>
+Content-Type: text/plain; charset="ISO-8859-15"
+Date:   Sun, 12 Nov 2017 17:44:35 +0530
+Mime-Version: 1.0
+X-Mailer: Evolution 3.22.6-1 
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Aug 13, 2017 at 12:58:13AM -0400, Jeff King wrote:
-
-> On Sat, Aug 12, 2017 at 03:44:17PM +0200, Dominik Mahrer (Teddy) wrote:
+On Sat, 2017-11-11 at 10:27 -0500, Robert P. J. Day wrote:
 > 
-> > Hi all
-> > 
-> > I'm compiling git from source code on a mashine without msgfmt. This leads
-> > to compile errors. To be able to compile git I created a patch that at least
-> > works for me:
+>   i realize that one of each commit is the simplest use case, but the
+> scenario that occurred to me is a bunch of branches being merged and,
+> suddenly, you have a bug, and you're not sure where it came from so
+> you identify a number of good commits, one per merged branch, and go
+> from there.
 > 
-> Try:
 > 
->   make NO_MSGFMT=Nope NO_GETTEXT=Nope
-> 
-> This also works:
-> 
->   make NO_GETTEXT=Nope NO_TCLTK=Nope
-> 
-> The flags to avoid gettext/msgfmt are sadly different between git itself
-> and git-gui/gitk, which we include as a subproject. It would be a useful
-> patch to harmonize though (probably by accepting both in all places for
-> compatibility).
 
-I saw somebody else today run into problems about gettext, so I thought
-I'd revisit this and write that patch. It turns out the situation is
-slightly different than I thought. So no patch, but I wanted to report
-here what I found.
+Just thinking out loud, couldn't you give the one commit that was the
+tip of the branch, to which you merged the branches, before you merged
+in the branches as the good commit ?
 
-It's true that the option is called NO_GETTEXT in git.git, but NO_MSGFMT
-in the tcl programs we pull in. So I figured to start with a patch that
-turns on NO_MSGFMT automatically when NO_GETTEXT is set. But it's
-not necessary.
 
-The gitk and git-gui tests actually check that msgfmt is available.
-If it isn't, they automatically fall back to using a pure-tcl
-implementation. So there's generally no need to set NO_MSGFMT at
-all.
-
-But that fallback is implemented using tcl. So if you _also_ don't have
-tcl installed (and I don't), you get quite a confusing output from make:
-
-  $ make -j1 
-    SUBDIR git-gui
-    MSGFMT po/pt_pt.msg Makefile:252: recipe for target 'po/pt_pt.msg' failed
-make[1]: *** [po/pt_pt.msg] Error 127
-
-If you run with V=1, you can see that it's not running msgfmt at all,
-but:
-
-  tclsh po/po2msg.sh --statistics --tcl -l pt_pt -d po/ po/pt_pt.po 
-
-So my takeaways are:
-
-  1. You should never need to set NO_MSGFMT; it falls back
-     automatically.
-
-  2. If you don't have gettext, you should set NO_GETTEXT to tell the
-     rest of git not to use it.
-
-  3. If you see msgfmt errors even after NO_GETTEXT, try NO_TCLTK.
-
--Peff
+-- 
+Kaartic
