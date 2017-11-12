@@ -2,71 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B368E1F43C
-	for <e@80x24.org>; Sat, 11 Nov 2017 19:46:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 35FFC1F43C
+	for <e@80x24.org>; Sun, 12 Nov 2017 01:18:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751839AbdKKTqY (ORCPT <rfc822;e@80x24.org>);
-        Sat, 11 Nov 2017 14:46:24 -0500
-Received: from imap.thunk.org ([74.207.234.97]:36000 "EHLO imap.thunk.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751810AbdKKTqX (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 Nov 2017 14:46:23 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=thunk.org;
-         s=ef5046eb; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
-        Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-        List-Post:List-Owner:List-Archive;
-        bh=F8t9unuG3AjaIFzOAGwUa9tlZ78Q4cFSWB/mEJPNshY=; b=RU4KAZGyyPX4NUIYBwCnTSFUVs
-        UnYYdAM8IAgmYkZoML0K+7UWrVSAtFyd5VzcfNuWdnA0OJXRtP9TE53L6kyj6v5ARP0FVB9R/uwAy
-        NI2OEAGZ1VbRZt4siJ8lYTyTgsEHRRZyuMsJAhikcITVoRx9Qi3UPQSKqK09jPDQDp94=;
-Received: from root (helo=callcc.thunk.org)
-        by imap.thunk.org with local-esmtp (Exim 4.89)
-        (envelope-from <tytso@thunk.org>)
-        id 1eDbjN-0006HZ-Io; Sat, 11 Nov 2017 19:46:17 +0000
-Received: by callcc.thunk.org (Postfix, from userid 15806)
-        id 87BBCC00640; Sat, 11 Nov 2017 14:46:16 -0500 (EST)
-Date:   Sat, 11 Nov 2017 14:46:16 -0500
-From:   Theodore Ts'o <tytso@mit.edu>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Christian Couder <christian.couder@gmail.com>,
+        id S1752487AbdKLBSM (ORCPT <rfc822;e@80x24.org>);
+        Sat, 11 Nov 2017 20:18:12 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60883 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752308AbdKLBSL (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 11 Nov 2017 20:18:11 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id BD7F3B485C;
+        Sat, 11 Nov 2017 20:18:10 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=St2rENFaeK1bhJwnirG0LwKIBwI=; b=usQ7hD
+        d6nGgcG16yzOiCc4oLauAuIkMPrPjORt1wyghDbTMnN5aAVS2bfHp7v2zCAS3pKg
+        8MvoZ6O5OpgwLWvGo+zLqD4wqEglybNZdA8b5900SlLL8oWVqo0laNks8P0bqUrx
+        6I+ymTTxHQc2pDZAPs2IZyvfbE+k95y2DMp3A=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=SpfvWvXKvcVNfnH043pgMDBYcf/QaoAC
+        k96iEif8iFad6Avu67gErvjOy+4vt0Asp5f65FEig89FGUKTTjvKavqTrFIgwjxR
+        tdZfPG2cobFlunDfc/b+cFpaApJPC1dVcvz/09ZXh0h+pjZ74ONLduvQZrt8X6Op
+        fYdtiZkE3gA=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B5DE4B485B;
+        Sat, 11 Nov 2017 20:18:10 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3947EB485A;
+        Sat, 11 Nov 2017 20:18:10 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Stefan Beller <sbeller@google.com>,
         "Robert P. J. Day" <rpjday@crashcourse.ca>,
-        Git Mailing list <git@vger.kernel.org>,
-        Stephan Beyer <s-beyer@gmx.net>
-Subject: Re: should "git bisect" support "git bisect next?"
-Message-ID: <20171111194616.a2hl4dwz5cycuzdh@thunk.org>
-References: <alpine.LFD.2.21.1711110639120.5632@localhost.localdomain>
- <CAP8UFD3az17BpB0nA+35p3BP95sBuOY0Yvce3cgbh0L3YH7+rQ@mail.gmail.com>
- <xmqq4lq0ev8g.fsf@gitster.mtv.corp.google.com>
+        Git Mailing list <git@vger.kernel.org>
+Subject: Re: is there a stylistic preference for a trailing "--" on a command?
+References: <alpine.LFD.2.21.1711100855140.3617@DESKTOP-1GPMCEJ>
+        <CAGZ79kavxFA_wBzcSbR8LT4uZGkdv4c07ZMfE4TK0tkooMGg6Q@mail.gmail.com>
+        <20171111151907.owrbpnn35aepj4ha@sigill.intra.peff.net>
+Date:   Sun, 12 Nov 2017 10:18:08 +0900
+In-Reply-To: <20171111151907.owrbpnn35aepj4ha@sigill.intra.peff.net> (Jeff
+        King's message of "Sat, 11 Nov 2017 15:39:54 +0000")
+Message-ID: <xmqqzi7scn1r.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq4lq0ev8g.fsf@gitster.mtv.corp.google.com>
-User-Agent: NeoMutt/20170609 (1.8.3)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
+Content-Type: text/plain
+X-Pobox-Relay-ID: 58AE07E0-C747-11E7-9D52-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Nov 11, 2017 at 11:38:23PM +0900, Junio C Hamano wrote:
-> 
-> Thanks for saving me time to explain why 'next' is still a very
-> important command but the end users do not actually need to be
-> strongly aware of it, because most commands automatically invokes it
-> as their final step due to the importance of what it does ;-)
+Jeff King <peff@peff.net> writes:
 
-This reminds me; is there a way to suppress it because I'm about to
-give a large set of good and bit commits (perhaps because I'm
-replaying part of a git biset log, minus one or two lines that are
-suspected of being bogus thanks to flaky reproduction), and so there's
-no point having git bisect figure the "next" commit to try until I'm
-done giving it a list of good/bad commits?
+> On Fri, Nov 10, 2017 at 10:12:39AM -0800, Stefan Beller wrote:
+>
+>> On Fri, Nov 10, 2017 at 5:57 AM, Robert P. J. Day <rpjday@crashcourse.ca> wrote:
+>> >
+>> >   just noticed these examples in "man git-bisect":
+>> >
+>> > EXAMPLES
+>> >   $ git bisect start HEAD v1.2 --      # HEAD is bad, v1.2 is good
+>> >   ...
+>> >   $ git bisect start HEAD origin --    # HEAD is bad, origin is good
+>> >   ...
+>> >   $ git bisect start HEAD HEAD~10 --   # culprit is among the last 10
+>> >
+>> > is there some rationale or stylistic significance to those trailing
+>> > "--" on those commands? i assume they have no effect, just curious as
+>> > to why they're there.
+>> 
+>> By having the -- there, it is clear that the strings are ref specs and not files
+>> of such a name. (Who would want to store a file named HEAD~10 in their
+>> repo?)
+>
+> Just to be explicit, that makes it not just clear to the user but clear
+> to Git. Without a "--" there heuristics that kick in. The first section
+> of the "gitcli" manpage talks about this, though I don't know that we
+> explicitly document the heuristics anywhere (and I think that is
+> intentional -- we promise only to try to do what you meant, and scripts
+> that want exact behavior should use a disambiguating "--").
 
-	     	       	      	 	  - Ted
+It is funny that your "Just to be explicit" reads two ways, and both
+readings turn out to be correct ;-)
+
+Yes, the use of these "--" in the examples are just to be explicit
+that the arguments that come before "--" are revisions (and not
+pathspecs); doing so prevents Git from complaining of ambiguity even
+when a file whose name is HEAD happens to be in your working tree.
+
+And it is good that you explicitly teach that these are not to
+clarify for the end users' who read the examples, but to encourage
+users to get into the habit of using them to make their intention
+clear when writing their scripts.
+
+;-).
