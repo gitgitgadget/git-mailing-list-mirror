@@ -2,107 +2,165 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 219D8201C8
-	for <e@80x24.org>; Sun, 12 Nov 2017 20:25:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 21D47201C8
+	for <e@80x24.org>; Sun, 12 Nov 2017 20:47:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751087AbdKLUZL (ORCPT <rfc822;e@80x24.org>);
-        Sun, 12 Nov 2017 15:25:11 -0500
-Received: from mout.web.de ([212.227.15.3]:58036 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750910AbdKLUZK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Nov 2017 15:25:10 -0500
-Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MVtqS-1egcZt2QwK-00X7m7; Sun, 12
- Nov 2017 21:25:05 +0100
-Date:   Sun, 12 Nov 2017 21:25:05 +0100
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Jerzy Kozera <jerzy.kozera@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH v2] gpg-interface: strip CR chars for Windows gpg2
-Message-ID: <20171112202505.GB2677@tor.lan>
-References: <20171112130710.16000-1-jerzy.kozera@gmail.com>
+        id S1750951AbdKLUrN (ORCPT <rfc822;e@80x24.org>);
+        Sun, 12 Nov 2017 15:47:13 -0500
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:40554 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750921AbdKLUrM (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Nov 2017 15:47:12 -0500
+Received: by mail-wm0-f65.google.com with SMTP id b189so4534554wmd.5
+        for <git@vger.kernel.org>; Sun, 12 Nov 2017 12:47:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=PpwX3w4AFvuOtuWcXBinfuVT+s76Ep0kTLC0my7GjUo=;
+        b=JDQwoigc0YufdsHa7EibhrhSlLIp62/wyOrBrOwH/2iyeX5XwGSO1RpMtNtT971cQ9
+         OPbCu6+YrU4H9PpLBUjCXVMbkbcM2lFS8DIA0zoL6Lbi7UiSPa1XDAfRhQDqf4UQgPzU
+         GMQtz99s56WtdIrPOgomxQXtnXRSc+iuOAcLu57fgvfg1AJKrk1HUpmniTdoopafWg/v
+         gVg+DLJE3d3HhX20wMDJ61ZhbxSwLYyu3qawsLOI99cqCiuHmQFw1J2NReOc3NYuQIG1
+         cI2upGh+wpBwysTE9CzcYvD85NNQTBuJtHOoycr9++kqygidA771Spbm7VbGQOQ2/0nA
+         Chyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=PpwX3w4AFvuOtuWcXBinfuVT+s76Ep0kTLC0my7GjUo=;
+        b=AaYzrv4O5ITWPuqmToeB0VZxP7zT5TV5OD4T7Kq0I/irgzvOLb0G7h/WfZ5jZ7Hu6z
+         NEfTky3IdFUP3Co63WTFbflTzvXTrWL7f/I2LwF00+SlBKq/H+vhbHGllI2ysJ6F6q6d
+         f2sixynYgTLuiOq6rKHLbWz6Mzj51pzON2hr58gHiU4Xiwvm3Vmt/JS6HmTAbFyvbbBy
+         JkDCg7sihUNTrP6a/t01gC95Uk14mAltNRRXlF1+6nzB4sJJXSzQ7h9WXgfPkV6P0pb8
+         I8rN9XWyyi0cx/Dzyxeg51pAo7//X9Oek0NvIJqWGwMUY+9gr+4T18xf6QhBam+xboLg
+         rj1g==
+X-Gm-Message-State: AJaThX5aRAXdp2Q/98IsrMFDfbzv/kF5BLpno+l+O5ZbiYXY0y372NpJ
+        d/x9CF5pLWl3eF3dRViCmOQ=
+X-Google-Smtp-Source: AGs4zMatzrPElIzccjyISw356RuvqHr1cJhRsOkct5mLB+z68EKL4KtXp/OkGbZZprwW4YWr6LZM8w==
+X-Received: by 10.80.163.101 with SMTP id 92mr9867423edn.100.1510519631198;
+        Sun, 12 Nov 2017 12:47:11 -0800 (PST)
+Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
+        by smtp.gmail.com with ESMTPSA id e24sm12054989edc.9.2017.11.12.12.47.09
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 12 Nov 2017 12:47:09 -0800 (PST)
+Received: from avar by evledraar with local (Exim 4.89)
+        (envelope-from <avarab@gmail.com>)
+        id 1eDz9o-0005dd-PK; Sun, 12 Nov 2017 21:47:08 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Charles Bailey <charles@hashpling.org>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Fix NO_LIBPCRE1_JIT to fully disable JIT
+References: <20171112165938.8787-1-charles@hashpling.org>
+User-agent: Debian GNU/Linux 9.2 (stretch); Emacs 25.1.1; mu4e 0.9.19
+In-reply-to: <20171112165938.8787-1-charles@hashpling.org>
+Date:   Sun, 12 Nov 2017 21:47:08 +0100
+Message-ID: <87tvxzxm0j.fsf@evledraar.booking.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20171112130710.16000-1-jerzy.kozera@gmail.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Provags-ID: V03:K0:cfHWej74RRr934m3h7m61eTsTDlb09HMR/EyBBSU8pc7MRCxxNE
- LmU1pXGJum37QJUEfbLUJbLu1ljplOhaGuLUD6+Lr9m0dfTIlzNlKCXoZB1dxyfdXDq5X+9
- JQyxVmUhQQ4/ZIZ2Ws9fI/UhQ4HYUug1ojQ8kTMASxKmkCZlXVhE/7IbW3C6q59Rj55dwcl
- GufsJSr9uigPirSmJ9f4g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:s6P9DXfqEWk=:lJNNZbtTF2iwa76NrHEuFA
- 9luTMq5Pwh8LNwnbFGujoxeM4AOBx61+nLR5v7jNd5650xKjb6sqjex9xAZWeLbf33MTOQ4PH
- 4GU02ek+b1ERZQnU1U/Mns608dJY6g4/6eoXrobLmspoxYpogK++4t4FIuN2rLtCCnma0eDes
- mG5GfoMYxWT0JBCobp+QlIt/NPmPjYLE2GOa7oC6rA7cqE3K537Q/2uDldZ83KKcG8y87Qb+7
- IubtCckuW2mZu4QqnkHKxV6POffXuzqwSfnrAZBwZfODS9iSQ6SV6AMF6SdECC9f9cqkvVnIQ
- kL0RwyoEtc5+Kok0DvGf79BCsO0IzTFMloKxPXFMsDL3G3RAsLF+q2PMgpNsTHF72AAtUEP8d
- R9nXOIL/hbxnvjfdY4xWsIUWnaSO5kVMCR/ZKUVd51rRGaiWd3xCvKsvkXO5o9gIUMBgpyDuL
- HT6mb4K//b+dOV6W2jpvG6bHmO8PIVe2r4E+hpQLeETdxjM8C0Jg7kRdGloKRJxmhFAcN7hJG
- wYeRDY1N7yGd7RbttN9AjUcxc8utFCFsdhEKbJQvydPG3afBaA1MTXmByYVjL+iTBZiZTZHne
- 4q8X/YROU90OnTwxtfXcdPojobLDyFArrEVoa1zrCiEsRUv6wP9LbMMV8mQcYlvc5OCVFW3Dl
- YTCTVKwyI2FZHZoAGuSN8egJKLfS50mmJnKL9qBHjPP9OGOOqgWuNHVQgJr9umXN/WoP9OKs9
- VNfrQjPoEDy0v+Jbjq127uXusiPGXYZ0D+6S6jKA1TtTOpPhyMbkRqaxKtOvmV1PhT6W0opdi
- 5VYY01k82y0wtaXLqJqi0Yt4H/30g==
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Nov 12, 2017 at 01:07:10PM +0000, Jerzy Kozera wrote:
-> This fixes the issue with newlines being \r\n and not being displayed
-> correctly when using gpg2 for Windows, as reported at
-> https://github.com/git-for-windows/git/issues/1249
-> 
-> Issues with non-ASCII characters remain for further investigation.
-> 
-> Signed-off-by: Jerzy Kozera <jerzy.kozera@gmail.com>
+
+On Sun, Nov 12 2017, Charles Bailey jotted:
+
+> From: Charles Bailey <cbailey32@bloomberg.net>
+>
+> If you have a pcre1 library which is compiled with JIT enabled then
+> PCRE_STUDY_JIT_COMPILE will be defined whether or not the
+> NO_LIBPCRE1_JIT configuration is set.
+>
+> This means that we enable JIT functionality when calling pcre_study
+> even if NO_LIBPCRE1_JIT has been explicitly set and we just use plain
+> pcre_exec later.
+>
+> Fix this by using own macro (GIT_PCRE_STUDY_JIT_COMPILE) which we set to
+> PCRE_STUDY_JIT_COMPILE only if NO_LIBPCRE1_JIT is not set and define to
+> 0 otherwise, as before.
 > ---
-> 
-> Addressed comments by Junio C Hamano (check for following \n, and
-> updated the commit description).
-> 
->  gpg-interface.c | 27 ++++++++++++++++++---------
->  1 file changed, 18 insertions(+), 9 deletions(-)
-> 
-> diff --git a/gpg-interface.c b/gpg-interface.c
-> index 4feacf16e5..ab592af7f2 100644
-> --- a/gpg-interface.c
-> +++ b/gpg-interface.c
-> @@ -145,6 +145,20 @@ const char *get_signing_key(void)
->  	return git_committer_info(IDENT_STRICT|IDENT_NO_DATE);
->  }
->  
-> +/* Strip CR from the CRLF line endings, in case we are on Windows. */
-> +static void strip_cr(struct strbuf *buffer, size_t bottom) {
-> +	size_t i, j;
+>
+> I was bisecting an issue with the PCRE support that was causing a test
+> suite failure on our Solaris builds and reached fbaceaac47 ("grep: add
+> support for the PCRE v1 JIT API"). It appeared to be a misaligned memory
+> access somewhere inside the libpcre code. I tried disabling the use of
+> JIT with NO_LIBPCRE1_JIT but it turned out that even with this set we
+> were still triggering the JIT code path in the call to pcre_study.
+>
+> Yes, we probably should fix our PCRE1 library build on Solaris or move
+> to PCRE2, but really NO_LIBPCRE1_JIT should have prevented us from
+> triggering this crash.
+>
+>  grep.c | 2 +-
+>  grep.h | 5 +++--
+>  2 files changed, 4 insertions(+), 3 deletions(-)
+>
+> diff --git a/grep.c b/grep.c
+> index ce6a48e..d0b9b6c 100644
+> --- a/grep.c
+> +++ b/grep.c
+> @@ -387,7 +387,7 @@ static void compile_pcre1_regexp(struct grep_pat *p, const struct grep_opt *opt)
+>  	if (!p->pcre1_regexp)
+>  		compile_regexp_failed(p, error);
+>
+> -	p->pcre1_extra_info = pcre_study(p->pcre1_regexp, PCRE_STUDY_JIT_COMPILE, &error);
+> +	p->pcre1_extra_info = pcre_study(p->pcre1_regexp, GIT_PCRE_STUDY_JIT_COMPILE, &error);
+>  	if (!p->pcre1_extra_info && error)
+>  		die("%s", error);
+>
+> diff --git a/grep.h b/grep.h
+> index 52aecfa..399381c 100644
+> --- a/grep.h
+> +++ b/grep.h
+> @@ -7,11 +7,12 @@
+>  #if PCRE_MAJOR >= 8 && PCRE_MINOR >= 32
+>  #ifndef NO_LIBPCRE1_JIT
+>  #define GIT_PCRE1_USE_JIT
+> +#define GIT_PCRE_STUDY_JIT_COMPILE PCRE_STUDY_JIT_COMPILE
+>  #endif
+>  #endif
+>  #endif
+> -#ifndef PCRE_STUDY_JIT_COMPILE
+> -#define PCRE_STUDY_JIT_COMPILE 0
+> +#ifndef GIT_PCRE_STUDY_JIT_COMPILE
+> +#define GIT_PCRE_STUDY_JIT_COMPILE 0
+>  #endif
+>  #if PCRE_MAJOR <= 8 && PCRE_MINOR < 20
+>  typedef int pcre_jit_stack;
 
-It is not wrong to say "Strip CR from the CRLF".
-In Git we often talk about "convert CRLF into LF",
+[CC-ing Junio]
 
-The comment somewhat different to the function name.
-The function namd and the name of the parameters can be more in
-in line with existing strbuf functions:
-(And the opening '{' should go into it's own line:
+Thanks a lot. This patch looks good to me.
 
-static void convert_crlf_to_lf(struct strbuf *sb, size_t len)
-{
-	size_t i, j;
+I could have sworn I was handling this already, but looking at this now
+I wasn't really.
 
-An even more generic approach (could be done in a seperate commit)
-would be to move the whole function into strbuf.c/strbuf.h,
-and it may be called like this.
+However, as a bit of extra info I *did* test this, and it works just
+fine for me, i.e. if I compile PCRE 8.32 now (as I did at the time)
+--without-jit it'll error with just USE_LIBPCRE=YesPlease as expected,
+but add NO_LIBPCRE1_JIT=UnfortunatelyYes and it works just fine without
+your patch.
 
-void strbuf_crlf_to_lf(struct strbuf *sb, size_t len)
-{
-  /* I would even avoid "i" and "j", and use src and dst or so) */
-  size_t src_pos, dst_idx;
-}
+However, as your patch shows (and as I've independently verified)
+PCRE_STUDY_JIT_COMPILE will still be defined in that case, since PCRE
+will be exposing the same headers. This is the logic error in my initial
+patch.
 
-Thanks for working on this.
+*But* for some reason you still get away with that on Linux. I don't
+know why, but I assume the compiler toolchain is more lax for some
+reason than on Solaris.
 
-[]
+All of which is a roundabout way of saying that we should apply this
+patch, but that I still have no idea why this worked on Linux before ,
+but it does.
+
+But that we should take it anyway regardless of that since it'll *also*
+work on Linux with your patch, and this logic makes some sense whereas
+the other one clearly didn't and just worked by pure accident of some
+toolchain semantics that I haven't figured out yet.
