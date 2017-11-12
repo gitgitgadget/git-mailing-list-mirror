@@ -2,185 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AFE22201C8
-	for <e@80x24.org>; Sun, 12 Nov 2017 13:55:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1B7A6201C8
+	for <e@80x24.org>; Sun, 12 Nov 2017 14:05:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751146AbdKLNz4 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 12 Nov 2017 08:55:56 -0500
-Received: from ikke.info ([178.21.113.177]:50666 "EHLO vps892.directvps.nl"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750994AbdKLNzz (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Nov 2017 08:55:55 -0500
-Received: by vps892.directvps.nl (Postfix, from userid 1008)
-        id B8FA3440808; Sun, 12 Nov 2017 14:55:53 +0100 (CET)
-Date:   Sun, 12 Nov 2017 14:55:53 +0100
-From:   Kevin Daudt <me@ikke.info>
-To:     Haaris <hsed@unimetic.com>
+        id S1751138AbdKLOFf (ORCPT <rfc822;e@80x24.org>);
+        Sun, 12 Nov 2017 09:05:35 -0500
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:43702 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750994AbdKLOFe (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Nov 2017 09:05:34 -0500
+Received: by mail-pg0-f67.google.com with SMTP id s75so10819574pgs.0
+        for <git@vger.kernel.org>; Sun, 12 Nov 2017 06:05:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:subject:from:to:cc:in-reply-to:references:date
+         :mime-version:content-transfer-encoding;
+        bh=3tWCjyskzMg9mqw5CgTMi2805WsliEhrtfI+g3PCEqQ=;
+        b=osP7Gmio4/zq9UX73/0wpXzv1DRSmdDF8bCqSY2E7ECleN7w/ZGLXp9l6jBy9fEw9i
+         mTW1n/wHdwu7QbrWQL4f76VfWKa98yTwrbMrYhFf/rl/2Jc/ahMLlag/y9OUgjoYDZ+3
+         HGvHS96TQn4b1V7ar3emZszhb+T5DZFafcWtzgKaZgTXFKqArCqU9rK7jnRDfD7Xa8TP
+         0/fYk0FAaLUYkqvL/I7CAaEiDr5Lg5BHKZ+A2DNkF+bDucexTAgTVRp4LqLhvgDaUy+h
+         Jv7Ib5lrolV2gEBAY0+/CY3sWoN+aff3QPqs+bVJfX2xoRUFkHw77Agh9tjZeCbD7iir
+         dBww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:subject:from:to:cc:in-reply-to
+         :references:date:mime-version:content-transfer-encoding;
+        bh=3tWCjyskzMg9mqw5CgTMi2805WsliEhrtfI+g3PCEqQ=;
+        b=Cj+arYaPi8wjPhPjaUtxa0IO9snA281HwI+F/xcSLH3LAmPwpaaW65N1ACaRWibCgu
+         cdtq9UEoFGBwa1nwrDqqf7AJYCnqqWSVmmV6hRUpugXyAZyt3vag5awea5Uc+QSSL9BM
+         r2jWfLNsNxriVP6k2/USZ6RdTr/9MzvwuhpPqfbUBt5+IjNQsN6h0fB0r7kC6IzCezdW
+         1XDQ/siXzsgWVjxSURdJafvL8JanPQhBDQ+KzRi1PECkwLDRnykT3wQ+hm4/yzJ6inH3
+         VQ5nCRYNlghM/cPfA8hG18mbMSwyl9Dpifx22nMt9C8RJSjzC32FPoJp97HaUXMnKYzm
+         OcnQ==
+X-Gm-Message-State: AJaThX5QLS8Mr+YPgXv0vuxivu7VRJBI4/6gKjVbmmykPPBFg59wcU62
+        bFpCGdP4T0QQZzvDn6UMlMer28ri
+X-Google-Smtp-Source: AGs4zMZhRav5bdhg4OMJraedlJOssowxMpycUGyY4hr7j+rpcYuuXPLs/nkGT3NxbZnWfrAGb66WaA==
+X-Received: by 10.98.106.5 with SMTP id f5mr6786789pfc.27.1510495534119;
+        Sun, 12 Nov 2017 06:05:34 -0800 (PST)
+Received: from unique-pc ([117.246.57.0])
+        by smtp.gmail.com with ESMTPSA id p14sm22717816pgr.51.2017.11.12.06.05.30
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 12 Nov 2017 06:05:32 -0800 (PST)
+Message-ID: <1510495525.2683.12.camel@gmail.com>
+Subject: Re: [RFC PATCH v3 4/4] builtin/branch: give more useful error
+ messages when renaming
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] config: added --expiry-date type support
-Message-ID: <20171112135553.GA10563@alpha.vpn.ikke.info>
-References: <0102015fb02bb5be-02c77f83-5a20-4ca1-8bab-5e9519cbd758-000000@eu-west-1.amazonses.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0102015fb02bb5be-02c77f83-5a20-4ca1-8bab-5e9519cbd758-000000@eu-west-1.amazonses.com>
-User-Agent: Mutt/1.9.1 (2017-09-22)
+In-Reply-To: <xmqq375sjfzk.fsf@gitster.mtv.corp.google.com>
+References: <20170925082024.2691-1-kaarticsivaraam91196@gmail.com>
+         <20171102065407.25404-1-kaartic.sivaraam@gmail.com>
+         <20171102065407.25404-5-kaartic.sivaraam@gmail.com>
+         <xmqq375sjfzk.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset="ISO-8859-15"
+Date:   Sun, 12 Nov 2017 19:35:25 +0530
+Mime-Version: 1.0
+X-Mailer: Evolution 3.22.6-1 
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Nov 12, 2017 at 12:19:35PM +0000, Haaris wrote:
-> ---
->  builtin/config.c       | 11 ++++++++++-
->  config.c               |  9 +++++++++
->  config.h               |  1 +
->  t/t1300-repo-config.sh | 25 +++++++++++++++++++++++++
->  4 files changed, 45 insertions(+), 1 deletion(-)
+On Mon, 2017-11-06 at 11:30 +0900, Junio C Hamano wrote:
+> Kaartic Sivaraam <kaartic.sivaraam@gmail.com> writes:
 > 
-> diff --git a/builtin/config.c b/builtin/config.c
-> index d13daeeb55927..41cd9f5ca7cde 100644
-> --- a/builtin/config.c
-> +++ b/builtin/config.c
-> @@ -52,6 +52,7 @@ static int show_origin;
->  #define TYPE_INT (1<<1)
->  #define TYPE_BOOL_OR_INT (1<<2)
->  #define TYPE_PATH (1<<3)
-> +#define TYPE_EXPIRY_DATE (1<<4)
->  
->  static struct option builtin_config_options[] = {
->  	OPT_GROUP(N_("Config file location")),
-> @@ -80,6 +81,7 @@ static struct option builtin_config_options[] = {
->  	OPT_BIT(0, "int", &types, N_("value is decimal number"), TYPE_INT),
->  	OPT_BIT(0, "bool-or-int", &types, N_("value is --bool or --int"), TYPE_BOOL_OR_INT),
->  	OPT_BIT(0, "path", &types, N_("value is a path (file or directory name)"), TYPE_PATH),
-> +	OPT_BIT(0, "expiry-date", &types, N_("value is an expiry date"), TYPE_EXPIRY_DATE),
->  	OPT_GROUP(N_("Other")),
->  	OPT_BOOL('z', "null", &end_null, N_("terminate values with NUL byte")),
->  	OPT_BOOL(0, "name-only", &omit_values, N_("show variable names only")),
-> @@ -159,6 +161,12 @@ static int format_config(struct strbuf *buf, const char *key_, const char *value
->  				return -1;
->  			strbuf_addstr(buf, v);
->  			free((char *)v);
-> +		} else if (types == TYPE_EXPIRY_DATE) {
-> +			timestamp_t *t = malloc(sizeof(*t));
-> +			if(git_config_expiry_date(&t, key_, value_) < 0)
-> +				return -1;
-> +			strbuf_addf(buf, "%"PRItime, *t);
-> +			free((timestamp_t *)t);
->  		} else if (value_) {
->  			strbuf_addstr(buf, value_);
->  		} else {
-> @@ -273,12 +281,13 @@ static char *normalize_value(const char *key, const char *value)
->  	if (!value)
->  		return NULL;
->  
-> -	if (types == 0 || types == TYPE_PATH)
-> +	if (types == 0 || types == TYPE_PATH || types == TYPE_EXPIRY_DATE)
->  		/*
->  		 * We don't do normalization for TYPE_PATH here: If
->  		 * the path is like ~/foobar/, we prefer to store
->  		 * "~/foobar/" in the config file, and to expand the ~
->  		 * when retrieving the value.
-> +		 * Also don't do normalization for expiry dates.
->  		 */
->  		return xstrdup(value);
->  	if (types == TYPE_INT)
-> diff --git a/config.c b/config.c
-> index 903abf9533b18..caa2fd5fb6915 100644
-> --- a/config.c
-> +++ b/config.c
-> @@ -990,6 +990,15 @@ int git_config_pathname(const char **dest, const char *var, const char *value)
->  	return 0;
->  }
->  
-> +int git_config_expiry_date(timestamp_t **timestamp, const char *var, const char *value)
-> +{
-> +	if (!value)
-> +		return config_error_nonbool(var);
-> +	if (!!parse_expiry_date(value, *timestamp))
-> +		die(_("failed to parse date_string in: '%s'"), value);
-> +	return 0;
-> +}
-> +
->  static int git_default_core_config(const char *var, const char *value)
->  {
->  	/* This needs a better name */
-> diff --git a/config.h b/config.h
-> index a49d264416225..2d127d9d23c90 100644
-> --- a/config.h
-> +++ b/config.h
-> @@ -58,6 +58,7 @@ extern int git_config_bool_or_int(const char *, const char *, int *);
->  extern int git_config_bool(const char *, const char *);
->  extern int git_config_string(const char **, const char *, const char *);
->  extern int git_config_pathname(const char **, const char *, const char *);
-> +extern int git_config_expiry_date(timestamp_t **, const char *, const char *);
->  extern int git_config_set_in_file_gently(const char *, const char *, const char *);
->  extern void git_config_set_in_file(const char *, const char *, const char *);
->  extern int git_config_set_gently(const char *, const char *);
-> diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
-> index 364a537000bbb..59a35be89e511 100755
-> --- a/t/t1300-repo-config.sh
-> +++ b/t/t1300-repo-config.sh
-> @@ -901,6 +901,31 @@ test_expect_success 'get --path barfs on boolean variable' '
->  	test_must_fail git config --get --path path.bool
->  '
->  
-> +test_expect_success 'get --expiry-date' '
-> +	cat >.git/config <<-\EOF &&
-> +	[date]
-> +	valid1 = "Fri Jun 4 15:46:55 2010"
-> +	valid2 = "2017/11/11 11:11:11PM"
-> +	valid3 = "2017/11/10 09:08:07 PM"
-> +	valid4 = "never"
-> +	invalid1 = "abc"
-> +	EOF
-> +	cat >expect <<-\EOF &&
-> +	1275666415
-> +	1510441871
-> +	1510348087
-> +	0
-> +	EOF
-> +	{
-> +		git config --expiry-date date.valid1 &&
-> +		git config --expiry-date date.valid2 &&
-> +		git config --expiry-date date.valid3 &&
-> +		git config --expiry-date date.valid4
-> +	} >actual &&
-> +	test_cmp expect actual &&
-> +	test_must_fail git config --expiry-date date.invalid1
-> +'
-> +
->  cat > expect << EOF
->  [quote]
->  	leading = " test"
+> No {} around a single statement block of "if", especially when there
+> is no "else" that has multi-statement block that needs {}.
 > 
-> --
-> https://github.com/git/git/pull/433
 
-Welcome and thanks for your submission.
+The code has changed a little since v3 so this if has been replaced
+with a switch case.
 
-There are a couple of issues, which you can read about in the
-SubmittingPatches[0] documentation.
 
-The first and most foremost is that your signed-off-by is missing,
-which is a requirement to show that you have the right to submit this
-code.
+> > +	switch (res) {
+> > +		case BRANCH_EXISTS_NO_FORCE:
+> > +			strbuf_addf(error_msg, "%s", (!old_branch_exists) ? connector_string : "");
+> > +			strbuf_addf(error_msg,_("branch '%s' already exists"), newname);
+> > +			break;
+> 
+> The case arms and their statements are indented by one level too much.
+> The lines are getting overlong.  Find a good place to split, e.g.
+> 
+>     		strbuf_addf(error_msg, "%s",
+> 			!old_branch_exists ? connector_string : "");
+> 
+> Leave a single SP after each "," in an arguments list.
+> 
 
-The commit subject should be in the present tense, as a command to the
-code base, like so:
+Fixed these.
 
-    config: add --expiry-date type support
 
-What I'm also missing is a motivation on why you added this option,
-which should be part of your commit message. As far as I know, there is
-currently no config setting that expects a date format.
+> As Eric pointed out, this certainly smells like a sentence lego that
+> we would be better off without.
+> 
 
-Kevin
+As stated in that mail,  I've replaced the connector " and " with "; "
+as it seemed to be the most simple way to overcome the issue, at least
+in my opinion. In case there's any better way to fix this let me know.
 
-[0]:https://github.com/git/git/blob/master/Documentation/SubmittingPatches
 
+> >  static void copy_or_rename_branch(const char *oldname, const char *newname, int copy, int force)
+> >  {
+> >  	struct strbuf oldref = STRBUF_INIT, newref = STRBUF_INIT, logmsg = STRBUF_INIT;
+> >  	struct strbuf oldsection = STRBUF_INIT, newsection = STRBUF_INIT;
+> >  	int recovery = 0;
+> > +	struct strbuf error_msg = STRBUF_INIT, empty = STRBUF_INIT;
+> > +	enum branch_validation_result res;
+> >  
+> >  	if (!oldname) {
+> >  		if (copy)
+> > @@ -471,15 +502,13 @@ static void copy_or_rename_branch(const char *oldname, const char *newname, int
+> >  			die(_("cannot rename the current branch while not on any."));
+> >  	}
+> >  
+> > -	if (strbuf_check_branch_ref(&oldref, oldname)) {
+> > +	if (strbuf_check_branch_ref(&oldref, oldname) && ref_exists(oldref.buf))
+> > +	{
+> 
+> Opening brace { that begins a block comes at the end of the line
+> that closes the condition of "if"; if you found that your line is
+> overlong, perhaps do it like so instead:
+> 
+> 	if (strbuf_check_branch_ref(&oldref, oldname) &&
+> 	    ref_exists(oldref.buf)) {
+
+This part changed too. Anyways thanks for the detailed review :-)
+
+-- 
+Kaartic
