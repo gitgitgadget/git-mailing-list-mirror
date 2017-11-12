@@ -6,27 +6,27 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B5A941F42B
-	for <e@80x24.org>; Sun, 12 Nov 2017 09:31:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 49CD71F42B
+	for <e@80x24.org>; Sun, 12 Nov 2017 09:49:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753082AbdKLJbI (ORCPT <rfc822;e@80x24.org>);
-        Sun, 12 Nov 2017 04:31:08 -0500
-Received: from cpanel2.indieserve.net ([199.212.143.6]:48038 "EHLO
+        id S1751425AbdKLJtG (ORCPT <rfc822;e@80x24.org>);
+        Sun, 12 Nov 2017 04:49:06 -0500
+Received: from cpanel2.indieserve.net ([199.212.143.6]:36036 "EHLO
         cpanel2.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752082AbdKLJbE (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Nov 2017 04:31:04 -0500
-Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:55282 helo=localhost.localdomain)
+        with ESMTP id S1750765AbdKLJtE (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Nov 2017 04:49:04 -0500
+Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:55312 helo=localhost.localdomain)
         by cpanel2.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
         (Exim 4.89)
         (envelope-from <rpjday@crashcourse.ca>)
-        id 1eDobX-0004m4-Qg
-        for git@vger.kernel.org; Sun, 12 Nov 2017 04:31:03 -0500
-Date:   Sun, 12 Nov 2017 04:30:38 -0500 (EST)
+        id 1eDosx-0008IY-C1
+        for git@vger.kernel.org; Sun, 12 Nov 2017 04:49:03 -0500
+Date:   Sun, 12 Nov 2017 04:48:40 -0500 (EST)
 From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
 X-X-Sender: rpjday@localhost.localdomain
 To:     Git Mailing list <git@vger.kernel.org>
-Subject: [PATCH v4] bisect: mention "view" as an alternative to "visualize"
-Message-ID: <alpine.LFD.2.21.1711120426540.29973@localhost.localdomain>
+Subject: more pedantry ... what means a file "known to Git"?
+Message-ID: <alpine.LFD.2.21.1711120430580.30032@localhost.localdomain>
 User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
@@ -45,98 +45,67 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Tweak a small number of files to mention "view" as an alternative to
-"visualize".
 
-Signed-off-by: Robert P. J. Day <rpjday@crashcourse.ca>
+  apologies for more excruciating nitpickery, but i ask since it seems
+that phrase means slightly different things depending on where you
+read it.
 
----
+  first, i assume that there are only two categories:
 
-  ok, let's see if this one is getting close ...
+  1) files known to Git
+  2) files unknown to Git
 
- Documentation/git-bisect.txt | 13 ++++++-------
- builtin/bisect--helper.c     |  2 +-
- git-bisect.sh                |  4 ++--
- 3 files changed, 9 insertions(+), 10 deletions(-)
+and that there is no fuzzy, grey area middle ground, yes?
 
-diff --git a/Documentation/git-bisect.txt b/Documentation/git-bisect.txt
-index 6c42abf07..4a1417bdc 100644
---- a/Documentation/git-bisect.txt
-+++ b/Documentation/git-bisect.txt
-@@ -23,7 +23,7 @@ on the subcommand:
-  git bisect terms [--term-good | --term-bad]
-  git bisect skip [(<rev>|<range>)...]
-  git bisect reset [<commit>]
-- git bisect visualize
-+ git bisect (visualize|view)
-  git bisect replay <logfile>
-  git bisect log
-  git bisect run <cmd>...
-@@ -193,24 +193,23 @@ git bisect start --term-new fixed --term-old broken
- Then, use `git bisect <term-old>` and `git bisect <term-new>` instead
- of `git bisect good` and `git bisect bad` to mark commits.
+  now, in "man git-clean", one reads (near the top):
 
--Bisect visualize
--~~~~~~~~~~~~~~~~
-+Bisect visualize/view
-+~~~~~~~~~~~~~~~~~~~~~
+    Cleans the working tree by recursively removing files that are
+    not under version control, starting from the current directory.
 
- To see the currently remaining suspects in 'gitk', issue the following
--command during the bisection process:
-+command during the bisection process (the subcommand `view` can be used
-+as an alternative to `visualize`):
+    Normally, only files unknown to Git are removed, but if the -x
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    option is specified, ignored files are also removed.
 
- ------------
- $ git bisect visualize
- ------------
+the way that's worded suggests that ignored files are "known" to Git,
+yes? that is, if, by default, "git clean" removes only files "unknown"
+to Git, and "-x" extends that to ignored files, the conclusion is that
+ignored files are *known* to Git.
 
--`view` may also be used as a synonym for `visualize`.
--
- If the `DISPLAY` environment variable is not set, 'git log' is used
- instead.  You can also give command-line options such as `-p` and
- `--stat`.
+  if, however, you check out "man git-rm", you read:
 
- ------------
--$ git bisect view --stat
-+$ git bisect visualize --stat
- ------------
+    The <file> list given to the command can be exact pathnames,
+    file glob patterns, or leading directory names. The command
+    removes only the paths that are known to Git. Giving the name
+                                    ^^^^^^^^^^^^
+    of a file that you have not told Git about does not remove that file.
 
- Bisect log and bisect replay
-diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index 35d2105f9..4b5fadcbe 100644
---- a/builtin/bisect--helper.c
-+++ b/builtin/bisect--helper.c
-@@ -46,7 +46,7 @@ static int check_term_format(const char *term, const char *orig_term)
- 		return error(_("'%s' is not a valid term"), term);
+so "git rm" removes only files "known to Git", but from the above
+regarding how "git clean" sees this, that should include ignored
+files, which of course it doesn't.
 
- 	if (one_of(term, "help", "start", "skip", "next", "reset",
--			"visualize", "replay", "log", "run", "terms", NULL))
-+			"visualize", "view", "replay", "log", "run", "terms", NULL))
- 		return error(_("can't use the builtin command '%s' as a term"), term);
+  given that this phrase occurs in a number of places:
 
- 	/*
-diff --git a/git-bisect.sh b/git-bisect.sh
-index 0138a8860..a82256e34 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -1,6 +1,6 @@
- #!/bin/sh
+$ grep -ir "known to git" *
+builtin/difftool.c:		/* The symlink is unknown to Git so read from the filesystem */
+dir.c:		error("pathspec '%s' did not match any file(s) known to git.",
+Documentation/git-rm.txt:removes only the paths that are known to Git.  Giving the name of
+Documentation/git-commit.txt:   be known to Git);
+Documentation/user-manual.txt:error: pathspec '261dfac35cb99d380eb966e102c1197139f7fa24' did not match any file(s) known to git.
+Documentation/gitattributes.txt:	Notice all types of potential whitespace errors known to Git.
+Documentation/git-clean.txt:Normally, only files unknown to Git are removed, but if the `-x`
+Documentation/RelNotes/1.8.2.1.txt: * The code to keep track of what directory names are known to Git on
+Documentation/RelNotes/1.8.1.6.txt: * The code to keep track of what directory names are known to Git on
+Documentation/RelNotes/2.9.0.txt:   known to Git.  They have been taught to do the normalization.
+Documentation/RelNotes/2.8.4.txt:   known to Git.  They have been taught to do the normalization.
+Documentation/RelNotes/1.8.3.txt: * The code to keep track of what directory names are known to Git on
+t/t3005-ls-files-relative.sh:			echo "error: pathspec $sq$f$sq did not match any file(s) known to git."
+t/t3005-ls-files-relative.sh:			echo "error: pathspec $sq$f$sq did not match any file(s) known to git."
+$
 
--USAGE='[help|start|bad|good|new|old|terms|skip|next|reset|visualize|replay|log|run]'
-+USAGE='[help|start|bad|good|new|old|terms|skip|next|reset|visualize|view|replay|log|run]'
- LONG_USAGE='git bisect help
- 	print this long help message.
- git bisect start [--term-{old,good}=<term> --term-{new,bad}=<term>]
-@@ -20,7 +20,7 @@ git bisect next
- 	find next bisection to test and check it out.
- git bisect reset [<commit>]
- 	finish bisection search and go back to commit.
--git bisect visualize
-+git bisect (visualize|view)
- 	show bisect status in gitk.
- git bisect replay <logfile>
- 	replay bisection log.
+it might be useful to define precisely what it means. or is it assumed
+to be context dependent?
 
+rday
 
 -- 
 
