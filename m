@@ -2,82 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C2183201C8
-	for <e@80x24.org>; Sun, 12 Nov 2017 18:43:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 26080201C8
+	for <e@80x24.org>; Sun, 12 Nov 2017 19:19:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751259AbdKLSnA (ORCPT <rfc822;e@80x24.org>);
-        Sun, 12 Nov 2017 13:43:00 -0500
-Received: from imap.thunk.org ([74.207.234.97]:37366 "EHLO imap.thunk.org"
+        id S1751309AbdKLTTu (ORCPT <rfc822;e@80x24.org>);
+        Sun, 12 Nov 2017 14:19:50 -0500
+Received: from mout.gmx.net ([212.227.15.15]:50150 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751092AbdKLSnA (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Nov 2017 13:43:00 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=thunk.org;
-         s=ef5046eb; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
-        Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-        List-Post:List-Owner:List-Archive;
-        bh=ZKc6V8P8uBzO77cH+d++xBpy8+CSWCJWPYRLV9PKp8E=; b=Zbr+K2XtVGyhBndN39t9/NfuDB
-        U1O88sPTkkG9lqgCoo2nbURm1UByadO+JjTM9lcZ77gm71maJzZJ9ZM9dLNKtCy4Ihbea4iy+HFxM
-        lFKSsWs8w34SgZ90KJaYGtIUmlWYgMtUMIGyQSaawH7WubK4yz13kyBtLf77D3VuluHY=;
-Received: from root (helo=callcc.thunk.org)
-        by imap.thunk.org with local-esmtp (Exim 4.89)
-        (envelope-from <tytso@thunk.org>)
-        id 1eDxDZ-0006uT-HT; Sun, 12 Nov 2017 18:42:53 +0000
-Received: by callcc.thunk.org (Postfix, from userid 15806)
-        id 84A80C00640; Sun, 12 Nov 2017 13:42:52 -0500 (EST)
-Date:   Sun, 12 Nov 2017 13:42:52 -0500
-From:   Theodore Ts'o <tytso@mit.edu>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "Robert P. J. Day" <rpjday@crashcourse.ca>,
-        Git Mailing list <git@vger.kernel.org>,
-        Stephan Beyer <s-beyer@gmx.net>
-Subject: Re: should "git bisect" support "git bisect next?"
-Message-ID: <20171112184252.vpasjhfkt63izrun@thunk.org>
-References: <alpine.LFD.2.21.1711110639120.5632@localhost.localdomain>
- <CAP8UFD3az17BpB0nA+35p3BP95sBuOY0Yvce3cgbh0L3YH7+rQ@mail.gmail.com>
- <xmqq4lq0ev8g.fsf@gitster.mtv.corp.google.com>
- <20171111194616.a2hl4dwz5cycuzdh@thunk.org>
- <xmqqvaigclv0.fsf@gitster.mtv.corp.google.com>
- <CAP8UFD3DzdTf6-yZVwMvc1=nP+ejrinjvE8wAPhdaHoOQOmpGw@mail.gmail.com>
+        id S1751089AbdKLTTt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Nov 2017 14:19:49 -0500
+Received: from [192.168.178.43] ([92.76.226.11]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Mgc0l-1ebvtM0EH1-00NwkF; Sun, 12
+ Nov 2017 20:19:47 +0100
+Subject: Re: [PATCH v16 Part II 5/8] bisect--helper: `bisect_next_check` shell
+ function in C
+To:     Pranit Bauva <pranit.bauva@gmail.com>, git@vger.kernel.org
+References: <0102015f5e5ee171-f30f4868-886f-47a1-a4e4-b4936afc545d-000000@eu-west-1.amazonses.com>
+ <0102015f5e5ee2ca-bf824205-86e6-4259-b7d7-a68e2fbb087d-000000@eu-west-1.amazonses.com>
+From:   Stephan Beyer <s-beyer@gmx.net>
+Message-ID: <d0994817-25be-25b8-565e-d81c5f18b210@gmx.net>
+Date:   Sun, 12 Nov 2017 20:19:46 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAP8UFD3DzdTf6-yZVwMvc1=nP+ejrinjvE8wAPhdaHoOQOmpGw@mail.gmail.com>
-User-Agent: NeoMutt/20170609 (1.8.3)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
+In-Reply-To: <0102015f5e5ee2ca-bf824205-86e6-4259-b7d7-a68e2fbb087d-000000@eu-west-1.amazonses.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:WTCv0g7aqMYopJORzhE5jZoIw4tiF6Yp0zSrazkfucUdLWjSFkE
+ aNW0DkPDqDgjHoe11ZPrNWbFt7IGg6B+F13yRMuUEePkp2MFUAaeS4nNh36AmFo/0p4XHe0
+ Q4JK/O5Xi5Dq5xVHFv4jzxRUAn+MLxBv/POmjWYe78xY2Y3pW3H/Tjw/Zx/PXi5UkPrtux4
+ sOObs83tgPo1RBombFuSw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:xWyuSAupJLI=:c2pir6mUA79xcgj2o8nTFy
+ cHc1ZMzmovLDi+8t27ohHOvYhqipRtTmejn3MouL9HMkmyfJ3IXPM+9V+AdI5OsrmDsbRgAmA
+ z3SwbHACZgMxxl78XTUDBWQsHHw+sjgGsech+5KNzFcmaXzCzaelXlF5kPvO1YjeybSZunBu4
+ EyoCWkDNSjPlkwvSUuUuU6tR4GIWGt89nvb5xfVWgvPIVD9m67OE7gCVvBFTweEq1cqaFA2qB
+ XCu0AvkmaRkKzX64VvTP3TzJxBlkcEPTSkm1fKWP4C+Rm2aDrkZ5S8mBqwoffDlZmZtD2ECWg
+ Edm0VCPfR3XX8OOIaYr07D0K6WM/tSDdOsgBzBwIoFPdeK34eSV4cPK/+7y5TvNd60TX1keK2
+ 94OlTINZBWzEF4oW3IDMOo8ppe0A42Uk67DSzU59UusqUZVgs1GivfsVu24NbGRC9rcHznMfn
+ ab0N3v77saMP5/UcYxztNm6JNCcLHy1oysRJAgk7yZJ1OYDNB6zHRu42mQmxYoLBjuVdfw0uC
+ Up72opCXWwXc8sQtCw0w9q2HpV0No/ZLZNXe7vH+7F7NBl0lXsQ581juvxG6e0y114MNbmVHG
+ 3kxavBqgoBMyXUNDxXOzr6mB4JcjA4jPm4qaUQPaFmJUOQ4g78TBmNPXn8yfYbdD+0s38PxHJ
+ sM4DofHGpXKZ64Idhk9Yt4c59uMo5uHOxar1nuyPt95SCBMvwBfD15blN88/tro0xdXe5APDx
+ ZWFAnsS52MgmMVjqzBZ8s6FM86k3dXkhzzMUuN1H9Bcr3VJB6EdPoTF3rHa/JC/prY6UBKVqy
+ j8V8OKQV+ZXu3a5lN2QcYM31ACxVfXq3Pzit0GAnr8Dk78xINs=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Nov 12, 2017 at 03:21:57PM +0100, Christian Couder wrote:
-> 
-> Yeah I agree that it might be something interesting for the user to do.
-> But in this case the sequence in which you give the good and the bad
-> commits is not important.
-> Only the last bad commit and the set of good commits that were given
-> are important.
+Hi,
 
-Is it really true that of the bad commits, only the last one is significant?
+another minor:
 
-Suppose we have a git tree that looks like this:
+On 10/27/2017 05:06 PM, Pranit Bauva wrote:
+> @@ -264,6 +271,79 @@ static int check_and_set_terms(struct bisect_terms *terms, const char *cmd)
+>  	return 0;
+>  }
+>  
+> +static int mark_good(const char *refname, const struct object_id *oid,
+> +		     int flag, void *cb_data)
+> +{
+> +	int *m_good = (int *)cb_data;
+> +	*m_good = 0;
+> +	return 1;
+> +}
+> +
+> +static int bisect_next_check(const struct bisect_terms *terms,
+> +			     const char *current_term)
+> +{
+> +	int missing_good = 1, missing_bad = 1, retval = 0;
+> +	const char *bad_ref = xstrfmt("refs/bisect/%s", terms->term_bad);
+> +	const char *good_glob = xstrfmt("%s-*", terms->term_good);
+> +
+> +	if (ref_exists(bad_ref))
+> +		missing_bad = 0;
+> +
+> +	for_each_glob_ref_in(mark_good, good_glob, "refs/bisect/",
+> +			     (void *) &missing_good);
+> +
+> +	if (!missing_good && !missing_bad)
+> +		goto finish;
+> +
+> +	if (!current_term)
+> +		goto fail;
+> +
+> +	if (missing_good && !missing_bad && current_term &&
 
-          *---*---*---*---*---*---M2---*---B1
-          |                        |
-  G1--*--D1---*---*---*---B2-\     |
-          |                   \    /
-          *---*---*---B3--*---M1--/
+This check for "current_term" is not necessary; it can be asserted to be
+non-NULL, otherwise you would have jumped to "fail"
 
-If we know that commits B2 and B3 are bad, if we assume that all
-commits before the "bad" commit are good, all commits after the "bad"
-commit are bad, can we not deduce that commit D1 should also be "bad"?
-
-       	   	       	   	       	      - Ted
+Stephan
