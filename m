@@ -2,114 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5DCE81F42B
-	for <e@80x24.org>; Mon, 13 Nov 2017 22:17:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CD1371F42B
+	for <e@80x24.org>; Mon, 13 Nov 2017 22:26:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751394AbdKMWRO (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Nov 2017 17:17:14 -0500
-Received: from mail-wm0-f48.google.com ([74.125.82.48]:37511 "EHLO
-        mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751303AbdKMWRN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Nov 2017 17:17:13 -0500
-Received: by mail-wm0-f48.google.com with SMTP id v186so9248298wma.2
-        for <git@vger.kernel.org>; Mon, 13 Nov 2017 14:17:13 -0800 (PST)
+        id S1752855AbdKMW0t (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Nov 2017 17:26:49 -0500
+Received: from mail-vk0-f66.google.com ([209.85.213.66]:45028 "EHLO
+        mail-vk0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751350AbdKMW0q (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Nov 2017 17:26:46 -0500
+Received: by mail-vk0-f66.google.com with SMTP id x65so11066708vkx.1
+        for <git@vger.kernel.org>; Mon, 13 Nov 2017 14:26:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=omYXc9w0d2qNhC62T07u0H6K/51wy8eKr3q059Rpe2U=;
-        b=Mhs7nEzqKf9pTKM3t/cz3OjPTIxPKHMf8K9Q+yZjkvyZpq6u0vWAaXehpPVppEnum5
-         2HaB/2zPTPD94ucOlqDChC3W2Pqezz2HmNtF2Ey16pceYNVTKSQM6QNaQMGK6V7Htr7g
-         SzCzg11s/nCCTUz4y74qLpsMFiVfzIIVDqAXZqFMzu2qwNWjriqiqY5wN6/OL4y2ty5o
-         bMInX1gFzDRAfTRlupUwp6ukcoA3EkEQOl6qqNTNNJotd9uNnwF4DixQYmwW5Cm/ixhI
-         aqA0OGH2mdNbv/OAb6Gey0dxE+0MsWlMCYV022svSkpaseHgcXEfLanqjFbBfTuGnAS/
-         GERA==
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=inzE3eEf5RZQIzgCGQDMfETBHFvx+FjP98goov2BvRs=;
+        b=Ktb9qpN63M2k2bjX/BSazIClfDUVaz57rRRE94RLJUUna8aKfhXkTE3plnEV+qV8kH
+         EjLlIjj8CHxQvfxU7hkPhYT8sKztlAkdB8mQTZWJ7hBznvaAjPnSLt9ZSNHMfvyfXuyq
+         y04CMMXc0Qf5v6lxpHah6xrIxuBDyVW+pNNhkrTfSzlh/b9mMQjKVxFxbemwW/4Hp/xF
+         MCUymVJuYaQKGkTtk3pscmOXy4fTLhnHqM2olmHkGSl36+VIkVDq7zwb2hv7mOGl/qGx
+         0f5OYaHEkNLN3RcMHeROv8u0oIvYy2N3vPVKST7fAbx8mM7fXGf7rNhPMhe4lrdAhbNe
+         QZCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=omYXc9w0d2qNhC62T07u0H6K/51wy8eKr3q059Rpe2U=;
-        b=gX3YshlbXNXNvpEnngBnIGmDvRqvXfMg2CMOzWks93kKcXns6i9+FmrSKStoop5pQd
-         Ry/u+fj8uNcUjjYbxw9w/KEH5oQCPHiMPe4NGxrkFUoCp1okR14TLatDHcMUtIUBfvZv
-         WV2C/gDhhwdpcS216Lk7b/ZxOnEI+Mc2fY8h6lkXgum4SGsJSFHrEgtLuqUe/TZfGuuC
-         fLZsNmgaMYW/PqFHRDh5nzEbPJjUlwEurXSeLgTeKXjvX3yGe7+DF/IvT3CYNIM0jnb+
-         DqMejIZNpMJW7R0wA8gRjlDDS+GSpLgXX1zJQDZ9NQzhcwbJAX+u8ok3HvNxr9JBj8eS
-         3YCA==
-X-Gm-Message-State: AJaThX5w8KynZZRoDQN9mCHPUuSiFXCVwQM/zJPTw/yk2quo2gPa4trc
-        yqUv6yPocLkNxHFai6GfNiIHCw==
-X-Google-Smtp-Source: AGs4zMbEXtRdUb7QNqs2wZ6r1s49OPF4AeZPv07ErPQeMRO18vgM9mpF1dR+SXoS8kHneIRV+520IA==
-X-Received: by 10.80.159.168 with SMTP id c37mr14556646edf.46.1510611432301;
-        Mon, 13 Nov 2017 14:17:12 -0800 (PST)
-Received: from LykOS.localdomain (cpe-67-245-44-149.nyc.res.rr.com. [67.245.44.149])
-        by smtp.gmail.com with ESMTPSA id f27sm13403478edj.82.2017.11.13.14.17.10
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 13 Nov 2017 14:17:11 -0800 (PST)
-Date:   Mon, 13 Nov 2017 17:18:24 -0500
-From:   Santiago Torres <santiago@nyu.edu>
-To:     Todd Zullinger <tmz@pobox.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t/lib-gpg: fix gpgconf stderr redirect to /dev/null
-Message-ID: <20171113221823.jzt7jfhxeuyivbcn@LykOS.localdomain>
-References: <20171113210745.24638-1-tmz@pobox.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=inzE3eEf5RZQIzgCGQDMfETBHFvx+FjP98goov2BvRs=;
+        b=CTMe4Ra7WGQ+nifPRd3NQ6W5sTy3g0iZ/1DeSl5XFxnnQvvgdC+eXkVgGqjKQFqVVL
+         JWMjm3XmTmKnlMtg9BGVghx8+QK8/00+yw1O596koNp0ire85RA7qaLyRs0zoKmYjfos
+         bMkW6UDsXLLBI+hsfZVqGIKWPIVhrezVjNb5IsD8iNUWA+yuZIINCz0QRhWH3s7uWWIW
+         8Z8Pl3LtQLi3NcqIHzadmnZf8KYnynTE1nGBCrQc3XUuDoRDmBOde82QyrdtJra1RHmD
+         LvxadJ7ENZrxYFre33qFQY9d0nP4W/iyXkeoBAzfSeAy0sKDRLNI6bdaZ7yjYa2XQolA
+         qNGA==
+X-Gm-Message-State: AJaThX7qnwf98fwQ5QzUWNTQY9hJxZ9brDi7MNh0+msNXp/DQEqirRW4
+        8/GfGgg7fIh0TqUpiHo5xrGdDpJOUMzDYhkEIfI=
+X-Google-Smtp-Source: AGs4zMYscPPFaG4zpHD2kjqadEMDMUw/58hHCj85ymqhlrQMbFCMr/u2zrPFA76FAeb8+EZNzt6rOzb4gNAIaGssfGo=
+X-Received: by 10.31.238.138 with SMTP id m132mr7803842vkh.114.1510612005141;
+ Mon, 13 Nov 2017 14:26:45 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="ebrdc6moxv6utuhk"
-Content-Disposition: inline
-In-Reply-To: <20171113210745.24638-1-tmz@pobox.com>
+Received: by 10.176.67.33 with HTTP; Mon, 13 Nov 2017 14:26:44 -0800 (PST)
+In-Reply-To: <20171113133316.c10bd360b4af10e572049443@google.com>
+References: <20171113201600.24878-1-newren@gmail.com> <20171113201600.24878-3-newren@gmail.com>
+ <20171113133316.c10bd360b4af10e572049443@google.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 13 Nov 2017 14:26:44 -0800
+Message-ID: <CABPp-BHhFq3C1t6TO2FMVT8=Bwf__cHhu2U-c+wd5zwHX-=9uQ@mail.gmail.com>
+Subject: Re: [PATCH v2 2/4] progress: fix progress meters when dealing with
+ lots of work
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Thanks for the reviews!
 
---ebrdc6moxv6utuhk
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Mon, Nov 13, 2017 at 1:33 PM, Jonathan Tan <jonathantanmy@google.com> wrote:
+> On Mon, 13 Nov 2017 12:15:58 -0800
+> Elijah Newren <newren@gmail.com> wrote:
+>
+>> -static int display(struct progress *progress, unsigned n, const char *done)
+>> +static int display(struct progress *progress, uint64_t n, const char *done)
+>>  {
+>>       const char *eol, *tp;
+>>
+>> @@ -106,7 +106,7 @@ static int display(struct progress *progress, unsigned n, const char *done)
+>>               if (percent != progress->last_percent || progress_update) {
+>>                       progress->last_percent = percent;
+>>                       if (is_foreground_fd(fileno(stderr)) || done) {
+>> -                             fprintf(stderr, "%s: %3u%% (%u/%u)%s%s",
+>> +                             fprintf(stderr, "%s: %3u%% (%"PRIuMAX"/%"PRIuMAX")%s%s",
+>>                                       progress->title, percent, n,
+>>                                       progress->total, tp, eol);
+>
+> I think it would be better to cast the appropriate arguments to
+> uintmax_t - searching through the Git code shows that we do that in
+> several situations. Same for the rest of the diff.
 
-=20
-> Of course, beyond getting stderr to /dev/null, there is the fact that on
-> versions of gnupg < 2.1, gpgconf --kill is not available.  I noticed this=
- with
-> gnupg-2.0.14 on CentOS 6.  It also occurs on CentOS 7, which provides
-> gnupg-2.0.22.
->=20
-> I don't know if there's much value in trying to better handle older gnupg=
--2.0
-> systems.=20
+Interesting.  My first inclination was to ask why not just change the
+variables to be of type uintmax_t instead of uint64_t (since we're
+already changing their types already), and then get rid of the cast.
+But I went digging through the source code based on your comment.
+Almost all the existing examples in the codebase were off_t and size_t
+values; there was only one case with uint64_t...but that one case led
+me to commit 5be507fc95 (Use PRIuMAX instead of 'unsigned long long'
+in show-index 2007-10-21), and that commit does suggest doing exactly
+as you say here.
 
-Hi Todd.
-
-Thanks for catching the redirection issue! I agree that the other fixes feel
-like overkill. Are you certain that switching to gpgconf --reload will have=
- the
-same effect as --kill? (I know that this is the case for scdaemon only).
-
-Thanks again!
--Santiago.
-
---ebrdc6moxv6utuhk
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEkDurc2QOttZVM+/zRo8SLOgWIpUFAloKGi8ACgkQRo8SLOgW
-IpUoIw//Qxdk6uWHG6k3UI3w4jo7PaSLo9COIDMQcfAHACSosXIR5Dcb3uH4eztD
-Agg/SFq033E3XbPsYEwAXA4KQdEbHv2oCA0IP4DFItLHGOatdKuHZOR/eboMmih5
-g/Kf6AQwF+YAGkTfkISPNt8dwZirl8pyZmBkrmT5S0owlJoF+jZsBdqGT1R+6ZKK
-cDU3Q9MHy/b2m4TpgrymH7P4lrnKUjz8mZFgcJJbt3Upn4lJOCINoIG8aZ7kMTky
-heHy91B5Z9/TbFrSHZdEPBdsI8wFsyTFF93+s4AlT3jAWFt2m75r4pJ13tWsO+I0
-wP7KC0exX1BilJ7/iOYHeq8BdJVCq8aI+TW5NqaHcqTWKcw5KdtBus0Stxx9h3pQ
-81FzaRuB0T4fi/gG/Zvf+7gZy6zwCKF+ampHgxLLBDVRXYwXiRvFSEtcvxH8Nh66
-WEEib5WRA2kNu+T38GkuvK8HCpxZkx1fHntZQOZlDAmTPEMbMnUI7otS/wjqY2OM
-aUUnDjFwb/Pqpyk6S5Eyw0NSREdWSf8XW/KlJQ0fCCSZZBiaqQ9kTsw5OE3GKjpB
-po+FGnZt/x7GmwZVGmYnEcSgEeYWqTxUcEpnNX09whZFrJXVy7b4sp8Dw3EOVabz
-dFqVOwLhL9RfBAEaSbPLLRDlFTmC1BOADTEFsYCL9xaWHp19O1o=
-=/KSA
------END PGP SIGNATURE-----
-
---ebrdc6moxv6utuhk--
+I'll fix it up.
