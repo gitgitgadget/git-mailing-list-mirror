@@ -2,99 +2,152 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 603971F42B
-	for <e@80x24.org>; Mon, 13 Nov 2017 14:49:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 703F01F42B
+	for <e@80x24.org>; Mon, 13 Nov 2017 15:04:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753728AbdKMOtK (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Nov 2017 09:49:10 -0500
-Received: from cpanel2.indieserve.net ([199.212.143.6]:35864 "EHLO
-        cpanel2.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752955AbdKMOtJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Nov 2017 09:49:09 -0500
-Received: from 69-196-158-250.dsl.teksavvy.com ([69.196.158.250]:39578 helo=DESKTOP-1GPMCEJ)
-        by cpanel2.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.89)
-        (envelope-from <rpjday@crashcourse.ca>)
-        id 1eEG2u-0002AN-98
-        for git@vger.kernel.org; Mon, 13 Nov 2017 09:49:08 -0500
-Date:   Mon, 13 Nov 2017 09:48:36 -0500 (EST)
-From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
-X-X-Sender: rpjday@DESKTOP-1GPMCEJ
-To:     Git Mailing list <git@vger.kernel.org>
-Subject: man page for "git-worktree" is a bit confusing WRT "prune"
-Message-ID: <alpine.LFD.2.21.1711130938080.5262@DESKTOP-1GPMCEJ>
-User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+        id S1752647AbdKMPEs (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Nov 2017 10:04:48 -0500
+Received: from smtp-out-6.talktalk.net ([62.24.135.70]:40299 "EHLO
+        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752551AbdKMPEr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Nov 2017 10:04:47 -0500
+Received: from PhilipOakley ([92.29.14.162])
+        by smtp.talktalk.net with SMTP
+        id EGI1e0IxLbjdZEGI1e4jTW; Mon, 13 Nov 2017 15:04:45 +0000
+X-Originating-IP: [92.29.14.162]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=ONFX5WSB c=1 sm=1 tr=0 a=NXc+vVEgz70gitWznrz3ig==:117
+ a=NXc+vVEgz70gitWznrz3ig==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
+ a=xtxXYLxNAAAA:8 a=NEAV23lmAAAA:8 a=oX-B-6vg45xkkKEZ-ysA:9
+ a=D9SZ0WojkjfvGg8R:21 a=zKaRQSi7SpZOq-mq:21 a=QEXdDO2ut3YA:10
+ a=xts0dhWdiJbonKbuqhAr:22
+Message-ID: <0CA45D65AEDF405C987769D865EE0836@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Elijah Newren" <newren@gmail.com>
+Cc:     "Git Mailing List" <git@vger.kernel.org>
+References: <20171110190550.27059-1-newren@gmail.com> <3076EE0E678D43B286F86E622CB9F06E@PhilipOakley> <CABPp-BE1+32fQQdYuwP-7m+GXqyhoUpHKgMM6SCcW4e9geutvw@mail.gmail.com>
+Subject: Re: [PATCH 00/30] Add directory rename detection to git
+Date:   Mon, 13 Nov 2017 15:04:49 -0000
+Organization: OPDS
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cpanel2.indieserve.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - crashcourse.ca
-X-Get-Message-Sender-Via: cpanel2.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
-X-Authenticated-Sender: cpanel2.indieserve.net: rpjday@crashcourse.ca
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+Content-Type: text/plain;
+        format=flowed;
+        charset="UTF-8";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-Antivirus: AVG (VPS 171113-0, 13/11/2017), Outbound message
+X-Antivirus-Status: Clean
+X-CMAE-Envelope: MS4wfNV7u4svS2QkVerQu68Q29ouWzvfNQCOfEsTkJEi57VCknekfNXzrG/juq7k8Iyw3pBngGD25jlpjoQF2WD+CuJwjhfE5/Yu0RAW1zG5l/mQBJQCu3Vs
+ 6SGTuzejmtYI5/CzQw0A2bmLKOE3Hu6Cpo5k6Bf/Qbgq9E7SU5I2K+q+1ngrdyzHSpkbdQV8FgwUhQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: "Elijah Newren" <newren@gmail.com>
+: Friday, November 10, 2017 11:26 PM
+> On Fri, Nov 10, 2017 at 2:27 PM, Philip Oakley <philipoakley@iee.org> 
+> wrote:
+>> From: "Elijah Newren" <newren@gmail.com>
+>>>
+>>> In this patchset, I introduce directory rename detection to
+>>> merge-recursive,
+>>> predominantly so that when files are added to directories on one side of
+>>> history and those directories are renamed on the other side of history,
+>>> the
+>>> files will end up in the proper location after a merge or cherry-pick.
+>>>
+>>> However, this isn't limited to that simplistic case.  More interesting
+>>> possibilities exist, such as:
+>>>
+>>>  * a file being renamed into a directory which is renamed on the other
+>>>    side of history, causing the need for a transitive rename.
+>>>
+>>
+>> How does this cope with the case insensitive case preserving file systems 
+>> on
+>> Mac and Windows, esp when core.ignorecase is true. If it's a bigger 
+>> problem
+>> that the series already covers, would the likely changes be reasonably
+>> localised?
+>>
+>> This came up recently on GfW for `git checkout` of a branch where the 
+>> case
+>> changed ("Test" <-> "test"), but git didn't notice that it needed to 
+>> rename
+>> the directories on such an file system.
+>> https://github.com/git-for-windows/git/issues/1333
+>
+> I wasn't aware there were problems with git on case insensitive case
+> preserving filesystems; fixing them wasn't something I had in mind
+> when writing this series.
 
-  once more, into the man pages ... "git worktree" seems like a fairly
-simple command, but there is some confusion about the function of
+I was mainly ensuring awareness of the potential issue, as it's not easy to 
+solve.
 
-  $ git worktree prune
+> However, the particular bug you mention is
+> actually completely orthogonal to this series; it talks about
+> git-checkout without the -m/--merge option, which doesn't touch any
+> code path I modified in my series, so my series can't really fix or
+> worsen that particular issue.
 
-the normal meaning of "prune" (certainly with git commands) is to
-actually delete some content, and the initial impression of this
-command is that it will delete an actual worktree. however, further
-reading reveals:
+That's good.
+>
+> But, if there are further issues with such filesystems that also
+> affect merges/cherry-picks/rebases, then I don't think my series will
+> either help or hurt there either.  The recursive merge machinery
+> already has remove_file() and update_file() wrappers that it uses
+> whenever it needs to remove/add/update a file in the working directory
+> and/or index, and I have simply continued using those, so the number
+> of places you'd need to modify to fix issues would remain just as
+> localized as before.
 
-" ... or you can run git worktree prune in the main or any linked
-working tree to clean up any stale administrative files."
+It's when the working directory path/filename has a case change that goes 
+undetected (one way or another) that can cause issues. I think that part of 
+the problem (after awareness) is not having a cannonical expectation of 
+which way is 'right', and what options there may be. E,g. if a project is 
+wholly on a case insensitive system then the filenames in the worktree never 
+matter, but aligning the path/filenames in the repository would still be a 
+problem.
 
-  ah, so one learns that the subcommand "prune" does *not* do any
-actual pruning as people would *normally* understand it, it simply
-deletes the administrative information about an already-deleted
-worktree, do i read that correctly?
+>  Also, I continue to depend on the reading of the
+> index & trees that unpack_trees() does, which I haven't modified, so
+> again it'd be the same number of places that someone would need to
+> fix.  (However, the whole design to have unpack_trees() do the initial
+> work and then have recursive merge try to "fix it up" is really
+> starting to strain.
 
-  that's emphasized further down in the actual definition of "prune":
+Interesting point.
 
-    prune
-        Prune working tree information in $GIT_DIR/worktrees.
+>  I'm starting to think, again, that merge
+> recursive needs a redesign, and have some arguments I wanted to float
+> out there...but I've dumped enough on the list for a day.)
+>
+> It's possible that this series fixes one particular issue -- namely
+> when merging, if the merge-base contained a "Test" directory, one side
+> added a file to that directory, and the other side renamed "Test" to
+> "test", and if the presence of both "Test" and "test" directories in
+> the merge result is problematic, then at least with my fixes you
+> wouldn't end up with both directories and could thus avoid that
+> problem in a narrow set of cases.
 
-but perhaps that explanation could be extended to say it only works on
-already-deleted trees, since that's certainly not clear from that
-single sentence.
+I'll think on that. It may provide extra clues as to what the right 
+solutions could be!
+>
+> Sorry that I don't have any better news than that for you.
+>
+> Elijah
 
-  finally, the prune "--expire" option is truly confusing:
+Thanks
+--
+Philip 
 
-    --expire <time>
-        With prune, only expire unused working trees older than <time>.
-
-suddenly, we encounter the verb "expire", which means ... what? how
-does "expiring" a worktree differ from "pruning" a worktree? and what
-makes a worktree "unused"? the normal meaning of "unused" is that you
-haven't, you know, *used* it lately. in this context, though, does it
-mean deleted? and if it means deleted, what does it mean for it to be
-older than some time if it's already gone?
-
-  thoughts?
-
-rday
-
--- 
-
-========================================================================
-Robert P. J. Day                                 Ottawa, Ontario, CANADA
-                        http://crashcourse.ca
-
-Twitter:                                       http://twitter.com/rpjday
-LinkedIn:                               http://ca.linkedin.com/in/rpjday
-========================================================================
