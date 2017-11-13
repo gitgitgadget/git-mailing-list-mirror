@@ -2,129 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 910B5201C8
-	for <e@80x24.org>; Mon, 13 Nov 2017 02:08:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 54870201C8
+	for <e@80x24.org>; Mon, 13 Nov 2017 02:32:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751530AbdKMCIP (ORCPT <rfc822;e@80x24.org>);
-        Sun, 12 Nov 2017 21:08:15 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59308 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751516AbdKMCIM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Nov 2017 21:08:12 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B122F95AC9;
-        Sun, 12 Nov 2017 21:08:11 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=xwRjZ5EErulgq8fg67nG7m8JFPc=; b=OezPni
-        v5kfgF6GWU6j72pvDt1fGt4AWnD8UTGJhvlWicW/6hpjvz63EJ12wF07ehsXD27L
-        H5/Vy2Dv9DKQeuvgOMBRhB66uWjXtT/oJGsuGx6FSrQdHnfEL6AAMybGcrqdxPA5
-        FXYaar8PhUmo50FmUhIKKms9QGjQcBn6UGEDw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=c2DOKjuB/wauzcpIxRv2oDM7dt/NVG+n
-        S5XlOWVCl7ljzMbHCqliHhkmZImrExtbZZ7fIy0cKjXS/vMVVrDNt87K5JV54lGH
-        h88jZLZmamp8Bhk6/+f8bUsWSJvnum1DpHA3y/VT/QKnDQaXkMLmpgY1kPFed1fO
-        uBWq3+b/4VM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A955495AC8;
-        Sun, 12 Nov 2017 21:08:11 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 287B095AC7;
-        Sun, 12 Nov 2017 21:08:11 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Jerzy Kozera <jerzy.kozera@gmail.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [PATCH v2] gpg-interface: strip CR chars for Windows gpg2
-References: <20171112130710.16000-1-jerzy.kozera@gmail.com>
-        <CAPig+cSR_GGog2vATwGgMWDofVzkgDE7K=VvZ4GEyrzYC1t-GQ@mail.gmail.com>
-Date:   Mon, 13 Nov 2017 11:08:09 +0900
-In-Reply-To: <CAPig+cSR_GGog2vATwGgMWDofVzkgDE7K=VvZ4GEyrzYC1t-GQ@mail.gmail.com>
-        (Eric Sunshine's message of "Sun, 12 Nov 2017 12:32:43 -0500")
-Message-ID: <xmqqk1yvaq2e.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751159AbdKMCbT (ORCPT <rfc822;e@80x24.org>);
+        Sun, 12 Nov 2017 21:31:19 -0500
+Received: from mail-pg0-f50.google.com ([74.125.83.50]:47877 "EHLO
+        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751107AbdKMCbT (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Nov 2017 21:31:19 -0500
+Received: by mail-pg0-f50.google.com with SMTP id o7so11621726pgc.4
+        for <git@vger.kernel.org>; Sun, 12 Nov 2017 18:31:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=UI2RH3u0Gb/ROXlr6528EKXtixv9WvLUwfBv3OGSiBE=;
+        b=mqN1r42wYDd6IKzP95+//XlbP8ek9pps/YMZ0FW8C0rnHUFofuCtIINJCdAHGq5fkY
+         CTEcfSi3CJEBt2aW9s05NA64vBmS0q/yiuZ7v8Xv/qxellufaVchy7t11jdr2gzSYKwv
+         hqV2/lHUYjQNeAYQJZlXuJVWZVd2DSpiGNikmoLsmziWonKq+OJ0hK7iBOD7QtTFINs1
+         EZYlNTkapJwMj5shJInsVRcUkKVgDhug2TPmHcC4XtDScS6oKQa+FSewC0lkikNDmz0R
+         OkHrXsoj3s5okCsjagFDyp0ETvQfO0c0Lh+fjAaZRJa1OlceK4Bapx06T1TP1uXlKxwd
+         gs5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=UI2RH3u0Gb/ROXlr6528EKXtixv9WvLUwfBv3OGSiBE=;
+        b=Q8DYRkZHtGSQWMgGBHmHOpkCj3zedl/+Vh4w5b0kd1yeiVIatxQ3V/cDb9nW7FhoGv
+         KuWcZUrhvCcbNaiZKnIhNAcgjmFcaAuMBEsyHXrCBjrkdwUi3Yd1lz3ei5+zD1wcWyJO
+         rcGAillMoN82H2VQUxPJXKgYZGz5BInZ0b0p+vuSLNCzDetDIzgciVah2QrxrvVgTQUi
+         x7T3RSXIgR3368Jc1yZa47LpOQllRX/YVl8Ja1Fx9AYitfchy45iExAAgzJngql7mJbg
+         sA5M+r8LnajePsii7kq3Ppa2pXPkzOX1wKcl8cao/emo9e/nQPjO2LxifyQTyv0NwF1Z
+         YxxA==
+X-Gm-Message-State: AJaThX6xqv8aFialYXJLklMVlUMdkK8BBIQco7UJAcZABetU5wa/ekLR
+        A2BJYtB3Qvvn6+oL0etVdIE=
+X-Google-Smtp-Source: AGs4zMaWxtHa/jBMB2QBd3Ejd1evuu5embfT90avzI5dQz1VwZA1Jtq9emSe5h3mSKfeyPwBfG2SgA==
+X-Received: by 10.101.80.4 with SMTP id f4mr7144876pgo.432.1510540278535;
+        Sun, 12 Nov 2017 18:31:18 -0800 (PST)
+Received: from [192.168.43.71] ([117.209.192.7])
+        by smtp.gmail.com with ESMTPSA id d68sm5776893pfl.38.2017.11.12.18.31.15
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 12 Nov 2017 18:31:17 -0800 (PST)
+Subject: Re: [RFC PATCH v3 4/4] builtin/branch: give more useful error
+ messages when renaming
+To:     Kevin Daudt <me@ikke.info>
+References: <20170925082024.2691-1-kaarticsivaraam91196@gmail.com>
+ <20171102065407.25404-1-kaartic.sivaraam@gmail.com>
+ <20171102065407.25404-5-kaartic.sivaraam@gmail.com>
+ <20171112182322.GA17612@alpha.vpn.ikke.info>
+Cc:     git@vger.kernel.org,
+        Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Message-ID: <29bd81e4-e8df-8fb8-9436-d70902106f49@gmail.com>
+Date:   Mon, 13 Nov 2017 08:01:12 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 7FC9B95C-C817-11E7-B360-575F0C78B957-77302942!pb-smtp2.pobox.com
+In-Reply-To: <20171112182322.GA17612@alpha.vpn.ikke.info>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
-
-> Thanks for the re-roll...
+On Sunday 12 November 2017 11:53 PM, Kevin Daudt wrote:
+> On Thu, Nov 02, 2017 at 12:24:07PM +0530, Kaartic Sivaraam wrote:
+>> From: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+>>
+>> When trying to rename an inexistent branch to with a name of a branch
 >
-> On Sun, Nov 12, 2017 at 8:07 AM, Jerzy Kozera <jerzy.kozera@gmail.com> wrote:
->> This fixes the issue with newlines being \r\n and not being displayed
->> correctly when using gpg2 for Windows, as reported at
->> https://github.com/git-for-windows/git/issues/1249
+> This sentence does not read well. Probably s/with a/the/ helps.
 >
-> It's still not clear from this description what "not being displayed
-> correctly" means. Ideally, the commit message should stand on its own,
-> explaining exactly what problem the patch is solving, without the
-> reader having to chase URLs to pages (which might disappear). If you
-> could summarize the problem and solution in your own words in such a
-> way that your description itself conveys enough information for
-> someone not familiar with that problem report to understand the
-> problem, then that would likely make a good commit message.
 
-Thanks.  I was wondering if I am the only one who does not
-understand what the revised wording wants to say.
+Thanks. Seems I missed it somehow. Will fix it.
 
->> @@ -145,6 +145,20 @@ const char *get_signing_key(void)
->> +/* Strip CR from the CRLF line endings, in case we are on Windows. */
->> +static void strip_cr(struct strbuf *buffer, size_t bottom) {
+>> that already exists the rename failed specifying the new branch name
+>> exists rather than specifying that the branch trying to be renamed
+>> doesn't exist.
+>>
+>> [..]
+>>
+>> Note: Thanks to the strbuf API that made it possible to easily construct
+>> the composite error message strings!
 >
-> It's not at all clear what 'bottom' means. In the original, when the
-> code was inline, the surrounding context would likely have given a
-> good clue to the meaning of 'bottom', but here stand-alone, it conveys
-> little or nothing. Perhaps a better name for this argument would be
-> 'start_at' or 'from' or something.
-
-I personally do not mind 'bottom' (especially when it appears in
-contrast to 'top') too much, but start_at would be much clearer.
-
->> +       size_t i, j;
->> +       for (i = j = bottom; i < buffer->len; i++)
->> +               if (!(i < buffer->len - 1 &&
->> +                               buffer->buf[i] == '\r' &&
->> +                               buffer->buf[i + 1] == '\n')) {
+> I'm not sure this note adds a lot, since the strbuf API is not that new.
 >
-> Hmm, was this tested? If I'm reading this correctly, this strips out
-> the entire CRLF pair, whereas the original code only stripped the CR
-> and left what followed it (typically LF) alone. Junio's suggestion was
-> to enhance this to be more careful and strip CR only when followed
-> immediately by LF (but to leave the LF intact). Therefore, this seems
-> like a regression.
->
->> +                       if (i != j)
->> +                               buffer->buf[j] = buffer->buf[i];
->> +                       j++;
->> +               }
 
-I think the "negate the entire thing" condition confuses the
-readers.  The negated condition is "Do we still have enough bytes to
-see if we are looking at CRLF?  Are we at CR?  Is the one byte
-beyond what we have a LF?  Do all of these three conditions hold
-true?"  If not, i.e. for all the bytes on the line except for that
-narrow "we are at CR of a CRLF sequence" case, the body of the loop
-makes a literal copy and advances the destination pointer 'j'.  The
-only thing that is skipped is CR that comes at the beginning of a
-CRLF sequence.
+That was a little attribution I wanted make to the strbuf API as this 
+was the first time I leveraged it to this extent and I was surprised by 
+the way it made string manipulation easier in C. Just documented my 
+excitation. In case it seems to be noise (?) which should removed, let 
+me know.
 
-So I think the loop does what it wants to do.
-
-In any case, I think this should be a two patch series---one with
-the code as-is with a better explanation, but without "make sure
-only CR in CRLF and no other CR are stripped" improvement, and the
-other as a follow-up to it to make the improvement.
-
-Thanks.
+---
+Kaartic
