@@ -2,102 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A31F71F42B
-	for <e@80x24.org>; Mon, 13 Nov 2017 19:40:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4836A1F42B
+	for <e@80x24.org>; Mon, 13 Nov 2017 19:48:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755029AbdKMTkP (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Nov 2017 14:40:15 -0500
-Received: from mail-io0-f174.google.com ([209.85.223.174]:54955 "EHLO
-        mail-io0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755023AbdKMTkN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Nov 2017 14:40:13 -0500
-Received: by mail-io0-f174.google.com with SMTP id w127so4469079iow.11
-        for <git@vger.kernel.org>; Mon, 13 Nov 2017 11:40:13 -0800 (PST)
+        id S1755077AbdKMTsM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Nov 2017 14:48:12 -0500
+Received: from mail-qk0-f172.google.com ([209.85.220.172]:46118 "EHLO
+        mail-qk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755205AbdKMTsF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Nov 2017 14:48:05 -0500
+Received: by mail-qk0-f172.google.com with SMTP id o6so21263467qkh.3
+        for <git@vger.kernel.org>; Mon, 13 Nov 2017 11:48:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=jEcs8HMsGdAzgUNSeZXhWD/NamKxEfZ3qBU/VZoOA8I=;
-        b=eaxfI/sH0h6jPWQ09CKqbkG8wnW+rwnTPCxSNbYoISroW5bk74L88jcUlmNbmAp1xR
-         0B++bSsGIe2lIcemeBcT+uQwVDD7jgt7gc5t3v3ytTNsphLgDOfJjN5Wh+ui79qXYpYn
-         uNe6EucVV4FmlKdQzf7BWK6m/ZwECsYIFcPFUsbJLNElkpnFa9Jsp1Z100Fa7zUtROHd
-         eucgANKjgbdtg4tm26ocJYL8oUo/VCoxZmWOr4Z4W5vPf7nfSz9onNGJrfYIIT8kQzMB
-         NDayJUvgfadhZ9ufOQ9jeEpVkXwl1J1zRN7PkmGJnfwXB2gq1OmSItKPGQzZOqY2mJkQ
-         mrhQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=RXZhBz4iUvAEUBij3Dxac1jwtBakGkM58NKl3hWRvqo=;
+        b=pv1nr7DXAE8hyFvqoihMWq5JCbsFcokkLUiVFoJt7LfV7NzqWydNh0hhWyR4ULQT1x
+         6UNk/qqCSyhaqIeTEKEYueYFXc/YGgh565gFhX1qKxdH6QNV7xqsSKug/l9/jMzcoI0j
+         ME6fPiSD7zXr5ywjC0xwkgwweCOvPRcP0haqyFxJGA13S+tlyd3sgl6EcV9HMhbooX7o
+         NolxT6jrlE9Pqns3rvzPRi8y6+MkcoNfzwOLz6rkVW2ZhJlQYHCtgVZf/KPboLq4a3gh
+         fyxAFV8xluovXj8ZhO2E7tKWlmuZihP60xPgSseSQURa4RQYNeseQk+Qa2BtR7VJKjR1
+         1G0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=jEcs8HMsGdAzgUNSeZXhWD/NamKxEfZ3qBU/VZoOA8I=;
-        b=PvzjB25nNSsiQs//4GT14ZdEBxhUy8FW1xSYl9vYv1dOs4niEwJkvIi0ojq6Y+qMIC
-         WNeso8ZkJiQYDVfJiMKE79MJQvPodffOxY9yGP1BphHuinb4oEzq9/eMx1ZO+IqvTvwi
-         b9OU6ksnfCGlDgU4zpHsEfWzOkmS+zsEJIXh/Gbe+4dGaRcqRjnVTMOaMXlzXqaaHKxk
-         lfW4TAx9qjhm2Q5pam/DUCfAK/G4IZf1Hy7tYn9C8y4a4fd++9x5Ort4zmu5MU4WcbWO
-         ffVGrXmx1Xnsw+BEsnilF/rio8Hw6Ev7m8m1B4jzaNaU484v34E/EfynUCQlb65iKti6
-         wxsQ==
-X-Gm-Message-State: AJaThX5sx4nJWnKoLimu3Mf+Niq4TrhbVQVPYiVFXoUato2MG2WVAXF1
-        UahcW6g8HrbXKV5I0Sf2YxK9pQ==
-X-Google-Smtp-Source: AGs4zMbWOLZlpDMxzy0b9D3Z7MsPhpvJHM0l+c8XIkDEuQUxMKVukP/vZ3vxqA1Dc+B+PLwPYF0qzg==
-X-Received: by 10.107.25.18 with SMTP id 18mr11239024ioz.11.1510602012910;
-        Mon, 13 Nov 2017 11:40:12 -0800 (PST)
-Received: from twelve3.mtv.corp.google.com ([2620:0:100e:422:b1aa:4028:e6df:d3e])
-        by smtp.gmail.com with ESMTPSA id 8sm7693330iob.32.2017.11.13.11.40.11
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 13 Nov 2017 11:40:11 -0800 (PST)
-Date:   Mon, 13 Nov 2017 11:40:10 -0800
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Nicolas Morey-Chaisemartin <NMoreyChaisemartin@suse.de>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC 0/3] Add support for --cover-at-tip
-Message-Id: <20171113114010.0d4acb09a7a133f4baee9076@google.com>
-In-Reply-To: <ab9dde24-bd1f-37b6-5fb4-247937e13432@suse.de>
-References: <xmqqbmk68o9d.fsf@gitster.mtv.corp.google.com>
-        <ab9dde24-bd1f-37b6-5fb4-247937e13432@suse.de>
-X-Mailer: Sylpheed 3.4.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=RXZhBz4iUvAEUBij3Dxac1jwtBakGkM58NKl3hWRvqo=;
+        b=nCtTEb04zaBRknC6FX9VOSseBm4w8BNB76DkFbxdlxXM1UPeJWWkuTB+cc7bk4hBOq
+         o9dFDgj+Z6EmliWfQOQhlbnShzC6zK0uXxLPCIW0YXqXgf9iChVnu6AGpnyFK6wXixDI
+         z20uwTMhy873dvovRWlt4aNHICDEhtC3m6iRcwj9MGukIesAPOygSeyG76KVYXyH+wy5
+         j63fwkRoX5ZiGBKztHF3xTztkGCeFSzlIKsv787Dy/1Cgj///NXxLHMSxIqxjcmOPCNa
+         ds4LIxC6qMvC5fZl4CiYj2OIwKikH/mozI7VQ6DVNxMh/K9nXuU9gWUX9RwSYkisvjf4
+         4v/w==
+X-Gm-Message-State: AJaThX6MzG2bFLkT8YPArIPLnlTe4Jx8fA5oUf+bFdMSv79xMQHN0U6a
+        VYafQSGURPvjSVt6kY8zWeSWIHOUJKQ3xshWn09AgQ==
+X-Google-Smtp-Source: AGs4zMZj7qsN1Fi39SaTeQPrf5Yly+8ZsTfia/1NsYABtMuRjPQXYby+OmWjMf01ggr3Db+1NB3Qq8LF3wO8SMWNRIc=
+X-Received: by 10.55.129.70 with SMTP id c67mr16355918qkd.230.1510602484797;
+ Mon, 13 Nov 2017 11:48:04 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.140.102.70 with HTTP; Mon, 13 Nov 2017 11:48:04 -0800 (PST)
+In-Reply-To: <20171110190550.27059-3-newren@gmail.com>
+References: <20171110190550.27059-1-newren@gmail.com> <20171110190550.27059-3-newren@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 13 Nov 2017 11:48:04 -0800
+Message-ID: <CAGZ79kYXbvDL_SoEENf60DsDFA-yEWfvgv8bNv_v+mw042ZH=w@mail.gmail.com>
+Subject: Re: [PATCH 02/30] merge-recursive: Fix logic ordering issue
+To:     Elijah Newren <newren@gmail.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 13 Nov 2017 18:13:27 +0100
-Nicolas Morey-Chaisemartin <NMoreyChaisemartin@suse.de> wrote:
+On Fri, Nov 10, 2017 at 11:05 AM, Elijah Newren <newren@gmail.com> wrote:
+> merge_trees() did a variety of work, including:
+>   * Calling get_unmerged() to get unmerged entries
+>   * Calling record_df_conflict_files() with all unmerged entries to
+>     do some work to ensure we could handle D/F conflicts correctly
+>   * Calling get_renames() to check for renames.
+>
+> An easily overlooked issue is that get_renames() can create more
+> unmerged entries and add them to the list, which have the possibility of
+> being involved in D/F conflicts.
 
-> v2:
-> - Enhance mailinfo to parse patch series id from subject
-> - Detect cover using mailinfo parsed ids in git am
+I presume these are created via insert_stage_data called in
+get_renames, when the path entry is not found?
 
-I noticed that this was done in the patch set by searching for "PATCH" -
-that is probably quite error-prone as not all patches will have a
-subject line of that form. It may be better to search for "0/" and
-ensure that it is immediately followed by an integer.
+> So the call to
+> record_df_conflict_files() should really be moved after all the rename
+> detection.  I didn't come up with any testcases demonstrating any bugs
+> with the old ordering, but I suspect there were some for both normal
+> renames and for directory renames.  Fix the ordering.
 
-Also, it might be worth checking the message IDs to ensure that the
-PATCH M/Ns all indeed are replies to PATCH 0/N.
+It is hard to trace this down, though looking at
+3af244caa8 (Cumulative update of merge-recursive in C, 2006-07-27)
+may help us reason about it.
 
-> - Support multiple patch series in a single run
+How would a bug look like?
 
-Is this done? I would have expected that some buffering of messages
-would be necessary, since you're writing a series of messages of the
-form <cover><patch 1>...<patch N> to the commits <patch 1>...<patch
-N><cover>.
-
-> TODO:
-> - Add doc/comments
-> - Add tests
-> - Add a new "seperator" at the end of a cover letter.
->   Right now I added a triple dash to all cover letter (manual or cover-at-tip) before shortlog/diff stat
->   This allows manually written cover letters to be handle by git am --cover-at-tip without including the shortlog/diffstat but
->   breaks compat with older git am as it is seen has a malformed patch. A new separator would solve that.
-
-I think the triple dash works. I tried "git am" with a cover letter with
-no triple dash, and it complains that the commit is empty anyway, so
-compatibility with older git am might not be such a big issue. (With the
-triple dash, it indeed complains about a malformed patch, as you
-describe.)
+>
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+>  merge-recursive.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/merge-recursive.c b/merge-recursive.c
+> index 1d3f8f0d22..52521faf09 100644
+> --- a/merge-recursive.c
+> +++ b/merge-recursive.c
+> @@ -1981,10 +1981,10 @@ int merge_trees(struct merge_options *o,
+>                 get_files_dirs(o, merge);
+>
+>                 entries = get_unmerged();
+> -               record_df_conflict_files(o, entries);
+>                 re_head  = get_renames(o, head, common, head, merge, entries);
+>                 re_merge = get_renames(o, merge, common, head, merge, entries);
+>                 clean = process_renames(o, re_head, re_merge);
+> +               record_df_conflict_files(o, entries);
+>                 if (clean < 0)
+>                         goto cleanup;
+>                 for (i = entries->nr-1; 0 <= i; i--) {
+> --
+> 2.15.0.5.g9567be9905
+>
