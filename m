@@ -2,97 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 007162021B
-	for <e@80x24.org>; Mon, 13 Nov 2017 03:53:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D0C92201C8
+	for <e@80x24.org>; Mon, 13 Nov 2017 03:55:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751740AbdKMDxS (ORCPT <rfc822;e@80x24.org>);
-        Sun, 12 Nov 2017 22:53:18 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55780 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751585AbdKMDxR (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Nov 2017 22:53:17 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4CA6EB5BEB;
-        Sun, 12 Nov 2017 22:53:17 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=Rs6+zwX6Xkze
-        274oOsafzPF7Djs=; b=waqWF9yhGffimK22hkCDWw6j+pOak9eLVbTCBmh1/q9o
-        urhJO7F33QzMJ2rdxagJpdOy+qaECKJ0F5GLschH5GM6sbF1NYNrKe3sCIRv8vJt
-        iVDqgad9/wk7XgV68D+wzqfx9Ci9HLF/iR/Hb6pYkTcqUz/Q3wKC7faZw43k5bE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=LVDc3G
-        P+OI7Dg0TrIJ+beWzr5Xz8nPVIZG2EMw3ep/o5AwbKqDi1fMa5U0t39i5TfAbdkC
-        EILmn7EZleEC2lq9FxeuavuozNZTV4utABZmbBD7CDtzZodElWSz7jJMstEbLcv2
-        No+IIxdEVPdSDlqaZNEpzC6G+PfGMVFm8pjyM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 449FCB5BEA;
-        Sun, 12 Nov 2017 22:53:17 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B53C8B5BE9;
-        Sun, 12 Nov 2017 22:53:16 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Charles Bailey <charles@hashpling.org>, git@vger.kernel.org
-Subject: Re: [PATCH] Fix NO_LIBPCRE1_JIT to fully disable JIT
-References: <20171112165938.8787-1-charles@hashpling.org>
-        <87tvxzxm0j.fsf@evledraar.booking.com>
-Date:   Mon, 13 Nov 2017 12:53:15 +0900
-In-Reply-To: <87tvxzxm0j.fsf@evledraar.booking.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Sun, 12 Nov 2017 21:47:08 +0100")
-Message-ID: <xmqqmv3qal78.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751389AbdKMDzW (ORCPT <rfc822;e@80x24.org>);
+        Sun, 12 Nov 2017 22:55:22 -0500
+Received: from cloud.peff.net ([104.130.231.41]:54474 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751243AbdKMDzV (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Nov 2017 22:55:21 -0500
+Received: (qmail 10567 invoked by uid 109); 13 Nov 2017 03:55:22 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 13 Nov 2017 03:55:22 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 19221 invoked by uid 111); 13 Nov 2017 03:55:34 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (5.148.117.68)
+ by peff.net (qpsmtpd/0.94) with ESMTPA; Sun, 12 Nov 2017 22:55:34 -0500
+Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 13 Nov 2017 03:55:17 +0000
+Date:   Mon, 13 Nov 2017 03:55:17 +0000
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Soukaina NAIT HMID <nhsoukaina@gmail.com>, git@vger.kernel.org
+Subject: Re: [add-default-config 2/5] adding default to color
+Message-ID: <20171113035516.446uznhfl6xlfvmi@sigill.intra.peff.net>
+References: <0102015fb0bf2f74-cb456171-fe65-4d83-8784-b553c7c9e584-000000@eu-west-1.amazonses.com>
+ <0102015fb0bf3002-3462777a-2363-40cf-af37-80e26c0db65b-000000@eu-west-1.amazonses.com>
+ <20171112153659.lt77rn6h6faeqfpb@sigill.intra.peff.net>
+ <xmqqvaiealsv.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 2E347EC4-C826-11E7-9185-8EF31968708C-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <xmqqvaiealsv.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+On Mon, Nov 13, 2017 at 12:40:16PM +0900, Junio C Hamano wrote:
 
-> On Sun, Nov 12 2017, Charles Bailey jotted:
->
->> From: Charles Bailey <cbailey32@bloomberg.net>
->>
->> If you have a pcre1 library which is compiled with JIT enabled then
->> PCRE_STUDY_JIT_COMPILE will be defined whether or not the
->> NO_LIBPCRE1_JIT configuration is set.
->>
->> This means that we enable JIT functionality when calling pcre_study
->> even if NO_LIBPCRE1_JIT has been explicitly set and we just use plain
->> pcre_exec later.
->>
->> Fix this by using own macro (GIT_PCRE_STUDY_JIT_COMPILE) which we set =
-to
->> PCRE_STUDY_JIT_COMPILE only if NO_LIBPCRE1_JIT is not set and define t=
-o
->> 0 otherwise, as before.
->> ---
->>
->> I was bisecting an issue with the PCRE support that was causing a test
->> ...
->
-> [CC-ing Junio]
->
-> Thanks a lot. This patch looks good to me.
+> As an aside.  Over time we accumulated quite a many actions that are
+> all mutually exclusive by nature.  I have a feeling that we might be
+> better off to move away from this implementation.  The only thing
+> that we are getting from the current one-bit-in-a-flag-word is that
+> we can name the variable "actions" (instead of "action") to pretend
+> as if we can be given more than one, and then having to check its
+> value with HAS_MULTI_BITS(actions) to confuse ourselves.
+> 
+> Instead, perhaps we should introduce an "enum action" that includes
+> ACTION_UNSPECIFIED that is the initial value for the "action"
+> variable, which gets set to ACTION_GET, etc. with OPT_SET_INT().  If
+> we really care about erroring out when given
+> 
+> 	$ git config --add --get foo.bar
+> 
+> instead of the "last one wins" semantics, we can use OPT_CMDMODE.
+> 
+> The above is of course outside the scope of this series, and I am
+> not sure if it should be done as a preparatory or a follow-up
+> clean-up.
 
-Thanks.  This patch needs a sign-off, by the way.
+Yes, I agree that it's a little confusing, and that an enum is a better
+representation.  The TYPE constants have the same problem.
 
-> But that we should take it anyway regardless of that since it'll *also*
-> work on Linux with your patch, and this logic makes some sense whereas
-> the other one clearly didn't and just worked by pure accident of some
-> toolchain semantics that I haven't figured out yet.
+I _think_ we could use OPT_CMDMODE() for those, too. Despite the name,
+there is nothing in the parse-options error message that would be
+inappropriate for something that isn't a cmdmode. Though I care a lot
+less about "--bool --int" reporting an error (instead of last-one-wins)
+than I do about "--get --set".
 
-That is curious and would be nice to know the answer to.
-
+-Peff
