@@ -2,79 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 08D26201C8
-	for <e@80x24.org>; Mon, 13 Nov 2017 03:16:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B2A02201C8
+	for <e@80x24.org>; Mon, 13 Nov 2017 03:40:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751602AbdKMDQt (ORCPT <rfc822;e@80x24.org>);
-        Sun, 12 Nov 2017 22:16:49 -0500
-Received: from mail-pf0-f175.google.com ([209.85.192.175]:44042 "EHLO
-        mail-pf0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751534AbdKMDQs (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Nov 2017 22:16:48 -0500
-Received: by mail-pf0-f175.google.com with SMTP id x7so10906833pfa.1
-        for <git@vger.kernel.org>; Sun, 12 Nov 2017 19:16:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=sr/co8/581bnn9vlqcUT0pDSfy47+1b8Pf8UagC+aEQ=;
-        b=kCtVkZrEgloheIqdsNxUZZBOhiIyb7UBjrGgTH9+F/W1PLBeFy22U91tD5aKYxGMAn
-         2bGbs4uHeJQNrVj/OY1HAOD1NP21FiZZE8ZwlOa9KJgFzw4puiAU9+vH2QSxbDhxKHJd
-         kfY9mMwL7YBc5OCL03MZhgh/nyYcpwiX4qacA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=sr/co8/581bnn9vlqcUT0pDSfy47+1b8Pf8UagC+aEQ=;
-        b=C9XUHusTLnbSYIxwqnI1Isv06bafzpvV6kWiOfyTC1Q+6tKG0u6EzjH2ZkwHDk4Bo7
-         B9bgsN4ezrI4DwTR1JSd8y+X4uB1RhHVgCxEVOxBndzqYt/Mfg4kcA2jjnj0jHo+dvOf
-         Vu6d0UPOc3gSPVr6xfgHfjrsZw8ASIZYRvvu1J33P/1byddaaT98WJ7QQyMow7UY85Xl
-         nQCXHEkyRsk8nFAPkBcm6mwh2zJWw2wqj55LLtme2bOeg2Lu24M2TP1ll7OQHvqpU+QT
-         WEzG0a0yUgOgz60Lwcb/B3yNu8V1U4ijKkYBb74SEQXP74mjW+wX3wwi4haCniymzw8M
-         PeSg==
-X-Gm-Message-State: AJaThX7kic0Jers+mgQesxipY4in5gBmQECOB+xY19LIspsWKi3k7ACR
-        gTfjHtvpZLrAp0YLATJ7goru4A==
-X-Google-Smtp-Source: AGs4zMZzNtAb7hwVLYWFEC4aWrRgyiO1laLSJHFrkv70zRH7M6juHFg2yHO9ktQea48avno5C9SE/Q==
-X-Received: by 10.84.213.9 with SMTP id f9mr7366290pli.76.1510543008454;
-        Sun, 12 Nov 2017 19:16:48 -0800 (PST)
-Received: from localhost ([122.172.166.155])
-        by smtp.gmail.com with ESMTPSA id i129sm25851083pgd.21.2017.11.12.19.16.46
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 12 Nov 2017 19:16:46 -0800 (PST)
-Date:   Mon, 13 Nov 2017 08:46:43 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Vincent Guittot <vincent.guittot@linaro.org>
-Subject: Re: [Query] Separate hooks for Git worktrees
-Message-ID: <20171113031643.GA4305@vireshk-i7>
-References: <CAKohponsPQC6qTw99+xh1RSu0bZNDSo5TbbZZcYmup3NOW6QmA@mail.gmail.com>
- <CAGZ79ka9VnzYTYgtWgGAhvgn2LRpP_BCQyVvQ8iC1w9XJnRxEw@mail.gmail.com>
- <xmqq60aihgod.fsf@gitster.mtv.corp.google.com>
- <CAGZ79kZ8PKBwe+aWTUOgPwV2tNQS7+dUrLTVsWhzemj-e35kaA@mail.gmail.com>
+        id S1751358AbdKMDkU (ORCPT <rfc822;e@80x24.org>);
+        Sun, 12 Nov 2017 22:40:20 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54911 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751241AbdKMDkT (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Nov 2017 22:40:19 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C0EBD96C96;
+        Sun, 12 Nov 2017 22:40:18 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=gFr3kRz0q3irp2anvOkvdbA7hoU=; b=fEe9/p
+        jzcVqFV8UGZx13V0xYPgGs5nJbpZQx+2M8LG108PVMgNatP6dNM0AiZ2TjnH2w5+
+        tDsc6fEumtasq10BNyKu+OXJvJdGGAqlA/xcLbyEIzU1uBhA+HQsdQ3mUP9HTYoD
+        KziRr25DTWOcjADW3puh7c5B1gNFMm6oUt0NQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=uFD7M/ws1A1cBaglxSWzSQQkv4fzkoA2
+        WNRH2HTC0tgmDYGsBwrrRhcXTXIEThRaHFlyF0Bc+6RcWN5qxRumUllx/FQEZxrW
+        2CrnCIlLPgZJDGJTb/ZslnOGQ65LFJlPyjEpby9mTRLwa6Lyn/s3zyt5OXqE2pez
+        sO4i1moPd3w=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B9E1396C91;
+        Sun, 12 Nov 2017 22:40:18 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3D17C96C8F;
+        Sun, 12 Nov 2017 22:40:18 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Soukaina NAIT HMID <nhsoukaina@gmail.com>, git@vger.kernel.org
+Subject: Re: [add-default-config 2/5] adding default to color
+References: <0102015fb0bf2f74-cb456171-fe65-4d83-8784-b553c7c9e584-000000@eu-west-1.amazonses.com>
+        <0102015fb0bf3002-3462777a-2363-40cf-af37-80e26c0db65b-000000@eu-west-1.amazonses.com>
+        <20171112153659.lt77rn6h6faeqfpb@sigill.intra.peff.net>
+Date:   Mon, 13 Nov 2017 12:40:16 +0900
+In-Reply-To: <20171112153659.lt77rn6h6faeqfpb@sigill.intra.peff.net> (Jeff
+        King's message of "Sun, 12 Nov 2017 15:37:00 +0000")
+Message-ID: <xmqqvaiealsv.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kZ8PKBwe+aWTUOgPwV2tNQS7+dUrLTVsWhzemj-e35kaA@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5E2FD3DC-C824-11E7-A35A-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10-11-17, 10:00, Stefan Beller wrote:
-> Well it is the same project with different upstream workflows.
-> For example I would imagine that Viresh wants to cherry-pick
-> from one branch to another, or even send the same patch
-> (just with different commit messages, with or without the
-> ChangeId) to the different upstreams?
+Jeff King <peff@peff.net> writes:
 
-Right.
+>> @@ -47,6 +48,7 @@ static int show_origin;
+>>  #define ACTION_GET_COLOR (1<<13)
+>>  #define ACTION_GET_COLORBOOL (1<<14)
+>>  #define ACTION_GET_URLMATCH (1<<15)
+>> +#define ACTION_GET_COLORORDEFAULT (1<<16)
+>
+> I'm not sure I understand this part, though. Providing a default should
+> be something that goes along with a "get" action, but isn't its own
+> action.
 
--- 
-viresh
+I agree that it is not.
+
+As an aside.  Over time we accumulated quite a many actions that are
+all mutually exclusive by nature.  I have a feeling that we might be
+better off to move away from this implementation.  The only thing
+that we are getting from the current one-bit-in-a-flag-word is that
+we can name the variable "actions" (instead of "action") to pretend
+as if we can be given more than one, and then having to check its
+value with HAS_MULTI_BITS(actions) to confuse ourselves.
+
+Instead, perhaps we should introduce an "enum action" that includes
+ACTION_UNSPECIFIED that is the initial value for the "action"
+variable, which gets set to ACTION_GET, etc. with OPT_SET_INT().  If
+we really care about erroring out when given
+
+	$ git config --add --get foo.bar
+
+instead of the "last one wins" semantics, we can use OPT_CMDMODE.
+
+The above is of course outside the scope of this series, and I am
+not sure if it should be done as a preparatory or a follow-up
+clean-up.
