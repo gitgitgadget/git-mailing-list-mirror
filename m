@@ -2,100 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B6C021F42B
-	for <e@80x24.org>; Mon, 13 Nov 2017 22:15:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5DCE81F42B
+	for <e@80x24.org>; Mon, 13 Nov 2017 22:17:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751585AbdKMWP4 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Nov 2017 17:15:56 -0500
-Received: from mail-qk0-f175.google.com ([209.85.220.175]:51521 "EHLO
-        mail-qk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750929AbdKMWP4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Nov 2017 17:15:56 -0500
-Received: by mail-qk0-f175.google.com with SMTP id f63so7273783qke.8
-        for <git@vger.kernel.org>; Mon, 13 Nov 2017 14:15:55 -0800 (PST)
+        id S1751394AbdKMWRO (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Nov 2017 17:17:14 -0500
+Received: from mail-wm0-f48.google.com ([74.125.82.48]:37511 "EHLO
+        mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751303AbdKMWRN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Nov 2017 17:17:13 -0500
+Received: by mail-wm0-f48.google.com with SMTP id v186so9248298wma.2
+        for <git@vger.kernel.org>; Mon, 13 Nov 2017 14:17:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=Bl8N02AKw1vl7iW4VggLpL6HhYA6fHWXkUg0/0kHLhg=;
-        b=j8NoMIHRjAx50knDU2YviDNPK7TrSNd8g9sh3Me5nq0jvEJrjADZ8p85j6h+OtR5RM
-         6NMV6sm9Zosuiqol87iihpWRU2xhVoHuNpja8ZIOOTzKKW1urAtRNDpsewlzTzLZ4bDY
-         oerHjgYIyYSh4VbjZFE13dVkM4M/AULSFcYAl+CVeHVwzPX7c1AiteKGSFyhKzGjNf5X
-         lQvjB5T2umQB6Dheg6NsTaTjP9Zj27UsuwRy2KwUD7qPMAd/GAd+AoFGKGTTZZX1OOd2
-         UVJtaJygnD6MnXPJOSPs6uGiQZnaKR4YKIrvh9wCYQma2xj+voH1rj/RAO8N4hO3MGMV
-         HVeA==
+        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=omYXc9w0d2qNhC62T07u0H6K/51wy8eKr3q059Rpe2U=;
+        b=Mhs7nEzqKf9pTKM3t/cz3OjPTIxPKHMf8K9Q+yZjkvyZpq6u0vWAaXehpPVppEnum5
+         2HaB/2zPTPD94ucOlqDChC3W2Pqezz2HmNtF2Ey16pceYNVTKSQM6QNaQMGK6V7Htr7g
+         SzCzg11s/nCCTUz4y74qLpsMFiVfzIIVDqAXZqFMzu2qwNWjriqiqY5wN6/OL4y2ty5o
+         bMInX1gFzDRAfTRlupUwp6ukcoA3EkEQOl6qqNTNNJotd9uNnwF4DixQYmwW5Cm/ixhI
+         aqA0OGH2mdNbv/OAb6Gey0dxE+0MsWlMCYV022svSkpaseHgcXEfLanqjFbBfTuGnAS/
+         GERA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Bl8N02AKw1vl7iW4VggLpL6HhYA6fHWXkUg0/0kHLhg=;
-        b=JSmk//hx+OOEDkAu4fOUamY7peTB0xJ5LQImvuHEWhufu9meE7wf/oM0ATDrmGyoFF
-         qFSRqyk8VuFtu5x/TNlAHsPmEKSxHXvXO8VImbml7Y+0kstUEVqRqoLBsf5HK1WabVtS
-         M9xHrQjbHownG8sS1RWrnMcJHL+r4vNA6juNFjBRYaQyU0ujHXiqkXqVN160h3hZjnpR
-         XNlqbRo5y0IxQQlftdwf11hT8FsCNTM4YayavLBsw6XlCsVF0S3ivtPZL1CUOFUo3Z7o
-         t6SDPYK2RvT0JQh9MpQ5qtK4pI3J8lVHWFV2Iz/XfIdCL1vOSA0XJh39gEtaCeeKSiz7
-         4rbA==
-X-Gm-Message-State: AJaThX7x9eJQJe1zLqRNQkqJeQ9xmvUAnM8p/h291kFYXcna4CRqhxOb
-        T8uo3GP7b2SHHG2JZOWEzvsFFnUoVVUfTCHVlWOXoQ==
-X-Google-Smtp-Source: AGs4zMZgEu5aDDj0ws1CVxPZl5T3YDD9fjCm+WifToSSbu+TbNCFGEYdH7638Yf3bAKZpEUEkIkx8/1sWqRUP1mtBfk=
-X-Received: by 10.55.33.13 with SMTP id h13mr16501797qkh.176.1510611355074;
- Mon, 13 Nov 2017 14:15:55 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=omYXc9w0d2qNhC62T07u0H6K/51wy8eKr3q059Rpe2U=;
+        b=gX3YshlbXNXNvpEnngBnIGmDvRqvXfMg2CMOzWks93kKcXns6i9+FmrSKStoop5pQd
+         Ry/u+fj8uNcUjjYbxw9w/KEH5oQCPHiMPe4NGxrkFUoCp1okR14TLatDHcMUtIUBfvZv
+         WV2C/gDhhwdpcS216Lk7b/ZxOnEI+Mc2fY8h6lkXgum4SGsJSFHrEgtLuqUe/TZfGuuC
+         fLZsNmgaMYW/PqFHRDh5nzEbPJjUlwEurXSeLgTeKXjvX3yGe7+DF/IvT3CYNIM0jnb+
+         DqMejIZNpMJW7R0wA8gRjlDDS+GSpLgXX1zJQDZ9NQzhcwbJAX+u8ok3HvNxr9JBj8eS
+         3YCA==
+X-Gm-Message-State: AJaThX5w8KynZZRoDQN9mCHPUuSiFXCVwQM/zJPTw/yk2quo2gPa4trc
+        yqUv6yPocLkNxHFai6GfNiIHCw==
+X-Google-Smtp-Source: AGs4zMbEXtRdUb7QNqs2wZ6r1s49OPF4AeZPv07ErPQeMRO18vgM9mpF1dR+SXoS8kHneIRV+520IA==
+X-Received: by 10.80.159.168 with SMTP id c37mr14556646edf.46.1510611432301;
+        Mon, 13 Nov 2017 14:17:12 -0800 (PST)
+Received: from LykOS.localdomain (cpe-67-245-44-149.nyc.res.rr.com. [67.245.44.149])
+        by smtp.gmail.com with ESMTPSA id f27sm13403478edj.82.2017.11.13.14.17.10
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 13 Nov 2017 14:17:11 -0800 (PST)
+Date:   Mon, 13 Nov 2017 17:18:24 -0500
+From:   Santiago Torres <santiago@nyu.edu>
+To:     Todd Zullinger <tmz@pobox.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] t/lib-gpg: fix gpgconf stderr redirect to /dev/null
+Message-ID: <20171113221823.jzt7jfhxeuyivbcn@LykOS.localdomain>
+References: <20171113210745.24638-1-tmz@pobox.com>
 MIME-Version: 1.0
-Received: by 10.140.102.70 with HTTP; Mon, 13 Nov 2017 14:15:54 -0800 (PST)
-In-Reply-To: <CAE5ih7_uuVVrze9gNr3JMg5HNH8eAcH_wM4wrc2kH6u=Hw0JOg@mail.gmail.com>
-References: <CAE5ih78nLL6UhKPObvFEA9xQZUtc1XpPvGJNaYTH9fJ0RyFRvA@mail.gmail.com>
- <CAE5ih7_uuVVrze9gNr3JMg5HNH8eAcH_wM4wrc2kH6u=Hw0JOg@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 13 Nov 2017 14:15:54 -0800
-Message-ID: <CAGZ79kZrZckX=xTgTH4cMper6BPAQ-_LT_x721SBEBB+Ks06jw@mail.gmail.com>
-Subject: Re: Bug in "revision.c: --all adds HEAD from all worktrees" ?
-To:     Luke Diamand <luke@diamand.org>
-Cc:     Git Users <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="ebrdc6moxv6utuhk"
+Content-Disposition: inline
+In-Reply-To: <20171113210745.24638-1-tmz@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 13, 2017 at 2:03 PM, Luke Diamand <luke@diamand.org> wrote:
-> On 13 November 2017 at 19:51, Luke Diamand <luke@diamand.org> wrote:
->> Hi!
->>
->> I think there may be a regression caused by this change which means
->> that "git fetch origin" doesn't work:
->>
->> commit d0c39a49ccb5dfe7feba4325c3374d99ab123c59 (refs/bisect/bad)
->> Author: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
->> Date:   Wed Aug 23 19:36:59 2017 +0700
->>
->>     revision.c: --all adds HEAD from all worktrees
->>
->> $ git fetch origin
->> fatal: bad object HEAD
->> error: ssh://my_remote_host/reponame did not send all necessary objects
->>
->> I used git bisect to find the problem, and it seems pretty consistent.
->> "git fetch" with the previous revision works fine.
->>
->> FWIW, I've got a lot of git worktrees associated with this repo, so
->> that may be why it's failing. The remote repo is actually a git-p4
->> clone, so HEAD there actually ends up pointing at
->> refs/remote/p4/master.
->>
->> Thanks,
->> Luke
->
-> Quite a few of the worktrees have expired - their head revision has
-> been GC'd and no longer points to anything sensible
-> (gc.worktreePruneExpire). The function other_head_refs() in worktree.c
-> bails out if there's an error, which I think is the problem. I wonder
-> if it should instead just report something and then keep going.
 
-Also see
-https://public-inbox.org/git/CAGZ79kYP0z1G_H3nwfmSHraWHMBOcik5LepUXKj0nveeB=
-rihiw@mail.gmail.com/
+--ebrdc6moxv6utuhk
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+=20
+> Of course, beyond getting stderr to /dev/null, there is the fact that on
+> versions of gnupg < 2.1, gpgconf --kill is not available.  I noticed this=
+ with
+> gnupg-2.0.14 on CentOS 6.  It also occurs on CentOS 7, which provides
+> gnupg-2.0.22.
+>=20
+> I don't know if there's much value in trying to better handle older gnupg=
+-2.0
+> systems.=20
+
+Hi Todd.
+
+Thanks for catching the redirection issue! I agree that the other fixes feel
+like overkill. Are you certain that switching to gpgconf --reload will have=
+ the
+same effect as --kill? (I know that this is the case for scdaemon only).
+
+Thanks again!
+-Santiago.
+
+--ebrdc6moxv6utuhk
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEkDurc2QOttZVM+/zRo8SLOgWIpUFAloKGi8ACgkQRo8SLOgW
+IpUoIw//Qxdk6uWHG6k3UI3w4jo7PaSLo9COIDMQcfAHACSosXIR5Dcb3uH4eztD
+Agg/SFq033E3XbPsYEwAXA4KQdEbHv2oCA0IP4DFItLHGOatdKuHZOR/eboMmih5
+g/Kf6AQwF+YAGkTfkISPNt8dwZirl8pyZmBkrmT5S0owlJoF+jZsBdqGT1R+6ZKK
+cDU3Q9MHy/b2m4TpgrymH7P4lrnKUjz8mZFgcJJbt3Upn4lJOCINoIG8aZ7kMTky
+heHy91B5Z9/TbFrSHZdEPBdsI8wFsyTFF93+s4AlT3jAWFt2m75r4pJ13tWsO+I0
+wP7KC0exX1BilJ7/iOYHeq8BdJVCq8aI+TW5NqaHcqTWKcw5KdtBus0Stxx9h3pQ
+81FzaRuB0T4fi/gG/Zvf+7gZy6zwCKF+ampHgxLLBDVRXYwXiRvFSEtcvxH8Nh66
+WEEib5WRA2kNu+T38GkuvK8HCpxZkx1fHntZQOZlDAmTPEMbMnUI7otS/wjqY2OM
+aUUnDjFwb/Pqpyk6S5Eyw0NSREdWSf8XW/KlJQ0fCCSZZBiaqQ9kTsw5OE3GKjpB
+po+FGnZt/x7GmwZVGmYnEcSgEeYWqTxUcEpnNX09whZFrJXVy7b4sp8Dw3EOVabz
+dFqVOwLhL9RfBAEaSbPLLRDlFTmC1BOADTEFsYCL9xaWHp19O1o=
+=/KSA
+-----END PGP SIGNATURE-----
+
+--ebrdc6moxv6utuhk--
