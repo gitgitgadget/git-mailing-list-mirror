@@ -2,82 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4181B1F42B
-	for <e@80x24.org>; Mon, 13 Nov 2017 17:11:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1C3491F42B
+	for <e@80x24.org>; Mon, 13 Nov 2017 17:13:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753946AbdKMRLa (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Nov 2017 12:11:30 -0500
-Received: from kitenet.net ([66.228.36.95]:59350 "EHLO kitenet.net"
+        id S1753987AbdKMRN3 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Nov 2017 12:13:29 -0500
+Received: from mx2.suse.de ([195.135.220.15]:39755 "EHLO mx2.suse.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753854AbdKMRL3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Nov 2017 12:11:29 -0500
-X-Question: 42
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=joeyh.name; s=mail;
-        t=1510593079; bh=hU6cxE9g9zs07uIwngr8moIuIosiEwci/d4UTNg6//g=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ApCM7rCX6xYdhpM+YpT/CNA2qNcMHyzl21JOIj9WFSG7+g1+Fg8LeMpNKU6p1dge4
-         IC6tuvYX5yV3/zSKog2y6nB7Ke8vYdZjwYIQQvmibXGzHLbiGC6RJ1AjYLcM+Qn3kD
-         6/iLT3gDrABawUoreeMm5XFz+QIqCiYro9xgGUj0=
-Date:   Mon, 13 Nov 2017 13:11:19 -0400
-From:   Joey Hess <id@joeyh.name>
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] link_alt_odb_entries: make empty input a noop
-Message-ID: <20171113171119.fjhufmbbuidr35ud@kitenet.net>
-References: <20171107192239.6hinu235hfpwqpv6@kitenet.net>
- <20171108075336.is4awgyw53dohf7y@sigill.intra.peff.net>
- <xmqqd14pef5q.fsf@gitster.mtv.corp.google.com>
- <20171112102739.6xtnnsmtabhnhrm5@sigill.intra.peff.net>
+        id S1753854AbdKMRN3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Nov 2017 12:13:29 -0500
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Received: from relay1.suse.de (charybdis-ext.suse.de [195.135.220.254])
+        by mx2.suse.de (Postfix) with ESMTP id 4524DAAB9
+        for <git@vger.kernel.org>; Mon, 13 Nov 2017 17:13:28 +0000 (UTC)
+From:   Nicolas Morey-Chaisemartin <NMoreyChaisemartin@suse.de>
+Subject: [RFC 0/3] Add support for --cover-at-tip
+To:     git@vger.kernel.org
+References: <xmqqbmk68o9d.fsf@gitster.mtv.corp.google.com>
+Openpgp: preference=signencrypt
+Message-ID: <ab9dde24-bd1f-37b6-5fb4-247937e13432@suse.de>
+Date:   Mon, 13 Nov 2017 18:13:27 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101
+ Thunderbird/56.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="qhns27aii4lrebpp"
-Content-Disposition: inline
-In-Reply-To: <20171112102739.6xtnnsmtabhnhrm5@sigill.intra.peff.net>
-User-Agent: NeoMutt/20170609 (1.8.3)
+In-Reply-To: <xmqqbmk68o9d.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=windows-1252
+Content-Language: fr-xx-classique+reforme1990
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+v2:
+- Enhance mailinfo to parse patch series id from subject
+- Detect cover using mailinfo parsed ids in git am
+- Support multiple patch series in a single run
 
---qhns27aii4lrebpp
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+TODO:
+- Add doc/comments
+- Add tests
+- Add a new "seperator" at the end of a cover letter.
+  Right now I added a triple dash to all cover letter (manual or cover-at-tip) before shortlog/diff stat
+  This allows manually written cover letters to be handle by git am --cover-at-tip without including the shortlog/diffstat but
+  breaks compat with older git am as it is seen has a malformed patch. A new separator would solve that.
 
-Jeff King wrote:
-> This should make Joey's immediate pain go away, though only by papering
-> it over. I tend to agree that we shouldn't be looking at $PWD at all
-> here.
+Note: Cover letter automatically generated with --cover-at-tip ;)
 
-I've confirmed that Jeff's patch fixes the case I was having trouble with.
+Signed-off-by: Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>
+---
+Nicolas Morey-Chaisemartin (3):
+  mailinfo: extract patch series id
+  am: semi working --cover-at-tip
+  log: add an option to generate cover letter from a branch tip
 
---=20
-see shy jo
+ Documentation/git-format-patch.txt |   4 ++
+ builtin/am.c                       | 143 ++++++++++++++++++++++++++++++++-----
+ builtin/log.c                      |  44 +++++++++---
+ mailinfo.c                         |  35 +++++++++
+ mailinfo.h                         |   2 +
+ 5 files changed, 201 insertions(+), 27 deletions(-)
 
---qhns27aii4lrebpp
-Content-Type: application/pgp-signature; name="signature.asc"
+-- 
+2.15.0.169.g3d3eebb67.dirty
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEKKUAw1IH6rcvbA8l2xLbD/BfjzgFAloJ0jcACgkQ2xLbD/Bf
-jzie9xAAufbI9QW17+zscUCK5fS7PLvnXLh11T1yorNGBpr70pRLAJBwULJYUSSL
-oo8nhijxXZKf0j21AA9qMJlewzEOT478Ipnxu5Rz83Lr0uKIZudXBSP1Z6546gDY
-JjaMJIs/soxL9r4xEQ+tkUYnJjLAmkequDWG+x3qkiPefg2MOYlyXmta2sPGkIVE
-WAFb+yMEyaye+vs+KBDBxDJnbQqrNyM/tts5JwM2qYos5C4Q4/IWI5VkQEgsHSOo
-xD3yFM4fzEMKVeoHUTWi4sxRqG1ENQXx8Qvuz8WdkmyffN0+i4ZHzUv46sSHexmc
-Es/ggLpIK8SF4YQG/t+m77PBHwZ2i5O8q4VKTFb9Jo/kR8VkHEwZZFgtLL+m6Eou
-YiEiIUxQjlIyghsQBTqHcxpIFWzNT6ao1qyjNmaWQOSaocPQ6iom4fbtwJCqeShF
-ma6Xxzee7aK72gfAqocgHcTiOJ4+VKMy+vCVhyix/WveuvjIJvvNxbRXfFFAeLqG
-TeELIF11+xFuGkwiAFe4/2lkdm6cflFNkE+7D2E0sihhyT1QoDYiZKOMpueY/Wok
-03fi+70w0wsXGfihOwru5s62ugGWh/2uicpJd55TVajlAd0nxIlm3V6zdH2GzfZQ
-3MRDbpZupg+uHexrY+/QteFf7WV104JzIYca+hF8uKp4JjB2nvY=
-=J7hx
------END PGP SIGNATURE-----
-
---qhns27aii4lrebpp--
