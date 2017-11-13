@@ -2,155 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AED9E1F43C
-	for <e@80x24.org>; Mon, 13 Nov 2017 10:48:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 217D91F43C
+	for <e@80x24.org>; Mon, 13 Nov 2017 11:08:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752116AbdKMKsO convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Mon, 13 Nov 2017 05:48:14 -0500
-Received: from mx2.suse.de ([195.135.220.15]:39684 "EHLO mx2.suse.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751986AbdKMKsN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Nov 2017 05:48:13 -0500
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay1.suse.de (charybdis-ext.suse.de [195.135.220.254])
-        by mx2.suse.de (Postfix) with ESMTP id 8427FABEB;
-        Mon, 13 Nov 2017 10:48:12 +0000 (UTC)
-Subject: Re: [RFC] cover-at-tip
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-References: <357e8afb-4814-c950-1530-530bb6dd5f5a@suse.de>
- <e1d3ab5b-82e6-8490-8f2e-00c1359c6deb@suse.de>
- <xmqqbmkaf0yn.fsf@gitster.mtv.corp.google.com>
- <bbdeaba0-b757-041d-9649-4150080d4b07@suse.de>
- <xmqqh8ty8q5x.fsf@gitster.mtv.corp.google.com>
- <xmqqbmk68o9d.fsf@gitster.mtv.corp.google.com>
-From:   Nicolas Morey-Chaisemartin <NMoreyChaisemartin@suse.de>
-Openpgp: preference=signencrypt
-Message-ID: <72b53257-5525-2622-1233-17cf0e0b4513@suse.de>
-Date:   Mon, 13 Nov 2017 11:48:11 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101
- Thunderbird/56.0
+        id S1751976AbdKMLI3 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Nov 2017 06:08:29 -0500
+Received: from smtp-out-1.talktalk.net ([62.24.135.65]:14763 "EHLO
+        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751265AbdKMLI2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Nov 2017 06:08:28 -0500
+Received: from [192.168.2.201] ([92.22.30.94])
+        by smtp.talktalk.net with SMTP
+        id ECb4ezLrRmITaECbDeEyww; Mon, 13 Nov 2017 11:08:26 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1510571306;
+        bh=JbE14QbC+URMRw1DB71otrqETpur7DpnI3lHswgC9dU=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=GPALwj7cJXnlgMjkKClxMkATCDWcOgTlBdZy0lBLIQ8kFFSFITgNG8bG/otYfvT3B
+         GYlIBpBZ08PnY91HR6MtwRXMHVvWpHc7EH989jJt4dc6Z285tS7YLnm6ILpAtn3b5U
+         6L4+njCkuKQd6gQwjQKzuFdhuUwuzd5bq2ZcpEXE=
+X-Originating-IP: [92.22.30.94]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=W/RIbVek c=1 sm=1 tr=0 a=lje0BXTe3+PqU+djfnm1WA==:117
+ a=lje0BXTe3+PqU+djfnm1WA==:17 a=IkcTkHD0fZMA:10 a=evINK-nbAAAA:8
+ a=i0qSn0j8x09g-LQUDGwA:9 a=CF1N6qyM6-JsaIPp:21 a=_K9dtJcr0A5dvI-8:21
+ a=QEXdDO2ut3YA:10 a=RfR_gqz1fSpA9VikTjo0:22
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 2/9] commit: move empty message checks to libgit
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Git Mailing List <git@vger.kernel.org>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+References: <20170925101041.18344-1-phillip.wood@talktalk.net>
+ <20171110110949.328-1-phillip.wood@talktalk.net>
+ <20171110110949.328-3-phillip.wood@talktalk.net>
+ <dbdb4990-e539-42d5-df0a-3d5f4a993faf@ramsayjones.plus.com>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <9e872c1f-2d51-ef20-bae8-305b6db14a7b@talktalk.net>
+Date:   Mon, 13 Nov 2017 11:08:08 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
 MIME-Version: 1.0
-In-Reply-To: <xmqqbmk68o9d.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <dbdb4990-e539-42d5-df0a-3d5f4a993faf@ramsayjones.plus.com>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8BIT
-Content-Language: fr-xx-classique+reforme1990
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfPsRHy4pnNthBnHx3dVS/UYzj0sRx4MFxWIHV+F8b31vCjl9xc9RuFUOJMEXu3BDYAWzjuqJKXe0wlOkZgr8NfEOvI1xC/XQ8Zo7hRKrhDcjVfzSac+/
+ 8j/DmMWwmCj2qiecEm3XQKzuHPAiLAcv/EtZoIupjZEEScNIPII4jy80uRtzVq8yB5Av8WiDnRjhEgapawbFcoqjI24B0e0KwyZjWa3y9rDSYbxFIOw4qNRT
+ ENkmlNbfrxcgRwQ40c8KlCeQnos6Ri+IyVCisTH5SJgxc6eYdePHU1TpxmaV02FNYtpatUfzn/RZff5N2u7l91VMDKQZw8X2BvBx4dCOu0Q=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-
-Le 13/11/2017 à 11:30, Junio C Hamano a écrit :
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Nicolas Morey-Chaisemartin <NMoreyChaisemartin@suse.de> writes:
+On 10/11/17 18:51, Ramsay Jones wrote:
+> 
+> 
+> On 10/11/17 11:09, Phillip Wood wrote:
+>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
 >>
->>> I agree this is a "am" job. Was just wondering if reusing some of
->>> the code from apply (and move it so it makes more sense) wouldnd't
->>> make more sense than rewriting a patch detection function.
->> Yes, I understood that and have already given an answer, no?
-> This was a bit too terse to be useful, so let me try again.
+>> Move the functions that check for empty messages from bulitin/commit.c
+>> to sequencer.c so they can be shared with other commands. The
+>> functions are refactored to take an explicit cleanup mode and template
+>> filename passed by the caller.
+>>
+>> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+>> ---
+>>
+>> Notes:
+>>     changes since v1:
+>>      - prefix cleanup_mode enum and constants with commit_msg_
+>>
+>>  builtin/commit.c | 99 +++++++++++---------------------------------------------
+>>  sequencer.c      | 61 ++++++++++++++++++++++++++++++++++
+>>  sequencer.h      | 11 +++++++
+>>  3 files changed, 91 insertions(+), 80 deletions(-)
+>>
+> 
+> Just an idle thought - why are these functions moving to
+> sequencer.[ch] rather than commit[.ch]?
+> 
+> Similar comments for other patches in the series which moves
+> code from builtin/commit.c to sequencer.[ch].
 
-Thanks ;)
+I did think about putting them in commit.[ch] but I felt they where
+higher level than the existing functions in those files and as they're
+used by the sequencer code I just put them in there in the end.
 
->
-> I think the ideal endgame would be to allow people to come up with a
-> topic branch of this shape (illustrated is a three-patch series on
-> top of 'origin'):
->
->     ---o---o (origin)
->             \
->              1---2---3
->
-> and then add an empty commit C whose log message is used to store
-> "cover letter material", i.e.
->
->     ---o---o (origin)
->             \
->              1---2---3---C (topic)
->
-> And then you should be able to 
->
->  (1) merge such branch yourself, coming up with a history like this,
->      where merge M uses material from C in the merge log message
->
->     ---o---o---x---x---M
->             \         /
->              1---2---3
->
->  (2) "git format-patch origin..topic" that would create the cover
->      letter using material found in C in addition to the usual
->      stuff (like shortlog) generated by "format-patch --cover",
->      followed by these three patches.
->
->  (3) "git format-patch M" should be able to (a) realize that M
->      merges a side branch that is a three-commit series (i.e.
->      M^1..M^2), and (b) notice that log message of M has
->      human-readable description.  Then it grabs the merge log
->      message of M and do the same as (2).
->
->  (4) "git am" the result from (2) or (3) should recreate the
->      original history i.e. what we started with with C.
->
->     ---o---o (origin)
->             \
->              1---2---3---C (topic)
+Best Wishes
 
-That what I got from the archive referenced in the leftover bits.
-I'm currently focusing on (2) and (4).
-(3) might come reasonably "easy" after (2) but I don't know enough about the internal API yet so I focused on the simplest ;)
+Phillip
 
->
-> Now, I _think_ what the machinery needs a lot more is to be able to
-> detect C is an empty commit (when doing (2)),
-
-Unless I'm mistaken, this should be covered by the RFC for format-patch:
-
-+			if (commit->parents && !commit->parents->next &&
-+			    !oidcmp(&commit->tree->object.oid,
-+				    &commit->parents->item->tree->object.oid)) {
-+				cover_at_tip_commit = commit;
-
-As I said, I'm focusing only for (2) now, so we check there is only one parent and that the commit did not change the tree hash. (meaning an empty commit right ?)
-
->  and then you have
-> quite a lattitude in designing what exactly such an automated cover
-> letter looks like, so that the receiving end (4) can recognize it
-> more easily and (more importantly) more robustly than "the message
-> does not have any patch in it".  Not all random messages that do
-> not have a patch in it are cover letters, and that is why I do not
-> think touching any code in the apply layer in an attempt to "reuse"
-> anything is a bad idea.  It will risk butchering the code without
-> any real gain, because what we really need to know is *not* absence
-> of patch, but presence of cover letter material.
-
-Agreed.
-
-> The simplest would probably be to notice that the subject of one has
-> 0/N on it, while other messages were labeled with 1/N..(N-1)/N; that
-> would be a lot stronger clue that 0/N has a cover than "it does not
-> have any patch in it".
-
-Good idea, and should be easy enough to put in place.
-
->
-> It may be that we would not just want to identify which message is
-> cover and which message is not, but which part of the cover letter
-> message should go back to the log message of the capping empty
-> commit (and moved to the merge log message).  Just like we invented
-> the conventions like scissors, three-dashes, etc., you might want to
-> come up with a way to do so in your format-patch enhancement used to
-> do the (2) and (3) above.  Then it will be the matter of teaching
-> that convention to "am" used in (4).
->
-
-I like that too. It could also allow using (4) on series with a manual cover letter without pulling the shortlog/diffstat stuff into the new topic commit.
-
-Nicolas
+> ATB,
+> Ramsay Jones
+> 
+> 
 
