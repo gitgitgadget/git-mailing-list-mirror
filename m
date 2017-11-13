@@ -7,90 +7,150 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C1A9B1F42B
+	by dcvr.yhbt.net (Postfix) with ESMTP id D8EA11F42B
 	for <e@80x24.org>; Mon, 13 Nov 2017 22:38:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752488AbdKMWim (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Nov 2017 17:38:42 -0500
-Received: from mout.gmx.net ([212.227.17.22]:65047 "EHLO mout.gmx.net"
+        id S1752646AbdKMWip (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Nov 2017 17:38:45 -0500
+Received: from mout.gmx.net ([212.227.17.22]:62157 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751376AbdKMWik (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Nov 2017 17:38:40 -0500
+        id S1751376AbdKMWio (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Nov 2017 17:38:44 -0500
 Received: from bedhanger.strangled.net ([188.192.144.31]) by mail.gmx.com
- (mrgmx101 [212.227.17.168]) with ESMTPSA (Nemesis) id
- 0MOSNd-1eK8882i61-005pg4; Mon, 13 Nov 2017 23:38:05 +0100
+ (mrgmx103 [212.227.17.168]) with ESMTPSA (Nemesis) id
+ 0MOOJl-1eK87p1QRh-005rob; Mon, 13 Nov 2017 23:38:08 +0100
 From:   Ann T Ropea <bedhanger@gmx.de>
 To:     Philip Oakley <philipoakley@iee.org>,
         Junio C Hamano <gitster@pobox.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Daniel Barkalow <barkalow@iabervon.org>,
         Ann T Ropea <bedhanger@gmx.de>
-Subject: Re: [PATCH v2 2/6] checkout: describe_detached_head: remove ellipsis after committish
-Date:   Mon, 13 Nov 2017 23:36:50 +0100
-Message-Id: <20171113223654.27732-2-bedhanger@gmx.de>
+Subject: Re: [PATCH v2 3/6] diff: diff_aligned_abbrev: remove ellipsis after abbreviated SHA-1 value
+Date:   Mon, 13 Nov 2017 23:36:51 +0100
+Message-Id: <20171113223654.27732-3-bedhanger@gmx.de>
 X-Mailer: git-send-email 2.13.6
 In-Reply-To: <20171113223654.27732-1-bedhanger@gmx.de>
 References: <20171113223654.27732-1-bedhanger@gmx.de>
 References: <83D263E58ABD46188756D41FE311E469@PhilipOakley> <xmqqfu9pmsx3.fsf@gitster.mtv.corp.google.com>
 In-Reply-To: <EA775C6AB4684B7A86A88C733C132827@PhilipOakley>
-X-Provags-ID: V03:K0:mHZPu7GUkb7umsybGAxvi6FlSBEBwu4YFJt0feDWZ+rm7vV/Ql3
- vmOg6qt9MQx1/wYOTlVdc3bqYpKzf2VDrBqOAQewtTkp+D14eopMEgLmil8erd3WuWlDhKk
- FQ3CQFTaMAn9RVtqTV16oig5I7jMFl2L416Sv85vTK+tcFAC1r6AxmluDHY0tYVjZYE9Y9X
- zJ6GO0yziQ/vLTN8Q0hHQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:x8UMTlu7ocU=:i3Rg4M2dnLpQOkyR4sj3dm
- sFNSHF2ww3EJO5unOJwzvbFzx52Lj+jr0RcaMpfwZpUYYs6vDuZcjRa1bE5ZfSJB6lFhLoe9B
- mvXjZX+OV+OMP+4pnJb3DK+HolzZSidGigAe0YxtRJkqjmTQMyiH1ikue+49yEx9/7c4gSxlB
- 3J3fMTPzln9ADmyQmvqCYt49vYWjQIeFYgsvf5OX8un/lZhbuLL+4UH3LkchTaTWFYBrTBgq8
- HCIYdwMGYJ+WnxbF92tCoPT4rCXcct/BaSjVoQnt8Z+CHExiVZg0FxYjT9gxC3jTQRNTsbY3k
- eH3X47fMvd/M3/R4rvzrD+RXz8bHoaENpQvjIH6cZUATqpr/VSdONicMb5S/JAq2ppnWiwPbV
- +SrjN/8z2sSYRDn8XTu9B+rnWnicCQj64K49d2Gz63nk8W1AIye4FmDll3F3HeUkTAfLOq/NY
- W7bkKAFndN4AniUIGv16fPdv8qYnwpHnNRe8e2O9xetf+a2i5LqVxH4pMrKqiNCE1ILCQmf7T
- CBAvfpncw3oZRLBd+DAnOese6XEYqcCVVKtCW7OowIre1KqXYkX0/prz03t1DJsnHbBjITgNj
- huWkpww6xojHD9eEM1fHLBZJLPM23PDVyh1D4+SV2wzNX8lc3iQ7X/F1pe7nH0LTNfRiTupqw
- eTUftl8XLKF5iLRmVk+fw43l0cGOBTDPDcg8K80jiJ/mwUu5IMHSigg52HOHhIz9nlXW5aXj0
- DoCu6CH+JLdIDAQpWN8+XvZR0TeJIxXA5euJHPPxOLi5KhDMdYTdicj76CrNdQs9pz7ZTW80A
- HMpxL+9Ct0RREAeCPISMvSfZutUNg==
+X-Provags-ID: V03:K0:1Hck+xYzffmeKCYSBlgL05WjwC5gni3+jE3Hb68H5xsOm4CZqzG
+ Xa/X0H+eWSUokpQpT+WK0lMthPfr7S4WL0KjtCffDUe/tZXlpAVjbo5xt4xiBbct0D2LFvG
+ 00qMbsLO4KrU3lDXV4RLQ18voHHW3IPoRpiFwSiRdIisU/jU3+Hlq4HBoxQLRiAQFY1gIOu
+ VqVEYfXdaNH+VB7dx87BA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:FdJ3yYz1peE=:lkyOfeXQUER5repyAk3QA7
+ kaBLKc8ya51ur09QONvZlwZPmei7p0cR1/ymY1UJkVyg86EZXN0vYwM/em/xJNCGFJETaL+fA
+ 5frf1gJuB/LDO2glZ2fW8kVx/LUEPuXcHzc/l8x+DO7SAzHrUIejr+hYnX4+vHYGrdhAhD0C6
+ /1zvzIy4buiVS0vn+PtHY/W5gKE+w4az8PSLPEjrdAyRbiB8RMLDTFElVlfrKknAiG8MIjCc7
+ PDJ+otGWtPc1uTFZJCKpFiFbc2nnyuiX5w1yTo/0yjzxStmlyUdQKE+agM7DOln/yG1FEEaqh
+ tKI+osM3/nJmYcynAY9ZC1Q3VL+NZzVGgdLuFIGiYWYEPByjGMi5cEDY3ZjUqhckt118mCb4A
+ NPpQc39EQW5BW4gweWYlPLV5mb2rtZmDPPb19uwCaliMDmTeIv/jYFEdaWe7qHHbrUirLtk0j
+ ID9LSMz0+oEqzDMq4UXRhUKOEth/7hWsCBVHDuVUXgs1Vv+Rl+3sVqbldPQ9dLNStFmF1WInT
+ myE+sY1C/qcvzLKL6vzu7qrnN8+leGV4ePdFp50/QrUiL42VfvtnJBqos11PVxJBE9zuzoVvj
+ ZdyE98IGO0CJMWLj3apGokgTmWOgorZb+lcx6X4yAbEhc6Wp+r2qWGFDmjRHsgMmGG/L2ZqmS
+ j4fu72sHiWfA1PfpUqe08LwA+q4TIu2e3SYvTJEWX95gPQ5tk9a5k4TzEUU9iouXj5F1RAuYR
+ 86TYJZEc0I9bG61n+RArMw89qlEdQ0AhhRtnkKq4r41vV9b7OYXehxo9zu9gp62eStb1s/IAQ
+ vlh7r3djjEBXUtt8pAiegrFDbU6Kg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We do not want an ellipsis displayed following an (abbreviated) SHA-1
-value.
+Neither Git nor the user are in need of this (visual) aid anymore, but
+we must offer a transition period.
 
-The days when this was necessary to indicate the truncation to
-lower-level Git commands and/or the user are bygone.
-
-However, to ease the transition, the ellipsis will still be printed if
-the user (actively!) sets the config option core.printsha1ellipsis to
-true.
+Also, fix a typo: "abbbreviated" ---> "abbreviated".
 
 Signed-off-by: Ann T Ropea <bedhanger@gmx.de>
 ---
 v2: rename patch series & focus on removal of ellipses
- builtin/checkout.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ diff.c | 69 +++++++++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 39 insertions(+), 30 deletions(-)
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 6c2b4cd419a4..101a16a14a76 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -402,8 +402,13 @@ static void describe_detached_head(const char *msg, struct commit *commit)
- 	struct strbuf sb = STRBUF_INIT;
- 	if (!parse_commit(commit))
- 		pp_commit_easy(CMIT_FMT_ONELINE, commit, &sb);
--	fprintf(stderr, "%s %s... %s\n", msg,
--		find_unique_abbrev(commit->object.oid.hash, DEFAULT_ABBREV), sb.buf);
+diff --git a/diff.c b/diff.c
+index 0763e89263ef..9709dc37c6d7 100644
+--- a/diff.c
++++ b/diff.c
+@@ -4902,41 +4902,50 @@ const char *diff_aligned_abbrev(const struct object_id *oid, int len)
+ 	int abblen;
+ 	const char *abbrev;
+ 
++	/* Do we want all 40 hex characters?
++	 */
+ 	if (len == GIT_SHA1_HEXSZ)
+ 		return oid_to_hex(oid);
+ 
+-	abbrev = diff_abbrev_oid(oid, len);
+-	abblen = strlen(abbrev);
+-
+-	/*
+-	 * In well-behaved cases, where the abbbreviated result is the
+-	 * same as the requested length, append three dots after the
+-	 * abbreviation (hence the whole logic is limited to the case
+-	 * where abblen < 37); when the actual abbreviated result is a
+-	 * bit longer than the requested length, we reduce the number
+-	 * of dots so that they match the well-behaved ones.  However,
+-	 * if the actual abbreviation is longer than the requested
+-	 * length by more than three, we give up on aligning, and add
+-	 * three dots anyway, to indicate that the output is not the
+-	 * full object name.  Yes, this may be suboptimal, but this
+-	 * appears only in "diff --raw --abbrev" output and it is not
+-	 * worth the effort to change it now.  Note that this would
+-	 * likely to work fine when the automatic sizing of default
+-	 * abbreviation length is used--we would be fed -1 in "len" in
+-	 * that case, and will end up always appending three-dots, but
+-	 * the automatic sizing is supposed to give abblen that ensures
+-	 * uniqueness across all objects (statistically speaking).
++	/* An abbreviated value is fine, possibly followed by an
++	 * ellipsis.
+ 	 */
+-	if (abblen < GIT_SHA1_HEXSZ - 3) {
+-		static char hex[GIT_MAX_HEXSZ + 1];
+-		if (len < abblen && abblen <= len + 2)
+-			xsnprintf(hex, sizeof(hex), "%s%.*s", abbrev, len+3-abblen, "..");
+-		else
+-			xsnprintf(hex, sizeof(hex), "%s...", abbrev);
+-		return hex;
+-	}
 +	if (print_sha1_ellipsis) {
-+		fprintf(stderr, "%s %s... %s\n", msg,
-+			find_unique_abbrev(commit->object.oid.hash, DEFAULT_ABBREV), sb.buf);
++		abbrev = diff_abbrev_oid(oid, len);
++		abblen = strlen(abbrev);
++
++		/*
++		 * In well-behaved cases, where the abbreviated result is the
++		 * same as the requested length, append three dots after the
++		 * abbreviation (hence the whole logic is limited to the case
++		 * where abblen < 37); when the actual abbreviated result is a
++		 * bit longer than the requested length, we reduce the number
++		 * of dots so that they match the well-behaved ones.  However,
++		 * if the actual abbreviation is longer than the requested
++		 * length by more than three, we give up on aligning, and add
++		 * three dots anyway, to indicate that the output is not the
++		 * full object name.  Yes, this may be suboptimal, but this
++		 * appears only in "diff --raw --abbrev" output and it is not
++		 * worth the effort to change it now.  Note that this would
++		 * likely to work fine when the automatic sizing of default
++		 * abbreviation length is used--we would be fed -1 in "len" in
++		 * that case, and will end up always appending three-dots, but
++		 * the automatic sizing is supposed to give abblen that ensures
++		 * uniqueness across all objects (statistically speaking).
++		 */
++		if (abblen < GIT_SHA1_HEXSZ - 3) {
++			static char hex[GIT_MAX_HEXSZ + 1];
++			if (len < abblen && abblen <= len + 2)
++				xsnprintf(hex, sizeof(hex), "%s%.*s", abbrev, len+3-abblen, "..");
++			else
++				xsnprintf(hex, sizeof(hex), "%s...", abbrev);
++			return hex;
++		}
+ 
+-	return oid_to_hex(oid);
++		return oid_to_hex(oid);
 +	} else {
-+		fprintf(stderr, "%s %s %s\n", msg,
-+			find_unique_abbrev(commit->object.oid.hash, DEFAULT_ABBREV), sb.buf);
++		return diff_abbrev_oid(oid, len);
 +	}
- 	strbuf_release(&sb);
  }
  
+ static void diff_flush_raw(struct diff_filepair *p, struct diff_options *opt)
 -- 
 2.13.6
 
