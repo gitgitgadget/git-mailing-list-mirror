@@ -2,141 +2,324 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F16CF1F42B
-	for <e@80x24.org>; Mon, 13 Nov 2017 17:39:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ABE0B1F42B
+	for <e@80x24.org>; Mon, 13 Nov 2017 17:53:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754170AbdKMRjH (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Nov 2017 12:39:07 -0500
-Received: from mail-qk0-f169.google.com ([209.85.220.169]:49055 "EHLO
-        mail-qk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754138AbdKMRjG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Nov 2017 12:39:06 -0500
-Received: by mail-qk0-f169.google.com with SMTP id a142so20710767qkb.5
-        for <git@vger.kernel.org>; Mon, 13 Nov 2017 09:39:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=XrG1vBjdnnFxVn/GSKJc1veRxC3G6FhBYiPdv3k94Ng=;
-        b=EQBgJ00aRtjBzXEOXOqN+4Mq6d7HYZOXkmBPMS+BOloKxH45kozP0QSy8jy4ihYu+F
-         FVz6aBGcnD+xvQ8CBO8YgsL/4kRU4H8G5zAUwhFd8aoeTzsZImCkIPLDrBJfNqOndujr
-         imLQiFN8Jmy8+PKyCpbxEgrbf7kiAzKmT6SPaztASUN21y/WvelMuNl03BhPQeKBJbDc
-         9zM42RKHtvKz9fxuG1TT5IIbRF8EH07VjSFOjxzVAMjkDqWHdxO/9QjvfebeitURTVIN
-         O2EaCjRRxvClssLmbWFEBCbwD11Ujas6rUuzl3HGJoXnp7yV1fPa4R952gASOSOeeuiJ
-         9AUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=XrG1vBjdnnFxVn/GSKJc1veRxC3G6FhBYiPdv3k94Ng=;
-        b=HW+PrZeyVXYpRbXyoZPclsunOs1RK+sGBL6Sz0MHl5XhppxyPgAijH0p+HNFuFsYNI
-         ZtCu5/PEm1CH1FfgaB6lZJQUE3/AWgcU/LfHPF4ROFhDWkWbeL3rRqUTFf5P47+/WE+s
-         //TBdHglrbwq33d14zQg2I3Ej1iO4FSn6DuWle6XuJRFwkAJSoMsaVc7Tlz09YfJ6znn
-         WXPriLkhNhG0mwey5W6QYwk8Hm5iZZF1erqfLAmG6TRbYb/wT9FW43gtLpBsKOAGqENz
-         j2uG1X4ruP4/RJBFeFeZxpEQ4AyXbxR9p1znnUUxHA/1sYTvSJOvCPucF94KioIN3+as
-         a2+w==
-X-Gm-Message-State: AJaThX6kM7PiIp5HxF2c7B5yaizXGJpP6IuQPPkTEmTfiLypWBU0TeLL
-        SCC5McCMz/wpC1PI+MQPIIvB71oS1/CeGlhx9Xg=
-X-Google-Smtp-Source: AGs4zMaU08lCMH51+NkAvpOc//KS8h3tg3lAUmpDMuoWXtmNQROJny4bJNLEtJ7XIJXZtdIqSuqY4KYm4aGJgSI/5rE=
-X-Received: by 10.55.97.209 with SMTP id v200mr6370789qkb.71.1510594745768;
- Mon, 13 Nov 2017 09:39:05 -0800 (PST)
+        id S1754359AbdKMRxw (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Nov 2017 12:53:52 -0500
+Received: from cp-27.webhostbox.net ([208.91.198.76]:40158 "EHLO
+        cp-27.webhostbox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754316AbdKMRxs (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Nov 2017 12:53:48 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=unimetic.com; s=default; h=Message-ID:References:In-Reply-To:Reply-To:
+        Subject:Cc:To:From:Date:Content-Transfer-Encoding:Content-Type:MIME-Version:
+        Sender:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+        Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=GavaDAw50VHDDFqrNP8B+Y6/DXI3Ob74SeWbSKsG1h8=; b=pFbwp9wXKFAxVYfOT3LEm96pm+
+        IAknxNRF8AT0OQifSdcYFz0Rio4vLSDMUPlR+SywobSPQh53a77rMwwY0Nv90Mv2mwUaituWWuT6s
+        ELUFfGduRPbBma0KCNvtC1XASmZJ5fEAnd0n7fi3WrgOD70Hrav9ijrBY4bIJUWZzqrA6Pjq3wxuP
+        MTcSAhh6GhzJLajQz+TGc6xAw6u4QsD4DAnEjSwCpRn+pbIai7gxgpxhw1ifsDkb/NtkGTzgOUWE7
+        DsXlkpdE3zPsif5QfVhj1ndBQmd0bD3OD2MORkw6iBMtKjGUMCU/YQFEZT2Mr/DxDkH8jE9NiuvxH
+        Cs3igr+g==;
+Received: from [127.0.0.1] (port=35440 helo=cp-27.webhostbox.net)
+        by cp-27.webhostbox.net with esmtpa (Exim 4.89)
+        (envelope-from <hsed@unimetic.com>)
+        id 1eEIva-000WHg-99; Mon, 13 Nov 2017 17:53:47 +0000
 MIME-Version: 1.0
-Received: by 10.12.155.209 with HTTP; Mon, 13 Nov 2017 09:39:05 -0800 (PST)
-In-Reply-To: <alpine.LFD.2.21.1711130938080.5262@DESKTOP-1GPMCEJ>
-References: <alpine.LFD.2.21.1711130938080.5262@DESKTOP-1GPMCEJ>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 13 Nov 2017 12:39:05 -0500
-X-Google-Sender-Auth: zBpz5iaCDm8fLxuYc-L3UeKcDQQ
-Message-ID: <CAPig+cRLcJ2a=QKyKAkaNiewoWMQvKr_AWePKYVpGS5S9g-i1Q@mail.gmail.com>
-Subject: Re: man page for "git-worktree" is a bit confusing WRT "prune"
-To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
-Cc:     Git Mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 13 Nov 2017 17:53:46 +0000
+From:   hsed@unimetic.com
+To:     Git <git@vger.kernel.org>
+Cc:     Jeff King <peff@peff.net>, Kevin Daudt <me@ikke.info>
+Subject: [PATCH V2] config: add --expiry-date
+Reply-To: 20171112145535.gb4nafdhhdslknex@sigill.intra.peff.net
+Mail-Reply-To: 20171112145535.gb4nafdhhdslknex@sigill.intra.peff.net
+In-Reply-To: <f9d6d1cfcad17c93a0131cf69c3d7705@unimetic.com>
+References: <f9d6d1cfcad17c93a0131cf69c3d7705@unimetic.com>
+Message-ID: <d4c5023dad8a7593373141a04a406b4d@unimetic.com>
+X-Sender: hsed@unimetic.com
+User-Agent: Roundcube Webmail/1.2.3
+X-Authenticated_sender: hsed@unimetic.com
+X-OutGoing-Spam-Status: No, score=-1.0
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cp-27.webhostbox.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - unimetic.com
+X-Get-Message-Sender-Via: cp-27.webhostbox.net: authenticated_id: hsed@unimetic.com
+X-Authenticated-Sender: cp-27.webhostbox.net: hsed@unimetic.com
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 13, 2017 at 9:48 AM, Robert P. J. Day <rpjday@crashcourse.ca> wrote:
->   once more, into the man pages ... "git worktree" seems like a fairly
-> simple command, but there is some confusion about the function of
->
->   $ git worktree prune
->
-> the normal meaning of "prune" (certainly with git commands) is to
-> actually delete some content, and the initial impression of this
-> command is that it will delete an actual worktree. however, further
-> reading reveals:
->
-> " ... or you can run git worktree prune in the main or any linked
-> working tree to clean up any stale administrative files."
->
->   ah, so one learns that the subcommand "prune" does *not* do any
-> actual pruning as people would *normally* understand it, it simply
-> deletes the administrative information about an already-deleted
-> worktree, do i read that correctly?
+Description:
+This patch adds a new option to the config command.
 
-Yes. This usage is consistent with "git remote prune" which removes
-administrative information about local branches which have already
-been deleted on the remote side.
+Enables flag --expiry-date as a data-type to covert date-strings to
+timestamps when reading from config files (GET).
+This flag is ignored on write (SET) because the date-string is stored in
+config without performing any normalization.
 
->   that's emphasized further down in the actual definition of "prune":
->
->     prune
->         Prune working tree information in $GIT_DIR/worktrees.
->
-> but perhaps that explanation could be extended to say it only works on
-> already-deleted trees, since that's certainly not clear from that
-> single sentence.
+A few test cases are also created since this is a new feature.
 
-As originally implemented, git-worktree would detect deleted or
-relocated worktrees and prune or update the administrative information
-automatically. So, "prune" was more a behind-the-scenes implementation
-detail rather than an important user-facing command. However, the
-implementation and semantics of that automatic behavior were not quite
-robust and ended up leaving things in a slightly corrupted state (if I
-recall correctly), though the corruption was easily corrected by hand.
-As a consequence, the automatic behavior was retired while the general
-implementation of git-worktree "cooked", with the idea that it could
-be revisited later, with the result that "prune" became more
-user-facing than originally intended.
+Motivation:
+A parse_expiry_date() function already existed for api calls,
+this patch simply allows the function to be used from the command line.
 
-The above description could be extended with more information. An
-alternative would be to point the reader at the "DETAILS" section as
-is done already for "prune" in "DISCUSSION".
+Update:
+Added suggestions, documentation, relative time test case and test
+helper function to print out timestamps for comparison. Updated reflog.c
+to avoid function duplication.
 
->   finally, the prune "--expire" option is truly confusing:
->
->     --expire <time>
->         With prune, only expire unused working trees older than <time>.
->
-> suddenly, we encounter the verb "expire", which means ... what? how
-> does "expiring" a worktree differ from "pruning" a worktree? and what
-> makes a worktree "unused"? the normal meaning of "unused" is that you
-> haven't, you know, *used* it lately. in this context, though, does it
-> mean deleted? and if it means deleted, what does it mean for it to be
-> older than some time if it's already gone?
->
->   thoughts?
+Signed-off-by: Haaris <hsed@unimetic.com>
+---
+  Documentation/git-config.txt |  5 +++++
+  builtin/config.c             | 10 +++++++++-
+  builtin/reflog.c             | 14 ++------------
+  config.c                     |  9 +++++++++
+  config.h                     |  1 +
+  t/helper/test-date.c         | 12 ++++++++++++
+  t/t1300-repo-config.sh       | 30 ++++++++++++++++++++++++++++++
+  7 files changed, 68 insertions(+), 13 deletions(-)
 
-This dates back to the original behavior of automatically pruning
-administrative information for deleted worktrees. As discussed
-elsewhere in the document, a worktree may be placed on some removable
-device (USB drive, memory stick, etc.) or network share which isn't
-always mounted. The "expire time" provides such
-not-necessarily-mounted worktrees a grace period before being pruned
-automatically. You wouldn't want your worktree administrative
-information erased automatically when invoking some git-worktree
-command -- say "git worktree list" -- simply because you forgot to
-plug your memory stick back into the computer; the grace period
-protects against this sort of lossage. As with "prune", originally,
-the grace period was more a behind-the-scenes detail than a
-user-facing feature. Nevertheless, it's still useful; you might forget
-to plug in your memory stick before invoking "git worktree prune"
-manually.
+diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
+index 4edd09fc6..14da5fc15 100644
+--- a/Documentation/git-config.txt
++++ b/Documentation/git-config.txt
+@@ -180,6 +180,11 @@ See also <<FILES>>.
+  	value (but you can use `git config section.variable ~/`
+  	from the command line to let your shell do the expansion).
 
-The term "unused" is unfortunate. A better description would likely be welcome.
++--expiry-date::
++	`git config` will ensure that the output is converted from
++	a fixed or relative date-string to a timestamp. This option
++	has no effect when setting the value.
++
+  -z::
+  --null::
+  	For all options that output values and/or keys, always
+diff --git a/builtin/config.c b/builtin/config.c
+index d13daeeb5..afdb02191 100644
+--- a/builtin/config.c
++++ b/builtin/config.c
+@@ -52,6 +52,7 @@ static int show_origin;
+  #define TYPE_INT (1<<1)
+  #define TYPE_BOOL_OR_INT (1<<2)
+  #define TYPE_PATH (1<<3)
++#define TYPE_EXPIRY_DATE (1<<4)
+
+  static struct option builtin_config_options[] = {
+  	OPT_GROUP(N_("Config file location")),
+@@ -80,6 +81,7 @@ static struct option builtin_config_options[] = {
+  	OPT_BIT(0, "int", &types, N_("value is decimal number"), TYPE_INT),
+  	OPT_BIT(0, "bool-or-int", &types, N_("value is --bool or --int"), 
+TYPE_BOOL_OR_INT),
+  	OPT_BIT(0, "path", &types, N_("value is a path (file or directory 
+name)"), TYPE_PATH),
++	OPT_BIT(0, "expiry-date", &types, N_("value is an expiry date"), 
+TYPE_EXPIRY_DATE),
+  	OPT_GROUP(N_("Other")),
+  	OPT_BOOL('z', "null", &end_null, N_("terminate values with NUL 
+byte")),
+  	OPT_BOOL(0, "name-only", &omit_values, N_("show variable names 
+only")),
+@@ -159,6 +161,11 @@ static int format_config(struct strbuf *buf, const 
+char *key_, const char *value
+  				return -1;
+  			strbuf_addstr(buf, v);
+  			free((char *)v);
++		} else if (types == TYPE_EXPIRY_DATE) {
++			timestamp_t t;
++			if(git_config_expiry_date(&t, key_, value_) < 0)
++				return -1;
++			strbuf_addf(buf, "%"PRItime, t);
+  		} else if (value_) {
+  			strbuf_addstr(buf, value_);
+  		} else {
+@@ -273,12 +280,13 @@ static char *normalize_value(const char *key, 
+const char *value)
+  	if (!value)
+  		return NULL;
+
+-	if (types == 0 || types == TYPE_PATH)
++	if (types == 0 || types == TYPE_PATH || types == TYPE_EXPIRY_DATE)
+  		/*
+  		 * We don't do normalization for TYPE_PATH here: If
+  		 * the path is like ~/foobar/, we prefer to store
+  		 * "~/foobar/" in the config file, and to expand the ~
+  		 * when retrieving the value.
++		 * Also don't do normalization for expiry dates.
+  		 */
+  		return xstrdup(value);
+  	if (types == TYPE_INT)
+diff --git a/builtin/reflog.c b/builtin/reflog.c
+index ab31a3b6a..223372531 100644
+--- a/builtin/reflog.c
++++ b/builtin/reflog.c
+@@ -416,16 +416,6 @@ static struct reflog_expire_cfg *find_cfg_ent(const 
+char *pattern, size_t len)
+  	return ent;
+  }
+
+-static int parse_expire_cfg_value(const char *var, const char *value, 
+timestamp_t *expire)
+-{
+-	if (!value)
+-		return config_error_nonbool(var);
+-	if (parse_expiry_date(value, expire))
+-		return error(_("'%s' for '%s' is not a valid timestamp"),
+-			     value, var);
+-	return 0;
+-}
+-
+  /* expiry timer slot */
+  #define EXPIRE_TOTAL   01
+  #define EXPIRE_UNREACH 02
+@@ -443,11 +433,11 @@ static int reflog_expire_config(const char *var, 
+const char *value, void *cb)
+
+  	if (!strcmp(key, "reflogexpire")) {
+  		slot = EXPIRE_TOTAL;
+-		if (parse_expire_cfg_value(var, value, &expire))
++		if (git_config_expiry_date(&expire, var, value))
+  			return -1;
+  	} else if (!strcmp(key, "reflogexpireunreachable")) {
+  		slot = EXPIRE_UNREACH;
+-		if (parse_expire_cfg_value(var, value, &expire))
++		if (git_config_expiry_date(&expire, var, value))
+  			return -1;
+  	} else
+  		return git_default_config(var, value, cb);
+diff --git a/config.c b/config.c
+index 903abf953..6ded9ce98 100644
+--- a/config.c
++++ b/config.c
+@@ -990,6 +990,15 @@ int git_config_pathname(const char **dest, const 
+char *var, const char *value)
+  	return 0;
+  }
+
++int git_config_expiry_date(timestamp_t *timestamp, const char *var, 
+const char *value)
++{
++	if (!value)
++		return config_error_nonbool(var);
++	if (parse_expiry_date(value, timestamp))
++		die(_("failed to parse date_string in: '%s'"), value);
++	return 0;
++}
++
+  static int git_default_core_config(const char *var, const char *value)
+  {
+  	/* This needs a better name */
+diff --git a/config.h b/config.h
+index a49d26441..fc66c5933 100644
+--- a/config.h
++++ b/config.h
+@@ -58,6 +58,7 @@ extern int git_config_bool_or_int(const char *, const 
+char *, int *);
+  extern int git_config_bool(const char *, const char *);
+  extern int git_config_string(const char **, const char *, const char 
+*);
+  extern int git_config_pathname(const char **, const char *, const char 
+*);
++extern int git_config_expiry_date(timestamp_t *, const char *, const 
+char *);
+  extern int git_config_set_in_file_gently(const char *, const char *, 
+const char *);
+  extern void git_config_set_in_file(const char *, const char *, const 
+char *);
+  extern int git_config_set_gently(const char *, const char *);
+diff --git a/t/helper/test-date.c b/t/helper/test-date.c
+index f414a3ac6..ac8368797 100644
+--- a/t/helper/test-date.c
++++ b/t/helper/test-date.c
+@@ -5,6 +5,7 @@ static const char *usage_msg = "\n"
+  "  test-date show:<format> [time_t]...\n"
+  "  test-date parse [date]...\n"
+  "  test-date approxidate [date]...\n"
++"  test-date timestamp [date]...\n"
+  "  test-date is64bit\n"
+  "  test-date time_t-is64bit\n";
+
+@@ -71,6 +72,15 @@ static void parse_approxidate(const char **argv, 
+struct timeval *now)
+  	}
+  }
+
++static void parse_approx_timestamp(const char **argv, struct timeval 
+*now)
++{
++	for (; *argv; argv++) {
++		timestamp_t t;
++		t = approxidate_relative(*argv, now);
++		printf("%s -> %"PRItime"\n", *argv, t);
++	}
++}
++
+  int cmd_main(int argc, const char **argv)
+  {
+  	struct timeval now;
+@@ -95,6 +105,8 @@ int cmd_main(int argc, const char **argv)
+  		parse_dates(argv+1, &now);
+  	else if (!strcmp(*argv, "approxidate"))
+  		parse_approxidate(argv+1, &now);
++	else if (!strcmp(*argv, "timestamp"))
++		parse_approx_timestamp(argv+1, &now);
+  	else if (!strcmp(*argv, "is64bit"))
+  		return sizeof(timestamp_t) == 8 ? 0 : 1;
+  	else if (!strcmp(*argv, "time_t-is64bit"))
+diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
+index 364a53700..cbeb9bebe 100755
+--- a/t/t1300-repo-config.sh
++++ b/t/t1300-repo-config.sh
+@@ -901,6 +901,36 @@ test_expect_success 'get --path barfs on boolean 
+variable' '
+  	test_must_fail git config --get --path path.bool
+  '
+
++test_expect_success 'get --expiry-date' '
++	rel="3.weeks.5.days.00:00" &&
++	rel_out="$rel ->" &&
++	cat >.git/config <<-\EOF &&
++	[date]
++	valid1 = "3.weeks.5.days 00:00"
++	valid2 = "Fri Jun 4 15:46:55 2010"
++	valid3 = "2017/11/11 11:11:11PM"
++	valid4 = "2017/11/10 09:08:07 PM"
++	valid5 = "never"
++	invalid1 = "abc"
++	EOF
++	cat >expect <<-EOF &&
++	$(test-date timestamp $rel)
++	1275666415
++	1510441871
++	1510348087
++	0
++	EOF
++	{
++		echo "$rel_out $(git config --expiry-date date.valid1)"
++		git config --expiry-date date.valid2 &&
++		git config --expiry-date date.valid3 &&
++		git config --expiry-date date.valid4 &&
++		git config --expiry-date date.valid5
++	} >actual &&
++	test_cmp expect actual &&
++	test_must_fail git config --expiry-date date.invalid1
++'
++
+  cat > expect << EOF
+  [quote]
+  	leading = " test"
