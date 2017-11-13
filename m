@@ -2,112 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4836A1F42B
-	for <e@80x24.org>; Mon, 13 Nov 2017 19:48:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4A8C92021B
+	for <e@80x24.org>; Mon, 13 Nov 2017 19:49:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755077AbdKMTsM (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Nov 2017 14:48:12 -0500
-Received: from mail-qk0-f172.google.com ([209.85.220.172]:46118 "EHLO
-        mail-qk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755205AbdKMTsF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Nov 2017 14:48:05 -0500
-Received: by mail-qk0-f172.google.com with SMTP id o6so21263467qkh.3
-        for <git@vger.kernel.org>; Mon, 13 Nov 2017 11:48:05 -0800 (PST)
+        id S1755028AbdKMTt0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Nov 2017 14:49:26 -0500
+Received: from mail-qk0-f176.google.com ([209.85.220.176]:48366 "EHLO
+        mail-qk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754649AbdKMTtZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Nov 2017 14:49:25 -0500
+Received: by mail-qk0-f176.google.com with SMTP id a142so21245287qkb.5
+        for <git@vger.kernel.org>; Mon, 13 Nov 2017 11:49:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=RXZhBz4iUvAEUBij3Dxac1jwtBakGkM58NKl3hWRvqo=;
-        b=pv1nr7DXAE8hyFvqoihMWq5JCbsFcokkLUiVFoJt7LfV7NzqWydNh0hhWyR4ULQT1x
-         6UNk/qqCSyhaqIeTEKEYueYFXc/YGgh565gFhX1qKxdH6QNV7xqsSKug/l9/jMzcoI0j
-         ME6fPiSD7zXr5ywjC0xwkgwweCOvPRcP0haqyFxJGA13S+tlyd3sgl6EcV9HMhbooX7o
-         NolxT6jrlE9Pqns3rvzPRi8y6+MkcoNfzwOLz6rkVW2ZhJlQYHCtgVZf/KPboLq4a3gh
-         fyxAFV8xluovXj8ZhO2E7tKWlmuZihP60xPgSseSQURa4RQYNeseQk+Qa2BtR7VJKjR1
-         1G0A==
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=AoSvIuHuVUgsOV1BudNRg683qB9pD7x3HU2XzI3fNIQ=;
+        b=lwqGqBxBBigvJrB1NFRZmAYws8er/Q+O6D0eG/2gf3dtHsHv2AzTvNw+N2bQCG0h3z
+         H1AVacY5+6RTG3pH0LLvDzD1uKHFfKzGyToRKbubAa/eruX7KMMZICZW3YRD7r2DiF6X
+         81W7DC0Ou3mnFCWYm2ZbEmSJctvjZz1TzT224GuEdK4gvaAETupJl+/CR/2rOq7+Y77a
+         oAT9FWhHvUTe888lGKtWTUzoNFTUzhZIXrESKLfXADEuu0TSQ6tBCcZ3uFXppVjfh1tj
+         Sqhhggv3ar0r62+HEwkNoKUBtccKBCeZ2+1tOBQ8WeGCN8GjSg5k5EB9lvQjntU8OS4D
+         LOVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=RXZhBz4iUvAEUBij3Dxac1jwtBakGkM58NKl3hWRvqo=;
-        b=nCtTEb04zaBRknC6FX9VOSseBm4w8BNB76DkFbxdlxXM1UPeJWWkuTB+cc7bk4hBOq
-         o9dFDgj+Z6EmliWfQOQhlbnShzC6zK0uXxLPCIW0YXqXgf9iChVnu6AGpnyFK6wXixDI
-         z20uwTMhy873dvovRWlt4aNHICDEhtC3m6iRcwj9MGukIesAPOygSeyG76KVYXyH+wy5
-         j63fwkRoX5ZiGBKztHF3xTztkGCeFSzlIKsv787Dy/1Cgj///NXxLHMSxIqxjcmOPCNa
-         ds4LIxC6qMvC5fZl4CiYj2OIwKikH/mozI7VQ6DVNxMh/K9nXuU9gWUX9RwSYkisvjf4
-         4v/w==
-X-Gm-Message-State: AJaThX6MzG2bFLkT8YPArIPLnlTe4Jx8fA5oUf+bFdMSv79xMQHN0U6a
-        VYafQSGURPvjSVt6kY8zWeSWIHOUJKQ3xshWn09AgQ==
-X-Google-Smtp-Source: AGs4zMZj7qsN1Fi39SaTeQPrf5Yly+8ZsTfia/1NsYABtMuRjPQXYby+OmWjMf01ggr3Db+1NB3Qq8LF3wO8SMWNRIc=
-X-Received: by 10.55.129.70 with SMTP id c67mr16355918qkd.230.1510602484797;
- Mon, 13 Nov 2017 11:48:04 -0800 (PST)
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=AoSvIuHuVUgsOV1BudNRg683qB9pD7x3HU2XzI3fNIQ=;
+        b=NsHjmxjsUPm690PA8xXUL0Uh1pFBOEVSr2kkQC5mDGfO61BP3smjvyhPktKL1BiLhX
+         S/v06pdoSOhpdq1EQHQLClQ/WXTtBE+gYd6GlYXA9ijpgeh6lxhAbCcFAjodgeQJKUi7
+         beTCqBeXU9GS6JDCH1+3w96OtErOE3FU5NzWsloXozKpYq0c9M6eHfPdqiFgwLKM+eO8
+         udPuPr1hdNOBXfNS1QPtrpeD6tCByu4qOOIFagyAJdP9Tuw3Jldpr6JHoWtnAzhrPs9y
+         m9XZsIm2iqJ17qGupnWQQc+USFjFYG5dDNePR47YluND/WTm9mi/88kZbnZF7IyzeJEo
+         L38w==
+X-Gm-Message-State: AJaThX62pHl1aYIV9jY15EIW+6+OyDzNtCLB4b4riIiVwtKlXq8Q/2Wc
+        TCX0Mgmt6oU41FpQbmmDUVI=
+X-Google-Smtp-Source: AGs4zMaHS+64SPrdU5hk1Bt43A/lKRmaypkydtfs1Q2EgNFY7gQRtuerTO/w2yau2BAa8r/a+HewMw==
+X-Received: by 10.55.77.67 with SMTP id a64mr14598227qkb.172.1510602564231;
+        Mon, 13 Nov 2017 11:49:24 -0800 (PST)
+Received: from zaya.teonanacatl.net (pool-173-67-181-41.hrbgpa.fios.verizon.net. [173.67.181.41])
+        by smtp.gmail.com with ESMTPSA id o95sm11276729qte.15.2017.11.13.11.49.23
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 13 Nov 2017 11:49:23 -0800 (PST)
+Date:   Mon, 13 Nov 2017 14:49:21 -0500
+From:   Todd Zullinger <tmz@pobox.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Pat Thoyts <patthoyts@users.sourceforge.net>
+Subject: Re: [PATCH/RFC] Replace Free Software Foundation address in license
+ notices
+Message-ID: <20171113194921.GP5144@zaya.teonanacatl.net>
+References: <20171107053933.23370-1-tmz@pobox.com>
+ <xmqqmv3wjd66.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Received: by 10.140.102.70 with HTTP; Mon, 13 Nov 2017 11:48:04 -0800 (PST)
-In-Reply-To: <20171110190550.27059-3-newren@gmail.com>
-References: <20171110190550.27059-1-newren@gmail.com> <20171110190550.27059-3-newren@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 13 Nov 2017 11:48:04 -0800
-Message-ID: <CAGZ79kYXbvDL_SoEENf60DsDFA-yEWfvgv8bNv_v+mw042ZH=w@mail.gmail.com>
-Subject: Re: [PATCH 02/30] merge-recursive: Fix logic ordering issue
-To:     Elijah Newren <newren@gmail.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <xmqqmv3wjd66.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.9.1 (2017-09-22)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 10, 2017 at 11:05 AM, Elijah Newren <newren@gmail.com> wrote:
-> merge_trees() did a variety of work, including:
->   * Calling get_unmerged() to get unmerged entries
->   * Calling record_df_conflict_files() with all unmerged entries to
->     do some work to ensure we could handle D/F conflicts correctly
->   * Calling get_renames() to check for renames.
->
-> An easily overlooked issue is that get_renames() can create more
-> unmerged entries and add them to the list, which have the possibility of
-> being involved in D/F conflicts.
+Junio C Hamano wrote:
+> This change probably makes sense.  From here on after applying the 
+> patch, we won't have to worry about updating these every time they 
+> move---not that they have moved often, though ;-)
 
-I presume these are created via insert_stage_data called in
-get_renames, when the path entry is not found?
+Indeed.  It's thankfully a rare move.  I imagine that's why it's 
+somewhat common to find license text with the previous address long 
+after the last move.  (That and how boring licensing details are, in 
+general.)
 
-> So the call to
-> record_df_conflict_files() should really be moved after all the rename
-> detection.  I didn't come up with any testcases demonstrating any bugs
-> with the old ordering, but I suspect there were some for both normal
-> renames and for directory renames.  Fix the ordering.
+>>  compat/obstack.c                                                | 5 ++--- 
+>>  ... 
+>>  ewah/ewok_rlw.h                                                 | 3 +-- 
+>>  git-gui/git-gui.sh                                              | 3 +-- 
+>>  imap-send.c                                                     | 3 +-- 
+>>  ... 
+>>  44 files changed, 69 insertions(+), 103 deletions(-)
+>
+> I've tried hard to keep the git-gui/ part as a separate project (it 
+> indeed is managed separately).  I have been, and am still only 
+> pulling from its "upstream" repository (Pat, who is its project 
+> lead, Cc'ed), refaining from making changes that do not exist there 
+> at git://repo.or.cz/git-gui.git/ to the tree I publish.
+>
+> I'll separate the part from this patch that touches git-gui/* and 
+> try to arrange the next pull from git-gui repository would have the 
+> omitted part somehow.  Given that the "upstream" seems to be inactive 
+> these days, we might want to change the way we manage that part of 
+> the tree, though.
 
-It is hard to trace this down, though looking at
-3af244caa8 (Cumulative update of merge-recursive in C, 2006-07-27)
-may help us reason about it.
+D'oh, I should have known that.  Thanks for splitting this up.  I was 
+worried more minor things like legal details or changing code that we 
+synced from another project (compat/regex or xdiff) might require some 
+changes and didn't think enough about git-gui being separate.
 
-How would a bug look like?
+> Thanks.
 
->
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
->  merge-recursive.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/merge-recursive.c b/merge-recursive.c
-> index 1d3f8f0d22..52521faf09 100644
-> --- a/merge-recursive.c
-> +++ b/merge-recursive.c
-> @@ -1981,10 +1981,10 @@ int merge_trees(struct merge_options *o,
->                 get_files_dirs(o, merge);
->
->                 entries = get_unmerged();
-> -               record_df_conflict_files(o, entries);
->                 re_head  = get_renames(o, head, common, head, merge, entries);
->                 re_merge = get_renames(o, merge, common, head, merge, entries);
->                 clean = process_renames(o, re_head, re_merge);
-> +               record_df_conflict_files(o, entries);
->                 if (clean < 0)
->                         goto cleanup;
->                 for (i = entries->nr-1; 0 <= i; i--) {
-> --
-> 2.15.0.5.g9567be9905
->
+Thank you too.  It's always impressive to see how well you wear the 
+maintainer hat. :)
+
+-- 
+Todd
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+A common mistake people make when trying to design something
+completely foolproof is to underestimate the ingenuity of complete
+fools.
+    -- Douglas Adams
+
