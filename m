@@ -2,141 +2,155 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8F9AF1F43C
-	for <e@80x24.org>; Mon, 13 Nov 2017 10:30:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AED9E1F43C
+	for <e@80x24.org>; Mon, 13 Nov 2017 10:48:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752053AbdKMKaR (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Nov 2017 05:30:17 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:58934 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751391AbdKMKaQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Nov 2017 05:30:16 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 74B83B91BB;
-        Mon, 13 Nov 2017 05:30:09 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=A+o+DPnY1ndGljwaTp0eJRUUaBQ=; b=yUWbld
-        sXIxUpaXC+dlkjQbqr42xUMD1LHrro7UMdmTIdOXpB0nOGg7z35OVEjUviw9UChq
-        hnlOfe0hEmNWHz9BdmTM7CsJgI2S/YaSRZEg68pxEqSKLxCQo2JCEWckz7haIBQu
-        JFDyNLBhtdmTA5FIjRbWp/rEGNK1fCjAogxTs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ACV9HRiSKxUnzSJA1LtkJdWQqomioKJW
-        CgcY86g1PU9HlaRuzYwDgSne0+DqxiKfRORDFPEk4ftlBmqhuafMJScuqmBcdRUn
-        J/4W0XRDjsGi+xEBlrVky2qlLksw3wc25DWjLE01zSLrPGNtkZ/MmP9waKx6QchC
-        UK2y3a41GEg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6BE95B91BA;
-        Mon, 13 Nov 2017 05:30:09 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CFE90B91B7;
-        Mon, 13 Nov 2017 05:30:07 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Nicolas Morey-Chaisemartin <NMoreyChaisemartin@suse.de>
-Cc:     git@vger.kernel.org
+        id S1752116AbdKMKsO convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Mon, 13 Nov 2017 05:48:14 -0500
+Received: from mx2.suse.de ([195.135.220.15]:39684 "EHLO mx2.suse.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751986AbdKMKsN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Nov 2017 05:48:13 -0500
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Received: from relay1.suse.de (charybdis-ext.suse.de [195.135.220.254])
+        by mx2.suse.de (Postfix) with ESMTP id 8427FABEB;
+        Mon, 13 Nov 2017 10:48:12 +0000 (UTC)
 Subject: Re: [RFC] cover-at-tip
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
 References: <357e8afb-4814-c950-1530-530bb6dd5f5a@suse.de>
-        <e1d3ab5b-82e6-8490-8f2e-00c1359c6deb@suse.de>
-        <xmqqbmkaf0yn.fsf@gitster.mtv.corp.google.com>
-        <bbdeaba0-b757-041d-9649-4150080d4b07@suse.de>
-        <xmqqh8ty8q5x.fsf@gitster.mtv.corp.google.com>
-Date:   Mon, 13 Nov 2017 19:30:06 +0900
-In-Reply-To: <xmqqh8ty8q5x.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Mon, 13 Nov 2017 18:48:58 +0900")
-Message-ID: <xmqqbmk68o9d.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+ <e1d3ab5b-82e6-8490-8f2e-00c1359c6deb@suse.de>
+ <xmqqbmkaf0yn.fsf@gitster.mtv.corp.google.com>
+ <bbdeaba0-b757-041d-9649-4150080d4b07@suse.de>
+ <xmqqh8ty8q5x.fsf@gitster.mtv.corp.google.com>
+ <xmqqbmk68o9d.fsf@gitster.mtv.corp.google.com>
+From:   Nicolas Morey-Chaisemartin <NMoreyChaisemartin@suse.de>
+Openpgp: preference=signencrypt
+Message-ID: <72b53257-5525-2622-1233-17cf0e0b4513@suse.de>
+Date:   Mon, 13 Nov 2017 11:48:11 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101
+ Thunderbird/56.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9EBBC864-C85D-11E7-A4B8-8EF31968708C-77302942!pb-smtp1.pobox.com
+In-Reply-To: <xmqqbmk68o9d.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8BIT
+Content-Language: fr-xx-classique+reforme1990
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> Nicolas Morey-Chaisemartin <NMoreyChaisemartin@suse.de> writes:
+
+Le 13/11/2017 à 11:30, Junio C Hamano a écrit :
+> Junio C Hamano <gitster@pobox.com> writes:
 >
->> I agree this is a "am" job. Was just wondering if reusing some of
->> the code from apply (and move it so it makes more sense) wouldnd't
->> make more sense than rewriting a patch detection function.
+>> Nicolas Morey-Chaisemartin <NMoreyChaisemartin@suse.de> writes:
+>>
+>>> I agree this is a "am" job. Was just wondering if reusing some of
+>>> the code from apply (and move it so it makes more sense) wouldnd't
+>>> make more sense than rewriting a patch detection function.
+>> Yes, I understood that and have already given an answer, no?
+> This was a bit too terse to be useful, so let me try again.
+
+Thanks ;)
+
 >
-> Yes, I understood that and have already given an answer, no?
+> I think the ideal endgame would be to allow people to come up with a
+> topic branch of this shape (illustrated is a three-patch series on
+> top of 'origin'):
+>
+>     ---o---o (origin)
+>             \
+>              1---2---3
+>
+> and then add an empty commit C whose log message is used to store
+> "cover letter material", i.e.
+>
+>     ---o---o (origin)
+>             \
+>              1---2---3---C (topic)
+>
+> And then you should be able to 
+>
+>  (1) merge such branch yourself, coming up with a history like this,
+>      where merge M uses material from C in the merge log message
+>
+>     ---o---o---x---x---M
+>             \         /
+>              1---2---3
+>
+>  (2) "git format-patch origin..topic" that would create the cover
+>      letter using material found in C in addition to the usual
+>      stuff (like shortlog) generated by "format-patch --cover",
+>      followed by these three patches.
+>
+>  (3) "git format-patch M" should be able to (a) realize that M
+>      merges a side branch that is a three-commit series (i.e.
+>      M^1..M^2), and (b) notice that log message of M has
+>      human-readable description.  Then it grabs the merge log
+>      message of M and do the same as (2).
+>
+>  (4) "git am" the result from (2) or (3) should recreate the
+>      original history i.e. what we started with with C.
+>
+>     ---o---o (origin)
+>             \
+>              1---2---3---C (topic)
 
-This was a bit too terse to be useful, so let me try again.
+That what I got from the archive referenced in the leftover bits.
+I'm currently focusing on (2) and (4).
+(3) might come reasonably "easy" after (2) but I don't know enough about the internal API yet so I focused on the simplest ;)
 
-I think the ideal endgame would be to allow people to come up with a
-topic branch of this shape (illustrated is a three-patch series on
-top of 'origin'):
+>
+> Now, I _think_ what the machinery needs a lot more is to be able to
+> detect C is an empty commit (when doing (2)),
 
-    ---o---o (origin)
-            \
-             1---2---3
+Unless I'm mistaken, this should be covered by the RFC for format-patch:
 
-and then add an empty commit C whose log message is used to store
-"cover letter material", i.e.
++			if (commit->parents && !commit->parents->next &&
++			    !oidcmp(&commit->tree->object.oid,
++				    &commit->parents->item->tree->object.oid)) {
++				cover_at_tip_commit = commit;
 
-    ---o---o (origin)
-            \
-             1---2---3---C (topic)
+As I said, I'm focusing only for (2) now, so we check there is only one parent and that the commit did not change the tree hash. (meaning an empty commit right ?)
 
-And then you should be able to 
+>  and then you have
+> quite a lattitude in designing what exactly such an automated cover
+> letter looks like, so that the receiving end (4) can recognize it
+> more easily and (more importantly) more robustly than "the message
+> does not have any patch in it".  Not all random messages that do
+> not have a patch in it are cover letters, and that is why I do not
+> think touching any code in the apply layer in an attempt to "reuse"
+> anything is a bad idea.  It will risk butchering the code without
+> any real gain, because what we really need to know is *not* absence
+> of patch, but presence of cover letter material.
 
- (1) merge such branch yourself, coming up with a history like this,
-     where merge M uses material from C in the merge log message
+Agreed.
 
-    ---o---o---x---x---M
-            \         /
-             1---2---3
+> The simplest would probably be to notice that the subject of one has
+> 0/N on it, while other messages were labeled with 1/N..(N-1)/N; that
+> would be a lot stronger clue that 0/N has a cover than "it does not
+> have any patch in it".
 
- (2) "git format-patch origin..topic" that would create the cover
-     letter using material found in C in addition to the usual
-     stuff (like shortlog) generated by "format-patch --cover",
-     followed by these three patches.
+Good idea, and should be easy enough to put in place.
 
- (3) "git format-patch M" should be able to (a) realize that M
-     merges a side branch that is a three-commit series (i.e.
-     M^1..M^2), and (b) notice that log message of M has
-     human-readable description.  Then it grabs the merge log
-     message of M and do the same as (2).
+>
+> It may be that we would not just want to identify which message is
+> cover and which message is not, but which part of the cover letter
+> message should go back to the log message of the capping empty
+> commit (and moved to the merge log message).  Just like we invented
+> the conventions like scissors, three-dashes, etc., you might want to
+> come up with a way to do so in your format-patch enhancement used to
+> do the (2) and (3) above.  Then it will be the matter of teaching
+> that convention to "am" used in (4).
+>
 
- (4) "git am" the result from (2) or (3) should recreate the
-     original history i.e. what we started with with C.
+I like that too. It could also allow using (4) on series with a manual cover letter without pulling the shortlog/diffstat stuff into the new topic commit.
 
-    ---o---o (origin)
-            \
-             1---2---3---C (topic)
-
-Now, I _think_ what the machinery needs a lot more is to be able to
-detect C is an empty commit (when doing (2)), and then you have
-quite a lattitude in designing what exactly such an automated cover
-letter looks like, so that the receiving end (4) can recognize it
-more easily and (more importantly) more robustly than "the message
-does not have any patch in it".  Not all random messages that do
-not have a patch in it are cover letters, and that is why I do not
-think touching any code in the apply layer in an attempt to "reuse"
-anything is a bad idea.  It will risk butchering the code without
-any real gain, because what we really need to know is *not* absence
-of patch, but presence of cover letter material.
-
-The simplest would probably be to notice that the subject of one has
-0/N on it, while other messages were labeled with 1/N..(N-1)/N; that
-would be a lot stronger clue that 0/N has a cover than "it does not
-have any patch in it".
-
-It may be that we would not just want to identify which message is
-cover and which message is not, but which part of the cover letter
-message should go back to the log message of the capping empty
-commit (and moved to the merge log message).  Just like we invented
-the conventions like scissors, three-dashes, etc., you might want to
-come up with a way to do so in your format-patch enhancement used to
-do the (2) and (3) above.  Then it will be the matter of teaching
-that convention to "am" used in (4).
+Nicolas
 
