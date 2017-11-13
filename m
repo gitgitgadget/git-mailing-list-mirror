@@ -2,77 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C84B51F42B
-	for <e@80x24.org>; Mon, 13 Nov 2017 20:16:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 518571F42B
+	for <e@80x24.org>; Mon, 13 Nov 2017 20:28:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755425AbdKMUQT (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Nov 2017 15:16:19 -0500
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:36982 "EHLO
-        mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1755311AbdKMUQK (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 13 Nov 2017 15:16:10 -0500
-Received: from pps.filterd (m0096528.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id vADKD1kb027363;
-        Mon, 13 Nov 2017 12:16:06 -0800
-Authentication-Results: palantir.com;
-        spf=softfail smtp.mailfrom=newren@gmail.com
-Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2e5xypb3h9-1;
-        Mon, 13 Nov 2017 12:16:06 -0800
-Received: from mxw1.palantir.com (smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id 885B82265D3F;
-        Mon, 13 Nov 2017 12:16:06 -0800 (PST)
-Received: from newren2-linux.yojoe.local (newren2-linux.dyn.yojoe.local [10.100.68.32])
-        by smtp.yojoe.local (Postfix) with ESMTP id 7CC602CDF15;
-        Mon, 13 Nov 2017 12:16:06 -0800 (PST)
-From:   Elijah Newren <newren@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>
-Subject: [PATCH v2 4/4] sequencer: show rename progress during cherry picks
-Date:   Mon, 13 Nov 2017 12:16:00 -0800
-Message-Id: <20171113201600.24878-5-newren@gmail.com>
-X-Mailer: git-send-email 2.15.0.44.gf995e411c7
-In-Reply-To: <20171113201600.24878-1-newren@gmail.com>
+        id S1755284AbdKMU2i (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Nov 2017 15:28:38 -0500
+Received: from mail-io0-f172.google.com ([209.85.223.172]:45827 "EHLO
+        mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752445AbdKMU2h (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Nov 2017 15:28:37 -0500
+Received: by mail-io0-f172.google.com with SMTP id i38so7491474iod.2
+        for <git@vger.kernel.org>; Mon, 13 Nov 2017 12:28:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Q87/0GhmywknoZNXF5Vtf1Az8vznQmMJ7Zw3s6QEm5Y=;
+        b=Hmv8CLmU5wkUzg/JWd4hwTlenpxTVCl77xR1yaBy79tj9sDk1K5vJtGcTJP6r5phZk
+         rLkVD8c2YQh3sa0joOCWohjDaF3u5oeyWUcqXgzLgDqddyOucs+arnoIInY6Fx/caTsw
+         XpAJSPZRcvP1wGFq12eoijnQHbWBJm5SHB1U4siBouPj+wyXIy/fba27COSq+5OAb9Ts
+         J0deX/zJ1CJfWhX5aaPidZ81g2YrBPfOAwPYgPJIvGBksRT7wZ4HQM1dG9l8elAkcGAY
+         q40frqBpE5LnInSKBAgDT3GXpAJ/RKM6E1gxUdpSbqQ4hw5C1EmkluWbpaeLAInGz2KZ
+         6SgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Q87/0GhmywknoZNXF5Vtf1Az8vznQmMJ7Zw3s6QEm5Y=;
+        b=C2l17KmRnBI+WMd+9v+79QkSyCS6NitT3bxZ+sM985xgUeO2f+2qkySCc1f56XNr7h
+         G43M7r6UROP5n2l3DsHf5zpgdDI/uazwkWQWQ5vJYXtZvEIjNdM2nX3W58h4SM5e+JXT
+         YLq6vvV5UJyirEtFnZEeIcnj6tQQjpcd6mOLUXHu+mVMCh7ur3RiW82d1YIvKGlR9RYG
+         TLphTHt3T+m5O2POUSTkd4bEy/4pFMB8h4i1veTw2amRMXTiSTFC3qiSc79LKRMTMsAr
+         fUF7X5JulusP1/sIUBGeif8IBJFxTyImPAJ4SjO5T55i+fpC2Q+e3h/6G9DQ7R/GZ6ZF
+         mtag==
+X-Gm-Message-State: AJaThX4nI8pxN2eX1+jsVK5SE4F8G2pB/ZJcWiY23ZL7wkEFS+Xfg5Sg
+        TUV7GJPmmtE29ZCvTD+oaCoZOlbpYH4=
+X-Google-Smtp-Source: AGs4zMZjPBIfzhMbuNO+3IjDfuY+qUBF4a9TXozyMio2MU5zXZ1efHzC4vaCbVmzLXdl2x43g4qKmw==
+X-Received: by 10.107.137.163 with SMTP id t35mr11271038ioi.198.1510604916291;
+        Mon, 13 Nov 2017 12:28:36 -0800 (PST)
+Received: from twelve3.mtv.corp.google.com ([2620:0:100e:422:b1aa:4028:e6df:d3e])
+        by smtp.gmail.com with ESMTPSA id k18sm7770478ioc.75.2017.11.13.12.28.35
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 13 Nov 2017 12:28:35 -0800 (PST)
+Date:   Mon, 13 Nov 2017 12:28:34 -0800
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 2/4] progress: fix progress meters when dealing with
+ lots of work
+Message-Id: <20171113122834.20a69d1e87defe95d6e0e8ed@google.com>
+In-Reply-To: <20171113201600.24878-3-newren@gmail.com>
 References: <20171113201600.24878-1-newren@gmail.com>
-X-Proofpoint-SPF-Result: softfail
-X-Proofpoint-SPF-Record: v=spf1 redirect=_spf.google.com
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,, definitions=2017-11-13_11:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1034 lowpriorityscore=0 impostorscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.0.1-1707230000
- definitions=main-1711130279
+        <20171113201600.24878-3-newren@gmail.com>
+X-Mailer: Sylpheed 3.4.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When trying to cherry-pick a change that has lots of renames, it is
-somewhat unsettling to wait a really long time without any feedback.
+On Mon, 13 Nov 2017 12:15:58 -0800
+Elijah Newren <newren@gmail.com> wrote:
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- sequencer.c | 1 +
- 1 file changed, 1 insertion(+)
+> The possibility of setting merge.renameLimit beyond 2^16 raises the
+> possibility that the values passed to progress can exceed 2^32.
+> Use uint64_t, because it "ought to be enough for anybody".  :-)
+> 
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+> This does imply 64-bit math for all progress operations.  Possible alternatives
+> I could think of listed at
+> https://public-inbox.org/git/CABPp-BH1Cpc9UfYpmBBAHWSqadg=QuD=28qx1oV29ZdvF4NbJw@mail.gmail.com/
+> Opinions of others on whether 64-bit is okay, or preference for which alternative
+> is picked?
 
-diff --git a/sequencer.c b/sequencer.c
-index 2b4cecb617..247d93f363 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -448,6 +448,7 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
- 	o.branch2 = next ? next_label : "(empty tree)";
- 	if (is_rebase_i(opts))
- 		o.buffer_output = 2;
-+	o.show_rename_progress = 1;
- 
- 	head_tree = parse_tree_indirect(head);
- 	next_tree = next ? next->tree : empty_tree();
--- 
-2.15.0.44.gf995e411c7
+I haven't looked into this in much detail, but another alternative to
+consider is to use size_t everywhere. This also allows us to use st_add
+and st_mult, which checks overflow for us.
 
+Changing progress to use the size_t of the local machine makes sense to
+me.
