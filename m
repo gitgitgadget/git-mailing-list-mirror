@@ -2,123 +2,156 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 959601F42B
-	for <e@80x24.org>; Mon, 13 Nov 2017 15:28:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A001A1F42B
+	for <e@80x24.org>; Mon, 13 Nov 2017 15:34:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753210AbdKMP2q (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Nov 2017 10:28:46 -0500
-Received: from mail-qt0-f173.google.com ([209.85.216.173]:46347 "EHLO
-        mail-qt0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752513AbdKMP2p (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Nov 2017 10:28:45 -0500
-Received: by mail-qt0-f173.google.com with SMTP id 1so19958154qtn.3
-        for <git@vger.kernel.org>; Mon, 13 Nov 2017 07:28:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=DwAehD7NXw7HnLyYaSeN09u95MNjDHbuXVbkf0JLA5Q=;
-        b=gTBXV2vrW51xCk+JKHu+wNUhwBg4JcZnlUpugR59AG5fQ8wM0zAjLYluAwH2ZqyfOr
-         viJ1XqjQDJP5UpFZsEgPdZLXUkXdkoNW4udJY5xBQYyurkAWQ7i0tibwB+pmHHPKtfqz
-         4E4SqaPTGB5aRYE06+Cpuyjb//wcBKhtfJcA5DHOBNgCADFpS0ubrUDvuZUtltRWdSC8
-         TIPccLz7IHDtDg1DswrxqiNqe7hfHwkuIX9vJUGut305L+edc8JdJ1cAgSUAf5kDOwPk
-         X6mMdUlZ1ekfDTwn4k8vJVE/ePbTlWj5KzDZXpgPp0Zt9SNglqnypW6b8mKxmjMFxSst
-         NpLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=DwAehD7NXw7HnLyYaSeN09u95MNjDHbuXVbkf0JLA5Q=;
-        b=ZTyy+c0ZPVkqWWZ7SeLXjdN0y1CM+x9OPg9Hq9gsLXtQCzobGgWhK0lvmdY/1Ly95r
-         RdQP/FYF0fvdc4MOjHS2oo5+IwYd1J01wIRC2m3HmzwalZIT+qNGLo94ymsE9SIyw+VM
-         2YBsraVUxXct2JVOpUzWzHCMvlNziaTgpRPqqUfyc0wAACEW4guyXZgEgl7o7uKCmXgU
-         NsFTEV+DdFLzITykDSUH8OUBhma5bIo9hFNNa6BJt3Epu49q9mhm+JOnDAaL1BXYflri
-         0rMMvO76DNennm1kEML56mDbTpP/QGlOABX1dwj1t9tBVVbf8BeQz5x/z/EdoQQn/UuA
-         ePIQ==
-X-Gm-Message-State: AJaThX6LI/P+aPBpsQShzS1VCswSrFSA82xGOv6aHpGmIy/npeVsVW99
-        12Qqn6RWKanOHhgb4eSIRfztnKA4
-X-Google-Smtp-Source: AGs4zMb8V1YDTBijZBkESzfhrd0zrtS31fMPF3Nmpgqb/3ZHF0bPMIxxJjNOqUnmscLhgRvZYhBGfA==
-X-Received: by 10.237.41.37 with SMTP id s34mr5384364qtd.154.1510586924470;
-        Mon, 13 Nov 2017 07:28:44 -0800 (PST)
-Received: from [192.168.1.13] ([65.222.173.206])
-        by smtp.gmail.com with ESMTPSA id c10sm10785932qtj.29.2017.11.13.07.28.42
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 13 Nov 2017 07:28:43 -0800 (PST)
-Subject: Re: [PATCH 2/2] fsmonitor: Store fsmonitor bitmap before splitting
- index
-To:     Alex Vandiver <alexmv@dropbox.com>, git@vger.kernel.org
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <20171109195810.30446-1-alexmv@dropbox.com>
- <4ff73be656d5bbf9e2cada6bdec61843da9d1516.1510257457.git.alexmv@dropbox.com>
-From:   Ben Peart <peartben@gmail.com>
-Message-ID: <9b6679ea-b7e4-b45a-32bb-448cd2e891df@gmail.com>
-Date:   Mon, 13 Nov 2017 10:28:43 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.4.0
+        id S1753142AbdKMPeJ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Nov 2017 10:34:09 -0500
+Received: from smtp-out-6.talktalk.net ([62.24.135.70]:54856 "EHLO
+        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753126AbdKMPeI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Nov 2017 10:34:08 -0500
+Received: from PhilipOakley ([92.29.14.162])
+        by smtp.talktalk.net with SMTP
+        id EGkQe0MDkbjdZEGkQe4kY6; Mon, 13 Nov 2017 15:34:07 +0000
+X-Originating-IP: [92.29.14.162]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=ONFX5WSB c=1 sm=1 tr=0 a=NXc+vVEgz70gitWznrz3ig==:117
+ a=NXc+vVEgz70gitWznrz3ig==:17 a=8nJEP1OIZ-IA:10 a=CEtC_dnCAAAA:8
+ a=O9WNP3v1vAWXluaIBh0A:9 a=wPNLvfGTeEIA:10 a=Fr9QGtSrJqje8MTI1nyQ:22
+Message-ID: <EEC5BA1D5F274F02AE20FC269868FDEF@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Robert P. J. Day" <rpjday@crashcourse.ca>,
+        "Git Mailing list" <git@vger.kernel.org>
+References: <alpine.LFD.2.21.1711120430580.30032@localhost.localdomain>
+Subject: Re: more pedantry ... what means a file "known to Git"?
+Date:   Mon, 13 Nov 2017 15:34:10 -0000
+Organization: OPDS
 MIME-Version: 1.0
-In-Reply-To: <4ff73be656d5bbf9e2cada6bdec61843da9d1516.1510257457.git.alexmv@dropbox.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain;
+        format=flowed;
+        charset="iso-8859-1";
+        reply-type=original
 Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-Antivirus: AVG (VPS 171113-0, 13/11/2017), Outbound message
+X-Antivirus-Status: Clean
+X-CMAE-Envelope: MS4wfBtKTZPELjb+CBIGq/Ei/6FOkF8fuCiFAbCIMBDGib4SWUMqD1GpkpTd1a6nt91gUOP2QNior3jv78IT/n2PG9Zk+t+F7MPh2/zbW2j9g5eRfxwMEnzp
+ lAJYgl8mvzLRBw79V9YMOIZuK6fhVgbXxdcc3OqB046bbcLjygPSn5s1kbLDA/4PHbX5V7aw1BW9dcSe6GCmGvlWAdcqQasP/Uc=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: "Robert P. J. Day" <rpjday@crashcourse.ca>
+>
+>  apologies for more excruciating nitpickery, but i ask since it seems
+> that phrase means slightly different things depending on where you
+> read it.
+>
+>  first, i assume that there are only two categories:
+>
+>  1) files known to Git
+>  2) files unknown to Git
+>
+> and that there is no fuzzy, grey area middle ground, yes?
+
+sort of...
+>
+>  now, in "man git-clean", one reads (near the top):
+>
+>    Cleans the working tree by recursively removing files that are
+>    not under version control, starting from the current directory.
+>
+>    Normally, only files unknown to Git are removed, but if the -x
+>              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>    option is specified, ignored files are also removed.
+>
+> the way that's worded suggests that ignored files are "known" to Git,
+> yes?
+
+You've hit the three way binary problem of +1, 0, -1 ! The lsb is still 0 or 
+1, but we have the two assertions of:
+Positively known to git -- added to the index and the object store
+Negatively 'known' to git -- paths we actively ignore, thus not in the index 
+or object store.
+
+Unknown files are those that could be added.
+
+>  that is, if, by default, "git clean" removes only files "unknown"
+> to Git, and "-x" extends that to ignored files, the conclusion is that
+> ignored files are *known* to Git.
+
+but only in a negative sense ...
+
+>
+>  if, however, you check out "man git-rm", you read:
+>
+>    The <file> list given to the command can be exact pathnames,
+>    file glob patterns, or leading directory names. The command
+>    removes only the paths that are known to Git. Giving the name
+>                                    ^^^^^^^^^^^^
+>    of a file that you have not told Git about does not remove that file.
+>
+> so "git rm" removes only files "known to Git", but from the above
+> regarding how "git clean" sees this, that should include ignored
+> files, which of course it doesn't.
+
+The man page description starts with the key "Remove files from the index", 
+so this is the positive 'knowing' part. Clearly it can never remove other 
+ignored files as they can't be in the index (but note the 'other' caveat. 
+P->Q # Q->P).
+
+>
+>  given that this phrase occurs in a number of places:
+>
+> $ grep -ir "known to git" *
+> builtin/difftool.c: /* The symlink is unknown to Git so read from the 
+> filesystem */
+> dir.c: error("pathspec '%s' did not match any file(s) known to git.",
+> Documentation/git-rm.txt:removes only the paths that are known to Git. 
+> Giving the name of
+> Documentation/git-commit.txt:   be known to Git);
+> Documentation/user-manual.txt:error: pathspec 
+> '261dfac35cb99d380eb966e102c1197139f7fa24' did not match any file(s) known 
+> to git.
+> Documentation/gitattributes.txt: Notice all types of potential whitespace 
+> errors known to Git.
+> Documentation/git-clean.txt:Normally, only files unknown to Git are 
+> removed, but if the `-x`
+> Documentation/RelNotes/1.8.2.1.txt: * The code to keep track of what 
+> directory names are known to Git on
+> Documentation/RelNotes/1.8.1.6.txt: * The code to keep track of what 
+> directory names are known to Git on
+> Documentation/RelNotes/2.9.0.txt:   known to Git.  They have been taught 
+> to do the normalization.
+> Documentation/RelNotes/2.8.4.txt:   known to Git.  They have been taught 
+> to do the normalization.
+> Documentation/RelNotes/1.8.3.txt: * The code to keep track of what 
+> directory names are known to Git on
+> t/t3005-ls-files-relative.sh: echo "error: pathspec $sq$f$sq did not match 
+> any file(s) known to git."
+> t/t3005-ls-files-relative.sh: echo "error: pathspec $sq$f$sq did not match 
+> any file(s) known to git."
+> $
+>
+> it might be useful to define precisely what it means. or is it assumed
+> to be context dependent?
 
 
-On 11/9/2017 2:58 PM, Alex Vandiver wrote:
-> ba1b9caca6 resolved the problem of the fsmonitor data being applied to
-> the non-base index when reading; however, a similar problem exists
-> when writing the index.  Specifically, writing of the fsmonitor
-> extension happens only after the work to split the index has been
-> applied -- as such, the information in the index is only for the
-> non-"base" index, and thus the extension information contains only
-> partial data.
-> 
-> When saving, compute the ewah bitmap before the index is split, and
-> store it in the fsmonitor_dirty field, mirroring the behavior that
-> occurred during reading.  fsmonitor_dirty is kept from being leaked by
-> being freed when the extension data is written -- which always happens
-> precisely once, no matter the split index configuration.
-> 
-> Signed-off-by: Alex Vandiver <alexmv@dropbox.com>
-> ---
+A little bit of clarification may be useful. You can't be/aren't the only 
+one who is willing to note these subtle inconsistencies (Git knows things 
+via the index (staging area) and the object store (repository)).
+>
+> rday
+--
+Philip================= 
 
-The patch looks like a reasonable fix to make fsmonitor work correctly 
-with split index.  I also did manual testing to verify it was working as 
-expected.
-
-Thanks for adding this additional test case to ensure we don't have any 
-regressions with the interactions between fsmonitor and split-index. 
-While the test does correctly fail before the patch and pass after the 
-patch, I had a question about the test-dump-fsmonitor lines.
-
-Why do you redirect stdout to stderr and then and perform an "echo" 
-afterwards?  I don't understand what benefit that provides.  I removed 
-this logic and the test still passes so am confused as to what its 
-purpose is.
-
-
->   
-> +# test that splitting the index dosn't interfere
-> +test_expect_success 'splitting the index results in the same state' '
-> +	write_integration_script &&
-> +	dirty_repo &&
-> +	git update-index --fsmonitor  &&
-> +	git ls-files -f >expect &&
-> +	test-dump-fsmonitor >&2 && echo &&
-> +	git update-index --fsmonitor --split-index &&
-> +	test-dump-fsmonitor >&2 && echo &&
-> +	git ls-files -f >actual &&
-> +	test_cmp expect actual
-> +'
-> +
->   test_done
-> 
