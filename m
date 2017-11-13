@@ -2,163 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 67B3C1F42B
-	for <e@80x24.org>; Mon, 13 Nov 2017 17:13:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F16CF1F42B
+	for <e@80x24.org>; Mon, 13 Nov 2017 17:39:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754002AbdKMRNm (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Nov 2017 12:13:42 -0500
-Received: from mx2.suse.de ([195.135.220.15]:39773 "EHLO mx2.suse.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753854AbdKMRNl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Nov 2017 12:13:41 -0500
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay2.suse.de (charybdis-ext.suse.de [195.135.220.254])
-        by mx2.suse.de (Postfix) with ESMTP id 4E6B2AAB9
-        for <git@vger.kernel.org>; Mon, 13 Nov 2017 17:13:40 +0000 (UTC)
-From:   Nicolas Morey-Chaisemartin <NMoreyChaisemartin@suse.de>
-Subject: [RFC 3/3] log: add an option to generate cover letter from a branch
- tip
-To:     git@vger.kernel.org
-References: <xmqqbmk68o9d.fsf@gitster.mtv.corp.google.com>
-Openpgp: preference=signencrypt
-Message-ID: <936c2b33-3432-f113-d84b-0623246ec673@suse.de>
-Date:   Mon, 13 Nov 2017 18:13:39 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101
- Thunderbird/56.0
+        id S1754170AbdKMRjH (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Nov 2017 12:39:07 -0500
+Received: from mail-qk0-f169.google.com ([209.85.220.169]:49055 "EHLO
+        mail-qk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754138AbdKMRjG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Nov 2017 12:39:06 -0500
+Received: by mail-qk0-f169.google.com with SMTP id a142so20710767qkb.5
+        for <git@vger.kernel.org>; Mon, 13 Nov 2017 09:39:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=XrG1vBjdnnFxVn/GSKJc1veRxC3G6FhBYiPdv3k94Ng=;
+        b=EQBgJ00aRtjBzXEOXOqN+4Mq6d7HYZOXkmBPMS+BOloKxH45kozP0QSy8jy4ihYu+F
+         FVz6aBGcnD+xvQ8CBO8YgsL/4kRU4H8G5zAUwhFd8aoeTzsZImCkIPLDrBJfNqOndujr
+         imLQiFN8Jmy8+PKyCpbxEgrbf7kiAzKmT6SPaztASUN21y/WvelMuNl03BhPQeKBJbDc
+         9zM42RKHtvKz9fxuG1TT5IIbRF8EH07VjSFOjxzVAMjkDqWHdxO/9QjvfebeitURTVIN
+         O2EaCjRRxvClssLmbWFEBCbwD11Ujas6rUuzl3HGJoXnp7yV1fPa4R952gASOSOeeuiJ
+         9AUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=XrG1vBjdnnFxVn/GSKJc1veRxC3G6FhBYiPdv3k94Ng=;
+        b=HW+PrZeyVXYpRbXyoZPclsunOs1RK+sGBL6Sz0MHl5XhppxyPgAijH0p+HNFuFsYNI
+         ZtCu5/PEm1CH1FfgaB6lZJQUE3/AWgcU/LfHPF4ROFhDWkWbeL3rRqUTFf5P47+/WE+s
+         //TBdHglrbwq33d14zQg2I3Ej1iO4FSn6DuWle6XuJRFwkAJSoMsaVc7Tlz09YfJ6znn
+         WXPriLkhNhG0mwey5W6QYwk8Hm5iZZF1erqfLAmG6TRbYb/wT9FW43gtLpBsKOAGqENz
+         j2uG1X4ruP4/RJBFeFeZxpEQ4AyXbxR9p1znnUUxHA/1sYTvSJOvCPucF94KioIN3+as
+         a2+w==
+X-Gm-Message-State: AJaThX6kM7PiIp5HxF2c7B5yaizXGJpP6IuQPPkTEmTfiLypWBU0TeLL
+        SCC5McCMz/wpC1PI+MQPIIvB71oS1/CeGlhx9Xg=
+X-Google-Smtp-Source: AGs4zMaU08lCMH51+NkAvpOc//KS8h3tg3lAUmpDMuoWXtmNQROJny4bJNLEtJ7XIJXZtdIqSuqY4KYm4aGJgSI/5rE=
+X-Received: by 10.55.97.209 with SMTP id v200mr6370789qkb.71.1510594745768;
+ Mon, 13 Nov 2017 09:39:05 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <xmqqbmk68o9d.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=windows-1252
-Content-Language: fr-xx-classique+reforme1990
-Content-Transfer-Encoding: 7bit
+Received: by 10.12.155.209 with HTTP; Mon, 13 Nov 2017 09:39:05 -0800 (PST)
+In-Reply-To: <alpine.LFD.2.21.1711130938080.5262@DESKTOP-1GPMCEJ>
+References: <alpine.LFD.2.21.1711130938080.5262@DESKTOP-1GPMCEJ>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 13 Nov 2017 12:39:05 -0500
+X-Google-Sender-Auth: zBpz5iaCDm8fLxuYc-L3UeKcDQQ
+Message-ID: <CAPig+cRLcJ2a=QKyKAkaNiewoWMQvKr_AWePKYVpGS5S9g-i1Q@mail.gmail.com>
+Subject: Re: man page for "git-worktree" is a bit confusing WRT "prune"
+To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
+Cc:     Git Mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-TODO: figure out defaults, add a config option, move tip detection to specific function
+On Mon, Nov 13, 2017 at 9:48 AM, Robert P. J. Day <rpjday@crashcourse.ca> wrote:
+>   once more, into the man pages ... "git worktree" seems like a fairly
+> simple command, but there is some confusion about the function of
+>
+>   $ git worktree prune
+>
+> the normal meaning of "prune" (certainly with git commands) is to
+> actually delete some content, and the initial impression of this
+> command is that it will delete an actual worktree. however, further
+> reading reveals:
+>
+> " ... or you can run git worktree prune in the main or any linked
+> working tree to clean up any stale administrative files."
+>
+>   ah, so one learns that the subcommand "prune" does *not* do any
+> actual pruning as people would *normally* understand it, it simply
+> deletes the administrative information about an already-deleted
+> worktree, do i read that correctly?
 
-Signed-off-by: Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>
----
- Documentation/git-format-patch.txt |  4 ++++
- builtin/log.c                      | 44 +++++++++++++++++++++++++++++---------
- 2 files changed, 38 insertions(+), 10 deletions(-)
+Yes. This usage is consistent with "git remote prune" which removes
+administrative information about local branches which have already
+been deleted on the remote side.
 
-diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-index 6cbe462a7..0ac9d4b71 100644
---- a/Documentation/git-format-patch.txt
-+++ b/Documentation/git-format-patch.txt
-@@ -228,6 +228,10 @@ feeding the result to `git send-email`.
- 	containing the branch description, shortlog and the overall diffstat.  You can
- 	fill in a description in the file before sending it out.
- 
-+--[no-]cover-letter-at-tip::
-+	Use the tip of the series as a cover letter if it is an empty commit.
-+    If no cover-letter is to be sent, the tip is ignored.
-+
- --notes[=<ref>]::
- 	Append the notes (see linkgit:git-notes[1]) for the commit
- 	after the three-dash line.
-diff --git a/builtin/log.c b/builtin/log.c
-index 6c1fa896a..292626482 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -986,11 +986,11 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
- 			      struct commit *origin,
- 			      int nr, struct commit **list,
- 			      const char *branch_name,
--			      int quiet)
-+			      int quiet,
-+			      struct commit *cover_at_tip_commit)
- {
- 	const char *committer;
--	const char *body = "*** SUBJECT HERE ***\n\n*** BLURB HERE ***\n";
--	const char *msg;
-+	const char *body = "*** SUBJECT HERE ***\n\n*** BLURB HERE ***\n\n";
- 	struct shortlog log;
- 	struct strbuf sb = STRBUF_INIT;
- 	int i;
-@@ -1021,17 +1021,21 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
- 	if (!branch_name)
- 		branch_name = find_branch_name(rev);
- 
--	msg = body;
- 	pp.fmt = CMIT_FMT_EMAIL;
- 	pp.date_mode.type = DATE_RFC2822;
- 	pp.rev = rev;
- 	pp.print_email_subject = 1;
--	pp_user_info(&pp, NULL, &sb, committer, encoding);
--	pp_title_line(&pp, &msg, &sb, encoding, need_8bit_cte);
--	pp_remainder(&pp, &msg, &sb, 0);
--	add_branch_description(&sb, branch_name);
--	fprintf(rev->diffopt.file, "%s\n", sb.buf);
- 
-+	if (!cover_at_tip_commit) {
-+		pp_user_info(&pp, NULL, &sb, committer, encoding);
-+		pp_title_line(&pp, &body, &sb, encoding, need_8bit_cte);
-+		pp_remainder(&pp, &body, &sb, 0);
-+	} else {
-+		pretty_print_commit(&pp, cover_at_tip_commit, &sb);
-+	}
-+	add_branch_description(&sb, branch_name);
-+	fprintf(rev->diffopt.file, "%s", sb.buf);
-+	fprintf(rev->diffopt.file, "---\n", sb.buf);
- 	strbuf_release(&sb);
- 
- 	shortlog_init(&log);
-@@ -1409,6 +1413,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 	int just_numbers = 0;
- 	int ignore_if_in_upstream = 0;
- 	int cover_letter = -1;
-+	int cover_at_tip = -1;
-+	struct commit *cover_at_tip_commit = NULL;
- 	int boundary_count = 0;
- 	int no_binary_diff = 0;
- 	int zero_commit = 0;
-@@ -1437,6 +1443,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 			    N_("print patches to standard out")),
- 		OPT_BOOL(0, "cover-letter", &cover_letter,
- 			    N_("generate a cover letter")),
-+		OPT_BOOL(0, "cover-at-tip", &cover_at_tip,
-+			    N_("fill the cover letter with the tip of the branch")),
- 		OPT_BOOL(0, "numbered-files", &just_numbers,
- 			    N_("use simple number sequence for output file names")),
- 		OPT_STRING(0, "suffix", &fmt_patch_suffix, N_("sfx"),
-@@ -1698,6 +1706,21 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 		if (ignore_if_in_upstream && has_commit_patch_id(commit, &ids))
- 			continue;
- 
-+		if (!nr && cover_at_tip == 1 && !cover_at_tip_commit) {
-+			/* Check that it is a candidate to be a cover at tip
-+			 * Meaning:
-+			 * - a single parent (merge commits are not eligible)
-+			 * - tree oid == parent->tree->oid (no diff to the tree)
-+			 */
-+			if (commit->parents && !commit->parents->next &&
-+			    !oidcmp(&commit->tree->object.oid,
-+				    &commit->parents->item->tree->object.oid)) {
-+				cover_at_tip_commit = commit;
-+				continue;
-+			} else {
-+				cover_at_tip = 0;
-+			}
-+		}
- 		nr++;
- 		REALLOC_ARRAY(list, nr);
- 		list[nr - 1] = commit;
-@@ -1748,7 +1771,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 		if (thread)
- 			gen_message_id(&rev, "cover");
- 		make_cover_letter(&rev, use_stdout,
--				  origin, nr, list, branch_name, quiet);
-+				  origin, nr, list, branch_name, quiet,
-+				  cover_at_tip_commit);
- 		print_bases(&bases, rev.diffopt.file);
- 		print_signature(rev.diffopt.file);
- 		total++;
--- 
-2.15.0.169.g3d3eebb67.dirty
+>   that's emphasized further down in the actual definition of "prune":
+>
+>     prune
+>         Prune working tree information in $GIT_DIR/worktrees.
+>
+> but perhaps that explanation could be extended to say it only works on
+> already-deleted trees, since that's certainly not clear from that
+> single sentence.
 
+As originally implemented, git-worktree would detect deleted or
+relocated worktrees and prune or update the administrative information
+automatically. So, "prune" was more a behind-the-scenes implementation
+detail rather than an important user-facing command. However, the
+implementation and semantics of that automatic behavior were not quite
+robust and ended up leaving things in a slightly corrupted state (if I
+recall correctly), though the corruption was easily corrected by hand.
+As a consequence, the automatic behavior was retired while the general
+implementation of git-worktree "cooked", with the idea that it could
+be revisited later, with the result that "prune" became more
+user-facing than originally intended.
+
+The above description could be extended with more information. An
+alternative would be to point the reader at the "DETAILS" section as
+is done already for "prune" in "DISCUSSION".
+
+>   finally, the prune "--expire" option is truly confusing:
+>
+>     --expire <time>
+>         With prune, only expire unused working trees older than <time>.
+>
+> suddenly, we encounter the verb "expire", which means ... what? how
+> does "expiring" a worktree differ from "pruning" a worktree? and what
+> makes a worktree "unused"? the normal meaning of "unused" is that you
+> haven't, you know, *used* it lately. in this context, though, does it
+> mean deleted? and if it means deleted, what does it mean for it to be
+> older than some time if it's already gone?
+>
+>   thoughts?
+
+This dates back to the original behavior of automatically pruning
+administrative information for deleted worktrees. As discussed
+elsewhere in the document, a worktree may be placed on some removable
+device (USB drive, memory stick, etc.) or network share which isn't
+always mounted. The "expire time" provides such
+not-necessarily-mounted worktrees a grace period before being pruned
+automatically. You wouldn't want your worktree administrative
+information erased automatically when invoking some git-worktree
+command -- say "git worktree list" -- simply because you forgot to
+plug your memory stick back into the computer; the grace period
+protects against this sort of lossage. As with "prune", originally,
+the grace period was more a behind-the-scenes detail than a
+user-facing feature. Nevertheless, it's still useful; you might forget
+to plug in your memory stick before invoking "git worktree prune"
+manually.
+
+The term "unused" is unfortunate. A better description would likely be welcome.
