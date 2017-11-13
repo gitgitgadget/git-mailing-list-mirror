@@ -2,105 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 386691F43C
-	for <e@80x24.org>; Mon, 13 Nov 2017 10:24:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8F9AF1F43C
+	for <e@80x24.org>; Mon, 13 Nov 2017 10:30:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751867AbdKMKYQ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Nov 2017 05:24:16 -0500
-Received: from mail-qt0-f180.google.com ([209.85.216.180]:53755 "EHLO
-        mail-qt0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751472AbdKMKYQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Nov 2017 05:24:16 -0500
-Received: by mail-qt0-f180.google.com with SMTP id n61so18846484qte.10
-        for <git@vger.kernel.org>; Mon, 13 Nov 2017 02:24:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=0mBOdo9mpBwfLAeyP4+UVsb3jlx2Ad4RCoxhpEeLtSg=;
-        b=kaxPyEbDeM5NrczLKkMqteIIcn+JCBjs83ur2S7hRRLolanCubHzAxJw0cApyO2t9C
-         Vduhkl/HZQ7nPnVnVTedGf7Mb7Xaucl1OeY7M7QA5NrUlqJCU946L+E58bKv11Zr38qg
-         3+XF8sclYxK48y3no72ALu90wYl19CjFxZSP+480WnqYDJ0xjcLDZk6xtfXyAXZNydji
-         gUrH96AITpNEMDl6lVXs2TVRL83ifLHE6pZw0ta3Rt2LQdh4fCcux07uC/T2ejqX96M0
-         an2UuIyPkjMULSXCH7UFicUmt+Y9WxWbsYJKo4Bn8pVyyJxh4HLNAB6OCSVtvQKwPzAG
-         34hQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=0mBOdo9mpBwfLAeyP4+UVsb3jlx2Ad4RCoxhpEeLtSg=;
-        b=izMcDa6p7N6FDGIBLfR6DL+AJq/hnjPuZiKEcJa1ggeiQROJQArKycsw2jV1M5uHvp
-         tofsJcH4/s3k5N174sZs9iEEWcRKSYfFXfoueHUgvQjK0xDwUmrqfp5ypQSK7+qEYO1T
-         G7QF3IOL+Xw+ag4d6XyfiL3oR/7NTGilIFWkhumzyAam/1YcSKQEorxOitgirEVLQJL5
-         DjqokoGB5c83KundwQjDOc/Yz4lbA2f4M8iB3FyE4757crDoglkeqCsMraZn4R+Kp2QY
-         dva/xz0uDO3RPUV3Aej7/tcbIHQhhT6BSylqf877GcEDTY5NBJ6xg71wK8dj9kyNMoCB
-         53rA==
-X-Gm-Message-State: AJaThX60lBoZLvDRP1Y4AoGyjHHDPuvspuvYCLDwitPKYd3NlTx72gBA
-        Zjj79s9GtuvMzUGdWlnNZW4YMVLfeGBEo8fQYOc=
-X-Google-Smtp-Source: AGs4zMYZg21GXo5UTeHkWQLwfIFWZ0+nRVDNcFKW1wURUf459Do9KfHE9nOCCIZZDEv78izcOBll2vB7PvKCi1oqQgE=
-X-Received: by 10.200.35.42 with SMTP id a39mr7370051qta.9.1510568655226; Mon,
- 13 Nov 2017 02:24:15 -0800 (PST)
+        id S1752053AbdKMKaR (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Nov 2017 05:30:17 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58934 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751391AbdKMKaQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Nov 2017 05:30:16 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 74B83B91BB;
+        Mon, 13 Nov 2017 05:30:09 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=A+o+DPnY1ndGljwaTp0eJRUUaBQ=; b=yUWbld
+        sXIxUpaXC+dlkjQbqr42xUMD1LHrro7UMdmTIdOXpB0nOGg7z35OVEjUviw9UChq
+        hnlOfe0hEmNWHz9BdmTM7CsJgI2S/YaSRZEg68pxEqSKLxCQo2JCEWckz7haIBQu
+        JFDyNLBhtdmTA5FIjRbWp/rEGNK1fCjAogxTs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ACV9HRiSKxUnzSJA1LtkJdWQqomioKJW
+        CgcY86g1PU9HlaRuzYwDgSne0+DqxiKfRORDFPEk4ftlBmqhuafMJScuqmBcdRUn
+        J/4W0XRDjsGi+xEBlrVky2qlLksw3wc25DWjLE01zSLrPGNtkZ/MmP9waKx6QchC
+        UK2y3a41GEg=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6BE95B91BA;
+        Mon, 13 Nov 2017 05:30:09 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CFE90B91B7;
+        Mon, 13 Nov 2017 05:30:07 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Nicolas Morey-Chaisemartin <NMoreyChaisemartin@suse.de>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC] cover-at-tip
+References: <357e8afb-4814-c950-1530-530bb6dd5f5a@suse.de>
+        <e1d3ab5b-82e6-8490-8f2e-00c1359c6deb@suse.de>
+        <xmqqbmkaf0yn.fsf@gitster.mtv.corp.google.com>
+        <bbdeaba0-b757-041d-9649-4150080d4b07@suse.de>
+        <xmqqh8ty8q5x.fsf@gitster.mtv.corp.google.com>
+Date:   Mon, 13 Nov 2017 19:30:06 +0900
+In-Reply-To: <xmqqh8ty8q5x.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Mon, 13 Nov 2017 18:48:58 +0900")
+Message-ID: <xmqqbmk68o9d.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.12.155.209 with HTTP; Mon, 13 Nov 2017 02:24:14 -0800 (PST)
-In-Reply-To: <xmqqk1yvaq2e.fsf@gitster.mtv.corp.google.com>
-References: <20171112130710.16000-1-jerzy.kozera@gmail.com>
- <CAPig+cSR_GGog2vATwGgMWDofVzkgDE7K=VvZ4GEyrzYC1t-GQ@mail.gmail.com> <xmqqk1yvaq2e.fsf@gitster.mtv.corp.google.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 13 Nov 2017 05:24:14 -0500
-X-Google-Sender-Auth: 3XSvBVwuaFjYS_PCoPaMZm_63Y4
-Message-ID: <CAPig+cQqLJsBTSMSPCVJ+_2JxkO=i4v681rK=THoN7xQ+jB91g@mail.gmail.com>
-Subject: Re: [PATCH v2] gpg-interface: strip CR chars for Windows gpg2
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jerzy Kozera <jerzy.kozera@gmail.com>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9EBBC864-C85D-11E7-A4B8-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Nov 12, 2017 at 9:08 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
->>> +       size_t i, j;
->>> +       for (i = j = bottom; i < buffer->len; i++)
->>> +               if (!(i < buffer->len - 1 &&
->>> +                               buffer->buf[i] == '\r' &&
->>> +                               buffer->buf[i + 1] == '\n')) {
->>
->> Hmm, was this tested? If I'm reading this correctly, this strips out
->> the entire CRLF pair, whereas the original code only stripped the CR
->> and left what followed it (typically LF) alone. Junio's suggestion was
->> to enhance this to be more careful and strip CR only when followed
->> immediately by LF (but to leave the LF intact). Therefore, this seems
->> like a regression.
->>
->>> +                       if (i != j)
->>> +                               buffer->buf[j] = buffer->buf[i];
->>> +                       j++;
->>> +               }
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Nicolas Morey-Chaisemartin <NMoreyChaisemartin@suse.de> writes:
 >
-> I think the "negate the entire thing" condition confuses the
-> readers.  The negated condition is "Do we still have enough bytes to
-> see if we are looking at CRLF?  Are we at CR?  Is the one byte
-> beyond what we have a LF?  Do all of these three conditions hold
-> true?"  If not, i.e. for all the bytes on the line except for that
-> narrow "we are at CR of a CRLF sequence" case, the body of the loop
-> makes a literal copy and advances the destination pointer 'j'.  The
-> only thing that is skipped is CR that comes at the beginning of a
-> CRLF sequence.
+>> I agree this is a "am" job. Was just wondering if reusing some of
+>> the code from apply (and move it so it makes more sense) wouldnd't
+>> make more sense than rewriting a patch detection function.
 >
-> So I think the loop does what it wants to do.
+> Yes, I understood that and have already given an answer, no?
 
-You're right. I misunderstood it. Rephrasing the logic in a simpler
-fashion would help.
+This was a bit too terse to be useful, so let me try again.
 
-> In any case, I think this should be a two patch series---one with
-> the code as-is with a better explanation, but without "make sure
-> only CR in CRLF and no other CR are stripped" improvement, and the
-> other as a follow-up to it to make the improvement.
+I think the ideal endgame would be to allow people to come up with a
+topic branch of this shape (illustrated is a three-patch series on
+top of 'origin'):
 
-Agreed, a 2-patch series makes sense.
+    ---o---o (origin)
+            \
+             1---2---3
+
+and then add an empty commit C whose log message is used to store
+"cover letter material", i.e.
+
+    ---o---o (origin)
+            \
+             1---2---3---C (topic)
+
+And then you should be able to 
+
+ (1) merge such branch yourself, coming up with a history like this,
+     where merge M uses material from C in the merge log message
+
+    ---o---o---x---x---M
+            \         /
+             1---2---3
+
+ (2) "git format-patch origin..topic" that would create the cover
+     letter using material found in C in addition to the usual
+     stuff (like shortlog) generated by "format-patch --cover",
+     followed by these three patches.
+
+ (3) "git format-patch M" should be able to (a) realize that M
+     merges a side branch that is a three-commit series (i.e.
+     M^1..M^2), and (b) notice that log message of M has
+     human-readable description.  Then it grabs the merge log
+     message of M and do the same as (2).
+
+ (4) "git am" the result from (2) or (3) should recreate the
+     original history i.e. what we started with with C.
+
+    ---o---o (origin)
+            \
+             1---2---3---C (topic)
+
+Now, I _think_ what the machinery needs a lot more is to be able to
+detect C is an empty commit (when doing (2)), and then you have
+quite a lattitude in designing what exactly such an automated cover
+letter looks like, so that the receiving end (4) can recognize it
+more easily and (more importantly) more robustly than "the message
+does not have any patch in it".  Not all random messages that do
+not have a patch in it are cover letters, and that is why I do not
+think touching any code in the apply layer in an attempt to "reuse"
+anything is a bad idea.  It will risk butchering the code without
+any real gain, because what we really need to know is *not* absence
+of patch, but presence of cover letter material.
+
+The simplest would probably be to notice that the subject of one has
+0/N on it, while other messages were labeled with 1/N..(N-1)/N; that
+would be a lot stronger clue that 0/N has a cover than "it does not
+have any patch in it".
+
+It may be that we would not just want to identify which message is
+cover and which message is not, but which part of the cover letter
+message should go back to the log message of the capping empty
+commit (and moved to the merge log message).  Just like we invented
+the conventions like scissors, three-dashes, etc., you might want to
+come up with a way to do so in your format-patch enhancement used to
+do the (2) and (3) above.  Then it will be the matter of teaching
+that convention to "am" used in (4).
+
