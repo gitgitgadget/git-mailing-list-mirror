@@ -2,79 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C26B61F42B
-	for <e@80x24.org>; Mon, 13 Nov 2017 14:15:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 603971F42B
+	for <e@80x24.org>; Mon, 13 Nov 2017 14:49:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752256AbdKMOPR (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Nov 2017 09:15:17 -0500
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:55265 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751759AbdKMOPP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Nov 2017 09:15:15 -0500
-Received: by mail-wm0-f68.google.com with SMTP id r68so15548962wmr.3
-        for <git@vger.kernel.org>; Mon, 13 Nov 2017 06:15:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rasmusvillemoes.dk; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=34xpckVhGalEqM1q4uSLBNCD3V9GqfF1s6kU8NgscCo=;
-        b=D+ow+G0jiiD+TgDoDaL3LhDiXW/cleH9AtdUH/835xvz3u1bFIRuYq9on5OOmb+jwn
-         kcVZdatuXvYD3v+S6+cOdJN4auPvKYAxFS1glmlXRUhOvdEBjTnVsXfeuYIEOxyuFiFQ
-         m5kCeD1zyNe3Q9fvkQByqeXeTkiPidMrf8whA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=34xpckVhGalEqM1q4uSLBNCD3V9GqfF1s6kU8NgscCo=;
-        b=KOSmKLkKdMB5UmlapYvcO8i28LFLQ2gvpb0Prxdyf+/cgsEbHRKpDBsBqp1PS5kL2y
-         tzUJnCAz/DzFLfGnYTAFSUp3frtvuSeF+0Aids5WQLmS7un5Y1xohJLYcngQRicuzS8f
-         7zkAw5plUvHLBjn7Xrt5FH3+xnDqXaKdKDVogbQ+QZjpsX7sEhEhzn4TYoBaSTQJKg6R
-         IPA5+kVccQxFiegYHHQm0gkO8H3U3uiKFDjja00cmWCWG4Jgw/mwpq7T5ISuB64j3Gt/
-         5yq4akZ0JQ5aYCoPB6hzgYJ2FCxWslxkLaR862LhHPkOLft6hnpIZ27ajKYLZtiUfGRf
-         xFIA==
-X-Gm-Message-State: AJaThX7P9xWKAimbpQ2iEYtDcB+Aif7Op1Q9a4jGzM+6n9ZSYG6EHae4
-        Jzj7kXt0Xqmgnq9YkQAkRCZW5w==
-X-Google-Smtp-Source: AGs4zMZ1l0UjGMiXLGvvaSm5Xji8pq+mpqX3Z+0OTdWwfpYlEPwQxeePGXPyjUGt3T8+QMD7pfu36w==
-X-Received: by 10.28.142.85 with SMTP id q82mr6212287wmd.155.1510582513986;
-        Mon, 13 Nov 2017 06:15:13 -0800 (PST)
-Received: from wildmoose.dk ([2a01:488:66:1000:57e6:57d1:0:1])
-        by smtp.gmail.com with ESMTPSA id k30sm18855993wrf.52.2017.11.13.06.15.13
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 13 Nov 2017 06:15:13 -0800 (PST)
-From:   Rasmus Villemoes <rv@rasmusvillemoes.dk>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, Rasmus Villemoes <rv@rasmusvillemoes.dk>
-Subject: [PATCH 2/2] completion: add git config sendemail.tocmd
-Date:   Mon, 13 Nov 2017 15:14:43 +0100
-Message-Id: <20171113141443.19141-2-rv@rasmusvillemoes.dk>
-X-Mailer: git-send-email 2.11.0
-In-Reply-To: <20171113141443.19141-1-rv@rasmusvillemoes.dk>
-References: <20171113141443.19141-1-rv@rasmusvillemoes.dk>
+        id S1753728AbdKMOtK (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Nov 2017 09:49:10 -0500
+Received: from cpanel2.indieserve.net ([199.212.143.6]:35864 "EHLO
+        cpanel2.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752955AbdKMOtJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Nov 2017 09:49:09 -0500
+Received: from 69-196-158-250.dsl.teksavvy.com ([69.196.158.250]:39578 helo=DESKTOP-1GPMCEJ)
+        by cpanel2.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.89)
+        (envelope-from <rpjday@crashcourse.ca>)
+        id 1eEG2u-0002AN-98
+        for git@vger.kernel.org; Mon, 13 Nov 2017 09:49:08 -0500
+Date:   Mon, 13 Nov 2017 09:48:36 -0500 (EST)
+From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
+X-X-Sender: rpjday@DESKTOP-1GPMCEJ
+To:     Git Mailing list <git@vger.kernel.org>
+Subject: man page for "git-worktree" is a bit confusing WRT "prune"
+Message-ID: <alpine.LFD.2.21.1711130938080.5262@DESKTOP-1GPMCEJ>
+User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel2.indieserve.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - crashcourse.ca
+X-Get-Message-Sender-Via: cpanel2.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: cpanel2.indieserve.net: rpjday@crashcourse.ca
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Rasmus Villemoes <rv@rasmusvillemoes.dk>
----
- contrib/completion/git-completion.bash | 1 +
- 1 file changed, 1 insertion(+)
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index fdd984d34..10607cdf2 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2642,6 +2642,7 @@ _git_config ()
- 		sendemail.suppressfrom
- 		sendemail.thread
- 		sendemail.to
-+		sendemail.tocmd
- 		sendemail.validate
- 		sendemail.smtpbatchsize
- 		sendemail.smtprelogindelay
+  once more, into the man pages ... "git worktree" seems like a fairly
+simple command, but there is some confusion about the function of
+
+  $ git worktree prune
+
+the normal meaning of "prune" (certainly with git commands) is to
+actually delete some content, and the initial impression of this
+command is that it will delete an actual worktree. however, further
+reading reveals:
+
+" ... or you can run git worktree prune in the main or any linked
+working tree to clean up any stale administrative files."
+
+  ah, so one learns that the subcommand "prune" does *not* do any
+actual pruning as people would *normally* understand it, it simply
+deletes the administrative information about an already-deleted
+worktree, do i read that correctly?
+
+  that's emphasized further down in the actual definition of "prune":
+
+    prune
+        Prune working tree information in $GIT_DIR/worktrees.
+
+but perhaps that explanation could be extended to say it only works on
+already-deleted trees, since that's certainly not clear from that
+single sentence.
+
+  finally, the prune "--expire" option is truly confusing:
+
+    --expire <time>
+        With prune, only expire unused working trees older than <time>.
+
+suddenly, we encounter the verb "expire", which means ... what? how
+does "expiring" a worktree differ from "pruning" a worktree? and what
+makes a worktree "unused"? the normal meaning of "unused" is that you
+haven't, you know, *used* it lately. in this context, though, does it
+mean deleted? and if it means deleted, what does it mean for it to be
+older than some time if it's already gone?
+
+  thoughts?
+
+rday
+
 -- 
-2.11.0
 
+========================================================================
+Robert P. J. Day                                 Ottawa, Ontario, CANADA
+                        http://crashcourse.ca
+
+Twitter:                                       http://twitter.com/rpjday
+LinkedIn:                               http://ca.linkedin.com/in/rpjday
+========================================================================
