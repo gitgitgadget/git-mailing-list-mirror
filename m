@@ -2,77 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D0C92201C8
-	for <e@80x24.org>; Mon, 13 Nov 2017 03:55:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EA26E201C8
+	for <e@80x24.org>; Mon, 13 Nov 2017 03:56:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751389AbdKMDzW (ORCPT <rfc822;e@80x24.org>);
-        Sun, 12 Nov 2017 22:55:22 -0500
-Received: from cloud.peff.net ([104.130.231.41]:54474 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751243AbdKMDzV (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Nov 2017 22:55:21 -0500
-Received: (qmail 10567 invoked by uid 109); 13 Nov 2017 03:55:22 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 13 Nov 2017 03:55:22 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19221 invoked by uid 111); 13 Nov 2017 03:55:34 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (5.148.117.68)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Sun, 12 Nov 2017 22:55:34 -0500
-Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 13 Nov 2017 03:55:17 +0000
-Date:   Mon, 13 Nov 2017 03:55:17 +0000
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Soukaina NAIT HMID <nhsoukaina@gmail.com>, git@vger.kernel.org
-Subject: Re: [add-default-config 2/5] adding default to color
-Message-ID: <20171113035516.446uznhfl6xlfvmi@sigill.intra.peff.net>
-References: <0102015fb0bf2f74-cb456171-fe65-4d83-8784-b553c7c9e584-000000@eu-west-1.amazonses.com>
- <0102015fb0bf3002-3462777a-2363-40cf-af37-80e26c0db65b-000000@eu-west-1.amazonses.com>
- <20171112153659.lt77rn6h6faeqfpb@sigill.intra.peff.net>
- <xmqqvaiealsv.fsf@gitster.mtv.corp.google.com>
+        id S1751516AbdKMD4R (ORCPT <rfc822;e@80x24.org>);
+        Sun, 12 Nov 2017 22:56:17 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59656 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751243AbdKMD4Q (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Nov 2017 22:56:16 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id EC08598002;
+        Sun, 12 Nov 2017 22:56:15 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=XpccrWjEfO97zt6DSKhyz95TSXk=; b=GWK4A9
+        kX0MhJb/vcpECUeL1RCNcZQcQHZy3XTqgXdXDdmhuHz3UEBemDQuYJpO1pkb2PL5
+        +f5G3OUrFnpsM95QsQ9lnJBRUm3zQ0Roh5q6SeyGpcjTLpe4Em1YlzEN/MEAioCb
+        xhKKGSIl+fK43rxrIWprf2DXITHfce4ejLFRU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=UT+pp2XBVRrjznSgNXtKGktV6DjH3OEs
+        jziPrx5WGE29tGFoDb0Uqm5OcMlnJdP7HsvXoOIe+dXytTHJHjXiFl6dCv3yFjRi
+        Rx3RDwyc2ePiG6LJXoZCauCtA1B8RC7m7ws40ZwImALDCOzqdiezwOnFAiZcxnm2
+        fHqw0ZJDdrI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E3E3F98001;
+        Sun, 12 Nov 2017 22:56:15 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6912D97000;
+        Sun, 12 Nov 2017 22:56:15 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stephan Beyer <s-beyer@gmx.net>
+Cc:     Pranit Bauva <pranit.bauva@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH v16 Part II 5/8] bisect--helper: `bisect_next_check` shell function in C
+References: <0102015f5e5ee171-f30f4868-886f-47a1-a4e4-b4936afc545d-000000@eu-west-1.amazonses.com>
+        <0102015f5e5ee2ca-bf824205-86e6-4259-b7d7-a68e2fbb087d-000000@eu-west-1.amazonses.com>
+        <214cfc63-79a8-a46f-4440-5e223186f2ff@gmx.net>
+Date:   Mon, 13 Nov 2017 12:56:14 +0900
+In-Reply-To: <214cfc63-79a8-a46f-4440-5e223186f2ff@gmx.net> (Stephan Beyer's
+        message of "Sun, 12 Nov 2017 21:03:45 +0100")
+Message-ID: <xmqqineeal29.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqvaiealsv.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 98B5C8DE-C826-11E7-A491-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 13, 2017 at 12:40:16PM +0900, Junio C Hamano wrote:
+Stephan Beyer <s-beyer@gmx.net> writes:
 
-> As an aside.  Over time we accumulated quite a many actions that are
-> all mutually exclusive by nature.  I have a feeling that we might be
-> better off to move away from this implementation.  The only thing
-> that we are getting from the current one-bit-in-a-flag-word is that
-> we can name the variable "actions" (instead of "action") to pretend
-> as if we can be given more than one, and then having to check its
-> value with HAS_MULTI_BITS(actions) to confuse ourselves.
-> 
-> Instead, perhaps we should introduce an "enum action" that includes
-> ACTION_UNSPECIFIED that is the initial value for the "action"
-> variable, which gets set to ACTION_GET, etc. with OPT_SET_INT().  If
-> we really care about erroring out when given
-> 
-> 	$ git config --add --get foo.bar
-> 
-> instead of the "last one wins" semantics, we can use OPT_CMDMODE.
-> 
-> The above is of course outside the scope of this series, and I am
-> not sure if it should be done as a preparatory or a follow-up
-> clean-up.
+> Hi again ;)
+> ...
+> In both of the above "error" calls, you should drop the final "\n"
+> because "error" does that already.
+>
+> On the other hand, you have dropped the "\n"s of the orginal error
+> messages. So it should probably be
+>
+>  _("You need to give me at least one %s and %s revision.\n"
+>    "You can use \"git bisect %s\" and \"git bisect %s\" for that.")
+>
+> and
+>
+>  _("You need to start by \"git bisect start\".\n"
+>    "You then need to give me at least one %s and %s revision.\n"
+>    "You can use \"git bisect %s\" and "\"git bisect %s\" for that.")
+>
+> Stephan
 
-Yes, I agree that it's a little confusing, and that an enum is a better
-representation.  The TYPE constants have the same problem.
-
-I _think_ we could use OPT_CMDMODE() for those, too. Despite the name,
-there is nothing in the parse-options error message that would be
-inappropriate for something that isn't a cmdmode. Though I care a lot
-less about "--bool --int" reporting an error (instead of last-one-wins)
-than I do about "--get --set".
-
--Peff
+Thanks for reviews (not just this patch, but for reviews on other
+patches, too).
