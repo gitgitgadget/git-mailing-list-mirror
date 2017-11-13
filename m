@@ -2,104 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 54870201C8
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6A08B2021B
 	for <e@80x24.org>; Mon, 13 Nov 2017 02:32:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751159AbdKMCbT (ORCPT <rfc822;e@80x24.org>);
-        Sun, 12 Nov 2017 21:31:19 -0500
-Received: from mail-pg0-f50.google.com ([74.125.83.50]:47877 "EHLO
-        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751107AbdKMCbT (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Nov 2017 21:31:19 -0500
-Received: by mail-pg0-f50.google.com with SMTP id o7so11621726pgc.4
-        for <git@vger.kernel.org>; Sun, 12 Nov 2017 18:31:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=UI2RH3u0Gb/ROXlr6528EKXtixv9WvLUwfBv3OGSiBE=;
-        b=mqN1r42wYDd6IKzP95+//XlbP8ek9pps/YMZ0FW8C0rnHUFofuCtIINJCdAHGq5fkY
-         CTEcfSi3CJEBt2aW9s05NA64vBmS0q/yiuZ7v8Xv/qxellufaVchy7t11jdr2gzSYKwv
-         hqV2/lHUYjQNeAYQJZlXuJVWZVd2DSpiGNikmoLsmziWonKq+OJ0hK7iBOD7QtTFINs1
-         EZYlNTkapJwMj5shJInsVRcUkKVgDhug2TPmHcC4XtDScS6oKQa+FSewC0lkikNDmz0R
-         OkHrXsoj3s5okCsjagFDyp0ETvQfO0c0Lh+fjAaZRJa1OlceK4Bapx06T1TP1uXlKxwd
-         gs5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=UI2RH3u0Gb/ROXlr6528EKXtixv9WvLUwfBv3OGSiBE=;
-        b=Q8DYRkZHtGSQWMgGBHmHOpkCj3zedl/+Vh4w5b0kd1yeiVIatxQ3V/cDb9nW7FhoGv
-         KuWcZUrhvCcbNaiZKnIhNAcgjmFcaAuMBEsyHXrCBjrkdwUi3Yd1lz3ei5+zD1wcWyJO
-         rcGAillMoN82H2VQUxPJXKgYZGz5BInZ0b0p+vuSLNCzDetDIzgciVah2QrxrvVgTQUi
-         x7T3RSXIgR3368Jc1yZa47LpOQllRX/YVl8Ja1Fx9AYitfchy45iExAAgzJngql7mJbg
-         sA5M+r8LnajePsii7kq3Ppa2pXPkzOX1wKcl8cao/emo9e/nQPjO2LxifyQTyv0NwF1Z
-         YxxA==
-X-Gm-Message-State: AJaThX6xqv8aFialYXJLklMVlUMdkK8BBIQco7UJAcZABetU5wa/ekLR
-        A2BJYtB3Qvvn6+oL0etVdIE=
-X-Google-Smtp-Source: AGs4zMaWxtHa/jBMB2QBd3Ejd1evuu5embfT90avzI5dQz1VwZA1Jtq9emSe5h3mSKfeyPwBfG2SgA==
-X-Received: by 10.101.80.4 with SMTP id f4mr7144876pgo.432.1510540278535;
-        Sun, 12 Nov 2017 18:31:18 -0800 (PST)
-Received: from [192.168.43.71] ([117.209.192.7])
-        by smtp.gmail.com with ESMTPSA id d68sm5776893pfl.38.2017.11.12.18.31.15
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 12 Nov 2017 18:31:17 -0800 (PST)
-Subject: Re: [RFC PATCH v3 4/4] builtin/branch: give more useful error
- messages when renaming
-To:     Kevin Daudt <me@ikke.info>
+        id S1751231AbdKMCcm (ORCPT <rfc822;e@80x24.org>);
+        Sun, 12 Nov 2017 21:32:42 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50434 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751107AbdKMCcm (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Nov 2017 21:32:42 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9F8A295FA0;
+        Sun, 12 Nov 2017 21:32:41 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=4YjxTAkBeO3lGlHpjWFFLkOAKRE=; b=vqIF/m
+        DAIFcKcWSRcaprzNHtjqD/vTgP5X6oA/a4K7mpBEoGOJMd6GeF2ror7eQUxj01lC
+        vMQnOjw2yCWCFu91BqyQSyZV8iHCyR4oaARydP9WPbQZMvRQrOaR0HQ4ACI8jxSX
+        J5peog6ZupOoUi+W3Z5rWQa66YQ+eUdT7pWQg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=AyCftMOlmyO+MbUu7JyOQvR0Z0I6f2kw
+        c8aGpqyEfFlRMAqFn6PW1r0AtNe16LdUhfUypGupZGJ0IP82sFIcbOaJgY38sS4A
+        3pSr2222u6kn8YTUFTihIGb3xif1T0nsiS1HOJQqm1T48AP2wwG/+0n2hbmTdObE
+        WOQ7nkfEPYM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9849F95F9F;
+        Sun, 12 Nov 2017 21:32:41 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1BC6895F9E;
+        Sun, 12 Nov 2017 21:32:41 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC PATCH v3 2/4] branch: re-order function arguments to group related arguments
 References: <20170925082024.2691-1-kaarticsivaraam91196@gmail.com>
- <20171102065407.25404-1-kaartic.sivaraam@gmail.com>
- <20171102065407.25404-5-kaartic.sivaraam@gmail.com>
- <20171112182322.GA17612@alpha.vpn.ikke.info>
-Cc:     git@vger.kernel.org,
-        Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Message-ID: <29bd81e4-e8df-8fb8-9436-d70902106f49@gmail.com>
-Date:   Mon, 13 Nov 2017 08:01:12 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+        <20171102065407.25404-1-kaartic.sivaraam@gmail.com>
+        <20171102065407.25404-3-kaartic.sivaraam@gmail.com>
+        <xmqqbmkgjh32.fsf@gitster.mtv.corp.google.com>
+        <1510493270.2683.6.camel@gmail.com>
+Date:   Mon, 13 Nov 2017 11:32:39 +0900
+In-Reply-To: <1510493270.2683.6.camel@gmail.com> (Kaartic Sivaraam's message
+        of "Sun, 12 Nov 2017 18:57:50 +0530")
+Message-ID: <xmqqefp2c3i0.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20171112182322.GA17612@alpha.vpn.ikke.info>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: EBF17856-C81A-11E7-812D-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sunday 12 November 2017 11:53 PM, Kevin Daudt wrote:
-> On Thu, Nov 02, 2017 at 12:24:07PM +0530, Kaartic Sivaraam wrote:
->> From: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
->>
->> When trying to rename an inexistent branch to with a name of a branch
->
-> This sentence does not read well. Probably s/with a/the/ helps.
->
+Kaartic Sivaraam <kaartic.sivaraam@gmail.com> writes:
 
-Thanks. Seems I missed it somehow. Will fix it.
-
->> that already exists the rename failed specifying the new branch name
->> exists rather than specifying that the branch trying to be renamed
->> doesn't exist.
->>
->> [..]
->>
->> Note: Thanks to the strbuf API that made it possible to easily construct
->> the composite error message strings!
+> I've tried to improve it, does the following paragraph sound clear
+> enough?
 >
-> I'm not sure this note adds a lot, since the strbuf API is not that new.
->
+>     branch: group related arguments of create_branch()
+>         
+>     New arguments were added to create_branch() whenever the need
+>     arised and they were added to tail of the argument list. This
+>     resulted in the related arguments not being close to each other.
 
-That was a little attribution I wanted make to the strbuf API as this 
-was the first time I leveraged it to this extent and I was surprised by 
-the way it made string manipulation easier in C. Just documented my 
-excitation. In case it seems to be noise (?) which should removed, let 
-me know.
+OK, I understand what you wanted to say.  But I do not think that is
+based on a true history.
 
----
-Kaartic
+ - f9a482e6 ("checkout: suppress tracking message with "-q"",
+   2012-03-26) adds 'quiet' just after 'clobber_head', exactly
+   because they are related, and leaves 'track' at the end.
+
+ - 39bd6f72 ("Allow checkout -B <current-branch> to update the
+   current branch", 2011-11-26) adds 'clobber_head' not at the end but
+   before 'track', which is left at the end.  
+
+ - c847f537 ("Detached HEAD (experimental)", 2007-01-01) split 'start'
+   into 'start_name' and 'start_sha1' (the latter was laster removed)
+   and this was not a mindless "add at the end", either.
+
+ - 0746d19a ("git-branch, git-checkout: autosetup for remote branch
+   tracking", 2007-03-08) did add track at the end, but that is
+   justifiable, as it has no relation to any other parameter.
+
+You could call 39bd6f72 somewhat questionable as 'clobber_head' is
+related to 'force' more strongly than it is to 'reflog' [*1*], but
+it is unfair to blame anything else having done a mindless "add at
+the end".
+
+
+
+[Footnote]
+
+*1* I actually think the commit added 'clobber_head' because for the
+    purpose of what the commit did, it closely was related to 'track',
+    turning <force, reflog, track> into <force, reflog, clobber, track>.
+    Arguably, it could have done <force, clobber, track, reflog> instead.
+
