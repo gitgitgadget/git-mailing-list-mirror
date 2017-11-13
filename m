@@ -7,151 +7,73 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3263B1F42B
-	for <e@80x24.org>; Mon, 13 Nov 2017 22:38:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ECB771F42B
+	for <e@80x24.org>; Mon, 13 Nov 2017 22:38:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752712AbdKMWit (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Nov 2017 17:38:49 -0500
-Received: from mout.gmx.net ([212.227.15.18]:52022 "EHLO mout.gmx.net"
+        id S1752746AbdKMWix (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Nov 2017 17:38:53 -0500
+Received: from mout.gmx.net ([212.227.17.20]:53791 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751376AbdKMWis (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Nov 2017 17:38:48 -0500
+        id S1752701AbdKMWit (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Nov 2017 17:38:49 -0500
 Received: from bedhanger.strangled.net ([188.192.144.31]) by mail.gmx.com
- (mrgmx002 [212.227.17.190]) with ESMTPSA (Nemesis) id
- 0M7Hao-1fAIuD0MMg-00x77H; Mon, 13 Nov 2017 23:38:11 +0100
+ (mrgmx101 [212.227.17.168]) with ESMTPSA (Nemesis) id
+ 0McR00-1eW2k81zcW-00Hhhl; Mon, 13 Nov 2017 23:38:12 +0100
 From:   Ann T Ropea <bedhanger@gmx.de>
 To:     Philip Oakley <philipoakley@iee.org>,
         Junio C Hamano <gitster@pobox.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Daniel Barkalow <barkalow@iabervon.org>,
         Ann T Ropea <bedhanger@gmx.de>
-Subject: Re: [PATCH v2 4/6] Documentation: user-manual: limit usage of ellipsis
-Date:   Mon, 13 Nov 2017 23:36:52 +0100
-Message-Id: <20171113223654.27732-4-bedhanger@gmx.de>
+Subject: Re: [PATCH v2 5/6] Documentation: revisions: fix typo: "three dot" ---> "three-dot" (in line with "two-dot").
+Date:   Mon, 13 Nov 2017 23:36:53 +0100
+Message-Id: <20171113223654.27732-5-bedhanger@gmx.de>
 X-Mailer: git-send-email 2.13.6
 In-Reply-To: <20171113223654.27732-1-bedhanger@gmx.de>
 References: <20171113223654.27732-1-bedhanger@gmx.de>
 References: <83D263E58ABD46188756D41FE311E469@PhilipOakley> <xmqqfu9pmsx3.fsf@gitster.mtv.corp.google.com>
 In-Reply-To: <EA775C6AB4684B7A86A88C733C132827@PhilipOakley>
-X-Provags-ID: V03:K0:zEuxLHEdcBwZmdar5TcpJKaYKbGh7cRNRRuwIzNHHIMNJqmVrD2
- 7Hl2/PfEzdBS00AqioOMinp+SvWtjdhCCOnsrvafpMt+r79Pd+dPSuGiLH/IrhOMvY0TVLS
- sG0htD4s6doObLI26A85wtP1FtxPcl33y/NvpcMH0dXTVxlqUYhyFM/oExgUshE4J9toInA
- uNqrcjw8AZcz+ePhaE6Sw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:iAr37rXoUbQ=:DL90UOUf7GKrvgvRhNFyJB
- TYI83O/Mb3EE2HdSnFxCya8r/Avkwtq3ybmdCtwVrND9Eo9WRpaXQeFXPVdouzLAK9jJgkSAi
- 8th2PmE4KXiWtiqTWfNZJy44pS+2sKPHuM7DF+iOeD8M1g6NsJmbm0R7nvFC3+EwsczcEF6Ey
- 8i7FFqgvN5cipMmHQz6N72RjaJAwC4NOozGRmUBUPuf97NaQG5lRudmsESoJNVshlnn5vV1Y7
- 9AiTiNG/sZzgz2M7tg8uvx1XaMgQorjzVWC1ko9oQr0V1cqmb2y9X+uL6w05/Am7/8SUS/dqS
- qHcaygOCBOGMbsBIAYkl2/bxyw+WICr2Abae2wbztUiRdeAc4NxtAUtJixFC0eKklLm0aWXT/
- W7fQBimGwD0ZQii1DiNahJXgnzFcXeguGr4YHpbkY3j7UDjbIT+o3RKGFBBrhcGrn8wywyiVz
- v4kF/wFaQwQlXm74s1nBqHOcbKKBcZdurl8rPUpN/vk437V8JwgZ7pFw6sNPF/r3fLp9aiDIw
- XVE4P4FiFtBNZFhORE+kces1A1iO9mSgfHFruWj/gJ/T/a2snEYJZDgnfuK30OvWaYi0x/+hU
- 5wDzmshVDoBq8BE6DtDKi8untZCBAxpMdAlOaWZ1sO0uPoxZ5vPGmxqJ0JUj7jUe2thUa20xk
- dNlkZCnm3gpwrDSTRFrBEQkJ91EH2fiVmYUNHsCQCgXNF+OJoOx626fythGe0tW8HSDCmgRyY
- AP+LXqvCoTjAPnog2urns2K8BT2dqmWMIz4Yp6DiuDGNYorAvaDonVJgyBOuH3jYHZFUQt68I
- Z8512KyRumuPfzj4KWqNYiKRMRp/Q==
+X-Provags-ID: V03:K0:buIY/WgjYAUUo+kPsTzfC9GKLrG5sKyjJqiPVpchqt6Za3NjZC9
+ 0Ul044OPZJMcM3RszPdecA94KoYtgj5MuH8X5UagG80Gv3fysVcFPnd8t8/p9MWWo4HajHX
+ X2g9XIzHKxY+SGrlbd5mZoRjkqQZLnu7GmN9nVYPiBTBqnmQynDH+MRCrXTnESKNsmM49yp
+ HDvayo3nw4uNqZoCJHLyA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:DhD8ukXN0/Y=:locsb+qKA0Bf4RLKFHJZoQ
+ yY6mSMx8+D3gYtGu11tD5eBiGAe0NIcK78ZZmCescwHUFheT4QpXguTqhqX8PVOxBO3T6XlKn
+ 01JPjXqKm9qf+wvZQcYiXl9D5c7TuQsMYy+Yx1GpoFVkl6U3V8mdMNml9wAB2bXdluSNDaUfW
+ dkTidgaykRi9fAL+mKUqDM8TkZ+j9Y+Hr4+HIy8Mgx60LubJqJSzGcpy0LNzGg2ExAhl822hZ
+ c7qrgaNfKmVLE9O914sXzl1Y8h6glYKUD7Bcqf9qda6shxwDMtOyhnQ07IdipwYk+4XYWom6K
+ cZOjtlNcmGKM0n8a4YnMQLZAl/lmNn/LWODVjlqX4MpwZtKpq8eiWGiUqHRKfTaPjmeuTnbzA
+ hWsxIMjGQF+WM4ZpHNXUSofJiVRCemh+0rNNEJu4tZlVio6FAgyBipqsVbOM0D57tWt3EXtWp
+ 8F31DeCFMQSp4rKHC3gISljBJ+enaROHaDMEvjEcDyLlYv8f+xQGI7eNhSEIwo4tyAFQH81LV
+ W1i7jhmvf/Lshhfqr55GZZYi1BQG3sTk76Mq39qDDYeo5onEP14HB0JgGoX2hoXTw5Cdf++6w
+ d5FoayGZcERQ9ZbZmwDIp88z5b1FkCPSe6YwOSGAjOQ+7BlxdPP2ytI4UjN3WygLtHJ5QnW8V
+ FrhY9kbNoYkJNvaYYN88WL3nqxooZTQ+AGIN7FQHjTy3n09K+BSA7NNqR5Y2ew3B/MQfZR+ra
+ tg6CbK+h4cU3fQ1SI1mbENRRegWHatDJgEG1VeNaLqL1oDVduYEq3aGgudrwT49WVgxqt08Bj
+ 5BXhpsaIToiACs3PkZH0L+vhramMg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Confusing the ellipsis with the three-dot operator should be made as
-difficult as possible.
-
 Signed-off-by: Ann T Ropea <bedhanger@gmx.de>
 ---
 v2: rename patch series & focus on removal of ellipses
- Documentation/user-manual.txt | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ Documentation/revisions.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-index 3a03e63eb0d8..eff78902742a 100644
---- a/Documentation/user-manual.txt
-+++ b/Documentation/user-manual.txt
-@@ -319,7 +319,7 @@ do so (now or later) by using -b with the checkout command again. Example:
+diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
+index 61277469c874..dfcc49c72c0f 100644
+--- a/Documentation/revisions.txt
++++ b/Documentation/revisions.txt
+@@ -271,7 +271,7 @@ The '..' (two-dot) Range Notation::
+  for commits that are reachable from r2 excluding those that are reachable
+  from r1 by '{caret}r1 r2' and it can be written as 'r1..r2'.
  
-   git checkout -b new_branch_name
- 
--HEAD is now at 427abfa... Linux v2.6.17
-+HEAD is now at 427abfa Linux v2.6.17
- ------------------------------------------------
- 
- The HEAD then refers to the SHA-1 of the commit instead of to a branch,
-@@ -508,7 +508,7 @@ Bisecting: 3537 revisions left to test after this
- 
- If you run `git branch` at this point, you'll see that Git has
- temporarily moved you in "(no branch)". HEAD is now detached from any
--branch and points directly to a commit (with commit id 65934...) that
-+branch and points directly to a commit (with commit id 65934) that
- is reachable from "master" but not from v2.6.18. Compile and test it,
- and see whether it crashes. Assume it does crash. Then:
- 
-@@ -549,14 +549,14 @@ says "bisect".  Choose a safe-looking commit nearby, note its commit
- id, and check it out with:
- 
- -------------------------------------------------
--$ git reset --hard fb47ddb2db...
-+$ git reset --hard fb47ddb2db
- -------------------------------------------------
- 
- then test, run `bisect good` or `bisect bad` as appropriate, and
- continue.
- 
- Instead of `git bisect visualize` and then `git reset --hard
--fb47ddb2db...`, you might just want to tell Git that you want to skip
-+fb47ddb2db`, you might just want to tell Git that you want to skip
- the current commit:
- 
- -------------------------------------------------
-@@ -3416,7 +3416,7 @@ commit abc
- Author:
- Date:
- ...
--:100644 100644 4b9458b... newsha... M somedirectory/myfile
-+:100644 100644 4b9458b newsha M somedirectory/myfile
- 
- 
- commit xyz
-@@ -3424,7 +3424,7 @@ Author:
- Date:
- 
- ...
--:100644 100644 oldsha... 4b9458b... M somedirectory/myfile
-+:100644 100644 oldsha 4b9458b M somedirectory/myfile
- ------------------------------------------------
- 
- This tells you that the immediately following version of the file was
-@@ -3449,7 +3449,7 @@ and your repository is good again!
- $ git log --raw --all
- ------------------------------------------------
- 
--and just looked for the sha of the missing object (4b9458b..) in that
-+and just looked for the sha of the missing object (4b9458b) in that
- whole thing. It's up to you--Git does *have* a lot of information, it is
- just missing one particular blob version.
- 
-@@ -4114,9 +4114,9 @@ program, e.g.  `diff3`, `merge`, or Git's own merge-file, on
- the blob objects from these three stages yourself, like this:
- 
- ------------------------------------------------
--$ git cat-file blob 263414f... >hello.c~1
--$ git cat-file blob 06fa6a2... >hello.c~2
--$ git cat-file blob cc44c73... >hello.c~3
-+$ git cat-file blob 263414f >hello.c~1
-+$ git cat-file blob 06fa6a2 >hello.c~2
-+$ git cat-file blob cc44c73 >hello.c~3
- $ git merge-file hello.c~2 hello.c~1 hello.c~3
- ------------------------------------------------
- 
-@@ -4374,7 +4374,7 @@ $ git log --no-merges t/
- ------------------------
- 
- In the pager (`less`), just search for "bundle", go a few lines back,
--and see that it is in commit 18449ab0...  Now just copy this object name,
-+and see that it is in commit 18449ab0.  Now just copy this object name,
- and paste it into the command line
- 
- -------------------
+-The '...' (three dot) Symmetric Difference Notation::
++The '...' (three-dot) Symmetric Difference Notation::
+  A similar notation 'r1\...r2' is called symmetric difference
+  of 'r1' and 'r2' and is defined as
+  'r1 r2 --not $(git merge-base --all r1 r2)'.
 -- 
 2.13.6
 
