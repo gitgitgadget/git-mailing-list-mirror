@@ -2,94 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 87D521F43C
-	for <e@80x24.org>; Mon, 13 Nov 2017 11:12:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D93391F43C
+	for <e@80x24.org>; Mon, 13 Nov 2017 11:19:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752168AbdKMLMQ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Nov 2017 06:12:16 -0500
-Received: from smtp-out-1.talktalk.net ([62.24.135.65]:43642 "EHLO
-        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751986AbdKMLMP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Nov 2017 06:12:15 -0500
-Received: from [192.168.2.201] ([92.22.30.94])
-        by smtp.talktalk.net with SMTP
-        id ECefezMRymITaECepeEzAK; Mon, 13 Nov 2017 11:12:14 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1510571534;
-        bh=XkLJDzG+RGh72pUlOHoUrg3vJ8iOagfIbW962s4WZMY=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=VXmDbmATIMaM5G0NuYutwAPJ2YWKNAM4vGzgIA74RlxBPw6sTYhBCH5ZHIc9OVRQV
-         Y945uAfcUCUAlQSLD/W1PBODuFW23s8MX0IwTJRRh8FuNj1hmeP9sHd8dirNrQd1gA
-         kbvJDNoFeW19KF8MrZcBFB+FKK3uIu3BtVuGjofg=
-X-Originating-IP: [92.22.30.94]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=W/RIbVek c=1 sm=1 tr=0 a=lje0BXTe3+PqU+djfnm1WA==:117
- a=lje0BXTe3+PqU+djfnm1WA==:17 a=IkcTkHD0fZMA:10 a=nN7BH9HXAAAA:8
- a=I7ZZ8Od9tPHz9YZaB0YA:9 a=QEXdDO2ut3YA:10
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v1 5/8] sequencer: don't die in print_commit_summary()
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <20170925101041.18344-1-phillip.wood@talktalk.net>
- <20171106112709.2121-1-phillip.wood@talktalk.net>
- <20171106112709.2121-6-phillip.wood@talktalk.net>
- <xmqq8tfig1rr.fsf@gitster.mtv.corp.google.com>
- <xmqq7ev2dsv2.fsf@gitster.mtv.corp.google.com>
- <072b0edb-7a30-77f3-2ac5-893c28c0a695@talktalk.net>
- <xmqqk1yyf1q0.fsf@gitster.mtv.corp.google.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <536b1a9e-92a2-b907-3489-d4059534edb8@talktalk.net>
-Date:   Mon, 13 Nov 2017 11:11:51 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.4.0
+        id S1752200AbdKMLTM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Nov 2017 06:19:12 -0500
+Received: from upper-gw.cixit.se ([92.43.32.133]:42471 "EHLO mail.cixit.se"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1752114AbdKMLTL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Nov 2017 06:19:11 -0500
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+        by mail.cixit.se (8.14.3/8.14.3/Debian-9.4) with ESMTP id vADBJ0pg023126
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+        Mon, 13 Nov 2017 12:19:00 +0100
+Received: from localhost (peter@localhost)
+        by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id vADBJ0Rw023122;
+        Mon, 13 Nov 2017 12:19:00 +0100
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+Date:   Mon, 13 Nov 2017 12:19:00 +0100 (CET)
+From:   Peter Krefting <peter@softwolves.pp.se>
+To:     Kevin Willford <kewillf@microsoft.com>
+cc:     Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: RE: cherry-pick very slow on big repository
+In-Reply-To: <CY4PR21MB0855CA8ABB6BE4F176902F36B7540@CY4PR21MB0855.namprd21.prod.outlook.com>
+Message-ID: <alpine.DEB.2.00.1711131217010.22867@ds9.cixit.se>
+References: <alpine.DEB.2.00.1711100959300.2391@ds9.cixit.se> <20171110102011.yqtka6a3wmgcvkl6@sigill.intra.peff.net> <alpine.DEB.2.00.1711101333030.2391@ds9.cixit.se> <7e242038-50e5-2cfc-e810-401af78b8cdc@gmail.com> <alpine.DEB.2.00.1711101436270.2391@ds9.cixit.se>
+ <CY4PR21MB0855CA8ABB6BE4F176902F36B7540@CY4PR21MB0855.namprd21.prod.outlook.com>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+Organization: /universe/earth/europe/norway/oslo
 MIME-Version: 1.0
-In-Reply-To: <xmqqk1yyf1q0.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfIE1vNdImMiNBaqnk++GbHQalgp9YdTaFGTXgpWA9zIw0cN6MQ5y2QD9Y+WdArLni59RBz86N18rM/TsxSxHeFtF+m4jlMGCX7BhLjSQbayfVhnkD/y6
- ee+vFSR9kR8FiYZ6SdYPbwHJKgmY/8ESOnZWg2Yvrva8hISko4Vb1ke+ep0YymNOsVJtyR+spNunPDU6JnLl9Kfzn4DyzWmuXPsa5CSPcZY5k8vP/OlJSufa
- Eslq2p4PU3PnDwWNSiTtBFQRJBMkty/KhhtE3/4IM1CfDl+e6pfbSotilHFFoKXs
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.3.7 (mail.cixit.se [127.0.0.1]); Mon, 13 Nov 2017 12:19:00 +0100 (CET)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/11/17 18:05, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood@talktalk.net> writes:
-> 
->> On 07/11/17 15:13, Junio C Hamano wrote:
->> ...
->>> Another possibility perhaps is that the function is safe to reuse
->>> already even without this patch, of course ;-).
->>>
->> Hmm, maybe it is. Looking at pick_commits() and do_pick_commit() if the
->> sequencer dies in print_commit_summary() (which can only happen when
->> cherry-picking or reverting) then neither the todo list or the abort
->> safety file are updated to reflect the commit that was just made.
->>
->> As I understand it print_commit_summary() dies because: (i) it cannot
->> resolve HEAD either because some other process is updating it (which is
->> bad news in the middle of a cherry-pick); (ii) because something went
->> wrong HEAD is corrupt; or (iii) log_tree_commit() cannot read some
->> objects. In all those cases dying will leave the sequencer in a sane
->> state for aborting - 'git cherry-pick --abort' will rewind HEAD to the
->> last successful commit before there was a problem with HEAD or the
->> object database. If the user somehow fixes the problem and runs 'git
->> cherry-pick --continue' then the sequencer will try and pick the same
->> commit again which may or may not be what the user wants depending on
->> what caused print_commit_summary() to die.
-> 
-> The above is all good analysis---thanks for your diligence.  Perhaps
-> some if not all of it can go to the log message?
-> 
-Thanks, that's a good idea. I see the above as a reason to drop this
-commit as returning an error will try and update the abort safety file
-which we don't want to do if there is a problem with HEAD so I'll add it
-to the previous commit to explain why it is okay to die.
+Kevin Willford:
+
+> Since this is happening during a merge, you might need to use merge.renameLimit
+> or the merge strategy option of -Xno-renames.  Although the code does fallback
+> to use the diff.renameLimit but there is still a lot that is done before even checking
+> the rename limit so I would first try getting renames turned off.
+
+That makes quite a large difference, with this setting it finishes in 
+just a few seconds:
+
+   $ time git -c merge.renameLimit=1 cherry-pick -x 717eb328940ca2e33f14ed27576e656327854b7b
+   [redacted 0576fbaf89] Redacted
+    Author: Redacted <redacted>
+    Date: Mon Oct 16 15:58:05 2017 +0200
+    1 file changed, 2 insertions(+), 2 deletions(-)
+
+   real    0m15,473s
+   user    0m14,904s
+   sys     0m0,488s
+
+I'll add this setting for the repository for the future, thank you!
+
+-- 
+\\// Peter - http://www.softwolves.pp.se/
