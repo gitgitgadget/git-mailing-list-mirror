@@ -2,58 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A52D61F42B
-	for <e@80x24.org>; Mon, 13 Nov 2017 23:25:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1D8B31F42B
+	for <e@80x24.org>; Mon, 13 Nov 2017 23:39:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751370AbdKMXZl (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Nov 2017 18:25:41 -0500
-Received: from mail-qk0-f172.google.com ([209.85.220.172]:48251 "EHLO
-        mail-qk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751240AbdKMXZk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Nov 2017 18:25:40 -0500
-Received: by mail-qk0-f172.google.com with SMTP id a142so21938144qkb.5
-        for <git@vger.kernel.org>; Mon, 13 Nov 2017 15:25:40 -0800 (PST)
+        id S1751371AbdKMXjG (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Nov 2017 18:39:06 -0500
+Received: from mail-vk0-f50.google.com ([209.85.213.50]:50481 "EHLO
+        mail-vk0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751073AbdKMXjG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Nov 2017 18:39:06 -0500
+Received: by mail-vk0-f50.google.com with SMTP id h82so9777730vkf.7
+        for <git@vger.kernel.org>; Mon, 13 Nov 2017 15:39:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=/F9bgbU1mO/4fZI16ET7UlB337oyryCHcIm8Zw/pGvw=;
-        b=TMFe0phyV61TnGoevxMSMx9iZjXZoJdcR//MWfV/GG3lv1pNqk5uZyeghTMO4dwdpo
-         UANDo+EzusqF9FEgLOpyfk9gOcHG+lc6NHO//EWSUSSmFHsTfnfvL8V3TI01S5+s5UdK
-         eAQPN2SpFAd1sKW38aYHgpxdpNv3mUsNt6Iez5qWnc6Mxxijp8Ymke2210hJ+7qJD6lY
-         8rebPhXUzOQrQMM2gdR7B5CpFuED1EELzFcXyObhuugpZBaTPVAzyqq5bKU2lYn1+8kc
-         ZS7gGGlHgmD2v/6JAX3xYNt3RwhwSZkWu6JNanh1lh+KZOJ2wZ4PeHBuFXHaBA5SNe43
-         GjAQ==
+        bh=M7U30VBdKw20wqUmMluoZuAFDyIkqtZ09uiZ9TJGikc=;
+        b=cz9mgZynHkgy7GO9E+zm3rhJ/H2l3ww0iolJOd/cLwDhdBJYWS7LPO+attBz/5F5hj
+         BabSL90IYoujZwBnFv+HTztvoZ2DW8kOdNKFNWaVe+zYuXRY7ys1RuDGBpPbVYcpDPvj
+         mDRFAKQMKxITRQ8VNe8ENlcbUWvyu4SjyoWG5IyY2SAH9wKie80+UyL3x8iXC62POxET
+         gAbbArQP+l63jjpD63Aew5GnaZVT6kebEk+B63f36XqJskXw4ZoJm1iTVUzlYhB+8OoG
+         syAsxJb9v5z4MeEInwZk/Yhx0yfibmcPUrLK8EGGHkjE7TEhO86SBnxDEViX4yFUehfQ
+         p3iA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=/F9bgbU1mO/4fZI16ET7UlB337oyryCHcIm8Zw/pGvw=;
-        b=YKxKHKZJHLDfpbGa8Q7IzmS0ze9VvZ8Jzalbg2+6a5fQWL5aLiHCJXNxsGt/rOGe2O
-         xLnKm+SEIH3w+z52DWIeOMjWdckuTaVLrUFN3Rga3jbqY3Llyy/UDE19q2Ejj6+NClah
-         aG3BaGDSQoUdwoOxnFalteo6KaQE3drw+ZLmQIA4ayHScPX7hzklXpabEWSJGe0ZKt2N
-         /7wAF8cg8z+g5RLYI3evld1KDRynkEBrRQxI0uvOPBOXObKoDFy4f8rYODVkJBy+K3xz
-         EOgIXHGRvYtHojTAQ+h1ZbR2Ov3I99FIEjdq+SazVF4z9xlR2+7IatCU8O7mjGsc1N3W
-         bvQg==
-X-Gm-Message-State: AJaThX5uSpv3BHuPqEh0W7kFSJO8DJb1N+rcYVSMiStkfZ4iaBJTVl9Q
-        qNZoG5QiuPTUmR4eb+fLuH/iDBMPjgAY2ZvNXVc7og==
-X-Google-Smtp-Source: AGs4zMY2l62uCctkGfKOMgEGWHGq4La6dNiPbq1CoXqvjNjPXTsx3BbLE/JHkhG3U1Kyl7sHnYtfdLiY/GIb1swcBlA=
-X-Received: by 10.55.111.3 with SMTP id k3mr15932788qkc.332.1510615539863;
- Mon, 13 Nov 2017 15:25:39 -0800 (PST)
+        bh=M7U30VBdKw20wqUmMluoZuAFDyIkqtZ09uiZ9TJGikc=;
+        b=sWaD475ICIQRrDVdbIAtkAxhjbc+9i8IcVrL/ghtI5RrE41dkaTF0QUcWObLMQy0cp
+         sABuLmNuyjt8OcEJEY3LW4BGSRcu3g3AIrg9W7UDWWXHp4QMPt+6LFFDQo5dPt5V6WTT
+         yZpym2ozBo6XIoxSlNN8iS7AAJ6fMMrqNGIQIflzOmQ7ehXxlCHJ39JVji9WiUoZ5Kcp
+         XjROygWJeicLC747iK9Z3yxSYXIHHaOHcSgpoAu228x0xlG66gksfOcHf4G9RUjluQNd
+         QFCWh6jTxmke+tYIgLuG3P4ENlgo7M/pNdVPibF6NpNsC2VvY+6sCxTRheqeR8mm1FEU
+         Hl5w==
+X-Gm-Message-State: AJaThX5m3aysJ/cCxhhyBsx7TqP6K7h25OcY9ZcbKc2TkAvOE17FFrvz
+        R470eSGh0tNQJGoZesHWJyxcGNrMf3+NgWrxrIU=
+X-Google-Smtp-Source: AGs4zMaFJyCeq6Akm+9XoIyT2kpf4DKoSMSIr6tMqWvZQxBwtAhNwJhroMpTaOow3ip8K6Mplkd17RySK+7V4fLKQdE=
+X-Received: by 10.31.61.11 with SMTP id k11mr8130707vka.153.1510616344919;
+ Mon, 13 Nov 2017 15:39:04 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.140.102.70 with HTTP; Mon, 13 Nov 2017 15:25:39 -0800 (PST)
-In-Reply-To: <20171110190550.27059-7-newren@gmail.com>
-References: <20171110190550.27059-1-newren@gmail.com> <20171110190550.27059-7-newren@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 13 Nov 2017 15:25:39 -0800
-Message-ID: <CAGZ79kYOW9+pP5ApKDHR2_VwPXyiLEEbbO0-3ka-SDCP6ryLPw@mail.gmail.com>
-Subject: Re: [PATCH 06/30] directory rename detection: testcases to avoid
- taking detection too far
-To:     Elijah Newren <newren@gmail.com>
+Received: by 10.176.67.33 with HTTP; Mon, 13 Nov 2017 15:39:04 -0800 (PST)
+In-Reply-To: <CAGZ79kYEwOhjMfNH3ovfEnRdU_OYWnGnai8HrZWxoBEC67xKVw@mail.gmail.com>
+References: <20171110190550.27059-1-newren@gmail.com> <20171110190550.27059-3-newren@gmail.com>
+ <CAGZ79kYXbvDL_SoEENf60DsDFA-yEWfvgv8bNv_v+mw042ZH=w@mail.gmail.com>
+ <CABPp-BFX-xZf962vuCjJSaB0=sPMT_zNF8+mGPG04dFi5PE6SQ@mail.gmail.com> <CAGZ79kYEwOhjMfNH3ovfEnRdU_OYWnGnai8HrZWxoBEC67xKVw@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 13 Nov 2017 15:39:04 -0800
+Message-ID: <CABPp-BFynaf6abbd2ywzjuQnus5BFp=DQmKd80qHj9vFOqEmig@mail.gmail.com>
+Subject: Re: [PATCH 02/30] merge-recursive: Fix logic ordering issue
+To:     Stefan Beller <sbeller@google.com>
 Cc:     git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
@@ -61,54 +63,36 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 10, 2017 at 11:05 AM, Elijah Newren <newren@gmail.com> wrote:
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
->  t/t6043-merge-rename-directories.sh | 137 ++++++++++++++++++++++++++++++++++++
->  1 file changed, 137 insertions(+)
->
-> diff --git a/t/t6043-merge-rename-directories.sh b/t/t6043-merge-rename-directories.sh
-> index 00811f512a..021513ec00 100755
-> --- a/t/t6043-merge-rename-directories.sh
-> +++ b/t/t6043-merge-rename-directories.sh
-> @@ -513,4 +513,141 @@ test_expect_success '2b-check: Directory split into two on one side, with equal
->  #   messages are handled correctly.
->  ###########################################################################
->
-> +
-> +###########################################################################
-> +# SECTION 3: Path in question is the source path for some rename already
-> +#
-> +# Combining cases from Section 1 and trying to handle them could lead to
-> +# directory renaming detection being over-applied.  So, this section
-> +# provides some good testcases to check that the implementation doesn't go
-> +# too far.
-> +###########################################################################
-> +
-> +# Testcase 3a, Avoid implicit rename if involved as source on other side
-> +#   (Related to testcases 1c and 1f)
-> +#   Commit A: z/{b,c,d}
-> +#   Commit B: z/{b,c,d} (no change)
+On Mon, Nov 13, 2017 at 2:12 PM, Stefan Beller <sbeller@google.com> wrote:
+> I wanted to debug a very similar issue today just after reviewing this
+> series, see
+> https://public-inbox.org/git/743acc29-85bb-3773-b6a0-68d4a0b8fd63@ispras.ru/
 
-This could also be an unrelated change such as adding w/e?
+Oh, bleh.  That's not a D/F conflict at all, it's the code assuming
+there's a D/F conflict because the entry it is processing ("sub") is a
+submodule rather than a file, and it panics when it sees "a directory
+in the way" -- a directory that just so happens to be named "sub" and
+which is in fact the desired submodule, meaning that the working
+directory is already good and needs no changes.
 
-> +#   Commit C: y/{b,c}, x/d
-> +#   Expected: y/{b,c}, x/d
+In this case, the relevant code from merge-recursive.c is the following:
 
+        /* Case B: Added in one. */
+        /* [nothing|directory] -> ([nothing|directory], file) */
+<snip>
+        if (dir_in_way(path, !o->call_depth,
+                   S_ISGITLINK(a_mode))) {
+            char *new_path = unique_path(o, path, add_branch);
+            clean_merge = 0;
+            output(o, 1, _("CONFLICT (%s): There is a directory with
+name %s in %s. "
+                   "Adding %s as %s"),
+                   conf, path, other_branch, path, new_path);
 
-> +
-> +# Testcase 3b, Avoid implicit rename if involved as source on other side
-> +#   (Related to testcases 5c and 7c, also kind of 1e and 1f)
-> +#   Commit A: z/{b,c,d}
-> +#   Commit B: y/{b,c}, x/d
-> +#   Commit C: z/{b,c}, w/d
-> +#   Expected: y/{b,c}, CONFLICT:(z/d -> x/d vs. w/d)
-> +#   NOTE: We're particularly checking that since z/d is already involved as
-> +#         a source in a file rename on the same side of history, that we don't
-> +#         get it involved in directory rename detection.  If it were, we might
-> +#         end up with CONFLICT:(z/d -> y/d vs. x/d vs. w/d), i.e. a
-> +#         rename/rename/rename(1to3) conflict, which is just weird.
-
-Makes sense.
-
->
+Note that the comment even explicitly assumes the newly added entry is
+a file.  We should expect there to be a directory present (the
+submodule being added), but the code doesn't have a check for that.
+The S_ISGITLINK(a_mode) makes you think it has special handling for
+the submodule case, but that's for the reverse situation (the
+submodule isn't yet present in the working copy, it came from the
+other side of history, but there is an empty directory present).
