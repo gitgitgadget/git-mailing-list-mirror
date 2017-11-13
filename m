@@ -2,133 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E3DD2021B
-	for <e@80x24.org>; Mon, 13 Nov 2017 23:05:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BE57A1F42B
+	for <e@80x24.org>; Mon, 13 Nov 2017 23:11:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753219AbdKMXFC (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Nov 2017 18:05:02 -0500
-Received: from mail-wr0-f169.google.com ([209.85.128.169]:54455 "EHLO
-        mail-wr0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752635AbdKMXFB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Nov 2017 18:05:01 -0500
-Received: by mail-wr0-f169.google.com with SMTP id l22so15861226wrc.11
-        for <git@vger.kernel.org>; Mon, 13 Nov 2017 15:05:00 -0800 (PST)
+        id S1751356AbdKMXL2 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Nov 2017 18:11:28 -0500
+Received: from mail-qt0-f174.google.com ([209.85.216.174]:53449 "EHLO
+        mail-qt0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751188AbdKMXL1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Nov 2017 18:11:27 -0500
+Received: by mail-qt0-f174.google.com with SMTP id n61so21692611qte.10
+        for <git@vger.kernel.org>; Mon, 13 Nov 2017 15:11:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=zJWDNZzgLtJhQyZ/abd/hQXsu8WQtl6AYUPmS3XEMhU=;
-        b=uUiUfL/x9oS1/VjrbVfX1GjTdw0HuW5HSigUE/9gO2jk+2wslo9FEdQryKaHBgksz2
-         DwjwK1DQteeG3QKDWZlEg2QHHaxwcfBC2t7gzlqINVFih4uJor5KHn925bx8sJoFUJOY
-         FJHnlLoNieBsOfdWJPSmLP54XUKacBOAWSOA8fIPpnmKc7msnRSFj6ymQx/UQSiVTHXa
-         wmOS9dcwoVy6tzdvT+SAAIdP0hsixW5lF1n2T2b/zAoOoLBLgYw/YlLUV+QXVvKjlqaV
-         qB+Q79a2NJAOXvxjVhfWIREhrEpim4tETcZAZWPKkfNJR70dbQu3CV3RLJZALSRaQuMG
-         TLPA==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=ezdHhPbkVCD7ntOUQq026Uh1fB0y3BwKttSsIFBMpEQ=;
+        b=pLAF4M1cul6iBs6vlHdtA7avXaLbVHV/jlG/nEgE+CetjYRSAUjeuXnoh6Gh5M+4fe
+         rlrlqMg3Se9ph8Kg7a4DiyxmRs9bt4Wyic2oW00TxM8d8Vk4zp7R3PI5c9dGLtEo08WK
+         hfa3d6XuNoDEG4I6PmNPuZmVm3q7TdTQZJAo30p5TEVTsIpnSfMqjdkgZSuoK1s/VTHa
+         I74gZUx9TNQ2CtS1eLAZc9nwRvKI/4P8/wgQxoRyDBxdxgWaZjc8u/inyESgODXm7ssU
+         w6n/KjiCByQPpHEKzFHdCCF7l8TlvwylPyEPgEDWPcAaUKpdCcA/Jd2Vh3w1FkljJMs6
+         W22Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=zJWDNZzgLtJhQyZ/abd/hQXsu8WQtl6AYUPmS3XEMhU=;
-        b=HvUEX9bOEKMqyVcik++5GSJ8ioXYzdS239hP0odTP+mM3JHIFBrw6S+wIee+9J8Xo9
-         CK7dDNGqlWmycTR08/5cVkn4uC6dd8FbEi29HVpizVZ/qTI0RQlzO4ZUgkjGiX4LWMOL
-         aJcfNFMsuX28qzWoc3grBGjyfYYyzbpeHGPczdSaNRSASJIhU5bWDgl+85L4PmtnTFu+
-         Siy7M3uUq0UKtdAfxUqL3j977AxRd3/1QCoc6VprnImLYccmeJn4D2uXjxpWVb1sE206
-         gSBtFyD7j1yPRUbrCqHzk1ZtSqnw/KDCjf1p9bFWjEvR4JY+iOx6O2AutHkTeLaNSiYe
-         d9Tg==
-X-Gm-Message-State: AJaThX78V1qdSx5mmlyh4pL56W9w9mMQQFIC1bTqU7SdkmIYU4p+xpgt
-        iiWIdcQ7L3ryBLl3PJd3Pk7gow==
-X-Google-Smtp-Source: AGs4zMaJgVl+QMab9kBOLi09kDBDIXDjrTFwQJN1spTYau1qxnhakt1SEf3qdO4o2sQUKM3i+bsfhg==
-X-Received: by 10.223.164.22 with SMTP id d22mr9402617wra.232.1510614300143;
-        Mon, 13 Nov 2017 15:05:00 -0800 (PST)
-Received: from LykOS.localdomain (cpe-67-245-44-149.nyc.res.rr.com. [67.245.44.149])
-        by smtp.gmail.com with ESMTPSA id 195sm31316562wmj.3.2017.11.13.15.04.58
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 13 Nov 2017 15:04:59 -0800 (PST)
-Date:   Mon, 13 Nov 2017 18:06:13 -0500
-From:   Santiago Torres <santiago@nyu.edu>
-To:     Todd Zullinger <tmz@pobox.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t/lib-gpg: fix gpgconf stderr redirect to /dev/null
-Message-ID: <20171113230612.nyygui2ahuqzrjsr@LykOS.localdomain>
-References: <20171113210745.24638-1-tmz@pobox.com>
- <20171113221823.jzt7jfhxeuyivbcn@LykOS.localdomain>
- <20171113224323.GR5144@zaya.teonanacatl.net>
- <20171113230201.3gyqh2oknic2o6mg@LykOS.localdomain>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=ezdHhPbkVCD7ntOUQq026Uh1fB0y3BwKttSsIFBMpEQ=;
+        b=OePKyLAMOh5msIs9GqhjRSYjnBK4bTUCAL8jpUPOSaefRlDuGa8McMtcsBwk7Nyfar
+         bgoEHhXpnmXLsxPFec4ZoTfZQ+TKcXCIXxrItgaL/iU2/qHDLPpb3d3GkbJe4Q/Ikfld
+         KdX+yzpIP7zDMSP+KL1Ntjg3q4to70wG+M1siTr7TZ+0cCmr1Ai3rZTQ8UOokCki1IHh
+         zKcGHX+bwFwRYJhULgLt6KuCgL+ByidWt4l7dJyQYZf5/w+M/8xBrQzI4itZOT0hoG+1
+         KbjWSovz03IsA+ahKoDZAyasCrdSrrLk0o65f+IGeWesN+ttOiemBFmhaiE7zpOP9lWb
+         LUOg==
+X-Gm-Message-State: AJaThX5IfbeuOkWPBJzNc/wgrozQaGVJU5h2Eut0h4mD9EipbcMPkn3C
+        chBx3zBZTvkbVtoxZm4y8pdZ0XdxRubJdrCIrEKRcA==
+X-Google-Smtp-Source: AGs4zMaxVKKzagLn78bFy8Vx6X+nzw+FXjmBax888DVT4xzEPbrjPmcwSqaJtfpl/cpMkwYM6xH7oDrEhLut6VCJubw=
+X-Received: by 10.200.27.225 with SMTP id m30mr14897753qtk.260.1510614686691;
+ Mon, 13 Nov 2017 15:11:26 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="5p7tpbgq3bsqnalu"
-Content-Disposition: inline
-In-Reply-To: <20171113230201.3gyqh2oknic2o6mg@LykOS.localdomain>
+Received: by 10.140.102.70 with HTTP; Mon, 13 Nov 2017 15:11:25 -0800 (PST)
+In-Reply-To: <CABPp-BFSt8NGSzkoJdhst_NHqx_hVGMzO-688SOdYRB413Zd9g@mail.gmail.com>
+References: <20171110190550.27059-1-newren@gmail.com> <20171110190550.27059-4-newren@gmail.com>
+ <CAGZ79kZ7d7fMp3Cw3Yy4bq9-Mh5Z_jhM5XDQbkVLoqzm6ONzDg@mail.gmail.com> <CABPp-BFSt8NGSzkoJdhst_NHqx_hVGMzO-688SOdYRB413Zd9g@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 13 Nov 2017 15:11:25 -0800
+Message-ID: <CAGZ79kYD8QjLDsF8APBP8P-WvAz7NBhnh6vbkr8xMnzW7XAm9g@mail.gmail.com>
+Subject: Re: [PATCH 03/30] merge-recursive: Add explanation for src_entry and dst_entry
+To:     Elijah Newren <newren@gmail.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, Nov 13, 2017 at 2:57 PM, Elijah Newren <newren@gmail.com> wrote:
+>
+> Perhaps:
+>
+>   If 'before' is renamed to 'after' then src_entry will contain
+>   the versions of 'before' from the merge_base, HEAD, and MERGE in
+>   stages 1, 2, and 3; and dst_entry will contain the respective versions of
+>   'after' in corresponding locations.  Thus, we have a total of six modes
+>   and oids, though some will be null.  (Stage 0 is ignored; we're interested
+>   in handling conflicts.)
 
---5p7tpbgq3bsqnalu
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-Quick followup.
-
-The version that triggers this is at least 2.1.21[1]. I recall there was so=
-me
-wiggle room on minor versions before it.
-
-Thanks!
--Santiago.
-
-[1] https://dev.gnupg.org/T3218
-
-On Mon, Nov 13, 2017 at 06:02:02PM -0500, Santiago Torres wrote:
-> =20
-> > Were the ENOENT errors you encountered in running the tests multiple ti=
-mes
-> > easy to reproduce?=20
->=20
-> If you had the right gpg2, it should be easy to repro with just re-runnin=
-g.
->=20
-> > If so, I can certainly try to reproduce them and then
-> > run the tests with --reload in place of --kill to gpgconf.  If that wor=
-ked
-> > across the various gnupg 2.x releases, it would be a simple enough chan=
-ge to
-> > make as a follow-up.
->=20
-> Let me dig up the exact versions. IIRC it was somewhere between 2.1.0 and=
- 2.2.x
-> or so. I think somewhere within the patch re-rolls I had the exact versio=
-ns.
->=20
-> Cheers!
-> -Santiago.
-
-
-
---5p7tpbgq3bsqnalu
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEkDurc2QOttZVM+/zRo8SLOgWIpUFAloKJWQACgkQRo8SLOgW
-IpXNJhAAm7ByBjbCD4KnGhzLFZdhdNWoNjKROJzfGlJQg07OgBYpmb5go8N7BG4J
-UwyHAHW8WA666oKVt6wcWlNthNe2WmwoU7Gc8nEPg4B08IcaUwI9Q7qboxZCcDy5
-Z1bqrYGW1li9hq71vWovMKyxqGqNV2gtUBBXd/kcx4bB/8V0t7AXT6rucwt+isxT
-YRRarQcSlJ0XOF8lcdnD+NWcfzfQw71rDoxYmoamqcJjIzOLSYU0CTBNhlguf2z/
-DG9ZaFidWGrylBCN7UGUd54TbdCwZCgmsZulFh9YDGsp2No+OAAtyuGC7ZZAyaAQ
-NQO26mRxAgBPT3GSmuJ/0lxz42Q5izSgGGTWgueSjm1rQd6l1w9KALxkEKHPMt3v
-5RKYJqhPmP9fOH6o8pU32pUefM2Hfgm8o+47i6dFcLzbCD1jk9fmGxwFIdQq5+v8
-1NvH/eBsbmRXB9e5FZYKTDukGv0JfghbYjaXW+ADhlVjXuSfcqAK3StauRh/bs1a
-X+77kdytklJKAwbk9WTPAximIgMTzB35azCQRphUiTu9geDDkKxMbDMlknKl5W4q
-Az/D1V5/vJdeIo3AshD7QTm48NBhkzwSBr0nkIQNPNFBrne7YbugI7Nt4x8z1w5f
-up7C3xPhcRwrFC2RVInrolco9hSOe1xgmjbVCDEiZcRr52NZrNY=
-=bNZ4
------END PGP SIGNATURE-----
-
---5p7tpbgq3bsqnalu--
+I find that much easier to read, though I am biased with prior knowledge now. ;)
