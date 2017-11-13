@@ -2,89 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6428C1F42B
-	for <e@80x24.org>; Mon, 13 Nov 2017 21:33:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 749B01F42B
+	for <e@80x24.org>; Mon, 13 Nov 2017 21:35:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751367AbdKMVdT (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Nov 2017 16:33:19 -0500
-Received: from mail-io0-f178.google.com ([209.85.223.178]:54964 "EHLO
-        mail-io0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751234AbdKMVdS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Nov 2017 16:33:18 -0500
-Received: by mail-io0-f178.google.com with SMTP id w127so4802679iow.11
-        for <git@vger.kernel.org>; Mon, 13 Nov 2017 13:33:18 -0800 (PST)
+        id S1751480AbdKMVfM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Nov 2017 16:35:12 -0500
+Received: from mail-bl2nam02on0080.outbound.protection.outlook.com ([104.47.38.80]:14510
+        "EHLO NAM02-BL2-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1751247AbdKMVfL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Nov 2017 16:35:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=WTqcy7vyOyqm4ekggc5mLhTCydhVTnPc7MpzHiG97kY=;
-        b=s0djFtCEa1iSMNNLHP+MRAXiOpBmQpebyc6/Z1F8clZRIeOFiT1Abwpd6bNQJXL1lG
-         HhzO0dF2IvIY5h9VkIB12yW8Jw9haL2xyhGcvw0oBPB0A049iqen8f6YReGa5wmtC9el
-         HkeIUY0b3Uv9pb0fwdf7/zRi0MK+v/Uzovk2/ZiObIB8YyvKSL9cMQzMb9TICDAnC8Zg
-         CRD9/piHP2Y+xGx+gQK4c1ttNAAgZsMpXaENna27AI2Yn8h95kaQ3K3GthOpzorVu/Ft
-         tf4sql1qk5QfxuY2hzxl3CCpFwtguProtfdUViey4Bg4ChcHP0U7FuykWVxBM0vDH96W
-         hGpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=WTqcy7vyOyqm4ekggc5mLhTCydhVTnPc7MpzHiG97kY=;
-        b=RWxaDnksXqObuF6V64bYxW+NBIeF4QY4WDhCcdax3+p8M8TI1V0ecgy+Yg/phQuxm0
-         0+o7q+29Y+30v6Mzmkys/qz7SiMHhlr8q5olsVggZCynbLtm0jQhnbBFzm+AESaxz0GQ
-         /2vSGohbEZ1f/HwPI3EoM9yANyhz9MckoE9N5LmVjir+OpzpunEeSAGq347JBFHUe/Mf
-         uvzQ23teRxLxWHA7gBdVx35eDVkKI6p7VKpPA+7T2Eo8Aqi6MOPRIRRv2YJ6t3OUAk1e
-         m3aPzZ4I4+0dlCLR8W5JiGINFf7mSbZSHj3gERNonvKCbS5SzMNWMsOTZhF/D13b5VKj
-         eFJA==
-X-Gm-Message-State: AJaThX4ZCAac3KWaJ9jv1jv9M2HMPtu5pmcyLBhmmOgSak/QQhppg8cM
-        wpE6BX3C7Al/aeFVscyO0MYkN1RO1Dc=
-X-Google-Smtp-Source: AGs4zMbJPDB/12eKjoBEJ1JuM4yrWxAyXAz+SA1Wg+AM1xtrKdGshTykki1pA+Q9yk5WJUZw49s8Gg==
-X-Received: by 10.107.129.163 with SMTP id l35mr9628551ioi.193.1510608797582;
-        Mon, 13 Nov 2017 13:33:17 -0800 (PST)
-Received: from twelve3.mtv.corp.google.com ([2620:0:100e:422:b1aa:4028:e6df:d3e])
-        by smtp.gmail.com with ESMTPSA id d1sm3056381ioc.61.2017.11.13.13.33.16
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 13 Nov 2017 13:33:16 -0800 (PST)
-Date:   Mon, 13 Nov 2017 13:33:16 -0800
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 2/4] progress: fix progress meters when dealing with
- lots of work
-Message-Id: <20171113133316.c10bd360b4af10e572049443@google.com>
-In-Reply-To: <20171113201600.24878-3-newren@gmail.com>
-References: <20171113201600.24878-1-newren@gmail.com>
-        <20171113201600.24878-3-newren@gmail.com>
-X-Mailer: Sylpheed 3.4.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+ d=McGill.onmicrosoft.com; s=selector1-mail-mcgill-ca;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
+ bh=qcZcsso+YqsEsyfMC5DP+iQ9PzlLQCKqRW1GZUR9+g4=;
+ b=fXVFFTGIeheAU3dIPviDIFdnawnL+E2oQa1j0x005mMrnHqqS01pOd83hnyhcIN3X8KG6Frzx9CNRpe6bg5prqwYxb+Q1y8eqQw18EsolVL0niYzrJoX7TsbKZTEEiBi+2b6Z+b8tFBiqPppHFzjZFMcZineGhG/rd0K90e8a+k=
+Received: from YTXPR0101MB2175.CANPRD01.PROD.OUTLOOK.COM (52.132.40.150) by
+ YTXPR0101MB2173.CANPRD01.PROD.OUTLOOK.COM (52.132.40.148) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P256) id
+ 15.20.197.13; Mon, 13 Nov 2017 21:35:10 +0000
+Received: from YTXPR0101MB2175.CANPRD01.PROD.OUTLOOK.COM
+ ([fe80::b86a:f234:8a3:92d2]) by YTXPR0101MB2175.CANPRD01.PROD.OUTLOOK.COM
+ ([fe80::b86a:f234:8a3:92d2%13]) with mapi id 15.20.0197.024; Mon, 13 Nov 2017
+ 21:35:10 +0000
+From:   Louis Gruand <louis.gruand@mail.mcgill.ca>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: no mountable file systems 
+Thread-Topic: no mountable file systems 
+Thread-Index: AQHTXMdHgIEGkqUNWUSwleVls4dQ6Q==
+Date:   Mon, 13 Nov 2017 21:35:09 +0000
+Message-ID: <5EC5A274-E62A-43F2-BAF0-9C83069F94D8@mail.mcgill.ca>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=louis.gruand@mail.mcgill.ca; 
+x-originating-ip: [142.157.13.132]
+x-ms-publictraffictype: Email
+x-microsoft-exchange-diagnostics: 1;YTXPR0101MB2173;6:kqEi6hPiT7UhvVSxv0Gtvl184aMHipzddbiSogIRftAXPrJe80g+iS2Dx/DHqrh/U3RvwwnluMqXsEsWNhTIIDCfyUR8zHOydP2zDsn7j8k4oz8tZG/Oeyp50CFcO+ZX6HtTHdP9SDzAYb2ShaOs4MphhSlx3BPQ56Ihllqg96ppvgyxgxW8SRN1nb1zAJclg6JJPcrn3sk9968dFgEpUWowSx3LdOxxHR1THXPBT0VtcaPTt4ll3e9CUd8IbHlEmQ0pls6/+2K/w0IyG+jacWUR/1cpxNj2GrhERxC7WEPl/MNmiT+Fy+NXxMguuJ4U4F+ZyBEyDVNoPdISPneY3JaLJV0Qr61YFnGf/RDGooo=;5:KLpZM0UmNE9ok8Kflz2Oq2xbunJN8w8NMVBGs1cfuasHGjCJeZP2O8xfL5bUjZQVNElh2qIMa7MluQO7NyqFIqBkEYsBjFhac0+JjpyW1dYcs3tFTEZsGl0pz3hkpOmJKKCzrj5KdWyroQvnr5fYf8WsgL/yM1Hj5HleS/nQbXA=;24:QMv430bc38E91RZiFz8ET7ACqQqoXahD6LfawvE9MmzsBU2TTieCzfQGAP4jzbRHcQdrKyCC9Erv5Fof2fuzg2JUplsAhO2BVOI2cwYpAMQ=;7:cQXIteURpCUmwY7B678cMcvWl9E22IbW9+4dZqN31QT4IoZru4FS3n1+WK9e6CnTL89V0allkNRrFquRSxaVE4xap0QKZ4lHMiX/gTq/hTZIfyhvK0HnV8haahKCsmsGn651ujywaLw9liR4f9pyNLZP+GLeZSNkqdktfVhsLMhILSZe4lGKN/3RAyPKa/bBq459ptdbqd7gjSMpZCoRUgA6GGsacuIrUhcP060ZmOxaUrWOAgvoDw+lrTpq9Xj0
+x-ms-exchange-antispam-srfa-diagnostics: SSOS;
+x-ms-office365-filtering-correlation-id: 9f67e5f9-9cc9-4d87-ca2b-08d52ade6a7b
+x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(22001)(4534020)(4602075)(4627115)(201703031133081)(201702281549075)(2017052603258);SRVR:YTXPR0101MB2173;
+x-ms-traffictypediagnostic: YTXPR0101MB2173:
+x-microsoft-antispam-prvs: <YTXPR0101MB21735B68C89390A7ADE6D5EEB82B0@YTXPR0101MB2173.CANPRD01.PROD.OUTLOOK.COM>
+x-exchange-antispam-report-test: UriScan:;
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(100000700101)(100105000095)(100000701101)(100105300095)(100000702101)(100105100095)(6040450)(2401047)(5005006)(8121501046)(3002001)(3231022)(10201501046)(93006095)(93001095)(100000703101)(100105400095)(6041248)(20161123555025)(201703131423075)(201702281528075)(201702281529075)(201703061421075)(201703061406153)(20161123564025)(20161123562025)(20161123558100)(20161123560025)(6072148)(201708071742011)(100000704101)(100105200095)(100000705101)(100105500095);SRVR:YTXPR0101MB2173;BCL:0;PCL:0;RULEID:(100000800101)(100110000095)(100000801101)(100110300095)(100000802101)(100110100095)(100000803101)(100110400095)(100000804101)(100110200095)(100000805101)(100110500095);SRVR:YTXPR0101MB2173;
+x-forefront-prvs: 0490BBA1F0
+x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(6009001)(376002)(346002)(199003)(189002)(40764003)(8936002)(101416001)(3280700002)(3660700001)(8676002)(81156014)(1730700003)(81166006)(305945005)(33656002)(7736002)(2906002)(66066001)(3480700004)(478600001)(14454004)(86362001)(413944005)(74482002)(82746002)(2501003)(2351001)(189998001)(6916009)(5250100002)(5660300001)(42882006)(558084003)(345774005)(106356001)(99286004)(105586002)(4743002)(6486002)(316002)(2900100001)(6512007)(6436002)(83716003)(25786009)(6506006)(786003)(53936002)(50986999)(3846002)(5640700003)(54356999)(6116002)(102836003)(97736004)(68736007);DIR:OUT;SFP:1101;SCL:1;SRVR:YTXPR0101MB2173;H:YTXPR0101MB2175.CANPRD01.PROD.OUTLOOK.COM;FPR:;SPF:None;PTR:InfoNoRecords;A:0;MX:1;LANG:en;
+received-spf: None (protection.outlook.com: mail.mcgill.ca does not designate
+ permitted sender hosts)
+spamdiagnosticoutput: 1:99
+spamdiagnosticmetadata: NSPM
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <20DD968239EE594594514028E2C52FCF@CANPRD01.PROD.OUTLOOK.COM>
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-OriginatorOrg: mail.mcgill.ca
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9f67e5f9-9cc9-4d87-ca2b-08d52ade6a7b
+X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Nov 2017 21:35:09.8209
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: cd319671-52e7-4a68-afa9-fcf8f89f09ea
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: YTXPR0101MB2173
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 13 Nov 2017 12:15:58 -0800
-Elijah Newren <newren@gmail.com> wrote:
-
-> -static int display(struct progress *progress, unsigned n, const char *done)
-> +static int display(struct progress *progress, uint64_t n, const char *done)
->  {
->  	const char *eol, *tp;
->  
-> @@ -106,7 +106,7 @@ static int display(struct progress *progress, unsigned n, const char *done)
->  		if (percent != progress->last_percent || progress_update) {
->  			progress->last_percent = percent;
->  			if (is_foreground_fd(fileno(stderr)) || done) {
-> -				fprintf(stderr, "%s: %3u%% (%u/%u)%s%s",
-> +				fprintf(stderr, "%s: %3u%% (%"PRIuMAX"/%"PRIuMAX")%s%s",
->  					progress->title, percent, n,
->  					progress->total, tp, eol);
-
-I think it would be better to cast the appropriate arguments to
-uintmax_t - searching through the Git code shows that we do that in
-several situations. Same for the rest of the diff.
+RGVhciB0ZWFtLCB3aGVuIGkgZG93bmxvYWQgR2l0IG9uIE1hYyBpdCBzYXlzIOKAnG5vIG1vdW50
+YWJsZSBmaWxlIHN5c3RlbXPigJ0gYW5kIGRvZXNudCBvcGVuIGFmdGVyLiBob3cgY2FuIGkgc29s
+dmUgdGhpcz8NCg0KDQpUaGFuayB5b3UgZm9yIHlvdXIgaGVscCwNCg0KDQoNCg==
