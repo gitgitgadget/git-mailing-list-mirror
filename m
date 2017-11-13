@@ -6,53 +6,52 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BE57A1F42B
-	for <e@80x24.org>; Mon, 13 Nov 2017 23:11:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AD6821F42B
+	for <e@80x24.org>; Mon, 13 Nov 2017 23:21:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751356AbdKMXL2 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Nov 2017 18:11:28 -0500
-Received: from mail-qt0-f174.google.com ([209.85.216.174]:53449 "EHLO
-        mail-qt0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751188AbdKMXL1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Nov 2017 18:11:27 -0500
-Received: by mail-qt0-f174.google.com with SMTP id n61so21692611qte.10
-        for <git@vger.kernel.org>; Mon, 13 Nov 2017 15:11:27 -0800 (PST)
+        id S1751355AbdKMXVB (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Nov 2017 18:21:01 -0500
+Received: from mail-qk0-f177.google.com ([209.85.220.177]:47819 "EHLO
+        mail-qk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751240AbdKMXVA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Nov 2017 18:21:00 -0500
+Received: by mail-qk0-f177.google.com with SMTP id 136so11089638qkd.4
+        for <git@vger.kernel.org>; Mon, 13 Nov 2017 15:20:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=ezdHhPbkVCD7ntOUQq026Uh1fB0y3BwKttSsIFBMpEQ=;
-        b=pLAF4M1cul6iBs6vlHdtA7avXaLbVHV/jlG/nEgE+CetjYRSAUjeuXnoh6Gh5M+4fe
-         rlrlqMg3Se9ph8Kg7a4DiyxmRs9bt4Wyic2oW00TxM8d8Vk4zp7R3PI5c9dGLtEo08WK
-         hfa3d6XuNoDEG4I6PmNPuZmVm3q7TdTQZJAo30p5TEVTsIpnSfMqjdkgZSuoK1s/VTHa
-         I74gZUx9TNQ2CtS1eLAZc9nwRvKI/4P8/wgQxoRyDBxdxgWaZjc8u/inyESgODXm7ssU
-         w6n/KjiCByQPpHEKzFHdCCF7l8TlvwylPyEPgEDWPcAaUKpdCcA/Jd2Vh3w1FkljJMs6
-         W22Q==
+        bh=ZixXwLXqPXiAewHpEydOP4AtlUmKeZ748xxXExlOixU=;
+        b=i4QQGAZFgmkcN9+mtfhpX6riB93BLxOxWZjN6QBSmPpyUZtIObSQFnqDMwXXg1qfv8
+         xlgQPx3i4SQmjuePSPyf+ma7fwdg9UMeUZpL22+qAQ/8zwqxRwB4MgD0AJuKoF3zRDFH
+         fj0ml4yh3qbjPm8tOwDHtUJUql2cpqCzokwIBRyMd7MhszmSJhOHawkCgYRumarw6DbB
+         isYirYoYO3NCXt0wrobuBfiOvXLOVVy4hhnsxostlMquykIyU5dcPeIJUrhaGIYza+Tf
+         R345t+ZNnMH9Y9X1Jj4tCz8JQHclDXQ/Cijqnh/dWvalHCfhQR+45ycP5LjUmNsaFfIQ
+         L95Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=ezdHhPbkVCD7ntOUQq026Uh1fB0y3BwKttSsIFBMpEQ=;
-        b=OePKyLAMOh5msIs9GqhjRSYjnBK4bTUCAL8jpUPOSaefRlDuGa8McMtcsBwk7Nyfar
-         bgoEHhXpnmXLsxPFec4ZoTfZQ+TKcXCIXxrItgaL/iU2/qHDLPpb3d3GkbJe4Q/Ikfld
-         KdX+yzpIP7zDMSP+KL1Ntjg3q4to70wG+M1siTr7TZ+0cCmr1Ai3rZTQ8UOokCki1IHh
-         zKcGHX+bwFwRYJhULgLt6KuCgL+ByidWt4l7dJyQYZf5/w+M/8xBrQzI4itZOT0hoG+1
-         KbjWSovz03IsA+ahKoDZAyasCrdSrrLk0o65f+IGeWesN+ttOiemBFmhaiE7zpOP9lWb
-         LUOg==
-X-Gm-Message-State: AJaThX5IfbeuOkWPBJzNc/wgrozQaGVJU5h2Eut0h4mD9EipbcMPkn3C
-        chBx3zBZTvkbVtoxZm4y8pdZ0XdxRubJdrCIrEKRcA==
-X-Google-Smtp-Source: AGs4zMaxVKKzagLn78bFy8Vx6X+nzw+FXjmBax888DVT4xzEPbrjPmcwSqaJtfpl/cpMkwYM6xH7oDrEhLut6VCJubw=
-X-Received: by 10.200.27.225 with SMTP id m30mr14897753qtk.260.1510614686691;
- Mon, 13 Nov 2017 15:11:26 -0800 (PST)
+        bh=ZixXwLXqPXiAewHpEydOP4AtlUmKeZ748xxXExlOixU=;
+        b=OAkJ0JER0rDb2soexSiGgnp6PnxbcZ4olOnv/+JUTCZufHuAhHr9dkG5AP5r+7TOjU
+         jr9IYICdpEFGuBINfhrLtdSihk5ROAKByMITd/rbIFB34HIsWeQecvG3Ix2ep7u8Mcim
+         yH16X4EXhbOjjcXaXQW3VUUjAcsRZLLxsM235wGf+sNF1rXqdGjWdN7K8/JFzvJ49u70
+         UmAPc0VFM7iutTd+aVKY0+2n2FRHxg9/zWonydLY4LEa7XXjRsKZxeDD1HKkS3bMViFa
+         dSmiukdyJgse/R5jwhSnSnJbs65+oNOYidKPlvtZhKGdyanKVJturHxAj6UQwe1m33Kk
+         HLhg==
+X-Gm-Message-State: AJaThX7u/7BsKSt0VVqDPFulid7mpPbO0Wj186ywRmPkdO2PPN0jw7+U
+        rKVbj7yjPgamqU4feisIDW68dtsPrR0WkiJ/cghsNXMX
+X-Google-Smtp-Source: AGs4zMaLb/8Lr7TUZZP9hg/1+Ihc4tuw7BqtHCO1wXR7BX/wJTyOq28dWEFuYQyKj9k3azfbj6RUu5uLcMYqUZyqY/g=
+X-Received: by 10.55.129.70 with SMTP id c67mr17249875qkd.230.1510615259216;
+ Mon, 13 Nov 2017 15:20:59 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.140.102.70 with HTTP; Mon, 13 Nov 2017 15:11:25 -0800 (PST)
-In-Reply-To: <CABPp-BFSt8NGSzkoJdhst_NHqx_hVGMzO-688SOdYRB413Zd9g@mail.gmail.com>
-References: <20171110190550.27059-1-newren@gmail.com> <20171110190550.27059-4-newren@gmail.com>
- <CAGZ79kZ7d7fMp3Cw3Yy4bq9-Mh5Z_jhM5XDQbkVLoqzm6ONzDg@mail.gmail.com> <CABPp-BFSt8NGSzkoJdhst_NHqx_hVGMzO-688SOdYRB413Zd9g@mail.gmail.com>
+Received: by 10.140.102.70 with HTTP; Mon, 13 Nov 2017 15:20:58 -0800 (PST)
+In-Reply-To: <20171110190550.27059-6-newren@gmail.com>
+References: <20171110190550.27059-1-newren@gmail.com> <20171110190550.27059-6-newren@gmail.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 13 Nov 2017 15:11:25 -0800
-Message-ID: <CAGZ79kYD8QjLDsF8APBP8P-WvAz7NBhnh6vbkr8xMnzW7XAm9g@mail.gmail.com>
-Subject: Re: [PATCH 03/30] merge-recursive: Add explanation for src_entry and dst_entry
+Date:   Mon, 13 Nov 2017 15:20:58 -0800
+Message-ID: <CAGZ79kY=JWXs3ASmWQPt__REMbcWQinkJt8ZcZWQEM6V5S7x+w@mail.gmail.com>
+Subject: Re: [PATCH 05/30] directory rename detection: directory splitting testcases
 To:     Elijah Newren <newren@gmail.com>
 Cc:     git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
@@ -61,15 +60,58 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 13, 2017 at 2:57 PM, Elijah Newren <newren@gmail.com> wrote:
+On Fri, Nov 10, 2017 at 11:05 AM, Elijah Newren <newren@gmail.com> wrote:
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+>  t/t6043-merge-rename-directories.sh | 125 ++++++++++++++++++++++++++++++++++++
+>  1 file changed, 125 insertions(+)
 >
-> Perhaps:
+> diff --git a/t/t6043-merge-rename-directories.sh b/t/t6043-merge-rename-directories.sh
+> index b737b0a105..00811f512a 100755
+> --- a/t/t6043-merge-rename-directories.sh
+> +++ b/t/t6043-merge-rename-directories.sh
+> @@ -388,4 +388,129 @@ test_expect_failure '1f-check: Split a directory into two other directories' '
+>  #   in section 2, plus testcases 3a and 4a.
+>  ###########################################################################
 >
->   If 'before' is renamed to 'after' then src_entry will contain
->   the versions of 'before' from the merge_base, HEAD, and MERGE in
->   stages 1, 2, and 3; and dst_entry will contain the respective versions of
->   'after' in corresponding locations.  Thus, we have a total of six modes
->   and oids, though some will be null.  (Stage 0 is ignored; we're interested
->   in handling conflicts.)
+> +
+> +###########################################################################
+> +# SECTION 2: Split into multiple directories, with equal number of paths
+> +#
+> +# Explore the splitting-a-directory rules a bit; what happens in the
+> +# edge cases?
+> +#
+> +# Note that there is a closely related case of a directory not being
+> +# split on either side of history, but being renamed differently on
+> +# each side.  See testcase 8e for that.
+> +###########################################################################
+> +
+> +# Testcase 2a, Directory split into two on one side, with equal numbers of paths
+> +#   Commit A: z/{b,c}
+> +#   Commit B: y/b, w/c
+> +#   Commit C: z/{b,c,d}
+> +#   Expected: y/b, w/c, z/d, with warning about z/ -> (y/ vs. w/) conflict
 
-I find that much easier to read, though I am biased with prior knowledge now. ;)
+> +       test_i18ngrep "CONFLICT.*directory rename split" out
+
+
+
+> +# Testcase 2b, Directory split into two on one side, with equal numbers of paths
+> +#   Commit A: z/{b,c}
+> +#   Commit B: y/b, w/c
+> +#   Commit C: z/{b,c}, x/d
+> +#   Expected: y/b, w/c, x/d; No warning about z/ -> (y/ vs. w/) conflict
+
+This makes sense.
+
+> +
+> +###########################################################################
+> +# Rules suggested by section 2:
+> +#
+> +#   None; the rule was already covered in section 1.  These testcases are
+> +#   here just to make sure the conflict resolution and necessary warning
+> +#   messages are handled correctly.
+> +###########################################################################
+
+okay, then I'll go back to 1. and discuss "the number of files as a
+hint where to rename it to" there
