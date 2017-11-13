@@ -3,116 +3,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7667B1F42B
-	for <e@80x24.org>; Mon, 13 Nov 2017 22:43:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4EA801F42B
+	for <e@80x24.org>; Mon, 13 Nov 2017 22:57:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752591AbdKMWn2 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Nov 2017 17:43:28 -0500
-Received: from mail-qk0-f181.google.com ([209.85.220.181]:50791 "EHLO
-        mail-qk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752444AbdKMWn1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Nov 2017 17:43:27 -0500
-Received: by mail-qk0-f181.google.com with SMTP id p7so21828129qkd.7
-        for <git@vger.kernel.org>; Mon, 13 Nov 2017 14:43:27 -0800 (PST)
+        id S1752890AbdKMW5F (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Nov 2017 17:57:05 -0500
+Received: from mail-ua0-f171.google.com ([209.85.217.171]:47516 "EHLO
+        mail-ua0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752523AbdKMW5E (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Nov 2017 17:57:04 -0500
+Received: by mail-ua0-f171.google.com with SMTP id s28so6493772uag.4
+        for <git@vger.kernel.org>; Mon, 13 Nov 2017 14:57:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=0u6VjKEdrbvhIOxvqkE/O/jtF39CHVaxEV4RnC1xk+o=;
-        b=uqPHnWxTjdmQgp/2kcGbalVdQfOmHdjwtMWaxOGlvh20ZAVNz6lc7xnzpgJDBQH9BD
-         CAFP2c3t0B0KBxbOb0OEwsex18J23xT45IEJvJasSOd08Kp4wXKGyayrL4/4bg8FobuZ
-         C9UgHefeJdRtknVkAkGenAETTxVYNv/AZ069vKRFZ+L4FOZfRqCSD0ZPwlnPtAoCq8uT
-         quQkpo2p+S1KDK7UO7LneN0u34NWY+juK08DR+4QPvMuWT8wCzVGONB+Vnq90FmxfKLd
-         0wDit5LWVeqV87QIACcY1dziS1IEP7ysq7SaLvl3c45jTic/BoKTemLZ8/2sIsFiXJPX
-         xp6A==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=TKoELb67ooWHIJYAlzS50H6RDQPZEb2BTl9S6GsjVDE=;
+        b=l5C0Z6WtNfwMBtRNSKdWdTGXtlEZsY0eUr6ZvhTnG/kLpYd+IdZWJBe9MYr4BO82uj
+         nApqEXnE8q+/piAedKC0Eq1u2Vo9X1pk55ws5095bz1jz8CIWuw+pQp7bxXzx/cUZANu
+         YkB7YY7C95Phy5sn7QvP0N7+RJ8Lh5kkK6OdgKw2Rz1sDBJA412MaWk0pqWyQWvAZbzK
+         7lsakogMzmsgW66P+YOILLLfglMjLIS/NpZYApM+CSYLhAKOn1zbqWW+KoNXEtduUf/6
+         Nm12XSeA+EHd1IaPCgfAsoXfcVTqsBGubhFz+wNobB132c9vvszmhiSczOJY5vycq3MB
+         cYWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=0u6VjKEdrbvhIOxvqkE/O/jtF39CHVaxEV4RnC1xk+o=;
-        b=i9D/B+EIT353J9s+aUknsDREglubt/UUhW5zGrfAY1y9ZB5cewkhtFPDAeQ8WhQQBB
-         kJpljKxom4Orp5uDUKn7Exrw6EbGbxEoeTgUNPhnqsHaITv7pVnPxnQW8jrzFDhE01Bp
-         +l/WW07iuNHvY5bnz4zvqn/uDni6DRwsjGjsS6BVyeEqWQALqGbTiZRmcKnHdPQn61pX
-         QDdWwXBTS4vTkRRnXOFfTHyp1xihmrMhyW6K8hdb5QiQdn+Tm56oGh1ivqutODeIZzIi
-         KEwm6MxraQow73SAOWyWmv3Tikpyt/Ju9LXhNJpZ4GvftQWeN/AEkJw12W/BEWQVnuFM
-         mULQ==
-X-Gm-Message-State: AJaThX5Rnu6WwplH4o+dNAZI/jzQUem17lqt3k8uBohlv2noKvnAxNEB
-        IKzox7ariXYvQpfymgbLzC0=
-X-Google-Smtp-Source: AGs4zMYsXS0Ue3BEUxk5zmznYheSTb6GpDfTIQ6pCOWaIK7Gn7hlv+Ep/f3pHOUOlgEjRROkphbtMA==
-X-Received: by 10.55.137.198 with SMTP id l189mr17059485qkd.169.1510613006382;
-        Mon, 13 Nov 2017 14:43:26 -0800 (PST)
-Received: from zaya.teonanacatl.net (pool-173-67-181-41.hrbgpa.fios.verizon.net. [173.67.181.41])
-        by smtp.gmail.com with ESMTPSA id n145sm9508944qke.38.2017.11.13.14.43.24
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 13 Nov 2017 14:43:25 -0800 (PST)
-Date:   Mon, 13 Nov 2017 17:43:23 -0500
-From:   Todd Zullinger <tmz@pobox.com>
-To:     Santiago Torres <santiago@nyu.edu>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t/lib-gpg: fix gpgconf stderr redirect to /dev/null
-Message-ID: <20171113224323.GR5144@zaya.teonanacatl.net>
-References: <20171113210745.24638-1-tmz@pobox.com>
- <20171113221823.jzt7jfhxeuyivbcn@LykOS.localdomain>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=TKoELb67ooWHIJYAlzS50H6RDQPZEb2BTl9S6GsjVDE=;
+        b=tvFcrzug7ohSAQmftehpH1cIBUsWYNUzpfcT6txw9Z7PGFPEPR2GwYx7TbrXFigAlh
+         cyMGewM46Z4qN+W3T0RU2hAsRUrAGhsjN1dHCuDchoWeo2rVZp4s/dyLse/2l7+hOjvS
+         Hyx+dBZShyZVahbIMLCHnVj1Qbo1Q3AhjvmB+JcYd4drXAD1/T7T5TTGqWzzc75PvAU8
+         OKVkHRZlDqi8GLX6k0LsfoD4uwlWmtKAM+oT3665rLvaW1Kcvk1cSRTF2YJXQloe2M46
+         0u1Oe84tJ4K2e1jjz9LAyOP0a5N3BdJGNt7IYcuv/ewe8G7X7l52DvdLYAILUtX79yY0
+         SkAw==
+X-Gm-Message-State: AJaThX6Bws9/eQArWTwbKsnl87ez8So6CVjHmR3+PGKULKIs7i963LEg
+        otnMar+U56Ly36t86iOwwbnJzXmuY0kKfHwzObc=
+X-Google-Smtp-Source: AGs4zMZ8TheP3TacieL8Xa/LBKelTa26XDlGOpSHC4Z6ZBBKyNLAZdbNxElcoCdwZZNU3vVEE9R4qkOHvFha7c+mcDE=
+X-Received: by 10.176.85.152 with SMTP id v24mr9669904uaa.147.1510613823236;
+ Mon, 13 Nov 2017 14:57:03 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="Zpx5Rz5PkYgiNBE6"
-Content-Disposition: inline
-In-Reply-To: <20171113221823.jzt7jfhxeuyivbcn@LykOS.localdomain>
-User-Agent: Mutt/1.9.1 (2017-09-22)
+Received: by 10.176.67.33 with HTTP; Mon, 13 Nov 2017 14:57:02 -0800 (PST)
+In-Reply-To: <CAGZ79kZ7d7fMp3Cw3Yy4bq9-Mh5Z_jhM5XDQbkVLoqzm6ONzDg@mail.gmail.com>
+References: <20171110190550.27059-1-newren@gmail.com> <20171110190550.27059-4-newren@gmail.com>
+ <CAGZ79kZ7d7fMp3Cw3Yy4bq9-Mh5Z_jhM5XDQbkVLoqzm6ONzDg@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 13 Nov 2017 14:57:02 -0800
+Message-ID: <CABPp-BFSt8NGSzkoJdhst_NHqx_hVGMzO-688SOdYRB413Zd9g@mail.gmail.com>
+Subject: Re: [PATCH 03/30] merge-recursive: Add explanation for src_entry and dst_entry
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, Nov 13, 2017 at 1:06 PM, Stefan Beller <sbeller@google.com> wrote:
+> On Fri, Nov 10, 2017 at 11:05 AM, Elijah Newren <newren@gmail.com> wrote:
+>> +       /*
+>> +        * Because I keep forgetting every few years what src_entry and
+>> +        * dst_entry are and have to walk through a debugger and puzzle
+>> +        * through it to remind myself...
+>
+> This repeats the commit message; and doesn't help me understanding the
+> {src/dst}_entry. (Maybe drop the first part here?) I'll read on.
 
---Zpx5Rz5PkYgiNBE6
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Yep, I'll toss it.
 
-Hi Santiago,
+>> +        *
+>> +        * If 'before' is renamed to 'after' then src_entry will contain
+>> +        * the versions of 'before' from the merge_base, HEAD, and MERGE in
+>> +        * stages 1, 2, and 3; dst_entry will contain the versions of
+>> +        * 'after' from the merge_base, HEAD, and MERGE in stages 1, 2, and
+>> +        * 3.
+>
+> So src == before, dst = after; no trickery with the stages (the same
+> stage number
+> before and after; only the order needs to be conveyed:
+> base, HEAD (ours?), MERGE (theirs?)
+>
+> I can understand that, so I wonder if we can phrase it to mention (base,
+> HEAD, MERGE) just once.
 
-Santiago Torres wrote:
-> Thanks for catching the redirection issue! I agree that the other=20
-> fixes feel like overkill. Are you certain that switching to gpgconf=20
-> --reload will have the same effect as --kill? (I know that this is=20
-> the case for scdaemon only).
+Perhaps:
 
-I am not at all certain whether reload would work to fix the issues=20
-you fixed by killing the agent between runs. :)
+  If 'before' is renamed to 'after' then src_entry will contain
+  the versions of 'before' from the merge_base, HEAD, and MERGE in
+  stages 1, 2, and 3; and dst_entry will contain the respective versions of
+  'after' in corresponding locations.  Thus, we have a total of six modes
+  and oids, though some will be null.  (Stage 0 is ignored; we're interested
+  in handling conflicts.)
 
-Were the ENOENT errors you encountered in running the tests multiple=20
-times easy to reproduce?  If so, I can certainly try to reproduce them=20
-and then run the tests with --reload in place of --kill to gpgconf. =20
-If that worked across the various gnupg 2.x releases, it would be a=20
-simple enough change to make as a follow-up.
-
---=20
-Todd
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Whatever it is that the government does, sensible Americans would
-prefer that the government does it to somebody else. This is the idea
-behind foreign policy.
-    -- P.J. O'Rourke
-
-
---Zpx5Rz5PkYgiNBE6
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.14 (GNU/Linux)
-
-iQFEBAEBCAAuBQJaCiALJxhodHRwczovL3d3dy5wb2JveC5jb20vfnRtei9wZ3Av
-dG16LmFzYwAKCRBDJZOLvq8M4zaVB/4y+ZDrioiJwuon3dbHkUafnfDGFEMyxDYp
-0L8/gJAoHLjk6y9fiRa21/kG/cY4T+/I/DdZXAq0iVRCn1edu1P6mQ5hwyrOhQm/
-dTty/5c2rj8HtGggLe0hDGmMFu9epTaUsxiNVh2v1/qoTt0dXMLN85/aa9mWmRM0
-kekZdFyBx1Np0WUEO45FrF68ARpLde1x8DkSTCC7mDe63jqtt/VBlJM6/t6o32Xd
-2jZKldicbmQjW96zk1HKMg7Ewz219zPJoJDQP1NiHtgZELWz1XCT2JQ1ktZyvhLM
-ZX/psm8VZgmvKagCNmcYa/beq9u2vgC10G2SsqcM9F4vIG8fmwtB
-=U8qP
------END PGP SIGNATURE-----
-
---Zpx5Rz5PkYgiNBE6--
+?
