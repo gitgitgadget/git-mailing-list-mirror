@@ -2,44 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9BB2B1F43C
-	for <e@80x24.org>; Tue, 14 Nov 2017 15:39:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1B9BF1F43C
+	for <e@80x24.org>; Tue, 14 Nov 2017 15:40:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755426AbdKNPjn (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Nov 2017 10:39:43 -0500
-Received: from smtp66.iad3a.emailsrvr.com ([173.203.187.66]:48351 "EHLO
-        smtp66.iad3a.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753741AbdKNPjd (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 14 Nov 2017 10:39:33 -0500
-Received: from smtp1.relay.iad3a.emailsrvr.com (localhost [127.0.0.1])
-        by smtp1.relay.iad3a.emailsrvr.com (SMTP Server) with ESMTP id 5210162AA;
-        Tue, 14 Nov 2017 10:39:32 -0500 (EST)
-X-Auth-ID: mbranchaud@xiplink.com
-Received: by smtp1.relay.iad3a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 1E6405C35;
-        Tue, 14 Nov 2017 10:39:32 -0500 (EST)
-X-Sender-Id: mbranchaud@xiplink.com
-Received: from [10.10.1.32] ([UNAVAILABLE]. [192.252.130.194])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA)
-        by 0.0.0.0:465 (trex/5.7.12);
-        Tue, 14 Nov 2017 10:39:32 -0500
-Subject: Re: Recovering from gc errors
-To:     Jeff King <peff@peff.net>
-References: <4f548c23-7bb5-a672-21bb-6c1dd6de6139@xiplink.com>
- <20171114055306.3tfi726wzmkcfluk@sigill.intra.peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>
-From:   Marc Branchaud <marcnarc@xiplink.com>
-Message-ID: <3af0f8cc-09f3-bcf2-04c8-f076e0ddcea2@xiplink.com>
-Date:   Tue, 14 Nov 2017 10:39:31 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+        id S1754568AbdKNPkF (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Nov 2017 10:40:05 -0500
+Received: from mail-qt0-f194.google.com ([209.85.216.194]:56478 "EHLO
+        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753741AbdKNPkE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Nov 2017 10:40:04 -0500
+Received: by mail-qt0-f194.google.com with SMTP id r39so9631410qtr.13
+        for <git@vger.kernel.org>; Tue, 14 Nov 2017 07:40:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=Dsiy0pp8M3B9GXpw71Dsv7cU3wp/A4qLpUHp8h8405U=;
+        b=ZdumeLkI7v/CLm0+YieTmIU8x4+auKOQj077Zn0/NuNl+YXsAa9hm6sRiIZmKvLEtp
+         H2quzbxCFJw5xbw+5a9PACpYdzaDDHS6iT42tr2c6438+dXV6wyHPQ7ep6BJG0pwLx6e
+         FpZ3EkQ5cndLdHsW+z732QKzjp1ReKakN1mkytEiz6t1sDQTbtOYX7wiomxSAuSQMgLG
+         0spSOr6EgTyXDPunIObQlpzyouXgw0/77o4v7mAedsY3v1PO/eMXvuVCOMhGNXYTUBNX
+         d8hvzTE0uW7dUrNA+adP2nhlavMughS7R2gCHUBV4BuV3I5/Hz5L7uAoZjc0jQLqsXkC
+         UdYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=Dsiy0pp8M3B9GXpw71Dsv7cU3wp/A4qLpUHp8h8405U=;
+        b=DPRgSHZwVUc8/DOKEKcepdzsegIpdtz9iCEXxipQMZloGaoXNBOQQMUqNecITRmmAY
+         EdtR5+ZwO5fJNDICB1fjztY7IvhXOIwvJn6Ln9Dcgwzw4MqsiW7E8okRRS5u2ivzrAHO
+         TtFiP865CBXrRQCYt1Z19dVQ7NieFe3O9nkut6L61IUuJLdk+fbYUtI5jv/8FD+DGu64
+         JFamPS3nUcIBIs2LN1A8ui1nLvcgGHR5+eEMlyX+h5VofKhisc6wb+utNd9GsFnh1YRg
+         MBwiP3NglMghZcm6L9jYgbT2G0+4vjJ80z83MwwMf3lps1bo0z34+mwavi5A8ovtAyv7
+         jKOA==
+X-Gm-Message-State: AJaThX7rm03ngK7Q91hFXGzDYGAdvQlRzrYdGeW1lBUlMhCKpsLTk2wh
+        q5CwRnF1zJ4ScQ7NHU35oOI=
+X-Google-Smtp-Source: AGs4zMajNkvjK4TJrrJQDN7wAZtwFvivRX/hiAiUhJVhmAsiXzD4YnSkCkcAFE78ejhzsrvVLApSWA==
+X-Received: by 10.200.50.78 with SMTP id y14mr9061170qta.84.1510674003065;
+        Tue, 14 Nov 2017 07:40:03 -0800 (PST)
+Received: from [192.168.1.13] ([65.222.173.206])
+        by smtp.gmail.com with ESMTPSA id o70sm12678504qki.35.2017.11.14.07.40.00
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 14 Nov 2017 07:40:01 -0800 (PST)
+Subject: Re: [PATCH v1 1/4] fastindex: speed up index load through
+ parallelization
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Ben Peart <benpeart@microsoft.com>, git@vger.kernel.org,
+        pclouds@gmail.com, chriscool@tuxfamily.org,
+        Johannes.Schindelin@gmx.de, alexmv@dropbox.com, peff@peff.net
+References: <20171109141737.47976-1-benpeart@microsoft.com>
+ <20171109141737.47976-2-benpeart@microsoft.com>
+ <xmqqbmkahhar.fsf@gitster.mtv.corp.google.com>
+ <7e5a9fde-67fc-2bb9-51b6-54bdaed162db@gmail.com>
+ <xmqq7eut8y36.fsf@gitster.mtv.corp.google.com>
+ <7428e41e-b705-f377-1951-b11af851c4d5@gmail.com>
+ <xmqq7eus3nr2.fsf@gitster.mtv.corp.google.com>
+From:   Ben Peart <peartben@gmail.com>
+Message-ID: <73fd93cd-91f4-1286-732c-cd8185fe2027@gmail.com>
+Date:   Tue, 14 Nov 2017 10:40:00 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.4.0
 MIME-Version: 1.0
-In-Reply-To: <20171114055306.3tfi726wzmkcfluk@sigill.intra.peff.net>
+In-Reply-To: <xmqq7eus3nr2.fsf@gitster.mtv.corp.google.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -48,112 +78,74 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-(It turned out that this problem is related to worktrees.  CCing some 
-worktree folks.)
 
-On 2017-11-14 12:53 AM, Jeff King wrote:
-> On Mon, Nov 13, 2017 at 04:13:19PM -0500, Marc Branchaud wrote:
+
+On 11/14/2017 10:04 AM, Junio C Hamano wrote:
+> Ben Peart <peartben@gmail.com> writes:
 > 
->> Various incantations of "git show ... 9c355a7726e31" only fail with the same
->> error, so I can't determine much about the problematic commit. Luckily I'm
->> not particularly concerned with losing objects, as I push any important
->> progress to named refs in backup repos.
+>> How about I add the logic to write out a special extension right
+>> before the SHA1 that contains an offset to the beginning of the
+>> extensions section.  I will also add the logic in do_read_index() to
+>> search for and load this special extension if it exists.
+>>
+>> This will provide a common framework for any future extension to take
+>> advantage of if it wants to be loaded/processed before or in parallel
+>> with the cache entries or other extensions.
+>>
+>> For all existing extensions that assume they are loaded _after_ the
+>> cache entries, in do_read_index() I'll add the logic to use the offset
+>> (if it exists) to adjust the src_offset and then load them normally.
+>>
+>> Given the IEOT extension is just another list of offsets into the
+>> index to enable out of order processing, I'll add those offsets into
+>> the same extension so that it is a more generic "table of contents"
+>> for the entire index.  This enables us to have common/reusable way to
+>> have random access to _all_ sections in the index while maintaining
+>> backwards comparability with the existing index formats and code.
+>>
+>> These additional offsets will initially only be used to parallelize
+>> the loading of cache entries and only if the user explicitly enables
+>> that option but I can think of other interesting uses for them in the
+>> future.
 > 
-> Doing "git show" will require looking at the parent commit to produce
-> the diff. Probably "git show -s" would work. But in general for poking
-> at corruption, something bare-bones like "git cat-file commit 9c355a77"
-> is going to be your best bet.
+> If we freeze the format of IEOT extension so that we can guarantee
+> that the very first version of Git that understands IEOT can always
+> find the beginning of extension section in an index file that was
+> written by future versions of Git, then I'm all for that plan, but
+> my impression was that you are planning to make incompatible change
+> in the future to IEOT, judging from the way that IEOT records its own
+> version number in the section and the reader uses it to reject an
+> unknown one.
 
-Thanks, I'd forgotten about cat-file (show's -s did not work).
+I have no thoughts or plans for changes in the future of IEOT (which I 
+plan to rename ITOC).  At this point in time, I can't even imagine what 
+else we'd want as the index only contains cache entries, extensions and 
+the trailing SHA1 and with the TOC we have random access to each of 
+those.  If nothing else, it gives another signature to verify to ensure 
+we actually have a valid trailing extension. :)
 
-Only one or two of the bad commits could possibly belong in a submodule, 
-so I don't think I'm seeing a worktree+submodule problem.
+I only added the version because I've learned my ability to predict the 
+future is pretty bad and it leaves us that option _if_ something ever 
+comes up that we need it _and_ are willing to live with the significant 
+negative trade-offs you correctly point out.
 
-There are some definite "rebase -i" commits (e.g. "fixup!"), and a lot 
-of what were probably cherry-picks.  I know I did these operations in a 
-worktree (see below).
-
->> But I would like to clean this up in my local repo so that gc stops failing.
->> I tried simply removing this and other loose commits that trip up gc (i.e.
->> the objects/9c/355a7726e31b3033b8e714cf7edb4f0a41d8d4 file -- there are 49
->> such files, all of which are several months old), but now gc complains of a
->> bad tree object:
 > 
-> You can't generally fix corruption issues by deleting objects[1]. The
-> "source" that makes Git want to have these objects is the refs and
-> reflogs. So your best bet is to find which of those point to the
-> problematic objects and delete them.
+> With that plan, what I suspect would happen is that a version of Git
+> that understands another optional extension section that wants to be
+> findable without scanning the main table and the then-current
+> version of IEOT would not be able to use an index file written by a
+> new version of Git that enhances the format of the IEOT extension
+> bumps its extension version.
 > 
-> I'd start by seeing if the breakage is reachable from any refs:
+> And if that is the case I would have to say that I strongly suspect
+> that you would regret the design decision to mix it into IEOT.  That
+> is why I keep suggesting that the back pointer extension should be
+> on its own, minimizing what it does and minimizing the need to be
+> updated across versions of Git.
 > 
->    git rev-list --objects --all >/dev/null
 
-That command does succeed.
-
-> If that command succeeds, then all your refs are intact and the problem
-> is in the reflogs. You can try to figure out which, but I'd probably
-> just blow them all away:
-> 
->    rm -rf .git/logs
-
-Unfortunately, removing the logs directory does not fix "git gc".  So I 
-restored it.
-
-However I did find all of the bad SHAs in the HEAD logs of four of my 
-worktrees.
-
-All of those worktrees have directories in .git/worktrees/, but "git 
-worktree list" does not show two of them.  "git worktree prune -v" 
-displays and does nothing.  (I do not want to play with --expire, 
-because I'd rather keep my other worktrees.)
-
-I removed all of those worktrees' directories from .git/worktrees/, and 
-now "git gc" succeeds.  I've also removed those worktrees' working 
-directories, as I don't really need them anymore.
-
-Thanks for your help!
-
-I'm willing to chalk this up to bugs in the early worktree code, unless 
-one of the CC'd worktree developers thinks otherwise.
-
-An explicit "git worktree delete" command would be nice for manually 
-cleaning things up.  It's easy to just delete the directory, but having 
-a "delete" command gives the user assurance that they're not missing 
-something.
-
-		M.
-
-> If the rev-list fails, then one or more branch is corrupted.
-> Unfortunately the usual efficient tools for asking "which branch
-> contains this object" are likely to be broken by the corruption. But you
-> can brute-force it, like:
-> 
->    git for-each-ref --format='%(refname)' |
->    while read ref; do
->      git rev-list --objects "$ref" >/dev/null 2>&1 ||
->      echo "$ref is broken"
->    done
-> 
-> Hopefully that turns up only branches with little value, and you can
-> delete them:
-> 
->    git update-ref -d $broken_ref
-> 
-> -Peff
-> 
-> [1] A note on my "you can't fix corruption by deleting objects".
-> 
->      Since abcb86553d (pack-objects: match prune logic for discarding
->      objects, 2014-10-15) , git-gc also traverses the history graph of
->      unreachable but "recent" objects. This is to keep whole chunks of
->      the history graph intact during the gc grace period (which is 2
->      weeks by default). So object themselves _can_ be a source of
->      traversal for git-gc.
-> 
->      We do that traversal with the ignore_missing_links flag, so
->      breakages in the unreachable objects _shouldn't_ cause what you're
->      seeing. IIRC we did turn up a bug or two with ignore_missing_links.
->      The only one I could find was a3ba6bf10a (revision.c: ignore broken
->      tags with ignore_missing_links, 2017-05-20), which I think wouldn't
->      generate the output you're seeing.
-> 
+I understand the risk but the list of offsets into the cache entries is 
+pretty simple as well. I prefer the simplicity of a single TOC extension 
+that gives us random access to the entire index rather than having to 
+piece one together using multiple extensions.  That model has its own 
+set of risks and tradeoffs.
