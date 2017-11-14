@@ -2,114 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 687AC1F43C
-	for <e@80x24.org>; Tue, 14 Nov 2017 18:24:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 326641F43C
+	for <e@80x24.org>; Tue, 14 Nov 2017 18:33:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755418AbdKNSYo (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Nov 2017 13:24:44 -0500
-Received: from mail-ua0-f178.google.com ([209.85.217.178]:51184 "EHLO
-        mail-ua0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753285AbdKNSYj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Nov 2017 13:24:39 -0500
-Received: by mail-ua0-f178.google.com with SMTP id v27so14546989uav.7
-        for <git@vger.kernel.org>; Tue, 14 Nov 2017 10:24:39 -0800 (PST)
+        id S1754201AbdKNSdR (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Nov 2017 13:33:17 -0500
+Received: from mail-qt0-f175.google.com ([209.85.216.175]:47317 "EHLO
+        mail-qt0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753132AbdKNSdP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Nov 2017 13:33:15 -0500
+Received: by mail-qt0-f175.google.com with SMTP id y5so11413586qtk.4
+        for <git@vger.kernel.org>; Tue, 14 Nov 2017 10:33:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=69wBWmxBWiQAuWZcpERsfUGTZRuoI8PrFf8Bu8arU8A=;
-        b=hL0SmRmNzjqMU7u1nn4ZLqyu91d3StoABN7yDXcWXMCQ1RALvbW8pqUaEBGc97xLWr
-         zWgIQrF8AbIXI4ar0QCxMUsS3BMXy2ql8hZ3BkbpYeUxT9/PrO9CIZ0e4YGeKZXx7pGZ
-         lqp1w1ymNhgTYjfh6wcR/JpG3RuzfSoR8RBSIuklVlhtQhUR+krME9Gt5AZDcpD+YAtd
-         jknBe9FQ/e4Wlp/9ZETJVfAd3WA3EJj9zH5UZ9Hx5qOVKkrLgrk+htwuYa7O4s1B8oxB
-         Y0usEVrfA9E3i0mIh+FXoL9LmlmZvYr1kD9R4oLGJFFiKQF+Pt0tF6KBuCY0In7B6Ygc
-         fYqg==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=k0R/lL04739Lkmmf8dPgu2HpYkJ3nS1hR3JtszyuQH8=;
+        b=Xi7xMVWzjwikDiIhbjr0pU7oEMd4kV2d8IzGm09c7ixmC/m0T30jLN6OaqOF/a/sTR
+         BPCUT+DbJFBrBrvSAnZDcWivDKaEvxTvhuc4UEjHUQsE4IxIUwu4WinphBy5ahAKxNvV
+         0asm/JE79bDL6cy3sygpTGuIudnfTDLYTmB9ux8QzWewKT5Jkf2X+yszioJq/ejwrPtI
+         UdrzMtqM4SI+C3zoTI5805qSCOMB2lXNJb17UjDWF+1ycDsXiwbW8N8NJEnWSmoXSxll
+         f7DBKTeC4O5gDu1y4fzLQnx/bmB95GfAweFeyJOO60O2PoAXMXa8TRqt752POff2EbEA
+         VWwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=69wBWmxBWiQAuWZcpERsfUGTZRuoI8PrFf8Bu8arU8A=;
-        b=MjWqsxxWEGRYD/CRRbdaWhg12EVXGCoKqPxitNeSF2m4MRsMvT+fLDeHa5jbFZ+Lbg
-         55ckCgFWAzt0bcabOk/DtC3O4EEyzRs6gESL8SypoejsZMUqELXCw2NLtQiMQLI8TO24
-         ObEtVGL+NDrZvGm5jpfTaTPOEwMNsuz2vZZIba3Vid8Dc4mdRVCYVNGNiz+QdxEV4x6L
-         kK/oVqFqTrV+8AKC9r7ulVtUlyB48RxDwoocmWZkIyo9ha3MUUgykFasNU3JQzSdIAl8
-         acxPjGm/ORkYfCVlwpYgdqOhdSZ1BzJvCJayqN2MAx1MwJxmFIT5mmPMJKxL5MpSsSme
-         b7zQ==
-X-Gm-Message-State: AJaThX7Bc+yApz6rM6XSYRftlbbPEUz0TNYH+cyjEW1vA7DTtRZDkFB3
-        SfKo+oYEhksPzGErS4BZU5Z22eJhe/aIVSLdyEA=
-X-Google-Smtp-Source: AGs4zMZMGoNw0AnqfVxIpJynYJ9vPTQ3S9zBGDjGBVS6uKEnvoQ1/cJolwO9MVEipQ8RYtki4/Y3le63abj29h1Pyy8=
-X-Received: by 10.176.95.138 with SMTP id b10mr11920426uaj.55.1510683878099;
- Tue, 14 Nov 2017 10:24:38 -0800 (PST)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=k0R/lL04739Lkmmf8dPgu2HpYkJ3nS1hR3JtszyuQH8=;
+        b=N014StbYI6/T3bI8zyqhqTn8La8gixVjgM7LeoiyKfDOtzWZD9fLhGIvYocpgS9999
+         3rrH9OUjjsfujPNXmOmIfwcWAV94aja3jcEYjiM/fYG3CiTdbJJ8YGilHdYNOrG7bH/T
+         qLpE+rARRXoVF5iBKvZlIWgzapg4cGvRAa34/usEowsHFOmLwf9/R0txXK62+FZgu7Vv
+         /65RNl8Vl/Xo7BSpFY9WRsXJ+pHdHrvqauH7GPCi9zbWHnd20Ze/b5U2Lbsb1PMEZXAt
+         X5kDN9VZjZTGeXg1eku6mmEx4kB9TDAAWRMM+pkLgC2Z/C/flyLDZWI4POkQiEGGQtJe
+         OwYg==
+X-Gm-Message-State: AJaThX5BkgVKxC/TfR5gZg/nWpLsiTuDTr+MiRKJ8bIL0NNUiP5xKDYL
+        HTt1iuqrN+X/oRtK1UmXMnZNUVIcOyhQgqd3U3k0gQ==
+X-Google-Smtp-Source: AGs4zMb0swqj3HgqiI9m8jLJ0XlHGfEKHZBp0yKdNO7d+Y/jRuvdY3n3v2MKHcVYFFtCHe6hUXvFl7FYlEAXKZpAS5A=
+X-Received: by 10.55.97.209 with SMTP id v200mr12445545qkb.71.1510684395112;
+ Tue, 14 Nov 2017 10:33:15 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.176.67.33 with HTTP; Tue, 14 Nov 2017 10:24:37 -0800 (PST)
-In-Reply-To: <xmqqy3n94f36.fsf@gitster.mtv.corp.google.com>
-References: <20171110190550.27059-1-newren@gmail.com> <20171110190550.27059-17-newren@gmail.com>
- <xmqqd14l5ugx.fsf@gitster.mtv.corp.google.com> <xmqqy3n94f36.fsf@gitster.mtv.corp.google.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 14 Nov 2017 10:24:37 -0800
-Message-ID: <CABPp-BFJm9C1zTKVLeFf6fnhxrUhTd+XZsD17DezqFKwwzsEBQ@mail.gmail.com>
-Subject: Re: [PATCH 16/30] merge-recursive: Introduce new functions to handle
- rename logic
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+Received: by 10.12.155.209 with HTTP; Tue, 14 Nov 2017 10:33:14 -0800 (PST)
+In-Reply-To: <alpine.LFD.2.21.1711140324580.12112@localhost.localdomain>
+References: <alpine.LFD.2.21.1711140324580.12112@localhost.localdomain>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 14 Nov 2017 13:33:14 -0500
+X-Google-Sender-Auth: tKfyLB1xTlYSwTExYri3YrSskNU
+Message-ID: <CAPig+cRc7Yqeys=oPEgPnyR4qT7qKYLbH1ifnp+6F6N+mSzNVA@mail.gmail.com>
+Subject: Re: some apparent inaccuracies in "man git-worktree"
+To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
+Cc:     Git Mailing list <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 13, 2017 at 9:14 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
+On Tue, Nov 14, 2017 at 3:43 AM, Robert P. J. Day <rpjday@crashcourse.ca> wrote:
+> from "man git-worktree", there seem to be some inaccuracies in the
+> SYNOPSIS regarding the "add" subcommand:
 >
->> Elijah Newren <newren@gmail.com> writes:
->>
->>> +struct rename_info {
->>> +    struct string_list *head_renames;
->>> +    struct string_list *merge_renames;
->>> +};
->>
->> This type is added in order to allow the caller and the helper to
->> communicate the findings in a single logical structure, instead of
->> having to pass them as separate parameters, etc.  If we anticipate
->> that the information that needs to be passed will grow richer in
->> later steps (or a follow-up series), such encapsulation makes a lot
+>   git worktree add \
+>     [-f] [--detach] [--checkout] [--lock] [-b <new-branch>] <path> [<branch>]
 >
-> Hmph, I actually am quite confused with the existing code.
+>   first, there's no mention of "-B" in that SYNOPSIS, even though it's
+> explained further down the man page.
+
+Omission of "-B" from the synopsis was intentional. From cbdf60fa18
+(worktree: add -b/-B options, 2015-07-06):
+
+    worktree: add -b/-B options
+
+    One of git-worktree's roles is to populate the new worktree, much like
+    git-checkout, and thus, for convenience, ought to support several of the
+    same shortcuts. Toward this goal, add -b/-B options to create a new
+    branch and check it out in the new worktree.
+
+    (For brevity, only -b is mentioned in the synopsis; -B is omitted.)
+
+Whether or not the omission was actually a good decision is
+questionable. The thinking, at the time, may have been that users
+already familiar with "-b" in 'git checkout' would likewise be
+familiar with (and be able to infer) "-B", thus it wasn't important to
+state its existence explicitly in the synopsis, which was already
+getting lengthy. Of course, that decision does not assist newcomers,
+so adding "-B" to the synopsis would help the page better stand on its
+own.
+
+>   next, the SYNOPSIS seems misleading as it doesn't make clear that
+> the options -b, -B and --detach are mutually exclusive, which is made
+> clear in the worktree.c source:
 >
-> The caller (originally in merge_trees(), now in handle_renames())
-> calls get_renames() twice and have the list of renamed paths in
-> these two string lists.  get_renames() mostly works with the
-> elements in the "entries" list and adds the "struct rename" to the
-> string list that is to be returned.  And the caller uses these two
-> string lists get_renames() returns when calling process_renames(),
-> but once process_renames() is done with them, these two string lists
-> are never looked at by anybody.
+>     if (!!opts.detach + !!opts.new_branch + !!new_branch_force > 1)
+>             die(_("-b, -B, and --detach are mutually exclusive"));
 
-Actually, if I remember correctly, my first stab was to do all the
-cleanup at the end of handle_renames(), but then I ran into
-use-after-free errors.  I'm not sure if I remember all the details,
-but I'll try to lay out the path:
+Failure to update the synopsis to indicate mutual exclusion appears to
+be a simple oversight in ab0b2c53ed (worktree: make --detach mutually
+exclusive with -b/-B, 2015-07-17) in response to:
+https://public-inbox.org/git/55A8F4B1.9060304@drmicha.warpmail.net/
 
-process_renames() can't handle conflicts immediately because of D/F
-concerns (if all entries in the competing directory resolve away, then
-there's no more D/F conflict, but we have to wait until each of those
-entries is processed to find out if that happens or if a D/F conflict
-remains).  Because of that, process_renames() needs to store
-information into a rename_conflict_info struct for process_entry() to
-look at later.  Included in rename_conflict_info are things like
-diff_filepair and stage_data entries, both taken from the rename
-lists.  If the rename lists are freed at the end of handle_renames(),
-then this information is freed before process_entry() runs and thus we
-get a use-after-free error.
+>   finally (and maybe i'm just not reading carefully enough), it's not
+> clear what happens if you add a worktree at a given commit without
+> specifying *any* of -b, -B or --detach. the obvious result should be a
+> new worktree checked out at a detached HEAD and, interestingly, if i
+> do that, then from the main tree, i see:
+>
+>   $ git worktree list
+>   /home/rpjday/k/git   516fb7f2e73d [master]
+>   /home/rpjday/k/temp  c470abd4fde4 (detached HEAD)
+>   $
+>
+> but from within the worktree, if i ask for the status, i see only:
+>
+>   $ git status
+>   Not currently on any branch.
+>   nothing to commit, working tree clean
+>   $
+>
+> where i would normally have expected to see "detached HEAD", is there
+> a reason that's not displayed?
 
-Since both you and I thought to push this cleanup to the end of
-handle_renames(), though, I should probably add that explanation to
-the commit message.  Granted, it isn't actually needed for this
-particular commit, because up to this point all the information used
-in rename_conflict_info was leaked anyway.  But it becomes an issue
-with patch 17 when we start freeing that info.
+Someone more familiar with this bit can correct me if I'm wrong, but I
+believe that the "HEAD detached at/from <branch>" you normally see
+with 'git status' is derived from the reflog, and if it can't find the
+information in the reflog, it instead shows the generic "Not currently
+on any branch" (which is the equivalent of the "(detached HEAD)" you
+see in "git worktree list").
+
+Each worktree has its own newly-created reflog, which does _not_
+contain enough information for 'git status' to present the more
+detailed "detached" message, thus it falls back to the generic one.
+Perhaps seeding the worktree's reflog with a bit more information at
+creation time would be a good #leftoverbits task.
