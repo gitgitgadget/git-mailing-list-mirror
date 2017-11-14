@@ -2,114 +2,183 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C815B1F43C
-	for <e@80x24.org>; Tue, 14 Nov 2017 21:17:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 908561F43C
+	for <e@80x24.org>; Tue, 14 Nov 2017 21:43:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756748AbdKNVRf (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Nov 2017 16:17:35 -0500
-Received: from mail-io0-f176.google.com ([209.85.223.176]:55238 "EHLO
-        mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756719AbdKNVRd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Nov 2017 16:17:33 -0500
-Received: by mail-io0-f176.google.com with SMTP id w127so8519833iow.11
-        for <git@vger.kernel.org>; Tue, 14 Nov 2017 13:17:33 -0800 (PST)
+        id S1756205AbdKNVnC (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Nov 2017 16:43:02 -0500
+Received: from mail-ua0-f182.google.com ([209.85.217.182]:47260 "EHLO
+        mail-ua0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756355AbdKNVms (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Nov 2017 16:42:48 -0500
+Received: by mail-ua0-f182.google.com with SMTP id s28so8875280uag.4
+        for <git@vger.kernel.org>; Tue, 14 Nov 2017 13:42:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=vdv6s/5BVTIy90gYYLbKDncIQr25iY3kournBx/CIsw=;
-        b=Mj9peKORr0Jg5IG5i8sAwag1lePVOZIacf1e3ll+z9/4p99SyOjgwzjwxItjsvUtO2
-         GoTlptTqAx7YkZQcR4A+QaPKYl9vMISNRRsLzQZLGxFZZbI2kro9EzOAT4XTrjLKDN9/
-         sQ+pkByORVw8yeLvOCc8fF2RwsyDuFhveXFJfG/pY0L3dwhi/pBs4qM25lDr1z3eqPC7
-         DS1NH7vRBC8TjTZYlMnwL28iIf20K0Hl2t+Nq2pNL5/YHTNgmW4Wew19aBEphusmw7F6
-         GcEi8/X908EuSvbw/Cjn151hF0voRcJ5EhBLdKIUDimWPTG+q0JLH5bTM66x+JMNgs0+
-         HWxQ==
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=FgiJ3bwzlvvxesndEXOaI+Vz5Yck0WB8vq3jsE+so8k=;
+        b=AMy2aSe3FbivA+fMMnZwEndIXsw4mu751yoSoLurBXkIceR4EUY3cihPKsmRcysK88
+         jGQBQRLvV63k+NtZpPikqSX3ZGtMNGLcxx6+Oju/hBYN/zE9SlsELsaP4HbSWvIiWLT6
+         g8/vTs8s+1ubcUeGA37RbrZhEf4N5NQbN3vFzMY3qEPoplJoPeTvoq8Jp1wNPAndNGLg
+         lLRzZlqrL7A5YOztjVqzrdJXAiSobrTY43ze00djlNdjn40jMtYTddHMeov22+7NYE0w
+         n0CH20MfGoU66aXjleXh8o/L7sxSORiLwhzSdrp5lEDi6r8AuvphPrnL8rFL+ARzPpJZ
+         vCHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=vdv6s/5BVTIy90gYYLbKDncIQr25iY3kournBx/CIsw=;
-        b=Qi9WMHkEWCwX76uC8V3wR6AuK5uKIaDuGEWzTzPOc8xjziCtj0UW8T1UE7A9KpvbeR
-         LCWSGZjRjFGpKloz0z0XvZS655nRGs9Cew5R8KMzigJClTCxVrHB3WSMb4+S0HVxyGkw
-         v1y3oYs5VK22xyXyw2CG1XNlDNoKYhlTDK0zpbNz8faXtjYToU38Eq8jMkuFKGsESeKy
-         M1r/FMSRHlKETxxelWYgTZSgRTD8Slh5HI1tSbERp7Y4T7b2sTzTbYqsqTjq/wEpKdAw
-         7qYdZ4P9yiBK9JVHvhHZH9zMvZw+3NrLBcPgZ9pxUd+gPCW56qEE35WZUDL8q6Ido0Z7
-         YL9g==
-X-Gm-Message-State: AJaThX4kZCe+ccR3nqsJUPXOqZepK1Ijy/yeBy3aVuo3GVQr8ZaDSnLo
-        Hs/ayJRSzLmH+/nu05k9kcO5TQ==
-X-Google-Smtp-Source: AGs4zMb8+SjtlgOyN1/HoQg/HkvvoEjgB99K5/CqTWOpeEcA63iFh3NE5RIu4x6/jQPOFATuXivjkA==
-X-Received: by 10.107.63.8 with SMTP id m8mr3744457ioa.137.1510694251422;
-        Tue, 14 Nov 2017 13:17:31 -0800 (PST)
-Received: from twelve3.mtv.corp.google.com ([2620:0:100e:422:9ca7:c33c:854a:a353])
-        by smtp.gmail.com with ESMTPSA id i76sm2209247itf.3.2017.11.14.13.17.30
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 14 Nov 2017 13:17:30 -0800 (PST)
-Date:   Tue, 14 Nov 2017 13:17:29 -0800
-From:   Jonathan Tan <jonathantanmy@google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=FgiJ3bwzlvvxesndEXOaI+Vz5Yck0WB8vq3jsE+so8k=;
+        b=CH1Z8eF45tt7jSMT2J64TXzO1E+tNuNfAB/INfRVRJ0GJSffNj2FV1QPvugSWJ2add
+         hLO7z5PJf8vCVFSCJYSumBQ2nio/veqQtRdgsCrY6AZGMIiLo35fSWbh+J2QHlKx76RV
+         UYfCdk/LEv1wBF8DFP/K9fRYdmhcUV2hrL9QjD4pYF8a4YhjyYI14hae01nai3BymNGJ
+         eXrOzMKV4F/6QKeWrwfPepJuWaOHBWh49EwMA/pxQMXLja4AmeYmxwJm4XdLOCbuXjf1
+         fm1v8h1d2/l4/2QiIBEiCmzxoTLoxv7J4OtwLaF9IDJwPcPbvnAJtH071ed155+ArpDq
+         b+gw==
+X-Gm-Message-State: AJaThX73rOz+Rcnmzzdknvvl9jHmn6t1F33Ym9pVZ1jifnnWdc5qEbX2
+        m5lqQy9ccpKgWOPlD45QQErrZb5d4VdfldSx/Ak=
+X-Google-Smtp-Source: AGs4zMapc+l9X7LZzd80WAy8VvXWmWGv8JoYjherpGMCSDFWumI45JAHErz2w5TbUgPr3ftXxEg0Nyj/Sshqup9kYgA=
+X-Received: by 10.159.62.1 with SMTP id o1mr12450268uai.123.1510695766603;
+ Tue, 14 Nov 2017 13:42:46 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.176.67.33 with HTTP; Tue, 14 Nov 2017 13:42:46 -0800 (PST)
+In-Reply-To: <CAGZ79kYCDBFwMhW4Qgwhomiv4kKRWS53cjMLuRG1NxrzULYwgg@mail.gmail.com>
+References: <20171110190550.27059-1-newren@gmail.com> <20171110190550.27059-12-newren@gmail.com>
+ <CAGZ79kYCDBFwMhW4Qgwhomiv4kKRWS53cjMLuRG1NxrzULYwgg@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 14 Nov 2017 13:42:46 -0800
+Message-ID: <CABPp-BHhf37R1LuHceXvuf=9nW4-EDaNLHkOBbgpsQhMPP2O_g@mail.gmail.com>
+Subject: Re: [PATCH 11/30] directory rename detection: testcases exploring
+ possibly suboptimal merges
 To:     Stefan Beller <sbeller@google.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git <git@vger.kernel.org>, Jacob Keller <jacob.keller@gmail.com>,
-        Kevin Daudt <me@ikke.info>,
-        Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: [PATCHv3 7/7] builtin/describe.c: describe a blob
-Message-Id: <20171114131729.4f0084a249fb8277e1c4cdd3@google.com>
-In-Reply-To: <CAGZ79kZXxrDKr5PfJ2xx_3hhzscUiQvqOnCGURXCbJSL118trw@mail.gmail.com>
-References: <20171031211852.13001-1-sbeller@google.com>
-        <20171102194148.2124-1-sbeller@google.com>
-        <20171102194148.2124-8-sbeller@google.com>
-        <20171114120208.d0570f20672f117bcf8e5396@google.com>
-        <CAGZ79kZXxrDKr5PfJ2xx_3hhzscUiQvqOnCGURXCbJSL118trw@mail.gmail.com>
-X-Mailer: Sylpheed 3.4.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 14 Nov 2017 12:40:03 -0800
-Stefan Beller <sbeller@google.com> wrote:
+On Tue, Nov 14, 2017 at 12:33 PM, Stefan Beller <sbeller@google.com> wrote:
+> On Fri, Nov 10, 2017 at 11:05 AM, Elijah Newren <newren@gmail.com> wrote:
 
-> Thanks for the review!
-> 
-> This series was written with the mindset, that a user would only ever
-> want to describe bad blobs. (bad in terms of file size, unwanted content, etc)
-> 
-> With the --reverse you only see the *first* introduction of said blob,
-> so finding out if it was re-introduced is still not as easy, whereas "when
-> was this blob last used" which is what the current algorithm does, covers
-> that case better.
+>> +# Possible Resolutions:
+>> +#   Previous git: y/{a,b,f},   z/{c,d},   x/e
+>> +#   Expected:     y/{a,b,e,f}, z/{c,d}
+>> +#   Preferred:    y/{a,b,e},   z/{c,d,f}
+>
+> it might be tricky in the future to know what "previous git" is;
+> "Previous git" means without directory renames enabled;
+>
+> "expected" means we expect the algorithm presented in this series to produce
+> this output, preferred is what we actually expect.
 
-How does "when was this blob last used" cover reintroduction better? If
-you want to check all introductions, then you'll need something like
-what I describe (quoted below).
+Yes, how about using:
+  "Without dir rename detection:"
+  "Currently expected:"
+and
+  "Optimal:"
+?
 
-> > Alternatively, to me, it seems that listing commits that *introduces*
-> > the blob (that is, where it references the blob, but none of its parents
-> > do) would be the best way. That would then be independent of traversal
-> > order (and we would no longer need to find a tag etc. to tie the blob
-> > to).
-> 
-> What if it is introduced multiple times? (either in multiple competing
-> side branches; or introduced, reverted and re-introduced?)
+>> +# Testcase 8b, Dual-directory rename, one into the others' way, with conflicting filenames
+>> +#   Commit A. x/{a_1,b_1},     y/{a_2,b_2}
+>> +#   Commit B. x/{a_1,b_1,e_1}, y/{a_2,b_2,e_2}
+>> +#   Commit C. y/{a_1,b_1},     z/{a_2,b_2}
+>> +#
+>> +# Possible Resolutions:
+>> +#   Previous git: y/{a_1,b_1,e_2}, z/{a_2,b_2}, x/e_1
+>> +#   Scary:        y/{a_1,b_1},     z/{a_2,b_2}, CONFLICT(add/add, e_1 vs. e_2)
+>> +#   Preferred:    y/{a_1,b_1,e_1}, z/{a_2,b_2,e_2}
+>
+> It may be common to have sub directories with the same path having different
+> blobs, e.g. when having say multiple hardware configurations in different sub
+> directories configured. Then renaming becomes a pain when they overlap.
 
-Then all of them should be listed.
+Sure, agreed.  Although, the one nice thing about this particular
+testcase is that despite showing suboptimal merge behavior, it's at
+least the exact same suboptimal behavior as before when we didn't have
+directory rename detection.
 
-> > If we do that, it seems to me that there is a future optimization that
-> > could get the first commit to the user more quickly - once a commit
-> > without the blob and a descendant commit with the blob is found, that
-> > interval can be bisected, so that the first commit is found in O(log
-> > number of commits) instead of O(commits). But this can be done later.
-> 
-> bisection assumes that we only have one "event" going from good to
-> bad, which doesn't hold true here, as the blob can be there at different
-> occasions of the history.
+>> +# moves directories.  Implment directory rename detection suboptimally, and
+>
+> Implement
 
-Yes, bisection would only be useful to output one commit more quickly.
-We will still need to exhaustively search for all commits if the user
-needs more than one.
+Thanks.
+
+> ok, so add "Expected" as well? (repeating "Previous git", or so?)
+
+Yeah, I should make that more explicit.
+
+>> +# Testcase 8d, rename/delete...or not?
+>> +#   (Related to testcase 5b; these may appear slightly inconsistent to users;
+>> +#    Also related to testcases 7d and 7e)
+>
+>> +#   Commit A: z/{b,c,d}
+>> +#   Commit B: y/{b,c}
+>> +#   Commit C: z/{b,c,d,e}
+>> +#   Expected: y/{b,c,e}
+>
+> Why this?
+> * d is deleted in B and not found in the result
+> * the rename detection also worked well in z->y  for adding e
+>
+> I do not see the confusion, yet.
+
+Um...yaay?  If you don't see it as confusing, then maybe others don't?
+ I was wondering if folks would expect a rename/delete conflict (x/d
+either deleted or renamed to y/d via directory rename detection), and
+be annoyed if the merge succeeded and didn't even give so much as a
+warning about what happened to 'd'.
+
+>> +#   In this case, I'm leaning towards: commit B was the one that deleted z/d
+>> +#   and it did the rename of z to y, so the two "conflicts" (rename vs.
+>> +#   delete) are both coming from commit B, which is non-sensical.  Conflicts
+>> +#   during merging are supposed to be about opposite sides doing things
+>> +#   differently.
+>
+>   "Sensical has not yet become an "official" word in the English language, which
+>   would be why you can't use it. Nonsense is a word, therefore nonsensical can
+>   used to describe something of nonsense. However, sense has different meanings
+>   and doesn't have an adjective for something of sense"
+>
+> from https://english.stackexchange.com/questions/38582/antonym-of-nonsensical
+> I don't mind it, the spell checker just made me go on a detour. Maybe illogical?
+
+Illogical works for me.
+
+>> +# Testcase 8e, Both sides rename, one side adds to original directory
+>> +#   Commit A: z/{b,c}
+>> +#   Commit B: y/{b,c}
+>> +#   Commit C: w/{b,c}, z/d
+>> +#
+>> +# Possible Resolutions:
+>> +#   Previous git: z/d, CONFLICT(z/b -> y/b vs. w/b), CONFLICT(z/c -> y/c vs. w/c)
+>> +#   Expected:     y/d, CONFLICT(z/b -> y/b vs. w/b), CONFLICT(z/c -> y/c vs. w/c)
+>> +#   Preferred:    ??
+>> +#
+>> +# Notes: In commit B, directory z got renamed to y.  In commit C, directory z
+>> +#        did NOT get renamed; the directory is still present; instead it is
+>> +#        considered to have just renamed a subset of paths in directory z
+>> +#        elsewhere.  Therefore, the directory rename done in commit B to z/
+>> +#        applies to z/d and maps it to y/d.
+>> +#
+>> +#        It's possible that users would get confused about this, but what
+>> +#        should we do instead?   Silently leaving at z/d seems just as bad or
+>> +#        maybe even worse.  Perhaps we could print a big warning about z/d
+>> +#        and how we're moving to y/d in this case, but when I started thinking
+>> +#        abouty the ramifications of doing that, I didn't know how to rule out
+>> +#        that opening other weird edge and corner cases so I just punted.
+>
+> s/about/abouty
+
+I think you mean the other direction?  Thanks for catching, I'll fix that up.
+
+> It sort of makes sense from a users POV.
+
+I'm afraid I'm unsure what the antecedent of "It" is here.  (Are you
+just saying that my rationale for what I listed as "Expected" makes
+sense, or something else?)
