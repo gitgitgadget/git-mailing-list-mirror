@@ -2,76 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F3FDC1F43C
-	for <e@80x24.org>; Tue, 14 Nov 2017 16:45:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E28E71F43C
+	for <e@80x24.org>; Tue, 14 Nov 2017 16:48:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755615AbdKNQp5 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Nov 2017 11:45:57 -0500
-Received: from mout.web.de ([212.227.15.3]:65332 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755608AbdKNQpw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Nov 2017 11:45:52 -0500
-Received: from macce.local ([195.198.252.176]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0M7bhn-1fAJ463bQF-00xKor; Tue, 14
- Nov 2017 17:45:49 +0100
-Subject: Re: Changing encoding of a file : What should happen to CRLF in file
- ?
-To:     Ashish Negi <ashishnegi33@gmail.com>
-Cc:     git@vger.kernel.org
-References: <CAJ_+vJ6FXXda4fe7=1YxtDGR2d8CqP4KXN+YR6+mdQ+5jQQXug@mail.gmail.com>
- <8b3225ce-a4aa-56ee-5296-6cc7528556d1@web.de>
- <CAJ_+vJ5J250CtzVg4QwEusddviDSYuJhubsbTJyv5Nc2conAfA@mail.gmail.com>
-From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Message-ID: <9d1f6549-fcf7-e96f-a15d-ca19c51c7fbd@web.de>
-Date:   Tue, 14 Nov 2017 17:45:49 +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:52.0)
- Gecko/20100101 Thunderbird/52.4.0
+        id S1755153AbdKNQsY (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Nov 2017 11:48:24 -0500
+Received: from mail-qt0-f172.google.com ([209.85.216.172]:46587 "EHLO
+        mail-qt0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755325AbdKNQsJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Nov 2017 11:48:09 -0500
+Received: by mail-qt0-f172.google.com with SMTP id 1so26534271qtn.3
+        for <git@vger.kernel.org>; Tue, 14 Nov 2017 08:48:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=gYrc4XKlsNQr4tlJ68wo70Yu2vhBNSpk4s3MQOgDnO4=;
+        b=hQDJX/khD/tnShCUEUYKWQ7i6vZD5IkqZMjXY4YCammsGA36ASXxkhtlRWKDpn8UCp
+         7XmzbfoOgafauH7BT4l/PwakUKaZ+C1cXDsMKFcmjFd0cEhvC8hKVM7Q3yrJ+jEGluuh
+         h1Gb20T2o5+vkJwBB4bjj8OENMHPFJrjol1ZDoQCM4UsM4d/IxS4bj8TYyGJOcF7DgJb
+         vgpGbP07M16NFpQbtLofzGbHw3NAJkkBFmFbTtARTDCmUeiPva117zJDurEBB2FKiCY+
+         1MtFHRiJI8uNQ1P+VSXRtL+lblLe3J3/w17/gdRExgU2ZypOlXs2UTS7uNatXbMlyVUV
+         HacA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=gYrc4XKlsNQr4tlJ68wo70Yu2vhBNSpk4s3MQOgDnO4=;
+        b=PRB4rluj+CDmvfvhRQsRJQ9zjOeMT8TKbsNx7fqCpdp2wzbearObofrsWqBIUpqpLz
+         QW0nWV0qhUchi/zW85AIs+Hlfr8EwzAYoPW55ugE712XIEs0YXxm2p/RvjXHFutq/T9g
+         NCeya+OBHOGrQrLH2SjjB4d1xSqeIe/U58j3IGU4qi0+FNtYw6XvViWjQortfN14PBz+
+         4fcDMNDn3IqPjsCzY/k595i4QVn3tvttWJmFD3FXZfyMCBUSbTBkfyPTUbg8RTqEVQfG
+         eWGC7/CRVWUsZU25pi7AMo4k5naMKbuGxE36UBdLWLQTQwZcwnK5FCC43W27wGuReZkh
+         1YlQ==
+X-Gm-Message-State: AJaThX5XTWdOJgzxCY8Iz/PhUjPxNh4uqdTMvVAcxYj7RyMq8QB8J+0A
+        lBiqSq+BqOQUovq558fAIckD2NmCcOqYFohYy94=
+X-Google-Smtp-Source: AGs4zMaR3bPxiOb8L6/rQzZCioltwxW6h4YK03POHUEJLGw2BxbXZP8+AwoNMbKlx/C0DGTlchEwzl6FNGABCYsRzY4=
+X-Received: by 10.55.130.194 with SMTP id e185mr2554926qkd.357.1510678088478;
+ Tue, 14 Nov 2017 08:48:08 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <CAJ_+vJ5J250CtzVg4QwEusddviDSYuJhubsbTJyv5Nc2conAfA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:I0EXDJrSM52i5S63T1rL+UVIrcdJ07LrvRVQdV3tS+NPdy/jDGu
- Iu7vYT7qYSXEQgJSyCx3z6T5aApJ1vnxQH3cUTZXaj0whR6uW/0Zz5IaQHar8cijqKJApBy
- yN4noyKU34hxHAD4GjjI58hA6hg0gcmjIlhvcjBUwCqLgmWoLJt1Lf2wkF5wjyNThWUjUgT
- s+3/1NVnAeUYEXcl6ZzfA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:q/RhJJ89c2g=:Til4Hwxngnb3q60YWmOmxk
- h9t97ZvRWfraFrV/8If4Vu8NKM0hXjYkmVB36Vz13hhVgV4cNC+MNTYHlbcEFIPYHRj3opi50
- pw0CQ/+2iC2cekBujfU3SbywVDrdB+PXurnIe9JR9U1qaZCwc9jMiNt1J2Ipyja57cYdOVqMv
- UiQF3+fK7I10Zj2XHVpFnh8pYlxAo3WAtoQrESB4iRHNk+dkTa35GV00OyBqYFzPgeLlDkHpC
- +nN8F8xDBZcQ8+xSXDu4yC5Y3fWQikRVEOmrTATQDuzTWSZ/usbr1WsH4FucCwCCY3W9Z2U9w
- nVqoXpnZj2p6A2+qSW34gro9vrne4+JrBibnjmuthkuszgYLtFPNeLXlsoTtSpH3kulCsO9sV
- 4nZOIPbOBcMW9E86CfFty5rGAj7PmikC+pjEclsiQ+USVNmdNOdGJ8WQTj7SO1DD2qKoymNlr
- pJaP05Vu19t5uB8SMd5LyE4F2E3kTcEAQz5rYqzFVfB+htxGC3xw+vYnJ7Ciz1CRWaKgkiEoE
- yeS+00CeFLVal0bBf22j101hD2Tl9s9jlfAY0+X4Bn4nD8u1nTfZ96p8sepdwuu6J2A2BsSFM
- 7NoabotJBJyBlCMhLZoTzAnvPGl+/oq5WuJS91gFiBmOvByTcX4L5qt7MSb39PaSV1JeAGJ2B
- eOsYwdLwA5AG081GxavkxYwJawU9VIeKsqH6RtQYZ7HxZz4FKTaDpAzRZlXan8nG0ISF89doC
- 5rY0qXqaEijxFJgQ1/Ft3CDVG0kXhDj1We/RPDMRQJI2KJ9SwWSrnwIZ4dS2DuoKbksyahOqn
- dGUPv4Q02MJu8zohUaV6wRWYCMl25uYbkhBi8FDLJlkGH9DnFo=
+Received: by 10.12.155.209 with HTTP; Tue, 14 Nov 2017 08:48:07 -0800 (PST)
+In-Reply-To: <3af0f8cc-09f3-bcf2-04c8-f076e0ddcea2@xiplink.com>
+References: <4f548c23-7bb5-a672-21bb-6c1dd6de6139@xiplink.com>
+ <20171114055306.3tfi726wzmkcfluk@sigill.intra.peff.net> <3af0f8cc-09f3-bcf2-04c8-f076e0ddcea2@xiplink.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 14 Nov 2017 11:48:07 -0500
+X-Google-Sender-Auth: r1wxwqoXeh7rGJ5HueKu5md9vCI
+Message-ID: <CAPig+cS8fg7UEX7eO4LLrVuuuBCxOVbhqmc5xFGqv3mT6s0=ng@mail.gmail.com>
+Subject: Re: Recovering from gc errors
+To:     Marc Branchaud <marcnarc@xiplink.com>
+Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2017-11-14 17:13, Ashish Negi wrote:
-> Running the command gives me :
-> 
->       git ls-files --eol file_name
->       i/-text w/-text attr/text=auto          file_name
-> 
+On Tue, Nov 14, 2017 at 10:39 AM, Marc Branchaud <marcnarc@xiplink.com> wrote:
+> I'm willing to chalk this up to bugs in the early worktree code, unless one
+> of the CC'd worktree developers thinks otherwise.
+>
+> An explicit "git worktree delete" command would be nice for manually
+> cleaning things up.  It's easy to just delete the directory, but having a
+> "delete" command gives the user assurance that they're not missing
+> something.
 
-That is strange to me:
-According to that, Git would treat the file as text=auto.
-And the content is "not next", so there is no need to convert.
-Do you have configured any filters ?
+Duy does have a series in 'pu' which adds this functionality, but I
+guess it's stalled for the moment. From "What's Cooking":
 
-Is this a public repo ?
-if not: Is there any chance that you provide a public example,
-so that we can have a look ?
+    * nd/worktree-move (2017-04-20) 6 commits
+    - worktree remove: new command
+    - worktree move: refuse to move worktrees with submodules
+    - worktree move: accept destination as directory
+    - worktree move: new command
+    - worktree.c: add update_worktree_location()
+    - worktree.c: add validate_worktree()
 
+    "git worktree" learned move and remove subcommands.
 
+    Expecting a reroll.
+    cf. <20170420101024.7593-1-pclouds@gmail.com>
+    cf. <20170421145916.mknekgqzhxffu7di@sigill.intra.peff.net>
+    cf. <d0e81b1e-5869-299e-f462-4d43dc997bd1@ramsayjones.plus.com>
