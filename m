@@ -6,53 +6,53 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6152920291
-	for <e@80x24.org>; Tue, 14 Nov 2017 00:15:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7E17920291
+	for <e@80x24.org>; Tue, 14 Nov 2017 00:25:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751151AbdKNAPa (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Nov 2017 19:15:30 -0500
-Received: from mail-qt0-f170.google.com ([209.85.216.170]:53770 "EHLO
-        mail-qt0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751028AbdKNAP3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Nov 2017 19:15:29 -0500
-Received: by mail-qt0-f170.google.com with SMTP id n61so21837456qte.10
-        for <git@vger.kernel.org>; Mon, 13 Nov 2017 16:15:28 -0800 (PST)
+        id S1751521AbdKNAZy (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Nov 2017 19:25:54 -0500
+Received: from mail-qt0-f176.google.com ([209.85.216.176]:57252 "EHLO
+        mail-qt0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751074AbdKNAZx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Nov 2017 19:25:53 -0500
+Received: by mail-qt0-f176.google.com with SMTP id r39so5581577qtr.13
+        for <git@vger.kernel.org>; Mon, 13 Nov 2017 16:25:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=UIev/8UMs52zp+SrtyW9EjQZ1zMLTktlKm84zp7KC08=;
-        b=ABjQMzU/MA2S/KHvb8hx1vC3X1szIGhjR+GQgIG2Lfnl/1UW/AFsR+YLiBDRT1UcPe
-         PLcIlp+OfAO0UI++vT5NH3Gb+8e4l68jj601w4i7SY+0P+UW6IABEXZq+oiss3slqloM
-         idKB0VZeCUPdRcDRL9GJ3NNb8N1QpifZTo0/fBTIgKgtJe99f3DOF4gZwxS83AqpI0gu
-         PH/hokYyPkUt+73ltAfEJDRMv3iPhs+WlGtEcUGR6ZQG62ZwciQZqDtUdv4QTCnwfxbR
-         yqQjAur1qVWw1jLjCmW+cusSK52RbOLMu3637gC4lxf78BZ5dO1VCyxnpwHDusvdw/ID
-         zE/A==
+        bh=AkgvVYdzuJgmzSxLGHVALBRYyQYby5wlAPF47gllVsc=;
+        b=OAZX5BZZiZ2hI68nV8GBp6HZqPf7S4PARHBDXIO6oY0Wj/rIt9UmoE54pDlsVKqE+P
+         HrN3fOSq0SuMVFR+NoTs45bOdVi+Equq8JmE7RTkk6YBceTJblbDZNrLUCRlbMgZxAfb
+         on11aI2plxziz1qxcRTPvBKEmtiDM8E/TnFS8MK1Ul6m2cHWOAbrmdsa+4n/N9XXD6zZ
+         6eKKY9MxNlC54JYMd+BiqfHi6pDfhA6IRaBOZgKkvMIs8C0BKICH5ELH/NYmM/OiMDlA
+         FHLwHh8xJ3LB0OvLgoI95ESa5NC7oJNFUZXN3q9p4PHDTYRDlMi/ETn6Ieb3M3YHEzs1
+         +v5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=UIev/8UMs52zp+SrtyW9EjQZ1zMLTktlKm84zp7KC08=;
-        b=r0ET7and3EaartCffdvAdaC76SfhqNnoL1ooxFL5lwzK/+yW2x/1A2FYhi5hAB7WrP
-         won3OUvDqnQccapfo/TTVgesBt7Ft8DEWX3WstBJY7eoC0QYvbYDD8FqJ799Ca+ba3I8
-         gnB5BFsxt6aVR1mS5SdBYJBZV8rukVNU+UWmTzYwcN0aFSFFlNcoHKV1kb1pMRU3F5oL
-         bnJ2qTXg9oNFmnUjJJmSk/lvNjDmFNJwQY2+7gNNY+YBc38zLj/leOhh5sqrOf3058nQ
-         7I2fiEW6pCaKkF/KkVVMO3SU6xHTn7SJ2xjngyAUGknx+sxY/Ig4DKZ3OIlMbqzuPEYH
-         RGJA==
-X-Gm-Message-State: AJaThX72xLYDv6+D6RvOtrv61zieajQQscP0KzyR8gx8qbbbiwliRcab
-        JnSJtuAtfF1wj5W3uBb+VzgI999niszBmhdRs7Hd1M+8
-X-Google-Smtp-Source: AGs4zMZJwxNN7hdeuCz0CK2LiHTTt4wVnXPkHQ84Pu0WVRQt14wTcgCB1kfqQJn9WMHctwcw+12pN8rU9d1URHpbHTQ=
-X-Received: by 10.237.34.201 with SMTP id q9mr17149494qtc.198.1510618528057;
- Mon, 13 Nov 2017 16:15:28 -0800 (PST)
+        bh=AkgvVYdzuJgmzSxLGHVALBRYyQYby5wlAPF47gllVsc=;
+        b=X2phw/kz8UEw5v1t7u4CD2e7jicY67evlwROI9O0a4jAlxZcFb7E2aMwvREYZ82Rt6
+         LxmJntGx9S/Jx5FvZc1jNfJp9s6MbCqUKuOWgBZrxdnxmgdHm2VkkxZmy80cbZJ1drYo
+         vG/w0yNlJPPDWtdjnSIxTtk9Az6p9fU27j6Sg6ReOKZwqRjUcY75NgOE8NW4wrqKzmLV
+         sRykBN8WS4c++iZKeMZwwxNxy/P2O4Y2/e6O0wcLM67NIfPAz6gpSMwBxLg4/FoGtENX
+         6dSqdgdZVrhBo2lTPoQsbjpn8sIjkRMi23IVgAyX1RSJFCxeTeH0RtAAMobPFfah+BW5
+         mJMg==
+X-Gm-Message-State: AJaThX4LQv5kEGpJftNk3qbmgIMxudahaYoH+5g/Oe0CLWuoTGtS2Rq0
+        FBCzdftNpntUKgyPbZVcbOORK9MC9tvpqCMaoGAvow==
+X-Google-Smtp-Source: AGs4zMbIdpGGrJO1oUp4VcneuWaIi2OPz333BD43pe0CuYTG79qJxWfIjGSnZAMmALXLykPflVhpxlpK8a6E7EaMEfc=
+X-Received: by 10.200.55.75 with SMTP id p11mr17029274qtb.298.1510619152089;
+ Mon, 13 Nov 2017 16:25:52 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.140.102.70 with HTTP; Mon, 13 Nov 2017 16:15:27 -0800 (PST)
-In-Reply-To: <20171110190550.27059-9-newren@gmail.com>
-References: <20171110190550.27059-1-newren@gmail.com> <20171110190550.27059-9-newren@gmail.com>
+Received: by 10.140.102.70 with HTTP; Mon, 13 Nov 2017 16:25:51 -0800 (PST)
+In-Reply-To: <20171110190550.27059-10-newren@gmail.com>
+References: <20171110190550.27059-1-newren@gmail.com> <20171110190550.27059-10-newren@gmail.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 13 Nov 2017 16:15:27 -0800
-Message-ID: <CAGZ79kana0_9N+gG+m2BT5Tnu_q4MC=WSTuvtwkdeD_Wn70ydA@mail.gmail.com>
-Subject: Re: [PATCH 08/30] directory rename detection: files/directories in
- the way of some renames
+Date:   Mon, 13 Nov 2017 16:25:51 -0800
+Message-ID: <CAGZ79kbsQqAFGFVN3dOnSAFuPishF3PGS7_go+53T5Oa-4qWiA@mail.gmail.com>
+Subject: Re: [PATCH 09/30] directory rename detection: testcases checking
+ which side did the rename
 To:     Elijah Newren <newren@gmail.com>
 Cc:     git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
@@ -64,95 +64,107 @@ X-Mailing-List: git@vger.kernel.org
 On Fri, Nov 10, 2017 at 11:05 AM, Elijah Newren <newren@gmail.com> wrote:
 > Signed-off-by: Elijah Newren <newren@gmail.com>
 > ---
->  t/t6043-merge-rename-directories.sh | 303 ++++++++++++++++++++++++++++++++++++
->  1 file changed, 303 insertions(+)
+>  t/t6043-merge-rename-directories.sh | 283 ++++++++++++++++++++++++++++++++++++
+>  1 file changed, 283 insertions(+)
 >
 > diff --git a/t/t6043-merge-rename-directories.sh b/t/t6043-merge-rename-directories.sh
-> index ec054b210a..d15153c652 100755
+> index d15153c652..157299105f 100755
 > --- a/t/t6043-merge-rename-directories.sh
 > +++ b/t/t6043-merge-rename-directories.sh
-> @@ -750,4 +750,307 @@ test_expect_success '4a-check: Directory split, with original directory still pr
->  #   detection.)  But, sadly, see testcase 8b.
+> @@ -1053,4 +1053,287 @@ test_expect_failure '5d-check: Directory/file/file conflict due to directory ren
+>  #   back to old handling.  But, sadly, see testcases 8a and 8b.
 >  ###########################################################################
 >
 > +
 > +###########################################################################
-> +# SECTION 5: Files/directories in the way of subset of to-be-renamed paths
+> +# SECTION 6: Same side of the merge was the one that did the rename
 > +#
-> +# Implicitly renaming files due to a detected directory rename could run
-> +# into problems if there are files or directories in the way of the paths
-> +# we want to rename.  Explore such cases in this section.
+> +# It may sound obvious that you only want to apply implicit directory
+> +# renames to directories if the _other_ side of history did the renaming.
+> +# If you did make an implementation that didn't explicitly enforce this
+> +# rule, the majority of cases that would fall under this section would
+> +# also be solved by following the rules from the above sections.  But
+> +# there are still a few that stick out, so this section covers them just
+> +# to make sure we also get them right.
 > +###########################################################################
 > +
-> +# Testcase 5a, Merge directories, other side adds files to original and target
-> +#   Commit A: z/{b,c},       y/d
-> +#   Commit B: z/{b,c,e_1,f}, y/{d,e_2}
-> +#   Commit C: y/{b,c,d}
-> +#   Expected: z/e_1, y/{b,c,d,e_2,f} + CONFLICT warning
-> +#   NOTE: While directory rename detection is active here causing z/f to
-> +#         become y/f, we did not apply this for z/e_1 because that would
-> +#         give us an add/add conflict for y/e_1 vs y/e_2.  This problem with
-> +#         this add/add, is that both versions of y/e are from the same side
-> +#         of history, giving us no way to represent this conflict in the
-> +#         index.
-
-Makes sense.
-
-> +# Testcase 5b, Rename/delete in order to get add/add/add conflict
-> +#   (Related to testcase 8d; these may appear slightly inconsistent to users;
-> +#    Also related to testcases 7d and 7e)
-> +#   Commit A: z/{b,c,d_1}
-> +#   Commit B: y/{b,c,d_2}
-> +#   Commit C: z/{b,c,d_1,e}, y/d_3
-> +#   Expected: y/{b,c,e}, CONFLICT(add/add: y/d_2 vs. y/d_3)
-> +#   NOTE: If z/d_1 in commit C were to be involved in dir rename detection, as
-> +#         we normaly would since z/ is being renamed to y/, then this would be
-> +#         a rename/delete (z/d_1 -> y/d_1 vs. deleted) AND an add/add/add
-> +#         conflict of y/d_1 vs. y/d_2 vs. y/d_3.  Add/add/add is not
-> +#         representable in the index, so the existence of y/d_3 needs to
-> +#         cause us to bail on directory rename detection for that path, falling
-> +#         back to git behavior without the directory rename detection.
-
+> +# Testcase 6a, Tricky rename/delete
+> +#   Commit A: z/{b,c,d}
+> +#   Commit B: z/b
+> +#   Commit C: y/{b,c}, z/d
+> +#   Expected: y/b, CONFLICT(rename/delete, z/c -> y/c vs. NULL)
+> +#   Note: We're just checking here that the rename of z/b and z/c to put
+> +#         them under y/ doesn't accidentally catch z/d and make it look like
+> +#         it is also involved in a rename/delete conflict.
+> +
 
 > +
-> +# Testcase 5c, Transitive rename would cause rename/rename/rename/add/add/add
-> +#   (Directory rename detection would result in transitive rename vs.
-> +#    rename/rename(1to2) and turn it into a rename/rename(1to3).  Further,
-> +#    rename paths conflict with separate adds on the other side)
-> +#   (Related to testcases 3b and 7c)
-> +#   Commit A: z/{b,c}, x/d_1
-> +#   Commit B: y/{b,c,d_2}, w/d_1
-> +#   Commit C: z/{b,c,d_1,e}, w/d_3, y/d_4
-> +#   Expected: A mess, but only a rename/rename(1to2)/add/add mess.  Use the
-> +#             presence of y/d_4 in C to avoid doing transitive rename of
-> +#             x/d_1 -> z/d_1 -> y/d_1, so that the only paths we have at
-> +#             y/d are y/d_2 and y/d_4.  We still do the move from z/e to y/e,
-> +#             though, because it doesn't have anything in the way.
-
-Missing the expected state, only the explanation is given.
-
-
-> +# Testcase 5d, Directory/file/file conflict due to directory rename
+> +# Testcase 6b, Same rename done on both sides
+> +#   (Related to testcases 6c and 8e)
 > +#   Commit A: z/{b,c}
-> +#   Commit B: y/{b,c,d_1}
-> +#   Commit C: z/{b,c,d_2,f}, y/d/e
-> +#   Expected: y/{b,c,d/e,f}, z/d_2, CONFLICT(file/directory), y/d_1~HEAD
-> +#   Note: The fact that y/d/ exists in C makes us bail on directory rename
-> +#         detection for z/d_2, but that doesn't prevent us from applying the
-> +#         directory rename detection for z/f -> y/f.
+> +#   Commit B: y/{b,c}
+> +#   Commit C: y/{b,c}, z/d
 
-Makes sense.
+Missing expected state
+
+> +#   Note: If we did directory rename detection here, we'd move z/d into y/,
+> +#         but C did that rename and still decided to put the file into z/,
+> +#         so we probably shouldn't apply directory rename detection for it.
+
+correct. Also we don't want to see a rename/rename conflict (obviously).
+
+If we have
+
+    Commit A: z/{b_1,c}
+    Commit B: y/{b_2,c}
+    Commit C: y/{b_3,c}, z/d
+
+then we'd produce a standard file merge (which may or may not result
+in conflict,
+depending on touched lines) for y/b_{try-resolve}
 
 > +
-> +###########################################################################
-> +# Rules suggested by section 5:
-> +#
-> +#   If a subset of to-be-renamed files have a file or directory in the way,
-> +#   "turn off" the directory rename for those specific sub-paths,
+> +# Testcase 6c, Rename only done on same side
+> +#   (Related to testcases 6b and 8e)
+> +#   Commit A: z/{b,c}
+> +#   Commit B: z/{b,c} (no change)
+> +#   Commit C: y/{b,c}, z/d
+> +#   Expected: y/{b,c}, z/d
+> +#   NOTE: Seems obvious, but just checking that the implementation doesn't
+> +#         "accidentally detect a rename" and give us y/{b,c,d}.
 
-Makes sense.
+makes sense.
 
->  falling
-> +#   back to old handling.  But, sadly, see testcases 8a and 8b.
+> +
+> +# Testcase 6d, We don't always want transitive renaming
+> +#   (Related to testcase 1c)
+> +#   Commit A: z/{b,c}, x/d
+> +#   Commit B: z/{b,c}, x/d (no change)
+> +#   Commit C: y/{b,c}, z/d
+> +#   Expected: y/{b,c}, z/d
+> +#   NOTE: Again, this seems obvious but just checking that the implementation
+> +#         doesn't "accidentally detect a rename" and give us y/{b,c,d}.
 
-You seem to be hinting at these all the time.
+makes sense, too.
+
+> +# Testcase 6e, Add/add from one-side
+> +#   Commit A: z/{b,c}
+> +#   Commit B: z/{b,c} (no change)
+> +#   Commit C: y/{b,c,d_1}, z/d_2
+> +#   Expected: y/{b,c,d_1}, z/d_2
+> +#   NOTE: Again, this seems obvious but just checking that the implementation
+> +#         doesn't "accidentally detect a rename" and give us y/{b,c} +
+> +#         add/add conflict on y/d_1 vs y/d_2.
+
+What is less obvious in all these cases is the "(no change)" part to me.
+I would think that at least *something* changes in B in all cases above, maybe
+add file u/r (un-related) to have the tree ids changed?
+("Less obvious" as in: we don't rely on the "no changes" part to make
+the decision,
+which sounds tempting so far)
+
+>  test_done
+
+No conclusion box here, so my (misguided) suggestion:
+
+  If "No change" occurs, just take the other side. ;)
