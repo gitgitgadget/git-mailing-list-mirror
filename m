@@ -2,119 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 49B3F201C2
-	for <e@80x24.org>; Tue, 14 Nov 2017 03:26:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9D143201C2
+	for <e@80x24.org>; Tue, 14 Nov 2017 03:30:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753202AbdKND01 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Nov 2017 22:26:27 -0500
-Received: from mail-qk0-f175.google.com ([209.85.220.175]:46834 "EHLO
-        mail-qk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751171AbdKND00 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Nov 2017 22:26:26 -0500
-Received: by mail-qk0-f175.google.com with SMTP id o6so22474670qkh.3
-        for <git@vger.kernel.org>; Mon, 13 Nov 2017 19:26:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=tmfMJ05u8dFGjbZ8+iOseBa6mpHSNF007rtg4KGRRbI=;
-        b=rrjJhf3LZdTGbkxknM4vqyv0Cl+t9Hk8woopjZaDEAIDPvd5ECjH/rsrAGRfArj8Jh
-         bC6S/cWAsoPQs6Mi4Nza8+rQke8cEEbj4dfo9Jl6g7geOsI3LCgzfeFeMAxzHADj52M5
-         RrUva9tMGy1T0rK4YJhqxK84GMmvILgmwL0b8FTVJf75Up/1v+ChiBoSbW8vcWuUFa+3
-         ahCBcqClZX9RdPphotdw9JZKFGnwH0YcKmhk5/womJ36xhwabcyJWlMCXVsbleBmZ4x4
-         aulQllYKwTfIrz2zbQ2ZCmVHKMMM5IP9lWWpflq/FcayAQqYjtBX+B3ngIDD9bcNZkxa
-         ZSDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=tmfMJ05u8dFGjbZ8+iOseBa6mpHSNF007rtg4KGRRbI=;
-        b=QgAuQru0qE8jHfgY87n7GIPbmfLGFxNzz7PTPYyYXPKltPzVtrW5rznGiH+/3wUjCf
-         e0fvTooG5TvoZY/W9DNEA22f3zdRIfKnooma5XgbxJxkQzA1XMNZhg/7G8FqYEB9CtGd
-         4EGC31YYgt74d+qR+bYEfTZndgCjpZ8y789lW8hV0aHeFOfmnRs62ZMC9uAvCLF3V26I
-         p2vqzJftkT16mSF1EV8/WMpsAXqDyp/7hy23uLw+tElU/ia5wnb+Qkb4Of/lx+iiyMWv
-         pv1PTGBT0weMe6aQpgh6PbqFI9I9/PjCNJpJm2/YaYJJAb0laHm454eo/rUaKSlRHGHx
-         8H7Q==
-X-Gm-Message-State: AJaThX5qnph0m8QOE6jwSQC9mt7oVD8imFffN1/FfyQDZYQrmATEfRct
-        0iwbNOMQXbulPH9rdjLr/Uofp6Bsj2iutA1teLI=
-X-Google-Smtp-Source: AGs4zMYHzG3nuGjxV6T8qk0dQSbeXMUPVLe78nwq9FUA2nNMtvy654QEaIzOoMfOnlANXCOLE1UuoISrTfX6M+qfZO0=
-X-Received: by 10.55.42.75 with SMTP id q72mr17367555qkh.57.1510629985536;
- Mon, 13 Nov 2017 19:26:25 -0800 (PST)
+        id S1753408AbdKNDaO (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Nov 2017 22:30:14 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58505 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752892AbdKNDaK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Nov 2017 22:30:10 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A83D1AD270;
+        Mon, 13 Nov 2017 22:30:08 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=s7roZtjLFnq1afYK3n6saSc7eaI=; b=pGvZDr
+        tosA+4EsjHCQEIjOL2p2Jr1zlEPVQMWSxFllACeqXw6fZw6iLZYOUlvWD6F4jomM
+        XaBIFQQ9/7wkSqQxAJgtkmrUsWwAcL/8MaT+zOCW6cVc0A3VJOvYZnF7Pu+ypL43
+        +FL6Da3UDSY6RmCKVUnPcpUTExxcYAfSeGuU0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=AoxBbGr6Ha6lBIzEidZ61zvnr/DFTU2Y
+        hHxFm0xKAYj7dUgAAW3/PnVMQhMxLuhh6oZcyiDwVsvFWdNK4ehXVcffcwhLlNJP
+        kWwQPVReiBE7BuUPuwm4UxRLSQTYzijatDCzyeSQi758Ph+Ir0ZmGU3eF+KxDqv+
+        3zNAK3DY4lA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A06A0AD26F;
+        Mon, 13 Nov 2017 22:30:08 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 13217AD269;
+        Mon, 13 Nov 2017 22:30:07 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Todd Zullinger <tmz@pobox.com>, Johan Herland <johan@herland.net>
+Cc:     git@vger.kernel.org, Santiago Torres <santiago@nyu.edu>
+Subject: Re: [PATCH] t/lib-gpg: fix gpgconf stderr redirect to /dev/null
+References: <20171113210745.24638-1-tmz@pobox.com>
+        <xmqq60ad7ewx.fsf@gitster.mtv.corp.google.com>
+        <20171114030351.GS5144@zaya.teonanacatl.net>
+Date:   Tue, 14 Nov 2017 12:30:05 +0900
+In-Reply-To: <20171114030351.GS5144@zaya.teonanacatl.net> (Todd Zullinger's
+        message of "Mon, 13 Nov 2017 22:03:51 -0500")
+Message-ID: <xmqqshdh5ygy.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.12.155.209 with HTTP; Mon, 13 Nov 2017 19:26:25 -0800 (PST)
-In-Reply-To: <alpine.LFD.2.21.1711131603340.6299@localhost.localdomain>
-References: <alpine.LFD.2.21.1711130938080.5262@DESKTOP-1GPMCEJ>
- <CAPig+cRLcJ2a=QKyKAkaNiewoWMQvKr_AWePKYVpGS5S9g-i1Q@mail.gmail.com> <alpine.LFD.2.21.1711131603340.6299@localhost.localdomain>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 13 Nov 2017 22:26:25 -0500
-X-Google-Sender-Auth: ENlt__qB52unJXPcNtDmdrgRHio
-Message-ID: <CAPig+cR2W2zKcjLYjd1E4jhMkad3O2ioncCZhkExGopxa_0_xg@mail.gmail.com>
-Subject: Re: man page for "git-worktree" is a bit confusing WRT "prune"
-To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
-Cc:     Git Mailing list <git@vger.kernel.org>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1C507DCC-C8EC-11E7-97F6-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-[+cc:Duy]
+Todd Zullinger <tmz@pobox.com> writes:
 
-On Mon, Nov 13, 2017 at 4:06 PM, Robert P. J. Day <rpjday@crashcourse.ca> wrote:
-> On Mon, 13 Nov 2017, Eric Sunshine wrote:
->> On Mon, Nov 13, 2017 at 9:48 AM, Robert P. J. Day <rpjday@crashcourse.ca> wrote:
->> >   finally, the prune "--expire" option is truly confusing:
->> >
->> >     --expire <time>
->> >         With prune, only expire unused working trees older than <time>.
->> >
->> > suddenly, we encounter the verb "expire", which means ... what?
->> > how does "expiring" a worktree differ from "pruning" a worktree?
->> > and what makes a worktree "unused"? the normal meaning of "unused"
->> > is that you haven't, you know, *used* it lately. in this context,
->> > though, does it mean deleted? and if it means deleted, what does
->> > it mean for it to be older than some time if it's already gone?
+>> I wonder if this line in 3320 is doing what it meant to do:
 >>
->> This dates back to the original behavior of automatically pruning
->> administrative information for deleted worktrees. As discussed
->> elsewhere in the document, a worktree may be placed on some
->> removable device (USB drive, memory stick, etc.) or network share
->> which isn't always mounted. The "expire time" provides such
->> not-necessarily-mounted worktrees a grace period before being pruned
->> automatically.
+>>    test_must_fail git notes merge z 2>&1 >out &&    test_i18ngrep
+>> "Automatic notes merge failed" out &&    grep -v "A notes merge into
+>> refs/notes/x is already in-progress in" out
 >
->   how is this "expire time" measured? relative to what? i've looked
-> under .git/worktrees/<wtname>, and i see a bunch of files defining
-> that worktree, but it's not clear how a worktree stores the relevant
-> time to be used for the determination of when a worktree "expires".
+> That's a fine question.  I only grepped for 2>&1 >/dev/null.  Dropping
+> /dev/null, as you did only turns up that test as an additional hit.
+>
+> I think, based on a very cursory reading of the test, that it's
+> intending to direct stderr and stdout to the file out.  The test gets
+> lucky that the code in builtin/notes.c directs the error message to
+> stdout:
+>
+>        printf(_("Automatic notes merge failed. Fix conflicts in %s and "
+>                 "commit the result with 'git notes merge --commit', or "
+>                 "abort the merge with 'git notes merge --abort'.\n"),
+>               git_path(NOTES_MERGE_WORKTREE));
+>
+> Perhaps that should be using fprintf(stderr, ...) instead?  (And the
+> test redirection corrected as well, of course.)  If that seems
+> correct, I can submit the trivial patch for that as well, while I'm on
+> the subject.
 
-According to Documentation/gitrepository-layout.txt:
+The message goes to the standard output stream since it was
+introduced in 809f38c8 ("git notes merge: Manual conflict
+resolution, part 1/2", 2010-11-09) and 6abb3655 ("git notes merge:
+Manual conflict resolution, part 2/2", 2010-11-09).  I do think it
+makes more sense to send it to the standard error stream, but just
+in case if the original author thinks of a reason why it shouldn't,
+let's summon Johan and ask his input.
 
-    worktrees/<id>/gitdir::
-        A text file containing the absolute path back to the .git file
-        that points to here. This is used to check if the linked
-        repository has been manually removed and there is no need to
-        keep this directory any more. The mtime of this file should be
-        updated every time the linked repository is accessed.
+Thanks.
 
-So, the expire time is relative to the mtime of the 'gitdir' file for
-that worktree. Presumably (according to the documentation excerpt),
-mtime of  'gitdir' is supposed to be updated each time the linked
-repository is accessed, however, I haven't found the code which does
-that (and it's been too long since I dealt which this code to remember
-where/if it is being done); in practice, I don't actually see the
-timestamp on 'gitdir' being updated, so that may be a bug/problem.
 
->   oh, and is it fair to assume that if a worktree is temporaily
-> missing, and is subsequently restored, the expire time counter is
-> reset? otherwise, it would get kind of weird.
-
-If we believe the documentation, then, as long as you've invoked some
-Git command recently enough in the restored worktree, it should be
-safe from pruning.
