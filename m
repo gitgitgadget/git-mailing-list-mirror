@@ -2,66 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BB0EB201C2
-	for <e@80x24.org>; Tue, 14 Nov 2017 06:21:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 896BA201C8
+	for <e@80x24.org>; Tue, 14 Nov 2017 06:38:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751303AbdKNGVs (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Nov 2017 01:21:48 -0500
-Received: from mail-io0-f179.google.com ([209.85.223.179]:49340 "EHLO
-        mail-io0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750790AbdKNGVq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Nov 2017 01:21:46 -0500
-Received: by mail-io0-f179.google.com with SMTP id x63so11063280ioe.6
-        for <git@vger.kernel.org>; Mon, 13 Nov 2017 22:21:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=O9HeD8BtOwkDTHwHgIi2my8xO7mb/n7YlF25ziWT37Y=;
-        b=psJKXyVhyDJS9T/d+eKvF279kXbbRlcGhnkensmuXHahjhMtNoWfpqRGNSAJIVO4Zu
-         Y39PgU5vvsVvAreOsacMNirIL0/lnm5RfA4ot0vzeEtNrhF+fTiNGoRBDvWgg6d3obdY
-         bBUosIJKuw5d1OCpiAJ8rzwEen8Da5gkTvqYpFgSviDwF0+kXIhUndkNSqlWX81IFLtJ
-         GocY/qxHLItjKjftHUS8rCUcqpNBVhmXihnLaCDyPOhN3k7k9BVyZTjzh7C8zAFXDVhz
-         /1C4qtspQsPe7Pp0rZZzqx64L4+aTHUQelxGoqUeIAw9KVKcUFFe6aXiUgFII+qzCEcH
-         eW3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=O9HeD8BtOwkDTHwHgIi2my8xO7mb/n7YlF25ziWT37Y=;
-        b=R4VvBuvBrIOOZ7Fzl19MIX7eCfGoOh6/UAcYafH6cIuepbmkXqURiex/kKt7jK8CVX
-         tqj/G/mmGj8OfGu5sUUvHGpk2AHS6MXvndKHgBFvld0nAnYUKf5q6G9dslGFFABtMFHA
-         dnGSPM9HalQCh9FCwdNAqlS4w6pXfajaERZzGhWciOlEvufWqq8RboFfRT054F7j+RuB
-         i1jcoxgRcUz1YFXhVXADTyd684HxkDybuMaVm56dgW6uyNjlDFV/S23PbFl08iGDI7UK
-         eR3RB9+3Ssa9FdOE709nTb26h842wArYfpcaQthax7HXd/qu7KU5Wx91+s76jgieK/kS
-         MUTQ==
-X-Gm-Message-State: AJaThX7H5FJaFeZaN1G27b1o6uR1wfWLCEzUokByGEjEcvvUx2+b2Irb
-        R7HLkGbfk1pYpOBJs+YYUNK4n25wGyu6IH+wbm4=
-X-Google-Smtp-Source: AGs4zMac6QFh+LsPIbHOJM+8Iv+FetckldFqJXoBFwu3nmMvWisjDQiOY9+fKXQAvQi8oM+lm98WwQG9HzOn2o+S/JA=
-X-Received: by 10.107.111.14 with SMTP id k14mr11644253ioc.282.1510640506067;
- Mon, 13 Nov 2017 22:21:46 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.79.28.137 with HTTP; Mon, 13 Nov 2017 22:21:45 -0800 (PST)
-In-Reply-To: <1510625073-8842-1-git-send-email-hsed@unimetic.com>
-References: <20171112145535.gb4nafdhhdslknex@sigill.intra.peff.net> <1510625073-8842-1-git-send-email-hsed@unimetic.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Tue, 14 Nov 2017 07:21:45 +0100
-Message-ID: <CAP8UFD3TbmZ3bRwg-fRoSJWAFaa=UDxVsZphn_3Nt4wMz1N2=A@mail.gmail.com>
-Subject: Re: [PATCH V2] config: add --expiry-date
+        id S1751734AbdKNGis (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Nov 2017 01:38:48 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57270 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751030AbdKNGiq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Nov 2017 01:38:46 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0F8FCAE7D1;
+        Tue, 14 Nov 2017 01:38:46 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=BMe+bnPWHsJg60Riwk47qDIOurI=; b=U60l+t
+        GpF7UYoMP3mSZUo1eBsauqooNM3DIpV2IQhVk8DRYvbJhivJKKAFBfNcV7IqH7IR
+        PD9hPG0CE0qHAOhMxMckZEIwIJ9UlGpC7suwQwKd7eFR2sSAdmhmod51YIUSeHU2
+        8G2VtyYJbIH42Llocv1zhCUmd807KyvDtzXNI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=XYlfFCca/mReTbwbrvUKIo/Lld28lYbn
+        voFdorbKYUSpSGkkaH+RQs2aljXw8ABQcrfVOGQE88wr0//daJcE4SgbWGEtvu1C
+        0NYfsZKCojwJ5AqhDqUdmkbqU9sNYc6nJbHfj/eCj0TLTKjSJwFlWLsuyZIyhe4Y
+        8gh0Sx7cUDY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 05967AE7D0;
+        Tue, 14 Nov 2017 01:38:46 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6FF29AE7CF;
+        Tue, 14 Nov 2017 01:38:45 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     hsed@unimetic.com
-Cc:     Jeff King <peff@peff.net>, git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     peff@peff.net, git@vger.kernel.org
+Subject: Re: [PATCH V2] config: add --expiry-date
+References: <20171112145535.gb4nafdhhdslknex@sigill.intra.peff.net>
+        <1510625073-8842-1-git-send-email-hsed@unimetic.com>
+Date:   Tue, 14 Nov 2017 15:38:44 +0900
+In-Reply-To: <1510625073-8842-1-git-send-email-hsed@unimetic.com>
+        (hsed@unimetic.com's message of "Tue, 14 Nov 2017 02:04:33 +0000")
+Message-ID: <xmqqshdh2wln.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 769792A6-C906-11E7-9849-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 14, 2017 at 3:04 AM,  <hsed@unimetic.com> wrote:
+hsed@unimetic.com writes:
+
 > From: Haaris <hsed@unimetic.com>
 >
 > Description:
@@ -79,23 +76,40 @@ On Tue, Nov 14, 2017 at 3:04 AM,  <hsed@unimetic.com> wrote:
 > this patch simply allows the function to be used from the command line.
 >
 > Signed-off-by: Haaris <hsed@unimetic.com>
+> ---
 
-Documentation/SubmittingPatches contains the following:
+Please drop all these section headers; they are irritating.  Learn
+from "git log --no-merges" how the log messages in this project is
+written and imitate them.  Documentation/SubmittingPatches would be
+helpful.
 
-"Also notice that a real name is used in the Signed-off-by: line. Please
-don't hide your real name."
+	Add --expiry-date as a new type 'git config --get' takes,
+	similar to existing --int, --bool, etc. types, so that
+	scripts can learn values of configuration variables like
+	gc.reflogexpire (e.g. "2.weeks") in a more useful way
+	(e.g. the timesamp as of two weeks ago, expressed in number
+	of seconds since epoch).
 
-And there is the following example before that:
+	As a helper function necessary to do this already exists in
+	the implementation of builtin/reflog.c, the implementation
+	is just the matter of moving it to config.c and using it
+	from bultin/config.c, but shuffle the order of the parameter
+	so that the pointer to the output variable comes first.
+	This is to match the convention used by git_config_pathname()
+	and other helper functions.
 
-        Signed-off-by: Random J Developer <random@developer.example.org>
+or something like that?
 
-So it looks like "a real name" actually means "a real firstname and a
-real surname".
+> +		} else if (types == TYPE_EXPIRY_DATE) {
+> +			timestamp_t t;
+> +			if(git_config_expiry_date(&t, key_, value_) < 0)
 
-It would be nice if your "Signed-off-by:" could match this format.
+Style.
 
-Also if you have a "From:" line at the beginning of the patch, please
-make sure that the name there is tha same as on the "Signed-off-by:".
+	if (git_config_expiry_date(&t, key_, value_) < 0)
 
-Thanks for working on this,
-Christian.
+> +				return -1;
+> +			strbuf_addf(buf, "%"PRItime, t);
+> ...
+
+Thanks.
