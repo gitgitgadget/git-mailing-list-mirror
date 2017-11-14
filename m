@@ -6,27 +6,27 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9454F201C8
-	for <e@80x24.org>; Tue, 14 Nov 2017 09:19:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6D876201C8
+	for <e@80x24.org>; Tue, 14 Nov 2017 09:25:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752952AbdKNJTG (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Nov 2017 04:19:06 -0500
-Received: from cpanel2.indieserve.net ([199.212.143.6]:38905 "EHLO
+        id S1753944AbdKNJZs (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Nov 2017 04:25:48 -0500
+Received: from cpanel2.indieserve.net ([199.212.143.6]:57291 "EHLO
         cpanel2.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751626AbdKNJTE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Nov 2017 04:19:04 -0500
-Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:40184 helo=localhost.localdomain)
+        with ESMTP id S1753476AbdKNJZh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Nov 2017 04:25:37 -0500
+Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:40214 helo=localhost.localdomain)
         by cpanel2.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
         (Exim 4.89)
         (envelope-from <rpjday@crashcourse.ca>)
-        id 1eEXN1-0001Ex-Ex
-        for git@vger.kernel.org; Tue, 14 Nov 2017 04:19:03 -0500
-Date:   Tue, 14 Nov 2017 04:18:30 -0500 (EST)
+        id 1eEXTN-0002un-0E
+        for git@vger.kernel.org; Tue, 14 Nov 2017 04:25:37 -0500
+Date:   Tue, 14 Nov 2017 04:25:03 -0500 (EST)
 From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
 X-X-Sender: rpjday@localhost.localdomain
 To:     Git Mailing list <git@vger.kernel.org>
-Subject: why can *some* git commands not be run from within .git directory?
-Message-ID: <alpine.LFD.2.21.1711140409020.13653@localhost.localdomain>
+Subject: [PATCH] t: correct obvious typo 'detahced'
+Message-ID: <alpine.LFD.2.21.1711140423450.14090@localhost.localdomain>
 User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
@@ -46,34 +46,25 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-  just noticed something i was unaware of -- some git commands can't
-be run if i'm in the .git directory, while others can. for example,
-if i "cd .git", commands like this work just fine:
+Signed-off-by: Robert P. J. Day <rpjday@crashcourse.ca>
 
-  $ git show
-  $ git branch
-  $ git log
+---
 
-but others seem unwilling to determine the "working tree":
+  by god, i'm going to get a patch into the code base if it kills me.
 
-  $ git status
-  fatal: This operation must be run in a work tree
-  $
+diff --git a/t/t7409-submodule-detached-work-tree.sh b/t/t7409-submodule-detached-work-tree.sh
+index c20717181..fc018e363 100755
+--- a/t/t7409-submodule-detached-work-tree.sh
++++ b/t/t7409-submodule-detached-work-tree.sh
+@@ -6,7 +6,7 @@
+ test_description='Test submodules on detached working tree
 
-and:
+ This test verifies that "git submodule" initialization, update and addition works
+-on detahced working trees
++on detached working trees
+ '
 
-  $ git stash list
-  fatal: /usr/libexec/git-core/git-stash cannot be used without a working tree.
-  $
-
-what's the distinction between commands that can work this way, and
-commands that can't?
-
-rday
-
-p.s. i will refrain from pointing out the inconsistency in using the
-phrases "work tree" and "working tree" to mean the same thing, when
-there is a distinct "worktree" entity.
+ TEST_NO_CREATE_REPO=1
 
 -- 
 
