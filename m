@@ -6,67 +6,84 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6EB5D201C2
-	for <e@80x24.org>; Tue, 14 Nov 2017 02:07:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 26B07201C2
+	for <e@80x24.org>; Tue, 14 Nov 2017 02:12:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752624AbdKNCHm (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Nov 2017 21:07:42 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:52934 "EHLO
+        id S1752871AbdKNCMG (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Nov 2017 21:12:06 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51204 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751184AbdKNCHl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Nov 2017 21:07:41 -0500
+        with ESMTP id S1752774AbdKNCMF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Nov 2017 21:12:05 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BCB84AC02A;
-        Mon, 13 Nov 2017 21:07:40 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B2003AB2E0;
+        Mon, 13 Nov 2017 21:12:04 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=mLfsUHhTZ7f1v4ejxNCngr046Vg=; b=r0Xl1e
-        hjted4w6KR29vzIX+JcLjMDP5t2bFlkoOBkVAdmYGDixkwUl92O0w0eUA1UF8LY2
-        Yevca9MtJcGcuhGmzDMLoTLXU4sPrImWfywRN8vzIgv8aQcI2cuH6vh/kw4q3MCC
-        NUWfrizZiXX347OyNGbONireANlCRCrbLdTJk=
+        :content-type:content-transfer-encoding; s=sasl; bh=AS9xSoxWxgTh
+        mPO1bilfI4WgDQU=; b=oYcc4JYOHJmogOXA9AqxrpkggPVeEjZSsZzG1nktcR+u
+        8M4m80zHYI750GjW/sAjnQzSCR/eOhuXiRKQKZbqcXhm/wku3szQ2iFLrsQ8ynpm
+        vtgWavMgK16TPw62/z/pHEMJhmC99HNOKJgpZ31rHcQ7nN7MOQSznsVIyZUvRdc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=x8v/SaITe7KJRURwnhhErL90cITcl8y1
-        9VvtRseUSJyrgT7VRCZrE69A9Krgqp/n18EBaq3JBYF5Dkwgl7wC+r6q4ghFSNRS
-        jRyH3WR6wHdq8eNOfQ/79y4vlbVI8Geq+gaLI9mDlGgc25nobKSgjWddqSPKxna7
-        v2a76n9lse4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B4A02AC025;
-        Mon, 13 Nov 2017 21:07:40 -0500 (EST)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=Ewupjn
+        s6CdbZw7QMLPBoFGLUF/rFp72uAVfQFFmlEMB9Fm+nTzrD/HGRNQpI2rzrXPHz+I
+        yyulQd4nNfcEATz+6LgHwdK1toqctu6qDFMjY5NnTXQh16Yt2a2YnP8otQJMlnbB
+        Vs3m8/J84HL6/hajlAlNppD/TqAnAxDDgQBVA=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id AB2ABAB2DF;
+        Mon, 13 Nov 2017 21:12:04 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2B2E7AC022;
-        Mon, 13 Nov 2017 21:07:40 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2A29AAB2DE;
+        Mon, 13 Nov 2017 21:12:04 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Joey Hess <id@joeyh.name>
-Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] link_alt_odb_entries: make empty input a noop
-References: <20171107192239.6hinu235hfpwqpv6@kitenet.net>
-        <20171108075336.is4awgyw53dohf7y@sigill.intra.peff.net>
-        <xmqqd14pef5q.fsf@gitster.mtv.corp.google.com>
-        <20171112102739.6xtnnsmtabhnhrm5@sigill.intra.peff.net>
-        <20171113171119.fjhufmbbuidr35ud@kitenet.net>
-Date:   Tue, 14 Nov 2017 11:07:38 +0900
-In-Reply-To: <20171113171119.fjhufmbbuidr35ud@kitenet.net> (Joey Hess's
-        message of "Mon, 13 Nov 2017 13:11:19 -0400")
-Message-ID: <xmqqined7gut.fsf@gitster.mtv.corp.google.com>
+To:     Charles Bailey <charles@hashpling.org>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] Fix NO_LIBPCRE1_JIT to fully disable JIT
+References: <20171112165938.8787-1-charles@hashpling.org>
+        <87tvxzxm0j.fsf@evledraar.booking.com>
+        <xmqqmv3qal78.fsf@gitster.mtv.corp.google.com>
+        <20171113065410.rb43utcbncy7ndrv@hashpling.org>
+Date:   Tue, 14 Nov 2017 11:12:03 +0900
+In-Reply-To: <20171113065410.rb43utcbncy7ndrv@hashpling.org> (Charles Bailey's
+        message of "Mon, 13 Nov 2017 06:54:10 +0000")
+Message-ID: <xmqqefp17gng.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 97BB1EA6-C8E0-11E7-8411-8EF31968708C-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 351523B8-C8E1-11E7-B506-575F0C78B957-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Joey Hess <id@joeyh.name> writes:
+Charles Bailey <charles@hashpling.org> writes:
 
-> Jeff King wrote:
->> This should make Joey's immediate pain go away, though only by papering
->> it over. I tend to agree that we shouldn't be looking at $PWD at all
->> here.
+>> > But that we should take it anyway regardless of that since it'll *al=
+so*
+>> > work on Linux with your patch, and this logic makes some sense where=
+as
+>> > the other one clearly didn't and just worked by pure accident of som=
+e
+>> > toolchain semantics that I haven't figured out yet.
+>>=20
+>> That is curious and would be nice to know the answer to.
 >
-> I've confirmed that Jeff's patch fixes the case I was having trouble with.
+> The error that I was getting ...
+> My guess is that we are just exposing a pre-existing bug in our Solaris
+> build of libpcre.
 
-Thanks, both.
+Sorry, my question was not clear.  I think you already mentioned the
+above in the thread.  What I was curious about was why =C3=86var was
+seeing that JIT disabled with NO_LIBPCRE1_JIT alone on his Linux
+setup, i.e. namely this part from his message:
+
+    *But* for some reason you still get away with that on Linux. I
+    don't know why, but I assume the compiler toolchain is more lax
+    for some reason than on Solaris.n
+
+In any case, thanks for a fix; queued.
