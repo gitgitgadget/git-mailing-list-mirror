@@ -2,132 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 921181F43C
-	for <e@80x24.org>; Tue, 14 Nov 2017 12:31:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A8C4F1F43C
+	for <e@80x24.org>; Tue, 14 Nov 2017 13:05:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754944AbdKNMbc (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Nov 2017 07:31:32 -0500
-Received: from mail-qt0-f178.google.com ([209.85.216.178]:43534 "EHLO
-        mail-qt0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753186AbdKNMbb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Nov 2017 07:31:31 -0500
-Received: by mail-qt0-f178.google.com with SMTP id r58so714001qtc.0
-        for <git@vger.kernel.org>; Tue, 14 Nov 2017 04:31:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=eeBHYB1m042djjWqN06aAb/IfowpR0mWVicCWka45mQ=;
-        b=Gik1Zqmuk97LEN7GYu6S/Wkc/YpWiNGBKhFP4LRJXGjvVXINORUlSsfxyqQLF9Ayc1
-         qYOYgA7V/lXfv/bR1bDcFeina4AiTzHxf9gd2V7l+sfR5OAyeZUMKHbWr5Fv2tInNXNf
-         6FH0cJbhEnrl4unY66sreXYLiOGrdIoWjhIufNz1AqNAGRTUYU259c9PhvtPHrXQZlsF
-         OaL9xov7obD3x2AtjeMzKizc/L4Rr7XmrTdT/4PBUtCoLi/f6BGlbOplt7Le0svyNnPW
-         0eXyODAUPLIiqEHEKqfrfI0pH7qnS6gmK6YI1TtuYPzfBGRXkV/p/sPmXNq3dIVwokAX
-         L9cw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=eeBHYB1m042djjWqN06aAb/IfowpR0mWVicCWka45mQ=;
-        b=Zh5GwlNuzeeS+BgMnJqVKDMLrRQ6s/Z1R4+XfZIyPAolBKUhwJokrSgX3NOr4zeVoH
-         1RZPWpntb9GdFtw0nerGYy2ea0yiMQPoamwb3FjXTicuY9IDnMSdwqPsdx8QfQMajbex
-         hvnmVFK6McuHAELwH37aWGglWrBvqXvCZOOWiHEfePRxYUavKgkubYHRl+6tQq4FkQ0C
-         DZrPxERnVTOJpwS5A0TIn3sEPzsI4aJE+ajU4l5Z4Cs5UzyK5mXzdWhxjdmzXIIsFgPm
-         6jgzofJUqWuVUAAR2ohOApqydw5GJvInQ5ZhWj2cssACwrgsQB3JUTlaM4AJKcfD7OIl
-         lpwg==
-X-Gm-Message-State: AJaThX4FBsClLFELZGz4DRlLvAnJspZ65XsRkoFLJ5VDTgu1nRvk4k7N
-        kNdBUPepsbXmmx/5juktTx36GtQRbSmNqmkP8GU=
-X-Google-Smtp-Source: AGs4zMZl5wBk6Gl1f3s+Sr3ebncT4V0AIdeuQtOqYFm4/ypBXpWZH3Cw9dRoagTmtrrZ6PmOiqghFRPT/eI3EdwGInU=
-X-Received: by 10.129.154.143 with SMTP id r137mr7645195ywg.251.1510662690942;
- Tue, 14 Nov 2017 04:31:30 -0800 (PST)
+        id S1755139AbdKNNFf (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Nov 2017 08:05:35 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61946 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1753976AbdKNNFe (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Nov 2017 08:05:34 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0C3CAB2583;
+        Tue, 14 Nov 2017 08:05:33 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=vwB8fmcunvIqk3q9oiV5Du4V19M=; b=W27Cml
+        ki5VjeZCCiK/NEPGMvDFmiNT9yYX2vCXt0MH/5ptyzl7vtDjw4ZYMT2yEJljbu0s
+        WQI7RAV4RthR2Efc8WDcmUrs3iMwRjyua6C2oKAiAjEUcFcd4ch6HUPR/BaxQuA1
+        hFKH76CbBV3A4kQYkpdF8HaeGwpNa6UMq+Zuk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ZA4HiIvlRfQICgBCkutlDQ6JgL046Zos
+        aPwqJ5KU0fJqX4mm96x3uxrrVPpCLDjf+fDZfYwVr8R26Bz7MzbBu2RRmFE+GxoL
+        7VHPt44dxYKZ5uj4OBzq5qbRHyl4pcXFhZj5VQdyAZzYZ+3K3hU1by+KqpXvCiMF
+        OAD5+FJy+4Y=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 019CFB2582;
+        Tue, 14 Nov 2017 08:05:33 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6D92FB2581;
+        Tue, 14 Nov 2017 08:05:32 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Nicolas Morey-Chaisemartin <NMoreyChaisemartin@suse.de>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC 3/3] log: add an option to generate cover letter from a branch tip
+References: <xmqqbmk68o9d.fsf@gitster.mtv.corp.google.com>
+        <936c2b33-3432-f113-d84b-0623246ec673@suse.de>
+        <xmqq7eut4cae.fsf@gitster.mtv.corp.google.com>
+        <92c426bc-5ce9-da7c-5f10-66b5fc46825b@suse.de>
+Date:   Tue, 14 Nov 2017 22:05:31 +0900
+In-Reply-To: <92c426bc-5ce9-da7c-5f10-66b5fc46825b@suse.de> (Nicolas
+        Morey-Chaisemartin's message of "Tue, 14 Nov 2017 10:28:21 +0100")
+Message-ID: <xmqqo9o52ep0.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.13.203.85 with HTTP; Tue, 14 Nov 2017 04:31:30 -0800 (PST)
-From:   Ashish Negi <ashishnegi33@gmail.com>
-Date:   Tue, 14 Nov 2017 18:01:30 +0530
-Message-ID: <CAJ_+vJ6FXXda4fe7=1YxtDGR2d8CqP4KXN+YR6+mdQ+5jQQXug@mail.gmail.com>
-Subject: Changing encoding of a file : What should happen to CRLF in file ?
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7F092270-C93C-11E7-8791-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello
+Nicolas Morey-Chaisemartin <NMoreyChaisemartin@suse.de> writes:
 
-I have a cross platform project. I have a utf-16 file in it.
-I changed its encoding to urf-8 and committed. When i pulled the file
-in Linux, it shows that file is modified. This means that the commit
-which changed the encoding does not convert crlf to lf, when new
-format is text based (utf-8).
+> The triple dash is so that the diffstat/shortlog as not seen as
+> part of the cover letter.  As said in the cover letter for this
+> series, it kinda breaks legacy behaviour right now.  It should
+> either be printed only for cover-at-tip, or a new separator should
+> be added.
 
-Steps to reproduce:
+This reminds me of a couple of random thoughts I had, so before I
+disconnect from my terminal and forget about them...
 
-   In windows :
+[1] format-patch and am must round-trip.
 
-    Change encoding of file from utf-16 to utf-8.
-    Commit the change.
+I mentioned four uses cases around the "cover letter at the
+tip" in my earlier message
 
-   In linux:
+    https://public-inbox.org/git/xmqqbmk68o9d.fsf@gitster.mtv.corp.google.com/
 
-    Pull your branch.
-    You will see the issue of file being shown as modified even though
-you have not used it.
+Specifically, (2) we should be able to run "format-patch" and record
+the log message of the empty commit at the tip to the cover letter,
+and (4) we should be able to accept such output with "am" and end up
+with the same sequence of commits as the original (modulo committer
+identity and timestamps).  So from the output we produce with this
+step, "am" should be able to split the material that came from the
+original empty commit from the surrounding cruft like shortlog and
+diffstat.  The output format of this step needs to be designed with
+that in mind.
 
+[2] reusing cover letter material in merge may not be ideal.
 
-If i change the file encoding in linux and commit. Then if i do git
-pull in windows, i don't see the issue.
-In linux, during committing i get warning : warning: CRLF will be
-replaced by LF in =E2=80=A6file_name..
+When people write a cover letter, they write different things in it.
+What they wanted to achieve, why they chose the approach they took,
+how the series is organized, which part of the series they find iffy
+and/orneeds special attention from the reviewers, where to find the
+previous iteration, what changed since the previous iterations, etc.
 
-Here are my configuration :
+All of them are to help the reviewers, many of who have already
+looked at the previous rounds, to understand and judge this round of
+the submission.
 
+The message in a merge commit as a part of the final history,
+however, cannot refer to anything from "previous rounds", as the
+previous attempts are not part of the final history readers of "git
+log" can refer to whey they are trying to understand the merge.
+What exactly goes in a merge commit and how the messages are phrased
+may be different from project to project, but for this project, I've
+been trying to write them in an end-user facing terms, i.e. they are
+designed in such a way that "git log --first-parent --merges" can be
+read as if they were entries in the release notes, summarizing fixes
+and features by describing their user-visible effects.  This is only
+one part of what people write in their cover letters (i.e. "what
+they wanted to achive").
 
-> git config --global --get core.autocrlf
-
-false
-
-
-> git config  --get core.autocrlf
-
-false
-
-
-
-> cat E:\work\WindowsFabric\.gitattributes
-
-
-# Set the default behavior, in case people don't have core.autocrlf set.
-
-* text=3Dauto
-*.vcxproj eol=3Dcrlf
-*.sh      eol=3Dlf
-
-# Denote all files that are truly binary and should not be modified.
-*.exe binary
-*.dll binary
-*.pdb binary
-*.ico binary
-*.png binary
-*.jpg binary
-
-
-> git --version
-git version 2.14.2.windows.2
-
-
-I played around with core.autocrlf values like true and native, but
-that didn't help.
-
-The behavior is inconsistent across platforms, and windows version is
-giving me problem.
-
-Can someone suggest right settings for this ? Or is this a bug in Git.
-
-Thanks
+So there probably needs a convention meant to be followed by human
+users when writing cover letters, so a mechanical process can tell
+which part of the text is to be made into the merge commit without
+understanding human languages.
