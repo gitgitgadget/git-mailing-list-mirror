@@ -2,125 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E2B351F43C
-	for <e@80x24.org>; Tue, 14 Nov 2017 20:02:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 369A01F43C
+	for <e@80x24.org>; Tue, 14 Nov 2017 20:11:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753626AbdKNUCM (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Nov 2017 15:02:12 -0500
-Received: from mail-io0-f172.google.com ([209.85.223.172]:53263 "EHLO
-        mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752436AbdKNUCL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Nov 2017 15:02:11 -0500
-Received: by mail-io0-f172.google.com with SMTP id 189so25665846iow.10
-        for <git@vger.kernel.org>; Tue, 14 Nov 2017 12:02:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=8wlqOMi1LVvkzi9ymNyW24LM888dSJmcPFkKGkedYbo=;
-        b=ZGijWLblqA57bFDmWahd28LQQYS7yXzWfBDpONT7cy5PfxlbEEikTBP49VQwSSTwYx
-         zXuG2qzn5psiojlIpd8godt5vizTBK31Q2C39zYKPvD7ysgXAcoUHjCutvZY4jmjY5ca
-         3TXYReXGySDi7lBPEpOsqUl7BcoOuBIgTtV7gs4t18EixH+Y30tbUtDMrvbtUL/3Xmx9
-         A58Vjso5j549w7H5YG6kMTjA4In3pT/SH9CigxOasirUAFPMbbygTN3PI8N2UFKNfXfO
-         uZXuq3NILLHmUm9RALxoYwwq4+zvZkus2DO4w+NSi7Z9DEPzM+ZFqQjmjN65HptgCbJf
-         mOQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=8wlqOMi1LVvkzi9ymNyW24LM888dSJmcPFkKGkedYbo=;
-        b=kM51lcRW5nQcdKCd9HYV1Lv8ctjq6+SvQfd1/5HoGdOX1V+jvhVxkqG2RL3zMFXagu
-         10PY2G6s/V/kzHZWRZxrOMQdwT2cgR9Khp3V4Jt7nJbhqgK842HM5tYL9F0SZC9Yt9TI
-         MuN5s1/cduoN39MprfaqwuUiG3AfwYSsX9duaRxGX+rYZy4Pf+ar1uqD3R3QaelaqkyN
-         Ya3yyq4nyF4gdCQkJHgt1LC+LT6UCqElIt7s7v4BAhV7O16fltkiRRVc5Y/Q7qN2cyFS
-         pprUViTL8qKNlxof8Dk/ZW8HZcCn7/ju9tneYYNjQeWlaGiItW+7eQvCBWNLtEpnxDso
-         KAyw==
-X-Gm-Message-State: AJaThX6oH0vKysaZozTDb41I5c/DO9vvtV1d9Haa0t2xd/mt1TidgRP7
-        2zIj9f6Kl16XHGU14+wUSnXXfa76szI=
-X-Google-Smtp-Source: AGs4zMZKAj8TkEOeMwK76MUqvM0NncERfS8LBDwTs1KljNOwNwLtU8D4T2SHs9eLGb60VCwRQWe/bg==
-X-Received: by 10.107.145.10 with SMTP id t10mr4310681iod.190.1510689730128;
-        Tue, 14 Nov 2017 12:02:10 -0800 (PST)
-Received: from twelve3.mtv.corp.google.com ([2620:0:100e:422:9ca7:c33c:854a:a353])
-        by smtp.gmail.com with ESMTPSA id f79sm2345442ioj.60.2017.11.14.12.02.08
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 14 Nov 2017 12:02:09 -0800 (PST)
-Date:   Tue, 14 Nov 2017 12:02:08 -0800
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Johannes.Schindelin@gmx.de, git@vger.kernel.org,
-        jacob.keller@gmail.com, me@ikke.info, schwab@linux-m68k.org
-Subject: Re: [PATCHv3 7/7] builtin/describe.c: describe a blob
-Message-Id: <20171114120208.d0570f20672f117bcf8e5396@google.com>
-In-Reply-To: <20171102194148.2124-8-sbeller@google.com>
-References: <20171031211852.13001-1-sbeller@google.com>
-        <20171102194148.2124-1-sbeller@google.com>
-        <20171102194148.2124-8-sbeller@google.com>
-X-Mailer: Sylpheed 3.4.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
+        id S1755699AbdKNULT (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Nov 2017 15:11:19 -0500
+Received: from cpanel2.indieserve.net ([199.212.143.6]:33844 "EHLO
+        cpanel2.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932107AbdKNULK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Nov 2017 15:11:10 -0500
+Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:40982 helo=localhost.localdomain)
+        by cpanel2.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.89)
+        (envelope-from <rpjday@crashcourse.ca>)
+        id 1eEhY5-00087X-5c; Tue, 14 Nov 2017 15:11:09 -0500
+Date:   Tue, 14 Nov 2017 15:10:34 -0500 (EST)
+From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
+X-X-Sender: rpjday@localhost.localdomain
+To:     Eric Sunshine <sunshine@sunshineco.com>
+cc:     Git Mailing list <git@vger.kernel.org>
+Subject: Re: some apparent inaccuracies in "man git-worktree"
+In-Reply-To: <CAPig+cRc7Yqeys=oPEgPnyR4qT7qKYLbH1ifnp+6F6N+mSzNVA@mail.gmail.com>
+Message-ID: <alpine.LFD.2.21.1711141509280.3970@localhost.localdomain>
+References: <alpine.LFD.2.21.1711140324580.12112@localhost.localdomain> <CAPig+cRc7Yqeys=oPEgPnyR4qT7qKYLbH1ifnp+6F6N+mSzNVA@mail.gmail.com>
+User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel2.indieserve.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - crashcourse.ca
+X-Get-Message-Sender-Via: cpanel2.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: cpanel2.indieserve.net: rpjday@crashcourse.ca
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu,  2 Nov 2017 12:41:48 -0700
-Stefan Beller <sbeller@google.com> wrote:
+On Tue, 14 Nov 2017, Eric Sunshine wrote:
 
-> Sometimes users are given a hash of an object and they want to
-> identify it further (ex.: Use verify-pack to find the largest blobs,
-> but what are these? or [1])
-> 
-> "This is an interesting endeavor, because describing things is hard."
->   -- me, upon writing this patch.
-> 
-> When describing commits, we try to anchor them to tags or refs, as these
-> are conceptually on a higher level than the commit. And if there is no ref
-> or tag that matches exactly, we're out of luck.  So we employ a heuristic
-> to make up a name for the commit. These names are ambiguous, there might
-> be different tags or refs to anchor to, and there might be different
-> path in the DAG to travel to arrive at the commit precisely.
-> 
-> When describing a blob, we want to describe the blob from a higher layer
-> as well, which is a tuple of (commit, deep/path) as the tree objects
-> involved are rather uninteresting.  The same blob can be referenced by
-> multiple commits, so how we decide which commit to use?  This patch
-> implements a rather naive approach on this: As there are no back pointers
-> from blobs to commits in which the blob occurs, we'll start walking from
-> any tips available, listing the blobs in-order of the commit and once we
-> found the blob, we'll take the first commit that listed the blob.  For
-> source code this is likely not the first commit that introduced the blob,
-> but rather the latest commit that contained the blob.  For example:
-> 
->   git describe v0.99:Makefile
->   v0.99-5-gab6625e06a:Makefile
-> 
-> tells us the latest commit that contained the Makefile as it was in tag
-> v0.99 is commit v0.99-5-gab6625e06a (and at the same path), as the next
-> commit on top v0.99-6-gb1de9de2b9 ([PATCH] Bootstrap "make dist",
-> 2005-07-11) touches the Makefile.
-> 
-> Let's see how this description turns out, if it is useful in day-to-day
-> use as I have the intuition that we'd rather want to see the *first*
-> commit that this blob was introduced to the repository (which can be
-> achieved easily by giving the `--reverse` flag in the describe_blob rev
-> walk).
+> On Tue, Nov 14, 2017 at 3:43 AM, Robert P. J. Day <rpjday@crashcourse.ca> wrote:
+> > from "man git-worktree", there seem to be some inaccuracies in the
+> > SYNOPSIS regarding the "add" subcommand:
+> >
+> >   git worktree add \
+> >     [-f] [--detach] [--checkout] [--lock] [-b <new-branch>] <path> [<branch>]
+> >
+> >   first, there's no mention of "-B" in that SYNOPSIS, even though it's
+> > explained further down the man page.
+>
+> Omission of "-B" from the synopsis was intentional. From cbdf60fa18
+> (worktree: add -b/-B options, 2015-07-06):
+>
+>     worktree: add -b/-B options
+>
+>     One of git-worktree's roles is to populate the new worktree, much like
+>     git-checkout, and thus, for convenience, ought to support several of the
+>     same shortcuts. Toward this goal, add -b/-B options to create a new
+>     branch and check it out in the new worktree.
+>
+>     (For brevity, only -b is mentioned in the synopsis; -B is omitted.)
+>
+> Whether or not the omission was actually a good decision is
+> questionable. The thinking, at the time, may have been that users
+> already familiar with "-b" in 'git checkout' would likewise be
+> familiar with (and be able to infer) "-B", thus it wasn't important to
+> state its existence explicitly in the synopsis, which was already
+> getting lengthy. Of course, that decision does not assist newcomers,
+> so adding "-B" to the synopsis would help the page better stand on its
+> own.
+>
+> >   next, the SYNOPSIS seems misleading as it doesn't make clear that
+> > the options -b, -B and --detach are mutually exclusive, which is made
+> > clear in the worktree.c source:
+> >
+> >     if (!!opts.detach + !!opts.new_branch + !!new_branch_force > 1)
+> >             die(_("-b, -B, and --detach are mutually exclusive"));
+>
+> Failure to update the synopsis to indicate mutual exclusion appears to
+> be a simple oversight in ab0b2c53ed (worktree: make --detach mutually
+> exclusive with -b/-B, 2015-07-17) in response to:
+> https://public-inbox.org/git/55A8F4B1.9060304@drmicha.warpmail.net/
+>
+> >   finally (and maybe i'm just not reading carefully enough), it's not
+> > clear what happens if you add a worktree at a given commit without
+> > specifying *any* of -b, -B or --detach. the obvious result should be a
+> > new worktree checked out at a detached HEAD and, interestingly, if i
+> > do that, then from the main tree, i see:
+> >
+> >   $ git worktree list
+> >   /home/rpjday/k/git   516fb7f2e73d [master]
+> >   /home/rpjday/k/temp  c470abd4fde4 (detached HEAD)
+> >   $
+> >
+> > but from within the worktree, if i ask for the status, i see only:
+> >
+> >   $ git status
+> >   Not currently on any branch.
+> >   nothing to commit, working tree clean
+> >   $
+> >
+> > where i would normally have expected to see "detached HEAD", is there
+> > a reason that's not displayed?
+>
+> Someone more familiar with this bit can correct me if I'm wrong, but I
+> believe that the "HEAD detached at/from <branch>" you normally see
+> with 'git status' is derived from the reflog, and if it can't find the
+> information in the reflog, it instead shows the generic "Not currently
+> on any branch" (which is the equivalent of the "(detached HEAD)" you
+> see in "git worktree list").
+>
+> Each worktree has its own newly-created reflog, which does _not_
+> contain enough information for 'git status' to present the more
+> detailed "detached" message, thus it falls back to the generic one.
+> Perhaps seeding the worktree's reflog with a bit more information at
+> creation time would be a good #leftoverbits task.
 
-The method of your intuition indeed seems better - could we just have
-this from the start?
+  i'm not sure what i can add to this, but i'm going to leave it to
+folks higher up the food chain than me to resolve any of the above.
 
-Alternatively, to me, it seems that listing commits that *introduces*
-the blob (that is, where it references the blob, but none of its parents
-do) would be the best way. That would then be independent of traversal
-order (and we would no longer need to find a tag etc. to tie the blob
-to).
+rday
 
-If we do that, it seems to me that there is a future optimization that
-could get the first commit to the user more quickly - once a commit
-without the blob and a descendant commit with the blob is found, that
-interval can be bisected, so that the first commit is found in O(log
-number of commits) instead of O(commits). But this can be done later.
+-- 
+
+========================================================================
+Robert P. J. Day                                 Ottawa, Ontario, CANADA
+                        http://crashcourse.ca
+
+Twitter:                                       http://twitter.com/rpjday
+LinkedIn:                               http://ca.linkedin.com/in/rpjday
+========================================================================
