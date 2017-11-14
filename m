@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 908561F43C
-	for <e@80x24.org>; Tue, 14 Nov 2017 21:43:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9CDBE1F45B
+	for <e@80x24.org>; Tue, 14 Nov 2017 22:48:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756205AbdKNVnC (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Nov 2017 16:43:02 -0500
-Received: from mail-ua0-f182.google.com ([209.85.217.182]:47260 "EHLO
-        mail-ua0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756355AbdKNVms (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Nov 2017 16:42:48 -0500
-Received: by mail-ua0-f182.google.com with SMTP id s28so8875280uag.4
-        for <git@vger.kernel.org>; Tue, 14 Nov 2017 13:42:47 -0800 (PST)
+        id S1757350AbdKNWsL (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Nov 2017 17:48:11 -0500
+Received: from mail-qt0-f182.google.com ([209.85.216.182]:54887 "EHLO
+        mail-qt0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1757331AbdKNWr5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Nov 2017 17:47:57 -0500
+Received: by mail-qt0-f182.google.com with SMTP id h42so8259497qtk.11
+        for <git@vger.kernel.org>; Tue, 14 Nov 2017 14:47:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=FgiJ3bwzlvvxesndEXOaI+Vz5Yck0WB8vq3jsE+so8k=;
-        b=AMy2aSe3FbivA+fMMnZwEndIXsw4mu751yoSoLurBXkIceR4EUY3cihPKsmRcysK88
-         jGQBQRLvV63k+NtZpPikqSX3ZGtMNGLcxx6+Oju/hBYN/zE9SlsELsaP4HbSWvIiWLT6
-         g8/vTs8s+1ubcUeGA37RbrZhEf4N5NQbN3vFzMY3qEPoplJoPeTvoq8Jp1wNPAndNGLg
-         lLRzZlqrL7A5YOztjVqzrdJXAiSobrTY43ze00djlNdjn40jMtYTddHMeov22+7NYE0w
-         n0CH20MfGoU66aXjleXh8o/L7sxSORiLwhzSdrp5lEDi6r8AuvphPrnL8rFL+ARzPpJZ
-         vCHQ==
+        bh=ZQCf1QRn2gjYor4EWB4hFermdPfOir5eUu2oEgRUm9I=;
+        b=Vq8mMZHMhXfHevvepdHlCbDyM4skdFRjfvEDWAaXNfm89xPfaTNsLMLQoykN3klDdh
+         TNLNdMJxaY/Aw6WxwfUDcWLN9W8JvRbnWlWs3VYFE8xhzvrYaMv8NDN+2mrH4Krm9f09
+         6ZaW6H45NWpY15uvb8kHJnjmRlRjToyNNYZQe69fA6UmTjI2gnSp284cCCPkcTvRfffa
+         wAZS1Z4YkQA4QVe+wPTejzEPVBsidQOi5KarjRruVY3AuX5gk6pVpNbSmWc8Dtu2vGBN
+         Hi9z0AgoqDGmbaPyCnNufsyW9YruSFnlUAM3CS3hNxGXTFmZcVsigkVNbJ0O7AT7Ui5A
+         VDGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=FgiJ3bwzlvvxesndEXOaI+Vz5Yck0WB8vq3jsE+so8k=;
-        b=CH1Z8eF45tt7jSMT2J64TXzO1E+tNuNfAB/INfRVRJ0GJSffNj2FV1QPvugSWJ2add
-         hLO7z5PJf8vCVFSCJYSumBQ2nio/veqQtRdgsCrY6AZGMIiLo35fSWbh+J2QHlKx76RV
-         UYfCdk/LEv1wBF8DFP/K9fRYdmhcUV2hrL9QjD4pYF8a4YhjyYI14hae01nai3BymNGJ
-         eXrOzMKV4F/6QKeWrwfPepJuWaOHBWh49EwMA/pxQMXLja4AmeYmxwJm4XdLOCbuXjf1
-         fm1v8h1d2/l4/2QiIBEiCmzxoTLoxv7J4OtwLaF9IDJwPcPbvnAJtH071ed155+ArpDq
-         b+gw==
-X-Gm-Message-State: AJaThX73rOz+Rcnmzzdknvvl9jHmn6t1F33Ym9pVZ1jifnnWdc5qEbX2
-        m5lqQy9ccpKgWOPlD45QQErrZb5d4VdfldSx/Ak=
-X-Google-Smtp-Source: AGs4zMapc+l9X7LZzd80WAy8VvXWmWGv8JoYjherpGMCSDFWumI45JAHErz2w5TbUgPr3ftXxEg0Nyj/Sshqup9kYgA=
-X-Received: by 10.159.62.1 with SMTP id o1mr12450268uai.123.1510695766603;
- Tue, 14 Nov 2017 13:42:46 -0800 (PST)
+        bh=ZQCf1QRn2gjYor4EWB4hFermdPfOir5eUu2oEgRUm9I=;
+        b=PQ+lXe0qpwd8ojVsU2MVLmrsWurMn0ydP7e6MTW+UHUOBnbbuDcZtSuZyT++jp00Mw
+         PgE902ve5CWiazNrTwWJdfSGMtP1VdwviGJkt5K2chv2kvGuFuVMtVdeE5tOVFd67HIw
+         /dwM/7z89kObejCNmW9Grceei/GCXuagbGabFY74dD8mqfnlfcj5qdxuH2WXODkg/wkq
+         CprIw37Pbo7Dto2zTvf+zlF8HJGfZv83OqKbVUcoi+mG/q991bL1A2guvFWjejF6RoIa
+         3M6eAzHNsl7sP0HCj/7ot1HZjJ0JctZ2irxizmRkZ1EuBhwa189GRqXmKjqiGL0peqbP
+         xKTQ==
+X-Gm-Message-State: AJaThX5lWBWH1JgreOxm+YhZWGHNtH1m8DdMMUSVj1LzYmulxma0iM9h
+        5dcR1tdVPXoSbb11GTOGLBmDYAlE8KrVtxiTSPTpSw==
+X-Google-Smtp-Source: AGs4zMYsRjYzo5d+QmMZZ8N/7PdWnVKjVIq9AJ+bll7jse+49dXP/5izqwqNgEXNcKyaKzyLUluN8LXm85OnOWOYHP0=
+X-Received: by 10.200.39.20 with SMTP id g20mr24061235qtg.125.1510699676050;
+ Tue, 14 Nov 2017 14:47:56 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.176.67.33 with HTTP; Tue, 14 Nov 2017 13:42:46 -0800 (PST)
-In-Reply-To: <CAGZ79kYCDBFwMhW4Qgwhomiv4kKRWS53cjMLuRG1NxrzULYwgg@mail.gmail.com>
-References: <20171110190550.27059-1-newren@gmail.com> <20171110190550.27059-12-newren@gmail.com>
- <CAGZ79kYCDBFwMhW4Qgwhomiv4kKRWS53cjMLuRG1NxrzULYwgg@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 14 Nov 2017 13:42:46 -0800
-Message-ID: <CABPp-BHhf37R1LuHceXvuf=9nW4-EDaNLHkOBbgpsQhMPP2O_g@mail.gmail.com>
-Subject: Re: [PATCH 11/30] directory rename detection: testcases exploring
- possibly suboptimal merges
-To:     Stefan Beller <sbeller@google.com>
+Received: by 10.140.96.118 with HTTP; Tue, 14 Nov 2017 14:47:55 -0800 (PST)
+In-Reply-To: <CABPp-BE7qKiYBNxMquXRv+Gr=sA3jGs8JyKuqNSzAwKbOWOQ=Q@mail.gmail.com>
+References: <20171110190550.27059-1-newren@gmail.com> <20171110190550.27059-11-newren@gmail.com>
+ <CAGZ79kaDWxx2g2OMY-VKJZD0-0t7V33644aqPLHq5Hppo_Be+w@mail.gmail.com> <CABPp-BE7qKiYBNxMquXRv+Gr=sA3jGs8JyKuqNSzAwKbOWOQ=Q@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 14 Nov 2017 14:47:55 -0800
+Message-ID: <CAGZ79kY+DcQkSBjz-=_pUzkpLk+yE2b+Nqi07a-WC4fwzsSCyA@mail.gmail.com>
+Subject: Re: [PATCH 10/30] directory rename detection: more involved
+ edge/corner testcases
+To:     Elijah Newren <newren@gmail.com>
 Cc:     git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
@@ -63,122 +63,181 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 14, 2017 at 12:33 PM, Stefan Beller <sbeller@google.com> wrote:
-> On Fri, Nov 10, 2017 at 11:05 AM, Elijah Newren <newren@gmail.com> wrote:
-
->> +# Possible Resolutions:
->> +#   Previous git: y/{a,b,f},   z/{c,d},   x/e
->> +#   Expected:     y/{a,b,e,f}, z/{c,d}
->> +#   Preferred:    y/{a,b,e},   z/{c,d,f}
+On Tue, Nov 14, 2017 at 1:11 PM, Elijah Newren <newren@gmail.com> wrote:
+> On Mon, Nov 13, 2017 at 4:42 PM, Stefan Beller <sbeller@google.com> wrote:
+>> On Fri, Nov 10, 2017 at 11:05 AM, Elijah Newren <newren@gmail.com> wrote:
 >
-> it might be tricky in the future to know what "previous git" is;
-> "Previous git" means without directory renames enabled;
+>> "In my opinion" ... sounds like commit message?
 >
-> "expected" means we expect the algorithm presented in this series to produce
-> this output, preferred is what we actually expect.
-
-Yes, how about using:
-  "Without dir rename detection:"
-  "Currently expected:"
-and
-  "Optimal:"
-?
-
->> +# Testcase 8b, Dual-directory rename, one into the others' way, with conflicting filenames
->> +#   Commit A. x/{a_1,b_1},     y/{a_2,b_2}
->> +#   Commit B. x/{a_1,b_1,e_1}, y/{a_2,b_2,e_2}
->> +#   Commit C. y/{a_1,b_1},     z/{a_2,b_2}
->> +#
->> +# Possible Resolutions:
->> +#   Previous git: y/{a_1,b_1,e_2}, z/{a_2,b_2}, x/e_1
->> +#   Scary:        y/{a_1,b_1},     z/{a_2,b_2}, CONFLICT(add/add, e_1 vs. e_2)
->> +#   Preferred:    y/{a_1,b_1,e_1}, z/{a_2,b_2,e_2}
+> Sure, I can move it there.
 >
-> It may be common to have sub directories with the same path having different
-> blobs, e.g. when having say multiple hardware configurations in different sub
-> directories configured. Then renaming becomes a pain when they overlap.
-
-Sure, agreed.  Although, the one nice thing about this particular
-testcase is that despite showing suboptimal merge behavior, it's at
-least the exact same suboptimal behavior as before when we didn't have
-directory rename detection.
-
->> +# moves directories.  Implment directory rename detection suboptimally, and
 >
-> Implement
-
-Thanks.
-
-> ok, so add "Expected" as well? (repeating "Previous git", or so?)
-
-Yeah, I should make that more explicit.
-
->> +# Testcase 8d, rename/delete...or not?
->> +#   (Related to testcase 5b; these may appear slightly inconsistent to users;
->> +#    Also related to testcases 7d and 7e)
+>>> +# Testcase 7a, rename-dir vs. rename-dir (NOT split evenly) PLUS add-other-file
+>>> +#   Commit A: z/{b,c}
+>>> +#   Commit B: y/{b,c}
+>>> +#   Commit C: w/b, x/c, z/d
+>>> +#   Expected: y/d, CONFLICT(rename/rename for both z/b and z/c)
+>>> +#   NOTE: There's a rename of z/ here, y/ has more renames, so z/d -> y/d.
+>>
+>> But the creator of C intended to have z/d, not {w,x}/d, and as {w,x} == y,
+>> I am not sure I like this result. (I have no concrete counter example, just
+>> messy logic)
 >
->> +#   Commit A: z/{b,c,d}
->> +#   Commit B: y/{b,c}
->> +#   Commit C: z/{b,c,d,e}
->> +#   Expected: y/{b,c,e}
+> I'm open to alternative interpretations here.  The biggest issue for
+> me -- going back our discussion at the end of
+> https://public-inbox.org/git/CABPp-BFKiam6AK-Gg_RzaLuLur-jz0kvv3TqsHNHg5+HTv_uzA@mail.gmail.com/
+> -- is "simple, predictable rule", which is consistent with the other
+> rules and limits the number of nasty corner cases as much as possible.
+> Perhaps you think this is one of those nasty corner cases, and that's
+> fair, but I think it'd be hard to do much better.
+
+yup, I agree that a simple, predictable rule is better than optimizing
+for the corner cases we can come up now. (I sent this email before
+reading your reply, so thanks for re-iterating the answer.)
+
+> After spending quite a while trying to think of any other alternative
+> rules or ways of looking at this, I could only come up with two
+> points:
 >
-> Why this?
-> * d is deleted in B and not found in the result
-> * the rename detection also worked well in z->y  for adding e
+>   1) One could view this as a case where commit C didn't in fact do
+> any directory rename -- note that directory z/ still exists in that
+> commit.  Thus, only B did a rename, it renamed z/ -> y/, thus C's z/d
+> should be moved to y/d.  So, this choice is consistent with the other
+> rules we've got.
+
+I wonder if we can do a data driven approach, i.e. mine some history
+(linux, git, other large projects), that would tell us which of these cases
+happens very often, and which of these corner cases can be "safely
+ignored because it never happens". My gut feeling tells me that
+splitting up a directory into two or three (potential sub-)directories
+is a common thing, whereas double renames are not as often.
+(But that's just my view, I have no data to back it up; the selection
+of the data would open the next debate as it will be very specific to
+a given community. But as linux has had such a huge impact on git,
+I'd be tempted to claim any study on linux.git is fruitful for gits defaults)
+
+>   2) An alternate (or maybe additional?) rule: We could decide that if
+> a source path is renamed on both sides of history, then we'll just
+> ignore both renames for consideration of directory rename detection.
 >
-> I do not see the confusion, yet.
-
-Um...yaay?  If you don't see it as confusing, then maybe others don't?
- I was wondering if folks would expect a rename/delete conflict (x/d
-either deleted or renamed to y/d via directory rename detection), and
-be annoyed if the merge succeeded and didn't even give so much as a
-warning about what happened to 'd'.
-
->> +#   In this case, I'm leaning towards: commit B was the one that deleted z/d
->> +#   and it did the rename of z to y, so the two "conflicts" (rename vs.
->> +#   delete) are both coming from commit B, which is non-sensical.  Conflicts
->> +#   during merging are supposed to be about opposite sides doing things
->> +#   differently.
+> The new rule idea would "fix" this testcase to your liking, although
+> now we'd be somewhat inconsistent with the "directory still exists
+> implies no directory rename occurred rule".  But what other weirdness
+> could entail?  Here's a few I've thought of:
 >
->   "Sensical has not yet become an "official" word in the English language, which
->   would be why you can't use it. Nonsense is a word, therefore nonsensical can
->   used to describe something of nonsense. However, sense has different meanings
->   and doesn't have an adjective for something of sense"
+> Commit O: z/{b,c,d}
+> Commit A: y/{b,c}
+> Commit B: z/{newb, newc, e}
 >
-> from https://english.stackexchange.com/questions/38582/antonym-of-nonsensical
-> I don't mind it, the spell checker just made me go on a detour. Maybe illogical?
+> Here, A renamed z/ -> y/.
 
-Illogical works for me.
+.. while deleting d ...
 
->> +# Testcase 8e, Both sides rename, one side adds to original directory
->> +#   Commit A: z/{b,c}
->> +#   Commit B: y/{b,c}
->> +#   Commit C: w/{b,c}, z/d
->> +#
->> +# Possible Resolutions:
->> +#   Previous git: z/d, CONFLICT(z/b -> y/b vs. w/b), CONFLICT(z/c -> y/c vs. w/c)
->> +#   Expected:     y/d, CONFLICT(z/b -> y/b vs. w/b), CONFLICT(z/c -> y/c vs. w/c)
->> +#   Preferred:    ??
->> +#
->> +# Notes: In commit B, directory z got renamed to y.  In commit C, directory z
->> +#        did NOT get renamed; the directory is still present; instead it is
->> +#        considered to have just renamed a subset of paths in directory z
->> +#        elsewhere.  Therefore, the directory rename done in commit B to z/
->> +#        applies to z/d and maps it to y/d.
->> +#
->> +#        It's possible that users would get confused about this, but what
->> +#        should we do instead?   Silently leaving at z/d seems just as bad or
->> +#        maybe even worse.  Perhaps we could print a big warning about z/d
->> +#        and how we're moving to y/d in this case, but when I started thinking
->> +#        abouty the ramifications of doing that, I didn't know how to rule out
->> +#        that opening other weird edge and corner cases so I just punted.
+
+>  Except B renamed z/b and z/c differently,
+
+... and z/d -> z/e, maybe(?).
+
+> so all paths used to detect the z/ -> y/ rename are ignored, so there
+> isn't a rename after all.  I'm not so sure I like that decision.
+> Let's keep looking though, and change it up a bit more:
 >
-> s/about/abouty
+> Commit O: z/{b,c,d}
+> Commit A: y/{b,c}, x/d
+> Commit B: z/{newb, newc, d, e}
+>
+> Here, A has a split rename.  Since B renames z/b and z/c differently,
+> we have to ignore the z/ -> y/ rename, and thus the only rename left
+> implies z/ -> x/.  Thus we'd end up with z/e getting moved into x/e.
+> Seems weird to me, and less likely that a user would understand this
+> rule than the "majority wins" one.
 
-I think you mean the other direction?  Thanks for catching, I'll fix that up.
+It still is "majority wins" except the set of inspected files is filtered first.
 
-> It sort of makes sense from a users POV.
+In an *ideal, but expensive* algorithm, we might give different
+weights to files, e.g.
+* large files have more weight than smaller files,
+* files with interesting names have more weight (c.f. Makefile vs. xstrbuf.c)
+* similar files have more weight than files that are rewritten, or rather
+  the more rewrite is done the less impact one file has.
+* how unique file content is (LICENSE.txt that exists 23 times in the
+  tree has less weight than the sekret-algorithm.c)
 
-I'm afraid I'm unsure what the antecedent of "It" is here.  (Are you
-just saying that my rationale for what I listed as "Expected" makes
-sense, or something else?)
+and depending on these weights we have a "majority of content" moved
+to y/ or x/.
+
+>>> +# Testcase 7c, rename/rename(1to...2or3); transitive rename may add complexity
+>>> +#   (Related to testcases 3b and 5c)
+>>> +#   Commit A: z/{b,c}, x/d
+>>> +#   Commit B: y/{b,c}, w/d
+>>> +#   Commit C: z/{b,c,d}
+>>> +#   Expected: y/{b,c}, CONFLICT(x/d -> w/d vs. y/d)
+>>
+>> CONFLICT(x/d -> y/d vs w/d) ?
+>
+> I'm afraid I'm not following the question.
+
+Yesterday I had the impression the renaming perspective changed,
+note the difference in order of y/ and w/ inside the CONFLICT.
+I might have been confused already, though.
+
+>>> +# Testcase 7e, transitive rename in rename/delete AND dirs in the way
+>>> +#   (Very similar to 'both rename source and destination involved in D/F conflict' from t6022-merge-rename.sh)
+>>> +#   (Also related to testcases 9c and 9d)
+>>> +#   Commit A: z/{b,c},     x/d_1
+>>> +#   Commit B: y/{b,c,d/g}, x/d/f
+>>> +#   Commit C: z/{b,c,d_1}
+>>> +#   Expected: rename/delete(x/d_1->y/d_1 vs. None) + D/F conflict on y/d
+>>> +#             y/{b,c,d/g}, y/d_1~C^0, x/d/f
+>>> +#   NOTE: x/d/f may be slightly confusing here.  x/d_1 -> z/d_1 implies
+>>> +#         there is a directory rename from x/ -> z/, performed by commit C.
+>>> +#         However, on the side of commit B, it renamed z/ -> y/, thus
+>>> +#         making a rename from x/ -> z/ when it was getting rid of z/ seems
+>>> +#         non-sensical.  Further, putting x/d/f into y/d/f also doesn't
+>>> +#         make a lot of sense because commit B did the renaming of z to y
+>>> +#         and it created x/d/f, and it clearly made these things separate,
+>>> +#         so it doesn't make much sense to push these together.
+>>
+>> This is confusing.
+>
+> Indeed it is.  When I first wrote this testcase, I didn't realize that
+> I actually had two potentially directory renames involved and a
+> doubly-transitive rename from it, on top of the D/F conflict.  I can
+> see two ways to resolve this.
+>
+> 1) Leave the testcase alone, just try to make the NOTE more clear:
+>
+> NOTE: The main path of interest here is d_1 and where it ends up, but
+> this is actually a case that has two potential directory renames
+> involved and D/F conflict(s), so it makes sense to walk through each
+> step.  Commit B renames z/ -> y/.  Thus everything that C adds to z/
+> should be instead moved to y/.  This gives us the D/F conflict on y/d
+> because x/d_1 -> z/d_1 -> y/d_1 conflicts with y/d/g.  Further, commit
+> C renames x/ -> z/, thus everything B adds to x/ should instead be
+> moved to z/...BUT we removed z/ and renamed it to y/, so maybe
+> everything should move not from x/ to z/, but from x/ to z/ to y/.
+> Doing so might make sense from the logic so far, but note that commit
+> B had both an x/ and a y/; it did the renaming of z/ to y/ and created
+> x/d/f and it clearly made these things separate, so it doesn't make
+> much sense to push these together.  Doing so is what I'd call a doubly
+> transitive rename; see testcases 9c and 9d for further discussion of
+> this issue and how it's resolved.
+>
+> 2) Modify the testcase so it doesn't have two potential directory
+> renames involved.  Just add another unrelated file under x/ that
+> doesn't change on either side, thus removing the x/ -> z/ rename from
+> the mix.  That wouldn't actually change the expected result (other
+> than the new file should remain around), but it would change the
+> reasoning and simplify it:
+>
+> NOTE: Commit B renames z/ -> y/.  Thus everything that C adds to z/
+> should be instead moved to y/.  This gives us the D/F conflict on y/d
+> because x/d_1 -> z/d_1 -> y/d_1 conflicts with y/d/g.  As a side note,
+> one could imagine an alternative implementation trying to resolve D/F
+> conflicts caused by renames by just undoing the rename, but in this
+> case that would end up with us needing to write an x/d_1, which would
+> still be a D/F conflict with x/d/f.
+
+What do you want to test in 7e? AFAICT section 7 is about
+"More involved Edge/Corner cases", so keeping it edge sounds fine.
+(hence I'd vote for (1), just adjusting the notes)
