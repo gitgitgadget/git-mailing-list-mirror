@@ -2,107 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2C03C1F43C
-	for <e@80x24.org>; Tue, 14 Nov 2017 17:31:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E47251F43C
+	for <e@80x24.org>; Tue, 14 Nov 2017 17:41:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754713AbdKNRbd (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Nov 2017 12:31:33 -0500
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:45282 "EHLO
-        mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1754289AbdKNRb2 (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 14 Nov 2017 12:31:28 -0500
-Received: from pps.filterd (m0096528.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id vAEHRYWl003309;
-        Tue, 14 Nov 2017 09:31:25 -0800
-Authentication-Results: palantir.com;
-        spf=softfail smtp.mailfrom=newren@gmail.com
-Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2e7p4992eq-1;
-        Tue, 14 Nov 2017 09:31:25 -0800
-Received: from mxw1.palantir.com (new-smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id 41525221A293;
-        Tue, 14 Nov 2017 09:31:25 -0800 (PST)
-Received: from newren2-linux.yojoe.local (newren2-linux.dyn.yojoe.local [10.100.68.32])
-        by smtp.yojoe.local (Postfix) with ESMTP id 3AAA92CDE60;
-        Tue, 14 Nov 2017 09:31:25 -0800 (PST)
+        id S1752524AbdKNRlf (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Nov 2017 12:41:35 -0500
+Received: from mail-vk0-f49.google.com ([209.85.213.49]:53871 "EHLO
+        mail-vk0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752776AbdKNRle (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Nov 2017 12:41:34 -0500
+Received: by mail-vk0-f49.google.com with SMTP id k195so12720436vke.10
+        for <git@vger.kernel.org>; Tue, 14 Nov 2017 09:41:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=5Vk+z5vjD10cftfGbhrzDW8cbI5Jr+M6GWiYfymAiH8=;
+        b=V/vDL+H+7HqHJ2AaPNlGtd8ODCu/wP3x+1JHu1Vd0G+oRJ8haFH33WMzE0YcBSOb7s
+         ihiENwDWcqie5UMyBoWWPbvGGfb1S15uVeVWepvzp9sckewQr8CZfytskzuGe8BuO/Oh
+         KiRaMOPhQMo5AF4RmywLgRIwhnBo2+42AdnVhe13Ll0ssTMac40xfL1oJGEz+QjZn9EL
+         4o/UlnJwDi/bS0JngBauc6TuHU9pYFSXy4mtdCUHhaWufouor8H3sB54AYroeZdHrGZV
+         h9121qOX6N8cgsyGnmgCBHY8a9/pGxwFD+Zjo/i4ix7ASrsFgEeo6u887kmX7/v33Hz5
+         zWuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=5Vk+z5vjD10cftfGbhrzDW8cbI5Jr+M6GWiYfymAiH8=;
+        b=VGQwNn31KHQPFw4lrsDICh0jK1MGFfLLlSaXezDa6hbMQTLffKq4SNiDvJmU0rU9jd
+         Xtq4DFIKjKQoM6OWcFA5N9ncoL94MNvEAsFW5SGdospFkvrriqGQbx5NmUpIE6tXcSR5
+         /0kb1fJHNXBWpoN6rFhAsWObEyKr51mWp9Y35PZYFiVROnb4iYgNtcm7LEWRAeOBi87e
+         lbeDX/ZIjz4zSVbw+YVAiYLYK1k4Gaul2XD5H8555Slf38WcB/QUstLlgEnqK3KihvwZ
+         bw026ru1EzDClW+/4gPU9wgkb8mMWjRpMRtRVs6jnroos1uuhIZJZq1ue8nwRYfmqgXl
+         Lv2g==
+X-Gm-Message-State: AJaThX79Wpamnp2RnVIjhZhsurQohaFj3T0lie0NGkle54GUG8jzwOvN
+        Y8gd/5Ibe+FTFCwF5GdbCgbw9sEgRzjmkrcDoCw=
+X-Google-Smtp-Source: AGs4zMaGb3FBmI4E9uiPMMoOQ+KQ2AnqNoUdP6r8n2sN0tSXO/3k6jmOUD5VpZZBgBGrKL84SFTC5AGCiLNmD3jntLQ=
+X-Received: by 10.31.172.137 with SMTP id v131mr10996088vke.75.1510681293164;
+ Tue, 14 Nov 2017 09:41:33 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.176.67.33 with HTTP; Tue, 14 Nov 2017 09:41:32 -0800 (PST)
+In-Reply-To: <xmqqh8tx5ux8.fsf@gitster.mtv.corp.google.com>
+References: <20171110190550.27059-1-newren@gmail.com> <20171110190550.27059-16-newren@gmail.com>
+ <xmqqh8tx5ux8.fsf@gitster.mtv.corp.google.com>
 From:   Elijah Newren <newren@gmail.com>
-To:     git@vger.kernel.org
-Cc:     sbeller@google.com, Elijah Newren <newren@gmail.com>
-Subject: [PATCH] merge-recursive: Handle addition of submodule on our side of history
-Date:   Tue, 14 Nov 2017 09:31:24 -0800
-Message-Id: <20171114173124.25982-1-newren@gmail.com>
-X-Mailer: git-send-email 2.15.0.2.g63e86ab1a0
-In-Reply-To: <ABPp-BHDrw_dAESic3xK7kC3jMgKeNQuPQF69OpbVYhRkbhJsw@mail.gmail.com>
-References: <ABPp-BHDrw_dAESic3xK7kC3jMgKeNQuPQF69OpbVYhRkbhJsw@mail.gmail.com>
-X-Proofpoint-SPF-Result: softfail
-X-Proofpoint-SPF-Record: v=spf1 redirect=_spf.google.com
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,, definitions=2017-11-14_08:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1034 lowpriorityscore=0 impostorscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.0.1-1709140000
- definitions=main-1711140238
+Date:   Tue, 14 Nov 2017 09:41:32 -0800
+Message-ID: <CABPp-BE8Jc-ZmW2bt3Fe3Azd6wEiSTUjsmhNNNdoip_LXHC_Yg@mail.gmail.com>
+Subject: Re: [PATCH 15/30] merge-recursive: Move the get_renames() function
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The code for a newly added path assumed that the path was a normal file,
-and thus checked for there being a directory still being in the way of
-the file.  Note that since unpack_trees() does path-in-the-way checks
-already, the only way for there to be a directory in the way at this
-point in the code, is if there is some kind of D/F conflict in the merge.
+On Mon, Nov 13, 2017 at 8:46 PM, Junio C Hamano <gitster@pobox.com> wrote:
 
-For a submodule addition on HEAD's side of history, the submodule would
-have already been present.  This means that we do expect there to be a
-directory present but should not consider it to be "in the way"; instead,
-it's the expected submodule.  So, when there's a submodule addition from
-HEAD's side, don't bother checking the working copy for a directory in
-the way.
+> It took me a while to figure out that you are basing this on top of
+> a slightly older tip of 'master'.  When rebasing on, or merging to,
+> a newer codebase
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
-This commit is based on top of sb/test-cherry-pick-submodule-getting-in-a-way.
+Sorry about that.  Yes, I worked on the series over time and rebased a
+couple times up to v2.15.0.  I assumed that was new enough, but
+clearly I was wrong.
 
- merge-recursive.c                | 5 +++--
- t/t3512-cherry-pick-submodule.sh | 2 +-
- 2 files changed, 4 insertions(+), 3 deletions(-)
+> By the way, checkpatch.pl complains about // C99 comments and binary
+> operators missing SP on both ends, etc., on the entire series [*1*].
+> These look like small issues, but they are distracting enough to
+> break concentration while reading the changes to spot places with
+> real issues and places that can be improved, so cleaning them up
+> early would help the final result to get better reviews.
+>
+> I won't reproduce all of them here, but here are a representable
+> few.
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 1d3f8f0d22..9fb0b9f8fd 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -1901,8 +1901,9 @@ static int process_entry(struct merge_options *o,
- 			oid = b_oid;
- 			conf = _("directory/file");
- 		}
--		if (dir_in_way(path, !o->call_depth,
--			       S_ISGITLINK(a_mode))) {
-+		if (dir_in_way(path,
-+			       !o->call_depth && !S_ISGITLINK(a_mode),
-+			       0)) {
- 			char *new_path = unique_path(o, path, add_branch);
- 			clean_merge = 0;
- 			output(o, 1, _("CONFLICT (%s): There is a directory with name %s in %s. "
-diff --git a/t/t3512-cherry-pick-submodule.sh b/t/t3512-cherry-pick-submodule.sh
-index 1b1e31100f..ce48c4fcca 100755
---- a/t/t3512-cherry-pick-submodule.sh
-+++ b/t/t3512-cherry-pick-submodule.sh
-@@ -10,7 +10,7 @@ KNOWN_FAILURE_NOFF_MERGE_DOESNT_CREATE_EMPTY_SUBMODULE_DIR=1
- KNOWN_FAILURE_NOFF_MERGE_ATTEMPTS_TO_MERGE_REMOVED_SUBMODULE_FILES=1
- test_submodule_switch "git cherry-pick"
- 
--test_expect_failure 'unrelated submodule/file conflict is ignored' '
-+test_expect_success 'unrelated submodule/file conflict is ignored' '
- 	test_create_repo sub &&
- 
- 	touch sub/file &&
--- 
-2.15.0.2.g63e86ab1a0
+Eek!  My apologies.  I will go through and fix them up.  I see no
+reference to checkpatch.pl in git, but a google search shows there's
+one in the linux source tree.  Is that were I get it from, or is there
+a different one?
 
+Also, would you like me to make a separate commit that cleans up
+pre-existing issues in merge-recursive.c so that it runs clean, or
+just remove the problems I added?
+
+
+Thanks for all the reviews!
