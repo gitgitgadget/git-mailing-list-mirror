@@ -2,91 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E28E71F43C
-	for <e@80x24.org>; Tue, 14 Nov 2017 16:48:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C45891F43C
+	for <e@80x24.org>; Tue, 14 Nov 2017 17:10:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755153AbdKNQsY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Nov 2017 11:48:24 -0500
-Received: from mail-qt0-f172.google.com ([209.85.216.172]:46587 "EHLO
-        mail-qt0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755325AbdKNQsJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Nov 2017 11:48:09 -0500
-Received: by mail-qt0-f172.google.com with SMTP id 1so26534271qtn.3
-        for <git@vger.kernel.org>; Tue, 14 Nov 2017 08:48:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=gYrc4XKlsNQr4tlJ68wo70Yu2vhBNSpk4s3MQOgDnO4=;
-        b=hQDJX/khD/tnShCUEUYKWQ7i6vZD5IkqZMjXY4YCammsGA36ASXxkhtlRWKDpn8UCp
-         7XmzbfoOgafauH7BT4l/PwakUKaZ+C1cXDsMKFcmjFd0cEhvC8hKVM7Q3yrJ+jEGluuh
-         h1Gb20T2o5+vkJwBB4bjj8OENMHPFJrjol1ZDoQCM4UsM4d/IxS4bj8TYyGJOcF7DgJb
-         vgpGbP07M16NFpQbtLofzGbHw3NAJkkBFmFbTtARTDCmUeiPva117zJDurEBB2FKiCY+
-         1MtFHRiJI8uNQ1P+VSXRtL+lblLe3J3/w17/gdRExgU2ZypOlXs2UTS7uNatXbMlyVUV
-         HacA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=gYrc4XKlsNQr4tlJ68wo70Yu2vhBNSpk4s3MQOgDnO4=;
-        b=PRB4rluj+CDmvfvhRQsRJQ9zjOeMT8TKbsNx7fqCpdp2wzbearObofrsWqBIUpqpLz
-         QW0nWV0qhUchi/zW85AIs+Hlfr8EwzAYoPW55ugE712XIEs0YXxm2p/RvjXHFutq/T9g
-         NCeya+OBHOGrQrLH2SjjB4d1xSqeIe/U58j3IGU4qi0+FNtYw6XvViWjQortfN14PBz+
-         4fcDMNDn3IqPjsCzY/k595i4QVn3tvttWJmFD3FXZfyMCBUSbTBkfyPTUbg8RTqEVQfG
-         eWGC7/CRVWUsZU25pi7AMo4k5naMKbuGxE36UBdLWLQTQwZcwnK5FCC43W27wGuReZkh
-         1YlQ==
-X-Gm-Message-State: AJaThX5XTWdOJgzxCY8Iz/PhUjPxNh4uqdTMvVAcxYj7RyMq8QB8J+0A
-        lBiqSq+BqOQUovq558fAIckD2NmCcOqYFohYy94=
-X-Google-Smtp-Source: AGs4zMaR3bPxiOb8L6/rQzZCioltwxW6h4YK03POHUEJLGw2BxbXZP8+AwoNMbKlx/C0DGTlchEwzl6FNGABCYsRzY4=
-X-Received: by 10.55.130.194 with SMTP id e185mr2554926qkd.357.1510678088478;
- Tue, 14 Nov 2017 08:48:08 -0800 (PST)
+        id S1755884AbdKNRKB (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Nov 2017 12:10:01 -0500
+Received: from mout.web.de ([212.227.15.3]:50472 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754291AbdKNRJ7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Nov 2017 12:09:59 -0500
+Received: from macce.local ([195.198.252.176]) by smtp.web.de (mrweb004
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0Ll30X-1eoosq3yB3-00ajUI; Tue, 14
+ Nov 2017 18:09:58 +0100
+Subject: Re: Changing encoding of a file : What should happen to CRLF in file
+ ?
+To:     Ashish Negi <ashishnegi33@gmail.com>
+Cc:     git@vger.kernel.org
+References: <CAJ_+vJ6FXXda4fe7=1YxtDGR2d8CqP4KXN+YR6+mdQ+5jQQXug@mail.gmail.com>
+ <8b3225ce-a4aa-56ee-5296-6cc7528556d1@web.de>
+ <CAJ_+vJ5J250CtzVg4QwEusddviDSYuJhubsbTJyv5Nc2conAfA@mail.gmail.com>
+ <CAJ_+vJ7Yfcpz5252M4XJnDmEDCANp+eJ7RLJJF8TCcTxexZEUA@mail.gmail.com>
+From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Message-ID: <f9dc6482-587d-50a9-d649-aed63be18fad@web.de>
+Date:   Tue, 14 Nov 2017 18:09:57 +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:52.0)
+ Gecko/20100101 Thunderbird/52.4.0
 MIME-Version: 1.0
-Received: by 10.12.155.209 with HTTP; Tue, 14 Nov 2017 08:48:07 -0800 (PST)
-In-Reply-To: <3af0f8cc-09f3-bcf2-04c8-f076e0ddcea2@xiplink.com>
-References: <4f548c23-7bb5-a672-21bb-6c1dd6de6139@xiplink.com>
- <20171114055306.3tfi726wzmkcfluk@sigill.intra.peff.net> <3af0f8cc-09f3-bcf2-04c8-f076e0ddcea2@xiplink.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 14 Nov 2017 11:48:07 -0500
-X-Google-Sender-Auth: r1wxwqoXeh7rGJ5HueKu5md9vCI
-Message-ID: <CAPig+cS8fg7UEX7eO4LLrVuuuBCxOVbhqmc5xFGqv3mT6s0=ng@mail.gmail.com>
-Subject: Re: Recovering from gc errors
-To:     Marc Branchaud <marcnarc@xiplink.com>
-Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CAJ_+vJ7Yfcpz5252M4XJnDmEDCANp+eJ7RLJJF8TCcTxexZEUA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:aivlozPhPoGzgNjXPuRvQa5VwNFQUM698T/Fo5yNBH0CZYofMGO
+ b9Vk9NwvVS66rJqh8KG7B3X1Yr2VBtRnvEhBAu0j55DLJhiJMApLYnUUVDNiRGIt7cdO6vE
+ 4HFkfRY1GE2rGJ2c/si5Ked/1zzQAGDTmAHwLFy0EJ8sRANTWGNyZobOn9riKB58GfU7DBT
+ dVLSZtqZUpxjX4E62mJPA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:kuesTRJwCeQ=:visXac2FvVHcVYIrf0p+/X
+ RFJPwaPAwf/d4mv6TvFygenrUgenSRN+CufGt5k4nlKmjQLmWZ72DZx6DBhQLqIJ/R2n4Fif1
+ aw4U/6g9mSymaCSo+lsttUqmhsKbKSTv1XpAIK/J7nJiNPArDKloeSPOz96MN13jd9lAQjn0X
+ 5CcTN3qmpqlAu/ylpY3NMXGIOVlATmcfGqW2/sZiYrjmtm2oXqJ/krFLFeuUJb5/RHoqlViGF
+ OZ9XD+5ibNmfRlIBKhYd/xsk75/A5Pd9m7ZqvpzsSDtouL+OwC6sou9LxFZXpy6zKiWD9qQqf
+ ORm4JTdTP56vMJwVzsvOCnwnML32gEcup9gjBu+xNH33s8a16TgMvob6GxPyfWuvhW1nU7nDE
+ 6XKCDsaSeCLA0CbpqN8pTafOor0eKUpFAG4mnuumioGo4Gw50AX1a4kufm+h7PDYR0CXxq2V6
+ tf1qmWqTkZPLU6F18fOIsOknvwpqzV8WaD5DdGfHuZgpZqKA9m9YGeRVQNs3A88k0hslN+LXH
+ nJAJ0GYwIcXJr2CkdtfNKjxQ2o9B4JBoXY75tQYh+QBKVKiyjzvYTFtk9LHvu2BKO6F5oRDv5
+ c2rl0ICBfrAn+Fhx/NEHEGFtlxTkZ6O0UVb+uI0dq9w3ymLll3juTih0gD2w3s27JiyTbEEkm
+ sHPCYCbVZ/8kq4fo09N1JYBhXZtahPGw429QRcUdwKYuedeVBA/YCnCks/IhzND2lJYEH0o9o
+ W7TVhdbn9K2fAbJQnmfKIFRMTzFd8O5yMCdvIio2yZKvinQcTYuFx4MWtpPnHVBwjRU/8MAlf
+ khFbbEAL+acLAc0yICQtP/JnXzw3KfBqjfNl05Ef6MgMwSItfs=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 14, 2017 at 10:39 AM, Marc Branchaud <marcnarc@xiplink.com> wrote:
-> I'm willing to chalk this up to bugs in the early worktree code, unless one
-> of the CC'd worktree developers thinks otherwise.
->
-> An explicit "git worktree delete" command would be nice for manually
-> cleaning things up.  It's easy to just delete the directory, but having a
-> "delete" command gives the user assurance that they're not missing
-> something.
+(Back to the beginning)
 
-Duy does have a series in 'pu' which adds this functionality, but I
-guess it's stalled for the moment. From "What's Cooking":
+You have a file ApplicationManifest.xml
+It is encoded in UTF-16 (and has CRLF)
 
-    * nd/worktree-move (2017-04-20) 6 commits
-    - worktree remove: new command
-    - worktree move: refuse to move worktrees with submodules
-    - worktree move: accept destination as directory
-    - worktree move: new command
-    - worktree.c: add update_worktree_location()
-    - worktree.c: add validate_worktree()
+You convert it into UTF-8
+The file has still CRLF (in the worktree)
 
-    "git worktree" learned move and remove subcommands.
+Now you add it and make a commit.
+Under both Linux and Windows you have "text=auto".
 
-    Expecting a reroll.
-    cf. <20170420101024.7593-1-pclouds@gmail.com>
-    cf. <20170421145916.mknekgqzhxffu7di@sigill.intra.peff.net>
-    cf. <d0e81b1e-5869-299e-f462-4d43dc997bd1@ramsayjones.plus.com>
+I assume that you have efficiently core.eol=lf under Linux
+and core.eol=crlf on Windows.
+
+(That is the default, when you don't change anything)
+
+Now, what happens to the CRLF?
+If you commit the file, it will be stored with LF in the index,
+on both systems.
+On checkout, Windows will convert them into CRLF, but Linux will not.
+
+That why you see
+>On linux, during committing i get warning : warning: CRLF will be
+>replaced by LF in …file_name..
+
+All in all there is nothing wrong, at least as I see it.
+
+The question remains:
+Do you need CRLF in Linux ?
+Probably not, but if yes, plase add a line
+
+*.xml text eol=crlf
+
+to your
+.gitattributes
+
+Otherwise your .gitconfig looks good to  me.
+
+
+
+
+
+
