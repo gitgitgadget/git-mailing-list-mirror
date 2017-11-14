@@ -2,97 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 82D541F43C
-	for <e@80x24.org>; Tue, 14 Nov 2017 16:03:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 666601F43C
+	for <e@80x24.org>; Tue, 14 Nov 2017 16:13:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755821AbdKNQDk (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Nov 2017 11:03:40 -0500
-Received: from smtp74.iad3a.emailsrvr.com ([173.203.187.74]:37304 "EHLO
-        smtp74.iad3a.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1755865AbdKNQDc (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 14 Nov 2017 11:03:32 -0500
-Received: from smtp18.relay.iad3a.emailsrvr.com (localhost [127.0.0.1])
-        by smtp18.relay.iad3a.emailsrvr.com (SMTP Server) with ESMTP id 932E6251B1;
-        Tue, 14 Nov 2017 11:03:31 -0500 (EST)
-X-Auth-ID: mbranchaud@xiplink.com
-Received: by smtp18.relay.iad3a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 5B9EF25490;
-        Tue, 14 Nov 2017 11:03:31 -0500 (EST)
-X-Sender-Id: mbranchaud@xiplink.com
-Received: from [10.10.1.32] ([UNAVAILABLE]. [192.252.130.194])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA)
-        by 0.0.0.0:465 (trex/5.7.12);
-        Tue, 14 Nov 2017 11:03:31 -0500
-Subject: Re: [PATCH V2] config: add --expiry-date
-To:     Christian Couder <christian.couder@gmail.com>, hsed@unimetic.com
-References: <20171112145535.gb4nafdhhdslknex@sigill.intra.peff.net>
- <1510625073-8842-1-git-send-email-hsed@unimetic.com>
- <CAP8UFD3TbmZ3bRwg-fRoSJWAFaa=UDxVsZphn_3Nt4wMz1N2=A@mail.gmail.com>
-Cc:     Jeff King <peff@peff.net>, git <git@vger.kernel.org>
-From:   Marc Branchaud <marcnarc@xiplink.com>
-Message-ID: <efc9cace-343a-4475-714c-85b499b9f9c9@xiplink.com>
-Date:   Tue, 14 Nov 2017 11:03:31 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.4.0
+        id S1751391AbdKNQNo (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Nov 2017 11:13:44 -0500
+Received: from mail-qt0-f173.google.com ([209.85.216.173]:52581 "EHLO
+        mail-qt0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750714AbdKNQNm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Nov 2017 11:13:42 -0500
+Received: by mail-qt0-f173.google.com with SMTP id 31so26160511qtz.9
+        for <git@vger.kernel.org>; Tue, 14 Nov 2017 08:13:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=/5tzutJwCpktrJPjLCyf0UdGG51flxJowpno1UkSCig=;
+        b=BKrGp1WhHGCEcHMwTjBE7qwuBWHtwj43QAQHaggq/y9tjQa9BpjPZS2BSWMmBGXmKO
+         ndJ1Iuph3qhDo6RtlinvFpnCffzWRTX/sa1mZXlqGliFvV5RR4ExAa5AuC+uVhyZvBdY
+         EIhtLGxdmJmtl0L/AN8iEOklLTEoABF4vq62u0N14v2kKF1pKaQoeOeJ6y7m5Fakttwc
+         yU96QAvHUyPaUD6num6tOeT4y7mKi+l2EkHzoyDi7X9caa5H21j2urF2FAbd9mYG1zD9
+         gY5TALySGnFQ01S8BgPbC0KbDMG0qNFybQa2DYwQfWIhWPhUBQURCsJdpLOLcubYNCH8
+         g40w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=/5tzutJwCpktrJPjLCyf0UdGG51flxJowpno1UkSCig=;
+        b=Yujd/CyM2omXsqGuGwtCYPE1NxoNGWGkCdS01MeRJLGFyc0I9IhrWM20nzoycwIZ4Q
+         x9EI/IiLlobqtMCbgHLKH7p6B0cdcs0DlQanV3Mn5TB9re8hjEYUtMCX5YV0twTnj8L6
+         VSQ4KYvMoLHRz3FfI7EBO41k0+7hZQuPnelFFa4vqxmwbabVkyzrllMRtR+q1IyGy1Va
+         7m5/k6Q8ZCaADPZ0ukGZdZh0+MM58x9+OMuDq243UXZtNZfooNzym16Hi9W9d9IdUBfL
+         YlVPmSIeqbfkeb6zAsdxs6O0l3crZEDz8mqIeUK4ehDV3RKmmmjtHHT3aNlWzPvO6HhP
+         O3Wg==
+X-Gm-Message-State: AJaThX5cenpK08chH2ZMoH3oL9DK/I/10FR301MOTxrVtbwbgYGXpnLW
+        DeeN9fj0kr363i295shJ9chAW0eZkUeSCq/XtCs=
+X-Google-Smtp-Source: AGs4zMZsfZGsXsVpSIQmstBOaPu+ntNwWUsnaV+zMp4CA8IrshATLFn+FtzIF+ooA+Py+0d1u4jWTAu+MzYWSXm1it4=
+X-Received: by 10.129.133.131 with SMTP id v125mr8063683ywf.442.1510676021805;
+ Tue, 14 Nov 2017 08:13:41 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <CAP8UFD3TbmZ3bRwg-fRoSJWAFaa=UDxVsZphn_3Nt4wMz1N2=A@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Received: by 10.13.203.85 with HTTP; Tue, 14 Nov 2017 08:13:41 -0800 (PST)
+In-Reply-To: <8b3225ce-a4aa-56ee-5296-6cc7528556d1@web.de>
+References: <CAJ_+vJ6FXXda4fe7=1YxtDGR2d8CqP4KXN+YR6+mdQ+5jQQXug@mail.gmail.com>
+ <8b3225ce-a4aa-56ee-5296-6cc7528556d1@web.de>
+From:   Ashish Negi <ashishnegi33@gmail.com>
+Date:   Tue, 14 Nov 2017 21:43:41 +0530
+Message-ID: <CAJ_+vJ5J250CtzVg4QwEusddviDSYuJhubsbTJyv5Nc2conAfA@mail.gmail.com>
+Subject: Re: Changing encoding of a file : What should happen to CRLF in file ?
+To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2017-11-14 01:21 AM, Christian Couder wrote:
-> On Tue, Nov 14, 2017 at 3:04 AM,  <hsed@unimetic.com> wrote:
->> From: Haaris <hsed@unimetic.com>
->>
->> Description:
->> This patch adds a new option to the config command.
->>
->> Uses flag --expiry-date as a data-type to covert date-strings to
->> timestamps when reading from config files (GET).
->> This flag is ignored on write (SET) because the date-string is stored in
->> config without performing any normalization.
->>
->> Creates a few test cases and documentation since its a new feature.
->>
->> Motivation:
->> A parse_expiry_date() function already existed for api calls,
->> this patch simply allows the function to be used from the command line.
->>
->> Signed-off-by: Haaris <hsed@unimetic.com>
-> 
-> Documentation/SubmittingPatches contains the following:
-> 
-> "Also notice that a real name is used in the Signed-off-by: line. Please
-> don't hide your real name."
-> 
-> And there is the following example before that:
-> 
->          Signed-off-by: Random J Developer <random@developer.example.org>
-> 
-> So it looks like "a real name" actually means "a real firstname and a
-> real surname".
-> 
-> It would be nice if your "Signed-off-by:" could match this format.
+Running the command gives me :
 
-It might already match that format if Haaris lives in a society that 
-only uses single names.
-
-Still, such names are unusual enough that it's good to check that new 
-contributors are following the guidelines properly.
-
-		M.
-
-
-> Also if you have a "From:" line at the beginning of the patch, please
-> make sure that the name there is tha same as on the "Signed-off-by:".
-> 
-> Thanks for working on this,
-> Christian.
-> 
+      git ls-files --eol file_name
+      i/-text w/-text attr/text=auto          file_name
