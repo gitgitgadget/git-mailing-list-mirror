@@ -2,80 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8A21B201C2
-	for <e@80x24.org>; Tue, 14 Nov 2017 01:02:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EA4CF201C2
+	for <e@80x24.org>; Tue, 14 Nov 2017 01:10:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751280AbdKNBCq (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Nov 2017 20:02:46 -0500
-Received: from mail-vk0-f42.google.com ([209.85.213.42]:55968 "EHLO
-        mail-vk0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751161AbdKNBCp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Nov 2017 20:02:45 -0500
-Received: by mail-vk0-f42.google.com with SMTP id b7so11227693vkh.12
-        for <git@vger.kernel.org>; Mon, 13 Nov 2017 17:02:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=0rvMzMexqI4XpAfvePPoPigo409JUi68VA5e0snBCHU=;
-        b=UpjMWXFgIQSlCdQE23BcMkx54p28zpMwqfnL5bR/L3k814icBfo8zmeEOlRw7gE+s0
-         M+Hp9bv+ykR3dGq7hFlbALPhuLIuEbEZoXN8BBojbaADznRCIrR5V96sgDZAzSMB96lO
-         x1LASqG9BabXnFK+7jF1oJGHKvdL/Rc6c40yXJjzMxEI+E4MymZcOdq0nLxUmyc9pIUj
-         7mVP5XRehLa/VQ/dZA6rTbHoDmiU0+oj1u4558CIR4r86QBpilpX0qam2RD20gse/sfe
-         5Bit1+W9K2YmkfT8l31mZoYrG/GiKX65PPYvdPYWbiwiEgWdDJNpVsF+gKi1E0pWxIPI
-         vLlg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=0rvMzMexqI4XpAfvePPoPigo409JUi68VA5e0snBCHU=;
-        b=AcHr/RHk3xYb/uLC0zI71ehXAUf1ydtfzc031zMjs0MsFA/h27TkdFCuuCxxnhqf14
-         dBxB4IqMHzErW8eY6+AFB/0Efh47mL9lkRfYc8N3uUCwENX91KbY7zcSxs4ClXQRvKnZ
-         vusw+uK0z6zIUUoISJUnJkl0XR2QQbDunGFv/9XQZgzg7shW0C9iJAeZSELRmg/oEtDn
-         /4jh1oAUS+oMMDPCTyPS9zCfDmTLqquE+QRPvx+ZOmO2w1ji7hdWUxUUNp2vWHguj5eD
-         lOEl0NXDmL1x2aTvdhZ+gitZDxaIDHBhd2eCMVJAkYHDZxZucaJ4lCs8vcXtYfW+PRHV
-         6WWg==
-X-Gm-Message-State: AJaThX6HhVdEP+GEgxah2kls72NbYjicwXeUoGwnKV+C2OOZ13cLwkpU
-        Jd58FoIm7MxcqtJ8eBC4p2UGkBFB2LoNciRW5o0=
-X-Google-Smtp-Source: AGs4zMZs5nsA2EUCioIQxFm+NzkcWOiAmlr30Cm4rCZVhWrw0WZEiK2uutYeZV6OouFzF6We/t1vFGa3hLAdQwu4dqY=
-X-Received: by 10.31.238.138 with SMTP id m132mr8045851vkh.114.1510621364637;
- Mon, 13 Nov 2017 17:02:44 -0800 (PST)
+        id S1751511AbdKNBKJ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Nov 2017 20:10:09 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61635 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751161AbdKNBKI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Nov 2017 20:10:08 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8961DAB34C;
+        Mon, 13 Nov 2017 20:10:07 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=v+NA8AjzCf6lfuFNZ9ahyvsFoSA=; b=sQFIjA
+        p4nakLY8SWNQjGnZFtcbSpYvq5mQV8FPkiXJJBnDB+/seaAbN0TC31rkE5brWDfW
+        tcV8FlSGcJGKnzTL9pISxp6TS80J1XLIYzCD9Scmj8P5IPgsqK+fWQfPi/PJ+YNG
+        NbKIVhj5iwysc48iFVe2l9FULhShjxehADXNE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Jp8VfPovkdb4MvkcgjNZLsbYKD96O+c6
+        Qz0hKyyFQb2bchyDceYGrntc0EIvG6lf73shGPBwG9YBWsaXPie357to9LQsxAv9
+        tWbkiEa0zSWnCcSWsDKFPpdflPCaZyw0pz58b4NErfB9l/QFXTaOAbZNiq/mQunB
+        QlA1dS5tMZA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7F20CAB34B;
+        Mon, 13 Nov 2017 20:10:07 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C1A05AB34A;
+        Mon, 13 Nov 2017 20:10:06 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Ben Peart <peartben@gmail.com>
+Cc:     Ben Peart <benpeart@microsoft.com>, git@vger.kernel.org,
+        pclouds@gmail.com, chriscool@tuxfamily.org,
+        Johannes.Schindelin@gmx.de, alexmv@dropbox.com, peff@peff.net
+Subject: Re: [PATCH v1 1/4] fastindex: speed up index load through parallelization
+References: <20171109141737.47976-1-benpeart@microsoft.com>
+        <20171109141737.47976-2-benpeart@microsoft.com>
+        <xmqqbmkahhar.fsf@gitster.mtv.corp.google.com>
+        <7e5a9fde-67fc-2bb9-51b6-54bdaed162db@gmail.com>
+Date:   Tue, 14 Nov 2017 10:10:05 +0900
+In-Reply-To: <7e5a9fde-67fc-2bb9-51b6-54bdaed162db@gmail.com> (Ben Peart's
+        message of "Mon, 13 Nov 2017 11:42:07 -0500")
+Message-ID: <xmqq7eut8y36.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.176.67.33 with HTTP; Mon, 13 Nov 2017 17:02:44 -0800 (PST)
-In-Reply-To: <CAGZ79kYOW9+pP5ApKDHR2_VwPXyiLEEbbO0-3ka-SDCP6ryLPw@mail.gmail.com>
-References: <20171110190550.27059-1-newren@gmail.com> <20171110190550.27059-7-newren@gmail.com>
- <CAGZ79kYOW9+pP5ApKDHR2_VwPXyiLEEbbO0-3ka-SDCP6ryLPw@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 13 Nov 2017 17:02:44 -0800
-Message-ID: <CABPp-BH2eGzTMzHvF9TD9uw_n8k_kbgvSF-ct8B9HMJRFAr6Ug@mail.gmail.com>
-Subject: Re: [PATCH 06/30] directory rename detection: testcases to avoid
- taking detection too far
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 8D65010E-C8D8-11E7-BC97-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 13, 2017 at 3:25 PM, Stefan Beller <sbeller@google.com> wrote:
-> On Fri, Nov 10, 2017 at 11:05 AM, Elijah Newren <newren@gmail.com> wrote:
+Ben Peart <peartben@gmail.com> writes:
 
->> +# Testcase 3a, Avoid implicit rename if involved as source on other side
->> +#   (Related to testcases 1c and 1f)
->> +#   Commit A: z/{b,c,d}
->> +#   Commit B: z/{b,c,d} (no change)
->
-> This could also be an unrelated change such as adding w/e?
+> The proposed format for extensions (ie having both a header and a
+> footer with name and size) in the current patch already enables having
+> multiple extensions that can be parsed forward or backward.  Any
+> extensions that would want to be parse-able in reverse would just all
+> need to be written one after the other after right before the trailing
+> SHA1 (and of course, include the proper footer).
 
-Yes, precisely.  Whenever I have a "no change" commit, the intent is
-that there may be unrelated changes involved, they've just been
-excluded from the testcase in order to make it minimal.
+In other words, anything that wants to be scannable from the tail is
+welcome to reimplement the same validation structure used by IEOT to
+check the section specific sanity constraint, and this series is not
+interested in introducing a more general infrastructure to make it
+easy for code that want to find where each extension section in the
+file begins without pasing the body of the index.
 
->> +#   Commit C: y/{b,c}, x/d
->> +#   Expected: y/{b,c}, x/d
+I find it somewhat unsatisfactory in that it is a fundamental change
+to allow jumping to the start of an extension section from the tail
+that can benefit any future codepath, and have expected a feature
+neutral extension whose sole purpose is to do so [*1*].
+
+That way, extension sections whose names are all-caps can stay to be
+optional, even if they allow locating from the tail of the file.  If
+you require them to implement the same validation struture as IEOT
+to perform section specific sanity constraint and also require them
+to be placed consecutively at the end, the reader MUST know about
+all such extensions---otherwise they cannot scan backwards and find
+ones that appear before an unknown but optional one.  If you keep an
+extension section at the end whose sole purpose is to point at the
+beginning of extension sections, the reader can then scan forward as
+usual, skipping over unknown but optional ones, and reading your
+IEOT can merely be an user (and the first user) of that more generic
+feature that is futureproof, no?
+
+
