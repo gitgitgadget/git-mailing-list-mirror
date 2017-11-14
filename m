@@ -2,114 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0CE341F43C
-	for <e@80x24.org>; Tue, 14 Nov 2017 19:47:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8E69A1F43C
+	for <e@80x24.org>; Tue, 14 Nov 2017 19:52:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755983AbdKNTrZ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Nov 2017 14:47:25 -0500
-Received: from mail-qt0-f171.google.com ([209.85.216.171]:54199 "EHLO
-        mail-qt0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755948AbdKNTrW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Nov 2017 14:47:22 -0500
-Received: by mail-qt0-f171.google.com with SMTP id n61so28469759qte.10
-        for <git@vger.kernel.org>; Tue, 14 Nov 2017 11:47:22 -0800 (PST)
+        id S1754322AbdKNTwu (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Nov 2017 14:52:50 -0500
+Received: from mail-io0-f172.google.com ([209.85.223.172]:43293 "EHLO
+        mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753115AbdKNTws (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Nov 2017 14:52:48 -0500
+Received: by mail-io0-f172.google.com with SMTP id 134so25666536ioo.0
+        for <git@vger.kernel.org>; Tue, 14 Nov 2017 11:52:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=ds5HKfBP7aXNGFurGqXM0niQvjIkbHI/LWlBB3u2iEQ=;
-        b=XSjjyU96YUXkEA74Ea4ZhF0bfVI1BE8BgN8bkPTe67XskrYnKDqxddIjlelTH7O33s
-         iiPJ4PSUD7rcpB9pOYsNFI4M1uy5zGWl/9aLu8tZIW4PxuOos1JHOyH/XELkDLeIh4Ue
-         78uunjUNAyRFIAEEtxCmPQJ3+yfMpmbPlTE2+JqWsYoBLvjU+YTkOer+aCyMgxUL7+xQ
-         3/OjnuKCbKqqp6THd6YHwPMxmqosANxflkhD2kLoIS/Rd51CsknkP77W0GnvWfU+aA82
-         OPPJtKlv0azIWGA+KMN0iv68BmueyhbHpTDawXpaxPsfe4+avo97A1j/j0QUVjFa5Q9C
-         R2JA==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=PHpSnhoSapHA20Fq91hzVjkA5Zt2vyc+xiQZBXbwoN8=;
+        b=RJCQYljy5Dpa8RE/ApzfF520Pn8uQorSk42mcLI0sg0Z5tFCy2DG1gG0CBMBf8WsWE
+         ZYyQ9OIvtvSnIqWXY1SvbkfGoPp6ZBIJLKCHsWrGW43u6h0YAZugwW2DUb+M24SFvI+X
+         cU8IXDLByD91gSXeYrdZMPDHpSP1SULsUE56Z7G+25F0PbL+AubLQUecnM+hrXwOvD3L
+         3opaXwHV6jyENP8gIl5SVf4izNOIyZLxqQj9eRT79wY6+8WheYzlerCGBJjqHR7Na7Hi
+         KYbCsUXa1engpxc9pqoUNEozVml1wYOKTMTDYSxDl5xsYtm6cSKoSYAZOnQY/dGp0Z2p
+         WDEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ds5HKfBP7aXNGFurGqXM0niQvjIkbHI/LWlBB3u2iEQ=;
-        b=IMwovL0/ItVtQ8RTjT3p/OuQlWup7YHTKmB0ZZwD7andv195dXUu4nd1KUPt4PNFFI
-         FuWv8ujl5RLVRhbDlqXCd0wlFh8o7j+U9XEuVMRFNeIs+NduZwL9D9hpU/8Cg74MrW8y
-         k8uwAB9/eAiwTNKgkIRUavrg8fAMp4QtDxesK3yhnzDVeG+WgSkmc2rdfyxAapn3CP1o
-         99UhDK+TrMUPgKFLoVMm7Ebj9MlHwMmO4o1sp2xdWjJksN+7YxTH1bJKWPWoQ8NBnKvx
-         J9KY8JlH6+nQtcl9nwz/fBDgUCChGulQdUTGy7aHL2EQAHtyQf1MV1jsOOqSQAxiDxfJ
-         GzDg==
-X-Gm-Message-State: AJaThX4rmbp/X3avCyhBHc1bFN3VCHtQ8wuafeFAxJzH8qq03hKV+tCG
-        U7HamKeJ2wfKnCrsvh4MHG8=
-X-Google-Smtp-Source: AGs4zMbzgXsUd9ztElBYXvDjwbeyVVdaM/fDuZxDKlODCQj4Jl5/fn0FbpqHQXBzDonD9XauovmxRw==
-X-Received: by 10.55.106.132 with SMTP id f126mr20361155qkc.295.1510688841260;
-        Tue, 14 Nov 2017 11:47:21 -0800 (PST)
-Received: from zaya.teonanacatl.net (pool-173-67-181-41.hrbgpa.fios.verizon.net. [173.67.181.41])
-        by smtp.gmail.com with ESMTPSA id z15sm12921959qti.47.2017.11.14.11.47.20
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 14 Nov 2017 11:47:20 -0800 (PST)
-Date:   Tue, 14 Nov 2017 14:47:18 -0500
-From:   Todd Zullinger <tmz@pobox.com>
-To:     Shawn Landden <slandden@gmail.com>
-Cc:     gitster@pobox.com, git@vger.kernel.org
-Subject: Re: [PATCH] sha1: add gnutls as a sha1 provider
-Message-ID: <20171114194718.GY5144@zaya.teonanacatl.net>
-References: <20171114093402.29256-1-slandden@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20171114093402.29256-1-slandden@gmail.com>
-User-Agent: Mutt/1.9.1 (2017-09-22)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=PHpSnhoSapHA20Fq91hzVjkA5Zt2vyc+xiQZBXbwoN8=;
+        b=Y/jWqd8o8ps4SziHFaS4EMnY1CofkwqwmhnQBGPXNDmSHfd17D4zfrIcpj8e2Mh20J
+         G3oVjNmKa3DtW/iALzrgfQLI60n+pahsSk2/eURgHNdRm61UWyyNlMUD8Jk9ZJvtDAlE
+         FWnCDBBdj4N6rTCIGUvAq4JWCroIttUc0WhgkHERwY72szGrNnTJooFnGh5cuIyhMjaU
+         JZZcCGCFO16GCRKSUvBFptwpi30mohHS8WxKR/EflMWP9DTZAdR6+BwYhoSoDBwikwC9
+         zUeMaddFBm4Zt4ip3N0OJFrFMI9Mk/FypDjYK00OXi7W1/qJH3z9SSbXPe8ETpqpwBm+
+         qDcw==
+X-Gm-Message-State: AJaThX7UyEfz4bJTkFbZ+VMebs6GiASdEiJmYKj+Y56fVN46tWCEiJnH
+        QHZo5CBsn6sE7+L1Rv5TKrYNHA==
+X-Google-Smtp-Source: AGs4zMbkEuQ0TLj1FTN0S1CSOLPyYTOwILqaaHKoIwO0IoQi91P9kG4hyS/rIbtUVB6IgYYSw4JjAQ==
+X-Received: by 10.107.22.69 with SMTP id 66mr15609372iow.150.1510689167526;
+        Tue, 14 Nov 2017 11:52:47 -0800 (PST)
+Received: from twelve3.mtv.corp.google.com ([2620:0:100e:422:9ca7:c33c:854a:a353])
+        by smtp.gmail.com with ESMTPSA id i62sm8796716ioe.31.2017.11.14.11.52.46
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 14 Nov 2017 11:52:46 -0800 (PST)
+Date:   Tue, 14 Nov 2017 11:52:45 -0800
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Johannes.Schindelin@gmx.de, git@vger.kernel.org,
+        jacob.keller@gmail.com, me@ikke.info, schwab@linux-m68k.org
+Subject: Re: [PATCHv3 3/7] revision.h: introduce blob/tree walking in order
+ of the commits
+Message-Id: <20171114115245.d150b8f741b6f809951cbec1@google.com>
+In-Reply-To: <20171102194148.2124-4-sbeller@google.com>
+References: <20171031211852.13001-1-sbeller@google.com>
+        <20171102194148.2124-1-sbeller@google.com>
+        <20171102194148.2124-4-sbeller@google.com>
+X-Mailer: Sylpheed 3.4.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Shawn,
+On Thu,  2 Nov 2017 12:41:44 -0700
+Stefan Beller <sbeller@google.com> wrote:
 
-Shawn Landden wrote:
-> I think this is preferrable to bringing the assembly routines into 
-> the git code-base, as a way of getting access to these high-performance 
-> routines to a git available in Debian, Ubuntu, or Fedora (which 
-> all use BLK_SHA1=1 due to GPLv2 + OpenSSL license considerations, 
-> see Debian Bug #879459).
+> @@ -239,6 +239,8 @@ void traverse_commit_list(struct rev_info *revs,
+>  		if (commit->tree)
+>  			add_pending_tree(revs, commit->tree);
+>  		show_commit(commit, data);
+> +		if (revs->tree_blobs_in_commit_order)
+> +			traverse_trees_and_blobs(revs, &csp, show_object, data);
+>  	}
+>  	traverse_trees_and_blobs(revs, &csp, show_object, data);
+>  
 
-While it seems like it could be useful to have the choice of using the 
-fast SHA1 implementation without concern about licensing issues, 
-there's a few details I thought were worth mentioning.
+I would have expected add_pending_tree() above to no longer be invoked.
+If it still needs to be invoked, maybe add an explanation in the form of
+a comment or commit message.
 
-Fedora moved from OpenSSL SHA1 to BLK_SHA1 to reduce the size of the 
-binaries and dependencies, not due to licensing issues (Fedora 
-considers OpenSSL a system library and allows linking GPLv2 code).
+> +test_expect_success 'rev-list --in-commit-order' '
+> +	for x in one two three four
+> +	do
+> +		echo $x >$x &&
+> +		git add $x &&
+> +		git commit -m "add file $x" ||
+> +		return 1
+> +	done &&
+> +	for x in four three
+> +	do
+> +		git rm $x &&
+> +		git commit -m "remove $x" ||
+> +		return 1
+> +	done &&
+> +	git rev-list --in-commit-order --objects HEAD >actual.raw &&
+> +	cut -c 1-40 >actual <actual.raw &&
+> +
+> +	git cat-file --batch-check="%(objectname)" >expect.raw <<-\EOF &&
+> +		HEAD^{commit}
+> +		HEAD^{tree}
+> +		HEAD^{tree}:one
+> +		HEAD^{tree}:two
+> +		HEAD~1^{commit}
+> +		HEAD~1^{tree}
+> +		HEAD~1^{tree}:three
+> +		HEAD~2^{commit}
+> +		HEAD~2^{tree}
+> +		HEAD~2^{tree}:four
+> +		HEAD~3^{commit}
+> +		# HEAD~3^{tree} skipped, same as HEAD~1^{tree}
+> +		HEAD~4^{commit}
+> +		# HEAD~4^{tree} skipped, same as HEAD^{tree}
+> +		HEAD~5^{commit}
+> +		HEAD~5^{tree}
+> +	EOF
+> +	grep -v "#" >expect <expect.raw &&
+> +
+> +	test_cmp expect actual
+> +'
 
-Fedora now uses the default DC_SHA1 (the collision-detecting SHA1 
-implementation).  DC_SHA1 is not, as far as I know, as fast as the 
-OpenSSL/GnuTLS SHA1, but it's safer given the increasingly successful 
-attacks against SHA1.  I don't envision changing that to gain 
-performance.  (And, of course, the speed of SHA1 should become less of 
-an issue once git moves to a new, stronger hash.)
-
-It looks like the Debian packages use the default DC_SHA1 
-implementation as well.  Regardless of the licensing concerns 
-regarding OpenSSL in Debian, I suspect they'll want to use the 
-default, collision-detecting SHA1 implementation.  That doesn't mean a 
-patch to add the option of GnuTLS isn't useful though.
-
-Fedora does link with OpenSSL's libcrypto and libssl in Fedora for the 
-remote-curl helpers and imap-send.  I believe the remote-curl helpers 
-just link with curl, which happens to use OpenSSL on Fedora and could 
-use GnuTLS instead.  The imap-send command might also use curl and 
-whatever crypto library curl is built with too, but I'm not terribly 
-familiar with imap-send. (I think those are the only uses of libcrypto 
-or libssl in Fedora's packages, but I could be mistaken).
-
-That's a lot of text without having anything to say about the actual 
-patch.  Hopefully it's at least mildly useful to you or others. :)
-
--- 
-Todd
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-When we remember we are all mad, the mysteries of life disappear and
-life stands explained.
-    -- Mark Twain
-
+Would it be useful to have another test without --in-commit-order, so
+that we can see the difference (and ensure that existing behavior is
+unchanged)?
