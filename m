@@ -2,206 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 235251F43C
-	for <e@80x24.org>; Tue, 14 Nov 2017 21:11:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C815B1F43C
+	for <e@80x24.org>; Tue, 14 Nov 2017 21:17:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756845AbdKNVLs (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Nov 2017 16:11:48 -0500
-Received: from mail-ua0-f178.google.com ([209.85.217.178]:44357 "EHLO
-        mail-ua0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756839AbdKNVLq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Nov 2017 16:11:46 -0500
-Received: by mail-ua0-f178.google.com with SMTP id g12so111225uaa.1
-        for <git@vger.kernel.org>; Tue, 14 Nov 2017 13:11:46 -0800 (PST)
+        id S1756748AbdKNVRf (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Nov 2017 16:17:35 -0500
+Received: from mail-io0-f176.google.com ([209.85.223.176]:55238 "EHLO
+        mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756719AbdKNVRd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Nov 2017 16:17:33 -0500
+Received: by mail-io0-f176.google.com with SMTP id w127so8519833iow.11
+        for <git@vger.kernel.org>; Tue, 14 Nov 2017 13:17:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=r2a2tR/ARw97VNQC4m+HKDo27C37N75HSDqx3YGBPto=;
-        b=BtS5/XlQ6uDA7z0rfYR/Er4XiOXFNaB8a8+bSIeI+4825ee8FXmxedn+QraZ3n7MR7
-         BxsDVmHssxBKKTPT4ikIGvcLz6kgK5lvqBQkzsI6Y9KOKJx/0jPH0UkVGd8jewhtD+/c
-         XLU7qwZaBQJ4Mf3Fi6ZLPHUSIZW+BiH2oGi/JLxF33r1hWGyL6w6dlVEJ5NglRYaTmoL
-         bI9FM+yyHkQ7O8+e4ByfcNBS7YzheTfP8ttVQLkzUzik3FvoVf1nvJDucN58EabJOCW0
-         lzD+GHddyVOspHt4CQI0PSB+uPf4U3UIfNVUvoF3mjZDydSV3K0um5zaYzGwdLurZs5D
-         ozBw==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=vdv6s/5BVTIy90gYYLbKDncIQr25iY3kournBx/CIsw=;
+        b=Mj9peKORr0Jg5IG5i8sAwag1lePVOZIacf1e3ll+z9/4p99SyOjgwzjwxItjsvUtO2
+         GoTlptTqAx7YkZQcR4A+QaPKYl9vMISNRRsLzQZLGxFZZbI2kro9EzOAT4XTrjLKDN9/
+         sQ+pkByORVw8yeLvOCc8fF2RwsyDuFhveXFJfG/pY0L3dwhi/pBs4qM25lDr1z3eqPC7
+         DS1NH7vRBC8TjTZYlMnwL28iIf20K0Hl2t+Nq2pNL5/YHTNgmW4Wew19aBEphusmw7F6
+         GcEi8/X908EuSvbw/Cjn151hF0voRcJ5EhBLdKIUDimWPTG+q0JLH5bTM66x+JMNgs0+
+         HWxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=r2a2tR/ARw97VNQC4m+HKDo27C37N75HSDqx3YGBPto=;
-        b=F2K9yMikJh5qaG4FWVuUH/xOgk0eJERcWP6pXKwwp87k28zW7GrTzr4TzTi8o+s6Z5
-         Eo/sxDeptjAGolCCTkAspKGWpKMgPzuvajAbVOJD+psk7dB032ZehmrczJPR1X5EQncJ
-         g49xni+nnLQbZgWWDM/qx62WG8cTtd8PBJ2BhIEHQuHpgjRVsyFnTm9wYb8ALHuQ8UE4
-         g2h3yPEpHtKGK7wfq38B7ukbDSRpyBOVB2K2qd5UR81BKddQZmiZmP8wvLEA2ZAJq9lQ
-         v7pSCk6hz2DIPLN6+9l6HE8aVaF+fUfoJdY1FCm2gnC08u9kB5Ll5IDZjgzahLZ8MEpF
-         563g==
-X-Gm-Message-State: AJaThX756GfZ5FQzU09dPbbVrHW6+BS8NjYftL5teS1UTbM8W347xyFC
-        zqTB+n8IhByCmV5jcG/7vomLT+Zec3jFgolH/70=
-X-Google-Smtp-Source: AGs4zMZKyAFmJun2whzlshN4zHu0A3CPJAyoPCQENtEbOVx9oRRH2cECdGVHo5cmq3aI2M+d3aw7opDlej12hbNds0w=
-X-Received: by 10.176.95.138 with SMTP id b10mr12361493uaj.55.1510693905547;
- Tue, 14 Nov 2017 13:11:45 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.176.67.33 with HTTP; Tue, 14 Nov 2017 13:11:44 -0800 (PST)
-In-Reply-To: <CAGZ79kaDWxx2g2OMY-VKJZD0-0t7V33644aqPLHq5Hppo_Be+w@mail.gmail.com>
-References: <20171110190550.27059-1-newren@gmail.com> <20171110190550.27059-11-newren@gmail.com>
- <CAGZ79kaDWxx2g2OMY-VKJZD0-0t7V33644aqPLHq5Hppo_Be+w@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 14 Nov 2017 13:11:44 -0800
-Message-ID: <CABPp-BE7qKiYBNxMquXRv+Gr=sA3jGs8JyKuqNSzAwKbOWOQ=Q@mail.gmail.com>
-Subject: Re: [PATCH 10/30] directory rename detection: more involved
- edge/corner testcases
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=vdv6s/5BVTIy90gYYLbKDncIQr25iY3kournBx/CIsw=;
+        b=Qi9WMHkEWCwX76uC8V3wR6AuK5uKIaDuGEWzTzPOc8xjziCtj0UW8T1UE7A9KpvbeR
+         LCWSGZjRjFGpKloz0z0XvZS655nRGs9Cew5R8KMzigJClTCxVrHB3WSMb4+S0HVxyGkw
+         v1y3oYs5VK22xyXyw2CG1XNlDNoKYhlTDK0zpbNz8faXtjYToU38Eq8jMkuFKGsESeKy
+         M1r/FMSRHlKETxxelWYgTZSgRTD8Slh5HI1tSbERp7Y4T7b2sTzTbYqsqTjq/wEpKdAw
+         7qYdZ4P9yiBK9JVHvhHZH9zMvZw+3NrLBcPgZ9pxUd+gPCW56qEE35WZUDL8q6Ido0Z7
+         YL9g==
+X-Gm-Message-State: AJaThX4kZCe+ccR3nqsJUPXOqZepK1Ijy/yeBy3aVuo3GVQr8ZaDSnLo
+        Hs/ayJRSzLmH+/nu05k9kcO5TQ==
+X-Google-Smtp-Source: AGs4zMb8+SjtlgOyN1/HoQg/HkvvoEjgB99K5/CqTWOpeEcA63iFh3NE5RIu4x6/jQPOFATuXivjkA==
+X-Received: by 10.107.63.8 with SMTP id m8mr3744457ioa.137.1510694251422;
+        Tue, 14 Nov 2017 13:17:31 -0800 (PST)
+Received: from twelve3.mtv.corp.google.com ([2620:0:100e:422:9ca7:c33c:854a:a353])
+        by smtp.gmail.com with ESMTPSA id i76sm2209247itf.3.2017.11.14.13.17.30
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 14 Nov 2017 13:17:30 -0800 (PST)
+Date:   Tue, 14 Nov 2017 13:17:29 -0800
+From:   Jonathan Tan <jonathantanmy@google.com>
 To:     Stefan Beller <sbeller@google.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git <git@vger.kernel.org>, Jacob Keller <jacob.keller@gmail.com>,
+        Kevin Daudt <me@ikke.info>,
+        Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: [PATCHv3 7/7] builtin/describe.c: describe a blob
+Message-Id: <20171114131729.4f0084a249fb8277e1c4cdd3@google.com>
+In-Reply-To: <CAGZ79kZXxrDKr5PfJ2xx_3hhzscUiQvqOnCGURXCbJSL118trw@mail.gmail.com>
+References: <20171031211852.13001-1-sbeller@google.com>
+        <20171102194148.2124-1-sbeller@google.com>
+        <20171102194148.2124-8-sbeller@google.com>
+        <20171114120208.d0570f20672f117bcf8e5396@google.com>
+        <CAGZ79kZXxrDKr5PfJ2xx_3hhzscUiQvqOnCGURXCbJSL118trw@mail.gmail.com>
+X-Mailer: Sylpheed 3.4.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 13, 2017 at 4:42 PM, Stefan Beller <sbeller@google.com> wrote:
-> On Fri, Nov 10, 2017 at 11:05 AM, Elijah Newren <newren@gmail.com> wrote:
+On Tue, 14 Nov 2017 12:40:03 -0800
+Stefan Beller <sbeller@google.com> wrote:
 
-> "In my opinion" ... sounds like commit message?
+> Thanks for the review!
+> 
+> This series was written with the mindset, that a user would only ever
+> want to describe bad blobs. (bad in terms of file size, unwanted content, etc)
+> 
+> With the --reverse you only see the *first* introduction of said blob,
+> so finding out if it was re-introduced is still not as easy, whereas "when
+> was this blob last used" which is what the current algorithm does, covers
+> that case better.
 
-Sure, I can move it there.
+How does "when was this blob last used" cover reintroduction better? If
+you want to check all introductions, then you'll need something like
+what I describe (quoted below).
 
+> > Alternatively, to me, it seems that listing commits that *introduces*
+> > the blob (that is, where it references the blob, but none of its parents
+> > do) would be the best way. That would then be independent of traversal
+> > order (and we would no longer need to find a tag etc. to tie the blob
+> > to).
+> 
+> What if it is introduced multiple times? (either in multiple competing
+> side branches; or introduced, reverted and re-introduced?)
 
->> +# Testcase 7a, rename-dir vs. rename-dir (NOT split evenly) PLUS add-other-file
->> +#   Commit A: z/{b,c}
->> +#   Commit B: y/{b,c}
->> +#   Commit C: w/b, x/c, z/d
->> +#   Expected: y/d, CONFLICT(rename/rename for both z/b and z/c)
->> +#   NOTE: There's a rename of z/ here, y/ has more renames, so z/d -> y/d.
->
-> But the creator of C intended to have z/d, not {w,x}/d, and as {w,x} == y,
-> I am not sure I like this result. (I have no concrete counter example, just
-> messy logic)
+Then all of them should be listed.
 
-I'm open to alternative interpretations here.  The biggest issue for
-me -- going back our discussion at the end of
-https://public-inbox.org/git/CABPp-BFKiam6AK-Gg_RzaLuLur-jz0kvv3TqsHNHg5+HTv_uzA@mail.gmail.com/
--- is "simple, predictable rule", which is consistent with the other
-rules and limits the number of nasty corner cases as much as possible.
-Perhaps you think this is one of those nasty corner cases, and that's
-fair, but I think it'd be hard to do much better.
+> > If we do that, it seems to me that there is a future optimization that
+> > could get the first commit to the user more quickly - once a commit
+> > without the blob and a descendant commit with the blob is found, that
+> > interval can be bisected, so that the first commit is found in O(log
+> > number of commits) instead of O(commits). But this can be done later.
+> 
+> bisection assumes that we only have one "event" going from good to
+> bad, which doesn't hold true here, as the blob can be there at different
+> occasions of the history.
 
-After spending quite a while trying to think of any other alternative
-rules or ways of looking at this, I could only come up with two
-points:
-
-  1) One could view this as a case where commit C didn't in fact do
-any directory rename -- note that directory z/ still exists in that
-commit.  Thus, only B did a rename, it renamed z/ -> y/, thus C's z/d
-should be moved to y/d.  So, this choice is consistent with the other
-rules we've got.
-
-  2) An alternate (or maybe additional?) rule: We could decide that if
-a source path is renamed on both sides of history, then we'll just
-ignore both renames for consideration of directory rename detection.
-
-The new rule idea would "fix" this testcase to your liking, although
-now we'd be somewhat inconsistent with the "directory still exists
-implies no directory rename occurred rule".  But what other weirdness
-could entail?  Here's a few I've thought of:
-
-Commit O: z/{b,c,d}
-Commit A: y/{b,c}
-Commit B: z/{newb, newc, e}
-
-Here, A renamed z/ -> y/.  Except B renamed z/b and z/c differently,
-so all paths used to detect the z/ -> y/ rename are ignored, so there
-isn't a rename after all.  I'm not so sure I like that decision.
-Let's keep looking though, and change it up a bit more:
-
-Commit O: z/{b,c,d}
-Commit A: y/{b,c}, x/d
-Commit B: z/{newb, newc, d, e}
-
-Here, A has a split rename.  Since B renames z/b and z/c differently,
-we have to ignore the z/ -> y/ rename, and thus the only rename left
-implies z/ -> x/.  Thus we'd end up with z/e getting moved into x/e.
-Seems weird to me, and less likely that a user would understand this
-rule than the "majority wins" one.
-
-
->> +# Testcase 7c, rename/rename(1to...2or3); transitive rename may add complexity
->> +#   (Related to testcases 3b and 5c)
->> +#   Commit A: z/{b,c}, x/d
->> +#   Commit B: y/{b,c}, w/d
->> +#   Commit C: z/{b,c,d}
->> +#   Expected: y/{b,c}, CONFLICT(x/d -> w/d vs. y/d)
->
-> CONFLICT(x/d -> y/d vs w/d) ?
-
-I'm afraid I'm not following the question.
-
->
->> +#   NOTE: z/ was renamed to y/ so we do not want to report
->> +#         either CONFLICT(x/d -> w/d vs. z/d)
->> +#         or CONFLiCT x/d -> w/d vs. y/d vs. z/d)
->
-> "neither ... nor" instead of "not either or"?
-
-Yes, thanks.
-
->> +# Testcase 7e, transitive rename in rename/delete AND dirs in the way
->> +#   (Very similar to 'both rename source and destination involved in D/F conflict' from t6022-merge-rename.sh)
->> +#   (Also related to testcases 9c and 9d)
->> +#   Commit A: z/{b,c},     x/d_1
->> +#   Commit B: y/{b,c,d/g}, x/d/f
->> +#   Commit C: z/{b,c,d_1}
->> +#   Expected: rename/delete(x/d_1->y/d_1 vs. None) + D/F conflict on y/d
->> +#             y/{b,c,d/g}, y/d_1~C^0, x/d/f
->> +#   NOTE: x/d/f may be slightly confusing here.  x/d_1 -> z/d_1 implies
->> +#         there is a directory rename from x/ -> z/, performed by commit C.
->> +#         However, on the side of commit B, it renamed z/ -> y/, thus
->> +#         making a rename from x/ -> z/ when it was getting rid of z/ seems
->> +#         non-sensical.  Further, putting x/d/f into y/d/f also doesn't
->> +#         make a lot of sense because commit B did the renaming of z to y
->> +#         and it created x/d/f, and it clearly made these things separate,
->> +#         so it doesn't make much sense to push these together.
->
-> This is confusing.
-
-Indeed it is.  When I first wrote this testcase, I didn't realize that
-I actually had two potentially directory renames involved and a
-doubly-transitive rename from it, on top of the D/F conflict.  I can
-see two ways to resolve this.
-
-1) Leave the testcase alone, just try to make the NOTE more clear:
-
-NOTE: The main path of interest here is d_1 and where it ends up, but
-this is actually a case that has two potential directory renames
-involved and D/F conflict(s), so it makes sense to walk through each
-step.  Commit B renames z/ -> y/.  Thus everything that C adds to z/
-should be instead moved to y/.  This gives us the D/F conflict on y/d
-because x/d_1 -> z/d_1 -> y/d_1 conflicts with y/d/g.  Further, commit
-C renames x/ -> z/, thus everything B adds to x/ should instead be
-moved to z/...BUT we removed z/ and renamed it to y/, so maybe
-everything should move not from x/ to z/, but from x/ to z/ to y/.
-Doing so might make sense from the logic so far, but note that commit
-B had both an x/ and a y/; it did the renaming of z/ to y/ and created
-x/d/f and it clearly made these things separate, so it doesn't make
-much sense to push these together.  Doing so is what I'd call a doubly
-transitive rename; see testcases 9c and 9d for further discussion of
-this issue and how it's resolved.
-
-2) Modify the testcase so it doesn't have two potential directory
-renames involved.  Just add another unrelated file under x/ that
-doesn't change on either side, thus removing the x/ -> z/ rename from
-the mix.  That wouldn't actually change the expected result (other
-than the new file should remain around), but it would change the
-reasoning and simplify it:
-
-NOTE: Commit B renames z/ -> y/.  Thus everything that C adds to z/
-should be instead moved to y/.  This gives us the D/F conflict on y/d
-because x/d_1 -> z/d_1 -> y/d_1 conflicts with y/d/g.  As a side note,
-one could imagine an alternative implementation trying to resolve D/F
-conflicts caused by renames by just undoing the rename, but in this
-case that would end up with us needing to write an x/d_1, which would
-still be a D/F conflict with x/d/f.
+Yes, bisection would only be useful to output one commit more quickly.
+We will still need to exhaustively search for all commits if the user
+needs more than one.
