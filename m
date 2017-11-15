@@ -2,109 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4E14E201C8
-	for <e@80x24.org>; Wed, 15 Nov 2017 16:59:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0B8A5201C8
+	for <e@80x24.org>; Wed, 15 Nov 2017 17:13:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933148AbdKOQ7q (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Nov 2017 11:59:46 -0500
-Received: from mail-pf0-f174.google.com ([209.85.192.174]:47046 "EHLO
-        mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932406AbdKOQ7p (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Nov 2017 11:59:45 -0500
-Received: by mail-pf0-f174.google.com with SMTP id i15so7112601pfa.3
-        for <git@vger.kernel.org>; Wed, 15 Nov 2017 08:59:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=MMIDOguf41GUU3v8WF0gae3sAnP6dk3DwlphUfv1Z3M=;
-        b=oaJu53CXriw5M0Jggt6PGLTKfXBNprWsAgWEbqcrgjSTf8wo3GpxRj8EeSYscOfeGW
-         GlslhiRUgfsweJZeRLOokOZT2bh8F9wBDk1jXxHmRki9QaSr78PXEOnDNDgc8FSUEeUG
-         CTRCkEKE5d5ZTI3B+yEbIKPvypXd/HES9Nintney34XeDURjYuo1qNnVjmH52iIWs347
-         4xA1J1ieD6CrAIK2E9tcoZOwtASlFlfHq30yZYLY2hugX3RxvRuaXfk9GEsNp2aK7RDu
-         3d+UbSl2d6fQNTxpFItXQbeIm/7L7CJQhGIVdvUuy8at+0rONiZ8gKEgrpDypcLAdPis
-         06Yg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=MMIDOguf41GUU3v8WF0gae3sAnP6dk3DwlphUfv1Z3M=;
-        b=ffNgZDlv60+0rOeM+VzUGARqf8g4SyTLEixX5NuBblK9PrcSNS9YSxrlC1FYpeeVhQ
-         nuuXEDheR8MRcnmjF1k6mj5zfHqYZF2fnVYgmbXXOTqZgTT0W5uoA27WdCiizxlKA1yk
-         wfa2ekRPg1y20vuAUtOSODmUE7C3mtE+zqcYTynvF2fEVVLMHdymhWJjlLBFneV2M5Lp
-         6V8j6TvQMkZ58vqjkr6ME/uNZqP3hetMjyfOPkgRDFLz1wbdGxF9OkUZB3KDYEVOJVbS
-         0nbA6r/GMfHWTryZq+rrjY6b7ejbQO5srm6knN8HcEfRGPtRZsl6Hz/E2FlCfGDkBZu3
-         ApKg==
-X-Gm-Message-State: AJaThX6zjOA+rTQCri8kzGsdmNdlQyRLiFLLWJ1qwoT+Sl47kscaulul
-        WzmwavNR8SbMIiVJiQGkOFZX+wHz
-X-Google-Smtp-Source: AGs4zMbEg4TmJHEqKmbpcXPoryp2WOoeMW9YRSOibg1Feo+Iq57vT9MoglGkxDBBnYJzjs+jJjZnCw==
-X-Received: by 10.98.32.21 with SMTP id g21mr11895355pfg.52.1510765184409;
-        Wed, 15 Nov 2017 08:59:44 -0800 (PST)
-Received: from ?IPv6:2405:204:72c0:fc36:9c82:85fe:4ccc:5d56? ([2405:204:72c0:fc36:9c82:85fe:4ccc:5d56])
-        by smtp.gmail.com with ESMTPSA id t4sm18536732pfd.110.2017.11.15.08.59.41
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 15 Nov 2017 08:59:43 -0800 (PST)
-Subject: Re: [PATCH v2 1/2] branch: forbid refs/heads/HEAD
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
-References: <20171013051132.3973-1-gitster@pobox.com>
- <20171114114259.8937-1-kaartic.sivaraam@gmail.com>
- <0f8166ab-7955-aa78-7d32-0ec80944f007@gmail.com>
- <xmqq375g3nkf.fsf@gitster.mtv.corp.google.com>
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Message-ID: <bb3485d0-71bc-452e-e4b9-8a7d767753a5@gmail.com>
-Date:   Wed, 15 Nov 2017 22:29:38 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.4.0
+        id S933432AbdKORNF (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Nov 2017 12:13:05 -0500
+Received: from mout.web.de ([212.227.15.3]:52727 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S933218AbdKORNA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Nov 2017 12:13:00 -0500
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb002
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0LlWRb-1eo4kP1ZOp-00bGjx; Wed, 15
+ Nov 2017 18:12:58 +0100
+Date:   Wed, 15 Nov 2017 18:12:58 +0100
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Ashish Negi <ashishnegi33@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Changing encoding of a file : What should happen to CRLF in file
+ ?
+Message-ID: <20171115171258.GA12963@tor.lan>
+References: <CAJ_+vJ6FXXda4fe7=1YxtDGR2d8CqP4KXN+YR6+mdQ+5jQQXug@mail.gmail.com>
+ <8b3225ce-a4aa-56ee-5296-6cc7528556d1@web.de>
+ <CAJ_+vJ5J250CtzVg4QwEusddviDSYuJhubsbTJyv5Nc2conAfA@mail.gmail.com>
+ <CAJ_+vJ7Yfcpz5252M4XJnDmEDCANp+eJ7RLJJF8TCcTxexZEUA@mail.gmail.com>
+ <f9dc6482-587d-50a9-d649-aed63be18fad@web.de>
+ <CAJ_+vJ6SxLOmZfG79Sa-vskBR-XG=C97--PB-vpijjUKym=jYw@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqq375g3nkf.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAJ_+vJ6SxLOmZfG79Sa-vskBR-XG=C97--PB-vpijjUKym=jYw@mail.gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Provags-ID: V03:K0:Ue/z0dToIBnxQlSJt14IoIrxKoPDglugomA6CPxDudmXRABUliy
+ da7Pgb8rr/9PqEI60xKin8BojpiLHH134MXNJNA4eU3Rz9mNwH0pvzD7iZE9A5YhEpPJ18N
+ bexWHSLVXydtiPcDdmZhEMB2fnutkrR2Zky4iYw3ruhy08M8ymixibWSoVnSUEnaVFzhROF
+ JSrO7qD9mVvYIaW7Kkhaw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:vHBeB36QgjI=:a7Mbj/AaNZayWb9rBPeqSG
+ t6ky+z7qEJyF4URVD++SQTVvN/5seVKcyN7BWTJU8weh2oQJb1zyyw1Im7kVhOPzAyQcIlrB/
+ qD3XdKOKZvrdVzPtmA47Gm9+cPaZfPA26b49TUkJVh1fwOAbGfRTEv8MSKo+N7fOMh4r1MYD2
+ 8k/pTpxNI29/RHxgeZque6yAFjENSRdaxAWnbeGEjEVp9KBi/6W/KCodld2SDg0iHyf0LaRHX
+ p9ryGSq1Owsr8juQOkq1xQ+DDBbfQ2BPjPz3lwUPbfXW9aj6NIp1/jq3KRi6YOV9Pxovr64TZ
+ 83h9BEeskDNfEszmarLTMoBCBGFxS4CKf2uXnj9WLo028foHcRmqWCnZuueBXrXYJVWBXc2px
+ Jo48TvqnX5WMS0l5r33m59oM+mKPXyyC4MEQLGu8r52YgK8KpGET6J9Qst0hrdZ38qwR2X/AH
+ f6U0ud59t0qCkSI88rUQJubaLS+z7Rb68Ug805LJum78YbfNopZHmq3KJ9KnKqHbgI6TaHp/9
+ EtLbxYm/btazFAOo3kp17qjk7J184+F4KYzKgfOLizaOLYrsTIAGl7RO/MlUH7G8smyNl9BCn
+ YuPNONrB5EVhhk9QSwtcITStWmCPP+qu+njBXUOScmwiDbMAJkyKAswICp7pfKhAttxjcyn++
+ 4rY/HpQosEdCLL+TozhK2XaWoY3PjbNyK9R+J+GbXUcmcCQ8E204wL6c4VEBWDnPlRkBXoUBr
+ Uab1lMn/buU5p1NGWgIFoNgSl5jHAsYaE0rraRHQcW8GeFfoTqVnabNAHNLO9Tsiq7SXtIFL5
+ mqxqZ81O9LB3p4Yd54SXeU/avK2DA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tuesday 14 November 2017 08:38 PM, Junio C Hamano wrote:
-> Kaartic Sivaraam <kaartic.sivaraam@gmail.com> writes:
+On Wed, Nov 15, 2017 at 01:41:42PM +0530, Ashish Negi wrote:
+> > If you commit the file, it will be stored with LF in the index,
+> This is what i believe is not happening.
 > 
->> I should have been a little more clear with the numbering, sorry. The
->> correct prefix should have been as follows,
->>
->>     * [PATCH v2 1/2] --> [PATCH v2 3/3]
->>
->>     * [PATCH v2 1/2] --> [PATCH v2 4/3]
->>
->> Sorry for the inconvenience.
+> Lets do this with a public repository and steps which are reproducible.
+> I have created a repo : https://github.com/ashishnegi/git_encoding
 > 
-> I assume that the second one above actually talks about what was
-> sent as "v2 2/2" (not "v2 1/2") being "4/3"?
->
+> If you clone this repo in linux and run `git status`, you will find
+> that file is modified.
 
-Yeah. Copy paste error, sorry.
+This is what what I get:
 
+ git ls-files --eol
+i/lf    w/lf    attr/text=auto          .gitattributes
+i/crlf  w/crlf  attr/text=auto          file_name.txt
 
-> Are these two patches follow-up fixes (replacement of 3/3 plus an
-> extra patch) to jc/branch-name-sanity topic?
-> 
+(And you get the same, I think)
+Newer versions of Git (>=2.10) will -not- treat file_name.txt as changed,
+older versions do.
+What does "git --version" say on your Linux machine ?
 
-Yes, that's right.
+However, if you want to fix it, you want to either end up with
 
+A)
+git ls-files --eol
+i/lf    w/lf    attr/text=auto          .gitattributes
+i/lf    w/crlf  attr/text=auto          file_name.txt
 
-> Thanks for working on these.
-> 
+or
+B)
+git ls-files --eol
+i/lf    w/lf    attr/text=auto          .gitattributes
+i/crlf  w/crlf  attr/-text              file_name.txt
 
-You're welcome. Please do be sure I haven't broken anything in v2. These 
-patches should cleanly apply on 'next', if they don't let me know.
+(The "attr/-text" means "don't change the line endings")
 
+Both A) or B) will work, typically A) is preferred.
 
-Thanks,
-Kaartic
+You should be able to achive A) :
+ git rm --cached file_name.txt  && git add file_name.txt 
+rm 'file_name.txt'
+warning: CRLF will be replaced by LF in file_name.txt.
+The file will have its original line endings in your working directory.
 
+git ls-files --eol
+i/lf    w/lf    attr/text=auto          .gitattributes
+i/lf    w/crlf  attr/text=auto          file_name.txt
+
+[snip the rest]
