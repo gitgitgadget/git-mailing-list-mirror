@@ -2,77 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C1878201C8
-	for <e@80x24.org>; Wed, 15 Nov 2017 22:03:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A90C3201C8
+	for <e@80x24.org>; Wed, 15 Nov 2017 22:08:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932558AbdKOWD4 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Nov 2017 17:03:56 -0500
-Received: from mout.gmx.net ([212.227.15.19]:51130 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932437AbdKOWDy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Nov 2017 17:03:54 -0500
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MOOdZ-1eIeYc1MW5-005ovu; Wed, 15
- Nov 2017 23:03:51 +0100
-Date:   Wed, 15 Nov 2017 23:03:45 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] sequencer: reschedule pick if index can't be locked
-In-Reply-To: <20171115104125.1686-1-phillip.wood@talktalk.net>
-Message-ID: <alpine.DEB.2.21.1.1711152301510.6482@virtualbox>
-References: <20171115104125.1686-1-phillip.wood@talktalk.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1753910AbdKOWIU (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Nov 2017 17:08:20 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60490 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1753199AbdKOWIS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Nov 2017 17:08:18 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B58B6B0D40;
+        Wed, 15 Nov 2017 17:08:15 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=9FTtq7hYgeHw3wkwdYoKsqjSNTY=; b=Rd0Os+WKcayfZx4bHQgN
+        cuW4FfEGfMw0owyPYGBWBrUXKbp9OijPeJ7uQSXOvSJRqatCKM25gz8jn4ZrGFeW
+        TDU2YfiBa9BjrMnwgu59l8IzM27oz9BCIKwHCpodZHnwAXmWrqsSOPOzduUAEuvp
+        OXKYES/xFPPUerqdqkgmRfw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         q=dns; s=sasl; b=wFXTk2QCPs0C1ZmIkSgMyX1+68wYenoib7I4pMd+TZHASo
+        d0ShtiTR2JdCy+fGKCsp6nOqa2mhGfVSA21Wpv6aQv3HAU+8bJUeks1xMaoXIvsE
+        9DjITni66Ys+IZIq/QQf3MwCdT03AhRPw32loWbdtq4FZpt2RDZ3KKQYkRp+U=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id AE462B0D3F;
+        Wed, 15 Nov 2017 17:08:15 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2F39FB0D3E;
+        Wed, 15 Nov 2017 17:08:15 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Luke Diamand <luke@diamand.org>
+Cc:     Git Users <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>
+Subject: Re: Bug in "revision.c: --all adds HEAD from all worktrees" ?
+References: <CAE5ih78nLL6UhKPObvFEA9xQZUtc1XpPvGJNaYTH9fJ0RyFRvA@mail.gmail.com>
+        <CAE5ih7_uuVVrze9gNr3JMg5HNH8eAcH_wM4wrc2kH6u=Hw0JOg@mail.gmail.com>
+Date:   Thu, 16 Nov 2017 07:08:13 +0900
+Message-ID: <xmqqtvxvyz3m.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:lp3USNLluOIkEjXA5fl7EsnK77jtJqqdH61X1kPRgPjrBMrxG18
- B7baW+Jh251wUi9Ilci3VpsNeZTL9ouC1Y2m27N/vJ0xbXQ6fHIylsQygy4a7tnOgDTeh7j
- 3wwbokxhFORiE4DzzLw09Ijat/XsD0IG6EiIB1SftuR3nYpDJ7bb7zYVNXHIT2H/Pkb3w41
- WxvxlbGGfIIxtXgYpxoWA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:0CO+NQne0DE=:tx/lHQcp6Q8AxeaRiSwVCs
- kImrmMm6cd4IosJ41rd17sAiyjlzPC1wi1jzbQdrLQTjTLFxPr5fq/qIy5QTpK0PPMDiuJ+W+
- KccOnZ6JvP7LlcFs4tC2RagAlEloRty8jsf9i/q2QSJNjiLKmEk4/WeVmodVqtvb+++MLvbBL
- f12DwYZG/hiCzwkNBP7sO7dqTGz0sQ20qUfTesCTQqwLUwxg7v9q7m2GF9z0b6arzvOZYpnX0
- phRmuBOdrW5ToCLKgbl+UzRqmlWxjI2OZj4Dncavywn12PrlJOX4IbW3vYGBugcb+XsRgNFc3
- 2R3hgWyQrhbZf/jiv4RwoKsWHlgypPE2Pdl+Bl9QNUSFRO+DztuVRMALif+gpqdetpg/d12BG
- OKo70w+3vlj/dR/dxR92ujNHqCS42mXXA9ItyHDbZJed3/EKMNZaac9dSFyEZMJQagSGbUR5k
- 5+Od+cBZ6kEMptcCNJnQVkQGNWCWQ2fuhMRw9HkJYM8wB7kOjueI8AJU/Xb3OKEkHclvLA9GL
- MgWz86gl2mM1PAEmFNu3pyPRQLmdixoY7+HXgk2EGkly0pfHFh4Dc2DN2YX5zwMn/+yUgC9E1
- SAA+huNqwiGCG9F+y9K5WmEGCuHmhM2EJrGYftOYRmFl1r8nVdW4cHH/yZweUyoWCm7e/AING
- XTexu1lpfTxBZfnMihul694X3Lmn9eIfSPDLvBfPFKQ/Ubd7Tc73FAjAAP9EGPr/z/DxAnP+R
- MDZmRnKWSBSAvxPHL2INhIBXEpcdMtn3hRIDB1hk+uYfPzQyeffjd+KE6WIQcYLWJ8HqUFozv
- GK6QEloHWTHoffNx7B8TDpf3kDIpJWGQRdKRy0oDutX5oaxNxM=
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7A5BD4B4-CA51-11E7-BFAA-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
+Luke Diamand <luke@diamand.org> writes:
 
-On Wed, 15 Nov 2017, Phillip Wood wrote:
+> Quite a few of the worktrees have expired - their head revision has
+> been GC'd and no longer points to anything sensible
+> (gc.worktreePruneExpire). The function other_head_refs() in worktree.c
+> bails out if there's an error, which I think is the problem. I wonder
+> if it should instead just report something and then keep going.
 
-> diff --git a/sequencer.c b/sequencer.c
-> index 6d027b06c8d8dc69b14d05752637a65aa121ab24..8c10442b84068d3fb7ec809ef1faa0203cb83e60 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -438,7 +438,8 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
->  	char **xopt;
->  	static struct lock_file index_lock;
->  
-> -	hold_locked_index(&index_lock, LOCK_DIE_ON_ERROR);
-> +	if (hold_locked_index(&index_lock, LOCK_REPORT_ON_ERROR))
+Am I correct to understand that your "git fsck" would fail because
+these HEAD refs used by other stale worktrees are pointing at
+missing objects?
 
-If you test the return value for *negative* values, I am fully on board
-with the change.
+What do you mean by "expired"?  "Even though I want to keep using
+them, Git for some reason decided to destroy them." or "I no longer
+use them but kept them lying around."?
 
-As far as I understand the code, hold_locked_index() returns -1 on error,
-but *a file descriptor* (which is usually not 0) upon success...
-
-Ciao,
-Dscho
+If the latter, I wonder "worktree prune" to remove the
+admininstrative information for them would unblock you?
