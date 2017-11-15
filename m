@@ -2,198 +2,189 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0D920202A0
-	for <e@80x24.org>; Wed, 15 Nov 2017 08:11:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 76316202A0
+	for <e@80x24.org>; Wed, 15 Nov 2017 08:49:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756783AbdKOILp (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Nov 2017 03:11:45 -0500
-Received: from mail-yw0-f172.google.com ([209.85.161.172]:46391 "EHLO
-        mail-yw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756582AbdKOILn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Nov 2017 03:11:43 -0500
-Received: by mail-yw0-f172.google.com with SMTP id a4so721704ywh.3
-        for <git@vger.kernel.org>; Wed, 15 Nov 2017 00:11:43 -0800 (PST)
+        id S1754867AbdKOItR (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Nov 2017 03:49:17 -0500
+Received: from mail-wm0-f54.google.com ([74.125.82.54]:45636 "EHLO
+        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752362AbdKOItQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Nov 2017 03:49:16 -0500
+Received: by mail-wm0-f54.google.com with SMTP id 9so1326030wme.4
+        for <git@vger.kernel.org>; Wed, 15 Nov 2017 00:49:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=yHsgC8AVMBCwslZ+iKsGDTSVtbcPS6kNUwZis9XFOR8=;
-        b=aGK2z0SKpjmJrTP1qcICUR0bua4/VAJAi4rahb+K1eOgadKZ59yOccEOCXXtkR7/Ni
-         P1FMrQ4/RynPhvEtIpfwI0p0IJTdL4wFy4EpPZ0PJ0XZf9uePt9WBGNc51dzQ/GdwWf2
-         0Rhk6KF0J5hwIYUtlFIzUe/bzl6J76UVVVpahCYevyYqPNnvl2FC+AoF8qQ4sfCAiYkO
-         k3gnbDSlMnn/b3/vU3Ndh/51SrHsziEny+o0KQj6duOlcmrQbtF5s9T1emyoDYW4lK6Q
-         TvOkMXHrHDZbJvQBs4q9i4nROK04IC8bJA2T9Pv0/zcCzYxpyECzWjXlZj9maKl/nt9W
-         lvrg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=tsH5fvXk5o0TKq32xuwqpl9ekXczoTcKM2deh9LDqFI=;
+        b=eAtFnPrBuN772bQUdAsBjUfqpRC1LCIrv9VnI75RJcnhGspgH5xewyHbQ6mv8W63AK
+         nUvO0U0kSGf1TS1CGPFvasm1zV41su92GE95XqiVOfVfRuDyxIIYnXvUz1YPxm3zgMRB
+         k/Y2SXoJCshn2CgSwc1GrK1bAYdhGrwTlN5LfdCLxEoGHNe6wT9VC9WK8mMw9M+1nctJ
+         87gYDYEL59KyZ0RDl9JIpZ2zRcMdFqCEY0QSV716c1qIj1XQ0SPLw2YNFblsqJiGYdd2
+         RYNxOt/2yw/aFL2hmoxCzuNncYoyL0EUN0MArx0KLNk1YT3xyr0fQnUZe1I/J1h6jCbP
+         2iyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=yHsgC8AVMBCwslZ+iKsGDTSVtbcPS6kNUwZis9XFOR8=;
-        b=dzuM3yrJd48ypi1ImkJ9gP/xxsMAqScj1sgvyCbS966q4vf0wCRF9u1FbUlKYoJKTl
-         YRMbA2pdTqLg9Y7iIXg+IQSPNM6U2JB5hkTAj9NExiGqVuekGHvkPO/yZVQxhck8pm1y
-         e94lVqQEYWwXQM1cpRMRMgkM59w7mhaQTH6/RXhXXV9iUvJQsXkhqNoKB5PnVukdUOgr
-         K5BI2tHlIQuuWHG1Qsi0uTtNFEbqjxsjrth40lTnHmWXGvCapj719fBcPrnRCqGh5JNt
-         tbVa66lCm3Ih3CH3ju3lltHL3snqqUQo5DUGQtdyHaJ5JhxP1bP9JuyZxy6PdIiw3d6J
-         WhnQ==
-X-Gm-Message-State: AJaThX4PuLrCa/qO6I7yZh+2OLRXD2gLzO+VEuYcbLnQmIHqnmtMcB8L
-        4e7GARaDYeHpRzWcKOK1fn73TeJBft6iLJ4KMvc=
-X-Google-Smtp-Source: AGs4zMbamjICB0t5+K0FY4z6tMKiG3DwZhZsQjStxImr+vuBBm14ZeKgXSOidMo9p0PQEGgTTmC3j8FT+Dch86faQLg=
-X-Received: by 10.13.198.133 with SMTP id i127mr9995189ywd.123.1510733502957;
- Wed, 15 Nov 2017 00:11:42 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=tsH5fvXk5o0TKq32xuwqpl9ekXczoTcKM2deh9LDqFI=;
+        b=R7PVSO6qfPYnU4Okjn0bjFtxKjzqdNgObzGf+8otkS67Dt1lKyvoemdH7ipfIwsObV
+         oc0FilwKDu05FxiOoEaNm2lv2EEiLlptcCjhu0q81mIGomknd0nB1Xdna0XtfOQfk0Gm
+         xUKnLJlKDGmFkR07avbzpQ6GDKstnnzcSaLBgmEFkTHbw3bzksRoUlLTk2k+3y7zqT2K
+         sfE2Uf30grgAZ0wOzVTOwSc02um/pKvK78vijSrIk7JcrkdnlKI9Q77YNt3AjgqyPIic
+         168MP+Zgy1bzpU8fN93PUwRUNfkWRApelArEByQyo4LDY+slu1VSoP+JdrHwAJuBB16K
+         923w==
+X-Gm-Message-State: AJaThX6RhrMKuRhh2TpMSUc403foaaFkF87FP4m8sckBtSGwjAa8GQRo
+        G9s4q3NlyewMocDglAg6Aik=
+X-Google-Smtp-Source: AGs4zMZXIg3B1qaIgLB2yZoPE92SFsA1sGm8WVonlPrF1LeHGxxPiRby+aXyeTR2y6Wyl37yPpeKTQ==
+X-Received: by 10.28.10.195 with SMTP id 186mr10284324wmk.136.1510735754611;
+        Wed, 15 Nov 2017 00:49:14 -0800 (PST)
+Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
+        by smtp.gmail.com with ESMTPSA id z11sm5867020wre.73.2017.11.15.00.49.13
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 15 Nov 2017 00:49:13 -0800 (PST)
+Date:   Wed, 15 Nov 2017 08:50:39 +0000
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: [PATCH v1 2/2] worktree: make add dwim
+Message-ID: <20171115085039.GA32324@hank>
+References: <20171112134305.3949-1-t.gummerer@gmail.com>
+ <20171112134305.3949-2-t.gummerer@gmail.com>
+ <xmqq1sl2c21g.fsf@gitster.mtv.corp.google.com>
+ <20171114084517.GA12097@hank>
+ <CAPig+cTYC01Y9-EvyNo9hxQRbT60iqp8MqXEB_zWBi14kPV1Ng@mail.gmail.com>
 MIME-Version: 1.0
-Received: by 10.13.203.85 with HTTP; Wed, 15 Nov 2017 00:11:42 -0800 (PST)
-In-Reply-To: <f9dc6482-587d-50a9-d649-aed63be18fad@web.de>
-References: <CAJ_+vJ6FXXda4fe7=1YxtDGR2d8CqP4KXN+YR6+mdQ+5jQQXug@mail.gmail.com>
- <8b3225ce-a4aa-56ee-5296-6cc7528556d1@web.de> <CAJ_+vJ5J250CtzVg4QwEusddviDSYuJhubsbTJyv5Nc2conAfA@mail.gmail.com>
- <CAJ_+vJ7Yfcpz5252M4XJnDmEDCANp+eJ7RLJJF8TCcTxexZEUA@mail.gmail.com> <f9dc6482-587d-50a9-d649-aed63be18fad@web.de>
-From:   Ashish Negi <ashishnegi33@gmail.com>
-Date:   Wed, 15 Nov 2017 13:41:42 +0530
-Message-ID: <CAJ_+vJ6SxLOmZfG79Sa-vskBR-XG=C97--PB-vpijjUKym=jYw@mail.gmail.com>
-Subject: Re: Changing encoding of a file : What should happen to CRLF in file ?
-To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-Cc:     git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="001a114e52f6cb6eeb055e010d76"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAPig+cTYC01Y9-EvyNo9hxQRbT60iqp8MqXEB_zWBi14kPV1Ng@mail.gmail.com>
+User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---001a114e52f6cb6eeb055e010d76
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 11/14, Eric Sunshine wrote:
+> On Tue, Nov 14, 2017 at 3:45 AM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
+> > On 11/13, Junio C Hamano wrote:
+> >> If so, as long as the new DWIM kicks in ONLY when "topic" does not
+> >> exist, I suspect that there is no backward compatibility worries.
+> >> The command line
+> >>
+> >>     $ git worktree add ../a-new-worktree topic
+> >>
+> >> would just have failed because three was no 'topic' branch yet, no?
+> >
+> > Indeed, with this there would not be any backwards compatility
+> > worries.
+> >
+> > Ideally I'd still like to make
+> >
+> >     $ git worktree add ../topic
+> >
+> > work as described above, to avoid having to type 'topic' twice (the
+> > directory name matches the branch name for the vast majority of my
+> > worktrees) but that should then come behind a flag/config option?
+> > Following your reasoning above it should probably be called something
+> > other than --guess.
+> >
+> > Maybe --guess-remote and worktree.guessRemote would do?  I'm quite bad
+> > at naming though, so other suggestions are very welcome.
+> 
+> For my own edification...
+> 
+> git worktree add ../dir branch
+> 
+> * Checks out branch into ../dir if branch exists.
+> 
+> * Errors out if branch does not exist. However, if we consider the
+> history of the implementation of worktrees[*1*], then this really
+> ought to try the "origin/branch -> branch" DWIM before erroring-out.
+> Implementing this DWIM could be considered a regression fix according
+> to [*1*] and, as Junio points out, should not pose backward
+> compatibility worries.
 
-> If you commit the file, it will be stored with LF in the index,
-This is what i believe is not happening.
+Agreed, I think it is not very controversial that this would be an
+improvement.
 
-Lets do this with a public repository and steps which are reproducible.
-I have created a repo : https://github.com/ashishnegi/git_encoding
+> git worktree add ../topic
+> 
+> * Correctly errors out, refusing to create a new branch named "topic",
+> if "topic" is already a branch.
+> 
+> * Creates a new branch named "topic" if no such local branch exists.
+> 
+> The desired new DWIMing would change the second bullet point to:
+> 
+> * If no local branch named "topic" exists, DWIM it from "origin/topic"
+> if possible, else create a new local branch named "topic".
+> 
+> But that's a behavior change since, with the existing implementation,
+> a newly created local "topic" has no relation to, and does not track,
+> any origin/topic branch. The proposed --guess option is to avoid users
+> being hit by this backward incompatibility, however, one could also
+> view the proposed DWIMing as some sort of bug fix since, at least
+> some, users would expect the DWIMing since it already takes place
+> elsewhere.
 
-If you clone this repo in linux and run `git status`, you will find
-that file is modified.
+I'm not sure we can call it a bug fix anymore, since as Junio pointed
+out the current behaviour of creating a new branch at HEAD is
+documented in the man page.
 
-About repo :
-Repo have 2 commits, done on windows machine.
-First one check in a utf-16le encoded file which has crlf. crlf will
-not be converted to lf in index as git treats it as binary file.
-2nd commit changes encoding to utf-8 and commits.
-This commit does not change crlf to lf in index, even though new
-format is utf-8 which is text based for git. This is the crux of
-problem.
+However git-worktree is also still marked as experimental in the man
+page, so we could allow ourselves to be a little bit more lax when it
+comes to backwards compatibility, especially because it is easy to
+take corrective action after the new DWIMing happened.
 
-I have attached all commands i ran on windows while creating the repo.
-I tried to capture all information that i could give.
-Please have a look. It might be useful.
+> So, at least two options exist:
+> 
+> * Just make the new DWIMing the default behavior, accepting that it
+> might bite a few people. Fallout can be mitigated somewhat by
+> prominently announcing that the DWIMing took place, in which case the
+> user can take corrective action (say, by choosing a different worktree
+> name); nothing is lost and no damage done since this is happening only
+> at worktree creation time.
+> 
+> * Add a new option to enable DWIMing; perhaps name it -t/--track,
+> which is familiar terminology and still gives you a relatively short
+> and sweet "git worktree add -t ../topic".
+> 
+> Given the mentioned mitigation factor and that some/many users likely
+> would expect it to DWIM "origin/topic -> topic" anyhow, I'd lean in
+> favor of the first option (but perhaps I'm too daring with other
+> people's workflows).
 
-Finally, thank you Torsten for giving your time to the problem. Really
-appreciate it.
+Yeah, I'm leaning towards the first option as well, but I'm clearly
+biased as that's how I'd like it to behave, and others might want the
+other behaviour.  Unfortunately I don't know many worktree users, so I
+can't tell what the general consensus on this would be.
 
-On Tue, Nov 14, 2017 at 10:39 PM, Torsten B=C3=B6gershausen <tboegi@web.de>=
- wrote:
-> (Back to the beginning)
->
-> You have a file ApplicationManifest.xml
-> It is encoded in UTF-16 (and has CRLF)
->
-> You convert it into UTF-8
-> The file has still CRLF (in the worktree)
->
-> Now you add it and make a commit.
-> Under both Linux and Windows you have "text=3Dauto".
->
-> I assume that you have efficiently core.eol=3Dlf under Linux
-> and core.eol=3Dcrlf on Windows.
->
-> (That is the default, when you don't change anything)
->
-> Now, what happens to the CRLF?
-> If you commit the file, it will be stored with LF in the index,
-> on both systems.
-> On checkout, Windows will convert them into CRLF, but Linux will not.
->
-> That why you see
->>On linux, during committing i get warning : warning: CRLF will be
->>replaced by LF in =E2=80=A6file_name..
->
-> All in all there is nothing wrong, at least as I see it.
->
-> The question remains:
-> Do you need CRLF in Linux ?
-> Probably not, but if yes, plase add a line
->
-> *.xml text eol=3Dcrlf
->
-> to your
-> .gitattributes
->
-> Otherwise your .gitconfig looks good to  me.
->
->
->
->
->
->
+I guess the second option would be the safer one, and we can still
+switch that to be the default at some point if we wish to do so
+later.
 
---001a114e52f6cb6eeb055e010d76
-Content-Type: text/plain; charset="US-ASCII"; name="all_git_commands_output.txt"
-Content-Disposition: attachment; filename="all_git_commands_output.txt"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_ja0rmjpk0
+tl;dr I have no idea which of the options would be better :)
 
-Z2l0X2VuY29kaW5nX3JlcG8+Z2l0IGNvbmZpZyAtLWdsb2JhbCBjb3JlLnNhZmVjcmxmCnRydWUK
-CmdpdF9lbmNvZGluZ19yZXBvPmdpdCBjb25maWcgIGNvcmUuYXV0b2NybGYKZmFsc2UKCmdpdF9l
-bmNvZGluZ19yZXBvPmdpdCBjb25maWcgLS1nZXQgY29yZS5hdXRvY3JsZgpmYWxzZQoKZ2l0X2Vu
-Y29kaW5nX3JlcG8+Y2F0IC5naXRhdHRyaWJ1dGVzCiMgU2V0IHRoZSBkZWZhdWx0IGJlaGF2aW9y
-LCBpbiBjYXNlIHBlb3BsZSBkb24ndCBoYXZlIGNvcmUuYXV0b2NybGYgc2V0LgoqIHRleHQ9YXV0
-bwoKKi52Y3hwcm9qIGVvbD1jcmxmCiouc2ggICAgICBlb2w9bGYKCiMgRGVub3RlIGFsbCBmaWxl
-cyB0aGF0IGFyZSB0cnVseSBiaW5hcnkgYW5kIHNob3VsZCBub3QgYmUgbW9kaWZpZWQuCiouZXhl
-IGJpbmFyeQoqLmRsbCBiaW5hcnkKKi5wZGIgYmluYXJ5CiouaWNvIGJpbmFyeQoqLnBuZyBiaW5h
-cnkKKi5qcGcgYmluYXJ5CgpnaXRfZW5jb2RpbmdfcmVwbz5naXQgc3RhdHVzCk9uIGJyYW5jaCBt
-YXN0ZXIKCk5vIGNvbW1pdHMgeWV0CgpVbnRyYWNrZWQgZmlsZXM6CiAgKHVzZSAiZ2l0IGFkZCA8
-ZmlsZT4uLi4iIHRvIGluY2x1ZGUgaW4gd2hhdCB3aWxsIGJlIGNvbW1pdHRlZCkKCiAgICAgICAg
-LmdpdGF0dHJpYnV0ZXMKICAgICAgICBmaWxlX25hbWUudHh0Cgpub3RoaW5nIGFkZGVkIHRvIGNv
-bW1pdCBidXQgdW50cmFja2VkIGZpbGVzIHByZXNlbnQgKHVzZSAiZ2l0IGFkZCIgdG8gdHJhY2sp
-CgpnaXRfZW5jb2RpbmdfcmVwbz5naXQgbHMtZmlsZXMgLS1lb2wgZmlsZV9uYW1lLnR4dAoKZ2l0
-X2VuY29kaW5nX3JlcG8+Z2l0IGFkZCAuCgpnaXRfZW5jb2RpbmdfcmVwbz5naXQgc3RhdHVzCk9u
-IGJyYW5jaCBtYXN0ZXIKCk5vIGNvbW1pdHMgeWV0CgpDaGFuZ2VzIHRvIGJlIGNvbW1pdHRlZDoK
-ICAodXNlICJnaXQgcm0gLS1jYWNoZWQgPGZpbGU+Li4uIiB0byB1bnN0YWdlKQoKICAgICAgICBu
-ZXcgZmlsZTogICAuZ2l0YXR0cmlidXRlcwogICAgICAgIG5ldyBmaWxlOiAgIGZpbGVfbmFtZS50
-eHQKCgpnaXRfZW5jb2RpbmdfcmVwbz5naXQgbHMtZmlsZXMgLS1lb2wgZmlsZV9uYW1lLnR4dApp
-Ly10ZXh0IHcvLXRleHQgYXR0ci90ZXh0PWF1dG8gICAgICAgICAgZmlsZV9uYW1lLnR4dAoKZ2l0
-X2VuY29kaW5nX3JlcG8+Z2l0IGNvbW1pdCAtbSAiQ29tbWl0IHV0Zi0xNmxlIGVuY29kZWQgZmls
-ZSB3aGljaCBoYXMgY3JsZi4iClttYXN0ZXIgKHJvb3QtY29tbWl0KSA5MWZlM2JkXSBDb21taXQg
-dXRmLTE2bGUgZW5jb2RlZCBmaWxlIHdoaWNoIGhhcyBjcmxmLgogMiBmaWxlcyBjaGFuZ2VkLCAx
-MyBpbnNlcnRpb25zKCspCiBjcmVhdGUgbW9kZSAxMDA2NDQgLmdpdGF0dHJpYnV0ZXMKIGNyZWF0
-ZSBtb2RlIDEwMDY0NCBmaWxlX25hbWUudHh0CgojIyBBdCB0aGlzIHRpbWUsIGkgY2hhbmdlZCBm
-aWxlIGVuY29kaW5nIHRvIHV0Zi04LgoKZ2l0X2VuY29kaW5nX3JlcG8+Z2l0IHN0YXR1cwpPbiBi
-cmFuY2ggbWFzdGVyCm5vdGhpbmcgdG8gY29tbWl0LCB3b3JraW5nIHRyZWUgY2xlYW4KCmdpdF9l
-bmNvZGluZ19yZXBvPmdpdCBhZGQgLXAKT25seSBiaW5hcnkgZmlsZXMgY2hhbmdlZC4KCmdpdF9l
-bmNvZGluZ19yZXBvPmdpdCBzdGF0dXMKT24gYnJhbmNoIG1hc3RlcgpDaGFuZ2VzIG5vdCBzdGFn
-ZWQgZm9yIGNvbW1pdDoKICAodXNlICJnaXQgYWRkIDxmaWxlPi4uLiIgdG8gdXBkYXRlIHdoYXQg
-d2lsbCBiZSBjb21taXR0ZWQpCiAgKHVzZSAiZ2l0IGNoZWNrb3V0IC0tIDxmaWxlPi4uLiIgdG8g
-ZGlzY2FyZCBjaGFuZ2VzIGluIHdvcmtpbmcgZGlyZWN0b3J5KQoKICAgICAgICBtb2RpZmllZDog
-ICBmaWxlX25hbWUudHh0CgpubyBjaGFuZ2VzIGFkZGVkIHRvIGNvbW1pdCAodXNlICJnaXQgYWRk
-IiBhbmQvb3IgImdpdCBjb21taXQgLWEiKQoKZ2l0X2VuY29kaW5nX3JlcG8+Z2l0IGFkZCBmaWxl
-X25hbWUudHh0CgpnaXRfZW5jb2RpbmdfcmVwbz5naXQgc3RhdHVzCk9uIGJyYW5jaCBtYXN0ZXIK
-Q2hhbmdlcyB0byBiZSBjb21taXR0ZWQ6CiAgKHVzZSAiZ2l0IHJlc2V0IEhFQUQgPGZpbGU+Li4u
-IiB0byB1bnN0YWdlKQoKICAgICAgICBtb2RpZmllZDogICBmaWxlX25hbWUudHh0CgoKZ2l0X2Vu
-Y29kaW5nX3JlcG8+Z2l0IGNvbW1pdCAtbSAiQ2hhbmdlIGVuY29kaW5nIG9mIGZpbGUgdG8gdXRm
-LTgiClttYXN0ZXIgMTc5YzI3Yl0gQ2hhbmdlIGVuY29kaW5nIG9mIGZpbGUgdG8gdXRmLTgKIDEg
-ZmlsZSBjaGFuZ2VkLCAwIGluc2VydGlvbnMoKyksIDAgZGVsZXRpb25zKC0pCiByZXdyaXRlIGZp
-bGVfbmFtZS50eHQgKDEwMCUpCgpnaXRfZW5jb2RpbmdfcmVwbz5naXQgcmVtb3RlIGFkZCBvcmln
-aW4gaHR0cHM6Ly9naXRodWIuY29tL2FzaGlzaG5lZ2kvZ2l0X2VuY29kaW5nLmdpdAoKZ2l0X2Vu
-Y29kaW5nX3JlcG8+Z2l0IHB1c2ggLXUgb3JpZ2luIG1hc3RlcgpDb3VudGluZyBvYmplY3RzOiA3
-LCBkb25lLgpEZWx0YSBjb21wcmVzc2lvbiB1c2luZyB1cCB0byAxMiB0aHJlYWRzLgpDb21wcmVz
-c2luZyBvYmplY3RzOiAxMDAlICg3LzcpLCBkb25lLgpXcml0aW5nIG9iamVjdHM6IDEwMCUgKDcv
-NyksIDgzNyBieXRlcyB8IDgzNy4wMCBLaUIvcywgZG9uZS4KVG90YWwgNyAoZGVsdGEgMCksIHJl
-dXNlZCAwIChkZWx0YSAwKQpUbyBodHRwczovL2dpdGh1Yi5jb20vYXNoaXNobmVnaS9naXRfZW5j
-b2RpbmcuZ2l0CiAqIFtuZXcgYnJhbmNoXSAgICAgIG1hc3RlciAtPiBtYXN0ZXIKQnJhbmNoIG1h
-c3RlciBzZXQgdXAgdG8gdHJhY2sgcmVtb3RlIGJyYW5jaCBtYXN0ZXIgZnJvbSBvcmlnaW4uCgpn
-aXRfZW5jb2RpbmdfcmVwbz5naXQgbHMtZmlsZXMgLS1lb2wgZmlsZV9uYW1lLnR4dAppL2NybGYg
-IHcvY3JsZiAgYXR0ci90ZXh0PWF1dG8gICAgICAgICAgZmlsZV9uYW1lLnR4dAoKZ2l0X2VuY29k
-aW5nX3JlcG8+
---001a114e52f6cb6eeb055e010d76--
+> FOOTNOTES
+> 
+> [*1*]: When Duy first implemented worktree support, he incorporated it
+> directly into the git-checkout command ("git checkout --to worktree
+> ..."), which means that he got all the git-checkout features for free,
+> including the "origin/branch -> branch" DWIM. When worktree support
+> was later moved to git-worktree, it lost most of the features
+> inherited implicitly from git-checkout, such as -b, -B, --detach, so
+> those were added back to git-worktree explicitly. However, at that
+> early stage, git-worktree was still piggy-backing atop git-checkout,
+> thus likely was still getting the "origin/branch -> branch" DWIM for
+> free. A final iteration converted git-worktree away from heavyweight
+> git-checkout to lightweight git-reset, at which point he DWIMing was
+> lost. If you take this history into account, then loss of
+> "origin/branch -> branch" DWIMing is a regression, so restoring it
+> could be considered a bug fix.
