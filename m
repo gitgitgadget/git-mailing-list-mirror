@@ -2,73 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A90C3201C8
-	for <e@80x24.org>; Wed, 15 Nov 2017 22:08:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8DD3D201C8
+	for <e@80x24.org>; Wed, 15 Nov 2017 22:10:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753910AbdKOWIU (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Nov 2017 17:08:20 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60490 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753199AbdKOWIS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Nov 2017 17:08:18 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B58B6B0D40;
-        Wed, 15 Nov 2017 17:08:15 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=9FTtq7hYgeHw3wkwdYoKsqjSNTY=; b=Rd0Os+WKcayfZx4bHQgN
-        cuW4FfEGfMw0owyPYGBWBrUXKbp9OijPeJ7uQSXOvSJRqatCKM25gz8jn4ZrGFeW
-        TDU2YfiBa9BjrMnwgu59l8IzM27oz9BCIKwHCpodZHnwAXmWrqsSOPOzduUAEuvp
-        OXKYES/xFPPUerqdqkgmRfw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         q=dns; s=sasl; b=wFXTk2QCPs0C1ZmIkSgMyX1+68wYenoib7I4pMd+TZHASo
-        d0ShtiTR2JdCy+fGKCsp6nOqa2mhGfVSA21Wpv6aQv3HAU+8bJUeks1xMaoXIvsE
-        9DjITni66Ys+IZIq/QQf3MwCdT03AhRPw32loWbdtq4FZpt2RDZ3KKQYkRp+U=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id AE462B0D3F;
-        Wed, 15 Nov 2017 17:08:15 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2F39FB0D3E;
-        Wed, 15 Nov 2017 17:08:15 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Luke Diamand <luke@diamand.org>
-Cc:     Git Users <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>
-Subject: Re: Bug in "revision.c: --all adds HEAD from all worktrees" ?
-References: <CAE5ih78nLL6UhKPObvFEA9xQZUtc1XpPvGJNaYTH9fJ0RyFRvA@mail.gmail.com>
-        <CAE5ih7_uuVVrze9gNr3JMg5HNH8eAcH_wM4wrc2kH6u=Hw0JOg@mail.gmail.com>
-Date:   Thu, 16 Nov 2017 07:08:13 +0900
-Message-ID: <xmqqtvxvyz3m.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1753740AbdKOWKy (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Nov 2017 17:10:54 -0500
+Received: from cp-27.webhostbox.net ([208.91.198.76]:38936 "EHLO
+        cp-27.webhostbox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752585AbdKOWKt (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Nov 2017 17:10:49 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=unimetic.com; s=default; h=Message-ID:References:In-Reply-To:Subject:Cc:To:
+        From:Date:Content-Transfer-Encoding:Content-Type:MIME-Version:Sender:Reply-To
+        :Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+        Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=iUhKrDkvoJ7Qj/2Kz6XGcQF/IutziMiNfhOvSxNGq0k=; b=gMa3V6OvEqnFoeQUl/XuL9gRnT
+        JO40x35CBnD64QUkaU39AAzd0cNo+Pn+PZez+6p98yYDu2T1OwIKUkyS2QlVu/qwk0lgiFDR2BUc2
+        HwTPzFG7cnNwUu08wZxCUNcri0rmQwnSP2biGxmSZke4gOMTf6sD6pV/LxMQU1/r+hcdu6C0XCbtR
+        4fyToi2jWbceslov+lHOYXp21pcnGR+ohm2QPjZihlVcLdZUqYtlXu+ZfVMTL0RUCqVt3EgvlFkez
+        xeA5r8919i0/6nlEeZJ5Rtzh3zxBhSDsJFoQgHW6DEgftkUPQ6nngFqeSZ0pMoKKZXbYrX02qKfL1
+        xnYDTtHw==;
+Received: from [127.0.0.1] (port=36610 helo=unimetic.com)
+        by cp-27.webhostbox.net with esmtpa (Exim 4.89)
+        (envelope-from <hsed@unimetic.com>)
+        id 1eF5tQ-001tyO-OL; Wed, 15 Nov 2017 22:10:49 +0000
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 7A5BD4B4-CA51-11E7-BFAA-575F0C78B957-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 15 Nov 2017 22:10:48 +0000
+From:   hsed@unimetic.com
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git <git@vger.kernel.org>
+Subject: Re: [PATCH V2] config: add --expiry-date
+In-Reply-To: <xmqqshdh2wln.fsf@gitster.mtv.corp.google.com>
+References: <20171112145535.gb4nafdhhdslknex@sigill.intra.peff.net>
+ <1510625073-8842-1-git-send-email-hsed@unimetic.com>
+ <xmqqshdh2wln.fsf@gitster.mtv.corp.google.com>
+Message-ID: <d1c0558cd56b4509c3e34daa48fd528d@unimetic.com>
+X-Sender: hsed@unimetic.com
+User-Agent: Roundcube Webmail/1.2.3
+X-Authenticated_sender: hsed@unimetic.com
+X-OutGoing-Spam-Status: No, score=-1.0
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cp-27.webhostbox.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - unimetic.com
+X-Get-Message-Sender-Via: cp-27.webhostbox.net: authenticated_id: hsed@unimetic.com
+X-Authenticated-Sender: cp-27.webhostbox.net: hsed@unimetic.com
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Luke Diamand <luke@diamand.org> writes:
+On 2017-11-14 06:38, Junio C Hamano wrote:
+> hsed@unimetic.com writes:
+> 
+>> From: Haaris <hsed@unimetic.com>
+>> 
+>> Description:
+>> This patch adds a new option to the config command.
+>> 
+>> ...
+>> 
+>> Motivation:
+>> A parse_expiry_date() function already existed for api calls,
+>> this patch simply allows the function to be used from the command 
+>> line.
+>> 
+>> Signed-off-by: Haaris <hsed@unimetic.com>
+>> ---
+> 
+> Please drop all these section headers; they are irritating.  Learn
+> from "git log --no-merges" how the log messages in this project is
+> written and imitate them.  Documentation/SubmittingPatches would be
+> helpful.
+> 
+> 	Add --expiry-date as a new type 'git config --get' takes,
+> 	similar to existing --int, --bool, etc. types, so that
+> 	scripts can learn values of configuration variables like
+> 	gc.reflogexpire (e.g. "2.weeks") in a more useful way
+> 	(e.g. the timesamp as of two weeks ago, expressed in number
+> 	of seconds since epoch).
+> 
+> 	As a helper function necessary to do this already exists in
+> 	the implementation of builtin/reflog.c, the implementation
+> 	is just the matter of moving it to config.c and using it
+> 	from bultin/config.c, but shuffle the order of the parameter
+> 	so that the pointer to the output variable comes first.
+> 	This is to match the convention used by git_config_pathname()
+> 	and other helper functions.
+> 
+> or something like that?
 
-> Quite a few of the worktrees have expired - their head revision has
-> been GC'd and no longer points to anything sensible
-> (gc.worktreePruneExpire). The function other_head_refs() in worktree.c
-> bails out if there's an error, which I think is the problem. I wonder
-> if it should instead just report something and then keep going.
+Hi,
+I am sorry for not following the format properly. I will change this for
+next patch update.
 
-Am I correct to understand that your "git fsck" would fail because
-these HEAD refs used by other stale worktrees are pointing at
-missing objects?
+> 
+>> +		} else if (types == TYPE_EXPIRY_DATE) {
+>> +			timestamp_t t;
+>> +			if(git_config_expiry_date(&t, key_, value_) < 0)
+> 
+> Style.
 
-What do you mean by "expired"?  "Even though I want to keep using
-them, Git for some reason decided to destroy them." or "I no longer
-use them but kept them lying around."?
+Sure.
 
-If the latter, I wonder "worktree prune" to remove the
-admininstrative information for them would unblock you?
+> 
+> 	if (git_config_expiry_date(&t, key_, value_) < 0)
+> 
+>> +				return -1;
+>> +			strbuf_addf(buf, "%"PRItime, t);
+>> ...
+> 
+> Thanks.
+
+
+Kind Regards,
+Haaris
