@@ -4,102 +4,136 @@ X-Spam-Level:
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1F3D3201C8
-	for <e@80x24.org>; Wed, 15 Nov 2017 18:44:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C9349201C8
+	for <e@80x24.org>; Wed, 15 Nov 2017 19:05:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758197AbdKOSoD (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Nov 2017 13:44:03 -0500
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:57029 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752585AbdKOSoB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Nov 2017 13:44:01 -0500
-Received: by mail-pg0-f65.google.com with SMTP id z184so13235441pgd.13
-        for <git@vger.kernel.org>; Wed, 15 Nov 2017 10:44:01 -0800 (PST)
+        id S932421AbdKOTFg (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Nov 2017 14:05:36 -0500
+Received: from mail-yw0-f176.google.com ([209.85.161.176]:47019 "EHLO
+        mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753579AbdKOTFe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Nov 2017 14:05:34 -0500
+Received: by mail-yw0-f176.google.com with SMTP id a4so2256350ywh.3
+        for <git@vger.kernel.org>; Wed, 15 Nov 2017 11:05:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=qWVlvl9nzqPufsNOx5z3dIWddnHwyy4kJo7h8RuT1GA=;
-        b=kMuvQihXY9zH6jwl1Qo/UMfu1HzfLecqwidcg5HonMaJUAENAC82b7qDsUpcgzvUpQ
-         tj9dYi4uGhV2Ddm+yw0cyFpTiwSddfoPk/zBOGNU/L8wafZb4hkyKt1RnXIn9bhFb4h1
-         M8cKZn6LSn7CBrMEe2W8Up+uMRTQzy3747rP15UPQeIGUr/8tWrL1I3rTc+FAUJcsX6J
-         JzMNjh/mZy5l0vfwNwoHgZGzv9lUaR/QF2xCuCaDZUarMBqnFFiOEZiFfkPeweOZtr2q
-         I7XmJdMg4tlovIWTRY9mQRUuJw+IsdsMPxR1c5L2p2so8ijjOmE/2zm72b+uZXA9Rp4B
-         rJ9Q==
+         :cc:content-transfer-encoding;
+        bh=toLr4dl49sGzIE28UHXqzmTA3uyRGV9VclcWxMeOjZw=;
+        b=k/O3Frx7896Xoxl3PaA6mCG85CrY6U6CeP7zJ64f5NWiDQH2lg/sttLDuMKKKmEvxd
+         FDmjJmLI9ZwD02AXZ4vZrlqmPiS6Bs1t5oiMuTP7/tDc4WdMw86elt9IcOdU/cSqlmhE
+         5DdX18feIqc3x+WeMQw/Jogfyq1agrTlnvEMf0TlCBUkx+c0NtjNaUA7HW1WrZuKolkJ
+         NPqLuLQ/21cze2jKfRXFliEf6ZALSskGa/60W/04NLNQh58rEJOAsgL/SCiclyOiiRnG
+         nAoWXphFoRowUwCatUrRItbqpax8rDpr/b32o0hbqLwqeyXcBanYmQZk7aGY4JsP3/tC
+         CNig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=qWVlvl9nzqPufsNOx5z3dIWddnHwyy4kJo7h8RuT1GA=;
-        b=CRb32niXJpUuukJzhlVuvyt2d3n3LNELw7+/GKKg4W8RkUMcU7ErVctPJIFAG3Liyj
-         StkW4/FXBNU2LoBNEO/MwqwvrHGWAc4a4xnaS7pVnbqcD3mUK0+B6TMZpjS9f3NQYRED
-         6hUy/UZ0FawCGf0ZsdhxU29PDTF9NSZMs1D38G+25XIkelnSva7PHWaF8KNngU8o7/ST
-         KmRB5MqFPbi6b67fEOjvZE5NGABaGr1Jqb8IPTf6x6XKlJouBThAim6bc6oUMB5AbD70
-         rcHpqWRvk1LIK2kzMU+TKE0i5S8qEKqjjW7qrbxLJvnCnIlWsJxiXWnprGVqab/YRKDb
-         /7pA==
-X-Gm-Message-State: AJaThX5mjC3z07GVjuxFaYJT2XWCHmQ/C1qx9o5DYnjP9AWAMRVmi4dI
-        r3Dk2gKnJqhIlBaLHEIUE0G7sFLSSKy29hld3kSajg==
-X-Google-Smtp-Source: AGs4zMbkg3c6VIPPRssFJBH/rPlmTB/X9cLlPmTrfutIfdfE9rkP2bm2thBm3v8vyOrlShnG0CLmi/xqeCIJE9mXR5w=
-X-Received: by 10.98.219.198 with SMTP id f189mr3819324pfg.44.1510771441192;
- Wed, 15 Nov 2017 10:44:01 -0800 (PST)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=toLr4dl49sGzIE28UHXqzmTA3uyRGV9VclcWxMeOjZw=;
+        b=Y62sAsSbUhVIM8Dvs1QNo2TnAkSEZHYSZmwLwPnUl+NMvyMA5+yojjc8l8ILJEAXno
+         TDotj1u6ZHdGn7Wu1hxZoTAtYHcnERnjqMkiRSfFdCDffZrOJdF+Eits+iIjCvQSO5sM
+         FkpSgIMFlnYWJqsa0hpq8rPGx3PMv0M+3E/ADDt4ePWCFKPC1DN4pS8X+jP6rG/zLDsz
+         1+trbsJ+8cIzRMWITZ4mn0xxEkF0+7bFaLmoI6NQn06PUyKLRBhJzwUTZ10GDnw/Qa6e
+         Ja49jLwi+sJ2DRM/R44mrPLL7ihQ+bT2wvd+IOWumxdcGNWRE43TrqK1MjAyLk7MqVzj
+         FfiQ==
+X-Gm-Message-State: AJaThX4D++YnS3Fwt2LJgXYgjFR5vYR20NZ/ecDADIhFbCsC9rD0pCdc
+        4XssTgWocYU+6Nz6y0JtWlrHm0+36hNE2eqchVw=
+X-Google-Smtp-Source: AGs4zMbZFgeoCTPPesPqLjDF6jxDnE9BsxIP01KV0LZZu+/fdzdCy63NCX7zIZjkLEQZUrE2dPhDrRV07gMpDuddsTo=
+X-Received: by 10.129.39.200 with SMTP id n191mr11425707ywn.388.1510772734051;
+ Wed, 15 Nov 2017 11:05:34 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.100.167.42 with HTTP; Wed, 15 Nov 2017 10:44:00 -0800 (PST)
-In-Reply-To: <20171115104125.1686-1-phillip.wood@talktalk.net>
-References: <20171115104125.1686-1-phillip.wood@talktalk.net>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Wed, 15 Nov 2017 19:44:00 +0100
-Message-ID: <CAN0heSrbszhhFauYHNs70-WWk+bju0sSVzjavRcwg09CzCXSjA@mail.gmail.com>
-Subject: Re: [PATCH] sequencer: reschedule pick if index can't be locked
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Received: by 10.13.203.85 with HTTP; Wed, 15 Nov 2017 11:05:33 -0800 (PST)
+In-Reply-To: <20171115171258.GA12963@tor.lan>
+References: <CAJ_+vJ6FXXda4fe7=1YxtDGR2d8CqP4KXN+YR6+mdQ+5jQQXug@mail.gmail.com>
+ <8b3225ce-a4aa-56ee-5296-6cc7528556d1@web.de> <CAJ_+vJ5J250CtzVg4QwEusddviDSYuJhubsbTJyv5Nc2conAfA@mail.gmail.com>
+ <CAJ_+vJ7Yfcpz5252M4XJnDmEDCANp+eJ7RLJJF8TCcTxexZEUA@mail.gmail.com>
+ <f9dc6482-587d-50a9-d649-aed63be18fad@web.de> <CAJ_+vJ6SxLOmZfG79Sa-vskBR-XG=C97--PB-vpijjUKym=jYw@mail.gmail.com>
+ <20171115171258.GA12963@tor.lan>
+From:   Ashish Negi <ashishnegi33@gmail.com>
+Date:   Thu, 16 Nov 2017 00:35:33 +0530
+Message-ID: <CAJ_+vJ7am7dU9B0qTYVtxpkHoZdV45ciZN5ifbv9W8xRO2o=EQ@mail.gmail.com>
+Subject: Re: Changing encoding of a file : What should happen to CRLF in file ?
+To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+Cc:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 15 November 2017 at 11:41, Phillip Wood <phillip.wood@talktalk.net> wrote:
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+On windows :
+> git --version
+git version 2.14.2.windows.2
+
+On linux :
+> git --version
+git version 2.7.4
+
+I would like to understand the solution :
+If i understood it correctly : it removes file_name.txt from index, so
+git forgets about it.
+we then add the file again after changing encoding. This time, git
+takes it as utf-8 file and converts crlf to lf when storing it
+internally.
+Right ?
+
+Thank you for the support.
+
+
+On Wed, Nov 15, 2017 at 10:42 PM, Torsten B=C3=B6gershausen <tboegi@web.de>=
+ wrote:
+> On Wed, Nov 15, 2017 at 01:41:42PM +0530, Ashish Negi wrote:
+>> > If you commit the file, it will be stored with LF in the index,
+>> This is what i believe is not happening.
+>>
+>> Lets do this with a public repository and steps which are reproducible.
+>> I have created a repo : https://github.com/ashishnegi/git_encoding
+>>
+>> If you clone this repo in linux and run `git status`, you will find
+>> that file is modified.
 >
-> Return an error instead of dying if the index cannot be locked in
-> do_recursive_merge() as if the commit cannot be picked it needs to be
-> rescheduled when performing an interactive rebase. If the pick is not
-> rescheduled and the user runs 'git rebase --continue' rather than 'git
-> rebase --abort' then the commit gets silently dropped.
-
-Makes sense. (Your analysis, not the current behavior. ;-) )
-
-> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> ---
->  sequencer.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
+> This is what what I get:
 >
-> diff --git a/sequencer.c b/sequencer.c
-> index 6d027b06c8d8dc69b14d05752637a65aa121ab24..8c10442b84068d3fb7ec809ef1faa0203cb83e60 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -438,7 +438,8 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
->         char **xopt;
->         static struct lock_file index_lock;
+>  git ls-files --eol
+> i/lf    w/lf    attr/text=3Dauto          .gitattributes
+> i/crlf  w/crlf  attr/text=3Dauto          file_name.txt
 >
-> -       hold_locked_index(&index_lock, LOCK_DIE_ON_ERROR);
-> +       if (hold_locked_index(&index_lock, LOCK_REPORT_ON_ERROR))
-> +               return -1;
+> (And you get the same, I think)
+> Newer versions of Git (>=3D2.10) will -not- treat file_name.txt as change=
+d,
+> older versions do.
+> What does "git --version" say on your Linux machine ?
 >
->         read_cache();
-
-From the commit message, I would have expected the flags to be zero. This patch
-does not only turn off the die-ing, it also tells the lockfile-API to print an
-error message before returning. I don't have an opinion on whether that extra
-verboseness is good or bad, but if it's wanted, I think the commit message
-should mention this change.
-
-Also, don't you want to check "< 0" rather than "!= 0"? If all goes
-well, the return value will be a file descriptor. I think that it will
-always be non-zero, so I think you'll always return -1 here.
-
-Martin
+> However, if you want to fix it, you want to either end up with
+>
+> A)
+> git ls-files --eol
+> i/lf    w/lf    attr/text=3Dauto          .gitattributes
+> i/lf    w/crlf  attr/text=3Dauto          file_name.txt
+>
+> or
+> B)
+> git ls-files --eol
+> i/lf    w/lf    attr/text=3Dauto          .gitattributes
+> i/crlf  w/crlf  attr/-text              file_name.txt
+>
+> (The "attr/-text" means "don't change the line endings")
+>
+> Both A) or B) will work, typically A) is preferred.
+>
+> You should be able to achive A) :
+>  git rm --cached file_name.txt  && git add file_name.txt
+> rm 'file_name.txt'
+> warning: CRLF will be replaced by LF in file_name.txt.
+> The file will have its original line endings in your working directory.
+>
+> git ls-files --eol
+> i/lf    w/lf    attr/text=3Dauto          .gitattributes
+> i/lf    w/crlf  attr/text=3Dauto          file_name.txt
+>
+> [snip the rest]
