@@ -2,271 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7C481202AF
-	for <e@80x24.org>; Wed, 15 Nov 2017 00:31:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A6F11202AF
+	for <e@80x24.org>; Wed, 15 Nov 2017 01:12:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756654AbdKOAbX (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Nov 2017 19:31:23 -0500
-Received: from mail-io0-f172.google.com ([209.85.223.172]:51778 "EHLO
-        mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755106AbdKOAbD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Nov 2017 19:31:03 -0500
-Received: by mail-io0-f172.google.com with SMTP id g73so10786058ioj.8
-        for <git@vger.kernel.org>; Tue, 14 Nov 2017 16:31:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=9kgPDtib2S4SokN0XgUK336XOYHkgvO4PVk734rVQmU=;
-        b=rgiWIHjIFSy/PQvctG5jfJUyNyo2SCCck6OaY5cVU2pBDvSmSdB1huA6jstP4UGfit
-         PYynWd3+4Nu6Jw+CVzELzVAUw5oTaqRD+sFKz9w9wEI/JLn75mcEHqVvOiFzqdCp/C4A
-         9FRqhMtdLqL0K0ICVY7atoMhNjquUyP2QhCplzCYgfBWk+Q0n37v8ddL7NqwXDbhUziZ
-         vHDep8aQTw0GeETfpzM/MOzgRL2Ya5KVIjKEFJBSjyocgSQY7FxxC/4U1e+iM8nAGK+x
-         3WobcEA+l7kuEUqkkVEFRi8uHeE1jEIY/CEVF0at1MmFB4bWrLgUjKw1Hb4+2pbxGo7O
-         nGhw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=9kgPDtib2S4SokN0XgUK336XOYHkgvO4PVk734rVQmU=;
-        b=BoD0kDFHHlHcNDgDfER/HwPuihvzAHFd4owN37cxJsAtgOXGUhZaK4WIz6d4f8mYmL
-         HcackOS6kL5SttKlaS0P1dptqFGB1EKm+RJ46vS7G/gARUiH/xeYaV0uk1L/2qjZAKRF
-         KTABlBqoH18PvZrxYmkYoYeAoKmWNQVdniU0Xkd/tHfbj/ERlLuh1nPo4OHymrnxBv17
-         6wkyYOpwU91gj+KtMdXSM53zKXySTOI/XiBaiv0ofBzCWuPTlAtueqGSHbrwmz9KsUES
-         iIwcXJesbdXNcxse9/ZfV9PmB8VgFKZ8Z//l+6rCrHZIdICgfE7PeYvLhtIk06RBLQt5
-         Gt4A==
-X-Gm-Message-State: AJaThX61IIitfr8je76SEpd/LVYg5YXq+K8MHm+/1p6UgU6gXAZ2ySo0
-        Hl9R890VJyb3KZwcZ2OEEAkeDXokGUs=
-X-Google-Smtp-Source: AGs4zMaK3Su3Jt9EUTWofgIJrjec5vPNBZk0byMZFNbDQD7Xo2WNEoYqwPEfn6EKsCSMmPKRf8mh4g==
-X-Received: by 10.107.10.69 with SMTP id u66mr734686ioi.230.1510705861005;
-        Tue, 14 Nov 2017 16:31:01 -0800 (PST)
-Received: from localhost ([2620:0:100e:422:c9fb:9110:c737:8943])
-        by smtp.gmail.com with ESMTPSA id h95sm8983541ioi.36.2017.11.14.16.30.59
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 14 Nov 2017 16:31:00 -0800 (PST)
-From:   Stefan Beller <sbeller@google.com>
-To:     git@vger.kernel.org, gitster@pobox.com
-Cc:     Stefan Beller <sbeller@google.com>
-Subject: [PATCHv4 7/7] builtin/describe.c: describe a blob
-Date:   Tue, 14 Nov 2017 16:30:43 -0800
-Message-Id: <20171115003043.24080-8-sbeller@google.com>
-X-Mailer: git-send-email 2.15.0.128.gcadd42da22
-In-Reply-To: <20171115003043.24080-1-sbeller@google.com>
-References: <20171115003043.24080-1-sbeller@google.com>
+        id S1756737AbdKOBMW (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Nov 2017 20:12:22 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53334 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1756733AbdKOBMU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Nov 2017 20:12:20 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A1DD3BC515;
+        Tue, 14 Nov 2017 20:12:12 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=bedPVE1iqkam+IwG1F3gbrUHSho=; b=kxfzrA
+        MMhWjXa2JqzknkFgyx5ohXXOcQzesL+iaOWKHqJnlo6yEntaxA7Q00XV1IZY9OJ9
+        XmIa05y6aXivVDBR59P+XHL1SI6AZUA9bwCP7pFD77dnhhPC2eTrzTkryhQohj2O
+        Sx54jC90z/jWPLrgq7eiVqFZuW5tXr3nXm+44=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=iCD60hiRyZEdiPrDoM9gXM/KQZ1JtDxo
+        OEqXbPnj24TB+PHS3IIm63uTr5L0jIg//041PXlbXqfBEB3M7B65WsWk3XgPDUdr
+        EaxXTuzL7ZQ4kPz6MR2gvK0NgJiuE+wqJiXuQnR075nFPnBCFKjoUtib4F5DysfC
+        EIblnFJZ4Jk=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 98E63BC514;
+        Tue, 14 Nov 2017 20:12:12 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 05260BC513;
+        Tue, 14 Nov 2017 20:12:12 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Ben Peart <peartben@gmail.com>
+Cc:     Ben Peart <benpeart@microsoft.com>, git@vger.kernel.org,
+        pclouds@gmail.com, chriscool@tuxfamily.org,
+        Johannes.Schindelin@gmx.de, alexmv@dropbox.com, peff@peff.net
+Subject: Re: [PATCH v1 1/4] fastindex: speed up index load through parallelization
+References: <20171109141737.47976-1-benpeart@microsoft.com>
+        <20171109141737.47976-2-benpeart@microsoft.com>
+        <xmqqbmkahhar.fsf@gitster.mtv.corp.google.com>
+        <7e5a9fde-67fc-2bb9-51b6-54bdaed162db@gmail.com>
+        <xmqq7eut8y36.fsf@gitster.mtv.corp.google.com>
+        <7428e41e-b705-f377-1951-b11af851c4d5@gmail.com>
+        <xmqq7eus3nr2.fsf@gitster.mtv.corp.google.com>
+        <73fd93cd-91f4-1286-732c-cd8185fe2027@gmail.com>
+Date:   Wed, 15 Nov 2017 10:12:10 +0900
+In-Reply-To: <73fd93cd-91f4-1286-732c-cd8185fe2027@gmail.com> (Ben Peart's
+        message of "Tue, 14 Nov 2017 10:40:00 -0500")
+Message-ID: <xmqqwp2s1h1x.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 02727B1A-C9A2-11E7-A250-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sometimes users are given a hash of an object and they want to
-identify it further (ex.: Use verify-pack to find the largest blobs,
-but what are these? or [1])
+Ben Peart <peartben@gmail.com> writes:
 
-When describing commits, we try to anchor them to tags or refs, as these
-are conceptually on a higher level than the commit. And if there is no ref
-or tag that matches exactly, we're out of luck.  So we employ a heuristic
-to make up a name for the commit. These names are ambiguous, there might
-be different tags or refs to anchor to, and there might be different
-path in the DAG to travel to arrive at the commit precisely.
+> I have no thoughts or plans for changes in the future of IEOT (which I
+> plan to rename ITOC).  At this point in time, I can't even imagine
+> what else we'd want as the index only contains cache entries, ...
 
-When describing a blob, we want to describe the blob from a higher layer
-as well, which is a tuple of (commit, deep/path) as the tree objects
-involved are rather uninteresting.  The same blob can be referenced by
-multiple commits, so how we decide which commit to use?  This patch
-implements a rather naive approach on this: As there are no back pointers
-from blobs to commits in which the blob occurs, we'll start walking from
-any tips available, listing the blobs in-order of the commit and once we
-found the blob, we'll take the first commit that listed the blob. For
-example
+Yeah, but the thing is that this is open source, and the imagination
+of the originator of the initial idea does not limit how the code
+and data structure evolves.
 
-  git describe --tags v0.99:Makefile
-  conversion-901-g7672db20c2:Makefile
+Back when I added the index extensions to the system, I didn't have
+perfect foresight, and I didn't have specific plans to add anything
+beyond "TREE" to optimize "write-tree" and "diff-index --cached".
 
-tells us the Makefile as it was in v0.99 was introduced in commit 7672db20.
+In hindsight, I got one thing right and one thing wrong.
 
-The walking is performed in reverse order to show the introduction of a
-blob rather than its last occurrence.
+Even though I didn't have any plan to add a mandatory extension, I
+made the code to ignore optional ones and error out on mandatory
+ones if an index extension section is not understood.  It turns out
+that later (in fact much later---the "TREE" extension dates back to
+April 2006, while "link" came in June 2014) we could add the
+split-index mode without having to worry about older versions of Git
+doing random wrong things when they see this new extension, thanks
+to that design decision.  That went well.
 
-[1] https://stackoverflow.com/questions/223678/which-commit-has-this-blob
+On the other hand, I didn't think things through to realize that
+some operations may want to peek only the extensions without ever
+using the main table, that some other operations may want to read
+some extensions first before reading the main table, or more
+importantly, that these limitations would start mattering once Git
+becomes popular enough and starts housing a project tree with very
+many paths in the main table.  
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- Documentation/git-describe.txt | 13 ++++++++-
- builtin/describe.c             | 66 ++++++++++++++++++++++++++++++++++++++----
- t/t6120-describe.sh            | 19 ++++++++++++
- 3 files changed, 92 insertions(+), 6 deletions(-)
+I really wish somebody had brought it up as a potential issue during
+the review---I would have defined the extended index format to have
+the simple extension at the end that points back to the tail end of
+the main table back then, and we wouldn't be having this back and
+forth now.  But I was just too happy and excited that I have found a
+room to squeeze extension sections into the index file format
+without breaking existing implementations of Git (which checked the
+trailer checksum matches to the result of hashing the whole thing,
+and read the recorded number of entries from the main table, without
+even noticing that there is a gap in between), and that excitement
+blinded me.
 
-diff --git a/Documentation/git-describe.txt b/Documentation/git-describe.txt
-index c924c945ba..a25443ca91 100644
---- a/Documentation/git-describe.txt
-+++ b/Documentation/git-describe.txt
-@@ -3,7 +3,7 @@ git-describe(1)
- 
- NAME
- ----
--git-describe - Describe a commit using the most recent tag reachable from it
-+git-describe - Describe a commit or blob using the graph relations
- 
- 
- SYNOPSIS
-@@ -11,6 +11,7 @@ SYNOPSIS
- [verse]
- 'git describe' [--all] [--tags] [--contains] [--abbrev=<n>] [<commit-ish>...]
- 'git describe' [--all] [--tags] [--contains] [--abbrev=<n>] --dirty[=<mark>]
-+'git describe' <blob>
- 
- DESCRIPTION
- -----------
-@@ -24,6 +25,16 @@ By default (without --all or --tags) `git describe` only shows
- annotated tags.  For more information about creating annotated tags
- see the -a and -s options to linkgit:git-tag[1].
- 
-+If the given object refers to a blob, it will be described
-+as `<commit-ish>:<path>`, such that the blob can be found
-+at `<path>` in the `<commit-ish>`. Note, that the commit is likely
-+not the commit that introduced the blob, but the one that was found
-+first; to find the commit that introduced the blob, you need to find
-+the commit that last touched the path, e.g.
-+`git log <commit-description> -- <path>`.
-+As blobs do not point at the commits they are contained in,
-+describing blobs is slow as we have to walk the whole graph.
-+
- OPTIONS
- -------
- <commit-ish>...::
-diff --git a/builtin/describe.c b/builtin/describe.c
-index 9e9a5ed5d4..a2a5fdc48d 100644
---- a/builtin/describe.c
-+++ b/builtin/describe.c
-@@ -3,6 +3,7 @@
- #include "lockfile.h"
- #include "commit.h"
- #include "tag.h"
-+#include "blob.h"
- #include "refs.h"
- #include "builtin.h"
- #include "exec_cmd.h"
-@@ -11,8 +12,9 @@
- #include "hashmap.h"
- #include "argv-array.h"
- #include "run-command.h"
-+#include "revision.h"
-+#include "list-objects.h"
- 
--#define SEEN		(1u << 0)
- #define MAX_TAGS	(FLAG_BITS - 1)
- 
- static const char * const describe_usage[] = {
-@@ -434,6 +436,57 @@ static void describe_commit(struct object_id *oid, struct strbuf *dst)
- 		strbuf_addstr(dst, suffix);
- }
- 
-+struct process_commit_data {
-+	struct object_id current_commit;
-+	struct object_id looking_for;
-+	struct strbuf *dst;
-+	struct rev_info *revs;
-+};
-+
-+static void process_commit(struct commit *commit, void *data)
-+{
-+	struct process_commit_data *pcd = data;
-+	pcd->current_commit = commit->object.oid;
-+}
-+
-+static void process_object(struct object *obj, const char *path, void *data)
-+{
-+	struct process_commit_data *pcd = data;
-+
-+	if (!oidcmp(&pcd->looking_for, &obj->oid) && !pcd->dst->len) {
-+		reset_revision_walk();
-+		describe_commit(&pcd->current_commit, pcd->dst);
-+		strbuf_addf(pcd->dst, ":%s", path);
-+		pcd->revs->max_count = 0;
-+	}
-+}
-+
-+static void describe_blob(struct object_id oid, struct strbuf *dst)
-+{
-+	struct rev_info revs;
-+	struct argv_array args = ARGV_ARRAY_INIT;
-+	struct process_commit_data pcd = { null_oid, oid, dst, &revs};
-+
-+	argv_array_pushl(&args, "internal: The first arg is not parsed",
-+		"--all", "--reflog", /* as many starting points as possible */
-+		/* NEEDSWORK: --all is incompatible with worktrees for now: */
-+		"--single-worktree",
-+		"--objects",
-+		"--in-commit-order",
-+		"--reverse",
-+		NULL);
-+
-+	init_revisions(&revs, NULL);
-+	if (setup_revisions(args.argc, args.argv, &revs, NULL) > 1)
-+		BUG("setup_revisions could not handle all args?");
-+
-+	if (prepare_revision_walk(&revs))
-+		die("revision walk setup failed");
-+
-+	traverse_commit_list(&revs, process_commit, process_object, &pcd);
-+	reset_revision_walk();
-+}
-+
- static void describe(const char *arg, int last_one)
- {
- 	struct object_id oid;
-@@ -445,11 +498,14 @@ static void describe(const char *arg, int last_one)
- 
- 	if (get_oid(arg, &oid))
- 		die(_("Not a valid object name %s"), arg);
--	cmit = lookup_commit_reference(&oid);
--	if (!cmit)
--		die(_("%s is not a valid '%s' object"), arg, commit_type);
-+	cmit = lookup_commit_reference_gently(&oid, 1);
- 
--	describe_commit(&oid, &sb);
-+	if (cmit)
-+		describe_commit(&oid, &sb);
-+	else if (lookup_blob(&oid))
-+		describe_blob(oid, &sb);
-+	else
-+		die(_("%s is neither a commit nor blob"), arg);
- 
- 	puts(sb.buf);
- 
-diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
-index c8b7ed82d9..ec4f25d009 100755
---- a/t/t6120-describe.sh
-+++ b/t/t6120-describe.sh
-@@ -310,6 +310,25 @@ test_expect_success 'describe ignoring a broken submodule' '
- 	grep broken out
- '
- 
-+test_expect_success 'describe a blob at a tag' '
-+	echo "make it a unique blob" >file &&
-+	git add file && git commit -m "content in file" &&
-+	git tag -a -m "latest annotated tag" unique-file &&
-+	git describe HEAD:file >actual &&
-+	echo "unique-file:file" >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'describe a blob with its last introduction' '
-+	git commit --allow-empty -m "empty commit" &&
-+	git rm file &&
-+	git commit -m "delete blob" &&
-+	git revert HEAD &&
-+	git commit --allow-empty -m "empty commit" &&
-+	git describe HEAD:file >actual &&
-+	grep unique-file-3-g actual
-+'
-+
- test_expect_failure ULIMIT_STACK_SIZE 'name-rev works in a deep repo' '
- 	i=1 &&
- 	while test $i -lt 8000
--- 
-2.15.0.128.gcadd42da22
+> I understand the risk but the list of offsets into the cache entries
+> is pretty simple as well. I prefer the simplicity of a single TOC
+> extension that gives us random access to the entire index rather than
+> having to piece one together using multiple extensions.  That model
+> has its own set of risks and tradeoffs.
+
+I thought that you are not using the "where does the series of
+extensions begin" information in the first place, no?  That piece of
+information is useful independent of the usefulness of "index into
+the main table to list entries where the prefix-compression is
+reset".  So if anything, I'd prefer the simplicity of introducing
+that "where does the series of extensions begin" that does not say
+anything else, and build on other things like ITOC as mere users of
+the mechanism.
 
