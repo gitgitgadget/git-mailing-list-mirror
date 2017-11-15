@@ -2,63 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 22419202AF
-	for <e@80x24.org>; Wed, 15 Nov 2017 01:38:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B35F2202AF
+	for <e@80x24.org>; Wed, 15 Nov 2017 01:41:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755255AbdKOBiP (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Nov 2017 20:38:15 -0500
-Received: from mail-pg0-f51.google.com ([74.125.83.51]:43603 "EHLO
-        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754031AbdKOBiO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Nov 2017 20:38:14 -0500
-Received: by mail-pg0-f51.google.com with SMTP id s75so16816429pgs.0
-        for <git@vger.kernel.org>; Tue, 14 Nov 2017 17:38:14 -0800 (PST)
+        id S1755430AbdKOBli (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Nov 2017 20:41:38 -0500
+Received: from mail-io0-f175.google.com ([209.85.223.175]:45267 "EHLO
+        mail-io0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754031AbdKOBlg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Nov 2017 20:41:36 -0500
+Received: by mail-io0-f175.google.com with SMTP id i38so11980292iod.2
+        for <git@vger.kernel.org>; Tue, 14 Nov 2017 17:41:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=kxj3QEuPKaWF9etACmFKUbdPArI3QuiKFOIa6iwwg7E=;
-        b=DEnAtBKLASNb2m3uF+P/sgM8VQmheCY42sK9mEGr0JXEK2h5hCPoI2WKMAxKVNS4X6
-         buCgvsLOnUW1MdW0d52cDpI3VJiAjdW1JN5Vvya3tDuVmiM4pndMTP7GVrfLjuBbEFtK
-         DOAKGFTVzim0lzRSWDaD8g/Pl9AuMzWzx1PlvF6F98FztLfFG0HG58tQJ4moLqDal0oY
-         hadPucNuRh7WE7oFlr5Rtl5IUv5B0XlsZtspxwPivoCst3JWxTw7c609wKB9isXJBGku
-         Ny3RrMKMtLXUI9+8rmKiete0Kf9TgSftyUZeSsJfYuidjw/jyehdGU7m8BNUBkRmFpp4
-         O13Q==
+        bh=E+N34AMmvCblGRXihTVAeJfx5Q0Vk7rWoxeThhfQHXQ=;
+        b=dVUKxpyDxNEFospYfzVyZ6AYHo2UlE7y4HUIq7UwBwIfk+8GVNkqPXSD1NG2m74H0L
+         8KKJyTgiuqj/uPqAHM2kWzt5J37hoMgBXTqdcf8Qm8Mf083mzgW4G3yQGCVAjK4cJd0l
+         hbGeBNz/5ENsqYVNHV2JaCcKiRgmx5xsV/jLWmMLsMnGELpTEq5Rtg31B+i0d+ZY4n/R
+         Jpwsze4IvVDqUeoqUMe3t4iYnf/DzsNMFtrnt5waFyITpskSKsEAzxmDoEPLILJGrZ+V
+         3cR/hhPeswZJexVo18rc6nJpynei8Xgl2gV1JF81AZ+9xNAazwsMUYZcQlFn8XQm37iz
+         Jh4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=kxj3QEuPKaWF9etACmFKUbdPArI3QuiKFOIa6iwwg7E=;
-        b=sbqhEsvNmdnbE6WyLRLZt07LA55y5MoboUkCm7QhuxDox1CzswlvpaG3JnbINI+18h
-         G+gHKne9g6emFXexdZqcX4NO5bbvK5+rB++3XEFWM/7MZPPdjcw9E2pbYVH7zcIZSPTZ
-         DTnNODrSDlEo7U1Zui3GHNikD3EBlTSuZXL3D7X3BzMh+qa6iFuu94ygZOyGEVJlZR4h
-         1Aw6noaPcxflB8dV3T1VQeNxAq6wgST26D4ENLR/qMkuHHR9JKWJXvwxlElCq1RtabNa
-         k+3dJvFHuXRx06Y+SwwYcArt5g4IdH8Ir/hlYJMn0ZMSpKVEcKa9vPAL8OCg8MzASs8U
-         VI3g==
-X-Gm-Message-State: AJaThX7JtQI1qToIap9p+Wl2u+d03TZnh6+hdex0Qd7HaF/baR6pZYJ6
-        dVtAnxTsRx6FkezzOV5jTxpouw==
-X-Google-Smtp-Source: AGs4zMZsvolpOrVKpM/WdyEyfklPHT5Xn3Q/HkLH3fj79RPKa8kjqIEceCChdpMe8l9I4QfmXgsVeg==
-X-Received: by 10.98.144.129 with SMTP id q1mr15845674pfk.38.1510709893698;
-        Tue, 14 Nov 2017 17:38:13 -0800 (PST)
+        bh=E+N34AMmvCblGRXihTVAeJfx5Q0Vk7rWoxeThhfQHXQ=;
+        b=QCS2TbQAqugOz0p+mD4iLeA8bnYH9kJzSiK7JUteUL6l1UgY79f4GeSs/hArsrjXDc
+         sg6g0aNjl57aLR+/kF10dU3tlbqvHPgSVzEO8jOSbG5KpMYND1YfXTWLWmuYeAcjGUtG
+         CFu19+jRG/4/IXh67uDBSXW+7iusEj+Ajt1/kqAZIJrMKbppqwwJrP6LSQyxVU2p9ofH
+         fnD8RSgzleOSclQc+mCDlfMB02tLJI2n4IjZOp8Wp+LV6rSBHi4SlWZFkcvkAltJto1T
+         uPjf09jU52jckMFT/fdpsnqRb/3sekjC94dRdy4eHpof4ZmgZenDeAKGG2RRZVFdbKTu
+         4IKA==
+X-Gm-Message-State: AJaThX4snUCHe8+YiABGvY/ptzM8s4sVwtiufsuYP9xpw6MRjvyHmR7O
+        s/1NAEC/BCW+pI47lq4GMGAAnA==
+X-Google-Smtp-Source: AGs4zMabgVX4w4bqazpVN5A1fkmIz9pWrt07AxAQm2u7aYzEIZigUTMt2pPhAmjndSbqvn1swD30TQ==
+X-Received: by 10.107.181.130 with SMTP id e124mr2585973iof.124.1510710096128;
+        Tue, 14 Nov 2017 17:41:36 -0800 (PST)
 Received: from twelve3.mtv.corp.google.com ([2620:0:100e:422:68e8:a345:46:2771])
-        by smtp.gmail.com with ESMTPSA id d28sm5230560pfb.105.2017.11.14.17.38.12
+        by smtp.gmail.com with ESMTPSA id q1sm6064339itc.9.2017.11.14.17.41.35
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 14 Nov 2017 17:38:12 -0800 (PST)
-Date:   Tue, 14 Nov 2017 17:38:12 -0800
+        Tue, 14 Nov 2017 17:41:35 -0800 (PST)
+Date:   Tue, 14 Nov 2017 17:41:34 -0800
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     Stefan Beller <sbeller@google.com>
 Cc:     git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCHv4 3/7] revision.h: introduce blob/tree walking in order
- of the commits
-Message-Id: <20171114173812.9ac53b0cf0aa93db08d6559c@google.com>
-In-Reply-To: <20171115003043.24080-4-sbeller@google.com>
+Subject: Re: [PATCHv4 5/7] builtin/describe.c: print debug statements
+ earlier
+Message-Id: <20171114174134.51c5a41788ecb5675b8d93f8@google.com>
+In-Reply-To: <20171115003043.24080-6-sbeller@google.com>
 References: <20171115003043.24080-1-sbeller@google.com>
-        <20171115003043.24080-4-sbeller@google.com>
+        <20171115003043.24080-6-sbeller@google.com>
 X-Mailer: Sylpheed 3.4.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
@@ -68,22 +67,31 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 14 Nov 2017 16:30:39 -0800
+On Tue, 14 Nov 2017 16:30:41 -0800
 Stefan Beller <sbeller@google.com> wrote:
 
-> The change in list-objects.c is rather minimal as we'll be re-using
-> the infrastructure put in place of the revision walking machinery. For
-> example one could expect that add_pending_tree is not called, but rather
-> commit->tree is directly passed to the tree traversal function. This
-> however requires a lot more code than just emptying the queue containing
-> trees after each commit.
+> For debuggers aid we'd want to print debug statements early, so
+> introduce a new line in the debug output that describes the whole
+> function, and then change the next debug output to describe why we
+> need to search. Conveniently drop the arg from the second line;
+> which will be useful in a follow up commit, that refactors the
+> describe function.
+> 
+> This re-arrangement of debug printing is solely done for a better
+> refactoring in the next commit, not to aid debugging git-describe,
+> which is expected to have the same information readily available
+> with the new prints.
 
-Ah, I see. You're calling add_pending_tree(), then
-traverse_trees_and_blobs() will immediately flush the list of pending
-trees.
+This paragraph ("not to aid debugging") contradicts the previous one
+("For debuggers aid").
 
-I'm not sure that passing commit->tree directly to the tree traversal
-function will require a lot more code, but even if it does, you should
-at least add a NEEDSWORK - currently, flushing the list of pending trees
-frees the array containing the list of pending trees, so each invocation
-will need to reallocate a new array.
+Looking at this patch and the subsequent patches, I would write the
+commit message like this:
+
+    When debugging, print the received argument at the start of the
+    function instead of in the middle. This ensures that the received
+    argument is printed in all code paths, and also allows a subsequent
+    refactoring to not need to move the "arg" parameter.
+
+Also change the title to "print arg earlier when debugging" or something
+like that.
