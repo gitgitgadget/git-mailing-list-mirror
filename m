@@ -2,106 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DEC10201C8
-	for <e@80x24.org>; Wed, 15 Nov 2017 21:40:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C1878201C8
+	for <e@80x24.org>; Wed, 15 Nov 2017 22:03:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759742AbdKOVkt (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Nov 2017 16:40:49 -0500
-Received: from mail-oi0-f43.google.com ([209.85.218.43]:44299 "EHLO
-        mail-oi0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1759569AbdKOVi1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Nov 2017 16:38:27 -0500
-Received: by mail-oi0-f43.google.com with SMTP id a75so11423324oib.1
-        for <git@vger.kernel.org>; Wed, 15 Nov 2017 13:38:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=091Dstou/osroT7mcKqNtguWo2AhLIUBde+yCdX9mDI=;
-        b=B60zoYP3WTb/Ul5RSF0qMQJxTs6XHMCMDGU1tnJRNm7/lx96dhxI0XTilojqS16Uy0
-         WLdfNW+O2iq30gsvtKAJRMIbbV1vxrMpGyiG2b8EhLydu3nHXE9MyjHtnvqkUxn2hS6a
-         tukCUBAwX69JrxUQbKho52KLFWiDx2NR+cHZ4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=091Dstou/osroT7mcKqNtguWo2AhLIUBde+yCdX9mDI=;
-        b=kPfUyVEV9rEF3wXE//6kJzBWmnGW+vYEoJ3A2YDd54ZctgMSH9mqv3bqfOc9u7EuBL
-         HcbdaqOQ7kit4zGxaN1UzwKeQt9dlak836bFrtUJd1CKZBDuxSBNKtBX1TPMJ3YzmbE3
-         /lPD8RXG56hK7Jz47pMoN+//omd+LOGUM0yGarBSwblZyW2V6/vuVMvRHNsu2DE/X221
-         dUQZPDWU5Kda+um+OoHld8NaQ4NoBrZbWcgXoHVeKoY5PiDZo7U/z/LPrNofPOkULyAR
-         kVc7IpMS4YvhapJNoVPEV2m8QRh7lu3C1Lw6lPFY7iIFXltC+Hp50FJZvHpRBADvobm8
-         M+LA==
-X-Gm-Message-State: AJaThX5j1JVHbuoAWDxnl1TRp5/MAodGfr1UC5+WfqbszrgIP3gHczMx
-        zbkdXkh0T+gmXTD0JsQBZdnfFkinZZuoFta6izr6IQ==
-X-Google-Smtp-Source: AGs4zMZwpgkdPOf9dIffp4m7aMzJZphT8K1L9KVxLQ2czELGaPalKi14JZ3csvPY5sWvvmMD4Q1TRQPYYmvir5jucQ4=
-X-Received: by 10.202.63.214 with SMTP id m205mr10564933oia.137.1510781907018;
- Wed, 15 Nov 2017 13:38:27 -0800 (PST)
+        id S932558AbdKOWD4 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Nov 2017 17:03:56 -0500
+Received: from mout.gmx.net ([212.227.15.19]:51130 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S932437AbdKOWDy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Nov 2017 17:03:54 -0500
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MOOdZ-1eIeYc1MW5-005ovu; Wed, 15
+ Nov 2017 23:03:51 +0100
+Date:   Wed, 15 Nov 2017 23:03:45 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Phillip Wood <phillip.wood@dunelm.org.uk>
+cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH] sequencer: reschedule pick if index can't be locked
+In-Reply-To: <20171115104125.1686-1-phillip.wood@talktalk.net>
+Message-ID: <alpine.DEB.2.21.1.1711152301510.6482@virtualbox>
+References: <20171115104125.1686-1-phillip.wood@talktalk.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Received: by 10.157.12.236 with HTTP; Wed, 15 Nov 2017 13:38:26 -0800 (PST)
-In-Reply-To: <CAGZ79kZrZckX=xTgTH4cMper6BPAQ-_LT_x721SBEBB+Ks06jw@mail.gmail.com>
-References: <CAE5ih78nLL6UhKPObvFEA9xQZUtc1XpPvGJNaYTH9fJ0RyFRvA@mail.gmail.com>
- <CAE5ih7_uuVVrze9gNr3JMg5HNH8eAcH_wM4wrc2kH6u=Hw0JOg@mail.gmail.com> <CAGZ79kZrZckX=xTgTH4cMper6BPAQ-_LT_x721SBEBB+Ks06jw@mail.gmail.com>
-From:   Luke Diamand <luke@diamand.org>
-Date:   Wed, 15 Nov 2017 21:38:26 +0000
-Message-ID: <CAE5ih79TojvBv4OZnHejm3Huypg=6KVmDqJURGN+uk+izkH0xw@mail.gmail.com>
-Subject: Re: Bug in "revision.c: --all adds HEAD from all worktrees" ?
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Git Users <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>,
-        Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:lp3USNLluOIkEjXA5fl7EsnK77jtJqqdH61X1kPRgPjrBMrxG18
+ B7baW+Jh251wUi9Ilci3VpsNeZTL9ouC1Y2m27N/vJ0xbXQ6fHIylsQygy4a7tnOgDTeh7j
+ 3wwbokxhFORiE4DzzLw09Ijat/XsD0IG6EiIB1SftuR3nYpDJ7bb7zYVNXHIT2H/Pkb3w41
+ WxvxlbGGfIIxtXgYpxoWA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:0CO+NQne0DE=:tx/lHQcp6Q8AxeaRiSwVCs
+ kImrmMm6cd4IosJ41rd17sAiyjlzPC1wi1jzbQdrLQTjTLFxPr5fq/qIy5QTpK0PPMDiuJ+W+
+ KccOnZ6JvP7LlcFs4tC2RagAlEloRty8jsf9i/q2QSJNjiLKmEk4/WeVmodVqtvb+++MLvbBL
+ f12DwYZG/hiCzwkNBP7sO7dqTGz0sQ20qUfTesCTQqwLUwxg7v9q7m2GF9z0b6arzvOZYpnX0
+ phRmuBOdrW5ToCLKgbl+UzRqmlWxjI2OZj4Dncavywn12PrlJOX4IbW3vYGBugcb+XsRgNFc3
+ 2R3hgWyQrhbZf/jiv4RwoKsWHlgypPE2Pdl+Bl9QNUSFRO+DztuVRMALif+gpqdetpg/d12BG
+ OKo70w+3vlj/dR/dxR92ujNHqCS42mXXA9ItyHDbZJed3/EKMNZaac9dSFyEZMJQagSGbUR5k
+ 5+Od+cBZ6kEMptcCNJnQVkQGNWCWQ2fuhMRw9HkJYM8wB7kOjueI8AJU/Xb3OKEkHclvLA9GL
+ MgWz86gl2mM1PAEmFNu3pyPRQLmdixoY7+HXgk2EGkly0pfHFh4Dc2DN2YX5zwMn/+yUgC9E1
+ SAA+huNqwiGCG9F+y9K5WmEGCuHmhM2EJrGYftOYRmFl1r8nVdW4cHH/yZweUyoWCm7e/AING
+ XTexu1lpfTxBZfnMihul694X3Lmn9eIfSPDLvBfPFKQ/Ubd7Tc73FAjAAP9EGPr/z/DxAnP+R
+ MDZmRnKWSBSAvxPHL2INhIBXEpcdMtn3hRIDB1hk+uYfPzQyeffjd+KE6WIQcYLWJ8HqUFozv
+ GK6QEloHWTHoffNx7B8TDpf3kDIpJWGQRdKRy0oDutX5oaxNxM=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-+Jeff King
+Hi Phillip,
 
-On 13 November 2017 at 22:15, Stefan Beller <sbeller@google.com> wrote:
-> On Mon, Nov 13, 2017 at 2:03 PM, Luke Diamand <luke@diamand.org> wrote:
->> On 13 November 2017 at 19:51, Luke Diamand <luke@diamand.org> wrote:
->>> Hi!
->>>
->>> I think there may be a regression caused by this change which means
->>> that "git fetch origin" doesn't work:
->>>
->>> commit d0c39a49ccb5dfe7feba4325c3374d99ab123c59 (refs/bisect/bad)
->>> Author: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
->>> Date:   Wed Aug 23 19:36:59 2017 +0700
->>>
->>>     revision.c: --all adds HEAD from all worktrees
->>>
->>> $ git fetch origin
->>> fatal: bad object HEAD
->>> error: ssh://my_remote_host/reponame did not send all necessary objects
->>>
->>> I used git bisect to find the problem, and it seems pretty consistent.
->>> "git fetch" with the previous revision works fine.
->>>
->>> FWIW, I've got a lot of git worktrees associated with this repo, so
->>> that may be why it's failing. The remote repo is actually a git-p4
->>> clone, so HEAD there actually ends up pointing at
->>> refs/remote/p4/master.
->>>
->>> Thanks,
->>> Luke
->>
->> Quite a few of the worktrees have expired - their head revision has
->> been GC'd and no longer points to anything sensible
->> (gc.worktreePruneExpire). The function other_head_refs() in worktree.c
->> bails out if there's an error, which I think is the problem. I wonder
->> if it should instead just report something and then keep going.
->
-> Also see
-> https://public-inbox.org/git/CAGZ79kYP0z1G_H3nwfmSHraWHMBOcik5LepUXKj0nve=
-eBrihiw@mail.gmail.com/
+On Wed, 15 Nov 2017, Phillip Wood wrote:
 
-So is this a bug or user error on my part?
+> diff --git a/sequencer.c b/sequencer.c
+> index 6d027b06c8d8dc69b14d05752637a65aa121ab24..8c10442b84068d3fb7ec809ef1faa0203cb83e60 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -438,7 +438,8 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
+>  	char **xopt;
+>  	static struct lock_file index_lock;
+>  
+> -	hold_locked_index(&index_lock, LOCK_DIE_ON_ERROR);
+> +	if (hold_locked_index(&index_lock, LOCK_REPORT_ON_ERROR))
 
-Surely at the very least "git fetch" shouldn't give a cryptic error
-message just because one of my git worktrees has expired!
+If you test the return value for *negative* values, I am fully on board
+with the change.
+
+As far as I understand the code, hold_locked_index() returns -1 on error,
+but *a file descriptor* (which is usually not 0) upon success...
+
+Ciao,
+Dscho
