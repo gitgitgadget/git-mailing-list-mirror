@@ -2,93 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9CCED201C8
-	for <e@80x24.org>; Wed, 15 Nov 2017 21:09:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DEC10201C8
+	for <e@80x24.org>; Wed, 15 Nov 2017 21:40:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756429AbdKOVJ1 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Nov 2017 16:09:27 -0500
-Received: from mail-qt0-f170.google.com ([209.85.216.170]:52912 "EHLO
-        mail-qt0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750714AbdKOVJZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Nov 2017 16:09:25 -0500
-Received: by mail-qt0-f170.google.com with SMTP id 31so37642944qtz.9
-        for <git@vger.kernel.org>; Wed, 15 Nov 2017 13:09:25 -0800 (PST)
+        id S1759742AbdKOVkt (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Nov 2017 16:40:49 -0500
+Received: from mail-oi0-f43.google.com ([209.85.218.43]:44299 "EHLO
+        mail-oi0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1759569AbdKOVi1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Nov 2017 16:38:27 -0500
+Received: by mail-oi0-f43.google.com with SMTP id a75so11423324oib.1
+        for <git@vger.kernel.org>; Wed, 15 Nov 2017 13:38:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=5sLnrYSS37GlmvctFCfo6jRAOrtarWeE1MCnLTgO0pk=;
-        b=FjHtomnfcx9J8OImI5fgNNGoPxD0oYOlBRHnvEXiGSCWVjuQ/nydoYshp9pD193zgd
-         +SjN3TeH5Co681CPWnnkhtXVxNh6OeuxAV23PIAQPrSAn2ZMSTLZ+e9jlGzLMblgpJks
-         RDfpRNWCxRS/TMZfSE4EQBS/YEYDJjVju7MC3JsEF8phl8oKKtaGb8E9+j872pqD1lCe
-         CDlP0mnvaBi7DY8Dj4hY1VZnSq0vG39912Co7/+TgglrXcK/hmU21321J1VKJtTnWp68
-         7fkn1tHYSO/PgeNunfmZ9CjDTmFVOBuhtNhsaRIGg3XUifa8oeWD1Jox0TVewpJsWiKx
-         Lo/Q==
+        d=diamand.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=091Dstou/osroT7mcKqNtguWo2AhLIUBde+yCdX9mDI=;
+        b=B60zoYP3WTb/Ul5RSF0qMQJxTs6XHMCMDGU1tnJRNm7/lx96dhxI0XTilojqS16Uy0
+         WLdfNW+O2iq30gsvtKAJRMIbbV1vxrMpGyiG2b8EhLydu3nHXE9MyjHtnvqkUxn2hS6a
+         tukCUBAwX69JrxUQbKho52KLFWiDx2NR+cHZ4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=5sLnrYSS37GlmvctFCfo6jRAOrtarWeE1MCnLTgO0pk=;
-        b=Ei8cqppCYQBtR6gZIVLZealnQ8+8WOAfAvMXp8Fj8w2XqFQk0Ok6IuVPUr1TGxuF90
-         H65M27vBXKLFf5ysSp150XrdkhyHYBBl1ucyBbjDSXbsWDkPsVrNIUi5jmd3TSMGGNNG
-         So/bKDwx3ctKiNxBhZOgYap74nkfttywRGjscQAGrCrFvcP3ANHMPsdWB4dvzPHbW6nb
-         jmckLK0x4LJuduoPpaz+GyJmzhHIGgYwyNWTgiCVHiMVhZPH+QhLBDCCXgbM3e5GCz52
-         O5/K/iEcbCELlP3o5GBPQrs6Bxhje6ed52FMxidrAZrYEjSvXNqN+DxEcT6jftbEqCzm
-         16eg==
-X-Gm-Message-State: AJaThX5NysDOfPNxlznfHJxm7032ctLLZZsWWhE2XLUg/TkDwfUfre+R
-        IZW0BsGu0m4gsm0iw55Uz0Y=
-X-Google-Smtp-Source: AGs4zMaSEZ8rI9gv3DJEVTit+Sz8NaOPYqxgmGm+kybhxW31aym26DuiktpNo6R+1BJ82/t3v0q59A==
-X-Received: by 10.200.51.107 with SMTP id u40mr25506645qta.152.1510780164623;
-        Wed, 15 Nov 2017 13:09:24 -0800 (PST)
-Received: from zaya.teonanacatl.net (pool-173-67-181-41.hrbgpa.fios.verizon.net. [173.67.181.41])
-        by smtp.gmail.com with ESMTPSA id y30sm14575744qtd.48.2017.11.15.13.09.22
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 15 Nov 2017 13:09:23 -0800 (PST)
-Date:   Wed, 15 Nov 2017 16:09:20 -0500
-From:   Todd Zullinger <tmz@pobox.com>
-To:     Johan Herland <johan@herland.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Santiago Torres <santiago@nyu.edu>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH] notes: send "Automatic notes merge failed" messages to
- stderr
-Message-ID: <20171115210920.GH5144@zaya.teonanacatl.net>
-References: <CALKQrgc427=JNkkH+k+EohgKYuJSBPbDNR3uUcmGuf_ZyQ0X4Q@mail.gmail.com>
- <20171114161752.13204-1-tmz@pobox.com>
- <CALKQrgfs9QNg9AcQ_CGq43XkSpAAgS4L0KokpCj2qnhPa9+-=w@mail.gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=091Dstou/osroT7mcKqNtguWo2AhLIUBde+yCdX9mDI=;
+        b=kPfUyVEV9rEF3wXE//6kJzBWmnGW+vYEoJ3A2YDd54ZctgMSH9mqv3bqfOc9u7EuBL
+         HcbdaqOQ7kit4zGxaN1UzwKeQt9dlak836bFrtUJd1CKZBDuxSBNKtBX1TPMJ3YzmbE3
+         /lPD8RXG56hK7Jz47pMoN+//omd+LOGUM0yGarBSwblZyW2V6/vuVMvRHNsu2DE/X221
+         dUQZPDWU5Kda+um+OoHld8NaQ4NoBrZbWcgXoHVeKoY5PiDZo7U/z/LPrNofPOkULyAR
+         kVc7IpMS4YvhapJNoVPEV2m8QRh7lu3C1Lw6lPFY7iIFXltC+Hp50FJZvHpRBADvobm8
+         M+LA==
+X-Gm-Message-State: AJaThX5j1JVHbuoAWDxnl1TRp5/MAodGfr1UC5+WfqbszrgIP3gHczMx
+        zbkdXkh0T+gmXTD0JsQBZdnfFkinZZuoFta6izr6IQ==
+X-Google-Smtp-Source: AGs4zMZwpgkdPOf9dIffp4m7aMzJZphT8K1L9KVxLQ2czELGaPalKi14JZ3csvPY5sWvvmMD4Q1TRQPYYmvir5jucQ4=
+X-Received: by 10.202.63.214 with SMTP id m205mr10564933oia.137.1510781907018;
+ Wed, 15 Nov 2017 13:38:27 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <CALKQrgfs9QNg9AcQ_CGq43XkSpAAgS4L0KokpCj2qnhPa9+-=w@mail.gmail.com>
-User-Agent: Mutt/1.9.1 (2017-09-22)
+Received: by 10.157.12.236 with HTTP; Wed, 15 Nov 2017 13:38:26 -0800 (PST)
+In-Reply-To: <CAGZ79kZrZckX=xTgTH4cMper6BPAQ-_LT_x721SBEBB+Ks06jw@mail.gmail.com>
+References: <CAE5ih78nLL6UhKPObvFEA9xQZUtc1XpPvGJNaYTH9fJ0RyFRvA@mail.gmail.com>
+ <CAE5ih7_uuVVrze9gNr3JMg5HNH8eAcH_wM4wrc2kH6u=Hw0JOg@mail.gmail.com> <CAGZ79kZrZckX=xTgTH4cMper6BPAQ-_LT_x721SBEBB+Ks06jw@mail.gmail.com>
+From:   Luke Diamand <luke@diamand.org>
+Date:   Wed, 15 Nov 2017 21:38:26 +0000
+Message-ID: <CAE5ih79TojvBv4OZnHejm3Huypg=6KVmDqJURGN+uk+izkH0xw@mail.gmail.com>
+Subject: Re: Bug in "revision.c: --all adds HEAD from all worktrees" ?
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Git Users <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>,
+        Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johan Herland wrote:
-> On Tue, Nov 14, 2017 at 5:17 PM, Todd Zullinger <tmz@pobox.com> wrote:
->> All other error messages from notes use stderr.  Do the same when 
->> alerting users of an unresolved notes merge.
++Jeff King
+
+On 13 November 2017 at 22:15, Stefan Beller <sbeller@google.com> wrote:
+> On Mon, Nov 13, 2017 at 2:03 PM, Luke Diamand <luke@diamand.org> wrote:
+>> On 13 November 2017 at 19:51, Luke Diamand <luke@diamand.org> wrote:
+>>> Hi!
+>>>
+>>> I think there may be a regression caused by this change which means
+>>> that "git fetch origin" doesn't work:
+>>>
+>>> commit d0c39a49ccb5dfe7feba4325c3374d99ab123c59 (refs/bisect/bad)
+>>> Author: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
+>>> Date:   Wed Aug 23 19:36:59 2017 +0700
+>>>
+>>>     revision.c: --all adds HEAD from all worktrees
+>>>
+>>> $ git fetch origin
+>>> fatal: bad object HEAD
+>>> error: ssh://my_remote_host/reponame did not send all necessary objects
+>>>
+>>> I used git bisect to find the problem, and it seems pretty consistent.
+>>> "git fetch" with the previous revision works fine.
+>>>
+>>> FWIW, I've got a lot of git worktrees associated with this repo, so
+>>> that may be why it's failing. The remote repo is actually a git-p4
+>>> clone, so HEAD there actually ends up pointing at
+>>> refs/remote/p4/master.
+>>>
+>>> Thanks,
+>>> Luke
 >>
->> Fix the output redirection in t3310 and t3320 as well.  Previously, the 
->> tests directed output to a file, but stderr was either not captured or 
->> not sent to the file due to the order of the redirection operators.
->>
->> Signed-off-by: Todd Zullinger <tmz@pobox.com>
+>> Quite a few of the worktrees have expired - their head revision has
+>> been GC'd and no longer points to anything sensible
+>> (gc.worktreePruneExpire). The function other_head_refs() in worktree.c
+>> bails out if there's an error, which I think is the problem. I wonder
+>> if it should instead just report something and then keep going.
 >
-> Looks good to me.
+> Also see
+> https://public-inbox.org/git/CAGZ79kYP0z1G_H3nwfmSHraWHMBOcik5LepUXKj0nve=
+eBrihiw@mail.gmail.com/
 
-Thanks Johan.
+So is this a bug or user error on my part?
 
--- 
-Todd
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Deliberation, n. The act of examining one's bread to determine which
-side it is buttered on.
-    -- Ambrose Bierce, "The Devil's Dictionary"
-
+Surely at the very least "git fetch" shouldn't give a cryptic error
+message just because one of my git worktrees has expired!
