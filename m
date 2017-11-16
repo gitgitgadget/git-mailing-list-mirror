@@ -2,116 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A678A201C8
-	for <e@80x24.org>; Thu, 16 Nov 2017 03:24:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C1D33201C8
+	for <e@80x24.org>; Thu, 16 Nov 2017 03:55:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932182AbdKPDY3 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Nov 2017 22:24:29 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54214 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753766AbdKPDY2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Nov 2017 22:24:28 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8D6FCB5F74;
-        Wed, 15 Nov 2017 22:24:27 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=a3Hv+uPD/2zRYReiIUiZKw4yyOA=; b=ApSuk+
-        HrzszEq7Y4WMKs4Q/5akyv9CkxO1PtZFRC6NQrZYQAbk8ajXb80G2vhX1iHGDZAw
-        WOICRUqoCYpzCC5dpy2l8+LbAwuRO5iEBvk1XSPGh09Jnz/Aa3ATk5BsJaUFdfhr
-        uGkitpLq6s++wwaXweKf/lUT8rLq4BJtNcVpA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=yXS0yWxgIp24D7AEbO70MFXQ5YIiQmnU
-        0ds9mTlm36LgEjB9fxebXzKd3yp20eiMnOyLh7L1dFEl1VYUAuVCPDG6tuCL/OxB
-        4DPgwQylS9wlxkzV7Dgii7d7O/3841JNj5NpJHjzYSXTLy3GvrL0AGY0kcTrRqj/
-        NW/mYwkaMgo=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 86014B5F73;
-        Wed, 15 Nov 2017 22:24:27 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 006DBB5F72;
-        Wed, 15 Nov 2017 22:24:26 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org, jonathantanmy@google.com
-Subject: Re: [PATCHv5 7/7] builtin/describe.c: describe a blob
-References: <20171116020039.17810-1-sbeller@google.com>
-        <20171116020039.17810-8-sbeller@google.com>
-Date:   Thu, 16 Nov 2017 12:24:25 +0900
-In-Reply-To: <20171116020039.17810-8-sbeller@google.com> (Stefan Beller's
-        message of "Wed, 15 Nov 2017 18:00:39 -0800")
-Message-ID: <xmqqwp2qx5w6.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S933115AbdKPDzB (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Nov 2017 22:55:01 -0500
+Received: from mail-ua0-f177.google.com ([209.85.217.177]:55053 "EHLO
+        mail-ua0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933090AbdKPDy7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Nov 2017 22:54:59 -0500
+Received: by mail-ua0-f177.google.com with SMTP id j14so17819573uag.11
+        for <git@vger.kernel.org>; Wed, 15 Nov 2017 19:54:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=DpQAm0x+xylRhRAuJ3yDC4h7txJRG9n99JB/TVS6jJM=;
+        b=gelMWRscyCOmHIOt8uC3YoibmLGe4NTaV4QyH6D8z6Le7wyqa6Xtolje3iUyP2KB3I
+         LG8lrKDn4SCqXrfrNtXbf80sXao2kaDdSwmN9pTY6qpYkYFJ40jXe8LVo6TOMEyVAdzl
+         jVbjQnhah7dcBcXIxC/+YG8yXcyqaOjnw9iRCDeQ4PQFRrCGb3EQJCD5jXvEuakuLv/4
+         WlGb2f+A6xNNkircGmAZrR23TWPkMNptfEBjVgGr5cTMH2SVNQ3de46kM/y/XiNEU3pV
+         jo+n1H7CrXhCvZjW8JAFwJgZThQo/foF/+Q+PE9AWbYYBD1SGCmOvqcPBwok5pcAhugn
+         osdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=DpQAm0x+xylRhRAuJ3yDC4h7txJRG9n99JB/TVS6jJM=;
+        b=J4Q1/oAF4tJ27CHIZQEQiaikufa2LH6Y8a2GeLY31g8xoSHlShziNCXVQjYhHM65Xh
+         ZxlLNMGZ05FAYuwrSnybTdhdLi81KmnoxFpD5FaFZpo/PS2H46cwVJ5TiL0Vt4WW3n1s
+         hI8bdlxz1QSQZ9d+TQhyfiZjyJn1BYc3NJvDw7w8uefCoVcOiDDrh0XNauKciDBlVkIF
+         5YUukPM/u/FTs9Yzp7UZ/95p6UUJPtrdN5JEWVIx7dO/mJASqKrgl+5UlPYHD57FEz1W
+         cEK5mh8AnPLkcOeFsg1c8FiQ2se7LtSXcgVWhRhpW+HFoxjRiH7kKCNFfA8erjeAzZEi
+         7OnQ==
+X-Gm-Message-State: AJaThX7x+53NOnWfECYypsIKt7tdC9TgRJpFU8+PtXbVJyhk30+wlngl
+        HKgU7ccvK3IaFbks9l7O1+4t87EfKadnDNI0mz0=
+X-Google-Smtp-Source: AGs4zMbeWTGDRIDIPmzqjawXSU6w5U2cKM1VjDLBrKJVKy9HH3aWJjyEeR5xjGgpp2HVV0XLEGSZ+Z0T99FaAkZdPMI=
+X-Received: by 10.176.82.110 with SMTP id j43mr213418uaa.9.1510804498752; Wed,
+ 15 Nov 2017 19:54:58 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A66FFEFA-CA7D-11E7-8603-575F0C78B957-77302942!pb-smtp2.pobox.com
+Received: by 10.176.87.193 with HTTP; Wed, 15 Nov 2017 19:54:58 -0800 (PST)
+In-Reply-To: <CAGZ79kanxn7+bgMxbEfSPZtSr4KBWzk9NHE9F-g4J+2TXbz_mQ@mail.gmail.com>
+References: <20171110190550.27059-1-newren@gmail.com> <20171110190550.27059-28-newren@gmail.com>
+ <CAGZ79kanxn7+bgMxbEfSPZtSr4KBWzk9NHE9F-g4J+2TXbz_mQ@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 15 Nov 2017 19:54:58 -0800
+Message-ID: <CABPp-BHfRtfOhD5bt-DCBgLW8NjzKsohaf4C5ZatWwPS-adYfQ@mail.gmail.com>
+Subject: Re: [PATCH 27/30] merge-recursive: Apply necessary modifications for
+ directory renames
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
-
-> When describing commits, we try to anchor them to tags or refs, as these
-> are conceptually on a higher level than the commit. And if there is no ref
-> or tag that matches exactly, we're out of luck.  So we employ a heuristic
-> to make up a name for the commit. These names are ambiguous, there might
-> be different tags or refs to anchor to, and there might be different
-> path in the DAG to travel to arrive at the commit precisely.
-
-I am not sure if "And if there is ..." is adding much value here (I
-do not think it is even technically correct for that matter).  If
-there are more than one tag that point at the commit the user is
-interested in, we use one of the tags, as tags conceptually sit at a
-higher level.  And we use a heuristic to use one or the other tag to
-make up a name for the commit, so the same commit can have two valid
-names. ---So what?  Neither of these two valid names is "ambigous";
-the commit object the user wanted to name _is_ correctly identified
-(I would assume that we are not discussing a hash collision).
-
-Lucikly, if we remove "And if...precisely", the logic still flows
-nicely, if not more, to the next paragraph.
-
-> When describing a blob, we want to describe the blob from a higher layer
-> as well, which is a tuple of (commit, deep/path) as the tree objects
-> involved are rather uninteresting.  The same blob can be referenced by
-> multiple commits, so how we decide which commit to use?  This patch
-> implements a rather naive approach on this: As there are no back pointers
-> from blobs to commits in which the blob occurs, we'll start walking from
-> any tips available, listing the blobs in-order of the commit and once we
-
-Is "any tips" still the case?  I was wondering why you start your
-traversal at HEAD and nothing else in this iteration.  There seems
-to be no mention of this design decision in the documentation and no
-justification in the log.
-
-> found the blob, we'll take the first commit that listed the blob. For
-> example
+On Wed, Nov 15, 2017 at 12:23 PM, Stefan Beller <sbeller@google.com> wrote:
+>> +               if (!strcmp(pair->one->path, pair->two->path)) {
+>> +                       /*
+>> +                        * Paths should only match if this was initially a
+>> +                        * non-rename that is being turned into one by
+>> +                        * directory rename detection.
+>> +                        */
+>> +                       assert(pair->status != 'R');
+>> +               } else {
+>> +                       assert(pair->status == 'R');
 >
->   git describe --tags v0.99:Makefile
->   conversion-901-g7672db20c2:Makefile
+> assert() is compiled conditionally depending on whether
+> NDEBUG is set, which makes potential error reports more interesting and
+> head-scratching. But we'd rather prefer easy bug reports, therefore
+> we'd want to (a) either have the condition checked always, when
+> you know this could occur, e.g. via
 >
-> tells us the Makefile as it was in v0.99 was introduced in commit 7672db20.
+>   if (<condition>)
+>     BUG("Git is broken, because...");
 >
-> The walking is performed in reverse order to show the introduction of a
-> blob rather than its last occurrence.
+> or (b) you could omit the asserts if they are more of a developer guideline?
+>
+> I wonder if we want to introduce a BUG_ON(<condition>, <msg>) macro
+> that contains (a).
 
-The reversing may improve the chance of an older commit to be chosen
-rather than the newer one, but it does not even guarantee to show the
-"introduction".
+Yeah, I added a few other asserts in other commits too.  None of these
+were written with the expectation that they should or could ever occur
+for a user; it was just a developer guideline to make sure I (and
+future others) didn't break certain invariants during the
+implementation or while making modifications to it.
 
-What this guarantees is that a long history will be traversed fully
-before we start considering which commit has the blob of interest, I
-am afraid.  Is this a sensible trade-off?
+So that makes it more like (b), but I feel that there is something to
+be said for having a convenient syntax for expressing pre-conditions
+that others shouldn't violate when changing the code, and which will
+be given more weight than a comment.  For that, something that is
+compiled out on many users systems seemed just fine.
 
-> +	argv_array_pushl(&args, "internal: The first arg is not parsed",
-> +		"--objects", "--in-commit-order", "--reverse", "HEAD",
-> +		NULL);
+But, I have certainly seen abuses of asserts in my time as well (e.g.
+function calls with important side-effects being placed inside
+asserts), so if folks have decided it's against git's style, then I
+understand.  I'll remove some, and switch the cheaper checks over to
+BUG().
 
+>> +                       re->dst_entry->processed = 1;
+>> +                       //string_list_remove(entries, pair->two->path, 0);
+>
+> commented code?
+
+Ugh, that's embarrassing.  I'll clean that out.
