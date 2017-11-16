@@ -6,30 +6,30 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 49EFD202A0
-	for <e@80x24.org>; Thu, 16 Nov 2017 18:08:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 24750202A0
+	for <e@80x24.org>; Thu, 16 Nov 2017 18:08:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966458AbdKPSIK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Nov 2017 13:08:10 -0500
-Received: from siwi.pair.com ([209.68.5.199]:44181 "EHLO siwi.pair.com"
+        id S966462AbdKPSIM (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Nov 2017 13:08:12 -0500
+Received: from siwi.pair.com ([209.68.5.199]:44175 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S936579AbdKPSH4 (ORCPT <rfc822;git@vger.kernel.org>);
+        id S936577AbdKPSH4 (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 16 Nov 2017 13:07:56 -0500
 Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id AC0EA8454F;
+        by siwi.pair.com (Postfix) with ESMTP id 26EB38454D;
         Thu, 16 Nov 2017 13:07:55 -0500 (EST)
 Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 3792384535;
-        Thu, 16 Nov 2017 13:07:55 -0500 (EST)
+        by siwi.pair.com (Postfix) with ESMTPSA id 98AE384535;
+        Thu, 16 Nov 2017 13:07:54 -0500 (EST)
 From:   Jeff Hostetler <git@jeffhostetler.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, jonathantanmy@google.com,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v4 3/6] oidset: add iterator methods to oidset
-Date:   Thu, 16 Nov 2017 18:07:40 +0000
-Message-Id: <20171116180743.61353-4-git@jeffhostetler.com>
+Subject: [PATCH v4 2/6] oidmap: add oidmap iterator methods
+Date:   Thu, 16 Nov 2017 18:07:39 +0000
+Message-Id: <20171116180743.61353-3-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20171116180743.61353-1-git@jeffhostetler.com>
 References: <20171116180743.61353-1-git@jeffhostetler.com>
@@ -40,93 +40,44 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Add the usual iterator methods to oidset.
-Add oidset_remove().
+Add the usual map iterator functions to oidmap.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- oidset.c | 10 ++++++++++
- oidset.h | 36 ++++++++++++++++++++++++++++++++++++
- 2 files changed, 46 insertions(+)
+ oidmap.h | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-diff --git a/oidset.c b/oidset.c
-index f1f874a..454c54f 100644
---- a/oidset.c
-+++ b/oidset.c
-@@ -24,6 +24,16 @@ int oidset_insert(struct oidset *set, const struct object_id *oid)
- 	return 0;
- }
- 
-+int oidset_remove(struct oidset *set, const struct object_id *oid)
-+{
-+	struct oidmap_entry *entry;
-+
-+	entry = oidmap_remove(&set->map, oid);
-+	free(entry);
-+
-+	return (entry != NULL);
-+}
-+
- void oidset_clear(struct oidset *set)
- {
- 	oidmap_free(&set->map, 1);
-diff --git a/oidset.h b/oidset.h
-index f4c9e0f..783abce 100644
---- a/oidset.h
-+++ b/oidset.h
-@@ -24,6 +24,12 @@ struct oidset {
- 
- #define OIDSET_INIT { OIDMAP_INIT }
- 
-+
-+static inline void oidset_init(struct oidset *set, size_t initial_size)
-+{
-+	return oidmap_init(&set->map, initial_size);
-+}
-+
- /**
-  * Returns true iff `set` contains `oid`.
+diff --git a/oidmap.h b/oidmap.h
+index 18f54cd..d3cd2bb 100644
+--- a/oidmap.h
++++ b/oidmap.h
+@@ -65,4 +65,26 @@ extern void *oidmap_put(struct oidmap *map, void *entry);
   */
-@@ -39,9 +45,39 @@ int oidset_contains(const struct oidset *set, const struct object_id *oid);
- int oidset_insert(struct oidset *set, const struct object_id *oid);
+ extern void *oidmap_remove(struct oidmap *map, const struct object_id *key);
  
- /**
-+ * Remove the oid from the set.
-+ *
-+ * Returns 1 if the oid was present in the set, 0 otherwise.
-+ */
-+int oidset_remove(struct oidset *set, const struct object_id *oid);
 +
-+/**
-  * Remove all entries from the oidset, freeing any resources associated with
-  * it.
-  */
- void oidset_clear(struct oidset *set);
- 
-+struct oidset_iter {
-+	struct oidmap_iter m_iter;
++struct oidmap_iter {
++	struct hashmap_iter h_iter;
 +};
 +
-+static inline void oidset_iter_init(struct oidset *set,
-+				    struct oidset_iter *iter)
++static inline void oidmap_iter_init(struct oidmap *map, struct oidmap_iter *iter)
 +{
-+	oidmap_iter_init(&set->map, &iter->m_iter);
++	hashmap_iter_init(&map->map, &iter->h_iter);
 +}
 +
-+static inline struct object_id *oidset_iter_next(struct oidset_iter *iter)
++static inline void *oidmap_iter_next(struct oidmap_iter *iter)
 +{
-+	struct oidmap_entry *e = oidmap_iter_next(&iter->m_iter);
-+	return e ? &e->oid : NULL;
++	return hashmap_iter_next(&iter->h_iter);
 +}
 +
-+static inline struct object_id *oidset_iter_first(struct oidset *set,
-+						  struct oidset_iter *iter)
++static inline void *oidmap_iter_first(struct oidmap *map,
++				      struct oidmap_iter *iter)
 +{
-+	oidset_iter_init(set, iter);
-+	return oidset_iter_next(iter);
++	oidmap_iter_init(map, iter);
++	return oidmap_iter_next(iter);
 +}
 +
- #endif /* OIDSET_H */
+ #endif
 -- 
 2.9.3
 
