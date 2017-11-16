@@ -6,122 +6,108 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B8B27201C8
-	for <e@80x24.org>; Thu, 16 Nov 2017 01:35:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 96B18201C8
+	for <e@80x24.org>; Thu, 16 Nov 2017 01:43:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933607AbdKPBfo (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Nov 2017 20:35:44 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:65493 "EHLO
+        id S933650AbdKPBnq (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Nov 2017 20:43:46 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51868 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S933189AbdKPBfm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Nov 2017 20:35:42 -0500
+        with ESMTP id S932697AbdKPBnp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Nov 2017 20:43:45 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 772ACB4682;
-        Wed, 15 Nov 2017 20:35:41 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2C3E6A29DF;
+        Wed, 15 Nov 2017 20:43:45 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=b+jiGywwXKLGEkdv4UA5dThu6/M=; b=oseya3
-        WeRAqd3lbiOc6wSd4xtiKeO24KFT1NDNXHMHwj9sPCZU+ua6fSFE5sqFadwh90JL
-        /qVMfZYKMOp1haUMFwNlVR8fcNbkghMk4x56j/QUorm4c/6VIH4JCflxnlxv3tFN
-        HdXepN1Du19WCzaYd3I3EjfPrhexcPBwiVh8o=
+        :content-type; s=sasl; bh=QuaH0OqzCXctno3nFhvC0iqByk8=; b=Di36Ya
+        Yuuqv2yJb1dnF1rNFj1k9of9NdwjQSE+/MDaP8v0oIBxQKyoSc/Vzp4ThoKqERdx
+        tDc+RwyD5v47PiolCC8hVVq0qxL4P7iNB28Gq+0+ePNBZoyCdl857gKqUez5X++H
+        DHhuYPc1CGzlHQJX6lALyysmZt7ukYEeSTvtc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=DW8jsIy7/odmy2AXXyQ8qoIdkVxkuqVV
-        R39gIBnJtzt8GZ4KpUDNxNsfjq4N2q8a0HZDQNO5rTNpxaDsA25GZHKk1S1DyK2/
-        Qzh3Kwj8LE6HiDk9sgJ5g8AQdqp0nuKEI/gfbdC4EgJ89GCAzLV2UvnRl3tDSEev
-        SORWKzk+oBw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 645F4B4681;
-        Wed, 15 Nov 2017 20:35:41 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=DO846jukgNr1eG8Od6AWy+rIJ1GKCFTl
+        eQKL/AmLT7ob87cI1aqc2ccIFbSvpTXR3AC0DEXkvb6wWsFyJCA9ASia4Fivqq4l
+        Lw6BkPXC10Slc1scEZ65L2wQTYHoHdeLL+fmHg5QFbflFejo/uGWP8Lc4OB/oZCj
+        R4qgBcqdKOA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 23CDCA29DE;
+        Wed, 15 Nov 2017 20:43:45 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D8731B4680;
-        Wed, 15 Nov 2017 20:35:40 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 97DF9A29DD;
+        Wed, 15 Nov 2017 20:43:44 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Dominik Mahrer <teddy@teddy.ch>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH] Makefile: check that tcl/tk is installed
-References: <20171115125200.17006-1-chriscool@tuxfamily.org>
-Date:   Thu, 16 Nov 2017 10:35:39 +0900
-In-Reply-To: <20171115125200.17006-1-chriscool@tuxfamily.org> (Christian
-        Couder's message of "Wed, 15 Nov 2017 13:52:00 +0100")
-Message-ID: <xmqqbmk3xaxg.fsf@gitster.mtv.corp.google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git <git@vger.kernel.org>
+Subject: Re: [PATCHv4 7/7] builtin/describe.c: describe a blob
+References: <20171115003043.24080-1-sbeller@google.com>
+        <20171115003043.24080-8-sbeller@google.com>
+        <20171114175207.f23d492045d52b8aa16c00be@google.com>
+        <CAGZ79kaum5py=14kdFy1a+K_0MzfaD5boYStixh=1aY2tUCV-Q@mail.gmail.com>
+Date:   Thu, 16 Nov 2017 10:43:43 +0900
+In-Reply-To: <CAGZ79kaum5py=14kdFy1a+K_0MzfaD5boYStixh=1aY2tUCV-Q@mail.gmail.com>
+        (Stefan Beller's message of "Wed, 15 Nov 2017 17:22:51 -0800")
+Message-ID: <xmqq7eurxak0.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 74921F62-CA6E-11E7-B1F8-575F0C78B957-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 94E5B4E4-CA6F-11E7-9447-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> writes:
+Stefan Beller <sbeller@google.com> writes:
 
-> To improve the current behavior when Tcl/Tk is not installed,
-> let's just check that TCLTK_PATH points to something and error
-> out right away if this is not the case.
+>>> -git-describe - Describe a commit using the most recent tag reachable from it
+>>> +git-describe - Describe a commit or blob using the graph relations
+>>
+>> I would write "Describe a commit or blob using a tag reachable from it".
 >
-> This should benefit people who actually want to install and use
-> git-gui or gitk as they will have to install Tcl/Tk anyway, and
-> it is better for them if they are told about installing it soon
-> in the build process, rather than if they have to debug it after
-> installing.
+> using a ref, as we also can use refs.
+> I think 'the graph' is technically correct here, but may be too confusing.
 
-Not objecting, but thinking aloud if this change makes sense.
+Without saying graph over what, "graph relations" is not just
+confusing but an insufficient explanation for a technically correct
+explanation.  Even though we have "--contains", we say "reachable from"
+and nobody has complained---so perhaps we can keep the white lie to
+keep the synopsis simpler?
 
-If you are building Git for your own use on the same box, which is
-presumably the majority of "build failed and I have no clue how to
-fix" case that needs help, if you want gui tools, you need to have
-tcl/tk installed anyway, whether you have msgfmt installed.  This
-seems to be the _only_ class of users this patch wants to cater to.
+If I were writing this sentence from scratch, perhaps I wouldn't
+even use the word "describe".  How about 
 
-I wonder if we are hurting people who are not in that category.
+    Give an object a human readable name based on an available ref
 
- - To run gui tools, tcl/tk must be available at runtime, but tcl/tk
-   is not necessary in the packager's environment to produce a
-   package of Git that contains working git-gui and gitk that will
-   be used on an end-user box with tcl/tk installed, as long as the
-   packager's environment has a working msgfmt.
+or something like that?
 
- - To process .po files for the gui tools in the packager's
-   environment without msgfmt, tcl/tk is required.
+>>  (Should we also test the case where a blob is directly
+>> tagged?)
+>
+> We do a bad job at describing tags that point at a blob currently:
+>
+>   git tag test-blob HEAD:Makefile
+>   git describe test-blob
+> error: object cd75985991f4535c45e2589222a9e6a38fb1d613 is a blob, not a commit
+> fatal: test-blob is not a valid 'commit' object
+>
+> This series changes this to
+>
+>   git describe test-blob
+>   v2.15.0-rc0-43-g54bd705a95:Makefile
+>
+> which might not be expected (you'd expect "test-blob"),
+> so I think I can write a test telling that this is suboptimal
+> behavior?
 
-I suspect that this change will hurt those who package Git for other
-people.
+Or a sentence in BUGS section.
 
-It used to be that, as long as they have msgfmt installed, they only
-needed to _know_ what the path on the users' box to "wish" is, and
-set it to TCLTK_PATH, and if they are distro packagers, most likely
-they already have such an automated set-up working.  Now with this
-change, they are forced to install tcl/tk on their possibly headless
-box where tcl/tk is useless, and worse yet, an attempt to install it
-may bring in tons of unwanted stuff related to X that is irrelevant
-on such a headless development environment.
+A case (or two) I find more interesting is to see how the code
+behaves against these:
 
-I doubt that this is quite a good trade-off; it feels that this
-burdens packagers a bit too much, and we may need a way to override
-this new check further.  I think "If I cannot run either wish or
-msgfmt, then barf and give an error message" might at least be
-needed.  Am I misinterpreting the motivation of the patch?
+	git tag -a -m "annotated blob" a-blob HEAD:Makefile
+	git tag -a -m "annotated tree" a-tree HEAD:t
+	git describe a-blob a-tree
 
-> diff --git a/Makefile b/Makefile
-> index ee9d5eb11e..ada6164e15 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -1636,6 +1636,13 @@ ifeq ($(TCLTK_PATH),)
->  NO_TCLTK = NoThanks
->  endif
->  
-> +ifndef NO_TCLTK
-> +	has_tcltk := $(shell type $(TCLTK_PATH) 2>/dev/null)
-> +	ifndef has_tcltk
-> +$(error "Tcl/Tk is not installed ('$(TCLTK_PATH)' not found). Consider setting NO_TCLTK or installing Tcl/Tk")
-> +	endif
-> +endif
-> +
->  ifeq ($(PERL_PATH),)
->  NO_PERL = NoThanks
->  endif
+Thanks.
