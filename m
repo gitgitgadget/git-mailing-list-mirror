@@ -6,29 +6,30 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF4E5202A0
-	for <e@80x24.org>; Thu, 16 Nov 2017 18:17:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C0B2F202A0
+	for <e@80x24.org>; Thu, 16 Nov 2017 18:17:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1760529AbdKPSRz (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Nov 2017 13:17:55 -0500
-Received: from siwi.pair.com ([209.68.5.199]:46685 "EHLO siwi.pair.com"
+        id S966301AbdKPSR4 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Nov 2017 13:17:56 -0500
+Received: from siwi.pair.com ([209.68.5.199]:46679 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S966654AbdKPSRh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Nov 2017 13:17:37 -0500
+        id S966657AbdKPSRk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Nov 2017 13:17:40 -0500
 Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id A44088454F;
-        Thu, 16 Nov 2017 13:17:36 -0500 (EST)
+        by siwi.pair.com (Postfix) with ESMTP id A315C8454F;
+        Thu, 16 Nov 2017 13:17:39 -0500 (EST)
 Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 3F3DA8454D;
-        Thu, 16 Nov 2017 13:17:36 -0500 (EST)
+        by siwi.pair.com (Postfix) with ESMTPSA id 277E88455A;
+        Thu, 16 Nov 2017 13:17:39 -0500 (EST)
 From:   Jeff Hostetler <git@jeffhostetler.com>
 To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net, jonathantanmy@google.com
-Subject: [PATCH v4 03/15] fetch: refactor calculation of remote list
-Date:   Thu, 16 Nov 2017 18:17:11 +0000
-Message-Id: <20171116181723.62033-4-git@jeffhostetler.com>
+Cc:     gitster@pobox.com, peff@peff.net, jonathantanmy@google.com,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: [PATCH v4 08/15] partial-clone: define partial clone settings in config
+Date:   Thu, 16 Nov 2017 18:17:16 +0000
+Message-Id: <20171116181723.62033-9-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20171116181723.62033-1-git@jeffhostetler.com>
 References: <20171116181723.62033-1-git@jeffhostetler.com>
@@ -37,70 +38,53 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jonathan Tan <jonathantanmy@google.com>
+From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Separate out the calculation of remotes to be fetched from and the
-actual fetching. This will allow us to include an additional step before
-the actual fetching in a subsequent commit.
+Create get and set routines for partial clone settings in
+the config.  These will be used by partial clone and fetch
+to remember the promisor remote and the default filter-spec.
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- builtin/fetch.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ t/t5500-fetch-pack.sh | 27 ---------------------------
+ 1 file changed, 27 deletions(-)
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 225c734..1b1f039 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1322,7 +1322,7 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- {
- 	int i;
- 	struct string_list list = STRING_LIST_INIT_DUP;
--	struct remote *remote;
-+	struct remote *remote = NULL;
- 	int result = 0;
- 	struct argv_array argv_gc_auto = ARGV_ARRAY_INIT;
+diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
+index c57916b..80a1a32 100755
+--- a/t/t5500-fetch-pack.sh
++++ b/t/t5500-fetch-pack.sh
+@@ -755,31 +755,4 @@ test_expect_success 'fetching deepen' '
+ 	)
+ '
  
-@@ -1367,17 +1367,14 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 		else if (argc > 1)
- 			die(_("fetch --all does not make sense with refspecs"));
- 		(void) for_each_remote(get_one_remote_for_fetch, &list);
--		result = fetch_multiple(&list);
- 	} else if (argc == 0) {
- 		/* No arguments -- use default remote */
- 		remote = remote_get(NULL);
--		result = fetch_one(remote, argc, argv);
- 	} else if (multiple) {
- 		/* All arguments are assumed to be remotes or groups */
- 		for (i = 0; i < argc; i++)
- 			if (!add_remote_or_group(argv[i], &list))
- 				die(_("No such remote or remote group: %s"), argv[i]);
--		result = fetch_multiple(&list);
- 	} else {
- 		/* Single remote or group */
- 		(void) add_remote_or_group(argv[0], &list);
-@@ -1385,14 +1382,19 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 			/* More than one remote */
- 			if (argc > 1)
- 				die(_("Fetching a group and specifying refspecs does not make sense"));
--			result = fetch_multiple(&list);
- 		} else {
- 			/* Zero or one remotes */
- 			remote = remote_get(argv[0]);
--			result = fetch_one(remote, argc-1, argv+1);
-+			argc--;
-+			argv++;
- 		}
- 	}
- 
-+	if (remote)
-+		result = fetch_one(remote, argc, argv);
-+	else
-+		result = fetch_multiple(&list);
-+
- 	if (!result && (recurse_submodules != RECURSE_SUBMODULES_OFF)) {
- 		struct argv_array options = ARGV_ARRAY_INIT;
- 
+-test_expect_success 'filtering by size' '
+-	rm -rf server client &&
+-	test_create_repo server &&
+-	test_commit -C server one &&
+-	test_config -C server uploadpack.allowfilter 1 &&
+-
+-	test_create_repo client &&
+-	git -C client fetch-pack --filter=blob:limit=0 ../server HEAD &&
+-
+-	# Ensure that object is not inadvertently fetched
+-	test_must_fail git -C client cat-file -e $(git hash-object server/one.t)
+-'
+-
+-test_expect_success 'filtering by size has no effect if support for it is not advertised' '
+-	rm -rf server client &&
+-	test_create_repo server &&
+-	test_commit -C server one &&
+-
+-	test_create_repo client &&
+-	git -C client fetch-pack --filter=blob:limit=0 ../server HEAD 2> err &&
+-
+-	# Ensure that object is fetched
+-	git -C client cat-file -e $(git hash-object server/one.t) &&
+-
+-	test_i18ngrep "filtering not recognized by server" err
+-'
+-
+ test_done
 -- 
 2.9.3
 
