@@ -2,98 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4B15E2036C
-	for <e@80x24.org>; Thu, 16 Nov 2017 00:38:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4DD96201C8
+	for <e@80x24.org>; Thu, 16 Nov 2017 00:54:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933926AbdKPAiS (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Nov 2017 19:38:18 -0500
-Received: from mail-qt0-f174.google.com ([209.85.216.174]:55833 "EHLO
-        mail-qt0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753105AbdKPAh7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Nov 2017 19:37:59 -0500
-Received: by mail-qt0-f174.google.com with SMTP id v41so38707007qtv.12
-        for <git@vger.kernel.org>; Wed, 15 Nov 2017 16:37:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=IQ8OPXPdsSu+lDHy5sWbVhgtx0yzRczPrkHpRNZGSVc=;
-        b=aQHsdXd0Bh+/vY0D0nRqpLwwf0cs8GvzxGE1VpMLjPbcu3y7gbPx2MOJsLQHoexVgR
-         JNBf4D6LyPkre9Trmhzco+sI+P46vvqZ4QKj99wb3V4W+1+EqYxTEvRWnznl2ltJFthy
-         IK+APZg2J8tOffZPSkBLWX5l2sWENFPcv/k2LyaC20PY8UXIlxWP9AV3h+wqhlutBqYr
-         PNQeE5xZPpq9CJFJ8D3LybCmG0eOU60jo/ZA3wT2Af7b8mw1QkeMvSncNWGp5keNtAhM
-         RGFeP0OOqyV6hMIA074eWsdrBmaVOdUW3KfFv0xNv1OvSkSu+6U3Iy1YQPz5abDJwkyB
-         otlg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=IQ8OPXPdsSu+lDHy5sWbVhgtx0yzRczPrkHpRNZGSVc=;
-        b=JB2+oa55+LKyecinAPTsCMrC3Pv/v2K7I2Il6wLN1t2MKD4oxQU0Ia1tAbjcPuq8QC
-         4HxEjOTbim4ys2rVtiEvSGCuqXqd87nyl1pNCFNoxq60/UY/uquOEvIqW7nurwp13c6Q
-         yUsLNmP1h+I3Pf16d2PVymad1aF1QO5K9okhngI70u3eSWzomhdpNsMZp7oN7hcD9ldx
-         uBIsIqFWrxDS4bIpt4QgVpgdGDNumGSfHv1igeZafc4tqlgDXXbhb3kr07c/QUjEKJw9
-         ZcAiudsX3U9482t8Um0hxvIV3qjMpblGNAnmwLpdxvcLB+Lmr2vWDnb0Ln1BaUfXxcMK
-         B1dg==
-X-Gm-Message-State: AJaThX4eSLyWnAHn6sU//m0kDpFez66GAaTosVr5tVHOgWsjTq0SXGxr
-        Wa0+V338jt74dtoO0FfhgcI60rJq6EiIhGwn79r0HYvW
-X-Google-Smtp-Source: AGs4zMZHp1zFhS5qP9tHVPkjAFZNZSNMavslEHuNZWNz3gGj3Vpgld4pknN1GVEEYkwD4iEugzIR6TM2HLAfO0rstOY=
-X-Received: by 10.55.125.196 with SMTP id y187mr29438588qkc.180.1510792678246;
- Wed, 15 Nov 2017 16:37:58 -0800 (PST)
+        id S932437AbdKPAyU (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Nov 2017 19:54:20 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58512 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1753066AbdKPAyT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Nov 2017 19:54:19 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C4E3BA1D5E;
+        Wed, 15 Nov 2017 19:54:18 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=qmD0NOLuxc+nQgDVsf3DfYn5TO8=; b=Yawq7S
+        MemEgTtplDFTG8R0L81hIl0Q7jlB0MABu3bZdDrERvWJetzS+UlFyU65Md7eKcvz
+        d0+KfDwV41QtC35SIBCSiUkQxdg3d1kr6UYm3xh61rAXDoALGat9hruNKIYq3dTv
+        YiIJ5j1+l6TxE5F75OlFj7u3d1cRlZlv9y/QQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=w0EUyrKwa4QeAAS6lPSJVqHc7CxFrx0L
+        DN/xjx+S/gNYYTy8rgnaSqQl23s/HZq1aK9Cawqv2psxjJHHw/oVDzpWFTjJnr9E
+        MqH9R/Jw4KUSXWq6BsNNOkKuqjN6nEQatGKMo2Yd7On0H02fdVHCvSu7R3v9hEpm
+        M/TnhqNAsvY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BBD1DA1D5D;
+        Wed, 15 Nov 2017 19:54:18 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 31746A1D5C;
+        Wed, 15 Nov 2017 19:54:18 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     hsed@unimetic.com
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH V3] config: add --expiry-date
+References: <xmqqshdh2wln.fsf@gitster.mtv.corp.google.com>
+        <20171116000547.3246-1-hsed@unimetic.com>
+Date:   Thu, 16 Nov 2017 09:54:16 +0900
+In-Reply-To: <20171116000547.3246-1-hsed@unimetic.com> (hsed@unimetic.com's
+        message of "Thu, 16 Nov 2017 00:05:47 +0000")
+Message-ID: <xmqqlgj7xcuf.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.140.96.118 with HTTP; Wed, 15 Nov 2017 16:37:57 -0800 (PST)
-In-Reply-To: <xmqqpo8jxdto.fsf@gitster.mtv.corp.google.com>
-References: <274B4850-2EB7-4BFA-A42C-25A573254969@gmail.com>
- <xmqq8tf7yxzn.fsf@gitster.mtv.corp.google.com> <CAGZ79kZbm8SGY4rXKZHV82E-HX9qbQ4iyCbMgJEBFQf4fj3u=Q@mail.gmail.com>
- <xmqqpo8jxdto.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 15 Nov 2017 16:37:57 -0800
-Message-ID: <CAGZ79kavG+gND_2oqMsB0HgZHbaCx2tRvB++8y7KvLc38mnUiQ@mail.gmail.com>
-Subject: Re: [RFC] Indicate that Git waits for user input via editor
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Lars Schneider <larsxschneider@gmail.com>,
-        git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: ACC66CE0-CA68-11E7-BEB4-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 15, 2017 at 4:33 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->>> I wonder if we can do something like
->>>
->>>         git_spawn_editor()
->>>         {
->>>                 const char *EL = "\033[K"; /* Erase in Line */
->>>
->>>                 /* notice the lack of terminating LF */
->>>                 fprintf(stderr, "Launching your editor...");
->>
->> "It takes quite some time to launch this special Git Editor"
->>
->> As Lars pointed out, the editor may be launched in the background,
->> that the user would not know, but they might expect a thing to
->> pop up as a modal dialog as is always with UIs.
->>
->> So despite it being technically wrong at this point in time,
->> I would phrase it in past tense or in a way that indicates that the
->> user needs to take action already.
->>
->> The "Launching..." sounds as if I need to wait for an event to occur.
->
-> Heh, I wasn't expecting phrasing nitpicks when I was trying to help
-> the thread by trying to come up with a way to avoid vertical space
-> wastage.
+hsed@unimetic.com writes:
 
-I know you weren't, but maybe it is helpful for the author of the patch
-(I presume you may not be the author, after all).
+> From: Haaris Mehmood <hsed@unimetic.com>
+>
+> Add --expiry-date as a data-type for config files when
+> 'git config --get' is used. This will return any relative
+> or fixed dates from config files  as a timestamp value.
+>
+> This is useful for scripts (e.g. gc.reflogexpire) that work
+> with timestamps so that '2.weeks' can be converted to a format
+> acceptable by those scripts/functions.
+>
+> Following the convention of git_config_pathname(), move
+> the helper function required for this feature from
+> builtin/reflog.c to builtin/config.c where other similar
+> functions exist (e.g. for --bool or --path), and match
+> the order of parameters with other functions (i.e. output
+> pointer as first parameter).
+>
+> Signed-off-by: Haaris Mehmood <hsed@unimetic.com>
 
-But you are right, I should have started with a more fundamental
-answer stating this is a good idea, and I cannot think of a negative
-side effect currently.
+Very nicely explained.  I often feel irritated when people further
+rewrite what I wrote for them as an example and make it much worse,
+but this one definitely is a lot more readable than the "something
+like this perhaps?" in my response to the previous round.
+
+> @@ -273,12 +280,13 @@ static char *normalize_value(const char *key, const char *value)
+>  	if (!value)
+>  		return NULL;
+>  
+> -	if (types == 0 || types == TYPE_PATH)
+> +	if (types == 0 || types == TYPE_PATH || types == TYPE_EXPIRY_DATE)
+>  		/*
+>  		 * We don't do normalization for TYPE_PATH here: If
+>  		 * the path is like ~/foobar/, we prefer to store
+>  		 * "~/foobar/" in the config file, and to expand the ~
+>  		 * when retrieving the value.
+> +		 * Also don't do normalization for expiry dates.
+>  		 */
+>  		return xstrdup(value);
+
+Sensible.  Just like we want to save "~u/path" as-is without
+expanding the "~u"/ part, we want to keep "2 weeks ago" as-is.
+
+> -	if (parse_expiry_date(value, expire))
+> -		return error(_("'%s' for '%s' is not a valid timestamp"),
+> -			     value, var);
+> ...
+> +	if (parse_expiry_date(value, timestamp))
+> +		die(_("failed to parse date_string in: '%s'"), value);
+
+This is an unintended change in behaviour (or at least undocumented
+in the log message) for the "git reflog" command, no?
+
+Not just the error message is different, but the original gave the
+calling code a chance to react to the failure by returning -1 from
+the function, but this makes the command fail outright here.
+
+Would it break anything if you did "return error()" just like the
+original used to?  Are your callers of this new function not
+prepared to see an error return?
