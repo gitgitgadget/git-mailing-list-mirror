@@ -2,120 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 164CE202A0
-	for <e@80x24.org>; Thu, 16 Nov 2017 18:50:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E2149202A0
+	for <e@80x24.org>; Thu, 16 Nov 2017 19:34:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1760762AbdKPSuo (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Nov 2017 13:50:44 -0500
-Received: from mout.web.de ([212.227.17.11]:56940 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751413AbdKPSum (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Nov 2017 13:50:42 -0500
-Received: from [192.168.178.36] ([91.20.49.242]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0M8zOD-1eKeQa1qgv-00CPq8; Thu, 16
- Nov 2017 19:50:37 +0100
-Subject: [PATCH] apply: update line lengths for --inaccurate-eof
-To:     mqudsi@neosmart.net, git@vger.kernel.org
-References: <0101015f9c91871f-2f750aec-6877-4e29-9c15-c8399670dd48-000000@us-west-2.amazonses.com>
-Cc:     Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <acc527e8-f617-6230-9872-0b23ac24f8e5@web.de>
-Date:   Thu, 16 Nov 2017 19:50:31 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.4.0
+        id S936760AbdKPTeU (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Nov 2017 14:34:20 -0500
+Received: from mail-qt0-f172.google.com ([209.85.216.172]:42028 "EHLO
+        mail-qt0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934962AbdKPTeO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Nov 2017 14:34:14 -0500
+Received: by mail-qt0-f172.google.com with SMTP id 31so341832qtz.9
+        for <git@vger.kernel.org>; Thu, 16 Nov 2017 11:34:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=MgpfV5157Gh0aGFqD3EwvCBqgiUpic4LUApPaMyeGXo=;
+        b=PyuojGviitYqdy027+K6sPGBT2IhldP8WSqCJRtEjvY7UwpG4VLjfFW+n23Axmv+so
+         hI0vocd5uW6xFWNI2zwblYL97FxLnVsHiG4MxdYZKhDiHHwrO/LLSyZ4Ze67YtozM3ZR
+         npmPRi2kNHt7zFnld+cRmxCNJb8cznbr88/XWwnXeGsEPF//2ApuYnN0SAGEf6cmXGEe
+         h4la8MCe4vBKmvOgXoD5GLFSiWV5Utym2kvzUF9KcuP9VEtGzdy5xqVlpmwMbqBpUT+w
+         fVZxWl3lj8uY7zsbAWFab5N6IhjNdaL2ykrgu7qvywV0SZ9DdVFO8cxcixsHF4n6Wh6t
+         +y7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=MgpfV5157Gh0aGFqD3EwvCBqgiUpic4LUApPaMyeGXo=;
+        b=URRQCEqcYNOGm0x67KGsS76Lj9c8XKtjb5zjQc63FvNcyyF5LQlFs/p1QVebWYgLzL
+         aX2lhmzjgfOtiJlh0CpwZnMx2w3tF75wYfYqZRPT/WzZBBpcaSEqzFqfgoKi/MwmOltY
+         hLnr66uTS/v9RDtqoa/+ekxgMrYx4qPO0L4KoCw1qwt2p+LSM/d5E+ynhhuvpJYsosw3
+         9NveR3Ie47A1S4DS/t00tKhVnhssyXFmL3YQj961iNBP2QjwtVwWoF1rulfuswK1somE
+         Ipp7hH3Yqd16TRnkWyN1GwaGue6FNZcQzP1d1N2LPA0/x21NFMpuAY95puLD/OEW7Z5d
+         99SQ==
+X-Gm-Message-State: AJaThX6ASDa8I+kN96lmJLyJ00GTPEZ7KLw9fbGOqFdFNmlXGLPoTVJ/
+        DuU6fRI1VwY7j6CR5WIWvNdIQce3ydYcOrkPIaZDaw==
+X-Google-Smtp-Source: AGs4zMaYHMU27vF4J6uLD0KeHaiIBddsFNqmH8/VG+1QEAyokxv5vtmnAaz0a3lMauI8Kt8QS98iopC65wDfJBWZQWg=
+X-Received: by 10.200.36.86 with SMTP id d22mr4504305qtd.140.1510860852875;
+ Thu, 16 Nov 2017 11:34:12 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <0101015f9c91871f-2f750aec-6877-4e29-9c15-c8399670dd48-000000@us-west-2.amazonses.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:Syn9iNoccrRVMZcOgEBE8AKLhZDCgdDwIaRZKIA9LT0CpmS8miu
- ADPN/x93pFRxHrT1YPwtl9BuEu1vSi/paFavQNw1QS7ofY5qV7AjkDtNjM9blCl+6v0MmmV
- exnPx8S4ng5yCcHAyLAIVm77tsRw6es8qbQZ123bb7PhlQ7eqXqTvqDWwwbQG3uTt8Yih4d
- /l9HmF29Xfj/+1OvdP/DA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:J0BYibtdFOg=:RkSqCdQilz5wqASjx2IaQu
- glFmVd16J+TjY8V8D+SylpNXZSHkxz0JHsAwVLIUZR2vjyLRdCawwRmUjNl56YB2CzcgcP3gY
- wmWH/2hVYwPSY6CJE4ZeUdrAwg+MoYJkxY4PMNgaP6rOc84R3Hoj+KVtN9gvP2CrH63KD3aKr
- c1XlGwcki2+M2pUwrPuvyyTuXkmNYiRRyDbgJr+hjN+ks16td+6WdEYX2QkXk8/s0cg/Q7kkA
- krQbj0aQOHocd5cKnsFMXqjOcigvypDcIVd2d6v5X6SRDjyCwdoLqK0wQK7Dm4uRzlWtG98TV
- PdnwXALMjo7j0iWEXKdUpmx3+VzigDruQx+x6HmqtWupj0nYLYIuppa2WWqeqh6iOVRLErbxb
- 6yErqtUlA1ijbbvpatoZu67n2Zo07q+8tkNyf59I4ut+NczTUEuMDzO2MzgI/sA6929c6On51
- 332cZRNbxCdxjkf7AVgpHYE6bUZW2qfoxWKMXfET0PgrLA6Iw0bP3VtqRudheYrMidgvpKnCy
- INia7wEYq8lB6joBu+ybwKu+KJ8aFRGC3zNsDKyqfTLGQO9yaiZ48sb97grHX3Fwrk9C1GMGb
- 002qUE6g11ervc1Y3ri+XZgV9xM+9Cz94GIhz2XcA2Flwufh7gjffSBA7kma5HTwq/KvDxl4/
- PtpypMt5bpd1EMXzwpLgmyuY92qzXtzKXqvzhlsSTOIs7VUxsMZvY2IFfIyOCuj9zkThghO6A
- +oC2oBbFpnty4IMm5JC8N4ydTRWhPX3dWInOWiyvvI+jPo3tbNeauCk3SIdUsN/k321DEJM9Z
- G+hccEuxgXzKfCTruBssB5Yc4f5buwcjubcTNRAisB2LZmsovY=
+Received: by 10.140.85.203 with HTTP; Thu, 16 Nov 2017 11:34:12 -0800 (PST)
+In-Reply-To: <xmqqwp2qx5w6.fsf@gitster.mtv.corp.google.com>
+References: <20171116020039.17810-1-sbeller@google.com> <20171116020039.17810-8-sbeller@google.com>
+ <xmqqwp2qx5w6.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 16 Nov 2017 11:34:12 -0800
+Message-ID: <CAGZ79kaGGUJSGG6OdfaTepDrvGBGFd17paBNNYuQt7t8XnDfHw@mail.gmail.com>
+Subject: Re: [PATCHv5 7/7] builtin/describe.c: describe a blob
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>, Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Some diff implementations don't report missing newlines at the end of
-files.  Applying such a patch can cause a newline character to be
-added inadvertently.  The option --inaccurate-eof of git apply can be
-used to remove trailing newlines if needed.
+On Wed, Nov 15, 2017 at 7:24 PM, Junio C Hamano <gitster@pobox.com> wrote:
 
-apply_one_fragment() cuts it off from the buffers for preimage and
-postimage.  Before it does, it builds an array with the lengths of each
-line for both.  Make sure to update the length of the last line in
-these line info structures as well to keep them consistent with their
-respective buffer.
+> I am not sure if "And if there is ..." is adding much value here (I
+> do not think it is even technically correct for that matter).  If
+> there are more than one tag that point at the commit the user is
+> interested in, we use one of the tags, as tags conceptually sit at a
+> higher level.  And we use a heuristic to use one or the other tag to
+> make up a name for the commit, so the same commit can have two valid
+> names. ---So what?  Neither of these two valid names is "ambigous";
+> the commit object the user wanted to name _is_ correctly identified
+> (I would assume that we are not discussing a hash collision).
+>
+> Lucikly, if we remove "And if...precisely", the logic still flows
+> nicely, if not more, to the next paragraph.
 
-Without this fix the added test fails; git apply dies and reports:
+fixed.
 
-   fatal: BUG: caller miscounted postlen: asked 1, orig = 1, used = 2
+>> When describing a blob, we want to describe the blob from a higher layer
+>> as well, which is a tuple of (commit, deep/path) as the tree objects
+>> involved are rather uninteresting.  The same blob can be referenced by
+>> multiple commits, so how we decide which commit to use?  This patch
+>> implements a rather naive approach on this: As there are no back pointers
+>> from blobs to commits in which the blob occurs, we'll start walking from
+>> any tips available, listing the blobs in-order of the commit and once we
+>
+> Is "any tips" still the case?  I was wondering why you start your
+> traversal at HEAD and nothing else in this iteration.  There seems
+> to be no mention of this design decision in the documentation and no
+> justification in the log.
 
-That sanity check is only called if whitespace changes are ignored.
+fixed the text. The design decision to reverse walk HEAD is tied to
+your observation below:
 
-Reported-by: Mahmoud Al-Qudsi <mqudsi@neosmart.net>
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
- apply.c                            |  2 ++
- t/t4107-apply-ignore-whitespace.sh | 14 ++++++++++++++
- 2 files changed, 16 insertions(+)
+> The reversing may improve the chance of an older commit to be chosen
+> rather than the newer one, but it does not even guarantee to show the
+> "introduction".
 
-diff --git a/apply.c b/apply.c
-index b8087bd29c..321a9fa68d 100644
---- a/apply.c
-+++ b/apply.c
-@@ -2953,6 +2953,8 @@ static int apply_one_fragment(struct apply_state *state,
- 	    newlines.len > 0 && newlines.buf[newlines.len - 1] == '\n') {
- 		old--;
- 		strbuf_setlen(&newlines, newlines.len - 1);
-+		preimage.line_allocated[preimage.nr - 1].len--;
-+		postimage.line_allocated[postimage.nr - 1].len--;
- 	}
- 
- 	leading = frag->leading;
-diff --git a/t/t4107-apply-ignore-whitespace.sh b/t/t4107-apply-ignore-whitespace.sh
-index 9e29b5262d..ac72eeaf27 100755
---- a/t/t4107-apply-ignore-whitespace.sh
-+++ b/t/t4107-apply-ignore-whitespace.sh
-@@ -178,4 +178,18 @@ test_expect_success 'patch5 fails (--no-ignore-whitespace)' '
- 	test_must_fail git apply --no-ignore-whitespace patch5.patch
- '
- 
-+test_expect_success 'apply --ignore-space-change --inaccurate-eof' '
-+	echo 1 >file &&
-+	git apply --ignore-space-change --inaccurate-eof <<-\EOF &&
-+	diff --git a/file b/file
-+	--- a/file
-+	+++ b/file
-+	@@ -1 +1 @@
-+	-1
-+	+2
-+	EOF
-+	printf 2 >expect &&
-+	test_cmp expect file
-+'
-+
- test_done
--- 
-2.15.0
+This is what I realized when we started walking all refs including reflog.
+The introduction can only be found when we take the commit-parents
+into account and look at the diffs. I noticed you started
+origin/jc/diff-blobfind
+which may be helpful to find the introduction correctly, which I'll play around
+with that and see if I can get that working.
+
+> What this guarantees is that a long history will be traversed fully
+> before we start considering which commit has the blob of interest, I
+> am afraid.  Is this a sensible trade-off?
+
+I am not fully convinced all descriptions are in recent history, but I
+tend to agree that most are, so probably the trade off is a wash.
