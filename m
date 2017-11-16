@@ -2,134 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5887C202A0
-	for <e@80x24.org>; Thu, 16 Nov 2017 19:57:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 44AB6202A0
+	for <e@80x24.org>; Thu, 16 Nov 2017 20:21:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933514AbdKPT5Y (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Nov 2017 14:57:24 -0500
-Received: from avasout04.plus.net ([212.159.14.19]:39263 "EHLO
-        avasout04.plus.net.plus.net" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1751140AbdKPT5X (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 16 Nov 2017 14:57:23 -0500
-Received: from [10.0.2.15] ([80.189.70.158])
-        by smtp with ESMTPA
-        id FQHoeX0zczbmWFQHpe9WIS; Thu, 16 Nov 2017 19:57:21 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=P6pKvmIu c=1 sm=1 tr=0
- a=bpDj9VLvXCYHU65eeb/Fiw==:117 a=bpDj9VLvXCYHU65eeb/Fiw==:17
- a=IkcTkHD0fZMA:10 a=1XWaLZrsAAAA:8 a=6f9Tyc_Vhj3ZW55LlUkA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH v4 07/10] introduce fetch-object: fetch one promisor
- object
-To:     Jeff Hostetler <git@jeffhostetler.com>, git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net, jonathantanmy@google.com
-References: <20171116181257.61673-1-git@jeffhostetler.com>
- <20171116181257.61673-8-git@jeffhostetler.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <e7b5e42f-b13c-50c8-501c-0100d8c48d00@ramsayjones.plus.com>
-Date:   Thu, 16 Nov 2017 19:57:19 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.4.0
-MIME-Version: 1.0
-In-Reply-To: <20171116181257.61673-8-git@jeffhostetler.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
+        id S965074AbdKPUVi (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Nov 2017 15:21:38 -0500
+Received: from mail-io0-f174.google.com ([209.85.223.174]:39392 "EHLO
+        mail-io0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S964935AbdKPUVg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Nov 2017 15:21:36 -0500
+Received: by mail-io0-f174.google.com with SMTP id x63so6506227ioe.6
+        for <git@vger.kernel.org>; Thu, 16 Nov 2017 12:21:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=cG6silSadUxZVdJUxFk23/NIsCdLX+MqZED0FvE+qe0=;
+        b=vXxT1Dk+woy6VKke6w05pHVkaQcJ+VHBpTPLbae8flkVCU3ovLlJNh9vLCcwkGlg75
+         +gBmOgbxXvBUOQN13cwxf5mAzhwPAphcv282oAEPi6WpmDD5duWSR/UiMPn5j2Z1SYBo
+         UYh/8T6dHYIBX9Zr60qFoO8lp3g39+EEewS2ufR450BVKxyYxtjE6nnsSoPTtI0HATgQ
+         AZhGXntGg9BP0scpeL1bNm3qZVA4EjRHGlXhC7d9i37mqpRj9WMDnpczMj4OhrB4lE2J
+         u6Co67Ly1BY8uog+T0URH3T5Pca5t5/9qkMKRJv/emTBJYkvNfuV9IC4zt9RzMVap7/3
+         2WnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=cG6silSadUxZVdJUxFk23/NIsCdLX+MqZED0FvE+qe0=;
+        b=DGJBYQP+QDWt4Hb8QH0F7NkxxCE1zYchZ8/myleBvDNOqGOEHSA6h3MgMvEWx2T5GX
+         QkXCNgzfU/X5gOesWktoUldZpKdLDfYShyyh04HOky/sXFEGzjbH8987Y1uaHmW3WwHr
+         MhcgcUeXcrAdUeCAIrviYZ6tWzs74sYrU8L+Z4evbqXqaUelbEv70wKh/hG73km5vtiq
+         D9aOrbbKJIFDm9vl1O8Ap3J+WWsxwPlM5JrZ3KrfYlCPoxGvg4ZgQQakkY/VrxR2D9tW
+         kg3W5wpdvCjhl11hg1IajCamBMrCPM5RP5XseXsnl7Qmj9vcKqewnFVAF+PtoXbax5Op
+         fKcg==
+X-Gm-Message-State: AJaThX7ZlYuQRdIf1bg1RzD/KiM4zVEQOay9rZ6KiuHroIXX2WZbdBM4
+        KS0xnswXv3v7nHoKiF+9W+wq3o5XgQo=
+X-Google-Smtp-Source: AGs4zMY14v0s49XZQX5jIMp2+Ev117e43B4uGkNm3zPNkH8utpcrKtEKJFehr06jjL3fMDYb10vUjg==
+X-Received: by 10.107.7.75 with SMTP id 72mr132542ioh.14.1510863694903;
+        Thu, 16 Nov 2017 12:21:34 -0800 (PST)
+Received: from twelve3.mtv.corp.google.com ([2620:0:100e:422:28fc:a358:3592:211f])
+        by smtp.gmail.com with ESMTPSA id v19sm1178091ite.4.2017.11.16.12.21.33
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 16 Nov 2017 12:21:34 -0800 (PST)
+Date:   Thu, 16 Nov 2017 12:21:33 -0800
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v4 4/6] list-objects: filter objects in
+ traverse_commit_list
+Message-Id: <20171116122133.4cc718414579c1a5a682174b@google.com>
+In-Reply-To: <20171116180743.61353-5-git@jeffhostetler.com>
+References: <20171116180743.61353-1-git@jeffhostetler.com>
+        <20171116180743.61353-5-git@jeffhostetler.com>
+X-Mailer: Sylpheed 3.4.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfGW4b1NOJf5BKENQ2EkkRL5XS2fk4YMsaIKb6hNsf6jZdvxFQ3xRYQbKtE9Fu6MQODQNeZzZ7BVTgREpCWg5Aly6Sn4hq2w6Tp37cC6raZkvhPPK6PRs
- MnasTjkxCmpf5c1QkjHUqYOVIe2c+GN+SfdKKO7agMBOsU62NJQpXejkMkTuVH0iehT6UOqNUZgeaA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, 16 Nov 2017 18:07:41 +0000
+Jeff Hostetler <git@jeffhostetler.com> wrote:
 
+> +/*
+> + * Return 1 if the given string needs armoring because of "special"
+> + * characters that may cause injection problems when a command passes
+> + * the argument to a subordinate command (such as when upload-pack
+> + * launches pack-objects).
+> + *
+> + * The usual alphanumeric and key punctuation do not trigger it.
+> + */ 
+> +static int arg_needs_armor(const char *arg)
 
-On 16/11/17 18:12, Jeff Hostetler wrote:
-> From: Jonathan Tan <jonathantanmy@google.com>
-> 
-> Introduce fetch-object, providing the ability to fetch one object from a
-> promisor remote.
-> 
-> This uses fetch-pack. To do this, the transport mechanism has been
-> updated with 2 flags, "from-promisor" to indicate that the resulting
-> pack comes from a promisor remote (and thus should be annotated as such
-> by index-pack), and "no-haves" to suppress the sending of "have" lines.
-> 
-> This will be tested in a subsequent commit.
-> 
-> NEEDSWORK: update this when we have more information about protocol v2,
-> which should allow a way to suppress the ref advertisement and
-> officially allow any object type to be "want"-ed.
-> 
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-> ---
->  Documentation/gitremote-helpers.txt |  6 ++++++
->  Makefile                            |  1 +
->  builtin/fetch-pack.c                |  8 ++++++++
->  builtin/index-pack.c                | 16 +++++++++++++---
->  fetch-object.c                      | 23 +++++++++++++++++++++++
->  fetch-object.h                      |  6 ++++++
->  fetch-pack.c                        |  8 ++++++--
->  fetch-pack.h                        |  2 ++
->  remote-curl.c                       | 14 +++++++++++++-
->  transport.c                         |  8 ++++++++
->  transport.h                         |  8 ++++++++
->  11 files changed, 94 insertions(+), 6 deletions(-)
->  create mode 100644 fetch-object.c
->  create mode 100644 fetch-object.h
-> 
-[snip]
-> diff --git a/fetch-object.c b/fetch-object.c
-> new file mode 100644
-> index 0000000..f89dbba
-> --- /dev/null
-> +++ b/fetch-object.c
-> @@ -0,0 +1,23 @@
-> +#include "cache.h"
-> +#include "packfile.h"
-> +#include "pkt-line.h"
-> +#include "strbuf.h"
-> +#include "transport.h"
+First of all, about the injection problem, replying to your previous e-mail
+[1]:
 
-I note that this still does not #include "fetch_object.h".
-[If you recall, this suppresses a sparse warning].
+https://public-inbox.org/git/61855872-221b-0e97-abaa-24a011ad899e@jeffhostetler.com/
 
-> +
-> +void fetch_object(const char *remote_name, const unsigned char *sha1)
+> I couldn't use quote.[ch] because it is more concerned with
+> quoting pathnames because of LF and CR characters within
+> them -- rather than semicolons and quotes and the like which
+> I was concerned about.
+
+sq_quote_buf() (or one of the other similarly-named functions) should
+solve this problem, right? The single quotes around the argument takes
+care of LF, CR, and semicolons, and things like backslashes and quotes
+are taken care of as documented.
+
+I don't think we need to invent another encoding to solve this.
+
 > +{
-> +	struct remote *remote;
-> +	struct transport *transport;
-> +	struct ref *ref;
+> +	const unsigned char *p;
 > +
-> +	remote = remote_get(remote_name);
-> +	if (!remote->url[0])
-> +		die(_("Remote with no URL"));
-> +	transport = transport_get(remote, remote->url[0]);
-> +
-> +	ref = alloc_ref(sha1_to_hex(sha1));
-> +	hashcpy(ref->old_oid.hash, sha1);
-> +	transport_set_option(transport, TRANS_OPT_FROM_PROMISOR, "1");
-> +	transport_set_option(transport, TRANS_OPT_NO_HAVES, "1");
-> +	transport_fetch_refs(transport, ref);
-> +}
-> diff --git a/fetch-object.h b/fetch-object.h
-> new file mode 100644
-> index 0000000..f371300
-> --- /dev/null
-> +++ b/fetch-object.h
-> @@ -0,0 +1,6 @@
-> +#ifndef FETCH_OBJECT_H
-> +#define FETCH_OBJECT_H
-> +
-> +extern void fetch_object(const char *remote_name, const unsigned char *sha1);
-> +
-> +#endif
+> +	for (p = (const unsigned char *)arg; *p; p++) {
+> +		if (*p >= 'a' && *p <= 'z')
+> +			continue;
+> +		if (*p >= 'A' && *p <= 'Z')
+> +			continue;
+> +		if (*p >= '0' && *p <= '9')
+> +			continue;
+> +		if (*p == '-' || *p == '_' || *p == '.' || *p == '/')
+> +			continue;
 
-ATB,
-Ramsay Jones
+If we do take this approach, can ':' also be included?
 
+> +	if (skip_prefix(arg, "sparse:oid=", &v0)) {
+> +		struct object_context oc;
+> +		struct object_id sparse_oid;
+> +
+> +		/*
+> +		 * Try to parse <oid-expression> into an OID for the current
+> +		 * command, but DO NOT complain if we don't have the blob or
+> +		 * ref locally.
+> +		 */
+> +		if (!get_oid_with_context(v0, GET_OID_BLOB,
+> +					  &sparse_oid, &oc))
+> +			filter_options->sparse_oid_value = oiddup(&sparse_oid);
+> +		filter_options->choice = LOFC_SPARSE_OID;
+> +		if (arg_needs_armor(v0))
+> +			filter_options->requires_armor = v0 - arg;
+> +		return 0;
+> +	}
 
+In your previous e-mail, you mentioned:
+
+> yes.  I always pass filter_options.raw_value over the wire.
+> The code above tries to parse it and put it in an OID for
+> private use by the current process -- just like the size limit
+> value in the blob:limit filter.
+
+So I think this function should complain if you don't have the blob or
+ref locally. (I envision that if a filter string is to be directly sent
+to a server, it should be stored as a string, not processed by this
+function first.)
