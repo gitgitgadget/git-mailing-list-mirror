@@ -6,30 +6,30 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D735E202A0
-	for <e@80x24.org>; Thu, 16 Nov 2017 18:18:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4F6FE202A0
+	for <e@80x24.org>; Thu, 16 Nov 2017 18:18:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966638AbdKPSSQ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Nov 2017 13:18:16 -0500
-Received: from siwi.pair.com ([209.68.5.199]:46685 "EHLO siwi.pair.com"
+        id S966673AbdKPSST (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Nov 2017 13:18:19 -0500
+Received: from siwi.pair.com ([209.68.5.199]:46770 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S966667AbdKPSRo (ORCPT <rfc822;git@vger.kernel.org>);
+        id S966652AbdKPSRo (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 16 Nov 2017 13:17:44 -0500
 Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id C95908454D;
+        by siwi.pair.com (Postfix) with ESMTP id 74E3A8455E;
         Thu, 16 Nov 2017 13:17:43 -0500 (EST)
 Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 4E52284557;
-        Thu, 16 Nov 2017 13:17:43 -0500 (EST)
+        by siwi.pair.com (Postfix) with ESMTPSA id EC55584559;
+        Thu, 16 Nov 2017 13:17:37 -0500 (EST)
 From:   Jeff Hostetler <git@jeffhostetler.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, jonathantanmy@google.com,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v4 15/15] fetch-pack: restore save_commit_buffer after use
-Date:   Thu, 16 Nov 2017 18:17:23 +0000
-Message-Id: <20171116181723.62033-16-git@jeffhostetler.com>
+Subject: [PATCH v4 06/15] pack-objects: test support for blob filtering
+Date:   Thu, 16 Nov 2017 18:17:14 +0000
+Message-Id: <20171116181723.62033-7-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20171116181723.62033-1-git@jeffhostetler.com>
 References: <20171116181723.62033-1-git@jeffhostetler.com>
@@ -40,58 +40,79 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jonathan Tan <jonathantanmy@google.com>
 
-In fetch-pack, the global variable save_commit_buffer is set to 0, but
-not restored to its original value after use.
-
-In particular, if show_log() (in log-tree.c) is invoked after
-fetch_pack() in the same process, show_log() will return before printing
-out the commit message (because the invocation to
-get_cached_commit_buffer() returns NULL, because the commit buffer was
-not saved). I discovered this when attempting to run "git log -S" in a
-partial clone, triggering the case where revision walking lazily loads
-missing objects.
-
-Therefore, restore save_commit_buffer to its original value after use.
-
-An alternative to solve the problem I had is to replace
-get_cached_commit_buffer() with get_commit_buffer(). That invocation was
-introduced in commit a97934d ("use get_cached_commit_buffer where
-appropriate", 2014-06-13) to replace "commit->buffer" introduced in
-commit 3131b71 ("Add "--show-all" revision walker flag for debugging",
-2008-02-13). In the latter commit, the commit author seems to be
-deciding between not showing an unparsed commit at all and showing an
-unparsed commit without the message (which is what the commit does), and
-did not mention parsing the unparsed commit, so I prefer to preserve the
-existing behavior.
+As part of an effort to improve Git support for very large repositories
+in which clients typically have only a subset of all version-controlled
+blobs, test pack-objects support for --filter=blob:limit=<n>, packing only
+blobs not exceeding that size unless the blob corresponds to a file
+whose name starts with ".git". upload-pack will eventually be taught to
+use this new parameter if needed to exclude certain blobs during a fetch
+or clone, potentially drastically reducing network consumption when
+serving these very large repositories.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- fetch-pack.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ t/t5300-pack-object.sh  | 26 ++++++++++++++++++++++++++
+ t/test-lib-functions.sh | 12 ++++++++++++
+ 2 files changed, 38 insertions(+)
 
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 895e8f9..121f03e 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -717,6 +717,7 @@ static int everything_local(struct fetch_pack_args *args,
- {
- 	struct ref *ref;
- 	int retval;
-+	int old_save_commit_buffer = save_commit_buffer;
- 	timestamp_t cutoff = 0;
+diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
+index 9c68b99..8e3db12 100755
+--- a/t/t5300-pack-object.sh
++++ b/t/t5300-pack-object.sh
+@@ -457,6 +457,32 @@ test_expect_success !PTHREADS,C_LOCALE_OUTPUT 'pack-objects --threads=N or pack.
+ 	grep -F "no threads support, ignoring pack.threads" err
+ '
  
- 	save_commit_buffer = 0;
-@@ -784,6 +785,9 @@ static int everything_local(struct fetch_pack_args *args,
- 		print_verbose(args, _("already have %s (%s)"), oid_to_hex(remote),
- 			      ref->name);
- 	}
++lcut () {
++	perl -e '$/ = undef; $_ = <>; s/^.{'$1'}//s; print $_'
++}
 +
-+	save_commit_buffer = old_save_commit_buffer;
++test_expect_success 'filtering by size works with multiple excluded' '
++	rm -rf server &&
++	git init server &&
++	printf a > server/a &&
++	printf b > server/b &&
++	printf c-very-long-file > server/c &&
++	printf d-very-long-file > server/d &&
++	git -C server add a b c d &&
++	git -C server commit -m x &&
 +
- 	return retval;
++	git -C server rev-parse HEAD >objects &&
++	git -C server pack-objects --revs --stdout --filter=blob:limit=10 <objects >my.pack &&
++
++	# Ensure that only the small blobs are in the packfile
++	git index-pack my.pack &&
++	git verify-pack -v my.idx >objectlist &&
++	grep $(git hash-object server/a) objectlist &&
++	grep $(git hash-object server/b) objectlist &&
++	! grep $(git hash-object server/c) objectlist &&
++	! grep $(git hash-object server/d) objectlist
++'
++
+ #
+ # WARNING!
+ #
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 1701fe2..07b79c7 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -1020,3 +1020,15 @@ nongit () {
+ 		"$@"
+ 	)
  }
- 
++
++# Converts big-endian pairs of hexadecimal digits into bytes. For example,
++# "printf 61620d0a | hex_pack" results in "ab\r\n".
++hex_pack () {
++	perl -e '$/ = undef; $input = <>; print pack("H*", $input)'
++}
++
++# Converts bytes into big-endian pairs of hexadecimal digits. For example,
++# "printf 'ab\r\n' | hex_unpack" results in "61620d0a".
++hex_unpack () {
++	perl -e '$/ = undef; $input = <>; print unpack("H2" x length($input), $input)'
++}
 -- 
 2.9.3
 
