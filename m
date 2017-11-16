@@ -2,85 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4268A202A0
-	for <e@80x24.org>; Thu, 16 Nov 2017 15:25:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 82562202A0
+	for <e@80x24.org>; Thu, 16 Nov 2017 15:48:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759883AbdKPPZA (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Nov 2017 10:25:00 -0500
-Received: from mail-wm0-f45.google.com ([74.125.82.45]:32835 "EHLO
-        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1759056AbdKPPY7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Nov 2017 10:24:59 -0500
-Received: by mail-wm0-f45.google.com with SMTP id g130so238922wme.0
-        for <git@vger.kernel.org>; Thu, 16 Nov 2017 07:24:58 -0800 (PST)
+        id S935787AbdKPPsU (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Nov 2017 10:48:20 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:45753 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933811AbdKPPsT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Nov 2017 10:48:19 -0500
+Received: by mail-wm0-f67.google.com with SMTP id 9so1119393wme.4
+        for <git@vger.kernel.org>; Thu, 16 Nov 2017 07:48:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=/N/+VgyYWr/UHAuEghhy0haROiWBEeha5VeU9TJNnR8=;
-        b=D/D/i4QlaZrxnZaZVdfkKA4K3Ahm7dn9pn45i+uW66VTCOZ3Arko8AeZbtMqCIOWkz
-         m1M0KWzWocIND5vAl8Ij1EtAZr289tOrmYhkR090PUfYfiFFov4J0tBbSxC0p/Ida4KH
-         CgABX5fM9ElyjHauwH7d7WC/Gl7G23OEwmFzynpimU1sd7z02iW/hNOaUvRGH6YmeQ35
-         m2N17fNTRIRtElBHZrYbQw393ndZt8Rmevy5IqpVoSd+0uP4Y7wI9Bxp84DEzFDjBFmO
-         xBp9JiyLK9iPvbzDTo+TZPakukb8wojxg5M6mfsXy1saU2w1vqwfs2Lsy2ekC01f54KW
-         laaw==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=QDeVVMhh7b9qdmdye49rNuOIonG3GHIBq1HobiGckkY=;
+        b=G5+Hl5w0kF4iSeb/zQZzmTx2dff5iNjST2w1MoaCVNRa9CjHXdfoMxxtnPpnvkIVxx
+         TpmjpoCpCgyaZC5UIXl7OUC7QQ6J09FmKfEKNfCqhGq64WJDdNtKfdD6sfbRqaeOyK3q
+         kWtPA0K0HoQ54gF19bxOzVf+bmJnlPI0QAjtk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=/N/+VgyYWr/UHAuEghhy0haROiWBEeha5VeU9TJNnR8=;
-        b=UF0VTJXXKv/t/qML42SVHlmaOEqJlyOv5xKFS0XFXBCoCh6e68PgN5KIJiOszCWW9f
-         iNQiVWhE1oIr24dLoqGIa3iBaTSw8ky6LYqEh1ABqZGUYV1hpJkiskKL0B05u8IPoZnq
-         GNPXdhBQfgVa069Ur+/G1/+3DO4SPho6MmL/O7ZMKmLVXurp2X/etNauaYznh/w0sxjw
-         D5un8MHK8sZW6PzqVlYXu4kt9cjW1UXPyEoCoRsFxhEEYgLwG9RyjIPIU0l1XOtZCZtf
-         ljKsLp54oJAq3Y2m3a80DKgdm/KfnNe0lkshtab9kCC7TtvyDfUIJ22ZRJpeLJycGtMA
-         9auw==
-X-Gm-Message-State: AJaThX630mvDynakHMK17SMbmkyENg3LRCAdpcUG0KXGZOeMkLZOL2DD
-        GgvSi95ah0Wo3eZCubjxJV8=
-X-Google-Smtp-Source: AGs4zMb9JaMnrmAaMQLGKqDiPWHVKtaPtFUWXGxnmjf8DoXAeaRKqDVtqV+SIdpU7P6TqRPgHNzWDg==
-X-Received: by 10.223.182.153 with SMTP id j25mr989087wre.242.1510845898061;
-        Thu, 16 Nov 2017 07:24:58 -0800 (PST)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id 90sm2420987wrp.93.2017.11.16.07.24.56
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 16 Nov 2017 07:24:57 -0800 (PST)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH] launch_editor(): indicate that Git waits for user input
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <xmqqh8tuuv6l.fsf@gitster.mtv.corp.google.com>
-Date:   Thu, 16 Nov 2017 16:24:55 +0100
-Cc:     git <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>
-Content-Transfer-Encoding: 7bit
-Message-Id: <DAA0F91D-5180-4C3B-B0E8-7C917915AC6F@gmail.com>
-References: <274B4850-2EB7-4BFA-A42C-25A573254969@gmail.com> <xmqqr2syvjxb.fsf@gitster.mtv.corp.google.com> <DAEC36C7-AE09-4C9B-ACC4-07F2C5F2B97F@gmail.com> <xmqqh8tuuv6l.fsf@gitster.mtv.corp.google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3124)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=QDeVVMhh7b9qdmdye49rNuOIonG3GHIBq1HobiGckkY=;
+        b=F0BePhymaww2ChtBqnDzTTBLOsZBESSj5UrAnG86D7ME21bqkGkQKZvkpPZ7SDffa6
+         oYyNqxhWELNX20puU/JvYCsD26FgAFcdhzaGQnUjp7cdVOUhXpJE3qP8pdFD4osu30l+
+         puuAtlAbtd20NR05hdx1D7pzuWR9tveMaXRELSVP90DL99oY7nhkzgdL5MwG255U0QlV
+         URufJiJS3YqARVUkZ2b4Ljy1rFxwYOPRFMLIO2VnQraYGvujN3WvYt/2MgsTV7vsCS6m
+         11pOPxP7trShLESZglKdjJ2j4fXStFtDfM2evSPWL7iHEUTfJ58nzcMMa+ERfuVmfUaC
+         wzJQ==
+X-Gm-Message-State: AJaThX6w5NcrdHHTNS7abLHdimd9/rrdh3hAQ4WgsUV12Ch5vFxn1PN0
+        PbZhPlYkp5fWp5nXHOtk3bvMow==
+X-Google-Smtp-Source: AGs4zMYR4439Ysjvnps2cPj2jjxZRsDfHAlBFEamesCnFq6SIVayvZ9hNn4AsZ+ZaFUB+yKAkJl1uw==
+X-Received: by 10.28.224.4 with SMTP id x4mr1790191wmg.118.1510847297973;
+        Thu, 16 Nov 2017 07:48:17 -0800 (PST)
+Received: from zen.linaro.local ([81.128.185.34])
+        by smtp.gmail.com with ESMTPSA id w18sm1538829wra.30.2017.11.16.07.48.17
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 16 Nov 2017 07:48:17 -0800 (PST)
+Received: from zen.linaroharston (localhost [127.0.0.1])
+        by zen.linaro.local (Postfix) with ESMTP id C04733E0260;
+        Thu, 16 Nov 2017 15:48:16 +0000 (GMT)
+From:   =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PATCH] git-send-email: fix get_maintainer.pl regression
+Date:   Thu, 16 Nov 2017 15:48:14 +0000
+Message-Id: <20171116154814.23785-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.15.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Getting rid of Mail::Address regressed behaviour with common
+get_maintainer scripts such as the Linux kernel. Fix the missed corner
+case and add a test for it.
 
-> On 16 Nov 2017, at 15:58, Junio C Hamano <gitster@pobox.com> wrote:
-> 
-> Lars Schneider <larsxschneider@gmail.com> writes:
-> 
->>> On 16 Nov 2017, at 07:04, Junio C Hamano <gitster@pobox.com> wrote:
->> 
->> Wow. Thanks for the quick patch :-)
-> 
-> Heh, this is not exactly my itch, so if you are inclined to, can you
-> take it over from here on?
+Fixes: cc9075067776ebd34cc08f31bf78bb05f12fd879
 
-Absolutely! What is the proper way to proceed here? Should I send a v2
-with the changes I suggested? How do I attribute you correctly? I
-assume I need to remove your 'Signed-off-by:'?
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ perl/Git.pm           |  3 +++
+ t/t9000/test.pl       |  4 +++-
+ t/t9001-send-email.sh | 21 +++++++++++++++++++++
+ 3 files changed, 27 insertions(+), 1 deletion(-)
 
-Thanks,
-Lars
+diff --git a/perl/Git.pm b/perl/Git.pm
+index ffa09ace9..9b17de1cc 100644
+--- a/perl/Git.pm
++++ b/perl/Git.pm
+@@ -936,6 +936,9 @@ sub parse_mailboxes {
+ 			$end_of_addr_seen = 0;
+ 		} elsif ($token =~ /^\(/) {
+ 			push @comment, $token;
++		} elsif ($token =~ /^\)/) {
++		        my $nested_comment = pop @comment;
++			push @comment, "$nested_comment$token";
+ 		} elsif ($token eq "<") {
+ 			push @phrase, (splice @address), (splice @buffer);
+ 		} elsif ($token eq ">") {
+diff --git a/t/t9000/test.pl b/t/t9000/test.pl
+index dfeaa9c65..f10be50cd 100755
+--- a/t/t9000/test.pl
++++ b/t/t9000/test.pl
+@@ -35,7 +35,9 @@ my @success_list = (q[Jane],
+ 	q['Jane 'Doe' <jdoe@example.com>],
+ 	q[Jane@:;\.,()<>Doe <jdoe@example.com>],
+ 	q[Jane <jdoe@example.com> Doe],
+-	q[<jdoe@example.com> Jane Doe]);
++	q[<jdoe@example.com> Jane Doe],
++	q[jdoe@example.com (open list:for thing (foo/bar))],
++    );
+ 
+ my @known_failure_list = (q[Jane\ Doe <jdoe@example.com>],
+ 	q["Doe, Ja"ne <jdoe@example.com>],
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index 4d261c2a9..0bcd7ab96 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -172,6 +172,27 @@ test_expect_success $PREREQ 'cc trailer with various syntax' '
+ 	test_cmp expected-cc commandline1
+ '
+ 
++test_expect_success $PREREQ 'setup get_mainter script for cc trailer' "
++cat >expected-cc-script.sh <<-EOF && chmod +x expected-cc-script.sh
++#!/bin/sh
++echo 'One Person <one@example.com> (supporter:THIS (FOO/bar))'
++echo 'Two Person <two@example.com> (maintainer:THIS THING)'
++echo 'Third List <three@example.com> (moderated list:THIS THING (FOO/bar))'
++echo '<four@example.com> (moderated list:FOR THING)'
++echo 'five@example.com (open list:FOR THING (FOO/bar))'
++echo 'six@example.com (open list)'
++EOF
++"
++
++test_expect_success $PREREQ 'cc trailer with get_maintainer output' '
++	test_commit cc-trailer &&
++	clean_fake_sendmail &&
++	git send-email -1 --to=recipient@example.com \
++		--cc-cmd="$(pwd)/expected-cc-script.sh" \
++		--smtp-server="$(pwd)/fake.sendmail" &&
++	test_cmp expected-cc commandline1
++'
++
+ test_expect_success $PREREQ 'setup expect' "
+ cat >expected-show-all-headers <<\EOF
+ 0001-Second.patch
+-- 
+2.15.0
+
