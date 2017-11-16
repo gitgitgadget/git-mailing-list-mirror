@@ -2,126 +2,157 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 695B7202A0
-	for <e@80x24.org>; Thu, 16 Nov 2017 16:47:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D146F202A0
+	for <e@80x24.org>; Thu, 16 Nov 2017 17:02:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S936172AbdKPQq7 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Nov 2017 11:46:59 -0500
-Received: from mail-wr0-f177.google.com ([209.85.128.177]:52939 "EHLO
-        mail-wr0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1759814AbdKPQql (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Nov 2017 11:46:41 -0500
-Received: by mail-wr0-f177.google.com with SMTP id o14so4478892wrf.9
-        for <git@vger.kernel.org>; Thu, 16 Nov 2017 08:46:41 -0800 (PST)
+        id S1760248AbdKPRB7 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Nov 2017 12:01:59 -0500
+Received: from mail-qt0-f194.google.com ([209.85.216.194]:52822 "EHLO
+        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1759690AbdKPRB5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Nov 2017 12:01:57 -0500
+Received: by mail-qt0-f194.google.com with SMTP id 31so44394084qtz.9
+        for <git@vger.kernel.org>; Thu, 16 Nov 2017 09:01:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=references:user-agent:from:to:cc:subject:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=TM9sX1qhSJP9ZjFNXMQWCOveyFU4JPmnX6/Oik2yNAg=;
-        b=dQHoBk+g4KRr0hi3fQjnEnKS+ksDnhMu4iGENrTzF+YOAhcCCzseG0KcMRB+j1ZYZO
-         EbOEWbppOm5lOLJza/rvx7207dILZkXnh4W4twzO3uzsQm6TAVlrNpnD7+BQleu8GddQ
-         1OQnKAGhT88JuIhCeaJDaxKjqqjREaWd4DtUk=
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=PIGZWHGCDi0YFMaixZFSb9fSCjey/dnVya8Spd9yHh8=;
+        b=ogfrgRjo6XY/Zd7wD2zcfNptZuMlAxYFtyDP0cGJstbWZmrysWVTXsiPgU45N4Sb9v
+         DYss/3zlGr1EAnvWtgN6KfwzMeNZiQpcJyipZlqcv/i2C5qxqhAKehBh014NCaMeRL+o
+         +kIfcNyGmJEfptmdjlzzLUXZ68j0CwyEeDX+5AIgG0c3BHBV6xi4Mk116f3ZBr0zyGDl
+         bkPVR3pdfmwR3aiSNrQ6uExdp2bqUECYjHzJov+ERVh5U/hRpSHBwGxNCQQX7PO3Eq6l
+         qucvpLyqJEGQ3yy/X568EBcZP5ulizOZ8XuNSiV7oFDpjm7lfQQE/TX9RZv4wi2r5ChM
+         IGvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:references:user-agent:from:to:cc:subject
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=TM9sX1qhSJP9ZjFNXMQWCOveyFU4JPmnX6/Oik2yNAg=;
-        b=dgpkEj98gvNTkBWRcSfEx26cw6jmeBsDzmXR6I7BHlz5iYPyjQNNlOCkDC4ZVJ1Jdk
-         EmiipmVQzrAervXl/SP2ZKddhEmyDHv90VK/vrtk4yIHjYrumYJ/Uvu1lmyWM1FsqcRC
-         CUIWEkCMtmdPICWWf59Fbb0N+7QLzrJr9Kb+hzGenDI9MYkmd5iLLDla5VOWaByOCYhn
-         7dlSQLR7+Mo49F/JN7ILJ2vSZuI+W9ZKX25qJkwkHkD5giYHQJX+OwYkdkqClJfO0uas
-         g2r4gqDtbCJvBIhIO+vfhcRTS2lKxfZnO6OoJqaYKsfb3xVR1de/O9nTkwof4/oGfTB5
-         buZw==
-X-Gm-Message-State: AJaThX6bt3OT9QV0rgojx0lFmBXsk4ISNJ1WfqaxY43wRVcrLEbgocXC
-        uF8OM3oZJbW881uZ5cezuvYr6g==
-X-Google-Smtp-Source: AGs4zMYu2ro+Ou5P+m9CkXjAe1smxbZsbyIxWuRkGxqL+dTGh0EM3kAILpbS4etJoU5U6VMlr3Z2oQ==
-X-Received: by 10.223.167.76 with SMTP id e12mr1919596wrd.259.1510850800445;
-        Thu, 16 Nov 2017 08:46:40 -0800 (PST)
-Received: from zen.linaro.local ([81.128.185.34])
-        by smtp.gmail.com with ESMTPSA id 2sm835346wrg.49.2017.11.16.08.46.39
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 16 Nov 2017 08:46:39 -0800 (PST)
-Received: from zen (localhost [127.0.0.1])
-        by zen.linaro.local (Postfix) with ESMTPS id 1976A3E009F;
-        Thu, 16 Nov 2017 16:46:39 +0000 (GMT)
-References: <20171116154814.23785-1-alex.bennee@linaro.org>
-User-agent: mu4e 1.0-alpha2; emacs 26.0.90
-From:   Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-To:     git@vger.kernel.org
-Cc:     Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: Re: [PATCH] git-send-email: fix get_maintainer.pl regression
-In-reply-to: <20171116154814.23785-1-alex.bennee@linaro.org>
-Date:   Thu, 16 Nov 2017 16:46:39 +0000
-Message-ID: <874lpu189c.fsf@linaro.org>
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=PIGZWHGCDi0YFMaixZFSb9fSCjey/dnVya8Spd9yHh8=;
+        b=mRG1Mqn88SnlAX0rjMOz3+YjTDsfMwuNrjHwr5+CAypa5TvxcnOi/npPbKsdNhHJR8
+         6kdcNw+bD+/y2Se0wAFuQnHOK/ElAl4G2Fz4viKeov6x/j2ls16DQZziPZ3cEmZBhJJh
+         dbYbXpieJivU+717GA5SEWtSoSr77udB1cSNZvDhY1/iJJ0uMaolwWCLapXRrWWjz92u
+         RWqHZRKGwvIfInI0Mphasa6bEgr7Lt0C7QTlPpmsLlm6X7G2n747MaI0XoKgle7CtlqL
+         gOHAKp7m/9e5vsU71ZpSeFIspCR/s9/AZPIZ+OHOkuTqdlLuxNkLLfeZs6jNi9RYXI5n
+         gHqA==
+X-Gm-Message-State: AJaThX5hJ0pwtNl51Uh4qT+xcJASRo95gpik6dN8Kwa2XtqZv4un76BM
+        mnQT5u7rrpDq7qHAOE5zdCI=
+X-Google-Smtp-Source: AGs4zMZayBP1JF0i9EPbq7zVISEZ+f0qihpMp6z4ExU1NFsY79CkLjmm5m3Fa0xjqKDklPZfuGemww==
+X-Received: by 10.55.154.85 with SMTP id c82mr3571619qke.327.1510851716437;
+        Thu, 16 Nov 2017 09:01:56 -0800 (PST)
+Received: from zaya.teonanacatl.net (pool-173-67-181-41.hrbgpa.fios.verizon.net. [173.67.181.41])
+        by smtp.gmail.com with ESMTPSA id p39sm1113029qta.78.2017.11.16.09.01.54
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 16 Nov 2017 09:01:54 -0800 (PST)
+Date:   Thu, 16 Nov 2017 12:01:52 -0500
+From:   Todd Zullinger <tmz@pobox.com>
+To:     Martin =?iso-8859-1?Q?=C5gren?= <martin.agren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] branch doc: remove --set-upstream from synopsis
+Message-ID: <20171116170152.GD3693@zaya.teonanacatl.net>
+References: <20171116074643.19614-1-tmz@pobox.com>
+ <CAN0heSpUm=U7aGVtRoUoGZCvNsOZ04wLqTOx8kMvZEa8GQUiLQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=iso-8859-1; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAN0heSpUm=U7aGVtRoUoGZCvNsOZ04wLqTOx8kMvZEa8GQUiLQ@mail.gmail.com>
+User-Agent: Mutt/1.9.1 (2017-09-22)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
-
-> Getting rid of Mail::Address regressed behaviour with common
-> get_maintainer scripts such as the Linux kernel. Fix the missed corner
-> case and add a test for it.
+Martin Ågren wrote:
+> On 16 November 2017 at 08:46, Todd Zullinger <tmz@pobox.com> wrote:
+>> I noticed that --set-upstream was still in the synopsis for git branch.  I 
+>> don't think it was left there intentionally.  I looked through the thread where 
+>> support for the option was removed and didn't notice any comments suggesting 
+>> otherwise[1].  With luck, I didn't miss the obvious while reading the thread.
+>>
+>> [1] https://public-inbox.org/git/20170807143938.5127-1-kaarticsivaraam91196@gmail.com/
 >
-<snip>
-> diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-> index 4d261c2a9..0bcd7ab96 100755
-> --- a/t/t9001-send-email.sh
-> +++ b/t/t9001-send-email.sh
-> @@ -172,6 +172,27 @@ test_expect_success $PREREQ 'cc trailer with various=
- syntax' '
->  	test_cmp expected-cc commandline1
->  '
+> Actually, the first version of the series did remove it from the 
+> synopsis [2]. That hunk was later dropped. Kaartic mentioned it [3] and 
+> I thought out loud about it [4].
+
+Oh my.  I'll have to hope no prospective employer finds this thread if 
+I ever apply for a job as a proofreader.  ;)
+
+Thanks for pointing out the relevant parts of the discussion, of 
+course.
+
+> I get the same initial thought now as then: It's a bit odd that we 
+> pique the interest of the reader, but that when they try it out or 
+> read up on it, we say "nope, this is not what you are looking for".
+
+Indeed.  If we do want to keep the option in the synopsis, it should 
+at least be moved to the same entry as --set-upstream-to, since that's 
+it's effect now.
+
+I don't think we should do that, but it would at least be accurate 
+there.  Using it like it's described in the synopsis now is an error.
+
+# git branch [--set-upstream | --track | --no-track] [-l] [-f] <branchname> [<start-point>]
+
+$ git branch --set-upstream mybranch master
+fatal: the '--set-upstream' option is no longer supported. Please use 
+'--track' or '--set-upstream-to' instead.
+
+$ git branch --track mybranch master
+Branch 'mybranch' set up to track local branch 'master'.
+
+Kaartic Sivaraam wrote:
+> I didn't remove it as there wasn't a "strong" consensus that this 
+> should go off the "Synopsis" at that time. If removing it from the 
+> synopsis seems to be better than leaving it, then lets do it.
+
+Indeed, I'm sorry I missed that you'd removed it earlier in the patch 
+history.  I'm obviously in favor of removing it now. :)
+
+> Further, I think we should make this some kind of "guideline" in 
+> this project to remain consistent. Something like,
 >
-> +test_expect_success $PREREQ 'setup get_mainter script for cc trailer' "
-> +cat >expected-cc-script.sh <<-EOF && chmod +x expected-cc-script.sh
-> +#!/bin/sh
-> +echo 'One Person <one@example.com> (supporter:THIS (FOO/bar))'
-> +echo 'Two Person <two@example.com> (maintainer:THIS THING)'
-> +echo 'Third List <three@example.com> (moderated list:THIS THING (FOO/bar=
-))'
-> +echo '<four@example.com> (moderated list:FOR THING)'
-> +echo 'five@example.com (open list:FOR THING (FOO/bar))'
-> +echo 'six@example.com (open list)'
-> +EOF
-> +"
-> +
-> +test_expect_success $PREREQ 'cc trailer with get_maintainer output' '
-> +	test_commit cc-trailer &&
-> +	clean_fake_sendmail &&
-> +	git send-email -1 --to=3Drecipient@example.com \
-> +		--cc-cmd=3D"$(pwd)/expected-cc-script.sh" \
-> +		--smtp-server=3D"$(pwd)/fake.sendmail" &&
-> +	test_cmp expected-cc commandline1
-> +'
-> +
+>    * If you deprecate an option of a command to an extent that it's not 
+>      usable at all, remove that option from the "Synopsis" of the 
+>      concerned "Documentation".
+>
+> possibly to "Documentation/SubmittingPatches" or at least keep this as 
+> some form of undocumented guideline if this might make 
+> "Documentation/SubmittingPatches" unnecessarily clumsy. I dunno, was 
+> just thinking out loud.
 
-OK I'm afraid I don't fully understand the test harness as this breaks a
-bunch of other tests. If anyone can offer some pointers on how to fix
-I'd be grateful.
+Yeah, it's probably tough to cover the many varied situations like 
+this to SubmittingPatches.  In general, I would agree with the above 
+guideline.  It's best to not steer people toward options which we 
+would prefer them not to use.
 
-In the meantime I know the core change works because I tested with:
+Where that line falls with regard to documentation can certainly vary 
+a lot.  It's often hard for long-time git users to step into the shoes 
+of new users who may be reading the documentation for the first time. 
+The right balance between enough information and not too much is 
+always tricky.
 
-#+name: send-patches-dry-run
-#+begin_src sh :results output
-# temp workaround
-export PERL5LIB=3D/home/alex/src/git.git/perl/
-git send-email --confirm=3Dnever --dry-run --quiet ${mailto} ${series}.patc=
-hes/*
-#+end_src
+[Incidentally, I ran into this because I had made some changes on a 
+master branch of a repository.  Later, I wanted to move them to a 
+topic branch so I could do some other comparisons between master and 
+upstream.  I wondered if I could setup the remote tracking using git 
+branch on the new branch in one step.  The recent branch --copy option 
+does this perfectly (and easily).]
 
-When I sent my last set of kernel patches to the list (the workflow that
-was broken before by the cc9075067776ebd34cc08f31bf78bb05f12fd879 change
-landing via my git stable PPA).
+Thanks to both of you.
 
---
-Alex Benn=C3=A9e
+-- 
+Todd
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Whenever I feel blue, I start breathing again.
+
