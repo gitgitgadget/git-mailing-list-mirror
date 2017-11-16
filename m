@@ -2,87 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1F9EE202A0
-	for <e@80x24.org>; Thu, 16 Nov 2017 21:57:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 250C3202A0
+	for <e@80x24.org>; Thu, 16 Nov 2017 22:40:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934204AbdKPV5a (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Nov 2017 16:57:30 -0500
-Received: from cloud.peff.net ([104.130.231.41]:60266 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1752051AbdKPV52 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Nov 2017 16:57:28 -0500
-Received: (qmail 20675 invoked by uid 109); 16 Nov 2017 21:57:28 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 16 Nov 2017 21:57:28 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20529 invoked by uid 111); 16 Nov 2017 21:57:41 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Thu, 16 Nov 2017 16:57:41 -0500
-Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 16 Nov 2017 16:57:26 -0500
-Date:   Thu, 16 Nov 2017 16:57:26 -0500
-From:   Jeff King <peff@peff.net>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        gitster@pobox.com, Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v4 4/6] list-objects: filter objects in
- traverse_commit_list
-Message-ID: <20171116215725.k44e3alk2lq6bbwu@sigill.intra.peff.net>
-References: <20171116180743.61353-1-git@jeffhostetler.com>
- <20171116180743.61353-5-git@jeffhostetler.com>
- <20171116122133.4cc718414579c1a5a682174b@google.com>
- <bdf75d90-570d-8cf0-886a-2c5c9cdba1c1@jeffhostetler.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <bdf75d90-570d-8cf0-886a-2c5c9cdba1c1@jeffhostetler.com>
+        id S936306AbdKPWkg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Nov 2017 17:40:36 -0500
+Received: from mail-wm0-f50.google.com ([74.125.82.50]:39839 "EHLO
+        mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934167AbdKPWke (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Nov 2017 17:40:34 -0500
+Received: by mail-wm0-f50.google.com with SMTP id l8so3068925wmg.4
+        for <git@vger.kernel.org>; Thu, 16 Nov 2017 14:40:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:subject:from:to:date:mime-version
+         :content-transfer-encoding;
+        bh=g2tTRtw5MKzgVgZ42LBditoEtCqywVfmBJMWW0EJFbQ=;
+        b=tTBatm3+lf4+OtFuDMlW3rd/ng8QbUl5E1QBHg1JP28s+JhquUM09xFta/ShT1VW4f
+         uvjLJernakOQwJJ4mUngE1aihBtLbFWE95yfPySvGu25FBPRjiPahTVUCWZH7NjsVLZ5
+         xrEplVHDuh+DFpH+GuRrq5BFxRtxDg40xJpKTps7cDZKhNz5P6z5yCNAj8rMilQ20E17
+         eGgWXa2AvklEQglurXNa56tJtxmF50AV316kOF0R0q4D8eQWmDK4YlD8JMuS5JAdk61S
+         Y7w7Bl0OQMefozx8ugi9MVfS9MXn+taiJHjmxQJQ7CXbVMHMrG8ABXwTXeW82HnOjYCv
+         JAwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:subject:from:to:date:mime-version
+         :content-transfer-encoding;
+        bh=g2tTRtw5MKzgVgZ42LBditoEtCqywVfmBJMWW0EJFbQ=;
+        b=tIExeRusxzS7uKARlcNNmOWuyVLS2gCtZDY+TxUAACAn1qgRB/DxeWEBf+6gVTZsBP
+         xDa0sUg4yPt020tO5/uJ/SxKj3/ROvZfVhc+Fb+1qFR4vRfTTuA2SktwZFXJn5oC5qQq
+         SJN6jnYis1FZIngJqgX1RuIGs6jUm/siZKn5kdUq8a+QHp2RWJGdoRSTSUzRTgPKKF98
+         QROmWv9M7nZFQPQW2MbBUveXC+htx2l005sDSukiH8qTPXbFEc4r8a16WHYRZzuMkOef
+         PRHOAllB9218KGyjQg0VQAq1fseb7trxYqHKklvj71x8xNDnjPNDug3E5r02jVhFUMyv
+         HtWA==
+X-Gm-Message-State: AJaThX5Oyc87FxAv+NQK+g8wespXD4MTUAiXIg7QrmMIBdu9ciAeNyMv
+        VzRc4kEqiX7XdbNCjTSsFuUZqqos
+X-Google-Smtp-Source: AGs4zMYgbqDiPug5DXTfLDoWfcSpynMdaLT9uL2CfOICrC9xUxXfm1xPc8zJfQ1woeRmxC1AVTznzA==
+X-Received: by 10.28.207.8 with SMTP id f8mr2943395wmg.30.1510872033353;
+        Thu, 16 Nov 2017 14:40:33 -0800 (PST)
+Received: from ?IPv6:2a02:8071:3185:fe00:35e2:b7f3:cb90:ac9b? ([2a02:8071:3185:fe00:35e2:b7f3:cb90:ac9b])
+        by smtp.googlemail.com with ESMTPSA id f19sm2231171wrh.64.2017.11.16.14.40.32
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 16 Nov 2017 14:40:32 -0800 (PST)
+Message-ID: <1510872031.23230.7.camel@gmail.com>
+Subject: Documentation of post-receive hook
+From:   Christoph Michelbach <michelbach94@gmail.com>
+To:     git@vger.kernel.org
+Date:   Thu, 16 Nov 2017 23:40:31 +0100
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.18.5.2-0ubuntu3.2 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 16, 2017 at 04:49:08PM -0500, Jeff Hostetler wrote:
+Hi,
 
-> > First of all, about the injection problem, replying to your previous e-mail
-> > [1]:
-> > 
-> > https://public-inbox.org/git/61855872-221b-0e97-abaa-24a011ad899e@jeffhostetler.com/
-> > 
-> > > I couldn't use quote.[ch] because it is more concerned with
-> > > quoting pathnames because of LF and CR characters within
-> > > them -- rather than semicolons and quotes and the like which
-> > > I was concerned about.
-> > 
-> > sq_quote_buf() (or one of the other similarly-named functions) should
-> > solve this problem, right? The single quotes around the argument takes
-> > care of LF, CR, and semicolons, and things like backslashes and quotes
-> > are taken care of as documented.
-> > 
-> > I don't think we need to invent another encoding to solve this.
-> 
-> I'll take another look, sq_quote_buf() looks like it might work.
-> I was looking at quote_c_style() and that didn't seem right for
-> my needs.  Thanks.
+I think the documentation of the post-receive hook is misleading. When reading
+it, it appears as though the post-receive hook is executed even when no commits
+are transferred by a git push because it isn't mentioned anywhere that this is
+necessary for its execution.
 
-I admit I haven't been following this thread closely, but I couldn't
-seem to find any indication of exactly which interfaces need quoting, or
-who is expected to unquote (here or in the previous iterations).
+This can easily be fixed by changing
 
-It sounds like you're worried about shell injection, but shouldn't we
-worry about that the actual shell boundary? Likewise, if these values
-are being passed over the git protocol, shouldn't that part of the
-protocol be designed to encode arbitrary bytes?
+    This hook is invoked by 'git-receive-pack' on the remote repository,
+    which happens when a 'git push' is done on a local repository.
 
-Those encodings don't necessarily need to be the same, because they're
-about transport. Inside each process we'd have the raw bytes, and encode
-them as appropriate to whatever sub-program we're going to pass to (or
-not at all if we skip the shell for sub-processes, which is usually a
-good idea).
+to:
 
-I have the feeling I'm missing something.
+    This hook is invoked by 'git-receive-pack' on the remote repository,
+    which happens when a 'git push' is done on a local repository and
+    successfully transfers at least 1 commit.
 
--Peff
+Alternatively,
+
+    This hook executes once for the receive operation.
+
+can be changed to
+
+    This hook executes once for the receive operation, but only if at least
+    1 commit was successfully transferred.
+
+Imho, the first option should be chosen as it informs the reader about this
+behavior at the first convenient opportunity.
+
+-- 
+Christoph Michelbach <michelbach94@gmail.com>
