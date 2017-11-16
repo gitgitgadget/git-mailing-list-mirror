@@ -2,94 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BE498202AF
-	for <e@80x24.org>; Thu, 16 Nov 2017 10:56:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ECBDC202AF
+	for <e@80x24.org>; Thu, 16 Nov 2017 11:10:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934130AbdKPK4J (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Nov 2017 05:56:09 -0500
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:51011 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933968AbdKPKz4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Nov 2017 05:55:56 -0500
-Received: by mail-pf0-f194.google.com with SMTP id u70so14543642pfa.7
-        for <git@vger.kernel.org>; Thu, 16 Nov 2017 02:55:56 -0800 (PST)
+        id S934108AbdKPLKa (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Nov 2017 06:10:30 -0500
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:57046 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932744AbdKPLK2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Nov 2017 06:10:28 -0500
+Received: by mail-pf0-f196.google.com with SMTP id q4so11242507pfg.13
+        for <git@vger.kernel.org>; Thu, 16 Nov 2017 03:10:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=u4gK0bNacnUpc/8NjHvb6npoyU0OEXz111YR3yN5Aqc=;
-        b=F64KmI4wS6jnrrDbiZucVvsdOeCN+H+UC0AFXaTG1Czl2tA7lu2oD2vRQUsKoq2UUM
-         5bUUHCo6apMNy5ZPZHoHZRz7pzuCw1q3rur2dIokv68/MbLp4ipa0vGQvLgGl4d1DLli
-         CemaBf4OeqEdeHl9V7W5DBDi8E8YGJOc9ZiCzryjV+fYV344Uet7n+JalTvsE3UzwfOn
-         uhs6WQn4m2b7CXAtQHnTKBxJ2WhT1GX5Moerj8O5uqzX1xt37VWckoHAe8oYfJ26W+c7
-         D7TeVuRyp+X8LnS84huF2qyrouwECt9PljTn51jVLvDm8FsFkyCpaXUEkbtUZvN1iRYI
-         bgYg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=6bUniDoJCQdg5r6nil4T9PrMBD5r5kwoJROPgMEbT40=;
+        b=qOLh00SqdQ6M5NAoDp8gF4byLY7r3OpQIWREGrm5DMv0N99RgUGGyB38JBdTEfgg69
+         hYVvsOxKxBu+mnEqCMNR+ZBbsGpraIQF4ma15j0Lx+fRtQiVhaL2x/27OjicvC+RGqcz
+         dgbx1SDM65ZyE4qoFqizILPoqCTceiPa3x2ufKNre/WdiQFqqKwew3x5Yon7hSNCR6ev
+         x0XCSSnJrZk2x/unBlXMjppOHnBMtE//cNG5UEj0o4AlZulQkC5YHPxb023EG85EVgWv
+         FdA1coUZvZgOzWByvZsK62aOFyEu03Kv63NdOTliSAoufHTZn1ciYeoTLFG2soRD+LLT
+         N0yQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=u4gK0bNacnUpc/8NjHvb6npoyU0OEXz111YR3yN5Aqc=;
-        b=RN3ZKgR4i3xmlM2e/+yJdk4mTFiFpCOz9PbuoeJ3M84THDcudZrJA9R0znXamjjTD+
-         767NvVqiM1/CWxB/9JAEgSItrPbA5ZjgZNW1766ge/KyRdzkJQ49YOyFKaOQ+jpvBPpO
-         fDwhAmkoNkBRQHl1AfdGlcI7gd51mX8trrXR10GAWle178zZU3jsxpAMtEjUg6rzpRPK
-         pvi8o6PXqdTa3sMr38s16cbfg+/Y3J2g8XNpg/vgtU9rCCONtBjt6oNp64agZ8EtTX1G
-         5C+94GYotadbD/bXQUTDBOgcRg4ji5LhinaJyrB2CKBSbH1VrpSdL2vPLXsE6XraOFQd
-         u7UQ==
-X-Gm-Message-State: AJaThX4rbQaG+/IgEUHOig1feQeaWBvlHVZ7aQyl2kEJu/fCdeNRNOTl
-        3DEP3UofpXTdxdtmoqee7e0bMSBadAKC63JNQrOmSQ==
-X-Google-Smtp-Source: AGs4zMYOf6r8JKHcL3trTw7+L64G7rsJQljrI11TN3R7TP2MSynxv3TiBAs8WoAx/+ptx9sNm5z875iCG9eBDBQsfQw=
-X-Received: by 10.84.164.231 with SMTP id l36mr1271236plg.179.1510829755801;
- Thu, 16 Nov 2017 02:55:55 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.100.167.42 with HTTP; Thu, 16 Nov 2017 02:55:55 -0800 (PST)
-In-Reply-To: <804e30dd-3c06-02c1-e5c0-f07265635943@talktalk.net>
-References: <20171115104125.1686-1-phillip.wood@talktalk.net>
- <CAN0heSrbszhhFauYHNs70-WWk+bju0sSVzjavRcwg09CzCXSjA@mail.gmail.com> <804e30dd-3c06-02c1-e5c0-f07265635943@talktalk.net>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Thu, 16 Nov 2017 11:55:55 +0100
-Message-ID: <CAN0heSrcAQhyzzB5c=W-diQecHgVQUC69xQwqnc36hSPVBpNig@mail.gmail.com>
-Subject: Re: [PATCH] sequencer: reschedule pick if index can't be locked
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=6bUniDoJCQdg5r6nil4T9PrMBD5r5kwoJROPgMEbT40=;
+        b=Hru/Sz3q2yVpHFQos7C9bVTVY6xOAz9Yh83RqL72VYKs1ahK638vt6HXbO9JVnpUV6
+         HHV8r47es6ks36kwnbMtqzpr7qMN6gvFdF06dIdHTTmDyOtLyP8iQsP+gxIauKFQf4oU
+         657fG8iPbdaWxfHBMSfVAhe+WYZcfh2VlGHesrDpFgY6dV9u2+dZQ05Z4TpW09sJJ1E8
+         VfOyrUr/KJANuWj7FStK6yuG/LO1AUHlMUP1BYSmjcf7G+JVWupjsMWttupGIH6OLdtI
+         crZBk7UPRCzi+xXbEzuNmdz7jJoaaHqubW0jJfhTcDXFAuDCO1Y7CGmSaHu9DaiOJnIC
+         pOag==
+X-Gm-Message-State: AJaThX6uKqjGfWX7H45A3PogvdplAWq5po0oypU2kEz23sG3IGKjPD4E
+        WqTqpa6bYxKGB0qgLkpLbztjgCgo
+X-Google-Smtp-Source: AGs4zMYIWanHxN1VHN8Q199woiVkcwDNb6DcjbKSAP8Mn/YA4VsNedzeCsd8zoL50eaSHzIQ2KwtvA==
+X-Received: by 10.99.110.3 with SMTP id j3mr1342179pgc.70.1510830627888;
+        Thu, 16 Nov 2017 03:10:27 -0800 (PST)
+Received: from ?IPv6:2405:204:72c0:fc36:f2a4:a5ab:70fc:f807? ([2405:204:72c0:fc36:f2a4:a5ab:70fc:f807])
+        by smtp.gmail.com with ESMTPSA id n129sm2501054pfn.1.2017.11.16.03.10.22
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 16 Nov 2017 03:10:26 -0800 (PST)
+Subject: Re: [PATCH] branch doc: remove --set-upstream from synopsis
+To:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
+        Todd Zullinger <tmz@pobox.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+References: <20171116074643.19614-1-tmz@pobox.com>
+ <CAN0heSpUm=U7aGVtRoUoGZCvNsOZ04wLqTOx8kMvZEa8GQUiLQ@mail.gmail.com>
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Message-ID: <493127ce-2596-fb93-993d-042097ca19bc@gmail.com>
+Date:   Thu, 16 Nov 2017 16:40:20 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
+MIME-Version: 1.0
+In-Reply-To: <CAN0heSpUm=U7aGVtRoUoGZCvNsOZ04wLqTOx8kMvZEa8GQUiLQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 16 November 2017 at 11:43, Phillip Wood <phillip.wood@talktalk.net> wrot=
-e:
-> On 15/11/17 18:44, Martin =C3=85gren wrote:
->>
->> On 15 November 2017 at 11:41, Phillip Wood <phillip.wood@talktalk.net>
->> wrote:
->>
->>  From the commit message, I would have expected the flags to be zero. Th=
-is
->> patch
->> does not only turn off the die-ing, it also tells the lockfile-API to
->> print an
->> error message before returning. I don't have an opinion on whether that
->> extra
->> verboseness is good or bad, but if it's wanted, I think the commit messa=
-ge
->> should mention this change.
+On Thursday 16 November 2017 04:19 PM, Martin Ågren wrote:
+> On 16 November 2017 at 08:46, Todd Zullinger <tmz@pobox.com> wrote:
+>> diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
+>> index d6587c5e96..159ca388f1 100644
+>> --- a/Documentation/git-branch.txt
+>> +++ b/Documentation/git-branch.txt
+>> @@ -14,7 +14,7 @@ SYNOPSIS
+>>          [(--merged | --no-merged) [<commit>]]
+>>          [--contains [<commit]] [--no-contains [<commit>]]
+>>          [--points-at <object>] [--format=<format>] [<pattern>...]
+>> -'git branch' [--set-upstream | --track | --no-track] [-l] [-f] <branchname> [<start-point>]
+>> +'git branch' [--track | --no-track] [-l] [-f] <branchname> [<start-point>]
+> 
+> Personally, I think this is an improvement.
 >
->
-> Hi Martin, thanks for your comments. LOCK_DIE_ON_ERROR also prints the sa=
-me
-> warning so that behavior is unchanged by this patch, though mentioning it=
- in
-> the commit message would be no bad thing.
 
-Argh, you're right of course. Sorry for this.
+I didn't remove it as there wasn't a "strong" consensus that this should 
+go off the "Synopsis" at that time. If removing it from the synopsis 
+seems to be better than leaving it, then lets do it. Further, I think we 
+should make this some kind of "guideline" in this project to remain 
+consistent. Something like,
 
-Martin
+
+     * If you deprecate an option of a command to an extent that it's not
+       usable at all, remove that option from the "Synopsis" of the
+       concerned "Documentation".
+
+
+possibly to "Documentation/SubmittingPatches" or at least keep this as 
+some form of undocumented guideline if this might make 
+"Documentation/SubmittingPatches" unnecessarily clumsy. I dunno, was 
+just thinking out loud.
+
+
+>>   'git branch' (--set-upstream-to=<upstream> | -u <upstream>) [<branchname>]
+>>   'git branch' --unset-upstream [<branchname>]
+>>   'git branch' (-m | -M) [<oldbranch>] <newbranch>
+>> @@ -86,7 +86,7 @@ OPTIONS
+>>   --delete::
+>>          Delete a branch. The branch must be fully merged in its
+>>          upstream branch, or in `HEAD` if no upstream was set with
+>> -       `--track` or `--set-upstream`.
+>> +       `--track` or `--set-upstream-to`.
+> 
+> Good catch.
+> 
+
+Yep. Thanks for catching this.
+
+
+---
+Kaartic
