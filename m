@@ -2,119 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4DD96201C8
-	for <e@80x24.org>; Thu, 16 Nov 2017 00:54:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E2CC8201C8
+	for <e@80x24.org>; Thu, 16 Nov 2017 01:06:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932437AbdKPAyU (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Nov 2017 19:54:20 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:58512 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753066AbdKPAyT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Nov 2017 19:54:19 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C4E3BA1D5E;
-        Wed, 15 Nov 2017 19:54:18 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=qmD0NOLuxc+nQgDVsf3DfYn5TO8=; b=Yawq7S
-        MemEgTtplDFTG8R0L81hIl0Q7jlB0MABu3bZdDrERvWJetzS+UlFyU65Md7eKcvz
-        d0+KfDwV41QtC35SIBCSiUkQxdg3d1kr6UYm3xh61rAXDoALGat9hruNKIYq3dTv
-        YiIJ5j1+l6TxE5F75OlFj7u3d1cRlZlv9y/QQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=w0EUyrKwa4QeAAS6lPSJVqHc7CxFrx0L
-        DN/xjx+S/gNYYTy8rgnaSqQl23s/HZq1aK9Cawqv2psxjJHHw/oVDzpWFTjJnr9E
-        MqH9R/Jw4KUSXWq6BsNNOkKuqjN6nEQatGKMo2Yd7On0H02fdVHCvSu7R3v9hEpm
-        M/TnhqNAsvY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BBD1DA1D5D;
-        Wed, 15 Nov 2017 19:54:18 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 31746A1D5C;
-        Wed, 15 Nov 2017 19:54:18 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     hsed@unimetic.com
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH V3] config: add --expiry-date
-References: <xmqqshdh2wln.fsf@gitster.mtv.corp.google.com>
-        <20171116000547.3246-1-hsed@unimetic.com>
-Date:   Thu, 16 Nov 2017 09:54:16 +0900
-In-Reply-To: <20171116000547.3246-1-hsed@unimetic.com> (hsed@unimetic.com's
-        message of "Thu, 16 Nov 2017 00:05:47 +0000")
-Message-ID: <xmqqlgj7xcuf.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S932600AbdKPBGE (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Nov 2017 20:06:04 -0500
+Received: from mail-oi0-f54.google.com ([209.85.218.54]:44592 "EHLO
+        mail-oi0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932186AbdKPBGC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Nov 2017 20:06:02 -0500
+Received: by mail-oi0-f54.google.com with SMTP id a75so11731985oib.1
+        for <git@vger.kernel.org>; Wed, 15 Nov 2017 17:06:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=diamand.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=qtCDHGgZyBOVt4Em5HZBOtqB2DtySZ5WyGELsxn0lvE=;
+        b=MDzeQ1678gfKTLTa0aiO61OkWInELhm5Ag7+pD9Yr0CznMaeX/BDt8ILNQ6rh4T+nP
+         9J5GDRwXiyy7ymYWzkdq5gEG5sEG+lDHlLVX1NkHPSJ4dWt4t2GM4t/mfMyVfdbAQ3Lw
+         lHWxPdGlM0mV/F6wyHjoNdJJgPCjr3bW4eVDI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=qtCDHGgZyBOVt4Em5HZBOtqB2DtySZ5WyGELsxn0lvE=;
+        b=D08bUyxBlsEJXhdU+kBSVQ+jH7Zk9l5v2StuaIZy4WjMBManNnR5YTB+/QtmXBTJsH
+         ZhPSE6b1vFPgIyUHVRFA/QHpGLY14EopuBAdAR5+2INGp+NQG/ifbwueVywJ5FvRPUgG
+         esVzFJCbBsm+LKJs9Tm612/puTTpv9VRhGsDvHAcD5D8V3rIIGfPwpmJWfdimHRSYyc1
+         TM1i04sARQrH8H45T+oMjvi+VxQOYG3NEKbTlHMgITJzclsz3kVn1qvm2RnIZ01IOhYk
+         Z/mB76DdV7ZPi4ilIUjLaxreieNMeA1rGn9w+C+2N6/76yLGZQX0vkEB9gv83LfRY1FD
+         ZILA==
+X-Gm-Message-State: AJaThX5gf62cu1+eY9PqBYMGrG7jLxsXhRqC/btM4uIxBu7eMY/Yz9Sw
+        VVSov7VM/PklWVARiNr3f/RhQdciWsJSKr8aDJdWSQ==
+X-Google-Smtp-Source: AGs4zMYBkaYFPcRu05h0IsfQ+GrxO7ChEl6a5/a3SYkP+QcqN/y/FQ6gCaVWPim37AsdD/SIskAR/A9yX7BUlIdHkP4=
+X-Received: by 10.202.223.194 with SMTP id w185mr4066081oig.45.1510794362196;
+ Wed, 15 Nov 2017 17:06:02 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: ACC66CE0-CA68-11E7-BEB4-8EF31968708C-77302942!pb-smtp1.pobox.com
+Received: by 10.157.12.236 with HTTP; Wed, 15 Nov 2017 17:06:01 -0800 (PST)
+In-Reply-To: <xmqqtvxvyz3m.fsf@gitster.mtv.corp.google.com>
+References: <CAE5ih78nLL6UhKPObvFEA9xQZUtc1XpPvGJNaYTH9fJ0RyFRvA@mail.gmail.com>
+ <CAE5ih7_uuVVrze9gNr3JMg5HNH8eAcH_wM4wrc2kH6u=Hw0JOg@mail.gmail.com> <xmqqtvxvyz3m.fsf@gitster.mtv.corp.google.com>
+From:   Luke Diamand <luke@diamand.org>
+Date:   Thu, 16 Nov 2017 01:06:01 +0000
+Message-ID: <CAE5ih79wG3ws=OyXqvbd+QKyyAmM-D2JVO5r9G5VHtoOfiXdug@mail.gmail.com>
+Subject: Re: Bug in "revision.c: --all adds HEAD from all worktrees" ?
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Users <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-hsed@unimetic.com writes:
-
-> From: Haaris Mehmood <hsed@unimetic.com>
+On 15 November 2017 at 22:08, Junio C Hamano <gitster@pobox.com> wrote:
+> Luke Diamand <luke@diamand.org> writes:
 >
-> Add --expiry-date as a data-type for config files when
-> 'git config --get' is used. This will return any relative
-> or fixed dates from config files  as a timestamp value.
+>> Quite a few of the worktrees have expired - their head revision has
+>> been GC'd and no longer points to anything sensible
+>> (gc.worktreePruneExpire). The function other_head_refs() in worktree.c
+>> bails out if there's an error, which I think is the problem. I wonder
+>> if it should instead just report something and then keep going.
 >
-> This is useful for scripts (e.g. gc.reflogexpire) that work
-> with timestamps so that '2.weeks' can be converted to a format
-> acceptable by those scripts/functions.
+> Am I correct to understand that your "git fsck" would fail because
+> these HEAD refs used by other stale worktrees are pointing at
+> missing objects?
+
+git fsck says:
+
+Checking object directories: 100% (256/256), done.
+Checking objects: 100% (1434634/1434634), done.
+error: HEAD: invalid reflog entry
+7fa2b7ee4bc0d11529f659db8b13ed1f537d2a98
+error: HEAD: invalid reflog entry
+7fa2b7ee4bc0d11529f659db8b13ed1f537d2a98
+error: HEAD: invalid reflog entry
+7e79e09e8a7382f91610f7255a1b99ea59f68c0b
+error: refs/stash: invalid reflog entry
+feeb35e7b045d28943c706e761d0a2ac8206af2f
+error: refs/remotes/origin/master: invalid reflog entry
+7fa2b7ee4bc0d11529f659db8b13ed1f537d2a98
+Checking connectivity: 1419477, done.
+missing tree 1480c0a7ed2ad59ae701667292399c38d294658e
+missing tree ca2a01116bfbbd1fcbcf9812b95d8dc6c39e69d5
+missing tree 5b7c41e547fc5c4c840e5b496da13d3daebc5fbe
+...
+...
+
 >
-> Following the convention of git_config_pathname(), move
-> the helper function required for this feature from
-> builtin/reflog.c to builtin/config.c where other similar
-> functions exist (e.g. for --bool or --path), and match
-> the order of parameters with other functions (i.e. output
-> pointer as first parameter).
+> What do you mean by "expired"?  "Even though I want to keep using
+> them, Git for some reason decided to destroy them." or "I no longer
+> use them but kept them lying around."?
+
+git worktree automatically prunes work trees:
+
+"The working tree=E2=80=99s administrative files in the repository (see
+"DETAILS" below) will eventually be removed automatically (see
+gc.worktreePruneExpire in git-config(1)),"
+
+In my case I didn't actually want them removed, but fortunately
+there's nothing important in them (there certainly isn't anymore...).
+
 >
-> Signed-off-by: Haaris Mehmood <hsed@unimetic.com>
+> If the latter, I wonder "worktree prune" to remove the
+> admininstrative information for them would unblock you?
 
-Very nicely explained.  I often feel irritated when people further
-rewrite what I wrote for them as an example and make it much worse,
-but this one definitely is a lot more readable than the "something
-like this perhaps?" in my response to the previous round.
+It doesn't seem to help.
 
-> @@ -273,12 +280,13 @@ static char *normalize_value(const char *key, const char *value)
->  	if (!value)
->  		return NULL;
->  
-> -	if (types == 0 || types == TYPE_PATH)
-> +	if (types == 0 || types == TYPE_PATH || types == TYPE_EXPIRY_DATE)
->  		/*
->  		 * We don't do normalization for TYPE_PATH here: If
->  		 * the path is like ~/foobar/, we prefer to store
->  		 * "~/foobar/" in the config file, and to expand the ~
->  		 * when retrieving the value.
-> +		 * Also don't do normalization for expiry dates.
->  		 */
->  		return xstrdup(value);
-
-Sensible.  Just like we want to save "~u/path" as-is without
-expanding the "~u"/ part, we want to keep "2 weeks ago" as-is.
-
-> -	if (parse_expiry_date(value, expire))
-> -		return error(_("'%s' for '%s' is not a valid timestamp"),
-> -			     value, var);
-> ...
-> +	if (parse_expiry_date(value, timestamp))
-> +		die(_("failed to parse date_string in: '%s'"), value);
-
-This is an unintended change in behaviour (or at least undocumented
-in the log message) for the "git reflog" command, no?
-
-Not just the error message is different, but the original gave the
-calling code a chance to react to the failure by returning -1 from
-the function, but this makes the command fail outright here.
-
-Would it break anything if you did "return error()" just like the
-original used to?  Are your callers of this new function not
-prepared to see an error return?
+$ git worktree prune -n
+<lists lots of unhappy trees>
+$ git worktree prune
+$ git fetch
+remote: Counting objects: 35, done.
+remote: Compressing objects: 100% (20/20), done.
+remote: Total 21 (delta 17), reused 5 (delta 1)
+Unpacking objects: 100% (21/21), done.
+fatal: bad object HEAD
+error: ssh://whatever/myrepol did not send all necessary objects
+$ /usr/bin/git-2.7.3 fetch
+<works fine>
