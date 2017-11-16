@@ -2,173 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 22E34201C8
-	for <e@80x24.org>; Thu, 16 Nov 2017 01:22:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B8B27201C8
+	for <e@80x24.org>; Thu, 16 Nov 2017 01:35:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933224AbdKPBWz (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Nov 2017 20:22:55 -0500
-Received: from mail-qt0-f175.google.com ([209.85.216.175]:45542 "EHLO
-        mail-qt0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932650AbdKPBWx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Nov 2017 20:22:53 -0500
-Received: by mail-qt0-f175.google.com with SMTP id n32so22789055qtb.2
-        for <git@vger.kernel.org>; Wed, 15 Nov 2017 17:22:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=KBFa3rsRGmMo3P7ezStz1P11+KSQpqI6hMcl3AKzsEE=;
-        b=H+cmJ5yL2PB9/ztieDMb4uh3A4OLWXMxsby7fZuDdkqw8Jzd6rAkB89eoep1qQXEp1
-         MZuNWJjcUbq1mVzJb62yxM3IqdmfB/RBfuP8OoeP/alEo1RRaaO9rH9EQtTPTigdFd3i
-         ZuPjQDcPZj/Hbj1Ow1K2FO02nMl3hBkxK6RFQNjPT4ABaBXLKvUiOo0kYYduwNsPT0+4
-         iB/LN2xDNQ4+302yjwmXnZijvaSPBe8iPNCMT5ZszLmVdk8ywiQkwFWFkjelso0PMcmk
-         Ly3JNbuBLgyc2TyeJosYwUeuD2lR7ZH9A1DI6a7WpGmQ+3q7X211M0gHR0h2I+9ozWDN
-         ANQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=KBFa3rsRGmMo3P7ezStz1P11+KSQpqI6hMcl3AKzsEE=;
-        b=V3OMI1RNvVIdq1HHCEF014Ai+yYBKl8lpgX5Uq7bORN92017JqoY3MeqL7/sGffQ4E
-         IbCm67ztnmoAlZ26YclKiBFCnFRyMmrqG8kscuG61ToSXB/dRQo3iGbkXCyGVdDl2tfz
-         DrmpmyQttIRVt5FU4ts3qwQJ/0p+TAd8Qr929vxhD81VR9Gc0Ldq6zHlmvQgiAY4B6mn
-         XauBEzwng7ls0X3cbDsrHCB/6u9Y7HQn6qG4DqzXt/GV6t1Y1EOtyak5JTO6jo6TVH+F
-         gmBxUXnWT5zeco8zPvnGFJwYB8bC+1j14MD9c38zuSDKRMixKIP8bSIoa2UIGEug6c6y
-         povA==
-X-Gm-Message-State: AJaThX6izvLHM+schN8jMIxIaeuaGFTXNZIEodgaKvc81S3/iYOwv84e
-        2ZTTxkfjmnxB5xYLK79dQCmJieSs/sMkLG5/+gvMbnGcfXo=
-X-Google-Smtp-Source: AGs4zMZycnWEy4IgCevua3Ef/KtgALcjFMvRDweGPznpUJQeLxbkbx3jfaebnKE+66gDZntn2zw+MAO8Ao/vBAhWRck=
-X-Received: by 10.55.119.70 with SMTP id s67mr20043221qkc.45.1510795372907;
- Wed, 15 Nov 2017 17:22:52 -0800 (PST)
+        id S933607AbdKPBfo (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Nov 2017 20:35:44 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:65493 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S933189AbdKPBfm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Nov 2017 20:35:42 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 772ACB4682;
+        Wed, 15 Nov 2017 20:35:41 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=b+jiGywwXKLGEkdv4UA5dThu6/M=; b=oseya3
+        WeRAqd3lbiOc6wSd4xtiKeO24KFT1NDNXHMHwj9sPCZU+ua6fSFE5sqFadwh90JL
+        /qVMfZYKMOp1haUMFwNlVR8fcNbkghMk4x56j/QUorm4c/6VIH4JCflxnlxv3tFN
+        HdXepN1Du19WCzaYd3I3EjfPrhexcPBwiVh8o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=DW8jsIy7/odmy2AXXyQ8qoIdkVxkuqVV
+        R39gIBnJtzt8GZ4KpUDNxNsfjq4N2q8a0HZDQNO5rTNpxaDsA25GZHKk1S1DyK2/
+        Qzh3Kwj8LE6HiDk9sgJ5g8AQdqp0nuKEI/gfbdC4EgJ89GCAzLV2UvnRl3tDSEev
+        SORWKzk+oBw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 645F4B4681;
+        Wed, 15 Nov 2017 20:35:41 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D8731B4680;
+        Wed, 15 Nov 2017 20:35:40 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Dominik Mahrer <teddy@teddy.ch>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH] Makefile: check that tcl/tk is installed
+References: <20171115125200.17006-1-chriscool@tuxfamily.org>
+Date:   Thu, 16 Nov 2017 10:35:39 +0900
+In-Reply-To: <20171115125200.17006-1-chriscool@tuxfamily.org> (Christian
+        Couder's message of "Wed, 15 Nov 2017 13:52:00 +0100")
+Message-ID: <xmqqbmk3xaxg.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.140.96.118 with HTTP; Wed, 15 Nov 2017 17:22:51 -0800 (PST)
-In-Reply-To: <20171114175207.f23d492045d52b8aa16c00be@google.com>
-References: <20171115003043.24080-1-sbeller@google.com> <20171115003043.24080-8-sbeller@google.com>
- <20171114175207.f23d492045d52b8aa16c00be@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 15 Nov 2017 17:22:51 -0800
-Message-ID: <CAGZ79kaum5py=14kdFy1a+K_0MzfaD5boYStixh=1aY2tUCV-Q@mail.gmail.com>
-Subject: Re: [PATCHv4 7/7] builtin/describe.c: describe a blob
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 74921F62-CA6E-11E7-B1F8-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 14, 2017 at 5:52 PM, Jonathan Tan <jonathantanmy@google.com> wrote:
-> On Tue, 14 Nov 2017 16:30:43 -0800
-> Stefan Beller <sbeller@google.com> wrote:
+Christian Couder <christian.couder@gmail.com> writes:
+
+> To improve the current behavior when Tcl/Tk is not installed,
+> let's just check that TCLTK_PATH points to something and error
+> out right away if this is not the case.
 >
->> The walking is performed in reverse order to show the introduction of a
->> blob rather than its last occurrence.
->
-> The code as implemented here does not do this - it instead shows the last
-> occurrence.
+> This should benefit people who actually want to install and use
+> git-gui or gitk as they will have to install Tcl/Tk anyway, and
+> it is better for them if they are told about installing it soon
+> in the build process, rather than if they have to debug it after
+> installing.
 
-fixed to show the first occurrence.
+Not objecting, but thinking aloud if this change makes sense.
 
->
->>  NAME
->>  ----
->> -git-describe - Describe a commit using the most recent tag reachable from it
->> +git-describe - Describe a commit or blob using the graph relations
->
-> I would write "Describe a commit or blob using a tag reachable from it".
+If you are building Git for your own use on the same box, which is
+presumably the majority of "build failed and I have no clue how to
+fix" case that needs help, if you want gui tools, you need to have
+tcl/tk installed anyway, whether you have msgfmt installed.  This
+seems to be the _only_ class of users this patch wants to cater to.
 
-using a ref, as we also can use refs.
-I think 'the graph' is technically correct here, but may be too confusing.
+I wonder if we are hurting people who are not in that category.
 
->
->> +If the given object refers to a blob, it will be described
->> +as `<commit-ish>:<path>`, such that the blob can be found
->> +at `<path>` in the `<commit-ish>`. Note, that the commit is likely
->> +not the commit that introduced the blob, but the one that was found
->> +first; to find the commit that introduced the blob, you need to find
->> +the commit that last touched the path, e.g.
->> +`git log <commit-description> -- <path>`.
->> +As blobs do not point at the commits they are contained in,
->> +describing blobs is slow as we have to walk the whole graph.
->
-> I think some of this needs to be updated?
+ - To run gui tools, tcl/tk must be available at runtime, but tcl/tk
+   is not necessary in the packager's environment to produce a
+   package of Git that contains working git-gui and gitk that will
+   be used on an end-user box with tcl/tk installed, as long as the
+   packager's environment has a working msgfmt.
 
-fixed.
+ - To process .po files for the gui tools in the packager's
+   environment without msgfmt, tcl/tk is required.
 
->
->> +static void process_object(struct object *obj, const char *path, void *data)
->> +{
->> +     struct process_commit_data *pcd = data;
->> +
->> +     if (!oidcmp(&pcd->looking_for, &obj->oid) && !pcd->dst->len) {
->> +             reset_revision_walk();
->> +             describe_commit(&pcd->current_commit, pcd->dst);
->> +             strbuf_addf(pcd->dst, ":%s", path);
->> +             pcd->revs->max_count = 0;
->> +     }
->> +}
->
-> Setting max_count to 0 does not work when reverse is used, because the
-> commits are first buffered into revs->commits (see get_revision() in
-> revision.c). There doesn't seem to be a convenient way to terminate the
-> traversal immediately - I think setting revs->commits to NULL should
-> work (but I didn't check). Remember to free revs->commits (using
-> free_commit_list) first.
+I suspect that this change will hurt those who package Git for other
+people.
 
-This does work indeed.
+It used to be that, as long as they have msgfmt installed, they only
+needed to _know_ what the path on the users' box to "wish" is, and
+set it to TCLTK_PATH, and if they are distro packagers, most likely
+they already have such an automated set-up working.  Now with this
+change, they are forced to install tcl/tk on their possibly headless
+box where tcl/tk is useless, and worse yet, an attempt to install it
+may bring in tons of unwanted stuff related to X that is irrelevant
+on such a headless development environment.
 
->
->> +test_expect_success 'describe a blob at a tag' '
->> +     echo "make it a unique blob" >file &&
->> +     git add file && git commit -m "content in file" &&
->> +     git tag -a -m "latest annotated tag" unique-file &&
->> +     git describe HEAD:file >actual &&
->> +     echo "unique-file:file" >expect &&
->> +     test_cmp expect actual
->> +'
->
-> This is probably better named "describe a blob at a directly tagged
-> commit".
+I doubt that this is quite a good trade-off; it feels that this
+burdens packagers a bit too much, and we may need a way to override
+this new check further.  I think "If I cannot run either wish or
+msgfmt, then barf and give an error message" might at least be
+needed.  Am I misinterpreting the motivation of the patch?
 
-ok
-
->  (Should we also test the case where a blob is directly
-> tagged?)
-
-We do a bad job at describing tags that point at a blob currently:
-
-  git tag test-blob HEAD:Makefile
-  git describe test-blob
-error: object cd75985991f4535c45e2589222a9e6a38fb1d613 is a blob, not a commit
-fatal: test-blob is not a valid 'commit' object
-
-This series changes this to
-
-  git describe test-blob
-  v2.15.0-rc0-43-g54bd705a95:Makefile
-
-which might not be expected (you'd expect "test-blob"),
-so I think I can write a test telling that this is suboptimal
-behavior?
-
->
->> +test_expect_success 'describe a blob with its last introduction' '
->> +     git commit --allow-empty -m "empty commit" &&
->> +     git rm file &&
->> +     git commit -m "delete blob" &&
->> +     git revert HEAD &&
->> +     git commit --allow-empty -m "empty commit" &&
->> +     git describe HEAD:file >actual &&
->> +     grep unique-file-3-g actual
->> +'
->
-> The description is not true: firstly, this shows the last occurrence,
-> not the last introduction (you can verify this by adding another commit
-> and noticing that the contents of "actual" changes), and what we want is
-> not the last introduction anyway, but the first one.
-
-fixed.
+> diff --git a/Makefile b/Makefile
+> index ee9d5eb11e..ada6164e15 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -1636,6 +1636,13 @@ ifeq ($(TCLTK_PATH),)
+>  NO_TCLTK = NoThanks
+>  endif
+>  
+> +ifndef NO_TCLTK
+> +	has_tcltk := $(shell type $(TCLTK_PATH) 2>/dev/null)
+> +	ifndef has_tcltk
+> +$(error "Tcl/Tk is not installed ('$(TCLTK_PATH)' not found). Consider setting NO_TCLTK or installing Tcl/Tk")
+> +	endif
+> +endif
+> +
+>  ifeq ($(PERL_PATH),)
+>  NO_PERL = NoThanks
+>  endif
