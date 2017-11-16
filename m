@@ -2,126 +2,173 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E2CC8201C8
-	for <e@80x24.org>; Thu, 16 Nov 2017 01:06:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 22E34201C8
+	for <e@80x24.org>; Thu, 16 Nov 2017 01:22:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932600AbdKPBGE (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Nov 2017 20:06:04 -0500
-Received: from mail-oi0-f54.google.com ([209.85.218.54]:44592 "EHLO
-        mail-oi0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932186AbdKPBGC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Nov 2017 20:06:02 -0500
-Received: by mail-oi0-f54.google.com with SMTP id a75so11731985oib.1
-        for <git@vger.kernel.org>; Wed, 15 Nov 2017 17:06:02 -0800 (PST)
+        id S933224AbdKPBWz (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Nov 2017 20:22:55 -0500
+Received: from mail-qt0-f175.google.com ([209.85.216.175]:45542 "EHLO
+        mail-qt0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932650AbdKPBWx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Nov 2017 20:22:53 -0500
+Received: by mail-qt0-f175.google.com with SMTP id n32so22789055qtb.2
+        for <git@vger.kernel.org>; Wed, 15 Nov 2017 17:22:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
+        d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=qtCDHGgZyBOVt4Em5HZBOtqB2DtySZ5WyGELsxn0lvE=;
-        b=MDzeQ1678gfKTLTa0aiO61OkWInELhm5Ag7+pD9Yr0CznMaeX/BDt8ILNQ6rh4T+nP
-         9J5GDRwXiyy7ymYWzkdq5gEG5sEG+lDHlLVX1NkHPSJ4dWt4t2GM4t/mfMyVfdbAQ3Lw
-         lHWxPdGlM0mV/F6wyHjoNdJJgPCjr3bW4eVDI=
+         :cc;
+        bh=KBFa3rsRGmMo3P7ezStz1P11+KSQpqI6hMcl3AKzsEE=;
+        b=H+cmJ5yL2PB9/ztieDMb4uh3A4OLWXMxsby7fZuDdkqw8Jzd6rAkB89eoep1qQXEp1
+         MZuNWJjcUbq1mVzJb62yxM3IqdmfB/RBfuP8OoeP/alEo1RRaaO9rH9EQtTPTigdFd3i
+         ZuPjQDcPZj/Hbj1Ow1K2FO02nMl3hBkxK6RFQNjPT4ABaBXLKvUiOo0kYYduwNsPT0+4
+         iB/LN2xDNQ4+302yjwmXnZijvaSPBe8iPNCMT5ZszLmVdk8ywiQkwFWFkjelso0PMcmk
+         Ly3JNbuBLgyc2TyeJosYwUeuD2lR7ZH9A1DI6a7WpGmQ+3q7X211M0gHR0h2I+9ozWDN
+         ANQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=qtCDHGgZyBOVt4Em5HZBOtqB2DtySZ5WyGELsxn0lvE=;
-        b=D08bUyxBlsEJXhdU+kBSVQ+jH7Zk9l5v2StuaIZy4WjMBManNnR5YTB+/QtmXBTJsH
-         ZhPSE6b1vFPgIyUHVRFA/QHpGLY14EopuBAdAR5+2INGp+NQG/ifbwueVywJ5FvRPUgG
-         esVzFJCbBsm+LKJs9Tm612/puTTpv9VRhGsDvHAcD5D8V3rIIGfPwpmJWfdimHRSYyc1
-         TM1i04sARQrH8H45T+oMjvi+VxQOYG3NEKbTlHMgITJzclsz3kVn1qvm2RnIZ01IOhYk
-         Z/mB76DdV7ZPi4ilIUjLaxreieNMeA1rGn9w+C+2N6/76yLGZQX0vkEB9gv83LfRY1FD
-         ZILA==
-X-Gm-Message-State: AJaThX5gf62cu1+eY9PqBYMGrG7jLxsXhRqC/btM4uIxBu7eMY/Yz9Sw
-        VVSov7VM/PklWVARiNr3f/RhQdciWsJSKr8aDJdWSQ==
-X-Google-Smtp-Source: AGs4zMYBkaYFPcRu05h0IsfQ+GrxO7ChEl6a5/a3SYkP+QcqN/y/FQ6gCaVWPim37AsdD/SIskAR/A9yX7BUlIdHkP4=
-X-Received: by 10.202.223.194 with SMTP id w185mr4066081oig.45.1510794362196;
- Wed, 15 Nov 2017 17:06:02 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=KBFa3rsRGmMo3P7ezStz1P11+KSQpqI6hMcl3AKzsEE=;
+        b=V3OMI1RNvVIdq1HHCEF014Ai+yYBKl8lpgX5Uq7bORN92017JqoY3MeqL7/sGffQ4E
+         IbCm67ztnmoAlZ26YclKiBFCnFRyMmrqG8kscuG61ToSXB/dRQo3iGbkXCyGVdDl2tfz
+         DrmpmyQttIRVt5FU4ts3qwQJ/0p+TAd8Qr929vxhD81VR9Gc0Ldq6zHlmvQgiAY4B6mn
+         XauBEzwng7ls0X3cbDsrHCB/6u9Y7HQn6qG4DqzXt/GV6t1Y1EOtyak5JTO6jo6TVH+F
+         gmBxUXnWT5zeco8zPvnGFJwYB8bC+1j14MD9c38zuSDKRMixKIP8bSIoa2UIGEug6c6y
+         povA==
+X-Gm-Message-State: AJaThX6izvLHM+schN8jMIxIaeuaGFTXNZIEodgaKvc81S3/iYOwv84e
+        2ZTTxkfjmnxB5xYLK79dQCmJieSs/sMkLG5/+gvMbnGcfXo=
+X-Google-Smtp-Source: AGs4zMZycnWEy4IgCevua3Ef/KtgALcjFMvRDweGPznpUJQeLxbkbx3jfaebnKE+66gDZntn2zw+MAO8Ao/vBAhWRck=
+X-Received: by 10.55.119.70 with SMTP id s67mr20043221qkc.45.1510795372907;
+ Wed, 15 Nov 2017 17:22:52 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.157.12.236 with HTTP; Wed, 15 Nov 2017 17:06:01 -0800 (PST)
-In-Reply-To: <xmqqtvxvyz3m.fsf@gitster.mtv.corp.google.com>
-References: <CAE5ih78nLL6UhKPObvFEA9xQZUtc1XpPvGJNaYTH9fJ0RyFRvA@mail.gmail.com>
- <CAE5ih7_uuVVrze9gNr3JMg5HNH8eAcH_wM4wrc2kH6u=Hw0JOg@mail.gmail.com> <xmqqtvxvyz3m.fsf@gitster.mtv.corp.google.com>
-From:   Luke Diamand <luke@diamand.org>
-Date:   Thu, 16 Nov 2017 01:06:01 +0000
-Message-ID: <CAE5ih79wG3ws=OyXqvbd+QKyyAmM-D2JVO5r9G5VHtoOfiXdug@mail.gmail.com>
-Subject: Re: Bug in "revision.c: --all adds HEAD from all worktrees" ?
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Users <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>
+Received: by 10.140.96.118 with HTTP; Wed, 15 Nov 2017 17:22:51 -0800 (PST)
+In-Reply-To: <20171114175207.f23d492045d52b8aa16c00be@google.com>
+References: <20171115003043.24080-1-sbeller@google.com> <20171115003043.24080-8-sbeller@google.com>
+ <20171114175207.f23d492045d52b8aa16c00be@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 15 Nov 2017 17:22:51 -0800
+Message-ID: <CAGZ79kaum5py=14kdFy1a+K_0MzfaD5boYStixh=1aY2tUCV-Q@mail.gmail.com>
+Subject: Re: [PATCHv4 7/7] builtin/describe.c: describe a blob
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 15 November 2017 at 22:08, Junio C Hamano <gitster@pobox.com> wrote:
-> Luke Diamand <luke@diamand.org> writes:
+On Tue, Nov 14, 2017 at 5:52 PM, Jonathan Tan <jonathantanmy@google.com> wrote:
+> On Tue, 14 Nov 2017 16:30:43 -0800
+> Stefan Beller <sbeller@google.com> wrote:
 >
->> Quite a few of the worktrees have expired - their head revision has
->> been GC'd and no longer points to anything sensible
->> (gc.worktreePruneExpire). The function other_head_refs() in worktree.c
->> bails out if there's an error, which I think is the problem. I wonder
->> if it should instead just report something and then keep going.
+>> The walking is performed in reverse order to show the introduction of a
+>> blob rather than its last occurrence.
 >
-> Am I correct to understand that your "git fsck" would fail because
-> these HEAD refs used by other stale worktrees are pointing at
-> missing objects?
+> The code as implemented here does not do this - it instead shows the last
+> occurrence.
 
-git fsck says:
-
-Checking object directories: 100% (256/256), done.
-Checking objects: 100% (1434634/1434634), done.
-error: HEAD: invalid reflog entry
-7fa2b7ee4bc0d11529f659db8b13ed1f537d2a98
-error: HEAD: invalid reflog entry
-7fa2b7ee4bc0d11529f659db8b13ed1f537d2a98
-error: HEAD: invalid reflog entry
-7e79e09e8a7382f91610f7255a1b99ea59f68c0b
-error: refs/stash: invalid reflog entry
-feeb35e7b045d28943c706e761d0a2ac8206af2f
-error: refs/remotes/origin/master: invalid reflog entry
-7fa2b7ee4bc0d11529f659db8b13ed1f537d2a98
-Checking connectivity: 1419477, done.
-missing tree 1480c0a7ed2ad59ae701667292399c38d294658e
-missing tree ca2a01116bfbbd1fcbcf9812b95d8dc6c39e69d5
-missing tree 5b7c41e547fc5c4c840e5b496da13d3daebc5fbe
-...
-...
+fixed to show the first occurrence.
 
 >
-> What do you mean by "expired"?  "Even though I want to keep using
-> them, Git for some reason decided to destroy them." or "I no longer
-> use them but kept them lying around."?
+>>  NAME
+>>  ----
+>> -git-describe - Describe a commit using the most recent tag reachable from it
+>> +git-describe - Describe a commit or blob using the graph relations
+>
+> I would write "Describe a commit or blob using a tag reachable from it".
 
-git worktree automatically prunes work trees:
-
-"The working tree=E2=80=99s administrative files in the repository (see
-"DETAILS" below) will eventually be removed automatically (see
-gc.worktreePruneExpire in git-config(1)),"
-
-In my case I didn't actually want them removed, but fortunately
-there's nothing important in them (there certainly isn't anymore...).
+using a ref, as we also can use refs.
+I think 'the graph' is technically correct here, but may be too confusing.
 
 >
-> If the latter, I wonder "worktree prune" to remove the
-> admininstrative information for them would unblock you?
+>> +If the given object refers to a blob, it will be described
+>> +as `<commit-ish>:<path>`, such that the blob can be found
+>> +at `<path>` in the `<commit-ish>`. Note, that the commit is likely
+>> +not the commit that introduced the blob, but the one that was found
+>> +first; to find the commit that introduced the blob, you need to find
+>> +the commit that last touched the path, e.g.
+>> +`git log <commit-description> -- <path>`.
+>> +As blobs do not point at the commits they are contained in,
+>> +describing blobs is slow as we have to walk the whole graph.
+>
+> I think some of this needs to be updated?
 
-It doesn't seem to help.
+fixed.
 
-$ git worktree prune -n
-<lists lots of unhappy trees>
-$ git worktree prune
-$ git fetch
-remote: Counting objects: 35, done.
-remote: Compressing objects: 100% (20/20), done.
-remote: Total 21 (delta 17), reused 5 (delta 1)
-Unpacking objects: 100% (21/21), done.
-fatal: bad object HEAD
-error: ssh://whatever/myrepol did not send all necessary objects
-$ /usr/bin/git-2.7.3 fetch
-<works fine>
+>
+>> +static void process_object(struct object *obj, const char *path, void *data)
+>> +{
+>> +     struct process_commit_data *pcd = data;
+>> +
+>> +     if (!oidcmp(&pcd->looking_for, &obj->oid) && !pcd->dst->len) {
+>> +             reset_revision_walk();
+>> +             describe_commit(&pcd->current_commit, pcd->dst);
+>> +             strbuf_addf(pcd->dst, ":%s", path);
+>> +             pcd->revs->max_count = 0;
+>> +     }
+>> +}
+>
+> Setting max_count to 0 does not work when reverse is used, because the
+> commits are first buffered into revs->commits (see get_revision() in
+> revision.c). There doesn't seem to be a convenient way to terminate the
+> traversal immediately - I think setting revs->commits to NULL should
+> work (but I didn't check). Remember to free revs->commits (using
+> free_commit_list) first.
+
+This does work indeed.
+
+>
+>> +test_expect_success 'describe a blob at a tag' '
+>> +     echo "make it a unique blob" >file &&
+>> +     git add file && git commit -m "content in file" &&
+>> +     git tag -a -m "latest annotated tag" unique-file &&
+>> +     git describe HEAD:file >actual &&
+>> +     echo "unique-file:file" >expect &&
+>> +     test_cmp expect actual
+>> +'
+>
+> This is probably better named "describe a blob at a directly tagged
+> commit".
+
+ok
+
+>  (Should we also test the case where a blob is directly
+> tagged?)
+
+We do a bad job at describing tags that point at a blob currently:
+
+  git tag test-blob HEAD:Makefile
+  git describe test-blob
+error: object cd75985991f4535c45e2589222a9e6a38fb1d613 is a blob, not a commit
+fatal: test-blob is not a valid 'commit' object
+
+This series changes this to
+
+  git describe test-blob
+  v2.15.0-rc0-43-g54bd705a95:Makefile
+
+which might not be expected (you'd expect "test-blob"),
+so I think I can write a test telling that this is suboptimal
+behavior?
+
+>
+>> +test_expect_success 'describe a blob with its last introduction' '
+>> +     git commit --allow-empty -m "empty commit" &&
+>> +     git rm file &&
+>> +     git commit -m "delete blob" &&
+>> +     git revert HEAD &&
+>> +     git commit --allow-empty -m "empty commit" &&
+>> +     git describe HEAD:file >actual &&
+>> +     grep unique-file-3-g actual
+>> +'
+>
+> The description is not true: firstly, this shows the last occurrence,
+> not the last introduction (you can verify this by adding another commit
+> and noticing that the contents of "actual" changes), and what we want is
+> not the last introduction anyway, but the first one.
+
+fixed.
