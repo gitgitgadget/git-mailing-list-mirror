@@ -6,54 +6,54 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 00953201C8
-	for <e@80x24.org>; Thu, 16 Nov 2017 02:01:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6AE50201C8
+	for <e@80x24.org>; Thu, 16 Nov 2017 02:01:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933670AbdKPCBD (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Nov 2017 21:01:03 -0500
-Received: from mail-it0-f66.google.com ([209.85.214.66]:45879 "EHLO
+        id S933675AbdKPCBG (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Nov 2017 21:01:06 -0500
+Received: from mail-it0-f66.google.com ([209.85.214.66]:38756 "EHLO
         mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933634AbdKPCAy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Nov 2017 21:00:54 -0500
-Received: by mail-it0-f66.google.com with SMTP id l196so4089028itl.4
-        for <git@vger.kernel.org>; Wed, 15 Nov 2017 18:00:54 -0800 (PST)
+        with ESMTP id S933636AbdKPCA4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Nov 2017 21:00:56 -0500
+Received: by mail-it0-f66.google.com with SMTP id n134so4133737itg.3
+        for <git@vger.kernel.org>; Wed, 15 Nov 2017 18:00:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=LhNIsCcME0XsXTl7aAaDIyDGnjAyi5m/IC5vqSFjXyo=;
-        b=eXb0MWMkfCR12GPn5vVpNMj6mNTSKKzWg4ozm8MtZF31kgdX8QT4m5DenYN4CvsgzK
-         90aLoq/y/ksGtkXyQiz5Xc68SjyfTq8Xu70axRJ9ZYF6GGAwP1VkIkbHKxIrHPQShIAB
-         aiVxBzw/KPGhSrzdd6DnsM5xZzDfRPORgt/ZsCXvg/brvrRPMmtJs1oyx1XrRB5jRgfR
-         jd0dl9WM9z9EbZEC+h2vnTsKNkIdv77UF9wgXnDeEuOXd4L1mOEeVSg64M48Hs08Nj02
-         j0yGJlBBxq0Xvyemt3OgMD9OBAAjR3I7N7UC6D9srGbsQbZU26TQ7Jq3XCUaT0MhWqZD
-         7OzA==
+        bh=GqjMnPIBOW9XgxhB/tS/EE6e6lTWH6powvK2IFOmXgw=;
+        b=jnKoSS4wgsrnCqI94k9goX2JhQOsk712YJE4zPQbBxkRoYBra1CACpsJ5TiHG1A6KB
+         gG62Y+8HbdnJ9irKcTOTHK+bJkOpxYHQgWurNnafQegAqLw9Wabik/lrYkGsHT/gLIEz
+         iJ2ShXpqahWOQ3XxEbp92JHTvpPf3AvZKGVKShXNQXr6ofQLLMe+uz5CP7k3BfS7XW9x
+         xC5oMSfpIPZn3hUSNhMG7VT2ewsV4AQL3dZeLZDiyDhqAGBBsUI3rm2eApBnK+Q7zSxj
+         9mvilOcMkbw+fmiCYKx4cwC0shUSCxloZ5eIEEnf866tNny/opHCOwc+mSyfZw+vHJ8q
+         AGmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=LhNIsCcME0XsXTl7aAaDIyDGnjAyi5m/IC5vqSFjXyo=;
-        b=ZFUw9aJ8j8M0pEn7H7gtbqppX98ZrdpWdUmKgSevoIsP+xAQRiL33lSkw9UAxdBSqf
-         JMJERs+sHmbz1v0Q2I1JEvCJ54VHjuMppsMfSH3zQZCnlRq+HF8vI0C/8y/uRjIc8GL0
-         HeZ0dbYToBGiHIOA7xrGl3Hgz/1sSXfXQdZ1tVX5weOyWkEOmHSiMKUkEaHrxGABpVhg
-         jG7vt2T9ba3eeKXeNjcBAx2reyM4kkQHc/3CNLAdEb50rdQ7dcNsrjEePNpIsws7OmiI
-         5EQmAlyk525zClqi0RD4cXto08aX2Zq0AGT+y08Ssipoajqzg9DAGAXa5WGRQv9OQ/82
-         EVJg==
-X-Gm-Message-State: AJaThX6XYo3TYnZ8d1nQV3IUWuYiUujCVgvaWeGxspkEkoKEHj3MGT2D
-        niDMRGpiUOu0b1/Qk2G+FT/J7j/LVOk=
-X-Google-Smtp-Source: AGs4zMZccer5toMR/zxze2JGNHmTedXNeZ0BAKoowIKKohv6PYbSlHyfEUZDQ3liWBiS70AYxkXV6Q==
-X-Received: by 10.36.17.193 with SMTP id 184mr554103itf.68.1510797653688;
-        Wed, 15 Nov 2017 18:00:53 -0800 (PST)
+        bh=GqjMnPIBOW9XgxhB/tS/EE6e6lTWH6powvK2IFOmXgw=;
+        b=SZDMV/xA7D/5KeObXuBRXpy0OpMg+ceDd+CJ2/XA28Fq9N/MVY9+aBzgLH5aCrSMVI
+         hbsgrkn69L6Ixkq8wGi694evb7YiVwXdWfuWEDEyX9W94oWZE/S7imaiLcEbt5/vzsSk
+         vQx53W950Zsoaedb1g4ncxdbiHK3Lk6upYfpeB/wbt+FNrZK736tJqW5frrzwGdcNJgy
+         negHqkPzddtyAf5oqvrEX273v5b4w3Q5AgTXU2uCA5IDVf1N26/M+qcTcWwfFZVSC4Gj
+         s0e0ZL5hmEnWk6uXXzGWHdHnkAFtXDimnC0QRC3p8AoUegzO/JTL7j36CuVzyxpsZEc+
+         TXbQ==
+X-Gm-Message-State: AJaThX50qV9RK2np99dVSj5HD5fQPz73k/2PKi1MtFku8m4Ka4XDym8G
+        8p+cXoj8bXpkWIAYi7D97Zj78dl2gv4=
+X-Google-Smtp-Source: AGs4zMaLRGBQPF4YS/kvhPslad8MiWhElkniE1+aXa24fj6YDMqrspW/c9u0o45L6CJAJD/KgFZMTA==
+X-Received: by 10.36.214.193 with SMTP id o184mr572951itg.71.1510797655050;
+        Wed, 15 Nov 2017 18:00:55 -0800 (PST)
 Received: from localhost ([2620:0:100e:422:34c9:3de6:9af7:a340])
-        by smtp.gmail.com with ESMTPSA id k23sm190119iti.22.2017.11.15.18.00.52
+        by smtp.gmail.com with ESMTPSA id u188sm197785itb.2.2017.11.15.18.00.54
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 15 Nov 2017 18:00:53 -0800 (PST)
+        Wed, 15 Nov 2017 18:00:54 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, jonathantanmy@google.com,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCHv5 4/7] builtin/describe.c: rename `oid` to avoid variable shadowing
-Date:   Wed, 15 Nov 2017 18:00:36 -0800
-Message-Id: <20171116020039.17810-5-sbeller@google.com>
+Subject: [PATCHv5 5/7] builtin/describe.c: print debug statements earlier
+Date:   Wed, 15 Nov 2017 18:00:37 -0800
+Message-Id: <20171116020039.17810-6-sbeller@google.com>
 X-Mailer: git-send-email 2.15.0.128.gcadd42da22
 In-Reply-To: <20171116020039.17810-1-sbeller@google.com>
 References: <20171116020039.17810-1-sbeller@google.com>
@@ -62,46 +62,39 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The function `describe` has already a variable named `oid` declared at
-the beginning of the function for an object id.  Do not shadow that
-variable with a pointer to an object id.
+When debugging, print the received argument at the start of the
+function instead of in the middle. This ensures that the received
+argument is printed in all code paths, and also allows a subsequent
+refactoring to not need to move the "arg" parameter.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/describe.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ builtin/describe.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/builtin/describe.c b/builtin/describe.c
-index 29075dbd0f..fd61f463cf 100644
+index fd61f463cf..3136efde31 100644
 --- a/builtin/describe.c
 +++ b/builtin/describe.c
-@@ -381,9 +381,9 @@ static void describe(const char *arg, int last_one)
- 	}
+@@ -293,6 +293,9 @@ static void describe(const char *arg, int last_one)
+ 	unsigned long seen_commits = 0;
+ 	unsigned int unannotated_cnt = 0;
  
- 	if (!match_cnt) {
--		struct object_id *oid = &cmit->object.oid;
-+		struct object_id *cmit_oid = &cmit->object.oid;
- 		if (always) {
--			printf("%s", find_unique_abbrev(oid->hash, abbrev));
-+			printf("%s", find_unique_abbrev(cmit_oid->hash, abbrev));
- 			if (suffix)
- 				printf("%s", suffix);
- 			printf("\n");
-@@ -392,11 +392,11 @@ static void describe(const char *arg, int last_one)
- 		if (unannotated_cnt)
- 			die(_("No annotated tags can describe '%s'.\n"
- 			    "However, there were unannotated tags: try --tags."),
--			    oid_to_hex(oid));
-+			    oid_to_hex(cmit_oid));
- 		else
- 			die(_("No tags can describe '%s'.\n"
- 			    "Try --always, or create some tags."),
--			    oid_to_hex(oid));
-+			    oid_to_hex(cmit_oid));
- 	}
++	if (debug)
++		fprintf(stderr, _("describe %s\n"), arg);
++
+ 	if (get_oid(arg, &oid))
+ 		die(_("Not a valid object name %s"), arg);
+ 	cmit = lookup_commit_reference(&oid);
+@@ -316,7 +319,7 @@ static void describe(const char *arg, int last_one)
+ 	if (!max_candidates)
+ 		die(_("no tag exactly matches '%s'"), oid_to_hex(&cmit->object.oid));
+ 	if (debug)
+-		fprintf(stderr, _("searching to describe %s\n"), arg);
++		fprintf(stderr, _("No exact match on refs or tags, searching to describe\n"));
  
- 	QSORT(all_matches, match_cnt, compare_pt);
+ 	if (!have_util) {
+ 		struct hashmap_iter iter;
 -- 
 2.15.0.128.gcadd42da22
 
