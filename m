@@ -2,102 +2,270 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0215C202A0
-	for <e@80x24.org>; Thu, 16 Nov 2017 17:55:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C5EC5202A0
+	for <e@80x24.org>; Thu, 16 Nov 2017 18:08:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966241AbdKPRzC (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Nov 2017 12:55:02 -0500
-Received: from siwi.pair.com ([209.68.5.199]:17238 "EHLO siwi.pair.com"
+        id S964951AbdKPSII (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Nov 2017 13:08:08 -0500
+Received: from siwi.pair.com ([209.68.5.199]:34137 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S966000AbdKPRx3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Nov 2017 12:53:29 -0500
+        id S936575AbdKPSH4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Nov 2017 13:07:56 -0500
 Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 3C96784516;
-        Thu, 16 Nov 2017 12:53:28 -0500 (EST)
-Received: from [10.160.98.77] (unknown [167.220.148.86])
+        by siwi.pair.com (Postfix) with ESMTP id 782B784548;
+        Thu, 16 Nov 2017 13:07:54 -0500 (EST)
+Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id E3554844F1;
-        Thu, 16 Nov 2017 12:53:27 -0500 (EST)
-Subject: Re: [PATCH 04/14] fetch: add object filtering for partial fetch
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
-        Jeff Hostetler <jeffhost@microsoft.com>
-References: <20171102203129.59417-1-git@jeffhostetler.com>
- <20171102203129.59417-5-git@jeffhostetler.com>
- <20171103133845.b270485dd04c6c6c1b47d42a@google.com>
+        by siwi.pair.com (Postfix) with ESMTPSA id CBB1784535;
+        Thu, 16 Nov 2017 13:07:53 -0500 (EST)
 From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <7eb6b165-77e5-78b9-e3a9-151f6a53a39a@jeffhostetler.com>
-Date:   Thu, 16 Nov 2017 12:53:27 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.4.0
-MIME-Version: 1.0
-In-Reply-To: <20171103133845.b270485dd04c6c6c1b47d42a@google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, peff@peff.net, jonathantanmy@google.com,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: [PATCH v4 1/6] dir: allow exclusions from blob in addition to file
+Date:   Thu, 16 Nov 2017 18:07:38 +0000
+Message-Id: <20171116180743.61353-2-git@jeffhostetler.com>
+X-Mailer: git-send-email 2.9.3
+In-Reply-To: <20171116180743.61353-1-git@jeffhostetler.com>
+References: <20171116180743.61353-1-git@jeffhostetler.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Jeff Hostetler <jeffhost@microsoft.com>
 
+Refactor add_excludes() to separate the reading of the
+exclude file into a buffer and the parsing of the buffer
+into exclude_list items.
 
-On 11/3/2017 4:38 PM, Jonathan Tan wrote:
->> @@ -1242,6 +1249,20 @@ static int fetch_multiple(struct string_list *list)
->>   	int i, result = 0;
->>   	struct argv_array argv = ARGV_ARRAY_INIT;
->>   
->> +	if (filter_options.choice) {
->> +		/*
->> +		 * We currently only support partial-fetches to the remote
->> +		 * used for the partial-clone because we only support 1
->> +		 * promisor remote, so we DO NOT allow explicit command
->> +		 * line filter arguments.
->> +		 *
->> +		 * Note that the loop below will spawn background fetches
->> +		 * for each remote and one of them MAY INHERIT the proper
->> +		 * partial-fetch settings, so everything is consistent.
->> +		 */
->> +		die(_("partial-fetch is not supported on multiple remotes"));
->> +	}
->> +
->>   	if (!append && !dry_run) {
->>   		int errcode = truncate_fetch_head();
->>   		if (errcode)
-> 
-> My intention in doing the "fetch: refactor calculation of remote list"
-> patch is so that the interaction between the provided list of remotes
-> and the specification of the filter can be handled using the following
-> diff:
-> 
->      -	if (remote)
->      +	if (remote) {
->      +		if (filter_options.choice &&
->      +		    strcmp(remote->name, repository_format_partial_clone_remote))
->      +			die(_("--blob-max-bytes can only be used with the remote configured in core.partialClone"));
->       		result = fetch_one(remote, argc, argv);
->      -	else
->      +	} else {
->      +		if (filter_options.choice)
->      +			die(_("--blob-max-bytes can only be used with the remote configured in core.partialClone"));
->       		result = fetch_multiple(&list);
->      +	}
-> 
-> (Ignore the "blob-max-bytes" in the error message - that needs to be
-> updated.)
-> 
-> The GitHub link I provided above has this diff, and it seems to work.
-> 
+Add add_excludes_from_blob_to_list() to allow an exclude
+file be specified with an OID without assuming a local
+worktree or index exists.
 
-I put the filter_options.choice tests inside the fetch_{one,multiple}
-routines because the former needs to be able to register partial clone
-with the config and/or inherit the default filter-spec for the
-promisor remote and that took more code that what can neatly fit inline
-here.  This will be more apparent in my next patch series.
+Refactor read_skip_worktree_file_from_index() and add
+do_read_blob() to eliminate duplication of preliminary
+processing of blob contents.
 
-Jeff
+Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+---
+ dir.c | 132 ++++++++++++++++++++++++++++++++++++++++++++++++++----------------
+ dir.h |   3 ++
+ 2 files changed, 104 insertions(+), 31 deletions(-)
+
+diff --git a/dir.c b/dir.c
+index 1d17b80..1962374 100644
+--- a/dir.c
++++ b/dir.c
+@@ -220,6 +220,57 @@ int within_depth(const char *name, int namelen,
+ 	return 1;
+ }
+ 
++/*
++ * Read the contents of the blob with the given OID into a buffer.
++ * Append a trailing LF to the end if the last line doesn't have one.
++ *
++ * Returns:
++ *    -1 when the OID is invalid or unknown or does not refer to a blob.
++ *     0 when the blob is empty.
++ *     1 along with { data, size } of the (possibly augmented) buffer
++ *       when successful.
++ *
++ * Optionally updates the given sha1_stat with the given OID (when valid).
++ */
++static int do_read_blob(const struct object_id *oid,
++			struct sha1_stat *sha1_stat,
++			size_t *size_out,
++			char **data_out)
++{
++	enum object_type type;
++	unsigned long sz;
++	char *data;
++
++	*size_out = 0;
++	*data_out = NULL;
++
++	data = read_sha1_file(oid->hash, &type, &sz);
++	if (!data || type != OBJ_BLOB) {
++		free(data);
++		return -1;
++	}
++
++	if (sha1_stat) {
++		memset(&sha1_stat->stat, 0, sizeof(sha1_stat->stat));
++		hashcpy(sha1_stat->sha1, oid->hash);
++	}
++
++	if (sz == 0) {
++		free(data);
++		return 0;
++	}
++
++	if (data[sz - 1] != '\n') {
++		data = xrealloc(data, st_add(sz, 1));
++		data[sz++] = '\n';
++	}
++
++	*size_out = xsize_t(sz);
++	*data_out = data;
++
++	return 1;
++}
++
+ #define DO_MATCH_EXCLUDE   (1<<0)
+ #define DO_MATCH_DIRECTORY (1<<1)
+ #define DO_MATCH_SUBMODULE (1<<2)
+@@ -600,32 +651,22 @@ void add_exclude(const char *string, const char *base,
+ 	x->el = el;
+ }
+ 
+-static void *read_skip_worktree_file_from_index(const struct index_state *istate,
+-						const char *path, size_t *size,
+-						struct sha1_stat *sha1_stat)
++static int read_skip_worktree_file_from_index(const struct index_state *istate,
++					      const char *path,
++					      size_t *size_out,
++					      char **data_out,
++					      struct sha1_stat *sha1_stat)
+ {
+ 	int pos, len;
+-	unsigned long sz;
+-	enum object_type type;
+-	void *data;
+ 
+ 	len = strlen(path);
+ 	pos = index_name_pos(istate, path, len);
+ 	if (pos < 0)
+-		return NULL;
++		return -1;
+ 	if (!ce_skip_worktree(istate->cache[pos]))
+-		return NULL;
+-	data = read_sha1_file(istate->cache[pos]->oid.hash, &type, &sz);
+-	if (!data || type != OBJ_BLOB) {
+-		free(data);
+-		return NULL;
+-	}
+-	*size = xsize_t(sz);
+-	if (sha1_stat) {
+-		memset(&sha1_stat->stat, 0, sizeof(sha1_stat->stat));
+-		hashcpy(sha1_stat->sha1, istate->cache[pos]->oid.hash);
+-	}
+-	return data;
++		return -1;
++
++	return do_read_blob(&istate->cache[pos]->oid, sha1_stat, size_out, data_out);
+ }
+ 
+ /*
+@@ -739,6 +780,10 @@ static void invalidate_directory(struct untracked_cache *uc,
+ 		dir->dirs[i]->recurse = 0;
+ }
+ 
++static int add_excludes_from_buffer(char *buf, size_t size,
++				    const char *base, int baselen,
++				    struct exclude_list *el);
++
+ /*
+  * Given a file with name "fname", read it (either from disk, or from
+  * an index if 'istate' is non-null), parse it and store the
+@@ -754,9 +799,10 @@ static int add_excludes(const char *fname, const char *base, int baselen,
+ 			struct sha1_stat *sha1_stat)
+ {
+ 	struct stat st;
+-	int fd, i, lineno = 1;
++	int r;
++	int fd;
+ 	size_t size = 0;
+-	char *buf, *entry;
++	char *buf;
+ 
+ 	fd = open(fname, O_RDONLY);
+ 	if (fd < 0 || fstat(fd, &st) < 0) {
+@@ -764,17 +810,13 @@ static int add_excludes(const char *fname, const char *base, int baselen,
+ 			warn_on_fopen_errors(fname);
+ 		else
+ 			close(fd);
+-		if (!istate ||
+-		    (buf = read_skip_worktree_file_from_index(istate, fname, &size, sha1_stat)) == NULL)
++		if (!istate)
+ 			return -1;
+-		if (size == 0) {
+-			free(buf);
+-			return 0;
+-		}
+-		if (buf[size-1] != '\n') {
+-			buf = xrealloc(buf, st_add(size, 1));
+-			buf[size++] = '\n';
+-		}
++		r = read_skip_worktree_file_from_index(istate, fname,
++						       &size, &buf,
++						       sha1_stat);
++		if (r != 1)
++			return r;
+ 	} else {
+ 		size = xsize_t(st.st_size);
+ 		if (size == 0) {
+@@ -813,6 +855,17 @@ static int add_excludes(const char *fname, const char *base, int baselen,
+ 		}
+ 	}
+ 
++	add_excludes_from_buffer(buf, size, base, baselen, el);
++	return 0;
++}
++
++static int add_excludes_from_buffer(char *buf, size_t size,
++				    const char *base, int baselen,
++				    struct exclude_list *el)
++{
++	int i, lineno = 1;
++	char *entry;
++
+ 	el->filebuf = buf;
+ 
+ 	if (skip_utf8_bom(&buf, size))
+@@ -841,6 +894,23 @@ int add_excludes_from_file_to_list(const char *fname, const char *base,
+ 	return add_excludes(fname, base, baselen, el, istate, NULL);
+ }
+ 
++int add_excludes_from_blob_to_list(
++	struct object_id *oid,
++	const char *base, int baselen,
++	struct exclude_list *el)
++{
++	char *buf;
++	size_t size;
++	int r;
++
++	r = do_read_blob(oid, NULL, &size, &buf);
++	if (r != 1)
++		return r;
++
++	add_excludes_from_buffer(buf, size, base, baselen, el);
++	return 0;
++}
++
+ struct exclude_list *add_exclude_list(struct dir_struct *dir,
+ 				      int group_type, const char *src)
+ {
+diff --git a/dir.h b/dir.h
+index e371705..1bcf391 100644
+--- a/dir.h
++++ b/dir.h
+@@ -256,6 +256,9 @@ extern struct exclude_list *add_exclude_list(struct dir_struct *dir,
+ extern int add_excludes_from_file_to_list(const char *fname, const char *base, int baselen,
+ 					  struct exclude_list *el, struct  index_state *istate);
+ extern void add_excludes_from_file(struct dir_struct *, const char *fname);
++extern int add_excludes_from_blob_to_list(struct object_id *oid,
++					  const char *base, int baselen,
++					  struct exclude_list *el);
+ extern void parse_exclude_pattern(const char **string, int *patternlen, unsigned *flags, int *nowildcardlen);
+ extern void add_exclude(const char *string, const char *base,
+ 			int baselen, struct exclude_list *el, int srcpos);
+-- 
+2.9.3
+
