@@ -2,115 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 28C36202AF
-	for <e@80x24.org>; Thu, 16 Nov 2017 10:43:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 152DE202AF
+	for <e@80x24.org>; Thu, 16 Nov 2017 10:49:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933563AbdKPKny (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Nov 2017 05:43:54 -0500
-Received: from smtp-out-4.talktalk.net ([62.24.135.68]:49857 "EHLO
-        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933448AbdKPKnw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Nov 2017 05:43:52 -0500
-Received: from [192.168.2.240] ([92.22.34.132])
-        by smtp.talktalk.net with SMTP
-        id FHe8e7MJ4Ap17FHe9eVamO; Thu, 16 Nov 2017 10:43:50 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1510829030;
-        bh=78IvpeIofmozE60r3L82+w2SXPP6zTN6NEYUok7/FrA=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=O5/+HWTIG18zLBKN1DBmodTiN0XadqO3nPOvptC2PE/+xNOy8TBSLjrjqNfIcCOxc
-         lzUxQAeH8i3SUsfrCZgwDkfhBhfRVAYZtALSQ2gWP4vOc6guFHtKeU6Nqvw/WRiIHC
-         XAhemybcxvES97LlSu6y2HylP9CXmIMtf8qThQdQ=
-X-Originating-IP: [92.22.34.132]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=EsGilWUA c=1 sm=1 tr=0 a=2gYdyS03q/cwff7SV6P5Ng==:117
- a=2gYdyS03q/cwff7SV6P5Ng==:17 a=IkcTkHD0fZMA:10 a=nN7BH9HXAAAA:8
- a=evINK-nbAAAA:8 a=8flSwIWK3WbnnK1REEUA:9 a=DBz6aBKGvNjS1pTX:21
- a=Q8_OzMeTLar5iaip:21 a=QEXdDO2ut3YA:10 a=RfR_gqz1fSpA9VikTjo0:22
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] sequencer: reschedule pick if index can't be locked
-To:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-References: <20171115104125.1686-1-phillip.wood@talktalk.net>
- <CAN0heSrbszhhFauYHNs70-WWk+bju0sSVzjavRcwg09CzCXSjA@mail.gmail.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <804e30dd-3c06-02c1-e5c0-f07265635943@talktalk.net>
-Date:   Thu, 16 Nov 2017 10:43:48 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.4.0
+        id S933736AbdKPKtg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Nov 2017 05:49:36 -0500
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:44658 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933687AbdKPKte (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Nov 2017 05:49:34 -0500
+Received: by mail-pg0-f65.google.com with SMTP id 4so11402410pge.1
+        for <git@vger.kernel.org>; Thu, 16 Nov 2017 02:49:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=XLGyU/p+hMBOW7EK3E6oY9I8qltYmwKCuvLjxU/Kqwc=;
+        b=pYn2/Su1TSiDwwznED6S2G1Gp9ArjudlPVQFaZPwfc1IbQbVm75IhWdJN6Cn592XJw
+         0YltWouCCjt/KmFUiycmDjkhIeP0n53KhrHD7pftZX9Yr8zA/GCN9927f4wECWhXGp+2
+         yTexwsQ3ZwSHgrb6t6m9UKf5EcqoNoMj8yXdbpzBlCBTBx8Q+w1/dtG6owWwS8hXOgGj
+         CjxtkjBBFBY5p0kRXk6zrDE6IMn/eIrgzXgk/BsNJ6wtVeaC/n5BYRUlSAvw6n8U9BFY
+         f7VYOWdujk1JthLpsnt7rQtpubDHmMHMi52SdJQa11xmHiPR6v6/NpOHvWQ4lRV6g1ro
+         EiJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=XLGyU/p+hMBOW7EK3E6oY9I8qltYmwKCuvLjxU/Kqwc=;
+        b=g0ej664fURSQi5mak9v2q+jyUZs1zELO8Yaz1J7zDRA/SaZJ6ESkmFnQKPzy3qPmCQ
+         teSXA0IpQR2+DZsMkdVyvaEQVYawgY2oh1vSNDyVXQCt/QzVWOxdhRSEKxIcas3QaFtX
+         l6Jmgjncjl7jV3Gj+5BbqOAwhFM/N6JGErMDe6LtIKZsXQVYWyML1LYUyfvIrZm2pQsR
+         nw3DYRXYaKsNeeaxtG0bv9Ci/EFH3etqA5hUogMAiqmFH3jMMT3RJ7sJgHo+UWB3XsQ8
+         0WQ7U2kx9SWMePEHa7hmk7KcyxbCVWUSeTK+h2OWKkohbLM1QVWde+3QKcZlohE6gPKg
+         YGrw==
+X-Gm-Message-State: AJaThX5LScgGnmMy86l9pNjikulQLUgoA1MyEGunIQMhONdTduk3Bija
+        9EfwmxHDlms44MlRCyBu/ygjqHGwCG7qTcv62dWK4A==
+X-Google-Smtp-Source: AGs4zMb4EAc/ohILcd/npu80hnM3Jfo0Th9n2sCKJ7vK9dJ210YataGHUHUo19aNXXSu17emZlAO1PsGLH8qNIc1Gp4=
+X-Received: by 10.159.234.3 with SMTP id be3mr1320076plb.322.1510829374000;
+ Thu, 16 Nov 2017 02:49:34 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <CAN0heSrbszhhFauYHNs70-WWk+bju0sSVzjavRcwg09CzCXSjA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfA/GTp2lTkk+UHsR1I3i5f46VJ9QEM7uyB3kv9LWccvJN8xehXpf+LHpcG4ngxu8pevlQOysTN97SRUAzQTJnApS/7U7NyNYgrJclBciFAPiF/jPckZT
- wZNAk+cTwQMeGgW4z9mYFESWQ3TORV3K3EViDNAGUXdbBTgxG3opc+JPYZ++sSX5aThFOuu780b9IthVNQ9NXsEHv5Xd9nUY9k3VXgaIjedW4UemuKnJm6D0
- 7Porbwj3jSf7V7voUQvKiS/WIYHBsLhnDzbUsA965YPq/hQsqejRV79OeQWa3gUym/mVa6JXifsHAh8DchuuqQ==
+Received: by 10.100.167.42 with HTTP; Thu, 16 Nov 2017 02:49:33 -0800 (PST)
+In-Reply-To: <20171116074643.19614-1-tmz@pobox.com>
+References: <20171116074643.19614-1-tmz@pobox.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Thu, 16 Nov 2017 11:49:33 +0100
+Message-ID: <CAN0heSpUm=U7aGVtRoUoGZCvNsOZ04wLqTOx8kMvZEa8GQUiLQ@mail.gmail.com>
+Subject: Re: [PATCH] branch doc: remove --set-upstream from synopsis
+To:     Todd Zullinger <tmz@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 15/11/17 18:44, Martin Ågren wrote:
-> On 15 November 2017 at 11:41, Phillip Wood <phillip.wood@talktalk.net> wrote:
->> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->>
->> Return an error instead of dying if the index cannot be locked in
->> do_recursive_merge() as if the commit cannot be picked it needs to be
->> rescheduled when performing an interactive rebase. If the pick is not
->> rescheduled and the user runs 'git rebase --continue' rather than 'git
->> rebase --abort' then the commit gets silently dropped.
-> 
-> Makes sense. (Your analysis, not the current behavior. ;-) )
-> 
->> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
->> ---
->>   sequencer.c | 3 ++-
->>   1 file changed, 2 insertions(+), 1 deletion(-)
->>
->> diff --git a/sequencer.c b/sequencer.c
->> index 6d027b06c8d8dc69b14d05752637a65aa121ab24..8c10442b84068d3fb7ec809ef1faa0203cb83e60 100644
->> --- a/sequencer.c
->> +++ b/sequencer.c
->> @@ -438,7 +438,8 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
->>          char **xopt;
->>          static struct lock_file index_lock;
->>
->> -       hold_locked_index(&index_lock, LOCK_DIE_ON_ERROR);
->> +       if (hold_locked_index(&index_lock, LOCK_REPORT_ON_ERROR))
->> +               return -1;
->>
->>          read_cache();
-> 
->  From the commit message, I would have expected the flags to be zero. This patch
-> does not only turn off the die-ing, it also tells the lockfile-API to print an
-> error message before returning. I don't have an opinion on whether that extra
-> verboseness is good or bad, but if it's wanted, I think the commit message
-> should mention this change.
+On 16 November 2017 at 08:46, Todd Zullinger <tmz@pobox.com> wrote:
+> Support for the --set-upstream option was removed in 52668846ea
+> (builtin/branch: stop supporting the "--set-upstream" option,
+> 2017-08-17), after a long deprecation period.
+>
+> Remove the option from the command synopsis for consistency.  Replace
+> another reference to it in the description of `--delete` with
+> `--set-upstream-to`.
+>
+> Signed-off-by: Todd Zullinger <tmz@pobox.com>
+> ---
+>
+> I noticed that --set-upstream was still in the synopsis for git branch.  I
+> don't think it was left there intentionally.  I looked through the thread where
+> support for the option was removed and didn't notice any comments suggesting
+> otherwise[1].  With luck, I didn't miss the obvious while reading the thread.
+>
+> [1] https://public-inbox.org/git/20170807143938.5127-1-kaarticsivaraam91196@gmail.com/
 
-Hi Martin, thanks for your comments. LOCK_DIE_ON_ERROR also prints the 
-same warning so that behavior is unchanged by this patch, though 
-mentioning it in the commit message would be no bad thing.
+Actually, the first version of the series did remove it from the
+synopsis [2]. That hunk was later dropped. Kaartic mentioned it [3] and
+I thought out loud about it [4].
 
-> 
-> Also, don't you want to check "< 0" rather than "!= 0"? If all goes
-> well, the return value will be a file descriptor. I think that it will
-> always be non-zero, so I think you'll always return -1 here.
+I get the same initial thought now as then: It's a bit odd that we pique
+the interest of the reader, but that when they try it out or read up on
+it, we say "nope, this is not what you are looking for".
 
-Yes you're right, thanks. I thought I had tested this but I now realise 
-my so called test just fast-forwarded so didn't touch this code path
+> diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
+> index d6587c5e96..159ca388f1 100644
+> --- a/Documentation/git-branch.txt
+> +++ b/Documentation/git-branch.txt
+> @@ -14,7 +14,7 @@ SYNOPSIS
+>         [(--merged | --no-merged) [<commit>]]
+>         [--contains [<commit]] [--no-contains [<commit>]]
+>         [--points-at <object>] [--format=<format>] [<pattern>...]
+> -'git branch' [--set-upstream | --track | --no-track] [-l] [-f] <branchname> [<start-point>]
+> +'git branch' [--track | --no-track] [-l] [-f] <branchname> [<start-point>]
 
-Best Wishes
+Personally, I think this is an improvement.
 
-Phillip
+>  'git branch' (--set-upstream-to=<upstream> | -u <upstream>) [<branchname>]
+>  'git branch' --unset-upstream [<branchname>]
+>  'git branch' (-m | -M) [<oldbranch>] <newbranch>
+> @@ -86,7 +86,7 @@ OPTIONS
+>  --delete::
+>         Delete a branch. The branch must be fully merged in its
+>         upstream branch, or in `HEAD` if no upstream was set with
+> -       `--track` or `--set-upstream`.
+> +       `--track` or `--set-upstream-to`.
 
-> Martin
-> 
+Good catch.
 
+Martin
+
+[2] https://public-inbox.org/git/20170807143938.5127-2-kaarticsivaraam91196@gmail.com/
+
+[3] https://public-inbox.org/git/20170817025425.6647-2-kaarticsivaraam91196@gmail.com/
+
+[4] https://public-inbox.org/git/CAN0heSquaXk421sR6Ry59C+er8n26nC93=3KG1wD0xNXZkuiGw@mail.gmail.com/
