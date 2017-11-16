@@ -6,33 +6,31 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 24750202A0
-	for <e@80x24.org>; Thu, 16 Nov 2017 18:08:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AFDBF202A0
+	for <e@80x24.org>; Thu, 16 Nov 2017 18:08:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966462AbdKPSIM (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Nov 2017 13:08:12 -0500
-Received: from siwi.pair.com ([209.68.5.199]:44175 "EHLO siwi.pair.com"
+        id S966464AbdKPSIQ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Nov 2017 13:08:16 -0500
+Received: from siwi.pair.com ([209.68.5.199]:13634 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S936577AbdKPSH4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Nov 2017 13:07:56 -0500
+        id S936572AbdKPSHz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Nov 2017 13:07:55 -0500
 Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 26EB38454D;
-        Thu, 16 Nov 2017 13:07:55 -0500 (EST)
+        by siwi.pair.com (Postfix) with ESMTP id C8CDE8453C;
+        Thu, 16 Nov 2017 13:07:53 -0500 (EST)
 Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 98AE384535;
-        Thu, 16 Nov 2017 13:07:54 -0500 (EST)
+        by siwi.pair.com (Postfix) with ESMTPSA id 2F12B84535;
+        Thu, 16 Nov 2017 13:07:53 -0500 (EST)
 From:   Jeff Hostetler <git@jeffhostetler.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, jonathantanmy@google.com,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v4 2/6] oidmap: add oidmap iterator methods
-Date:   Thu, 16 Nov 2017 18:07:39 +0000
-Message-Id: <20171116180743.61353-3-git@jeffhostetler.com>
+Subject: [PATCH v4 0/6] Partial clone part 1: object filtering
+Date:   Thu, 16 Nov 2017 18:07:37 +0000
+Message-Id: <20171116180743.61353-1-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.9.3
-In-Reply-To: <20171116180743.61353-1-git@jeffhostetler.com>
-References: <20171116180743.61353-1-git@jeffhostetler.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -40,44 +38,58 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Add the usual map iterator functions to oidmap.
+Here is V4 of the list-object filtering, rev-list, and pack-objects.
 
-Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
----
- oidmap.h | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+This version addresses comments on the V3 version series.
 
-diff --git a/oidmap.h b/oidmap.h
-index 18f54cd..d3cd2bb 100644
---- a/oidmap.h
-+++ b/oidmap.h
-@@ -65,4 +65,26 @@ extern void *oidmap_put(struct oidmap *map, void *entry);
-  */
- extern void *oidmap_remove(struct oidmap *map, const struct object_id *key);
- 
-+
-+struct oidmap_iter {
-+	struct hashmap_iter h_iter;
-+};
-+
-+static inline void oidmap_iter_init(struct oidmap *map, struct oidmap_iter *iter)
-+{
-+	hashmap_iter_init(&map->map, &iter->h_iter);
-+}
-+
-+static inline void *oidmap_iter_next(struct oidmap_iter *iter)
-+{
-+	return hashmap_iter_next(&iter->h_iter);
-+}
-+
-+static inline void *oidmap_iter_first(struct oidmap *map,
-+				      struct oidmap_iter *iter)
-+{
-+	oidmap_iter_init(map, iter);
-+	return oidmap_iter_next(iter);
-+}
-+
- #endif
+This version replaces the code to scan and reject the filter-spec
+for injection characters with a new hex-encoding technique.  The
+purpose of this is only to guard against injection attacks containing
+characters like semicolon, quotes, spaces, and etc. when a filter-spec
+is handed to a subordinate command.  It does not eliminate the need
+for the recipient to validate the contents.
+
+This version also combines the various command line flags for
+handling missing objects into a single --missing={error,print,allow-any}
+flag.
+
+
+Jeff Hostetler (6):
+  dir: allow exclusions from blob in addition to file
+  oidmap: add oidmap iterator methods
+  oidset: add iterator methods to oidset
+  list-objects: filter objects in traverse_commit_list
+  rev-list: add list-objects filtering support
+  pack-objects: add list-objects filtering
+
+ Documentation/git-pack-objects.txt     |  12 +-
+ Documentation/git-rev-list.txt         |   4 +-
+ Documentation/rev-list-options.txt     |  37 +++
+ Makefile                               |   2 +
+ builtin/pack-objects.c                 |  64 +++++-
+ builtin/rev-list.c                     | 108 ++++++++-
+ dir.c                                  | 132 ++++++++---
+ dir.h                                  |   3 +
+ list-objects-filter-options.c          | 149 ++++++++++++
+ list-objects-filter-options.h          |  57 +++++
+ list-objects-filter.c                  | 401 +++++++++++++++++++++++++++++++++
+ list-objects-filter.h                  |  77 +++++++
+ list-objects.c                         |  95 ++++++--
+ list-objects.h                         |  13 +-
+ object.h                               |   1 +
+ oidmap.h                               |  22 ++
+ oidset.c                               |  10 +
+ oidset.h                               |  36 +++
+ t/t5317-pack-objects-filter-objects.sh | 375 ++++++++++++++++++++++++++++++
+ t/t6112-rev-list-filters-objects.sh    | 225 ++++++++++++++++++
+ 20 files changed, 1770 insertions(+), 53 deletions(-)
+ create mode 100644 list-objects-filter-options.c
+ create mode 100644 list-objects-filter-options.h
+ create mode 100644 list-objects-filter.c
+ create mode 100644 list-objects-filter.h
+ create mode 100755 t/t5317-pack-objects-filter-objects.sh
+ create mode 100755 t/t6112-rev-list-filters-objects.sh
+
 -- 
 2.9.3
 
