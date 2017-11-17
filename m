@@ -2,225 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BC03E202AF
-	for <e@80x24.org>; Fri, 17 Nov 2017 16:10:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D56A4202AF
+	for <e@80x24.org>; Fri, 17 Nov 2017 17:16:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759094AbdKQQK0 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Nov 2017 11:10:26 -0500
-Received: from mail-wm0-f46.google.com ([74.125.82.46]:43355 "EHLO
-        mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1759087AbdKQQKZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Nov 2017 11:10:25 -0500
-Received: by mail-wm0-f46.google.com with SMTP id x63so7460420wmf.2
-        for <git@vger.kernel.org>; Fri, 17 Nov 2017 08:10:24 -0800 (PST)
+        id S1751344AbdKQRQh (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Nov 2017 12:16:37 -0500
+Received: from mail-pf0-f179.google.com ([209.85.192.179]:34096 "EHLO
+        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751313AbdKQRQf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Nov 2017 12:16:35 -0500
+Received: by mail-pf0-f179.google.com with SMTP id x7so2389585pfa.1
+        for <git@vger.kernel.org>; Fri, 17 Nov 2017 09:16:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Lzer6T/jFS5vHhTvprJ6puxzSfNoJa7zcdLpe1DFCB0=;
-        b=RVCjimiG83pT9KM+aTh+gKZFZiFLH6g4lRakSOe2bEVgHq8Oa3QdreUcATVHThvXFp
-         80l0fUlm0N82la2jc+gxQl9acgE2xz5d21JNoPntV3To7XQ2mKIWm1WNWznwq029FuLN
-         4AucWkLSBd7kfQVpPnoHTKio2ATJRzMgRFAJDFLk5EWN6zq0OKEgV16dHii0HsUQHXkS
-         bA43jg9a2eJTLPDzWXB+YK7xSxB6xcoIOdqROxzmA+x8xu0amWNqefQkREu4W5f8j/Pt
-         oycTgF+F4DBfgnKVs0ZhhRRFSSe4wvjEXBdpxIHuJvZ5jXcQo21VH+Kq1zdXXrCXmFiL
-         z+hQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=PMxzY1I8km9ELU8jj5Kqvhdn41OMHQRKS99zNQDLpYo=;
+        b=XhB3p1LRPC2gIWvZONeqB7O+K5mFLRAx8x8RGotA0qSGEjY+yO6glvS12Hj44l3+UM
+         bSKVMcCVyEnSAx09gSXmGaj3mEReAGHEnL8bF+4QSjBhQhnvlNKDT1kwC+lf78AwJHhh
+         4fURO3d8kvEThOTVj5kWt3IpHTVvhQo+wIF/pRt8DHWuAfnGO/9ljS09NA03L4LpesCO
+         agkpEYGQVIq4f+HMtr1hadPezTtn+F8AivzHBpbK5ALlr3FzWEK0CyXsPWydIFxKdtAi
+         KcjQWFnPJjzWxbl3+RjHIciXuf2/Vjdnzug7x2B94wrAovTHoUbZCzxQDGd2fKykiMIt
+         lsxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=Lzer6T/jFS5vHhTvprJ6puxzSfNoJa7zcdLpe1DFCB0=;
-        b=nrMuNPQCgZ4mDMKCZYmYqXU1W84wHYJVwS83iG7XrGrRUv0nPExT247QHvvelS/hye
-         Cq27/I8j8yYV5ZyzzY0pO8aoX7v79dnJytFkahqfBUeMqqiTKoLDLNR3COMBAascE96Q
-         3+MzCGtXEcrhrAzRyF764n+060BUwOwwj6+lVkD/GGgnOnkR6ONw7pkxLXgzR5TBbWh4
-         7GP4awptTF7FXb0G46U/yqYPhz31l8LuaQ/x7v5X6+EWftOrIIMbI1H2lpf5t/2hnoJW
-         ZyFbrrehX/Rzc9XNgYholnb4OuViDbTztaXb0OZGfTAa2Xj5g9+chuL0+fv190xZoBlv
-         +kiA==
-X-Gm-Message-State: AJaThX6oDlw4U6B9GjOOCltCKZqN+QI0J3G0LAg9oUOtle/lTy7s8Sz2
-        pcl+x3BKpSfPHmukvSwPmiMTHyHa
-X-Google-Smtp-Source: AGs4zMbjYYnbksII147ETiArHLDcTM3de0xnt8R8caBPYKcDJgsfOllMeX9/LOcgMFMe7qXj5EYB/A==
-X-Received: by 10.28.156.67 with SMTP id f64mr4367911wme.42.1510935023398;
-        Fri, 17 Nov 2017 08:10:23 -0800 (PST)
-Received: from dnl-413.univ-lyon1.fr (wifi-ext-0165.univ-lyon1.fr. [134.214.214.166])
-        by smtp.gmail.com with ESMTPSA id o190sm4777307wmd.32.2017.11.17.08.10.22
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 17 Nov 2017 08:10:22 -0800 (PST)
-From:   Daniel Bensoussan <danielbensoussanbohm@gmail.com>
-X-Google-Original-From: Daniel Bensoussan <daniel.bensoussan--bohm@etu.univ-lyon1.fr>
-To:     git@vger.kernel.org
-Cc:     Daniel Bensoussan <daniel.bensoussan--bohm@etu.univ-lyon1.fr>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Jordan DE GEA <jordan.de-gea@grenoble-inp.org>,
-        Matthieu Moy <matthieu.moy@univ-lyon1.fr>,
-        Timothee Albertin <timothee.albertin@etu.univ-lyon1.fr>,
-        Nathan Payre <nathan.payre@etu.univ-lyon1.fr>
-Subject: [PATCH 2/2] Triangular workflow
-Date:   Fri, 17 Nov 2017 17:07:59 +0100
-Message-Id: <20171117160759.6397-2-daniel.bensoussan--bohm@etu.univ-lyon1.fr>
-X-Mailer: git-send-email 2.11.0
-In-Reply-To: <20171117160759.6397-1-daniel.bensoussan--bohm@etu.univ-lyon1.fr>
-References: <20171117160759.6397-1-daniel.bensoussan--bohm@etu.univ-lyon1.fr>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=PMxzY1I8km9ELU8jj5Kqvhdn41OMHQRKS99zNQDLpYo=;
+        b=ObU+bR19KdJvHqpYHthE2xMKVLDxsdu7PWHiOR+fs+sDg48gZSmtosxyM+bCL70dGy
+         pWT23t477BeipLHhADk9FIPfDgbCcb4/MpvOpyHSQ1UdfTwCVEWRYC/YF6thV9UuUXx7
+         b83kCsjknXa6F0FJkEmGcxXrLAPe7bzIPxPZ1SN3JM/mid+xvpud43MmTRpxQaBWyVmj
+         aXEPzVT6F0SlOhRzuUQtoeN02GmkxYLHQe3wcbGWN8QypaUWwEQ9wb8aAHdf/1sm7e45
+         +1B4/Ke9mK3e8n/aF+TmTbbf31BL5XQjDQ2Gi/D7Ysry6+tiaVvaoP/+JVdr+hAk86ov
+         ceMg==
+X-Gm-Message-State: AJaThX7gR3P1xf4liD4dKXpGAg4sWfEW0hdR/xknnjeGHozMq+9Vf5j2
+        exvjxku5e/88+LQNt5IJ+eCVXFhV
+X-Google-Smtp-Source: AGs4zMZHUbE9Xch0y5c4qVVduiS37/nZPKIFkMOoZpvZ8XFil2Sw6NsJICocnlU70WAGFQJxzqHRkQ==
+X-Received: by 10.159.249.1 with SMTP id bf1mr2194304plb.401.1510938995071;
+        Fri, 17 Nov 2017 09:16:35 -0800 (PST)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id k80sm9214733pfh.30.2017.11.17.09.16.34
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 17 Nov 2017 09:16:34 -0800 (PST)
+Date:   Fri, 17 Nov 2017 09:16:09 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
+Cc:     Git Mailing list <git@vger.kernel.org>
+Subject: Re: is there a rationale for some sample hooks but not others?
+Message-ID: <20171117171609.3lwjlrhm43o3pqir@aiede.mtv.corp.google.com>
+References: <alpine.LFD.2.21.1711170114080.6483@localhost.localdomain>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.2.21.1711170114080.6483@localhost.localdomain>
+User-Agent: NeoMutt/20170609 (1.8.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The documentation about triangular workflow was not clear enough.
-So it couldn't be clear enough for someone else. That's why we decided to
-change it. Some documentation about triangular workflow already exists.
-However, it seems unfortunate that there is no documentation about it in Git.
+Hi Robert,
 
-Based-on-patch-by: Jordan DE GEA <jordan.de-gea@grenoble-inp.org>
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
-Signed-off-by: Jordan DE GEA <jordan.de-gea@grenoble-inp.org>
-Signed-off-by: Matthieu Moy <matthieu.moy@univ-lyon1.fr>
-Signed-off-by: Timothee Albertin <timothee.albertin@etu.univ-lyon1.fr>
-Signed-off-by: Nathan Payre <nathan.payre@etu.univ-lyon1.fr>
-Signed-off-by: Daniel Bensoussan <daniel.bensoussan--bohm@etu.univ-lyon1.fr>
----
- Documentation/gitworkflows.txt | 59 +++++++++++++++++++-----------------------
- 1 file changed, 26 insertions(+), 33 deletions(-)
+Robert P. J. Day wrote:
 
-diff --git a/Documentation/gitworkflows.txt b/Documentation/gitworkflows.txt
-index 3f1ddba82..4aea16bc0 100644
---- a/Documentation/gitworkflows.txt
-+++ b/Documentation/gitworkflows.txt
-@@ -490,7 +490,7 @@ GitHub or GitLab which provide a dedicated mechanism for requesting merges.
- ........................................
- ------------------               -----------------
- | UPSTREAM       |  maintainer   | PUBLISH       |
--|  git/git       |- - - - - - - -|  me/remote    |
-+|                |- - - - - - - -|               |
- ------------------      <-       -----------------
-               \                     /
-                \                   /
-@@ -515,7 +515,7 @@ new and the old code, and then send it to a maintainer to commit
- and push it.  This isn't convenient at all, neither for the
- contributor, neither for the maintainer. With the triangular
- workflow, the contributors have the write access on **PUBLISH**
--so they don't have to pass upon maintainer(s).  And only the
-+so they don't need maintainer(s) approval to write code.  And only the
- maintainer(s) can push from **PUBLISH** to **UPSTREAM**.
- This is called a distributed workflow (See "DISTRIBUTED WORKFLOWS"
- above).
-@@ -526,13 +526,13 @@ The goal of the triangular workflow is also that the rest of the
- community or the company can review the code before it's in production.
- Everyone can read on **PUBLISH** so everyone can review code
- before the maintainer(s) merge it to **UPSTREAM**.  It also means
--that, in a free software, anyone can propose code without danger
-+that, in free software, anyone can propose code without danger
- for the stability of the software.
- 
- * Encourages clean history by using `rebase -i` and `push --force` to
- the public fork before the code is merged.
- 
--This is just a side-effect of the "review before merge" mentionned
-+This is just a side-effect of the "review before merge" mentioned
- above but this is still a good point.
- 
- 
-@@ -543,18 +543,20 @@ workflow.
- Preparation as a contributor
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- 
--Cloning from **PUBLISH**, which is a fork of **UPSTREAM** or an empty
--repository.
-+Cloning from **UPSTREAM**.
- 
- ======================
--`git clone <PUBLISH_url>`
-+`git clone <UPSTREAM_url>`
- ======================
- 
--Setting the behavior of push for the triangular workflow:
-+If **PUBLISH** doesn't exist, a contributor can publish his own repository.
-+**PUBLISH** contains modifications before integration.
- 
--===========================
--`git config push.default current`
--===========================
-+============================
-+`git clone <UPSTREAM_url>`
-+`git remote add **PUBLISH**`
-+`git push`
-+============================
- 
- Adding **UPSTREAM** remote:
- 
-@@ -576,12 +578,6 @@ Example with master as <branch>:
- * `git config branch.master.pushRemote origin`
- ===================================
- 
--Staying up-to-date
--~~~~~~~~~~~~~~~~~~
--
--Retrieve updates from **UPSTREAM** with `git pull` and send them to
--**PUBLISH** with `git push`.
--
- Making your work available
- ~~~~~~~~~~~~~~~~~~~~~~~~~~
- 
-@@ -590,20 +586,19 @@ the **UPSTREAM** thanks to the configuration you did earlier with the
- `git config remote.pushdefault origin` command.
- 
- When a contributor pushes something, the `git config push.default
--current` command can be used to specifies that the name of the
-+current` command can be used to specify that the name of the
- **PUBLISH** branch is the same as the name of the **LOCAL** one.
- 
--.Display the push remote's name:
-+.Display the name of the push remote:
- [caption="Recipe: "]
- 
--=================================
--`git rev-parse --abbrev-ref @{push}`
--=================================
--
- The shorthand `<branch>@{push}` denotes the remote-tracking branch
- where the <branch> would be pushed to. If no <branch> is specified
- (`@{push}`), <branch> takes the value of the current branch.
- 
-+=================================
-+`git rev-parse --abbrev-ref @{push}`
-+=================================
- 
- .Display the fetch remote's name:
- [caption="Recipe: "]
-@@ -630,6 +625,12 @@ takes the value of the current branch.
- `git log <branch_name>@{push}..`
- ============================
- 
-+Staying up-to-date
-+~~~~~~~~~~~~~~~~~~
-+
-+Retrieve updates from **UPSTREAM** with `git pull` and send them to
-+**PUBLISH** with `git push`.
-+
- Alternatively
- ~~~~~~~~~~~~~
- 
-@@ -662,16 +663,8 @@ Adding **PUBLISH** remote:
- ===================================
- 
- With the `remote add` above, using `git push publish` pushes there,
--instead of saying its URL. In addition, `git push` can push to
--**PUBLISH** without argument.
--
--'Method 1: One option for all branches'
--
--===================================
--`git config remote.pushDefault publish`
--===================================
--
--'Method 2: Each branch its option'
-+instead of saying its URL. In addition, `git push` without argument
-+pushes to **PUBLISH**.
- 
- Example with master as <branch>:
- ===================================
--- 
-2.11.0
+> given that a newly-initialized repo contains samples for some hooks
+> but not others, is there a simple rationale for why those particular
+> sample hooks are provided, and not the rest?
 
+I assume this is in the context of reviewing the Pro Git book.  Thanks
+for doing this work.
+
+Let me turn the question around: do you think it would be useful to
+have samples for all hook types?  What would you like those samples to
+look like?
+
+Thanks,
+Jonathan
