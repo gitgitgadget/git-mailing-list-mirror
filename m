@@ -2,93 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E0A3202AF
-	for <e@80x24.org>; Fri, 17 Nov 2017 21:15:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EB197202AF
+	for <e@80x24.org>; Fri, 17 Nov 2017 22:02:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1762235AbdKQVPj (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Nov 2017 16:15:39 -0500
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:34386 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753461AbdKQVPh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Nov 2017 16:15:37 -0500
-Received: by mail-pf0-f196.google.com with SMTP id x7so2808660pfa.1
-        for <git@vger.kernel.org>; Fri, 17 Nov 2017 13:15:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=sC1C45OvPPvNHKxcUb14w1hPxjbdAFXP8+HhRLEerf4=;
-        b=gy8oAk693VMQzTdVxcYZ+yMn7IHFJPBC2m6AQRpxKpt/nOz6PZSgW2lP35HNMjxkaX
-         z5cpsuWNu4HmfI+OWQKeZfVQ3oK1Lk0c76dJXi5i4KFfvOeYYzx6A5Qf+kAZfAgxDWk+
-         xf6wohtpRNicr1aFvYELCIFOOzxFY3gHCCGLOJz4cG0/zzVw/apCmuTkBastohO9zrXr
-         SNjGq8u9rpYmii3qXUXwCtG3z2TTngs3S6tpak7ZrrrbVC1vm0hh2czerqpwjty/bEUv
-         QvYVx9t8wVB8c6lK83e5KOyump/DYT2HLpICrj1kgFuM/VjMrgo/UbCRKedSzQfwJl4z
-         trfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=sC1C45OvPPvNHKxcUb14w1hPxjbdAFXP8+HhRLEerf4=;
-        b=Rf15Rlt8twvogw6Zll/6zzjUujH768xOHXvROCxlvfja7aYFiMAJtW1G7N/OdIm/Gj
-         /EshZimhL1uCttwkUrmY0ypIHxctqxD2cpol+O7GPvGz0mTMloLfogYWtGK6GJnw3MWO
-         GZXWwweDPAxEloFhZ6tzgVvo/cWhRlyGjdCzlbermfz8fm5HWcedgHBWkl/YpgCLFqKw
-         rlvhyn5ILJ97lGYj+R8HE1wcaC51A2bbB1TLEt7okbyYIn3SUJ3pom+8ucHLW+XcDrle
-         E6l68bGvP2kDoOu4ijuQXlhEOjzb6q4mp19mqiGpVuNTxEoY9rDtjtiTpth9IzKBgO/V
-         0SlA==
-X-Gm-Message-State: AJaThX78NAwKKMU63mIdsj3IrSoGv2Jp3LkiJTOMI2vK2mJK/PWqk8vE
-        u3DZb42MWnlU83sICFFL9j9ZwTmiHeT+XBaRcWg=
-X-Google-Smtp-Source: AGs4zMaOeZnt28N17F6K8hbGWfCJ4tzNZItalMec/bXWuENeslxnYHm1k/NMrMZTkzRAycJys6LCBv2s3f2jlP49C5U=
-X-Received: by 10.98.202.74 with SMTP id n71mr3366860pfg.202.1510953336808;
- Fri, 17 Nov 2017 13:15:36 -0800 (PST)
+        id S936619AbdKQWCO (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Nov 2017 17:02:14 -0500
+Received: from cloud.peff.net ([104.130.231.41]:32954 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S933170AbdKQWCM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Nov 2017 17:02:12 -0500
+Received: (qmail 8903 invoked by uid 109); 17 Nov 2017 22:02:12 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 17 Nov 2017 22:02:12 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 28849 invoked by uid 111); 17 Nov 2017 22:02:26 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with ESMTPA; Fri, 17 Nov 2017 17:02:26 -0500
+Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 17 Nov 2017 17:02:10 -0500
+Date:   Fri, 17 Nov 2017 17:02:10 -0500
+From:   Jeff King <peff@peff.net>
+To:     Todd Zullinger <tmz@pobox.com>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        git <git@vger.kernel.org>, Dominik Mahrer <teddy@teddy.ch>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH] Makefile: check that tcl/tk is installed
+Message-ID: <20171117220210.6xqi26mabbyvxc2m@sigill.intra.peff.net>
+References: <20171115125200.17006-1-chriscool@tuxfamily.org>
+ <xmqqbmk3xaxg.fsf@gitster.mtv.corp.google.com>
+ <CAP8UFD1hcFLMvNsXONPNbxZhTbHVzSMdRgCB9m=ZGeSTpMsYew@mail.gmail.com>
+ <20171117174258.GP3693@zaya.teonanacatl.net>
 MIME-Version: 1.0
-Received: by 10.100.167.42 with HTTP; Fri, 17 Nov 2017 13:15:36 -0800 (PST)
-In-Reply-To: <20171117160759.6397-2-daniel.bensoussan--bohm@etu.univ-lyon1.fr>
-References: <20171117160759.6397-1-daniel.bensoussan--bohm@etu.univ-lyon1.fr> <20171117160759.6397-2-daniel.bensoussan--bohm@etu.univ-lyon1.fr>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Fri, 17 Nov 2017 22:15:36 +0100
-Message-ID: <CAN0heSoJissfQqO9sDi1sHut7a-tfFcQgkcUD=QLa+5F0F9PbA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] Triangular workflow
-To:     Daniel Bensoussan <danielbensoussanbohm@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Daniel Bensoussan <daniel.bensoussan--bohm@etu.univ-lyon1.fr>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Jordan DE GEA <jordan.de-gea@grenoble-inp.org>,
-        Matthieu Moy <matthieu.moy@univ-lyon1.fr>,
-        Timothee Albertin <timothee.albertin@etu.univ-lyon1.fr>,
-        Nathan Payre <nathan.payre@etu.univ-lyon1.fr>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20171117174258.GP3693@zaya.teonanacatl.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 17 November 2017 at 17:07, Daniel Bensoussan
-<danielbensoussanbohm@gmail.com> wrote:
-> The documentation about triangular workflow was not clear enough.
+On Fri, Nov 17, 2017 at 12:42:58PM -0500, Todd Zullinger wrote:
 
-I think you would be able to `git rebase -i` these two patches into a
-single, perfect patch. ;-) Maybe in collaboration with Albertin?
+> > I'd rather add a separate check for msgfmt than mixing the 2 issues,
+> > because I think that unless it has been explicitly told to do so, Git
+> > should not try to build git-gui and gitk in the first place if there is
+> > a big chance that those tools will not work.
+> 
+> If that's a motivation, wouldn't a check in the gitk and git-gui scripts
+> handle it?  That would provide an error at run time to the user.  This
+> change is about helping the user who builds their own git and then runs it,
+> so if they built git without wish installed and then ran git-gui, they'd get
+> a clear error that wish is missing and could easily install it.  It's not
+> needed for the build, so they wouldn't need to rebuild anything.
 
-> -===========================
-> -`git config push.default current`
-> -===========================
-> +============================
-> +`git clone <UPSTREAM_url>`
-> +`git remote add **PUBLISH**`
-> +`git push`
-> +============================
+I think the message is already OK:
 
-This renders as a single line for me, including "**PUBLISH**". (I use
-AsciiDoctor, does this look good with AsciiDoc, I wonder?)
+  $ ./gitk
+  ./gitk: 3: exec: wish: not found
 
-I've never worked with triangular workflows. That means I can't judge
-the correctness of this, but what I've read seems reasonable and
-helpful. I dropped some comments along the way, I hope you'll find them
-constructive.
+The question is whether we would want to catch this at build time. And I
+think Junio's point is that we don't _know_ it's an error at build time.
+We could be building gitk for use on a system that isn't quite like the
+build system, so any "solution" here is going to have to make an
+assumption either way.
 
-Martin
+It's also not foolproof. You could build when wish is present, and then
+later uninstall it and receive the same error message.
+
+I also think all of this is largely orthogonal to gettext. It just so
+happens that if you don't have gettext installed, we'll try to run wish
+as part of the build process, but detecting broken tcl setups was
+definitely not part of the intent there.
+
+And the failure actually runs the other way, too. If you have neither
+gettext nor tcl, you get this confusing output:
+
+  $ make NO_GETTEXT=1
+  ...
+  MSGFMT po/pt_pt.msg     MSGFMT    po/hu.msg Makefile:252: recipe for target 'po/pt_pt.msg' failed
+  make[1]: *** [po/pt_pt.msg] Error 127
+
+(the problem is not msgfmt, but our tcl substitute which cannot run).
+
+I'm actually tempted to say that we should not be building the tcl parts
+by default. IOW, instead of NO_TCLTK we should have USE_TCLTK. That
+would also require an adjustment by package builders, but it would
+hopefully be a really obvious one. And once the user has told our
+Makefile that they definitely want to build the tcl parts, we'd
+presumably just trust that the tcl path they give us is sane.
+
+But it's possible I'm underestimating how many people actually use the
+tcl scripts. Certainly I don't, and git-gui seems fairly primitive to me
+these days compared to 3rd party tools. But then I don't use any of them
+either. ;)
+
+-Peff
