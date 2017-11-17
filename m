@@ -6,38 +6,38 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EE7DB201C8
-	for <e@80x24.org>; Fri, 17 Nov 2017 11:36:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1C369201C8
+	for <e@80x24.org>; Fri, 17 Nov 2017 11:36:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754716AbdKQLgS (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Nov 2017 06:36:18 -0500
-Received: from smtp-out-5.talktalk.net ([62.24.135.69]:30751 "EHLO
+        id S1754725AbdKQLgV (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Nov 2017 06:36:21 -0500
+Received: from smtp-out-5.talktalk.net ([62.24.135.69]:23070 "EHLO
         smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754452AbdKQLgL (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1754480AbdKQLgL (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 17 Nov 2017 06:36:11 -0500
 Received: from lindisfarne.localdomain ([92.22.34.132])
         by smtp.talktalk.net with SMTP
-        id FevAeP1Zopb8rFewLexNEi; Fri, 17 Nov 2017 11:36:10 +0000
+        id FevAeP1Zopb8rFewMexNEo; Fri, 17 Nov 2017 11:36:10 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
         s=cmr1711; t=1510918570;
-        bh=EC7Kwm4Fe78+semDao7Sx+PcIc4WnO+YeChUa0Op6QU=;
+        bh=VoCKEU9FF/ayhKEEwRnsD/DNSrtW87zZvA6Jf/ugte0=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:Reply-To;
-        b=S/2Ljxh4dJjAnJfahXKEv2/YSBBJZr5os2ytrGJvzprcoEeaKJAMbp32Zgn8gS96N
-         D2p4QDShitp8S8jBx1I4Qe76ozO22YiNmS2kI0LPNObBPHNAitiTd5S52TzprkJD8F
-         zkZlqJ3ugbK2FJ495pDLm2cT5JnXRw+NcyH9Lmto=
+        b=OyVHSQg7jaG2HPu3oDF4oooYpTI1BC5OTI0zr3zJXk3s7llB6sNWkbAJLFJcW0RVz
+         1Elb4356ZPDH+23PJzjCDkHcFAQQNFzg0d7snjaZnU0K4ifmw5QJfvHqig//hrLtGU
+         RMNuMaRGP0O/g20UhI6SxZ8EAl5dKJ2xC64e6DSk=
 X-Originating-IP: [92.22.34.132]
 X-Spam: 0
 X-OAuthority: v=2.2 cv=ZM2noTzb c=1 sm=1 tr=0 a=2gYdyS03q/cwff7SV6P5Ng==:117
- a=2gYdyS03q/cwff7SV6P5Ng==:17 a=evINK-nbAAAA:8 a=gmYsS5rWCjj2l-UK0YYA:9
- a=MYcFLkyzOMbnKKlA:21 a=zFrQdP-yZpiLN47d:21 a=RfR_gqz1fSpA9VikTjo0:22
+ a=2gYdyS03q/cwff7SV6P5Ng==:17 a=evINK-nbAAAA:8 a=lwQX8hbtY5LG0p_dRqUA:9
+ a=YtLniJEHI1pBiEd6:21 a=YqjHFiUZr1EcQFKv:21 a=RfR_gqz1fSpA9VikTjo0:22
 From:   Phillip Wood <phillip.wood@talktalk.net>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH v3 2/8] commit: move empty message checks to libgit
-Date:   Fri, 17 Nov 2017 11:34:46 +0000
-Message-Id: <20171117113452.26597-3-phillip.wood@talktalk.net>
+Subject: [PATCH v3 3/8] Add a function to update HEAD after creating a commit
+Date:   Fri, 17 Nov 2017 11:34:47 +0000
+Message-Id: <20171117113452.26597-4-phillip.wood@talktalk.net>
 X-Mailer: git-send-email 2.15.0
 In-Reply-To: <20171117113452.26597-1-phillip.wood@talktalk.net>
 References: <20170925101041.18344-1-phillip.wood@talktalk.net>
@@ -53,281 +53,144 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Move the functions that check for empty messages from bulitin/commit.c
-to sequencer.c so they can be shared with other commands. The
-functions are refactored to take an explicit cleanup mode and template
-filename passed by the caller.
+Add update_head_with_reflog() based on the code that updates HEAD
+after committing in builtin/commit.c that can be called by 'git
+commit' and other commands.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
 
 Notes:
+    changes since v2:
+     - updated commit message to reflect the change in function name
+     - style fixes
+    
     changes since v1:
-     - prefix cleanup_mode enum and constants with commit_msg_
+     - rename update_head() to update_head_with_reflog()
 
- builtin/commit.c | 99 +++++++++++---------------------------------------------
- sequencer.c      | 61 ++++++++++++++++++++++++++++++++++
- sequencer.h      | 11 +++++++
- 3 files changed, 91 insertions(+), 80 deletions(-)
+ builtin/commit.c | 20 ++------------------
+ sequencer.c      | 39 ++++++++++++++++++++++++++++++++++++++-
+ sequencer.h      |  4 ++++
+ 3 files changed, 44 insertions(+), 19 deletions(-)
 
 diff --git a/builtin/commit.c b/builtin/commit.c
-index 8a877014145435516930c787dec37b8c4ac3da90..d958c2eb2adc9a29dab29340ce9b56daea41fecd 100644
+index d958c2eb2adc9a29dab29340ce9b56daea41fecd..eb144556bf37b7bf357bd976b94305171b4fd159 100644
 --- a/builtin/commit.c
 +++ b/builtin/commit.c
-@@ -128,12 +128,7 @@ static char *sign_commit;
-  * if editor is used, and only the whitespaces if the message
-  * is specified explicitly.
-  */
--static enum {
--	CLEANUP_SPACE,
--	CLEANUP_NONE,
--	CLEANUP_SCISSORS,
--	CLEANUP_ALL
--} cleanup_mode;
-+static enum commit_msg_cleanup_mode cleanup_mode;
- static const char *cleanup_arg;
- 
- static enum commit_whence whence;
-@@ -673,7 +668,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+@@ -1610,13 +1610,11 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
  	struct strbuf sb = STRBUF_INIT;
- 	const char *hook_arg1 = NULL;
- 	const char *hook_arg2 = NULL;
--	int clean_message_contents = (cleanup_mode != CLEANUP_NONE);
-+	int clean_message_contents = (cleanup_mode != COMMIT_MSG_CLEANUP_NONE);
- 	int old_display_comment_prefix;
+ 	struct strbuf author_ident = STRBUF_INIT;
+ 	const char *index_file, *reflog_msg;
+-	char *nl;
+ 	struct object_id oid;
+ 	struct commit_list *parents = NULL;
+ 	struct stat statbuf;
+ 	struct commit *current_head = NULL;
+ 	struct commit_extra_header *extra = NULL;
+-	struct ref_transaction *transaction;
+ 	struct strbuf err = STRBUF_INIT;
  
- 	/* This checks and barfs if author is badly specified */
-@@ -812,7 +807,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 		struct ident_split ci, ai;
+ 	if (argc == 2 && !strcmp(argv[1], "-h"))
+@@ -1739,25 +1737,11 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 	strbuf_release(&author_ident);
+ 	free_commit_extra_headers(extra);
  
- 		if (whence != FROM_COMMIT) {
--			if (cleanup_mode == CLEANUP_SCISSORS)
-+			if (cleanup_mode == COMMIT_MSG_CLEANUP_SCISSORS)
- 				wt_status_add_cut_line(s->fp);
- 			status_printf_ln(s, GIT_COLOR_NORMAL,
- 			    whence == FROM_MERGE
-@@ -832,14 +827,15 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 		}
- 
- 		fprintf(s->fp, "\n");
--		if (cleanup_mode == CLEANUP_ALL)
-+		if (cleanup_mode == COMMIT_MSG_CLEANUP_ALL)
- 			status_printf(s, GIT_COLOR_NORMAL,
- 				_("Please enter the commit message for your changes."
- 				  " Lines starting\nwith '%c' will be ignored, and an empty"
- 				  " message aborts the commit.\n"), comment_line_char);
--		else if (cleanup_mode == CLEANUP_SCISSORS && whence == FROM_COMMIT)
-+		else if (cleanup_mode == COMMIT_MSG_CLEANUP_SCISSORS &&
-+			 whence == FROM_COMMIT)
- 			wt_status_add_cut_line(s->fp);
--		else /* CLEANUP_SPACE, that is. */
-+		else /* COMMIT_MSG_CLEANUP_SPACE, that is. */
- 			status_printf(s, GIT_COLOR_NORMAL,
- 				_("Please enter the commit message for your changes."
- 				  " Lines starting\n"
-@@ -984,65 +980,6 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 	return 1;
- }
- 
--static int rest_is_empty(struct strbuf *sb, int start)
--{
--	int i, eol;
--	const char *nl;
+-	nl = strchr(sb.buf, '\n');
+-	if (nl)
+-		strbuf_setlen(&sb, nl + 1 - sb.buf);
+-	else
+-		strbuf_addch(&sb, '\n');
+-	strbuf_insert(&sb, 0, reflog_msg, strlen(reflog_msg));
+-	strbuf_insert(&sb, strlen(reflog_msg), ": ", 2);
 -
--	/* Check if the rest is just whitespace and Signed-off-by's. */
--	for (i = start; i < sb->len; i++) {
--		nl = memchr(sb->buf + i, '\n', sb->len - i);
--		if (nl)
--			eol = nl - sb->buf;
--		else
--			eol = sb->len;
--
--		if (strlen(sign_off_header) <= eol - i &&
--		    starts_with(sb->buf + i, sign_off_header)) {
--			i = eol;
--			continue;
--		}
--		while (i < eol)
--			if (!isspace(sb->buf[i++]))
--				return 0;
--	}
--
--	return 1;
--}
--
--/*
-- * Find out if the message in the strbuf contains only whitespace and
-- * Signed-off-by lines.
-- */
--static int message_is_empty(struct strbuf *sb)
--{
--	if (cleanup_mode == CLEANUP_NONE && sb->len)
--		return 0;
--	return rest_is_empty(sb, 0);
--}
--
--/*
-- * See if the user edited the message in the editor or left what
-- * was in the template intact
-- */
--static int template_untouched(struct strbuf *sb)
--{
--	struct strbuf tmpl = STRBUF_INIT;
--	const char *start;
--
--	if (cleanup_mode == CLEANUP_NONE && sb->len)
--		return 0;
--
--	if (!template_file || strbuf_read_file(&tmpl, template_file, 0) <= 0)
--		return 0;
--
--	strbuf_stripspace(&tmpl, cleanup_mode == CLEANUP_ALL);
--	if (!skip_prefix(sb->buf, tmpl.buf, &start))
--		start = sb->buf;
--	strbuf_release(&tmpl);
--	return rest_is_empty(sb, start - sb->buf);
--}
--
- static const char *find_author_by_nickname(const char *name)
- {
- 	struct rev_info revs;
-@@ -1227,15 +1164,17 @@ static int parse_and_validate_options(int argc, const char *argv[],
- 	if (argc == 0 && (also || (only && !amend && !allow_empty)))
- 		die(_("No paths with --include/--only does not make sense."));
- 	if (!cleanup_arg || !strcmp(cleanup_arg, "default"))
--		cleanup_mode = use_editor ? CLEANUP_ALL : CLEANUP_SPACE;
-+		cleanup_mode = use_editor ? COMMIT_MSG_CLEANUP_ALL :
-+					    COMMIT_MSG_CLEANUP_SPACE;
- 	else if (!strcmp(cleanup_arg, "verbatim"))
--		cleanup_mode = CLEANUP_NONE;
-+		cleanup_mode = COMMIT_MSG_CLEANUP_NONE;
- 	else if (!strcmp(cleanup_arg, "whitespace"))
--		cleanup_mode = CLEANUP_SPACE;
-+		cleanup_mode = COMMIT_MSG_CLEANUP_SPACE;
- 	else if (!strcmp(cleanup_arg, "strip"))
--		cleanup_mode = CLEANUP_ALL;
-+		cleanup_mode = COMMIT_MSG_CLEANUP_ALL;
- 	else if (!strcmp(cleanup_arg, "scissors"))
--		cleanup_mode = use_editor ? CLEANUP_SCISSORS : CLEANUP_SPACE;
-+		cleanup_mode = use_editor ? COMMIT_MSG_CLEANUP_SCISSORS :
-+					    COMMIT_MSG_CLEANUP_SPACE;
- 	else
- 		die(_("Invalid cleanup mode %s"), cleanup_arg);
- 
-@@ -1768,17 +1707,17 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	if (verbose || /* Truncate the message just before the diff, if any. */
--	    cleanup_mode == CLEANUP_SCISSORS)
-+	    cleanup_mode == COMMIT_MSG_CLEANUP_SCISSORS)
- 		strbuf_setlen(&sb, wt_status_locate_end(sb.buf, sb.len));
--	if (cleanup_mode != CLEANUP_NONE)
--		strbuf_stripspace(&sb, cleanup_mode == CLEANUP_ALL);
-+	if (cleanup_mode != COMMIT_MSG_CLEANUP_NONE)
-+		strbuf_stripspace(&sb, cleanup_mode == COMMIT_MSG_CLEANUP_ALL);
- 
--	if (message_is_empty(&sb) && !allow_empty_message) {
-+	if (message_is_empty(&sb, cleanup_mode) && !allow_empty_message) {
+-	transaction = ref_transaction_begin(&err);
+-	if (!transaction ||
+-	    ref_transaction_update(transaction, "HEAD", &oid,
+-				   current_head
+-				   ? &current_head->object.oid : &null_oid,
+-				   0, sb.buf, &err) ||
+-	    ref_transaction_commit(transaction, &err)) {
++	if (update_head_with_reflog(current_head, &oid, reflog_msg, &sb,
++				    &err)) {
  		rollback_index_files();
- 		fprintf(stderr, _("Aborting commit due to empty commit message.\n"));
- 		exit(1);
+ 		die("%s", err.buf);
  	}
--	if (template_untouched(&sb) && !allow_empty_message) {
-+	if (template_untouched(&sb, template_file, cleanup_mode) && !allow_empty_message) {
- 		rollback_index_files();
- 		fprintf(stderr, _("Aborting commit; you did not edit the message.\n"));
- 		exit(1);
+-	ref_transaction_free(transaction);
+ 
+ 	unlink(git_path_cherry_pick_head());
+ 	unlink(git_path_revert_head());
 diff --git a/sequencer.c b/sequencer.c
-index 19dd575ed9b3b280a3fdabc9121a2e193d6984db..36e03d041f32bcc0fdd1fddebb33b23c7e4d8a70 100644
+index 36e03d041f32bcc0fdd1fddebb33b23c7e4d8a70..ef262980c5255d90ee023c0b29c6c1c628b3c7d2 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -691,6 +691,67 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
- 	return run_command(&cmd);
+@@ -1,10 +1,10 @@
+ #include "cache.h"
+ #include "config.h"
+ #include "lockfile.h"
+-#include "sequencer.h"
+ #include "dir.h"
+ #include "object.h"
+ #include "commit.h"
++#include "sequencer.h"
+ #include "tag.h"
+ #include "run-command.h"
+ #include "exec_cmd.h"
+@@ -752,6 +752,43 @@ int template_untouched(const struct strbuf *sb, const char *template_file,
+ 	return rest_is_empty(sb, start - sb->buf);
  }
  
-+static int rest_is_empty(const struct strbuf *sb, int start)
++int update_head_with_reflog(const struct commit *old_head,
++			    const struct object_id *new_head,
++			    const char *action, const struct strbuf *msg,
++			    struct strbuf *err)
 +{
-+	int i, eol;
++	struct ref_transaction *transaction;
++	struct strbuf sb = STRBUF_INIT;
 +	const char *nl;
++	int ret = 0;
 +
-+	/* Check if the rest is just whitespace and Signed-off-by's. */
-+	for (i = start; i < sb->len; i++) {
-+		nl = memchr(sb->buf + i, '\n', sb->len - i);
-+		if (nl)
-+			eol = nl - sb->buf;
-+		else
-+			eol = sb->len;
-+
-+		if (strlen(sign_off_header) <= eol - i &&
-+		    starts_with(sb->buf + i, sign_off_header)) {
-+			i = eol;
-+			continue;
-+		}
-+		while (i < eol)
-+			if (!isspace(sb->buf[i++]))
-+				return 0;
++	if (action) {
++		strbuf_addstr(&sb, action);
++		strbuf_addstr(&sb, ": ");
 +	}
 +
-+	return 1;
-+}
++	nl = strchr(msg->buf, '\n');
++	if (nl) {
++		strbuf_add(&sb, msg->buf, nl + 1 - msg->buf);
++	} else {
++		strbuf_addbuf(&sb, msg);
++		strbuf_addch(&sb, '\n');
++	}
 +
-+/*
-+ * Find out if the message in the strbuf contains only whitespace and
-+ * Signed-off-by lines.
-+ */
-+int message_is_empty(const struct strbuf *sb,
-+		     enum commit_msg_cleanup_mode cleanup_mode)
-+{
-+	if (cleanup_mode == COMMIT_MSG_CLEANUP_NONE && sb->len)
-+		return 0;
-+	return rest_is_empty(sb, 0);
-+}
++	transaction = ref_transaction_begin(err);
++	if (!transaction ||
++	    ref_transaction_update(transaction, "HEAD", new_head,
++				   old_head ? &old_head->object.oid : &null_oid,
++				   0, sb.buf, err) ||
++	    ref_transaction_commit(transaction, err)) {
++		ret = -1;
++	}
++	ref_transaction_free(transaction);
++	strbuf_release(&sb);
 +
-+/*
-+ * See if the user edited the message in the editor or left what
-+ * was in the template intact
-+ */
-+int template_untouched(const struct strbuf *sb, const char *template_file,
-+		       enum commit_msg_cleanup_mode cleanup_mode)
-+{
-+	struct strbuf tmpl = STRBUF_INIT;
-+	const char *start;
-+
-+	if (cleanup_mode == COMMIT_MSG_CLEANUP_NONE && sb->len)
-+		return 0;
-+
-+	if (!template_file || strbuf_read_file(&tmpl, template_file, 0) <= 0)
-+		return 0;
-+
-+	strbuf_stripspace(&tmpl, cleanup_mode == COMMIT_MSG_CLEANUP_ALL);
-+	if (!skip_prefix(sb->buf, tmpl.buf, &start))
-+		start = sb->buf;
-+	strbuf_release(&tmpl);
-+	return rest_is_empty(sb, start - sb->buf);
++	return ret;
 +}
 +
  static int is_original_commit_empty(struct commit *commit)
  {
  	const struct object_id *ptree_oid;
 diff --git a/sequencer.h b/sequencer.h
-index 6f3d3df82c0ade64b7b125acd49bf3f5e15c53af..82e57713a2940c5d65ccac013c3f42c55cc12baf 100644
+index 82e57713a2940c5d65ccac013c3f42c55cc12baf..81a2098e900f0aca30e45ed7f19ae4bf3ce682f0 100644
 --- a/sequencer.h
 +++ b/sequencer.h
-@@ -58,4 +58,15 @@ extern const char sign_off_header[];
- void append_signoff(struct strbuf *msgbuf, int ignore_footer, unsigned flag);
- void append_conflicts_hint(struct strbuf *msgbuf);
- 
-+enum commit_msg_cleanup_mode {
-+	COMMIT_MSG_CLEANUP_SPACE,
-+	COMMIT_MSG_CLEANUP_NONE,
-+	COMMIT_MSG_CLEANUP_SCISSORS,
-+	COMMIT_MSG_CLEANUP_ALL
-+};
-+
-+int message_is_empty(const struct strbuf *sb,
-+		     enum commit_msg_cleanup_mode cleanup_mode);
-+int template_untouched(const struct strbuf *sb, const char *template_file,
-+		       enum commit_msg_cleanup_mode cleanup_mode);
+@@ -69,4 +69,8 @@ int message_is_empty(const struct strbuf *sb,
+ 		     enum commit_msg_cleanup_mode cleanup_mode);
+ int template_untouched(const struct strbuf *sb, const char *template_file,
+ 		       enum commit_msg_cleanup_mode cleanup_mode);
++int update_head_with_reflog(const struct commit *old_head,
++			    const struct object_id *new_head,
++			    const char *action, const struct strbuf *msg,
++			    struct strbuf *err);
  #endif
 -- 
 2.15.0
