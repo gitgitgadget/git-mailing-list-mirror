@@ -6,80 +6,123 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A97CB202AF
-	for <e@80x24.org>; Fri, 17 Nov 2017 22:19:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 71E5C202AF
+	for <e@80x24.org>; Fri, 17 Nov 2017 22:33:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S936778AbdKQWTk (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Nov 2017 17:19:40 -0500
-Received: from cloud.peff.net ([104.130.231.41]:33018 "HELO cloud.peff.net"
+        id S966589AbdKQWdt (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Nov 2017 17:33:49 -0500
+Received: from cloud.peff.net ([104.130.231.41]:33038 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S936777AbdKQWTi (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Nov 2017 17:19:38 -0500
-Received: (qmail 9608 invoked by uid 109); 17 Nov 2017 22:19:38 -0000
+        id S935197AbdKQWds (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Nov 2017 17:33:48 -0500
+Received: (qmail 10122 invoked by uid 109); 17 Nov 2017 22:33:48 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 17 Nov 2017 22:19:38 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 17 Nov 2017 22:33:48 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 29016 invoked by uid 111); 17 Nov 2017 22:19:53 -0000
+Received: (qmail 29050 invoked by uid 111); 17 Nov 2017 22:34:02 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Fri, 17 Nov 2017 17:19:53 -0500
+ by peff.net (qpsmtpd/0.94) with ESMTPA; Fri, 17 Nov 2017 17:34:02 -0500
 Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 17 Nov 2017 17:19:36 -0500
-Date:   Fri, 17 Nov 2017 17:19:36 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 17 Nov 2017 17:33:46 -0500
+Date:   Fri, 17 Nov 2017 17:33:46 -0500
 From:   Jeff King <peff@peff.net>
-To:     Jeff Hostetler <git@jeffhostetler.com>
+To:     Simon Ruderich <simon@ruderich.org>
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v4 4/6] list-objects: filter objects in
- traverse_commit_list
-Message-ID: <20171117221936.zsokhvmslnf6jete@sigill.intra.peff.net>
-References: <20171116180743.61353-1-git@jeffhostetler.com>
- <20171116180743.61353-5-git@jeffhostetler.com>
- <20171116122133.4cc718414579c1a5a682174b@google.com>
- <bdf75d90-570d-8cf0-886a-2c5c9cdba1c1@jeffhostetler.com>
- <20171116215725.k44e3alk2lq6bbwu@sigill.intra.peff.net>
- <xmqqh8tttzwq.fsf@gitster.mtv.corp.google.com>
- <6f433987-f91b-d5b5-242e-3a241b7442c7@jeffhostetler.com>
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        Git List <git@vger.kernel.org>,
+        Ralf Thielow <ralf.thielow@gmail.com>
+Subject: Re: Improved error handling (Was: [PATCH 1/2] sequencer: factor out
+ rewrite_file())
+Message-ID: <20171117223345.s3ihubgda3qdb2j6@sigill.intra.peff.net>
+References: <6150c80b-cb0e-06d4-63a7-a4f4a9107ab2@web.de>
+ <20171101194732.fn4n46wppl35e2z2@sigill.intra.peff.net>
+ <alpine.DEB.2.21.1.1711012240500.6482@virtualbox>
+ <20171101221618.4ioog7jlp7n2nd53@sigill.intra.peff.net>
+ <20171103103248.4p45r4klojk5cf2g@ruderich.org>
+ <xmqqpo8zpjdj.fsf@gitster.mtv.corp.google.com>
+ <20171103191309.sth4zjokgcupvk2e@sigill.intra.peff.net>
+ <20171104183643.akaazwswysphzuoq@ruderich.org>
+ <20171105020700.2p4nguemzdrwiila@sigill.intra.peff.net>
+ <20171106161315.dmftp6ktk6bu7cah@ruderich.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <6f433987-f91b-d5b5-242e-3a241b7442c7@jeffhostetler.com>
+In-Reply-To: <20171106161315.dmftp6ktk6bu7cah@ruderich.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 17, 2017 at 10:42:52AM -0500, Jeff Hostetler wrote:
+On Mon, Nov 06, 2017 at 05:13:15PM +0100, Simon Ruderich wrote:
 
-> > Yes, I share the same feeling.  It does not help that the series
-> > defines its own notion of arg_needs_armor() and uses it to set a
-> > field called requires_armor that is not yet used, the definition of
-> > "armor"ing being each byte getting encoded as two hexadecimal digits
-> > without any sign (which makes me wonder what a receiver of
-> > "deadbeef" would do---did it receive an armored string or a plain
-> > one???).  I do not understand why these strings are not passed as
-> > opaque sequences of bytes and instead converted at this low a layer.
+> On Sat, Nov 04, 2017 at 10:07:00PM -0400, Jeff King wrote:
+> > Yes, I think what you've written here (and below) is quite close to the
+> > error_context patches I linked elsewhere in the thread. In other
+> > words, I think it's a sane approach.
 > 
-> I'm probably being too paranoid.  My fear is that a client could pass
-> an expression to clone/fetch/fetch-pack that would be sent to the
-> server and evaluated by the interface between upload-pack and pack-objects.
-> I'm not worried about the pack-protocol transport.  I'm mainly concerned
-> in how upload-pack passes that *client-expression* to pack-objects and are
-> there ways for that to go south on the server with a carefully crafted
-> expression.
+> In contrast to error_context I'd like to keep all exiting
+> behavior (die, ignore, etc.) in the hand of the caller and not
+> use any callbacks as that makes the control flow much harder to
+> follow.
 
-I think you have to trust that those interfaces are capable of passing
-raw bytes, whether directly via execve() or because we got the quoting
-right. If there's a bug there, it's going to be a bigger problem than
-just this code path (and the fix needs to be there, not second-guessing
-it in the callers).
+Yeah, I have mixed feelings on that. I think it does make the control
+flow less clear. At the same time, what I found was that handlers like
+die/ignore/warn were the thing that gave the most reduction in
+complexity in the callers.
 
-So I'd say that yeah, you are being too paranoid.
+> Regarding the API, should it be allowed to pass NULL as error
+> pointer to request no additional error handling or should the
+> error functions panic on NULL? Allowing NULL makes partial
+> conversions possible (e.g. for write_in_full) where old callers
+> just pass NULL and check the return values and converted callers
+> can use the error struct.
 
-As an aside, though, I wonder if these client expressions should be fed
-over stdin to pack-objects. That removes any argv limits we might run
-into on the server side. It also removes shell injections as a
-possibility, though of course we'd need quoting in that layer to avoid
-argument-injection to pack-objects.
+I think it's probably better to be explicit, and pass some "noop" error
+handling struct. We'll have to be adding parameters to functions to
+handle this anyway, so I don't think there's much opportunity for having
+NULL as a fallback for partial conversions.
+
+> How should translations get handled? Appending ": %s" for
+> strerror(errno) might be problematic. Same goes for "outer
+> message: inner message" where the helper function just inserts ":
+> " between the messages. Is _("%s: %s") (with appropriate
+> translator comments) enough to handle these cases?
+
+I don't have a real opinion, not having done much translation myself. I
+will say that the existing die_errno(), error_errno(), etc just use "%s:
+%s", without even allowing for translation (see fmt_with_err in
+usage.c). I'm sure that probably sucks for RTL languages, but I think
+it would be fine to punt on it for now.
+
+> Suggestions how to name the struct and the corresponding
+> functions? My initial idea was struct error and to use error_ as
+> prefix, but I'm not sure if struct error is too broad and may
+> introduce conflicts with system headers. Also error_ is a little
+> long and could be shorted to just err_ but I don't know if that's
+> clear enough. The error_ prefix doesn't conflict with many git
+> functions, but there are some in usage.c (error_errno, error,
+> error_routine).
+
+In my experiments[1] I called the types error_*, and then generally used
+"err" as a local variable when necessary. Variants on that seem fine to
+me, but yeah, you have to avoid conflicting with error(). We _could_
+rename that, but it would be a pretty invasive patch.
+
+> And as general question, is this approach to error handling
+> something we should pursue or are there objections? If there's
+> consensus that this might be a good idea I'll look into
+> converting some parts of the git code (maybe refs.c) to see how
+> it pans out.
+
+I dunno. I kind of like the idea, but if the only error context is one
+that adds to strbufs, I don't know that it's buying us much over the
+status quo (which is passing around strbufs). It's a little more
+explicit, I guess.
+
+Other list regulars besides me seem mostly quiet on the subject.
 
 -Peff
+
+[1] This is the jk/error-context-wip branch of https://github.com/peff/git.
+    I can't remember if I mentioned that before.
