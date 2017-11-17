@@ -2,93 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_NUMERIC_HELO,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E82CB202AF
-	for <e@80x24.org>; Fri, 17 Nov 2017 18:15:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 06C07202AF
+	for <e@80x24.org>; Fri, 17 Nov 2017 18:41:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1760101AbdKQSPM (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Nov 2017 13:15:12 -0500
-Received: from cp-27.webhostbox.net ([208.91.198.76]:48716 "EHLO
-        cp-27.webhostbox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752369AbdKQSPK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Nov 2017 13:15:10 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=unimetic.com; s=default; h=Message-ID:References:In-Reply-To:Subject:Cc:To:
-        From:Date:Content-Transfer-Encoding:Content-Type:MIME-Version:Sender:Reply-To
-        :Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-        Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=dyPnw+6QHcnJbPL8qTfRKWycqW0BCwUxYDHvGSahypc=; b=HVJHMVEtUreh5SU+8eM+rxP2ZG
-        k/YgcGF8yFS96bbBT0BmNQzweBlYW9+5UmOEnLH+ifaGt7vExjQXcoP6P/JzaUKF7gL8W1JHS2TLc
-        /c1s13K4VZ64vXWk91Ez3dFgX4V6Futx7xa1lULFIbP0+P9S8hFBabGbbTd19WUYlPbT9CcL/k0lU
-        mUBH0S8fHa6eh3l3TQ4C96ZktpwiytglyU5d2LAcTFo3GiWW+U6rAUqCxNSBgW61aMU1s/Ze/Zs7H
-        1CmOnNef9Bc2FNJqJlU7Zl6Gc/lfvXkl/d5hCfu/N8CoNpIDQWtqsqR6JQfVKoUywZCsP8Lm35vEY
-        Kw8Zx/mA==;
-Received: from [127.0.0.1] (port=41021 helo=208.91.198.76)
-        by cp-27.webhostbox.net with esmtpa (Exim 4.89)
-        (envelope-from <hsed@unimetic.com>)
-        id 1eFlAT-0036Xj-Kc; Fri, 17 Nov 2017 18:15:10 +0000
+        id S1755870AbdKQSlD (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Nov 2017 13:41:03 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64412 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1755723AbdKQSlB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Nov 2017 13:41:01 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 917C7A42FD;
+        Fri, 17 Nov 2017 13:40:58 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=1Z5u3CXP0nPaBVVXgtkGd+dNDws=; b=rVThhy
+        q7ZgLeDI4zQIIZy5Op/pSbcKrFh6VBI+iQug04fayIwU03dORX77lOe6c6pQwKNX
+        qC9zAlJYYPVehI5Y08svQ4jCosvU22QKWE4+GikdfE8qrUX3gYGEr4Pqy2VUWwBL
+        imzdyNK28pADI8xazeRU+UNPvAz36MewgeARc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ZAP+tmGLes0w22EFb/PfBTI/L3Tzs+V3
+        pnRBYC6Jt1bDh/r7Z7Ywa9v/5DQwuTklXNXjpT8QXG3VGMw6MxaSJ8O7RrhoqXdr
+        mKdCymZ3ClZjAEOm2E2hSxEOuRZvbDIPjzbxTUexuqmH06zgn1B7Vb3XkvOFFAoS
+        0hbrvRp89ZI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 89E7BA42FC;
+        Fri, 17 Nov 2017 13:40:58 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0A9E5A42FB;
+        Fri, 17 Nov 2017 13:40:57 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     lars.schneider@autodesk.com
+Cc:     git@vger.kernel.org, sbeller@google.com,
+        Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [PATCH v2] launch_editor(): indicate that Git waits for user input
+References: <20171117135109.18071-1-lars.schneider@autodesk.com>
+Date:   Sat, 18 Nov 2017 03:40:56 +0900
+In-Reply-To: <20171117135109.18071-1-lars.schneider@autodesk.com> (lars
+        schneider's message of "Fri, 17 Nov 2017 14:51:09 +0100")
+Message-ID: <xmqqy3n4rbnr.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 17 Nov 2017 18:15:09 +0000
-From:   hsed@unimetic.com
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git <git@vger.kernel.org>
-Subject: Re: [PATCH V3] config: add --expiry-date
-In-Reply-To: <xmqqlgj7xcuf.fsf@gitster.mtv.corp.google.com>
-References: <xmqqshdh2wln.fsf@gitster.mtv.corp.google.com>
- <20171116000547.3246-1-hsed@unimetic.com>
- <xmqqlgj7xcuf.fsf@gitster.mtv.corp.google.com>
-Message-ID: <aaff8c91c03bbbc797183f26440496b6@unimetic.com>
-X-Sender: hsed@unimetic.com
-User-Agent: Roundcube Webmail/1.2.3
-X-Authenticated_sender: hsed@unimetic.com
-X-OutGoing-Spam-Status: No, score=-1.0
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cp-27.webhostbox.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - unimetic.com
-X-Get-Message-Sender-Via: cp-27.webhostbox.net: authenticated_id: hsed@unimetic.com
-X-Authenticated-Sender: cp-27.webhostbox.net: hsed@unimetic.com
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+Content-Type: text/plain
+X-Pobox-Relay-ID: DA1125A0-CBC6-11E7-A5DB-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2017-11-16 00:54, Junio C Hamano wrote:
-> 
->> -	if (parse_expiry_date(value, expire))
->> -		return error(_("'%s' for '%s' is not a valid timestamp"),
->> -			     value, var);
->> ...
->> +	if (parse_expiry_date(value, timestamp))
->> +		die(_("failed to parse date_string in: '%s'"), value);
-> 
-> This is an unintended change in behaviour (or at least undocumented
-> in the log message) for the "git reflog" command, no?
-> 
-> Not just the error message is different, but the original gave the
-> calling code a chance to react to the failure by returning -1 from
-> the function, but this makes the command fail outright here.
-> 
-> Would it break anything if you did "return error()" just like the
-> original used to?  Are your callers of this new function not
-> prepared to see an error return?
+lars.schneider@autodesk.com writes:
 
-I did notice the slight change in the error handling but the new one
-was copied from one of the other functions in builtin/config.c. I
-will revert it to the old method and if the new (and other) tests still
-pass, I will provide an updated patch.
+> Junio posted the original version of this patch [1] as response to my RFC [2].
+> I took Junio's patch and slightly changed the commit message as well as the
+> message printed to the user after GIT_EDITOR is invoked [3].
+>
+> Thanks,
+> Lars
 
-Kind Regards,
-Haaris
+Thanks.
+
+> diff --git a/editor.c b/editor.c
+> index 7519edecdc..23db92d8c6 100644
+> --- a/editor.c
+> +++ b/editor.c
+> @@ -40,6 +40,32 @@ int launch_editor(const char *path, struct strbuf...
+> ...
+> +		if (close_notice) {
+> +			fprintf(
+> +				stderr,
+> +				"Launched your editor ('%s'). Adjust, save, and close the "
+> +				"file to continue. Waiting for your input... ", editor
+
+How wide is your typical terminal window?  With message this long, a
+sample standalone program I used while developing the prototype of
+this feature no longer can retract this "temporary" message.
+
+Would something shorter like "Waiting for you to finish editing..."
+work well enough?
+
+-- -- --
+#include <stdio.h>
+
+int main(void)
+{
+	const char *EL = "\033[K"; /* Erase in Line */
+	const char *editor = "emacsclient";
+
+	fprintf(
+		stderr,
+		"Launched your editor ('%s'). Adjust, save, and close the "
+		"file to continue. Waiting for your input... ", editor);
+	fflush(stderr);
+	sleep(2);
+	fprintf(stderr, "\r%s", EL);
+	fflush(stderr);
+	return 0;
+}
+-- -- --
+
