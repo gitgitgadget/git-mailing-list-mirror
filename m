@@ -6,65 +6,80 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B77D9202AF
-	for <e@80x24.org>; Fri, 17 Nov 2017 22:16:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A97CB202AF
+	for <e@80x24.org>; Fri, 17 Nov 2017 22:19:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S936737AbdKQWQe (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Nov 2017 17:16:34 -0500
-Received: from cloud.peff.net ([104.130.231.41]:33000 "HELO cloud.peff.net"
+        id S936778AbdKQWTk (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Nov 2017 17:19:40 -0500
+Received: from cloud.peff.net ([104.130.231.41]:33018 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S936734AbdKQWQd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Nov 2017 17:16:33 -0500
-Received: (qmail 9485 invoked by uid 109); 17 Nov 2017 22:16:33 -0000
+        id S936777AbdKQWTi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Nov 2017 17:19:38 -0500
+Received: (qmail 9608 invoked by uid 109); 17 Nov 2017 22:19:38 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 17 Nov 2017 22:16:33 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 17 Nov 2017 22:19:38 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28951 invoked by uid 111); 17 Nov 2017 22:16:47 -0000
+Received: (qmail 29016 invoked by uid 111); 17 Nov 2017 22:19:53 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Fri, 17 Nov 2017 17:16:47 -0500
+ by peff.net (qpsmtpd/0.94) with ESMTPA; Fri, 17 Nov 2017 17:19:53 -0500
 Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 17 Nov 2017 17:16:31 -0500
-Date:   Fri, 17 Nov 2017 17:16:31 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 17 Nov 2017 17:19:36 -0500
+Date:   Fri, 17 Nov 2017 17:19:36 -0500
 From:   Jeff King <peff@peff.net>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     gennady.kupava@gmail.com, git <git@vger.kernel.org>,
-        Gennady Kupava <gkupava@bloomberg.net>
-Subject: Re: [PATCH] Reduce performance penalty for turned off traces
-Message-ID: <20171117221631.x2xqeeqmf5xob3yv@sigill.intra.peff.net>
-References: <20171111192858.27255-1-gennady.kupava@gmail.com>
- <20171112141737.nmnsygm4wrhtkqwb@sigill.intra.peff.net>
- <CAGZ79kb4Eo0AC4Z42_ks5_+Pcy4DrDCufNb=5J=g8L6pMnHd7A@mail.gmail.com>
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v4 4/6] list-objects: filter objects in
+ traverse_commit_list
+Message-ID: <20171117221936.zsokhvmslnf6jete@sigill.intra.peff.net>
+References: <20171116180743.61353-1-git@jeffhostetler.com>
+ <20171116180743.61353-5-git@jeffhostetler.com>
+ <20171116122133.4cc718414579c1a5a682174b@google.com>
+ <bdf75d90-570d-8cf0-886a-2c5c9cdba1c1@jeffhostetler.com>
+ <20171116215725.k44e3alk2lq6bbwu@sigill.intra.peff.net>
+ <xmqqh8tttzwq.fsf@gitster.mtv.corp.google.com>
+ <6f433987-f91b-d5b5-242e-3a241b7442c7@jeffhostetler.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAGZ79kb4Eo0AC4Z42_ks5_+Pcy4DrDCufNb=5J=g8L6pMnHd7A@mail.gmail.com>
+In-Reply-To: <6f433987-f91b-d5b5-242e-3a241b7442c7@jeffhostetler.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 15, 2017 at 11:14:20AM -0800, Stefan Beller wrote:
+On Fri, Nov 17, 2017 at 10:42:52AM -0500, Jeff Hostetler wrote:
 
-> > I did manually disable HAVE_VARIADIC_MACROS and confirmed that the
-> > result builds and passes the test suite (though I suspect that GIT_TRACE
-> > is not well exercised by the suite).
+> > Yes, I share the same feeling.  It does not help that the series
+> > defines its own notion of arg_needs_armor() and uses it to set a
+> > field called requires_armor that is not yet used, the definition of
+> > "armor"ing being each byte getting encoded as two hexadecimal digits
+> > without any sign (which makes me wonder what a receiver of
+> > "deadbeef" would do---did it receive an armored string or a plain
+> > one???).  I do not understand why these strings are not passed as
+> > opaque sequences of bytes and instead converted at this low a layer.
 > 
-> GIT_TRACE is exercised in the test suite (though I am not sure if it counts
-> as well-exercised) in t7406-submodule-update.sh for example, which uses
-> GIT_TRACE to obtain information about thread parallelism used by Git, as
-> that is not observable otherwise, if we assume that performance tests in the
-> standard test suite are not feasible.
+> I'm probably being too paranoid.  My fear is that a client could pass
+> an expression to clone/fetch/fetch-pack that would be sent to the
+> server and evaluated by the interface between upload-pack and pack-objects.
+> I'm not worried about the pack-protocol transport.  I'm mainly concerned
+> in how upload-pack passes that *client-expression* to pack-objects and are
+> there ways for that to go south on the server with a carefully crafted
+> expression.
 
-Hmm, yeah, that might cover it. What I'm worried about is that we missed
-some case where NULL needed to become &trace_default_key. But I did look
-for that in my review of the patch and didn't notice any spots. And the
-coverage in t7406 should help.
+I think you have to trust that those interfaces are capable of passing
+raw bytes, whether directly via execve() or because we got the quoting
+right. If there's a bug there, it's going to be a bigger problem than
+just this code path (and the fix needs to be there, not second-guessing
+it in the callers).
 
-> > After your patch, the GIT_TRACE=1 time remains the same but GIT_TRACE=0
-> > drops to 1ms.
-> 
-> So does that mean we can use a lot more tracing now?
+So I'd say that yeah, you are being too paranoid.
 
-Yep, that's the intent.
+As an aside, though, I wonder if these client expressions should be fed
+over stdin to pack-objects. That removes any argv limits we might run
+into on the server side. It also removes shell injections as a
+possibility, though of course we'd need quoting in that layer to avoid
+argument-injection to pack-objects.
 
 -Peff
