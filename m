@@ -2,84 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D56A4202AF
-	for <e@80x24.org>; Fri, 17 Nov 2017 17:16:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EAB76202AF
+	for <e@80x24.org>; Fri, 17 Nov 2017 17:36:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751344AbdKQRQh (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Nov 2017 12:16:37 -0500
-Received: from mail-pf0-f179.google.com ([209.85.192.179]:34096 "EHLO
-        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751313AbdKQRQf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Nov 2017 12:16:35 -0500
-Received: by mail-pf0-f179.google.com with SMTP id x7so2389585pfa.1
-        for <git@vger.kernel.org>; Fri, 17 Nov 2017 09:16:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=PMxzY1I8km9ELU8jj5Kqvhdn41OMHQRKS99zNQDLpYo=;
-        b=XhB3p1LRPC2gIWvZONeqB7O+K5mFLRAx8x8RGotA0qSGEjY+yO6glvS12Hj44l3+UM
-         bSKVMcCVyEnSAx09gSXmGaj3mEReAGHEnL8bF+4QSjBhQhnvlNKDT1kwC+lf78AwJHhh
-         4fURO3d8kvEThOTVj5kWt3IpHTVvhQo+wIF/pRt8DHWuAfnGO/9ljS09NA03L4LpesCO
-         agkpEYGQVIq4f+HMtr1hadPezTtn+F8AivzHBpbK5ALlr3FzWEK0CyXsPWydIFxKdtAi
-         KcjQWFnPJjzWxbl3+RjHIciXuf2/Vjdnzug7x2B94wrAovTHoUbZCzxQDGd2fKykiMIt
-         lsxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=PMxzY1I8km9ELU8jj5Kqvhdn41OMHQRKS99zNQDLpYo=;
-        b=ObU+bR19KdJvHqpYHthE2xMKVLDxsdu7PWHiOR+fs+sDg48gZSmtosxyM+bCL70dGy
-         pWT23t477BeipLHhADk9FIPfDgbCcb4/MpvOpyHSQ1UdfTwCVEWRYC/YF6thV9UuUXx7
-         b83kCsjknXa6F0FJkEmGcxXrLAPe7bzIPxPZ1SN3JM/mid+xvpud43MmTRpxQaBWyVmj
-         aXEPzVT6F0SlOhRzuUQtoeN02GmkxYLHQe3wcbGWN8QypaUWwEQ9wb8aAHdf/1sm7e45
-         +1B4/Ke9mK3e8n/aF+TmTbbf31BL5XQjDQ2Gi/D7Ysry6+tiaVvaoP/+JVdr+hAk86ov
-         ceMg==
-X-Gm-Message-State: AJaThX7gR3P1xf4liD4dKXpGAg4sWfEW0hdR/xknnjeGHozMq+9Vf5j2
-        exvjxku5e/88+LQNt5IJ+eCVXFhV
-X-Google-Smtp-Source: AGs4zMZHUbE9Xch0y5c4qVVduiS37/nZPKIFkMOoZpvZ8XFil2Sw6NsJICocnlU70WAGFQJxzqHRkQ==
-X-Received: by 10.159.249.1 with SMTP id bf1mr2194304plb.401.1510938995071;
-        Fri, 17 Nov 2017 09:16:35 -0800 (PST)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id k80sm9214733pfh.30.2017.11.17.09.16.34
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 17 Nov 2017 09:16:34 -0800 (PST)
-Date:   Fri, 17 Nov 2017 09:16:09 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
-Cc:     Git Mailing list <git@vger.kernel.org>
-Subject: Re: is there a rationale for some sample hooks but not others?
-Message-ID: <20171117171609.3lwjlrhm43o3pqir@aiede.mtv.corp.google.com>
-References: <alpine.LFD.2.21.1711170114080.6483@localhost.localdomain>
+        id S1760025AbdKQRgK (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Nov 2017 12:36:10 -0500
+Received: from siwi.pair.com ([209.68.5.199]:59083 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752783AbdKQRgJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Nov 2017 12:36:09 -0500
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id BD177844DB;
+        Fri, 17 Nov 2017 12:36:08 -0500 (EST)
+Received: from [10.160.98.77] (unknown [167.220.148.86])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 78BFE844D7;
+        Fri, 17 Nov 2017 12:36:08 -0500 (EST)
+Subject: Re: [PATCH v4 5/6] rev-list: add list-objects filtering support
+To:     Junio C Hamano <gitster@pobox.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, peff@peff.net,
+        Jeff Hostetler <jeffhost@microsoft.com>
+References: <20171116180743.61353-1-git@jeffhostetler.com>
+ <20171116180743.61353-6-git@jeffhostetler.com>
+ <20171116124354.3d800cc27dbe3ea668c64519@google.com>
+ <xmqqd14htzw5.fsf@gitster.mtv.corp.google.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <f59d4b4a-3eec-6cc2-d822-f65d0d8fd99e@jeffhostetler.com>
+Date:   Fri, 17 Nov 2017 12:36:07 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.21.1711170114080.6483@localhost.localdomain>
-User-Agent: NeoMutt/20170609 (1.8.3)
+In-Reply-To: <xmqqd14htzw5.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Robert,
 
-Robert P. J. Day wrote:
 
-> given that a newly-initialized repo contains samples for some hooks
-> but not others, is there a simple rationale for why those particular
-> sample hooks are provided, and not the rest?
+On 11/16/2017 9:14 PM, Junio C Hamano wrote:
+> Jonathan Tan <jonathantanmy@google.com> writes:
+> 
+>> If it were up to me, I would remove all existing mentions of "partial
+>> clone" and explain the presence of the "--missing" argument as follows:
+>>
+>>      In the future, we will introduce a "partial clone" mechanism wherein
+>>      an object in a repo, obtained from a remote, may reference a missing
+>>      object that can be dynamically fetched from that remote once needed.
+>>      This "partial clone" mechanism will have a way, sometimes slow, of
+>>      determining if a missing link is one of the links expected to be
+>>      produced by this mechanism.
+>>
+>>      This patch introduces handling of missing objects to help debugging
+>>      and development of the "partial clone" mechanism, and once the
+>>      mechanism is implemented, for a power user to perform operations
+>>      that are missing-object-aware without incurring the cost of checking
+>>      if a missing link is expected.
+> 
+> That sounds quite sensible.
+> 
 
-I assume this is in the context of reviewing the Pro Git book.  Thanks
-for doing this work.
-
-Let me turn the question around: do you think it would be useful to
-have samples for all hook types?  What would you like those samples to
-look like?
-
-Thanks,
-Jonathan
+will do.  thanks.
+Jeff
