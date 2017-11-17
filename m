@@ -2,111 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4AAEB202A0
-	for <e@80x24.org>; Fri, 17 Nov 2017 01:36:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 77EFA202A0
+	for <e@80x24.org>; Fri, 17 Nov 2017 01:41:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754727AbdKQBgs (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Nov 2017 20:36:48 -0500
-Received: from mail-qt0-f196.google.com ([209.85.216.196]:37139 "EHLO
-        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752487AbdKQBgq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Nov 2017 20:36:46 -0500
-Received: by mail-qt0-f196.google.com with SMTP id d15so2467177qte.4
-        for <git@vger.kernel.org>; Thu, 16 Nov 2017 17:36:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Ju4Tta9z/5gm0TwnsNXtYjHvYkqhC6QXjUDIwfugtNE=;
-        b=JeSnOjtgxoVm4tLHk6TUtTX60hfWdDvaN3ui+iX+VbTRHgNpp9uaQLG5aqMwUnLFSU
-         EkLtxC0iiQcBXDklUq3ZLXISdlKjCXEoL366go9CLz8tRTligy42hHKXlKF16oCfeI8w
-         VVY2FdSW5osWBxN/odyrOejhAY89z44BWWGxCCuEh9QtseYfmczqAgG+oi8vEdgCq6mJ
-         mOvcLnJenEK0XvL36FKI5LwYgya6R/WHLSdNZ56Bu1itTOa8VSZ4xJUG9S381Va7qDzK
-         TsdaYFAWRMUQjG7gRYeDDoZZnw6PJoBh3bQ0LxHdlWf49Tfjx3/+jAlP40bcAN/QbO3U
-         GurA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Ju4Tta9z/5gm0TwnsNXtYjHvYkqhC6QXjUDIwfugtNE=;
-        b=fqa6ZITpz9YhiTgkvoEXb+5rBsqXtijhYLLyxJBLIPqZnmBOXJ0YBd6po5gPoy+PmO
-         pUu1DiVHDqk8Fp+WthglLs207tT1bmxcN3cmMxDvsJyIP3oQQNV9HpeFyoaInGjhL7OU
-         VLPbMfxhjDKxfaKqMsBgvkI+yg1AaJDkEuyvzygX0YjHO9zaAuzbBC1lyURSYxYXf6S+
-         AnHS2iIgTAoyXNLWNxrcCZnS+Yn1gLcrRSHIqi9uScl4Z78OS0yRDNTtJFO498WpRoLk
-         IF6JZgFtDhOfkPX1OOehLqSBm/dmXWMpDxtPL7mD+jJMtiw0FlbhLKZ4jGLfw68SieYV
-         nYiQ==
-X-Gm-Message-State: AJaThX5MkedRtmBgtvB5w4AXToYcdDwOof2ode2u4/iO8owmCSQI5Hp6
-        htI8KeuaClqPUwE+0APMLBk=
-X-Google-Smtp-Source: AGs4zMY2/SyBLGQ/GkjK5zqVFLMpKqAOBPj1pMjQiDUOYNn6SVXWqJ13Nd5rN75XRyVjhe/MwJltcA==
-X-Received: by 10.237.60.117 with SMTP id u50mr5578789qte.6.1510882605419;
-        Thu, 16 Nov 2017 17:36:45 -0800 (PST)
-Received: from zaya.teonanacatl.net (pool-173-67-181-41.hrbgpa.fios.verizon.net. [173.67.181.41])
-        by smtp.gmail.com with ESMTPSA id j30sm1822937qkh.61.2017.11.16.17.36.44
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 16 Nov 2017 17:36:44 -0800 (PST)
-Date:   Thu, 16 Nov 2017 20:36:42 -0500
-From:   Todd Zullinger <tmz@pobox.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Martin =?iso-8859-1?Q?=C5gren?= <martin.agren@gmail.com>
-Subject: Re: [PATCH] branch doc: remove --set-upstream from synopsis
-Message-ID: <20171117013642.GL3693@zaya.teonanacatl.net>
-References: <20171116074643.19614-1-tmz@pobox.com>
- <xmqqzi7lu2h8.fsf@gitster.mtv.corp.google.com>
+        id S1754732AbdKQBlZ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Nov 2017 20:41:25 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62795 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752487AbdKQBlY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Nov 2017 20:41:24 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 33F919EBDF;
+        Thu, 16 Nov 2017 20:41:23 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=7YqkriTzp5hj2TZPRdttzdL2iQA=; b=F611lX
+        AMWBGjxAGnkebqIBh6+R0kI1I00yPTBxUIWHC7Bq9ERfIA4tXQ72ncYvjtjVSV8l
+        MsiIJLamcxnnCjZ70u/pA1Z6YORCIGAC4SGUNKtS92cbCoP6As0kw5U6ESRp44Sd
+        SlyjyGPJcvyOf5cu7HHTLvGn3LvNM0UgxiiHM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=He5jEuFgzZQQ/TV6L/nIgeatJc3IgX6d
+        l3w+gL5Pxs4TUD7u/T7+WI69jKjod7wi62DBe7PHTo84F5xwTaMTN9KyWn5RibMY
+        xB3xtwX7/r9YCsbN/nvKLNfCqAhif9YjeLOWpqFXepDJ/BZ97+eHoOriOhDBQwoy
+        P6dkzT7wXEM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2C79C9EBDE;
+        Thu, 16 Nov 2017 20:41:23 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9866B9EBDD;
+        Thu, 16 Nov 2017 20:41:22 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Christoph Michelbach <michelbach94@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Documentation of post-receive hook
+References: <1510872031.23230.7.camel@gmail.com>
+Date:   Fri, 17 Nov 2017 10:41:21 +0900
+In-Reply-To: <1510872031.23230.7.camel@gmail.com> (Christoph Michelbach's
+        message of "Thu, 16 Nov 2017 23:40:31 +0100")
+Message-ID: <xmqqpo8hu1fi.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <xmqqzi7lu2h8.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.9.1 (2017-09-22)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6AACD922-CB38-11E7-B53B-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> Todd Zullinger <tmz@pobox.com> writes:
->> Support for the --set-upstream option was removed in 52668846ea
->> (builtin/branch: stop supporting the "--set-upstream" option,
->> 2017-08-17), after a long deprecation period.
->>
->> Remove the option from the command synopsis for consistency.  Replace
->> another reference to it in the description of `--delete` with
->> `--set-upstream-to`.
->>
->> Signed-off-by: Todd Zullinger <tmz@pobox.com>
->> ---
+Christoph Michelbach <michelbach94@gmail.com> writes:
+
+> I think the documentation of the post-receive hook is misleading. When reading
+> it, it appears as though the post-receive hook is executed even when no commits
+> are transferred by a git push because it isn't mentioned anywhere that this is
+> necessary for its execution.
+
+In other words, post-receive hook triggers only after it receives
+objects.  A mere action of running receive-pack command does not.
+
+> This can easily be fixed by changing
 >
-> Makes sense.  Even though we internally still carry (and have to
-> carry) code to notice and explicitly reject "--set-upstream", I do
-> not think that we need to suggest its presence to the end user.
->
-> The option parsing code marks it with the PARSE_OPT_HIDDEN bit
-> correctly and it would make sense to make the synopsis section
-> follow suit.
+>     This hook is invoked by 'git-receive-pack' on the remote repository,
+>     which happens when a 'git push' is done on a local repository.
 
-Seeing that the error output when using it tells the user to "use
-'--track' or '--set-upstream-to' instead," should we perhaps also
-remove the --set-upstream entry entirely?  That's reads:
+So the existing description is technically correct (i.e. it does
+correctly identify who invokes it) but lacks a more interesting and
+relevant information (i.e. receive-pack invokes only after receiving
+data).
 
-    --set-upstream::
-            As this option had confusing syntax, it is no longer supported.
-            Please use `--track` or `--set-upstream-to` instead.
+>     This hook is invoked by 'git-receive-pack' on the remote repository,
+>     which happens when a 'git push' is done on a local repository and
+>     successfully transfers at least 1 commit.
 
-I don't have a strong opinion either way, but perhaps the error
-message is all that's needed now?  Only users who have a long memory
-or are reading old documentation will call --set-upstream.  I can
-imagine someone coming along in a few months suggesting to remove the
-remaining reference to --set-upstream from the git branch
-documentation for consistency.
+I am not sure "at least 1 commit" is a good phrase to use here.
+There are transfer that sends objects but no commit object, and the
+above makes it sound as if such a transfer will not trigger the
+hook.  Would
 
--- 
-Todd
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-...more people are driven insane through religious hysteria than by
-drinking alcohol.
-    -- W.C. Fields
+	This hook is run by 'git receive-pack' on the remote
+	repository, after it receives objects sent by 'git push'.
+
+be clear enough to teach readers that a no-op push that recieve-pack
+does not receive any object does not trigger the hook?
 
