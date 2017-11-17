@@ -2,151 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F2F0E202D7
-	for <e@80x24.org>; Fri, 17 Nov 2017 20:46:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CE33B202AF
+	for <e@80x24.org>; Fri, 17 Nov 2017 20:50:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759153AbdKQUq5 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Nov 2017 15:46:57 -0500
-Received: from mail-qk0-f178.google.com ([209.85.220.178]:43531 "EHLO
-        mail-qk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751573AbdKQUoN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Nov 2017 15:44:13 -0500
-Received: by mail-qk0-f178.google.com with SMTP id j202so926515qke.10
-        for <git@vger.kernel.org>; Fri, 17 Nov 2017 12:44:13 -0800 (PST)
+        id S1161438AbdKQURb (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Nov 2017 15:17:31 -0500
+Received: from mail-qk0-f170.google.com ([209.85.220.170]:36309 "EHLO
+        mail-qk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1161392AbdKQURY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Nov 2017 15:17:24 -0500
+Received: by mail-qk0-f170.google.com with SMTP id o6so833035qkh.3
+        for <git@vger.kernel.org>; Fri, 17 Nov 2017 12:17:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=OZ3OXMUFYfzNr5H68KCGlN1u+V0R5gwsWkDmiFpD7Po=;
-        b=eaynKnYwX3oaDtA3VDle7jnd5HBRPcPSvkpXqLO80jOzU8Ms/R4EM4b2r69R+LIIYZ
-         3G3382wOeOB9MAAh7rNvnRTAHrl9FrRgx457Q21D6IIrUOmVXSnutd5QY/TPdNS1wWcd
-         6Up/IU2WFvI0xrm+WDu0eCzE5y52DlKxNZwRt0gIg/3RDtrGjbxAuQzsfNrYdGqTgYLp
-         R7/iccCnHEsvJV4UWhHNqHW2g9VOxseS3CLp37BeGFltqGz3kikFwNfQe1xL/MpjwPYd
-         oO/4ATtEN/6QWWuhHiUSLc6y2UEtKF6jYsUSF0HhK0cJbDXrPsPzX3IgJ0wyIzpp6ANf
-         Ey6A==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=gJ//5K8RD4ezbKOY0e/lth+7ytdaDVJ1OTX/Sjr7Zas=;
+        b=G0GyicEQ4beLQegQQo5WR72ekzALQnRmAZ0oeEyR1IFlF9dqqHHDw9AdnDE9QTfpN+
+         8eP2U2si3faXUsCPqHjW4LTV/jZwrPpU02+3gE/H2QTCxup39+Z/uEB4ktIHpbkTvI5J
+         PJWnoRczpmE83MsQGuMsYui0g+1WEeIXtBYgQvofb8QjoOJFH6oAMhe5z3UiZW/Zcrsx
+         m+JKMSz923v5huBKj+RpGhgErJiW5qJwZEMRtnmYdNnjY+2eq5x2AOhG4xIxKPPQKgsU
+         23V+DfnN954ihSW9Lc/JwqJeHWfjzodcqTAbQBGt0vRXSfsft+Mnl97QF3ExXZEFw81Z
+         GuUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=OZ3OXMUFYfzNr5H68KCGlN1u+V0R5gwsWkDmiFpD7Po=;
-        b=pG0e3PZbtN1SHITMbwc4uXlMURTbKlKbiyWKZrved3Wx3Sgmr7wVntGbV4VBw2ALPM
-         pW1LzI8XW3EIW24WNpIx3RgelzCewrWOc/3y4tj/4y3YTwa88BPkiVJ/1NLIxiEKT5U9
-         GFx2kLUgTtI5tyMvIj8fDtRSxO6Jm8PzJLNMfqdVBdKDtC+WOR5UAGsFjidxwmqtBlrN
-         VRe4MMTJGKcyxcwRMT+0vSq4+ctZMM+5Okr/INbsvotyJMSEssM/9ES14WRYWN/qFNnT
-         9EA2yHZJbXT3DNw6V3+Ioi7cYNkQfnLijSMcxaGVU436lQFS4M1OnZYimsFK0cxL2NLM
-         AYvQ==
-X-Gm-Message-State: AJaThX5bGiZw8ENvXJDIg34UMmzASRept1w3L9eM5h7igyMjU5iIw7m6
-        EFf5+W2SapMdcEEq9SzdDZXP+qsLYufekzCZI+mpfw==
-X-Google-Smtp-Source: AGs4zMbRMbo+/iZ6YI5knqCmmr/dXPLma5RcIF9mrIXDVeeENDCHY8KqzYFClPbYwZUFEsUHLiH8qB/It++ipPmGgJ0=
-X-Received: by 10.55.114.69 with SMTP id n66mr9964380qkc.306.1510951452405;
- Fri, 17 Nov 2017 12:44:12 -0800 (PST)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=gJ//5K8RD4ezbKOY0e/lth+7ytdaDVJ1OTX/Sjr7Zas=;
+        b=OA6w0fvdu7TZ8LlMsyUk0Q+WBTpdZELv+70N1Qu8f2MKL6ShAh2f8YEobNp2W1tdZM
+         REbJVIA72OG74QuQBz3VTmo/8fUC6ngn2pJGWmc/mtmUYV53fJn51EiU5YGCvHvEv5nG
+         /sYZBi5y1QZypTqrnrLJpmrAroE1ZaOIrAhoj/sJcZsbYz39dh/doIhbrOG8eQPfSa5j
+         0B5leKB/edbrX7iJ++xVBxGvYkpMiJ15X1Q3MqlBoocWT4MOMl6yy7dmbDQWeuXUfyq8
+         2FP4Vk0ss1cSUMS41gLrhkwOxX1KKBZGKka3Ss6SYmbA4+ClQHUv8MVFGBhX4sLGMg7w
+         tWCw==
+X-Gm-Message-State: AJaThX5hiFNiXa4wr6M/dUlxOP3Vn7TPuB9LmPN7BbOVglkZAsmKmMTM
+        Mmc8oMZ9onGJelPsuPfYOP9Gkx0AjvK7VdVFAxX74w==
+X-Google-Smtp-Source: AGs4zMYEvZPQAQyqaYl/dXxxILKi5o7/T3CykHw5yLZbLwpqMGIcbXxB55tcGzxnhqxTphw8Bhg0eZiwoYebCIFsY7o=
+X-Received: by 10.55.124.198 with SMTP id x189mr10264526qkc.40.1510949843498;
+ Fri, 17 Nov 2017 12:17:23 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.12.155.209 with HTTP; Fri, 17 Nov 2017 12:44:11 -0800 (PST)
-In-Reply-To: <20171116163828.14937-1-tboegi@web.de>
-References: <xmqqshejq9mn.fsf@gitster.mtv.corp.google.com> <20171116163828.14937-1-tboegi@web.de>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 17 Nov 2017 15:44:11 -0500
-X-Google-Sender-Auth: A8Chblb4okoD_hpGaIjRM_8flfQ
-Message-ID: <CAPig+cQocmJyoALeQeCRQPNsRgvJ5PSe=u2LN8Ec6aC86D4iQw@mail.gmail.com>
-Subject: Re: [PATCH v3 1/1] Introduce git add --renormalize .
-To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-Cc:     Git List <git@vger.kernel.org>
+Received: by 10.140.85.203 with HTTP; Fri, 17 Nov 2017 12:17:22 -0800 (PST)
+In-Reply-To: <798096fe-dd01-5351-94d3-949039c84e69@jeffhostetler.com>
+References: <20171116181257.61673-1-git@jeffhostetler.com> <20171116181257.61673-8-git@jeffhostetler.com>
+ <e7b5e42f-b13c-50c8-501c-0100d8c48d00@ramsayjones.plus.com> <798096fe-dd01-5351-94d3-949039c84e69@jeffhostetler.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 17 Nov 2017 12:17:22 -0800
+Message-ID: <CAGZ79kZCdxN8h-mJRY9fQy5W3HtqcvFoL1W5jVcb3=A3vvk_Ww@mail.gmail.com>
+Subject: Re: [PATCH v4 07/10] introduce fetch-object: fetch one promisor object
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Jonathan Tan <jonathantanmy@google.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 16, 2017 at 11:38 AM,  <tboegi@web.de> wrote:
-> Make it safer to normalize the line endings in a repository:
-> Files that had been commited with CRLF will be commited with LF.
+On Fri, Nov 17, 2017 at 11:49 AM, Jeff Hostetler <git@jeffhostetler.com> wrote:
 >
-> The old way to normalize a repo was like this:
->  # Make sure that there are not untracked files
->  $ echo "* text=3Dauto" >.gitattributes
->  $ git read-tree --empty
->  $ git add .
->  $ git commit -m "Introduce end-of-line normalization"
 >
-> The user must make sure that there are no untracked files,
-> otherwise they would have been added and tracked from now on.
+> On 11/16/2017 2:57 PM, Ramsay Jones wrote:
+>>
+>>
+>>
+>> On 16/11/17 18:12, Jeff Hostetler wrote:
+>>>
+>>> From: Jonathan Tan <jonathantanmy@google.com>
+>>>
+>>> Introduce fetch-object, providing the ability to fetch one object from a
+>>> promisor remote.
 >
-> The new "add ..renormalize" does not add untracked files:
->  $ echo "* text=3Dauto" >.gitattributes
->  $ git add --renormalize .
->  $ git commit -m "Introduce end-of-line normalization"
+> [snip]
+>>>
+>>> +#include "transport.h"
+>>
+>>
+>> I note that this still does not #include "fetch_object.h".
+>> [If you recall, this suppresses a sparse warning].
+>>
 >
-> Note that "git add --renormalize <pathspec>" is the short form for
-> "git add -u --renormalize <pathspec>".
->
-> While add it, document that the same renormalization may be needed,
-> whenever a clean filter is added or changed.
+> Sorry, I missed that.  I know I did a DEVELOPER=1 build and
+> I didn't see a warning, but I'll check again.
 
-Forgive me for chiming in so late, but as a newcomer to this topic,
-the high-level choice made by this patch feels a bit questionable. I
-understand that, for people familiar with the "old way" of normalizing
-files, git-add might seems like the right place to house this
-functionality (and perhaps that's true from an implementation angle?),
-but as one coming to this topic with no existing bias about
-implementation or the "old way", git-add feels like an odd choice.
-This sort of normalization (emptying the index, potentially modifying
-files, repopulating the index) seems too high-level for git-add.
+sparse is an extra tool, which you have to run/install;
+it is not included in the developer build.
 
-I _could_ understand if this functionality lived in, say, a new
-command git-attr:
-
-    SYNOPSIS
-
-    git attr renormalize [--no-commit | [-m <msg>]] pathname...
-    git attr check [-a | --all | attr=E2=80=A6] [--] pathname=E2=80=A6
-    git attr check --stdin [-z] [-a | --all | attr=E2=80=A6]
-
-    DESCRIPTION
-
-    'git attr renormalize'
-
-    Apply the "clean" process ... and commit the results. This is
-    useful after changing `core.autocrlf` ... etc. With '-m', uses
-    <msg> as the commit message, else launches the editor. Use
-    '--no-commit' to skip the automatic commit.
-
-The 'git attr check' command subsumes the role of existing
-git-check-attr. One could envision git-attr growing additional
-subcommands to edit .gitattributes, much like git-config edits
-.gitconfig.
-
-(I have since read the thread in which Junio's suggested[1] that
-git-add could house this functionality, but it still feels too
-high-level.)
-
-More below...
-
-> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
-> ---
-> diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
-> @@ -175,6 +175,13 @@ for "git add --no-all <pathspec>...", i.e. ignored r=
-emoved files.
-> +--renormalize::
-> +       Apply the "clean" process freshly to all tracked files to
-
-This is the only time "clean" appears in git-add documentation. Every
-newcomer to git learns about git-add very early on, but "clean
-process" is a fairly advanced topic, unlikely to be on a newcomer's
-radar. The term "renormalize" also feels out of place in git-add
-documentation. If I was a newcomer reading git-add documentation, I
-think I'd be left pretty well clueless by this description. At the
-very least, perhaps add links to git-attributes and 'core.autocflf'
-configuration.
-
-> +       forcibly add them again to the index.  This is useful after
-> +       changing `core.autocrlf` configuration or the `text` attribute
-> +       in order to correct files added with wrong CRLF/LF line endings.
-> +       This option implies `-u`.
-
-[1]: https://public-inbox.org/git/xmqqbmlm9y94.fsf@gitster.mtv.corp.google.=
-com/
+https://en.wikipedia.org/wiki/Sparse
