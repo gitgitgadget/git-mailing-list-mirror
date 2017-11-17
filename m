@@ -2,108 +2,191 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 06C07202AF
-	for <e@80x24.org>; Fri, 17 Nov 2017 18:41:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5BB9D202AF
+	for <e@80x24.org>; Fri, 17 Nov 2017 19:41:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755870AbdKQSlD (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Nov 2017 13:41:03 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64412 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1755723AbdKQSlB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Nov 2017 13:41:01 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 917C7A42FD;
-        Fri, 17 Nov 2017 13:40:58 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=1Z5u3CXP0nPaBVVXgtkGd+dNDws=; b=rVThhy
-        q7ZgLeDI4zQIIZy5Op/pSbcKrFh6VBI+iQug04fayIwU03dORX77lOe6c6pQwKNX
-        qC9zAlJYYPVehI5Y08svQ4jCosvU22QKWE4+GikdfE8qrUX3gYGEr4Pqy2VUWwBL
-        imzdyNK28pADI8xazeRU+UNPvAz36MewgeARc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ZAP+tmGLes0w22EFb/PfBTI/L3Tzs+V3
-        pnRBYC6Jt1bDh/r7Z7Ywa9v/5DQwuTklXNXjpT8QXG3VGMw6MxaSJ8O7RrhoqXdr
-        mKdCymZ3ClZjAEOm2E2hSxEOuRZvbDIPjzbxTUexuqmH06zgn1B7Vb3XkvOFFAoS
-        0hbrvRp89ZI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 89E7BA42FC;
-        Fri, 17 Nov 2017 13:40:58 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0A9E5A42FB;
-        Fri, 17 Nov 2017 13:40:57 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     lars.schneider@autodesk.com
-Cc:     git@vger.kernel.org, sbeller@google.com,
-        Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [PATCH v2] launch_editor(): indicate that Git waits for user input
-References: <20171117135109.18071-1-lars.schneider@autodesk.com>
-Date:   Sat, 18 Nov 2017 03:40:56 +0900
-In-Reply-To: <20171117135109.18071-1-lars.schneider@autodesk.com> (lars
-        schneider's message of "Fri, 17 Nov 2017 14:51:09 +0100")
-Message-ID: <xmqqy3n4rbnr.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S934915AbdKQTlV (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Nov 2017 14:41:21 -0500
+Received: from mail-qk0-f176.google.com ([209.85.220.176]:35464 "EHLO
+        mail-qk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751102AbdKQTlT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Nov 2017 14:41:19 -0500
+Received: by mail-qk0-f176.google.com with SMTP id p19so708393qke.2
+        for <git@vger.kernel.org>; Fri, 17 Nov 2017 11:41:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=BZ8GnIr66K8OsDhSiUG1wBB3iwECb8amTi1ldNhEY6o=;
+        b=i3BSCIfd7WsFnuX9mDNDWcreS0iUULGRS2Kr4WNT4TZRR3ksCuSRGaHGeBn+wTfLfO
+         NLZlOY5tjl5yMq0At1Ft4tdeW0HzDC7/fz3V2e7/WJCMUIRQFQ6/ZmmSwT12rxdc7x0Y
+         FztvhN6kpBYsH6FejA9wcidlXygNi60zpOTnQFp9VgAqWS70l77XA7xyHGopsm8jiuEv
+         jWDsQg/bvcOk244BBDzZ7QEjIrDm66dVp2Yhk3JCRplI+J0mNtnwtMrNpNh704zwrmvn
+         aKwf+mbvialrDz3aOzWq8g/ukKPr5xP+/xv53vMwfzuTxwIf+tIQO6J10nbOEGbta8s8
+         wd1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=BZ8GnIr66K8OsDhSiUG1wBB3iwECb8amTi1ldNhEY6o=;
+        b=g9zY9EVglQqJkzw8arltFVjRcETt3lo1G8Jh5J0JArJHFSuFW2burOTqAQETsSSb9X
+         K91CMJMg2Bg+24eRHErWSe424dpEynVqFVePQq3js4vLP1ubU0wAPzhoTgW2160eohLI
+         E1JkimaSdUAcBg66l3ZfHjuIR1AfHVUXiSDV1sfxj9zjyYlmXaSKQYQKgF2ubfvT+UYo
+         ViygIlzR77wBdtiERcw6B7NZZlTOFyBFtjac//IFrRK0esfSIVTd5d/6/CW6DNCoteqC
+         hd5nfEnjt+8IyhTHLOpOX+A2znWNZgqRwXnhaRZ5IWIb1Yv4WX+BzXf3brj8boLnKLeN
+         z5Tw==
+X-Gm-Message-State: AJaThX4nRiQuFORjBdImMWsLXZjlnIreCB/3he5yUdPNpWqQzG9AMUsI
+        dXG14YRjv7Mf+w5B9Y1OWXcg+93ehaVu1doj0Rs=
+X-Google-Smtp-Source: AGs4zMYzrGh5ptIcDCStK9RI5P6x04d1XlOffOr+dCPrY3544EK1BFtttE3y881GrCCssH+a+4C+eUyXTcrYL1Hte3o=
+X-Received: by 10.55.114.69 with SMTP id n66mr9699785qkc.306.1510947679009;
+ Fri, 17 Nov 2017 11:41:19 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: DA1125A0-CBC6-11E7-A5DB-8EF31968708C-77302942!pb-smtp1.pobox.com
+Received: by 10.12.155.209 with HTTP; Fri, 17 Nov 2017 11:41:18 -0800 (PST)
+In-Reply-To: <20171117135109.18071-1-lars.schneider@autodesk.com>
+References: <20171117135109.18071-1-lars.schneider@autodesk.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 17 Nov 2017 14:41:18 -0500
+X-Google-Sender-Auth: 0rF8Y66o2z9Gj7eIIRs37NYwE5k
+Message-ID: <CAPig+cQ3a0guJUhnbktrjs6fL6mSrUXmPqR0BafEAOhVr7Sy-w@mail.gmail.com>
+Subject: Re: [PATCH v2] launch_editor(): indicate that Git waits for user input
+To:     Lars Schneider <lars.schneider@autodesk.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>,
+        Lars Schneider <larsxschneider@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-lars.schneider@autodesk.com writes:
-
-> Junio posted the original version of this patch [1] as response to my RFC [2].
-> I took Junio's patch and slightly changed the commit message as well as the
-> message printed to the user after GIT_EDITOR is invoked [3].
+On Fri, Nov 17, 2017 at 8:51 AM,  <lars.schneider@autodesk.com> wrote:
+> When a graphical GIT_EDITOR is spawned by a Git command that opens
+> and waits for user input (e.g. "git rebase -i"), then the editor window
+> might be obscured by other windows. The user may be left staring at the
+> original Git terminal window without even realizing that s/he needs to
+> interact with another window before Git can proceed. To this user Git
+> appears hanging.
 >
-> Thanks,
-> Lars
-
-Thanks.
-
+> Show a message in the original terminal and get rid of it when the
+> editor returns.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+> ---
 > diff --git a/editor.c b/editor.c
-> index 7519edecdc..23db92d8c6 100644
-> --- a/editor.c
-> +++ b/editor.c
-> @@ -40,6 +40,32 @@ int launch_editor(const char *path, struct strbuf...
-> ...
-> +		if (close_notice) {
-> +			fprintf(
-> +				stderr,
-> +				"Launched your editor ('%s'). Adjust, save, and close the "
-> +				"file to continue. Waiting for your input... ", editor
+> @@ -40,6 +40,32 @@ int launch_editor(const char *path, struct strbuf *buffer, const char *const *en
+> +               static const char *close_notice = NULL;
+> +
+> +               if (isatty(2) && !close_notice) {
 
-How wide is your typical terminal window?  With message this long, a
-sample standalone program I used while developing the prototype of
-this feature no longer can retract this "temporary" message.
+If you reverse this condition to say (!close_notice && isatty(2)),
+then you save an isatty() invocation each time if close_notice is
+already assigned.
 
-Would something shorter like "Waiting for you to finish editing..."
-work well enough?
+However, it's not clear how much benefit you gain from stashing this
+away in a static variable. Premature optimization?
 
--- -- --
-#include <stdio.h>
+> +                       char *term = getenv("TERM");
+> +
+> +                       if (term && strcmp(term, "dumb"))
+> +                               /*
+> +                                * go back to the beginning and erase the
+> +                                * entire line if the terminal is capable
+> +                                * to do so, to avoid wasting the vertical
+> +                                * space.
+> +                                */
+> +                               close_notice = "\r\033[K";
+> +                       else
+> +                               /* otherwise, complete and waste the line */
+> +                               close_notice = "done.\n";
+> +               }
+> +
+> +               if (close_notice) {
+> +                       fprintf(
+> +                               stderr,
+> +                               "Launched your editor ('%s'). Adjust, save, and close the "
+> +                               "file to continue. Waiting for your input... ", editor
+> +                       );
 
-int main(void)
-{
-	const char *EL = "\033[K"; /* Erase in Line */
-	const char *editor = "emacsclient";
+Here's what this looks like for me:
 
-	fprintf(
-		stderr,
-		"Launched your editor ('%s'). Adjust, save, and close the "
-		"file to continue. Waiting for your input... ", editor);
-	fflush(stderr);
-	sleep(2);
-	fprintf(stderr, "\r%s", EL);
-	fflush(stderr);
-	return 0;
-}
--- -- --
+--- 8< ---
+Launched your editor
+('/Applications/Emacs.app/Contents/MacOS/bin/emacsclient'). Adjust,
+save, and close the file to continue. Waiting for your input...
+Waiting for Emacs...
+--- 8< ---
 
+Very, very noisy, so much so that it's almost unreadable. There are at
+least three reasons for the noise:
+
+* The raw message itself is already overly long. Do we really need to
+assume that newcomers are so clueless that they need it spelled out to
+such a level of detail? "Launched editor" should be enough for most
+people, and one would hope that "Launched editor; waiting for
+input..." would be enough for the rest.
+
+* Does not take into consideration that EDITOR might be very long;
+perhaps you could just print the basename and strip arguments (i.e.
+"/my/long/path/edit -x --foo --zap" becomes "edit"). Or, just omit the
+editor altogether.
+
+* emacsclient already prints its own message ("Waiting for Emacs...",
+which runs together with Git's message). Perhaps treat emacsclient as
+a special case and skip printing this message if emacsclient is in
+use: if (strstr(...,"emacsclient"))
+
+And, of course, with a "dumb" terminal, it's even noisier with the
+extra "done." at the end:
+
+--- 8< ---
+Launched your editor
+('/Applications/Emacs.app/Contents/MacOS/bin/emacsclient'). Adjust,
+save, and close the file to continue. Waiting for your input...
+Waiting for Emacs...
+done.
+--- 8< ---
+
+As Junio pointed out in [1], emacsclient has already emitted a
+newline, so the clear-line sequence is ineffective; likewise, for a
+dumb terminal, "done." ends up on its own line. Aside from the noise,
+this also suggests making a special case for emacsclient.
+
+And, as Junio pointed out in [2], with a message so long, once it has
+wrapped, the clear-line sequence does not work as intended. For those
+of us with 80-column terminals, we're left with a bunch of noise on
+the screen.
+
+> +                       fflush(stderr);
+> +               }
+>
+>                 p.argv = args;
+>                 p.env = env;
+> @@ -53,11 +79,14 @@ int launch_editor(const char *path, struct strbuf *buffer, const char *const *en
+>                 sig = ret - 128;
+>                 sigchain_pop(SIGINT);
+>                 sigchain_pop(SIGQUIT);
+> +
+>                 if (sig == SIGINT || sig == SIGQUIT)
+>                         raise(sig);
+>                 if (ret)
+>                         return error("There was a problem with the editor '%s'.",
+>                                         editor);
+> +               if (close_notice)
+> +                       fputs(close_notice, stderr);
+
+Should printing of close_notice be done before the error()? Otherwise,
+you get this:
+
+--- 8< ---
+Launched your editor (...) ...There was a problem...
+--- 8< ---
+
+>         }
+
+[1]: https://public-inbox.org/git/xmqqr2syvjxb.fsf@gitster.mtv.corp.google.com/
+[2]: https://public-inbox.org/git/xmqqy3n4rbnr.fsf@gitster.mtv.corp.google.com/
