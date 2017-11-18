@@ -6,77 +6,48 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2839120437
-	for <e@80x24.org>; Sat, 18 Nov 2017 22:20:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4393320437
+	for <e@80x24.org>; Sat, 18 Nov 2017 22:25:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1424462AbdKRWUS (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 Nov 2017 17:20:18 -0500
-Received: from mail.zeus.flokli.de ([88.198.15.28]:42946 "EHLO zeus.flokli.de"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1424438AbdKRWUQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Nov 2017 17:20:16 -0500
-Received: from localhost (unknown [185.104.140.104])
-        (using TLSv1.2 with cipher AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: flokli@flokli.de)
-        by zeus.flokli.de (Postfix) with ESMTPSA id AF7C737E5AF;
-        Sat, 18 Nov 2017 22:20:14 +0000 (UTC)
-From:   Florian Klink <flokli@flokli.de>
+        id S1162457AbdKRWZJ (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Nov 2017 17:25:09 -0500
+Received: from nuclearsunshine.com ([81.187.79.3]:44756 "EHLO
+        nuclearsunshine.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1161543AbdKRWZI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Nov 2017 17:25:08 -0500
+X-Greylist: delayed 506 seconds by postgrey-1.27 at vger.kernel.org; Sat, 18 Nov 2017 17:25:08 EST
+Received: from desktop.internal.chaoschild.com (desktop.internal.chaoschild.com [192.168.1.2])
+        by chaoschild.com (Postfix) with ESMTPSA id 292D02A0076
+        for <git@vger.kernel.org>; Sat, 18 Nov 2017 22:16:41 +0000 (GMT)
+Message-ID: <1511043401.28381.11.camel@nuclearsunshine.com>
+Subject: git archive --remote should generate tar.gz format indicated by -o
+ filename
+From:   git-scm@nuclearsunshine.com
 To:     git@vger.kernel.org
-Cc:     flokli@flokli.de, sandals@crustytoothpaste.net
-Subject: [PATCH v2] git-send-email: honor $PATH for sendmail binary
-Date:   Sat, 18 Nov 2017 23:20:12 +0100
-Message-Id: <20171118222012.23137-1-flokli@flokli.de>
-X-Mailer: git-send-email 2.15.0
-In-Reply-To: <20171118212833.qwcvt2divpi4smtl@tp.flokli.de>
-References: <20171118212833.qwcvt2divpi4smtl@tp.flokli.de>
+Date:   Sat, 18 Nov 2017 22:16:41 +0000
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.26.2 (3.26.2-1.fc27) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This extends git-send-email to also consider sendmail binaries in $PATH,
-in addition to the (fixed) list of /usr/sbin and /usr/lib.fixed) list of
-paths.
+git archive -o name.tar.gz generates a gzipped file without needing an
+explicit --format switch.
 
-Signed-off-by: Florian Klink <flokli@flokli.de>
----
- Documentation/git-send-email.txt | 6 +++---
- git-send-email.perl              | 4 +++-
- 2 files changed, 6 insertions(+), 4 deletions(-)
+However, git archive -o name.tar.gz --remote [url] generates a tar
+file, which is unexpected, bandwidth-heavier, and additionally in some
+cases it's not immediately obvious that this has happened.
 
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index bac9014ac..7af48f8eb 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -203,9 +203,9 @@ a password is obtained using 'git-credential'.
- 	specify a full pathname of a sendmail-like program instead;
- 	the program must support the `-i` option.  Default value can
- 	be specified by the `sendemail.smtpServer` configuration
--	option; the built-in default is `/usr/sbin/sendmail` or
--	`/usr/lib/sendmail` if such program is available, or
--	`localhost` otherwise.
-+	option; the built-in default is to search in $PATH,
-+	then /usr/sbin and /usr/lib/sendmail afterwards if such program
-+	is available, falling back to `localhost` otherwise.
- 
- --smtp-server-port=<port>::
- 	Specifies a port different from the default port (SMTP
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 2208dcc21..570f04079 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -885,7 +885,9 @@ if (defined $initial_reply_to) {
- }
- 
- if (!defined $smtp_server) {
--	foreach (qw( /usr/sbin/sendmail /usr/lib/sendmail )) {
-+	my @sendmail_paths = map {"$_/sendmail"} split /:/, $ENV{PATH};
-+	push @sendmail_paths, qw( /usr/sbin/sendmail /usr/lib/sendmail );
-+	foreach (@sendmail_paths) {
- 		if (-x $_) {
- 			$smtp_server = $_;
- 			last;
--- 
-2.15.0
+git archive -o name.tar.gz --remote [url] --format tar.gz generates a
+gzipped file, so there's obviously no limitation with e.g. git-upload-
+archive.
 
+Given the above, either git archive or git-upload-archive should apply
+the same tar.gz filename heuristic and generate the expected format.
+
+Presumably e.g. tar.xz support when using --remote would be more
+problematic since, in the local case, it involves specifying an
+arbitrary command.
