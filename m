@@ -2,84 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF7CB201C8
-	for <e@80x24.org>; Sat, 18 Nov 2017 17:52:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2E7EA201C8
+	for <e@80x24.org>; Sat, 18 Nov 2017 18:01:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1030342AbdKRRwu (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 Nov 2017 12:52:50 -0500
-Received: from cloud.peff.net ([104.130.231.41]:33552 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S965970AbdKRRws (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Nov 2017 12:52:48 -0500
-Received: (qmail 19963 invoked by uid 109); 18 Nov 2017 17:52:48 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 18 Nov 2017 17:52:48 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 1149 invoked by uid 111); 18 Nov 2017 17:53:03 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Sat, 18 Nov 2017 12:53:03 -0500
-Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 18 Nov 2017 12:52:46 -0500
-Date:   Sat, 18 Nov 2017 12:52:46 -0500
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] config: avoid "write_in_full(fd, buf, len) != len"
- pattern
-Message-ID: <20171118175246.puaepnyw3u4a33dy@sigill.intra.peff.net>
-References: <20171115124043.17147-1-phillip.wood@talktalk.net>
- <20171117220633.6yoovfgpbr3rsykr@sigill.intra.peff.net>
- <f3038984-1cd8-e11f-61fd-10bf0cc33e2d@web.de>
+        id S1423193AbdKRSBe (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Nov 2017 13:01:34 -0500
+Received: from mout.web.de ([212.227.17.12]:64298 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1423188AbdKRSBc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Nov 2017 13:01:32 -0500
+Received: from [192.168.178.36] ([91.20.49.242]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0M8iLA-1eSBiA2xga-00CEAe; Sat, 18
+ Nov 2017 19:01:22 +0100
+To:     Git List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Vegard Nossum <vegard.nossum@oracle.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH 0/6] show non-empty lines before functions with diff/grep -W
+Message-ID: <790c2344-a71e-7089-9000-f9b37a4a5cd9@web.de>
+Date:   Sat, 18 Nov 2017 19:01:19 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <f3038984-1cd8-e11f-61fd-10bf0cc33e2d@web.de>
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:vWgLao+dbKkfGaZ63Y7pW7YL0zviEjK0VV46jibk3N1OKHwzumS
+ Cs0c+q/VlT8RxANK3vVZTmrgBegP8VBbbobFxWtGe8mnpb99KtNGX0hLiLt46X+BLREhCYF
+ VQ2/v3tmk+sCjxjGNbUCYqo8khZVhbpVWJWeEqd1+T+qT7GxJv4vekTA3I5cgiLneXGo2Qy
+ vDBsU15OvnD9qkqEHc5hw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:xYWTo+4SOQo=:BP9kS2SBgVJEfyai9PeHAb
+ VkP38nqVuMuNUZwTSZbJtGJELhnyULwdFzIZS4OVCsKHcjpBdWTZrsXZtAsfdK+qq6AYHdQUx
+ 3s9qZCZ3JZteLLThQN6kPq3P7ZOYe0Bh16EHPwFX/y+aKcmDKE9klVDqGxBEfq1cWl1T7CQEt
+ 5/ao9ls9ohVKv4hzt5GM1jS47PJHz5Q03+CsWuQglF0qgQ2Rd4C/5+Qs0Rt6NUwb75Qk6ZCNe
+ t5cg5dhOxZx+H5pRwLUsQjDKYaViVNt1zwUwE7Qshbv5775PL6F+0P7bhjchJwXs2VaI24GiW
+ c3K7s4bklghCk2ObOqb2sx7fjLgTpHluQsmoOxxeKxGqi1p6d48Ww/fQ19dLyvSjSdhhUvRgM
+ NdGgHvxwUrZpUx5bP9ywcHBteMGyBcQ0p/PKMG0eRNQrLmhLtpr/xEH/xihVRJsUjBmdIOb6p
+ XC+K2IOH/olscXltvWCFpuHRjX01R8/3/GwxdLXo7O0nmRwLXvaWQZKk5s0jLu+/ToYHBmNUB
+ I/lBxpDBWoKr7TDP4gk5wl4ujQvY+oR9+6HRQ+s+7wJBh6unqGFeYeLIfaWearqJ1arPNEl+z
+ hEmiryGs/Rs6xa7DQbHpTb9dsVnlmxxkx0Y5iER6lSgOFIjnCk5f7frrW1XEpKu4VEK28BtGH
+ MDsML3tDNo3Uk0KV0bC+HWnSqL2xZPpxniPSIjLlpcvhEvDuDZoyfTTd2dJZjbf6vrXpJcxlR
+ 18dL26OhubHeWZFEUjYbrJ+lCFrTc9T3Fuirb+UjzhqtEgSXiFfgYJky67JcZEgpa5SjI9wBs
+ am01/mGaDaDFTez0LMQ7sd5t8F+vW20hSeZZU+vHVgJWH3rSD8=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Nov 18, 2017 at 11:20:04AM +0100, René Scharfe wrote:
+The option -W/--function-context lets git diff and git grep show the
+whole surrounding function as context.  For the sake of simplicity and
+performance they don't fully parse the files, but as a heuristic show
+all lines from the preceding function line to the next one.
 
-> Am 17.11.2017 um 23:06 schrieb Jeff King:
-> > There's one more case in write_section() that uses "==". That's not
-> > actually wrong, but I wonder if we'd want to make it "< 0" for
-> > consistency.
-> 
-> Actually it *is* wrong.
+This series refines that heuristic and extends the context to include
+any non-empty lines before the preceding function line as well.  They
+most likely contain comments related to that function and are thus
+relevant for reviewing diffs and search results.
 
-Thanks for digging, I didn't look beyond that single line.
+Idea and original implementation for git diff by Vegard Nossum:
+https://public-inbox.org/git/1484324112-17773-2-git-send-email-vegard.nossum@oracle.com/
 
-> -- >8 --
-> Subject: [PATCH] config: flip return value of write_section()
-> 
-> d9bd4cbb9cc (config: flip return value of store_write_*()) made
-> write_section() follow the convention of write(2) to return -1 on error
-> and the number of written bytes on success.  3b48045c6c7 (Merge branch
-> 'sd/branch-copy') changed it back to returning 0 on error and 1 on
-> success, but left its callers still checking for negative values.
-> 
-> Let write_section() follow the convention of write(2) again to meet the
-> expectations of its callers.
+  t4051: add test for comments preceeding function lines
+  xdiff: factor out is_func_rec()
+  xdiff: show non-empty lines before functions with -W
+  t7810: improve check of -W with user-defined function lines
+  grep: update boundary variable for pre-context
+  grep: show non-empty lines before functions with -W
 
-Yikes. It looks like this slipped by on the tests because we always
-check "< 0" in the callers, not non-zero. So success would not look like
-failure, but failure would look like success. And write failure does not
-happen regularly in the test suite.
+ grep.c                           | 35 +++++++++++++++++++++++++++-------
+ t/t4051-diff-function-context.sh |  4 ++++
+ t/t4051/hello.c                  |  3 +++
+ t/t7810-grep.sh                  | 41 ++++++++++++++++++++++++++++++----------
+ xdiff/xemit.c                    | 13 ++++++++++---
+ 5 files changed, 76 insertions(+), 20 deletions(-)
 
-So this looks correct, and well-explained.
-
-> Reported-by: Jeff King <peff@peff.net>
-> Signed-off-by: Rene Scharfe <l.s.r@web.de>
-
-I'm not sure I deserve a reported-by if I say "it looks fine" but am
-totally wrong. ;)
-
--Peff
+-- 
+2.15.0
