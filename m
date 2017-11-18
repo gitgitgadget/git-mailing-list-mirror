@@ -7,79 +7,91 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2E7EA201C8
-	for <e@80x24.org>; Sat, 18 Nov 2017 18:01:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 22B4E201C8
+	for <e@80x24.org>; Sat, 18 Nov 2017 18:04:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1423193AbdKRSBe (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 Nov 2017 13:01:34 -0500
-Received: from mout.web.de ([212.227.17.12]:64298 "EHLO mout.web.de"
+        id S1030806AbdKRSEM (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Nov 2017 13:04:12 -0500
+Received: from mout.web.de ([212.227.17.11]:49230 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1423188AbdKRSBc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Nov 2017 13:01:32 -0500
+        id S936280AbdKRSEK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Nov 2017 13:04:10 -0500
 Received: from [192.168.178.36] ([91.20.49.242]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0M8iLA-1eSBiA2xga-00CEAe; Sat, 18
- Nov 2017 19:01:22 +0100
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MVLWc-1efqlY3wmE-00YhAL; Sat, 18
+ Nov 2017 19:04:03 +0100
+Subject: [PATCH 1/6] t4051: add test for comments preceding function lines
 To:     Git List <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Vegard Nossum <vegard.nossum@oracle.com>
+References: <790c2344-a71e-7089-9000-f9b37a4a5cd9@web.de>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH 0/6] show non-empty lines before functions with diff/grep -W
-Message-ID: <790c2344-a71e-7089-9000-f9b37a4a5cd9@web.de>
-Date:   Sat, 18 Nov 2017 19:01:19 +0100
+Message-ID: <b5815f62-3ed4-58ea-6d32-b156e44cbe3f@web.de>
+Date:   Sat, 18 Nov 2017 19:04:00 +0100
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.4.0
 MIME-Version: 1.0
+In-Reply-To: <790c2344-a71e-7089-9000-f9b37a4a5cd9@web.de>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:vWgLao+dbKkfGaZ63Y7pW7YL0zviEjK0VV46jibk3N1OKHwzumS
- Cs0c+q/VlT8RxANK3vVZTmrgBegP8VBbbobFxWtGe8mnpb99KtNGX0hLiLt46X+BLREhCYF
- VQ2/v3tmk+sCjxjGNbUCYqo8khZVhbpVWJWeEqd1+T+qT7GxJv4vekTA3I5cgiLneXGo2Qy
- vDBsU15OvnD9qkqEHc5hw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:xYWTo+4SOQo=:BP9kS2SBgVJEfyai9PeHAb
- VkP38nqVuMuNUZwTSZbJtGJELhnyULwdFzIZS4OVCsKHcjpBdWTZrsXZtAsfdK+qq6AYHdQUx
- 3s9qZCZ3JZteLLThQN6kPq3P7ZOYe0Bh16EHPwFX/y+aKcmDKE9klVDqGxBEfq1cWl1T7CQEt
- 5/ao9ls9ohVKv4hzt5GM1jS47PJHz5Q03+CsWuQglF0qgQ2Rd4C/5+Qs0Rt6NUwb75Qk6ZCNe
- t5cg5dhOxZx+H5pRwLUsQjDKYaViVNt1zwUwE7Qshbv5775PL6F+0P7bhjchJwXs2VaI24GiW
- c3K7s4bklghCk2ObOqb2sx7fjLgTpHluQsmoOxxeKxGqi1p6d48Ww/fQ19dLyvSjSdhhUvRgM
- NdGgHvxwUrZpUx5bP9ywcHBteMGyBcQ0p/PKMG0eRNQrLmhLtpr/xEH/xihVRJsUjBmdIOb6p
- XC+K2IOH/olscXltvWCFpuHRjX01R8/3/GwxdLXo7O0nmRwLXvaWQZKk5s0jLu+/ToYHBmNUB
- I/lBxpDBWoKr7TDP4gk5wl4ujQvY+oR9+6HRQ+s+7wJBh6unqGFeYeLIfaWearqJ1arPNEl+z
- hEmiryGs/Rs6xa7DQbHpTb9dsVnlmxxkx0Y5iER6lSgOFIjnCk5f7frrW1XEpKu4VEK28BtGH
- MDsML3tDNo3Uk0KV0bC+HWnSqL2xZPpxniPSIjLlpcvhEvDuDZoyfTTd2dJZjbf6vrXpJcxlR
- 18dL26OhubHeWZFEUjYbrJ+lCFrTc9T3Fuirb+UjzhqtEgSXiFfgYJky67JcZEgpa5SjI9wBs
- am01/mGaDaDFTez0LMQ7sd5t8F+vW20hSeZZU+vHVgJWH3rSD8=
+X-Provags-ID: V03:K0:2wcZyj6LdtawFXmlmmTpnGGmQArxbEewSFQCB0lu6EzEXymZD+3
+ q89JCBNsQ3QXfZmZIou4JIvv5kFbwSbWGx1A7CX1yJ3yA6WTSj7ml6x+aOXKOvo7cY5T1OW
+ yQ7KhccROoxcJGkGd3f2MMBb55AIXDLtPj3af6xksvlU6lT0z4qSDnpyt+CujKvKfVA37/Z
+ ITn8ReTSjHOeocmOdcvpA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:bDu/tkRcTO4=:I9GuhJ7Utmh/b0SQ6eKI3j
+ E6wielTk8+yLyr9Dj0Yb4yKSiz8nBMRmj6la3vK2HjQlEGsIqlN39DPujbuw3OaImqhMy/fDz
+ 5WHTrOkWChjga/xWp2GsdeV1c5Uhx//dgDScWXG/UPNUqvQZZ/oBL1ML08NwQs7VlhNpY4gBm
+ wQz3OuSZlTB1GmeCh4qBDYLEoZg0FLAEprGbmlQ8RRJ9FlksyCbveRxNrgU0Ev/VAGkpok81g
+ EaX3SLaGddr2wYLlDeCBvSNAT4GQV/XGAyTX2Qf0HulsTNal9HUVEfJE6cySVayt6Jok55pLd
+ 7OYhk07+fc0xzEm4OvCzSfHU4xKU3qGM/fTq7QUcG9blhi/c4eJnf4eb0AZD4Vq8QWbOiOeUc
+ /fZ6GWa6/IFZziygo8cWgsbSXZqDdKpaRIwxH/UlUv9HCqkR8mrGf+bvJKQJQCL4dfxgvFzGP
+ N1Zvrh9/hKd+5t0p4U3hcRhCS/mzRrNJH3EplYzA6HaY3jwB1QmV7MngV3h/P3TWbwwfB1YHh
+ mQn9QfC1ln5MXlnMvSIK1oT6hliZNwLGQoHjInZLOiMPUUZMVsbysIa145QA/+t4peMTb5Ab5
+ g1oH/WujAXFeq5r/JUQo+n2zGHuukvutXNqOx8ZhqQbdWYCGYMXssIUXOuy4/X+dY3+RQxZoB
+ ArPsPvlNn4xTbnglpVu1/D/RSZ6KaqMgqaeJ74+rTveDpVU9hiXY3JrHI4XUaF8YXxA3OM7R+
+ sSfsel4+OXk/sbs72uIgLONCwoUmDvC/1pesLqXlOji6qSSBjf+9GZsC+bplvx1/C7NXNW9YA
+ Fp8j2Bou7Dj9IGnxox1pkNnsTLKftEi4jd2dVZrJitlskuQ4T0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The option -W/--function-context lets git diff and git grep show the
-whole surrounding function as context.  For the sake of simplicity and
-performance they don't fully parse the files, but as a heuristic show
-all lines from the preceding function line to the next one.
+When showing function context it would be helpful to show comments
+immediately before declarations, as they are most likely relevant.  Add
+a test for that.
 
-This series refines that heuristic and extends the context to include
-any non-empty lines before the preceding function line as well.  They
-most likely contain comments related to that function and are thus
-relevant for reviewing diffs and search results.
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ t/t4051-diff-function-context.sh | 4 ++++
+ t/t4051/hello.c                  | 3 +++
+ 2 files changed, 7 insertions(+)
 
-Idea and original implementation for git diff by Vegard Nossum:
-https://public-inbox.org/git/1484324112-17773-2-git-send-email-vegard.nossum@oracle.com/
-
-  t4051: add test for comments preceeding function lines
-  xdiff: factor out is_func_rec()
-  xdiff: show non-empty lines before functions with -W
-  t7810: improve check of -W with user-defined function lines
-  grep: update boundary variable for pre-context
-  grep: show non-empty lines before functions with -W
-
- grep.c                           | 35 +++++++++++++++++++++++++++-------
- t/t4051-diff-function-context.sh |  4 ++++
- t/t4051/hello.c                  |  3 +++
- t/t7810-grep.sh                  | 41 ++++++++++++++++++++++++++++++----------
- xdiff/xemit.c                    | 13 ++++++++++---
- 5 files changed, 76 insertions(+), 20 deletions(-)
-
+diff --git a/t/t4051-diff-function-context.sh b/t/t4051-diff-function-context.sh
+index 3e6b485ecb..30fc5bf2b3 100755
+--- a/t/t4051-diff-function-context.sh
++++ b/t/t4051-diff-function-context.sh
+@@ -85,6 +85,10 @@ test_expect_success 'setup' '
+ 
+ check_diff changed_hello 'changed function'
+ 
++test_expect_failure ' context includes comment' '
++	grep "^ .*Hello comment" changed_hello.diff
++'
++
+ test_expect_success ' context includes begin' '
+ 	grep "^ .*Begin of hello" changed_hello.diff
+ '
+diff --git a/t/t4051/hello.c b/t/t4051/hello.c
+index 63b1a1e4ef..73e767e178 100644
+--- a/t/t4051/hello.c
++++ b/t/t4051/hello.c
+@@ -1,4 +1,7 @@
+ 
++/*
++ * Hello comment.
++ */
+ static void hello(void)	// Begin of hello
+ {
+ 	/*
 -- 
 2.15.0
