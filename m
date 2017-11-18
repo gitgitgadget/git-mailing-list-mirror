@@ -2,114 +2,226 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C25E201C8
-	for <e@80x24.org>; Sat, 18 Nov 2017 18:07:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D01F2201C8
+	for <e@80x24.org>; Sat, 18 Nov 2017 18:09:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1424394AbdKRSH3 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 Nov 2017 13:07:29 -0500
-Received: from mout.web.de ([212.227.17.11]:50962 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1423099AbdKRSH2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Nov 2017 13:07:28 -0500
-Received: from [192.168.178.36] ([91.20.49.242]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MHowb-1eJhUX1BvR-003dtv; Sat, 18
- Nov 2017 19:07:16 +0100
-Subject: [PATCH 5/6] grep: update boundary variable for pre-context
-To:     Git List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Vegard Nossum <vegard.nossum@oracle.com>
-References: <790c2344-a71e-7089-9000-f9b37a4a5cd9@web.de>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <265400ac-ff2a-4a3f-795c-53f0274e8c7a@web.de>
-Date:   Sat, 18 Nov 2017 19:07:13 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.4.0
-MIME-Version: 1.0
-In-Reply-To: <790c2344-a71e-7089-9000-f9b37a4a5cd9@web.de>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:hehwkzSiUGe99SKC/cDuSjOZHzMkqXkcSjB0L3jRMm3N5vqvH/m
- Ze2Yv9XKNwVQmM0BIqd3nye0bxqFkGPO4Gbp6Zu8UAINnvTxYgGCV15ZZd5zAn1sT7ZEPw0
- 7Fp6hJOn766WjHji5qEfWW932yRD5+7ihgsQZoiI7BCjKSQG+QBhFWDf5RI8GNZPrmheTqP
- lM9RE/a5jxkhJo2YM/fbQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Tup3WEMKSWM=:XNarxVUeJgzgVbnN0xXhEx
- EX5NLbFZ/8IjfryAgxneqqBhITw68R/HwAju+ISgChfzM8ZCfqHJeS+0zSG8YqzcffVk1oCF7
- +rEhpBAGz7yheyl6CZg0k76++T/3EzKnpoJ/5u/bfoLUHqCibiC0a+WtjObfFF+asd6gM1pJk
- xxe1a7CHA07hLAtJaRRyouYN3IigVFGNxNJpyp9IK8eSr0hhoabdt0vwxxafQS28U9sJY5qMa
- IaUR4bK15KUNTzoh86hLLzhGgTLSvpo9KBWuzlhepqgJ9GAuL+9+y7OBxnlltgisb1toYLChe
- ZaQqRTTu2oBT4Xm5OVYpurDJmoNF5w1l3WfHWc92Fejk51wV7Q1JWSS7vIu3H3pm2+oaQY7mt
- kyAR+giIkJFo7+ulCmdiaQrihIt5TXKInPRtdhfPHJpjxlePQoo6mu465kecY/GH6dL81riWg
- zhTMMGGsceR6VEGeaWqpLddYsbrB/uzkkFaeVAf0/jup9d1wHNQ1nbbb0EacRJ8Hqkb1w7FUj
- KEEmhFg804bVV+gL6J2qTt0CXw8MlkBEpOE2m0UlW+27bvr3k/GUWW9HPcmjsiPwG/1ab73sz
- qZjP5AFVMcu3xulbO46RMMEqRfPfwMvzDkHjrUJ3kFtdynbvGM9xUExUCNZ+fivoySVk/zJIY
- Ia6F8yKDNDOKhekIBIQv5GkS/jZD7L/DJyICTFxAiZYsZELFelPOQMcROTsGE/Ri0lbQmq+gI
- cZn8707CPopSp2VgBN1R+LvAAehJQlvSrEnUM8Fsut4qm1GZuzpEmnT5FCY4erpmCpd4CdBnK
- yd9sG9NKwJWAylhC1n4/OyHQRMdYuhYg/PnnSo7kIuR9b2Kbj8=
+        id S1030841AbdKRSJt (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Nov 2017 13:09:49 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:37372 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1030836AbdKRSJr (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Nov 2017 13:09:47 -0500
+Received: by mail-wm0-f67.google.com with SMTP id v186so11764635wma.2
+        for <git@vger.kernel.org>; Sat, 18 Nov 2017 10:09:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=dKJDMQCgrzJ80dE7ewxGDhSTAU8SYd3A11eLknP0DNY=;
+        b=iQwX5e41rOxzmz5jWIacoA6qTZpswkBD4GHisNKeiC6AwWMZD3dpV4ZP/BwPabizv1
+         /uEPBbAGSPBjdVsfjsudB8RQILqJAHmYuzet3VGmFczVBRAwEfbz0miyAmW5puhF2fdT
+         aD1JfLZ/nIU70YeVqvbgul6iluE5N8n2iZk7OCKvuHgDQWDmQSLKFfFZDsN0ZE9ocRge
+         0LnnXkYMSxufMxeLmttabl6IW4eNiCIPSlaH1Fzd+b2DTkWudVj/z84xiGTWFDRZ2QUU
+         +wejF695KnwGOquXsqx73YxhAzZcI8qPlqoWG4cmiwOmCcjCe7eVvJwig81DelUffY2j
+         p8Wg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=dKJDMQCgrzJ80dE7ewxGDhSTAU8SYd3A11eLknP0DNY=;
+        b=QFDqhCum9pM1HYjTf6Empdh7eFC8d3yxTovvtWP6RwUhMVIZbIIrEv5qnZYypg+8ur
+         TdyADA5hJ+iypRA6h2Iyjiar/YX3svlpy2ka8wQOILCM6yAyT9xEVwzIt8DoChV2W5xU
+         g/OTjaiHT6kQ9AXJeskZ9vW8QzKNCSml+UoIIJV7lkWtdRBStlYqDPDpZ/ghRy2qSgIY
+         gpIkiatFAyl+9vUKE9IwSMboHFKT3/S3P2NBtY9RWbN3cvAV+Zah2YSPY1DJtN9PQICz
+         waoG4jjlqfOY/d7qzHksoSpDTxnDB6Goj4yObs0GTnF1g2/MA1gfQKe4b01WR9/Bt1iM
+         5VYg==
+X-Gm-Message-State: AJaThX5hC0AVEqKpjpULFFbQsJqPdlbLxTkXxj/PznoVE8dOVzCgQWYe
+        QEQud4W227qniNnyVVApe0AKPgF1
+X-Google-Smtp-Source: AGs4zMZMUJnk5PaVDK5ngszxYMBPyVypLdrg2qDuFSJnDUXts53Qo14Z3V2dJqwz/+Xv3CvuANxctg==
+X-Received: by 10.28.22.16 with SMTP id 16mr6173793wmw.138.1511028586173;
+        Sat, 18 Nov 2017 10:09:46 -0800 (PST)
+Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
+        by smtp.gmail.com with ESMTPSA id 143sm13294209wmj.35.2017.11.18.10.09.44
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 18 Nov 2017 10:09:44 -0800 (PST)
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>
+Subject: [PATCH v2 1/3] checkout: factor out functions to new lib file
+Date:   Sat, 18 Nov 2017 18:11:01 +0000
+Message-Id: <20171118181103.28354-1-t.gummerer@gmail.com>
+X-Mailer: git-send-email 2.15.0.345.gf926f18f3
+In-Reply-To: <20171112134305.3949-1-t.gummerer@gmail.com>
+References: <20171112134305.3949-1-t.gummerer@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Function context can be bigger than -A/-B/-C context.  To find the
-beginning of the combined context we search backwards.  Currently we
-check at each loop iteration what we're looking for and determine the
-effective upper boundary based on that.
+Factor the functions out, so they can be re-used from other places.  In
+particular these functions will be re-used in builtin/worktree.c to make
+git worktree add dwim more.
 
-Simplify this a bit by setting the variable "from" to the lowest unshown
-line number up front if we're looking for a function line and set it
-back to the required -B/-C context line number when we find one.  This
-prepares the ground for the next patch; no functional change intended.
+While there add some docs to the function.
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
+Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
- grep.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+The previous round of this series is at
+https://public-inbox.org/git/20171112134305.3949-1-t.gummerer@gmail.com/.
+Thanks Junio and Eric for the comments on the previous round!
 
-diff --git a/grep.c b/grep.c
-index d0b9b6cdfa..2c55d10c55 100644
---- a/grep.c
-+++ b/grep.c
-@@ -1479,20 +1479,21 @@ static void show_funcname_line(struct grep_opt *opt, struct grep_source *gs,
- static void show_pre_context(struct grep_opt *opt, struct grep_source *gs,
- 			     char *bol, char *end, unsigned lno)
- {
--	unsigned cur = lno, from = 1, funcname_lno = 0;
-+	unsigned cur = lno, from = 1, funcname_lno = 0, orig_from;
- 	int funcname_needed = !!opt->funcname;
+ Makefile           |  1 +
+ builtin/checkout.c | 41 +----------------------------------------
+ checkout.c         | 42 ++++++++++++++++++++++++++++++++++++++++++
+ checkout.h         | 13 +++++++++++++
+ 4 files changed, 57 insertions(+), 40 deletions(-)
+ create mode 100644 checkout.c
+ create mode 100644 checkout.h
+
+diff --git a/Makefile b/Makefile
+index cd75985991..8d603c7443 100644
+--- a/Makefile
++++ b/Makefile
+@@ -757,6 +757,7 @@ LIB_OBJS += branch.o
+ LIB_OBJS += bulk-checkin.o
+ LIB_OBJS += bundle.o
+ LIB_OBJS += cache-tree.o
++LIB_OBJS += checkout.o
+ LIB_OBJS += color.o
+ LIB_OBJS += column.o
+ LIB_OBJS += combine-diff.o
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index fc4f8fd2ea..9e1cfd10b3 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -1,5 +1,6 @@
+ #include "builtin.h"
+ #include "config.h"
++#include "checkout.h"
+ #include "lockfile.h"
+ #include "parse-options.h"
+ #include "refs.h"
+@@ -874,46 +875,6 @@ static int git_checkout_config(const char *var, const char *value, void *cb)
+ 	return git_xmerge_config(var, value, NULL);
+ }
  
--	if (opt->funcbody && !match_funcname(opt, gs, bol, end))
--		funcname_needed = 2;
+-struct tracking_name_data {
+-	/* const */ char *src_ref;
+-	char *dst_ref;
+-	struct object_id *dst_oid;
+-	int unique;
+-};
 -
- 	if (opt->pre_context < lno)
- 		from = lno - opt->pre_context;
- 	if (from <= opt->last_shown)
- 		from = opt->last_shown + 1;
-+	orig_from = from;
-+	if (opt->funcbody && !match_funcname(opt, gs, bol, end)) {
-+		funcname_needed = 1;
-+		from = opt->last_shown + 1;
+-static int check_tracking_name(struct remote *remote, void *cb_data)
+-{
+-	struct tracking_name_data *cb = cb_data;
+-	struct refspec query;
+-	memset(&query, 0, sizeof(struct refspec));
+-	query.src = cb->src_ref;
+-	if (remote_find_tracking(remote, &query) ||
+-	    get_oid(query.dst, cb->dst_oid)) {
+-		free(query.dst);
+-		return 0;
+-	}
+-	if (cb->dst_ref) {
+-		free(query.dst);
+-		cb->unique = 0;
+-		return 0;
+-	}
+-	cb->dst_ref = query.dst;
+-	return 0;
+-}
+-
+-static const char *unique_tracking_name(const char *name, struct object_id *oid)
+-{
+-	struct tracking_name_data cb_data = { NULL, NULL, NULL, 1 };
+-	cb_data.src_ref = xstrfmt("refs/heads/%s", name);
+-	cb_data.dst_oid = oid;
+-	for_each_remote(check_tracking_name, &cb_data);
+-	free(cb_data.src_ref);
+-	if (cb_data.unique)
+-		return cb_data.dst_ref;
+-	free(cb_data.dst_ref);
+-	return NULL;
+-}
+-
+ static int parse_branchname_arg(int argc, const char **argv,
+ 				int dwim_new_local_branch_ok,
+ 				struct branch_info *new,
+diff --git a/checkout.c b/checkout.c
+new file mode 100644
+index 0000000000..b0c744d37a
+--- /dev/null
++++ b/checkout.c
+@@ -0,0 +1,42 @@
++#include "cache.h"
++#include "remote.h"
++
++struct tracking_name_data {
++	/* const */ char *src_ref;
++	char *dst_ref;
++	struct object_id *dst_oid;
++	int unique;
++};
++
++static int check_tracking_name(struct remote *remote, void *cb_data)
++{
++	struct tracking_name_data *cb = cb_data;
++	struct refspec query;
++	memset(&query, 0, sizeof(struct refspec));
++	query.src = cb->src_ref;
++	if (remote_find_tracking(remote, &query) ||
++	    get_oid(query.dst, cb->dst_oid)) {
++		free(query.dst);
++		return 0;
 +	}
- 
- 	/* Rewind. */
--	while (bol > gs->buf &&
--	       cur > (funcname_needed == 2 ? opt->last_shown + 1 : from)) {
-+	while (bol > gs->buf && cur > from) {
- 		char *eol = --bol;
- 
- 		while (bol > gs->buf && bol[-1] != '\n')
-@@ -1501,6 +1502,7 @@ static void show_pre_context(struct grep_opt *opt, struct grep_source *gs,
- 		if (funcname_needed && match_funcname(opt, gs, bol, eol)) {
- 			funcname_lno = cur;
- 			funcname_needed = 0;
-+			from = orig_from;
- 		}
- 	}
- 
++	if (cb->dst_ref) {
++		free(query.dst);
++		cb->unique = 0;
++		return 0;
++	}
++	cb->dst_ref = query.dst;
++	return 0;
++}
++
++const char *unique_tracking_name(const char *name, struct object_id *oid)
++{
++	struct tracking_name_data cb_data = { NULL, NULL, NULL, 1 };
++	cb_data.src_ref = xstrfmt("refs/heads/%s", name);
++	cb_data.dst_oid = oid;
++	for_each_remote(check_tracking_name, &cb_data);
++	free(cb_data.src_ref);
++	if (cb_data.unique)
++		return cb_data.dst_ref;
++	free(cb_data.dst_ref);
++	return NULL;
++}
+diff --git a/checkout.h b/checkout.h
+new file mode 100644
+index 0000000000..9980711179
+--- /dev/null
++++ b/checkout.h
+@@ -0,0 +1,13 @@
++#ifndef CHECKOUT_H
++#define CHECKOUT_H
++
++#include "cache.h"
++
++/*
++ * Check if the branch name uniquely matches a branch name on a remote
++ * tracking branch.  Return the name of the remote if such a branch
++ * exists, NULL otherwise.
++ */
++extern const char *unique_tracking_name(const char *name, struct object_id *oid);
++
++#endif /* CHECKOUT_H */
 -- 
-2.15.0
+2.15.0.345.gf926f18f3d
+
