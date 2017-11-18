@@ -2,103 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4CD91202F2
-	for <e@80x24.org>; Sat, 18 Nov 2017 03:57:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 51DE8202F2
+	for <e@80x24.org>; Sat, 18 Nov 2017 04:12:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S937492AbdKRD5P (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Nov 2017 22:57:15 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52942 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S937489AbdKRD5O (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Nov 2017 22:57:14 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D7CCDBBE00;
-        Fri, 17 Nov 2017 22:57:13 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=pI1nKqWZPiLSh8dQiz0S2U+Qlp4=; b=U+6deg
-        LYh1IkzNGcDVD7ExzrmB/mpfFB2IY18ZKsb7y28Zr3BpVQYdWsxlxde78wvZGSec
-        HIbLZuSj1/ZDHF0AIl+OKV6AJK/tOX8nCpOWBHIbbUANyUtq6Dlf1Lg87i0iVzfq
-        njk6+3J4kpJH2BjoUxfM7CQh/wxrDLDm6q3Dw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=mwlIHZpU7s4rsZEVJdnGXzgKo6jtIZw/
-        Wr+sxYTLj3KoxWm1YOW5pnSO0iwtOFTjIcYvtuoXtG3fS9LEfek//dE3ZNpS4G2W
-        mr+BoUa/xOZ0E3tHwPB8T81+d9v2/AhKsbroBB7H2WMJ/nHZdniymGKUoBJWBM7J
-        3dCf3mG078I=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id CFC52BBDFE;
-        Fri, 17 Nov 2017 22:57:13 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 44B39BBDFD;
-        Fri, 17 Nov 2017 22:57:13 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Phillip Wood <phillip.wood@talktalk.net>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v3 0/8] sequencer: don't fork git commit
-References: <20170925101041.18344-1-phillip.wood@talktalk.net>
-        <20171117113452.26597-1-phillip.wood@talktalk.net>
-        <xmqq4lpsqmm5.fsf@gitster.mtv.corp.google.com>
-Date:   Sat, 18 Nov 2017 12:57:12 +0900
-In-Reply-To: <xmqq4lpsqmm5.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Sat, 18 Nov 2017 12:41:54 +0900")
-Message-ID: <xmqqvai8p7c7.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S932518AbdKREMc (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Nov 2017 23:12:32 -0500
+Received: from mail-qt0-f182.google.com ([209.85.216.182]:44519 "EHLO
+        mail-qt0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754597AbdKREMa (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Nov 2017 23:12:30 -0500
+Received: by mail-qt0-f182.google.com with SMTP id h42so9215807qtk.11
+        for <git@vger.kernel.org>; Fri, 17 Nov 2017 20:12:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=stgW2QAnOsy3Ak3Yfst/tRTskScUXfdruDwiM6ukIyQ=;
+        b=Ga9zGXpMpCjmDQO8/ZCYM8OMIFJpkLqTmk8wyTGyHAVYj91Dq1/DOALjGF1ySkMacb
+         RshpU2Rtqh0eeAYdkmI1z44rNcZNV4hzFL0/MO5AjN0PaycBiBmbSy0S4y9hTLplytC5
+         cd1sT+gHrMJa8EArcloydye8jZY5esuOBqUtFEBfPCLS5MGex+MKj0rRHQfd2bObaJyt
+         V924nBPcQm94U0VzgVLuEriLexg0lMzaiDhNl+20nH1Mb1M3YeLIt26wYaYCHSS8a0pn
+         I3ULlE46uQI+I5g019YRcMNIBaA80Hy6is0er2SP78QjSS1vP/ZlcCAqrRZdZePdqg7+
+         FdPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=stgW2QAnOsy3Ak3Yfst/tRTskScUXfdruDwiM6ukIyQ=;
+        b=Oyz7h1AqSDIB0dgZhInclVJrrFKpTqEVTs9sXZ6jXgJYBdgSVwuLWxL01Y2a0WajKr
+         2T/fg3ea1/8cOTpIDLk9/2yGpDV3HZXnnH9hA8XF+cnyLb6/bSjOvdT3IqLSokZA7d62
+         seJQoW3xgsp+vEMn/W5Igi84nugPY4HxVb/0ZZArG09CRPLEK7QxMFsbt7pRKQdAK8/g
+         AqHmsfBZMLqOn+yTpWOJ06sBJo64qTRQJ7C2eWPASrx1dq0gXHpVTj4FcZJHbNAIgIpU
+         Wu0X7WQP1E0DCkSzaAat92R7nN2jfzqNpt43EvO9VqCt2HsAFRFHO8gI5h3KLSvQv1HG
+         /A2w==
+X-Gm-Message-State: AJaThX7qqU+fBoKarv7XykEhTJwtXD8wCO5AfD2lcTAEMocxpA8Rqc8z
+        aSUDzGfSeI+8GFl/CcwEgZGS0RZk2j+V5aIJbpe7ow==
+X-Google-Smtp-Source: AGs4zMarQ2NTdXWN/yoEfLake69Io2Ivu2Bev4TsXfJHC6LNy5N0kxSNLNgZKsCHIYE6xVClUmYiCpDMqf8unoN5EL0=
+X-Received: by 10.200.15.249 with SMTP id f54mr11649045qtk.216.1510978349812;
+ Fri, 17 Nov 2017 20:12:29 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8F41DFBC-CC14-11E7-BA59-575F0C78B957-77302942!pb-smtp2.pobox.com
+Received: by 10.200.54.4 with HTTP; Fri, 17 Nov 2017 20:12:29 -0800 (PST)
+In-Reply-To: <xmqqzi7kp7j2.fsf@gitster.mtv.corp.google.com>
+References: <CAC2Jkr+brEKLy-z45WwP2iqssA14na9xpaCoKrNKbPcTvtUxJA@mail.gmail.com>
+ <xmqqzi7kp7j2.fsf@gitster.mtv.corp.google.com>
+From:   =?UTF-8?B?5bCP5bed5oGt5Y+y?= <aiueogawa217@gmail.com>
+Date:   Sat, 18 Nov 2017 13:12:29 +0900
+Message-ID: <CAC2JkrLWVEHvV7tf24bPmVEDpgnrKTFtHR5UHMh+kC8v_fWumA@mail.gmail.com>
+Subject: Re: Is it not bug git stash -- <pathspec> does not work at non-root directory?
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+> Please make it a habit (not limited to when interacting with _this_
+project) to state a bit more than "does not work"; instead, say "it
+is expected to do X, but instead it does Y, and the difference
+between X and Y I perceive is Z".
 
-> Phillip Wood <phillip.wood@talktalk.net> writes:
+Thanks. I'll rewrite the issue.
+
+Assuming that we have sub/something and something is not included anywhere =
+else,
+
+        cd sub && git stash -- something
+
+ is expected to make a stash for sub/something but instead returns error li=
+ke
+
+        error: pathspec 'something' did not match any file(s) known to git.
+        Did you forget to 'git add'?
+
+.
+
+I don't know what I should write about 'the difference between X and Y is Z=
+'.
+
+2017-11-18 12:53 GMT+09:00 Junio C Hamano <gitster@pobox.com>:
+> =E5=B0=8F=E5=B7=9D=E6=81=AD=E5=8F=B2 <aiueogawa217@gmail.com> writes:
 >
->> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->>
->> I've updated these based on the feedback for v2. I've dropped the
->> patch that stopped print_commit_summary() from dying as I think it is
->> better to die than return an error (see the commit message of the
->> patch that adds print_commit_summary() for the reasoning). Apart from
->> that they're minor changes - style fixes and a reworded a commit message.
+>> Is it not bug git stash -- <pathspec> does not work at non-root director=
+y?
 >
-> Thanks for further polishing this topic; I found nothing in the
-> update that was questionable.  Will replace.
+> Please make it a habit (not limited to when interacting with _this_
+> project) to state a bit more than "does not work"; instead, say "it
+> is expected to do X, but instead it does Y, and the difference
+> between X and Y I perceive is Z".
 >
-> With this, perhaps it is ready for 'next'?
-
-Not really.  I needed at least this to get it even compile, which
-hints that I do not yet know what _else_ I missed by skimming this
-round of the series.
-
- sequencer.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/sequencer.c b/sequencer.c
-index 37460db6b1..63cfb6ddd9 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -1139,8 +1139,8 @@ static int do_commit(const char *msg_file, const char *author,
- 			unlink(git_path_cherry_pick_head());
- 			unlink(git_path_merge_msg());
- 			if (!is_rebase_i(opts))
--				res = print_commit_summary(NULL, &oid,
--						SUMMARY_SHOW_AUTHOR_DATE);
-+				print_commit_summary(NULL, &oid,
-+						     SUMMARY_SHOW_AUTHOR_DATE);
- 			return res;
- 		}
- 	}
--- 
-2.15.0-372-g9a6f8facfd
-
+> If you mean
+>
+>         cd sub && git stash -- Makefile
+>
+> does not make a stash for only sub/Makefile and instead makes (or
+> attempts to make) a stash for only Makefile at the top-level, then
+> I think it is a bug, whose likely cause is that the implementation
+> forgets to prepend the $prefix to the pathspec it got from the
+> command line.  But I am writing this without looking at the
+> implementation and with your unclear description of the issue, so
+> I may be completely off the mark ;-)
+>
+> Thanks.
