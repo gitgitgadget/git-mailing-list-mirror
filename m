@@ -2,74 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 75BB8201C8
-	for <e@80x24.org>; Sat, 18 Nov 2017 20:25:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EAC11201C8
+	for <e@80x24.org>; Sat, 18 Nov 2017 20:32:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1423350AbdKRUZq (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 Nov 2017 15:25:46 -0500
-Received: from mout.web.de ([212.227.17.12]:49377 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1161613AbdKRUZo (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Nov 2017 15:25:44 -0500
-Received: from [192.168.178.36] ([91.20.49.242]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0LwHkw-1fF9Vb0wTG-0181wd; Sat, 18
- Nov 2017 21:25:33 +0100
-Subject: Re: [PATCH] config: avoid "write_in_full(fd, buf, len) != len"
- pattern
-To:     Jeff King <peff@peff.net>
-Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-References: <20171115124043.17147-1-phillip.wood@talktalk.net>
- <20171117220633.6yoovfgpbr3rsykr@sigill.intra.peff.net>
- <f3038984-1cd8-e11f-61fd-10bf0cc33e2d@web.de>
- <20171118175246.puaepnyw3u4a33dy@sigill.intra.peff.net>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <d93bd6b8-3f90-03da-97db-317524cace36@web.de>
-Date:   Sat, 18 Nov 2017 21:25:30 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.4.0
+        id S1423427AbdKRUc1 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Nov 2017 15:32:27 -0500
+Received: from mail-ua0-f175.google.com ([209.85.217.175]:46765 "EHLO
+        mail-ua0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1423422AbdKRUcZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Nov 2017 15:32:25 -0500
+Received: by mail-ua0-f175.google.com with SMTP id 21so3605081uas.13
+        for <git@vger.kernel.org>; Sat, 18 Nov 2017 12:32:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=BU8Kg+ArWHkwmFll7Sqcy4rQYXYBBD+ixQS+UIQvJC4=;
+        b=Kpq7EU7S0nOLkLBHEEig6mBvyipXCfBB38MLEuprFKKvTELdOvu9Loa2bgpIXD4od9
+         nMt/GgtLX5qQVM2Dk0HGRxPUynC5QiKof84vgWNNaC4sjCI6P8to47+M8kFY9AclaRk3
+         MXQE0lADtf24mf1hyXHxdmoTP36wPdrI+eb0ln+Laja5D4U+hGBY0rq4W5aSjtfSMcAS
+         dmw6FJnVt06wEytV4O8cSu9Vr4bl2IxN2ZR3vicmwxp8QyccfGeW66fTWeV6uqjILG1B
+         mqMMAURIpOMbKDgkSXRQjGnwbUBAzpP+XDSjWJOGAMcuCxc/l7/O1k5npWGFmHS2eJGP
+         KypQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=BU8Kg+ArWHkwmFll7Sqcy4rQYXYBBD+ixQS+UIQvJC4=;
+        b=qqOTOcVyeHZJiQUh+UnLt6BDUHxBGD0PrrmE6jimFeCiejD4iBaL3xIDQfnKB/7C10
+         X9zghblUq/z3g0zr32ZJoGF7Pk0KN7iAzY9c62MKwcd6fQ/N8roKjIFXlG3jXJucdFHk
+         8cJP5HuMYY2S/WqBK2hvIl60rUtlBBNxuECmrEqSU7U0ply61m1SWfKJkAObaRpC8Z29
+         QTj6h5+z9OYcRJb3DN2kyRrB6H1qEou55PJTB+NdEQfX2HqcKaROZGY9CYaAs5g+PGSh
+         zMV6d4ZcunzwWKWFYSeDMOn84GScu70Rc5cwgVnpIQnCVxekQ9nvSJiUZjHBevxUDGWE
+         /wtg==
+X-Gm-Message-State: AJaThX57XkeNmFsr1AnrSKQyrIoimyPbto8poKT8N7EMT/mne5HFEdrE
+        BoFH+jX5fyo5OpjjAzbI2fJraBiB/mJaGJFHB5Y=
+X-Google-Smtp-Source: AGs4zMa8QV/S8bvCKCjPH5Hmqq4e8rKuh+M6l1F0FzaC0u1ShHoBUZcn1oZoAT1u5HRt7pGUlNc6iVzYbnhDLx08YFg=
+X-Received: by 10.159.49.234 with SMTP id w39mr7674484uad.133.1511037144871;
+ Sat, 18 Nov 2017 12:32:24 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20171118175246.puaepnyw3u4a33dy@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:5pcW6WrW+/xxEgSdwEj5+0wVg3T8OSE/G6xgkON9smt4PiEJchA
- V8FI9G451nR5yIOPsRtHI1Y0R9Wu+lL3ysFpQaW+XIps2CV9uNjIE5NlePO1LFUusFO/sK0
- iiRvMfB5l4ZISPjUKBxk5HVSKiduc0eZrqh+Nrh/1goqmCW8pefR1qCbSGVcnff36XXeVQv
- +4CPAglhbyRemZ1KecZ5A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:J0hSUqL+vHc=:vNLXJjQogriqtKXNZzQcPf
- PNwqQZSH9CFsBgvEmFSleJBY4R/qx1B0jxMe6xNyjwkP16m9FgR/QtSVdTaRlr0i37n2AWMQA
- YT+HXp2C5DGcigGwHAlKwy2WKepjCD3/gefQimwuEYVjfy76Lr2SHsrbZ9lzNuGyWb3u+TyYg
- gP8H+tXrTMXpLxzWyPtMAaMPwCH/OgQ+nIwzSvqjR9kUWDgvJz9u+3mS58QGRDw5gLsJbbMiy
- xQ5W86lGW7SJwi/C2Fv8DoKTyNpSIO/mTQkbkERvI8glWz2MLHFpPcwfl+iSasx6D3m6hfDQ6
- ItPWpEfWIAwbi+716ZmWE+Vw+vIfBxjfnk3CASEMicVlRkOx6ItX/ReOne+7vpsEjjilxFRuH
- TrtkBRUMoV+X7kR5PIztrKUj0Wx9v0IiY834t5gjYrYOI8DN2kw2Uz0L/gEU6P4SGKPpKU7p6
- x0uY8eRqD3lJJC73zJUTnzPTA0qX5SsYVJv8Q6aTxPKGfQVTV7B1tGdqhEwot0CMgNLCxdfZc
- wOfseq5v4APAqFWrXIzvzfYSjJH0a16mcy2NrZFja/B8A7eWPAxsJodl2BVPhhMy9U7XsEo3I
- vf8ebS458tQMbxcOFAOvi/aEFrrwAVOaHKJDggKQ7C0JN1iw3WNDrcMGk4opnigctFLRY9ZZp
- /H6AdJFEJUbv6lV7NsBG4xXgfqsVdk/lfJFFJpl8YmyRe4Eos93v1+u+supBwilcaRwHHZSfU
- 6CKqkAUbzboQU1flUPhu+gib9Yi12dk9di9CA+eVha/UZbG+G413/nAJBrb3zx+p+Z6t3L/TH
- 7xt2N67mZ3HJ0h84tWjwl7BFAK5+/oUYUJ97F1jYARnQAiqLbo=
+Received: by 10.176.70.73 with HTTP; Sat, 18 Nov 2017 12:32:24 -0800 (PST)
+In-Reply-To: <20171114194718.GY5144@zaya.teonanacatl.net>
+References: <20171114093402.29256-1-slandden@gmail.com> <20171114194718.GY5144@zaya.teonanacatl.net>
+From:   Shawn Landden <slandden@gmail.com>
+Date:   Sat, 18 Nov 2017 12:32:24 -0800
+Message-ID: <CA+49okpfdzFwB32VksO4nQJX+enc2MZzg8=xkeFgUEHhGvEBjw@mail.gmail.com>
+Subject: Re: [PATCH] sha1: add gnutls as a sha1 provider
+To:     Todd Zullinger <tmz@pobox.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 18.11.2017 um 18:52 schrieb Jeff King:
-> On Sat, Nov 18, 2017 at 11:20:04AM +0100, René Scharfe wrote:
->> Reported-by: Jeff King <peff@peff.net>
->> Signed-off-by: Rene Scharfe <l.s.r@web.de>
-> 
-> I'm not sure I deserve a reported-by if I say "it looks fine" but am
-> totally wrong. ;)
-
-Right, wrong -- mere details.  You pointed out that there was work
-to do. :)
-
-René
+On Tue, Nov 14, 2017 at 11:47 AM, Todd Zullinger <tmz@pobox.com> wrote:
+>
+> Hi Shawn,
+>
+> Shawn Landden wrote:
+>>
+>> I think this is preferrable to bringing the assembly routines into the g=
+it code-base, as a way of getting access to these high-performance routines=
+ to a git available in Debian, Ubuntu, or Fedora (which all use BLK_SHA1=3D=
+1 due to GPLv2 + OpenSSL license considerations, see Debian Bug #879459).
+>
+>
+> While it seems like it could be useful to have the choice of using the fa=
+st SHA1 implementation without concern about licensing issues, there's a fe=
+w details I thought were worth mentioning.
+>
+> Fedora moved from OpenSSL SHA1 to BLK_SHA1 to reduce the size of the bina=
+ries and dependencies, not due to licensing issues (Fedora considers OpenSS=
+L a system library and allows linking GPLv2 code).
+>
+> Fedora now uses the default DC_SHA1 (the collision-detecting SHA1 impleme=
+ntation).  DC_SHA1 is not, as far as I know, as fast as the OpenSSL/GnuTLS =
+SHA1, but it's safer given the increasingly successful attacks against SHA1=
+.  I don't envision changing that to gain performance.  (And, of course, th=
+e speed of SHA1 should become less of an issue once git moves to a new, str=
+onger hash.)
+>
+> It looks like the Debian packages use the default DC_SHA1 implementation =
+as well.  Regardless of the licensing concerns regarding OpenSSL in Debian,=
+ I suspect they'll want to use the default, collision-detecting SHA1 implem=
+entation.  That doesn't mean a patch to add the option of GnuTLS isn't usef=
+ul though.
+>
+> Fedora does link with OpenSSL's libcrypto and libssl in Fedora for the re=
+mote-curl helpers and imap-send.  I believe the remote-curl helpers just li=
+nk with curl, which happens to use OpenSSL on Fedora and could use GnuTLS i=
+nstead.  The imap-send command might also use curl and whatever crypto libr=
+ary curl is built with too, but I'm not terribly familiar with imap-send. (=
+I think those are the only uses of libcrypto or libssl in Fedora's packages=
+, but I could be mistaken).
+>
+> That's a lot of text without having anything to say about the actual patc=
+h.  Hopefully it's at least mildly useful to you or others. :)
+It is all appreciated. I just want to make note that I am still
+interested in getting this patch in.
