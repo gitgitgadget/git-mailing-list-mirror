@@ -7,27 +7,26 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E675E201C8
-	for <e@80x24.org>; Sat, 18 Nov 2017 18:10:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 011D9201C8
+	for <e@80x24.org>; Sat, 18 Nov 2017 18:10:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966889AbdKRSKh (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 Nov 2017 13:10:37 -0500
-Received: from mout.web.de ([212.227.17.11]:53588 "EHLO mout.web.de"
+        id S1424428AbdKRSKm (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Nov 2017 13:10:42 -0500
+Received: from mout.web.de ([212.227.17.11]:65283 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S966794AbdKRSKg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Nov 2017 13:10:36 -0500
-Received: from [192.168.178.36] ([91.20.49.242]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MIvXZ-1eIbXn44Gv-002TUW; Sat, 18
- Nov 2017 19:06:19 +0100
-Subject: [PATCH 4/6] t7810: improve check of -W with user-defined function
- lines
+        id S1424422AbdKRSKk (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Nov 2017 13:10:40 -0500
+Received: from [192.168.178.36] ([91.20.49.242]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LsyZi-1fIVUn01SU-012WEC; Sat, 18
+ Nov 2017 19:04:43 +0100
+Subject: [PATCH 2/6] xdiff: factor out is_func_rec()
 To:     Git List <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Vegard Nossum <vegard.nossum@oracle.com>
 References: <790c2344-a71e-7089-9000-f9b37a4a5cd9@web.de>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <c89b1e5f-0145-ec93-c7fa-53fac1d429da@web.de>
-Date:   Sat, 18 Nov 2017 19:06:16 +0100
+Message-ID: <4efcd033-ab8d-7b0c-0c2f-8e5b5cdd5e0c@web.de>
+Date:   Sat, 18 Nov 2017 19:04:40 +0100
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.4.0
 MIME-Version: 1.0
@@ -35,110 +34,71 @@ In-Reply-To: <790c2344-a71e-7089-9000-f9b37a4a5cd9@web.de>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:fjngfQFfBiLzwZunt2kCScKgKIE0F7JlowFwpP2XQEpEB9cP4eO
- 5jTG5MJaPqHk9pFg6FmYg6qtLpawdj2JLOoUIy+LUkOkIGJTDcOjllnou3sDH42AwJIz2F9
- /GJzE8tL/76k7OvgU0j5uA+o9VZBLzoMBHlxrC7smmbqp6y5fI1EVhrMWeg3OrXLf9tPma4
- WWpOaJf+Z1V+fCOVSjdMQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:3sOgBzvKlMo=:amDNVTf+NQmv3YfZCmoMPf
- AbN8TRAo4RAu3EeB2cwSzK9Y/avwJoAyjUc2olzECeFfc2N5rdVuHw8eKLyD4gZ0xPAqdJIvQ
- /dXlCTJRbET7bZIoD0YHs/lDX6ron+PACL8IJ/sci3b61vhblssaNFOEvilmO7KbR87kws7jB
- dZbuAw2redz3zpcEVBzNh1pLvfafMUM207JI28mqR262AWuvk6qSmqSiQparJtz0dXkNmatMQ
- 6PcHgNeSU/C70wghMRCnEgHYF1ug9gki727Orn5eSnzKyO863OPePc4rMEyw25RxyZ4N6aC4V
- UAoB8tpjnZR4zEwVn2DlgoynmShRyDKy60LSoftiGdMnO81HtRkQcYtoznSxBNRFiivllb+rE
- rb8yidTkEXySgdMnfyCZNz0VzlhJnFLL45/5Guji99He3BApLk4X2E7wXHZQ8qY2wqA2qmgxl
- aBt0qKpN/oZIomzCN80TnKRsVe5nKGo/I1/dXTKyjZVNX3giaRzye+GW0lKIT2RxuBKgrWe2p
- 3T2QGvLTf1DfIQpB1tl83e8KR7rXupo/6NkEBv7vGMOUs6KoxCwWj5X5xxKkymBcc9RyrcIXi
- tKBSzJ/kPPLN1y5zKGCFZuPAB+2ponjw2hzLxzZTqu7jlgHK+debyzBB9wpzunf9XunkjnrhM
- 22N1EUC1rZnzgEOcfuZI8Yc5FKATgBwR4zEpz2gYaDGk/7+znR8emo/GlY5BuTuXbd9C5pxVg
- cko/HXZrnWA7aTP3bjDdeWYc5+jMzD6X6kaGz+zHnlsNLkuTC76RIuEQDojXh/rU5WRFe7xAw
- pQ4rVj6GsI2vA7dzpep44n5xRb4COx8++s0JIQ7+NMQM2Gb2rHVkEzUt6b2FVvkK2f9nK0sxh
- G5+PrR+8B/H52zv7wmlu0cgW+FhFxLgVARrpUyVDcOg75ozzTNhQlS6+KBf6cjMSMVFnbuiJr
- 3NSou+SJtQmGtGE1ooAtxM1OrlO/i4DKNe3hAVjYgYLTlnB1OX+Psr1Xfzn2ljI2ohki8qU2s
- ug==
+X-Provags-ID: V03:K0:JNZj+C/22I1E6XuU4rgbJQPgeHay8KYKlq5D0B280dIHemcA6uB
+ FoaesMdZpgmi/Icg2x/9YQsJJofccj3JJSev11XhmTFoZwTrYmyOHSZTR10jGUeUoj4Eb20
+ tWeWy92oJgX+GQScpKeuhP9mHB0O7HZs9pFBJLjkiSNcbq25wjKV1wP9UtDNp9Ig/Xx5EVr
+ YxS2ayT6HDKm39s2PcSJw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:epRBlW3Bkc0=:Lb6iadZCn2TpgxjrFITCa1
+ 8YKTVTDOjUYZ4Wg9v29LwzMirsqOoB8wsuateeCLjr3sCWyNjNdrTbGEam0Fo7yA9MVULEZKA
+ hzr9ulIs2jfk9rZX9yE2QV+8YPCZMo7Q5F9u4kN5c5orJAzkwS3xSrWiI3Z/XzKRufSWPi8wn
+ K8VrCHniUkT6AWeG97ND4fH9LQiSOo37sJNDb/piUGx+0JbmIZr28F76lXRn9zgSu5DCBSXs/
+ 7DsYTBQTtC4heh/+LWmICXoFcNFrjx3j5hisvFLQkrbBeGjDWoVBAuNfCLBRb3H1HlYs9sS37
+ pfxFkuZhgvl6V1gw3LzSGiXtZ/8O5kI0auR8MhcEpNRa5ILG4YRYlHvnj45zbE+wV+Q7iseMz
+ Hi1sVWrHTHGVHuWhYmTUlNuyuRpWcNdcrZeh/pTx+7tsYZk6mqx1xsCCZP+IUbuW8mOH3LnSs
+ Q5gN/sJB1IpsH4qPpBgR9ntaHdl4CIJSx4TFWQN6AWpFKdx5cBm+EviKrlYNmP64X4CJjDPM6
+ Iy/qc/KEkByvLgH5jfmLcni4ngUnPeLFZdR0cfPtgmZOxIgaE31Q+9/EnRXqL2+ehtsUapTLc
+ i61qWcW5m4OOmHuip99F6E79WUl4G2qUKXfaBnYZ4yWVTouYSn1GKewHVkPfxvpCmC8/oZCww
+ /avWisIPHUlRFrg3I2l/oHbwazXrJWC9/x+1WSvergetFogJ+Rc29uhA6EuDqi7Bf3azVRj9r
+ gFmjNzIHLBtCnINCS7ojx/Mo2uCBB4o+SnSBQCe4qNWORQD3UqhofWcGIRCDUE2ul5OfX5bsC
+ 29Kfv/FvRxEdP6wboNxab4HYPc7AE4q8aSD4xzsvRNHWmx+Jpk=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The check for function context (-W) together with user-defined function
-line patterns reuses hello.c and pretends it's written in a language in
-which function lines contain either "printf" or a trailing curly brace.
-That's a bit obscure.
-
-Make the test easier to read by adding a small PowerShell script, using
-a simple, but meaningful expression, and separating out checks for
-different aspects into dedicated tests instead of simply matching the
-whole output byte for byte.
-
-Also include a test for showing comments before function lines like git
-diff -W does, which is currently failing because that functionality is
-not implemented for git grep, yet.
+Add a helper for checking if a given record is a function line.  It
+frees callers from having to deal with the buffer arguments of
+match_func_rec().
 
 Signed-off-by: Rene Scharfe <l.s.r@web.de>
 ---
- t/t7810-grep.sh | 41 +++++++++++++++++++++++++++++++----------
- 1 file changed, 31 insertions(+), 10 deletions(-)
+ xdiff/xemit.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
-index 2a6679c2f5..632b905611 100755
---- a/t/t7810-grep.sh
-+++ b/t/t7810-grep.sh
-@@ -60,6 +60,18 @@ test_expect_success setup '
- 		echo " line with leading space3"
- 		echo "line without leading space2"
- 	} >space &&
-+	cat >hello.ps1 <<-\EOF &&
-+	# No-op.
-+	function dummy() {}
-+
-+	# Say hello.
-+	function hello() {
-+	  echo "Hello world."
-+	} # hello
-+
-+	# Still a no-op.
-+	function dummy() {}
-+	EOF
- 	git add . &&
- 	test_tick &&
- 	git commit -m initial
-@@ -766,18 +778,27 @@ test_expect_success 'grep -W shows no trailing empty lines' '
- 	test_cmp expected actual
- '
+diff --git a/xdiff/xemit.c b/xdiff/xemit.c
+index 6881445e4a..c2d5bd004c 100644
+--- a/xdiff/xemit.c
++++ b/xdiff/xemit.c
+@@ -121,6 +121,12 @@ static long match_func_rec(xdfile_t *xdf, xdemitconf_t const *xecfg, long ri,
+ 	return xecfg->find_func(rec, len, buf, sz, xecfg->find_func_priv);
+ }
  
--cat >expected <<EOF
--hello.c=	printf("Hello world.\n");
--hello.c:	return 0;
--hello.c-	/* char ?? */
--EOF
--
- test_expect_success 'grep -W with userdiff' '
- 	test_when_finished "rm -f .gitattributes" &&
--	git config diff.custom.xfuncname "(printf.*|})$" &&
--	echo "hello.c diff=custom" >.gitattributes &&
--	git grep -W return >actual &&
--	test_cmp expected actual
-+	git config diff.custom.xfuncname "^function .*$" &&
-+	echo "hello.ps1 diff=custom" >.gitattributes &&
-+	git grep -W echo >function-context-userdiff-actual
-+'
++static int is_func_rec(xdfile_t *xdf, xdemitconf_t const *xecfg, long ri)
++{
++	char dummy[1];
++	return match_func_rec(xdf, xecfg, ri, dummy, sizeof(dummy)) >= 0;
++}
 +
-+test_expect_failure ' includes preceding comment' '
-+	grep "# Say hello" function-context-userdiff-actual
-+'
-+
-+test_expect_success ' includes function line' '
-+	grep "=function hello" function-context-userdiff-actual
-+'
-+
-+test_expect_success ' includes matching line' '
-+	grep ":  echo" function-context-userdiff-actual
-+'
-+
-+test_expect_success ' includes last line of the function' '
-+	grep "} # hello" function-context-userdiff-actual
- '
+ struct func_line {
+ 	long len;
+ 	char buf[80];
+@@ -178,7 +184,6 @@ int xdl_emit_diff(xdfenv_t *xe, xdchange_t *xscr, xdemitcb_t *ecb,
  
- for threads in $(test_seq 0 10)
+ 			/* Appended chunk? */
+ 			if (i1 >= xe->xdf1.nrec) {
+-				char dummy[1];
+ 				long i2 = xch->i2;
+ 
+ 				/*
+@@ -186,8 +191,7 @@ int xdl_emit_diff(xdfenv_t *xe, xdchange_t *xscr, xdemitcb_t *ecb,
+ 				 * a whole function was added.
+ 				 */
+ 				while (i2 < xe->xdf2.nrec) {
+-					if (match_func_rec(&xe->xdf2, xecfg, i2,
+-						dummy, sizeof(dummy)) >= 0)
++					if (is_func_rec(&xe->xdf2, xecfg, i2))
+ 						goto post_context_calculation;
+ 					i2++;
+ 				}
 -- 
 2.15.0
