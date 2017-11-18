@@ -7,221 +7,193 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D01F2201C8
-	for <e@80x24.org>; Sat, 18 Nov 2017 18:09:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2002E201C8
+	for <e@80x24.org>; Sat, 18 Nov 2017 18:09:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1030841AbdKRSJt (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 Nov 2017 13:09:49 -0500
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:37372 "EHLO
+        id S1424416AbdKRSJw (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Nov 2017 13:09:52 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:36084 "EHLO
         mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1030836AbdKRSJr (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Nov 2017 13:09:47 -0500
-Received: by mail-wm0-f67.google.com with SMTP id v186so11764635wma.2
-        for <git@vger.kernel.org>; Sat, 18 Nov 2017 10:09:46 -0800 (PST)
+        with ESMTP id S1030837AbdKRSJs (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Nov 2017 13:09:48 -0500
+Received: by mail-wm0-f67.google.com with SMTP id r68so11865342wmr.1
+        for <git@vger.kernel.org>; Sat, 18 Nov 2017 10:09:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=dKJDMQCgrzJ80dE7ewxGDhSTAU8SYd3A11eLknP0DNY=;
-        b=iQwX5e41rOxzmz5jWIacoA6qTZpswkBD4GHisNKeiC6AwWMZD3dpV4ZP/BwPabizv1
-         /uEPBbAGSPBjdVsfjsudB8RQILqJAHmYuzet3VGmFczVBRAwEfbz0miyAmW5puhF2fdT
-         aD1JfLZ/nIU70YeVqvbgul6iluE5N8n2iZk7OCKvuHgDQWDmQSLKFfFZDsN0ZE9ocRge
-         0LnnXkYMSxufMxeLmttabl6IW4eNiCIPSlaH1Fzd+b2DTkWudVj/z84xiGTWFDRZ2QUU
-         +wejF695KnwGOquXsqx73YxhAzZcI8qPlqoWG4cmiwOmCcjCe7eVvJwig81DelUffY2j
-         p8Wg==
+        bh=/ZFBVfzboGaHxKClDqTrDj7kgeJPH7jJEZjWWglUgbI=;
+        b=XYmutQnECoAgYNLctECVzpLBOtZDUToe2p+i/hCOcZEDxt7NjIk0f+FmMoU/mszGKM
+         jwLhRKMEEsRvZLKdUFwSxCQswUsysvc82+nACoQbpDodgGdD/JRCtk8qjaV3sfFq1MLM
+         o0j2d2eF3+5JRrVKJaqon0IeWW2Ky0kXfmO1E6270hs0G3r7XKpfYvox2b97cXC1B3qS
+         783YB1aNzM2L9KEvQA5XZawPM/0axl2h/oloB8zSBgonfeqr7A8fRz1GBdJ/PSgwgV3x
+         3MP2IzKvR5ISdyshoGLnjwt9Nf6m8gzZevfGYjb59TSbdFIX65PAaoLwjg8s3pIyufRv
+         zaYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=dKJDMQCgrzJ80dE7ewxGDhSTAU8SYd3A11eLknP0DNY=;
-        b=QFDqhCum9pM1HYjTf6Empdh7eFC8d3yxTovvtWP6RwUhMVIZbIIrEv5qnZYypg+8ur
-         TdyADA5hJ+iypRA6h2Iyjiar/YX3svlpy2ka8wQOILCM6yAyT9xEVwzIt8DoChV2W5xU
-         g/OTjaiHT6kQ9AXJeskZ9vW8QzKNCSml+UoIIJV7lkWtdRBStlYqDPDpZ/ghRy2qSgIY
-         gpIkiatFAyl+9vUKE9IwSMboHFKT3/S3P2NBtY9RWbN3cvAV+Zah2YSPY1DJtN9PQICz
-         waoG4jjlqfOY/d7qzHksoSpDTxnDB6Goj4yObs0GTnF1g2/MA1gfQKe4b01WR9/Bt1iM
-         5VYg==
-X-Gm-Message-State: AJaThX5hC0AVEqKpjpULFFbQsJqPdlbLxTkXxj/PznoVE8dOVzCgQWYe
-        QEQud4W227qniNnyVVApe0AKPgF1
-X-Google-Smtp-Source: AGs4zMZMUJnk5PaVDK5ngszxYMBPyVypLdrg2qDuFSJnDUXts53Qo14Z3V2dJqwz/+Xv3CvuANxctg==
-X-Received: by 10.28.22.16 with SMTP id 16mr6173793wmw.138.1511028586173;
-        Sat, 18 Nov 2017 10:09:46 -0800 (PST)
+        bh=/ZFBVfzboGaHxKClDqTrDj7kgeJPH7jJEZjWWglUgbI=;
+        b=XC0/j9tVZnuKuOmKODLWj02E3wBvbbPqpGeIAwtnwMHe3LRu3FaToJeMvRhTqxLWl3
+         hpqom6EYmtY8W5ytOnV/wu6NWMSGfm5D4KA7bM/YoQpm8MD6M19QGHeNqUfqPc+1EG4d
+         qXnWmAmvE7zwVdcXyIE3c9DWWV0U1UIIpoLwsgFfivWdDsCTZXaceAx1HGIYYCSOSeJi
+         snvOVEXmEmZFoY10CxVYm9h/hieLlzKFt46oE95mjW92J7OdO5X7KWNAD5IEpryAAvAh
+         Mx4Q4+2slgDw8eRj9bsA2GDCud2x2Pja6vRXBnYuhSv6Qpug61xME7bq8tp3nM3GfBao
+         wnYA==
+X-Gm-Message-State: AJaThX6INvXQICHNjADnyfBF9u//bsB6ucSvQfoTnuNgo8jBsYCvfFgl
+        TvlUT4XEckTeoynXczdLPFPM3STM
+X-Google-Smtp-Source: AGs4zMaeaHAubuTVy7z+v0wmkSHHMEEMFnVyVy9bKqtxTK/TmA6Ydp2/d7DXYl+TLA8vWaIMfTMYdw==
+X-Received: by 10.28.27.206 with SMTP id b197mr6579477wmb.96.1511028587354;
+        Sat, 18 Nov 2017 10:09:47 -0800 (PST)
 Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
-        by smtp.gmail.com with ESMTPSA id 143sm13294209wmj.35.2017.11.18.10.09.44
+        by smtp.gmail.com with ESMTPSA id g65sm11691931wmd.16.2017.11.18.10.09.46
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 18 Nov 2017 10:09:44 -0800 (PST)
+        Sat, 18 Nov 2017 10:09:46 -0800 (PST)
 From:   Thomas Gummerer <t.gummerer@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v2 1/3] checkout: factor out functions to new lib file
-Date:   Sat, 18 Nov 2017 18:11:01 +0000
-Message-Id: <20171118181103.28354-1-t.gummerer@gmail.com>
+Subject: [PATCH v2 2/3] worktree: make add <path> <branch> dwim
+Date:   Sat, 18 Nov 2017 18:11:02 +0000
+Message-Id: <20171118181103.28354-2-t.gummerer@gmail.com>
 X-Mailer: git-send-email 2.15.0.345.gf926f18f3
-In-Reply-To: <20171112134305.3949-1-t.gummerer@gmail.com>
+In-Reply-To: <20171118181103.28354-1-t.gummerer@gmail.com>
 References: <20171112134305.3949-1-t.gummerer@gmail.com>
+ <20171118181103.28354-1-t.gummerer@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Factor the functions out, so they can be re-used from other places.  In
-particular these functions will be re-used in builtin/worktree.c to make
-git worktree add dwim more.
+Currently 'git worktree add <path> <branch>', errors out when 'branch'
+is not a local branch.   It has no additional dwim'ing features that one
+might expect.
 
-While there add some docs to the function.
+Make it behave more like 'git checkout <branch>' when the branch doesn't
+exist locally, but a remote tracking branch uniquely matches the desired
+branch name, i.e. create a new branch from the remote tracking branch
+and set the upstream to the remote tracking branch.
+
+As 'git worktree add' currently just dies in this situation, there are
+no backwards compatibility worries when introducing this feature.
 
 Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
-The previous round of this series is at
-https://public-inbox.org/git/20171112134305.3949-1-t.gummerer@gmail.com/.
-Thanks Junio and Eric for the comments on the previous round!
+ Documentation/git-worktree.txt |  7 +++++++
+ builtin/worktree.c             | 15 ++++++++++++++
+ t/t2025-worktree-add.sh        | 44 ++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 66 insertions(+)
 
- Makefile           |  1 +
- builtin/checkout.c | 41 +----------------------------------------
- checkout.c         | 42 ++++++++++++++++++++++++++++++++++++++++++
- checkout.h         | 13 +++++++++++++
- 4 files changed, 57 insertions(+), 40 deletions(-)
- create mode 100644 checkout.c
- create mode 100644 checkout.h
-
-diff --git a/Makefile b/Makefile
-index cd75985991..8d603c7443 100644
---- a/Makefile
-+++ b/Makefile
-@@ -757,6 +757,7 @@ LIB_OBJS += branch.o
- LIB_OBJS += bulk-checkin.o
- LIB_OBJS += bundle.o
- LIB_OBJS += cache-tree.o
-+LIB_OBJS += checkout.o
- LIB_OBJS += color.o
- LIB_OBJS += column.o
- LIB_OBJS += combine-diff.o
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index fc4f8fd2ea..9e1cfd10b3 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -1,5 +1,6 @@
- #include "builtin.h"
- #include "config.h"
+diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
+index b472acc356..3c7c8c3cee 100644
+--- a/Documentation/git-worktree.txt
++++ b/Documentation/git-worktree.txt
+@@ -52,6 +52,13 @@ is linked to the current repository, sharing everything except working
+ directory specific files such as HEAD, index, etc. `-` may also be
+ specified as `<branch>`; it is synonymous with `@{-1}`.
+ +
++If <branch> is not found but there does exist a tracking branch in
++exactly one remote (call it <remote>) with a matching name, treat as
++equivalent to
++------------
++$ git worktree add -b <branch> <path> <remote>/<branch>
++------------
+++
+ If `<branch>` is omitted and neither `-b` nor `-B` nor `--detach` used,
+ then, as a convenience, a new branch based at HEAD is created automatically,
+ as if `-b $(basename <path>)` was specified.
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 7b9307aa58..92b583ae39 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -1,4 +1,5 @@
+ #include "cache.h"
 +#include "checkout.h"
- #include "lockfile.h"
- #include "parse-options.h"
- #include "refs.h"
-@@ -874,46 +875,6 @@ static int git_checkout_config(const char *var, const char *value, void *cb)
- 	return git_xmerge_config(var, value, NULL);
- }
+ #include "config.h"
+ #include "builtin.h"
+ #include "dir.h"
+@@ -386,6 +387,20 @@ static int add(int ac, const char **av, const char *prefix)
+ 		opts.new_branch = xstrndup(s, n);
+ 	}
  
--struct tracking_name_data {
--	/* const */ char *src_ref;
--	char *dst_ref;
--	struct object_id *dst_oid;
--	int unique;
--};
--
--static int check_tracking_name(struct remote *remote, void *cb_data)
--{
--	struct tracking_name_data *cb = cb_data;
--	struct refspec query;
--	memset(&query, 0, sizeof(struct refspec));
--	query.src = cb->src_ref;
--	if (remote_find_tracking(remote, &query) ||
--	    get_oid(query.dst, cb->dst_oid)) {
--		free(query.dst);
--		return 0;
--	}
--	if (cb->dst_ref) {
--		free(query.dst);
--		cb->unique = 0;
--		return 0;
--	}
--	cb->dst_ref = query.dst;
--	return 0;
--}
--
--static const char *unique_tracking_name(const char *name, struct object_id *oid)
--{
--	struct tracking_name_data cb_data = { NULL, NULL, NULL, 1 };
--	cb_data.src_ref = xstrfmt("refs/heads/%s", name);
--	cb_data.dst_oid = oid;
--	for_each_remote(check_tracking_name, &cb_data);
--	free(cb_data.src_ref);
--	if (cb_data.unique)
--		return cb_data.dst_ref;
--	free(cb_data.dst_ref);
--	return NULL;
--}
--
- static int parse_branchname_arg(int argc, const char **argv,
- 				int dwim_new_local_branch_ok,
- 				struct branch_info *new,
-diff --git a/checkout.c b/checkout.c
-new file mode 100644
-index 0000000000..b0c744d37a
---- /dev/null
-+++ b/checkout.c
-@@ -0,0 +1,42 @@
-+#include "cache.h"
-+#include "remote.h"
++	if (ac == 2) {
++		struct object_id oid;
++		struct commit *commit;
++		const char *remote;
 +
-+struct tracking_name_data {
-+	/* const */ char *src_ref;
-+	char *dst_ref;
-+	struct object_id *dst_oid;
-+	int unique;
-+};
++		commit = lookup_commit_reference_by_name(branch);
++		if (!commit)
++			remote = unique_tracking_name(branch, &oid);
++		if (!commit && remote) {
++			opts.new_branch = branch;
++			branch = remote;
++		}
++	}
 +
-+static int check_tracking_name(struct remote *remote, void *cb_data)
-+{
-+	struct tracking_name_data *cb = cb_data;
-+	struct refspec query;
-+	memset(&query, 0, sizeof(struct refspec));
-+	query.src = cb->src_ref;
-+	if (remote_find_tracking(remote, &query) ||
-+	    get_oid(query.dst, cb->dst_oid)) {
-+		free(query.dst);
-+		return 0;
-+	}
-+	if (cb->dst_ref) {
-+		free(query.dst);
-+		cb->unique = 0;
-+		return 0;
-+	}
-+	cb->dst_ref = query.dst;
-+	return 0;
+ 	if (opts.new_branch) {
+ 		struct child_process cp = CHILD_PROCESS_INIT;
+ 		cp.git_cmd = 1;
+diff --git a/t/t2025-worktree-add.sh b/t/t2025-worktree-add.sh
+index b5c47ac602..e5959800c0 100755
+--- a/t/t2025-worktree-add.sh
++++ b/t/t2025-worktree-add.sh
+@@ -6,6 +6,16 @@ test_description='test git worktree add'
+ 
+ . "$TEST_DIRECTORY"/lib-rebase.sh
+ 
++# Is branch "refs/heads/$1" set to pull from "$2/$3"?
++test_branch_upstream () {
++	printf "%s\n" "$2" "refs/heads/$3" >expect.upstream &&
++	{
++		git config "branch.$1.remote" &&
++		git config "branch.$1.merge"
++	} >actual.upstream &&
++	test_cmp expect.upstream actual.upstream
 +}
 +
-+const char *unique_tracking_name(const char *name, struct object_id *oid)
-+{
-+	struct tracking_name_data cb_data = { NULL, NULL, NULL, 1 };
-+	cb_data.src_ref = xstrfmt("refs/heads/%s", name);
-+	cb_data.dst_oid = oid;
-+	for_each_remote(check_tracking_name, &cb_data);
-+	free(cb_data.src_ref);
-+	if (cb_data.unique)
-+		return cb_data.dst_ref;
-+	free(cb_data.dst_ref);
-+	return NULL;
-+}
-diff --git a/checkout.h b/checkout.h
-new file mode 100644
-index 0000000000..9980711179
---- /dev/null
-+++ b/checkout.h
-@@ -0,0 +1,13 @@
-+#ifndef CHECKOUT_H
-+#define CHECKOUT_H
+ test_expect_success 'setup' '
+ 	test_commit init
+ '
+@@ -314,4 +324,38 @@ test_expect_success 'rename a branch under bisect not allowed' '
+ 	test_must_fail git branch -M under-bisect bisect-with-new-name
+ '
+ 
++test_expect_success '"add" <path> <non-existent-branch> fails' '
++	test_must_fail git worktree add foo non-existent
++'
 +
-+#include "cache.h"
++test_expect_success '"add" <path> <branch> dwims' '
++	test_when_finished rm -rf repo_upstream &&
++	test_when_finished rm -rf repo_dwim &&
++	test_when_finished rm -rf foo &&
++	git init repo_upstream &&
++	(
++		cd repo_upstream &&
++		test_commit upstream_master &&
++		git checkout -b foo &&
++		test_commit a_foo
++	) &&
++	git init repo_dwim &&
++	(
++		cd repo_dwim &&
++		test_commit dwim_master &&
++		git remote add repo_upstream ../repo_upstream &&
++		git config remote.repo_upstream.fetch \
++			  "refs/heads/*:refs/remotes/repo_upstream/*" &&
++		git fetch --all &&
++		git worktree add ../foo foo
++	) &&
++	(
++		cd foo &&
++		test_branch_upstream foo repo_upstream foo &&
++		git rev-parse repo_upstream/foo >expect &&
++		git rev-parse foo >actual &&
++		test_cmp expect actual
++	)
++'
 +
-+/*
-+ * Check if the branch name uniquely matches a branch name on a remote
-+ * tracking branch.  Return the name of the remote if such a branch
-+ * exists, NULL otherwise.
-+ */
-+extern const char *unique_tracking_name(const char *name, struct object_id *oid);
-+
-+#endif /* CHECKOUT_H */
+ test_done
 -- 
 2.15.0.345.gf926f18f3d
 
