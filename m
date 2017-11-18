@@ -2,138 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3299A202A0
-	for <e@80x24.org>; Sat, 18 Nov 2017 07:56:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 116A5202A0
+	for <e@80x24.org>; Sat, 18 Nov 2017 09:01:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1162996AbdKRH4q (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 Nov 2017 02:56:46 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55739 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1162993AbdKRH4o (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Nov 2017 02:56:44 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8F6D9B2B07;
-        Sat, 18 Nov 2017 02:56:43 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=IVzDoPNM41K4
-        iV4P+Xd+MUBeB7U=; b=Y2cLkzfC96/II94lciYQxCje503f0SGAaNgOtcIq4SvM
-        WTdS6pNHbpyYC0JbnCFLmPxr2ljK87gTYy6r+IUQ14BE+h6g+RdDSYw3Q5B7H6tV
-        l1nMWP+FHUeH+MIvOhlgK5ErrQQtT5oxE1XiRIoMQ9JxuWVFubu0aV6vYDKrOho=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=BMZWMp
-        ri8fSHOY/dBoUMy9v4P52/TRCLynMWHV6qKrVfdzqrdI9S8udGAgC1R9cymr0+lI
-        ioyOP93WDDB6IWIkw/Qunjg1zsl/V6xi52FeXWzFeyA+D9w9KGTwZzFApjCRSa7K
-        ZOnOj3eL/Iy/9ZaiIPv79jdtt5A5StDrIoz04=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 87141B2B06;
-        Sat, 18 Nov 2017 02:56:43 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 03F65B2B05;
-        Sat, 18 Nov 2017 02:56:42 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?5bCP5bed5oGt5Y+y?= <aiueogawa217@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Is it not bug git stash -- <pathspec> does not work at non-root directory?
-References: <CAC2Jkr+brEKLy-z45WwP2iqssA14na9xpaCoKrNKbPcTvtUxJA@mail.gmail.com>
-        <xmqqzi7kp7j2.fsf@gitster.mtv.corp.google.com>
-        <CAC2JkrLWVEHvV7tf24bPmVEDpgnrKTFtHR5UHMh+kC8v_fWumA@mail.gmail.com>
-Date:   Sat, 18 Nov 2017 16:56:41 +0900
-In-Reply-To: <CAC2JkrLWVEHvV7tf24bPmVEDpgnrKTFtHR5UHMh+kC8v_fWumA@mail.gmail.com>
-        (=?utf-8?B?IuWwj+W3neaBreWPsiIncw==?= message of "Sat, 18 Nov 2017 13:12:29
- +0900")
-Message-ID: <xmqqmv3kow92.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1161154AbdKRJBu (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Nov 2017 04:01:50 -0500
+Received: from bsmtp.bon.at ([213.33.87.14]:12208 "EHLO bsmtp.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753070AbdKRJBt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Nov 2017 04:01:49 -0500
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp.bon.at (Postfix) with ESMTPSA id 3yf89k49jzz5tlF;
+        Sat, 18 Nov 2017 10:01:46 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id C8037211E;
+        Sat, 18 Nov 2017 10:01:45 +0100 (CET)
+Subject: Re: Improved error handling (Was: [PATCH 1/2] sequencer: factor out
+ rewrite_file())
+To:     Jeff King <peff@peff.net>, Simon Ruderich <simon@ruderich.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?Q?Ren=c3=a9_Schar?= =?UTF-8?Q?fe?= <l.s.r@web.de>,
+        Git List <git@vger.kernel.org>,
+        Ralf Thielow <ralf.thielow@gmail.com>
+References: <6150c80b-cb0e-06d4-63a7-a4f4a9107ab2@web.de>
+ <20171101194732.fn4n46wppl35e2z2@sigill.intra.peff.net>
+ <alpine.DEB.2.21.1.1711012240500.6482@virtualbox>
+ <20171101221618.4ioog7jlp7n2nd53@sigill.intra.peff.net>
+ <20171103103248.4p45r4klojk5cf2g@ruderich.org>
+ <xmqqpo8zpjdj.fsf@gitster.mtv.corp.google.com>
+ <20171103191309.sth4zjokgcupvk2e@sigill.intra.peff.net>
+ <20171104183643.akaazwswysphzuoq@ruderich.org>
+ <20171105020700.2p4nguemzdrwiila@sigill.intra.peff.net>
+ <20171106161315.dmftp6ktk6bu7cah@ruderich.org>
+ <20171117223345.s3ihubgda3qdb2j6@sigill.intra.peff.net>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <c50ac174-15bd-60bc-490c-d231e3eb501d@kdbg.org>
+Date:   Sat, 18 Nov 2017 10:01:45 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 04494C16-CC36-11E7-8CA5-8EF31968708C-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20171117223345.s3ihubgda3qdb2j6@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=E5=B0=8F=E5=B7=9D=E6=81=AD=E5=8F=B2 <aiueogawa217@gmail.com> writes:
+Am 17.11.2017 um 23:33 schrieb Jeff King:
+> On Mon, Nov 06, 2017 at 05:13:15PM +0100, Simon Ruderich wrote:
+>> On Sat, Nov 04, 2017 at 10:07:00PM -0400, Jeff King wrote:
+>>> Yes, I think what you've written here (and below) is quite close to the
+>>> error_context patches I linked elsewhere in the thread. In other
+>>> words, I think it's a sane approach.
+>>
+>> In contrast to error_context I'd like to keep all exiting
+>> behavior (die, ignore, etc.) in the hand of the caller and not
+>> use any callbacks as that makes the control flow much harder to
+>> follow.
+> 
+> Yeah, I have mixed feelings on that. I think it does make the control
+> flow less clear. At the same time, what I found was that handlers like
+> die/ignore/warn were the thing that gave the most reduction in
+> complexity in the callers.
 
->> Please make it a habit (not limited to when interacting with
->> _this_ project) to state a bit more than "does not work";
->> instead, say "it is expected to do X, but instead it does Y, and
->> the difference between X and Y I perceive is Z".
->
-> Thanks. I'll rewrite the issue.
->
-> Assuming that we have sub/something and something is not included anywh=
-ere else,
->
->         cd sub && git stash -- something
->
->  is expected to make a stash for sub/something but instead returns erro=
-r like
->
->         error: pathspec 'something' did not match any file(s) known to =
-git.
->         Did you forget to 'git add'?
->
-> .
->
-> I don't know what I should write about 'the difference between X and Y =
-is Z'.
+Would you not consider switching over to C++? With exceptions, you get 
+the error context without cluttering the API. (Did I mention that 
+librarification would become a breeze? Do not die in library routines: 
+not a problem anymore, just catch the exception. die_on_error 
+parameters? Not needed anymore. Not to mention that resource leaks would 
+be much, MUCH simpler to treat.)
 
-If the difference between X and Y is obvious there is no need. =20
-
-I just tried it and I do not see the command is broken in the way
-you describe.
-
-Trial #1 -- the command fully spelled out.
-
-    $ git.git/master: cd Documentation
-    $ Documentation/master: echo >>Makefile
-    $ Documentation/master: git stash push -m "doc-make" -- Makefile
-    Saved working directory and index state On master: doc-make
-    $ Documentation/master: git stash show --stat=20
-     Documentation/Makefile | 1 +
-     1 file changed, 1 insertion(+:
-
-Trial #2 -- lazily issue the command without subcommand.
-
-    $ git.git/master: cd Documentation
-    $ Documentation/master: echo >>Makefile
-    $ Documentation/master: git stash -- Makefile
-    Saved working directory and index state WIP on master: 89ea799ffc Syn=
-c with maint
-    $ Documentation/master: git stash show --stat=20
-     Documentation/Makefile | 1 +
-     1 file changed, 1 insertion(+:
-
-Trial #3 -- make sure having files with the same name is not hiding any b=
-ug.
-
-    $ git.git/master: cd Documentation
-    $ Documentation/master: echo >>CodingGuidelines
-    $ Documentation/master: git stash -- CodingGuidelines
-    Saved working directory and index state WIP on master: 89ea799ffc
-    $ Documentation/master: git stash show --stat
-     Documentation/CodingGuidelines | 1 +
-      1 file changed, 1 insertion(+)
-
-Trial #4 -- simulate a PEBKAC
-
-    $ git.git/master: cd Documentation
-    $ Documentation/master: echo >>no-such-file
-    $ Documentation/master: git stash -- no-such-file
-    error: pathspec 'Documentation/no-such-file' did not match any file(s=
-) known to git.
-    Did you forget to 'git add'?
-
-The last one is an expected result---the pathspec given to the
-command does not match anything tracked, so without first adding the
-file, there is nothing for the command to do.
-
+-- Hannes
