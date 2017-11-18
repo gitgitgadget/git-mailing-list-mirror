@@ -6,78 +6,104 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 509E7202A0
-	for <e@80x24.org>; Sat, 18 Nov 2017 11:27:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D51D4202A0
+	for <e@80x24.org>; Sat, 18 Nov 2017 11:32:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1424186AbdKRL1h (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 Nov 2017 06:27:37 -0500
-Received: from smtp-out-5.talktalk.net ([62.24.135.69]:54673 "EHLO
+        id S1030727AbdKRLcl (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Nov 2017 06:32:41 -0500
+Received: from smtp-out-5.talktalk.net ([62.24.135.69]:58349 "EHLO
         smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1424183AbdKRL1f (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Nov 2017 06:27:35 -0500
+        with ESMTP id S1030723AbdKRLck (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Nov 2017 06:32:40 -0500
 Received: from [192.168.2.201] ([92.22.34.132])
         by smtp.talktalk.net with SMTP
-        id G1HYeSM0Wpb8rG1HYeyXIC; Sat, 18 Nov 2017 11:27:33 +0000
+        id G1MUeSMXtpb8rG1MVeyXRZ; Sat, 18 Nov 2017 11:32:39 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1511004453;
-        bh=20mckJpMqDACbHu7W/1Apl4ZvYiA4ibam4ak1st+xzk=;
+        s=cmr1711; t=1511004759;
+        bh=ZOOztKL33PBk+V6aT/6akwfhSlYAdscSBadOFzCwE2c=;
         h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=krglx3s5nps/jbrOOHFjzA0+9Qe/VS/IisCX2bg8+3SQYCXZzBpGB11OFAVcmJVzH
-         nVhYdoJQpRDJ1uJ5+YIWAyX2rmVvryM3bfAOlNEyfNxh1ufGnohgGvp0WJ22PIwvRG
-         zB8dy5iKvgdmDsbIU1czH8dDbnlxGog7NlcQLgJ4=
+        b=WBs0z19N+Ycj3LD/RdJxaqREAlWfs8nlYApgEPkCYOPLFi2u0VjP2kLfPw5TnVunI
+         LVQEVC1ESRf5evTVcVMo6hVNjXWT/HzSGtyFDx7xTE9f9WCeVUs7mOHKwUL/Q+cs5q
+         kPROioXZMfpd4oKNGbWVd2C3GZfhIS6MvV+OWpMg=
 X-Originating-IP: [92.22.34.132]
 X-Spam: 0
 X-OAuthority: v=2.2 cv=ZM2noTzb c=1 sm=1 tr=0 a=2gYdyS03q/cwff7SV6P5Ng==:117
- a=2gYdyS03q/cwff7SV6P5Ng==:17 a=IkcTkHD0fZMA:10 a=evINK-nbAAAA:8
- a=2m3lvUFcvLo_0xxW1XQA:9 a=4Jm_EJeHNPkaKl0-:21 a=Fwg3fkPENNh7eGT1:21
- a=QEXdDO2ut3YA:10 a=RfR_gqz1fSpA9VikTjo0:22
+ a=2gYdyS03q/cwff7SV6P5Ng==:17 a=IkcTkHD0fZMA:10 a=ybZZDoGAAAAA:8
+ a=nN7BH9HXAAAA:8 a=evINK-nbAAAA:8 a=hRX2jeQqJ8wSOPg4QCQA:9 a=QEXdDO2ut3YA:10
+ a=UF-tvkePCJwA:10 a=SHUmGpGg8TAA:10 a=0RhZnL1DYvcuLYC8JZ5M:22
+ a=RfR_gqz1fSpA9VikTjo0:22
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] config: avoid "write_in_full(fd, buf, len) != len"
- pattern
-To:     Jeff King <peff@peff.net>,
+Subject: Re: [PATCH v3 0/8] sequencer: don't fork git commit
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Git Mailing List <git@vger.kernel.org>
-References: <20171115124043.17147-1-phillip.wood@talktalk.net>
- <20171117220633.6yoovfgpbr3rsykr@sigill.intra.peff.net>
+References: <20170925101041.18344-1-phillip.wood@talktalk.net>
+ <20171117113452.26597-1-phillip.wood@talktalk.net>
+ <xmqq4lpsqmm5.fsf@gitster.mtv.corp.google.com>
+ <xmqqvai8p7c7.fsf@gitster.mtv.corp.google.com>
 From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <6f1cf9ac-42e4-76b2-6936-4646a5cb574c@talktalk.net>
-Date:   Sat, 18 Nov 2017 11:27:31 +0000
+Message-ID: <61d0e704-b6f3-19de-b1cc-90f56b04229f@talktalk.net>
+Date:   Sat, 18 Nov 2017 11:32:38 +0000
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.4.0
 MIME-Version: 1.0
-In-Reply-To: <20171117220633.6yoovfgpbr3rsykr@sigill.intra.peff.net>
+In-Reply-To: <xmqqvai8p7c7.fsf@gitster.mtv.corp.google.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-GB
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfGKsUXe0umSQZmb8LVHm+Z49fsUbrqX/u6mhI9n/fe0T1amlWzYapJNX4mdcXyN6xgBxsxOzWKCgqi2YqANOWiUm5aAM4rK9HbEbGJG8dJybLcsZ9q7f
- 6jTmftGTx20GENhEHT5Ys7rwJE/v0vDlt7bdkw+1ZdmDZVT0mwfJMpjUcSWBpufT50VNjStFMe8Fi/4giyzcu+pyIWd/kazmH7yLB0H5TbxRaLEUYh3Kg8m6
- SbxMNUsYVE5Z46pikDw9YA==
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfGyHphWtcVZ3XLetsnDYNj+ESqLurhyTA4ZYMjlwjdwGLHm4teyPc9vx6ytHipKNMOhCX6JJxytNZrJbmfSNxZ3TikHdJgqkyoBa4Ynt+1xMcg+y67On
+ mM3JaWXCayfFqcsx3nd+2doh6sxgkumBbtX9iwieunxaImeRodI1TXoT7wvpRWo1mgMvGLPoI+yP9hnCNuVQCxMGsDrBoJXlFl9BL9EZ2ICMnebIUEDdz9Y8
+ RSAP2oPXZz5Qp6A7KE8LLFxXWVETCg83XaVCzH+1ajewVxXNgVTbjFaDsk/MaAM7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 17/11/17 22:06, Jeff King wrote:
-> On Wed, Nov 15, 2017 at 12:40:43PM +0000, Phillip Wood wrote:
+On 18/11/17 03:57, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
 > 
->> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>> Phillip Wood <phillip.wood@talktalk.net> writes:
 >>
->> As explained in commit 06f46f237 (avoid "write_in_full(fd, buf, len)
->> != len" pattern, 2017–09–13) the return value of write_in_full() is
->> either -1 or the requested number of bytes. As such comparing the
->> return value to an unsigned value such as strbuf.len will fail to
->> catch errors. Change the code to use the preferred '< 0' check.
+>>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>>>
+>>> I've updated these based on the feedback for v2. I've dropped the
+>>> patch that stopped print_commit_summary() from dying as I think it is
+>>> better to die than return an error (see the commit message of the
+>>> patch that adds print_commit_summary() for the reasoning). Apart from
+>>> that they're minor changes - style fixes and a reworded a commit message.
+>>
+>> Thanks for further polishing this topic; I found nothing in the
+>> update that was questionable.  Will replace.
+>>
+>> With this, perhaps it is ready for 'next'?
 > 
-> Thanks for catching this. I wondered at first how I missed these obvious
-> cases, but the answer is that they were added after my commit. :)
-> 
-> There's one more case in write_section() that uses "==". That's not
-> actually wrong, but I wonder if we'd want to make it "< 0" for
-> consistency.
+> Not really.  I needed at least this to get it even compile, which
+> hints that I do not yet know what _else_ I missed by skimming this
+> round of the series.
 
-Yes, I noticed that but didn't get round to looking at it properly the
-other day. Rene's fix looks good to me.
-
-Best Wishes
+Sorry I'm not sure what happened there, by branch has the missing 'res =
+' something must have happened to the patches. I'll sort it out and resend
 
 Phillip
+
+>  sequencer.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/sequencer.c b/sequencer.c
+> index 37460db6b1..63cfb6ddd9 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -1139,8 +1139,8 @@ static int do_commit(const char *msg_file, const char *author,
+>  			unlink(git_path_cherry_pick_head());
+>  			unlink(git_path_merge_msg());
+>  			if (!is_rebase_i(opts))
+> -				res = print_commit_summary(NULL, &oid,
+> -						SUMMARY_SHOW_AUTHOR_DATE);
+> +				print_commit_summary(NULL, &oid,
+> +						     SUMMARY_SHOW_AUTHOR_DATE);
+>  			return res;
+>  		}
+>  	}
+> 
+
