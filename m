@@ -7,26 +7,26 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5A5B2201C8
-	for <e@80x24.org>; Sat, 18 Nov 2017 18:05:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9C25E201C8
+	for <e@80x24.org>; Sat, 18 Nov 2017 18:07:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1424380AbdKRSFh (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 Nov 2017 13:05:37 -0500
-Received: from mout.web.de ([217.72.192.78]:61245 "EHLO mout.web.de"
+        id S1424394AbdKRSH3 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Nov 2017 13:07:29 -0500
+Received: from mout.web.de ([212.227.17.11]:50962 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1424371AbdKRSF3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Nov 2017 13:05:29 -0500
-Received: from [192.168.178.36] ([91.20.49.242]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MHY1o-1eJQLd3mYe-003Od2; Sat, 18
- Nov 2017 19:05:21 +0100
-Subject: [PATCH 3/6] xdiff: show non-empty lines before functions with -W
+        id S1423099AbdKRSH2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Nov 2017 13:07:28 -0500
+Received: from [192.168.178.36] ([91.20.49.242]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MHowb-1eJhUX1BvR-003dtv; Sat, 18
+ Nov 2017 19:07:16 +0100
+Subject: [PATCH 5/6] grep: update boundary variable for pre-context
 To:     Git List <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Vegard Nossum <vegard.nossum@oracle.com>
 References: <790c2344-a71e-7089-9000-f9b37a4a5cd9@web.de>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <3a304ace-05ee-2285-1790-627aa6674cba@web.de>
-Date:   Sat, 18 Nov 2017 19:05:19 +0100
+Message-ID: <265400ac-ff2a-4a3f-795c-53f0274e8c7a@web.de>
+Date:   Sat, 18 Nov 2017 19:07:13 +0100
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.4.0
 MIME-Version: 1.0
@@ -34,69 +34,82 @@ In-Reply-To: <790c2344-a71e-7089-9000-f9b37a4a5cd9@web.de>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:Dpwar2dqqELFiJ2znofo4W4GEQEjEkV+jqDZWjiS5jgtGvOwQjT
- 2nBgJ/eiOYlPu7wBZroFjeNwxLqAjidf0LsCPFJwXZ8fn//VFv4bsYrcDYv1h7Bqx09vXh3
- tKoDlwxRi1ymuP/6uhtq5dwWs6TQdI9fGf+cMj+/1Jwr+TI0fEj013ZXUye2pJbZTy1ULe8
- CEJreZCtqpkfQUtQgak/g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:UESnXVwp1nQ=:YPkC6RQRCepWVIuvtUB82A
- jK9NGEqmW27tAMRNAXO5rC71DRLtIvMsMGJSLj0DMS3SS4DkVFahk8I4nijDZax+00PaBvIj2
- /Q1xPQHjJW9XaO0uLMmZW5MivbKxlfjrhOCvJ4EgdJdErS5xyxpGKCg4QHwScj++vKFVrtoU3
- czgHC4jTA8lw05Adk+KTwRZBwiON02Vpi120TgeRU3QQIc2+U8ktsHpmmCs7xlHR09TLKFXub
- WW8dTXMq8mqK83g4wQ2792H96srtOalcd7U9tBQXsd0qi5DC6TNUVauYr9fgczfRkw4TP/Utr
- 0XHlU8CkOZw2HSsy3gV7cIxfItNqJo9ybMgT4iC1tsHtzHm1uedOGruYMPuUD4kNc8XW83hh6
- v4YoRu+dSlwEVNJC3M0DMmUYhOx8J/1zwOzF/pTxvk0scPLaQ3VsE3jeLhXi7xjEfQz0MnxUG
- +ElvLTjsp5TAOykQAEfGsii1lBGHCdptRNNApR7mKf0otoYqUWVSA45xFe4fDYxZV8mEzWZad
- 2xnZ3Rg0SURyUL2EjheFFKT+a/f6VWxv1hvFU3UXOhZJpqL08de8qhE94SpUHBUPgioZAtC3w
- nnQFzx2FSBqRvOlvobgDahSkNSCPDmL5BcGaHZMbAPcZTvRJN2wGE3wncgXodXRn0Sp5QRgxp
- CIjD9MNQpRDyekePwi6vztLOT9ZnhXM1aln3fIuGrRQp9k/cCLDWeqrmnwYbSGna/uNSe4N/L
- v6Ta8AjwceRX0vx++G7QjJGEhc4F9z9UDoz0C/PBg2R9weFgPOo+hmieTK82LeJkAcNnUylTf
- 5UDwBCWYG8m4EScBPLUoL2sm03KvuO8EtaWI1ZGjGlp9C7QDJ4=
+X-Provags-ID: V03:K0:hehwkzSiUGe99SKC/cDuSjOZHzMkqXkcSjB0L3jRMm3N5vqvH/m
+ Ze2Yv9XKNwVQmM0BIqd3nye0bxqFkGPO4Gbp6Zu8UAINnvTxYgGCV15ZZd5zAn1sT7ZEPw0
+ 7Fp6hJOn766WjHji5qEfWW932yRD5+7ihgsQZoiI7BCjKSQG+QBhFWDf5RI8GNZPrmheTqP
+ lM9RE/a5jxkhJo2YM/fbQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Tup3WEMKSWM=:XNarxVUeJgzgVbnN0xXhEx
+ EX5NLbFZ/8IjfryAgxneqqBhITw68R/HwAju+ISgChfzM8ZCfqHJeS+0zSG8YqzcffVk1oCF7
+ +rEhpBAGz7yheyl6CZg0k76++T/3EzKnpoJ/5u/bfoLUHqCibiC0a+WtjObfFF+asd6gM1pJk
+ xxe1a7CHA07hLAtJaRRyouYN3IigVFGNxNJpyp9IK8eSr0hhoabdt0vwxxafQS28U9sJY5qMa
+ IaUR4bK15KUNTzoh86hLLzhGgTLSvpo9KBWuzlhepqgJ9GAuL+9+y7OBxnlltgisb1toYLChe
+ ZaQqRTTu2oBT4Xm5OVYpurDJmoNF5w1l3WfHWc92Fejk51wV7Q1JWSS7vIu3H3pm2+oaQY7mt
+ kyAR+giIkJFo7+ulCmdiaQrihIt5TXKInPRtdhfPHJpjxlePQoo6mu465kecY/GH6dL81riWg
+ zhTMMGGsceR6VEGeaWqpLddYsbrB/uzkkFaeVAf0/jup9d1wHNQ1nbbb0EacRJ8Hqkb1w7FUj
+ KEEmhFg804bVV+gL6J2qTt0CXw8MlkBEpOE2m0UlW+27bvr3k/GUWW9HPcmjsiPwG/1ab73sz
+ qZjP5AFVMcu3xulbO46RMMEqRfPfwMvzDkHjrUJ3kFtdynbvGM9xUExUCNZ+fivoySVk/zJIY
+ Ia6F8yKDNDOKhekIBIQv5GkS/jZD7L/DJyICTFxAiZYsZELFelPOQMcROTsGE/Ri0lbQmq+gI
+ cZn8707CPopSp2VgBN1R+LvAAehJQlvSrEnUM8Fsut4qm1GZuzpEmnT5FCY4erpmCpd4CdBnK
+ yd9sG9NKwJWAylhC1n4/OyHQRMdYuhYg/PnnSo7kIuR9b2Kbj8=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Non-empty lines before a function definition are most likely comments
-for that function and thus relevant.  Include them in function context.
+Function context can be bigger than -A/-B/-C context.  To find the
+beginning of the combined context we search backwards.  Currently we
+check at each loop iteration what we're looking for and determine the
+effective upper boundary based on that.
 
-Such a non-empty line might also belong to the preceeding function if
-there is no separating blank line.  Stop extending the context upwards
-also at the next function line to make sure only one extra function body
-is shown at most.
+Simplify this a bit by setting the variable "from" to the lowest unshown
+line number up front if we're looking for a function line and set it
+back to the required -B/-C context line number when we find one.  This
+prepares the ground for the next patch; no functional change intended.
 
-Original-patch-by: Vegard Nossum <vegard.nossum@oracle.com>
 Signed-off-by: Rene Scharfe <l.s.r@web.de>
 ---
- t/t4051-diff-function-context.sh | 2 +-
- xdiff/xemit.c                    | 3 +++
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ grep.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/t/t4051-diff-function-context.sh b/t/t4051-diff-function-context.sh
-index 30fc5bf2b3..2d76a971c4 100755
---- a/t/t4051-diff-function-context.sh
-+++ b/t/t4051-diff-function-context.sh
-@@ -85,7 +85,7 @@ test_expect_success 'setup' '
+diff --git a/grep.c b/grep.c
+index d0b9b6cdfa..2c55d10c55 100644
+--- a/grep.c
++++ b/grep.c
+@@ -1479,20 +1479,21 @@ static void show_funcname_line(struct grep_opt *opt, struct grep_source *gs,
+ static void show_pre_context(struct grep_opt *opt, struct grep_source *gs,
+ 			     char *bol, char *end, unsigned lno)
+ {
+-	unsigned cur = lno, from = 1, funcname_lno = 0;
++	unsigned cur = lno, from = 1, funcname_lno = 0, orig_from;
+ 	int funcname_needed = !!opt->funcname;
  
- check_diff changed_hello 'changed function'
+-	if (opt->funcbody && !match_funcname(opt, gs, bol, end))
+-		funcname_needed = 2;
+-
+ 	if (opt->pre_context < lno)
+ 		from = lno - opt->pre_context;
+ 	if (from <= opt->last_shown)
+ 		from = opt->last_shown + 1;
++	orig_from = from;
++	if (opt->funcbody && !match_funcname(opt, gs, bol, end)) {
++		funcname_needed = 1;
++		from = opt->last_shown + 1;
++	}
  
--test_expect_failure ' context includes comment' '
-+test_expect_success ' context includes comment' '
- 	grep "^ .*Hello comment" changed_hello.diff
- '
+ 	/* Rewind. */
+-	while (bol > gs->buf &&
+-	       cur > (funcname_needed == 2 ? opt->last_shown + 1 : from)) {
++	while (bol > gs->buf && cur > from) {
+ 		char *eol = --bol;
  
-diff --git a/xdiff/xemit.c b/xdiff/xemit.c
-index c2d5bd004c..7778dc2b19 100644
---- a/xdiff/xemit.c
-+++ b/xdiff/xemit.c
-@@ -204,6 +204,9 @@ int xdl_emit_diff(xdfenv_t *xe, xdchange_t *xscr, xdemitcb_t *ecb,
- 			}
+ 		while (bol > gs->buf && bol[-1] != '\n')
+@@ -1501,6 +1502,7 @@ static void show_pre_context(struct grep_opt *opt, struct grep_source *gs,
+ 		if (funcname_needed && match_funcname(opt, gs, bol, eol)) {
+ 			funcname_lno = cur;
+ 			funcname_needed = 0;
++			from = orig_from;
+ 		}
+ 	}
  
- 			fs1 = get_func_line(xe, xecfg, NULL, i1, -1);
-+			while (fs1 > 0 && !is_empty_rec(&xe->xdf1, fs1 - 1) &&
-+			       !is_func_rec(&xe->xdf1, xecfg, fs1 - 1))
-+				fs1--;
- 			if (fs1 < 0)
- 				fs1 = 0;
- 			if (fs1 < s1) {
 -- 
 2.15.0
