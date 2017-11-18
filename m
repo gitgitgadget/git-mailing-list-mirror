@@ -2,302 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B3B51202F2
-	for <e@80x24.org>; Sat, 18 Nov 2017 02:27:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D0910202F2
+	for <e@80x24.org>; Sat, 18 Nov 2017 03:37:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1161315AbdKRC1q (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Nov 2017 21:27:46 -0500
-Received: from cp-27.webhostbox.net ([208.91.198.76]:57162 "EHLO
-        cp-27.webhostbox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S966244AbdKRC1o (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Nov 2017 21:27:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=unimetic.com; s=default; h=References:In-Reply-To:Message-Id:Date:Subject:
-        Cc:To:From:Sender:Reply-To:MIME-Version:Content-Type:
-        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-         bh=VquyMZGvr7IVn652yvnseJ+OWzKAFer3syxgkJ7TPx8=; b=uDu8qiEzvcOfArf7vDm3I6plw
-        xUgnCBXe2RQ2YlQOrLvfxaZTzjHElj9JGfdMyNg/Qf74U9VKrW/ptIjw46I+hKDIvTte8Y54QJ75C
-        pVljl0yZzpHrnz2MQ9REpmwGbu6qLEHHxHd/JxMvPG1MhhwAtKmrClU9CrdgATzhr1lYv01Wm1+GX
-        gSO5BYypfK7jfXevmQKB7V28xQq47oMURb5/qgz7vmJKsdJsRgbbSi49KF+w677R/Vi58AicZMmS5
-        rj9oDPEM2oGQU+IMNucuLfiNZQHCLwBVDlZt3YdOyJcKsEd7XJvOcwQ5qzigRf5aDKizLmYHxzkFc
-        GSHriKELQ==;
-Received: from [94.0.241.119] (port=39810 helo=localhost)
-        by cp-27.webhostbox.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
-        (Exim 4.89)
-        (envelope-from <hsed@unimetic.com>)
-        id 1eFsr8-003WPl-2Z; Sat, 18 Nov 2017 02:27:43 +0000
-From:   hsed@unimetic.com
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, hsed@unimetic.com
-Subject: [PATCH V4] config: add --expiry-date
-Date:   Sat, 18 Nov 2017 02:27:27 +0000
-Message-Id: <20171118022727.30179-1-hsed@unimetic.com>
-X-Mailer: git-send-email 2.15.0.169.g13c4699b6.dirty
-In-Reply-To: <xmqqlgj7xcuf.fsf@gitster.mtv.corp.google.com>
-References: <xmqqlgj7xcuf.fsf@gitster.mtv.corp.google.com>
-X-Authenticated_sender: hsed@unimetic.com
-X-OutGoing-Spam-Status: No, score=-1.0
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cp-27.webhostbox.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - unimetic.com
-X-Get-Message-Sender-Via: cp-27.webhostbox.net: authenticated_id: hsed@unimetic.com
-X-Authenticated-Sender: cp-27.webhostbox.net: hsed@unimetic.com
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+        id S1760822AbdKRDhD (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Nov 2017 22:37:03 -0500
+Received: from mail-qt0-f176.google.com ([209.85.216.176]:37609 "EHLO
+        mail-qt0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1760807AbdKRDhC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Nov 2017 22:37:02 -0500
+Received: by mail-qt0-f176.google.com with SMTP id d15so9213662qte.4
+        for <git@vger.kernel.org>; Fri, 17 Nov 2017 19:37:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=rcKqRZnf9jLwwfNRYdgzaMvnoudPkIiOiSUtkrbwWf8=;
+        b=f8DMC5ZvjMURYIYr4Ys2F3YhEf67fUCo9UpynUSvxq3iZQt2BwufFOJyydTbaCd5cT
+         1gVNm5dXJiS82vO8KI/xUw9ImHSzogZYDwYIU65PG/Wz2RrebToixQl1pow5xq6S2g9t
+         Ujaxaf3ZK2AdcJX3GDcO9ROf6U4LXQAuLuZJjo8XuXRjE+qQZJDATMvL4Xxp3p7JMEdZ
+         ebuJ6l8Ke1xm0p3jhoNR0qJB1vZk1LAf5nUNJ70LCwMqHQwZxDOv0Q5yV/d3VMY7wBYv
+         S7C+OkSqSheLvSruzEwCGhuN2uXV1DIpGckl7q/XwU/iScIhPoGclyJx+Q4DfRoYbm/X
+         x89A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=rcKqRZnf9jLwwfNRYdgzaMvnoudPkIiOiSUtkrbwWf8=;
+        b=nIPhGHswGX9wvn9Jb2x9UgbNSyzYYT2j8bKzOo81IgXRWYzqx7Ces0HgHFUm1YOFh0
+         rnPlRhMDUbBLP1JSPJolTJTvz+jbGMlww/t2KWuNMrXVT9S9jNJSVoDMnkStrd9u+SSv
+         cgi33cOHs39h03XrXZrWeEW2f2k2r6MdUWF7L9ws9lTFZwXKMvBDQyRH73l056tKNvRj
+         nmMDNxTqUSOCloM0G16jiCxSUF3WudWHwpM5L8LsVVw7n/dSM12SeKfLUoHE+QOvguJ6
+         ewe9PvAwPehU/MBiMJbGeowcUrqakZwJs1krzIa2ycIAa8u/DP3eF/L0PPgFlsNUjMjX
+         LNOA==
+X-Gm-Message-State: AJaThX7Wq6HdnqcWElSrrvnkPQDq0fFxtBwDCHK4POxNhpqyv0e3SoA4
+        clIP7Fuqa1WGw0pxoN2wOX7zmaWVvCrolBw8iIEsEA==
+X-Google-Smtp-Source: AGs4zMaVnTOsWDo6iFeqWNT5nF3BvPfDCqB7avMJNd9wsO0p9zPSQk212ulvF1GlqxldqrnHPAdjJnMR0ok5LJQcZBc=
+X-Received: by 10.200.34.239 with SMTP id g44mr12290965qta.11.1510976221789;
+ Fri, 17 Nov 2017 19:37:01 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.200.54.4 with HTTP; Fri, 17 Nov 2017 19:37:01 -0800 (PST)
+From:   =?UTF-8?B?5bCP5bed5oGt5Y+y?= <aiueogawa217@gmail.com>
+Date:   Sat, 18 Nov 2017 12:37:01 +0900
+Message-ID: <CAC2Jkr+brEKLy-z45WwP2iqssA14na9xpaCoKrNKbPcTvtUxJA@mail.gmail.com>
+Subject: Is it not bug git stash -- <pathspec> does not work at non-root directory?
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Haaris Mehmood <hsed@unimetic.com>
-
-Add --expiry-date as a data-type for config files when
-'git config --get' is used. This will return any relative
-or fixed dates from config files as timestamps.
-
-This is useful for scripts (e.g. gc.reflogexpire) that work
-with timestamps so that '2.weeks' can be converted to a format
-acceptable by those scripts/functions.
-
-Following the convention of git_config_pathname(), move
-the helper function required for this feature from
-builtin/reflog.c to builtin/config.c where other similar
-functions exist (e.g. for --bool or --path), and match
-the order of parameters with other functions (i.e. output
-pointer as first parameter).
-
-Signed-off-by: Haaris Mehmood <hsed@unimetic.com>
-
----
- Documentation/git-config.txt |  5 +++++
- builtin/config.c             | 10 +++++++++-
- builtin/reflog.c             | 14 ++------------
- config.c                     | 10 ++++++++++
- config.h                     |  1 +
- t/helper/test-date.c         | 12 ++++++++++++
- t/t1300-repo-config.sh       | 30 ++++++++++++++++++++++++++++++
- 7 files changed, 69 insertions(+), 13 deletions(-)
-
-update v4: preserve the error handling style of builtin/reflog.c
-
-diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-index 4edd09fc6..14da5fc15 100644
---- a/Documentation/git-config.txt
-+++ b/Documentation/git-config.txt
-@@ -180,6 +180,11 @@ See also <<FILES>>.
- 	value (but you can use `git config section.variable ~/`
- 	from the command line to let your shell do the expansion).
- 
-+--expiry-date::
-+	`git config` will ensure that the output is converted from
-+	a fixed or relative date-string to a timestamp. This option
-+	has no effect when setting the value.
-+
- -z::
- --null::
- 	For all options that output values and/or keys, always
-diff --git a/builtin/config.c b/builtin/config.c
-index d13daeeb5..ab5f95476 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -52,6 +52,7 @@ static int show_origin;
- #define TYPE_INT (1<<1)
- #define TYPE_BOOL_OR_INT (1<<2)
- #define TYPE_PATH (1<<3)
-+#define TYPE_EXPIRY_DATE (1<<4)
- 
- static struct option builtin_config_options[] = {
- 	OPT_GROUP(N_("Config file location")),
-@@ -80,6 +81,7 @@ static struct option builtin_config_options[] = {
- 	OPT_BIT(0, "int", &types, N_("value is decimal number"), TYPE_INT),
- 	OPT_BIT(0, "bool-or-int", &types, N_("value is --bool or --int"), TYPE_BOOL_OR_INT),
- 	OPT_BIT(0, "path", &types, N_("value is a path (file or directory name)"), TYPE_PATH),
-+	OPT_BIT(0, "expiry-date", &types, N_("value is an expiry date"), TYPE_EXPIRY_DATE),
- 	OPT_GROUP(N_("Other")),
- 	OPT_BOOL('z', "null", &end_null, N_("terminate values with NUL byte")),
- 	OPT_BOOL(0, "name-only", &omit_values, N_("show variable names only")),
-@@ -159,6 +161,11 @@ static int format_config(struct strbuf *buf, const char *key_, const char *value
- 				return -1;
- 			strbuf_addstr(buf, v);
- 			free((char *)v);
-+		} else if (types == TYPE_EXPIRY_DATE) {
-+			timestamp_t t;
-+			if (git_config_expiry_date(&t, key_, value_) < 0)
-+				return -1;
-+			strbuf_addf(buf, "%"PRItime, t);
- 		} else if (value_) {
- 			strbuf_addstr(buf, value_);
- 		} else {
-@@ -273,12 +280,13 @@ static char *normalize_value(const char *key, const char *value)
- 	if (!value)
- 		return NULL;
- 
--	if (types == 0 || types == TYPE_PATH)
-+	if (types == 0 || types == TYPE_PATH || types == TYPE_EXPIRY_DATE)
- 		/*
- 		 * We don't do normalization for TYPE_PATH here: If
- 		 * the path is like ~/foobar/, we prefer to store
- 		 * "~/foobar/" in the config file, and to expand the ~
- 		 * when retrieving the value.
-+		 * Also don't do normalization for expiry dates.
- 		 */
- 		return xstrdup(value);
- 	if (types == TYPE_INT)
-diff --git a/builtin/reflog.c b/builtin/reflog.c
-index ab31a3b6a..223372531 100644
---- a/builtin/reflog.c
-+++ b/builtin/reflog.c
-@@ -416,16 +416,6 @@ static struct reflog_expire_cfg *find_cfg_ent(const char *pattern, size_t len)
- 	return ent;
- }
- 
--static int parse_expire_cfg_value(const char *var, const char *value, timestamp_t *expire)
--{
--	if (!value)
--		return config_error_nonbool(var);
--	if (parse_expiry_date(value, expire))
--		return error(_("'%s' for '%s' is not a valid timestamp"),
--			     value, var);
--	return 0;
--}
--
- /* expiry timer slot */
- #define EXPIRE_TOTAL   01
- #define EXPIRE_UNREACH 02
-@@ -443,11 +433,11 @@ static int reflog_expire_config(const char *var, const char *value, void *cb)
- 
- 	if (!strcmp(key, "reflogexpire")) {
- 		slot = EXPIRE_TOTAL;
--		if (parse_expire_cfg_value(var, value, &expire))
-+		if (git_config_expiry_date(&expire, var, value))
- 			return -1;
- 	} else if (!strcmp(key, "reflogexpireunreachable")) {
- 		slot = EXPIRE_UNREACH;
--		if (parse_expire_cfg_value(var, value, &expire))
-+		if (git_config_expiry_date(&expire, var, value))
- 			return -1;
- 	} else
- 		return git_default_config(var, value, cb);
-diff --git a/config.c b/config.c
-index 903abf953..64f8aa42b 100644
---- a/config.c
-+++ b/config.c
-@@ -990,6 +990,16 @@ int git_config_pathname(const char **dest, const char *var, const char *value)
- 	return 0;
- }
- 
-+int git_config_expiry_date(timestamp_t *timestamp, const char *var, const char *value)
-+{
-+	if (!value)
-+		return config_error_nonbool(var);
-+	if (parse_expiry_date(value, timestamp))
-+		return error(_("'%s' for '%s' is not a valid timestamp"),
-+			     value, var);
-+	return 0;
-+}
-+
- static int git_default_core_config(const char *var, const char *value)
- {
- 	/* This needs a better name */
-diff --git a/config.h b/config.h
-index a49d26441..fc66c5933 100644
---- a/config.h
-+++ b/config.h
-@@ -58,6 +58,7 @@ extern int git_config_bool_or_int(const char *, const char *, int *);
- extern int git_config_bool(const char *, const char *);
- extern int git_config_string(const char **, const char *, const char *);
- extern int git_config_pathname(const char **, const char *, const char *);
-+extern int git_config_expiry_date(timestamp_t *, const char *, const char *);
- extern int git_config_set_in_file_gently(const char *, const char *, const char *);
- extern void git_config_set_in_file(const char *, const char *, const char *);
- extern int git_config_set_gently(const char *, const char *);
-diff --git a/t/helper/test-date.c b/t/helper/test-date.c
-index f414a3ac6..ac8368797 100644
---- a/t/helper/test-date.c
-+++ b/t/helper/test-date.c
-@@ -5,6 +5,7 @@ static const char *usage_msg = "\n"
- "  test-date show:<format> [time_t]...\n"
- "  test-date parse [date]...\n"
- "  test-date approxidate [date]...\n"
-+"  test-date timestamp [date]...\n"
- "  test-date is64bit\n"
- "  test-date time_t-is64bit\n";
- 
-@@ -71,6 +72,15 @@ static void parse_approxidate(const char **argv, struct timeval *now)
- 	}
- }
- 
-+static void parse_approx_timestamp(const char **argv, struct timeval *now)
-+{
-+	for (; *argv; argv++) {
-+		timestamp_t t;
-+		t = approxidate_relative(*argv, now);
-+		printf("%s -> %"PRItime"\n", *argv, t);
-+	}
-+}
-+
- int cmd_main(int argc, const char **argv)
- {
- 	struct timeval now;
-@@ -95,6 +105,8 @@ int cmd_main(int argc, const char **argv)
- 		parse_dates(argv+1, &now);
- 	else if (!strcmp(*argv, "approxidate"))
- 		parse_approxidate(argv+1, &now);
-+	else if (!strcmp(*argv, "timestamp"))
-+		parse_approx_timestamp(argv+1, &now);
- 	else if (!strcmp(*argv, "is64bit"))
- 		return sizeof(timestamp_t) == 8 ? 0 : 1;
- 	else if (!strcmp(*argv, "time_t-is64bit"))
-diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
-index 364a53700..cbeb9bebe 100755
---- a/t/t1300-repo-config.sh
-+++ b/t/t1300-repo-config.sh
-@@ -901,6 +901,36 @@ test_expect_success 'get --path barfs on boolean variable' '
- 	test_must_fail git config --get --path path.bool
- '
- 
-+test_expect_success 'get --expiry-date' '
-+	rel="3.weeks.5.days.00:00" &&
-+	rel_out="$rel ->" &&
-+	cat >.git/config <<-\EOF &&
-+	[date]
-+	valid1 = "3.weeks.5.days 00:00"
-+	valid2 = "Fri Jun 4 15:46:55 2010"
-+	valid3 = "2017/11/11 11:11:11PM"
-+	valid4 = "2017/11/10 09:08:07 PM"
-+	valid5 = "never"
-+	invalid1 = "abc"
-+	EOF
-+	cat >expect <<-EOF &&
-+	$(test-date timestamp $rel)
-+	1275666415
-+	1510441871
-+	1510348087
-+	0
-+	EOF
-+	{
-+		echo "$rel_out $(git config --expiry-date date.valid1)"
-+		git config --expiry-date date.valid2 &&
-+		git config --expiry-date date.valid3 &&
-+		git config --expiry-date date.valid4 &&
-+		git config --expiry-date date.valid5
-+	} >actual &&
-+	test_cmp expect actual &&
-+	test_must_fail git config --expiry-date date.invalid1
-+'
-+
- cat > expect << EOF
- [quote]
- 	leading = " test"
--- 
-2.15.0.169.g13c4699b6.dirty
-
+Is it not bug git stash -- <pathspec> does not work at non-root directory?
