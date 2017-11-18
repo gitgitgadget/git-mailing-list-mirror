@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2002E201C8
-	for <e@80x24.org>; Sat, 18 Nov 2017 18:09:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 79030201C8
+	for <e@80x24.org>; Sat, 18 Nov 2017 18:09:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1424416AbdKRSJw (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 Nov 2017 13:09:52 -0500
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:36084 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1030837AbdKRSJs (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Nov 2017 13:09:48 -0500
-Received: by mail-wm0-f67.google.com with SMTP id r68so11865342wmr.1
-        for <git@vger.kernel.org>; Sat, 18 Nov 2017 10:09:48 -0800 (PST)
+        id S1424420AbdKRSJz (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Nov 2017 13:09:55 -0500
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:37372 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1030842AbdKRSJu (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Nov 2017 13:09:50 -0500
+Received: by mail-wm0-f65.google.com with SMTP id v186so11764734wma.2
+        for <git@vger.kernel.org>; Sat, 18 Nov 2017 10:09:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=/ZFBVfzboGaHxKClDqTrDj7kgeJPH7jJEZjWWglUgbI=;
-        b=XYmutQnECoAgYNLctECVzpLBOtZDUToe2p+i/hCOcZEDxt7NjIk0f+FmMoU/mszGKM
-         jwLhRKMEEsRvZLKdUFwSxCQswUsysvc82+nACoQbpDodgGdD/JRCtk8qjaV3sfFq1MLM
-         o0j2d2eF3+5JRrVKJaqon0IeWW2Ky0kXfmO1E6270hs0G3r7XKpfYvox2b97cXC1B3qS
-         783YB1aNzM2L9KEvQA5XZawPM/0axl2h/oloB8zSBgonfeqr7A8fRz1GBdJ/PSgwgV3x
-         3MP2IzKvR5ISdyshoGLnjwt9Nf6m8gzZevfGYjb59TSbdFIX65PAaoLwjg8s3pIyufRv
-         zaYw==
+        bh=/Nup0brM2ezNvc7EhEnSGTPBmIYVRlmw0GU8/7bN24s=;
+        b=seDRkBw3QH1UMcCKhiuQxyJyggjZ4qENDJZZxbe7NpK1gIv5CXPTNGdhxW/j02igU9
+         yWOYGTYa8oUMh3UqnXwmhj6EVIwpbRFbOXDvJp8f5MqvUCSuKZ6EkBd0WVCXCtkzQmXS
+         YxQCDrYGrK/+fw0jkMFUUcpsxZXZTLnCggctn4O8FpxSZtUM4g6jn2g+hesvYAwrrd4S
+         vFF2/FNdZ9uJTFv33XQzHSZyuAcBHpyretYjt+uxZUtQTbFL7niuDtlxD6BMerxmOgzn
+         WBThxiGymNIC4NSUdBOtkKxn2IHoRevP7mzcCsWTacvPNxQ5VJblrHTOmYokEFqi0zni
+         M3vQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=/ZFBVfzboGaHxKClDqTrDj7kgeJPH7jJEZjWWglUgbI=;
-        b=XC0/j9tVZnuKuOmKODLWj02E3wBvbbPqpGeIAwtnwMHe3LRu3FaToJeMvRhTqxLWl3
-         hpqom6EYmtY8W5ytOnV/wu6NWMSGfm5D4KA7bM/YoQpm8MD6M19QGHeNqUfqPc+1EG4d
-         qXnWmAmvE7zwVdcXyIE3c9DWWV0U1UIIpoLwsgFfivWdDsCTZXaceAx1HGIYYCSOSeJi
-         snvOVEXmEmZFoY10CxVYm9h/hieLlzKFt46oE95mjW92J7OdO5X7KWNAD5IEpryAAvAh
-         Mx4Q4+2slgDw8eRj9bsA2GDCud2x2Pja6vRXBnYuhSv6Qpug61xME7bq8tp3nM3GfBao
-         wnYA==
-X-Gm-Message-State: AJaThX6INvXQICHNjADnyfBF9u//bsB6ucSvQfoTnuNgo8jBsYCvfFgl
-        TvlUT4XEckTeoynXczdLPFPM3STM
-X-Google-Smtp-Source: AGs4zMaeaHAubuTVy7z+v0wmkSHHMEEMFnVyVy9bKqtxTK/TmA6Ydp2/d7DXYl+TLA8vWaIMfTMYdw==
-X-Received: by 10.28.27.206 with SMTP id b197mr6579477wmb.96.1511028587354;
-        Sat, 18 Nov 2017 10:09:47 -0800 (PST)
+        bh=/Nup0brM2ezNvc7EhEnSGTPBmIYVRlmw0GU8/7bN24s=;
+        b=k36Kbcol94+97UOwKZK88X8f/iCQvjPyDcsguorrP1dzxUvMvFA4tsjPz1olsP/2rK
+         WlYpRjGMKl+GmJbl29EPMPEh0G+YiHg1M3EUDQSZB4dh/S/n1ASXS8gVl4ihAKD/Co+Q
+         abVfeTi76Vcgzodo7bzofpinvkYRA35aeSAYGhaHjdIZGwp1nuZan6GLgSExum/JoLwy
+         F16LcScsfKyZuRk0WpO+goK7w5kFeb8gSaHz42gdmTTzAsU16JqPWhdKai93sgvBn//O
+         ++PnbP+gqX+mTcBidQfLlGs/4beT25G8VFN9k9MszDMyjH0lo1cXA6VZnpTT4yWd5EkY
+         Hjsg==
+X-Gm-Message-State: AJaThX48Xd1smD5O4NeeeQkBmGxUCIFXd0ph+uCOLnVTGRAv/3abg9KE
+        3tsL1iyVnoFA2MTPL//j6mA6Rx4x
+X-Google-Smtp-Source: AGs4zMZJr0kbuD1wTXjIyKWGrvrvNjLn3c6YEFeFN4RHXQp6Dk+GwvPXxH82agcLghiWALc0sI+HjQ==
+X-Received: by 10.28.52.148 with SMTP id b142mr6313605wma.154.1511028588589;
+        Sat, 18 Nov 2017 10:09:48 -0800 (PST)
 Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
-        by smtp.gmail.com with ESMTPSA id g65sm11691931wmd.16.2017.11.18.10.09.46
+        by smtp.gmail.com with ESMTPSA id o22sm16799474wrb.40.2017.11.18.10.09.47
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 18 Nov 2017 10:09:46 -0800 (PST)
+        Sat, 18 Nov 2017 10:09:47 -0800 (PST)
 From:   Thomas Gummerer <t.gummerer@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v2 2/3] worktree: make add <path> <branch> dwim
-Date:   Sat, 18 Nov 2017 18:11:02 +0000
-Message-Id: <20171118181103.28354-2-t.gummerer@gmail.com>
+Subject: [PATCH v2 3/3] worktree: make add <path> dwim
+Date:   Sat, 18 Nov 2017 18:11:03 +0000
+Message-Id: <20171118181103.28354-3-t.gummerer@gmail.com>
 X-Mailer: git-send-email 2.15.0.345.gf926f18f3
 In-Reply-To: <20171118181103.28354-1-t.gummerer@gmail.com>
 References: <20171112134305.3949-1-t.gummerer@gmail.com>
@@ -66,128 +66,169 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently 'git worktree add <path> <branch>', errors out when 'branch'
-is not a local branch.   It has no additional dwim'ing features that one
-might expect.
+Currently 'git worktree add <path>' creates a new branch named after the
+basename of the <path>, that matches the HEAD of whichever worktree we
+were on when calling "git worktree add <path>".
 
-Make it behave more like 'git checkout <branch>' when the branch doesn't
-exist locally, but a remote tracking branch uniquely matches the desired
-branch name, i.e. create a new branch from the remote tracking branch
-and set the upstream to the remote tracking branch.
+Make 'git worktree add <path> behave more like the dwim machinery in
+'git checkout <new-branch>', i.e. check if the new branch name uniquely
+matches the branch name of a remote tracking branch, and if so check out
+that branch and set the upstream to the remote tracking branch.
 
-As 'git worktree add' currently just dies in this situation, there are
-no backwards compatibility worries when introducing this feature.
+This is a change of behaviour compared to the current behaviour, where
+we create a new branch matching HEAD.  However as 'git worktree' is
+still an experimental feature, and it's easy to notice/correct the
+behaviour in case it's not what the user desired it's probably okay to
+break existing behaviour here.
+
+In order to also satisfy users who want the current behaviour of
+creating a new branch from HEAD, add a '--no-track' flag, which disables
+the new behaviour, and keeps the old behaviour of creating a new branch
+from the head of the current worktree.
 
 Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
- Documentation/git-worktree.txt |  7 +++++++
- builtin/worktree.c             | 15 ++++++++++++++
- t/t2025-worktree-add.sh        | 44 ++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 66 insertions(+)
+I went back and forth between hiding this behing a flag, and making it
+default and having a flag for getting the old behaviour back.
+
+In the end I went for making the new behaviour the default, because
+the 'worktree' feature is still experimental, and it's easy to correct
+the behaviour if it's not what was desired.  I also think this is the
+more intuitve behaviour, but clearly I'm biased because *I* want to it
+to behave this way.
+
+I'm happy to keep the old behaviour the default and hide the new
+behaviour behind a flag if we feel this is too much of a change in
+behaviour at this point.
+
+ Documentation/git-worktree.txt | 15 ++++++++---
+ builtin/worktree.c             |  9 +++++++
+ t/t2025-worktree-add.sh        | 60 ++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 81 insertions(+), 3 deletions(-)
 
 diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
-index b472acc356..3c7c8c3cee 100644
+index 3c7c8c3cee..11cac104d9 100644
 --- a/Documentation/git-worktree.txt
 +++ b/Documentation/git-worktree.txt
-@@ -52,6 +52,13 @@ is linked to the current repository, sharing everything except working
- directory specific files such as HEAD, index, etc. `-` may also be
- specified as `<branch>`; it is synonymous with `@{-1}`.
+@@ -60,9 +60,18 @@ $ git worktree add -b <branch> <path> <remote>/<branch>
+ ------------
  +
-+If <branch> is not found but there does exist a tracking branch in
-+exactly one remote (call it <remote>) with a matching name, treat as
-+equivalent to
+ If `<branch>` is omitted and neither `-b` nor `-B` nor `--detach` used,
+-then, as a convenience, a new branch based at HEAD is created automatically,
+-as if `-b $(basename <path>)` was specified.
+-
++then, as a convenience, if there exists a tracking branch in exactly
++one remote (call it <remote>) matching the basename of the path
++(call it <branch>), treat it as equivalent to
 +------------
 +$ git worktree add -b <branch> <path> <remote>/<branch>
 +------------
++If no tracking branch exists in exactly one remote, <branch> is
++created based on HEAD, as if `-b $(basename <path>)` was specified.
 ++
- If `<branch>` is omitted and neither `-b` nor `-B` nor `--detach` used,
- then, as a convenience, a new branch based at HEAD is created automatically,
- as if `-b $(basename <path>)` was specified.
++To disable the behaviour of trying to match the basename of <path> to
++a remote, and always create a new branch from HEAD, the `--no-track`
++flag can be passed to `git worktree add`.
+ list::
+ 
+ List details of each worktree.  The main worktree is listed first, followed by
 diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 7b9307aa58..92b583ae39 100644
+index 92b583ae39..82088415b8 100644
 --- a/builtin/worktree.c
 +++ b/builtin/worktree.c
-@@ -1,4 +1,5 @@
- #include "cache.h"
-+#include "checkout.h"
- #include "config.h"
- #include "builtin.h"
- #include "dir.h"
-@@ -386,6 +387,20 @@ static int add(int ac, const char **av, const char *prefix)
+@@ -342,6 +342,7 @@ static int add(int ac, const char **av, const char *prefix)
+ 	const char *new_branch_force = NULL;
+ 	char *path;
+ 	const char *branch;
++	int track_dwim = 1;
+ 	struct option options[] = {
+ 		OPT__FORCE(&opts.force, N_("checkout <branch> even if already checked out in other worktree")),
+ 		OPT_STRING('b', NULL, &opts.new_branch, N_("branch"),
+@@ -351,6 +352,7 @@ static int add(int ac, const char **av, const char *prefix)
+ 		OPT_BOOL(0, "detach", &opts.detach, N_("detach HEAD at named commit")),
+ 		OPT_BOOL(0, "checkout", &opts.checkout, N_("populate the new working tree")),
+ 		OPT_BOOL(0, "lock", &opts.keep_locked, N_("keep the new working tree locked")),
++		OPT_BOOL(0, "track", &track_dwim, N_("checkout upstream branch if there's a unique match")),
+ 		OPT_END()
+ 	};
+ 
+@@ -385,6 +387,13 @@ static int add(int ac, const char **av, const char *prefix)
+ 		int n;
+ 		const char *s = worktree_basename(path, &n);
  		opts.new_branch = xstrndup(s, n);
++		if (track_dwim) {
++			struct object_id oid;
++			const char *remote =
++				unique_tracking_name(opts.new_branch, &oid);
++			if (remote)
++				branch = remote;
++		}
  	}
  
-+	if (ac == 2) {
-+		struct object_id oid;
-+		struct commit *commit;
-+		const char *remote;
-+
-+		commit = lookup_commit_reference_by_name(branch);
-+		if (!commit)
-+			remote = unique_tracking_name(branch, &oid);
-+		if (!commit && remote) {
-+			opts.new_branch = branch;
-+			branch = remote;
-+		}
-+	}
-+
- 	if (opts.new_branch) {
- 		struct child_process cp = CHILD_PROCESS_INIT;
- 		cp.git_cmd = 1;
+ 	if (ac == 2) {
 diff --git a/t/t2025-worktree-add.sh b/t/t2025-worktree-add.sh
-index b5c47ac602..e5959800c0 100755
+index e5959800c0..a566d867fe 100755
 --- a/t/t2025-worktree-add.sh
 +++ b/t/t2025-worktree-add.sh
-@@ -6,6 +6,16 @@ test_description='test git worktree add'
- 
- . "$TEST_DIRECTORY"/lib-rebase.sh
- 
-+# Is branch "refs/heads/$1" set to pull from "$2/$3"?
-+test_branch_upstream () {
-+	printf "%s\n" "$2" "refs/heads/$3" >expect.upstream &&
-+	{
-+		git config "branch.$1.remote" &&
-+		git config "branch.$1.merge"
-+	} >actual.upstream &&
-+	test_cmp expect.upstream actual.upstream
-+}
-+
- test_expect_success 'setup' '
- 	test_commit init
- '
-@@ -314,4 +324,38 @@ test_expect_success 'rename a branch under bisect not allowed' '
- 	test_must_fail git branch -M under-bisect bisect-with-new-name
+@@ -358,4 +358,64 @@ test_expect_success '"add" <path> <branch> dwims' '
+ 	)
  '
  
-+test_expect_success '"add" <path> <non-existent-branch> fails' '
-+	test_must_fail git worktree add foo non-existent
-+'
-+
-+test_expect_success '"add" <path> <branch> dwims' '
-+	test_when_finished rm -rf repo_upstream &&
-+	test_when_finished rm -rf repo_dwim &&
++test_expect_success 'git worktree add --no-track does not set up tracking' '
++	test_when_finished rm -rf repo_a &&
++	test_when_finished rm -rf repo_b &&
 +	test_when_finished rm -rf foo &&
-+	git init repo_upstream &&
++	git init repo_a &&
 +	(
-+		cd repo_upstream &&
-+		test_commit upstream_master &&
++		cd repo_a &&
++		test_commit a_master &&
 +		git checkout -b foo &&
 +		test_commit a_foo
 +	) &&
-+	git init repo_dwim &&
++	git init repo_b &&
 +	(
-+		cd repo_dwim &&
-+		test_commit dwim_master &&
-+		git remote add repo_upstream ../repo_upstream &&
-+		git config remote.repo_upstream.fetch \
-+			  "refs/heads/*:refs/remotes/repo_upstream/*" &&
++		cd repo_b &&
++		test_commit b_master &&
++		git remote add repo_a ../repo_a &&
++		git config remote.repo_a.fetch \
++			"+refs/heads/*:refs/remotes/other_a/*" &&
 +		git fetch --all &&
-+		git worktree add ../foo foo
++		git worktree add --no-track ../foo
 +	) &&
 +	(
 +		cd foo &&
-+		test_branch_upstream foo repo_upstream foo &&
-+		git rev-parse repo_upstream/foo >expect &&
++		! test_branch_upstream foo repo_a foo &&
++		git rev-parse other_a/foo >expect &&
++		git rev-parse foo >actual &&
++		! test_cmp expect actual
++	)
++'
++
++test_expect_success 'git worktree add sets up tracking' '
++	test_when_finished rm -rf repo_a &&
++	test_when_finished rm -rf repo_b &&
++	test_when_finished rm -rf foo &&
++	git init repo_a &&
++	(
++		cd repo_a &&
++		test_commit a_master &&
++		git checkout -b foo &&
++		test_commit a_foo
++	) &&
++	git init repo_b &&
++	(
++		cd repo_b &&
++		test_commit b_master &&
++		git remote add repo_a ../repo_a &&
++		git config remote.repo_a.fetch \
++			"+refs/heads/*:refs/remotes/other_a/*" &&
++		git fetch --all &&
++		git worktree add ../foo
++	) &&
++	(
++		cd foo &&
++		test_branch_upstream foo repo_a foo &&
++		git rev-parse other_a/foo >expect &&
 +		git rev-parse foo >actual &&
 +		test_cmp expect actual
 +	)
