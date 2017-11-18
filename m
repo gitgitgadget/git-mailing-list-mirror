@@ -2,100 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CE2F1202A0
-	for <e@80x24.org>; Sat, 18 Nov 2017 10:20:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 509E7202A0
+	for <e@80x24.org>; Sat, 18 Nov 2017 11:27:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1764502AbdKRKUm (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 Nov 2017 05:20:42 -0500
-Received: from mout.web.de ([212.227.17.12]:58194 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1764468AbdKRKUV (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Nov 2017 05:20:21 -0500
-Received: from [192.168.178.36] ([91.20.49.242]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0Le4Po-1ex5Lv1JlM-00px89; Sat, 18
- Nov 2017 11:20:07 +0100
+        id S1424186AbdKRL1h (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Nov 2017 06:27:37 -0500
+Received: from smtp-out-5.talktalk.net ([62.24.135.69]:54673 "EHLO
+        smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1424183AbdKRL1f (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Nov 2017 06:27:35 -0500
+Received: from [192.168.2.201] ([92.22.34.132])
+        by smtp.talktalk.net with SMTP
+        id G1HYeSM0Wpb8rG1HYeyXIC; Sat, 18 Nov 2017 11:27:33 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1511004453;
+        bh=20mckJpMqDACbHu7W/1Apl4ZvYiA4ibam4ak1st+xzk=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=krglx3s5nps/jbrOOHFjzA0+9Qe/VS/IisCX2bg8+3SQYCXZzBpGB11OFAVcmJVzH
+         nVhYdoJQpRDJ1uJ5+YIWAyX2rmVvryM3bfAOlNEyfNxh1ufGnohgGvp0WJ22PIwvRG
+         zB8dy5iKvgdmDsbIU1czH8dDbnlxGog7NlcQLgJ4=
+X-Originating-IP: [92.22.34.132]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=ZM2noTzb c=1 sm=1 tr=0 a=2gYdyS03q/cwff7SV6P5Ng==:117
+ a=2gYdyS03q/cwff7SV6P5Ng==:17 a=IkcTkHD0fZMA:10 a=evINK-nbAAAA:8
+ a=2m3lvUFcvLo_0xxW1XQA:9 a=4Jm_EJeHNPkaKl0-:21 a=Fwg3fkPENNh7eGT1:21
+ a=QEXdDO2ut3YA:10 a=RfR_gqz1fSpA9VikTjo0:22
+Reply-To: phillip.wood@dunelm.org.uk
 Subject: Re: [PATCH] config: avoid "write_in_full(fd, buf, len) != len"
  pattern
 To:     Jeff King <peff@peff.net>,
         Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
 References: <20171115124043.17147-1-phillip.wood@talktalk.net>
  <20171117220633.6yoovfgpbr3rsykr@sigill.intra.peff.net>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <f3038984-1cd8-e11f-61fd-10bf0cc33e2d@web.de>
-Date:   Sat, 18 Nov 2017 11:20:04 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <6f1cf9ac-42e4-76b2-6936-4646a5cb574c@talktalk.net>
+Date:   Sat, 18 Nov 2017 11:27:31 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.4.0
 MIME-Version: 1.0
 In-Reply-To: <20171117220633.6yoovfgpbr3rsykr@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:WOyfwXomx7JJltzYi5CIbmwYyso+v0oWCX6EZXmaibKT6rlDYFt
- RCrYtBWqDDnl1ZcqkU/KyXljn1ItTbvQXmVBPA2DhoQGP0kgBZ2UP4kKfm8AcIIshZiwgmi
- pxgAATC8bHo2Zy/02XPfC8HltQ4p6qzGxCuCApzsL1qNZtQPDQXpk1OEzhagzEgojwb7TIw
- tAPp0WyCZ90Gtg9uyIcYQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:uYnvzEWmBso=:MqXpb7AH6q3eCNVM6QtiDf
- o2z003fiGYD0ZAUFApKignYVGZSZf7ZiXHI+Lhzm42zbqluzd2ECDc3JIQwYU6iedxaDkZwmp
- 69TCZWecksQnLeRzWMtjaB0+sbAA+QV/ISPuQiI5DsivEquG1baAyi3wX09xER60e/O+glFtf
- L6xaR8H1VFanAW1Hq3eTzqmsDRQH6SA8AUdFZEzwzuRmtEAXkgjHK9/P9dAD/yPRLcRXG2tSq
- YgbVbDCVQ57bEsKqurmSox5494Km9ph04iLrrUKA2qMj3ohgfEYBPoW7ZNt0gD2QdG8OvCBC5
- gkPc/Xb/TPF6EFdVz8fgNgdP5HlffT3IQFyCxUPSWXUdPMBUtK4399ZFAkX3TZZ8dvrGweA5W
- 9lIcqv9GbAjzUjFrKK+gudvj8lbVvOxb2Vj6W6LuIT+fT1Jc7jsph1o5XSi5XEAj0Yd7nKw+9
- WAb/VZVyR2X5gFbDzAcj13fLmYW4OXdj3Ce59/wDahW3GfjmD/5BsCp9YxsOObamAo1LXwV3p
- daZZIxCm5py/qe6HBPvNdGHyUQWMAm3RvMlXdCByS1hJ5h4ihjgMvv7N280et9y2aaboBxaIF
- WwbGFqOn+2icc3x983A0nnPQ8SBh5twBY8791QW8rCb9VAef7VKWqky/zSsW579gkMYRWLHvh
- TsnLbD6PuzSOgpC+F4k2l44NSLryZeqPjyS43JiGhFVGE+QqQwKqFxA4b7vtWr86KJRkYZ5+4
- VyFWdmIz6aI0oA+Kl7nw8jFvhFqkb7ATDA7hPRctbcAoUKh0+7mWJaxJEyuh1HXTRkN4u3TZ6
- 3DuFVsAKRjBHiqgSF6F0SJ/tegSqRMGoxkpD8+148bdseDzzQA=
+Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4wfGKsUXe0umSQZmb8LVHm+Z49fsUbrqX/u6mhI9n/fe0T1amlWzYapJNX4mdcXyN6xgBxsxOzWKCgqi2YqANOWiUm5aAM4rK9HbEbGJG8dJybLcsZ9q7f
+ 6jTmftGTx20GENhEHT5Ys7rwJE/v0vDlt7bdkw+1ZdmDZVT0mwfJMpjUcSWBpufT50VNjStFMe8Fi/4giyzcu+pyIWd/kazmH7yLB0H5TbxRaLEUYh3Kg8m6
+ SbxMNUsYVE5Z46pikDw9YA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 17.11.2017 um 23:06 schrieb Jeff King:
+On 17/11/17 22:06, Jeff King wrote:
+> On Wed, Nov 15, 2017 at 12:40:43PM +0000, Phillip Wood wrote:
+> 
+>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>>
+>> As explained in commit 06f46f237 (avoid "write_in_full(fd, buf, len)
+>> != len" pattern, 2017–09–13) the return value of write_in_full() is
+>> either -1 or the requested number of bytes. As such comparing the
+>> return value to an unsigned value such as strbuf.len will fail to
+>> catch errors. Change the code to use the preferred '< 0' check.
+> 
+> Thanks for catching this. I wondered at first how I missed these obvious
+> cases, but the answer is that they were added after my commit. :)
+> 
 > There's one more case in write_section() that uses "==". That's not
 > actually wrong, but I wonder if we'd want to make it "< 0" for
 > consistency.
 
-Actually it *is* wrong.
+Yes, I noticed that but didn't get round to looking at it properly the
+other day. Rene's fix looks good to me.
 
--- >8 --
-Subject: [PATCH] config: flip return value of write_section()
+Best Wishes
 
-d9bd4cbb9cc (config: flip return value of store_write_*()) made
-write_section() follow the convention of write(2) to return -1 on error
-and the number of written bytes on success.  3b48045c6c7 (Merge branch
-'sd/branch-copy') changed it back to returning 0 on error and 1 on
-success, but left its callers still checking for negative values.
-
-Let write_section() follow the convention of write(2) again to meet the
-expectations of its callers.
-
-Reported-by: Jeff King <peff@peff.net>
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
- config.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/config.c b/config.c
-index 903abf9533..3f079c77ad 100644
---- a/config.c
-+++ b/config.c
-@@ -2315,7 +2315,7 @@ static ssize_t write_section(int fd, const char *key)
- 	struct strbuf sb = store_create_section(key);
- 	ssize_t ret;
- 
--	ret = write_in_full(fd, sb.buf, sb.len) == sb.len;
-+	ret = write_in_full(fd, sb.buf, sb.len);
- 	strbuf_release(&sb);
- 
- 	return ret;
--- 
-2.15.0
+Phillip
