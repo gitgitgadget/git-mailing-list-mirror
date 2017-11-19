@@ -2,226 +2,178 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DCD212036D
-	for <e@80x24.org>; Sat, 18 Nov 2017 22:45:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D9DFA2036D
+	for <e@80x24.org>; Sun, 19 Nov 2017 00:43:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1947359AbdKRWpw (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 Nov 2017 17:45:52 -0500
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:45821 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1424473AbdKRWpr (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Nov 2017 17:45:47 -0500
-Received: by mail-wm0-f68.google.com with SMTP id 9so12432176wme.4
-        for <git@vger.kernel.org>; Sat, 18 Nov 2017 14:45:46 -0800 (PST)
+        id S1764968AbdKSAmz (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Nov 2017 19:42:55 -0500
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:37342 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1764964AbdKSAmy (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Nov 2017 19:42:54 -0500
+Received: by mail-wm0-f65.google.com with SMTP id v186so12510968wma.2
+        for <git@vger.kernel.org>; Sat, 18 Nov 2017 16:42:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=u5BFWfLA/RzzaZoxgRbi1Of8hTsG6Ryv/YlOMshpMEU=;
-        b=AEhQeFJMPmgRh6jzU+4NLPr2AthUWxLzVuToXh8nZSaTO2ygbThbnzGcun6SKST3wr
-         GPIj/JZPn/0n7FvVOMXI1tBv/tvHL6IuCcwCjBtVolBYX5IyNS1P523bGlh8smgVAYbu
-         fC/18UaWK2KtKb//HX2LTzYMwjSevPB1HQeHPNVN2MveBcCP/dfaH/DMNN54vPuXRUsc
-         1c4oYtp0YmbWlChI5qbfDQVgc43C2i6MBnTY3QAbRKoxEfdHo7XlkxrvD0K2L+lu9YeI
-         NKM3+YeSQCBuU87f3tSPVbyyrh7LZraxDsGeIyqTvocYNGAMic+qt/aiW4K9nfPaU6XX
-         Yxew==
+        bh=GSD5/vC8cXkIH6nko1T3m2M0qqMv+O9/kgus1Pu9GN8=;
+        b=Q/R/yFgWBzjXFETJ85eQspDZdklerElHuD3vanBv4VZc7g9ixSrw0cAWkSInslGhAQ
+         BKxFiINMWJE6qHO3+ni3ZW6krR1vunV2qPw2+e5nwop72VTLvY1jsONhBVTe+F7/vzdo
+         6Cb/vgzKox02q61as+bX9jIMKRnr42DjiKTh2Zchinx9a3jn/f3653I1piEFT+6LN6vg
+         LX25dEkBKASjFoTACppDtYEUNMLOd0ftVu6jnjKX7sj3QmF3+mCQjqsJqR/8YmgLnNy4
+         Xi/zv0P3vZFvz2BD50OajXJRQPj/faSd6XPiiVAO2M0445JxYL08EyMeN0hsx1Mti+aw
+         FOMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=u5BFWfLA/RzzaZoxgRbi1Of8hTsG6Ryv/YlOMshpMEU=;
-        b=gaEakGTwGmJBNiGfgoaaP4N/mldxKxkU2MH93TlEta9OwfgLJj4PliwZz4J+ZsEuF/
-         L61WoyLa4g0gx1p/kYfuLIRNqhehionJUkz/Jb2v0fE1hdH23eEzol+TGpwVq3fZZern
-         SEyN8+X0A8RQ52ZzERdTmqpVSzM1I5JB1CTMGGaW/EmL6KEjkemS3K4yUJ1qtgNtJZk2
-         d6/Tn1cCReE0+sUT/AMovfWaM+eP0uQkbUn7hRlxvOoD1W5w5x1zTTFiwLOLsbRJ6PC9
-         mJNnet+Q+9kh6kb32fdxaDSCTnfiEPykgGMZmAVlmIIWeU3nJTqsc2L4sfM7ntI/8uer
-         AP8Q==
-X-Gm-Message-State: AJaThX6avJe9h8S4Y6HmluHzL8P+vq20TGyyF9lXMZksW3IKGxo1lCYS
-        a9qBzThtsg7pLcj+IhbxMXbtb4/u
-X-Google-Smtp-Source: AGs4zMYGFUEc4W+JSi1/YLgHgVrbZ5KePJksgqiuSQk8VmYlCFpC40G42HzyfagTlbC/pAsLyb/B/w==
-X-Received: by 10.28.135.135 with SMTP id j129mr6983656wmd.144.1511045145443;
-        Sat, 18 Nov 2017 14:45:45 -0800 (PST)
-Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
-        by smtp.gmail.com with ESMTPSA id v18sm157832wrv.37.2017.11.18.14.45.44
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 18 Nov 2017 14:45:44 -0800 (PST)
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v3 3/3] worktree: make add <path> dwim
-Date:   Sat, 18 Nov 2017 22:47:06 +0000
-Message-Id: <20171118224706.13810-4-t.gummerer@gmail.com>
-X-Mailer: git-send-email 2.15.0.345.gf926f18f3
-In-Reply-To: <20171118224706.13810-1-t.gummerer@gmail.com>
-References: <20171118181103.28354-1-t.gummerer@gmail.com>
- <20171118224706.13810-1-t.gummerer@gmail.com>
+        bh=GSD5/vC8cXkIH6nko1T3m2M0qqMv+O9/kgus1Pu9GN8=;
+        b=NkBZxNbq8iXS+aVXZXde6kTy6ITg31WCzcmRY6oHWvf0j/BhzIpqzoglhW23tLsC2T
+         5H7zQ0sUa7JsCDx6frQdS0WLnrBznRqwAY3OeOm/RqEj9y+qMrbpo2whVolUtPXNIMbT
+         UlI6mqZfCq4P4fpbMzuRPHwzP5J8JGaeBbfY/8QG37fhsXxz2okPqnflCoL7kVzXIijd
+         RndcKcAgIbIi0wGD8I4DvV1sugjdGKf7bNKF2pSBRh8J88XMYytX4pJ5bL20tt/bTfZx
+         S2X1rC+KWvEw3XfvCCVxwIdZ42zWRWbUd8/MoRZh9iY8ZHhgah8YgU/eKZmoSR5BVU/Y
+         zZRw==
+X-Gm-Message-State: AJaThX7NY06zpoRSEogF5KY/wWZJDQZcBaEwtqsPBixwhSWOqiCX3prC
+        beWPbyEg/xaSRqSZmjXcVaBlPg==
+X-Google-Smtp-Source: AGs4zMZ9frxXjIV6Lmw04MSEz/ZnASfVtiJnqnw7Anc3sHiHIiluzbudL2UU2hySxNlrh5MonhODJQ==
+X-Received: by 10.28.194.139 with SMTP id s133mr6573310wmf.14.1511052172657;
+        Sat, 18 Nov 2017 16:42:52 -0800 (PST)
+Received: from p50-debian.bsdmn (cpc93788-hari17-2-0-cust762.20-2.cable.virginm.net. [82.39.98.251])
+        by smtp.gmail.com with ESMTPSA id f10sm6982988wrg.20.2017.11.18.16.42.51
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 18 Nov 2017 16:42:51 -0800 (PST)
+From:   gennady.kupava@gmail.com
+To:     git <git@vger.kernel.org>
+Cc:     Gennady Kupava <gkupava@bloomberg.net>
+Subject: [PATCH 1/2] Simplify tracing code by removing trace key normalization concept
+Date:   Sun, 19 Nov 2017 00:42:46 +0000
+Message-Id: <20171119004247.22792-1-gennady.kupava@gmail.com>
+X-Mailer: git-send-email 2.15.0.278.gca7b6c74c.dirty
+In-Reply-To: <20171117221631.x2xqeeqmf5xob3yv@sigill.intra.peff.net>
+References: <20171117221631.x2xqeeqmf5xob3yv@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently 'git worktree add <path>' creates a new branch named after the
-basename of the <path>, that matches the HEAD of whichever worktree we
-were on when calling "git worktree add <path>".
+From: Gennady Kupava <gkupava@bloomberg.net>
 
-Make 'git worktree add <path> behave more like the dwim machinery in
-'git checkout <new-branch>', i.e. check if the new branch name uniquely
-matches the branch name of a remote tracking branch, and if so check out
-that branch and set the upstream to the remote tracking branch.
+- to implement efficient traces with normalization, normalization
+  implementation should be moved to header. as it seems better to not
+  overload header file with this normalization logic, suggestion is
+  just to remove it
+- different macro exist specifically to handle traces with default key
+- there is no use of normalization in current code
+- it could be reintroduced if necessary
 
-This is a change of behaviour compared to the current behaviour, where
-we create a new branch matching HEAD.  However as 'git worktree' is
-still an experimental feature, and it's easy to notice/correct the
-behaviour in case it's not what the user desired it's probably okay to
-break existing behaviour here.
-
-In order to also satisfy users who want the current behaviour of
-creating a new branch from HEAD, add a '--no-track' flag, which disables
-the new behaviour, and keeps the old behaviour of creating a new branch
-from the head of the current worktree.
-
-Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+Signed-off-by: Gennady Kupava <gkupava@bloomberg.net>
 ---
- Documentation/git-worktree.txt | 15 ++++++++---
- builtin/worktree.c             |  9 +++++++
- t/t2025-worktree-add.sh        | 60 ++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 81 insertions(+), 3 deletions(-)
+ trace.c | 24 ++++--------------------
+ trace.h |  4 +++-
+ 2 files changed, 7 insertions(+), 21 deletions(-)
 
-diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
-index abf48fecb8..eedead2c4c 100644
---- a/Documentation/git-worktree.txt
-+++ b/Documentation/git-worktree.txt
-@@ -60,9 +60,18 @@ $ git worktree add -b <branch> <path> <remote>/<branch>
- ------------
- +
- If `<branch>` is omitted and neither `-b` nor `-B` nor `--detach` used,
--then, as a convenience, a new branch based at HEAD is created automatically,
--as if `-b $(basename <path>)` was specified.
+diff --git a/trace.c b/trace.c
+index cb1293ed3..d47ea28e8 100644
+--- a/trace.c
++++ b/trace.c
+@@ -24,26 +24,13 @@
+ #include "cache.h"
+ #include "quote.h"
+ 
+-/*
+- * "Normalize" a key argument by converting NULL to our trace_default,
+- * and otherwise passing through the value. All caller-facing functions
+- * should normalize their inputs in this way, though most get it
+- * for free by calling get_trace_fd() (directly or indirectly).
+- */
+-static void normalize_trace_key(struct trace_key **key)
+-{
+-	static struct trace_key trace_default = { "GIT_TRACE" };
+-	if (!*key)
+-		*key = &trace_default;
+-}
++struct trace_key trace_default_key = { "GIT_TRACE", 0, 0, 0 };
+ 
+ /* Get a trace file descriptor from "key" env variable. */
+ static int get_trace_fd(struct trace_key *key)
+ {
+ 	const char *trace;
+ 
+-	normalize_trace_key(&key);
 -
-+then, as a convenience, if there exists a tracking branch in exactly
-+one remote (call it <remote>) matching the basename of the path
-+(call it <branch>), treat it as equivalent to
-+------------
-+$ git worktree add -b <branch> <path> <remote>/<branch>
-+------------
-+If no tracking branch exists in exactly one remote, <branch> is
-+created based on HEAD, as if `-b $(basename <path>)` was specified.
-++
-+To disable the behaviour of trying to match the basename of <path> to
-+a remote, and always create a new branch from HEAD, the `--no-track`
-+flag can be passed to `git worktree add`.
- list::
+ 	/* don't open twice */
+ 	if (key->initialized)
+ 		return key->fd;
+@@ -81,8 +68,6 @@ static int get_trace_fd(struct trace_key *key)
  
- List details of each worktree.  The main worktree is listed first, followed by
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 05fc902bcc..b2a6dd020c 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -342,6 +342,7 @@ static int add(int ac, const char **av, const char *prefix)
- 	const char *new_branch_force = NULL;
- 	char *path;
- 	const char *branch;
-+	int track_dwim = 1;
- 	struct option options[] = {
- 		OPT__FORCE(&opts.force, N_("checkout <branch> even if already checked out in other worktree")),
- 		OPT_STRING('b', NULL, &opts.new_branch, N_("branch"),
-@@ -351,6 +352,7 @@ static int add(int ac, const char **av, const char *prefix)
- 		OPT_BOOL(0, "detach", &opts.detach, N_("detach HEAD at named commit")),
- 		OPT_BOOL(0, "checkout", &opts.checkout, N_("populate the new working tree")),
- 		OPT_BOOL(0, "lock", &opts.keep_locked, N_("keep the new working tree locked")),
-+		OPT_BOOL(0, "track", &track_dwim, N_("checkout upstream branch if there's a unique match")),
- 		OPT_END()
- 	};
+ void trace_disable(struct trace_key *key)
+ {
+-	normalize_trace_key(&key);
+-
+ 	if (key->need_close)
+ 		close(key->fd);
+ 	key->fd = 0;
+@@ -128,7 +113,6 @@ static int prepare_trace_line(const char *file, int line,
+ static void trace_write(struct trace_key *key, const void *buf, unsigned len)
+ {
+ 	if (write_in_full(get_trace_fd(key), buf, len) < 0) {
+-		normalize_trace_key(&key);
+ 		warning("unable to write trace for %s: %s",
+ 			key->key, strerror(errno));
+ 		trace_disable(key);
+@@ -167,13 +151,13 @@ static void trace_argv_vprintf_fl(const char *file, int line,
+ {
+ 	struct strbuf buf = STRBUF_INIT;
  
-@@ -385,6 +387,13 @@ static int add(int ac, const char **av, const char *prefix)
- 		int n;
- 		const char *s = worktree_basename(path, &n);
- 		opts.new_branch = xstrndup(s, n);
-+		if (track_dwim) {
-+			struct object_id oid;
-+			const char *remote =
-+				unique_tracking_name(opts.new_branch, &oid);
-+			if (remote)
-+				branch = remote;
-+		}
- 	}
+-	if (!prepare_trace_line(file, line, NULL, &buf))
++	if (!prepare_trace_line(file, line, &trace_default_key, &buf))
+ 		return;
  
- 	if (ac == 2 && !opts.new_branch && !opts.detach) {
-diff --git a/t/t2025-worktree-add.sh b/t/t2025-worktree-add.sh
-index e3fc60dd1c..87e233f812 100755
---- a/t/t2025-worktree-add.sh
-+++ b/t/t2025-worktree-add.sh
-@@ -360,4 +360,64 @@ test_expect_success '"add" <path> <branch> dwims' '
- 	)
- '
+ 	strbuf_vaddf(&buf, format, ap);
  
-+test_expect_success 'git worktree add --no-track does not set up tracking' '
-+	test_when_finished rm -rf repo_a &&
-+	test_when_finished rm -rf repo_b &&
-+	test_when_finished rm -rf foo &&
-+	git init repo_a &&
-+	(
-+		cd repo_a &&
-+		test_commit a_master &&
-+		git checkout -b foo &&
-+		test_commit a_foo
-+	) &&
-+	git init repo_b &&
-+	(
-+		cd repo_b &&
-+		test_commit b_master &&
-+		git remote add repo_a ../repo_a &&
-+		git config remote.repo_a.fetch \
-+			"+refs/heads/*:refs/remotes/other_a/*" &&
-+		git fetch --all &&
-+		git worktree add --no-track ../foo
-+	) &&
-+	(
-+		cd foo &&
-+		! test_branch_upstream foo repo_a foo &&
-+		git rev-parse other_a/foo >expect &&
-+		git rev-parse foo >actual &&
-+		! test_cmp expect actual
-+	)
-+'
+ 	sq_quote_argv(&buf, argv, 0);
+-	print_trace_line(NULL, &buf);
++	print_trace_line(&trace_default_key, &buf);
+ }
+ 
+ void trace_strbuf_fl(const char *file, int line, struct trace_key *key,
+@@ -215,7 +199,7 @@ void trace_printf(const char *format, ...)
+ {
+ 	va_list ap;
+ 	va_start(ap, format);
+-	trace_vprintf_fl(NULL, 0, NULL, format, ap);
++	trace_vprintf_fl(NULL, 0, &trace_default_key, format, ap);
+ 	va_end(ap);
+ }
+ 
+diff --git a/trace.h b/trace.h
+index 179b249c5..24b32f8f4 100644
+--- a/trace.h
++++ b/trace.h
+@@ -11,6 +11,8 @@ struct trace_key {
+ 	unsigned int  need_close : 1;
+ };
+ 
++extern struct trace_key trace_default_key;
 +
-+test_expect_success 'git worktree add sets up tracking' '
-+	test_when_finished rm -rf repo_a &&
-+	test_when_finished rm -rf repo_b &&
-+	test_when_finished rm -rf foo &&
-+	git init repo_a &&
-+	(
-+		cd repo_a &&
-+		test_commit a_master &&
-+		git checkout -b foo &&
-+		test_commit a_foo
-+	) &&
-+	git init repo_b &&
-+	(
-+		cd repo_b &&
-+		test_commit b_master &&
-+		git remote add repo_a ../repo_a &&
-+		git config remote.repo_a.fetch \
-+			"+refs/heads/*:refs/remotes/other_a/*" &&
-+		git fetch --all &&
-+		git worktree add ../foo
-+	) &&
-+	(
-+		cd foo &&
-+		test_branch_upstream foo repo_a foo &&
-+		git rev-parse other_a/foo >expect &&
-+		git rev-parse foo >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
- test_done
+ #define TRACE_KEY_INIT(name) { "GIT_TRACE_" #name, 0, 0, 0 }
+ 
+ extern void trace_repo_setup(const char *prefix);
+@@ -78,7 +80,7 @@ extern void trace_performance_since(uint64_t start, const char *format, ...);
+  */
+ 
+ #define trace_printf(...) \
+-	trace_printf_key_fl(TRACE_CONTEXT, __LINE__, NULL, __VA_ARGS__)
++	trace_printf_key_fl(TRACE_CONTEXT, __LINE__, &trace_default_key, __VA_ARGS__)
+ 
+ #define trace_printf_key(key, ...) \
+ 	trace_printf_key_fl(TRACE_CONTEXT, __LINE__, key, __VA_ARGS__)
 -- 
-2.15.0.345.gf926f18f3
+2.14.1
 
