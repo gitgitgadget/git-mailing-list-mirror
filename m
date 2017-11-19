@@ -2,113 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 44BBE2036D
-	for <e@80x24.org>; Sun, 19 Nov 2017 01:53:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 44FEB2036D
+	for <e@80x24.org>; Sun, 19 Nov 2017 02:13:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750982AbdKSBxi (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 Nov 2017 20:53:38 -0500
-Received: from sdaoden.eu ([217.144.132.164]:39152 "EHLO sdaoden.eu"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750954AbdKSBxh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Nov 2017 20:53:37 -0500
-X-Greylist: delayed 505 seconds by postgrey-1.27 at vger.kernel.org; Sat, 18 Nov 2017 20:53:36 EST
-Received: by sdaoden.eu (Postfix, from userid 1000)
-        id BF38716045; Sun, 19 Nov 2017 02:45:09 +0100 (CET)
-Date:   Sun, 19 Nov 2017 02:45:08 +0100
-From:   Steffen Nurpmeso <steffen@sdaoden.eu>
-To:     git@vger.kernel.org
-Subject: v2.15.0: commits become falsely joined when rebasing
- (interactively)
-Message-ID: <20171119014508.OOpRb%steffen@sdaoden.eu>
-Mail-Followup-To: git@vger.kernel.org,
- Steffen Nurpmeso <steffen@sdaoden.eu>
-User-Agent: s-nail v14.9.5-29-gab03c38f
-OpenPGP: id=232C220BCB5690A37BD22FFDEB66022795F382CE;
- url=https://www.sdaoden.eu/downloads/steffen.asc
-BlahBlahBlah: Any stupid boy can crush a beetle. But all the professors in
- the world can make no bugs.
+        id S1750910AbdKSCM6 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Nov 2017 21:12:58 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52555 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750779AbdKSCM5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Nov 2017 21:12:57 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E9E10A2F49;
+        Sat, 18 Nov 2017 21:12:54 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=m4FfWcJwda7SkUUqRFagGAWjsMY=; b=c+P5uo
+        fcBcnx9Oz0cWsCPt3pY3AMBbuveEWwaDZKCU0443QmrREMLZOjl7Io28XhvPocUM
+        u+vOviK38Cm+nxzMRac1aIlO0PVfs1e5Q/ViZgtDrSJX/U18VmLX+gF0cL8OsldY
+        Yu7pA/TtUskr4sJEAD4pZMCzHSmWFv8uNdQ8w=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=K9NeeRVy9YHdgcKdruH0bO/+adp0WVhK
+        6kR5e+njqKQRTS9oGnHPT9DOKAkar/SyRbLTOC5yPqyszLEhQGsjg79XF/iIMhxU
+        qSCbuqUxDicoEyDc3djjNi6omdMiPMZON8//j+5NOPDHLV6VTgPDQopcb3P5fs/C
+        jZ0iyFMjo+U=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E0799A2F48;
+        Sat, 18 Nov 2017 21:12:54 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5D7B3A2F42;
+        Sat, 18 Nov 2017 21:12:54 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc:     Git mailing list <git@vger.kernel.org>
+Subject: Re: [PATCH] git-rebase: clean up dashed-usages in messages
+References: <20171118161810.16494-1-kaartic.sivaraam@gmail.com>
+Date:   Sun, 19 Nov 2017 11:12:53 +0900
+In-Reply-To: <20171118161810.16494-1-kaartic.sivaraam@gmail.com> (Kaartic
+        Sivaraam's message of "Sat, 18 Nov 2017 21:48:10 +0530")
+Message-ID: <xmqq4lprow2i.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2713B6CA-CCCF-11E7-A7B8-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello again,
+>  git rebase [-i] [options] [--exec <cmd>] [--onto <newbase>] [<upstream>] [<branch>]
+>  git rebase [-i] [options] [--exec <cmd>] [--onto <newbase>] --root [<branch>]
+> -git-rebase --continue | --abort | --skip | --edit-todo
+> +git rebase --continue | --abort | --skip | --edit-todo
 
-i see an error with v2.15.0 that happened already back in early
-October (AlpineLinux [edge] pretty much up-to-date with newest git
-but please don't ask exact version).  I failed to reproduce it
-back then, but now again, here is how.
+A good change.
 
-- It seems related to having a hook (pre-commit), and the "reword"
-  action.
-- Doing a rebase interactively to move (two) commits back from
-  HEAD downwards in a linear hierarchy, as in
-    * 306b5c7e (HEAD -> refs/heads/notpushed) [-] COMMIT 1
-    * 7e34d5fa [-] COMMIT 2
-  the above two to be moved down
-    * 65d216c3 (refs/remotes/origin/notpushed)...
-    ...
-    * 5ff5ef05 (refs/remotes/origin/next, refs/heads/next) [-]..
-  to end up stacked upon and as new [next]
+>  test -f "$apply_dir"/applying &&
+> -	die "$(gettext "It looks like git-am is in progress. Cannot rebase.")"
+> +	die "$(gettext "It looks like you are in the middle of an am session. Cannot rebase.")"
 
-- COMMIT 2 is to be picked, but COMMIT 1 shall be "r"eworded.
+Probably not, as 'am' alone would be confusing.
 
-Now what happens is that COMMIT 2 is rebased ok, but instead of
-simply opening the editor to allow rewording of the commit message
-of COMMIT 2 the pre-commit hook runs, and it has to complain in
-this case (lines too long), but i "commit -n" that once
-i committed first.  Anyway git says
+    "It looks like 'git am' is in progress. Cannot rebase."
 
-  You can amend the commit now, with
+may be a more sensible improvement.
 
-    git commit --amend
-
-  Once you are satisfied with your changes, run
-
-    git rebase --continue
-
-Which i have not asked for!  More:
-
-  ?1[steffen@essex nail.git]$ git status
-  interactive rebase in progress; onto 6d437ab6
-  Last commands done (12 commands done):
-     pick 7e34d5fa [-] COMMIT 2
-     r 306b5c7e [-] COMMIT 1
-    (see more in file .git/rebase-merge/done)
-  Next commands to do (27 remaining commands):
-  ...
-    (use "git rebase --edit-todo" to view and edit)
-  You are currently rebasing branch 'notpushed' on '6d437ab6'.
-    (all conflicts fixed: run "git rebase --continue")
-
-  Changes to be committed:
-    (use "git reset HEAD <file>..." to unstage)
-
-          modified:   gen-okeys.h
-
-  Untracked files not listed (use -u option to show untracked files)
-
-So far so good, but now:
-
-  ?0[steffen@essex nail.git]$ git rec
-alias: rebase --continue
-  [detached HEAD ca77a94a] COMMIT 1 with adjusted commit message
-   Date: Sun Nov 19 02:19:30 2017 +0100
-   9 files changed, 357 insertions(+), 339 deletions(-)
-  Successfully rebased and updated refs/heads/notpushed.
-
-Uh!  It joined COMMIT 1 with COMMIT 2!
-Thanks for git!
-
-Ciao,
-
---steffen
-|
-|Der Kragenbaer,                The moon bear,
-|der holt sich munter           he cheerfully and one by one
-|einen nach dem anderen runter  wa.ks himself off
-|(By Robert Gernhardt)
