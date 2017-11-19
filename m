@@ -2,105 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9AA85202A0
-	for <e@80x24.org>; Sun, 19 Nov 2017 18:06:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 37A0220437
+	for <e@80x24.org>; Sun, 19 Nov 2017 18:09:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751087AbdKSSGe (ORCPT <rfc822;e@80x24.org>);
-        Sun, 19 Nov 2017 13:06:34 -0500
-Received: from mail-qt0-f195.google.com ([209.85.216.195]:37497 "EHLO
-        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751014AbdKSSGd (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 19 Nov 2017 13:06:33 -0500
-Received: by mail-qt0-f195.google.com with SMTP id d15so12367808qte.4
-        for <git@vger.kernel.org>; Sun, 19 Nov 2017 10:06:33 -0800 (PST)
+        id S1751102AbdKSSJL (ORCPT <rfc822;e@80x24.org>);
+        Sun, 19 Nov 2017 13:09:11 -0500
+Received: from mail-pg0-f50.google.com ([74.125.83.50]:44872 "EHLO
+        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751014AbdKSSJK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 19 Nov 2017 13:09:10 -0500
+Received: by mail-pg0-f50.google.com with SMTP id c123so5573338pga.11
+        for <git@vger.kernel.org>; Sun, 19 Nov 2017 10:09:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=S7HKmnrjQuWKH/topGI5CoWZP0zF6SUnLJOs2zE9X70=;
-        b=dPCWBlzh/vQuiJpsBpL7zkU4TOfQx9AZtqE96CQg/hCtL8Bm19qY8NWZ7En/PJJGK7
-         ELROJBYmJWMrzebOuQb1lQOEHbhlO6hZEOji5mkWNafC0hrgIWPTjAKnTASyvVa//uxm
-         PYPrPLnfhYPtgnxCb9vJlb4bAdHDS+Q1yHttFzaajS/TJie1UEKhFstTyTngKYGmCJCs
-         q0gpPWJVy2p7gDJ972U/bs4X+DygnoeppLOUoeXF4bWIaWy8bpcY1WHA0yJvPrZSH4v4
-         V9gKhKbEeHjrBI+p1EmJJBigf3i41c+3I7u+BTB+lMhbT69FV0lHHs3kjhkS5zT3ptfJ
-         RDRQ==
+        h=to:from:subject:message-id:date:user-agent:mime-version
+         :content-language:content-transfer-encoding;
+        bh=tVlM2knJZZyWBG1loFANeu/GLeQsAS3g/RPRPVkGXto=;
+        b=M77CdRDzOB6gJPSDapSo0YuaFdKGd413OckeNip8mSR9+7hKalnCTEIyK/85paXz6G
+         XthmRmsgUxcPzMgOSHJGC9yyN5h6OcfvABFfc1BdLr4RyU2tkUM+FQ3MvTufQiyLnQiF
+         M8byKrcLaUhThehOsEq7go1Gh00DeRlqRkKrdVQD9wgkEVHjTpMamyah56sUd24bFPn9
+         rNZxmtplUmxX/FPaIpUF0i9mi6FcK1kvNbwU106hAFpHMit9sWUcPvADxdWJsUFfVn9H
+         4v7V6mKGCl/OWFJWGkvhadVdFDa4oQ8AVdtTlFxoWsJHd+udAIg+/sJ0lZCV+QXT395j
+         LhOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=S7HKmnrjQuWKH/topGI5CoWZP0zF6SUnLJOs2zE9X70=;
-        b=ZSRLeZAqJFDT4Tw/N8BHxTdcSdvKclkiuTeXb1J5qfE/Kqd3/ZsDjZub0ySwWz02Gv
-         +sTdFynunSQOHq625dG8uxhSWVOFnN8blELjwzpupEDt0c2o+hEk1vD07WckeWfF06Mm
-         wfjKey605hUJgG2o7MoCB4thHjHePeg1Au4qtRutapNhs2GjD3/mGU3oAPXV0DzmY/8u
-         co7VnYdIxelMgYF+7T2ADXBEECrywrgCG/845JXnm4VA8AQdLc9eYM4PJwiZ3ZFCnq7/
-         JLGc1TIODMBo9d2/2PndFMO/9pNDx7ihHJ2LVTUdk4FhUgPipB6nOAFaB/fgbk5AUE9X
-         aXIQ==
-X-Gm-Message-State: AJaThX7fFYXa+8O8FOiul9h7VJRMWJ5DOl8ndA6QBWMD+kKkyZ3fhVmU
-        +pAfZhv7OlznhDHqtEgddjs+lO64QTLQab2Xcx4=
-X-Google-Smtp-Source: AGs4zMZBXDJm1ptupVcrzLfaU9aNTm/EwslhQd/7fxOSzFWimxiwsoqeDn1P7i3dz+8wntptYsxZVFzzSoUspRuVWu4=
-X-Received: by 10.200.5.2 with SMTP id u2mr17590137qtg.217.1511114792950; Sun,
- 19 Nov 2017 10:06:32 -0800 (PST)
+        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
+         :mime-version:content-language:content-transfer-encoding;
+        bh=tVlM2knJZZyWBG1loFANeu/GLeQsAS3g/RPRPVkGXto=;
+        b=g9+ubwlYSJkCrpFvZc0qgleAnB68s6n3SydbxjKJ9mNMvz/8jiR4LPiuRBmDXSTG0f
+         HwNOpz9Tt3fbsj128CTGx3RZT3SC0+wgHEJQZ596NjPwIXgWX3hRo9wCaOrnzxtXEoEd
+         Rv840wsvwXmGvS2TW6DAGSZCpxBHttKKwHj1QebIOXi72W94+gLJbiftzKOISOzh+ZuC
+         YZLGnYfxKReLc8BNoz0D/Nocpz6aWBytFZutwk8kovOGiXtjJCPi1LI34fHCNJaWKxU6
+         sUJSOlrxRbOXgIO8hZGmCYTVB/DOdJkMiNXM/9Y1SbDJwSvQONS5IoqzqyEa0LK7+nxV
+         +fsA==
+X-Gm-Message-State: AJaThX44NswAx9HkrWlUWs6SzZCM9GBzp5A/5crzuvTBI1CMFXabaSVt
+        uNwgm3S+M1T7xxhrhU9FmyRj/NtcjNI=
+X-Google-Smtp-Source: AGs4zMbd8g6TrB1hBf3z9CZzAPuSTvIj5qncNQ23xgmLNyeJqwJOwABGuU/dDSPD3h4Mh23Eata8aQ==
+X-Received: by 10.98.112.71 with SMTP id l68mr7079674pfc.11.1511114949458;
+        Sun, 19 Nov 2017 10:09:09 -0800 (PST)
+Received: from ?IPv6:2405:204:72c8:8b21:b8b1:7c41:1a33:6334? ([2405:204:72c8:8b21:b8b1:7c41:1a33:6334])
+        by smtp.gmail.com with ESMTPSA id m3sm14247070pgs.12.2017.11.19.10.09.07
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 19 Nov 2017 10:09:08 -0800 (PST)
+To:     Git Mailing list <git@vger.kernel.org>
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Subject: Can @{-N} always be used where a branch name is expected?
+Message-ID: <38b4b665-18c4-5c95-f142-aedf33bc1b5c@gmail.com>
+Date:   Sun, 19 Nov 2017 23:39:04 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
 MIME-Version: 1.0
-Received: by 10.12.155.209 with HTTP; Sun, 19 Nov 2017 10:06:32 -0800 (PST)
-In-Reply-To: <a3bba8dc-0f4c-808c-9b6e-2252160a2cc1@gmail.com>
-References: <20171102065407.25404-1-kaartic.sivaraam@gmail.com>
- <20171118172648.17918-1-kaartic.sivaraam@gmail.com> <20171118172648.17918-5-kaartic.sivaraam@gmail.com>
- <CAPig+cRrJVhYMYfoFhSi+FOLv0X4or1-YV=M8_X10_d_Bbt3pA@mail.gmail.com> <a3bba8dc-0f4c-808c-9b6e-2252160a2cc1@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 19 Nov 2017 13:06:32 -0500
-X-Google-Sender-Auth: AY7tfnEjD14Vq9B96JpnDaNHgNU
-Message-ID: <CAPig+cRXk8LdTFKagNFJ3L3AUsA=ZAs=eiaBwBs4JDYG303vmA@mail.gmail.com>
-Subject: Re: [PATCH 4/4] builtin/branch: strip refs/heads/ using skip_prefix
-To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Nov 19, 2017 at 12:21 PM, Kaartic Sivaraam
-<kaartic.sivaraam@gmail.com> wrote:
-> On Sunday 19 November 2017 06:34 AM, Eric Sunshine wrote:
->> On Sat, Nov 18, 2017 at 12:26 PM, Kaartic Sivaraam
->> <kaartic.sivaraam@gmail.com> wrote:
->>>
->>> diff --git a/builtin/branch.c b/builtin/branch.c
->>> @@ -462,6 +462,8 @@ static void copy_or_rename_branch(const char
->>> *oldname, const char *newname, int
->>>   {
->>>          struct strbuf oldref = STRBUF_INIT, newref = STRBUF_INIT, logmsg
->>> = STRBUF_INIT;
->>>          struct strbuf oldsection = STRBUF_INIT, newsection =
->>> STRBUF_INIT;
->>> +       const char *prefix_free_oldref = NULL;
->>> +       const char *prefix_free_newref = NULL;
->>
->> A bit of a mouthful.
->> Perhaps name these 'oldname' and 'newname' or something?
->
-> How about the following ?
->
-> 1) "interpreted_oldname" and "interpreted_newname" or
->
-> 2) "stripped_oldref" and "stripped_newref"
->
-> I couldn't come up with better names for now.
+I was recently digging to find if there is any special syntax accepted 
+for <oldbranch> in "git branch -m <oldbranch> <newbranch>" other than 
+the plain branch name. I discovered the @{-N} notation. I was trying to 
+play around with it and found that it didn't work as guaranteed by the 
+last sentence  of the following paragraph in the "check-ref-format" 
+documentation,
 
-Sorry, I didn't look closely enough at the context to see that
-'oldname' and 'newname' were already used as function arguments.
 
-Perhaps call them 'oldref_bare' and 'newref_bare' or something. It not
-that important (though, shorter may be preferable). Aside from the
-names being rather long, what I didn't mention originally (because I
-had edited it out of my earlier response) was that having "free" in
-the names made me think that the values needed to be passed to free()
-by the end of the function. It's probably not worth a re-roll,
-though...
+     With the --branch option, it expands the “previous branch syntax” 
+@{-n}. For example, @{-1} is a way to refer the last branch you were on.
+     This option should be used by porcelains to accept this syntax 
+anywhere a branch name is expected, so they can act as if you typed the
+     branch name.
+
+
+In particular the following case doesn't work,
+
+git init test &&
+cd test &&
+echo "Hello" >file &&
+git add file &&
+git commit -m "Initial commit that will be checked out" &&
+echo "Hello world" >file &&
+git commit file -m "Second commit" &&
+git checkout HEAD^ &&
+git checkout - &&
+git branch -m @{-1} initial-commit
+
+
+It failed with an error,
+
+error: refname refs/heads/d21e72600673c670b3ae803488d0cebfa949e4c3 not found
+fatal: Branch rename failed
+
+
+Then I digged into why it didn't work to discover that @{-N}  just 
+expands to a valid checkout and not a valid "branch name". So, the 
+documentation  guaranteeing that "@{-N} acts as if you typed the branch 
+name" seems wrong.  That makes me think that we should avoid misleading 
+the user in the "check-ref-format" documentation.
+
+So, should we update the 'check-ref-format' doc or am I missing something?
+
+---
+Kaartic
