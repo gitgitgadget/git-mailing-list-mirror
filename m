@@ -7,152 +7,94 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B2049202A0
-	for <e@80x24.org>; Sun, 19 Nov 2017 18:42:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E576C202A0
+	for <e@80x24.org>; Sun, 19 Nov 2017 18:42:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751055AbdKSSmR (ORCPT <rfc822;e@80x24.org>);
-        Sun, 19 Nov 2017 13:42:17 -0500
-Received: from mout.gmx.net ([212.227.15.19]:63979 "EHLO mout.gmx.net"
+        id S1751015AbdKSSmO (ORCPT <rfc822;e@80x24.org>);
+        Sun, 19 Nov 2017 13:42:14 -0500
+Received: from mout.gmx.net ([212.227.15.15]:58767 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751002AbdKSSmP (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 19 Nov 2017 13:42:15 -0500
+        id S1750954AbdKSSmM (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 19 Nov 2017 13:42:12 -0500
 Received: from bedhanger.strangled.net ([188.193.87.84]) by mail.gmx.com
- (mrgmx002 [212.227.17.190]) with ESMTPSA (Nemesis) id
- 0M3zne-1f7dNw38yo-00rbT5; Sun, 19 Nov 2017 19:41:39 +0100
+ (mrgmx001 [212.227.17.190]) with ESMTPSA (Nemesis) id
+ 0M39zL-1f8Srn3K2J-00stPo; Sun, 19 Nov 2017 19:41:37 +0100
 From:   Ann T Ropea <bedhanger@gmx.de>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Philip Oakley <philipoakley@iee.org>,
         Git Mailing List <git@vger.kernel.org>,
         Daniel Barkalow <barkalow@iabervon.org>,
         Ann T Ropea <bedhanger@gmx.de>
-Subject: Re: [PATCH v3 3/5] Documentation: user-manual: limit usage of ellipsis
-Date:   Sun, 19 Nov 2017 19:41:11 +0100
-Message-Id: <20171119184113.16630-3-bedhanger@gmx.de>
+Subject: Re: [PATCH v3 2/5] diff: diff_aligned_abbrev: remove ellipsis after abbreviated SHA-1 value
+Date:   Sun, 19 Nov 2017 19:41:10 +0100
+Message-Id: <20171119184113.16630-2-bedhanger@gmx.de>
 X-Mailer: git-send-email 2.13.6
 In-Reply-To: <20171119184113.16630-1-bedhanger@gmx.de>
 References: <20171119184113.16630-1-bedhanger@gmx.de>
 References: <20171113223654.27732-1-bedhanger@gmx.de> <83D263E58ABD46188756D41FE311E469@PhilipOakley> <xmqqfu9pmsx3.fsf@gitster.mtv.corp.google.com> <20171113223654.27732-3-bedhanger@gmx.de> <xmqq1sl17e1u.fsf@gitster.mtv.corp.google.com>
 In-Reply-To: <xmqq1sl17e1u.fsf@gitster.mtv.corp.google.com>
-X-Provags-ID: V03:K0:WyL8JOMk5by2e0WnLRkK9V39wXtWAV0NIOZwpE6FbhU2nlBQVqT
- eEPcGG7v73OftR4EY8NCxtVILReGPRCPJON+8xWZF/LpvI3ly9hWpiZV1Fekz9kfkJFWh/u
- z7DsHganv3aeB0SDjotX5DZnckp9aRXdi57UYhpSE91GwUmm/bM6E7shvOIXsZl7QRto8K1
- Hm7YqyW/bqr2NF+fGyDDA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:z/kpE7xYbRg=:vu7QKtTmrbCpUmZjvtSspX
- iSxl+5oxWO/tKrUqOBuAzAzYGbP/OZpJzxHj80sx4fz0bEANFTsJeJ/vfieW4oSu+OGIlyZjR
- Pt5+qoht9gI19LC/aEA6M6YdtbDwKiooVuOJqooKZMOrZd4tTpIFvgYBpEjxN4tuM971B3osO
- yYGkEKDD0Yz8ecPG8SoEPmDVKx7QIVg7xNVkGrs2yjc5np6ZNcX2aaEnGWA2K2ZlTgc8h3yT+
- iuBVv4tTnL4GKMnPMYAl4NFzJxbrR61cTG4l3At7NcSMlk0NLCu14MBqDG8ByschbMZPg8ud8
- cnweB0n9GPcWo5OXEXrGY1TYweJV6bXrRmQ0SCVbBqtLxpLMBk/Xzuh2YZKX8FP6KPs0Z8iIA
- +YWtx4eZvJzC2nHxOgqOApVKiRKPWi7+n17TfHFZEO8aqOszwALmjotF0L2pR4sL0tFc8404m
- f6f5shlCwAKkrfEiCSQBrvCMINZOcFDAxO5+iS08OteOmKujJzL5ole9wUTb1zEBMUOtwOHIP
- S3rCzFbjyTiAyzzNt4OZ4Uod5eWvlyu/NxK03j9K9+ykR2UWZtglVPdabteQZunRyHImyQhi6
- XkF6jn+/j5+cbY2oAcCT6Xdgsqfny0jGOAVdvnsS0PwJnOisJo7jS+jpDrmxtkRbh0MAX5wMy
- SjnMN5ftif6w/N1ByuaXhcIf6aDeb80si+CLq7ht+HmIr3ruHlajyvFuzz00tLnXF+OYfelK8
- DTBaJ0/zWon9NjrzZ23G/r1v1R40Oz/zMVDU+8tP/OOlTh+6E4VwSwB28SDTqmzIvVX3GV6N+
- B38anMg4kkhP2toGsfi6xfjfbH++Q==
+X-Provags-ID: V03:K0:vOJ1jK17ODqjQs2tR69M6z8+j/hQJ1hXWtixBfpGPxlvsJtXCQh
+ sx7Fs7JB+SXTCaFxRkxbK+heE9lmv3RbOqRwUtVK8PRVGFJ3hasS2FzcqmhlvpmVecWr3TS
+ 9cFqnQNUJZDY318XTrPDz6H2L6Jq4xh7UGEaO08pKxVD/2sAzTPdNd/HKT0ArTiCmG38Xud
+ lfsjEKQ5h13sinwO+2kGQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:6maK5NQknV4=:OUFoDTUB70EH5/v1ufg1Sj
+ 8hA2ivLi4Jisl3C2WOiiGEURswuOtGFnZmr5W3RPJMX4Hbt45Q6Qsr8JQnVvfaoH0tRkneVBj
+ WKVgA5O/sY96a/+HPJhaK1zNjuVkp3BCwDv4ceHhEcTfHArtr8ierGFTk1RM90Y2eCsMJWdJE
+ a4ZdykqDlSuBaT3bFDKQ+jt63CL7yc+82t+ShUxLapsnBT7/U2sCwoDl652Jr//CkyrY8d5EM
+ 7Vtmuto2U7fxRFA1hVEifrRU4PY+5DD80SW0ZiucISi8NzTithgFq5Tcin38XKocpKkP4MWwK
+ lo3NWe1I962D6KcdeDRG4welM54orhG/jiSJRovPxRxluYb05/eujQbJsBYfK/O3d7WKA2L80
+ iv8moI+ZAOPpj9ArqQjV6K1lXXQtI0D3VkzMmo9dJ64A6TqSATdpATDI05u3uDDN6tuBWMiwY
+ X22i99seUEmxKTXSpGQr3HlJl84f0r0DM2hySPbTrlcX/ci0Ic8O7rBv2V3orcjBX9Q9wNhjz
+ /mg6obmma2/NGSTiGZyEtKOa3s9lIkCCmCG1JaG0FYqmXUbBt/Db9flSq3EJmaOc7dUFraoTg
+ dGGkt0My4zK/YtbuuO3himaE6FegKFdn2g+82eIV3jUqE/E03VnvCR4VJTkwGxi4b9cpRf8Hz
+ /A9tQuUays9vviBWQPQLzphg1vwqe1a1/4Dl57XHmgEbPQ+ljFzn9l4kTH1QkBycPDCbob2iP
+ hNFVu/hx2Ckk1yGhIYg9O3aNQLyH22LxGHhli1EDZLYFtrGyRLcrLGSRMoXkPRa5hYmqgGb0x
+ lVJRM8Sof9NOsvIvPpCTLM93VapMg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Confusing the ellipsis with the three-dot operator should be made as
-difficult as possible.
+Neither Git nor the user are in need of this (visual) aid anymore, but
+we must offer a transition period.
+
+Also, fix a typo: "abbbreviated" ---> "abbreviated".
 
 Signed-off-by: Ann T Ropea <bedhanger@gmx.de>
 ---
 v2: rename patch series & focus on removal of ellipses
 v3: env var instead of config option, use one-line comments where appropriate, preserve indent level
- Documentation/user-manual.txt | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ diff.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-index 3a03e63eb0d8..eff78902742a 100644
---- a/Documentation/user-manual.txt
-+++ b/Documentation/user-manual.txt
-@@ -319,7 +319,7 @@ do so (now or later) by using -b with the checkout command again. Example:
+diff --git a/diff.c b/diff.c
+index 0763e89263ef..359c6fc85a27 100644
+--- a/diff.c
++++ b/diff.c
+@@ -4901,15 +4901,22 @@ const char *diff_aligned_abbrev(const struct object_id *oid, int len)
+ {
+ 	int abblen;
+ 	const char *abbrev;
++	const char *env_printsha1ellipsis = getenv("PRINT_SHA1_ELLIPSIS");
  
-   git checkout -b new_branch_name
++	/* Do we want all 40 hex characters? */
+ 	if (len == GIT_SHA1_HEXSZ)
+ 		return oid_to_hex(oid);
  
--HEAD is now at 427abfa... Linux v2.6.17
-+HEAD is now at 427abfa Linux v2.6.17
- ------------------------------------------------
++	/* An abbreviated value is fine, possibly followed by an ellipsis. */
+ 	abbrev = diff_abbrev_oid(oid, len);
++
++	if (!(env_printsha1ellipsis && !strcasecmp(env_printsha1ellipsis, "yes")))
++		return abbrev;
++
+ 	abblen = strlen(abbrev);
  
- The HEAD then refers to the SHA-1 of the commit instead of to a branch,
-@@ -508,7 +508,7 @@ Bisecting: 3537 revisions left to test after this
- 
- If you run `git branch` at this point, you'll see that Git has
- temporarily moved you in "(no branch)". HEAD is now detached from any
--branch and points directly to a commit (with commit id 65934...) that
-+branch and points directly to a commit (with commit id 65934) that
- is reachable from "master" but not from v2.6.18. Compile and test it,
- and see whether it crashes. Assume it does crash. Then:
- 
-@@ -549,14 +549,14 @@ says "bisect".  Choose a safe-looking commit nearby, note its commit
- id, and check it out with:
- 
- -------------------------------------------------
--$ git reset --hard fb47ddb2db...
-+$ git reset --hard fb47ddb2db
- -------------------------------------------------
- 
- then test, run `bisect good` or `bisect bad` as appropriate, and
- continue.
- 
- Instead of `git bisect visualize` and then `git reset --hard
--fb47ddb2db...`, you might just want to tell Git that you want to skip
-+fb47ddb2db`, you might just want to tell Git that you want to skip
- the current commit:
- 
- -------------------------------------------------
-@@ -3416,7 +3416,7 @@ commit abc
- Author:
- Date:
- ...
--:100644 100644 4b9458b... newsha... M somedirectory/myfile
-+:100644 100644 4b9458b newsha M somedirectory/myfile
- 
- 
- commit xyz
-@@ -3424,7 +3424,7 @@ Author:
- Date:
- 
- ...
--:100644 100644 oldsha... 4b9458b... M somedirectory/myfile
-+:100644 100644 oldsha 4b9458b M somedirectory/myfile
- ------------------------------------------------
- 
- This tells you that the immediately following version of the file was
-@@ -3449,7 +3449,7 @@ and your repository is good again!
- $ git log --raw --all
- ------------------------------------------------
- 
--and just looked for the sha of the missing object (4b9458b..) in that
-+and just looked for the sha of the missing object (4b9458b) in that
- whole thing. It's up to you--Git does *have* a lot of information, it is
- just missing one particular blob version.
- 
-@@ -4114,9 +4114,9 @@ program, e.g.  `diff3`, `merge`, or Git's own merge-file, on
- the blob objects from these three stages yourself, like this:
- 
- ------------------------------------------------
--$ git cat-file blob 263414f... >hello.c~1
--$ git cat-file blob 06fa6a2... >hello.c~2
--$ git cat-file blob cc44c73... >hello.c~3
-+$ git cat-file blob 263414f >hello.c~1
-+$ git cat-file blob 06fa6a2 >hello.c~2
-+$ git cat-file blob cc44c73 >hello.c~3
- $ git merge-file hello.c~2 hello.c~1 hello.c~3
- ------------------------------------------------
- 
-@@ -4374,7 +4374,7 @@ $ git log --no-merges t/
- ------------------------
- 
- In the pager (`less`), just search for "bundle", go a few lines back,
--and see that it is in commit 18449ab0...  Now just copy this object name,
-+and see that it is in commit 18449ab0.  Now just copy this object name,
- and paste it into the command line
- 
- -------------------
+ 	/*
+-	 * In well-behaved cases, where the abbbreviated result is the
++	 * In well-behaved cases, where the abbreviated result is the
+ 	 * same as the requested length, append three dots after the
+ 	 * abbreviation (hence the whole logic is limited to the case
+ 	 * where abblen < 37); when the actual abbreviated result is a
 -- 
 2.13.6
 
