@@ -2,70 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D28CA202A0
-	for <e@80x24.org>; Sun, 19 Nov 2017 18:12:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 00E52202A0
+	for <e@80x24.org>; Sun, 19 Nov 2017 18:42:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751107AbdKSSMD (ORCPT <rfc822;e@80x24.org>);
-        Sun, 19 Nov 2017 13:12:03 -0500
-Received: from mail-qk0-f178.google.com ([209.85.220.178]:41363 "EHLO
-        mail-qk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751014AbdKSSMC (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 19 Nov 2017 13:12:02 -0500
-Received: by mail-qk0-f178.google.com with SMTP id f63so4998944qke.8
-        for <git@vger.kernel.org>; Sun, 19 Nov 2017 10:12:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=P5jivl5CHQVY6g9EHA0Qxh6q9dNS8Ubkb/DsVsLn+Tg=;
-        b=iSBPIY1U+GajtfUpD9gjuO4fO9PvF+eKh1iNtrCKd49JhAuBnyNocLukAFwvwvWJb9
-         1yamj5lRN+XDz0dkELd18+IutQeVmtzICMntIiFGl5S7a2AHxfPqHDvbO98hcUmYEVK4
-         RKwoy8SVRoAfzhgqwBXyQqxy1XeQURE+c7Hv6VVoJitYTdiEwhYkwMEUU3yZKK6V/K3h
-         ppTKNNWdCGSnmutTAlWUmXa6/lSkMjnuB8PNXqMK7KLk+iu9vwY+pru9CEx/0eL/mllG
-         uRrDBiE8YUpLnNNb1IhJi0LbTDbB5anTJ3Bhl9plqOlLPr9doMN/jMw5Tq8Z5rdBnPgd
-         MpsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=P5jivl5CHQVY6g9EHA0Qxh6q9dNS8Ubkb/DsVsLn+Tg=;
-        b=OFMGTL9DYNMMdxUFDsm9OA9RawFK0vPsWLwOpA3yLXsEymLMSLvZl81mxNboUW2kFM
-         4UY3Mfg7OBH+uQkGkslVJ91QYi74fUP/Saoo0WF1R5UIfDEoOb7s8d3E7GXJb259+FuO
-         ZgNk8DF2WX/LZuIzkoA+0GaEgxqBHJkiUjiOIgQnDr4UkBJFwM6cVgqlaSPHHGHQOXxz
-         wXBNiioR08pwbybaUdCD8MKy5Ns1K7CaoZIyNo4dS1ixYPRdCdNQ8FRK7AYIlQ7cWsq2
-         UivuPKUFb1DRaC5yWj63OTqL5/fLMRKWAOkPs3oNISoWqNW9h8YYWNMnQGnuNh1H7jHh
-         R3sQ==
-X-Gm-Message-State: AJaThX5850WUZSgkuDdsCkplSl2PrI3Y/A3XTajmDn07UTWzVz+2dPfU
-        mx6NJQbkZeNNoymUgAybCZxYdU3voywcAmxuJvE=
-X-Google-Smtp-Source: AGs4zMZxIyYXRGn4QPAwN4oCrMkzsb2Hzj66IUH5A3/cAUpiBDg/AYhhyPNTFY/pdwfydw9Fwrf15kMlQEi0CCCi6UM=
-X-Received: by 10.55.114.69 with SMTP id n66mr17115502qkc.306.1511115121444;
- Sun, 19 Nov 2017 10:12:01 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.12.155.209 with HTTP; Sun, 19 Nov 2017 10:12:00 -0800 (PST)
-In-Reply-To: <C47F730C-18AE-411E-AC57-2DA8625451C4@icloud.com>
-References: <C47F730C-18AE-411E-AC57-2DA8625451C4@icloud.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 19 Nov 2017 13:12:00 -0500
-X-Google-Sender-Auth: vW0ab0sfEtO-bXdu4tw0b53bmCY
-Message-ID: <CAPig+cRxB5xiyeCWKTB3O1zeH50pobjBH8oyQt75FkC09_4_dw@mail.gmail.com>
-Subject: Re: Why gc --auto is called so rarely?
-To:     Ilya Kantor <ilya.a.kantor@icloud.com>
-Cc:     =?UTF-8?B?0JzQvtC5INCl0L7RgNCy0LDRgtC40Y8=?= <iliakan@gmail.com>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        id S1751020AbdKSSmO (ORCPT <rfc822;e@80x24.org>);
+        Sun, 19 Nov 2017 13:42:14 -0500
+Received: from mout.gmx.net ([212.227.15.15]:55458 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750952AbdKSSmN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 19 Nov 2017 13:42:13 -0500
+Received: from bedhanger.strangled.net ([188.193.87.84]) by mail.gmx.com
+ (mrgmx002 [212.227.17.190]) with ESMTPSA (Nemesis) id
+ 0LwqwS-1fDhva3dtY-016QJN; Sun, 19 Nov 2017 19:41:34 +0100
+From:   Ann T Ropea <bedhanger@gmx.de>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Philip Oakley <philipoakley@iee.org>,
+        Git Mailing List <git@vger.kernel.org>,
+        Daniel Barkalow <barkalow@iabervon.org>,
+        Ann T Ropea <bedhanger@gmx.de>
+Subject: Re: [PATCH v3 1/5] checkout: describe_detached_head: remove ellipsis after committish
+Date:   Sun, 19 Nov 2017 19:41:09 +0100
+Message-Id: <20171119184113.16630-1-bedhanger@gmx.de>
+X-Mailer: git-send-email 2.13.6
+References: <20171113223654.27732-1-bedhanger@gmx.de> <83D263E58ABD46188756D41FE311E469@PhilipOakley> <xmqqfu9pmsx3.fsf@gitster.mtv.corp.google.com> <20171113223654.27732-3-bedhanger@gmx.de> <xmqq1sl17e1u.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <xmqq1sl17e1u.fsf@gitster.mtv.corp.google.com>
+X-Provags-ID: V03:K0:hvqK4mBbHSxvao9k6rEpvcjfMfIj+WNQc/qOO6Ruvb1qehjELLo
+ Io8QYWkFjiNRnlM9FaRvGt1jRGIAZSuRFel1I4Njto0TtEYeRlPGjyB/R6X7qAUv20sk+wl
+ PJBuantKRUnMY3hjUksTqg8Qs8LQV8lQqwLbomHn5XwNrMGWx1ntaK8MXB/GuvBUSYsEoUw
+ Opc7nAom1CcQPzQ+mKd/w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:/Z0TIn950RQ=:ySElpf1L53VPNiTZIi2FgG
+ FUc9pciVe7Z/TTxir8Ky97Rfr72ubIKix4VNJe8IIavDLTeNyd7xyBpi1vS6BfzYSz5NZbQP/
+ EfDCeORnalGez+9Ze/iAKg/FWcOkS3JLl7cQjGkXjkYdpDJX1wku77AEhy2vrG1nQN6K0vQB8
+ vfvRL7JfPNy2ojjLQILNWHy79NvfG7QonjxyXHxtmsG3Bz+wAIjOIZKbSPPnDHx8FB6jfvtCC
+ ML/FzrAzLLKL0v3rYyliAub9jGh10c3Sh7BAmSw83+Srs52RQa3gO8USQfIL+YIeEZOrffJJb
+ zDw1EFCpFi2Ao5WfUfjtUZN6/0/Spw0BkP54RushlaThfUV+cXH0tY5LzoCsDh9Bw1UK+KgeF
+ NAYIM+R7TIXUEEorhfR7vJEbB7KZIsXF17oSqpVyrs79JgSQ3Os7ygOtE1sW9m1PYjFf9lTNO
+ SKUpDeKUX7VPs0ywr/yoi/OdToZXfRBKoQdDNMGqjf6T1zRZWxBbFRC++NmZlLlih2BexrotM
+ cZnJX+5Ysa1MRO3Gifhnuj0hBTx6U36kojcYM6FMoHK+/PATqkT47x3dF74H96i5x9XXFyAaA
+ 2eModPLBB5mpxyrEdWleiZ41frJ78kq3jp2vmhN583Zi9mF9s7kRPWemY58QXytR7UnZ52OKo
+ 3R1mVII+IhclfLRM445AaV08sLzEcy2FmX0X1m34FkJdx7xwl453hyPpk6NnCnxWAPLZEVHxc
+ TK8Oy5yuk8Y7GoNCkdLn7M/s0qOeaQCrPXaFKFj8YyfddAyukJi1BsxIhGoZAqa5HSMsNE/1n
+ bl+pBFXVFlkYgdGsfNkS065zZv2DA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Nov 19, 2017 at 12:04 PM, Ilya Kantor <ilya.a.kantor@icloud.com> wrote:
-> P.S. The old gmane discussion referenced by some previous posts on this subject is lost.
+We do not want an ellipsis displayed following an (abbreviated) SHA-1
+value.
 
-You can find old gmane conversations at https://public-inbox.org/git/
-by searching for "gmane:<id>" in the search field, where <id> is the
-gmane ID number of the message.
+The days when this was necessary to indicate the truncation to
+lower-level Git commands and/or the user are bygone.
+
+However, to ease the transition, the ellipsis will still be printed if
+the user (actively!) sets the environment variable PRINT_SHA1_ELLIPSIS
+to "yes" (case does not matter).
+
+The transient nature of this fallback suggests that we should not prefix
+the variable by "GIT_".
+
+Signed-off-by: Ann T Ropea <bedhanger@gmx.de>
+---
+v2: rename patch series & focus on removal of ellipses
+v3: env var instead of config option, use one-line comments where appropriate, preserve indent level
+ builtin/checkout.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
+
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 7d8bcc383351..e6d3a28fe26e 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -400,10 +400,17 @@ static void show_local_changes(struct object *head,
+ static void describe_detached_head(const char *msg, struct commit *commit)
+ {
+ 	struct strbuf sb = STRBUF_INIT;
++	const char *env_printsha1ellipsis = getenv("PRINT_SHA1_ELLIPSIS");
++
+ 	if (!parse_commit(commit))
+ 		pp_commit_easy(CMIT_FMT_ONELINE, commit, &sb);
+-	fprintf(stderr, "%s %s... %s\n", msg,
+-		find_unique_abbrev(commit->object.oid.hash, DEFAULT_ABBREV), sb.buf);
++	if (env_printsha1ellipsis && !strcasecmp(env_printsha1ellipsis, "yes")) {
++		fprintf(stderr, "%s %s... %s\n", msg,
++			find_unique_abbrev(commit->object.oid.hash, DEFAULT_ABBREV), sb.buf);
++	} else {
++		fprintf(stderr, "%s %s %s\n", msg,
++			find_unique_abbrev(commit->object.oid.hash, DEFAULT_ABBREV), sb.buf);
++	}
+ 	strbuf_release(&sb);
+ }
+ 
+-- 
+2.13.6
+
