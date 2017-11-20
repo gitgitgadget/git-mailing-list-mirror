@@ -7,59 +7,58 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6A42F202F2
-	for <e@80x24.org>; Mon, 20 Nov 2017 21:22:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C84A9202F2
+	for <e@80x24.org>; Mon, 20 Nov 2017 21:23:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753057AbdKTVW2 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Nov 2017 16:22:28 -0500
-Received: from mail-io0-f195.google.com ([209.85.223.195]:42673 "EHLO
-        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752855AbdKTVW0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Nov 2017 16:22:26 -0500
-Received: by mail-io0-f195.google.com with SMTP id u42so17210246ioi.9
-        for <git@vger.kernel.org>; Mon, 20 Nov 2017 13:22:26 -0800 (PST)
+        id S1753044AbdKTVXB (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Nov 2017 16:23:01 -0500
+Received: from mail-it0-f66.google.com ([209.85.214.66]:39862 "EHLO
+        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752962AbdKTVW6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Nov 2017 16:22:58 -0500
+Received: by mail-it0-f66.google.com with SMTP id x13so3562629iti.4
+        for <git@vger.kernel.org>; Mon, 20 Nov 2017 13:22:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=Z9lfPOUBnykXndrh41SwS/KU5nkfx5f2ninzcXtII3w=;
-        b=JcCt/TQ/nzBpthgw4cs57fFQ9BnkT8A1on9gUgrXz2ki0onaOhiEL+hnmiVzp+fQTM
-         eZKTtUp9nUfuaEDHvBH/VCcdrVkDtMGXBUK0tnBVDjlsr2qFwIoYUlU3dz4xZ/h4+H1J
-         DCpbH4femiQEcuU1YtQZs4leZZaXGCqiRFJn6R3DaKOl+nE35Cq1bVUFfeU2pe81qLMI
-         Wv6+YNpyDXGNn4Y8JvMRuiPKJrlS8rL20IiT668/9sdwzutXdrlcI10dQHsDPEXU5kdy
-         Ubddf4DtZgaMdQPDnax7jAXkm0L8edT5F5yujML5Lax8pFq+1TDdohl9COez1YIRicdr
-         si3w==
+        bh=j2fdmRfAUwM3Zx5C1LeP6gTU0i3csJuwIy//nT6lse0=;
+        b=b8WWGNkP/lpCzIMEOqkb8VNisxyrJt0SctbXbTui57Ejn8jIIjCPv/lXEZXl2S9OZH
+         gGgTC483kBATyYe3LBIDmgxb8ZFRSIzh9affnvoCCfsITtz3l4LT3qL9b1QW/Au8g3f9
+         ACuHCgPtMxCMSM4aoX8jkrYvo71GTFGpxMJqIrG0MLHpAhjL0D2Yr3vXuM5BUbM6LIdy
+         Cbixx/lgpblnkjXBOWprnGzEWU7qpqdNQCQgAbi4NYmn9hOQSf4P4+RVJ9g/E+BcZhSI
+         CsXXL8OgS6me24xW0X/amp0xe650Yq/P5/35s6qOSbAai/tcNJjQPkRbxjkKpl27eHzC
+         hCig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Z9lfPOUBnykXndrh41SwS/KU5nkfx5f2ninzcXtII3w=;
-        b=TVl5kSTfxkMys8DDXpQmm753yaShzMa0N/aXNlr3oQRczjTHRThfPmMZfcDN9BO9aW
-         /JKIZwPB9H51czKTlCsyUlZ5oWbsRa0R0o0bAXIdeNGUplDmr89BIkJEMlbQYfmGV7JK
-         ApfYlVa4k8lpTASy+uZxBlHNacu6vNJ14pA0fP28W7uytO8+Lpwm51NwCW6Uh1kZLCbE
-         h83zMmF9e+UyGaim+Su0jDBkEBhZNWCIi2z6GmA6zub7ZKCd0dbtF//EQInBY+Z4ddVT
-         Ah0jNm+xTEl57gVR4vyyseTcSeXHEGFx2LseHZ7lJsoP7dMp9dU/di42xysM/2qJDW9y
-         W/Sw==
-X-Gm-Message-State: AJaThX6ck5Ky+9WDzf4enqkZ4tzua74bg6oXNlf/Rc+/Q24x5p/NA14g
-        UdkD5Cq5JoH77NmBKqbkl6txzKw0
-X-Google-Smtp-Source: AGs4zMbaJwmrviL7bAdXhachFVeVh2D/UreIpBPrKYVykJHCOaU8vsbDgYlQKJffL+d/sSsLdCbiYg==
-X-Received: by 10.107.30.76 with SMTP id e73mr1603154ioe.60.1511212945753;
-        Mon, 20 Nov 2017 13:22:25 -0800 (PST)
+        bh=j2fdmRfAUwM3Zx5C1LeP6gTU0i3csJuwIy//nT6lse0=;
+        b=DF4kLmJqTBxAOLF8WeLRzap28iFqwF0qbquBjqEgVEnIA169jSJafPVk75J+97dWe2
+         F3RaUJbKYxsw8fHjLGf1ImTImtmOPIUyXc0mDCAGlSd7b3a7aRr2ZkDfJBoRmpL5a56k
+         AEvQPLoGhZgn3r63VrKhYI9cQum2GFu6JMdiMZfbqujfJcmyEiuPo6ICNVav84CtE8uH
+         NBSGk3aTihI/V9QzM700SolWngjQajN8fSDPSa0i8bFOIT2pyTdrqkARWk0iAABV5BbB
+         5/M8QhKpmYpvG47B0XmE2lunMMlRoyHIGt6K4eKXHh/+n6td+xVasWIA80ounJJuTTbl
+         NkCg==
+X-Gm-Message-State: AJaThX5v60GiohZ1YKzHyT28l7+Vsv9PepeYreQzipbZtb0m41gIt0Bx
+        E9GaseNLxwGbZQAY1ChFYDscf6rZ
+X-Google-Smtp-Source: AGs4zMbk/Hy5HcrQG+Wj4nMh2fz2b2tMNmHpNJryE/jzoLO16Eeky+qnbbfMwmsQd/dPg9x9I00Jsg==
+X-Received: by 10.36.230.3 with SMTP id e3mr20445551ith.15.1511212977343;
+        Mon, 20 Nov 2017 13:22:57 -0800 (PST)
 Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id i76sm5474339ita.21.2017.11.20.13.22.24
+        by smtp.gmail.com with ESMTPSA id m87sm1122001ioi.2.2017.11.20.13.22.56
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 20 Nov 2017 13:22:25 -0800 (PST)
-Date:   Mon, 20 Nov 2017 13:22:23 -0800
+        Mon, 20 Nov 2017 13:22:56 -0800 (PST)
+Date:   Mon, 20 Nov 2017 13:22:54 -0800
 From:   Jonathan Nieder <jrnieder@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Brandon Williams <bmwill@google.com>,
         Stefan Beller <sbeller@google.com>,
         Jonathan Tan <jonathantanmy@google.com>,
-        Segev Finer <segev208@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH 1/8] ssh test: make copy_ssh_wrapper_as clean up after itself
-Message-ID: <20171120212223.wquyxbmz34foynrk@aiede.mtv.corp.google.com>
+        Segev Finer <segev208@gmail.com>
+Subject: [PATCH 2/8] connect: move no_fork fallback to git_tcp_connect
+Message-ID: <20171120212254.ab6ata2mwvdbbdmw@aiede.mtv.corp.google.com>
 References: <20171120212134.lh2l4drdzu6fh5g2@aiede.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -71,98 +70,126 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Simplify by not allowing the copied ssh wrapper to persist between
-tests.  This way, tests can be safely reordered, added, and removed
-with less fear of hidden side effects.
+git_connect has the structure
 
-This also avoids having to call setup_ssh_wrapper to restore the value
-of GIT_SSH after this battery of tests, since it means each test will
-restore it individually.
+	struct child_process *conn = &no_fork;
 
-Noticed because on Windows, if `uplink.exe` exists, the MSYS2 Bash
-will overwrite that when redirecting via `>uplink`.  A proposed test
-wrote a script to 'uplink' after a previous test created uplink.exe
-using copy_ssh_wrapper_as, so the script written with '>uplink' had
-the wrong filename and failed.
+	...
+	switch (protocol) {
+	case PROTO_GIT:
+		if (git_use_proxy(hostandport))
+			conn = git_proxy_connect(fd, hostandport);
+		else
+			git_tcp_connect(fd, hostandport, flags);
+		...
+		break;
+	case PROTO_SSH:
+		conn = xmalloc(sizeof(*conn));
+		child_process_init(conn);
+		argv_array_push(&conn->args, ssh);
+		...
+		break;
+	...
+	return conn;
 
-Reported-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+In all cases except the git_tcp_connect case, conn is explicitly
+assigned a value. Make the code clearer by explicitly assigning
+'conn = &no_fork' in the tcp case and eliminating the default so the
+compiler can ensure conn is always correctly assigned.
+
+Noticed-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
-Thanks to Dscho for tracking this subtle issue down.
+ connect.c | 36 +++++++++++++++++++++---------------
+ 1 file changed, 21 insertions(+), 15 deletions(-)
 
- t/t5601-clone.sh | 28 ++++++++++++----------------
- 1 file changed, 12 insertions(+), 16 deletions(-)
-
-diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index 86811a0c35..9d007c0f8d 100755
---- a/t/t5601-clone.sh
-+++ b/t/t5601-clone.sh
-@@ -306,21 +306,20 @@ test_expect_success 'clone checking out a tag' '
- 	test_cmp fetch.expected fetch.actual
- '
+diff --git a/connect.c b/connect.c
+index 7fbd396b35..aa994d1518 100644
+--- a/connect.c
++++ b/connect.c
+@@ -582,12 +582,25 @@ static int git_tcp_connect_sock(char *host, int flags)
+ #endif /* NO_IPV6 */
  
--setup_ssh_wrapper () {
--	test_expect_success 'setup ssh wrapper' '
--		cp "$GIT_BUILD_DIR/t/helper/test-fake-ssh$X" \
--			"$TRASH_DIRECTORY/ssh$X" &&
--		GIT_SSH="$TRASH_DIRECTORY/ssh$X" &&
--		export GIT_SSH &&
--		export TRASH_DIRECTORY &&
--		>"$TRASH_DIRECTORY"/ssh-output
--	'
+ 
+-static void git_tcp_connect(int fd[2], char *host, int flags)
++/*
++ * Dummy child_process returned by git_connect() if the transport protocol
++ * does not need fork(2).
++ */
++static struct child_process no_fork = CHILD_PROCESS_INIT;
++
++int git_connection_is_socket(struct child_process *conn)
++{
++	return conn == &no_fork;
++}
++
++static struct child_process *git_tcp_connect(int fd[2], char *host, int flags)
+ {
+ 	int sockfd = git_tcp_connect_sock(host, flags);
+ 
+ 	fd[0] = sockfd;
+ 	fd[1] = dup(sockfd);
++
++	return &no_fork;
+ }
+ 
+ 
+@@ -761,8 +774,6 @@ static enum protocol parse_connect_url(const char *url_orig, char **ret_host,
+ 	return protocol;
+ }
+ 
+-static struct child_process no_fork = CHILD_PROCESS_INIT;
+-
+ static const char *get_ssh_command(void)
+ {
+ 	const char *ssh;
+@@ -851,11 +862,11 @@ static enum ssh_variant determine_ssh_variant(const char *ssh_command,
+ }
+ 
+ /*
+- * This returns a dummy child_process if the transport protocol does not
+- * need fork(2), or a struct child_process object if it does.  Once done,
+- * finish the connection with finish_connect() with the value returned from
+- * this function (it is safe to call finish_connect() with NULL to support
+- * the former case).
++ * This returns the dummy child_process `no_fork` if the transport protocol
++ * does not need fork(2), or a struct child_process object if it does.  Once
++ * done, finish the connection with finish_connect() with the value returned
++ * from this function (it is safe to call finish_connect() with NULL to
++ * support the former case).
+  *
+  * If it returns, the connect is successful; it just dies on errors (this
+  * will hopefully be changed in a libification effort, to return NULL when
+@@ -865,7 +876,7 @@ struct child_process *git_connect(int fd[2], const char *url,
+ 				  const char *prog, int flags)
+ {
+ 	char *hostandport, *path;
+-	struct child_process *conn = &no_fork;
++	struct child_process *conn;
+ 	enum protocol protocol;
+ 
+ 	/* Without this we cannot rely on waitpid() to tell
+@@ -901,7 +912,7 @@ struct child_process *git_connect(int fd[2], const char *url,
+ 		if (git_use_proxy(hostandport))
+ 			conn = git_proxy_connect(fd, hostandport);
+ 		else
+-			git_tcp_connect(fd, hostandport, flags);
++			conn = git_tcp_connect(fd, hostandport, flags);
+ 		/*
+ 		 * Separate original protocol components prog and path
+ 		 * from extended host header with a NUL byte.
+@@ -1041,11 +1052,6 @@ struct child_process *git_connect(int fd[2], const char *url,
+ 	return conn;
+ }
+ 
+-int git_connection_is_socket(struct child_process *conn)
+-{
+-	return conn == &no_fork;
 -}
-+test_expect_success 'set up ssh wrapper' '
-+	cp "$GIT_BUILD_DIR/t/helper/test-fake-ssh$X" \
-+		"$TRASH_DIRECTORY/ssh$X" &&
-+	GIT_SSH="$TRASH_DIRECTORY/ssh$X" &&
-+	export GIT_SSH &&
-+	export TRASH_DIRECTORY &&
-+	>"$TRASH_DIRECTORY"/ssh-output
-+'
- 
- copy_ssh_wrapper_as () {
- 	cp "$TRASH_DIRECTORY/ssh$X" "${1%$X}$X" &&
-+	test_when_finished "rm -f ${1%$X}$X" &&
- 	GIT_SSH="${1%$X}$X" &&
--	export GIT_SSH
-+	test_when_finished "GIT_SSH=\"\$TRASH_DIRECTORY/ssh\$X\""
- }
- 
- expect_ssh () {
-@@ -344,8 +343,6 @@ expect_ssh () {
- 	(cd "$TRASH_DIRECTORY" && test_cmp ssh-expect ssh-output)
- }
- 
--setup_ssh_wrapper
 -
- test_expect_success 'clone myhost:src uses ssh' '
- 	git clone myhost:src ssh-clone &&
- 	expect_ssh myhost src
-@@ -432,12 +429,14 @@ test_expect_success 'ssh.variant overrides plink detection' '
- '
- 
- test_expect_success 'GIT_SSH_VARIANT overrides plink detection to plink' '
-+	copy_ssh_wrapper_as "$TRASH_DIRECTORY/plink" &&
- 	GIT_SSH_VARIANT=plink \
- 	git clone "[myhost:123]:src" ssh-bracket-clone-variant-3 &&
- 	expect_ssh "-P 123" myhost src
- '
- 
- test_expect_success 'GIT_SSH_VARIANT overrides plink to tortoiseplink' '
-+	copy_ssh_wrapper_as "$TRASH_DIRECTORY/plink" &&
- 	GIT_SSH_VARIANT=tortoiseplink \
- 	git clone "[myhost:123]:src" ssh-bracket-clone-variant-4 &&
- 	expect_ssh "-batch -P 123" myhost src
-@@ -449,9 +448,6 @@ test_expect_success 'clean failure on broken quoting' '
- 		git clone "[myhost:123]:src" sq-failure
- '
- 
--# Reset the GIT_SSH environment variable for clone tests.
--setup_ssh_wrapper
--
- counter=0
- # $1 url
- # $2 none|host
+ int finish_connect(struct child_process *conn)
+ {
+ 	int code;
 -- 
 2.15.0.448.gf294e3d99a
 
