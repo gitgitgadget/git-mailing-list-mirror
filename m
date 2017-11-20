@@ -2,110 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A8785202F2
-	for <e@80x24.org>; Mon, 20 Nov 2017 22:14:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 986AF202F2
+	for <e@80x24.org>; Mon, 20 Nov 2017 22:19:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751195AbdKTWOz (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Nov 2017 17:14:55 -0500
-Received: from mail-qk0-f170.google.com ([209.85.220.170]:34795 "EHLO
-        mail-qk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751154AbdKTWOy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Nov 2017 17:14:54 -0500
-Received: by mail-qk0-f170.google.com with SMTP id v137so9475978qkb.1
-        for <git@vger.kernel.org>; Mon, 20 Nov 2017 14:14:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=1xUnDGyZO1EAI64ZMKOupodyfP3KP6dHgH6H9GgqNZs=;
-        b=Q+r15v+4SI7z+9F818SPW5eCpQvBrWnGO0M0Vf/cgQVFYbWOa7yzYMbskcl2qEaWpl
-         F0dQcnjdkYi5B5/3aaA/OoE4W1eXCNrQbvGzSXbUAqjiSQGJ2HT7x9DfaqT8fhHtE65G
-         09zY3N1RY/N13RPg99DbMw61Uh+UVe2Ws81okuHOH6SaVkeeAOx87aO30Nb/2z93QHKw
-         HSsv6uC5IQWhoXmUrfaAtN+EjIf1aUNl77m1lUumHlb4QpB8n05fYK57KKWaPujUZYf0
-         RuvAlADxekyk3aHR24ZhNz4SV41AvyJKaREwC2t8stF0KYA9wzfRgtEiQhUUbjo0gVG1
-         asOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=1xUnDGyZO1EAI64ZMKOupodyfP3KP6dHgH6H9GgqNZs=;
-        b=OA05+uhKdUL2mVElx/0BkRDXcyFk9s+5Dpmo8eIKpZmWO2R2esZr4w7N7m2KZ50Y2/
-         p0KhGGEe4IW7ckArdPHbG6AD4sYffQMvgMY2T+7y3+uthP5CrspnTPrRm2fBAaL5sfov
-         /8lxa2IYN6wanBu1omeMt8K1oMMPQdFhiT0zeuNak3EOnI4oJ7MEDoijDi1iR6jFabut
-         yAV8q0zK2/3pSHk166xbLxZQcri/UF4SM5xt1jyDxvGS50JM20PN4RsJ3n2JW8eSAG3I
-         t3kbMqwaJkYtU0b9en5vBlWuvPEyrMFJWtAMCzgYl7IMm8foFoqLgiF/UIuiZjXCMKWT
-         GJmw==
-X-Gm-Message-State: AJaThX6U0K1DvXo32YNr+kO4EPHVM5jbmgSFSqoK1SyeLnDWNaA7gOu8
-        RZsmD2TROLJkrIManG8erM7fBT62ayNdNJRqBMM=
-X-Google-Smtp-Source: AGs4zMYgn3GgUoP8e+0U/sUV0ZGZ2oSs3+xUWIiL+4SUuN3bKtlLDgMSSaUy5p6O09fxfX2T80w8OGsW+gsWiQK+PLE=
-X-Received: by 10.55.42.75 with SMTP id q72mr23696820qkh.57.1511216093470;
- Mon, 20 Nov 2017 14:14:53 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.12.155.209 with HTTP; Mon, 20 Nov 2017 14:14:53 -0800 (PST)
-In-Reply-To: <20171116154814.23785-1-alex.bennee@linaro.org>
-References: <20171116154814.23785-1-alex.bennee@linaro.org>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 20 Nov 2017 17:14:53 -0500
-X-Google-Sender-Auth: c0Y7aEMUwArC2quNI7LhHhV9NGQ
-Message-ID: <CAPig+cTXq6jSN9f2_xyj=Jfv_cg2kUFUtA5uVkZDrRRSi2x7vg@mail.gmail.com>
-Subject: Re: [PATCH] git-send-email: fix get_maintainer.pl regression
-To:     =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        id S1751275AbdKTWTs (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Nov 2017 17:19:48 -0500
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:41126 "EHLO
+        mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751154AbdKTWTq (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2017 17:19:46 -0500
+Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
+        by mx0a-00153501.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id vAKMJG7G001667;
+        Mon, 20 Nov 2017 14:19:44 -0800
+Authentication-Results: ppops.net;
+        spf=softfail smtp.mailfrom=newren@gmail.com
+Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
+        by mx0a-00153501.pphosted.com with ESMTP id 2eakkpb9q3-1;
+        Mon, 20 Nov 2017 14:19:44 -0800
+Received: from mxw1.palantir.com (smtp.yojoe.local [172.19.0.45])
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id 6ECE122F4648;
+        Mon, 20 Nov 2017 14:19:44 -0800 (PST)
+Received: from newren2-linux.yojoe.local (newren2-linux.dyn.yojoe.local [10.100.68.32])
+        by smtp.yojoe.local (Postfix) with ESMTP id 65E672CDE75;
+        Mon, 20 Nov 2017 14:19:44 -0800 (PST)
+From:   Elijah Newren <newren@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>
+Subject: [RFC PATCH v2 0/9] Improve merge recursive performance
+Date:   Mon, 20 Nov 2017 14:19:35 -0800
+Message-Id: <20171120221944.15431-1-newren@gmail.com>
+X-Mailer: git-send-email 2.15.0.323.g31fe956618
+X-Proofpoint-SPF-Result: softfail
+X-Proofpoint-SPF-Record: v=spf1 redirect=_spf.google.com
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,, definitions=2017-11-20_12:,,
+ signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1034 lowpriorityscore=0 impostorscore=0 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.0.1-1709140000
+ definitions=main-1711200300
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A few more comments/observations...
+You probably want to wait to review this series until my rename detection
+series lands so that I can clean up any more conflicts, but I'm posting
+this new series in case anyone wants to take an early look.  It includes
+fixes identified by the reviews of my other patch series, and has been
+rebased on top of newer versions with conflicts resolved.
 
-On Thu, Nov 16, 2017 at 10:48 AM, Alex Benn=C3=A9e <alex.bennee@linaro.org>=
- wrote:
-> diff --git a/perl/Git.pm b/perl/Git.pm
-> @@ -936,6 +936,9 @@ sub parse_mailboxes {
->                         $end_of_addr_seen =3D 0;
->                 } elsif ($token =3D~ /^\(/) {
->                         push @comment, $token;
-> +               } elsif ($token =3D~ /^\)/) {
-> +                       my $nested_comment =3D pop @comment;
-> +                       push @comment, "$nested_comment$token";
+For the adventerous, though...
 
-Due to the way tokenization works, it looks like you will only ever
-see a ")" as a single character. That suggests that you should be
-using ($token eq ")"), as is done for "<" and ">", rather than ($token
-=3D~ /^\)/).
+This patch series improves merge recursive performance, particularly when
+one side of history only makes a small number of changes, and the other has
+lots of renames (or lots of adds and deletes); I saw a speedup factor of
+over 30 on one particular real world repository.
 
-What happens if there is text before the final closing ')'? For
-instance, "foo@bar (bibble (bobble) smoo)" or "...)smoo)". The result
-is that "smoo" ends up tacked onto the end of the email address
-("foo@barsmoo") rather than incorporated into the comment, as
-intended.
+Still RFC for the same reasons that the first series was (see
+https://public-inbox.org/git/20171110222156.23221-1-newren@gmail.com/), I
+haven't yet had time to push this further other than rebasing and cleaning
+up issues shared with my other series.
 
-What happens if you encounter a ")" but haven't yet encountered an
-opening "(" (that is, @comment is empty)? For example, "foo@bar )". In
-that case, it unconditionally pops from the empty array, which seems
-iffy at best. It might be nice to see this case taken into
-consideration explicitly.
+If you just want to test it out, it's available as the
+'big-repo-small-cherry-pick' branch of https://github.com/newren/git .
 
-I also was wondering if it would make more sense to take advantage of
-Perl's ability to match nested expressions (??{$nested}), however,
-that feature apparently was added in 5.10, and Git.pm only requires
-5.8, so perhaps not (unless we want to bump the requirement higher).
+Elijah Newren (9):
+  diffcore-rename: no point trying to find a match better than exact
+  merge-recursive: avoid unnecessary string list lookups
+  merge-recursive: new function for better colliding conflict
+    resolutions
+  Add testcases for improved file collision conflict handling
+  merge-recursive: fix rename/add conflict handling
+  merge-recursive: improve handling for rename/rename(2to1) conflicts
+  merge-recursive: improve handling for add/add conflicts
+  merge-recursive: accelerate rename detection
+  diffcore-rename: filter rename_src list when possible
 
-Aside from those observations, it looks like the tokenizer in this
-function is broken. For any input with the address enclosed in "<" and
-">", the comment is lost entirely; it doesn't even end up in the
-@tokens array. Since you're already fixing bugs/regressions in this
-code, perhaps that's something you'd like to tackle as well in a
-separate patch? ("No" is an acceptable answer, of course.)
+ diff.c                               |   1 +
+ diff.h                               |   7 +
+ diffcore-rename.c                    |  85 ++++++-
+ merge-recursive.c                    | 452 ++++++++++++++++++++++++-----------
+ t/t2023-checkout-m.sh                |   2 +-
+ t/t3418-rebase-continue.sh           |  27 ++-
+ t/t3504-cherry-pick-rerere.sh        |  19 +-
+ t/t4200-rerere.sh                    |  12 +-
+ t/t6020-merge-df.sh                  |   4 +-
+ t/t6024-recursive-merge.sh           |  35 +--
+ t/t6025-merge-symlinks.sh            |   9 +-
+ t/t6031-merge-filemode.sh            |   4 +-
+ t/t6036-recursive-corner-cases.sh    |  19 +-
+ t/t6042-merge-rename-corner-cases.sh | 212 +++++++++++++++-
+ t/t6043-merge-rename-directories.sh  |  15 +-
+ t/t7060-wtstatus.sh                  |   1 +
+ t/t7064-wtstatus-pv2.sh              |   4 +-
+ t/t7506-status-submodule.sh          |  11 +-
+ t/t7610-mergetool.sh                 |  28 +--
+ 19 files changed, 723 insertions(+), 224 deletions(-)
 
->                 } elsif ($token eq "<") {
->                         push @phrase, (splice @address), (splice @buffer)=
-;
->                 } elsif ($token eq ">") {
+-- 
+2.15.0.323.g31fe956618
+
