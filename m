@@ -2,329 +2,318 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DCF7E20A40
-	for <e@80x24.org>; Mon, 20 Nov 2017 22:20:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DB950202F2
+	for <e@80x24.org>; Mon, 20 Nov 2017 22:25:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751318AbdKTWUH (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Nov 2017 17:20:07 -0500
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:41144 "EHLO
-        mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751198AbdKTWTq (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2017 17:19:46 -0500
-Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id vAKMJGO4001657;
-        Mon, 20 Nov 2017 14:19:45 -0800
-Authentication-Results: ppops.net;
-        spf=softfail smtp.mailfrom=newren@gmail.com
-Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2eakkpb9q8-1;
-        Mon, 20 Nov 2017 14:19:45 -0800
-Received: from mxw1.palantir.com (smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id C367222F4670;
-        Mon, 20 Nov 2017 14:19:44 -0800 (PST)
-Received: from newren2-linux.yojoe.local (newren2-linux.dyn.yojoe.local [10.100.68.32])
-        by smtp.yojoe.local (Postfix) with ESMTP id BC7A62CDE75;
-        Mon, 20 Nov 2017 14:19:44 -0800 (PST)
-From:   Elijah Newren <newren@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>
-Subject: [RFC PATCH v2 8/9] merge-recursive: accelerate rename detection
-Date:   Mon, 20 Nov 2017 14:19:43 -0800
-Message-Id: <20171120221944.15431-9-newren@gmail.com>
-X-Mailer: git-send-email 2.15.0.323.g31fe956618
-In-Reply-To: <20171120221944.15431-1-newren@gmail.com>
-References: <20171120221944.15431-1-newren@gmail.com>
-X-Proofpoint-SPF-Result: softfail
-X-Proofpoint-SPF-Record: v=spf1 redirect=_spf.google.com
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,, definitions=2017-11-20_12:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=13 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1034 lowpriorityscore=0 impostorscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.0.1-1709140000
- definitions=main-1711200300
+        id S1751338AbdKTWZ0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Nov 2017 17:25:26 -0500
+Received: from mail-io0-f176.google.com ([209.85.223.176]:35111 "EHLO
+        mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751109AbdKTWZZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Nov 2017 17:25:25 -0500
+Received: by mail-io0-f176.google.com with SMTP id i38so17394139iod.2
+        for <git@vger.kernel.org>; Mon, 20 Nov 2017 14:25:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=1Xx/cNGacM9e3ouMMP+7LcVvIKJSzk5G/idDY3W191I=;
+        b=OlWS/BXKCo6fDHvoiBdRLhcJvi9Df39SDIxrTHhRBqgLwO88kEqRe6Sjdeo6FGLY3B
+         szMCkMP1j00bbqq2zB6evTn9uKqGt1krpfyElgAnESe0XiUqLb9GX8NTlvuMGN8tI77a
+         o9v6Sgt8I6tMatzKyfEj7jwrbbh+TSU+Tf1eKppQQXhlRY2NIkgt6U4cPVdze0rpx3CL
+         BB6ylNhpO9dH1RBnjQykAXC4sFmbz74oFGB/wNGls3Cz43z6nVuhZJEFIL4gTQGdgVx6
+         fV+zApG8cRpdKhYV3rzFGA1GH47v3FZ3WNrLtcZclaY1fokRNUuphdh0PbhIryavY5z0
+         1ldA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=1Xx/cNGacM9e3ouMMP+7LcVvIKJSzk5G/idDY3W191I=;
+        b=N4GNkX4+jA51P/gGGmvVAs31BtUhJEFqtQ5zIcY7usEf5PrDJryjW8jU5XdkTL1UAH
+         agpAcH6hPYNktrgko6QLk4hZeLayWNMIBzzXnSTNqjDBueqcmkmVeqN9fcSx5p7nYpNA
+         14nvygZaiJgkbN+fT9DzXAO9j5iFlyoccpa1Odg0oMIxfZ6JmQl2ac/tsKBNCBG2QZ5A
+         XtYHUcFGZhXSIpDCvn+c5zE208BRfKBQ4thaP7Dy7ru8PvMZV8leyEh7SJ/3KzTaI6y2
+         YrBfZkEzdZd5NXz7K5RAOmBHqmlU0ZJTm1b0p1fHlNZ/YrrU8P/eZTFXbo8MXDqvP0ww
+         YMNw==
+X-Gm-Message-State: AJaThX6r2rrzRk5sX0xYAASg0zK9LvpAwUzauNhGWrXsZgKcEYblaBFJ
+        koG/BZi0Q+54+lrQUtg6cATU9Q==
+X-Google-Smtp-Source: AGs4zMbPW53vD+ZohIYLFkO40NwK+AM6BL2VTE/+7q0R7lyK5EqRjKwaXT80fEWTofo5m+b9BSIzrg==
+X-Received: by 10.107.174.222 with SMTP id n91mr13529592ioo.43.1511216724418;
+        Mon, 20 Nov 2017 14:25:24 -0800 (PST)
+Received: from google.com ([2620:0:100e:422:255c:f926:518d:9e83])
+        by smtp.gmail.com with ESMTPSA id b72sm5579316iti.44.2017.11.20.14.25.22
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 20 Nov 2017 14:25:23 -0800 (PST)
+Date:   Mon, 20 Nov 2017 14:25:21 -0800
+From:   Brandon Williams <bmwill@google.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Segev Finer <segev208@gmail.com>
+Subject: Re: [PATCH 6/8] ssh: 'auto' variant to select between 'ssh' and
+ 'simple'
+Message-ID: <20171120222521.GD92506@google.com>
+References: <20171120212134.lh2l4drdzu6fh5g2@aiede.mtv.corp.google.com>
+ <20171120213004.57552ja3nmxy6pmc@aiede.mtv.corp.google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20171120213004.57552ja3nmxy6pmc@aiede.mtv.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If a file is unmodified on one side of history (no content changes, no
-name change, and no mode change) and is renamed on the other side, then
-the correct merge result is to take both the file name and the file
-contents (and file mode) of the renamed file.  merge-recursive detects
-this rename and gets the correct merge result.
+On 11/20, Jonathan Nieder wrote:
+> Android's "repo" tool is a tool for managing a large codebase
+> consisting of multiple smaller repositories, similar to Git's
+> submodule feature.  Starting with Git 94b8ae5a (ssh: introduce a
+> 'simple' ssh variant, 2017-10-16), users noticed that it stopped
+> handling the port in ssh:// URLs.
+> 
+> The cause: when it encounters ssh:// URLs, repo pre-connects to the
+> server and sets GIT_SSH to a helper ".repo/repo/git_ssh" that reuses
+> that connection.  Before 94b8ae5a, the helper was assumed to support
+> OpenSSH options for lack of a better guess and got passed a -p option
+> to set the port.  After that patch, it uses the new default of a
+> simple helper that does not accept an option to set the port.
+> 
+> The next release of "repo" will set GIT_SSH_VARIANT to "ssh" to avoid
+> that.  But users of old versions and of other similar GIT_SSH
+> implementations would not get the benefit of that fix.
+> 
+> So update the default to use OpenSSH options again, with a twist.  As
+> observed in 94b8ae5a, we cannot assume that $GIT_SSH always handles
+> OpenSSH options: common helpers such as travis-ci's dpl[*] are
+> configured using GIT_SSH and do not accept OpenSSH options.  So make
+> the default a new variant "auto", with the following behavior:
+> 
+>  1. First, check for a recognized basename, like today.
+> 
+>  2. If the basename is not recognized, check whether $GIT_SSH supports
+>     OpenSSH options by running
+> 
+> 	$GIT_SSH -G <options> <host>
+> 
+>     This returns status 0 and prints configuration in OpenSSH if it
+>     recognizes all <options> and returns status 255 if it encounters
+>     an unrecognized option.  A wrapper script like
+> 
+> 	exec ssh -- "$@"
+> 
+>     would fail with
+> 
+> 	ssh: Could not resolve hostname -g: Name or service not known
+> 
+>     , correctly reflecting that it does not support OpenSSH options.
+>     The command is run with stdin, stdout, and stderr redirected to
+>     /dev/null so even a command that expects a terminal would exit
+>     immediately.
+> 
+>  3. Based on the result from step (2), behave like "ssh" (if it
+>     succeeded) or "simple" (if it failed).
+> 
+> This way, the default ssh variant for unrecognized commands can handle
+> both the repo and dpl cases as intended.
+> 
+> This autodetection has been running on Google workstations since
+> 2017-10-23 with no reported negative effects.
+> 
+> [*] https://github.com/travis-ci/dpl/blob/6c3fddfda1f2a85944c544446b068bac0a77c049/lib/dpl/provider.rb#L215
+> 
+> Reported-by: William Yan <wyan@google.com>
+> Improved-by: Jonathan Tan <jonathantanmy@google.com>
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+> ---
+> Added two notes to the commit message:
+>  - describing the real-world testing this patch has undergone
+>  - stdin, stdout, and stderr go to /dev/null, preventing a
+>    hypothetical ssh variant that *ignores* -G from hanging waiting for
+>    input from the terminal.
+> 
+> This is to address the worries at
+> https://public-inbox.org/git/xmqq60b59toe.fsf@gitster.mtv.corp.google.com/
+> and https://public-inbox.org/git/CAGZ79kZTjUvcq_hKHCqTDoaBxt2x+9XcqYc6ao1bhcET2SM-PQ@mail.gmail.com/
+> about hanging.
+> 
+> No change to the code from last time.
+> 
 
-Note that if no rename detection is done, then this will appear to the
-merge machinery as two files: one that was unmodified on one side of
-history and deleted on the other (thus the merge should delete it), and
-one which was newly added on one side of history (thus the merge should
-include it).  Thus, even if the rename wasn't detected, we still would
-have ended up with the correct result.
+Thanks a lot for getting this patch out. It's a much more robust
+solution than I had originally and should hopefully avoid any more issues
+with detecting different ssh programs.  My only concern is there may be
+some program out there that uses -G in a way different from OpenSSH.
+Though realistically i don't think that is an issue because if that ends
+up being a problem we can just have the authors of the offending ssh
+client send a patch to us to fix it! :)
 
-In other words, rename detection is a waste of time for files that were
-unmodified on the OTHER side of history.  We can accelerate rename
-detection for merges by providing information about the other side of
-history, which will allow us to remove all such rename sources from the
-list of candidates we care about.
+>  Documentation/config.txt | 24 +++++++++++++++---------
+>  connect.c                | 32 +++++++++++++++++++++++++-------
+>  t/t5601-clone.sh         | 21 +++++++++++++++++++++
+>  3 files changed, 61 insertions(+), 16 deletions(-)
+> 
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 0460af37e2..0c371ad786 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -2081,16 +2081,22 @@ matched against are those given directly to Git commands.  This means any URLs
+>  visited as a result of a redirection do not participate in matching.
+>  
+>  ssh.variant::
+> -	Depending on the value of the environment variables `GIT_SSH` or
+> -	`GIT_SSH_COMMAND`, or the config setting `core.sshCommand`, Git
+> -	auto-detects whether to adjust its command-line parameters for use
+> -	with ssh (OpenSSH), plink or tortoiseplink, as opposed to the default
+> -	(simple).
+> +	By default, Git determines the command line arguments to use
+> +	based on the basename of the configured SSH command (configured
+> +	using the environment variable `GIT_SSH` or `GIT_SSH_COMMAND` or
+> +	the config setting `core.sshCommand`). If the basename is
+> +	unrecognized, Git will attempt to detect support of OpenSSH
+> +	options by first invoking the configured SSH command with the
+> +	`-G` (print configuration) option and will subsequently use
+> +	OpenSSH options (if that is successful) or no options besides
+> +	the host and remote command (if it fails).
+>  +
+> -The config variable `ssh.variant` can be set to override this auto-detection;
+> -valid values are `ssh`, `simple`, `plink`, `putty` or `tortoiseplink`. Any
+> -other value will be treated as normal ssh. This setting can be overridden via
+> -the environment variable `GIT_SSH_VARIANT`.
+> +The config variable `ssh.variant` can be set to override this detection.
+> +Valid values are `ssh` (to use OpenSSH options), `plink`, `putty`,
+> +`tortoiseplink`, `simple` (no options except the host and remote command).
+> +The default auto-detection can be explicitly requested using the value
+> +`auto`.  Any other value is treated as `ssh`.  This setting can also be
+> +overridden via the environment variable `GIT_SSH_VARIANT`.
+>  +
+>  The current command-line parameters used for each variant are as
+>  follows:
+> diff --git a/connect.c b/connect.c
+> index d2fbb15cc5..455c54a2ec 100644
+> --- a/connect.c
+> +++ b/connect.c
+> @@ -788,6 +788,7 @@ static const char *get_ssh_command(void)
+>  }
+>  
+>  enum ssh_variant {
+> +	VARIANT_AUTO,
+>  	VARIANT_SIMPLE,
+>  	VARIANT_SSH,
+>  	VARIANT_PLINK,
+> @@ -795,14 +796,16 @@ enum ssh_variant {
+>  	VARIANT_TORTOISEPLINK,
+>  };
+>  
+> -static int override_ssh_variant(enum ssh_variant *ssh_variant)
+> +static void override_ssh_variant(enum ssh_variant *ssh_variant)
+>  {
+>  	const char *variant = getenv("GIT_SSH_VARIANT");
+>  
+>  	if (!variant && git_config_get_string_const("ssh.variant", &variant))
+> -		return 0;
+> +		return;
+>  
+> -	if (!strcmp(variant, "plink"))
+> +	if (!strcmp(variant, "auto"))
+> +		*ssh_variant = VARIANT_AUTO;
+> +	else if (!strcmp(variant, "plink"))
+>  		*ssh_variant = VARIANT_PLINK;
+>  	else if (!strcmp(variant, "putty"))
+>  		*ssh_variant = VARIANT_PUTTY;
+> @@ -812,18 +815,18 @@ static int override_ssh_variant(enum ssh_variant *ssh_variant)
+>  		*ssh_variant = VARIANT_SIMPLE;
+>  	else
+>  		*ssh_variant = VARIANT_SSH;
+> -
+> -	return 1;
+>  }
+>  
+>  static enum ssh_variant determine_ssh_variant(const char *ssh_command,
+>  					      int is_cmdline)
+>  {
+> -	enum ssh_variant ssh_variant = VARIANT_SIMPLE;
+> +	enum ssh_variant ssh_variant = VARIANT_AUTO;
+>  	const char *variant;
+>  	char *p = NULL;
+>  
+> -	if (override_ssh_variant(&ssh_variant))
+> +	override_ssh_variant(&ssh_variant);
+> +
+> +	if (ssh_variant != VARIANT_AUTO)
+>  		return ssh_variant;
+>  
+>  	if (!is_cmdline) {
+> @@ -982,6 +985,21 @@ static void fill_ssh_args(struct child_process *conn, const char *ssh_host,
+>  		variant = determine_ssh_variant(ssh, 0);
+>  	}
+>  
+> +	if (variant == VARIANT_AUTO) {
+> +		struct child_process detect = CHILD_PROCESS_INIT;
+> +
+> +		detect.use_shell = conn->use_shell;
+> +		detect.no_stdin = detect.no_stdout = detect.no_stderr = 1;
+> +
+> +		argv_array_push(&detect.args, ssh);
+> +		argv_array_push(&detect.args, "-G");
+> +		push_ssh_options(&detect.args, &detect.env_array,
+> +				 VARIANT_SSH, port, flags);
+> +		argv_array_push(&detect.args, ssh_host);
+> +
+> +		variant = run_command(&detect) ? VARIANT_SIMPLE : VARIANT_SSH;
+> +	}
+> +
+>  	argv_array_push(&conn->args, ssh);
+>  	push_ssh_options(&conn->args, &conn->env_array, variant, port, flags);
+>  	argv_array_push(&conn->args, ssh_host);
+> diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+> index 9d007c0f8d..209e2d5604 100755
+> --- a/t/t5601-clone.sh
+> +++ b/t/t5601-clone.sh
+> @@ -369,6 +369,12 @@ test_expect_success 'variant can be overriden' '
+>  	expect_ssh myhost src
+>  '
+>  
+> +test_expect_success 'variant=auto picks based on basename' '
+> +	copy_ssh_wrapper_as "$TRASH_DIRECTORY/plink" &&
+> +	git -c ssh.variant=auto clone -4 "[myhost:123]:src" ssh-auto-clone &&
+> +	expect_ssh "-4 -P 123" myhost src
+> +'
+> +
+>  test_expect_success 'simple is treated as simple' '
+>  	copy_ssh_wrapper_as "$TRASH_DIRECTORY/simple" &&
+>  	git clone -4 "[myhost:123]:src" ssh-bracket-clone-simple &&
+> @@ -381,6 +387,21 @@ test_expect_success 'uplink is treated as simple' '
+>  	expect_ssh myhost src
+>  '
+>  
+> +test_expect_success 'OpenSSH-like uplink is treated as ssh' '
+> +	write_script "$TRASH_DIRECTORY/uplink" <<-EOF &&
+> +	if test "\$1" = "-G"
+> +	then
+> +		exit 0
+> +	fi &&
+> +	exec "\$TRASH_DIRECTORY/ssh$X" "\$@"
+> +	EOF
+> +	test_when_finished "rm -f \"\$TRASH_DIRECTORY/uplink\"" &&
+> +	GIT_SSH="$TRASH_DIRECTORY/uplink" &&
+> +	test_when_finished "GIT_SSH=\"\$TRASH_DIRECTORY/ssh\$X\"" &&
+> +	git clone "[myhost:123]:src" ssh-bracket-clone-sshlike-uplink &&
+> +	expect_ssh "-p 123" myhost src
+> +'
+> +
+>  test_expect_success 'plink is treated specially (as putty)' '
+>  	copy_ssh_wrapper_as "$TRASH_DIRECTORY/plink" &&
+>  	git clone "[myhost:123]:src" ssh-bracket-clone-plink-0 &&
+> -- 
+> 2.15.0.448.gf294e3d99a
+> 
 
-There are two gotchas:
-
-  1) Not trying to detect renames for these types of files can result in
-     rename/add conflicts being instead detected as add/add conflicts,
-     and can result in rename/rename(2to1) conflicts being instead
-     detected as either rename/add or add/add conflicts.  Luckily for
-     us, these three types of conflicts happen to make the same changes
-     to the index and working tree (what a coincidence...), so this
-     isn't a significant issue; the only annoyance is that the stdout
-     from the merge command will include a "CONFLICT($type)" message for
-     a related conflict type instead of the precise conflict type.
-
-  2) If there is a directory rename on one side of history AND all files
-     within the directory are not merely renamed but are modified as
-     well AND none of the original files in the directory are modified
-     on the other side of history AND there are new files added (or
-     moved into) to the original directory on that other side of
-     history, then this change will prevent us from being able to detect
-     that directory rename and placing the new file(s) into the
-     appropriate directory.  A subsequent commit will correct this
-     downside.
-
-In one particular testcase involving a large repository and some
-high-level directories having been renamed, this cut the time necessary
-for a cherry-pick down by a factor of about 8 (from around 4.5 minutes
-down to around 34 seconds)
-
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- diff.c            |  1 +
- diff.h            |  3 +++
- diffcore-rename.c | 43 +++++++++++++++++++++++++++++++++++++++++-
- merge-recursive.c | 56 +++++++++++++++++++++++++++++++++++++++++++++++++++----
- 4 files changed, 98 insertions(+), 5 deletions(-)
-
-diff --git a/diff.c b/diff.c
-index 40054070bd..b4717df4a4 100644
---- a/diff.c
-+++ b/diff.c
-@@ -4102,6 +4102,7 @@ void diff_setup(struct diff_options *options)
- 	}
- 
- 	options->color_moved = diff_color_moved_default;
-+	options->ignore_for_renames = NULL;
- }
- 
- void diff_setup_done(struct diff_options *options)
-diff --git a/diff.h b/diff.h
-index 34dbc3cc05..4d7318c12c 100644
---- a/diff.h
-+++ b/diff.h
-@@ -206,6 +206,9 @@ struct diff_options {
- 	} color_moved;
- 	#define COLOR_MOVED_DEFAULT COLOR_MOVED_ZEBRA
- 	#define COLOR_MOVED_MIN_ALNUM_COUNT 20
-+
-+	/* Paths we should ignore for rename purposes */
-+	struct string_list *ignore_for_renames;
- };
- 
- void diff_emit_submodule_del(struct diff_options *o, const char *line);
-diff --git a/diffcore-rename.c b/diffcore-rename.c
-index 4fe5d0471c..5bf5bf7379 100644
---- a/diffcore-rename.c
-+++ b/diffcore-rename.c
-@@ -437,6 +437,40 @@ static int find_renames(struct diff_score *mx, int dst_cnt, int minimum_score, i
- 	return count;
- }
- 
-+static int handle_rename_ignores(struct diff_options *options)
-+{
-+	int detect_rename = options->detect_rename;
-+	struct string_list *ignores = options->ignore_for_renames;
-+	int ignored = 0;
-+	int i, j;
-+
-+	/* rename_ignores onlhy relevant when we're not detecting copies */
-+	if (ignores == NULL || detect_rename == DIFF_DETECT_COPY)
-+		return 0;
-+
-+	for (i = 0, j = 0; i < ignores->nr && j < rename_src_nr;) {
-+		struct diff_filespec *one = rename_src[j].p->one;
-+		int cmp;
-+
-+		if (one->rename_used) {
-+			j++;
-+			continue;
-+		}
-+
-+		cmp = strcmp(ignores->items[i].string, one->path);
-+		if (cmp < 0)
-+			i++;
-+		else if (cmp > 0)
-+			j++;
-+		else {
-+			one->rename_used++;
-+			ignored++;
-+		}
-+	}
-+
-+	return ignored;
-+}
-+
- void diffcore_rename(struct diff_options *options)
- {
- 	int detect_rename = options->detect_rename;
-@@ -445,7 +479,7 @@ void diffcore_rename(struct diff_options *options)
- 	struct diff_queue_struct outq;
- 	struct diff_score *mx;
- 	int i, j, rename_count, skip_unmodified = 0;
--	int num_create, dst_cnt, num_src;
-+	int num_create, dst_cnt, num_src, ignore_count;
- 	struct progress *progress = NULL;
- 
- 	if (!minimum_score)
-@@ -506,6 +540,12 @@ void diffcore_rename(struct diff_options *options)
- 	if (minimum_score == MAX_SCORE)
- 		goto cleanup;
- 
-+	/*
-+	 * Mark source files as used if they are found in the
-+	 * ignore_for_renames list.
-+	 */
-+	ignore_count = handle_rename_ignores(options);
-+
- 	/*
- 	 * Calculate how many renames are left (but all the source
- 	 * files still remain as options for rename/copies!)
-@@ -513,6 +553,7 @@ void diffcore_rename(struct diff_options *options)
- 	num_create = (rename_dst_nr - rename_count);
- 	num_src = (detect_rename == DIFF_DETECT_COPY ?
- 		   rename_src_nr : rename_src_nr - rename_count);
-+	num_src -= ignore_count;
- 
- 	/* All done? */
- 	if (!num_create)
-diff --git a/merge-recursive.c b/merge-recursive.c
-index e2d3b0fb4a..231d2d6a66 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -503,6 +503,48 @@ static struct string_list *get_unmerged(void)
- 	return unmerged;
- }
- 
-+static void get_rename_ignore(struct string_list *unmerged,
-+			      struct string_list *rename_ignore)
-+{
-+	/*
-+	 * If a file is unmodified on one side of history (no content
-+	 * changes, no mode change, and no name change) and is renamed on
-+	 * the other side, then the correct merge result is to take both
-+	 * the file name and the file contents (and file mode) of the
-+	 * renamed file.  merge-recursive detects this rename and gets the
-+	 * correct merge result.
-+	 *
-+	 * Note that if no rename detection is done, then this will appear
-+	 * to the merge machinery as two files: one that was unmodified on
-+	 * one side of history and deleted on the other (thus the merge
-+	 * should delete it), and one which was newly added on one side of
-+	 * history (thus the merge should include it).  Thus, even if the
-+	 * rename wasn't detected, we still would have ended up with the
-+	 * correct result.
-+	 *
-+	 * In other words, rename detection is a waste of time for files
-+	 * that were unmodified on the OTHER side of history.  We can
-+	 * accelerate rename detection for merges by find these sets of
-+	 * unmodified files, and feeding them to get_renames so it can
-+	 * omit using those files as rename sources.
-+	 */
-+	int i;
-+
-+	for (i = 0; i < unmerged->nr; i++) {
-+		const char *path = unmerged->items[i].string;
-+		struct stage_data *e = unmerged->items[i].util;
-+		unsigned int ign_head = is_null_oid(&e->stages[2].oid) &&
-+		  oid_eq(&e->stages[1].oid, &e->stages[3].oid) &&
-+		  e->stages[1].mode == e->stages[3].mode;
-+		unsigned int ign_merge = is_null_oid(&e->stages[3].oid) &&
-+		  oid_eq(&e->stages[1].oid, &e->stages[2].oid) &&
-+		  e->stages[1].mode == e->stages[2].mode;
-+		if (ign_head || ign_merge)
-+			string_list_append(rename_ignore, path);
-+	}
-+}
-+
-+
- static int string_list_df_name_compare(const char *one, const char *two)
- {
- 	int onelen = strlen(one);
-@@ -1624,7 +1666,8 @@ static int conflict_rename_rename_2to1(struct merge_options *o,
-  */
- static struct diff_queue_struct *get_diffpairs(struct merge_options *o,
- 					       struct tree *o_tree,
--					       struct tree *tree)
-+					       struct tree *tree,
-+					       struct string_list *rename_ignore)
- {
- 	struct diff_queue_struct *ret;
- 	struct diff_options opts;
-@@ -1633,6 +1676,7 @@ static struct diff_queue_struct *get_diffpairs(struct merge_options *o,
- 	opts.flags.recursive = 1;
- 	opts.flags.rename_empty = 0;
- 	opts.detect_rename = DIFF_DETECT_RENAME;
-+	opts.ignore_for_renames = rename_ignore;
- 	opts.rename_limit = o->merge_rename_limit >= 0 ? o->merge_rename_limit :
- 			    o->diff_rename_limit >= 0 ? o->diff_rename_limit :
- 			    1000;
-@@ -2604,6 +2648,7 @@ static int handle_renames(struct merge_options *o,
- 			  struct tree *head,
- 			  struct tree *merge,
- 			  struct string_list *entries,
-+			  struct string_list *rename_ignore,
- 			  struct rename_info *ri)
- {
- 	struct diff_queue_struct *head_pairs, *merge_pairs;
-@@ -2618,8 +2663,8 @@ static int handle_renames(struct merge_options *o,
- 		return 1;
- 	}
- 
--	head_pairs = get_diffpairs(o, common, head);
--	merge_pairs = get_diffpairs(o, common, merge);
-+	head_pairs = get_diffpairs(o, common, head, rename_ignore);
-+	merge_pairs = get_diffpairs(o, common, merge, rename_ignore);
- 
- 	dir_re_head = get_directory_renames(head_pairs, head);
- 	dir_re_merge = get_directory_renames(merge_pairs, merge);
-@@ -3114,6 +3159,7 @@ int merge_trees(struct merge_options *o,
- 
- 	if (unmerged_cache()) {
- 		struct string_list *entries;
-+		struct string_list rename_ignore = STRING_LIST_INIT_NODUP;
- 		struct rename_info re_info;
- 		int i;
- 		/*
-@@ -3128,8 +3174,9 @@ int merge_trees(struct merge_options *o,
- 		get_files_dirs(o, merge);
- 
- 		entries = get_unmerged();
-+		get_rename_ignore(entries, &rename_ignore);
- 		clean = handle_renames(o, common, head, merge, entries,
--				       &re_info);
-+				       &rename_ignore, &re_info);
- 		record_df_conflict_files(o, entries);
- 		if (clean < 0)
- 			goto cleanup;
-@@ -3156,6 +3203,7 @@ int merge_trees(struct merge_options *o,
- cleanup:
- 		cleanup_renames(&re_info);
- 
-+		string_list_clear(&rename_ignore, 0);
- 		string_list_clear(entries, 1);
- 		free(entries);
- 
 -- 
-2.15.0.323.g31fe956618
-
+Brandon Williams
