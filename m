@@ -2,84 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,PI_EMPTY_SUBJ,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD,UNPARSEABLE_RELAY shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C855C202F2
-	for <e@80x24.org>; Mon, 20 Nov 2017 15:08:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 43C40202F2
+	for <e@80x24.org>; Mon, 20 Nov 2017 15:10:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751282AbdKTPIT convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Mon, 20 Nov 2017 10:08:19 -0500
-Received: from mail.kdab.com ([176.9.126.58]:56296 "EHLO mail.kdab.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751170AbdKTPIT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Nov 2017 10:08:19 -0500
-X-Virus-Scanned: amavisd-new at kdab.com
-From:   Albert Astals Cid <albert.astals.cid@kdab.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git <git@vger.kernel.org>
-Subject: Re: Bug/Wish: bash completion for git pull --rebase doesn't include --autostash
-Date:   Mon, 20 Nov 2017 16:08:16 +0100
-Message-ID: <2531561.GdBCVJbi7q@yoga>
-In-Reply-To: <CAGZ79kacD1Gw0tyPWv+1_PtFW-wM8SAjFTg_i2bk7ogPBvYn7Q@mail.gmail.com>
-References: <5829116.cWPNik6EL4@yoga> <CAGZ79kacD1Gw0tyPWv+1_PtFW-wM8SAjFTg_i2bk7ogPBvYn7Q@mail.gmail.com>
+        id S1751413AbdKTPKk (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Nov 2017 10:10:40 -0500
+Received: from mail-yw0-f169.google.com ([209.85.161.169]:38152 "EHLO
+        mail-yw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751263AbdKTPKj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Nov 2017 10:10:39 -0500
+Received: by mail-yw0-f169.google.com with SMTP id v195so627444ywg.5
+        for <git@vger.kernel.org>; Mon, 20 Nov 2017 07:10:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:mime-version:date:message-id:subject:to;
+        bh=7mbM0yKjbyDpTVlY3SygizTLc7hBBQl5UD9g+obTCb0=;
+        b=JNVQCLIEoXo9ju04XqU+pKcUwm09mmrmzU9yzQX9njQzby6I+KhS/eENjj5u52Q4Mr
+         mSvQ8zzlK2Fyn/LS6pZvIl/O/NX/aGvVXNFFPZBUX5wPucUAdk3Nj+tuDS6TmLyT46sw
+         m/LRk5nBpA0PBpOD8yTxwVsHnVfCfqtzlmJ3bwBfiTXPayxjSnn/Ckc0QU3+Xq89aZW0
+         GUgnVpobe8VPq1Xx/otscNX3IbQ8sOZzqL1LOCuYIRIJmjAr6MxtwAsZzh26LP/aTQ+S
+         CFTV/PnoX7gBQsgU/UxF2xqieqv6c/YBmHrMIJMSIj2CZPBr+ViFF8VyTm9Vq3V+ljAL
+         ZZ8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:mime-version:date:message-id:subject:to;
+        bh=7mbM0yKjbyDpTVlY3SygizTLc7hBBQl5UD9g+obTCb0=;
+        b=pqaL2l8tG4tygbJP+uAJ0qUfb+0S2AvjRZBCZSOa3KKVFm1j7DgkxT5Xasoi60NB3u
+         bkZiS7A27rlpHLBIybarYLVEnaVEFduN1Amfd3nnRdN3wpfhX/pU4Pt+pZ+Xzq5cNaoM
+         MBec8CBMD/bV+FM1FhyBxqFdNxSuId1wMyuP3EEaTfvgibQ5qgQjVca7Ce6kOE8ePr6n
+         v7arx+TJ3gYNP3nPNBaensObTyukPnv6m1lwxaHhaG1uegw4oYVU0TyLLdKfEmBfYwcc
+         BoJeyN/hqo+dS5FHudurPK3R4OGRzseW8y0ivkuIXaQGTQExqL1jrjPwyxTT4SfiC0+j
+         grpQ==
+X-Gm-Message-State: AJaThX4o2GDF0TNy4dkEvtn0qThMR2ViqHdhRs+NDKXXg3nW0ULCfetC
+        qZo5wObryLd6wmdQcl+Fv6Tj2iISBi387Uh+QnHO1A==
+X-Google-Smtp-Source: AGs4zMY1/UCJWhyHeUZ5yBE6IVGCJ6YMya3c5f4b+SYpY0Er3tMfxiwGoqbR5rTsMVwFKtDnbxhwK3byufUD2MMFIDM=
+X-Received: by 10.129.161.141 with SMTP id y135mr8583931ywg.281.1511190638334;
+ Mon, 20 Nov 2017 07:10:38 -0800 (PST)
+Received: from 1058052472880 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 20 Nov 2017 10:10:37 -0500
+From:   Viet Nguyen <ntviet18@gmail.com>
+X-Mailer: Airmail (457)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8BIT
+Date:   Mon, 20 Nov 2017 10:10:37 -0500
+Message-ID: <CANb5NdLE3edJW4nRDqrPFuC4680J_K-Nt8VyW5tgjRBgf_ZU1w@mail.gmail.com>
+Subject: 
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Patch sent, please still CC me as i'm not on the list.
-
-Cheers,
-  Albert
-
-El dimarts, 31 d’octubre de 2017, a les 18:56:22 CET, Stefan Beller va 
-escriure:
-> On Tue, Oct 31, 2017 at 8:21 AM, Albert Astals Cid
-> 
-> <albert.astals.cid@kdab.com> wrote:
-> > git pull --rebase --autostash
-> > 
-> > is a valid command but the --autostash autocompletion is not suggested
-> > after typing
-> > 
-> > git pul<TAB> --reb<TAB --au<TAB
-> > 
-> > Would be great if that could be added.
-> > 
-> > Thanks :)
-> > 
-> > Albert
-> > 
-> > P.S: I'm not subscribed CC me if need me to test something
-> 
-> Maybe you can propose a patch for this?
-> 
-> Rough steps to success:
-> 
->   git clone git://git.kernel.org/pub/scm/git/git.git/
->   cd git
->   $EDIT contrib/completion/git-completion.bash
->    (look for _git_pull)
->   git commit -m "my first commit to git"
->   (This is paraphrased, see Documentation/SubmittingPatches
->    for a better idea how to craft commit messages)
->   git format-patch HEAD^
->   git send-email 0001-xxx.patch
-> 
-> > --
-> > Albert Astals Cid | albert.astals.cid@kdab.com | Software Engineer
-> > Klarälvdalens Datakonsult AB, a KDAB Group company
-> > Tel: Sweden (HQ) +46-563-540090, USA +1-866-777-KDAB(5322)
-> > KDAB - The Qt, C++ and OpenGL Experts
-
-
--- 
-Albert Astals Cid | albert.astals.cid@kdab.com | Software Engineer
-Klarälvdalens Datakonsult AB, a KDAB Group company
-Tel: Sweden (HQ) +46-563-540090, USA +1-866-777-KDAB(5322)
-KDAB - The Qt, C++ and OpenGL Experts
+unsubscribe git
