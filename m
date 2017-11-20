@@ -2,92 +2,197 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 50A8B202F2
-	for <e@80x24.org>; Mon, 20 Nov 2017 17:29:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 94353202F2
+	for <e@80x24.org>; Mon, 20 Nov 2017 18:12:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751813AbdKTR3F (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Nov 2017 12:29:05 -0500
-Received: from mout.web.de ([212.227.17.11]:55605 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751781AbdKTR3E (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Nov 2017 12:29:04 -0500
-Received: from [192.168.178.36] ([91.20.49.242]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MVcZf-1efPXj045v-00Z30I; Mon, 20
- Nov 2017 18:28:56 +0100
-Subject: Re: [PATCH 1/6] t4051: add test for comments preceding function lines
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>,
-        Vegard Nossum <vegard.nossum@oracle.com>
-References: <790c2344-a71e-7089-9000-f9b37a4a5cd9@web.de>
- <b5815f62-3ed4-58ea-6d32-b156e44cbe3f@web.de>
- <CAPig+cQTzBYLqHw5TRYFajTK2Uq2fE=q=h=b=VA43zdJs0_CMA@mail.gmail.com>
- <bde81d14-a955-4ea4-5799-2a95511d8215@web.de>
- <xmqqine5okeu.fsf@gitster.mtv.corp.google.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <88f46ab2-03ff-3607-c776-25f34715ceda@web.de>
-Date:   Mon, 20 Nov 2017 18:28:54 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.4.0
+        id S1751863AbdKTSMg (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Nov 2017 13:12:36 -0500
+Received: from mail-io0-f169.google.com ([209.85.223.169]:44725 "EHLO
+        mail-io0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751885AbdKTSMf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Nov 2017 13:12:35 -0500
+Received: by mail-io0-f169.google.com with SMTP id w127so16652404iow.11
+        for <git@vger.kernel.org>; Mon, 20 Nov 2017 10:12:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=sKvqFE7PT3YUr7PzTfrNsEAJzz75j2HUvgAFBxMwOQU=;
+        b=upSggObpO0BcvIgcbSg7Be8Rg7myif2D/xkbU+fCKcHS6/KeBoiZnTzQTA/LKTkffa
+         QQ+NbmKUJVOw3j3NQ6LnEZ/TPKDKVaOR2HkS7GmW03zLGG8BZ/cCyYNFzhjMOPK4CCDM
+         8A8D+TuVXWohl2ax6YhVEYHG1X/q+fqQ4Xvr1ByxoBRwgRhtnvLlDA1DJZAK4chGHusT
+         km6Zw+y1X2NA4MiLMyt+ldpDKgLly6amz9lNasntPtoXVtgwbjbXxK8BWQ2blzawwSXb
+         jlqmzviSoEkH3Z32/Oz01qFyhOWrwSOPBVmPp6spXaPXHpL2MCqT60dac00F+uzPMmqt
+         VYzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=sKvqFE7PT3YUr7PzTfrNsEAJzz75j2HUvgAFBxMwOQU=;
+        b=AI7CJ9oaKWhCXYSPDHjL/HP8rzIDgMQCoqjGFvtaPA3ATT77sBTKyFQhpgsKheW84N
+         M/3SCZ3jp/nn1rIofe5PYDTAZ8E4oW07SIGGgfl1q1ZTNlsKu1slKI0/fy+JdC4M23kr
+         BTvTAlpFucDVMspesuaasBRDl10AsbiXNW7m+qGOVTqGUGJ89kCKaMu3ZIk0g6+A6vYJ
+         op/QIvaYPbtu05a/tIx/0IXVM+HLacdZDrDEAYPQy7m20iaQKvKzA7FYSsGW+KzawE7H
+         pd+mzsy5AYIB9gVY84iQ+TBbTqsYGvrBl3fhx1/847R/TU0A/ScwkEvHcGbnNGLlk3hk
+         Jh2g==
+X-Gm-Message-State: AJaThX7TojfrULqRwOwB5O2rUFLrm1IoEwAdD3QotqWTk+yRkHXyB03p
+        liP+LnJu/hD0yMJas2VES74Uk/oJQ9eXeWgp3BY=
+X-Google-Smtp-Source: AGs4zMaPYef2Ydrql6X2zPX63/mqjxHsotNYiCJRB/GhL8QBBf6yA09Eh2TLOMTnAllY4MTGyiBj2J4RXfEu5XdSHQ0=
+X-Received: by 10.107.20.21 with SMTP id 21mr15363998iou.116.1511201554058;
+ Mon, 20 Nov 2017 10:12:34 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <xmqqine5okeu.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:GbjRKuYNrcCoKp8BDS3jwz6X2QFrkvek3z5WmnEYbypmhRaaiEc
- ZbVqHGwNMzUlz/TF6f3TLSsEABDa9R5JL/mCjOYqZQjcrS84OPDbgWijCR+TIIanHy9pNz4
- sWkcDPyhja8n5Ay4tQamY/lRg/CWKMVD7ii1oPYgebW9+5oil0vbS31hAs4u+gDBt6NJvKe
- rewHSYT3mmZ9sI5kkXBog==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:edzyQnYuvVo=:F8zmuiUOqZWwCet+8o8bi6
- lTXlQJMbI/bCWGVLIohk4wxr7OiAfKOnQqWCuexhJGIc3+ixTLwsmUKhlXbfPDgvpZ+/mU/SJ
- SNa0MIbDHa6UNk2iQ+MBG052X3sdwggOvmjAnBRLM5ERlcJu2ccXKiROtcjMxE2/uMaXI9yMN
- Rj5gdbY6fpaG0P1TimhLs9/cNnzxfqgt0gtur6+9WXFlUM8+9gs1/02rCnCtl3SPTiqw4AD1A
- 7BxzhFiO7KK0/9n9aF0WVBg8pXhcl+MwCYPRtuVvZTtM17Txz3y3Te967pQXHZJbJB/nGjtuA
- hmR0frwlJZvPurHYYRSmyhrMVmghwdRXw31nc3d/wGIYU4Ltk0/AiIi2D7Mi4aOt4q7kYOQa+
- /lgaw4pHjsge+IkPpf/cmuD/gU6A7AbBtpxDjJJL6H+5dzMkf/W5KZDf7WEPonVbW5dzG6eGP
- ojNOEtUMqTKLlI4bcCTAEVE5VRXBDuq/jlPphk+G4PO2PLBe43LUZr6VbikFT/Sv63z37gX7h
- R+hS0eDWgOL80SrvJsbZyMDCl/0qu3fQyzDrk4uZc8OW78CBoDqjolKzIgeEurTqiNoG/jlQj
- gs/n+8Br4skE6/b0pv3fFBpr0tZOcJ89qG1soRgJSE5NJ4uFH6Z/hnv5eSPkmv3MHwfNyO4C7
- 0VkbcUmi2+i1KUe3EJznX8uAqAPPB0AvrYU0jxE34B3WZQ/z7aEER6sCFNvF0JyN1GLGxpxMv
- vG8cdjeAVD9n8Gm3RO7U8aQC8CbY6cADzIkcVCLwbUheWhOQoZea+twMXrbzOCay6svtSBorY
- wUMAcNttvKHKmcQnGUkpv+oeEUYKYeh1JaAHjEKKAFk5ymoiVg=
+Received: by 10.79.28.137 with HTTP; Mon, 20 Nov 2017 10:12:33 -0800 (PST)
+In-Reply-To: <20171117174258.GP3693@zaya.teonanacatl.net>
+References: <20171115125200.17006-1-chriscool@tuxfamily.org>
+ <xmqqbmk3xaxg.fsf@gitster.mtv.corp.google.com> <CAP8UFD1hcFLMvNsXONPNbxZhTbHVzSMdRgCB9m=ZGeSTpMsYew@mail.gmail.com>
+ <20171117174258.GP3693@zaya.teonanacatl.net>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Mon, 20 Nov 2017 19:12:33 +0100
+Message-ID: <CAP8UFD23ALBQO=kfeKrf4YXFigtC79mLtnBuXtTgjbeqPFE76Q@mail.gmail.com>
+Subject: Re: [PATCH] Makefile: check that tcl/tk is installed
+To:     Todd Zullinger <tmz@pobox.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>, Dominik Mahrer <teddy@teddy.ch>,
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 20.11.2017 um 01:36 schrieb Junio C Hamano:
-> René Scharfe <l.s.r@web.de> writes:
-> 
->> your suggested full-comment metric, i.e. more than nothing.  But more
->> importantly it's the actual comment payload.  The leading "/*" line is
->> included as a consequence of the employed heuristic, but a more
->> refined one might omit it as it doesn't actually contain any comment.
-> 
-> I am slightly in favor of than against the above reasoning, but it
-> probably deserves to be recorded somewhere more readily accessible
-> than the mailing list archive.  The title of the test "context
-> *includes* comment" can be read to hint it by not saying that the
-> precontext shows the *entire* comment, but that is a very weak hint
-> that will be missed by anybody unaware of the reasoning behind this
-> decision.
-> 
->      When showing function context it would be helpful to show comments
->      immediately before declarations, as they are most likely relevant.  Add
->      a test for that.
-> 
-> ... but without specifying the choice of lines too rigidly in the
-> test---we may want to stop before and not include "/*" in the
-> future, for example.
-> 
-> perhaps?
+On Fri, Nov 17, 2017 at 6:42 PM, Todd Zullinger <tmz@pobox.com> wrote:
+> Christian Couder wrote:
+>>
+>> On Thu, Nov 16, 2017 at 2:35 AM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+>>>
+>>> I suspect that this change will hurt those who package Git for other
+>>> people.
+>>
+>>
+>> Maybe a little bit, but in my opinion it should not be a big problem for
+>> them to install Tcl/Tk and its dependencies on the build machine.
+>
+> It's not a big burden, but it is a seemingly unnecessary build-time
+> dependency.
+>
+>>> It used to be that, as long as they have msgfmt installed, they only
+>>> needed to _know_ what the path on the users' box to "wish" is, and set =
+it to
+>>> TCLTK_PATH, and if they are distro packagers, most likely they already =
+have
+>>> such an automated set-up working.  Now with this change, they are force=
+d to
+>>> install tcl/tk on their possibly headless box where tcl/tk is useless, =
+and
+>>> worse yet, an attempt to install it may bring in tons of unwanted stuff
+>>> related to X that is irrelevant on such a headless development environm=
+ent.
+>>
+>> Yeah, but if they build gitk and git-gui, there is a significant chance
+>> that they build other graphical software too, and that this will require
+>> installing stuff related to X anyway.
+>
+> Most distributions build packages in individual container or chroots, to
+> increase the stability and reproducibility of the builds.  So package bui=
+lds
+> don't run on systems where any deps have already been installed.
+>
+> To be fair, it looks like pulling in tcl/tk would add only around 8MB to =
+the
+> Fedora build root for git.  That's not egregious, to be sure.  But it rea=
+lly
+> isn't a necessary build-time dependency either.  I don't know if there ar=
+e
+> other distros who would strongly object to pulling in tcl/tk.  Some are m=
+uch
+> more sensitive to build root sizes and unnecessary dependencies.
 
-That's fine with me.
+Yeah, I still think that when packaging graphical tools, packagers
+should be used to managing builds that need a lot of dependencies
+(especially X related dependencies). I used to be a KDE developer in a
+previous life and the amount of dependencies to build KDE was much
+larger than what is required for everything in the git repo (git,
+gitk, git-gui, git-svn, etc).
 
-Thanks,
-René
+>> In general I think packagers are much more able to deal with those kinds
+>> of problems than most regular developers who want to hack on Git.
+>
+> I agree.  Packagers also provide git builds to the vast majority of
+> end-users, so we should make their task easier whenever possible. :)
+
+Yeah, but you might have noticed that such checks might be a good
+thing for packagers, as it makes the build fail right away with a
+clear error message. So in the long run, I think this kind of patches
+will make it easier also for packagers.
+
+>> So asking packagers to either set NO_TCLTK or BYPASS_TCLTK_CHECK or to
+>> install Tcl/Tk would not burden them much, especially compared to what
+>> regular developers have to deal with these days when trying to build Git=
+.
+>
+> Presuming this new BYPASS_TCLTK_CHECK is communicated well and that the
+> failure when not using it is clear, this doesn't seem likely to cause
+> problems.
+
+Yeah I agree.
+
+> (I'll leave it to others whether there's a better way to solve
+> the msgfmt fallthrough issue.  I didn't even know such a fallthrough exis=
+ted
+> until yesterday.)
+
+I might also send a similar patch for the msgfmt issue, otherwise it
+may be a good #leftoverbit for someone starting to hack on Git.
+But anyway it is a separate issue.
+
+> I think it's important to ensure that automated package builds of a newer
+> git don't simply skip parts of the build which used to work and so packag=
+ers
+> reading the failed builds logs can easily see what they need to adjust.
+
+I agree and the patch doesn't skip parts of the build that used to
+work, and actually it makes logs easier to understand and build
+failures easier to fix.
+
+> Just dropping the new variable in the Makefile and waiting for package
+> builds to fail or not package gitk & git-gui at the next release would be=
+ a
+> bit unkind, I think.  Posting this to the git-packagers group[1] which =
+=C3=86var
+> created would be useful.  It /might/ even be worth asking there if any
+> distros have strong opinions on the subject.
+>
+> [1] https://groups.google.com/forum/#!forum/git-packagers and
+>    git-packagers@googlegroups.com
+
+I cc'ed this list when I sent version 2 of the patch.
+
+>>> I think "If I cannot run either wish or msgfmt, then barf and give an
+>>> error message" might at least be needed.  Am I misinterpreting the
+>>> motivation of the patch?
+>>
+>> I'd rather add a separate check for msgfmt than mixing the 2 issues,
+>> because I think that unless it has been explicitly told to do so, Git sh=
+ould
+>> not try to build git-gui and gitk in the first place if there is a big
+>> chance that those tools will not work.
+>
+> If that's a motivation, wouldn't a check in the gitk and git-gui scripts
+> handle it? That would provide an error at run time to the user.  This
+> change is about helping the user who builds their own git and then runs i=
+t,
+> so if they built git without wish installed and then ran git-gui, they'd =
+get
+> a clear error that wish is missing and could easily install it.  It's not
+> needed for the build, so they wouldn't need to rebuild anything.
+
+This change is not just about people who want to build and run those
+tools, but it already helps them by improving build error messages a
+lot.
