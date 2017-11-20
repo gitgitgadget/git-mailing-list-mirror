@@ -2,251 +2,235 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 80AC8202F2
-	for <e@80x24.org>; Mon, 20 Nov 2017 22:20:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BE3DC202F2
+	for <e@80x24.org>; Mon, 20 Nov 2017 22:20:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751306AbdKTWT5 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Nov 2017 17:19:57 -0500
-Received: from mail-it0-f66.google.com ([209.85.214.66]:45257 "EHLO
-        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751197AbdKTWTr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Nov 2017 17:19:47 -0500
-Received: by mail-it0-f66.google.com with SMTP id x13so5407368iti.4
-        for <git@vger.kernel.org>; Mon, 20 Nov 2017 14:19:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=BDVpP8e7PRYJWw87Er+MISP+qPkwgsSglBN6TCjleik=;
-        b=W12tSwgg+pgRVvq0N91mwe6a4Zy/CTHFUCWFjdw1IWxde2FjCxTx6f2DaaYnz9ydtx
-         OaQ14x4dJJ1c3CABHAgwSwY8xuBrY1VhTTGwnAHEpLv3qA35dELsH+Et+lJcBezRIl5f
-         oT1ROkeTao8usy3BLm0cMZcUTwZQ9Mo0kZIeGmDwwISuNyfTHkzq9dBvAcMK38MqYn7z
-         qlUjmd5PNiKU6OO9fYIeRrpHQif2XI7sUBHAyz6nMo2czBpxOErrAEzWIWwXDlpIf7aT
-         ZKekoH0k+bTHTxx9CP46CpbMfJxVYebfgn3b/Xh7sBIUyZsFMsJiubihumVZuZKGEzST
-         0j9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=BDVpP8e7PRYJWw87Er+MISP+qPkwgsSglBN6TCjleik=;
-        b=N58qABCY8Er2RhK718093GsEFEs+rehGw2+tqcpT5Tw2/YQrXvnq3KO1gWPZfk8siQ
-         BZV93A6pHSz2eQ7PMrFETlRv43h2oShIjSmjJ+TATBRJetxGFtAVSSekppcFdXWxjLeu
-         H7Bcwi1gBVqtzMei5683zpMmGYzpnAcXRIcbkpcO5UXLG8AJFMamVEF/mdji/Kf3Ocgo
-         r+hWkSENXJ7KDyodq4s5FKpGcaMLzhug7u1TMI85XD365CQZ04NcIeVZvBCGIqgwdgQ2
-         th0T4+4ii/co+SRauloXszp7B6fy6JtQim2e1zpDNNnwRgsg4IgI8RiXI/w6zGD9ZkFV
-         8EEA==
-X-Gm-Message-State: AJaThX7UML7oKC6hEWzBYEWvXbdq7D9X7pIKy8gFNXDfW0LUT0kLTLzV
-        3kTDTnM52N5eX4A7RSfvlrU=
-X-Google-Smtp-Source: AGs4zMY4vM8thBRFIxAkUerOHEvv2nJyCX4hfiki4WgKZ/X1qnZPdPmjWQSfRY7Ttm8/+EoerRAWOQ==
-X-Received: by 10.36.6.142 with SMTP id 136mr20043967itv.121.1511216385762;
-        Mon, 20 Nov 2017 14:19:45 -0800 (PST)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id n68sm4938159ion.57.2017.11.20.14.19.44
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 20 Nov 2017 14:19:45 -0800 (PST)
-Date:   Mon, 20 Nov 2017 14:19:43 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Segev Finer <segev208@gmail.com>
-Subject: [PATCH v4 4/8] connect: split ssh command line options into separate
- function
-Message-ID: <20171120221943.5slenc6lovg73kif@aiede.mtv.corp.google.com>
-References: <20171120212134.lh2l4drdzu6fh5g2@aiede.mtv.corp.google.com>
- <20171120212505.5t6vzvkfvhmjqwsd@aiede.mtv.corp.google.com>
- <20171120215404.GC92506@google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20171120215404.GC92506@google.com>
-User-Agent: NeoMutt/20170609 (1.8.3)
+        id S1751305AbdKTWT4 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Nov 2017 17:19:56 -0500
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:41152 "EHLO
+        mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751212AbdKTWTr (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2017 17:19:47 -0500
+Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
+        by mx0a-00153501.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id vAKMJG7I001667;
+        Mon, 20 Nov 2017 14:19:45 -0800
+Authentication-Results: ppops.net;
+        spf=softfail smtp.mailfrom=newren@gmail.com
+Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
+        by mx0a-00153501.pphosted.com with ESMTP id 2eakkpb9q6-1;
+        Mon, 20 Nov 2017 14:19:44 -0800
+Received: from mxw1.palantir.com (new-smtp.yojoe.local [172.19.0.45])
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id B24E222F466E;
+        Mon, 20 Nov 2017 14:19:44 -0800 (PST)
+Received: from newren2-linux.yojoe.local (newren2-linux.dyn.yojoe.local [10.100.68.32])
+        by smtp.yojoe.local (Postfix) with ESMTP id AB4BE2CDE75;
+        Mon, 20 Nov 2017 14:19:44 -0800 (PST)
+From:   Elijah Newren <newren@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>
+Subject: [RFC PATCH v2 6/9] merge-recursive: improve handling for rename/rename(2to1) conflicts
+Date:   Mon, 20 Nov 2017 14:19:41 -0800
+Message-Id: <20171120221944.15431-7-newren@gmail.com>
+X-Mailer: git-send-email 2.15.0.323.g31fe956618
+In-Reply-To: <20171120221944.15431-1-newren@gmail.com>
+References: <20171120221944.15431-1-newren@gmail.com>
+X-Proofpoint-SPF-Result: softfail
+X-Proofpoint-SPF-Record: v=spf1 redirect=_spf.google.com
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,, definitions=2017-11-20_12:,,
+ signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ malwarescore=0 suspectscore=15 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1034 lowpriorityscore=0 impostorscore=0 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.0.1-1709140000
+ definitions=main-1711200300
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The git_connect function is growing long.  Split the portion that
-discovers an ssh command and options it accepts before the service
-name and path to a separate function to make it easier to read.
+This makes the rename/rename(2to1) conflicts use the new
+handle_file_collision() function.  Since that function was based
+originally on the rename/rename(2to1) handling code, the main
+differences here are in what was added.  In particular:
 
-No functional change intended.
+  * If the two colliding files are similar, instead of being stored
+    at collide_path~HEAD and collide_path~MERGE, the files are two-way
+    merged and recorded at collide_path.
+  * Instead of recording the version of the renamed file that existed
+    on the renamed side in the index (thus ignoring any changes that
+    were made to the file on the side of history without the rename),
+    we do a three-way content merge on the renamed path, then store
+    that at either stage 2 or stage 3.
+  * Note that if either of the three-way content merges done for each
+    rename have conflicts, we do NOT try to estimate the similarity of
+    the resulting two files and just automatically consider them to be
+    dissimilar.  This is done to avoid foisting conflicts-of-conflicts
+    on the user.
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-Reviewed-by: Stefan Beller <sbeller@google.com>
+Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
-Brandon Williams wrote:
-> On 11/20, Jonathan Nieder wrote:
+ merge-recursive.c                    | 101 +++++------------------------------
+ t/t6042-merge-rename-corner-cases.sh |   2 +-
+ 2 files changed, 14 insertions(+), 89 deletions(-)
 
->> @@ -972,16 +1031,13 @@ struct child_process *git_connect(int fd[2], const char *url,
->>  		conn->use_shell = 1;
->>  		conn->in = conn->out = -1;
->>  		if (protocol == PROTO_SSH) {
->> -			const char *ssh;
->> -			enum ssh_variant variant;
->>  			char *ssh_host = hostandport;
->>  			const char *port = NULL;
->> +
->>  			transport_check_allowed("ssh");
->>  			get_host_and_port(&ssh_host, &port);
->> -
->>  			if (!port)
->>  				port = get_port(ssh_host);
->> -
->
-> Are these random additions and deletions intentional?
-
-Thanks again for noticing this.  After looking more closely, I don't
-see any reason for these whitespace changes.  Here's a corrected
-patch.
-
- connect.c | 113 +++++++++++++++++++++++++++++++++-----------------------------
- 1 file changed, 60 insertions(+), 53 deletions(-)
-
-diff --git a/connect.c b/connect.c
-index 9425229206..2113feb4f8 100644
---- a/connect.c
-+++ b/connect.c
-@@ -919,6 +919,65 @@ static struct child_process *git_connect_git(int fd[2], char *hostandport,
- 	return conn;
+diff --git a/merge-recursive.c b/merge-recursive.c
+index bae50258d7..d818830098 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -660,27 +660,6 @@ static int update_stages(struct merge_options *opt, const char *path,
+ 	return 0;
  }
  
-+/* Prepare a child_process for use by Git's SSH-tunneled transport. */
-+static void fill_ssh_args(struct child_process *conn, const char *ssh_host,
-+			  const char *port, int flags)
-+{
-+	const char *ssh;
-+	enum ssh_variant variant;
-+
-+	if (looks_like_command_line_option(ssh_host))
-+		die("strange hostname '%s' blocked", ssh_host);
-+
-+	ssh = get_ssh_command();
-+	if (ssh) {
-+		variant = determine_ssh_variant(ssh, 1);
-+	} else {
-+		/*
-+		 * GIT_SSH is the no-shell version of
-+		 * GIT_SSH_COMMAND (and must remain so for
-+		 * historical compatibility).
-+		 */
-+		conn->use_shell = 0;
-+
-+		ssh = getenv("GIT_SSH");
-+		if (!ssh)
-+			ssh = "ssh";
-+		variant = determine_ssh_variant(ssh, 0);
-+	}
-+
-+	argv_array_push(&conn->args, ssh);
-+
-+	if (variant == VARIANT_SSH &&
-+	    get_protocol_version_config() > 0) {
-+		argv_array_push(&conn->args, "-o");
-+		argv_array_push(&conn->args, "SendEnv=" GIT_PROTOCOL_ENVIRONMENT);
-+		argv_array_pushf(&conn->env_array, GIT_PROTOCOL_ENVIRONMENT "=version=%d",
-+				 get_protocol_version_config());
-+	}
-+
-+	if (variant != VARIANT_SIMPLE) {
-+		if (flags & CONNECT_IPV4)
-+			argv_array_push(&conn->args, "-4");
-+		else if (flags & CONNECT_IPV6)
-+			argv_array_push(&conn->args, "-6");
-+	}
-+
-+	if (variant == VARIANT_TORTOISEPLINK)
-+		argv_array_push(&conn->args, "-batch");
-+
-+	if (port && variant != VARIANT_SIMPLE) {
-+		if (variant == VARIANT_SSH)
-+			argv_array_push(&conn->args, "-p");
-+		else
-+			argv_array_push(&conn->args, "-P");
-+
-+		argv_array_push(&conn->args, port);
-+	}
-+
-+	argv_array_push(&conn->args, ssh_host);
-+}
-+
+-static int update_stages_for_stage_data(struct merge_options *opt,
+-					const char *path,
+-					const struct stage_data *stage_data)
+-{
+-	struct diff_filespec o, a, b;
+-
+-	o.mode = stage_data->stages[1].mode;
+-	oidcpy(&o.oid, &stage_data->stages[1].oid);
+-
+-	a.mode = stage_data->stages[2].mode;
+-	oidcpy(&a.oid, &stage_data->stages[2].oid);
+-
+-	b.mode = stage_data->stages[3].mode;
+-	oidcpy(&b.oid, &stage_data->stages[3].oid);
+-
+-	return update_stages(opt, path,
+-			     is_null_sha1(o.oid.hash) ? NULL : &o,
+-			     is_null_sha1(a.oid.hash) ? NULL : &a,
+-			     is_null_sha1(b.oid.hash) ? NULL : &b);
+-}
+-
+ static void update_entry(struct stage_data *entry,
+ 			 struct diff_filespec *o,
+ 			 struct diff_filespec *a,
+@@ -1618,7 +1597,6 @@ static int conflict_rename_rename_2to1(struct merge_options *o,
+ 	char *path = c1->path; /* == c2->path */
+ 	struct merge_file_info mfi_c1;
+ 	struct merge_file_info mfi_c2;
+-	int ret;
+ 
+ 	output(o, 1, _("CONFLICT (rename/rename): "
+ 	       "Rename %s->%s in %s. "
+@@ -1626,9 +1604,6 @@ static int conflict_rename_rename_2to1(struct merge_options *o,
+ 	       a->path, c1->path, ci->branch1,
+ 	       b->path, c2->path, ci->branch2);
+ 
+-	remove_file(o, 1, a->path, o->call_depth || would_lose_untracked(a->path));
+-	remove_file(o, 1, b->path, o->call_depth || would_lose_untracked(b->path));
+-
+ 	if (merge_file_special_markers(o, a, c1, &ci->ren1_other,
+ 				       o->branch1, c1->path,
+ 				       o->branch2, ci->ren1_other.path, &mfi_c1) ||
+@@ -1637,66 +1612,11 @@ static int conflict_rename_rename_2to1(struct merge_options *o,
+ 				       o->branch2, c2->path, &mfi_c2))
+ 		return -1;
+ 
+-	if (o->call_depth) {
+-		/*
+-		 * If mfi_c1.clean && mfi_c2.clean, then it might make
+-		 * sense to do a two-way merge of those results.  But, I
+-		 * think in all cases, it makes sense to have the virtual
+-		 * merge base just undo the renames; they can be detected
+-		 * again later for the non-recursive merge.
+-		 */
+-		remove_file(o, 0, path, 0);
+-		ret = update_file(o, 0, &mfi_c1.oid, mfi_c1.mode, a->path);
+-		if (!ret)
+-			ret = update_file(o, 0, &mfi_c2.oid, mfi_c2.mode,
+-					  b->path);
+-	} else {
+-		char *new_path1 = unique_path(o, path, ci->branch1);
+-		char *new_path2 = unique_path(o, path, ci->branch2);
+-		output(o, 1, _("Renaming %s to %s and %s to %s instead"),
+-		       a->path, new_path1, b->path, new_path2);
+-		if (was_dirty(o, path))
+-			output(o, 1, _("Refusing to lose dirty file at %s"),
+-			       path);
+-		else if (would_lose_untracked(path))
+-			/*
+-			 * Only way we get here is if both renames were from
+-			 * a directory rename AND user had an untracked file
+-			 * at the location where both files end up after the
+-			 * two directory renames.  See testcase 10d of t6043.
+-			 */
+-			output(o, 1, _("Refusing to lose untracked file at "
+-				       "%s, even though it's in the way."),
+-			       path);
+-		else
+-			remove_file(o, 0, path, 0);
+-		ret = update_file(o, 0, &mfi_c1.oid, mfi_c1.mode, new_path1);
+-		if (!ret)
+-			ret = update_file(o, 0, &mfi_c2.oid, mfi_c2.mode,
+-					  new_path2);
+-		/*
+-		 * unpack_trees() actually populates the index for us for
+-		 * "normal" rename/rename(2to1) situtations so that the
+-		 * correct entries are at the higher stages, which would
+-		 * make the call below to update_stages_for_stage_data
+-		 * unnecessary.  However, if either of the renames came
+-		 * from a directory rename, then unpack_trees() will not
+-		 * have gotten the right data loaded into the index, so we
+-		 * need to do so now.  (While it'd be tempting to move this
+-		 * call to update_stages_for_stage_data() to
+-		 * apply_directory_rename_modifications(), that would break
+-		 * our intermediate calls to would_lose_untracked() since
+-		 * those rely on the current in-memory index.  See also the
+-		 * big "NOTE" in update_stages()).
+-		 */
+-		if (update_stages_for_stage_data(o, path, ci->dst_entry1))
+-			ret = -1;
+-
+-		free(new_path2);
+-		free(new_path1);
+-	}
+-
+-	return ret;
++	return handle_file_collision(o, path, a->path, b->path,
++				     ci->branch1, ci->branch2,
++				     &mfi_c1.oid, mfi_c1.mode,
++				     &mfi_c2.oid, mfi_c2.mode,
++				     !mfi_c1.clean || !mfi_c2.clean);
+ }
+ 
  /*
-  * This returns the dummy child_process `no_fork` if the transport protocol
-  * does not need fork(2), or a struct child_process object if it does.  Once
-@@ -972,8 +1031,6 @@ struct child_process *git_connect(int fd[2], const char *url,
- 		conn->use_shell = 1;
- 		conn->in = conn->out = -1;
- 		if (protocol == PROTO_SSH) {
--			const char *ssh;
--			enum ssh_variant variant;
- 			char *ssh_host = hostandport;
- 			const char *port = NULL;
- 			transport_check_allowed("ssh");
-@@ -995,57 +1052,7 @@ struct child_process *git_connect(int fd[2], const char *url,
- 				strbuf_release(&cmd);
- 				return NULL;
- 			}
--
--			if (looks_like_command_line_option(ssh_host))
--				die("strange hostname '%s' blocked", ssh_host);
--
--			ssh = get_ssh_command();
--			if (ssh) {
--				variant = determine_ssh_variant(ssh, 1);
--			} else {
--				/*
--				 * GIT_SSH is the no-shell version of
--				 * GIT_SSH_COMMAND (and must remain so for
--				 * historical compatibility).
--				 */
--				conn->use_shell = 0;
--
--				ssh = getenv("GIT_SSH");
--				if (!ssh)
--					ssh = "ssh";
--				variant = determine_ssh_variant(ssh, 0);
--			}
--
--			argv_array_push(&conn->args, ssh);
--
--			if (variant == VARIANT_SSH &&
--			    get_protocol_version_config() > 0) {
--				argv_array_push(&conn->args, "-o");
--				argv_array_push(&conn->args, "SendEnv=" GIT_PROTOCOL_ENVIRONMENT);
--				argv_array_pushf(&conn->env_array, GIT_PROTOCOL_ENVIRONMENT "=version=%d",
--						 get_protocol_version_config());
--			}
--
--			if (variant != VARIANT_SIMPLE) {
--				if (flags & CONNECT_IPV4)
--					argv_array_push(&conn->args, "-4");
--				else if (flags & CONNECT_IPV6)
--					argv_array_push(&conn->args, "-6");
--			}
--
--			if (variant == VARIANT_TORTOISEPLINK)
--				argv_array_push(&conn->args, "-batch");
--
--			if (port && variant != VARIANT_SIMPLE) {
--				if (variant == VARIANT_SSH)
--					argv_array_push(&conn->args, "-p");
--				else
--					argv_array_push(&conn->args, "-P");
--
--				argv_array_push(&conn->args, port);
--			}
--
--			argv_array_push(&conn->args, ssh_host);
-+			fill_ssh_args(conn, ssh_host, port, flags);
- 		} else {
- 			transport_check_allowed("file");
- 			if (get_protocol_version_config() > 0) {
+@@ -3057,9 +2977,14 @@ static int process_entry(struct merge_options *o,
+ 				clean_merge = -1;
+ 			break;
+ 		case RENAME_TWO_FILES_TO_ONE:
+-			clean_merge = 0;
+-			if (conflict_rename_rename_2to1(o, conflict_info))
+-				clean_merge = -1;
++			/*
++			 * Probably unclean merge, but if the two renamed
++			 * files merge cleanly and the two resulting files
++			 * can then be two-way merged cleanly, I guess it's
++			 * a clean merge?
++			 */
++			clean_merge = conflict_rename_rename_2to1(o,
++								  conflict_info);
+ 			break;
+ 		default:
+ 			entry->processed = 0;
+diff --git a/t/t6042-merge-rename-corner-cases.sh b/t/t6042-merge-rename-corner-cases.sh
+index d8fe797f0d..b0b840223b 100755
+--- a/t/t6042-merge-rename-corner-cases.sh
++++ b/t/t6042-merge-rename-corner-cases.sh
+@@ -358,7 +358,7 @@ test_expect_success 'setup rename/rename (2to1) + modify/modify' '
+ 	git init &&
+ 
+ 	printf "1\n2\n3\n4\n5\n" >a &&
+-	printf "5\n4\n3\n2\n1\n" >b &&
++	printf "9\n8\n7\n6\n5\n" >b &&
+ 	git add a b &&
+ 	git commit -m A &&
+ 	git tag A &&
 -- 
-2.15.0.448.gf294e3d99a
+2.15.0.323.g31fe956618
 
