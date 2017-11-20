@@ -2,74 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 543BD202F2
-	for <e@80x24.org>; Mon, 20 Nov 2017 23:51:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4CC26202F2
+	for <e@80x24.org>; Mon, 20 Nov 2017 23:55:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751275AbdKTXva (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Nov 2017 18:51:30 -0500
-Received: from avasout04.plus.net ([212.159.14.19]:56564 "EHLO
-        avasout04.plus.net.plus.net" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1751195AbdKTXv3 (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2017 18:51:29 -0500
-Received: from [10.0.2.15] ([80.189.70.158])
-        by smtp with ESMTPA
-        id GvqYejy60zbmWGvqZeC1rL; Mon, 20 Nov 2017 23:51:28 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=P6pKvmIu c=1 sm=1 tr=0
- a=bpDj9VLvXCYHU65eeb/Fiw==:117 a=bpDj9VLvXCYHU65eeb/Fiw==:17
- a=IkcTkHD0fZMA:10 a=fFWYPnE7F0dn5gEAs6IA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH v1 1/4] fastindex: speed up index load through
- parallelization
-To:     Ben Peart <peartben@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Cc:     Ben Peart <benpeart@microsoft.com>, git@vger.kernel.org,
-        pclouds@gmail.com, chriscool@tuxfamily.org,
-        Johannes.Schindelin@gmx.de, alexmv@dropbox.com, peff@peff.net
-References: <20171109141737.47976-1-benpeart@microsoft.com>
- <20171109141737.47976-2-benpeart@microsoft.com>
- <xmqqbmkahhar.fsf@gitster.mtv.corp.google.com>
- <7e5a9fde-67fc-2bb9-51b6-54bdaed162db@gmail.com>
- <xmqq7eut8y36.fsf@gitster.mtv.corp.google.com>
- <7428e41e-b705-f377-1951-b11af851c4d5@gmail.com>
- <xmqq7eus3nr2.fsf@gitster.mtv.corp.google.com>
- <73fd93cd-91f4-1286-732c-cd8185fe2027@gmail.com>
- <xmqqwp2s1h1x.fsf@gitster.mtv.corp.google.com>
- <9ba23d2c-2198-55d7-5a02-69879fbbb3cb@gmail.com>
- <xmqq1sl017dw.fsf@gitster.mtv.corp.google.com>
- <92b0b0ff-6878-003a-b26f-3b4c2c857be3@gmail.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <63053f5d-0089-4165-0470-ed0d88a87e9e@ramsayjones.plus.com>
-Date:   Mon, 20 Nov 2017 23:51:26 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.4.0
+        id S1752379AbdKTXzy (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Nov 2017 18:55:54 -0500
+Received: from mail-qk0-f169.google.com ([209.85.220.169]:43965 "EHLO
+        mail-qk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752359AbdKTXzw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Nov 2017 18:55:52 -0500
+Received: by mail-qk0-f169.google.com with SMTP id j202so9738837qke.10
+        for <git@vger.kernel.org>; Mon, 20 Nov 2017 15:55:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=Bmagsk4UiUOGYiAoMiO/awl1aECT0Y/w/wRjx9DK6zk=;
+        b=lXC8FbPy0sDRBb5chxT+9uwGlnZ9N0R6eX+diQhEZKv9XnpZwzOC7shahJrvUiC8lJ
+         1zcfCVuozEw91fUAWXvFURbbU2UWnqn1JGnO/qzpiY6fqeSghsYDdwNylZrLuC6Ac+te
+         E4EnYy+Tc0Lq+S0AVKcRtgwyvMOhqz5megGuy5cxKtp7h4kwkVFgp4VbrRzD0DLw/c8Q
+         OlFZ/yb5BklHmssbUlRc4BNCHapMjAwIBkzFOVSkylyhP4RzjZv9kf/IO9leiTz9oKx1
+         iWdSU7J/mtBZdom/86oB0hT29Wix1QclqAHrICsx+zEuMit1UdxuOXA+VWORB8sLPkDt
+         oUoQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=Bmagsk4UiUOGYiAoMiO/awl1aECT0Y/w/wRjx9DK6zk=;
+        b=PkXshlhs42zh0ZD1AAmQJglJ54rjqNMT1IIjmP/TSL03t2zjn1Pwmvkkv5Q+8kieAC
+         Po1cBuzsHvRyziARMtQphDzisd4kK8hEYZOCknYgbXB/O5e0INmf+k493obwMBZ0xFCJ
+         o3BdlYdqSoAVAgoF2HBEpziUxtrB0iabdubD6IsLWbjG4dxsGi1mah+qLXxcdBxnHwnu
+         su7g/lspAnw0sboHUHQhzYZm7jCgakEC44ZpN6IzOdQIAM0fDOq9ywquLLR4AfVDq0qc
+         nHtRz/KkyLbtXjPwqIozH9YWuzwjz5bqnxlytM3ZuD2YuPat1CyicjG5BrnnfxzyNKHH
+         mHYA==
+X-Gm-Message-State: AJaThX4rdufxe+GsjDj1h8uWuOkPMh0vGY0p948qinvA71XIxBOsAgrK
+        dY//rg7d88aE2qGx4TnLOs8sJ94OL3FDvQexRz/reg==
+X-Google-Smtp-Source: AGs4zMb1y46ZTkTnzxgb110/Y98/vVos9J+HIgacvv96kqOgdGTdkUFYHkAIp4U9KEgNGZ827k2VVvLavWQMsuAkaMo=
+X-Received: by 10.55.58.14 with SMTP id h14mr21962797qka.132.1511222152112;
+ Mon, 20 Nov 2017 15:55:52 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <92b0b0ff-6878-003a-b26f-3b4c2c857be3@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfOKnS7sXwRRh8ZFJYSdX8XQ6moQSjg69WVhfkEQPqrDBIenYuvi23Sibr4Ep74wj9in6Ou8Dj+dOXhRzxIMPKwxMvVfdF7ElG/ivHWVxBaoef3eQdIuk
- 78tGC1ZjHyXJPOdgFpSA0bCcIxjDheJqC+q+HnYSgs4LVbL1MeFWdChG
+Received: by 10.12.155.209 with HTTP; Mon, 20 Nov 2017 15:55:51 -0800 (PST)
+In-Reply-To: <20171120202643.s2cywlqykayq5qdb@sigill.intra.peff.net>
+References: <20171120202607.tf2pvegqe35mhxjs@sigill.intra.peff.net> <20171120202643.s2cywlqykayq5qdb@sigill.intra.peff.net>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 20 Nov 2017 18:55:51 -0500
+X-Google-Sender-Auth: 6vRQTqFk5qbcT3_L1etpPBTz0sg
+Message-ID: <CAPig+cRDNmjmM2Ed+mwqf7JZ76CxA3Eh7-UV6k=LFngZ3YE_sQ@mail.gmail.com>
+Subject: Re: [PATCH 1/5] p5550: factor our nonsense-pack creation
+To:     Jeff King <peff@peff.net>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, Nov 20, 2017 at 3:26 PM, Jeff King <peff@peff.net> wrote:
+> p5550: factor our nonsense-pack creation
 
+s/our/out/, I guess.
 
-On 20/11/17 14:01, Ben Peart wrote:
-> Further testing has revealed that switching from the regular heap to a refactored version of the mem_pool in fast-import.c produces similar gains as parallelizing do_index_load().  This appears to be a much simpler patch for similar gains so we will be pursuing that path.
-> 
-> Combining the two patches resulted in a further 25% reduction of do_index_load() but with index load times getting smaller, that only resulted in a 3% improvement in total git command time.  Given the greater complexity of this patch, we've decided to put it on hold for now.  We'll keep it in our back pocket in case we need it in the future.
-
-Since you are withdrawing the 'bp/fastindex' branch, I won't send the
-patch to fix up the sparse warnings (unless you would like to see it
-before you put it in your back pocket). ;-)
-
-ATB,
-Ramsay Jones
-
-
+> We have a function to create a bunch of irrelevant packs to
+> measure the expense of reprepare_packed_git(). Let's make
+> that available to other perf scripts.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
