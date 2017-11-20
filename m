@@ -7,120 +7,135 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 78E2020954
-	for <e@80x24.org>; Mon, 20 Nov 2017 03:11:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ABF8F20954
+	for <e@80x24.org>; Mon, 20 Nov 2017 03:35:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751072AbdKTDLT (ORCPT <rfc822;e@80x24.org>);
-        Sun, 19 Nov 2017 22:11:19 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53670 "EHLO
+        id S1751050AbdKTDfN (ORCPT <rfc822;e@80x24.org>);
+        Sun, 19 Nov 2017 22:35:13 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64060 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751029AbdKTDLS (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 19 Nov 2017 22:11:18 -0500
+        with ESMTP id S1750969AbdKTDfM (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 19 Nov 2017 22:35:12 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id F3E4DB719C;
-        Sun, 19 Nov 2017 22:11:15 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4E6D5B765B;
+        Sun, 19 Nov 2017 22:35:12 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=8bhPSYg1vIoEHJ8kaPKI5PJFdNk=; b=OfnWHt
-        R7F/3CTDtjN8i3fnALnQp+yInRNrilZR5ulQ8BfigfqmjJaDg1Mb/h0uG6lI2ot+
-        KDxg1eXHHK5NjwNog0IkYaXSOVrv26+m6KGy+cp7QrovjZD1jMphsQ5M6qgl9S49
-        viU7ysM6Xru9oo85mTQ2JtfcL8+p0V6HtiKX8=
+        :content-type; s=sasl; bh=JN2GdCVpElGwjEWLS24Zmhp/veI=; b=ozIr/K
+        7g6nZQojoBAIa0n1mgfUl+fFdtD4tPuoBrtK0o6sL4Zb41MUnrzC52S7d2nwo58+
+        j1IEfcJiLe3bqAheUT5gfYz1ktJqnTycigx6wPskCIoku8DX+oBf/kChBDUSR73b
+        KY5l1cJ/WQl3Ys+YMbC5EjvQVdfwhVgTg1Cn0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=D2tX7stOetXss6t6GtMYFt3HacKxbpFX
-        4Ei7BsEQLaRwNh5qxAF5/yLzz/609xh6qsNCNjuhD94L45wq4ke5fTRb0aDOOj4n
-        jVVKOtUsVheSZd0Pnh9sIikx3W70apxyjpYzFJLbWMLfOlrvWWbhAnkXGMA+oTL3
-        kGaoYL/S0io=
+        :content-type; q=dns; s=sasl; b=iHz2tfCZccNhq3DpNdqyKhM3cMipH3al
+        d2re91Pvw75/Gh2Y9n1grPOkS0fXHBH0cYN/lAS7ezFn58tATN31VItAopiSySe5
+        I7OQM0GCRrNo9Of7Oin1pO738WeB7WMBvlJRH7NqlUnEdX6CkFNAxL3B9xlzw6G9
+        /lrDfbQhCtM=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id EABC6B719B;
-        Sun, 19 Nov 2017 22:11:15 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4727BB765A;
+        Sun, 19 Nov 2017 22:35:12 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6B171B7198;
-        Sun, 19 Nov 2017 22:11:15 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BF320B7658;
+        Sun, 19 Nov 2017 22:35:11 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>, Beat Bolli <dev+git@drbeat.li>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] contrib/git-jump: allow to configure the grep command
-References: <20171119230536.1628-1-dev+git@drbeat.li>
-Date:   Mon, 20 Nov 2017 12:11:13 +0900
-In-Reply-To: <20171119230536.1628-1-dev+git@drbeat.li> (Beat Bolli's message
-        of "Mon, 20 Nov 2017 00:05:36 +0100")
-Message-ID: <xmqqh8tpmypa.fsf@gitster.mtv.corp.google.com>
+To:     Ann T Ropea <bedhanger@gmx.de>
+Cc:     Philip Oakley <philipoakley@iee.org>,
+        Git Mailing List <git@vger.kernel.org>,
+        Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH v3 1/5] checkout: describe_detached_head: remove ellipsis after committish
+References: <20171113223654.27732-1-bedhanger@gmx.de>
+        <83D263E58ABD46188756D41FE311E469@PhilipOakley>
+        <xmqqfu9pmsx3.fsf@gitster.mtv.corp.google.com>
+        <20171113223654.27732-3-bedhanger@gmx.de>
+        <xmqq1sl17e1u.fsf@gitster.mtv.corp.google.com>
+        <20171119184113.16630-1-bedhanger@gmx.de>
+Date:   Mon, 20 Nov 2017 12:35:10 +0900
+In-Reply-To: <20171119184113.16630-1-bedhanger@gmx.de> (Ann T. Ropea's message
+        of "Sun, 19 Nov 2017 19:41:09 +0100")
+Message-ID: <xmqqa7zhmxld.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 784809CA-CDA0-11E7-873D-575F0C78B957-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: D068904A-CDA3-11E7-B5C4-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Beat Bolli <dev+git@drbeat.li> writes:
+Ann T Ropea <bedhanger@gmx.de> writes:
 
-> Add the configuration option "jump.grepCmd" that allows to configure the
-> command that is used to search in grep mode. This allows the users of
-> git-jump to use ag(1) or ack(1) as search engines.
+> We do not want an ellipsis displayed following an (abbreviated) SHA-1
+> value.
 >
-> Signed-off-by: Beat Bolli <dev+git@drbeat.li>
-> ---
-
-Thanks.  The contrib/README file has this to say (also read the
-surrounding text):
-
-    ... If
-    you have patches to things in contrib/ area, the patch should be
-    first sent to the primary author, and then the primary author
-    should ack and forward it to me (git pull request is nicer).
-
-Peff, I think we need a clear indication in contrib/git-jump/README
-to whom patches to the area should be sent.  I know how to run 
-
-    $ git shortlog -n --no-merges contrib/git-jump
-
-but not everybody does (or bothers).
-
->  contrib/git-jump/README   | 3 +++
->  contrib/git-jump/git-jump | 7 +++++--
->  2 files changed, 8 insertions(+), 2 deletions(-)
+> The days when this was necessary to indicate the truncation to
+> lower-level Git commands and/or the user are bygone.
 >
-> diff --git a/contrib/git-jump/README b/contrib/git-jump/README
-> index 225e3f095..9f58d5db8 100644
-> --- a/contrib/git-jump/README
-> +++ b/contrib/git-jump/README
-> @@ -63,6 +63,9 @@ git jump grep foo_bar
->  # same as above, but case-insensitive; you can give
->  # arbitrary grep options
->  git jump grep -i foo_bar
+> However, to ease the transition, the ellipsis will still be printed if
+> the user (actively!) sets the environment variable PRINT_SHA1_ELLIPSIS
+> to "yes" (case does not matter).
+
+Does "(actively!)" add any value here?  For that matter, it appears
+to me that "(case does not matter)" does not, either.  I thought
+you'd be also reacting to Print_SHA1_Ellipsis variable, too, but the
+code does not seem to be doing so (for obvious reasons).  If the users
+can get what they want by setting it to "yes", that is sufficient to
+say, whether your implementation accepts "Yes" as a synonym or not,
+especially for something like this that we would want to remove in
+an year or two.
+
+> The transient nature of this fallback suggests that we should not prefix
+> the variable by "GIT_".
+
+Hmph.  That nature does not suggest anything like it to me.  When I
+find an unfamiliar environment variable in my ~/.login I defined or
+added to an existing script a few years back and forgot what it was
+for, with a GIT_ prefix I would have one extra clue to help me
+recall that it was once needed but no longer supported one that I
+can safely remove.
+
+I do agree that moving to an environment variable is a more useful
+escape hatch for existing scripts that could be broken with this
+change.
+
+> diff --git a/builtin/checkout.c b/builtin/checkout.c
+> index 7d8bcc383351..e6d3a28fe26e 100644
+> --- a/builtin/checkout.c
+> +++ b/builtin/checkout.c
+> @@ -400,10 +400,17 @@ static void show_local_changes(struct object *head,
+>  static void describe_detached_head(const char *msg, struct commit *commit)
+>  {
+>  	struct strbuf sb = STRBUF_INIT;
+> +	const char *env_printsha1ellipsis = getenv("PRINT_SHA1_ELLIPSIS");
 > +
-> +# use the silver searcher for git jump grep
-> +git config jump.grepCmd "ag --column"
->  --------------------------------------------------
->  
->  
-> diff --git a/contrib/git-jump/git-jump b/contrib/git-jump/git-jump
-> index 427f206a4..80ab0590b 100755
-> --- a/contrib/git-jump/git-jump
-> +++ b/contrib/git-jump/git-jump
-> @@ -11,7 +11,8 @@ diff: elements are diff hunks. Arguments are given to diff.
->  
->  merge: elements are merge conflicts. Arguments are ignored.
->  
-> -grep: elements are grep hits. Arguments are given to grep.
-> +grep: elements are grep hits. Arguments are given to git grep or, if
-> +      configured, to the command in `jump.grepCmd`.
->  
->  ws: elements are whitespace errors. Arguments are given to diff --check.
->  EOF
-> @@ -50,7 +51,9 @@ mode_merge() {
->  # but let's clean up extra whitespace, so they look better if the
->  # editor shows them to us in the status bar.
->  mode_grep() {
-> -	git grep -n "$@" |
-> +	cmd=$(git config jump.grepCmd)
-> +	test -n "$cmd" || cmd="git grep -n"
-> +	$cmd "$@" |
->  	perl -pe '
->  	s/[ \t]+/ /g;
->  	s/^ *//;
+>  	if (!parse_commit(commit))
+>  		pp_commit_easy(CMIT_FMT_ONELINE, commit, &sb);
+> -	fprintf(stderr, "%s %s... %s\n", msg,
+> -		find_unique_abbrev(commit->object.oid.hash, DEFAULT_ABBREV), sb.buf);
+> +	if (env_printsha1ellipsis && !strcasecmp(env_printsha1ellipsis, "yes")) {
+> +		fprintf(stderr, "%s %s... %s\n", msg,
+> +			find_unique_abbrev(commit->object.oid.hash, DEFAULT_ABBREV), sb.buf);
+> +	} else {
+> +		fprintf(stderr, "%s %s %s\n", msg,
+> +			find_unique_abbrev(commit->object.oid.hash, DEFAULT_ABBREV), sb.buf);
+> +	}
+>  	strbuf_release(&sb);
+>  }
+
+I would actually have expected a helper function like
+
+int print_sha1_ellipsis(void)
+{
+        static int cached_result = -1; /* unknown */
+
+	if (cached_result < 0) {
+		const char *v = getenv("PRINT_SHA1_ELLIPSIS");
+                cached_result = (v && !strcasecmp(v, "yes"));
+	}
+	return cached_result;
+}
+
+so that you can reuse that in here and in quite a different place
+like in diff.c.
+
