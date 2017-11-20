@@ -2,177 +2,276 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5BE0220A40
-	for <e@80x24.org>; Mon, 20 Nov 2017 21:47:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2E170202F2
+	for <e@80x24.org>; Mon, 20 Nov 2017 21:50:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753165AbdKTVr0 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Nov 2017 16:47:26 -0500
-Received: from mail-io0-f196.google.com ([209.85.223.196]:46775 "EHLO
-        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753131AbdKTVrY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Nov 2017 16:47:24 -0500
-Received: by mail-io0-f196.google.com with SMTP id q64so4426820iof.13
-        for <git@vger.kernel.org>; Mon, 20 Nov 2017 13:47:24 -0800 (PST)
+        id S1753120AbdKTVuQ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Nov 2017 16:50:16 -0500
+Received: from mail-wm0-f45.google.com ([74.125.82.45]:42678 "EHLO
+        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752931AbdKTVuP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Nov 2017 16:50:15 -0500
+Received: by mail-wm0-f45.google.com with SMTP id 5so20510812wmk.1
+        for <git@vger.kernel.org>; Mon, 20 Nov 2017 13:50:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=ntVapyjZBzpBj67i0yKDt5tI8IM9A50TvpGlMfBnvxk=;
-        b=oyXgYLHJB9kM1owbC8wk5W3/4VCfw+BK7YDjas3uueW/t7xKTlTgsr0iVKK/XGRrhX
-         IoshqEaPQL2EgCA3xiMO60LrV9u9/gBXB97TQv/MwiqgKQW68xyjT7DP4OWkP+nOxVKY
-         LnFmJIAu9MMV9oBdWhxR9Sn38DsaH4pCoTnGy7U9C+EBszqdmX5Ge8KfaqqG2kp8DWKX
-         /4Rtu8fvnXbrUt6o5s6NLyORqS5N7ixbF2eIFJairVZJ5MLZYxuSIbM+++sd/FzsW0fE
-         nrCUwoNr2dbyw7T3OAxpkwm9ehLcyqH/kYTfGsDD97uQNgxwB0T7evpSPUEvKbdCEgjp
-         o31Q==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=ausz7EtiSzMymnUUY6iD5rg7l4DXP5vC65dPwAVtyc0=;
+        b=DWqvrieeqIHk3Xjmb3f4EqsNH41GYnU0e2gdStR82dxwu+7mcummXSNP3RiX2xgRDx
+         Nh+zE2rHup32yRCePgC8tYlwtggcD/671cAu7+RE6wrxcvjqE5eSVAsrU8sgjeu6aXVu
+         0CTPkGAiMnlwEy6lr1zelN3tijkLPHsaqJng5B+EaWypJdRV43YdO6Xijm4q6cKla5hW
+         POjFr/6iV4ol8cYonPKqX+gCAG9n7JeoNEI5SWwMveBswnUWakRloqohqDvyzRWtXhFD
+         oC1xIAZlVdr0tQS+NpCz4e3iBw+fpZKgIHAly9eu/aAWZfJPGlOAX5c/2QrOMx5eWTFw
+         Dfhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ntVapyjZBzpBj67i0yKDt5tI8IM9A50TvpGlMfBnvxk=;
-        b=EF2gynwz32nMyvHendQNTuRzw87Mcft6iCuIl12CFk4xIG6oSu4hFZUY9I/eTgTwED
-         aaDAW2qB6AWMZ+mDYQhw+LQWWo9Ocu8XhVVkt87JlctqPrJxefwUqYRR3ty+l+1qKoPT
-         jhTkLLlitN8s2rf42PFh2FYvisWa3xxoimqCJsxKVfrckBIofhR1V7BH6dnzbsbj4BF5
-         TSQsTHrrEHJHjVRmTfWPlpf2iRzXk1XPXOOsFP2POVwKfUKIF5PRIDDn3VLl4qDthjb+
-         jQmXMTYhe3PnWFDCVg+aZvdlRJoPx4zGbmduGKbRKNm0+skfgnqSbhlnreZR8vPE9qEZ
-         gUgA==
-X-Gm-Message-State: AJaThX6U9MpIEEuzFlkWan1AjlzZzXnwUzhORLLCShQ2YPZq4VrdXssJ
-        O4r+BBaW0mdh7XCWmsKJXhTyig==
-X-Google-Smtp-Source: AGs4zMZVSVkm0HSWr/aDjyebZH5pdmXxLKxNNyuS31WM0ls16iuP0EcxW6TkRIy4PHOwnJXG48DATg==
-X-Received: by 10.107.190.198 with SMTP id o189mr15734972iof.18.1511214443236;
-        Mon, 20 Nov 2017 13:47:23 -0800 (PST)
-Received: from google.com ([2620:0:100e:422:255c:f926:518d:9e83])
-        by smtp.gmail.com with ESMTPSA id 16sm5571876itw.38.2017.11.20.13.47.21
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 20 Nov 2017 13:47:22 -0800 (PST)
-Date:   Mon, 20 Nov 2017 13:47:20 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=ausz7EtiSzMymnUUY6iD5rg7l4DXP5vC65dPwAVtyc0=;
+        b=mWt82llPlqt9noGGrY2D/Ge8ZZQdMnlUWCl4UJF2LEvC2G7yF8dYSxzf14V6TwrJUK
+         F2ix1cfNVdYZpQdU1BWZ0WXFwHv5it3xfQBwvmFYo1KxFwvFLZ8OgNnisTDvUf/o4hWd
+         wU3tsi36A7PNjo1YmlYPHDKHxQWdTBl8nCiYkxHTfa4K/2f1I2s+jzafgIJmyM+YKqh2
+         IPQxjsl5/Bz8D35cMDAwnOsON7nFamo0oVAYGKaNXwT1sDY65ZSW6wx8+gXEioRFmJhp
+         hczWcX043p+xjezzBvjGsxtwb7nGjTapZGRNthyehsUNKjMgUMgYH3jLJ4FKZd326hwH
+         JNNg==
+X-Gm-Message-State: AJaThX5wiPhj7A+cWos8M4QWblkajL/jXmIrzdtadfIZvWiq6Pcp+/l6
+        3CKds6+iNMGjERsVKI6pSLgDMSGq
+X-Google-Smtp-Source: AGs4zMa8LsLIyd4Oshi6zMK5h4fwRtnn6XTNbFZIClWUa1rwVk9rQBuhuhBJ+ivvMjUI3VjkKZXSHw==
+X-Received: by 10.80.164.87 with SMTP id v23mr11887077edb.99.1511214614431;
+        Mon, 20 Nov 2017 13:50:14 -0800 (PST)
+Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
+        by smtp.gmail.com with ESMTPSA id z23sm8781725edm.62.2017.11.20.13.50.13
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 20 Nov 2017 13:50:13 -0800 (PST)
+Received: from avar by evledraar with local (Exim 4.89)
+        (envelope-from <avarab@gmail.com>)
+        id 1eGtxE-0004yY-Lk; Mon, 20 Nov 2017 22:50:12 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Dan Jacques <dnj@google.com>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Segev Finer <segev208@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 1/8] ssh test: make copy_ssh_wrapper_as clean up after
- itself
-Message-ID: <20171120214720.GA92506@google.com>
-References: <20171120212134.lh2l4drdzu6fh5g2@aiede.mtv.corp.google.com>
- <20171120212223.wquyxbmz34foynrk@aiede.mtv.corp.google.com>
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/1] exec_cmd: RUNTIME_PREFIX on some POSIX systems
+References: <20171119173141.4896-1-dnj@google.com> <20171119173141.4896-2-dnj@google.com> <87lgj0wtr9.fsf@evledraar.booking.com>
+User-agent: Debian GNU/Linux 9.2 (stretch); Emacs 25.1.1; mu4e 0.9.19
+In-reply-to: <87lgj0wtr9.fsf@evledraar.booking.com>
+Date:   Mon, 20 Nov 2017 22:50:12 +0100
+Message-ID: <87k1ykwrfv.fsf@evledraar.booking.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20171120212223.wquyxbmz34foynrk@aiede.mtv.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/20, Jonathan Nieder wrote:
-> Simplify by not allowing the copied ssh wrapper to persist between
-> tests.  This way, tests can be safely reordered, added, and removed
-> with less fear of hidden side effects.
-> 
-> This also avoids having to call setup_ssh_wrapper to restore the value
-> of GIT_SSH after this battery of tests, since it means each test will
-> restore it individually.
-> 
-> Noticed because on Windows, if `uplink.exe` exists, the MSYS2 Bash
-> will overwrite that when redirecting via `>uplink`.  A proposed test
-> wrote a script to 'uplink' after a previous test created uplink.exe
-> using copy_ssh_wrapper_as, so the script written with '>uplink' had
-> the wrong filename and failed.
-> 
-> Reported-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-> ---
-> Thanks to Dscho for tracking this subtle issue down.
-> 
->  t/t5601-clone.sh | 28 ++++++++++++----------------
->  1 file changed, 12 insertions(+), 16 deletions(-)
-> 
-> diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-> index 86811a0c35..9d007c0f8d 100755
-> --- a/t/t5601-clone.sh
-> +++ b/t/t5601-clone.sh
-> @@ -306,21 +306,20 @@ test_expect_success 'clone checking out a tag' '
->  	test_cmp fetch.expected fetch.actual
->  '
->  
-> -setup_ssh_wrapper () {
-> -	test_expect_success 'setup ssh wrapper' '
-> -		cp "$GIT_BUILD_DIR/t/helper/test-fake-ssh$X" \
-> -			"$TRASH_DIRECTORY/ssh$X" &&
-> -		GIT_SSH="$TRASH_DIRECTORY/ssh$X" &&
-> -		export GIT_SSH &&
-> -		export TRASH_DIRECTORY &&
-> -		>"$TRASH_DIRECTORY"/ssh-output
-> -	'
-> -}
-> +test_expect_success 'set up ssh wrapper' '
-> +	cp "$GIT_BUILD_DIR/t/helper/test-fake-ssh$X" \
-> +		"$TRASH_DIRECTORY/ssh$X" &&
-> +	GIT_SSH="$TRASH_DIRECTORY/ssh$X" &&
-> +	export GIT_SSH &&
-> +	export TRASH_DIRECTORY &&
-> +	>"$TRASH_DIRECTORY"/ssh-output
-> +'
->  
->  copy_ssh_wrapper_as () {
->  	cp "$TRASH_DIRECTORY/ssh$X" "${1%$X}$X" &&
-> +	test_when_finished "rm -f ${1%$X}$X" &&
->  	GIT_SSH="${1%$X}$X" &&
-> -	export GIT_SSH
-> +	test_when_finished "GIT_SSH=\"\$TRASH_DIRECTORY/ssh\$X\""
 
-All the escaping!
+On Mon, Nov 20 2017, Ævar Arnfjörð Bjarmason jotted:
 
-Patch looks good.
+> On Sun, Nov 19 2017, Dan Jacques jotted:
+>
+>> [...]
+>
+> Firstly the promise of this is very neat. I'm happy to offer any help I
+> can give.
+>
+>> Enable Git to resolve its own binary location using a variety of
+>> OS-specific and generic methods, including:
+>>
+>> - procfs via "/proc/self/exe" (Linux)
+>> - _NSGetExecutablePath (Darwin)
+>> - KERN_PROC_PATHNAME sysctl on BSDs.
+>> - argv0, if absolute (all, including Windows).
+>>
+>> This is used to enable RUNTIME_PREFIX support for non-Windows systems,
+>> notably Linux and Darwin. When configured with RUNTIME_PREFIX, Git will
+>> do a best-effort resolution of its executable path and automatically use
+>> this as its "exec_path" for relative helper and data lookups, unless
+>> explicitly overridden.
+>>
+>> Git's PERL tooling now responds to RUNTIME_PREFIX_PERL. When configured,
+>> Git's generated PERL scripts resolve the Git library location relative to
+>> their runtime paths instead of hard-coding them. Structural changes
+>> were made to Makefile to support selective PERL header generation.
+>>
+>> Small incidental formatting cleanup of "exec_cmd.c".
+>
+>> +$(SCRIPT_PERL_GEN): % : %.perl perl/perl.mak GIT-PERL-DEFINES GIT-PERL-HEADER GIT-VERSION-FILE
+>>  	$(QUIET_GEN)$(RM) $@ $@+ && \
+>>  	INSTLIBDIR=`MAKEFLAGS= $(MAKE) -C perl -s --no-print-directory instlibdir` && \
+>>  	INSTLIBDIR_EXTRA='$(PERLLIB_EXTRA_SQ)' && \
+>>  	INSTLIBDIR="$$INSTLIBDIR$${INSTLIBDIR_EXTRA:+:$$INSTLIBDIR_EXTRA}" && \
+>>  	sed -e '1{' \
+>>  	    -e '	s|#!.*perl|#!$(PERL_PATH_SQ)|' \
+>> -	    -e '	h' \
+>> -	    -e '	s=.*=use lib (split(/$(pathsep)/, $$ENV{GITPERLLIB} || "'"$$INSTLIBDIR"'"));=' \
+>> -	    -e '	H' \
+>> -	    -e '	x' \
+>> +	    -e '	rGIT-PERL-HEADER' \
+>> +	    -e '	G' \
+>>  	    -e '}' \
+>>  	    -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
+>>  	    $< >$@+ && \
+>> @@ -1986,6 +2028,29 @@ GIT-PERL-DEFINES: FORCE
+>>  		echo "$$FLAGS" >$@; \
+>>  	    fi
+>>
+>> +GIT-PERL-HEADER: perl/perl.mak GIT-PERL-DEFINES FORCE
+>> +ifndef RUNTIME_PREFIX_PERL
+>> +	# Hardcode the runtime path.
+>> +	INSTLIBDIR=`MAKEFLAGS= $(MAKE) -C perl -s --no-print-directory instlibdir` && \
+>> +	INSTLIBDIR_EXTRA='$(PERLLIB_EXTRA_SQ)' && \
+>> +	echo \
+>> +	  'use lib (split(/$(pathsep)/, $$ENV{GITPERLLIB} || "'"$$INSTLIBDIR"'"));' \
+>> +	  >$@
+>> +else
+>> +	# Probe the runtime path relative to the PERL script. RUNTIME_PREFIX_PERL
+>> +	# automatically sets NO_PERL_MAKEMAKER, causing PERL scripts to be installed
+>> +	# to "$(prefix)/lib" (see "perl/Makefile"). This expectation is hard-coded
+>> +	# into the generated code below.
+>> +	GITEXECDIR='$(gitexecdir_SQ)' && \
+>> +	echo \
+>> +	  'sub _get_git_lib{'\
+>> +	  'use FindBin;'\
+>> +	  '(my $$p=$$FindBin::Bin)=~s=/'$${GITEXECDIR}'$$==;'\
+>> +		'return File::Spec->catdir($$p,"'"lib"'");' \
+>> +	  '};' \
+>> +	  'use lib (split(/$(pathsep)/, $$ENV{GITPERLLIB}||_get_git_lib()));'\
+>> +	  >$@
+>> +endif
+>
+> If you run run:
+>
+>     make -j8 prefix=/tmp/git RUNTIME_PREFIX=YesPlease RUNTIME_PREFIX_PERL= CFLAGS="-O0 -g" all install
+>
+> And then:
+>
+>     make -j8 prefix=/tmp/git RUNTIME_PREFIX=YesPlease RUNTIME_PREFIX_PERL=YesPlease CFLAGS="-O0 -g" all install
+>
+> You end up with this:
+>
+>     $ tree /tmp/git/{lib,share/perl}
+>     /tmp/git/lib
+>     └── x86_64-linux-gnu
+>         └── perl
+>             └── 5.26.1
+>                 ├── auto
+>                 │ └── Git
+>                 └── perllocal.pod
+>     /tmp/git/share/perl
+>     └── 5.26.1
+>         [...]
+>         └── Git.pm
+>
+> You need to bust the perl/PM.stamp cache as a function of your
+> RUNTIME_PREFIX_PERL variable (or NO_PERL_MAKEMAKER).
+>
+> Other than that, is this whole NO_PERL_MAKEMAKER workaround just because
+> you couldn't figure out what the target RELPERLPATH is in
+> $prefix/$RELPERLPATH, which in this case is share/perl/5.26.1 ?
+>
+> I don't remember offhand how to extract that, but htis is built into
+> perl itself, see e.g.:
+>
+>     $ PERL5LIB= /usr/bin/perl -E 'say for grep { m[share|lib] } @INC'
+>     /usr/local/lib/x86_64-linux-gnu/perl/5.26.1
+>     /usr/local/share/perl/5.26.1
+>     /usr/lib/x86_64-linux-gnu/perl5/5.26
+>     /usr/share/perl5
+>     /usr/lib/x86_64-linux-gnu/perl/5.26
+>     /usr/share/perl/5.26
+>     /usr/local/lib/site_perl
+>     /usr/lib/x86_64-linux-gnu/perl-base
+>
+> So it's in Config.pm somewhere IIRC. But your patch doesn't discuss why
+> you toggled NO_PERL_MAKEMAKER, is it purely to work around this issue,
+> and if we had some aesy way to figure out the target $RELPERLPATH we
+> wouldn't need to do that?
+>
+> Seems a bit of baby & bathwater there :)
 
->  }
->  
->  expect_ssh () {
-> @@ -344,8 +343,6 @@ expect_ssh () {
->  	(cd "$TRASH_DIRECTORY" && test_cmp ssh-expect ssh-output)
->  }
->  
-> -setup_ssh_wrapper
-> -
->  test_expect_success 'clone myhost:src uses ssh' '
->  	git clone myhost:src ssh-clone &&
->  	expect_ssh myhost src
-> @@ -432,12 +429,14 @@ test_expect_success 'ssh.variant overrides plink detection' '
->  '
->  
->  test_expect_success 'GIT_SSH_VARIANT overrides plink detection to plink' '
-> +	copy_ssh_wrapper_as "$TRASH_DIRECTORY/plink" &&
->  	GIT_SSH_VARIANT=plink \
->  	git clone "[myhost:123]:src" ssh-bracket-clone-variant-3 &&
->  	expect_ssh "-P 123" myhost src
->  '
->  
->  test_expect_success 'GIT_SSH_VARIANT overrides plink to tortoiseplink' '
-> +	copy_ssh_wrapper_as "$TRASH_DIRECTORY/plink" &&
->  	GIT_SSH_VARIANT=tortoiseplink \
->  	git clone "[myhost:123]:src" ssh-bracket-clone-variant-4 &&
->  	expect_ssh "-batch -P 123" myhost src
-> @@ -449,9 +448,6 @@ test_expect_success 'clean failure on broken quoting' '
->  		git clone "[myhost:123]:src" sq-failure
->  '
->  
-> -# Reset the GIT_SSH environment variable for clone tests.
-> -setup_ssh_wrapper
-> -
->  counter=0
->  # $1 url
->  # $2 none|host
-> -- 
-> 2.15.0.448.gf294e3d99a
-> 
+So LeonT over at #p5p helped me with this. He believes this'll work
+(unless MakeMaker INSTALL_BASE is set, but that should break the Git
+install anyway):
 
--- 
-Brandon Williams
+
+    /usr/bin/perl -MConfig -wE 'my ($relsite) = $Config{installsitelib} =~ m[^\Q$Config{siteprefixexp}\E/(.+)]s; say $relsite'
+    share/perl/5.26.1
+
+I.e. aside from my spiel below injecting this should work, and would
+eliminate the need to toggle NO_PERL_MAKEMAKER (untested):
+
+    BEGIN {
+        use lib split /:/,
+        (
+            $ENV{GITPERLLIB}
+            ||
+            do {
+                require FindBin;
+                require File::Spec;
+                require Config;
+                Config->import;
+
+                my ($relsite) = $Config{installsitelib} =~ m[^\Q$Config{siteprefixexp}\E/(.+)]s
+                    or die "PANIC: Ohes noes $Config{siteprefixexp} doesn't match a subset of $Config{installsitelib}";
+                File::Spec->catdir($FindBin::Bin, '..', '..', $relsite);
+            }
+        );
+    }
+
+
+> Aside from that:
+>
+> 1. The regex match you're doing to munge the dir could be done as a
+>    catdir($orig, '..', '..', 'lib'), that doesn't work as discussed
+>    above, but *might* be more portable. I say might because I don't know
+>    if the path string is always normalized to be unix-like, but if not
+>    this won't work e.g on Windows where it'll have \ not /.
+>
+> 2. You are 'use'-ing FindBin there unconditionally (use is not function
+>    local in perl), and implicitly assuming it loads File::Spec.
+>
+>    Ignoring the NO_PERL_MAKEMAKER caveats above I'd suggest something
+>    like this:
+>
+>        #!/usr/bin/perl
+>
+>        # BEGIN RUNTIME_PREFIX_PERL=YesPlease generated code.
+>        #
+>        # This finds our Git::* libraries at relative locations.
+>        BEGIN {
+>            use lib split /:/,
+>            (
+>                $ENV{GITPERLLIB}
+>                ||
+>                do {
+>                    require FindBin;
+>                    require File::Spec;
+>                    File::Spec->catdir($FindBin::Bin, '..', '..', 'lib');
+>                }
+>            );
+>        }
+>        # END RUNTIME_PREFIX_PERL=YesPlease generated code.
+>
+>        # Copyright (C) 2006, Eric Wong <normalperson@yhbt.net>
+>        # License: GPL v2 or later
+>
+>    It's also nice to have some whitespace / comments to note that this
+>    is generated code.
+>
+>  3. I may be squinting at this wrong but it seems to me that between
+>     your v1 and v2 reading GITPERLLIB here no longer makes any sense at
+>     all. You used to set it in git itself, now it takes priority but
+>     nothing sets it, presumably you'd have some external wrapper script
+>     that'll set it?
+>
+>     Now if I compile with RUNTIME_PREFIX=YesPlease I get magic
+>     auto-discovery of C program paths, right? But it'll still fallback
+>     to the system perl libs (if any) unless
+>     RUNTIME_PREFIX_PERL=YesPlease is set. Shouldn't we just make
+>     RUNTIME_PREFIX=YesPlease Just Work for everything?
