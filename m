@@ -2,141 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5ACF5202F2
-	for <e@80x24.org>; Mon, 20 Nov 2017 18:19:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 19D9C202F2
+	for <e@80x24.org>; Mon, 20 Nov 2017 18:24:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752008AbdKTSTL (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Nov 2017 13:19:11 -0500
-Received: from e1i183.smtp2go.com ([103.36.108.183]:33512 "EHLO
-        e1i183.smtp2go.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751975AbdKTSTK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Nov 2017 13:19:10 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=smtpservice.net; s=m1fbw0.a1-4.dyn; x=1511202850; h=Feedback-ID:
-        X-Smtpcorp-Track:Date:Subject:To:From:Reply-To:Message-ID:Sender:
-        List-Unsubscribe; bh=eCQj1g6g5JN9tG3ofQ/CaTT1acGKb/AP4CQBCisGopo=; b=R2BZwKAn
-        MIMHLj8ruYtkfIg/0/YzQw9581gM+GyHbSd6fMYKIN03msqa0kpWp5b/sWxghZXNroMahFdacuKy4
-        ZnfhzRYwq+ZmWwRja5ngiEAfa9mC4HISpzQgiGYnTKZ3LtWWtSBRw0lnztgEopnurGvrDWaA3Uzk+
-        z+yJjHC73ppoX58hzf6B7ipHnS1s98xUyNUSLH0WQIiYXJHfBQRpea62PjYR+g1PgheoNPqAIMX9K
-        R8i0hY3MOIZs7f9vEa/xKiYCDvQadVEjb67cjOaa/CWgUiJyKDfVqL58jbGWFRA2OC0sWBKijPYOR
-        GHsSJ30E3CSSOPrPiGIubjbPSA==;
-Message-ID: <B89FAB6895F940EBA45554F20184302F@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:   "Philip Oakley" <philipoakley@iee.org>
-To:     "Philip Oakley" <philipoakley@iee.org>,
-        "Junio C Hamano" <gitster@pobox.com>
-Cc:     "Stefan Beller" <sbeller@google.com>, "git" <git@vger.kernel.org>,
-        "Kevin Daudt" <me@ikke.info>,
-        "Jacob Keller" <jacob.keller@gmail.com>,
-        "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-References: <20171028004419.10139-1-sbeller@google.com><20171031003351.22341-1-sbeller@google.com><20171031003351.22341-7-sbeller@google.com><xmqqinevzvel.fsf@gitster.mtv.corp.google.com><CAGZ79kYO=4SWzfKY6bU8Spn5Ubw39ghOH6wanFhFEsKD8q9vrA@mail.gmail.com><xmqq4lqewu2b.fsf@gitster.mtv.corp.google.com><CAGZ79kYC4=rDSWC7WCGVL4n4OC8BpvMJFwxx+LV9GqoGnSHFSA@mail.gmail.com><xmqqinetsayr.fsf@gitster.mtv.corp.google.com><xmqq375xs3zr.fsf@gitster.mtv.corp.google.com><BFE987312194406AAAEA8DAC7EC5BFF5@PhilipOakley><xmqqlgjlkzmm.fsf@gitster.mtv.corp.google.com><D199FB1260C4462ABFC1F0F77D26EF06@PhilipOakley><CAGZ79kYRunzS9vDO=Zk1jQk1BvwJomN5+=1gQi0aDau_qbamew@mail.gmail.com><54073F7B0C9E49C4BA55CA97A605A724@PhilipOakley> <xmqqo9obhqo0.fsf@gitster.mtv.corp.google.com> <205BDB5638F64690AF6BE91360CE155E@PhilipOakley>
-Subject: Re: [PATCH 6/7] builtin/describe.c: describe a blob
-Date:   Mon, 20 Nov 2017 18:18:51 -0000
-Organization: OPDS
-MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="iso-8859-1";
-        reply-type=response
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-Smtpcorp-Track: 1-Gq-i9EFQiS9y.EzymrxhL1
-Feedback-ID: 66524m:66524aMf6O2Y:66524sajhSw-HGc:SMTPCORP
-X-Report-Abuse: Please forward a copy of this message, including all
- headers, to <abuse-contact@smtp2go.com>
+        id S1752430AbdKTSYt (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Nov 2017 13:24:49 -0500
+Received: from mail-wm0-f48.google.com ([74.125.82.48]:39467 "EHLO
+        mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752424AbdKTSYp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Nov 2017 13:24:45 -0500
+Received: by mail-wm0-f48.google.com with SMTP id x63so7979011wmf.4
+        for <git@vger.kernel.org>; Mon, 20 Nov 2017 10:24:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=dinwoodie.org; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=C0Qp85sNprlLD5YVt0mV7ZM5G1M/5d3ux2qlOALptTQ=;
+        b=A8DIYrWYwPEKbsOm2B0Ia4J3DQaKfm0CjX38N6v5bZkD04r/ngUj1ffsQSGAxJh1LI
+         Pq9HY8SO0xsN/8e9yZcAE2nqKB6p4l2jch3fKyrPKljcGmAYrdhsP6km5bk1EIrXxKbI
+         fdSkIwKFehuV0waTOuvC9X8cK+QjE+8GRgVZs=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=C0Qp85sNprlLD5YVt0mV7ZM5G1M/5d3ux2qlOALptTQ=;
+        b=R+uCYWWLqcGUq7jr8PngXa2KFmz9xYVtKeoucGXB+fk0uZmx6rFHtf9PQ5Cc3vTBxU
+         K9LU9Vh52Iu8q0tc6YquMo5R2EQEoDD4N+i27fiL22egm0DeuZL4fmrIq91jcv+OL93w
+         LYOQehTto36/SduRCSW/xDikt+UaRIsnGNnOKjdNQdzkVHjHJHC+8SCDDKlqOLC99aPL
+         cvdPBGU1EO+C6FxeKFwc+HXoUSuneXg4XRM9rPT510hx6qmL9Xes7tGg991jJieJIKz/
+         0/63evgLKkaJb0b5z63FfvLYhdvXcuOU7L9UI8/UFJV0bVOSWKJPs6RZJTeF+aMg3bEv
+         YHUA==
+X-Gm-Message-State: AJaThX7ckykvcxBwEmvygP9VPSGkQOjX89FIcZnLyC7don5pPRfbRp0k
+        TJMPUWL9tm94bzGbAX/jHJhwI1ySYv4=
+X-Google-Smtp-Source: AGs4zMbPHq3ec2Wm8Dsk5YPEbpJCuRRBj/eIg8CbjUKP5dUSScrAiFQOApOLSSHtYDKIUAG7vwMmBw==
+X-Received: by 10.28.67.68 with SMTP id q65mr9975444wma.26.1511202283729;
+        Mon, 20 Nov 2017 10:24:43 -0800 (PST)
+Received: from PC5175.ad.datcon.co.uk ([2620:104:4001:73:a407:552d:75e4:4516])
+        by smtp.gmail.com with ESMTPSA id 138sm13691999wmf.21.2017.11.20.10.24.42
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 20 Nov 2017 10:24:42 -0800 (PST)
+From:   Adam Dinwoodie <adam@dinwoodie.org>
+To:     git@vger.kernel.org
+Cc:     Christian Couder <christian.couder@gmail.com>
+Subject: [RFC PATCH v2 0/2] bisect: add a single command for editing logs
+Date:   Mon, 20 Nov 2017 18:24:37 +0000
+Message-Id: <cover.1511200589.git.adam@dinwoodie.org>
+X-Mailer: git-send-email 2.15.0.281.g87c0a7615
+In-Reply-To: <20171108135931.166880-1-adam@dinwoodie.org>
+References: <20171108135931.166880-1-adam@dinwoodie.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Philip Oakley" <philipoakley@iee.org>
+When I'm bisecting, I sometimes want to edit the bisection log, e.g. to
+remove the "skip" marker by a commit I've now found a way to avoid
+skipping.  Rather than requiring users to save off the log, edit it,
+then replay the edited log as separate commands, this patch series adds
+support for a "git bisect edit" command which does all three steps in
+one.
 
-s/with/without/  ...
+Christian Couder has already said he's happy with the broad idea in the
+previous spin of this RFC, so here's a first attempt at actually
+implementing the function within "git bisect".
 
-> From: "Junio C Hamano" <gitster@pobox.com>
-> : Friday, November 10, 2017 1:24 AM
-> [catch up]
->
->> "Philip Oakley" <philipoakley@iee.org> writes:
->>
->>> From: "Stefan Beller" <sbeller@google.com>
->>>> Rereading this discussion, there is currently no urgent thing to 
->>>> address?
->>>
->>> True.
->>>
->>>> Then the state as announced by the last cooking email, to just cook
->>>> it, seems
->>>> about right and we'll wait for further feedback.
->>
->> A shiny new toy that is not a fix for a grave bug is rarely urgent,
->> so with that criterion, we'd end up with hundreds of topics not in
->> 'next' but in 'pu' waiting for the original contributor to get out
->> of his or her procrastination, which certainly is not what I want to
->> see, as I'd have to throw them into the Stalled bin and then
->> eventually discard them, while having to worry about possible
->> mismerges with remaining good topics caused by these topics
->> appearing and disappearing from 'pu'.
->>
->> I'd rather see any topic that consumed reviewers' time to be
->> polished enough to get into 'next' while we all recall the issues
->> raised during previous reviews.  I consider the process to further
->> incrementally polish it after that happens a true "cooking".
->>
->> For this topic, aside from "known issues" that we decided to punt
->> for now, my impression was that the code is in good enough shape,
->> and we need a bit of documentation polishes before I can mark it
->> as "Will merge to 'next'".
->>
->>> Possibly only checking the documenation aspects, so folks don't fall
->>> into the same trap as me.. ;-)
->>
->> Yup, so let's resolve that documentation thing while we remember
->> that the topic has that issue, and what part of the documentation
->> we find needs improvement.
->>
->> I am not sure what "trap: you fell into, though.  Are you saying
->> that giving
->>
->> git describe [<option to describe a commit>...] <commit-ish>
->> git describe [<option to describe a blob>...] <blob>
->>
->> in the synopsis is not helpful, because the user may not know what
->> kind of object s/he has, and cannot decide from which set of options
->> to pick?  Then an alternative would be to list
->
-> (If I remember correctly) My nit pick was roughly along the lines you 
-> suggest, and that the two option lists (for commit-ish and blob) were 
-> shown in different ways, which could lead to the scenarion that, with 
-> knowing the
+There are a few issues of varying significance before I think this is
+ready to be actually used.  I'm not sure how to approach them, and would
+be very grateful for advice from the list:
 
-s/with/without/  ...
+- It's possible to start a bisect session with a command like `git
+  bisect @ @~10`.  This will lead to the bisect log including the `@`
+  and `@~10` literally, and the interpretation of those values changes
+  depending on the current HEAD.  As a result, if you do a `git bisect
+  edit` after starting a bisect like that, but don't actually edit the
+  file, you'll nonetheless be in a different state.
 
-> oid object type (or knowing how to get it), the user could give an invalid 
-> option, and think the command failure was because the oid was invalid, not 
-> that the option was not appropriate, along with variations on that theme.
->
-> The newer synopsis (v5) looks Ok in that it avoids digging the hole by not 
-> mentioning the blob options. Personally I'm more for manuals that tend 
-> toward instructional, rather than being expert references. I'd sneak in a 
-> line saying "The object type can be determined using `git cat-file`.", but 
-> maybe that's my work environment...
->
->>
->> git describe [<option>...] <object>
->>
->> in the synopsis, say upfront that most options are applicable only
->> when describing a commit-ish, and when describing a blob, we do
->> quite different thing and a separate set of options apply, perhaps?
->>
-> --
-> Philip 
+  I can see a few ways of coping with that:
+
+  1. Change the existing `git bisect start` behaviour to run arguments
+     through `git rev-parse` before recording them.  It appears `git
+     bisect good` et al. already do that, but it is a change in
+     behaviour that I guess could impact badly on other people using
+     `git bisect log`-based workflows.
+
+  2. Do a full `git bisect reset` before replaying the log, so the
+     revisions will be parsed in the same way as they were originally.
+     I'd be slightly sad about that, as it seems an unnecessary
+     inefficiency, but it may well be the simplest approach.
+
+  3. Somehow get Git to parse the relative references as relative to the
+     original commit rather than the current HEAD.  I'm not sure if
+     there's code for doing this already, but if not I suspect it's
+     beyond my ability to implement in the immediate term.
+
+  4. Just detect when users are in this scenario, and warn them that
+     Git's behaviour might be unexpected.
+
+- I can see `git rebase --interactive` detects when the edited file
+  hasn't changed, and in that case prints a success message but
+  otherwise takes no action.  I've not implemented that behaviour here
+  because I couldn't immediately work out how rebase does it, and I
+  didn't want to reinvent that particular wheel.  (Plus I think the
+  impact of performing such unnecessary steps will be considerably lower
+  than the equivalent with rebase.)
+
+- I'm not entirely happy with the error handling, primarily as I
+  couldn't seem to find a consensus on what best practice is for
+  handling errors between the existing shell code in this script and
+  git-rebase--interactive.sh.
+
+- There aren't yet any tests or documentation changes; I wanted to get
+  commentary on the initial code changes before I spent time on those
+  parts.
+
+Adam Dinwoodie (2):
+  bisect: split out replay file parsing
+  bisect: add "edit" command
+
+ builtin/bisect--helper.c |  3 ++-
+ git-bisect.sh            | 25 +++++++++++++++++++++++++
+ 2 files changed, 27 insertions(+), 1 deletion(-)
+
+-- 
+2.15.0.281.g87c0a7615
 
