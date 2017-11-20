@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B8FDF2036D
-	for <e@80x24.org>; Mon, 20 Nov 2017 11:41:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0873D2036D
+	for <e@80x24.org>; Mon, 20 Nov 2017 11:44:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751154AbdKTLlS (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Nov 2017 06:41:18 -0500
-Received: from mail-wr0-f180.google.com ([209.85.128.180]:45858 "EHLO
-        mail-wr0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751151AbdKTLlR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Nov 2017 06:41:17 -0500
-Received: by mail-wr0-f180.google.com with SMTP id a63so7772059wrc.12
-        for <git@vger.kernel.org>; Mon, 20 Nov 2017 03:41:17 -0800 (PST)
+        id S1751159AbdKTLoo (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Nov 2017 06:44:44 -0500
+Received: from mail-wr0-f177.google.com ([209.85.128.177]:42754 "EHLO
+        mail-wr0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751070AbdKTLon (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Nov 2017 06:44:43 -0500
+Received: by mail-wr0-f177.google.com with SMTP id o14so7796760wrf.9
+        for <git@vger.kernel.org>; Mon, 20 Nov 2017 03:44:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
         bh=ba0Ok4Lg2HrUnfwc5LJL7hnnrCiVDngsDKXX0//vMkw=;
-        b=Of/AtJqA4rpPtKxPFLConp4Um7s/sy8yvM8dcmXZOreIAUW9tJjFZrhDhbQZrIgQKc
-         M+4sQ+AvHh0vm5YmLrCxq8kRftJMcQB6A2ir11ya4e1/TZeox4cF22CaSuFt4Fld3QWq
-         1kWG97zn6Lia647fEVdvHpD+2X3NyGp4gzzJ4=
+        b=G9d+AzdUDvmM2njOCy2mSrIGm4pyDV1khz/bzsPtIqLJm0VZ39WzsAYVZdkWIUtKMu
+         2M0l5rfHwnMpr/fe/GfCzt1elM3GWx+HdLtdB5/jNhtDlJQfheS5sjHET/BAn1NrPNyX
+         CCfo41WI0F4bSAUFnnWjSIF+p9FCRYZBFW4vw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
         bh=ba0Ok4Lg2HrUnfwc5LJL7hnnrCiVDngsDKXX0//vMkw=;
-        b=b8Nnh9l/fWWtT40hubuOZgAbi+S6j/zJTqUya1+voZ4LZz3hESXW0ndh3B9POjZjkP
-         3BcuWNjIhXpxWTGDeah7tvpJ6yU5Zwc2NZcFE/hVrcVN9fKKUEtENUh+hl6xYBtDKVpo
-         lF4QxsQBGTF7VV9FOj+g42PTfD2vZwM1y/k1rI4W28ouq4eHuXZ4rv1wV0YYocS+Vrn5
-         nLlOHL6Hbkg13DP2UejTVddPcdU3t3FdXGTCVjg1+UfarRAHxReg32HzK9aBAXokRe90
-         c6533R16FpoeBsvaw2c//fO3hI6TO49Ou5G90xKl4g4pIg2qS4SXHC0bXSJrzKwUfjXV
-         XF7Q==
-X-Gm-Message-State: AJaThX5zcTHNadfWWSQ2/yH9uDW65qf2d/r/mkMWVVFE6NQKZl4ar8El
-        j33XazL4dQ2Piq3DHWg3NdAzig==
-X-Google-Smtp-Source: AGs4zMYb7nxbTs3JQcysFN5CS0y2vuNxeO5kFX1U37HGi43+FcXz+Yw6lqMumSWlXgTPDhqZbLaRDA==
-X-Received: by 10.223.128.4 with SMTP id 4mr12193110wrk.9.1511178076357;
-        Mon, 20 Nov 2017 03:41:16 -0800 (PST)
+        b=QoEE6jl38wFK94u04XFZ3CtlRHxGAgwFyBjLQt8bLrX3nf/+rqhmNobnSZ+rCDCpnT
+         c7DZyRc15cTITjG4nBt3J6zuEHp47eKLryS8ZdXQPAnwW1bNv2M+lZBWw2MZBf6p5G3f
+         2wYF6XAURNAXrdCb9R9AkYdI33BwEVIwP+v+aaCqbeVp8fBxzIJ4iPEuQn7lZiV0BjTL
+         Ha3nWIsjz62gzeA1VjYHrTORjpALJGgNQW0vcpPGuBPMfa8pi1a1B1tk0b9XR36OHrpk
+         ALhylE2Qnz+hez70u7+zN/k/3YuzRArHJFN9jZ6d6Z+MxQlcnnQ987grCgD4X6qtwZYa
+         KQ+Q==
+X-Gm-Message-State: AJaThX6pAY1JioFS8+/88zQ8GZOSpAyKb+TxurUtWuOlnIUZwpKYkjNG
+        2LWE4Ff9mFJ0YHQXITNVrkEbsQ==
+X-Google-Smtp-Source: AGs4zMZuCUnXKN7m21wmh9fPRNbK+TTSiw8J5++mR8PzjCDzMgDQr06MZPQNxwfEq+z5d4DfZd+tsA==
+X-Received: by 10.223.166.235 with SMTP id t98mr10937995wrc.251.1511178282366;
+        Mon, 20 Nov 2017 03:44:42 -0800 (PST)
 Received: from zen.linaro.local ([81.128.185.34])
-        by smtp.gmail.com with ESMTPSA id y15sm24885216wrc.96.2017.11.20.03.41.15
+        by smtp.gmail.com with ESMTPSA id o88sm4270878wrc.10.2017.11.20.03.44.41
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 20 Nov 2017 03:41:15 -0800 (PST)
+        Mon, 20 Nov 2017 03:44:41 -0800 (PST)
 Received: from zen.linaroharston (localhost [127.0.0.1])
-        by zen.linaro.local (Postfix) with ESMTP id ECE5A3E01B1;
-        Mon, 20 Nov 2017 11:41:14 +0000 (GMT)
+        by zen.linaro.local (Postfix) with ESMTP id C5A353E01B1;
+        Mon, 20 Nov 2017 11:44:40 +0000 (GMT)
 From:   =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH] git-send-email: fix --cc-cmd get_maintainer.pl regression
-Date:   Mon, 20 Nov 2017 11:41:01 +0000
-Message-Id: <20171120114101.16508-1-alex.bennee@linaro.org>
+Subject: [PATCH v2] git-send-email: fix --cc-cmd get_maintainer.pl regression
+Date:   Mon, 20 Nov 2017 11:44:35 +0000
+Message-Id: <20171120114435.17989-1-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.15.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
