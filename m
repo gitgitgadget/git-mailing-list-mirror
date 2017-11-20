@@ -7,111 +7,81 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 68F94202F2
-	for <e@80x24.org>; Mon, 20 Nov 2017 23:05:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D001C202F2
+	for <e@80x24.org>; Mon, 20 Nov 2017 23:14:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751176AbdKTXE6 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Nov 2017 18:04:58 -0500
-Received: from mail-qk0-f174.google.com ([209.85.220.174]:39048 "EHLO
-        mail-qk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751158AbdKTXE5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Nov 2017 18:04:57 -0500
-Received: by mail-qk0-f174.google.com with SMTP id w125so9613814qkb.6
-        for <git@vger.kernel.org>; Mon, 20 Nov 2017 15:04:56 -0800 (PST)
+        id S1751213AbdKTXO0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Nov 2017 18:14:26 -0500
+Received: from mail-qk0-f194.google.com ([209.85.220.194]:38972 "EHLO
+        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751173AbdKTXOZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Nov 2017 18:14:25 -0500
+Received: by mail-qk0-f194.google.com with SMTP id w125so9639265qkb.6
+        for <git@vger.kernel.org>; Mon, 20 Nov 2017 15:14:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=v6hDIbI5abdTZ3Fcn3S8wMn0OkUrx5y4s8xmAz8vTBM=;
-        b=IvKBPxHR+S/gQucFsIpkZQ9miENHh/p/i34w6jbasBUCQgEw30EEmRmZBYcp93Y/5L
-         zupdI01CZ/U3tMsxgcQwN5unhzb47Gfyx4kfC9ULxeinOIdS0r8bLTFyuKiOmcMBFjWs
-         KNT2SeOVjzZtS9YfU7YWQKMsg7psT/ClztDzKzN0P2JISkxpeBcMKJtHnEwIh8sH765/
-         winNwXuT0OxZyiU1FK9ogxZxkDWN0MMSm1OTSuWpFzA50kgF6axUGxCG+IoI2/pb5rBO
-         Jrxf1bsNTErD/2pkEjK6SrZESAy7dwzj9e8r+ERP2tL5dQLmbl83Ylc7/mCcu/8wRXSv
-         4evQ==
+         :subject:to:cc;
+        bh=X73uRo4h85rWmNKt0J3LrqoI+bxs+QJNFBFFvvlxAKs=;
+        b=edqiiwNr7PO3Vv1U6tuYfC+/07S407SEcQSObLA2VYHgO2UYyAz3in3s3oOdQDiloh
+         Fb+Zgc6/R2Gd+NGhdyg2ve0A7H9pOntr6crr0MAWKjLydwyiVOJzEeNQjzkR2wh6GVt/
+         CninvXRb423TT7qjlm24T+3VsWA6P2HyS1NiadLRw/Sin+KZCfCEpwWS4i78kSi6iMbG
+         CIinnux4ICxPkSqajjIfzPP9wqwIBC+0a8t4Lmr+xtWYzbU7Ub/5wJGKL095ZQGZvfIT
+         SKXaXgCYdq+2NKoFmVmtU4DinlA8blA8SEbkquZ10L+p+Gj5yrPkm4LKOb6f3iWcYcQ3
+         g4Fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=v6hDIbI5abdTZ3Fcn3S8wMn0OkUrx5y4s8xmAz8vTBM=;
-        b=ney69ioOcuVIgq8IIPqy1cVaV8RFKT+D/o5c0eognmxaxLA1vzzSKpuiYBmOA/ObS/
-         y/lw8kBvhQknkS0IwF2NwGZAee5bt0rpBiQ7ms6pKJViImJClOZnrApYnUN5GEdDCcmN
-         lAqWbr7ir+Iu4g4sLDXLqa/vISDqCfibUrIL+41R018+elv2sUe8UiCvrQocf7w63CvF
-         VCDi7CFqsXbRRHOI27+kLbdoq1XF1398RBvEMtSbQTbTMc5xofU49lgq+0Y4i3EtH9mL
-         Av7mOTatvTP8y+pw8urPxe4kO/DVY7LVFTJifoh1kNJ0wPLmT1SkUDFf0pg58fWCyP32
-         5wlg==
-X-Gm-Message-State: AJaThX5An1x4NLG9DEoKgbKz2X94c0q+60yNl95jOHDorW0CEp34HB0d
-        F8HA9wJK+f7BCJNaMMrSuJzNEv7o+3Rym7Y6JQMVog==
-X-Google-Smtp-Source: AGs4zMYOrG2OE5uajkElnFEObpivrc953R+9IVg5UN31C6XvX+uv2qQpgqUwVuNd7O0yH5GsK3AK5SFBM+QvKI2ZIR4=
-X-Received: by 10.55.141.3 with SMTP id p3mr23583080qkd.210.1511219096291;
- Mon, 20 Nov 2017 15:04:56 -0800 (PST)
+         :date:message-id:subject:to:cc;
+        bh=X73uRo4h85rWmNKt0J3LrqoI+bxs+QJNFBFFvvlxAKs=;
+        b=COawRxalZuLzaaagWBlD9nrnf2gj0Wo0VB0Cr1+qhzL9lEoH2+TXoPo6ou6WolcRFu
+         CLZLbjOMRogmMte4J4L8h04rLQSUyXtt64pWwidCAybzGCDx1EqDakVd3MP3AKxANvyi
+         jOOINO3FVNPKgoD8VE9Jg8twy5cQTBzL73jIjjk0GhMbCmhzRlPxSI4GSuXvVoisiog7
+         y+5lN4v7Hk0JFLX6Nvc6Cy3s6zFY8u3nMOI4pSU2NgaWQuOivb8h5DTrjiN8n42VRBes
+         85+USle+xkZ7F73DBnmoGannXXcrykeRLnzgo5Ufl7y+JQWvGh9DjgkYsUWjBdBTlNCK
+         fK7A==
+X-Gm-Message-State: AJaThX7yrIuJyNsG29FGyPj16yi2mX/NScekRClv+kRLgWbVt59sdZ4n
+        Ae+1YzENBiKwma0L7CHGyePnsLZRQFCszP2+fO0=
+X-Google-Smtp-Source: AGs4zMaSwR0MwJmikeSe9L5mliP3iFnyzMsmB2C2ALjibVbnxX5vRETXgNVa1fQZIQGDSUciq75NHkJO98+rB8/+cgo=
+X-Received: by 10.55.42.75 with SMTP id q72mr23912840qkh.57.1511219664728;
+ Mon, 20 Nov 2017 15:14:24 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.12.155.209 with HTTP; Mon, 20 Nov 2017 15:04:55 -0800 (PST)
-In-Reply-To: <20171120114101.16508-1-alex.bennee@linaro.org>
-References: <20171120114101.16508-1-alex.bennee@linaro.org>
+Received: by 10.12.155.209 with HTTP; Mon, 20 Nov 2017 15:14:24 -0800 (PST)
+In-Reply-To: <3893514.emzqGSqeDI@yoga>
+References: <3893514.emzqGSqeDI@yoga>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 20 Nov 2017 18:04:55 -0500
-X-Google-Sender-Auth: tMNWABD6QA7qRuKj8XXRs31kGGE
-Message-ID: <CAPig+cTkPUVgEaDK+yo9+JdE1Mmx0kEOV5EfCQYeswd8vkxJNw@mail.gmail.com>
-Subject: Re: [PATCH] git-send-email: fix --cc-cmd get_maintainer.pl regression
-To:     =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc:     Git List <git@vger.kernel.org>
+Date:   Mon, 20 Nov 2017 18:14:24 -0500
+X-Google-Sender-Auth: 7D2EAXMci69iFLF9_Wa9ERrJUiE
+Message-ID: <CAPig+cTncgDToo0=zHsBHfCPMPTYNumNAhTgOnhceLHpse3wuw@mail.gmail.com>
+Subject: Re: [PATCH] bash completion: Add --autostash and --no-autostash to pull
+To:     Albert Astals Cid <albert.astals.cid@kdab.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 20, 2017 at 6:41 AM, Alex Benn=C3=A9e <alex.bennee@linaro.org> =
-wrote:
-> Since the removal of Mail::Address from git-send-email certain address
-> patterns returned by common get_maintainer.pl scripts now fail to get
-> correctly parsed by the built-in Git::parse_mailboxes. Specifically
-> the patterns with embedded parenthesis fail. For example from the
-> Linux kernel MAINTAINERS:
-> [...snip...]
-> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+On Mon, Nov 20, 2017 at 10:07 AM, Albert Astals Cid
+<albert.astals.cid@kdab.com> wrote:
+> Ideally we should only autocomplete if pull has --rebase since
+> they only work with it but could not figure out how to do that
+> and the error message of doing git pull --autostash points out
+> that you need --rebase so i guess it's good enough
+
+Missing Signed-off-by:. See Documentation/SubmittingPatches. Thanks.
+
 > ---
-> diff --git a/perl/Git.pm b/perl/Git.pm
-> @@ -936,6 +936,9 @@ sub parse_mailboxes {
->                         $end_of_addr_seen =3D 0;
->                 } elsif ($token =3D~ /^\(/) {
->                         push @comment, $token;
-> +               } elsif ($token =3D~ /^\)/) {
-> +                       my $nested_comment =3D pop @comment;
-> +                       push @comment, "$nested_comment$token";
-
-See [1] for commentary on this fix being too fragile and working only
-for this very specific case.
-
-[1]: https://public-inbox.org/git/CAPig+cTXq6jSN9f2_xyj=3DJfv_cg2kUFUtA5uVk=
-ZDrRRSi2x7vg@mail.gmail.com/
-
-> diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-> @@ -172,6 +172,22 @@ test_expect_success $PREREQ 'cc trailer with various=
- syntax' '
-> +test_expect_success $PREREQ 'cc trailer with get_maintainer output' '
-> +        write_script expected-cc-script.sh <<-EOF &&
-> +echo "One Person <one@example.com> (supporter:THIS (FOO/bar))"
-> +echo "Two Person <two@example.com> (maintainer:THIS THING)"
-> +echo "Third List <three@example.com> (moderated list:THIS THING (FOO/bar=
-))"
-> +echo "<four@example.com> (moderated list:FOR THING)"
-> +echo "five@example.com (open list:FOR THING (FOO/bar))"
-> +echo "six@example.com (open list)"
-> +EOF
-
-Since you've used -EOF, you can indent this entire block (with tabs)
-to the level of the write_script() to make it easier to read.
-
-Also, it's recommended to use -\EOF to suppress interpolation within
-the here-doc; it's not needed in this case, but doing so states
-intent.
-
-> +       clean_fake_sendmail &&
-> +       git send-email -1 --to=3Drecipient@example.com \
-> +               --cc-cmd=3D./expected-cc-script.sh \
-> +               --smtp-server=3D"$(pwd)/fake.sendmail" &&
-> +       test_cmp expected-cc commandline1
-> +'
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-
+> completion.bash
+> index 539d7f84f..7ded58f38 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -1923,6 +1923,7 @@ _git_pull ()
+>         --*)
+>                 __gitcomp "
+>                         --rebase --no-rebase
+> +                       --autostash --no-autostash
+>                         $__git_merge_options
+>                         $__git_fetch_options
+>                 "
