@@ -2,77 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 94BBC202F2
-	for <e@80x24.org>; Mon, 20 Nov 2017 20:16:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A159C202F2
+	for <e@80x24.org>; Mon, 20 Nov 2017 20:26:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752660AbdKTUQx (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Nov 2017 15:16:53 -0500
-Received: from avasout04.plus.net ([212.159.14.19]:35171 "EHLO
-        avasout04.plus.net.plus.net" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1752546AbdKTUQw (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2017 15:16:52 -0500
-Received: from [10.0.2.15] ([80.189.70.158])
-        by smtp with ESMTPA
-        id GsUrejPHPzbmWGsUseBvQH; Mon, 20 Nov 2017 20:16:51 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=P6pKvmIu c=1 sm=1 tr=0
- a=bpDj9VLvXCYHU65eeb/Fiw==:117 a=bpDj9VLvXCYHU65eeb/Fiw==:17
- a=IkcTkHD0fZMA:10 a=qmtHxtvZsTsTWKRDoHYA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Stefan Beller <sbeller@google.com>,
-        GIT Mailing-list <git@vger.kernel.org>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: t3512 & t3513 'unexpected passes'
-Message-ID: <73f0fb1e-5b55-1049-7706-652f1f9deaed@ramsayjones.plus.com>
-Date:   Mon, 20 Nov 2017 20:16:49 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.4.0
+        id S1752739AbdKTU0Q (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Nov 2017 15:26:16 -0500
+Received: from cloud.peff.net ([104.130.231.41]:35014 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1752422AbdKTU0O (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Nov 2017 15:26:14 -0500
+Received: (qmail 3896 invoked by uid 109); 20 Nov 2017 20:26:09 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 20 Nov 2017 20:26:09 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 15774 invoked by uid 111); 20 Nov 2017 20:26:25 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with ESMTPA; Mon, 20 Nov 2017 15:26:25 -0500
+Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 20 Nov 2017 15:26:07 -0500
+Date:   Mon, 20 Nov 2017 15:26:07 -0500
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Subject: [PATCH 0/5] avoiding pointless pack-directory re-scans
+Message-ID: <20171120202607.tf2pvegqe35mhxjs@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfFjjKGSgDX+V3BW90f9c74gZdnKd+rczWUOvwPCGqqw8ah1QBo5YcmL5BRNsrd3tRavCcpDWbxk3LNDm/w3FYa0QpNiM/3z+XnLmePbREbgED+J2ce+C
- sxP7OEb3cwVSdUMzRPOWIUGiMouI808n8zB/5f+QQ2RnoGpUDX7IXShfVubcjAiaTYt+dVbRKianWQ==
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+I recently dug into a performance problem running "git fetch" in a
+repository with 5000 packs. Now obviously that's a silly number of packs
+to have, but I did find some pretty low-hanging fruit.  Most of the time
+was spent in pointlessly re-scanning the objects/pack directory.
 
-For several days, I have been staring at some 'unexpected passes' in
-the t3512-cherry-pick-submodule.sh and t3513-revert-submodule.sh test
-files (tests #11-13 in both cases).
+This series has two fixes, along with a perf test that covers this case.
+I think the perf test is especially important here because we actually
+fixed one of these cases (patch 4) already, but later regressed it
+without noticing. The perf suite could have caught that (and would after
+this series).
 
-I finally found time tonight to 'git bisect' the 'problem', and found
-that bisect fingered commit b5a812b298 ("sequencer: try to commit without
- forking 'git commit'", 17-11-2017).
+There are numbers in the individual commits, but here's the before/after
+for the whole series:
 
-During the bisection I stumbled across (several times) the following
-compilation error:
+Test            origin            HEAD
+--------------------------------------------------------
+5551.4: fetch   5.48(4.99+0.50)   0.14(0.09+0.05) -97.4%
 
-      CC sequencer.o
-  sequencer.c: In function ‘do_commit’:
-  sequencer.c:1142:9: error: void value not ignored as it ought to be
-       res = print_commit_summary(NULL, &oid,
-           ^
-  Makefile:2105: recipe for target 'sequencer.o' failed
-  make: *** [sequencer.o] Error 1
+That's on a somewhat-contrived setup meant to maximize us noticing a
+regression. But I do think these re-scans are probably kicking in for
+normal situations, but just aren't quite expensive enough for anybody to
+have noticed and dug into it.
 
-which I 'fixed' like so: s/res = //
+Patches:
 
-So, given that the 'fingered' commit didn't immediately seem to be
-related to the problem, along with the above errors, this may well
-not be the culprit.
+  [1/5]: p5550: factor our nonsense-pack creation
+  [2/5]: t/perf/lib-pack: use fast-import checkpoint to create packs
+  [3/5]: p5551: add a script to test fetch pack-dir rescans
+  [4/5]: everything_local: use "quick" object existence check
+  [5/5]: sha1_file: don't re-scan pack directory for null sha1
 
-Just FYI.
+ fetch-pack.c                 |  3 ++-
+ sha1_file.c                  |  3 +++
+ t/perf/lib-pack.sh           | 25 ++++++++++++++++++++
+ t/perf/p5550-fetch-tags.sh   | 25 ++------------------
+ t/perf/p5551-fetch-rescan.sh | 55 ++++++++++++++++++++++++++++++++++++++++++++
+ 5 files changed, 87 insertions(+), 24 deletions(-)
+ create mode 100644 t/perf/lib-pack.sh
+ create mode 100755 t/perf/p5551-fetch-rescan.sh
 
-ATB,
-Ramsay Jones
-
+-Peff
