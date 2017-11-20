@@ -2,86 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D001C202F2
-	for <e@80x24.org>; Mon, 20 Nov 2017 23:14:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D676C202F2
+	for <e@80x24.org>; Mon, 20 Nov 2017 23:39:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751213AbdKTXO0 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Nov 2017 18:14:26 -0500
-Received: from mail-qk0-f194.google.com ([209.85.220.194]:38972 "EHLO
-        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751173AbdKTXOZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Nov 2017 18:14:25 -0500
-Received: by mail-qk0-f194.google.com with SMTP id w125so9639265qkb.6
-        for <git@vger.kernel.org>; Mon, 20 Nov 2017 15:14:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=X73uRo4h85rWmNKt0J3LrqoI+bxs+QJNFBFFvvlxAKs=;
-        b=edqiiwNr7PO3Vv1U6tuYfC+/07S407SEcQSObLA2VYHgO2UYyAz3in3s3oOdQDiloh
-         Fb+Zgc6/R2Gd+NGhdyg2ve0A7H9pOntr6crr0MAWKjLydwyiVOJzEeNQjzkR2wh6GVt/
-         CninvXRb423TT7qjlm24T+3VsWA6P2HyS1NiadLRw/Sin+KZCfCEpwWS4i78kSi6iMbG
-         CIinnux4ICxPkSqajjIfzPP9wqwIBC+0a8t4Lmr+xtWYzbU7Ub/5wJGKL095ZQGZvfIT
-         SKXaXgCYdq+2NKoFmVmtU4DinlA8blA8SEbkquZ10L+p+Gj5yrPkm4LKOb6f3iWcYcQ3
-         g4Fg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=X73uRo4h85rWmNKt0J3LrqoI+bxs+QJNFBFFvvlxAKs=;
-        b=COawRxalZuLzaaagWBlD9nrnf2gj0Wo0VB0Cr1+qhzL9lEoH2+TXoPo6ou6WolcRFu
-         CLZLbjOMRogmMte4J4L8h04rLQSUyXtt64pWwidCAybzGCDx1EqDakVd3MP3AKxANvyi
-         jOOINO3FVNPKgoD8VE9Jg8twy5cQTBzL73jIjjk0GhMbCmhzRlPxSI4GSuXvVoisiog7
-         y+5lN4v7Hk0JFLX6Nvc6Cy3s6zFY8u3nMOI4pSU2NgaWQuOivb8h5DTrjiN8n42VRBes
-         85+USle+xkZ7F73DBnmoGannXXcrykeRLnzgo5Ufl7y+JQWvGh9DjgkYsUWjBdBTlNCK
-         fK7A==
-X-Gm-Message-State: AJaThX7yrIuJyNsG29FGyPj16yi2mX/NScekRClv+kRLgWbVt59sdZ4n
-        Ae+1YzENBiKwma0L7CHGyePnsLZRQFCszP2+fO0=
-X-Google-Smtp-Source: AGs4zMaSwR0MwJmikeSe9L5mliP3iFnyzMsmB2C2ALjibVbnxX5vRETXgNVa1fQZIQGDSUciq75NHkJO98+rB8/+cgo=
-X-Received: by 10.55.42.75 with SMTP id q72mr23912840qkh.57.1511219664728;
- Mon, 20 Nov 2017 15:14:24 -0800 (PST)
+        id S1751301AbdKTXjJ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Nov 2017 18:39:09 -0500
+Received: from avasout04.plus.net ([212.159.14.19]:55894 "EHLO
+        avasout04.plus.net.plus.net" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1751243AbdKTXjI (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2017 18:39:08 -0500
+Received: from [10.0.2.15] ([80.189.70.158])
+        by smtp with ESMTPA
+        id GvebejvhGzbmWGveceC1d5; Mon, 20 Nov 2017 23:39:07 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=P6pKvmIu c=1 sm=1 tr=0
+ a=bpDj9VLvXCYHU65eeb/Fiw==:117 a=bpDj9VLvXCYHU65eeb/Fiw==:17
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=7gWbIBjvgrWuyaat1Y8A:9 a=QEXdDO2ut3YA:10
+ a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+To:     Jeff Hostetler <jeffhost@microsoft.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: [PATCH] list-objects-filter-options: fix up some sparse warnings
+Message-ID: <b1037774-6ae6-630b-f330-e95b1c3d681d@ramsayjones.plus.com>
+Date:   Mon, 20 Nov 2017 23:39:05 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
 MIME-Version: 1.0
-Received: by 10.12.155.209 with HTTP; Mon, 20 Nov 2017 15:14:24 -0800 (PST)
-In-Reply-To: <3893514.emzqGSqeDI@yoga>
-References: <3893514.emzqGSqeDI@yoga>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 20 Nov 2017 18:14:24 -0500
-X-Google-Sender-Auth: 7D2EAXMci69iFLF9_Wa9ERrJUiE
-Message-ID: <CAPig+cTncgDToo0=zHsBHfCPMPTYNumNAhTgOnhceLHpse3wuw@mail.gmail.com>
-Subject: Re: [PATCH] bash completion: Add --autostash and --no-autostash to pull
-To:     Albert Astals Cid <albert.astals.cid@kdab.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfGPfFRhxnsR8BWkYvptPDQxpPL33ZoI3ByaqhpjVqpTIxSaVM1KbStpEUN4m2ONeoO6apwHyWzJ0UY0Cjtm+egBohUCcsowxSQBdLJ9VKwYkc9es2ZBd
+ 3fni/GdMzXHbY3kjwkOXI2WgXnVU/9pa6lIPt5srRZu/CAyWTrqSUh1sIbKDJWpgpbYjdg6euqk8GA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 20, 2017 at 10:07 AM, Albert Astals Cid
-<albert.astals.cid@kdab.com> wrote:
-> Ideally we should only autocomplete if pull has --rebase since
-> they only work with it but could not figure out how to do that
-> and the error message of doing git pull --autostash points out
-> that you need --rebase so i guess it's good enough
 
-Missing Signed-off-by:. See Documentation/SubmittingPatches. Thanks.
+In particular, sparse complains that the armor_{en,de}code_arg()
+functions are 'not declared - should they be static?'. Since the
+armor_decode_arg() symbol does not require more than file visibility,
+we can simply mark the declaration with static. The armor_encode_arg()
+function has no callers, so we simply remove the (unused) definition.
 
-> ---
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-
-> completion.bash
-> index 539d7f84f..7ded58f38 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -1923,6 +1923,7 @@ _git_pull ()
->         --*)
->                 __gitcomp "
->                         --rebase --no-rebase
-> +                       --autostash --no-autostash
->                         $__git_merge_options
->                         $__git_fetch_options
->                 "
+Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+---
+
+Hi Jeff,
+
+If you need to re-roll your 'jh/object-filtering' branch, could you
+please squash this (or something like it) into the relevant patch
+(commit bf0aedcbe1, "list-objects: filter objects in traverse_commit_list",
+16-11-2017).
+
+Thanks!
+
+ATB,
+Ramsay Jones
+
+ list-objects-filter-options.c | 14 +-------------
+ 1 file changed, 1 insertion(+), 13 deletions(-)
+
+diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
+index 0e4ad70ab..bdbadd5a3 100644
+--- a/list-objects-filter-options.c
++++ b/list-objects-filter-options.c
+@@ -34,19 +34,7 @@ static int arg_needs_armor(const char *arg)
+ 	return 0;
+ }
+ 
+-void armor_encode_arg(struct strbuf *buf, const char *arg)
+-{
+-	static const char hex[] = "0123456789abcdef";
+-	const unsigned char *p;
+-
+-	for (p = (const unsigned char *)arg; *p; p++) {
+-		unsigned int val = *p;
+-		strbuf_addch(buf, hex[val >> 4]);
+-		strbuf_addch(buf, hex[val & 0xf]);
+-	}
+-}
+-
+-int armor_decode_arg(struct strbuf *buf, const char *arg)
++static int armor_decode_arg(struct strbuf *buf, const char *arg)
+ {
+ 	const char *p;
+ 
+-- 
+2.15.0
