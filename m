@@ -7,77 +7,73 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2432C202A0
-	for <e@80x24.org>; Mon, 20 Nov 2017 00:39:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A7249202A0
+	for <e@80x24.org>; Mon, 20 Nov 2017 00:46:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751087AbdKTAjE (ORCPT <rfc822;e@80x24.org>);
-        Sun, 19 Nov 2017 19:39:04 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56467 "EHLO
+        id S1751088AbdKTAqg (ORCPT <rfc822;e@80x24.org>);
+        Sun, 19 Nov 2017 19:46:36 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53496 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750952AbdKTAjD (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 19 Nov 2017 19:39:03 -0500
+        with ESMTP id S1750952AbdKTAqf (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 19 Nov 2017 19:46:35 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6D2FAB5003;
-        Sun, 19 Nov 2017 19:39:03 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id BC934B5274;
+        Sun, 19 Nov 2017 19:46:34 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ZpRsFcm3pRJ33DOkc+G/kPZNx4k=; b=dHvfUP
-        XjE0bB5BMkuIQ6M6x407tGSxa+xGWQmBa4F6nDtiz9JGknngfDom49T+ZTulh3y7
-        lROmDwwHjqGb0iyvPabk/kqNvRO3pNeYBsBx85n7YXgQ7VREjMq3PKbG3DapZlKB
-        DXx+twjIRn4glwkmfYxa0jAH2w7nBDYSrIOHw=
+        :content-type; s=sasl; bh=l0e89KS/NjAXvflLsh+gUYp45qI=; b=EFylHL
+        N8JWB2rqbwTXjjNBMX3o2sQGX1r8Wv+mNz3pQj93Lgr42Scu0kpJiwb0H1t/8K4S
+        3KZI5U3VgZmw60yfXdOSZNL6j9YMs4bXTflzHgSkhRGzBnA3Yq1+0RjE4DQ1/MjR
+        xUSV34OqipGJXTWOOyFYynEK24ynxbx2MT9Bk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=IlK7nWM/U/2JAPKQiWuOPiWvNqpu+agn
-        BV2QNUSkykwEOLiqWEvq74W4yZqUF0Ri2dK6oAamHEAX8eW2lrVIENnuhlUlg+Bq
-        S5UV2G1Fm4fkWEHcDJteqjI363MuTvs91rRNFCGeOkoeFhCwFINuRSY1auUOAQLx
-        04wrLxK7wWQ=
+        :content-type; q=dns; s=sasl; b=q/58VIdOM5AqzkHuSMbk5HHtwXMpVOFL
+        +HkBtDbL58q4zp1EIm0Zg06LVDHjg4T44IpfTDpIbkVFU6dQynsR3jrAFPL6oU0q
+        Epdc/inJcl3/3ZgM5wfumc2R5suVr6q7C0wmxQIIRrS1z2jY9TK4eSbXuJ0DhC5P
+        3XcvVTR7PpY=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 64C38B5002;
-        Sun, 19 Nov 2017 19:39:03 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B4899B5273;
+        Sun, 19 Nov 2017 19:46:34 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DC159B5001;
-        Sun, 19 Nov 2017 19:39:02 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 32F81B5272;
+        Sun, 19 Nov 2017 19:46:34 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Thomas Gummerer <t.gummerer@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [PATCH v3 3/3] worktree: make add <path> dwim
-References: <20171118181103.28354-1-t.gummerer@gmail.com>
-        <20171118224706.13810-1-t.gummerer@gmail.com>
-        <20171118224706.13810-4-t.gummerer@gmail.com>
-        <CAPig+cQqbvuZg0Y8ZMObZc7mYXzohooVBFj0-o+CGGXrgGLp5w@mail.gmail.com>
-        <CAPig+cTmqHt5s+C1vTFA7S4ZBwjqnzkn-2wA6i3jVeLw7i1_Lg@mail.gmail.com>
-Date:   Mon, 20 Nov 2017 09:39:01 +0900
-In-Reply-To: <CAPig+cTmqHt5s+C1vTFA7S4ZBwjqnzkn-2wA6i3jVeLw7i1_Lg@mail.gmail.com>
-        (Eric Sunshine's message of "Sun, 19 Nov 2017 15:20:00 -0500")
-Message-ID: <xmqqefotokbe.fsf@gitster.mtv.corp.google.com>
+To:     Ilya Kantor <ilya.a.kantor@icloud.com>
+Cc:     =?utf-8?B?0JzQvtC5INCl0L7RgNCy0LDRgtC40Y8=?= <iliakan@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: Why gc --auto is called so rarely?
+References: <C47F730C-18AE-411E-AC57-2DA8625451C4@icloud.com>
+Date:   Mon, 20 Nov 2017 09:46:32 +0900
+In-Reply-To: <C47F730C-18AE-411E-AC57-2DA8625451C4@icloud.com> (Ilya Kantor's
+        message of "Sun, 19 Nov 2017 20:04:21 +0300")
+Message-ID: <xmqqa7zhojyv.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 34DD28F6-CD8B-11E7-BB7D-575F0C78B957-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 41DD4C6A-CD8C-11E7-820B-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Ilya Kantor <ilya.a.kantor@icloud.com> writes:
 
-> On Sun, Nov 19, 2017 at 2:04 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> On Sat, Nov 18, 2017 at 5:47 PM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
->>> +To disable the behaviour of trying to match the basename of <path> to
->>> +a remote, and always create a new branch from HEAD, the `--no-track`
->>
->> Does --[no-]track deserve to be documented in the OPTIONS section like
->> the other options are?
+> ...It seems sane to git gc --auto from command that are expected to take time.
 >
-> One other question: Since this is re-using the well-known option name
-> --no-track, should it also get applied to the "git worktree add -b foo
-> dir origin/foo" case, as well, which you pointed out (in the patch 2/3
-> thread) already DWIMs tracking automatically? (I can easily see
-> someone reporting it as a bug if "git worktree add --no-track -b foo
-> dir origin/foo" does not suppress tracking.)
+> That's probably the reason why it's not called on commits and
+> called on receive-pack.
+>
+> But then why call it on merges? Especially on those that have no
+> conflicts and should run fast.  Also, merges are not supposed to
+> introduce unreachable objects.
 
-Sensible suggestion.  Thanks.
+The primary thing we want the users get out of running "gc --auto"
+during these operations are not the removal of unreachable garbage.
+It is primarily run to reduce the number of loose objects and
+prevent great many numbers of tiny packfiles from being accumulated,
+so the places you see calls to it tend to be after creating new
+objects in the repository.
+
+
