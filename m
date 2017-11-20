@@ -7,97 +7,162 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C5539202F2
-	for <e@80x24.org>; Mon, 20 Nov 2017 21:21:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6A42F202F2
+	for <e@80x24.org>; Mon, 20 Nov 2017 21:22:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753007AbdKTVVj (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Nov 2017 16:21:39 -0500
-Received: from mail-io0-f195.google.com ([209.85.223.195]:33627 "EHLO
+        id S1753057AbdKTVW2 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Nov 2017 16:22:28 -0500
+Received: from mail-io0-f195.google.com ([209.85.223.195]:42673 "EHLO
         mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752973AbdKTVVi (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Nov 2017 16:21:38 -0500
-Received: by mail-io0-f195.google.com with SMTP id i184so9800491ioa.0
-        for <git@vger.kernel.org>; Mon, 20 Nov 2017 13:21:38 -0800 (PST)
+        with ESMTP id S1752855AbdKTVW0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Nov 2017 16:22:26 -0500
+Received: by mail-io0-f195.google.com with SMTP id u42so17210246ioi.9
+        for <git@vger.kernel.org>; Mon, 20 Nov 2017 13:22:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=O5SzfI2TI6lM7xh58xg219DWgbbKPIGUyNc2m8xmbnk=;
-        b=BwGCTG2Evz0Vrs7CtkVXbM0JfCczveG7Zrli9CpmVvvd2n1mMJ4VcwZ+xDm/o6xjv6
-         7oKc8XZ+rbn/elMU0JD4GjTrL+bcg+dEKxYFWGXhN6JpqwHyfc4GCd8MwW2hcQ6ykoxZ
-         kw2JxVVBW0GI1jj3tjXUe9yX/2Ja8MVyWj+cesIGfzyDP1fiYHPQGJHtV0iSQg46rKDz
-         wpHvJ+8ebMrIT3DpiOeB1SrYRvnR1CcU11GlHa+3CzPLAfR9nDKPatOrmq5PR+9JUUFr
-         gKDiIaabFMYfQrZaFqrQW29gtJV21ERrrpOhXz3AXR0vDkZ/eGRh8LAlXfca8gwNkLr/
-         kxbA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Z9lfPOUBnykXndrh41SwS/KU5nkfx5f2ninzcXtII3w=;
+        b=JcCt/TQ/nzBpthgw4cs57fFQ9BnkT8A1on9gUgrXz2ki0onaOhiEL+hnmiVzp+fQTM
+         eZKTtUp9nUfuaEDHvBH/VCcdrVkDtMGXBUK0tnBVDjlsr2qFwIoYUlU3dz4xZ/h4+H1J
+         DCpbH4femiQEcuU1YtQZs4leZZaXGCqiRFJn6R3DaKOl+nE35Cq1bVUFfeU2pe81qLMI
+         Wv6+YNpyDXGNn4Y8JvMRuiPKJrlS8rL20IiT668/9sdwzutXdrlcI10dQHsDPEXU5kdy
+         Ubddf4DtZgaMdQPDnax7jAXkm0L8edT5F5yujML5Lax8pFq+1TDdohl9COez1YIRicdr
+         si3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=O5SzfI2TI6lM7xh58xg219DWgbbKPIGUyNc2m8xmbnk=;
-        b=W12yo1vZ6oHp+Wi8zh4HMzSRAtUiptXCHEnb2ebkS+OrNuvgW6cyRxb9IIif3XcaTB
-         e8NPO8KiUdUUvDOpmCwsG8obLAjorv9WymUm7HBk0rGxKG/cPEHqK8bMBh2NkRMpV567
-         Yrwu1HQ2nLFv1K9dBIKvvDxLXB0crZ1NPHAq+rxdUMQCermowKJArmHrkjVddJkRTlSE
-         riEuu8c8bKE4cyKMxB4BHiC0C6vHIxHC2HxQ4U07GVE0LH+oASV48zjII8EALRCdOEj+
-         Aby44VRnEoGkz9PkDHOLFyDTq4aA7WHKlISZAWfmLoK0bZoxYcIweXKH8zDHExvlcwSu
-         HoWw==
-X-Gm-Message-State: AJaThX6jAg3zrcjaGMdgY8/UkkHJfElfCRi7eJB40gPpfI2JyfW6YMbG
-        PLinkMLZvttlE6z0yyGHk2O6w9n8
-X-Google-Smtp-Source: AGs4zMbl1PldZBnoyu4Op4zHM8FZ52N+E3FH+UgHRDGKJoqwjCbnTsauchAunk4IBNkrEWApCN8XdQ==
-X-Received: by 10.107.20.68 with SMTP id 65mr15345381iou.244.1511212897608;
-        Mon, 20 Nov 2017 13:21:37 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Z9lfPOUBnykXndrh41SwS/KU5nkfx5f2ninzcXtII3w=;
+        b=TVl5kSTfxkMys8DDXpQmm753yaShzMa0N/aXNlr3oQRczjTHRThfPmMZfcDN9BO9aW
+         /JKIZwPB9H51czKTlCsyUlZ5oWbsRa0R0o0bAXIdeNGUplDmr89BIkJEMlbQYfmGV7JK
+         ApfYlVa4k8lpTASy+uZxBlHNacu6vNJ14pA0fP28W7uytO8+Lpwm51NwCW6Uh1kZLCbE
+         h83zMmF9e+UyGaim+Su0jDBkEBhZNWCIi2z6GmA6zub7ZKCd0dbtF//EQInBY+Z4ddVT
+         Ah0jNm+xTEl57gVR4vyyseTcSeXHEGFx2LseHZ7lJsoP7dMp9dU/di42xysM/2qJDW9y
+         W/Sw==
+X-Gm-Message-State: AJaThX6ck5Ky+9WDzf4enqkZ4tzua74bg6oXNlf/Rc+/Q24x5p/NA14g
+        UdkD5Cq5JoH77NmBKqbkl6txzKw0
+X-Google-Smtp-Source: AGs4zMbaJwmrviL7bAdXhachFVeVh2D/UreIpBPrKYVykJHCOaU8vsbDgYlQKJffL+d/sSsLdCbiYg==
+X-Received: by 10.107.30.76 with SMTP id e73mr1603154ioe.60.1511212945753;
+        Mon, 20 Nov 2017 13:22:25 -0800 (PST)
 Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id b77sm1215278ioj.42.2017.11.20.13.21.36
+        by smtp.gmail.com with ESMTPSA id i76sm5474339ita.21.2017.11.20.13.22.24
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 20 Nov 2017 13:21:36 -0800 (PST)
-Date:   Mon, 20 Nov 2017 13:21:34 -0800
+        Mon, 20 Nov 2017 13:22:25 -0800 (PST)
+Date:   Mon, 20 Nov 2017 13:22:23 -0800
 From:   Jonathan Nieder <jrnieder@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Brandon Williams <bmwill@google.com>,
         Stefan Beller <sbeller@google.com>,
         Jonathan Tan <jonathantanmy@google.com>,
-        Segev Finer <segev208@gmail.com>
-Subject: [PATCH v3 0/8] Coping with unrecognized ssh wrapper scripts in
- GIT_SSH
-Message-ID: <20171120212134.lh2l4drdzu6fh5g2@aiede.mtv.corp.google.com>
+        Segev Finer <segev208@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH 1/8] ssh test: make copy_ssh_wrapper_as clean up after itself
+Message-ID: <20171120212223.wquyxbmz34foynrk@aiede.mtv.corp.google.com>
+References: <20171120212134.lh2l4drdzu6fh5g2@aiede.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <20171120212134.lh2l4drdzu6fh5g2@aiede.mtv.corp.google.com>
 User-Agent: NeoMutt/20170609 (1.8.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Previously: [1].
+Simplify by not allowing the copied ssh wrapper to persist between
+tests.  This way, tests can be safely reordered, added, and removed
+with less fear of hidden side effects.
 
-This version should be essentially identical to v2.  Changes:
-- patch 1 is new and should fix the test failure on Windows
-- patch 2 is new, discussed at [2]
-- patch 5 split off from patch 6 as suggested at [3]
-- patch 6 commit message got two new notes to address the worries
-  from [3]
+This also avoids having to call setup_ssh_wrapper to restore the value
+of GIT_SSH after this battery of tests, since it means each test will
+restore it individually.
 
-Thanks for the helpful reviews, and sorry to take so long to get this
-out.  Thoughts of all kinds welcome, as always.
+Noticed because on Windows, if `uplink.exe` exists, the MSYS2 Bash
+will overwrite that when redirecting via `>uplink`.  A proposed test
+wrote a script to 'uplink' after a previous test created uplink.exe
+using copy_ssh_wrapper_as, so the script written with '>uplink' had
+the wrong filename and failed.
 
-Sincerely,
-Jonathan Nieder (8):
-  ssh test: make copy_ssh_wrapper_as clean up after itself
-  connect: move no_fork fallback to git_tcp_connect
-  connect: split git:// setup into a separate function
-  connect: split ssh command line options into separate function
-  connect: split ssh option computation to its own function
-  ssh: 'auto' variant to select between 'ssh' and 'simple'
-  ssh: 'simple' variant does not support -4/-6
-  ssh: 'simple' variant does not support --port
+Reported-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+Thanks to Dscho for tracking this subtle issue down.
 
- Documentation/config.txt |  24 ++--
- connect.c                | 322 +++++++++++++++++++++++++++++------------------
- t/t5601-clone.sh         |  69 ++++++----
- t/t5603-clone-dirname.sh |   2 +
- 4 files changed, 265 insertions(+), 152 deletions(-)
+ t/t5601-clone.sh | 28 ++++++++++++----------------
+ 1 file changed, 12 insertions(+), 16 deletions(-)
 
-[1] https://public-inbox.org/git/20171023231625.6mhcyqti7vdg6yot@aiede.mtv.corp.google.com/
-[2] https://public-inbox.org/git/20171115202516.hduhzsgeoff5a22b@aiede.mtv.corp.google.com/
-[3] https://public-inbox.org/git/xmqq60b59toe.fsf@gitster.mtv.corp.google.com/
+diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+index 86811a0c35..9d007c0f8d 100755
+--- a/t/t5601-clone.sh
++++ b/t/t5601-clone.sh
+@@ -306,21 +306,20 @@ test_expect_success 'clone checking out a tag' '
+ 	test_cmp fetch.expected fetch.actual
+ '
+ 
+-setup_ssh_wrapper () {
+-	test_expect_success 'setup ssh wrapper' '
+-		cp "$GIT_BUILD_DIR/t/helper/test-fake-ssh$X" \
+-			"$TRASH_DIRECTORY/ssh$X" &&
+-		GIT_SSH="$TRASH_DIRECTORY/ssh$X" &&
+-		export GIT_SSH &&
+-		export TRASH_DIRECTORY &&
+-		>"$TRASH_DIRECTORY"/ssh-output
+-	'
+-}
++test_expect_success 'set up ssh wrapper' '
++	cp "$GIT_BUILD_DIR/t/helper/test-fake-ssh$X" \
++		"$TRASH_DIRECTORY/ssh$X" &&
++	GIT_SSH="$TRASH_DIRECTORY/ssh$X" &&
++	export GIT_SSH &&
++	export TRASH_DIRECTORY &&
++	>"$TRASH_DIRECTORY"/ssh-output
++'
+ 
+ copy_ssh_wrapper_as () {
+ 	cp "$TRASH_DIRECTORY/ssh$X" "${1%$X}$X" &&
++	test_when_finished "rm -f ${1%$X}$X" &&
+ 	GIT_SSH="${1%$X}$X" &&
+-	export GIT_SSH
++	test_when_finished "GIT_SSH=\"\$TRASH_DIRECTORY/ssh\$X\""
+ }
+ 
+ expect_ssh () {
+@@ -344,8 +343,6 @@ expect_ssh () {
+ 	(cd "$TRASH_DIRECTORY" && test_cmp ssh-expect ssh-output)
+ }
+ 
+-setup_ssh_wrapper
+-
+ test_expect_success 'clone myhost:src uses ssh' '
+ 	git clone myhost:src ssh-clone &&
+ 	expect_ssh myhost src
+@@ -432,12 +429,14 @@ test_expect_success 'ssh.variant overrides plink detection' '
+ '
+ 
+ test_expect_success 'GIT_SSH_VARIANT overrides plink detection to plink' '
++	copy_ssh_wrapper_as "$TRASH_DIRECTORY/plink" &&
+ 	GIT_SSH_VARIANT=plink \
+ 	git clone "[myhost:123]:src" ssh-bracket-clone-variant-3 &&
+ 	expect_ssh "-P 123" myhost src
+ '
+ 
+ test_expect_success 'GIT_SSH_VARIANT overrides plink to tortoiseplink' '
++	copy_ssh_wrapper_as "$TRASH_DIRECTORY/plink" &&
+ 	GIT_SSH_VARIANT=tortoiseplink \
+ 	git clone "[myhost:123]:src" ssh-bracket-clone-variant-4 &&
+ 	expect_ssh "-batch -P 123" myhost src
+@@ -449,9 +448,6 @@ test_expect_success 'clean failure on broken quoting' '
+ 		git clone "[myhost:123]:src" sq-failure
+ '
+ 
+-# Reset the GIT_SSH environment variable for clone tests.
+-setup_ssh_wrapper
+-
+ counter=0
+ # $1 url
+ # $2 none|host
+-- 
+2.15.0.448.gf294e3d99a
+
