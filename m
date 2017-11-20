@@ -2,39 +2,40 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.9 required=3.0 tests=AWL,BAYES_00,
-	DATE_IN_PAST_03_06,DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	STOX_REPLY_TYPE,T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,STOX_REPLY_TYPE,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6DBB2202F2
-	for <e@80x24.org>; Mon, 20 Nov 2017 17:26:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4D739202F2
+	for <e@80x24.org>; Mon, 20 Nov 2017 17:28:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751856AbdKTR0p (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Nov 2017 12:26:45 -0500
-Received: from e1i183.smtp2go.com ([103.36.108.183]:50852 "EHLO
+        id S1751741AbdKTR2j (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Nov 2017 12:28:39 -0500
+Received: from e1i183.smtp2go.com ([103.36.108.183]:35553 "EHLO
         e1i183.smtp2go.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751646AbdKTR0o (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Nov 2017 12:26:44 -0500
+        with ESMTP id S1751646AbdKTR2i (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Nov 2017 12:28:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=smtpservice.net; s=m1fbw0.a1-4.dyn; x=1511199704; h=Feedback-ID:
+        d=smtpservice.net; s=m1fbw0.a1-4.dyn; x=1511199818; h=Feedback-ID:
         X-Smtpcorp-Track:Date:Subject:To:From:Reply-To:Message-ID:Sender:
-        List-Unsubscribe; bh=zsqYwTcQGtC5eP+tRTc5asQrRbVRdguComh5VO7sTkk=; b=Igzru3rp
-        H1iwbNJEsB/jaqu2cPiyEGU6ePI1g4e714ZAygWqSUTRQnWw9bWCWUp1Z3sEYrn6UDzKBWvQ1HdQY
-        5ObfwmC0/A2f8QlpZwKfm0kH+qYCszUEvEl+1xCXyGUvjilR738hjPEdpZfFOj/2x9sJIqZGqMIoi
-        bGpI8e5y7eppE1VVFzkFSLTfXkFVa1y7nzrFjF1Fnnarxu7w4LWlIZ5rDYnlhWjHM00yFz9u/wJ7g
-        iIIMtMKc67YZmywRC9uzs8xqpqllhdHmZZoaOECaYM2u7KbbkUV2VGHy2K81e1zCfNpl/Ibsi7GFH
-        xDZt/cdUyoeeRZUZ1Vxyr0p18w==;
-Message-ID: <5AE7AD53CF184A27BF8F484D415083D9@PhilipOakley>
+        List-Unsubscribe; bh=nNsaxO9ZN/SsmCfNO51HmU3EbMxKhpbETqmWKPG3x28=; b=eWEcYUql
+        AWVB83TlfwgAWH4g6qp67gC2Gjrh8J+Bell4zQdkIpPLSefx5ivOx883DGh4b5idc8rXFRo5hSsCW
+        jTLZYSE8fnsuDtMnrLmDnqs5l8D9FdXRdRtAjOUERCfYy+uN0VQN+gDq7nL7S/Cmn8KZ69yZfRc31
+        tdRelWhPN/czxaKDbHAWPtqk0YU8hNu1AKEHGSkZOOcirS0dzEZ/gzB+2vcJLCpSNF+xYXuseb1EF
+        j6FUGVY3tx9gyneJ+KWHrv4XhuAFPFFFGTjcJhAg3N3bLOW6wC/L5q1leQj4p+gBEOZGMxjdXZd+a
+        DYIlfk3KF2/OqcHHeIYa1ljtsQ==;
+Message-ID: <205BDB5638F64690AF6BE91360CE155E@PhilipOakley>
 Reply-To: "Philip Oakley" <philipoakley@iee.org>
 From:   "Philip Oakley" <philipoakley@iee.org>
-To:     "Junio C Hamano" <gitster@pobox.com>,
-        "Ann T Ropea" <bedhanger@gmx.de>
-Cc:     "Git Mailing List" <git@vger.kernel.org>,
-        "Daniel Barkalow" <barkalow@iabervon.org>
-References: <20171119184113.16630-1-bedhanger@gmx.de>        <20171113223654.27732-1-bedhanger@gmx.de>        <83D263E58ABD46188756D41FE311E469@PhilipOakley>        <xmqqfu9pmsx3.fsf@gitster.mtv.corp.google.com>        <20171113223654.27732-3-bedhanger@gmx.de>        <xmqq1sl17e1u.fsf@gitster.mtv.corp.google.com>        <20171119184113.16630-5-bedhanger@gmx.de> <xmqqzi7hlhkx.fsf@gitster.mtv.corp.google.com>
-Subject: Re: [PATCH v3 5/5] Testing: provide tests requiring them with ellipses after SHA-1 values
-Date:   Mon, 20 Nov 2017 12:25:34 -0000
+To:     "Junio C Hamano" <gitster@pobox.com>
+Cc:     "Stefan Beller" <sbeller@google.com>, "git" <git@vger.kernel.org>,
+        "Kevin Daudt" <me@ikke.info>,
+        "Jacob Keller" <jacob.keller@gmail.com>,
+        "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+References: <20171028004419.10139-1-sbeller@google.com><20171031003351.22341-1-sbeller@google.com><20171031003351.22341-7-sbeller@google.com><xmqqinevzvel.fsf@gitster.mtv.corp.google.com><CAGZ79kYO=4SWzfKY6bU8Spn5Ubw39ghOH6wanFhFEsKD8q9vrA@mail.gmail.com><xmqq4lqewu2b.fsf@gitster.mtv.corp.google.com><CAGZ79kYC4=rDSWC7WCGVL4n4OC8BpvMJFwxx+LV9GqoGnSHFSA@mail.gmail.com><xmqqinetsayr.fsf@gitster.mtv.corp.google.com><xmqq375xs3zr.fsf@gitster.mtv.corp.google.com><BFE987312194406AAAEA8DAC7EC5BFF5@PhilipOakley><xmqqlgjlkzmm.fsf@gitster.mtv.corp.google.com><D199FB1260C4462ABFC1F0F77D26EF06@PhilipOakley><CAGZ79kYRunzS9vDO=Zk1jQk1BvwJomN5+=1gQi0aDau_qbamew@mail.gmail.com><54073F7B0C9E49C4BA55CA97A605A724@PhilipOakley> <xmqqo9obhqo0.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH 6/7] builtin/describe.c: describe a blob
+Date:   Mon, 20 Nov 2017 15:22:40 -0000
 Organization: OPDS
 MIME-Version: 1.0
 Content-Type: text/plain;
@@ -46,8 +47,8 @@ X-Priority: 3
 X-MSMail-Priority: Normal
 X-Mailer: Microsoft Outlook Express 6.00.2900.5931
 X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-Smtpcorp-Track: 1-GpMI9EFLrbTj.Ey7JGYcn6
-Feedback-ID: 66524m:66524aMf6O2Y:66524sRv53HvUS8:SMTPCORP
+X-Smtpcorp-Track: 1-GpMw9EFLrbCQ.Ey7egyzBI
+Feedback-ID: 66524m:66524aMf6O2Y:66524sajhSw-HGc:SMTPCORP
 X-Report-Abuse: Please forward a copy of this message, including all
  headers, to <abuse-contact@smtp2go.com>
 Sender: git-owner@vger.kernel.org
@@ -56,85 +57,77 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 From: "Junio C Hamano" <gitster@pobox.com>
-> Ann T Ropea <bedhanger@gmx.de> writes:
->
->> *1* We are being overly generous in t4013-diff-various.sh because we do
->> not want to destroy/take apart the here-document.  Given that all this a
->> temporary measure, we should get away with it.
+: Friday, November 10, 2017 1:24 AM
+[catch up]
 
-So, the need to reformat the test for the future post-deprecation period is 
-being deferred to the time that the PRINT_SHA1_ELLIPSIS env variable, and 
-all ellipis, is removed - is that the case? Maybe it just needs saying 
-plainly.
+> "Philip Oakley" <philipoakley@iee.org> writes:
+>
+>> From: "Stefan Beller" <sbeller@google.com>
+>>> Rereading this discussion, there is currently no urgent thing to 
+>>> address?
+>>
+>> True.
+>>
+>>> Then the state as announced by the last cooking email, to just cook
+>>> it, seems
+>>> about right and we'll wait for further feedback.
+>
+> A shiny new toy that is not a fix for a grave bug is rarely urgent,
+> so with that criterion, we'd end up with hundreds of topics not in
+> 'next' but in 'pu' waiting for the original contributor to get out
+> of his or her procrastination, which certainly is not what I want to
+> see, as I'd have to throw them into the Stalled bin and then
+> eventually discard them, while having to worry about possible
+> mismerges with remaining good topics caused by these topics
+> appearing and disappearing from 'pu'.
+>
+> I'd rather see any topic that consumed reviewers' time to be
+> polished enough to get into 'next' while we all recall the issues
+> raised during previous reviews.  I consider the process to further
+> incrementally polish it after that happens a true "cooking".
+>
+> For this topic, aside from "known issues" that we decided to punt
+> for now, my impression was that the code is in good enough shape,
+> and we need a bit of documentation polishes before I can mark it
+> as "Will merge to 'next'".
+>
+>> Possibly only checking the documenation aspects, so folks don't fall
+>> into the same trap as me.. ;-)
+>
+> Yup, so let's resolve that documentation thing while we remember
+> that the topic has that issue, and what part of the documentation
+> we find needs improvement.
+>
+> I am not sure what "trap: you fell into, though.  Are you saying
+> that giving
+>
+> git describe [<option to describe a commit>...] <commit-ish>
+> git describe [<option to describe a blob>...] <blob>
+>
+> in the synopsis is not helpful, because the user may not know what
+> kind of object s/he has, and cannot decide from which set of options
+> to pick?  Then an alternative would be to list
 
-Or is the env variable being retained as a fallback 'forever'? I'm half 
-guessing that it may tend toward the latter as it's an easier backward 
-compatibility decision.
+(If I remember correctly) My nit pick was roughly along the lines you 
+suggest, and that the two option lists (for commit-ish and blob) were shown 
+in different ways, which could lead to the scenarion that, with knowing the 
+oid object type (or knowing how to get it), the user could give an invalid 
+option, and think the command failure was because the oid was invalid, not 
+that the option was not appropriate, along with variations on that theme.
 
-[apologioes this is mid thread, I'm catching up on 2 weeks of emails]
+The newer synopsis (v5) looks Ok in that it avoids digging the hole by not 
+mentioning the blob options. Personally I'm more for manuals that tend 
+toward instructional, rather than being expert references. I'd sneak in a 
+line saying "The object type can be determined using `git cat-file`.", but 
+maybe that's my work environment...
 
 >
-> I do not think the patch is being particularly generous.  If
-> anything, it is being unnecessarily sloppy by not adding new checks
-> to verify the updated behaviour.
+> git describe [<option>...] <object>
 >
-> The above comment mentions "destroy/take apart" the here-document,
-> but I do see no need to destroy anything.  All you need to do is to
-> enhance and extend.  For example, you could do it like so (this is
-> written in my e-mail client, and not an output of diff, so the
-> indentation etc. may be all off, but should be sufficient to
-> illustrate the idea):
+> in the synopsis, say upfront that most options are applicable only
+> when describing a commit-ish, and when describing a blob, we do
+> quite different thing and a separate set of options apply, perhaps?
 >
->    while read cmd
->    do
->            case "$cmd" in
->            '' | '#'*) continue ;;
->            esac
->            test=$(echo "$cmd" | sed -e 's|[/ ][/ ]*|_|g')
->            pfx=$(printf "%04d" $test_count)
->            expect="$TEST_DIRECTORY/t4013/diff.$test"
->            actual="$pfx-diff.$test"
->   +        case "$cmd" in
->   +        X*) cmd=${cmd#X}; no_ellipses=" (no ellipses)" ;;
->   +        *) no_ellipses= ;;
->   +        esac
->   -        test_expect_success "git $cmd" '
->   +        test_expect_success "git $cmd$no_ellipses" '
->                {
->                        echo "\$ git $cmd"
->   -                    git $cmd |
->   +                    if test -n "$no_ellipses"
->   +                    then
->   +                            git $cmd
->   +                    else
->   +                            PRINT_SHA1_ELLIPSES=yes git $cmd
->   +                    fi |
->                        sed -e ....
->        ...
->    done <<\EOF
->    diff-tree initial
->    diff-tree -r initial
->    diff-tree -r --abbrev initial
->    diff-tree -r --abbrev=4 initial
->   +Xdiff-tree -r --abbrev=4 initial
->    ...
->    EOF
->
-> There is a new and duplicated line with a prefix X for one existing
-> test in the above.  The idea is that the ones marked as such will
-> test and verify the effect of this new behaviour by not setting the
-> environment variable.  The expected and actual test output for the
-> new test will have X prefixed to it.  t4013 is arranged in such a
-> way that it is easy to add a new test like this---you only need to
-> add an expected output in a new file in t/t4013/. directory.  And
-> the output with these ellipses removed will be something we would
-> expect see in the new world (without the escape hatch environment
-> variable), we would need to add a new file there to record what the
-> expected output from the command is.
->
-> I singled out the diff-tree invocation with --abbrev=4 as an example
-> in the above, but in a more thorough final version, we'd need to
-> cover both "abbreviation with ellipses" and "abbreviation without
-> ellipses" output for other lines in the test case listed in the
-> here-document. 
+--
+Philip 
 
