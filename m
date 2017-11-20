@@ -7,74 +7,139 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7CC8D202F2
-	for <e@80x24.org>; Mon, 20 Nov 2017 20:39:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 037A3202F2
+	for <e@80x24.org>; Mon, 20 Nov 2017 20:47:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752564AbdKTUjS (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Nov 2017 15:39:18 -0500
-Received: from mail-qt0-f173.google.com ([209.85.216.173]:45826 "EHLO
-        mail-qt0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752485AbdKTUjR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Nov 2017 15:39:17 -0500
-Received: by mail-qt0-f173.google.com with SMTP id r37so8358079qtj.12
-        for <git@vger.kernel.org>; Mon, 20 Nov 2017 12:39:17 -0800 (PST)
+        id S1752739AbdKTUrz (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Nov 2017 15:47:55 -0500
+Received: from mail-qk0-f176.google.com ([209.85.220.176]:43664 "EHLO
+        mail-qk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752552AbdKTUry (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Nov 2017 15:47:54 -0500
+Received: by mail-qk0-f176.google.com with SMTP id j202so9168342qke.10
+        for <git@vger.kernel.org>; Mon, 20 Nov 2017 12:47:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=jqqPar+FMtTAWGUarQDUOor1WY1kxk9Ne7rSb+28aTU=;
-        b=oLfW7uf3kC4Ar66iKE7iEp3OXCCH6k1yhe1V7Di1DVLUJSOWiM1YqaG4K5xT/KyU98
-         v/noKF07EEq3H5IuE/C1y0IiPlmjqP03fHRT7cyWKHON0BheVZ7/ZlUGQMaG/+WK+zbQ
-         8slTEEPySlZ7etJZV4YpuneAbmKXrYZp7WqK3JujKga70Uq6DfF/GgJCcXuW1qpnAjh6
-         nRrANsaWt3m+RI67wvuGt8IuA9a/2s44Lho+Trzl5VeaIgDDn2yshRqAtYeRFwF0aoCF
-         rz/5z9yQ2i/+wLYncHz11pPE9DAcORqrIRyHzHPRrxCvPD3frR2m6z48XCUAxe9TOxTg
-         mLOQ==
+         :cc;
+        bh=cSCIInlT0AG5TOUja1rnXraK/HQJvms+UKv57jqvjdI=;
+        b=iE6kan75dm9IW2zryP2t+Ifs+mOioaqymf3xIVLw2dhLVT/vrg+fteGJo+wkk8t4ja
+         c1Vl0bDdIHZ9gLsxeF66FkkkqcFi+Migd02J+gaiGh//xFuKBczvUJGurJRm8fxl5Kq1
+         jt+IX6UdB7ssikPbG74VeU53rTowwQ3NSBL5GfVPJGBkYrFVWukI6F3ADEGAboaxp4NY
+         8TYbCeJPmKWrcLAnCTMtvcY3QP+PCKiqp8BDP0AfkRlcYmeTlT+fYlQ6AT+46KJanSnx
+         nvJKF6q3+tmoJzNcZG5f85e/asE0W7eJX7nIpVrE1M4WG21lgvUvi+zv4bOwZRZweWlW
+         QERQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=jqqPar+FMtTAWGUarQDUOor1WY1kxk9Ne7rSb+28aTU=;
-        b=sCmDovkA8jcCbvd0eqet+QcMEuYrbGgFtLIvBxI4Ok0K1kUt0gLc3n73nIakKeN5EL
-         HQ5ApMn/OJG5ugMbbky2CB0Alo8qRfQtfsw/g6eZFM3pjpRT/jFbM8mehhxEFowwR7M0
-         +ol0DrQ8z1N6SnqLALKQytQhfMHygpdeJf+CpJRX2P5htVhXxl0+Z7UVmAIUvJ0lPcCE
-         Xg6y3LTVNCieuQE3toWeoM6BRqhIY7JTl0/exNYVA3p9fN8o3Z2qpni5eavBmqXudPQy
-         ZZEdRhA4zfm3pUmoIUYWNwM9NVgC3Q6wXAq1JW17b3Wn1fwFqeKSoQfNXsUsxoYHBLas
-         mi8g==
-X-Gm-Message-State: AJaThX4JNsFEpaypnwspp2ldlFPz6qrxzpp+2LLsYDOV4Zp3pF20iAMi
-        vV64aoYre428gmdEqJ1L/7w+1bvqcuv6qI6n0YNXjw==
-X-Google-Smtp-Source: AGs4zMbwuWQtwMrvHIRk1KtQ5xCHEV5kbJhqAPhZajnbySnfvKELaRu0dfDVbGeiHnnFDC3Kds9F5lxQyRuVP18U3UE=
-X-Received: by 10.200.44.251 with SMTP id 56mr23281342qtx.87.1511210356582;
- Mon, 20 Nov 2017 12:39:16 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=cSCIInlT0AG5TOUja1rnXraK/HQJvms+UKv57jqvjdI=;
+        b=tNvtei4cI6sLVCBRv5bMvxFljdsm13GhnxwInnEGDktVg03rvlNd8Xf9ryrg7jBKZm
+         mPsrT2UMaxK15QUbksD524zHXb4BXJoX4OwY9ydR+txzbLk6vd4xQoy9mopKx/+xCr1u
+         OGJ5cC9QljTUWCPMKpsUAnkctOWI3c/XwvdJvYZ9KhzqGfGYcVJKcxUMLJLdrlj/XfeL
+         UZvS9s8K5xO3Yf6JD7NKSOe4fY5L50SO9c6AZRrd9RiWD4aqUoixgtSNED5LtGZWWqzi
+         OmKQv+v/MV+a4ZAn4Iwoxjy3aQfMvp8qKEYq7Ay0PeI79iiSeCnTB2fdWf1zosSruD2O
+         ZKMQ==
+X-Gm-Message-State: AJaThX7U300fczrueiUDkPeOjE3bzZDTx5BAdD+ZRsTlR+hZQaELWdV0
+        h0vvdrjt7MM5rPqsjwGnD4biv9JWNpG5w7xpG5YLpw==
+X-Google-Smtp-Source: AGs4zMZokSWwq4xh7PMJoRBJ43Iy6Ud3dpsC3DSEOYCL09ja7knSrKVQ6Lb03CHbPQEBCs+RL0CDJgQ3ikLblrzh/Ag=
+X-Received: by 10.55.106.132 with SMTP id f126mr22109414qkc.295.1511210873792;
+ Mon, 20 Nov 2017 12:47:53 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.140.85.179 with HTTP; Mon, 20 Nov 2017 12:39:15 -0800 (PST)
-In-Reply-To: <9c3462e3-2d1d-05bc-9f7d-4bc93d32e7ff@web.de>
-References: <790c2344-a71e-7089-9000-f9b37a4a5cd9@web.de> <9c3462e3-2d1d-05bc-9f7d-4bc93d32e7ff@web.de>
+Received: by 10.140.85.179 with HTTP; Mon, 20 Nov 2017 12:47:53 -0800 (PST)
+In-Reply-To: <20171120203523.c3pt5qi43e24ttqq@sigill.intra.peff.net>
+References: <20171120202607.tf2pvegqe35mhxjs@sigill.intra.peff.net> <20171120203523.c3pt5qi43e24ttqq@sigill.intra.peff.net>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 20 Nov 2017 12:39:15 -0800
-Message-ID: <CAGZ79kZxiEPE4LPEo-eb4Ta4bYXVr9xQM0dFeiJk9XXKU4AR+w@mail.gmail.com>
-Subject: Re: [PATCH 6/6] grep: show non-empty lines before functions with -W
-To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Vegard Nossum <vegard.nossum@oracle.com>
+Date:   Mon, 20 Nov 2017 12:47:53 -0800
+Message-ID: <CAGZ79kZWJhZ-6-1MZiWK4O-uWJG+T5QU29a5fRnw6R26J4fuCA@mail.gmail.com>
+Subject: Re: [PATCH 5/5] sha1_file: don't re-scan pack directory for null sha1
+To:     Jeff King <peff@peff.net>
+Cc:     git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Nov 18, 2017 at 10:08 AM, Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
-> Non-empty lines before a function definition are most likely comments
-> for that function and thus relevant.  Include them in function context.
+On Mon, Nov 20, 2017 at 12:35 PM, Jeff King <peff@peff.net> wrote:
+> In theory nobody should ever ask the low-level object code
+> for a null sha1. It's used as a sentinel for "no such
+> object" in lots of places, so leaking through to this level
+> is a sign that the higher-level code is not being careful
+> about its error-checking.  In practice, though, quite a few
+> code paths seem to rely on the null sha1 lookup failing as a
+> way to quietly propagate non-existence (e.g., by feeding it
+> to lookup_commit_reference_gently(), which then returns
+> NULL).
 >
-> Such a non-empty line might also belong to the preceding function if
-> there is no separating blank line.  Stop extending the context upwards
-> also at the next function line to make sure only one extra function body
-> is shown at most.
+> When this happens, we do two inefficient things:
+>
+>   1. We actually search for the null sha1 in packs and in
+>      the loose object directory.
+>
+>   2. When we fail to find it, we re-scan the pack directory
+>      in case a simultaneous repack happened to move it from
+>      loose to packed.
+>
+> It's debatable whether (1) is a good idea or not. The
+> performance drop is at least linear in the number of
+> lookups, so it's not too bad. And if by some 2^-160th chance
+> somebody does have such an object, we probably ought to
+> access it. On the other hand, enough code paths treat the
+> null sha1 specially that the object probably isn't usable,
+> anyway.
+>
+> Problem (2), on the other hand, is a pretty severe
+> performance issue. If you have a large number of packs,
+> rescanning the pack directory can be very expensive. And it
+> only helps in the case that you have an object with the null
+> sha1 _and_ somebody was simultaneously repacking it. The
+> tradeoff is certainly a bad one there.
+>
+> In an ideal world, we'd simply fix all of the callers to
+> notice the null sha1 and avoid passing it to us. But a
+> simple experiment to catch this with a BUG() shows that
+> there are a large number of code paths.
+>
+> In the meantime, let's address problem (2). That's the
+> minimal fix we can do to make the performance problems go
+> away. p5551 shows this off (when a fetched ref is new, the
+> "old" sha1 is 0{40}, which ends up being passed for
+> fast-forward checks, the status table abbreviations, etc):
+>
+>   Test            HEAD^             HEAD
+>   --------------------------------------------------------
+>   5551.4: fetch   5.51(5.03+0.48)   0.17(0.10+0.06) -96.9%
+>
+> We could address (1), too, but there's not much performance
+> improvement left to make.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> This is the minimal fix that addresses the performance issues.
+> I'd actually have no problem at all declaring that looking up a null
+> sha1 is insane, and having the object-lookup routines simply return "no
+> such object" without even doing the loose/pack lookup first.
+>
+> I'm also fine with going down the BUG() route and fixing the
+> higher-level callers, but it's a big enough task (with little enough
+> real-world impact) that I think it would be worth applying this in the
+> meantime.
 
-Can we add another heuristic, that checks for common function body ends, e.=
-g.
-if the preceding line contains '}' but is not commented (the line doesn't
-contain '*/' '//', '#'), we have a strong hint that it is a function, not a=
-n
-additional comment.
+It would have a lot of impact in the future, when new developers
+are hindered mis-using the API. The (unwritten) series with introducing
+BUG() would help a lot in 'holding it right' and I would expect fewer
+performance
+regressions over time.
+
+The patch is impressively small for such a performance gain.
+Personally I think (1) (which essentially means "making null sha1
+work like a regular sha1") is quite an endeavor at this point in time
+for this code base.
+
+As a tangent, a similar but solved problem in the diff code is how
+NUL in user data is treated in xdiff for example, as there we kept
+being careful since the beginning (though I think we don't have tests
+for it, so it might be broken)
+
+Stefan
