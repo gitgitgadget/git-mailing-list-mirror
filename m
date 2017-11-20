@@ -2,318 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DB950202F2
-	for <e@80x24.org>; Mon, 20 Nov 2017 22:25:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BDA48202F2
+	for <e@80x24.org>; Mon, 20 Nov 2017 22:25:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751338AbdKTWZ0 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Nov 2017 17:25:26 -0500
-Received: from mail-io0-f176.google.com ([209.85.223.176]:35111 "EHLO
-        mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751109AbdKTWZZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Nov 2017 17:25:25 -0500
-Received: by mail-io0-f176.google.com with SMTP id i38so17394139iod.2
-        for <git@vger.kernel.org>; Mon, 20 Nov 2017 14:25:25 -0800 (PST)
+        id S1751364AbdKTWZf (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Nov 2017 17:25:35 -0500
+Received: from mail-it0-f41.google.com ([209.85.214.41]:34489 "EHLO
+        mail-it0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751109AbdKTWZe (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Nov 2017 17:25:34 -0500
+Received: by mail-it0-f41.google.com with SMTP id m11so5569526iti.1
+        for <git@vger.kernel.org>; Mon, 20 Nov 2017 14:25:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=1Xx/cNGacM9e3ouMMP+7LcVvIKJSzk5G/idDY3W191I=;
-        b=OlWS/BXKCo6fDHvoiBdRLhcJvi9Df39SDIxrTHhRBqgLwO88kEqRe6Sjdeo6FGLY3B
-         szMCkMP1j00bbqq2zB6evTn9uKqGt1krpfyElgAnESe0XiUqLb9GX8NTlvuMGN8tI77a
-         o9v6Sgt8I6tMatzKyfEj7jwrbbh+TSU+Tf1eKppQQXhlRY2NIkgt6U4cPVdze0rpx3CL
-         BB6ylNhpO9dH1RBnjQykAXC4sFmbz74oFGB/wNGls3Cz43z6nVuhZJEFIL4gTQGdgVx6
-         fV+zApG8cRpdKhYV3rzFGA1GH47v3FZ3WNrLtcZclaY1fokRNUuphdh0PbhIryavY5z0
-         1ldA==
+        h=from:to:cc:subject:date:message-id;
+        bh=lQtY9c5hGEZh07ONFccIdjgogVm9FZAAuBVdBG3+IAw=;
+        b=kIkzsvjeJVYf65L5mwl2ihtKp2/kBxDfl6DVTouu5GvrA8psOuGreHL6oU7KpDBjy3
+         ixosMlUJ1oT1lfdvWTaobTYNIHWToD5dQhzUA9MGyoK+H+UHaNckOm5nU/+fyWsPxG/9
+         mXUz9ajIRX1H3iv3enRyqt5Gwgvqaqq264xHduLNym4oMz1kjlMDJHhcJeyZn2ceUNnT
+         +LvKqWqXGVh0xDsVCQOWgLTUFB1IweGBJdDIsUUWX1x0v4t55gTD1DbeyqBuc/t1z6Ox
+         zcD4RaWVzIIHaT7N9ugSLO+8YW1YciuW7bKriaHFiIeE+cv2sE+YCL95xIBvkJpJYp4a
+         iyeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=1Xx/cNGacM9e3ouMMP+7LcVvIKJSzk5G/idDY3W191I=;
-        b=N4GNkX4+jA51P/gGGmvVAs31BtUhJEFqtQ5zIcY7usEf5PrDJryjW8jU5XdkTL1UAH
-         agpAcH6hPYNktrgko6QLk4hZeLayWNMIBzzXnSTNqjDBueqcmkmVeqN9fcSx5p7nYpNA
-         14nvygZaiJgkbN+fT9DzXAO9j5iFlyoccpa1Odg0oMIxfZ6JmQl2ac/tsKBNCBG2QZ5A
-         XtYHUcFGZhXSIpDCvn+c5zE208BRfKBQ4thaP7Dy7ru8PvMZV8leyEh7SJ/3KzTaI6y2
-         YrBfZkEzdZd5NXz7K5RAOmBHqmlU0ZJTm1b0p1fHlNZ/YrrU8P/eZTFXbo8MXDqvP0ww
-         YMNw==
-X-Gm-Message-State: AJaThX6r2rrzRk5sX0xYAASg0zK9LvpAwUzauNhGWrXsZgKcEYblaBFJ
-        koG/BZi0Q+54+lrQUtg6cATU9Q==
-X-Google-Smtp-Source: AGs4zMbPW53vD+ZohIYLFkO40NwK+AM6BL2VTE/+7q0R7lyK5EqRjKwaXT80fEWTofo5m+b9BSIzrg==
-X-Received: by 10.107.174.222 with SMTP id n91mr13529592ioo.43.1511216724418;
-        Mon, 20 Nov 2017 14:25:24 -0800 (PST)
-Received: from google.com ([2620:0:100e:422:255c:f926:518d:9e83])
-        by smtp.gmail.com with ESMTPSA id b72sm5579316iti.44.2017.11.20.14.25.22
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=lQtY9c5hGEZh07ONFccIdjgogVm9FZAAuBVdBG3+IAw=;
+        b=TqR/ZwEFxBlttf/awhfS77qPFBZ6YmYIi9/iR/3Hd913sPkEtBp5EdZDIMrVs1NAY6
+         7Nw0lYxpEhO7P0f9nde4FGbARxbTtO1fzJImxPKZSbHIdzRb+5PxSGiJsQTcm+PtNy+Q
+         Nz10KFU2MYCnDIp/X1GjVUHKQ+HnTH6C9m2OktPUS3Wx3RB9o3SXhBXdRozk2j9bAmgd
+         iyUcuPQJFQmzDrEdE61s8T8LX/3IAv99fknbgqabp56vgnDpqppjgruDYIvFqfOVCRTm
+         8ctn06L2QeHyL/+OgoxNdCw/eTZ9PioeRWCGrRgiCG9791Q39WqRGGG7ongVaRNM6CZA
+         +6bQ==
+X-Gm-Message-State: AJaThX5LJ8FVBn6uOv2CFMrZveuRDfQW5iehymX3MAbM6GBW/Tp8BySx
+        vwas8uvREBqa2YzksEEM2c3uYzfow5I=
+X-Google-Smtp-Source: AGs4zMahQPA2cwYNiMWKyIwGQpmPN3l8ifQi6rzNwOkMeimWIg7DaCKJx94WG6g57Y6FewHhqL4iwQ==
+X-Received: by 10.36.10.73 with SMTP id 70mr20442839itw.145.1511216733783;
+        Mon, 20 Nov 2017 14:25:33 -0800 (PST)
+Received: from localhost ([2620:0:100e:422:d59e:3b74:3df:d3bb])
+        by smtp.gmail.com with ESMTPSA id z2sm5586190ite.26.2017.11.20.14.25.32
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 20 Nov 2017 14:25:23 -0800 (PST)
-Date:   Mon, 20 Nov 2017 14:25:21 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Segev Finer <segev208@gmail.com>
-Subject: Re: [PATCH 6/8] ssh: 'auto' variant to select between 'ssh' and
- 'simple'
-Message-ID: <20171120222521.GD92506@google.com>
-References: <20171120212134.lh2l4drdzu6fh5g2@aiede.mtv.corp.google.com>
- <20171120213004.57552ja3nmxy6pmc@aiede.mtv.corp.google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20171120213004.57552ja3nmxy6pmc@aiede.mtv.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        Mon, 20 Nov 2017 14:25:33 -0800 (PST)
+From:   Stefan Beller <sbeller@google.com>
+To:     git@vger.kernel.org
+Cc:     Stefan Beller <sbeller@google.com>
+Subject: [PATCH 0/1] Teaching the diff machinery about blobfind [WAS: git describe <blob>]
+Date:   Mon, 20 Nov 2017 14:25:28 -0800
+Message-Id: <20171120222529.24995-1-sbeller@google.com>
+X-Mailer: git-send-email 2.15.0.128.gcadd42da22
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/20, Jonathan Nieder wrote:
-> Android's "repo" tool is a tool for managing a large codebase
-> consisting of multiple smaller repositories, similar to Git's
-> submodule feature.  Starting with Git 94b8ae5a (ssh: introduce a
-> 'simple' ssh variant, 2017-10-16), users noticed that it stopped
-> handling the port in ssh:// URLs.
-> 
-> The cause: when it encounters ssh:// URLs, repo pre-connects to the
-> server and sets GIT_SSH to a helper ".repo/repo/git_ssh" that reuses
-> that connection.  Before 94b8ae5a, the helper was assumed to support
-> OpenSSH options for lack of a better guess and got passed a -p option
-> to set the port.  After that patch, it uses the new default of a
-> simple helper that does not accept an option to set the port.
-> 
-> The next release of "repo" will set GIT_SSH_VARIANT to "ssh" to avoid
-> that.  But users of old versions and of other similar GIT_SSH
-> implementations would not get the benefit of that fix.
-> 
-> So update the default to use OpenSSH options again, with a twist.  As
-> observed in 94b8ae5a, we cannot assume that $GIT_SSH always handles
-> OpenSSH options: common helpers such as travis-ci's dpl[*] are
-> configured using GIT_SSH and do not accept OpenSSH options.  So make
-> the default a new variant "auto", with the following behavior:
-> 
->  1. First, check for a recognized basename, like today.
-> 
->  2. If the basename is not recognized, check whether $GIT_SSH supports
->     OpenSSH options by running
-> 
-> 	$GIT_SSH -G <options> <host>
-> 
->     This returns status 0 and prints configuration in OpenSSH if it
->     recognizes all <options> and returns status 255 if it encounters
->     an unrecognized option.  A wrapper script like
-> 
-> 	exec ssh -- "$@"
-> 
->     would fail with
-> 
-> 	ssh: Could not resolve hostname -g: Name or service not known
-> 
->     , correctly reflecting that it does not support OpenSSH options.
->     The command is run with stdin, stdout, and stderr redirected to
->     /dev/null so even a command that expects a terminal would exit
->     immediately.
-> 
->  3. Based on the result from step (2), behave like "ssh" (if it
->     succeeded) or "simple" (if it failed).
-> 
-> This way, the default ssh variant for unrecognized commands can handle
-> both the repo and dpl cases as intended.
-> 
-> This autodetection has been running on Google workstations since
-> 2017-10-23 with no reported negative effects.
-> 
-> [*] https://github.com/travis-ci/dpl/blob/6c3fddfda1f2a85944c544446b068bac0a77c049/lib/dpl/provider.rb#L215
-> 
-> Reported-by: William Yan <wyan@google.com>
-> Improved-by: Jonathan Tan <jonathantanmy@google.com>
-> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-> ---
-> Added two notes to the commit message:
->  - describing the real-world testing this patch has undergone
->  - stdin, stdout, and stderr go to /dev/null, preventing a
->    hypothetical ssh variant that *ignores* -G from hanging waiting for
->    input from the terminal.
-> 
-> This is to address the worries at
-> https://public-inbox.org/git/xmqq60b59toe.fsf@gitster.mtv.corp.google.com/
-> and https://public-inbox.org/git/CAGZ79kZTjUvcq_hKHCqTDoaBxt2x+9XcqYc6ao1bhcET2SM-PQ@mail.gmail.com/
-> about hanging.
-> 
-> No change to the code from last time.
-> 
+This seems to be an easier approach; thanks Junio for hinting at it.
+This certainly solves our immediate needs, we may want to build
+'git describe <blob>' on top of it or defer it until later.
 
-Thanks a lot for getting this patch out. It's a much more robust
-solution than I had originally and should hopefully avoid any more issues
-with detecting different ssh programs.  My only concern is there may be
-some program out there that uses -G in a way different from OpenSSH.
-Though realistically i don't think that is an issue because if that ends
-up being a problem we can just have the authors of the offending ssh
-client send a patch to us to fix it! :)
+Thanks,
+Stefan
 
->  Documentation/config.txt | 24 +++++++++++++++---------
->  connect.c                | 32 +++++++++++++++++++++++++-------
->  t/t5601-clone.sh         | 21 +++++++++++++++++++++
->  3 files changed, 61 insertions(+), 16 deletions(-)
-> 
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 0460af37e2..0c371ad786 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -2081,16 +2081,22 @@ matched against are those given directly to Git commands.  This means any URLs
->  visited as a result of a redirection do not participate in matching.
->  
->  ssh.variant::
-> -	Depending on the value of the environment variables `GIT_SSH` or
-> -	`GIT_SSH_COMMAND`, or the config setting `core.sshCommand`, Git
-> -	auto-detects whether to adjust its command-line parameters for use
-> -	with ssh (OpenSSH), plink or tortoiseplink, as opposed to the default
-> -	(simple).
-> +	By default, Git determines the command line arguments to use
-> +	based on the basename of the configured SSH command (configured
-> +	using the environment variable `GIT_SSH` or `GIT_SSH_COMMAND` or
-> +	the config setting `core.sshCommand`). If the basename is
-> +	unrecognized, Git will attempt to detect support of OpenSSH
-> +	options by first invoking the configured SSH command with the
-> +	`-G` (print configuration) option and will subsequently use
-> +	OpenSSH options (if that is successful) or no options besides
-> +	the host and remote command (if it fails).
->  +
-> -The config variable `ssh.variant` can be set to override this auto-detection;
-> -valid values are `ssh`, `simple`, `plink`, `putty` or `tortoiseplink`. Any
-> -other value will be treated as normal ssh. This setting can be overridden via
-> -the environment variable `GIT_SSH_VARIANT`.
-> +The config variable `ssh.variant` can be set to override this detection.
-> +Valid values are `ssh` (to use OpenSSH options), `plink`, `putty`,
-> +`tortoiseplink`, `simple` (no options except the host and remote command).
-> +The default auto-detection can be explicitly requested using the value
-> +`auto`.  Any other value is treated as `ssh`.  This setting can also be
-> +overridden via the environment variable `GIT_SSH_VARIANT`.
->  +
->  The current command-line parameters used for each variant are as
->  follows:
-> diff --git a/connect.c b/connect.c
-> index d2fbb15cc5..455c54a2ec 100644
-> --- a/connect.c
-> +++ b/connect.c
-> @@ -788,6 +788,7 @@ static const char *get_ssh_command(void)
->  }
->  
->  enum ssh_variant {
-> +	VARIANT_AUTO,
->  	VARIANT_SIMPLE,
->  	VARIANT_SSH,
->  	VARIANT_PLINK,
-> @@ -795,14 +796,16 @@ enum ssh_variant {
->  	VARIANT_TORTOISEPLINK,
->  };
->  
-> -static int override_ssh_variant(enum ssh_variant *ssh_variant)
-> +static void override_ssh_variant(enum ssh_variant *ssh_variant)
->  {
->  	const char *variant = getenv("GIT_SSH_VARIANT");
->  
->  	if (!variant && git_config_get_string_const("ssh.variant", &variant))
-> -		return 0;
-> +		return;
->  
-> -	if (!strcmp(variant, "plink"))
-> +	if (!strcmp(variant, "auto"))
-> +		*ssh_variant = VARIANT_AUTO;
-> +	else if (!strcmp(variant, "plink"))
->  		*ssh_variant = VARIANT_PLINK;
->  	else if (!strcmp(variant, "putty"))
->  		*ssh_variant = VARIANT_PUTTY;
-> @@ -812,18 +815,18 @@ static int override_ssh_variant(enum ssh_variant *ssh_variant)
->  		*ssh_variant = VARIANT_SIMPLE;
->  	else
->  		*ssh_variant = VARIANT_SSH;
-> -
-> -	return 1;
->  }
->  
->  static enum ssh_variant determine_ssh_variant(const char *ssh_command,
->  					      int is_cmdline)
->  {
-> -	enum ssh_variant ssh_variant = VARIANT_SIMPLE;
-> +	enum ssh_variant ssh_variant = VARIANT_AUTO;
->  	const char *variant;
->  	char *p = NULL;
->  
-> -	if (override_ssh_variant(&ssh_variant))
-> +	override_ssh_variant(&ssh_variant);
-> +
-> +	if (ssh_variant != VARIANT_AUTO)
->  		return ssh_variant;
->  
->  	if (!is_cmdline) {
-> @@ -982,6 +985,21 @@ static void fill_ssh_args(struct child_process *conn, const char *ssh_host,
->  		variant = determine_ssh_variant(ssh, 0);
->  	}
->  
-> +	if (variant == VARIANT_AUTO) {
-> +		struct child_process detect = CHILD_PROCESS_INIT;
-> +
-> +		detect.use_shell = conn->use_shell;
-> +		detect.no_stdin = detect.no_stdout = detect.no_stderr = 1;
-> +
-> +		argv_array_push(&detect.args, ssh);
-> +		argv_array_push(&detect.args, "-G");
-> +		push_ssh_options(&detect.args, &detect.env_array,
-> +				 VARIANT_SSH, port, flags);
-> +		argv_array_push(&detect.args, ssh_host);
-> +
-> +		variant = run_command(&detect) ? VARIANT_SIMPLE : VARIANT_SSH;
-> +	}
-> +
->  	argv_array_push(&conn->args, ssh);
->  	push_ssh_options(&conn->args, &conn->env_array, variant, port, flags);
->  	argv_array_push(&conn->args, ssh_host);
-> diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-> index 9d007c0f8d..209e2d5604 100755
-> --- a/t/t5601-clone.sh
-> +++ b/t/t5601-clone.sh
-> @@ -369,6 +369,12 @@ test_expect_success 'variant can be overriden' '
->  	expect_ssh myhost src
->  '
->  
-> +test_expect_success 'variant=auto picks based on basename' '
-> +	copy_ssh_wrapper_as "$TRASH_DIRECTORY/plink" &&
-> +	git -c ssh.variant=auto clone -4 "[myhost:123]:src" ssh-auto-clone &&
-> +	expect_ssh "-4 -P 123" myhost src
-> +'
-> +
->  test_expect_success 'simple is treated as simple' '
->  	copy_ssh_wrapper_as "$TRASH_DIRECTORY/simple" &&
->  	git clone -4 "[myhost:123]:src" ssh-bracket-clone-simple &&
-> @@ -381,6 +387,21 @@ test_expect_success 'uplink is treated as simple' '
->  	expect_ssh myhost src
->  '
->  
-> +test_expect_success 'OpenSSH-like uplink is treated as ssh' '
-> +	write_script "$TRASH_DIRECTORY/uplink" <<-EOF &&
-> +	if test "\$1" = "-G"
-> +	then
-> +		exit 0
-> +	fi &&
-> +	exec "\$TRASH_DIRECTORY/ssh$X" "\$@"
-> +	EOF
-> +	test_when_finished "rm -f \"\$TRASH_DIRECTORY/uplink\"" &&
-> +	GIT_SSH="$TRASH_DIRECTORY/uplink" &&
-> +	test_when_finished "GIT_SSH=\"\$TRASH_DIRECTORY/ssh\$X\"" &&
-> +	git clone "[myhost:123]:src" ssh-bracket-clone-sshlike-uplink &&
-> +	expect_ssh "-p 123" myhost src
-> +'
-> +
->  test_expect_success 'plink is treated specially (as putty)' '
->  	copy_ssh_wrapper_as "$TRASH_DIRECTORY/plink" &&
->  	git clone "[myhost:123]:src" ssh-bracket-clone-plink-0 &&
-> -- 
-> 2.15.0.448.gf294e3d99a
-> 
+previous descussion
+https://public-inbox.org/git/20171028004419.10139-1-sbeller@google.com/
+
+Stefan Beller (1):
+  diffcore: add a filter to find a specific blob
+
+ Documentation/diff-options.txt |  4 ++++
+ Makefile                       |  1 +
+ builtin/log.c                  |  2 +-
+ diff.c                         | 20 ++++++++++++++++-
+ diff.h                         |  3 +++
+ diffcore-blobfind.c            | 51 ++++++++++++++++++++++++++++++++++++++++++
+ diffcore.h                     |  1 +
+ revision.c                     |  3 ++-
+ t/t4064-diff-blobfind.sh       | 35 +++++++++++++++++++++++++++++
+ 9 files changed, 117 insertions(+), 3 deletions(-)
+ create mode 100644 diffcore-blobfind.c
+ create mode 100755 t/t4064-diff-blobfind.sh
 
 -- 
-Brandon Williams
+2.15.0.128.gcadd42da22
+
