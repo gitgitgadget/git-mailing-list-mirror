@@ -6,93 +6,70 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D676C202F2
-	for <e@80x24.org>; Mon, 20 Nov 2017 23:39:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 543BD202F2
+	for <e@80x24.org>; Mon, 20 Nov 2017 23:51:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751301AbdKTXjJ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Nov 2017 18:39:09 -0500
-Received: from avasout04.plus.net ([212.159.14.19]:55894 "EHLO
+        id S1751275AbdKTXva (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Nov 2017 18:51:30 -0500
+Received: from avasout04.plus.net ([212.159.14.19]:56564 "EHLO
         avasout04.plus.net.plus.net" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1751243AbdKTXjI (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2017 18:39:08 -0500
+        by vger.kernel.org with ESMTP id S1751195AbdKTXv3 (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2017 18:51:29 -0500
 Received: from [10.0.2.15] ([80.189.70.158])
         by smtp with ESMTPA
-        id GvebejvhGzbmWGveceC1d5; Mon, 20 Nov 2017 23:39:07 +0000
+        id GvqYejy60zbmWGvqZeC1rL; Mon, 20 Nov 2017 23:51:28 +0000
 X-CM-Score: 0.00
 X-CNFS-Analysis: v=2.2 cv=P6pKvmIu c=1 sm=1 tr=0
  a=bpDj9VLvXCYHU65eeb/Fiw==:117 a=bpDj9VLvXCYHU65eeb/Fiw==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=7gWbIBjvgrWuyaat1Y8A:9 a=QEXdDO2ut3YA:10
- a=yJM6EZoI5SlJf8ks9Ge_:22
+ a=IkcTkHD0fZMA:10 a=fFWYPnE7F0dn5gEAs6IA:9 a=QEXdDO2ut3YA:10
 X-AUTH: ramsayjones@:2500
-To:     Jeff Hostetler <jeffhost@microsoft.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        GIT Mailing-list <git@vger.kernel.org>
+Subject: Re: [PATCH v1 1/4] fastindex: speed up index load through
+ parallelization
+To:     Ben Peart <peartben@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Cc:     Ben Peart <benpeart@microsoft.com>, git@vger.kernel.org,
+        pclouds@gmail.com, chriscool@tuxfamily.org,
+        Johannes.Schindelin@gmx.de, alexmv@dropbox.com, peff@peff.net
+References: <20171109141737.47976-1-benpeart@microsoft.com>
+ <20171109141737.47976-2-benpeart@microsoft.com>
+ <xmqqbmkahhar.fsf@gitster.mtv.corp.google.com>
+ <7e5a9fde-67fc-2bb9-51b6-54bdaed162db@gmail.com>
+ <xmqq7eut8y36.fsf@gitster.mtv.corp.google.com>
+ <7428e41e-b705-f377-1951-b11af851c4d5@gmail.com>
+ <xmqq7eus3nr2.fsf@gitster.mtv.corp.google.com>
+ <73fd93cd-91f4-1286-732c-cd8185fe2027@gmail.com>
+ <xmqqwp2s1h1x.fsf@gitster.mtv.corp.google.com>
+ <9ba23d2c-2198-55d7-5a02-69879fbbb3cb@gmail.com>
+ <xmqq1sl017dw.fsf@gitster.mtv.corp.google.com>
+ <92b0b0ff-6878-003a-b26f-3b4c2c857be3@gmail.com>
 From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH] list-objects-filter-options: fix up some sparse warnings
-Message-ID: <b1037774-6ae6-630b-f330-e95b1c3d681d@ramsayjones.plus.com>
-Date:   Mon, 20 Nov 2017 23:39:05 +0000
+Message-ID: <63053f5d-0089-4165-0470-ed0d88a87e9e@ramsayjones.plus.com>
+Date:   Mon, 20 Nov 2017 23:51:26 +0000
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.4.0
 MIME-Version: 1.0
+In-Reply-To: <92b0b0ff-6878-003a-b26f-3b4c2c857be3@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfGPfFRhxnsR8BWkYvptPDQxpPL33ZoI3ByaqhpjVqpTIxSaVM1KbStpEUN4m2ONeoO6apwHyWzJ0UY0Cjtm+egBohUCcsowxSQBdLJ9VKwYkc9es2ZBd
- 3fni/GdMzXHbY3kjwkOXI2WgXnVU/9pa6lIPt5srRZu/CAyWTrqSUh1sIbKDJWpgpbYjdg6euqk8GA==
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4wfOKnS7sXwRRh8ZFJYSdX8XQ6moQSjg69WVhfkEQPqrDBIenYuvi23Sibr4Ep74wj9in6Ou8Dj+dOXhRzxIMPKwxMvVfdF7ElG/ivHWVxBaoef3eQdIuk
+ 78tGC1ZjHyXJPOdgFpSA0bCcIxjDheJqC+q+HnYSgs4LVbL1MeFWdChG
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-In particular, sparse complains that the armor_{en,de}code_arg()
-functions are 'not declared - should they be static?'. Since the
-armor_decode_arg() symbol does not require more than file visibility,
-we can simply mark the declaration with static. The armor_encode_arg()
-function has no callers, so we simply remove the (unused) definition.
 
-Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
----
+On 20/11/17 14:01, Ben Peart wrote:
+> Further testing has revealed that switching from the regular heap to a refactored version of the mem_pool in fast-import.c produces similar gains as parallelizing do_index_load().  This appears to be a much simpler patch for similar gains so we will be pursuing that path.
+> 
+> Combining the two patches resulted in a further 25% reduction of do_index_load() but with index load times getting smaller, that only resulted in a 3% improvement in total git command time.  Given the greater complexity of this patch, we've decided to put it on hold for now.  We'll keep it in our back pocket in case we need it in the future.
 
-Hi Jeff,
-
-If you need to re-roll your 'jh/object-filtering' branch, could you
-please squash this (or something like it) into the relevant patch
-(commit bf0aedcbe1, "list-objects: filter objects in traverse_commit_list",
-16-11-2017).
-
-Thanks!
+Since you are withdrawing the 'bp/fastindex' branch, I won't send the
+patch to fix up the sparse warnings (unless you would like to see it
+before you put it in your back pocket). ;-)
 
 ATB,
 Ramsay Jones
 
- list-objects-filter-options.c | 14 +-------------
- 1 file changed, 1 insertion(+), 13 deletions(-)
 
-diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
-index 0e4ad70ab..bdbadd5a3 100644
---- a/list-objects-filter-options.c
-+++ b/list-objects-filter-options.c
-@@ -34,19 +34,7 @@ static int arg_needs_armor(const char *arg)
- 	return 0;
- }
- 
--void armor_encode_arg(struct strbuf *buf, const char *arg)
--{
--	static const char hex[] = "0123456789abcdef";
--	const unsigned char *p;
--
--	for (p = (const unsigned char *)arg; *p; p++) {
--		unsigned int val = *p;
--		strbuf_addch(buf, hex[val >> 4]);
--		strbuf_addch(buf, hex[val & 0xf]);
--	}
--}
--
--int armor_decode_arg(struct strbuf *buf, const char *arg)
-+static int armor_decode_arg(struct strbuf *buf, const char *arg)
- {
- 	const char *p;
- 
--- 
-2.15.0
