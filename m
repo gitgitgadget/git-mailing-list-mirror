@@ -2,117 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C1BD202F2
-	for <e@80x24.org>; Mon, 20 Nov 2017 22:05:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC39B202F2
+	for <e@80x24.org>; Mon, 20 Nov 2017 22:07:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751262AbdKTWFC (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Nov 2017 17:05:02 -0500
-Received: from mail-it0-f68.google.com ([209.85.214.68]:36929 "EHLO
-        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751149AbdKTWFB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Nov 2017 17:05:01 -0500
-Received: by mail-it0-f68.google.com with SMTP id m191so13603666itg.2
-        for <git@vger.kernel.org>; Mon, 20 Nov 2017 14:05:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=hh8MXlYyIhkrcrX+4Rknh0dFZNYYXIg9UNPS8ovb+bs=;
-        b=nr/PBLgv7tRyNcQZddozf1ToSZNvZztgPPbIWAX0P5jRvwrT9MdejQgKqL0i2KcBd0
-         hRzWqikvOP8AtJ0H7amcByMDTHqHRQCULw5BhmeZ7MXBgJjDHskrQXzPVnSdzoY7sZqe
-         O5w/r5oTR1/SpkFTjRJHy9iEcrx/vK6C6HEwytKDV2m8uxFZQsWgS98znPkcASbxBrF1
-         +NyR1+uciErHQjddqZX8bqJqHoJwmRDpS286OE/r98qkuBnXeweMSNLgCGRKLFhBbI72
-         hpc1NnnFLhn1hEZcD/JPjrVofOBcyvQjzD2wv35yHac3si6no4g/6GcNZboHoEoR8/2T
-         ehQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=hh8MXlYyIhkrcrX+4Rknh0dFZNYYXIg9UNPS8ovb+bs=;
-        b=sxsDh2DkVTgtFjkkK+MGWRr/51n8iIHtYZ5xMpRFVL+hybcnGcjMwcs9hcviHu0Qez
-         1T9z578qilnNl1p97M5khdPAmAWPpkDiOUkioDT2mUAaTKxMUhwaYhpeZNqPDJzoVFer
-         xPR+Nv9VFeb+oAIydGPp4Ogs9zy/W5GdsknQC+y7QvClxhJ0GKi0YeBjl1fndl2iBEN6
-         olEHWd4kkHxdWuUNDWWudVGnLqCD1fKNGxu++qJS4tmNHQWFJPAq4u6qWD5hlCjRvhV4
-         Hu9V1wiiTijBRtWI0d3ACJah42jX+GwSZOfHUHWF2DpZT4+ftXt6LTBdfvSrgIpiN+FD
-         tfAQ==
-X-Gm-Message-State: AJaThX5WQLdV+5ZjNsRtFsfi0lCJuojmPoxhIz81s72AKZzC7wNrABE2
-        K/yADeI52vb2ORTAe7tuQ7w=
-X-Google-Smtp-Source: AGs4zMaMDTycFOzZNiizlKnNEqFLgN4wgtif8jDDW1Qgv/xcxg/Wz+dsj0pffGF+qz2dXlmeR7c4Vw==
-X-Received: by 10.36.240.78 with SMTP id p14mr1893752iti.28.1511215500900;
-        Mon, 20 Nov 2017 14:05:00 -0800 (PST)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id v8sm5393894itc.5.2017.11.20.14.04.59
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 20 Nov 2017 14:05:00 -0800 (PST)
-Date:   Mon, 20 Nov 2017 14:04:58 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Segev Finer <segev208@gmail.com>
-Subject: Re: [PATCH 3/8] connect: split git:// setup into a separate function
-Message-ID: <20171120220458.sxltsyheixgkunyh@aiede.mtv.corp.google.com>
-References: <20171120212134.lh2l4drdzu6fh5g2@aiede.mtv.corp.google.com>
- <20171120212327.ssk6vmw2hd5jwbi5@aiede.mtv.corp.google.com>
- <20171120215218.GB92506@google.com>
+        id S1751252AbdKTWHo (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Nov 2017 17:07:44 -0500
+Received: from mout.web.de ([212.227.15.4]:56267 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751131AbdKTWHn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Nov 2017 17:07:43 -0500
+Received: from [192.168.178.36] ([91.20.49.242]) by smtp.web.de (mrweb001
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MWAtV-1eemtj2niT-00XNN0; Mon, 20
+ Nov 2017 23:07:34 +0100
+Subject: Re: [PATCH 6/6] grep: show non-empty lines before functions with -W
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Vegard Nossum <vegard.nossum@oracle.com>
+References: <790c2344-a71e-7089-9000-f9b37a4a5cd9@web.de>
+ <9c3462e3-2d1d-05bc-9f7d-4bc93d32e7ff@web.de>
+ <CAGZ79kZxiEPE4LPEo-eb4Ta4bYXVr9xQM0dFeiJk9XXKU4AR+w@mail.gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <55af5442-c22a-342e-edbd-02a776228345@web.de>
+Date:   Mon, 20 Nov 2017 23:07:32 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20171120215218.GB92506@google.com>
-User-Agent: NeoMutt/20170609 (1.8.3)
+In-Reply-To: <CAGZ79kZxiEPE4LPEo-eb4Ta4bYXVr9xQM0dFeiJk9XXKU4AR+w@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:FLimaAVrACURYUVJXcypVB3bl4mUbVkn6/FWbM09odU5hpjCrkP
+ t68cHVEgsgDTngA0FI7KEfHsf9ySqNpGntbaMH5ahbHwlnQI/jCqepGn63qjONRDBtdcmxt
+ oA1zvLUQuPgyze3MXBBN0lLsbVuTKoWQDCbZX/RL9dHhdNDJUvg3II/f1yBghIfKOQZSs5c
+ ye84/HUFfTPi6euatfRLQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:puHy9eP3oXk=:I0vnB5qC/4dBDVIR3KqCnz
+ COdVPexdnX0sYpEy5EDhb6yZPtfgVfA/ZcPMvBL81BLT5MvmmotbP3D7kZzo9P1+8UZJjdA8r
+ sBYAAaERa7FHtK4nRj52CzOBQ0ub3URbDoEQVUFQhDxm30IR2M9Ql2piTAYZtjK10//thzfDd
+ 3zUIQQEbr8r0Lsh0nlXk8BF0SCWO3OpQGsTlm1rO+YU5Ywdkn1MR0O9K/U82wN44BfZbaSAmr
+ dO+07HiU733/vAcx3FnMb3llXcsZk6fcZngiDZCDhcN03WTJAD4uuvu6FJdxLb2iIt7OL1CQy
+ qo+lX2k09XRN/sAJeQlLM5m2nczueUye3mVNbKw03K0EHcDSTrMrIfPE1xbZ4kvqQGGjNcXy4
+ vRJq0JEQfMKl0z6ELy6dtSCcJih3Jmh6hii00tlve+bxNplfs5n7PVyF04nAqqEnzi8hPTyij
+ w886wV1sEAj/IYajzwR58S7FvGfyjYmjoKJWnNRaKHmmFOxYHYvOH0VxLTFOFkPSyclci4pvI
+ YeTKwZA5peLhFvmCPkHn1xC82EF3tRmcVSr6UI1mi8jH/H+iXY7bQqucNJhQ/GIozwO+soFd6
+ EE3bFiWDkvPPi8eD1nScTBgRMGzRiA6+Q/WGba36uz3uZu7JUuC4Rc+ZGly/PfGhyv3cV80rG
+ /Le1s+hSxL3BCjYSbVRz4KdAswWr4Dz7Jqh+Ol9juemsFrzOq4Vxnzwf2pvlHV11oY97JQds0
+ RHuP/qeqBblfUamtejWFuqFJuVgZa4ZodeCgEYJQxg6hjK+iHs7pAm4gZY6XHxrT98q0USWlO
+ Bqir9fBf6JasAiJ9uVlVh4DlxkjW6Ph6I9S2Ob3KOBO3+cFsRY=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brandon Williams wrote:
-> On 11/20, Jonathan Nieder wrote:
+Am 20.11.2017 um 21:39 schrieb Stefan Beller:
+> On Sat, Nov 18, 2017 at 10:08 AM, René Scharfe <l.s.r@web.de> wrote:
+>> Non-empty lines before a function definition are most likely comments
+>> for that function and thus relevant.  Include them in function context.
+>>
+>> Such a non-empty line might also belong to the preceding function if
+>> there is no separating blank line.  Stop extending the context upwards
+>> also at the next function line to make sure only one extra function body
+>> is shown at most.
+> 
+> Can we add another heuristic, that checks for common function body ends, e.g.
+> if the preceding line contains '}' but is not commented (the line doesn't
+> contain '*/' '//', '#'), we have a strong hint that it is a function, not an
+> additional comment.
 
->> +	/* These underlying connection commands die() if they
->> +	 * cannot connect.
->> +	 */
->
-> I know this is really just code motion but maybe we can fix the style of
-> the comment here?
-
-How about doing that as a separate commit?
-
--- >8 --
-Subject: connect: correct style of C-style comment
-
-Documentation/CodingGuidelines explains:
-
- - Multi-line comments include their delimiters on separate lines from
-   the text.  E.g.
+C comments containing "}" as part of the text would only be shown
+partially, e.g:
 
 	/*
-	 * A very long
-	 * multi-line comment.
+	 * Not shown because of the curly closing brace in ${PATH}.
+	 * Shown.
 	 */
 
-Reported-by: Brandon Williams <bmwill@google.com>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- connect.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Two examples in git's repo are in refs.h and sha1-lookup.c.
 
-diff --git i/connect.c w/connect.c
-index 20ed1d9574..e544a5e1dd 100644
---- i/connect.c
-+++ w/connect.c
-@@ -889,7 +889,8 @@ static struct child_process *git_connect_git(int fd[2], char *hostandport,
- 
- 	transport_check_allowed("git");
- 
--	/* These underlying connection commands die() if they
-+	/*
-+	 * These underlying connection commands die() if they
- 	 * cannot connect.
- 	 */
- 	if (git_use_proxy(hostandport))
+Before diving deeper: Is it worth it?  Does the heuristic in this series
+produce excessive context often?  Enough to be annoying?
+
+Thanks,
+René
