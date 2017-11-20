@@ -2,121 +2,170 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 095F2202F2
-	for <e@80x24.org>; Mon, 20 Nov 2017 22:34:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E5B46202F2
+	for <e@80x24.org>; Mon, 20 Nov 2017 22:47:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751159AbdKTWex (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Nov 2017 17:34:53 -0500
-Received: from mail-qk0-f174.google.com ([209.85.220.174]:36586 "EHLO
-        mail-qk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751149AbdKTWex (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Nov 2017 17:34:53 -0500
-Received: by mail-qk0-f174.google.com with SMTP id o6so9528161qkh.3
-        for <git@vger.kernel.org>; Mon, 20 Nov 2017 14:34:52 -0800 (PST)
+        id S1751212AbdKTWq7 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Nov 2017 17:46:59 -0500
+Received: from mail-wm0-f44.google.com ([74.125.82.44]:40767 "EHLO
+        mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751158AbdKTWq7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Nov 2017 17:46:59 -0500
+Received: by mail-wm0-f44.google.com with SMTP id b189so21662069wmd.5
+        for <git@vger.kernel.org>; Mon, 20 Nov 2017 14:46:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=6nc/Kn/ROHV4rKkzc77lpC6ll9vhz6n9qdkzk7XoG2Y=;
-        b=bEUqKTqYTpxqGQsNDJIcYK3kx9jkCGA5cCQ+5dWvGJnMa+qoUDowrHP+UEuqJqinAF
-         XLYkJLsh/9h8CTYo8zi4ggIub5cKCUqIwPkKH0bJxsgEMTk2V2QJH9t685Z3LFpnOmhQ
-         hOKm2PW6ejhqAed7aH17+zoZBszf6isekSFjRlbIJBcqryHmrk/k/X35oYeHespYJu+q
-         ewh0tMVK4UPOC5FiTuOUU4dJDpJz3BEhJzhg9dWE1+4dfSfbdUKv6D9GIwXJoIcq9bzp
-         Ozup9UkQ46pmzeJfrqeoTeLOQrc5+08JO0VvArO13aPMla0E/XT24SvGu2kJtSSFGa5z
-         DYzw==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=h6o4KSuu0R2F9VgE+To6mF/6Reb1QXfhyQQRDvllFKQ=;
+        b=tGflghwvz87Bh/gnxNeXYenkn+F00imaRVyB2ZdrVWEqIdvDmDvFkXRJIL2PKQPcUh
+         7DGQVE8eaGuu4bECaITDr4gAyBlRZ7dO96ggvXbcIvgEqz5TI4Vu9nSfZV8COp2/obPM
+         umqvCbKguTIwbSM9qRtqXF6HuOG046AW7UvFWe5auSYYiaHykNcVfIH/veYCaA9cgHx5
+         MX4fhJ852zOBKWuZFMeGSoj/5yFGTIganzhmse/llcNY3f8hjQt3ERyyfhAZ4xaAevqp
+         f4A3CY9UWh5d7xAYlyh8tbDWL7VvTkXqiI5a/RE4eno9eookbKeF1rIZbRjHcx5q3i3D
+         sF2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=6nc/Kn/ROHV4rKkzc77lpC6ll9vhz6n9qdkzk7XoG2Y=;
-        b=EHkjhGa9SrYy6LQDHxQzBelEWMWKeY+8X31r8vCNL0yI+Tl71LH0iaQPbScxPLs2qE
-         wHU8lh0yIV3G6D0nu6SJTzv3sAvVKYbKaL4PXpdTb59/2u9CMLfdvCFusW4UsqFxvbqe
-         pwp3a9ZloW/pHOmSmRGz3pH4ZnjoALb7amvFTa/kGqRexS/KWdveSdzKFc3mNWv4dC81
-         WdOv7W14r8Z+XUC6LWSDrN7mOC8D5cBiHEN5Uy5jrRo1eHaAKhtQp8UQCSgBxeU2hw7E
-         07ZShf7AO9px67sYxTty28zhU15khOOlFVOGTGRvIRPTp3f6IHhfP6do0MB+lGFHsFGG
-         oyTQ==
-X-Gm-Message-State: AJaThX6xl9HmcD4kA5R5eEIKbgaUCHOG6dUUgf1Lo780Hjk2Ls1+vXJC
-        xDad4xe0HBmFKazE/bLeAzrJxfT2bP+d1wOl1yU=
-X-Google-Smtp-Source: AGs4zMZ+NHWvzCdyutoShm3Hn7CEcYnb/04PlIXnAv0tYaY/ijoLQPM2tuBAbsqxIi1lKhI+Y6ZUktZA9Bhl45QE2Dw=
-X-Received: by 10.55.58.14 with SMTP id h14mr21708971qka.132.1511217290583;
- Mon, 20 Nov 2017 14:34:50 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=h6o4KSuu0R2F9VgE+To6mF/6Reb1QXfhyQQRDvllFKQ=;
+        b=EjE8oH1J6DnItexT0J7ywQyntWdaHoYqHUuXgpx/Z6s8cwLsgoV+DKlgLrFZLj1oCg
+         o5iac8whozkNzKbxmjVoHb1xEvPUcGmicxh2bTAANHJmxZXaTRzm5Q0kZqBnTCG9Csyu
+         cPhekgwS3AUeo6q19/bsACC2vGsaHjrrMLqn1kNT01oJxe2ONEku4SV+BnS5kg5EWGNQ
+         ThfR0L6MD7u+b4DNHwhFmdfchBraHMX0k99Q5rzW1OmWM/puaXp2k7zYdD+tKO26qveg
+         6BmLsU+6p4bDZj8IiSexSUMw7Lx4plYICpEdqYWnL3M5/joehthbBg/GJVXRiWVUGzry
+         6Xlg==
+X-Gm-Message-State: AJaThX5kx5ReJnX4Ve75C1P8KzzBl3OBSxhG85Kd061NKR/R3Hb0h824
+        AczVIvxPcpOmB1UJUuNPbhg=
+X-Google-Smtp-Source: AGs4zMY6bCw7cpzPKPlWqJpt7DCUdRPj1WyyT/FV4mOVSl14CT54gG46JLkoprjgYURNne5i+k2XYg==
+X-Received: by 10.80.136.49 with SMTP id b46mr18289249edb.155.1511218017782;
+        Mon, 20 Nov 2017 14:46:57 -0800 (PST)
+Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
+        by smtp.gmail.com with ESMTPSA id p45sm9299422edc.30.2017.11.20.14.46.56
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 20 Nov 2017 14:46:56 -0800 (PST)
+Received: from avar by evledraar with local (Exim 4.89)
+        (envelope-from <avarab@gmail.com>)
+        id 1eGuq7-0007Dc-Ts; Mon, 20 Nov 2017 23:46:55 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Dan Jacques <dnj@google.com>
+Cc:     Johannes.Schindelin@gmx.de, git@vger.kernel.org, gitster@pobox.com
+Subject: Re: Re(2): [PATCH 1/1] exec_cmd: RUNTIME_PREFIX on some POSIX systems
+References: <87lgj0wtr9.fsf@evledraar.booking.com> <20171120215805.16994-1-dnj@google.com>
+User-agent: Debian GNU/Linux 9.2 (stretch); Emacs 25.1.1; mu4e 0.9.19
+In-reply-to: <20171120215805.16994-1-dnj@google.com>
+Date:   Mon, 20 Nov 2017 23:46:55 +0100
+Message-ID: <87ine4wotc.fsf@evledraar.booking.com>
 MIME-Version: 1.0
-Received: by 10.12.155.209 with HTTP; Mon, 20 Nov 2017 14:34:50 -0800 (PST)
-In-Reply-To: <87a7zhxm9s.fsf@linaro.org>
-References: <20171116154814.23785-1-alex.bennee@linaro.org>
- <CAPig+cSh0tVVkh0xF9FwCfM4gngAWMSN_FXd2zhzHcy2trYXfw@mail.gmail.com> <87a7zhxm9s.fsf@linaro.org>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 20 Nov 2017 17:34:50 -0500
-X-Google-Sender-Auth: zwKMacieTTt0ZLk631FHjok9lEc
-Message-ID: <CAPig+cQQHMt9757aoBAQfyMtnxmDmrVJ_g8AmzvmmqTMAYaUXw@mail.gmail.com>
-Subject: Re: [PATCH] git-send-email: fix get_maintainer.pl regression
-To:     =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 20, 2017 at 5:44 AM, Alex Benn=C3=A9e <alex.bennee@linaro.org> =
-wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
->> It is not at all clear, based upon this text, what this is fixing.
->> When you re-roll, please provide a description of the regression in
->> sufficient detail for readers to easily understand the problem and the
->> solution.
->
-> How about:
->
-> Since the removal of Mail::Address from git-send-email certain addresses
-> common in MAINTAINERS now fail to get correctly parsed by
-> Git::parse_mailboxes. Specifically the patterns with embedded
-> parenthesis fail, for example for MAINTAINERS:
-> [...snip...]
 
-Thanks, that explanation makes the problem quite clear. It also
-allowed me to examine the fix with a more critical eye, which led to
-several additional comments and observations (sent in my previous
-email).
+On Mon, Nov 20 2017, Dan Jacques jotted:
 
->> Use write_script() to create the script:
+> On Mon, 20 Nov 2017 22:00:10, Ævar Arnfjörð Bjarmason replied:
 >
-> Thanks for the pointers, I'll fix it up.
+>> [...]
 >
-> I missed the existence of write_script.sh while I scanned through
-> t/README, perhaps a stanza in in "Test harness library":
+> Thanks for responding. I'll readily confess that PERL and the PERL
+> ecosystem are not areas I'm very familiar with, so I'm really grateful
+> for your feedback here.
 >
->  - write_script <name> <<-\EOF && <rest of test>
->    echo '...'
->    ...
->    EOF
+>> You need to bust the perl/PM.stamp cache as a function of your
+>> RUNTIME_PREFIX_PERL variable (or NO_PERL_MAKEMAKER).
 >
->    The write_script helper takes care of ensuring the created helper
->    script has the right shebang and is executable.
-> ?
+> Good catch, I'll add that to the next version of the patch.
+>
+>> Other than that, is this whole NO_PERL_MAKEMAKER workaround just because
+>> you couldn't figure out what the target RELPERLPATH is in
+>> $prefix/$RELPERLPATH, which in this case is share/perl/5.26.1 ?
+>
+> Sort of. I actually had a version set hacked MakeMaker's $INSTALLSITELIB
+> (same general result) and it worked.
+>
+> The executable path resolution logic that I built make assumptions about
+> the layout of the installation, and I ended up favoring NO_PERL_MAKEMAKER
+> because I could rely on its explicit and straightforward installation
+> logic.
+>
+> I am not sure that MakeMaker adds value in a RUNTIME_PREFIX
+> installation, since RUNTIME_PREFIX's motivation is fundamentally portable
+> and my impression of MakeMaker is that much of the value that it adds is
+> handling system-specific PERL installation details. Given that
+> NO_PERL_MAKEMAKER is supported as a Git installation option, I opted to
+> take advantage of the explicit installation rather than rely on
+> MakeMaker as an intermediary.
+>
+> My other motivation is that if I integrate $RELPERLPATH into the MakeMaker
+> installation, I'd still have to implement that behavior when
+> NO_PERL_MAKEMAMER is enabled so that it is compatible with
+> RUNTIME_PREFIX_PERL.
 
-Mentioning write_script() in the "Test harness library" section might
-indeed be a good idea.
+Right, it needs some if/else, or we could simply always add lib/ as well
+to @INC (via "use lib") and it would work in both modes unconditionally.
 
-> Ahh that makes sense. Again perhaps in the t/README "Keep in mind:"
+> I'd welcome any insight on whether this is the correct way to proceed.
+> If we decode to go forward with NO_PERL_MAKEMAKER, I'm happy to add some
+> better documentation in the Makefile to detail the rationale for
+> forcefully enabling it.
+
+My impression is (see `git log --reverse -p -GNO_PERL_MAKEMAKER`) that
+almost nobody uses NO_PERL_MAKEMAKER, so it would be better to make it
+work with the more supported mode since it seems easy.
+
+But I've now forgotten all the details of why we're even using MakeMaker
+in the first place, if I ever actually knew them.
+
+>> 1. The regex match you're doing to munge the dir could be done as a
+>>    catdir($orig, '..', '..', 'lib'), that doesn't work as discussed
+>>    above, but *might* be more portable. I say might because I don't know
+>>    if the path string is always normalized to be unix-like, but if not
+>>    this won't work e.g on Windows where it'll have \ not /.
 >
->  - All the tests in a given test file run sequentially and share
->    repository state. This means you should take care not to break
->    assumptions of later tests as to which commits exist in the test
->    repository.
-> ?
+> The regex-based approach was motivated by a perceived value to
+> conciseness. Since a larger header code block seems to be acceptable, I
+> could emit "$(gitexecdir)" as a constant in the header and operate on it
+> at runtime. This would avoid having to calculate the correct sequence of
+> "../" to walk up from "$(gitexecdir)" directly in the Makefile.
 
-Maybe, maybe not. Ideally, tests should be as self-contained as
-possible. In practice, of course, this isn't always practical or even
-possible (and there is a lot of old test code which is heavily
-dependent upon state left over from earlier tests). Perfectly
-self-contained tests (or self-contained _sets_ of tests) could
-theoretically be run in parallel, so, in general, we'd like to
-encourage people to tend toward self-contained, thus the above snippet
-may be going in the wrong direction.
+Yeah I think nobody's going to have any problem with a large header
+block.
+
+>> 2. You are 'use'-ing FindBin there unconditionally (use is not function
+>>    local in perl), and implicitly assuming it loads File::Spec.
+>>
+>>    Ignoring the NO_PERL_MAKEMAKER caveats above I'd suggest something
+>>    like this:
+>
+> Sounds good! I wasn't sure whether I should adhere to the one-line header
+> that was being used before, but I am all for whitespace if that is
+> acceptable.
+>
+> This seems a bit much to emit from a Makefile - what do you think about
+> adding template files for each header in the "perl/" directory and
+> preprocessing them via "sed" in the Makefile?
+
+Sure, that sounds great.
+
+>> 3. I may be squinting at this wrong but it seems to me that between
+>>    your v1 and v2 reading GITPERLLIB here no longer makes any sense at
+>>    all. You used to set it in git itself, now it takes priority but
+>>    nothing sets it, presumably you'd have some external wrapper script
+>>    that'll set it?
+>
+> $GITPERLLIB is (as far as I can tell) used for testing, so that PERL scripts
+> invoked by tests can find the Git support libraries. I think it is still
+> necessary in both RUNTIME_PREFIX_PERL and default worlds because tests run
+> Git out of the repository root, so relative resolution logic based on
+> installation paths will not work.
+
+Ah, thanks. Makes sense, I missed that.
