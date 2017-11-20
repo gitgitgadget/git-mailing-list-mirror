@@ -2,116 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5830B202F2
-	for <e@80x24.org>; Mon, 20 Nov 2017 15:21:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B9622202F2
+	for <e@80x24.org>; Mon, 20 Nov 2017 15:28:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751410AbdKTPVI (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Nov 2017 10:21:08 -0500
-Received: from mail-pg0-f51.google.com ([74.125.83.51]:43126 "EHLO
-        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751245AbdKTPVH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Nov 2017 10:21:07 -0500
-Received: by mail-pg0-f51.google.com with SMTP id r12so7603300pgu.10
-        for <git@vger.kernel.org>; Mon, 20 Nov 2017 07:21:07 -0800 (PST)
+        id S1751318AbdKTP2T (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Nov 2017 10:28:19 -0500
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:38391 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751272AbdKTP2S (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Nov 2017 10:28:18 -0500
+Received: by mail-pf0-f193.google.com with SMTP id r62so7528093pfd.5
+        for <git@vger.kernel.org>; Mon, 20 Nov 2017 07:28:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=+PP8zXY1N2JaSJRnARwj9q0HZoReB9aPEy5cmDo0bx4=;
-        b=PoMlMod07yv2/eqxIH2kdEnQAiHq3mHO7/9l1k5K1Q066XqyutOflE8fddB9DIvZ78
-         SmhszJeHXpgISjK3eM7Z8Qhq9+KPMum31xCZv6zzFpTAy5MuzsNFoVu/If6vb+MwHJ8y
-         FUdjO8x0Z4T7frfc6MjLJnoVenc+KG0/LBYGLG/miIZaM41uDm3c22dcgqBFGU4aJG/f
-         GVOBXQ0Ozb7pVXI7CY0imYDhwku8jkM54w4fOb+2ibtMelHCNl2hYY13hYVqMVKdkeMU
-         kF104bIAsyCJVBh04fc0yFsZvquSkcM6IRUtZoWOsYAc7Vqnj1XANjOSbOpb2fOfvhFK
-         EytQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=etuqHSHOflUFxyTIu0VU8G1WKKuJn1Db5oKfLuHDAzg=;
+        b=uGdmOs5q7UacbHGxdIAkYiriudOaLxpQF3yxmIxITqW3mbcBI5dL9mnYGBWmB1Ppot
+         JGR1uOvb19gaKlgEXl4UZvTJZ/4o6whukASB2rF+CyqnAs3x++YbzMcuea+tNmHaq4WB
+         Twn10n9oX045cKFrG3Y1SSEtFMZxckOkHGdCC7+OlkEQs7kHK40vCZe4Y5qUz/vk/JqV
+         S5eOOyMSzWljmHn2su3AhaIwmWmVos/quRYzu9O1whsWdU3+C9dBZ2Ncktoo1aUmrFAa
+         LbqdD0p5czaK7eeKD1nT+dU44ZHBwhG/qsA0wRAL5Rut45Q4Y89NYo9XcB4NrCmDyxZP
+         LMKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=+PP8zXY1N2JaSJRnARwj9q0HZoReB9aPEy5cmDo0bx4=;
-        b=gIlVMgzT1ZN0e2YqeqxEjLTxwECvkGU86GlJleBGHNTQbSuLTTGJUyNXMPGW4knqed
-         4e/YJkAA07MJh6S5P2yCdkbU4sAUi/vth+tMfD0USLWYBSqfb8p4h2V+VxFAXuxc7lyU
-         Cx+/qZCHR4e4m6Q9FBkoNDreJormvF0S8uBy46nuOvaVwcNbwSBYsMECDerklXPaJbVU
-         oWaWxfTULSOkDp7kUIP1hzHWDGHUlM67UMyGAU4mZTdE71WebbDojOuTvJHeobratQJC
-         S6fwPN714aYqq+I9s55KXfsiqFl2jkyh9FYHCOz2raWuvIFUeiJF/p/QLN9ybu6AjHT7
-         ThIg==
-X-Gm-Message-State: AJaThX5780s+6ehOU+nlcxfblE7lntH0nWCkTKlIRC+qtLdm60N367FS
-        NCqXhSVzFfYk1qFCMKP5l1jDdoU/
-X-Google-Smtp-Source: AGs4zMaXauuht6vcI9ZcpKsTYgLC8f5bNj7HAYFc8e5C2I1t2LQexwfgfhUIk3wCmD7XzWlBN/nsoA==
-X-Received: by 10.98.87.13 with SMTP id l13mr11922785pfb.193.1511191266350;
-        Mon, 20 Nov 2017 07:21:06 -0800 (PST)
-Received: from [192.168.43.71] ([157.50.8.247])
-        by smtp.gmail.com with ESMTPSA id t4sm18064088pfd.110.2017.11.20.07.21.02
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=etuqHSHOflUFxyTIu0VU8G1WKKuJn1Db5oKfLuHDAzg=;
+        b=scGkzgcOAtU79xRtp7n6+yFQyfZjvJeuVWjRGk/vrjFs1nHsQn5vANpbFWtCrRC7NF
+         aXxeNzclmH/RA8xAAQvrKCwpkoG2qzN3lcYS+OLzrvLE5cUQtphP4DjF4W1ZlGi3G0i2
+         UsEWnRo2Oa0VxfdbOXrcQvgSBEI5b7plzsn8IzDDBhoJDo2trQGhoDfqU4KeW3BaWYto
+         f4sYExzDaYeSwgSMx3JNMXCvGMtHjEST2YhBwITvXuBAJPazagQiZKUFYESoO1Vsvs2q
+         q5isLIAxwFAmZhYhrgJNPOc5qIDmiL+Xq+gUs3X7B33Tv/3FPSaC5LJaSL8lz/WxfCyZ
+         zjDQ==
+X-Gm-Message-State: AJaThX5O5UJ+Y50G3HPuTXaF6cQsAvZ0q/u/HnSqxBQxgg3AOFqp96aB
+        ryRrJQK7oRfnFcaqIaZMzkP3n/tp
+X-Google-Smtp-Source: AGs4zMa5u4mjuu7NpNyxp+GcpO8uexIA4BLUIpyAa+ecjMeMjqDypfyjR3G9UkS+Ir4d6l0nAMM8QA==
+X-Received: by 10.159.246.20 with SMTP id b20mr13982154pls.95.1511191698159;
+        Mon, 20 Nov 2017 07:28:18 -0800 (PST)
+Received: from localhost.localdomain ([2405:204:73ca:5b3a:a0bc:36c6:4f00:c705])
+        by smtp.gmail.com with ESMTPSA id y5sm20854493pfa.128.2017.11.20.07.28.08
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 20 Nov 2017 07:21:05 -0800 (PST)
-Subject: Re: [PATCH] docs: checking out using @{-N} can lead to detached state
+        Mon, 20 Nov 2017 07:28:17 -0800 (PST)
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Git mailing list <git@vger.kernel.org>
-References: <20171119175411.13570-1-kaartic.sivaraam@gmail.com>
- <xmqqpo8dn1jd.fsf@gitster.mtv.corp.google.com>
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Message-ID: <52a6a1e5-c444-0bad-2558-e326ae170a3c@gmail.com>
-Date:   Mon, 20 Nov 2017 20:48:49 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.4.0
-MIME-Version: 1.0
-In-Reply-To: <xmqqpo8dn1jd.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Subject: [PATCH] git-rebase: clean up dashed-usages in messages
+Date:   Mon, 20 Nov 2017 20:56:52 +0530
+Message-Id: <20171120152652.9413-1-kaartic.sivaraam@gmail.com>
+X-Mailer: git-send-email 2.15.0.291.g0d8980c5d
+In-Reply-To: <xmqqmv3hokvx.fsf@gitster.mtv.corp.google.com>
+References: <xmqqmv3hokvx.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Monday 20 November 2017 07:39 AM, Junio C Hamano wrote:
-> Kaartic Sivaraam <kaartic.sivaraam@gmail.com> writes:
-> 
-> After the first paragraph explains what happens during "checkout
-> <branch>" and goes from the normal case where <branch> is really a
-> branch name to an arbitrary commit (where "detaching" needs to be
-> mentioned), a commit before 75d6e552a added mention of @{-N} and
-> made it appear as if it were a reference to a commit (i.e. not a
-> branch name) and that was why it said "As a special case" and
-> mentioned "detaching".  The problem lies in a lot older one,
-> 696acf45 ("checkout: implement "-" abbreviation, add docs and
-> tests", 2009-01-17).
-> 
+Signed-off-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+---
+ git-rebase.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Thanks for the analysis. Just to be sure, I referred to 75d6e552a just 
-to back up my claim, was that intention clear in my log message? Also, 
-should I mention the old commit (696acf45) also in the log message?
+diff --git a/git-rebase.sh b/git-rebase.sh
+index 6344e8d5e..2f5d138a0 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -9,7 +9,7 @@ OPTIONS_STUCKLONG=t
+ OPTIONS_SPEC="\
+ git rebase [-i] [options] [--exec <cmd>] [--onto <newbase>] [<upstream>] [<branch>]
+ git rebase [-i] [options] [--exec <cmd>] [--onto <newbase>] --root [<branch>]
+-git-rebase --continue | --abort | --skip | --edit-todo
++git rebase --continue | --abort | --skip | --edit-todo
+ --
+  Available options are
+ v,verbose!         display a diffstat of what changed upstream
+@@ -216,7 +216,7 @@ run_pre_rebase_hook () {
+ }
+ 
+ test -f "$apply_dir"/applying &&
+-	die "$(gettext "It looks like git-am is in progress. Cannot rebase.")"
++	die "$(gettext "It looks like 'git am' is in progress. Cannot rebase.")"
+ 
+ if test -d "$apply_dir"
+ then
+-- 
+2.15.0.291.g0d8980c5d
 
-
-> 
-> So perhaps we should start from dropping that "As a special case".
-> 
->      You can also use the `"@{-N}"` syntax to refer to the thing the N-th
->      last "git checkout" operation checked out; if it was a branch, that
->      branch is checked out, and otherwise the HEAD is detached at the
->      commit.  You may also specify `-` which is synonymous to `"@{-1}"`.
-> 
-> or something like that.  If we do so, we'd further need to tweak "As
-> a further special case", as this rewrite makes it clear that "@{-N}"
-> is not a special case at all (instead it is merely a different way
-> to spell <branch> or <commit> that is already covered).
-
-Good point. I did use your rewritten message but with some modification,
-
-     You can also use the `@{-N}` syntax to refer to the N-th last
-     branch/commit checked out using "git checkout" operation. You may
-     also specify `-` which is synonymous to `@{-1}`.
-
-I tweaked the first part of the first sentence and dropped the last part 
-of it just to avoid redundancy with the paragraph above it. Hope that 
-sounds good. If it seems to need some modification, let me know.
-
-
-Thanks,
-Kaartic
