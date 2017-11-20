@@ -6,51 +6,80 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C356202F2
-	for <e@80x24.org>; Mon, 20 Nov 2017 15:07:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C855C202F2
+	for <e@80x24.org>; Mon, 20 Nov 2017 15:08:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751292AbdKTPHw (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Nov 2017 10:07:52 -0500
-Received: from mail.kdab.com ([176.9.126.58]:56260 "EHLO mail.kdab.com"
+        id S1751282AbdKTPIT convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Mon, 20 Nov 2017 10:08:19 -0500
+Received: from mail.kdab.com ([176.9.126.58]:56296 "EHLO mail.kdab.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751170AbdKTPHw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Nov 2017 10:07:52 -0500
+        id S1751170AbdKTPIT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Nov 2017 10:08:19 -0500
 X-Virus-Scanned: amavisd-new at kdab.com
 From:   Albert Astals Cid <albert.astals.cid@kdab.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: [PATCH] bash completion: Add --autostash and --no-autostash to pull
-Date:   Mon, 20 Nov 2017 16:07:49 +0100
-Message-ID: <3893514.emzqGSqeDI@yoga>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git <git@vger.kernel.org>
+Subject: Re: Bug/Wish: bash completion for git pull --rebase doesn't include --autostash
+Date:   Mon, 20 Nov 2017 16:08:16 +0100
+Message-ID: <2531561.GdBCVJbi7q@yoga>
+In-Reply-To: <CAGZ79kacD1Gw0tyPWv+1_PtFW-wM8SAjFTg_i2bk7ogPBvYn7Q@mail.gmail.com>
+References: <5829116.cWPNik6EL4@yoga> <CAGZ79kacD1Gw0tyPWv+1_PtFW-wM8SAjFTg_i2bk7ogPBvYn7Q@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ideally we should only autocomplete if pull has --rebase since
-they only work with it but could not figure out how to do that
-and the error message of doing git pull --autostash points out
-that you need --rebase so i guess it's good enough
----
- contrib/completion/git-completion.bash | 1 +
- 1 file changed, 1 insertion(+)
+Patch sent, please still CC me as i'm not on the list.
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-
-completion.bash
-index 539d7f84f..7ded58f38 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1923,6 +1923,7 @@ _git_pull ()
- 	--*)
- 		__gitcomp "
- 			--rebase --no-rebase
-+			--autostash --no-autostash
- 			$__git_merge_options
- 			$__git_fetch_options
- 		"
+Cheers,
+  Albert
+
+El dimarts, 31 d’octubre de 2017, a les 18:56:22 CET, Stefan Beller va 
+escriure:
+> On Tue, Oct 31, 2017 at 8:21 AM, Albert Astals Cid
+> 
+> <albert.astals.cid@kdab.com> wrote:
+> > git pull --rebase --autostash
+> > 
+> > is a valid command but the --autostash autocompletion is not suggested
+> > after typing
+> > 
+> > git pul<TAB> --reb<TAB --au<TAB
+> > 
+> > Would be great if that could be added.
+> > 
+> > Thanks :)
+> > 
+> > Albert
+> > 
+> > P.S: I'm not subscribed CC me if need me to test something
+> 
+> Maybe you can propose a patch for this?
+> 
+> Rough steps to success:
+> 
+>   git clone git://git.kernel.org/pub/scm/git/git.git/
+>   cd git
+>   $EDIT contrib/completion/git-completion.bash
+>    (look for _git_pull)
+>   git commit -m "my first commit to git"
+>   (This is paraphrased, see Documentation/SubmittingPatches
+>    for a better idea how to craft commit messages)
+>   git format-patch HEAD^
+>   git send-email 0001-xxx.patch
+> 
+> > --
+> > Albert Astals Cid | albert.astals.cid@kdab.com | Software Engineer
+> > Klarälvdalens Datakonsult AB, a KDAB Group company
+> > Tel: Sweden (HQ) +46-563-540090, USA +1-866-777-KDAB(5322)
+> > KDAB - The Qt, C++ and OpenGL Experts
+
+
 -- 
-2.15.0
-
-
+Albert Astals Cid | albert.astals.cid@kdab.com | Software Engineer
+Klarälvdalens Datakonsult AB, a KDAB Group company
+Tel: Sweden (HQ) +46-563-540090, USA +1-866-777-KDAB(5322)
+KDAB - The Qt, C++ and OpenGL Experts
