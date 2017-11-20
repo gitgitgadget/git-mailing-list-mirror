@@ -7,36 +7,38 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 986AF202F2
-	for <e@80x24.org>; Mon, 20 Nov 2017 22:19:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 28D90202F2
+	for <e@80x24.org>; Mon, 20 Nov 2017 22:19:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751275AbdKTWTs (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Nov 2017 17:19:48 -0500
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:41126 "EHLO
+        id S1751299AbdKTWTt (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Nov 2017 17:19:49 -0500
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:41134 "EHLO
         mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751154AbdKTWTq (ORCPT
+        by vger.kernel.org with ESMTP id S1751173AbdKTWTq (ORCPT
         <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2017 17:19:46 -0500
 Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id vAKMJG7G001667;
+        by mx0a-00153501.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id vAKMJFgb001649;
         Mon, 20 Nov 2017 14:19:44 -0800
 Authentication-Results: ppops.net;
         spf=softfail smtp.mailfrom=newren@gmail.com
 Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2eakkpb9q3-1;
+        by mx0a-00153501.pphosted.com with ESMTP id 2eakkpb9q4-1;
         Mon, 20 Nov 2017 14:19:44 -0800
-Received: from mxw1.palantir.com (smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id 6ECE122F4648;
+Received: from mxw1.palantir.com (new-smtp.yojoe.local [172.19.0.45])
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id 88CD622F4660;
         Mon, 20 Nov 2017 14:19:44 -0800 (PST)
 Received: from newren2-linux.yojoe.local (newren2-linux.dyn.yojoe.local [10.100.68.32])
-        by smtp.yojoe.local (Postfix) with ESMTP id 65E672CDE75;
+        by smtp.yojoe.local (Postfix) with ESMTP id 81DB72CDE75;
         Mon, 20 Nov 2017 14:19:44 -0800 (PST)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Elijah Newren <newren@gmail.com>
-Subject: [RFC PATCH v2 0/9] Improve merge recursive performance
-Date:   Mon, 20 Nov 2017 14:19:35 -0800
-Message-Id: <20171120221944.15431-1-newren@gmail.com>
+Subject: [RFC PATCH v2 2/9] merge-recursive: avoid unnecessary string list lookups
+Date:   Mon, 20 Nov 2017 14:19:37 -0800
+Message-Id: <20171120221944.15431-3-newren@gmail.com>
 X-Mailer: git-send-email 2.15.0.323.g31fe956618
+In-Reply-To: <20171120221944.15431-1-newren@gmail.com>
+References: <20171120221944.15431-1-newren@gmail.com>
 X-Proofpoint-SPF-Result: softfail
 X-Proofpoint-SPF-Record: v=spf1 redirect=_spf.google.com
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,, definitions=2017-11-20_12:,,
@@ -51,60 +53,53 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-You probably want to wait to review this series until my rename detection
-series lands so that I can clean up any more conflicts, but I'm posting
-this new series in case anyone wants to take an early look.  It includes
-fixes identified by the reviews of my other patch series, and has been
-rebased on top of newer versions with conflicts resolved.
+Since we're taking entries from active_cache, which is already in sorted
+order with same-named entries adjacent, we can skip a lookup.  Also, we can
+just use append instead of insert (avoiding the need to find where to put
+the new item) and still end up with a sorted list.
 
-For the adventerous, though...
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ merge-recursive.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-This patch series improves merge recursive performance, particularly when
-one side of history only makes a small number of changes, and the other has
-lots of renames (or lots of adds and deletes); I saw a speedup factor of
-over 30 on one particular real world repository.
-
-Still RFC for the same reasons that the first series was (see
-https://public-inbox.org/git/20171110222156.23221-1-newren@gmail.com/), I
-haven't yet had time to push this further other than rebasing and cleaning
-up issues shared with my other series.
-
-If you just want to test it out, it's available as the
-'big-repo-small-cherry-pick' branch of https://github.com/newren/git .
-
-Elijah Newren (9):
-  diffcore-rename: no point trying to find a match better than exact
-  merge-recursive: avoid unnecessary string list lookups
-  merge-recursive: new function for better colliding conflict
-    resolutions
-  Add testcases for improved file collision conflict handling
-  merge-recursive: fix rename/add conflict handling
-  merge-recursive: improve handling for rename/rename(2to1) conflicts
-  merge-recursive: improve handling for add/add conflicts
-  merge-recursive: accelerate rename detection
-  diffcore-rename: filter rename_src list when possible
-
- diff.c                               |   1 +
- diff.h                               |   7 +
- diffcore-rename.c                    |  85 ++++++-
- merge-recursive.c                    | 452 ++++++++++++++++++++++++-----------
- t/t2023-checkout-m.sh                |   2 +-
- t/t3418-rebase-continue.sh           |  27 ++-
- t/t3504-cherry-pick-rerere.sh        |  19 +-
- t/t4200-rerere.sh                    |  12 +-
- t/t6020-merge-df.sh                  |   4 +-
- t/t6024-recursive-merge.sh           |  35 +--
- t/t6025-merge-symlinks.sh            |   9 +-
- t/t6031-merge-filemode.sh            |   4 +-
- t/t6036-recursive-corner-cases.sh    |  19 +-
- t/t6042-merge-rename-corner-cases.sh | 212 +++++++++++++++-
- t/t6043-merge-rename-directories.sh  |  15 +-
- t/t7060-wtstatus.sh                  |   1 +
- t/t7064-wtstatus-pv2.sh              |   4 +-
- t/t7506-status-submodule.sh          |  11 +-
- t/t7610-mergetool.sh                 |  28 +--
- 19 files changed, 723 insertions(+), 224 deletions(-)
-
+diff --git a/merge-recursive.c b/merge-recursive.c
+index cf8986be82..09b6092abb 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -467,22 +467,28 @@ static struct stage_data *insert_stage_data(const char *path,
+ static struct string_list *get_unmerged(void)
+ {
+ 	struct string_list *unmerged = xcalloc(1, sizeof(struct string_list));
++	struct string_list_item *item;
++	const char *last = NULL;
+ 	int i;
+ 
+ 	unmerged->strdup_strings = 1;
+ 
+ 	for (i = 0; i < active_nr; i++) {
+-		struct string_list_item *item;
+ 		struct stage_data *e;
+ 		const struct cache_entry *ce = active_cache[i];
+ 		if (!ce_stage(ce))
+ 			continue;
+ 
+-		item = string_list_lookup(unmerged, ce->name);
+-		if (!item) {
+-			item = string_list_insert(unmerged, ce->name);
++		if (last == NULL || strcmp(last, ce->name)) {
++			/*
++			 * active_cache is in sorted order, so we can just call
++			 * string_list_append instead of string_list_insert and
++			 * still end up with a sorted list.
++			 */
++			item = string_list_append(unmerged, ce->name);
+ 			item->util = xcalloc(1, sizeof(struct stage_data));
+ 		}
++		last = ce->name;
+ 		e = item->util;
+ 		e->stages[ce_stage(ce)].mode = ce->ce_mode;
+ 		oidcpy(&e->stages[ce_stage(ce)].oid, &ce->oid);
 -- 
 2.15.0.323.g31fe956618
 
