@@ -7,36 +7,36 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 19DF8202F2
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7869B202F2
 	for <e@80x24.org>; Mon, 20 Nov 2017 22:04:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751790AbdKTWDd (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Nov 2017 17:03:33 -0500
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:38048 "EHLO
+        id S1751781AbdKTWDc (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Nov 2017 17:03:32 -0500
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:38046 "EHLO
         mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751390AbdKTWCO (ORCPT
+        by vger.kernel.org with ESMTP id S1751374AbdKTWCO (ORCPT
         <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2017 17:02:14 -0500
 Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id vAKLxAQj020070;
+        by mx0a-00153501.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id vAKLxADP020076;
         Mon, 20 Nov 2017 14:02:10 -0800
 Authentication-Results: ppops.net;
         spf=softfail smtp.mailfrom=newren@gmail.com
 Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2eakkpb8qq-1;
+        by mx0a-00153501.pphosted.com with ESMTP id 2eakkpb8qn-1;
         Mon, 20 Nov 2017 14:02:10 -0800
-Received: from mxw1.palantir.com (smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id D7A8D22F41A3;
+Received: from mxw1.palantir.com (new-smtp.yojoe.local [172.19.0.45])
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id BCD8422F41A0;
         Mon, 20 Nov 2017 14:02:09 -0800 (PST)
 Received: from newren2-linux.yojoe.local (newren2-linux.dyn.yojoe.local [10.100.68.32])
-        by smtp.yojoe.local (Postfix) with ESMTP id D1AE82CDEB1;
+        by smtp.yojoe.local (Postfix) with ESMTP id B73F82CDE75;
         Mon, 20 Nov 2017 14:02:09 -0800 (PST)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, gitster@pobox.com,
         Elijah Newren <newren@gmail.com>
-Subject: [PATCH v2 16/33] merge-recursive: introduce new functions to handle rename logic
-Date:   Mon, 20 Nov 2017 14:01:52 -0800
-Message-Id: <20171120220209.15111-17-newren@gmail.com>
+Subject: [PATCH v2 13/33] directory rename detection: tests for handling overwriting untracked files
+Date:   Mon, 20 Nov 2017 14:01:49 -0800
+Message-Id: <20171120220209.15111-14-newren@gmail.com>
 X-Mailer: git-send-email 2.15.0.323.g31fe956618
 In-Reply-To: <20171120220209.15111-1-newren@gmail.com>
 References: <20171120220209.15111-1-newren@gmail.com>
@@ -45,7 +45,7 @@ X-Proofpoint-SPF-Record: v=spf1 redirect=_spf.google.com
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,, definitions=2017-11-20_12:,,
  signatures=0
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=13 phishscore=0 bulkscore=0 spamscore=0
+ malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
  clxscore=1034 lowpriorityscore=0 impostorscore=0 adultscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.0.1-1709140000
  definitions=main-1711200295
@@ -54,104 +54,357 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The amount of logic in merge_trees() relative to renames was just a few
-lines, but split it out into new handle_renames() and cleanup_renames()
-functions to prepare for additional logic to be added to each.  No code or
-logic changes, just a new place to put stuff for when the rename detection
-gains additional checks.
-
-Note that process_renames() records pointers to various information (such
-as diff_filepairs) into rename_conflict_info structs.  Even though the
-rename string_lists are not directly used once handle_renames() completes,
-we should not immediately free the lists at the end of that function
-because they store the information referenced in the rename_conflict_info,
-which is used later in process_entry().  Thus the reason for a separate
-cleanup_renames().
-
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-recursive.c | 43 +++++++++++++++++++++++++++++++++----------
- 1 file changed, 33 insertions(+), 10 deletions(-)
+ t/t6043-merge-rename-directories.sh | 337 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 337 insertions(+)
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 91bc354bec..4249caad4d 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -1636,6 +1636,32 @@ static int process_renames(struct merge_options *o,
- 	return clean_merge;
- }
+diff --git a/t/t6043-merge-rename-directories.sh b/t/t6043-merge-rename-directories.sh
+index 9e00a26c69..7408c788fc 100755
+--- a/t/t6043-merge-rename-directories.sh
++++ b/t/t6043-merge-rename-directories.sh
+@@ -2766,4 +2766,341 @@ test_expect_failure '9g-check: Renamed directory that only contained immediate s
+ #   side of history for any implicit directory renames.
+ ###########################################################################
  
-+struct rename_info {
-+	struct string_list *head_renames;
-+	struct string_list *merge_renames;
-+};
++###########################################################################
++# SECTION 10: Handling untracked files
++#
++# unpack_trees(), upon which the recursive merge algorithm is based, aborts
++# the operation if untracked or dirty files would be deleted or overwritten
++# by the merge.  Unfortunately, unpack_trees() does not understand renames,
++# and if it doesn't abort, then it muddies up the working directory before
++# we even get to the point of detecting renames, so we need some special
++# handling, at least in the case of directory renames.
++###########################################################################
 +
-+static int handle_renames(struct merge_options *o,
-+			  struct tree *common,
-+			  struct tree *head,
-+			  struct tree *merge,
-+			  struct string_list *entries,
-+			  struct rename_info *ri)
-+{
-+	ri->head_renames  = get_renames(o, head, common, head, merge, entries);
-+	ri->merge_renames = get_renames(o, merge, common, head, merge, entries);
-+	return process_renames(o, ri->head_renames, ri->merge_renames);
-+}
++# Testcase 10a, Overwrite untracked: normal rename/delete
++#   Commit O: z/{b,c_1}
++#   Commit A: z/b + untracked z/c + untracked z/d
++#   Commit B: z/{b,d_1}
++#   Expected: Aborted Merge +
++#       ERROR_MSG(untracked working tree files would be overwritten by merge)
 +
-+static void cleanup_renames(struct rename_info *re_info)
-+{
-+	string_list_clear(re_info->head_renames, 0);
-+	string_list_clear(re_info->merge_renames, 0);
++test_expect_success '10a-setup: Overwrite untracked with normal rename/delete' '
++	test_create_repo 10a &&
++	(
++		cd 10a &&
 +
-+	free(re_info->head_renames);
-+	free(re_info->merge_renames);
-+}
++		mkdir z &&
++		echo b >z/b &&
++		echo c >z/c &&
++		git add z &&
++		test_tick &&
++		git commit -m "O" &&
 +
- static struct object_id *stage_oid(const struct object_id *oid, unsigned mode)
- {
- 	return (is_null_oid(oid) || mode == 0) ? NULL: (struct object_id *)oid;
-@@ -1987,7 +2013,8 @@ int merge_trees(struct merge_options *o,
- 	}
- 
- 	if (unmerged_cache()) {
--		struct string_list *entries, *re_head, *re_merge;
-+		struct string_list *entries;
-+		struct rename_info re_info;
- 		int i;
- 		/*
- 		 * Only need the hashmap while processing entries, so
-@@ -2001,9 +2028,8 @@ int merge_trees(struct merge_options *o,
- 		get_files_dirs(o, merge);
- 
- 		entries = get_unmerged();
--		re_head  = get_renames(o, head, common, head, merge, entries);
--		re_merge = get_renames(o, merge, common, head, merge, entries);
--		clean = process_renames(o, re_head, re_merge);
-+		clean = handle_renames(o, common, head, merge, entries,
-+				       &re_info);
- 		record_df_conflict_files(o, entries);
- 		if (clean < 0)
- 			goto cleanup;
-@@ -2028,16 +2054,13 @@ int merge_trees(struct merge_options *o,
- 		}
- 
- cleanup:
--		string_list_clear(re_merge, 0);
--		string_list_clear(re_head, 0);
-+		cleanup_renames(&re_info);
++		git branch O &&
++		git branch A &&
++		git branch B &&
 +
- 		string_list_clear(entries, 1);
-+		free(entries);
- 
- 		hashmap_free(&o->current_file_dir_set, 1);
- 
--		free(re_merge);
--		free(re_head);
--		free(entries);
--
- 		if (clean < 0)
- 			return clean;
- 	}
++		git checkout A &&
++		git rm z/c &&
++		test_tick &&
++		git commit -m "A" &&
++
++		git checkout B &&
++		git mv z/c z/d &&
++		test_tick &&
++		git commit -m "B"
++	)
++'
++
++test_expect_success '10a-check: Overwrite untracked with normal rename/delete' '
++	(
++		cd 10a &&
++
++		git checkout A^0 &&
++		echo very >z/c &&
++		echo important >z/d &&
++
++		test_must_fail git merge -s recursive B^0 >out 2>err &&
++		test_i18ngrep "The following untracked working tree files would be overwritten by merge" err &&
++
++		test 1 -eq $(git ls-files -s | wc -l) &&
++		test 4 -eq $(git ls-files -o | wc -l) &&
++
++		test "very" = "$(cat z/c)" &&
++		test "important" = "$(cat z/d)" &&
++		test $(git rev-parse HEAD:z/b) = $(git rev-parse O:z/b)
++	)
++'
++
++# Testcase 10b, Overwrite untracked: dir rename + delete
++#   Commit O: z/{b,c_1}
++#   Commit A: y/b + untracked y/{c,d,e}
++#   Commit B: z/{b,d_1,e}
++#   Expected: Failed Merge; y/b + untracked y/c + untracked y/d on disk +
++#             z/c_1 -> z/d_1 rename recorded at stage 3 for y/d +
++#       ERROR_MSG(refusing to lose untracked file at 'y/d')
++
++test_expect_success '10b-setup: Overwrite untracked with dir rename + delete' '
++	test_create_repo 10b &&
++	(
++		cd 10b &&
++
++		mkdir z &&
++		echo b >z/b &&
++		echo c >z/c &&
++		git add z &&
++		test_tick &&
++		git commit -m "O" &&
++
++		git branch O &&
++		git branch A &&
++		git branch B &&
++
++		git checkout A &&
++		git rm z/c &&
++		git mv z/ y/ &&
++		test_tick &&
++		git commit -m "A" &&
++
++		git checkout B &&
++		git mv z/c z/d &&
++		echo e >z/e &&
++		git add z/e &&
++		test_tick &&
++		git commit -m "B"
++	)
++'
++
++test_expect_failure '10b-check: Overwrite untracked with dir rename + delete' '
++	(
++		cd 10b &&
++
++		git checkout A^0 &&
++		echo very >y/c &&
++		echo important >y/d &&
++		echo contents >y/e &&
++
++		test_must_fail git merge -s recursive B^0 >out 2>err &&
++		test_i18ngrep "CONFLICT (rename/delete).*Version B^0 of y/d left in tree at y/d~B^0" out &&
++		test_i18ngrep "Error: Refusing to lose untracked file at y/e; writing to y/e~B^0 instead" out &&
++
++		test 3 -eq $(git ls-files -s | wc -l) &&
++		test 2 -eq $(git ls-files -u | wc -l) &&
++		test 5 -eq $(git ls-files -o | wc -l) &&
++
++		test $(git rev-parse :0:y/b) = $(git rev-parse O:z/b) &&
++		test "very" = "$(cat y/c)" &&
++
++		test "important" = "$(cat y/d)" &&
++		test "important" != "$(git rev-parse :3:y/d)" &&
++		test $(git rev-parse :3:y/d) = $(git rev-parse O:z/c) &&
++
++		test "contents" = "$(cat y/e)" &&
++		test "contents" != "$(git rev-parse :3:y/e)" &&
++		test $(git rev-parse :3:y/e) = $(git rev-parse B:z/e)
++	)
++'
++
++# Testcase 10c, Overwrite untracked: dir rename/rename(1to2)
++#   Commit O: z/{a,b}, x/{c,d}
++#   Commit A: y/{a,b}, w/c, x/d + different untracked y/c
++#   Commit B: z/{a,b,c}, x/d
++#   Expected: Failed Merge; y/{a,b} + x/d + untracked y/c +
++#             CONFLICT(rename/rename) x/c -> w/c vs y/c +
++#             y/c~B^0 +
++#             ERROR_MSG(Refusing to lose untracked file at y/c)
++
++test_expect_success '10c-setup: Overwrite untracked with dir rename/rename(1to2)' '
++	test_create_repo 10c &&
++	(
++		cd 10c &&
++
++		mkdir z x &&
++		echo a >z/a &&
++		echo b >z/b &&
++		echo c >x/c &&
++		echo d >x/d &&
++		git add z x &&
++		test_tick &&
++		git commit -m "O" &&
++
++		git branch O &&
++		git branch A &&
++		git branch B &&
++
++		git checkout A &&
++		mkdir w &&
++		git mv x/c w/c &&
++		git mv z/ y/ &&
++		test_tick &&
++		git commit -m "A" &&
++
++		git checkout B &&
++		git mv x/c z/ &&
++		test_tick &&
++		git commit -m "B"
++	)
++'
++
++test_expect_failure '10c-check: Overwrite untracked with dir rename/rename(1to2)' '
++	(
++		cd 10c &&
++
++		git checkout A^0 &&
++		echo important >y/c &&
++
++		test_must_fail git merge -s recursive B^0 >out 2>err &&
++		test_i18ngrep "CONFLICT (rename/rename)" out &&
++		test_i18ngrep "Refusing to lose untracked file at y/c; adding as y/c~B^0 instead" out &&
++
++		test 6 -eq $(git ls-files -s | wc -l) &&
++		test 3 -eq $(git ls-files -u | wc -l) &&
++		test 3 -eq $(git ls-files -o | wc -l) &&
++
++		git rev-parse >actual \
++			:0:y/a :0:y/b :0:x/d :1:x/c :2:w/c :3:y/c &&
++		git rev-parse >expect \
++			O:z/a O:z/b O:x/d O:x/c O:x/c O:x/c &&
++		test_cmp expect actual &&
++
++		test "important" = "$(cat y/c)" &&
++		test "important" != "$(git rev-parse :3:y/c)" &&
++		test $(git hash-object y/c~B^0) = $(git rev-parse O:x/c)
++	)
++'
++
++# Testcase 10d, Delete untracked w/ dir rename/rename(2to1)
++#   Commit O: z/{a,b,c_1},        x/{d,e,f_2}
++#   Commit A: y/{a,b},            x/{d,e,f_2,wham_1} + untracked y/wham
++#   Commit B: z/{a,b,c_1,wham_2}, y/{d,e}
++#   Expected: Failed Merge; y/{a,b,d,e} + untracked y/{wham,wham~B^0,wham~HEAD}+
++#             CONFLICT(rename/rename) z/c_1 vs x/f_2 -> y/wham
++#             ERROR_MSG(Refusing to lose untracked file at y/wham)
++
++test_expect_success '10d-setup: Delete untracked with dir rename/rename(2to1)' '
++	test_create_repo 10d &&
++	(
++		cd 10d &&
++
++		mkdir z x &&
++		echo a >z/a &&
++		echo b >z/b &&
++		echo c >z/c &&
++		echo d >x/d &&
++		echo e >x/e &&
++		echo f >x/f &&
++		git add z x &&
++		test_tick &&
++		git commit -m "O" &&
++
++		git branch O &&
++		git branch A &&
++		git branch B &&
++
++		git checkout A &&
++		git mv z/c x/wham &&
++		git mv z/ y/ &&
++		test_tick &&
++		git commit -m "A" &&
++
++		git checkout B &&
++		git mv x/f z/wham &&
++		git mv x/ y/ &&
++		test_tick &&
++		git commit -m "B"
++	)
++'
++
++test_expect_failure '10d-check: Delete untracked with dir rename/rename(2to1)' '
++	(
++		cd 10d &&
++
++		git checkout A^0 &&
++		echo important >y/wham &&
++
++		test_must_fail git merge -s recursive B^0 >out 2>err &&
++		test_i18ngrep "CONFLICT (rename/rename)" out &&
++		test_i18ngrep "Refusing to lose untracked file at y/wham" out &&
++
++		test 6 -eq $(git ls-files -s | wc -l) &&
++		test 2 -eq $(git ls-files -u | wc -l) &&
++		test 4 -eq $(git ls-files -o | wc -l) &&
++
++		git rev-parse >actual \
++			:0:y/a :0:y/b :0:y/d :0:y/e :2:y/wham :3:y/wham &&
++		git rev-parse >expect \
++			O:z/a O:z/b O:x/d O:x/e O:z/c O:x/f &&
++		test_cmp expect actual &&
++
++		test_must_fail git rev-parse :1:y/wham &&
++
++		test "important" = "$(cat y/wham)" &&
++		git hash-object >actual \
++			y/wham~B^0 y/wham~HEAD &&
++		git rev-parse >expect \
++			O:x/f O:z/c &&
++		test_cmp expect actual
++	)
++'
++
++# Testcase 10e, Does git complain about untracked file that's not in the way?
++#   Commit O: z/{a,b}
++#   Commit A: y/{a,b} + untracked z/c
++#   Commit B: z/{a,b,c}
++#   Expected: y/{a,b,c} + untracked z/c
++
++test_expect_success '10e-setup: Does git complain about untracked file that is not really in the way?' '
++	test_create_repo 10e &&
++	(
++		cd 10e &&
++
++		mkdir z &&
++		echo a >z/a &&
++		echo b >z/b &&
++		git add z &&
++		test_tick &&
++		git commit -m "O" &&
++
++		git branch O &&
++		git branch A &&
++		git branch B &&
++
++		git checkout A &&
++		git mv z/ y/ &&
++		test_tick &&
++		git commit -m "A" &&
++
++		git checkout B &&
++		echo c >z/c &&
++		git add z/c &&
++		test_tick &&
++		git commit -m "B"
++	)
++'
++
++test_expect_failure '10e-check: Does git complain about untracked file that is not really in the way?' '
++	(
++		cd 10e &&
++
++		git checkout A^0 &&
++		mkdir z &&
++		echo random >z/c &&
++
++		git merge -s recursive B^0 >out 2>err &&
++	! test_i18ngrep "following untracked working tree files would be overwritten by merge" err &&
++
++		test 3 -eq $(git ls-files -s | wc -l) &&
++		test 0 -eq $(git ls-files -u | wc -l) &&
++		test 3 -eq $(git ls-files -o | wc -l) &&
++
++		git rev-parse >actual \
++			:0:y/a :0:y/b :0:y/c &&
++		git rev-parse >expect \
++			O:z/a O:z/b B:z/c &&
++		test_cmp expect actual &&
++
++		test "random" = "$(cat z/c)"
++	)
++'
++
+ test_done
 -- 
 2.15.0.309.g00c152f825
 
