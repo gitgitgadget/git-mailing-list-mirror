@@ -7,126 +7,97 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 19D9C202F2
-	for <e@80x24.org>; Mon, 20 Nov 2017 18:24:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3A54F202F2
+	for <e@80x24.org>; Mon, 20 Nov 2017 18:24:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752430AbdKTSYt (ORCPT <rfc822;e@80x24.org>);
+        id S1752435AbdKTSYw (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Nov 2017 13:24:52 -0500
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:34230 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752427AbdKTSYt (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 20 Nov 2017 13:24:49 -0500
-Received: from mail-wm0-f48.google.com ([74.125.82.48]:39467 "EHLO
-        mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752424AbdKTSYp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Nov 2017 13:24:45 -0500
-Received: by mail-wm0-f48.google.com with SMTP id x63so7979011wmf.4
-        for <git@vger.kernel.org>; Mon, 20 Nov 2017 10:24:44 -0800 (PST)
+Received: by mail-wm0-f66.google.com with SMTP id y82so7333624wmg.1
+        for <git@vger.kernel.org>; Mon, 20 Nov 2017 10:24:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=dinwoodie.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=C0Qp85sNprlLD5YVt0mV7ZM5G1M/5d3ux2qlOALptTQ=;
-        b=A8DIYrWYwPEKbsOm2B0Ia4J3DQaKfm0CjX38N6v5bZkD04r/ngUj1ffsQSGAxJh1LI
-         Pq9HY8SO0xsN/8e9yZcAE2nqKB6p4l2jch3fKyrPKljcGmAYrdhsP6km5bk1EIrXxKbI
-         fdSkIwKFehuV0waTOuvC9X8cK+QjE+8GRgVZs=
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :in-reply-to:references;
+        bh=3tOwFUWBoF06O3fouSa8wVn4ukJlo3uMroeMTIzKwYM=;
+        b=re2Rf221+bJIQCLm0aYkX2Zc7l/U4uvQofaYAEjFQdkiQXmHONzBk36Xb42FdL/qyE
+         eN8hRt5WONRBcDR8mH28vuwwTluySGmMZSuv+lhtB8tPb82IjsbdQiJcUeBgD7uEmsUy
+         T7iV8G85mft8lHWvuikXdtoctWPGZOcSEMly0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=C0Qp85sNprlLD5YVt0mV7ZM5G1M/5d3ux2qlOALptTQ=;
-        b=R+uCYWWLqcGUq7jr8PngXa2KFmz9xYVtKeoucGXB+fk0uZmx6rFHtf9PQ5Cc3vTBxU
-         K9LU9Vh52Iu8q0tc6YquMo5R2EQEoDD4N+i27fiL22egm0DeuZL4fmrIq91jcv+OL93w
-         LYOQehTto36/SduRCSW/xDikt+UaRIsnGNnOKjdNQdzkVHjHJHC+8SCDDKlqOLC99aPL
-         cvdPBGU1EO+C6FxeKFwc+HXoUSuneXg4XRM9rPT510hx6qmL9Xes7tGg991jJieJIKz/
-         0/63evgLKkaJb0b5z63FfvLYhdvXcuOU7L9UI8/UFJV0bVOSWKJPs6RZJTeF+aMg3bEv
-         YHUA==
-X-Gm-Message-State: AJaThX7ckykvcxBwEmvygP9VPSGkQOjX89FIcZnLyC7don5pPRfbRp0k
-        TJMPUWL9tm94bzGbAX/jHJhwI1ySYv4=
-X-Google-Smtp-Source: AGs4zMbPHq3ec2Wm8Dsk5YPEbpJCuRRBj/eIg8CbjUKP5dUSScrAiFQOApOLSSHtYDKIUAG7vwMmBw==
-X-Received: by 10.28.67.68 with SMTP id q65mr9975444wma.26.1511202283729;
-        Mon, 20 Nov 2017 10:24:43 -0800 (PST)
+         :references:in-reply-to:references;
+        bh=3tOwFUWBoF06O3fouSa8wVn4ukJlo3uMroeMTIzKwYM=;
+        b=pi9TnBVDq3bma1vsJm9UHYss4l7JH4KLrwCeo18ACGqYBOiapCCRzHAkjTkUgNnnrE
+         pGhn4AXiNVx1DemurqI/uiwlUUNUj/iox4WMJQrk/qXXU6DOHwQrcO/dHmKrRa6qTWwW
+         xqd66EcTKG3Pobi9tx6lhB8GctZ01DBkDM+Llj/isll/SJ8goiTxtYOL/a3saVkmPwNs
+         k/HHeDInCSIs3BD09TpXIyz+zLBiBzEq8yIhGhFvzkC1UfOKOr7/J5O7y7ImxNRFrIEr
+         MmX6NGUskx2U3101O/AgSWOCNF7qb0jBQZ1E8rh/FaGyucD9zAMR3eLfVFb9rGfvM5uu
+         tsJQ==
+X-Gm-Message-State: AJaThX5NSTfsyxUW1AHCoWpboliVEwBN4BCzaw2NojGO91Beyf09A7wX
+        tHY59BN6e/IxRLx6R0yYRP8okLYmkvw=
+X-Google-Smtp-Source: AGs4zMYl5VUQO6MLJmvaLMP9JocxSwEEdet6joPDLxqnZwJ15WvYyVH2846vvmjn6YY1b7sDgGOD0g==
+X-Received: by 10.28.183.132 with SMTP id h126mr11139970wmf.17.1511202288315;
+        Mon, 20 Nov 2017 10:24:48 -0800 (PST)
 Received: from PC5175.ad.datcon.co.uk ([2620:104:4001:73:a407:552d:75e4:4516])
-        by smtp.gmail.com with ESMTPSA id 138sm13691999wmf.21.2017.11.20.10.24.42
+        by smtp.gmail.com with ESMTPSA id 138sm13691999wmf.21.2017.11.20.10.24.47
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 20 Nov 2017 10:24:42 -0800 (PST)
+        Mon, 20 Nov 2017 10:24:47 -0800 (PST)
 From:   Adam Dinwoodie <adam@dinwoodie.org>
 To:     git@vger.kernel.org
 Cc:     Christian Couder <christian.couder@gmail.com>
-Subject: [RFC PATCH v2 0/2] bisect: add a single command for editing logs
-Date:   Mon, 20 Nov 2017 18:24:37 +0000
-Message-Id: <cover.1511200589.git.adam@dinwoodie.org>
+Subject: [RFC PATCH v2 1/2] bisect: split out replay file parsing
+Date:   Mon, 20 Nov 2017 18:24:38 +0000
+Message-Id: <e3bfd0ab1f7b17eb43cf50c91e17f498db56cdee.1511200589.git.adam@dinwoodie.org>
 X-Mailer: git-send-email 2.15.0.281.g87c0a7615
-In-Reply-To: <20171108135931.166880-1-adam@dinwoodie.org>
-References: <20171108135931.166880-1-adam@dinwoodie.org>
+In-Reply-To: <cover.1511200589.git.adam@dinwoodie.org>
+References: <cover.1511200589.git.adam@dinwoodie.org>
+In-Reply-To: <cover.1511200589.git.adam@dinwoodie.org>
+References: <20171108135931.166880-1-adam@dinwoodie.org> <cover.1511200589.git.adam@dinwoodie.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When I'm bisecting, I sometimes want to edit the bisection log, e.g. to
-remove the "skip" marker by a commit I've now found a way to avoid
-skipping.  Rather than requiring users to save off the log, edit it,
-then replay the edited log as separate commands, this patch series adds
-support for a "git bisect edit" command which does all three steps in
-one.
+In order to allow a git bisect log file to be replayed without using all
+the surrounding code to do things like clean the repository state, split
+out the file-parsing part of bisect_replay into a separate function.
 
-Christian Couder has already said he's happy with the broad idea in the
-previous spin of this RFC, so here's a first attempt at actually
-implementing the function within "git bisect".
+Signed-off-by: Adam Dinwoodie <adam@dinwoodie.org>
+---
+ git-bisect.sh | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-There are a few issues of varying significance before I think this is
-ready to be actually used.  I'm not sure how to approach them, and would
-be very grateful for advice from the list:
-
-- It's possible to start a bisect session with a command like `git
-  bisect @ @~10`.  This will lead to the bisect log including the `@`
-  and `@~10` literally, and the interpretation of those values changes
-  depending on the current HEAD.  As a result, if you do a `git bisect
-  edit` after starting a bisect like that, but don't actually edit the
-  file, you'll nonetheless be in a different state.
-
-  I can see a few ways of coping with that:
-
-  1. Change the existing `git bisect start` behaviour to run arguments
-     through `git rev-parse` before recording them.  It appears `git
-     bisect good` et al. already do that, but it is a change in
-     behaviour that I guess could impact badly on other people using
-     `git bisect log`-based workflows.
-
-  2. Do a full `git bisect reset` before replaying the log, so the
-     revisions will be parsed in the same way as they were originally.
-     I'd be slightly sad about that, as it seems an unnecessary
-     inefficiency, but it may well be the simplest approach.
-
-  3. Somehow get Git to parse the relative references as relative to the
-     original commit rather than the current HEAD.  I'm not sure if
-     there's code for doing this already, but if not I suspect it's
-     beyond my ability to implement in the immediate term.
-
-  4. Just detect when users are in this scenario, and warn them that
-     Git's behaviour might be unexpected.
-
-- I can see `git rebase --interactive` detects when the edited file
-  hasn't changed, and in that case prints a success message but
-  otherwise takes no action.  I've not implemented that behaviour here
-  because I couldn't immediately work out how rebase does it, and I
-  didn't want to reinvent that particular wheel.  (Plus I think the
-  impact of performing such unnecessary steps will be considerably lower
-  than the equivalent with rebase.)
-
-- I'm not entirely happy with the error handling, primarily as I
-  couldn't seem to find a consensus on what best practice is for
-  handling errors between the existing shell code in this script and
-  git-rebase--interactive.sh.
-
-- There aren't yet any tests or documentation changes; I wanted to get
-  commentary on the initial code changes before I spent time on those
-  parts.
-
-Adam Dinwoodie (2):
-  bisect: split out replay file parsing
-  bisect: add "edit" command
-
- builtin/bisect--helper.c |  3 ++-
- git-bisect.sh            | 25 +++++++++++++++++++++++++
- 2 files changed, 27 insertions(+), 1 deletion(-)
-
+diff --git a/git-bisect.sh b/git-bisect.sh
+index 54cbfecc5..895d7976a 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -422,6 +422,14 @@ bisect_replay () {
+ 	test "$#" -eq 1 || die "$(gettext "No logfile given")"
+ 	test -r "$file" || die "$(eval_gettext "cannot read \$file for replaying")"
+ 	bisect_reset
++	bisect_replay_file "$file"
++	bisect_auto_next
++}
++
++bisect_replay_file() {
++	file="$1"
++	test "$#" -eq 1 || die "$(gettext "No logfile given")"
++	test -r "$file" || die "$(eval_gettext "cannot read \$file for replaying")"
+ 	while read git bisect command rev
+ 	do
+ 		test "$git $bisect" = "git bisect" || test "$git" = "git-bisect" || continue
+@@ -444,7 +452,6 @@ bisect_replay () {
+ 			die "$(gettext "?? what are you talking about?")" ;;
+ 		esac
+ 	done <"$file"
+-	bisect_auto_next
+ }
+ 
+ bisect_run () {
 -- 
 2.15.0.281.g87c0a7615
 
