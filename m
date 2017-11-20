@@ -2,109 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E224202A0
-	for <e@80x24.org>; Sun, 19 Nov 2017 23:05:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 53ED0202A0
+	for <e@80x24.org>; Mon, 20 Nov 2017 00:11:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751102AbdKSXFs (ORCPT <rfc822;e@80x24.org>);
-        Sun, 19 Nov 2017 18:05:48 -0500
-Received: from s019.cyon.net ([149.126.4.28]:40092 "EHLO s019.cyon.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751043AbdKSXFr (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 19 Nov 2017 18:05:47 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=drbeat.li;
-         s=default; h=Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:MIME-Version
-        :Content-Type:Content-Transfer-Encoding:Content-ID:Content-Description:
-        Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
-        In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-        List-Post:List-Owner:List-Archive;
-        bh=REOQCuSJK1XceA4IEaiIA2o+JuwgSSQtGxSbP80o4Wg=; b=jGu2mmoqoYBeOLFm8sSfnPWWtV
-        LSAKeCMUOXmkynI4MgEq40tnBOEjK2DlGXAxh0dP+2niCwE+u3nSssv1ghgQkfrTfWwp/jVcxgJKG
-        paseE7kP6vrF/Qai84CSYb/bYeRcOTZGpd3YfVADDAZDmuOWzHh2vv9/DTrBfWtK6YxwFsELJ0bWD
-        9ad7aYMu0HK5CY0Rg2CYKfwiBYzQd5pdI5KZ9/mYX3M67oCSzbzSqVrkeegopd9C6Y4YLmC3M/sH1
-        oCc+LphnwlGCXGwbOt8z3kEpvh6jFWtpkKe2j7pJEB5iJjTC6gEUnWYEy483CGdz9CoKlc50ajE7Q
-        DDsv7aYA==;
-Received: from [10.20.10.233] (port=14490 helo=mail.cyon.ch)
-        by s019.cyon.net with esmtpa (Exim 4.89)
-        (envelope-from <bb@drbeat.li>)
-        id 1eGYem-0001pQ-Hn; Mon, 20 Nov 2017 00:05:44 +0100
-Received: by drbeat.li (Postfix, from userid 1000)
-        id 202E91FFE5; Mon, 20 Nov 2017 00:05:44 +0100 (CET)
-From:   Beat Bolli <dev+git@drbeat.li>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Beat Bolli <dev+git@drbeat.li>
-Subject: [PATCH] contrib/git-jump: allow to configure the grep command
-Date:   Mon, 20 Nov 2017 00:05:36 +0100
-Message-Id: <20171119230536.1628-1-dev+git@drbeat.li>
-X-Mailer: git-send-email 2.15.0.rc1.299.gda03b47c3
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - s019.cyon.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - drbeat.li
-X-Get-Message-Sender-Via: s019.cyon.net: authenticated_id: ig@drbeat.li
-X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+        id S1751087AbdKTALK (ORCPT <rfc822;e@80x24.org>);
+        Sun, 19 Nov 2017 19:11:10 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58312 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751043AbdKTALJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 19 Nov 2017 19:11:09 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2A6CBB4B2D;
+        Sun, 19 Nov 2017 19:11:08 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=6ZdTD/O6+fHK/5CheqRdtuyMqlk=; b=uDZPY7
+        tN/le5uqP4ybngZLQGaKACXC2JphPCxm4NYfOgekU30U/IIq+HpBIWnwkcfl0bAW
+        Dg7TLKptmytkcXq2jfu38l/rq39MgXy31zAdc3RDJa8/8M8605YUaAiiqAKdxAwX
+        JwEtLZ90wucSEozPxQ8hL2RYK1fNy/xUrynFA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=MqxzR84VNLencMhP+gHpTnyP6S7c9kdw
+        W78ivQ1xwtKrAw9hZNsH0n7B40kchIwJgr8bda2IaIE8nKzEUbZqoBXauO0bvwME
+        MliRKNaRno71gVn2peeGF0vUlUUKCQofb54nRaSVkevI8SH+BnbElAv6wRe4JAi0
+        Nx4W7DPglz0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 229D6B4B2C;
+        Sun, 19 Nov 2017 19:11:08 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7FF58B4B2B;
+        Sun, 19 Nov 2017 19:11:07 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Lars Schneider <lars.schneider@autodesk.com>,
+        Git List <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>,
+        Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [PATCH v2] launch_editor(): indicate that Git waits for user input
+References: <20171117135109.18071-1-lars.schneider@autodesk.com>
+        <CAPig+cQ3a0guJUhnbktrjs6fL6mSrUXmPqR0BafEAOhVr7Sy-w@mail.gmail.com>
+        <xmqqh8tsqs83.fsf@gitster.mtv.corp.google.com>
+        <d53a655b-f51e-3f44-23db-581071010fd2@gmail.com>
+Date:   Mon, 20 Nov 2017 09:11:06 +0900
+In-Reply-To: <d53a655b-f51e-3f44-23db-581071010fd2@gmail.com> (Kaartic
+        Sivaraam's message of "Sun, 19 Nov 2017 23:19:51 +0530")
+Message-ID: <xmqqvai5ollx.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4E4D3488-CD87-11E7-85B5-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add the configuration option "jump.grepCmd" that allows to configure the
-command that is used to search in grep mode. This allows the users of
-git-jump to use ag(1) or ack(1) as search engines.
+Kaartic Sivaraam <kaartic.sivaraam@gmail.com> writes:
 
-Signed-off-by: Beat Bolli <dev+git@drbeat.li>
----
- contrib/git-jump/README   | 3 +++
- contrib/git-jump/git-jump | 7 +++++--
- 2 files changed, 8 insertions(+), 2 deletions(-)
+>>> However, it's not clear how much benefit you gain from stashing this
+>>> away in a static variable. Premature optimization?
+>>
+>> The variable being "static" could be (but it was done primarily
+>> because it allowed me not to worry about freeing),
 
-diff --git a/contrib/git-jump/README b/contrib/git-jump/README
-index 225e3f095..9f58d5db8 100644
---- a/contrib/git-jump/README
-+++ b/contrib/git-jump/README
-@@ -63,6 +63,9 @@ git jump grep foo_bar
- # same as above, but case-insensitive; you can give
- # arbitrary grep options
- git jump grep -i foo_bar
-+
-+# use the silver searcher for git jump grep
-+git config jump.grepCmd "ag --column"
- --------------------------------------------------
- 
- 
-diff --git a/contrib/git-jump/git-jump b/contrib/git-jump/git-jump
-index 427f206a4..80ab0590b 100755
---- a/contrib/git-jump/git-jump
-+++ b/contrib/git-jump/git-jump
-@@ -11,7 +11,8 @@ diff: elements are diff hunks. Arguments are given to diff.
- 
- merge: elements are merge conflicts. Arguments are ignored.
- 
--grep: elements are grep hits. Arguments are given to grep.
-+grep: elements are grep hits. Arguments are given to git grep or, if
-+      configured, to the command in `jump.grepCmd`.
- 
- ws: elements are whitespace errors. Arguments are given to diff --check.
- EOF
-@@ -50,7 +51,9 @@ mode_merge() {
- # but let's clean up extra whitespace, so they look better if the
- # editor shows them to us in the status bar.
- mode_grep() {
--	git grep -n "$@" |
-+	cmd=$(git config jump.grepCmd)
-+	test -n "$cmd" || cmd="git grep -n"
-+	$cmd "$@" |
- 	perl -pe '
- 	s/[ \t]+/ /g;
- 	s/^ *//;
--- 
-2.15.0.rc1.299.gda03b47c3
+The current code happens to be safe because I do not allocate.  I do
+not know what others will do to the code in the future, and at that
+point, instinct kicks in to futureproof against the worst ;-).
+
+>>> Should printing of close_notice be done before the error()? Otherwise,
+>>> you get this:
+>>>
+>>> --- 8< ---
+>>> Launched your editor (...) ...There was a problem...
+>>> --- 8< ---
+>>
+>> In my version with a far shorter message, I deliberately chose not
+>> to clear the notice.  We ran the editor, and we saw a problem.  That
+>> is what happened and that is what will be left on the terminal.
+>>
+>
+> It might be a good thing to keep the notice but I think it would be
+> better to have that error message in a "new line". I'm not sure if
+> it's possible or not.
+
+Of course it is possible, if you really wanted to.  The code knows
+if it gave the "we launched and waiting for you" notice, so it can
+maintain not just one (i.e. "how I close the notice?") but another
+one (i.e. "how I do so upon an error?") and use it in the error
+codepath.
 
