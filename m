@@ -7,123 +7,113 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EB1D5202A0
-	for <e@80x24.org>; Mon, 20 Nov 2017 01:48:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DD7F1202A0
+	for <e@80x24.org>; Mon, 20 Nov 2017 02:10:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751190AbdKTBsT (ORCPT <rfc822;e@80x24.org>);
-        Sun, 19 Nov 2017 20:48:19 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56454 "EHLO
+        id S1751215AbdKTCKB (ORCPT <rfc822;e@80x24.org>);
+        Sun, 19 Nov 2017 21:10:01 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50200 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751020AbdKTBsS (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 19 Nov 2017 20:48:18 -0500
+        with ESMTP id S1751043AbdKTCKB (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 19 Nov 2017 21:10:01 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9AA3CA738C;
-        Sun, 19 Nov 2017 20:48:17 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2AD47B63F1;
+        Sun, 19 Nov 2017 21:10:00 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=rW50Bwzeo0EE8HYcrQT68P9kgwM=; b=SoX0CZ
-        Rr7lb8tucmiqmHtMF3YIoFfWIrKIdL4IV29UUqaFIwGeeVKim2uGJUgLyHEGV4Vi
-        vvJEKqmXYXNzy06fhVXG6GjwQpdxrbGhvQI86juFxa9O0DM3g7gbxHvaQmezG/0V
-        eAdWc5v9Ltcphll8y3Nophbu+atAIRkMRfmTU=
+        :content-type; s=sasl; bh=Qg9ZRHiktkEjJezJ7Yya23j/u9s=; b=KZwlB3
+        OA8TecqJ7PSjBJrWTmRdKyaUGV8Aplt1c9u85Z67XABx+/vS22UmbFc0SXbnP34P
+        yE7PK29XicTLgHNIveeiQihd/67TnOtFDRyMH04vxEfflfRXqPyRYMzqqmp02MeC
+        6f8QRueU33crwBFRqiWyLcT75SrYC251QeNoM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=MuC776s2WgXgRX6QzIV6uLOUTR8zUneD
-        LDPCKkLjrVzN+1nxVHGZTggKMWzo/49UZ4Y6TWmoMR9Bx6IoRexBHZrlPqURW5te
-        nrdqq4Ae68Yop23Esmrgz3RG0d8M7Yyp8zSRAU91K942BmX+n1/I7Jw18koeWXWx
-        C+XfD5433VQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9221FA738B;
-        Sun, 19 Nov 2017 20:48:17 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=P/d6jJudTerrALCextVInmjAcW/RkgJy
+        dN8L3WAaVJWrGYJzukSvLHwdD0v7l9Vz/JWXOcOJFaUlLtoP22GO3IQr6LpZVCDH
+        alKNjI3KfblHQVwOnaQbQZMNoz6r7k1iloboJGU0qc2fVFeQvxuwiuVScPNH45X+
+        FSWFnUrd+UM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1B97BB63EF;
+        Sun, 19 Nov 2017 21:10:00 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 105DDA738A;
-        Sun, 19 Nov 2017 20:48:16 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8FBE6B63EE;
+        Sun, 19 Nov 2017 21:09:59 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Ann T Ropea <bedhanger@gmx.de>
-Cc:     Philip Oakley <philipoakley@iee.org>,
-        Git Mailing List <git@vger.kernel.org>,
-        Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH v2 3/6] diff: diff_aligned_abbrev: remove ellipsis after abbreviated SHA-1 value
-References: <20171113223654.27732-1-bedhanger@gmx.de>
-        <83D263E58ABD46188756D41FE311E469@PhilipOakley>
-        <xmqqfu9pmsx3.fsf@gitster.mtv.corp.google.com>
-        <20171113223654.27732-3-bedhanger@gmx.de>
-        <xmqq1sl17e1u.fsf@gitster.mtv.corp.google.com>
-        <20171119173838.8820-1-bedhanger@gmx.de>
-Date:   Mon, 20 Nov 2017 10:48:15 +0900
-In-Reply-To: <20171119173838.8820-1-bedhanger@gmx.de> (Ann T. Ropea's message
-        of "Sun, 19 Nov 2017 18:38:38 +0100")
-Message-ID: <xmqqtvxpn2jk.fsf@gitster.mtv.corp.google.com>
+To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc:     Git mailing list <git@vger.kernel.org>
+Subject: Re: [PATCH] docs: checking out using @{-N} can lead to detached state
+References: <20171119175411.13570-1-kaartic.sivaraam@gmail.com>
+Date:   Mon, 20 Nov 2017 11:09:58 +0900
+In-Reply-To: <20171119175411.13570-1-kaartic.sivaraam@gmail.com> (Kaartic
+        Sivaraam's message of "Sun, 19 Nov 2017 23:24:11 +0530")
+Message-ID: <xmqqpo8dn1jd.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: E0F0B6F4-CD94-11E7-A5F3-8EF31968708C-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: E94D9C6A-CD97-11E7-A6F5-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ann T Ropea <bedhanger@gmx.de> writes:
+Kaartic Sivaraam <kaartic.sivaraam@gmail.com> writes:
 
->> Notice the name of the function.  We no longer even attempt to align
->> the output, and in general the output column length of each line
->> would be shorter than the original.  I am wondering if the change
->> would be of less impact if we try to abbreviate to len+3 and then
->> chomp the result at the right hand side to len+3 (only if the result
->> is unique) when print_sha1_ellipsis is false.  Of course, once we go
->> that path, the code structure this patch introduces (not the one I
->> mentioned in the previous paragraph) would be necessary.  Essentially
->> you would be enhancing the "else" clause.
->
-> Sorry, but you've lost me there.
+> The commit message of 75d6e552a (Documentation: @{-N} can refer to
+> a commit, 2014-01-19) clearly specifies how @{-N} can be used to
+> refer not only to a branch but also to a commit. IOW, @{-N} is a
+> syntax for the N-th last "checkout" and not the N-th last "branch"
 
-After diff_aligned_abbrev(const struct object_id *oid, int len)
-returns the full-size result when asked, it does this:
+If you define a new term "checkout" to mean "what was checked out",
+yes that is correct.  After re-reading the said commit and the text
+it tried to update, I agree with you that it did not go far enough.
 
-	abbrev = diff_abbrev_oid(oid, len);
-	abblen = strlen(abbrev);
+After the first paragraph explains what happens during "checkout
+<branch>" and goes from the normal case where <branch> is really a
+branch name to an arbitrary commit (where "detaching" needs to be
+mentioned), a commit before 75d6e552a added mention of @{-N} and
+made it appear as if it were a reference to a commit (i.e. not a
+branch name) and that was why it said "As a special case" and
+mentioned "detaching".  The problem lies in a lot older one,
+696acf45 ("checkout: implement "-" abbreviation, add docs and
+tests", 2009-01-17).
 
-	if (abblen < GIT_SHA1_HEXSZ - 3) {
-		static char hex[GIT_MAX_HEXSZ + 1];
-		if (len < abblen && abblen <= len + 2)
-			xsnprintf(hex, sizeof(hex), "%s%.*s", abbrev, len+3-abblen, "..");
-		else
-			xsnprintf(hex, sizeof(hex), "%s...", abbrev);
-		return hex;
-	}
+I agree that a real fix should ensure that @{-N} is merely a
+short-hand for what was checked out in the Nth-previous "git
+checkout" operation, *and* regardless of which between a branch name
+or a commit object name that Nth thing is, the previous rules we
+already gave in the first paragraph apply---if the thing checked out
+in the Nth-previous "git checkout" was a branch, we checkout the
+branch.  If it was a commit, we detach.
 
-When asked to abbreviate to 4, which is shorter than 40-3=37, and
-the unique abbreviation results in "dead" (iow, no other object that
-shares that prefix), then len=4, abblen=4, so we get "dead..." as
-the output.  If the unique abbreviation is "deadb" (iow, some other
-object shares "dead" prefix and we require one more hexdigit for
-uniqueness), len=4, abblen=5, and abblen <= len + 2, so we get
-"deadb.." as the output.  Either codepath yields 7 hexdigits, and
-this is because the function wants to help the user of its output
-to produce lines that are as aligned as possible.
+So perhaps we should start from dropping that "As a special case".
 
-Of course, the leeway we have ... that can be reduced is small and
-limited.  For a len that is too small in a repository with many
-objects that share the same prefix, we cannot fit the result in 7
-(i.e. len+3) columns and may have to return a longer result.
+    You can also use the `"@{-N}"` syntax to refer to the thing the N-th
+    last "git checkout" operation checked out; if it was a branch, that
+    branch is checked out, and otherwise the HEAD is detached at the
+    commit.  You may also specify `-` which is synonymous to `"@{-1}"`.
 
-But the point is that the existing callers that ask for len=7 are
-expecting output that is "7+3=10 output columns most of the time,
-even though it might yield a string longer than 10 output columns
-when the object names cannot be uniquely shown with that output
-width".  
+or something like that.  If we do so, we'd further need to tweak "As
+a further special case", as this rewrite makes it clear that "@{-N}"
+is not a special case at all (instead it is merely a different way
+to spell <branch> or <commit> that is already covered).
 
-And that was why I was wondering if it gives less negative impact to
-callers if we abbreviate to (len+3) hexdigits and return the result.
-
-Note that this was not (and is not) "I think yours is wrong
-because..." but was (and is) "I am wondering if doing it differently
-is better because...".  Asking for 7 and getting 10 feels strange
-and that is one valid reason to "correct" the existing behaviour by
-abbreviating to len and just dropping the padding with dots, and it
-may be worth a bit of surprise to existing users.  I dunno, and that
-is why it was "I wonder...".
+Thanks.
 
 
-
+> diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
+> index e108b0f74..238880f10 100644
+> --- a/Documentation/git-checkout.txt
+> +++ b/Documentation/git-checkout.txt
+> @@ -272,9 +272,8 @@ section of linkgit:git-add[1] to learn how to operate the `--patch` mode.
+>  	commit, your HEAD becomes "detached" and you are no longer on
+>  	any branch (see below for details).
+>  +
+> -As a special case, the `"@{-N}"` syntax for the N-th last branch/commit
+> -checks out branches (instead of detaching).  You may also specify
+> -`-` which is synonymous with `"@{-1}"`.
+> +As a special case, the `@{-N}` syntax checks out the N-th last branch/commit(checkout).
+> +You may also specify `-` which is synonymous with `@{-1}`.
+>  +
+>  As a further special case, you may use `"A...B"` as a shortcut for the
+>  merge base of `A` and `B` if there is exactly one merge base. You can
