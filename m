@@ -2,94 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 37949202F2
-	for <e@80x24.org>; Mon, 20 Nov 2017 15:38:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C4FB9202F2
+	for <e@80x24.org>; Mon, 20 Nov 2017 15:56:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751321AbdKTPit (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Nov 2017 10:38:49 -0500
-Received: from cloud.peff.net ([104.130.231.41]:34632 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751301AbdKTPis (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Nov 2017 10:38:48 -0500
-Received: (qmail 25660 invoked by uid 109); 20 Nov 2017 15:38:48 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 20 Nov 2017 15:38:48 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12473 invoked by uid 111); 20 Nov 2017 15:39:03 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Mon, 20 Nov 2017 10:39:03 -0500
-Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 20 Nov 2017 10:38:46 -0500
-Date:   Mon, 20 Nov 2017 10:38:46 -0500
-From:   Jeff King <peff@peff.net>
-To:     Ben Peart <peartben@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Ben Peart <benpeart@microsoft.com>, git@vger.kernel.org,
-        pclouds@gmail.com, chriscool@tuxfamily.org,
-        Johannes.Schindelin@gmx.de, alexmv@dropbox.com
-Subject: Re: [PATCH v1 1/4] fastindex: speed up index load through
- parallelization
-Message-ID: <20171120153846.v5b7ho42yzrznqoh@sigill.intra.peff.net>
-References: <7e5a9fde-67fc-2bb9-51b6-54bdaed162db@gmail.com>
- <xmqq7eut8y36.fsf@gitster.mtv.corp.google.com>
- <7428e41e-b705-f377-1951-b11af851c4d5@gmail.com>
- <xmqq7eus3nr2.fsf@gitster.mtv.corp.google.com>
- <73fd93cd-91f4-1286-732c-cd8185fe2027@gmail.com>
- <xmqqwp2s1h1x.fsf@gitster.mtv.corp.google.com>
- <9ba23d2c-2198-55d7-5a02-69879fbbb3cb@gmail.com>
- <xmqq1sl017dw.fsf@gitster.mtv.corp.google.com>
- <92b0b0ff-6878-003a-b26f-3b4c2c857be3@gmail.com>
- <20171120142035.bfwu24oegw27ucs3@sigill.intra.peff.net>
+        id S1751595AbdKTP4N (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Nov 2017 10:56:13 -0500
+Received: from siwi.pair.com ([209.68.5.199]:34860 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751506AbdKTP4M (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Nov 2017 10:56:12 -0500
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id BA8EF844E6;
+        Mon, 20 Nov 2017 10:56:11 -0500 (EST)
+Received: from [192.168.1.71] (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 6C097844E2;
+        Mon, 20 Nov 2017 10:56:11 -0500 (EST)
+Subject: Re: [PATCH v4 07/10] introduce fetch-object: fetch one promisor
+ object
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Jonathan Tan <jonathantanmy@google.com>
+References: <20171116181257.61673-1-git@jeffhostetler.com>
+ <20171116181257.61673-8-git@jeffhostetler.com>
+ <e7b5e42f-b13c-50c8-501c-0100d8c48d00@ramsayjones.plus.com>
+ <798096fe-dd01-5351-94d3-949039c84e69@jeffhostetler.com>
+ <CAGZ79kZCdxN8h-mJRY9fQy5W3HtqcvFoL1W5jVcb3=A3vvk_Ww@mail.gmail.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <85b615eb-d152-ed7e-779c-8fc3e46d60e1@jeffhostetler.com>
+Date:   Mon, 20 Nov 2017 10:56:10 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20171120142035.bfwu24oegw27ucs3@sigill.intra.peff.net>
+In-Reply-To: <CAGZ79kZCdxN8h-mJRY9fQy5W3HtqcvFoL1W5jVcb3=A3vvk_Ww@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 20, 2017 at 09:20:35AM -0500, Jeff King wrote:
 
-> Out of curiosity, have you tried experimenting with any high-performance
-> 3rd-party allocator libraries? I've often wondered if we could get a
-> performance improvement from dropping in a new allocator, but was never
-> able to measure any real benefit over glibc's ptmalloc2. The situation
-> might be different on Windows, though (i.e., if the libc allocator isn't
-> that great).
 
-Just linking with tcmalloc, like:
+On 11/17/2017 3:17 PM, Stefan Beller wrote:
+> On Fri, Nov 17, 2017 at 11:49 AM, Jeff Hostetler <git@jeffhostetler.com> wrote:
+>>
+>>
+>> On 11/16/2017 2:57 PM, Ramsay Jones wrote:
+>>>
+>>>
+>>>
+>>> On 16/11/17 18:12, Jeff Hostetler wrote:
+>>>>
+>>>> From: Jonathan Tan <jonathantanmy@google.com>
+>>>>
+>>>> Introduce fetch-object, providing the ability to fetch one object from a
+>>>> promisor remote.
+>>
+>> [snip]
+>>>>
+>>>> +#include "transport.h"
+>>>
+>>>
+>>> I note that this still does not #include "fetch_object.h".
+>>> [If you recall, this suppresses a sparse warning].
+>>>
+>>
+>> Sorry, I missed that.  I know I did a DEVELOPER=1 build and
+>> I didn't see a warning, but I'll check again.
+> 
+> sparse is an extra tool, which you have to run/install;
+> it is not included in the developer build.
+> 
+> https://en.wikipedia.org/wiki/Sparse
+> 
 
-diff --git a/Makefile b/Makefile
-index ee9d5eb11e..4f299cd914 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1018,7 +1018,7 @@ BUILTIN_OBJS += builtin/worktree.o
- BUILTIN_OBJS += builtin/write-tree.o
- 
- GITLIBS = common-main.o $(LIB_FILE) $(XDIFF_LIB)
--EXTLIBS =
-+EXTLIBS = -ltcmalloc
- 
- GIT_USER_AGENT = git/$(GIT_VERSION)
- 
-
-seems to consistently show about 30% speedup on p0002:
-
-Test                                          HEAD^             HEAD                  
---------------------------------------------------------------------------------------
-0002.1: read_cache/discard_cache 1000 times   0.19(0.18+0.01)   0.13(0.12+0.01) -31.6%
-
-I don't think we really even need a patch for it. You should be able to
-just build with:
-
-  make EXT_LIBS=-ltcmalloc
-
-I can't think of any real advantage to a Makefile knob except
-discoverability.
-
--Peff
+ah, thanks!
+Jeff
