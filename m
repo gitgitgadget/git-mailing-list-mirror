@@ -2,134 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D24D202F2
-	for <e@80x24.org>; Mon, 20 Nov 2017 22:09:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A8785202F2
+	for <e@80x24.org>; Mon, 20 Nov 2017 22:14:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751176AbdKTWJy (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Nov 2017 17:09:54 -0500
-Received: from mail-io0-f196.google.com ([209.85.223.196]:46445 "EHLO
-        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751131AbdKTWJx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Nov 2017 17:09:53 -0500
-Received: by mail-io0-f196.google.com with SMTP id q64so4485125iof.13
-        for <git@vger.kernel.org>; Mon, 20 Nov 2017 14:09:53 -0800 (PST)
+        id S1751195AbdKTWOz (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Nov 2017 17:14:55 -0500
+Received: from mail-qk0-f170.google.com ([209.85.220.170]:34795 "EHLO
+        mail-qk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751154AbdKTWOy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Nov 2017 17:14:54 -0500
+Received: by mail-qk0-f170.google.com with SMTP id v137so9475978qkb.1
+        for <git@vger.kernel.org>; Mon, 20 Nov 2017 14:14:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=HFNd9GAa9ZqZte3SN+fCER7cZ1ov/AEnpIupaP8pMhw=;
-        b=ga9Cn6n7Hqul3sqqzy8UDmeBsAxLsKj0spO3efEVh8rmmJxmMbCD0Oq5oWWZdEy5rt
-         uOBgEZn/xymSgOEUJxdqEWRuqzXBZowYeC4BgUElGG3oAi8YY4P3jcmBgZDOyPVHfsA/
-         /NQRrOGemcHkRroAtmEEev6lvWRBzx+EW4AuiLHFIYpla+LvFwcy6jn35sZQBNUMDPMf
-         EuuMxoKNC0vUyw8uG5PJgJncvzHeJDK/kuVT7ae/7KPPvRR2xjgXsRzxjjUaRgionRPn
-         wiozIjYgBF2eVD18nibzay+Kd46MiRyYV+1zrmUs5fPWblHI779KU/KDLEQqGlIaJl2X
-         WM+Q==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=1xUnDGyZO1EAI64ZMKOupodyfP3KP6dHgH6H9GgqNZs=;
+        b=Q+r15v+4SI7z+9F818SPW5eCpQvBrWnGO0M0Vf/cgQVFYbWOa7yzYMbskcl2qEaWpl
+         F0dQcnjdkYi5B5/3aaA/OoE4W1eXCNrQbvGzSXbUAqjiSQGJ2HT7x9DfaqT8fhHtE65G
+         09zY3N1RY/N13RPg99DbMw61Uh+UVe2Ws81okuHOH6SaVkeeAOx87aO30Nb/2z93QHKw
+         HSsv6uC5IQWhoXmUrfaAtN+EjIf1aUNl77m1lUumHlb4QpB8n05fYK57KKWaPujUZYf0
+         RuvAlADxekyk3aHR24ZhNz4SV41AvyJKaREwC2t8stF0KYA9wzfRgtEiQhUUbjo0gVG1
+         asOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=HFNd9GAa9ZqZte3SN+fCER7cZ1ov/AEnpIupaP8pMhw=;
-        b=STnpAXqiJFvWLsgEyFj/Ak4njm7thiSV5AMMJ0ksPRFETxs3t3QtXkGgj2KW15Fuh5
-         zPnnSPz869e40MvfJptbga9uk8tdCroJMbqbzpjYPbKM1ht5eg6vgCZzmeNhjztjgQz1
-         Y35aU9Wx+ryJNb9BkWI0BK+9InrJrahpDmtIpy0Lw2utFqv5bdlLrMWrrtUhY+hNfv2D
-         I2hd+54Qfpx+GOXFSWxgk6U35EGZliAxf+jaZma1yX7RtSLqcVqqmauQWUq8LMFStvwR
-         URgMTVzfD+3Z3Qt6zpbvaIORCDC7wdhlfRmGx2ACe1OOurULBAHmlX0TTB6FBgPsUNgV
-         iQmw==
-X-Gm-Message-State: AJaThX6+RFqXLXaXsGqey99Np/++dqhnw/dW/rGeYv2DpELP+5Yx4kdW
-        uR2c/s2aPUp1+FSf87RFW/A=
-X-Google-Smtp-Source: AGs4zMbex4eF2WFegBnCiAfx93+27DhpqvfhKYVTbDcAuk6Pq7BqYlOnl+7hWGBgUcoTaIO9TX+XEQ==
-X-Received: by 10.107.47.1 with SMTP id j1mr8962511ioo.217.1511215792776;
-        Mon, 20 Nov 2017 14:09:52 -0800 (PST)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id i33sm4921825ioo.64.2017.11.20.14.09.51
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 20 Nov 2017 14:09:52 -0800 (PST)
-Date:   Mon, 20 Nov 2017 14:09:50 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Segev Finer <segev208@gmail.com>
-Subject: Re: [PATCH 4/8] connect: split ssh command line options into
- separate function
-Message-ID: <20171120220950.f5ipri354x6squck@aiede.mtv.corp.google.com>
-References: <20171120212134.lh2l4drdzu6fh5g2@aiede.mtv.corp.google.com>
- <20171120212505.5t6vzvkfvhmjqwsd@aiede.mtv.corp.google.com>
- <20171120215404.GC92506@google.com>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=1xUnDGyZO1EAI64ZMKOupodyfP3KP6dHgH6H9GgqNZs=;
+        b=OA05+uhKdUL2mVElx/0BkRDXcyFk9s+5Dpmo8eIKpZmWO2R2esZr4w7N7m2KZ50Y2/
+         p0KhGGEe4IW7ckArdPHbG6AD4sYffQMvgMY2T+7y3+uthP5CrspnTPrRm2fBAaL5sfov
+         /8lxa2IYN6wanBu1omeMt8K1oMMPQdFhiT0zeuNak3EOnI4oJ7MEDoijDi1iR6jFabut
+         yAV8q0zK2/3pSHk166xbLxZQcri/UF4SM5xt1jyDxvGS50JM20PN4RsJ3n2JW8eSAG3I
+         t3kbMqwaJkYtU0b9en5vBlWuvPEyrMFJWtAMCzgYl7IMm8foFoqLgiF/UIuiZjXCMKWT
+         GJmw==
+X-Gm-Message-State: AJaThX6U0K1DvXo32YNr+kO4EPHVM5jbmgSFSqoK1SyeLnDWNaA7gOu8
+        RZsmD2TROLJkrIManG8erM7fBT62ayNdNJRqBMM=
+X-Google-Smtp-Source: AGs4zMYgn3GgUoP8e+0U/sUV0ZGZ2oSs3+xUWIiL+4SUuN3bKtlLDgMSSaUy5p6O09fxfX2T80w8OGsW+gsWiQK+PLE=
+X-Received: by 10.55.42.75 with SMTP id q72mr23696820qkh.57.1511216093470;
+ Mon, 20 Nov 2017 14:14:53 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20171120215404.GC92506@google.com>
-User-Agent: NeoMutt/20170609 (1.8.3)
+Received: by 10.12.155.209 with HTTP; Mon, 20 Nov 2017 14:14:53 -0800 (PST)
+In-Reply-To: <20171116154814.23785-1-alex.bennee@linaro.org>
+References: <20171116154814.23785-1-alex.bennee@linaro.org>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 20 Nov 2017 17:14:53 -0500
+X-Google-Sender-Auth: c0Y7aEMUwArC2quNI7LhHhV9NGQ
+Message-ID: <CAPig+cTXq6jSN9f2_xyj=Jfv_cg2kUFUtA5uVkZDrRRSi2x7vg@mail.gmail.com>
+Subject: Re: [PATCH] git-send-email: fix get_maintainer.pl regression
+To:     =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+A few more comments/observations...
 
-Brandon Williams wrote:
-> On 11/20, Jonathan Nieder wrote:
-[long stream of quoted context snipped; please cut down the quoted
- text to what you are replying to in the future]
->> @@ -972,16 +1031,13 @@ struct child_process *git_connect(int fd[2], const char *url,
->>  		conn->use_shell = 1;
->>  		conn->in = conn->out = -1;
->>  		if (protocol == PROTO_SSH) {
->> -			const char *ssh;
->> -			enum ssh_variant variant;
->>  			char *ssh_host = hostandport;
->>  			const char *port = NULL;
->> +
->>  			transport_check_allowed("ssh");
->>  			get_host_and_port(&ssh_host, &port);
->> -
->>  			if (!port)
->>  				port = get_port(ssh_host);
->> -
->
-> Are these random additions and deletions intentional?
+On Thu, Nov 16, 2017 at 10:48 AM, Alex Benn=C3=A9e <alex.bennee@linaro.org>=
+ wrote:
+> diff --git a/perl/Git.pm b/perl/Git.pm
+> @@ -936,6 +936,9 @@ sub parse_mailboxes {
+>                         $end_of_addr_seen =3D 0;
+>                 } elsif ($token =3D~ /^\(/) {
+>                         push @comment, $token;
+> +               } elsif ($token =3D~ /^\)/) {
+> +                       my $nested_comment =3D pop @comment;
+> +                       push @comment, "$nested_comment$token";
 
-Sorry about that.  It was to make the code easier to read, but I can
-see how it's jarring during review.  I can resend without the removed
-blank lines if you like.
+Due to the way tokenization works, it looks like you will only ever
+see a ")" as a single character. That suggests that you should be
+using ($token eq ")"), as is done for "<" and ">", rather than ($token
+=3D~ /^\)/).
 
-For context, here's the code in question after the current patch:
+What happens if there is text before the final closing ')'? For
+instance, "foo@bar (bibble (bobble) smoo)" or "...)smoo)". The result
+is that "smoo" ends up tacked onto the end of the email address
+("foo@barsmoo") rather than incorporated into the comment, as
+intended.
 
-	if (protocol == PROTO_SSH) {
-		char *ssh_host = hostandport;
-		const char *port = NULL;
+What happens if you encounter a ")" but haven't yet encountered an
+opening "(" (that is, @comment is empty)? For example, "foo@bar )". In
+that case, it unconditionally pops from the empty array, which seems
+iffy at best. It might be nice to see this case taken into
+consideration explicitly.
 
-		transport_check_allowed("ssh");
-		get_host_and_port(&ssh_host, &port);
-		if (!port)
-			port = get_port(ssh_host);
-		if (flags & CONNECT_DIAG_URL) {
-			printf("Diag: url=%s\n", url ? url : "NULL");
-			printf("Diag: protocol=%s\n", prot_name(protocol));
-			printf("Diag: userandhost=%s\n", ssh_host ? ssh_host : "NULL");
-			printf("Diag: port=%s\n", port ? port : "NONE");
-			printf("Diag: path=%s\n", path ? path : "NULL");
+I also was wondering if it would make more sense to take advantage of
+Perl's ability to match nested expressions (??{$nested}), however,
+that feature apparently was added in 5.10, and Git.pm only requires
+5.8, so perhaps not (unless we want to bump the requirement higher).
 
-			free(hostandport);
-			free(path);
-			free(conn);
-			strbuf_release(&cmd);
-			return NULL;
-		}
-		fill_ssh_args(conn, ssh_host, port, flags);
-	} else {
-		transport_check_allowed("file");
-		if (get_protocol_version_config() > 0) {
-			argv_array_pushf(&conn->env_array, GIT_PROTOCOL_ENVIRONMENT "=version=%d",
-					 get_protocol_version_config());
-		}
-	}
+Aside from those observations, it looks like the tokenizer in this
+function is broken. For any input with the address enclosed in "<" and
+">", the comment is lost entirely; it doesn't even end up in the
+@tokens array. Since you're already fixing bugs/regressions in this
+code, perhaps that's something you'd like to tackle as well in a
+separate patch? ("No" is an acceptable answer, of course.)
 
-Jonathan
+>                 } elsif ($token eq "<") {
+>                         push @phrase, (splice @address), (splice @buffer)=
+;
+>                 } elsif ($token eq ">") {
