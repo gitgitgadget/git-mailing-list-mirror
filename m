@@ -2,66 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0E7AE202F2
-	for <e@80x24.org>; Mon, 20 Nov 2017 20:37:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7CC8D202F2
+	for <e@80x24.org>; Mon, 20 Nov 2017 20:39:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752612AbdKTUhF (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Nov 2017 15:37:05 -0500
-Received: from cloud.peff.net ([104.130.231.41]:35058 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1752402AbdKTUhF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Nov 2017 15:37:05 -0500
-Received: (qmail 4315 invoked by uid 109); 20 Nov 2017 20:37:05 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 20 Nov 2017 20:37:05 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15965 invoked by uid 111); 20 Nov 2017 20:37:20 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Mon, 20 Nov 2017 15:37:20 -0500
-Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 20 Nov 2017 15:37:03 -0500
-Date:   Mon, 20 Nov 2017 15:37:03 -0500
-From:   Jeff King <peff@peff.net>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, hsed@unimetic.com,
-        git <git@vger.kernel.org>, Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: [PATCH V4] config: add --expiry-date
-Message-ID: <20171120203702.mdd3hkwezxyf7vtg@sigill.intra.peff.net>
-References: <xmqqlgj7xcuf.fsf@gitster.mtv.corp.google.com>
- <20171118022727.30179-1-hsed@unimetic.com>
- <xmqq8tf4qmu8.fsf@gitster.mtv.corp.google.com>
- <20171120170443.awpvcuubsi5o6zmp@sigill.intra.peff.net>
- <CAGZ79ka+5o07cz4A8=Gu_VqO1hYqqO=8Ju1uAaDY23s7xjCWvw@mail.gmail.com>
+        id S1752564AbdKTUjS (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Nov 2017 15:39:18 -0500
+Received: from mail-qt0-f173.google.com ([209.85.216.173]:45826 "EHLO
+        mail-qt0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752485AbdKTUjR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Nov 2017 15:39:17 -0500
+Received: by mail-qt0-f173.google.com with SMTP id r37so8358079qtj.12
+        for <git@vger.kernel.org>; Mon, 20 Nov 2017 12:39:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=jqqPar+FMtTAWGUarQDUOor1WY1kxk9Ne7rSb+28aTU=;
+        b=oLfW7uf3kC4Ar66iKE7iEp3OXCCH6k1yhe1V7Di1DVLUJSOWiM1YqaG4K5xT/KyU98
+         v/noKF07EEq3H5IuE/C1y0IiPlmjqP03fHRT7cyWKHON0BheVZ7/ZlUGQMaG/+WK+zbQ
+         8slTEEPySlZ7etJZV4YpuneAbmKXrYZp7WqK3JujKga70Uq6DfF/GgJCcXuW1qpnAjh6
+         nRrANsaWt3m+RI67wvuGt8IuA9a/2s44Lho+Trzl5VeaIgDDn2yshRqAtYeRFwF0aoCF
+         rz/5z9yQ2i/+wLYncHz11pPE9DAcORqrIRyHzHPRrxCvPD3frR2m6z48XCUAxe9TOxTg
+         mLOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=jqqPar+FMtTAWGUarQDUOor1WY1kxk9Ne7rSb+28aTU=;
+        b=sCmDovkA8jcCbvd0eqet+QcMEuYrbGgFtLIvBxI4Ok0K1kUt0gLc3n73nIakKeN5EL
+         HQ5ApMn/OJG5ugMbbky2CB0Alo8qRfQtfsw/g6eZFM3pjpRT/jFbM8mehhxEFowwR7M0
+         +ol0DrQ8z1N6SnqLALKQytQhfMHygpdeJf+CpJRX2P5htVhXxl0+Z7UVmAIUvJ0lPcCE
+         Xg6y3LTVNCieuQE3toWeoM6BRqhIY7JTl0/exNYVA3p9fN8o3Z2qpni5eavBmqXudPQy
+         ZZEdRhA4zfm3pUmoIUYWNwM9NVgC3Q6wXAq1JW17b3Wn1fwFqeKSoQfNXsUsxoYHBLas
+         mi8g==
+X-Gm-Message-State: AJaThX4JNsFEpaypnwspp2ldlFPz6qrxzpp+2LLsYDOV4Zp3pF20iAMi
+        vV64aoYre428gmdEqJ1L/7w+1bvqcuv6qI6n0YNXjw==
+X-Google-Smtp-Source: AGs4zMbwuWQtwMrvHIRk1KtQ5xCHEV5kbJhqAPhZajnbySnfvKELaRu0dfDVbGeiHnnFDC3Kds9F5lxQyRuVP18U3UE=
+X-Received: by 10.200.44.251 with SMTP id 56mr23281342qtx.87.1511210356582;
+ Mon, 20 Nov 2017 12:39:16 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAGZ79ka+5o07cz4A8=Gu_VqO1hYqqO=8Ju1uAaDY23s7xjCWvw@mail.gmail.com>
+Received: by 10.140.85.179 with HTTP; Mon, 20 Nov 2017 12:39:15 -0800 (PST)
+In-Reply-To: <9c3462e3-2d1d-05bc-9f7d-4bc93d32e7ff@web.de>
+References: <790c2344-a71e-7089-9000-f9b37a4a5cd9@web.de> <9c3462e3-2d1d-05bc-9f7d-4bc93d32e7ff@web.de>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 20 Nov 2017 12:39:15 -0800
+Message-ID: <CAGZ79kZxiEPE4LPEo-eb4Ta4bYXVr9xQM0dFeiJk9XXKU4AR+w@mail.gmail.com>
+Subject: Re: [PATCH 6/6] grep: show non-empty lines before functions with -W
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Vegard Nossum <vegard.nossum@oracle.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 20, 2017 at 12:28:11PM -0800, Stefan Beller wrote:
+On Sat, Nov 18, 2017 at 10:08 AM, Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
+> Non-empty lines before a function definition are most likely comments
+> for that function and thus relevant.  Include them in function context.
+>
+> Such a non-empty line might also belong to the preceding function if
+> there is no separating blank line.  Stop extending the context upwards
+> also at the next function line to make sure only one extra function body
+> is shown at most.
 
-> > +cc Stefan, who added the die(). It may be that we don't care that much
-> > these days about recovering from broken .gitmodules files.
-> 
-> By that you mean commits like 37f52e9344 (submodule-config:
-> keep shallow recommendation around, 2016-05-26) for example?
-> That adds a git_config_bool to the submodule config machinery.
-
-I actually meant ea2fa5a338 (submodule-config: keep update strategy
-around, 2016-02-29), which adds an actual die() into parse_config(). But
-yeah, I think the end result is the same.
-
-> I agree that we'd want to be more careful, but for now I'd put it to the
-> #leftoverbits.
-
-Fine by me. While I think the original intent was to be more lenient to
-malformed .gitmodules, it's not like we're seeing bug reports about it.
-
--Peff
+Can we add another heuristic, that checks for common function body ends, e.=
+g.
+if the preceding line contains '}' but is not commented (the line doesn't
+contain '*/' '//', '#'), we have a strong hint that it is a function, not a=
+n
+additional comment.
