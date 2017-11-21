@@ -6,33 +6,31 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8F0C22036D
-	for <e@80x24.org>; Tue, 21 Nov 2017 20:59:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 897422036D
+	for <e@80x24.org>; Tue, 21 Nov 2017 21:07:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751350AbdKUU7G (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Nov 2017 15:59:06 -0500
-Received: from siwi.pair.com ([209.68.5.199]:63948 "EHLO siwi.pair.com"
+        id S1751306AbdKUVHa (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Nov 2017 16:07:30 -0500
+Received: from siwi.pair.com ([209.68.5.199]:33783 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751067AbdKUU7F (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Nov 2017 15:59:05 -0500
+        id S1751229AbdKUVHa (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Nov 2017 16:07:30 -0500
 Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id B382784510;
-        Tue, 21 Nov 2017 15:59:04 -0500 (EST)
+        by siwi.pair.com (Postfix) with ESMTP id BC2DF844F6;
+        Tue, 21 Nov 2017 16:07:29 -0500 (EST)
 Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 3EF13844E7;
-        Tue, 21 Nov 2017 15:59:04 -0500 (EST)
+        by siwi.pair.com (Postfix) with ESMTPSA id 4C6F1844F0;
+        Tue, 21 Nov 2017 16:07:29 -0500 (EST)
 From:   Jeff Hostetler <git@jeffhostetler.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, jonathantanmy@google.com,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v5 2/6] oidmap: add oidmap iterator methods
-Date:   Tue, 21 Nov 2017 20:58:48 +0000
-Message-Id: <20171121205852.15731-3-git@jeffhostetler.com>
+Subject: [PATCH v5 00/10] Partial clone part 2: fsck and promisors
+Date:   Tue, 21 Nov 2017 21:07:10 +0000
+Message-Id: <20171121210720.21376-1-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.9.3
-In-Reply-To: <20171121205852.15731-1-git@jeffhostetler.com>
-References: <20171121205852.15731-1-git@jeffhostetler.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -40,44 +38,64 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Add the usual map iterator functions to oidmap.
+This is V5 of part 2 of partial clone.  This assumes V5 of part 1
+is already present.  V5 includes minor cleanup over V4 and better
+separates the --exclude-promisor-objects and --missing arguments.
 
-Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
----
- oidmap.h | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+Part 2 is concerned with fsck, gc, initial support for dynamic
+object fetching, and tracking promisor objects.  Jonathan Tan
+originally developed this code.  I have moved it on top of
+part 1 and updated it slightly.
 
-diff --git a/oidmap.h b/oidmap.h
-index 18f54cd..d3cd2bb 100644
---- a/oidmap.h
-+++ b/oidmap.h
-@@ -65,4 +65,26 @@ extern void *oidmap_put(struct oidmap *map, void *entry);
-  */
- extern void *oidmap_remove(struct oidmap *map, const struct object_id *key);
- 
-+
-+struct oidmap_iter {
-+	struct hashmap_iter h_iter;
-+};
-+
-+static inline void oidmap_iter_init(struct oidmap *map, struct oidmap_iter *iter)
-+{
-+	hashmap_iter_init(&map->map, &iter->h_iter);
-+}
-+
-+static inline void *oidmap_iter_next(struct oidmap_iter *iter)
-+{
-+	return hashmap_iter_next(&iter->h_iter);
-+}
-+
-+static inline void *oidmap_iter_first(struct oidmap *map,
-+				      struct oidmap_iter *iter)
-+{
-+	oidmap_iter_init(map, iter);
-+	return oidmap_iter_next(iter);
-+}
-+
- #endif
+Jonathan Tan (10):
+  extension.partialclone: introduce partial clone extension
+  fsck: introduce partialclone extension
+  fsck: support refs pointing to promisor objects
+  fsck: support referenced promisor objects
+  fsck: support promisor objects as CLI argument
+  index-pack: refactor writing of .keep files
+  introduce fetch-object: fetch one promisor object
+  sha1_file: support lazily fetching missing objects
+  rev-list: support termination at promisor objects
+  gc: do not repack promisor packfiles
+
+ Documentation/git-pack-objects.txt             |  11 +
+ Documentation/gitremote-helpers.txt            |   6 +
+ Documentation/rev-list-options.txt             |  11 +
+ Documentation/technical/repository-version.txt |  12 +
+ Makefile                                       |   1 +
+ builtin/cat-file.c                             |   2 +
+ builtin/fetch-pack.c                           |  10 +
+ builtin/fsck.c                                 |  26 +-
+ builtin/gc.c                                   |   3 +
+ builtin/index-pack.c                           | 113 ++++----
+ builtin/pack-objects.c                         |  37 ++-
+ builtin/prune.c                                |   7 +
+ builtin/repack.c                               |   8 +-
+ builtin/rev-list.c                             |  71 ++++-
+ cache.h                                        |  13 +-
+ environment.c                                  |   1 +
+ fetch-object.c                                 |  27 ++
+ fetch-object.h                                 |   6 +
+ fetch-pack.c                                   |   8 +-
+ fetch-pack.h                                   |   2 +
+ list-objects.c                                 |  29 ++-
+ object.c                                       |   2 +-
+ packfile.c                                     |  77 +++++-
+ packfile.h                                     |  13 +
+ remote-curl.c                                  |  14 +-
+ revision.c                                     |  33 ++-
+ revision.h                                     |   5 +-
+ setup.c                                        |   7 +-
+ sha1_file.c                                    |  38 ++-
+ t/t0410-partial-clone.sh                       | 343 +++++++++++++++++++++++++
+ transport.c                                    |   8 +
+ transport.h                                    |   8 +
+ 32 files changed, 869 insertions(+), 83 deletions(-)
+ create mode 100644 fetch-object.c
+ create mode 100644 fetch-object.h
+ create mode 100755 t/t0410-partial-clone.sh
+
 -- 
 2.9.3
 
