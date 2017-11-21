@@ -7,35 +7,35 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 67F8020954
-	for <e@80x24.org>; Tue, 21 Nov 2017 08:01:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A7EF920954
+	for <e@80x24.org>; Tue, 21 Nov 2017 08:01:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751393AbdKUIBv (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Nov 2017 03:01:51 -0500
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:40640 "EHLO
+        id S1751388AbdKUIBu (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Nov 2017 03:01:50 -0500
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:43694 "EHLO
         mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751370AbdKUIBt (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2017 03:01:49 -0500
-Received: from pps.filterd (m0096528.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id vAL7xKAZ002559;
+        by vger.kernel.org with ESMTP id S1751247AbdKUIBr (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2017 03:01:47 -0500
+Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
+        by mx0a-00153501.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id vAL7xVPD019352;
         Tue, 21 Nov 2017 00:01:00 -0800
 Authentication-Results: ppops.net;
         spf=softfail smtp.mailfrom=newren@gmail.com
 Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2eajmr44rd-1;
+        by mx0a-00153501.pphosted.com with ESMTP id 2eakkpc221-1;
         Tue, 21 Nov 2017 00:01:00 -0800
 Received: from mxw1.palantir.com (new-smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id 1807722658DB;
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id 242CD22658EF;
         Tue, 21 Nov 2017 00:01:00 -0800 (PST)
 Received: from newren2-linux.yojoe.local (newren2-linux.dyn.yojoe.local [10.100.68.32])
-        by smtp.yojoe.local (Postfix) with ESMTP id 0D21C2CDE75;
+        by smtp.yojoe.local (Postfix) with ESMTP id 194FF2CDEB1;
         Tue, 21 Nov 2017 00:01:00 -0800 (PST)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, Elijah Newren <newren@gmail.com>
-Subject: [PATCH v3 04/33] directory rename detection: basic testcases
-Date:   Tue, 21 Nov 2017 00:00:30 -0800
-Message-Id: <20171121080059.32304-5-newren@gmail.com>
+Subject: [PATCH v3 05/33] directory rename detection: directory splitting testcases
+Date:   Tue, 21 Nov 2017 00:00:31 -0800
+Message-Id: <20171121080059.32304-6-newren@gmail.com>
 X-Mailer: git-send-email 2.15.0.309.g62ce55426d
 In-Reply-To: <20171121080059.32304-1-newren@gmail.com>
 References: <20171121080059.32304-1-newren@gmail.com>
@@ -57,338 +57,51 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- t/t6043-merge-rename-directories.sh | 430 ++++++++++++++++++++++++++++++=
+ t/t6043-merge-rename-directories.sh | 137 ++++++++++++++++++++++++++++++=
 ++++++
- 1 file changed, 430 insertions(+)
- create mode 100755 t/t6043-merge-rename-directories.sh
+ 1 file changed, 137 insertions(+)
 
 diff --git a/t/t6043-merge-rename-directories.sh b/t/t6043-merge-rename-d=
 irectories.sh
-new file mode 100755
-index 0000000000..d8ead7c56b
---- /dev/null
+index d8ead7c56b..335aa1c145 100755
+--- a/t/t6043-merge-rename-directories.sh
 +++ b/t/t6043-merge-rename-directories.sh
-@@ -0,0 +1,430 @@
-+#!/bin/sh
-+
-+test_description=3D"recursive merge with directory renames"
-+# includes checking of many corner cases, with a similar methodology to:
-+#   t6042: corner cases with renames but not criss-cross merges
-+#   t6036: corner cases with both renames and criss-cross merges
-+#
-+# The setup for all of them, pictorially, is:
-+#
-+#      A
-+#      o
-+#     / \
-+#  O o   ?
-+#     \ /
-+#      o
-+#      B
-+#
-+# To help make it easier to follow the flow of tests, they have been
-+# divided into sections and each test will start with a quick explanatio=
-n
-+# of what commits O, A, and B contain.
-+#
-+# Notation:
-+#    z/{b,c}   means  files z/b and z/c both exist
-+#    x/d_1     means  file x/d exists with content d1.  (Purpose of the
-+#                     underscore notation is to differentiate different
-+#                     files that might be renamed into each other's path=
-s.)
-+
-+. ./test-lib.sh
-+
+@@ -427,4 +427,141 @@ test_expect_failure '1f-check: Split a directory in=
+to two other directories' '
+ #   in section 2, plus testcases 3a and 4a.
+ ########################################################################=
+###
+=20
 +
 +########################################################################=
 ###
-+# SECTION 1: Basic cases we should be able to handle
++# SECTION 2: Split into multiple directories, with equal number of paths
++#
++# Explore the splitting-a-directory rules a bit; what happens in the
++# edge cases?
++#
++# Note that there is a closely related case of a directory not being
++# split on either side of history, but being renamed differently on
++# each side.  See testcase 8e for that.
 +########################################################################=
 ###
 +
-+# Testcase 1a, Basic directory rename.
++# Testcase 2a, Directory split into two on one side, with equal numbers =
+of paths
 +#   Commit O: z/{b,c}
-+#   Commit A: y/{b,c}
-+#   Commit B: z/{b,c,d,e/f}
-+#   Expected: y/{b,c,d,e/f}
-+
-+test_expect_success '1a-setup: Simple directory rename detection' '
-+	test_create_repo 1a &&
-+	(
-+		cd 1a &&
-+
-+		mkdir z &&
-+		echo b >z/b &&
-+		echo c >z/c &&
-+		git add z &&
-+		test_tick &&
-+		git commit -m "O" &&
-+
-+		git branch O &&
-+		git branch A &&
-+		git branch B &&
-+
-+		git checkout A &&
-+		git mv z y &&
-+		test_tick &&
-+		git commit -m "A" &&
-+
-+		git checkout B &&
-+		echo d >z/d &&
-+		mkdir z/e &&
-+		echo f >z/e/f &&
-+		git add z/d z/e/f &&
-+		test_tick &&
-+		git commit -m "B"
-+	)
-+'
-+
-+test_expect_failure '1a-check: Simple directory rename detection' '
-+	(
-+		cd 1a &&
-+
-+		git checkout A^0 &&
-+
-+		git merge -s recursive B^0 &&
-+
-+		test 4 -eq $(git ls-files -s | wc -l) &&
-+
-+		git rev-parse >actual \
-+			HEAD:y/b HEAD:y/c HEAD:y/d HEAD:y/e/f &&
-+		git rev-parse >expect \
-+			O:z/b O:z/c B:z/d B:z/e/f &&
-+		test_cmp expect actual &&
-+		test "$(git hash-object y/d)" =3D $(git rev-parse B:z/d) &&
-+		test_must_fail git rev-parse HEAD:z/d &&
-+		test_must_fail git rev-parse HEAD:z/e/f &&
-+		test ! -d z/d &&
-+		test ! -d z/e/f
-+	)
-+'
-+
-+# Testcase 1b, Merge a directory with another
-+#   Commit O: z/{b,c},   y/d
-+#   Commit A: z/{b,c,e}, y/d
-+#   Commit B: y/{b,c,d}
-+#   Expected: y/{b,c,d,e}
-+
-+test_expect_success '1b-setup: Merge a directory with another' '
-+	test_create_repo 1b &&
-+	(
-+		cd 1b &&
-+
-+		mkdir z &&
-+		echo b >z/b &&
-+		echo c >z/c &&
-+		mkdir y &&
-+		echo d >y/d &&
-+		git add z y &&
-+		test_tick &&
-+		git commit -m "O" &&
-+
-+		git branch O &&
-+		git branch A &&
-+		git branch B &&
-+
-+		git checkout A &&
-+		echo e >z/e &&
-+		git add z/e &&
-+		test_tick &&
-+		git commit -m "A" &&
-+
-+		git checkout B &&
-+		git mv z/b y &&
-+		git mv z/c y &&
-+		rmdir z &&
-+		test_tick &&
-+		git commit -m "B"
-+	)
-+'
-+
-+test_expect_failure '1b-check: Merge a directory with another' '
-+	(
-+		cd 1b &&
-+
-+		git checkout A^0 &&
-+
-+		git merge -s recursive B^0 &&
-+
-+		test 4 -eq $(git ls-files -s | wc -l) &&
-+
-+		git rev-parse >actual \
-+			HEAD:y/b HEAD:y/c HEAD:y/d HEAD:y/e &&
-+		git rev-parse >expect \
-+			O:z/b O:z/c O:y/d A:z/e &&
-+		test_cmp expect actual &&
-+		test_must_fail git rev-parse HEAD:z/e
-+	)
-+'
-+
-+# Testcase 1c, Transitive renaming
-+#   (Related to testcases 3a and 6d -- when should a transitive rename a=
-pply?)
-+#   (Related to testcases 9c and 9d -- can transitivity repeat?)
-+#   Commit O: z/{b,c},   x/d
-+#   Commit A: y/{b,c},   x/d
++#   Commit A: y/b, w/c
 +#   Commit B: z/{b,c,d}
-+#   Expected: y/{b,c,d}  (because x/d -> z/d -> y/d)
-+
-+test_expect_success '1c-setup: Transitive renaming' '
-+	test_create_repo 1c &&
++#   Expected: y/b, w/c, z/d, with warning about z/ -> (y/ vs. w/) confli=
+ct
++test_expect_success '2a-setup: Directory split into two on one side, wit=
+h equal numbers of paths' '
++	test_create_repo 2a &&
 +	(
-+		cd 1c &&
++		cd 2a &&
 +
 +		mkdir z &&
 +		echo b >z/b &&
 +		echo c >z/c &&
-+		mkdir x &&
-+		echo d >x/d &&
-+		git add z x &&
-+		test_tick &&
-+		git commit -m "O" &&
-+
-+		git branch O &&
-+		git branch A &&
-+		git branch B &&
-+
-+		git checkout A &&
-+		git mv z y &&
-+		test_tick &&
-+		git commit -m "A" &&
-+
-+		git checkout B &&
-+		git mv x/d z/d &&
-+		test_tick &&
-+		git commit -m "B"
-+	)
-+'
-+
-+test_expect_failure '1c-check: Transitive renaming' '
-+	(
-+		cd 1c &&
-+
-+		git checkout A^0 &&
-+
-+		git merge -s recursive B^0 &&
-+
-+		test 3 -eq $(git ls-files -s | wc -l) &&
-+
-+		git rev-parse >actual \
-+			HEAD:y/b HEAD:y/c HEAD:y/d &&
-+		git rev-parse >expect \
-+			O:z/b O:z/c O:x/d &&
-+		test_cmp expect actual &&
-+		test_must_fail git rev-parse HEAD:x/d &&
-+		test_must_fail git rev-parse HEAD:z/d &&
-+		test ! -f z/d
-+	)
-+'
-+
-+# Testcase 1d, Directory renames (merging two directories into one new o=
-ne)
-+#              cause a rename/rename(2to1) conflict
-+#   (Related to testcases 1c and 7b)
-+#   Commit O. z/{b,c},        y/{d,e}
-+#   Commit A. x/{b,c},        y/{d,e,m,wham_1}
-+#   Commit B. z/{b,c,n,wham_2}, x/{d,e}
-+#   Expected: x/{b,c,d,e,m,n}, CONFLICT:(y/wham_1 & z/wham_2 -> x/wham)
-+#   Note: y/m & z/n should definitely move into x.  By the same token, b=
-oth
-+#         y/wham_1 & z/wham_2 should too...giving us a conflict.
-+
-+test_expect_success '1d-setup: Directory renames cause a rename/rename(2=
-to1) conflict' '
-+	test_create_repo 1d &&
-+	(
-+		cd 1d &&
-+
-+		mkdir z &&
-+		echo b >z/b &&
-+		echo c >z/c &&
-+		mkdir y &&
-+		echo d >y/d &&
-+		echo e >y/e &&
-+		git add z y &&
-+		test_tick &&
-+		git commit -m "O" &&
-+
-+		git branch O &&
-+		git branch A &&
-+		git branch B &&
-+
-+		git checkout A &&
-+		git mv z x &&
-+		echo m >y/m &&
-+		echo wham1 >y/wham &&
-+		git add y &&
-+		test_tick &&
-+		git commit -m "A" &&
-+
-+		git checkout B &&
-+		git mv y x &&
-+		echo n >z/n &&
-+		echo wham2 >z/wham &&
-+		git add z &&
-+		test_tick &&
-+		git commit -m "B"
-+	)
-+'
-+
-+test_expect_failure '1d-check: Directory renames cause a rename/rename(2=
-to1) conflict' '
-+	(
-+		cd 1d &&
-+
-+		git checkout A^0 &&
-+
-+		test_must_fail git merge -s recursive B^0 >out &&
-+		test_i18ngrep "CONFLICT (rename/rename)" out &&
-+
-+		test 8 -eq $(git ls-files -s | wc -l) &&
-+		test 2 -eq $(git ls-files -u | wc -l) &&
-+		test 3 -eq $(git ls-files -o | wc -l) &&
-+
-+		git rev-parse >actual \
-+			:0:x/b :0:x/c :0:x/d :0:x/e :0:x/m :0:x/n &&
-+		git rev-parse >expect \
-+			O:z/b O:z/c O:y/d O:y/e A:y/m B:z/n &&
-+		test_cmp expect actual &&
-+
-+		test_must_fail git rev-parse :0:x/wham &&
-+		git rev-parse >actual \
-+			:2:x/wham :3:x/wham &&
-+		git rev-parse >expect \
-+			A:y/wham B:z/wham &&
-+		test_cmp expect actual &&
-+
-+		test ! -f x/wham &&
-+		test -f x/wham~HEAD &&
-+		test -f x/wham~B^0 &&
-+
-+		git hash-object >actual \
-+			x/wham~HEAD x/wham~B^0 &&
-+		git rev-parse >expect \
-+			A:y/wham B:z/wham &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+# Testcase 1e, Renamed directory, with all filenames being renamed too
-+#   Commit O: z/{oldb,oldc}
-+#   Commit A: y/{newb,newc}
-+#   Commit B: z/{oldb,oldc,d}
-+#   Expected: y/{newb,newc,d}
-+
-+test_expect_success '1e-setup: Renamed directory, with all files being r=
-enamed too' '
-+	test_create_repo 1e &&
-+	(
-+		cd 1e &&
-+
-+		mkdir z &&
-+		echo b >z/oldb &&
-+		echo c >z/oldc &&
 +		git add z &&
 +		test_tick &&
 +		git commit -m "O" &&
@@ -399,8 +112,9 @@ enamed too' '
 +
 +		git checkout A &&
 +		mkdir y &&
-+		git mv z/oldb y/newb &&
-+		git mv z/oldc y/newc &&
++		mkdir w &&
++		git mv z/b y/ &&
++		git mv z/c w/ &&
 +		test_tick &&
 +		git commit -m "A" &&
 +
@@ -412,45 +126,43 @@ enamed too' '
 +	)
 +'
 +
-+test_expect_failure '1e-check: Renamed directory, with all files being r=
-enamed too' '
++test_expect_failure '2a-check: Directory split into two on one side, wit=
+h equal numbers of paths' '
 +	(
-+		cd 1e &&
++		cd 2a &&
 +
 +		git checkout A^0 &&
 +
-+		git merge -s recursive B^0 &&
++		test_must_fail git merge -s recursive B^0 >out &&
 +
 +		test 3 -eq $(git ls-files -s | wc -l) &&
++		test 0 -eq $(git ls-files -u | wc -l) &&
++		test 1 -eq $(git ls-files -o | wc -l) &&
 +
 +		git rev-parse >actual \
-+			HEAD:y/newb HEAD:y/newc HEAD:y/d &&
++			:0:y/b :0:w/c :0:z/d &&
 +		git rev-parse >expect \
-+			O:z/oldb O:z/oldc B:z/d &&
++			O:z/b O:z/c B:z/d &&
 +		test_cmp expect actual &&
-+		test_must_fail git rev-parse HEAD:z/d
++		test_i18ngrep "CONFLICT.*directory rename split" out
 +	)
 +'
 +
-+# Testcase 1f, Split a directory into two other directories
-+#   (Related to testcases 3a, all of section 2, and all of section 4)
-+#   Commit O: z/{b,c,d,e,f}
-+#   Commit A: z/{b,c,d,e,f,g}
-+#   Commit B: y/{b,c}, x/{d,e,f}
-+#   Expected: y/{b,c}, x/{d,e,f,g}
-+
-+test_expect_success '1f-setup: Split a directory into two other director=
-ies' '
-+	test_create_repo 1f &&
++# Testcase 2b, Directory split into two on one side, with equal numbers =
+of paths
++#   Commit O: z/{b,c}
++#   Commit A: y/b, w/c
++#   Commit B: z/{b,c}, x/d
++#   Expected: y/b, w/c, x/d; No warning about z/ -> (y/ vs. w/) conflict
++test_expect_success '2b-setup: Directory split into two on one side, wit=
+h equal numbers of paths' '
++	test_create_repo 2b &&
 +	(
-+		cd 1f &&
++		cd 2b &&
 +
 +		mkdir z &&
 +		echo b >z/b &&
 +		echo c >z/c &&
-+		echo d >z/d &&
-+		echo e >z/e &&
-+		echo f >z/f &&
 +		git add z &&
 +		test_tick &&
 +		git commit -m "O" &&
@@ -460,60 +172,56 @@ ies' '
 +		git branch B &&
 +
 +		git checkout A &&
-+		echo g >z/g &&
-+		git add z/g &&
++		mkdir y &&
++		mkdir w &&
++		git mv z/b y/ &&
++		git mv z/c w/ &&
 +		test_tick &&
 +		git commit -m "A" &&
 +
 +		git checkout B &&
-+		mkdir y &&
 +		mkdir x &&
-+		git mv z/b y/ &&
-+		git mv z/c y/ &&
-+		git mv z/d x/ &&
-+		git mv z/e x/ &&
-+		git mv z/f x/ &&
-+		rmdir z &&
++		echo d >x/d &&
++		git add x/d &&
 +		test_tick &&
 +		git commit -m "B"
 +	)
 +'
 +
-+test_expect_failure '1f-check: Split a directory into two other director=
-ies' '
++test_expect_success '2b-check: Directory split into two on one side, wit=
+h equal numbers of paths' '
 +	(
-+		cd 1f &&
++		cd 2b &&
 +
 +		git checkout A^0 &&
 +
-+		git merge -s recursive B^0 &&
++		git merge -s recursive B^0 >out &&
 +
-+		test 6 -eq $(git ls-files -s | wc -l) &&
++		test 3 -eq $(git ls-files -s | wc -l) &&
++		test 0 -eq $(git ls-files -u | wc -l) &&
++		test 1 -eq $(git ls-files -o | wc -l) &&
 +
 +		git rev-parse >actual \
-+			HEAD:y/b HEAD:y/c HEAD:x/d HEAD:x/e HEAD:x/f HEAD:x/g &&
++			:0:y/b :0:w/c :0:x/d &&
 +		git rev-parse >expect \
-+			O:z/b O:z/c O:z/d O:z/e O:z/f A:z/g &&
++			O:z/b O:z/c B:x/d &&
 +		test_cmp expect actual &&
-+		test ! -f z/g &&
-+		test_must_fail git rev-parse HEAD:z/g
++		! test_i18ngrep "CONFLICT.*directory rename split" out
 +	)
 +'
 +
 +########################################################################=
 ###
-+# Rules suggested by testcases in section 1:
++# Rules suggested by section 2:
 +#
-+#   We should still detect the directory rename even if it wasn't just
-+#   the directory renamed, but the files within it. (see 1b)
-+#
-+#   If renames split a directory into two or more others, the directory
-+#   with the most renames, "wins" (see 1c).  However, see the testcases
-+#   in section 2, plus testcases 3a and 4a.
++#   None; the rule was already covered in section 1.  These testcases ar=
+e
++#   here just to make sure the conflict resolution and necessary warning
++#   messages are handled correctly.
 +########################################################################=
 ###
 +
-+test_done
+ test_done
 --=20
 2.15.0.309.g62ce55426d
 
