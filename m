@@ -2,113 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2ADE92036D
-	for <e@80x24.org>; Tue, 21 Nov 2017 15:26:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C4A6F2036D
+	for <e@80x24.org>; Tue, 21 Nov 2017 15:41:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751314AbdKUP0c (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Nov 2017 10:26:32 -0500
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:37232 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750772AbdKUP0b (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Nov 2017 10:26:31 -0500
-Received: by mail-pg0-f67.google.com with SMTP id m4so471975pgc.4
-        for <git@vger.kernel.org>; Tue, 21 Nov 2017 07:26:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=5iXl6m/MxSoomGX2lM/jdjhp7j50irfxsSnYmwcw1fc=;
-        b=AS4Igx8Y8pDUMLZW1Z0/A0muotiarJ2FeZl9q091SdS/DhrCoSny/T3s6AK/b+ZcJ7
-         XVbwPozss5gGTSSePyTnwR15TXvATbPvySUKkgfEXSQRD52XfMxZhNs3qQxhXHxJ+0Hk
-         9QXwn0+Zqx6+VlfRxvyv2aJFGwqAu8wzwZNA9e7QuurDjJRvAmo1//tJYHfNyXB3qm2y
-         yqiwwvKJP+/8g+oD8SiksDkDTAOJhK4Eev0UglXd1h7cWBYcCZM5tqPV9BRwcd84Fk+/
-         FbfrSktdyfgzJL8n372r158NbSxS+6N9QVANjkWlf7yZbNF5pYM136hup894TJlfRIxz
-         02Jg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=5iXl6m/MxSoomGX2lM/jdjhp7j50irfxsSnYmwcw1fc=;
-        b=TluUyCHB76o7AX/JIR8q7MLv/KDMPBTaqZUyLQw+lm09/dzCVEpc5YacPctrK8DxE+
-         UWtsBwGCX37Q1BOc9FMwL0vT7qUhSHew4uJNaASt0oWYAL48s9DbNCXU/0BTt8yISwyl
-         +Jz7dd9U1faHQ2rfRAGKZ7mgrs6JA/o6OoMQygjfXEJekH9U1UEuI+HI1eBPvELKeWkr
-         iz+LDHXuCBV6/B10bTv1RQh9pshUkhDWaFfD/XOFfFK/eJsbmx6vuun8AD5/6pbEXyku
-         hDTgDMsTDyCkdljZUFe7L1vijF0bQs1qyUbghn6TylmslQ+zC6bPHMPmL9+UbTKy6Hgq
-         AhXQ==
-X-Gm-Message-State: AJaThX6RSXM6rziMByOi+j/VcgMX5wSh45N3uWzej7FwyjyYNPwNVq0K
-        ciUASpu5O5OmZkSWtGzH2vk=
-X-Google-Smtp-Source: AGs4zMbhng0OHBfv3KeqvEAisPm8+EHHx1qNxSsX2+EzJ5CYA28Ay6H2j0TaxMGB46isqwaQ5nRu8w==
-X-Received: by 10.84.217.206 with SMTP id d14mr17820574plj.132.1511277990617;
-        Tue, 21 Nov 2017 07:26:30 -0800 (PST)
-Received: from localhost.localdomain ([2405:204:7280:849f:7a33:ea78:e714:400])
-        by smtp.gmail.com with ESMTPSA id r16sm20224662pgt.72.2017.11.21.07.26.23
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 21 Nov 2017 07:26:29 -0800 (PST)
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git mailing list <git@vger.kernel.org>
-Subject: [PATCH] rebase: rebasing can also be done when HEAD is detached
-Date:   Tue, 21 Nov 2017 20:55:33 +0530
-Message-Id: <20171121152533.3793-1-kaartic.sivaraam@gmail.com>
-X-Mailer: git-send-email 2.15.0.345.gf926f18f3
+        id S1751249AbdKUPlS (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Nov 2017 10:41:18 -0500
+Received: from cpanel2.indieserve.net ([199.212.143.6]:37606 "EHLO
+        cpanel2.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750772AbdKUPlS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Nov 2017 10:41:18 -0500
+Received: from 69-196-158-250.dsl.teksavvy.com ([69.196.158.250]:52800 helo=DESKTOP-1GPMCEJ)
+        by cpanel2.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.89)
+        (envelope-from <rpjday@crashcourse.ca>)
+        id 1eHAfl-00038l-CS
+        for git@vger.kernel.org; Tue, 21 Nov 2017 10:41:17 -0500
+Date:   Tue, 21 Nov 2017 10:39:55 -0500 (EST)
+From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
+X-X-Sender: rpjday@DESKTOP-1GPMCEJ
+To:     Git Mailing list <git@vger.kernel.org>
+Subject: [PATCH v2] doc: Add missing "-n" (dry-run) option to reflog man
+ page
+Message-ID: <alpine.LFD.2.21.1711211038410.8568@DESKTOP-1GPMCEJ>
+User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel2.indieserve.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - crashcourse.ca
+X-Get-Message-Sender-Via: cpanel2.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: cpanel2.indieserve.net: rpjday@crashcourse.ca
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a repository when attempting to rebase when the HEAD is detached
-and it is already up to date with upstream (so there's nothing to do),
-the following message is shown
+While the "git reflog" man page supports both "--dry-run" and "-n" for
+a dry run, the man page mentions only the former, not the latter.
 
-        Current branch HEAD is up to date.
+Signed-off-by: Robert P. J. Day <rpjday@crashcourse.ca>
 
-which is clearly wrong as HEAD is not a branch.
-
-Handle the special case of HEAD correctly to give a more precise
-error message.
-
-Signed-off-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
 ---
- In this patch, I basically assumed that there would be no
- branch named "HEAD". To the cotrary if it did, it would make
- 'git' throw spurious ambiguity messages, in general. So, I
- guess it's not worth trying to check if HEAD is a branch or
- not and handle that specially.
 
- git-rebase.sh | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+  sorry, i accidentally chopped off the leading lines of the patch in
+the earlier post.
 
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 6344e8d5e..933df832a 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -598,11 +598,21 @@ then
- 		test -z "$switch_to" ||
- 		GIT_REFLOG_ACTION="$GIT_REFLOG_ACTION: checkout $switch_to" \
- 			git checkout -q "$switch_to" --
--		say "$(eval_gettext "Current branch \$branch_name is up to date.")"
-+		if test "$branch_name" = "HEAD"
-+		then
-+			say "$(eval_gettext "HEAD is up to date.")"
-+		else
-+			say "$(eval_gettext "Current branch \$branch_name is up to date.")"
-+		fi
- 		finish_rebase
- 		exit 0
- 	else
--		say "$(eval_gettext "Current branch \$branch_name is up to date, rebase forced.")"
-+		if test "$branch_name" = "HEAD"
-+		then
-+			say "$(eval_gettext "HEAD is up to date, rebase forced.")"
-+		else
-+			say "$(eval_gettext "Current branch \$branch_name is up to date, rebase forced.")"
-+		fi
- 	fi
- fi
- 
+diff --git a/Documentation/git-reflog.txt b/Documentation/git-reflog.txt
+index 44c736f1a..472a6808c 100644
+--- a/Documentation/git-reflog.txt
++++ b/Documentation/git-reflog.txt
+@@ -20,9 +20,9 @@ depending on the subcommand:
+ 'git reflog' ['show'] [log-options] [<ref>]
+ 'git reflog expire' [--expire=<time>] [--expire-unreachable=<time>]
+ 	[--rewrite] [--updateref] [--stale-fix]
+-	[--dry-run] [--verbose] [--all | <refs>...]
++	[--dry-run | -n] [--verbose] [--all | <refs>...]
+ 'git reflog delete' [--rewrite] [--updateref]
+-	[--dry-run] [--verbose] ref@\{specifier\}...
++	[--dry-run | -n] [--verbose] ref@\{specifier\}...
+ 'git reflog exists' <ref>
+
+ Reference logs, or "reflogs", record when the tips of branches and
+
+
 -- 
-2.15.0.345.gf926f18f3
 
+========================================================================
+Robert P. J. Day                                 Ottawa, Ontario, CANADA
+                        http://crashcourse.ca
+
+Twitter:                                       http://twitter.com/rpjday
+LinkedIn:                               http://ca.linkedin.com/in/rpjday
+========================================================================
