@@ -2,132 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 85BA92036D
-	for <e@80x24.org>; Tue, 21 Nov 2017 18:38:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1D2922036D
+	for <e@80x24.org>; Tue, 21 Nov 2017 18:38:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751317AbdKUSiV (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Nov 2017 13:38:21 -0500
-Received: from mail-qk0-f195.google.com ([209.85.220.195]:33195 "EHLO
-        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751229AbdKUSiU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Nov 2017 13:38:20 -0500
-Received: by mail-qk0-f195.google.com with SMTP id 78so13397428qkz.0
-        for <git@vger.kernel.org>; Tue, 21 Nov 2017 10:38:20 -0800 (PST)
+        id S1751271AbdKUSiy (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Nov 2017 13:38:54 -0500
+Received: from mail-it0-f46.google.com ([209.85.214.46]:37243 "EHLO
+        mail-it0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750794AbdKUSix (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Nov 2017 13:38:53 -0500
+Received: by mail-it0-f46.google.com with SMTP id m191so3212684itg.2
+        for <git@vger.kernel.org>; Tue, 21 Nov 2017 10:38:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=28TpptAzcoJtIRa2guDRvdqaA9ck2yuTZzJMhpYem6A=;
-        b=gtXiFJ7zUiqBOrBbM6boCbPSb5eZv/DYImpXpmEkNOdEHWoJMb/pVkd0Ci4jkuj3d9
-         oOXhD6aIeFLgGqMNmqi6RzglwDRxk0ZGK+WTqOrxsrMylXxWktOfrWyxaFyuSFbNihMO
-         EQ2DJZdnspEAkVdZ9ONLlrIT+lj75jVb8SqS7emktpDCiEphL+81hlRXmoiJ1iAK/FjN
-         qAjjuugMrMFmd10Zwtl0lywb0WZapVSo2pyyT7ilcW7bvgcreDfvj/eM01/AtmGkbSJ0
-         aTF4TwHA6y5aiKsU15bXrK5vMgtKwGERnhuf85oJE7WZuOR2//LQ9xdnVf8G8GSHDIgj
-         B7sg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=ThN9LdK+vEufVy9xHkQ7X2XMLmrl+BIPrR7zt5BspeM=;
+        b=lFr6cu5oYb7ftqlfMjzqo3GwUD4XMxAp3C/3bPYpWKnx13xTMET5lcrYTOjw4AwmTG
+         ai5mWzgWFogBE+EG5cdrVE8dH+T+qnN2qqJBq1DcbraahAiCet7nwG2G1Qhv/yEFvQhb
+         mD1wLzI6+0XY024+YXbSdmixswLuz4H93UgG2FEGV2FzP0246HW6DeCSiLDBRdVuSPcR
+         Y7Rap9up9WTHPIzJn2iXwP8+H5iZlgu6qW8cUBtAzTcZ0tHWuBNQ1TEHAvTDgFiCkYOM
+         HWSjeQCFlrktOh00pgy/35YCEu4Yr+kUeuDFFJnn/We53y5kL1QOExWRAvKDaA3trO/4
+         PIkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=28TpptAzcoJtIRa2guDRvdqaA9ck2yuTZzJMhpYem6A=;
-        b=DaQpFxVSFhruelO/RORdfMt7Aq8xmTMXi1FMCMmpzgS8GDnTJI36WuOIH/EubGqfko
-         736yfA8EnWZPI4YuDy85aDPJ51zPOSgFu6Ti/0TpvBCDibYujnMV+h5lz1gvTlguRARM
-         yjYrPQiB+/YAd5Jl33M/rQFdbwll1rSh5CEP9Ifci17gQDUTZNnWOUGPSYnLCRTtsDSs
-         G9WmVII8UF9n5HM7u4sYOVVdE7jPcdPdHzACMai075ndyYguhbeUn0ZZ53YzSgU1rQzB
-         jzKDS0kn9UDxP5O8b1pJ751CyTVMJXm11v+42OexE88Cp8VMNwmM/Z/WjaE0bA3EvaGg
-         Wwhg==
-X-Gm-Message-State: AJaThX46zZLL7doVtVXiCmP/y9z5kSA9KHDxSxRRobsyHN/6fafS/KmT
-        xkblqsUji6w7Ccuqe7FKheJso1oswZNsbA6F0BM=
-X-Google-Smtp-Source: AGs4zMbdGPtxjf/EpHnXvk+6hA+m94BwVlC7XifITp5WEo82I+hbIjoC1Xr8qXOzTkT0PHNlb/npE1jiR1Vp271/xoI=
-X-Received: by 10.55.90.4 with SMTP id o4mr15421346qkb.296.1511289499645; Tue,
- 21 Nov 2017 10:38:19 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=ThN9LdK+vEufVy9xHkQ7X2XMLmrl+BIPrR7zt5BspeM=;
+        b=Yp5jVkbb9s9q+0CMBU7fD7bZhRJ6kD7J14ssXN3AIbGIPhJPjnJ+0j6ZlQua3wMaC1
+         MI+1dq1dx3KR9qHkpDSsWAlPlUetuUJ0JAhRFQc7cSOj5ex16DeY4bL2YpsmNe2Z8ISE
+         ST4JddVSzpJH0yh9pWdffWmWlVMI0hcxWxQcnWurh/jO9bQZJ43aLhb6OqRLQ5/Ydy/Z
+         ISHFnHe5MRIkSiWmwWavyPrrJDDG8jYpRvuy6kGNJYl3Yu0WPkXgRinXUEqKQNwpoEfR
+         9uOCU3j6dWJQU14p2BHuzmIBMBheNGhe4rLtFBbIptv8RSNfVnHPqV5hZBbGb2ChpaCO
+         jtnQ==
+X-Gm-Message-State: AJaThX6sB8kDEkiyuJD1QQfzsNwqPwL/vZwZGHB0SNsERawBgzTzKsGr
+        PTQKluNqScH2ca5pf4SsIG1q8su/
+X-Google-Smtp-Source: AGs4zMYyPYYwVumsRQyxpnuFCucM+3U+zpCXAVs6tMAM/hKX7MLmCRAB/5o8ARS/ESloWm+kDiPhfw==
+X-Received: by 10.36.254.71 with SMTP id w68mr3217831ith.24.1511289532679;
+        Tue, 21 Nov 2017 10:38:52 -0800 (PST)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id f193sm927452ita.27.2017.11.21.10.38.52
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 21 Nov 2017 10:38:52 -0800 (PST)
+Date:   Tue, 21 Nov 2017 10:38:50 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
+Cc:     Git Mailing list <git@vger.kernel.org>
+Subject: Re: [PATCH] notes: fix erroneous "git notes prune [-n | -v]" message
+Message-ID: <20171121183850.GB3429@aiede.mtv.corp.google.com>
+References: <alpine.LFD.2.21.1711211156110.10397@DESKTOP-1GPMCEJ>
+ <20171121175846.GB27041@aiede.mtv.corp.google.com>
+ <alpine.LFD.2.21.1711211328070.4528@localhost.localdomain>
 MIME-Version: 1.0
-Received: by 10.12.155.209 with HTTP; Tue, 21 Nov 2017 10:38:19 -0800 (PST)
-In-Reply-To: <20171121141852.551-1-kaartic.sivaraam@gmail.com>
-References: <20171121141852.551-1-kaartic.sivaraam@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 21 Nov 2017 13:38:19 -0500
-X-Google-Sender-Auth: DnFfiS0B4W1D5KYVwfuosASVOSI
-Message-ID: <CAPig+cSGu-+6Bw3YBzMwzxO8vKt7jdf9xgtr9FUdOAQpXzi2rQ@mail.gmail.com>
-Subject: Re: [PATCH v2 4/4] builtin/branch: strip refs/heads/ using skip_prefix
-To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.2.21.1711211328070.4528@localhost.localdomain>
+User-Agent: Mutt/1.9.1 (2017-09-22)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 21, 2017 at 9:18 AM, Kaartic Sivaraam
-<kaartic.sivaraam@gmail.com> wrote:
-> Instead of hard-coding the offset strlen("refs/heads/") to skip
-> the prefix "refs/heads/" use the skip_prefix() function which
-> is more communicative and verifies that the string actually
-> starts with that prefix.
+Robert P. J. Day wrote:
+
+> so it should simply be corrected to:
 >
-> Though we don't check for the result of verification here as
-> it's (almost) always the case that the string does start
-> with "refs/heads", it's just better to avoid hard-coding and
-> be more communicative.
+>   git notes prune [-n] [-v]
+>
+> sound about right?
 
-The original code unconditionally uses "+ 11", which says that the
-prefix is _always_ present. This commit message muddies the waters by
-saying the prefix might or might not be present. Which is correct? If
-the code is correct, then the commit message is misleading; if the
-message is correct, then the code is buggy and the commit message
-should say that it is fixing a bug.
+Sounds good to me.
 
-I'm guessing that the code is correct, which means the commit message
-should be revised. The motivation for using skip_prefix() over
-hard-coded magic values should be pretty obvious, thus doesn't require
-a long (and potentially confusing) explanation. Perhaps take a hint
-from de3ce210ed (merge: use skip_prefix(), 2017-08-10):
+Thanks for finding these confusing docs, by the way.
 
-    merge: use skip_prefix()
-
-    Get rid of a magic string length constant by using skip_prefix() instead
-    of starts_with().
-
-and pattern your commit message after it.
-
-> Signed-off-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-> ---
-> diff --git a/builtin/branch.c b/builtin/branch.c
-> @@ -493,13 +495,17 @@ static void copy_or_rename_branch(const char *oldname, const char *newname, int
-> +       /* At this point it should be safe to believe that the refs have the
-> +          prefix "refs/heads/" */
-> +       skip_prefix(oldref.buf, "refs/heads/", &interpreted_oldname);
-> +       skip_prefix(newref.buf, "refs/heads/", &interpreted_newname);
-
-    /*
-     * Format mult-line comments
-     * like this.
-     */
-
-However, this in-code comment shares the same problem as the commit
-message. It muddies the waters by saying that the prefix may or may
-not be present, whereas the original code unconditionally stated that
-it was present. Moreover, the comment adds very little or any value
-since it's pretty much repeating what the code itself already says.
-Consequently, it probably would be best to drop the comment
-altogether.
-
->         if (copy)
->                 strbuf_addf(&logmsg, "Branch: copied %s to %s",
->                             oldref.buf, newref.buf);
->         else
->                 strbuf_addf(&logmsg, "Branch: renamed %s to %s",
->                             oldref.buf, newref.buf);
-> -
->         if (!copy && rename_ref(oldref.buf, newref.buf, logmsg.buf))
-
-Was the blank line removal intentional?
-
->                 die(_("Branch rename failed"));
->         if (copy && copy_existing_ref(oldref.buf, newref.buf, logmsg.buf))
+Jonathan
