@@ -2,78 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 690E42036D
-	for <e@80x24.org>; Tue, 21 Nov 2017 21:24:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0D51B2036D
+	for <e@80x24.org>; Tue, 21 Nov 2017 21:26:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751345AbdKUVY1 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Nov 2017 16:24:27 -0500
-Received: from mail-qt0-f177.google.com ([209.85.216.177]:36233 "EHLO
-        mail-qt0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751145AbdKUVY0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Nov 2017 16:24:26 -0500
-Received: by mail-qt0-f177.google.com with SMTP id a19so21158703qtb.3
-        for <git@vger.kernel.org>; Tue, 21 Nov 2017 13:24:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=w6TvRpv1lnUCUdK3dwc1ewh/9K3KYla9021zU+ycWmA=;
-        b=kDzOMynY+51Imf1Icwz3+VHduNAyiqPazE5ivvutO3dGY6eFdXv/ADuSbt6q3+ORu7
-         Pdy5Sa7RW5XD4yZ6KMXTmylBmofIfN6AhIv+1ct33J3+wY8YvLnzBVab/vtZtg+6rbTW
-         k+HS7Pf3Rdw9bcbq1haO+3I5fny0hw70rwlVAkZroKr+DRRQ36MBNGUOFmlGOwagaEgT
-         is3JWB3V9K9nW9IG6u6/614F2ufpfWBB9kV/auCP3OvN89AALZVwqOD2djw33RkSsXQq
-         5MAQVq9ZImnvxE7PbiVctDfYJB0N9Abtw5SS8ciPc9Ba2LSrHon4VjAsnkDfCFm6N80Y
-         0bVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=w6TvRpv1lnUCUdK3dwc1ewh/9K3KYla9021zU+ycWmA=;
-        b=tgWD5dk/fA7rervWvhNQrh4sNnNg2HQXZ63ZMfqWxzd2wkyxRjUqWKZ0Sql3OOZmqG
-         ytQBKKmuUdgRbUsxoUN9mTBiFtjnbqzpxxdm/3MfZElb3n7ewhi23jSqXuUEdFp9gEmi
-         4CkdTzMVv6ysxmM1jUyAXmwtDNMytE9vv/mf/e6tDHtAZ4vTT2RtBehWgqQwNPTRJaPa
-         FP9jvkTJQZP6z8p6kxpP7rMZWRvM8enGvY5NbnKLixglNvrbqqO3Yg8Sa3pNDvxdXkhG
-         YBrp1Lt3lBBsExk/wQIw5dkcTqCbLXTp2Kketcb+gu5QXC3uSToHCED0Gyp2uOLQN6or
-         D9pg==
-X-Gm-Message-State: AJaThX5aQ/bCBzIQE10TLFZ1/ihpZfKgUK+U4uU4nyhLPS2j7gBqPH/f
-        sCIzlLcHSepmylKelbBq71l5ZIqWF7cs10omd0Y=
-X-Google-Smtp-Source: AGs4zMad0hNECjsjyz8WdusIb6dtOgvFVuu6QVcAumjEHmMl3kkbw/Gb0d4F1OKiU3OQWrPy8JBPciKlBcU4nuDMgL8=
-X-Received: by 10.200.35.28 with SMTP id a28mr10563147qta.51.1511299465566;
- Tue, 21 Nov 2017 13:24:25 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.12.155.209 with HTTP; Tue, 21 Nov 2017 13:24:25 -0800 (PST)
-In-Reply-To: <alpine.LFD.2.21.1711211551230.24935@localhost.localdomain>
-References: <alpine.LFD.2.21.1711211551230.24935@localhost.localdomain>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 21 Nov 2017 16:24:25 -0500
-X-Google-Sender-Auth: Ah4CgndDlYhIvKt0DopAfQYQM4g
-Message-ID: <CAPig+cS2i1WOYg1d3fup0PPq_HzJE_XXXtkEMqxq=1Fc9E1sMQ@mail.gmail.com>
+        id S1751302AbdKUV0n (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Nov 2017 16:26:43 -0500
+Received: from cpanel2.indieserve.net ([199.212.143.6]:42791 "EHLO
+        cpanel2.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751229AbdKUV0n (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Nov 2017 16:26:43 -0500
+Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:38428 helo=localhost.localdomain)
+        by cpanel2.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.89)
+        (envelope-from <rpjday@crashcourse.ca>)
+        id 1eHG42-0007b0-O0; Tue, 21 Nov 2017 16:26:42 -0500
+Date:   Tue, 21 Nov 2017 16:25:20 -0500 (EST)
+From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
+X-X-Sender: rpjday@localhost.localdomain
+To:     Eric Sunshine <sunshine@sunshineco.com>
+cc:     Git Mailing list <git@vger.kernel.org>
 Subject: Re: [PATCH] gitcli: tweak "man gitcli" for clarity
-To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
-Cc:     Git Mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CAPig+cS2i1WOYg1d3fup0PPq_HzJE_XXXtkEMqxq=1Fc9E1sMQ@mail.gmail.com>
+Message-ID: <alpine.LFD.2.21.1711211624560.26021@localhost.localdomain>
+References: <alpine.LFD.2.21.1711211551230.24935@localhost.localdomain> <CAPig+cS2i1WOYg1d3fup0PPq_HzJE_XXXtkEMqxq=1Fc9E1sMQ@mail.gmail.com>
+User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel2.indieserve.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - crashcourse.ca
+X-Get-Message-Sender-Via: cpanel2.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: cpanel2.indieserve.net: rpjday@crashcourse.ca
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 21, 2017 at 3:53 PM, Robert P. J. Day <rpjday@crashcourse.ca> wrote:
-> No major changes, just some rewording and showing some variations of
-> general Git commands.
->
-> Signed-off-by: Robert P. J. Day <rpjday@crashcourse.ca>
-> ---
-> diff --git a/Documentation/gitcli.txt b/Documentation/gitcli.txt
-> @@ -13,7 +13,7 @@ gitcli
->  DESCRIPTION
->  -----------
->
-> -This manual describes the convention used throughout Git CLI.
-> +This manual describes the common conventions used throughout Git CLI.
+On Tue, 21 Nov 2017, Eric Sunshine wrote:
 
-The Department of Redundancy department...
+> On Tue, Nov 21, 2017 at 3:53 PM, Robert P. J. Day <rpjday@crashcourse.ca> wrote:
+> > No major changes, just some rewording and showing some variations of
+> > general Git commands.
+> >
+> > Signed-off-by: Robert P. J. Day <rpjday@crashcourse.ca>
+> > ---
+> > diff --git a/Documentation/gitcli.txt b/Documentation/gitcli.txt
+> > @@ -13,7 +13,7 @@ gitcli
+> >  DESCRIPTION
+> >  -----------
+> >
+> > -This manual describes the convention used throughout Git CLI.
+> > +This manual describes the common conventions used throughout Git CLI.
+>
+> The Department of Redundancy department...
+
+  oh, fine, reduced redundancy coming shortly ...
+
+rday
+
+-- 
+
+========================================================================
+Robert P. J. Day                                 Ottawa, Ontario, CANADA
+                        http://crashcourse.ca
+
+Twitter:                                       http://twitter.com/rpjday
+LinkedIn:                               http://ca.linkedin.com/in/rpjday
+========================================================================
