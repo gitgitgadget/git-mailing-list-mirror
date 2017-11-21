@@ -2,149 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8595B2036D
-	for <e@80x24.org>; Tue, 21 Nov 2017 23:17:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 211EB2036D
+	for <e@80x24.org>; Tue, 21 Nov 2017 23:21:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751439AbdKUXRm (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Nov 2017 18:17:42 -0500
-Received: from cloud.peff.net ([104.130.231.41]:36970 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751290AbdKUXRl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Nov 2017 18:17:41 -0500
-Received: (qmail 5661 invoked by uid 109); 21 Nov 2017 23:17:42 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 21 Nov 2017 23:17:42 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28708 invoked by uid 111); 21 Nov 2017 23:17:57 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Tue, 21 Nov 2017 18:17:57 -0500
-Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 21 Nov 2017 18:17:39 -0500
-Date:   Tue, 21 Nov 2017 18:17:39 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 5/5] sha1_file: don't re-scan pack directory for null sha1
-Message-ID: <20171121231739.GB21197@sigill>
-References: <20171120202607.tf2pvegqe35mhxjs@sigill.intra.peff.net>
- <20171120203523.c3pt5qi43e24ttqq@sigill.intra.peff.net>
- <xmqqwp2ki4x8.fsf@gitster.mtv.corp.google.com>
+        id S1751364AbdKUXVS (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Nov 2017 18:21:18 -0500
+Received: from mail-io0-f196.google.com ([209.85.223.196]:43190 "EHLO
+        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751290AbdKUXVR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Nov 2017 18:21:17 -0500
+Received: by mail-io0-f196.google.com with SMTP id s37so10357399ioe.10
+        for <git@vger.kernel.org>; Tue, 21 Nov 2017 15:21:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Xs6YmEF86PcznvTCbNj47w+mGrsQRI0lavTVmjhpTvs=;
+        b=TeWaLRpEnjtLxTTdpuUkdqPhXoOX6JI298ye6D351E3OKz7YLs5jFZxhyJGkVPXmeh
+         9qIxICZcNOtEwv8ADafJwMGSWED/8jybArs16Y3vyU2LdMd/cMsAFeTPniqbMQF+a9SQ
+         N/CIGhA/uLnGJYIFXkSHM/JcYBac/PT+sPj0iEl8LD2Fuv/NYud5Bp4GRYM/Dl3WuYht
+         l29yEiTUwnbN6EJvBgbsOvIKlsdQm0kTHFgYCskLDmKRVNar03ni8apq/vCCBi2mFxxH
+         now8CgBvxQXdGICxUkuSAj+9BFbxgVzNueyL8KPTPHt1SdxLC78/vYjxPKPQ3dNXrKU1
+         OPjw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Xs6YmEF86PcznvTCbNj47w+mGrsQRI0lavTVmjhpTvs=;
+        b=XcEnlfDdtaTPaPl6l3JgqgL4x8+m5ssPzuaIvsRaEj5QCiG4r95M7vlQr8iK3WHGoz
+         XEiEOFhDiKgA8ZQuZTFzR7olTU5xk3s8j0fRxtXTjpNdttlNX7P6FAVM1x05TKshvFBx
+         +3dBxk+0tnD3G/CqhSb1TIHT3T2R9PYqQi1D79FuwlFW38vbpDs1k6D9cun1jZr+CW1h
+         BFikdRiA3yX1q3qG6LHYT+DnALZ0Uu43Gs7yoxkfrIOFVnRRhyidzDWpWenluZGf0A3e
+         F24H5GFRifqowat2mA5nd9sQByLt9VfzkjXS7UUFFRXAiFUs3D5N+yLxwTrDRPreELe6
+         LyNg==
+X-Gm-Message-State: AJaThX68vUGyvKG75n7J5uqHRxOhW8dKtcoNsgjppbCfgbSWtAba2Z8D
+        0Xhcs03EIFFqs3PdP2JSseg=
+X-Google-Smtp-Source: AGs4zMbz6qKIni+ckMmkVYAPqSz37gj3SWEY2i0DKQdFLiCm0AHks4HPtBl/EfPsVpaSOCPkn2XxfA==
+X-Received: by 10.107.62.10 with SMTP id l10mr19853646ioa.178.1511306476313;
+        Tue, 21 Nov 2017 15:21:16 -0800 (PST)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id v125sm1350123itv.42.2017.11.21.15.21.15
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 21 Nov 2017 15:21:15 -0800 (PST)
+Date:   Tue, 21 Nov 2017 15:21:13 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Phil Hord <phil.hord@gmail.com>
+Cc:     Git <git@vger.kernel.org>, Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: doc: prefer 'stash push' over 'stash save'
+Message-ID: <20171121232113.GK3429@aiede.mtv.corp.google.com>
+References: <CABURp0pxYiwrpvT9E_jpvZKDMOUVA9e7dUhARfKEQymWzUwtiw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqwp2ki4x8.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <CABURp0pxYiwrpvT9E_jpvZKDMOUVA9e7dUhARfKEQymWzUwtiw@mail.gmail.com>
+User-Agent: Mutt/1.9.1 (2017-09-22)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 21, 2017 at 02:20:19PM +0900, Junio C Hamano wrote:
+Phil Hord wrote:
 
-> After queuing this series to an earlier part of 'pu' and resolving a
-> conflict with jh/fsck-promisors topic, I ended up with a code that
-> rejects 0{40} a lot earlier, before we try to see if a pack entry
-> for 0{40} exists, even though the patch that is queued on this topic
-> is more conservative (i.e. the above one).
-> 
-> Perhaps we would want to use the alternate version that declares the
-> 0{40} is a sentinel that signals that there is no such object in
-> this topic---that would give us a consistent semantics without
-> having to adjust jh/fsck-promisors when it becomes ready to be
-> merged.
+> Although `git stash save` was deprecated recently, some parts of the
+> documentation still refer to it instead of `push`.
+>
+> Signed-off-by: Phil Hord <phil.hord@gmail.com>
+> ---
+>  Documentation/git-stash.txt | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 
-I think we could adjust the patches without too much effort. That said,
-I am very on-the-fence about whether to just declare the null sha1 as
-"not a real object" and automatically return from the lookup without
-doing any work. But if you agree that it's not likely to hurt anything,
-it's IMHO a lot easier to reason about.
-
-Here's a re-roll of patch 5 that behaves this way (the patch should be
-unsurprising, but I've updated the commit message to match).
-
-I did notice one other thing: the function looks up replace objects, so
-we have both the original and the replaced sha1 available. My earlier
-patch used the original sha1, but this one uses the replaced value.
-I'm not sure if that's sane or not. It lets the fast-path kick in if you
-point a replace ref at 0{40}. And it lets you point refs/replace/0{40}
-to something else. I doubt that's useful, but it could perhaps be for
-debugging, etc.
-
-In most cases, of course, it wouldn't matter (since pointing to or from
-the null sha1 is vaguely crazy in the first place).
-
--- >8 --
-Subject: [PATCH v2 5/5] sha1_file: fast-path null sha1 as a missing object
-
-In theory nobody should ever ask the low-level object code
-for a null sha1. It's used as a sentinel for "no such
-object" in lots of places, so leaking through to this level
-is a sign that the higher-level code is not being careful
-about its error-checking.  In practice, though, quite a few
-code paths seem to rely on the null sha1 lookup failing as a
-way to quietly propagate non-existence (e.g., by feeding it
-to lookup_commit_reference_gently(), which then returns
-NULL).
-
-When this happens, we do two inefficient things:
-
-  1. We actually search for the null sha1 in packs and in
-     the loose object directory.
-
-  2. When we fail to find it, we re-scan the pack directory
-     in case a simultaneous repack happened to move it from
-     loose to packed. This can be very expensive if you have
-     a large number of packs.
-
-Only the second one actually causes noticeable performance
-problems, so we could treat them independently. But for the
-sake of simplicity (both of code and of reasoning about it),
-it makes sense to just declare that the null sha1 cannot be
-a real on-disk object, and looking it up will always return
-"no such object".
-
-There's no real loss of functionality to do so Its use as a
-sentinel value means that anybody who is unlucky enough to
-hit the 2^-160th chance of generating an object with that
-sha1 is already going to find the object largely unusable.
-
-In an ideal world, we'd simply fix all of the callers to
-notice the null sha1 and avoid passing it to us. But a
-simple experiment to catch this with a BUG() shows that
-there are a large number of code paths that do so.
-
-So in the meantime, let's fix the performance problem by
-taking a fast exit from the object lookup when we see a null
-sha1. p5551 shows off the improvement (when a fetched ref is
-new, the "old" sha1 is 0{40}, which ends up being passed for
-fast-forward checks, the status table abbreviations, etc):
-
-  Test            HEAD^             HEAD
-  --------------------------------------------------------
-  5551.4: fetch   5.51(5.03+0.48)   0.17(0.10+0.06) -96.9%
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- sha1_file.c | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/sha1_file.c b/sha1_file.c
-index 8a7c6b7eba..ae4b71f445 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1152,6 +1152,9 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi,
- 				    lookup_replace_object(sha1) :
- 				    sha1;
- 
-+	if (is_null_sha1(real))
-+		return -1;
-+
- 	if (!oi)
- 		oi = &blank_oi;
- 
--- 
-2.15.0.578.g35b419775f
-
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+Thanks.
