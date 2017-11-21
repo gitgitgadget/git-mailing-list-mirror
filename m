@@ -2,101 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 94E1A2036D
-	for <e@80x24.org>; Tue, 21 Nov 2017 23:35:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 612572036D
+	for <e@80x24.org>; Tue, 21 Nov 2017 23:36:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751443AbdKUXfg (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Nov 2017 18:35:36 -0500
-Received: from mail-qk0-f171.google.com ([209.85.220.171]:41876 "EHLO
-        mail-qk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751290AbdKUXff (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Nov 2017 18:35:35 -0500
-Received: by mail-qk0-f171.google.com with SMTP id f63so14466916qke.8
-        for <git@vger.kernel.org>; Tue, 21 Nov 2017 15:35:35 -0800 (PST)
+        id S1751374AbdKUXgZ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Nov 2017 18:36:25 -0500
+Received: from mail-io0-f196.google.com ([209.85.223.196]:32906 "EHLO
+        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751290AbdKUXgY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Nov 2017 18:36:24 -0500
+Received: by mail-io0-f196.google.com with SMTP id i184so13895103ioa.0
+        for <git@vger.kernel.org>; Tue, 21 Nov 2017 15:36:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=hAlcuCiNH1XWxHYg0rMfcMxKTeFfAh7wHY6d61Dai/U=;
-        b=URACRQR0aJQ/y5rEhlB2NRG18gPrycxyENC4q44CO9KQ6XqCEHiDVspViw7SP8u7V+
-         iZ/2AmJbFqDy5Bpz1KqEwA15zooFvT+g0G3KqgXGNFz42KqO1YmFptFzYO3JxDLy6asA
-         Y0FmdABkLEwaLeeL7477j1uAqWH3xg+K/5sulfRedNEHX30o/MaKvU6VHuFQbDxSf+2Z
-         OLIosGiyYz2NnxHieTCI4Mx2sfXwdV9Ne7nAHQi3oDNmejlRs4ZkeJug1/+Rp0bpXKRn
-         p1KsKHD/Pi/S7XnYJwvMPg/XAmQ1ltTuEyyhqm2M86HfBo6x30K2izjtKZ1e77m+6XOX
-         pf9w==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=MM5DJjzenL+0eDQ+gDQRrb7QgxvINn1OTeRrQpyWMUo=;
+        b=YAa7wwZOpwS2K7wDEkdSbpAWvWY1A5fgY8jJQzTx0wFF0V8I3ligI1dB00nNHbFWTU
+         rZPCmcK5yZ78JXVA/opkwN/tUn4frqjEANYolqYx27XtZv4yilxt0o3b1Vm08iY8huq7
+         heZyyGbsw53uqXnpZBAQJxkMFHNDEFw8Q8c3Nrum2Mvhr7TLpwUjF4cd9rvFvhHSr231
+         8RZlRAz9yS6buu5W/pRzRu7TEcFKKAxTmpdCRtROGV/PVQFanKifr5pdyuagh6eD6nS+
+         EeuhNZt7QHC2dDaHUSCclGsCchryLlEuRLs1tS4PgXTK1Xei4qcyA/HdmeAWxS3t3gn/
+         pnMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=hAlcuCiNH1XWxHYg0rMfcMxKTeFfAh7wHY6d61Dai/U=;
-        b=esGL65AlY4IHU2QvW7v7R1mkzwMp0kqt935fwsWAL6T5BmFtrVMcRERFt30Jp4dIwV
-         Z898bWE+uNnVIOLrcchbq7udBkCCvaNnPs1prDB3OX/clOHQTAAeQ1dRzpquQDj2aS/H
-         bNVdz86EIT/Otm4q0JRFtARZuABfP4xihaYgzlGtKDWrIJ9CAVZO1+yikiVzpMdIRIxd
-         NhPzgcQrit9jHsKQw9fPBfhFtMa+7NFFoT6x/okB+JuDV6/dSSez0f+KcTgCNcC09X0x
-         JA3T7R6dYPxEU8DrCabAvJzBokb1KiwuO9EnEc7wC7l94oUAWJtaMFOUd7KLS2yZT3Wm
-         W2lg==
-X-Gm-Message-State: AJaThX6CwApdDJIIkb80ymOAr3IvP3S77mCiFeIXkGgsQZ8ah1mezINr
-        h/3fjydPwkiWVZySllriqzPbONSkNASI0u3SB3mWBA==
-X-Google-Smtp-Source: AGs4zMatK8WJwp2q1oftB2Ovo41ITubyLMQT5l5CVICLd9GG4Ul/HVbXNW5bGKTqPjz0TDZdoEZmJUXdB4fB09CMuyo=
-X-Received: by 10.55.143.134 with SMTP id r128mr17268875qkd.320.1511307334940;
- Tue, 21 Nov 2017 15:35:34 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=MM5DJjzenL+0eDQ+gDQRrb7QgxvINn1OTeRrQpyWMUo=;
+        b=EQvkBq41S6Lyx+q+DhKbwHjQoZlAOXnp2UFBMTyKGUZRrpEWQ4yLNJ23GuwPJa4fbA
+         dep6b7SotEi3pgWuR0iGRgavtD+ZXqUMz+xqD3DTniCjhRvuMd6s9tthPKWV1D798i/Y
+         ARJmrb4I6DBjS1s5CgDBs/nQ673eULXi7xkUGTRaxri9+XAQxPlgR02E9hCHDEkSNzl6
+         RZlzP1ZBNt9VEIWdUSnb/8nX/CH30dX90oxC4KcnrT2GZ26lSth26chkFjLsltsaNUTB
+         j2Zo+WT5TiX8zogezDNVQoK+7Z+/bWlMZmZiLcdnElOViSF41jDaMg2bCmjg+rH6qxfK
+         8ccw==
+X-Gm-Message-State: AJaThX6PEwGK74jVoj7ihQa7NOcgwQ6N8biIliNNWpPt7A6RKwQg2Lu4
+        KeR1V4vZNyVOWOcLu9uyr7UsDhi0
+X-Google-Smtp-Source: AGs4zMZd8XRlqI7DnENo9YnXPLN+dGbqmvJeT9z2Q2YzTkjWFkJsG+WcGAj8EMnf1k2rsPIOhjBsHw==
+X-Received: by 10.107.32.70 with SMTP id g67mr14342282iog.69.1511307384095;
+        Tue, 21 Nov 2017 15:36:24 -0800 (PST)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id 191sm1222614itb.21.2017.11.21.15.36.23
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 21 Nov 2017 15:36:23 -0800 (PST)
+Date:   Tue, 21 Nov 2017 15:36:21 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Anders Kaseorg <andersk@mit.edu>,
+        Junio C Hamano <gitster@pobox.com>,
+        Todd Zullinger <tmz@pobox.com>,
+        Pat Thoyts <patthoyts@users.sourceforge.net>
+Subject: [PATCH 2/3] git-gui: sort entries in optimized tclIndex
+Message-ID: <20171121233621.GO3429@aiede.mtv.corp.google.com>
+References: <20171121232935.GM3429@aiede.mtv.corp.google.com>
 MIME-Version: 1.0
-Received: by 10.140.85.179 with HTTP; Tue, 21 Nov 2017 15:35:34 -0800 (PST)
-In-Reply-To: <55af5442-c22a-342e-edbd-02a776228345@web.de>
-References: <790c2344-a71e-7089-9000-f9b37a4a5cd9@web.de> <9c3462e3-2d1d-05bc-9f7d-4bc93d32e7ff@web.de>
- <CAGZ79kZxiEPE4LPEo-eb4Ta4bYXVr9xQM0dFeiJk9XXKU4AR+w@mail.gmail.com> <55af5442-c22a-342e-edbd-02a776228345@web.de>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 21 Nov 2017 15:35:34 -0800
-Message-ID: <CAGZ79kbL-oXPTgB+tzAUEVJ7K=F44883bW1u93UYgp4kp8r=fA@mail.gmail.com>
-Subject: Re: [PATCH 6/6] grep: show non-empty lines before functions with -W
-To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Vegard Nossum <vegard.nossum@oracle.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20171121232935.GM3429@aiede.mtv.corp.google.com>
+User-Agent: Mutt/1.9.1 (2017-09-22)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 20, 2017 at 2:07 PM, Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
-> Am 20.11.2017 um 21:39 schrieb Stefan Beller:
->> On Sat, Nov 18, 2017 at 10:08 AM, Ren=C3=A9 Scharfe <l.s.r@web.de> wrote=
-:
->>> Non-empty lines before a function definition are most likely comments
->>> for that function and thus relevant.  Include them in function context.
->>>
->>> Such a non-empty line might also belong to the preceding function if
->>> there is no separating blank line.  Stop extending the context upwards
->>> also at the next function line to make sure only one extra function bod=
-y
->>> is shown at most.
->>
->> Can we add another heuristic, that checks for common function body ends,=
- e.g.
->> if the preceding line contains '}' but is not commented (the line doesn'=
-t
->> contain '*/' '//', '#'), we have a strong hint that it is a function, no=
-t an
->> additional comment.
->
-> C comments containing "}" as part of the text would only be shown
-> partially, e.g:
->
->         /*
->          * Not shown because of the curly closing brace in ${PATH}.
->          * Shown.
->          */
->
-> Two examples in git's repo are in refs.h and sha1-lookup.c.
->
-> Before diving deeper: Is it worth it?  Does the heuristic in this series
-> produce excessive context often?  Enough to be annoying?
+From: Anders Kaseorg <andersk@mit.edu>
+Date: Wed, 16 Nov 2016 16:37:17 -0500
 
-We'll find out... I was just spurting out my thought of the day.
-Sorry for the noise.
+auto_mkindex expands wildcards in directory order, which depends on
+the underlying filesystem.  To improve build reproducibility, sort the
+list of *.tcl files in the Makefile.
+
+The unoptimized loading case was previously fixed in gitgui-0.21.0~14
+(git-gui: sort entries in tclIndex, 2015-01-26).
+
+Signed-off-by: Anders Kaseorg <andersk@mit.edu>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index 918a8de369..f10caedaa7 100644
+--- a/Makefile
++++ b/Makefile
+@@ -254,7 +254,7 @@ $(ALL_MSGFILES): %.msg : %.po
+ lib/tclIndex: $(ALL_LIBFILES) GIT-GUI-VARS
+ 	$(QUIET_INDEX)if echo \
+ 	  $(foreach p,$(PRELOAD_FILES),source $p\;) \
+-	  auto_mkindex lib '*.tcl' \
++	  auto_mkindex lib $(patsubst lib/%,%,$(sort $(ALL_LIBFILES))) \
+ 	| $(TCL_PATH) $(QUIET_2DEVNULL); then : ok; \
+ 	else \
+ 	 echo >&2 "    * $(TCL_PATH) failed; using unoptimized loading"; \
+-- 
+2.15.0.448.gf294e3d99a
+
