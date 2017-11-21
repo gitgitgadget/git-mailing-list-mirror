@@ -2,71 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B8A0A202F2
-	for <e@80x24.org>; Tue, 21 Nov 2017 02:37:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2801F202F2
+	for <e@80x24.org>; Tue, 21 Nov 2017 02:41:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752228AbdKUChc (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Nov 2017 21:37:32 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54854 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751876AbdKUChb (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Nov 2017 21:37:31 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B6F03BC404;
-        Mon, 20 Nov 2017 21:37:30 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=T6qDAv6vRL02mxc7V0FetSbmA20=; b=oiEcQO
-        F6SRt6sQGyNLdP96OV3qnBKlW8jAenHZ9plN9FCZQ3UWMASIkh0jhGsV5SSEJlap
-        /0gRayhtUVU4XAw5/JtJa+LYQAC8aa5YsJfeP3og57iY5b0R8N7+mzymvHctslTQ
-        kNyrrw1g9aSfdu7JdS+e/uuROnCn7lsaD3hFw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=GgikkfFja7EFCmmNNzaNiraL288tkJLZ
-        J88jUgr8RijfsiT2V9yLOs6sCUczmt2iaMabA0wAJPDY0MJ6l6wIS6ARdI93om15
-        2Yy7VRxebBhwhKimHiZhOCv3DyeYPUuPdIgf2EIIxQxAX6jpeIgBXlrTRNViObTi
-        p/XJs+bfKoQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id AF1D9BC403;
-        Mon, 20 Nov 2017 21:37:30 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1C1CFBC401;
-        Mon, 20 Nov 2017 21:37:30 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 5/5] sha1_file: don't re-scan pack directory for null sha1
-References: <20171120202607.tf2pvegqe35mhxjs@sigill.intra.peff.net>
-        <20171120203523.c3pt5qi43e24ttqq@sigill.intra.peff.net>
-Date:   Tue, 21 Nov 2017 11:37:28 +0900
-In-Reply-To: <20171120203523.c3pt5qi43e24ttqq@sigill.intra.peff.net> (Jeff
-        King's message of "Mon, 20 Nov 2017 15:35:23 -0500")
-Message-ID: <xmqqd14cjr13.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1752104AbdKUClJ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Nov 2017 21:41:09 -0500
+Received: from mail-io0-f180.google.com ([209.85.223.180]:36520 "EHLO
+        mail-io0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752010AbdKUClI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Nov 2017 21:41:08 -0500
+Received: by mail-io0-f180.google.com with SMTP id 79so10298266ioi.3
+        for <git@vger.kernel.org>; Mon, 20 Nov 2017 18:41:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=YTUo8JsXtlKaeUpQe3rFf5ZTy9tz5C3qan4tVuAdUFs=;
+        b=FYxuFGG3T6z0lwxDBe2Y7L0ytDD8zxqrsS0YyAmcy0/xCYZvqyaT9bf6UadxZ/l1aH
+         9zu8e8jKJH2CXZmEcl5LxLbhCr39LPRG+1c5T0HQjHtalq/9iNliyLfZDzV1bR9aJejR
+         oCzD9ecvgxCkzb1WrB1Y9Xwr3fhNFl6zzgdlvZWcdjnm+yKWZUfmbCKbu6bXNDua2U+p
+         BnQN2MaDEGwKGNT22gAhFCgbcsm/vv1RGvoE993k7bYFBMDlTdn8PdkPk8S5L0eGnf4h
+         ZWtnJiKUeQNDFUL8VPiHxEQn4iTR6JJLT/JkChNX+vrqrhn+dofHGGPaykMycbcKTLtC
+         QZnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=YTUo8JsXtlKaeUpQe3rFf5ZTy9tz5C3qan4tVuAdUFs=;
+        b=ne+65A6dlo3rz+7bUJ7IkFT5MHnEF3VDDodV5DEywW1LsqG0JB9l0dKliV/3OAG/dR
+         b0ulF4GGNs3TXZ2SoYBeH/BOmZZ3sTKSTCzRm7zpo7CFcn7ZZzZLHrlRakab8/rZORgX
+         GCf+5cww1YUjpY2l2H9qcGvOhikCjoYpZPJ+hwhsw3+fMZHA3ga3OsDDHURBBgwfq7uJ
+         WvSB4QaDKBSm96mn2Z6JcRxyrjLE9+3ZMZa5bamLnFxfDsAgyaymdV3qGmKbgu2RxkxY
+         fyJLfdIhT2noesEq71GjJsiImfU38ajPgG7/mVm3hyqEe9W9BGbC+k3hb563yNGA0Jbe
+         /JaA==
+X-Gm-Message-State: AJaThX4WlAO0jOl2A4vsuI+c/z2wUBZ7OyC1DsasasKkjvjXxna3VQ3G
+        h1Ru0lxoyYIUW+um85cjtzLSoQ==
+X-Google-Smtp-Source: AGs4zMYBHOHnwCoAJEnJvZHBVKamemH9zgH1Kpmk40l9c52s2CupEj9VDqy93s6BnCwrH3OeBI6K2w==
+X-Received: by 10.107.167.83 with SMTP id q80mr16012431ioe.89.1511232066979;
+        Mon, 20 Nov 2017 18:41:06 -0800 (PST)
+Received: from dnj.pit.corp.google.com ([2620:0:1019:0:5840:7173:18ff:ed41])
+        by smtp.gmail.com with ESMTPSA id j193sm85034ita.9.2017.11.20.18.41.04
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 20 Nov 2017 18:41:05 -0800 (PST)
+From:   Dan Jacques <dnj@google.com>
+To:     avarab@gmail.com
+Cc:     Johannes.Schindelin@gmx.de, dnj@google.com, git@vger.kernel.org,
+        gitster@pobox.com
+Subject: Re [PATCH 1/1] exec_cmd: RUNTIME_PREFIX on some POSIX systems
+Date:   Mon, 20 Nov 2017 21:41:02 -0500
+Message-Id: <20171121024102.14153-1-dnj@google.com>
+X-Mailer: git-send-email 2.15.0.chromium12
+In-Reply-To: <87k1ykwrfv.fsf@evledraar.booking.com>
+References: <87k1ykwrfv.fsf@evledraar.booking.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: EB820886-CE64-11E7-B719-8EF31968708C-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Ævar Arnfjörð Bjarmason @ 2017-11-20 21:50 UTC suggested:
 
-> In an ideal world, we'd simply fix all of the callers to
-> notice the null sha1 and avoid passing it to us. But a
-> simple experiment to catch this with a BUG() shows that
-> there are a large number of code paths.
+> So LeonT over at #p5p helped me with this. He believes this'll work
+> (unless MakeMaker INSTALL_BASE is set, but that should break the Git
+> install anyway):
 
-Well, we can view this (or the alternative you sent later that does
-the same a bit earlier in the function) as "fixing the caller" but
-has already refactord the common logic to a helper function that all
-of these callers call into ;-).
+I think that the problem with this approach is that it uses the local
+"Config" module. The primary purpose of RUNTIME_PREFIX(_PERL) is that one
+can build/install Git into a directory, then either move that directory
+somewhere else or archive it and put it on a different (binary-compatible)
+system altogether.
 
+The latter case concerns me here. If the "Config" module is loading local
+system paths, then the relative pathing between "$Config{installsitelib}"
+and "$Config{siteprefixexp}" may not be consistent between systems, so an
+archive built from one system may not have a compatible relative
+directory structure when resolved with the Config module on another
+system.
+
+Since we control the installation process and paths, we know that the
+directory structure looks someting like:
+
+.../prefix/$GITEXECDIR/git-perl-script
+.../prefix/$RELPERLPATH/Git.pm
+
+Our goal is to, given the directory that "git-perl-script" belongs to,
+first identify the path for ".../prefix" and then append "$RELPERLPATH" to
+it to generate the full library path.
+
+The most straightforward way to do this, to me, is to:
+
+1) Have the Makefile hard-code "$RELPERLPATH" and "$GITEXECDIR" (relative
+  paths) into the header code.
+2) Assert that "$FindBin::Bin" (the directory containing the script) ends
+  with "$GITEXECDIR".
+3) Remove "$GITEXECDIR" from the end of "$FindBin::Bin" to obtain
+  ".../prefix" ($prefix). Simple string truncation is probably fine for
+  this.
+4) Add "File::Spec->catdir($prefix, $RELPERLPATH)" to "lib".
+
+I don't think path separators are a problem, since the Makefile uses "/"
+indiscriminately. Even Git-for-Windows seems to run its PERL scripts in
+a POSIX environment (mingw).
+
+Does this sound like a reasonable way to proceed?
