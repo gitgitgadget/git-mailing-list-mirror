@@ -2,103 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 817D72036D
-	for <e@80x24.org>; Tue, 21 Nov 2017 22:47:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6F7B22036D
+	for <e@80x24.org>; Tue, 21 Nov 2017 22:57:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751353AbdKUWrN (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Nov 2017 17:47:13 -0500
-Received: from mail-it0-f66.google.com ([209.85.214.66]:36258 "EHLO
-        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751263AbdKUWrM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Nov 2017 17:47:12 -0500
-Received: by mail-it0-f66.google.com with SMTP id 187so4046125iti.1
-        for <git@vger.kernel.org>; Tue, 21 Nov 2017 14:47:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=0fz3PIsVEtwo4JzSXY6NoPiabEAGt9dbvQj1HamqIJ8=;
-        b=pPECQ8qC3Hhu8HBZeqLeCp0M/J4JhcZ8+4VpjOLLA1noSYDMFFVBdPqUzSLXJupQTo
-         ws1W//T+jq+wMuVxe2gIGyInQb8T8D/FErgZpNjoTHDZMo3kv9rXDAKS01gPsh2qv66Y
-         BvIYTyLXzl5Ohx6lepHoWZsdCnbdK2vFsUW8ljTrH1ACRfgpA8JGeO/ekayswqqStrpm
-         rDZeg28jo/vs17O4h5K+hDMLzGgIUfMOxv0DubRibPNhPdkdifovU/y76kCtnfGV7nZ/
-         MDsSPt7D+z9+djE5eNRPBBR76f7Y8bDWJJzii1aZ2Rnxa5qVsMvNip2y2XXpLLPaeNNv
-         r2LA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=0fz3PIsVEtwo4JzSXY6NoPiabEAGt9dbvQj1HamqIJ8=;
-        b=uJccBZC2D3pDWFzsGRZ7h2uzEu6cICVCbEc1wCosEh1mDvG+qOK4iKeL1NXNGUFWSx
-         PxSSmGATaXDqCXk/QTr1HFaOnZ5ASbhTcE5QaSqo6v3nlHzKmDR9zl62FQZvsIgpoMes
-         B32S5k4gNJld3o4azRoO4IPRazIoZzJ7MxldQgXKvxGDkqj+iuSJF3Y6vKuwyUaNEfBw
-         pC2MZyzpJYIyP7Wk9P7NqA81vlhNp3he5ySqH0dFnI+tqd/sr8Be2nlRCYJ1p8iMJ8Ce
-         GVxPYzH6SO98rLAmWV2iW1yYL4CkdaauwEdwu0+6ucn40rOHeBdw//a6Bp4OWjZMZbIV
-         fbOg==
-X-Gm-Message-State: AJaThX5tzwSu/pae0TEwI4F5HIB8QpUpcIEQKu0kVxDAnwviGUbVmydq
-        85H+YWCfalQ97SKpceXhJd0=
-X-Google-Smtp-Source: AGs4zMasVfu+V6vgA5BiukuhzSdkKrRYVh6gUUYQmm7zFmC3+2ngSxdDo+fKiw3umZPQYXvLjaMcmA==
-X-Received: by 10.36.37.138 with SMTP id g132mr4420824itg.72.1511304431785;
-        Tue, 21 Nov 2017 14:47:11 -0800 (PST)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id o1sm1188170ite.2.2017.11.21.14.47.10
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 21 Nov 2017 14:47:11 -0800 (PST)
-Date:   Tue, 21 Nov 2017 14:47:09 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH] recursive submodules: detach HEAD from new state
-Message-ID: <20171121224709.GJ3429@aiede.mtv.corp.google.com>
-References: <20170724173601.19921-1-sbeller@google.com>
- <20170724180312.GE13924@aiede.mtv.corp.google.com>
- <xmqq8tjdcyf1.fsf@gitster.mtv.corp.google.com>
- <xmqqr2x5bhk7.fsf@gitster.mtv.corp.google.com>
- <CAGZ79kZdoktBRBuNxVk-zehZR3Z-egEPG81KQ9WqHTEtrm+5uw@mail.gmail.com>
- <20171121223449.GI3429@aiede.mtv.corp.google.com>
- <CAGZ79kZxD4r0J+uZCuBStkZq1mqPSTaOdkpyOmPXjdLLr6rkOQ@mail.gmail.com>
+        id S1751401AbdKUW5r (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Nov 2017 17:57:47 -0500
+Received: from cloud.peff.net ([104.130.231.41]:36938 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751364AbdKUW5q (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Nov 2017 17:57:46 -0500
+Received: (qmail 4753 invoked by uid 109); 21 Nov 2017 22:57:46 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 21 Nov 2017 22:57:46 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 28600 invoked by uid 111); 21 Nov 2017 22:58:02 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with ESMTPA; Tue, 21 Nov 2017 17:58:02 -0500
+Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 21 Nov 2017 17:57:44 -0500
+Date:   Tue, 21 Nov 2017 17:57:44 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 5/5] sha1_file: don't re-scan pack directory for null sha1
+Message-ID: <20171121225744.GA21197@sigill>
+References: <20171120202607.tf2pvegqe35mhxjs@sigill.intra.peff.net>
+ <20171120203523.c3pt5qi43e24ttqq@sigill.intra.peff.net>
+ <xmqqd14cjr13.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAGZ79kZxD4r0J+uZCuBStkZq1mqPSTaOdkpyOmPXjdLLr6rkOQ@mail.gmail.com>
-User-Agent: Mutt/1.9.1 (2017-09-22)
+In-Reply-To: <xmqqd14cjr13.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Tue, Nov 21, 2017 at 11:37:28AM +0900, Junio C Hamano wrote:
 
-Stefan Beller wrote:
-> On Tue, Nov 21, 2017 at 2:34 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Jeff King <peff@peff.net> writes:
+> 
+> > In an ideal world, we'd simply fix all of the callers to
+> > notice the null sha1 and avoid passing it to us. But a
+> > simple experiment to catch this with a BUG() shows that
+> > there are a large number of code paths.
+> 
+> Well, we can view this (or the alternative you sent later that does
+> the same a bit earlier in the function) as "fixing the caller" but
+> has already refactord the common logic to a helper function that all
+> of these callers call into ;-).
 
->> Stefan, do you know what thread I should look at to find the current
->> state of this patch?  I've had it applied locally for a long time.
->
-> It was "Undecided" for some time, then Junio kicked it back to pu, expecting a
-> reroll[1]. The "send out a plan" that was referenced is found in [2]
-> describing 6 plans for the future of submodules. The approach in [3]
-> which is different on the implementation level, but very similar on
-> the UX level sounds best currently.  I'll coordinate with JTan to
-> come up with patches for that.
->
-> [1] https://public-inbox.org/git/CAGZ79kYUZv0g+3OEMrbT26A7mSLJzeS-yf5Knr-CnARHqVB=aQ@mail.gmail.com/
-> [2] https://public-inbox.org/git/20171109001007.11894-1-sbeller@google.com/
-> [3] https://public-inbox.org/git/20171108172945.33c42a0e91b4ac494217b788@google.com/
+Yes, I'm definitely tempted by that view. :)
 
-Thanks.  That thread appears to be about a long-term plan; what is the
-short-term plan?
+What worries me, though, is that callers who lazily propagate the null
+sha1 to the lookup functions cannot reasonably tell the difference
+between "this object was corrupt or missing" and "we passed the null
+sha1, and a missing object is expected".
 
-E.g. is there any additional documentation that should be added to the
-patch that detaches?
+For example, look at how fetch.c:update_local_ref() looks up objects.
+It feeds the old and new sha1 to lookup_commit_reference_gently(), and
+if either is NULL, it skips the fast-forward check. That makes sense if
+we expect the null sha1 to get translated into a NULL commit. But it
+also triggers for a broken ref, and we'd overwrite it (when the right
+thing is probably refusing to update).
 
-Or should it go in as-is?
+Here's a runnable example:
 
-Thanks,
-Jonathan
+-- >8 --
+git init parent
+git -C parent commit --allow-empty -m base
+
+git clone parent child
+git -C parent commit --allow-empty -m more
+
+cd child
+rm -f .git/objects/??/*
+git fetch
+-- 8< --
+
+That final fetch spews a bunch of errors about broken refs, and then
+overwrites the value of origin/master, even though it's broken (in this
+case it actually is a fast-forward, but the child repo doesn't even know
+that).
+
+I'm not sure what the right behavior is, but I'm pretty sure that's not
+it. Probably one of:
+
+  - skip updating the ref when we see the breakage
+
+  - ditto, but terminate the whole operation, since we might be deleting
+    other refs and in a broken repo we're probably best to make as few
+    changes as possible
+
+  - behave as if it was a non-ff, which would allow "--force" to
+    overwrite the broken ref. Maybe convenient for fixing things, but
+    possibly surprising (and it's not that hard to just delete the
+    broken refs manually before proceeding).
+
+-Peff
