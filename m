@@ -2,76 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 157D72036D
-	for <e@80x24.org>; Tue, 21 Nov 2017 21:18:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 192D52036D
+	for <e@80x24.org>; Tue, 21 Nov 2017 21:23:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751347AbdKUVSB (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Nov 2017 16:18:01 -0500
-Received: from cpanel2.indieserve.net ([199.212.143.6]:42475 "EHLO
-        cpanel2.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751290AbdKUVSB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Nov 2017 16:18:01 -0500
-Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:38316 helo=localhost.localdomain)
-        by cpanel2.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.89)
-        (envelope-from <rpjday@crashcourse.ca>)
-        id 1eHFvc-0005F5-4X; Tue, 21 Nov 2017 16:18:00 -0500
-Date:   Tue, 21 Nov 2017 16:16:38 -0500 (EST)
-From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
-X-X-Sender: rpjday@localhost.localdomain
-To:     Jonathan Nieder <jrnieder@gmail.com>
-cc:     Git Mailing list <git@vger.kernel.org>
-Subject: Re: pedantry: is there a standard for what should be in the
- SYNOPSIS?
-In-Reply-To: <20171121175436.GA27041@aiede.mtv.corp.google.com>
-Message-ID: <alpine.LFD.2.21.1711211615510.25800@localhost.localdomain>
-References: <alpine.LFD.2.21.1711210925530.6795@DESKTOP-1GPMCEJ> <20171121175436.GA27041@aiede.mtv.corp.google.com>
-User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+        id S1751351AbdKUVXH (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Nov 2017 16:23:07 -0500
+Received: from ikke.info ([178.21.113.177]:36612 "EHLO vps892.directvps.nl"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751229AbdKUVXH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Nov 2017 16:23:07 -0500
+Received: by vps892.directvps.nl (Postfix, from userid 1008)
+        id 68B264400DB; Tue, 21 Nov 2017 22:23:05 +0100 (CET)
+Date:   Tue, 21 Nov 2017 22:23:05 +0100
+From:   Kevin Daudt <me@ikke.info>
+To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
+Cc:     Git Mailing list <git@vger.kernel.org>
+Subject: Re: [PATCH] doc: remove explanation of "--" from man pages
+Message-ID: <20171121212305.GA16418@alpha.vpn.ikke.info>
+References: <alpine.LFD.2.21.1711211607200.25585@localhost.localdomain>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cpanel2.indieserve.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - crashcourse.ca
-X-Get-Message-Sender-Via: cpanel2.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
-X-Authenticated-Sender: cpanel2.indieserve.net: rpjday@crashcourse.ca
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.2.21.1711211607200.25585@localhost.localdomain>
+User-Agent: Mutt/1.9.1 (2017-09-22)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 21 Nov 2017, Jonathan Nieder wrote:
+On Tue, Nov 21, 2017 at 04:12:02PM -0500, Robert P. J. Day wrote:
+> "man gitcli" already explains the purpose of the "--" syntax, so there
+> is no value to a small subset of Git commands explaining that in their
+> man pages.
+> 
+> Signed-off-by: Robert P. J. Day <rpjday@crashcourse.ca>
+> 
+> ---
+> 
+>   i tried this once before, and i'm going to try to push it through
+> again ... it's pointless and inconsistent for less than a dozen man
+> pages to explicitly explain the purpose of "--" unless all of the man
+> pages do. as long as the "--" appears in the command SYNOPSIS, that
+> should be more than adequate.
 
-> Hi,
->
-> Robert P. J. Day wrote:
->
-> > following up on an earlier question of mine, is there a standard
-> > for what options should be listed in either the SYNOPSIS or the
-> > DESCRIPTION sections of a man page? i ask since i'm seeing some
-> > definite inconsistency.
->
-> No standard.  Seems worth starting a discussion on what you'd like
-> the standard to be.
+Although I agree that common options don't need to be explained
+everytime again, this change might make '--' even more obscure. To be
+honest, I didn't even know about gitcli(7), let alone most new users.
 
-  so i'm in charge? awesome. you won't regret it. :-)
+In the #git irc channel we often have to explain what '--' means and
+why it's sometimes necessary.
 
-rday
+I don't however know a better solution to it more clear.
 
--- 
-
-========================================================================
-Robert P. J. Day                                 Ottawa, Ontario, CANADA
-                        http://crashcourse.ca
-
-Twitter:                                       http://twitter.com/rpjday
-LinkedIn:                               http://ca.linkedin.com/in/rpjday
-========================================================================
+Kevin
