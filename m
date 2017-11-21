@@ -6,31 +6,33 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 586D62036D
-	for <e@80x24.org>; Tue, 21 Nov 2017 20:59:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EB5CC2036D
+	for <e@80x24.org>; Tue, 21 Nov 2017 20:59:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751335AbdKUU7E (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Nov 2017 15:59:04 -0500
-Received: from siwi.pair.com ([209.68.5.199]:63927 "EHLO siwi.pair.com"
+        id S1751357AbdKUU7H (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Nov 2017 15:59:07 -0500
+Received: from siwi.pair.com ([209.68.5.199]:63955 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751067AbdKUU7D (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Nov 2017 15:59:03 -0500
+        id S1751145AbdKUU7F (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Nov 2017 15:59:05 -0500
 Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 82667844F0;
-        Tue, 21 Nov 2017 15:59:03 -0500 (EST)
+        by siwi.pair.com (Postfix) with ESMTP id 5015F84512;
+        Tue, 21 Nov 2017 15:59:05 -0500 (EST)
 Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 0ECE6844E7;
-        Tue, 21 Nov 2017 15:59:02 -0500 (EST)
+        by siwi.pair.com (Postfix) with ESMTPSA id D3AF7844E7;
+        Tue, 21 Nov 2017 15:59:04 -0500 (EST)
 From:   Jeff Hostetler <git@jeffhostetler.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, jonathantanmy@google.com,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v5 0/6] Partial clone part 1: object filtering
-Date:   Tue, 21 Nov 2017 20:58:46 +0000
-Message-Id: <20171121205852.15731-1-git@jeffhostetler.com>
+Subject: [PATCH v5 3/6] oidset: add iterator methods to oidset
+Date:   Tue, 21 Nov 2017 20:58:49 +0000
+Message-Id: <20171121205852.15731-4-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.9.3
+In-Reply-To: <20171121205852.15731-1-git@jeffhostetler.com>
+References: <20171121205852.15731-1-git@jeffhostetler.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -38,48 +40,93 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Here is V5 of the list-object filtering, rev-list, and pack-objects.
+Add the usual iterator methods to oidset.
+Add oidset_remove().
 
-This version addresses comments on the V4 series.  I removed the
-questionable character encoding scheme.  And I removed or clarified
-use of the term "partial clone" to refer to a future feature.
+Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+---
+ oidset.c | 10 ++++++++++
+ oidset.h | 36 ++++++++++++++++++++++++++++++++++++
+ 2 files changed, 46 insertions(+)
 
-Jeff Hostetler (6):
-  dir: allow exclusions from blob in addition to file
-  oidmap: add oidmap iterator methods
-  oidset: add iterator methods to oidset
-  list-objects: filter objects in traverse_commit_list
-  rev-list: add list-objects filtering support
-  pack-objects: add list-objects filtering
-
- Documentation/git-pack-objects.txt     |  19 +-
- Documentation/git-rev-list.txt         |   4 +-
- Documentation/rev-list-options.txt     |  36 +++
- Makefile                               |   2 +
- builtin/pack-objects.c                 |  64 +++++-
- builtin/rev-list.c                     | 108 ++++++++-
- dir.c                                  | 132 ++++++++---
- dir.h                                  |   3 +
- list-objects-filter-options.c          |  81 +++++++
- list-objects-filter-options.h          |  58 +++++
- list-objects-filter.c                  | 401 +++++++++++++++++++++++++++++++++
- list-objects-filter.h                  |  77 +++++++
- list-objects.c                         |  95 ++++++--
- list-objects.h                         |  13 +-
- object.h                               |   1 +
- oidmap.h                               |  22 ++
- oidset.c                               |  10 +
- oidset.h                               |  36 +++
- t/t5317-pack-objects-filter-objects.sh | 375 ++++++++++++++++++++++++++++++
- t/t6112-rev-list-filters-objects.sh    | 225 ++++++++++++++++++
- 20 files changed, 1709 insertions(+), 53 deletions(-)
- create mode 100644 list-objects-filter-options.c
- create mode 100644 list-objects-filter-options.h
- create mode 100644 list-objects-filter.c
- create mode 100644 list-objects-filter.h
- create mode 100755 t/t5317-pack-objects-filter-objects.sh
- create mode 100755 t/t6112-rev-list-filters-objects.sh
-
+diff --git a/oidset.c b/oidset.c
+index f1f874a..454c54f 100644
+--- a/oidset.c
++++ b/oidset.c
+@@ -24,6 +24,16 @@ int oidset_insert(struct oidset *set, const struct object_id *oid)
+ 	return 0;
+ }
+ 
++int oidset_remove(struct oidset *set, const struct object_id *oid)
++{
++	struct oidmap_entry *entry;
++
++	entry = oidmap_remove(&set->map, oid);
++	free(entry);
++
++	return (entry != NULL);
++}
++
+ void oidset_clear(struct oidset *set)
+ {
+ 	oidmap_free(&set->map, 1);
+diff --git a/oidset.h b/oidset.h
+index f4c9e0f..783abce 100644
+--- a/oidset.h
++++ b/oidset.h
+@@ -24,6 +24,12 @@ struct oidset {
+ 
+ #define OIDSET_INIT { OIDMAP_INIT }
+ 
++
++static inline void oidset_init(struct oidset *set, size_t initial_size)
++{
++	return oidmap_init(&set->map, initial_size);
++}
++
+ /**
+  * Returns true iff `set` contains `oid`.
+  */
+@@ -39,9 +45,39 @@ int oidset_contains(const struct oidset *set, const struct object_id *oid);
+ int oidset_insert(struct oidset *set, const struct object_id *oid);
+ 
+ /**
++ * Remove the oid from the set.
++ *
++ * Returns 1 if the oid was present in the set, 0 otherwise.
++ */
++int oidset_remove(struct oidset *set, const struct object_id *oid);
++
++/**
+  * Remove all entries from the oidset, freeing any resources associated with
+  * it.
+  */
+ void oidset_clear(struct oidset *set);
+ 
++struct oidset_iter {
++	struct oidmap_iter m_iter;
++};
++
++static inline void oidset_iter_init(struct oidset *set,
++				    struct oidset_iter *iter)
++{
++	oidmap_iter_init(&set->map, &iter->m_iter);
++}
++
++static inline struct object_id *oidset_iter_next(struct oidset_iter *iter)
++{
++	struct oidmap_entry *e = oidmap_iter_next(&iter->m_iter);
++	return e ? &e->oid : NULL;
++}
++
++static inline struct object_id *oidset_iter_first(struct oidset *set,
++						  struct oidset_iter *iter)
++{
++	oidset_iter_init(set, iter);
++	return oidset_iter_next(iter);
++}
++
+ #endif /* OIDSET_H */
 -- 
 2.9.3
 
