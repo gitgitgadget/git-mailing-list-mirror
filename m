@@ -7,35 +7,35 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E8DC20954
-	for <e@80x24.org>; Tue, 21 Nov 2017 08:02:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 34D3E20954
+	for <e@80x24.org>; Tue, 21 Nov 2017 08:02:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751480AbdKUIC3 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Nov 2017 03:02:29 -0500
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:43782 "EHLO
+        id S1751455AbdKUICX (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Nov 2017 03:02:23 -0500
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:43756 "EHLO
         mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751418AbdKUIC2 (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2017 03:02:28 -0500
+        by vger.kernel.org with ESMTP id S1751438AbdKUICR (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2017 03:02:17 -0500
 Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id vAL7xiuN019361;
+        by mx0a-00153501.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id vAL7xVPF019352;
         Tue, 21 Nov 2017 00:01:01 -0800
 Authentication-Results: ppops.net;
         spf=softfail smtp.mailfrom=newren@gmail.com
 Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2eakkpc223-2;
+        by mx0a-00153501.pphosted.com with ESMTP id 2eakkpc221-3;
         Tue, 21 Nov 2017 00:01:01 -0800
-Received: from mxw1.palantir.com (new-smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id 426D32266AC8;
+Received: from mxw1.palantir.com (smtp.yojoe.local [172.19.0.45])
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id 5C4E52266B6B;
         Tue, 21 Nov 2017 00:01:01 -0800 (PST)
 Received: from newren2-linux.yojoe.local (newren2-linux.dyn.yojoe.local [10.100.68.32])
-        by smtp.yojoe.local (Postfix) with ESMTP id 370682CDEB1;
+        by smtp.yojoe.local (Postfix) with ESMTP id 520362CDEB1;
         Tue, 21 Nov 2017 00:01:01 -0800 (PST)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, Elijah Newren <newren@gmail.com>
-Subject: [PATCH v3 26/33] merge-recursive: when comparing files, don't include trees
-Date:   Tue, 21 Nov 2017 00:00:52 -0800
-Message-Id: <20171121080059.32304-27-newren@gmail.com>
+Subject: [PATCH v3 28/33] merge-recursive: avoid clobbering untracked files with directory renames
+Date:   Tue, 21 Nov 2017 00:00:54 -0800
+Message-Id: <20171121080059.32304-29-newren@gmail.com>
 X-Mailer: git-send-email 2.15.0.309.g62ce55426d
 In-Reply-To: <20171121080059.32304-1-newren@gmail.com>
 References: <20171121080059.32304-1-newren@gmail.com>
@@ -46,7 +46,7 @@ X-Proofpoint-SPF-Record: v=spf1 redirect=_spf.google.com
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,, definitions=2017-11-21_03:,,
  signatures=0
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
+ malwarescore=0 suspectscore=15 phishscore=0 bulkscore=0 spamscore=0
  clxscore=1034 lowpriorityscore=0 impostorscore=0 adultscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.0.1-1709140000
  definitions=main-1711210110
@@ -55,71 +55,131 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-get_renames() would look up stage data that already existed (populated
-in get_unmerged(), taken from whatever unpack_trees() created), and if
-it didn't exist, would call insert_stage_data() to create the necessary
-entry for the given file.  The insert_stage_data() fallback becomes
-much more important for directory rename detection, because that creates
-a mechanism to have a file in the resulting merge that didn't exist on
-either side of history.  However, insert_stage_data(), due to calling
-get_tree_entry() loaded up trees as readily as files.  We aren't
-interested in comparing trees to files; the D/F conflict handling is
-done elsewhere.  This code is just concerned with what entries existed
-for a given path on the different sides of the merge, so create a
-get_tree_entry_if_blob() helper function and use it.
-
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-recursive.c | 27 +++++++++++++++++++++------
- 1 file changed, 21 insertions(+), 6 deletions(-)
+ merge-recursive.c                   | 42 +++++++++++++++++++++++++++++++=
+++++--
+ t/t6043-merge-rename-directories.sh |  6 +++---
+ 2 files changed, 43 insertions(+), 5 deletions(-)
 
 diff --git a/merge-recursive.c b/merge-recursive.c
-index 5bc207b819..90c753cd7e 100644
+index 9e8f9ea3c4..cf2f087fcd 100644
 --- a/merge-recursive.c
 +++ b/merge-recursive.c
-@@ -418,6 +418,21 @@ static void get_files_dirs(struct merge_options *o, =
-struct tree *tree)
- 	read_tree_recursive(tree, "", 0, 0, &match_all, save_files_dirs, o);
- }
-=20
-+static int get_tree_entry_if_blob(const unsigned char *tree,
-+				  const char *path,
-+				  unsigned char *hashy,
-+				  unsigned int *mode_o)
-+{
-+	int ret;
-+
-+	ret =3D get_tree_entry(tree, path, hashy, mode_o);
-+	if (S_ISDIR(*mode_o)) {
-+		hashcpy(hashy, null_sha1);
-+		*mode_o =3D 0;
-+	}
-+	return ret;
-+}
-+
- /*
-  * Returns an index_entry instance which doesn't have to correspond to
-  * a real cache entry in Git's index.
-@@ -428,12 +443,12 @@ static struct stage_data *insert_stage_data(const c=
-har *path,
+@@ -1138,6 +1138,26 @@ static int conflict_rename_dir(struct merge_option=
+s *o,
  {
- 	struct string_list_item *item;
- 	struct stage_data *e =3D xcalloc(1, sizeof(struct stage_data));
--	get_tree_entry(o->object.oid.hash, path,
--			e->stages[1].oid.hash, &e->stages[1].mode);
--	get_tree_entry(a->object.oid.hash, path,
--			e->stages[2].oid.hash, &e->stages[2].mode);
--	get_tree_entry(b->object.oid.hash, path,
--			e->stages[3].oid.hash, &e->stages[3].mode);
-+	get_tree_entry_if_blob(o->object.oid.hash, path,
-+			       e->stages[1].oid.hash, &e->stages[1].mode);
-+	get_tree_entry_if_blob(a->object.oid.hash, path,
-+			       e->stages[2].oid.hash, &e->stages[2].mode);
-+	get_tree_entry_if_blob(b->object.oid.hash, path,
-+			       e->stages[3].oid.hash, &e->stages[3].mode);
- 	item =3D string_list_insert(entries, path);
- 	item->util =3D e;
- 	return e;
+ 	const struct diff_filespec *dest =3D pair->two;
+=20
++	if (!o->call_depth && would_lose_untracked(dest->path)) {
++		char *alt_path =3D unique_path(o, dest->path, rename_branch);
++
++		output(o, 1, _("Error: Refusing to lose untracked file at %s; "
++			       "writing to %s instead."),
++		       dest->path, alt_path);
++		/*
++		 * Write the file in worktree at alt_path, but not in the
++		 * index.  Instead, write to dest->path for the index but
++		 * only at the higher appropriate stage.
++		 */
++		if (update_file(o, 0, &dest->oid, dest->mode, alt_path))
++			return -1;
++		free(alt_path);
++		return update_stages(o, dest->path, NULL,
++				     rename_branch =3D=3D o->branch1 ? dest : NULL,
++				     rename_branch =3D=3D o->branch1 ? NULL : dest);
++	}
++
++	/* Update dest->path both in index and in worktree */
+ 	if (update_file(o, 1, &dest->oid, dest->mode, dest->path))
+ 		return -1;
+ 	return 0;
+@@ -1156,7 +1176,8 @@ static int handle_change_delete(struct merge_option=
+s *o,
+ 	const char *update_path =3D path;
+ 	int ret =3D 0;
+=20
+-	if (dir_in_way(path, !o->call_depth, 0)) {
++	if (dir_in_way(path, !o->call_depth, 0) ||
++	    (!o->call_depth && would_lose_untracked(path))) {
+ 		update_path =3D alt_path =3D unique_path(o, path, change_branch);
+ 	}
+=20
+@@ -1282,6 +1303,12 @@ static int handle_file(struct merge_options *o,
+ 			dst_name =3D unique_path(o, rename->path, cur_branch);
+ 			output(o, 1, _("%s is a directory in %s adding as %s instead"),
+ 			       rename->path, other_branch, dst_name);
++		} else if (!o->call_depth &&
++			   would_lose_untracked(rename->path)) {
++			dst_name =3D unique_path(o, rename->path, cur_branch);
++			output(o, 1, _("Refusing to lose untracked file at %s; "
++				       "adding as %s instead"),
++			       rename->path, dst_name);
+ 		}
+ 	}
+ 	if ((ret =3D update_file(o, 0, &rename->oid, rename->mode, dst_name)))
+@@ -1407,7 +1434,18 @@ static int conflict_rename_rename_2to1(struct merg=
+e_options *o,
+ 		char *new_path2 =3D unique_path(o, path, ci->branch2);
+ 		output(o, 1, _("Renaming %s to %s and %s to %s instead"),
+ 		       a->path, new_path1, b->path, new_path2);
+-		remove_file(o, 0, path, 0);
++		if (would_lose_untracked(path))
++			/*
++			 * Only way we get here is if both renames were from
++			 * a directory rename AND user had an untracked file
++			 * at the location where both files end up after the
++			 * two directory renames.  See testcase 10d of t6043.
++			 */
++			output(o, 1, _("Refusing to lose untracked file at "
++				       "%s, even though it's in the way."),
++			       path);
++		else
++			remove_file(o, 0, path, 0);
+ 		ret =3D update_file(o, 0, &mfi_c1.oid, mfi_c1.mode, new_path1);
+ 		if (!ret)
+ 			ret =3D update_file(o, 0, &mfi_c2.oid, mfi_c2.mode,
+diff --git a/t/t6043-merge-rename-directories.sh b/t/t6043-merge-rename-d=
+irectories.sh
+index 6efe7a45ec..915a920e1e 100755
+--- a/t/t6043-merge-rename-directories.sh
++++ b/t/t6043-merge-rename-directories.sh
+@@ -2871,7 +2871,7 @@ test_expect_success '10b-setup: Overwrite untracked=
+ with dir rename + delete' '
+ 	)
+ '
+=20
+-test_expect_failure '10b-check: Overwrite untracked with dir rename + de=
+lete' '
++test_expect_success '10b-check: Overwrite untracked with dir rename + de=
+lete' '
+ 	(
+ 		cd 10b &&
+=20
+@@ -2942,7 +2942,7 @@ test_expect_success '10c-setup: Overwrite untracked=
+ with dir rename/rename(1to2)
+ 	)
+ '
+=20
+-test_expect_failure '10c-check: Overwrite untracked with dir rename/rena=
+me(1to2)' '
++test_expect_success '10c-check: Overwrite untracked with dir rename/rena=
+me(1to2)' '
+ 	(
+ 		cd 10c &&
+=20
+@@ -3011,7 +3011,7 @@ test_expect_success '10d-setup: Delete untracked wi=
+th dir rename/rename(2to1)' '
+ 	)
+ '
+=20
+-test_expect_failure '10d-check: Delete untracked with dir rename/rename(=
+2to1)' '
++test_expect_success '10d-check: Delete untracked with dir rename/rename(=
+2to1)' '
+ 	(
+ 		cd 10d &&
+=20
 --=20
 2.15.0.309.g62ce55426d
 
