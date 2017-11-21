@@ -6,30 +6,30 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 738C02036D
-	for <e@80x24.org>; Tue, 21 Nov 2017 21:16:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C258020A43
+	for <e@80x24.org>; Tue, 21 Nov 2017 21:16:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751505AbdKUVPu (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Nov 2017 16:15:50 -0500
-Received: from siwi.pair.com ([209.68.5.199]:38458 "EHLO siwi.pair.com"
+        id S1751470AbdKUVPt (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Nov 2017 16:15:49 -0500
+Received: from siwi.pair.com ([209.68.5.199]:38486 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751458AbdKUVPs (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1751445AbdKUVPs (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 21 Nov 2017 16:15:48 -0500
 Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 50AFC844F1;
-        Tue, 21 Nov 2017 16:15:48 -0500 (EST)
+        by siwi.pair.com (Postfix) with ESMTP id B4A9A8450B;
+        Tue, 21 Nov 2017 16:15:47 -0500 (EST)
 Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id D4923844D5;
+        by siwi.pair.com (Postfix) with ESMTPSA id 448BB844D5;
         Tue, 21 Nov 2017 16:15:47 -0500 (EST)
 From:   Jeff Hostetler <git@jeffhostetler.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, jonathantanmy@google.com,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v5 12/14] t5500: more tests for partial clone and fetch
-Date:   Tue, 21 Nov 2017 21:15:26 +0000
-Message-Id: <20171121211528.21891-13-git@jeffhostetler.com>
+Subject: [PATCH v5 11/14] t5601: test for partial clone
+Date:   Tue, 21 Nov 2017 21:15:25 +0000
+Message-Id: <20171121211528.21891-12-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20171121211528.21891-1-git@jeffhostetler.com>
 References: <20171121211528.21891-1-git@jeffhostetler.com>
@@ -43,100 +43,124 @@ From: Jonathan Tan <jonathantanmy@google.com>
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- t/t5500-fetch-pack.sh | 60 +++++++++++++++++++++++++++++++++++++++++++++++----
- 1 file changed, 56 insertions(+), 4 deletions(-)
+ builtin/clone.c  | 15 ++++++++++++---
+ t/t5601-clone.sh | 49 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 61 insertions(+), 3 deletions(-)
 
-diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
-index 23702b5..c95bb7b 100755
---- a/t/t5500-fetch-pack.sh
-+++ b/t/t5500-fetch-pack.sh
-@@ -782,7 +782,7 @@ test_expect_success 'filtering by size has no effect if support for it is not ad
- 	test_i18ngrep "filtering not recognized by server" err
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 0a8ac76..f519bd4 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -889,6 +889,8 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	struct refspec *refspec;
+ 	const char *fetch_pattern;
+ 
++	fetch_if_missing = 0;
++
+ 	packet_trace_identity("clone");
+ 	argc = parse_options(argc, argv, prefix, builtin_clone_options,
+ 			     builtin_clone_usage, 0);
+@@ -1109,11 +1111,13 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 		transport_set_option(transport, TRANS_OPT_UPLOADPACK,
+ 				     option_upload_pack);
+ 
+-	if (filter_options.choice)
++	if (filter_options.choice) {
+ 		transport_set_option(transport, TRANS_OPT_LIST_OBJECTS_FILTER,
+ 				     filter_options.filter_spec);
++		transport_set_option(transport, TRANS_OPT_FROM_PROMISOR, "1");
++	}
+ 
+-	if (transport->smart_options && !deepen)
++	if (transport->smart_options && !deepen && !filter_options.choice)
+ 		transport->smart_options->check_self_contained_and_connected = 1;
+ 
+ 	refs = transport_get_remote_refs(transport);
+@@ -1173,13 +1177,17 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	write_refspec_config(src_ref_prefix, our_head_points_at,
+ 			remote_head_points_at, &branch_top);
+ 
++	if (filter_options.choice)
++		partial_clone_register("origin", &filter_options);
++
+ 	if (is_local)
+ 		clone_local(path, git_dir);
+ 	else if (refs && complete_refs_before_fetch)
+ 		transport_fetch_refs(transport, mapped_refs);
+ 
+ 	update_remote_refs(refs, mapped_refs, remote_head_points_at,
+-			   branch_top.buf, reflog_msg.buf, transport, !is_local);
++			   branch_top.buf, reflog_msg.buf, transport,
++			   !is_local && !filter_options.choice);
+ 
+ 	update_head(our_head_points_at, remote_head, reflog_msg.buf);
+ 
+@@ -1200,6 +1208,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	}
+ 
+ 	junk_mode = JUNK_LEAVE_REPO;
++	fetch_if_missing = 1;
+ 	err = checkout(submodule_progress);
+ 
+ 	strbuf_release(&reflog_msg);
+diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+index 9c56f77..6d37c6d 100755
+--- a/t/t5601-clone.sh
++++ b/t/t5601-clone.sh
+@@ -571,4 +571,53 @@ test_expect_success 'GIT_TRACE_PACKFILE produces a usable pack' '
+ 	git -C replay.git index-pack -v --stdin <tmp.pack
  '
  
--fetch_blob_max_bytes () {
-+setup_blob_max_bytes () {
- 		      SERVER="$1"
- 		      URL="$2"
- 
-@@ -794,7 +794,11 @@ fetch_blob_max_bytes () {
- 	git clone "$URL" client &&
- 	test_config -C client extensions.partialclone origin &&
- 
--	test_commit -C "$SERVER" two &&
-+	test_commit -C "$SERVER" two
++partial_clone () {
++	       SERVER="$1" &&
++	       URL="$2" &&
++
++	rm -rf "$SERVER" client &&
++	test_create_repo "$SERVER" &&
++	test_commit -C "$SERVER" one &&
++	HASH1=$(git hash-object "$SERVER/one.t") &&
++	git -C "$SERVER" revert HEAD &&
++	test_commit -C "$SERVER" two &&
++	HASH2=$(git hash-object "$SERVER/two.t") &&
++	test_config -C "$SERVER" uploadpack.allowfilter 1 &&
++	test_config -C "$SERVER" uploadpack.allowanysha1inwant 1 &&
++
++	git clone --filter=blob:limit=0 "$URL" client &&
++
++	git -C client fsck &&
++
++	# Ensure that unneeded blobs are not inadvertently fetched.
++	test_config -C client extensions.partialclone "not a remote" &&
++	test_must_fail git -C client cat-file -e "$HASH1" &&
++
++	# But this blob was fetched, because clone performs an initial checkout
++	git -C client cat-file -e "$HASH2"
 +}
 +
-+do_blob_max_bytes() {
-+	SERVER="$1" &&
- 
- 	git -C client fetch --filter=blob:limit=0 origin HEAD:somewhere &&
- 
-@@ -805,14 +809,62 @@ fetch_blob_max_bytes () {
- }
- 
- test_expect_success 'fetch with filtering' '
--		     fetch_blob_max_bytes server server
-+	setup_blob_max_bytes server server &&
-+	do_blob_max_bytes server
++test_expect_success 'partial clone' '
++	partial_clone server "file://$(pwd)/server"
 +'
 +
-+test_expect_success 'fetch respects configured filtering' '
-+	setup_blob_max_bytes server server &&
-+
-+	test_config -C client core.partialclonefilter blob:limit=0 &&
-+
-+	git -C client fetch origin HEAD:somewhere &&
-+
-+	# Ensure that commit is fetched, but blob is not
-+	test_config -C client extensions.partialclone "arbitrary string" &&
-+	git -C client cat-file -e $(git -C server rev-parse two) &&
-+	test_must_fail git -C client cat-file -e $(git hash-object server/two.t)
-+'
-+
-+test_expect_success 'pull respects configured filtering' '
-+	setup_blob_max_bytes server server &&
-+
-+	# Hide two.t from tip so that client does not load it upon the
-+	# automatic checkout that pull performs
-+	git -C server rm two.t &&
-+	test_commit -C server three &&
-+
-+	test_config -C server uploadpack.allowanysha1inwant 1 &&
-+	test_config -C client core.partialclonefilter blob:limit=0 &&
-+
-+	git -C client pull origin &&
-+
-+	# Ensure that commit is fetched, but blob is not
-+	test_config -C client extensions.partialclone "arbitrary string" &&
-+	git -C client cat-file -e $(git -C server rev-parse two) &&
-+	test_must_fail git -C client cat-file -e $(git hash-object server/two.t)
-+'
-+
-+test_expect_success 'clone configures filtering' '
++test_expect_success 'partial clone: warn if server does not support object filtering' '
 +	rm -rf server client &&
 +	test_create_repo server &&
 +	test_commit -C server one &&
-+	test_commit -C server two &&
-+	test_config -C server uploadpack.allowanysha1inwant 1 &&
 +
-+	git clone --filter=blob:limit=12345 server client &&
++	git clone --filter=blob:limit=0 "file://$(pwd)/server" client 2> err &&
 +
-+	# Ensure that we can, for example, checkout HEAD^
-+	rm -rf client/.git/objects/* &&
-+	git -C client checkout HEAD^
- '
- 
- . "$TEST_DIRECTORY"/lib-httpd.sh
- start_httpd
- 
- test_expect_success 'fetch with filtering and HTTP' '
--		     fetch_blob_max_bytes "$HTTPD_DOCUMENT_ROOT_PATH/server" "$HTTPD_URL/smart/server"
-+	setup_blob_max_bytes "$HTTPD_DOCUMENT_ROOT_PATH/server" "$HTTPD_URL/smart/server" &&
-+	do_blob_max_bytes "$HTTPD_DOCUMENT_ROOT_PATH/server"
- '
- 
- stop_httpd
++	test_i18ngrep "filtering not recognized by server" err
++'
++
++. "$TEST_DIRECTORY"/lib-httpd.sh
++start_httpd
++
++test_expect_success 'partial clone using HTTP' '
++	partial_clone "$HTTPD_DOCUMENT_ROOT_PATH/server" "$HTTPD_URL/smart/server"
++'
++
++stop_httpd
++
+ test_done
 -- 
 2.9.3
 
