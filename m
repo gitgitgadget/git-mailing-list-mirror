@@ -2,135 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1F4F92036D
-	for <e@80x24.org>; Tue, 21 Nov 2017 22:06:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 32BEC2036D
+	for <e@80x24.org>; Tue, 21 Nov 2017 22:12:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751410AbdKUWGD (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Nov 2017 17:06:03 -0500
-Received: from gproxy2-pub.mail.unifiedlayer.com ([69.89.18.3]:48726 "EHLO
-        gproxy2-pub.mail.unifiedlayer.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751339AbdKUWGC (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2017 17:06:02 -0500
-X-Greylist: delayed 1419 seconds by postgrey-1.27 at vger.kernel.org; Tue, 21 Nov 2017 17:06:02 EST
-Received: from CMOut01 (unknown [10.0.90.82])
-        by gproxy2.mail.unifiedlayer.com (Postfix) with ESMTP id 334F21E09C6
-        for <git@vger.kernel.org>; Tue, 21 Nov 2017 14:42:23 -0700 (MST)
-Received: from box5008.bluehost.com ([50.116.64.19])
-        by CMOut01 with 
-        id cliJ1w00m0QvKlu01liNVd; Tue, 21 Nov 2017 14:42:22 -0700
-X-Authority-Analysis: v=2.2 cv=K4VSJ2eI c=1 sm=1 tr=0
- a=gch/BGY/Gm5DEW28s2kmlQ==:117 a=gch/BGY/Gm5DEW28s2kmlQ==:17
- a=IkcTkHD0fZMA:10 a=sC3jslCIGhcA:10 a=h9fvwNikAAAA:8 a=NEAV23lmAAAA:8
- a=zfxOeNzCKgb1qnYvX3cA:9 a=QEXdDO2ut3YA:10 a=FtDhlDV5sdB6JbnI9c3R:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=mad-scientist.net; s=default; h=Content-Transfer-Encoding:Mime-Version:
-        Content-Type:References:In-Reply-To:Date:To:Reply-To:From:Subject:Message-ID:
-        Sender:Cc:Content-ID:Content-Description:Resent-Date:Resent-From:
-        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=PCpbiU4GUI1Ezj+zhY99M/6o4cWcK4LjPdOIxk7Z7UA=; b=bGv59ztE8D7zLnAVnSzn689qxg
-        fKfNoLeZJRvpx1u95/zMVY+puvyLbnwZgY/cbk3FXhFHXOmPt9YJcsA0J28BE8eiv8Q1lsFIX0nPQ
-        5nF9mdOccp2J/hAbaoso4sYgf;
-Received: from [50.226.24.42] (port=37248 helo=pdsdesk)
-        by box5008.bluehost.com with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.89)
-        (envelope-from <paul@mad-scientist.net>)
-        id 1eHGJ8-000l2Y-J6; Tue, 21 Nov 2017 14:42:18 -0700
-Message-ID: <1511300532.7410.19.camel@mad-scientist.net>
-Subject: Re: bash script to pull in branch B the changes from parent branch A
-From:   Paul Smith <paul@mad-scientist.net>
-Reply-To: paul@mad-scientist.net
-To:     Laetitia Pfaender <laetitia.pfaender@icloud.com>,
-        git@vger.kernel.org
-Date:   Tue, 21 Nov 2017 16:42:12 -0500
-In-Reply-To: <BEFA6451-9A9A-4B44-B067-727136AD39EF@icloud.com>
-References: <BEFA6451-9A9A-4B44-B067-727136AD39EF@icloud.com>
-Organization: GNU's Not UNIX!
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.22.6-1ubuntu1 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5008.bluehost.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - mad-scientist.net
-X-BWhitelist: no
-X-Source-IP: 50.226.24.42
-X-Exim-ID: 1eHGJ8-000l2Y-J6
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: (pdsdesk) [50.226.24.42]:37248
-X-Source-Auth: paul@mad-scientist.us
-X-Email-Count: 1
-X-Source-Cap: bWFkc2NpZTE7bWFkc2NpZTE7Ym94NTAwOC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
+        id S1751425AbdKUWMN (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Nov 2017 17:12:13 -0500
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:44506 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751372AbdKUWMM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Nov 2017 17:12:12 -0500
+Received: by mail-wr0-f196.google.com with SMTP id l22so12680749wrc.11
+        for <git@vger.kernel.org>; Tue, 21 Nov 2017 14:12:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=e35y6ur99RgJgK3+C+gKsYNX9QOmlWF80gnfw6qRcWs=;
+        b=DCiH+N/m3q8iPKu/U9nhfvqpJS41cEELItUOE295R6ziYHQYWeeqqAYeBFiChXIfjM
+         G+OQywDaPMneDRhCgEbWB64uSKRDStZ3Zy9yQnWSfqtrVVUfrIrCNjkrJPQSsY/1WMK2
+         KcUqRQ9AYVhLF9UyzfwqGCv4kUidYEfQ/5SDuY/SpUB1uvs5t9JpI/GQCebMXcXijFMq
+         QlimVDxOmJ2r2lhqFWCMiBVd/noadjFSlLUQmKUzIwc5z8LF7OE0SNf2xo25JKCI3yqA
+         /XhMqNbxXPIdaKGToONu472F4vn0PKMZ53+hIUZDCd7Dz1Xe3KFbRpuAvH9bKw4vDnjT
+         3ZNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=e35y6ur99RgJgK3+C+gKsYNX9QOmlWF80gnfw6qRcWs=;
+        b=i/I4uI7Z9tJoTWk3s0SV2p1tAo8Ytu7cO5q+2KFtSI0Z/TyQSC53lTEkd5Uy+8RvCf
+         GMk5ocq4uc8jmoxsM46QbqE35N2Np+b/16NnzV87V8I0Ti+oO/wz018KhoTXDymxBiZ/
+         zajZgjR0oAK4BZFAX9myHQ0F0VTgLjJYC3CGmEmA+Tv0BYkdMPA+rG1M9EWxvarcOKQX
+         gSPEvLQg98Ll8h8OJ+EOJk22yjwKA+/y3KHncVa8j78KviVgx46+iEPGAZeCxKrjyz3s
+         +z88t4HrML+Jsj0lvTAvFwWeC4dxxy1GPAw9C2wwppsqqwZxGDFFq0cicLBnxX7ndR1f
+         IO/Q==
+X-Gm-Message-State: AJaThX7WuZQvHWT1YyRyGAJz8l6qa3tC6ieOXt14y/YI89NgC8PbwMrS
+        E84wW9c+xTGf9aLC2KuSEI0=
+X-Google-Smtp-Source: AGs4zMYdQTTrIWCwiFSFecjytlLqFDPyVgmXPzy6kwW6b6i12OzPNRLj7xVE+54iIUgRtf05c8toMA==
+X-Received: by 10.223.189.11 with SMTP id j11mr11074879wrh.265.1511302330953;
+        Tue, 21 Nov 2017 14:12:10 -0800 (PST)
+Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
+        by smtp.gmail.com with ESMTPSA id j125sm4028914wmf.24.2017.11.21.14.12.09
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 21 Nov 2017 14:12:10 -0800 (PST)
+Date:   Tue, 21 Nov 2017 22:13:39 +0000
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 3/3] worktree: make add <path> dwim
+Message-ID: <20171121221339.GA4047@hank>
+References: <20171118181103.28354-1-t.gummerer@gmail.com>
+ <20171118224706.13810-1-t.gummerer@gmail.com>
+ <20171118224706.13810-4-t.gummerer@gmail.com>
+ <CAPig+cQqbvuZg0Y8ZMObZc7mYXzohooVBFj0-o+CGGXrgGLp5w@mail.gmail.com>
+ <CAPig+cTmqHt5s+C1vTFA7S4ZBwjqnzkn-2wA6i3jVeLw7i1_Lg@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAPig+cTmqHt5s+C1vTFA7S4ZBwjqnzkn-2wA6i3jVeLw7i1_Lg@mail.gmail.com>
+User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 2017-11-22 at 00:19 +0800, Laetitia Pfaender wrote:
-> cd repo-in-branchB
-> git branch --set-upstream-to=origin/branchB
-> git pull
+On 11/19, Eric Sunshine wrote:
+> On Sun, Nov 19, 2017 at 2:04 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> > On Sat, Nov 18, 2017 at 5:47 PM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
+> >> +To disable the behaviour of trying to match the basename of <path> to
+> >> +a remote, and always create a new branch from HEAD, the `--no-track`
+> >
+> > Does --[no-]track deserve to be documented in the OPTIONS section like
+> > the other options are?
 > 
-> git branch --set-upstream-to=origin/branchA
-> git pull
-> git branch --set-
-> upstream-to=origin/branchB
-> 
-> It does exactly what I want but, as I have
-> many children branches B to update, I would like to prompt my
-> username and password only once and then makes the script use them in
-> all following git requests.
+> One other question: Since this is re-using the well-known option name
+> --no-track, should it also get applied to the "git worktree add -b foo
+> dir origin/foo" case, as well, which you pointed out (in the patch 2/3
+> thread) already DWIMs tracking automatically? (I can easily see
+> someone reporting it as a bug if "git worktree add --no-track -b foo
+> dir origin/foo" does not suppress tracking.)
 
-It would be nice if you explained in words exactly what it is you want
-to do.
-
-This seems like a lot more work than necessary.  A "git pull" consists
-of two steps: first a "git fetch" which is the part that actually goes
-out to the remote and pulls all the new content, and then a merge
-operation to the remote's version of the current branch.
-
-The "git fetch" is all that needs credentials, and it pulls the entire
-contents of the repo including all branches, so you only need to do it
-once.
-
-Is there some reason why you can't do the following:
-
-  cd repo
-  git fetch (requires you to enter username/password)
-  git merge origin/branchB
-  git merge origin/branchA
-
-and just continue to merge for each different branch (without re-
-running git fetch)?
-
->  I came to the conclusion that I needed to update my script as
-> follow:
-> echo “pull from branchB"
-> git pull https://$username:$password@g
-> ithub.com/myrepo.git heads/branchB
-> echo “pull from parent branchA"
-> git
-> pull https://$username:$password@github.com/myrepo.git heads/branchA
->  I came to the conclusion that I needed to update my script as
-> follow:
-> echo “pull from branchB"
-> git pull https://$username:$password@g
-> ithub.com/myrepo.git heads/branchB
-> echo “pull from parent branchA"
-> git
-> pull https://$username:$password@github.com/myrepo.git heads/branchA
-
-Don't know how well this works as I don't use HTTPS remotes very much. 
-But note, this will make your username AND password for your GitHub
-account visible to anyone one the system who happens to run "ps" while
-your pull command is running.
+I didn't consider that, I think you are right, and the flag should
+apply in that case as well.  I think at that point we may as well pass
+this flag through to the 'git branch' call, and let users set up
+tracking if they want to, the same way it works in 'git branch'.  Thanks!
