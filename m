@@ -2,106 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 34ABF20954
-	for <e@80x24.org>; Tue, 21 Nov 2017 08:17:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 405A020954
+	for <e@80x24.org>; Tue, 21 Nov 2017 10:44:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751340AbdKUIRO (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Nov 2017 03:17:14 -0500
-Received: from mail-it0-f54.google.com ([209.85.214.54]:32792 "EHLO
-        mail-it0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751154AbdKUIRN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Nov 2017 03:17:13 -0500
-Received: by mail-it0-f54.google.com with SMTP id o130so6500761itg.0
-        for <git@vger.kernel.org>; Tue, 21 Nov 2017 00:17:13 -0800 (PST)
+        id S1751840AbdKUKoN (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Nov 2017 05:44:13 -0500
+Received: from mail-wm0-f45.google.com ([74.125.82.45]:35485 "EHLO
+        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751766AbdKUKoI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Nov 2017 05:44:08 -0500
+Received: by mail-wm0-f45.google.com with SMTP id y80so2322901wmd.0
+        for <git@vger.kernel.org>; Tue, 21 Nov 2017 02:44:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=UKL4FMEDw6FoQT4TL90Jj0Ne0Drff9TiTr3cfsT8Bnc=;
-        b=GVIctuCfOSKfhZLPqhD/t/GFCYlhaDuI5AmCLhhNAJdpr/a0qZAxJ2KbPJKCgdgHGS
-         g9IfM179cuOt3a97TX+sqFWVfiCPdIDJzTH8fnRVs22re96F4QlmXEWR0pmL3uExjl94
-         IcL/ft8Yr7G9h3U/vovJWyOSfsVRetKDSNNvtQc1HJxwfi902Ltzl9ZTe+Mwoer3WcS3
-         7giZ5Wb5+DVPuP6bIzAPRn6fFX3iqOLJaNKvkTwGazKjJGRMZS2wirjjVKhjrvWxQ+Xc
-         AaJkYkG1vcPWWPUM8sb1chtN3aIjEJOFW4cdr7FzN2/DM4qmXCxGvs1cKmh/uM5j3bIO
-         KlPw==
+        d=dinwoodie.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=xJycUYYevvy/uYul9vSsQy4lnLoVJzzDkQm1humU+xc=;
+        b=rIlY6qYAYPhlkuSoOIpLPbl9wy4Evry7KgbKiNEJzlZi0Re0XswMfSx3Ur4QTl3J++
+         YDDGAw39wirmDMNkdDP1IdwIP48YFJUnpXLw1WJdJpuD/U1ufpp4MD7KVfQu60sORWFJ
+         NxqBKMc+NYg+A3ESIpjPivTZJYywI3DdkAUU4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=UKL4FMEDw6FoQT4TL90Jj0Ne0Drff9TiTr3cfsT8Bnc=;
-        b=ULBAyzsWSBegoUKf9QXojSU1gLy1pMSgjS1UzrqHUDG9yuCK8Gcc4spd0YClWFpWv2
-         ANGDp3x9XfM2kmN12lmZHG5RMaHbDSAR3mOksjZBVDHo1/D9pPo0F7cLJV22YTOXRC8I
-         dOP8O5iwfrWZYkkhsdqzmfgi+Z3thlFskz45qC2b5c0RoMx9o6KcS62/ZK29UZJyPVsn
-         HINAltWaFEWRTr7ayhJBrS9j/m781eE6hGLJ6vsoNduzvwQAMYKPQd0KQLKeRog0X3lR
-         RFsqoQwUrXCJUB0NK6x1y6IIL6cibdwTtICENb4nbNuSCtQ3KiH1paSQzCVG00ITy4CC
-         JWDg==
-X-Gm-Message-State: AJaThX4mqDmND1qBSx40R/y1iVCxtRNYqSAqWe5j+y5x9Yr5kMpPWVrL
-        qHbbIXg3wamzkdMST9HiXxqJeaaQ55UJI0pURdY=
-X-Google-Smtp-Source: AGs4zMb1HMqCajUaO8nurLhrSHn/2HV01VW0rubqBNq8F5B7LrspqSp5GYiekId322wqXipHaPMsgPrRR95QIdKsa7w=
-X-Received: by 10.36.192.2 with SMTP id u2mr840231itf.119.1511252232367; Tue,
- 21 Nov 2017 00:17:12 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.79.28.137 with HTTP; Tue, 21 Nov 2017 00:17:11 -0800 (PST)
-In-Reply-To: <20171121011017.e2aac53zfo2n2whc@aiede.mtv.corp.google.com>
-References: <CAP8UFD0ggpUGGoOEjAt3sB9=ek+Av+6GemiyqZ4kTCHLC9dWoA@mail.gmail.com>
- <CAJYFCiOj1DwgMMrFRxV315CB7xuvXMFRbRAkbx6s14oPm3ui1Q@mail.gmail.com> <20171121011017.e2aac53zfo2n2whc@aiede.mtv.corp.google.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Tue, 21 Nov 2017 09:17:11 +0100
-Message-ID: <CAP8UFD0dN2V5GVokvMD-XLDEhPVJrE=m3h8oM5VC_Lq6x3=9=A@mail.gmail.com>
-Subject: Re: Draft of Git Rev News edition 33
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Yubin Ruan <ablacktshirt@gmail.com>, git <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Thomas Ferris Nicolaisen <tfnico@gmail.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Markus Jansen <mja@jansen-preisler.de>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=xJycUYYevvy/uYul9vSsQy4lnLoVJzzDkQm1humU+xc=;
+        b=bdLwh9I4LUB81SFZRColIjdzR75Pp5FZVkWdnhefls93DrFD4AM0rQJ1LjFVB9oR9+
+         L6v/nbuNoZ7j5nqyE9mjOlSHMdRnwHyrXDSoStT0UvrxEWesfbOELHSf+yBmwiJViY4c
+         sGUEQEww0XuEEpn9JZlg3FZ42UnbXpZResF/CX+0YpfvHsMbVX48jF728qqSkcD7wtzQ
+         Zvu81Q1JmSnrBHEDJoJKgtJx4mgcz+7Btwa+OpTpS+wvg2r3Wykr6RoPkLspwzHj5zKs
+         vgWPRdZDHQriTVjP4x7ZvozJvNjZGeuwR/6hicSKWLAf5Ih5c+8WB9+MY5wp34o2Odg0
+         xP4w==
+X-Gm-Message-State: AJaThX7a52W3y9VqAfWlr0rqc1cWlASBnPiz5z5IjM4a+2YiVpOFMqsp
+        aPrB8XzpP/17889Ju59QpkwJxw==
+X-Google-Smtp-Source: AGs4zMaCiJY4VC53NqQ3VWjan+VpPSSe4zincfgFqxcr7QTxvK0mOAQDB/mRGV15sJGX1jPNG4RdjA==
+X-Received: by 10.28.110.26 with SMTP id j26mr919906wmc.46.1511261047062;
+        Tue, 21 Nov 2017 02:44:07 -0800 (PST)
+Received: from dinwoodie.org ([2001:ba8:0:1c0::9:1])
+        by smtp.gmail.com with ESMTPSA id u194sm924937wmd.6.2017.11.21.02.44.05
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 21 Nov 2017 02:44:06 -0800 (PST)
+Date:   Tue, 21 Nov 2017 10:44:04 +0000
+From:   Adam Dinwoodie <adam@dinwoodie.org>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
         Stefan Beller <sbeller@google.com>,
-        =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
-        =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Phillip Wood <phillip.wood@talktalk.net>,
-        Ross Kabus <rkabus@aerotech.com>,
-        Henry Kleynhans <hkleynhans@bloomberg.net>,
-        Charles Bailey <charles@hashpling.org>,
-        Thomas Gummerer <t.gummerer@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        GIT Mailing-list <git@vger.kernel.org>
+Subject: Re: t3512 & t3513 'unexpected passes'
+Message-ID: <20171121104404.GN20681@dinwoodie.org>
+References: <73f0fb1e-5b55-1049-7706-652f1f9deaed@ramsayjones.plus.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <73f0fb1e-5b55-1049-7706-652f1f9deaed@ramsayjones.plus.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 21, 2017 at 2:10 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
->
-> That said, I believe that the gitattributes(5) manpage does an okay
-> job of covering this and that that thread came to a clear conclusion:
->
->   https://public-inbox.org/git/20171026203046.fu3z5ngnw7hckfrn@aiede.mtv.corp.google.com/
->
-> I commented at [1] that I found the conclusion of the rev news entry
-> misleading and confusing but it doesn't appear that there is anything
-> I can do about that.
+On Monday 20 November 2017 at 08:16 pm +0000, Ramsay Jones wrote:
+> For several days, I have been staring at some 'unexpected passes' in
+> the t3512-cherry-pick-submodule.sh and t3513-revert-submodule.sh test
+> files (tests #11-13 in both cases).
+> 
+> I finally found time tonight to 'git bisect' the 'problem', and found
+> that bisect fingered commit b5a812b298 ("sequencer: try to commit without
+>  forking 'git commit'", 17-11-2017).
+> 
+> During the bisection I stumbled across (several times) the following
+> compilation error:
+> 
+>       CC sequencer.o
+>   sequencer.c: In function ‘do_commit’:
+>   sequencer.c:1142:9: error: void value not ignored as it ought to be
+>        res = print_commit_summary(NULL, &oid,
+>            ^
+>   Makefile:2105: recipe for target 'sequencer.o' failed
+>   make: *** [sequencer.o] Error 1
+> 
+> which I 'fixed' like so: s/res = //
+> 
+> So, given that the 'fingered' commit didn't immediately seem to be
+> related to the problem, along with the above errors, this may well
+> not be the culprit.
 
-Well, you could have provided a pull request or otherwise suggested
-what you think would be a better conclusion for the article and why.
+I've seen the same unexpected passes, and had just completed the same
+bisect run myself, although I fixed the build failure by cherry-picking
+82921316a ("SQUASH???", 2017-11-18) onto commits that wouldn't build,
+given that commit seems to exist entirely to fix that build breakage.  I
+think that adds more weight to b5a812b29 being the culprit for these
+unexpected passes.
 
-If you just say that the above email is the conclusion, when it seems
-to me that another email from someone else is also a conclusion with a
-quite different outcome, it does not help much come to an agreement
-about what should be reported as the conclusion of the thread.
-
-> It's disappointing because if there is something
-> that was not covered in that thread, then it would be good to revive
-> it so we can improve the program's behavior or docs, but I wasn't able
-> to find out what was missed.
-
-Perhaps nothing was missed, but as the issue is complex, it is just
-difficult to explain and summarize it in a good way.
+It's definitely the case that these unexpected passes exist at 8e4ff0ae1
+("Merge branch 'pw/sequencer-in-process-commit' into pu", 2017-11-21)
+and do not exist at its immediate left-hand parent, e017a4ccc ("Merge
+branch 'jn/ssh-wrappers' into jch", 2017-11-21), which means it's
+clearly _something_ in the branch merged at 8e4ff0ae1.
