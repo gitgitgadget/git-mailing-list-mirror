@@ -7,77 +7,61 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6A040202F2
-	for <e@80x24.org>; Tue, 21 Nov 2017 01:10:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4271F202F2
+	for <e@80x24.org>; Tue, 21 Nov 2017 01:16:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752008AbdKUBKY (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Nov 2017 20:10:24 -0500
-Received: from mail-io0-f193.google.com ([209.85.223.193]:40941 "EHLO
-        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751864AbdKUBKX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Nov 2017 20:10:23 -0500
-Received: by mail-io0-f193.google.com with SMTP id d123so1645587iog.7
-        for <git@vger.kernel.org>; Mon, 20 Nov 2017 17:10:23 -0800 (PST)
+        id S1751519AbdKUBQh (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Nov 2017 20:16:37 -0500
+Received: from mail-io0-f178.google.com ([209.85.223.178]:45242 "EHLO
+        mail-io0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751195AbdKUBQh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Nov 2017 20:16:37 -0500
+Received: by mail-io0-f178.google.com with SMTP id z74so17714659iof.12
+        for <git@vger.kernel.org>; Mon, 20 Nov 2017 17:16:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=84u1xaonovsmUV2/yVKrcpnufmWay7r5vezKEXx+LAM=;
-        b=KluBF1CraTsLzYjCsBPEFIu/NHrlQMW/dvXpzJ8qw/TLySKI9U5jGWpIJhWFs7Wryh
-         tQ7hFy3LSpWtGyE1e6XNuvHmrgaE86QQEwS0L1YnxtM1VJF3c2P9wib6prtv/BXzUyJ+
-         EmUuV/lhQfZloH+rLHoDUFokVe1Eq4XECRxkwjmgMmnJardYanOQAlab7NO/sMQacGNO
-         xeSdtTkDjH4X8iGFrnpep09Dedw//SWw5Wd6BfvN0cITNr5HVN1qazu4ivMvxF/Xf6oX
-         gQlh8QaEBqJzwGV9tFQhultEpz2X4iLWkjNDOiKyS83JwXhltnxsg4Wi+TbaxIrjZ3q+
-         qprg==
+        bh=rTLFZXT/tUQBJ3cghdbyAzmFN7ib1Mr+d4TmBP09+2Q=;
+        b=LZHS/mjAiYywmd0jAs+aaVLNxCzlrNlJHvCVszkunDYw/1ea9fq3gfrtBMcRqWSRMd
+         MeBySgSqzxTYAnuOH/zMxzhN5rDtOCjA5Xe8721T/9Y/1FpUUiKuZeFUXZ+kQzs0Jn+h
+         dpRMCDhoHDLly+dJgXmzZtDCWRs0ldG8DMfdodrz6bOHRfxHHYDnpB7aosL6EWGBfLqs
+         LEDJ3PsM5nbu6yXy0/7K1VbyAgXPIzua2odl6sbJ+Ra7AMQtvMgCP+v7JkhYBG7tS+Ox
+         nN6WeA8Z1jx2Wg8FxLRBIupdSIIH0nj3wUNffAmdielW6sPfD/OkRiVSnWVZ1uPRRU0z
+         Tnhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=84u1xaonovsmUV2/yVKrcpnufmWay7r5vezKEXx+LAM=;
-        b=i1vcMOQrbuocb5IQYbioPgQIZgzXTMp301qUVwa7IJMg/0XLGg5lYUWiBV2cFUSqEc
-         ZB4N6BRa+sSpzbt04iwQ03g2r1oscylBztV4zphZqptBsdzUWJTVdDjbD0fwRZ2/bgsX
-         ww6AaKkUP3lLLi+CorGf6keUJJ3YEOY99G+e8gOnl+Mk/HGIoasx9PkeRRRZsHunsE2U
-         RGBd0vEQ3NwqhQB+yTIGmFeXzQWWN6IJTsKbhZ0kce6q7v4YiXLXHVM3BfHQop24dLse
-         52RFz9WSHoDhEmhcRAvVGXHSKIKlV8D8CWUosecrLKRQ7iB9sZ+gLG7yAGdwohRMqD63
-         V08Q==
-X-Gm-Message-State: AJaThX7TBFRjz/x8PnGxwKX0obLwTpOFSx6V5fKlM0rNCAHi/x/nbBrY
-        7yNWKwlYZDRWaQZDa6MXu4M=
-X-Google-Smtp-Source: AGs4zMYo/AGy4qlqpWSFQylvhhdvDQ/g+SqUXWe+ZHBgWFAH3rZT7fQbkJ9Znk3V8/nTnYmYCIM0dQ==
-X-Received: by 10.107.53.98 with SMTP id c95mr566551ioa.199.1511226621322;
-        Mon, 20 Nov 2017 17:10:21 -0800 (PST)
+        bh=rTLFZXT/tUQBJ3cghdbyAzmFN7ib1Mr+d4TmBP09+2Q=;
+        b=VhTj4mjqD0mn5G1rubQRwCWkluGJJaUxQBihRtiBuyOQusoQEcTF6UO9VKcIOs7MKt
+         lKIbhWSITSRhtvQ7Owf0jRzj21zlbp3KO4NJFYWdt2YiZjnPkLvA/Jw/2TRDLtA3wtIN
+         MyihNQzyiRN/ysasQWSf67XTOGjtaZVg9YSex7BlKd+t4kXqK11e8yJx6NoArVyG+4ch
+         rXJhjRE94KyGBwsGw8mBpk+Kq5JKGokC4ilwNeHMm5zWorRkRfj/P/nDPuJapEkg2xlK
+         ZtiLuUOarNKFPVHXe51wckUlLBAx11vWPuOEfCNOIghsoW5esH6VFHTR8JolFX0smPZp
+         HyIg==
+X-Gm-Message-State: AJaThX6gFsasSnMMsA04uJuW2/BhWb3rujyMc+1GeaXyjp6uDaln0T6o
+        cX7wD/l1sxYeDfShKzu4Axc=
+X-Google-Smtp-Source: AGs4zMa0Dwgse7tLjdIwbGtDCo5DRDJgLfZo7We7wLDOGY4GxaP8bmfuvo31r7e3hkT86vkQp6eMYQ==
+X-Received: by 10.107.36.17 with SMTP id k17mr3348071iok.176.1511226996472;
+        Mon, 20 Nov 2017 17:16:36 -0800 (PST)
 Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id f3sm4856137iob.70.2017.11.20.17.10.19
+        by smtp.gmail.com with ESMTPSA id 14sm5026509ior.48.2017.11.20.17.16.35
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 20 Nov 2017 17:10:20 -0800 (PST)
-Date:   Mon, 20 Nov 2017 17:10:17 -0800
+        Mon, 20 Nov 2017 17:16:35 -0800 (PST)
+Date:   Mon, 20 Nov 2017 17:16:34 -0800
 From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Yubin Ruan <ablacktshirt@gmail.com>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Thomas Ferris Nicolaisen <tfnico@gmail.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Markus Jansen <mja@jansen-preisler.de>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Stefan Beller <sbeller@google.com>,
-        =?utf-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
-        Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Phillip Wood <phillip.wood@talktalk.net>,
-        Ross Kabus <rkabus@aerotech.com>,
-        Henry Kleynhans <hkleynhans@bloomberg.net>,
-        Charles Bailey <charles@hashpling.org>,
-        Thomas Gummerer <t.gummerer@gmail.com>
-Subject: Re: Draft of Git Rev News edition 33
-Message-ID: <20171121011017.e2aac53zfo2n2whc@aiede.mtv.corp.google.com>
-References: <CAP8UFD0ggpUGGoOEjAt3sB9=ek+Av+6GemiyqZ4kTCHLC9dWoA@mail.gmail.com>
- <CAJYFCiOj1DwgMMrFRxV315CB7xuvXMFRbRAkbx6s14oPm3ui1Q@mail.gmail.com>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Jeff Hostetler <jeffhost@microsoft.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+Subject: Re: [PATCH] list-objects-filter-options: fix up some sparse warnings
+Message-ID: <20171121011634.dw6tdgp2s7lpl2lm@aiede.mtv.corp.google.com>
+References: <b1037774-6ae6-630b-f330-e95b1c3d681d@ramsayjones.plus.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAJYFCiOj1DwgMMrFRxV315CB7xuvXMFRbRAkbx6s14oPm3ui1Q@mail.gmail.com>
+In-Reply-To: <b1037774-6ae6-630b-f330-e95b1c3d681d@ramsayjones.plus.com>
 User-Agent: NeoMutt/20170609 (1.8.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -86,42 +70,17 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi,
 
-Yubin Ruan wrote:
-> 2017-11-20 16:33 GMT+08:00 Christian Couder <christian.couder@gmail.com>:
+Ramsay Jones wrote:
 
->> A draft of a new Git Rev News edition is available here:
->>
->>   https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-33.md
->>
->> Everyone is welcome to contribute in any section either by editing the
->> above page on GitHub and sending a pull request, or by commenting on
->> this GitHub issue:
->>
->>   https://github.com/git/git.github.io/issues/262
->>
->> You can also reply to this email.
-[...]
-> For the CRLF issue: I am not really that concerned with this issue
-> because I mostly develop all my project on Linux. But can't git treat
-> CRLF and LF just as the same thing? That will solves the problem
-> gracefully.
+> If you need to re-roll your 'jh/object-filtering' branch, could you
+> please squash this (or something like it) into the relevant patch
+> (commit bf0aedcbe1, "list-objects: filter objects in traverse_commit_list",
+> 16-11-2017).
 
-Do you mean that it should ignore line ending changes?  What line
-endings should a user get when they "git clone" or "git checkout"?
+Micronit: can these messages use the ISO 8601 order 2017-11-16?
 
-That said, I believe that the gitattributes(5) manpage does an okay
-job of covering this and that that thread came to a clear conclusion:
-
-  https://public-inbox.org/git/20171026203046.fu3z5ngnw7hckfrn@aiede.mtv.corp.google.com/
-
-I commented at [1] that I found the conclusion of the rev news entry
-misleading and confusing but it doesn't appear that there is anything
-I can do about that.  It's disappointing because if there is something
-that was not covered in that thread, then it would be good to revive
-it so we can improve the program's behavior or docs, but I wasn't able
-to find out what was missed.
+That way, the date can be read without confusion regardless of what
+locale the reader is in.
 
 Thanks,
 Jonathan
-
-[1] https://github.com/git/git.github.io/issues/262#issuecomment-345804038
