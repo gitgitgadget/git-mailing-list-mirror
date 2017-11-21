@@ -6,30 +6,30 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A625B2036D
-	for <e@80x24.org>; Tue, 21 Nov 2017 21:16:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F2FB82036D
+	for <e@80x24.org>; Tue, 21 Nov 2017 21:16:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751586AbdKUVQb (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Nov 2017 16:16:31 -0500
-Received: from siwi.pair.com ([209.68.5.199]:38464 "EHLO siwi.pair.com"
+        id S1751594AbdKUVQf (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Nov 2017 16:16:35 -0500
+Received: from siwi.pair.com ([209.68.5.199]:38410 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751460AbdKUVPt (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Nov 2017 16:15:49 -0500
+        id S1751229AbdKUVPm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Nov 2017 16:15:42 -0500
 Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id E29F9844F5;
-        Tue, 21 Nov 2017 16:15:48 -0500 (EST)
+        by siwi.pair.com (Postfix) with ESMTP id 4E98D844F5;
+        Tue, 21 Nov 2017 16:15:42 -0500 (EST)
 Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 711F1844D5;
-        Tue, 21 Nov 2017 16:15:48 -0500 (EST)
+        by siwi.pair.com (Postfix) with ESMTPSA id C57D6844D5;
+        Tue, 21 Nov 2017 16:15:41 -0500 (EST)
 From:   Jeff Hostetler <git@jeffhostetler.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, jonathantanmy@google.com,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v5 13/14] unpack-trees: batch fetching of missing blobs
-Date:   Tue, 21 Nov 2017 21:15:27 +0000
-Message-Id: <20171121211528.21891-14-git@jeffhostetler.com>
+Subject: [PATCH v5 02/14] clone, fetch-pack, index-pack, transport: partial clone
+Date:   Tue, 21 Nov 2017 21:15:16 +0000
+Message-Id: <20171121211528.21891-3-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20171121211528.21891-1-git@jeffhostetler.com>
 References: <20171121211528.21891-1-git@jeffhostetler.com>
@@ -38,199 +38,215 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jonathan Tan <jonathantanmy@google.com>
+From: Jeff Hostetler <jeffhost@microsoft.com>
 
-When running checkout, first prefetch all blobs that are to be updated
-but are missing. This means that only one pack is downloaded during such
-operations, instead of one per missing blob.
-
-This operates only on the blob level - if a repository has a missing
-tree, they are still fetched one at a time.
-
-This does not use the delayed checkout mechanism introduced in commit
-2841e8f ("convert: add "status=delayed" to filter process protocol",
-2017-06-30) due to significant conceptual differences - in particular,
-for partial clones, we already know what needs to be fetched based on
-the contents of the local repo alone, whereas for status=delayed, it is
-the filter process that tells us what needs to be checked in the end.
-
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- fetch-object.c   | 26 ++++++++++++++++++++++----
- fetch-object.h   |  5 +++++
- t/t5601-clone.sh | 52 ++++++++++++++++++++++++++++++++++++++++++++++++++++
- unpack-trees.c   | 22 ++++++++++++++++++++++
- 4 files changed, 101 insertions(+), 4 deletions(-)
+ builtin/clone.c      |  9 +++++++++
+ builtin/fetch-pack.c |  4 ++++
+ fetch-pack.c         | 13 +++++++++++++
+ fetch-pack.h         |  2 ++
+ transport-helper.c   |  5 +++++
+ transport.c          |  4 ++++
+ transport.h          |  5 +++++
+ 7 files changed, 42 insertions(+)
 
-diff --git a/fetch-object.c b/fetch-object.c
-index fc086fc..21b4dfa 100644
---- a/fetch-object.c
-+++ b/fetch-object.c
-@@ -5,11 +5,10 @@
- #include "transport.h"
- #include "fetch-object.h"
- 
--void fetch_object(const char *remote_name, const unsigned char *sha1)
-+static void fetch_refs(const char *remote_name, struct ref *ref)
- {
- 	struct remote *remote;
- 	struct transport *transport;
--	struct ref *ref;
- 	int original_fetch_if_missing = fetch_if_missing;
- 
- 	fetch_if_missing = 0;
-@@ -18,10 +17,29 @@ void fetch_object(const char *remote_name, const unsigned char *sha1)
- 		die(_("Remote with no URL"));
- 	transport = transport_get(remote, remote->url[0]);
- 
--	ref = alloc_ref(sha1_to_hex(sha1));
--	hashcpy(ref->old_oid.hash, sha1);
- 	transport_set_option(transport, TRANS_OPT_FROM_PROMISOR, "1");
- 	transport_set_option(transport, TRANS_OPT_NO_HAVES, "1");
- 	transport_fetch_refs(transport, ref);
- 	fetch_if_missing = original_fetch_if_missing;
- }
-+
-+void fetch_object(const char *remote_name, const unsigned char *sha1)
-+{
-+	struct ref *ref = alloc_ref(sha1_to_hex(sha1));
-+	hashcpy(ref->old_oid.hash, sha1);
-+	fetch_refs(remote_name, ref);
-+}
-+
-+void fetch_objects(const char *remote_name, const struct oid_array *to_fetch)
-+{
-+	struct ref *ref = NULL;
-+	int i;
-+
-+	for (i = 0; i < to_fetch->nr; i++) {
-+		struct ref *new_ref = alloc_ref(oid_to_hex(&to_fetch->oid[i]));
-+		oidcpy(&new_ref->old_oid, &to_fetch->oid[i]);
-+		new_ref->next = ref;
-+		ref = new_ref;
-+	}
-+	fetch_refs(remote_name, ref);
-+}
-diff --git a/fetch-object.h b/fetch-object.h
-index f371300..4b269d0 100644
---- a/fetch-object.h
-+++ b/fetch-object.h
-@@ -1,6 +1,11 @@
- #ifndef FETCH_OBJECT_H
- #define FETCH_OBJECT_H
- 
-+#include "sha1-array.h"
-+
- extern void fetch_object(const char *remote_name, const unsigned char *sha1);
- 
-+extern void fetch_objects(const char *remote_name,
-+			  const struct oid_array *to_fetch);
-+
- #endif
-diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index 6d37c6d..13610b7 100755
---- a/t/t5601-clone.sh
-+++ b/t/t5601-clone.sh
-@@ -611,6 +611,58 @@ test_expect_success 'partial clone: warn if server does not support object filte
- 	test_i18ngrep "filtering not recognized by server" err
- '
- 
-+test_expect_success 'batch missing blob request during checkout' '
-+	rm -rf server client &&
-+
-+	test_create_repo server &&
-+	echo a >server/a &&
-+	echo b >server/b &&
-+	git -C server add a b &&
-+
-+	git -C server commit -m x &&
-+	echo aa >server/a &&
-+	echo bb >server/b &&
-+	git -C server add a b &&
-+	git -C server commit -m x &&
-+
-+	test_config -C server uploadpack.allowfilter 1 &&
-+	test_config -C server uploadpack.allowanysha1inwant 1 &&
-+
-+	git clone --filter=blob:limit=0 "file://$(pwd)/server" client &&
-+
-+	# Ensure that there is only one negotiation by checking that there is
-+	# only "done" line sent. ("done" marks the end of negotiation.)
-+	GIT_TRACE_PACKET="$(pwd)/trace" git -C client checkout HEAD^ &&
-+	grep "git> done" trace >done_lines &&
-+	test_line_count = 1 done_lines
-+'
-+
-+test_expect_success 'batch missing blob request does not inadvertently try to fetch gitlinks' '
-+	rm -rf server client &&
-+
-+	test_create_repo repo_for_submodule &&
-+	test_commit -C repo_for_submodule x &&
-+
-+	test_create_repo server &&
-+	echo a >server/a &&
-+	echo b >server/b &&
-+	git -C server add a b &&
-+	git -C server commit -m x &&
-+
-+	echo aa >server/a &&
-+	echo bb >server/b &&
-+	# Also add a gitlink pointing to an arbitrary repository
-+	git -C server submodule add "$(pwd)/repo_for_submodule" c &&
-+	git -C server add a b c &&
-+	git -C server commit -m x &&
-+
-+	test_config -C server uploadpack.allowfilter 1 &&
-+	test_config -C server uploadpack.allowanysha1inwant 1 &&
-+
-+	# Make sure that it succeeds
-+	git clone --filter=blob:limit=0 "file://$(pwd)/server" client
-+'
-+
- . "$TEST_DIRECTORY"/lib-httpd.sh
- start_httpd
- 
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 71b70cc..73a1cdb 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -14,6 +14,7 @@
- #include "dir.h"
- #include "submodule.h"
- #include "submodule-config.h"
-+#include "fetch-object.h"
+diff --git a/builtin/clone.c b/builtin/clone.c
+index dbddd98..0a8ac76 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -26,6 +26,7 @@
+ #include "run-command.h"
+ #include "connected.h"
+ #include "packfile.h"
++#include "list-objects-filter-options.h"
  
  /*
-  * Error messages expected by scripts out of plumbing commands such as
-@@ -369,6 +370,27 @@ static int check_updates(struct unpack_trees_options *o)
- 		load_gitmodules_file(index, &state);
+  * Overall FIXMEs:
+@@ -60,6 +61,7 @@ static struct string_list option_optional_reference = STRING_LIST_INIT_NODUP;
+ static int option_dissociate;
+ static int max_jobs = -1;
+ static struct string_list option_recurse_submodules = STRING_LIST_INIT_NODUP;
++static struct list_objects_filter_options filter_options;
  
- 	enable_delayed_checkout(&state);
-+	if (repository_format_partial_clone && o->update && !o->dry_run) {
-+		/*
-+		 * Prefetch the objects that are to be checked out in the loop
-+		 * below.
-+		 */
-+		struct oid_array to_fetch = OID_ARRAY_INIT;
-+		int fetch_if_missing_store = fetch_if_missing;
-+		fetch_if_missing = 0;
-+		for (i = 0; i < index->cache_nr; i++) {
-+			struct cache_entry *ce = index->cache[i];
-+			if ((ce->ce_flags & CE_UPDATE) &&
-+			    !S_ISGITLINK(ce->ce_mode)) {
-+				if (!has_object_file(&ce->oid))
-+					oid_array_append(&to_fetch, &ce->oid);
-+			}
+ static int recurse_submodules_cb(const struct option *opt,
+ 				 const char *arg, int unset)
+@@ -135,6 +137,7 @@ static struct option builtin_clone_options[] = {
+ 			TRANSPORT_FAMILY_IPV4),
+ 	OPT_SET_INT('6', "ipv6", &family, N_("use IPv6 addresses only"),
+ 			TRANSPORT_FAMILY_IPV6),
++	OPT_PARSE_LIST_OBJECTS_FILTER(&filter_options),
+ 	OPT_END()
+ };
+ 
+@@ -1073,6 +1076,8 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 			warning(_("--shallow-since is ignored in local clones; use file:// instead."));
+ 		if (option_not.nr)
+ 			warning(_("--shallow-exclude is ignored in local clones; use file:// instead."));
++		if (filter_options.choice)
++			warning(_("--filter is ignored in local clones; use file:// instead."));
+ 		if (!access(mkpath("%s/shallow", path), F_OK)) {
+ 			if (option_local > 0)
+ 				warning(_("source repository is shallow, ignoring --local"));
+@@ -1104,6 +1109,10 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 		transport_set_option(transport, TRANS_OPT_UPLOADPACK,
+ 				     option_upload_pack);
+ 
++	if (filter_options.choice)
++		transport_set_option(transport, TRANS_OPT_LIST_OBJECTS_FILTER,
++				     filter_options.filter_spec);
++
+ 	if (transport->smart_options && !deepen)
+ 		transport->smart_options->check_self_contained_and_connected = 1;
+ 
+diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
+index 9a7ebf6..d0fdaa8 100644
+--- a/builtin/fetch-pack.c
++++ b/builtin/fetch-pack.c
+@@ -153,6 +153,10 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
+ 			args.no_haves = 1;
+ 			continue;
+ 		}
++		if (skip_prefix(arg, ("--" CL_ARG__FILTER "="), &arg)) {
++			parse_list_objects_filter(&args.filter_options, arg);
++			continue;
 +		}
-+		if (to_fetch.nr)
-+			fetch_objects(repository_format_partial_clone,
-+				      &to_fetch);
-+		fetch_if_missing = fetch_if_missing_store;
-+	}
- 	for (i = 0; i < index->cache_nr; i++) {
- 		struct cache_entry *ce = index->cache[i];
+ 		usage(fetch_pack_usage);
+ 	}
+ 	if (deepen_not.nr)
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 4640b4e..2b04251 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -29,6 +29,7 @@ static int deepen_not_ok;
+ static int fetch_fsck_objects = -1;
+ static int transfer_fsck_objects = -1;
+ static int agent_supported;
++static int server_supports_filtering;
+ static struct lock_file shallow_lock;
+ static const char *alternate_shallow_file;
  
+@@ -379,6 +380,8 @@ static int find_common(struct fetch_pack_args *args,
+ 			if (deepen_not_ok)      strbuf_addstr(&c, " deepen-not");
+ 			if (agent_supported)    strbuf_addf(&c, " agent=%s",
+ 							    git_user_agent_sanitized());
++			if (args->filter_options.choice)
++				strbuf_addstr(&c, " filter");
+ 			packet_buf_write(&req_buf, "want %s%s\n", remote_hex, c.buf);
+ 			strbuf_release(&c);
+ 		} else
+@@ -407,6 +410,9 @@ static int find_common(struct fetch_pack_args *args,
+ 			packet_buf_write(&req_buf, "deepen-not %s", s->string);
+ 		}
+ 	}
++	if (server_supports_filtering && args->filter_options.choice)
++		packet_buf_write(&req_buf, "filter %s",
++				 args->filter_options.filter_spec);
+ 	packet_buf_flush(&req_buf);
+ 	state_len = req_buf.len;
+ 
+@@ -967,6 +973,13 @@ static struct ref *do_fetch_pack(struct fetch_pack_args *args,
+ 	else
+ 		prefer_ofs_delta = 0;
+ 
++	if (server_supports("filter")) {
++		server_supports_filtering = 1;
++		print_verbose(args, _("Server supports filter"));
++	} else if (args->filter_options.choice) {
++		warning("filtering not recognized by server, ignoring");
++	}
++
+ 	if ((agent_feature = server_feature_value("agent", &agent_len))) {
+ 		agent_supported = 1;
+ 		if (agent_len)
+diff --git a/fetch-pack.h b/fetch-pack.h
+index 84904c3..64661b6 100644
+--- a/fetch-pack.h
++++ b/fetch-pack.h
+@@ -3,6 +3,7 @@
+ 
+ #include "string-list.h"
+ #include "run-command.h"
++#include "list-objects-filter-options.h"
+ 
+ struct oid_array;
+ 
+@@ -12,6 +13,7 @@ struct fetch_pack_args {
+ 	int depth;
+ 	const char *deepen_since;
+ 	const struct string_list *deepen_not;
++	struct list_objects_filter_options filter_options;
+ 	unsigned deepen_relative:1;
+ 	unsigned quiet:1;
+ 	unsigned keep_pack:1;
+diff --git a/transport-helper.c b/transport-helper.c
+index c948d52..0650ca0 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -671,6 +671,11 @@ static int fetch(struct transport *transport,
+ 	if (data->transport_options.update_shallow)
+ 		set_helper_option(transport, "update-shallow", "true");
+ 
++	if (data->transport_options.filter_options.choice)
++		set_helper_option(
++			transport, "filter",
++			data->transport_options.filter_options.filter_spec);
++
+ 	if (data->fetch)
+ 		return fetch_with_fetch(transport, nr_heads, to_fetch);
+ 
+diff --git a/transport.c b/transport.c
+index 8211f82..d50c73b 100644
+--- a/transport.c
++++ b/transport.c
+@@ -166,6 +166,9 @@ static int set_git_option(struct git_transport_options *opts,
+ 	} else if (!strcmp(name, TRANS_OPT_NO_HAVES)) {
+ 		opts->no_haves = !!value;
+ 		return 0;
++	} else if (!strcmp(name, TRANS_OPT_LIST_OBJECTS_FILTER)) {
++		parse_list_objects_filter(&opts->filter_options, value);
++		return 0;
+ 	}
+ 	return 1;
+ }
+@@ -236,6 +239,7 @@ static int fetch_refs_via_pack(struct transport *transport,
+ 	args.update_shallow = data->options.update_shallow;
+ 	args.from_promisor = data->options.from_promisor;
+ 	args.no_haves = data->options.no_haves;
++	args.filter_options = data->options.filter_options;
+ 
+ 	if (!data->got_remote_heads) {
+ 		connect_setup(transport, 0);
+diff --git a/transport.h b/transport.h
+index 67428f6..f64aa3a 100644
+--- a/transport.h
++++ b/transport.h
+@@ -4,6 +4,7 @@
+ #include "cache.h"
+ #include "run-command.h"
+ #include "remote.h"
++#include "list-objects-filter-options.h"
+ 
+ struct string_list;
+ 
+@@ -23,6 +24,7 @@ struct git_transport_options {
+ 	const char *uploadpack;
+ 	const char *receivepack;
+ 	struct push_cas_option *cas;
++	struct list_objects_filter_options filter_options;
+ };
+ 
+ enum transport_family {
+@@ -218,6 +220,9 @@ void transport_check_allowed(const char *type);
+ /* Do not send "have" lines */
+ #define TRANS_OPT_NO_HAVES "no-haves"
+ 
++/* Filter objects for partial clone and fetch */
++#define TRANS_OPT_LIST_OBJECTS_FILTER "filter"
++
+ /**
+  * Returns 0 if the option was used, non-zero otherwise. Prints a
+  * message to stderr if the option is not used.
 -- 
 2.9.3
 
