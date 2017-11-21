@@ -2,105 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 54DAA2036D
-	for <e@80x24.org>; Tue, 21 Nov 2017 20:52:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0F7942036D
+	for <e@80x24.org>; Tue, 21 Nov 2017 20:54:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751309AbdKUUwN (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Nov 2017 15:52:13 -0500
-Received: from mail-wm0-f42.google.com ([74.125.82.42]:33320 "EHLO
-        mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751067AbdKUUwM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Nov 2017 15:52:12 -0500
-Received: by mail-wm0-f42.google.com with SMTP id g130so11419085wme.0
-        for <git@vger.kernel.org>; Tue, 21 Nov 2017 12:52:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=8Zt9JyuZd2560Af0GnmZ9fyPeS9Ac7rhpohe0kc1Xuc=;
-        b=T5NxDI2gTNlK+GElOfXqnK1ri59F+1RNIpyCF56YUwFwTwZKBA9T6dRhZVROMOTkuG
-         gDje4MgDU8VJt0BOHW0mfjix26rOFcWLMY3RL5dqyMEQi2uX3uefUQr1FalWlX8t3PTA
-         TpiUQ6oNyle9t+WaCaYHl3qC1BhkjUobf6uELpe6vi6ryKCVddkmYkcboU68e4KvaTHx
-         RiFhTWftCQEOeZnFlxM0oyJTUc2UeYonhwt8Szdx/3pgqh6XvAZUGs/B1p0rMtZz9cUV
-         42zH7CYTdd0jX2Y60HO04cbVqMC/T8ucYkwG2Y3aIWESWRP68DixCD1bvYgTi1Q7BagQ
-         4uog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=8Zt9JyuZd2560Af0GnmZ9fyPeS9Ac7rhpohe0kc1Xuc=;
-        b=i89Wb/x1U5BZuINGNO3nNgtyetSPo/FFeKeoLf/zc9Q4VbT1MrO7IB2alSLOtrNQ3I
-         Vjk/41+JCI5V20yvJRmyXr4FtHvRveDTdYljDs6IaD2XEXGD7+M5aJywRnfPsMoHw/F5
-         20pE+HS00Z5+BtTXF7h3FC1I3Lt+W5DlFyD5i4d5BtCuu2CRLguh/jl10JsLa0efaWcS
-         9NhVMRJZDphmKkhXuf618/1C16qGKl3e0+DFskKvExnEbj/gqvEA4JmvQimeobHpY3Ho
-         LOt2RsXbAFrHk1apuqPz5Uy+A/Tt5pXpUAeoSY4CkFW4RGLbbPqTbzlbUde6p6mgSfsl
-         2WuA==
-X-Gm-Message-State: AJaThX6CfOFeknp4RDUVMcae7VdwLBmr3RmeE/Lx/i/GgqolPUEeEsnK
-        0VqIByI1SD1hAs6WV4chC0E=
-X-Google-Smtp-Source: AGs4zMYJoHJcTiLm6qY5l4RAJNI7om5daWaQKFr4q88Kj8ZS1pY2ivVMktH3/h703f524++e0yKQ7A==
-X-Received: by 10.28.70.66 with SMTP id t63mr2444034wma.106.1511297531243;
-        Tue, 21 Nov 2017 12:52:11 -0800 (PST)
-Received: from laptop ([46.233.112.42])
-        by smtp.gmail.com with ESMTPSA id e131sm14114900wmg.1.2017.11.21.12.52.09
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 21 Nov 2017 12:52:10 -0800 (PST)
-Date:   Tue, 21 Nov 2017 20:52:08 +0000
-From:   Thomas Adam <thomas@xteddy.org>
-To:     Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>,
-        Matthieu Moy <Matthieu.Moy@imag.fr>,
-        Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
-Subject: Re: [PATCH] git-send-email: fix get_maintainer.pl regression
-Message-ID: <20171121205206.fvwjkkwhil4abmmk@laptop>
-References: <20171116154814.23785-1-alex.bennee@linaro.org>
- <CAPig+cTXq6jSN9f2_xyj=Jfv_cg2kUFUtA5uVkZDrRRSi2x7vg@mail.gmail.com>
- <87wp2jwe9o.fsf@linaro.org>
+        id S1751410AbdKUUyp (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Nov 2017 15:54:45 -0500
+Received: from cpanel2.indieserve.net ([199.212.143.6]:45521 "EHLO
+        cpanel2.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751067AbdKUUyo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Nov 2017 15:54:44 -0500
+Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:38110 helo=localhost.localdomain)
+        by cpanel2.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.89)
+        (envelope-from <rpjday@crashcourse.ca>)
+        id 1eHFZ6-0006uz-8a
+        for git@vger.kernel.org; Tue, 21 Nov 2017 15:54:44 -0500
+Date:   Tue, 21 Nov 2017 15:53:22 -0500 (EST)
+From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
+X-X-Sender: rpjday@localhost.localdomain
+To:     Git Mailing list <git@vger.kernel.org>
+Subject: [PATCH] gitcli: tweak "man gitcli" for clarity
+Message-ID: <alpine.LFD.2.21.1711211551230.24935@localhost.localdomain>
+User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87wp2jwe9o.fsf@linaro.org>
-User-Agent: NeoMutt/20171013-21-a9a9c7-dirty
+Content-Type: text/plain; charset=US-ASCII
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel2.indieserve.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - crashcourse.ca
+X-Get-Message-Sender-Via: cpanel2.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: cpanel2.indieserve.net: rpjday@crashcourse.ca
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 21, 2017 at 08:46:59PM +0000, Alex Bennée wrote:
-> 
-> Eric Sunshine <sunshine@sunshineco.com> writes:
-> > Aside from those observations, it looks like the tokenizer in this
-> > function is broken. For any input with the address enclosed in "<" and
-> > ">", the comment is lost entirely; it doesn't even end up in the
-> > @tokens array. Since you're already fixing bugs/regressions in this
-> > code, perhaps that's something you'd like to tackle as well in a
-> > separate patch? ("No" is an acceptable answer, of course.)
-> >
-> >>                 } elsif ($token eq "<") {
-> >>                         push @phrase, (splice @address), (splice @buffer);
-> >>                 } elsif ($token eq ">") {
-> 
-> I can have a go but my perl-fu has weakened somewhat since I stopped
-> having to maintain perl code for a living. It's almost as though my
-> brain was glad to dump the knowledge ;-)
-> 
-> I guess we could maintain a nesting count and a current token type and
-> use that to more intelligently direct the nested portions to the
-> appropriate bits. Maybe Matthieu or Remi (CC'ed) might want to chime in
-> on other options?
+No major changes, just some rewording and showing some variations of
+general Git commands.
 
-Trying to come up with a reinvention of regexps for email addresses is asking
-for trouble, not to mention a crappy rod for your own back.  Don't do that.
-This is why people use Mail::Address.
+Signed-off-by: Robert P. J. Day <rpjday@crashcourse.ca>
 
-https://metacpan.org/pod/distribution/MailTools/lib/Mail/Address.pod
+---
 
--- Thomas Adam
+diff --git a/Documentation/gitcli.txt b/Documentation/gitcli.txt
+index 9f13266a6..a4efcb7ce 100644
+--- a/Documentation/gitcli.txt
++++ b/Documentation/gitcli.txt
+@@ -13,7 +13,7 @@ gitcli
+ DESCRIPTION
+ -----------
+
+-This manual describes the convention used throughout Git CLI.
++This manual describes the common conventions used throughout Git CLI.
+
+ Many commands take revisions (most often "commits", but sometimes
+ "tree-ish", depending on the context and command) and paths as their
+@@ -32,32 +32,35 @@ arguments.  Here are the rules:
+    between the HEAD commit and the work tree as a whole".  You can say
+    `git diff HEAD --` to ask for the latter.
+
+- * Without disambiguating `--`, Git makes a reasonable guess, but errors
+-   out and asking you to disambiguate when ambiguous.  E.g. if you have a
++ * Without a disambiguating `--`, Git makes a reasonable guess, but can
++   error out, asking you to disambiguate when ambiguous.  E.g. if you have a
+    file called HEAD in your work tree, `git diff HEAD` is ambiguous, and
+    you have to say either `git diff HEAD --` or `git diff -- HEAD` to
+    disambiguate.
+ +
+ When writing a script that is expected to handle random user-input, it is
+ a good practice to make it explicit which arguments are which by placing
+-disambiguating `--` at appropriate places.
++a disambiguating `--` at appropriate places.
+
+  * Many commands allow wildcards in paths, but you need to protect
+-   them from getting globbed by the shell.  These two mean different
+-   things:
++   them from getting globbed by the shell.  The following commands have
++   two different meanings:
+ +
+ --------------------------------
+ $ git checkout -- *.c
++
+ $ git checkout -- \*.c
++$ git checkout -- "*.c"
++$ git checkout -- '*.c'
+ --------------------------------
+ +
+-The former lets your shell expand the fileglob, and you are asking
+-the dot-C files in your working tree to be overwritten with the version
+-in the index.  The latter passes the `*.c` to Git, and you are asking
+-the paths in the index that match the pattern to be checked out to your
+-working tree.  After running `git add hello.c; rm hello.c`, you will _not_
+-see `hello.c` in your working tree with the former, but with the latter
+-you will.
++The first command lets your shell expand the fileglob, and you are asking
++the dot-C files in your working tree to be overwritten with the version in
++the index.  The latter three variations pass the `*.c` to Git, and you are
++asking the paths in the index that match the pattern to be checked out to
++your working tree.  After running `git add hello.c; rm hello.c`, you will
++_not_ see `hello.c` in your working tree with the first command, but with
++the latter three variations, you will.
+
+  * Just as the filesystem '.' (period) refers to the current directory,
+    using a '.' as a repository name in Git (a dot-repository) is a relative
+
+-- 
+
+========================================================================
+Robert P. J. Day                                 Ottawa, Ontario, CANADA
+                        http://crashcourse.ca
+
+Twitter:                                       http://twitter.com/rpjday
+LinkedIn:                               http://ca.linkedin.com/in/rpjday
+========================================================================
