@@ -6,30 +6,30 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 31DF02036D
-	for <e@80x24.org>; Tue, 21 Nov 2017 21:15:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 00E352036D
+	for <e@80x24.org>; Tue, 21 Nov 2017 21:15:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751515AbdKUVPv (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Nov 2017 16:15:51 -0500
-Received: from siwi.pair.com ([209.68.5.199]:38464 "EHLO siwi.pair.com"
+        id S1751527AbdKUVPw (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Nov 2017 16:15:52 -0500
+Received: from siwi.pair.com ([209.68.5.199]:38441 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751350AbdKUVPq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Nov 2017 16:15:46 -0500
+        id S1751356AbdKUVPp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Nov 2017 16:15:45 -0500
 Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 5A652844F0;
-        Tue, 21 Nov 2017 16:15:46 -0500 (EST)
+        by siwi.pair.com (Postfix) with ESMTP id 9E57D844F0;
+        Tue, 21 Nov 2017 16:15:44 -0500 (EST)
 Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id DD14E844D5;
-        Tue, 21 Nov 2017 16:15:45 -0500 (EST)
+        by siwi.pair.com (Postfix) with ESMTPSA id 2C3FE844D5;
+        Tue, 21 Nov 2017 16:15:44 -0500 (EST)
 From:   Jeff Hostetler <git@jeffhostetler.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, jonathantanmy@google.com,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v5 09/14] fetch: add from_promisor and exclude-promisor-objects parameters
-Date:   Tue, 21 Nov 2017 21:15:23 +0000
-Message-Id: <20171121211528.21891-10-git@jeffhostetler.com>
+Subject: [PATCH v5 06/14] pack-objects: test support for blob filtering
+Date:   Tue, 21 Nov 2017 21:15:20 +0000
+Message-Id: <20171121211528.21891-7-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20171121211528.21891-1-git@jeffhostetler.com>
 References: <20171121211528.21891-1-git@jeffhostetler.com>
@@ -40,125 +40,79 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jonathan Tan <jonathantanmy@google.com>
 
-Teach fetch to use from-promisor and exclude-promisor-objects
-parameters with sub-commands.  Initialize fetch_if_missing
-global variable.
+As part of an effort to improve Git support for very large repositories
+in which clients typically have only a subset of all version-controlled
+blobs, test pack-objects support for --filter=blob:limit=<n>, packing only
+blobs not exceeding that size unless the blob corresponds to a file
+whose name starts with ".git". upload-pack will eventually be taught to
+use this new parameter if needed to exclude certain blobs during a fetch
+or clone, potentially drastically reducing network consumption when
+serving these very large repositories.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- builtin/fetch.c | 61 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
- connected.c     |  2 ++
- 2 files changed, 62 insertions(+), 1 deletion(-)
+ t/t5300-pack-object.sh  | 26 ++++++++++++++++++++++++++
+ t/test-lib-functions.sh | 12 ++++++++++++
+ 2 files changed, 38 insertions(+)
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 29d3807..e018aa3 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1047,9 +1047,11 @@ static struct transport *prepare_transport(struct remote *remote, int deepen)
- 		set_option(transport, TRANS_OPT_DEEPEN_RELATIVE, "yes");
- 	if (update_shallow)
- 		set_option(transport, TRANS_OPT_UPDATE_SHALLOW, "yes");
--	if (filter_options.choice)
-+	if (filter_options.choice) {
- 		set_option(transport, TRANS_OPT_LIST_OBJECTS_FILTER,
- 			   filter_options.filter_spec);
-+		set_option(transport, TRANS_OPT_FROM_PROMISOR, "1");
-+	}
- 	return transport;
- }
+diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
+index 9c68b99..8e3db12 100755
+--- a/t/t5300-pack-object.sh
++++ b/t/t5300-pack-object.sh
+@@ -457,6 +457,32 @@ test_expect_success !PTHREADS,C_LOCALE_OUTPUT 'pack-objects --threads=N or pack.
+ 	grep -F "no threads support, ignoring pack.threads" err
+ '
  
-@@ -1287,6 +1289,59 @@ static int fetch_multiple(struct string_list *list)
- 	return result;
- }
- 
-+static inline void fetch_one__setup_partial(struct remote *remote)
-+{
-+	int ppc, neq;
-+
-+	/* Do we have a prior partial clone/fetch? */
-+	ppc = (repository_format_partial_clone &&
-+	       *repository_format_partial_clone);
-+
-+	/*
-+	 * If no prior partial clone/fetch and partial fetch was NOT
-+	 * requested now, do a normal fetch.
-+	 */
-+	if (!ppc && !filter_options.choice)
-+		return;
-+
-+	/*
-+	 * If this is the FIRST partial fetch request, we enable partial
-+	 * on this repo and remember the given filter-spec as the default
-+	 * for subsequent fetches to this remote.
-+	 */
-+	if (!ppc && filter_options.choice) {
-+		partial_clone_register(remote->name, &filter_options);
-+		return;
-+	}
-+
-+	/*
-+	 * We are currently limited to only ONE promisor remote.  That is,
-+	 * we only allow partial fetches back to the original partial clone
-+	 * remote (or the first partial fetch remote).  Disallow explicit
-+	 * partial fetches to a different remote.
-+	 *
-+	 * Normal (non-partial) fetch commands should still be allowed to
-+	 * other remotes.
-+	 */
-+	neq = (strcmp(remote->name, repository_format_partial_clone));
-+	if (neq && filter_options.choice)
-+		die(_("unsupported partial-fetch to a different remote"));
-+
-+	if (neq && !filter_options.choice)
-+		return;
-+
-+	/*
-+	 * When fetching from the promisor remote, we either use the
-+	 * explicitly given filter-spec or inherit the filter-spec from
-+	 * the clone.
-+	 */
-+	if (filter_options.choice)
-+		return;
-+
-+	partial_clone_get_default_filter_spec(&filter_options);
-+	return;
++lcut () {
++	perl -e '$/ = undef; $_ = <>; s/^.{'$1'}//s; print $_'
 +}
 +
- static int fetch_one(struct remote *remote, int argc, const char **argv)
- {
- 	static const char **refs = NULL;
-@@ -1298,6 +1353,8 @@ static int fetch_one(struct remote *remote, int argc, const char **argv)
- 		die(_("No remote repository specified.  Please, specify either a URL or a\n"
- 		    "remote name from which new revisions should be fetched."));
- 
-+	fetch_one__setup_partial(remote);
++test_expect_success 'filtering by size works with multiple excluded' '
++	rm -rf server &&
++	git init server &&
++	printf a > server/a &&
++	printf b > server/b &&
++	printf c-very-long-file > server/c &&
++	printf d-very-long-file > server/d &&
++	git -C server add a b c d &&
++	git -C server commit -m x &&
 +
- 	gtransport = prepare_transport(remote, 1);
- 
- 	if (prune < 0) {
-@@ -1348,6 +1405,8 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 
- 	packet_trace_identity("fetch");
- 
-+	fetch_if_missing = 0;
++	git -C server rev-parse HEAD >objects &&
++	git -C server pack-objects --revs --stdout --filter=blob:limit=10 <objects >my.pack &&
 +
- 	/* Record the command line for the reflog */
- 	strbuf_addstr(&default_rla, "fetch");
- 	for (i = 1; i < argc; i++)
-diff --git a/connected.c b/connected.c
-index f416b05..3a5bd67 100644
---- a/connected.c
-+++ b/connected.c
-@@ -56,6 +56,8 @@ int check_connected(sha1_iterate_fn fn, void *cb_data,
- 	argv_array_push(&rev_list.args,"rev-list");
- 	argv_array_push(&rev_list.args, "--objects");
- 	argv_array_push(&rev_list.args, "--stdin");
-+	if (repository_format_partial_clone)
-+		argv_array_push(&rev_list.args, "--exclude-promisor-objects");
- 	argv_array_push(&rev_list.args, "--not");
- 	argv_array_push(&rev_list.args, "--all");
- 	argv_array_push(&rev_list.args, "--quiet");
++	# Ensure that only the small blobs are in the packfile
++	git index-pack my.pack &&
++	git verify-pack -v my.idx >objectlist &&
++	grep $(git hash-object server/a) objectlist &&
++	grep $(git hash-object server/b) objectlist &&
++	! grep $(git hash-object server/c) objectlist &&
++	! grep $(git hash-object server/d) objectlist
++'
++
+ #
+ # WARNING!
+ #
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 1701fe2..07b79c7 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -1020,3 +1020,15 @@ nongit () {
+ 		"$@"
+ 	)
+ }
++
++# Converts big-endian pairs of hexadecimal digits into bytes. For example,
++# "printf 61620d0a | hex_pack" results in "ab\r\n".
++hex_pack () {
++	perl -e '$/ = undef; $input = <>; print pack("H*", $input)'
++}
++
++# Converts bytes into big-endian pairs of hexadecimal digits. For example,
++# "printf 'ab\r\n' | hex_unpack" results in "61620d0a".
++hex_unpack () {
++	perl -e '$/ = undef; $input = <>; print unpack("H2" x length($input), $input)'
++}
 -- 
 2.9.3
 
