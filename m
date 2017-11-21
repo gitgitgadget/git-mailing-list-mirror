@@ -7,35 +7,35 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8EE9C20954
-	for <e@80x24.org>; Tue, 21 Nov 2017 08:02:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 49FD520954
+	for <e@80x24.org>; Tue, 21 Nov 2017 08:02:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751425AbdKUICP (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Nov 2017 03:02:15 -0500
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:43672 "EHLO
+        id S1751317AbdKUICp (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Nov 2017 03:02:45 -0500
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:43744 "EHLO
         mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751326AbdKUIBj (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2017 03:01:39 -0500
+        by vger.kernel.org with ESMTP id S1751330AbdKUICP (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2017 03:02:15 -0500
 Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id vAL7xiuM019361;
+        by mx0a-00153501.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id vAL7xiuL019361;
         Tue, 21 Nov 2017 00:01:01 -0800
 Authentication-Results: ppops.net;
         spf=softfail smtp.mailfrom=newren@gmail.com
 Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2eakkpc224-1;
-        Tue, 21 Nov 2017 00:01:01 -0800
-Received: from mxw1.palantir.com (smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id 8E2A92265EFF;
+        by mx0a-00153501.pphosted.com with ESMTP id 2eakkpc223-1;
+        Tue, 21 Nov 2017 00:01:00 -0800
+Received: from mxw1.palantir.com (new-smtp.yojoe.local [172.19.0.45])
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id 737792265EC6;
         Tue, 21 Nov 2017 00:01:00 -0800 (PST)
 Received: from newren2-linux.yojoe.local (newren2-linux.dyn.yojoe.local [10.100.68.32])
-        by smtp.yojoe.local (Postfix) with ESMTP id 8335E2CDE75;
+        by smtp.yojoe.local (Postfix) with ESMTP id 679622CDE75;
         Tue, 21 Nov 2017 00:01:00 -0800 (PST)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, Elijah Newren <newren@gmail.com>
-Subject: [PATCH v3 14/33] directory rename detection: tests for handling overwriting dirty files
-Date:   Tue, 21 Nov 2017 00:00:40 -0800
-Message-Id: <20171121080059.32304-15-newren@gmail.com>
+Subject: [PATCH v3 12/33] directory rename detection: miscellaneous testcases to complete coverage
+Date:   Tue, 21 Nov 2017 00:00:38 -0800
+Message-Id: <20171121080059.32304-13-newren@gmail.com>
 X-Mailer: git-send-email 2.15.0.309.g62ce55426d
 In-Reply-To: <20171121080059.32304-1-newren@gmail.com>
 References: <20171121080059.32304-1-newren@gmail.com>
@@ -55,61 +55,84 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+I came up with the testcases in the first eight sections before coding up
+the implementation.  The testcases in this section were mostly ones I
+thought of while coding/debugging, and which I was too lazy to insert
+into the previous sections because I didn't want to re-label with all the
+testcase references.  :-)
+
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- t/t6043-merge-rename-directories.sh | 436 ++++++++++++++++++++++++++++++=
-++++++
- 1 file changed, 436 insertions(+)
+ t/t6043-merge-rename-directories.sh | 536 ++++++++++++++++++++++++++++++=
++++++-
+ 1 file changed, 535 insertions(+), 1 deletion(-)
 
 diff --git a/t/t6043-merge-rename-directories.sh b/t/t6043-merge-rename-d=
 irectories.sh
-index 7408c788fc..88243651f7 100755
+index b153468a5c..9e00a26c69 100755
 --- a/t/t6043-merge-rename-directories.sh
 +++ b/t/t6043-merge-rename-directories.sh
-@@ -3103,4 +3103,440 @@ test_expect_failure '10e-check: Does git complain=
- about untracked file that is n
+@@ -295,6 +295,7 @@ test_expect_failure '1d-check: Directory renames caus=
+e a rename/rename(2to1) con
+ '
+=20
+ # Testcase 1e, Renamed directory, with all filenames being renamed too
++#   (Related to testcases 9f & 9g)
+ #   Commit O: z/{oldb,oldc}
+ #   Commit A: y/{newb,newc}
+ #   Commit B: z/{oldb,oldc,d}
+@@ -575,7 +576,7 @@ test_expect_success '2b-check: Directory split into t=
+wo on one side, with equal
+ ########################################################################=
+###
+=20
+ # Testcase 3a, Avoid implicit rename if involved as source on other side
+-#   (Related to testcases 1c and 1f)
++#   (Related to testcases 1c, 1f, and 9h)
+ #   Commit O: z/{b,c,d}
+ #   Commit A: z/{b,c,d} (no change)
+ #   Commit B: y/{b,c}, x/d
+@@ -2232,4 +2233,537 @@ test_expect_failure '8e-check: Both sides rename,=
+ one side adds to original dire
  	)
  '
 =20
 +########################################################################=
 ###
-+# SECTION 11: Handling dirty (not up-to-date) files
++# SECTION 9: Other testcases
 +#
-+# unpack_trees(), upon which the recursive merge algorithm is based, abo=
-rts
-+# the operation if untracked or dirty files would be deleted or overwrit=
-ten
-+# by the merge.  Unfortunately, unpack_trees() does not understand renam=
-es,
-+# and if it doesn't abort, then it muddies up the working directory befo=
-re
-+# we even get to the point of detecting renames, so we need some special
-+# handling.  This was true even of normal renames, but there are additio=
-nal
-+# codepaths that need special handling with directory renames.  Add
-+# testcases for both renamed-by-directory-rename-detection and standard
-+# rename cases.
++# This section consists of miscellaneous testcases I thought of during
++# the implementation which round out the testing.
 +########################################################################=
 ###
 +
-+# Testcase 11a, Avoid losing dirty contents with simple rename
-+#   Commit O: z/{a,b_v1},
-+#   Commit A: z/{a,c_v1}, and z/c_v1 has uncommitted mods
-+#   Commit B: z/{a,b_v2}
-+#   Expected: ERROR_MSG(Refusing to lose dirty file at z/c) +
-+#             z/a, staged version of z/c has sha1sum matching B:z/b_v2,
-+#             z/c~HEAD with contents of B:z/b_v2,
-+#             z/c with uncommitted mods on top of A:z/c_v1
++# Testcase 9a, Inner renamed directory within outer renamed directory
++#   (Related to testcase 1f)
++#   Commit O: z/{b,c,d/{e,f,g}}
++#   Commit A: y/{b,c}, x/w/{e,f,g}
++#   Commit B: z/{b,c,d/{e,f,g,h},i}
++#   Expected: y/{b,c,i}, x/w/{e,f,g,h}
++#   NOTE: The only reason this one is interesting is because when a dire=
+ctory
++#         is split into multiple other directories, we determine by the =
+weight
++#         of which one had the most paths going to it.  A naive implemen=
+tation
++#         of that could take the new file in commit B at z/i to x/w/i or=
+ x/i.
 +
-+test_expect_success '11a-setup: Avoid losing dirty contents with simple =
-rename' '
-+	test_create_repo 11a &&
++test_expect_success '9a-setup: Inner renamed directory within outer rena=
+med directory' '
++	test_create_repo 9a &&
 +	(
-+		cd 11a &&
++		cd 9a &&
 +
-+		mkdir z &&
-+		echo a >z/a &&
-+		test_seq 1 10 >z/b &&
++		mkdir -p z/d &&
++		echo b >z/b &&
++		echo c >z/c &&
++		echo e >z/d/e &&
++		echo f >z/d/f &&
++		echo g >z/d/g &&
 +		git add z &&
 +		test_tick &&
 +		git commit -m "O" &&
@@ -119,416 +142,531 @@ rename' '
 +		git branch B &&
 +
 +		git checkout A &&
-+		git mv z/b z/c &&
-+		test_tick &&
-+		git commit -m "A" &&
-+
-+		git checkout B &&
-+		echo 11 >>z/b &&
-+		git add z/b &&
-+		test_tick &&
-+		git commit -m "B"
-+	)
-+'
-+
-+test_expect_failure '11a-check: Avoid losing dirty contents with simple =
-rename' '
-+	(
-+		cd 11a &&
-+
-+		git checkout A^0 &&
-+		echo stuff >>z/c &&
-+
-+		test_must_fail git merge -s recursive B^0 >out 2>err &&
-+		test_i18ngrep "Refusing to lose dirty file at z/c" out &&
-+
-+		test_seq 1 10 >expected &&
-+		echo stuff >>expected &&
-+
-+		test 2 -eq $(git ls-files -s | wc -l) &&
-+		test 1 -eq $(git ls-files -u | wc -l) &&
-+		test 4 -eq $(git ls-files -o | wc -l) &&
-+
-+		git rev-parse >actual \
-+			:0:z/a :2:z/c &&
-+		git rev-parse >expect \
-+			O:z/a B:z/b &&
-+		test_cmp expect actual &&
-+
-+		test "$(git hash-object z/c~HEAD)" =3D $(git rev-parse B:z/b) &&
-+		test_cmp expected z/c
-+	)
-+'
-+
-+# Testcase 11b, Avoid losing dirty file involved in directory rename
-+#   Commit O: z/a,         x/{b,c_v1}
-+#   Commit A: z/{a,c_v1},  x/b,       and z/c_v1 has uncommitted mods
-+#   Commit B: y/a,         x/{b,c_v2}
-+#   Expected: y/{a,c_v2}, x/b, z/c_v1 with uncommitted mods untracked,
-+#             ERROR_MSG(Refusing to lose dirty file at z/c)
-+
-+
-+test_expect_success '11b-setup: Avoid losing dirty file involved in dire=
-ctory rename' '
-+	test_create_repo 11b &&
-+	(
-+		cd 11b &&
-+
-+		mkdir z x &&
-+		echo a >z/a &&
-+		echo b >x/b &&
-+		test_seq 1 10 >x/c &&
-+		git add z x &&
-+		test_tick &&
-+		git commit -m "O" &&
-+
-+		git branch O &&
-+		git branch A &&
-+		git branch B &&
-+
-+		git checkout A &&
-+		git mv x/c z/c &&
-+		test_tick &&
-+		git commit -m "A" &&
-+
-+		git checkout B &&
++		mkdir x &&
++		git mv z/d x/w &&
 +		git mv z y &&
-+		echo 11 >>x/c &&
-+		git add x/c &&
-+		test_tick &&
-+		git commit -m "B"
-+	)
-+'
-+
-+test_expect_failure '11b-check: Avoid losing dirty file involved in dire=
-ctory rename' '
-+	(
-+		cd 11b &&
-+
-+		git checkout A^0 &&
-+		echo stuff >>z/c &&
-+
-+		git merge -s recursive B^0 >out 2>err &&
-+		test_i18ngrep "Refusing to lose dirty file at z/c" out &&
-+
-+		grep -q stuff */* &&
-+		test_seq 1 10 >expected &&
-+		echo stuff >>expected &&
-+
-+		test 3 -eq $(git ls-files -s | wc -l) &&
-+		test 0 -eq $(git ls-files -u | wc -l) &&
-+		test 0 -eq $(git ls-files -m | wc -l) &&
-+		test 4 -eq $(git ls-files -o | wc -l) &&
-+
-+		git rev-parse >actual \
-+			:0:x/b :0:y/a :0:y/c &&
-+		git rev-parse >expect \
-+			O:x/b O:z/a B:x/c &&
-+		test_cmp expect actual &&
-+
-+		test "$(git hash-object y/c)" =3D $(git rev-parse B:x/c) &&
-+		test_cmp expected z/c
-+	)
-+'
-+
-+# Testcase 11c, Avoid losing not-up-to-date with rename + D/F conflict
-+#   Commit O: y/a,         x/{b,c_v1}
-+#   Commit A: y/{a,c_v1},  x/b,       and y/c_v1 has uncommitted mods
-+#   Commit B: y/{a,c/d},   x/{b,c_v2}
-+#   Expected: Abort_msg("following files would be overwritten by merge")=
- +
-+#             y/c left untouched (still has uncommitted mods)
-+
-+test_expect_success '11c-setup: Avoid losing not-uptodate with rename + =
-D/F conflict' '
-+	test_create_repo 11c &&
-+	(
-+		cd 11c &&
-+
-+		mkdir y x &&
-+		echo a >y/a &&
-+		echo b >x/b &&
-+		test_seq 1 10 >x/c &&
-+		git add y x &&
-+		test_tick &&
-+		git commit -m "O" &&
-+
-+		git branch O &&
-+		git branch A &&
-+		git branch B &&
-+
-+		git checkout A &&
-+		git mv x/c y/c &&
 +		test_tick &&
 +		git commit -m "A" &&
 +
 +		git checkout B &&
-+		mkdir y/c &&
-+		echo d >y/c/d &&
-+		echo 11 >>x/c &&
-+		git add x/c y/c/d &&
++		echo h >z/d/h &&
++		echo i >z/i &&
++		git add z &&
 +		test_tick &&
 +		git commit -m "B"
 +	)
 +'
 +
-+test_expect_success '11c-check: Avoid losing not-uptodate with rename + =
-D/F conflict' '
++test_expect_failure '9a-check: Inner renamed directory within outer rena=
+med directory' '
 +	(
-+		cd 11c &&
++		cd 9a &&
 +
 +		git checkout A^0 &&
-+		echo stuff >>y/c &&
 +
-+		test_must_fail git merge -s recursive B^0 >out 2>err &&
-+		test_i18ngrep "following files would be overwritten by merge" err &&
-+
-+		grep -q stuff */* &&
-+		test_seq 1 10 >expected &&
-+		echo stuff >>expected &&
-+
-+		test 3 -eq $(git ls-files -s | wc -l) &&
-+		test 0 -eq $(git ls-files -u | wc -l) &&
-+		test 1 -eq $(git ls-files -m | wc -l) &&
-+		test 3 -eq $(git ls-files -o | wc -l) &&
-+
-+		test $(git rev-parse HEAD) =3D $(git rev-parse A) &&
-+		test_cmp expected y/c
-+	)
-+'
-+
-+# Testcase 11d, Avoid losing not-up-to-date with rename + D/F conflict
-+#   Commit O: z/a,         x/{b,c_v1}
-+#   Commit A: z/{a,c_v1},  x/b,       and z/c_v1 has uncommitted mods
-+#   Commit B: y/{a,c/d},   x/{b,c_v2}
-+#   Expected: D/F: y/c_v2 vs y/c/d) +
-+#             Warning_Msg("Refusing to lose dirty file at z/c) +
-+#             y/{a,c~HEAD,c/d}, x/b, now-untracked z/c_v1 with uncommitt=
-ed mods
-+
-+test_expect_success '11d-setup: Avoid losing not-uptodate with rename + =
-D/F conflict' '
-+	test_create_repo 11d &&
-+	(
-+		cd 11d &&
-+
-+		mkdir z x &&
-+		echo a >z/a &&
-+		echo b >x/b &&
-+		test_seq 1 10 >x/c &&
-+		git add z x &&
-+		test_tick &&
-+		git commit -m "O" &&
-+
-+		git branch O &&
-+		git branch A &&
-+		git branch B &&
-+
-+		git checkout A &&
-+		git mv x/c z/c &&
-+		test_tick &&
-+		git commit -m "A" &&
-+
-+		git checkout B &&
-+		git mv z y &&
-+		mkdir y/c &&
-+		echo d >y/c/d &&
-+		echo 11 >>x/c &&
-+		git add x/c y/c/d &&
-+		test_tick &&
-+		git commit -m "B"
-+	)
-+'
-+
-+test_expect_failure '11d-check: Avoid losing not-uptodate with rename + =
-D/F conflict' '
-+	(
-+		cd 11d &&
-+
-+		git checkout A^0 &&
-+		echo stuff >>z/c &&
-+
-+		test_must_fail git merge -s recursive B^0 >out 2>err &&
-+		test_i18ngrep "Refusing to lose dirty file at z/c" out &&
-+
-+		grep -q stuff */* &&
-+		test_seq 1 10 >expected &&
-+		echo stuff >>expected &&
-+
-+		test 4 -eq $(git ls-files -s | wc -l) &&
-+		test 1 -eq $(git ls-files -u | wc -l) &&
-+		test 5 -eq $(git ls-files -o | wc -l) &&
-+
-+		git rev-parse >actual \
-+			:0:x/b :0:y/a :0:y/c/d :3:y/c &&
-+		git rev-parse >expect \
-+			O:x/b O:z/a B:y/c/d B:x/c &&
-+		test_cmp expect actual &&
-+
-+		test "$(git hash-object y/c~HEAD)" =3D $(git rev-parse B:x/c) &&
-+		test_cmp expected z/c
-+	)
-+'
-+
-+# Testcase 11e, Avoid deleting not-up-to-date with dir rename/rename(1to=
-2)/add
-+#   Commit O: z/{a,b},      x/{c_1,d}
-+#   Commit A: y/{a,b,c_2},  x/d, w/c_1, and y/c_2 has uncommitted mods
-+#   Commit B: z/{a,b,c_1},  x/d
-+#   Expected: Failed Merge; y/{a,b} + x/d +
-+#             CONFLICT(rename/rename) x/c_1 -> w/c_1 vs y/c_1 +
-+#             ERROR_MSG(Refusing to lose dirty file at y/c)
-+#             y/c~B^0 has O:x/c_1 contents
-+#             y/c~HEAD has A:y/c_2 contents
-+#             y/c has dirty file from before merge
-+
-+test_expect_success '11e-setup: Avoid deleting not-uptodate with dir ren=
-ame/rename(1to2)/add' '
-+	test_create_repo 11e &&
-+	(
-+		cd 11e &&
-+
-+		mkdir z x &&
-+		echo a >z/a &&
-+		echo b >z/b &&
-+		echo c >x/c &&
-+		echo d >x/d &&
-+		git add z x &&
-+		test_tick &&
-+		git commit -m "O" &&
-+
-+		git branch O &&
-+		git branch A &&
-+		git branch B &&
-+
-+		git checkout A &&
-+		git mv z/ y/ &&
-+		echo different >y/c &&
-+		mkdir w &&
-+		git mv x/c w/ &&
-+		git add y/c &&
-+		test_tick &&
-+		git commit -m "A" &&
-+
-+		git checkout B &&
-+		git mv x/c z/ &&
-+		test_tick &&
-+		git commit -m "B"
-+	)
-+'
-+
-+test_expect_failure '11e-check: Avoid deleting not-uptodate with dir ren=
-ame/rename(1to2)/add' '
-+	(
-+		cd 11e &&
-+
-+		git checkout A^0 &&
-+		echo mods >>y/c &&
-+
-+		test_must_fail git merge -s recursive B^0 >out 2>err &&
-+		test_i18ngrep "CONFLICT (rename/rename)" out &&
-+		test_i18ngrep "Refusing to lose dirty file at y/c" out &&
++		git merge -s recursive B^0 &&
 +
 +		test 7 -eq $(git ls-files -s | wc -l) &&
-+		test 4 -eq $(git ls-files -u | wc -l) &&
-+		test 4 -eq $(git ls-files -o | wc -l) &&
-+
-+		echo different >expected &&
-+		echo mods >>expected &&
++		test 0 -eq $(git ls-files -u | wc -l) &&
++		test 0 -eq $(git ls-files -o | wc -l) &&
 +
 +		git rev-parse >actual \
-+			:0:y/a :0:y/b :0:x/d :1:x/c :2:w/c :2:y/c :3:y/c &&
++			HEAD:y/b HEAD:y/c HEAD:y/i &&
 +		git rev-parse >expect \
-+			O:z/a O:z/b O:x/d O:x/c O:x/c A:y/c O:x/c &&
++			O:z/b O:z/c B:z/i &&
 +		test_cmp expect actual &&
-+
-+		git hash-object >actual \
-+			y/c~B^0 y/c~HEAD &&
-+		git rev-parse >expect \
-+			O:x/c A:y/c &&
-+		test_cmp expect actual &&
-+
-+		test_cmp expected y/c
-+	)
-+'
-+
-+# Testcase 11f, Avoid deleting not-up-to-date w/ dir rename/rename(2to1)
-+#   Commit O: z/{a,b},        x/{c_1,d_2}
-+#   Commit A: y/{a,b,wham_1}, x/d_2, except y/wham has uncommitted mods
-+#   Commit B: z/{a,b,wham_2}, x/c_1
-+#   Expected: Failed Merge; y/{a,b} + untracked y/{wham~B^0,wham~B^HEAD}=
- +
-+#             y/wham with dirty changes from before merge +
-+#             CONFLICT(rename/rename) x/c vs x/d -> y/wham
-+#             ERROR_MSG(Refusing to lose dirty file at y/wham)
-+
-+test_expect_success '11f-setup: Avoid deleting not-uptodate with dir ren=
-ame/rename(2to1)' '
-+	test_create_repo 11f &&
-+	(
-+		cd 11f &&
-+
-+		mkdir z x &&
-+		echo a >z/a &&
-+		echo b >z/b &&
-+		test_seq 1 10 >x/c &&
-+		echo d >x/d &&
-+		git add z x &&
-+		test_tick &&
-+		git commit -m "O" &&
-+
-+		git branch O &&
-+		git branch A &&
-+		git branch B &&
-+
-+		git checkout A &&
-+		git mv z/ y/ &&
-+		git mv x/c y/wham &&
-+		test_tick &&
-+		git commit -m "A" &&
-+
-+		git checkout B &&
-+		git mv x/d z/wham &&
-+		test_tick &&
-+		git commit -m "B"
-+	)
-+'
-+
-+test_expect_failure '11f-check: Avoid deleting not-uptodate with dir ren=
-ame/rename(2to1)' '
-+	(
-+		cd 11f &&
-+
-+		git checkout A^0 &&
-+		echo important >>y/wham &&
-+
-+		test_must_fail git merge -s recursive B^0 >out 2>err &&
-+		test_i18ngrep "CONFLICT (rename/rename)" out &&
-+		test_i18ngrep "Refusing to lose dirty file at y/wham" out &&
-+
-+		test 4 -eq $(git ls-files -s | wc -l) &&
-+		test 2 -eq $(git ls-files -u | wc -l) &&
-+		test 4 -eq $(git ls-files -o | wc -l) &&
-+
-+		test_seq 1 10 >expected &&
-+		echo important >>expected &&
 +
 +		git rev-parse >actual \
-+			:0:y/a :0:y/b :2:y/wham :3:y/wham &&
++			HEAD:x/w/e HEAD:x/w/f HEAD:x/w/g HEAD:x/w/h &&
 +		git rev-parse >expect \
-+			O:z/a O:z/b O:x/c O:x/d &&
-+		test_cmp expect actual &&
-+
-+		test_must_fail git rev-parse :1:y/wham &&
-+
-+		test_cmp expected y/wham &&
-+		git hash-object >actual \
-+			y/wham~B^0 y/wham~HEAD &&
-+		git rev-parse >expect \
-+			O:x/d O:x/c &&
++			O:z/d/e O:z/d/f O:z/d/g B:z/d/h &&
 +		test_cmp expect actual
 +	)
 +'
++
++# Testcase 9b, Transitive rename with content merge
++#   (Related to testcase 1c)
++#   Commit O: z/{b,c},   x/d_1
++#   Commit A: y/{b,c},   x/d_2
++#   Commit B: z/{b,c,d_3}
++#   Expected: y/{b,c,d_merged}
++
++test_expect_success '9b-setup: Transitive rename with content merge' '
++	test_create_repo 9b &&
++	(
++		cd 9b &&
++
++		mkdir z &&
++		echo b >z/b &&
++		echo c >z/c &&
++		mkdir x &&
++		test_seq 1 10 >x/d &&
++		git add z x &&
++		test_tick &&
++		git commit -m "O" &&
++
++		git branch O &&
++		git branch A &&
++		git branch B &&
++
++		git checkout A &&
++		git mv z y &&
++		test_seq 1 11 >x/d &&
++		git add x/d &&
++		test_tick &&
++		git commit -m "A" &&
++
++		git checkout B &&
++		test_seq 0 10 >x/d &&
++		git mv x/d z/d &&
++		git add z/d &&
++		test_tick &&
++		git commit -m "B"
++	)
++'
++
++test_expect_failure '9b-check: Transitive rename with content merge' '
++	(
++		cd 9b &&
++
++		git checkout A^0 &&
++
++		git merge -s recursive B^0 &&
++
++		test 3 -eq $(git ls-files -s | wc -l) &&
++
++		test_seq 0 11 >expected &&
++		git add expected &&
++		git rev-parse >actual \
++			HEAD:y/b HEAD:y/c HEAD:y/d &&
++		git rev-parse >expect \
++			O:z/b O:z/c :0:expected &&
++		test_cmp expect actual &&
++		test_must_fail git rev-parse HEAD:x/d &&
++		test_must_fail git rev-parse HEAD:z/d &&
++		test ! -f z/d &&
++
++		test $(git rev-parse HEAD:y/d) !=3D $(git rev-parse O:x/d) &&
++		test $(git rev-parse HEAD:y/d) !=3D $(git rev-parse A:x/d) &&
++		test $(git rev-parse HEAD:y/d) !=3D $(git rev-parse B:z/d) &&
++		test_cmp expected y/d
++	)
++'
++
++# Testcase 9c, Doubly transitive rename?
++#   (Related to testcase 1c, 7e, and 9d)
++#   Commit O: z/{b,c},     x/{d,e},    w/f
++#   Commit A: y/{b,c},     x/{d,e,f,g}
++#   Commit B: z/{b,c,d,e},             w/f
++#   Expected: y/{b,c,d,e}, x/{f,g}
++#
++#   NOTE: x/f and x/g may be slightly confusing here.  The rename from w=
+/f to
++#         x/f is clear.  Let's look beyond that.  Here's the logic:
++#            Commit B renamed x/ -> z/
++#            Commit A renamed z/ -> y/
++#         So, we could possibly further rename x/f to z/f to y/f, a doub=
+ly
++#         transient rename.  However, where does it end?  We can chain t=
+hese
++#         indefinitely (see testcase 9d).  What if there is a D/F confli=
+ct
++#         at z/f/ or y/f/?  Or just another file conflict at one of thos=
+e
++#         paths?  In the case of an N-long chain of transient renamings,
++#         where do we "abort" the rename at?  Can the user make sense of
++#         the resulting conflict and resolve it?
++#
++#         To avoid this confusion I use the simple rule that if the othe=
+r side
++#         of history did a directory rename to a path that your side ren=
+amed
++#         away, then ignore that particular rename from the other side o=
+f
++#         history for any implicit directory renames.
++
++test_expect_success '9c-setup: Doubly transitive rename?' '
++	test_create_repo 9c &&
++	(
++		cd 9c &&
++
++		mkdir z &&
++		echo b >z/b &&
++		echo c >z/c &&
++		mkdir x &&
++		echo d >x/d &&
++		echo e >x/e &&
++		mkdir w &&
++		echo f >w/f &&
++		git add z x w &&
++		test_tick &&
++		git commit -m "O" &&
++
++		git branch O &&
++		git branch A &&
++		git branch B &&
++
++		git checkout A &&
++		git mv z y &&
++		git mv w/f x/ &&
++		echo g >x/g &&
++		git add x/g &&
++		test_tick &&
++		git commit -m "A" &&
++
++		git checkout B &&
++		git mv x/d z/d &&
++		git mv x/e z/e &&
++		test_tick &&
++		git commit -m "B"
++	)
++'
++
++test_expect_failure '9c-check: Doubly transitive rename?' '
++	(
++		cd 9c &&
++
++		git checkout A^0 &&
++
++		git merge -s recursive B^0 >out &&
++		test_i18ngrep "WARNING: Avoiding applying x -> z rename to x/f" out &&
++
++		test 6 -eq $(git ls-files -s | wc -l) &&
++		test 1 -eq $(git ls-files -o | wc -l) &&
++
++		git rev-parse >actual \
++			HEAD:y/b HEAD:y/c HEAD:y/d HEAD:y/e HEAD:x/f HEAD:x/g &&
++		git rev-parse >expect \
++			O:z/b O:z/c O:x/d O:x/e O:w/f A:x/g &&
++		test_cmp expect actual
++	)
++'
++
++# Testcase 9d, N-fold transitive rename?
++#   (Related to testcase 9c...and 1c and 7e)
++#   Commit O: z/a, y/b, x/c, w/d, v/e, u/f
++#   Commit A:  y/{a,b},  w/{c,d},  u/{e,f}
++#   Commit B: z/{a,t}, x/{b,c}, v/{d,e}, u/f
++#   Expected: <see NOTE first>
++#
++#   NOTE: z/ -> y/ (in commit A)
++#         y/ -> x/ (in commit B)
++#         x/ -> w/ (in commit A)
++#         w/ -> v/ (in commit B)
++#         v/ -> u/ (in commit A)
++#         So, if we add a file to z, say z/t, where should it end up?  I=
+n u?
++#         What if there's another file or directory named 't' in one of =
+the
++#         intervening directories and/or in u itself?  Also, shouldn't t=
+he
++#         same logic that places 't' in u/ also move ALL other files to =
+u/?
++#         What if there are file or directory conflicts in any of them? =
+ If
++#         we attempted to do N-way (N-fold? N-ary? N-uple?) transitive r=
+enames
++#         like this, would the user have any hope of understanding any
++#         conflicts or how their working tree ended up?  I think not, so=
+ I'm
++#         ruling out N-ary transitive renames for N>1.
++#
++#   Therefore our expected result is:
++#     z/t, y/a, x/b, w/c, u/d, u/e, u/f
++#   The reason that v/d DOES get transitively renamed to u/d is that u/ =
+isn't
++#   renamed somewhere.  A slightly sub-optimal result, but it uses fairl=
+y
++#   simple rules that are consistent with what we need for all the other
++#   testcases and simplifies things for the user.
++
++test_expect_success '9d-setup: N-way transitive rename?' '
++	test_create_repo 9d &&
++	(
++		cd 9d &&
++
++		mkdir z y x w v u &&
++		echo a >z/a &&
++		echo b >y/b &&
++		echo c >x/c &&
++		echo d >w/d &&
++		echo e >v/e &&
++		echo f >u/f &&
++		git add z y x w v u &&
++		test_tick &&
++		git commit -m "O" &&
++
++		git branch O &&
++		git branch A &&
++		git branch B &&
++
++		git checkout A &&
++		git mv z/a y/ &&
++		git mv x/c w/ &&
++		git mv v/e u/ &&
++		test_tick &&
++		git commit -m "A" &&
++
++		git checkout B &&
++		echo t >z/t &&
++		git mv y/b x/ &&
++		git mv w/d v/ &&
++		git add z/t &&
++		test_tick &&
++		git commit -m "B"
++	)
++'
++
++test_expect_failure '9d-check: N-way transitive rename?' '
++	(
++		cd 9d &&
++
++		git checkout A^0 &&
++
++		git merge -s recursive B^0 >out &&
++		test_i18ngrep "WARNING: Avoiding applying z -> y rename to z/t" out &&
++		test_i18ngrep "WARNING: Avoiding applying y -> x rename to y/a" out &&
++		test_i18ngrep "WARNING: Avoiding applying x -> w rename to x/b" out &&
++		test_i18ngrep "WARNING: Avoiding applying w -> v rename to w/c" out &&
++
++		test 7 -eq $(git ls-files -s | wc -l) &&
++		test 1 -eq $(git ls-files -o | wc -l) &&
++
++		git rev-parse >actual \
++			HEAD:z/t HEAD:y/a HEAD:x/b HEAD:w/c HEAD:u/d HEAD:u/e HEAD:u/f &&
++		git rev-parse >expect \
++			B:z/t O:z/a O:y/b O:x/c O:w/d O:v/e A:u/f &&
++		test_cmp expect actual
++	)
++'
++
++# Testcase 9e, N-to-1 whammo
++#   (Related to testcase 9c...and 1c and 7e)
++#   Commit O: dir1/{a,b}, dir2/{d,e}, dir3/{g,h}, dirN/{j,k}
++#   Commit A: dir1/{a,b,c,yo}, dir2/{d,e,f,yo}, dir3/{g,h,i,yo}, dirN/{j=
+,k,l,yo}
++#   Commit B: combined/{a,b,d,e,g,h,j,k}
++#   Expected: combined/{a,b,c,d,e,f,g,h,i,j,k,l}, CONFLICT(Nto1) warning=
+s,
++#             dir1/yo, dir2/yo, dir3/yo, dirN/yo
++
++test_expect_success '9e-setup: N-to-1 whammo' '
++	test_create_repo 9e &&
++	(
++		cd 9e &&
++
++		mkdir dir1 dir2 dir3 dirN &&
++		echo a >dir1/a &&
++		echo b >dir1/b &&
++		echo d >dir2/d &&
++		echo e >dir2/e &&
++		echo g >dir3/g &&
++		echo h >dir3/h &&
++		echo j >dirN/j &&
++		echo k >dirN/k &&
++		git add dir* &&
++		test_tick &&
++		git commit -m "O" &&
++
++		git branch O &&
++		git branch A &&
++		git branch B &&
++
++		git checkout A &&
++		echo c  >dir1/c &&
++		echo yo >dir1/yo &&
++		echo f  >dir2/f &&
++		echo yo >dir2/yo &&
++		echo i  >dir3/i &&
++		echo yo >dir3/yo &&
++		echo l  >dirN/l &&
++		echo yo >dirN/yo &&
++		git add dir* &&
++		test_tick &&
++		git commit -m "A" &&
++
++		git checkout B &&
++		git mv dir1 combined &&
++		git mv dir2/* combined/ &&
++		git mv dir3/* combined/ &&
++		git mv dirN/* combined/ &&
++		test_tick &&
++		git commit -m "B"
++	)
++'
++
++test_expect_failure '9e-check: N-to-1 whammo' '
++	(
++		cd 9e &&
++
++		git checkout A^0 &&
++
++		test_must_fail git merge -s recursive B^0 >out &&
++		test_i18ngrep "CONFLICT (implicit dir rename): Cannot map more than on=
+e path to combined/yo" out >error_line &&
++		grep -q dir1/yo error_line &&
++		grep -q dir2/yo error_line &&
++		grep -q dir3/yo error_line &&
++		grep -q dirN/yo error_line &&
++
++		test 16 -eq $(git ls-files -s | wc -l) &&
++		test 0 -eq $(git ls-files -u | wc -l) &&
++		test 2 -eq $(git ls-files -o | wc -l) &&
++
++		git rev-parse >actual \
++			:0:combined/a :0:combined/b :0:combined/c \
++			:0:combined/d :0:combined/e :0:combined/f \
++			:0:combined/g :0:combined/h :0:combined/i \
++			:0:combined/j :0:combined/k :0:combined/l &&
++		git rev-parse >expect \
++			O:dir1/a O:dir1/b A:dir1/c \
++			O:dir2/d O:dir2/e A:dir2/f \
++			O:dir3/g O:dir3/h A:dir3/i \
++			O:dirN/j O:dirN/k A:dirN/l &&
++		test_cmp expect actual &&
++
++		git rev-parse >actual \
++			:0:dir1/yo :0:dir2/yo :0:dir3/yo :0:dirN/yo &&
++		git rev-parse >expect \
++			A:dir1/yo A:dir2/yo A:dir3/yo A:dirN/yo &&
++		test_cmp expect actual
++	)
++'
++
++# Testcase 9f, Renamed directory that only contained immediate subdirs
++#   (Related to testcases 1e & 9g)
++#   Commit O: goal/{a,b}/$more_files
++#   Commit A: priority/{a,b}/$more_files
++#   Commit B: goal/{a,b}/$more_files, goal/c
++#   Expected: priority/{a,b}/$more_files, priority/c
++
++test_expect_success '9f-setup: Renamed directory that only contained imm=
+ediate subdirs' '
++	test_create_repo 9f &&
++	(
++		cd 9f &&
++
++		mkdir -p goal/a &&
++		mkdir -p goal/b &&
++		echo foo >goal/a/foo &&
++		echo bar >goal/b/bar &&
++		echo baz >goal/b/baz &&
++		git add goal &&
++		test_tick &&
++		git commit -m "O" &&
++
++		git branch O &&
++		git branch A &&
++		git branch B &&
++
++		git checkout A &&
++		git mv goal/ priority &&
++		test_tick &&
++		git commit -m "A" &&
++
++		git checkout B &&
++		echo c >goal/c &&
++		git add goal/c &&
++		test_tick &&
++		git commit -m "B"
++	)
++'
++
++test_expect_failure '9f-check: Renamed directory that only contained imm=
+ediate subdirs' '
++	(
++		cd 9f &&
++
++		git checkout A^0 &&
++
++		git merge -s recursive B^0 &&
++
++		test 4 -eq $(git ls-files -s | wc -l) &&
++
++		git rev-parse >actual \
++			HEAD:priority/a/foo HEAD:priority/b/bar HEAD:priority/b/baz HEAD:prio=
+rity/c &&
++		git rev-parse >expect \
++			O:goal/a/foo O:goal/b/bar O:goal/b/baz B:goal/c &&
++		test_cmp expect actual &&
++		test_must_fail git rev-parse HEAD:goal/c
++	)
++'
++
++# Testcase 9g, Renamed directory that only contained immediate subdirs, =
+immediate subdirs renamed
++#   (Related to testcases 1e & 9f)
++#   Commit O: goal/{a,b}/$more_files
++#   Commit A: priority/{alpha,bravo}/$more_files
++#   Commit B: goal/{a,b}/$more_files, goal/c
++#   Expected: priority/{alpha,bravo}/$more_files, priority/c
++
++test_expect_success '9g-setup: Renamed directory that only contained imm=
+ediate subdirs, immediate subdirs renamed' '
++	test_create_repo 9g &&
++	(
++		cd 9g &&
++
++		mkdir -p goal/a &&
++		mkdir -p goal/b &&
++		echo foo >goal/a/foo &&
++		echo bar >goal/b/bar &&
++		echo baz >goal/b/baz &&
++		git add goal &&
++		test_tick &&
++		git commit -m "O" &&
++
++		git branch O &&
++		git branch A &&
++		git branch B &&
++
++		git checkout A &&
++		mkdir priority &&
++		git mv goal/a/ priority/alpha &&
++		git mv goal/b/ priority/beta &&
++		rmdir goal/ &&
++		test_tick &&
++		git commit -m "A" &&
++
++		git checkout B &&
++		echo c >goal/c &&
++		git add goal/c &&
++		test_tick &&
++		git commit -m "B"
++	)
++'
++
++test_expect_failure '9g-check: Renamed directory that only contained imm=
+ediate subdirs, immediate subdirs renamed' '
++	(
++		cd 9g &&
++
++		git checkout A^0 &&
++
++		git merge -s recursive B^0 &&
++
++		test 4 -eq $(git ls-files -s | wc -l) &&
++
++		git rev-parse >actual \
++			HEAD:priority/alpha/foo HEAD:priority/beta/bar HEAD:priority/beta/baz=
+ HEAD:priority/c &&
++		git rev-parse >expect \
++			O:goal/a/foo O:goal/b/bar O:goal/b/baz B:goal/c &&
++		test_cmp expect actual &&
++		test_must_fail git rev-parse HEAD:goal/c
++	)
++'
++
++########################################################################=
+###
++# Rules suggested by section 9:
++#
++#   If the other side of history did a directory rename to a path that y=
+our
++#   side renamed away, then ignore that particular rename from the other
++#   side of history for any implicit directory renames.
++########################################################################=
+###
 +
  test_done
 --=20
