@@ -2,93 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E85C62036D
-	for <e@80x24.org>; Tue, 21 Nov 2017 17:14:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6ACD62036D
+	for <e@80x24.org>; Tue, 21 Nov 2017 17:19:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751234AbdKUROd (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Nov 2017 12:14:33 -0500
-Received: from mail-ua0-f169.google.com ([209.85.217.169]:41707 "EHLO
-        mail-ua0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750794AbdKUROc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Nov 2017 12:14:32 -0500
-Received: by mail-ua0-f169.google.com with SMTP id l25so8741496uag.8
-        for <git@vger.kernel.org>; Tue, 21 Nov 2017 09:14:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=5wPJ8jalfA6WPyOqiMuCGcVMvL/ztNsRuepBGukqvzQ=;
-        b=jPfFQDLUgozlcPZYVFdSMZ46+pJCds751V5wz5EhEWx30UbEjBfP9wsf94QO1KO0vp
-         9d44LMfaO8mCAlJ1edj9Eui0rk1dxiBFkU7d0wUgpzNOp7wIqweRKRXQz6gW8U0PLcnz
-         UJe6nOOyvOMR5FkEE8840X1eazJy7vGVg8oIoN2orv4G8ckgviZPCf+hWHpUzEHb6d1c
-         bWAkkzdJpXJUnlsFf7xVaetgO7Vhe8bqU6id5BktptZ7f5TuYhV1gZOgKnTqclvUXTCo
-         Biey3UO/4y5MqRsB+0JinlsZAKw3QCVKH/JFAo9P8c7Tq5YjUFJyRib3If5L2XKmqS4O
-         LuXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=5wPJ8jalfA6WPyOqiMuCGcVMvL/ztNsRuepBGukqvzQ=;
-        b=OLfyihFq9MTzkasNlZKYxKaB8zyOUH+OYRVirly8FmjETwMLO2WZ6/pPpF1EMkZUeg
-         qwtrZM4glYSUXgZwOSt9X3r+6oYXhJIOVve+U00DGeXu1XZrVB0T6xFs00kgjZvmXBK3
-         ggDyzDvAiRsDMl+9ZuUOName0qOy/Bn6naxPObxMYgNHXRlHVDLClLxu42S6sfTmgqXk
-         wcSzpxlZ2U5EKjXL5xhXSApJf2C0M1H0d54wPu1eeYlK9D9ZHZ26KgC1xaCaghxR93e1
-         kmGAlDsV+tlynDYmGBraAg++ccftv3Jt3Hl+ZZQabtoK7P4HkbeJNjBkmo1BxHAd+tcb
-         6lSg==
-X-Gm-Message-State: AJaThX4O6wmnRC1TDQxm3B5EJpI6p36eRyUIZpjfpC85atHIA3iSSt/t
-        6fL4M938gPvAU3efzylXpiFOjba9dRaCoZGGrv0=
-X-Google-Smtp-Source: AGs4zMa3ARAlLI7SOeQ8LwNXHx2ZLZwUxo7fIHepW2XtdlcNj7Lv4gKbNHa/hHkDY9HDhQIX+Z1sJItAN+Bnlx5iF8E=
-X-Received: by 10.176.82.73 with SMTP id j9mr6621839uaa.9.1511284471790; Tue,
- 21 Nov 2017 09:14:31 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.176.70.138 with HTTP; Tue, 21 Nov 2017 09:14:30 -0800 (PST)
-In-Reply-To: <alpine.DEB.2.00.1711211303290.20686@ds9.cixit.se>
-References: <alpine.DEB.2.00.1711100959300.2391@ds9.cixit.se>
- <20171110102011.yqtka6a3wmgcvkl6@sigill.intra.peff.net> <alpine.DEB.2.00.1711101333030.2391@ds9.cixit.se>
- <7e242038-50e5-2cfc-e810-401af78b8cdc@gmail.com> <alpine.DEB.2.00.1711101436270.2391@ds9.cixit.se>
- <CABPp-BEu_DOg5t0qHnyLYSok+J+onGFPoFBbgp9P-S5JfhcRjw@mail.gmail.com>
- <alpine.DEB.2.00.1711131221150.22867@ds9.cixit.se> <CABPp-BE-bJnLTf7Y-6_uy=+QA2pi=6EAmGy8S2n7B5Ry8ckHuA@mail.gmail.com>
- <alpine.DEB.2.00.1711211303290.20686@ds9.cixit.se>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 21 Nov 2017 09:14:30 -0800
-Message-ID: <CABPp-BEQMMa4Q9MOHpjyzAs=n79qMe6XbOn6ryaeKeUtkrxenA@mail.gmail.com>
-Subject: Re: cherry-pick very slow on big repository
-To:     Peter Krefting <peter@softwolves.pp.se>
-Cc:     Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        id S1751245AbdKURT2 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Nov 2017 12:19:28 -0500
+Received: from pv33p36im-asmtp001.me.com ([17.142.213.62]:43611 "EHLO
+        pv33p36im-asmtp001.me.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751145AbdKURT1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Nov 2017 12:19:27 -0500
+X-Greylist: delayed 3600 seconds by postgrey-1.27 at vger.kernel.org; Tue, 21 Nov 2017 12:19:27 EST
+Received: from process-dkim-sign-daemon.pv33p36im-asmtp001.me.com by
+ pv33p36im-asmtp001.me.com
+ (Oracle Communications Messaging Server 8.0.1.2.20170607 64bit (built Jun  7
+ 2017)) id <0OZR00H00ZQATK00@pv33p36im-asmtp001.me.com> for
+ git@vger.kernel.org; Tue, 21 Nov 2017 16:19:27 +0000 (GMT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;     s=04042017;
+ t=1511281167;  bh=gy01kin5+wjHuvH+w3Wkjp9F/w8yYfV1W7SEfOFr3qQ=;
+        h=From:Content-type:MIME-version:Subject:Message-id:Date:To;
+        b=o6o/bwslHGsp3NPmhQnbo7j7o6nX3Sq/ViPApWQq1torORnTn0Nbvao1yjsronjBl
+ Veu1NZChHqPvkyrZ74JO78SguvJNmkEe56FpS+5YJXhGFnrN/7MxSm0BVtlc3QeQ1o
+ iqNxcOoKyzsx+4sWhxwuuxQHMtcDfKvFimnjjlyDZV+RTp4BPze9kY2OhGFeZ4u8x8
+ j/PkBd+9KIR4xG7G1P3JN0DEumwAOwYY5ll9TBdQfTUaDXmi+RVHzgXwZc9/ClAVNv
+ e/lUU5AlsILMAA1aM5C4UHS8mTJH9Eok2uBGf5a511Hl3jaBfzVCqE4RFSjiZs2/i+
+ 8A9UmjnEDRxoQ==
+Received: from icloud.com ([127.0.0.1]) by pv33p36im-asmtp001.me.com
+ (Oracle Communications Messaging Server 8.0.1.2.20170607 64bit (built Jun  7
+ 2017)) with ESMTPSA id <0OZS000FH005XI30@pv33p36im-asmtp001.me.com> for
+ git@vger.kernel.org; Tue, 21 Nov 2017 16:19:26 +0000 (GMT)
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,,
+ definitions=2017-11-21_06:,, signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ clxscore=1011 suspectscore=3 malwarescore=0 phishscore=0 adultscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.0.1-1707230000 definitions=main-1711210217
+From:   Laetitia Pfaender <laetitia.pfaender@icloud.com>
+Content-type: text/plain; charset=utf-8
+Content-transfer-encoding: quoted-printable
+MIME-version: 1.0 (Mac OS X Mail 10.3 \(3273\))
+Subject: bash script to pull in branch B the changes from parent branch A
+Message-id: <BEFA6451-9A9A-4B44-B067-727136AD39EF@icloud.com>
+Date:   Wed, 22 Nov 2017 00:19:22 +0800
+To:     git@vger.kernel.org
+X-Mailer: Apple Mail (2.3273)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 21, 2017 at 4:07 AM, Peter Krefting <peter@softwolves.pp.se> wrote:
-> Elijah Newren:
->
->> Sure, take a look at the big-repo-small-cherry-pick branch of
->> https://github.com/newren/git
->
->
-> With those changes, the time usage is the same as if I set
-> merge.renameLimit=1 for the repository, and the end result is identical:
->
-> $ time /usr/local/stow/git-v2.15.0-323-g31fe956618/bin/git cherry-pick -x
-> 717eb328940ca2e33f14ed27576e656327854b7b
-> [redacted 19be3551bc] Redacted
->  Author: Redacted <redacted>
->  Date: Mon Oct 16 15:58:05 2017 +0200
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> real    0m15,345s
-> user    0m14,908s
-> sys     0m0,528s
->
-> Thanks!
+Hi,
+
+I have a bash script to pull in branch B the changes from parent branch =
+A that does the following:
+
+cd repo-in-branchB
+git branch --set-upstream-to=3Dorigin/branchB
+git pull
+git branch --set-upstream-to=3Dorigin/branchA
+git pull
+git branch --set-upstream-to=3Dorigin/branchB
+
+It does exactly what I want but, as I have many children branches B to =
+update, I would like to prompt my username and password only once and =
+then makes the script use them in all following git requests. I came to =
+the conclusion that I needed to update my script as follow:
+
+read -p "Username for 'https://github.com': " username
+read -s -p "Password for 'https://$username@github.com': " password
+echo ""
+cd repo-in-branchB
+echo =E2=80=9Cpull from branchB"
+git pull https://$username:$password@github.com/myrepo.git heads/branchB
+echo =E2=80=9Cpull from parent branchA"
+git pull https://$username:$password@github.com/myrepo.git heads/branchA
+
+I have never used this kind of URLs, so just to make sure, are these 2 =
+versions conceptually equivalent? Will they do the exact same thing?
+
+Best regards
+
+Laetitia
+
+PS: I=E2=80=99m open to suggestions but note that I don=E2=80=99t want =
+to rebase, neither can I configure my username and password in a =
+permanent way on this server.
 
 
-Cool, glad it worked for you.  Thanks for testing it out.
+
