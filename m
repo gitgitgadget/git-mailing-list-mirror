@@ -7,35 +7,35 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A7EF920954
-	for <e@80x24.org>; Tue, 21 Nov 2017 08:01:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DBBAD20954
+	for <e@80x24.org>; Tue, 21 Nov 2017 08:01:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751388AbdKUIBu (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Nov 2017 03:01:50 -0500
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:43694 "EHLO
+        id S1751402AbdKUIB4 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Nov 2017 03:01:56 -0500
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:43712 "EHLO
         mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751247AbdKUIBr (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2017 03:01:47 -0500
+        by vger.kernel.org with ESMTP id S1751367AbdKUIBu (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2017 03:01:50 -0500
 Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id vAL7xVPD019352;
-        Tue, 21 Nov 2017 00:01:00 -0800
+        by mx0a-00153501.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id vAL7xBAB018976;
+        Tue, 21 Nov 2017 00:01:01 -0800
 Authentication-Results: ppops.net;
         spf=softfail smtp.mailfrom=newren@gmail.com
 Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2eakkpc221-1;
+        by mx0a-00153501.pphosted.com with ESMTP id 2eakkpc226-1;
         Tue, 21 Nov 2017 00:01:00 -0800
 Received: from mxw1.palantir.com (new-smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id 242CD22658EF;
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id DA961226639D;
         Tue, 21 Nov 2017 00:01:00 -0800 (PST)
 Received: from newren2-linux.yojoe.local (newren2-linux.dyn.yojoe.local [10.100.68.32])
-        by smtp.yojoe.local (Postfix) with ESMTP id 194FF2CDEB1;
+        by smtp.yojoe.local (Postfix) with ESMTP id CCF0B2CDE75;
         Tue, 21 Nov 2017 00:01:00 -0800 (PST)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, Elijah Newren <newren@gmail.com>
-Subject: [PATCH v3 05/33] directory rename detection: directory splitting testcases
-Date:   Tue, 21 Nov 2017 00:00:31 -0800
-Message-Id: <20171121080059.32304-6-newren@gmail.com>
+Subject: [PATCH v3 20/33] merge-recursive: add a new hashmap for storing directory renames
+Date:   Tue, 21 Nov 2017 00:00:46 -0800
+Message-Id: <20171121080059.32304-21-newren@gmail.com>
 X-Mailer: git-send-email 2.15.0.309.g62ce55426d
 In-Reply-To: <20171121080059.32304-1-newren@gmail.com>
 References: <20171121080059.32304-1-newren@gmail.com>
@@ -55,173 +55,81 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This just adds dir_rename_entry and the associated functions; code using
+these will be added in subsequent commits.
+
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- t/t6043-merge-rename-directories.sh | 137 ++++++++++++++++++++++++++++++=
-++++++
- 1 file changed, 137 insertions(+)
+ merge-recursive.c | 35 +++++++++++++++++++++++++++++++++++
+ merge-recursive.h |  8 ++++++++
+ 2 files changed, 43 insertions(+)
 
-diff --git a/t/t6043-merge-rename-directories.sh b/t/t6043-merge-rename-d=
-irectories.sh
-index d8ead7c56b..335aa1c145 100755
---- a/t/t6043-merge-rename-directories.sh
-+++ b/t/t6043-merge-rename-directories.sh
-@@ -427,4 +427,141 @@ test_expect_failure '1f-check: Split a directory in=
-to two other directories' '
- #   in section 2, plus testcases 3a and 4a.
- ########################################################################=
-###
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 26cae6bdfd..2f4f85314a 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -49,6 +49,41 @@ static unsigned int path_hash(const char *path)
+ 	return ignore_case ? strihash(path) : strhash(path);
+ }
 =20
++static struct dir_rename_entry *dir_rename_find_entry(struct hashmap *ha=
+shmap,
++						      char *dir)
++{
++	struct dir_rename_entry key;
 +
-+########################################################################=
-###
-+# SECTION 2: Split into multiple directories, with equal number of paths
-+#
-+# Explore the splitting-a-directory rules a bit; what happens in the
-+# edge cases?
-+#
-+# Note that there is a closely related case of a directory not being
-+# split on either side of history, but being renamed differently on
-+# each side.  See testcase 8e for that.
-+########################################################################=
-###
++	if (dir =3D=3D NULL)
++		return NULL;
++	hashmap_entry_init(&key, strhash(dir));
++	key.dir =3D dir;
++	return hashmap_get(hashmap, &key, NULL);
++}
 +
-+# Testcase 2a, Directory split into two on one side, with equal numbers =
-of paths
-+#   Commit O: z/{b,c}
-+#   Commit A: y/b, w/c
-+#   Commit B: z/{b,c,d}
-+#   Expected: y/b, w/c, z/d, with warning about z/ -> (y/ vs. w/) confli=
-ct
-+test_expect_success '2a-setup: Directory split into two on one side, wit=
-h equal numbers of paths' '
-+	test_create_repo 2a &&
-+	(
-+		cd 2a &&
++static int dir_rename_cmp(void *unused_cmp_data,
++			  const struct dir_rename_entry *e1,
++			  const struct dir_rename_entry *e2,
++			  const void *unused_keydata)
++{
++	return strcmp(e1->dir, e2->dir);
++}
 +
-+		mkdir z &&
-+		echo b >z/b &&
-+		echo c >z/c &&
-+		git add z &&
-+		test_tick &&
-+		git commit -m "O" &&
++static void dir_rename_init(struct hashmap *map)
++{
++	hashmap_init(map, (hashmap_cmp_fn) dir_rename_cmp, NULL, 0);
++}
 +
-+		git branch O &&
-+		git branch A &&
-+		git branch B &&
++static void dir_rename_entry_init(struct dir_rename_entry *entry,
++				  char *directory)
++{
++	hashmap_entry_init(entry, strhash(directory));
++	entry->dir =3D directory;
++	entry->non_unique_new_dir =3D 0;
++	entry->new_dir =3D NULL;
++	string_list_init(&entry->possible_new_dirs, 0);
++}
 +
-+		git checkout A &&
-+		mkdir y &&
-+		mkdir w &&
-+		git mv z/b y/ &&
-+		git mv z/c w/ &&
-+		test_tick &&
-+		git commit -m "A" &&
+ static void flush_output(struct merge_options *o)
+ {
+ 	if (o->buffer_output < 2 && o->obuf.len) {
+diff --git a/merge-recursive.h b/merge-recursive.h
+index 80d69d1401..a024949739 100644
+--- a/merge-recursive.h
++++ b/merge-recursive.h
+@@ -29,6 +29,14 @@ struct merge_options {
+ 	struct string_list df_conflict_file_set;
+ };
+=20
++struct dir_rename_entry {
++	struct hashmap_entry ent; /* must be the first member! */
++	char *dir;
++	unsigned non_unique_new_dir:1;
++	char *new_dir;
++	struct string_list possible_new_dirs;
++};
 +
-+		git checkout B &&
-+		echo d >z/d &&
-+		git add z/d &&
-+		test_tick &&
-+		git commit -m "B"
-+	)
-+'
-+
-+test_expect_failure '2a-check: Directory split into two on one side, wit=
-h equal numbers of paths' '
-+	(
-+		cd 2a &&
-+
-+		git checkout A^0 &&
-+
-+		test_must_fail git merge -s recursive B^0 >out &&
-+
-+		test 3 -eq $(git ls-files -s | wc -l) &&
-+		test 0 -eq $(git ls-files -u | wc -l) &&
-+		test 1 -eq $(git ls-files -o | wc -l) &&
-+
-+		git rev-parse >actual \
-+			:0:y/b :0:w/c :0:z/d &&
-+		git rev-parse >expect \
-+			O:z/b O:z/c B:z/d &&
-+		test_cmp expect actual &&
-+		test_i18ngrep "CONFLICT.*directory rename split" out
-+	)
-+'
-+
-+# Testcase 2b, Directory split into two on one side, with equal numbers =
-of paths
-+#   Commit O: z/{b,c}
-+#   Commit A: y/b, w/c
-+#   Commit B: z/{b,c}, x/d
-+#   Expected: y/b, w/c, x/d; No warning about z/ -> (y/ vs. w/) conflict
-+test_expect_success '2b-setup: Directory split into two on one side, wit=
-h equal numbers of paths' '
-+	test_create_repo 2b &&
-+	(
-+		cd 2b &&
-+
-+		mkdir z &&
-+		echo b >z/b &&
-+		echo c >z/c &&
-+		git add z &&
-+		test_tick &&
-+		git commit -m "O" &&
-+
-+		git branch O &&
-+		git branch A &&
-+		git branch B &&
-+
-+		git checkout A &&
-+		mkdir y &&
-+		mkdir w &&
-+		git mv z/b y/ &&
-+		git mv z/c w/ &&
-+		test_tick &&
-+		git commit -m "A" &&
-+
-+		git checkout B &&
-+		mkdir x &&
-+		echo d >x/d &&
-+		git add x/d &&
-+		test_tick &&
-+		git commit -m "B"
-+	)
-+'
-+
-+test_expect_success '2b-check: Directory split into two on one side, wit=
-h equal numbers of paths' '
-+	(
-+		cd 2b &&
-+
-+		git checkout A^0 &&
-+
-+		git merge -s recursive B^0 >out &&
-+
-+		test 3 -eq $(git ls-files -s | wc -l) &&
-+		test 0 -eq $(git ls-files -u | wc -l) &&
-+		test 1 -eq $(git ls-files -o | wc -l) &&
-+
-+		git rev-parse >actual \
-+			:0:y/b :0:w/c :0:x/d &&
-+		git rev-parse >expect \
-+			O:z/b O:z/c B:x/d &&
-+		test_cmp expect actual &&
-+		! test_i18ngrep "CONFLICT.*directory rename split" out
-+	)
-+'
-+
-+########################################################################=
-###
-+# Rules suggested by section 2:
-+#
-+#   None; the rule was already covered in section 1.  These testcases ar=
-e
-+#   here just to make sure the conflict resolution and necessary warning
-+#   messages are handled correctly.
-+########################################################################=
-###
-+
- test_done
+ /* merge_trees() but with recursive ancestor consolidation */
+ int merge_recursive(struct merge_options *o,
+ 		    struct commit *h1,
 --=20
 2.15.0.309.g62ce55426d
 
