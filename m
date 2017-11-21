@@ -2,218 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7677D2036D
-	for <e@80x24.org>; Tue, 21 Nov 2017 23:28:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7D55D2036D
+	for <e@80x24.org>; Tue, 21 Nov 2017 23:29:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751494AbdKUX2q (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Nov 2017 18:28:46 -0500
-Received: from mail-qk0-f178.google.com ([209.85.220.178]:46231 "EHLO
-        mail-qk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751445AbdKUX2p (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Nov 2017 18:28:45 -0500
-Received: by mail-qk0-f178.google.com with SMTP id b85so14451680qkc.13
-        for <git@vger.kernel.org>; Tue, 21 Nov 2017 15:28:45 -0800 (PST)
+        id S1751451AbdKUX3j (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Nov 2017 18:29:39 -0500
+Received: from mail-io0-f194.google.com ([209.85.223.194]:38748 "EHLO
+        mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751401AbdKUX3i (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Nov 2017 18:29:38 -0500
+Received: by mail-io0-f194.google.com with SMTP id h205so20546392iof.5
+        for <git@vger.kernel.org>; Tue, 21 Nov 2017 15:29:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=e6yXrTxEpBy5lVfEhD+w3K/ELmKkW2fdQP06/2dsY1k=;
-        b=IEYkUeFesPpRqIIS9B775JZUMX8KQvzpRn3l8T0r2Yj1KGCGxXaXBxMWUn2RWf8Ypc
-         yg1Pi7u7YiMmqgOzhBaKBu8d/y1fPa7uKbudjoZ+/SMkj1szkQhXTcjP0mQ1Jx4e24qg
-         N7kbXpQ0XZxIKVjrDaxF3OdkiUsTISpMFC2s3hcbgF+h2XzbTHw3idKbaUpVNmDnowqM
-         k0O24Il7EY2mdCyybtPib/RCnr8b40FaCImRwQczguWP17uDQhgWUPkmp0mssgWybW/U
-         JZfz1fuiC0mIxmldEyaVpXyrK1TXmUIRbxJ3AEtwxzC6pSO+BijNOK9vxsSGHd1DOIip
-         i1zw==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=8vxWyquoNvjOwTXPkGQ5E0tYfCXz7jQEUFD5MKtrAps=;
+        b=mft+kwFfkBw4NLLdvVO96uKsFuYkk6EkkV4un8oVaU0eAAVi0SFKUylpwA/c/AxAoi
+         vqfCPR1someMSTMxH4dwQv+Cf4qFf6fCxB2zEj8R4A835YOwFqTwAoXjhnaESWBAeRx8
+         W9FoUTG93wuz67WrCBjeFSFsCRLAuYW/fJXnxVf9GezLRwFw9hwe2AK9RAS2gV6Dzug0
+         91pAffwJArHymtsTaBUCgQyL4kEU3C9YdXOdrdq/nMeqWhwQ2gkRlUrlnDx0kb5yuB2Q
+         RRtoVeMwqBN5xwRvIw71qE4if9La9c18arOXpvYcrpEh4hpnSs3EQ5cHmCpbdAzc1Gjt
+         Gxdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=e6yXrTxEpBy5lVfEhD+w3K/ELmKkW2fdQP06/2dsY1k=;
-        b=SyICpIb6hKRhuEyMIpu4mu0qF/zqcBMxTrc8Pk9uFzSbekiZxoauLxjirNH7JCaBo5
-         5PmTXhN9aMau8mbcycWCup+0394co0G+YWzAjhPQYaoNwoY8B89vin/Ak0vLfGx7viCb
-         o5/zGJJA0Jih+8hiY4K7K3j4o96QcD4WF+ucyG1qCSClM7TcPhfolYVo4wBA3jVRA0rn
-         m5QZ/p3rUaEnsuVwS1bamKzf3tlKG2BpZFXtQ+veIijYp6xWXXq9Fny1hxzZESvG+qYz
-         6cimoHlXm4yE9Naa6iSmld1MEUWCi0LgeRL41qFSTYRTrlzrDP/zomidP0Uf3c9Z+icH
-         mwjw==
-X-Gm-Message-State: AJaThX5UMO/68oyEKrJ7Q1/ZCfNpa9fUHfy22wsOheHkkzW92IKompSv
-        m5zu2xqGnUKWySmipIy9DlkG+BEwMTplQo27NUst3KW32X8=
-X-Google-Smtp-Source: AGs4zMbaQo/bGdot2y8c+UOOGvlfxBVPGnlip0PoWmvIxftF0/ex8Bh5Nvg5WESOIlIlt+dKPILdnqFMrneVXhZgFB8=
-X-Received: by 10.55.76.85 with SMTP id z82mr30199720qka.346.1511306924551;
- Tue, 21 Nov 2017 15:28:44 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=8vxWyquoNvjOwTXPkGQ5E0tYfCXz7jQEUFD5MKtrAps=;
+        b=PQJyb2ZpqKGAvMlW7LsFamseEVZV/PgO+XnRpTuK1iIZm6zMfWwGl8T2gIWZ9OCShZ
+         is5yb9EnCipMFbZTYaruD+wdcy00/hCSUr8CsRr+FR4AJj4b2rY75Hq64JtgeE3U5R3B
+         o5+AO4zwszoxJxKPcbjaEGyUHsHfp+Cs5TCjVH5nRpDuMWQvi1xb69JHih5rABnUFdNe
+         898/9wM39+SbwoP/5qqEQcuh3T9DczXLw5qQg+ij0wSC6IW9P75Eo/0p96rib2zPKkMZ
+         mQdO5LQPtaPF1/zDbqrQXXJ6zqNfUGJwckjA3ShAq7YZyt/5GNdG0a99f6M7T2h3mLA0
+         PDaQ==
+X-Gm-Message-State: AJaThX62cyc9xCurU6xxReAW3zdSswc3lcLYbfSt7P76MPUVroPuuMzv
+        nIEtWKfluXOqPLEZTCqTkvRq1bjZ
+X-Google-Smtp-Source: AGs4zMbbewkc1nKFa3XkB5GcSmxeZaV2qoP2fUcW+t9Q3jPP590TTqlxZla42D3Y3SO9LXxyVqbiXg==
+X-Received: by 10.107.156.209 with SMTP id f200mr19305844ioe.226.1511306977868;
+        Tue, 21 Nov 2017 15:29:37 -0800 (PST)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id d14sm1208292itj.11.2017.11.21.15.29.37
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 21 Nov 2017 15:29:37 -0800 (PST)
+Date:   Tue, 21 Nov 2017 15:29:35 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Anders Kaseorg <andersk@mit.edu>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 0/3] Improving build reproducibility
+Message-ID: <20171121232935.GM3429@aiede.mtv.corp.google.com>
 MIME-Version: 1.0
-Received: by 10.140.85.179 with HTTP; Tue, 21 Nov 2017 15:28:43 -0800 (PST)
-In-Reply-To: <20171121221717.155301-1-jonathantanmy@google.com>
-References: <20171121221717.155301-1-jonathantanmy@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 21 Nov 2017 15:28:43 -0800
-Message-ID: <CAGZ79kba49xP8m2gf-BAGkUhJ_=qwwr6LVJohbA+afFhjOn49w@mail.gmail.com>
-Subject: Re: [RFC PATCH] xdiff/xpatience: support anchoring a line
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.9.1 (2017-09-22)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 21, 2017 at 2:17 PM, Jonathan Tan <jonathantanmy@google.com> wrote:
-> Teach the patience diff to support prohibiting a user-specified line
-> from appearing as a deletion or addition in the end result.
->
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-> ---
-> I'm sending this out to see if a change similar to this would be
-> welcome. It is useful to me as a reviewer (to check my own code, e.g.
-> when checking [1]). Probably more design needs to go into this,
-> including the best way to specify the "anchor" line, and the correct
-> behavior when the anchor is either not found or appears more than once.
->
-> Any thoughts?
+Hi,
 
-The background from this whole idea is that the Myers diff algorithm
-may produce the shortest diff, which is good for computer consumption
-or transport, but not ideal for human review. To accommodate human
-review we need to couple the diff with higher level concepts, such as
-move detection or ignoring blanks.
+The reproducible builds <https://reproducible-builds.org/> project has
+been working on making it possible to verify that binary packages of
+open source projects were built from the source they were claimed to
+have been built from.
 
-I would imagine that this anchor can be set by a user to a function
-header or other significant line, such that the commit is more in line with
-the diff itself ("move code out of function A into its helper" would not
-want to have the "function A" line jump around, but the code should
-be removed from the function, hence you'd anchor the function).
+To that end, Debian has been carrying patches 1-2 for a while.  Patch
+3 is a Google-internal patch with a related but distinct goal of
+making builds go faster.
 
-The solution you provide is a good thing to experiment with, but
-longer term, I would want to have huge record of configs in which
-humans selected the best diff, such that we can use that data
-to reason about better automatic diff generation.
-The diff heuristic was based on a lot of human generated data,
-that was generated by Michael at the time. I wonder if we want to
-permanently store the anchor so the data collection will happen
-automatically over time.
+I think these should be ready to apply.  Thoughts of all kinds welcome.
 
-I had a similar idea, which would affix a given coordinate of the map[1]
-to be on the path. I imagine it similar to e.g. Google Maps in which you
-can select intermittent way points on your route.
+Sincerely,
+Anders Kaseorg (2):
+  Documentation: allow overriding timestamps of generated asciidoc
+  git-gui: sort entries in optimized tclIndex
 
-When having this rather abstract coordinate, which can be
-given as line number in pre and post image, then we would not
-need to think about questions whether a given line is found or
-appears multiple times; however users like concise input the best,
-so the idea of an "anchor line" might be the best representation for
-the user, which is internally translated into way points.
+Jonathan Nieder (1):
+  generate-cmdlist: avoid non-deterministic output
 
-[1] think of http://simplygenius.net/ArticleFiles/DiffTutorial/diagonals.png
-
-Stefan
-
-> [1]
-> https://public-inbox.org/git/20171121221256.154741-1-jonathantanmy@google.com/
-> ---
->  t/t4033-diff-patience.sh | 13 +++++++++++++
->  xdiff/xpatience.c        | 29 +++++++++++++++++++++++++++--
->  2 files changed, 40 insertions(+), 2 deletions(-)
->
-> diff --git a/t/t4033-diff-patience.sh b/t/t4033-diff-patience.sh
-> index 113304dc5..2147fd688 100755
-> --- a/t/t4033-diff-patience.sh
-> +++ b/t/t4033-diff-patience.sh
-> @@ -13,6 +13,19 @@ test_expect_success '--ignore-space-at-eol with a single appended character' '
->         grep "^+.*X" diff
->  '
->
-> +test_expect_success 'anchor' '
-> +       printf "a\nb\nc\n" >pre &&
-> +       printf "c\na\nb\n" >post &&
-> +
-> +       # without anchor, c is moved
-> +       test_expect_code 1 git diff --no-index --patience pre post >diff &&
-> +       grep "^+c" diff &&
-> +
-> +       # with anchor, a is moved
-> +       DIFF_ANCHOR=c test_expect_code 1 git diff --no-index --patience pre post >diff &&
-> +       grep "^+a" diff
-
-or rather: "c is not moved, we don't care how the diff actually looks like",
-so maybe
-      ! grep "+c" diff
-
-
-> diff --git a/xdiff/xpatience.c b/xdiff/xpatience.c
-> index a44e77632..195a60e57 100644
-> --- a/xdiff/xpatience.c
-> +++ b/xdiff/xpatience.c
-> @@ -62,6 +62,8 @@ struct hashmap {
->                  * initially, "next" reflects only the order in file1.
->                  */
->                 struct entry *next, *previous;
-> +
-> +               unsigned anchor : 1;
-
-While this is RFC, I should not expect comments, though it would
-be nice to have them in the final series. ;-)
-
->         } *entries, *first, *last;
->         /* were common records found? */
->         unsigned long has_matches;
-> @@ -70,6 +72,14 @@ struct hashmap {
->         xpparam_t const *xpp;
->  };
->
-> +static int is_anchor(const char *line)
-> +{
-> +       char *anchor = getenv("DIFF_ANCHOR");
-> +       if (!anchor)
-> +               return 0;
-> +       return !strncmp(line, anchor, strlen(anchor));
-> +}
-> +
->  /* The argument "pass" is 1 for the first file, 2 for the second. */
->  static void insert_record(int line, struct hashmap *map, int pass)
->  {
-> @@ -110,6 +120,7 @@ static void insert_record(int line, struct hashmap *map, int pass)
->                 return;
->         map->entries[index].line1 = line;
->         map->entries[index].hash = record->ha;
-> +       map->entries[index].anchor = is_anchor(map->env->xdf1.recs[line - 1]->ptr);
->         if (!map->first)
->                 map->first = map->entries + index;
->         if (map->last) {
-> @@ -192,14 +203,28 @@ static struct entry *find_longest_common_sequence(struct hashmap *map)
->         int longest = 0, i;
->         struct entry *entry;
->
-> +       /*
-> +        * If not -1, this entry in sequence must never be overridden. (Also,
-> +        * do not override entries in sequence before this entry, since it is
-> +        * useless.)
-> +        */
-> +       int anchor_i = -1;
-> +
->         for (entry = map->first; entry; entry = entry->next) {
->                 if (!entry->line2 || entry->line2 == NON_UNIQUE)
->                         continue;
->                 i = binary_search(sequence, longest, entry);
->                 entry->previous = i < 0 ? NULL : sequence[i];
-> -               sequence[++i] = entry;
-> -               if (i == longest)
-> +               ++i;
-> +               if (i <= anchor_i)
-> +                       continue;
-> +               sequence[i] = entry;
-> +               if (anchor_i == -1 && entry->anchor) {
-> +                       anchor_i = i;
-> +                       longest = anchor_i + 1;
-> +               } else if (i == longest) {
->                         longest++;
-> +               }
->         }
->
->         /* No common unique lines were found */
-> --
-> 2.15.0.448.gf294e3d99a-goog
->
+ Documentation/Makefile               | 7 +++++--
+ Documentation/technical/api-index.sh | 5 +++++
+ generate-cmdlist.sh                  | 2 +-
+ git-gui/Makefile                     | 2 +-
+ 4 files changed, 12 insertions(+), 4 deletions(-)
