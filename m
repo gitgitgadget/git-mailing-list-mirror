@@ -6,29 +6,29 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0C0AD2036D
-	for <e@80x24.org>; Tue, 21 Nov 2017 21:07:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9FAB12036D
+	for <e@80x24.org>; Tue, 21 Nov 2017 21:07:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751434AbdKUVHq (ORCPT <rfc822;e@80x24.org>);
+        id S1751425AbdKUVHq (ORCPT <rfc822;e@80x24.org>);
         Tue, 21 Nov 2017 16:07:46 -0500
-Received: from siwi.pair.com ([209.68.5.199]:44457 "EHLO siwi.pair.com"
+Received: from siwi.pair.com ([209.68.5.199]:44447 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751372AbdKUVHe (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1751353AbdKUVHe (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 21 Nov 2017 16:07:34 -0500
 Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 129D484512;
-        Tue, 21 Nov 2017 16:07:34 -0500 (EST)
+        by siwi.pair.com (Postfix) with ESMTP id 762AD844F7;
+        Tue, 21 Nov 2017 16:07:33 -0500 (EST)
 Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 9605D844F0;
+        by siwi.pair.com (Postfix) with ESMTPSA id 1550F844F0;
         Tue, 21 Nov 2017 16:07:33 -0500 (EST)
 From:   Jeff Hostetler <git@jeffhostetler.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, jonathantanmy@google.com
-Subject: [PATCH v5 08/10] sha1_file: support lazily fetching missing objects
-Date:   Tue, 21 Nov 2017 21:07:18 +0000
-Message-Id: <20171121210720.21376-9-git@jeffhostetler.com>
+Subject: [PATCH v5 07/10] introduce fetch-object: fetch one promisor object
+Date:   Tue, 21 Nov 2017 21:07:17 +0000
+Message-Id: <20171121210720.21376-8-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20171121210720.21376-1-git@jeffhostetler.com>
 References: <20171121210720.21376-1-git@jeffhostetler.com>
@@ -39,304 +39,332 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jonathan Tan <jonathantanmy@google.com>
 
-Teach sha1_file to fetch objects from the remote configured in
-extensions.partialclone whenever an object is requested but missing.
+Introduce fetch-object, providing the ability to fetch one object from a
+promisor remote.
 
-The fetching of objects can be suppressed through a global variable.
-This is used by fsck and index-pack.
+This uses fetch-pack. To do this, the transport mechanism has been
+updated with 2 flags, "from-promisor" to indicate that the resulting
+pack comes from a promisor remote (and thus should be annotated as such
+by index-pack), and "no-haves" to suppress the sending of "have" lines.
 
-However, by default, such fetching is not suppressed. This is meant as a
-temporary measure to ensure that all Git commands work in such a
-situation. Future patches will update some commands to either tolerate
-missing objects (without fetching them) or be more efficient in fetching
-them.
+This will be tested in a subsequent commit.
 
-In order to determine the code changes in sha1_file.c necessary, I
-investigated the following:
- (1) functions in sha1_file.c that take in a hash, without the user
-     regarding how the object is stored (loose or packed)
- (2) functions in packfile.c (because I need to check callers that know
-     about the loose/packed distinction and operate on both differently,
-     and ensure that they can handle the concept of objects that are
-     neither loose nor packed)
-
-(1) is handled by the modification to sha1_object_info_extended().
-
-For (2), I looked at for_each_packed_object and others.  For
-for_each_packed_object, the callers either already work or are fixed in
-this patch:
- - reachable - only to find recent objects
- - builtin/fsck - already knows about missing objects
- - builtin/cat-file - warning message added in this commit
-
-Callers of the other functions do not need to be changed:
- - parse_pack_index
-   - http - indirectly from http_get_info_packs
-   - find_pack_entry_one
-     - this searches a single pack that is provided as an argument; the
-       caller already knows (through other means) that the sought object
-       is in a specific pack
- - find_sha1_pack
-   - fast-import - appears to be an optimization to not store a file if
-     it is already in a pack
-   - http-walker - to search through a struct alt_base
-   - http-push - to search through remote packs
- - has_sha1_pack
-   - builtin/fsck - already knows about promisor objects
-   - builtin/count-objects - informational purposes only (check if loose
-     object is also packed)
-   - builtin/prune-packed - check if object to be pruned is packed (if
-     not, don't prune it)
-   - revision - used to exclude packed objects if requested by user
-   - diff - just for optimization
+NEEDSWORK: update this when we have more information about protocol v2,
+which should allow a way to suppress the ref advertisement and
+officially allow any object type to be "want"-ed.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- builtin/cat-file.c       |  2 ++
- builtin/fetch-pack.c     |  2 ++
- builtin/fsck.c           |  3 +++
- builtin/index-pack.c     |  6 ++++++
- cache.h                  |  8 ++++++++
- fetch-object.c           |  3 +++
- sha1_file.c              | 38 ++++++++++++++++++++++++------------
- t/t0410-partial-clone.sh | 51 ++++++++++++++++++++++++++++++++++++++++++++++++
- 8 files changed, 100 insertions(+), 13 deletions(-)
+ Documentation/gitremote-helpers.txt |  6 ++++++
+ Makefile                            |  1 +
+ builtin/fetch-pack.c                |  8 ++++++++
+ builtin/index-pack.c                | 16 +++++++++++++---
+ fetch-object.c                      | 24 ++++++++++++++++++++++++
+ fetch-object.h                      |  6 ++++++
+ fetch-pack.c                        |  8 ++++++--
+ fetch-pack.h                        |  2 ++
+ remote-curl.c                       | 14 +++++++++++++-
+ transport.c                         |  8 ++++++++
+ transport.h                         |  8 ++++++++
+ 11 files changed, 95 insertions(+), 6 deletions(-)
+ create mode 100644 fetch-object.c
+ create mode 100644 fetch-object.h
 
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index f5fa4fd..cf9ea5c 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -475,6 +475,8 @@ static int batch_objects(struct batch_options *opt)
+diff --git a/Documentation/gitremote-helpers.txt b/Documentation/gitremote-helpers.txt
+index 4a584f3..96feb4e 100644
+--- a/Documentation/gitremote-helpers.txt
++++ b/Documentation/gitremote-helpers.txt
+@@ -466,6 +466,12 @@ set by Git if the remote helper has the 'option' capability.
+ 	Transmit <string> as a push option. As the push option
+ 	must not contain LF or NUL characters, the string is not encoded.
  
- 		for_each_loose_object(batch_loose_object, &sa, 0);
- 		for_each_packed_object(batch_packed_object, &sa, 0);
-+		if (repository_format_partial_clone)
-+			warning("This repository has extensions.partialClone set. Some objects may not be loaded.");
- 
- 		cb.opt = opt;
- 		cb.expand = &data;
++'option from-promisor' {'true'|'false'}::
++	Indicate that these objects are being fetched from a promisor.
++
++'option no-haves' {'true'|'false'}::
++	Do not send "have" lines.
++
+ SEE ALSO
+ --------
+ linkgit:git-remote[1]
+diff --git a/Makefile b/Makefile
+index ca378a4..795e0c7 100644
+--- a/Makefile
++++ b/Makefile
+@@ -792,6 +792,7 @@ LIB_OBJS += ewah/ewah_bitmap.o
+ LIB_OBJS += ewah/ewah_io.o
+ LIB_OBJS += ewah/ewah_rlw.o
+ LIB_OBJS += exec_cmd.o
++LIB_OBJS += fetch-object.o
+ LIB_OBJS += fetch-pack.o
+ LIB_OBJS += fsck.o
+ LIB_OBJS += gettext.o
 diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
-index 9f303cf..9a7ebf6 100644
+index 366b9d1..9f303cf 100644
 --- a/builtin/fetch-pack.c
 +++ b/builtin/fetch-pack.c
-@@ -53,6 +53,8 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
- 	struct oid_array shallow = OID_ARRAY_INIT;
- 	struct string_list deepen_not = STRING_LIST_INIT_DUP;
- 
-+	fetch_if_missing = 0;
-+
- 	packet_trace_identity("fetch-pack");
- 
- 	memset(&args, 0, sizeof(args));
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 578a7c8..3b76c0e 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -678,6 +678,9 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
- 	int i;
- 	struct alternate_object_database *alt;
- 
-+	/* fsck knows how to handle missing promisor objects */
-+	fetch_if_missing = 0;
-+
- 	errors_found = 0;
- 	check_replace_refs = 0;
- 
+@@ -143,6 +143,14 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
+ 			args.update_shallow = 1;
+ 			continue;
+ 		}
++		if (!strcmp("--from-promisor", arg)) {
++			args.from_promisor = 1;
++			continue;
++		}
++		if (!strcmp("--no-haves", arg)) {
++			args.no_haves = 1;
++			continue;
++		}
+ 		usage(fetch_pack_usage);
+ 	}
+ 	if (deepen_not.nr)
 diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 24c2f05..a0a35e6 100644
+index 4f305a7..24c2f05 100644
 --- a/builtin/index-pack.c
 +++ b/builtin/index-pack.c
-@@ -1657,6 +1657,12 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
- 	unsigned foreign_nr = 1;	/* zero is a "good" value, assume bad */
- 	int report_end_of_input = 0;
- 
-+	/*
-+	 * index-pack never needs to fetch missing objects, since it only
-+	 * accesses the repo to do hash collision checks
-+	 */
-+	fetch_if_missing = 0;
-+
- 	if (argc == 2 && !strcmp(argv[1], "-h"))
- 		usage(index_pack_usage);
- 
-diff --git a/cache.h b/cache.h
-index c76f2e9..6980072 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1727,6 +1727,14 @@ struct object_info {
- #define OBJECT_INFO_QUICK 8
- extern int sha1_object_info_extended(const unsigned char *, struct object_info *, unsigned flags);
- 
-+/*
-+ * Set this to 0 to prevent sha1_object_info_extended() from fetching missing
-+ * blobs. This has a difference only if extensions.partialClone is set.
-+ *
-+ * Its default value is 1.
-+ */
-+extern int fetch_if_missing;
-+
- /* Dumb servers support */
- extern int update_server_info(int);
- 
-diff --git a/fetch-object.c b/fetch-object.c
-index 78c939d..fc086fc 100644
---- a/fetch-object.c
-+++ b/fetch-object.c
-@@ -10,7 +10,9 @@ void fetch_object(const char *remote_name, const unsigned char *sha1)
- 	struct remote *remote;
- 	struct transport *transport;
- 	struct ref *ref;
-+	int original_fetch_if_missing = fetch_if_missing;
- 
-+	fetch_if_missing = 0;
- 	remote = remote_get(remote_name);
- 	if (!remote->url[0])
- 		die(_("Remote with no URL"));
-@@ -21,4 +23,5 @@ void fetch_object(const char *remote_name, const unsigned char *sha1)
- 	transport_set_option(transport, TRANS_OPT_FROM_PROMISOR, "1");
- 	transport_set_option(transport, TRANS_OPT_NO_HAVES, "1");
- 	transport_fetch_refs(transport, ref);
-+	fetch_if_missing = original_fetch_if_missing;
- }
-diff --git a/sha1_file.c b/sha1_file.c
-index 10c3a00..fc7718a 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -29,6 +29,7 @@
- #include "mergesort.h"
- #include "quote.h"
- #include "packfile.h"
-+#include "fetch-object.h"
- 
- const unsigned char null_sha1[GIT_MAX_RAWSZ];
- const struct object_id null_oid;
-@@ -1144,6 +1145,8 @@ static int sha1_loose_object_info(const unsigned char *sha1,
- 	return (status < 0) ? status : 0;
+@@ -1429,14 +1429,16 @@ static void write_special_file(const char *suffix, const char *msg,
+ 		if (close(fd) != 0)
+ 			die_errno(_("cannot close written %s file '%s'"),
+ 				  suffix, filename);
+-		*report = suffix;
++		if (report)
++			*report = suffix;
+ 	}
+ 	strbuf_release(&name_buf);
  }
  
-+int fetch_if_missing = 1;
-+
- int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi, unsigned flags)
+ static void final(const char *final_pack_name, const char *curr_pack_name,
+ 		  const char *final_index_name, const char *curr_index_name,
+-		  const char *keep_msg, unsigned char *sha1)
++		  const char *keep_msg, const char *promisor_msg,
++		  unsigned char *sha1)
  {
- 	static struct object_info blank_oi = OBJECT_INFO_INIT;
-@@ -1152,6 +1155,7 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi,
- 	const unsigned char *real = (flags & OBJECT_INFO_LOOKUP_REPLACE) ?
- 				    lookup_replace_object(sha1) :
- 				    sha1;
-+	int already_retried = 0;
+ 	const char *report = "pack";
+ 	struct strbuf pack_name = STRBUF_INIT;
+@@ -1455,6 +1457,9 @@ static void final(const char *final_pack_name, const char *curr_pack_name,
+ 	if (keep_msg)
+ 		write_special_file("keep", keep_msg, final_pack_name, sha1,
+ 				   &report);
++	if (promisor_msg)
++		write_special_file("promisor", promisor_msg, final_pack_name,
++				   sha1, NULL);
  
- 	if (!oi)
- 		oi = &blank_oi;
-@@ -1176,28 +1180,36 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi,
+ 	if (final_pack_name != curr_pack_name) {
+ 		if (!final_pack_name)
+@@ -1644,6 +1649,7 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
+ 	const char *curr_index;
+ 	const char *index_name = NULL, *pack_name = NULL;
+ 	const char *keep_msg = NULL;
++	const char *promisor_msg = NULL;
+ 	struct strbuf index_name_buf = STRBUF_INIT;
+ 	struct pack_idx_entry **idx_objects;
+ 	struct pack_idx_option opts;
+@@ -1693,6 +1699,10 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
+ 				keep_msg = "";
+ 			} else if (starts_with(arg, "--keep=")) {
+ 				keep_msg = arg + 7;
++			} else if (!strcmp(arg, "--promisor")) {
++				promisor_msg = "";
++			} else if (starts_with(arg, "--promisor=")) {
++				promisor_msg = arg + strlen("--promisor=");
+ 			} else if (starts_with(arg, "--threads=")) {
+ 				char *end;
+ 				nr_threads = strtoul(arg+10, &end, 0);
+@@ -1803,7 +1813,7 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
+ 	if (!verify)
+ 		final(pack_name, curr_pack,
+ 		      index_name, curr_index,
+-		      keep_msg,
++		      keep_msg, promisor_msg,
+ 		      pack_sha1);
+ 	else
+ 		close(input_fd);
+diff --git a/fetch-object.c b/fetch-object.c
+new file mode 100644
+index 0000000..78c939d
+--- /dev/null
++++ b/fetch-object.c
+@@ -0,0 +1,24 @@
++#include "cache.h"
++#include "packfile.h"
++#include "pkt-line.h"
++#include "strbuf.h"
++#include "transport.h"
++#include "fetch-object.h"
++
++void fetch_object(const char *remote_name, const unsigned char *sha1)
++{
++	struct remote *remote;
++	struct transport *transport;
++	struct ref *ref;
++
++	remote = remote_get(remote_name);
++	if (!remote->url[0])
++		die(_("Remote with no URL"));
++	transport = transport_get(remote, remote->url[0]);
++
++	ref = alloc_ref(sha1_to_hex(sha1));
++	hashcpy(ref->old_oid.hash, sha1);
++	transport_set_option(transport, TRANS_OPT_FROM_PROMISOR, "1");
++	transport_set_option(transport, TRANS_OPT_NO_HAVES, "1");
++	transport_fetch_refs(transport, ref);
++}
+diff --git a/fetch-object.h b/fetch-object.h
+new file mode 100644
+index 0000000..f371300
+--- /dev/null
++++ b/fetch-object.h
+@@ -0,0 +1,6 @@
++#ifndef FETCH_OBJECT_H
++#define FETCH_OBJECT_H
++
++extern void fetch_object(const char *remote_name, const unsigned char *sha1);
++
++#endif
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 008b25d..4640b4e 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -450,6 +450,8 @@ static int find_common(struct fetch_pack_args *args,
+ 
+ 	flushes = 0;
+ 	retval = -1;
++	if (args->no_haves)
++		goto done;
+ 	while ((oid = get_rev())) {
+ 		packet_buf_write(&req_buf, "have %s\n", oid_to_hex(oid));
+ 		print_verbose(args, "have %s", oid_to_hex(oid));
+@@ -832,7 +834,7 @@ static int get_pack(struct fetch_pack_args *args,
+ 		argv_array_push(&cmd.args, alternate_shallow_file);
+ 	}
+ 
+-	if (do_keep) {
++	if (do_keep || args->from_promisor) {
+ 		if (pack_lockfile)
+ 			cmd.out = -1;
+ 		cmd_name = "index-pack";
+@@ -842,7 +844,7 @@ static int get_pack(struct fetch_pack_args *args,
+ 			argv_array_push(&cmd.args, "-v");
+ 		if (args->use_thin_pack)
+ 			argv_array_push(&cmd.args, "--fix-thin");
+-		if (args->lock_pack || unpack_limit) {
++		if (do_keep && (args->lock_pack || unpack_limit)) {
+ 			char hostname[HOST_NAME_MAX + 1];
+ 			if (xgethostname(hostname, sizeof(hostname)))
+ 				xsnprintf(hostname, sizeof(hostname), "localhost");
+@@ -852,6 +854,8 @@ static int get_pack(struct fetch_pack_args *args,
  		}
+ 		if (args->check_self_contained_and_connected)
+ 			argv_array_push(&cmd.args, "--check-self-contained-and-connected");
++		if (args->from_promisor)
++			argv_array_push(&cmd.args, "--promisor");
  	}
+ 	else {
+ 		cmd_name = "unpack-objects";
+diff --git a/fetch-pack.h b/fetch-pack.h
+index b6aeb43..84904c3 100644
+--- a/fetch-pack.h
++++ b/fetch-pack.h
+@@ -29,6 +29,8 @@ struct fetch_pack_args {
+ 	unsigned cloning:1;
+ 	unsigned update_shallow:1;
+ 	unsigned deepen:1;
++	unsigned from_promisor:1;
++	unsigned no_haves:1;
+ };
  
--	if (!find_pack_entry(real, &e)) {
--		/* Most likely it's a loose object. */
--		if (!sha1_loose_object_info(real, oi, flags))
--			return 0;
-+retry:
-+	if (find_pack_entry(real, &e))
-+		goto found_packed;
- 
--		/* Not a loose object; someone else may have just packed it. */
--		if (flags & OBJECT_INFO_QUICK) {
--			return -1;
--		} else {
--			reprepare_packed_git();
--			if (!find_pack_entry(real, &e))
--				return -1;
--		}
-+	/* Most likely it's a loose object. */
-+	if (!sha1_loose_object_info(real, oi, flags))
-+		return 0;
-+
-+	/* Not a loose object; someone else may have just packed it. */
-+	reprepare_packed_git();
-+	if (find_pack_entry(real, &e))
-+		goto found_packed;
-+
-+	/* Check if it is a missing object */
-+	if (fetch_if_missing && repository_format_partial_clone &&
-+	    !already_retried) {
-+		fetch_object(repository_format_partial_clone, real);
-+		already_retried = 1;
-+		goto retry;
- 	}
- 
-+	return -1;
-+
-+found_packed:
- 	if (oi == &blank_oi)
- 		/*
- 		 * We know that the caller doesn't actually need the
- 		 * information below, so return early.
- 		 */
+ /*
+diff --git a/remote-curl.c b/remote-curl.c
+index 0053b09..34a81b8 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -33,7 +33,9 @@ struct options {
+ 		thin : 1,
+ 		/* One of the SEND_PACK_PUSH_CERT_* constants. */
+ 		push_cert : 2,
+-		deepen_relative : 1;
++		deepen_relative : 1,
++		from_promisor : 1,
++		no_haves : 1;
+ };
+ static struct options options;
+ static struct string_list cas_options = STRING_LIST_INIT_DUP;
+@@ -157,6 +159,12 @@ static int set_option(const char *name, const char *value)
+ 			return -1;
  		return 0;
--
- 	rtype = packed_object_info(e.p, e.offset, oi);
- 	if (rtype < 0) {
- 		mark_bad_packed_object(e.p, real);
-diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
-index e96f436..8a90f6a 100755
---- a/t/t0410-partial-clone.sh
-+++ b/t/t0410-partial-clone.sh
-@@ -138,4 +138,55 @@ test_expect_success 'missing CLI object, but promised, passes fsck' '
- 	git -C repo fsck "$A"
- '
+ #endif /* LIBCURL_VERSION_NUM >= 0x070a08 */
++	} else if (!strcmp(name, "from-promisor")) {
++		options.from_promisor = 1;
++		return 0;
++	} else if (!strcmp(name, "no-haves")) {
++		options.no_haves = 1;
++		return 0;
+ 	} else {
+ 		return 1 /* unsupported */;
+ 	}
+@@ -822,6 +830,10 @@ static int fetch_git(struct discovery *heads,
+ 				 options.deepen_not.items[i].string);
+ 	if (options.deepen_relative && options.depth)
+ 		argv_array_push(&args, "--deepen-relative");
++	if (options.from_promisor)
++		argv_array_push(&args, "--from-promisor");
++	if (options.no_haves)
++		argv_array_push(&args, "--no-haves");
+ 	argv_array_push(&args, url.buf);
  
-+test_expect_success 'fetching of missing objects' '
-+	rm -rf repo &&
-+	test_create_repo server &&
-+	test_commit -C server foo &&
-+	git -C server repack -a -d --write-bitmap-index &&
+ 	for (i = 0; i < nr_heads; i++) {
+diff --git a/transport.c b/transport.c
+index f1e2f61..8211f82 100644
+--- a/transport.c
++++ b/transport.c
+@@ -160,6 +160,12 @@ static int set_git_option(struct git_transport_options *opts,
+ 	} else if (!strcmp(name, TRANS_OPT_DEEPEN_RELATIVE)) {
+ 		opts->deepen_relative = !!value;
+ 		return 0;
++	} else if (!strcmp(name, TRANS_OPT_FROM_PROMISOR)) {
++		opts->from_promisor = !!value;
++		return 0;
++	} else if (!strcmp(name, TRANS_OPT_NO_HAVES)) {
++		opts->no_haves = !!value;
++		return 0;
+ 	}
+ 	return 1;
+ }
+@@ -228,6 +234,8 @@ static int fetch_refs_via_pack(struct transport *transport,
+ 		data->options.check_self_contained_and_connected;
+ 	args.cloning = transport->cloning;
+ 	args.update_shallow = data->options.update_shallow;
++	args.from_promisor = data->options.from_promisor;
++	args.no_haves = data->options.no_haves;
+ 
+ 	if (!data->got_remote_heads) {
+ 		connect_setup(transport, 0);
+diff --git a/transport.h b/transport.h
+index bc55715..67428f6 100644
+--- a/transport.h
++++ b/transport.h
+@@ -15,6 +15,8 @@ struct git_transport_options {
+ 	unsigned self_contained_and_connected : 1;
+ 	unsigned update_shallow : 1;
+ 	unsigned deepen_relative : 1;
++	unsigned from_promisor : 1;
++	unsigned no_haves : 1;
+ 	int depth;
+ 	const char *deepen_since;
+ 	const struct string_list *deepen_not;
+@@ -210,6 +212,12 @@ void transport_check_allowed(const char *type);
+ /* Send push certificates */
+ #define TRANS_OPT_PUSH_CERT "pushcert"
+ 
++/* Indicate that these objects are being fetched by a promisor */
++#define TRANS_OPT_FROM_PROMISOR "from-promisor"
 +
-+	git clone "file://$(pwd)/server" repo &&
-+	HASH=$(git -C repo rev-parse foo) &&
-+	rm -rf repo/.git/objects/* &&
++/* Do not send "have" lines */
++#define TRANS_OPT_NO_HAVES "no-haves"
 +
-+	git -C repo config core.repositoryformatversion 1 &&
-+	git -C repo config extensions.partialclone "origin" &&
-+	git -C repo cat-file -p "$HASH" &&
-+
-+	# Ensure that the .promisor file is written, and check that its
-+	# associated packfile contains the object
-+	ls repo/.git/objects/pack/pack-*.promisor >promisorlist &&
-+	test_line_count = 1 promisorlist &&
-+	IDX=$(cat promisorlist | sed "s/promisor$/idx/") &&
-+	git verify-pack --verbose "$IDX" | grep "$HASH"
-+'
-+
-+LIB_HTTPD_PORT=12345  # default port, 410, cannot be used as non-root
-+. "$TEST_DIRECTORY"/lib-httpd.sh
-+start_httpd
-+
-+test_expect_success 'fetching of missing objects from an HTTP server' '
-+	rm -rf repo &&
-+	SERVER="$HTTPD_DOCUMENT_ROOT_PATH/server" &&
-+	test_create_repo "$SERVER" &&
-+	test_commit -C "$SERVER" foo &&
-+	git -C "$SERVER" repack -a -d --write-bitmap-index &&
-+
-+	git clone $HTTPD_URL/smart/server repo &&
-+	HASH=$(git -C repo rev-parse foo) &&
-+	rm -rf repo/.git/objects/* &&
-+
-+	git -C repo config core.repositoryformatversion 1 &&
-+	git -C repo config extensions.partialclone "origin" &&
-+	git -C repo cat-file -p "$HASH" &&
-+
-+	# Ensure that the .promisor file is written, and check that its
-+	# associated packfile contains the object
-+	ls repo/.git/objects/pack/pack-*.promisor >promisorlist &&
-+	test_line_count = 1 promisorlist &&
-+	IDX=$(cat promisorlist | sed "s/promisor$/idx/") &&
-+	git verify-pack --verbose "$IDX" | grep "$HASH"
-+'
-+
-+stop_httpd
-+
- test_done
+ /**
+  * Returns 0 if the option was used, non-zero otherwise. Prints a
+  * message to stderr if the option is not used.
 -- 
 2.9.3
 
