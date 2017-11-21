@@ -2,101 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5BD0C2036D
-	for <e@80x24.org>; Tue, 21 Nov 2017 23:38:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C85D72036D
+	for <e@80x24.org>; Tue, 21 Nov 2017 23:42:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751372AbdKUXiR (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Nov 2017 18:38:17 -0500
-Received: from mail-io0-f194.google.com ([209.85.223.194]:40778 "EHLO
-        mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751290AbdKUXiQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Nov 2017 18:38:16 -0500
-Received: by mail-io0-f194.google.com with SMTP id d123so5243742iog.7
-        for <git@vger.kernel.org>; Tue, 21 Nov 2017 15:38:16 -0800 (PST)
+        id S1751409AbdKUXmq (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Nov 2017 18:42:46 -0500
+Received: from mail-qt0-f175.google.com ([209.85.216.175]:44646 "EHLO
+        mail-qt0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751290AbdKUXmq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Nov 2017 18:42:46 -0500
+Received: by mail-qt0-f175.google.com with SMTP id h42so21507458qtk.11
+        for <git@vger.kernel.org>; Tue, 21 Nov 2017 15:42:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=R6/Pj1K/iNkqe1JCnUaPBSylzQrId/PFZEv60mlUwyQ=;
-        b=cDoz5frppTomHznYoXW8PxkOyUpRaxF80SkhvFXeo7xnADj3wzyxSR0ZOy6RuMFWmn
-         Viojku9/11HichWgS113+LgcSkM7XxChm+CWwHh7WAj7i6RI81GusS6Wp8hkS71mzl9b
-         1+/phnuMIcFnUfjMbK1z5y6HrxdaKJd+GGHkPe/IHJhRahFhrhIZ1NrjrrkYmlr8HXZl
-         VvKY+/jp8RuUBo71cZyJyhgJivc16P/9JK5JvWVd8vgHGwkkuQeHFeL//qnqodks0DaI
-         hpHLyydq4U6aEx9O0BPeyFrzjhWPAFLoTlhsl0wBO537uFNuo6pxxmxwobXoNCROqD4E
-         PxhA==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=8YV9KolG1mwM/O5e87xBOLpg5PgROzvxorPj0DJcY80=;
+        b=uk9jb6MyxF+GBGp3bU1KiPFaBAL0m2Jo1wQVcJ9FVpRENPxg0yv6M2ItgN+uB2Jtj5
+         7Q1UrbIMW4sRB5TFLqeDmB2CArblAhXEpp1r5qQioZnB1+cZ9ZUKMHfJ2n+9I3h9vRlo
+         CWKdbMSHGTUOuCKK/H+rPIG7quSmxyShsJ+e1z1oBB8NXWK55reMil/GzSVbQbzOtF3R
+         e9d3DZM8fDioRbRhrA6MOZQ1Cfx+2+OWg3wvsVdWKn9t0zQNlw8xJkgAkXgF6rXsC2PW
+         XcJi2PIyMDbPV1IVIhfny0ZeeywqtazpknTi4YJXPJOne9u9SSAJnXzNGHgXE0Q/Qhhl
+         9H6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=R6/Pj1K/iNkqe1JCnUaPBSylzQrId/PFZEv60mlUwyQ=;
-        b=YwNp7E5I7JM1NJhWbhfNz303r+B3V2wHjyjl0lUxOkIY5wkssQH+SSPgjggWGOai79
-         Xu5wns3JSc20az7A6tYuX9+xOnBgx2WVhhIfQ6epfygjEXiLQnJJkZG6zh8jmaVYARfb
-         zxZ0N+awzyb/nJuwWStnuHJKI8sS+syGksdPVaM+ZmzZI4H4gMsTjsR2kK+I+2fWbMgM
-         w65TNdVKZPzlgl9uCdBy7C0xPLavIZaGa56UHCcK/r4wxKXK3oo3APp0hdfcBj9ZtIrs
-         Wo+Tf6oYPqk3jk9P40tttP1Pn3OVxkydIsSvx5vDLt88mB+9CwSm2+K0ofJmH/0fDtlY
-         I4lQ==
-X-Gm-Message-State: AJaThX4r6eOAg2Gr/LvaNBG/iP5QeFC6zbdEvxF27V0nkjWPZhujU1Bp
-        Lazbxos5ewXOrMwsZLnUgnWjJYZu
-X-Google-Smtp-Source: AGs4zMZXyBLwxa3Gq4aqkeidCHBkBOhUG4WYm9NJSITj0hnsHskCgQzvZQWmyPEdDcHA75lsvTqOwA==
-X-Received: by 10.107.30.76 with SMTP id e73mr6764453ioe.60.1511307495808;
-        Tue, 21 Nov 2017 15:38:15 -0800 (PST)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id v125sm1374794itv.42.2017.11.21.15.38.15
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 21 Nov 2017 15:38:15 -0800 (PST)
-Date:   Tue, 21 Nov 2017 15:38:13 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Anders Kaseorg <andersk@mit.edu>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 3/3] generate-cmdlist: avoid non-deterministic output
-Message-ID: <20171121233813.GP3429@aiede.mtv.corp.google.com>
-References: <20171121232935.GM3429@aiede.mtv.corp.google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=8YV9KolG1mwM/O5e87xBOLpg5PgROzvxorPj0DJcY80=;
+        b=DJbJf2HtdPxjXuhwhNMe7QOuJvSMetjBZUqfBeNbvrEm/4dmwofMf2uCiP2ZcHNrLo
+         4DAKGjHjAST88mJpS0ItMeURpPuomK+01F43MbGFzHfINZLWLw/oA7NUCphRGwY28fhW
+         LUJfuO1R9JJPhF4pHpmu8tRNU+cOa8eggbXAvCsw4wqEGATIE2AR+BhK/Ju5L6PxP/2p
+         j/3omN3xIqyVv5+PVh2RsVQ+ZE/GRS2zR4q5E/BZVBjxmUK4wTXbkkEDqx6Uc/DNYR5P
+         QUhXNTrXID0k21Frv9613GPoIVO+OTOeDG4kSHL0/XcKkctpB/D8BeIbA60XSs7S0XAC
+         Txpw==
+X-Gm-Message-State: AJaThX7NI3aHSHatGOslajCWXim1EctB113Vd4BuEdFtUNqSSm73N22r
+        V/oZ2IN5bYZqyfsjjPCiSqxVfvzTk0k1a1tZiZ7Pxg==
+X-Google-Smtp-Source: AGs4zMblqcA/Asdo+ylPoRkip7Ip+pikukXx63KxE+Hlf8ARdwGr85u3bY7CZa6ikB97wLZpQWbiPcwxDHoYhgJcT7U=
+X-Received: by 10.237.61.181 with SMTP id i50mr31347437qtf.29.1511307765063;
+ Tue, 21 Nov 2017 15:42:45 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20171121232935.GM3429@aiede.mtv.corp.google.com>
-User-Agent: Mutt/1.9.1 (2017-09-22)
+Received: by 10.140.85.179 with HTTP; Tue, 21 Nov 2017 15:42:44 -0800 (PST)
+In-Reply-To: <20171121014919.p4cl5esf7evptzbk@aiede.mtv.corp.google.com>
+References: <20171120212134.lh2l4drdzu6fh5g2@aiede.mtv.corp.google.com>
+ <20171120212223.wquyxbmz34foynrk@aiede.mtv.corp.google.com> <20171121014919.p4cl5esf7evptzbk@aiede.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 21 Nov 2017 15:42:44 -0800
+Message-ID: <CAGZ79ka6HVtF10K9_t30E0bjRzc+Ac-GZB99fqoU5CVvUjooug@mail.gmail.com>
+Subject: Re: [PATCH 1/8 v2] ssh test: make copy_ssh_wrapper_as clean up after itself
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Brandon Williams <bmwill@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Segev Finer <segev208@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Date: Fri, 1 Jul 2016 17:32:00 -0700
+On Mon, Nov 20, 2017 at 5:49 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
 
-Non-determinism makes it harder for build tools to discover when a
-target needs to be rebuilt.
+>  @@ -317,7 +317,7 @@ test_expect_success 'set up ssh wrapper' '
+>
+>   copy_ssh_wrapper_as () {
+>         cp "$TRASH_DIRECTORY/ssh$X" "${1%$X}$X" &&
+>  -      test_when_finished "rm -f ${1%$X}$X" &&
+>  +      test_when_finished "rm $(git rev-parse --sq-quote "${1%$X}$X")" &&
 
-generate-cmdlist.sh stores the full path in a comment:
+I wondered why the line above doesn't need the same treatment, but there
+the argument is quoted, in this line we cannot use quotation as we are already
+using it for bundle up the argument for test_when_finished.
 
- /* Automatically generated by /build/git-agojiD/git-2.15.0/generate-cmdlist.sh */
-
-Use the file name alone instead.
-
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-That's the end of the series.  Thanks for reading.
-
- generate-cmdlist.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
-index ab0d1b0c06..eeea4b67ea 100755
---- a/generate-cmdlist.sh
-+++ b/generate-cmdlist.sh
-@@ -1,6 +1,6 @@
- #!/bin/sh
- 
--echo "/* Automatically generated by $0 */
-+echo "/* Automatically generated by generate-cmdlist.sh */
- struct cmdname_help {
- 	char name[16];
- 	char help[80];
--- 
-2.15.0.448.gf294e3d99a
-
+The patch looks good.
+Stefan
