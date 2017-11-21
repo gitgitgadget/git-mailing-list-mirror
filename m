@@ -7,144 +7,127 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BCD762036D
-	for <e@80x24.org>; Tue, 21 Nov 2017 19:12:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C7D112036D
+	for <e@80x24.org>; Tue, 21 Nov 2017 19:17:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751284AbdKUTMs (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Nov 2017 14:12:48 -0500
-Received: from mail-pg0-f45.google.com ([74.125.83.45]:40451 "EHLO
-        mail-pg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751184AbdKUTMr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Nov 2017 14:12:47 -0500
-Received: by mail-pg0-f45.google.com with SMTP id u3so10905166pgn.7
-        for <git@vger.kernel.org>; Tue, 21 Nov 2017 11:12:47 -0800 (PST)
+        id S1751316AbdKUTRy (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Nov 2017 14:17:54 -0500
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:37580 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751281AbdKUTRx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Nov 2017 14:17:53 -0500
+Received: by mail-pg0-f65.google.com with SMTP id m4so982604pgc.4
+        for <git@vger.kernel.org>; Tue, 21 Nov 2017 11:17:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=ytUeZUPzSUFwuNbWZ2aMnAp4PlKuUKBQDFmE+wDuBLc=;
-        b=JcY1lzanXTgsGWgwFK/2wiEPkszl91L/UMHol9anvp4HCLW4oRGqAKyJJzKSWp40vQ
-         l+myuMS0D4o/BcZmjXRnyA47bkKycHcB6L5ysbrIgfOZXh7Fk4C4u4l0YySpoOCYV4Rw
-         wO7zpCKUxAPhNY7D9It5Z7Ur760klugfxm7Jdolpdm098MRi58ROIfTaHAQ5Xkq/DYb3
-         L6U/6oZQnwOc+0fczYjqEkdvJsP07zpgBMo+Emyr9OXXrLjZe8pspRlkJaoJEfLCGsd9
-         WyPFvTWZTJxE2LSyAeeGrnlHU5DmKqjfoVUH7L1cwk/wmjNej/o0oTrqeePFmiFG8fYC
-         tcOg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=89OpioHJ2Na24XWgTrrRy7kzT9Kdcn9vuXFSW6KBfQk=;
+        b=TbqlzM1mJcS58HDEM18MWPB/AjrmX04c4fULrGtjKzq5Ssk0YULKQ6nnDKJOJmi9eE
+         J0vb1zcE1t7j2mSblg9hIWPtr3USVXILZpQHce7dQIAwFeZM5SbYIkjM9nkVpAApxt2V
+         GlEhhdhZSuo8JC9e9LOMgkrtKlSzOQ/RXEi8b4AweIb3lWxbxue5ZWCZa2hTIVrSaNyj
+         sehAJiqIc5fI0Db2pD0G8/4w/58MVh3nReTJBzB4HKqixyHAls6ZD/uEYb7zYLtJxvZ+
+         vHkDf0rssUM7cvE2CoIZd8hjhh0iLNbBywoVyfm0BAJoKaPwGPnB8P9/LNHLwzWWNA1o
+         cHmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=ytUeZUPzSUFwuNbWZ2aMnAp4PlKuUKBQDFmE+wDuBLc=;
-        b=QOVEd/iZvHf3gm5ZwaVOLTWc4ISlNxcWfuBmZkIoXjIyb0ivoP6rkiMxV0KmAQT4bn
-         BukJyxCw/2ptHmfXhpmhmu+iIk3JgsqYewftbvm1u7QA9c4ZVGSYjM+uPmYsfkj/MXgQ
-         j7hhccNNM65DOx7aHOEoRqsxro0WQQVIwAnjIs+DVmFPBO+B7gb8QAsXBJ45oKld3TH7
-         7GWQ4Ntj0vFfGsj/ppe6KPG+EmIIPTH91/jOEKBcXdNAeST464SQH8BLFcBReMgfyVwT
-         ncSr/jDTBVoHPLBQ3NXp5nO8qRzFOio/E89lCQD7eHoZX6gps3FY7TdMTyZ9i2sT7Y49
-         duug==
-X-Gm-Message-State: AJaThX449Tsn5mxfltSALaMgxx8Dcj02VKLuTUXhEWI7VeXiEJhsqpKC
-        vtntwerC0+j/5OPjumWclLFREGVK
-X-Google-Smtp-Source: AGs4zMZIUiG9XkgIWap5+28Od4ANZRPzGIeHwgFpMYwfaXxgDEuxUDtmBuxHxwWACOKOm9Ub2zEEyA==
-X-Received: by 10.84.211.79 with SMTP id b73mr18592937pli.419.1511291567047;
-        Tue, 21 Nov 2017 11:12:47 -0800 (PST)
-Received: from ?IPv6:2405:204:7280:849f:7a33:ea78:e714:400? ([2405:204:7280:849f:7a33:ea78:e714:400])
-        by smtp.gmail.com with ESMTPSA id f9sm9559280pgq.11.2017.11.21.11.12.42
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=89OpioHJ2Na24XWgTrrRy7kzT9Kdcn9vuXFSW6KBfQk=;
+        b=aWT/aelkv9NwRQ0kFrOP4VAew9nOibazyBTRn8GUYjrTZpMEJnVv8rwhT6rG1ZcG41
+         zyW17IsHs4MHL3YO5N/sUIKqVhzTbJgpwzgA4mdT6Yo1xEcvKfK5DH+BQuYlonGt9hZp
+         9guKUxaOy5A6J0ShH66A2Z+ZhEunanP+u1G8IJqq/c52P+ZlfQrx3j8IUhiHPasrYame
+         IQgP9eV8UFd+QZGSS3PJLLY4pVhEOV+veuWfqnn0RMR8VZGFJVW77nZPz/m/g7qs7LrR
+         ZQ8hYU+eFc1qJqLnVoRhMwvVUqbLJK/2gKZIFE/ienNBNR+PbcEtPGfxW1InmVKCPubQ
+         AO5w==
+X-Gm-Message-State: AJaThX5SEg8mEeNBwg77+HaAGW0numr7/zWgGnZdXPvg8RD1ZWWVP1f1
+        WNL9VVSdJAzzyjbXmvKdWE8UD65F
+X-Google-Smtp-Source: AGs4zMa5dc3oFXrJlKttjgFQfqZZefEiCiwCnF0tSXwachcPP81G7HnSV5JOH/2wjsAmR8LPPtHwVg==
+X-Received: by 10.84.246.201 with SMTP id j9mr6824792plt.333.1511291873195;
+        Tue, 21 Nov 2017 11:17:53 -0800 (PST)
+Received: from localhost.localdomain ([2405:204:7280:849f:7a33:ea78:e714:400])
+        by smtp.gmail.com with ESMTPSA id a13sm21092120pgq.10.2017.11.21.11.17.42
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 21 Nov 2017 11:12:45 -0800 (PST)
-Subject: Re: [PATCH v2 4/4] builtin/branch: strip refs/heads/ using
- skip_prefix
+        Tue, 21 Nov 2017 11:17:52 -0800 (PST)
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
 To:     Eric Sunshine <sunshine@sunshineco.com>
 Cc:     Git mailing list <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>
-References: <20171121141852.551-1-kaartic.sivaraam@gmail.com>
- <CAPig+cSGu-+6Bw3YBzMwzxO8vKt7jdf9xgtr9FUdOAQpXzi2rQ@mail.gmail.com>
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Message-ID: <60caf5c8-4dc3-481a-80d6-37a697e31b52@gmail.com>
-Date:   Wed, 22 Nov 2017 00:42:34 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.4.0
-MIME-Version: 1.0
+Subject: [PATCH v3 4/4] builtin/branch: strip refs/heads/ using skip_prefix
+Date:   Wed, 22 Nov 2017 00:47:08 +0530
+Message-Id: <20171121191708.7662-1-kaartic.sivaraam@gmail.com>
+X-Mailer: git-send-email 2.15.0.345.gf926f18f3
 In-Reply-To: <CAPig+cSGu-+6Bw3YBzMwzxO8vKt7jdf9xgtr9FUdOAQpXzi2rQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+References: <CAPig+cSGu-+6Bw3YBzMwzxO8vKt7jdf9xgtr9FUdOAQpXzi2rQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wednesday 22 November 2017 12:08 AM, Eric Sunshine wrote:
-> On Tue, Nov 21, 2017 at 9:18 AM, Kaartic Sivaraam
-> <kaartic.sivaraam@gmail.com> wrote:
->>
->> Though we don't check for the result of verification here as
->> it's (almost) always the case that the string does start
->> with "refs/heads", it's just better to avoid hard-coding and
->> be more communicative.
-> 
-> The original code unconditionally uses "+ 11", which says that the
-> prefix is _always_ present. This commit message muddies the waters by
-> saying the prefix might or might not be present. Which is correct? If
-> the code is correct, then the commit message is misleading; if the
-> message is correct, then the code is buggy and the commit message
-> should say that it is fixing a bug.
-> 
+Instead of hard-coding the offset strlen("refs/heads/") to skip
+the prefix "refs/heads/" use the skip_prefix() function which
+is more communicative and verifies that the string actually
+starts with that prefix.
 
-That muddiness of that statement is a consequence of my recent 
-encounter[1] in which the assumption (that the prefix(refs/heads/ always 
-exists) of that code failed. I had a little suspicion, when I wrote that 
-commit message, that there might be other cases in which assumption 
-might fail. The issue has been resolved only in 3/4 of 
-jc/branch-name-sanity but that was only after I wrote the commit message 
-initially.  So, it does make sense to remove that muddiness now. Thanks 
-for noting that.
-
-
->> diff --git a/builtin/branch.c b/builtin/branch.c
->> @@ -493,13 +495,17 @@ static void copy_or_rename_branch(const char *oldname, const char *newname, int
->> +       /* At this point it should be safe to believe that the refs have the
->> +          prefix "refs/heads/" */
->> +       skip_prefix(oldref.buf, "refs/heads/", &interpreted_oldname);
->> +       skip_prefix(newref.buf, "refs/heads/", &interpreted_newname);
-> 
->      /*
->       * Format mult-line comments
->       * like this.
->       */
-> 
-> However, this in-code comment shares the same problem as the commit
-> message. It muddies the waters by saying that the prefix may or may
-> not be present, whereas the original code unconditionally stated that
-> it was present. Moreover, the comment adds very little or any value
-> since it's pretty much repeating what the code itself already says.
-> Consequently, it probably would be best to drop the comment
-> altogether.
-
-Makes sense. Of course, only if there aren't any code paths that lead to 
-a state where the expected prefix doesn't exist. Hope, there's none!
-
-
-> 
->>          if (copy)
->>                  strbuf_addf(&logmsg, "Branch: copied %s to %s",
->>                              oldref.buf, newref.buf);
->>          else
->>                  strbuf_addf(&logmsg, "Branch: renamed %s to %s",
->>                              oldref.buf, newref.buf);
->> -
->>          if (!copy && rename_ref(oldref.buf, newref.buf, logmsg.buf))
-> 
-> Was the blank line removal intentional?
-
-Nope.
-
-
-Footnotes:
-[1]: Note the 'warning: ' message in the following mail. That ugly '|�?' 
-was a consequence of the assumption that the 'prefix' always existed!
-
-https://public-inbox.org/git/1509209933.2256.4.camel@gmail.com/
-
-
+Signed-off-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
 ---
-Kaartic
+ Changes in v3:
+
+  - Update commit message
+
+  - Removed superfluous comment
+
+ builtin/branch.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
+
+diff --git a/builtin/branch.c b/builtin/branch.c
+index ca9d8abd0..4ad3b228b 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -462,6 +462,8 @@ static void copy_or_rename_branch(const char *oldname, const char *newname, int
+ {
+ 	struct strbuf oldref = STRBUF_INIT, newref = STRBUF_INIT, logmsg = STRBUF_INIT;
+ 	struct strbuf oldsection = STRBUF_INIT, newsection = STRBUF_INIT;
++	const char *interpreted_oldname = NULL;
++	const char *interpreted_newname = NULL;
+ 	int recovery = 0;
+ 	int clobber_head_ok;
+ 
+@@ -493,6 +495,9 @@ static void copy_or_rename_branch(const char *oldname, const char *newname, int
+ 
+ 	reject_rebase_or_bisect_branch(oldref.buf);
+ 
++	skip_prefix(oldref.buf, "refs/heads/", &interpreted_oldname);
++	skip_prefix(newref.buf, "refs/heads/", &interpreted_newname);
++
+ 	if (copy)
+ 		strbuf_addf(&logmsg, "Branch: copied %s to %s",
+ 			    oldref.buf, newref.buf);
+@@ -508,10 +513,10 @@ static void copy_or_rename_branch(const char *oldname, const char *newname, int
+ 	if (recovery) {
+ 		if (copy)
+ 			warning(_("Created a copy of a misnamed branch '%s'"),
+-				oldref.buf + 11);
++				interpreted_oldname);
+ 		else
+ 			warning(_("Renamed a misnamed branch '%s' away"),
+-				oldref.buf + 11);
++				interpreted_oldname);
+ 	}
+ 
+ 	if (!copy &&
+@@ -520,9 +525,9 @@ static void copy_or_rename_branch(const char *oldname, const char *newname, int
+ 
+ 	strbuf_release(&logmsg);
+ 
+-	strbuf_addf(&oldsection, "branch.%s", oldref.buf + 11);
++	strbuf_addf(&oldsection, "branch.%s", interpreted_oldname);
+ 	strbuf_release(&oldref);
+-	strbuf_addf(&newsection, "branch.%s", newref.buf + 11);
++	strbuf_addf(&newsection, "branch.%s", interpreted_newname);
+ 	strbuf_release(&newref);
+ 	if (!copy && git_config_rename_section(oldsection.buf, newsection.buf) < 0)
+ 		die(_("Branch is renamed, but update of config-file failed"));
+-- 
+2.15.0.345.gf926f18f3
+
