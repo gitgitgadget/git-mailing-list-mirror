@@ -6,30 +6,30 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7A9622036D
-	for <e@80x24.org>; Tue, 21 Nov 2017 21:07:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 68C522036D
+	for <e@80x24.org>; Tue, 21 Nov 2017 21:07:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751415AbdKUVHi (ORCPT <rfc822;e@80x24.org>);
+        id S1751410AbdKUVHi (ORCPT <rfc822;e@80x24.org>);
         Tue, 21 Nov 2017 16:07:38 -0500
-Received: from siwi.pair.com ([209.68.5.199]:44465 "EHLO siwi.pair.com"
+Received: from siwi.pair.com ([209.68.5.199]:44472 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751284AbdKUVHf (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1751324AbdKUVHf (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 21 Nov 2017 16:07:35 -0500
 Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id A908984513;
-        Tue, 21 Nov 2017 16:07:34 -0500 (EST)
+        by siwi.pair.com (Postfix) with ESMTP id 4680C8450B;
+        Tue, 21 Nov 2017 16:07:35 -0500 (EST)
 Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 33345844F0;
+        by siwi.pair.com (Postfix) with ESMTPSA id C98BC844F0;
         Tue, 21 Nov 2017 16:07:34 -0500 (EST)
 From:   Jeff Hostetler <git@jeffhostetler.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, jonathantanmy@google.com,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v5 09/10] rev-list: support termination at promisor objects
-Date:   Tue, 21 Nov 2017 21:07:19 +0000
-Message-Id: <20171121210720.21376-10-git@jeffhostetler.com>
+Subject: [PATCH v5 10/10] gc: do not repack promisor packfiles
+Date:   Tue, 21 Nov 2017 21:07:20 +0000
+Message-Id: <20171121210720.21376-11-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20171121210720.21376-1-git@jeffhostetler.com>
 References: <20171121210720.21376-1-git@jeffhostetler.com>
@@ -40,480 +40,280 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jonathan Tan <jonathantanmy@google.com>
 
-Teach rev-list to support termination of an object traversal at any
-object from a promisor remote (whether one that the local repo also has,
-or one that the local repo knows about because it has another promisor
-object that references it).
-
-This will be used subsequently in gc and in the connectivity check used
-by fetch.
-
-For efficiency, if an object is referenced by a promisor object, and is
-in the local repo only as a non-promisor object, object traversal will
-not stop there. This is to avoid building the list of promisor object
-references.
-
-(In list-objects.c, the case where obj is NULL in process_blob() and
-process_tree() do not need to be changed because those happen only when
-there is a conflict between the expected type and the existing object.
-If the object doesn't exist, an object will be synthesized, which is
-fine.)
+Teach gc to stop traversal at promisor objects, and to leave promisor
+packfiles alone. This has the effect of only repacking non-promisor
+packfiles, and preserves the distinction between promisor packfiles and
+non-promisor packfiles.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- Documentation/rev-list-options.txt |  11 ++++
- builtin/rev-list.c                 |  71 +++++++++++++++++++++++---
- list-objects.c                     |  29 ++++++++++-
- object.c                           |   2 +-
- revision.c                         |  33 +++++++++++-
- revision.h                         |   5 +-
- t/t0410-partial-clone.sh           | 101 +++++++++++++++++++++++++++++++++++++
- 7 files changed, 240 insertions(+), 12 deletions(-)
+ Documentation/git-pack-objects.txt | 11 ++++++++
+ builtin/gc.c                       |  3 +++
+ builtin/pack-objects.c             | 37 +++++++++++++++++++++++++--
+ builtin/prune.c                    |  7 +++++
+ builtin/repack.c                   |  8 ++++--
+ t/t0410-partial-clone.sh           | 52 +++++++++++++++++++++++++++++++++++++-
+ 6 files changed, 113 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index 11bb87f..2c88aaf 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -740,10 +740,21 @@ The form '--missing=allow-any' will allow object traversal to continue
+diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
+index b924c6c..114629d 100644
+--- a/Documentation/git-pack-objects.txt
++++ b/Documentation/git-pack-objects.txt
+@@ -252,6 +252,17 @@ a missing object is encountered.  This is the default action.
+ The form '--missing=allow-any' will allow object traversal to continue
  if a missing object is encountered.  Missing objects will silently be
  omitted from the results.
- +
+++
 +The form '--missing=allow-promisor' is like 'allow-any', but will only
 +allow object traversal to continue for EXPECTED promisor missing objects.
-+Unexpected missing objects will raise an error.
-++
- The form '--missing=print' is like 'allow-any', but will also print a
- list of the missing objects.  Object IDs are prefixed with a ``?'' character.
- endif::git-rev-list[]
- 
-+--exclude-promisor-objects::
-+	(For internal use only.)  Prefilter object traversal at
-+	promisor boundary.  This is used with partial clone.  This is
-+	stronger than `--missing=allow-promisor` because it limits the
-+	traversal, rather than just silencing errors about missing
-+	objects.
++Unexpected missing object will raise an error.
 +
- --no-walk[=(sorted|unsorted)]::
- 	Only show the given commits, but do not traverse their ancestors.
- 	This has no effect if a range is specified. If the argument
-diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-index 4700473..8f65284 100644
---- a/builtin/rev-list.c
-+++ b/builtin/rev-list.c
-@@ -15,6 +15,7 @@
- #include "progress.h"
- #include "reflog-walk.h"
- #include "oidset.h"
-+#include "packfile.h"
++--exclude-promisor-objects::
++	Omit objects that are known to be in the promisor remote.  (This
++	option has the purpose of operating only on locally created objects,
++	so that when we repack, we still maintain a distinction between
++	locally created objects [without .promisor] and objects from the
++	promisor remote [with .promisor].)  This is used with partial clone.
  
- static const char rev_list_usage[] =
- "git rev-list [OPTION] <commit-id>... [ -- paths... ]\n"
-@@ -67,6 +68,7 @@ enum missing_action {
- 	MA_ERROR = 0,    /* fail if any missing objects are encountered */
- 	MA_ALLOW_ANY,    /* silently allow ALL missing objects */
- 	MA_PRINT,        /* print ALL missing objects in special section */
+ SEE ALSO
+ --------
+diff --git a/builtin/gc.c b/builtin/gc.c
+index 3c5eae0..77fa720 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -458,6 +458,9 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
+ 			argv_array_push(&prune, prune_expire);
+ 			if (quiet)
+ 				argv_array_push(&prune, "--no-progress");
++			if (repository_format_partial_clone)
++				argv_array_push(&prune,
++						"--exclude-promisor-objects");
+ 			if (run_command_v_opt(prune.argv, RUN_GIT_CMD))
+ 				return error(FAILED_RUN, prune.argv[0]);
+ 		}
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 45ad35d..f5fc401 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -75,6 +75,8 @@ static int use_bitmap_index = -1;
+ static int write_bitmap_index;
+ static uint16_t write_bitmap_options;
+ 
++static int exclude_promisor_objects;
++
+ static unsigned long delta_cache_size = 0;
+ static unsigned long max_delta_cache_size = 256 * 1024 * 1024;
+ static unsigned long cache_max_small_delta_size = 1000;
+@@ -84,8 +86,9 @@ static unsigned long window_memory_limit = 0;
+ static struct list_objects_filter_options filter_options;
+ 
+ enum missing_action {
+-	MA_ERROR = 0,    /* fail if any missing objects are encountered */
+-	MA_ALLOW_ANY,    /* silently allow ALL missing objects */
++	MA_ERROR = 0,      /* fail if any missing objects are encountered */
++	MA_ALLOW_ANY,      /* silently allow ALL missing objects */
 +	MA_ALLOW_PROMISOR, /* silently allow all missing PROMISOR objects */
  };
  static enum missing_action arg_missing_action;
- 
-@@ -197,6 +199,12 @@ static void finish_commit(struct commit *commit, void *data)
- 
- static inline void finish_object__ma(struct object *obj)
- {
-+	/*
-+	 * Whether or not we try to dynamically fetch missing objects
-+	 * from the server, we currently DO NOT have the object.  We
-+	 * can either print, allow (ignore), or conditionally allow
-+	 * (ignore) them.
-+	 */
- 	switch (arg_missing_action) {
- 	case MA_ERROR:
- 		die("missing blob object '%s'", oid_to_hex(&obj->oid));
-@@ -209,25 +217,36 @@ static inline void finish_object__ma(struct object *obj)
- 		oidset_insert(&missing_objects, &obj->oid);
- 		return;
- 
-+	case MA_ALLOW_PROMISOR:
-+		if (is_promisor_object(&obj->oid))
-+			return;
-+		die("unexpected missing blob object '%s'",
-+		    oid_to_hex(&obj->oid));
-+		return;
-+
- 	default:
- 		BUG("unhandled missing_action");
- 		return;
- 	}
+ static show_object_fn fn_show_object;
+@@ -2577,6 +2580,20 @@ static void show_object__ma_allow_any(struct object *obj, const char *name, void
+ 	show_object(obj, name, data);
  }
  
--static void finish_object(struct object *obj, const char *name, void *cb_data)
-+static int finish_object(struct object *obj, const char *name, void *cb_data)
- {
- 	struct rev_list_info *info = cb_data;
--	if (obj->type == OBJ_BLOB && !has_object_file(&obj->oid))
-+	if (obj->type == OBJ_BLOB && !has_object_file(&obj->oid)) {
- 		finish_object__ma(obj);
-+		return 1;
-+	}
- 	if (info->revs->verify_objects && !obj->parsed && obj->type != OBJ_COMMIT)
- 		parse_object(&obj->oid);
-+	return 0;
- }
- 
- static void show_object(struct object *obj, const char *name, void *cb_data)
- {
- 	struct rev_list_info *info = cb_data;
--	finish_object(obj, name, cb_data);
-+	if (finish_object(obj, name, cb_data))
-+		return;
- 	display_progress(progress, ++progress_counter);
- 	if (info->flags & REV_LIST_QUIET)
- 		return;
-@@ -315,11 +334,19 @@ static inline int parse_missing_action_value(const char *value)
- 
- 	if (!strcmp(value, "allow-any")) {
- 		arg_missing_action = MA_ALLOW_ANY;
-+		fetch_if_missing = 0;
- 		return 1;
- 	}
- 
- 	if (!strcmp(value, "print")) {
- 		arg_missing_action = MA_PRINT;
-+		fetch_if_missing = 0;
-+		return 1;
-+	}
-+
-+	if (!strcmp(value, "allow-promisor")) {
-+		arg_missing_action = MA_ALLOW_PROMISOR;
-+		fetch_if_missing = 0;
- 		return 1;
- 	}
- 
-@@ -344,6 +371,35 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
- 	init_revisions(&revs, prefix);
- 	revs.abbrev = DEFAULT_ABBREV;
- 	revs.commit_format = CMIT_FMT_UNSPECIFIED;
-+
-+	/*
-+	 * Scan the argument list before invoking setup_revisions(), so that we
-+	 * know if fetch_if_missing needs to be set to 0.
-+	 *
-+	 * "--exclude-promisor-objects" acts as a pre-filter on missing objects
-+	 * by not crossing the boundary from realized objects to promisor
-+	 * objects.
-+	 *
-+	 * Let "--missing" to conditionally set fetch_if_missing.
-+	 */
-+	for (i = 1; i < argc; i++) {
-+		const char *arg = argv[i];
-+		if (!strcmp(arg, "--exclude-promisor-objects")) {
-+			fetch_if_missing = 0;
-+			revs.exclude_promisor_objects = 1;
-+			break;
-+		}
-+	}
-+	for (i = 1; i < argc; i++) {
-+		const char *arg = argv[i];
-+		if (skip_prefix(arg, "--missing=", &arg)) {
-+			if (revs.exclude_promisor_objects)
-+				die(_("cannot combine --exclude-promisor-objects and --missing"));
-+			if (parse_missing_action_value(arg))
-+				break;
-+		}
-+	}
-+
- 	argc = setup_revisions(argc, argv, &revs, NULL);
- 
- 	memset(&info, 0, sizeof(info));
-@@ -408,10 +464,11 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
- 			continue;
- 		}
- 
--		if (skip_prefix(arg, "--missing=", &arg) &&
--		    parse_missing_action_value(arg))
--			continue;
--		
-+		if (!strcmp(arg, "--exclude-promisor-objects"))
-+			continue; /* already handled above */
-+		if (skip_prefix(arg, "--missing=", &arg))
-+			continue; /* already handled above */
-+
- 		usage(rev_list_usage);
- 
- 	}
-diff --git a/list-objects.c b/list-objects.c
-index d9e83d0..58621fc 100644
---- a/list-objects.c
-+++ b/list-objects.c
-@@ -9,6 +9,7 @@
- #include "list-objects.h"
- #include "list-objects-filter.h"
- #include "list-objects-filter-options.h"
-+#include "packfile.h"
- 
- static void process_blob(struct rev_info *revs,
- 			 struct blob *blob,
-@@ -30,6 +31,20 @@ static void process_blob(struct rev_info *revs,
- 	if (obj->flags & (UNINTERESTING | SEEN))
- 		return;
- 
-+	/*
-+	 * Pre-filter known-missing objects when explicitly requested.
-+	 * Otherwise, a missing object error message may be reported
-+	 * later (depending on other filtering criteria).
-+	 *
-+	 * Note that this "--exclude-promisor-objects" pre-filtering
-+	 * may cause the actual filter to report an incomplete list
-+	 * of missing objects.
-+	 */
-+	if (revs->exclude_promisor_objects &&
-+	    !has_object_file(&obj->oid) &&
-+	    is_promisor_object(&obj->oid))
-+		return;
-+
- 	pathlen = path->len;
- 	strbuf_addstr(path, name);
- 	if (filter_fn)
-@@ -91,6 +106,8 @@ static void process_tree(struct rev_info *revs,
- 		all_entries_interesting: entry_not_interesting;
- 	int baselen = base->len;
- 	enum list_objects_filter_result r = LOFR_MARK_SEEN | LOFR_DO_SHOW;
-+	int gently = revs->ignore_missing_links ||
-+		     revs->exclude_promisor_objects;
- 
- 	if (!revs->tree_objects)
- 		return;
-@@ -98,9 +115,19 @@ static void process_tree(struct rev_info *revs,
- 		die("bad tree object");
- 	if (obj->flags & (UNINTERESTING | SEEN))
- 		return;
--	if (parse_tree_gently(tree, revs->ignore_missing_links) < 0) {
-+	if (parse_tree_gently(tree, gently) < 0) {
- 		if (revs->ignore_missing_links)
- 			return;
-+
-+		/*
-+		 * Pre-filter known-missing tree objects when explicitly
-+		 * requested.  This may cause the actual filter to report
-+		 * an incomplete list of missing objects.
-+		 */
-+		if (revs->exclude_promisor_objects &&
-+		    is_promisor_object(&obj->oid))
-+			return;
-+
- 		die("bad tree object %s", oid_to_hex(&obj->oid));
- 	}
- 
-diff --git a/object.c b/object.c
-index b9a4a0e..4c222d6 100644
---- a/object.c
-+++ b/object.c
-@@ -252,7 +252,7 @@ struct object *parse_object(const struct object_id *oid)
- 	if (obj && obj->parsed)
- 		return obj;
- 
--	if ((obj && obj->type == OBJ_BLOB) ||
-+	if ((obj && obj->type == OBJ_BLOB && has_object_file(oid)) ||
- 	    (!obj && has_object_file(oid) &&
- 	     sha1_object_info(oid->hash, NULL) == OBJ_BLOB)) {
- 		if (check_sha1_signature(repl, NULL, 0, NULL) < 0) {
-diff --git a/revision.c b/revision.c
-index d167223..05a7aac 100644
---- a/revision.c
-+++ b/revision.c
-@@ -198,6 +198,8 @@ static struct object *get_reference(struct rev_info *revs, const char *name,
- 	if (!object) {
- 		if (revs->ignore_missing)
- 			return object;
-+		if (revs->exclude_promisor_objects && is_promisor_object(oid))
-+			return NULL;
- 		die("bad object %s", name);
- 	}
- 	object->flags |= flags;
-@@ -790,9 +792,17 @@ static int add_parents_to_list(struct rev_info *revs, struct commit *commit,
- 
- 	for (parent = commit->parents; parent; parent = parent->next) {
- 		struct commit *p = parent->item;
--
--		if (parse_commit_gently(p, revs->ignore_missing_links) < 0)
-+		int gently = revs->ignore_missing_links ||
-+			     revs->exclude_promisor_objects;
-+		if (parse_commit_gently(p, gently) < 0) {
-+			if (revs->exclude_promisor_objects &&
-+			    is_promisor_object(&p->object.oid)) {
-+				if (revs->first_parent_only)
-+					break;
-+				continue;
-+			}
- 			return -1;
-+		}
- 		if (revs->show_source && !p->util)
- 			p->util = commit->util;
- 		p->object.flags |= left_flag;
-@@ -2088,6 +2098,10 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 		revs->limited = 1;
- 	} else if (!strcmp(arg, "--ignore-missing")) {
- 		revs->ignore_missing = 1;
-+	} else if (!strcmp(arg, "--exclude-promisor-objects")) {
-+		if (fetch_if_missing)
-+			die("BUG: exclude_promisor_objects can only be used when fetch_if_missing is 0");
-+		revs->exclude_promisor_objects = 1;
- 	} else {
- 		int opts = diff_opt_parse(&revs->diffopt, argv, argc, revs->prefix);
- 		if (!opts)
-@@ -2830,6 +2844,16 @@ void reset_revision_walk(void)
- 	clear_object_flags(SEEN | ADDED | SHOWN);
- }
- 
-+static int mark_uninteresting(const struct object_id *oid,
-+			      struct packed_git *pack,
-+			      uint32_t pos,
-+			      void *unused)
++static void show_object__ma_allow_promisor(struct object *obj, const char *name, void *data)
 +{
-+	struct object *o = parse_object(oid);
-+	o->flags |= UNINTERESTING | SEEN;
-+	return 0;
++	assert(arg_missing_action == MA_ALLOW_PROMISOR);
++
++	/*
++	 * Quietly ignore EXPECTED missing objects.  This avoids problems with
++	 * staging them now and getting an odd error later.
++	 */
++	if (!has_object_file(&obj->oid) && is_promisor_object(&obj->oid))
++		return;
++
++	show_object(obj, name, data);
 +}
 +
- int prepare_revision_walk(struct rev_info *revs)
+ static int option_parse_missing_action(const struct option *opt,
+ 				       const char *arg, int unset)
  {
- 	int i;
-@@ -2858,6 +2882,11 @@ int prepare_revision_walk(struct rev_info *revs)
- 	    (revs->limited && limiting_can_increase_treesame(revs)))
- 		revs->treesame.name = "treesame";
+@@ -2591,10 +2608,18 @@ static int option_parse_missing_action(const struct option *opt,
  
-+	if (revs->exclude_promisor_objects) {
-+		for_each_packed_object(mark_uninteresting, NULL,
-+				       FOR_EACH_OBJECT_PROMISOR_ONLY);
+ 	if (!strcmp(arg, "allow-any")) {
+ 		arg_missing_action = MA_ALLOW_ANY;
++		fetch_if_missing = 0;
+ 		fn_show_object = show_object__ma_allow_any;
+ 		return 0;
+ 	}
+ 
++	if (!strcmp(arg, "allow-promisor")) {
++		arg_missing_action = MA_ALLOW_PROMISOR;
++		fetch_if_missing = 0;
++		fn_show_object = show_object__ma_allow_promisor;
++		return 0;
 +	}
 +
- 	if (revs->no_walk != REVISION_WALK_NO_WALK_UNSORTED)
- 		commit_list_sort_by_date(&revs->commits);
- 	if (revs->no_walk)
-diff --git a/revision.h b/revision.h
-index 5476120..5f9a49c 100644
---- a/revision.h
-+++ b/revision.h
-@@ -121,7 +121,10 @@ struct rev_info {
- 			bisect:1,
- 			ancestry_path:1,
- 			first_parent_only:1,
--			line_level_traverse:1;
-+			line_level_traverse:1,
-+
-+			/* for internal use only */
-+			exclude_promisor_objects:1;
+ 	die(_("invalid value for --missing"));
+ 	return 0;
+ }
+@@ -3008,6 +3033,8 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+ 		{ OPTION_CALLBACK, 0, "missing", NULL, N_("action"),
+ 		  N_("handling for missing objects"), PARSE_OPT_NONEG,
+ 		  option_parse_missing_action },
++		OPT_BOOL(0, "exclude-promisor-objects", &exclude_promisor_objects,
++			 N_("do not pack objects in promisor packfiles")),
+ 		OPT_END(),
+ 	};
  
- 	/* Diff flags */
- 	unsigned int	diff:1,
+@@ -3053,6 +3080,12 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+ 		argv_array_push(&rp, "--unpacked");
+ 	}
+ 
++	if (exclude_promisor_objects) {
++		use_internal_rev_list = 1;
++		fetch_if_missing = 0;
++		argv_array_push(&rp, "--exclude-promisor-objects");
++	}
++
+ 	if (!reuse_object)
+ 		reuse_delta = 0;
+ 	if (pack_compression_level == -1)
+diff --git a/builtin/prune.c b/builtin/prune.c
+index cddabf2..be34645 100644
+--- a/builtin/prune.c
++++ b/builtin/prune.c
+@@ -101,12 +101,15 @@ int cmd_prune(int argc, const char **argv, const char *prefix)
+ {
+ 	struct rev_info revs;
+ 	struct progress *progress = NULL;
++	int exclude_promisor_objects = 0;
+ 	const struct option options[] = {
+ 		OPT__DRY_RUN(&show_only, N_("do not remove, show only")),
+ 		OPT__VERBOSE(&verbose, N_("report pruned objects")),
+ 		OPT_BOOL(0, "progress", &show_progress, N_("show progress")),
+ 		OPT_EXPIRY_DATE(0, "expire", &expire,
+ 				N_("expire objects older than <time>")),
++		OPT_BOOL(0, "exclude-promisor-objects", &exclude_promisor_objects,
++			 N_("limit traversal to objects outside promisor packfiles")),
+ 		OPT_END()
+ 	};
+ 	char *s;
+@@ -139,6 +142,10 @@ int cmd_prune(int argc, const char **argv, const char *prefix)
+ 		show_progress = isatty(2);
+ 	if (show_progress)
+ 		progress = start_delayed_progress(_("Checking connectivity"), 0);
++	if (exclude_promisor_objects) {
++		fetch_if_missing = 0;
++		revs.exclude_promisor_objects = 1;
++	}
+ 
+ 	mark_reachable_objects(&revs, 1, expire, progress);
+ 	stop_progress(&progress);
+diff --git a/builtin/repack.c b/builtin/repack.c
+index f17a68a..7bdb401 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -83,7 +83,8 @@ static void remove_pack_on_signal(int signo)
+ 
+ /*
+  * Adds all packs hex strings to the fname list, which do not
+- * have a corresponding .keep file.
++ * have a corresponding .keep or .promisor file. These packs are not to
++ * be kept if we are going to pack everything into one file.
+  */
+ static void get_non_kept_pack_filenames(struct string_list *fname_list)
+ {
+@@ -101,7 +102,8 @@ static void get_non_kept_pack_filenames(struct string_list *fname_list)
+ 
+ 		fname = xmemdupz(e->d_name, len);
+ 
+-		if (!file_exists(mkpath("%s/%s.keep", packdir, fname)))
++		if (!file_exists(mkpath("%s/%s.keep", packdir, fname)) &&
++		    !file_exists(mkpath("%s/%s.promisor", packdir, fname)))
+ 			string_list_append_nodup(fname_list, fname);
+ 		else
+ 			free(fname);
+@@ -232,6 +234,8 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 	argv_array_push(&cmd.args, "--all");
+ 	argv_array_push(&cmd.args, "--reflog");
+ 	argv_array_push(&cmd.args, "--indexed-objects");
++	if (repository_format_partial_clone)
++		argv_array_push(&cmd.args, "--exclude-promisor-objects");
+ 	if (window)
+ 		argv_array_pushf(&cmd.args, "--window=%s", window);
+ 	if (window_memory)
 diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
-index 8a90f6a..3ca6af5 100755
+index 3ca6af5..071736c 100755
 --- a/t/t0410-partial-clone.sh
 +++ b/t/t0410-partial-clone.sh
-@@ -160,6 +160,107 @@ test_expect_success 'fetching of missing objects' '
- 	git verify-pack --verbose "$IDX" | grep "$HASH"
+@@ -11,13 +11,15 @@ delete_object () {
+ pack_as_from_promisor () {
+ 	HASH=$(git -C repo pack-objects .git/objects/pack/pack) &&
+ 	>repo/.git/objects/pack/pack-$HASH.promisor
++	echo $HASH
+ }
+ 
+ promise_and_delete () {
+ 	HASH=$(git -C repo rev-parse "$1") &&
+ 	git -C repo tag -a -m message my_annotated_tag "$HASH" &&
+ 	git -C repo rev-parse my_annotated_tag | pack_as_from_promisor &&
+-	git -C repo tag -d my_annotated_tag &&
++	# tag -d prints a message to stdout, so redirect it
++	git -C repo tag -d my_annotated_tag >/dev/null &&
+ 	delete_object repo "$HASH"
+ }
+ 
+@@ -261,6 +263,54 @@ test_expect_success 'rev-list accepts missing and promised objects on command li
+ 	git -C repo rev-list --exclude-promisor-objects --objects "$COMMIT" "$TREE" "$BLOB"
  '
  
-+test_expect_success 'rev-list stops traversal at missing and promised commit' '
++test_expect_success 'gc does not repack promisor objects' '
 +	rm -rf repo &&
 +	test_create_repo repo &&
-+	test_commit -C repo foo &&
-+	test_commit -C repo bar &&
++	test_commit -C repo my_commit &&
 +
-+	FOO=$(git -C repo rev-parse foo) &&
-+	promise_and_delete "$FOO" &&
++	TREE_HASH=$(git -C repo rev-parse HEAD^{tree}) &&
++	HASH=$(printf "$TREE_HASH\n" | pack_as_from_promisor) &&
 +
 +	git -C repo config core.repositoryformatversion 1 &&
 +	git -C repo config extensions.partialclone "arbitrary string" &&
-+	git -C repo rev-list --exclude-promisor-objects --objects bar >out &&
-+	grep $(git -C repo rev-parse bar) out &&
-+	! grep $FOO out
++	git -C repo gc &&
++
++	# Ensure that the promisor packfile still exists, and remove it
++	test -e repo/.git/objects/pack/pack-$HASH.pack &&
++	rm repo/.git/objects/pack/pack-$HASH.* &&
++
++	# Ensure that the single other pack contains the commit, but not the tree
++	ls repo/.git/objects/pack/pack-*.pack >packlist &&
++	test_line_count = 1 packlist &&
++	git verify-pack repo/.git/objects/pack/pack-*.pack -v >out &&
++	grep "$(git -C repo rev-parse HEAD)" out &&
++	! grep "$TREE_HASH" out
 +'
 +
-+test_expect_success 'rev-list stops traversal at missing and promised tree' '
++test_expect_success 'gc stops traversal when a missing but promised object is reached' '
 +	rm -rf repo &&
 +	test_create_repo repo &&
-+	test_commit -C repo foo &&
-+	mkdir repo/a_dir &&
-+	echo something >repo/a_dir/something &&
-+	git -C repo add a_dir/something &&
-+	git -C repo commit -m bar &&
++	test_commit -C repo my_commit &&
 +
-+	# foo^{tree} (tree referenced from commit)
-+	TREE=$(git -C repo rev-parse foo^{tree}) &&
-+
-+	# a tree referenced by HEAD^{tree} (tree referenced from tree)
-+	TREE2=$(git -C repo ls-tree HEAD^{tree} | grep " tree " | head -1 | cut -b13-52) &&
-+
-+	promise_and_delete "$TREE" &&
-+	promise_and_delete "$TREE2" &&
++	TREE_HASH=$(git -C repo rev-parse HEAD^{tree}) &&
++	HASH=$(promise_and_delete $TREE_HASH) &&
 +
 +	git -C repo config core.repositoryformatversion 1 &&
 +	git -C repo config extensions.partialclone "arbitrary string" &&
-+	git -C repo rev-list --exclude-promisor-objects --objects HEAD >out &&
-+	grep $(git -C repo rev-parse foo) out &&
-+	! grep $TREE out &&
-+	grep $(git -C repo rev-parse HEAD) out &&
-+	! grep $TREE2 out
-+'
++	git -C repo gc &&
 +
-+test_expect_success 'rev-list stops traversal at missing and promised blob' '
-+	rm -rf repo &&
-+	test_create_repo repo &&
-+	echo something >repo/something &&
-+	git -C repo add something &&
-+	git -C repo commit -m foo &&
++	# Ensure that the promisor packfile still exists, and remove it
++	test -e repo/.git/objects/pack/pack-$HASH.pack &&
++	rm repo/.git/objects/pack/pack-$HASH.* &&
 +
-+	BLOB=$(git -C repo hash-object -w something) &&
-+	promise_and_delete "$BLOB" &&
-+
-+	git -C repo config core.repositoryformatversion 1 &&
-+	git -C repo config extensions.partialclone "arbitrary string" &&
-+	git -C repo rev-list --exclude-promisor-objects --objects HEAD >out &&
-+	grep $(git -C repo rev-parse HEAD) out &&
-+	! grep $BLOB out
-+'
-+
-+test_expect_success 'rev-list stops traversal at promisor commit, tree, and blob' '
-+	rm -rf repo &&
-+	test_create_repo repo &&
-+	test_commit -C repo foo &&
-+	test_commit -C repo bar &&
-+	test_commit -C repo baz &&
-+
-+	COMMIT=$(git -C repo rev-parse foo) &&
-+	TREE=$(git -C repo rev-parse bar^{tree}) &&
-+	BLOB=$(git hash-object repo/baz.t) &&
-+	printf "%s\n%s\n%s\n" $COMMIT $TREE $BLOB | pack_as_from_promisor &&
-+
-+	git -C repo config core.repositoryformatversion 1 &&
-+	git -C repo config extensions.partialclone "arbitrary string" &&
-+	git -C repo rev-list --exclude-promisor-objects --objects HEAD >out &&
-+	! grep $COMMIT out &&
-+	! grep $TREE out &&
-+	! grep $BLOB out &&
-+	grep $(git -C repo rev-parse bar) out  # sanity check that some walking was done
-+'
-+
-+test_expect_success 'rev-list accepts missing and promised objects on command line' '
-+	rm -rf repo &&
-+	test_create_repo repo &&
-+	test_commit -C repo foo &&
-+	test_commit -C repo bar &&
-+	test_commit -C repo baz &&
-+
-+	COMMIT=$(git -C repo rev-parse foo) &&
-+	TREE=$(git -C repo rev-parse bar^{tree}) &&
-+	BLOB=$(git hash-object repo/baz.t) &&
-+
-+	promise_and_delete $COMMIT &&
-+	promise_and_delete $TREE &&
-+	promise_and_delete $BLOB &&
-+
-+	git -C repo config core.repositoryformatversion 1 &&
-+	git -C repo config extensions.partialclone "arbitrary string" &&
-+	git -C repo rev-list --exclude-promisor-objects --objects "$COMMIT" "$TREE" "$BLOB"
++	# Ensure that the single other pack contains the commit, but not the tree
++	ls repo/.git/objects/pack/pack-*.pack >packlist &&
++	test_line_count = 1 packlist &&
++	git verify-pack repo/.git/objects/pack/pack-*.pack -v >out &&
++	grep "$(git -C repo rev-parse HEAD)" out &&
++	! grep "$TREE_HASH" out
 +'
 +
  LIB_HTTPD_PORT=12345  # default port, 410, cannot be used as non-root
