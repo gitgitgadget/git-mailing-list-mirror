@@ -7,35 +7,35 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0D38A20954
-	for <e@80x24.org>; Tue, 21 Nov 2017 08:01:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7E1DB20954
+	for <e@80x24.org>; Tue, 21 Nov 2017 08:01:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751365AbdKUIBo (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Nov 2017 03:01:44 -0500
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:43680 "EHLO
+        id S1751357AbdKUIBn (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Nov 2017 03:01:43 -0500
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:40610 "EHLO
         mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751247AbdKUIBl (ORCPT
+        by vger.kernel.org with ESMTP id S1751343AbdKUIBl (ORCPT
         <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2017 03:01:41 -0500
-Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id vAL7xbPs019355;
+Received: from pps.filterd (m0096528.ppops.net [127.0.0.1])
+        by mx0a-00153501.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id vAL7xL2i002570;
         Tue, 21 Nov 2017 00:01:01 -0800
 Authentication-Results: ppops.net;
         spf=softfail smtp.mailfrom=newren@gmail.com
 Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2eakkpc225-2;
+        by mx0a-00153501.pphosted.com with ESMTP id 2eajmr44re-3;
         Tue, 21 Nov 2017 00:01:01 -0800
 Received: from mxw1.palantir.com (new-smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id 35EA222666FA;
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id 2714F226665B;
         Tue, 21 Nov 2017 00:01:01 -0800 (PST)
 Received: from newren2-linux.yojoe.local (newren2-linux.dyn.yojoe.local [10.100.68.32])
-        by smtp.yojoe.local (Postfix) with ESMTP id 27E5E2CDEB1;
+        by smtp.yojoe.local (Postfix) with ESMTP id 17E8D2CDEC1;
         Tue, 21 Nov 2017 00:01:01 -0800 (PST)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, Elijah Newren <newren@gmail.com>
-Subject: [PATCH v3 25/33] merge-recursive: check for file level conflicts then get new name
-Date:   Tue, 21 Nov 2017 00:00:51 -0800
-Message-Id: <20171121080059.32304-26-newren@gmail.com>
+Subject: [PATCH v3 24/33] merge-recursive: add computation of collisions due to dir rename & merging
+Date:   Tue, 21 Nov 2017 00:00:50 -0800
+Message-Id: <20171121080059.32304-25-newren@gmail.com>
 X-Mailer: git-send-email 2.15.0.309.g62ce55426d
 In-Reply-To: <20171121080059.32304-1-newren@gmail.com>
 References: <20171121080059.32304-1-newren@gmail.com>
@@ -46,7 +46,7 @@ X-Proofpoint-SPF-Record: v=spf1 redirect=_spf.google.com
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,, definitions=2017-11-21_03:,,
  signatures=0
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=15 phishscore=0 bulkscore=0 spamscore=0
+ malwarescore=0 suspectscore=13 phishscore=0 bulkscore=0 spamscore=0
  clxscore=1034 lowpriorityscore=0 impostorscore=0 adultscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.0.1-1709140000
  definitions=main-1711210110
@@ -55,194 +55,139 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Before trying to apply directory renames to paths within the given
-directories, we want to make sure that there aren't conflicts at the
-file level either.  If there aren't any, then get the new name from
-any directory renames.
+directory renaming and merging can cause one or more files to be moved to
+where an existing file is, or to cause several files to all be moved to
+the same (otherwise vacant) location.  Add checking and reporting for suc=
+h
+cases, falling back to no-directory-rename handling for such paths.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-recursive.c                   | 192 ++++++++++++++++++++++++++++++=
+ merge-recursive.c | 124 ++++++++++++++++++++++++++++++++++++++++++++++++=
 ++++--
- t/t6043-merge-rename-directories.sh |   2 +-
- 2 files changed, 185 insertions(+), 9 deletions(-)
+ 1 file changed, 121 insertions(+), 3 deletions(-)
 
 diff --git a/merge-recursive.c b/merge-recursive.c
-index b8c7d6dce3..5bc207b819 100644
+index 1fa3eb6fb5..b8c7d6dce3 100644
 --- a/merge-recursive.c
 +++ b/merge-recursive.c
-@@ -1496,6 +1496,109 @@ static void get_renamed_dir_portion(const char *o=
-ld_path, const char *new_path,
- 	}
+@@ -1416,6 +1416,32 @@ static int tree_has_path(struct tree *tree, const =
+char *path)
+ 			       hashy, &mode_o);
  }
 =20
 +/*
-+ * Write:
-+ *   element1, element2, element3, ..., elementN
-+ * to str.  If only one element, just write "element1" to str.
++ * Return a new string that replaces the beginning portion (which matche=
+s
++ * entry->dir), with entry->new_dir.  In perl-speak:
++ *   new_path_name =3D (old_path =3D~ s/entry->dir/entry->new_dir/);
++ * NOTE:
++ *   Caller must ensure that old_path starts with entry->dir + '/'.
 + */
-+static void comma_separated_list(char *str, struct string_list *slist)
++static char *apply_dir_rename(struct dir_rename_entry *entry,
++			      const char *old_path)
++{
++	char *new_path;
++	int entrylen, oldlen, newlen;
++
++	if (entry->non_unique_new_dir)
++		return NULL;
++
++	entrylen =3D strlen(entry->new_dir);
++	oldlen =3D strlen(entry->dir);
++	newlen =3D entrylen + (strlen(old_path) - oldlen) + 1;
++	new_path =3D malloc(newlen);
++	strcpy(new_path, entry->new_dir);
++	strcpy(&new_path[entrylen], &old_path[oldlen]);
++
++	return new_path;
++}
++
+ static void get_renamed_dir_portion(const char *old_path, const char *ne=
+w_path,
+ 				    char **old_dir, char **new_dir)
+ {
+@@ -1641,6 +1667,84 @@ static struct hashmap *get_directory_renames(struc=
+t diff_queue_struct *pairs,
+ 	return dir_renames;
+ }
+=20
++static struct dir_rename_entry *check_dir_renamed(const char *path,
++						  struct hashmap *dir_renames)
++{
++	char temp[PATH_MAX];
++	char *end;
++	struct dir_rename_entry *entry;
++
++	strcpy(temp, path);
++	while ((end =3D strrchr(temp, '/'))) {
++		*end =3D '\0';
++		entry =3D dir_rename_find_entry(dir_renames, temp);
++		if (entry)
++			return entry;
++	}
++	return NULL;
++}
++
++static void compute_collisions(struct hashmap *collisions,
++			       struct hashmap *dir_renames,
++			       struct diff_queue_struct *pairs)
 +{
 +	int i;
 +
-+	for (i =3D 0; i < slist->nr; i++) {
-+		str +=3D sprintf(str, "%s", slist->items[i].string);
-+		if (i < slist->nr-1)
-+			str +=3D sprintf(str, ", ");
-+	}
-+}
-+
-+/*
-+ * See if there is a directory rename for path, and if there are any fil=
-e
-+ * level conflicts for the renamed location.  If there is a rename and
-+ * there are no conflicts, return the new name.  Otherwise, return NULL.
-+ */
-+static char *handle_path_level_conflicts(struct merge_options *o,
-+					 const char *path,
-+					 struct dir_rename_entry *entry,
-+					 struct hashmap *collisions,
-+					 struct tree *tree)
-+{
-+	char *new_path =3D NULL;
-+	struct collision_entry *collision_ent;
-+	int clean =3D 1;
-+	char *collision_paths;
-+
 +	/*
-+	 * entry has the mapping of old directory name to new directory name
-+	 * that we want to apply to path.
-+	 */
-+	new_path =3D apply_dir_rename(entry, path);
-+
-+	if (!new_path) {
-+		/* This should only happen when entry->non_unique_new_dir set */
-+		if (!entry->non_unique_new_dir)
-+			BUG("entry->non_unqiue_dir not set and !new_path");
-+		output(o, 1, _("CONFLICT (directory rename split): "
-+			       "Unclear where to place %s because directory "
-+			       "%s was renamed to multiple other directories, "
-+			       "with no destination getting a majority of the "
-+			       "files."),
-+		       path, entry->dir);
-+		clean =3D 0;
-+		return NULL;
-+	}
-+
-+	/*
-+	 * The caller needs to have ensured that it has pre-populated
-+	 * collisions with all paths that map to new_path.  Do a quick check
-+	 * to ensure that's the case.
-+	 */
-+	collision_ent =3D collision_find_entry(collisions, new_path);
-+	if (collision_ent =3D=3D NULL)
-+		BUG("collision_ent is NULL");
-+
-+	/*
-+	 * Check for one-sided add/add/.../add conflicts, i.e.
-+	 * where implicit renames from the other side doing
-+	 * directory rename(s) can affect this side of history
-+	 * to put multiple paths into the same location.  Warn
-+	 * and bail on directory renames for such paths.
-+	 */
-+	collision_paths =3D malloc((PATH_MAX+2) * collision_ent->source_files.n=
-r);
-+
-+	if (collision_ent->reported_already) {
-+		clean =3D 0;
-+	} else if (tree_has_path(tree, new_path)) {
-+		collision_ent->reported_already =3D 1;
-+		comma_separated_list(collision_paths,
-+				     &collision_ent->source_files);
-+		output(o, 1, _("CONFLICT (implicit dir rename): Existing "
-+			       "file/dir at %s in the way of implicit "
-+			       "directory rename(s) putting the following "
-+			       "path(s) there: %s."),
-+		       new_path, collision_paths);
-+		clean =3D 0;
-+	} else if (collision_ent->source_files.nr > 1) {
-+		collision_ent->reported_already =3D 1;
-+		comma_separated_list(collision_paths,
-+				     &collision_ent->source_files);
-+		output(o, 1, _("CONFLICT (implicit dir rename): Cannot map "
-+			       "more than one path to %s; implicit directory "
-+			       "renames tried to put these paths there: %s"),
-+		       new_path, collision_paths);
-+		clean =3D 0;
-+	}
-+
-+	/* Free memory we no longer need */
-+	free(collision_paths);
-+	if (!clean && new_path) {
-+		free(new_path);
-+		return NULL;
-+	}
-+
-+	return new_path;
-+}
-+
- /*
-  * There are a couple things we want to do at the directory level:
-  *   1. Check for both sides renaming to the same thing, in order to avo=
-id
-@@ -1745,6 +1848,59 @@ static void compute_collisions(struct hashmap *col=
-lisions,
- 	}
- }
-=20
-+static char *check_for_directory_rename(struct merge_options *o,
-+					const char *path,
-+					struct tree *tree,
-+					struct hashmap *dir_renames,
-+					struct hashmap *dir_rename_exclusions,
-+					struct hashmap *collisions,
-+					int *clean_merge)
-+{
-+	char *new_path =3D NULL;
-+	struct dir_rename_entry *entry =3D check_dir_renamed(path, dir_renames)=
-;
-+	struct dir_rename_entry *oentry =3D NULL;
-+
-+	if (!entry)
-+		return new_path;
-+
-+	/*
-+	 * This next part is a little weird.  We do not want to do an
-+	 * implicit rename into a directory we renamed on our side, because
-+	 * that will result in a spurious rename/rename(1to2) conflict.  An
-+	 * example:
-+	 *   Base commit: dumbdir/afile, otherdir/bfile
-+	 *   Side 1:      smrtdir/afile, otherdir/bfile
-+	 *   Side 2:      dumbdir/afile, dumbdir/bfile
-+	 * Here, while working on Side 1, we could notice that otherdir was
-+	 * renamed/merged to dumbdir, and change the diff_filepair for
-+	 * otherdir/bfile into a rename into dumbdir/bfile.  However, Side
-+	 * 2 will notice the rename from dumbdir to smrtdir, and do the
-+	 * transitive rename to move it from dumbdir/bfile to
-+	 * smrtdir/bfile.  That gives us bfile in dumbdir vs being in
-+	 * smrtdir, a rename/rename(1to2) conflict.  We really just want
-+	 * the file to end up in smrtdir.  And the way to achieve that is
-+	 * to not let Side1 do the rename to dumbdir, since we know that is
-+	 * the source of one of our directory renames.
++	 * Multiple files can be mapped to the same path due to directory
++	 * renames done by the other side of history.  Since that other
++	 * side of history could have merged multiple directories into one,
++	 * if our side of history added the same file basename to each of
++	 * those directories, then all N of them would get implicitly
++	 * renamed by the directory rename detection into the same path,
++	 * and we'd get an add/add/.../add conflict, and all those adds
++	 * from *this* side of history.  This is not representable in the
++	 * index, and users aren't going to easily be able to make sense of
++	 * it.  So we need to provide a good warning about what's
++	 * happening, and fall back to no-directory-rename detection
++	 * behavior for those paths.
 +	 *
-+	 * That's why oentry and dir_rename_exclusions is here.
-+	 *
-+	 * As it turns out, this also prevents N-way transient rename
-+	 * confusion; See testcases 9c and 9d of t6043.
++	 * See testcases 9e and all of section 5 from t6043 for examples.
 +	 */
-+	oentry =3D dir_rename_find_entry(dir_rename_exclusions, entry->new_dir)=
-;
-+	if (oentry) {
-+		output(o, 1, _("WARNING: Avoiding applying %s -> %s rename "
-+			       "to %s, because %s itself was renamed."),
-+		       entry->dir, entry->new_dir, path, entry->new_dir);
-+	} else {
-+		new_path =3D handle_path_level_conflicts(o, path, entry,
-+						       collisions, tree);
-+		*clean_merge &=3D (new_path !=3D NULL);
-+	}
++	collision_init(collisions);
 +
-+	return new_path;
++	for (i =3D 0; i < pairs->nr; ++i) {
++		struct dir_rename_entry *dir_rename_ent;
++		struct collision_entry *collision_ent;
++		char *new_path;
++		struct diff_filepair *pair =3D pairs->queue[i];
++
++		if (pair->status =3D=3D 'D')
++			continue;
++		dir_rename_ent =3D check_dir_renamed(pair->two->path,
++						   dir_renames);
++		if (!dir_rename_ent)
++			continue;
++
++		new_path =3D apply_dir_rename(dir_rename_ent, pair->two->path);
++		if (!new_path)
++			/*
++			 * dir_rename_ent->non_unique_new_path is true, which
++			 * means there is no directory rename for us to use,
++			 * which means it won't cause us any additional
++			 * collisions.
++			 */
++			continue;
++		collision_ent =3D collision_find_entry(collisions, new_path);
++		if (!collision_ent) {
++			collision_ent =3D xcalloc(1,
++						sizeof(struct collision_entry));
++			hashmap_entry_init(collision_ent, strhash(new_path));
++			hashmap_put(collisions, collision_ent);
++			collision_ent->target_file =3D new_path;
++		} else {
++			free(new_path);
++		}
++		string_list_insert(&collision_ent->source_files,
++				   pair->two->path);
++	}
 +}
 +
  /*
@@ -250,99 +195,58 @@ lisions,
 of
   * any implicit directory renames inferred from the other side of histor=
 y.
-@@ -1755,11 +1911,13 @@ static void compute_collisions(struct hashmap *co=
-llisions,
+@@ -1650,6 +1754,7 @@ static struct hashmap *get_directory_renames(struct=
+ diff_queue_struct *pairs,
+  */
  static struct string_list *get_renames(struct merge_options *o,
  				       struct diff_queue_struct *pairs,
- 				       struct hashmap *dir_renames,
-+				       struct hashmap *dir_rename_exclusions,
++				       struct hashmap *dir_renames,
  				       struct tree *tree,
  				       struct tree *o_tree,
  				       struct tree *a_tree,
- 				       struct tree *b_tree,
--				       struct string_list *entries)
-+				       struct string_list *entries,
-+				       int *clean_merge)
+@@ -1657,8 +1762,12 @@ static struct string_list *get_renames(struct merg=
+e_options *o,
+ 				       struct string_list *entries)
  {
  	int i;
- 	struct hashmap collisions;
-@@ -1774,11 +1932,22 @@ static struct string_list *get_renames(struct mer=
-ge_options *o,
- 		struct string_list_item *item;
- 		struct rename *re;
- 		struct diff_filepair *pair =3D pairs->queue[i];
-+		char *new_path; /* non-NULL only with directory renames */
++	struct hashmap collisions;
++	struct hashmap_iter iter;
++	struct collision_entry *e;
+ 	struct string_list *renames;
 =20
--		if (pair->status !=3D 'R') {
-+		if (pair->status =3D=3D 'D') {
-+			diff_free_filepair(pair);
-+			continue;
-+		}
-+		new_path =3D check_for_directory_rename(o, pair->two->path, tree,
-+						      dir_renames,
-+						      dir_rename_exclusions,
-+						      &collisions,
-+						      clean_merge);
-+		if (pair->status !=3D 'R' && !new_path) {
- 			diff_free_filepair(pair);
- 			continue;
- 		}
++	compute_collisions(&collisions, dir_renames, pairs);
+ 	renames =3D xcalloc(1, sizeof(struct string_list));
+=20
+ 	for (i =3D 0; i < pairs->nr; ++i) {
+@@ -1689,6 +1798,13 @@ static struct string_list *get_renames(struct merg=
+e_options *o,
+ 		item =3D string_list_insert(renames, pair->one->path);
+ 		item->util =3D re;
+ 	}
 +
- 		re =3D xmalloc(sizeof(*re));
- 		re->processed =3D 0;
- 		re->pair =3D pair;
-@@ -2079,7 +2248,7 @@ static int handle_renames(struct merge_options *o,
- 	struct hashmap *dir_re_head, *dir_re_merge;
- 	struct hashmap_iter iter;
- 	struct dir_rename_entry *e;
--	int clean;
-+	int clean =3D 1;
++	hashmap_iter_init(&collisions, &iter);
++	while ((e =3D hashmap_iter_next(&iter))) {
++		free(e->target_file);
++		string_list_clear(&e->source_files, 0);
++	}
++	hashmap_free(&collisions, 1);
+ 	return renames;
+ }
 =20
- 	ri->head_renames =3D NULL;
- 	ri->merge_renames =3D NULL;
-@@ -2098,13 +2267,20 @@ static int handle_renames(struct merge_options *o=
-,
+@@ -1981,9 +2097,11 @@ static int handle_renames(struct merge_options *o,
+ 					 dir_re_head, head,
  					 dir_re_merge, merge);
 =20
- 	ri->head_renames  =3D get_renames(o, head_pairs,
--					dir_re_merge, head,
--					common, head, merge, entries);
-+					dir_re_merge, dir_re_head, head,
-+					common, head, merge, entries,
-+					&clean);
-+	if (clean < 0)
-+		goto cleanup;
- 	ri->merge_renames =3D get_renames(o, merge_pairs,
--					dir_re_head, merge,
+-	ri->head_renames  =3D get_renames(o, head_pairs, head,
 -					 common, head, merge, entries);
--	clean =3D process_renames(o, ri->head_renames, ri->merge_renames);
-+					dir_re_head, dir_re_merge, merge,
-+					common, head, merge, entries,
-+					&clean);
-+	if (clean < 0)
-+		goto cleanup;
-+	clean &=3D process_renames(o, ri->head_renames, ri->merge_renames);
-=20
-+cleanup:
- 	/*
- 	 * Some cleanup is deferred until cleanup_renames() because the
- 	 * data structures are still needed and referenced in
-diff --git a/t/t6043-merge-rename-directories.sh b/t/t6043-merge-rename-d=
-irectories.sh
-index 88243651f7..a45425f4d7 100755
---- a/t/t6043-merge-rename-directories.sh
-+++ b/t/t6043-merge-rename-directories.sh
-@@ -477,7 +477,7 @@ test_expect_success '2a-setup: Directory split into t=
-wo on one side, with equal
- 	)
- '
-=20
--test_expect_failure '2a-check: Directory split into two on one side, wit=
-h equal numbers of paths' '
-+test_expect_success '2a-check: Directory split into two on one side, wit=
-h equal numbers of paths' '
- 	(
- 		cd 2a &&
+-	ri->merge_renames =3D get_renames(o, merge_pairs, merge,
++	ri->head_renames  =3D get_renames(o, head_pairs,
++					dir_re_merge, head,
++					common, head, merge, entries);
++	ri->merge_renames =3D get_renames(o, merge_pairs,
++					dir_re_head, merge,
+ 					 common, head, merge, entries);
+ 	clean =3D process_renames(o, ri->head_renames, ri->merge_renames);
 =20
 --=20
 2.15.0.309.g62ce55426d
