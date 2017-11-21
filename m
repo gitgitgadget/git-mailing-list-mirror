@@ -6,210 +6,226 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 507642036D
-	for <e@80x24.org>; Tue, 21 Nov 2017 21:08:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 94FB72036D
+	for <e@80x24.org>; Tue, 21 Nov 2017 21:13:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751436AbdKUVHy (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Nov 2017 16:07:54 -0500
-Received: from siwi.pair.com ([209.68.5.199]:44440 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751351AbdKUVHd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Nov 2017 16:07:33 -0500
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id E94D48450B;
-        Tue, 21 Nov 2017 16:07:32 -0500 (EST)
-Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 8A3FB844F0;
-        Tue, 21 Nov 2017 16:07:32 -0500 (EST)
-From:   Jeff Hostetler <git@jeffhostetler.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net, jonathantanmy@google.com
-Subject: [PATCH v5 06/10] index-pack: refactor writing of .keep files
-Date:   Tue, 21 Nov 2017 21:07:16 +0000
-Message-Id: <20171121210720.21376-7-git@jeffhostetler.com>
-X-Mailer: git-send-email 2.9.3
-In-Reply-To: <20171121210720.21376-1-git@jeffhostetler.com>
-References: <20171121210720.21376-1-git@jeffhostetler.com>
+        id S1751384AbdKUVNZ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Nov 2017 16:13:25 -0500
+Received: from cpanel2.indieserve.net ([199.212.143.6]:57616 "EHLO
+        cpanel2.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751145AbdKUVNY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Nov 2017 16:13:24 -0500
+Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:38264 helo=localhost.localdomain)
+        by cpanel2.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.89)
+        (envelope-from <rpjday@crashcourse.ca>)
+        id 1eHFrA-0003ua-0T
+        for git@vger.kernel.org; Tue, 21 Nov 2017 16:13:24 -0500
+Date:   Tue, 21 Nov 2017 16:12:02 -0500 (EST)
+From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
+X-X-Sender: rpjday@localhost.localdomain
+To:     Git Mailing list <git@vger.kernel.org>
+Subject: [PATCH] doc: remove explanation of "--" from man pages
+Message-ID: <alpine.LFD.2.21.1711211607200.25585@localhost.localdomain>
+User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel2.indieserve.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - crashcourse.ca
+X-Get-Message-Sender-Via: cpanel2.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: cpanel2.indieserve.net: rpjday@crashcourse.ca
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jonathan Tan <jonathantanmy@google.com>
+"man gitcli" already explains the purpose of the "--" syntax, so there
+is no value to a small subset of Git commands explaining that in their
+man pages.
 
-In a subsequent commit, index-pack will be taught to write ".promisor"
-files which are similar to the ".keep" files it knows how to write.
-Refactor the writing of ".keep" files, so that the implementation of
-writing ".promisor" files becomes easier.
+Signed-off-by: Robert P. J. Day <rpjday@crashcourse.ca>
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- builtin/index-pack.c | 99 ++++++++++++++++++++++++++++------------------------
- 1 file changed, 53 insertions(+), 46 deletions(-)
 
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 8ec459f..4f305a7 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -1389,15 +1389,58 @@ static void fix_unresolved_deltas(struct sha1file *f)
- 	free(sorted_by_pos);
- }
- 
-+static const char *derive_filename(const char *pack_name, const char *suffix,
-+				   struct strbuf *buf)
-+{
-+	size_t len;
-+	if (!strip_suffix(pack_name, ".pack", &len))
-+		die(_("packfile name '%s' does not end with '.pack'"),
-+		    pack_name);
-+	strbuf_add(buf, pack_name, len);
-+	strbuf_addch(buf, '.');
-+	strbuf_addstr(buf, suffix);
-+	return buf->buf;
-+}
-+
-+static void write_special_file(const char *suffix, const char *msg,
-+			       const char *pack_name, const unsigned char *sha1,
-+			       const char **report)
-+{
-+	struct strbuf name_buf = STRBUF_INIT;
-+	const char *filename;
-+	int fd;
-+	int msg_len = strlen(msg);
-+
-+	if (pack_name)
-+		filename = derive_filename(pack_name, suffix, &name_buf);
-+	else
-+		filename = odb_pack_name(&name_buf, sha1, suffix);
-+
-+	fd = odb_pack_keep(filename);
-+	if (fd < 0) {
-+		if (errno != EEXIST)
-+			die_errno(_("cannot write %s file '%s'"),
-+				  suffix, filename);
-+	} else {
-+		if (msg_len > 0) {
-+			write_or_die(fd, msg, msg_len);
-+			write_or_die(fd, "\n", 1);
-+		}
-+		if (close(fd) != 0)
-+			die_errno(_("cannot close written %s file '%s'"),
-+				  suffix, filename);
-+		*report = suffix;
-+	}
-+	strbuf_release(&name_buf);
-+}
-+
- static void final(const char *final_pack_name, const char *curr_pack_name,
- 		  const char *final_index_name, const char *curr_index_name,
--		  const char *keep_name, const char *keep_msg,
--		  unsigned char *sha1)
-+		  const char *keep_msg, unsigned char *sha1)
- {
- 	const char *report = "pack";
- 	struct strbuf pack_name = STRBUF_INIT;
- 	struct strbuf index_name = STRBUF_INIT;
--	struct strbuf keep_name_buf = STRBUF_INIT;
- 	int err;
- 
- 	if (!from_stdin) {
-@@ -1409,28 +1452,9 @@ static void final(const char *final_pack_name, const char *curr_pack_name,
- 			die_errno(_("error while closing pack file"));
- 	}
- 
--	if (keep_msg) {
--		int keep_fd, keep_msg_len = strlen(keep_msg);
+  i tried this once before, and i'm going to try to push it through
+again ... it's pointless and inconsistent for less than a dozen man
+pages to explicitly explain the purpose of "--" unless all of the man
+pages do. as long as the "--" appears in the command SYNOPSIS, that
+should be more than adequate.
+
+diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
+index b700beaff..69d625285 100644
+--- a/Documentation/git-add.txt
++++ b/Documentation/git-add.txt
+@@ -180,11 +180,6 @@ for "git add --no-all <pathspec>...", i.e. ignored removed files.
+ 	bit is only changed in the index, the files on disk are left
+ 	unchanged.
+
+-\--::
+-	This option can be used to separate command-line options from
+-	the list of files, (useful when filenames might be mistaken
+-	for command-line options).
 -
--		if (!keep_name)
--			keep_name = odb_pack_name(&keep_name_buf, sha1, "keep");
+
+ Configuration
+ -------------
+diff --git a/Documentation/git-check-attr.txt b/Documentation/git-check-attr.txt
+index aa3b2bf2f..0ae2523e0 100644
+--- a/Documentation/git-check-attr.txt
++++ b/Documentation/git-check-attr.txt
+@@ -36,10 +36,6 @@ OPTIONS
+ 	If `--stdin` is also given, input paths are separated
+ 	with a NUL character instead of a linefeed character.
+
+-\--::
+-	Interpret all preceding arguments as attributes and all following
+-	arguments as path names.
 -
--		keep_fd = odb_pack_keep(keep_name);
--		if (keep_fd < 0) {
--			if (errno != EEXIST)
--				die_errno(_("cannot write keep file '%s'"),
--					  keep_name);
--		} else {
--			if (keep_msg_len > 0) {
--				write_or_die(keep_fd, keep_msg, keep_msg_len);
--				write_or_die(keep_fd, "\n", 1);
--			}
--			if (close(keep_fd) != 0)
--				die_errno(_("cannot close written keep file '%s'"),
--					  keep_name);
--			report = "keep";
--		}
--	}
-+	if (keep_msg)
-+		write_special_file("keep", keep_msg, final_pack_name, sha1,
-+				   &report);
- 
- 	if (final_pack_name != curr_pack_name) {
- 		if (!final_pack_name)
-@@ -1472,7 +1496,6 @@ static void final(const char *final_pack_name, const char *curr_pack_name,
- 
- 	strbuf_release(&index_name);
- 	strbuf_release(&pack_name);
--	strbuf_release(&keep_name_buf);
- }
- 
- static int git_index_pack_config(const char *k, const char *v, void *cb)
-@@ -1615,26 +1638,13 @@ static void show_pack_info(int stat_only)
- 	}
- }
- 
--static const char *derive_filename(const char *pack_name, const char *suffix,
--				   struct strbuf *buf)
--{
--	size_t len;
--	if (!strip_suffix(pack_name, ".pack", &len))
--		die(_("packfile name '%s' does not end with '.pack'"),
--		    pack_name);
--	strbuf_add(buf, pack_name, len);
--	strbuf_addstr(buf, suffix);
--	return buf->buf;
--}
+ If none of `--stdin`, `--all`, or `--` is used, the first argument
+ will be treated as an attribute and the rest of the arguments as
+ pathnames.
+diff --git a/Documentation/git-checkout-index.txt b/Documentation/git-checkout-index.txt
+index 4d33e7be0..11ee76e7d 100644
+--- a/Documentation/git-checkout-index.txt
++++ b/Documentation/git-checkout-index.txt
+@@ -68,9 +68,6 @@ OPTIONS
+ 	Only meaningful with `--stdin`; paths are separated with
+ 	NUL character instead of LF.
+
+-\--::
+-	Do not interpret any more arguments as options.
 -
- int cmd_index_pack(int argc, const char **argv, const char *prefix)
- {
- 	int i, fix_thin_pack = 0, verify = 0, stat_only = 0;
- 	const char *curr_index;
- 	const char *index_name = NULL, *pack_name = NULL;
--	const char *keep_name = NULL, *keep_msg = NULL;
--	struct strbuf index_name_buf = STRBUF_INIT,
--		      keep_name_buf = STRBUF_INIT;
-+	const char *keep_msg = NULL;
-+	struct strbuf index_name_buf = STRBUF_INIT;
- 	struct pack_idx_entry **idx_objects;
- 	struct pack_idx_option opts;
- 	unsigned char pack_sha1[20];
-@@ -1745,9 +1755,7 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
- 	if (from_stdin && !startup_info->have_repository)
- 		die(_("--stdin requires a git repository"));
- 	if (!index_name && pack_name)
--		index_name = derive_filename(pack_name, ".idx", &index_name_buf);
--	if (keep_msg && !keep_name && pack_name)
--		keep_name = derive_filename(pack_name, ".keep", &keep_name_buf);
-+		index_name = derive_filename(pack_name, "idx", &index_name_buf);
- 
- 	if (verify) {
- 		if (!index_name)
-@@ -1795,13 +1803,12 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
- 	if (!verify)
- 		final(pack_name, curr_pack,
- 		      index_name, curr_index,
--		      keep_name, keep_msg,
-+		      keep_msg,
- 		      pack_sha1);
- 	else
- 		close(input_fd);
- 	free(objects);
- 	strbuf_release(&index_name_buf);
--	strbuf_release(&keep_name_buf);
- 	if (pack_name == NULL)
- 		free((void *) curr_pack);
- 	if (index_name == NULL)
+ The order of the flags used to matter, but not anymore.
+
+ Just doing `git checkout-index` does nothing. You probably meant
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+index 8c74a2ca0..cd9f362d1 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -334,9 +334,6 @@ changes to tracked files.
+ 	Countermand `commit.gpgSign` configuration variable that is
+ 	set to force each and every commit to be signed.
+
+-\--::
+-	Do not interpret any more arguments as options.
+-
+ <file>...::
+ 	When files are given on the command line, the command
+ 	commits the contents of the named files, without
+diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+index 18b494731..bac0b789c 100644
+--- a/Documentation/git-grep.txt
++++ b/Documentation/git-grep.txt
+@@ -282,10 +282,6 @@ providing this option will cause it to die.
+ 	Instead of searching tracked files in the working tree, search
+ 	blobs in the given trees.
+
+-\--::
+-	Signals the end of options; the rest of the parameters
+-	are <pathspec> limiters.
+-
+ <pathspec>...::
+ 	If given, limit the search to paths matching at least one pattern.
+ 	Both leading paths match and glob(7) patterns are supported.
+diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
+index 3ac3e3a77..c5cf3a488 100644
+--- a/Documentation/git-ls-files.txt
++++ b/Documentation/git-ls-files.txt
+@@ -176,9 +176,6 @@ Both the <eolinfo> in the index ("i/<eolinfo>")
+ and in the working tree ("w/<eolinfo>") are shown for regular files,
+ followed by the  ("attr/<eolattr>").
+
+-\--::
+-	Do not interpret any more arguments as options.
+-
+ <file>::
+ 	Files to show. If no files are given all files which match the other
+ 	specified criteria are shown.
+diff --git a/Documentation/git-merge-index.txt b/Documentation/git-merge-index.txt
+index 02676fb39..51f884c7e 100644
+--- a/Documentation/git-merge-index.txt
++++ b/Documentation/git-merge-index.txt
+@@ -20,9 +20,6 @@ files are passed as arguments 5, 6 and 7.
+
+ OPTIONS
+ -------
+-\--::
+-	Do not interpret any more arguments as options.
+-
+ -a::
+ 	Run merge against all files in the index that need merging.
+
+diff --git a/Documentation/git-prune.txt b/Documentation/git-prune.txt
+index 7a493c80f..39caa247a 100644
+--- a/Documentation/git-prune.txt
++++ b/Documentation/git-prune.txt
+@@ -42,9 +42,6 @@ OPTIONS
+ --verbose::
+ 	Report all removed objects.
+
+-\--::
+-	Do not interpret any more arguments as options.
+-
+ --expire <time>::
+ 	Only expire loose objects older than <time>.
+
+diff --git a/Documentation/git-rm.txt b/Documentation/git-rm.txt
+index b5c46223c..67ea38e46 100644
+--- a/Documentation/git-rm.txt
++++ b/Documentation/git-rm.txt
+@@ -50,11 +50,6 @@ OPTIONS
+         Allow recursive removal when a leading directory name is
+         given.
+
+-\--::
+-	This option can be used to separate command-line options from
+-	the list of files, (useful when filenames might be mistaken
+-	for command-line options).
+-
+ --cached::
+ 	Use this option to unstage and remove paths only from the index.
+ 	Working tree files, whether modified or not, will be
+diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
+index bdb034259..7d67704a9 100644
+--- a/Documentation/git-update-index.txt
++++ b/Documentation/git-update-index.txt
+@@ -218,9 +218,6 @@ will remove the intended effect of the option.
+ 	the configured value will take effect next time the index is
+ 	read and this will remove the intended effect of the option.
+
+-\--::
+-	Do not interpret any more arguments as options.
+-
+ <file>::
+ 	Files to act on.
+ 	Note that files beginning with '.' are discarded. This includes
+diff --git a/Documentation/git-verify-pack.txt b/Documentation/git-verify-pack.txt
+index 61ca6d04c..b546c2192 100644
+--- a/Documentation/git-verify-pack.txt
++++ b/Documentation/git-verify-pack.txt
+@@ -33,9 +33,6 @@ OPTIONS
+ 	Do not verify the pack contents; only show the histogram of delta
+ 	chain length.  With `--verbose`, list of objects is also shown.
+
+-\--::
+-	Do not interpret any more arguments as options.
+-
+ OUTPUT FORMAT
+ -------------
+ When specifying the -v option the format used is:
+
 -- 
-2.9.3
 
+========================================================================
+Robert P. J. Day                                 Ottawa, Ontario, CANADA
+                        http://crashcourse.ca
+
+Twitter:                                       http://twitter.com/rpjday
+LinkedIn:                               http://ca.linkedin.com/in/rpjday
+========================================================================
