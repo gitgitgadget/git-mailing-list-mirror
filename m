@@ -6,120 +6,80 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0F7942036D
-	for <e@80x24.org>; Tue, 21 Nov 2017 20:54:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 586D62036D
+	for <e@80x24.org>; Tue, 21 Nov 2017 20:59:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751410AbdKUUyp (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Nov 2017 15:54:45 -0500
-Received: from cpanel2.indieserve.net ([199.212.143.6]:45521 "EHLO
-        cpanel2.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751067AbdKUUyo (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Nov 2017 15:54:44 -0500
-Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:38110 helo=localhost.localdomain)
-        by cpanel2.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.89)
-        (envelope-from <rpjday@crashcourse.ca>)
-        id 1eHFZ6-0006uz-8a
-        for git@vger.kernel.org; Tue, 21 Nov 2017 15:54:44 -0500
-Date:   Tue, 21 Nov 2017 15:53:22 -0500 (EST)
-From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
-X-X-Sender: rpjday@localhost.localdomain
-To:     Git Mailing list <git@vger.kernel.org>
-Subject: [PATCH] gitcli: tweak "man gitcli" for clarity
-Message-ID: <alpine.LFD.2.21.1711211551230.24935@localhost.localdomain>
-User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cpanel2.indieserve.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - crashcourse.ca
-X-Get-Message-Sender-Via: cpanel2.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
-X-Authenticated-Sender: cpanel2.indieserve.net: rpjday@crashcourse.ca
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+        id S1751335AbdKUU7E (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Nov 2017 15:59:04 -0500
+Received: from siwi.pair.com ([209.68.5.199]:63927 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751067AbdKUU7D (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Nov 2017 15:59:03 -0500
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 82667844F0;
+        Tue, 21 Nov 2017 15:59:03 -0500 (EST)
+Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 0ECE6844E7;
+        Tue, 21 Nov 2017 15:59:02 -0500 (EST)
+From:   Jeff Hostetler <git@jeffhostetler.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, peff@peff.net, jonathantanmy@google.com,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: [PATCH v5 0/6] Partial clone part 1: object filtering
+Date:   Tue, 21 Nov 2017 20:58:46 +0000
+Message-Id: <20171121205852.15731-1-git@jeffhostetler.com>
+X-Mailer: git-send-email 2.9.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-No major changes, just some rewording and showing some variations of
-general Git commands.
+From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Signed-off-by: Robert P. J. Day <rpjday@crashcourse.ca>
+Here is V5 of the list-object filtering, rev-list, and pack-objects.
 
----
+This version addresses comments on the V4 series.  I removed the
+questionable character encoding scheme.  And I removed or clarified
+use of the term "partial clone" to refer to a future feature.
 
-diff --git a/Documentation/gitcli.txt b/Documentation/gitcli.txt
-index 9f13266a6..a4efcb7ce 100644
---- a/Documentation/gitcli.txt
-+++ b/Documentation/gitcli.txt
-@@ -13,7 +13,7 @@ gitcli
- DESCRIPTION
- -----------
+Jeff Hostetler (6):
+  dir: allow exclusions from blob in addition to file
+  oidmap: add oidmap iterator methods
+  oidset: add iterator methods to oidset
+  list-objects: filter objects in traverse_commit_list
+  rev-list: add list-objects filtering support
+  pack-objects: add list-objects filtering
 
--This manual describes the convention used throughout Git CLI.
-+This manual describes the common conventions used throughout Git CLI.
-
- Many commands take revisions (most often "commits", but sometimes
- "tree-ish", depending on the context and command) and paths as their
-@@ -32,32 +32,35 @@ arguments.  Here are the rules:
-    between the HEAD commit and the work tree as a whole".  You can say
-    `git diff HEAD --` to ask for the latter.
-
-- * Without disambiguating `--`, Git makes a reasonable guess, but errors
--   out and asking you to disambiguate when ambiguous.  E.g. if you have a
-+ * Without a disambiguating `--`, Git makes a reasonable guess, but can
-+   error out, asking you to disambiguate when ambiguous.  E.g. if you have a
-    file called HEAD in your work tree, `git diff HEAD` is ambiguous, and
-    you have to say either `git diff HEAD --` or `git diff -- HEAD` to
-    disambiguate.
- +
- When writing a script that is expected to handle random user-input, it is
- a good practice to make it explicit which arguments are which by placing
--disambiguating `--` at appropriate places.
-+a disambiguating `--` at appropriate places.
-
-  * Many commands allow wildcards in paths, but you need to protect
--   them from getting globbed by the shell.  These two mean different
--   things:
-+   them from getting globbed by the shell.  The following commands have
-+   two different meanings:
- +
- --------------------------------
- $ git checkout -- *.c
-+
- $ git checkout -- \*.c
-+$ git checkout -- "*.c"
-+$ git checkout -- '*.c'
- --------------------------------
- +
--The former lets your shell expand the fileglob, and you are asking
--the dot-C files in your working tree to be overwritten with the version
--in the index.  The latter passes the `*.c` to Git, and you are asking
--the paths in the index that match the pattern to be checked out to your
--working tree.  After running `git add hello.c; rm hello.c`, you will _not_
--see `hello.c` in your working tree with the former, but with the latter
--you will.
-+The first command lets your shell expand the fileglob, and you are asking
-+the dot-C files in your working tree to be overwritten with the version in
-+the index.  The latter three variations pass the `*.c` to Git, and you are
-+asking the paths in the index that match the pattern to be checked out to
-+your working tree.  After running `git add hello.c; rm hello.c`, you will
-+_not_ see `hello.c` in your working tree with the first command, but with
-+the latter three variations, you will.
-
-  * Just as the filesystem '.' (period) refers to the current directory,
-    using a '.' as a repository name in Git (a dot-repository) is a relative
+ Documentation/git-pack-objects.txt     |  19 +-
+ Documentation/git-rev-list.txt         |   4 +-
+ Documentation/rev-list-options.txt     |  36 +++
+ Makefile                               |   2 +
+ builtin/pack-objects.c                 |  64 +++++-
+ builtin/rev-list.c                     | 108 ++++++++-
+ dir.c                                  | 132 ++++++++---
+ dir.h                                  |   3 +
+ list-objects-filter-options.c          |  81 +++++++
+ list-objects-filter-options.h          |  58 +++++
+ list-objects-filter.c                  | 401 +++++++++++++++++++++++++++++++++
+ list-objects-filter.h                  |  77 +++++++
+ list-objects.c                         |  95 ++++++--
+ list-objects.h                         |  13 +-
+ object.h                               |   1 +
+ oidmap.h                               |  22 ++
+ oidset.c                               |  10 +
+ oidset.h                               |  36 +++
+ t/t5317-pack-objects-filter-objects.sh | 375 ++++++++++++++++++++++++++++++
+ t/t6112-rev-list-filters-objects.sh    | 225 ++++++++++++++++++
+ 20 files changed, 1709 insertions(+), 53 deletions(-)
+ create mode 100644 list-objects-filter-options.c
+ create mode 100644 list-objects-filter-options.h
+ create mode 100644 list-objects-filter.c
+ create mode 100644 list-objects-filter.h
+ create mode 100755 t/t5317-pack-objects-filter-objects.sh
+ create mode 100755 t/t6112-rev-list-filters-objects.sh
 
 -- 
+2.9.3
 
-========================================================================
-Robert P. J. Day                                 Ottawa, Ontario, CANADA
-                        http://crashcourse.ca
-
-Twitter:                                       http://twitter.com/rpjday
-LinkedIn:                               http://ca.linkedin.com/in/rpjday
-========================================================================
