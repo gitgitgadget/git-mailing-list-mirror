@@ -2,116 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,STOX_REPLY_TYPE,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2EE8E202F2
-	for <e@80x24.org>; Tue, 21 Nov 2017 00:07:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 874CC202F2
+	for <e@80x24.org>; Tue, 21 Nov 2017 00:21:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751714AbdKUAHb (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Nov 2017 19:07:31 -0500
-Received: from e1i183.smtp2go.com ([103.36.108.183]:60863 "EHLO
-        e1i183.smtp2go.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751275AbdKUAHb (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Nov 2017 19:07:31 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=smtpservice.net; s=m1fbw0.a1-4.dyn; x=1511223751; h=Feedback-ID:
-        X-Smtpcorp-Track:Date:Subject:To:From:Reply-To:Message-ID:Sender:
-        List-Unsubscribe; bh=z4I6mZJOSFPvlLazsNDv2jD3FG7Gmb3dS6BJF3us3nc=; b=eaC7Fkaj
-        tXPqnceqbmooSMXUHKVFekJzhn4/WAVdftxLXUnk0Iz9NXoVQ3j898FlpUHv9YrpPfAWZUVIFK4Z7
-        c+XPQid7kdyLZ68xTfwxYUhXrIY+x76Vh5DUqe67JIyu78qfkWCah9gTw7ZVd//b9bGVIA+Mkbpez
-        PSEcbVrhxdEGsPUJ0opnR+SN6yEF4Cgyt8NOJ6kAFM/cqoxqr2mEvXq//201UbaB4J/UGisWvYFE9
-        LeAZURRajk8RTzDMDq96tZKBtLLpGfkJbmwir2fsGecl9p5fF1M68HkbB+kXFRPmB++8BRgGf7PaE
-        40q8qbjqf3nPVayAvLTD0yNRoA==;
-Message-ID: <D810DA8B202742B38343EBB44BD54A1D@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:   "Philip Oakley" <philipoakley@iee.org>
-To:     "Eric Sunshine" <sunshine@sunshineco.com>,
-        =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc:     "Git List" <git@vger.kernel.org>
-References: <20171116154814.23785-1-alex.bennee@linaro.org> <CAPig+cSh0tVVkh0xF9FwCfM4gngAWMSN_FXd2zhzHcy2trYXfw@mail.gmail.com> <CAPig+cSbRrGnyDkunMFiFXbWRMAsGyuAL-0FpP1QTtjSUSY2Hg@mail.gmail.com>
-Subject: Re: [PATCH] git-send-email: fix get_maintainer.pl regression
-Date:   Tue, 21 Nov 2017 00:07:24 -0000
-Organization: OPDS
+        id S1751875AbdKUAVQ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Nov 2017 19:21:16 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51416 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751800AbdKUAVM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Nov 2017 19:21:12 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 68491BAC29;
+        Mon, 20 Nov 2017 19:21:11 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=aL2wjQfRkPPOfZWmvgEOL/QcKpk=; b=PKGvRZ
+        bZOlYIoRFB7LRzd1ViIInkS4xZFRqU67ed/tNRyuZXDRIPiTJThabzh/lsAFcCRW
+        xwncXzJk4hjzN96vtfEShl+onqSBYXbfSmizUicYwP5xO93nIg4dYqLmaVjEcQvD
+        Yl4T2TYdPaASzfb7cNyuQpktwhQbQlM55lBEY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=SH3aYLVrjJwu/1lr9s1mIv8akhgziPY7
+        s88+PMK5xoQSndplIBOkxb9hi5Ie3MAbUy+ERzt0n73oSqiTEVm5ViGiqKR77ViU
+        Tc7wDKwgzEbdnKdMIP5gy536bPayi401BTaj6SEhdbqG97rvnrdkw7qikiikeTKD
+        86Udxbm+90Y=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5FB40BAC27;
+        Mon, 20 Nov 2017 19:21:11 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D274ABAC25;
+        Mon, 20 Nov 2017 19:21:10 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Ben Peart <Ben.Peart@microsoft.com>
+Cc:     Alex Vandiver <alexmv@dropbox.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: What's cooking in git.git (Nov 2017, #05; Fri, 17)
+References: <xmqqbmk1sabs.fsf@gitster.mtv.corp.google.com>
+        <xmqq375ds99m.fsf@gitster.mtv.corp.google.com>
+        <MWHPR21MB047824EDFD7AE4EC39256E7FF4220@MWHPR21MB0478.namprd21.prod.outlook.com>
+Date:   Tue, 21 Nov 2017 09:21:09 +0900
+In-Reply-To: <MWHPR21MB047824EDFD7AE4EC39256E7FF4220@MWHPR21MB0478.namprd21.prod.outlook.com>
+        (Ben Peart's message of "Mon, 20 Nov 2017 13:49:24 +0000")
+Message-ID: <xmqqmv3glbwq.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="UTF-8";
-        reply-type=original
-Content-Transfer-Encoding: 8bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-Smtpcorp-Track: 1-Gw5z9EFSahuh.E044gOVrh
-Feedback-ID: 66524m:66524aMf6O2Y:66524sDmFiOrcIT:SMTPCORP
-X-Report-Abuse: Please forward a copy of this message, including all
- headers, to <abuse-contact@smtp2go.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: E04B49B8-CE51-11E7-A46F-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Eric Sunshine" <sunshine@sunshineco.com>
-On Sat, Nov 18, 2017 at 9:54 PM, Eric Sunshine <sunshine@sunshineco.com>
-wrote:
-> On Thu, Nov 16, 2017 at 10:48 AM, Alex Bennée <alex.bennee@linaro.org>
-> wrote:
->> +test_expect_success $PREREQ 'cc trailer with get_maintainer output' '
->> +       [...]
->> +       git send-email -1 --to=recipient@example.com \
->> +               --cc-cmd="$(pwd)/expected-cc-script.sh" \
->> +       [...]
->> +'
->> OK I'm afraid I don't fully understand the test harness as this breaks a
->> bunch of other tests. If anyone can offer some pointers on how to fix
->> I'd be grateful.
->
-> There are several problems:
-> [...]
-> * The directory in which the expected-cc-script.sh is created contains
-> a space; this is intentional to catch bugs in tests and Git itself. In
-> this case, your test is exposing what might be considered a bug in
-> git-send-email itself, in which it invokes the --cc-cmd as "/path/with
-> space/expected-cc-script.sh", which is interpreted as trying to invoke
-> program "/path/with" with argument "space/expected-cc-script.sh". One
-> > fix (which you could submit as a preparatory patch, making this a
-> > 2-patch series) would be this:
-> >
-> > --- 8< ---
-> > diff --git a/git-send-email.perl b/git-send-email.perl
-> > @@ -1724,7 +1724,7 @@ sub recipients_cmd {
-> > -    open my $fh, "-|", "$cmd \Q$file\E"
-> > +   open my $fh, "-|", "\Q$cmd\E \Q$file\E"
-> > --- 8< ---
-> >
-> > However, it's possible that might break existing users who rely on
-> > --cc-cmd="myscript --option arg" working. It's not clear which
-> > behavior is correct.
->
-> The more I think about this, the less I consider this a bug in
-> git-send-email. As noted, people might legitimately use a complex
-> command (--cc-cmd="myscript--option arg"), so changing git-send-email
-> to treat cc-cmd as an atomic string seems like a bad idea.
+Ben Peart <Ben.Peart@microsoft.com> writes:
 
-A while back I proposed some documentation updates
-https://public-inbox.org/git/1437416790-5792-1-git-send-email-philipoakley@iee.org/
-regarding what is (should be) allowed in the cc-cmd etc., and at the time
-Junio suggested that possible existing uses of the current code would be
-abuses. I didn't pursue it further, but it may be useful guidance here as to
-potential real world command lines..
+> As far as I can tell, the patches are good.  I'm not aware of
+> anything else that should hold it up.
 
->
-> Assuming no changes to git-send-email, to get your test working, you
-> could try to figure out how to quote the script's path you're
-> specifying with --cc-cmd, however, even easier would be to drop $(pwd)
-> altogether. That is, instead of:
->
->     --cc-cmd="$(pwd)/expected-cc-script.sh"
->
-> just use:
->
->     --cc-cmd=./expected-cc-script.sh
-
+Great; thanks.
