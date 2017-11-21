@@ -7,35 +7,35 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E0CA920954
-	for <e@80x24.org>; Tue, 21 Nov 2017 08:03:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6F46F20954
+	for <e@80x24.org>; Tue, 21 Nov 2017 08:03:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751245AbdKUIB2 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Nov 2017 03:01:28 -0500
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:40524 "EHLO
+        id S1751511AbdKUIDR (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Nov 2017 03:03:17 -0500
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:43616 "EHLO
         mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751100AbdKUIB1 (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2017 03:01:27 -0500
-Received: from pps.filterd (m0096528.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id vAL7wTik002024;
+        by vger.kernel.org with ESMTP id S1751238AbdKUIB2 (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2017 03:01:28 -0500
+Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
+        by mx0a-00153501.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id vAL7xVPC019352;
         Tue, 21 Nov 2017 00:01:00 -0800
 Authentication-Results: ppops.net;
         spf=softfail smtp.mailfrom=newren@gmail.com
 Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2eajmr44rg-1;
-        Tue, 21 Nov 2017 00:01:00 -0800
+        by mx0a-00153501.pphosted.com with ESMTP id 2eakkpc21y-1;
+        Tue, 21 Nov 2017 00:00:59 -0800
 Received: from mxw1.palantir.com (new-smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id 3A90E2265DBB;
-        Tue, 21 Nov 2017 00:01:00 -0800 (PST)
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id DFA61226525B;
+        Tue, 21 Nov 2017 00:00:59 -0800 (PST)
 Received: from newren2-linux.yojoe.local (newren2-linux.dyn.yojoe.local [10.100.68.32])
-        by smtp.yojoe.local (Postfix) with ESMTP id 3447E2CDE75;
-        Tue, 21 Nov 2017 00:01:00 -0800 (PST)
+        by smtp.yojoe.local (Postfix) with ESMTP id D54762CDEC1;
+        Tue, 21 Nov 2017 00:00:59 -0800 (PST)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, Elijah Newren <newren@gmail.com>
-Subject: [PATCH v3 07/33] directory rename detection: partially renamed directory testcase/discussion
-Date:   Tue, 21 Nov 2017 00:00:33 -0800
-Message-Id: <20171121080059.32304-8-newren@gmail.com>
+Subject: [PATCH v3 01/33] Tighten and correct a few testcases for merging and cherry-picking
+Date:   Tue, 21 Nov 2017 00:00:27 -0800
+Message-Id: <20171121080059.32304-2-newren@gmail.com>
 X-Mailer: git-send-email 2.15.0.309.g62ce55426d
 In-Reply-To: <20171121080059.32304-1-newren@gmail.com>
 References: <20171121080059.32304-1-newren@gmail.com>
@@ -55,147 +55,77 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+t3501 had a testcase originally added in 05f2dfb965 (cherry-pick:
+demonstrate a segmentation fault, 2016-11-26) to ensure cherry-pick
+wouldn't segfault when working with a dirty file involved in a rename.
+While the segfault was fixed, there was another problem this test
+demonstrated: namely, that git would overwrite a dirty file involved in a
+rename.  Further, the test encoded a "successful merge" and overwriting o=
+f
+this file as correct behavior.  Modify the test so that it would still
+catch the segfault, but to require the correct behavior.  Mark it as
+test_expect_failure for now too, since this second bug is not yet fixed.
+
+t7607 had a test added in 30fd3a5425 (merge overwrites unstaged changes i=
+n
+renamed file, 2012-04-15) specific to looking for a merge overwriting a
+dirty file involved in a rename, but it too actually encoded what I would
+term incorrect behavior: it expected the merge to succeed.  Fix that, and
+add a few more checks to make sure that the merge really does produce the
+expected results.
+
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- t/t6043-merge-rename-directories.sh | 104 ++++++++++++++++++++++++++++++=
-++++++
- 1 file changed, 104 insertions(+)
+ t/t3501-revert-cherry-pick.sh | 7 +++++--
+ t/t7607-merge-overwrite.sh    | 5 ++++-
+ 2 files changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/t/t6043-merge-rename-directories.sh b/t/t6043-merge-rename-d=
-irectories.sh
-index 0ccabed4a2..1dcf010aa6 100755
---- a/t/t6043-merge-rename-directories.sh
-+++ b/t/t6043-merge-rename-directories.sh
-@@ -714,4 +714,108 @@ test_expect_success '3b-check: Avoid implicit renam=
-e if involved as source on cu
- #   of a rename on either side of a merge.
- ########################################################################=
-###
+diff --git a/t/t3501-revert-cherry-pick.sh b/t/t3501-revert-cherry-pick.s=
+h
+index 4f2a263b63..783bdbf59d 100755
+--- a/t/t3501-revert-cherry-pick.sh
++++ b/t/t3501-revert-cherry-pick.sh
+@@ -141,7 +141,7 @@ test_expect_success 'cherry-pick "-" works with argum=
+ents' '
+ 	test_cmp expect actual
+ '
 =20
-+
-+########################################################################=
-###
-+# SECTION 4: Partially renamed directory; still exists on both sides of =
-merge
-+#
-+# What if we were to attempt to do directory rename detection when someo=
-ne
-+# "mostly" moved a directory but still left some files around, or,
-+# equivalently, fully renamed a directory in one commmit and then recrea=
-ted
-+# that directory in a later commit adding some new files and then tried =
-to
-+# merge?
-+#
-+# It's hard to divine user intent in these cases, because you can make a=
-n
-+# argument that, depending on the intermediate history of the side being
-+# merged, that some users will want files in that directory to
-+# automatically be detected and renamed, while users with a different
-+# intermediate history wouldn't want that rename to happen.
-+#
-+# I think that it is best to simply not have directory rename detection
-+# apply to such cases.  My reasoning for this is four-fold: (1) it's
-+# easiest for users in general to figure out what happened if we don't
-+# apply directory rename detection in any such case, (2) it's an easy ru=
-le
-+# to explain ["We don't do directory rename detection if the directory
-+# still exists on both sides of the merge"], (3) we can get some hairy
-+# edge/corner cases that would be really confusing and possibly not even
-+# representable in the index if we were to even try, and [related to 3] =
-(4)
-+# attempting to resolve this issue of divining user intent by examining
-+# intermediate history goes against the spirit of three-way merges and i=
-s a
-+# path towards crazy corner cases that are far more complex than what we=
-'re
-+# already dealing with.
-+#
-+# This section contains a test for this partially-renamed-directory case=
-.
-+########################################################################=
-###
-+
-+# Testcase 4a, Directory split, with original directory still present
-+#   (Related to testcase 1f)
-+#   Commit O: z/{b,c,d,e}
-+#   Commit A: y/{b,c,d}, z/e
-+#   Commit B: z/{b,c,d,e,f}
-+#   Expected: y/{b,c,d}, z/{e,f}
-+#   NOTE: Even though most files from z moved to y, we don't want f to f=
-ollow.
-+
-+test_expect_success '4a-setup: Directory split, with original directory =
-still present' '
-+	test_create_repo 4a &&
-+	(
-+		cd 4a &&
-+
-+		mkdir z &&
-+		echo b >z/b &&
-+		echo c >z/c &&
-+		echo d >z/d &&
-+		echo e >z/e &&
-+		git add z &&
-+		test_tick &&
-+		git commit -m "O" &&
-+
-+		git branch O &&
-+		git branch A &&
-+		git branch B &&
-+
-+		git checkout A &&
-+		mkdir y &&
-+		git mv z/b y/ &&
-+		git mv z/c y/ &&
-+		git mv z/d y/ &&
-+		test_tick &&
-+		git commit -m "A" &&
-+
-+		git checkout B &&
-+		echo f >z/f &&
-+		git add z/f &&
-+		test_tick &&
-+		git commit -m "B"
-+	)
-+'
-+
-+test_expect_success '4a-check: Directory split, with original directory =
-still present' '
-+	(
-+		cd 4a &&
-+
-+		git checkout A^0 &&
-+
-+		git merge -s recursive B^0 &&
-+
-+		test 5 -eq $(git ls-files -s | wc -l) &&
-+		test 0 -eq $(git ls-files -u | wc -l) &&
-+		test 0 -eq $(git ls-files -o | wc -l) &&
-+
-+		git rev-parse >actual \
-+			HEAD:y/b HEAD:y/c HEAD:y/d HEAD:z/e HEAD:z/f &&
-+		git rev-parse >expect \
-+			O:z/b O:z/c O:z/d O:z/e B:z/f &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+########################################################################=
-###
-+# Rules suggested by section 4:
-+#
-+#   Directory-rename-detection should be turned off for any directories =
-(as
-+#   a source for renames) that exist on both sides of the merge.  (The "=
-as
-+#   a source for renames" clarification is due to cases like 1c where
-+#   the target directory exists on both sides and we do want the rename
-+#   detection.)  But, sadly, see testcase 8b.
-+########################################################################=
-###
-+
+-test_expect_success 'cherry-pick works with dirty renamed file' '
++test_expect_failure 'cherry-pick works with dirty renamed file' '
+ 	test_commit to-rename &&
+ 	git checkout -b unrelated &&
+ 	test_commit unrelated &&
+@@ -150,7 +150,10 @@ test_expect_success 'cherry-pick works with dirty re=
+named file' '
+ 	test_tick &&
+ 	git commit -m renamed &&
+ 	echo modified >renamed &&
+-	git cherry-pick refs/heads/unrelated
++	test_must_fail git cherry-pick refs/heads/unrelated >out &&
++	test_i18ngrep "Refusing to lose dirty file at renamed" out &&
++	test $(git rev-parse :0:renamed) =3D $(git rev-parse HEAD^:to-rename.t)=
+ &&
++	grep -q "^modified$" renamed
+ '
+=20
  test_done
+diff --git a/t/t7607-merge-overwrite.sh b/t/t7607-merge-overwrite.sh
+index 9444d6a9b9..00617dadf8 100755
+--- a/t/t7607-merge-overwrite.sh
++++ b/t/t7607-merge-overwrite.sh
+@@ -97,7 +97,10 @@ test_expect_failure 'will not overwrite unstaged chang=
+es in renamed file' '
+ 	git mv c1.c other.c &&
+ 	git commit -m rename &&
+ 	cp important other.c &&
+-	git merge c1a &&
++	test_must_fail git merge c1a >out &&
++	test_i18ngrep "Refusing to lose dirty file at other.c" out &&
++	test -f other.c~HEAD &&
++	test $(git hash-object other.c~HEAD) =3D $(git rev-parse c1a:c1.c) &&
+ 	test_cmp important other.c
+ '
+=20
 --=20
 2.15.0.309.g62ce55426d
 
