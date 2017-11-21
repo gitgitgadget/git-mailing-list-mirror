@@ -6,226 +6,91 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 94FB72036D
-	for <e@80x24.org>; Tue, 21 Nov 2017 21:13:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 93FEB2036D
+	for <e@80x24.org>; Tue, 21 Nov 2017 21:15:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751384AbdKUVNZ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Nov 2017 16:13:25 -0500
-Received: from cpanel2.indieserve.net ([199.212.143.6]:57616 "EHLO
-        cpanel2.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751145AbdKUVNY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Nov 2017 16:13:24 -0500
-Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:38264 helo=localhost.localdomain)
-        by cpanel2.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.89)
-        (envelope-from <rpjday@crashcourse.ca>)
-        id 1eHFrA-0003ua-0T
-        for git@vger.kernel.org; Tue, 21 Nov 2017 16:13:24 -0500
-Date:   Tue, 21 Nov 2017 16:12:02 -0500 (EST)
-From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
-X-X-Sender: rpjday@localhost.localdomain
-To:     Git Mailing list <git@vger.kernel.org>
-Subject: [PATCH] doc: remove explanation of "--" from man pages
-Message-ID: <alpine.LFD.2.21.1711211607200.25585@localhost.localdomain>
-User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cpanel2.indieserve.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - crashcourse.ca
-X-Get-Message-Sender-Via: cpanel2.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
-X-Authenticated-Sender: cpanel2.indieserve.net: rpjday@crashcourse.ca
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+        id S1751344AbdKUVPm (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Nov 2017 16:15:42 -0500
+Received: from siwi.pair.com ([209.68.5.199]:59079 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751229AbdKUVPl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Nov 2017 16:15:41 -0500
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id F1231844F0;
+        Tue, 21 Nov 2017 16:15:40 -0500 (EST)
+Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 80A35844D5;
+        Tue, 21 Nov 2017 16:15:40 -0500 (EST)
+From:   Jeff Hostetler <git@jeffhostetler.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, peff@peff.net, jonathantanmy@google.com,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: [PATCH v5 00/14] Parial clone part 3: clone, fetch, fetch-pack, upload-pack, and tests
+Date:   Tue, 21 Nov 2017 21:15:14 +0000
+Message-Id: <20171121211528.21891-1-git@jeffhostetler.com>
+X-Mailer: git-send-email 2.9.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"man gitcli" already explains the purpose of the "--" syntax, so there
-is no value to a small subset of Git commands explaining that in their
-man pages.
+From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Signed-off-by: Robert P. J. Day <rpjday@crashcourse.ca>
+This is V5 of part 3 of partial clone.  It assumes that V5 of
+parts 1 and 2 are already present.
 
----
+This version carries forward the cleanup described in part 1 WRT
+filter argument encoding.
 
-  i tried this once before, and i'm going to try to push it through
-again ... it's pointless and inconsistent for less than a dozen man
-pages to explicitly explain the purpose of "--" unless all of the man
-pages do. as long as the "--" appears in the command SYNOPSIS, that
-should be more than adequate.
+Jeff Hostetler (5):
+  upload-pack: add object filtering for partial clone
+  clone, fetch-pack, index-pack, transport: partial clone
+  fetch: add object filtering for partial fetch
+  remote-curl: add object filtering for partial clone
+  partial-clone: define partial clone settings in config
 
-diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
-index b700beaff..69d625285 100644
---- a/Documentation/git-add.txt
-+++ b/Documentation/git-add.txt
-@@ -180,11 +180,6 @@ for "git add --no-all <pathspec>...", i.e. ignored removed files.
- 	bit is only changed in the index, the files on disk are left
- 	unchanged.
+Jonathan Tan (9):
+  fetch: refactor calculation of remote list
+  pack-objects: test support for blob filtering
+  fetch-pack: test support excluding large blobs
+  fetch: add from_promisor and exclude-promisor-objects parameters
+  t5500: add fetch-pack tests for partial clone
+  t5601: test for partial clone
+  t5500: more tests for partial clone and fetch
+  unpack-trees: batch fetching of missing blobs
+  fetch-pack: restore save_commit_buffer after use
 
--\--::
--	This option can be used to separate command-line options from
--	the list of files, (useful when filenames might be mistaken
--	for command-line options).
--
-
- Configuration
- -------------
-diff --git a/Documentation/git-check-attr.txt b/Documentation/git-check-attr.txt
-index aa3b2bf2f..0ae2523e0 100644
---- a/Documentation/git-check-attr.txt
-+++ b/Documentation/git-check-attr.txt
-@@ -36,10 +36,6 @@ OPTIONS
- 	If `--stdin` is also given, input paths are separated
- 	with a NUL character instead of a linefeed character.
-
--\--::
--	Interpret all preceding arguments as attributes and all following
--	arguments as path names.
--
- If none of `--stdin`, `--all`, or `--` is used, the first argument
- will be treated as an attribute and the rest of the arguments as
- pathnames.
-diff --git a/Documentation/git-checkout-index.txt b/Documentation/git-checkout-index.txt
-index 4d33e7be0..11ee76e7d 100644
---- a/Documentation/git-checkout-index.txt
-+++ b/Documentation/git-checkout-index.txt
-@@ -68,9 +68,6 @@ OPTIONS
- 	Only meaningful with `--stdin`; paths are separated with
- 	NUL character instead of LF.
-
--\--::
--	Do not interpret any more arguments as options.
--
- The order of the flags used to matter, but not anymore.
-
- Just doing `git checkout-index` does nothing. You probably meant
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index 8c74a2ca0..cd9f362d1 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -334,9 +334,6 @@ changes to tracked files.
- 	Countermand `commit.gpgSign` configuration variable that is
- 	set to force each and every commit to be signed.
-
--\--::
--	Do not interpret any more arguments as options.
--
- <file>...::
- 	When files are given on the command line, the command
- 	commits the contents of the named files, without
-diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
-index 18b494731..bac0b789c 100644
---- a/Documentation/git-grep.txt
-+++ b/Documentation/git-grep.txt
-@@ -282,10 +282,6 @@ providing this option will cause it to die.
- 	Instead of searching tracked files in the working tree, search
- 	blobs in the given trees.
-
--\--::
--	Signals the end of options; the rest of the parameters
--	are <pathspec> limiters.
--
- <pathspec>...::
- 	If given, limit the search to paths matching at least one pattern.
- 	Both leading paths match and glob(7) patterns are supported.
-diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
-index 3ac3e3a77..c5cf3a488 100644
---- a/Documentation/git-ls-files.txt
-+++ b/Documentation/git-ls-files.txt
-@@ -176,9 +176,6 @@ Both the <eolinfo> in the index ("i/<eolinfo>")
- and in the working tree ("w/<eolinfo>") are shown for regular files,
- followed by the  ("attr/<eolattr>").
-
--\--::
--	Do not interpret any more arguments as options.
--
- <file>::
- 	Files to show. If no files are given all files which match the other
- 	specified criteria are shown.
-diff --git a/Documentation/git-merge-index.txt b/Documentation/git-merge-index.txt
-index 02676fb39..51f884c7e 100644
---- a/Documentation/git-merge-index.txt
-+++ b/Documentation/git-merge-index.txt
-@@ -20,9 +20,6 @@ files are passed as arguments 5, 6 and 7.
-
- OPTIONS
- -------
--\--::
--	Do not interpret any more arguments as options.
--
- -a::
- 	Run merge against all files in the index that need merging.
-
-diff --git a/Documentation/git-prune.txt b/Documentation/git-prune.txt
-index 7a493c80f..39caa247a 100644
---- a/Documentation/git-prune.txt
-+++ b/Documentation/git-prune.txt
-@@ -42,9 +42,6 @@ OPTIONS
- --verbose::
- 	Report all removed objects.
-
--\--::
--	Do not interpret any more arguments as options.
--
- --expire <time>::
- 	Only expire loose objects older than <time>.
-
-diff --git a/Documentation/git-rm.txt b/Documentation/git-rm.txt
-index b5c46223c..67ea38e46 100644
---- a/Documentation/git-rm.txt
-+++ b/Documentation/git-rm.txt
-@@ -50,11 +50,6 @@ OPTIONS
-         Allow recursive removal when a leading directory name is
-         given.
-
--\--::
--	This option can be used to separate command-line options from
--	the list of files, (useful when filenames might be mistaken
--	for command-line options).
--
- --cached::
- 	Use this option to unstage and remove paths only from the index.
- 	Working tree files, whether modified or not, will be
-diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
-index bdb034259..7d67704a9 100644
---- a/Documentation/git-update-index.txt
-+++ b/Documentation/git-update-index.txt
-@@ -218,9 +218,6 @@ will remove the intended effect of the option.
- 	the configured value will take effect next time the index is
- 	read and this will remove the intended effect of the option.
-
--\--::
--	Do not interpret any more arguments as options.
--
- <file>::
- 	Files to act on.
- 	Note that files beginning with '.' are discarded. This includes
-diff --git a/Documentation/git-verify-pack.txt b/Documentation/git-verify-pack.txt
-index 61ca6d04c..b546c2192 100644
---- a/Documentation/git-verify-pack.txt
-+++ b/Documentation/git-verify-pack.txt
-@@ -33,9 +33,6 @@ OPTIONS
- 	Do not verify the pack contents; only show the histogram of delta
- 	chain length.  With `--verbose`, list of objects is also shown.
-
--\--::
--	Do not interpret any more arguments as options.
--
- OUTPUT FORMAT
- -------------
- When specifying the -v option the format used is:
+ Documentation/config.txt                          |   4 +
+ Documentation/gitremote-helpers.txt               |   4 +
+ Documentation/technical/pack-protocol.txt         |   8 ++
+ Documentation/technical/protocol-capabilities.txt |   8 ++
+ builtin/clone.c                                   |  22 ++++-
+ builtin/fetch-pack.c                              |   4 +
+ builtin/fetch.c                                   |  93 +++++++++++++++--
+ cache.h                                           |   1 +
+ config.c                                          |   5 +
+ connected.c                                       |   2 +
+ environment.c                                     |   1 +
+ fetch-object.c                                    |  26 ++++-
+ fetch-object.h                                    |   5 +
+ fetch-pack.c                                      |  17 ++++
+ fetch-pack.h                                      |   2 +
+ list-objects-filter-options.c                     |  90 ++++++++++++++---
+ list-objects-filter-options.h                     |   6 ++
+ remote-curl.c                                     |  12 +++
+ t/t5300-pack-object.sh                            |  26 +++++
+ t/t5500-fetch-pack.sh                             | 115 ++++++++++++++++++++++
+ t/t5601-clone.sh                                  | 101 +++++++++++++++++++
+ t/test-lib-functions.sh                           |  12 +++
+ transport-helper.c                                |   5 +
+ transport.c                                       |   4 +
+ transport.h                                       |   5 +
+ unpack-trees.c                                    |  22 +++++
+ upload-pack.c                                     |  22 ++++-
+ 27 files changed, 594 insertions(+), 28 deletions(-)
 
 -- 
+2.9.3
 
-========================================================================
-Robert P. J. Day                                 Ottawa, Ontario, CANADA
-                        http://crashcourse.ca
-
-Twitter:                                       http://twitter.com/rpjday
-LinkedIn:                               http://ca.linkedin.com/in/rpjday
-========================================================================
