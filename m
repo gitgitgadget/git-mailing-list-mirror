@@ -2,99 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4ABB32036D
-	for <e@80x24.org>; Tue, 21 Nov 2017 21:49:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D3D582036D
+	for <e@80x24.org>; Tue, 21 Nov 2017 21:57:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751302AbdKUVtG (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Nov 2017 16:49:06 -0500
-Received: from cpanel2.indieserve.net ([199.212.143.6]:59330 "EHLO
-        cpanel2.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751229AbdKUVtF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Nov 2017 16:49:05 -0500
-Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:38648 helo=localhost.localdomain)
-        by cpanel2.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.89)
-        (envelope-from <rpjday@crashcourse.ca>)
-        id 1eHGPg-00057V-Ng; Tue, 21 Nov 2017 16:49:04 -0500
-Date:   Tue, 21 Nov 2017 16:47:42 -0500 (EST)
-From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
-X-X-Sender: rpjday@localhost.localdomain
-To:     Kevin Daudt <me@ikke.info>
-cc:     Git Mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH v2] gitcli: tweak "man gitcli" for clarity
-In-Reply-To: <20171121214552.GB16418@alpha.vpn.ikke.info>
-Message-ID: <alpine.LFD.2.21.1711211646050.26665@localhost.localdomain>
-References: <alpine.LFD.2.21.1711211626460.26166@localhost.localdomain> <20171121214552.GB16418@alpha.vpn.ikke.info>
-User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+        id S1751306AbdKUV5u (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Nov 2017 16:57:50 -0500
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:46624 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751229AbdKUV5t (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Nov 2017 16:57:49 -0500
+Received: by mail-pf0-f193.google.com with SMTP id q4so10814252pfg.13
+        for <git@vger.kernel.org>; Tue, 21 Nov 2017 13:57:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=reply2setup-com.20150623.gappssmtp.com; s=20150623;
+        h=to:subject:from:message-id:disposition-notification-to:date
+         :user-agent:mime-version:content-transfer-encoding:content-language;
+        bh=c+v5ahEIqQSQ8m4xUzTeohvgqyy50ed6KrPhXFlzDrg=;
+        b=y8/m877Knip2nVhaPQzrkXDVZn1B+hYQqWp1pI4JWn3fe2FQYggzqdqVLHkNe8HPDC
+         8QdZdz3ZGTP5y1MeoIs7CzixG7C3hpNUDGhTMbEZwjw44BwsXahAXc3+cz7T2dt1f+gp
+         eVU9J/B2UW1XvcH9pPfdLVZNGfCIqwKG7qbtvKjjTyGCACiecbXG17wVeNjjWRc5afZL
+         DHnp4mBcs2Lr6EgVdiytM1vEF1lxZMWLzcn3BrR7xuO3x1cCFHjsZMzHmVELW6U64O3+
+         tE7KsTFj5tcz0Qd7ft8WaoMNReckcoqG8IK6rvRUL8hjH+M0e8moU/wuGgt4wZSPnFPp
+         HaTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:to:subject:from:message-id
+         :disposition-notification-to:date:user-agent:mime-version
+         :content-transfer-encoding:content-language;
+        bh=c+v5ahEIqQSQ8m4xUzTeohvgqyy50ed6KrPhXFlzDrg=;
+        b=mjBV8fre60KT91hTB8bPPJvgtl3Fiin0cwWT9r9oE7+3FZAWWQK+hDEUX+ljy5aNOe
+         RY8kxu4/hxxf7+fFPykYWyDOhmrKjhdpubEId0nI1eLGtN0agxcLw8blrUQ44sRaF1Ej
+         FuivHetvbtrHcJJ8dCeZ+A+L9Wkhn2QjF2E44clCmiGyot3nYfX6qdYGn/TCIaY78/V9
+         JwZRoJaIy41+I73IsSJAxAzc/RH5tjh+b3G5ctM9zEgXO/Gg9Cyjz2U0pcnawENTX5Ka
+         cRQNtN2zVD+X0KfSEPo10rvpjuUkB8fXG8flK+X996gzSdCW3VfBtpQReCHauJLiRyzG
+         SbtQ==
+X-Gm-Message-State: AJaThX4Yzi/kUd9/aK8BaYk/6+NTRzutg0kn5jtzI44rbWWSazqMKM/H
+        T5ANnuDcBpEz5fPV3mQ3TWuVL2J3
+X-Google-Smtp-Source: AGs4zMa06RQ8VVhCLnqrIFFMcw/U+Br2r/MEXsmPRub04Y9hBsKcfzaHRXvLvByZtPMeMx994+e4GQ==
+X-Received: by 10.84.209.136 with SMTP id y8mr19044497plh.439.1511301469079;
+        Tue, 21 Nov 2017 13:57:49 -0800 (PST)
+Received: from [192.168.0.20] ([103.6.157.159])
+        by smtp.gmail.com with ESMTPSA id s14sm26721775pfe.36.2017.11.21.13.57.47
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 21 Nov 2017 13:57:48 -0800 (PST)
+To:     git@vger.kernel.org
+Subject: Boat Owners List
+From:   Marvin Curtis <mcurtis@reply2setup.com>
+Message-ID: <7161349e-0a18-d865-4c89-0294830a1a65@reply2setup.com>
+Date:   Tue, 21 Nov 2017 16:18:28 -0500
+User-Agent: Mozilla/5.0 (Windows NT 6.3; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cpanel2.indieserve.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - crashcourse.ca
-X-Get-Message-Sender-Via: cpanel2.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
-X-Authenticated-Sender: cpanel2.indieserve.net: rpjday@crashcourse.ca
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-Antivirus: Avast (VPS 171121-4, 11/21/2017), Outbound message
+X-Antivirus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 21 Nov 2017, Kevin Daudt wrote:
 
-> On Tue, Nov 21, 2017 at 04:27:59PM -0500, Robert P. J. Day wrote:
-> > No major changes, just some rewording and showing some variations of
-> > general Git commands.
-> >
-> > Signed-off-by: Robert P. J. Day <rpjday@crashcourse.ca>
-> >
-> > ---
-> >
-> > diff --git a/Documentation/gitcli.txt b/Documentation/gitcli.txt
-> > index 9f13266a6..d690d1ff0 100644
-> > --- a/Documentation/gitcli.txt
-> > +++ b/Documentation/gitcli.txt
-> > @@ -13,7 +13,7 @@ gitcli
-> >  DESCRIPTION
-> >  -----------
-> >
-> > -This manual describes the convention used throughout Git CLI.
-> > +This manual describes the conventions used throughout Git CLI.
-> >
-> >  Many commands take revisions (most often "commits", but sometimes
-> >  "tree-ish", depending on the context and command) and paths as their
-> > @@ -32,32 +32,35 @@ arguments.  Here are the rules:
-> >     between the HEAD commit and the work tree as a whole".  You can say
-> >     `git diff HEAD --` to ask for the latter.
-> >
-> > - * Without disambiguating `--`, Git makes a reasonable guess, but errors
-> > -   out and asking you to disambiguate when ambiguous.  E.g. if you have a
-> > + * Without a disambiguating `--`, Git makes a reasonable guess, but can
-> > +   error out, asking you to disambiguate when ambiguous.  E.g. if you have a
->
-> 'Can' error out implies that it sometimes would not error out when
-> there is ambiguity. Are there situation where git does not error out
-> in that case?
+Hi,
 
-  i would say (based on my limited knowledge) that if the heuristic
-kicks in and works fine, then things will work. i think it's fair to
-say that git "can" error out if the heuristic fails.
+Greeting of the day!
 
-rday
+Would you be interested in acquiring an email list of "Boat Owners" from USA?
 
--- 
+Our Databases:-1.RV Owners List              2.Sail and Power boat Owners List
+                3.Travelers List              4.Fishing Enthusiasts List
+                5.Cruise Travelers List       6.Motorcycle Owners List
+                7.Camping Enthusiasts List    8.Spa and Resort Visitors List
+                9.Car Owners List             10.Outdoor Enthusiasts List and many more..,
 
-========================================================================
-Robert P. J. Day                                 Ottawa, Ontario, CANADA
-                        http://crashcourse.ca
+We provide Data fields on each record contains: Name (First and Last), Address, City, State, Zip, County, Opt-in Email Address, Boat use, Boat length, Boat Propulsion, Boat Fuel, Boat Hull Material, Boat Make, Boat Hull Shape, Boat Size, Boat Year, Boat Transaction Date, Boat Transaction Type, Boat Validation Date and Registration date.
 
-Twitter:                                       http://twitter.com/rpjday
-LinkedIn:                               http://ca.linkedin.com/in/rpjday
-========================================================================
+All the contacts are opt-in verified, complete permission based and can be used for unlimited multi-channel marketing.
+
+Please let me know your thoughts towards procuring the Boat Owners List.
+
+Waiting for your valuable and sincere reply.
+
+
+Best Regards,
+Marvin Curtis
+Research Analyst
+
