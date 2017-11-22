@@ -2,102 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4351C20954
-	for <e@80x24.org>; Wed, 22 Nov 2017 15:37:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D0E3C20954
+	for <e@80x24.org>; Wed, 22 Nov 2017 15:54:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751472AbdKVPhN (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Nov 2017 10:37:13 -0500
-Received: from mail-pf0-f177.google.com ([209.85.192.177]:44191 "EHLO
-        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751292AbdKVPhM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Nov 2017 10:37:12 -0500
-Received: by mail-pf0-f177.google.com with SMTP id r14so5707536pfl.11
-        for <git@vger.kernel.org>; Wed, 22 Nov 2017 07:37:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=neulinger-org.20150623.gappssmtp.com; s=20150623;
-        h=subject:to:cc:references:from:organization:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=szJA6dDh0nklGlRyBoqBLBuX907ZmnBzWK08NJ6pD8g=;
-        b=rd4PWJkpQafCh+UKGV5tOAqbajS6Br7Ql0zR8BGk7QUEP/Zg0MF7x4xugPYIqqkJgf
-         nRFUKCp9TNgQVNRWuIyeELM5bhw33TtHs3Ae8kAlWjsd2si/N9cA1duQPiL6e7cP85Oe
-         +fQwaQNIPvRQivo5JwLiWzlWpIH4YH5ZnFRKOnbig2/PC8V87w7RrNuzeUJJwuKWZB97
-         A/k9ZLp8CNFvDwv/4iRlI7WIIknWlaMLDdknWjUZscuHVx2p+uU1sd9J11bkHFy6T7cT
-         z9XKrZLXnOi2rleMHr9/n+L/YlV/ElxVZAlz5tiYZhEyCh1Tmm6/SLs3MsP0EiN5cR8Y
-         +jtg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:organization
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=szJA6dDh0nklGlRyBoqBLBuX907ZmnBzWK08NJ6pD8g=;
-        b=RNpGY1846xRkJ8LF3cmfqclp7AEo5rMflEatx/ZOkalaAYRJBrt6+yoYyz9lVdB/tz
-         8qEYlWbWhNFgzzovpwnfBxPFZH3HdYUrX1U2J+v4zKoMlhDtWC5Cy6Db6THU3jRiFc2f
-         4VZAnenzd7hw88DoWA/4R3q0Rg0W4nk3MqJki2TwQG+aAZbwbhbTlBxoOx2YiJ2OHHH0
-         29iu+LLhyrmRUhH1sGihkk8W5wv9p7TvaiwBsc6BzUvn2hY798OlRY8Sy6AIvmY2UzRc
-         wxv+pCjQeGfQyKcWfjGTBDll9Q1P0mMPUOthAv6xrVyITirWkHbtspfA1iCQOctnsKSY
-         09Wg==
-X-Gm-Message-State: AJaThX5N7LjyTU2Ho/Dgm8BG7vyzhFid/etedDItbV7TFMzYuuDrCqTC
-        iXhfnXYAI4Xp6vkBuh7QrBfEEMcY
-X-Google-Smtp-Source: AGs4zMbNwUFgS482AZOy85iQpSn+tBEbGsEdNTTWHa1MR0qqsJai0z1Odgv/dViLvR337QBVPc9KYA==
-X-Received: by 10.98.213.71 with SMTP id d68mr18274525pfg.171.1511365031466;
-        Wed, 22 Nov 2017 07:37:11 -0800 (PST)
-Received: from infinity.srv.mst.edu (infinity.srv.mst.edu. [131.151.93.93])
-        by smtp.gmail.com with ESMTPSA id l24sm15854098pgu.38.2017.11.22.07.37.10
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 22 Nov 2017 07:37:10 -0800 (PST)
-Subject: Re: git status always modifies index?
-To:     Santiago Torres <santiago@nyu.edu>
+        id S1751384AbdKVPyg (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Nov 2017 10:54:36 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64353 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751259AbdKVPyf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Nov 2017 10:54:35 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E9018C32AF;
+        Wed, 22 Nov 2017 10:54:34 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=eZgrGtvu9G62hWoGfpvUAj5B9Pc=; b=vKS1cy
+        HGP/hynjjRRVws0evzZPMeq4rNW4kBq6WNzxivybwZxzk1IN0LfIqD8jKAaekTVi
+        gk3uEj3SeXM0UrFNm9ZHpghUus9MuRN787kOkAZzohwmFwiQWrqc4W5o4cSZ88SD
+        M7OhHUwVim0TG36hsRL/SsdgO5I8MJJeQ2ZU4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=nBVIqGakPwSNequZ9FbIL6O8vLGGoDg0
+        Wvw6zng589fGzQuKnueBPeGrblQyMslCSElwn/QjSgQANExxaPSEQTo1cIf2qUDi
+        vEbaCDnSjRxH2xVIyGLOnq2NRBXEtLeq0VwMwagwuoxoBoHRfiS4/W4JeXaRXr68
+        PBA6IwlrU4Y=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E1AFFC32AE;
+        Wed, 22 Nov 2017 10:54:34 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 60A39C32AC;
+        Wed, 22 Nov 2017 10:54:34 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Steffen Prohaska <prohaska@zib.de>
 Cc:     git@vger.kernel.org
-References: <a039d139-dba5-683e-afbf-4044cd32ab1d@neulinger.org>
- <20171122153028.olssotkcf3dd6ron@LykOS.localdomain>
-From:   Nathan Neulinger <nneul@neulinger.org>
-Organization: Neulinger Consulting
-Message-ID: <5050d779-2981-6f06-49f7-0ecb4efb25b8@neulinger.org>
-Date:   Wed, 22 Nov 2017 09:37:09 -0600
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:57.0) Gecko/20100101
- Thunderbird/57.0
+Subject: Re: [PATCH 1/1] doc: Mention info/attributes in gitrepository-layout
+References: <20171122085814.8563-1-prohaska@zib.de>
+Date:   Thu, 23 Nov 2017 00:54:32 +0900
+In-Reply-To: <20171122085814.8563-1-prohaska@zib.de> (Steffen Prohaska's
+        message of "Wed, 22 Nov 2017 09:58:14 +0100")
+Message-ID: <xmqqmv3es407.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20171122153028.olssotkcf3dd6ron@LykOS.localdomain>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6F69F030-CF9D-11E7-BD74-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-What I'm meaning is - why does it need to write the index back out to disk?
+Steffen Prohaska <prohaska@zib.de> writes:
 
- From looking at the code in builtin/commit.c it looks like it takes a lock on the index, collects the status, and then 
-unconditionally rewrites the index file.
+> Signed-off-by: Steffen Prohaska <prohaska@zib.de>
+> ---
+>  Documentation/gitrepository-layout.txt | 4 ++++
+>  1 file changed, 4 insertions(+)
+>
+> diff --git a/Documentation/gitrepository-layout.txt b/Documentation/gitrepository-layout.txt
+> index adf9554ad2..c60bcad44a 100644
+> --- a/Documentation/gitrepository-layout.txt
+> +++ b/Documentation/gitrepository-layout.txt
+> @@ -208,6 +208,10 @@ info/exclude::
+>  	'git clean' look at it but the core Git commands do not look
+>  	at it.  See also: linkgit:gitignore[5].
+>  
+> +info/attributes::
+> +	Defines which attributes to assign to a path, similar to per-directory
+> +	`.gitattributes` files.   See also: linkgit:gitattributes[5].
+> +
 
-I'm proposing that the update_index_if_able call not actually be issued if it would result in a ownership change on the 
-underlying file - such as a simple case of root user or other privileged account issuing 'git status' in a directory.
+Makes sense, but don't we also want to mention a bit more than
+"similar to"?  The entries in this file is treated as higher
+priority than the in-tree .gitattributes file, which allows us to
+use it to locally override the choice made by the project.
 
-
-I understand completely that it would be expected to be altered if the privileged user did a commit/add or any other 
-operation that was inherently a 'write' operation, but doesn't seem like status should be one of those cases.
-
--- Nathan
-
-On 11/22/17 9:30 AM, Santiago Torres wrote:
-> Hi Nathan.
-> 
-> Do you mean git-status writing an index file? What would you suggest for
-> git-status to compute which files have changed without modifying an
-> index-file? Or are you suggesting git-status to fail if the index file
-> doesn't belong to the user-id who invoked the command...
-> 
-> Thanks,
-> -Santiago
-> 
-
--- 
-------------------------------------------------------------
-Nathan Neulinger                       nneul@neulinger.org
-Neulinger Consulting                   (573) 612-1412
+>  info/sparse-checkout::
+>  	This file stores sparse checkout patterns.
+>  	See also: linkgit:git-read-tree[1].
