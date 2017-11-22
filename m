@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CE91920954
-	for <e@80x24.org>; Wed, 22 Nov 2017 22:30:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7D9CC20954
+	for <e@80x24.org>; Wed, 22 Nov 2017 22:30:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753385AbdKVW25 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Nov 2017 17:28:57 -0500
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:34963 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753349AbdKVW2z (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1753015AbdKVWad (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Nov 2017 17:30:33 -0500
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:36108 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753381AbdKVW2z (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 22 Nov 2017 17:28:55 -0500
-Received: by mail-wr0-f196.google.com with SMTP id w95so15991535wrc.2
-        for <git@vger.kernel.org>; Wed, 22 Nov 2017 14:28:54 -0800 (PST)
+Received: by mail-wm0-f65.google.com with SMTP id r68so13195928wmr.1
+        for <git@vger.kernel.org>; Wed, 22 Nov 2017 14:28:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=/cOUK50YuIF6DS2VcPh6DjiL61kJSHHDdCU1hROsOT4=;
-        b=dC75qzuXLuSV38w4pNvgEZZJF4OQg+svUhyKOlaB8alOpyQ8bxIHvG49M8VAm6aB9x
-         j7igeqOUTWlc+f3CR7TKyzTgRVsdqewL60rRCuz+RPeBdLo9TInA0LMYGU/Z1h5Lt+Oa
-         eUeB2iTtkcqEtoudTEXUj0AlxkYCntQAILqXT+2va72gU/LzlXF/G+SMxn/rEYu/jlkd
-         Q0cmyW0tsduPUlVFZrAJOibesO00hff2sK++oYyWMTlvo9Gwis3x2UsxW5rg73lCbFs4
-         Vu3tSCg6IHiTVqHOLa1XTNicB5COTZtaISaR3RCn5terQHR25FY71m6v48HLcC4zJ+yD
-         iC8w==
+        bh=GAnHGWk5D1n8CWQ+B2bp+gbN48QPglH4PCSgcBOgL44=;
+        b=M/CvoG4VLjjCtoDAV+9RsuOrvDMTqSFIilyAtr98BVXdgYdOlyKG9i5w35kIPnnQlN
+         ACAbc/0EnqI5qgAkVTE1fdJHoxcI8LWuKXIuel7urPYx+IR8mqIlzm2m6POabRBl+04r
+         iSViMljs6qhHvDI+dNHRk2PMEzwMdRe6PHdQUrJefTZP4uzHMuiWtKsGPTR+LiUKZ8bE
+         MR5GNoIgQVy3EISYhOk20P7jwMcCoB5saebyqLokDCdYfUIm9uvGD0JEXeDhDAhGTUpR
+         iJBWcTDQEQwCiz6DJUNguqW4i+uYXW+I5YkztZF0pY1rOQgiDJE83Zjzk1MNdZIIkA+L
+         vjow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=/cOUK50YuIF6DS2VcPh6DjiL61kJSHHDdCU1hROsOT4=;
-        b=E/VR219T9rZKs/kTO0SGiBbTPjoy7CnqeyxN0wcEXO0ftRudreaxB7AuYFXCmqu7LR
-         afgDA5JasTVWTlOq1nT//VJ6p8Tf3j45+5hnXHGHRGNfbBpj3/1/aKFMRBw9uKTVEkK0
-         A8rchW1uo5dg9288eTqvx8wBo8Eo/AvLoR74YX5M3N7pQi3TVRP5cCKJu1whlQFZAdHN
-         6obO/9RB+mw37vNzvUFvQD4GH4RSDD0yWUW07g7Bf4LpYl0ze+Y45SZQeX3bmV0IE51W
-         cn3Nkwi/OwvzHky/TodNVpY1Nx96LU6aY5qvQuMi3Bu0jc1gwkUnSLeTthr4qsA/eird
-         h2aQ==
-X-Gm-Message-State: AJaThX57AiZAjVvhsfZc5pQ5oninHswkTrwD3jujIXuPAv+FROCK6ub3
-        JHPBRomacKGo+ngjJmt2vqOM2K86
-X-Google-Smtp-Source: AGs4zMa14j5qovDSg0R7K3FPjHu+Gcuq//BgOcB6rBWVV4HZlywq4uM3frzjhXljuC++kTEhVn1FXA==
-X-Received: by 10.223.196.189 with SMTP id m58mr20713510wrf.7.1511389733087;
-        Wed, 22 Nov 2017 14:28:53 -0800 (PST)
+        bh=GAnHGWk5D1n8CWQ+B2bp+gbN48QPglH4PCSgcBOgL44=;
+        b=Jop1bLgJXE6T7HRHA8LtK4U2cHgdW5iYAte0haEUjmdU7+XOfeX/qIXl/FEv+jYC4u
+         +aP5JdvAy/H+pkDSt/PHIhK9YIDyeTRPw3/q2mYZegK1OCvV0hqLSqHyelzSO31988PD
+         qMsrcjBJ23SCX8crtTaScI6EiVZfFdkO3yf7JMacpZCE6afM1c3ulrNhjNwZzPXW3w+t
+         pElaurRPqkNknC2ZupMgvnUcok7xTVh7vJGRYYgMq6ESllaQB3TK9Q9xhjupnV5scRiI
+         qufeC7MZkDUgDPiinFXtop78WEb55h5glXXF2IUYTBFS9MukZUC97JS8K9s6mQr4nxOs
+         ZGBw==
+X-Gm-Message-State: AJaThX4jSvEQGgOoLkPYias/T+F9D5STXbN+rlMLvahUIm3FiCmWAXyP
+        FhBJuVTagn7j0Q+pTxxfmqwE8qAJ
+X-Google-Smtp-Source: AGs4zMb5U3tIAbxg1jNxS4qKuCYfC2aglcTYRFDHcaA224cHAKpuD7b0TCKG0LctlupjkjLMHhL8Qg==
+X-Received: by 10.28.234.71 with SMTP id i68mr5295807wmh.7.1511389734367;
+        Wed, 22 Nov 2017 14:28:54 -0800 (PST)
 Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
-        by smtp.gmail.com with ESMTPSA id t200sm3653071wmd.45.2017.11.22.14.28.52
+        by smtp.gmail.com with ESMTPSA id n143sm10434673wmd.31.2017.11.22.14.28.53
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 22 Nov 2017 14:28:52 -0800 (PST)
+        Wed, 22 Nov 2017 14:28:53 -0800 (PST)
 From:   Thomas Gummerer <t.gummerer@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v4 1/4] checkout: factor out functions to new lib file
-Date:   Wed, 22 Nov 2017 22:30:17 +0000
-Message-Id: <20171122223020.2780-2-t.gummerer@gmail.com>
+Subject: [PATCH v4 2/4] worktree: add --[no-]track option to the add subcommand
+Date:   Wed, 22 Nov 2017 22:30:18 +0000
+Message-Id: <20171122223020.2780-3-t.gummerer@gmail.com>
 X-Mailer: git-send-email 2.15.0.345.gf926f18f3
 In-Reply-To: <20171122223020.2780-1-t.gummerer@gmail.com>
 References: <mailto:20171118224706.13810-1-t.gummerer@gmail.com>
@@ -66,159 +66,142 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Factor the functions out, so they can be re-used from other places.  In
-particular these functions will be re-used in builtin/worktree.c to make
-git worktree add dwim more.
+Currently 'git worktree add' sets up tracking branches if '<branch>' is
+a remote tracking branch, and doesn't set them up otherwise, as is the
+default for 'git branch'.
 
-While there add some docs to the function.
+This may or may not be what the user wants.  Allow overriding this
+behaviour with a --[no-]track flag that gets passed through to 'git
+branch'.
+
+We already respect branch.autoSetupMerge, as 'git worktree' just calls
+'git branch' internally.
 
 Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
- Makefile           |  1 +
- builtin/checkout.c | 41 +----------------------------------------
- checkout.c         | 42 ++++++++++++++++++++++++++++++++++++++++++
- checkout.h         | 13 +++++++++++++
- 4 files changed, 57 insertions(+), 40 deletions(-)
- create mode 100644 checkout.c
- create mode 100644 checkout.h
+ Documentation/git-worktree.txt |  6 +++++
+ builtin/worktree.c             |  8 ++++++
+ t/t2025-worktree-add.sh        | 55 ++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 69 insertions(+)
 
-diff --git a/Makefile b/Makefile
-index cd75985991..8d603c7443 100644
---- a/Makefile
-+++ b/Makefile
-@@ -757,6 +757,7 @@ LIB_OBJS += branch.o
- LIB_OBJS += bulk-checkin.o
- LIB_OBJS += bundle.o
- LIB_OBJS += cache-tree.o
-+LIB_OBJS += checkout.o
- LIB_OBJS += color.o
- LIB_OBJS += column.o
- LIB_OBJS += combine-diff.o
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index fc4f8fd2ea..9e1cfd10b3 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -1,5 +1,6 @@
- #include "builtin.h"
- #include "config.h"
-+#include "checkout.h"
- #include "lockfile.h"
- #include "parse-options.h"
- #include "refs.h"
-@@ -874,46 +875,6 @@ static int git_checkout_config(const char *var, const char *value, void *cb)
- 	return git_xmerge_config(var, value, NULL);
- }
+diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
+index b472acc356..798a642f84 100644
+--- a/Documentation/git-worktree.txt
++++ b/Documentation/git-worktree.txt
+@@ -107,6 +107,12 @@ OPTIONS
+ 	such as configuring sparse-checkout. See "Sparse checkout"
+ 	in linkgit:git-read-tree[1].
  
--struct tracking_name_data {
--	/* const */ char *src_ref;
--	char *dst_ref;
--	struct object_id *dst_oid;
--	int unique;
--};
--
--static int check_tracking_name(struct remote *remote, void *cb_data)
--{
--	struct tracking_name_data *cb = cb_data;
--	struct refspec query;
--	memset(&query, 0, sizeof(struct refspec));
--	query.src = cb->src_ref;
--	if (remote_find_tracking(remote, &query) ||
--	    get_oid(query.dst, cb->dst_oid)) {
--		free(query.dst);
--		return 0;
--	}
--	if (cb->dst_ref) {
--		free(query.dst);
--		cb->unique = 0;
--		return 0;
--	}
--	cb->dst_ref = query.dst;
--	return 0;
--}
--
--static const char *unique_tracking_name(const char *name, struct object_id *oid)
--{
--	struct tracking_name_data cb_data = { NULL, NULL, NULL, 1 };
--	cb_data.src_ref = xstrfmt("refs/heads/%s", name);
--	cb_data.dst_oid = oid;
--	for_each_remote(check_tracking_name, &cb_data);
--	free(cb_data.src_ref);
--	if (cb_data.unique)
--		return cb_data.dst_ref;
--	free(cb_data.dst_ref);
--	return NULL;
--}
--
- static int parse_branchname_arg(int argc, const char **argv,
- 				int dwim_new_local_branch_ok,
- 				struct branch_info *new,
-diff --git a/checkout.c b/checkout.c
-new file mode 100644
-index 0000000000..b0c744d37a
---- /dev/null
-+++ b/checkout.c
-@@ -0,0 +1,42 @@
-+#include "cache.h"
-+#include "remote.h"
++--[no-]track::
++	With `--track` `<branch>` is set as "tracking" branch for
++	`<new-branch>`.  This is the default if `<branch>` is a remote
++	tracking branch, and can be suppressed with `--no-track`.  See
++	also linkgit:git-branch[1].
 +
-+struct tracking_name_data {
-+	/* const */ char *src_ref;
-+	char *dst_ref;
-+	struct object_id *dst_oid;
-+	int unique;
-+};
-+
-+static int check_tracking_name(struct remote *remote, void *cb_data)
-+{
-+	struct tracking_name_data *cb = cb_data;
-+	struct refspec query;
-+	memset(&query, 0, sizeof(struct refspec));
-+	query.src = cb->src_ref;
-+	if (remote_find_tracking(remote, &query) ||
-+	    get_oid(query.dst, cb->dst_oid)) {
-+		free(query.dst);
-+		return 0;
-+	}
-+	if (cb->dst_ref) {
-+		free(query.dst);
-+		cb->unique = 0;
-+		return 0;
-+	}
-+	cb->dst_ref = query.dst;
-+	return 0;
+ --lock::
+ 	Keep the working tree locked after creation. This is the
+ 	equivalent of `git worktree lock` after `git worktree add`,
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 7b9307aa58..8f9446d43c 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -341,6 +341,7 @@ static int add(int ac, const char **av, const char *prefix)
+ 	const char *new_branch_force = NULL;
+ 	char *path;
+ 	const char *branch;
++	const char *opt_track = NULL;
+ 	struct option options[] = {
+ 		OPT__FORCE(&opts.force, N_("checkout <branch> even if already checked out in other worktree")),
+ 		OPT_STRING('b', NULL, &opts.new_branch, N_("branch"),
+@@ -350,6 +351,9 @@ static int add(int ac, const char **av, const char *prefix)
+ 		OPT_BOOL(0, "detach", &opts.detach, N_("detach HEAD at named commit")),
+ 		OPT_BOOL(0, "checkout", &opts.checkout, N_("populate the new working tree")),
+ 		OPT_BOOL(0, "lock", &opts.keep_locked, N_("keep the new working tree locked")),
++		OPT_PASSTHRU(0, "track", &opt_track, NULL,
++			     N_("set up tracking mode (see git-branch(1))"),
++			     PARSE_OPT_NOARG | PARSE_OPT_OPTARG),
+ 		OPT_END()
+ 	};
+ 
+@@ -394,9 +398,13 @@ static int add(int ac, const char **av, const char *prefix)
+ 			argv_array_push(&cp.args, "--force");
+ 		argv_array_push(&cp.args, opts.new_branch);
+ 		argv_array_push(&cp.args, branch);
++		if (opt_track)
++			argv_array_push(&cp.args, opt_track);
+ 		if (run_command(&cp))
+ 			return -1;
+ 		branch = opts.new_branch;
++	} else if (opt_track) {
++		die(_("--[no-]track can only be used if a new branch is created"));
+ 	}
+ 
+ 	UNLEAK(path);
+diff --git a/t/t2025-worktree-add.sh b/t/t2025-worktree-add.sh
+index b5c47ac602..53042ce565 100755
+--- a/t/t2025-worktree-add.sh
++++ b/t/t2025-worktree-add.sh
+@@ -313,5 +313,60 @@ test_expect_success 'checkout a branch under bisect' '
+ test_expect_success 'rename a branch under bisect not allowed' '
+ 	test_must_fail git branch -M under-bisect bisect-with-new-name
+ '
++# Is branch "refs/heads/$1" set to pull from "$2/$3"?
++test_branch_upstream () {
++	printf "%s\n" "$2" "refs/heads/$3" >expect.upstream &&
++	{
++		git config "branch.$1.remote" &&
++		git config "branch.$1.merge"
++	} >actual.upstream &&
++	test_cmp expect.upstream actual.upstream
 +}
 +
-+const char *unique_tracking_name(const char *name, struct object_id *oid)
-+{
-+	struct tracking_name_data cb_data = { NULL, NULL, NULL, 1 };
-+	cb_data.src_ref = xstrfmt("refs/heads/%s", name);
-+	cb_data.dst_oid = oid;
-+	for_each_remote(check_tracking_name, &cb_data);
-+	free(cb_data.src_ref);
-+	if (cb_data.unique)
-+		return cb_data.dst_ref;
-+	free(cb_data.dst_ref);
-+	return NULL;
++test_expect_success '--track sets up tracking' '
++	test_when_finished rm -rf track &&
++	git worktree add --track -b track track master &&
++	git config "branch.track.merge" &&
++	(
++		test_branch_upstream track . master
++	)
++'
++
++# setup remote repository $1 and repository $2 with $1 set up as
++# remote.  The remote has two branches, master and foo.
++setup_remote_repo () {
++	git init $1 &&
++	(
++		cd $1 &&
++		test_commit $1_master &&
++		git checkout -b foo &&
++		test_commit upstream_foo
++	) &&
++	git init $2 &&
++	(
++		cd $2 &&
++		test_commit $2_master &&
++		git remote add $1 ../$1 &&
++		git config remote.$1.fetch \
++			"refs/heads/*:refs/remotes/$1/*" &&
++		git fetch --all
++	)
 +}
-diff --git a/checkout.h b/checkout.h
-new file mode 100644
-index 0000000000..9980711179
---- /dev/null
-+++ b/checkout.h
-@@ -0,0 +1,13 @@
-+#ifndef CHECKOUT_H
-+#define CHECKOUT_H
 +
-+#include "cache.h"
-+
-+/*
-+ * Check if the branch name uniquely matches a branch name on a remote
-+ * tracking branch.  Return the name of the remote if such a branch
-+ * exists, NULL otherwise.
-+ */
-+extern const char *unique_tracking_name(const char *name, struct object_id *oid);
-+
-+#endif /* CHECKOUT_H */
++test_expect_success '--no-track avoids setting up tracking' '
++	test_when_finished rm -rf repo_upstream repo_local foo &&
++	setup_remote_repo repo_upstream repo_local &&
++	(
++		cd repo_local &&
++		git worktree add --no-track -b foo ../foo repo_upstream/foo
++	) &&
++	(
++		cd foo &&
++		! test_branch_upstream foo repo_upstream foo &&
++		git rev-parse repo_upstream/foo >expect &&
++		git rev-parse foo >actual &&
++		test_cmp expect actual
++	)
++'
+ 
+ test_done
 -- 
 2.15.0.345.gf926f18f3
 
