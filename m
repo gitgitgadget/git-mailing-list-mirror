@@ -3,106 +3,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DC3BA20954
-	for <e@80x24.org>; Wed, 22 Nov 2017 17:59:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B16C520A40
+	for <e@80x24.org>; Wed, 22 Nov 2017 18:00:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751669AbdKVR7E (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Nov 2017 12:59:04 -0500
-Received: from mail-pl0-f44.google.com ([209.85.160.44]:43377 "EHLO
-        mail-pl0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751546AbdKVR7D (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Nov 2017 12:59:03 -0500
-Received: by mail-pl0-f44.google.com with SMTP id h3so1159410pln.10
-        for <git@vger.kernel.org>; Wed, 22 Nov 2017 09:59:03 -0800 (PST)
+        id S1751858AbdKVSAR (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Nov 2017 13:00:17 -0500
+Received: from mail-it0-f47.google.com ([209.85.214.47]:37588 "EHLO
+        mail-it0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751794AbdKVSAR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Nov 2017 13:00:17 -0500
+Received: by mail-it0-f47.google.com with SMTP id m191so7354255itg.2
+        for <git@vger.kernel.org>; Wed, 22 Nov 2017 10:00:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=cKgg9edvGtmOKysspurqKjz+AQTa5qiu0LDAO5AM1iw=;
-        b=jZZANgmWu9ZgkPMVmAPKvDCuJ6vHCeRA025Jt5Xg/b0cl62785qa8oYlRV0+nHIcWL
-         nfbJLXV7p0OWU9IKjo2zyELJ/eSmpmLAHB2g0xaYLanY/TCg9Ww4CgtzPd4OuA/DFPf9
-         u3r1e6gQy+x02SyLpL8KW6k+u+CtuVNah8XyCxULxnH6XqZfHXfHqPIsjJ14mrQONTgU
-         33lmXP/ddlPZxhyynaZbMNizxJYj3A7T2+3nrSsX/m+6F9fk2e6XtjwEZu1nt5NcviBH
-         OINLMAayhkCKeNN98mUwJa7JjajKFcGw+Q0SVQJgMZFX+xMzN7lCHzQ4cs5Ya1txnGpR
-         bvaw==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=ohvhamPWioIQdHCtUdy8wsrWkdpMdu2+JJbbYlHRK18=;
+        b=VS8KNMCvfUBqBDU66r16oiR3Jvt5GgyVQhuqNZvUKvUEf0us+GcU/5Szq1TvTufKwf
+         MMngoaXFvOoLs8iiyjpHJOVf/KRkrF828XaWy4tFcDcIEJmvOySurpZtQV31kBFGbSZM
+         pkAINACKLsFD2hyjUly4r/2AqVuubANJRXoidm/a/UWG/i16vZDwk1Wu9+gAQEfmdUh8
+         oLJG1MoDRR45RLzFbi6QyiqZt7RO6zqsBrlX6izsk3s59lTN7e8cLdZDk24UyxiqD0oW
+         MS2PBWCNwkz7q2wuuRAUv6Vk0bBaBy/Yo3+Q+T4o64nIT1ELwsArhFDp0n/Vtqvwk40J
+         /B9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=cKgg9edvGtmOKysspurqKjz+AQTa5qiu0LDAO5AM1iw=;
-        b=PGoOhQgFmcd+Eo5iRLg2i36Rujt5y80mXturVwE7az/KnEAIPSMJWpYzFRtoIuUgZR
-         FfRzCLR5pd6smatwgUc/QTtUyfAQ7MC50yLtIUu8zSjGQs9sWiNoIcm8YIi7WHguT2xY
-         45MpVJvoW2JrtrTFwJ2MK3tl8bOzF9dK+8kvvCGSOsMjj35yRjwgCC7X9h/1RhoL/Gca
-         Xwk6vP3DFCHo237wpg0kQYUbCR8OM+VYDJxw51fN4/+R2xHCAeN5guPbfXdjouj2hqry
-         kWQ4VOp18+XUilkeN9FA6er0sSg64zT/dI6w97GVZ/eujr20EGswoAxel1GMuE9912ye
-         NwJg==
-X-Gm-Message-State: AJaThX7aIyAsYnZCXfO6rgy9VM+zCqjWErG6K5hBSfMRlbyf38honkOn
-        FjDWTcwBhHRX2yQaYGtacOk=
-X-Google-Smtp-Source: AGs4zMapguf/axaaSJJyK3vbRmhTK8hfv3C8bNuMUdc+Djuziq9BtFYVpIF9IgwyPGZjavUvUDnuqg==
-X-Received: by 10.84.168.227 with SMTP id f90mr21863764plb.320.1511373543484;
-        Wed, 22 Nov 2017 09:59:03 -0800 (PST)
-Received: from ?IPv6:2405:204:73cd:cf11:6767:b6f6:4b9c:e3f? ([2405:204:73cd:cf11:6767:b6f6:4b9c:e3f])
-        by smtp.gmail.com with ESMTPSA id p189sm28169237pfp.127.2017.11.22.09.58.58
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=ohvhamPWioIQdHCtUdy8wsrWkdpMdu2+JJbbYlHRK18=;
+        b=ONjlH6lk2TyrrGa8DwLpScEPYGJMwZp4q+UXmpF6h5nOX60NhkdQptcNvcdFc2tBen
+         9c+6N3/oLXiUt4GFrO5UgSf0QpI18RALzZQWJFVL14WFKXenq+qjbmQ25dbu2MXWkxQL
+         XzKK9JePZu3aNp/ZbNeah3AFGBd54vkCBO/jyX8F1v9DHaW0UYoCH0orXBqQKQTAxTKj
+         jWHNUvNVlXvVhNwZwOK5wyrTCulUTzcJqYPDoTyW00qSU9XByh4z5cDnnOTtJJYLZA+F
+         MUn7kJ2Tlr9PCWlJIamRCpH1YVnVvo6WtocxehBi8fWzSZUg5+fEeU+2Ki59OcHiV4TZ
+         xntg==
+X-Gm-Message-State: AJaThX6ac1g1w93zrnpq4xuBlbOj1/AlvMsEu9fGJ+hateg993vaYBaT
+        Odwml2i1kJOZrVBt62kr5XtrXg==
+X-Google-Smtp-Source: AGs4zMZ9dRSy+7TCQoNIntRZ9cIA1CmoH5dHPYDCpkkQUMKtkyir/GJp1JLqBHYs133bPE0Ar1pdZw==
+X-Received: by 10.36.245.133 with SMTP id k127mr7956350ith.136.1511373616285;
+        Wed, 22 Nov 2017 10:00:16 -0800 (PST)
+Received: from twelve3.mtv.corp.google.com ([2620:0:100e:422:4fa:d4be:6ce:3f8b])
+        by smtp.gmail.com with ESMTPSA id e203sm2238164itb.32.2017.11.22.10.00.14
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 22 Nov 2017 09:59:01 -0800 (PST)
-Subject: Re: [PATCH v2] launch_editor(): indicate that Git waits for user
- input
-To:     Lars Schneider <larsxschneider@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Lars Schneider <lars.schneider@autodesk.com>,
-        Git List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>
-References: <20171117135109.18071-1-lars.schneider@autodesk.com>
- <CAPig+cQ3a0guJUhnbktrjs6fL6mSrUXmPqR0BafEAOhVr7Sy-w@mail.gmail.com>
- <xmqqh8tsqs83.fsf@gitster.mtv.corp.google.com>
- <d53a655b-f51e-3f44-23db-581071010fd2@gmail.com>
- <xmqqvai5ollx.fsf@gitster.mtv.corp.google.com>
- <998E3A52-C710-447A-82A3-50C58354CC31@gmail.com>
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Message-ID: <96f9c87c-d2c3-ebf3-bcca-da538c946733@gmail.com>
-Date:   Wed, 22 Nov 2017 23:28:55 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.4.0
-MIME-Version: 1.0
-In-Reply-To: <998E3A52-C710-447A-82A3-50C58354CC31@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+        Wed, 22 Nov 2017 10:00:15 -0800 (PST)
+Date:   Wed, 22 Nov 2017 10:00:14 -0800
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff Hostetler <git@jeffhostetler.com>, git@vger.kernel.org,
+        peff@peff.net, Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v5 00/10] Partial clone part 2: fsck and promisors
+Message-Id: <20171122100014.937f5902c3714e6e26e20a1b@google.com>
+In-Reply-To: <xmqqy3myubpi.fsf@gitster.mtv.corp.google.com>
+References: <20171121210720.21376-1-git@jeffhostetler.com>
+        <xmqqy3myubpi.fsf@gitster.mtv.corp.google.com>
+X-Mailer: Sylpheed 3.4.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wednesday 22 November 2017 10:25 PM, Lars Schneider wrote:
-> 
->> On 20 Nov 2017, at 01:11, Junio C Hamano <gitster@pobox.com> wrote:
->>
->> Kaartic Sivaraam <kaartic.sivaraam@gmail.com> writes:
->>> It might be a good thing to keep the notice but I think it would be
->>> better to have that error message in a "new line". I'm not sure if
->>> it's possible or not.
->>
->> Of course it is possible, if you really wanted to.  The code knows
->> if it gave the "we launched and waiting for you" notice, so it can
->> maintain not just one (i.e. "how I close the notice?") but another
->> one (i.e. "how I do so upon an error?") and use it in the error
->> codepath.
-> 
-> I think a newline makes sense. I'll look into this for v3.
->
+On Wed, 22 Nov 2017 14:25:13 +0900
+Junio C Hamano <gitster@pobox.com> wrote:
 
-If I remember correctly, I don't think it's as simple as printing a 
-newline character in case of an error.  That's because the error message 
-that shows up in the same line as "Launched your ..." comes from a 
-different function (possibly finish_command() though I'm not sure)
-
-> Thanks,
-> Lars
+> Jeff Hostetler <git@jeffhostetler.com> writes:
 > 
+> > From: Jeff Hostetler <jeffhost@microsoft.com>
+> >
+> > This is V5 of part 2 of partial clone.  This assumes V5 of part 1
+> > is already present.  V5 includes minor cleanup over V4 and better
+> > separates the --exclude-promisor-objects and --missing arguments.
+> >
+> > Part 2 is concerned with fsck, gc, initial support for dynamic
+> > object fetching, and tracking promisor objects.  Jonathan Tan
+> > originally developed this code.  I have moved it on top of
+> > part 1 and updated it slightly.
+> 
+> Thanks, will replace/queue all three series.  I am getting a feeling
+> that the first one is already ready for 'next', while the other two
+> may want to see a bit more comments?
 
+Yes, I think so too.
+
+Jeff Hostetler and I noticed some issues occuring when some other Git
+commands dynamically fetch objects due to the fact that those commands
+and fetch-pack use overlapping object flags. At the very least, we
+should look at that before it goes into next.
