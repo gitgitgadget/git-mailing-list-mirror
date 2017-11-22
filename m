@@ -2,97 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0A40A20954
-	for <e@80x24.org>; Wed, 22 Nov 2017 23:02:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 858C520954
+	for <e@80x24.org>; Wed, 22 Nov 2017 23:08:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752356AbdKVXCo (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Nov 2017 18:02:44 -0500
-Received: from mail-it0-f65.google.com ([209.85.214.65]:38576 "EHLO
-        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751571AbdKVXCm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Nov 2017 18:02:42 -0500
-Received: by mail-it0-f65.google.com with SMTP id n134so8233456itg.3
-        for <git@vger.kernel.org>; Wed, 22 Nov 2017 15:02:42 -0800 (PST)
+        id S1752960AbdKVXIE (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Nov 2017 18:08:04 -0500
+Received: from mail-qk0-f181.google.com ([209.85.220.181]:36328 "EHLO
+        mail-qk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752434AbdKVXIB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Nov 2017 18:08:01 -0500
+Received: by mail-qk0-f181.google.com with SMTP id o6so18879872qkh.3
+        for <git@vger.kernel.org>; Wed, 22 Nov 2017 15:08:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=684aUbNwCZkis2TbCtFrk2tDR4k9vYA2m3W2JA5Ql3M=;
-        b=b1yjjvYYljZqmLTJy6FWSUeByUjJSa1u1cvg1qrmvU0V6X2sQqb9FGN1HLs/zN49gF
-         URLMVv8tHE0w7ixqEp7MRL3UAd/9bwo5ZDyVIDJEU142csRpIldvyapcu7CVhdWP1OdK
-         nhCgy6WYmoisD4xBfgeeMUFYqRks/E/Shleg0cN4y0ek9X7mlg/AU286WiSKAnFe8yfo
-         vJ88jxEb6Z6uhzluGhqUtf8BraU8hCABDjWblMPVFrNU/31cxW60IhThF0HaDlKAZbym
-         Q0YDfPtXXDV3W2DMS4JC9oziXDIBxsoz8EsNtum3FQYTKbO21eB6RPPptX7GfXPvRzPU
-         TV3A==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=OxNUtWBOqG2WbKOhfloDAY23mi6zX9vuJZT+Aumwkzc=;
+        b=eol62cSp+RWUD9dJiGetqLpjk1mX/jS+Xfv6QQViYm5xgeekFr1vnVXHM9eWc9dx2r
+         TBdyJQxLxMU79HZBKUwQaA19FfhRpyZYW/svg9dfEptCRBDirCzZKumaEyVC8jDcOQKL
+         hMkmJ7dmOxbv/qk+tHJ4803rhSmLRDNJj6dMXHqV9it615AP+iKhkOXeXwRt+WXLk6jr
+         tV32FvpnROpkrNZVNDC81nHD3yJOVljvYHdAifda8ZwgppxGtzpc8lUNTKZvYHp1pUJy
+         UeRIlhgEXGrB5blltbStVpG+fWXV1Et3/ZYlIATG4y4s4Y70w3mXWRkNVJWYpiz+VNQe
+         lDqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=684aUbNwCZkis2TbCtFrk2tDR4k9vYA2m3W2JA5Ql3M=;
-        b=tP+yx8k0F6sNWidRKGcBw/O0AD6vvqEwWFS6U1dd6N03uUJnYJKwEBXhA8B2YVR9yC
-         yo4six4rXgGC5eLmLr+CKxTxzq6yeZZCid4S1dM22zNsbsnXSrRJyrXKSPZ5Ccvl5FJS
-         FPlXmY0VoSOF7M7YL6OsA3LY7a7r5K8kM71ComRE4y9mC1NZnb+t8rya/Hxnoytzzmu6
-         fax/X08/rsQ9WHltDPDGfncG1EQMV/yAvopcFOqec6xBSLzt5YRLvjCIuDRBydsdA4A+
-         wouPO099T8ssARDBnq8+vR7zxZgwckaXF/YYWhss2mWfARPcSUVyZ+f017LOjWyIaoIo
-         pdYg==
-X-Gm-Message-State: AJaThX7EdcoMAai07BAl8BM1+nI8Nae2hJYkxRXE/PDorzMknRjPPCY5
-        fPL25QY9WnZ05rri3OAV9SM=
-X-Google-Smtp-Source: AGs4zMaFNBiJJ5thYCEf5reeuZjoJw71TdTYgl28TK63uL8TsSgA0ITl0gAyPgKJmq5L96xzlreVcA==
-X-Received: by 10.36.108.81 with SMTP id w78mr9451174itb.140.1511391762048;
-        Wed, 22 Nov 2017 15:02:42 -0800 (PST)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id l195sm2541855itl.0.2017.11.22.15.02.41
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 22 Nov 2017 15:02:41 -0800 (PST)
-Date:   Wed, 22 Nov 2017 15:02:39 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org, git@jeffhostetler.com
-Subject: Re: [PATCH 2/3] git-compat: introduce BUG_ON(condition, fmt, ...)
- macro
-Message-ID: <20171122230239.GG11671@aiede.mtv.corp.google.com>
-References: <20171122223827.26773-1-sbeller@google.com>
- <20171122223827.26773-3-sbeller@google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=OxNUtWBOqG2WbKOhfloDAY23mi6zX9vuJZT+Aumwkzc=;
+        b=iL/trOogLXnNN/iMsHJ7A1jYmIs1QqxyPV0s7Gzx5yZKqOdm85mpkzyLzJ2/7Xawfi
+         CYo62M1fp5jjFjQBiAgUpsRW2IK1kVaZaHTB4R4DzgntB0mXSGmXuTgZ/2TPhzDcvQ/K
+         qrRpXFMn9rEYw6btHqjKka+/HeiBRDv3vSa43CwqxRbxp/3uOlDkBN/v3jZLm0dm3wQM
+         IYVikcVxvdlt35rq7ZUIBVv99Yx91rOlgwocGCUweFlacJxSqb5ysySSXnLLl+A2Gk/G
+         gczxpo/fr7snONqfojplUqLabR2i8xahltqup8dCapqgwHPPlc4V9hIcv9J9tx1I9jP4
+         nh8g==
+X-Gm-Message-State: AJaThX4Y8J0N5zo1a708H3U796YdhD6K0h2RSWsl3Vn9TognkW8yZjOD
+        R8j7CFaArH7tB5aJdoAFMoJVGzy52Cf2Lg2HPwf3sA==
+X-Google-Smtp-Source: AGs4zMZmvIic5+6ccfDRZOxhKCaV983oogGdYc4yhBKJkLvD0XbBAJ5CuTw+rewE2gKeKqtFnQluJd3fRhmXSPToIpU=
+X-Received: by 10.55.76.193 with SMTP id z184mr4500050qka.346.1511392080937;
+ Wed, 22 Nov 2017 15:08:00 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20171122223827.26773-3-sbeller@google.com>
-User-Agent: Mutt/1.9.1 (2017-09-22)
+Received: by 10.140.85.179 with HTTP; Wed, 22 Nov 2017 15:08:00 -0800 (PST)
+In-Reply-To: <20171122225913.GF11671@aiede.mtv.corp.google.com>
+References: <20171122223827.26773-1-sbeller@google.com> <20171122223827.26773-2-sbeller@google.com>
+ <20171122225913.GF11671@aiede.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 22 Nov 2017 15:08:00 -0800
+Message-ID: <CAGZ79kY7yrgYSM7jLQD3Q4sRpjovXY=HZwU4M-Ai_XRPseda9A@mail.gmail.com>
+Subject: Re: [PATCH 1/3] Documentation/CodingGuidelines: explain why assert is bad
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git <git@vger.kernel.org>, Jeff Hostetler <git@jeffhostetler.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Wed, Nov 22, 2017 at 2:59 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
 
-Stefan Beller wrote:
+> In a certain ideal world, the preference would be reversed: you'd want
+> to use assert() wherever you can and require the compiler to check
+> that all assert()s are verifiable at compile time.  A check that a
+> static analyzer can verify is more valuable than a run-time check.
+> When a compile-time check is not possible, you'd have to fall back to
+> BUG_ON().
 
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -1092,9 +1092,13 @@ static inline int regexec_buf(const regex_t *preg, const char *buf, size_t size,
->  __attribute__((format (printf, 3, 4))) NORETURN
->  void BUG_fl(const char *file, int line, const char *fmt, ...);
->  #define BUG(...) BUG_fl(__FILE__, __LINE__, __VA_ARGS__)
-> +#define BUG_ON(condition, ...) do { if (condition) BUG(__VA_ARGS__); } while (0)
->  #else
->  __attribute__((format (printf, 1, 2))) NORETURN
->  void BUG(const char *fmt, ...);
-> +
-> +__attribute__((format (printf, 2, 3)))
-> +void BUG_ON(int condition, const char *fmt, ...);
->  #endif
-
-I worry that these definitions are mildly incompatible: the macro
-accepts anything that can go in an 'if', including pointers, and the
-function only accepts an int.
-
-Is there a way for the macro to typecheck that its argument is an
-integer to avoid that?
-
-Thanks,
-Jonathan
+Linux has BUILT_BUG_ON as well, which we may desire?
