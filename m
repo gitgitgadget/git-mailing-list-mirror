@@ -7,96 +7,73 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B52F32036D
-	for <e@80x24.org>; Wed, 22 Nov 2017 03:56:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9701D2036D
+	for <e@80x24.org>; Wed, 22 Nov 2017 04:19:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751472AbdKVD4C (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Nov 2017 22:56:02 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54313 "EHLO
+        id S1751512AbdKVETE (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Nov 2017 23:19:04 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62369 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751434AbdKVD4B (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Nov 2017 22:56:01 -0500
+        with ESMTP id S1751429AbdKVETD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Nov 2017 23:19:03 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id BCBC1BB8BA;
-        Tue, 21 Nov 2017 22:56:00 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 54B56BBCD2;
+        Tue, 21 Nov 2017 23:18:58 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=4qB4FdJScIK27ZYo2QmVCHRje9A=; b=vThSGN
-        LM3DI8dZiL6tHyCcEe+gTEFhAKKBPTiSy7KkytJJZ1N4Agev9PPgcr3i8KXpkE9f
-        3TV0NKGUoPiAXE6qf7Ryuu4SeQRwsxNP1fe50FnFbdKt3Oqqz50Bsf8M4eotsoQO
-        abMA8KC5PinXpAVcWj9njPKFx3qSvSjlNAm0c=
+        :content-type:content-transfer-encoding; s=sasl; bh=yDvCPOdylqp8
+        pyjsTAawrJw/Qho=; b=Bvtp2PjqgkjgnINPI6lJOoEM+CSL8nYLEnCi46l268U/
+        SMPFAwjaTmj9eOG4rrrN7mfwFArdE4jHsaEZXy6nrFCJH10S2j36+deymiA7cFep
+        vKvxghrbhdnWyGYZJyfSmoyFZ6k+YtC1mu+MWsGIkgWmBLJnxpGoJPItafjTa5M=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Tt2tE6UGoZfpUbmUkNUTavA5P6Tp0vW3
-        LyQ+5uN6J4OYfrxVR+r6vb8t1Bb7Pj2rsOh//Gp0jlDR6JjyojQZSgOFA2BEFDX/
-        47VDUAonMPJaccBoJAbtF8MKnMmpqcAwTcnzG/wck6CUJP7wxrBiGDRg2OuAtIy1
-        awicacjd7e8=
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=k91wYO
+        1qTFLSM5tOTP7uiaIUSauo063PR4364gmMYi6gNKKQQANZYGSPA+4BzSQp6wb3KZ
+        vUfaStErCAXpD4lWCZAATpsEkGYkk/kMOTK6qUfKNYvMSncIcNbNIKTP576lpZXh
+        NCPnRFSG5xfp4Ajp25HxnDj6+10uqrJW0L3rM=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 97217BB8B9;
-        Tue, 21 Nov 2017 22:56:00 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4BD5ABBCD1;
+        Tue, 21 Nov 2017 23:18:58 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id F1F43BB8B8;
-        Tue, 21 Nov 2017 22:55:59 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B1301BBCCE;
+        Tue, 21 Nov 2017 23:18:57 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        =?utf-8?B?Tmd1eeG7hW4g?= =?utf-8?B?VGjDoWkgTmfhu41j?= Duy 
-        <pclouds@gmail.com>, Git List <git@vger.kernel.org>
-Subject: Re: [RFC PATCH] builtin/worktree: enhance worktree removal
-References: <20171121150954.3227-1-kaartic.sivaraam@gmail.com>
-        <CAPig+cQrC1MiPrwwPqtdX2tzj1ntFHxO28uqnMBcmVpPPrc_Rg@mail.gmail.com>
-        <xmqqa7zfxdru.fsf@gitster.mtv.corp.google.com>
-        <CAPig+cTux4dfBsX3DD=5TbM-p4-t66WX3+sufi39-W5Dw+ZvOw@mail.gmail.com>
-        <CAPig+cStgFaeWoNVcwaJVtNnYeLQ2LfS9xXF7uM3Py17HUaFFw@mail.gmail.com>
-Date:   Wed, 22 Nov 2017 12:55:58 +0900
-In-Reply-To: <CAPig+cStgFaeWoNVcwaJVtNnYeLQ2LfS9xXF7uM3Py17HUaFFw@mail.gmail.com>
-        (Eric Sunshine's message of "Tue, 21 Nov 2017 22:23:08 -0500")
-Message-ID: <xmqqvai3ufu9.fsf@gitster.mtv.corp.google.com>
+To:     Rafael =?utf-8?Q?Ascens=C3=A3o?= <rafa.almas@gmail.com>
+Cc:     git@vger.kernel.org, me@ikke.info, hjemli@gmail.com,
+        mhagger@alum.mit.edu, pclouds@gmail.com,
+        ilari.liusvaara@elisanet.fi
+Subject: Re: [PATCH v2] log: add option to choose which refs to decorate
+References: <20171104004144.5975-1-rafa.almas@gmail.com>
+        <20171121213341.13939-1-rafa.almas@gmail.com>
+Date:   Wed, 22 Nov 2017 13:18:56 +0900
+In-Reply-To: <20171121213341.13939-1-rafa.almas@gmail.com> ("Rafael
+        =?utf-8?Q?Ascens=C3=A3o=22's?= message of "Tue, 21 Nov 2017 21:33:41
+ +0000")
+Message-ID: <xmqqpo8buerz.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 0D3A62DC-CF39-11E7-9543-575F0C78B957-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 4275AD14-CF3C-11E7-B567-575F0C78B957-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Rafael Ascens=C3=A3o <rafa.almas@gmail.com> writes:
 
-> On Tue, Nov 21, 2017 at 10:14 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> The erroring out in this case looks like simple oversight. Most
->> likely, this particular case did not occur to Duy. The code does
->> intentionally check the directory to see if it is dirty so that it can
->> warn the user (in which case the user can re-run with --force or take
->> other corrective action), but erroring out if the directory is merely
->
-> "...erroring out if the directory _is missing_ is merely..."
->
->> an indirect (and unintended) result of trying to check for dirtiness.
->>
->> So, Kaatic's patch is intended to address that oversight (though I
->> haven't examined the implementation closely; I was just trying to
->> understand the reason for the patch).
+> When `log --decorate` is used, git will decorate commits with all
+> available refs. While in most cases this the desired effect, under some
 
-OK, so the proposed log message was a bit confusing for those who
-are *not* the person who wrote it (who knew why existing behaviour
-was inadequate and did not describe how "worktree remove" would fail
-under such a scenario to illustrate it, incorrectly assuming that
-everybody who reads the proposed log message already *knows* how it
-would fail).
+Missing verb.  s/this the/this may give the/; perhaps.
 
-	"git worktree remove" removes both the named worktree
-	directory and the administrative information for it after
-	checking that there is no local modifications that would be
-	lost (which is a handy safety measure).  It however refuses
-	to work if the worktree directory is _already_ removed.
+> conditions it can lead to excessively verbose output.
 
-	The user could use "git worktree prune" after seeing the
-	error and realizing the situation, but at that point, there
-	is nothing gained by leaving only the administrative data
-	behind.  Teach "git worktree remove" to go ahead and remove
-	the trace of the worktree in such a case.
+Other than that, I didn't find anything questionable in the
+implementation, tests or doc updates.  Nicely done.
 
-or soemthing like that?
+Will queue.
+
+Thanks.
