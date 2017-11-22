@@ -2,89 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BBBE320954
-	for <e@80x24.org>; Wed, 22 Nov 2017 18:18:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4FD6120954
+	for <e@80x24.org>; Wed, 22 Nov 2017 18:29:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751888AbdKVSSk (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Nov 2017 13:18:40 -0500
-Received: from mail-qt0-f194.google.com ([209.85.216.194]:46263 "EHLO
-        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751640AbdKVSSj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Nov 2017 13:18:39 -0500
-Received: by mail-qt0-f194.google.com with SMTP id r39so24896734qtr.13
-        for <git@vger.kernel.org>; Wed, 22 Nov 2017 10:18:39 -0800 (PST)
+        id S1751797AbdKVS3Y (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Nov 2017 13:29:24 -0500
+Received: from mail-qt0-f182.google.com ([209.85.216.182]:45817 "EHLO
+        mail-qt0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751554AbdKVS3W (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Nov 2017 13:29:22 -0500
+Received: by mail-qt0-f182.google.com with SMTP id r37so16923790qtj.12
+        for <git@vger.kernel.org>; Wed, 22 Nov 2017 10:29:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=BE6RHCOJaqW3xPNP1fSCkYp+jV2rtOnIba1wE3Za6xQ=;
-        b=ZGI1fv6DJh9IwXDvTdQ+htgpoX1AwwriUQwv8p5dkHvPuwtjwRiIxUGYXqXa+xyRKE
-         S4ylbD5YSz2kE7G8CafmnKq6MTEnTbvMBodxppLCtU12JxkVGVf6I2SpYMc0ohco0//q
-         yFw17zmtI7ut6VK3+MPQ3lLiViB4qgaH+4AJLzp+kL3I74pgB7jJTOkXxwUVOB59oTSh
-         vEobAqEZiZo6VDQVbO+AgrQwOIWHzAA5Vs2GwC0dVvgc4DdKXCkfAF1xXnhxFd027m7h
-         yqwHn5gDungC/9yAyj2nQLEQuEMoNVfOjDiYZRI4NmELtEx4aEDco3qUaReLNLZox1Fe
-         S86g==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=a+zEHBuCwLtVZeBYsRmD/WU1IfQreVXirj+rq61NcKM=;
+        b=QxWw8r3eVGn+LAniSRVeXTaCZtfl5Ebuaz0rocdRys/xY8O7oSfot+lQtxr5uxAOOu
+         y8xnpqTvJH9E3sogmHaWofXXU0/SSzoteUpqqWd6iaXrHkI7sI0EhUWM0KiM+SnVH1Zn
+         eHEeZNlL0Tlh/hBrX3VnLif6oaT0rWjGW38gVqsgQQ55EGzWsoNzmJ+xEcPLOJhMQq3F
+         MHjo0MhRBS/J4TUPgyLtjC9qp7QEYtD/yyvvLTbKwIObeHEkhZewsLRl5JlndkXyuk7z
+         2vNJBtPTLvUp8XpDJIpPhN11WHC0lGT60FtBa2AvbTL0emZIqgPVvc/KBGEKch8CxzTJ
+         buwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=BE6RHCOJaqW3xPNP1fSCkYp+jV2rtOnIba1wE3Za6xQ=;
-        b=aB0UKQUGPVVsRSoJSyzho3sg89LhH3kqd3tPjfGXCLkoSPDGAvUNj9+Bh3YS3ZyokC
-         EeJ5V5SUlKKtu49vNw1eYb5rKoOrWzZHQOGPrt+r3ghBapDmmKHRSc4y1SA7nZOVcPfJ
-         LPmbxGJfAEJSi0Y6wf0rs5jFDWXL2eWXGMJsoLQEKHPC1ItMS+wQYKzS4/0nKIx3CxeW
-         iefSHtJoXHaKPfWyq+ef+h3hgARR0fuiiAQ0CMjRkzCEUv2P0L59+d9HZdzv/QuyWpAG
-         /w4q51kQY9GFBoocteIKoIN7Zguj66K26SCLWy/u5gwNiyhRvKaIvhKd09ofPIGZ7bNl
-         8E7Q==
-X-Gm-Message-State: AJaThX7N1uom0Xfhrz/eY96yaHCFEMKgeSMoPZcWsRVh2Ziu5V5T+hzy
-        GO3pC1LhvoFgOsTy65q4PB9vmdG/fYAmqE3rOSs=
-X-Google-Smtp-Source: AGs4zMYFLjYI/vXb+PftVGxBS/Qfu36wyAYr1Bx2kooCd1e/zS7KNQzzTqoB6EIkRBE1s/M8Hd6CiUl4j6+8TwnvWFE=
-X-Received: by 10.200.39.104 with SMTP id h37mr33826332qth.114.1511374718970;
- Wed, 22 Nov 2017 10:18:38 -0800 (PST)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=a+zEHBuCwLtVZeBYsRmD/WU1IfQreVXirj+rq61NcKM=;
+        b=dA6BqVAlDHzmd/wfOvdKR+TUT3rF9H4PveW7OlpfQ1pEMWUBe6soKnVW0sD3rM5d2N
+         grclPOBQ6YLi7X7z/njrWovj1IjFZj4gd/gJTxIlzZvTKizjGY+FraHiCeROGpsq+olS
+         IueIka0zasV3yhdcFMoxtXXSZkpDWcdUvaE8eBFOKF36HziUO3faqq8QGyYcYVDoQ+F4
+         9kHIlk6SHgoSS4NbZTtZn8RfMOB/Q4kMYyDzEKNL9j74+pxPDQknraxhOX4MMqVO1I8d
+         k0bpwTmQdUgRd0yp5zFYXpuE1tClxRabMtUXSdtWzLb1YNADBFJPjoXcDfIk3wRcgIzH
+         /DcA==
+X-Gm-Message-State: AJaThX58SVGJdHMqg5Q3zWWtu1nPX8/CZOR9mTQMkVEAyRwIcyjCvcCF
+        4psVod1jpQmPS2LGwk/EIxSso/zbOWCfggI5Q+WmWA==
+X-Google-Smtp-Source: AGs4zMbGL3LPw88S2pTKuwg/fNX754JDp4jO0DI+ut5ufMw3RFzQPsuFNrVjqnG6D4kvjuw6I4lu9LBM9Z4OXXOjZXM=
+X-Received: by 10.200.36.86 with SMTP id d22mr34908487qtd.140.1511375361455;
+ Wed, 22 Nov 2017 10:29:21 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.12.155.209 with HTTP; Wed, 22 Nov 2017 10:18:38 -0800 (PST)
-In-Reply-To: <20171122133630.18931-2-avarab@gmail.com>
-References: <20171122133630.18931-1-avarab@gmail.com> <20171122133630.18931-2-avarab@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 22 Nov 2017 13:18:38 -0500
-X-Google-Sender-Auth: Q_COCDkrYTp_0gKIedrCvV_ovDQ
-Message-ID: <CAPig+cS_R5wcJQNavGSgNQXtbXNbDsTDhj8cbSZ5BBxRqU8yRQ@mail.gmail.com>
-Subject: Re: [PATCH 2/2] grep: fix segfault under -P + PCRE2 + (*NO_JIT)
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Received: by 10.140.85.179 with HTTP; Wed, 22 Nov 2017 10:29:20 -0800 (PST)
+In-Reply-To: <20171121080059.32304-12-newren@gmail.com>
+References: <20171121080059.32304-1-newren@gmail.com> <20171121080059.32304-12-newren@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 22 Nov 2017 10:29:20 -0800
+Message-ID: <CAGZ79kbMuxnToLazoVh6sx5ujB2Hh+eUqVy9j3dN6MnnJiZ-qQ@mail.gmail.com>
+Subject: Re: [PATCH v3 11/33] directory rename detection: testcases exploring
+ possibly suboptimal merges
+To:     Elijah Newren <newren@gmail.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 22, 2017 at 8:36 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> Fix a bug in the compilation of PCRE2 patterns under JIT (the most
-> common runtime configuration), any pattern with a (*NO_JIT) verb would
-> segfault. This bug dates back to my 94da9193a6 ("grep: add support for
-> PCRE v2", 2017-06-01):
->
->     $ git grep -P '(*NO_JIT)hi.*there'
->     Segmentation fault
->
-> As explained ad more length in the comment being added here it isn't
+> +# Note: Both x and y got renamed and it'd be nice to detect both, and we do
+> +# better with directory rename detection than git did previously, but the
+> +# simple rule from section 5 prevents me from handling this as optimally as
+> +# we potentially could.
 
-s/ad/at/
-s/here/here,/
+...previously...
 
-> sufficient to just check pcre2_config() to see whether the JIT should
-> be used, pcre2_pattern_info() also has to be asked.
->
-> This is something I discovered myself when fiddling around with PCRE2
-> verbs in patterns passed to git. I don't expect that any user of git
-> has encountered this given the obscurity of passing PCRE2 verbs
-> through to the library, along with the relative obscurity of (*NO_JIT)
-> itself.
->
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> +# Testcase 8e, Both sides rename, one side adds to original directory
+> +#   Commit O: z/{b,c}
+> +#   Commit A: y/{b,c}
+> +#   Commit B: w/{b,c}, z/d
+> +#
+> +# Possible Resolutions:
+> +#   Previous git: z/d, CONFLICT(z/b -> y/b vs. w/b), CONFLICT(z/c -> y/c vs. w/c)
+
+"Previous git" may be hard to understand when reviewing this code in 2 years.
+The future proof term is "git without dir rename detection" or such.
+(This is only a small nit, which on its own doesn't require a reroll;
+I'll keep reading.)
