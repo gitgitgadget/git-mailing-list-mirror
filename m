@@ -7,79 +7,72 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6ABD82036D
-	for <e@80x24.org>; Wed, 22 Nov 2017 02:24:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CE5DD2036D
+	for <e@80x24.org>; Wed, 22 Nov 2017 02:28:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752057AbdKVCYQ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Nov 2017 21:24:16 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57972 "EHLO
+        id S1752356AbdKVC2E (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Nov 2017 21:28:04 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59838 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752069AbdKVCYO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Nov 2017 21:24:14 -0500
+        with ESMTP id S1752069AbdKVC2C (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Nov 2017 21:28:02 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4CE04BA7DA;
-        Tue, 21 Nov 2017 21:24:14 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3DD3AB00D4;
+        Tue, 21 Nov 2017 21:28:02 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=eoK/KvrnVfkeXjlQsJoekHJSVUs=; b=UgrBV/
-        JJKlFRCmcu9p+8C2ZJWBCozuKFY6QPly1kFeX8GidqCVq1azvOftm0r+c/cKFqGT
-        1sza4xvQPp9ghP0D/XQhJM24ae0QhYHjaazdMB5k2GknWDPiqB4bWbxM9dgrpFt9
-        woJGpi3OkDFI04GA2X5iIs/0Rr2FOFtTnpzeA=
+        :content-type; s=sasl; bh=mI8DSHIWlDYTnOSPTTHdKI71mUs=; b=iGuG3l
+        qRIi1wHlUsnm/4J6BxJIJl3x1NpdDjk9dPuXha4qISDyRK1EsEczatP/HdVWe7IS
+        1st3M+XzjyNNAuMFRVw8HqD2bQXsV+KJKVf5FIQTpbBRmy6xMvkJ5nODTC7Gxv/H
+        xWVO6vastOnyIzM6wFwsabPsJ75t1xdQauEAw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=NrNsthjWq5C+lMheE9kD7yiUGxKsdFl3
-        +dymDVbwMEwk2npdZXA+RLkVhsBhbHkR9U6a8Wdqi+V+ZSN13aAfCV4SJJTUOfs+
-        QTiugWM3gw5vWtGyiMgvakNmBzu7lrXyK48JLi/hXao6w14UmMxM8gbTKMnJXnJ5
-        kSeL/ZSNrmU=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 437FCBA7D8;
-        Tue, 21 Nov 2017 21:24:14 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=gVj0cDxopI5poJvBbPreZuTMAmlKb6Hz
+        anmNrQXyMRi3J0qtO7b5xLV5GVYL6vqnJpq/ZRSg12VQcWjSadAKSpU2KiX+cxHq
+        yYYWDUWB82btnl0dAiF9ObDvrJUJXL2zvVY1RzuntY1UzIkljwQphiPzk+s/77dZ
+        5LV+XH/RyHI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 34A64B00D3;
+        Tue, 21 Nov 2017 21:28:02 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A7559BA7D3;
-        Tue, 21 Nov 2017 21:24:13 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4963CB00CE;
+        Tue, 21 Nov 2017 21:28:01 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Kevin Daudt <me@ikke.info>
-Cc:     "Robert P. J. Day" <rpjday@crashcourse.ca>,
-        Git Mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH] doc: remove explanation of "--" from man pages
-References: <alpine.LFD.2.21.1711211607200.25585@localhost.localdomain>
-        <20171121212305.GA16418@alpha.vpn.ikke.info>
-Date:   Wed, 22 Nov 2017 11:24:12 +0900
-In-Reply-To: <20171121212305.GA16418@alpha.vpn.ikke.info> (Kevin Daudt's
-        message of "Tue, 21 Nov 2017 22:23:05 +0100")
-Message-ID: <xmqq1skrxd83.fsf@gitster.mtv.corp.google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC PATCH] xdiff/xpatience: support anchoring a line
+References: <20171121221717.155301-1-jonathantanmy@google.com>
+Date:   Wed, 22 Nov 2017 11:27:59 +0900
+In-Reply-To: <20171121221717.155301-1-jonathantanmy@google.com> (Jonathan
+        Tan's message of "Tue, 21 Nov 2017 14:17:17 -0800")
+Message-ID: <xmqqwp2jvyhc.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 3B3622A0-CF2C-11E7-8262-575F0C78B957-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: C2F0A530-CF2C-11E7-80A8-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Kevin Daudt <me@ikke.info> writes:
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-> Although I agree that common options don't need to be explained
-> everytime again, this change might make '--' even more obscure. To be
-> honest, I didn't even know about gitcli(7), let alone most new users.
+> Teach the patience diff to support prohibiting a user-specified line
+> from appearing as a deletion or addition in the end result.
 >
-> In the #git irc channel we often have to explain what '--' means and
-> why it's sometimes necessary.
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> ---
+> I'm sending this out to see if a change similar to this would be
+> welcome. It is useful to me as a reviewer (to check my own code, e.g.
+> when checking [1]). Probably more design needs to go into this,
+> including the best way to specify the "anchor" line, and the correct
+> behavior when the anchor is either not found or appears more than once.
 >
-> I don't however know a better solution to it more clear.
+> Any thoughts?
 
-I do not agree with the starting thought of this patch in the first
-place.  With the same logic, "git help" showing the most commonly
-used subcommands, as "git help -a" has all the information, is
-redundant and unwanted.  So is the synopsis section and "git $cmd
--h" that shows only commonly used options but not necessarily all of
-them.
-
-There may be some git-$foo manual page that do not describe how '--'
-would be useful for the specific $foo subcommand that would become
-more helpful to new readers if they did, and I think updating them
-would be a better approach if we wanted to have consistency across
-manual pages.
-
+This is a natural extension of the idea the patience algorithm is
+built upon.  If this were a cumulative command line option that can
+be given to specify multiple lines and can be used across the diff
+family, it would make a welcome addition, I would think.
