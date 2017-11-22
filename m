@@ -2,105 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 27EA820954
-	for <e@80x24.org>; Wed, 22 Nov 2017 15:13:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E4BE520954
+	for <e@80x24.org>; Wed, 22 Nov 2017 15:19:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751539AbdKVPNV convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Wed, 22 Nov 2017 10:13:21 -0500
-Received: from cisrsmtp4.univ-lyon1.fr ([134.214.188.147]:60154 "EHLO
-        cisrsmtp4.univ-lyon1.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751438AbdKVPNU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Nov 2017 10:13:20 -0500
-Received: from localhost (localhost [127.0.0.1])
-        by cisrsmtp4.univ-lyon1.fr (Postfix) with ESMTP id 6DEB5A0427;
-        Wed, 22 Nov 2017 16:13:18 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at cisrsmtp4.univ-lyon1.fr
-Received: from cisrsmtp4.univ-lyon1.fr ([127.0.0.1])
-        by localhost (cisrsmtp4.univ-lyon1.fr [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id O1Ak4b2bTtav; Wed, 22 Nov 2017 16:13:18 +0100 (CET)
-Received: from BEMBX2013-02.univ-lyon1.fr (bembx2013-02.univ-lyon1.fr [134.214.201.248])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by cisrsmtp4.univ-lyon1.fr (Postfix) with ESMTPS id 2E0B1A003F;
-        Wed, 22 Nov 2017 16:13:18 +0100 (CET)
-Received: from BEMBX2013-01.univ-lyon1.fr (2002:86d6:c9f7::86d6:c9f7) by
- BEMBX2013-02.univ-lyon1.fr (2002:86d6:c9f8::86d6:c9f8) with Microsoft SMTP
- Server (TLS) id 15.0.1263.5; Wed, 22 Nov 2017 16:13:17 +0100
-Received: from BEMBX2013-01.univ-lyon1.fr ([fe80::b1ea:14ef:61b9:d4cd]) by
- BEMBX2013-01.univ-lyon1.fr ([fe80::b1ea:14ef:61b9:d4cd%15]) with mapi id
- 15.00.1263.000; Wed, 22 Nov 2017 16:13:17 +0100
-From:   ALBERTIN TIMOTHEE p1514771 <timothee.albertin@etu.univ-lyon1.fr>
-To:     =?iso-8859-1?Q?Martin_=C5gren?= <martin.agren@gmail.com>
-CC:     Git Mailing List <git@vger.kernel.org>,
-        "danielbensoussanbohm@gmail.com" <danielbensoussanbohm@gmail.com>,
-        PAYRE NATHAN p1508475 <nathan.payre@etu.univ-lyon1.fr>,
-        MOY MATTHIEU <matthieu.moy@univ-lyon1.fr>
-Subject: RE: [PATCH 1/2] Documentation about triangular workflow
-Thread-Topic: [PATCH 1/2] Documentation about triangular workflow
-Thread-Index: AQHTX75nW1NbRUFw+0OfOC4ezq/91KMZARWAgAeEv5c=
-Date:   Wed, 22 Nov 2017 15:13:17 +0000
-Message-ID: <1511367199220.88867@etu.univ-lyon1.fr>
-References: <20171117160759.6397-1-daniel.bensoussan--bohm@etu.univ-lyon1.fr>,<CAN0heSoLbnkfJLqStvR2nfy4LAAc3KEkRH-_kE-QAQoM-4iqGA@mail.gmail.com>
-In-Reply-To: <CAN0heSoLbnkfJLqStvR2nfy4LAAc3KEkRH-_kE-QAQoM-4iqGA@mail.gmail.com>
-Accept-Language: fr-FR, en-US
-Content-Language: fr-FR
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [134.214.126.172]
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: 8BIT
+        id S1751740AbdKVPTs (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Nov 2017 10:19:48 -0500
+Received: from mail-pl0-f44.google.com ([209.85.160.44]:44360 "EHLO
+        mail-pl0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751585AbdKVPTp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Nov 2017 10:19:45 -0500
+Received: by mail-pl0-f44.google.com with SMTP id v15so910018plk.11
+        for <git@vger.kernel.org>; Wed, 22 Nov 2017 07:19:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=neulinger-org.20150623.gappssmtp.com; s=20150623;
+        h=to:from:subject:organization:message-id:date:user-agent
+         :mime-version:content-language:content-transfer-encoding;
+        bh=FumanC7x9Sl0UX5yJmk+lg9Sbye7MMDjybmPNh6sCuE=;
+        b=VNoQdWnpdJAwuUqTsG/i2G51wdWqAfB3PJdItHhsRvdP5/21K3oyE1ymdSsZuWdeLb
+         H7JjkwDziM9hxSyRiyeUbVJF6r7yyDXStgnP4g5Hf4wmcPKoUT2KJDDr2oiPKEenYqAd
+         9T6sqTgsLnFWBX1ypPqiBnYwiz1jq+X4Fu+Ul8GYEARJJ3NvT6VKc8+pOIoyaBbF53Ik
+         /w3FEMlsdHs83upVAACi62waHzEzPtiBemPinI4bQLkkR8jVvfuUcTd7xSUgWN9GBhrE
+         N+ZbKIXNZOTHonWsKVZNOQMWdn20awWeSby0Ff5N6LsXs8Fm+JEIENJD2P63GjFxDa/C
+         z8bw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:to:from:subject:organization:message-id:date
+         :user-agent:mime-version:content-language:content-transfer-encoding;
+        bh=FumanC7x9Sl0UX5yJmk+lg9Sbye7MMDjybmPNh6sCuE=;
+        b=GeecI8SFFQ+fstMWEF0fz5kwn5YvC4sFlb6Q4R9C7I4n2n9FRJ+6M7+eGMeGdng/Yf
+         PVvUdeZnLcm0o2zeX9WOWNAu2t9Gs9+CDs5nQZb3gtxPcszAqTMmX/gXb1ESwxp2KRY7
+         IeNIg/deM5peDBYfFtOuCV5fb6jMbz0Zf+AnwiaVl8awRIrnAaXpZtYt9AWJXpz3t3NW
+         8fFre2VuwFCXsZlhteuEGf8NF0TBz5IH3cjV4sbSePhEPmn36/rq/9/B1LyV9tnBJ81N
+         G20YtU/hYJ75yCvWPiPev/hVh5/7HSX8Lm5p8kVFhk9bOJDgt6O9qA0dEupcqILdL4Fm
+         3oNg==
+X-Gm-Message-State: AJaThX6dWaQJ+s3wa918ykvLFePk2n0wUyAsx2wxd1gvDoTGGa15Bfqj
+        1uWqOu24ACkEhZmF0sS8CHE51MIa
+X-Google-Smtp-Source: AGs4zMaPaUA240lbULw3g933KIyz+h1Uh9FE90sPnmkmQSSAA1/n6nv2hS6Q+YuUflcvOmdW6jrMXQ==
+X-Received: by 10.84.248.142 with SMTP id q14mr21499102pll.102.1511363984746;
+        Wed, 22 Nov 2017 07:19:44 -0800 (PST)
+Received: from infinity.srv.mst.edu (infinity.srv.mst.edu. [131.151.93.93])
+        by smtp.gmail.com with ESMTPSA id g7sm31559307pfj.13.2017.11.22.07.19.43
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 22 Nov 2017 07:19:43 -0800 (PST)
+To:     git@vger.kernel.org
+From:   Nathan Neulinger <nneul@neulinger.org>
+Subject: git status always modifies index?
+Organization: Neulinger Consulting
+Message-ID: <a039d139-dba5-683e-afbf-4044cd32ab1d@neulinger.org>
+Date:   Wed, 22 Nov 2017 09:19:43 -0600
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:57.0) Gecko/20100101
+ Thunderbird/57.0
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Current code appears to always attempt an index refresh, which results in file permission changes if you run a 'git 
+status' as a privileged account.
 
->On 17 November 2017 at 17:07, Daniel Bensoussan
-><danielbensoussanbohm@gmail.com> wrote:
->> +- If the maintainer accepts the changes, he merges them into the
->> +  **UPSTREAM** repository.
+Would be nice if there were an option available to ask git status to NOT update the index.
 
->Personally, I would prefer "they" and "their" over "he" and "his". I'm
->not sure how universal this preference is, but see also 715a51bcaf (am:
->counteract gender bias, 2016-07-08). I realize that "he" is already used
->in this document...
+Even better would be if it was smart about the situation and would not refresh the index if it can see that file 
+ownership would change as a result of updating the index. To me this is following principle of least surprise. Running a 
+"query" operation would not normally be expected to result in write/modify activity.
 
-This could be a good thing in order to be neutral.  We can change this in
-the whole file.
-
->> + ... The contributor
->> +was forced to create a mail which shows the difference between the
->> +new and the old code, and then send it to a maintainer to commit
->> +and push it.  This isn't convenient at all, neither for the
->> +contributor, neither for the maintainer.
-
->"neither ... nor". That said, I find the tone of this paragraph a bit
->value-loaded ("forced ... isn't convenient at all"). It does sort of
->contradict or at least compare interestingly with how git.git itself is
->maintained. ;-) Maybe this could be framed in a more neutral way?
-
-Junio C Hamano told us the same thing about the motivation
-section, we'll change it the next patch.
-
->> +The goal of the triangular workflow is also that the rest of the
->> +community or the company can review the code before it's in production.
->> +Everyone can read on **PUBLISH** so everyone can review code
->> +before the maintainer(s) merge it to **UPSTREAM**.  It also means
-
->I think you can drop the "(s)". Your example workflow could have a
->single maintainer. In a multi-maintainer workflow, the workflow would
->still be the same. So no need to cover all bases by sprinkling "(s)" on
->the text. (IMHO.)
-
-We'll fix that.
-
-
-Thank you for your review.
-
-Timothée Albertin
+-- Nathan
+------------------------------------------------------------
+Nathan Neulinger                       nneul@neulinger.org
+Neulinger Consulting                   (573) 612-1412
