@@ -2,108 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9101420954
-	for <e@80x24.org>; Wed, 22 Nov 2017 19:24:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF9DD20954
+	for <e@80x24.org>; Wed, 22 Nov 2017 19:48:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751468AbdKVTYx (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Nov 2017 14:24:53 -0500
-Received: from mail-qt0-f175.google.com ([209.85.216.175]:40095 "EHLO
-        mail-qt0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751249AbdKVTYu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Nov 2017 14:24:50 -0500
-Received: by mail-qt0-f175.google.com with SMTP id u42so25153951qte.7
-        for <git@vger.kernel.org>; Wed, 22 Nov 2017 11:24:50 -0800 (PST)
+        id S1751324AbdKVTsK (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Nov 2017 14:48:10 -0500
+Received: from mail-wm0-f44.google.com ([74.125.82.44]:38214 "EHLO
+        mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751286AbdKVTsJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Nov 2017 14:48:09 -0500
+Received: by mail-wm0-f44.google.com with SMTP id 128so12444359wmo.3
+        for <git@vger.kernel.org>; Wed, 22 Nov 2017 11:48:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=x4tPBbgtlVuTJcJTU5ATEj5989su7SNHvk5ugIK4X1s=;
-        b=dkkTqlXpqr5dZ62es1lg4WQgOA1Ws1mS78LCPoFa9GZMsP3Wn/QKw1COkyZ6PmAG9K
-         0h8VcAfJzeOLNGjfJL6BjTQ8xbGU8q2eaby3ki09z4jS4WOV9z6S3kcN62775kG7Tz3w
-         KKK+JINU8YD/J+IeVDiCkau1vBkIqRde+hWtrBhjffnIHL0WjuqCEsXp5ly7IYwmXtiw
-         Yi4ghrIxxL7KuormI3A3jAmaXVFKm85n0NqxT1Zx+RUSa/3n+91EIBYaoRh3+GlV37WS
-         7p1b4rHeHikseWzEAxHTvxH7/CB0kGEkLFyociulNt3zfS2SKoZr6PaNw1HlkO8r8xkZ
-         XfQg==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=VWaNh4yb/rqhRL8HhZdhp7EThMX6LKssKKuomBe6bck=;
+        b=KCP8hQqUNTzaEQdIp0hhlsNyV8psBuZvbucwX2onPpPOrdSIM6ZS656gjF0l8+r9mB
+         cehNN0d/LpCrhtkWTc2x3z4Lg3D5b5oN17VcAr1PY5qTLJTYt3WuqJ/Bi8yVUw+N2azy
+         6nxFHV0MewTlHZrzxlwARPRlDZ1sqphnFV6Mc8b9Biv3YBGcDGghTImA191Ue6YK/wGj
+         Huvho7QlndON3t/5SPccHqH8/xifUQwGgpTgPQ+gVACKIBda08ilq1XtNBH3HSp+zu4O
+         /9lVZLX/OasgZnCdg+EUborF8BR4YaYYvwO0XOeQcEzDcUrecsjWxYIrtgRBcee9uNG/
+         I/WQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=x4tPBbgtlVuTJcJTU5ATEj5989su7SNHvk5ugIK4X1s=;
-        b=Rg/DuwkhY9p71N9n+VcMv1wk8JXPuQjVoIYUqZDBP10Lruy1jgEsPXHlxFVZ4YFaJX
-         u2cmlOuYHVNcKXDlYutXmFi6+GwlaJG7ygApb0DWWedpeTrExWtB/OJYZ6xlPzze6/+S
-         rJ5PI9taQm/dha7tTKvisGxpoQRelJN2v+TeW6q4Lw/KEiFK6KeQUhICOC5lAmdTV8ak
-         Gy2YUSIWE+pMirBe0PdHyt0bVDda85N08gVItCz/ge5xDJeJ08tvMbNvVQfyeawnkjDT
-         Ljiex1x/5sqIMYEN+7epdIzUyKJqOThQjvdT2F4SHV4QnwhV6kL1k1+2RW6YOriIZV8T
-         7p8w==
-X-Gm-Message-State: AJaThX6cmT6KUKLFu2KW9YIeO1S5mZ0xm/arrXfTeCrz5dimh4kfLRc2
-        1MZz0J5Kwqf61Ka28M/cI3TctpJbx6tnHk7428SQFA==
-X-Google-Smtp-Source: AGs4zManYCMUJQNms7dqv3fre4Cx0Z9WhNPsmxuEQ7VcxXh07S6wPjcSpZVPwZk/VYr9trLY0IGqurHWapknPQp0JRY=
-X-Received: by 10.200.36.105 with SMTP id d38mr32750302qtd.180.1511378689342;
- Wed, 22 Nov 2017 11:24:49 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=VWaNh4yb/rqhRL8HhZdhp7EThMX6LKssKKuomBe6bck=;
+        b=YYWuHMyGbY04Rh/2eFyyn87lOKK9uV6D5W8KwsCwM39SDp9mSwdB2RXbMYDbhp8BZV
+         odF/t2a9zFR5SuVO343/GWFQfZLqOEWLzpDWgB0OedvbsVO0El2G+CvPYzDeCRAvywLx
+         bXJYUESuI3UukNWKb6RA7DErniEuuAPE/K79ZYyv5jVccs7GLzdUAplo+QDAGSkrp6JJ
+         kBnZ/ewusGt5WBmxZ8FXKVJg53az6ZP3uxhdJslNqw/2u2pmOBS8j1XUl5zFZTQOslbk
+         q39XaWOYmVvL8kDu0gF4DGmQN9e0M95rGAli7VtkHjxZ6P2YDM4F5E6BjgG4UBOCAPFL
+         4oew==
+X-Gm-Message-State: AJaThX5xSC0m1OwdqnzmtdfzMkfoaaOCHYDN6Ggxr+L4tMtxku5nmTfK
+        fdp+ntTjPzSio2yypuYz8UE=
+X-Google-Smtp-Source: AGs4zMaU0KaI6lDorKGzUBnIiwmwAXLfCux1N+JgWENupGcyZ2r72xAIFrnh3zdmW1Ay6DlaDykwiw==
+X-Received: by 10.28.158.206 with SMTP id h197mr4835274wme.23.1511380088604;
+        Wed, 22 Nov 2017 11:48:08 -0800 (PST)
+Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
+        by smtp.gmail.com with ESMTPSA id d9sm11511544wrf.45.2017.11.22.11.48.06
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 22 Nov 2017 11:48:06 -0800 (PST)
+Date:   Wed, 22 Nov 2017 19:49:37 +0000
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: [PATCH v3 3/3] worktree: make add <path> dwim
+Message-ID: <20171122194937.GA11773@hank>
+References: <20171118181103.28354-1-t.gummerer@gmail.com>
+ <20171118224706.13810-1-t.gummerer@gmail.com>
+ <20171118224706.13810-4-t.gummerer@gmail.com>
+ <CAPig+cQqbvuZg0Y8ZMObZc7mYXzohooVBFj0-o+CGGXrgGLp5w@mail.gmail.com>
+ <CAPig+cTmqHt5s+C1vTFA7S4ZBwjqnzkn-2wA6i3jVeLw7i1_Lg@mail.gmail.com>
+ <20171121221339.GA4047@hank>
+ <xmqqh8tnyuq3.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Received: by 10.140.85.179 with HTTP; Wed, 22 Nov 2017 11:24:48 -0800 (PST)
-In-Reply-To: <CABPp-BFm7ZcYbie-n-ASmb6MDyJXW3G8YdtHRAzpVNgOvwK5MA@mail.gmail.com>
-References: <20171121080059.32304-1-newren@gmail.com> <CAGZ79kbVzDEv=rj7X6EhWZyAFd+fq+nwG8c+raqu9tXv_z9f4A@mail.gmail.com>
- <CABPp-BFm7ZcYbie-n-ASmb6MDyJXW3G8YdtHRAzpVNgOvwK5MA@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 22 Nov 2017 11:24:48 -0800
-Message-ID: <CAGZ79kbustk48yP7jC6UmjidQUuWfhQWcqX_CUz=WnM0X3H8aw@mail.gmail.com>
-Subject: Re: [PATCH v3 00/33] Add directory rename detection to git
-To:     Elijah Newren <newren@gmail.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqh8tnyuq3.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 21, 2017 at 5:12 PM, Elijah Newren <newren@gmail.com> wrote:
-> On Tue, Nov 21, 2017 at 4:42 PM, Stefan Beller <sbeller@google.com> wrote:
->> On Tue, Nov 21, 2017 at 12:00 AM, Elijah Newren <newren@gmail.com> wrote:
->>> This patchset introduces directory rename detection to merge-recursive; I'm
->>> resubmitting just a few hours after my PATCHv2 because I didn't know about
->>> the DEVELOPER=1 flag previously, and my code had a number of
->>> warnings/errors.  I would have just submitted fixup/squash patches, but
->>> when I checked, there sadly they cause merge conflicts when rebasing
->>>
->>> See https://public-inbox.org/git/20171110190550.27059-1-newren@gmail.com/
->>> for the first series, design considerations, etc, and
->>> https://public-inbox.org/git/20171120220209.15111-1-newren@gmail.com/ for
->>> v2.
->>
->> Thanks, I'll take a look!
->>
->> Protip: To make it easy for reviewers add an interdiff[1] between the different
->> versions of the patch series, this can be done via tbdiff[2] for example,
->> or in case you still have the old branch around or Junio has it queued already,
->> you can do a diff against that branch.
->
-> Thanks!
->
-> Interesting; tbdiff looks cool.  Junio hasn't queued this series yet,
-> but it's easy enough to reconstruct the old one.  It does weigh in
-> pretty heavy, and I'm slighly worried about gmail mangling all the
-> lines, but I'm going to give it a shot anyway.  If it's too mangled,
-> I'll try to repost using git-send-email.  It does weigh in at over
-> 1600 lines, so it's not small.
+On 11/22, Junio C Hamano wrote:
+> Thomas Gummerer <t.gummerer@gmail.com> writes:
+> 
+> > I didn't consider that, I think you are right, and the flag should
+> > apply in that case as well.  I think at that point we may as well pass
+> > this flag through to the 'git branch' call, and let users set up
+> > tracking if they want to, the same way it works in 'git branch'.
+> 
+> OK, so tracking is set up by default in the current implementation
+> of "git worktree" (even without your proposed update), but we will
+> stop doing so, and instead take an explicit "--track" option (or
+> "--no-track" to countermand an earlier "--track" on the command line
+> and/or a default configured with branch.autosetupmerge) just like
+> "git branch" does?
 
-In my first round of review I only looked over the tests to see if I'd
-find the behavior intuitive, I spared the implementation, as Junio seemed
-to have reviewed a couple patches of the v1 implementation.
+I was a bit brief in the above.  The full story is that tracking is
+set up by default if the '<branch>' given is a remote tracking branch,
+and isn't set up otherwise, the same way as 'git branch' behaves.
 
-Now I also looked over the implementation and quite like it, though
-I'd be happy if others would also have a look.
+What I'm planning to do is introduce a --[no-]track flag to override
+this behaviour.  As 'git worktree' really just calls 'git branch'
+internally, the branch.autoSetupMerge configuration is also
+respected.
 
-All but one comment were minor style nits, which are no big deal;
-the other remark that I was musing about was whether we want to use
-strbufs in the new code instead of e.g. sprintfs to extend strings.
-And I'd think we would want to use them unless there are compelling
-reasons not to.
+> I think that it is very sensible thing to make sure that "branch",
+> "checkout -b" and "worktree", i.e. the three ways to create a branch
+> to work on (the latter two being short-hands), behave consistently.
 
-Thanks,
-Stefan
+So in summary "branch" and "worktree" already behave consistently, the
+plan is just to introduce the same "--[no-]track" flag as branch to
+allow users to override the behaviour the same way as they are allowed
+in "branch".
+
+> Thanks.
