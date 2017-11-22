@@ -2,125 +2,167 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4516220954
-	for <e@80x24.org>; Wed, 22 Nov 2017 12:04:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 929E720954
+	for <e@80x24.org>; Wed, 22 Nov 2017 12:10:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752256AbdKVMEg (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Nov 2017 07:04:36 -0500
-Received: from cpanel2.indieserve.net ([199.212.143.6]:44021 "EHLO
-        cpanel2.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752044AbdKVMEf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Nov 2017 07:04:35 -0500
-Received: from 69-196-158-250.dsl.teksavvy.com ([69.196.158.250]:36434 helo=DESKTOP-1GPMCEJ)
-        by cpanel2.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.89)
-        (envelope-from <rpjday@crashcourse.ca>)
-        id 1eHTla-0008Il-Ni
-        for git@vger.kernel.org; Wed, 22 Nov 2017 07:04:34 -0500
-Date:   Wed, 22 Nov 2017 07:03:09 -0500 (EST)
-From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
-X-X-Sender: rpjday@DESKTOP-1GPMCEJ
-To:     Git Mailing list <git@vger.kernel.org>
-Subject: [PATCH v3] doc: tweak "man gitcli" for clarity
-Message-ID: <alpine.LFD.2.21.1711220701070.12544@DESKTOP-1GPMCEJ>
-User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+        id S1752370AbdKVMJ7 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Nov 2017 07:09:59 -0500
+Received: from mail-wm0-f42.google.com ([74.125.82.42]:46364 "EHLO
+        mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752322AbdKVMJ5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Nov 2017 07:09:57 -0500
+Received: by mail-wm0-f42.google.com with SMTP id u83so9903259wmb.5
+        for <git@vger.kernel.org>; Wed, 22 Nov 2017 04:09:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=9JKp8cn9rYL5CSHExk+VGgVXyScD6pCSv8qvTbfaouE=;
+        b=ucdM2fphuMCQUxOAudsk1E08f6/RW6W62SzG57A7ielCsQ7xIf5f0PjKAnpfZPddI6
+         dTZzgFS+mSjfTyWaitHJx/Jqx/zAdmUP7A2hp417onoM4sW+eRCYuQ9OxXFLj8+DkWoI
+         ZD1vLLHHSg+aZenddmsX1H0C8NpJt2OWerv+yWbIAwY8tLJU7tZD0Qq65567FW2TsEAJ
+         Zen70I3lhjBXCqe2UWS2CgwPP3s9KRFeb31fV0bX7rLmBPYG6N2pzLLcM+G4HGy1mRgu
+         BQjthkeDcVGlrKGcALVB6zgm5jLwljt3NYhKD3czsD2nmsgVboAzk7i+zYzDQeQqzxbd
+         0Ezg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=9JKp8cn9rYL5CSHExk+VGgVXyScD6pCSv8qvTbfaouE=;
+        b=bdLcRqe1CQRBGL+5f15wEHSaD/7QOexptifVMe453VdmF2tJAlF7+A7zQh5NXqZ84z
+         ozOrAJlNCFINudeyrHruUeFvi+3zcEAaaYB9BYP5TRvhKR1BsH2A9jhhI/QXsz6P1ghk
+         eOioCH3DHSe5YrxIdqcuGPd9YYwx7hRKe35VBKXzxuDGJTXbCfLgDgqbX4w/jgLfORCI
+         60Dn+w9OUXmc1AA+3qyD40LKQ0IigNkWT0cOhwH9bzrawk1eQd+BxerL0J8MRT1UA0lI
+         x+BWfpQ7UFlfwqw5R7xEbjmBziVpWt+pOQX1gIuGTpsyYYoxWkNCih5iwEDN+s3vbLRx
+         +bXQ==
+X-Gm-Message-State: AJaThX6MSi/yEu6cqzsVGjW61FAeUb8sn3B+zQuDCc4ELwc38afM8bGY
+        O64H+qO3BYfOP+cktAEKHVYcgpo7
+X-Google-Smtp-Source: AGs4zMY1SxnUih+We7v8D+W2YQgpzurbOWqBLG13r+tcFtEUZMHa86Sz5weFER5UgXe9UF5ID5B3/A==
+X-Received: by 10.80.212.27 with SMTP id t27mr27072358edh.89.1511352595822;
+        Wed, 22 Nov 2017 04:09:55 -0800 (PST)
+Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
+        by smtp.gmail.com with ESMTPSA id x5sm7974528eda.8.2017.11.22.04.09.54
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 22 Nov 2017 04:09:54 -0800 (PST)
+Received: from avar by evledraar with local (Exim 4.89)
+        (envelope-from <avarab@gmail.com>)
+        id 1eHTqk-0004Me-5M; Wed, 22 Nov 2017 13:09:54 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Dan Jacques <dnj@google.com>
+Cc:     Johannes.Schindelin@gmx.de, git@vger.kernel.org, gitster@pobox.com,
+        Petr Baudis <pasky@ucw.cz>
+Subject: Re: Re [PATCH 1/1] exec_cmd: RUNTIME_PREFIX on some POSIX systems
+References: <87k1ykwrfv.fsf@evledraar.booking.com> <20171121024102.14153-1-dnj@google.com>
+User-agent: Debian GNU/Linux 9.2 (stretch); Emacs 25.1.1; mu4e 0.9.19
+In-reply-to: <20171121024102.14153-1-dnj@google.com>
+Date:   Wed, 22 Nov 2017 13:09:54 +0100
+Message-ID: <87efoqwm3x.fsf@evledraar.booking.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cpanel2.indieserve.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - crashcourse.ca
-X-Get-Message-Sender-Via: cpanel2.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
-X-Authenticated-Sender: cpanel2.indieserve.net: rpjday@crashcourse.ca
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-No major changes, just some rewording and showing some variations of
-general Git commands.
 
-Signed-off-by: Robert P. J. Day <rpjday@crashcourse.ca>
+On Tue, Nov 21 2017, Dan Jacques jotted:
 
----
+> Ævar Arnfjörð Bjarmason @ 2017-11-20 21:50 UTC suggested:
+>
+>> So LeonT over at #p5p helped me with this. He believes this'll work
+>> (unless MakeMaker INSTALL_BASE is set, but that should break the Git
+>> install anyway):
+>
+> I think that the problem with this approach is that it uses the local
+> "Config" module. The primary purpose of RUNTIME_PREFIX(_PERL) is that one
+> can build/install Git into a directory, then either move that directory
+> somewhere else or archive it and put it on a different (binary-compatible)
+> system altogether.
+>
+> The latter case concerns me here. If the "Config" module is loading local
+> system paths, then the relative pathing between "$Config{installsitelib}"
+> and "$Config{siteprefixexp}" may not be consistent between systems, so an
+> archive built from one system may not have a compatible relative
+> directory structure when resolved with the Config module on another
+> system.
 
-diff --git a/Documentation/gitcli.txt b/Documentation/gitcli.txt
-index 9f13266a6..b7f40bf78 100644
---- a/Documentation/gitcli.txt
-+++ b/Documentation/gitcli.txt
-@@ -13,7 +13,7 @@ gitcli
- DESCRIPTION
- -----------
+I don't see how this is different from any other option we build git
+with. When we dynamically link to e.g. PCRE under RUNTIME_PREFIX*=Yes
+you can move the installed git from /tmp/git to /tmp/git2, but it'll
+still expect the specific version of the *.so libraries to be in
+/usr/lib or whatever.
 
--This manual describes the convention used throughout Git CLI.
-+This manual describes the conventions used throughout Git CLI.
+Similarly we under the default MakeMaker path add the perl version to
+the directories we have, you can move git from /tmp/git to /tmp/git2 no
+problem, since that won't change the perl version, but if you upgrade
+the global perl itself from 5.20 to 5.24 you'll need to re-build.
 
- Many commands take revisions (most often "commits", but sometimes
- "tree-ish", depending on the context and command) and paths as their
-@@ -32,32 +32,35 @@ arguments.  Here are the rules:
-    between the HEAD commit and the work tree as a whole".  You can say
-    `git diff HEAD --` to ask for the latter.
+> Since we control the installation process and paths, we know that the
+> directory structure looks someting like:
+>
+> .../prefix/$GITEXECDIR/git-perl-script
+> .../prefix/$RELPERLPATH/Git.pm
+>
 
-- * Without disambiguating `--`, Git makes a reasonable guess, but errors
--   out and asking you to disambiguate when ambiguous.  E.g. if you have a
--   file called HEAD in your work tree, `git diff HEAD` is ambiguous, and
-+ * In cases where a Git command is truly ambiguous, Git will error out
-+   and ask you to disambiguate the command.  E.g. if you have a file
-+   called HEAD in your work tree, `git diff HEAD` is ambiguous, and
-    you have to say either `git diff HEAD --` or `git diff -- HEAD` to
-    disambiguate.
- +
- When writing a script that is expected to handle random user-input, it is
- a good practice to make it explicit which arguments are which by placing
--disambiguating `--` at appropriate places.
-+a disambiguating `--` at appropriate places.
+Having said the above, I don't understand why we're using MakeMaker at
+all and I think we should just get rid of it.
 
-  * Many commands allow wildcards in paths, but you need to protect
--   them from getting globbed by the shell.  These two mean different
--   things:
-+   them from getting globbed by the shell.  The following commands have
-+   two different meanings:
- +
- --------------------------------
- $ git checkout -- *.c
-+
- $ git checkout -- \*.c
-+$ git checkout -- "*.c"
-+$ git checkout -- '*.c'
- --------------------------------
- +
--The former lets your shell expand the fileglob, and you are asking
--the dot-C files in your working tree to be overwritten with the version
--in the index.  The latter passes the `*.c` to Git, and you are asking
--the paths in the index that match the pattern to be checked out to your
--working tree.  After running `git add hello.c; rm hello.c`, you will _not_
--see `hello.c` in your working tree with the former, but with the latter
--you will.
-+The first command lets your shell expand the fileglob, and you are asking
-+the dot-C files in your working tree to be overwritten with the version in
-+the index.  The latter three variations pass the `*.c` to Git, and you are
-+asking the paths in the index that match the pattern to be checked out to
-+your working tree.  After running `git add hello.c; rm hello.c`, you will
-+_not_ see `hello.c` in your working tree with the first command, but with
-+the latter three variations, you will.
+We're not using the perldoc toolchain to build manpages from *.pod for
+these, and we don't have any C bindings, it seems to me that we could
+simply replace this whole thing with a removal of all things Make-y from
+perl/* and just do the minor work of creating a top-levle git-perl-lib
+in our install $PREFIX and make the perl stuff use that.
 
-  * Just as the filesystem '.' (period) refers to the current directory,
-    using a '.' as a repository name in Git (a dot-repository) is a relative
+Looking at the history of the Makefile.PL it originally had XS stuff
+(which you'd need a Makefile.PL for), but this was removed in 18b0fc1ce1
+before it made it to master.
 
--- 
+My comment on your patch series was just that with the method I posted
+there's no reason for why RUNTIME_PREFIX*=Yes and MakeMaker need to be
+mutually exclusive, so if we're keeping the MakeMaker it seems to me
+that we can support both.
 
-========================================================================
-Robert P. J. Day                                 Ottawa, Ontario, CANADA
-                        http://crashcourse.ca
+But we can probably just get rid of MakeMaker.
 
-Twitter:                                       http://twitter.com/rpjday
-LinkedIn:                               http://ca.linkedin.com/in/rpjday
-========================================================================
+> Our goal is to, given the directory that "git-perl-script" belongs to,
+> first identify the path for ".../prefix" and then append "$RELPERLPATH" to
+> it to generate the full library path.
+>
+> The most straightforward way to do this, to me, is to:
+>
+> 1) Have the Makefile hard-code "$RELPERLPATH" and "$GITEXECDIR" (relative
+>   paths) into the header code.
+> 2) Assert that "$FindBin::Bin" (the directory containing the script) ends
+>   with "$GITEXECDIR".
+> 3) Remove "$GITEXECDIR" from the end of "$FindBin::Bin" to obtain
+>   ".../prefix" ($prefix). Simple string truncation is probably fine for
+>   this.
+> 4) Add "File::Spec->catdir($prefix, $RELPERLPATH)" to "lib".
+>
+> I don't think path separators are a problem, since the Makefile uses "/"
+> indiscriminately. Even Git-for-Windows seems to run its PERL scripts in
+> a POSIX environment (mingw).
+
+Right. I don't know that they are either, it just stuck me as an odd
+inconsistency that you're going out of your way to do catdir($p, "lib")
+in one place and then hardcoding unix-like paths in another place.
+
+If it's not neede dwe can just do "$p/lib".
+
+> Does this sound like a reasonable way to proceed?
+
+I think the best way to proceed is probalby to just start getting rid of
+the perl/* make stuff as discussed above.
+
+Is that something you're interested in / have time for, otherwise I
+could see if I could find some time, but I don't have a lot these days.
+
+Which is not to say that I think that should block this patch series or
+anything. If it really needs to disable MakeMaker to work we're no worse
+off than before.
