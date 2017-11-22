@@ -2,82 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6A41C20954
-	for <e@80x24.org>; Wed, 22 Nov 2017 20:39:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 36F6820954
+	for <e@80x24.org>; Wed, 22 Nov 2017 21:17:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751357AbdKVUjc convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Wed, 22 Nov 2017 15:39:32 -0500
-Received: from marot.dh.bytemark.co.uk ([212.110.172.17]:39066 "EHLO
-        marot.bettens.info" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751260AbdKVUjb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Nov 2017 15:39:31 -0500
-Received: by marot.bettens.info (Sendmail new on BidulOS, from userid 65534)
-        id 5E69157058D; Wed, 22 Nov 2017 21:39:30 +0100 (CET)
-Received: from machaut.bettens.info (dslgva4378.worldcom.ch [83.172.215.76])
-        (using TLSv1.2 with cipher ADH-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by marot.bettens.info (Sendmail new on BidulOS) with ESMTPS id 2080E57057F;
-        Wed, 22 Nov 2017 21:39:28 +0100 (CET)
-Received: from [192.168.1.9] (dslgva4378.worldcom.ch [83.172.215.76])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by machaut.bettens.info (Postfix) with ESMTPSA id 7E29F914;
-        Wed, 22 Nov 2017 21:39:24 +0100 (CET)
-Date:   Wed, 22 Nov 2017 21:39:24 +0100
-From:   Louis Bettens <louis@bettens.info>
-Subject: Re: [PATCH] fix french translation
-To:     =?iso-8859-1?q?Jean-No=EBl?= AVILA <jn.avila@free.fr>
-Cc:     git@vger.kernel.org, worldhello.net@gmail.com
-Message-Id: <1511383164.854.8@machaut.bettens.info>
-In-Reply-To: <3937091.4fae5A5SOV@cayenne>
-References: <20171122172440.15106-1-louis@bettens.info>
-        <20171122172440.15106-2-louis@bettens.info> <3937091.4fae5A5SOV@cayenne>
-X-Mailer: geary/0.12-dev
+        id S1751987AbdKVVRe (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Nov 2017 16:17:34 -0500
+Received: from cloud.peff.net ([104.130.231.41]:37982 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751982AbdKVVRc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Nov 2017 16:17:32 -0500
+Received: (qmail 2782 invoked by uid 109); 22 Nov 2017 21:17:32 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 22 Nov 2017 21:17:31 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 4854 invoked by uid 111); 22 Nov 2017 21:17:47 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with ESMTPA; Wed, 22 Nov 2017 16:17:47 -0500
+Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 22 Nov 2017 16:17:29 -0500
+Date:   Wed, 22 Nov 2017 16:17:29 -0500
+From:   Jeff King <peff@peff.net>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Nathan Neulinger <nneul@neulinger.org>,
+        Santiago Torres <santiago@nyu.edu>, git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: git status always modifies index?
+Message-ID: <20171122211729.GA2854@sigill>
+References: <a039d139-dba5-683e-afbf-4044cd32ab1d@neulinger.org>
+ <20171122153028.olssotkcf3dd6ron@LykOS.localdomain>
+ <5050d779-2981-6f06-49f7-0ecb4efb25b8@neulinger.org>
+ <20171122161014.djkdygmclk227xmq@LykOS.localdomain>
+ <dfbf4af3-e87c-bdcb-7544-685572925a50@neulinger.org>
+ <20171122202720.GD11671@aiede.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1; format=flowed
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20171122202720.GD11671@aiede.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks!
+On Wed, Nov 22, 2017 at 12:27:20PM -0800, Jonathan Nieder wrote:
 
-Bye
+> Nathan Neulinger wrote[1]:
+> 
+> > I just got an answer to my stackoverflow question on this,
+> > apparently it's already implemented:
+> >
+> > https://stackoverflow.com/questions/47436939/how-to-run-git-status-without-modifying-git-index-such-as-in-a-prompt-command
+> >
+> > There is a "--no-optional-locks" command in 2.15 that looks like it
+> > does exactly what I need.
+> 
+> I was about to point to
+> https://public-inbox.org/git/20170921043214.pyhdsrpy4omy54rm@sigill.intra.peff.net/
+> about exactly this thing. :)
+> 
+> That said, I wonder if this use case is an illustration that a name
+> like --no-lock-index (as was used in Git for Windows when this feature
+> first appeared) or --no-refresh-on-disk-index (sorry, I am terrible at
+> coming up with option names) would make the feature easier to
+> discover.
 
-Le mer 22 nov 2017 à 21:17, Jean-Noël AVILA <jn.avila@free.fr> a 
-écrit :
-> On Wednesday, 22 November 2017 18:24:40 CET Louis Bettens wrote:
->>  Signed-off-by: Louis Bettens <louis@bettens.info>
->>  ---
->>   po/fr.po | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->> 
->>  diff --git a/po/fr.po b/po/fr.po
->>  index 4deae3318..a12a2ae37 100644
->>  --- a/po/fr.po
->>  +++ b/po/fr.po
->>  @@ -14331,7 +14331,7 @@ msgstr "git worktree add [<options>] 
->> <chemin> [<branche>]"
->> 
->>   #: builtin/worktree.c:17
->>   msgid "git worktree list [<options>]"
->>  -msgstr "git worktree prune [<options>]"
->>  +msgstr "git worktree list [<options>]"
->> 
->>   #: builtin/worktree.c:18
->>   msgid "git worktree lock [<options>] <path>"
->> 
-> 
-> Good catch! I guess the segment switched directly from fuzzy to 
-> translated.
-> 
-> I'll queue it for the next version which we should not wait for long.
-> 
-> Thanks
-> 
+Yeah, it's interesting that Nathan does not care about the simultaneous
+locking here, but rather about the effect of writing to the repo for
+what would otherwise be a read-only operation.
 
+Under the original intent of --no-optional-locks I think if we could
+somehow magically update the on-disk index without lock contention, it
+would be OK to do so. But that would make it no longer work for this
+particular case.
+
+And I would also not be surprised if there are other cases where we
+write in a lockless way that would best be avoided in a multi-user
+setup. I'm thinking specifically of the way that some merge-y operations
+may write out intermediate objects, even though they're only needed
+inside the process. It _should_ be a read-only operation to ask "can
+these two things be merged cleanly", and you should be able to ask that
+without accidentally creating root-owned files in .git/objects.
+
+So I actually think what Nathan wants is not exactly the same as
+--no-optional-locks in the first place. But in practice, for a limited
+set of operations and with the way that locks work in Git, it
+accomplishes the same thing. Maybe that points to having a broader
+option. Or maybe having two separate options that largely have the same
+effect. Or maybe just living with the minor philosophical rough edges,
+since it seems OK in practice.
+
+-Peff
