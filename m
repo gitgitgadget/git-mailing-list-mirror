@@ -2,96 +2,232 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 36F6820954
-	for <e@80x24.org>; Wed, 22 Nov 2017 21:17:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0071E20954
+	for <e@80x24.org>; Wed, 22 Nov 2017 21:21:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751987AbdKVVRe (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Nov 2017 16:17:34 -0500
-Received: from cloud.peff.net ([104.130.231.41]:37982 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751982AbdKVVRc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Nov 2017 16:17:32 -0500
-Received: (qmail 2782 invoked by uid 109); 22 Nov 2017 21:17:32 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 22 Nov 2017 21:17:31 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 4854 invoked by uid 111); 22 Nov 2017 21:17:47 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Wed, 22 Nov 2017 16:17:47 -0500
-Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 22 Nov 2017 16:17:29 -0500
-Date:   Wed, 22 Nov 2017 16:17:29 -0500
-From:   Jeff King <peff@peff.net>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Nathan Neulinger <nneul@neulinger.org>,
-        Santiago Torres <santiago@nyu.edu>, git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: git status always modifies index?
-Message-ID: <20171122211729.GA2854@sigill>
-References: <a039d139-dba5-683e-afbf-4044cd32ab1d@neulinger.org>
- <20171122153028.olssotkcf3dd6ron@LykOS.localdomain>
- <5050d779-2981-6f06-49f7-0ecb4efb25b8@neulinger.org>
- <20171122161014.djkdygmclk227xmq@LykOS.localdomain>
- <dfbf4af3-e87c-bdcb-7544-685572925a50@neulinger.org>
- <20171122202720.GD11671@aiede.mtv.corp.google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20171122202720.GD11671@aiede.mtv.corp.google.com>
+        id S1751816AbdKVVV2 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Nov 2017 16:21:28 -0500
+Received: from mail-pl0-f65.google.com ([209.85.160.65]:41502 "EHLO
+        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751596AbdKVVVG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Nov 2017 16:21:06 -0500
+Received: by mail-pl0-f65.google.com with SMTP id u14so1446723plm.8
+        for <git@vger.kernel.org>; Wed, 22 Nov 2017 13:21:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=232RtYE7HK0wMNDzhA1K9T5eTmySaqgg9GLVDVDrZzg=;
+        b=ksAOY3NI07DNoGjcQvhYXHUB8dR5NljQQQma9uk7+wsqShhDCPpI6h+vuOv9VNF8EG
+         +NetoKxdCssRQT4Ij0M2Vo2I59OuyRYfMxVBLpI2iZWtEMIoZ/+3sJtTAFPxPNhV3ok3
+         kLwCNU/SM1D0DIPXoAm/27mdoEtC6llkNG/NmS6XEZAcD2fNReKI9c25201fJ5dYS5Iw
+         oNO4VYnRjcTvgs2yQWyvANWHUGr109SY2ZbJ+2Ddy7mgPQp12aMPeMIDMDT/m0WbGcfz
+         Q8Js9euaijkybfsXxzxCpETj10FAKU8qb2c91hx/BWNHW+sqjl/VIOTYyXDU04rCvpyt
+         ZLyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=232RtYE7HK0wMNDzhA1K9T5eTmySaqgg9GLVDVDrZzg=;
+        b=a3C2TBbpczfPMCPr7pGg/QdVdktUHaIJt4P0g7L0djl+3VgkjhWQz+kCbh74iPjJhw
+         19+xDFLpl6kzzZyZEmWtyJ3tFfpX7wRPxiuhZTHisYWkfIWsps7EgX0P4hGdSvWB+0nR
+         cWF1GjzHvINUy28CO0hCB89odB4cHlPBslM1jVE6eAEcL9juHdKjte229Gkj/hNkR8zI
+         To79UEJJ1/QbXAak3KF470Vtxzp/EeynFhzQUKim/VoprExJA+j1uuHTg2dqqjiKq4Ni
+         pLYJBdERM0YNs2yG0O78L2T/I58D1AI/+X3V9dx6GY/3A5NNF5/ufBIEhH/O3fF3dUuh
+         yzyQ==
+X-Gm-Message-State: AJaThX6ercjc0uZDlMFkqJ8f9FkLKjJv1B0w1YlUTCipjHns+Mu9qqum
+        gNsHV+qeNLoeiBTQ9imCjvGc4Bsq
+X-Google-Smtp-Source: AGs4zMZcxAUjEHF7t81prrX+sFXXkg644I0QrdWjghUAgGbOoA16DbxuXpCcf1m7fa/KRgiN1JGP1w==
+X-Received: by 10.84.202.12 with SMTP id w12mr13331277pld.107.1511385665292;
+        Wed, 22 Nov 2017 13:21:05 -0800 (PST)
+Received: from phord-x1.purestorage.com ([64.84.68.252])
+        by smtp.gmail.com with ESMTPSA id h192sm14912194pfc.139.2017.11.22.13.21.03
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 22 Nov 2017 13:21:03 -0800 (PST)
+From:   Phil Hord <phil.hord@gmail.com>
+To:     Git <git@vger.kernel.org>
+Cc:     Thomas Gummerer <t.gummerer@gmail.com>,
+        Phil Hord <phil.hord@gmail.com>
+Subject: [PATCH v2] Teach stash to parse -m/--message like commit does
+Date:   Wed, 22 Nov 2017 13:20:30 -0800
+Message-Id: <20171122212031.5988-1-phil.hord@gmail.com>
+X-Mailer: git-send-email 2.15.0.471.g17a719cfe.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 22, 2017 at 12:27:20PM -0800, Jonathan Nieder wrote:
+`git stash push -m foo` uses "foo" as the message for the stash. But
+`git stash push -m"foo"` does not parse successfully.  Similarly
+`git stash push --message="My stash message"` also fails.  The stash
+documentation doesn't suggest this syntax should work, but gitcli
+does and my fingers have learned this pattern long ago for `commit`.
 
-> Nathan Neulinger wrote[1]:
-> 
-> > I just got an answer to my stackoverflow question on this,
-> > apparently it's already implemented:
-> >
-> > https://stackoverflow.com/questions/47436939/how-to-run-git-status-without-modifying-git-index-such-as-in-a-prompt-command
-> >
-> > There is a "--no-optional-locks" command in 2.15 that looks like it
-> > does exactly what I need.
-> 
-> I was about to point to
-> https://public-inbox.org/git/20170921043214.pyhdsrpy4omy54rm@sigill.intra.peff.net/
-> about exactly this thing. :)
-> 
-> That said, I wonder if this use case is an illustration that a name
-> like --no-lock-index (as was used in Git for Windows when this feature
-> first appeared) or --no-refresh-on-disk-index (sorry, I am terrible at
-> coming up with option names) would make the feature easier to
-> discover.
+Teach `git stash` and `git store` to parse -mFoo and --message=Foo
+the same as `git commit` would do.  Even though it's an internal
+function, add similar support to create_stash() for consistency.
 
-Yeah, it's interesting that Nathan does not care about the simultaneous
-locking here, but rather about the effect of writing to the repo for
-what would otherwise be a read-only operation.
+Reviewd-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Phil Hord <phil.hord@gmail.com>
+---
 
-Under the original intent of --no-optional-locks I think if we could
-somehow magically update the on-disk index without lock contention, it
-would be OK to do so. But that would make it no longer work for this
-particular case.
+Added tests for 'stash push' and 'stash store'.
+Added a note that create_stash is included but unnecessary.
 
-And I would also not be surprised if there are other cases where we
-write in a lockless way that would best be avoided in a multi-user
-setup. I'm thinking specifically of the way that some merge-y operations
-may write out intermediate objects, even though they're only needed
-inside the process. It _should_ be a read-only operation to ask "can
-these two things be merged cleanly", and you should be able to ask that
-without accidentally creating root-owned files in .git/objects.
+ git-stash.sh     | 18 +++++++++++
+ t/t3903-stash.sh | 93 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 111 insertions(+)
 
-So I actually think what Nathan wants is not exactly the same as
---no-optional-locks in the first place. But in practice, for a limited
-set of operations and with the way that locks work in Git, it
-accomplishes the same thing. Maybe that points to having a broader
-option. Or maybe having two separate options that largely have the same
-effect. Or maybe just living with the minor philosophical rough edges,
-since it seems OK in practice.
+diff --git a/git-stash.sh b/git-stash.sh
+index 4b7495144..1114005ce 100755
+--- a/git-stash.sh
++++ b/git-stash.sh
+@@ -76,6 +76,12 @@ create_stash () {
+ 			shift
+ 			stash_msg=${1?"BUG: create_stash () -m requires an argument"}
+ 			;;
++		-m*)
++			stash_msg=${1#-m}
++			;;
++		--message=*)
++			stash_msg=${1#--message=}
++			;;
+ 		-u|--include-untracked)
+ 			shift
+ 			untracked=${1?"BUG: create_stash () -u requires an argument"}
+@@ -193,6 +199,12 @@ store_stash () {
+ 			shift
+ 			stash_msg="$1"
+ 			;;
++		-m*)
++			stash_msg=${1#-m}
++			;;
++		--message=*)
++			stash_msg=${1#--message=}
++			;;
+ 		-q|--quiet)
+ 			quiet=t
+ 			;;
+@@ -251,6 +263,12 @@ push_stash () {
+ 			test -z ${1+x} && usage
+ 			stash_msg=$1
+ 			;;
++		-m*)
++			stash_msg=${1#-m}
++			;;
++		--message=*)
++			stash_msg=${1#--message=}
++			;;
+ 		--help)
+ 			show_help
+ 			;;
+diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+index 3b1ac1971..39c7f2ebd 100755
+--- a/t/t3903-stash.sh
++++ b/t/t3903-stash.sh
+@@ -804,6 +804,99 @@ test_expect_success 'push -m shows right message' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'push -m also works without space' '
++	>foo &&
++	git add foo &&
++	git stash push -m"unspaced test message" &&
++	echo "stash@{0}: On master: unspaced test message" >expect &&
++	git stash list -1 >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'store -m foo shows right message' '
++	git stash clear &&
++	git reset --hard &&
++	echo quux >bazzy &&
++	git add bazzy &&
++	STASH_ID=$(git stash create) &&
++	git stash store -m "store m" $STASH_ID &&
++	echo "stash@{0}: store m" >expect &&
++	git stash list -1 >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'store -mfoo shows right message' '
++	git stash clear &&
++	git reset --hard &&
++	echo quux >bazzy &&
++	git add bazzy &&
++	STASH_ID=$(git stash create) &&
++	git stash store -m"store mfoo" $STASH_ID &&
++	echo "stash@{0}: store mfoo" >expect &&
++	git stash list -1 >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'store --message=foo shows right message' '
++	git stash clear &&
++	git reset --hard &&
++	echo quux >bazzy &&
++	git add bazzy &&
++	STASH_ID=$(git stash create) &&
++	git stash store --message="store message=foo" $STASH_ID &&
++	echo "stash@{0}: store message=foo" >expect &&
++	git stash list -1 >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'store --message foo shows right message' '
++	git stash clear &&
++	git reset --hard &&
++	echo quux >bazzy &&
++	git add bazzy &&
++	STASH_ID=$(git stash create) &&
++	git stash store --message "store message foo" $STASH_ID &&
++	echo "stash@{0}: store message foo" >expect &&
++	git stash list -1 >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'push -mfoo uses right message' '
++	>foo &&
++	git add foo &&
++	git stash push -m"test mfoo" &&
++	echo "stash@{0}: On master: test mfoo" >expect &&
++	git stash list -1 >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'push --message foo is synonym for -mfoo' '
++	>foo &&
++	git add foo &&
++	git stash push --message "test message foo" &&
++	echo "stash@{0}: On master: test message foo" >expect &&
++	git stash list -1 >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'push --message=foo is synonym for -mfoo' '
++	>foo &&
++	git add foo &&
++	git stash push --message="test message=foo" &&
++	echo "stash@{0}: On master: test message=foo" >expect &&
++	git stash list -1 >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'push -m shows right message' '
++	>foo &&
++	git add foo &&
++	git stash push -m "test m foo" &&
++	echo "stash@{0}: On master: test m foo" >expect &&
++	git stash list -1 >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'create stores correct message' '
+ 	>foo &&
+ 	git add foo &&
+-- 
+2.15.0.471.g17a719cfe.dirty
 
--Peff
