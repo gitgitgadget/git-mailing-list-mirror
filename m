@@ -2,113 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B625520954
-	for <e@80x24.org>; Wed, 22 Nov 2017 14:39:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D67C320954
+	for <e@80x24.org>; Wed, 22 Nov 2017 14:56:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751496AbdKVOjH (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Nov 2017 09:39:07 -0500
-Received: from mail-wm0-f46.google.com ([74.125.82.46]:41941 "EHLO
-        mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751316AbdKVOjG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Nov 2017 09:39:06 -0500
-Received: by mail-wm0-f46.google.com with SMTP id b189so10813737wmd.0
-        for <git@vger.kernel.org>; Wed, 22 Nov 2017 06:39:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dinwoodie.org; s=google;
-        h=date:from:to:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=IYS+zHObdtsIq34+7gBGtPSZOiTlHCToW7DhOLD2Xik=;
-        b=BXO9EMAjMvoSAY83qYLhF56DfhCa9b4L+/QsSxhm5DcmCJW5N8hm0ITFBkAKPLmRiX
-         FekjX0oWPFEW5jzv0hJ9Vs0MxyFzfGOdQnPzt294LAvoMbs8fzPSN0LobytpYPu9Sp+w
-         BQbAbP2I7Oqh/JoHKyBka54gqhKU8QSclTT5Q=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=IYS+zHObdtsIq34+7gBGtPSZOiTlHCToW7DhOLD2Xik=;
-        b=mcDoeyaj7+rnbarZr2n52NVJ/ycRvlt6JJn+o30ciDkpF63UE4umlZgivEX2JEajOK
-         9F8G8tndSnPsi/aLWdhlUWg7V/39wmLpwZxMIuyt9XsWZAcKPpu6nJM7OK1sz7gHYzpL
-         GNuDqm6XrQasAYQAs/F/MRODY4dqrSPJV22g9A85WxG/d9q1qYxOQRY5OjGNMrLJKQLQ
-         s1UDE+alotOUqgaDR2YMg/SzTAmhgHa4SuIncE9yYMq95nP1LkBUOgmKjIOMnPBb/rhk
-         kR84iJcbh1icIMpLuZlPGyAEEF7+gjawc/o8ucQ3OSkrFbJGFZ9jx5tldNBTeul5D9Mp
-         Lsuw==
-X-Gm-Message-State: AJaThX5b/8Evka0D1KTjU+BVVzEzkrmdGAROQIQ5Zxcwm0P5y99+9DRn
-        m6S23pKN5fH/7YHs2i+xO/phdUx8I5g=
-X-Google-Smtp-Source: AGs4zMZSKkyc5pPusU/mFywjHEYDqcibnB/bsKk6gWLjZV57QrBvCcnHKdTxhjpRvuDVO6CRrzTqBA==
-X-Received: by 10.80.226.198 with SMTP id q6mr7786665edl.290.1511361545109;
-        Wed, 22 Nov 2017 06:39:05 -0800 (PST)
-Received: from dinwoodie.org ([2001:ba8:0:1c0::9:1])
-        by smtp.gmail.com with ESMTPSA id o64sm11506912edb.14.2017.11.22.06.39.04
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 22 Nov 2017 06:39:04 -0800 (PST)
-Date:   Wed, 22 Nov 2017 14:39:02 +0000
-From:   Adam Dinwoodie <adam@dinwoodie.org>
-To:     git@vger.kernel.org
-Subject: Bisect marking new commits incorrectly
-Message-ID: <20171122143902.GO20681@dinwoodie.org>
+        id S1751438AbdKVO4k (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Nov 2017 09:56:40 -0500
+Received: from mout.web.de ([212.227.17.11]:63846 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751338AbdKVO4j (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Nov 2017 09:56:39 -0500
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LmcnP-1eqrT80ILb-00aFAC; Wed, 22
+ Nov 2017 15:56:33 +0100
+Date:   Wed, 22 Nov 2017 15:56:32 +0100
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Vladimir Nikishkin <lockywolf@gmail.com>, git@vger.kernel.org
+Subject: Re: core.safecrlf warning is confusing[improvement suggestion?]
+Message-ID: <20171122145632.GA22931@tor.lan>
+References: <CA+A2iZaLZCMvyb3nbcn=ofVGAPeW2_wRhjOeRRu5q01LuV++Gw@mail.gmail.com>
+ <20171121161824.GA13548@tor.lan>
+ <xmqqine3xea5.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqine3xea5.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Provags-ID: V03:K0:Az7eWfi4D4zO9uOwYXY0VcmrbMo1Y29aY9oH/J6qnOAiQWCUl5P
+ RVykdYETQQ0zThKVkXIjY+ozUK1ZiKTB6ZqZoVpfCLv029vSeQT1yL4zVsMz4GCJZBlHHCO
+ Qi310G+bVq5V203c0N6eRub6FtHXkLl68GSmVtarAwfuWDv217J23rNt2nCkqia6ldV2B0W
+ PX+4Vn/2l43wW7HrJ9M/w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:YJ3kumSeeec=:E9XJbaZAl+3Md68Ei9+bzt
+ Ko6WarkOxfdqOXvb9UWhKGVlgqZecXJNfOufPdGEYPZgAWJesJur1ImovqC+mHr1qKzcW3qzT
+ wHQbYlBX/E4qQeh+jdMQwFKBC3vbEr268WOL1fD/WNeedV+JUBbeOMPMhBXcS+dn2jnPfhjhR
+ HsPfXrQ2H029isX53uBsbDUKYWUfAwgCuBsHmztaoZTwc9sB7ePyPLtz12PqVyU/VAM8y4YIA
+ q+nAJVXytXeA7RM3x7w+HbIxT13hzVHN7FMJWU8y8krzobt2Zl7Klr1n1U6JdyH5Eh5uN+BdQ
+ qIftUl471ok58Zo0apg6iX/k+GVZlKLCBtGjsCQSR1kvLwWpfKOqT4uAP+8mcMd367RVBx4br
+ 39BZrdOcz2iXBzrgoeWbp8oTIQ35RL3B2WHemUa503okq8gOdeRfa8v3XYNrwOG5yLOlQGvgr
+ 2xaFTiA3sIt5rt10IyfQ3BQ7NPXxpOf8VgdrHJHeXdSyOOin21fzcG7SJiO86PYaqMaHglmGT
+ uVAf8nDQOXaZzNafts8IeDbJXA1wcpAtqkQVDM/w4d0WHTxVSdvrkMqGyvuhv1R77sifBXQnj
+ 0Jmg/cF5XiCmNNSoJFWwbR0sBgvenH50Q25GZFfks21tmywV2kTk7levvFIT+xDAFt9zygdPl
+ CS8uJyRzfWPnvqDHZAetJKTM4Pzausga0qwyzs6OfSKQciNdx1kJP/2DUl6K9KxK6x9o0rnoj
+ 6dxH94GMMOFyfAt12nMUOEckIvW3dpzNOYHuepKtA0YO5KwOURLhtSMl6XLtFTEVxlQoKYvZH
+ s9ZfVy9Q84OlxI+HjfqKjCypighXQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In trying to do a bisect on the Git repository, I seem to have come
-across surprising behavior where the order in which `git bisect` appears
-to forget that previous commits were marked as new.
+On Wed, Nov 22, 2017 at 11:01:22AM +0900, Junio C Hamano wrote:
+> Torsten Bögershausen <tboegi@web.de> writes:
+> 
+> >> I want to have LF line endings in the repository and CRLF endings in
+> >> the working copy. (Because I use windows-exclusive tools to develop.)
+> >
+> > Side note: If you ever want to push your repository somewhere,
+> > it would be good practice to have a .gitattributes file:
+> > ...
+> 
+> Now we got your attention ;-)
+> 
+> What would be the BCP we would give if somebody has just a tarball
+> without .git that has LF endings?
+> 
+>     $ git init a-project
+>     $ cd a-project
+>     $ tar xf ../a-project.tar
+>     $ git add .
+>     $ git commit -m 'Initial import'
 
-You can see this behaviour in the following commands, run on the Git
-repository, where the order of the `git bisect new` commands affects the
-results.
+There is room for small improvements:
+     $ cd /tmp
+     $ git init a-project
+     $ cd a-project
+     $ tar xf ../a-project.tar
+     $ git -c core.autocrlf=false add .
+     $ git commit -m 'Initial import'
+     # Make up your mind: is it truly cross-platform ?
+       $ echo "* text=auto" >.gitattributes
+       # E.g. if you have shell scripts:
+       $ echo "*.sh text eol=lf" >>.gitattributes
+       # E.g. if you are a git developer:
+       $ echo "/GIT-VERSION-GEN eol=lf" >>.gitattributes   
+      # Or, is it e.g. a project where a tool needs some line endings
+      # visual studio is one example, there are many others:
+       $ echo "* -text" >.gitattributes
+      # in any case, we need to commit: 
+      $ git add .gitattributes && git commit -m "Add .gitattributes"
 
-Case 1:
+# Now we have the repo. I we don't want the hammer, simply clone it:
+     $ cd $HOME
+     $ git clone /tmp/a-project
 
-    $ git bisect start; git bisect old v2.15.0
+That should work for project small enough not to fill the disk.
+And other adjustments may be needed to the .gitattributes file.
+A final check with
+$ git ls-files --eol
+may give inspiration.
 
-    $ git bisect new 95a731ce
-    Bisecting: 40 revisions left to test after this (roughly 5 steps)
-    [934e330c9d0d12f7a0dd82b9699456c891e4dd4a] Merge branch 'ad/5580-unc-tests-on-cygwin' into maint
-
-    $ git bisect new 14c63a9d
-    Bisecting: 153 revisions left to test after this (roughly 7 steps)
-    [421f21c98f8b515412ca683ae3743013a8b3bda2] Merge branch 'js/mingw-redirect-std-handles'
-
-    $ for h in 95a731ce 14c63a9d; do git log -1 --format=oneline --decorate "$h"; done
-    95a731ce92c7576d927f0d8a9b27c206cb58c2e6 (origin/maint) Almost ready for 2.15.1
-    14c63a9dc093d6738454f6369a4f5663ca732cf7 (origin/master, origin/HEAD, refs/bisect/new) Sync with maint
-
-Case 2:
-
-    $ git bisect start; git bisect old v2.15.0
-
-    $ git bisect new 14c63a9d
-    Bisecting: 153 revisions left to test after this (roughly 7 steps)
-    [421f21c98f8b515412ca683ae3743013a8b3bda2] Merge branch 'js/mingw-redirect-std-handles'
-
-    $ git bisect new 95a731ce
-    Bisecting: 40 revisions left to test after this (roughly 5 steps)
-    [934e330c9d0d12f7a0dd82b9699456c891e4dd4a] Merge branch 'ad/5580-unc-tests-on-cygwin' into maint
-
-    $ for h in 95a731ce 14c63a9d; do git log -1 --format=oneline --decorate "$h"; done
-    95a731ce92c7576d927f0d8a9b27c206cb58c2e6 (origin/maint, refs/bisect/new) Almost ready for 2.15.1
-    14c63a9dc093d6738454f6369a4f5663ca732cf7 (origin/master, origin/HEAD) Sync with maint
-
-As you can see, in both cases, only the most recent "new" command
-appears to have any effect.  I'd have expected that both commits would
-have been marked as "new", and the bisect run would use both facts to
-work out which commit is the target of the bisection.
-
-This is using v2.15.0.  It's possibly relevant that 95a731ce is a
-direct parent of 14c63a9d.
-
-Is this a bug, or intentional behaviour?  Am I missing something that
-means it's actually sensible to have Git silently discard some bisect
-commands in this sort of circumstance?
+> 
+> would achieve one half of the original wish (i.e. "I want to end up
+> with repository data in LF eol"); disabling the "safe crlf" before
+> running that "git add ." step may also not be a bad idea, because it
+> reduces the number of things that can get in the way by one.
+> 
+> But the above also leaves the "working tree" files in LF eol
+> (i.e. it goes against "I want to work with CRLF in my working
+> tree").  What would be our recommendation?
+> 
+> One big-hammer way I can think of is
+> 
+>     $ git rm -f .
+>     $ git reset --hard
+> 
+> and that actually may be a good enough solution, given that you'd be
+> doing this just once at the beginning of "your" project that starts
+> from an inherited code drop.
