@@ -2,97 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD,
-	UNPARSEABLE_RELAY shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA50E202F2
-	for <e@80x24.org>; Wed, 22 Nov 2017 08:16:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 58345202F2
+	for <e@80x24.org>; Wed, 22 Nov 2017 08:22:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751639AbdKVIQc (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Nov 2017 03:16:32 -0500
-Received: from mail-yw0-f169.google.com ([209.85.161.169]:36325 "EHLO
-        mail-yw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751606AbdKVIQb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Nov 2017 03:16:31 -0500
-Received: by mail-yw0-f169.google.com with SMTP id a4so6846884ywh.3
-        for <git@vger.kernel.org>; Wed, 22 Nov 2017 00:16:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:in-reply-to:references:mime-version:date:message-id:subject:to;
-        bh=dgLWYiemM78+QJUYSrWNq3NxPNeHr8YvUOZjzQyFBxM=;
-        b=aqtc+AZwHBWaPcS4m2u7m8fMNyMdCnmrIEZAvg8jTx0DDnecuchQQXuSzkMTYBJLmP
-         D9bJSrg3uODiaLIbvhmsF1N5R9xC+Z1tUuHjDt0T8rKZt1bil1vxsdNxsVuJ33Z5Q/Yc
-         Zx/a9yJ6JiXVYX1mh707ph1JIZVVYRxrp5zormBPK5IDqWOXYEuK9BkEc95Jh1gZaYiB
-         92usUTYTVJ5u5RhyN4q5/UtszA/f6gM62LTe4pAjovz+RqU/+hYFX0iQEgJye4aLd3wi
-         JxVaLe0PbcnMuM/jH8p1U9mRiXVlohBtYzGfl44ly4kmyKQW/whmKJr3d/RfovpQwVYy
-         WY7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:in-reply-to:references:mime-version:date
-         :message-id:subject:to;
-        bh=dgLWYiemM78+QJUYSrWNq3NxPNeHr8YvUOZjzQyFBxM=;
-        b=JDuR6dJFVa9P9aEhV6ZPvaojYHhqURGuVuiXktFZyohfsAntRy1iVWSc7W48W0FHTH
-         BWqvALgHKb+rafez1k2bY6nMrUwz3b9bA6HBHxZ2+GwTwIMCsezl96owTwGtAbMePUY4
-         AkOWDj6d5jNGGTHuwyWahIRHHjjujKISU5XNfZNhdZP4MlHhZznccpXhD1eBjnKN3fQw
-         FMwFUwZBpAN3YpIrqznN/3WUGB05eSkfpsS/MIHX2YBxneHz7c3EUaFwVxmeAKmsiELZ
-         MJlgTAO3V/SksJrGc7srxgVpfUKsUkz8c3EU5Uvyf6tpiqfSb5xxNSHdVqF1cUqfqrDE
-         ivAQ==
-X-Gm-Message-State: AJaThX60ce0YBG+rnPxUf+Z7wxewzswREw1DzLRyQjghlkf5kcFAtau6
-        j2Zv1JKGYIsdHom1+itpo1osN4HeT9F2oFIugRU=
-X-Google-Smtp-Source: AGs4zMZRZ9I+h9AR4eeYFyIDMZ83DnDpJjCT7XeS4qDmShEYIRaIL+bvFyvH5DfFAyZ/Wy0mKIytRXXp6YIzspmS0is=
-X-Received: by 10.13.210.6 with SMTP id u6mr13261161ywd.301.1511338590575;
- Wed, 22 Nov 2017 00:16:30 -0800 (PST)
-Received: from 1058052472880 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 22 Nov 2017 00:16:30 -0800
-From:   Viet Nguyen <ntviet18@gmail.com>
-In-Reply-To: <ba0c7ff2-98b1-7331-dfeb-b6adae0d6207@gmail.com>
-References: <CANb5NdLCFiaUjit10aV8ewaJOe3UxM28+PwY96dHDM_95GRv+w@mail.gmail.com>
- <ba0c7ff2-98b1-7331-dfeb-b6adae0d6207@gmail.com>
-X-Mailer: Airmail (457)
+        id S1751606AbdKVIWM (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Nov 2017 03:22:12 -0500
+Received: from mail2-relais-roc.national.inria.fr ([192.134.164.83]:28892 "EHLO
+        mail2-relais-roc.national.inria.fr" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751516AbdKVIWL (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 22 Nov 2017 03:22:11 -0500
+X-IronPort-AV: E=Sophos;i="5.44,436,1505772000"; 
+   d="scan'208";a="301955686"
+Received: from orange.lip.ens-lyon.fr ([140.77.14.54])
+  by mail2-relais-roc.national.inria.fr with ESMTP/TLS/AES128-GCM-SHA256; 22 Nov 2017 09:22:10 +0100
+From:   Matthieu Moy <Matthieu.Moy@univ-lyon1.fr>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Thomas Adam <thomas@xteddy.org>,
+        Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>,
+        Matthieu Moy <Matthieu.Moy@imag.fr>,
+        Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
+Subject: Re: [PATCH] git-send-email: fix get_maintainer.pl regression
+References: <20171116154814.23785-1-alex.bennee@linaro.org>
+        <CAPig+cTXq6jSN9f2_xyj=Jfv_cg2kUFUtA5uVkZDrRRSi2x7vg@mail.gmail.com>
+        <87wp2jwe9o.fsf@linaro.org> <20171121205206.fvwjkkwhil4abmmk@laptop>
+        <b131cc195280498ea3a77a37eff8444e@BPMBX2013-01.univ-lyon1.fr>
+Date:   Wed, 22 Nov 2017 09:22:05 +0100
+In-Reply-To: <b131cc195280498ea3a77a37eff8444e@BPMBX2013-01.univ-lyon1.fr>
+        (Junio C. Hamano's message of "Wed, 22 Nov 2017 01:34:27 +0000")
+Message-ID: <q7h97euiradu.fsf@orange.lip.ens-lyon.fr>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
-Date:   Wed, 22 Nov 2017 00:16:30 -0800
-Message-ID: <CANb5NdL3=L-z7E=XSzfKF_JunpDUrwfK101jEAwua8C5_cEooQ@mail.gmail.com>
-Subject: Re: Add feature to stop tracking files while keeping them in the index
-To:     Igor Djordjevic <igor.d.djordjevic@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Igor,
+Junio C Hamano <gitster@pobox.com> writes:
 
-On November 20, 2017 at 7:15:00 PM, Igor Djordjevic
-(igor.d.djordjevic@gmail.com) wrote:
-> Hi Viet,
->
-> On 20/11/2017 10:52, Viet Nguyen wrote:
-> > Currently, a file can be either tracked or untracked. So, I propose we
-> > add a feature to stop tracking files while keeping them in the index.
-> >
-> > Example scenario:
-> > - A developer would like to add some configuration files with example
-> > values, e.g. DB_PASSWORD=changeme. But in the future he also want to
-> > update those files and to notify the others with conflicts.
->
-> If I`m understanding you correctly, what you want should already be
-> possible through `git update-index --[no-]skip-worktree`[1].
->
-> Regards, Buga
->
-> [1] https://git-scm.com/docs/git-update-index#git-update-index---no-skip-worktree
->
+> Was there any reason why Mail::Address was _inadequate_?
 
-We are currently using git-update-index in a client hook, but found it
-a little tedious because sometime we forget to configure the hooks
-correctly and it just stop working. So I am thinking that it would be
-a lot better if we can store it somewhere in the shared repository, so
-the other developers could ignore the fact that some files in our
-project are special and treat them just like the regular files.
+I think the main reason was that Mail::Address is not a standard perl
+module, and not relying on it avoided one external dependency. AFAIK, we
+don't really have a good way to deal with Perl dependencies, so having a
+strong requirement on Mail::Address will probably end up in a runtime
+error for users who compile Git from source (people using a packaged
+version have their package manager to deal with this).
 
-Best regards,
+> I know we had trouble with random garbage that are *not* addresses
+> people put on the in-body CC: trailer in the past, but I do not recall
+> if they are something Mail::Address would give worse result and we
+> need our workaround (hence our own substitute), or Mail::Address would
+> handle them just fine.
 
-Viet
+For a long time, we used Mail::Address if it was available and I don't
+think we had issues with it.
+
+My point in cc907506 ("send-email: don't use Mail::Address, even if
+available", 2017-08-23) was not that Mail::Address was bad, but that
+changing our behavior depending on whether it was there or not was
+really bad. For example, the issue dealt with in this thread probably
+always existed, but it was present only for *some* users.
+
+-- 
+Matthieu Moy
+https://matthieu-moy.fr/
