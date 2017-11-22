@@ -2,128 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0601A20954
-	for <e@80x24.org>; Wed, 22 Nov 2017 18:02:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5355E20954
+	for <e@80x24.org>; Wed, 22 Nov 2017 18:06:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751646AbdKVSCp (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Nov 2017 13:02:45 -0500
-Received: from mail-io0-f193.google.com ([209.85.223.193]:32994 "EHLO
-        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751292AbdKVSCo (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Nov 2017 13:02:44 -0500
-Received: by mail-io0-f193.google.com with SMTP id i184so16681012ioa.0
-        for <git@vger.kernel.org>; Wed, 22 Nov 2017 10:02:44 -0800 (PST)
+        id S1751951AbdKVSGB (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Nov 2017 13:06:01 -0500
+Received: from mail-qk0-f194.google.com ([209.85.220.194]:33317 "EHLO
+        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751888AbdKVSGA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Nov 2017 13:06:00 -0500
+Received: by mail-qk0-f194.google.com with SMTP id 78so17889250qkz.0
+        for <git@vger.kernel.org>; Wed, 22 Nov 2017 10:06:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=EM+98tg3njP4CH+J/qhBr3VqaVKo4/WqGWubgo87/AU=;
-        b=oyrkHBk8W/7tbsfHAldG6xrrllqPBj4tZt4Gr9C6XOhcRfX1N/F3RlJUFT12jEglkF
-         qSQdY4VJVmzlU66K79kNyAtAuhQr0MqL6smZGhARQG0cE16/Pco5g6BiCTj6vlLvxHrF
-         rXgxGUmwCXP3aI2bL2HKteLi0dIdeKzBrtyTVFc7q9rlIHxUOke+nfbkXDtPoxsNuNsy
-         VaTK6jtMEgPlTlwngz/gSd++2L0/WNSP2C5mI0dESiZ/ddVOjCVp1SAXvvZ5jcVONyRd
-         3a9NcImwNn1IEsgPhUWJ7ZL4ZoqqrbeAVSS7/lz+L+jWt8UzEJEK32vmAlmiOo0xagwL
-         B+Vw==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=sIXS+yj1XR8/HrjFimYCby2los16NYIPaUW0pt6ekOM=;
+        b=kMqpDhpKrcJ8pTWcqivSSX87Jb304U5SflFVl3gp5kmifP11qyZsYhlWTqTxNwTUDc
+         4h2pOUe7oEu26Tdl5qePX4xJJscZYvZoSAgIE5t+9xvHdUuMMUADW8Uzt43Q6JZJXWuk
+         pRNvgEKTAMDnBx3xRo39SPTlLtFubNkmMimS004oJpBEuuMz27FsoUqHbQ/A3ZvCjQ9k
+         OoiTvlH8gctwd0xdX8d9YAC+uIh211s3wrff4JbYNiZObAkEIoIMX694/byrXeHexWe1
+         2/8DQz9Nxs/ngs3z/ShihoMDt32mZqCbJNtPTVD5aIiiMm+xyYi1ZvyahQPTCAeqa0f3
+         sifA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=EM+98tg3njP4CH+J/qhBr3VqaVKo4/WqGWubgo87/AU=;
-        b=ckc9WC5mZgZfVKW0BiIkmuXfBFI1Hu6tCoT15c6uQ+AV9rUrVBofZdBRM0DTGjL4fv
-         2MTtQpzBeIVHdABbWzp2EFWMKjGLV/jxVTmaMoeMULgoX2u3fUJAXZwAri4orYByrLiA
-         6lRIgMtI6TJFbEB0SQUVDgxuHzBiXiyRcPWeXAXI66dtWlvQyp701v5hIVxXPfaO3BpH
-         61q8GGxx1w6yRWQBib/DFCoriRkwBxxK4FgnW/TiZuY31DQ2EfosLt2KUKyrP4Jpe/cG
-         T5gNAWBu99IeHtype9aF411edfK/3haWt2froUD40OSiG9BB6y0HXLK/jfoX0cIzpIM8
-         8org==
-X-Gm-Message-State: AJaThX6adZV21BOQT9QgHCSWIDJTH1RtEGiMCN1szi+xv7vWC9yxZWkB
-        2fCpAJPyMeM9DAt0evdWmlQ=
-X-Google-Smtp-Source: AGs4zMbTgInw158bf9mqcniZkweU4IWsb6D4BnMg9N+9wmK7bOK5m1Ev/3bqUKSIzHv5TNz1+AmJVQ==
-X-Received: by 10.107.201.78 with SMTP id z75mr24390380iof.123.1511373763608;
-        Wed, 22 Nov 2017 10:02:43 -0800 (PST)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id 16sm2280229itw.38.2017.11.22.10.02.42
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 22 Nov 2017 10:02:43 -0800 (PST)
-Date:   Wed, 22 Nov 2017 10:02:36 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Louis Bettens <louis@bettens.info>
-Cc:     git@vger.kernel.org, jn.avila@free.fr, worldhello.net@gmail.com,
-        Nicolas Cornu <nicolac76@yahoo.fr>
-Subject: Re: [PATCH][l10n-fr] list translated to prune in command
-Message-ID: <20171122180236.GA11671@aiede.mtv.corp.google.com>
-References: <20171122172440.15106-1-louis@bettens.info>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=sIXS+yj1XR8/HrjFimYCby2los16NYIPaUW0pt6ekOM=;
+        b=ZQuBTGmYvFdJ/ucixpV6w23T9AbRZ/hhl1HfuevNvRNMMzziUgbauX3PlxoC4YMVwg
+         d2SyxMkQKS7JrqCHDW8sln77BXeHiLb4zvh6tlB1muiLXwbjwPZ6adMVXDgKSB2wS1Oh
+         0QLc71H1W+kVUo8H4kgGK4I1Q0HgLtZM4D42TkTAw8DIBimSlJ2JknMBjQp2ttf/+yY4
+         S9fybNDNzpu8Rzcjr0W7Cb71VC5FMzg7ymqDgTTveo3xR7LpWE4F7ASGh79YhY9jvI97
+         mh2ICzaiX1e/aOqbWx7LgiD07/760T10w2cOwemLefj6nkH3r4ym+k13N2fq4Nd2d2SW
+         /AFQ==
+X-Gm-Message-State: AJaThX5W9K9QDMum4g6gCT8fL7cHKYLxEYxAkNKSLsxe/X7KpPPsajJW
+        AzhSXUACHbvJM5SsXZfjhiEyWbEPMV6wS8FwraRoFg==
+X-Google-Smtp-Source: AGs4zMbxvRy9X+m28ARjwJ5exQ/9euuql8pkPVMXAcm2AMqwfBa6Azn1wLUBZmyGu2b5pelKM5eTJBWH7sP6oC0rjZY=
+X-Received: by 10.55.97.209 with SMTP id v200mr35189894qkb.71.1511373959647;
+ Wed, 22 Nov 2017 10:05:59 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20171122172440.15106-1-louis@bettens.info>
-User-Agent: Mutt/1.9.1 (2017-09-22)
+Received: by 10.12.155.209 with HTTP; Wed, 22 Nov 2017 10:05:59 -0800 (PST)
+In-Reply-To: <fee60b19-bc8e-bbd8-9f5d-347b2f941b2e@gmail.com>
+References: <20171121150954.3227-1-kaartic.sivaraam@gmail.com>
+ <CAPig+cQrC1MiPrwwPqtdX2tzj1ntFHxO28uqnMBcmVpPPrc_Rg@mail.gmail.com> <fee60b19-bc8e-bbd8-9f5d-347b2f941b2e@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 22 Nov 2017 13:05:59 -0500
+X-Google-Sender-Auth: hYcNBTplFowfc6HEQxm6oHEsx3E
+Message-ID: <CAPig+cQF6V8HNdMX5AZbmz3_w2WhSfA4SFfNhQqxXBqPXTZL+w@mail.gmail.com>
+Subject: Re: [RFC PATCH] builtin/worktree: enhance worktree removal
+To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Wed, Nov 22, 2017 at 12:09 PM, Kaartic Sivaraam
+<kaartic.sivaraam@gmail.com> wrote:
+> On Wednesday 22 November 2017 03:07 AM, Eric Sunshine wrote:
+>> [1]: Excerpt from:
+>> https://public-inbox.org/git/CAPig+cTTrv2C7JLu1dr4+N8xo+7YQ+deiwLDA835wBGD6fhS1g@mail.gmail.com/
+>>
+>> Other information which would be nice to display for each worktree
+>> [by the 'list' command] (possibly controlled by a --verbose flag):
+>>
+>>     * the checked out branch or detached head
+>>     * whether it is locked
+>>          - the lock reason (if available)
+>>          - and whether the worktree is currently accessible
+>>      * whether it can be pruned
+>>          - and the prune reason if so
+>
+> It would nice to see this information. It would be very useful but 'list'
+> doesn't seem to be the right sub-sub-command to give such information. Maybe
+> there should be a new sub-sub-command named 'info' or something to give such
+> information?
 
-Louis Bettens wrote:
+I'm perfectly fine with having 'git worktree list' provide this extra
+information; that was the intention from the start. The "quick"
+summary of all worktrees provided by 'git worktree list' is exactly
+the sort of place where you're most likely to notice something
+unexpected, such as the missing worktree directory. And, this extra
+information doesn't have to be noisy:
 
-> "$ git worktree" when in a french locale shows an incorrect usage
-> summary.  This comes down to this trivial issue in the i18n.
+--- 8< ---
+% git worktree list
+giggle     89ea799ffc [master]
+../bobble  f172cb543d [feature1]  locked
+../fumple  6453c84b7d (detached HEAD)  prunable
+--- 8< ---
 
-Good catch.  This comes from v2.7.0-rc3~4^2~7^2~2^2 (l10n: fr v2.7.0
-round 1 (2477t), 2015-12-18).
+And, the verbose case:
 
-For next time, you can send these three emails in a single email:
+--- 8< ---
+% git worktree list -v
+giggle     89ea799ffc [master]
+../bobble  f172cb543d [feature1]
+    locked: worktree on removable media
+../fumple  6453c84b7d (detached HEAD)
+    prunable: directory does not exist
+--- 8< ---
 
-	Subject: l10n: fr.po: "worktree list" mistranslated as prune
-
-	"$ git worktree" when in a french locale shows an incorrect usage
-	summary.  This comes down to this trivial issue in the i18n.
-
-	Signed-off-by: ...
-	---
-	Also it seems this is the only .po that has this particular quirk:
-
-	$ grep -c "worktree prune" po/*.po
-	po/bg.po:2
-	po/ca.po:2
-	po/de.po:2
-	po/es.po:2
-	po/fr.po:3  # outlier
-	po/is.po:0
-	po/it.po:0
-	po/ko.po:2
-	po/pt_PT.po:2
-	po/ru.po:2
-	po/sv.po:2
-	po/vi.po:2
-	po/zh_CN.po:2
-
-	zero lines -> translation missing, OK
-	two lines -> msgid and msgstr, OK
-	three lines -> something wrong. In this case, the present issue.
-
-	 po/fr.po | 2 +-
-	 1 file changed, 1 insertion(+), 1 deletion(-)
-
-	diff --git a/po/fr.po b/po/fr.po
-	index 4deae3318..a12a2ae37 100644
-	--- a/po/fr.po
-	+++ b/po/fr.po
-[...]
-
-That way, Jean-Noel Avila or Jiang Xin can apply the patch with a
-single "git am" command and the explanation (above the "---" line)
-shows up in "git log".
-
-I assume they can handle this one fine as-is.  Just pointing it out
-for the future.
-
-See the DISCUSSION section in "git help format-patch" for more details.
-
-Thanks,
-Jonathan
+An "info" command you speak of might also have value, but that's
+orthogonal to this extra information that 'git worktree list' could
+provide.
