@@ -2,78 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 58BDB2036D
-	for <e@80x24.org>; Wed, 22 Nov 2017 05:07:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 14BCB2036D
+	for <e@80x24.org>; Wed, 22 Nov 2017 05:10:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751167AbdKVFHm (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Nov 2017 00:07:42 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63570 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750959AbdKVFHl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Nov 2017 00:07:41 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 35631B2277;
-        Wed, 22 Nov 2017 00:07:41 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=If4P+vzQNhzz
-        W+B7yt1mTCsZmU0=; b=eRnxp1jWDkCIsorAL9hz+Z8g1lBTNlL6WWOPU6uLDduZ
-        n+W8HBwlLnWSbiFVvaOvdE4+MoHk3GnphcdE9NUmnzzp7YH1C35TQ0aVjzHa0m6d
-        wDcA7fE2kw492qaE7pO8T4xISooHK4OP4ZYyf/l9/WOfE6W2OjeKicQb7pP8tKY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=vywV17
-        khUs/OZt0aLUdmxjST2Qtw22AhABGbw3rI2BcaIvX7zxzyHdAhAtf1v4YuibODrP
-        nC9pslknhrIVRtHCsDsFbiCUoF3mb6ar8Ysu0uoS8fCiImSlx1Oa/PaT1Zr6ryZb
-        ZV16QTHp0iMEoFyrQjniYQBtuV7Du0gagH9Eo=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2CF58B2276;
-        Wed, 22 Nov 2017 00:07:41 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9697EB2275;
-        Wed, 22 Nov 2017 00:07:40 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Anders Kaseorg <andersk@mit.edu>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 1/3] Documentation: allow overriding timestamps of generated asciidoc
-References: <20171121232935.GM3429@aiede.mtv.corp.google.com>
-        <20171121233432.GN3429@aiede.mtv.corp.google.com>
-        <20171122005433.kwv4bin6y65xuxm5@genre.crustytoothpaste.net>
-        <20171122011531.GQ3429@aiede.mtv.corp.google.com>
-        <alpine.DEB.2.10.1711212317440.27951@mass-toolpike.mit.edu>
-Date:   Wed, 22 Nov 2017 14:07:39 +0900
-In-Reply-To: <alpine.DEB.2.10.1711212317440.27951@mass-toolpike.mit.edu>
-        (Anders Kaseorg's message of "Tue, 21 Nov 2017 23:30:27 -0500 (EST)")
-Message-ID: <xmqq7euivr38.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751216AbdKVFKV (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Nov 2017 00:10:21 -0500
+Received: from mail-it0-f67.google.com ([209.85.214.67]:36344 "EHLO
+        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750959AbdKVFKU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Nov 2017 00:10:20 -0500
+Received: by mail-it0-f67.google.com with SMTP id 187so4838781iti.1
+        for <git@vger.kernel.org>; Tue, 21 Nov 2017 21:10:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=bL1/XJrEqxlP+8d1Y36Z/Gx1ojW7TQ6Ok4vs9WjGmTQ=;
+        b=m5kIIbVIgMjIuwaiUXpCl+8r7e+wVfxDKW3buL+nuzKWa6xgPWWtTXInioFlZ/3jiy
+         K+hH/MTncuBnGhxT08Iat2HdrqGeYIPL2fYlkD0s2fBwicCFivGL0PmRvORFGgEb2Prr
+         OGoLqi1azeZWMbUE4aZq/h4xgZR02D5bbFwhzBRKgXA3BOD9QB1tNe5nlEk3WwNfuiHt
+         UXSc6aJEdGWDjCQOYMbOZsgPpSDqqcG7NE36RGsBUvH3ECsHCPBCf5+gYRc7EhvKJnGf
+         agcRuMmoZJYLOK8WfDDqDK5oNKmfjUuBf1oFsWTvOl3gRZXRrVcuWTGlvtK5nyvltNH0
+         uOLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=bL1/XJrEqxlP+8d1Y36Z/Gx1ojW7TQ6Ok4vs9WjGmTQ=;
+        b=uib1QQzYNNuMA5ixySrrWKDvPDjC6Yt+8U17m+/GISI0WA5/RN1llwCDOuB92MpBHR
+         3Y4aHILlOXortKkQx+VUDcf2V4ecXXg8IF16nbd44zhRFzG/+4xxJ84F/aoVvaB8HF79
+         3BAdQUP+rnoViJlvrtm518jKu2ADgYVy3gI4vPS4J6P8de5u4Qrir0FcQpcnaxa5ffoR
+         RqjXgbEpNgWT4PuZvcNb3YyNGmFv3rdsTAIfmPjn8xCzVMCAbB796q3QgvmzXWu7ATn+
+         8lKLKISh/Bpm8S0GYwNIMSe9zK84EcGE7fXKoK1bmAcdmm2tyiUaHJT+II0b9Z0BmkmK
+         QsTg==
+X-Gm-Message-State: AJaThX75WjKJovjJ8Kj1HymvJx0K4FSLETaBQBFE3CZcpF+wociFIz3v
+        1xi9UllXQqmysfbsl4rQx/E=
+X-Google-Smtp-Source: AGs4zMaJuxhbMJtsgpFLskWjVbkW4H2T9BHQ/tH2Kv97YbN8aUetD/DMgpXrOEu79q/0gFIa40O+Yw==
+X-Received: by 10.36.248.6 with SMTP id a6mr5284175ith.11.1511327420223;
+        Tue, 21 Nov 2017 21:10:20 -0800 (PST)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id r124sm1523833ita.13.2017.11.21.21.10.19
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 21 Nov 2017 21:10:19 -0800 (PST)
+Date:   Tue, 21 Nov 2017 21:10:14 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
+        Jeff King <peff@peff.net>, Ben Peart <Ben.Peart@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Mike Hommey <mh@glandium.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Eric Wong <e@80x24.org>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH 1/2] Git/Packet.pm: rename packet_required_key_val_read()
+Message-ID: <20171122051014.GA7625@aiede.mtv.corp.google.com>
+References: <20171121160939.22962-1-chriscool@tuxfamily.org>
+ <20171121191900.GD3429@aiede.mtv.corp.google.com>
+ <xmqq60a3vv63.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 1098E688-CF43-11E7-9908-8EF31968708C-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq60a3vv63.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.9.1 (2017-09-22)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Anders Kaseorg <andersk@mit.edu> writes:
+Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
+>> Christian Couder wrote:
 
-> That should make this Git patch unnecessary.  (You=E2=80=99re of course=
- still=20
-> welcome to take it if you think build reproducibility with old AsciiDoc=
-=20
-> versions is worthwhile.)
+>>> +# Read a text line and check that it is in the form "key=value"
+>>> +sub packet_key_val_read {
+>>
+>> This comment doesn't tell me how to use the function.  How do I detect
+>> whether it successfully read a line?  What do the return values
+>> represent?  What happens if the line it read doesn't match the key?
+>
+> Would this work for both of you?
+>
+> # Read a text packet, expecting that it is in the form "key=value" for
+> # the given $key.  An EOF does not trigger any error and is reported
+> # back to the caller (like packet_txt_read() does).  Die if the "key"
+> # part of "key=value" does not match the given $key, or the value part
+> # is empty.
 
-Thanks. =20
+Yes, thank you.
 
-I've queued these three only so that I won't lose track, but will
-not hastily merge them down (yet) until I hear from people.
-
+Jonathan
