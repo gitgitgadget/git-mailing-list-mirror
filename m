@@ -2,119 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D629720954
-	for <e@80x24.org>; Wed, 22 Nov 2017 23:48:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA83020954
+	for <e@80x24.org>; Wed, 22 Nov 2017 23:54:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751594AbdKVXso (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Nov 2017 18:48:44 -0500
-Received: from cloud.peff.net ([104.130.231.41]:38224 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751494AbdKVXsn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Nov 2017 18:48:43 -0500
-Received: (qmail 8154 invoked by uid 109); 22 Nov 2017 23:48:43 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 22 Nov 2017 23:48:43 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 5889 invoked by uid 111); 22 Nov 2017 23:48:59 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Wed, 22 Nov 2017 18:48:59 -0500
-Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 22 Nov 2017 18:48:41 -0500
-Date:   Wed, 22 Nov 2017 18:48:41 -0500
-From:   Jeff King <peff@peff.net>
-To:     Phil Hord <phil.hord@gmail.com>
-Cc:     Git <git@vger.kernel.org>
-Subject: Re: [PATCH] defer expensive load_ref_decorations until needed
-Message-ID: <20171122234841.GD8577@sigill>
-References: <20171121234336.10209-1-phil.hord@gmail.com>
- <20171122212710.GB2854@sigill>
- <CABURp0rq9pwFWuBbrSB-FNUQ6B-7V8uL=Drw6O1-151u_cRKww@mail.gmail.com>
+        id S1751507AbdKVXy3 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Nov 2017 18:54:29 -0500
+Received: from mail-pl0-f68.google.com ([209.85.160.68]:45093 "EHLO
+        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751483AbdKVXy2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Nov 2017 18:54:28 -0500
+Received: by mail-pl0-f68.google.com with SMTP id f6so1645370pln.12
+        for <git@vger.kernel.org>; Wed, 22 Nov 2017 15:54:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=rR9DlrTzXk4dIZyK8/DpMQJJEMZgy8kRQnBRWcig5i8=;
+        b=t8cFRIq6/zSGCyOwFYNkWNLyzeUUII0Z344i2tDKiNT1euNG6qqOWlYDj31T+OIrCi
+         a0OKPafkv/czoHznuuQmhpTsQGrnunuzbBJCoCGsQeRrEV5bTM0xhORw6BTw43KyKzw/
+         WFLmAGASRWowMbswvBzM+lcxjanMBmE3fIUtLwtSIU98tTWCu6f51tMP2yzq1yzRdRAu
+         2Fk4SoKOMcloiKDbx70L/qaN655HGelPgXylPTnssseZ6wtMiYXsW7B4a3c02vNfnB91
+         dqeE0wCp6ODgOcd5R5ySWPdIA0pymSMJXZzqR7Itq1zsb9pvCcZx1Nulo6HRrsxLbGsW
+         miwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=rR9DlrTzXk4dIZyK8/DpMQJJEMZgy8kRQnBRWcig5i8=;
+        b=Htgnh4o+NU3qosn/dT4dHWQ/22h3RCWQYZd3mKCW2PPW9o+s7SJhwAGYTgY2gL8wri
+         MIa7rwlb550iA0c+U6YdFKt3N7HLeh8mxIkNZo5LHHIcctE0GiIaSm1S1z+qa0kJOIxU
+         FbJayYJVpej4/P3Xdba1yu7yf85l2+2rAWCNJf0H8vPGhaMZLgtw5w6mKS4zC81CQG0H
+         VijLusaj1Mde5k8XxLTgBPykOiBVhsPiCX7ioBQifWaY29wALSz1zqxtO62lsVyBC7sn
+         lf55DFHJD/ky5qMuhhoKBfafpFV62CvlsJqkgzp8QzfIP824XTQV6sx0JR8wrQfxgN9x
+         7Crw==
+X-Gm-Message-State: AJaThX6jxoXmGI7f5f1F35zPooRUIjces0tAH+MJMwxVfDOC17LOz4jb
+        92z0kardDC7I5VWNnsKtF6PNgvbX
+X-Google-Smtp-Source: AGs4zMZT2bIcxBw5E0UZWmHcPJP9lP7QkqcpJ9DoukzyKaMcfOrW1mtx79ZN1I04RM0Cskcv4CKjfA==
+X-Received: by 10.159.231.22 with SMTP id w22mr23344351plq.45.1511394867947;
+        Wed, 22 Nov 2017 15:54:27 -0800 (PST)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id j79sm20741672pfe.129.2017.11.22.15.54.27
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 22 Nov 2017 15:54:27 -0800 (PST)
+Date:   Wed, 22 Nov 2017 15:54:25 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git <git@vger.kernel.org>, Jeff Hostetler <git@jeffhostetler.com>
+Subject: Re: [PATCH 1/3] Documentation/CodingGuidelines: explain why assert
+ is bad
+Message-ID: <20171122235425.GK11671@aiede.mtv.corp.google.com>
+References: <20171122223827.26773-1-sbeller@google.com>
+ <20171122223827.26773-2-sbeller@google.com>
+ <20171122225913.GF11671@aiede.mtv.corp.google.com>
+ <CAGZ79kY7yrgYSM7jLQD3Q4sRpjovXY=HZwU4M-Ai_XRPseda9A@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CABURp0rq9pwFWuBbrSB-FNUQ6B-7V8uL=Drw6O1-151u_cRKww@mail.gmail.com>
+In-Reply-To: <CAGZ79kY7yrgYSM7jLQD3Q4sRpjovXY=HZwU4M-Ai_XRPseda9A@mail.gmail.com>
+User-Agent: Mutt/1.9.1 (2017-09-22)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 22, 2017 at 03:21:06PM -0800, Phil Hord wrote:
+Stefan Beller wrote:
+> On Wed, Nov 22, 2017 at 2:59 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
 
-> Hm. I think I was confused.
-> 
-> I wrote v1 of this patch a few months ago. Clearly I was wrong about
-> rev-parse being afflicted.  We have a script that was suffering and it
-> uses both "git log --format=%h" and "git rev-parse" to get hashes; I
-> remember testing both, but I can't find it in my $zsh_history; my
-> memory and my commit-message must be faulty.
-
-OK, that makes more sense (that log would see it).
-
-> However, "git log" does not need any --decorate option to trigger this lag.
-> 
->     $ git for-each-ref| wc -l
->     24172
->     $ time git log --format=%h -1
->     git log --format=%h -1   0.47s user 0.04s system 99% cpu 0.509 total
+>> In a certain ideal world, the preference would be reversed: you'd want
+>> to use assert() wherever you can and require the compiler to check
+>> that all assert()s are verifiable at compile time.  A check that a
+>> static analyzer can verify is more valuable than a run-time check.
+>> When a compile-time check is not possible, you'd have to fall back to
+>> BUG_ON().
 >
-> I grepped the code just now, too, and I see the same as you, though;
-> it seems to hold off unless !!decoration_style.  Nevertheless, gdb
-> shows me decoration_style=1 with this command:
-> 
->     GIT_CONFIG=/dev/null cgdb --args git log -1 --format="%h"
-> 
+> Linux has BUILT_BUG_ON as well, which we may desire?
 
-Right, the default these days is "auto decorate", so it's enabled if
-your output is to a terminal. So "git log --no-decorate" should be cheap
-again (or you may want to set log.decorate=false in your config).
+I thought so until I tried to use it:
+https://public-inbox.org/git/20170830065631.GH153983@aiede.mtv.corp.google.com/
 
-And lazy-load wouldn't help you there for a normal:
+So I think we are stuck with run-time checking for now.
 
-  git log
-
-But what's interesting in your command is the pretty-format. Even though
-decoration is turned on, your format doesn't show any. So we never
-actually ask "is this commit decorated" and the lazy-load helps.
-
-So I think your patch is doing the right thing, but the explanation
-should probably cover that it is really helping non-decorating formats.
-
-> Here are timing tests on this repo without this change:
-> 
->     git log --format=%h -1             0.54s user 0.05s system 99% cpu
-> 0.597 total
->     git log --format=%h -1 --decorate  0.54s user 0.04s system 98% cpu
-> 0.590 total
->     git log --format=%h%d -1           0.53s user 0.05s system 99% cpu
-> 0.578 total
-> 
-> And the same commands with this change:
-> 
->     git log --format=%h -1              0.01s user 0.01s system 71%
-> cpu 0.017 total
->     git log --format=%h -1 --decorate   0.00s user 0.01s system 92%
-> cpu 0.009 total
->     git log --format=%h%d -1            0.53s user 0.09s system 88%
-> cpu 0.699 total
-
-Yeah, that's consistent with what I'd expect.
-
-> > I have definitely seen "rev-parse HEAD" be O(# of refs), but that is
-> > mostly attributable to having all the refs packed (and until v2.15.0,
-> > the packed-refs code would read the whole file into memory).
-> 
-> Hm.  Could this be why rev-parse was slow for me?  My original problem
-> showed up on v1.9 (build machine) and I patched it on v2.14.0-rc1.
-> But, no; testing on 1.9, 2.11 and 2.14 still doesn't show me the lag
-> in rev-parse.  I remain befuddled.
-
-Doing "rev-parse HEAD" would still have to load the packed refs if the
-thing that HEAD points to is in there. Perhaps your current HEAD is
-detached, or you have a loose ref for the current branch? Try "git
-pack-refs --all --prune" and then re-time.
-
--Peff
+Thanks,
+Jonathan
