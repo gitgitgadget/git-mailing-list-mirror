@@ -2,120 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0C6AF20954
-	for <e@80x24.org>; Wed, 22 Nov 2017 16:20:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5FEE120954
+	for <e@80x24.org>; Wed, 22 Nov 2017 16:21:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751712AbdKVQUq (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Nov 2017 11:20:46 -0500
-Received: from mail-pf0-f176.google.com ([209.85.192.176]:39587 "EHLO
-        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751658AbdKVQUp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Nov 2017 11:20:45 -0500
-Received: by mail-pf0-f176.google.com with SMTP id l24so12283181pfj.6
-        for <git@vger.kernel.org>; Wed, 22 Nov 2017 08:20:45 -0800 (PST)
+        id S1751762AbdKVQVc (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Nov 2017 11:21:32 -0500
+Received: from mail-it0-f49.google.com ([209.85.214.49]:46096 "EHLO
+        mail-it0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751303AbdKVQVb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Nov 2017 11:21:31 -0500
+Received: by mail-it0-f49.google.com with SMTP id 187so5137568iti.5
+        for <git@vger.kernel.org>; Wed, 22 Nov 2017 08:21:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=neulinger-org.20150623.gappssmtp.com; s=20150623;
-        h=subject:to:cc:references:from:organization:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=JX6RrXG2M/6Vdwd5C/kgtMLcT0BzLK7ctEHexBh8laE=;
-        b=PyG9lxXZ2APUdzdLkpTqtE1ktbHHnSF9dwYUgO/Exayb8G93BgQ4gri9+r+odjkHQn
-         QAvm96cSXCExTUEQuS1qQpprN0H4e8fBgvyrutCCue5Dq8HGmPqz5j4W7rrs4D+dra6U
-         +hJf0fJDOK+jIXdJWI3zor2dVElr9Opb3HvdR0OJ8CkTssmuCGgqnKbw1+PomYktaRW+
-         DPnrUdC/xtcCiXUzDgciXhDHUxgmv7GmuQmCr3h8Pmh1sstYqiA2R8jvOBkN2NcJRcKk
-         KvBWSOIZWRNHmGt5CFmrToBLekvyfk4EEnZrKp3mOH4AJ4bo5t6k9VHPQ0o5FOEUX40s
-         crQg==
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=dZ7L+yMN5qeIU7a8EDDFMxzW40Lh2EjmrLawtsdpf1w=;
+        b=ke/Wkywz7gktjhPQROxlUb3QoREDPK5mLATTAnwYJoZhvXM5kJ7iymsJNt1ZZVYU0c
+         JXMm4GXpyZhqBq63HdTGTE7Fh9oE2bOgHGEccsY0K1+Qw0p6V7dgph0Ug/SeuPcVoTs2
+         AcVdJ/DzSXZ6vYBS48qPfMP9JDw6DtVDS1CRTCTg+2JsUwBmA1KUygJVgb2qtqK2f9jI
+         kJSxvvsVc13SIdaylRlI4dbhJPv4SEx1cVUFgGR2MCA5ZR8oGmgAcgxmxlL0DjgW7iZ+
+         m/T+B6PhJjxkiafsJ21vrM00wRsJsS7dnt6yvN6Kk7Z/+j2t/lTA3m4VKxh0ftjGOkzk
+         1A2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:organization
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=JX6RrXG2M/6Vdwd5C/kgtMLcT0BzLK7ctEHexBh8laE=;
-        b=C7b7T4ARDpganP2xkcZTRAqc10YjLwTSpM9KSl6iejD8JxG9zzVpFyji1xsk/l5ODV
-         /4pY3UFOVTUpjr3A9g+EjsI6W4kq4PF1HNLQAm+h3gVvYLUEpUn583sJRfWbZbrimlmc
-         3r/wzRl+w+jdlCUYUkP8C1ZZgRha0RFkwBv/wpcQRE+GmXWdUxhHHgtYJAVRVf2yBHzx
-         XLd9lpynal/Vsxt+3eUhWKlU7VYPJRM9AG1OR2VcTSUXhGpRVQJCxNESZ1+LQhAt5UDo
-         iMzUo6E66WPBkZD2fBOkRfm0rjSI1xg9riWsYP1tG1KkYiApKLg5pmqYF6KqvsyleQ40
-         3dPQ==
-X-Gm-Message-State: AJaThX5RX0umd7Rs6cOYpP56pGH3qZb4jooXkkxB+mI7ZelBvn9Z2qN1
-        Y86Njzmam7M4hvXp9YL9bhWAZDMs
-X-Google-Smtp-Source: AGs4zMbkdZL1eizZhZRiQ4znOc3Pp8kzg4iLyslzNIPR3tFs2+gZi3XXyJHOzvDgmfr45vUnlIMqgA==
-X-Received: by 10.98.196.77 with SMTP id y74mr19983597pff.186.1511367645042;
-        Wed, 22 Nov 2017 08:20:45 -0800 (PST)
-Received: from infinity.srv.mst.edu (infinity.srv.mst.edu. [131.151.93.93])
-        by smtp.gmail.com with ESMTPSA id y5sm26042279pfl.52.2017.11.22.08.20.44
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 22 Nov 2017 08:20:44 -0800 (PST)
-Subject: Re: git status always modifies index?
-To:     Santiago Torres <santiago@nyu.edu>
-Cc:     git@vger.kernel.org
-References: <a039d139-dba5-683e-afbf-4044cd32ab1d@neulinger.org>
- <20171122153028.olssotkcf3dd6ron@LykOS.localdomain>
- <5050d779-2981-6f06-49f7-0ecb4efb25b8@neulinger.org>
- <20171122161014.djkdygmclk227xmq@LykOS.localdomain>
-From:   Nathan Neulinger <nneul@neulinger.org>
-Organization: Neulinger Consulting
-Message-ID: <dfbf4af3-e87c-bdcb-7544-685572925a50@neulinger.org>
-Date:   Wed, 22 Nov 2017 10:20:43 -0600
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:57.0) Gecko/20100101
- Thunderbird/57.0
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=dZ7L+yMN5qeIU7a8EDDFMxzW40Lh2EjmrLawtsdpf1w=;
+        b=poBRq6oy0L7D64AMnrTDRkfGFeh7/bcBuP+FoJ0PkLdSEoA6TL9pzoKPCbFJzOSDRJ
+         t1kVboqOxzUrEp3HoFBXEjyGzeErPhjxovOPaAZnTFxGM76RwFZo7HGSX1CJV8Z6AHAV
+         FZAl5XqPTiWcF3GdhLGB1t26pA1A6g9L9aakAG5RzZ+Sdhah+nQJQWmTB0D9lTtjb2Lp
+         SilKn1wMCguH5KwkqLVOB6GXUR77IZIkk5ZIOIV/hbrmafiNPnP99WlLVsImvfbapfQH
+         IV8wEMQpsMM8HK2s7JrmrR3TqYCuddYW4ulZcOW/wMhlqj/5oR5EJkE4SBt86NNdst94
+         FWfQ==
+X-Gm-Message-State: AJaThX5d3L9HJVzEMV2WIMfJjGRN6ZtHVHuhnaqvxugdL0Xqv/lVnj9m
+        HusJzj9l97nf/waPZCdLE269JDqin1E0lA4zIMARWwG3
+X-Google-Smtp-Source: AGs4zMZ+ScRGuaopl9HOLle860vkH0GCQd9nJomV4IlpVruvLiwhoFMy2lyZJVALVjDMJkmViDcLEzTtUsZkNW4z+Ik=
+X-Received: by 10.36.228.68 with SMTP id o65mr7883680ith.128.1511367690598;
+ Wed, 22 Nov 2017 08:21:30 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20171122161014.djkdygmclk227xmq@LykOS.localdomain>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Received: by 10.79.28.137 with HTTP; Wed, 22 Nov 2017 08:21:29 -0800 (PST)
+In-Reply-To: <20171122143902.GO20681@dinwoodie.org>
+References: <20171122143902.GO20681@dinwoodie.org>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Wed, 22 Nov 2017 17:21:29 +0100
+Message-ID: <CAP8UFD35-z9qA_m28EbpvN-X_HVcDvEirn69DJNESikJ=Txg7g@mail.gmail.com>
+Subject: Re: Bisect marking new commits incorrectly
+To:     Adam Dinwoodie <adam@dinwoodie.org>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I just got an answer to my stackoverflow question on this, apparently it's already implemented:
+On Wed, Nov 22, 2017 at 3:39 PM, Adam Dinwoodie <adam@dinwoodie.org> wrote:
+> In trying to do a bisect on the Git repository, I seem to have come
+> across surprising behavior where the order in which `git bisect` appears
+> to forget that previous commits were marked as new.
 
-https://stackoverflow.com/questions/47436939/how-to-run-git-status-without-modifying-git-index-such-as-in-a-prompt-command
+Yeah, the algorithm uses many "old" commits and only one "new" commit.
 
-There is a "--no-optional-locks" command in 2.15 that looks like it does exactly what I need.
+[...]
 
--- Nathan
+> As you can see, in both cases, only the most recent "new" command
+> appears to have any effect.  I'd have expected that both commits would
+> have been marked as "new", and the bisect run would use both facts to
+> work out which commit is the target of the bisection.
 
-On 11/22/17 10:10 AM, Santiago Torres wrote:
-> On Wed, Nov 22, 2017 at 09:37:09AM -0600, Nathan Neulinger wrote:
->> What I'm meaning is - why does it need to write the index back out to disk?
->>
->>  From looking at the code in builtin/commit.c it looks like it takes a lock
->> on the index, collects the status, and then unconditionally rewrites the
->> index file.
->>
-> Hmm, I just took a look at those lines and I see what you mean. From
-> what I understand, this is to cache the result of the index computation
-> for ensuing git calls.
-> 
->> I'm proposing that the update_index_if_able call not actually be issued if
->> it would result in a ownership change on the underlying file - such as a
->> simple case of root user or other privileged account issuing 'git status' in
->> a directory.
-> 
-> I don't think this would be a desire-able default behavior. I'd wager
-> that running git status using different accounts is not a great idea ---
-> specially interacting with a user repository as root.
-> 
->> I understand completely that it would be expected to be altered if the
->> privileged user did a commit/add or any other operation that was inherently
->> a 'write' operation, but doesn't seem like status should be one of those
->> cases.
-> 
-> I think it's because of the reasons above. That being said, I don't know
-> what the rest of the community would think of something akin to a
-> --no-update-index type flag.
-> 
-> Cheers!
-> -Santiago.
-> 
+I didn't look at your test case, but the algorithm to find another
+commit to test is described here:
 
--- 
-------------------------------------------------------------
-Nathan Neulinger                       nneul@neulinger.org
-Neulinger Consulting                   (573) 612-1412
+https://git-scm.com/docs/git-bisect-lk2009.html#_bisection_algorithm
+
+and you can see that the first rule of the algorithm is to keep only
+the commits that are ancestors of the "new" commit (including the
+"new" commit itself).
+
+The reason for this rule is that other commits cannot have introduced
+the behavior we are looking for. The result of this rule is that git
+bisect will always ask you to test a commit that is an ancestor of the
+"new" commit.
+
+So if you test a commit that git bisect asks you to test, and it
+appears that this commit is "new", then you can just discard the
+previous "new" commit because it will give you less information than
+the new "new" one.
+(The old "new" will not let you discard any commits that the new "new"
+commit allows you to discard, because it is a descendant of the new
+"new" commit.)
+
+If you don't test the commit that git bisect asks you to test, then
+git bisect assumes that you know better and discards the old "new".
+
+> This is using v2.15.0.  It's possibly relevant that 95a731ce is a
+> direct parent of 14c63a9d.
+>
+> Is this a bug, or intentional behaviour?  Am I missing something that
+> means it's actually sensible to have Git silently discard some bisect
+> commands in this sort of circumstance?
+
+Well, instead of silently discarding a the old "new" commit when the
+new "new" commit is not an ancestor of it, git bisect could perhaps
+warn or ask you to confirm that you know what you are doing.
