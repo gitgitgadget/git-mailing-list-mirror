@@ -2,101 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C532A20954
-	for <e@80x24.org>; Wed, 22 Nov 2017 16:22:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ED37720954
+	for <e@80x24.org>; Wed, 22 Nov 2017 16:41:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751617AbdKVQWm (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Nov 2017 11:22:42 -0500
-Received: from mail-wm0-f41.google.com ([74.125.82.41]:40723 "EHLO
-        mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751303AbdKVQWm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Nov 2017 11:22:42 -0500
-Received: by mail-wm0-f41.google.com with SMTP id b189so11339964wmd.5
-        for <git@vger.kernel.org>; Wed, 22 Nov 2017 08:22:41 -0800 (PST)
+        id S1751476AbdKVQlr (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Nov 2017 11:41:47 -0500
+Received: from mail-lf0-f68.google.com ([209.85.215.68]:39563 "EHLO
+        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751448AbdKVQlq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Nov 2017 11:41:46 -0500
+Received: by mail-lf0-f68.google.com with SMTP id x76so14328424lfb.6
+        for <git@vger.kernel.org>; Wed, 22 Nov 2017 08:41:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=irrTXkYfozpujQw5aNVvWBQXPYPRkbUaznHIBjhef0o=;
-        b=TEedi0IWLlko770A5DiBKMBvAG7KkCvofAdKcfIMTu/CEPG4MYQtEerU+4v0Hkhg5A
-         IFfk3CgyBOBHBfZPq9ADdaGPXWmRJOOed4s4RuOt0IDbaJ4iZrblSaFmCoEQPNLbQ91E
-         50edl4SlLTRy7pd8Oz1MQuiVXBNHA3/1oybZEZQGRyzeThS0ODlH0yZcqdKIiIiTiVk+
-         x5PnDR+YuGYXhoAPncHy+5lCyxZ8lpFOCj8SGXaHPItaKB45xcrr33DbHsEyvK9xaBxc
-         MRprkF8vfq1xrAS82IeDKJvkfIohTtKitRhMro6lZQ8EUDyTO9ClPwT/LlwSMZUlPWE8
-         +V+g==
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=ry4qkPDZwULJJyndnWrRK3dN1BxUHejxKV2KGqzTcLY=;
+        b=cz6jtOFgBKI2OtQPahWdxdhmfgE+l6b2ipYChemg4yB+sPIWTPH0EN4IuimCkXQSzD
+         /jx8vyDC7zzVF2ZOJshPQFzpfWAccOsyGKsNiLmR7OC2Ummox65bpKOnML5Fk7uUwVK3
+         2kukd0HdNnLbrYPWa85srRSnWeK8Ncbtsne0FT/nQb35Rud6JdgNzsPAThNRaBacJDxw
+         Az7d0FjtNVl1rdvH85PHeuEi2KjlLjLdVVOYh3GfdgvwB6LuO/JYgGN8pWJKGmTYQ0tR
+         xGo0WIqHKLz/pqnTLEiq0C3sQPR5hdVBBpXeLfxwOQw+4UfTm43h370ndzczjUNtTzBq
+         pDWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=irrTXkYfozpujQw5aNVvWBQXPYPRkbUaznHIBjhef0o=;
-        b=smKxVLw0mZqbkht/0RR6SQq34d3ErUpEe2qRPxNFWSC5aVyRdm2OfTZg1iih2qkwy+
-         RcO3aprNr0Yg1tF1jTbmXjX0lR82FxOT9OOnquxY3SmkZ74YxoT+G2XGbfqAd7dyveDZ
-         okP/B8G1uob8l1np6qtAekGhOp6avMb8lXPWnBlGQzLWMEEJSI+yNoUE+lYhJcGQjVwM
-         ZwmTIKLPZkEyoG4DkhblJzxBhO6FNBr4QcBrkZkvVwNZeTfYL4HMpAG9PB+L2V8FetEc
-         gbcT7TRuhqSL8DsaDGPmDAjxtcT9hhHcQeZvol1xU+2WXHBfXc+tfuZVmfFwDgqA9RtZ
-         yukA==
-X-Gm-Message-State: AJaThX4kKS5m0B1rhiPw4UngQzWN5uCi7zeGG3yVftfUxI1z1/8EXqeo
-        EESVGNq/fA3g4QYsu3sUJFNBxA==
-X-Google-Smtp-Source: AGs4zMbKCxd5F262FCPLtOAtDGvNUFb5zhwLkeRuSIV3gBBwme8d+eCV/1fkYt72PVzPYEJtWcwVfQ==
-X-Received: by 10.28.132.19 with SMTP id g19mr4431468wmd.90.1511367760913;
-        Wed, 22 Nov 2017 08:22:40 -0800 (PST)
-Received: from LykOS.localdomain (216-165-95-144.NATPOOL.NYU.EDU. [216.165.95.144])
-        by smtp.gmail.com with ESMTPSA id 80sm3709634wmk.14.2017.11.22.08.22.39
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 22 Nov 2017 08:22:40 -0800 (PST)
-Date:   Wed, 22 Nov 2017 11:24:06 -0500
-From:   Santiago Torres <santiago@nyu.edu>
-To:     Nathan Neulinger <nneul@neulinger.org>
-Cc:     git@vger.kernel.org
-Subject: Re: git status always modifies index?
-Message-ID: <20171122162405.rr2uyggfv3xj4bqb@LykOS.localdomain>
-References: <a039d139-dba5-683e-afbf-4044cd32ab1d@neulinger.org>
- <20171122153028.olssotkcf3dd6ron@LykOS.localdomain>
- <5050d779-2981-6f06-49f7-0ecb4efb25b8@neulinger.org>
- <20171122161014.djkdygmclk227xmq@LykOS.localdomain>
- <dfbf4af3-e87c-bdcb-7544-685572925a50@neulinger.org>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=ry4qkPDZwULJJyndnWrRK3dN1BxUHejxKV2KGqzTcLY=;
+        b=mbuA2lyKOf7RB6pJl232Na4GOyMkgyoqvZbAqEdOMeaag7ic9lujvCgYma/J8Ne9r1
+         EceC/0VoROwYf9Do7ecy2HEzQgfydQxyu+dyhEjRAwPkgYBiZB0evmPphjN7UN06FsXI
+         J/8vDOCkyzZaAmDsF3XOzJmsDs+DmlIjGmqD4XLc4GyVQy7ZgVm0f2MQlondH3UgESWb
+         mZwgdzcwXpmE0y8eYRtBELUHSaqJZH72L8+kUVSlKUhcprXZ62QJ/s6KWgkEkWGbAqvp
+         9RTNv3NJF0GNYbL9WrHXyTSx12aiUMuFAXyG2DTQhrP1ajSsQf89vd4GqtV5S7RDrG1P
+         4fPA==
+X-Gm-Message-State: AJaThX6irBLzzvnqAkg3nK8mkWPUQH8MlQHiWhZ2O2b+fOo03FxZH+19
+        xYe+tuFRSTLBtIZJexunFzk1OCPxeVR8+d8be3A=
+X-Google-Smtp-Source: AGs4zMY4uQd4TVZ/13ttfrX2tMrd1ZBMAopRc+MNfmGjgfBU6yMymbq9+iiIc2tYASV/QxIjqDbWJuMeX39pBn7B9VE=
+X-Received: by 10.46.17.70 with SMTP id f67mr7367640lje.160.1511368905309;
+ Wed, 22 Nov 2017 08:41:45 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="ziexfnr477kxvibi"
-Content-Disposition: inline
-In-Reply-To: <dfbf4af3-e87c-bdcb-7544-685572925a50@neulinger.org>
+Received: by 10.179.22.16 with HTTP; Wed, 22 Nov 2017 08:41:24 -0800 (PST)
+In-Reply-To: <xmqqlgizudto.fsf@gitster.mtv.corp.google.com>
+References: <CABURp0pxYiwrpvT9E_jpvZKDMOUVA9e7dUhARfKEQymWzUwtiw@mail.gmail.com>
+ <20171121232113.GK3429@aiede.mtv.corp.google.com> <xmqqlgizudto.fsf@gitster.mtv.corp.google.com>
+From:   Phil Hord <phil.hord@gmail.com>
+Date:   Wed, 22 Nov 2017 08:41:24 -0800
+Message-ID: <CABURp0r6JQ9ehs+_h4XcNkHmEVogJ7b8UKSte_Ytxe0+ziiA2g@mail.gmail.com>
+Subject: Re: doc: prefer 'stash push' over 'stash save'
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>, Git <git@vger.kernel.org>,
+        Thomas Gummerer <t.gummerer@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+You probably already noticed this was my fault for filtering the patch
+through Gmail's GUI.  I did also push a replacement which hopefully
+does apply.
 
---ziexfnr477kxvibi
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-
-Ah, my bad. I missed this patch...
-
-Good luck!
--Santiago.
-
---ziexfnr477kxvibi
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEkDurc2QOttZVM+/zRo8SLOgWIpUFAloVpKMACgkQRo8SLOgW
-IpWlQw/9HvZP1I03ma3SxXvPX3whVb2Bkd3zEDpBWSW1Oq2XDs3WzAfrnzsYMxvq
-1Xs6VvIi6MfO+9NJ1Cqnq0J8H/cTOqmj0PmrIOTbRBrJylwa4RXGXiohn2G73XUF
-REKJjKJXgHmEsdsyB8TQgfN3QymfyiXZUKp+xVf0+OzrzWCBGF2v4ww8SvuvO6FM
-2U3ZdKodXpyQWP8Xrzs9sg1S2uzi52OywJ8wT3apRW/3VN9quaAEsVw/B2U4p0t4
-NWus4txYiRi04qmJF9N7o+0F53Fe9XCzoo5FX44M4aTpx/czLx97tAszWMpEUo4H
-DnfdrRgggbAGPJxQVJGZb4CfDV5Rpyt7AGi9uqiCTvex7S/Mo5XhOCqhfKx+QYu/
-54zOWHj2qTL6LgNeKMccYK8FWL6Ni7W7ku7lfnN6KvogRsZxTaGkSThSnBim6izC
-eC2MNMzsJj3TxrbFouHXmoCOl3dYCuRUUJIpUPN+L7EwEnVnFUAYg+lYcROmGh6o
-OnUrDprnpRLGXIcwOGBJu9A3k4z8/1E0F5RmLbkbNiK1dMUq+qK9odnn6rUw1JLu
-mpxYAnBRjUuwUCSjE9opL96RiRb7Z1KyojdPbdQhU/S7cgApq32v/YgzG52lAsh0
-7kSkmNo+QMyZqptarVuzzrbWErO+Mo9+kuA+YqX7DwkgK5m2Vcg=
-=YsNU
------END PGP SIGNATURE-----
-
---ziexfnr477kxvibi--
+On Tue, Nov 21, 2017 at 8:39 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
+>
+>> Phil Hord wrote:
+>>
+>>> Although `git stash save` was deprecated recently, some parts of the
+>>> documentation still refer to it instead of `push`.
+>>>
+>>> Signed-off-by: Phil Hord <phil.hord@gmail.com>
+>>> ---
+>>>  Documentation/git-stash.txt | 4 ++--
+>>>  1 file changed, 2 insertions(+), 2 deletions(-)
+>>
+>> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+>> Thanks.
+>
+> Heh, this does not even apply to 8be661007 that it claims to apply
+> on top of, which is contained in fd2ebf14 ("stash: mark "git stash
+> save" deprecated in the man page", 2017-10-22).
+>
+> I've wiggled it in, so there is no need to resend, but next time
+> please be careful when sending the patch and also when sending a
+> reviewed-by.
