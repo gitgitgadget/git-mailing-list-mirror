@@ -2,82 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 661E62036D
-	for <e@80x24.org>; Wed, 22 Nov 2017 01:41:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4FE052036D
+	for <e@80x24.org>; Wed, 22 Nov 2017 01:41:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751436AbdKVBlB (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Nov 2017 20:41:01 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55703 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751353AbdKVBlA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Nov 2017 20:41:00 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 20559AF61B;
-        Tue, 21 Nov 2017 20:41:00 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=wwxZUcySI+sB3PeLtQ4WZFuJKg4=; b=cTVJKz
-        7phL5heTniGmvjiZ4ZfNtTiXZJ6nH0eiAd3Z0suEheamGdMfWuJ7F3rv5hxHJ65V
-        2DNOmGlal+gdvbKm5XfyMdbXErOXm++TNDn3qRsOVh43NVsLQ+buyoXVHmV7QeX6
-        CeJYjoKdkarKPf0UN4WThfWwvPoeKTFxPUWtQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=bs4Grsk6EEIQa3KIitUh7BgRkDx1AqSF
-        4Vzk8+qhpgqtEsZ/qHW/zQRhGxkg3Q3uRhQyjyqkrySNPt3hJsYqZB8nxSk1Urb4
-        EOnsXGbVXoPk7Fv3NHRAF4GyCHGanNZfINaffpRZj1ejTl0rwpBKyeL25aBwHsFy
-        r7mud34b3qQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 15B2FAF61A;
-        Tue, 21 Nov 2017 20:41:00 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 621CEAF617;
-        Tue, 21 Nov 2017 20:40:59 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Adam Dinwoodie <adam@dinwoodie.org>
-Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        id S1751445AbdKVBlU (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Nov 2017 20:41:20 -0500
+Received: from mail-io0-f194.google.com ([209.85.223.194]:35740 "EHLO
+        mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751353AbdKVBlT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Nov 2017 20:41:19 -0500
+Received: by mail-io0-f194.google.com with SMTP id i38so21551562iod.2
+        for <git@vger.kernel.org>; Tue, 21 Nov 2017 17:41:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=y6G29Y7k7ArCv6WQrD0kokOBqBrOvsUn/xC6/uo6M4s=;
+        b=IW8FIbDuGNiW7jppNmTqsF4IdKyHw2XKV9UmR7MCgEz215n8/ZLUOZ29qQ12hf/Tti
+         7QTmUBpLCBd1DdAeLZOHqIUL6FfCDboe+blGenyiFhwjK2IqBVbO5f7kSnvo2fLTmDH1
+         9JE62AVgIlnHOGx9ROBWdiaQAyIMDNQKK3h9/WKprBoft3M73lvcGfhxfAhmc6IwyysD
+         JunrOJIGDXreyU/r4HZvktyPzBnnnbN86Isc+60/YpR/UlHq4IBhhR8rqnzel+DAcvO4
+         RBQwocRlCVfdmq9ecFUWeInSPPzp8PtlMtdkWIptPhMXyjxc0MERIhpThlE+Tad1L4OF
+         8Cww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=y6G29Y7k7ArCv6WQrD0kokOBqBrOvsUn/xC6/uo6M4s=;
+        b=puwvyq8aFken5m4OtMBbcBMg2JA9S53o5iH++4nNiI86vId3ICLJ93U3Qabadq83i4
+         VhMocQVo/R+nO4XefYlDTxLEJQzrRkoPxOhLcSi+/AXrOkJvHjj44kx/JBa42Rtf0YmT
+         mw48OccNZoFPi7wWa6nH3QtkHPd3gE5D6oCpKJjKfEakRPz0v59iCZ6uDNlcyVCocZr7
+         AvIeOkcI10OoBwkFV8rUy2MGPbOuYr5bCxRGO5ZqVqjUlT7nhXyj/JuOjVfk3dCef1MZ
+         g0yGL7tH4eyfZkqTSGStgTkTqcsPw6dsVs2qpTAs83dF7scBanZqmgEMkCeC5EMvFl/w
+         aPZQ==
+X-Gm-Message-State: AJaThX4NdrGWFqrjzFa4ujhPZ2TANg5Y0eAM1Hl//iSi77pw7b4RPVLz
+        rpKCTwosPRrHc9mv1BvNRjg=
+X-Google-Smtp-Source: AGs4zMZsJrna/vtezsfNSRNfvVMivD15KmZKfTkCdVJH6O2KSsI2CqOGuSiftql1iYg6HgNSurtAEg==
+X-Received: by 10.107.35.4 with SMTP id j4mr19849335ioj.145.1511314878742;
+        Tue, 21 Nov 2017 17:41:18 -0800 (PST)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id o207sm1315136itc.27.2017.11.21.17.41.17
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 21 Nov 2017 17:41:18 -0800 (PST)
+Date:   Tue, 21 Nov 2017 17:41:15 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Yubin Ruan <ablacktshirt@gmail.com>, git <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Thomas Ferris Nicolaisen <tfnico@gmail.com>,
+        Jakub Narebski <jnareb@gmail.com>,
+        Markus Jansen <mja@jansen-preisler.de>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Stefan Beller <sbeller@google.com>,
-        GIT Mailing-list <git@vger.kernel.org>
-Subject: Re: t3512 & t3513 'unexpected passes'
-References: <73f0fb1e-5b55-1049-7706-652f1f9deaed@ramsayjones.plus.com>
-        <20171121104404.GN20681@dinwoodie.org>
-Date:   Wed, 22 Nov 2017 10:40:58 +0900
-In-Reply-To: <20171121104404.GN20681@dinwoodie.org> (Adam Dinwoodie's message
-        of "Tue, 21 Nov 2017 10:44:04 +0000")
-Message-ID: <xmqq1skrytsl.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        =?utf-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
+        Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Phillip Wood <phillip.wood@talktalk.net>,
+        Ross Kabus <rkabus@aerotech.com>,
+        Henry Kleynhans <hkleynhans@bloomberg.net>,
+        Charles Bailey <charles@hashpling.org>,
+        Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: Draft of Git Rev News edition 33
+Message-ID: <20171122014115.GR3429@aiede.mtv.corp.google.com>
+References: <CAP8UFD0ggpUGGoOEjAt3sB9=ek+Av+6GemiyqZ4kTCHLC9dWoA@mail.gmail.com>
+ <CAJYFCiOj1DwgMMrFRxV315CB7xuvXMFRbRAkbx6s14oPm3ui1Q@mail.gmail.com>
+ <20171121011017.e2aac53zfo2n2whc@aiede.mtv.corp.google.com>
+ <CAP8UFD0dN2V5GVokvMD-XLDEhPVJrE=m3h8oM5VC_Lq6x3=9=A@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 30EFD53A-CF26-11E7-A37A-8EF31968708C-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAP8UFD0dN2V5GVokvMD-XLDEhPVJrE=m3h8oM5VC_Lq6x3=9=A@mail.gmail.com>
+User-Agent: Mutt/1.9.1 (2017-09-22)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Adam Dinwoodie <adam@dinwoodie.org> writes:
+Hi,
 
-> I've seen the same unexpected passes, and had just completed the same
-> bisect run myself, although I fixed the build failure by cherry-picking
-> 82921316a ("SQUASH???", 2017-11-18) onto commits that wouldn't build,
-> given that commit seems to exist entirely to fix that build breakage.
+Christian Couder wrote:
+> On Tue, Nov 21, 2017 at 2:10 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
 
-Your assumption is correct wrt "SQUASH???".  When I am in a hurry
-and cannot spend extra cycles to pinpoint which one of the commits
-in a multi-patch series breaks a build, I just fix the breakage on
-top of the tip commit, and leave it to the original author of the
-series to apply them down to the original breakage in individual
-commits when the topic is rerolled.
+>> That said, I believe that the gitattributes(5) manpage does an okay
+>> job of covering this and that that thread came to a clear conclusion:
+>>
+>>   https://public-inbox.org/git/20171026203046.fu3z5ngnw7hckfrn@aiede.mtv.corp.google.com/
+>>
+>> I commented at [1] that I found the conclusion of the rev news entry
+>> misleading and confusing but it doesn't appear that there is anything
+>> I can do about that.
+>
+> Well, you could have provided a pull request or otherwise suggested
+> what you think would be a better conclusion for the article and why.
+>
+> If you just say that the above email is the conclusion, when it seems
+> to me that another email from someone else is also a conclusion with a
+> quite different outcome, it does not help much come to an agreement
+> about what should be reported as the conclusion of the thread.
 
-It seems that the compilation breakage 82921316a fixes comes from
-its immediate parent, so I'll squash them together, just in case a
-rerolled topic does not materialize.
+This is something I suspect journalists have to deal with all the
+time: when one of the subjects of an article feels misrepresented
+(which happens inevitably when writing to a deadline), that comes with
+a feeling of powerlessness that can lead to grumpiness and harsh
+words.
 
-Thanks.
+In the end you ended up improving the text enough that I don't mind
+any more.  Sorry for the bumpy road along the way.
 
+Thanks,
+Jonathan
