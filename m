@@ -2,83 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AE5C020A40
-	for <e@80x24.org>; Wed, 22 Nov 2017 02:50:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2899D2036D
+	for <e@80x24.org>; Wed, 22 Nov 2017 03:14:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751651AbdKVCuY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Nov 2017 21:50:24 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:65510 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751429AbdKVCuV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Nov 2017 21:50:21 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5276CB0539;
-        Tue, 21 Nov 2017 21:50:21 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=8pNSAyB+q7Q1gGtERqleb2+WYsg=; b=b/D3KM
-        FhAr2M+bJNCXVbUNFRRrsomy3LhK8JsRlc8L5wZNg5qIOV5CXxJatnavjMPld5Qo
-        +8F1ay0zuWEZwR26hun7tvuPjm164lL2zsOaJisNxga+pf1e/9U7iPt/WBEsFBXd
-        zVzjZisJ7AQMVw2nUdfuT5tQR87+ky694ab/U=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=jWVz86Dz5fsEG9YmvYGb/OGtHDbBIJtI
-        /aTlBj51bl99vzftTKIFbhhkZ/1E+HOJiaH3WfCkpjjzhM+roSSm1U/RnXPZQQ7/
-        uA+jAY4SGIKoPTSzNKf4jWJ2pq6nVtVqcKFcStzA+Ro29DDhRDE9S6QZCJfhJNRp
-        89zCsW0KJUg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 488B0B0538;
-        Tue, 21 Nov 2017 21:50:21 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id ABA5EB0537;
-        Tue, 21 Nov 2017 21:50:20 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org, Anders Kaseorg <andersk@mit.edu>
-Subject: Re: [PATCH 1/3] Documentation: allow overriding timestamps of generated asciidoc
-References: <20171121232935.GM3429@aiede.mtv.corp.google.com>
-        <20171121233432.GN3429@aiede.mtv.corp.google.com>
-        <20171122005433.kwv4bin6y65xuxm5@genre.crustytoothpaste.net>
-        <20171122011531.GQ3429@aiede.mtv.corp.google.com>
-Date:   Wed, 22 Nov 2017 11:50:19 +0900
-In-Reply-To: <20171122011531.GQ3429@aiede.mtv.corp.google.com> (Jonathan
-        Nieder's message of "Tue, 21 Nov 2017 17:15:31 -0800")
-Message-ID: <xmqqlgizvxg4.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751527AbdKVDOw (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Nov 2017 22:14:52 -0500
+Received: from mail-qk0-f194.google.com ([209.85.220.194]:33559 "EHLO
+        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751431AbdKVDOv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Nov 2017 22:14:51 -0500
+Received: by mail-qk0-f194.google.com with SMTP id 78so14976840qkz.0
+        for <git@vger.kernel.org>; Tue, 21 Nov 2017 19:14:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=IKM57ftgBj3I9uCoagwJ0HzrwqeWSSezg0nImxVR25E=;
+        b=sJIN1b+yOTOsJPzmc2wuPOabEkDprTvED71Kmw79ylRlUbNBx/8O3AbNYJb+OQQE51
+         Lp9XQ8HVZzVsp0cbRwbTPXHNyv8qQaYBjMFfY4dXcyni3awQLMcMm1G5oQFhDc8HXpcb
+         v4o5kNkKllTzfXfYHqPUMwOdMQVrB5IZ0QccDI2GOVyD0eukSsJtu6xnUuS6dU8oLous
+         2L4DniQmzED8B/itdz+JF/3D6h4/BlIyyyun71yelKnH/6B5zZ/OFKIde2JkJpW5Lu5u
+         y3zsJfTnynof0VIQ2YNj+OSo8I3OjHN/istWumMWtkDmyL2b8LUQkrCqbqoTFCHOoEpa
+         O4sg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=IKM57ftgBj3I9uCoagwJ0HzrwqeWSSezg0nImxVR25E=;
+        b=Em47zkr3cWssDw8SgNBJfVC4dN+7k38ynUjleadpbaCQ2uS+BuDFMViXm/J3a+KcSq
+         uD2SQ2547z6VyTrAgIshaqwb6KIgxkgzVesRzOPjTdkWkg/+lSY8F6rmhSa6XiAZ/d/F
+         VMScL9rB8UnvpvSAI9/M9su3euIT3Tb2qkwUOzbNKzmSwckYKxy+Hf8VGW5aa0XLEwA9
+         0N8gPfROa+DwVc5iYq2BHPlS0rsmCvGq7WXOtqWD3rvovweaq3NkGplI8W0r259neQe9
+         Ejr8SCSxzWlQcLUSb7gX1dpPW90O5BjRc7s4wc+xtCykmadjZJ2yw/ZD0s7BiMy9+FpA
+         Ax7A==
+X-Gm-Message-State: AJaThX61ZW7/ZokOpr90Ftw/gteLMcXKiQu5g9f7Et1A72eb8hoIUYpv
+        0WHJUn0eBCAPrTVt4wtVWcV2SuWfuQTFchy8CUA=
+X-Google-Smtp-Source: AGs4zMYvfCmV7ztATlMG9u4tYSgX5bNubMT4G17uDL+zmaY4UBmEwsb/HuULQFq55kG4iyua5lLvgW+3Ezje8wAyF8M=
+X-Received: by 10.55.90.4 with SMTP id o4mr17408379qkb.296.1511320490332; Tue,
+ 21 Nov 2017 19:14:50 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E143B59C-CF2F-11E7-A064-8EF31968708C-77302942!pb-smtp1.pobox.com
+Received: by 10.12.155.209 with HTTP; Tue, 21 Nov 2017 19:14:49 -0800 (PST)
+In-Reply-To: <xmqqa7zfxdru.fsf@gitster.mtv.corp.google.com>
+References: <20171121150954.3227-1-kaartic.sivaraam@gmail.com>
+ <CAPig+cQrC1MiPrwwPqtdX2tzj1ntFHxO28uqnMBcmVpPPrc_Rg@mail.gmail.com> <xmqqa7zfxdru.fsf@gitster.mtv.corp.google.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 21 Nov 2017 22:14:49 -0500
+X-Google-Sender-Auth: bj0F0JOq2uu5O-xgE9aPsNs2xbE
+Message-ID: <CAPig+cTux4dfBsX3DD=5TbM-p4-t66WX3+sufi39-W5Dw+ZvOw@mail.gmail.com>
+Subject: Re: [RFC PATCH] builtin/worktree: enhance worktree removal
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
-
->> touch -d @SECONDS isn't POSIX compliant, and non-Linux systems don't
->> provide it.  POSIX only allows certain fixed format, and I assume that
->> non-Linux parties (maybe OpenBSD) will want to have reproducible builds
->> as well.
+On Tue, Nov 21, 2017 at 9:12 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+>> Let me see if I understand. Sometimes you know that you've deleted the
+>> worktree directory, in which case 'git worktree prune' is the obvious
+>> choice. However, there may be cases when you've forgotten that you
+>> deleted the worktree directory (or it got deleted some other way), yet
+>> it still shows up in "git worktree list" output with no indication
+>> that it has been deleted (though, ideally, it should tell you so[1]).
+>> In this case, you see a worktree that you know you no longer want, so
+>> you invoke "git worktree remove" but that errors out because the
+>> actual directory is already gone. This patch make the operation
+>> succeed, despite the missing directory. Is that correct?
 >
-> Interesting.  My knee-jerk preference is still to go with this patch
-> as-is for now, since the non-portability only triggers when
-> SOURCE_DATE_EPOCH is set.
+> Hmph, so the user could be using "git worktree prune" after seeing
+> the error?  Was there a reason behind "git worktree remove" to be
+> extra careful to make sure both existed before going forward, or was
+> this a simple oversight?
 
-As long as this patch is kept Debian-only, that is a sensible stance
-to take.  I am not sure (note: this is different from "I do not think")
-if it is also OK for the wider public, though.
+The erroring out in this case looks like simple oversight. Most
+likely, this particular case did not occur to Duy. The code does
+intentionally check the directory to see if it is dirty so that it can
+warn the user (in which case the user can re-run with --force or take
+other corrective action), but erroring out if the directory is merely
+an indirect (and unintended) result of trying to check for dirtiness.
 
-I wondered if this affects the dirtyness of the build, regardless of
-how file timestamps are mucked with.  It turns out that we do not
-use "describe --dirty" in the GIT-VERSION-GEN script, so perhaps
-it would be OK.
-
-
+So, Kaatic's patch is intended to address that oversight (though I
+haven't examined the implementation closely; I was just trying to
+understand the reason for the patch).
