@@ -7,70 +7,93 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 800AF2036D
-	for <e@80x24.org>; Wed, 22 Nov 2017 01:52:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 11C772036D
+	for <e@80x24.org>; Wed, 22 Nov 2017 02:01:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751379AbdKVBwV (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Nov 2017 20:52:21 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:52300 "EHLO
+        id S1751431AbdKVCBa (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Nov 2017 21:01:30 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:63632 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751344AbdKVBwV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Nov 2017 20:52:21 -0500
+        with ESMTP id S1751364AbdKVCB3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Nov 2017 21:01:29 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6E4E7AF9A2;
-        Tue, 21 Nov 2017 20:52:20 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 91BACBA3D0;
+        Tue, 21 Nov 2017 21:01:24 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=HR5Hy0/dztlUEnxsVaJaJh0mNSg=; b=G65i88
-        D+l25GfvBiIWKpQwpvUD3m+ckZF2Cq+zmYNUfz2ajFyyndpOA3EtPBPdNHCLron7
-        v8B0Z9diuhVQwvy3VvZcmn6guBJvfV7ckeMA6ZT9pE2EvRzpZt6N+At+d8R9xW3z
-        ZRQ2wa6zQpSY3qXHfUggiQHMBVZjeYihbUSpo=
+        :content-type:content-transfer-encoding; s=sasl; bh=bAEZD1PlUdNL
+        2MSLe01k1FUQNPU=; b=Kj3nPKX/HwvozpHOAu6o8kCknr9MAXwq8pmtPqOPcCgq
+        tgWXQ6eYMDrJNWxBgwHmrWQoggTufBqREipLyHLMYyVFrlztdOtr4io6NJz9OYv2
+        EJMDn35PDtKgINp5/A5VVR4TyNmgxf5kiE83JDnPva+wef6u9aF6t8FHsBytTxk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=WJ7jfrTZR7yb9RAiQOFdvyxCksLcJRka
-        +Z2AvUEwXajSgNyYLHjNDjBug7hAK4rGVyCOOOYxAIho0Ia0vZsrjH0e+oBOwIqM
-        8hDmWBuQlh5GVA+O1IMIOr4jcs6SUePC45PUnsjTCs1dsANlbBUPiZblF+UxkCLu
-        BOhJS6VSmC4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 63894AF9A1;
-        Tue, 21 Nov 2017 20:52:20 -0500 (EST)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=srKb9A
+        VI2RVQkIkl0uI/slin6jLiCj13jgoTjSFBuj54HZmVe8M4xrbr44b0XjXBgRMpF1
+        jzc7dc3PU9M03786BM6bjxESDihXAdatz+2r9fcaeToNaIDVahurdtdSAObvzt9j
+        PK+Jar/D+mfcVtKidIbsbL1tonQuGAmbWCwIE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 88DF5BA3CF;
+        Tue, 21 Nov 2017 21:01:24 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C330FAF99F;
-        Tue, 21 Nov 2017 20:52:19 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0BB93BA3CE;
+        Tue, 21 Nov 2017 21:01:23 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     git@vger.kernel.org, Brandon Williams <bmwill@google.com>,
-        Stefan Beller <sbeller@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Segev Finer <segev208@gmail.com>
-Subject: Re: [PATCH v3 0/8] Coping with unrecognized ssh wrapper scripts in GIT_SSH
-References: <20171120212134.lh2l4drdzu6fh5g2@aiede.mtv.corp.google.com>
-Date:   Wed, 22 Nov 2017 10:52:18 +0900
-In-Reply-To: <20171120212134.lh2l4drdzu6fh5g2@aiede.mtv.corp.google.com>
-        (Jonathan Nieder's message of "Mon, 20 Nov 2017 13:21:34 -0800")
-Message-ID: <xmqqmv3fxep9.fsf@gitster.mtv.corp.google.com>
+To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+Cc:     Vladimir Nikishkin <lockywolf@gmail.com>, git@vger.kernel.org
+Subject: Re: core.safecrlf warning is confusing[improvement suggestion?]
+References: <CA+A2iZaLZCMvyb3nbcn=ofVGAPeW2_wRhjOeRRu5q01LuV++Gw@mail.gmail.com>
+        <20171121161824.GA13548@tor.lan>
+Date:   Wed, 22 Nov 2017 11:01:22 +0900
+In-Reply-To: <20171121161824.GA13548@tor.lan> ("Torsten =?utf-8?Q?B=C3=B6g?=
+ =?utf-8?Q?ershausen=22's?=
+        message of "Tue, 21 Nov 2017 17:18:24 +0100")
+Message-ID: <xmqqine3xea5.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C67CB2FC-CF27-11E7-9FD1-8EF31968708C-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 0AD8022A-CF29-11E7-82C0-575F0C78B957-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
-> Jonathan Nieder (8):
->   ssh test: make copy_ssh_wrapper_as clean up after itself
->   connect: move no_fork fallback to git_tcp_connect
->   connect: split git:// setup into a separate function
->   connect: split ssh command line options into separate function
->   connect: split ssh option computation to its own function
->   ssh: 'auto' variant to select between 'ssh' and 'simple'
->   ssh: 'simple' variant does not support -4/-6
->   ssh: 'simple' variant does not support --port
+>> I want to have LF line endings in the repository and CRLF endings in
+>> the working copy. (Because I use windows-exclusive tools to develop.)
+>
+> Side note: If you ever want to push your repository somewhere,
+> it would be good practice to have a .gitattributes file:
+> ...
 
-Thanks.  All looked sensible.  With this, we can unblock both topics
-;-)
+Now we got your attention ;-)
+
+What would be the BCP we would give if somebody has just a tarball
+without .git that has LF endings?
+
+    $ git init a-project
+    $ cd a-project
+    $ tar xf ../a-project.tar
+    $ git add .
+    $ git commit -m 'Initial import'
+
+would achieve one half of the original wish (i.e. "I want to end up
+with repository data in LF eol"); disabling the "safe crlf" before
+running that "git add ." step may also not be a bad idea, because it
+reduces the number of things that can get in the way by one.
+
+But the above also leaves the "working tree" files in LF eol
+(i.e. it goes against "I want to work with CRLF in my working
+tree").  What would be our recommendation?
+
+One big-hammer way I can think of is
+
+    $ git rm -f .
+    $ git reset --hard
+
+and that actually may be a good enough solution, given that you'd be
+doing this just once at the beginning of "your" project that starts
+from an inherited code drop.
