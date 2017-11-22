@@ -7,82 +7,67 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DF3E02036D
-	for <e@80x24.org>; Wed, 22 Nov 2017 00:00:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6D8DF2036D
+	for <e@80x24.org>; Wed, 22 Nov 2017 00:23:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751500AbdKVAAm (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Nov 2017 19:00:42 -0500
-Received: from mail-qt0-f176.google.com ([209.85.216.176]:33652 "EHLO
-        mail-qt0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751443AbdKVAAl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Nov 2017 19:00:41 -0500
-Received: by mail-qt0-f176.google.com with SMTP id r58so21649143qtc.0
-        for <git@vger.kernel.org>; Tue, 21 Nov 2017 16:00:41 -0800 (PST)
+        id S1751415AbdKVAXd (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Nov 2017 19:23:33 -0500
+Received: from mail-qk0-f181.google.com ([209.85.220.181]:45069 "EHLO
+        mail-qk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751372AbdKVAXc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Nov 2017 19:23:32 -0500
+Received: by mail-qk0-f181.google.com with SMTP id d125so14586400qkc.12
+        for <git@vger.kernel.org>; Tue, 21 Nov 2017 16:23:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=VTFwA9FD4Jk4YK3YIF1R75m3ALi11JdbKcSN/sQFdaY=;
-        b=VLFHn5p3Ezp8AqORh5xQCBrWExoLb+uR/MWzLFG8xrmZkSpxthb7AEH4Oo/OKzvx1H
-         9+MHLALxBo+bwJc/QVcpdN5aL1ILNK1WVdcVPLR6bBTlzRt499TNQmYCLOS8iVquHmHy
-         vuQISbbKspdI7Jf7J5k2ReZoQTkrFgJeNPouGi8SivLEaCAG1k+Gv7JxfQ1azqYTCAY3
-         GdA5Q/F2OaUxuxXIAye07Pz7+aD40ZKMxDUEYuXcktoINQ3w4I6UM714cvQbAcOTPPYn
-         xSgT0nbagH0UUKm3OPaEvhh41OcHVmyfjMWGrpBMdaEp2fglnfWENpCesuTPDoN8Bb7h
-         dK0Q==
+        bh=KSchO13ZSW/zT77CZDX4IRgsZtLYei0VlrRUzfi+VAI=;
+        b=mlvpnk6+hNnemOsTIomn1ZzW0qsFrNi84/5qxuNi2O0sOTPx0loogI/w9DnsPLP4Cl
+         MDzLvTHzjYzeFPnL5OYvO7gTpc5fVpsvGnctaPIlioihMbeoVE4VQSwK5sf+npBHgf1w
+         rJIhqUuiMRQz59AW8K8E32ZLitV/8tfcE1H9GnMKP90ki6f1YXPQSle7iu6imn6BWIZX
+         Hppnq12ONHkzAa77Bpv5014EHwCxVErLEJRD3QqeauLyOds38GnFzvz4emah5v5zJ4V2
+         tsZAFDPwgeV7pc1FWsgiCg9H0u5E8bdMwi/YCeL6zP8vnCeFIUpV8RQf2eAJdi/JfJBI
+         cHjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=VTFwA9FD4Jk4YK3YIF1R75m3ALi11JdbKcSN/sQFdaY=;
-        b=tPkkh4GwzewUJy4+Kzer60sKL/GQCVJ70kECMpgeoYitCpm913YL5LQU7EnWJA/3gT
-         e8qMB/tOlNtCWhbgrm5AnpwY+wZ5Um31mTo/Ur0z4XRSmBLuxLO/o+Q54LKw1AlMxJl1
-         KHo5ROosBudq1BxEk8iqXH4SigBotZaNUpRYPGlbQ46+T5Uy5/tsemdy9eih2a/79fd3
-         awMMYLDHnw5DXCxZn2ZgpRZdU7ppGYuggzrY4OFLyJ9zafzKxcFGThUbqQ149vWGgHvW
-         OIwuGaFdB5Ev9CvwXf1n2GEoon5vmH5lYhHMkvkY0qRhhPW6iok1B/jqAKlXdBonbuLT
-         Yfng==
-X-Gm-Message-State: AJaThX47RMnzGe3S+oXpkBOc+fckwYZtr702lyY0rGR7WaFh3IfqaUPN
-        ObMXycoPCM/iyiGRYG1JniaFJApnYzfxX1w+DOdyrA==
-X-Google-Smtp-Source: AGs4zMZ8V6CHVcLM9VfM6iKnwFfnyqekaJ/ZZ72O8VZxItzM/LcgV1QXkSVZgn5MkHh3oPuzQvxV+oiFXlu5a7ofj3k=
-X-Received: by 10.200.44.251 with SMTP id 56mr29900968qtx.87.1511308841081;
- Tue, 21 Nov 2017 16:00:41 -0800 (PST)
+        bh=KSchO13ZSW/zT77CZDX4IRgsZtLYei0VlrRUzfi+VAI=;
+        b=LaZou6uFx6t7Rkcduy6xnFGfRnmBdy4eZwxrrd3nKoviiN5D7n/rrnovDpy81592jK
+         m1lMLcCIx2eSY/ZcmZFqrnCfPxaprySiHE80rsjouYjmFh/W6rLx49fkb5vk7djRt70h
+         GVOW9jk9rd+aw5pZ6JT1gqsLF4Qk6KLSoQCgUFiEoswm4sn3QQw33QKDVpjxMJcpE7DI
+         /5ZiLZQZQxKa5lJkDg1fpVBry0wWt6LAQPZPqzJuh86fGbu8W06nWPwjkH1aPyQyguLA
+         5onmZdr06eVZ3jvX1Z4OlEpfN36IigqKGoXjTCy9aZfTMYp4WmHGO5C7G0t6YC3RAaQ/
+         1Abw==
+X-Gm-Message-State: AJaThX49xxLFqAORnPlN1NJSX/YnNeeQBrqm+9G+dmfdEa2J0OEFEB9h
+        hLzao7A/11RoVMSva6Y7gBYeJBaTAT5Le8Hv/eGvDQ==
+X-Google-Smtp-Source: AGs4zMaz0fKKluGtAdmKn9IXCa0YleW4vF9dCzDByQudO72eMEWz6kWQGNUGGWgvqW22N2Jr6PKA6uhpsLLDZ4VuP7Y=
+X-Received: by 10.55.107.65 with SMTP id g62mr5837327qkc.295.1511310211494;
+ Tue, 21 Nov 2017 16:23:31 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.140.85.179 with HTTP; Tue, 21 Nov 2017 16:00:40 -0800 (PST)
-In-Reply-To: <20171120223232.GG92506@google.com>
-References: <20171120212134.lh2l4drdzu6fh5g2@aiede.mtv.corp.google.com> <20171120223232.GG92506@google.com>
+Received: by 10.140.85.179 with HTTP; Tue, 21 Nov 2017 16:23:30 -0800 (PST)
+In-Reply-To: <b5a6ddb1-0971-92d1-4cfb-94366d8f14c3@ramsayjones.plus.com>
+References: <b1037774-6ae6-630b-f330-e95b1c3d681d@ramsayjones.plus.com>
+ <20171121011634.dw6tdgp2s7lpl2lm@aiede.mtv.corp.google.com> <b5a6ddb1-0971-92d1-4cfb-94366d8f14c3@ramsayjones.plus.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 21 Nov 2017 16:00:40 -0800
-Message-ID: <CAGZ79kaR3Jk++mQKhJVk9dK8_usLGWTAgEdkF1K061TKwiFv5w@mail.gmail.com>
-Subject: Re: [PATCH v3 0/8] Coping with unrecognized ssh wrapper scripts in GIT_SSH
-To:     Brandon Williams <bmwill@google.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>, git <git@vger.kernel.org>,
+Date:   Tue, 21 Nov 2017 16:23:30 -0800
+Message-ID: <CAGZ79kaKWRMDFQLbeRtGmejOD7JD_RCjK5J_HOFqddReT6yOEA@mail.gmail.com>
+Subject: Re: [PATCH] list-objects-filter-options: fix up some sparse warnings
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
         Junio C Hamano <gitster@pobox.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Segev Finer <segev208@gmail.com>
+        GIT Mailing-list <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 20, 2017 at 2:32 PM, Brandon Williams <bmwill@google.com> wrote:
-> On 11/20, Jonathan Nieder wrote:
->> Previously: [1].
->>
->> This version should be essentially identical to v2.  Changes:
->> - patch 1 is new and should fix the test failure on Windows
->> - patch 2 is new, discussed at [2]
->> - patch 5 split off from patch 6 as suggested at [3]
->> - patch 6 commit message got two new notes to address the worries
->>   from [3]
->>
->> Thanks for the helpful reviews, and sorry to take so long to get this
->> out.  Thoughts of all kinds welcome, as always.
->
-> Just finished looking through the series.  Looks good overall!
->
-> Thanks again for getting this out!
+> [It would probably be easier if I used git to output this for me, rather
+> than typing it into my email client!]
 
-Same here,
+git config alias.gcs "show --date=short -s --pretty='format:%h ("%s", %ad)'"
 
-Thanks,
-Stefan
+will make you the `git gcs` alias that I use to describe commits.
