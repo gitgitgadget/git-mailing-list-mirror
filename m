@@ -2,167 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 929E720954
-	for <e@80x24.org>; Wed, 22 Nov 2017 12:10:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E199C20954
+	for <e@80x24.org>; Wed, 22 Nov 2017 12:33:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752370AbdKVMJ7 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Nov 2017 07:09:59 -0500
-Received: from mail-wm0-f42.google.com ([74.125.82.42]:46364 "EHLO
-        mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752322AbdKVMJ5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Nov 2017 07:09:57 -0500
-Received: by mail-wm0-f42.google.com with SMTP id u83so9903259wmb.5
-        for <git@vger.kernel.org>; Wed, 22 Nov 2017 04:09:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=9JKp8cn9rYL5CSHExk+VGgVXyScD6pCSv8qvTbfaouE=;
-        b=ucdM2fphuMCQUxOAudsk1E08f6/RW6W62SzG57A7ielCsQ7xIf5f0PjKAnpfZPddI6
-         dTZzgFS+mSjfTyWaitHJx/Jqx/zAdmUP7A2hp417onoM4sW+eRCYuQ9OxXFLj8+DkWoI
-         ZD1vLLHHSg+aZenddmsX1H0C8NpJt2OWerv+yWbIAwY8tLJU7tZD0Qq65567FW2TsEAJ
-         Zen70I3lhjBXCqe2UWS2CgwPP3s9KRFeb31fV0bX7rLmBPYG6N2pzLLcM+G4HGy1mRgu
-         BQjthkeDcVGlrKGcALVB6zgm5jLwljt3NYhKD3czsD2nmsgVboAzk7i+zYzDQeQqzxbd
-         0Ezg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=9JKp8cn9rYL5CSHExk+VGgVXyScD6pCSv8qvTbfaouE=;
-        b=bdLcRqe1CQRBGL+5f15wEHSaD/7QOexptifVMe453VdmF2tJAlF7+A7zQh5NXqZ84z
-         ozOrAJlNCFINudeyrHruUeFvi+3zcEAaaYB9BYP5TRvhKR1BsH2A9jhhI/QXsz6P1ghk
-         eOioCH3DHSe5YrxIdqcuGPd9YYwx7hRKe35VBKXzxuDGJTXbCfLgDgqbX4w/jgLfORCI
-         60Dn+w9OUXmc1AA+3qyD40LKQ0IigNkWT0cOhwH9bzrawk1eQd+BxerL0J8MRT1UA0lI
-         x+BWfpQ7UFlfwqw5R7xEbjmBziVpWt+pOQX1gIuGTpsyYYoxWkNCih5iwEDN+s3vbLRx
-         +bXQ==
-X-Gm-Message-State: AJaThX6MSi/yEu6cqzsVGjW61FAeUb8sn3B+zQuDCc4ELwc38afM8bGY
-        O64H+qO3BYfOP+cktAEKHVYcgpo7
-X-Google-Smtp-Source: AGs4zMY1SxnUih+We7v8D+W2YQgpzurbOWqBLG13r+tcFtEUZMHa86Sz5weFER5UgXe9UF5ID5B3/A==
-X-Received: by 10.80.212.27 with SMTP id t27mr27072358edh.89.1511352595822;
-        Wed, 22 Nov 2017 04:09:55 -0800 (PST)
-Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
-        by smtp.gmail.com with ESMTPSA id x5sm7974528eda.8.2017.11.22.04.09.54
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 22 Nov 2017 04:09:54 -0800 (PST)
-Received: from avar by evledraar with local (Exim 4.89)
-        (envelope-from <avarab@gmail.com>)
-        id 1eHTqk-0004Me-5M; Wed, 22 Nov 2017 13:09:54 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Dan Jacques <dnj@google.com>
-Cc:     Johannes.Schindelin@gmx.de, git@vger.kernel.org, gitster@pobox.com,
-        Petr Baudis <pasky@ucw.cz>
-Subject: Re: Re [PATCH 1/1] exec_cmd: RUNTIME_PREFIX on some POSIX systems
-References: <87k1ykwrfv.fsf@evledraar.booking.com> <20171121024102.14153-1-dnj@google.com>
-User-agent: Debian GNU/Linux 9.2 (stretch); Emacs 25.1.1; mu4e 0.9.19
-In-reply-to: <20171121024102.14153-1-dnj@google.com>
-Date:   Wed, 22 Nov 2017 13:09:54 +0100
-Message-ID: <87efoqwm3x.fsf@evledraar.booking.com>
+        id S1752544AbdKVMdj (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Nov 2017 07:33:39 -0500
+Received: from cpanel2.indieserve.net ([199.212.143.6]:52884 "EHLO
+        cpanel2.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752325AbdKVMdj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Nov 2017 07:33:39 -0500
+Received: from 69-196-158-250.dsl.teksavvy.com ([69.196.158.250]:36898 helo=DESKTOP-1GPMCEJ)
+        by cpanel2.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.89)
+        (envelope-from <rpjday@crashcourse.ca>)
+        id 1eHUDi-0007sn-DM
+        for git@vger.kernel.org; Wed, 22 Nov 2017 07:33:38 -0500
+Date:   Wed, 22 Nov 2017 07:32:14 -0500 (EST)
+From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
+X-X-Sender: rpjday@DESKTOP-1GPMCEJ
+To:     Git Mailing list <git@vger.kernel.org>
+Subject: [PATCH v2] doc: clarify that "git bisect" accepts one or more good
+ commits
+Message-ID: <alpine.LFD.2.21.1711220729230.13545@DESKTOP-1GPMCEJ>
+User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel2.indieserve.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - crashcourse.ca
+X-Get-Message-Sender-Via: cpanel2.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: cpanel2.indieserve.net: rpjday@crashcourse.ca
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Reword the man page for "git bisect" to emphasize that, in the general
+case, this command can take more than one good commit to define the
+initial range of commits to examine.
 
-On Tue, Nov 21 2017, Dan Jacques jotted:
+Signed-off-by: Robert P. J. Day <rpjday@crashcourse.ca>
 
-> Ævar Arnfjörð Bjarmason @ 2017-11-20 21:50 UTC suggested:
->
->> So LeonT over at #p5p helped me with this. He believes this'll work
->> (unless MakeMaker INSTALL_BASE is set, but that should break the Git
->> install anyway):
->
-> I think that the problem with this approach is that it uses the local
-> "Config" module. The primary purpose of RUNTIME_PREFIX(_PERL) is that one
-> can build/install Git into a directory, then either move that directory
-> somewhere else or archive it and put it on a different (binary-compatible)
-> system altogether.
->
-> The latter case concerns me here. If the "Config" module is loading local
-> system paths, then the relative pathing between "$Config{installsitelib}"
-> and "$Config{siteprefixexp}" may not be consistent between systems, so an
-> archive built from one system may not have a compatible relative
-> directory structure when resolved with the Config module on another
-> system.
+---
 
-I don't see how this is different from any other option we build git
-with. When we dynamically link to e.g. PCRE under RUNTIME_PREFIX*=Yes
-you can move the installed git from /tmp/git to /tmp/git2, but it'll
-still expect the specific version of the *.so libraries to be in
-/usr/lib or whatever.
+diff --git a/Documentation/git-bisect.txt b/Documentation/git-bisect.txt
+index 4a1417bdc..2afbd9562 100644
+--- a/Documentation/git-bisect.txt
++++ b/Documentation/git-bisect.txt
+@@ -30,10 +30,10 @@ on the subcommand:
+  git bisect help
 
-Similarly we under the default MakeMaker path add the perl version to
-the directories we have, you can move git from /tmp/git to /tmp/git2 no
-problem, since that won't change the perl version, but if you upgrade
-the global perl itself from 5.20 to 5.24 you'll need to re-build.
+ This command uses a binary search algorithm to find which commit in
+-your project's history introduced a bug. You use it by first telling
+-it a "bad" commit that is known to contain the bug, and a "good"
+-commit that is known to be before the bug was introduced. Then `git
+-bisect` picks a commit between those two endpoints and asks you
++your project's history introduced a bug. You use it by first telling it
++a "bad" commit that is known to contain the bug, and one or more "good"
++commits that are known to be before the bug was introduced. Then `git
++bisect` picks a commit somewhere in between those commits and asks you
+ whether the selected commit is "good" or "bad". It continues narrowing
+ down the range until it finds the exact commit that introduced the
+ change.
+@@ -58,7 +58,7 @@ $ git bisect bad                 # Current version is bad
+ $ git bisect good v2.6.13-rc2    # v2.6.13-rc2 is known to be good
+ ------------------------------------------------
 
-> Since we control the installation process and paths, we know that the
-> directory structure looks someting like:
->
-> .../prefix/$GITEXECDIR/git-perl-script
-> .../prefix/$RELPERLPATH/Git.pm
->
+-Once you have specified at least one bad and one good commit, `git
++Once you have specified one bad and one or more good commits, `git
+ bisect` selects a commit in the middle of that range of history,
+ checks it out, and outputs something similar to the following:
 
-Having said the above, I don't understand why we're using MakeMaker at
-all and I think we should just get rid of it.
+@@ -137,7 +137,7 @@ respectively, in place of "good" and "bad". (But note that you cannot
+ mix "good" and "bad" with "old" and "new" in a single session.)
 
-We're not using the perldoc toolchain to build manpages from *.pod for
-these, and we don't have any C bindings, it seems to me that we could
-simply replace this whole thing with a removal of all things Make-y from
-perl/* and just do the minor work of creating a top-levle git-perl-lib
-in our install $PREFIX and make the perl stuff use that.
+ In this more general usage, you provide `git bisect` with a "new"
+-commit that has some property and an "old" commit that doesn't have that
++commit with some property and some "old" commits that don't have that
+ property. Each time `git bisect` checks out a commit, you test if that
+ commit has the property. If it does, mark the commit as "new";
+ otherwise, mark it as "old". When the bisection is done, `git bisect`
+@@ -145,19 +145,19 @@ will report which commit introduced the property.
 
-Looking at the history of the Makefile.PL it originally had XS stuff
-(which you'd need a Makefile.PL for), but this was removed in 18b0fc1ce1
-before it made it to master.
+ To use "old" and "new" instead of "good" and bad, you must run `git
+ bisect start` without commits as argument and then run the following
+-commands to add the commits:
++commands to identify the commits:
 
-My comment on your patch series was just that with the method I posted
-there's no reason for why RUNTIME_PREFIX*=Yes and MakeMaker need to be
-mutually exclusive, so if we're keeping the MakeMaker it seems to me
-that we can support both.
+ ------------------------------------------------
+-git bisect old [<rev>]
++git bisect old [<rev>...]
+ ------------------------------------------------
 
-But we can probably just get rid of MakeMaker.
+-to indicate that a commit was before the sought change, or
++to identify one or more commits before the sought change, or
 
-> Our goal is to, given the directory that "git-perl-script" belongs to,
-> first identify the path for ".../prefix" and then append "$RELPERLPATH" to
-> it to generate the full library path.
->
-> The most straightforward way to do this, to me, is to:
->
-> 1) Have the Makefile hard-code "$RELPERLPATH" and "$GITEXECDIR" (relative
->   paths) into the header code.
-> 2) Assert that "$FindBin::Bin" (the directory containing the script) ends
->   with "$GITEXECDIR".
-> 3) Remove "$GITEXECDIR" from the end of "$FindBin::Bin" to obtain
->   ".../prefix" ($prefix). Simple string truncation is probably fine for
->   this.
-> 4) Add "File::Spec->catdir($prefix, $RELPERLPATH)" to "lib".
->
-> I don't think path separators are a problem, since the Makefile uses "/"
-> indiscriminately. Even Git-for-Windows seems to run its PERL scripts in
-> a POSIX environment (mingw).
+ ------------------------------------------------
+-git bisect new [<rev>...]
++git bisect new [<rev>]
+ ------------------------------------------------
 
-Right. I don't know that they are either, it just stuck me as an odd
-inconsistency that you're going out of your way to do catdir($p, "lib")
-in one place and then hardcoding unix-like paths in another place.
+-to indicate that it was after.
++to indicate a single commit after that change.
 
-If it's not neede dwe can just do "$p/lib".
+ To get a reminder of the currently used terms, use
 
-> Does this sound like a reasonable way to proceed?
 
-I think the best way to proceed is probalby to just start getting rid of
-the perl/* make stuff as discussed above.
+-- 
 
-Is that something you're interested in / have time for, otherwise I
-could see if I could find some time, but I don't have a lot these days.
+========================================================================
+Robert P. J. Day                                 Ottawa, Ontario, CANADA
+                        http://crashcourse.ca
 
-Which is not to say that I think that should block this patch series or
-anything. If it really needs to disable MakeMaker to work we're no worse
-off than before.
+Twitter:                                       http://twitter.com/rpjday
+LinkedIn:                               http://ca.linkedin.com/in/rpjday
+========================================================================
