@@ -7,38 +7,38 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6029A20A40
-	for <e@80x24.org>; Wed, 22 Nov 2017 03:39:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DAB642036D
+	for <e@80x24.org>; Wed, 22 Nov 2017 03:48:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751458AbdKVDjg (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Nov 2017 22:39:36 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54720 "EHLO
+        id S1751479AbdKVDsJ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Nov 2017 22:48:09 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59333 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751434AbdKVDjf (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Nov 2017 22:39:35 -0500
+        with ESMTP id S1751415AbdKVDsI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Nov 2017 22:48:08 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8136FB0F81;
-        Tue, 21 Nov 2017 22:39:34 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5FBB1BB6F8;
+        Tue, 21 Nov 2017 22:48:08 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=KmB7+nDfMN3DyErPy9gvaBpsRtI=; b=P0asJu
-        Pt7DbTPXIfAuV6agkfLVUACNhfhaVS3ZjlkNrDlZjt+9kLSR0Oy+rRpdh939sOvb
-        O2U469Ow3dCWeZwzM7jeTvxQ5EvF+pHw+LKY7aE7f0cj+x2kM4c/tPedWZhKA5yo
-        iw2G+qeBcgL3Gm2nH6864ttisZNPJn3dDD9lY=
+        :content-type; s=sasl; bh=f3/JkTJIZHafAf62ATOpncrhbbE=; b=JMmLPf
+        Ic/Ed9vemZWdFjcPhzy/03tzSEoccyX99BzkjTHf3nqoVpzigR2bUXwwPobUB4iU
+        oybkWeUGHKV/Jcx9C1DKObYIZTqX9z4abD7AWMpnc0ZdsbtedGqtE5bWdFpXg+Ig
+        jyutPHg8EYBPjb7n53ImHd3bPNeXgAn1Cxf0U=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=d+Nz+5lHjgUc+O4u8dMUKulK6b8iZlU0
-        VjTkBnrW8OgYPQ/DctrVu2uMnL8R1jF6ZaDxoOOTPGWQTHW5yxiX9Kzu8jnObdo+
-        ua7/tMdiIzfuUn2FNWgQxtqDG6SFxqlMyuq0F2Ls4+wlG3YyqcGLpm8Ka3cVjUYs
-        ziMo2dt220Y=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6C8D8B0F80;
-        Tue, 21 Nov 2017 22:39:34 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=fYL9na60cgf0eRUW6Ao7ifTYcJMSl96l
+        3CEz9hmMS/ZCQkbdlFptrXCMRMHe7QcqIlJF8HUEcmFmhfyY7fWaOyKStpLkaZSB
+        B5MjU3YDUOm7KttC7pjGO3OBUE5aiFatHVMNG8nrr0VPNmoT6ru3v94Lc+ljCxzJ
+        wwbxga5BNyE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 56C4EBB6F7;
+        Tue, 21 Nov 2017 22:48:08 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C17CCB0F7F;
-        Tue, 21 Nov 2017 22:39:33 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B98FEBB6F6;
+        Tue, 21 Nov 2017 22:48:07 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jonathan Nieder <jrnieder@gmail.com>
 Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
@@ -49,17 +49,18 @@ Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
         Lars Schneider <larsxschneider@gmail.com>,
         Eric Wong <e@80x24.org>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 1/2] Git/Packet.pm: rename packet_required_key_val_read()
+Subject: Re: [PATCH 2/2] Git/Packet.pm: use 'if' instead of 'unless'
 References: <20171121160939.22962-1-chriscool@tuxfamily.org>
-        <20171121191900.GD3429@aiede.mtv.corp.google.com>
-Date:   Wed, 22 Nov 2017 12:39:32 +0900
-In-Reply-To: <20171121191900.GD3429@aiede.mtv.corp.google.com> (Jonathan
-        Nieder's message of "Tue, 21 Nov 2017 11:19:00 -0800")
-Message-ID: <xmqq60a3vv63.fsf@gitster.mtv.corp.google.com>
+        <20171121160939.22962-2-chriscool@tuxfamily.org>
+        <20171121192440.GE3429@aiede.mtv.corp.google.com>
+Date:   Wed, 22 Nov 2017 12:48:06 +0900
+In-Reply-To: <20171121192440.GE3429@aiede.mtv.corp.google.com> (Jonathan
+        Nieder's message of "Tue, 21 Nov 2017 11:24:40 -0800")
+Message-ID: <xmqq1skrvurt.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: C171BEEC-CF36-11E7-B21D-8EF31968708C-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: F3CB1C70-CF37-11E7-8529-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -67,34 +68,20 @@ X-Mailing-List: git@vger.kernel.org
 
 Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> nit: please wrap lines to a consistent width, to make the message
-> easier to read.  In the above, it looks like the line break is
-> intentional --- is it meant to be two paragraphs (i.e. is it missing
-> another newline)?
-
-I'd think so; will add a missing LF while queuing..
-
-> optional, just noticed while I'm nitpicking: the description 'rename
-> packet_required_key_val_read' doesn't tell why the function is being
-> renamed.  Maybe something like
+> [...]
+>> --- a/perl/Git/Packet.pm
+>> +++ b/perl/Git/Packet.pm
+>> @@ -68,16 +68,16 @@ sub packet_bin_read {
+>>  
+>>  sub remove_final_lf_or_die {
+>>  	my $buf = shift;
+>> -	unless ( $buf =~ s/\n$// ) {
 >
-> 	Git::Packet: clarify that packet_required_key_val_read allows EOF
->
-> would do the trick.
+> For readability, I find this whitespace within parens more distracting.
 
-Sounds good. 
+I personally find them distracting, too.  This file seems full of
+them so it is OK to be consistent with the existing practice in this
+step, leaving the eventual clean-up (if we agree that it is a good
+idea) to a later step that does it for the entire file contents.
 
->> +# Read a text line and check that it is in the form "key=value"
->> +sub packet_key_val_read {
->
-> This comment doesn't tell me how to use the function.  How do I detect
-> whether it successfully read a line?  What do the return values
-> represent?  What happens if the line it read doesn't match the key?
-
-Would this work for both of you?
-
-# Read a text packet, expecting that it is in the form "key=value" for
-# the given $key.  An EOF does not trigger any error and is reported
-# back to the caller (like packet_txt_read() does).  Die if the "key"
-# part of "key=value" does not match the given $key, or the value part
-# is empty.
+Thanks.
