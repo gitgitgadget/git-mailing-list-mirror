@@ -2,119 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B676820954
-	for <e@80x24.org>; Wed, 22 Nov 2017 23:28:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4053320954
+	for <e@80x24.org>; Wed, 22 Nov 2017 23:37:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752561AbdKVX2T (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Nov 2017 18:28:19 -0500
-Received: from mail-it0-f66.google.com ([209.85.214.66]:42005 "EHLO
-        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752050AbdKVX2R (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Nov 2017 18:28:17 -0500
-Received: by mail-it0-f66.google.com with SMTP id n134so8188312itg.1
-        for <git@vger.kernel.org>; Wed, 22 Nov 2017 15:28:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=7mo6cTKhwPwv+Aq/sn7DdgAXBcxhDSuVVr7lktFoto4=;
-        b=crSVby5VEhWPPWxB1uQvNzAyIMwUJA3mucnS9+eDe3Q8gQ7B+pngNardcCdIi956vj
-         hSrhBl8xFejCkLpHuKR1tZrayNxsRrVgPfciPgY6/o9Z3oX1Jar06bEQXXUOTD9sAbnc
-         9LwJwqZdPysOCxgsnCut3TNYISJBPo+uNvQk/SseZIcQu81HTa7oPkciME15kJPWlVBs
-         9uwd2rKWp32AUxIqIALdvACURzZZjQ2Rp//ZaBYXys2RfUwTp8+n7kfa4QVV2c3kZe/u
-         T6SP/wi3phTQSmjbtUhS5An4o0U5N+X5/RNhFb1cFcctQazP8slBRtOMlZBni9kpaFMf
-         V7Pw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=7mo6cTKhwPwv+Aq/sn7DdgAXBcxhDSuVVr7lktFoto4=;
-        b=Lhv0TYXUJWOqyZqqYKM2vznd6jgga467cUbwruxxio6XkC2CsjEvwENAdLvT3ngba7
-         WCLvcCqtyodU4na1mejwqVrUhmNfh5kiGwtUUyelLRT//I/tOMn0LAn6U8tY2ayeEhA4
-         Rgyh4/W8SB2hZBMqw/aFDmlt8O0ECbrgZvH2ii3s8eHQm+e3pLuNyuk1tDb5ad7Kj4cB
-         F2MSSfTjPDPb5xRQ4p9EUKTw6f2S4NS8hObDkKlez65SG0iex8/WRFfL+GeOzMcH8ZWX
-         Rpwk3u0YfOJZb8oll1xYGM+jQoBdcG2BD1RcPUkT9vKP2a2OWsBguiVJX3P7TjpNZru2
-         SZEA==
-X-Gm-Message-State: AJaThX4b7Fg92D8zvjh/yZ9kxQIt2LPRLWfFit7Qka2e/jRFeSMg2yFW
-        k2SvkjqzMMcned4stDR7dNELXJUx
-X-Google-Smtp-Source: AGs4zMbu2uP9TTxRDDrihCuGDkHTTmfr5u6QhBwylehHqpNC/SnCcObwIMBjdl9NVMUrLCy24qQHag==
-X-Received: by 10.36.47.204 with SMTP id j195mr8470315itj.98.1511393296651;
-        Wed, 22 Nov 2017 15:28:16 -0800 (PST)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id e12sm7375093iod.4.2017.11.22.15.28.15
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 22 Nov 2017 15:28:16 -0800 (PST)
-Date:   Wed, 22 Nov 2017 15:28:14 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Jeff King <peff@peff.net>
+        id S1751897AbdKVXhM (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Nov 2017 18:37:12 -0500
+Received: from cloud.peff.net ([104.130.231.41]:38186 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751674AbdKVXhL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Nov 2017 18:37:11 -0500
+Received: (qmail 7702 invoked by uid 109); 22 Nov 2017 23:37:11 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 22 Nov 2017 23:37:11 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 5763 invoked by uid 111); 22 Nov 2017 23:37:27 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with ESMTPA; Wed, 22 Nov 2017 18:37:27 -0500
+Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 22 Nov 2017 18:37:09 -0500
+Date:   Wed, 22 Nov 2017 18:37:09 -0500
+From:   Jeff King <peff@peff.net>
+To:     Jonathan Nieder <jrnieder@gmail.com>
 Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
         git@jeffhostetler.com
-Subject: Re: [PATCH 0/3] Introduce BUG_ON(cond, msg) MACRO
-Message-ID: <20171122232814.GH11671@aiede.mtv.corp.google.com>
+Subject: Re: [PATCH 2/3] git-compat: introduce BUG_ON(condition, fmt, ...)
+ macro
+Message-ID: <20171122233709.GB8577@sigill>
 References: <20171122223827.26773-1-sbeller@google.com>
- <20171122232457.GA8577@sigill>
+ <20171122223827.26773-3-sbeller@google.com>
+ <20171122230239.GG11671@aiede.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20171122232457.GA8577@sigill>
-User-Agent: Mutt/1.9.1 (2017-09-22)
+In-Reply-To: <20171122230239.GG11671@aiede.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Wed, Nov 22, 2017 at 03:02:39PM -0800, Jonathan Nieder wrote:
 
-Jeff King wrote:
-> On Wed, Nov 22, 2017 at 02:38:24PM -0800, Stefan Beller wrote:
+> > --- a/git-compat-util.h
+> > +++ b/git-compat-util.h
+> > @@ -1092,9 +1092,13 @@ static inline int regexec_buf(const regex_t *preg, const char *buf, size_t size,
+> >  __attribute__((format (printf, 3, 4))) NORETURN
+> >  void BUG_fl(const char *file, int line, const char *fmt, ...);
+> >  #define BUG(...) BUG_fl(__FILE__, __LINE__, __VA_ARGS__)
+> > +#define BUG_ON(condition, ...) do { if (condition) BUG(__VA_ARGS__); } while (0)
+> >  #else
+> >  __attribute__((format (printf, 1, 2))) NORETURN
+> >  void BUG(const char *fmt, ...);
+> > +
+> > +__attribute__((format (printf, 2, 3)))
+> > +void BUG_ON(int condition, const char *fmt, ...);
+> >  #endif
+> 
+> I worry that these definitions are mildly incompatible: the macro
+> accepts anything that can go in an 'if', including pointers, and the
+> function only accepts an int.
 
->> On reviewing [1] I wondered why there are so many asserts and wondered
->> if these asserts could have been prevented by a better functionality around
->> bug reporting in our code.
->>
->> Introduce a BUG_ON macro, which is superior to assert() by
->>  * being always there, even when compiled with NDEBUG and
->>  * providind an additional human readable error message, like BUG()
->
-> I'm not sure I agree with the aim of the series.
->
-> If people want to compile with NDEBUG, that's their business, I guess.
-> I don't see much _point_ in it for Git, since most of our assertions do
-> not respect NDEBUG, and I don't think we tend to assert in expensive
-> ways anyway.
->
-> I do like human readable messages. But sometimes such a message just
-> makes the code harder to read (and to write). E.g., is there any real
-> value in:
->
->   BUG_ON(!foo, "called bar() with a foo!");
->
-> over:
->
->   assert(foo);
+I suspect this would cause real latent problems. Doing:
 
-I think you're hinting at wanting
+  const char *foo = NULL;
 
-	BUG_ON(!foo);
+  ...
+  BUG_ON(foo, "foo was set twice!");
+  foo = xstrdup(bar);
 
-which is something that the Linux kernel has (and which is not done in
-this series).
+would compile fine on modern systems, but issue a pointer-to-int
+conversion warning if you didn't have variadic macros. So most git devs
+would be unlikely to see it, until the trap springs on some poor soul
+building on ancient AIX or something.
 
-[...]
-> I also find (as your third patch switches):
->
->   if (!foo)
-> 	BUG("foo has not been setup");
->
-> more readable than the BUG_ON() version, if only because it uses
-> traditional control flow.
+On the other hand, I wouldn't be surprised if our friends on less-abled
+compilers see a lot of pointless warnings anyway, and almost certainly
+can't deal with the equivalent of "-Werror".
 
-Yes, I think you're right.
+I'm also not sure which compilers that even encompasses these days.
+Maybe we should add variadic macros to our list of weather-balloon c99
+features to test for.
 
-Thanks,
-Jonathan
+> Is there a way for the macro to typecheck that its argument is an
+> integer to avoid that?
+
+I couldn't think of one.
+
+It would be nice to just "!!condition" in the non-macro case, but of
+course we can't do that automatically without a macro.
+
+You're asking for the opposite: force the macro version to require an
+int, so that the caller has to remember to do "!!condition". I can't
+think of a way to do that, but I'm also not sure I like the direction,
+as it pushes the effort into the callsite.
+
+-Peff
