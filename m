@@ -2,367 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2A81720954
-	for <e@80x24.org>; Wed, 22 Nov 2017 23:42:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 729FF20954
+	for <e@80x24.org>; Wed, 22 Nov 2017 23:45:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751731AbdKVXmD (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Nov 2017 18:42:03 -0500
-Received: from mail-io0-f172.google.com ([209.85.223.172]:40483 "EHLO
-        mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751683AbdKVXmB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Nov 2017 18:42:01 -0500
-Received: by mail-io0-f172.google.com with SMTP id d21so2725310ioe.7
-        for <git@vger.kernel.org>; Wed, 22 Nov 2017 15:42:01 -0800 (PST)
+        id S1751673AbdKVXpg (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Nov 2017 18:45:36 -0500
+Received: from mail-it0-f67.google.com ([209.85.214.67]:34623 "EHLO
+        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751559AbdKVXpf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Nov 2017 18:45:35 -0500
+Received: by mail-it0-f67.google.com with SMTP id m11so11042960iti.1
+        for <git@vger.kernel.org>; Wed, 22 Nov 2017 15:45:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=CWhXrXiv/bQMtx4mTqJdFRJDdYT1psXHn8mTGRaGwrg=;
-        b=pf899Nu21y8udySbTF019ehKwnZMG1DTNC/a/RZzA2ilKwdROgK2+fIJReYmNDMfgN
-         6OnOs9i+zVxHab99fucMSHzTije205oF9w7BR3cnqEOKtuxKlnVmZmdgExBJYswJYERc
-         GsPjAoMUPCl0Ycc+O3aCdgqvICNPZoW7a5tqpfX+gAk00RE5V9RCNDMp/TGaGTj08Rfn
-         MfzBGuBb1lWFbcEwW7iCagFfhm8vNJX9pPEXvDXnyylKWxPU9mcP26vkOexbpFNWbsMY
-         jskrzQ6M9VXAF6W2xEG7qPRLdaHWm794tLfhbX0dIVgoyypPaqMElLSRLVSbfqg80Ne1
-         BM9A==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=NvyCqgZ/l/lLmbDMSWMe7cWXlKiG4J6+NaV+FQ1n5qo=;
+        b=KrDWutW5PFc9ypVVMD9MJOtbRdS1/MM5eRnxN+++TZ5u1wguC1jGHLxCHXaivcvdJm
+         tWVeofGy4e0CrxXAtTJVWW1/Rqoy/3GgTwvFXchDy+ZosLdSHnAJg5ZLip15M3ZsMqbA
+         9JtR5Ny56ELuXWkoIsFkgZA/HhnFxLvEeMsGcnGr1f4uIKyrSOgxecuzQOIRotPXcMHy
+         a92ek8IB94fGGJxERAtG0Go270PiCYYQJgsZmL0r9333Lhjr/o4DmS3v26IbHZVr3xW8
+         ODWXKmZQjPBeJdlG2L/GGdEucHsk3FfI85cHUYWztm9RtLzc+6BKJkRoii//8mehnyVQ
+         PMJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=CWhXrXiv/bQMtx4mTqJdFRJDdYT1psXHn8mTGRaGwrg=;
-        b=jQV5ACDk5yisaM6yhXAQjPWVT0DxNLAkP36IwI7ymKM+az2qAXFKMhQD+kZsKTYXYS
-         KUhRUdQrd9PovtlFxWuWena+npNNkQqpPUIKCJufZCqZSPBtiL+uVQgj67kSWotF1Zzt
-         mWf1drcW4n2pfJuWSBvPJ+P4bkxgaXJj5pfU5REOIS3uLcldFsLW0JJrmC2EsbfJ7u1a
-         HaebIxfrl5q8tYUE1v//qteosQOdnQ0DKp6TZXUiVzJ/xl8mCFFGawiBSACB7R1pFTFU
-         JfeeJ1x+rgxAPSgXBaP2RLheLOpd6i/keIrGelrRxsxtDSQJh+VB6JycJf6RUKqWDnR5
-         DTpA==
-X-Gm-Message-State: AJaThX5oyj7ZnekmyPvXyxltzSwd+lu94+sBmQZmkIejofPFqWeID6tm
-        CTYZ4VEht5vFMPs8xgg6MrN0HA==
-X-Google-Smtp-Source: AGs4zMY+Ha2+yviSWSO342Jn4Gfzjf6aBBgXYo5V9zcxQU70XgtnGoEbZjtlN7VbV0PChvjYdKewXw==
-X-Received: by 10.107.147.69 with SMTP id v66mr24950674iod.148.1511394120923;
-        Wed, 22 Nov 2017 15:42:00 -0800 (PST)
-Received: from twelve3.mtv.corp.google.com ([100.96.218.44])
-        by smtp.gmail.com with ESMTPSA id v203sm2513294itf.33.2017.11.22.15.41.59
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 22 Nov 2017 15:42:00 -0800 (PST)
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     jonathantanmy@google.com, git@vger.kernel.org
-Cc:     gitster@pobox.com, sbeller@google.com
-Subject: [PATCH] xdiff/xpatience: support anchoring line(s)
-Date:   Wed, 22 Nov 2017 15:41:52 -0800
-Message-Id: <20171122234152.72901-1-jonathantanmy@google.com>
-X-Mailer: git-send-email 2.15.0.318.gcfd76db1b.dirty
-In-Reply-To: <20171121221717.155301-1-jonathantanmy@google.com>
-References: <20171121221717.155301-1-jonathantanmy@google.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=NvyCqgZ/l/lLmbDMSWMe7cWXlKiG4J6+NaV+FQ1n5qo=;
+        b=H4IKF+kngByaBoC1dEYSKOlQ0zZ63mi/D9VO1R7EirNztC9RWM/Ow7IoSyzV6KyG4z
+         eHSiNgTNxUBnhwei5K+vAIfnv2OY4ToQ0pJApn2gHPL/Sa7IUq7e3LEjeyixpzAs8uTg
+         RhNax4LsIC6l7pQolm9glPSkwEH+kqvWUpVo9175vy7g1xGlLYKKZBZuXUZSqkWaDklh
+         U0+yf3y4qVYX3DLFRbPmEtrjcuDhranCL4MxFW+p1yg36WR12rzsonXziq27Sv++kTqa
+         kTP0CJmteD6uV9gj/QnIT/Px+rMpenpludsvWCOvcfIQxwap1n2GCDb/1KPCJ/mKyZn9
+         7u4g==
+X-Gm-Message-State: AJaThX7r6KuDrhZ2lzVMjHmsDu22n/CdG/CvzeVF2FCk6VYgO/lJOLBt
+        2Wwpr+euk1tBYERyx7bR6N7sspqj
+X-Google-Smtp-Source: AGs4zMZL3aNIypH0lCFMCk4YYD4qj5K74OBfQR6fXl/21wR7zbEqUq4oroWUZGLRNHrrxNsqxezCSw==
+X-Received: by 10.36.254.71 with SMTP id w68mr9075647ith.24.1511394334534;
+        Wed, 22 Nov 2017 15:45:34 -0800 (PST)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id v19sm2638169ite.4.2017.11.22.15.45.33
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 22 Nov 2017 15:45:34 -0800 (PST)
+Date:   Wed, 22 Nov 2017 15:45:32 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
+        git@jeffhostetler.com
+Subject: Re: [PATCH 0/3] Introduce BUG_ON(cond, msg) MACRO
+Message-ID: <20171122234532.GI11671@aiede.mtv.corp.google.com>
+References: <20171122223827.26773-1-sbeller@google.com>
+ <20171122232457.GA8577@sigill>
+ <20171122232814.GH11671@aiede.mtv.corp.google.com>
+ <20171122233905.GC8577@sigill>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20171122233905.GC8577@sigill>
+User-Agent: Mutt/1.9.1 (2017-09-22)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teach the patience diff to attempt preventing user-specified lines from
-appearing as a deletion or addition in the end result. The end user can
-use this by specifying "--anchor=<text>" one or more times when using
-Git commands like "diff" and "show".
+Jeff King wrote:
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
-Actual patch instead of RFC.
+> Yes. I'd be fine having a single-argument BUG_ON() like that. But then,
+> I'm not sure what it's buying us over assert().
 
-One thing that might help is to warn if --anchor is used without
---patience, but I couldn't find a good place to put that warning. Let me
-know if you know of a good place.
+It lets you build with NDEBUG.  It also goes through our own die()
+handler, which means that e.g. the error message gets propagated over
+remote transports.
 
-Replying to Stefan's and Junio's comments:
+Please please please, don't rely on side-effects from assert().  They
+will cause me to run into pain over time.  This issue alone might be
+worth banning use of assert() in the codebase, if we can't trust
+reviewers to catch problematic examples (fortunately reviewers have
+been pretty good about that so far, but banning it would free up their
+attention to focus on other aspects of a patch).
 
-> The solution you provide is a good thing to experiment with, but
-> longer term, I would want to have huge record of configs in which
-> humans selected the best diff, such that we can use that data
-> to reason about better automatic diff generation.
-> The diff heuristic was based on a lot of human generated data,
-> that was generated by Michael at the time. I wonder if we want to
-> permanently store the anchor so the data collection will happen
-> automatically over time.
-
-I think machine learning is beyond the scope of this patch :-)
-
-> or rather: "c is not moved, we don't care how the diff actually looks
-> like",
-> so maybe
->       ! grep "+c" diff
-
-I think it's less error-prone to show "a" moving. With this, if the
-command somehow prints nothing, the test would still pass.
-
-> While this is RFC, I should not expect comments, though it would
-> be nice to have them in the final series. ;-)
-
-Added comments :-)
-
-> This is a natural extension of the idea the patience algorithm is
-> built upon.  If this were a cumulative command line option that can
-> be given to specify multiple lines and can be used across the diff
-> family, it would make a welcome addition, I would think.
-
-Specifying multiple lines - done.
-
-By diff family, do you mean "diff", "show", and others? If yes, that has
-also been done in this patch.
----
- Documentation/diff-options.txt |  9 +++++++
- diff.c                         |  8 ++++++
- diff.h                         |  4 +++
- t/t4033-diff-patience.sh       | 59 ++++++++++++++++++++++++++++++++++++++++++
- xdiff/xdiff.h                  |  4 +++
- xdiff/xpatience.c              | 42 ++++++++++++++++++++++++++----
- 6 files changed, 121 insertions(+), 5 deletions(-)
-
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index dd0dba5b1..b17d62696 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -100,6 +100,15 @@ For instance, if you configured diff.algorithm variable to a
- non-default value and want to use the default one, then you
- have to use `--diff-algorithm=default` option.
- 
-+--anchor=<text>::
-+	This option may be specified more than once.
-++
-+If the "patience diff" algorithm is used, Git attempts to prevent lines
-+starting with this text from appearing as a deletion or addition in the
-+output.
-++
-+If another diff algorithm is used, this has no effect.
-+
- --stat[=<width>[,<name-width>[,<count>]]]::
- 	Generate a diffstat. By default, as much space as necessary
- 	will be used for the filename part, and the rest for the graph
-diff --git a/diff.c b/diff.c
-index 0763e8926..29a7176ee 100644
---- a/diff.c
-+++ b/diff.c
-@@ -3210,6 +3210,8 @@ static void builtin_diff(const char *name_a,
- 		ecbdata.opt = o;
- 		ecbdata.header = header.len ? &header : NULL;
- 		xpp.flags = o->xdl_opts;
-+		xpp.anchors = o->anchors;
-+		xpp.anchors_nr = o->anchors_nr;
- 		xecfg.ctxlen = o->context;
- 		xecfg.interhunkctxlen = o->interhunkcontext;
- 		xecfg.flags = XDL_EMIT_FUNCNAMES;
-@@ -3302,6 +3304,8 @@ static void builtin_diffstat(const char *name_a, const char *name_b,
- 		memset(&xpp, 0, sizeof(xpp));
- 		memset(&xecfg, 0, sizeof(xecfg));
- 		xpp.flags = o->xdl_opts;
-+		xpp.anchors = o->anchors;
-+		xpp.anchors_nr = o->anchors_nr;
- 		xecfg.ctxlen = o->context;
- 		xecfg.interhunkctxlen = o->interhunkcontext;
- 		if (xdi_diff_outf(&mf1, &mf2, diffstat_consume, diffstat,
-@@ -4608,6 +4612,10 @@ int diff_opt_parse(struct diff_options *options,
- 		options->xdl_opts &= ~XDF_DIFF_ALGORITHM_MASK;
- 		options->xdl_opts |= value;
- 		return argcount;
-+	} else if (skip_prefix(arg, "--anchor=", &arg)) {
-+		ALLOC_GROW(options->anchors, options->anchors_nr + 1,
-+			   options->anchors_alloc);
-+		options->anchors[options->anchors_nr++] = xstrdup(arg);
- 	}
- 
- 	/* flags options */
-diff --git a/diff.h b/diff.h
-index 0fb18dd73..7cf276f07 100644
---- a/diff.h
-+++ b/diff.h
-@@ -166,6 +166,10 @@ struct diff_options {
- 	const char *stat_sep;
- 	long xdl_opts;
- 
-+	/* see Documentation/diff-options.txt */
-+	char **anchors;
-+	size_t anchors_nr, anchors_alloc;
-+
- 	int stat_width;
- 	int stat_name_width;
- 	int stat_graph_width;
-diff --git a/t/t4033-diff-patience.sh b/t/t4033-diff-patience.sh
-index 113304dc5..2d00d1056 100755
---- a/t/t4033-diff-patience.sh
-+++ b/t/t4033-diff-patience.sh
-@@ -13,6 +13,65 @@ test_expect_success '--ignore-space-at-eol with a single appended character' '
- 	grep "^+.*X" diff
- '
- 
-+test_expect_success '--anchor' '
-+	printf "a\nb\nc\n" >pre &&
-+	printf "c\na\nb\n" >post &&
-+
-+	# without anchor, c is moved
-+	test_expect_code 1 git diff --no-index --patience pre post >diff &&
-+	grep "^+c" diff &&
-+
-+	# with anchor, a is moved
-+	test_expect_code 1 git diff --no-index --patience --anchor=c pre post >diff &&
-+	grep "^+a" diff
-+'
-+
-+test_expect_success '--anchor multiple' '
-+	printf "a\nb\nc\nd\ne\nf\n" >pre &&
-+	printf "c\na\nb\nf\nd\ne\n" >post &&
-+
-+	# with 1 anchor, c is not moved, but f is moved
-+	test_expect_code 1 git diff --no-index --patience --anchor=c pre post >diff &&
-+	grep "^+a" diff && # a is moved instead of c
-+	grep "^+f" diff &&
-+
-+	# with 2 anchors, c and f are not moved
-+	test_expect_code 1 git diff --no-index --patience --anchor=c --anchor=f pre post >diff &&
-+	grep "^+a" diff &&
-+	grep "^+d" diff # d is moved instead of f
-+'
-+
-+test_expect_success '--anchor with nonexistent line has no effect' '
-+	printf "a\nb\nc\n" >pre &&
-+	printf "c\na\nb\n" >post &&
-+
-+	test_expect_code 1 git diff --no-index --patience --anchor=x pre post >diff &&
-+	grep "^+c" diff
-+'
-+
-+test_expect_success 'diff still produced with impossible multiple --anchor' '
-+	printf "a\nb\nc\n" >pre &&
-+	printf "c\na\nb\n" >post &&
-+
-+	test_expect_code 1 git diff --no-index --patience --anchor=a --anchor=c pre post >diff &&
-+	mv post expected_post &&
-+	git apply diff &&
-+	diff expected_post post # make sure that the diff is correct
-+'
-+
-+test_expect_success '--anchor works with other commands like "git show"' '
-+	printf "a\nb\nc\n" >file &&
-+	git add file &&
-+	git commit -m foo &&
-+	printf "c\na\nb\n" >file &&
-+	git add file &&
-+	git commit -m foo &&
-+
-+	# with anchor, a is moved
-+	git show --patience --anchor=c >diff &&
-+	grep "^+a" diff
-+'
-+
- test_diff_frobnitz "patience"
- 
- test_diff_unique "patience"
-diff --git a/xdiff/xdiff.h b/xdiff/xdiff.h
-index 785ecb089..e6217e1d7 100644
---- a/xdiff/xdiff.h
-+++ b/xdiff/xdiff.h
-@@ -80,6 +80,10 @@ typedef struct s_mmbuffer {
- 
- typedef struct s_xpparam {
- 	unsigned long flags;
-+
-+	/* See Documentation/diff-options.txt. */
-+	char **anchors;
-+	size_t anchors_nr;
- } xpparam_t;
- 
- typedef struct s_xdemitcb {
-diff --git a/xdiff/xpatience.c b/xdiff/xpatience.c
-index a44e77632..f55c9fb11 100644
---- a/xdiff/xpatience.c
-+++ b/xdiff/xpatience.c
-@@ -62,6 +62,12 @@ struct hashmap {
- 		 * initially, "next" reflects only the order in file1.
- 		 */
- 		struct entry *next, *previous;
-+
-+		/*
-+		 * If 1, this entry can serve as the anchor. See
-+		 * Documentation/diff-options.txt for more information.
-+		 */
-+		unsigned anchor : 1;
- 	} *entries, *first, *last;
- 	/* were common records found? */
- 	unsigned long has_matches;
-@@ -70,8 +76,19 @@ struct hashmap {
- 	xpparam_t const *xpp;
- };
- 
-+static int is_anchor(xpparam_t const *xpp, const char *line)
-+{
-+	int i;
-+	for (i = 0; i < xpp->anchors_nr; i++) {
-+		if (!strncmp(line, xpp->anchors[i], strlen(xpp->anchors[i])))
-+			return 1;
-+	}
-+	return 0;
-+}
-+
- /* The argument "pass" is 1 for the first file, 2 for the second. */
--static void insert_record(int line, struct hashmap *map, int pass)
-+static void insert_record(xpparam_t const *xpp, int line, struct hashmap *map,
-+			  int pass)
- {
- 	xrecord_t **records = pass == 1 ?
- 		map->env->xdf1.recs : map->env->xdf2.recs;
-@@ -110,6 +127,7 @@ static void insert_record(int line, struct hashmap *map, int pass)
- 		return;
- 	map->entries[index].line1 = line;
- 	map->entries[index].hash = record->ha;
-+	map->entries[index].anchor = is_anchor(xpp, map->env->xdf1.recs[line - 1]->ptr);
- 	if (!map->first)
- 		map->first = map->entries + index;
- 	if (map->last) {
-@@ -147,11 +165,11 @@ static int fill_hashmap(mmfile_t *file1, mmfile_t *file2,
- 
- 	/* First, fill with entries from the first file */
- 	while (count1--)
--		insert_record(line1++, result, 1);
-+		insert_record(xpp, line1++, result, 1);
- 
- 	/* Then search for matches in the second file */
- 	while (count2--)
--		insert_record(line2++, result, 2);
-+		insert_record(xpp, line2++, result, 2);
- 
- 	return 0;
- }
-@@ -192,14 +210,28 @@ static struct entry *find_longest_common_sequence(struct hashmap *map)
- 	int longest = 0, i;
- 	struct entry *entry;
- 
-+	/*
-+	 * If not -1, this entry in sequence must never be overridden.
-+	 * Therefore, overriding entries before this has no effect, so
-+	 * do not do that either.
-+	 */
-+	int anchor_i = -1;
-+
- 	for (entry = map->first; entry; entry = entry->next) {
- 		if (!entry->line2 || entry->line2 == NON_UNIQUE)
- 			continue;
- 		i = binary_search(sequence, longest, entry);
- 		entry->previous = i < 0 ? NULL : sequence[i];
--		sequence[++i] = entry;
--		if (i == longest)
-+		++i;
-+		if (i <= anchor_i)
-+			continue;
-+		sequence[i] = entry;
-+		if (entry->anchor) {
-+			anchor_i = i;
-+			longest = anchor_i + 1;
-+		} else if (i == longest) {
- 			longest++;
-+		}
- 	}
- 
- 	/* No common unique lines were found */
--- 
-2.15.0.448.gf294e3d99a-goog
-
+Jonathan
