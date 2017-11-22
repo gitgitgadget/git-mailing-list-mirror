@@ -7,77 +7,78 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C9D472036D
-	for <e@80x24.org>; Wed, 22 Nov 2017 04:39:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1D4492036D
+	for <e@80x24.org>; Wed, 22 Nov 2017 04:44:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751471AbdKVEje (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Nov 2017 23:39:34 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61797 "EHLO
+        id S1751549AbdKVEoo (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Nov 2017 23:44:44 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54494 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751434AbdKVEje (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Nov 2017 23:39:34 -0500
+        with ESMTP id S1751767AbdKVEom (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Nov 2017 23:44:42 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5684BB1BC8;
-        Tue, 21 Nov 2017 23:39:33 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D47A8BC206;
+        Tue, 21 Nov 2017 23:44:41 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=k5I4VtnUbM6OnHLGzX5um9IleQg=; b=ZSTue2
-        64qJgMT0cu1ic3tTN2rBvHOCjrNAMI+NeYhPg4l7f7iCzEoJnHr+9zbV51ZtX5UW
-        RHZWI3ZK5ViXQD5XL6q7VMS9uWaBR+PqC3U7YVwB0GlKEubmBkPZ7iTtlNjNh6Tq
-        duWbTufT/mldhw+6ex2F81cse4bya0F3jvDVY=
+        :content-type; s=sasl; bh=Gr9CpCpBxwyeqXjoq6auDI4A8ak=; b=yifHpK
+        BIT6vdCTM0x8yeSenIs599ZB/tGUaR4PrWcp6/xdYaAoTM9Q60mm5NLihg1RjIWa
+        3wodROWCGBE0g9SMOAP3BX0CDtHTQZiigssGTeg0LH9U/KaIc0fHbQAXEKB8ltCG
+        w8/+jl7gx70gd8+nHaoXIJ4RWB7e0Iwxj4Vpg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Y4KwXxm+gs8Pj6zQzrrSjs7OdJRhQeFH
-        7S9+REoG2VV22v3pq0DJJDQB6n9QpOv85oWSmFWhA7Ev7TfWtmqxtcwz0eOxFkVW
-        z+29JOkADYD6v4+s68bvJ7BDUzjAUo3B4CJ9KpJVIqQMliTZdXV9Tgku2vf8T4uz
-        v+HK0H7r+6w=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4D422B1BC7;
-        Tue, 21 Nov 2017 23:39:33 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=O8fCi1qGU1ONijYBt9AmUIJvxGy7NKeA
+        FfwpCjAlLhtLOqAuHspzPQ+u8Z3K77u7uY656wovFi4LY3OY0nCqw++nmHMoDO5q
+        GfQYYZqn0p61uj3RTblZYWiuWaovenBvvT8fR29hQdD5ZeZYVE68kZUWauTp2xJp
+        dCr9VbPPQDQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CCA72BC205;
+        Tue, 21 Nov 2017 23:44:41 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B9913B1BC6;
-        Tue, 21 Nov 2017 23:39:32 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4CE66BC204;
+        Tue, 21 Nov 2017 23:44:41 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Phil Hord <phil.hord@gmail.com>, Git <git@vger.kernel.org>,
-        Thomas Gummerer <t.gummerer@gmail.com>
-Subject: Re: doc: prefer 'stash push' over 'stash save'
-References: <CABURp0pxYiwrpvT9E_jpvZKDMOUVA9e7dUhARfKEQymWzUwtiw@mail.gmail.com>
-        <20171121232113.GK3429@aiede.mtv.corp.google.com>
-Date:   Wed, 22 Nov 2017 13:39:31 +0900
-In-Reply-To: <20171121232113.GK3429@aiede.mtv.corp.google.com> (Jonathan
-        Nieder's message of "Tue, 21 Nov 2017 15:21:13 -0800")
-Message-ID: <xmqqlgizudto.fsf@gitster.mtv.corp.google.com>
+To:     Phil Hord <phil.hord@gmail.com>
+Cc:     Git <git@vger.kernel.org>, Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: [PATCH] stash: Learn to parse -m/--message like commit does
+References: <20171121232643.8380-1-phil.hord@gmail.com>
+Date:   Wed, 22 Nov 2017 13:44:40 +0900
+In-Reply-To: <20171121232643.8380-1-phil.hord@gmail.com> (Phil Hord's message
+        of "Tue, 21 Nov 2017 15:26:42 -0800")
+Message-ID: <xmqqh8tmvs5j.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 228F0C90-CF3F-11E7-9C1F-8EF31968708C-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: DA78B004-CF3F-11E7-BC40-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Phil Hord <phil.hord@gmail.com> writes:
 
-> Phil Hord wrote:
+> `git stash push -m foo` uses "foo" as the message for the stash. But
+> `git stash push -m"foo"` does not parse successfully.  Similarly
+> `git stash push --message="My stash message"` also fails.  Nothing
+> in the documentation suggests this syntax should work, but it does
+> work for `git commit`, and my fingers have learned this pattern long
+> ago.
 >
->> Although `git stash save` was deprecated recently, some parts of the
->> documentation still refer to it instead of `push`.
->>
->> Signed-off-by: Phil Hord <phil.hord@gmail.com>
->> ---
->>  Documentation/git-stash.txt | 4 ++--
->>  1 file changed, 2 insertions(+), 2 deletions(-)
+> Teach `git stash` to parse -mFoo and --message=Foo the same as
+> `git commit` would do.
 >
-> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-> Thanks.
+> Signed-off-by: Phil Hord <phil.hord@gmail.com>
+> ---
+>  git-stash.sh | 18 ++++++++++++++++++
+>  1 file changed, 18 insertions(+)
 
-Heh, this does not even apply to 8be661007 that it claims to apply
-on top of, which is contained in fd2ebf14 ("stash: mark "git stash
-save" deprecated in the man page", 2017-10-22).
+Makes sense.  Thanks.
 
-I've wiggled it in, so there is no need to resend, but next time
-please be careful when sending the patch and also when sending a
-reviewed-by.
+I wonder if you want to add a trivial test or two for this, if "git
+stash [save|push|nothing] -m foo" is already tested.  It appears
+that t3903 already has a test that does 'push -m "test message"' and
+sees if that appears in the output of "list", which looks like the
+ideal place to do so.
+
