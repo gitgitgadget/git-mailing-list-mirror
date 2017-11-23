@@ -2,131 +2,168 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AA5C5202F2
-	for <e@80x24.org>; Thu, 23 Nov 2017 15:19:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 62E17202F2
+	for <e@80x24.org>; Thu, 23 Nov 2017 15:43:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752923AbdKWPTD (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Nov 2017 10:19:03 -0500
-Received: from mail-wm0-f53.google.com ([74.125.82.53]:38852 "EHLO
-        mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752611AbdKWPTC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Nov 2017 10:19:02 -0500
-Received: by mail-wm0-f53.google.com with SMTP id 128so17229703wmo.3
-        for <git@vger.kernel.org>; Thu, 23 Nov 2017 07:19:02 -0800 (PST)
+        id S1752841AbdKWPnK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Nov 2017 10:43:10 -0500
+Received: from mail-qt0-f195.google.com ([209.85.216.195]:36254 "EHLO
+        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752611AbdKWPnJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Nov 2017 10:43:09 -0500
+Received: by mail-qt0-f195.google.com with SMTP id a19so28366105qtb.3
+        for <git@vger.kernel.org>; Thu, 23 Nov 2017 07:43:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:content-transfer-encoding:subject:date:message-id:cc:to
-         :mime-version;
-        bh=SSi8QJbVMF7yoTkqfgws3NnZi0l67iV2yLVQ9iq6dq8=;
-        b=U9rg7hyOwyFu8ij7gJefj/wqdvbMTIxs0ZCoKuaH6cd9uEmW7WXAVVT3IuJSFZBpl7
-         3DgSOWCE0+AsCcjpXkRqYxxniI6iDzYD3uyz80AW4vZS2FqEMUUaxZkiC7o03nR8a9PR
-         760Kjm2IJ4zw4dscZ97HhufWtIYBxBG8qj8HJPkT4ljcC04Ca3XKMFxLucvyAu4rYC3Z
-         k9vDU+Z0is9JYflV+U71tIRxGkhm3kjBoEobLqGiPUE225dwGih8Fa/mnRsqSlAoPszf
-         KQx1tiFpMS3sM9M9N/0PO1X96smcLcAo6JCYzl4pri5UrSpzakogCqa5jl3QbwhL0jt8
-         WhFQ==
+        h=sender:from:to:cc:subject:date:message-id;
+        bh=Gcm+pkM5dJqpehe8aF5e0n2u8r+x05C16siOviuGxv8=;
+        b=n2M4uRzRGir22B3S1E3szSJ1Cx6mFzoJXyrnnDnSTKdvayuT4se7UXS+U9FFrNu5oG
+         ICzp5+zE4sQ9s83koRWWxsMUO9AbeKMG7ZNQ6JRyZO/GVOQYLZor/9GXHP7VInBYgp/8
+         dUJyncamTHa5h3QaNX3WNEoDFGemspwo3mEp4Yxw71kLORHNQOce8QxusM51lzPb0Vhp
+         jkxIUVHPEsoIxJ1kqsL6S+XKY+UIxVIbKE+H2F7sfEKjkpGRNoAkCfrNlqcvRHEJSoBQ
+         zFVSdBuRQ90i5U48SivIyfBX/OqL/SKsm6+099qvrxp83/ztgdL19JLHJiAyqozmIceB
+         7X8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:content-transfer-encoding:subject:date
-         :message-id:cc:to:mime-version;
-        bh=SSi8QJbVMF7yoTkqfgws3NnZi0l67iV2yLVQ9iq6dq8=;
-        b=PPqSmaSMjgDOD6embDi/7b0yisR3NBJZMfYt8ZkuxqoGbNacOHQApRZw5T0cHcZL24
-         DL7U0nkgo050AAfWBmO7zJ5ZonCz0pjJiTXiIFvnzRl1YiEC79g3z5/XJ7jHg/gsBcD5
-         IyPL3TPwScP33KUtMxnLpn/adOkDs4DFLSdOvOvjg4khr/wi1/qRF/huIalP8E1EUu2R
-         LIW0eGkEjrkkE4wAw9hqI4XSH2e18YQxa6boGzka/hwYXdVeEsR21svr0+xwRpau5GbR
-         8XnAELhRsyVq1oW8SsTuW5J1JW/xd3fAhunm9HOUBCrfMJABa/6ijanKf1Hvywh3czBK
-         f7Cg==
-X-Gm-Message-State: AJaThX6uBjw2ep9/q+oCyZzFoFzcwWs5F/Nq0vl3L3oFHWuNpl9di9Dv
-        0zf12vA0cxcjclGFPmmpLE8Eentq
-X-Google-Smtp-Source: AGs4zMYCgPXAtPZT0s8jRmZg21Z/kqN6w1ag0yZuua/xx5mYFWUXyX5UbOE45zViyXNEVDfcpbqnVQ==
-X-Received: by 10.28.149.144 with SMTP id x138mr6973105wmd.49.1511450341357;
-        Thu, 23 Nov 2017 07:19:01 -0800 (PST)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id w21sm5138788wra.30.2017.11.23.07.19.00
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 23 Nov 2017 07:19:00 -0800 (PST)
-From:   Lars Schneider <larsxschneider@gmail.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Subject: RFC: Native clean/smudge filter for UTF-16 files
-Date:   Thu, 23 Nov 2017 16:18:59 +0100
-Message-Id: <BDB9B884-6D17-4BE3-A83C-F67E2AFA2B46@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Shawn Pearce <spearce@spearce.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jakub Narebski <jnareb@gmail.com>, Jeff King <peff@peff.net>
-To:     Git List <git@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-X-Mailer: Apple Mail (2.3124)
+        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id;
+        bh=Gcm+pkM5dJqpehe8aF5e0n2u8r+x05C16siOviuGxv8=;
+        b=HkeC/zpVBLTflrWQgvY9S+Ql4sU3tqdC8H6371VBc9mfLdzOr1Aim6A/PT65jeXL/h
+         GPPOjZT3MUdZqsdfR2ShBYlf8HunVcRSOmED2auZnQSWQDuaH4XiNemjsxiapjtlNZuc
+         dZYl37uiCZ4K6uLYH3tP4oV74wG3R0TgrxvLKLfbjpI2siV7VUMhcoFab4C3PK8NARRv
+         1wyiFXlV4jUwj4wdOaI0s3/qJApnST71q1hyN/lyiOq6QtjIr5A0A1vZ6ICEkjCX6N4f
+         vhdZrFt5bSK+ud6puSBznmX+XIXAtUCAnp9QwgeFi3rGbBCYyTmXDnYBMMOvCka0EczS
+         podw==
+X-Gm-Message-State: AJaThX4eiq4N+ffSFmR+T09796LOtvu9yL1L27CpkT+V0LQb/jowqc2Y
+        UP+1D8kwhUdmf6s1HNJKan2CY6rr
+X-Google-Smtp-Source: AGs4zMYPcJv3ztzbXtiD/ofnkMiAA69E/9hirf5nL0jxqOUjSPcBxpbC5xT7ZZEB/5+pmzqBeQnk0Q==
+X-Received: by 10.200.35.248 with SMTP id r53mr37465991qtr.110.1511451787975;
+        Thu, 23 Nov 2017 07:43:07 -0800 (PST)
+Received: from ogre.lan (modemcable022.17-70-69.static.videotron.ca. [69.70.17.22])
+        by smtp.gmail.com with ESMTPSA id z7sm13091823qtz.40.2017.11.23.07.43.07
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 23 Nov 2017 07:43:07 -0800 (PST)
+From:   Marc-Antoine Ruel <maruel@chromium.org>
+To:     git@vger.kernel.org
+Cc:     Marc-Antoine Ruel <maruel@chromium.org>
+Subject: [PATCH] grep: Add option --max-line-len
+Date:   Thu, 23 Nov 2017 10:41:59 -0500
+Message-Id: <20171123154159.17408-1-maruel@chromium.org>
+X-Mailer: git-send-email 2.15.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+This tells git grep to skip files longer than a specified length,
+which is often the result of generators and not actual source files.
 
-I am working with a team that owns a repository with lots of UTF-16 =
-files.
-Converting these files to UTF-8 is no good option as downstream =
-applications
-require the UTF-16 encoding. Keeping the files in UTF-16 is no good =
-option
-either as Git and Git related tools (e.g. GitHub) consider the files =
-binary
-and consequently do not render diffs.
+Signed-off-by: Marc-Antoine Ruel <maruel@chromium.org>
+---
+ Documentation/git-grep.txt | 5 +++++
+ builtin/grep.c             | 2 ++
+ grep.c                     | 4 ++++
+ grep.h                     | 1 +
+ t/t7810-grep.sh            | 5 +++++
+ 5 files changed, 17 insertions(+)
 
-The obvious solution is to setup a clean/smudge filter like this [1]:
-    [filter "winutf16"]
-        clean =3D iconv -f utf-16 -t utf-8
-        smudge =3D iconv -f utf-8 -t utf-16
+diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+index 18b494731..75081defb 100644
+--- a/Documentation/git-grep.txt
++++ b/Documentation/git-grep.txt
+@@ -10,6 +10,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git grep' [-a | --text] [-I] [--textconv] [-i | --ignore-case] [-w | --word-regexp]
++	   [-M | --max-line-len <num>]
+ 	   [-v | --invert-match] [-h|-H] [--full-name]
+ 	   [-E | --extended-regexp] [-G | --basic-regexp]
+ 	   [-P | --perl-regexp]
+@@ -127,6 +128,10 @@ OPTIONS
+ 	beginning of a line, or preceded by a non-word character; end at
+ 	the end of a line or followed by a non-word character).
+ 
++-M<num>::
++--max-line-len<num>::
++	Match the pattern only for line shorter or equal to this length.
++
+ -v::
+ --invert-match::
+ 	Select non-matching lines.
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 5a6cfe6b4..cc5c70be5 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -796,6 +796,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 			N_("case insensitive matching")),
+ 		OPT_BOOL('w', "word-regexp", &opt.word_regexp,
+ 			N_("match patterns only at word boundaries")),
++		OPT_INTEGER('M', "max-line-len", &opt.max_line_length,
++			N_("ignore lines longer than <n>")),
+ 		OPT_SET_INT('a', "text", &opt.binary,
+ 			N_("process binary files as text"), GREP_BINARY_TEXT),
+ 		OPT_SET_INT('I', NULL, &opt.binary,
+diff --git a/grep.c b/grep.c
+index d0b9b6cdf..881078b82 100644
+--- a/grep.c
++++ b/grep.c
+@@ -36,6 +36,7 @@ void init_grep_defaults(void)
+ 	opt->relative = 1;
+ 	opt->pathname = 1;
+ 	opt->max_depth = -1;
++	opt->max_line_length = -1;
+ 	opt->pattern_type_option = GREP_PATTERN_TYPE_UNSPECIFIED;
+ 	color_set(opt->color_context, "");
+ 	color_set(opt->color_filename, "");
+@@ -151,6 +152,7 @@ void grep_init(struct grep_opt *opt, const char *prefix)
+ 	opt->pattern_type_option = def->pattern_type_option;
+ 	opt->linenum = def->linenum;
+ 	opt->max_depth = def->max_depth;
++	opt->max_line_length = def->max_line_length;
+ 	opt->pathname = def->pathname;
+ 	opt->relative = def->relative;
+ 	opt->output = def->output;
+@@ -1273,6 +1275,8 @@ static int match_line(struct grep_opt *opt, char *bol, char *eol,
+ 	struct grep_pat *p;
+ 	regmatch_t match;
+ 
++	if (opt->max_line_length > 0 && eol-bol > opt->max_line_length)
++		return 0;
+ 	if (opt->extended)
+ 		return match_expr(opt, bol, eol, ctx, collect_hits);
+ 
+diff --git a/grep.h b/grep.h
+index 399381c90..0e76c0a19 100644
+--- a/grep.h
++++ b/grep.h
+@@ -151,6 +151,7 @@ struct grep_opt {
+ 	int null_following_name;
+ 	int color;
+ 	int max_depth;
++	int max_line_length;
+ 	int funcname;
+ 	int funcbody;
+ 	int extended_regexp_option;
+diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
+index 2a6679c2f..c514bd388 100755
+--- a/t/t7810-grep.sh
++++ b/t/t7810-grep.sh
+@@ -766,6 +766,11 @@ test_expect_success 'grep -W shows no trailing empty lines' '
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success 'grep skips long lines' '
++	git grep -M18 -W include >actual &&
++	test_cmp expected actual
++'
++
+ cat >expected <<EOF
+ hello.c=	printf("Hello world.\n");
+ hello.c:	return 0;
+-- 
+2.15.0
 
-In general this works well but the "per-file" clean/smudge process =
-invocation=20
-can be slow for many files. I could apply the same trick that we used =
-for Git
-LFS and write a iconv that processes all files with a single invocation =
-(see
-"edcc85814c convert: add filter.<driver>.process option" [2]).=20
-
-Alternatively, I could add a native attribute to Git that translates =
-UTF-16=20
-to UTF-8 and back. A conversion function is already available in =
-"mingw.h" [3]
-on Windows. Limiting this feature to Windows wouldn't be a problem from =
-my
-point of view as UTF-16 is only relevant on Windows anyways. The =
-attribute=20
-could look like this:
-
-    *.txt        text encoding=3Dutf-16
-
-There was a previous discussion on the topic and Jonathan already =
-suggested
-a "native" clean/smudge filter in 2010 [4]. Also the "encoding" =
-attribute
-is already present but, as far as I can tell, is only used by the git =
-gui
-for viewing [5].
-
-Do you think a patch that converts UTF-16 files to UTF-8 via an =
-attribute
-"encoding=3Dutf-16" on Windows would have a chance to get accepted?
-
-Thanks,
-Lars
-
-[1] https://github.com/msysgit/msysgit/issues/113#issue-13142846
-[2] =
-https://github.com/git/git/commit/edcc85814c87ebd7f3b1b7d3979fac3dfb84d308=
-
-[3] =
-https://github.com/git/git/blob/14c63a9dc093d6738454f6369a4f5663ca732cf7/c=
-ompat/mingw.h#L501-L533
-[4] https://public-inbox.org/git/20101022195331.GA12014@burratino/
-[5] =
-https://github.com/git/git/commit/1ffca60f0b0395e1e593e64d66e7ed3c47d8517e=
