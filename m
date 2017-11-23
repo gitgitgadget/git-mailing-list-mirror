@@ -7,55 +7,56 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CE37A20954
-	for <e@80x24.org>; Thu, 23 Nov 2017 02:22:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A3BD520954
+	for <e@80x24.org>; Thu, 23 Nov 2017 02:35:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752249AbdKWCWV (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Nov 2017 21:22:21 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64345 "EHLO
+        id S1751967AbdKWCfY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Nov 2017 21:35:24 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62760 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752231AbdKWCWU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Nov 2017 21:22:20 -0500
+        with ESMTP id S1751861AbdKWCfX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Nov 2017 21:35:23 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6D9D7A0369;
-        Wed, 22 Nov 2017 21:22:20 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 57844A04DD;
+        Wed, 22 Nov 2017 21:35:23 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=09p+BuFa8M+S9rJIzSgy76fs5G4=; b=Nfe+M/
-        4QjSxh7ED0Qhk7KvjqjqB4I85XR/aLxJX53b+DRltJ8zPqzXOsaGB9qvqorpf2Hc
-        OH61D+3CWroX8XQxGNqxtBYnzJjM7vlDfz5yhgXQuMeIQJ7hAmGbkM2NoedInZpS
-        fwM2KoG1PVBiSl+dcraH/QvV0vHTuFhuL/Ehk=
+        :content-type; s=sasl; bh=EzWa9SQfH256C/7cqdYDU4RS9dw=; b=OWRMkQ
+        IXmrHMahi6XWs1Szp7sF0rlZeri2B68gTas7uBtFUqnWRXy9dOo3jgQjKIkG4Ynq
+        m/H1qacyz1U/1qhDeAEfytUUZJLKoCu6aArQQkiyQyneR3xD2rKRmSGCrE4ffiMc
+        GZ9HHNfaGUcbwkSjuT5uIjq4QkGVW2ki5gLGA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=tUpU8npi+ZXdmE00xdFaQD962QYOHuJc
-        Zf/1izWO1vJMeeOWtFcWeDVa1PEK9RWU3ajXSXoAokDQOtPF7rKIIU7/j6dY8FY9
-        VpUZtwBsmQAwerdC1GQ0Gydj0YpyfF8n+Bo1LcyY3uwtFap0glPrtJr9sugsHJ4H
-        2FVPUEzx5h0=
+        :content-type; q=dns; s=sasl; b=KmXy/Nf5x5TEesZja2L46dYtpigivvhh
+        xJXlkdrf3Q7EpbtqoEevOzvytRItoY/g+aaMz0KtOQ5OC9HSo8Vp96cZhU6xwFbW
+        HlUKjzFFF16krgyp2zO4IbbyjpCZqvhrF6oCLiJNqUitADypDbQ8msdO81fpxxjs
+        DjorwqVNBOQ=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6375FA0368;
-        Wed, 22 Nov 2017 21:22:20 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 50233A04DC;
+        Wed, 22 Nov 2017 21:35:23 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D9237A0364;
-        Wed, 22 Nov 2017 21:22:19 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id CD24AA04DB;
+        Wed, 22 Nov 2017 21:35:22 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Kevin Daudt <me@ikke.info>,
-        "Robert P. J. Day" <rpjday@crashcourse.ca>,
-        Git Mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH v2] gitcli: tweak "man gitcli" for clarity
-References: <alpine.LFD.2.21.1711211626460.26166@localhost.localdomain>
-        <20171121214552.GB16418@alpha.vpn.ikke.info>
-        <20171123000346.GA8718@sigill>
-Date:   Thu, 23 Nov 2017 11:22:18 +0900
-In-Reply-To: <20171123000346.GA8718@sigill> (Jeff King's message of "Wed, 22
-        Nov 2017 19:03:46 -0500")
-Message-ID: <xmqqtvxlraxx.fsf@gitster.mtv.corp.google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 5/5] sha1_file: don't re-scan pack directory for null sha1
+References: <20171120202607.tf2pvegqe35mhxjs@sigill.intra.peff.net>
+        <20171120203523.c3pt5qi43e24ttqq@sigill.intra.peff.net>
+        <xmqqd14cjr13.fsf@gitster.mtv.corp.google.com>
+        <20171121225744.GA21197@sigill>
+        <xmqqwp2jxf5l.fsf@gitster.mtv.corp.google.com>
+        <20171122223613.GA1405@sigill>
+Date:   Thu, 23 Nov 2017 11:35:21 +0900
+In-Reply-To: <20171122223613.GA1405@sigill> (Jeff King's message of "Wed, 22
+        Nov 2017 17:36:14 -0500")
+Message-ID: <xmqqpo89rac6.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 21CC0252-CFF5-11E7-B5F4-575F0C78B957-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: F4786596-CFF6-11E7-884A-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -63,21 +64,41 @@ X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
-> I read the rest of the thread, and I think the question here is not
-> about Git's behavior, but about parsing this sentence.
+> So there are four cases we care about for this call in fetch:
 >
-> Without a "--" Git can sometimes do what you want. Or it may error out,
-> if what you asked for is ambiguous. And that sentence is trying to cover
-> those cases separately, and the "can" only applies to the ambiguous
-> case.
+>   1. We fed a real sha1 and got a commit (or peeled to one).
 >
-> It's pretty clear to me as it is, but maybe we can write it differently.
-> Like:
+>   2. We fed a real sha1 which resolved to a non-commit, and we got NULL.
 >
->   Without a disambiguating `--`, Git makes a reasonable guess. If it
->   cannot guess (because your request is ambiguous), then it will error
->   out.
+>   3. We fed a real sha1 and the object was missing or corrupted, and we
+>      got NULL.
+>
+>   4. We fed a null sha1 and got NULL.
+>
+> Right now we lump cases 2-4 together as "do not do a fast-forward
+> check". That's fine for 2 and 4, but probably not for 3. We can easily
+> catch case 4 ourselves (if we care to), but distinguishing case 3 from
+> the others is hard. How should lookup_commit_reference_gently() signal
+> it to us?
 
-Splitting it into two sentences like you did makes it even clearer,
-I would think.
+Not limiting us to the caller in the "fetch" codepath, I think the
+expectation by callers of lookup_commit_reference_gently() in the
+ideal world would be:
 
+ - It has an object name, and wants to use it as point in the commit
+   DAG to define the traversal over the DAG, if it refers to a
+   commit known to us.
+
+ - It does not know if these object names represent a tag object, a
+   commit object, or some other object.  It does not know if the
+   local repository actually has them (e.g. we received a "have"
+   from the other side---missing is expected).
+
+ - Hence, it would happily accept a NULL as "we do not have it" and
+   "we do have it, but it is not a commit-ish".
+
+And from that point of view, 2, 3a (missing), and 4 (0{40}) to yield
+NULL is perfectly fine.  3b (exists but broken) may be a noteworthy
+event, but for the purpose of the caller, it may want to proceed as
+if the object is missing from our end, so it might deserve warning()
+but not die(), at least as the default behaviour.
