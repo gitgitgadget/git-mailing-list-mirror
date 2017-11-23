@@ -2,89 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,PI_DNOT,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F1AA5202F2
-	for <e@80x24.org>; Thu, 23 Nov 2017 21:42:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EC0A3202F2
+	for <e@80x24.org>; Thu, 23 Nov 2017 22:28:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753391AbdKWVmA (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Nov 2017 16:42:00 -0500
-Received: from mail-wr0-f181.google.com ([209.85.128.181]:34267 "EHLO
-        mail-wr0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753046AbdKWVl7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Nov 2017 16:41:59 -0500
-Received: by mail-wr0-f181.google.com with SMTP id k18so13722684wre.1
-        for <git@vger.kernel.org>; Thu, 23 Nov 2017 13:41:59 -0800 (PST)
+        id S1753376AbdKWW2f (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Nov 2017 17:28:35 -0500
+Received: from mail-vk0-f67.google.com ([209.85.213.67]:35182 "EHLO
+        mail-vk0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752460AbdKWW2e (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Nov 2017 17:28:34 -0500
+Received: by mail-vk0-f67.google.com with SMTP id n63so12569798vkf.2
+        for <git@vger.kernel.org>; Thu, 23 Nov 2017 14:28:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=rZ+2bBXK/fuC93++QzatpFFJkzyqRswwnsbx5Ri4qyM=;
-        b=b+REW+dnzn49qZMPTYGBFa96zz77/ExoxKMWRenRROvecOjJdb/4yHZkLqFkweOuZ9
-         v3c99TQphSSdkVJISL8Xnredq/5nB5J713Jav6cNGhzEUc0/JVKmN6fUpWiEXvQ4nMCh
-         +ytQGepHSPxojFcdESwAwbP+GLd2nEMJ54+Uu2hHYH6GZ5r8USj0HpLjujwu+WdK9GfO
-         I0K/vZYXJLm9/HAjcGyZOOaznn9p0SuFHYOhhe32It3ueTTXpN/iZ4ibRyTN+GN2fV50
-         wodzuhvibOvmsuc+xnpwn0vzj8RbxCVxiJbTb30q0/1kUEiivZqLhC79jLQwccUzFX7I
-         eb5w==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=uU/BTA6aSeWKUvqW+bu3NgHZULcgjO/IE8FBf71PMug=;
+        b=nT0YHqMUSMDhJrOPqmpftcYIcPFyfIxsNkU6w+KpHeLL0ScqRVO1L97xxw+ajxKyJf
+         o7Ej8CX1fjqi5omytj3BgUWLXl7APAQKeN4PKTZdorpSRjSpanYGPlu6HXJfLPIxU1h3
+         pBT6mtPPr7D/Zhm00/l0bhFEY5dKiz3t/Ts+1T3O9i4t6G8SvXScS/y/W+BDLc24p20r
+         4LgLC9uzejr6Q+0++hlmW2zWeKmWL8YA2KnS4c0xL375xmZOZexvSkXjas5T1FuL+5AZ
+         IP8LDXnRlQ4gapySPk6LSe3Aj9Y7K3WuisyX0K8z+0wslbGICRxtTekJlJUWhjiLwQ/h
+         2VEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=rZ+2bBXK/fuC93++QzatpFFJkzyqRswwnsbx5Ri4qyM=;
-        b=QwESjjDkS85XUT1YdxFcd1AjpKdEIr+Ry15WikJvz0FfZLwpkB2bTpEJNdIRBR+V8M
-         QTwmm3jHn9192GmzlirsYofOMu+r95K5xXnGxvlHKTiIn8+AIC+9PY5UjEH7I9jajXRP
-         HpvQbFfqbHZlMd/5RV+9eFt1Z2Z0rXKa/uQ3Q7bFPNieSq+FsvBEeEdfgnvlx04miZ2m
-         aednKt7QrmIQ/2IuJm4jSTZe8lbNEtggqVtO6SwgejEzk5uVvCLh3sy03CFg5qYV+FpB
-         V0H9NHC6jwVXh/4xC6HPfgwBTrz1lvolu8Bpx2mbkVOSacGSny36sqij/nDhPrsN+LUP
-         8SCA==
-X-Gm-Message-State: AJaThX5zuUtFT+l0soQNB0Y//ep/cU+2XWIrZ1rPEIcNcE1NpMqTjv4k
-        MlGRBqLY/um+GEELAZ1QEJPkE6Yt
-X-Google-Smtp-Source: AGs4zMbMWWKrO8vfbrE1ioIup/ITHmjzVkHER7CeqG9uvy1BZuW+RglbVfSks7svFHhcCJ7IxjV0PA==
-X-Received: by 10.223.149.5 with SMTP id 5mr21583410wrs.135.1511473318453;
-        Thu, 23 Nov 2017 13:41:58 -0800 (PST)
-Received: from [192.168.5.102] (cable-24-135-61-30.dynamic.sbb.rs. [24.135.61.30])
-        by smtp.gmail.com with ESMTPSA id l140sm9168917wma.5.2017.11.23.13.41.57
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 23 Nov 2017 13:41:57 -0800 (PST)
-Subject: Re: Delivery Status Notification (Failure)
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-References: <077942bb-5952-6f4a-8054-b17d3883b901@comcast.net>
- <f30c4350-500a-44e8-27ee-7d5ae49903c4@gmail.com>
- <001a1148fe243ade02055ead2599@google.com>
-From:   Igor Djordjevic <igor.d.djordjevic@gmail.com>
-Message-ID: <4a773661-efce-7be1-f6a7-2d09a95f63b1@gmail.com>
-Date:   Thu, 23 Nov 2017 22:41:52 +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.4.0
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=uU/BTA6aSeWKUvqW+bu3NgHZULcgjO/IE8FBf71PMug=;
+        b=n+zuzkZHkLgL8Yjk0vTQMtumAl8KqA0DI57OOgtyV1W3IM9t9s8Bscyd82DnoGRmU8
+         yODiiZV7IPI8qK6DicQFhBdx0XRcR91zoIXp45E2kwtMhl5D9TMY0Q15lOLeflG4dRq/
+         a0yqPKWVRDQSrZOj7q/SQORExjFm9lr2LXNdp+H/cz0K7t365zz5769P5RrzkDXezFt9
+         4aHAgqd3osI/V8e4EHubh8LQ9MhS3DRE0x7GoY4bSen8ijykIhc69ZKndAXo9PODjCa4
+         /eLLLwvvHtqSSDWtyvKBRyHuYPMe7/qCOVrPV1++0jmQhJLsUeXBL9hVbp9mumRe/VKb
+         5/vQ==
+X-Gm-Message-State: AJaThX6PYr8ZUxraxDrH88KxGz5bFkM/guZvD7kSmlINwDK3gC46Igif
+        1nepTfxaEdgg3YwhGFUk2ixj/x8bjwrj52sv9VI=
+X-Google-Smtp-Source: AGs4zMa69iLJIXLOARlGSTEnyhoRYhL4qm/eWmcmZseYIB+KXI0Y0uMOzDXFgzLRfL2uZsFQoEvTiqsJEjELsGF5Mus=
+X-Received: by 10.31.176.133 with SMTP id z127mr18808991vke.183.1511476113873;
+ Thu, 23 Nov 2017 14:28:33 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <001a1148fe243ade02055ead2599@google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Received: by 10.176.70.138 with HTTP; Thu, 23 Nov 2017 14:28:33 -0800 (PST)
+In-Reply-To: <20171123115246.GV20681@dinwoodie.org>
+References: <20171121080059.32304-1-newren@gmail.com> <20171123115246.GV20681@dinwoodie.org>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 23 Nov 2017 14:28:33 -0800
+Message-ID: <CABPp-BE5-MCUfUAdOBv4zYRJxqAiGdv-JGrrzQoo9SUiQwWKYA@mail.gmail.com>
+Subject: Re: [PATCH v3 00/33] Add directory rename detection to git
+To:     Adam Dinwoodie <adam@dinwoodie.org>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 23/11/2017 22:30, Mail Delivery Subsystem wrote:
-> Hello igor.d.djordjevic@gmail.com,
-> 
-> We're writing to let you know that the group you tried to contact (git-for-windows) may not exist, or you may not have permission to post messages to the group. A few more details on why you weren't able to post:
-> 
->  * You might have spelled or formatted the group name incorrectly.
->  * The owner of the group may have removed this group.
->  * You may need to join the group before receiving permission to post.
->  * This group may not be open to posting.
-> 
-> If you have questions related to this or any other Google Group, visit the Help Center at https://groups.google.com/support/.
-> 
-> Thanks,
-> 
-> Google Groups
+On Thu, Nov 23, 2017 at 3:52 AM, Adam Dinwoodie <adam@dinwoodie.org> wrote:
+> On Tuesday 21 November 2017 at 12:00 am -0800, Elijah Newren wrote:
+>> <snip>
+>>
+>>  merge-recursive.c                   | 1243 +++++++++++-
+>>  merge-recursive.h                   |   17 +
+>>  t/t3501-revert-cherry-pick.sh       |    5 +-
+>>  t/t6043-merge-rename-directories.sh | 3821 +++++++++++++++++++++++++++++++++++
+>>  t/t7607-merge-overwrite.sh          |    7 +-
+>>  unpack-trees.c                      |    4 +-
+>>  unpack-trees.h                      |    4 +
+>>  7 files changed, 4985 insertions(+), 116 deletions(-)
+>>  create mode 100755 t/t6043-merge-rename-directories.sh
+>
+> The new t6043.44 introduced in this branch is failing on my Cygwin
+> system.  I can't immeditely see what's causing the failure, but I've
+> copied the relevant verbose + shell tracing output below in the hope it
+> makes more sense to you:
 
-Well, seems that +Cc-ing wasn`t the most successful one... :P
+Thanks for reporting.  Unfortunately, I have been unable to locate or
+create a cygwin system on which to replicate the testing.  Valgrind is
+running clean for me, and I find it interesting that the output shows
+it did detect the rename/rename(2to1) conflict on y/d for you, and the
+index has all the right values, but somehow the 'test ! -f y/d' line
+isn't passing for you.
+
+Out of curiosity:
+  * What is in the y/ directory in that test?  (That is, the y/
+directory within the 7b/ directory)
+  * What are the full contents of the 'out' file?  (again, within the
+7b/ directory)
+  * What commit have you actually built and run with (maybe I'm trying
+with something slightly different?)
