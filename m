@@ -2,78 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D858D20954
-	for <e@80x24.org>; Thu, 23 Nov 2017 05:02:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B325C20954
+	for <e@80x24.org>; Thu, 23 Nov 2017 06:22:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750751AbdKWFCR (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Nov 2017 00:02:17 -0500
-Received: from cloud.peff.net ([104.130.231.41]:38400 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750707AbdKWFCR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Nov 2017 00:02:17 -0500
-Received: (qmail 20039 invoked by uid 109); 23 Nov 2017 05:02:17 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 23 Nov 2017 05:02:17 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6972 invoked by uid 111); 23 Nov 2017 05:02:33 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Thu, 23 Nov 2017 00:02:33 -0500
-Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 23 Nov 2017 00:02:15 -0500
-Date:   Thu, 23 Nov 2017 00:02:15 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [PATCH 1/5] p5550: factor our nonsense-pack creation
-Message-ID: <20171123050214.GB22218@sigill>
-References: <20171120202607.tf2pvegqe35mhxjs@sigill.intra.peff.net>
- <20171120202643.s2cywlqykayq5qdb@sigill.intra.peff.net>
- <CAPig+cRDNmjmM2Ed+mwqf7JZ76CxA3Eh7-UV6k=LFngZ3YE_sQ@mail.gmail.com>
- <20171121155815.46ih4ld4cp7n544l@sigill.intra.peff.net>
- <CAGZ79kbNQCzmkQDFY+gxEuZDPziehZdhgReCzpk3oxn=fpv=UQ@mail.gmail.com>
- <20171122223817.GB1405@sigill>
- <xmqqlgixra22.fsf@gitster.mtv.corp.google.com>
+        id S1752684AbdKWGWP (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Nov 2017 01:22:15 -0500
+Received: from mail-vk0-f47.google.com ([209.85.213.47]:36484 "EHLO
+        mail-vk0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752563AbdKWGWO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Nov 2017 01:22:14 -0500
+Received: by mail-vk0-f47.google.com with SMTP id p144so11222273vkp.3
+        for <git@vger.kernel.org>; Wed, 22 Nov 2017 22:22:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=9lhxqdlKQymjedJLG9tg0CMYlVjwdPn+4mx/+4RSP+E=;
+        b=HELPpq3UE1Zbv1mcCRbm7zQBRdFNQvMocGuZuv3uumcqA5yojD6Ra7aWgDg0GA4FqO
+         Wvj4fjaFg0OmjVu9IWtnvXsD83ilYyWtwgK1Svd8QAxQjcRExD/PTtO0ZNEPWG+U1oQ2
+         dNOM4qKdfT/fhTYqNsh7GLlHJrwHJEvIMHm7qZL1Ty4Cg7D5yRc3KXF+MhLbM1MIUI1/
+         /stDEsjgeLK5xCLe+BxWgjNdp9HtmjbhS9LrqevtXA4dNs26ImUkbTF907uTMMK+9Jl3
+         VLe6uxYHCuQ9FDLxrW8vuVMcxtMzP6HMoS054Wq8kKFcTH3nkf+5xG1b6o5dloRHSyDj
+         PTVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=9lhxqdlKQymjedJLG9tg0CMYlVjwdPn+4mx/+4RSP+E=;
+        b=UaspVDFt5neP6blTqBg6e898rnNKJsUhvsuNvu3fukhTvU8Sb0nvYwURgOlRxkzv/s
+         amRdo0VSLkUlkqxMrHqjoXSNQ0LiLHPqWz0+AShEM13ovsfTFP83+NdJ3JU2PKkrzNYk
+         5Fv4xAGQdlS+p3Xr/Auyk3NJr8wZlZ/58D+N9bpBQAerRJNFY08r5BGCwkPo/xp1NzTq
+         0O5R5f4/Bbm2uoEY9yRnPSjZ/F0SJTLM1YTzmrdG9YpxXWGwu058S2r2Zh3MTHPlDyZf
+         hbfjBnVjuwZdFxJ13bYdZ0vbgk3jM8BBEGUdbUtLReiVInnLFBbqmoWnc5v4e5UFtc6w
+         aiQw==
+X-Gm-Message-State: AJaThX46AQheUi1S9FkLiSjqS/fZN8trjjLYkFSy0UjqMo94GwNb3Rmk
+        XB0qdJYaN96riijDmSrAc/GPWiOSQ5gOeYKyx9s=
+X-Google-Smtp-Source: AGs4zMbGPqscYtqR+u3UZeb7568ZnUl07rY8fzBnY+JlEPukRmLaW3FV2kzzHYLAPyKpKHRuKkyHGqbM8K5Bv7ApObI=
+X-Received: by 10.31.172.137 with SMTP id v131mr19372266vke.75.1511418133463;
+ Wed, 22 Nov 2017 22:22:13 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqlgixra22.fsf@gitster.mtv.corp.google.com>
+Received: by 10.176.70.138 with HTTP; Wed, 22 Nov 2017 22:22:12 -0800 (PST)
+In-Reply-To: <CAGZ79kbustk48yP7jC6UmjidQUuWfhQWcqX_CUz=WnM0X3H8aw@mail.gmail.com>
+References: <20171121080059.32304-1-newren@gmail.com> <CAGZ79kbVzDEv=rj7X6EhWZyAFd+fq+nwG8c+raqu9tXv_z9f4A@mail.gmail.com>
+ <CABPp-BFm7ZcYbie-n-ASmb6MDyJXW3G8YdtHRAzpVNgOvwK5MA@mail.gmail.com> <CAGZ79kbustk48yP7jC6UmjidQUuWfhQWcqX_CUz=WnM0X3H8aw@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 22 Nov 2017 22:22:12 -0800
+Message-ID: <CABPp-BE3W1dRNZtYxAimT4v-J4jzjKAV03YH3gF5V9f3A91P7g@mail.gmail.com>
+Subject: Re: [PATCH v3 00/33] Add directory rename detection to git
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 23, 2017 at 11:41:25AM +0900, Junio C Hamano wrote:
+On Wed, Nov 22, 2017 at 11:24 AM, Stefan Beller <sbeller@google.com> wrote:
+> On Tue, Nov 21, 2017 at 5:12 PM, Elijah Newren <newren@gmail.com> wrote:
+>> On Tue, Nov 21, 2017 at 4:42 PM, Stefan Beller <sbeller@google.com> wrote:
+>>> On Tue, Nov 21, 2017 at 12:00 AM, Elijah Newren <newren@gmail.com> wrote:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > Right, I came to the same conclusion (we may even have discussed this on
-> > the list, I don't remember). The current "todo" format says that only
-> > the command and sha1 matter, and we'd be changing that. Maybe that's not
-> > so bad if the user has to enable the feature themselves (and clearly it
-> > would be incompatible with a custom format option).
-> 
-> If you are in the habit of always writing 4 or more lines, the
-> chance that you would make a typo on the line you can correct in the
-> "todo" list with such a feature is at most 25% ;-).
+>>>> This patchset introduces directory rename detection to merge-recursive; I'm
 
-You'd think, but the distribution of typos doesn't seem to be uniform.
-:)
+> In my first round of review I only looked over the tests to see if I'd
+> find the behavior intuitive, I spared the implementation, as Junio seemed
+> to have reviewed a couple patches of the v1 implementation.
+>
+> Now I also looked over the implementation and quite like it, though
+> I'd be happy if others would also have a look.
+>
+> All but one comment were minor style nits, which are no big deal;
+> the other remark that I was musing about was whether we want to use
+> strbufs in the new code instead of e.g. sprintfs to extend strings.
+> And I'd think we would want to use them unless there are compelling
+> reasons not to.
 
-I think what actually happens is that I quite often do my final
-proofread in my MUA, where the subject is displayed apart from the rest
-of the message. So I tend to gloss over it, and any errors there are
-more likely to make it to the list.
-
-> I think one downside is that a mere presence of such an option hints
-> that we somehow encourage people to commit with a title-only message.
-
-Yeah, though it might be handy for me I think it just opens up too many
-funny questions like this.
-
--Peff
+Thanks for the reviews!  I've fixed up the style issues already and
+will take a look into switching over to strbuf.
