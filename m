@@ -7,80 +7,91 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B325C20954
-	for <e@80x24.org>; Thu, 23 Nov 2017 06:22:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 673472036D
+	for <e@80x24.org>; Thu, 23 Nov 2017 07:31:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752684AbdKWGWP (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Nov 2017 01:22:15 -0500
-Received: from mail-vk0-f47.google.com ([209.85.213.47]:36484 "EHLO
-        mail-vk0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752563AbdKWGWO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Nov 2017 01:22:14 -0500
-Received: by mail-vk0-f47.google.com with SMTP id p144so11222273vkp.3
-        for <git@vger.kernel.org>; Wed, 22 Nov 2017 22:22:14 -0800 (PST)
+        id S1751591AbdKWHbg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Nov 2017 02:31:36 -0500
+Received: from mail-wr0-f182.google.com ([209.85.128.182]:45558 "EHLO
+        mail-wr0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751326AbdKWHbf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Nov 2017 02:31:35 -0500
+Received: by mail-wr0-f182.google.com with SMTP id a63so16701008wrc.12
+        for <git@vger.kernel.org>; Wed, 22 Nov 2017 23:31:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=9lhxqdlKQymjedJLG9tg0CMYlVjwdPn+4mx/+4RSP+E=;
-        b=HELPpq3UE1Zbv1mcCRbm7zQBRdFNQvMocGuZuv3uumcqA5yojD6Ra7aWgDg0GA4FqO
-         Wvj4fjaFg0OmjVu9IWtnvXsD83ilYyWtwgK1Svd8QAxQjcRExD/PTtO0ZNEPWG+U1oQ2
-         dNOM4qKdfT/fhTYqNsh7GLlHJrwHJEvIMHm7qZL1Ty4Cg7D5yRc3KXF+MhLbM1MIUI1/
-         /stDEsjgeLK5xCLe+BxWgjNdp9HtmjbhS9LrqevtXA4dNs26ImUkbTF907uTMMK+9Jl3
-         VLe6uxYHCuQ9FDLxrW8vuVMcxtMzP6HMoS054Wq8kKFcTH3nkf+5xG1b6o5dloRHSyDj
-         PTVw==
+        bh=jpeNPzmBsO6rEslFG3oW+ChQbuXOlwvbzuI9tJSZFyQ=;
+        b=bx+kQiVSIU+P1oS7aXxRktLcXk1KyE+mk4bGj7JAR/XSNOUULk65s8v4p2JcK1nXXU
+         aqLtue/Jb/KKHvnZWL66kPP/aGoNXZhPtf0+nZRshyQK863RQ9Y4C9RJAt8eNzYlxTiE
+         eKQeBILJWbVQmh6izTy+oJX6J2Solqd5tLyEz+Mjdk6gPPWB99KLVvKIdJJFZaujzyka
+         ik6ovrCWgjEWPmQGVZI+nwkQLx0/BGx4ky/bPcLME8OXpiE5r5PuAqZbUH08ftAgaAFl
+         3bORzj4SXvKOdA9bHttW8TGVZdZKakiKC/+KgUWiGdLErOHI27F+BBzjHQ/XZ3gxPKpW
+         sDsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=9lhxqdlKQymjedJLG9tg0CMYlVjwdPn+4mx/+4RSP+E=;
-        b=UaspVDFt5neP6blTqBg6e898rnNKJsUhvsuNvu3fukhTvU8Sb0nvYwURgOlRxkzv/s
-         amRdo0VSLkUlkqxMrHqjoXSNQ0LiLHPqWz0+AShEM13ovsfTFP83+NdJ3JU2PKkrzNYk
-         5Fv4xAGQdlS+p3Xr/Auyk3NJr8wZlZ/58D+N9bpBQAerRJNFY08r5BGCwkPo/xp1NzTq
-         0O5R5f4/Bbm2uoEY9yRnPSjZ/F0SJTLM1YTzmrdG9YpxXWGwu058S2r2Zh3MTHPlDyZf
-         hbfjBnVjuwZdFxJ13bYdZ0vbgk3jM8BBEGUdbUtLReiVInnLFBbqmoWnc5v4e5UFtc6w
-         aiQw==
-X-Gm-Message-State: AJaThX46AQheUi1S9FkLiSjqS/fZN8trjjLYkFSy0UjqMo94GwNb3Rmk
-        XB0qdJYaN96riijDmSrAc/GPWiOSQ5gOeYKyx9s=
-X-Google-Smtp-Source: AGs4zMbGPqscYtqR+u3UZeb7568ZnUl07rY8fzBnY+JlEPukRmLaW3FV2kzzHYLAPyKpKHRuKkyHGqbM8K5Bv7ApObI=
-X-Received: by 10.31.172.137 with SMTP id v131mr19372266vke.75.1511418133463;
- Wed, 22 Nov 2017 22:22:13 -0800 (PST)
+        bh=jpeNPzmBsO6rEslFG3oW+ChQbuXOlwvbzuI9tJSZFyQ=;
+        b=sAxz45tcne8byOOcro90RknkwbZ8/jp4UgPlX1UIYt5mJyXoTf/HgAsXqLcBYkM4x1
+         YyrMG146Snrh0lip/57u+OEgjBw39OovlKSX+d4PKt+8E/MrU66oUclzpwcnrEaOEJ+r
+         gRnGN+Ol4KxalNYh8pYPWckBwFTsI1edewgcg7SgtO9C7cyIxUJEXlhqajYR95d8l1Rd
+         ua0lSNY0q/TN3D4hyD0IZEozFES2Ya2e/r22ZMhR4+LIkSy25lhNAQJ2yOHo2VMZCOfq
+         byKbM6s9IbKTl66ms2qXYlJXk3IVHz1dQPhqWpOoVtcprz+jH143WH6jf3XYVs8neymh
+         52dw==
+X-Gm-Message-State: AJaThX6Fc/ucaLF5mhRR4C3uWDw3FC7JzI3rs8kv5wdbJlQnCsFw08iT
+        p80hax3vcSDYtXbksCqWbaZEjtSapT3WegnwQow=
+X-Google-Smtp-Source: AGs4zMZY5zbhhlWAwPCfWAlrbsG1cjqHVlMEN2Q5/hXXucAYFZ/KGlcYuK71UT/m/khf1nyOKO6ZFQ8SovPemSO6mmM=
+X-Received: by 10.223.174.147 with SMTP id y19mr21188519wrc.97.1511422294852;
+ Wed, 22 Nov 2017 23:31:34 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.176.70.138 with HTTP; Wed, 22 Nov 2017 22:22:12 -0800 (PST)
-In-Reply-To: <CAGZ79kbustk48yP7jC6UmjidQUuWfhQWcqX_CUz=WnM0X3H8aw@mail.gmail.com>
-References: <20171121080059.32304-1-newren@gmail.com> <CAGZ79kbVzDEv=rj7X6EhWZyAFd+fq+nwG8c+raqu9tXv_z9f4A@mail.gmail.com>
- <CABPp-BFm7ZcYbie-n-ASmb6MDyJXW3G8YdtHRAzpVNgOvwK5MA@mail.gmail.com> <CAGZ79kbustk48yP7jC6UmjidQUuWfhQWcqX_CUz=WnM0X3H8aw@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 22 Nov 2017 22:22:12 -0800
-Message-ID: <CABPp-BE3W1dRNZtYxAimT4v-J4jzjKAV03YH3gF5V9f3A91P7g@mail.gmail.com>
-Subject: Re: [PATCH v3 00/33] Add directory rename detection to git
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Received: by 10.28.151.195 with HTTP; Wed, 22 Nov 2017 23:31:14 -0800 (PST)
+In-Reply-To: <xmqqh8u1efh5.fsf@gitster.mtv.corp.google.com>
+References: <CAPkN8x+MELCnttE+xptKzYXsYPWqbiE59LABrwNBhFroayc+wQ@mail.gmail.com>
+ <ec4be1c2-a0cc-cec8-a566-06c11c8abe06@gmail.com> <xmqqh8u1efh5.fsf@gitster.mtv.corp.google.com>
+From:   anatoly techtonik <techtonik@gmail.com>
+Date:   Thu, 23 Nov 2017 10:31:14 +0300
+Message-ID: <CAPkN8xJU74N_kYL9f2v_vuk3C3omhYaz7uPMzbanEU=RTEPOYg@mail.gmail.com>
+Subject: Re: Unify annotated and non-annotated tags
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Igor Djordjevic <igor.d.djordjevic@gmail.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 22, 2017 at 11:24 AM, Stefan Beller <sbeller@google.com> wrote:
-> On Tue, Nov 21, 2017 at 5:12 PM, Elijah Newren <newren@gmail.com> wrote:
->> On Tue, Nov 21, 2017 at 4:42 PM, Stefan Beller <sbeller@google.com> wrote:
->>> On Tue, Nov 21, 2017 at 12:00 AM, Elijah Newren <newren@gmail.com> wrote:
-
->>>> This patchset introduces directory rename detection to merge-recursive; I'm
-
-> In my first round of review I only looked over the tests to see if I'd
-> find the behavior intuitive, I spared the implementation, as Junio seemed
-> to have reviewed a couple patches of the v1 implementation.
+On Sat, Nov 11, 2017 at 5:06 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Igor Djordjevic <igor.d.djordjevic@gmail.com> writes:
 >
-> Now I also looked over the implementation and quite like it, though
-> I'd be happy if others would also have a look.
+>> If you would like to mimic output of "git show-ref", repeating
+>> commits for each tag pointing to it and showing full tag name as
+>> well, you could do something like this, for example:
+>>
+>>       for tag in $(git for-each-ref --format="%(refname)" refs/tags)
+>>       do
+>>               printf '%s %s\n' "$(git rev-parse $tag^0)" "$tag"
+>>       done
+>>
+>>
+>> Hope that helps a bit.
 >
-> All but one comment were minor style nits, which are no big deal;
-> the other remark that I was musing about was whether we want to use
-> strbufs in the new code instead of e.g. sprintfs to extend strings.
-> And I'd think we would want to use them unless there are compelling
-> reasons not to.
+> If you use for-each-ref's --format option, you could do something
+> like (pardon a long line):
+>
+> git for-each-ref --format='%(if)%(*objectname)%(then)%(*objectname)%(else)%(objectname)%(end) %(refname)' refs/tags
+>
+> without any loop, I would think.
 
-Thanks for the reviews!  I've fixed up the style issues already and
-will take a look into switching over to strbuf.
+Thanks. That helps.
+
+So my proposal is to get rid of non-annotated tags, so to get all
+tags with commits that they point to, one would use:
+
+git for-each-ref --format='%(*objectname) %(refname)' refs/tags
+
+For so-called non-annotated tags just leave the message empty.
+I don't see why anyone would need non-annotated tags though.
+-- 
+anatoly t.
