@@ -7,48 +7,49 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6D84D202F2
-	for <e@80x24.org>; Thu, 23 Nov 2017 14:17:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BEB83202F2
+	for <e@80x24.org>; Thu, 23 Nov 2017 14:17:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752840AbdKWORM (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Nov 2017 09:17:12 -0500
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:33119 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752020AbdKWORK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Nov 2017 09:17:10 -0500
-Received: by mail-wm0-f67.google.com with SMTP id g130so17327239wme.0
-        for <git@vger.kernel.org>; Thu, 23 Nov 2017 06:17:10 -0800 (PST)
+        id S1752974AbdKWORP (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Nov 2017 09:17:15 -0500
+Received: from mail-wr0-f178.google.com ([209.85.128.178]:35085 "EHLO
+        mail-wr0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752874AbdKWORN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Nov 2017 09:17:13 -0500
+Received: by mail-wr0-f178.google.com with SMTP id w95so17772179wrc.2
+        for <git@vger.kernel.org>; Thu, 23 Nov 2017 06:17:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=p9Aooau1OGHI/d1BHlDHPDaJFd56jklfJEOZV+iatro=;
-        b=bEb4OALyPFLqd9pzv0PeMOfs5T7OY/h97Oky3cnYofY98Y+GBcoGPIVYlZ5xH/xKRC
-         pzif5bvZY43UTnV3wnh/S49JyuixEhQgMLByDEkt1b0l9loYyxwWTVZA0/B+STdwi35F
-         r1fCAcu4sNaxFybji5pS/9BCZ60fYu5Uc1aOoM17hJ6nbcxMZW8g95R0DGTi8+tkvAYm
-         6c8zOlmlywMslsqLWWDAkCYH6elpNDpTsThSQDbYGy/IhyWO+IGrZw0X1lZKsPaJc8l3
-         v7lK8cKy+zBVSAxrmqP3tPtXm0wfHEBQtxlBJlU2FiL9KgbkReapFl4f9jX7tndQ8d4H
-         wUtQ==
+         :in-reply-to:references:mime-version:content-transfer-encoding;
+        bh=52ea5O4yNqk7O7dete3zhF9oqi/dfuRoVJAVr6v5CGM=;
+        b=t8D8H1nhTHTa8FJKOj3wknCubM4qR5Q63BDj7COlnH3gxN79geakDafX1te15MaZ2B
+         lx6kB4sVD6+GPLZ+WIpR9aW6lYI/sSfCOtaQr7Ztr2apcCTmDNgri16JDV5h09o/S5Rc
+         LGmCFrJBptSCD28qW1CUoz+MJYxtwdVE4E824zQJo+V+iKyb9/pYRgYGL0WyXc/nShFU
+         SpwWWv0TdsUMN0XmYnl8JsmrlN2+5awAi70kSLZKTOt48/bFYnD0yGVrE/QOTzQB70lV
+         0bSe/Cyfz/Ihq/cr7jPFFQfWvE/3bIK7Hk87HprIMPPBxf4wfDsyIaD5+FVYPzen5dFN
+         kvlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=p9Aooau1OGHI/d1BHlDHPDaJFd56jklfJEOZV+iatro=;
-        b=QRjGvNKck7HqWtOb+k3HAHDiG+g7Hrdnv0qurQ9lZDQdWhq42q7xqzezDg8APnNr13
-         uIGpJQFGikJH63BpjaqnO/bTP8F/zZITsZvtME5BjPqBZa4MtgLU0Nr/CYSZjuBXBDrO
-         +Ma9vLOQbLMVgfpFCpEgXC2TU9FulQweVVBmu/V8YNDS/tDfVcjv6Qdbt7Ut//FDXhB4
-         vzBBWyBXXNwTXnLfzXwDngPVj+g5tv5b7Cc8JGwZGAJ/ZHf7fSi2Yr3SI5yafEkSTFCY
-         Z7/HnbHcsJZOYIs5qWGO4sEj3RpdWTLXPvrecWNHDbtv5wGMezLNFVrT2ZveMna9nxyq
-         Z+Ug==
-X-Gm-Message-State: AJaThX5nP9Mg6M9fPdKGM7hNRFy6VTBnU9SaLIPAUZQtwQ2WANMq5qD0
-        8sHTAvqP0IJSTLIEiC04YFE2UVk2
-X-Google-Smtp-Source: AGs4zMbpV4V9tJEAYV/rqlfdS4ArmMKxkHuo3v2TyPstgsKmZRQuAXpgSNw3ywrDxdokWNtTyvctwQ==
-X-Received: by 10.28.158.212 with SMTP id h203mr7152903wme.157.1511446629241;
-        Thu, 23 Nov 2017 06:17:09 -0800 (PST)
+         :references:in-reply-to:references:mime-version
+         :content-transfer-encoding;
+        bh=52ea5O4yNqk7O7dete3zhF9oqi/dfuRoVJAVr6v5CGM=;
+        b=EMoAhBA1MMu8jZAL+igszZPZHeyqhoTMEaJ8tHxZnDrQ6xB9eIU5N1sbi+R75T2wvV
+         GbCkQO+nvC9/ezJEqiSBShczOpUrMXPpl44MajhLTd4KVolnG0iMZwoRoTqeM6Wd3Aw2
+         bmhZFo8c/NegPaFjegp3id1iVfpjiwBC8em4GXXy1oC+JFuAQ4wsk6BBvwCImm8I1Z+/
+         5qQK3TDXqfQyHAlOD67phjg/+LEU0JJX6GDMqmUKAhqb854EQS0KRuW1vLSfFSsAyWKG
+         p3eOusvZ6Bk3o5BKKpb8ez0o5biYMVwoFR2hZLksAkCZodppJa5MuX5iMgW8w4PDEDXa
+         fBdw==
+X-Gm-Message-State: AJaThX6yepCQAVihPgJq8Bhqml2KrOZ0LIQjhZRhjbp7Fh/PpMR4Oaya
+        QqZa9LzOcYPZbRILloCQJHuSTKUA
+X-Google-Smtp-Source: AGs4zMYRXxH3MfFHX8gI/lZ8BTeueIgAnpjEzk67ETjGje5I2aImraiLlXwyzLXZS3kC17O6/MVmRw==
+X-Received: by 10.223.134.75 with SMTP id 11mr22160591wrw.37.1511446632044;
+        Thu, 23 Nov 2017 06:17:12 -0800 (PST)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id n143sm14755536wmd.31.2017.11.23.06.17.07
+        by smtp.gmail.com with ESMTPSA id n143sm14755536wmd.31.2017.11.23.06.17.10
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 23 Nov 2017 06:17:07 -0800 (PST)
+        Thu, 23 Nov 2017 06:17:11 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,10 +59,12 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 1/2] test-lib: add LIBPCRE1 & LIBPCRE2 prerequisites
-Date:   Thu, 23 Nov 2017 14:16:57 +0000
-Message-Id: <20171123141658.13010-1-avarab@gmail.com>
+Subject: [PATCH v2 2/2] grep: fix segfault under -P + PCRE2 <=10.30 + (*NO_JIT)
+Date:   Thu, 23 Nov 2017 14:16:58 +0000
+Message-Id: <20171123141658.13010-2-avarab@gmail.com>
 X-Mailer: git-send-email 2.15.0.403.gc27cc4dac6
+In-Reply-To: <20171123141658.13010-1-avarab@gmail.com>
+References: <20171123141658.13010-1-avarab@gmail.com>
 In-Reply-To: <20171122133630.18931-2-avarab@gmail.com>
 References: <20171122133630.18931-2-avarab@gmail.com>
 MIME-Version: 1.0
@@ -72,67 +75,110 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add LIBPCRE1 and LIBPCRE2 prerequisites which are true when git is
-compiled with USE_LIBPCRE1=YesPlease or USE_LIBPCRE2=YesPlease,
-respectively.
+Fix a bug in the compilation of PCRE2 patterns under JIT (the most
+common runtime configuration). Any pattern with a (*NO_JIT) verb would
+segfault in any currently released PCRE2 version:
 
-The syntax of PCRE1 and PCRE2 isn't the same in all cases (see
-pcresyntax(3) and pcre2syntax(3)). If test are added that test for
-those they'll need to be guarded by these new prerequisites.
+    $ git grep -P '(*NO_JIT)hi.*there'
+    Segmentation fault
 
-The subsequent patch will make use of LIBPCRE2, so LIBPCRE1 isn't
-strictly needed for now, but let's add it for consistency and so that
-checking for it doesn't have to be done with the less obvious "PCRE,
-!LIBPCRE2", which while semantically the same is more confusing, and
-would lead to bugs if PCRE v3 is ever released as the tests would mean
-v1, not any non-v2 version.
+That this segfaulted was a bug in PCRE2 itself, after reporting it[1]
+on pcre-dev it's been fixed in a yet-to-be-released version of
+PCRE (presumably released first as 10.31). Now it'll die with:
+
+    $ git grep -P '(*NO_JIT)hi.*there'
+    fatal: pcre2_jit_match failed with error code -45: bad JIT option
+
+But the cause of the bug is in our own code dating back to my
+94da9193a6 ("grep: add support for PCRE v2", 2017-06-01).
+
+As explained at more length in the comment being added here, it isn't
+sufficient to just check pcre2_config() to see whether the JIT should
+be used, pcre2_pattern_info() also has to be asked.
+
+This is something I discovered myself when fiddling around with PCRE2
+verbs in patterns passed to git. I don't expect that any user of git
+has encountered this given the obscurity of passing PCRE2 verbs
+through to the library, along with the relative obscurity of (*NO_JIT)
+itself.
+
+1. "How am I supposed to use PCRE2 JIT in the face of (*NO_JIT) ?"
+   (<CACBZZX5mMqDuWuFmi7sRBp3wH6CFyd-ghACukd=v0NN=rBMnJg@mail.gmail.com> &
+    https://lists.exim.org/lurker/thread/20171123.101502.7f0d38ca.en.html)
+   on the pcre-dev mailing list
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
 
-As noted on-list I changed nothing here in the code, but noted in the
-commit message why I'm keeping LIBPCRE1.
+Incorporates feedback from Eric & Simon. Thanks both. I also amended
+the commit message / comment to note that this was also a bug in PCRE2
+upstream, which has been fixed after I reported it.
 
- t/README      | 12 ++++++++++++
- t/test-lib.sh |  2 ++
- 2 files changed, 14 insertions(+)
+ grep.c          | 26 ++++++++++++++++++++++++++
+ t/t7810-grep.sh |  6 ++++++
+ 2 files changed, 32 insertions(+)
 
-diff --git a/t/README b/t/README
-index 4b079e4494..599cd9808c 100644
---- a/t/README
-+++ b/t/README
-@@ -808,6 +808,18 @@ use these, and "test_set_prereq" for how to define your own.
-    Git was compiled with support for PCRE. Wrap any tests
-    that use git-grep --perl-regexp or git-grep -P in these.
+diff --git a/grep.c b/grep.c
+index d0b9b6cdfa..e8ae0b5d8f 100644
+--- a/grep.c
++++ b/grep.c
+@@ -477,6 +477,8 @@ static void compile_pcre2_pattern(struct grep_pat *p, const struct grep_opt *opt
+ 	int options = PCRE2_MULTILINE;
+ 	const uint8_t *character_tables = NULL;
+ 	int jitret;
++	int patinforet;
++	size_t jitsizearg;
  
-+ - LIBPCRE1
-+
-+   Git was compiled with PCRE v1 support via
-+   USE_LIBPCRE1=YesPlease. Wrap any PCRE using tests that for some
-+   reason need v1 of the PCRE library instead of v2 in these.
-+
-+ - LIBPCRE2
-+
-+   Git was compiled with PCRE v2 support via
-+   USE_LIBPCRE2=YesPlease. Wrap any PCRE using tests that for some
-+   reason need v2 of the PCRE library instead of v1 in these.
-+
-  - CASE_INSENSITIVE_FS
+ 	assert(opt->pcre2);
  
-    Test is run on a case insensitive file system.
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 116bd6a70c..e7065df2bb 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1028,6 +1028,8 @@ test -z "$NO_PERL" && test_set_prereq PERL
- test -z "$NO_PTHREADS" && test_set_prereq PTHREADS
- test -z "$NO_PYTHON" && test_set_prereq PYTHON
- test -n "$USE_LIBPCRE1$USE_LIBPCRE2" && test_set_prereq PCRE
-+test -n "$USE_LIBPCRE1" && test_set_prereq LIBPCRE1
-+test -n "$USE_LIBPCRE2" && test_set_prereq LIBPCRE2
- test -z "$NO_GETTEXT" && test_set_prereq GETTEXT
+@@ -511,6 +513,30 @@ static void compile_pcre2_pattern(struct grep_pat *p, const struct grep_opt *opt
+ 		jitret = pcre2_jit_compile(p->pcre2_pattern, PCRE2_JIT_COMPLETE);
+ 		if (jitret)
+ 			die("Couldn't JIT the PCRE2 pattern '%s', got '%d'\n", p->pattern, jitret);
++
++		/*
++		 * The pcre2_config(PCRE2_CONFIG_JIT, ...) call just
++		 * tells us whether the library itself supports JIT,
++		 * but to see whether we're going to be actually using
++		 * JIT we need to extract PCRE2_INFO_JITSIZE from the
++		 * pattern *after* we do pcre2_jit_compile() above.
++		 *
++		 * This is because if the pattern contains the
++		 * (*NO_JIT) verb (see pcre2syntax(3))
++		 * pcre2_jit_compile() will exit early with 0. If we
++		 * then proceed to call pcre2_jit_match() further down
++		 * the line instead of pcre2_match() we'll either
++		 * segfault (pre PCRE 10.31) or run into a fatal error
++		 * (post PCRE2 10.31)
++		 */
++		patinforet = pcre2_pattern_info(p->pcre2_pattern, PCRE2_INFO_JITSIZE, &jitsizearg);
++		if (patinforet)
++			BUG("pcre2_pattern_info() failed: %d", patinforet);
++		if (jitsizearg == 0) {
++			p->pcre2_jit_on = 0;
++			return;
++		}
++
+ 		p->pcre2_jit_stack = pcre2_jit_stack_create(1, 1024 * 1024, NULL);
+ 		if (!p->pcre2_jit_stack)
+ 			die("Couldn't allocate PCRE2 JIT stack");
+diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
+index 2a6679c2f5..c8ff50cc30 100755
+--- a/t/t7810-grep.sh
++++ b/t/t7810-grep.sh
+@@ -1110,6 +1110,12 @@ test_expect_success PCRE 'grep -P pattern' '
+ 	test_cmp expected actual
+ '
  
- # Can we rely on git's output in the C locale?
++test_expect_success LIBPCRE2 "grep -P with (*NO_JIT) doesn't error out" '
++	git grep -P "(*NO_JIT)\p{Ps}.*?\p{Pe}" hello.c >actual &&
++	test_cmp expected actual
++
++'
++
+ test_expect_success !PCRE 'grep -P pattern errors without PCRE' '
+ 	test_must_fail git grep -P "foo.*bar"
+ '
 -- 
 2.15.0.403.gc27cc4dac6
 
