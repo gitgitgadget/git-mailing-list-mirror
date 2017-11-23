@@ -2,132 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2092720954
-	for <e@80x24.org>; Thu, 23 Nov 2017 00:15:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3FA1420954
+	for <e@80x24.org>; Thu, 23 Nov 2017 01:12:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751753AbdKWAPw (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Nov 2017 19:15:52 -0500
-Received: from mail-qk0-f178.google.com ([209.85.220.178]:46437 "EHLO
-        mail-qk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751594AbdKWAPw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Nov 2017 19:15:52 -0500
-Received: by mail-qk0-f178.google.com with SMTP id b85so19034422qkc.13
-        for <git@vger.kernel.org>; Wed, 22 Nov 2017 16:15:51 -0800 (PST)
+        id S1751692AbdKWBMb (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Nov 2017 20:12:31 -0500
+Received: from mail-it0-f42.google.com ([209.85.214.42]:46772 "EHLO
+        mail-it0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751241AbdKWBMa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Nov 2017 20:12:30 -0500
+Received: by mail-it0-f42.google.com with SMTP id 187so6620233iti.5
+        for <git@vger.kernel.org>; Wed, 22 Nov 2017 17:12:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=fmPuBS7PwkTGAuU2Ra9zY/poL1VcfI65Ho0kDsvPWTc=;
-        b=LF43SVBsihKLHGssaNjJBQJEqTnptyZRxKNX/3o1PcO4b0xxcRnhDwLNmRwHQNCJjS
-         LtzFWjkiFX+LlbJ6i8w198MAgO4MFvNbSGCylAke6G8D0VygCGwMYJKMIOhPG564dlzf
-         r3+EUtfhnhYTQi9kHWDCbOHhgGURb3R5N1HZ1Hl84UtP9WaaS6cgBxSejq1CFKGYN8xu
-         jFDGPZJbl5sRrkq2WyLeWWipu6u0tEgG5rnuGnYS0ODiQUkvgZbodfHn4q0FtxtudehG
-         /5Ze9MBl7oqbg1MuLk3NQC2XGxySirOn9f/VcAPklB1gCfmR+lMIZJKouJL1dzjYfq4s
-         ahow==
+        d=gmail.com; s=20161025;
+        h=date:from:to:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=V69Sh0ypy6YZFvM7mXOwugaEN1XQS9XVdGU9QiFlJg8=;
+        b=JtEu262dwtFjkTl+9UmABtC6n5qWum6x06ImM9o4F3wGlLzXth3tRSfTdJlyVUAHvK
+         pF0LjAs7W6ZQJ6UmP2lZ0rmgPs2vOSKJPjrZXI0hOMV5r7YHI9WKHiUlEp8MUucgWh1b
+         Y7FPiJqLE839op9hlTDsfpMVMNODIG0wMqQm+RPo+KaU6EC0Mu3ez41rtH7YSYPw1YWM
+         lW9UcSKsfoEoU00CKmKdhXML+S887HjkXzs/P9Al3acVgjp6+NmMLPuZwXAdJOuwVQw+
+         0D3hZYiUCqXQ9awB0UBBhVFdXYBbcFj1rw4wXEa/nkIa2zSZXZDoaxr0wqfwKfwQhFne
+         fSmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=fmPuBS7PwkTGAuU2Ra9zY/poL1VcfI65Ho0kDsvPWTc=;
-        b=msd79qMiWfhyHspm4QYQK701Sui/ovPtqUTjJotd3DI23UoBluRKABSyRxa7i52/fA
-         dHw3gPROJraRfyaqjR9qnxpBJX50uLm1i7D1wmQxS0/0LKmnWkT/M2W2WOifsyY8vrrK
-         BcUbtYYWqeRWUiqNXPix1PaYIAMFPSttpQEuMYZTbJgFYHhg5YqpxpjxhFuH7uDKImct
-         uovHBxYdzZSkydtjz8HAZwLwEJxec0nJtQGW2aI53hi3pxXyMi8zuwMF/nXG1JXyR+F7
-         NIUxsGumYNYiTg6xQrRFF2r3qm7MI0rkYtilq/kRAmGruWQMw9zSF8BYnoo06V/9qBvn
-         Dyfw==
-X-Gm-Message-State: AJaThX5Rf3c3P29j1XXzQT7IVzF0R857MoloG2fsJnexPUPQ+TLHLOpl
-        TYuQWMtfrARo5uPiqCJzoiem2qm88v6woZCdf0Phomxjit4=
-X-Google-Smtp-Source: AGs4zMarSzAzSjo7LCaWXoR2SzPTs/j+PtRkT/ONho/WNT2OdPHk9MqVGYPIA3LuZVNIEaZepZYz5Dpnnl0lvyH1P8E=
-X-Received: by 10.55.76.193 with SMTP id z184mr4740261qka.346.1511396151128;
- Wed, 22 Nov 2017 16:15:51 -0800 (PST)
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=V69Sh0ypy6YZFvM7mXOwugaEN1XQS9XVdGU9QiFlJg8=;
+        b=QSBran9dfHMUf+oRD4JDZw7Yt7CpS1d+xazdnfdMXrsR8rm+gm96L94YD5MwZr+R4J
+         jDsNcQDkuZCj6cPSOPW414Z6wEhhZTzWe+4deso9FDM8QYDSU+VP+UzIkb1XMI8YXFva
+         1kFL/81P8pDhoOw1IDzH+3ZxXKDYmfpYpaXEvsbUMJAhoGjGwqkHB+zekJdrB8sdFcGF
+         jJFkedk+Io1mnth90NoJ+Ku7wZpqUwlLnGRsKm4WtsWynlUiEtY/+tj9A1WLDoXzZj/Y
+         WDHg6Qnn79jlMhNY1eKhQqugXAMQUH8kVbDf6plGVWUH7Wh4PTX8qWXygFYOeP6H/Ag7
+         vZcw==
+X-Gm-Message-State: AJaThX5Bf2Ik2nw2KVXTqYhU6bfGysRNxjqusMrzOnsvAwFI4Sd1W0tP
+        T5luFhGlU7a2mZvG+7Ip8oHHeDwZ
+X-Google-Smtp-Source: AGs4zMb9ekYCJ3pmrVhwjtUjkGlwdKasDKDDeQVjGbPWFi6zc0pAhuvMw8OCctpOSrcFDqJGaDfLoQ==
+X-Received: by 10.36.249.134 with SMTP id l128mr9656032ith.12.1511399549813;
+        Wed, 22 Nov 2017 17:12:29 -0800 (PST)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id 80sm7420348ioz.54.2017.11.22.17.12.28
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 22 Nov 2017 17:12:29 -0800 (PST)
+Date:   Wed, 22 Nov 2017 17:12:27 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     git@vger.kernel.org
+Subject: [ANNOUNCE] Bug tracker for Git
+Message-ID: <20171123011227.GM11671@aiede.mtv.corp.google.com>
 MIME-Version: 1.0
-Received: by 10.140.85.179 with HTTP; Wed, 22 Nov 2017 16:15:50 -0800 (PST)
-In-Reply-To: <20171122234152.72901-1-jonathantanmy@google.com>
-References: <20171121221717.155301-1-jonathantanmy@google.com> <20171122234152.72901-1-jonathantanmy@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 22 Nov 2017 16:15:50 -0800
-Message-ID: <CAGZ79kYOovfAGNseAevsZOP2emxFCZfJpH=EJD5L0_vVnMZ-2Q@mail.gmail.com>
-Subject: Re: [PATCH] xdiff/xpatience: support anchoring line(s)
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.9.1 (2017-09-22)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 22, 2017 at 3:41 PM, Jonathan Tan <jonathantanmy@google.com> wrote:
-> Teach the patience diff to attempt preventing user-specified lines from
-> appearing as a deletion or addition in the end result. The end user can
-> use this by specifying "--anchor=<text>" one or more times when using
-> Git commands like "diff" and "show".
->
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-> ---
-> Actual patch instead of RFC.
->
-> One thing that might help is to warn if --anchor is used without
-> --patience, but I couldn't find a good place to put that warning. Let me
-> know if you know of a good place.
+Hi,
 
-Would it make sense to have `--anchor` imply patience?
-(not necessarily in this patch, might be a "yes, let's do
-it in a year when users complain")
+As discussed at [1], I've occasionally wanted to have a place to keep
+track of bugs I'm working on in Git.  Some kind people on the Chromium
+project helped me set an issue tracker up, so now we have one.
 
-> Replying to Stefan's and Junio's comments:
->
->> The solution you provide is a good thing to experiment with, but
->> longer term, I would want to have huge record of configs in which
->> humans selected the best diff, such that we can use that data
->> to reason about better automatic diff generation.
->> The diff heuristic was based on a lot of human generated data,
->> that was generated by Michael at the time. I wonder if we want to
->> permanently store the anchor so the data collection will happen
->> automatically over time.
->
-> I think machine learning is beyond the scope of this patch :-)
+ https://crbug.com/git
 
-agreed; I just wanted to share what I think we could do in the future
-to select sane default. For that we'd want to collect some "most useful"
-configurations.
+Feel free to file bugs, feature requests, and leftover bits there.
+I'll be happy to triage them to keep the list of bugs meaningful.
+Anyone else wanting to help with bug management can feel free to
+contact me and I'll grant you permissions to edit issues.
 
-When I proposed separate flags for the move detection regarding
-ignoring whitespaces, the question "how is the user sanely select
-from so many flags?" came up. And in that spirit I would want think
-adding this rather fundamental flag, and then machine learn (e.g. the
-weights in traversing the diff matrix) off of this collected data later
-might be a viable approach.
+This particular implementation of an issue tracker is Monorail
+<https://chromium.googlesource.com/infra/infra/+/master/appengine/monorail>.
+It is similar to the issue tracker that used to run at
+code.google.com.  If you find things you don't like about the way it
+works, they accept patches. :)
 
->> or rather: "c is not moved, we don't care how the diff actually looks
->> like",
->> so maybe
->>       ! grep "+c" diff
->
-> I think it's less error-prone to show "a" moving. With this, if the
-> command somehow prints nothing, the test would still pass.
+It accepts replies to the emails it sends.
 
-Makes sense.
+This uses Google accounts to authenticate people filing a bug.  If you
+would like a Google account for your existing email address, you can
+get one at https://accounts.google.com/SignUpWithoutGmail.
 
-> diff --git a/t/t4033-diff-patience.sh b/t/t4033-diff-patience.sh
-> index 113304dc5..2d00d1056 100755
-> --- a/t/t4033-diff-patience.sh
-> +++ b/t/t4033-diff-patience.sh
+There is an API for programmatic access to the issue tracker: [2].
+One thing I would appreciate help with is using that API to make
+regular backups.  The chromium project has their own backups using
+database dumps but I would be happier if multiple people are making
+backups independently.
 
-I was waiting for
+This is an experiment --- I don't know whether it will stick.  The
+configuration will likely change as we get experience with it.  I
+expect to be using it to track my own work for the forseeable future.
+I'd be happy if it is useful to others as well.
 
-    test_expect_success 'one --anchor anchors many lines' '
-        printf "a\nb\na\nc\na\n" >file && # many 'a's
-        ....
-        --anchor=a
-        ...
+Thanks,
+Jonathan
 
-
-Thanks for writing this patch,
-I hope we can make use of this addition eventually a lot. :)
-
-Stefan
+[1] https://public-inbox.org/git/20170919160753.GA75068@aiede.mtv.corp.google.com/
+    https://public-inbox.org/git/vpqiovpubmh.fsf@anie.imag.fr/
+    https://public-inbox.org/git/7vhay9tqs6.fsf@alter.siamese.dyndns.org/
+    https://public-inbox.org/git/7vehzjugdz.fsf@alter.siamese.dyndns.org/
+    https://public-inbox.org/git/4A1FB1DE.3070904@op5.se/
+[2] https://chromium.googlesource.com/infra/infra/+/master/appengine/monorail/doc/api.md
