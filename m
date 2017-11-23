@@ -2,63 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 36AAB20954
-	for <e@80x24.org>; Thu, 23 Nov 2017 00:10:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2092720954
+	for <e@80x24.org>; Thu, 23 Nov 2017 00:15:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751731AbdKWAKv (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Nov 2017 19:10:51 -0500
-Received: from cloud.peff.net ([104.130.231.41]:38272 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751575AbdKWAKu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Nov 2017 19:10:50 -0500
-Received: (qmail 8943 invoked by uid 109); 23 Nov 2017 00:10:50 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 23 Nov 2017 00:10:50 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6081 invoked by uid 111); 23 Nov 2017 00:11:06 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Wed, 22 Nov 2017 19:11:06 -0500
-Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 22 Nov 2017 19:10:48 -0500
-Date:   Wed, 22 Nov 2017 19:10:48 -0500
-From:   Jeff King <peff@peff.net>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
-        git@jeffhostetler.com
-Subject: Re: [PATCH 0/3] Introduce BUG_ON(cond, msg) MACRO
-Message-ID: <20171123001048.GA9465@sigill>
-References: <20171122223827.26773-1-sbeller@google.com>
- <20171122232457.GA8577@sigill>
- <20171122232814.GH11671@aiede.mtv.corp.google.com>
- <20171122233905.GC8577@sigill>
- <20171122234532.GI11671@aiede.mtv.corp.google.com>
- <20171122235851.GE8577@sigill>
- <20171123000839.GL11671@aiede.mtv.corp.google.com>
+        id S1751753AbdKWAPw (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Nov 2017 19:15:52 -0500
+Received: from mail-qk0-f178.google.com ([209.85.220.178]:46437 "EHLO
+        mail-qk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751594AbdKWAPw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Nov 2017 19:15:52 -0500
+Received: by mail-qk0-f178.google.com with SMTP id b85so19034422qkc.13
+        for <git@vger.kernel.org>; Wed, 22 Nov 2017 16:15:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=fmPuBS7PwkTGAuU2Ra9zY/poL1VcfI65Ho0kDsvPWTc=;
+        b=LF43SVBsihKLHGssaNjJBQJEqTnptyZRxKNX/3o1PcO4b0xxcRnhDwLNmRwHQNCJjS
+         LtzFWjkiFX+LlbJ6i8w198MAgO4MFvNbSGCylAke6G8D0VygCGwMYJKMIOhPG564dlzf
+         r3+EUtfhnhYTQi9kHWDCbOHhgGURb3R5N1HZ1Hl84UtP9WaaS6cgBxSejq1CFKGYN8xu
+         jFDGPZJbl5sRrkq2WyLeWWipu6u0tEgG5rnuGnYS0ODiQUkvgZbodfHn4q0FtxtudehG
+         /5Ze9MBl7oqbg1MuLk3NQC2XGxySirOn9f/VcAPklB1gCfmR+lMIZJKouJL1dzjYfq4s
+         ahow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=fmPuBS7PwkTGAuU2Ra9zY/poL1VcfI65Ho0kDsvPWTc=;
+        b=msd79qMiWfhyHspm4QYQK701Sui/ovPtqUTjJotd3DI23UoBluRKABSyRxa7i52/fA
+         dHw3gPROJraRfyaqjR9qnxpBJX50uLm1i7D1wmQxS0/0LKmnWkT/M2W2WOifsyY8vrrK
+         BcUbtYYWqeRWUiqNXPix1PaYIAMFPSttpQEuMYZTbJgFYHhg5YqpxpjxhFuH7uDKImct
+         uovHBxYdzZSkydtjz8HAZwLwEJxec0nJtQGW2aI53hi3pxXyMi8zuwMF/nXG1JXyR+F7
+         NIUxsGumYNYiTg6xQrRFF2r3qm7MI0rkYtilq/kRAmGruWQMw9zSF8BYnoo06V/9qBvn
+         Dyfw==
+X-Gm-Message-State: AJaThX5Rf3c3P29j1XXzQT7IVzF0R857MoloG2fsJnexPUPQ+TLHLOpl
+        TYuQWMtfrARo5uPiqCJzoiem2qm88v6woZCdf0Phomxjit4=
+X-Google-Smtp-Source: AGs4zMarSzAzSjo7LCaWXoR2SzPTs/j+PtRkT/ONho/WNT2OdPHk9MqVGYPIA3LuZVNIEaZepZYz5Dpnnl0lvyH1P8E=
+X-Received: by 10.55.76.193 with SMTP id z184mr4740261qka.346.1511396151128;
+ Wed, 22 Nov 2017 16:15:51 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20171123000839.GL11671@aiede.mtv.corp.google.com>
+Received: by 10.140.85.179 with HTTP; Wed, 22 Nov 2017 16:15:50 -0800 (PST)
+In-Reply-To: <20171122234152.72901-1-jonathantanmy@google.com>
+References: <20171121221717.155301-1-jonathantanmy@google.com> <20171122234152.72901-1-jonathantanmy@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 22 Nov 2017 16:15:50 -0800
+Message-ID: <CAGZ79kYOovfAGNseAevsZOP2emxFCZfJpH=EJD5L0_vVnMZ-2Q@mail.gmail.com>
+Subject: Re: [PATCH] xdiff/xpatience: support anchoring line(s)
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 22, 2017 at 04:08:39PM -0800, Jonathan Nieder wrote:
+On Wed, Nov 22, 2017 at 3:41 PM, Jonathan Tan <jonathantanmy@google.com> wrote:
+> Teach the patience diff to attempt preventing user-specified lines from
+> appearing as a deletion or addition in the end result. The end user can
+> use this by specifying "--anchor=<text>" one or more times when using
+> Git commands like "diff" and "show".
+>
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> ---
+> Actual patch instead of RFC.
+>
+> One thing that might help is to warn if --anchor is used without
+> --patience, but I couldn't find a good place to put that warning. Let me
+> know if you know of a good place.
 
-> > For the record, I'm totally fine with banning assert() in favor of a
-> > custom equivalent. I just don't think we've seen any real problems with
-> > assert in our codebase so far.
-> 
-> It sounds like we basically agree, then. :)
+Would it make sense to have `--anchor` imply patience?
+(not necessarily in this patch, might be a "yes, let's do
+it in a year when users complain")
 
-Yeah, I didn't quite understand your argument at first. If it's that
-asserts are potentially dangerous, I buy that. They haven't bit us, but
-they could.
+> Replying to Stefan's and Junio's comments:
+>
+>> The solution you provide is a good thing to experiment with, but
+>> longer term, I would want to have huge record of configs in which
+>> humans selected the best diff, such that we can use that data
+>> to reason about better automatic diff generation.
+>> The diff heuristic was based on a lot of human generated data,
+>> that was generated by Michael at the time. I wonder if we want to
+>> permanently store the anchor so the data collection will happen
+>> automatically over time.
+>
+> I think machine learning is beyond the scope of this patch :-)
 
-That would be a good thing for Stefan to put in his commit message. ;)
+agreed; I just wanted to share what I think we could do in the future
+to select sane default. For that we'd want to collect some "most useful"
+configurations.
 
--Peff
+When I proposed separate flags for the move detection regarding
+ignoring whitespaces, the question "how is the user sanely select
+from so many flags?" came up. And in that spirit I would want think
+adding this rather fundamental flag, and then machine learn (e.g. the
+weights in traversing the diff matrix) off of this collected data later
+might be a viable approach.
+
+>> or rather: "c is not moved, we don't care how the diff actually looks
+>> like",
+>> so maybe
+>>       ! grep "+c" diff
+>
+> I think it's less error-prone to show "a" moving. With this, if the
+> command somehow prints nothing, the test would still pass.
+
+Makes sense.
+
+> diff --git a/t/t4033-diff-patience.sh b/t/t4033-diff-patience.sh
+> index 113304dc5..2d00d1056 100755
+> --- a/t/t4033-diff-patience.sh
+> +++ b/t/t4033-diff-patience.sh
+
+I was waiting for
+
+    test_expect_success 'one --anchor anchors many lines' '
+        printf "a\nb\na\nc\na\n" >file && # many 'a's
+        ....
+        --anchor=a
+        ...
+
+
+Thanks for writing this patch,
+I hope we can make use of this addition eventually a lot. :)
+
+Stefan
