@@ -2,98 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B894520954
-	for <e@80x24.org>; Thu, 23 Nov 2017 02:47:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F2BAA20954
+	for <e@80x24.org>; Thu, 23 Nov 2017 04:00:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752340AbdKWCrF (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Nov 2017 21:47:05 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64635 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752324AbdKWCrE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Nov 2017 21:47:04 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0034DA076A;
-        Wed, 22 Nov 2017 21:47:03 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=f9Dh1radVwrg+6Kha2D0bxBTcY4=; b=ff8IgJ
-        6DHi4Mw0lCam56NPMt7kZtKqSbAySOTXfYaJTC36gpRSGowi62uTn6VULW45Ucj8
-        Am4TXv20GLqVKCRaHEIDJ+Vu6RDkSSZa0Uz3ExmLht98T+EotAeHiVRsErg9K7WO
-        BS/nF1dmHiFQQN/P1GFkoby/Mdv8GmZo/l8/A=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=QvBJmr+f7K1IpV8dVgJaVhjqLx+/6BDh
-        dQXr9vKV1PHubjDp1rsDDRb+WBVMXpscyrSDUBMXu0v2oU8fx2RAbJoj42JSKY+Y
-        ePrDRelIjzaSCNmfGkpZi4PDnjB64TgS2OCQfjmTvi0PFClOFbUc7C5IzwkL4lIt
-        tjJyGeCK9nc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C3EC8A0769;
-        Wed, 22 Nov 2017 21:47:03 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 43883A0768;
-        Wed, 22 Nov 2017 21:47:03 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, sbeller@google.com
-Subject: Re: [PATCH] xdiff/xpatience: support anchoring line(s)
-References: <20171121221717.155301-1-jonathantanmy@google.com>
-        <20171122234152.72901-1-jonathantanmy@google.com>
-        <xmqqa7zdsqb6.fsf@gitster.mtv.corp.google.com>
-        <xmqq3755sprp.fsf@gitster.mtv.corp.google.com>
-Date:   Thu, 23 Nov 2017 11:47:02 +0900
-In-Reply-To: <xmqq3755sprp.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Thu, 23 Nov 2017 11:16:42 +0900")
-Message-ID: <xmqqh8tlr9sp.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1752366AbdKWEAV (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Nov 2017 23:00:21 -0500
+Received: from cloud.peff.net ([104.130.231.41]:38360 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1752350AbdKWEAV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Nov 2017 23:00:21 -0500
+Received: (qmail 17432 invoked by uid 109); 23 Nov 2017 04:00:21 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 23 Nov 2017 04:00:21 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6810 invoked by uid 111); 23 Nov 2017 04:00:37 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with ESMTPA; Wed, 22 Nov 2017 23:00:37 -0500
+Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 22 Nov 2017 23:00:19 -0500
+Date:   Wed, 22 Nov 2017 23:00:19 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Phil Hord <phil.hord@gmail.com>, Git <git@vger.kernel.org>
+Subject: Re: [PATCH] defer expensive load_ref_decorations until needed
+Message-ID: <20171123040018.GA21706@sigill>
+References: <20171121234336.10209-1-phil.hord@gmail.com>
+ <20171122212710.GB2854@sigill>
+ <CABURp0rq9pwFWuBbrSB-FNUQ6B-7V8uL=Drw6O1-151u_cRKww@mail.gmail.com>
+ <20171122234841.GD8577@sigill>
+ <xmqqy3mxrb29.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 95F72802-CFF8-11E7-BA22-575F0C78B957-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqy3mxrb29.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Thu, Nov 23, 2017 at 11:19:42AM +0900, Junio C Hamano wrote:
 
-> What do we do when
->
->     git diff --histogram --patience
->
-> is given?  Do we warn?  If we don't, perhaps it may not be too bad
-> if 
->
->     git diff --histogram --patience-anchor=foo
->     git diff --patience-anchor=foo --histogram
->
-> did not get any warning.  Instead we just implicitly turn any
-> occurence of --patience-anchor=foo into --patience followed by the
-> same option, and assume that the user wanted the usual "last one
-> wins" semantics.  It would turn patience on for the former, and
-> ignore the anchor for the latter and use historgram.
+> Jeff King <peff@peff.net> writes:
+> 
+> > And lazy-load wouldn't help you there for a normal:
+> >
+> >   git log
+> >
+> > But what's interesting in your command is the pretty-format. Even though
+> > decoration is turned on, your format doesn't show any. So we never
+> > actually ask "is this commit decorated" and the lazy-load helps.
+> 
+> Hmph, I wonder if we can detect this case and not make a call to
+> load decorations in the first place.  That would remove the need to
+> remember the options when load is called so that we can use it when
+> we load decorations lazily later.
 
-Thinking about this a bit more, I do like the basic idea of the UI
-even better.  What we could do is to sell this to the end users as a
-new kind of diff algorithm choice (i.e. myers, patience, ... will
-gain a new friend) that internally happens to be implemented by
-piggybacking on patience (just like minimal is piggybacking on
-myers) and call it "anchor".  Then just like this command line
+Probably userformat_find_requirements() could (and should) be taught to
+report on decoration flags, like it does for notes. As it is now we call
+load_ref_decorations() repeatedly while processing the commits (which
+works because it's a noop after the first call).
 
-    git diff --histogram --patience
+And once we can do that, it would be easy to do something like:
 
-makes the last one win without complaint, it is sane that these
-command lines
+  if (decoration_style && !want->decorations)
+	decoration_style = 0;
 
-    git diff --histogram --anchored=<pattern>
-    git diff --anchored=<pattern> --histogram
+But I think that may only be part of the story. Do all of the output
+formats show decorations? I think --format=email, for instance, does
+not.
 
-make the last one win without complaint, either.
+So the real question is not just "does the user format want
+decorations", but "does the pretty format want decorations". Which
+requires knowing things about each format that might get out of sync
+with the rest of the code. That might be OK if it lives in pretty.c. But
+the lazy-load thing make sit just work without having to duplicate the
+logic at all.
 
-Hmm?
-
+-Peff
