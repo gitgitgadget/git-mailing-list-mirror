@@ -2,168 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 62E17202F2
-	for <e@80x24.org>; Thu, 23 Nov 2017 15:43:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B2528202F2
+	for <e@80x24.org>; Thu, 23 Nov 2017 16:31:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752841AbdKWPnK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Nov 2017 10:43:10 -0500
-Received: from mail-qt0-f195.google.com ([209.85.216.195]:36254 "EHLO
-        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752611AbdKWPnJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Nov 2017 10:43:09 -0500
-Received: by mail-qt0-f195.google.com with SMTP id a19so28366105qtb.3
-        for <git@vger.kernel.org>; Thu, 23 Nov 2017 07:43:08 -0800 (PST)
+        id S1753115AbdKWQbm (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Nov 2017 11:31:42 -0500
+Received: from mail-yb0-f173.google.com ([209.85.213.173]:43219 "EHLO
+        mail-yb0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753090AbdKWQbl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Nov 2017 11:31:41 -0500
+Received: by mail-yb0-f173.google.com with SMTP id q84so4222022ybc.10
+        for <git@vger.kernel.org>; Thu, 23 Nov 2017 08:31:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:date:message-id;
-        bh=Gcm+pkM5dJqpehe8aF5e0n2u8r+x05C16siOviuGxv8=;
-        b=n2M4uRzRGir22B3S1E3szSJ1Cx6mFzoJXyrnnDnSTKdvayuT4se7UXS+U9FFrNu5oG
-         ICzp5+zE4sQ9s83koRWWxsMUO9AbeKMG7ZNQ6JRyZO/GVOQYLZor/9GXHP7VInBYgp/8
-         dUJyncamTHa5h3QaNX3WNEoDFGemspwo3mEp4Yxw71kLORHNQOce8QxusM51lzPb0Vhp
-         jkxIUVHPEsoIxJ1kqsL6S+XKY+UIxVIbKE+H2F7sfEKjkpGRNoAkCfrNlqcvRHEJSoBQ
-         zFVSdBuRQ90i5U48SivIyfBX/OqL/SKsm6+099qvrxp83/ztgdL19JLHJiAyqozmIceB
-         7X8A==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=kD6EP2ZYwTC4BLfd25xn2h3UC6hJHHTdNkGypJfpuNM=;
+        b=LTqGf3gkWnOQ/atjZOPTwgAqU6kYtUtPgUUMQ4HzLBPvkPmvPENwEX/LJ7rcGrnbrh
+         fIU0sIeYAUdQtQpccQ3fUj+pja1UVFuP5UdiSbL9z8LSPftHX/IREbZa8XscHn2zA8V1
+         MTDQDUeBjqc833xoLwPruNxK0mrRGCaor835YF2zb12AsGmhO0B3GhMkPcrLy8VQTJYa
+         x+iNaTKjJTfRmVdyqlmgN2Ajqelfh3pvoay7DcpUpHq7eqPWWb7/4ucCppLtIeXxRicx
+         ZGdfndqMMeSMCghm2mMAH0zzD0ANX/BB9FA5opq4xm2CNN36JebAnW8fk5g9MWtMQ/JG
+         xhZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id;
-        bh=Gcm+pkM5dJqpehe8aF5e0n2u8r+x05C16siOviuGxv8=;
-        b=HkeC/zpVBLTflrWQgvY9S+Ql4sU3tqdC8H6371VBc9mfLdzOr1Aim6A/PT65jeXL/h
-         GPPOjZT3MUdZqsdfR2ShBYlf8HunVcRSOmED2auZnQSWQDuaH4XiNemjsxiapjtlNZuc
-         dZYl37uiCZ4K6uLYH3tP4oV74wG3R0TgrxvLKLfbjpI2siV7VUMhcoFab4C3PK8NARRv
-         1wyiFXlV4jUwj4wdOaI0s3/qJApnST71q1hyN/lyiOq6QtjIr5A0A1vZ6ICEkjCX6N4f
-         vhdZrFt5bSK+ud6puSBznmX+XIXAtUCAnp9QwgeFi3rGbBCYyTmXDnYBMMOvCka0EczS
-         podw==
-X-Gm-Message-State: AJaThX4eiq4N+ffSFmR+T09796LOtvu9yL1L27CpkT+V0LQb/jowqc2Y
-        UP+1D8kwhUdmf6s1HNJKan2CY6rr
-X-Google-Smtp-Source: AGs4zMYPcJv3ztzbXtiD/ofnkMiAA69E/9hirf5nL0jxqOUjSPcBxpbC5xT7ZZEB/5+pmzqBeQnk0Q==
-X-Received: by 10.200.35.248 with SMTP id r53mr37465991qtr.110.1511451787975;
-        Thu, 23 Nov 2017 07:43:07 -0800 (PST)
-Received: from ogre.lan (modemcable022.17-70-69.static.videotron.ca. [69.70.17.22])
-        by smtp.gmail.com with ESMTPSA id z7sm13091823qtz.40.2017.11.23.07.43.07
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 23 Nov 2017 07:43:07 -0800 (PST)
-From:   Marc-Antoine Ruel <maruel@chromium.org>
-To:     git@vger.kernel.org
-Cc:     Marc-Antoine Ruel <maruel@chromium.org>
-Subject: [PATCH] grep: Add option --max-line-len
-Date:   Thu, 23 Nov 2017 10:41:59 -0500
-Message-Id: <20171123154159.17408-1-maruel@chromium.org>
-X-Mailer: git-send-email 2.15.0
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=kD6EP2ZYwTC4BLfd25xn2h3UC6hJHHTdNkGypJfpuNM=;
+        b=KVehFHsJBH/UhkFdZDUeni9Q7iWCnUMIs0LybIdThHEZ2v4Qb5z5eLTYs3LtWjSehg
+         xM9VsGAQFaB5WLII5EAc+NnEpe7cD9i6oJxPPXZn/+rkAFDs5/k4dGJkxzR7zrqMtbQ3
+         f1XLaqNhw4bkp0US6jkDPzdW5nZS9BfbfNV+DvwHOsGnEQ2YQJe7jFmVvd2gQX+7c1tM
+         j49XyFcdvlbuEd8P6fV1lenJgmwta3P0l3lw2Py2kwS61lUvEoS4bTLUE72Qi6n/A+D/
+         sDGcWOwWMWcJw2gjrsGZNba7CYApw9Y2O+n3My8/HRDzCYAtddNpHeSSEg4c4kJFwQcT
+         uqoQ==
+X-Gm-Message-State: AJaThX44KKnBbxUjlgThq4IXK+cle/SUZf0lXhkAjjCAqiuaqbsGfPDE
+        iEohp39jb3EeUPnFsGoUq8cHGV4NdAGlLFIet0A=
+X-Google-Smtp-Source: AGs4zMZnUXgKg1FpDgKlfC0eHdzhOOeWCNclibSTA2aivDdrPWJOUvKeWN5N6h59Nbpq7dRULuiU5nZAMBWKHltUIzo=
+X-Received: by 10.37.177.16 with SMTP id g16mr15261476ybj.191.1511454700552;
+ Thu, 23 Nov 2017 08:31:40 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.13.203.85 with HTTP; Thu, 23 Nov 2017 08:31:40 -0800 (PST)
+In-Reply-To: <20171116161506.GA20809@tor.lan>
+References: <CAJ_+vJ6FXXda4fe7=1YxtDGR2d8CqP4KXN+YR6+mdQ+5jQQXug@mail.gmail.com>
+ <8b3225ce-a4aa-56ee-5296-6cc7528556d1@web.de> <CAJ_+vJ5J250CtzVg4QwEusddviDSYuJhubsbTJyv5Nc2conAfA@mail.gmail.com>
+ <CAJ_+vJ7Yfcpz5252M4XJnDmEDCANp+eJ7RLJJF8TCcTxexZEUA@mail.gmail.com>
+ <f9dc6482-587d-50a9-d649-aed63be18fad@web.de> <CAJ_+vJ6SxLOmZfG79Sa-vskBR-XG=C97--PB-vpijjUKym=jYw@mail.gmail.com>
+ <20171115171258.GA12963@tor.lan> <CAJ_+vJ7am7dU9B0qTYVtxpkHoZdV45ciZN5ifbv9W8xRO2o=EQ@mail.gmail.com>
+ <20171116161506.GA20809@tor.lan>
+From:   Ashish Negi <ashishnegi33@gmail.com>
+Date:   Thu, 23 Nov 2017 22:01:40 +0530
+Message-ID: <CAJ_+vJ74mocjicpQ2BGUT+TrqrWqidp0bUJUGSz-B40-bC-c6w@mail.gmail.com>
+Subject: Re: Changing encoding of a file : What should happen to CRLF in file ?
+To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This tells git grep to skip files longer than a specified length,
-which is often the result of generators and not actual source files.
+Thanks for confirming.
+Is it possible to track this via a bug number ?
+It will help me to try out the fix when its available.
 
-Signed-off-by: Marc-Antoine Ruel <maruel@chromium.org>
----
- Documentation/git-grep.txt | 5 +++++
- builtin/grep.c             | 2 ++
- grep.c                     | 4 ++++
- grep.h                     | 1 +
- t/t7810-grep.sh            | 5 +++++
- 5 files changed, 17 insertions(+)
 
-diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
-index 18b494731..75081defb 100644
---- a/Documentation/git-grep.txt
-+++ b/Documentation/git-grep.txt
-@@ -10,6 +10,7 @@ SYNOPSIS
- --------
- [verse]
- 'git grep' [-a | --text] [-I] [--textconv] [-i | --ignore-case] [-w | --word-regexp]
-+	   [-M | --max-line-len <num>]
- 	   [-v | --invert-match] [-h|-H] [--full-name]
- 	   [-E | --extended-regexp] [-G | --basic-regexp]
- 	   [-P | --perl-regexp]
-@@ -127,6 +128,10 @@ OPTIONS
- 	beginning of a line, or preceded by a non-word character; end at
- 	the end of a line or followed by a non-word character).
- 
-+-M<num>::
-+--max-line-len<num>::
-+	Match the pattern only for line shorter or equal to this length.
-+
- -v::
- --invert-match::
- 	Select non-matching lines.
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 5a6cfe6b4..cc5c70be5 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -796,6 +796,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 			N_("case insensitive matching")),
- 		OPT_BOOL('w', "word-regexp", &opt.word_regexp,
- 			N_("match patterns only at word boundaries")),
-+		OPT_INTEGER('M', "max-line-len", &opt.max_line_length,
-+			N_("ignore lines longer than <n>")),
- 		OPT_SET_INT('a', "text", &opt.binary,
- 			N_("process binary files as text"), GREP_BINARY_TEXT),
- 		OPT_SET_INT('I', NULL, &opt.binary,
-diff --git a/grep.c b/grep.c
-index d0b9b6cdf..881078b82 100644
---- a/grep.c
-+++ b/grep.c
-@@ -36,6 +36,7 @@ void init_grep_defaults(void)
- 	opt->relative = 1;
- 	opt->pathname = 1;
- 	opt->max_depth = -1;
-+	opt->max_line_length = -1;
- 	opt->pattern_type_option = GREP_PATTERN_TYPE_UNSPECIFIED;
- 	color_set(opt->color_context, "");
- 	color_set(opt->color_filename, "");
-@@ -151,6 +152,7 @@ void grep_init(struct grep_opt *opt, const char *prefix)
- 	opt->pattern_type_option = def->pattern_type_option;
- 	opt->linenum = def->linenum;
- 	opt->max_depth = def->max_depth;
-+	opt->max_line_length = def->max_line_length;
- 	opt->pathname = def->pathname;
- 	opt->relative = def->relative;
- 	opt->output = def->output;
-@@ -1273,6 +1275,8 @@ static int match_line(struct grep_opt *opt, char *bol, char *eol,
- 	struct grep_pat *p;
- 	regmatch_t match;
- 
-+	if (opt->max_line_length > 0 && eol-bol > opt->max_line_length)
-+		return 0;
- 	if (opt->extended)
- 		return match_expr(opt, bol, eol, ctx, collect_hits);
- 
-diff --git a/grep.h b/grep.h
-index 399381c90..0e76c0a19 100644
---- a/grep.h
-+++ b/grep.h
-@@ -151,6 +151,7 @@ struct grep_opt {
- 	int null_following_name;
- 	int color;
- 	int max_depth;
-+	int max_line_length;
- 	int funcname;
- 	int funcbody;
- 	int extended_regexp_option;
-diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
-index 2a6679c2f..c514bd388 100755
---- a/t/t7810-grep.sh
-+++ b/t/t7810-grep.sh
-@@ -766,6 +766,11 @@ test_expect_success 'grep -W shows no trailing empty lines' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'grep skips long lines' '
-+	git grep -M18 -W include >actual &&
-+	test_cmp expected actual
-+'
-+
- cat >expected <<EOF
- hello.c=	printf("Hello world.\n");
- hello.c:	return 0;
--- 
-2.15.0
-
+On Thu, Nov 16, 2017 at 9:45 PM, Torsten B=C3=B6gershausen <tboegi@web.de> =
+wrote:
+> On Thu, Nov 16, 2017 at 12:35:33AM +0530, Ashish Negi wrote:
+>> On windows :
+>> > git --version
+>> git version 2.14.2.windows.2
+>>
+>> On linux :
+>> > git --version
+>> git version 2.7.4
+>>
+>> I would like to understand the solution :
+>> If i understood it correctly : it removes file_name.txt from index, so
+>> git forgets about it.
+>> we then add the file again after changing encoding. This time, git
+>> takes it as utf-8 file and converts crlf to lf when storing it
+>> internally.
+>> Right ?
+>
+> Yes, exactly.
+> (In a coming release of Git there will be a "git add --renormalize <paths=
+pec>" )
+>
+>>
+>> Thank you for the support.
+>>
+>
+> Thanks for a clean bug report.
+> Actually it is a bug, I put it on my to do list
+>
+>
