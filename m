@@ -7,40 +7,39 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C8489202F2
-	for <e@80x24.org>; Thu, 23 Nov 2017 23:35:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 76B3A202F2
+	for <e@80x24.org>; Thu, 23 Nov 2017 23:44:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753368AbdKWXfw (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Nov 2017 18:35:52 -0500
-Received: from resqmta-ch2-11v.sys.comcast.net ([69.252.207.43]:51520 "EHLO
-        resqmta-ch2-11v.sys.comcast.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752615AbdKWXfv (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 23 Nov 2017 18:35:51 -0500
-Received: from resomta-ch2-20v.sys.comcast.net ([69.252.207.116])
-        by resqmta-ch2-11v.sys.comcast.net with ESMTP
-        id I11qewYyzvLn4I127emNbm; Thu, 23 Nov 2017 23:35:51 +0000
+        id S1753343AbdKWXoS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Nov 2017 18:44:18 -0500
+Received: from resqmta-ch2-08v.sys.comcast.net ([69.252.207.40]:38140 "EHLO
+        resqmta-ch2-08v.sys.comcast.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752951AbdKWXoR (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 23 Nov 2017 18:44:17 -0500
+Received: from resomta-ch2-09v.sys.comcast.net ([69.252.207.105])
+        by resqmta-ch2-08v.sys.comcast.net with ESMTP
+        id I19eeuVX51zMnI1AGekts9; Thu, 23 Nov 2017 23:44:16 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-        s=q20161114; t=1511480151;
-        bh=J9C4KA0fCq0izS6s0VeyBuQj4tjWuD9p8ua5eNCajjk=;
+        s=q20161114; t=1511480656;
+        bh=VoF5HLMaz1yY51uhMuoNJjXIMxsolNV7YCaAJlv/yDg=;
         h=Received:Received:Subject:To:From:Message-ID:Date:MIME-Version:
          Content-Type;
-        b=o8s+SqL4RkbaM95nn16csq8YssMXyOLTOi0Lp3KqGlJ0QQehj3lov1g5QNFNbtgAI
-         8hhvuS23vPm5kI7TDd4vF+lFyg0M2sRqXB8cyg7hMEq7lAZqMtE/V+/wbK6OlX7j2P
-         NWBwiZt6/K5em4HVGLz+FM3fzXgyPF06aQbrkHcDI1z9WLIreNtHKlOr3HxJwBtTGW
-         T4E5HiOZvHyo3JcFg1oZw8skL7BlDQ2lOVE40qr6ERGyIitsscMxP2aNlQFncRzk3Z
-         gElXIZu3Tun2cOqSCzxuxfJ9D9d7nu6co1zbNqUmIpjMiV7JeQHu5F7rQnbOphn0yE
-         ukCV0mZ7Tx+uA==
+        b=NfXyrkJEehMN/i+woHkazDQkADFc2yjPgbycRtNfoN69szgCur/zpXoeplxAfRrNJ
+         tTGm7ZlFRn/gfaH9Qd5SQDrULih2JVopfhDdGQtkah35WxEKX3Afx8b3DTVBffmeQa
+         Qeb0+g8eGjH5thiapEXSldLvzh0UzK1R7PAkmlhWEG+Y/H45t2JWQgMAw/hTb0yy70
+         ThV6dv6XUHpZU2SN2WYk7hbRj2Lf0nyK2adM6k4hQ4b8EOcA1Ppduwqr+JKIykfLB1
+         WycRNwYuJRcrqfwM8sgn9yG3a7SbU+5pidiEzn1n3y20iR5bzy0lOgCvnV0+ILY/wz
+         u3kLmiSAFNEYQ==
 Received: from [192.168.1.100] ([73.149.212.147])
-        by resomta-ch2-20v.sys.comcast.net with SMTP
-        id I126eeYo7k7fvI126e6WPw; Thu, 23 Nov 2017 23:35:50 +0000
-Subject: Re: Problem installing Git
+        by resomta-ch2-09v.sys.comcast.net with SMTP
+        id I1AGeLlwP2mvhI1AGeq2Dw; Thu, 23 Nov 2017 23:44:16 +0000
+Subject: Re: Problem installing Git (followup)
 To:     Igor Djordjevic <igor.d.djordjevic@gmail.com>, git@vger.kernel.org
-Cc:     git-for-windows@googlegroups.com
 References: <077942bb-5952-6f4a-8054-b17d3883b901@comcast.net>
  <f30c4350-500a-44e8-27ee-7d5ae49903c4@gmail.com>
 From:   Phil Martel <pomartel@comcast.net>
-Message-ID: <b4fa4027-8019-7a35-40e0-77172047eab6@comcast.net>
-Date:   Thu, 23 Nov 2017 18:35:45 -0500
+Message-ID: <5d95405e-7c95-88b2-2481-bb7990c5b8b5@comcast.net>
+Date:   Thu, 23 Nov 2017 18:44:11 -0500
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.4.0
 MIME-Version: 1.0
@@ -48,17 +47,21 @@ In-Reply-To: <f30c4350-500a-44e8-27ee-7d5ae49903c4@gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Content-Language: en-US
-X-CMAE-Envelope: MS4wfGenRD1cmb3/V019c6a7v2XKQu4sNUsFgKumvrIR0T/BXmnPFuULnxUSsXfkCNYbOup6pzIPj3NB4xFNzxy61f7mGEslGHbEzOXtnE7E4Gjv0Y0KKNqp
- mDf5SGwFrFUWuX6oZetNXqLOldb5UUhyzyt0EtpEO7tuQr9WBHMbskJlOEtH5hyxX4aqRF/i04dR8+Hz1oW5SMV8mp1Y3Jc32t4CroqwQNDO2lKNve9oI5mJ
- +jIbLEqo8kFZ1Ejkkbu6EtjHdXY2AcQUi2zVbDeU4OM=
+X-CMAE-Envelope: MS4wfLsSiipI84Wjj2h8WkbV+YlAK9+yttaRdLlW5kfGTyv32zMyNfiAEeGCJMcm/A9nAdeNGmys9XypKWg1v/DH8JOUER+hyW7QVw28j6On0DRV5AZEJBun
+ YfkR8GEoGi5ntiBjEjylF1BMwUH9heCNGSqAxXKYge5yn0KdGfvfVTxAVIn62BIwFQAn79Oi0+A1nYCeRa2n5dHgqQ9ek1gzqaJJTG/cUEWLafxmf7IEmxU0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thank you.  I'll look into it.
+Hi Buga,
 
-Best wishes,
+That solved my problem.  I apparently had enough cruft left over from a 
+hard disk issue for Windows to think I still had a copy of Git 
+installed.  when I got rid of it, the new version installed with no 
+problems.
+
+Thanks again,
 
 --Phil Martel
 
