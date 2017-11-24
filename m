@@ -2,82 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6DB6E20954
-	for <e@80x24.org>; Fri, 24 Nov 2017 06:37:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3B93020954
+	for <e@80x24.org>; Fri, 24 Nov 2017 06:38:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751942AbdKXGhS (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Nov 2017 01:37:18 -0500
-Received: from mail-yb0-f176.google.com ([209.85.213.176]:34744 "EHLO
-        mail-yb0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751643AbdKXGhR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Nov 2017 01:37:17 -0500
-Received: by mail-yb0-f176.google.com with SMTP id k40so7939715ybj.1
-        for <git@vger.kernel.org>; Thu, 23 Nov 2017 22:37:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=51Hj/SToEBp7jK+mxPSAbf9Q6A9Y1YxYYTn9CG7W5xY=;
-        b=hImJAdYpNrsSS71D6G8WNwsByezPCARrCoZgqcuVPrFpaxb8xaxNsD2Yg2cvUtZDUb
-         ZZxb9hT90aBLNLWIh5cMfHwNBi7H4eaNqVX7lGtzV0q+F662m14SBAiHszINQIV+XBsI
-         1wctvngbJdLAAeZxdI+xyw7vmslfJghae1EmfhswHhOINFaLg1xS6IswR+qLPAeQFkX4
-         45rJptlKV3TsYjIWWiOF4DzZR1sWvA+E9rIh8DC8cRs71gNougNLl/CEhRDCYhhEpTUb
-         Pp/DpXnoQDjtajRl1/veaL5MO5w/dxWbIM+cbFK0PW3aPG0xNMHAcYhCvfc1Y8yen5U6
-         DXrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=51Hj/SToEBp7jK+mxPSAbf9Q6A9Y1YxYYTn9CG7W5xY=;
-        b=BFEPILparq8VC87zD3lFj0wbVt7qHo8q8rNvXX9u17iYkiygmHoQRg1Gd8s7dEJIs/
-         dtars0KafxqbV01UqKV4DTe6VZCE25q+cutQlrPf9lOCTE1aRY0vcjCQfQyE/jYXy1pL
-         kucWxjPxH9hwH7ybKmJTXUW+SBmlFC2j971rzZzMzqEATCAGfoum/DlVNhYfW8ebVHKr
-         w4nQAU6y7dM8jwn53CtGsPX0ma72w6bdC8ULyF7q6WqHa0udoQS+6c10XPrnxn7gYSAV
-         qZ7AYdAe1vx4046JYZGGmWLkNMocJjT4igje+DbzTnro1T3JgisyVp98fKHN+gVptOGm
-         VGdA==
-X-Gm-Message-State: AJaThX6306fKrwwbramh5GQh+mZzOCRAw02it7xKehhRvP0+8+6IqM8y
-        OOiptDD39mbYjikRl6dCWRnjc6PDmOGGXcJDncc=
-X-Google-Smtp-Source: AGs4zMbOW1IUSKsn+OKFnfqs8mDi9aoSgKt7BQ64ePGtfdMSgMP7/a3rSx8FVUX8kyKnWItTOKb8UpgLetgahw8C9YU=
-X-Received: by 10.37.177.16 with SMTP id g16mr16663108ybj.191.1511505436970;
- Thu, 23 Nov 2017 22:37:16 -0800 (PST)
+        id S1752018AbdKXGin (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Nov 2017 01:38:43 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50930 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751643AbdKXGim (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Nov 2017 01:38:42 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D8E72B7330;
+        Fri, 24 Nov 2017 01:38:41 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=BqxXBF86xkmBvGE0l/FzYFhBaKk=; b=V2Hl9m
+        dP6NPqmHZktQu3CDimxbRZZ1giCv69xX8N5w3Ax/37t4DuTk1K8nv6uQ1cXaPVni
+        FCFISTUR/MvtK7e2XsT9vnSOQRasynw82/qk8oKHGAry2o8LBhRtBrZdm5Z96eTl
+        GyBzY+47LbhRNPMCyWqWVng82W1TegooHNY3s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=jIZmXR931LQXf18/0y/WDe3RcG77nxvt
+        ZsTzXTQVm9E6vfriZOWRgRGkiEQ9Jw6CwItKduAouRTIqE0FgbKcXUruwVABHfR8
+        1yYeHuBBOZfAiamBnQJDwHw5CwYEn/zIEt+trjqId61DMj/ThCWaDZtZ6UGoKICE
+        Ks6Fd/r3Pm8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D0FE8B732E;
+        Fri, 24 Nov 2017 01:38:41 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3DE4AB732D;
+        Fri, 24 Nov 2017 01:38:41 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Lars Schneider <lars.schneider@autodesk.com>,
+        Git List <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH v2] launch_editor(): indicate that Git waits for user input
+References: <20171117135109.18071-1-lars.schneider@autodesk.com>
+        <CAPig+cQ3a0guJUhnbktrjs6fL6mSrUXmPqR0BafEAOhVr7Sy-w@mail.gmail.com>
+        <xmqqh8tsqs83.fsf@gitster.mtv.corp.google.com>
+        <d53a655b-f51e-3f44-23db-581071010fd2@gmail.com>
+        <xmqqvai5ollx.fsf@gitster.mtv.corp.google.com>
+        <998E3A52-C710-447A-82A3-50C58354CC31@gmail.com>
+Date:   Fri, 24 Nov 2017 15:38:40 +0900
+In-Reply-To: <998E3A52-C710-447A-82A3-50C58354CC31@gmail.com> (Lars
+        Schneider's message of "Wed, 22 Nov 2017 17:55:29 +0100")
+Message-ID: <xmqqk1ygnpu7.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.13.203.85 with HTTP; Thu, 23 Nov 2017 22:37:16 -0800 (PST)
-In-Reply-To: <20171123202548.GA30957@tor.lan>
-References: <CAJ_+vJ6FXXda4fe7=1YxtDGR2d8CqP4KXN+YR6+mdQ+5jQQXug@mail.gmail.com>
- <8b3225ce-a4aa-56ee-5296-6cc7528556d1@web.de> <CAJ_+vJ5J250CtzVg4QwEusddviDSYuJhubsbTJyv5Nc2conAfA@mail.gmail.com>
- <CAJ_+vJ7Yfcpz5252M4XJnDmEDCANp+eJ7RLJJF8TCcTxexZEUA@mail.gmail.com>
- <f9dc6482-587d-50a9-d649-aed63be18fad@web.de> <CAJ_+vJ6SxLOmZfG79Sa-vskBR-XG=C97--PB-vpijjUKym=jYw@mail.gmail.com>
- <20171115171258.GA12963@tor.lan> <CAJ_+vJ7am7dU9B0qTYVtxpkHoZdV45ciZN5ifbv9W8xRO2o=EQ@mail.gmail.com>
- <20171116161506.GA20809@tor.lan> <CAJ_+vJ74mocjicpQ2BGUT+TrqrWqidp0bUJUGSz-B40-bC-c6w@mail.gmail.com>
- <20171123202548.GA30957@tor.lan>
-From:   Ashish Negi <ashishnegi33@gmail.com>
-Date:   Fri, 24 Nov 2017 12:07:16 +0530
-Message-ID: <CAJ_+vJ7-M2fek8nFQgqYPs9pcAnYgenuvG50GC3ZRuPCc=R2EQ@mail.gmail.com>
-Subject: Re: Changing encoding of a file : What should happen to CRLF in file ?
-To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1C41FF74-D0E2-11E7-8052-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Great work !!!
-Thanks
+Lars Schneider <larsxschneider@gmail.com> writes:
 
-On Fri, Nov 24, 2017 at 1:55 AM, Torsten B=C3=B6gershausen <tboegi@web.de> =
-wrote:
-> On Thu, Nov 23, 2017 at 10:01:40PM +0530, Ashish Negi wrote:
->> Thanks for confirming.
->> Is it possible to track this via a bug number ?
->> It will help me to try out the fix when its available.
->>
+>> Of course it is possible, if you really wanted to.  The code knows
+>> if it gave the "we launched and waiting for you" notice, so it can
+>> maintain not just one (i.e. "how I close the notice?") but another
+>> one (i.e. "how I do so upon an error?") and use it in the error
+>> codepath.
 >
-> No worry, the fix is nearly complete and will come out in a couple of day=
-s.
+> I think a newline makes sense. I'll look into this for v3.
+
+As this is an error codepath, I am OK to waste one more line with a
+line break after the "we launched and are waiting..." message, but
+with a shorter "we are waiting..." message, I do not know if it is
+bad enough to have these two on the same line, so I am on the fence.
