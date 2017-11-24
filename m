@@ -2,216 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 00678202F2
-	for <e@80x24.org>; Fri, 24 Nov 2017 01:30:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DC3B2202F2
+	for <e@80x24.org>; Fri, 24 Nov 2017 01:44:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751864AbdKXBal (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Nov 2017 20:30:41 -0500
-Received: from mail-qt0-f170.google.com ([209.85.216.170]:35833 "EHLO
-        mail-qt0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751600AbdKXBak (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Nov 2017 20:30:40 -0500
-Received: by mail-qt0-f170.google.com with SMTP id n32so29788101qtb.2
-        for <git@vger.kernel.org>; Thu, 23 Nov 2017 17:30:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=t7nwecdLpoNFvOM/6YrE4JereYiqq5UHLg1U9RhIM+I=;
-        b=ayN2oLN17NIA9Y5PnMaTbUnPbF/ldIoBuwx0rgfbInh+o+Ev1LzrjYncD0UHmwS1o7
-         DqagUqwCAywmvG3mjMb/TGgqeCfDPMFHTZuk8TghYHYD/ldAnrm5DQiiOugwCM+63kZ0
-         ENfFOCyOjM32pHfHo7T//4a5zap05cwPL4va7tkwbwNKygXEJPN4aMHMxU0TyC60YvJy
-         F2F55p0h/DfgvYlEamO/LeIkCJzj57lViz0NTizGf75RH3pq85uYyQCt2Z+C351BAvtC
-         jb9MvxJmcT3iZf5D5CQgNtiFEuBJeV+ylDSPIa5P0DheXeC80bW7EjBXDhpUu+xHamZo
-         rT6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=t7nwecdLpoNFvOM/6YrE4JereYiqq5UHLg1U9RhIM+I=;
-        b=pIxbZdBN5yJojG8bH+IVmB4F79Y42VmvinAa5UBH1P9rEaAO+ab3mFUlydFzXGdPvZ
-         WL4FnkAq1gAEdmMlIgaifilGaa470BQ9PA8y1KCeOsAFJRrPjq4WlDkSSsDRnMdbCsx0
-         8iWtRRjfNXyUNGHNXxZHHPza7cfYRM565cM3SwfYUSRKcxpt1KLnjLEkgSKWU6RQaesD
-         jsPFXeJVRbA1ZoCAtH6I3cjcKwMzZdBKlpHSFLm4L4Mo8I1oCgJbBy4oJynUsEnrRopK
-         OPVQAhmnMkm6uWDgDTSBIluNknfmLR2tEZLYxYUT2/fyJjO8UQToyAXqoTf1ZJ68bbsq
-         B9mw==
-X-Gm-Message-State: AJaThX5isDY0HQdv3RSCNeOaPmkzyEnr70oSG1dpdjjztLclT6M/UY1N
-        WN71iIfH52izr28pfL0dt+vMIcdydUh5x1UVObc=
-X-Google-Smtp-Source: AGs4zMZiHMHxDrCx3ZDrKzrKKcB6/GSUVdPWrE0mX4mteNaUqyBitypVliuiuMXJL6ydmZR8e1FuVGaDAi2cRoR3B/g=
-X-Received: by 10.237.35.37 with SMTP id h34mr42783884qtc.9.1511487039441;
- Thu, 23 Nov 2017 17:30:39 -0800 (PST)
+        id S1751502AbdKXBoE (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Nov 2017 20:44:04 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57390 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751400AbdKXBoE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Nov 2017 20:44:04 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3E83DA9511;
+        Thu, 23 Nov 2017 20:44:03 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=HMvPM4vvblRr2KKvmlHiptOdzao=; b=lBwWlm
+        Y9eGkmIo/OqPuylXZnZPOSepkJ62oOurw50bFnivgYEaTU6MgAbdQNJyRbqV3ujc
+        ViUKXA8Fju+7xiS+Fs8eOJ1CnpQ/eueUkpN3eCLehqyJ7NTubr33k41ZBFFLuQPJ
+        NyRd3EETv5L04IsFIPy0Cu2ztXJJUkTCle5ds=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=fSkpD9OW8XMtkjtSGiMoflEHM406TFOt
+        2GS9j5dPFHoRTLZJXFXUuU9Oj8aVyD2FV7EUK17EtvC+BJ3Q69+a68/u0IBJh68k
+        DhWU7srYyxQA9erzdEtbKwa/a16HZdNCp3+HnRlwUQIJutkb6ZiDI21uB0TxuT4t
+        ZunGNdeXrGQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 34F98A9510;
+        Thu, 23 Nov 2017 20:44:03 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 89DB1A950B;
+        Thu, 23 Nov 2017 20:44:02 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Marc-Antoine Ruel <maruel@chromium.org>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] grep: Add option --max-line-len
+References: <20171123154159.17408-1-maruel@chromium.org>
+Date:   Fri, 24 Nov 2017 10:44:01 +0900
+In-Reply-To: <20171123154159.17408-1-maruel@chromium.org> (Marc-Antoine Ruel's
+        message of "Thu, 23 Nov 2017 10:41:59 -0500")
+Message-ID: <xmqqwp2gpi1q.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.12.155.209 with HTTP; Thu, 23 Nov 2017 17:30:39 -0800 (PST)
-In-Reply-To: <20171123234511.574-1-max@max630.net>
-References: <20160401235532.GA27941@sigill.intra.peff.net> <20171123234511.574-1-max@max630.net>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 23 Nov 2017 20:30:39 -0500
-X-Google-Sender-Auth: HFXuajD4_JDozG8uygEuGqlF1_Y
-Message-ID: <CAPig+cQEaqaOTcC=5pZZmZNs_QQQ0vBRbzczyM3ZXXi+ZHW4XA@mail.gmail.com>
-Subject: Re: [PATCH] http-backend: respect CONTENT_LENGTH as specified by rfc3875
-To:     Max Kirillov <max@max630.net>
-Cc:     Jeff King <peff@peff.net>,
-        Florian Manschwetus <manschwetus@cs-software-gmbh.de>,
-        Chris Packham <judge.packham@gmail.com>,
-        Konstantin Khomoutov <kostix+git@007spb.ru>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: F2E71656-D0B8-11E7-8952-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 23, 2017 at 6:45 PM, Max Kirillov <max@max630.net> wrote:
-> [PATCH] http-backend: respect CONTENT_LENGTH as specified by rfc3875
+Marc-Antoine Ruel <maruel@chromium.org> writes:
 
-The "RFC" seems to be missing from the subject line of this unpolished patch.
-
-> http-backend reads whole input until EOF. However, the RFC 3875 specifies
-> that a script must read only as many bytes as specified by CONTENT_LENGTH
-> environment variable. This causes hang under IIS/Windows, for example.
-
-By "_this_ causes a hang", I presume you mean "not respecting
-CONTENT_LENGTH causes a hang"? Perhaps that could be spelled out
-explicitly.
-
-> Make http-backend read only CONTENT_LENGTH bytes, if it's defined, rather than
-> the whole input until EOF. If the varibale is not defined, keep older behavior
-
-s/varibale/variable/
-
-> of reading until EOF because it is used to support chunked transfer-encoding.
+> This tells git grep to skip files longer than a specified length,
+> which is often the result of generators and not actual source files.
 >
-> Signed-off-by: Florian Manschwetus <manschwetus@cs-software-gmbh.de>
-> Authored-by: Florian Manschwetus <manschwetus@cs-software-gmbh.de>
-> Fixed-by: Max Kirillov <max@max630.net>
-> Signed-off-by: Max Kirillov <max@max630.net>
-> ---
-> diff --git a/http-backend.c b/http-backend.c
-> @@ -317,6 +317,76 @@ static ssize_t read_request(int fd, unsigned char **out)
-> +/*
-> + * replacement for original read_request, now renamed to read_request_eof,
-> + * honoring given content_length (req_len),
-> + * provided by new wrapper function read_request
-> + */
-
-This comment has value only to someone who knew what the code was like
-before this change, and it merely repeats what is already implied by
-the commit message, rather than providing any valuable information
-about this new function itself. Therefore, it should be dropped.
-
-> +static ssize_t read_request_fix_len(int fd, size_t req_len, unsigned char **out)
-
-Wrong data type: s/size_t req_len/ssize_t req_len/
-
-Also: s/fix/fixed/
-
-> +{
-> +       unsigned char *buf = NULL;
-> +       size_t len = 0;
-> +
-> +       /* check request size */
-
-Comment merely repeats what code says, thus has no value. Please drop.
-
-> +       if (max_request_buffer < req_len) {
-> +               die("request was larger than our maximum size (%lu);"
-> +                           " try setting GIT_HTTP_MAX_REQUEST_BUFFER",
-> +                           max_request_buffer);
-
-This error message neglects to say what the request size was. Such
-information would be useful given that it suggests bumping
-GIT_HTTP_MAX_REQUEST_BUFFER to a larger value.
-
-> +       }
-> +
-> +       if (req_len <= 0) {
-> +               *out = NULL;
-> +               return 0;
-> +       }
-> +
-> +       /* allocate buffer */
-
-Drop valueless comment.
-
-> +       buf = xmalloc(req_len);
-> +
+> ...
+> +-M<num>::
+> +--max-line-len<num>::
+> +	Match the pattern only for line shorter or equal to this length.
 > +
 
-Style: Too many blank lines.
+All the excellent review comments from Eric I agree with.
 
-> +       while (1) {
-> +               ssize_t cnt;
-> +
-> +               cnt = read_in_full(fd, buf + len, req_len - len);
-> +               if (cnt < 0) {
-> +                       free(buf);
-> +                       return -1;
-> +               }
-> +
-> +               /* partial read from read_in_full means we hit EOF */
-> +               len += cnt;
-> +               if (len < req_len) {
-> +                       /* TODO request incomplete?? */
-> +                       /* maybe just remove this block and condition along with the loop, */
-> +                       /* if read_in_full is prooven reliable */
+With the name of the option and the above end-user facing
+description, it is very clear that the only thing this feature does
+is to declare that an overlong line does _not_ match when trying to
+check against any pattern.
 
-s/prooven/proven/
+That is a much clearer definition and description than random new
+features people propose here (and kicked back by reviewers, telling
+them to make the specification clearer), and I'd commend you for that.
 
-> +                       *out = buf;
-> +                       return len;
-> +               } else {
-> +                       /* request complete */
-> +                       *out = buf;
-> +                       return len;
-> +
-> +               }
-> +       }
+But it still leaves at least one thing unclear.  How should it
+interact with "-v"?  If we consider an overlong line never matches,
+would "git grep -v <pattern>" should include the line in its output?
 
-What is the purpose of the while(1) loop? Every code path inside the
-loop returns, so it will never execute more than once. Likewise, why
-is 'len' needed?
+Speaking of the output, it also makes me wonder if the feature
+really wants to include an overlong line as a context line when
+showing a near-by line that matches the pattern when -A/-B/-C/-W
+options are in use. Even though it is clear that it does from the
+above description, is it really the best thing the feature can do to
+help the end users?
 
-Rather than writing an entirely new "read" function, how about just
-modifying the existing read_request() to optionally limit the read to
-a specified number of bytes?
+Which leads me to suspect that this "feature" might not be the ideal
+you wanted to achive, but is an approximate substitution that you
+found is "good enough" to simulate what the real thing you wanted to
+do, especially when I go back and read the justfication in the
+proposed log message that talks about "result of generators".
 
-> +}
-> +
-> +/**
-> + * wrapper function, whcih determines based on CONTENT_LENGTH value,
+Isn't it a property of the entire file, not individual lines, if you
+find it uninteresting to see reported by "git grep"?  I cannot shake
+the suspicion that this feature happened to have ended up in this
+shape, instead of "ignore a file with a line this long", only
+because your starting point was to use "has overlong lines" as the
+heuristic for "not interesting", and because "git grep" code is not
+structured to first scan the entire file to decide if it is worth
+working on it, and it is extra work to restructure the codeflow to
+make it so (which you avoided).
 
-s/whcih/which/
+If your real motivation was either
 
-Also, the placement of commas needs some attention.
+ (1) whether the file has or does not have the pattern for certain
+     class of files are uninteresting; do not even run "grep"
+     processing for them; or
 
-> + * to
-> + * - use old behaviour of read_request, to read until EOF
-> + * => read_request_eof(...)
-> + * - just read CONTENT_LENGTH-bytes, when provided
-> + * => read_request_fix_len(...)
-> + */
+ (2) hits or no-hits may be intereseting but output of overlong
+     lines from certain class of files I do not wish to see;
 
-When talking about "old behavior", this comment is repeating
-information more suitable to the commit message (and effectively
-already covered there); information which only has value to someone
-who knew what the old code/behavior was like. The rest of this comment
-is merely repeating what the code itself already says, thus adds no
-value, so should be dropped.
+then I can think of two alternatives.
 
-> +static ssize_t read_request(int fd, unsigned char **out)
-> +{
-> +       /* get request size */
+For (1), can't we tell "result of generators" and other files with
+pathspec?  If so, perhaps a negative pathspec can rescue.  e.g.
 
-Drop valueless comment.
+    git grep <pattern> -- '*.cc' ':!*-autogen.cc'
 
-> +       ssize_t req_len = git_env_ssize_t("CONTENT_LENGTH", -1);
-> +       if (req_len < 0)
-> +               return read_request_eof(fd, out);
-> +       else
-> +               return read_request_fix_len(fd, req_len, out);
-> +}
+For (2), can't we model this after how users can tell "git diff"
+that certain paths are not worth computing and showing textual
+patches for, which is to Unset the 'diff' attribute?  When you have
+
+    *-autogen.cc	-diff
+
+in your .gitattributes, "git diff" would say "Binary files A and B
+differ" instead of explaining line-by-line differences in the patch
+form.  Perhaps we can also have a 'grep' attribute and squelch the
+output if it is Unset?  
+
+It is debatable but one could propose extending the use of existing
+'diff' attribute to cover 'grep' too, with an argument that anything
+not worth showing patch (i.e. 'diff' attribute is Unset) is not
+worth showing grep hits from.
