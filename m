@@ -7,133 +7,157 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DC3B2202F2
-	for <e@80x24.org>; Fri, 24 Nov 2017 01:44:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E8A11202F2
+	for <e@80x24.org>; Fri, 24 Nov 2017 02:11:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751502AbdKXBoE (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Nov 2017 20:44:04 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57390 "EHLO
+        id S1752151AbdKXCLD (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Nov 2017 21:11:03 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:63807 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751400AbdKXBoE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Nov 2017 20:44:04 -0500
+        with ESMTP id S1751502AbdKXCLC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Nov 2017 21:11:02 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3E83DA9511;
-        Thu, 23 Nov 2017 20:44:03 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id F1290B4798;
+        Thu, 23 Nov 2017 21:11:00 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=HMvPM4vvblRr2KKvmlHiptOdzao=; b=lBwWlm
-        Y9eGkmIo/OqPuylXZnZPOSepkJ62oOurw50bFnivgYEaTU6MgAbdQNJyRbqV3ujc
-        ViUKXA8Fju+7xiS+Fs8eOJ1CnpQ/eueUkpN3eCLehqyJ7NTubr33k41ZBFFLuQPJ
-        NyRd3EETv5L04IsFIPy0Cu2ztXJJUkTCle5ds=
+        :content-type; s=sasl; bh=puifRGeCKwOJkcA8mJ0qK6SoViM=; b=cGmJDN
+        Vd6tHDA+7O7uaFuRr3kveiz1YCfwWB2go5L6VWdp71mPkQhBJaC4JBoV8U8P+uRs
+        lrqB3w9/C98PHWFI08KjYPN4rKfuvGJanquBEFOZS2g2jqx/Vx4+axKuqJPzgBJn
+        UXOH9MzNKuNzF5CmP1DHrCyu/mybX47EyTxF8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=fSkpD9OW8XMtkjtSGiMoflEHM406TFOt
-        2GS9j5dPFHoRTLZJXFXUuU9Oj8aVyD2FV7EUK17EtvC+BJ3Q69+a68/u0IBJh68k
-        DhWU7srYyxQA9erzdEtbKwa/a16HZdNCp3+HnRlwUQIJutkb6ZiDI21uB0TxuT4t
-        ZunGNdeXrGQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 34F98A9510;
-        Thu, 23 Nov 2017 20:44:03 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=KCL0DOAtNEgOTkhQgJzxEbnfKjzhXzTs
+        szfRc0wGYuR9AIUA7WGX2/5Ol3tQn7/vjJcajvRCfFRsgMbnMFD6wqrCLaPhvJqj
+        bOFe7FwLJZYHV11NQIELz2qjoFA+Of/8iWXYAtaiCip6i0A9ClAQU2ezD4lsOZ51
+        ZPXRIJnX/VU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8093AB4797;
+        Thu, 23 Nov 2017 21:11:00 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 89DB1A950B;
-        Thu, 23 Nov 2017 20:44:02 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C8496B4796;
+        Thu, 23 Nov 2017 21:10:59 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Marc-Antoine Ruel <maruel@chromium.org>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] grep: Add option --max-line-len
-References: <20171123154159.17408-1-maruel@chromium.org>
-Date:   Fri, 24 Nov 2017 10:44:01 +0900
-In-Reply-To: <20171123154159.17408-1-maruel@chromium.org> (Marc-Antoine Ruel's
-        message of "Thu, 23 Nov 2017 10:41:59 -0500")
-Message-ID: <xmqqwp2gpi1q.fsf@gitster.mtv.corp.google.com>
+To:     git@vger.kernel.org
+Cc:     Christoph Michelbach <michelbach94@gmail.com>
+Subject: Re*: Documentation of post-receive hook
+References: <1510872031.23230.7.camel@gmail.com>
+        <xmqqpo8hu1fi.fsf@gitster.mtv.corp.google.com>
+        <xmqq375dtwnr.fsf@gitster.mtv.corp.google.com>
+        <1511112703.8109.5.camel@gmail.com>
+        <xmqq1sktoiih.fsf@gitster.mtv.corp.google.com>
+        <A82275FD-C9AC-4632-A5E8-ED86CE2AC67D@gmail.com>
+        <xmqqlgizyv0o.fsf@gitster.mtv.corp.google.com>
+Date:   Fri, 24 Nov 2017 11:10:58 +0900
+In-Reply-To: <xmqqlgizyv0o.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Wed, 22 Nov 2017 10:14:31 +0900")
+Message-ID: <xmqqlgiwpgst.fsf_-_@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: F2E71656-D0B8-11E7-8952-8EF31968708C-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: B6DBD6F2-D0BC-11E7-A759-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Marc-Antoine Ruel <maruel@chromium.org> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> This tells git grep to skip files longer than a specified length,
-> which is often the result of generators and not actual source files.
+> Your suggesting to mention that particular message hints at me that
+> you feel that the users may not necessarily understand that push did
+> not result in any update of references on the other side when they
+> see it.  If the message was clear enough to them, "when it reacts to
+> push and updates" ought to be clear enough description, too.
 >
-> ...
-> +-M<num>::
-> +--max-line-len<num>::
-> +	Match the pattern only for line shorter or equal to this length.
-> +
+> And if that indeed is the case (and I would not be surprised if it
+> is, but I suspect that most users are clueful enough), it is not the
+> documentation, but the "Already up-to-date" message, that needs to
+> be clarified, no?
 
-All the excellent review comments from Eric I agree with.
+I do not know if it helps to _also_ clarify the message, but at
+least, let's tie the loose end by updating the documentation.
 
-With the name of the option and the above end-user facing
-description, it is very clear that the only thing this feature does
-is to declare that an overlong line does _not_ match when trying to
-check against any pattern.
+-- >8 --
+Subject: hooks doc: clarify when receive-pack invokes its hooks
 
-That is a much clearer definition and description than random new
-features people propose here (and kicked back by reviewers, telling
-them to make the specification clearer), and I'd commend you for that.
+The text meant to say that receive-pack runs these hooks, and only
+because receive-pack is not a command the end users use every day
+(ever), as an explanation also meantioned that it is run in response
+to 'git push', which is an end-user facing command readers hopefully
+know about.
 
-But it still leaves at least one thing unclear.  How should it
-interact with "-v"?  If we consider an overlong line never matches,
-would "git grep -v <pattern>" should include the line in its output?
+This unfortunately gave an incorrect impression that 'git push'
+always result in the hook to run.  If the refs push wanted to update
+all already had the desired value, these hooks are not run.  
 
-Speaking of the output, it also makes me wonder if the feature
-really wants to include an overlong line as a context line when
-showing a near-by line that matches the pattern when -A/-B/-C/-W
-options are in use. Even though it is clear that it does from the
-above description, is it really the best thing the feature can do to
-help the end users?
+Explicitly mention "... and updates reference(s)" as a precondition
+to avoid this ambiguity.
 
-Which leads me to suspect that this "feature" might not be the ideal
-you wanted to achive, but is an approximate substitution that you
-found is "good enough" to simulate what the real thing you wanted to
-do, especially when I go back and read the justfication in the
-proposed log message that talks about "result of generators".
+Helped-by: Christoph Michelbach <michelbach94@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-Isn't it a property of the entire file, not individual lines, if you
-find it uninteresting to see reported by "git grep"?  I cannot shake
-the suspicion that this feature happened to have ended up in this
-shape, instead of "ignore a file with a line this long", only
-because your starting point was to use "has overlong lines" as the
-heuristic for "not interesting", and because "git grep" code is not
-structured to first scan the entire file to decide if it is worth
-working on it, and it is extra work to restructure the codeflow to
-make it so (which you avoided).
+ Documentation/githooks.txt | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-If your real motivation was either
-
- (1) whether the file has or does not have the pattern for certain
-     class of files are uninteresting; do not even run "grep"
-     processing for them; or
-
- (2) hits or no-hits may be intereseting but output of overlong
-     lines from certain class of files I do not wish to see;
-
-then I can think of two alternatives.
-
-For (1), can't we tell "result of generators" and other files with
-pathspec?  If so, perhaps a negative pathspec can rescue.  e.g.
-
-    git grep <pattern> -- '*.cc' ':!*-autogen.cc'
-
-For (2), can't we model this after how users can tell "git diff"
-that certain paths are not worth computing and showing textual
-patches for, which is to Unset the 'diff' attribute?  When you have
-
-    *-autogen.cc	-diff
-
-in your .gitattributes, "git diff" would say "Binary files A and B
-differ" instead of explaining line-by-line differences in the patch
-form.  Perhaps we can also have a 'grep' attribute and squelch the
-output if it is Unset?  
-
-It is debatable but one could propose extending the use of existing
-'diff' attribute to cover 'grep' too, with an argument that anything
-not worth showing patch (i.e. 'diff' attribute is Unset) is not
-worth showing grep hits from.
+diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+index 9565dc3fda..8f6a3cd63e 100644
+--- a/Documentation/githooks.txt
++++ b/Documentation/githooks.txt
+@@ -222,8 +222,8 @@ to the user by writing to standard error.
+ pre-receive
+ ~~~~~~~~~~~
+ 
+-This hook is invoked by 'git-receive-pack' on the remote repository,
+-which happens when a 'git push' is done on a local repository.
++This hook is invoked by 'git-receive-pack' when it reacts to
++'git push' and updates reference(s) in its repository.
+ Just before starting to update refs on the remote repository, the
+ pre-receive hook is invoked.  Its exit status determines the success
+ or failure of the update.
+@@ -260,8 +260,8 @@ will be set to zero, `GIT_PUSH_OPTION_COUNT=0`.
+ update
+ ~~~~~~
+ 
+-This hook is invoked by 'git-receive-pack' on the remote repository,
+-which happens when a 'git push' is done on a local repository.
++This hook is invoked by 'git-receive-pack' when it reacts to
++'git push' and updates reference(s) in its repository.
+ Just before updating the ref on the remote repository, the update hook
+ is invoked.  Its exit status determines the success or failure of
+ the ref update.
+@@ -305,8 +305,8 @@ unannotated tags to be pushed.
+ post-receive
+ ~~~~~~~~~~~~
+ 
+-This hook is invoked by 'git-receive-pack' on the remote repository,
+-which happens when a 'git push' is done on a local repository.
++This hook is invoked by 'git-receive-pack' when it reacts to
++'git push' and updates reference(s) in its repository.
+ It executes on the remote repository once after all the refs have
+ been updated.
+ 
+@@ -344,8 +344,8 @@ will be set to zero, `GIT_PUSH_OPTION_COUNT=0`.
+ post-update
+ ~~~~~~~~~~~
+ 
+-This hook is invoked by 'git-receive-pack' on the remote repository,
+-which happens when a 'git push' is done on a local repository.
++This hook is invoked by 'git-receive-pack' when it reacts to
++'git push' and updates reference(s) in its repository.
+ It executes on the remote repository once after all the refs have
+ been updated.
+ 
+@@ -375,8 +375,8 @@ for the user.
+ push-to-checkout
+ ~~~~~~~~~~~~~~~~
+ 
+-This hook is invoked by 'git-receive-pack' on the remote repository,
+-which happens when a 'git push' is done on a local repository, when
++This hook is invoked by 'git-receive-pack' when it reacts to
++'git push' and updates reference(s) in its repository, and when
+ the push tries to update the branch that is currently checked out
+ and the `receive.denyCurrentBranch` configuration variable is set to
+ `updateInstead`.  Such a push by default is refused if the working
