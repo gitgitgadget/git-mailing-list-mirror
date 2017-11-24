@@ -2,105 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9CAA32036D
-	for <e@80x24.org>; Fri, 24 Nov 2017 18:09:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 73D3F2036D
+	for <e@80x24.org>; Fri, 24 Nov 2017 18:12:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753540AbdKXSJZ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Nov 2017 13:09:25 -0500
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:45525 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752111AbdKXSJY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Nov 2017 13:09:24 -0500
-Received: by mail-wm0-f65.google.com with SMTP id 9so23834944wme.4
-        for <git@vger.kernel.org>; Fri, 24 Nov 2017 10:09:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:mime-version
-         :content-transfer-encoding;
-        bh=aFd3Q4mfgdNiGZbVg9cPz8K8OAsCivgBQlleq9KtFOQ=;
-        b=T9fKNwHaLqzZNfsOlVG0xycHkc0y3y4tjaMeoIyRAu3GXA0jEcpoC5Lb+2Fivj0YkL
-         KVMHFxabdrZRVxoJQDaJRhUYrRwjHqx/WS+KfN27j4qotoJLQXLTYxR8XkuwJWecvGxl
-         Q6bEyDjodQwxrsQQAeOsQrd24aw9cTMi6hpGNvyKjjBOmJTWX6qkZJKrBFJzFIpyibZU
-         XKCkfw6m+ju8I9BxK4mWhxTrXn6xzmMv3Jlw1onsWNu25O+K2mgVQW0o+ibXBeFYeVcr
-         UxVPrLbr7KeH3wAqn+sdZqXgNH4bl85a7wnEBI3rHQVyg8dkUZk3U03XrycBLrxEo9+K
-         vPiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :mime-version:content-transfer-encoding;
-        bh=aFd3Q4mfgdNiGZbVg9cPz8K8OAsCivgBQlleq9KtFOQ=;
-        b=U+5NR1GhJ2uZGioGsrKC/5nzrjJxMcnfD8U+32KyL15Igb6/P8mUBZilFJZHUl2Oz6
-         HlnKth82JiAZ7hkwokBWKfkB99ethnFdSj3+6VMDmFM231L7AGNRmleWJDQNU+vrqNU3
-         J7eVyEP5fVPis63UmZCe4PM+WV6Je1+8jz5XC8ZDzV49OXPYkjeyHY6JCULSGXSwIg8T
-         M9FErNdZEPM+HvE7mUOr2WLGfo3mrOX4MW4d5iWvyZKmT7y86TNHZ/Bp/ngjfR0ldd8N
-         zKmZPkjNJJ7v3dhb1wixLVszvN35BmQeigqedINF+SKPoyuStpU3AfiwTPuRytLHstKN
-         Emew==
-X-Gm-Message-State: AJaThX52TcMIy2M4ab4tFezTUYFdpeX6FWSjxCuf/HRSGOf97YQuVzFW
-        3XXtRp3expmyEkZS4L88iGyYlA==
-X-Google-Smtp-Source: AGs4zMYzNMTUmo81c38m1qF1qzvzqdFKGgerLHtn9piqCLFfY7ddic1Pw9Ais65APyvjlBGuxq/LrQ==
-X-Received: by 10.28.4.146 with SMTP id 140mr9891004wme.38.1511546963423;
-        Fri, 24 Nov 2017 10:09:23 -0800 (PST)
-Received: from localhost.localdomain (x590db49d.dyn.telefonica.de. [89.13.180.157])
-        by smtp.gmail.com with ESMTPSA id 65sm10327213wrn.27.2017.11.24.10.09.22
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 24 Nov 2017 10:09:22 -0800 (PST)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     Albert Astals Cid <albert.astals.cid@kdab.com>
-Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH] bash completion: Add --autostash and --no-autostash to pull
-Date:   Fri, 24 Nov 2017 19:09:02 +0100
-Message-Id: <20171124180902.31253-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.15.0.384.g4c06762c1
-In-Reply-To: <94455771.5s97AYBuGd@yoga>
+        id S1753707AbdKXSM5 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Nov 2017 13:12:57 -0500
+Received: from cloud.peff.net ([104.130.231.41]:39514 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1753595AbdKXSM4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Nov 2017 13:12:56 -0500
+Received: (qmail 22108 invoked by uid 109); 24 Nov 2017 18:12:57 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 24 Nov 2017 18:12:57 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 15778 invoked by uid 111); 24 Nov 2017 18:13:13 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with ESMTPA; Fri, 24 Nov 2017 13:13:13 -0500
+Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 24 Nov 2017 13:12:54 -0500
+Date:   Fri, 24 Nov 2017 13:12:54 -0500
+From:   Jeff King <peff@peff.net>
+To:     Kevin Daudt <me@ikke.info>
+Cc:     "Robert P. J. Day" <rpjday@crashcourse.ca>,
+        Git Mailing list <git@vger.kernel.org>
+Subject: Re: [PATCH v2] gitcli: tweak "man gitcli" for clarity
+Message-ID: <20171124181254.GC29190@sigill>
+References: <alpine.LFD.2.21.1711211626460.26166@localhost.localdomain>
+ <20171121214552.GB16418@alpha.vpn.ikke.info>
+ <20171123000346.GA8718@sigill>
+ <alpine.LFD.2.21.1711230241260.11944@localhost.localdomain>
+ <20171123135155.GA8231@sigill>
+ <20171123205503.GE16418@alpha.vpn.ikke.info>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20171123205503.GE16418@alpha.vpn.ikke.info>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Ideally we should only autocomplete if pull has --rebase since
-> they only work with it but could not figure out how to do that
-> and the error message of doing git pull --autostash points out
-> that you need --rebase so i guess it's good enough
+On Thu, Nov 23, 2017 at 09:55:03PM +0100, Kevin Daudt wrote:
 
-You could use the completion script's __git_find_on_cmdline() helper
-function to easily check whether the '--rebase' option is already
-present on the command line.
+> > > >   Without a disambiguating `--`, Git makes a reasonable guess. If it
+> > > >   cannot guess (because your request is ambiguous), then it will error
+> > > >   out.
+> [...]
+> > > 1) even without the "--", git can generally parse the command and do
+> > > the right thing (or do a *valid* thing, given its heuristics)
+> > > 
+> > > 2) occasionally, without the "--", the command is really and truly
+> > > ambiguous, at which point git will fail and tell you to disambiguate
+> [...]
+> 
+> Just for completeness, as it is somewhat covered by point 1 already, but
+> there are cases where there is no real ambiguity but you are required to
+> add '--' to tell git that it should not look for the file in the working
+> tree:
 
-Having said that, I don't think we should go there, it feels that's
-trying to be overly and unnecessarily clever.  After all, the order of
-command line options doesn't matter, and 'git pull --autostash
---rebase' is a perfectly legit command.
+Right, I was focused on what the sentence _currently_ said, and didn't
+think about other cases. The "cannot guess" case is not just due to
+ambiguity, but may be due to other heuristics.
 
+I _think_ the only one is the "does it exist in the working tree" rule
+you found, but I'm not sure we'd want to commit ourselves to never
+changing that.
 
-> Signed-off-by: Albert Astals Cid <albert.astals.cid@kdab.com>
-> ---
->  contrib/completion/git-completion.bash | 1 +
->  1 file changed, 1 insertion(+)
+You could make my suggestion correct by putting "e.g.," or "for example"
+at the front of the parentheses. ;)
+
+There is an open question of how carefully we want to document it, but I
+think the strategy so far has been:
+
+ - if you want to be careful, use "--"
+
+ - if you don't, git will use black magic to guess, but that magic is
+   subject to change, so don't rely on it
+
+I don't mind documenting the current magic as long as the "don't rely on
+it" part is made clear.
+
+>   $ git show abc123 deleted_file.txt
+>   fatal: ambiguous argument 'deleted_file.txt':
+>   unknown revision or path not in the working tree.
+>   Use '--' to separate paths from revisions, like this:
+>   'git <command> [<revision>...] -- [<file>...]'
 > 
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-
-> completion.bash
-> index 539d7f84f..7ded58f38 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -1923,6 +1923,7 @@ _git_pull ()
->  	--*)
->  		__gitcomp "
->  			--rebase --no-rebase
-> +			--autostash --no-autostash
->  			$__git_merge_options
->  			$__git_fetch_options
->  		"
-> -- 
-> 2.15.0
-> 
-> 
-> 
+> There might be good reasons why this is, but I don't consider this to be
+> actually ambiguous: there is no branch called 'deleted_file.txt' and git
+> could know that the files exists in the mentioned commit, so it should
+> be pretty clear what is meant.
+
+For that command, yes. But when the command is "git log", do we really
+want to dig through all of history to see if anybody ever mentions
+"deleted_file"?
+
+I'm not sure if we want to get into having different rules for different
+contexts. Not to mention that this really mixes up the layers; you
+cannot know what the whole command line means until you decide what
+abc123 means and examine it, which may in turn be influenced by other
+options. E.g., given:
+
+  git log --no-merges A..B deleted_file.txt
+
+we have to actually do the no-merges log of A..B to see if
+deleted_file.txt is in there.
+
+-Peff
