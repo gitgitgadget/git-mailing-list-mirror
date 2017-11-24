@@ -7,18 +7,18 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EC9D32036D
-	for <e@80x24.org>; Fri, 24 Nov 2017 23:55:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0F3BD2036D
+	for <e@80x24.org>; Fri, 24 Nov 2017 23:55:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753887AbdKXXzG (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Nov 2017 18:55:06 -0500
-Received: from mout.gmx.net ([212.227.17.21]:59947 "EHLO mout.gmx.net"
+        id S1753866AbdKXXy6 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Nov 2017 18:54:58 -0500
+Received: from mout.gmx.net ([212.227.15.18]:54172 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753880AbdKXXzE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Nov 2017 18:55:04 -0500
+        id S1753855AbdKXXy5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Nov 2017 18:54:57 -0500
 Received: from bedhanger.strangled.net ([188.193.86.106]) by mail.gmx.com
- (mrgmx102 [212.227.17.168]) with ESMTPSA (Nemesis) id
- 0MgpmG-1eVdMA1txo-00M09c; Sat, 25 Nov 2017 00:54:26 +0100
+ (mrgmx003 [212.227.17.190]) with ESMTPSA (Nemesis) id
+ 0M08eS-1f81Zv3Y9k-00uM1A; Sat, 25 Nov 2017 00:54:19 +0100
 From:   Ann T Ropea <bedhanger@gmx.de>
 To:     Junio C Hamano <gitster@pobox.com>,
         Philip Oakley <philipoakley@iee.org>,
@@ -26,64 +26,135 @@ To:     Junio C Hamano <gitster@pobox.com>,
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Daniel Barkalow <barkalow@iabervon.org>,
         Ann T Ropea <bedhanger@gmx.de>
-Subject: Re: [PATCH v4 5/6] Documentation: git: document GIT_PRINT_SHA1_ELLIPSIS
-Date:   Sat, 25 Nov 2017 00:53:29 +0100
-Message-Id: <20171124235330.15157-5-bedhanger@gmx.de>
+Subject: Re: [PATCH v4 3/6] Documentation: user-manual: limit usage of ellipsis
+Date:   Sat, 25 Nov 2017 00:53:27 +0100
+Message-Id: <20171124235330.15157-3-bedhanger@gmx.de>
 X-Mailer: git-send-email 2.13.6
 In-Reply-To: <20171124235330.15157-1-bedhanger@gmx.de>
 References: <20171124235330.15157-1-bedhanger@gmx.de>
 References: <20171119184113.16630-1-bedhanger@gmx.de> <20171113223654.27732-1-bedhanger@gmx.de> <83D263E58ABD46188756D41FE311E469@PhilipOakley> <xmqqfu9pmsx3.fsf@gitster.mtv.corp.google.com> <20171113223654.27732-3-bedhanger@gmx.de> <xmqq1sl17e1u.fsf@gitster.mtv.corp.google.com> <20171119184113.16630-5-bedhanger@gmx.de> <xmqqzi7hlhkx.fsf@gitster.mtv.corp.google.com> <5AE7AD53CF184A27BF8F484D415083D9@PhilipOakley> <xmqqo9nuuadm.fsf@gitster.mtv.corp.google.com> <FDCFD8EC7A754412A6369F03E91926C5@PhilipOakley> <CAPig+cT-r0uLLv_GyTRddPe=ATX883S1jt-8gc=ANZW21S81Mg@mail.gmail.com> <CAPig+cT4MvjLDvFEB6hJOSip=dqkp10ydnpfnoUabK=53OmQkw@mail.gmail.com>
 In-Reply-To: <xmqqo9nuuadm.fsf@gitster.mtv.corp.google.com>
-X-Provags-ID: V03:K0:38GNPwnMNj6ChlVFr32KR9cOf2ekgDGyF6gJfYfS6Gt5eAz+Voj
- SAqoxODStHNoXmgd20GNjRWq63m1yu2a6PbiEPxhzROey4JdyN/smuQC6rbCMozHNrJ9Dh6
- WNJ1EriG0hucb39l6o/b8JEsEEtpUALODmux5NMUaajf2eG/ihoz3DMcw73T8Iuf7TKir1L
- ZOJmY4ByKs8Q2L6Ylxukg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:WbFWHyOy8u8=:vhpq6868T8GeCceo0OtkBM
- kXKVfRWdYCMI3rWm7VmpTyrDwZ65VvsD2R0hHcoq9ROjduV33VIMSgJd8EwXvPSzBZXTRr6u1
- iuMcRciTLe0o/wgmtuKXOJms5TiZ4ProYGhTxFINpVpj6SB5XwUn4c+A4yG5rq1QmV3hgMHHo
- 2hzBoGhO3q9vUOglGv3kFxKRUdAHR06Vzh77pb4DbuOYDcOx+auqGxe7D10U/xnzqqUOz2umK
- uMiaBbYFMP58KN6hCFJdH2MYcklOqqKQk6CxxTV2pCpPbpANoRNyCMZFigC28gPoAN159SOu5
- ZXtRaW6Py4eN3AiD7Hwmo8uw+MBZbEFujQWmTVboTeUR1bizFKblCiGcxxtqb89ijKqsOR9A/
- 0yrG75v2/06RSQJjMHq+LtqsgNuP55+GeOtH+AuYhltc2ul4lTZO1+Y5L/WxNuyL+shll7Bf8
- kR/xPne7m2jJkwzHXhZvVBK04GE2f8nSbyHAZl7EOFSNaBlE7tg7sCHgM2BH7E/7X9Y+B5+Q/
- XRcf+k6q8MFN/7RC1rIkoEksyIUXrDGY8OD8MORI86ktCq5IVzhCulmoeHhksMWcW09YhHwhq
- Bn4wo92y/He6PQlOTs37KJHhS6dj4+MFpSdIkoV2bCuI1UquNK3Uyjq8OIfBQkCZScPYkTeb0
- W8iPufK8REBAYLMtsMFV3oaYMgH5GeFyhV4egpCaqO77Vkw/BtWdJZwr3QhXtGRynKKJ5ByF1
- EA2xtywE7r5Obh1MFezGtcisqXGw5GK9qElNXj2PsAqodR2MQJ6e6mMSLh3AHXACEZIeeovR+
- ej44qUNurxmZ6hXIrhej8Alb9rCcw==
+X-Provags-ID: V03:K0:PQ80uEYXXKvIWt1c2vNFZTtjv4hpcUJwAzHOtbfpRwjqVJ7ybQE
+ AiUzRQDBIY5FC5xIIbuA13saV/V5PILjIVKefJWtVlkqJERV5M9V11J+jAALuy0hFas13JT
+ DGVA7p4KFgqE1jXAM+hISjxQSw9pb1S6PYDYXpODuT0aquXYQn2MdZF9Nj0uFqjc2z+5SK0
+ XzTZUn6C0byiWHNV2uSbA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:bOU8PwvP5IE=:2ThKPkakmPfEEZbHlCtXnw
+ /0ENyppjzTo3tYRDo1CX0K14sP+d9LkHzP8CculCeVREIq3ukM3c3zUqr7VyMYhgckfzWldAA
+ 24w6jzubGWC8plVZR/C2oB9Hi5gqvj2sjo+ogR/VrUehoNoWPdQpuBC2QpHDNTqkrDFmyxWeJ
+ o8Mc72MWEPYIM1H31Slz2lqP6pxbw/Z4/7ZVR37W2Gl3t2Zj63GDdBsHvvj8WRHiNFqIOpllM
+ tVLXLtxnhl4xn2GD1mqCCHO612GX1f1iykKxvaWPoTztJwsNOyzHgX5T5OnDAzUel9E2kktx/
+ 5VN+hRf+1AGHlMcVHO+uTc5CcARX16zNAjh9VwkX9R8urdVttiVVMlXAxH1VdsHTnq/frVMvi
+ uXbATdUJdZCRIH1riaoRPAiXTEmO8vNzaUaG45qTtke7RBGbsPivHHsiRkMkFRfqPRwOSZyoU
+ /4jKLjORFpzpc0SFczlnufb8Pw5gUmMVvBFt4K+gLTOkSryLe3GO+TRVAYt9I9si3DbhHpcYp
+ baRDTGL84nQ03+0udMTy7BHD8cuHSNHIF+TqaDGeRz52E+g8dpveVytNV44i+QMuTXGLeY1mD
+ Vv4FsDCN+nXVHhyRfOMTQiDOMukT3riMoK96l0e944N5SMULLOv87zKGNO0Qb7anJt86EN+WY
+ 2YI6PWGOavMAouo+uaKFfzK11/O/+Gedyz98KMpr4WkvnacWbEdKkBn2Ec0EEXqhXzsjhHZ7m
+ LldxtYm9YaIvJ1ode9Pl69o8Po+dWldgE5Uky1Vh8ZRky6cu/d0BW/DFSG3VTXcK2EVAVN0vq
+ TJfg2Ka4OBV10eWRBeVAaivpn88jQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+
+Confusing the ellipsis with the three-dot operator should be made as
+difficult as possible.
 
 Signed-off-by: Ann T Ropea <bedhanger@gmx.de>
 ---
 v2: rename patch series & focus on removal of ellipses
 v3: env var instead of config option, use one-line comments where appropriate, preserve indent level
 v4: improve env var handling (rename, helper func to query, docu)
- Documentation/git.txt | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ Documentation/user-manual.txt | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 483a1f35475e..395c88c8a31f 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -731,6 +731,15 @@ corresponding standard handle, and if `GIT_REDIRECT_STDERR` is
- `2>&1`, standard error will be redirected to the same handle as
- standard output.
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+index 3a03e63eb0d8..eff78902742a 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -319,7 +319,7 @@ do so (now or later) by using -b with the checkout command again. Example:
  
-+`GIT_PRINT_SHA1_ELLIPSIS` (deprecated)::
-+	If set to `yes`, print an ellipsis following an
-+	(abbreviated) SHA-1 value.  This affects indications of
-+	detached HEADs (linkgit:git-checkout[1]) and the raw
-+	diff output (linkgit:git-diff[1]).  Printing an
-+	ellipsis in the cases mentioned is no longer considered
-+	adequate and support for it is likely to be removed in the
-+	foreseeable future (along with the variable).
-+
- Discussion[[Discussion]]
+   git checkout -b new_branch_name
+ 
+-HEAD is now at 427abfa... Linux v2.6.17
++HEAD is now at 427abfa Linux v2.6.17
+ ------------------------------------------------
+ 
+ The HEAD then refers to the SHA-1 of the commit instead of to a branch,
+@@ -508,7 +508,7 @@ Bisecting: 3537 revisions left to test after this
+ 
+ If you run `git branch` at this point, you'll see that Git has
+ temporarily moved you in "(no branch)". HEAD is now detached from any
+-branch and points directly to a commit (with commit id 65934...) that
++branch and points directly to a commit (with commit id 65934) that
+ is reachable from "master" but not from v2.6.18. Compile and test it,
+ and see whether it crashes. Assume it does crash. Then:
+ 
+@@ -549,14 +549,14 @@ says "bisect".  Choose a safe-looking commit nearby, note its commit
+ id, and check it out with:
+ 
+ -------------------------------------------------
+-$ git reset --hard fb47ddb2db...
++$ git reset --hard fb47ddb2db
+ -------------------------------------------------
+ 
+ then test, run `bisect good` or `bisect bad` as appropriate, and
+ continue.
+ 
+ Instead of `git bisect visualize` and then `git reset --hard
+-fb47ddb2db...`, you might just want to tell Git that you want to skip
++fb47ddb2db`, you might just want to tell Git that you want to skip
+ the current commit:
+ 
+ -------------------------------------------------
+@@ -3416,7 +3416,7 @@ commit abc
+ Author:
+ Date:
+ ...
+-:100644 100644 4b9458b... newsha... M somedirectory/myfile
++:100644 100644 4b9458b newsha M somedirectory/myfile
+ 
+ 
+ commit xyz
+@@ -3424,7 +3424,7 @@ Author:
+ Date:
+ 
+ ...
+-:100644 100644 oldsha... 4b9458b... M somedirectory/myfile
++:100644 100644 oldsha 4b9458b M somedirectory/myfile
+ ------------------------------------------------
+ 
+ This tells you that the immediately following version of the file was
+@@ -3449,7 +3449,7 @@ and your repository is good again!
+ $ git log --raw --all
+ ------------------------------------------------
+ 
+-and just looked for the sha of the missing object (4b9458b..) in that
++and just looked for the sha of the missing object (4b9458b) in that
+ whole thing. It's up to you--Git does *have* a lot of information, it is
+ just missing one particular blob version.
+ 
+@@ -4114,9 +4114,9 @@ program, e.g.  `diff3`, `merge`, or Git's own merge-file, on
+ the blob objects from these three stages yourself, like this:
+ 
+ ------------------------------------------------
+-$ git cat-file blob 263414f... >hello.c~1
+-$ git cat-file blob 06fa6a2... >hello.c~2
+-$ git cat-file blob cc44c73... >hello.c~3
++$ git cat-file blob 263414f >hello.c~1
++$ git cat-file blob 06fa6a2 >hello.c~2
++$ git cat-file blob cc44c73 >hello.c~3
+ $ git merge-file hello.c~2 hello.c~1 hello.c~3
+ ------------------------------------------------
+ 
+@@ -4374,7 +4374,7 @@ $ git log --no-merges t/
  ------------------------
  
+ In the pager (`less`), just search for "bundle", go a few lines back,
+-and see that it is in commit 18449ab0...  Now just copy this object name,
++and see that it is in commit 18449ab0.  Now just copy this object name,
+ and paste it into the command line
+ 
+ -------------------
 -- 
 2.13.6
 
