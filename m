@@ -7,30 +7,30 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E67F20954
-	for <e@80x24.org>; Fri, 24 Nov 2017 11:08:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0DEE420954
+	for <e@80x24.org>; Fri, 24 Nov 2017 11:08:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753453AbdKXLIP (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Nov 2017 06:08:15 -0500
-Received: from smtp-out-4.talktalk.net ([62.24.135.68]:62813 "EHLO
+        id S1753446AbdKXLIO (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Nov 2017 06:08:14 -0500
+Received: from smtp-out-4.talktalk.net ([62.24.135.68]:57722 "EHLO
         smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753239AbdKXLIN (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1753292AbdKXLIN (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 24 Nov 2017 06:08:13 -0500
 Received: from lindisfarne.localdomain ([92.22.34.132])
         by smtp.talktalk.net with SMTP
-        id IBq0eNps6Ap17IBq7eb1BP; Fri, 24 Nov 2017 11:08:12 +0000
+        id IBq0eNps6Ap17IBq6eb1BI; Fri, 24 Nov 2017 11:08:11 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1511521692;
-        bh=EWLLel6iLTLnUKdlJZSeE8MIR9gC6bHqi56xJvtnxAs=;
+        s=cmr1711; t=1511521691;
+        bh=aq5AJYjV3si6e9e+byGtk7mTx3R/L2u4n8bGdph1IWU=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:Reply-To;
-        b=m7bTYo25KefiBMiG7hah4AkpW8zDbZio95e5O4zhs+uspeSiM/3sdWCnlMUm0VhkL
-         XPnIAey+4lJMjSnMQxCNAR2dbdY50MzF+zttXuLg5LyYfL5AEcYW1SLpzzOB4qxNKQ
-         uMfPnz50o/4ODYk3wOZWfPfXcM7aDRXNXCcFQkHg=
+        b=lDfgDMFYgrk8Uay6N57P3OmwuaeBmyX9CT5uVl8cxje6Tys1FIvvj8E4fwvZ9ngV0
+         QC0Gn/BI6q5ehI8gujTr2NiqZzEnhPo8UfXBk+lhxbbeb6qCXx9g1XytSxf7hfHHOv
+         uOZqEb51ORE7smi/glz4gjqiZEVY8RNAk4NL0cjU=
 X-Originating-IP: [92.22.34.132]
 X-Spam: 0
 X-OAuthority: v=2.2 cv=EsGilWUA c=1 sm=1 tr=0 a=2gYdyS03q/cwff7SV6P5Ng==:117
- a=2gYdyS03q/cwff7SV6P5Ng==:17 a=evINK-nbAAAA:8 a=1hiMVKsh0mBqE-q75WoA:9
- a=MEzT_SyuPu8Hlan-:21 a=UsvAgxNaHALTGGpc:21 a=RfR_gqz1fSpA9VikTjo0:22
+ a=2gYdyS03q/cwff7SV6P5Ng==:17 a=evINK-nbAAAA:8 a=oiBNXzDSRNRMXQ8EyGAA:9
+ a=RfR_gqz1fSpA9VikTjo0:22
 From:   Phillip Wood <phillip.wood@talktalk.net>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -39,18 +39,17 @@ Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Adam Dinwoodie <adam@dinwoodie.org>,
         Stefan Beller <sbeller@google.com>,
         Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH v4 1/9] t3404: check intermediate squash messages
-Date:   Fri, 24 Nov 2017 11:07:50 +0000
-Message-Id: <20171124110758.9406-2-phillip.wood@talktalk.net>
+Subject: [PATCH v4 0/9] sequencer: don't fork git commit
+Date:   Fri, 24 Nov 2017 11:07:49 +0000
+Message-Id: <20171124110758.9406-1-phillip.wood@talktalk.net>
 X-Mailer: git-send-email 2.15.0
-In-Reply-To: <20171124110758.9406-1-phillip.wood@talktalk.net>
+In-Reply-To: <20170925101041.18344-1-phillip.wood@talktalk.net>
 References: <20170925101041.18344-1-phillip.wood@talktalk.net>
- <20171124110758.9406-1-phillip.wood@talktalk.net>
 Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
-X-CMAE-Envelope: MS4wfCqSXmLLsuTK2K4Cut1TkN8/ftJgedYgJrsLMdCxU/06U6YQ5AZ9gbe5EMwjRHMwVAwU+toiBB34lLueOcylFe2gG9vI6zD5CT54ZCZzEmW+a7x2omv2
- a0dh4aWAsEfMVF+hl8nwxQZojIakO4jrIS+2atb0WuEw9urtSb2y2AyhtC2WeZf7/QXaCG6/9sKJQeEOtt5ObbpEw0zBTtOrCYCb/cRgGRhvFWphTuErr/kJ
- mqlVtElF2tGQEi7DFchw31kJKlX1AMOWWS02vWcBNP2UGkqk/D+DcYTp61wSTYQwu/ozvryNoETDjZIMgowm71N10cPyNf57lRoIYf9pikIh+ApSswt79LRU
- u2tULG9hYQ/68OwLcL91h6YoSjb8T42qybuAhUeIlsP61hxeah0=
+X-CMAE-Envelope: MS4wfGwGswSee6wOeCXD0AyVfNaTC/zCT3Om9k7A+svH9NxbqWWWjhqDma3K9byIm7E3TyBu0f9dKKxzu20Vk4bj5FLX5W4m5gNguZ01LLaFBCur1ITkE2ky
+ gTUbSw6IsmBsSoezFYvUFvhy5c9dlr0xP6CpN7yFUPXR7JwD/fqtafRSN5zE0imRj5puy++G3iAVcP07RQt2Jfwbr9HX81VI9p52L7JyhAnH0jnsU77UnUL+
+ BMi9RcjnvdJhw5iapH8F2DvNbOHurWWcsxlhRhZqE/WpKxRUu5c38dSAqqBCAECpC0gZ7iC3oAS8GI1VhtzTQi/+TE/IpdMStfgG9io6tqDvF3IqehIiakXo
+ jXiN98Mg9kgP8cWcFUQc4UvTha1SJ5gQmUFZhsjhzlIafd9ILvQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -58,29 +57,44 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-When there is more than one squash/fixup command in a row check the
-intermediate messages are correct.
+I've updated the patches to fix the embarassing build failure in
+v3. I've also added a patch to remove the known breakage from some of
+the tests in t3512/t3513 that now pass - someone who knows about
+submodules should check this. The only other change is to interpret
+commit.cleanup=scissors to mean COMMIT_MSG_CLEANUP_SPACE when loading
+the default value for message cleanups to be consistent with 'git
+commit'. (I can't imagine many people have that value set in their
+config)
 
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
- t/t3404-rebase-interactive.sh | 4 ++++
- 1 file changed, 4 insertions(+)
+Here's the original summary:
+These patches teach the sequencer to create commits without forking
+git commit when the commit message does not need to be edited. This
+speeds up cherry picking 10 commits by 26% and picking 10 commits with
+rebase --continue by 44%. The first few patches move bits of
+builtin/commit.c to sequencer.c. The last two patches actually
+implement creating commits in sequencer.c.
 
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index 6a82d1ed876dd5d1073dc63be8ba5720adbf12e3..9ed0a244e6cdf34c7caca8232f0c0a8cf4864c42 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -453,6 +453,10 @@ test_expect_success C_LOCALE_OUTPUT 'squash and fixup generate correct log messa
- 		git rebase -i $base &&
- 	git cat-file commit HEAD | sed -e 1,/^\$/d > actual-squash-fixup &&
- 	test_cmp expect-squash-fixup actual-squash-fixup &&
-+	git cat-file commit HEAD@{2} |
-+		grep "^# This is a combination of 3 commits\."  &&
-+	git cat-file commit HEAD@{3} |
-+		grep "^# This is a combination of 2 commits\."  &&
- 	git checkout to-be-rebased &&
- 	git branch -D squash-fixup
- '
+Phillip Wood (9):
+  t3404: check intermediate squash messages
+  commit: move empty message checks to libgit
+  Add a function to update HEAD after creating a commit
+  commit: move post-rewrite code to libgit
+  commit: move print_commit_summary() to libgit
+  sequencer: simplify adding Signed-off-by: trailer
+  sequencer: load commit related config
+  sequencer: try to commit without forking 'git commit'
+  t3512/t3513: remove KNOWN_FAILURE_CHERRY_PICK_SEES_EMPTY_COMMIT=1
+
+ builtin/commit.c                 | 289 +++--------------------
+ builtin/rebase--helper.c         |  13 +-
+ builtin/revert.c                 |  15 +-
+ sequencer.c                      | 486 ++++++++++++++++++++++++++++++++++++++-
+ sequencer.h                      |  23 ++
+ t/t3404-rebase-interactive.sh    |   4 +
+ t/t3512-cherry-pick-submodule.sh |   1 -
+ t/t3513-revert-submodule.sh      |   1 -
+ 8 files changed, 561 insertions(+), 271 deletions(-)
+
 -- 
 2.15.0
 
