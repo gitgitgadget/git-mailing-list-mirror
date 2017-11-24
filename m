@@ -2,91 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A611720954
-	for <e@80x24.org>; Fri, 24 Nov 2017 07:18:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AE56820954
+	for <e@80x24.org>; Fri, 24 Nov 2017 07:39:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752016AbdKXHS4 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Nov 2017 02:18:56 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60074 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751730AbdKXHSz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Nov 2017 02:18:55 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7F9B2AD455;
-        Fri, 24 Nov 2017 02:18:55 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=2HQoa5ujSevW4erColN+rCFSmOw=; b=vAx6tM
-        ujRqjlzyYIwh7X5UWs2mgug3BuRQVgN25VlZqMvaFC24zdLZwRFUwaFJAkHvF2fH
-        ZdV8sLzL+c71mQ1oSCPkQfF3QT46koO3kzstt82WD5U2+vCeikl9zppEP3DL5PWc
-        tvj8xii1aGyKbbxC8fITwU1tVrLU9hd4qL77k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=bOi4xWk6/P9KEKvlfU00acSkuPW5Bd/p
-        sSFct6kseFqspuYdM3hk8FDpCKLdDssLOhk2lq5SeXMDpd/tDpChFgGk7F2x3xlZ
-        kukIh/p+ugTIwgSVz4HOIDTjHXQL1MlGJnpIzDNCHw+MnXIyevDEsIe27hp8Y5oG
-        SfjZWIi7EWM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 77864AD452;
-        Fri, 24 Nov 2017 02:18:55 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        id S1752286AbdKXHjO (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Nov 2017 02:39:14 -0500
+Received: from smtp1.de.adit-jv.com ([62.225.105.245]:53174 "EHLO
+        smtp1.de.adit-jv.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751577AbdKXHjN (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Nov 2017 02:39:13 -0500
+X-Greylist: delayed 333 seconds by postgrey-1.27 at vger.kernel.org; Fri, 24 Nov 2017 02:39:12 EST
+Received: from localhost (smtp1.de.adit-jv.com [127.0.0.1])
+        by smtp1.de.adit-jv.com (Postfix) with ESMTP id A79F63C0016
+        for <git@vger.kernel.org>; Fri, 24 Nov 2017 08:33:37 +0100 (CET)
+Received: from smtp1.de.adit-jv.com ([127.0.0.1])
+        by localhost (smtp1.de.adit-jv.com [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id QdQFMIdd8gIb for <git@vger.kernel.org>;
+        Fri, 24 Nov 2017 08:33:31 +0100 (CET)
+Received: from HI2EXCH01.adit-jv.com (hi2exch01.adit-jv.com [10.72.92.24])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EE614AD451;
-        Fri, 24 Nov 2017 02:18:54 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git <git@vger.kernel.org>, Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCHv5 7/7] builtin/describe.c: describe a blob
-References: <20171116020039.17810-1-sbeller@google.com>
-        <20171116020039.17810-8-sbeller@google.com>
-        <xmqqwp2qx5w6.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kaGGUJSGG6OdfaTepDrvGBGFd17paBNNYuQt7t8XnDfHw@mail.gmail.com>
-        <xmqq7euiu4r8.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kZajrugviv60kQA6UepYrQGpJK447BK1fBFd3N5Wnn5rQ@mail.gmail.com>
-Date:   Fri, 24 Nov 2017 16:18:53 +0900
-In-Reply-To: <CAGZ79kZajrugviv60kQA6UepYrQGpJK447BK1fBFd3N5Wnn5rQ@mail.gmail.com>
-        (Stefan Beller's message of "Wed, 22 Nov 2017 09:00:43 -0800")
-Message-ID: <xmqqtvxkm9eq.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        by smtp1.de.adit-jv.com (Postfix) with ESMTPS id 3F4313C07D3
+        for <git@vger.kernel.org>; Fri, 24 Nov 2017 08:33:31 +0100 (CET)
+Received: from vmlxhi-102.adit-jv.com (10.72.93.184) by HI2EXCH01.adit-jv.com
+ (10.72.92.24) with Microsoft SMTP Server (TLS) id 14.3.361.1; Fri, 24 Nov
+ 2017 08:33:31 +0100
+Date:   Fri, 24 Nov 2017 08:33:27 +0100
+From:   Eugeniu Rosca <erosca@de.adit-jv.com>
+To:     <git@vger.kernel.org>
+CC:     <erosca@de.adit-jv.com>
+Subject: Make patch-id more flexible?
+Message-ID: <20171124073327.GA15188@vmlxhi-102.adit-jv.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: BAE8B2C6-D0E7-11E7-BB65-8EF31968708C-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Originating-IP: [10.72.93.184]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Dear git Community,
 
-> On Tue, Nov 21, 2017 at 11:55 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Stefan Beller <sbeller@google.com> writes:
->>
->>> ...
->>> fixed.
->>> ...
->>> fixed the text...
->>> ...
->>> I am not fully convinced all descriptions are in recent history, but I
->>> tend to agree that most are, so probably the trade off is a wash.
->>
->> So what do we want with this topic?  I think the "teach 'git log' to
->> highlight commits whose changes involve the given blob" is a more or
->> less an orthogonal thing,
->
-> Well, both of them solve our immediate needs, so I'd be fine with pursuing
-> just one of them, but I do not oppose taking both.
->
->> and I suspect that it is something users
->> may (although I personally do not) find valuable to have a related
->> but different feature in "git describe".
->
-> agreed.
+This is my first post to the git mailing list, so I would first like to
+express my gratitude to everyone involved in developing one of my
+favorite development tools.
 
-I was reacting to your "fixed".  So will we see a rerolled series or
-not?
+I will make my question short and concrete. My day to day job is doing
+Linux kernel integration, which also includes importing of out-of-tree
+kernel modules into the kernel tree. Our team extensively uses cherry
+picking for integration purpose, since most often merging work is simply
+not possible because of a different kernel base used by our suppliers.
+We don't rebase remote commits --onto our repository/branch, since
+(compared to `git cherry-pick -x`) `git rebase --onto` doesn't
+add source/origin information to commit description. The `(cherry
+picked from *)` line is extremely helpful in generating proper commit
+statistics on a given branch, which is interesting because of a high
+amount of commits coming from various non-vanilla remotes.
+
+Reviewing the cherry picked commits, we extensively rely on patch id
+comparison. We've developed scripts that extract the remote commit hash
+from the `(cherry picked from <commit-id>)` line in the commit
+description, in order to produce tables like below:
+
+Remote-commit-id   Local-commit-id    Patch-id-mismatch?
+<rem-commit-id-1>  <loc-commit-id-1>  No
+<rem-commit-id-2>  <loc-commit-id-2>  Yes
+---------------------------------
+<rem-commit-id-N>  <loc-commit-id-N>  No
+
+This information helps the reviewer identify the non-clean picks, which
+are oftentimes (but not always) caused by manual conflict resolution,
+which we try to briefly document in square brackets above the
+`Signed-off-by` signature. We feel that documenting any manual conflict
+resolution is important, as it can be source of bugs if not done
+properly.
+
+Troubles begin when we import out-of-tree kernel modules in-tree (some
+suppliers delivery many of them). We use subtree cherry picking [1] for
+that. Because subtree strategy alters the file-names, there will always
+be a patch id mismatch between the origin commit and its pick. To
+overcome this, we are using alternatives to `git patch-id`, which ignore
+file-names. Here comes my actual question. Would it be conceptually fine
+to implement some `git patch-id` parameter, which would allow ignoring
+the file-names (or reducing those to their `basename`) before computing
+the patch id? Or would it break the concept of patch id (which shouldn't
+accept variations)?
+
+Thank you.
+Eugeniu.
+
+[1] git cherry-pick -x -s --no-merges --strategy=subtree -Xsubtree=drivers/staging/mymodule <commit-X>..<commit-Y>
