@@ -7,90 +7,100 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C05DC20A40
-	for <e@80x24.org>; Fri, 24 Nov 2017 05:49:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E687120A40
+	for <e@80x24.org>; Fri, 24 Nov 2017 05:54:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751241AbdKXFtR (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Nov 2017 00:49:17 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55839 "EHLO
+        id S1751524AbdKXFyx (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Nov 2017 00:54:53 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57696 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750853AbdKXFtR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Nov 2017 00:49:17 -0500
+        with ESMTP id S1750853AbdKXFyx (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Nov 2017 00:54:53 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2012FB6B28;
-        Fri, 24 Nov 2017 00:49:16 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A2752AC523;
+        Fri, 24 Nov 2017 00:54:52 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=FKzDjqWI122nv108jr7Kls1RbsY=; b=GhZYSB
-        JJTikQYSliVxUSw1jA2pp+h5Rx+c2r9UThYLFk4ersQlogrv0wrLTH3umKu8GcAq
-        uFouQ7a8N9SqzFv+Q7P0JPYvWQ1WqVQqlj49sRpV25Kr7W0YE7nQMkUw8v6N6dt9
-        tY+rPpkcKGg4A1GOL5xyGre4cYFe1oIGzhlPc=
+        :content-type; s=sasl; bh=o8/TXY6h9uWyFd0LPmWd93qD6w8=; b=R1jPHb
+        hkvVRbkMEomfWBPzoAr8GGw4jGQ3w3Nzf5ad1cHjHQlAwyXCgCqQ6TqUV5riKlWd
+        62RH8M6Sg6clbABUjn85kgfeU82m21Zj7pGEdZyy72VjfkUs8mOawFUsB7AiVQOY
+        7IBrDVSP2gkmra8jHHCvHUgJRZOFPf1yPjD+o=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=h/lOVorO+lnPgvkYA7QcGev216Nikyue
-        OpbkRtHBFe+XcQLz4d+PSEaj7tVOO8wMluomJNILXHr3U9DNrsKgEoWbjr3W14LF
-        wl/L8dNtJYsRP9RSxyQWISJo6rR1Gj8hVcfQ+wv6njEk8LV3zc5wehlMr5tYkpGb
-        ZG89kHLZcz8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 171A8B6B27;
-        Fri, 24 Nov 2017 00:49:16 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=Pt8l516hzZZiuqJC7Nuv7JxkEOUCsvyK
+        /qecj3Y5CvqHXl3cv5i8LwlZPmpn/lmG+nVqtoMUHNfaCQITN6uG4Ba2BmcLxJyD
+        GF7SZBzgq6+5lIdeDUgchxLgfqDNsuPpdN6T+dMBEU9Q+lX0Xsl6OmGCD9YdspV5
+        WrSaFj1z9BM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 99946AC522;
+        Fri, 24 Nov 2017 00:54:52 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8F4CBB6B26;
-        Fri, 24 Nov 2017 00:49:15 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 016A0AC520;
+        Fri, 24 Nov 2017 00:54:51 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Phil Hord <phil.hord@gmail.com>
-Cc:     Git <git@vger.kernel.org>, David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH v2 2/2] stash-store: add failing test for same-ref
-References: <20171122212802.7068-1-phil.hord@gmail.com>
-Date:   Fri, 24 Nov 2017 14:49:14 +0900
-In-Reply-To: <20171122212802.7068-1-phil.hord@gmail.com> (Phil Hord's message
-        of "Wed, 22 Nov 2017 13:28:02 -0800")
-Message-ID: <xmqqzi7cns4l.fsf@gitster.mtv.corp.google.com>
+To:     Max Kirillov <max@max630.net>
+Cc:     Jeff King <peff@peff.net>,
+        Florian Manschwetus <manschwetus@cs-software-gmbh.de>,
+        Chris Packham <judge.packham@gmail.com>,
+        Konstantin Khomoutov <kostix+git@007spb.ru>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH] http-backend: respect CONTENT_LENGTH as specified by rfc3875
+References: <20171123234511.574-1-max@max630.net>
+Date:   Fri, 24 Nov 2017 14:54:50 +0900
+In-Reply-To: <20171123234511.574-1-max@max630.net> (Max Kirillov's message of
+        "Fri, 24 Nov 2017 01:45:11 +0200")
+Message-ID: <xmqqvai0nrv9.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 348A9AA2-D0DB-11E7-9AAF-575F0C78B957-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: FD10E8FA-D0DB-11E7-8AD6-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phil Hord <phil.hord@gmail.com> writes:
+Max Kirillov <max@max630.net> writes:
 
-> stash-store cannot create a new stash with the same ref as stash@{0}. No
-> error is returned even though no new stash log is created. Add a failing
-> test to track.
+> http-backend reads whole input until EOF. However, the RFC 3875 specifies
+> that a script must read only as many bytes as specified by CONTENT_LENGTH
+> environment variable. This causes hang under IIS/Windows, for example.
 >
-> Signed-off-by: Phil Hord <phil.hord@gmail.com>
+> Make http-backend read only CONTENT_LENGTH bytes, if it's defined, rather than
+> the whole input until EOF. If the varibale is not defined, keep older behavior
+> of reading until EOF because it is used to support chunked transfer-encoding.
+>
+> Signed-off-by: Florian Manschwetus <manschwetus@cs-software-gmbh.de>
+> Authored-by: Florian Manschwetus <manschwetus@cs-software-gmbh.de>
+> Fixed-by: Max Kirillov <max@max630.net>
+> Signed-off-by: Max Kirillov <max@max630.net>
 > ---
+> ...
+> I hope I marked it correctly in the trailers.
 
-Sorry, I lost track.  Where is v1 of this series and 1/2 of v2?
-IOW, where does this patch fit in in the larger picture?
+It is probably more conventional to do it like so:
 
->  t/t3903-stash.sh | 11 +++++++++++
->  1 file changed, 11 insertions(+)
->
-> diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-> index 279e31717..7d511afd3 100755
-> --- a/t/t3903-stash.sh
-> +++ b/t/t3903-stash.sh
-> @@ -813,6 +813,17 @@ test_expect_success 'push -m also works without space' '
->  	test_cmp expect actual
->  '
+    From: Florian Manschwetus <manschwetus@cs-software-gmbh.de>
+    Date: <original date of Florian's patch series>
+
+    http-backend reads whole input until EOF. However, the RFC 3875...
+    ... chunked transfer-encoding.
+
+    Signed-off-by: Florian Manschwetus <manschwetus@cs-software-gmbh.de>
+    [mk: fixed trivial build failures and stuff]
+    Signed-off-by: Max Kirillov <max@max630.net>
+    ---
+
 >  
-> +test_expect_failure 'store same ref twice' '
-> +	>foo &&
-> +	git add foo &&
-> +	STASH_ID=$(git stash create) &&
-> +	git stash store -m "original message" $STASH_ID &&
-> +	git stash store -m "custom message" $STASH_ID &&
-> +	echo "stash@{0}: custom message" >expect &&
-> +	git stash list -1 >actual &&
-> +	test_cmp expect actual
-> +'
-> +
->  test_expect_success 'store -m foo shows right message' '
->  	>foo &&
->  	git add foo &&
+> +/*
+> + * replacement for original read_request, now renamed to read_request_eof,
+> + * honoring given content_length (req_len),
+> + * provided by new wrapper function read_request
+> + */
+
+I agree with Eric's suggestion.  In-code comment is read by those
+who have the current code, without knowing/caring what it used to
+be.  "It used to do this, but replace it with this new thing
+because..." is a valuable thing to record in the log message, but
+not here.
