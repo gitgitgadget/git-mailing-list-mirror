@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8B2C620A40
-	for <e@80x24.org>; Fri, 24 Nov 2017 04:45:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CFF2220A40
+	for <e@80x24.org>; Fri, 24 Nov 2017 05:02:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753391AbdKXEpW (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Nov 2017 23:45:22 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50210 "EHLO
+        id S1750749AbdKXFC0 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Nov 2017 00:02:26 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51260 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753346AbdKXEpT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Nov 2017 23:45:19 -0500
+        with ESMTP id S1750715AbdKXFC0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Nov 2017 00:02:26 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 75B82B618D;
-        Thu, 23 Nov 2017 23:45:18 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8EEE2B64FF;
+        Fri, 24 Nov 2017 00:02:25 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=WCGJdeWVdr7Hy3vkYhjOFxf4ssw=; b=fLAuM6
-        X2ZWqendQIiE18c3+GfnmmqZiVu5hSPUxbQB6sB1Vsy0UQLFTewQbo+zlOs4bPNo
-        v5LTyioS7EDKzPnt6LvlZMTp4Q3vqYbeYyzDJhM8zcB3nr0Uu2EJQOryYMaZuEQ7
-        jZaUbM4xVWpc4p4w40Y2dHRxP+tLRxrJ9wFTY=
+        :content-type; s=sasl; bh=zv3eU8dNJD9AR1aZnYOvGP/uCAU=; b=UQwrPx
+        3V+OBed1WTGgvq5kJCkQpExClhFs1DvfgzGXvR+q8VKYIpCFhFxbskYKbcXX8Hw1
+        qm9lFBGDYkDkHxsD4rCz4TiQd8tI1YlObLn0yS1KgfaFj8p0Q/NEAnFGvBn3mg15
+        Cf7X78eYdRYriHijwtv0Se8jC7yD+BoqhdiyE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=upi8f8RGpeAwCNK4GBlL7i+v+sLPOS5S
-        v0DFgeIYIPB+v1ZreiKFbER5SnRYxKS/3CDKx2373LcU18T0NrA24+jxR9V74XNZ
-        FKUmw2IdUv2tBMyPGQKIQlYhCi5/yhgDU/0574ymPWCk9PgN++gRHpaNMm0OgURg
-        QBlp9Q6AXCY=
+        :content-type; q=dns; s=sasl; b=ABS/LjZZH5mmz7KXJSKB9rkMdmYWDbuf
+        oIjBmdZ6Uyjun5y8Vw817HROYyGEf9lBMzH9lO6yMME7P71Qp2x8Q8VHY+PllYbA
+        H5ns54lqpRBbfVQs82ey8QKCCXQh5uwofC5q75FbHKV/Yt3VtNs4b7aYTDwVpavr
+        gajXb7ixvmM=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6D5B5B618C;
-        Thu, 23 Nov 2017 23:45:18 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 85CC4B64FE;
+        Fri, 24 Nov 2017 00:02:25 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D19BDB618B;
-        Thu, 23 Nov 2017 23:45:17 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0457BB64FD;
+        Fri, 24 Nov 2017 00:02:24 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
 Cc:     Git Mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH v2] doc: clarify that "git bisect" accepts one or more good commits
-References: <alpine.LFD.2.21.1711220729230.13545@DESKTOP-1GPMCEJ>
-Date:   Fri, 24 Nov 2017 13:45:16 +0900
-In-Reply-To: <alpine.LFD.2.21.1711220729230.13545@DESKTOP-1GPMCEJ> (Robert
-        P. J. Day's message of "Wed, 22 Nov 2017 07:32:14 -0500 (EST)")
-Message-ID: <xmqqh8tkp9nn.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH v3] doc: tweak "man gitcli" for clarity
+References: <alpine.LFD.2.21.1711220701070.12544@DESKTOP-1GPMCEJ>
+Date:   Fri, 24 Nov 2017 14:02:23 +0900
+In-Reply-To: <alpine.LFD.2.21.1711220701070.12544@DESKTOP-1GPMCEJ> (Robert
+        P. J. Day's message of "Wed, 22 Nov 2017 07:03:09 -0500 (EST)")
+Message-ID: <xmqqd148p8v4.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 45147DCE-D0D2-11E7-AB28-575F0C78B957-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: A950417C-D0D4-11E7-9F49-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -59,87 +59,72 @@ X-Mailing-List: git@vger.kernel.org
 
 "Robert P. J. Day" <rpjday@crashcourse.ca> writes:
 
->  This command uses a binary search algorithm to find which commit in
-> -your project's history introduced a bug. You use it by first telling
-> -it a "bad" commit that is known to contain the bug, and a "good"
-> -commit that is known to be before the bug was introduced. Then `git
-> -bisect` picks a commit between those two endpoints and asks you
-> +your project's history introduced a bug. You use it by first telling it
-> +a "bad" commit that is known to contain the bug, and one or more "good"
-> +commits that are known to be before the bug was introduced. Then `git
-> +bisect` picks a commit somewhere in between those commits and asks you
+> -This manual describes the convention used throughout Git CLI.
+> +This manual describes the conventions used throughout Git CLI.
 
-Good.
+OK.
 
-> -Once you have specified at least one bad and one good commit, `git
-> +Once you have specified one bad and one or more good commits, `git
->  bisect` selects a commit in the middle of that range of history,
->  checks it out, and outputs something similar to the following:
-
-Good.
-
-> @@ -137,7 +137,7 @@ respectively, in place of "good" and "bad". (But note that you cannot
->  mix "good" and "bad" with "old" and "new" in a single session.)
+>  Many commands take revisions (most often "commits", but sometimes
+>  "tree-ish", depending on the context and command) and paths as their
+> @@ -32,32 +32,35 @@ arguments.  Here are the rules:
+>     between the HEAD commit and the work tree as a whole".  You can say
+>     `git diff HEAD --` to ask for the latter.
 >
->  In this more general usage, you provide `git bisect` with a "new"
-> -commit that has some property and an "old" commit that doesn't have that
-> +commit with some property and some "old" commits that don't have that
->  property. Each time `git bisect` checks out a commit, you test if that
+> - * Without disambiguating `--`, Git makes a reasonable guess, but errors
+> -   out and asking you to disambiguate when ambiguous.  E.g. if you have a
+> -   file called HEAD in your work tree, `git diff HEAD` is ambiguous, and
+> + * In cases where a Git command is truly ambiguous, Git will error out
+> +   and ask you to disambiguate the command.  E.g. if you have a file
+> +   called HEAD in your work tree, `git diff HEAD` is ambiguous, and
+>     you have to say either `git diff HEAD --` or `git diff -- HEAD` to
+>     disambiguate.
+>  +
+>  When writing a script that is expected to handle random user-input, it is
+>  a good practice to make it explicit which arguments are which by placing
+> -disambiguating `--` at appropriate places.
+> +a disambiguating `--` at appropriate places.
 
-Good.
+The above "truly" is misleading by giving the information the other
+way around.  We ask to disambiguate when we cannot readily say the
+command line is *not* unambiguous.  That is different from asking
+when we know it is truly ambiguous.
 
-> @@ -145,19 +145,19 @@ will report which commit introduced the property.
->
->  To use "old" and "new" instead of "good" and bad, you must run `git
->  bisect start` without commits as argument and then run the following
-> -commands to add the commits:
-> +commands to identify the commits:
+Also see <xmqq7eugqykq.fsf@gitster.mtv.corp.google.com> if you want
+to know more.
 
-I am not sure if this is an improvement (see below).
+>   * Many commands allow wildcards in paths, but you need to protect
+> -   them from getting globbed by the shell.  These two mean different
+> -   things:
+> +   them from getting globbed by the shell.  The following commands have
+> +   two different meanings:
+>  +
+>  --------------------------------
+>  $ git checkout -- *.c
+> +
+>  $ git checkout -- \*.c
+> +$ git checkout -- "*.c"
+> +$ git checkout -- '*.c'
 
->
->  ------------------------------------------------
-> -git bisect old [<rev>]
-> +git bisect old [<rev>...]
->  ------------------------------------------------
+I do not think these two additional ones add any value.
 
-Good.
+And if you do not add these two, you do not need any of the change
+we see before or after this example.  The changes you made to these
+paragraphs are primarily there because you need to explain that the
+latter three are equivalent to each other now because of these two
+extra ones, while the original did not have to say anything like
+that.
 
-> -to indicate that a commit was before the sought change, or
-> +to identify one or more commits before the sought change, or
->
->  ------------------------------------------------
-> -git bisect new [<rev>...]
-> +git bisect new [<rev>]
->  ------------------------------------------------
+Because this is not a tutorial for shell scripting and its quoting
+rules, highlighting the difference between the case where Git sees
+the asterisk and you let shell to expand asterisk and do not let Git
+see the asterisk _is_ important, but the fact that you can quote the
+asterisk in different ways from the shell is *not* important.  We
+shouldn't clutter the description with the latter, I would think.
 
-Good.
+I would however be receptive if the change were to only replace the
+backslash quoting of asterisk with the one that uses a single quote
+pair (and with no changes in the surrounding paragraphs).  That
+change could be justified by saying that a pair of single (or
+double) quotes would be more familiar for people new to the shell.
 
-> -to indicate that it was after.
-> +to indicate a single commit after that change.
-
-As to "identify", I would say it is better to consistently use
-"indicate" like the original of these two hunks at the end says,
-i.e. "indicate that it is bad/new (or they are good/old)".
-
-Regarding the earlier "add the commits", I do not think the original
-is confusing and any reasonable reader would get that the verb is a
-casually (or "carelessly") used short-hand for "add the commits to
-the set of commits the bisect algorithm cares about", and turning it
-to "identify" adds much clarity.
-
-As it is immediately followed by two illustrations to use old and
-new, I would think that we could just stop the sentence at "then run
-the following commands:" without saying anything else.
-
-If you really want to phrase it differently from the two sentences
-to describe use of old and new, because this is acting as a headline
-for these two, perhaps it is an improvement to say something like
-"then run the following commands to limit the bisection range"; that
-would explain _why_ these commits are "added" and would give additional
-information to the readers.
-
-
-   
-
-	
+Thanks.
