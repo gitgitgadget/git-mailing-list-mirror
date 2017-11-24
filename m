@@ -2,188 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C3F92202F2
-	for <e@80x24.org>; Thu, 23 Nov 2017 23:53:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 235EF202F2
+	for <e@80x24.org>; Fri, 24 Nov 2017 00:12:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753374AbdKWXxs (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Nov 2017 18:53:48 -0500
-Received: from p3plsmtpa11-10.prod.phx3.secureserver.net ([68.178.252.111]:34059
-        "EHLO p3plsmtpa11-10.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753333AbdKWXxr (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 23 Nov 2017 18:53:47 -0500
-X-Greylist: delayed 439 seconds by postgrey-1.27 at vger.kernel.org; Thu, 23 Nov 2017 18:53:47 EST
-Received: from jessie.local ([212.149.203.197])
-        by :SMTPAUTH: with SMTP
-        id I1CGeB30a9pdmI1CMelVFo; Thu, 23 Nov 2017 16:46:28 -0700
-From:   Max Kirillov <max@max630.net>
-To:     Jeff King <peff@peff.net>
-Cc:     Max Kirillov <max@max630.net>,
-        Florian Manschwetus <manschwetus@cs-software-gmbh.de>,
-        Chris Packham <judge.packham@gmail.com>,
-        Konstantin Khomoutov <kostix+git@007spb.ru>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: [PATCH] http-backend: respect CONTENT_LENGTH as specified by rfc3875
-Date:   Fri, 24 Nov 2017 01:45:11 +0200
-Message-Id: <20171123234511.574-1-max@max630.net>
-X-Mailer: git-send-email 2.11.0.1122.gc3fec58.dirty
-In-Reply-To: <20160401235532.GA27941@sigill.intra.peff.net>
-X-CMAE-Envelope: MS4wfNwhu1iiWv3I0MZRGzIHzVll+TyyTlQgFATkBhol2hvAogbjN2bZlMkOr/zroUOVFcV8S81s9bYwWsLXJsj3fjhT8Y9Gn0rgT5Ff/48bM3NRgtyEKhpf
- psCkQBI4HRtvHTLE/QpBEWR2bqHW3rrhz5D+mkQbiQxDWMcoFKCa3UnzvpdiyvqhWA9gd+Z/mb3Mgqmv/LtGRDdalBKXR+S0Gif561n/Re2JdnQO09rx/UJy
- t4siVZ0K8q8Q+LmQAwjd46MOXTVBZ/LuQVT7ZToGq6OD1k/WDkBKeKUpDkuFW2QSZ+mphmmWzVF7N8GYeb2WV0abAxe2f7LJyI4CU5+i/zc=
+        id S1753404AbdKXAM4 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Nov 2017 19:12:56 -0500
+Received: from mail-wm0-f52.google.com ([74.125.82.52]:38104 "EHLO
+        mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753398AbdKXAM4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Nov 2017 19:12:56 -0500
+Received: by mail-wm0-f52.google.com with SMTP id 128so19427374wmo.3
+        for <git@vger.kernel.org>; Thu, 23 Nov 2017 16:12:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=jboNLSr6/Pya1QM9tTt07M0eeVNFzXZXg6J/kA2MGmY=;
+        b=VczlHP+PRfIlJxasJxqaS9YB9/UuWHo4ofXWyf9Tlk/qH9hREvt6q3BSPO313k0yK9
+         HkNZReldC2VfiI5YMDU+KkyVF+xn8ICi6ur1d4oNxgmd3k+23vBJGKl0aJfXugGuPhuG
+         4/KBqXA1BLnB52qdwXV2sx+gvZEfepPqAvuYnRAYh6qiCHF0sFPU+YR+6XnoTVJbwGDw
+         6LqukahICB+hlkK04dqa7zI0Rp9JKsKplDORkrLzECy0qLnIL9b569O21Lab6eD4sPFa
+         DLTc+YvgmvzXBLDoE/ZU9DP4i6pVcciFHv+kq8I+EyPO95yjI4A0CzwYcNdObxDk8vOf
+         aQvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=jboNLSr6/Pya1QM9tTt07M0eeVNFzXZXg6J/kA2MGmY=;
+        b=RGiIg87RqlJ1wlsrcl6I27ymZJtI2xNkuQzDjSdyXeLWUtYV05eI4GeF4wWXZFML04
+         pwBSvFhrHFCOapn8wKzWOWhd8Zqn+birGfoEleEu4KvGnqmlXPZ95GeKhP0iW+R1tk1Y
+         CeNCw+0lu8j0ebn2liWFZfi3LnwVZTa7kKElWS+DAo1tk8Eso1amkkQSs+qURGj9kGK7
+         X5r0PARbTa4k5rhIYRGjQ6R+MmXyNOMKnJGtCP358mIY/5PbwicEo8V+W0KWcDiPiIiF
+         HLBxgaSW15BRz1zYthWNv6t/33ogp9xwqKMsFQlUXftQaZyxQsxQmXIHvDyfcVgWOa0f
+         o7jw==
+X-Gm-Message-State: AJaThX5HYvuo/7azX3BfKZGJzgwxdRZELGIXvNSsN5fHXzVyzwQt+xYE
+        HjBqtwyiE6eB+rRkttLjmE94DZa4
+X-Google-Smtp-Source: AGs4zMaPbB5HLwWjXNxipPPXMkfpIFYt6Hg8pREYfLx67Z2DsY2XjMlmA3ORMx5bUj1S3hdVvOblZw==
+X-Received: by 10.28.14.195 with SMTP id 186mr8177017wmo.56.1511482374803;
+        Thu, 23 Nov 2017 16:12:54 -0800 (PST)
+Received: from [192.168.5.102] (cable-24-135-61-30.dynamic.sbb.rs. [24.135.61.30])
+        by smtp.gmail.com with ESMTPSA id r14sm47646130wrb.43.2017.11.23.16.12.53
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 23 Nov 2017 16:12:54 -0800 (PST)
+Subject: Re: Problem installing Git (followup)
+To:     Phil Martel <pomartel@comcast.net>, git@vger.kernel.org
+References: <077942bb-5952-6f4a-8054-b17d3883b901@comcast.net>
+ <f30c4350-500a-44e8-27ee-7d5ae49903c4@gmail.com>
+ <5d95405e-7c95-88b2-2481-bb7990c5b8b5@comcast.net>
+From:   Igor Djordjevic <igor.d.djordjevic@gmail.com>
+Message-ID: <55436c77-89f7-8f18-18a3-ca75a5ff96cb@gmail.com>
+Date:   Fri, 24 Nov 2017 01:12:48 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
+MIME-Version: 1.0
+In-Reply-To: <5d95405e-7c95-88b2-2481-bb7990c5b8b5@comcast.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-http-backend reads whole input until EOF. However, the RFC 3875 specifies
-that a script must read only as many bytes as specified by CONTENT_LENGTH
-environment variable. This causes hang under IIS/Windows, for example.
+Hi Phil,
 
-Make http-backend read only CONTENT_LENGTH bytes, if it's defined, rather than
-the whole input until EOF. If the varibale is not defined, keep older behavior
-of reading until EOF because it is used to support chunked transfer-encoding.
+On 24/11/2017 00:44, Phil Martel wrote:
+> On 11/23/2017 4:30 PM, Igor Djordjevic wrote:
+>> On 23/11/2017 19:51, Phil Martel wrote:
+>>> I'm trying to install Git-2.15.0-64-bit.exe onto my Windows 10 
+>>> machine.  When I run this installer program no matter what 
+>>> options I try or whether I run as administrator it ends up with 
+>>> an error box saying "The drive or UNC share you selected does 
+>>> not exist or is not accessible. Please select another".  I do 
+>>> not see any way of selecting a drive.  Any suggestions?
+>> 
+>> Do you already have "Git for Windows" installed? If so, does it work
+>> if you try uninstalling it first?
+> 
+> That solved my problem.  I apparently had enough cruft left over 
+> from a hard disk issue for Windows to think I still had a copy of 
+> Git installed.  when I got rid of it, the new version installed
+> with no problems.
+> 
+> Thanks again,
 
-Signed-off-by: Florian Manschwetus <manschwetus@cs-software-gmbh.de>
-Authored-by: Florian Manschwetus <manschwetus@cs-software-gmbh.de>
-Fixed-by: Max Kirillov <max@max630.net>
-Signed-off-by: Max Kirillov <max@max630.net>
----
-Hi
+No problem, it was more of a lucky shot, but glad it helped :)
 
-I came across this issue, and I think is should be good to restore the patch.
-It is basically same but I squashed them, fixed the thing you mentioned and
-also some trivial build failures (null -> NULL and missing return from the wrapper).
-I hope I marked it correctly in the trailers.
- config.c       |  8 +++++++
- config.h       |  1 +
- http-backend.c | 72 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
- 3 files changed, 80 insertions(+), 1 deletion(-)
+Regards, Buga
 
-diff --git a/config.c b/config.c
-index 231f9a750b..925bb65dfa 100644
---- a/config.c
-+++ b/config.c
-@@ -1525,6 +1525,14 @@ unsigned long git_env_ulong(const char *k, unsigned long val)
- 	return val;
- }
- 
-+ssize_t git_env_ssize_t(const char *k, ssize_t val)
-+{
-+	const char *v = getenv(k);
-+	if (v && !git_parse_ssize_t(v, &val))
-+		die("failed to parse %s", k);
-+	return val;
-+}
-+
- int git_config_system(void)
- {
- 	return !git_env_bool("GIT_CONFIG_NOSYSTEM", 0);
-diff --git a/config.h b/config.h
-index 0352da117b..947695c304 100644
---- a/config.h
-+++ b/config.h
-@@ -74,6 +74,7 @@ extern int git_config_rename_section_in_file(const char *, const char *, const c
- extern const char *git_etc_gitconfig(void);
- extern int git_env_bool(const char *, int);
- extern unsigned long git_env_ulong(const char *, unsigned long);
-+extern ssize_t git_env_ssize_t(const char *, ssize_t);
- extern int git_config_system(void);
- extern int config_error_nonbool(const char *);
- #if defined(__GNUC__)
-diff --git a/http-backend.c b/http-backend.c
-index 519025d2c3..317b99b87c 100644
---- a/http-backend.c
-+++ b/http-backend.c
-@@ -280,7 +280,7 @@ static struct rpc_service *select_service(struct strbuf *hdr, const char *name)
-  * hit max_request_buffer we die (we'd rather reject a
-  * maliciously large request than chew up infinite memory).
-  */
--static ssize_t read_request(int fd, unsigned char **out)
-+static ssize_t read_request_eof(int fd, unsigned char **out)
- {
- 	size_t len = 0, alloc = 8192;
- 	unsigned char *buf = xmalloc(alloc);
-@@ -317,6 +317,76 @@ static ssize_t read_request(int fd, unsigned char **out)
- 	}
- }
- 
-+/*
-+ * replacement for original read_request, now renamed to read_request_eof,
-+ * honoring given content_length (req_len),
-+ * provided by new wrapper function read_request
-+ */
-+static ssize_t read_request_fix_len(int fd, size_t req_len, unsigned char **out)
-+{
-+	unsigned char *buf = NULL;
-+	size_t len = 0;
-+
-+	/* check request size */
-+	if (max_request_buffer < req_len) {
-+		die("request was larger than our maximum size (%lu);"
-+			    " try setting GIT_HTTP_MAX_REQUEST_BUFFER",
-+			    max_request_buffer);
-+	}
-+
-+	if (req_len <= 0) {
-+		*out = NULL;
-+		return 0;
-+	}
-+
-+	/* allocate buffer */
-+	buf = xmalloc(req_len);
-+
-+
-+	while (1) {
-+		ssize_t cnt;
-+
-+		cnt = read_in_full(fd, buf + len, req_len - len);
-+		if (cnt < 0) {
-+			free(buf);
-+			return -1;
-+		}
-+
-+		/* partial read from read_in_full means we hit EOF */
-+		len += cnt;
-+		if (len < req_len) {
-+			/* TODO request incomplete?? */
-+			/* maybe just remove this block and condition along with the loop, */
-+			/* if read_in_full is prooven reliable */
-+			*out = buf;
-+			return len;
-+		} else {
-+			/* request complete */
-+			*out = buf;
-+			return len;
-+			
-+		}
-+	}
-+}
-+
-+/**
-+ * wrapper function, whcih determines based on CONTENT_LENGTH value,
-+ * to
-+ * - use old behaviour of read_request, to read until EOF
-+ * => read_request_eof(...)
-+ * - just read CONTENT_LENGTH-bytes, when provided
-+ * => read_request_fix_len(...)
-+ */
-+static ssize_t read_request(int fd, unsigned char **out)
-+{
-+	/* get request size */
-+	ssize_t req_len = git_env_ssize_t("CONTENT_LENGTH", -1);
-+	if (req_len < 0)
-+		return read_request_eof(fd, out);
-+	else
-+		return read_request_fix_len(fd, req_len, out);
-+}
-+
- static void inflate_request(const char *prog_name, int out, int buffer_input)
- {
- 	git_zstream stream;
--- 
-2.11.0.1122.gc3fec58.dirty
+p.s. When discussing here, it`s more customary to quote inline, instead of top-posting[1].
 
+[1] https://en.wikipedia.org/wiki/Posting_style
