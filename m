@@ -2,391 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E11B620954
-	for <e@80x24.org>; Fri, 24 Nov 2017 11:08:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2EFCB2036D
+	for <e@80x24.org>; Fri, 24 Nov 2017 13:27:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753432AbdKXLIf (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Nov 2017 06:08:35 -0500
-Received: from smtp-out-4.talktalk.net ([62.24.135.68]:62813 "EHLO
-        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753456AbdKXLIS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Nov 2017 06:08:18 -0500
-Received: from lindisfarne.localdomain ([92.22.34.132])
-        by smtp.talktalk.net with SMTP
-        id IBq0eNps6Ap17IBqDeb1CN; Fri, 24 Nov 2017 11:08:17 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1511521697;
-        bh=nup1LvNr3b1Syj54EYxAY70+JfiwoQqFKhvFFR+zti0=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:Reply-To;
-        b=KzeQlhsIh3yczylT/9qjWprPsCdLi2dIo61YO+DQehQSZcVuSgcmjGuOi7jOPBVxg
-         CuGLdH9NCicP6U1l2iwroNCJYNYxFDisqizEJhqF3EkiPYqcPnVA7/FXX6tZ9QbwzH
-         A3NCGwnBNbV9eski4riCk9z8EwwktAeP3tJ20QCY=
-X-Originating-IP: [92.22.34.132]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=EsGilWUA c=1 sm=1 tr=0 a=2gYdyS03q/cwff7SV6P5Ng==:117
- a=2gYdyS03q/cwff7SV6P5Ng==:17 a=evINK-nbAAAA:8 a=A1X0JdhQAAAA:8
- a=YDFH51GLp7YKjXVtbWYA:9 a=yZHd8Vbq-DicxKpS:21 a=NMo6ZmpqHQ8wNkP-:21
- a=RfR_gqz1fSpA9VikTjo0:22 a=Df3jFdWbhGDLdZNm0fyq:22
-From:   Phillip Wood <phillip.wood@talktalk.net>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Adam Dinwoodie <adam@dinwoodie.org>,
-        Stefan Beller <sbeller@google.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH v4 9/9] t3512/t3513: remove KNOWN_FAILURE_CHERRY_PICK_SEES_EMPTY_COMMIT=1
-Date:   Fri, 24 Nov 2017 11:07:58 +0000
-Message-Id: <20171124110758.9406-10-phillip.wood@talktalk.net>
-X-Mailer: git-send-email 2.15.0
-In-Reply-To: <20171124110758.9406-1-phillip.wood@talktalk.net>
-References: <20170925101041.18344-1-phillip.wood@talktalk.net>
- <20171124110758.9406-1-phillip.wood@talktalk.net>
-Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
-X-CMAE-Envelope: MS4wfKAWFKIH/leX0PMQWdLQGisd9XPdpAUUELh+0CForo8awQNZfj3RNw9AHOz98r+ZZr0ndoeWSEJM8ROFUOLK0H5F7hXuhAQXXME2kg/ZCrnMNK3OYNOh
- hGA/kWEHSnk8enLC8d6vbFw0tBTiiBZzro5qVEQZcFRX7HUcwzJkOp/5yvPVkSydh6za1g82hPMvscJL7n1fbqu/ull6EhhZjas9hIeTBMao7S2Bo74ZU/Bm
- JWc0WvwiavYPXRio/jbIjgRD0aCmu9BhgX27MxxbBp0jCUuCsmD+NGnj/ZTlLC/vhssh5LxHVe9PpiGFFD7fXM6Wegl7qKr/wURU55M5mPNZIk7FL7TRkF4T
- /33Rf7rPRB6UAi4WCyEzToizBRyFkEIRt+A9MQ2DqLQm0XoOwow=
+        id S1753484AbdKXN1X (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Nov 2017 08:27:23 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52908 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1753476AbdKXN1W (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Nov 2017 08:27:22 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4FD6FB19FD;
+        Fri, 24 Nov 2017 08:27:21 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=+X67p3mcRQfRBU6PZkLY4RIuMqw=; b=sW1MGg
+        XkIwDqWpOpgEC7NCHWswFl/dHeVXaCDrU6TUEIaypnrsjLXgkx0tdRdwW0g+76a7
+        Xi6PEITCM/NdZBNj+XO9YuKLyXF6cIhN6qQFOMrCqU6S8o8um5rruwU8w/g+2pqD
+        3Q7byb4uJ3oM+4Wh3HF+4gWxlY9iRpzNXoqPc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ZBb5GB6MwtY9ZvYQ2mx+B7K7kAy3zgxK
+        jWoAJnc79nqsxh8LkzvMYokklshpP0FOgEEhqj+paCah8c6I2lduYg2pIis8U0s+
+        piJdqqAAWYopfKLIs+GptD/Qhw4mVKi+Ra1cDhROQQ3eN92YwQpzZ8PlSSZwihJp
+        bsRP/re9eEI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 45A9DB19FC;
+        Fri, 24 Nov 2017 08:27:21 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AB611B19FA;
+        Fri, 24 Nov 2017 08:27:20 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
+Cc:     Git Mailing list <git@vger.kernel.org>
+Subject: Re: [PATCH v2] doc: clarify that "git bisect" accepts one or more good commits
+References: <alpine.LFD.2.21.1711220729230.13545@DESKTOP-1GPMCEJ>
+        <xmqqh8tkp9nn.fsf@gitster.mtv.corp.google.com>
+        <alpine.LFD.2.21.1711240351170.30318@localhost.localdomain>
+Date:   Fri, 24 Nov 2017 22:27:19 +0900
+In-Reply-To: <alpine.LFD.2.21.1711240351170.30318@localhost.localdomain>
+        (Robert P. J. Day's message of "Fri, 24 Nov 2017 04:11:06 -0500
+        (EST)")
+Message-ID: <xmqqh8tjn6x4.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 32F2A276-D11B-11E7-8A7A-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+"Robert P. J. Day" <rpjday@crashcourse.ca> writes:
 
-Now that the sequencer creates commits without forking 'git commit' it
-does not see an empty commit in these tests which fixes the known
-breakage. Note that logic for handling
-KNOWN_FAILURE_CHERRY_PICK_SEES_EMPTY_COMMIT=1 is not removed from
-lib-submodule-update.sh as it is still used by other tests.
+>   in this sense, i don't think "indicate" and "identify" are
+> completely interchangeable. in my mind, the word "identify" does
+> nothing more than, you know, point at something and say, "that one,
+> that's the one i'm talking about;" it goes no further than that.
+>
+>   on the other hand, the word "indicate" (in my mind) implies that
+> you're about to provide some *property* or *quality* of something, and
+> you do exactly that in the earlier quote:
 
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
+I do not think the two words have different connotations, so we are
+in agreement.  You do not necessarily need a property in mind when
+you "identify" a commit.  You could just "identify" this and that
+commits to yourself, to keep them in mind.  You _also_ can have a
+property in mind and "identify" this commit as a good one, and that
+commit as a bad one.
 
-Notes:
-    The output of the tests with after the previous patch looks like the
-    output of the merge tests (see below), so I'm hopeful that this is a
-    genuine fix, but someone who knows about submodules should check that
-    things are in fact working properly now.
-    
-    t3512-cherry-pick-submodule.sh
-    
-    expecting success:
-    		prolog &&
-    		reset_work_tree_to add_sub1 &&
-    		(
-    			cd submodule_update &&
-    			git branch -t modify_sub1 origin/modify_sub1 &&
-    			$command modify_sub1 &&
-    			test_superproject_content origin/modify_sub1 &&
-    			test_submodule_content sub1 origin/add_sub1 &&
-    			git submodule update &&
-    			test_submodule_content sub1 origin/modify_sub1
-    		)
-    
-    Cloning into 'submodule_update'...
-    done.
-    Switched to a new branch 'add_sub1'
-    Branch 'add_sub1' set up to track remote branch 'add_sub1' from 'origin'.
-    Submodule 'sub1' (/home/phil/Documents/src/git/t/trash directory.t3512-cherry-pick-submodule/submodule_update_sub1) registered for path 'sub1'
-    Cloning into '/home/phil/Documents/src/git/t/trash directory.t3512-cherry-pick-submodule/submodule_update/sub1'...
-    done.
-    Submodule path 'sub1': checked out 'ce9efb76b6ff5beb56e70d3662695f3ecbd38330'
-    Branch 'modify_sub1' set up to track remote branch 'modify_sub1' from 'origin'.
-    [add_sub1 e57a25c] Modify sub1
-     Author: A U Thor <author@example.com>
-     Date: Fri Nov 24 10:48:45 2017 +0000
-    Submodule path 'sub1': checked out '7c9cd6d138a7bb3145fc0c7fca1f403cbe89010e'
-    ok 11 - git cherry-pick: modified submodule does not update submodule work tree
-    
-    expecting success:
-    		prolog &&
-    		reset_work_tree_to add_sub1 &&
-    		(
-    			cd submodule_update &&
-    			git branch -t invalid_sub1 origin/invalid_sub1 &&
-    			$command invalid_sub1 &&
-    			test_superproject_content origin/invalid_sub1 &&
-    			test_submodule_content sub1 origin/add_sub1 &&
-    			test_must_fail git submodule update &&
-    			test_submodule_content sub1 origin/add_sub1
-    		)
-    
-    Cloning into 'submodule_update'...
-    done.
-    Switched to a new branch 'add_sub1'
-    Branch 'add_sub1' set up to track remote branch 'add_sub1' from 'origin'.
-    Submodule 'sub1' (/home/phil/Documents/src/git/t/trash directory.t3512-cherry-pick-submodule/submodule_update_sub1) registered for path 'sub1'
-    Cloning into '/home/phil/Documents/src/git/t/trash directory.t3512-cherry-pick-submodule/submodule_update/sub1'...
-    done.
-    Submodule path 'sub1': checked out 'ce9efb76b6ff5beb56e70d3662695f3ecbd38330'
-    Branch 'invalid_sub1' set up to track remote branch 'invalid_sub1' from 'origin'.
-    [add_sub1 155695c] Invalid sub1 commit
-     Author: A U Thor <author@example.com>
-     Date: Fri Nov 24 10:48:45 2017 +0000
-    error: Server does not allow request for unadvertised object 0123456789012345678901234567890123456789
-    Fetched in submodule path 'sub1', but it did not contain 0123456789012345678901234567890123456789. Direct fetching of that commit failed.
-    ok 12 - git cherry-pick: modified submodule does not update submodule work tree to invalid commit
-    
-    expecting success:
-    		prolog &&
-    		reset_work_tree_to invalid_sub1 &&
-    		(
-    			cd submodule_update &&
-    			git branch -t valid_sub1 origin/valid_sub1 &&
-    			$command valid_sub1 &&
-    			test_superproject_content origin/valid_sub1 &&
-    			test_dir_is_empty sub1 &&
-    			git submodule update --init --recursive &&
-    			test_submodule_content sub1 origin/valid_sub1
-    		)
-    
-    Cloning into 'submodule_update'...
-    done.
-    Switched to a new branch 'invalid_sub1'
-    Branch 'invalid_sub1' set up to track remote branch 'invalid_sub1' from 'origin'.
-    fatal: Needed a single revision
-    Branch 'valid_sub1' set up to track remote branch 'valid_sub1' from 'origin'.
-    [invalid_sub1 497299e] Revert "Invalid sub1 commit"
-     Author: A U Thor <author@example.com>
-     Date: Fri Nov 24 10:48:46 2017 +0000
-    Submodule 'sub1' (/home/phil/Documents/src/git/t/trash directory.t3512-cherry-pick-submodule/submodule_update_sub1) registered for path 'sub1'
-    Submodule 'uninitialized_sub' (/home/phil/Documents/src/git/t/trash directory.t3512-cherry-pick-submodule/submodule_update_sub1) registered for path 'uninitialized_sub'
-    Cloning into '/home/phil/Documents/src/git/t/trash directory.t3512-cherry-pick-submodule/submodule_update/sub1'...
-    done.
-    Cloning into '/home/phil/Documents/src/git/t/trash directory.t3512-cherry-pick-submodule/submodule_update/uninitialized_sub'...
-    done.
-    Submodule path 'sub1': checked out 'ce9efb76b6ff5beb56e70d3662695f3ecbd38330'
-    Submodule path 'uninitialized_sub': checked out 'ce9efb76b6ff5beb56e70d3662695f3ecbd38330'
-    ok 13 - git cherry-pick: modified submodule does not update submodule work tree from invalid commit
-    
-    t3513-revert-submodule.sh
-    
-    expecting success:
-    		prolog &&
-    		reset_work_tree_to add_sub1 &&
-    		(
-    			cd submodule_update &&
-    			git branch -t modify_sub1 origin/modify_sub1 &&
-    			$command modify_sub1 &&
-    			test_superproject_content origin/modify_sub1 &&
-    			test_submodule_content sub1 origin/add_sub1 &&
-    			git submodule update &&
-    			test_submodule_content sub1 origin/modify_sub1
-    		)
-    
-    Cloning into 'submodule_update'...
-    done.
-    Switched to a new branch 'add_sub1'
-    Branch 'add_sub1' set up to track remote branch 'add_sub1' from 'origin'.
-    Submodule 'sub1' (/home/phil/Documents/src/git/t/trash directory.t3513-revert-submodule/submodule_update_sub1) registered for path 'sub1'
-    Cloning into '/home/phil/Documents/src/git/t/trash directory.t3513-revert-submodule/submodule_update/sub1'...
-    done.
-    Submodule path 'sub1': checked out '4497aa8f9341f6e5f178dbb536a7093e8f093d8a'
-    Branch 'modify_sub1' set up to track remote branch 'modify_sub1' from 'origin'.
-    Switched to branch 'modify_sub1'
-    Your branch is up to date with 'origin/modify_sub1'.
-    [modify_sub1 1c2c464] Revert "Modify sub1"
-     Author: A U Thor <author@example.com>
-     Date: Fri Nov 24 10:48:51 2017 +0000
-    [modify_sub1 cde56a6] Revert "Revert "Modify sub1""
-     Author: A U Thor <author@example.com>
-     Date: Fri Nov 24 10:48:51 2017 +0000
-    Submodule path 'sub1': checked out 'a66b894bbfed816edf59cf901620978a64419731'
-    ok 11 - git_revert: modified submodule does not update submodule work tree
-    
-    expecting success:
-    		prolog &&
-    		reset_work_tree_to add_sub1 &&
-    		(
-    			cd submodule_update &&
-    			git branch -t invalid_sub1 origin/invalid_sub1 &&
-    			$command invalid_sub1 &&
-    			test_superproject_content origin/invalid_sub1 &&
-    			test_submodule_content sub1 origin/add_sub1 &&
-    			test_must_fail git submodule update &&
-    			test_submodule_content sub1 origin/add_sub1
-    		)
-    
-    Cloning into 'submodule_update'...
-    done.
-    Switched to a new branch 'add_sub1'
-    Branch 'add_sub1' set up to track remote branch 'add_sub1' from 'origin'.
-    Submodule 'sub1' (/home/phil/Documents/src/git/t/trash directory.t3513-revert-submodule/submodule_update_sub1) registered for path 'sub1'
-    Cloning into '/home/phil/Documents/src/git/t/trash directory.t3513-revert-submodule/submodule_update/sub1'...
-    done.
-    Submodule path 'sub1': checked out '4497aa8f9341f6e5f178dbb536a7093e8f093d8a'
-    Branch 'invalid_sub1' set up to track remote branch 'invalid_sub1' from 'origin'.
-    Switched to branch 'invalid_sub1'
-    Your branch is up to date with 'origin/invalid_sub1'.
-    [invalid_sub1 cec26d9] Revert "Invalid sub1 commit"
-     Author: A U Thor <author@example.com>
-     Date: Fri Nov 24 10:48:51 2017 +0000
-    [invalid_sub1 d017764] Revert "Revert "Invalid sub1 commit""
-     Author: A U Thor <author@example.com>
-     Date: Fri Nov 24 10:48:51 2017 +0000
-    error: Server does not allow request for unadvertised object 0123456789012345678901234567890123456789
-    Fetched in submodule path 'sub1', but it did not contain 0123456789012345678901234567890123456789. Direct fetching of that commit failed.
-    ok 12 - git_revert: modified submodule does not update submodule work tree to invalid commit
-    
-    expecting success:
-    		prolog &&
-    		reset_work_tree_to invalid_sub1 &&
-    		(
-    			cd submodule_update &&
-    			git branch -t valid_sub1 origin/valid_sub1 &&
-    			$command valid_sub1 &&
-    			test_superproject_content origin/valid_sub1 &&
-    			test_dir_is_empty sub1 &&
-    			git submodule update --init --recursive &&
-    			test_submodule_content sub1 origin/valid_sub1
-    		)
-    
-    Cloning into 'submodule_update'...
-    done.
-    Switched to a new branch 'invalid_sub1'
-    Branch 'invalid_sub1' set up to track remote branch 'invalid_sub1' from 'origin'.
-    fatal: Needed a single revision
-    Branch 'valid_sub1' set up to track remote branch 'valid_sub1' from 'origin'.
-    Switched to branch 'valid_sub1'
-    Your branch is up to date with 'origin/valid_sub1'.
-    [valid_sub1 ca047d9] Revert "Revert "Invalid sub1 commit""
-     Author: A U Thor <author@example.com>
-     Date: Fri Nov 24 10:48:51 2017 +0000
-    [valid_sub1 e1e9178] Revert "Revert "Revert "Invalid sub1 commit"""
-     Author: A U Thor <author@example.com>
-     Date: Fri Nov 24 10:48:51 2017 +0000
-    Submodule 'sub1' (/home/phil/Documents/src/git/t/trash directory.t3513-revert-submodule/submodule_update_sub1) registered for path 'sub1'
-    Submodule 'uninitialized_sub' (/home/phil/Documents/src/git/t/trash directory.t3513-revert-submodule/submodule_update_sub1) registered for path 'uninitialized_sub'
-    Cloning into '/home/phil/Documents/src/git/t/trash directory.t3513-revert-submodule/submodule_update/sub1'...
-    done.
-    Cloning into '/home/phil/Documents/src/git/t/trash directory.t3513-revert-submodule/submodule_update/uninitialized_sub'...
-    done.
-    Submodule path 'sub1': checked out '4497aa8f9341f6e5f178dbb536a7093e8f093d8a'
-    Submodule path 'uninitialized_sub': checked out '4497aa8f9341f6e5f178dbb536a7093e8f093d8a'
-    ok 13 - git_revert: modified submodule does not update submodule work tree from invalid commit
-    
-    t7613-merge-submodule.sh
-    
-    expecting success:
-    		prolog &&
-    		reset_work_tree_to add_sub1 &&
-    		(
-    			cd submodule_update &&
-    			git branch -t modify_sub1 origin/modify_sub1 &&
-    			$command modify_sub1 &&
-    			test_superproject_content origin/modify_sub1 &&
-    			test_submodule_content sub1 origin/add_sub1 &&
-    			git submodule update &&
-    			test_submodule_content sub1 origin/modify_sub1
-    		)
-    
-    Cloning into 'submodule_update'...
-    done.
-    Switched to a new branch 'add_sub1'
-    Branch 'add_sub1' set up to track remote branch 'add_sub1' from 'origin'.
-    Submodule 'sub1' (/home/phil/Documents/src/git/t/trash directory.t7613-merge-submodule/submodule_update_sub1) registered for path 'sub1'
-    Cloning into '/home/phil/Documents/src/git/t/trash directory.t7613-merge-submodule/submodule_update/sub1'...
-    done.
-    Submodule path 'sub1': checked out 'c97e5093cc535f043494394509e7ad784b5931ce'
-    Branch 'modify_sub1' set up to track remote branch 'modify_sub1' from 'origin'.
-    Updating ec3f722..c933e8b
-    Fast-forward
-    Submodule path 'sub1': checked out '614c78931e0df85cee80e90bbf96ed92504cd886'
-    ok 11 - git merge: modified submodule does not update submodule work tree
-    
-    expecting success:
-    		prolog &&
-    		reset_work_tree_to add_sub1 &&
-    		(
-    			cd submodule_update &&
-    			git branch -t invalid_sub1 origin/invalid_sub1 &&
-    			$command invalid_sub1 &&
-    			test_superproject_content origin/invalid_sub1 &&
-    			test_submodule_content sub1 origin/add_sub1 &&
-    			test_must_fail git submodule update &&
-    			test_submodule_content sub1 origin/add_sub1
-    		)
-    
-    Cloning into 'submodule_update'...
-    done.
-    Switched to a new branch 'add_sub1'
-    Branch 'add_sub1' set up to track remote branch 'add_sub1' from 'origin'.
-    Submodule 'sub1' (/home/phil/Documents/src/git/t/trash directory.t7613-merge-submodule/submodule_update_sub1) registered for path 'sub1'
-    Cloning into '/home/phil/Documents/src/git/t/trash directory.t7613-merge-submodule/submodule_update/sub1'...
-    done.
-    Submodule path 'sub1': checked out 'c97e5093cc535f043494394509e7ad784b5931ce'
-    Branch 'invalid_sub1' set up to track remote branch 'invalid_sub1' from 'origin'.
-    Updating ec3f722..5c6fb5f
-    Fast-forward
-    error: Server does not allow request for unadvertised object 0123456789012345678901234567890123456789
-    Fetched in submodule path 'sub1', but it did not contain 0123456789012345678901234567890123456789. Direct fetching of that commit failed.
-    ok 12 - git merge: modified submodule does not update submodule work tree to invalid commit
-    
-    expecting success:
-    		prolog &&
-    		reset_work_tree_to invalid_sub1 &&
-    		(
-    			cd submodule_update &&
-    			git branch -t valid_sub1 origin/valid_sub1 &&
-    			$command valid_sub1 &&
-    			test_superproject_content origin/valid_sub1 &&
-    			test_dir_is_empty sub1 &&
-    			git submodule update --init --recursive &&
-    			test_submodule_content sub1 origin/valid_sub1
-    		)
-    
-    Cloning into 'submodule_update'...
-    done.
-    Switched to a new branch 'invalid_sub1'
-    Branch 'invalid_sub1' set up to track remote branch 'invalid_sub1' from 'origin'.
-    fatal: Needed a single revision
-    Branch 'valid_sub1' set up to track remote branch 'valid_sub1' from 'origin'.
-    Updating 5c6fb5f..07412aa
-    Fast-forward
-    Submodule 'sub1' (/home/phil/Documents/src/git/t/trash directory.t7613-merge-submodule/submodule_update_sub1) registered for path 'sub1'
-    Submodule 'uninitialized_sub' (/home/phil/Documents/src/git/t/trash directory.t7613-merge-submodule/submodule_update_sub1) registered for path 'uninitialized_sub'
-    Cloning into '/home/phil/Documents/src/git/t/trash directory.t7613-merge-submodule/submodule_update/sub1'...
-    done.
-    Cloning into '/home/phil/Documents/src/git/t/trash directory.t7613-merge-submodule/submodule_update/uninitialized_sub'...
-    done.
-    Submodule path 'sub1': checked out 'c97e5093cc535f043494394509e7ad784b5931ce'
-    Submodule path 'uninitialized_sub': checked out 'c97e5093cc535f043494394509e7ad784b5931ce'
-    ok 13 - git merge: modified submodule does not update submodule work tree from invalid commit
-
- t/t3512-cherry-pick-submodule.sh | 1 -
- t/t3513-revert-submodule.sh      | 1 -
- 2 files changed, 2 deletions(-)
-
-diff --git a/t/t3512-cherry-pick-submodule.sh b/t/t3512-cherry-pick-submodule.sh
-index 6863b7bb6fd94cbbd3fcc8f29ab02e344cac23c9..059213767e089e69ad61d14c329930ef097813e7 100755
---- a/t/t3512-cherry-pick-submodule.sh
-+++ b/t/t3512-cherry-pick-submodule.sh
-@@ -5,7 +5,6 @@ test_description='cherry-pick can handle submodules'
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-submodule-update.sh
- 
--KNOWN_FAILURE_CHERRY_PICK_SEES_EMPTY_COMMIT=1
- KNOWN_FAILURE_NOFF_MERGE_DOESNT_CREATE_EMPTY_SUBMODULE_DIR=1
- KNOWN_FAILURE_NOFF_MERGE_ATTEMPTS_TO_MERGE_REMOVED_SUBMODULE_FILES=1
- test_submodule_switch "git cherry-pick"
-diff --git a/t/t3513-revert-submodule.sh b/t/t3513-revert-submodule.sh
-index db9378142a93338d2988f40e2748bc476490bcd5..5e39fcdb66c0c7c4b112c1bbe941d886db237693 100755
---- a/t/t3513-revert-submodule.sh
-+++ b/t/t3513-revert-submodule.sh
-@@ -25,7 +25,6 @@ git_revert () {
- 	git revert HEAD
- }
- 
--KNOWN_FAILURE_CHERRY_PICK_SEES_EMPTY_COMMIT=1
- KNOWN_FAILURE_NOFF_MERGE_DOESNT_CREATE_EMPTY_SUBMODULE_DIR=1
- test_submodule_switch "git_revert"
- 
--- 
-2.15.0
+But identifying a commit as bad (or another one as good) alone to
+yourself does not get anything started.  In order to advance the
+bisection process, you need to tell the "git bisect" machinery that
+"this commit is good", "that commit is bad", etc.  I would think
+"indicate" is a verb with better connotation than "identify" for
+describing that action.  You indicate something *to* *somebody, and
+in this case you indicate that this commit is good and that commit
+is bad to git.
 
