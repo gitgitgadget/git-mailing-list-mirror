@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9F91A20954
-	for <e@80x24.org>; Fri, 24 Nov 2017 06:47:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8B5CA20954
+	for <e@80x24.org>; Fri, 24 Nov 2017 06:57:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752016AbdKXGrE (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Nov 2017 01:47:04 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50978 "EHLO
+        id S1753192AbdKXG5K (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Nov 2017 01:57:10 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61827 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751730AbdKXGrD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Nov 2017 01:47:03 -0500
+        with ESMTP id S1752963AbdKXG5H (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Nov 2017 01:57:07 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E6CD7ACDFA;
-        Fri, 24 Nov 2017 01:47:02 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E21D4B75B4;
+        Fri, 24 Nov 2017 01:57:06 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=MmkkCmHmPu5lBZVWPpYONvZgnT0=; b=udiLde
-        dEa4wy1+1TdtXOQCdzbnlQ2E5YeDEVnHos018/ulosVv5WI3jj6pOdffVp0AWrGg
-        QG35VFerff+ygrf+uhI96t+GEbTF5eYns7ftuIFMmx/aQAeegKD6E+E7e3KnskGc
-        4qOeo1LrchV/OhtjdmmOeX1nxdaApUwM/YJFQ=
+        :content-type; s=sasl; bh=UkMRMz122KAUHJnT6+1hDKEy4ZQ=; b=pp6kGO
+        GvD8bIrqhNXsVo928pjr5dpaCu5jdv8PocBJSTr9bEqTGB6k4PSZZLQcJVtcl6GV
+        J85Xh3bH4X5q7KZYp6IbGNPPp+5HYh6H+T0vbPxMcddRPpyUkG6EbW7YVsNxDBQb
+        6gS4DAEzT29Qa4dhrVxwQJSyQO6YtAd7x2gVE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=m5hV28eO+2sFMtRO7t3fAhMchD9A1OXr
-        YKI6uk7Yl0prow2wz7y+OkzSpcXNIeC82vSjLHZ6u8XlDBJanqPqVzTD/ySRR++w
-        oFEGtsx3R68FRkfhSfRtTS5B7uD8/GhxUXbKy1xU1TzhKbCwL2y4yrCqIw/l65Nf
-        8WBIsP6VzsM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D9D0FACDF9;
-        Fri, 24 Nov 2017 01:47:02 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=FINpUpiKhClZq0NdHN5uQcehfMs/o+/M
+        m3RrLNEvVRrhuDpaVchc90kb9QsbWdvQY+maCZzhV2gruXfcE/ctNSd2o+G1vZ2Y
+        DikkP4pAnq5huSroQwnxYBC6zrKi7g6ybqG48aofmkFqJ0SHfil3XjDBGb2E7YMy
+        phcHqfK4Bjo=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id DACC8B75B3;
+        Fri, 24 Nov 2017 01:57:06 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5CE56ACDF6;
-        Fri, 24 Nov 2017 01:47:02 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5788BB75B2;
+        Fri, 24 Nov 2017 01:57:06 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Thomas Gummerer <t.gummerer@gmail.com>
 Cc:     git@vger.kernel.org,
         =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4 1/4] checkout: factor out functions to new lib file
+Subject: Re: [PATCH v4 2/4] worktree: add --[no-]track option to the add subcommand
 References: <mailto:20171118224706.13810-1-t.gummerer@gmail.com>
         <20171122223020.2780-1-t.gummerer@gmail.com>
-        <20171122223020.2780-2-t.gummerer@gmail.com>
-Date:   Fri, 24 Nov 2017 15:47:01 +0900
-In-Reply-To: <20171122223020.2780-2-t.gummerer@gmail.com> (Thomas Gummerer's
-        message of "Wed, 22 Nov 2017 22:30:17 +0000")
-Message-ID: <xmqqfu94npga.fsf@gitster.mtv.corp.google.com>
+        <20171122223020.2780-3-t.gummerer@gmail.com>
+Date:   Fri, 24 Nov 2017 15:57:04 +0900
+In-Reply-To: <20171122223020.2780-3-t.gummerer@gmail.com> (Thomas Gummerer's
+        message of "Wed, 22 Nov 2017 22:30:18 +0000")
+Message-ID: <xmqqa7zcnozj.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 46E9445C-D0E3-11E7-918A-8EF31968708C-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: AEE9295E-D0E4-11E7-903A-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -63,61 +63,83 @@ X-Mailing-List: git@vger.kernel.org
 
 Thomas Gummerer <t.gummerer@gmail.com> writes:
 
-> Factor the functions out, so they can be re-used from other places.  In
-> particular these functions will be re-used in builtin/worktree.c to make
-> git worktree add dwim more.
->
-> While there add some docs to the function.
->
-> Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
-> ---
->  Makefile           |  1 +
->  builtin/checkout.c | 41 +----------------------------------------
->  checkout.c         | 42 ++++++++++++++++++++++++++++++++++++++++++
->  checkout.h         | 13 +++++++++++++
->  4 files changed, 57 insertions(+), 40 deletions(-)
->  create mode 100644 checkout.c
->  create mode 100644 checkout.h
->
-> diff --git a/Makefile b/Makefile
-> index cd75985991..8d603c7443 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -757,6 +757,7 @@ LIB_OBJS += branch.o
->  LIB_OBJS += bulk-checkin.o
->  LIB_OBJS += bundle.o
->  LIB_OBJS += cache-tree.o
-> +LIB_OBJS += checkout.o
->  LIB_OBJS += color.o
->  LIB_OBJS += column.o
->  LIB_OBJS += combine-diff.o
-> diff --git a/builtin/checkout.c b/builtin/checkout.c
-> index fc4f8fd2ea..9e1cfd10b3 100644
-> --- a/builtin/checkout.c
-> +++ b/builtin/checkout.c
-> @@ -1,5 +1,6 @@
->  #include "builtin.h"
->  #include "config.h"
-> +#include "checkout.h"
->  #include "lockfile.h"
->  #include "parse-options.h"
->  #include "refs.h"
+> diff --git a/t/t2025-worktree-add.sh b/t/t2025-worktree-add.sh
+> index b5c47ac602..53042ce565 100755
+> --- a/t/t2025-worktree-add.sh
+> +++ b/t/t2025-worktree-add.sh
+> @@ -313,5 +313,60 @@ test_expect_success 'checkout a branch under bisect' '
+>  test_expect_success 'rename a branch under bisect not allowed' '
+>  	test_must_fail git branch -M under-bisect bisect-with-new-name
+>  '
+> +# Is branch "refs/heads/$1" set to pull from "$2/$3"?
+> +test_branch_upstream () {
+> +	printf "%s\n" "$2" "refs/heads/$3" >expect.upstream &&
+> +	{
+> +		git config "branch.$1.remote" &&
+> +		git config "branch.$1.merge"
+> +	} >actual.upstream &&
+> +	test_cmp expect.upstream actual.upstream
+> +}
 
-With this, and also ...
+OK.
 
-> diff --git a/checkout.c b/checkout.c
-> new file mode 100644
-> index 0000000000..b0c744d37a
-> --- /dev/null
-> +++ b/checkout.c
-> @@ -0,0 +1,42 @@
-> +#include "cache.h"
-> +#include "remote.h"
+> +test_expect_success '--track sets up tracking' '
+> +	test_when_finished rm -rf track &&
+> +	git worktree add --track -b track track master &&
+> +	git config "branch.track.merge" &&
+> +	(
+> +		test_branch_upstream track . master
+> +	)
+> +'
 
-... with this, I sort of expected that builtin/checkout.c no longer
-has to include "remote.h" but can now rely on the common helpers in
-this new file to perform anything remote-related operation.  But it
-seems that it is not the case (yet).
+Is this "git config" necessary, or is it a remnant of a debugging
+session?  It is tested in the helper that branch.track.merge is set
+to something, and otherwise the helper would fail the same way as
+this standalnoe "git config" would, no?
 
-Just recording my observation for future reference, as we might also
-want to move report_tracking(), etc., to this new file in the future.
+> +# setup remote repository $1 and repository $2 with $1 set up as
+> +# remote.  The remote has two branches, master and foo.
+> +setup_remote_repo () {
+> +	git init $1 &&
+> +	(
+> +		cd $1 &&
+> +		test_commit $1_master &&
+> +		git checkout -b foo &&
+> +		test_commit upstream_foo
+> +	) &&
+> +	git init $2 &&
+> +	(
+> +		cd $2 &&
+> +		test_commit $2_master &&
+> +		git remote add $1 ../$1 &&
+> +		git config remote.$1.fetch \
+> +			"refs/heads/*:refs/remotes/$1/*" &&
+> +		git fetch --all
+> +	)
+> +}
+> +
+> +test_expect_success '--no-track avoids setting up tracking' '
+> +	test_when_finished rm -rf repo_upstream repo_local foo &&
+> +	setup_remote_repo repo_upstream repo_local &&
+> +	(
+> +		cd repo_local &&
+> +		git worktree add --no-track -b foo ../foo repo_upstream/foo
+> +	) &&
+> +	(
+> +		cd foo &&
+> +		! test_branch_upstream foo repo_upstream foo &&
+
+It is true that this test helper must yield failure.  But what you
+expect probably is more than that, no?  For example, the test helper
+would fail even if branch.foo.remote is set to the upstream as long
+as branch.foo.merge is not set to point at their foo, but what you
+really want to make sure is that neither configuration variable is
+set.
+
+> +		git rev-parse repo_upstream/foo >expect &&
+> +		git rev-parse foo >actual &&
+> +		test_cmp expect actual
+> +	)
+> +'
+>  
+>  test_done
