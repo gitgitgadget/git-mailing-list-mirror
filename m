@@ -2,127 +2,149 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF1B32036D
-	for <e@80x24.org>; Fri, 24 Nov 2017 17:33:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E418E2036D
+	for <e@80x24.org>; Fri, 24 Nov 2017 18:04:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753921AbdKXRdw (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Nov 2017 12:33:52 -0500
-Received: from mail-qk0-f196.google.com ([209.85.220.196]:33849 "EHLO
-        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753777AbdKXRYu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Nov 2017 12:24:50 -0500
-Received: by mail-qk0-f196.google.com with SMTP id v137so25327634qkb.1
-        for <git@vger.kernel.org>; Fri, 24 Nov 2017 09:24:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=zqksCmo1M3CxqhGz/ysoeFJZ3bbC7gKBOBa8BC/VDGc=;
-        b=i1y3jTLDcxr6dz7pIFMLQkPWF9g5aCg/X4GPDC9m7SPErsCzNqc3JU+AIm6lA8c9nd
-         6YASztqpmGBxSKlAjL3FBiCjabRXNqiyAeKFkXr2WO7o0VJi8m3CJOiDwSpBNYi2tzYa
-         TunIKZk9B/AEa3fq5PSpjZQnZQculFfspmjjiu9piePS4wvb9q2o7W5Gn65LevcRrTbR
-         FOm16Gg4jROfvXrxOqYvDyGZWBwg7d+viOFUsroushdgPshUerM/d4LaCTI2TZHQFyX0
-         cfXji46BbVdVgW9Dw4gKuuz8n7z++Nsgq6NZRlcg6ev8nVsdEgvC7PiC8vHCQneED7XU
-         nQMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=zqksCmo1M3CxqhGz/ysoeFJZ3bbC7gKBOBa8BC/VDGc=;
-        b=cUBYKsUHwSeNhiAnUjrEd9L70fIAMzrqa5LQ+8XHpK8Q6MSxWKmnzZP2PK5C+tg8WS
-         fN75ECLmmecLUwY5iutntjQyBWew4Mpr0UiJYdzkAS31DYtXOTjWBig+rwVmp/H/9dKH
-         Dwv8fj5b8BJvITjvHitQEE4WkgbmhxUTE2mxT9C1F4oJujdgA3DX4rZxySrT/E9pAZic
-         Iz1rEjkAvZxCr5Bn+PSbulqgwFpQzFAUixhO4DdH9Wo9swuzKquXiZp9LjnG8zpKXc89
-         1si0MI7drhvgxuaNw4+Z1Q8etRgPvZ3nqnMbbd9DFGtYwjlwXsr+TOOU6zRhuwkVZBDv
-         XBvA==
-X-Gm-Message-State: AJaThX7vuHdJFX6iH7Xkiz5m6LX7tZPLM8RYSXs1GZnwVNEtrZaRkmfh
-        2nrNsk32oDAVfzMrRxXePYzKt7R8EBoINdDAl+o=
-X-Google-Smtp-Source: AGs4zMaPwZMTsJQ6k7Hyaluur53XC/duzxeDRL0CJ7MZ64RTCKIHsmhvpAMDtaCNiTaZrY0MD7h1VfNM9C3Fctc1EY4=
-X-Received: by 10.55.126.7 with SMTP id z7mr8227524qkc.306.1511544289245; Fri,
- 24 Nov 2017 09:24:49 -0800 (PST)
+        id S1753713AbdKXSEE (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Nov 2017 13:04:04 -0500
+Received: from cloud.peff.net ([104.130.231.41]:39490 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751503AbdKXSEE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Nov 2017 13:04:04 -0500
+Received: (qmail 21637 invoked by uid 109); 24 Nov 2017 18:04:04 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 24 Nov 2017 18:04:04 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 15728 invoked by uid 111); 24 Nov 2017 18:04:20 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with ESMTPA; Fri, 24 Nov 2017 13:04:20 -0500
+Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 24 Nov 2017 13:04:01 -0500
+Date:   Fri, 24 Nov 2017 13:04:01 -0500
+From:   Jeff King <peff@peff.net>
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Shawn Pearce <spearce@spearce.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jakub Narebski <jnareb@gmail.com>
+Subject: Re: RFC: Native clean/smudge filter for UTF-16 files
+Message-ID: <20171124180401.GB29190@sigill>
+References: <BDB9B884-6D17-4BE3-A83C-F67E2AFA2B46@gmail.com>
 MIME-Version: 1.0
-Received: by 10.12.155.209 with HTTP; Fri, 24 Nov 2017 09:24:48 -0800 (PST)
-In-Reply-To: <20171124161407.30698-1-tboegi@web.de>
-References: <CAJ_+vJ6FXXda4fe7=1YxtDGR2d8CqP4KXN+YR6+mdQ+5jQQXug@mail.gmail.com>
- <20171124161407.30698-1-tboegi@web.de>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 24 Nov 2017 12:24:48 -0500
-X-Google-Sender-Auth: 3n81iONyPbKLwb0CxnH_9XZcCx4
-Message-ID: <CAPig+cT7=yLUVpmtutmTep5NBbSRNOL17dsOuVvn_Scu7_+p_w@mail.gmail.com>
-Subject: Re: [PATCH 1/1] convert: tighten the safe autocrlf handling
-To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-Cc:     Git List <git@vger.kernel.org>, ashishnegi33@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <BDB9B884-6D17-4BE3-A83C-F67E2AFA2B46@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 24, 2017 at 11:14 AM,  <tboegi@web.de> wrote:
-> When a text file had been commited with CRLF and the file is commited
-> again, the CRLF are kept if .gitattributs has "text=3Dauto".
-> This is done by analyzing the content of the blob stored in the index:
-> If a '\r' is found, Git assumes that the blob was commited with CRLF.
->
-> The simple search for a '\r' does not always work as expected:
-> A file is encoded in UTF-16 with CRLF and commited. Git treats it as bina=
-ry.
-> Now the content is converted into UTF-8. At the next commit Git treats th=
-e
-> file as text, the CRLF should be converted into LF, but isn't.
->
-> Solution:
-> Replace has_cr_in_index() with has_crlf_in_index(). When no '\r' is found=
-,
-> 0 is returned directly, this is the most common case.
-> If a '\r' is found, the content is analyzed more deeply.
->
-> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
-> ---
-> diff --git a/convert.c b/convert.c
-> @@ -220,18 +220,27 @@ static void check_safe_crlf(const char *path, enum =
-crlf_action crlf_action,
-> -static int has_cr_in_index(const struct index_state *istate, const char =
-*path)
-> +static int has_crlf_in_index(const struct index_state *istate, const cha=
-r *path)
->  {
->         unsigned long sz;
->         void *data;
-> -       int has_cr;
-> +       const char *crp;
-> +       int has_crlf =3D 0;
->
->         data =3D read_blob_data_from_index(istate, path, &sz);
->         if (!data)
->                 return 0;
-> -       has_cr =3D memchr(data, '\r', sz) !=3D NULL;
-> +
-> +       crp =3D memchr(data, '\r', sz);
-> +       if (crp && (crp[1] =3D=3D '\n')) {
+On Thu, Nov 23, 2017 at 04:18:59PM +0100, Lars Schneider wrote:
 
-If I understand correctly, this isn't a NUL-terminated string and it
-might be a binary blob, so if the lone CR in a file resides at the end
-of the file, won't this try looking for LF out-of-bounds? I would have
-expected the conditional to be:
+> Alternatively, I could add a native attribute to Git that translates UTF-16 
+> to UTF-8 and back. A conversion function is already available in "mingw.h" [3]
+> on Windows. Limiting this feature to Windows wouldn't be a problem from my
+> point of view as UTF-16 is only relevant on Windows anyways. The attribute 
+> could look like this:
+> 
+>     *.txt        text encoding=utf-16
+>
+> There was a previous discussion on the topic and Jonathan already suggested
+> a "native" clean/smudge filter in 2010 [4]. Also the "encoding" attribute
+> is already present but, as far as I can tell, is only used by the git gui
+> for viewing [5].
 
-    if (crp && crp - data + 1 < sz && crp[1] =3D=3D '\n') {
+I would not want to see a proliferation of built-in filters, but it
+really seems like text-encoding conversion is a broad and practical one
+that many people might benefit from. So just like line-ending
+conversion, which _could_ be done by generic filters, it makes sense to
+me to support it natively for speed and simplicity.
 
-or any equivalent variation.
+> Do you think a patch that converts UTF-16 files to UTF-8 via an attribute
+> "encoding=utf-16" on Windows would have a chance to get accepted?
 
-> +               unsigned int ret_stats;
-> +               ret_stats =3D gather_convert_stats(data, sz);
-> +               if (!(ret_stats & CONVERT_STAT_BITS_BIN) &&
-> +                   (ret_stats & CONVERT_STAT_BITS_TXT_CRLF))
-> +                       has_crlf =3D 1;
-> +       }
->         free(data);
-> -       return has_cr;
-> +       return has_crlf;
->  }
+You haven't fully specified the semantics here, so let me sketch out
+what I think it ought to look like:
+
+ - declare utf8 the "canonical" in-repo representation, just as we have
+   declared LF for line endings (alternatively this could be
+   configurable, but if we can get away with declaring utf8 the one true
+   encoding, that cuts out a lot of corner cases).
+
+ - if core.convertEncoding is true, then for any file with an
+   encoding=foo attribute, internally run iconv(foo, utf8) in
+   convert_to_git(), and likewise iconv(utf8, foo) in
+   convert_to_working_tree.
+
+ - I'm not sure if core.convertEncoding should be enabled by default. If
+   it's a noop as long as there's no encoding attribute, then it's
+   probably fine. But I would not want accidental conversion or any
+   slowdown for the common case that the user wants no conversion.
+
+ - I doubt we'd want a "core.autoEncoding" similar to "core.autocrlf". I
+   don't think people consistently have all utf-16 files (the way they
+   might have all CRLF files) rather a few files that must be utf-16.
+
+ - I have actually seen two types of utf-16 in git repos in the wild:
+   files which really must be utf-16 (because some tool demands it) and
+   files which happen to be utf-16, but could just as easily be utf-8
+   (and the user simply does not notice and commits utf-16, but doesn't
+   realize it until much later when their diffs are unreadable).
+
+   For the first case, the "encoding" thing above would work fine. For
+   the second case, in theory we could have an option that takes any
+   file with a "text" attribute and no "encoding" attribute, and
+   converts it to utf-8.
+
+   I suspect that's opening a can of worms for false positives similar
+   to core.autocrlf. And performance drops as we try to guess the
+   encoding and convert all incoming data.
+
+   So I mention it mostly as a direction I think we probably _don't_
+   want to go. Anybody with the "this could have been utf-8 all along"
+   type of file can remedy it by converting and committing the result.
+
+Omitting all of the "we shouldn't do this" bullet points, it seems
+pretty simple and sane to me.
+
+There is one other approach, which is to really store utf-16 in the
+repository and better teach the diff tools to handle it (which are
+really the main thing in git that cares about looking into the blob
+contents). You can do this already with a textconv filter, but:
+
+  1. It's slow (though cacheable).
+
+  2. It doesn't work unless each repo configures the filter (so not on
+     sites like GitHub, unless we define a micro-format that diff=utf16
+     should be textconv'd on display, and get all implementations to
+     respect that).
+
+  3. Textconv patches look good, but can't be applied. This occasionally
+     makes things awkward, depending on your workflow.
+
+  4. You have to actually mark each file with an attribute, which is
+     slightly annoying and more thing to remember to do (I see this from
+     the server side, since people often commit utf-16 without any
+     attributes, and then get annoyed when they see the file marked as
+     binary).
+
+We've toyed with the idea at GitHub of auto-detecting UTF-16 BOMs and
+doing an "auto-textconv" to utf-8 (for our human-readable diffs only, of
+course). That solves (1), (2), and (4), but leaves (3). I actually
+looked into using libicu to do it not just for UTF-16, but to detect any
+encoding. It turned out to be really slow, though. :)
+
+So anyway, that is an alternate strategy, but I think I like "canonical
+in-repo text is utf-8" approach a lot more, since then git operations
+work consistently. There are still a few rough edges (e.g., I'm not sure
+if you could apply a utf-8 patch directly to a utf-16 working tree file.
+Certainly not using "patch", but I'm not sure how well "git apply" would
+handle that case either). But I think it would mostly Just Work as long
+as people were willing to set their encoding attributes.
+
+-Peff
