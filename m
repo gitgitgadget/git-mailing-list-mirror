@@ -7,30 +7,31 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8219320954
-	for <e@80x24.org>; Fri, 24 Nov 2017 11:08:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7127120954
+	for <e@80x24.org>; Fri, 24 Nov 2017 11:08:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753466AbdKXLIW (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Nov 2017 06:08:22 -0500
-Received: from smtp-out-4.talktalk.net ([62.24.135.68]:7464 "EHLO
+        id S1753462AbdKXLIV (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Nov 2017 06:08:21 -0500
+Received: from smtp-out-4.talktalk.net ([62.24.135.68]:62813 "EHLO
         smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753435AbdKXLIO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Nov 2017 06:08:14 -0500
+        with ESMTP id S1753292AbdKXLIP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Nov 2017 06:08:15 -0500
 Received: from lindisfarne.localdomain ([92.22.34.132])
         by smtp.talktalk.net with SMTP
-        id IBq0eNps6Ap17IBq8eb1Bf; Fri, 24 Nov 2017 11:08:13 +0000
+        id IBq0eNps6Ap17IBqAeb1Bt; Fri, 24 Nov 2017 11:08:14 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1511521693;
-        bh=VoCKEU9FF/ayhKEEwRnsD/DNSrtW87zZvA6Jf/ugte0=;
+        s=cmr1711; t=1511521695;
+        bh=tdG0b1H9/jFDa+nt6pf8mpUbXoQKHVn18L0A1YF9eBg=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:Reply-To;
-        b=iq1/haPyrDWqE8GhidFrTD8niINNOR2GXXJ2hT/KbOq55X2jBVAJPi1ih+9b1AWF3
-         6xrrAOm9EIOHEMweFGpV58ijEDNzit7ReTPcvAByetXIHNlOMbLIhgMolk/x3n6FWv
-         9UpQB7m6ZxFMiQ3yMxVLkmCrSQnjyqDX3igifSuo=
+        b=UuE+8tTab4/fIEfTzDNOVtgS3/MrrAvAo8ZpYS40coYn5clEryy4OSTJHOf/SpLKi
+         fVGwA7QzFDRRfdDvRvRlC3T/LMRFPGvozl09hhT4r9Cisb0fL2whtczAVMA54nE/vc
+         uWeOX7QqtH1iblVXnk/qEncub2sDBKAU44ISuCwQ=
 X-Originating-IP: [92.22.34.132]
 X-Spam: 0
 X-OAuthority: v=2.2 cv=EsGilWUA c=1 sm=1 tr=0 a=2gYdyS03q/cwff7SV6P5Ng==:117
- a=2gYdyS03q/cwff7SV6P5Ng==:17 a=evINK-nbAAAA:8 a=lwQX8hbtY5LG0p_dRqUA:9
- a=YtLniJEHI1pBiEd6:21 a=YqjHFiUZr1EcQFKv:21 a=RfR_gqz1fSpA9VikTjo0:22
+ a=2gYdyS03q/cwff7SV6P5Ng==:17 a=evINK-nbAAAA:8 a=A1X0JdhQAAAA:8
+ a=0o2gBBPYjOzhW3oaBd4A:9 a=fhmI9-BBkOOThNUC:21 a=d8ba_cfY3pfL5CLH:21
+ a=10xEi4siOC0A:10 a=RfR_gqz1fSpA9VikTjo0:22 a=Df3jFdWbhGDLdZNm0fyq:22
 From:   Phillip Wood <phillip.wood@talktalk.net>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -39,18 +40,18 @@ Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Adam Dinwoodie <adam@dinwoodie.org>,
         Stefan Beller <sbeller@google.com>,
         Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH v4 3/9] Add a function to update HEAD after creating a commit
-Date:   Fri, 24 Nov 2017 11:07:52 +0000
-Message-Id: <20171124110758.9406-4-phillip.wood@talktalk.net>
+Subject: [PATCH v4 5/9] commit: move print_commit_summary() to libgit
+Date:   Fri, 24 Nov 2017 11:07:54 +0000
+Message-Id: <20171124110758.9406-6-phillip.wood@talktalk.net>
 X-Mailer: git-send-email 2.15.0
 In-Reply-To: <20171124110758.9406-1-phillip.wood@talktalk.net>
 References: <20170925101041.18344-1-phillip.wood@talktalk.net>
  <20171124110758.9406-1-phillip.wood@talktalk.net>
 Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
-X-CMAE-Envelope: MS4wfCb8U2ga1It3H/SonjsfQbifcZiogzgpuQA4yQxyWQvtbewkd+mAUVsfGk8lO8DIXomgg21qxDdCQkKPT2DD0pXYxnb/9ao26i7uypcrouDjbaxNxjNE
- Tv3gf5jiUzlmW9/bxNtTZXP2a/xz/GxCBhBR9Ur58o2QfZ+VONMFP00xWQtkHydGoh39HaT4clxCizLaLfL6JCWFsUSB81eQcAWzjG+Tixm8HrFpc4//2Enm
- E0X6nG9o5McDnVlfTemcqx3gVeAd5zT8Wo2stpRLuyF/koDsktJGal3qtn3DNxRf/yQHP+68wYP/fji/IsQ1ZijBuOYKROLSyXN5levDGdyJmAK45KCD49qt
- in85Nra7KCSCBZthiBwcPvxen6eXw/QwBxYFBTSXAZwEqwA/V14=
+X-CMAE-Envelope: MS4wfH8TKEAhOUqlKo1McuTIUQFTFRAvda/StH8BtjSrDZei7kxClCB64wbJffACTQdX6gVW+b33lPCuEcUHMcOhuqPnsTuCyPPiVFEdtQWsLXoO0nkvLNiB
+ lQRi3n0PWrzL2lR9s7Ea5entR4T9NM81P2lPeurvA5RjVS8CYPOnaLKxVhzSScOJtZhAthq24z6/kPjRtfyhjqMw7DPjZsd3iiGx40tvNMBcLeY1VduDPcZs
+ whVUimu3OR6d62LDJQLwCPsEbMZNL7XE0guC0TUK1kfOXTixabXhcjQ3ZkKj06d+R0JZRM/NIvdKqdjqScF5Bri60/gqVHuIAwRR9bd05C6VyfVGRJo7nQ6M
+ Z8XH4cwQkZDAHNHJ2e/s0xYqB8MAesp2/Ehe6/XHOBvFeCmLl+8=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -58,144 +59,351 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Add update_head_with_reflog() based on the code that updates HEAD
-after committing in builtin/commit.c that can be called by 'git
-commit' and other commands.
+Move print_commit_summary() from builtin/commit.c to sequencer.c so it
+can be shared with other commands. The function is modified by
+changing the last argument to a flag so callers can specify whether
+they want to show the author date in addition to specifying if this is
+an initial commit.
+
+If the sequencer dies in print_commit_summary() (which can only happen
+when cherry-picking or reverting) then neither the todo list nor the
+abort safety file are updated to reflect the commit that was just
+made. print_commit_summary() can die if:
+
+ - The commit that was just created cannot be found or parsed.
+
+ - HEAD cannot be resolved either because some other process is
+   updating it (which is bad news in the middle of a cherry-pick) or
+   because it is corrupt.
+
+ - log_tree_commit() cannot read some objects.
+
+In all those cases dying will leave the sequencer in a sane state for
+aborting; 'git cherry-pick --abort' will rewind HEAD to the last
+successful commit before there was a problem with HEAD or the object
+database. If the user somehow fixes the problem and runs 'git
+cherry-pick --continue' then the sequencer will try and pick the same
+commit again which may or may not be what the user wants depending on
+what caused print_commit_summary() to die. If print_commit_summary()
+returned an error instead then update_abort_safety_file() would try to
+resolve HEAD which may or may not be successful. If it is successful
+then running 'git rebase --abort' would not rewind HEAD to the last
+successful commit which is not what we want.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
 
 Notes:
     changes since v2:
-     - updated commit message to reflect the change in function name
-     - style fixes
+     - expanded commit message to explain why it is ok to die in
+       print_commit_summary() and dropped the next patch which made it
+       return an error instead.
+     - style fixes.
     
     changes since v1:
-     - rename update_head() to update_head_with_reflog()
+     - convert flags passed to print_commit_summary() to unsigned int
 
- builtin/commit.c | 20 ++------------------
- sequencer.c      | 39 ++++++++++++++++++++++++++++++++++++++-
- sequencer.h      |  4 ++++
- 3 files changed, 44 insertions(+), 19 deletions(-)
+ builtin/commit.c | 128 ++++---------------------------------------------------
+ sequencer.c      | 119 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ sequencer.h      |   5 +++
+ 3 files changed, 133 insertions(+), 119 deletions(-)
 
 diff --git a/builtin/commit.c b/builtin/commit.c
-index d958c2eb2adc9a29dab29340ce9b56daea41fecd..eb144556bf37b7bf357bd976b94305171b4fd159 100644
+index d251cfcebad3476c365492d83803e7821fdfdf2b..2043479d37873671d43124dc0cb509d6d9247baa 100644
 --- a/builtin/commit.c
 +++ b/builtin/commit.c
-@@ -1610,13 +1610,11 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 	struct strbuf sb = STRBUF_INIT;
- 	struct strbuf author_ident = STRBUF_INIT;
- 	const char *index_file, *reflog_msg;
--	char *nl;
- 	struct object_id oid;
- 	struct commit_list *parents = NULL;
- 	struct stat statbuf;
- 	struct commit *current_head = NULL;
- 	struct commit_extra_header *extra = NULL;
--	struct ref_transaction *transaction;
- 	struct strbuf err = STRBUF_INIT;
+@@ -43,31 +43,6 @@ static const char * const builtin_status_usage[] = {
+ 	NULL
+ };
  
- 	if (argc == 2 && !strcmp(argv[1], "-h"))
-@@ -1739,25 +1737,11 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 	strbuf_release(&author_ident);
- 	free_commit_extra_headers(extra);
- 
--	nl = strchr(sb.buf, '\n');
--	if (nl)
--		strbuf_setlen(&sb, nl + 1 - sb.buf);
--	else
--		strbuf_addch(&sb, '\n');
--	strbuf_insert(&sb, 0, reflog_msg, strlen(reflog_msg));
--	strbuf_insert(&sb, strlen(reflog_msg), ": ", 2);
+-static const char implicit_ident_advice_noconfig[] =
+-N_("Your name and email address were configured automatically based\n"
+-"on your username and hostname. Please check that they are accurate.\n"
+-"You can suppress this message by setting them explicitly. Run the\n"
+-"following command and follow the instructions in your editor to edit\n"
+-"your configuration file:\n"
+-"\n"
+-"    git config --global --edit\n"
+-"\n"
+-"After doing this, you may fix the identity used for this commit with:\n"
+-"\n"
+-"    git commit --amend --reset-author\n");
 -
--	transaction = ref_transaction_begin(&err);
--	if (!transaction ||
--	    ref_transaction_update(transaction, "HEAD", &oid,
--				   current_head
--				   ? &current_head->object.oid : &null_oid,
--				   0, sb.buf, &err) ||
--	    ref_transaction_commit(transaction, &err)) {
-+	if (update_head_with_reflog(current_head, &oid, reflog_msg, &sb,
-+				    &err)) {
- 		rollback_index_files();
- 		die("%s", err.buf);
- 	}
--	ref_transaction_free(transaction);
- 
- 	unlink(git_path_cherry_pick_head());
- 	unlink(git_path_revert_head());
-diff --git a/sequencer.c b/sequencer.c
-index 36e03d041f32bcc0fdd1fddebb33b23c7e4d8a70..ef262980c5255d90ee023c0b29c6c1c628b3c7d2 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -1,10 +1,10 @@
- #include "cache.h"
- #include "config.h"
- #include "lockfile.h"
--#include "sequencer.h"
- #include "dir.h"
- #include "object.h"
- #include "commit.h"
-+#include "sequencer.h"
- #include "tag.h"
- #include "run-command.h"
- #include "exec_cmd.h"
-@@ -752,6 +752,43 @@ int template_untouched(const struct strbuf *sb, const char *template_file,
- 	return rest_is_empty(sb, start - sb->buf);
+-static const char implicit_ident_advice_config[] =
+-N_("Your name and email address were configured automatically based\n"
+-"on your username and hostname. Please check that they are accurate.\n"
+-"You can suppress this message by setting them explicitly:\n"
+-"\n"
+-"    git config --global user.name \"Your Name\"\n"
+-"    git config --global user.email you@example.com\n"
+-"\n"
+-"After doing this, you may fix the identity used for this commit with:\n"
+-"\n"
+-"    git commit --amend --reset-author\n");
+-
+ static const char empty_amend_advice[] =
+ N_("You asked to amend the most recent commit, but doing so would make\n"
+ "it empty. You can repeat your command with --allow-empty, or you can\n"
+@@ -1374,98 +1349,6 @@ int cmd_status(int argc, const char **argv, const char *prefix)
+ 	return 0;
  }
  
-+int update_head_with_reflog(const struct commit *old_head,
-+			    const struct object_id *new_head,
-+			    const char *action, const struct strbuf *msg,
-+			    struct strbuf *err)
+-static const char *implicit_ident_advice(void)
+-{
+-	char *user_config = expand_user_path("~/.gitconfig", 0);
+-	char *xdg_config = xdg_config_home("config");
+-	int config_exists = file_exists(user_config) || file_exists(xdg_config);
+-
+-	free(user_config);
+-	free(xdg_config);
+-
+-	if (config_exists)
+-		return _(implicit_ident_advice_config);
+-	else
+-		return _(implicit_ident_advice_noconfig);
+-
+-}
+-
+-static void print_summary(const char *prefix, const struct object_id *oid,
+-			  int initial_commit)
+-{
+-	struct rev_info rev;
+-	struct commit *commit;
+-	struct strbuf format = STRBUF_INIT;
+-	const char *head;
+-	struct pretty_print_context pctx = {0};
+-	struct strbuf author_ident = STRBUF_INIT;
+-	struct strbuf committer_ident = STRBUF_INIT;
+-
+-	commit = lookup_commit(oid);
+-	if (!commit)
+-		die(_("couldn't look up newly created commit"));
+-	if (parse_commit(commit))
+-		die(_("could not parse newly created commit"));
+-
+-	strbuf_addstr(&format, "format:%h] %s");
+-
+-	format_commit_message(commit, "%an <%ae>", &author_ident, &pctx);
+-	format_commit_message(commit, "%cn <%ce>", &committer_ident, &pctx);
+-	if (strbuf_cmp(&author_ident, &committer_ident)) {
+-		strbuf_addstr(&format, "\n Author: ");
+-		strbuf_addbuf_percentquote(&format, &author_ident);
+-	}
+-	if (author_date_is_interesting()) {
+-		struct strbuf date = STRBUF_INIT;
+-		format_commit_message(commit, "%ad", &date, &pctx);
+-		strbuf_addstr(&format, "\n Date: ");
+-		strbuf_addbuf_percentquote(&format, &date);
+-		strbuf_release(&date);
+-	}
+-	if (!committer_ident_sufficiently_given()) {
+-		strbuf_addstr(&format, "\n Committer: ");
+-		strbuf_addbuf_percentquote(&format, &committer_ident);
+-		if (advice_implicit_identity) {
+-			strbuf_addch(&format, '\n');
+-			strbuf_addstr(&format, implicit_ident_advice());
+-		}
+-	}
+-	strbuf_release(&author_ident);
+-	strbuf_release(&committer_ident);
+-
+-	init_revisions(&rev, prefix);
+-	setup_revisions(0, NULL, &rev, NULL);
+-
+-	rev.diff = 1;
+-	rev.diffopt.output_format =
+-		DIFF_FORMAT_SHORTSTAT | DIFF_FORMAT_SUMMARY;
+-
+-	rev.verbose_header = 1;
+-	rev.show_root_diff = 1;
+-	get_commit_format(format.buf, &rev);
+-	rev.always_show_header = 0;
+-	rev.diffopt.detect_rename = 1;
+-	rev.diffopt.break_opt = 0;
+-	diff_setup_done(&rev.diffopt);
+-
+-	head = resolve_ref_unsafe("HEAD", 0, NULL, NULL);
+-	if (!head)
+-		die_errno(_("unable to resolve HEAD after creating commit"));
+-	if (!strcmp(head, "HEAD"))
+-		head = _("detached HEAD");
+-	else
+-		skip_prefix(head, "refs/heads/", &head);
+-	printf("[%s%s ", head, initial_commit ? _(" (root-commit)") : "");
+-
+-	if (!log_tree_commit(&rev, commit)) {
+-		rev.always_show_header = 1;
+-		rev.use_terminator = 1;
+-		log_tree_commit(&rev, commit);
+-	}
+-
+-	strbuf_release(&format);
+-}
+-
+ static int git_commit_config(const char *k, const char *v, void *cb)
+ {
+ 	struct wt_status *s = cb;
+@@ -1727,8 +1610,15 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 	if (amend && !no_post_rewrite) {
+ 		commit_post_rewrite(current_head, &oid);
+ 	}
+-	if (!quiet)
+-		print_summary(prefix, &oid, !current_head);
++	if (!quiet) {
++		unsigned int flags = 0;
++
++		if (!current_head)
++			flags |= SUMMARY_INITIAL_COMMIT;
++		if (author_date_is_interesting())
++			flags |= SUMMARY_SHOW_AUTHOR_DATE;
++		print_commit_summary(prefix, &oid, flags);
++	}
+ 
+ 	UNLEAK(err);
+ 	UNLEAK(sb);
+diff --git a/sequencer.c b/sequencer.c
+index 6bc8346d42bb3cb1d2dc6a2238dd1b38e4308914..a2cf6f5e06ffec5108f0faf43d1a4cb605264c3f 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -836,6 +836,125 @@ void commit_post_rewrite(const struct commit *old_head,
+ 	run_rewrite_hook(&old_head->object.oid, new_head);
+ }
+ 
++static const char implicit_ident_advice_noconfig[] =
++N_("Your name and email address were configured automatically based\n"
++"on your username and hostname. Please check that they are accurate.\n"
++"You can suppress this message by setting them explicitly. Run the\n"
++"following command and follow the instructions in your editor to edit\n"
++"your configuration file:\n"
++"\n"
++"    git config --global --edit\n"
++"\n"
++"After doing this, you may fix the identity used for this commit with:\n"
++"\n"
++"    git commit --amend --reset-author\n");
++
++static const char implicit_ident_advice_config[] =
++N_("Your name and email address were configured automatically based\n"
++"on your username and hostname. Please check that they are accurate.\n"
++"You can suppress this message by setting them explicitly:\n"
++"\n"
++"    git config --global user.name \"Your Name\"\n"
++"    git config --global user.email you@example.com\n"
++"\n"
++"After doing this, you may fix the identity used for this commit with:\n"
++"\n"
++"    git commit --amend --reset-author\n");
++
++static const char *implicit_ident_advice(void)
 +{
-+	struct ref_transaction *transaction;
-+	struct strbuf sb = STRBUF_INIT;
-+	const char *nl;
-+	int ret = 0;
++	char *user_config = expand_user_path("~/.gitconfig", 0);
++	char *xdg_config = xdg_config_home("config");
++	int config_exists = file_exists(user_config) || file_exists(xdg_config);
 +
-+	if (action) {
-+		strbuf_addstr(&sb, action);
-+		strbuf_addstr(&sb, ": ");
++	free(user_config);
++	free(xdg_config);
++
++	if (config_exists)
++		return _(implicit_ident_advice_config);
++	else
++		return _(implicit_ident_advice_noconfig);
++
++}
++
++void print_commit_summary(const char *prefix, const struct object_id *oid,
++			  unsigned int flags)
++{
++	struct rev_info rev;
++	struct commit *commit;
++	struct strbuf format = STRBUF_INIT;
++	const char *head;
++	struct pretty_print_context pctx = {0};
++	struct strbuf author_ident = STRBUF_INIT;
++	struct strbuf committer_ident = STRBUF_INIT;
++
++	commit = lookup_commit(oid);
++	if (!commit)
++		die(_("couldn't look up newly created commit"));
++	if (parse_commit(commit))
++		die(_("could not parse newly created commit"));
++
++	strbuf_addstr(&format, "format:%h] %s");
++
++	format_commit_message(commit, "%an <%ae>", &author_ident, &pctx);
++	format_commit_message(commit, "%cn <%ce>", &committer_ident, &pctx);
++	if (strbuf_cmp(&author_ident, &committer_ident)) {
++		strbuf_addstr(&format, "\n Author: ");
++		strbuf_addbuf_percentquote(&format, &author_ident);
++	}
++	if (flags & SUMMARY_SHOW_AUTHOR_DATE) {
++		struct strbuf date = STRBUF_INIT;
++
++		format_commit_message(commit, "%ad", &date, &pctx);
++		strbuf_addstr(&format, "\n Date: ");
++		strbuf_addbuf_percentquote(&format, &date);
++		strbuf_release(&date);
++	}
++	if (!committer_ident_sufficiently_given()) {
++		strbuf_addstr(&format, "\n Committer: ");
++		strbuf_addbuf_percentquote(&format, &committer_ident);
++		if (advice_implicit_identity) {
++			strbuf_addch(&format, '\n');
++			strbuf_addstr(&format, implicit_ident_advice());
++		}
++	}
++	strbuf_release(&author_ident);
++	strbuf_release(&committer_ident);
++
++	init_revisions(&rev, prefix);
++	setup_revisions(0, NULL, &rev, NULL);
++
++	rev.diff = 1;
++	rev.diffopt.output_format =
++		DIFF_FORMAT_SHORTSTAT | DIFF_FORMAT_SUMMARY;
++
++	rev.verbose_header = 1;
++	rev.show_root_diff = 1;
++	get_commit_format(format.buf, &rev);
++	rev.always_show_header = 0;
++	rev.diffopt.detect_rename = 1;
++	rev.diffopt.break_opt = 0;
++	diff_setup_done(&rev.diffopt);
++
++	head = resolve_ref_unsafe("HEAD", 0, NULL, NULL);
++	if (!head)
++		die_errno(_("unable to resolve HEAD after creating commit"));
++	if (!strcmp(head, "HEAD"))
++		head = _("detached HEAD");
++	else
++		skip_prefix(head, "refs/heads/", &head);
++	printf("[%s%s ", head, (flags & SUMMARY_INITIAL_COMMIT) ?
++						_(" (root-commit)") : "");
++
++	if (!log_tree_commit(&rev, commit)) {
++		rev.always_show_header = 1;
++		rev.use_terminator = 1;
++		log_tree_commit(&rev, commit);
 +	}
 +
-+	nl = strchr(msg->buf, '\n');
-+	if (nl) {
-+		strbuf_add(&sb, msg->buf, nl + 1 - msg->buf);
-+	} else {
-+		strbuf_addbuf(&sb, msg);
-+		strbuf_addch(&sb, '\n');
-+	}
-+
-+	transaction = ref_transaction_begin(err);
-+	if (!transaction ||
-+	    ref_transaction_update(transaction, "HEAD", new_head,
-+				   old_head ? &old_head->object.oid : &null_oid,
-+				   0, sb.buf, err) ||
-+	    ref_transaction_commit(transaction, err)) {
-+		ret = -1;
-+	}
-+	ref_transaction_free(transaction);
-+	strbuf_release(&sb);
-+
-+	return ret;
++	strbuf_release(&format);
 +}
 +
  static int is_original_commit_empty(struct commit *commit)
  {
  	const struct object_id *ptree_oid;
 diff --git a/sequencer.h b/sequencer.h
-index 82e57713a2940c5d65ccac013c3f42c55cc12baf..81a2098e900f0aca30e45ed7f19ae4bf3ce682f0 100644
+index ec13b679c40dc4012a84a761ea856d6e75953490..4f616c61a3f3869daf9f427b978c308d6094a978 100644
 --- a/sequencer.h
 +++ b/sequencer.h
-@@ -69,4 +69,8 @@ int message_is_empty(const struct strbuf *sb,
- 		     enum commit_msg_cleanup_mode cleanup_mode);
- int template_untouched(const struct strbuf *sb, const char *template_file,
- 		       enum commit_msg_cleanup_mode cleanup_mode);
-+int update_head_with_reflog(const struct commit *old_head,
-+			    const struct object_id *new_head,
-+			    const char *action, const struct strbuf *msg,
-+			    struct strbuf *err);
+@@ -75,4 +75,9 @@ int update_head_with_reflog(const struct commit *old_head,
+ 			    struct strbuf *err);
+ void commit_post_rewrite(const struct commit *current_head,
+ 			 const struct object_id *new_head);
++
++#define SUMMARY_INITIAL_COMMIT   (1 << 0)
++#define SUMMARY_SHOW_AUTHOR_DATE (1 << 1)
++void print_commit_summary(const char *prefix, const struct object_id *oid,
++			  unsigned int flags);
  #endif
 -- 
 2.15.0
