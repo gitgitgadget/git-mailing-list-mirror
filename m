@@ -2,99 +2,195 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AE56820954
-	for <e@80x24.org>; Fri, 24 Nov 2017 07:39:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5186E20954
+	for <e@80x24.org>; Fri, 24 Nov 2017 07:43:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752286AbdKXHjO (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Nov 2017 02:39:14 -0500
-Received: from smtp1.de.adit-jv.com ([62.225.105.245]:53174 "EHLO
-        smtp1.de.adit-jv.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751577AbdKXHjN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Nov 2017 02:39:13 -0500
-X-Greylist: delayed 333 seconds by postgrey-1.27 at vger.kernel.org; Fri, 24 Nov 2017 02:39:12 EST
-Received: from localhost (smtp1.de.adit-jv.com [127.0.0.1])
-        by smtp1.de.adit-jv.com (Postfix) with ESMTP id A79F63C0016
-        for <git@vger.kernel.org>; Fri, 24 Nov 2017 08:33:37 +0100 (CET)
-Received: from smtp1.de.adit-jv.com ([127.0.0.1])
-        by localhost (smtp1.de.adit-jv.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id QdQFMIdd8gIb for <git@vger.kernel.org>;
-        Fri, 24 Nov 2017 08:33:31 +0100 (CET)
-Received: from HI2EXCH01.adit-jv.com (hi2exch01.adit-jv.com [10.72.92.24])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        id S1752179AbdKXHnz (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Nov 2017 02:43:55 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63313 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751577AbdKXHnw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Nov 2017 02:43:52 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B1AFFAD8B0;
+        Fri, 24 Nov 2017 02:43:51 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=TmIubwv2WQlZVybdK0hSfBQk4fg=; b=atGaoA
+        QwOzLbIEqgLFdnAfRPsatMTbwcy2j0VDCGufjdoJi/En0MwrOV87iIY3tQIwLET9
+        P/Taz0Jo60nGO+t7Of/7H6k7OsnLZtlKpUcDShAvLPS4LqzIYc3S4xl0lvGV8Q5/
+        xb54PsxHMuwD3xRu8RXpjuwc5/MYLhuie/oYA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=cLW+PEZZhvdgyZpPUhmlw1tgNZvaMYlF
+        NeVi9wylAZjCH4t02f3+F3jNufEgh9CsuQPC2JjU4c1O7dG0m20U53kgb0GJqrRO
+        fTU/SCFq0H/0qSTl+Vr/z8ouRyOtUH33VZl5+k5HNhDHoysD47rsp3pMZu47En+d
+        0eE9DJKJTYA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A9A5CAD8AF;
+        Fri, 24 Nov 2017 02:43:51 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by smtp1.de.adit-jv.com (Postfix) with ESMTPS id 3F4313C07D3
-        for <git@vger.kernel.org>; Fri, 24 Nov 2017 08:33:31 +0100 (CET)
-Received: from vmlxhi-102.adit-jv.com (10.72.93.184) by HI2EXCH01.adit-jv.com
- (10.72.92.24) with Microsoft SMTP Server (TLS) id 14.3.361.1; Fri, 24 Nov
- 2017 08:33:31 +0100
-Date:   Fri, 24 Nov 2017 08:33:27 +0100
-From:   Eugeniu Rosca <erosca@de.adit-jv.com>
-To:     <git@vger.kernel.org>
-CC:     <erosca@de.adit-jv.com>
-Subject: Make patch-id more flexible?
-Message-ID: <20171124073327.GA15188@vmlxhi-102.adit-jv.com>
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 22A6DAD8AE;
+        Fri, 24 Nov 2017 02:43:51 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 1/1] diffcore: add a filter to find a specific blob
+References: <20171120222529.24995-1-sbeller@google.com>
+        <20171120222529.24995-2-sbeller@google.com>
+Date:   Fri, 24 Nov 2017 16:43:49 +0900
+In-Reply-To: <20171120222529.24995-2-sbeller@google.com> (Stefan Beller's
+        message of "Mon, 20 Nov 2017 14:25:29 -0800")
+Message-ID: <xmqqpo88m896.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Originating-IP: [10.72.93.184]
+Content-Type: text/plain
+X-Pobox-Relay-ID: 36B1471C-D0EB-11E7-A35A-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear git Community,
+Stefan Beller <sbeller@google.com> writes:
 
-This is my first post to the git mailing list, so I would first like to
-express my gratitude to everyone involved in developing one of my
-favorite development tools.
+> Sometimes users are given a hash of an object and they want to
+> identify it further (ex.: Use verify-pack to find the largest blobs,
+> but what are these? or [1])
+>
+> One might be tempted to extend git-describe to also work with blobs,
+> such that `git describe <blob-id>` gives a description as
+> '<commit-ish>:<path>'.  This was implemented at [2]; as seen by the sheer
+> number of responses (>110), it turns out this is tricky to get right.
+> The hard part to get right is picking the correct 'commit-ish' as that
+> could be the commit that (re-)introduced the blob or the blob that
+> removed the blob; the blob could exist in different branches.
+>
+> Junio hinted at a different approach of solving this problem, which this
+> patch implements. Teach the diff machinery another flag for restricting
+> the information to what is shown. For example:
+>
+>   $ ./git log --oneline --blobfind=v2.0.0:Makefile
+>   b2feb64309 Revert the whole "ask curl-config" topic for now
+>   47fbfded53 i18n: only extract comments marked with "TRANSLATORS:"
+>
+> we observe that the Makefile as shipped with 2.0 was introduced in
+> v1.9.2-471-g47fbfded53 and replaced in v2.0.0-rc1-5-gb2feb64309 by
+> a different blob.
+>
+> [1] https://stackoverflow.com/questions/223678/which-commit-has-this-blob
+> [2] https://public-inbox.org/git/20171028004419.10139-1-sbeller@google.com/
+>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>
+> On playing around with this, trying to find more interesting cases, I observed:
+>
+>     git log --oneline --blobfind=HEAD:COPYING
+>     703601d678 Update COPYING with GPLv2 with new FSF address
+>     
+>     git log --oneline --blobfind=703601d678^:COPYING
+>     459b8d22e5 tests: do not borrow from COPYING and README from the real source
+>     703601d678 Update COPYING with GPLv2 with new FSF address
+>     075b845a85 Add a COPYING notice, making it explicit that the license is GPLv2.
+>
+>     t/diff-lib/COPYING may need an update of the adress of the FSF,
+>     # leftoverbits I guess.
 
-I will make my question short and concrete. My day to day job is doing
-Linux kernel integration, which also includes importing of out-of-tree
-kernel modules into the kernel tree. Our team extensively uses cherry
-picking for integration purpose, since most often merging work is simply
-not possible because of a different kernel base used by our suppliers.
-We don't rebase remote commits --onto our repository/branch, since
-(compared to `git cherry-pick -x`) `git rebase --onto` doesn't
-add source/origin information to commit description. The `(cherry
-picked from *)` line is extremely helpful in generating proper commit
-statistics on a given branch, which is interesting because of a high
-amount of commits coming from various non-vanilla remotes.
+I do not think so.  See tz/fsf-address-update topic for details.
 
-Reviewing the cherry picked commits, we extensively rely on patch id
-comparison. We've developed scripts that extract the remote commit hash
-from the `(cherry picked from <commit-id>)` line in the commit
-description, in order to produce tables like below:
+Please do not contaminate the list archive with careless mention of 
+"hash-mark plus left over bits", as it will make searching the real
+good bits harder.  Thanks.
 
-Remote-commit-id   Local-commit-id    Patch-id-mismatch?
-<rem-commit-id-1>  <loc-commit-id-1>  No
-<rem-commit-id-2>  <loc-commit-id-2>  Yes
----------------------------------
-<rem-commit-id-N>  <loc-commit-id-N>  No
+> Another interesting case that I found was
+>    git log --oneline --blobfind=v2.14.0:Makefile
+>    3921a0b3c3 perf: add test for writing the index
+>    36f048c5e4 sha1dc: build git plumbing code more explicitly
+>    2118805b92 Makefile: add style build rule
+>
+> all of which were after v2.14, such that the introduction of that blob doesn't
+> show up; I suspect it came in via a merge as unrelated series may have updated
+> the Makefile in parallel, though git-log should have told me?
 
-This information helps the reviewer identify the non-clean picks, which
-are oftentimes (but not always) caused by manual conflict resolution,
-which we try to briefly document in square brackets above the
-`Signed-off-by` signature. We feel that documenting any manual conflict
-resolution is important, as it can be source of bugs if not done
-properly.
+If that is the case, shouldn't we make this new mode imply
+--full-history to forbid history simplification?  "git log" is a
+tool to find _an_ explanation of the current state, and the usual
+history simplification makes tons of sense there, but blobfind is
+run most likely in order to find _all_ mention of the set of blobs
+given.
 
-Troubles begin when we import out-of-tree kernel modules in-tree (some
-suppliers delivery many of them). We use subtree cherry picking [1] for
-that. Because subtree strategy alters the file-names, there will always
-be a patch id mismatch between the origin commit and its pick. To
-overcome this, we are using alternatives to `git patch-id`, which ignore
-file-names. Here comes my actual question. Would it be conceptually fine
-to implement some `git patch-id` parameter, which would allow ignoring
-the file-names (or reducing those to their `basename`) before computing
-the patch id? Or would it break the concept of patch id (which shouldn't
-accept variations)?
+> diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+> index dd0dba5b1d..252a21cc19 100644
+> --- a/Documentation/diff-options.txt
+> +++ b/Documentation/diff-options.txt
+> @@ -500,6 +500,10 @@ information.
+>  --pickaxe-regex::
+>  	Treat the <string> given to `-S` as an extended POSIX regular
+>  	expression to match.
+> +--blobfind=<blob-id>::
+> +	Restrict the output such that one side of the diff
+> +	matches the given blob-id.
+> +
+>  endif::git-format-patch[]
 
-Thank you.
-Eugeniu.
+Can we have a blank line between these enumerations to make the
+source easier to read?  Thanks.
 
-[1] git cherry-pick -x -s --no-merges --strategy=subtree -Xsubtree=drivers/staging/mymodule <commit-X>..<commit-Y>
+> diff --git a/diffcore-blobfind.c b/diffcore-blobfind.c
+> new file mode 100644
+> index 0000000000..5d222fc336
+> --- /dev/null
+> +++ b/diffcore-blobfind.c
+> @@ -0,0 +1,51 @@
+> +/*
+> + * Copyright (c) 2017 Google Inc.
+> + */
+> +#include "cache.h"
+> +#include "diff.h"
+> +#include "diffcore.h"
+> +
+> +static void diffcore_filter_blobs(struct diff_queue_struct *q,
+> +				  struct diff_options *options)
+> +{
+> +	int i, j = 0, c = q->nr;
+> +
+> +	if (!options->blobfind)
+> +		BUG("blobfind oidset not initialized???");
+> +
+> +	for (i = 0; i < q->nr; i++) {
+> +		struct diff_filepair *p = q->queue[i];
+> +
+> +		if (DIFF_PAIR_UNMERGED(p) ||
+> +		    (DIFF_FILE_VALID(p->one) &&
+> +		     oidset_contains(options->blobfind, &p->one->oid)) ||
+> +		    (DIFF_FILE_VALID(p->two) &&
+> +		     oidset_contains(options->blobfind, &p->two->oid)))
+> +			continue;
+
+So, we keep an unmerged pair, a pair that mentions a sought-blob on
+one side or the other side?  I am not sure if we want to keep the
+unmerged pair for the purpose of this one.
+
+> +		diff_free_filepair(p);
+> +		q->queue[i] = NULL;
+> +		c--;
+
+Also, if you are doing the in-place shrinking and have already
+introduced another counter 'j' that is initialized to 0, I think it
+makes more sense to do the shrinking in-place.  'i' will stay to be
+the source-scan pointer that runs 0 thru q->nr, while 'j' can be
+used in this loop (where you have 'continue') to move the current
+one that is determined to survive from q->queue[i] to q->queue[j++].
+
+Then you do not need 'c'; when the loop ends, 'j' would be the
+number of surviving entries and q->nr can be adjusted to it.  Unlike
+the usual pattern taken by the other diffcore transformations where
+a new queue is populated and the old one discarded, this would leave
+the q->queue[] over-allocated, but I do not think it is too bad.
