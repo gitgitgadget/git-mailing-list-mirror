@@ -2,107 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.6 required=3.0 tests=BAYES_00,BODY_8BITS,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5C5B72036D
-	for <e@80x24.org>; Fri, 24 Nov 2017 18:59:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 889AB2036D
+	for <e@80x24.org>; Fri, 24 Nov 2017 19:02:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753610AbdKXS73 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Nov 2017 13:59:29 -0500
-Received: from mout.web.de ([212.227.15.4]:63633 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752530AbdKXS73 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Nov 2017 13:59:29 -0500
-Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0LyftH-1fFTty42nn-016Bhw; Fri, 24
- Nov 2017 19:59:26 +0100
-Date:   Fri, 24 Nov 2017 19:59:05 +0100
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>, ashishnegi33@gmail.com
-Subject: Re: [PATCH 1/1] convert: tighten the safe autocrlf handling
-Message-ID: <20171124185905.GA9736@tor.lan>
-References: <CAJ_+vJ6FXXda4fe7=1YxtDGR2d8CqP4KXN+YR6+mdQ+5jQQXug@mail.gmail.com>
- <20171124161407.30698-1-tboegi@web.de>
- <CAPig+cT7=yLUVpmtutmTep5NBbSRNOL17dsOuVvn_Scu7_+p_w@mail.gmail.com>
+        id S1753862AbdKXTCv (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Nov 2017 14:02:51 -0500
+Received: from a7-11.smtp-out.eu-west-1.amazonses.com ([54.240.7.11]:56882
+        "EHLO a7-11.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1753722AbdKXTCu (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 24 Nov 2017 14:02:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1511550168;
+        h=From:To:Message-ID:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+        bh=6SpH/EKBfZUDaxjoMU6mE+vSZll/X26P0p41SDE391g=;
+        b=djI5DcnW6y8CrTUDZ5hucHE1unMgXuiMfl2eyH2CjyoPM8r5f3EG6DP9+YBOTqbv
+        NXGmIwgDgl3FkihhxjwGhiyKWbcf/QOWWmXVF8pquKQPQv+caAjyHM3RfmbOtrurWyZ
+        GtbDpS0LcNC7z10xkEyZqCKsT/59r41//yJz+Qa0=
+From:   Stepan Kashuba <ihaterabbids@gmail.com>
+To:     git@vger.kernel.org
+Message-ID: <0102015fef692e1e-3a4dbc30-1a94-4e9b-a8a5-135a23e203ed-000000@eu-west-1.amazonses.com>
+Subject: [PATCH] Fixed Russian translation
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAPig+cT7=yLUVpmtutmTep5NBbSRNOL17dsOuVvn_Scu7_+p_w@mail.gmail.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Provags-ID: V03:K0:7Rt4/+ci8gsV2RISeXfVrnxmtxX2D8wL5EGw4rF7Lo0g3GCSCip
- 47R6NIL6otNpBnMR+6rCD01oTKs1MSgQ6G6pyanobtMhG69Q8AY28xpDWtk/NnpZB+Q8B/o
- MmQcsODl4a4TIq7Rrq2lq6KESwIw6kyJqsj9K8lATUiJG5WN1VwF2BXegF3unmBcGGHf7q+
- Cmq5yTXRYnKFlHr2FRTRQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:0eFSl11qNCY=:/aLwcnzV6frkbWNKJ/LKtK
- qQQKC1qOFXCCJxRLHyb9m9MwNsKGXtCztLDFfqCviogjROb/vGMvj7VO//+0m7K1wMYsQcLL8
- s0lFb5q8q8N+LBJWCBEzUso6WcEC3RRgj+fXG2+0qvlga7kCoB1MdQJjekp2df/xWt9q+3MSy
- AakrnRDpDnNfydjdmDz2YYNQ6m/9zDA6vN3C3PPTjvULcOzfBEz0JSYCHBes/VnPFMGqUym4Q
- caEI6QzGs7sBx1VX4K1fTtf3/f6rgpaSBhbJXEkofcrvqBKDmGyzEtFBZxOI1OATHuBNs2O2a
- PPXCI4X9En+zJoI1ozDqk/+ciSVXVQHvww8YI9eMHpFWc7iw070xCker/uv/mOpR77QkdG4wp
- Y8HOj2uGsnZfJWlitnTZrLWaZOwrLck9t8P0rKtw6RL+Ji/ILD2LgnpqvY5Kzi/v4kcKz4z8p
- dpJF9UOgFvwNzCrVgSfxhdGKMlpRGtKR934AeWnkz42R69eqUY2K80lfOZG3y9ePeha5gVk3l
- HtnS4ulY/uwAJ+b7oWLyD6p1LSUnqJt8aW6CpxHHAJP2v6CTcI18xUgrXa1SZpXZuA/0YgokD
- BzIMhl2qAzmA/duSxFq2P7u3Ewc/6SR1+uGzgHDKCFwNPiy7SovVgzS5/1MV+M30AQjelKXQp
- 7+Be/afkIwcxj9lv2E2GRffC8G9lSypk+o1TwHifT5+v+iVU6A9PNZafzXsEvwDYTWOgiHwCu
- m8waNtCZ33aNmwrEscRth1uiKPlKuNxZJHZdgEu62ND6X9DjGdxYcASbeWm5oaleP48EJZSuy
- ARFq58pX2x9exFviqIIlVxRyHyZhH6Q1Sfwd5vmoDMnPH3PdEM=
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Date:   Fri, 24 Nov 2017 19:02:48 +0000
+X-SES-Outgoing: 2017.11.24-54.240.7.11
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 24, 2017 at 12:24:48PM -0500, Eric Sunshine wrote:
-> On Fri, Nov 24, 2017 at 11:14 AM,  <tboegi@web.de> wrote:
-> > When a text file had been commited with CRLF and the file is commited
-> > again, the CRLF are kept if .gitattributs has "text=auto".
-> > This is done by analyzing the content of the blob stored in the index:
-> > If a '\r' is found, Git assumes that the blob was commited with CRLF.
-> >
-> > The simple search for a '\r' does not always work as expected:
-> > A file is encoded in UTF-16 with CRLF and commited. Git treats it as binary.
-> > Now the content is converted into UTF-8. At the next commit Git treats the
-> > file as text, the CRLF should be converted into LF, but isn't.
-> >
-> > Solution:
-> > Replace has_cr_in_index() with has_crlf_in_index(). When no '\r' is found,
-> > 0 is returned directly, this is the most common case.
-> > If a '\r' is found, the content is analyzed more deeply.
-> >
-> > Signed-off-by: Torsten Bögershausen <tboegi@web.de>
-> > ---
-> > diff --git a/convert.c b/convert.c
-> > @@ -220,18 +220,27 @@ static void check_safe_crlf(const char *path, enum crlf_action crlf_action,
-> > -static int has_cr_in_index(const struct index_state *istate, const char *path)
-> > +static int has_crlf_in_index(const struct index_state *istate, const char *path)
-> >  {
-> >         unsigned long sz;
-> >         void *data;
-> > -       int has_cr;
-> > +       const char *crp;
-> > +       int has_crlf = 0;
-> >
-> >         data = read_blob_data_from_index(istate, path, &sz);
-> >         if (!data)
-> >                 return 0;
-> > -       has_cr = memchr(data, '\r', sz) != NULL;
-> > +
-> > +       crp = memchr(data, '\r', sz);
-> > +       if (crp && (crp[1] == '\n')) {
-> 
-> If I understand correctly, this isn't a NUL-terminated string and it
-> might be a binary blob, so if the lone CR in a file resides at the end
-> of the file, won't this try looking for LF out-of-bounds? I would have
-> expected the conditional to be:
-> 
->     if (crp && crp - data + 1 < sz && crp[1] == '\n') {
-> 
-> or any equivalent variation.
-> 
+---
+ po/ru.po | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-The read_blob_data_from_index() function should always append a '\0',
-regardless if the blob is binary or not.
+diff --git a/po/ru.po b/po/ru.po
+index d4370b5941a13..4ce3d38047303 100644
+--- a/po/ru.po
++++ b/po/ru.po
+@@ -1,7 +1,7 @@
+ # SOME DESCRIPTIVE TITLE.
+ # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+ # This file is distributed under the same license as the PACKAGE package.
+-#=20
++#
+ # Translators:
+ # Dimitriy Ryazantcev <DJm00n@mail.ru>, 2014-2017
+ # insolor, 2014
+@@ -3421,7 +3421,7 @@ msgstr "=D0=BE=D0=B1=D0=BD=D0=B0=D1=80=D1=83=D0=B6=D0=
+=B5=D0=BD=D1=8B =D0=BD=D0=B5=D0=B8=D0=B7=D0=B2=D0=B5=D1=81=D1=82=D0=BD=D1=
+=8B=D0=B5 =D1=80=D0=B0=D1=81=D1=88=D0=B8=D1=80=D0=B5=D0=BD=D0=B8=D1=8F =D1=
+=80=D0=B5=D0=BF
+ #: setup.c:806
+ #, c-format
+ msgid "Not a git repository (or any of the parent directories): %s"
+-msgstr "=D0=9D=D0=B5 =D0=BD=D0=B0=D0=B9=D0=B4=D0=B5=D0=BD git =D1=80=D0=B5=
+=D0=BF=D0=BE=D0=B7=D0=B8=D1=82=D0=BE=D0=B8=D0=B9 (=D0=B8=D0=BB=D0=B8 =D0=BE=
+=D0=B4=D0=B8=D0=BD =D0=B8=D0=B7 =D0=B5=D0=B3=D0=BE =D0=BA=D0=B0=D1=82=D0=B0=
+=D0=BB=D0=BE=D0=B3=D0=BE=D0=B2): %s"
++msgstr "=D0=9D=D0=B5 =D0=BD=D0=B0=D0=B9=D0=B4=D0=B5=D0=BD git =D1=80=D0=B5=
+=D0=BF=D0=BE=D0=B7=D0=B8=D1=82=D0=BE=D1=80=D0=B8=D0=B9 (=D0=B8=D0=BB=D0=B8 =
+=D0=BE=D0=B4=D0=B8=D0=BD =D0=B8=D0=B7 =D0=B5=D0=B3=D0=BE =D0=BA=D0=B0=D1=82=
+=D0=B0=D0=BB=D0=BE=D0=B3=D0=BE=D0=B2): %s"
+=20
+ #: setup.c:808 builtin/index-pack.c:1653
+ msgid "Cannot come back to cwd"
+@@ -3441,7 +3441,7 @@ msgstr "=D0=9D=D0=B5 =D1=83=D0=B4=D0=B0=D0=BB=D0=BE=
+=D1=81=D1=8C =D0=B8=D0=B7=D0=BC=D0=B5=D0=BD=D0=B8=D1=82=D1=8C =D0=BD=D0=B0 =
+=C2=AB%s=C2=BB"
+ msgid ""
+ "Not a git repository (or any parent up to mount point %s)\n"
+ "Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set)=
+."
+-msgstr "=D0=9D=D0=B5 =D0=BD=D0=B0=D0=B9=D0=B4=D0=B5=D0=BD git =D1=80=D0=B5=
+=D0=BF=D0=BE=D0=B7=D0=B8=D1=82=D0=BE=D0=B8=D0=B9 (=D0=B8=D0=BB=D0=B8 =D0=BE=
+=D0=B4=D0=B8=D0=BD =D0=B8=D0=B7 =D0=B5=D0=B3=D0=BE =D0=BA=D0=B0=D1=82=D0=B0=
+=D0=BB=D0=BE=D0=B3=D0=BE=D0=B2 =D0=B2=D0=BF=D0=BB=D0=BE=D1=82=D1=8C =D0=B4=
+=D0=BE =D1=82=D0=BE=D1=87=D0=BA=D0=B8 =D0=BC=D0=BE=D0=BD=D1=82=D0=B8=D1=80=
+=D0=BE=D0=B2=D0=B0=D0=BD=D0=B8=D1=8F %s)\n=D0=9E=D1=81=D1=82=D0=B0=D0=BD=D0=
+=B0=D0=B2=D0=BB=D0=B8=D0=B2=D0=B0=D1=8E =D0=BF=D0=BE=D0=B8=D1=81=D0=BA =D0=
+=BD=D0=B0 =D0=B3=D1=80=D0=B0=D0=BD=D0=B8=D1=86=D0=B5 =D1=84=D0=B0=D0=B9=D0=
+=BB=D0=BE=D0=B2=D0=BE=D0=B9 =D1=81=D0=B8=D1=81=D1=82=D0=B5=D0=BC=D1=8B (=D1=
+=82=D0=B0=D0=BA =D0=BA=D0=B0=D0=BA GIT_DISCOVERY_ACROSS_FILESYSTEM =D0=BD=
+=D0=B5 =D1=83=D1=81=D1=82=D0=B0=D0=BD=D0=BE=D0=B2=D0=BB=D0=B5=D0=BD)."
++msgstr "=D0=9D=D0=B5 =D0=BD=D0=B0=D0=B9=D0=B4=D0=B5=D0=BD git =D1=80=D0=B5=
+=D0=BF=D0=BE=D0=B7=D0=B8=D1=82=D0=BE=D1=80=D0=B8=D0=B9 (=D0=B8=D0=BB=D0=B8 =
+=D0=BE=D0=B4=D0=B8=D0=BD =D0=B8=D0=B7 =D0=B5=D0=B3=D0=BE =D0=BA=D0=B0=D1=82=
+=D0=B0=D0=BB=D0=BE=D0=B3=D0=BE=D0=B2 =D0=B2=D0=BF=D0=BB=D0=BE=D1=82=D1=8C =
+=D0=B4=D0=BE =D1=82=D0=BE=D1=87=D0=BA=D0=B8 =D0=BC=D0=BE=D0=BD=D1=82=D0=B8=
+=D1=80=D0=BE=D0=B2=D0=B0=D0=BD=D0=B8=D1=8F %s)\n=D0=9E=D1=81=D1=82=D0=B0=D0=
+=BD=D0=B0=D0=B2=D0=BB=D0=B8=D0=B2=D0=B0=D1=8E =D0=BF=D0=BE=D0=B8=D1=81=D0=
+=BA =D0=BD=D0=B0 =D0=B3=D1=80=D0=B0=D0=BD=D0=B8=D1=86=D0=B5 =D1=84=D0=B0=D0=
+=B9=D0=BB=D0=BE=D0=B2=D0=BE=D0=B9 =D1=81=D0=B8=D1=81=D1=82=D0=B5=D0=BC=D1=
+=8B (=D1=82=D0=B0=D0=BA =D0=BA=D0=B0=D0=BA GIT_DISCOVERY_ACROSS_FILESYSTEM =
+=D0=BD=D0=B5 =D1=83=D1=81=D1=82=D0=B0=D0=BD=D0=BE=D0=B2=D0=BB=D0=B5=D0=BD).=
+"
+=20
+ #: setup.c:1159
+ #, c-format
+@@ -7436,7 +7436,7 @@ msgstr "=D0=BD=D0=B5=D0=BF=D1=80=D0=B0=D0=B2=D0=B8=D0=
+=BB=D1=8C=D0=BD=D1=8B=D0=B9 =D0=BF=D0=B0=D1=80=D0=B0=D0=BC=D0=B5=D1=82=D1=
+=80: %s"
+=20
+ #: builtin/diff.c:357
+ msgid "Not a git repository"
+-msgstr "=D0=9D=D0=B5 =D0=BD=D0=B0=D0=B9=D0=B4=D0=B5=D0=BD git =D1=80=D0=B5=
+=D0=BF=D0=BE=D0=B7=D0=B8=D1=82=D0=BE=D0=B8=D0=B9"
++msgstr "=D0=9D=D0=B5 =D0=BD=D0=B0=D0=B9=D0=B4=D0=B5=D0=BD git =D1=80=D0=B5=
+=D0=BF=D0=BE=D0=B7=D0=B8=D1=82=D0=BE=D1=80=D0=B8=D0=B9"
+=20
+ #: builtin/diff.c:400
+ #, c-format
+
+--
+https://github.com/git/git/pull/435
