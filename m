@@ -2,136 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C13E320954
-	for <e@80x24.org>; Fri, 24 Nov 2017 09:12:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A6B4420954
+	for <e@80x24.org>; Fri, 24 Nov 2017 09:52:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752472AbdKXJMi (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Nov 2017 04:12:38 -0500
-Received: from cpanel2.indieserve.net ([199.212.143.6]:44424 "EHLO
-        cpanel2.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752432AbdKXJMf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Nov 2017 04:12:35 -0500
-Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:44724 helo=localhost.localdomain)
-        by cpanel2.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.89)
-        (envelope-from <rpjday@crashcourse.ca>)
-        id 1eIA2E-00088Y-DL; Fri, 24 Nov 2017 04:12:34 -0500
-Date:   Fri, 24 Nov 2017 04:11:06 -0500 (EST)
-From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
-X-X-Sender: rpjday@localhost.localdomain
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Git Mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH v2] doc: clarify that "git bisect" accepts one or more
- good commits
-In-Reply-To: <xmqqh8tkp9nn.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.LFD.2.21.1711240351170.30318@localhost.localdomain>
-References: <alpine.LFD.2.21.1711220729230.13545@DESKTOP-1GPMCEJ> <xmqqh8tkp9nn.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+        id S1752955AbdKXJwZ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Nov 2017 04:52:25 -0500
+Received: from mail-wm0-f47.google.com ([74.125.82.47]:44589 "EHLO
+        mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752737AbdKXJwX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Nov 2017 04:52:23 -0500
+Received: by mail-wm0-f47.google.com with SMTP id r68so21400112wmr.3
+        for <git@vger.kernel.org>; Fri, 24 Nov 2017 01:52:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=42J07qfgy8on9zdCX6IM/oduZTODly1IALS6VTBbmEg=;
+        b=sNytPkemF6oLsWHyBuc9rE1pAkYIF4AC7A9pt//hPrT/FaJ9hpGoGKyA3tPT8MA/DZ
+         NUQedWM6hL3nkRynXyHl3VxsPvbtw79WSSZ4aMo1xwImVhIz/OepFMMZhp171797mgLq
+         /Ig2eI+YMJtDInypqrbcAJroVCJUK0yBWfTuSNvAWqDcXzl9vSxAaQ71EqIQUxfMaAu8
+         PzwLaraENNu8/v8ksz7TbS6rwap8im8Uo9zBZb3Z0xiUnAbJfAMhx2H/DnDfHPVWWxDU
+         +QJzz94T+C4/9jbrNFRXDd41z93cO4PPr+1K9BEy8zE31CWxZl5f1BphqfEa7Xs9DJep
+         uoKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=42J07qfgy8on9zdCX6IM/oduZTODly1IALS6VTBbmEg=;
+        b=mzArEuuD5lNV6EhFkS24YBwCBb0Vv76VteyrQs2VWn8oQ/30tSc/g/fBi8LvarD7m5
+         YAj6IiNtTHmF7b78HPfSp6JBOskE1IqaRjVSIHqkbBdopx0A2t49IN1A+1KyAdvGfNPJ
+         dICLg29759niRU/V6CfBxydYXTdYt5Tk6lSBzOJ6Koa8NjcNW1rFmh2aZvqI/C0Fqe6e
+         lDqJU0YUGB6ptzKV64GjBcz4kfnq2xovwiB+tFqxho9PK0rhbAcmVzL4DaONkFaSzDuf
+         vqyUTj2ETWkyyGzqTm2UTGHKTRjmk0k49oIk92ior7ppE/aAuw4IUtsBHCM/nTWMmuz8
+         91iA==
+X-Gm-Message-State: AJaThX4716F4SfcIkr9/QN4mA24on0qs+Egv1FOXMlcX/fRM2Uj+nPZN
+        c57mBY26GlH9t2GAMYXcES0O+aKhq/Nek6/UV+M=
+X-Google-Smtp-Source: AGs4zMZzxXSodQCrlzBUUyot+cZMzMW5KFBjXGYXdRShPrx/lk2+vVMJD/upS5uxjv6vqJHa8opSAq0d17so01i0yjc=
+X-Received: by 10.28.227.136 with SMTP id a130mr9953171wmh.104.1511517142517;
+ Fri, 24 Nov 2017 01:52:22 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cpanel2.indieserve.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - crashcourse.ca
-X-Get-Message-Sender-Via: cpanel2.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
-X-Authenticated-Sender: cpanel2.indieserve.net: rpjday@crashcourse.ca
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+Received: by 10.28.151.195 with HTTP; Fri, 24 Nov 2017 01:52:02 -0800 (PST)
+In-Reply-To: <003c01d3646c$df78fc50$9e6af4f0$@nexbridge.com>
+References: <201711231458.vANEwUMK048049@elephants.elehost.com> <003c01d3646c$df78fc50$9e6af4f0$@nexbridge.com>
+From:   anatoly techtonik <techtonik@gmail.com>
+Date:   Fri, 24 Nov 2017 12:52:02 +0300
+Message-ID: <CAPkN8xJBWRs-2DxViBACLKzAbD1_EBA2MvmWVZmWgL+Sg72znw@mail.gmail.com>
+Subject: Re: Re: Unify annotated and non-annotated tags
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Igor Djordjevic <igor.d.djordjevic@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 24 Nov 2017, Junio C Hamano wrote:
-
-> "Robert P. J. Day" <rpjday@crashcourse.ca> writes:
-
-... snip ...
-
-> > -to indicate that it was after.
-> > +to indicate a single commit after that change.
+On Thu, Nov 23, 2017 at 6:08 PM, Randall S. Becker
+<rsbecker@nexbridge.com> wrote:
+> On 2017-11-23 02:31 (GMT-05:00) anatoly techtonik wrote
+>>Subject: Re: Unify annotated and non-annotated tags
+>>On Sat, Nov 11, 2017 at 5:06 AM, Junio C Hamano <gitster@pobox.com> wrote=
+:
+>>> Igor Djordjevic <igor.d.djordjevic@gmail.com> writes:
+>>>
+>>>> If you would like to mimic output of "git show-ref", repeating
+>>>> commits for each tag pointing to it and showing full tag name as
+>>>> well, you could do something like this, for example:
+>>>>
+>>>>       for tag in $(git for-each-ref --format=3D"%(refname)" refs/tags)
+>>>>       do
+>>>>               printf '%s %s\n' "$(git rev-parse $tag^0)" "$tag"
+>>>>       done
+>>>>
+>>>>
+>>>> Hope that helps a bit.
+>>>
+>>> If you use for-each-ref's --format option, you could do something
+>>> like (pardon a long line):
+>>>
+>>> git for-each-ref --format=3D'%(if)%(*objectname)%(then)%(*objectname)%(=
+else)%(objectname)%(end) %(refname)' refs/tags
+>>>
+>>> without any loop, I would think.
+>>Thanks. That helps.
+>>So my proposal is to get rid of non-annotated tags, so to get all
+>>tags with commits that they point to, one would use:
+>>git for-each-ref --format=3D'%(*objectname) %(refname)' refs/tags>
+>>For so-called non-annotated tags just leave the message empty.
+>>I don't see why anyone would need non-annotated tags though.
 >
-> As to "identify", I would say it is better to consistently use
-> "indicate" like the original of these two hunks at the end says,
-> i.e. "indicate that it is bad/new (or they are good/old)".
+> I have seen non-annotated tags used in automations (not necessarily well =
+written ones) that create tags as a record of automation activity. I am not=
+ sure we should be writing off the concept of unannotated tags entirely. Th=
+is may cause breakage based on existing expectations of how tags work at pr=
+esent. My take is that tags should include whodunnit, even if it's just the=
+ version of the automation being used, but I don't always get to have my wi=
+shes fulfilled. In essence, whatever behaviour a non-annotated tag has now =
+may need to be emulated in future even if reconciliation happens. An option=
+ to preserve empty tag compatibility with pre-2.16 behaviour, perhaps? Sadl=
+y, I cannot supply examples of this usage based on a human memory page-faul=
+t and NDAs.
 
-  i'm going to ponder this, but let me explain why i am such an
-annoying stickler for the choice of words at times, and you can read
-all about it here:
-
-  http://twain.lib.virginia.edu/projects/rissetto/offense.html
-
-in particular, i draw your attention to twain's trashing of cooper
-for, in many cases, using *almost* the right word, but not *quite* the
-right word:
-
-"Cooper's word-sense was singularly dull. When a person has a poor ear
-for music he will flat and sharp right along without knowing it. He
-keeps near the tune, but is not the tune. When a person has a poor ear
-for words, the result is a literary flatting and sharping; you
-perceive what he is intending to say, but you also perceive that he
-does not say it. This is Cooper. He was not a word-musician. His ear
-was satisfied with the approximate words. I will furnish some
-circumstantial evidence in support of this charge. My instances are
-gathered from half a dozen pages of the tale called "Deerslayer." He
-uses "Verbal" for "oral"; "precision" for "facility"; "phenomena" for
-"marvels"; "necessary" for "predetermined"; "unsophisticated" for
-"primitive"; "preparation" for "expectancy"; "rebuked" for "subdued";
-"dependent on" for "resulting from"; "fact" for "condition"; "fact"
-for "conjecture"; "precaution" for "caution"; "explain" for
-"determine"; "mortified" for "disappointed"; "meretricious" for
-"factitious"; "materially" for "considerably"; "decreasing" for
-"deepening"; "increasing" for "disappearing"; "embedded" for
-"inclosed"; "treacherous" for "hostile"; "stood" for "stooped";
-"softened" for "replaced"; "rejoined" for "remarked"; "situation" for
-"condition"; "different" for "differing"; "insensible" for
-"unsentient"; "brevity" for "celerity"; "distrusted" for "suspicious";
-"mental imbecility" for "imbecility"; "eyes" for "sight";
-"counteracting" for "opposing"; "funeral obsequies" for "obsequies."
-
-  in this sense, i don't think "indicate" and "identify" are
-completely interchangeable. in my mind, the word "identify" does
-nothing more than, you know, point at something and say, "that one,
-that's the one i'm talking about;" it goes no further than that.
-
-  on the other hand, the word "indicate" (in my mind) implies that
-you're about to provide some *property* or *quality* of something, and
-you do exactly that in the earlier quote:
-
-> As to "identify", I would say it is better to consistently use
-> "indicate" like the original of these two hunks at the end says,
-> i.e. "indicate that it is bad/new (or they are good/old)".
-
-  as in, you "identify" a commit, but you "indicate" that it
-represents a good or bad commit. i know this sounds picky, but it is
-exactly this tendency of using *almost* the right word that makes a
-lot of documentation potentially confusing. given this distinction,
-depending on the word to be used, i would write one of:
-
-1) "first, identify the bad commit and one or more good commits..."
-
-2) "first, indicate which commit is the bad commit, and which commits
-are the good commits ..."
-
-  the eventual meaning *should* be the same, but the choice of words
-can make the meaning clear, or can confuse the reader.
-
-  thoughts?
-
-rday
-
--- 
-
-========================================================================
-Robert P. J. Day                                 Ottawa, Ontario, CANADA
-                        http://crashcourse.ca
-
-Twitter:                                       http://twitter.com/rpjday
-LinkedIn:                               http://ca.linkedin.com/in/rpjday
-========================================================================
+Are there any windows for backward compatibility breaks, or git is
+doomed to preserve it forever?
+Automation without support won't survive for long, and people who rely
+on that, like Chromium team, usually hard set the version used.
+--=20
+anatoly t.
