@@ -7,128 +7,294 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F2D972036D
-	for <e@80x24.org>; Sat, 25 Nov 2017 03:02:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1DAE92036D
+	for <e@80x24.org>; Sat, 25 Nov 2017 03:16:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751689AbdKYDCc (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Nov 2017 22:02:32 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51202 "EHLO
+        id S1751913AbdKYDQI (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Nov 2017 22:16:08 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61717 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751413AbdKYDCb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Nov 2017 22:02:31 -0500
+        with ESMTP id S1751882AbdKYDQG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Nov 2017 22:16:06 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8495FC3462;
-        Fri, 24 Nov 2017 22:02:30 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D4424BAC40;
+        Fri, 24 Nov 2017 22:16:05 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=wmdey9m30kYiy+rBWl9q0ZJGQME=; b=HEpebu
-        FuJdVTZK7bWYP3jSo9MGsGdmMwxcb2uNC14DsCS/bLA/p5uatuaXqndws1ooRzMP
-        lUXPCHBeUCK2i99orNB5QpSSSCNnKmx2n+WUJgZ91KlvTOn8NoUlQ+WaQ5cxTVDy
-        3u97B+/Q1NIHl01RxMZjHnWQtGp7MkeI0Sx90=
+        :content-type:content-transfer-encoding; s=sasl; bh=o7E6Ej8mB/GK
+        5ZHff/WWe4J+6qY=; b=pTeksY4052DRDAo1ejY7c7nQdp9lTpjawT5QFc+Yz4XJ
+        6uzQNU6uTt4s4hT0QzlEz41Z5fYX+VzcQLGY9+6D6MYTD9StdKHtZ60NDHkGXfzx
+        jj3A7i+qteKxVj3JP6IWIzKnSy0bcwuwW+M8CbhTiJ46m8Jzj2hK9lEsLV8y/Jc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=p7Q2P2PFkBclt9En4AHXCEQ/tPFvmHk0
-        TdvZDG3jX6+wHXyaL8hNGWefYjFvFd4r5QKwrg1AFy0jjpL30kx+4sRAhrz+p/Ny
-        InZJCZ4+tBhbc+NigI1h1W4sHhFbV1pFIW/jNAqXF+teGf0eCdRT2gXow7YWvekz
-        M3UYsIi6U0o=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7CDC6C3461;
-        Fri, 24 Nov 2017 22:02:30 -0500 (EST)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=fjdJNZ
+        6+aRKT2EF0HncdgP4wmmRY9rmFQo3+sX1li2tOsZQzePFCuUrRKRewhsTq6ExSXn
+        LwExJWHpdnveDcHC7b/SrPNHH7CECge1n8Ha9RLFo3/vMZI7sJTB0+n0ZiB4gYTd
+        eGAiU5gmrgyJSI51KuS6+cukikXF419Dm8ndU=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id CCDE4BAC3F;
+        Fri, 24 Nov 2017 22:16:05 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id F41ADC3460;
-        Fri, 24 Nov 2017 22:02:29 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3718EBAC3E;
+        Fri, 24 Nov 2017 22:16:05 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Kevin Daudt <me@ikke.info>,
-        "Robert P. J. Day" <rpjday@crashcourse.ca>,
-        Git Mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH v2] gitcli: tweak "man gitcli" for clarity
-References: <alpine.LFD.2.21.1711211626460.26166@localhost.localdomain>
-        <20171121214552.GB16418@alpha.vpn.ikke.info>
-        <20171123000346.GA8718@sigill>
-        <alpine.LFD.2.21.1711230241260.11944@localhost.localdomain>
-        <20171123135155.GA8231@sigill>
-        <20171123205503.GE16418@alpha.vpn.ikke.info>
-        <20171124181254.GC29190@sigill>
-Date:   Sat, 25 Nov 2017 12:02:28 +0900
-In-Reply-To: <20171124181254.GC29190@sigill> (Jeff King's message of "Fri, 24
-        Nov 2017 13:12:54 -0500")
-Message-ID: <xmqqpo87kqm3.fsf@gitster.mtv.corp.google.com>
+To:     tboegi@web.de
+Cc:     git@vger.kernel.org, ashishnegi33@gmail.com
+Subject: Re: [PATCH 1/1] convert: tighten the safe autocrlf handling
+References: <CAJ_+vJ6FXXda4fe7=1YxtDGR2d8CqP4KXN+YR6+mdQ+5jQQXug@mail.gmail.com>
+        <20171124161407.30698-1-tboegi@web.de>
+Date:   Sat, 25 Nov 2017 12:16:03 +0900
+In-Reply-To: <20171124161407.30698-1-tboegi@web.de> (tboegi@web.de's message
+        of "Fri, 24 Nov 2017 17:14:07 +0100")
+Message-ID: <xmqqlgivkpzg.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 13297F56-D18D-11E7-9440-575F0C78B957-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: F9124E5C-D18E-11E7-935F-8EF31968708C-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+tboegi@web.de writes:
 
-> There is an open question of how carefully we want to document it, but I
-> think the strategy so far has been:
+> From: Torsten B=C3=B6gershausen <tboegi@web.de>
 >
->  - if you want to be careful, use "--"
+> When a text file had been commited with CRLF and the file is commited
+> again, the CRLF are kept if .gitattributs has "text=3Dauto".
+> This is done by analyzing the content of the blob stored in the index:
+> If a '\r' is found, Git assumes that the blob was commited with CRLF.
 >
->  - if you don't, git will use black magic to guess, but that magic is
->    subject to change, so don't rely on it
+> The simple search for a '\r' does not always work as expected:
+> A file is encoded in UTF-16 with CRLF and commited. Git treats it as bi=
+nary.
+> Now the content is converted into UTF-8. At the next commit Git treats =
+the
+> file as text, the CRLF should be converted into LF, but isn't.
 >
-> I don't mind documenting the current magic as long as the "don't rely on
-> it" part is made clear.
+> Solution:
 
-Yes, taken with "git log master" example where if we want to say
-"this truly cannot be ambiguous" and end up digging "git log HEAD --"
-to ensure there is no path that match 'master' ever existed, I would
-prefer not to say a lot more about "black magic" and yet still going
-into the precise details.
+Remove this line.
 
-On the other hand, of course we do not want to cast in stone the
-precise details of the current "black magic" implementation that is
-subject to change.
+> Replace has_cr_in_index() with has_crlf_in_index(). When no '\r' is fou=
+nd,
+> 0 is returned directly, this is the most common case.
+> If a '\r' is found, the content is analyzed more deeply.
 
-A description of "black magic" that is without details, i.e. the one
-that focuses on the spirit and not the exact design, would be...
+I may be recalling things incorrectly, but didn't an old version of
+the code check CRLF explicitly, unlike the current implementation
+that only check CRs?
 
-    Without "--", Git tries to find a point between two arguments on
-    (or at the beginning or the end of) the command line, where
-    every argument before it are likely to be a revision (and
-    unlikely to be a path) and every argument after it are likely to
-    be a path (and unlikely to be a revision) with "black magic".
-    If there is no such point, you'd be asked to disambiguate.
+In any case, I think we have accumulated enough cruft only to work
+around the issues caused by "safe" crlf.  I moderately strongly
+wonder if we should go back and think if that "feature" is adding
+much value, and remove it if it is not.
 
-    The "black magic" would use 4 combinations that results from
-    two tests.  
+In the meantime, let's queue this fix on top of the "safe crlf
+workaround" pile.
 
-    A. Is it likely to be a revision (yes/no)?
-    B. Is it likely to be a path (yes/no)?
+Thanks.
 
-    If both are true, it is am ambigous command line.  If neither is
-    true, it is likely a typo (e.g. "git log naster" when the user
-    meant 'master', or "git log Nakefile" when the user meant
-    'Makefile').  If only one is true, Git thinks that the command
-    line is unambigous and goes ahead with its decision.
-
-    Git will not spend excess amount of cycles to make these two
-    tests, so there can be misidentification.  Two easy to
-    understand examples are:
-
-    - If you have a file 'naster' in your working tree and said "git
-      log naster", test A _could_ notice that there is a slightly
-      different name 'master' that could be a revision that you
-      meant, and ask you to disambiguate in case you made a typo.
-      Because test A (deliberately) is not overly thorough, Git does
-      not flag it as a possible ambiguity.
-
-    - If you had a file whose name is "Nakefile" in HEAD but you
-      just removed it, "git log Nakefile" may actually be a valid
-      and unambigous request to use Nakefile as a path, but in order
-      to notice that possibility, Git has to not just check if the
-      working tree has such a path, but also in the index and HEAD
-      (and if the removal was older, then it has to do an internal
-      "git log" to see what paths ever existed in the past, which is
-      ridiculous).  Because test B (deliberately) is not overly
-      thorough, Git would refuse to use it as either a revision or a
-      path without disambiguation.
-
+>
+> Reported-By: Ashish Negi <ashishnegi33@gmail.com>
+> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+> ---
+>  convert.c            | 19 +++++++++----
+>  t/t0027-auto-crlf.sh | 76 ++++++++++++++++++++++++++++++++++++++++++++=
+++++----
+>  2 files changed, 85 insertions(+), 10 deletions(-)
+>
+> diff --git a/convert.c b/convert.c
+> index 20d7ab67bd..63ef799239 100644
+> --- a/convert.c
+> +++ b/convert.c
+> @@ -220,18 +220,27 @@ static void check_safe_crlf(const char *path, enu=
+m crlf_action crlf_action,
+>  	}
+>  }
+> =20
+> -static int has_cr_in_index(const struct index_state *istate, const cha=
+r *path)
+> +static int has_crlf_in_index(const struct index_state *istate, const c=
+har *path)
+>  {
+>  	unsigned long sz;
+>  	void *data;
+> -	int has_cr;
+> +	const char *crp;
+> +	int has_crlf =3D 0;
+> =20
+>  	data =3D read_blob_data_from_index(istate, path, &sz);
+>  	if (!data)
+>  		return 0;
+> -	has_cr =3D memchr(data, '\r', sz) !=3D NULL;
+> +
+> +	crp =3D memchr(data, '\r', sz);
+> +	if (crp && (crp[1] =3D=3D '\n')) {
+> +		unsigned int ret_stats;
+> +		ret_stats =3D gather_convert_stats(data, sz);
+> +		if (!(ret_stats & CONVERT_STAT_BITS_BIN) &&
+> +		    (ret_stats & CONVERT_STAT_BITS_TXT_CRLF))
+> +			has_crlf =3D 1;
+> +	}
+>  	free(data);
+> -	return has_cr;
+> +	return has_crlf;
+>  }
+> =20
+>  static int will_convert_lf_to_crlf(size_t len, struct text_stat *stats=
+,
+> @@ -290,7 +299,7 @@ static int crlf_to_git(const struct index_state *is=
+tate,
+>  		 * cherry-pick.
+>  		 */
+>  		if ((checksafe !=3D SAFE_CRLF_RENORMALIZE) &&
+> -		    has_cr_in_index(istate, path))
+> +		    has_crlf_in_index(istate, path))
+>  			convert_crlf_into_lf =3D 0;
+>  	}
+>  	if ((checksafe =3D=3D SAFE_CRLF_WARN ||
+> diff --git a/t/t0027-auto-crlf.sh b/t/t0027-auto-crlf.sh
+> index 68108d956a..0af35cfb1f 100755
+> --- a/t/t0027-auto-crlf.sh
+> +++ b/t/t0027-auto-crlf.sh
+> @@ -43,19 +43,31 @@ create_gitattributes () {
+>  	} >.gitattributes
+>  }
+> =20
+> -create_NNO_files () {
+> +# Create 2 sets of files:
+> +# The NNO files are "Not NOrmalized in the repo. We use CRLF_mix_LF an=
+d store
+> +#   it under different names for the different test cases, see ${pfx}
+> +#   Depending on .gitattributes they are normalized at the next commit=
+ (or not)
+> +# The MIX files have different contents in the repo.
+> +#   Depending on its contents, the "new safer autocrlf" may kick in.
+> +create_NNO_MIX_files () {
+>  	for crlf in false true input
+>  	do
+>  		for attr in "" auto text -text
+>  		do
+>  			for aeol in "" lf crlf
+>  			do
+> -				pfx=3DNNO_attr_${attr}_aeol_${aeol}_${crlf}
+> +				pfx=3DNNO_attr_${attr}_aeol_${aeol}_${crlf} &&
+>  				cp CRLF_mix_LF ${pfx}_LF.txt &&
+>  				cp CRLF_mix_LF ${pfx}_CRLF.txt &&
+>  				cp CRLF_mix_LF ${pfx}_CRLF_mix_LF.txt &&
+>  				cp CRLF_mix_LF ${pfx}_LF_mix_CR.txt &&
+> -				cp CRLF_mix_LF ${pfx}_CRLF_nul.txt
+> +				cp CRLF_mix_LF ${pfx}_CRLF_nul.txt &&
+> +				pfx=3DMIX_attr_${attr}_aeol_${aeol}_${crlf} &&
+> +				cp LF          ${pfx}_LF.txt &&
+> +				cp CRLF        ${pfx}_CRLF.txt &&
+> +				cp CRLF_mix_LF ${pfx}_CRLF_mix_LF.txt &&
+> +				cp LF_mix_CR   ${pfx}_LF_mix_CR.txt &&
+> +				cp CRLF_nul    ${pfx}_CRLF_nul.txt
+>  			done
+>  		done
+>  	done
+> @@ -136,6 +148,49 @@ commit_chk_wrnNNO () {
+>  	'
+>  }
+> =20
+> +# Commit a file with mixed line endings on top of different files
+> +# in the index. Check for warnings
+> +commit_MIX_chkwrn () {
+> +	attr=3D$1 ; shift
+> +	aeol=3D$1 ; shift
+> +	crlf=3D$1 ; shift
+> +	lfwarn=3D$1 ; shift
+> +	crlfwarn=3D$1 ; shift
+> +	lfmixcrlf=3D$1 ; shift
+> +	lfmixcr=3D$1 ; shift
+> +	crlfnul=3D$1 ; shift
+> +	pfx=3DMIX_attr_${attr}_aeol_${aeol}_${crlf}
+> +	#Commit file with CLRF_mix_LF on top of existing file
+> +	create_gitattributes "$attr" $aeol &&
+> +	for f in LF CRLF CRLF_mix_LF LF_mix_CR CRLF_nul
+> +	do
+> +		fname=3D${pfx}_$f.txt &&
+> +		cp CRLF_mix_LF $fname &&
+> +		printf Z >>"$fname" &&
+> +		git -c core.autocrlf=3D$crlf add $fname 2>"${pfx}_$f.err"
+> +	done
+> +
+> +	test_expect_success "commit file with mixed EOL crlf=3D$crlf attr=3D$=
+attr LF" '
+> +		check_warning "$lfwarn" ${pfx}_LF.err
+> +	'
+> +	test_expect_success "commit file with mixed EOL attr=3D$attr aeol=3D$=
+aeol crlf=3D$crlf CRLF" '
+> +		check_warning "$crlfwarn" ${pfx}_CRLF.err
+> +	'
+> +
+> +	test_expect_success "commit file with mixed EOL attr=3D$attr aeol=3D$=
+aeol crlf=3D$crlf CRLF_mix_LF" '
+> +		check_warning "$lfmixcrlf" ${pfx}_CRLF_mix_LF.err
+> +	'
+> +
+> +	test_expect_success "commit file with mixed EOL attr=3D$attr aeol=3D$=
+aeol crlf=3D$crlf LF_mix_cr" '
+> +		check_warning "$lfmixcr" ${pfx}_LF_mix_CR.err
+> +	'
+> +
+> +	test_expect_success "commit file with mixed EOL attr=3D$attr aeol=3D$=
+aeol crlf=3D$crlf CRLF_nul" '
+> +		check_warning "$crlfnul" ${pfx}_CRLF_nul.err
+> +	'
+> +}
+> +
+> +
+>  stats_ascii () {
+>  	case "$1" in
+>  	LF)
+> @@ -323,8 +378,8 @@ test_expect_success 'setup master' '
+>  	printf "\$Id: 0000000000000000000000000000000000000000 \$\r\nLINEONE\=
+r\nLINETWO\rLINETHREE"   >CRLF_mix_CR &&
+>  	printf "\$Id: 0000000000000000000000000000000000000000 \$\r\nLINEONEQ=
+\r\nLINETWO\r\nLINETHREE" | q_to_nul >CRLF_nul &&
+>  	printf "\$Id: 0000000000000000000000000000000000000000 \$\nLINEONEQ\n=
+LINETWO\nLINETHREE" | q_to_nul >LF_nul &&
+> -	create_NNO_files CRLF_mix_LF CRLF_mix_LF CRLF_mix_LF CRLF_mix_LF CRLF=
+_mix_LF &&
+> -	git -c core.autocrlf=3Dfalse add NNO_*.txt &&
+> +	create_NNO_MIX_files CRLF_mix_LF CRLF_mix_LF CRLF_mix_LF CRLF_mix_LF =
+CRLF_mix_LF &&
+> +	git -c core.autocrlf=3Dfalse add NNO_*.txt MIX_*.txt &&
+>  	git commit -m "mixed line endings" &&
+>  	test_tick
+>  '
+> @@ -385,6 +440,17 @@ test_expect_success 'commit files attr=3Dcrlf' '
+>  	commit_check_warn input "crlf" "LF_CRLF" ""        "LF_CRLF" "LF_CRLF=
+" ""
+>  '
+> =20
+> +# Commit "CRLFmixLF" on top of these files already in the repo:
+> +# LF, CRLF, CRLFmixLF LF_mix_CR CRLFNULL
+> +#                 attr                    LF        CRLF      CRLFmixL=
+F   LF_mix_CR   CRLFNUL
+> +commit_MIX_chkwrn ""      ""      false   ""        ""        ""      =
+    ""          ""
+> +commit_MIX_chkwrn ""      ""      true    "LF_CRLF" ""        ""      =
+    "LF_CRLF"   "LF_CRLF"
+> +commit_MIX_chkwrn ""      ""      input   "CRLF_LF" ""        ""      =
+    "CRLF_LF"   "CRLF_LF"
+> +
+> +commit_MIX_chkwrn "auto"  ""      false   "CRLF_LF" ""        ""      =
+    "CRLF_LF"   "CRLF_LF"
+> +commit_MIX_chkwrn "auto"  ""      true    "LF_CRLF" ""        ""      =
+    "LF_CRLF"   "LF_CRLF"
+> +commit_MIX_chkwrn "auto"  ""      input   "CRLF_LF" ""        ""      =
+    "CRLF_LF"   "CRLF_LF"
+> +
+>  #                 attr                    LF        CRLF      CRLFmixL=
+F   LF_mix_CR   CRLFNUL
+>  commit_chk_wrnNNO ""      ""      false   ""        ""        ""      =
+    ""          ""
+>  commit_chk_wrnNNO ""      ""      true    LF_CRLF   ""        ""      =
+    ""          ""
