@@ -2,102 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 26BC920954
-	for <e@80x24.org>; Sat, 25 Nov 2017 22:17:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7173B20A41
+	for <e@80x24.org>; Sat, 25 Nov 2017 22:35:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751501AbdKYWRU (ORCPT <rfc822;e@80x24.org>);
-        Sat, 25 Nov 2017 17:17:20 -0500
-Received: from mout.gmx.net ([212.227.15.19]:65230 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751395AbdKYWRT (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Nov 2017 17:17:19 -0500
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LiTJE-1eqfzy1quq-00cfdt; Sat, 25
- Nov 2017 23:17:14 +0100
-Date:   Sat, 25 Nov 2017 23:16:56 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Igor Djordjevic <igor.d.djordjevic@gmail.com>
-cc:     Phil Martel <pomartel@comcast.net>, git@vger.kernel.org,
-        git-for-windows@googlegroups.com
-Subject: Re: Problem installing Git
-In-Reply-To: <f30c4350-500a-44e8-27ee-7d5ae49903c4@gmail.com>
-Message-ID: <alpine.DEB.2.21.1.1711252312270.6482@virtualbox>
-References: <077942bb-5952-6f4a-8054-b17d3883b901@comcast.net> <f30c4350-500a-44e8-27ee-7d5ae49903c4@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751761AbdKYWfx (ORCPT <rfc822;e@80x24.org>);
+        Sat, 25 Nov 2017 17:35:53 -0500
+Received: from mail-vk0-f45.google.com ([209.85.213.45]:45434 "EHLO
+        mail-vk0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751748AbdKYWfs (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Nov 2017 17:35:48 -0500
+Received: by mail-vk0-f45.google.com with SMTP id s141so9571386vkb.12
+        for <git@vger.kernel.org>; Sat, 25 Nov 2017 14:35:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=5Hd6dehQyySTPtjp0ekY7eCKNM+SLA0YPHDp52YDC4c=;
+        b=W/IvhD0i1tY4mZpMgDfvaUlCLBAyitPNje2yriIPQBW9Kv9ve53Vhl8g6WR1AckFJw
+         8CkCqfw9bC0DzvE9052UHtogKzCbt4fgjPOp1AVy+n0SDIKOTO7GSDFisVv0Fo8wMaqh
+         Mecy/hGN0GMvTF86XUpC/lEhomTbo2QYOcChe3swFDXLNNgVhWg1/eEkj2c3StzFJwQq
+         hjaA1V+z4cqBo2Bkzh3AUs1R0hLMJ88F0Klk2pRK6oVd8SKHcV/cPS0uO8W8ygZ9NsnA
+         WMKUSXbTNf2zOMGFpinyWeeX6j0gLxlMhgJGYIYbJSt3WAA1oEVxeTPBSUfU06e/pPJ8
+         zkWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=5Hd6dehQyySTPtjp0ekY7eCKNM+SLA0YPHDp52YDC4c=;
+        b=PbMvJQk5Krm8VNEA+LH7DB+cTubGiry8eQxmL5mwneY2gZmcKmotRJUSokO10Vh78a
+         TlesXNSJkHvpQAjK5TQJWOCmEuKmCHSKC0lFR5N+B/N9nMVXBligJnsFNwOvuA2GQDSv
+         rEIbU6MraEoyksVt0F2pvuuwlcwxBBnNKBbUI09j0AV22EiqUM+EnRoyODN4nWmox0mT
+         Ze9OCt8ZcQ3VOwTue30yS5ozC9hYXziMeV9RV7Ke7jiwUhC7rZKdO2G/YdYGQHNh3VHG
+         wUPystdAnP8m1Um4OCxg7XP/m/n96FDjRG9Bn/shlDOZM1Xnkc6bgHu4U5bHiH6Uf+l6
+         959g==
+X-Gm-Message-State: AJaThX6khXxv2e14D9Z6TYcGOM0Za5ytkMIti9yyYctrpRUYOWD0VjFj
+        MWbz6rc7ZogWOElIC5UCTUQ9W9gN8ZGN8xFluZM=
+X-Google-Smtp-Source: AGs4zMaoke0ya0bmDEHZoNLYCefchsjL9AA7l/3fCzbZ5GArwzq7ygQc2SaOxBDZ/C9h7Lsg6vHVYuhL6kOLDOuTr2o=
+X-Received: by 10.31.125.75 with SMTP id y72mr23717479vkc.79.1511649347396;
+ Sat, 25 Nov 2017 14:35:47 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:kqsmMAk2gt4zTJpsvldjK4W6MqMTNVUob9efSw4jiDK9mQsFL1/
- fga4g9nQUy+3slMnUG1p2joZSq19eTFE6jX39GFjAwe8DY6dr46bVnp4EqXIbMrFD10RpAi
- Gj1IjbfHq0ckkxH5JDRqzsyqxYfSN6DbovBnX045oPPtypCRsxR0R8ZYpetixcCUqMwgGN0
- s7ohj8qIUrj3JhstIm1+Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:wydyLNcN8Cc=:4AcWrSfWMg+0objtlN697M
- e+ZlS799AC0YYqvWxd7ML2HwsJ7UGUM5pUOhmjk0lcTAbkshvQngp3jT3yBlwCv1ovroSBLZl
- 3i9a27SL2bIBwFeCJalNi+O4piM3k7ixtx34eq9uafXJIyTBi2VmB98WzGPiIhbuDOLvTTYJm
- rt4mXgTmwq+e7hG0b6OqtyTp4Q/bbLtYoDR/H5Xlu1dXgf20ZpA1IVYXJmNJP3jXdxk2o8QWs
- XpjWJvZCmlXAqLLr1AV9JKXH6HHrfwD9PcWbpMORAMJ2xk46HWgIPw3GMD0zDw5MSH3m1zJ87
- edUS1DRP2smQjCj88EBI+oFFltkiC/rLNV+f3LYuCadYQsgNGpFh89fZV6EAz8aWCBgg1XEmY
- h0vOCgxghGgc1DVhxrLR6vAqd7IsHprEhhxgq98N/0FM9ORZYwgvqAZ9dUlMzctdqRcIzoJcG
- pqx0biuy8OySeFJzgn1EpN9yvXPTnpyT0xm6j2N3IqbJdaKK9ESx7OxvQIzLvEzo65ffPpYFI
- r2Q1tlG76TTgPC406DNR0J806aCz8GdnXROE7HW3t4/AEjevzu8MVN7OKCW9ipLH8xjkQboU/
- 40b4l4Ews0dnM6uOAXwTUkoabI/oiZULiLeI7WXXvFFZ8LPhYmGIE4mTekv+SOuHDOUq8ClXB
- e6kUQfGQLTNp4ppuHlIeDF9+CSZtqR0/b60zXkVcA9U4aColktNVcTJ5YIcTlyrDMupHMp86k
- fE+xI5u/AYXw0Zre36s+5aQTtFWyzERbP4JcE8AhZl+mkF7ItnilV+NtUsgVabozSKHgFLRyA
- h7Hx07loVloubJ7Cva2xkotO2St9f+h5Ywi1LMaqrHS2bgnTD9yyOax8fSio+K9DGGr5xE/
+Received: by 10.176.70.138 with HTTP; Sat, 25 Nov 2017 14:35:46 -0800 (PST)
+In-Reply-To: <xmqqd147kpdm.fsf@gitster.mtv.corp.google.com>
+References: <20171124195901.2581-1-newren@gmail.com> <xmqqd147kpdm.fsf@gitster.mtv.corp.google.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Sat, 25 Nov 2017 14:35:46 -0800
+Message-ID: <CABPp-BGcfFOvv+-uW2_EaftLiU-xs_D4g8hsYOZqjk1XwK_8Fw@mail.gmail.com>
+Subject: Re: [PATCH] merge-recursive: ignore_case shouldn't reject intentional removals
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Adam Dinwoodie <adam@dinwoodie.org>,
+        David Turner <dturner@twitter.com>,
+        David Turner <dturner@twopensource.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Igor,
+On Fri, Nov 24, 2017 at 7:29 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Elijah Newren <newren@gmail.com> writes:
+>
+>>     But what it really is forced to do is more of a 4-way merge; a good
+>>     chunk of its annoying complexity is based around this (undocumented
+>>     and unfortunate) reality.  It derives from what I consider a simple
+>>     design flaw.
+>
+> Yes, and it does not help that it wants to write into the filesystem
+> while it performs the outermost merges.
+>
+> In the ideal world, we should
+>
+>  - ask unpack_trees() to do "read-tree -m" without "-u";
+>
+>  - do all the merge-recursive computations in-core and prepare the
+>    resulting index, while keeping the current index intact;
+>
+>  - compare the current in-core index and the resulting in-core
+>    index, and notice the paths that need to be added, updated or
+>    removed in the working tree, and ensure that there is no loss of
+>    information when the change is reflected to the working tree,
+>    e.g. the result wants to create a file where the working tree
+>    currently has a directory with non-expendable contents in it, the
+>    result wants to remove a file where the working tree file has
+>    local modification, etc.; and then finally
+>
+>  - carry out the working tree update to make it match what the
+>    resulting in-core index says it should look like.
 
-On Thu, 23 Nov 2017, Igor Djordjevic wrote:
-
-> [ +Cc:  Git for Windows mailing list ]
-
-I have no idea why it claimed that that group does not exist, the email
-address looks correct to me.
-
-> On 23/11/2017 19:51, Phil Martel wrote:
-> > I'm trying to install Git-2.15.0-64-bit.exe onto my Windows 10 
-> > machine.  When I run this installer program no matter what options I 
-> > try or whether I run as administrator it ends up with an error box 
-> > saying "The drive or UNC share you selected does not exist or is not 
-> > accessible. Please select another".  I do not see any way of 
-> > selecting a drive.  Any suggestions?
-> 
-> From what I could Google around, this seems to be (Inno Setup?) 
-> installation related issue...?
-
-Indeed.
-
-> Do you already have "Git for Windows" installed? If so, does it work 
-> if you try uninstalling it first?
-
-That is a workaround, correct.
-
-> p.s. Note the existence of "Git for Windows"[1] specific mailing list 
-> as well, where this issue might belong better.
-> 
-> [1] git-for-windows@googlegroups.com
-
-I think a much better place is the Git for Windows bug tracker (if you
-ever wonder where the bug tracker is, or the home page, or the repository
-or the FAQ, there are links in the upper left of the release notes --
-which probably nobody reads, even if I really try to make them worth the
-while -- and which you can find in C:\Program Files\Git\ReleaseNotes.html
-if you closed the tab after installing Git for Windows).
-
-And indeed, there is already a ticket for this issue:
-https://github.com/git-for-windows/git/issues/1074
-
-The original reporter did not respond to any questions, maybe you can do
-better, Phil?
-
-Ciao,
-Johannes
+I had another email I had been composing to try to argue for changing
+merge-recursive.c's design to the above, assuming I could get the time
+to work on it.  Nice to see that I'm not crazy, and that I apparently
+don't need to do much convincing.  :-)
