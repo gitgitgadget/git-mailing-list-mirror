@@ -2,94 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1D10620954
-	for <e@80x24.org>; Sat, 25 Nov 2017 20:40:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 38E5D20954
+	for <e@80x24.org>; Sat, 25 Nov 2017 20:46:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751557AbdKYUkO (ORCPT <rfc822;e@80x24.org>);
-        Sat, 25 Nov 2017 15:40:14 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:30095 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751453AbdKYUkN (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Nov 2017 15:40:13 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.136.74])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id vAPKdwIA076900
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Sat, 25 Nov 2017 15:39:59 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Thomas Gummerer'" <t.gummerer@gmail.com>,
-        "'Paul Smith'" <paul@mad-scientist.net>
-Cc:     <git@vger.kernel.org>
-References: <mailto:20171118224706.13810-1-t.gummerer@gmail.com> <20171122223020.2780-1-t.gummerer@gmail.com> <20171122223020.2780-5-t.gummerer@gmail.com> <xmqq1skonoaw.fsf@gitster.mtv.corp.google.com> <20171125175010.GB14993@hank> <1511634365.2847.211.camel@mad-scientist.net> <20171125200615.GA4344@hank>
-In-Reply-To: <20171125200615.GA4344@hank>
-Subject: RE: [PATCH v4 4/4] worktree: make add <path> dwim
-Date:   Sat, 25 Nov 2017 15:39:52 -0500
-Message-ID: <004401d3662d$8f099e10$ad1cda30$@nexbridge.com>
+        id S1751679AbdKYUqV (ORCPT <rfc822;e@80x24.org>);
+        Sat, 25 Nov 2017 15:46:21 -0500
+Received: from mail-it0-f48.google.com ([209.85.214.48]:37041 "EHLO
+        mail-it0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751024AbdKYUqU (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Nov 2017 15:46:20 -0500
+Received: by mail-it0-f48.google.com with SMTP id m191so17056222itg.2
+        for <git@vger.kernel.org>; Sat, 25 Nov 2017 12:46:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=4S8eyuzZC+bu5iuAvyTnaa/hP36Q4/zKBKR7/mRCwSc=;
+        b=sKAZ71gkEObT+CvJjvLH3WtEWR3WmRC5gJIPpT1dph+jp+VXmAXRCqqScxZks9Clsc
+         kK6DMU8PNLXGSLqp05N+Oac3Ppo2GONLoFA4YBu20Osj093K9QIFzuqqGzlTidKkrSu/
+         NeluWrwpH+Fn9G4UJGZ+lyMn/UJMaOn3tkTHjat4zbaDvEJkTBNuHDqTdgX2ekqvWRgk
+         x9OBUzPB7BVHTSBo7UpXnWnJ048IR5YqCJwGWd0xbtWnP/NzF3VBwCIGFuJIIJpv7wf9
+         7clg2Pb7/366WPRzGoa6fI2dWEz41xbEylDqm3mTayzmCKNN+UxKMUHPl4DC9XGyJeYm
+         OfHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=4S8eyuzZC+bu5iuAvyTnaa/hP36Q4/zKBKR7/mRCwSc=;
+        b=E52ozVYo2MeUnD7LN8pUkiYziAfRs29449jA+bUqVO9jmEk+dcFeDp1Wfj0qE2GkJJ
+         MSfATnCxATISuFT6LjQfUxbuBblOBklP01CT8ua2GV8T8HWh48em4eV9wvjulj1aL04h
+         Y0MLLYqiMuK9LBajykqtsRdxeDaxZUtOJJzY9caMGD3tZA9qQ9fF7a7O6gHpjpoDOVNh
+         kVO9xVJsEEtTcgfwg4p0L8hKuPJT8s81mF7zt894KjUBG/sA4V5WoKxavqFA+4NUOwqt
+         OZp7JwtzKWPA24D4R2xBrEDYdbhJdK267xdzrHE13Yo7+GVRwrtknOYu7x1G9EJLoBj+
+         NhZA==
+X-Gm-Message-State: AJaThX6ak4LFR5X0Ofeh6JyK6mGuerWfpJ0TX5v381SFV1HXxGAIGdxV
+        RvcpnbJbVuk+NWW1nXJLVI95HdRuLC7OjpiKXEcDzQ==
+X-Google-Smtp-Source: AGs4zMaj3csnOBHga+5wSFkcLXkFfpesAFjFZxCsHllQvoqHgvOV2XX0HQb1k+qGMr1B/srD3UQKVtHvio8cCp/xNOo=
+X-Received: by 10.36.0.209 with SMTP id 200mr21983906ita.55.1511642779125;
+ Sat, 25 Nov 2017 12:46:19 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQGEnX00pXwLwvrZI7vHKMRm0k2hVAEInd6cAuUq5+YCw2SqUAKzXrZtAZvXXh0CwZDp6KNVDjWA
-Content-Language: en-ca
+Received: by 10.79.28.137 with HTTP; Sat, 25 Nov 2017 12:46:18 -0800 (PST)
+In-Reply-To: <20171120171517.6365-1-chriscool@tuxfamily.org>
+References: <20171120171517.6365-1-chriscool@tuxfamily.org>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Sat, 25 Nov 2017 21:46:18 +0100
+Message-ID: <CAP8UFD1YY_f4Ds0sYK86OBb7Wyud_YWr2Wx8nx1pdnwSsPgJ8A@mail.gmail.com>
+Subject: Re: [PATCH] Makefile: check that tcl/tk is installed
+To:     git <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Dominik Mahrer <teddy@teddy.ch>,
+        git-packagers@googlegroups.com, Todd Zullinger <tmz@pobox.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On November 25, 2017 3:06 PM Thomas Gummerer wrote:
-<big snip>
->however we currently document one behaviour, which I would like to change
-(I usually have branches
->without a / in that I want to look at) we currently document one behaviour,
-which I'd like to change.  So 
->in that case we are a bit worried about backwards compatibility, and how
-this will affect current users
->that have a certain expectation of how the command is supposed to work,
-hence the discussion of
->whether to hide the new behaviour behind a flag or not.
+On Mon, Nov 20, 2017 at 6:15 PM, Christian Couder
+<christian.couder@gmail.com> wrote:
+> By default running `make install` in the root directory of the
+> project will set TCLTK_PATH to `wish` and then go into the "git-gui"
+> and "gitk-git" sub-directories to build and install these 2
+> sub-projects.
 
->Either way, if we do put the behaviour behind a flag, I'll also add a
-configuration variable, which can
->be set to enable the new behaviour so one doesn't have to type out the flag
-all the time.
-
-To be consistent with other commands, you could put path after -- and the
-ambiguity with refs containing '/' goes away, as refs before the -- would
-always be considered refs while after you have paths.
-
-What I don't like is the current add syntax of:
-git worktree add [-f] [--detach] [--checkout] [--lock] [-b <new-branch>]
-<path> [<branch>]
-
-where the path-spec precedes branch making things a bit icky. It might be
-better to have an alternate syntax of:
-
-git worktree add [-f] [--detach] [--checkout] [--lock] [-b <new-branch>]
-<path> [<branch>]
-git worktree add [-f] [--detach] [--checkout] [--lock] [-b <new-branch>]
-[<branch>] -- <path>
-
-But since we only have one path, that may be redundant. Just a thought, as
--- avoids a lot of interpretation evils. While we're here, I wonder whether
-<branch> should be changed to <ref-spec> for more general use. Consider
-release identifiers using tags, and using the tag instead of branch to
-define commit on which the worktree is based.
-
-Cheers,
-Randall
-
--- Brief whoami: NonStop&UNIX developer since approximately
-UNIX(421664400)/NonStop(211288444200000000) 
--- In my real life, I talk too much.
-
-
-
-
-
+Has this patch fallen through the cracks or is there an unresolved issue?
