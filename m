@@ -2,79 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 58BC320954
-	for <e@80x24.org>; Sat, 25 Nov 2017 20:36:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1D10620954
+	for <e@80x24.org>; Sat, 25 Nov 2017 20:40:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751439AbdKYUf6 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 25 Nov 2017 15:35:58 -0500
-Received: from mail-it0-f41.google.com ([209.85.214.41]:37593 "EHLO
-        mail-it0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750819AbdKYUf5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Nov 2017 15:35:57 -0500
-Received: by mail-it0-f41.google.com with SMTP id m191so17042242itg.2
-        for <git@vger.kernel.org>; Sat, 25 Nov 2017 12:35:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=mK3YK7O4+SMHGYFxLAMayeii0/Kr0wh6gHFeSFcBP6I=;
-        b=B/KLpZM5uXcEwX+D2fNO7pXCYikNA530XPn90icbqe5+Iu2L4aeRyXLljOYEEhr+6K
-         Un5KgfSkFM7eC5Unh3OYd924BFRCr04hKZmqy77nik/gus11ddZK8a7P0Ta1jZeboEx6
-         Cx0hvfTRasUF61OcdEh/+3aoGDoHb3ae5kp/Ul2vMOUxdNNDeKQVd5sb0Zyauxanw+az
-         jJUwpFj/q1OQRM4dqS7tF5IBWTPKcZXh8Nq2MHPrgqLShDkhaIULJQt8vZ2BmH/U+X7k
-         /d31mRDTeIM3rxMo5Gg5lkhu4UtSmydIcRJRAh3Tagw4XmLNK+7rlsgGIPLuQthELVgq
-         MvnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=mK3YK7O4+SMHGYFxLAMayeii0/Kr0wh6gHFeSFcBP6I=;
-        b=cXErdPZfIwU0iYf1j7Ca7YTU1U4+M/uqFip37YZFFTvULzM5KpHma9Z2KN3TYnQztP
-         Cnfea8cxwKvC6KEHjXp2xwbwBigxoUaz+aqxgHC0mTYZydKf/RxNXMNqEufjUXP1B6Hs
-         X7ccsl646XnLAQLBJFkqXQhTScNggLe8jjxNSaAykXCKRPLKMzX9fVxrTrMiNB5lofIP
-         a+Rx067+tIQSoKyRpyo65O2MYCe8m+9O03qDgtGI5/oMlqhPSnOH+f32TSq+vnPMLIsk
-         mP+5anEq0YWXegoaHAU44qhPIV9siZV6fVv8b/AAvYomg2rRehza/o3iu8Sbene5rT8Z
-         mL5g==
-X-Gm-Message-State: AJaThX7ooaj9lihZKOQl+G9nBbxp6qzjE5x2ihDVw5QLa9Jl+7hd1H0A
-        PowihWKisl9W4/bmJ8u96xtbl3lx9spU7KB+TJY+fulh
-X-Google-Smtp-Source: AGs4zMZ/g5rFzwkOWiQcDEVrblJh6V27qSvNFbLMKc0uqBRmxUKvpqaekCoWOgOP/AMlQVgHJWkNmvJbPb1+TQSl0nY=
-X-Received: by 10.36.108.81 with SMTP id w78mr22862282itb.140.1511642156834;
- Sat, 25 Nov 2017 12:35:56 -0800 (PST)
+        id S1751557AbdKYUkO (ORCPT <rfc822;e@80x24.org>);
+        Sat, 25 Nov 2017 15:40:14 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:30095 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751453AbdKYUkN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Nov 2017 15:40:13 -0500
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.136.74])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id vAPKdwIA076900
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Sat, 25 Nov 2017 15:39:59 -0500 (EST)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Thomas Gummerer'" <t.gummerer@gmail.com>,
+        "'Paul Smith'" <paul@mad-scientist.net>
+Cc:     <git@vger.kernel.org>
+References: <mailto:20171118224706.13810-1-t.gummerer@gmail.com> <20171122223020.2780-1-t.gummerer@gmail.com> <20171122223020.2780-5-t.gummerer@gmail.com> <xmqq1skonoaw.fsf@gitster.mtv.corp.google.com> <20171125175010.GB14993@hank> <1511634365.2847.211.camel@mad-scientist.net> <20171125200615.GA4344@hank>
+In-Reply-To: <20171125200615.GA4344@hank>
+Subject: RE: [PATCH v4 4/4] worktree: make add <path> dwim
+Date:   Sat, 25 Nov 2017 15:39:52 -0500
+Message-ID: <004401d3662d$8f099e10$ad1cda30$@nexbridge.com>
 MIME-Version: 1.0
-Received: by 10.36.169.76 with HTTP; Sat, 25 Nov 2017 12:35:56 -0800 (PST)
-From:   Patrick Rouleau <prouleau72@gmail.com>
-Date:   Sat, 25 Nov 2017 15:35:56 -0500
-Message-ID: <CAL1_K8AYf1jKDO8+czcqkUxDAuOODgKv9avaiikWi+4zpqenMQ@mail.gmail.com>
-Subject: git-p4: cloning with a change number does not import all files
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+        charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQGEnX00pXwLwvrZI7vHKMRm0k2hVAEInd6cAuUq5+YCw2SqUAKzXrZtAZvXXh0CwZDp6KNVDjWA
+Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On November 25, 2017 3:06 PM Thomas Gummerer wrote:
+<big snip>
+>however we currently document one behaviour, which I would like to change
+(I usually have branches
+>without a / in that I want to look at) we currently document one behaviour,
+which I'd like to change.  So 
+>in that case we are a bit worried about backwards compatibility, and how
+this will affect current users
+>that have a certain expectation of how the command is supposed to work,
+hence the discussion of
+>whether to hide the new behaviour behind a flag or not.
 
-I created a git repository with these commands:
-  git p4 clone //perforce/path@123456 repo
-  cd repo
-  git p4 rebase
+>Either way, if we do put the behaviour behind a flag, I'll also add a
+configuration variable, which can
+>be set to enable the new behaviour so one doesn't have to type out the flag
+all the time.
 
-Some files created before the change 123456 do not exist in git
-history. I do see why,
-but those files were not modified after that change number.
+To be consistent with other commands, you could put path after -- and the
+ambiguity with refs containing '/' goes away, as refs before the -- would
+always be considered refs while after you have paths.
 
-If I use "git p4 sync --detect-branches" instead of "git p4 rebase",
-the branch contains
-all the files, but not the main trunk, and they appear to be added in
-the first commit of
-the branch.
+What I don't like is the current add syntax of:
+git worktree add [-f] [--detach] [--checkout] [--lock] [-b <new-branch>]
+<path> [<branch>]
 
-To avoid the problem, I must clone with "@all" or with the change number when
-//perforce/path was created, which is significantly longer.
+where the path-spec precedes branch making things a bit icky. It might be
+better to have an alternate syntax of:
 
-Regards,
-P. Rouleau
+git worktree add [-f] [--detach] [--checkout] [--lock] [-b <new-branch>]
+<path> [<branch>]
+git worktree add [-f] [--detach] [--checkout] [--lock] [-b <new-branch>]
+[<branch>] -- <path>
+
+But since we only have one path, that may be redundant. Just a thought, as
+-- avoids a lot of interpretation evils. While we're here, I wonder whether
+<branch> should be changed to <ref-spec> for more general use. Consider
+release identifiers using tags, and using the tag instead of branch to
+define commit on which the worktree is based.
+
+Cheers,
+Randall
+
+-- Brief whoami: NonStop&UNIX developer since approximately
+UNIX(421664400)/NonStop(211288444200000000) 
+-- In my real life, I talk too much.
+
+
+
+
+
