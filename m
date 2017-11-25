@@ -2,85 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8E4F920954
-	for <e@80x24.org>; Sat, 25 Nov 2017 23:11:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D718520954
+	for <e@80x24.org>; Sat, 25 Nov 2017 23:51:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751635AbdKYXLO (ORCPT <rfc822;e@80x24.org>);
-        Sat, 25 Nov 2017 18:11:14 -0500
-Received: from gproxy2-pub.mail.unifiedlayer.com ([69.89.18.3]:52187 "EHLO
-        gproxy2-pub.mail.unifiedlayer.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751197AbdKYXLN (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 25 Nov 2017 18:11:13 -0500
-Received: from CMOut01 (unknown [10.0.90.82])
-        by gproxy2.mail.unifiedlayer.com (Postfix) with ESMTP id D69EB1E06DE
-        for <git@vger.kernel.org>; Sat, 25 Nov 2017 16:11:12 -0700 (MST)
-Received: from box5008.bluehost.com ([50.116.64.19])
-        by CMOut01 with 
-        id ePB91w00C0QvKlu01PBCSv; Sat, 25 Nov 2017 16:11:12 -0700
-X-Authority-Analysis: v=2.2 cv=K4VSJ2eI c=1 sm=1 tr=0
- a=gch/BGY/Gm5DEW28s2kmlQ==:117 a=gch/BGY/Gm5DEW28s2kmlQ==:17
- a=IkcTkHD0fZMA:10 a=sC3jslCIGhcA:10 a=-qA8Sg-ed6W9_ROAwzoA:9 a=QEXdDO2ut3YA:10
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=mad-scientist.net; s=default; h=Content-Transfer-Encoding:Mime-Version:
-        Content-Type:References:In-Reply-To:Date:Cc:To:Reply-To:From:Subject:
-        Message-ID:Sender:Content-ID:Content-Description:Resent-Date:Resent-From:
-        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=WHzA0f7tcqv7AzLUP/juBUVIDJpNZitA/NN7XAD9JhM=; b=n2JUk7C6zmtIsGZNk1G6uC0SIK
-        o6wj3+lubukIk0CTKepOSP7ayYGTSk02msp6qWkmNGIsrJ+FfVJUlSNselQEFMjsbo/T3Y/Z6LtKJ
-        3+c5t7YO0hh5rEYpmQHv5A+2p;
-Received: from pool-74-104-137-100.bstnma.fios.verizon.net ([74.104.137.100]:41750 helo=homebase)
-        by box5008.bluehost.com with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.89)
-        (envelope-from <paul@mad-scientist.net>)
-        id 1eIjbJ-000teR-07; Sat, 25 Nov 2017 16:11:09 -0700
-Message-ID: <1511651467.2847.212.camel@mad-scientist.net>
-Subject: Re: [PATCH v4 4/4] worktree: make add <path> dwim
-From:   Paul Smith <paul@mad-scientist.net>
-Reply-To: paul@mad-scientist.net
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     git@vger.kernel.org
-Date:   Sat, 25 Nov 2017 18:11:07 -0500
-In-Reply-To: <20171125200615.GA4344@hank>
-References: <mailto:20171118224706.13810-1-t.gummerer@gmail.com>
-         <20171122223020.2780-1-t.gummerer@gmail.com>
-         <20171122223020.2780-5-t.gummerer@gmail.com>
-         <xmqq1skonoaw.fsf@gitster.mtv.corp.google.com>
-         <20171125175010.GB14993@hank> <1511634365.2847.211.camel@mad-scientist.net>
-         <20171125200615.GA4344@hank>
+        id S1751776AbdKYXvN (ORCPT <rfc822;e@80x24.org>);
+        Sat, 25 Nov 2017 18:51:13 -0500
+Received: from mail-qk0-f195.google.com ([209.85.220.195]:41055 "EHLO
+        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751730AbdKYXvN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Nov 2017 18:51:13 -0500
+Received: by mail-qk0-f195.google.com with SMTP id f63so28379165qke.8
+        for <git@vger.kernel.org>; Sat, 25 Nov 2017 15:51:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=ahH4aVhv8Snl0oHOVjQ8Y25H5dQEfjUH9z8PqoG2qeM=;
+        b=A7GLPf6KLFEvLqDkGDikSjBKcaxYQd5HYrC3kOnPax7W1hJts/OrdueGW28fDhuVBl
+         OiETRV6SamIlShJGFpV8IglVsWsu/fxbt4z0ZPPX7RsM3OZpRDa6W716v35CaBIgk2o4
+         LpbS61UV6GCGRdjTVg1eZMAjUlizVYEQoilz8W+0BwDOoFUkiphUBNcoQwdX4Zdg9i8u
+         gAkbxqwlmVHK2a5BKyvc14CAGYJJcXjVbADZW/UuA8/zbAGjgwQiZagv/x4NMEbSdLOn
+         6MnTrbnHhVj6651WAOZW8+qsCA5epKbQdAaXGFL1uLXQHloppYSRLbFptAgb3EqgM5cW
+         mbpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=ahH4aVhv8Snl0oHOVjQ8Y25H5dQEfjUH9z8PqoG2qeM=;
+        b=t8MYVlLQ3hGRTwkt8auOAdS1mOwIs2bjvUjWo1oN4oeSQf+AQco/mMc/u0o6+qK3vV
+         g+pi7erD4bvngASvrYezQd079WLSDY3F0ky7bgPFTQoi3xd6Qzw34wYjhGwfqbNU034r
+         5oeIQRo9K70oMi+oI0mD2/Nw+mS3uaRLfCpI8Aom7G0zgTZXgT1JoUKp/kvaZSMPU5QF
+         Wb8I7LrIN865PgC12YJllQR4OBJU9pdASqoPtH0FiPi0CFWCBnSmwBF9MtkBmLOx88By
+         LtHkFkS+PZkuaO33BrPh7AtGKvsRNEEtnFwwgIYruzTF9p6hYh95MM/uTDiAYkdiWx73
+         ROjQ==
+X-Gm-Message-State: AJaThX7KE7ECVebF7Nlz0yn0QBefUgfDac9YUUK1VBrfZiFB1m1D7dSl
+        5aYE8xdO3XM0jHPVP5gzb6AHscv9wh3vggMIyxxfgg==
+X-Google-Smtp-Source: AGs4zMbigj4WD2hkoG3DW+fPCnxQ9oJSz01iJjsywf7IqC72kTGXBXqsg+Q1UGPQRYHmVPiZTJbRx5VKOETXVnXJ/6k=
+X-Received: by 10.55.42.75 with SMTP id q72mr51694730qkh.57.1511653872253;
+ Sat, 25 Nov 2017 15:51:12 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.12.155.209 with HTTP; Sat, 25 Nov 2017 15:51:11 -0800 (PST)
+In-Reply-To: <20171125195524.29162-1-jn.avila@free.fr>
+References: <20171125195524.29162-1-jn.avila@free.fr>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sat, 25 Nov 2017 18:51:11 -0500
+X-Google-Sender-Auth: TwZ5HzcIkD67A0yaCWczCukSfe4
+Message-ID: <CAPig+cTZcS0nk-grQaN7kXxJMRELd6fuhS459FtVVeOV1ZYODw@mail.gmail.com>
+Subject: Re: [PATCH] submodule--helper.c: i18n: add a missing space in message
+To:     Jean-Noel Avila <jn.avila@free.fr>
+Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.26.1-1 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5008.bluehost.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - mad-scientist.net
-X-BWhitelist: no
-X-Source-IP: 74.104.137.100
-X-Exim-ID: 1eIjbJ-000teR-07
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: pool-74-104-137-100.bstnma.fios.verizon.net (homebase) [74.104.137.100]:41750
-X-Source-Auth: paul@mad-scientist.us
-X-Email-Count: 1
-X-Source-Cap: bWFkc2NpZTE7bWFkc2NpZTE7Ym94NTAwOC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, 2017-11-25 at 20:06 +0000, Thomas Gummerer wrote:
-> This part is getting done in 3/4, and is definitely going to work
-> without an additional flag, so this is (hopefully) soon going to work
-> just as you want :)
+On Sat, Nov 25, 2017 at 2:55 PM, Jean-Noel Avila <jn.avila@free.fr> wrote:
+> The message spans over 2 lines but the C conconcatenation does not add
 
-Yay!  Thanks!
+s/conconcatenation/concatenation/
+
+> the needed space between the two lines.
+>
+> Signed-off-by: Jean-Noel Avila <jn.avila@free.fr>
+> ---
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index 2086f0eb0..a5c4a8a69 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -623,7 +623,7 @@ static void status_submodule(const char *path, const struct object_id *ce_oid,
+>
+>                 if (refs_head_ref(get_submodule_ref_store(path),
+>                                   handle_submodule_head_ref, &oid))
+> -                       die(_("could not resolve HEAD ref inside the"
+> +                       die(_("could not resolve HEAD ref inside the "
+>                               "submodule '%s'"), path);
+>
+>                 print_status(flags, '+', path, &oid, displaypath);
+> --
+> 2.15.0
