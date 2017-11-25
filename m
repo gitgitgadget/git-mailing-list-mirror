@@ -7,103 +7,87 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 506A62036D
-	for <e@80x24.org>; Sat, 25 Nov 2017 04:59:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E92EB2036D
+	for <e@80x24.org>; Sat, 25 Nov 2017 05:01:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750739AbdKYE7h (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Nov 2017 23:59:37 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61746 "EHLO
+        id S1751286AbdKYFBJ (ORCPT <rfc822;e@80x24.org>);
+        Sat, 25 Nov 2017 00:01:09 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59463 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750724AbdKYE7h (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Nov 2017 23:59:37 -0500
+        with ESMTP id S1751091AbdKYFBH (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Nov 2017 00:01:07 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5EFFCC43EF;
-        Fri, 24 Nov 2017 23:59:36 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id AA336BBCBA;
+        Sat, 25 Nov 2017 00:01:05 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=GCOkVyQthg/MXwNqbzJbRUxQYTY=; b=q2fGeU
-        ggCCO7IY/g+/zAUnN3wvMUXo1U4Hto/S1TUEVtcFWXrOWoaIzMeFKu20rGp3TWyt
-        Ql49Zv6Lk4FTWlVhrxkXEkz7g03LoZQJ1Z+0oN6FinVWD3oHyQ+i4EZOv+hOwSVE
-        R8VdVDNGqok5FevyftVv0C8h35tDAN+AnMx5E=
+        :content-type; s=sasl; bh=rCX8ktsud4/ZrwgOzxq1IkQIAo8=; b=YSTJtk
+        6CR2uyBdmpVqInWkjgAvgmftAr9XoQ/1xqMtRRUNC4UHn0/b90dHx1MfyLuX1c4H
+        ObXaRPk+PdY7j/ZFFxn7hPEyPDgjIa9oJ88JMwmNNmT36ZQ+dcdOO59uzQfwgROK
+        SMasaWmWy+wH0FtSw2XtrVOQ0IGMDlm2cqV3E=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=JXcj4ExdsO0v6hH/B60NFTfxQIS3sbSY
-        B7tCMqHEggzDQ4iWfNil0pN/F7D+lHEqGnQHZMHUOVEMn4xyqkLbNhpaafPkx/jI
-        GYldN4NtSviJ53pOvd3oaYCkXfCb5sjpPucvu9jXsLbgScMHqq+6LuyZUBhWCqNq
-        ZY6ZzR5EDic=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 56901C43EE;
-        Fri, 24 Nov 2017 23:59:36 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=XuHLZLjnbd1hxiLXfLE/zoYtjNJMVsGK
+        /LHvd5cbV9hUER0Rl1ibPdoV4cF4tJJIL2ntila6LXyIOJEWrA0Vx3J0/0NBOhEm
+        VqHwmyLEO0sy+5nY4pTeuu9HsOldiskuKFpmqMEQFSJK+cFDA8W9dO2PQ21XBQXa
+        HV2ZfuBthNU=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A31F0BBCB9;
+        Sat, 25 Nov 2017 00:01:05 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C7152C43ED;
-        Fri, 24 Nov 2017 23:59:35 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2AFF6BBCB8;
+        Sat, 25 Nov 2017 00:01:05 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/1] diffcore: add a filter to find a specific blob
-References: <20171120222529.24995-1-sbeller@google.com>
-        <20171120222529.24995-2-sbeller@google.com>
-        <xmqqpo88m896.fsf@gitster.mtv.corp.google.com>
-Date:   Sat, 25 Nov 2017 13:59:34 +0900
-In-Reply-To: <xmqqpo88m896.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Fri, 24 Nov 2017 16:43:49 +0900")
-Message-ID: <xmqq8tevkl6x.fsf@gitster.mtv.corp.google.com>
+To:     Ann T Ropea <bedhanger@gmx.de>
+Cc:     Philip Oakley <philipoakley@iee.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH v4 1/6] diff: diff_aligned_abbrev: remove ellipsis after abbreviated SHA-1 value
+References: <20171119184113.16630-1-bedhanger@gmx.de>
+        <20171113223654.27732-1-bedhanger@gmx.de>
+        <83D263E58ABD46188756D41FE311E469@PhilipOakley>
+        <xmqqfu9pmsx3.fsf@gitster.mtv.corp.google.com>
+        <20171113223654.27732-3-bedhanger@gmx.de>
+        <xmqq1sl17e1u.fsf@gitster.mtv.corp.google.com>
+        <20171119184113.16630-5-bedhanger@gmx.de>
+        <xmqqzi7hlhkx.fsf@gitster.mtv.corp.google.com>
+        <5AE7AD53CF184A27BF8F484D415083D9@PhilipOakley>
+        <xmqqo9nuuadm.fsf@gitster.mtv.corp.google.com>
+        <FDCFD8EC7A754412A6369F03E91926C5@PhilipOakley>
+        <CAPig+cT-r0uLLv_GyTRddPe=ATX883S1jt-8gc=ANZW21S81Mg@mail.gmail.com>
+        <CAPig+cT4MvjLDvFEB6hJOSip=dqkp10ydnpfnoUabK=53OmQkw@mail.gmail.com>
+        <20171124235330.15157-1-bedhanger@gmx.de>
+Date:   Sat, 25 Nov 2017 14:01:03 +0900
+In-Reply-To: <20171124235330.15157-1-bedhanger@gmx.de> (Ann T. Ropea's message
+        of "Sat, 25 Nov 2017 00:53:25 +0100")
+Message-ID: <xmqq4lpjkl4g.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 6EDF5F9A-D19D-11E7-8CF7-575F0C78B957-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: A422E244-D19D-11E7-9532-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Ann T Ropea <bedhanger@gmx.de> writes:
 
-> If that is the case, shouldn't we make this new mode imply
-> --full-history to forbid history simplification?  "git log" is a
-> tool to find _an_ explanation of the current state, and the usual
-> history simplification makes tons of sense there, but blobfind is
-> run most likely in order to find _all_ mention of the set of blobs
-> given.
+> Neither Git nor the user are in need of this (visual) aid anymore, but
+> we must offer a transition period.
+>
+> Also, fix a typo: "abbbreviated" ---> "abbreviated".
+>
+> Signed-off-by: Ann T Ropea <bedhanger@gmx.de>
+> ---
+> v2: rename patch series & focus on removal of ellipses
+> v3: env var instead of config option, use one-line comments where appropriate, preserve indent level
+> v4: improve env var handling (rename, helper func to query, docu)
 
-One scenario that I think we may want to be careful about is this:
-
- ---o---*---*---A*--M*--o---X
-     \             /
-      o---*---o---B
-
-where commits marked with '*' has the same blob M:Makefile you are
-looking for at the same path Makefile, and we start traversal at X
-with "git log --blobfind=M:Makefile X" (or even with a pathspec, i.e.
-"git log --blobfind=M:Makefile X -- Makefile).
-
-The usual merge simplification rules would say "Ah, M and A are
-TREESAME so we do not have to look at the side branch that ends at
-B".  If the user is interested in finding all the introduction and
-the retirement of a specific blob object, we would miss the
-transition around the '*' on that side branch and ends up finding
-only the transitions after the fork point where the blob is
-introduced, and after M where the blob is retired.
-
-Another interesting case we may want to be careful is this:
-
-    ---A*--M*--o---X
-          /
-      ---B*
-
-for the same reason.  The usual merge simplification rules are
-designed to come up with _an_ explanation for the state in X,
-and because M is TREESAME with both A and B, it would pick just
-one (the first parent) while ignoring the other.  Again, that would
-not be appropriate if the reason why the user is running the command
-is to find all the introduction and the retirement of an object.
-
-It may be worth covering these in the tests (I didn't try to see
-specifically if the patch has these cases already, as I didn't think
-of the issue when I responded---sorry about that).
-
-Thanks.
-
+Thanks for sticking with this topic---very much appreciated, as we
+saw many newcomers get tired of doing repeated polishing and abandon
+their topic in the past.  I have to go offline now, but will comment
+later when I come back.
 
