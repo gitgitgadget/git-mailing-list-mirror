@@ -2,86 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7C8FD20954
-	for <e@80x24.org>; Sat, 25 Nov 2017 18:02:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2BBF220954
+	for <e@80x24.org>; Sat, 25 Nov 2017 18:51:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751677AbdKYSCt (ORCPT <rfc822;e@80x24.org>);
-        Sat, 25 Nov 2017 13:02:49 -0500
-Received: from mail-qt0-f177.google.com ([209.85.216.177]:41049 "EHLO
-        mail-qt0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751590AbdKYSCs (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Nov 2017 13:02:48 -0500
-Received: by mail-qt0-f177.google.com with SMTP id i40so23438210qti.8
-        for <git@vger.kernel.org>; Sat, 25 Nov 2017 10:02:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=HtldAgN7E8WnZX7Ky4QVmRqxTSawUvyQTVCp6QnQQO4=;
-        b=Bi0C0p2OdHRWkJN5QH1PLhQGl7NfR1oMttgVQNtfhk/pTvwIfzUjgXOml8EopuunjB
-         nnbRgpgPmBpe5z89zSieUXmmpSYtAIOOv7gAmUJfakD1e8gPJrLy9t86wnx7CWYBEOJ2
-         qe+ThFGSRaaW3GmYp3E/R1A4GSGjp8J86uw73myYg4RdU+AKjOtf8u/FdVLEUE6w0ofR
-         OFDnnXVrCuWQ/iD7sYVeeOKPY4wbV2BEu3C5tAKUWM+KMlwq56cMywYstUARwuKnJoF8
-         j3fAULFTSzCl1M3lEw+HPAPRX/ElQ3/BRAw2lpz2DF6CWUBmOzD1sE4XbfCrPz0BEFg0
-         dUiw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=HtldAgN7E8WnZX7Ky4QVmRqxTSawUvyQTVCp6QnQQO4=;
-        b=L+Ci40zzR12b/s5oSLSQgSjB/4CidgtZ11SDYg2FjTJQA+o/E+3mJWViHgym8XyLN7
-         Xm88igcZDGiKmvVOBuoGOjKRxgWJBQ+fY/Z4X2EOvMRE3huQZVGtCcObU3Rxe5nU8ud1
-         CGP99KO45m0NMMSMaCdh0mTqmgktjyADTReYSv617vqpXjvGnoMv3mrJ6tB+TlRj+k8+
-         B3NcBB/77mqGZBJFauJhIenA6oy3c43zR4Hs2rA9Gnbq4HBrIPlQY5yo3Z0tYY43nUdo
-         5YWt5WQe3VWhreDkJIR0nOUYsRmEyu8t348QGJd13j4af6tgH3B9ocFfWTxXIYdCAfKV
-         Tv6g==
-X-Gm-Message-State: AJaThX58zX2NbP/0RcBc/khvOAtmngKW9UicwOf/o9IAeo6yHCkyKd9+
-        wACTCedy+34SEji65x0yoiY=
-X-Google-Smtp-Source: AGs4zMbwqfjVnXANmVDbsU0IQjkQh92thoKdTua/QcDfMD65zssR3I2Cq66OV8YE2U5SWQPtzH/16A==
-X-Received: by 10.200.56.34 with SMTP id q31mr52568255qtb.64.1511632967196;
-        Sat, 25 Nov 2017 10:02:47 -0800 (PST)
-Received: from zaya.teonanacatl.net (pool-173-67-181-41.hrbgpa.fios.verizon.net. [173.67.181.41])
-        by smtp.gmail.com with ESMTPSA id e16sm16947982qtk.64.2017.11.25.10.02.46
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sat, 25 Nov 2017 10:02:46 -0800 (PST)
-Date:   Sat, 25 Nov 2017 13:02:44 -0500
-From:   Todd Zullinger <tmz@pobox.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] RelNotes: minor typo fixes in 2.15.1 draft
-Message-ID: <20171125180243.GV3693@zaya.teonanacatl.net>
-References: <20171125173345.17488-1-tmz@pobox.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20171125173345.17488-1-tmz@pobox.com>
-User-Agent: Mutt/1.9.1 (2017-09-22)
+        id S1751664AbdKYSvE (ORCPT <rfc822;e@80x24.org>);
+        Sat, 25 Nov 2017 13:51:04 -0500
+Received: from gproxy10-pub.mail.unifiedlayer.com ([69.89.20.226]:40522 "EHLO
+        gproxy10-pub.mail.unifiedlayer.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751156AbdKYSvC (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 25 Nov 2017 13:51:02 -0500
+X-Greylist: delayed 1490 seconds by postgrey-1.27 at vger.kernel.org; Sat, 25 Nov 2017 13:51:02 EST
+Received: from cmgw2 (unknown [10.0.90.83])
+        by gproxy10.mail.unifiedlayer.com (Postfix) with ESMTP id E6437140572
+        for <git@vger.kernel.org>; Sat, 25 Nov 2017 11:26:09 -0700 (MST)
+Received: from box5008.bluehost.com ([50.116.64.19])
+        by cmgw2 with 
+        id eJS61w00N0QvKlu01JS9iF; Sat, 25 Nov 2017 11:26:09 -0700
+X-Authority-Analysis: v=2.2 cv=dZfw5Tfe c=1 sm=1 tr=0
+ a=gch/BGY/Gm5DEW28s2kmlQ==:117 a=gch/BGY/Gm5DEW28s2kmlQ==:17
+ a=IkcTkHD0fZMA:10 a=sC3jslCIGhcA:10 a=-tvoqAE7v2l1TXM1_9cA:9 a=QEXdDO2ut3YA:10
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=mad-scientist.net; s=default; h=Content-Transfer-Encoding:Mime-Version:
+        Content-Type:References:In-Reply-To:Date:To:Reply-To:From:Subject:Message-ID:
+        Sender:Cc:Content-ID:Content-Description:Resent-Date:Resent-From:
+        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=kAJuIpw1axKTyqXtxg4xI2XbCikRWrzqezS3qmsr+Qo=; b=eT+LRceCIXBRY8h1JDUCCQitsU
+        5Qk+RPYyMsJfTUn+AtF999Xf6P650HOtpOZaFV0OECEOCFhBi+vRVbP5hnHHD8zMoSh8GpbC0OCBt
+        rhC/qftzIuoMtff0zbwaYw81w;
+Received: from pool-74-104-137-100.bstnma.fios.verizon.net ([74.104.137.100]:38326 helo=homebase)
+        by box5008.bluehost.com with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.89)
+        (envelope-from <paul@mad-scientist.net>)
+        id 1eIf9S-002XYx-68
+        for git@vger.kernel.org; Sat, 25 Nov 2017 11:26:06 -0700
+Message-ID: <1511634365.2847.211.camel@mad-scientist.net>
+Subject: Re: [PATCH v4 4/4] worktree: make add <path> dwim
+From:   Paul Smith <paul@mad-scientist.net>
+Reply-To: paul@mad-scientist.net
+To:     git@vger.kernel.org
+Date:   Sat, 25 Nov 2017 13:26:05 -0500
+In-Reply-To: <20171125175010.GB14993@hank>
+References: <mailto:20171118224706.13810-1-t.gummerer@gmail.com>
+         <20171122223020.2780-1-t.gummerer@gmail.com>
+         <20171122223020.2780-5-t.gummerer@gmail.com>
+         <xmqq1skonoaw.fsf@gitster.mtv.corp.google.com>
+         <20171125175010.GB14993@hank>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.26.1-1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5008.bluehost.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - mad-scientist.net
+X-BWhitelist: no
+X-Source-IP: 74.104.137.100
+X-Exim-ID: 1eIf9S-002XYx-68
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: pool-74-104-137-100.bstnma.fios.verizon.net (homebase) [74.104.137.100]:38326
+X-Source-Auth: paul@mad-scientist.us
+X-Email-Count: 1
+X-Source-Cap: bWFkc2NpZTE7bWFkc2NpZTE7Ym94NTAwOC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Apologies for the duplicate.  I used the `-n` option, mistakenly 
-thinking it was a synonym for `--dry-run` and didn't pay enough 
-attention to see that it sent.  (The only indication is s/OK./Dry &/ 
-which I missed.)
+On Sat, 2017-11-25 at 17:50 +0000, Thomas Gummerer wrote:
+> This would be the output in the new version:
+> 
+>      $ git worktree add ../bla
+>      Branch 'bla' set up to track remote branch 'bla' from 'origin'.
+>      Preparing ../bla (identifier bla)
+>      HEAD is now at 4aade43 bla
+> 
+> vs. the output without the changed behaviour:
+> 
+>      $ git worktree add ../bla
+>      Preparing ../bla (identifier bla)
+>      HEAD is now at 0f215c9 initial import
+> 
+> Of course that assumes that it's used directly, not in scripts, and
+> that users will actually read the output of the command when they
+> invoke it.  Maybe these are not safe assumptions to make though, and
+> we'd rather not have this on by default then.  As I mentioned
+> previously I would prefer having this as default, but I'm happy to
+> hide this behaviour behind a flag if we want to be more careful about
+> introducing this.  Dunno?
 
-It was mildly surprising that the script didn't warn or complain about 
-an unknown option.  After a quick look, that seems to be due to the 
-Getopt::Long pass_through option which sends unknown options to 
-format-patch.
+Speaking as a simple user, I find the current behavior of Git worktree
+add very frustrating; I am constantly wanting to create worktrees for
+other peoples' branches so I can look at the code there without messing
+up my workspace, and it's really inconvenient to do that now.
 
-That doesn't remove the user-error on my part, of course. ;)
+Also, the current special handling of the directory name as a putative
+branch name is not helpful for me because many of the branches I need
+to examine use "/" as their separator.  I don't begrudge making that
+feature more "DWIM" for those that can use it, but hopefully some help
+is forthcoming for those who can't.
 
--- 
-Todd
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Cogito cogito ergo cogito sum --
-I think that I think, therefore I think that I am.
-    -- Ambrose Bierce, "The Devil's Dictionary"
+For example, I need to create a local worktree for the remote rel/1.0
+branch... what do I do?
 
+What I want to work is this:
+
+    git worktree add ../1.0 rel/1.0
+
+and have it create a worktree at ../1.0, then do the equivalent of "git
+checkout rel/1.0" which includes setting up to track the remote branch.
+ But of course this doesn't work at all; I get:
+
+    fatal: invalid reference: rel/1.0
+
+Personally I would think it odd to have to add an extra flag to get
+what I would expect would be "normal" behavior (checkout).
+
+But maybe that's just me.
