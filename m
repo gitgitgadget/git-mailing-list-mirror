@@ -6,102 +6,101 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C2DB620A40
-	for <e@80x24.org>; Sun, 26 Nov 2017 19:15:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9210420A40
+	for <e@80x24.org>; Sun, 26 Nov 2017 19:25:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751528AbdKZTPN (ORCPT <rfc822;e@80x24.org>);
-        Sun, 26 Nov 2017 14:15:13 -0500
-Received: from cloud.peff.net ([104.130.231.41]:40544 "HELO cloud.peff.net"
+        id S1751807AbdKZTZL (ORCPT <rfc822;e@80x24.org>);
+        Sun, 26 Nov 2017 14:25:11 -0500
+Received: from cloud.peff.net ([104.130.231.41]:40566 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751427AbdKZTPM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 26 Nov 2017 14:15:12 -0500
-Received: (qmail 32262 invoked by uid 109); 26 Nov 2017 19:15:13 -0000
+        id S1751785AbdKZTZK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Nov 2017 14:25:10 -0500
+Received: (qmail 32729 invoked by uid 109); 26 Nov 2017 19:25:11 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 26 Nov 2017 19:15:13 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 26 Nov 2017 19:25:11 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 29413 invoked by uid 111); 26 Nov 2017 19:15:30 -0000
+Received: (qmail 29452 invoked by uid 111); 26 Nov 2017 19:25:27 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Sun, 26 Nov 2017 14:15:30 -0500
+ by peff.net (qpsmtpd/0.94) with ESMTPA; Sun, 26 Nov 2017 14:25:27 -0500
 Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 26 Nov 2017 14:15:10 -0500
-Date:   Sun, 26 Nov 2017 14:15:10 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 26 Nov 2017 14:25:08 -0500
+Date:   Sun, 26 Nov 2017 14:25:08 -0500
 From:   Jeff King <peff@peff.net>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>, git <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Dominik Mahrer <teddy@teddy.ch>,
-        git-packagers@googlegroups.com, Todd Zullinger <tmz@pobox.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH] Makefile: check that tcl/tk is installed
-Message-ID: <20171126191510.GA1501@sigill>
-References: <20171120171517.6365-1-chriscool@tuxfamily.org>
- <20171120191931.okxejqyqayjvxpbc@aiede.mtv.corp.google.com>
- <CAP8UFD0d9zM9F3tLrTMiLdfoJQsOPELtmudVB6e83DiLPN5DEA@mail.gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Nathan Neulinger <nneul@neulinger.org>,
+        Santiago Torres <santiago@nyu.edu>, git@vger.kernel.org
+Subject: Re: git status always modifies index?
+Message-ID: <20171126192508.GB1501@sigill>
+References: <a039d139-dba5-683e-afbf-4044cd32ab1d@neulinger.org>
+ <20171122153028.olssotkcf3dd6ron@LykOS.localdomain>
+ <5050d779-2981-6f06-49f7-0ecb4efb25b8@neulinger.org>
+ <20171122161014.djkdygmclk227xmq@LykOS.localdomain>
+ <dfbf4af3-e87c-bdcb-7544-685572925a50@neulinger.org>
+ <20171122202720.GD11671@aiede.mtv.corp.google.com>
+ <20171122211729.GA2854@sigill>
+ <20171122215635.GE11671@aiede.mtv.corp.google.com>
+ <20171122220627.GE2854@sigill>
+ <alpine.DEB.2.21.1.1711252240300.6482@virtualbox>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAP8UFD0d9zM9F3tLrTMiLdfoJQsOPELtmudVB6e83DiLPN5DEA@mail.gmail.com>
+In-Reply-To: <alpine.DEB.2.21.1.1711252240300.6482@virtualbox>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 21, 2017 at 12:58:17AM +0100, Christian Couder wrote:
+On Sat, Nov 25, 2017 at 10:55:25PM +0100, Johannes Schindelin wrote:
 
-> > Can you say more about where this comes up?
+> > Right, I went a little off track of your original point.
+> > 
+> > What I was trying to get at is that naming it "status --no-lock-index"
+> > would not be the same thing (even though with the current implementation
+> > it would behave the same). IOW, can we improve the documentation of
+> > "status" to point to make it easier to discover this use case.
 > 
-> The original discussion is:
-> 
-> https://public-inbox.org/git/b6b12040-100f-5965-6dfd-344c84dddf96@teddy.ch/
-> 
-> and here are discussions related to version 1 of this patch:
-> 
-> https://public-inbox.org/git/20171115125200.17006-1-chriscool@tuxfamily.org/
-> 
-> As Peff mentions in the original discussion, at the Bloomberg Git
-> sprint, we saw someone struggling to compile Git, because of these
-> msgfmt and Tcl/Tk issues.
+> I had the hunch that renaming the option (and moving it away from `git
+> status`, even if it is currently only affecting `git status` and even if
+> it will most likely be desirable to have the option to really only prevent
+> `git status` from writing .lock files) was an unfortunate decision (and
+> made my life as Git for Windows quite a bit harder than really necessary,
+> it cost me over one workday of a bug hunt, mainly due to a false flag
+> indicating `git rebase` to be the culprit). And I hinted at it, too.
 
-Actually, I think we had the _opposite_ problem there.
+I remain unconvinced that we have actually uncovered a serious problem.
+Somebody asked if Git could do a thing, and people pointed him to the
+right option. That option is new in the latest release. So it is
+entirely plausible to me that the new option is just fine and:
 
-The main problem your patch fixes is that we may silently build a
-version of gitk/git-gui that do not work. The "make" process completes,
-but they refer to a non-existent "wish" tool, and running them will
-fail.
+  1. We could adjust the documentation to cross-reference from
+     git-status.
 
-That's potentially annoying if you wanted those tools. But if you didn't
-care about them in the first place, it's fine.
+  2. Now that the new option exists, informal documentation will start
+     to mention it. Including this thread in the mailing list archive,
+     and the stack overflow thread that was linked.
 
-The opposite problem is when you don't care about those tools, and they
-_do_ break the build. And then just to get the rest of Git built, you
-have to know about and set NO_TCLTK.
+> I really never understood why --no-optional-locks had to be introduced
+> when it did exactly the same as --no-lock-index, and when the latter has a
+> right to exist in the first place, even in the purely hypothetical case
+> that we teach --no-optional-locks to handle more cases than just `git
+> status`' writing of the index (and in essence, it looks like premature
+> optimization): it is a very concrete use case that a user may want `git
+> status` to refrain from even trying to write any file, as this thread
+> shows very eloquently.
 
-AFAIK that only happens if you don't have msgfmt installed. Because then
-the gitk and git-gui Makefiles try to auto-fallback to implementing
-msgfmt in tcl _during the build_, and there a lack of "tclsh" will break
-the build.
+Besides potentially handling more than just "git status", it differs in
+one other way: it can be triggered via and is carried through the
+environment.
 
-I think your patch does say "consider setting NO_TCLTK" in that case,
-which is an improvement. But it might be nicer still if it Just Worked
-(either because we don't do tcl/tk by default, or because we respect
-NO_GETTEXT in the gitk/git-gui Makefiles, or because our msgfmt can
-fallback further to not even using tclsh).
+> Maybe it is time to reintroduce --no-lock-index, and make
+> --no-optional-locks' functionality a true superset of --no-lock-index'.
 
-So I'm not really against this patch, but IMHO it doesn't make the
-interesting case (you don't care about tcl and are just trying to build
-git for the first time) all that much better. I do also wonder if we
-want to start putting these kind of run-time checks into the Makefile
-itself. That's kind of what autoconf is for. As much as I hate autoconf,
-is it the right advice for somebody who doesn't want to look at the
-Makefile knobs to do:
-
-  autoconf
-  ./configure
-  make
-
-?
-
-If there are deficiencies in configure.in (and I can well believe that
-there are), should we be fixing it there?
+I'm not against having a separate option for "never write to the
+repository". I think it's potentially different than "don't lock", as I
+mentioned earlier. Frankly I don't see much value in "--no-lock-index"
+if we already have "--no-optional-locks". But I figured you would carry
+"status --no-lock-index" forever in Git for Windows anyway (after all,
+if you remove it now, you're breaking compatibility for existing users).
 
 -Peff
