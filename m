@@ -2,80 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BA59C20954
-	for <e@80x24.org>; Sun, 26 Nov 2017 02:32:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EFF4C20954
+	for <e@80x24.org>; Sun, 26 Nov 2017 02:55:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751888AbdKZCcP (ORCPT <rfc822;e@80x24.org>);
-        Sat, 25 Nov 2017 21:32:15 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63772 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751882AbdKZCcO (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Nov 2017 21:32:14 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9F141C6C61;
-        Sat, 25 Nov 2017 21:32:13 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=13mc/mQbpapYhRwY4vXdUISwlAw=; b=MXA+Q1
-        eprwBF9ni+pC3vGpQBRYSFUVC7yhEK/xOO5GAalE5gQnGIFZXQP6O35Tkj+rrpeP
-        ++ioQEMK8dnbjPTJ0NU89R30y6BSibu/e/KpBs+CfnP4NxxGYhPoZ2d3pkMZBI88
-        0vTF9Wm5/+/gjjq8Jv4bv2sd5YIWl7lJGUAzs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=gUmkYaS9X3TI2OyJ5kJSi6m3Rl1mgf6y
-        X6xlfQVpCBUbZu43Q/oB/ABr90SwnCyKmNVnX03TM/4Dh3LtjpLwA+qHZGrCSblc
-        /eyshIYpKE2kmxPePgWitWW7xevUCIdliSvbPyhaEODspkum5ssS6avLf7feMryz
-        d1u3lXJql88=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 95D23C6C60;
-        Sat, 25 Nov 2017 21:32:13 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1B241C6C5F;
-        Sat, 25 Nov 2017 21:32:13 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Adam Dinwoodie <adam@dinwoodie.org>,
-        David Turner <dturner@twitter.com>,
-        David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH] merge-recursive: ignore_case shouldn't reject intentional removals
-References: <20171124195901.2581-1-newren@gmail.com>
-        <xmqqd147kpdm.fsf@gitster.mtv.corp.google.com>
-        <CABPp-BGcfFOvv+-uW2_EaftLiU-xs_D4g8hsYOZqjk1XwK_8Fw@mail.gmail.com>
-Date:   Sun, 26 Nov 2017 11:32:11 +0900
-In-Reply-To: <CABPp-BGcfFOvv+-uW2_EaftLiU-xs_D4g8hsYOZqjk1XwK_8Fw@mail.gmail.com>
-        (Elijah Newren's message of "Sat, 25 Nov 2017 14:35:46 -0800")
-Message-ID: <xmqqk1ydkbx0.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 029FFA5A-D252-11E7-8441-8EF31968708C-77302942!pb-smtp1.pobox.com
+        id S1751940AbdKZCy7 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 25 Nov 2017 21:54:59 -0500
+Received: from mout.gmx.net ([212.227.15.18]:53665 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751917AbdKZCy6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Nov 2017 21:54:58 -0500
+Received: from localhost ([82.251.162.233]) by mail.gmx.com (mrgmx003
+ [212.227.17.184]) with ESMTPSA (Nemesis) id 0LgZRV-1exsYP3Won-00nv4b; Sun, 26
+ Nov 2017 03:54:56 +0100
+From:   mwnx <mwnx@gmx.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, mwnx <mwnx@gmx.com>
+Subject: [PATCH] pretty: fix buffer over-read with %> and %<
+Date:   Sun, 26 Nov 2017 03:52:22 +0100
+Message-Id: <20171126025222.7831-1-mwnx@gmx.com>
+X-Mailer: git-send-email 2.15.0.90.g6559daec7
+X-Provags-ID: V03:K0:XhW2qqDN+FLmLoLs9s4mtcrrQjvx1nrVVtu/2h7ec+uHhqOZrMp
+ Y480IAJLlcgBktTNVjgSK0BHZQnXKELJL5f8zgkTHSNRCNLPJ+2T3ZKmVi8vdB8ekRfSIqI
+ 45UuSiKGcbz0sfKxOei4Me72v5WrIZhpALpL5QnJHvBRJ98JfQPdIaIdE3S3U/h7Gpu/dJR
+ PpD9KkTH1+H0XKkLpzM0Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:d4buRbn0MBw=:ypc/r+u336hMD+7Ggjy7+s
+ A47Q/2tx8z96aukT8RY2rGOPS7kzXT9nIqBgeyg8w5YKkBWGVfb4cSTyIHOFGoukR+mDHhQf0
+ ++LXh5FeOWUDIx+zpJM8kxiAydYgvp7VYnBeXaE8kWvVKwu9PfqQmXInMapv/j9ALGhiPaixr
+ vweqqIh+gebN46LItd5LuUcv3yYzGc6tIXEH8udXn7m3Q+MP/ZEEQe2SVQAL1cwnBArFhFuuR
+ E+oCF0jSAuXxdaS7Y3L+66LVV2jUDnFx/N3+tmap5jFjkNkU+iIZxDD4JLwxMA+MXII0SMB5u
+ Hmd0xH4HV93hG0fpPHA9+R3W6TCR13taMas7kM80BuOEo6ODDn0VxJuZgK213D1vC1Z8zbVwB
+ H/FDAUtHg66lXtdwkxvEK+9iSnh2tKlBADX0tJd+Azk3SANpbXX0lSb7dbihzxkJpy5L+3wb2
+ VY/HTIKnb2FSaB39DePGgrJGSnJxPAX8SpYT8mgG9JuIATKwZwC7ytzJK3uFDjBKvcSagz7Je
+ gNCcZrN0fLIJWnEyUhni0Mg9pG9RuQzg05Jimz80JB/MWDJFwYfuYXSnV/heKlW4J4HtSZN6p
+ df14ZkfdusCjkkjiMKXtLct/AOlHhETGolNtyuBpCk7O0C4wMhdvtx2jLJPxqlzS2bc4i3I/D
+ XS2HdkTYKZ4JH6LBFjZP23X2CQyZBOJno2sQZNhgmWGaVF1rGACc0SAupWAM11D0VcMMzPU9/
+ Vt26OLy0FYqUG66n9PuNjqqrs/yxApw6EA7ZKBTUcJ3LG4Uy/o+f1NBGfJPeYPX0EewmM3W5u
+ UGVP4CxiauRuU4pYuvY62T8nhVPniQ8w5ApySRpbpejN6Ct2ls=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+A buffer over-read of the format string would occur with unterminated
+formats of the form '%>(#' and '%<(#', where '#' represents a number.
 
-> I had another email I had been composing to try to argue for changing
-> merge-recursive.c's design to the above, assuming I could get the time
-> to work on it.  Nice to see that I'm not crazy, and that I apparently
-> don't need to do much convincing.  :-)
+This error can be witnessed by running git log under valgrind like so:
 
-You might even be better off coming up with a *new* merge strategy
-backend if you want to do this, without using much from the existing
-code in merge-recursive.c at all (I've written off that code as
-mostly unsalvageable long time ago, and thanked for whoever had a
-clever idea to allow different strategy backend to be made without
-disrupting the rest of the system).
+    valgrind git log -n1 --format='%<(42'
 
-After we gain more confidence with the rewrite, we can switch the
-internally built-in backend used by different codepaths from
-merge-recursive.c::merge_recursive() to the new thing.
+This was due to the fact that the "not found" case for strcspn() was
+being checked in the same way that one checks the "not found" case for
+strchr(), i.e. by checking for a NULL pointer return value. Instead, one
+must check for the end of the string since strcspn() points to the
+character where it finished its search (which will be a '\0' if
+unsuccessful).
+
+Signed-off-by: mwnx <mwnx@gmx.com>
+---
+ pretty.c                      | 2 +-
+ t/t4205-log-pretty-formats.sh | 6 ++++++
+ 2 files changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/pretty.c b/pretty.c
+index 2f6b0ae6c..4c70bad45 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -1021,7 +1021,7 @@ static size_t parse_padding_placeholder(struct strbuf *sb,
+ 		const char *end = start + strcspn(start, ",)");
+ 		char *next;
+ 		int width;
+-		if (!end || end == start)
++		if (!*end || end == start)
+ 			return 0;
+ 		width = strtol(start, &next, 10);
+ 		if (next == start || width == 0)
+diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
+index 591f35daa..4d9555962 100755
+--- a/t/t4205-log-pretty-formats.sh
++++ b/t/t4205-log-pretty-formats.sh
+@@ -598,4 +598,10 @@ test_expect_success ':only and :unfold work together' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'unterminated alignment formatting' '
++	git log -n1 --format="%<(42" >actual &&
++	echo "%<(42" >expected &&
++	test_cmp expected actual
++'
++
+ test_done
+-- 
+2.15.0.90.g6559daec7
+
