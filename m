@@ -2,129 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 731BA2036D
-	for <e@80x24.org>; Sun, 26 Nov 2017 07:19:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 168462036D
+	for <e@80x24.org>; Sun, 26 Nov 2017 08:13:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752051AbdKZHTs (ORCPT <rfc822;e@80x24.org>);
-        Sun, 26 Nov 2017 02:19:48 -0500
-Received: from mail-qt0-f182.google.com ([209.85.216.182]:35543 "EHLO
-        mail-qt0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751930AbdKZHTr (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 26 Nov 2017 02:19:47 -0500
-Received: by mail-qt0-f182.google.com with SMTP id n32so35649202qtb.2
-        for <git@vger.kernel.org>; Sat, 25 Nov 2017 23:19:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=iHdgFVmMS/Q7gQRnNxf0E4jXeBU3QlOWEd0CRy1wn7Q=;
-        b=OPiriw3ibJlcrTXu4bUdCGLOoahgDhRNk3zTtoIAPXsFLnRNTiaPDzN2mkEjQI+WQv
-         PMSpbqRQcOWAB7QAbuOZMGiQOoqy0YpfiwYV4ZPnugsfE2f1Z/WTFpRutNzgoJZgqIvV
-         gIcLDX5lKXX3bN5S6YCd8Co869JZvOEmA9trjm41PSPrl7/SBW1KAQwtJ75ZcEd8SeVl
-         2Vt4XIHyXUuef/E0D393C1d3u8rSHbUi7BgAH7w4s+APIUcG6A7hRto9hI6swanbU3g7
-         PxWb+H5WnCPO8a3FTqM6cewvGAwSY/t+OfcgrvH9DP0PbR56kKQ65eE66UXsMkT36hvu
-         /7iQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=iHdgFVmMS/Q7gQRnNxf0E4jXeBU3QlOWEd0CRy1wn7Q=;
-        b=Vgcsd4/wvWcC6TwDQgM65cYk08pcyKuVLM6PSCMoP1XR4Y4O0ntzXJJPxx9FlYKT8m
-         OpMgZBNqQV09CcOQSg4sdjVBi7y8CY3Iq4KYQ67xIfiLzD7+W0Ssb0KMbf4RieEtJ2Q+
-         MiXPEkhYu1lrrFXImm0Ww8TRAiWloms2ysqhXTHoI9W/2Ponjdxt2RL1HQG4S4nSoG0+
-         LCKxVSC6J5aOwqlK+G7eZUGNpuy8UemTKJh8kxKdYl5Kpsw5DpU+k60GxXW/FPiS8RkI
-         eaXh25N3zWUJur/kv5TRbL7QTGj47geSY/TF2RKpuMEJvEAR3nt+aB7+x6G0Nv8soZLB
-         o+eQ==
-X-Gm-Message-State: AJaThX5Y7akw+t9z8e+NvbY4PVm7mOvHPwo6ThqDRxXvDcgIQorcEvxK
-        3s5HeObi+2hIcZMoWF9Gskf2aswP5IFqZ1cOwqJn+ZeC
-X-Google-Smtp-Source: AGs4zMa6auq9KBRW22iMMEf5W3H2q0iPLbVvecgYTZ1ERmTCxBXtGURwlSkcmBY4Dwe35vOKUFbm/MWnO1m1wKFdiZY=
-X-Received: by 10.200.27.76 with SMTP id p12mr33841273qtk.310.1511680786350;
- Sat, 25 Nov 2017 23:19:46 -0800 (PST)
+        id S1752111AbdKZINg (ORCPT <rfc822;e@80x24.org>);
+        Sun, 26 Nov 2017 03:13:36 -0500
+Received: from p3plsmtpa07-06.prod.phx3.secureserver.net ([173.201.192.235]:38933
+        "EHLO p3plsmtpa07-06.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752053AbdKZINf (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 26 Nov 2017 03:13:35 -0500
+Received: from jessie.local ([212.149.203.197])
+        by :SMTPAUTH: with SMTP
+        id Is49eVTkAfgV3Is4CevZec; Sun, 26 Nov 2017 01:13:35 -0700
+Date:   Sun, 26 Nov 2017 10:13:30 +0200
+From:   Max Kirillov <max@max630.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Max Kirillov <max@max630.net>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Jeff King <peff@peff.net>,
+        Florian Manschwetus <manschwetus@cs-software-gmbh.de>,
+        Chris Packham <judge.packham@gmail.com>,
+        Konstantin Khomoutov <kostix+git@007spb.ru>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH v5 1/2] http-backend: respect CONTENT_LENGTH as specified
+ by rfc3875
+Message-ID: <20171126081329.GD26158@jessie.local>
+References: <20171126015448.24111-1-max@max630.net>
+ <20171126015448.24111-2-max@max630.net>
+ <xmqqo9npitx7.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Received: by 10.12.209.220 with HTTP; Sat, 25 Nov 2017 23:19:25 -0800 (PST)
-From:   Michael Sloan <mgsloan@gmail.com>
-Date:   Sat, 25 Nov 2017 23:19:25 -0800
-Message-ID: <CAEDDsWdXQ1+UukvbfRoTPzY3Y9sOaxQ7nh+qL_Mcuy3=XKKh7w@mail.gmail.com>
-Subject: Problem with environment of hook execution when git is run with
- --work-tree / --git-dir
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqo9npitx7.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-CMAE-Envelope: MS4wfB7d6kR3wNKeayChsWvtAdv2VZsvIme/hLEaFByFlCAkUSVqCYJN1RHge7XP43qbnhYWljX90iJc5gmvJqdTR6txdlxnF5+X9U8/SLPFEnnKVOtXdh1a
+ M9FUbLXb9uxqlBrQ9UCAPjzp5tNgDYuEzVmG6NS+hFtns0lI89Rew8Ky4sD+sUldr4Zd3Jw/0+qmbfqnvmjiXK2/9+13W5RDrQL6LIsrqoYSVVV+uO2IPP7A
+ fu6pJSJ6P88gUhW41KE+CQ3Y/x4/zf6hsVwc51T2aS+RFiB6lz8ccKOVN1kyVyrgmAb0xn5z/cn4xYwLpdMhisqaqbI2bK2NTU9noAEziP6nECCYpRdJfvze
+ jI51MONSFaJM5/1ZNiZFMHfYeWrI+7Ulrz33lKkw9B+tveTgAWA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi!
+On Sun, Nov 26, 2017 at 12:46:12PM +0900, Junio C Hamano wrote:
+> Max Kirillov <max@max630.net> writes:
+> > +ssize_t git_env_ssize_t(const char *k, ssize_t val)
+> > +{
+> > +	const char *v = getenv(k);
+> > +	if (v && !git_parse_ssize_t(v, &val))
+> > +		die("failed to parse %s", k);
+> > +	return val;
+> > +}
+> > +
+> 
+> If this were passing "v" that is a string the caller obtains from
+> any source (and the callee does not care about where it came from),
+> that would be a different story, but as a public interface that is
+> part of the config.c layer, "k" that has to be the name of the
+> environment variable sticks out like a sore thumb.
+> 
+> If we were to add one more public function to the interface, I
+> suspect that exposing the existing git_parse_ssize_t() and have the
+> caller implement the above function for its use would be a much
+> better way to go.
 
-I noticed a potential bug with the invocation of a pre-commit hook
-when running git with --work-tree and --git-dir.  In particular, I was
-investigating how hooks can still run git commands properly even when
-the work-tree or git-dir is overridden via CLI args.  I put the
-following in "/home/mgsloan/.dotfiles-git/hooks/pre-commit":
+I'm afraid I did not get the reasonsing and not fully the
+desired change. Is this http-backend code change (compared
+to the last patch) what you mean?
 
-    #!/bin/sh
-    env
+--- a/http-backend.c
++++ b/http-backend.c
+@@ -346,9 +346,18 @@ static ssize_t read_request_fixed_len(int fd, ssize_t req_len, unsigned char **o
+ 	}
+ }
+ 
++static ssize_t env_content_length()
++{
++	const char *str = getenv("CONTENT_LENGTH");
++	ssize_t val = -1;
++	if (str && !git_parse_ssize_t(str, &val))
++		die("failed to parse CONTENT_LENGTH: %s", str);
++	return val;
++}
++
+ static ssize_t read_request(int fd, unsigned char **out)
+ {
+-	ssize_t req_len = git_env_ssize_t("CONTENT_LENGTH", -1);
++	ssize_t req_len = env_content_length();
+ 	if (req_len < 0)
+ 		return read_request_eof(fd, out);
+ 	else
 
-after this, running "git --work-tree=/home/mgsloan
---git-dir=/home/mgsloan/.dotfiles-git commit" has output with a bunch
-of variables, here are the important ones:
-
-    GIT_WORK_TREE=.
-    GIT_DIR=.dotfiles-git/
-    PWD=/home/mgsloan
-
-So what's the problem with this choice of environment variables?
-Well, the problem is that if PWD is changed during the execution of
-the script, then GIT_WORK_TREE and GIT_DIR will no longer work
-properly. For example, if the pre-commit hook is
-
-    #!/bin/sh
-    cd some-dir
-    git status
-
-This will fail with
-
-    Not a git repository: '.dotfiles-git'
-
-There is another detail here, which is that when --git-dir /
---work-tree is not specified, the no GIT_WORK_TREE / GIT_DIR
-environment variable is set.  This means that in this case, changing
-PWD in the hook will work fine as long as the search for .git will
-find the right one.  Note that this also means that changing PWD in a
-script can change which git repo the command is being run on, for
-example, when the hook is interacting with a submodule.
-
-A half-fix to this would be to have the GIT_WORK_TREE and GIT_DIR set
-when running hooks use absolute paths.  However, this would not have
-the same behavior as when git is used without --git-dir / --work-tree.
-As described in the paragraph above, if PWD is relied upon to instead
-target a different git repo, then things break.
-
-Not sure what the total fix for this would be.   I think the
-information that needs to be conveyed to the hook's git invocations is
-that "the work-tree /home/mgsloan should be associated with the
-git-dir /home/mgsloan/.dotfiles-git".  Could have an env var like
-
-    GIT_DIR_MAPPINGS="/home/mgsloan!/home/mgsloan/.dotfiles-git"
-
-The idea is that this would be a list of mappings from GIT_WORK_TREE
-to GIT_DIR.  If this variable is set, then it will be followed when
-git is searching parents of PWD for ".git" directories.  I chose "!"
-rather arbitrarily here.  "->" would look nicer, but people might
-forget to escape it when programmatically setting this var.
-
-What do y'all think of this idea?
-
-Some of you might be wondering what I'm doing with my work tree being
-my home directory.  It is the approach suggested here -
-https://developer.atlassian.com/blog/2016/02/best-way-to-store-dotfiles-git-bare-repo/
-- for versioning your configuration files directly.
-
-Apologies if this has already been discussed, I could not find a good
-way to search the mailinglist archives.
-
-Thanks!
--Michael
