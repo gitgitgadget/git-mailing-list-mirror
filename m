@@ -7,54 +7,53 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C7EE20A40
-	for <e@80x24.org>; Sun, 26 Nov 2017 22:09:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 19C1F20A40
+	for <e@80x24.org>; Sun, 26 Nov 2017 22:19:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752056AbdKZWJC (ORCPT <rfc822;e@80x24.org>);
-        Sun, 26 Nov 2017 17:09:02 -0500
-Received: from mail-qk0-f194.google.com ([209.85.220.194]:35951 "EHLO
-        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751816AbdKZWJB (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 26 Nov 2017 17:09:01 -0500
-Received: by mail-qk0-f194.google.com with SMTP id o6so30179462qkh.3
-        for <git@vger.kernel.org>; Sun, 26 Nov 2017 14:09:00 -0800 (PST)
+        id S1751979AbdKZWS5 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 26 Nov 2017 17:18:57 -0500
+Received: from mail-qk0-f195.google.com ([209.85.220.195]:42879 "EHLO
+        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751934AbdKZWS4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Nov 2017 17:18:56 -0500
+Received: by mail-qk0-f195.google.com with SMTP id a194so30197366qkc.9
+        for <git@vger.kernel.org>; Sun, 26 Nov 2017 14:18:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:sender:in-reply-to:references:from:date:message-id
          :subject:to:cc;
-        bh=piUn98E4ME5UBI+7tZ+viN5QHlPKU6ns1OxTVYHw8e8=;
-        b=Nxv50AtVwyoO+k2o+0bygQhIGhWfq7TaEa9WqANqlI7mmVsfMSF0qZNzcPlltOoAVs
-         I8Mp1/TSHXvcuFXEbEgoIIhPDn3Uxn8Ikmeayx/ODzMdUUgxChAtT6pUlKnBFAE32zdq
-         2dn/Tp+Tv/ql+VZbNA6UPSewRqMGu/hxrQMEhb3ec4QJTNSVEzDfM+Ll4BV1rBYPaK7C
-         1DRizn4vqRINxWBhFAtfhrmIOlKgKoUXg65GUMDySn1DNLtPp8gaPkF5dlK3Ftio+F+W
-         akMpSG5w+8+GQgwJX+gp4CMKiS3CN8WJvu1hkaIOBaJfFgk5jvohba541R5Z1zDZMRLj
-         a+xQ==
+        bh=7XCSaZSCwQCeWfaAerOulSFPOqjo8kHoiZbFqrSR+eY=;
+        b=WnfNdnxj8MCo4DfOHjFP7kACDWmHDbvnqr0cZlZM1ZSOp12nPcpjn5PQ4c0cND/sF9
+         aqaHi7DIgXMThgsDlbYQ0tIUOISGPSHj7dehJByDun0fFlFu7MLIYQA0Ciq4tebHhH4U
+         1M3DV33gtpW0+oUFrzTlCCGg2xwAUk+Z9dlz4aKIdJYW/z66Xa0r+bvBuwWbqQgt3Sa4
+         hbNbfbOmtOEQKoXN+7tCVWNzcXYZ4VWWFGxZ9iVuCwuhzYL2R42e8uix2JVN2LBCcfl4
+         82Bax8+RmZVugO8SnN++GKux08Q1I3HZC+87lh4fnFONSc39NsOwACFnFXSj4/t6/v3r
+         LUvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
          :date:message-id:subject:to:cc;
-        bh=piUn98E4ME5UBI+7tZ+viN5QHlPKU6ns1OxTVYHw8e8=;
-        b=hvbj2K/+IKQYuXBdqehiv28iYpocG6Woz0UTZpKx8ysHZrcFZLNo5VCZgnoCV1hHLT
-         g3ysc1+cVTE0l7GV2SLHQAJ2qMrciSagxoYljbBgXBH2EMbWfNoRvfUz96G/HI5gHmBR
-         OjjCQnndfGkI0zVxdy7ndUL6rURtqEWw9AdXQOrBH98WkjYPhQizc3tm3F4PPGLaW9oC
-         6Ly752qfmmHYnRft6ipV5v5GSNn7t7MsT2PmNOKhOWQoUgYTMwdeSn8qnmvT9V0S+Opt
-         JuTDqAZbr32IMMZIBv6ODU8wBw477RY1JSChMrI369MEhqj8ydCFbz4MSm3Gw6hDcAup
-         CzpQ==
-X-Gm-Message-State: AJaThX57WcasBtMJY4Qx5BA38AleolCTw7PwVgi2QnvN65/F/mJAck2+
-        O8y/2m1ruHgmkT1eRNBm0mtG8RrPtX9l/OIe0ns=
-X-Google-Smtp-Source: AGs4zMYk0xpXfu/97yUVBriTbv0/ZTKYcSTkkhFPu4Udc4BWJoeSxurix8tXG1/pI3yMgAb7GHfnwH6LXkJ1mh593qY=
-X-Received: by 10.55.126.7 with SMTP id z7mr17893652qkc.306.1511734140185;
- Sun, 26 Nov 2017 14:09:00 -0800 (PST)
+        bh=7XCSaZSCwQCeWfaAerOulSFPOqjo8kHoiZbFqrSR+eY=;
+        b=d6lMFVLU0vMlq6f5J50F55rlbm1v4NLA5R4kjaQJy1xVBiHyRXgfn3uy8udEvznytQ
+         Ly8rzDXIjbj3ZVvRlW5YtLg0VwrCearTLpuvwjzyXFiDwV+KZnvf6mV1dJwKEm5aR8Zi
+         PslfrE35gyC3/ag+HpE0Q+/ZsJbWZX3FvpVPAua1yPa7MvVr6GbWxRhPRzF9GTKpD5Za
+         9AnRRmY/1ux9GrHlvAXsBzZ4z/vrcDqhsI8dJaltwkEda9LJvSc3iwupoF66xvtEPmTW
+         NwMLUnjyJd2vreh3JQThoTFRTOZYc1/xSX9VPIJVpoXTMHjGhRxAsLILZoketrHKAuaU
+         zzLg==
+X-Gm-Message-State: AJaThX64A2cW4/ANuy1ADTU5VUADJIK24o2V7TP6Dp4eTCbgmVyOIRKN
+        LF4C/tHTvm58wq4CtYj30yRtFol5upbv47KrwdI=
+X-Google-Smtp-Source: AGs4zMaLjTpasfgJSgkJpRNFouOvxL0HAFZdlUqJT2ELuDOB+HRebHR+viscHLh50+0Og25/PMF5kmTC1Bn5G+Je1G8=
+X-Received: by 10.55.58.14 with SMTP id h14mr50654695qka.132.1511734735988;
+ Sun, 26 Nov 2017 14:18:55 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.12.155.209 with HTTP; Sun, 26 Nov 2017 14:08:59 -0800 (PST)
-In-Reply-To: <20171126193813.12531-2-max@max630.net>
-References: <20171126193813.12531-1-max@max630.net> <20171126193813.12531-2-max@max630.net>
+Received: by 10.12.155.209 with HTTP; Sun, 26 Nov 2017 14:18:55 -0800 (PST)
+In-Reply-To: <20171126193813.12531-3-max@max630.net>
+References: <20171126193813.12531-1-max@max630.net> <20171126193813.12531-3-max@max630.net>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 26 Nov 2017 17:08:59 -0500
-X-Google-Sender-Auth: vIiYD7WTv2NZcNxt5Fm9Z6krgAI
-Message-ID: <CAPig+cTuBRzoxtmp1_MQ3fUxC5LXpyFPAaEOL7z96e_Szfqn5w@mail.gmail.com>
-Subject: Re: [PATCH v6 1/2] http-backend: respect CONTENT_LENGTH as specified
- by rfc3875
+Date:   Sun, 26 Nov 2017 17:18:55 -0500
+X-Google-Sender-Auth: TGRmQ1juf3nRbFwSLnj6JHRzoZA
+Message-ID: <CAPig+cROFS+3Yon2CFr-aPUGzDY4WVbU8kHbBx68O3M8k5eeug@mail.gmail.com>
+Subject: Re: [PATCH v6 2/2] t5560-http-backend-noserver.sh: add CONTENT_LENGTH cases
 To:     Max Kirillov <max@max630.net>
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Florian Manschwetus <manschwetus@cs-software-gmbh.de>,
@@ -68,101 +67,47 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On Sun, Nov 26, 2017 at 2:38 PM, Max Kirillov <max@max630.net> wrote:
-> [...]
-> Make http-backend read only CONTENT_LENGTH bytes, if it's defined, rather than
-> the whole input until EOF. If the variable is not defined, keep older behavior
-> of reading until EOF because it is used to support chunked transfer-encoding.
-> [...]
-
-A few small comments below; with the possible exception of one,
-probably none worth a re-roll...
-
-> diff --git a/http-backend.c b/http-backend.c
-> @@ -317,6 +317,54 @@ static ssize_t read_request(int fd, unsigned char **out)
-> +static ssize_t read_request_fixed_len(int fd, ssize_t req_len, unsigned char **out)
+> Add tests for cases:
+>
+> * CONTENT_LENGTH is set, script's stdin has more data.
+>   (Failure would make it read GIT_HTTP_MAX_REQUEST_BUFFER bytes from /dev/zero
+>   and fail. It does not seem to cause any performance issues with the default
+>   value of GIT_HTTP_MAX_REQUEST_BUFFER.)
+> * CONTENT_LENGTH is specified to a value which does not fix into ssize_t.
+>
+> Signed-off-by: Max Kirillov <max@max630.net>
+> ---
+> diff --git a/t/helper/test-print-values.c b/t/helper/test-print-values.c
+> @@ -0,0 +1,10 @@
+> +int cmd_main(int argc, const char **argv)
 > +{
-> +       unsigned char *buf = NULL;
-> +       ssize_t cnt = 0;
+> +       if (argc == 2 && strcmp(argv[1], "(size_t)(-20)") == 0)
+> +               printf("%zu", (ssize_t)(-20));
 > +
-> +       if (max_request_buffer < req_len) {
-> +               die("request was larger than our maximum size (%lu): %lu;"
-> +                           " try setting GIT_HTTP_MAX_REQUEST_BUFFER",
-> +                           max_request_buffer,
-> +                           req_len);
+> +       return 0;
 
-Unsigned format conversion '%lu' doesn't seem correct for ssize_t.
-
-> +       }
-> +
-> +       if (req_len <= 0) {
-> +               *out = NULL;
-> +               return 0;
-> +       }
-> +
-> +       buf = xmalloc(req_len);
-> +       cnt = read_in_full(fd, buf, req_len);
-> +       if (cnt < 0) {
-> +               free(buf);
-> +               return -1;
-> +       } else {
-> +               *out = buf;
-> +               return cnt;
-> +       }
-
-This could have been written:
-
-    if (cnt < 0) {
-        free(buf);
-        return -1;
-    }
-    *out = buf;
-    return cnt;
-
-but not worth a re-roll.
+Perhaps this should return 0 only if it gets the expected argument
+"(size_t)(-20)", and return an error otherwise.
 
 > +}
-> +
-> +static ssize_t env_content_length(void)
+> diff --git a/t/t5560-http-backend-noserver.sh b/t/t5560-http-backend-noserver.sh
+> @@ -71,4 +71,34 @@ test_expect_success 'http-backend blocks bad PATH_INFO' '
+> +test_expect_success 'CONTENT_LENGTH overflow ssite_t' '
+> +       NOT_FIT_IN_SSIZE=`"$GIT_BUILD_DIR/t/helper/test-print-values" "(size_t)(-20)"` &&
 
-The caller of this function doesn't care how the content length is
-being determined -- whether it comes from an environment variable or
-is computed some other way; it cares only about the result. Having
-"env" in the name ties it to checking only the environment. A more
-generic name, such as get_content_length(), would help to decouple the
-API from the implementation.
+Rather than introducing a new 'test' program, would it be possible to
+get by with just using 'printf' from the shell?
 
-Nevertheless, not worth a re-roll.
+    % printf "%zu\n" -20
+    18446744073709551596
 
-> +{
-> +       ssize_t val = -1;
-> +       const char *str = getenv("CONTENT_LENGTH");
-> +
-> +       if (str && !git_parse_ssize_t(str, &val))
-
-git_parse_ssize_t() does the right thing even when 'str' is NULL, so
-this condition could be simplified (but not worth a re-roll and may
-not improve clarity).
-
-> +               die("failed to parse CONTENT_LENGTH: %s", str);
-> +       return val;
-> +}
-> +
-> +static ssize_t read_request(int fd, unsigned char **out)
-> +{
-> +       ssize_t req_len = env_content_length();
-
-Grabbing and parsing the value from the environment variable is
-effectively a one-liner, so env_content_length() could be dropped
-altogether, and instead (taking advantage of git_parse_ssize_t()'s
-proper NULL-handling):
-
-    if (!git_parse_ssize_t(getenv(...), &req_len))
-        die(...);
-
-Not worth a re-roll.
-
-> +       if (req_len < 0)
-> +               return read_request_eof(fd, out);
-> +       else
-> +               return read_request_fixed_len(fd, req_len, out);
-> +}
+> +       env \
+> +               CONTENT_TYPE=application/x-git-upload-pack-request \
+> +               QUERY_STRING=/repo.git/git-upload-pack \
+> +               PATH_TRANSLATED="$PWD"/.git/git-upload-pack \
+> +               GIT_HTTP_EXPORT_ALL=TRUE \
+> +               REQUEST_METHOD=POST \
+> +               CONTENT_LENGTH="$NOT_FIT_IN_SSIZE" \
+> +               git http-backend </dev/zero >/dev/null 2>err &&
+> +       grep -q "fatal:.*CONTENT_LENGTH" err
+> +'
