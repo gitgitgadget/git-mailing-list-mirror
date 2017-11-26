@@ -2,165 +2,190 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF16020A40
-	for <e@80x24.org>; Sun, 26 Nov 2017 20:57:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9991920A40
+	for <e@80x24.org>; Sun, 26 Nov 2017 21:55:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751797AbdKZU5R (ORCPT <rfc822;e@80x24.org>);
-        Sun, 26 Nov 2017 15:57:17 -0500
-Received: from mail-io0-f179.google.com ([209.85.223.179]:36128 "EHLO
-        mail-io0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751662AbdKZU5Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 26 Nov 2017 15:57:16 -0500
-Received: by mail-io0-f179.google.com with SMTP id 79so26655657ioi.3
-        for <git@vger.kernel.org>; Sun, 26 Nov 2017 12:57:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=ZmxCef6jn/x8rApcofLYbBNXVKqg+ij9Tb0ejlUWKK4=;
-        b=XCZBOLKc4UtdqlZk2i1mk1gY7zvvSUeww5VErKoKAlCTDvevxwuQj1PaUi5w/cb1N6
-         lAo7C1T4OLCUxpeG9ah1i6jia3YJCi5Aq8UU7Wh7S+RNYrNPBV3BY53G9Ar8rl/oVEZU
-         +oAqOtOi7USMHMBXKWgo7Jr4ojplhhlG6vynxY2kQvDrC1eKKEtKOxZI30nB3I3cQu0k
-         6bdq2lGLkU2Hopwtt7fpPz6a9/NQik252lMmED0NLxh8h0Vmycf0PqCoYZql0VCOwaiP
-         5HhiS/DgBOEMFuGWLreLl2jLN1g+SwxGLjdnRLEnL26t6cPabdIQU5ZOpZ9V5CMDYiCG
-         qPnw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=ZmxCef6jn/x8rApcofLYbBNXVKqg+ij9Tb0ejlUWKK4=;
-        b=qTdqH5UAkWboOIZ9u0yxAvCeCTHANpgcfL71l1GZdgq/cYYNtTvHmRSJGGbM93Cwgp
-         QdHroLAIoDcne4hgoXI4BAIRwuP5yuCLQz5dQoPsBCOfyqz1Mf3ivIddPncv2KkVGH8Z
-         z6vDRgLCU/4/OQpDHUyZuhwWHraR3oXexy5gsIVZd9W2+lHsBCVGSKHBJAwc5rLDhZQu
-         iZt9qdOllYOl209/bmZMXKfIbB6DrhQeWPzhV2NyBqYWqyIX0R3SydCqV3f9fhHHWb5Z
-         n7cAvpbc26wz0uiSljtGX4j9xQA8Vpax+g+M0/b8tAm8x6QG3lzlkbQLJSOwxKgANxkN
-         jrQA==
-X-Gm-Message-State: AJaThX7NNB0CCc4vs/GV25VSDEmF+xrtkKvOr9X7MpoujfbmpXRwGri1
-        NjLjOyKADNjD+ZVzSpjeJPojmZKp10yVjxwzTzo=
-X-Google-Smtp-Source: AGs4zMYlgIBRHbY65o4gDm/G3YHMrnI1qhiNxEMa3DO+Lr1wj2cWcZYD/UOQEEvjV5hINZ/Fp5XVGUFFLgsHDcdH+6Q=
-X-Received: by 10.107.20.21 with SMTP id 21mr41205963iou.116.1511729835209;
- Sun, 26 Nov 2017 12:57:15 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.79.28.137 with HTTP; Sun, 26 Nov 2017 12:57:14 -0800 (PST)
-In-Reply-To: <20171126191510.GA1501@sigill>
-References: <20171120171517.6365-1-chriscool@tuxfamily.org>
- <20171120191931.okxejqyqayjvxpbc@aiede.mtv.corp.google.com>
- <CAP8UFD0d9zM9F3tLrTMiLdfoJQsOPELtmudVB6e83DiLPN5DEA@mail.gmail.com> <20171126191510.GA1501@sigill>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sun, 26 Nov 2017 21:57:14 +0100
-Message-ID: <CAP8UFD1hRWa1YtgRPZxXvkqcHfUoKKxgVUuN_d9C36jbrGBBXA@mail.gmail.com>
-Subject: Re: [PATCH] Makefile: check that tcl/tk is installed
+        id S1751864AbdKZVzT (ORCPT <rfc822;e@80x24.org>);
+        Sun, 26 Nov 2017 16:55:19 -0500
+Received: from mout.gmx.net ([212.227.15.18]:63825 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751816AbdKZVzS (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Nov 2017 16:55:18 -0500
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Me86g-1eUg1J1TrS-00Px1N; Sun, 26
+ Nov 2017 22:55:03 +0100
+Date:   Sun, 26 Nov 2017 22:55:01 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
 To:     Jeff King <peff@peff.net>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>, git <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Dominik Mahrer <teddy@teddy.ch>,
-        git-packagers@googlegroups.com, Todd Zullinger <tmz@pobox.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
+cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Nathan Neulinger <nneul@neulinger.org>,
+        Santiago Torres <santiago@nyu.edu>, git@vger.kernel.org
+Subject: Re: git status always modifies index?
+In-Reply-To: <20171126192508.GB1501@sigill>
+Message-ID: <alpine.DEB.2.21.1.1711262231250.6482@virtualbox>
+References: <a039d139-dba5-683e-afbf-4044cd32ab1d@neulinger.org> <20171122153028.olssotkcf3dd6ron@LykOS.localdomain> <5050d779-2981-6f06-49f7-0ecb4efb25b8@neulinger.org> <20171122161014.djkdygmclk227xmq@LykOS.localdomain> <dfbf4af3-e87c-bdcb-7544-685572925a50@neulinger.org>
+ <20171122202720.GD11671@aiede.mtv.corp.google.com> <20171122211729.GA2854@sigill> <20171122215635.GE11671@aiede.mtv.corp.google.com> <20171122220627.GE2854@sigill> <alpine.DEB.2.21.1.1711252240300.6482@virtualbox> <20171126192508.GB1501@sigill>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:ousL5rk0laX5Mh8+Moplbc7V9+0zdDedkQwCq9sq9zcrJiW5ifF
+ drwG1Yb1gN+JgO6Mkby0B/oELNCNQBfEcNDIqv2FobwilYL5ApsLIzwIwYNdpb6QaykedE9
+ 9v5Y5ZA2YXQmeiYXf2veppsURiMlwQUtu17/YL0u1LeGFK7tEI30iyvPSEw6dfnpwM+7n0T
+ I8bqi+KWXoLtldN6fcNrA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:7FEF54fWItM=:Qvs6ESIhonKw2Je2QzUPKG
+ YzlgOaOYH8u4eJatiQyLKamQvAlyZIsHY2lYeewohIw1Qg4OxhabJYgYsBpJXkbvTGz573Fyk
+ jdYmLzN+yXYqccDzsIq8mosauIiCOoWddxhSbd/Y5X7BM6b8R5PCKN/Sj2EgzJf6yuKGBJIu9
+ 7nLYsTu/osIwgv9edb0S3D6hVkrg3+989IcxOWd+zFjCHIMZEMcczzMlGIBgZnmcmJFFLoQXG
+ UVw/ZebwjF51p9FVRSJ/0ImKjf6Z++no9JHurxWzxwkQjmL0WEAfQOAkVcZYRt5Wjdq5tTIvc
+ Mb22DoIu+0zzmzf2pC/IV1fxQyC1gY2RLKQiMJ1ImYSRMsWP2IfeK0ZjkN0GNNWLDFCfiUWO8
+ pd5sfhpPF6U/4ZFCYpH60HHNr+jYKib0L223TX/y2+InQ89IlFOE+b2Dq++VFywYl+euXFshz
+ rL35XzgqhdzrSAWBz8o5D7HpqWeG/hmr8AEFYYsDQC+Xkhzaft04lyEczr8Z8Uq1i8un8Va3Q
+ WGiPYOOFjtZ2rbIind940jTssGPR2BFHFifey/goJ/eUqXcOEetSkXmnM0Aog8fketUStp3Km
+ gL2LK5ZR/ja81stgAJ077pdiRf9Yg5n+ndzUuwyUuHqGH+a09V7NnfkIXpTQdtW9BrstCiFjM
+ fbkXAd8I1OkU/TPooX4a5lD2q/ENJttI0VDJYeZ1ZiEeE27EcfUuX8xhnCa3tImXkG9isf/Q1
+ QIa0AtwnNih1Y+0MAWUy53AZXuGZxeba8iuMtH+7ZOhGjyKFAGqjXRvQ+BgcLPFosu58VXn4c
+ 7d8s5gke3ggI1b6zM0k007BMgwHYA+UCbJYcAqS8ymRn073xQM=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Nov 26, 2017 at 8:15 PM, Jeff King <peff@peff.net> wrote:
-> On Tue, Nov 21, 2017 at 12:58:17AM +0100, Christian Couder wrote:
->
->> > Can you say more about where this comes up?
->>
->> The original discussion is:
->>
->> https://public-inbox.org/git/b6b12040-100f-5965-6dfd-344c84dddf96@teddy.ch/
->>
->> and here are discussions related to version 1 of this patch:
->>
->> https://public-inbox.org/git/20171115125200.17006-1-chriscool@tuxfamily.org/
->>
->> As Peff mentions in the original discussion, at the Bloomberg Git
->> sprint, we saw someone struggling to compile Git, because of these
->> msgfmt and Tcl/Tk issues.
->
-> Actually, I think we had the _opposite_ problem there.
->
-> The main problem your patch fixes is that we may silently build a
-> version of gitk/git-gui that do not work. The "make" process completes,
-> but they refer to a non-existent "wish" tool, and running them will
-> fail.
->
-> That's potentially annoying if you wanted those tools. But if you didn't
-> care about them in the first place, it's fine.
+Hi Peff,
 
-I think it's a bit better to not install the tools if you don't care about them.
-So overall whether you care or not about them, there is still a bit of
-improvement.
+On Sun, 26 Nov 2017, Jeff King wrote:
 
-> The opposite problem is when you don't care about those tools, and they
-> _do_ break the build. And then just to get the rest of Git built, you
-> have to know about and set NO_TCLTK.
->
-> AFAIK that only happens if you don't have msgfmt installed. Because then
-> the gitk and git-gui Makefiles try to auto-fallback to implementing
-> msgfmt in tcl _during the build_, and there a lack of "tclsh" will break
-> the build.
->
-> I think your patch does say "consider setting NO_TCLTK" in that case,
-> which is an improvement.
+> On Sat, Nov 25, 2017 at 10:55:25PM +0100, Johannes Schindelin wrote:
+> 
+> > > Right, I went a little off track of your original point.
+> > > 
+> > > What I was trying to get at is that naming it "status --no-lock-index"
+> > > would not be the same thing (even though with the current implementation
+> > > it would behave the same). IOW, can we improve the documentation of
+> > > "status" to point to make it easier to discover this use case.
+> > 
+> > I had the hunch that renaming the option (and moving it away from `git
+> > status`, even if it is currently only affecting `git status` and even if
+> > it will most likely be desirable to have the option to really only prevent
+> > `git status` from writing .lock files) was an unfortunate decision (and
+> > made my life as Git for Windows quite a bit harder than really necessary,
+> > it cost me over one workday of a bug hunt, mainly due to a false flag
+> > indicating `git rebase` to be the culprit). And I hinted at it, too.
+> 
+> I remain unconvinced that we have actually uncovered a serious problem.
 
-Yeah, so my patch actually improve things in all the cases.
+You did not. A colleague of mine did. And it was a problem in Git for
+Windows only, caused by the changes necessitated by yours (which even used
+my tests, which made it easy for my conflict resolution to do the wrong
+thing by removing my --no-lock-index test in favor of your
+--no-optional-locks test, breaking --no-lock-index).
 
-> But it might be nicer still if it Just Worked
-> (either because we don't do tcl/tk by default, or because we respect
-> NO_GETTEXT in the gitk/git-gui Makefiles, or because our msgfmt can
-> fallback further to not even using tclsh).
+It cost me almost two work days, and a lot of hair. And all I meant by "I
+hinted at it, too" was that I felt that something like that was coming
+when I saw your variation of my patches making it into git/git's master.
 
-Yeah, it might be nicer if it just worked, but as I already answered
-in another thread, it could break some environments if we just stopped
-installing gitk and git-gui by default.
+This kind of stuff really throws my upstreaming back quite a bit, not only
+due to lost time, but also due to the frustration with the caused
+regressions.
 
-About improving the way msgfmt is handled, I am not against it. In
-fact I might even give it a try, but I think it is a separate issue,
-and I don't want to mix those issues right now.
+Now, the report indicates that not only Git for Windows had a problem, but
+that the new feature is unnecessarily unintuitive. I would even claim that
+the --no-lock-index option (even if it does not say "--read-only") would
+have made for a better user experience because it is at least in the
+expected place: the `git status` man page.
 
-> So I'm not really against this patch, but IMHO it doesn't make the
-> interesting case (you don't care about tcl and are just trying to build
-> git for the first time) all that much better.
+> Somebody asked if Git could do a thing, and people pointed him to the
+> right option.
 
-I agree that it doesn't solve all the issues, if you are trying to
-build git for the first time, but I do think that it makes it easier.
-If you don't have msgfmt, you get an error that is not so difficult to
-debug.
+If people have to ask on the mailing list even after reading the man
+pages, that's a strong indicator that we could do better.
 
-> I do also wonder if we
-> want to start putting these kind of run-time checks into the Makefile
-> itself. That's kind of what autoconf is for.
+> That option is new in the latest release.
 
-I don't quite agree that autoconf is for that, and there are already
-some checks in the Makefile.
+In Git, yes. In Git for Windows, no. And it worked beautifully in Git for
+Windows before v2.15.0.
 
-> As much as I hate autoconf,
-> is it the right advice for somebody who doesn't want to look at the
-> Makefile knobs to do:
->
->   autoconf
->   ./configure
->   make
->
-> ?
+> > I really never understood why --no-optional-locks had to be introduced
+> > when it did exactly the same as --no-lock-index, and when the latter has a
+> > right to exist in the first place, even in the purely hypothetical case
+> > that we teach --no-optional-locks to handle more cases than just `git
+> > status`' writing of the index (and in essence, it looks like premature
+> > optimization): it is a very concrete use case that a user may want `git
+> > status` to refrain from even trying to write any file, as this thread
+> > shows very eloquently.
+> 
+> Besides potentially handling more than just "git status",
 
-I don't think so. I think it is just easier to advice to do as most of
-us do, and to just add a few checks in the Makefile to make it clear
-which dependencies should be installed or which knob should be
-tweaked.
+... which is a premature optimization...
 
-> If there are deficiencies in configure.in (and I can well believe that
-> there are), should we be fixing it there?
+> it differs in one other way: it can be triggered via and is carried
+> through the environment.
 
-If most of us don't use autoconf, even if we fix the current
-deficiencies, there could still be some a few years from now. While if
-we add checks to the Makefile, there is a good chance that those who
-change the Makefile will see the existing tests and add more if
-necessary.
+... which Git for Windows' --no-lock-index *also* had to do (think
+submodules). We simply figured that out only after introducing the option,
+therefore it was carried as an add-on commit, and the plan was to squash
+it in before upstreaming (obviously!).
+
+So I contest your claim. `--no-lock-index` must be propagated to callees
+in the same way as the (still hypothetical) `--no-optional-locks` that
+would cover more than just `git status`.
+
+> > Maybe it is time to reintroduce --no-lock-index, and make
+> > --no-optional-locks' functionality a true superset of --no-lock-index'.
+> 
+> I'm not against having a separate option for "never write to the
+> repository".
+
+Whoa, slow down. We already introduced the `--no-optional-locks` option
+for a completely hypothetical use case covering more than just `git
+status`, a use case that may very well never see the light of day. (At
+least it was my undederstanding that the conjecture of something like that
+maybe being needed by somebody some time in the future was the entire
+reason tobutcher the --no-lock-index approach into a very different
+looking --no-optional-locks that is much harder to find in the
+documentation.)
+
+Let's not introduce yet another option for a completely hypothetical use
+case that may be even more theoretical.
+
+> I think it's potentially different than "don't lock", as I
+> mentioned earlier.
+
+I don't see the need at all at the moemnt.
+
+> Frankly I don't see much value in "--no-lock-index" if we already have
+> "--no-optional-locks".
+
+Funny. I did not (and still do not) see the need for renaming `git status
+--no-lock-index` to `git --no-optional-locks status` (i.e. cluttering the
+global option space for something that really only `git status` needs).
+
+> But I figured you would carry "status --no-lock-index" forever in Git
+> for Windows anyway (after all, if you remove it now, you're breaking
+> compatibility for existing users).
+
+I will not carry it forever. Most definitely not. It was marked as
+experimental for a reason: I suspected that major changes would be
+required to get it accepted into git.git (even if I disagree from a purely
+practicial point of view that those changes are required, but that's what
+you have to accept when working in Open Source, that you sometimes have to
+change something solely to please the person who can reject your patches).
+
+Sure, I am breaking compatibility for existing users, but that is more the
+fault of --no-optional-locks being introduced than anything else.
+
+I am pretty much done talking about this subject at this point. I only
+started talking about it because I wanted you to understand that I will
+insist on my hunches more forcefully in the future, and I hope you will
+see why I do that. But then, you may not even see the problems caused by
+the renaming (and forced broader scope for currently no good reason) of
+--no-lock-index, so maybe you disagree that acting on my hunch would have
+prevented those problems.
+
+Ciao,
+Dscho
