@@ -6,18 +6,19 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 799FA20954
-	for <e@80x24.org>; Sun, 26 Nov 2017 01:55:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2E55B20954
+	for <e@80x24.org>; Sun, 26 Nov 2017 01:55:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751915AbdKZBzC (ORCPT <rfc822;e@80x24.org>);
-        Sat, 25 Nov 2017 20:55:02 -0500
-Received: from p3plsmtpa08-10.prod.phx3.secureserver.net ([173.201.193.111]:33024
-        "EHLO p3plsmtpa08-10.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751900AbdKZBzB (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 25 Nov 2017 20:55:01 -0500
+        id S1751906AbdKZBzA (ORCPT <rfc822;e@80x24.org>);
+        Sat, 25 Nov 2017 20:55:00 -0500
+Received: from p3plsmtpa08-02.prod.phx3.secureserver.net ([173.201.193.103]:35083
+        "EHLO p3plsmtpa08-02.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751758AbdKZBy7 (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 25 Nov 2017 20:54:59 -0500
+X-Greylist: delayed 438 seconds by postgrey-1.27 at vger.kernel.org; Sat, 25 Nov 2017 20:54:57 EST
 Received: from jessie.local ([212.149.203.197])
         by :SMTPAUTH: with SMTP
-        id Im9jetQwL0TufIm9reDkyn; Sat, 25 Nov 2017 18:55:01 -0700
+        id Im2ce86W4hwvHIm2kewPFK; Sat, 25 Nov 2017 18:47:41 -0700
 From:   Max Kirillov <max@max630.net>
 To:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>
@@ -26,23 +27,20 @@ Cc:     Max Kirillov <max@max630.net>, Jeff King <peff@peff.net>,
         Chris Packham <judge.packham@gmail.com>,
         Konstantin Khomoutov <kostix+git@007spb.ru>,
         "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: [PATCH v5 1/2] http-backend: respect CONTENT_LENGTH as specified by rfc3875
-Date:   Sun, 26 Nov 2017 03:54:47 +0200
-Message-Id: <20171126015448.24111-2-max@max630.net>
+Subject: [PATCH v4 1/2] http-backend: respect CONTENT_LENGTH as specified by rfc3875
+Date:   Sun, 26 Nov 2017 03:47:18 +0200
+Message-Id: <20171126014719.23728-2-max@max630.net>
 X-Mailer: git-send-email 2.11.0.1122.gc3fec58.dirty
-In-Reply-To: <20171126015448.24111-1-max@max630.net>
-References: <20171126015448.24111-1-max@max630.net>
-X-CMAE-Envelope: MS4wfMSpghPudJZiz091PQko4Su1gJ1RHuvO20Te+x6q0CaqpZtrp/IcLzHRjGcqCrZYbyASy4a1DuKsPBUxWQIk85e27qjAtQs18bWRbqdNk/wmXfZP3vMh
- sh4nzbxupYF5ViQiD2927LCNLPcVyS0AeuTSg9rFthU5nMbWqHmip911YRf6hCbkyJsCE3u2PiDFi6f0mezVEzn6jd9Jm57x4x99GdNxOIfWcpxuKaGYNiEt
- kzF2PommNeZAEC2Mb99mNHLH5u/MKuTgZOZJH6vBEp8SpEWOvXAD3wa19AhggvsbR+8oAg/67vA2xQIO7thcEZQ2DDmhOuOOeTnaO0dOu/sJ95jfV8pk7La9
- XuFHzkK9HSJtfuawZ9BG1mh6w5zdo/shcAo4pFGHeffyaqbkkf0=
+In-Reply-To: <20171126014719.23728-1-max@max630.net>
+References: <20171126014719.23728-1-max@max630.net>
+X-CMAE-Envelope: MS4wfCf1iJbASIGTUP0GNHPEGrF0HlaRkMxAV082tobWpvK8S9cOpqSM/rju0G6IbwWEB24H0rp8bhID2PYD96bm6lpWaDv+5IiidWAaeP+MAbqYArOeVI7M
+ LggpcQRM0Np0AM4u4aAH+HF61Zu7nbMn3F6Ga81tNgXE2yMlqYJmq/Cvw4svfJs1c87mUlbRfRaD0xAD/nHKF3spWPI5MBvtdXhGO+hO1ijk1cznWpB7rNBV
+ u+hbDCpJfdGdfGyTUs27RcVJt1y3tMfG38yATx8r4hLcwHUEEmUrnLcRxlSPUtw8wJa3/hWzdtMQ2R6nXWzjYaVFTT9/TUxBAQ1Gu6n51oPuGN+6afVzxgOx
+ 7B5fw6Zw39MALw29hUc3lLboVvabIBr3TTGvcN9iVb+p21LvQ/c=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-
-Author: Florian Manschwetus <manschwetus@cs-software-gmbh.de>
-Date: Wed, 30 Mar 2016 09:08:56 +0000
 
 http-backend reads whole input until EOF. However, the RFC 3875 specifies
 that a script must read only as many bytes as specified by CONTENT_LENGTH
