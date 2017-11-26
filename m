@@ -2,98 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 168462036D
-	for <e@80x24.org>; Sun, 26 Nov 2017 08:13:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9CFB22036D
+	for <e@80x24.org>; Sun, 26 Nov 2017 08:38:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752111AbdKZINg (ORCPT <rfc822;e@80x24.org>);
-        Sun, 26 Nov 2017 03:13:36 -0500
-Received: from p3plsmtpa07-06.prod.phx3.secureserver.net ([173.201.192.235]:38933
-        "EHLO p3plsmtpa07-06.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752053AbdKZINf (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 26 Nov 2017 03:13:35 -0500
-Received: from jessie.local ([212.149.203.197])
-        by :SMTPAUTH: with SMTP
-        id Is49eVTkAfgV3Is4CevZec; Sun, 26 Nov 2017 01:13:35 -0700
-Date:   Sun, 26 Nov 2017 10:13:30 +0200
-From:   Max Kirillov <max@max630.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Max Kirillov <max@max630.net>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Jeff King <peff@peff.net>,
-        Florian Manschwetus <manschwetus@cs-software-gmbh.de>,
-        Chris Packham <judge.packham@gmail.com>,
-        Konstantin Khomoutov <kostix+git@007spb.ru>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH v5 1/2] http-backend: respect CONTENT_LENGTH as specified
- by rfc3875
-Message-ID: <20171126081329.GD26158@jessie.local>
-References: <20171126015448.24111-1-max@max630.net>
- <20171126015448.24111-2-max@max630.net>
- <xmqqo9npitx7.fsf@gitster.mtv.corp.google.com>
+        id S1752065AbdKZIin (ORCPT <rfc822;e@80x24.org>);
+        Sun, 26 Nov 2017 03:38:43 -0500
+Received: from mail-oi0-f44.google.com ([209.85.218.44]:42083 "EHLO
+        mail-oi0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752053AbdKZIim (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Nov 2017 03:38:42 -0500
+Received: by mail-oi0-f44.google.com with SMTP id p23so14392360oie.9
+        for <git@vger.kernel.org>; Sun, 26 Nov 2017 00:38:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=assw28+8Vtjus8c5dnSi10L5QgwBc+QMdQq1Wxn/abA=;
+        b=R+P/znFr/B3OZa9od3F56+ZPzekyuc/plzDaqPc8uTv8nEMDD4RXA0+dPvOWBM50NT
+         RIBYyCil8MHhmCfDFHsp9NSOqBXOAvRCihB6Mh3ed7pwa+DAzXUFmh/0UVxJ9tU/vzNS
+         E/T0uV6dQ7GSfjIAJDa0SQTDtUtq9hNSQcwrknjV7uHTnvqz16fR7e0jV+QutvqhxFhL
+         qhU1fv7/htQhJoBPGtPmukJhefA5QBFX72bmXFUdnk1UtNBMNyLoj6Xbl/7mKuapaR6m
+         W1raiKZB/Q03lTL7kVaAI/BCm3ES/mRSsTn8eVOVIst4ISKyvNNbNPaBRi0JUVpF4Ycg
+         RbXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=assw28+8Vtjus8c5dnSi10L5QgwBc+QMdQq1Wxn/abA=;
+        b=BlGntZuv1oFHICGnCWdV7rZSfknQPGwMEc7VylrZD9n2KaqvNvLZyqTDAOEgjQiH+/
+         gBeW+YtBw/deZS8nRqmC1led0xhKb2reW0fE4a8hISR0W7ba6hNyXS8WJjGelvzfiqma
+         2VT4UTW8spVwLFv8PhBurM3aLw2dP0TMAYQ4aF3ydIneAmCmz1ZkvPhwr24frDJZrGIG
+         x4Gh0Kom+1k/y3BZ+/G9veC4MvwxObLK5TX58g9sqz13BxFH/eD6CObRaNfKzR4+56cB
+         Eq2R8acdhtDRBNuxFv+09bjjgfJVVAsRZaT54h4y8zABAH52BLOVjPWKS1vSVS80QT5v
+         i95Q==
+X-Gm-Message-State: AJaThX6TS5jdbocrIPw0TzFRpMmvZe10a48TCapybyAdyPkFUB/xcs0b
+        RC9bLX7AsezrWTEH7+JAkMqEb8PA4EmsxET7Hto=
+X-Google-Smtp-Source: AGs4zMbLe0jgjZKqIwhfp/bCpyo4+it56FHIWEeJr18Id4Yex656pDIYFzUrDCmpg+5vs8J4VJw2F9+zt/mJ9EnqKXk=
+X-Received: by 10.202.184.69 with SMTP id i66mr13187271oif.261.1511685521842;
+ Sun, 26 Nov 2017 00:38:41 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqo9npitx7.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-CMAE-Envelope: MS4wfB7d6kR3wNKeayChsWvtAdv2VZsvIme/hLEaFByFlCAkUSVqCYJN1RHge7XP43qbnhYWljX90iJc5gmvJqdTR6txdlxnF5+X9U8/SLPFEnnKVOtXdh1a
- M9FUbLXb9uxqlBrQ9UCAPjzp5tNgDYuEzVmG6NS+hFtns0lI89Rew8Ky4sD+sUldr4Zd3Jw/0+qmbfqnvmjiXK2/9+13W5RDrQL6LIsrqoYSVVV+uO2IPP7A
- fu6pJSJ6P88gUhW41KE+CQ3Y/x4/zf6hsVwc51T2aS+RFiB6lz8ccKOVN1kyVyrgmAb0xn5z/cn4xYwLpdMhisqaqbI2bK2NTU9noAEziP6nECCYpRdJfvze
- jI51MONSFaJM5/1ZNiZFMHfYeWrI+7Ulrz33lKkw9B+tveTgAWA=
+Received: by 10.74.108.78 with HTTP; Sun, 26 Nov 2017 00:38:41 -0800 (PST)
+In-Reply-To: <alpine.DEB.2.21.1.1711252338050.6482@virtualbox>
+References: <CAOeKBwpUDD_C5mQ54Aa2pj72aVkp9F2rkmGrSVMC81d6gJQRew@mail.gmail.com>
+ <alpine.DEB.2.21.1.1711252338050.6482@virtualbox>
+From:   Roberto Garcia <eltitorober1985@gmail.com>
+Date:   Sun, 26 Nov 2017 09:38:41 +0100
+Message-ID: <CAOeKBwprpzGYDjjgcaZwmuG4DXiWB-kHn+BekDTD18qSgXWpUg@mail.gmail.com>
+Subject: Re: Clone repository computer A to remote B doenst work
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Nov 26, 2017 at 12:46:12PM +0900, Junio C Hamano wrote:
-> Max Kirillov <max@max630.net> writes:
-> > +ssize_t git_env_ssize_t(const char *k, ssize_t val)
-> > +{
-> > +	const char *v = getenv(k);
-> > +	if (v && !git_parse_ssize_t(v, &val))
-> > +		die("failed to parse %s", k);
-> > +	return val;
-> > +}
-> > +
-> 
-> If this were passing "v" that is a string the caller obtains from
-> any source (and the callee does not care about where it came from),
-> that would be a different story, but as a public interface that is
-> part of the config.c layer, "k" that has to be the name of the
-> environment variable sticks out like a sore thumb.
-> 
-> If we were to add one more public function to the interface, I
-> suspect that exposing the existing git_parse_ssize_t() and have the
-> caller implement the above function for its use would be a much
-> better way to go.
+Thanks you very much:
+I have QNAP NAS,
+Finally I have installed QGit (from forum QNAP because you can't find
+in app center) from here:
+https://forum.qnap.com/viewtopic.php?f=320&t=109649
+I used SSH for create a bare repository in the server side.
+Once it was created i went to the local machine and i wrote:
+git clone user@ip:/my/path/in/the/server/git
+I put my files, add and commit to the new git repository created by git clone.
+Now i can use git push to commit the changes into the server
 
-I'm afraid I did not get the reasonsing and not fully the
-desired change. Is this http-backend code change (compared
-to the last patch) what you mean?
+Thanks you very much!!!!!!!!!!!
+Regards,
+Roberto
 
---- a/http-backend.c
-+++ b/http-backend.c
-@@ -346,9 +346,18 @@ static ssize_t read_request_fixed_len(int fd, ssize_t req_len, unsigned char **o
- 	}
- }
- 
-+static ssize_t env_content_length()
-+{
-+	const char *str = getenv("CONTENT_LENGTH");
-+	ssize_t val = -1;
-+	if (str && !git_parse_ssize_t(str, &val))
-+		die("failed to parse CONTENT_LENGTH: %s", str);
-+	return val;
-+}
-+
- static ssize_t read_request(int fd, unsigned char **out)
- {
--	ssize_t req_len = git_env_ssize_t("CONTENT_LENGTH", -1);
-+	ssize_t req_len = env_content_length();
- 	if (req_len < 0)
- 		return read_request_eof(fd, out);
- 	else
 
+2017-11-25 23:38 GMT+01:00 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+> Hi Roberto,
+>
+> On Sat, 25 Nov 2017, Roberto Garcia wrote:
+>
+>> I'm trying clone in windows a git repository to other remote machine
+>> (NAS Linux based).
+>> I have installed git for windows but i didn't installed nothing in the
+>> other remote machine (NAS Linux based).
+>
+> You need a Git on the remote side. Otherwise Git will not be able to clone
+> from there.
+>
+> Ciao,
+> Johannes
