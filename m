@@ -6,151 +6,56 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2E55B20954
-	for <e@80x24.org>; Sun, 26 Nov 2017 01:55:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CA06320954
+	for <e@80x24.org>; Sun, 26 Nov 2017 01:57:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751906AbdKZBzA (ORCPT <rfc822;e@80x24.org>);
-        Sat, 25 Nov 2017 20:55:00 -0500
-Received: from p3plsmtpa08-02.prod.phx3.secureserver.net ([173.201.193.103]:35083
-        "EHLO p3plsmtpa08-02.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751758AbdKZBy7 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 25 Nov 2017 20:54:59 -0500
-X-Greylist: delayed 438 seconds by postgrey-1.27 at vger.kernel.org; Sat, 25 Nov 2017 20:54:57 EST
+        id S1751869AbdKZB5j (ORCPT <rfc822;e@80x24.org>);
+        Sat, 25 Nov 2017 20:57:39 -0500
+Received: from p3plsmtpa08-01.prod.phx3.secureserver.net ([173.201.193.102]:42090
+        "EHLO p3plsmtpa08-01.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751832AbdKZB5j (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 25 Nov 2017 20:57:39 -0500
 Received: from jessie.local ([212.149.203.197])
         by :SMTPAUTH: with SMTP
-        id Im2ce86W4hwvHIm2kewPFK; Sat, 25 Nov 2017 18:47:41 -0700
+        id Im5HeetPQMKYRIm5Keu16P; Sat, 25 Nov 2017 18:50:20 -0700
+Date:   Sun, 26 Nov 2017 03:50:15 +0200
 From:   Max Kirillov <max@max630.net>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Max Kirillov <max@max630.net>, Jeff King <peff@peff.net>,
         Florian Manschwetus <manschwetus@cs-software-gmbh.de>,
         Chris Packham <judge.packham@gmail.com>,
         Konstantin Khomoutov <kostix+git@007spb.ru>,
         "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: [PATCH v4 1/2] http-backend: respect CONTENT_LENGTH as specified by rfc3875
-Date:   Sun, 26 Nov 2017 03:47:18 +0200
-Message-Id: <20171126014719.23728-2-max@max630.net>
-X-Mailer: git-send-email 2.11.0.1122.gc3fec58.dirty
-In-Reply-To: <20171126014719.23728-1-max@max630.net>
-References: <20171126014719.23728-1-max@max630.net>
-X-CMAE-Envelope: MS4wfCf1iJbASIGTUP0GNHPEGrF0HlaRkMxAV082tobWpvK8S9cOpqSM/rju0G6IbwWEB24H0rp8bhID2PYD96bm6lpWaDv+5IiidWAaeP+MAbqYArOeVI7M
- LggpcQRM0Np0AM4u4aAH+HF61Zu7nbMn3F6Ga81tNgXE2yMlqYJmq/Cvw4svfJs1c87mUlbRfRaD0xAD/nHKF3spWPI5MBvtdXhGO+hO1ijk1cznWpB7rNBV
- u+hbDCpJfdGdfGyTUs27RcVJt1y3tMfG38yATx8r4hLcwHUEEmUrnLcRxlSPUtw8wJa3/hWzdtMQ2R6nXWzjYaVFTT9/TUxBAQ1Gu6n51oPuGN+6afVzxgOx
- 7B5fw6Zw39MALw29hUc3lLboVvabIBr3TTGvcN9iVb+p21LvQ/c=
+Subject: Re: [PATCH] http-backend: respect CONTENT_LENGTH as specified by
+ rfc3875
+Message-ID: <20171126015015.GC26158@jessie.local>
+References: <20171123234511.574-1-max@max630.net>
+ <xmqqvai0nrv9.fsf@gitster.mtv.corp.google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqvai0nrv9.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-CMAE-Envelope: MS4wfBTKAVBPjvIdWm/Oaca3C1Yrz5t0I1wpu520m9lylAaAONCPRgt/njmPy6SfssE75SfexzxA5l8Vf9U+cInO4Ghic4VfjNRFC6IV/vT1iqhdBnC/pFl1
+ Tpa0Fso+Pq9gb5h3LsGtt3uGQzmLtEZZmtAviMV9gJfzy7ysyE4Fq/N9jFcKMC2eL+NFtfPoamVArg0VcSQity3DYeEhCc4jEeSZsfXJA3y7nDJziZ921TXL
+ JlTaQQQPvHMgts3dno6nk/I5FFZVWqb0FSk6k0gLr0bW3RopWj2/UV9AolME2mbV12BA1P6inNLnHk5e4X0TgoWulCGF7a22JRh1/o2YVUQJEPacT/i0Ywf2
+ j2npLywI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-http-backend reads whole input until EOF. However, the RFC 3875 specifies
-that a script must read only as many bytes as specified by CONTENT_LENGTH
-environment variable. Web server may exercise the specification by not closing
-the script's standard input after writing content. In that case http-backend
-would hang waiting for the input. The issue is known to happen with
-IIS/Windows, for example.
+On Fri, Nov 24, 2017 at 02:54:50PM +0900, Junio C Hamano wrote:
+> Max Kirillov <max@max630.net> writes:
+>> I hope I marked it correctly in the trailers.
+> 
+> It is probably more conventional to do it like so:
+> 
+>     From: Florian Manschwetus <manschwetus@cs-software-gmbh.de>
+>     Date: <original date of Florian's patch series>
+> 
+>     Signed-off-by: Florian Manschwetus <manschwetus@cs-software-gmbh.de>
+>     [mk: fixed trivial build failures and stuff]
+>     Signed-off-by: Max Kirillov <max@max630.net>
 
-Make http-backend read only CONTENT_LENGTH bytes, if it's defined, rather than
-the whole input until EOF. If the variable is not defined, keep older behavior
-of reading until EOF because it is used to support chunked transfer-encoding.
-
-Signed-off-by: Florian Manschwetus <manschwetus@cs-software-gmbh.de>
-[mk: fixed trivial build failures and polished style issues]
-
-Signed-off-by: Max Kirillov <max@max630.net>
----
- config.c       |  8 ++++++++
- config.h       |  1 +
- http-backend.c | 39 ++++++++++++++++++++++++++++++++++++++-
- 3 files changed, 47 insertions(+), 1 deletion(-)
-
-diff --git a/config.c b/config.c
-index 231f9a750b..925bb65dfa 100644
---- a/config.c
-+++ b/config.c
-@@ -1525,6 +1525,14 @@ unsigned long git_env_ulong(const char *k, unsigned long val)
- 	return val;
- }
- 
-+ssize_t git_env_ssize_t(const char *k, ssize_t val)
-+{
-+	const char *v = getenv(k);
-+	if (v && !git_parse_ssize_t(v, &val))
-+		die("failed to parse %s", k);
-+	return val;
-+}
-+
- int git_config_system(void)
- {
- 	return !git_env_bool("GIT_CONFIG_NOSYSTEM", 0);
-diff --git a/config.h b/config.h
-index 0352da117b..947695c304 100644
---- a/config.h
-+++ b/config.h
-@@ -74,6 +74,7 @@ extern int git_config_rename_section_in_file(const char *, const char *, const c
- extern const char *git_etc_gitconfig(void);
- extern int git_env_bool(const char *, int);
- extern unsigned long git_env_ulong(const char *, unsigned long);
-+extern ssize_t git_env_ssize_t(const char *, ssize_t);
- extern int git_config_system(void);
- extern int config_error_nonbool(const char *);
- #if defined(__GNUC__)
-diff --git a/http-backend.c b/http-backend.c
-index 519025d2c3..b4ba83b624 100644
---- a/http-backend.c
-+++ b/http-backend.c
-@@ -280,7 +280,7 @@ static struct rpc_service *select_service(struct strbuf *hdr, const char *name)
-  * hit max_request_buffer we die (we'd rather reject a
-  * maliciously large request than chew up infinite memory).
-  */
--static ssize_t read_request(int fd, unsigned char **out)
-+static ssize_t read_request_eof(int fd, unsigned char **out)
- {
- 	size_t len = 0, alloc = 8192;
- 	unsigned char *buf = xmalloc(alloc);
-@@ -317,6 +317,43 @@ static ssize_t read_request(int fd, unsigned char **out)
- 	}
- }
- 
-+static ssize_t read_request_fixed_len(int fd, ssize_t req_len, unsigned char **out)
-+{
-+	unsigned char *buf = NULL;
-+	ssize_t cnt = 0;
-+
-+	if (max_request_buffer < req_len) {
-+		die("request was larger than our maximum size (%lu): %lu;"
-+			    " try setting GIT_HTTP_MAX_REQUEST_BUFFER",
-+			    max_request_buffer,
-+			    req_len);
-+	}
-+
-+	if (req_len <= 0) {
-+		*out = NULL;
-+		return 0;
-+	}
-+
-+	buf = xmalloc(req_len);
-+	cnt = read_in_full(fd, buf, req_len);
-+	if (cnt < 0) {
-+		free(buf);
-+		return -1;
-+	} else {
-+		*out = buf;
-+		return cnt;
-+	}
-+}
-+
-+static ssize_t read_request(int fd, unsigned char **out)
-+{
-+	ssize_t req_len = git_env_ssize_t("CONTENT_LENGTH", -1);
-+	if (req_len < 0)
-+		return read_request_eof(fd, out);
-+	else
-+		return read_request_fixed_len(fd, req_len, out);
-+}
-+
- static void inflate_request(const char *prog_name, int out, int buffer_input)
- {
- 	git_zstream stream;
--- 
-2.11.0.1122.gc3fec58.dirty
-
+Thanks. Have done so
