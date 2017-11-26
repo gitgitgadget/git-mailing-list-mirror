@@ -2,69 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4206A20954
-	for <e@80x24.org>; Sun, 26 Nov 2017 00:50:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6EB3220954
+	for <e@80x24.org>; Sun, 26 Nov 2017 00:52:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751857AbdKZAuZ (ORCPT <rfc822;e@80x24.org>);
-        Sat, 25 Nov 2017 19:50:25 -0500
-Received: from p3plsmtpa06-06.prod.phx3.secureserver.net ([173.201.192.107]:49027
-        "EHLO p3plsmtpa06-06.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751377AbdKZAuZ (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 25 Nov 2017 19:50:25 -0500
-X-Greylist: delayed 438 seconds by postgrey-1.27 at vger.kernel.org; Sat, 25 Nov 2017 19:50:25 EST
-Received: from jessie.local ([212.149.203.197])
-        by :SMTPAUTH: with SMTP
-        id Il2CeTz4K9uxTIl2EegA9N; Sat, 25 Nov 2017 17:43:07 -0700
-Date:   Sun, 26 Nov 2017 02:43:00 +0200
-From:   Max Kirillov <max@max630.net>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Max Kirillov <max@max630.net>, Jeff King <peff@peff.net>,
-        Florian Manschwetus <manschwetus@cs-software-gmbh.de>,
-        Chris Packham <judge.packham@gmail.com>,
-        Konstantin Khomoutov <kostix+git@007spb.ru>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH] http-backend: respect CONTENT_LENGTH as specified by
- rfc3875
-Message-ID: <20171126004300.GB26158@jessie.local>
-References: <20160401235532.GA27941@sigill.intra.peff.net>
- <20171123234511.574-1-max@max630.net>
- <CAPig+cQEaqaOTcC=5pZZmZNs_QQQ0vBRbzczyM3ZXXi+ZHW4XA@mail.gmail.com>
- <20171125214721.GA26158@jessie.local>
- <CAPig+cRRHepuNNva_cq2YPEDSBCO25y1mihuC52RntpJ+a+YMg@mail.gmail.com>
+        id S1751832AbdKZAwJ (ORCPT <rfc822;e@80x24.org>);
+        Sat, 25 Nov 2017 19:52:09 -0500
+Received: from mout.gmx.net ([212.227.15.18]:53041 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751798AbdKZAwI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Nov 2017 19:52:08 -0500
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LiDrv-1ewEys2Kh9-00nNB8; Sun, 26
+ Nov 2017 01:52:05 +0100
+Date:   Sun, 26 Nov 2017 01:52:04 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Elijah Newren <newren@gmail.com>
+cc:     git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH v3 21/33] merge-recursive: add get_directory_renames()
+In-Reply-To: <20171121080059.32304-22-newren@gmail.com>
+Message-ID: <alpine.DEB.2.21.1.1711260147330.6482@virtualbox>
+References: <20171121080059.32304-1-newren@gmail.com> <20171121080059.32304-22-newren@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAPig+cRRHepuNNva_cq2YPEDSBCO25y1mihuC52RntpJ+a+YMg@mail.gmail.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-CMAE-Envelope: MS4wfK3gVWoBExnMvEpTX2mjg9m2zfnIjNbCmijb9mwNZzsWA9TD62Dha2rMjaaFv4sQtth/TuC6PtrdbPtTrmi+g0HUsmKGt6crs0aQBr6sA8++GynCcSTQ
- PHX9793njcdGbDPiwbcAjAZgr22z9x+EEOXEX1N6CKtV4ao6CEIaAsT9fsHPBkBsMM7qfrdwkIaTLDBqhGojOqvpALPAxpbLIuotqu96heEoGthq6HikaOSP
- Pg7+wXT4lgTWPMiJRMih+BRJ2Rkex9u23nIKqwJKt1QuxrUdfXxTNtXzpryq6aRmWrCjFB50rTwYSfXazULk7dPmBnQkgyHbmEKQUWTJdDWIOxYWiEFl0fIz
- Wks4HL24
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:s7NyQ4dn62Yc4T4z7S/XjQch6H5eZkiP8paPg7qyBVDq5At2lXo
+ IYNcyz9JdhGRPyyPha6jUtU0ziQTeiduLxUv09X9zIlg41TGc7lT/BHls24iQ+w6BL9cKyu
+ 4IlLWOQNKx8VmXBJB2rtSDqQRnxSRqmghFj3/xPsRZu8d9h0X0PbTZutdHLmTgrtKG0Qs/7
+ tFkpVLy2jIrILKBZFcr1g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:k/MErriHUj0=:zq+ZvkvxKVf3doPPnZqgBO
+ Fnpsb+xn2FCw28buX3vAD9b50F7FPZSklHpT7F/L2vz4HnZWdQaUQc6bkZuByu30Uf1/L5+Qa
+ Xji7J9RwQu74qVJc9nOnYAXibJYhdVxwPPctQSvz3yO25vqHA/x0k1qUxrYH4CYPNBlhFnpxr
+ npSIBmMg9Bxp06vWOZ6Lc4bS5o3AjnEBJxfGfpdFEQk5syrFe8SynqO3uly6QcYrgWDDxAadY
+ MMwfQzrUmM6YAf4zTbI27U2ayKq6kwXFwVZuUAP5/L5KxI0CB4yNXpKkTTrRrinxwEA6HG/EA
+ N+LcAPapDwcJmJZkHAjVVMGt9sUdOjHE/gwHk0G7UF0b2KgCgE7Ovkmy/zQwC0ouVHHUpaLtL
+ 4n9PXQKqQgGn6FsLndFWNaT1rVRdUrSZtJHxZziv7q7Td+PRiCKkevGZrGwuVCI8FTdDKxDXO
+ wtVygKlsLhTzOJAEHSrhU3Rxu3DI/gQ/7tBNaerhLuyQFZhVH9rwjQmI/FY5PffOeLGls6/Lj
+ HOP1kXu4zkn7Jpe0VVkp0t8S2lPtIu7uPbIGmAk2gFzJdb5nagjAjZUFIqElTGNSLNxE8VdmJ
+ 4AMzhQv5f3m5fRaND+avTH+ze5qajiogRKbMqNc/yvaieK6Awc0qGelabdsrGI5FeDx1o4BtZ
+ 9+n06+8zYgV5qh+SSoq4ndTUOmOmktZqw3StoCEktQXU9CeLoTRBXbrvn+7zgq3HwVLfMa2eE
+ QtI6FnxhVQh+14A/hWEjaQGop46CpHQ0UeM6Fiob/CNa3wwDMiyeGK3xrO1CCrpvCXUBdMWH4
+ UYpNxo2Q+H8XxzamRWSRAnra+MWZhkejkzO5fvzK5jovcWI+lc=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Nov 25, 2017 at 07:38:33PM -0500, Eric Sunshine wrote:
-> On Sat, Nov 25, 2017 at 4:47 PM, Max Kirillov <max@max630.net> wrote:
->> On Thu, Nov 23, 2017 at 08:30:39PM -0500, Eric Sunshine wrote:
->>>> +static ssize_t read_request_fix_len(int fd, size_t req_len, unsigned char **out)
->>>
->>> Wrong data type: s/size_t req_len/ssize_t req_len/
->>
->> Passing negative value to the function makes no sense. I
->> could add explicit type cast to make it clear. It should be
->> safe as site_t's range is bigger, and overflown
->> CONTENT_LENGTH results in die() at parsing (I have a test
->> which verifies it)
-> 
-> A concern with requesting size_t bytes is that, if it does read all
-> bytes, that value can't necessarily be represented by the ssize_t
-> returned from the function. Where would the cast be placed that you
-> suggest? How do other git functions deal with this sort of situation?
+Hi Elijah,
 
-Right... ok, let it be ssize_t
+On Tue, 21 Nov 2017, Elijah Newren wrote:
+
+> diff --git a/merge-recursive.c b/merge-recursive.c
+> index 2f4f85314a..6a0a6d4366 100644
+> --- a/merge-recursive.c
+> +++ b/merge-recursive.c
+> @@ -1384,6 +1384,132 @@ static struct diff_queue_struct *get_diffpairs(struct merge_options *o,
+>  	return ret;
+>  }
+>  
+> +static void get_renamed_dir_portion(const char *old_path, const char *new_path,
+> +				    char **old_dir, char **new_dir)
+> +{
+> +	char *end_of_old, *end_of_new;
+> +	int old_len, new_len;
+> +
+> +	*old_dir = NULL;
+> +	*new_dir = NULL;
+> +
+> +	/* For
+> +	 *    "a/b/c/d/foo.c" -> "a/b/something-else/d/foo.c"
+> +	 * the "d/foo.c" part is the same, we just want to know that
+> +	 *    "a/b/c" was renamed to "a/b/something-else"
+> +	 * so, for this example, this function returns "a/b/c" in
+> +	 * *old_dir and "a/b/something-else" in *new_dir.
+> +	 *
+> +	 * Also, if the basename of the file changed, we don't care.  We
+> +	 * want to know which portion of the directory, if any, changed.
+> +	 */
+> +	end_of_old = strrchr(old_path, '/');
+> +	end_of_new = strrchr(new_path, '/');
+> +
+> +	if (end_of_old == NULL || end_of_new == NULL)
+> +		return;
+> +	while (*--end_of_new == *--end_of_old &&
+> +	       end_of_old != old_path &&
+> +	       end_of_new != new_path)
+> +		; /* Do nothing; all in the while loop */
+> +	/*
+> +	 * We've found the first non-matching character in the directory
+> +	 * paths.  That means the current directory we were comparing
+> +	 * represents the rename.  Move end_of_old and end_of_new back
+> +	 * to the full directory name.
+> +	 */
+> +	if (*end_of_old == '/')
+> +		end_of_old++;
+> +	if (*end_of_old != '/')
+> +		end_of_new++;
+> +	end_of_old = strchr(end_of_old, '/');
+> +	end_of_new = strchr(end_of_new, '/');
+> +
+> +	/*
+> +	 * It may have been the case that old_path and new_path were the same
+> +	 * directory all along.  Don't claim a rename if they're the same.
+> +	 */
+> +	old_len = end_of_old - old_path;
+> +	new_len = end_of_new - new_path;
+> +
+> +	if (old_len != new_len || strncmp(old_path, new_path, old_len)) {
+> +		*old_dir = strndup(old_path, old_len);
+> +		*new_dir = strndup(new_path, new_len);
+
+These two callers of strndup() are the only ones in Git's code base now.
+It is also causing a compile error on Windows.
+
+Any reason you did not use xstrndup() here?
+
+Ciao,
+Dscho
