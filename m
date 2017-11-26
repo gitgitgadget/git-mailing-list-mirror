@@ -7,82 +7,88 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D718520954
-	for <e@80x24.org>; Sat, 25 Nov 2017 23:51:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4AADC20954
+	for <e@80x24.org>; Sun, 26 Nov 2017 00:38:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751776AbdKYXvN (ORCPT <rfc822;e@80x24.org>);
-        Sat, 25 Nov 2017 18:51:13 -0500
-Received: from mail-qk0-f195.google.com ([209.85.220.195]:41055 "EHLO
-        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751730AbdKYXvN (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Nov 2017 18:51:13 -0500
-Received: by mail-qk0-f195.google.com with SMTP id f63so28379165qke.8
-        for <git@vger.kernel.org>; Sat, 25 Nov 2017 15:51:12 -0800 (PST)
+        id S1751798AbdKZAif (ORCPT <rfc822;e@80x24.org>);
+        Sat, 25 Nov 2017 19:38:35 -0500
+Received: from mail-qt0-f172.google.com ([209.85.216.172]:45006 "EHLO
+        mail-qt0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751415AbdKZAie (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Nov 2017 19:38:34 -0500
+Received: by mail-qt0-f172.google.com with SMTP id h42so35165733qtk.11
+        for <git@vger.kernel.org>; Sat, 25 Nov 2017 16:38:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:sender:in-reply-to:references:from:date:message-id
          :subject:to:cc;
-        bh=ahH4aVhv8Snl0oHOVjQ8Y25H5dQEfjUH9z8PqoG2qeM=;
-        b=A7GLPf6KLFEvLqDkGDikSjBKcaxYQd5HYrC3kOnPax7W1hJts/OrdueGW28fDhuVBl
-         OiETRV6SamIlShJGFpV8IglVsWsu/fxbt4z0ZPPX7RsM3OZpRDa6W716v35CaBIgk2o4
-         LpbS61UV6GCGRdjTVg1eZMAjUlizVYEQoilz8W+0BwDOoFUkiphUBNcoQwdX4Zdg9i8u
-         gAkbxqwlmVHK2a5BKyvc14CAGYJJcXjVbADZW/UuA8/zbAGjgwQiZagv/x4NMEbSdLOn
-         6MnTrbnHhVj6651WAOZW8+qsCA5epKbQdAaXGFL1uLXQHloppYSRLbFptAgb3EqgM5cW
-         mbpg==
+        bh=j7+953OZVJ5E8EDicFD0q8Q8n9vrSjojdsu3Am5fXzk=;
+        b=iwSbp99hX77NSHFX1SMOcGp62YjNV7imvXxitdDojPLZdLO4VLNaq6RwAhjoE/I1V4
+         +ogtXeC5Yg4IQcdAAEsiP0rMpBQenfO1tOVHzJSWUWJOR099ejNye/f/wqOxEkrEep0R
+         nAxX8SB2rQUjWkalfoHqdq2GkIYYK/ylAlaA1YWw2avZCeFKuRWdiu3id4wmwVLJpD9w
+         Ml7aJR4DC5lazDF7ZK+Z5UIWvtzHrUUjA+6OpOU+y9xte1l4Igx4e6XAksRZI1v/+vF4
+         l0IqcD5/Qypr5Neb8coChXPjHSz8XFYGn126qXo3G4Nr7wYvJhGNENYaPiYSbZG0Aur+
+         u4Cg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
          :date:message-id:subject:to:cc;
-        bh=ahH4aVhv8Snl0oHOVjQ8Y25H5dQEfjUH9z8PqoG2qeM=;
-        b=t8MYVlLQ3hGRTwkt8auOAdS1mOwIs2bjvUjWo1oN4oeSQf+AQco/mMc/u0o6+qK3vV
-         g+pi7erD4bvngASvrYezQd079WLSDY3F0ky7bgPFTQoi3xd6Qzw34wYjhGwfqbNU034r
-         5oeIQRo9K70oMi+oI0mD2/Nw+mS3uaRLfCpI8Aom7G0zgTZXgT1JoUKp/kvaZSMPU5QF
-         Wb8I7LrIN865PgC12YJllQR4OBJU9pdASqoPtH0FiPi0CFWCBnSmwBF9MtkBmLOx88By
-         LtHkFkS+PZkuaO33BrPh7AtGKvsRNEEtnFwwgIYruzTF9p6hYh95MM/uTDiAYkdiWx73
-         ROjQ==
-X-Gm-Message-State: AJaThX7KE7ECVebF7Nlz0yn0QBefUgfDac9YUUK1VBrfZiFB1m1D7dSl
-        5aYE8xdO3XM0jHPVP5gzb6AHscv9wh3vggMIyxxfgg==
-X-Google-Smtp-Source: AGs4zMbigj4WD2hkoG3DW+fPCnxQ9oJSz01iJjsywf7IqC72kTGXBXqsg+Q1UGPQRYHmVPiZTJbRx5VKOETXVnXJ/6k=
-X-Received: by 10.55.42.75 with SMTP id q72mr51694730qkh.57.1511653872253;
- Sat, 25 Nov 2017 15:51:12 -0800 (PST)
+        bh=j7+953OZVJ5E8EDicFD0q8Q8n9vrSjojdsu3Am5fXzk=;
+        b=jERNJm3PccKeK/NcVdSI2jTx8BkDYGo/kC9kGXUgC74j2Wj23nmN25iKtLQ+hKA2j3
+         pW8Gl0wZBwB5SIwpUzHmKhsJ4c7T5JLtwEQOWYm0oXZW1nCpr7KrUX3qrrbu/Q9anejK
+         RKf/ZShaUWtnHKJ0ZvdG453oDR5i0Py+FTrzL34tYC8RPGkCRSODB2ckjHGnlrh2R8Ft
+         dDPpPsarZELGM3Aq7b863XLL04oU3lJ5xfW8EIUm7+tSVsbV0PTHfZ6goxgJtfqy1No/
+         E+x9aTJwaVStmLYyhC0kENFu0OUOgcN1IIRzBQHwfrvGsFPw/6kA99HgzKrBOZ2Srxi1
+         3QBg==
+X-Gm-Message-State: AJaThX71cBrMxQ3yJR5GF+YADYYXEx5yu+NY01C8antPoiCv5Oa7LoCy
+        yorUrfT2TYA6by8ONqR1Kvkz1PqrOneqIOpYK5Q=
+X-Google-Smtp-Source: AGs4zMbwTDhKFc/U0UHWT14LDErSDBl9Ulx+N7nK+XYF36hm6sDwKytcTSNUdy9QjA/+VV//iF75ZbX0nnyh+bwbOcE=
+X-Received: by 10.237.37.162 with SMTP id x31mr53541167qtc.58.1511656713899;
+ Sat, 25 Nov 2017 16:38:33 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.12.155.209 with HTTP; Sat, 25 Nov 2017 15:51:11 -0800 (PST)
-In-Reply-To: <20171125195524.29162-1-jn.avila@free.fr>
-References: <20171125195524.29162-1-jn.avila@free.fr>
+Received: by 10.12.155.209 with HTTP; Sat, 25 Nov 2017 16:38:33 -0800 (PST)
+In-Reply-To: <20171125214721.GA26158@jessie.local>
+References: <20160401235532.GA27941@sigill.intra.peff.net> <20171123234511.574-1-max@max630.net>
+ <CAPig+cQEaqaOTcC=5pZZmZNs_QQQ0vBRbzczyM3ZXXi+ZHW4XA@mail.gmail.com> <20171125214721.GA26158@jessie.local>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sat, 25 Nov 2017 18:51:11 -0500
-X-Google-Sender-Auth: TwZ5HzcIkD67A0yaCWczCukSfe4
-Message-ID: <CAPig+cTZcS0nk-grQaN7kXxJMRELd6fuhS459FtVVeOV1ZYODw@mail.gmail.com>
-Subject: Re: [PATCH] submodule--helper.c: i18n: add a missing space in message
-To:     Jean-Noel Avila <jn.avila@free.fr>
-Cc:     Git List <git@vger.kernel.org>
+Date:   Sat, 25 Nov 2017 19:38:33 -0500
+X-Google-Sender-Auth: Yn7YQ4-eG65HCOpk9T_wKRPy1lU
+Message-ID: <CAPig+cRRHepuNNva_cq2YPEDSBCO25y1mihuC52RntpJ+a+YMg@mail.gmail.com>
+Subject: Re: [PATCH] http-backend: respect CONTENT_LENGTH as specified by rfc3875
+To:     Max Kirillov <max@max630.net>
+Cc:     Jeff King <peff@peff.net>,
+        Florian Manschwetus <manschwetus@cs-software-gmbh.de>,
+        Chris Packham <judge.packham@gmail.com>,
+        Konstantin Khomoutov <kostix+git@007spb.ru>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Nov 25, 2017 at 2:55 PM, Jean-Noel Avila <jn.avila@free.fr> wrote:
-> The message spans over 2 lines but the C conconcatenation does not add
+On Sat, Nov 25, 2017 at 4:47 PM, Max Kirillov <max@max630.net> wrote:
+> Thanks for the review. I saw only reaction of the Jeff in
+> the original thread and though that it is ok otherwise. I'm
+> fixing the things you mentioned.
 
-s/conconcatenation/concatenation/
+The commentary (in which you talked about restoring the patch and
+squashing) seemed to imply that this had been posted somewhere before,
+but it wasn't marked as "v2" (or whatever attempt) and lacked a URL
+pointing at the previous attempt, so it was difficult to judge.
 
-> the needed space between the two lines.
+> On Thu, Nov 23, 2017 at 08:30:39PM -0500, Eric Sunshine wrote:
+>>> +static ssize_t read_request_fix_len(int fd, size_t req_len, unsigned char **out)
+>>
+>> Wrong data type: s/size_t req_len/ssize_t req_len/
 >
-> Signed-off-by: Jean-Noel Avila <jn.avila@free.fr>
-> ---
-> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> index 2086f0eb0..a5c4a8a69 100644
-> --- a/builtin/submodule--helper.c
-> +++ b/builtin/submodule--helper.c
-> @@ -623,7 +623,7 @@ static void status_submodule(const char *path, const struct object_id *ce_oid,
->
->                 if (refs_head_ref(get_submodule_ref_store(path),
->                                   handle_submodule_head_ref, &oid))
-> -                       die(_("could not resolve HEAD ref inside the"
-> +                       die(_("could not resolve HEAD ref inside the "
->                               "submodule '%s'"), path);
->
->                 print_status(flags, '+', path, &oid, displaypath);
-> --
-> 2.15.0
+> Passing negative value to the function makes no sense. I
+> could add explicit type cast to make it clear. It should be
+> safe as site_t's range is bigger, and overflown
+> CONTENT_LENGTH results in die() at parsing (I have a test
+> which verifies it)
+
+A concern with requesting size_t bytes is that, if it does read all
+bytes, that value can't necessarily be represented by the ssize_t
+returned from the function. Where would the cast be placed that you
+suggest? How do other git functions deal with this sort of situation?
