@@ -6,18 +6,18 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A983420A40
-	for <e@80x24.org>; Sun, 26 Nov 2017 19:38:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E76AD20A40
+	for <e@80x24.org>; Sun, 26 Nov 2017 19:38:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751816AbdKZTia (ORCPT <rfc822;e@80x24.org>);
-        Sun, 26 Nov 2017 14:38:30 -0500
+        id S1751858AbdKZTic (ORCPT <rfc822;e@80x24.org>);
+        Sun, 26 Nov 2017 14:38:32 -0500
 Received: from p3plsmtpa08-02.prod.phx3.secureserver.net ([173.201.193.103]:33285
         "EHLO p3plsmtpa08-02.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751766AbdKZTi2 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 26 Nov 2017 14:38:28 -0500
+        by vger.kernel.org with ESMTP id S1751766AbdKZTib (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 26 Nov 2017 14:38:31 -0500
 Received: from jessie.local ([212.149.203.197])
         by :SMTPAUTH: with SMTP
-        id J2kreBvfThwvHJ2l0ewoBn; Sun, 26 Nov 2017 12:38:28 -0700
+        id J2kreBvfThwvHJ2l2ewoBy; Sun, 26 Nov 2017 12:38:31 -0700
 From:   Max Kirillov <max@max630.net>
 To:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>
@@ -26,139 +26,104 @@ Cc:     Max Kirillov <max@max630.net>, Jeff King <peff@peff.net>,
         Chris Packham <judge.packham@gmail.com>,
         Konstantin Khomoutov <kostix+git@007spb.ru>,
         "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: [PATCH v6 1/2] http-backend: respect CONTENT_LENGTH as specified by rfc3875
-Date:   Sun, 26 Nov 2017 21:38:12 +0200
-Message-Id: <20171126193813.12531-2-max@max630.net>
+Subject: [PATCH v6 2/2] t5560-http-backend-noserver.sh: add CONTENT_LENGTH cases
+Date:   Sun, 26 Nov 2017 21:38:13 +0200
+Message-Id: <20171126193813.12531-3-max@max630.net>
 X-Mailer: git-send-email 2.11.0.1122.gc3fec58.dirty
 In-Reply-To: <20171126193813.12531-1-max@max630.net>
 References: <20171126193813.12531-1-max@max630.net>
-X-CMAE-Envelope: MS4wfKcyhvBZ0oGdewUFJ8/nYaKRFkFOtUVHPN9k/saakFPzXDcHN53IFRKavF2QXthnj1Fy/ONYmuerhB7GudD3DYE5hT1f2NMSQYY1QLnhUvvS2Xm2q8Jz
- td7Oo9xrig5aJoNdn/hBIH6e+SmuWF2gAGr/3hAxkCP4GnqJtegj2JDWYPNtsyVxh3CfqfuP69hSjq/jnNRgqxLTtY6eY9CH1wNpOrpthDl0j9bN7mitFw4N
- j5kcop50758FdBiBSJEZmVk2KCa1Jo3bOsCqD4piGbqaYdsHI1X/3OP68pBo+qOoX6jKNL84mvx+fNgEz0rn17j/NFhoqqqqoe7/fopxYbI7Ru04sxGLYBhr
- 6f+m2SXdchCQBLwXP9hkBiWFuPfNbjINzdPo7shyiwPX5QwLpbU=
+X-CMAE-Envelope: MS4wfMDtHF9+JdiwMcA+keK7z6VxDnf7/nEI9Hxsc7LjWW8u2x7g1dK8+XgrFgDhO4xNqagpH967LSQMs/OFPTmA/vsaIwg4ktWGWCZj+qg0WgOMTUrbt4lM
+ 1zHPVfL+l/6TaXMzj9kkgrkaOYnuyzSwrXFvYy5Fj+NcP2WFlnHDEtD5g87LbepXRuGPjadAu3Z0d+qEhpIbb+QSw04GTD3bzr8M5kZbEm/QB+LtFPPWjqG5
+ ePfhIytR/vYkuULMCFWB++N9oJ5Y9w0HnpylXTWmxmQy3bp1IahYYBe3vmdP6ZDzRirElepynRiOLtlYgqgvmrp5OzQwMj3g8Pf/7/qPVPiEPiTC9v1UylUL
+ UjQE7YrW0PYsRbbaFUkKS8rpMI+QKFrq7ki8ETBchWueOxMrWf0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Florian Manschwetus <manschwetus@cs-software-gmbh.de>
+Add tests for cases:
 
-From: Florian Manschwetus <manschwetus@cs-software-gmbh.de>
-Date: Wed, 30 Mar 2016 10:54:21 +0200
+* CONTENT_LENGTH is set, script's stdin has more data.
+  (Failure would make it read GIT_HTTP_MAX_REQUEST_BUFFER bytes from /dev/zero
+  and fail. It does not seem to cause any performance issues with the default
+  value of GIT_HTTP_MAX_REQUEST_BUFFER.)
+* CONTENT_LENGTH is specified to a value which does not fix into ssize_t.
 
-http-backend reads whole input until EOF. However, the RFC 3875 specifies
-that a script must read only as many bytes as specified by CONTENT_LENGTH
-environment variable. Web server may exercise the specification by not closing
-the script's standard input after writing content. In that case http-backend
-would hang waiting for the input. The issue is known to happen with
-IIS/Windows, for example.
-
-Make http-backend read only CONTENT_LENGTH bytes, if it's defined, rather than
-the whole input until EOF. If the variable is not defined, keep older behavior
-of reading until EOF because it is used to support chunked transfer-encoding.
-
-Signed-off-by: Florian Manschwetus <manschwetus@cs-software-gmbh.de>
-[mk: fixed trivial build failures and polished style issues]
 Signed-off-by: Max Kirillov <max@max630.net>
 ---
- config.c       |  2 +-
- config.h       |  1 +
- http-backend.c | 50 +++++++++++++++++++++++++++++++++++++++++++++++++-
- 3 files changed, 51 insertions(+), 2 deletions(-)
+ Makefile                         |  1 +
+ t/helper/test-print-values.c     | 10 ++++++++++
+ t/t5560-http-backend-noserver.sh | 30 ++++++++++++++++++++++++++++++
+ 3 files changed, 41 insertions(+)
+ create mode 100644 t/helper/test-print-values.c
 
-diff --git a/config.c b/config.c
-index 231f9a750b..d3ec14ab74 100644
---- a/config.c
-+++ b/config.c
-@@ -853,7 +853,7 @@ int git_parse_ulong(const char *value, unsigned long *ret)
- 	return 1;
- }
+diff --git a/Makefile b/Makefile
+index 461c845d33..616408b32c 100644
+--- a/Makefile
++++ b/Makefile
+@@ -653,6 +653,7 @@ TEST_PROGRAMS_NEED_X += test-mktemp
+ TEST_PROGRAMS_NEED_X += test-online-cpus
+ TEST_PROGRAMS_NEED_X += test-parse-options
+ TEST_PROGRAMS_NEED_X += test-path-utils
++TEST_PROGRAMS_NEED_X += test-print-values
+ TEST_PROGRAMS_NEED_X += test-prio-queue
+ TEST_PROGRAMS_NEED_X += test-read-cache
+ TEST_PROGRAMS_NEED_X += test-ref-store
+diff --git a/t/helper/test-print-values.c b/t/helper/test-print-values.c
+new file mode 100644
+index 0000000000..8f7e5af319
+--- /dev/null
++++ b/t/helper/test-print-values.c
+@@ -0,0 +1,10 @@
++#include <stdio.h>
++#include <string.h>
++
++int cmd_main(int argc, const char **argv)
++{
++	if (argc == 2 && strcmp(argv[1], "(size_t)(-20)") == 0)
++		printf("%zu", (ssize_t)(-20));
++
++	return 0;
++}
+diff --git a/t/t5560-http-backend-noserver.sh b/t/t5560-http-backend-noserver.sh
+index 9fafcf1945..f452090216 100755
+--- a/t/t5560-http-backend-noserver.sh
++++ b/t/t5560-http-backend-noserver.sh
+@@ -71,4 +71,34 @@ test_expect_success 'http-backend blocks bad PATH_INFO' '
+ 	expect_aliased 1 //domain/data.txt
+ '
  
--static int git_parse_ssize_t(const char *value, ssize_t *ret)
-+int git_parse_ssize_t(const char *value, ssize_t *ret)
- {
- 	intmax_t tmp;
- 	if (!git_parse_signed(value, &tmp, maximum_signed_value_of_type(ssize_t)))
-diff --git a/config.h b/config.h
-index 0352da117b..46a4989def 100644
---- a/config.h
-+++ b/config.h
-@@ -48,6 +48,7 @@ extern void git_config(config_fn_t fn, void *);
- extern int config_with_options(config_fn_t fn, void *,
- 			       struct git_config_source *config_source,
- 			       const struct config_options *opts);
-+extern int git_parse_ssize_t(const char *, ssize_t *);
- extern int git_parse_ulong(const char *, unsigned long *);
- extern int git_parse_maybe_bool(const char *);
- extern int git_config_int(const char *, const char *);
-diff --git a/http-backend.c b/http-backend.c
-index 519025d2c3..af7dd00d70 100644
---- a/http-backend.c
-+++ b/http-backend.c
-@@ -280,7 +280,7 @@ static struct rpc_service *select_service(struct strbuf *hdr, const char *name)
-  * hit max_request_buffer we die (we'd rather reject a
-  * maliciously large request than chew up infinite memory).
-  */
--static ssize_t read_request(int fd, unsigned char **out)
-+static ssize_t read_request_eof(int fd, unsigned char **out)
- {
- 	size_t len = 0, alloc = 8192;
- 	unsigned char *buf = xmalloc(alloc);
-@@ -317,6 +317,54 @@ static ssize_t read_request(int fd, unsigned char **out)
- 	}
- }
- 
-+static ssize_t read_request_fixed_len(int fd, ssize_t req_len, unsigned char **out)
-+{
-+	unsigned char *buf = NULL;
-+	ssize_t cnt = 0;
-+
-+	if (max_request_buffer < req_len) {
-+		die("request was larger than our maximum size (%lu): %lu;"
-+			    " try setting GIT_HTTP_MAX_REQUEST_BUFFER",
-+			    max_request_buffer,
-+			    req_len);
-+	}
-+
-+	if (req_len <= 0) {
-+		*out = NULL;
-+		return 0;
-+	}
-+
-+	buf = xmalloc(req_len);
-+	cnt = read_in_full(fd, buf, req_len);
-+	if (cnt < 0) {
-+		free(buf);
-+		return -1;
-+	} else {
-+		*out = buf;
-+		return cnt;
-+	}
++# overrides existing definition for further cases
++run_backend() {
++	CONTENT_LENGTH="${#2}" && export CONTENT_LENGTH &&
++	( echo "$2" && cat /dev/zero ) |
++	QUERY_STRING="${1#*[?]}" \
++	PATH_TRANSLATED="$HTTPD_DOCUMENT_ROOT_PATH/${1%%[?]*}" \
++	git http-backend >act.out 2>act.err
 +}
 +
-+static ssize_t env_content_length(void)
-+{
-+	ssize_t val = -1;
-+	const char *str = getenv("CONTENT_LENGTH");
++test_expect_success 'CONTENT_LENGTH set and infinite input' '
++	config http.uploadpack true &&
++	GET info/refs?service=git-upload-pack "200 OK"	&&
++	! grep "fatal:.*" act.err &&
++	POST git-upload-pack 0000 "200 OK" &&
++	! grep "fatal:.*" act.err
++'
 +
-+	if (str && !git_parse_ssize_t(str, &val))
-+		die("failed to parse CONTENT_LENGTH: %s", str);
-+	return val;
-+}
++test_expect_success 'CONTENT_LENGTH overflow ssite_t' '
++	NOT_FIT_IN_SSIZE=`"$GIT_BUILD_DIR/t/helper/test-print-values" "(size_t)(-20)"` &&
++	env \
++		CONTENT_TYPE=application/x-git-upload-pack-request \
++		QUERY_STRING=/repo.git/git-upload-pack \
++		PATH_TRANSLATED="$PWD"/.git/git-upload-pack \
++		GIT_HTTP_EXPORT_ALL=TRUE \
++		REQUEST_METHOD=POST \
++		CONTENT_LENGTH="$NOT_FIT_IN_SSIZE" \
++		git http-backend </dev/zero >/dev/null 2>err &&
++	grep -q "fatal:.*CONTENT_LENGTH" err
++'
 +
-+static ssize_t read_request(int fd, unsigned char **out)
-+{
-+	ssize_t req_len = env_content_length();
-+
-+	if (req_len < 0)
-+		return read_request_eof(fd, out);
-+	else
-+		return read_request_fixed_len(fd, req_len, out);
-+}
-+
- static void inflate_request(const char *prog_name, int out, int buffer_input)
- {
- 	git_zstream stream;
+ test_done
 -- 
 2.11.0.1122.gc3fec58.dirty
 
