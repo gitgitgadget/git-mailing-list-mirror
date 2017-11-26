@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3286B20A40
-	for <e@80x24.org>; Sun, 26 Nov 2017 19:42:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5E4D320A40
+	for <e@80x24.org>; Sun, 26 Nov 2017 19:42:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751893AbdKZTmj (ORCPT <rfc822;e@80x24.org>);
+        id S1751867AbdKZTmm (ORCPT <rfc822;e@80x24.org>);
+        Sun, 26 Nov 2017 14:42:42 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:35166 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751838AbdKZTmj (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 26 Nov 2017 14:42:39 -0500
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:42091 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751749AbdKZTmh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 26 Nov 2017 14:42:37 -0500
-Received: by mail-wr0-f194.google.com with SMTP id o14so24491828wrf.9
-        for <git@vger.kernel.org>; Sun, 26 Nov 2017 11:42:36 -0800 (PST)
+Received: by mail-wm0-f67.google.com with SMTP id w73so2175287wmw.0
+        for <git@vger.kernel.org>; Sun, 26 Nov 2017 11:42:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=u6bfMv+8iq+jd5gNs803TNAZRfUg+jDEKP+Ch2SD12k=;
-        b=kJPT59ahXhPmtamx6n/HpDUBxA+QOrt8xlrJE+UREKGoXaGqRCnMeGkA8m0XyxGJo2
-         S4LL5y95kcg+ZaIMrvQJuQuKN7tw839zsgIHxf6Jy6tyKAIGGNIuSx3ZqiYgDdkDpbll
-         aUcQxIYP/REbJ/eLAd1g+XIQgBNSgXfcMmjZTgwzvo1hoEhganAU8PPbsQSBO5rZVE2t
-         SnsCXJKQ75ydAmhqlWJsuhg6ISpBoKWgrHFs2h3x4yWxyOKg96aLG9k5Gr9TbRNpkREk
-         jIMFvOJGT+7mZ2lJdYJJkMDb/H1FBI5jJDorUIobzIwqDZXuvox4MbslUOxmkClDdT4G
-         sIdw==
+        bh=FN6Ljdpl4tRErIBAiA1+fJplHz6A7N1a5MuHQ+yG8eg=;
+        b=LhpcIheXO+TxTNJjL5V1f3IxNvmsMXweCmCOP/TVtBdqPaFc9o7EtYEVwprKrNrKkD
+         cQUcBi0H4yzL0rgQYSz54YzlDFDx0kQ4nNNTXflhvCvt4HbJR6LhiTDfZ1Kdca9/7/Du
+         PcmAd5LeIzzzzZoA/xbVmwBAwFmdoe8lcBCNKqTw4DNm2DQd0CTZMpfWM4AN4Cj52Ol4
+         8Zk4R6IxRim8DTHoAVhq1FraOZOqbxm24TrXD1u/kEJU1WqLNGXFO+A7zoclYsCMyswq
+         ohhobOsEluh7pBGffE04MSLVphmKGdTRjuu3NGqNbWh0IlCOFNb4EZqX2d/RWG9ZP/OG
+         /WgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=u6bfMv+8iq+jd5gNs803TNAZRfUg+jDEKP+Ch2SD12k=;
-        b=TXsyvxrglbUUL8I1hy0dkNzfSQm9puqMzqjxijY2yD7ffzyVK4JlnkBTNCjPOANTnn
-         fVsi7LvDWruYMXlFPw3CObxnu/CbsXTRbOnjfsCgwk786qAbNkGImuKnk4i2mPNrFcEY
-         zyLpqQhbD1L7fuCkrsBvfQUB0H+2gBqATzbrD/pztDW4ZKo0uRMZvTrDCiq0hYbXG+KC
-         F+uet2fqve/PG3tBu9B/tyLi7Up8XYsAVUQSbJVY/Rowf4S+DUCGjmcxkIth9FVicIzL
-         ls/FluQ6x0HDZJHS2CssdnqSy3I+UqNB4ocnBFNbwayWzmK6HdgcGhr0lS4c7G4OWe7R
-         n2ZQ==
-X-Gm-Message-State: AJaThX7fxH7StrCI467oeIVDXvk4isScYKhrs/LbE4wd+vrrybsqDN2O
-        KGjR96ZaMyA8tuGtdrJw5RDBjXFq
-X-Google-Smtp-Source: AGs4zMa9AM2u6UGCgNSQZ1r+r93rTec/pIBS1a9kCCg5QFtym6LLusgmX3wQVTZUqK6HxUkQO21VTg==
-X-Received: by 10.223.132.129 with SMTP id 1mr28357531wrg.136.1511725356036;
-        Sun, 26 Nov 2017 11:42:36 -0800 (PST)
+        bh=FN6Ljdpl4tRErIBAiA1+fJplHz6A7N1a5MuHQ+yG8eg=;
+        b=idn2Ni7ImgxB0UnU96EpibgbveJ1rrxR42GcQVMQR37gGFsxpvkxMeoe8d8WkQIbSg
+         mYt8VBBtJR5YnSwdrUWsQj46Wn5Rq0F+TaH8fz3Gt160QSYrcI0PA58NZpILD4+KAeOa
+         nurewnLt2p/vRfNJyho4Ejbbcx1SHcHTdNtnPTIdYJ1ymB4/BS7PedDRIR7HGsflTlY+
+         4LfPuow7xdti75LEl+PGwiV+flYHq4Vo5mewMEDzX/pntPDz0k5HLqPWmg+exNsZtEqA
+         Reqs55yv16xIIa15Chvi4Gqyv8/qD4NkaL5hurSD8qJfudyqvtHKo17/oY2OlQZ8mgdc
+         yCGg==
+X-Gm-Message-State: AJaThX4Fjx8Ph+pcRXMCr/aUVH7yqlVUkBIp8IffGAXpcXefuvb9F47o
+        tsPMHHZ0MEpL2UdwUkdtaW9vXfrH
+X-Google-Smtp-Source: AGs4zMayZ66KGaAezGLIxS7wyCVUu1YVZoG/tEAK+ipC1G0EFfq1M8CqKbA2xK3gy0EDE51Qa/JVPA==
+X-Received: by 10.28.149.203 with SMTP id x194mr14239401wmd.145.1511725358308;
+        Sun, 26 Nov 2017 11:42:38 -0800 (PST)
 Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
-        by smtp.gmail.com with ESMTPSA id o48sm10326864wrf.85.2017.11.26.11.42.35
+        by smtp.gmail.com with ESMTPSA id s195sm18239728wmb.33.2017.11.26.11.42.37
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 26 Nov 2017 11:42:35 -0800 (PST)
+        Sun, 26 Nov 2017 11:42:37 -0800 (PST)
 From:   Thomas Gummerer <t.gummerer@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
@@ -56,9 +56,9 @@ Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?=
         "Randall S. Becker" <rsbecker@nexbridge.com>,
         Paul Smith <paul@mad-scientist.net>,
         Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v5 4/6] worktree: make add <path> <branch> dwim
-Date:   Sun, 26 Nov 2017 19:43:54 +0000
-Message-Id: <20171126194356.16187-5-t.gummerer@gmail.com>
+Subject: [PATCH v5 6/6] add worktree.guessRemote config option
+Date:   Sun, 26 Nov 2017 19:43:56 +0000
+Message-Id: <20171126194356.16187-7-t.gummerer@gmail.com>
 X-Mailer: git-send-email 2.15.0.426.gb06021eeb
 In-Reply-To: <20171126194356.16187-1-t.gummerer@gmail.com>
 References: <20171122223020.2780-1-t.gummerer@gmail.com>
@@ -68,100 +68,130 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently 'git worktree add <path> <branch>', errors out when 'branch'
-is not a local branch.  It has no additional dwim'ing features that one
-might expect.
+Some users might want to have the --guess-remote option introduced in
+the previous commit on by default, so they don't have to type it out
+every time they create a new worktree.
 
-Make it behave more like 'git checkout <branch>' when the branch doesn't
-exist locally, but a remote tracking branch uniquely matches the desired
-branch name, i.e. create a new branch from the remote tracking branch
-and set the upstream to the remote tracking branch.
-
-As 'git worktree add' currently just dies in this situation, there are
-no backwards compatibility worries when introducing this feature.
+Add a config option worktree.guessRemote that allows users to configure
+the default behaviour for themselves.
 
 Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
- Documentation/git-worktree.txt |  8 ++++++++
- builtin/worktree.c             | 16 ++++++++++++++++
- t/t2025-worktree-add.sh        | 19 +++++++++++++++++++
- 3 files changed, 43 insertions(+)
+ Documentation/config.txt       | 10 ++++++++++
+ Documentation/git-worktree.txt |  3 +++
+ builtin/worktree.c             | 14 +++++++++++++-
+ t/t2025-worktree-add.sh        | 31 +++++++++++++++++++++++++++++++
+ 4 files changed, 57 insertions(+), 1 deletion(-)
 
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 5f65fa9234..4966d90ebb 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -3425,3 +3425,13 @@ web.browser::
+ 	Specify a web browser that may be used by some commands.
+ 	Currently only linkgit:git-instaweb[1] and linkgit:git-help[1]
+ 	may use it.
++
++worktree.guessRemote::
++	With `add`, if no branch argument, and neither of `-b` nor
++	`-B` nor `--detach` are given, the command defaults to
++	creating a new branch from HEAD.  If `worktree.guessRemote` is
++	set to true, `worktree add` tries to find a remote-tracking
++	branch whose name uniquely matches the new branch name.  If
++	such a branch exists, it is checked out and set as "upstream"
++	for the new branch.  If no such match can be found, it falls
++	back to creating a new branch from the current HEAD.
 diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
-index 15e58b18f7..3044d305a6 100644
+index a81cfb2229..fd841886ef 100644
 --- a/Documentation/git-worktree.txt
 +++ b/Documentation/git-worktree.txt
-@@ -52,6 +52,14 @@ is linked to the current repository, sharing everything except working
- directory specific files such as HEAD, index, etc. `-` may also be
- specified as `<commit-ish>`; it is synonymous with `@{-1}`.
- +
-+If <commit-ish> is a branch name (call it `<branch>` and is not found,
-+and neither `-b` nor `-B` nor `--detach` are used, but there does
-+exist a tracking branch in exactly one remote (call it `<remote>`)
-+with a matching name, treat as equivalent to
-+------------
-+$ git worktree add --track -b <branch> <path> <remote>/<branch>
-+------------
+@@ -121,6 +121,9 @@ OPTIONS
+ 	in exactly one remote matching the basename of the path, base
+ 	the new branch on the remote-tracking branch, and mark the
+ 	remote-tracking branch as "upstream" from the new branch.
 ++
- If `<commit-ish>` is omitted and neither `-b` nor `-B` nor `--detach` used,
- then, as a convenience, a new branch based at HEAD is created automatically,
- as if `-b $(basename <path>)` was specified.
++This can also be set up as the default behaviour by using the
++`worktree.guessRemote` config option.
+ 
+ --[no-]track::
+ 	When creating a new branch, if `<commit-ish>` is a branch,
 diff --git a/builtin/worktree.c b/builtin/worktree.c
-index ea9678cac8..7021d02585 100644
+index 15cb1600ee..426aea8761 100644
 --- a/builtin/worktree.c
 +++ b/builtin/worktree.c
-@@ -1,4 +1,5 @@
- #include "cache.h"
-+#include "checkout.h"
- #include "config.h"
- #include "builtin.h"
- #include "dir.h"
-@@ -390,6 +391,21 @@ static int add(int ac, const char **av, const char *prefix)
- 		opts.new_branch = xstrndup(s, n);
- 	}
+@@ -33,8 +33,19 @@ struct add_opts {
  
-+	if (ac == 2 && !opts.new_branch && !opts.detach) {
-+		struct object_id oid;
-+		struct commit *commit;
-+		const char *remote;
-+
-+		commit = lookup_commit_reference_by_name(branch);
-+		if (!commit) {
-+			remote = unique_tracking_name(branch, &oid);
-+			if (remote) {
-+				opts.new_branch = branch;
-+				branch = remote;
-+			}
-+		}
+ static int show_only;
+ static int verbose;
++static int guess_remote;
+ static timestamp_t expire;
+ 
++static int git_worktree_config(const char *var, const char *value, void *cb)
++{
++	if (!strcmp(var, "worktree.guessremote")) {
++		guess_remote = git_config_bool(var, value);
++		return 0;
 +	}
 +
- 	if (opts.new_branch) {
- 		struct child_process cp = CHILD_PROCESS_INIT;
- 		cp.git_cmd = 1;
++	return 0;
++}
++
+ static int prune_worktree(const char *id, struct strbuf *reason)
+ {
+ 	struct stat st;
+@@ -343,7 +354,6 @@ static int add(int ac, const char **av, const char *prefix)
+ 	char *path;
+ 	const char *branch;
+ 	const char *opt_track = NULL;
+-	int guess_remote = 0;
+ 	struct option options[] = {
+ 		OPT__FORCE(&opts.force, N_("checkout <branch> even if already checked out in other worktree")),
+ 		OPT_STRING('b', NULL, &opts.new_branch, N_("branch"),
+@@ -361,6 +371,8 @@ static int add(int ac, const char **av, const char *prefix)
+ 		OPT_END()
+ 	};
+ 
++	git_config(git_worktree_config, NULL);
++
+ 	memset(&opts, 0, sizeof(opts));
+ 	opts.checkout = 1;
+ 	ac = parse_options(ac, av, prefix, options, worktree_usage, 0);
 diff --git a/t/t2025-worktree-add.sh b/t/t2025-worktree-add.sh
-index 72e8b62927..96ebc63d04 100755
+index d25c774cb7..6ce9b9c070 100755
 --- a/t/t2025-worktree-add.sh
 +++ b/t/t2025-worktree-add.sh
-@@ -365,4 +365,23 @@ test_expect_success '--no-track avoids setting up tracking' '
+@@ -413,4 +413,35 @@ test_expect_success 'git worktree add --guess-remote sets up tracking' '
  	)
  '
  
-+test_expect_success '"add" <path> <non-existent-branch> fails' '
-+	test_must_fail git worktree add foo non-existent
-+'
-+
-+test_expect_success '"add" <path> <branch> dwims' '
-+	test_when_finished rm -rf repo_upstream repo_dwim foo &&
-+	setup_remote_repo repo_upstream repo_dwim &&
-+	git init repo_dwim &&
++test_expect_success 'git worktree add with worktree.guessRemote sets up tracking' '
++	test_when_finished rm -rf repo_a repo_b foo &&
++	setup_remote_repo repo_a repo_b &&
 +	(
-+		cd repo_dwim &&
-+		git worktree add ../foo foo
++		cd repo_b &&
++		git config worktree.guessRemote true &&
++		git worktree add ../foo
 +	) &&
 +	(
 +		cd foo &&
-+		test_branch_upstream foo repo_upstream foo &&
-+		test_cmp_rev refs/remotes/repo_upstream/foo refs/heads/foo
++		test_branch_upstream foo repo_a foo &&
++		test_cmp_rev refs/remotes/repo_a/foo refs/heads/foo
++	)
++'
++
++test_expect_success 'git worktree --no-guess-remote option overrides config' '
++	test_when_finished rm -rf repo_a repo_b foo &&
++	setup_remote_repo repo_a repo_b &&
++	(
++		cd repo_b &&
++		git config worktree.guessRemote true &&
++		git worktree add --no-guess-remote ../foo
++	) &&
++	(
++		cd foo &&
++		test_must_fail git config "branch.foo.remote" &&
++		test_must_fail git config "branch.foo.merge" &&
++		! test_cmp_rev refs/remotes/repo_a/foo refs/heads/foo
 +	)
 +'
 +
