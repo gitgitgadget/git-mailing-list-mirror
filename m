@@ -2,123 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 04BE420A40
-	for <e@80x24.org>; Sun, 26 Nov 2017 18:34:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C2DB620A40
+	for <e@80x24.org>; Sun, 26 Nov 2017 19:15:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751868AbdKZSer (ORCPT <rfc822;e@80x24.org>);
-        Sun, 26 Nov 2017 13:34:47 -0500
-Received: from mail-it0-f52.google.com ([209.85.214.52]:43654 "EHLO
-        mail-it0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751519AbdKZSer (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 26 Nov 2017 13:34:47 -0500
-Received: by mail-it0-f52.google.com with SMTP id m191so18378154itg.2
-        for <git@vger.kernel.org>; Sun, 26 Nov 2017 10:34:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=sfhjQ1T8xSSSZic9a9x8mB1osentxT/YSi6BvwjnryY=;
-        b=ChwGtZnVflEIAYGu+FGPvwVGwmljqrHdQuopuehErZgLErxBQHLx5R9XIX/727LfzG
-         htLm4EaPeS/fwTmKEAwK/TrIWuaM6y0JwAi/Y1H7GZkRXXe7MnvDkoh/1hvaczx8ciAc
-         svv9UeR1YWPjHayHY4807FUMW2oY1GmkmDI41p8T0k8BiNOAw+7BBm9/RsF2bmqJG4xu
-         Elc7yzafZXigPMw7nOy57/yyqQjx53ebqzF9CoYVic4K3Aj0eM0I4IuZ9WdGTVHNyOZE
-         IeEyJ2VARGk1tbYbaUcu9gYbEKGvJBX8hvcgr+27kFv3jTeQ7ODaraTQZRUwvpfeWNFR
-         +8OA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=sfhjQ1T8xSSSZic9a9x8mB1osentxT/YSi6BvwjnryY=;
-        b=PM3enZBkbuoVa+HzyDjvkZ8YcX5gUvb8Tabazdc6Aryn+OF3u9zs9hn1oqY6eBshE0
-         sTjlFX4W4PO9AdJDD/pzgfbf9VDQixSpH1Kt2BIAG5HRmfQeSwlAy038nM+M+jeYfAu1
-         KchgOwvZHVx1b4zqfATNcA9VJv30Nsnge3pik82CzA91Iv/+q6O/B7rBhCPO9mvZcKZc
-         ijbTvhT3WvGiEKomjD91bc4t6//DemlRP2+vYtSNRgWKo8K6s1tFVmJvCnhpnHPZV3e/
-         M8Uq0FdFGnUWMMxxd6RZxjq+svlcCxyW3Kcb0F2kQC6xM58vecaeCOMERlE8gAxtGAWo
-         NFQQ==
-X-Gm-Message-State: AJaThX4s5KeGZlnOf2X5aviQFQlYivhfh22hQUH+zNcZH0aEWdGon833
-        wVutgsCDec9vzt6o90ndTP+GiMdhF/OwuAslFN8=
-X-Google-Smtp-Source: AGs4zMZ7HgH5HXDt/k6aWB3QWzM4nNteY2S65ZNCdHQjPyA/yDeuWivH2H0NaiD+JRRz+rpsdrAXKPd1LecRoOcPKOc=
-X-Received: by 10.36.124.197 with SMTP id a188mr25078225itd.63.1511721286159;
- Sun, 26 Nov 2017 10:34:46 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.79.28.137 with HTTP; Sun, 26 Nov 2017 10:34:45 -0800 (PST)
-In-Reply-To: <be2b6fd3-b405-7537-ba38-60d5eb2b341a@ramsayjones.plus.com>
-References: <20171120171517.6365-1-chriscool@tuxfamily.org>
- <CAP8UFD1YY_f4Ds0sYK86OBb7Wyud_YWr2Wx8nx1pdnwSsPgJ8A@mail.gmail.com>
- <xmqqbmjpitl2.fsf@gitster.mtv.corp.google.com> <CAP8UFD2sWE9cZe=OO1UQjf6Boih=Go9xJg=gDgEUzbXNuood5w@mail.gmail.com>
- <be2b6fd3-b405-7537-ba38-60d5eb2b341a@ramsayjones.plus.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sun, 26 Nov 2017 19:34:45 +0100
-Message-ID: <CAP8UFD2fH3PP3TeqTNy9+NL4T+ycu26S6qurTrDW2mEEN4WKtQ@mail.gmail.com>
-Subject: Re: [PATCH] Makefile: check that tcl/tk is installed
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>, Dominik Mahrer <teddy@teddy.ch>,
+        id S1751528AbdKZTPN (ORCPT <rfc822;e@80x24.org>);
+        Sun, 26 Nov 2017 14:15:13 -0500
+Received: from cloud.peff.net ([104.130.231.41]:40544 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751427AbdKZTPM (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Nov 2017 14:15:12 -0500
+Received: (qmail 32262 invoked by uid 109); 26 Nov 2017 19:15:13 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 26 Nov 2017 19:15:13 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 29413 invoked by uid 111); 26 Nov 2017 19:15:30 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with ESMTPA; Sun, 26 Nov 2017 14:15:30 -0500
+Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 26 Nov 2017 14:15:10 -0500
+Date:   Sun, 26 Nov 2017 14:15:10 -0500
+From:   Jeff King <peff@peff.net>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>, git <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Dominik Mahrer <teddy@teddy.ch>,
         git-packagers@googlegroups.com, Todd Zullinger <tmz@pobox.com>,
         Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH] Makefile: check that tcl/tk is installed
+Message-ID: <20171126191510.GA1501@sigill>
+References: <20171120171517.6365-1-chriscool@tuxfamily.org>
+ <20171120191931.okxejqyqayjvxpbc@aiede.mtv.corp.google.com>
+ <CAP8UFD0d9zM9F3tLrTMiLdfoJQsOPELtmudVB6e83DiLPN5DEA@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAP8UFD0d9zM9F3tLrTMiLdfoJQsOPELtmudVB6e83DiLPN5DEA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Nov 26, 2017 at 6:43 PM, Ramsay Jones
-<ramsay@ramsayjones.plus.com> wrote:
->
->
-> On 26/11/17 14:00, Christian Couder wrote:
->> On Sun, Nov 26, 2017 at 4:53 AM, Junio C Hamano <gitster@pobox.com> wrote:
->>> Christian Couder <christian.couder@gmail.com> writes:
->>>
->>>> On Mon, Nov 20, 2017 at 6:15 PM, Christian Couder
->>>> <christian.couder@gmail.com> wrote:
->>>>> By default running `make install` in the root directory of the
->>>>> project will set TCLTK_PATH to `wish` and then go into the "git-gui"
->>>>> and "gitk-git" sub-directories to build and install these 2
->>>>> sub-projects.
->>>>
->>>> Has this patch fallen through the cracks or is there an unresolved issue?
->>>
->>> I had an impression that the conclusion was that the existing error
->>> message at runtime already does an adequate job and there is no
->>> issue to be addressed by this patch.  Am I mistaken?
->>
->> This patch is mostly about what happens at the build step. Its goal is
->> not much to improve what happens at runtime, though that is improved a
->> bit too. If the build step was good enough, then I would agree that
->> what happens at run time is adequate.
->>
->> Let's consider only people installing git using "make install" to use
->> it on their machine, as I think I already discussed the case of
->> packagers and added the BYPASS_TCLTK_CHECK variable for them.
->>
->
-> I haven't been following this thread too closely, but I have the
-> feeling that the best course of action is to simply not fall back
-> to using a tcl version of msgfmt in the first place!. ;-)
+On Tue, Nov 21, 2017 at 12:58:17AM +0100, Christian Couder wrote:
 
-Well, another possibility would be to try to use the tcl version of
-msgfmt in the build of git itself if msgfmt is not available.
-This way the build behavior of git and git-gui could be similar.
+> > Can you say more about where this comes up?
+> 
+> The original discussion is:
+> 
+> https://public-inbox.org/git/b6b12040-100f-5965-6dfd-344c84dddf96@teddy.ch/
+> 
+> and here are discussions related to version 1 of this patch:
+> 
+> https://public-inbox.org/git/20171115125200.17006-1-chriscool@tuxfamily.org/
+> 
+> As Peff mentions in the original discussion, at the Bloomberg Git
+> sprint, we saw someone struggling to compile Git, because of these
+> msgfmt and Tcl/Tk issues.
 
-> If a given platform does not have gettext/msgfmt, then you just
-> don't get an i18n-ed version of git. (no need for BYPASS_ ...).
+Actually, I think we had the _opposite_ problem there.
 
-Right now without gettext/msgfmt you get an error unless you set
-NO_GETTEXT. If we try to use the tcl version of msgfmt in the build of
-git itself, then you could still get an i18n-ed version of git if you
-have Tcl/Tk.
+The main problem your patch fixes is that we may silently build a
+version of gitk/git-gui that do not work. The "make" process completes,
+but they refer to a non-existent "wish" tool, and running them will
+fail.
 
-But anyway even if this is related, I think it is a different issue.
+That's potentially annoying if you wanted those tools. But if you didn't
+care about them in the first place, it's fine.
 
-> Am I missing something?
+The opposite problem is when you don't care about those tools, and they
+_do_ break the build. And then just to get the rest of Git built, you
+have to know about and set NO_TCLTK.
 
-I still think it is not the best outcome to just install git-gui and
-gitk by default when Tcl/Tk is not installed. In general it is best to
-fix potential errors at build time rather than at run time (even if
-the run time error is adequate).
+AFAIK that only happens if you don't have msgfmt installed. Because then
+the gitk and git-gui Makefiles try to auto-fallback to implementing
+msgfmt in tcl _during the build_, and there a lack of "tclsh" will break
+the build.
+
+I think your patch does say "consider setting NO_TCLTK" in that case,
+which is an improvement. But it might be nicer still if it Just Worked
+(either because we don't do tcl/tk by default, or because we respect
+NO_GETTEXT in the gitk/git-gui Makefiles, or because our msgfmt can
+fallback further to not even using tclsh).
+
+So I'm not really against this patch, but IMHO it doesn't make the
+interesting case (you don't care about tcl and are just trying to build
+git for the first time) all that much better. I do also wonder if we
+want to start putting these kind of run-time checks into the Makefile
+itself. That's kind of what autoconf is for. As much as I hate autoconf,
+is it the right advice for somebody who doesn't want to look at the
+Makefile knobs to do:
+
+  autoconf
+  ./configure
+  make
+
+?
+
+If there are deficiencies in configure.in (and I can well believe that
+there are), should we be fixing it there?
+
+-Peff
