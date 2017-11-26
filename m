@@ -6,19 +6,18 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B083C20954
-	for <e@80x24.org>; Sun, 26 Nov 2017 01:55:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7E81D20954
+	for <e@80x24.org>; Sun, 26 Nov 2017 01:55:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751917AbdKZBzD (ORCPT <rfc822;e@80x24.org>);
-        Sat, 25 Nov 2017 20:55:03 -0500
-Received: from p3plsmtpa08-02.prod.phx3.secureserver.net ([173.201.193.103]:35083
-        "EHLO p3plsmtpa08-02.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751907AbdKZBzB (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 25 Nov 2017 20:55:01 -0500
-X-Greylist: delayed 438 seconds by postgrey-1.27 at vger.kernel.org; Sat, 25 Nov 2017 20:54:57 EST
+        id S1751925AbdKZBzG (ORCPT <rfc822;e@80x24.org>);
+        Sat, 25 Nov 2017 20:55:06 -0500
+Received: from p3plsmtpa08-10.prod.phx3.secureserver.net ([173.201.193.111]:33024
+        "EHLO p3plsmtpa08-10.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751907AbdKZBzE (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 25 Nov 2017 20:55:04 -0500
 Received: from jessie.local ([212.149.203.197])
         by :SMTPAUTH: with SMTP
-        id Im2ce86W4hwvHIm2newPFV; Sat, 25 Nov 2017 18:47:43 -0700
+        id Im9jetQwL0TufIm9teDkyx; Sat, 25 Nov 2017 18:55:04 -0700
 From:   Max Kirillov <max@max630.net>
 To:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>
@@ -27,17 +26,16 @@ Cc:     Max Kirillov <max@max630.net>, Jeff King <peff@peff.net>,
         Chris Packham <judge.packham@gmail.com>,
         Konstantin Khomoutov <kostix+git@007spb.ru>,
         "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: [PATCH v4 2/2] t5560-http-backend-noserver.sh: add CONTENT_LENGTH cases
-Date:   Sun, 26 Nov 2017 03:47:19 +0200
-Message-Id: <20171126014719.23728-3-max@max630.net>
+Subject: [PATCH v5 2/2] t5560-http-backend-noserver.sh: add CONTENT_LENGTH cases
+Date:   Sun, 26 Nov 2017 03:54:48 +0200
+Message-Id: <20171126015448.24111-3-max@max630.net>
 X-Mailer: git-send-email 2.11.0.1122.gc3fec58.dirty
-In-Reply-To: <20171126014719.23728-2-max@max630.net>
-References: <20171126014719.23728-1-max@max630.net>
- <20171126014719.23728-2-max@max630.net>
-X-CMAE-Envelope: MS4wfHT5uLkbmJHIRn9X9qIjvB8/MfkHBmdgUoShI8kM5IpwtyOLOJPHduyAvO92dEAPMmZI0YDMxX4Xo5BbNIwSg6OEF6/05sdrSQRSBEKJ01kNu3rAjvZy
- fYXAoG0qR2YkzvrA+NOohpWbdSs4+lnWgkQL1W20c2GHIZsKe9QOtP5PGC139gi7cWpY8Ehb8tRB/IzMH4f6c9FVzc4UmqiEAj6Fk1eoK8ULH+QluRCwQcUC
- IOx+8zw2fcWD3AdDz73a3tacy6xc5jco5aZ0QFCgO2OlPDgs/dh2G24Gkne/H1wwqTAWRCTvBU2fwzTi3HEvAOTaTL4RD0ldA5W1VyiI5Cz6L3c2IIxJN2x0
- nnYvW4e1NaZyqoeGJXi4deTNdxNdwiqoyo0aDwE0L62ip1j+3Uk=
+In-Reply-To: <20171126015448.24111-1-max@max630.net>
+References: <20171126015448.24111-1-max@max630.net>
+X-CMAE-Envelope: MS4wfDvQNxcYf3JmeRL046pSwiZQKzno7lplc40HusDj5xFoAt904g4cR0kRVP2VKT0WWJLRcz4uTDbtf0TB8iffTjn8vVZw6yAP4KLc85AG/p6iJmz7ktMJ
+ Q3WSVu0Ef+9Fna1RRKFJ0/srkmzvUjaU9nqTUrxTzuj8yN8fMXK/RBY78XYRqhM6AdJ47LZcF6MOLduGmzZqeshi/AAuDozd/oH44FYFCRlq8S/1Wnm761DT
+ VOeVClReeoCPQGRmXEMXjaFHPdmgmCIsfCPklTxkp8uD0QwgQ8MPt+HbK5VK3N8vk9dtU4pFHivyfrEIAzLKsVPQW7mwU8lTvFkgbVcdQ9C6cZf9E9AAKGus
+ v6IQWbtBH02+jm8MJGb3Y3quGlLzKzHSV2EcDG12WYJN9+6r7CQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
