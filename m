@@ -2,135 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5E68120C11
-	for <e@80x24.org>; Mon, 27 Nov 2017 20:57:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2701C20C11
+	for <e@80x24.org>; Mon, 27 Nov 2017 21:20:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753248AbdK0U5s (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Nov 2017 15:57:48 -0500
-Received: from mail-wr0-f177.google.com ([209.85.128.177]:34604 "EHLO
-        mail-wr0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753166AbdK0U5r (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Nov 2017 15:57:47 -0500
-Received: by mail-wr0-f177.google.com with SMTP id k18so22833669wre.1
-        for <git@vger.kernel.org>; Mon, 27 Nov 2017 12:57:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=IyN1lz5Ph0xdaV7rlUaukA7KVAgy0rXHBbKejanlr2Y=;
-        b=mGKbsOnGWQeVdoGGTrNR9m7/Ese2p3N5sZxGXEyNxvbrmZH5Jq9il7dJgG24G9RvMQ
-         qvlu8p9txmRY/c962rLSB9dmzAGXB4fED3leXgGPc8n4G/6mlTJhKBW2qO9RQIRa28Gu
-         RisZPEb1PfalYmkt8rLjzYakyWNmQwRPlPMaS5JXNi1RxTWVoSXeFrXIZSVwtUyOe7zZ
-         fB0+6uyaQ97Tt5eNlWrMHluRJI7/9Qoo4F04+jMB70qFF4SSE8ekS3wWV1RlyxoxA7xS
-         UB//kZRfLJd8oM/g6pQ8hhyyDtrEVlJQ+G/50+FDmBHigFtYNTdw0I5o/6Xc6JCpRfnh
-         5/3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=IyN1lz5Ph0xdaV7rlUaukA7KVAgy0rXHBbKejanlr2Y=;
-        b=sDrO5suc56EeRC8PkdmdipWZwxIVvaiAZ5bO8kb8MBWeujmN1oYfUXDLYs48rOmn8c
-         +GprbCA0jDw3NDWelKzptrtsv+rVl90XwhJuQaVhD4Fnvd1Yz/hL+dfjrTKMdKvzGbB5
-         RPF+rQKh4u9Mj4m66Gs9yEpEI467jEzVLLSgFICWa3pokxa22MHASDAOpTpovNSFUvpY
-         8ytIMf0YmxuQ4BQMzSL9ZVRh90WRtdJ2dDBaFYtMa40NVoK0p4nI0jxb6uAOxqjnlc7l
-         KaINTaIZhrV4Erq/wYleHvOadmlLXob1zA+xpuw3wm8in4axJGDEb7DniMSsUl9p78F6
-         rvGA==
-X-Gm-Message-State: AJaThX5WXfBfbxqYEDH7w2UjuN95kJGbOcZFIR/kgVihuthyL9XLqd0Q
-        gjIpVNj9zkuDYInYNyYZVlrflRhy
-X-Google-Smtp-Source: AGs4zMYtpl3uFkMHH7DGGxEld4JeccstPHL5JqY8cY18JOypPL9++GclXYcTPq1aAJy1IwXTpGE7nA==
-X-Received: by 10.223.150.163 with SMTP id u32mr33313634wrb.157.1511816266366;
-        Mon, 27 Nov 2017 12:57:46 -0800 (PST)
-Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
-        by smtp.gmail.com with ESMTPSA id j10sm15509669wrh.32.2017.11.27.12.57.45
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 27 Nov 2017 12:57:45 -0800 (PST)
-Date:   Mon, 27 Nov 2017 20:59:18 +0000
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>,
-        Paul Smith <paul@mad-scientist.net>
-Subject: Re: [PATCH v5 6/6] add worktree.guessRemote config option
-Message-ID: <20171127205918.GB32057@hank>
-References: <20171122223020.2780-1-t.gummerer@gmail.com>
- <20171126194356.16187-1-t.gummerer@gmail.com>
- <20171126194356.16187-7-t.gummerer@gmail.com>
- <xmqq8tescj9p.fsf@gitster.mtv.corp.google.com>
+        id S1751899AbdK0VUK (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Nov 2017 16:20:10 -0500
+Received: from resqmta-ch2-12v.sys.comcast.net ([69.252.207.44]:45070 "EHLO
+        resqmta-ch2-12v.sys.comcast.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751601AbdK0VUJ (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2017 16:20:09 -0500
+X-Greylist: delayed 488 seconds by postgrey-1.27 at vger.kernel.org; Mon, 27 Nov 2017 16:20:09 EST
+Received: from resomta-ch2-20v.sys.comcast.net ([69.252.207.116])
+        by resqmta-ch2-12v.sys.comcast.net with ESMTP
+        id JQeieBF8VfgCFJQh7eiBml; Mon, 27 Nov 2017 21:12:01 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+        s=q20161114; t=1511817121;
+        bh=UiL6fKxjk4y0+mqaicagHEmkig4UoSochtBocqNvHwA=;
+        h=Received:Received:Subject:To:From:Message-ID:Date:MIME-Version:
+         Content-Type;
+        b=CzOYP7l54t5piQjZ59aPPANxhfswkq6wnsd+wtgyOKioUicRPY7d2+1+AyeotGbq2
+         O4AbgwG3XdFHgt7kMrLbNsNZGspwpUuycdXdRo6Ua0zRBhOxxE6B/JiZj890YxMCfG
+         iFAABUr7rKfVsB1+eZo9f7klq1Y5lGH1PVseaSWNV4ZDItDrakhazq/iOPQ55Oub4D
+         5W0qft2Utzxb44SBComKAVAzMp0x13bR+ZPpNqN5bEA/+F5fCGY9FBL+QpIaPlXO/K
+         ya57gDUIdLgYm61xnsMYaXvBPRpVbHP7JaRrMSXGpWlJhNpCcMg3C26ygu9NlCEXZ4
+         WhKk09hvrfVgA==
+Received: from [192.168.1.100] ([73.149.212.147])
+        by resomta-ch2-20v.sys.comcast.net with SMTP
+        id JQh6evj7ok7fvJQh6eCZl8; Mon, 27 Nov 2017 21:12:00 +0000
+Subject: Re: Problem installing Git
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Igor Djordjevic <igor.d.djordjevic@gmail.com>
+Cc:     git@vger.kernel.org, git-for-windows@googlegroups.com
+References: <077942bb-5952-6f4a-8054-b17d3883b901@comcast.net>
+ <f30c4350-500a-44e8-27ee-7d5ae49903c4@gmail.com>
+ <alpine.DEB.2.21.1.1711252312270.6482@virtualbox>
+From:   Phil Martel <pomartel@comcast.net>
+Message-ID: <63cb0d32-c866-f249-c636-2e034b48836f@comcast.net>
+Date:   Mon, 27 Nov 2017 16:12:00 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq8tescj9p.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
+In-Reply-To: <alpine.DEB.2.21.1.1711252312270.6482@virtualbox>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-CMAE-Envelope: MS4wfAfEecL5wYEXwCoPsYXTDLxVTbPJIDu/A1B/7UURQgUui04n9ory6kKTXoulFfkilaauV1Atl8CYS+8SBjO/7AArWenVhnZ7DHi64MemQPlThPLn/Mjc
+ Yd8FGq626+JB/jaNiqxYshNizZLCWSUb/b/OR0we2y1k1xDb0CH4oKohr8HYT8KgLH9nPuSCu+x19LWPyZZ1uqpZTBIkRyJa0fU3c0mAdoryHOEthXaFj2IL
+ emA638jtVNW8ZtshJVOaUlKOubkslc24q+gjTvmJiy5xPC5Qw3w8vnkxuoyUZgruA8Bl00td9J6jgVNnxZk5tg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/27, Junio C Hamano wrote:
-> Thomas Gummerer <t.gummerer@gmail.com> writes:
-> 
-> > +worktree.guessRemote::
-> > +	With `add`, if no branch argument, and neither of `-b` nor
-> > +	`-B` nor `--detach` are given, the command defaults to
-> > +	creating a new branch from HEAD.  If `worktree.guessRemote` is
-> > +	set to true, `worktree add` tries to find a remote-tracking
-> > +	branch whose name uniquely matches the new branch name.  If
-> > +	such a branch exists, it is checked out and set as "upstream"
-> > +	for the new branch.  If no such match can be found, it falls
-> > +	back to creating a new branch from the current HEAD.
-> 
-> Unlike the part I commented on in the previous step, this one is
-> clear that the feature only kicks in for 'add <path>' without
-> anything else, which is good.
-> 
-> > diff --git a/builtin/worktree.c b/builtin/worktree.c
-> > index 15cb1600ee..426aea8761 100644
-> > --- a/builtin/worktree.c
-> > +++ b/builtin/worktree.c
-> > @@ -33,8 +33,19 @@ struct add_opts {
-> >  
-> >  static int show_only;
-> >  static int verbose;
-> > +static int guess_remote;
-> >  static timestamp_t expire;
-> >  
-> > +static int git_worktree_config(const char *var, const char *value, void *cb)
-> > +{
-> > +	if (!strcmp(var, "worktree.guessremote")) {
-> > +		guess_remote = git_config_bool(var, value);
-> > +		return 0;
-> > +	}
-> > +
-> > +	return 0;
-> > +}
-> > +
-> 
-> It is a lot more consistent with the established practice if this
-> function had
-> 
-> 	return git_default_config(var, value, cb);
-> 
-> instead of "return 0" at the end, and then have the call to
-> 
-> 	git_config(git_default_config, NULL);
-> 
-> we have in cmd_worktree() replaced with
-> 
-> 	git_config(git_worktree_config, NULL);
-> 
-> That would avoid having to scan the entire set of config keys once
-> in cmd_worktree() and then again in add(), the latter one only
-> looking for a single variable.
 
-Makes sense, I missed that.  I'll fix it in the re-roll.  I'll wait a
-few days to see if there are any more comments on the series and then
-re-roll it with the suggested changes.
 
-Thanks for the review!
+On 11/25/2017 5:16 PM, Johannes Schindelin wrote:
+> Hi Igor,
+>
+> On Thu, 23 Nov 2017, Igor Djordjevic wrote:
+>
+>> [ +Cc:  Git for Windows mailing list ]
+> I have no idea why it claimed that that group does not exist, the email
+> address looks correct to me.
+>
+>> On 23/11/2017 19:51, Phil Martel wrote:
+>>> I'm trying to install Git-2.15.0-64-bit.exe onto my Windows 10
+>>> machine.  When I run this installer program no matter what options I
+>>> try or whether I run as administrator it ends up with an error box
+>>> saying "The drive or UNC share you selected does not exist or is not
+>>> accessible. Please select another".  I do not see any way of
+>>> selecting a drive.  Any suggestions?
+>>  From what I could Google around, this seems to be (Inno Setup?)
+>> installation related issue...?
+> Indeed.
+>
+>> Do you already have "Git for Windows" installed? If so, does it work
+>> if you try uninstalling it first?
+> That is a workaround, correct.
+>
+>> p.s. Note the existence of "Git for Windows"[1] specific mailing list
+>> as well, where this issue might belong better.
+>>
+>> [1] git-for-windows@googlegroups.com
+> I think a much better place is the Git for Windows bug tracker (if you
+> ever wonder where the bug tracker is, or the home page, or the repository
+> or the FAQ, there are links in the upper left of the release notes --
+> which probably nobody reads, even if I really try to make them worth the
+> while -- and which you can find in C:\Program Files\Git\ReleaseNotes.html
+> if you closed the tab after installing Git for Windows).
+>
+> And indeed, there is already a ticket for this issue:
+> https://github.com/git-for-windows/git/issues/1074
+>
+> The original reporter did not respond to any questions, maybe you can do
+> better, Phil?
+My case seems similar although it may be different.  I originally had 
+Git installed on my C: drive.  A hardware upgrade moved that drive to 
+E:.  I was able to link everything back and to run Git Bash (IIRC).
+
+A few weeks later, the E: drive got sick.  The repair shop I went to was 
+not able to restore much, but in the course of changes took my DVD drive 
+out of the boot sequence which changed the E: drive to D:.  I was able 
+to restore most of my files from an external herd disk backup, but the 
+backup was from when the disk was C:
+
+I could not run Git when I tried, so I downloaded the latest version 
+from git-scm.com.  This failed to install with the  "The drive or UNC 
+share you selected does not exist or is not accessible. Please select 
+another" error.  I was puzzled because the installation code had not 
+asked me to select a drive.  Following Buga's suggestion, I tried 
+uninstalling Git.  I believe Windows said it could not find the 
+uninstall information, but it did remove Git from the list of programs.  
+I also removed Git from the start menu.  The installation then succeeded.
+
+Best wishes,
+--Phil
+>
+> Ciao,
+> Johannes
+
