@@ -2,163 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 762A520954
-	for <e@80x24.org>; Mon, 27 Nov 2017 08:24:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7C6DE20954
+	for <e@80x24.org>; Mon, 27 Nov 2017 09:08:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751264AbdK0IYu (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Nov 2017 03:24:50 -0500
-Received: from mail-it0-f41.google.com ([209.85.214.41]:35391 "EHLO
-        mail-it0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751156AbdK0IYt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Nov 2017 03:24:49 -0500
-Received: by mail-it0-f41.google.com with SMTP id x28so4739577ita.0
-        for <git@vger.kernel.org>; Mon, 27 Nov 2017 00:24:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=ZYqHxqFyObJOmsM74HYdFVqAXvvGagGzsJnlEFJAGZc=;
-        b=YfDxiL0Edj2DhuT1cI8Mj4828Fcc3Q+fV22gww9JrcK2J+f+6jhz9SEaN7J+9eiO8S
-         oluFf8F0ZjMydF0HP8g0RgoZr5LbTDw8vU8nrrjxDmGO7AG/hc5bT01y3VxfsqskcGgw
-         2yhv+gUnWYbFc9e9r/EO61SogGIdhM7WSKxoNyxUafIcBBFso38fXgznuSJiuXNCBEtY
-         5dp3MI8H4EZM+sTeX38dGEr+EL9zizgU21LUrsznQfomjgwJ5rFbEK+XdtlnglxWgiMV
-         IARXX/4PSsbzcnY2T9fgX3qeDoj6XC5614eDDLq9TcIwvMRTQfbcdiOd2xNzTJmnKPum
-         /uaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=ZYqHxqFyObJOmsM74HYdFVqAXvvGagGzsJnlEFJAGZc=;
-        b=qV6M9QVYtN09K1E17tZ6HWkCHZVTvcMcqlfPXmBfr+Gzrq2cbqc3I2htdujzIiw2qO
-         FIuMI7GRoFceYuflF35MShHXq9hTrPrIYWD8OpToS3QEJukooLPuOVgekOeBY5no8vVN
-         43YC0yNi2pKIun77ayGBo8pDcxGQ14eDudn4xasaHjnozheUPnMfDPjHhR9RlSIN+J+d
-         h27H1Fiz1Z/h5Bda26Ag1OYhOTEAZ8pL0ufaswEV8tAuVTlCcK8J/f5jkb+T90egLoDb
-         GDujnTayV9eS7q8zE1tVpXRIw3fnc2nNeFCsMQvvFtDGaC4Gr9L9FF5LRIoJgyADyfaP
-         +TjA==
-X-Gm-Message-State: AJaThX7avsp93t+s+lgiGt1XEUWPeyWcSjvlsUB6z6hqxnSSRBOiGGPS
-        Vz3THmU8rnYO91Wvi5g1gI/AT85I6BMQS/pmB6UuQBKv
-X-Google-Smtp-Source: AGs4zMam8mocUrxX2zrFGFV9JWsltLyNv7YLHfPdyZk8yCeWx5hSwYGMc9GTre1W+GUn7NpNV/6SvZ8hAUWGrVtNdpc=
-X-Received: by 10.36.0.209 with SMTP id 200mr27233085ita.55.1511771088063;
- Mon, 27 Nov 2017 00:24:48 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.79.28.137 with HTTP; Mon, 27 Nov 2017 00:24:47 -0800 (PST)
-In-Reply-To: <20171127043502.GA5946@sigill>
-References: <20171120171517.6365-1-chriscool@tuxfamily.org>
- <20171120191931.okxejqyqayjvxpbc@aiede.mtv.corp.google.com>
- <CAP8UFD0d9zM9F3tLrTMiLdfoJQsOPELtmudVB6e83DiLPN5DEA@mail.gmail.com>
- <20171126191510.GA1501@sigill> <xmqqy3msfrr1.fsf@gitster.mtv.corp.google.com>
- <xmqqshd0e41a.fsf@gitster.mtv.corp.google.com> <20171127043502.GA5946@sigill>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 27 Nov 2017 09:24:47 +0100
-Message-ID: <CAP8UFD2tB_CpopP5OuqPSBfeeGzXfoC_Hz-UeT=eNW1fU6zyzA@mail.gmail.com>
-Subject: Re: [PATCH] Makefile: check that tcl/tk is installed
+        id S1751313AbdK0JIU (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Nov 2017 04:08:20 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64371 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751141AbdK0JIS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Nov 2017 04:08:18 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0A667BE0E3;
+        Mon, 27 Nov 2017 04:08:18 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=zXLc8uOg2ouOUcQ9sxWg75IuZaQ=; b=jWD4H1
+        xSx7tRrnZHenKSzdQnXGrZbXTTNVUmYn9G85v+s5ZowhCvbzWM2KANPmLrdHwu7A
+        0X31HsV8hTOo3bfckhEXr/LC5x+jCzCUxlKuOQGsi5i4afv2lpWtcQ9Y8bV05qLH
+        TdR0+tMcWcmzT2n9QmeYrmb7D1mKoF782400o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=kGecIwe7sxc9K7Q0T52UE1RLQpYFvH0u
+        y2N9e1cRte5YvKBbcW1IkbzRGoVcz/W9SMlWPcL4/eZIIqpvUv5LLGuhnvPBFKt5
+        3FPXDTSskBF+QH8sSNoYKJQ/e7WzdOriPrAUre+sjqN3CbVFFSN9Jxx/72J5/Z3a
+        YllXow/v/tc=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 01D2CBE0E2;
+        Mon, 27 Nov 2017 04:08:18 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 540F6BE0E1;
+        Mon, 27 Nov 2017 04:08:17 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
+Cc:     Christian Couder <christian.couder@gmail.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
         git <git@vger.kernel.org>, Dominik Mahrer <teddy@teddy.ch>,
         git-packagers@googlegroups.com, Todd Zullinger <tmz@pobox.com>,
         Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH] Makefile: check that tcl/tk is installed
+References: <20171120171517.6365-1-chriscool@tuxfamily.org>
+        <20171120191931.okxejqyqayjvxpbc@aiede.mtv.corp.google.com>
+        <CAP8UFD0d9zM9F3tLrTMiLdfoJQsOPELtmudVB6e83DiLPN5DEA@mail.gmail.com>
+        <20171126191510.GA1501@sigill>
+        <xmqqy3msfrr1.fsf@gitster.mtv.corp.google.com>
+        <xmqqshd0e41a.fsf@gitster.mtv.corp.google.com>
+        <20171127043502.GA5946@sigill>
+Date:   Mon, 27 Nov 2017 18:08:16 +0900
+In-Reply-To: <20171127043502.GA5946@sigill> (Jeff King's message of "Sun, 26
+        Nov 2017 23:35:02 -0500")
+Message-ID: <xmqq1skkccn3.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 81A9438C-D352-11E7-A2FC-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 27, 2017 at 5:35 AM, Jeff King <peff@peff.net> wrote:
-> On Mon, Nov 27, 2017 at 01:31:13PM +0900, Junio C Hamano wrote:
->
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->> > Perhaps the "else" part of the above should become a bit more
->> > careful, something along the lines of...
->> >
->> >     else
->> >             MSGFMT ?= msgfmt
->> > -           ifneq ($(shell $(MSGFMT) --tcl -l C -d . /dev/null 2>/dev/null; echo $$?),0)
->> > -                   MSGFMT := $(TCL_PATH) po/po2msg.sh
->> > -           endif
->> > +           MSGFMT_DRYRUN = --tcl -l C -d . /dev/null 2>/dev/null
->> > +            ifneq ($(shell $(MSGFMT) $(MSGFMT_DRYRUN); echo $$?),0)
->> > +               ifneq ($(shell $(TCL_PATH) po/po2msg.sh $(MSGFMT_DRYRUN); echo $$?),0)
->> > +                    MSGFMT := $(TCL_PATH) po/po2msg.sh
->> > +               else
->> > +                   $(error "no usable msgfmt to build gitk; set NO_TCLTK perhaps?")
->> > +               endif
->> >             endif
->> >     endif
->>
->> Actually, at this point, I think the suggestion should primarily be
->> to install either msgfmt or tclsh; offering another choice to set
->> NO_TCLTK is OK, but it should be secondary, as the fact that the
->> make utility is running this recipe is a sign that the builder wants
->> to build gitk/git-gui.
-
-What if the user actually don't care about internationalization?
-
-The problem is that inside git-gui, the option to disable msgfmt is
-NO_MSGFMT, while in the git repo it is NO_GETTEXT, so if we make this
-change in git-gui, we should suggest using NO_MSGFMT to disable
-msgfmt. But then the user building git and setting NO_MSGFMT will get
-another msgfmt related error later in the git build (as NO_MSGFMT will
-have no effect in the git build) and will not understand at all why
-there is still a msgfmt error despite setting NO_MSGFMT as the build
-suggested.
+Jeff King <peff@peff.net> writes:
 
 > I think that's the rub, though. We hit this code path by default, so
 > it's _not_ a sign that the builder cares about gitk.
 
-Yeah, I agree. That's why I think it is a good idea if Tcl/Tk is not
-installed to ask for either setting NO_TCLTK or installing Tcl/Tk or
-setting BYPASS_TCLTK_CHECK.
-
-> I do agree that outlining "install one of these or disable tcl" as the
-> options is a good idea, though.
-
-The problem is that we should suggest disabling msgfmt as it is a
-valid solution, but as explained above there is an issue related to
-NO_MSGFMT in git-gui vs NO_GETTEXT in git.
-
-That's also one of the reason why I don't want to mix the Tcl/Tk issue
-and the msgfmt issue. In the end I think we should fix both, but if it
-is not possible to fix the simpler Tcl/Tk issue first, it's not even
-worth spending time to take a deep look at the msgfmt issue.
+OK.
 
 >> Whether the builder wants to run the result on the same box is a
 >> separate and irrelevant matter.  Once built and installed, a box
 >> without "wish" may not be able to run the result, but installing it
 >> after the fact will fix it without need to rebuild anything.
-
-Yeah, people have not complained about that and it is not a really bad
-situation, but I don't think this is the best practice nor the best we
-can do, and I think the situation in this regard is better after my
-patch.
-
-For example if someone builds a box that should be used afterwards in
-an internal network where this no way to install Tcl/Tk, then users
-will be screwed when they will try to run gitk or git-gui. The same
-thing can happen if someone installs git just before a long plane trip
-with no Internet access. Also the person using git-gui or gitk may not
-be the same person as the person installing the box, so the user might
-just not have the rights to actually install things.
-
-As I wrote in a previous email, in general it is best to try to fix
-issues as soon possible, so it is better to invite people to decide if
-they want to install Tcl/Tk at build time rather than at run time.
-Yeah, I know that it is not best for packagers and maybe a few other
-special cases, but I think setting BYPASS_TCLTK_CHECK should be a good
-enough workaround in those cases.
-
+>
 > Yeah, this side-steps the "other half" of the issue that Christian's
 > patch addresses, which seems like the more controversial part (I don't
 > have a strong opinion myself, though).
 
-I don't think any part of my patch should be controversial. I
-repeatedly wrote very long messages to show all the possible cases, so
-that it is easy to see that we are not worse in any case. And all the
-competing suggestions, even the above from Junio either have
-significant problems or address a different problem.
+Is that controversial at all?  In the sense that it is addressing a
+non-issue (i.e. it is perfectly fine if installed gitk fails at
+runtime complaining that it cannot find wish), it might be, but to
+me, it appears there isn't any room for controversy there.
+
+But an out-of-box build that fails _is_ a problem worth addressing
+to, so I view it primarily as the "how do we do msgfmt (or its
+substitute that is good enough for tcl script)" issue.  Perhaps we
+can export NO_GETTEXT from the top-level Makefile and have Makefiles
+in these two subdirectories to pay attention to it, in addition to
+NO_MSGFMT, and build them without i18n support instead of failing,
+or something?
