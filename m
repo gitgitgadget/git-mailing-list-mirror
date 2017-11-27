@@ -2,94 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F0E7620A40
-	for <e@80x24.org>; Mon, 27 Nov 2017 04:35:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B947620A40
+	for <e@80x24.org>; Mon, 27 Nov 2017 04:35:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751105AbdK0EfF (ORCPT <rfc822;e@80x24.org>);
-        Sun, 26 Nov 2017 23:35:05 -0500
-Received: from cloud.peff.net ([104.130.231.41]:40964 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750841AbdK0EfE (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 26 Nov 2017 23:35:04 -0500
-Received: (qmail 25060 invoked by uid 109); 27 Nov 2017 04:35:05 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 27 Nov 2017 04:35:05 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 32242 invoked by uid 111); 27 Nov 2017 04:35:21 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Sun, 26 Nov 2017 23:35:21 -0500
-Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 26 Nov 2017 23:35:02 -0500
-Date:   Sun, 26 Nov 2017 23:35:02 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        git <git@vger.kernel.org>, Dominik Mahrer <teddy@teddy.ch>,
-        git-packagers@googlegroups.com, Todd Zullinger <tmz@pobox.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH] Makefile: check that tcl/tk is installed
-Message-ID: <20171127043502.GA5946@sigill>
-References: <20171120171517.6365-1-chriscool@tuxfamily.org>
- <20171120191931.okxejqyqayjvxpbc@aiede.mtv.corp.google.com>
- <CAP8UFD0d9zM9F3tLrTMiLdfoJQsOPELtmudVB6e83DiLPN5DEA@mail.gmail.com>
- <20171126191510.GA1501@sigill>
- <xmqqy3msfrr1.fsf@gitster.mtv.corp.google.com>
- <xmqqshd0e41a.fsf@gitster.mtv.corp.google.com>
+        id S1751136AbdK0Efj (ORCPT <rfc822;e@80x24.org>);
+        Sun, 26 Nov 2017 23:35:39 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57799 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751045AbdK0Efi (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Nov 2017 23:35:38 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A9C3CBBEE4;
+        Sun, 26 Nov 2017 23:35:37 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=KOmRtHPA2ZgZ82g5fKM7aCK3zik=; b=UjVfyc
+        VVBsgzRfJOc1+Iu8KcSI03mcglGyywClqiuvTodcJorv0+83csppyhoXXajzZsDr
+        N8KFMF3BU+Q8D40bz42utVfvjQ2sTv6yf3Oc+Kn5ZKN1H2cJSLCY36fHKyb0RVWo
+        JsKeZZRjaywlhNFGSE9HjVNhoIorol4caB5NU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=opl1XS7Q3FpthwM1RmINfHOVqY4jCEBg
+        /DpoKKaTaWo7TmLeb9Nxz7DATlmIEHodFV+5RrWKWNLeRpHPjZUqflzMUdDB+q3K
+        hthxA9cY8+6oAoskoaVoRwdUp0K2Wic2A68zT4Ws1gX7KoONKg1phJCXl0fXeLQA
+        djxOs/DyDpM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9F381BBEE2;
+        Sun, 26 Nov 2017 23:35:37 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1E907BBEE0;
+        Sun, 26 Nov 2017 23:35:37 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Takuto Ikuta <tikuta@google.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Use OBJECT_INFO_QUICK to speedup git fetch-pack
+References: <0102015ffbbb2905-570eadd1-6b5c-46af-a3a9-bddfbd01c242-000000@eu-west-1.amazonses.com>
+Date:   Mon, 27 Nov 2017 13:35:35 +0900
+In-Reply-To: <0102015ffbbb2905-570eadd1-6b5c-46af-a3a9-bddfbd01c242-000000@eu-west-1.amazonses.com>
+        (Takuto Ikuta's message of "Mon, 27 Nov 2017 04:27:47 +0000")
+Message-ID: <xmqqo9noe3u0.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqshd0e41a.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6A2C3992-D32C-11E7-97DD-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 27, 2017 at 01:31:13PM +0900, Junio C Hamano wrote:
+Takuto Ikuta <tikuta@google.com> writes:
 
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > Perhaps the "else" part of the above should become a bit more
-> > careful, something along the lines of...
-> >
-> >     else
-> >             MSGFMT ?= msgfmt
-> > -           ifneq ($(shell $(MSGFMT) --tcl -l C -d . /dev/null 2>/dev/null; echo $$?),0)
-> > -                   MSGFMT := $(TCL_PATH) po/po2msg.sh
-> > -           endif
-> > +           MSGFMT_DRYRUN = --tcl -l C -d . /dev/null 2>/dev/null
-> > +            ifneq ($(shell $(MSGFMT) $(MSGFMT_DRYRUN); echo $$?),0)
-> > +               ifneq ($(shell $(TCL_PATH) po/po2msg.sh $(MSGFMT_DRYRUN); echo $$?),0)
-> > +                    MSGFMT := $(TCL_PATH) po/po2msg.sh
-> > +               else
-> > +                   $(error "no usable msgfmt to build gitk; set NO_TCLTK perhaps?")
-> > +               endif
-> >             endif
-> >     endif
-> 
-> Actually, at this point, I think the suggestion should primarily be
-> to install either msgfmt or tclsh; offering another choice to set
-> NO_TCLTK is OK, but it should be secondary, as the fact that the
-> make utility is running this recipe is a sign that the builder wants
-> to build gitk/git-gui.
+> diff --git a/fetch-pack.c b/fetch-pack.c
+> index 008b25d3db087..0184584e80599 100644
+> --- a/fetch-pack.c
+> +++ b/fetch-pack.c
+> @@ -716,7 +716,7 @@ static int everything_local(struct fetch_pack_args *args,
+>  	for (ref = *refs; ref; ref = ref->next) {
+>  		struct object *o;
+>  
+> -		if (!has_object_file(&ref->old_oid))
+> +		if (!has_object_file_with_flags(&ref->old_oid, OBJECT_INFO_QUICK))
+>  			continue;
+>  
 
-I think that's the rub, though. We hit this code path by default, so
-it's _not_ a sign that the builder cares about gitk.
+It appears that great minds think alike?
 
-I do agree that outlining "install one of these or disable tcl" as the
-options is a good idea, though.
+cf. https://public-inbox.org/git/20171120202920.7ppcwmzkxifywtoj@sigill.intra.peff.net/
 
-> Whether the builder wants to run the result on the same box is a
-> separate and irrelevant matter.  Once built and installed, a box
-> without "wish" may not be able to run the result, but installing it
-> after the fact will fix it without need to rebuild anything.
+The 5-patch series that contains the same change as this one is
+cooking and will hopefully be in the released version before the end
+of the year.
 
-Yeah, this side-steps the "other half" of the issue that Christian's
-patch addresses, which seems like the more controversial part (I don't
-have a strong opinion myself, though).
 
--Peff
