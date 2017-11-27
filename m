@@ -2,169 +2,227 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2968D20C11
-	for <e@80x24.org>; Mon, 27 Nov 2017 22:50:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1274E20C11
+	for <e@80x24.org>; Mon, 27 Nov 2017 23:04:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752302AbdK0WuY (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Nov 2017 17:50:24 -0500
-Received: from cloud.peff.net ([104.130.231.41]:41882 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751771AbdK0WuX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Nov 2017 17:50:23 -0500
-Received: (qmail 13220 invoked by uid 109); 27 Nov 2017 22:50:23 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 27 Nov 2017 22:50:23 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6964 invoked by uid 111); 27 Nov 2017 22:50:40 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Mon, 27 Nov 2017 17:50:40 -0500
-Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 27 Nov 2017 17:50:21 -0500
-Date:   Mon, 27 Nov 2017 17:50:21 -0500
-From:   Jeff King <peff@peff.net>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Nathan Neulinger <nneul@neulinger.org>,
-        Santiago Torres <santiago@nyu.edu>, git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: git status always modifies index?
-Message-ID: <20171127225020.GA29384@sigill.intra.peff.net>
-References: <20171122161014.djkdygmclk227xmq@LykOS.localdomain>
- <dfbf4af3-e87c-bdcb-7544-685572925a50@neulinger.org>
- <20171122202720.GD11671@aiede.mtv.corp.google.com>
- <20171122211729.GA2854@sigill>
- <20171122215635.GE11671@aiede.mtv.corp.google.com>
- <20171122220627.GE2854@sigill>
- <xmqqwp2diuki.fsf@gitster.mtv.corp.google.com>
- <xmqq7eudidqb.fsf@gitster.mtv.corp.google.com>
- <20171127044314.GA6236@sigill>
- <20171127205731.GB27469@aiede.mtv.corp.google.com>
+        id S1753101AbdK0XEx (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Nov 2017 18:04:53 -0500
+Received: from mout.gmx.net ([212.227.17.22]:54137 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753035AbdK0XEv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Nov 2017 18:04:51 -0500
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MbsV8-1eaZtg1mIo-00JFhy; Tue, 28
+ Nov 2017 00:04:46 +0100
+Date:   Tue, 28 Nov 2017 00:04:45 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Liam Beguin <liambeguin@gmail.com>
+cc:     git@vger.kernel.org, gitster@pobox.com, avarab@gmail.com
+Subject: Re: [PATCH 4/5] rebase -i: learn to abbreviate command names
+In-Reply-To: <20171127045514.25647-5-liambeguin@gmail.com>
+Message-ID: <alpine.DEB.2.21.1.1711272344290.6482@virtualbox>
+References: <20171127045514.25647-1-liambeguin@gmail.com> <20171127045514.25647-5-liambeguin@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20171127205731.GB27469@aiede.mtv.corp.google.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:whAYitveRrEJzQjX+uzxBbSh+BVaR3xCn2N1wLvw19WLL4a1dv/
+ y+/xuvzS4DYv+RFq0xHjfrnl7XozO3EIjBlWFESN5pzhJodZ319Bstj+yAlXy7VFdjH+wWR
+ SGnNqpH6bDYPxmAuSx4VetHE1k6gDSU0UjM8eNpp0FSuIJqOOYKc27Fec0sNWkE5JufZREc
+ Lm5IFM5pDjhaPauOu0Lfw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Q25ZxovzAlc=:MfGxPUTmYNTVGesUUrMB60
+ yf1ECayA0dno1lt5aErMWzDlgnveMFsx57Dr1qGjqVHC/3OOidNE/TPGuNuxnjQgRUllEe4QM
+ 4AuGpZtln0e5csmWwetcQYobZUG5QeRPg4M+NmxThhKrGuFAgpeRpuvAIGR8/YPlWGTmTydFh
+ omw7GlJM/XWV2qO+TCU+O8wbeqG1wWomGdaRiLfpHLdrV96FTdyP5mIlOp8gqvSia8OXxgLxu
+ aQjhCsAkzjHNv8gJiuVBdGIeFA+pNOLZVE3tvDXR3UXQ5DbdAdrQWLcmT+vqMAdS+ZbCz/zk0
+ qAl+speKxjMBgOO5Rf+zxesyf0OM6j8uI3dyEQMZZhE2+lpomA+CkP/sYIxnyJsleaCA8ZTKx
+ Sz4/RdMKZOCXt3/xI5YLYC6y1e0ghJeRL0iPnTvYxcosX3wS2CUUijhYXt/Ki5TGfkLtNPu7L
+ FoTvIfY8OrhUJjYKXekCI2cgBdiXHR9wAqYo/tKANv2BAHsFKSu2nOnGnmhsNltJJOPeLrKI5
+ BDewLenH4QWA4OPJSXnzaHfADQg+u+h3KktrFgw1VBGDk++Jmpi/qWSNYdwsOPboiOZwDPMV5
+ /4QBbSdfK0ZLsddIc2/RX6Kf5BgHv+vDh28GOowC/7NNItP7od5hhiL2tZfLwp7epTTZSf55K
+ gKvXHGyfoDyGt04jBsyH9NRbNWSS87k+oy2F25WLlnBckRka5B6RWQMqHgDRi5Bue2NICf9zz
+ SKIep2gbOnGs4L3nu9d0F6HM0Evx2IBa7oymXvwQd+WUpMa6s81Xd0mK4MK5+LWUBVi1nALM9
+ FyVRiB4TryKG5/UIJJVkkQ/dRRFm7aKruOYBGJ/xsN/jxTo/VQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 27, 2017 at 12:57:31PM -0800, Jonathan Nieder wrote:
+Hi Liam,
 
-> > I actually consider "--no-optional-locks" to be such an aspirational
-> > feature. I didn't go digging for other cases (though I'm fairly certain
-> > that "diff" has one), but hoped to leave it for further bug reports ("I
-> > used the option, ran command X, and saw lock contention").
-> 
-> I am worried that the project is not learning from what happened here.
-> 
-> My main issue with the --no-optional-locks name is that it does not
-> connect to the underlying user need.  Your main argument for it is
-> that it exactly describes the underlying user need.  One of us has to
-> be wrong.
+On Sun, 26 Nov 2017, Liam Beguin wrote:
 
-Or there's a false dichotomy. ;) We could be talking about two different
-users.
+> diff --git a/Documentation/rebase-config.txt b/Documentation/rebase-config.txt
+> index 30ae08cb5a4b..0820b60f6e12 100644
+> --- a/Documentation/rebase-config.txt
+> +++ b/Documentation/rebase-config.txt
+> @@ -30,3 +30,22 @@ rebase.instructionFormat::
+>  	A format string, as specified in linkgit:git-log[1], to be used for the
+>  	todo list during an interactive rebase.  The format will
+>  	automatically have the long commit hash prepended to the format.
+> +
+> +rebase.abbreviateCommands::
+> +	If set to true, `git rebase` will use abbreviated command names in the
+> +	todo list resulting in something like this:
+> +
+> +-------------------------------------------
+> +	p deadbee The oneline of the commit
+> +	p fa1afe1 The oneline of the next commit
+> +	...
+> +-------------------------------------------
 
-> So let me describe my naive reading:
-> 
-> As a user, I want to inspect the state of the repository without
-> disrupting it in any way.  That means not breaking concurrent
-> processes and not upsetting permissions.  --read-only seems to
-> describe this use case to me perfectly.
+I *think* that AsciiDoc will render this in a different way from what we
+want, but I am not an AsciiDoc expert. In my hands, I always had to add a
+single + in an otherwise empty line to start a new indented paragraph *and
+then continue with non-indented lines*.
 
-That does not match the request that I got from real script writers who
-were having a problem. They wanted to avoid lock contention with
-background tasks.  They don't care if the repository is modified as long
-as it is done in a safe and non-conflicting way.
+> diff --git a/sequencer.c b/sequencer.c
+> index 810b7850748e..aa01e8bd9280 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -795,6 +795,13 @@ static const char *command_to_string(const enum todo_command command)
+>  	die("Unknown command: %d", command);
+>  }
+>  
+> +static const char command_to_char(const enum todo_command command)
+> +{
+> +	if (command < TODO_COMMENT && todo_command_info[command].c)
+> +		return todo_command_info[command].c;
+> +	return -1;
 
-I agree (as I think I've said already in this thread) that --read-only
-would be a superset of that. And that it would probably be OK to have
-just gone there in the first place, sacrificing a small amount of
-specificity in the name of having fewer knobs for the user to turn.
+My initial reaction was: should we return comment_line_char instead of -1
+here? Only after reading how this is called did I realize that the idea is
+to use full command names if there is no abbreviation. Not sure whether
+this is worth a code comment. What do you think?
 
-> If I understood correctly, your objection is that --read-only is not
-> specific enough.  What I really want, you might say, is not to break
-> concurrent processes.  Any other aspects of being read-only are not
-> relevant.  E.g. if I can refresh the on-disk index using O_APPEND
-> without disrupting concurrent processes then I should be satisfied
-> with that.
+> +}
+> +
+>  static int is_noop(const enum todo_command command)
+>  {
+>  	return TODO_NOOP <= command;
+> @@ -1242,15 +1249,16 @@ static int parse_insn_line(struct todo_item *item, const char *bol, char *eol)
+>  		return 0;
+>  	}
+>  
+> -	for (i = 0; i < TODO_COMMENT; i++)
+> +	for (i = 0; i < TODO_COMMENT; i++) {
+>  		if (skip_prefix(bol, todo_command_info[i].str, &bol)) {
+>  			item->command = i;
+>  			break;
+> -		} else if (bol[1] == ' ' && *bol == todo_command_info[i].c) {
+> +		} else if (bol[1] == ' ' && *bol == command_to_char(i)) {
+>  			bol++;
+>  			item->command = i;
+>  			break;
+>  		}
+> +	}
+>  	if (i >= TODO_COMMENT)
+>  		return -1;
+>  
 
-Do I have an objection? It's not clear to me that anybody is actually
-proposing anything concrete for me to object to.
+I would prefer this hunk to be skipped, it does not really do anything if
+I understand correctly.
 
-Are we adding "--read-only"? Are we going back to "status
---no-lock-index"? In either case, are we deprecating
-"--no-optional-locks"?
+> @@ -2443,8 +2451,8 @@ void append_signoff(struct strbuf *msgbuf, int ignore_footer, unsigned flag)
+>  	strbuf_release(&sob);
+>  }
+>  
+> -int sequencer_make_script(int keep_empty, FILE *out,
+> -		int argc, const char **argv)
+> +int sequencer_make_script(int keep_empty, int abbreviate_commands, FILE *out,
+> +			  int argc, const char **argv)
+>  {
+>  	char *format = NULL;
+>  	struct pretty_print_context pp = {0};
+> @@ -2483,7 +2491,9 @@ int sequencer_make_script(int keep_empty, FILE *out,
+>  		strbuf_reset(&buf);
+>  		if (!keep_empty && is_original_commit_empty(commit))
+>  			strbuf_addf(&buf, "%c ", comment_line_char);
+> -		strbuf_addf(&buf, "pick %s ", oid_to_hex(&commit->object.oid));
+> +		strbuf_addf(&buf, "%s %s ",
+> +			    abbreviate_commands ? "p" : "pick",
+> +			    oid_to_hex(&commit->object.oid));
 
-It sounds like you are arguing for the first, and it sounds like Dscho
-is arguing for the second. Frankly, I don't really care that much. I've
-said all that I can on why I chose the direction I did, and I remain
-unconvinced that we have evidence that the current option is somehow
-impossible to find. If somebody wants to take us down one of the other
-roads, that's fine by me.
+I guess the compiler will optimize this code so that the conditional is
+evaluated only once. Not that this is performance critical ;-)
 
-> Fair enough, though that feels like overengineering.  But I *still*
-> don't see what that has to do with the name "no-optional-locks".  When
-> is a lock *optional*?  And how am I supposed to discover this option?
+>  		pretty_print_commit(&pp, commit, &buf);
+>  		strbuf_addch(&buf, '\n');
+>  		fputs(buf.buf, out);
+> @@ -2539,7 +2549,7 @@ int add_exec_commands(const char *command)
+>  	return 0;
+>  }
+>  
+> -int transform_todo_ids(int shorten_ids)
+> +int transform_todo_ids(int shorten_ids, int abbreviate_commands)
+>  {
+>  	const char *todo_file = rebase_path_todo();
+>  	struct todo_list todo_list = TODO_LIST_INIT;
+> @@ -2575,19 +2585,33 @@ int transform_todo_ids(int shorten_ids)
+>  			todo_list.items[i + 1].offset_in_buf :
+>  			todo_list.buf.len;
+>  
+> -		if (item->command >= TODO_EXEC && item->command != TODO_DROP)
+> -			fwrite(p, eol - bol, 1, out);
+> -		else {
+> +		if (item->command >= TODO_EXEC && item->command != TODO_DROP) {
+> +			if (!abbreviate_commands || command_to_char(item->command) < 0) {
+> +				fwrite(p, eol - bol, 1, out);
+> +			} else {
+> +				const char *end_of_line = strchrnul(p, '\n');
+> +				p += strspn(p, " \t"); /* skip whitespace */
+> +				p += strcspn(p, " \t"); /* skip command */
+> +				fprintf(out, "%c%.*s\n",
+> +					command_to_char(item->command),
+> +					(int)(end_of_line - p), p);
+> +			}
+> +		} else {
+>  			const char *id = shorten_ids ?
+>  				short_commit_name(item->commit) :
+>  				oid_to_hex(&item->commit->object.oid);
+> -			int len;
+>  
+> -			p += strspn(p, " \t"); /* left-trim command */
+> -			len = strcspn(p, " \t"); /* length of command */
+> -
+> -			fprintf(out, "%.*s %s %.*s\n",
+> -				len, p, id, item->arg_len, item->arg);
+> +			if (abbreviate_commands) {
+> +				fprintf(out, "%c %s %.*s\n",
+> +					command_to_char(item->command),
+> +					id, item->arg_len, item->arg);
+> +			} else {
+> +				int len;
+> +				p += strspn(p, " \t"); /* left-trim command */
+> +				len = strcspn(p, " \t"); /* length of command */
+> +				fprintf(out, "%.*s %s %.*s\n",
+> +					len, p, id, item->arg_len, item->arg);
+> +			}
 
-I kind of feel like any answer I give to these questions is just going
-to be waved aside. But here are my earnest answers:
+This hunk changes indentation quite a bit, therefore it is a bit harder to
+read than necessary (and the resulting code, too, as it is more smooshed
+against the 80-column boundary on the right).
 
-  1. You are bit by lock contention, where running operation X ends up
-     with some error like "unable to create index.lock: file exists".
-     "X" is probably something like "commit".
+How about this instead:
 
-  2. You search the documentation for options related to locks. You're
-     not likely to find it in the manpage for X, since the root of the
-     problem actually has nothing to do with X in the first place. It's
-     a background task running "status" that is the problem.
+-		if (item->command >= TODO_EXEC && item->command != TODO_DROP)
++		if (abbreviate_commands && command_to_char(item->command)) {
++			const char *id = shorten_ids ?
++				short_commit_name(item->commit) :
++				oid_to_hex(&item->commit->object.oid);
++			fprintf(out, "%c %s %.*s\n",
++				command_to_char(item->command),
++				id, item->arg_len, item->arg);
++		} else if (item->command >= TODO_EXEC &&
++			 item->command != TODO_DROP)
 
-  3. You might find it in git(1) while searching for information on
-     locks, since "lock" is in the name of the option (and is in fact
-     the only hit in that page). The index is also mentioned there
-     (though searching for "index" yields a lot more hits).
+i.e. test first for the short and sweet case that we want (and can)
+abbreviate the command, otherwise keep the code as before?
 
-  4. You might find it in git-status(1) if you suspect that "status" is
-     at work. Searching for "index" or "lock" turns up the addition I
-     just proposed yesterday.
-
-There are obviously a lot of places where that sequence might fail to
-find a hit. But the same is true of just about any option, including
-putting "--read-only" into git(1).
-
-> This also came up during review, and I am worried that this review
-> feedback is being ignored.  In other words, I have no reason to
-> believe it won't happen again.
-
-I'm having a hard time figuring out what you mean here. Do you mean that
-I ignored feedback on this topic during the initial review?
-
-Looking at the original thread, I just don't see it. There was some
-question about the name. I tried to lay out my thinking here:
-
-  https://public-inbox.org/git/20170921050835.mrbgx2zryy3jusdk@sigill.intra.peff.net/
-
-and ended with:
-
-  I am open to a better name, but I could not come up with one.
-
-There was no meaningful response on the topic. When I reposted v2, I
-tried to bring attention to that with:
-
-    - there was some discussion over the name. I didn't see other
-      suggestions, and I didn't come up with anything better.
-
-So...am I missing something? Am I misunderstanding your point?
-
-> > I would be fine with having a further aspirational "read only" mode.
-> 
-> Excellent, we seem to agree on this much.  If I can find time for it
-> today then I'll write a patch.
-
-Great.
-
--Peff
+Ciao,
+Dscho
