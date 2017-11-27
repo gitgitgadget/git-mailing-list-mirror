@@ -2,109 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 03DDF20A40
-	for <e@80x24.org>; Mon, 27 Nov 2017 05:23:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6AE6020A40
+	for <e@80x24.org>; Mon, 27 Nov 2017 05:23:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751034AbdK0FXB (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Nov 2017 00:23:01 -0500
-Received: from mail-qt0-f178.google.com ([209.85.216.178]:42051 "EHLO
-        mail-qt0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750787AbdK0FXA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Nov 2017 00:23:00 -0500
-Received: by mail-qt0-f178.google.com with SMTP id j12so15932575qtc.9
-        for <git@vger.kernel.org>; Sun, 26 Nov 2017 21:22:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=NLyhtdWlVXVlS11zocupUpSImqswQHPJiC8DWMWEPAQ=;
-        b=ByaHZi3eIlXAtWpRsoRCa0ti3CKv/Fdr0lQ/fYicrkeA7KD6Y/ucZ5iTWxt62gxnWb
-         r5ip0drH7yDJMUNvhr1lKqp77UbaGLBukiaRPLaVM/kRG5ZkpQIpWg0hjrS3uQQI48Sr
-         iyUeqyFmWZKHltgEMjvL1ob5Cyx/fF41TuCNfcRh4P3uDejH6rhzr7vMCH4Um/x4Spef
-         FOKLCXSKgQnyEpTTVwCzAZdTujO7aTcOXo+gE9mvsWij4bUiUI2B/tpgTJTq+h/SU00D
-         DvyHD5AF2ZjFC0Tw2J8Ib+m/60DzZw1mxxbJNPN0C5zfdm+kXl1dtTsYNYZrH6D5+c+H
-         l5RA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=NLyhtdWlVXVlS11zocupUpSImqswQHPJiC8DWMWEPAQ=;
-        b=ljJro8ygPFSbz5Do+ueqQxtIXB7O0V1sSh9ME1c9/3erSf/ELNzfirJ83oI+arWGbZ
-         dWQQxWmJ5osPyE7+QkpHSyKQ/BM6n+HKNgFWalMYvdeJJWe0sg9kcZM8E0+M2dR7QFpS
-         WRSyhMC+itSUcUWIzegPH1JB5HxRRFEENQV6CAcyQOSYuHfA2zBsJPQ7nUG9PYGXAulR
-         CL/L6VBrlKyNubi0SPY1s2E+/9NvUUgcBuMkI+klZ6vxMjABjSWKOhlw/jpDxRrYwbhY
-         aRdcY9FwNjqBIAw76QaprcJ0JOFPYYa5p0Iv/d4SuExHdrnE1gfxzah0mmO4krUyosJH
-         Ku7A==
-X-Gm-Message-State: AJaThX4hbbqUS7iMOSj3Va/IBKetR06618SsTwl1TeDeHp8wUG1Xs0p2
-        wH1HwFIyDY8v1Av67V5pcKo=
-X-Google-Smtp-Source: AGs4zMb7W/bIzsltUmCcH+xSuYXPZEdR7ArvZ8TISiDCkoBZkSy5QUT4DcrH0w0uC6pt3qNvu6cYJA==
-X-Received: by 10.200.57.80 with SMTP id t16mr56068357qtb.98.1511760179072;
-        Sun, 26 Nov 2017 21:22:59 -0800 (PST)
-Received: from zaya.teonanacatl.net (pool-173-67-181-41.hrbgpa.fios.verizon.net. [173.67.181.41])
-        by smtp.gmail.com with ESMTPSA id 26sm19580850qtm.3.2017.11.26.21.22.56
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sun, 26 Nov 2017 21:22:57 -0800 (PST)
-Date:   Mon, 27 Nov 2017 00:22:54 -0500
-From:   Todd Zullinger <tmz@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        git <git@vger.kernel.org>, Dominik Mahrer <teddy@teddy.ch>,
-        git-packagers@googlegroups.com,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH] Makefile: check that tcl/tk is installed
-Message-ID: <20171127052254.GA3693@zaya.teonanacatl.net>
-References: <20171120171517.6365-1-chriscool@tuxfamily.org>
- <20171120191931.okxejqyqayjvxpbc@aiede.mtv.corp.google.com>
- <CAP8UFD0d9zM9F3tLrTMiLdfoJQsOPELtmudVB6e83DiLPN5DEA@mail.gmail.com>
- <20171126191510.GA1501@sigill>
- <xmqqy3msfrr1.fsf@gitster.mtv.corp.google.com>
- <xmqqshd0e41a.fsf@gitster.mtv.corp.google.com>
- <20171127043502.GA5946@sigill>
+        id S1751136AbdK0FXE (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Nov 2017 00:23:04 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55425 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751055AbdK0FXD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Nov 2017 00:23:03 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 67637B24E0;
+        Mon, 27 Nov 2017 00:23:03 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=USMpIig04OCKID7xcTwCrFgxc/I=; b=ayhFIN
+        FcN3JD39nxXvatIJ/TlCrlSCQ9nXlQQt5s0DghnG+iIu79H7ebWpg2RL9j/HJE5R
+        SHHxsHi8Z/PDpqNWuz8KWCt9ooiB4sJmaW4iIqRk9KYF0uGECy0/3jBvHa4CIr4a
+        LdZq0IvHWKi292V7hRY/+/3vIl1H48N+CuATc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=akIoys2wmnFRxltGbuc5/fewHBuTGFmd
+        qE7ZKvd5eIzZpmj8Eur+F2n/uUjcW0MEncUHBl1VmCozaVvNyzld1PeSv2ObqUuV
+        Q2YWNlZUs8Rfiz3KbjH3I9zGhUQznd016Gsk1wBZre8ut6JBUxA219LmeCugm/ek
+        oaFGVD0fqHs=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5CF92B24DF;
+        Mon, 27 Nov 2017 00:23:03 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CD686B24DC;
+        Mon, 27 Nov 2017 00:23:02 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Liam Beguin <liambeguin@gmail.com>
+Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de, avarab@gmail.com
+Subject: Re: [PATCH 0/5] rebase -i: add config to abbreviate command names
+References: <20171127045514.25647-1-liambeguin@gmail.com>
+Date:   Mon, 27 Nov 2017 14:23:01 +0900
+In-Reply-To: <20171127045514.25647-1-liambeguin@gmail.com> (Liam Beguin's
+        message of "Sun, 26 Nov 2017 23:55:09 -0500")
+Message-ID: <xmqqwp2ccn2i.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20171127043502.GA5946@sigill>
-User-Agent: Mutt/1.9.1 (2017-09-22)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0A5A0132-D333-11E7-BBAD-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King wrote:
-> Yeah, this side-steps the "other half" of the issue that Christian's 
-> patch addresses, which seems like the more controversial part (I don't 
-> have a strong opinion myself, though).
+Liam Beguin <liambeguin@gmail.com> writes:
 
-I don't either.  The general motivation there, as far as I understand, 
-is that it's undesirable to have 'make install' install tools that 
-cannot run.
+> Liam Beguin (5):
+>   Documentation: move rebase.* configs to new file
+>   Documentation: use preferred name for the 'todo list' script
+>   rebase -i: add exec commands via the rebase--helper
+>   rebase -i: learn to abbreviate command names
+>   t3404: add test case for abbreviated commands
 
-Perhaps it's worth noting that there are other commands installed by 
-default which won't work out of the box.  For example, 'git svn'
-requires subversion at run time but not at build time.
-
-If there aren't many such commands, then maybe checking for them in 
-the Makefile is reasonable to make installing git from source easier 
-for new users.  Without looking closely, I can't do more than take a 
-wild guess.
-
-As a package maintainer and an aging sysadmin, I'd bet that there are 
-more dependencies than one might initially guess.  I also tend to 
-think that by the time most users want something newer than their OS 
-provides that they're a bit more able to deal with these sort of 
-issues.  But I could easily be wrong on all counts.
-
--- 
-Todd
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Going to trial with a lawyer who considers your whole life-style a
-Crime in Progress is not a happy prospect.
-    -- Hunter S. Thompson
-
+I didn't send any comment on [1&2/5] but they both looked good.
