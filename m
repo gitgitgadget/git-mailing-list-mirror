@@ -2,79 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 47B5420C11
-	for <e@80x24.org>; Mon, 27 Nov 2017 23:42:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 49C1220C11
+	for <e@80x24.org>; Mon, 27 Nov 2017 23:43:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753338AbdK0XmH (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Nov 2017 18:42:07 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53997 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752378AbdK0XmF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Nov 2017 18:42:05 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BE830BEFC6;
-        Mon, 27 Nov 2017 18:42:04 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=LtInHwVWn2kinR9sc8LNh6UyVtE=; b=horRh8
-        Cr8LeCCZEz9zwxZQiaT9nq/dC/RW/Ah97hi8MVg7L6AyTykJS3WRmS7JW3vxqUXB
-        JXUvhlY388q+jCFQVPkwEioyxYzyEFox+MmPwW3q7eFwZqu0N5KRPIUIBTo94kHy
-        UjVfwU+M7W1RDSjZnx2rVbp6JzstnCvu0FQO8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=KPjpnCmXKmDkbXqs5XkMOV1hW1vTlhbr
-        LxRb31FBRFv5dEJiarn7sNlh17qD410hh4plkrPC3mN+J5WagbCC0t+DfPysd5cg
-        N4QUQQggoC5mBejmQ9Zkztm1KELqZKtvIxDylFhum9dRfLYuHT4q5LG0B3dRcwoR
-        PnEHVBk1WPM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B4F35BEFC5;
-        Mon, 27 Nov 2017 18:42:04 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1D60EBEFC4;
-        Mon, 27 Nov 2017 18:42:04 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        git <git@vger.kernel.org>, Dominik Mahrer <teddy@teddy.ch>,
-        git-packagers@googlegroups.com, Todd Zullinger <tmz@pobox.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH] Makefile: check that tcl/tk is installed
-References: <20171120171517.6365-1-chriscool@tuxfamily.org>
-        <20171120191931.okxejqyqayjvxpbc@aiede.mtv.corp.google.com>
-        <CAP8UFD0d9zM9F3tLrTMiLdfoJQsOPELtmudVB6e83DiLPN5DEA@mail.gmail.com>
-        <20171126191510.GA1501@sigill>
-        <xmqqy3msfrr1.fsf@gitster.mtv.corp.google.com>
-        <xmqqshd0e41a.fsf@gitster.mtv.corp.google.com>
-        <20171127043502.GA5946@sigill>
-        <CAP8UFD2tB_CpopP5OuqPSBfeeGzXfoC_Hz-UeT=eNW1fU6zyzA@mail.gmail.com>
-        <20171127152748.GA23218@sigill.intra.peff.net>
-Date:   Tue, 28 Nov 2017 08:42:02 +0900
-In-Reply-To: <20171127152748.GA23218@sigill.intra.peff.net> (Jeff King's
-        message of "Mon, 27 Nov 2017 10:27:49 -0500")
-Message-ID: <xmqqo9nn9tmd.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1752836AbdK0XnB (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Nov 2017 18:43:01 -0500
+Received: from mout.gmx.net ([212.227.17.21]:65091 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753141AbdK0Xm7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Nov 2017 18:42:59 -0500
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M8JyQ-1f6MN4227e-00vt0c; Tue, 28
+ Nov 2017 00:42:52 +0100
+Date:   Tue, 28 Nov 2017 00:42:25 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Dan Jacques <dnj@google.com>
+cc:     git@vger.kernel.org, avarab@gmail.com, gitster@pobox.com
+Subject: Re: [PATCH v3 4/4] exec_cmd: RUNTIME_PREFIX on some POSIX systems
+In-Reply-To: <20171127164055.93283-5-dnj@google.com>
+Message-ID: <alpine.DEB.2.21.1.1711280039010.6482@virtualbox>
+References: <20171127164055.93283-1-dnj@google.com> <20171127164055.93283-5-dnj@google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 927550BE-D3CC-11E7-B81E-8EF31968708C-77302942!pb-smtp1.pobox.com
+Content-Type: multipart/mixed; boundary="8323329-203006063-1511826172=:6482"
+X-Provags-ID: V03:K0:zk7bnw0w0LFlQA2vXPjYvIHDDsLoGqXovydUmzjji/EF2Nhiuj6
+ zSGIfCFgOUNW93eOcbr28vddGi34vVvRjvitFGFPQ60exJMYyHyw2qlEd6LQEIKd5Tkbko3
+ fqSOWdxqmc7PIPaFgG0P323D+IXqrYRBx1dxIpAqxhBMkolmp8LhcYe8l08LwKqpJ7NcbSC
+ h8b9B9SMDt+d5+VRd5TDQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ql8fCmIiGjk=:69fUFfYW7AFGFodj5qrrYZ
+ OUKSQSuD/cZ/FlhoiecmBhZltalKW/YygITgc2LLXcI6ESCo8UYtCfkiFZsHIM0Ch9J/jR+Rt
+ XhgrQJpToudxZ3UNaDpFf3h8eF7CAVwgx/BK0eiOO9iONWZxxyFzfzJWr+0JkUVfrTFGZgW5k
+ LvrHXosxaTlAX7zh9urZWahxo4aKf/bAm7+ey3KliHJvjCOSiZblsCAGD1y9GOTS99XhrmtQQ
+ c3QjyjnK7MIf5JnW7DsJRI5akr2w0/9PQKajh2pJlp3ICjEk/O51ZqCT/mdUzo/xITELdAsQO
+ PfIma1yodngz0avHoNS7Zs8ZhhnNho9v6R5nq2LLXt21/y3bPzWGRXNVGWJqpRAOmpAHC/iFo
+ 73bwvfMhh7SD44qmz2HKs5J+dyksG2adfTDHwBk5tpMNeZy+BKBc1VhQmTlEQ5zCui2L9NewI
+ KLTCxWjUewJ5jASez3GwySjhs10/quWlNDBhpoKqgbFn0TaKsKDISG+J/W7JbipZNv7RASPd4
+ wdIeSI4CsBbQfId2m52GsAeKjmyqWLCP3LyRPSlXwFhsC/YE1j5jYtHrJgaI6FZI7lZI9A1q8
+ RoRTFgS8QvXq8NYxLiLxV2ZJdEdi1s62JHdVV+zOgLjaEVVQLGsh8FSHivI88a2MegWCUg9Fq
+ 5h8/h5T303mzE9TGtqx1E6OGmuS7TvHzpmKi4bI3TTmVfx1ZzLdWbREnZ6OJY66MrMq0axWDe
+ dIZHrWfLdOQ36IbRaB0fSye3C4oOsG9XM1C3WdlP2BhaYfL8IvTFLkb0glVzTDuTlGIHfgHZ2
+ owWKIKIkCAfKG03HQzByYnZugaRJRb5cRgCtMx5PalGvhtvKs25QPODlr94PpqIQ6IcOOnR
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> without having "wish" on the build machine. If everybody is happy with
-> the BYPASS mechanism you added to address that, then I'm perfectly fine
-> with it.
+--8323329-203006063-1511826172=:6482
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-OK.  The topic was queued on 'pu' yesterday; lets move it forward
-after waiting for a few more days to see if there are further
-improvements and/or objections.
+Hi Dan,
+
+On Mon, 27 Nov 2017, Dan Jacques wrote:
+
+> diff --git a/gettext.c b/gettext.c
+> index db727ea02..6b64d5c2e 100644
+> --- a/gettext.c
+> +++ b/gettext.c
+> @@ -2,7 +2,8 @@
+>   * Copyright (c) 2010 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+>   */
+> =20
+> -#include "git-compat-util.h"
+> +#include "cache.h"
+> +#include "exec_cmd.h"
+>  #include "gettext.h"
+>  #include "strbuf.h"
+>  #include "utf8.h"
+> @@ -157,10 +158,11 @@ static void init_gettext_charset(const char *domain=
+)
+> =20
+>  void git_setup_gettext(void)
+>  {
+> -=09const char *podir =3D getenv("GIT_TEXTDOMAINDIR");
+> +=09const char *podir =3D getenv(GIT_TEXT_DOMAIN_DIR_ENVIRONMENT);
+> =20
+>  =09if (!podir)
+> -=09=09podir =3D GIT_LOCALE_PATH;
+> +=09=09podir =3D system_path(GIT_LOCALE_PATH);
+
+In Git for Windows, we have an almost identical patch:
+
+=09https://github.com/git-for-windows/git/commit/bdd739bb2b0b
+
+We just guard the call to system_path() behind a test whether podir is
+already absolute, but these days, system_path() does that itself.
+
+I am too little of a Perl expert to be helpful with the other patches, but
+I would gladly runa build & test on Windows if you direct me to an
+easily-pullable branch.
+
+Ciao,
+Johannes
+--8323329-203006063-1511826172=:6482--
