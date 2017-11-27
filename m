@@ -2,124 +2,156 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A579C20C11
-	for <e@80x24.org>; Mon, 27 Nov 2017 23:16:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E44720C11
+	for <e@80x24.org>; Mon, 27 Nov 2017 23:18:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752943AbdK0XQJ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Nov 2017 18:16:09 -0500
-Received: from mout.gmx.net ([212.227.15.18]:60878 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752540AbdK0XQI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Nov 2017 18:16:08 -0500
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lh7sF-1ewf3M0cCt-00oUNC; Tue, 28
- Nov 2017 00:16:03 +0100
-Date:   Tue, 28 Nov 2017 00:16:02 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Liam Beguin <liambeguin@gmail.com>
-cc:     git@vger.kernel.org, gitster@pobox.com, avarab@gmail.com
-Subject: Re: [PATCH 5/5] t3404: add test case for abbreviated commands
-In-Reply-To: <20171127045514.25647-6-liambeguin@gmail.com>
-Message-ID: <alpine.DEB.2.21.1.1711280007160.6482@virtualbox>
-References: <20171127045514.25647-1-liambeguin@gmail.com> <20171127045514.25647-6-liambeguin@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1753193AbdK0XSe (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Nov 2017 18:18:34 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60713 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1753033AbdK0XSd (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Nov 2017 18:18:33 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 953BCBEC04;
+        Mon, 27 Nov 2017 18:18:32 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Ag3kjDyxuyXLimzoZP/B6pAfJgU=; b=cgXQ1A
+        YyXo7QX7t/hZixXGkxKHrKS/FKCwmobVDVhsRfO0Q9egDp5E7XTKfO9apGEjwTkc
+        gywOGJiq12QywsZuYemU00lbTjxLw80XxK8xOnkyrxiw1f5/9olDz7COoUJYpMia
+        MUQXzFKQNxlXKjxGbzwiaGq6vMCl8hbJLM2O8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=r7i33YxweoQXK/doG25MF3OizsewdKF+
+        hpS2yZU5lOrAsTRV1iHrXwIq7dBuYhsCYoplYT5cRSrLpKjPrXDH8WfwL4+9MiEH
+        A6Tp3T8gXCOCQ0kxUjARUXU2oqLfBm8XXiDaKDW/gZJnrmAF9YRmKo9e/Q07SshL
+        PiUgVoOjRbY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8C1C7BEC03;
+        Mon, 27 Nov 2017 18:18:32 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E382CBEC02;
+        Mon, 27 Nov 2017 18:18:31 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     lars.schneider@autodesk.com
+Cc:     git@vger.kernel.org, sbeller@google.com, sunshine@sunshineco.com,
+        kaartic.sivaraam@gmail.com,
+        Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [PATCH v3] launch_editor(): indicate that Git waits for user input
+References: <20171127134716.69471-1-lars.schneider@autodesk.com>
+Date:   Tue, 28 Nov 2017 08:18:30 +0900
+In-Reply-To: <20171127134716.69471-1-lars.schneider@autodesk.com> (lars
+        schneider's message of "Mon, 27 Nov 2017 14:47:16 +0100")
+Message-ID: <xmqqefojb9a1.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:k+GH+vJYEK07FkyYvS4+b/lyF9FgTI2/tkZJawBfev8tH+nf6r3
- dSe1dFHrrc4Op2tO11oSdzzXgwq2UNrp3pG9KMgjvV72Wdusg17K1jjFqNR0psvfHe68pp6
- hAcZ/Md0qa5l76IihVwVbbl2K2EFYvzTqlXK/Bf+bCp93xPyzjnTYU+iR9/lu2OXjoFXnEC
- ly4iSKLjgAlyy6Qw26k+Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Xjui+Duruck=:19b7Ip0v6RyJb09tPsUw9F
- 8TGRvv63MNCgVHAGNbS/LNrQMXfUUs6OIZgWyRxQm+7spuQsDB3Tjfs6jaZxbknd0YkS/Qh0+
- 6lIQEoRzhnXwDy9vmWifPMGokIXRagTivS3CnbLVSTHiucAhnTG9NsEUCArq8kOSQpJNHDz4f
- cyLYh2HkMqvch9zAagqjbsH1cFU/H4hhgJG2ewJhk6LqjATzZ3AOX7GI0APnJi0K5VrNZ13xm
- C30/4iXEAzJ9RsjrV15/QCEqsmcUugzynaCq07yma5IA9On6fYhwQXYMvt1aMD0FohvWeng0Q
- kCbFpNnEcYG2UAPfV00yaIW5YzK/coa+5IYmEEj4qZe6vbv6CZ+dASELrncU5rAIli0uQR0aJ
- q8W6hQTWih12RhJPDOsQmpPANx7uN7jkMHLiIJ/fzoidmBdeEG5tWcRISS+D/XjfFecJQRHSl
- gbA80tdJ38vmQ4HbXtCl0tA5Dw170v5+t5wnYfiweu7WD1GEUW8L2uEpxKRSx+T0eoyQhk/yD
- OnmXKp1pGCb/RKcVpyTxV15Q7w93nLCCxnCiVzItL662StYHE35t3EA/Oh6sgE+obLcxaDWcK
- bukiQCR2jxoHfqPKcrDrpDzAnGtBpyrn36H2CbW6Kbvfrkv2IGsMR2VcSPbuG6jLaN7Y8tQl/
- qW5sldoED4EcdbTZwr/hq+N1M3zunjXLn69I3gfBRfpuGALgV5Yhwe7xg9bcW/9objKX7x9yi
- 29HWzaK+lGkMAn6IzLC0ym9oEn4YA+B3L88Qrx6JqvFQ/hYmWj2R3Xa3N+4ExiWr4+rEZKGwt
- YAuNBVkiAIQ88Zk/8E5C2Mupce6PAWCxhVAHha+fxdOwzzO6X4=
+Content-Type: text/plain
+X-Pobox-Relay-ID: 48BA4504-D3C9-11E7-80CE-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Liam,
+lars.schneider@autodesk.com writes:
 
-On Sun, 26 Nov 2017, Liam Beguin wrote:
+> diff to v2:
+>     - shortened and localized the "waiting" message
+>     - detect "emacsclient" and suppress "waiting" message
 
-> Make sure the todo list ends up using single-letter command
-> abbreviations when the rebase.abbreviateCommands is enabled.
-> This configuration options should not change anything else.
+Thanks for moving this forward.
 
-Makes sense. As to the diff:
 
-> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-> index 6a82d1ed876d..e460ebde3393 100755
-> --- a/t/t3404-rebase-interactive.sh
-> +++ b/t/t3404-rebase-interactive.sh
-> @@ -1260,6 +1260,38 @@ test_expect_success 'rebase -i respects rebase.missingCommitsCheck = error' '
->  	test B = $(git cat-file commit HEAD^ | sed -ne \$p)
->  '
->  
-> +test_expect_success 'prepare rebase.abbreviateCommands' '
-> +	reset_rebase &&
-> +	git checkout -b abbrevcmd master &&
-> +	test_commit "first" file1.txt "first line" first &&
-> +	test_commit "second" file1.txt "another line" second &&
-> +	test_commit "fixup! first" file2.txt "first line again" first_fixup &&
-> +	test_commit "squash! second" file1.txt "another line here" second_squash
-> +'
+> +		static const char *close_notice = NULL;
 
-In addition to Junio's suggestion to include the "expected" block in the
-next test case, I would be in favor of combining all the new code in a
-single test case.
+Because this thing is "static", the variable is NULL when the first
+call to this function is made, and the value left in the variable
+when a call returns will be seen by the next call.
 
-Also, I think that the test_commit calls can be simplified to:
+> +		if (isatty(2) && !close_notice) {
 
-	test_commit first &&
-	test_commit second &&
-	test_commit "fixup! first" first A dummy1 &&
-	test_commit "squash! second" second B dummy2 &&
+Declaring a "static" variable initialized to NULL and checking its
+NULL-ness upfront is a common pattern to make sure that the code
+avoids repeated computation of the same thing.  The body of the if
+statement is run only when standard error stream is a tty (hinting
+an interactive session) *and* close_notice is (still) NULL.
 
-> +cat >expected <<EOF &&
-> +p $(git rev-list --abbrev-commit -1 first) first
-
-Maybe $(git rev-parse --short HEAD~3)?
-
-> +f $(git rev-list --abbrev-commit -1 first_fixup) fixup! first
-> +x git show HEAD
-> +p $(git rev-list --abbrev-commit -1 second) second
-> +s $(git rev-list --abbrev-commit -1 second_squash) squash! second
-> +x git show HEAD
-> +EOF
+> +			char *term = getenv("TERM");
 > +
-> +test_expect_success 'respects rebase.abbreviateCommands with fixup, squash and exec' '
-> +	test_when_finished "
-> +		git checkout master &&
-> +		test_might_fail git branch -D abbrevcmd &&
-> +		test_might_fail git rebase --abort
-> +	" &&
-> +	git checkout abbrevcmd &&
-> +	set_cat_todo_editor &&
-> +	test_config rebase.abbreviateCommands true &&
-> +	test_must_fail git rebase -i --exec "git show HEAD" \
-> +		--autosquash master >actual &&
-> +	test_cmp expected actual
-> +'
+> +			if (term && strcmp(term, "dumb"))
+> +				/*
+> +				 * go back to the beginning and erase the
+> +				 * entire line if the terminal is capable
+> +				 * to do so, to avoid wasting the vertical
+> +				 * space.
+> +				 */
+> +				close_notice = "\r\033[K";
+> +			else if (term && strstr(term, "emacsclient"))
+> +				/*
+> +				 * `emacsclient` (or `emacsclientw` on Windows) already prints
+> +				 * ("Waiting for Emacs...") if a file is opened for editing.
+> +				 * Therefore, we don't need to print the editor launch info.
+> +				 */
+> +				;
+> +			else
+> +				/* otherwise, complete and waste the line */
+> +				close_notice = _("done.\n");
+> +		}
 
-Otherwise, it looks good!
+It assigns a non-NULL value to close_notice unless the editor is
+emacsclient (modulo the bug that "emacsclient" is to be compared
+with EDITOR, GIT_EDITOR, core.editor etc. -- git_editor() can be
+used to pick the right one).  For a user of that particular editor,
+it is left as NULL.  Because it is unlikely that EDITOR etc. would
+change across calls to this function, for them, and only for them,
+the above is computed to yield the same result every time this
+function is called.
 
-Thank you for staying on the ball and getting this patch series updated.
+That feels a bit uneven, doesn't it?
 
-Ciao,
-Dscho
+There are two possible solutions:
+
+1. drop "static" from the declaration to stress the fact that the
+   variable and !close_notice in the upfront if() statement is not
+   avoiding repeated computation of the same thing, or
+
+2. arrange that "emacsclient" case also participates in "avoid
+   repeated computation" dance.  While at it, swap the order of
+   checking isatty(2) and !close_notice (aka "have we done this
+   already?)--because we do not expect us swapping file descriptor
+   #2 inside this single process, we'd be repeatedly asking
+   isatty(2) for the same answer.
+
+The former may be simpler and easier, as an editor invocation would
+not be a performance critical codepath.
+
+If we want to do the latter, a cleaner way may be to have another
+static "static int use_notice_checked = 0;" declared, and then
+
+	if (!use_notice_checked && isatty(2)) {
+		... what you currently have, modulo the
+		... fix for the editor thing, and set
+		... close_notice to a string (or NULL).
+                use_notice_checked = 1;
+	}
+
+The users of close_notice after this part that use !close_notice
+as "do not give the notice at all" flag and also as "this is the
+string to show after editor comes back" can stay the same if you go
+this route.  That would be solution 2a.
+
+Of course, you can instead use close_notice = "" (empty string) as a
+signal "we checked and we know that we are not using the notice
+thing".  If you go that route, then the users after this if statement
+that sets up close_notice upon the first call would say !*close_notice
+instead of !close_notice when they try to see if the notice is in use.
+That would be solution 2b.
+
+I personally think any one of 1., 2a., or 2b. is fine.
+
