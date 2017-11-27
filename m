@@ -2,73 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA15C20A40
-	for <e@80x24.org>; Mon, 27 Nov 2017 05:04:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3EDF620A40
+	for <e@80x24.org>; Mon, 27 Nov 2017 05:14:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750838AbdK0FEX (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Nov 2017 00:04:23 -0500
-Received: from cloud.peff.net ([104.130.231.41]:41088 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750726AbdK0FEW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Nov 2017 00:04:22 -0500
-Received: (qmail 26535 invoked by uid 109); 27 Nov 2017 05:04:23 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 27 Nov 2017 05:04:23 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 380 invoked by uid 111); 27 Nov 2017 05:04:39 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Mon, 27 Nov 2017 00:04:39 -0500
-Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 27 Nov 2017 00:04:20 -0500
-Date:   Mon, 27 Nov 2017 00:04:20 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Takuto Ikuta <tikuta@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH] Use OBJECT_INFO_QUICK to speedup git fetch-pack
-Message-ID: <20171127050420.GB6858@sigill>
-References: <0102015ffbbb2905-570eadd1-6b5c-46af-a3a9-bddfbd01c242-000000@eu-west-1.amazonses.com>
- <xmqqo9noe3u0.fsf@gitster.mtv.corp.google.com>
- <20171127043740.GA5994@sigill>
- <xmqqk1yce301.fsf@gitster.mtv.corp.google.com>
+        id S1751224AbdK0FOo (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Nov 2017 00:14:44 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55390 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751197AbdK0FOn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Nov 2017 00:14:43 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 84223BC3C0;
+        Mon, 27 Nov 2017 00:14:42 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Y+927m7FmjAknAfQFhnUvfSsiTs=; b=haZxDW
+        9j8K5fn/MGgmXou9IM00q3DSRchTSvRLjWtosAUBaZ2rFS1b/SKoW6Qu1AggkJB3
+        3yB9X8cgNS6tqxBFMnkTMIuIUzsW5gaslnorDVcL9XY51aQji4oc3xqPN0sRRFdR
+        yFIza5la3S8CudP8+6yVRra9mGXQG0UpKHRTU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=fgd3n+tVbZ8Irrlz0FtmS6eyjRKXTrPI
+        xqeFuusH9xdvaRzazdjweeRdlJy802KaSKBTzTWet9I+yaRtdBbQMdQTkgOBYHYV
+        uIa+2t+Md3LU5+vC0NKReDOVt9kiT5xpUB2gOjMPTBt9QlKlUcVKaK90MXm1/WtL
+        0ByzKYpdyWo=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7BF9BBC3BF;
+        Mon, 27 Nov 2017 00:14:42 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id F4125BC3BE;
+        Mon, 27 Nov 2017 00:14:41 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Liam Beguin <liambeguin@gmail.com>
+Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de, avarab@gmail.com
+Subject: Re: [PATCH 3/5] rebase -i: add exec commands via the rebase--helper
+References: <20171127045514.25647-1-liambeguin@gmail.com>
+        <20171127045514.25647-4-liambeguin@gmail.com>
+Date:   Mon, 27 Nov 2017 14:14:40 +0900
+In-Reply-To: <20171127045514.25647-4-liambeguin@gmail.com> (Liam Beguin's
+        message of "Sun, 26 Nov 2017 23:55:12 -0500")
+Message-ID: <xmqq609we20v.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqk1yce301.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: DFD3C41C-D331-11E7-92BC-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 27, 2017 at 01:53:34PM +0900, Junio C Hamano wrote:
+Liam Beguin <liambeguin@gmail.com> writes:
 
-> > I'd be curious if the 5th patch there provides an additional speedup for
-> > Takuto's case.
-> 
-> Indeed, it is a very good point.
-> 
-> IIUC, the 5th one is about fetching tons of refs that you have never
-> seen, right?  If a repository that has trouble with everything-local
-> is suffering because it right now has 300k remote-tracking branches,
-> I'd imagine that these remote-tracking branches are being added at a
-> considerable rate, so I'd not be surprised if these "new" refs
-> benefits from that patch.  And it would be nice to know how much a
-> real life scenario actually does improve.
+> diff --git a/sequencer.c b/sequencer.c
+> index fa94ed652d2c..810b7850748e 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -2492,6 +2492,52 @@ int sequencer_make_script(int keep_empty, FILE *out,
+>  	return 0;
+>  }
+>  
+> +int add_exec_commands(const char *command)
+> +{
 
-Right, I think it will only kick in for new refs (and maybe deleted
-ones, but I didn't check).
+As the name of a public function, it does not feel that this hints
+it strongly enough that it is from and a part of sequencer.c API.
 
-I actually did have a real life scenario that was improved, but it's not
-very typical. As I've mentioned before, we keep a big shared-object
-repository for forks of a single repo, so a fairly common operation is
+> +	const char *todo_file = rebase_path_todo();
+> +	struct todo_list todo_list = TODO_LIST_INIT;
+> +	int fd, res, i, first = 1;
+> +	FILE *out;
 
-  git -C network.git fetch ../$fork.git +refs/*:refs/remotes/$fork/*
+Having had to scan backwards while trying to see what the loop that
+uses this variable is doing and if it gets affected by things that
+happened before we entered the loop, I'd rather not to see 'first'
+initialized here, left unused for quite some time until the loop is
+entered.  It would make it a lot easier to follow if it is declared
+and left uninitilized here, and set to 1 immediately before the
+for() loop that uses it.
 
-The first time that's run on a fork, everything looks like a new ref.
+> +
+> +	strbuf_reset(&todo_list.buf);
+> +	fd = open(todo_file, O_RDONLY);
+> +	if (fd < 0)
+> +		return error_errno(_("could not open '%s'"), todo_file);
+> +	if (strbuf_read(&todo_list.buf, fd, 0) < 0) {
+> +		close(fd);
+> +		return error(_("could not read '%s'."), todo_file);
+> +	}
+> +	close(fd);
 
-So "real life", but thankfully not life for most git users. :)
+Is this strbuf_read_file() written in longhand?
 
--Peff
+> +	res = parse_insn_buffer(todo_list.buf.buf, &todo_list);
+> +	if (res) {
+> +		todo_list_release(&todo_list);
+> +		return error(_("unusable todo list: '%s'"), todo_file);
+> +	}
+> +
+> +	out = fopen(todo_file, "w");
+> +	if (!out) {
+> +		todo_list_release(&todo_list);
+> +		return error(_("unable to open '%s' for writing"), todo_file);
+> +	}
+> +	for (i = 0; i < todo_list.nr; i++) {
+> +		struct todo_item *item = todo_list.items + i;
+> +		int bol = item->offset_in_buf;
+> +		const char *p = todo_list.buf.buf + bol;
+> +		int eol = i + 1 < todo_list.nr ?
+> +			todo_list.items[i + 1].offset_in_buf :
+> +			todo_list.buf.len;
+
+Should bol and eol be of type size_t instead?  The values that get
+assigned to them from other structures are.
