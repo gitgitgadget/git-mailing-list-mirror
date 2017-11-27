@@ -6,86 +6,98 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9F76320C11
-	for <e@80x24.org>; Mon, 27 Nov 2017 23:05:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9510120C11
+	for <e@80x24.org>; Mon, 27 Nov 2017 23:11:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753166AbdK0XFY (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Nov 2017 18:05:24 -0500
-Received: from cloud.peff.net ([104.130.231.41]:41910 "HELO cloud.peff.net"
+        id S1752926AbdK0XLe (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Nov 2017 18:11:34 -0500
+Received: from cloud.peff.net ([104.130.231.41]:41928 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1752429AbdK0XFX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Nov 2017 18:05:23 -0500
-Received: (qmail 13934 invoked by uid 109); 27 Nov 2017 23:05:23 -0000
+        id S1752348AbdK0XLd (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Nov 2017 18:11:33 -0500
+Received: (qmail 14235 invoked by uid 109); 27 Nov 2017 23:11:33 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 27 Nov 2017 23:05:23 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 27 Nov 2017 23:11:33 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 7024 invoked by uid 111); 27 Nov 2017 23:05:40 -0000
+Received: (qmail 7068 invoked by uid 111); 27 Nov 2017 23:11:51 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Mon, 27 Nov 2017 18:05:40 -0500
+ by peff.net (qpsmtpd/0.94) with ESMTPA; Mon, 27 Nov 2017 18:11:51 -0500
 Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 27 Nov 2017 18:05:20 -0500
-Date:   Mon, 27 Nov 2017 18:05:20 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 27 Nov 2017 18:11:31 -0500
+Date:   Mon, 27 Nov 2017 18:11:31 -0500
 From:   Jeff King <peff@peff.net>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     lars.schneider@autodesk.com, git@vger.kernel.org,
-        gitster@pobox.com, sbeller@google.com, sunshine@sunshineco.com,
-        kaartic.sivaraam@gmail.com,
-        Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [PATCH v3] launch_editor(): indicate that Git waits for user
- input
-Message-ID: <20171127230520.GA29636@sigill.intra.peff.net>
-References: <20171127134716.69471-1-lars.schneider@autodesk.com>
- <20171127200932.GA558049@genre.crustytoothpaste.net>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Liam Beguin <liambeguin@gmail.com>, git@vger.kernel.org,
+        gitster@pobox.com, avarab@gmail.com
+Subject: Re: [PATCH 4/5] rebase -i: learn to abbreviate command names
+Message-ID: <20171127231131.GB29636@sigill.intra.peff.net>
+References: <20171127045514.25647-1-liambeguin@gmail.com>
+ <20171127045514.25647-5-liambeguin@gmail.com>
+ <alpine.DEB.2.21.1.1711272344290.6482@virtualbox>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20171127200932.GA558049@genre.crustytoothpaste.net>
+In-Reply-To: <alpine.DEB.2.21.1.1711272344290.6482@virtualbox>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 27, 2017 at 08:09:32PM +0000, brian m. carlson wrote:
+On Tue, Nov 28, 2017 at 12:04:45AM +0100, Johannes Schindelin wrote:
 
-> > Show a message in the original terminal and get rid of it when the
-> > editor returns.
-> [...]
+> > +rebase.abbreviateCommands::
+> > +	If set to true, `git rebase` will use abbreviated command names in the
+> > +	todo list resulting in something like this:
+> > +
+> > +-------------------------------------------
+> > +	p deadbee The oneline of the commit
+> > +	p fa1afe1 The oneline of the next commit
+> > +	...
+> > +-------------------------------------------
 > 
-> Sorry for coming to the topic so late, but it occurred to me that we
-> might want to conditionalize this on an advice.* flag.  I expect there
-> are some people who will never want to see this, and letting them turn
-> it off would be good.
+> I *think* that AsciiDoc will render this in a different way from what we
+> want, but I am not an AsciiDoc expert. In my hands, I always had to add a
+> single + in an otherwise empty line to start a new indented paragraph *and
+> then continue with non-indented lines*.
 
-I am torn between saying "yes please, I would absolutely set such an
-option myself" and "if we need advice.*, that is a good sign that the
-feature is mis-designed".
+Good catch. Interestingly enough, my asciidoc seems to render this
+as desired for the docbook/roff version, but has screwed-up indentation
+for the HTML version.
 
-Let me elaborate a bit on the latter.
+Fixing it as you suggest makes it look good in both (and I think you can
+never go wrong with "+"-continuation, aside from making the source a bit
+uglier).
 
-My gut feeling is that this is absolutely the wrong place to put a
-message like this. We don't know enough about what the editor is doing,
-so we have to take pains to avoid a crufty message in the terminal,
-including:
-
-  - playing ANSI-term trickery to erase the message
-
-  - hard-coding (!) emacsclient as a special case
-
-And that's why I say that "advice.*" is a bad sign, because it means
-those other techniques are failing, and somebody is seeing and being
-annoyed by the cruft.
-
-The right place for this message, IMHO, is for the editor itself (or a
-wrapper script) to say "hey, I'm opening a new window" (like emacsclient
-does).
-
-But I also recognize that the world isn't perfect. Not all editors will
-get this right, and not all users are savvy enough to set up a wrapper
-script for editors which don't. So defaulting this to "on" tries to help
-those cases.
-
-If the anti-cruft techniques I mentioned above work well in practice,
-then we get to have our cake and eat it, too. If they don't, then I'm
-not sure if the tradeoff is worth it.
+Squashable patch below for convenience, since I did try it.
 
 -Peff
+
+diff --git a/Documentation/rebase-config.txt b/Documentation/rebase-config.txt
+index 0820b60f6e..42e1ba7575 100644
+--- a/Documentation/rebase-config.txt
++++ b/Documentation/rebase-config.txt
+@@ -34,18 +34,19 @@ rebase.instructionFormat::
+ rebase.abbreviateCommands::
+ 	If set to true, `git rebase` will use abbreviated command names in the
+ 	todo list resulting in something like this:
+-
+++
+ -------------------------------------------
+ 	p deadbee The oneline of the commit
+ 	p fa1afe1 The oneline of the next commit
+ 	...
+ -------------------------------------------
+-
+-	instead of:
+-
+++
++instead of:
+++
+ -------------------------------------------
+ 	pick deadbee The oneline of the commit
+ 	pick fa1afe1 The oneline of the next commit
+ 	...
+ -------------------------------------------
+-	Defaults to false.
+++
++Defaults to false.
