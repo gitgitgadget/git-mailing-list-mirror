@@ -3,59 +3,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6F67020A40
-	for <e@80x24.org>; Mon, 27 Nov 2017 01:54:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0223720A40
+	for <e@80x24.org>; Mon, 27 Nov 2017 01:59:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752289AbdK0Byr (ORCPT <rfc822;e@80x24.org>);
-        Sun, 26 Nov 2017 20:54:47 -0500
-Received: from mail-qk0-f173.google.com ([209.85.220.173]:39363 "EHLO
-        mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752227AbdK0Byq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 26 Nov 2017 20:54:46 -0500
-Received: by mail-qk0-f173.google.com with SMTP id w125so30581973qkb.6
-        for <git@vger.kernel.org>; Sun, 26 Nov 2017 17:54:46 -0800 (PST)
+        id S1752425AbdK0B7F (ORCPT <rfc822;e@80x24.org>);
+        Sun, 26 Nov 2017 20:59:05 -0500
+Received: from mail-io0-f178.google.com ([209.85.223.178]:40823 "EHLO
+        mail-io0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752421AbdK0B7E (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Nov 2017 20:59:04 -0500
+Received: by mail-io0-f178.google.com with SMTP id d21so12444407ioe.7
+        for <git@vger.kernel.org>; Sun, 26 Nov 2017 17:59:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=ML7Whjeb+m0TRGe1A04zszASSUnE93wtODmMcN2ZamE=;
-        b=MXfS5NQcB7kpoKA5n2qg5W1+P8mMwOTHPMPrvCekgPPk4201Bgue7RevisELO3nnRV
-         MsO+tocTnKJGBa1AIrQrUNsRvdQJexDC5fiZU+Xjt8YuzTY8Gggd7bYpsQJ32RaRz4fs
-         vKg1xMLQ6oN42n0TZQfe3sKhvfVxCgSu17u03MzRvEhL+DhJKDVSKr8rtR8WP0TI4SQ1
-         juJS5cvrAazs2eZGzzAXgpPT0h07D8VSDSOMGTlWMqxbr2/cLrwCIPb3Ff2p80cH7KYI
-         3zH4+VZC6RM0otiOQWpnrjJHhBoZVCylpPdCHMDl4i9uAmOsK3XlFTOvNe7M5p6wh2En
-         slMQ==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=eJIXbqZGtD4ehAzGuFcgtYNjBI0VW7anaWmP/5DbF6M=;
+        b=d/kG8UQAdHhkmf2FeMRHpBDgnBslrACPOtu3RDEoFly4+KWQJDy8z/JhVGP68ms4kv
+         J5g+/7nEHwikMf3WgNigljrKqDGY+cbgLKGlEeHTCAZX/nTvRQlo7wVbtuRirEG52Q1I
+         lokVf9hAQEwkSqKbcKxAueMIXBfnIlQsDXcwNJPaJMBNeTtCrmpASypEISeswKkbkAMw
+         tfSaljRxK/nIVku6KYGk331//pq7qET2N7ssageqw/4jBL7V3i19UuVKbeHRlQFXK+qi
+         nuieKzSp21h7oj1btfn8bfJqzGfgPAu7w42tjlprjkueebFfzC0ZrPJg9c5mUxvDGzYL
+         6CgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=ML7Whjeb+m0TRGe1A04zszASSUnE93wtODmMcN2ZamE=;
-        b=BR+M58MxIDo85kVWXcwUM8ptQi43jvk1DhmOKIS8F1xIl69MHIhPYEu4Wj/dd2AdPD
-         6axognCfrA2NGtrgBZk+m+zommcVrEtWQ7Cy2JMjSAZYo6cOW+AlwmkU1I7C/kXh/LT0
-         JSDTTVVrQ6uMjXzhBP2WGmLLMK1WH0Klx6K577rOae1PJ71fpf2u9Wjn6CdaZPZbMBhi
-         HP9LPBS8S/rH01vCOUhSQBEWfIlud3wsUPJwZQHTLujnaoIkZeseVlPxOuDRnS1s/8uG
-         iPCBbhsmp6rKxird0RpoLHWCYxKKAy9DrarSfz3SV5RVFqXPpL1jRKeRhAdDY8CVnfkD
-         XGkg==
-X-Gm-Message-State: AJaThX4Snrebeds09/pptVlnfn1JtRKnFeabu3iirwKW2VTQwZrKUTXm
-        mn0Qu0BXQziEBKOLA9lT0blh2/gG802weNTU3zU=
-X-Google-Smtp-Source: AGs4zMarplYS8rw7APO+qGIE1cVpXRaSfm+DNvmjkn/ZRSpCohRXEC0lwUHp35CHbkKLybAisGvUK8YC1NQVCO/j4qM=
-X-Received: by 10.55.48.69 with SMTP id w66mr28558409qkw.123.1511747685794;
- Sun, 26 Nov 2017 17:54:45 -0800 (PST)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=eJIXbqZGtD4ehAzGuFcgtYNjBI0VW7anaWmP/5DbF6M=;
+        b=Yq1dun6klqR6XMN784yvHcSTRiUoLAOzKPHM//6WPhVnVmQ0ljjZPyUzn3C8Wnu2Or
+         64M/AFdtcuopjTVsBw2PVRk/Rz+y7+T8pScEdqWiPQqz7PQ+ak+Mn62nece/Trv64W8M
+         Lud6QyYOtK+EezDZY3K609ygAyhAHXt7LZ0FX7C3V85742ujRCW9M8MkpA8YF6KkQb1A
+         nEm3IOUJyWyO3ciX1TcFp9Vz+1E0bmGVLSz3pS1bzY9m7BsopfOXC5TRi8xhPml2PEVr
+         bvGCd9JhyZi8FXbZyX2rVPsuYN88n2hK1U3sfQiigkLlg4na/UuyKSQcAPJAU28lNbHZ
+         NwHw==
+X-Gm-Message-State: AJaThX7fTdvtjWdgCYERjb+LS5wsmXJU+/Rx4R3cO7x+fu7vIMsnxweG
+        acU/r8tSYYCMljWsSlayrqO5n2ODR+S6DOFAYcI=
+X-Google-Smtp-Source: AGs4zMYFkIvyiFCyaz0UGPlPGrby1c74BPb2wuC/SoiJ+IO8qyDxqdO+sEQa1AxpjowxU30kHPZBMf5NlwHubXWBrdM=
+X-Received: by 10.107.3.86 with SMTP id 83mr42858507iod.297.1511747943346;
+ Sun, 26 Nov 2017 17:59:03 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.12.209.220 with HTTP; Sun, 26 Nov 2017 17:54:25 -0800 (PST)
-In-Reply-To: <xmqqtvxgfrlp.fsf@gitster.mtv.corp.google.com>
-References: <CAEDDsWdXQ1+UukvbfRoTPzY3Y9sOaxQ7nh+qL_Mcuy3=XKKh7w@mail.gmail.com>
- <xmqqtvxgfrlp.fsf@gitster.mtv.corp.google.com>
-From:   Michael Sloan <mgsloan@gmail.com>
-Date:   Sun, 26 Nov 2017 17:54:25 -0800
-Message-ID: <CAEDDsWeLYGXn_ZeCAxGJjOUzfm_FZjZYWu9f=dAOAfe-2LcCZQ@mail.gmail.com>
-Subject: Re: Problem with environment of hook execution when git is run with
- --work-tree / --git-dir
-To:     Junio C Hamano <gitster@pobox.com>
+Received: by 10.79.37.143 with HTTP; Sun, 26 Nov 2017 17:58:42 -0800 (PST)
+In-Reply-To: <CAN+rsqmEWHhnQvktxsLJC2CkOQEmBL3b_xjRkEOHzV8W72zJew@mail.gmail.com>
+References: <20171123154159.17408-1-maruel@chromium.org> <xmqqwp2gpi1q.fsf@gitster.mtv.corp.google.com>
+ <CAN+rsqmEWHhnQvktxsLJC2CkOQEmBL3b_xjRkEOHzV8W72zJew@mail.gmail.com>
+From:   Marc-Antoine Ruel <maruel@chromium.org>
+Date:   Sun, 26 Nov 2017 20:58:42 -0500
+X-Google-Sender-Auth: Ad9w9ywC82ZuTVrybFBz-I4P2DU
+Message-ID: <CAN+rsqnnFXxh4=mk8L5Hzk=f=rTU101XiO-GvepSXsaVePOkZQ@mail.gmail.com>
+Subject: Re: [PATCH] grep: Add option --max-line-len
+To:     Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
 Cc:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
@@ -63,61 +64,150 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Nov 26, 2017 at 5:16 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Michael Sloan <mgsloan@gmail.com> writes:
+[second try, now with text format]
+
+Thanks a lot for the reviews. Replying to both.
+
+If I send a follow up, I'll fix the commit description and the help
+string, remove the shorthand -M, write a more sensible test.
+
+
+2017-11-23 14:24 GMT-05:00 Eric Sunshine <sunshine@sunshineco.com>:
+>> diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+>> @@ -127,6 +128,10 @@ OPTIONS
+>> +-M<num>::
+>> +--max-line-len<num>::
+>> +       Match the pattern only for line shorter or equal to this length.
 >
->> So what's the problem with this choice of environment variables?
->> Well, the problem is that if PWD is changed during the execution of
->> the script, then GIT_WORK_TREE and GIT_DIR will no longer work
->> properly. For example, if the pre-commit hook is
->>
->>     #!/bin/sh
->>     cd some-dir
->>     git status
->>
->> This will fail with
->>
->>     Not a git repository: '.dotfiles-git'
+> This documentation doesn't explain what it means by a line's length.
+> This implementation seems to take into consideration only the line's
+> byte count, however, given that displayed lines are normally
+> tab-expanded, people might intuitively expect that expansion to count
+> toward the length. A similar question arises for Unicode characters.
 >
-> That is to be expected.  It's up to the script to make them absolute
-> if it cannot cope with relative paths.
+> Should this option take tab-expansion and Unicode into account?
+> Regardless of the answer to that question, the documentation should
+> make it clear what "line length" means.
+
+Excellent question. I don't have an immediate answer.
+
+
+>> diff --git a/grep.c b/grep.c
+>> @@ -1273,6 +1275,8 @@ static int match_line(struct grep_opt *opt, char *bol, char *eol,
+>> +       if (opt->max_line_length > 0 && eol-bol > opt->max_line_length)
+>> +               return 0;
 >
->> There is another detail here, which is that when --git-dir /
->> --work-tree is not specified, the no GIT_WORK_TREE / GIT_DIR
->> environment variable is set.  This means that in this case, changing
->> PWD in the hook will work fine as long as the search for .git will
->> find the right one.
+> If the user specifies "-M0", should that error out or at least warn
+> the user that the value is non-sensical? What about -1, etc.? (These
+> are UX-related questions; the implementation obviously doesn't care
+> one way or the other.)
+
+Precedent with -A is to ignore the negative value. I don't have a
+strong opinion.
+
+
+2017-11-23 20:44 GMT-05:00 Junio C Hamano <gitster@pobox.com>:
 >
-> That also is working as designed.
+> Marc-Antoine Ruel <maruel@chromium.org> writes:
+>
+> > This tells git grep to skip files longer than a specified length,
+> > which is often the result of generators and not actual source files.
+> >
+> > ...
+> > +-M<num>::
+> > +--max-line-len<num>::
+> > +     Match the pattern only for line shorter or equal to this length.
+> > +
+>
+> All the excellent review comments from Eric I agree with.
+>
+> With the name of the option and the above end-user facing
+> description, it is very clear that the only thing this feature does
+> is to declare that an overlong line does _not_ match when trying to
+> check against any pattern.
+>
+> That is a much clearer definition and description than random new
+> features people propose here (and kicked back by reviewers, telling
+> them to make the specification clearer), and I'd commend you for that.
+>
+> But it still leaves at least one thing unclear.  How should it
+> interact with "-v"?  If we consider an overlong line never matches,
+> would "git grep -v <pattern>" should include the line in its output?
 
-Hmm, I do not think that this is good for the reliability of hooks.
-It means that hooks written with the common case assumption (no
-GIT_WORK_TREE / GIT_DIR set) will fail when run in these rarer
-configurations.  I imagine that many authors of hooks are entirely
-unaware of work-tree / git-dir options.  I know that I used git for
-something like 8 years before encountering a use for them, or really
-being aware.  Perhaps hooks authors are savvier than your average
-user.
+Ah! No idea. :/
 
-It seems to me like something similar to my suggested GIT_DIR_MAPPINGS
-could be quite powerful for this circumstance as well as others.  I
-guess a temporary hack would be to create a ".git" file that specifies
-the git-dir, but this doesn't work if something is already called
-".git".
+> Speaking of the output, it also makes me wonder if the feature
+> really wants to include an overlong line as a context line when
+> showing a near-by line that matches the pattern when -A/-B/-C/-W
+> options are in use. Even though it is clear that it does from the
+> above description, is it really the best thing the feature can do to
+> help the end users?
+>
+> Which leads me to suspect that this "feature" might not be the ideal
+> you wanted to achive, but is an approximate substitution that you
+> found is "good enough" to simulate what the real thing you wanted to
+> do, especially when I go back and read the justfication in the
+> proposed log message that talks about "result of generators".
+>
+> Isn't it a property of the entire file, not individual lines, if you
+> find it uninteresting to see reported by "git grep"?  I cannot shake
+> the suspicion that this feature happened to have ended up in this
+> shape, instead of "ignore a file with a line this long", only
+> because your starting point was to use "has overlong lines" as the
+> heuristic for "not interesting", and because "git grep" code is not
+> structured to first scan the entire file to decide if it is worth
+> working on it, and it is extra work to restructure the codeflow to
+> make it so (which you avoided).
+>
+> If your real motivation was either
+>
+>  (1) whether the file has or does not have the pattern for certain
+>      class of files are uninteresting; do not even run "grep"
+>      processing for them; or
+>
+>  (2) hits or no-hits may be intereseting but output of overlong
+>      lines from certain class of files I do not wish to see;
+>
+> then I can think of two alternatives.
+>
+> For (1), can't we tell "result of generators" and other files with
+> pathspec?  If so, perhaps a negative pathspec can rescue.  e.g.
+>
+>     git grep <pattern> -- '*.cc' ':!*-autogen.cc'
+>
+> For (2), can't we model this after how users can tell "git diff"
+> that certain paths are not worth computing and showing textual
+> patches for, which is to Unset the 'diff' attribute?  When you have
+>
+>     *-autogen.cc        -diff
+>
+> in your .gitattributes, "git diff" would say "Binary files A and B
+> differ" instead of explaining line-by-line differences in the patch
+> form.  Perhaps we can also have a 'grep' attribute and squelch the
+> output if it is Unset?
+>
+> It is debatable but one could propose extending the use of existing
+> 'diff' attribute to cover 'grep' too, with an argument that anything
+> not worth showing patch (i.e. 'diff' attribute is Unset) is not
+> worth showing grep hits from.
 
-I do not have a concrete example of this causing problems in practice,
-I've just observed that it is a potential gotcha for --git-dir +
-hooks.  I can understand keeping things simple even if it means making
-it much harder for hooks authors to write correct code.  It seems
-bothersome to me that git hooks have to be crafted so carefully to
-support variations in environment.
+Thanks for the thoughtful analysis. My main motivation was (1), thus
+filtering with a pathspec is much better than trying to work around
+the issue. The issues raised in the review are significant enough that
+committing this patch could cause significant issues; I don't know how
+to resolve handling with -v and how to handle tabs.
 
-If we could go back to when hooks were introduced and add a
-"GIT_IN_HOOK=1" and have it require manual specification of
---work-tree and -git-dir, that might have been the best option.
-However, doing that now would break everyone's hooks, so not really
-practical.
+After further thinking, what I'd like is a smarter version of the
+git-gs shortcut wrapper that limits the search space on well known
+extensions but I'd like it to also limit itself to "source-like"
+files, similar in some ways to the -I flag. So in some ways this could
+be better served as a git config but I'm not even sure what kind of
+heuristic would be generic enough to be valuable to a large number of
+users.
 
-Also, thanks for all your work on git, overall it is excellent software :)
+As such I'll drop the patch as I don't see a clear path forward with
+the current one.
 
--Michael
+Thanks,
+
+M-A
