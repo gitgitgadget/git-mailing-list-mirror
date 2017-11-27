@@ -2,88 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2019C20A40
-	for <e@80x24.org>; Mon, 27 Nov 2017 06:13:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 61FCB20954
+	for <e@80x24.org>; Mon, 27 Nov 2017 06:36:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751698AbdK0GNA (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Nov 2017 01:13:00 -0500
-Received: from cloud.peff.net ([104.130.231.41]:41186 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751685AbdK0GM7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Nov 2017 01:12:59 -0500
-Received: (qmail 29778 invoked by uid 109); 27 Nov 2017 06:13:00 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 27 Nov 2017 06:13:00 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 858 invoked by uid 111); 27 Nov 2017 06:13:17 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Mon, 27 Nov 2017 01:13:17 -0500
-Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 27 Nov 2017 01:12:57 -0500
-Date:   Mon, 27 Nov 2017 01:12:57 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Nathan Neulinger <nneul@neulinger.org>,
-        Santiago Torres <santiago@nyu.edu>, git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: git status always modifies index?
-Message-ID: <20171127061257.GB1247@sigill>
-References: <5050d779-2981-6f06-49f7-0ecb4efb25b8@neulinger.org>
- <20171122161014.djkdygmclk227xmq@LykOS.localdomain>
- <dfbf4af3-e87c-bdcb-7544-685572925a50@neulinger.org>
- <20171122202720.GD11671@aiede.mtv.corp.google.com>
- <20171122211729.GA2854@sigill>
- <20171122215635.GE11671@aiede.mtv.corp.google.com>
- <20171122220627.GE2854@sigill>
- <xmqqwp2diuki.fsf@gitster.mtv.corp.google.com>
- <20171126192749.GC1501@sigill>
- <xmqq7euch7jb.fsf@gitster.mtv.corp.google.com>
+        id S1751180AbdK0Ggi (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Nov 2017 01:36:38 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54430 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751045AbdK0Ggi (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Nov 2017 01:36:38 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 760B9BCF8B;
+        Mon, 27 Nov 2017 01:36:37 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=2g0n+K9oKpLU/gs+OYpmlmCeZW0=; b=iPBCvW
+        PYBP8eLTBBWLLAr5NpsFZF83DgKmvjOVp3vGcqOoqufYRyHhZH6gbJmsn94oCI+V
+        PzFi0uPjsYmh3Rgh6SRKI+0pNpB2Wu1M/ebSPtJNDJ/aCVdnpKy/5EdzPjKxFOGT
+        DFYl41Y3Yel2ETPf+qg6dF921S2FmSfYMk+PE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ZsWZJAMyf2Zga1cc23uvX/X7ww52wJ2n
+        mk+lt63xe/g88dExwmP8MVSp+sEN1Gtn5ZrXF6kYbcbb87ustqZnXgZog6vfHCuZ
+        TgncoV0Ma8xPyoz1RxPmSxO/JTfXFgU9RmRmAg7NPF2sDjELDMJaMM2Op375B14f
+        vJz8+bohHfs=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6C7A7BCF8A;
+        Mon, 27 Nov 2017 01:36:37 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id CFA9DBCF89;
+        Mon, 27 Nov 2017 01:36:36 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>,
+        Paul Smith <paul@mad-scientist.net>
+Subject: Re: [PATCH v5 5/6] worktree: add --guess-remote flag to add subcommand
+References: <20171122223020.2780-1-t.gummerer@gmail.com>
+        <20171126194356.16187-1-t.gummerer@gmail.com>
+        <20171126194356.16187-6-t.gummerer@gmail.com>
+Date:   Mon, 27 Nov 2017 15:36:35 +0900
+In-Reply-To: <20171126194356.16187-6-t.gummerer@gmail.com> (Thomas Gummerer's
+        message of "Sun, 26 Nov 2017 19:43:55 +0000")
+Message-ID: <xmqqd144cjnw.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq7euch7jb.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 514E5E4E-D33D-11E7-9752-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 27, 2017 at 09:47:20AM +0900, Junio C Hamano wrote:
+Thomas Gummerer <t.gummerer@gmail.com> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > I'm not sure I agree. Lockless writes are actually fine for the original
-> > use case of --no-optional-locks (which is a process for the same user
-> > that just happens to run in the background).
-> 
-> The phrase "lockless write" scares me---it sounds as if you
-> overwrite the index file no matter what other people (including
-> another instance of yourself) are doing to it.  
+> Currently 'git worktree add <path>' creates a new branch named after the
+> basename of the <path>, that matches the HEAD of whichever worktree we
+> were on when calling "git worktree add <path>".
+>
+> It's sometimes useful to have 'git worktree add <path> behave more like
+> the dwim machinery in 'git checkout <new-branch>', i.e. check if the new
+> branch name uniquely matches the branch name of a remote-tracking
+> branch, and if so check out that branch and set the upstream to the
+> remote-tracking branch.
 
-Ick, no, that would be quite bad. ;)
+This paragraph was a bit hard to sympathize because it was not
+obvious that the new feature still assumes how <path> is used to
+compute the name of the new branch.  Perhaps if it were written like
+so:
 
-I only meant that if we "somehow" had a way in the future to update the
-stat cache without affecting the other parts of the index, and without
-causing lock contention that causes other readers to barf, it could be
-triggered even under this option.
+	check if the new branch name, derived from the basename of
+	the <path>, uniquely matches the branch name of ...
 
-That would be quite different from the current index and stat-cache
-design, and I have no plans in that area.
+I would not have had to read it twice to understand what was going
+on.
 
-Writes to the object database _are_ lockless now (it is OK if two
-writers collide, because they are by definition writing the same data).
-And I wouldn't expect them to be affected by --no-optional-locks.  I
-think elsewhere in the thread you mentioned writing out trees for
-cache-tree, which seems like a plausible example. Usually there's not
-much point if you're not going to write out the index with the new
-cache-tree entries, too. But I could see a program wanting to convert
-the index into a tree in order to speed up a series of tree-to-index
-diffs within a single program.
+> +--[no-]guess-remote::
+> +	With `add`, instead of creating a new branch from HEAD when
+> +	`<commit-ish>` is not given, if there exists a tracking branch
+> +	in exactly one remote matching the basename of the path, base
+> +	the new branch on the remote-tracking branch, and mark the
+> +	remote-tracking branch as "upstream" from the new branch.
+> +
 
-This is all pretty hypothetical, though.
+Would
 
--Peff
+	git worktree add --guess-remote <path> <branch>
+
+be an error?  It is allowed as long as <branch> and the basename of
+the <path> matches?  The option is silently ignored?  Something
+else?
+
+I am reacting to "with `add`" part of this desciption.  I wouldn't
+be asking if it said "With `worktree add <path>` without <branch>",
+as that would make the scenario I am wondering about automatically
+"undefined".  Yes, we should strive for leaving things undefined as
+little as practically possible, but at least saying something like
+"without <branch>" explicitly there would make sure that readers
+know in what scenario this option is meant to be used a bit better.
+
+> @@ -389,6 +392,13 @@ static int add(int ac, const char **av, const char *prefix)
+>  		int n;
+>  		const char *s = worktree_basename(path, &n);
+>  		opts.new_branch = xstrndup(s, n);
+> +		if (guess_remote) {
+> +			struct object_id oid;
+> +			const char *remote =
+> +				unique_tracking_name(opts.new_branch, &oid);
+> +			if (remote)
+> +				branch = remote;
+> +		}
+>  	}
+
+I think the answer is "silently ignored", as the above hunk is
+inside "if (ac < 2 && !opts.new_branch && !opts.detach)".
+
