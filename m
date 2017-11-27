@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1152620C11
-	for <e@80x24.org>; Mon, 27 Nov 2017 16:41:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2519B20C11
+	for <e@80x24.org>; Mon, 27 Nov 2017 16:41:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932203AbdK0QlL (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Nov 2017 11:41:11 -0500
-Received: from mail-qk0-f196.google.com ([209.85.220.196]:42344 "EHLO
-        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932119AbdK0QlI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Nov 2017 11:41:08 -0500
-Received: by mail-qk0-f196.google.com with SMTP id a194so33192459qkc.9
-        for <git@vger.kernel.org>; Mon, 27 Nov 2017 08:41:08 -0800 (PST)
+        id S932196AbdK0QlG (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Nov 2017 11:41:06 -0500
+Received: from mail-qt0-f194.google.com ([209.85.216.194]:41664 "EHLO
+        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932174AbdK0QlD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Nov 2017 11:41:03 -0500
+Received: by mail-qt0-f194.google.com with SMTP id i40so28632501qti.8
+        for <git@vger.kernel.org>; Mon, 27 Nov 2017 08:41:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=1hHjgNXx400qnbhvbrag/E1uxfn3J1UPzaFVAETPTSU=;
-        b=CkM65DDCcRWyT2qNBjFGr43HawXGuXnzYMagL7Xo/ixnwZe3V7eQzUzXKVQWmO7Tno
-         6EBuhFr/pyDMHQwE0kKI71YrRpZxxdlED7Y3UEEAVFQv2/I+Isc5f98/Ib/LZp5XmzSb
-         dEbXO+ZTH66hemG7M7mRwGL2I7egWaB+AfCj5t0fFYXQ6wiX+X4vLv8NxOJpXeiCrivw
-         MfF4gcRoquGbGvAjtpyI3WMR6wFbJL6n6nwh6dUWZSV613DVgY/Cx47oY3d1VYVjJ9A3
-         rUICB3XbOzlk0Nhb5WDbgk9bjRiAJ+75RbdUm83k/E9fnDkn3A4FoJV22ibT0ZBkaBEj
-         kQbg==
+        bh=ZetyPtvXarorEkO0mtBBZAPf8lciTrz2JD2W1UKcSe4=;
+        b=iqlLstW6L/ODQYuYDHDmXflBqlVs1zHjUB1h6BiFEv+uni/4j3d6Z1oHKgDaxuecoG
+         dmaRgRcrN0ZTyZUXAlFumc6KZ2e4jLu2SI1LVWnhYEyioOoDwn9mgUZW6qWx14WTYhbm
+         25j0vmgzDvnDN02CgPCwE3eI2TrXuzBXgdmIFG5oFWAC5iLY5FwIsoEcHb4HEl3r2R4c
+         /Xj640CwRlAYrlon3I/M3hWKvAHES36mHCPdb1Ww3Lx8h25U1ZVV75s8UYZNn7gkEuDm
+         w1gad/EbtUC7ZIohR67cW+78Zszs7wUzn10pn3SKzWc3jVpecO4DbA5DgtTHS/L5rD6n
+         Lx+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=1hHjgNXx400qnbhvbrag/E1uxfn3J1UPzaFVAETPTSU=;
-        b=X7/QGb+NrNW1gX2/xmCRU5TvOyeklBGuZtugbWcPMrtkaCTv/3I2PkQG27fSm/JKIB
-         1nAz5CURxrnhVZTQ280UgxuNM2/JfbZovTXaRAj4ZqZmYZqgqHo1BpWu+kfejOzLtmN7
-         0G6nLpvdBG9JO7NdqHIpTXAg4h04/l7K7CeID/VW9RazdvWOeRGtdgB/QWNmXakdq4Do
-         LL6oS77pl3BRwPfNxDPi1CG7XQRvQ39HqXb5VBABOEMYRWAPeAt1r6gdMSUXMOx6ZqFo
-         frbXXUq9nNL/23senuhL114avKleL1DZjz5Prer8mSGfsFyTwtbHRBR/ZTSX5wINnSA7
-         jLog==
-X-Gm-Message-State: AJaThX7e0T/247zI2xiLQ1AAHz8LavB0Gc7E/KpquzD6ndfIdsaKi2nJ
-        G3ZRvHh8gE8oqa9gNhmcda2CfF8GxgU=
-X-Google-Smtp-Source: AGs4zMZRF6vgoGUrazwMGYeADAakxHwphluppu6Ipr0vF2yYXPfLbe3vZWnsafQeXwExswvQ190oVQ==
-X-Received: by 10.55.98.6 with SMTP id w6mr40173482qkb.322.1511800866973;
-        Mon, 27 Nov 2017 08:41:06 -0800 (PST)
+        bh=ZetyPtvXarorEkO0mtBBZAPf8lciTrz2JD2W1UKcSe4=;
+        b=T0Ubz0Xu1CUvF01CsrLvIRKATEcJMYX3cMZlu/cTCe7yfVDS+U8ixBTQwW+gEcYJmM
+         7dbJJmrLaUh6Gx4uVQ/kipDjos7KJcN3i0fjlWdhA8M/2QDbp+BrKB6niF6Ai7cwQKr9
+         4HgrgtJr/BobvytNZvhB39Odhh2Qxf2rxwguO6bCEIlfAipM4lFWn7rzarFTbyC7Asi9
+         fYE4pBFjtk9isP2807Kkbehfgr/ckzJ9gsUmnE4gJVX5ZKHXJLuxT90r81kotdYf/rl+
+         cg5J5Y/zpmZdSo6PyY/491E0cHUtqLmQvKAwjpVjvf11D+Uay2aBgo5Oo1X0VfMQVIha
+         URfQ==
+X-Gm-Message-State: AJaThX6GQ8XOE21z+TCyfV/kRRQ+tMr8k7BopGmH+2k55Az8BBIrm9eM
+        rmrlEqB3ocF8CbN8zQRP1E8AxmZlLV0=
+X-Google-Smtp-Source: AGs4zMaMICqIfiarXvMm3CjPB37y8lVYx719kL+zHee6yhmhv7Mp+cZuYxL3OvK32oeyzzAwzgv9ZA==
+X-Received: by 10.200.39.104 with SMTP id h37mr59356829qth.114.1511800861926;
+        Mon, 27 Nov 2017 08:41:01 -0800 (PST)
 Received: from dnj-macbookpro.fios-router.home (pool-108-32-46-175.pitbpa.fios.verizon.net. [108.32.46.175])
-        by smtp.gmail.com with ESMTPSA id y9sm9696394qkl.17.2017.11.27.08.41.04
+        by smtp.gmail.com with ESMTPSA id y9sm9696394qkl.17.2017.11.27.08.41.01
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Mon, 27 Nov 2017 08:41:04 -0800 (PST)
+        Mon, 27 Nov 2017 08:41:01 -0800 (PST)
 From:   Dan Jacques <dnj@google.com>
 To:     git@vger.kernel.org
 Cc:     Johannes.Schindelin@gmx.de, avarab@gmail.com, dnj@google.com,
         gitster@pobox.com
-Subject: [PATCH v3 3/4] Makefile: add Perl runtime prefix support
-Date:   Mon, 27 Nov 2017 11:40:54 -0500
-Message-Id: <20171127164055.93283-4-dnj@google.com>
+Subject: [PATCH v3 1/4] Makefile: generate Perl header from template file
+Date:   Mon, 27 Nov 2017 11:40:52 -0500
+Message-Id: <20171127164055.93283-2-dnj@google.com>
 X-Mailer: git-send-email 2.15.0.chromium12
 In-Reply-To: <20171127164055.93283-1-dnj@google.com>
 References: <20171127164055.93283-1-dnj@google.com>
@@ -63,127 +63,96 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a new Makefile flag, RUNTIME_PREFIX_PERL, which, when enabled,
-configures Perl scripts to locate the Git installation's Perl support
-libraries by resolving against the script's path, rather than
-hard-coding that path at build-time.
+Currently, the generated Perl script headers are emitted by commands in
+the Makefile. This mechanism restricts options to introduce alternative
+header content, needed by Perl runtime prefix support, and obscures the
+origin of the Perl script header.
 
-Enabling RUNTIME_PREFIX_PERL overrides the system-specific Perl script
-installation path generated by MakeMaker to force installation into a
-platform-neutral location, "<prefix>/share/perl5".
-
-This change enables Git's Perl scripts to work when their Git installation
-is relocated or moved to another system.
+Change the Makefile to generate a header by processing a template file and
+move the header content into the "perl/" subdirectory. The processed
+generated will now be stored in the "GIT-PERL-HEADER" file. This allows
+the content of the Perl header to be controlled by changing the path of
+the template in the Makefile.
 
 Signed-off-by: Dan Jacques <dnj@google.com>
 ---
- Makefile                               | 40 +++++++++++++++++++++++++++++++++-
- perl/header_runtime_prefix.pl.template | 24 ++++++++++++++++++++
- 2 files changed, 63 insertions(+), 1 deletion(-)
- create mode 100644 perl/header_runtime_prefix.pl.template
+ .gitignore                           |  1 +
+ Makefile                             | 23 ++++++++++++++---------
+ perl/header_fixed_prefix.pl.template |  1 +
+ 3 files changed, 16 insertions(+), 9 deletions(-)
+ create mode 100644 perl/header_fixed_prefix.pl.template
 
+diff --git a/.gitignore b/.gitignore
+index 833ef3b0b..89bd7bd8a 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -3,6 +3,7 @@
+ /GIT-LDFLAGS
+ /GIT-PREFIX
+ /GIT-PERL-DEFINES
++/GIT-PERL-HEADER
+ /GIT-PYTHON-VARS
+ /GIT-SCRIPT-DEFINES
+ /GIT-USER-AGENT
 diff --git a/Makefile b/Makefile
-index 7a2ed8857..a36815b49 100644
+index e53750ca0..5ad60a54c 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -425,6 +425,10 @@ all::
- #
- # to say "export LESS=FRX (and LV=-c) if the environment variable
- # LESS (and LV) is not set, respectively".
-+#
-+# Define RUNTIME_PREFIX_PERL to configure Git's PERL commands to locate Git
-+# support libraries relative to their filesystem path instead of hard-coding
-+# it.
- 
- GIT-VERSION-FILE: FORCE
- 	@$(SHELL_PATH) ./GIT-VERSION-GEN
-@@ -485,6 +489,7 @@ pathsep = :
- 
- mandir_relative = $(patsubst $(prefix)/%,%,$(mandir))
- infodir_relative = $(patsubst $(prefix)/%,%,$(infodir))
-+sharedir_relative = $(patsubst $(prefix)/%,%,$(sharedir))
- htmldir_relative = $(patsubst $(prefix)/%,%,$(htmldir))
- 
- export prefix bindir sharedir sysconfdir gitwebdir localedir
-@@ -1967,7 +1972,38 @@ perl/PM.stamp: GIT-PERL-DEFINES FORCE
- PERL_HEADER_TEMPLATE = perl/header_fixed_prefix.pl.template
- 
- PERL_DEFINES := $(PERL_PATH_SQ) $(PERLLIB_EXTRA_SQ)
--PERL_DEFINES += $(NO_PERL_MAKEMAKER)
-+PERL_DEFINES += $(NO_PERL_MAKEMAKER) $(RUNTIME_PREFIX_PERL)
-+
-+# Support Perl runtime prefix. In this mode, a different header is installed
-+# into Perl scripts. This header expects both the scripts and their support
-+# library to be installed relative to $(prefix), and resolves the path to
-+# the Perl libraries (perllibdir) from the executable's current path
-+# (gitexecdir).
-+#
-+# This configuration requires both $(perllibdir) and $(gitexecdir) to be
-+# relative paths, and will error if this is not the case.
-+ifdef RUNTIME_PREFIX_PERL
-+
-+PERL_HEADER_TEMPLATE = perl/header_runtime_prefix.pl.template
-+PERL_DEFINES += $(gitexecdir)
-+
-+# RUNTIME_PREFIX_PERL requires a $(perllibdir) value.
-+ifeq ($(perllibdir),)
-+perllibdir = $(sharedir_relative)/perl5
-+endif
-+
-+ifneq ($(filter /%,$(firstword $(gitexecdir))),)
-+$(error RUNTIME_PREFIX_PERL requires a relative $(gitexecdir))
-+endif
-+gitexecdir_relative_SQ = $(gitexecdir_SQ)
-+
-+ifneq ($(filter /%,$(firstword $(perllibdir))),)
-+$(error RUNTIME_PREFIX_PERL requires a relative perllibdir)
-+endif
-+perllibdir_relative_SQ = $(perllibdir_SQ)
-+
-+endif
-+
- PERL_DEFINES += $(perllibdir)
- 
+@@ -1964,18 +1964,15 @@ perl/PM.stamp: FORCE
  perl/perl.mak: GIT-CFLAGS GIT-PREFIX perl/Makefile perl/Makefile.PL
-@@ -2001,6 +2037,8 @@ GIT-PERL-HEADER: $(PERL_HEADER_TEMPLATE) GIT-PERL-DEFINES perl/perl.mak
- 	INSTLIBDIR="$$INSTLIBDIR$${INSTLIBDIR_EXTRA:+:$$INSTLIBDIR_EXTRA}" && \
- 	sed -e 's=@@PATHSEP@@='$(pathsep)'=g' \
- 	    -e 's=@@INSTLIBDIR@@='$$INSTLIBDIR'=g' \
-+	    -e 's=@@GITEXECDIR@@='$(gitexecdir_relative_SQ)'=g' \
-+	    -e 's=@@PERLLIBDIR@@='$(perllibdir_relative_SQ)'=g' \
- 	    $< >$@
+ 	$(QUIET_SUBDIR0)perl $(QUIET_SUBDIR1) PERL_PATH='$(PERL_PATH_SQ)' prefix='$(prefix_SQ)' $(@F)
+ 
++PERL_HEADER_TEMPLATE = perl/header_fixed_prefix.pl.template
+ PERL_DEFINES = $(PERL_PATH_SQ):$(PERLLIB_EXTRA_SQ)
+-$(SCRIPT_PERL_GEN): % : %.perl perl/perl.mak GIT-PERL-DEFINES GIT-VERSION-FILE
++
++$(SCRIPT_PERL_GEN): % : %.perl perl/perl.mak GIT-PERL-DEFINES GIT-PERL-HEADER GIT-VERSION-FILE
+ 	$(QUIET_GEN)$(RM) $@ $@+ && \
+-	INSTLIBDIR=`MAKEFLAGS= $(MAKE) -C perl -s --no-print-directory instlibdir` && \
+-	INSTLIBDIR_EXTRA='$(PERLLIB_EXTRA_SQ)' && \
+-	INSTLIBDIR="$$INSTLIBDIR$${INSTLIBDIR_EXTRA:+:$$INSTLIBDIR_EXTRA}" && \
+ 	sed -e '1{' \
+ 	    -e '	s|#!.*perl|#!$(PERL_PATH_SQ)|' \
+-	    -e '	h' \
+-	    -e '	s=.*=use lib (split(/$(pathsep)/, $$ENV{GITPERLLIB} || "'"$$INSTLIBDIR"'"));=' \
+-	    -e '	H' \
+-	    -e '	x' \
++	    -e '	rGIT-PERL-HEADER' \
++	    -e '	G' \
+ 	    -e '}' \
+ 	    -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
+ 	    $< >$@+ && \
+@@ -1989,6 +1986,14 @@ GIT-PERL-DEFINES: FORCE
+ 		echo "$$FLAGS" >$@; \
+ 	    fi
+ 
++GIT-PERL-HEADER: $(PERL_HEADER_TEMPLATE) GIT-PERL-DEFINES perl/perl.mak
++	$(QUIET_GEN)$(RM) $@ && \
++	INSTLIBDIR=`MAKEFLAGS= $(MAKE) -C perl -s --no-print-directory instlibdir` && \
++	INSTLIBDIR_EXTRA='$(PERLLIB_EXTRA_SQ)' && \
++	INSTLIBDIR="$$INSTLIBDIR$${INSTLIBDIR_EXTRA:+:$$INSTLIBDIR_EXTRA}" && \
++	sed -e 's=@@PATHSEP@@='$(pathsep)'=g' \
++	    -e 's=@@INSTLIBDIR@@='$$INSTLIBDIR'=g' \
++	    $< >$@
  
  .PHONY: gitweb
-diff --git a/perl/header_runtime_prefix.pl.template b/perl/header_runtime_prefix.pl.template
+ gitweb:
+@@ -2707,7 +2712,7 @@ ifndef NO_TCLTK
+ endif
+ 	$(RM) GIT-VERSION-FILE GIT-CFLAGS GIT-LDFLAGS GIT-BUILD-OPTIONS
+ 	$(RM) GIT-USER-AGENT GIT-PREFIX
+-	$(RM) GIT-SCRIPT-DEFINES GIT-PERL-DEFINES GIT-PYTHON-VARS
++	$(RM) GIT-SCRIPT-DEFINES GIT-PERL-DEFINES GIT-PERL-HEADER GIT-PYTHON-VARS
+ 
+ .PHONY: all install profile-clean clean strip
+ .PHONY: shell_compatibility_test please_set_SHELL_PATH_to_a_more_modern_shell
+diff --git a/perl/header_fixed_prefix.pl.template b/perl/header_fixed_prefix.pl.template
 new file mode 100644
-index 000000000..fb9a9924d
+index 000000000..9a4bc4d30
 --- /dev/null
-+++ b/perl/header_runtime_prefix.pl.template
-@@ -0,0 +1,24 @@
-+# BEGIN RUNTIME_PREFIX_PERL generated code.
-+#
-+# This finds our Git::* libraries relative to the script's runtime path.
-+BEGIN {
-+	use lib split /@@PATHSEP@@/,
-+	(
-+		$ENV{GITPERLLIB}
-+		||
-+		do {
-+			require FindBin;
-+			require File::Spec;
-+			my $gitexecdir_relative = '@@GITEXECDIR@@';
-+			my $perllibdir_relative = '@@PERLLIBDIR@@';
-+
-+			($FindBin::Bin =~ m=${gitexecdir_relative}$=) ||
-+			    die('Unrecognized runtime path.');
-+			my $prefix = substr($FindBin::Bin, 0, -length($gitexecdir_relative));
-+			my $perllibdir = File::Spec->catdir($prefix, $perllibdir_relative);
-+			(-e $perllibdir) || die("Invalid library path: $perllibdir");
-+			$perllibdir;
-+		}
-+	);
-+}
-+# END RUNTIME_PREFIX_PERL generated code.
++++ b/perl/header_fixed_prefix.pl.template
+@@ -0,0 +1 @@
++use lib (split(/@@PATHSEP@@/, $ENV{GITPERLLIB} || "@@INSTLIBDIR@@"));
 -- 
 2.15.0.chromium12
 
