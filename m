@@ -2,75 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 67C0D20A40
-	for <e@80x24.org>; Mon, 27 Nov 2017 05:00:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0ADC620A40
+	for <e@80x24.org>; Mon, 27 Nov 2017 05:02:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750773AbdK0FAe (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Nov 2017 00:00:34 -0500
-Received: from cloud.peff.net ([104.130.231.41]:41064 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750726AbdK0FAd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Nov 2017 00:00:33 -0500
-Received: (qmail 26325 invoked by uid 109); 27 Nov 2017 05:00:35 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 27 Nov 2017 05:00:35 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 32767 invoked by uid 111); 27 Nov 2017 05:00:51 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Mon, 27 Nov 2017 00:00:51 -0500
-Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 27 Nov 2017 00:00:31 -0500
-Date:   Mon, 27 Nov 2017 00:00:31 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Nathan Neulinger <nneul@neulinger.org>,
-        Santiago Torres <santiago@nyu.edu>, git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: git status always modifies index?
-Message-ID: <20171127050031.GA6858@sigill>
-References: <20171122161014.djkdygmclk227xmq@LykOS.localdomain>
- <dfbf4af3-e87c-bdcb-7544-685572925a50@neulinger.org>
- <20171122202720.GD11671@aiede.mtv.corp.google.com>
- <20171122211729.GA2854@sigill>
- <20171122215635.GE11671@aiede.mtv.corp.google.com>
- <20171122220627.GE2854@sigill>
- <xmqqwp2diuki.fsf@gitster.mtv.corp.google.com>
- <xmqq7eudidqb.fsf@gitster.mtv.corp.google.com>
- <20171127044314.GA6236@sigill>
- <xmqqd144e2uu.fsf@gitster.mtv.corp.google.com>
+        id S1750837AbdK0FCU (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Nov 2017 00:02:20 -0500
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:45003 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750726AbdK0FCT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Nov 2017 00:02:19 -0500
+Received: by mail-wm0-f68.google.com with SMTP id r68so31685058wmr.3
+        for <git@vger.kernel.org>; Sun, 26 Nov 2017 21:02:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=sZFzVE1PuYAsc/Z1W+g9IXziJwcuOb+Fpj0JPfvFayM=;
+        b=vIrONJ8AgmuLpuanEOK+Qr+QcpUzZCTrPsQXqzAPPJsa+GLzb84sklstTSItWvtZGc
+         EvmkbNGjebAOv0QTdWbgMY7RW5T6/UmmZ21fbxuERSIni9WxKByHSs9DJ6UeM+N0wrAp
+         bdZ1BKsmCnt962GEMC+hcNlFJQ49l49CbaPUaxGw3cWl5o07EhR6KmAc144cq7/wyg3q
+         YsQAppXyYJUDt6VC7qdbo7H/9+KW37q4J+3YKmD/C1x4TD6AZS3sHa/QqvCWZSlfQIGX
+         WndI7MRCKI6ciqhyByZsBSLfLGuetpJkp3C1itfsD2TxskhuuRDIT+Zeo+a1yisu5wkO
+         Q+7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=sZFzVE1PuYAsc/Z1W+g9IXziJwcuOb+Fpj0JPfvFayM=;
+        b=SUIO/uKpYUiHaCsOOJarvm08w1liNZPeOIvOjvqVmNeaJVCCMpdNNgHOD4VLdtydP7
+         ANsTbFurqsVGXwLbV7G75fTtNF8e/XHxfowkKZHPdotkapIPA06zgiu7V8l1dxxt3ulO
+         hm0rqjh1tAEBxqDWJX4qePbCdUjIGDdawRvE3B2E3U53tb+pPEdfuC+NC2b7IxDLw7YT
+         xX9nfDfshrr1deTbcnSkcHKE8cMBoH/CSN8S8g2nrmbbQRJKVfw5jFWoMgEcufUilHdJ
+         pGK9MQ8Pc0j0p6GUMr9MY5mHny8wNbCBrrFcRN27A77QQW1Oyqk3egKPer2gInJcAaWL
+         hoRA==
+X-Gm-Message-State: AJaThX43NcfkFI8ULhSeiJtCO749i6oAKrcsax/zEyiGmd0uHjnn9T9q
+        4ftKDkD5Zxswo2COrNHCJMj/i7S/2CI/n/HUits8TA==
+X-Google-Smtp-Source: AGs4zMb5FmA1ve9UnbnwGrwsNF5vJhJw9/f84t8N7VXtMFXqeC/WlTlsi6yS9S5nrky+T5stmbvRwm8UZrV+pLAgmSM=
+X-Received: by 10.28.73.196 with SMTP id w187mr5121778wma.17.1511758938077;
+ Sun, 26 Nov 2017 21:02:18 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqd144e2uu.fsf@gitster.mtv.corp.google.com>
+Received: by 10.28.203.140 with HTTP; Sun, 26 Nov 2017 21:01:36 -0800 (PST)
+In-Reply-To: <xmqqk1yce301.fsf@gitster.mtv.corp.google.com>
+References: <0102015ffbbb2905-570eadd1-6b5c-46af-a3a9-bddfbd01c242-000000@eu-west-1.amazonses.com>
+ <xmqqo9noe3u0.fsf@gitster.mtv.corp.google.com> <20171127043740.GA5994@sigill> <xmqqk1yce301.fsf@gitster.mtv.corp.google.com>
+From:   Takuto Ikuta <tikuta@google.com>
+Date:   Mon, 27 Nov 2017 14:01:36 +0900
+Message-ID: <CALNjmMo3KH4QXY00ViVaiHdy=pSZ5j0BWRueO1T=sC_r0=3c3g@mail.gmail.com>
+Subject: Re: [PATCH] Use OBJECT_INFO_QUICK to speedup git fetch-pack
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 27, 2017 at 01:56:41PM +0900, Junio C Hamano wrote:
-
+2017-11-27 13:53 GMT+09:00 Junio C Hamano <gitster@pobox.com>:
 > Jeff King <peff@peff.net> writes:
-> 
-> > I actually consider "--no-optional-locks" to be such an aspirational
-> > feature. I didn't go digging for other cases (though I'm fairly certain
-> > that "diff" has one), but hoped to leave it for further bug reports ("I
-> > used the option, ran command X, and saw lock contention").
-> 
-> OK, then we are essentially on the same page.  I just was hoping
-> that we can restrain ourselves from adding these "non essential"
-> knobs at too fine granularity, ending up forcing end users to use
-> all of them.
+>
+>>> cf. https://public-inbox.org/git/20171120202920.7ppcwmzkxifywtoj@sigill.intra.peff.net/
+>>
+>> It's funny that we'd get two patches so close together. AFAIK the
+>> slowness here has been with us for years, and I just happened to
+>> investigate it recently.
 
-Yes, I agree we should try not to have too many knobs. That's actually
-one of the reasons I avoided a status-only option in the first place.
+Yes, thank you for let me know.
+Please ignore my patch, sorry.
 
-In retrospect, I agree that the current option probably doesn't get the
-granularity quite right. The idea of "totally read-only" just didn't
-cross my mind at all when working on the earlier feature.
+>>
+>>> The 5-patch series that contains the same change as this one is
+>>> cooking and will hopefully be in the released version before the end
+>>> of the year.
+>>
+>> I'd be curious if the 5th patch there provides an additional speedup for
+>> Takuto's case.
+>
+> Indeed, it is a very good point.
+>
+> IIUC, the 5th one is about fetching tons of refs that you have never
+> seen, right?  If a repository that has trouble with everything-local
+> is suffering because it right now has 300k remote-tracking branches,
+> I'd imagine that these remote-tracking branches are being added at a
+> considerable rate, so I'd not be surprised if these "new" refs
+> benefits from that patch.  And it would be nice to know how much a
+> real life scenario actually does improve.
+>
+> Thanks.
 
--Peff
+In chromium repository,  your 5th patch does not improve performance,
+took more than 5 minutes to run fetch on windows.
+4th patch is very important for the repository in daily fetch.
+I hope your 4th patch will be merged.
+
+Thanks.
+-- 
+Takuto Ikuta
+Software Engineer in Tokyo
+Chrome Infrastructure (goma team)
