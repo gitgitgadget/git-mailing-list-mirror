@@ -2,100 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 83BD520954
-	for <e@80x24.org>; Mon, 27 Nov 2017 10:22:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E64682036D
+	for <e@80x24.org>; Mon, 27 Nov 2017 12:52:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751664AbdK0KWl (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Nov 2017 05:22:41 -0500
-Received: from mail-it0-f53.google.com ([209.85.214.53]:38645 "EHLO
-        mail-it0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751495AbdK0KWk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Nov 2017 05:22:40 -0500
-Received: by mail-it0-f53.google.com with SMTP id n134so20624601itg.3
-        for <git@vger.kernel.org>; Mon, 27 Nov 2017 02:22:39 -0800 (PST)
+        id S1752145AbdK0Mwb (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Nov 2017 07:52:31 -0500
+Received: from mail-wm0-f47.google.com ([74.125.82.47]:38291 "EHLO
+        mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751889AbdK0MwU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Nov 2017 07:52:20 -0500
+Received: by mail-wm0-f47.google.com with SMTP id n74so9052827wmi.3
+        for <git@vger.kernel.org>; Mon, 27 Nov 2017 04:52:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=afz1/kQz7Ot2mRq5fBcN/giIrqrvhCXkc5f6gXw+BHA=;
-        b=RV/bP90sUog+joZQjHUoiQdx1YSlfIDVpsYQA9tU/o4aFC2oKnSGTgOcxJK8NUf/pF
-         RCQmqOxWON2EA6JAEQMdY5tJmI11THFxYpM1pHUtKZlwl8vtmefNSPG/689uMk1SO6o4
-         ipyNKNqTtI+G3HgnO2NfRzA2aECKtnE5ddrfryqMghzuc2GngiA/hY1VFH8x4P1/rqs/
-         0SnUZ4Eh7W+KtzSGLuG9Iz02ZEMJjXbq9F74eD1wZkMdFTUr9EVawAeUqNJeVgFR+J67
-         BqRYAODtn20d76xgGb6A7o8UuDiOcNeIdRZLGU7k17uYL/pwU2k7ex0S8dhlBgFncUJw
-         ySiQ==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=vLJZGjElE6dOBf4TLW3HjZh85IHUkuWhdBsV88oNsJg=;
+        b=ks/LcimLXnJng+mvPvKe1UtFNzp16UVQQzVvBz3efeTtS5bdMiVbVKg7sD/u94Yqh+
+         x1BZNceUI0odVpQmlXJPvd7etyz62KaEn9qVk4zEva4/Kf5UQmL4dG+eDuw/k741Sqkp
+         EwY9XE81Vw9FZcdcdr5SJBrPUXozYqxEut/Br08prXBVCmD36epd1xBg6xiIN5ZcQRB8
+         qfCkGbW9ME4CaFRlejow5ctWto3Rlw5fvK52ESDMxb+6Zl3mXPHNelJeAiCl9SJZKNew
+         4hQUCaHpG6Jdwey7Ny61e7OB2L/fhLwprUzw6PryUBn3Ptrm+GIen1pv5C7ZdnKJIIMu
+         6wVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=afz1/kQz7Ot2mRq5fBcN/giIrqrvhCXkc5f6gXw+BHA=;
-        b=kX9sy8BzfC5QnSsL77lQcpJi1N/RV0RJxlILABT87S24AkZB3xi+urNUowMTUoUJwD
-         CQ1ZlZTncCQR2Xo/22E67cEqfPa+Q0eyMeQTcw2vuwDpIBN7fCEKg/1d11GrAoXcL+oU
-         K6g1XYj80Vss66+rkgwN7rWc+mS5XnvAuvk/ZnVRF8Xvm689MvDoSq8JL+kzl2eXvpgY
-         0iv6LgUiMFR6jcmpOXdlRrNdJTC++uRqcOYzDrK6IOHKv5E5s6cnwTb2avnUbRu56sfD
-         FLmaaGiuGjVuiOxWSg6+rNl1Q4WjNhrB1yYO9VoV0xLQVKoVF28quywXTxui/SU8cWbO
-         ZY/Q==
-X-Gm-Message-State: AJaThX4evUfnEwmwn8zFfb8usDtq0RDJtPYS4mbb1Agktl7Tb8rT13B+
-        7ddKeiGH6SuezcRzk1xwqVq70db9
-X-Google-Smtp-Source: AGs4zMasckgspFEwroBRMdzdqcmSpv5LAUvP+hrDT1tgK+uSqTyTb4d8OLR3sD/JECmlDETapaACcw==
-X-Received: by 10.36.239.195 with SMTP id i186mr25017722ith.29.1511778159270;
-        Mon, 27 Nov 2017 02:22:39 -0800 (PST)
-Received: from [10.4.2.238] ([14.102.72.147])
-        by smtp.gmail.com with ESMTPSA id i201sm7304949ita.32.2017.11.27.02.22.34
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 27 Nov 2017 02:22:38 -0800 (PST)
-Subject: Re: [PATCH] git-status.txt: mention --no-optional-locks
-To:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Nathan Neulinger <nneul@neulinger.org>,
-        Santiago Torres <santiago@nyu.edu>, git@vger.kernel.org
-References: <20171122161014.djkdygmclk227xmq@LykOS.localdomain>
- <dfbf4af3-e87c-bdcb-7544-685572925a50@neulinger.org>
- <20171122202720.GD11671@aiede.mtv.corp.google.com>
- <20171122211729.GA2854@sigill>
- <20171122215635.GE11671@aiede.mtv.corp.google.com>
- <20171122220627.GE2854@sigill>
- <alpine.DEB.2.21.1.1711252240300.6482@virtualbox>
- <20171126192508.GB1501@sigill>
- <alpine.DEB.2.21.1.1711262231250.6482@virtualbox>
- <20171127052443.GB5946@sigill> <20171127060412.GA1247@sigill>
- <xmqqindwcl00.fsf@gitster.mtv.corp.google.com>
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Message-ID: <b63ecdab-2283-9479-0de6-29a604c09670@gmail.com>
-Date:   Mon, 27 Nov 2017 15:52:31 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.4.0
-MIME-Version: 1.0
-In-Reply-To: <xmqqindwcl00.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Cyberoam-smtpxy-version: 1.0.6.3
-X-Cyberoam-AV-Policy: default
-X-CTCH-Error: Unable to connect local ctasd
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=vLJZGjElE6dOBf4TLW3HjZh85IHUkuWhdBsV88oNsJg=;
+        b=JHjcgl2q+MnieaVTS78dbOW3M1Aqj8y7LlUtmKHO1JRgEn53v3PS6I3bQsT8i1Owpc
+         TlETZcu/R3WpanLycF+CpsbQuDPuP3GcunOJVD94QuDrJHm+tuXJiUM2GO0/nHmWpJjc
+         8IZUeGa/zuve9vWadOGbOskaMcP2auJPv759zsOqyi6IVNar4UAF6zc4QwQgzrqT31eu
+         Brv/Tv8yq/Jtc4V6vIxA52UoxSjBp4/EVmyIh6ualUZJFHsGB/InehMHG+cb0ENykG/f
+         yHpwrTXXnWIUWB3Il2OOL5bX/IKiGFTN4/zXn5BhxJfl8goHDnJQRUL6cUnCY2VHyONJ
+         su3Q==
+X-Gm-Message-State: AJaThX7hry7sBHU632k2sHnnTOnJd+hDZleCwaqA9ksY0/1KPbjy/Rke
+        rAKW35kn+/ZC/FajhJujgwU=
+X-Google-Smtp-Source: AGs4zMacCYp2FcTnuhpJy1GaVHx+TLUvxu1qBfgc3QHhlCFARI3k97Sf7njv8bHUeDVIBeOQhf1Uog==
+X-Received: by 10.28.178.135 with SMTP id b129mr16559124wmf.103.1511787139096;
+        Mon, 27 Nov 2017 04:52:19 -0800 (PST)
+Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id r63sm22986787wmg.13.2017.11.27.04.52.18
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 27 Nov 2017 04:52:18 -0800 (PST)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: git-p4: cloning with a change number does not import all files
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <CAL1_K8AYf1jKDO8+czcqkUxDAuOODgKv9avaiikWi+4zpqenMQ@mail.gmail.com>
+Date:   Mon, 27 Nov 2017 13:52:17 +0100
+Cc:     git@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <57A92686-9161-4234-8341-CD6FAD7AE049@gmail.com>
+References: <CAL1_K8AYf1jKDO8+czcqkUxDAuOODgKv9avaiikWi+4zpqenMQ@mail.gmail.com>
+To:     Patrick Rouleau <prouleau72@gmail.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Monday 27 November 2017 11:37 AM, Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
->> +using `git --no-optional-locks status` (see linkgit:git[1] for details).
 
-It strikes me just now that `--no-side-effects` might have been a better 
-name for the option (of course, iff this avoid all kinds of side 
-effects. I'm not sure about the side affects other than index refreshing 
-of "git status"). And in case we didn't care about the predictability of 
-option names even a little, `--do-what-i-say` might have been a catchy 
-alternative ;-)
+> On 25 Nov 2017, at 21:35, Patrick Rouleau <prouleau72@gmail.com> =
+wrote:
+>=20
+> Hi,
+>=20
+> I created a git repository with these commands:
+>  git p4 clone //perforce/path@123456 repo
+>  cd repo
+>  git p4 rebase
+>=20
+> Some files created before the change 123456 do not exist in git
+> history. I do see why,
+> but those files were not modified after that change number.
+>=20
+> If I use "git p4 sync --detect-branches" instead of "git p4 rebase",
+> the branch contains
+> all the files, but not the main trunk, and they appear to be added in
+> the first commit of
+> the branch.
+>=20
+> To avoid the problem, I must clone with "@all" or with the change =
+number when
+> //perforce/path was created, which is significantly longer.
+>=20
+> Regards,
+> P. Rouleau
 
+Hi Patrick,
 
----
-Kaartic
+what is your goal here? Do you want to convert the repo to Git or do you
+want to use Git to interact with a P4 repo?
+
+I mainly do the former and use the @all switch. You can greatly reduce
+the time if your `git-p4` machine is close to the P4 server and if you
+reduce the P4 client spec used for the migration.
+
+- Lars=
