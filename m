@@ -2,75 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8229420C11
-	for <e@80x24.org>; Mon, 27 Nov 2017 15:31:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6581320C11
+	for <e@80x24.org>; Mon, 27 Nov 2017 16:40:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752635AbdK0PbK (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Nov 2017 10:31:10 -0500
-Received: from cloud.peff.net ([104.130.231.41]:41462 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1752291AbdK0PbK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Nov 2017 10:31:10 -0500
-Received: (qmail 24983 invoked by uid 109); 27 Nov 2017 15:31:09 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 27 Nov 2017 15:31:09 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3250 invoked by uid 111); 27 Nov 2017 15:31:27 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Mon, 27 Nov 2017 10:31:27 -0500
-Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 27 Nov 2017 10:31:07 -0500
-Date:   Mon, 27 Nov 2017 10:31:07 -0500
-From:   Jeff King <peff@peff.net>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>, git <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Dominik Mahrer <teddy@teddy.ch>,
-        git-packagers@googlegroups.com, Todd Zullinger <tmz@pobox.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH] Makefile: check that tcl/tk is installed
-Message-ID: <20171127153107.GB23218@sigill.intra.peff.net>
-References: <20171120171517.6365-1-chriscool@tuxfamily.org>
- <20171120191931.okxejqyqayjvxpbc@aiede.mtv.corp.google.com>
- <CAP8UFD0d9zM9F3tLrTMiLdfoJQsOPELtmudVB6e83DiLPN5DEA@mail.gmail.com>
- <20171126191510.GA1501@sigill>
- <CAP8UFD1hRWa1YtgRPZxXvkqcHfUoKKxgVUuN_d9C36jbrGBBXA@mail.gmail.com>
+        id S1753725AbdK0QkW (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Nov 2017 11:40:22 -0500
+Received: from mail-ua0-f179.google.com ([209.85.217.179]:38126 "EHLO
+        mail-ua0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753291AbdK0QkU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Nov 2017 11:40:20 -0500
+Received: by mail-ua0-f179.google.com with SMTP id f14so19458434uaa.5
+        for <git@vger.kernel.org>; Mon, 27 Nov 2017 08:40:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=pgFouP9TN3snc0BmIiISVGAuMu7Q+iuZsGaPZE59rCk=;
+        b=sqz7tGkMBN3V4W5i4HnZ1iAcRvvFSsCvDWBKz7YdpB7Yvvui93xitRis2CeV0tOmcd
+         iXyRpSQs9V4dX8BEmOndU7huEmrlIy5BOaOT5htIqc5CLmpH4S/XWSBmMzbA762y1RgW
+         vWM2xtu3CsaIU+l3d2bM+0Ijlm8Cwp81nf31pSEN5+pHwtrWWd8wtaq1BUxhglQtlyUG
+         a2Ocwza9xLSSum4METqFtUgxoAi6W+JIYQ0NZ9prbV9/3w+6SZk8Aj7UbwvpEtehfMZh
+         miCvAOylGZHXVEc2h8dLFj2Wwmsg6g/UPdc1RsJQSGZphP4wTXfYVyt5YXkmjIT9akLH
+         j7MQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=pgFouP9TN3snc0BmIiISVGAuMu7Q+iuZsGaPZE59rCk=;
+        b=Y1h+64hvekaJ3KrZ12I8vi2kiMiFPWpZ7u6J10VXoR2czT+2GMScxUZsYTqFqQS7bo
+         2ivULy+y8WMzEP1u8gEyNY+g7oQ2Xj/g9Bw4htPAGfS+cygfQ8PH+VaYuNE6HxCefG4u
+         i82IlvI4kxTKEz4khBYXCU9o/SRRZ+Baax9xbsX5TAu/4nyCQQ7ItykmCKn/tkngr/sY
+         8/oMMz4AbtMUFLUxOj9/CDRbuPWfpL5l7JUqEbCKUnYIrOJgiQxHQtGUKyGBFz+HNvLr
+         wLUXx/6qZtjV4seC3/uKKNV23kUXjQV5nxC84TIUpSEPO7PBSXgjwoTjAEZy3fgy5SdB
+         DezA==
+X-Gm-Message-State: AJaThX5nW57nVL/L7sc4i9KY1acsaYFUoC3EuLhRODGNYfBAoltg9oy1
+        anRF9l7tZg1j9oM4diJAbeLJDMxQQoa+CrwvkPY=
+X-Google-Smtp-Source: AGs4zMblx1V3F6DXvsiGphOQvu/2l7B85WVSV2A5Vqb3/UZF50/n6AeIeP/iXqfxeGkBqEnTX1V0RxmUrr1z9wSHdD0=
+X-Received: by 10.176.78.238 with SMTP id x46mr33197382uah.147.1511800818913;
+ Mon, 27 Nov 2017 08:40:18 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAP8UFD1hRWa1YtgRPZxXvkqcHfUoKKxgVUuN_d9C36jbrGBBXA@mail.gmail.com>
+Received: by 10.176.70.138 with HTTP; Mon, 27 Nov 2017 08:40:17 -0800 (PST)
+In-Reply-To: <xmqq4lpgfkyb.fsf@gitster.mtv.corp.google.com>
+References: <20171124195901.2581-1-newren@gmail.com> <xmqq4lpgfkyb.fsf@gitster.mtv.corp.google.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 27 Nov 2017 08:40:17 -0800
+Message-ID: <CABPp-BELci79tuiPFVRKQwm_-j6tN-DxqcKsvjD2xG_8ZWNxGw@mail.gmail.com>
+Subject: Re: [PATCH] merge-recursive: ignore_case shouldn't reject intentional removals
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Adam Dinwoodie <adam@dinwoodie.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Nov 26, 2017 at 09:57:14PM +0100, Christian Couder wrote:
+[Removed cc's that just bounce]
 
-> > As much as I hate autoconf,
-> > is it the right advice for somebody who doesn't want to look at the
-> > Makefile knobs to do:
-> >
-> >   autoconf
-> >   ./configure
-> >   make
-> >
-> > ?
-> 
-> I don't think so. I think it is just easier to advice to do as most of
-> us do, and to just add a few checks in the Makefile to make it clear
-> which dependencies should be installed or which knob should be
-> tweaked.
+On Sun, Nov 26, 2017 at 7:40 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Elijah Newren <newren@gmail.com> writes:
+>
+>> In commit ae352c7f3 (merge-recursive.c: fix case-changing merge bug,
+>> 2014-05-01), it was observed that removing files could be problematic on
+<snip>
+>>
+>> If that description leaves more questions than answers, we may need to
+>> augment the above commit message with the following explanation...
+>> ...
+>>  merge-recursive.c | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> As a fix, this sorely wants something new in t/ directory.
 
-I guess I can buy that line of reasoning (and in particular your later
-comment that autoconf is doomed to bitrot, since most of us don't use
-it). I'm just slightly concerned that we're going to end up
-reimplementing autoconf inside our Makefile. ;)
+Well, then perhaps I was wrong to submit it independent of my
+directory rename series.  As noted in the (very lengthy) extended
+commit message explanation, the assumption the previous code made just
+happened to work until a few extra tweaks (from directory renames)
+caused us to want to remove a file from the working copy that was
+found at stage 0 in the index.  Thus, the only testcase we can really
+use for this commit, is testcase 7b of the new t6043 added by that
+other patch series, and it's only valid with the code from that other
+series.
 
-But that is a slippery slope argument; we could switch our approach any
-time if it starts to look bad.
+When I submitted this patch, I was thinking about just including this
+fix with the next reroll of my rename-directory-detection series but
+it partially felt like an independent fix...but maybe I chose wrong.
 
--Peff
+Would you prefer I include it in my next en/rename-directory-detection reroll?
