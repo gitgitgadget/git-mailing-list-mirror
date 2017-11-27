@@ -2,96 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7C6DE20954
-	for <e@80x24.org>; Mon, 27 Nov 2017 09:08:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 97A5820954
+	for <e@80x24.org>; Mon, 27 Nov 2017 10:12:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751313AbdK0JIU (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Nov 2017 04:08:20 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64371 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751141AbdK0JIS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Nov 2017 04:08:18 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0A667BE0E3;
-        Mon, 27 Nov 2017 04:08:18 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=zXLc8uOg2ouOUcQ9sxWg75IuZaQ=; b=jWD4H1
-        xSx7tRrnZHenKSzdQnXGrZbXTTNVUmYn9G85v+s5ZowhCvbzWM2KANPmLrdHwu7A
-        0X31HsV8hTOo3bfckhEXr/LC5x+jCzCUxlKuOQGsi5i4afv2lpWtcQ9Y8bV05qLH
-        TdR0+tMcWcmzT2n9QmeYrmb7D1mKoF782400o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=kGecIwe7sxc9K7Q0T52UE1RLQpYFvH0u
-        y2N9e1cRte5YvKBbcW1IkbzRGoVcz/W9SMlWPcL4/eZIIqpvUv5LLGuhnvPBFKt5
-        3FPXDTSskBF+QH8sSNoYKJQ/e7WzdOriPrAUre+sjqN3CbVFFSN9Jxx/72J5/Z3a
-        YllXow/v/tc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 01D2CBE0E2;
-        Mon, 27 Nov 2017 04:08:18 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 540F6BE0E1;
-        Mon, 27 Nov 2017 04:08:17 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        git <git@vger.kernel.org>, Dominik Mahrer <teddy@teddy.ch>,
-        git-packagers@googlegroups.com, Todd Zullinger <tmz@pobox.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH] Makefile: check that tcl/tk is installed
-References: <20171120171517.6365-1-chriscool@tuxfamily.org>
-        <20171120191931.okxejqyqayjvxpbc@aiede.mtv.corp.google.com>
-        <CAP8UFD0d9zM9F3tLrTMiLdfoJQsOPELtmudVB6e83DiLPN5DEA@mail.gmail.com>
-        <20171126191510.GA1501@sigill>
-        <xmqqy3msfrr1.fsf@gitster.mtv.corp.google.com>
-        <xmqqshd0e41a.fsf@gitster.mtv.corp.google.com>
-        <20171127043502.GA5946@sigill>
-Date:   Mon, 27 Nov 2017 18:08:16 +0900
-In-Reply-To: <20171127043502.GA5946@sigill> (Jeff King's message of "Sun, 26
-        Nov 2017 23:35:02 -0500")
-Message-ID: <xmqq1skkccn3.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751725AbdK0KMS (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Nov 2017 05:12:18 -0500
+Received: from mail-oi0-f65.google.com ([209.85.218.65]:35690 "EHLO
+        mail-oi0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751537AbdK0KMR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Nov 2017 05:12:17 -0500
+Received: by mail-oi0-f65.google.com with SMTP id e142so18995330oih.2
+        for <git@vger.kernel.org>; Mon, 27 Nov 2017 02:12:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=XeiQ+J6vZv0fLP/Nv0TN6xB3Ok90YxNed+bBQ4Wyrls=;
+        b=AJ2xj+ZngNkOdS6RHmg4xLfiLsR08P/2V8DRHBq8V/sK2ax+IgoUvX1uAmUB6Z6Zyj
+         tryaQFMuEesAzN3Fvoz+1lIiZ3CoVB7D9YqDOAGCxpMrWA0QLqt7hCmggALSq6RZWAhD
+         IaEYg/la+desLOhR2YUNef9UqPMVwgvQVudItOeq6VbP+GvQOg9jQBTMNkgUh1kigaHQ
+         GNY4xs97Vf0A4NZi95yL1uhd6b/CghEUeaRaLqJkq555ZkuiCag21R2UpsCjFMOEvzQ6
+         iR11b1mreuR6Y5WTxSQFyNtIWFH6JiFlbr7+hhYkuWw0mqyZIEwR2R8cV96Hl2GSVcDd
+         0W6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=XeiQ+J6vZv0fLP/Nv0TN6xB3Ok90YxNed+bBQ4Wyrls=;
+        b=VhXXGLtc5pOhlMViwiDpEmpPMEsTQNqjmEyzR5QwPZROKcTJ6R7W7sycmk2dkLCkg7
+         EtcCg/pX++6htJVfGvK31KLXfNqNwAHIkdYWMum+OAAQu3cWJMCliEvuEJSDSPjOMaIs
+         oLgjRnPWhz55JQgTvatJxIHAZCmee5VVKDNaHpGrWTaK/w47QfwSX52tUmocxCG8P7Fh
+         TA85P11RUWJ0+s/5gjlApCh2rmRiliuz9UNwSflreyK/oaHIx2IIMban9msS5b6032s6
+         07ObX3XJf2POXp+V6UWqAgQmYZhnfqmn9Zc9cx76cBaLF9zuEzKYFLc0+S9QFEBMRdtg
+         fj0g==
+X-Gm-Message-State: AJaThX4OK/FN4UrjyeKq1o4v9bCVJD8pqs3YO1BrJ5bRQumZLOqqdInm
+        pAHz1COTZ/CSVesQHr13hH6CoIYCw1szrSADWQE=
+X-Google-Smtp-Source: AGs4zMZfhDAMYzSCYGFlYOCYSZ/IbHVwl9OVLSyOpDDmPm5/mEqjqL/ESeejR00TUpM3o2gZ9AcrN1NYjUNJ9RVLgbA=
+X-Received: by 10.202.244.212 with SMTP id s203mr15827245oih.145.1511777536821;
+ Mon, 27 Nov 2017 02:12:16 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 81A9438C-D352-11E7-A2FC-575F0C78B957-77302942!pb-smtp2.pobox.com
+Received: by 10.157.1.137 with HTTP; Mon, 27 Nov 2017 02:12:16 -0800 (PST)
+In-Reply-To: <xmqq8tesflne.fsf@gitster.mtv.corp.google.com>
+References: <xmqqvai5lf4a.fsf@gitster.mtv.corp.google.com> <20171126201119.24313-1-gennady.kupava@gmail.com>
+ <20171126201119.24313-2-gennady.kupava@gmail.com> <xmqqpo84fre1.fsf@gitster.mtv.corp.google.com>
+ <xmqqlgisfquy.fsf@gitster.mtv.corp.google.com> <xmqq8tesflne.fsf@gitster.mtv.corp.google.com>
+From:   Gennady Kupava <gennady.kupava@gmail.com>
+Date:   Mon, 27 Nov 2017 10:12:16 +0000
+Message-ID: <CAPu-DQpKRvU05pgfFpdguAfMKJnHpshsajivTCtNa56GtToUtg@mail.gmail.com>
+Subject: Re: [PATCH 2/2] trace: improve performance while category is disabled
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>, Gennady Kupava <gkupava@bloomberg.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+> Spotted yet another.  This function in a header file, that is
+included by many source files, must be made "static inline" (which I
+already did as without the fix I couldn't get 'pu' to compile).
 
-> I think that's the rub, though. We hit this code path by default, so
-> it's _not_ a sign that the builder cares about gitk.
+Thanks, missed that, seems my compiler inlined all calls and I didn't
+notice the problem.
 
-OK.
 
->> Whether the builder wants to run the result on the same box is a
->> separate and irrelevant matter.  Once built and installed, a box
->> without "wish" may not be able to run the result, but installing it
->> after the fact will fix it without need to rebuild anything.
+On 27 November 2017 at 03:25, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> Yeah, this side-steps the "other half" of the issue that Christian's
-> patch addresses, which seems like the more controversial part (I don't
-> have a strong opinion myself, though).
-
-Is that controversial at all?  In the sense that it is addressing a
-non-issue (i.e. it is perfectly fine if installed gitk fails at
-runtime complaining that it cannot find wish), it might be, but to
-me, it appears there isn't any room for controversy there.
-
-But an out-of-box build that fails _is_ a problem worth addressing
-to, so I view it primarily as the "how do we do msgfmt (or its
-substitute that is good enough for tcl script)" issue.  Perhaps we
-can export NO_GETTEXT from the top-level Makefile and have Makefiles
-in these two subdirectories to pay attention to it, in addition to
-NO_MSGFMT, and build them without i18n support instead of failing,
-or something?
+>> Just in case others notice style and whitespace issues, I've applied
+>> the following to fix them, so there is no need to reroll only to fix
+>> these.
+>> ...
+>> -inline int trace_pass_fl(struct trace_key *key) {
+>> +inline int trace_pass_fl(struct trace_key *key)
+>> +{
+>>       return key->fd || !key->initialized;
+>>  }
+>
+> Spotted yet another.  This function in a header file, that is
+> included by many source files, must be made "static inline" (which I
+> already did as without the fix I couldn't get 'pu' to compile).
+>
+>
+>
