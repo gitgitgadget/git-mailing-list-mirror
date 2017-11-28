@@ -2,185 +2,179 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BA30820954
-	for <e@80x24.org>; Tue, 28 Nov 2017 23:06:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C760B20954
+	for <e@80x24.org>; Tue, 28 Nov 2017 23:22:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751748AbdK1XG3 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Nov 2017 18:06:29 -0500
-Received: from mail-it0-f51.google.com ([209.85.214.51]:38149 "EHLO
-        mail-it0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750904AbdK1XG2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Nov 2017 18:06:28 -0500
-Received: by mail-it0-f51.google.com with SMTP id r6so1832192itr.3
-        for <git@vger.kernel.org>; Tue, 28 Nov 2017 15:06:27 -0800 (PST)
+        id S1751901AbdK1XWu (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Nov 2017 18:22:50 -0500
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:46694 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752187AbdK1XWt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Nov 2017 18:22:49 -0500
+Received: by mail-pg0-f68.google.com with SMTP id b11so623353pgu.13
+        for <git@vger.kernel.org>; Tue, 28 Nov 2017 15:22:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=MRY6+AdhaVfcS8rpBTINRWJAyZu0nMWi5NGugFy+wfg=;
-        b=oRaYaVJNafZjcYS+OpX+9PydbV8DjAfnujwvtl8dzVtNn427pjP24TK8/VI7TjeUVv
-         lGb2Q25YNMqkqdOT8N/9Nfxtv4HRzAOs1aNzRWgnz3CLuru7ryj7W3ZnZ2MORiC9eieH
-         WkbOdy2SulqfMSAiS9CY/n4+pjzTVHcDW/eZQcPQllTnm0ChwrGgxDOHuHfayq1QSABM
-         tm2br7aSpGUwokM1pks5H0uZ0YAMUNt2pYdfc5puyyBFLwbuDjBqWte6/ivkw/9bKxTv
-         1eEN5NV8Jd7fMsIAhWXr5K4e73p2AeEtiaKQOApPrZ/cB/ljK/tN2fuft1LUZ+RWOfwn
-         kUvQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=xBv3z4mSgsPaouapDxsJJ2r5gWNhe9BMPLZeN0Sfc5M=;
+        b=tsKbuzWimEDPC405yrn2BdeCk/6qZOlfhREANKSdKqNy0Ua/2F8ObFx6Coo4ddavCU
+         VaZ57ZDcX67O5RoIfvxbbH0rX+LxdBOD2XDhQ9YOXM0IPe228aaGMpyHMVaBD/PmMAWr
+         9bPJ+shj2imzLyjumZ6ASYsAQPwvtlakQNwEonnVv4PGGX6dHDn5QHS3sQ/xaONqJNcA
+         1QAOO/vnQ1AjFRx2Tl/pemFjdKKZ7qyeFuqwfBL9kRr7NLwdyV66zp2RM+MxGDH3Jc0W
+         saVCdLXfWgK/+QQWb0/6ePDKUVGd5uXzDf+Oh+y33bRqb4I24HssLOMQKo2yksUHp+Pu
+         Sm3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=MRY6+AdhaVfcS8rpBTINRWJAyZu0nMWi5NGugFy+wfg=;
-        b=UQFwc8DnZHF15kFdnH9FUKfKYV3Mn0qocucxII8lKzk40g+I94qe5xtKe4gBOUmq1m
-         LwYfU1Moa1mwL1SHaVJ4TUeaUYVakwCfFvVh8Et0450oLu4+peoOYhEkT5G71swy4o5l
-         iHUgtWDRdOUeu02t5vGv9jcijj/jTkqJiICzAtm0M3hFdiLEhrSUz+aT6BTrASjzD8ve
-         kuhn9lXXQBHt5te2fl+BVOpIIcZuGjbTEbjZOKrTcWxGt3DbPBQ9xE/YWu4W3cyDmife
-         hA93pDvuGi5b0N+x+Ha5e1GygzMaPtz63zlRXREI0+rw851V7AWwGozTZsumh/suBa1r
-         WA7w==
-X-Gm-Message-State: AJaThX5mDOruvG9PK+duP/djBhhnPY69qE0KGm0qA7RG7qdqy7YxNR+i
-        dhWn4kKQgaJsTOJ42wUv0rkL6Q==
-X-Google-Smtp-Source: AGs4zMbqnNfDOIGz+9+1YpHAy7UjOJoGTNWaOj1TfjubhlrT5O5pw5ioy4SMws7MMyCTbZxglIWlpg==
-X-Received: by 10.36.228.15 with SMTP id o15mr4668430ith.46.1511910386838;
-        Tue, 28 Nov 2017 15:06:26 -0800 (PST)
-Received: from google.com ([2620:0:100e:422:d514:add4:62c9:d57f])
-        by smtp.gmail.com with ESMTPSA id n184sm327713itg.9.2017.11.28.15.06.25
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 28 Nov 2017 15:06:25 -0800 (PST)
-Date:   Tue, 28 Nov 2017 15:06:24 -0800
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=xBv3z4mSgsPaouapDxsJJ2r5gWNhe9BMPLZeN0Sfc5M=;
+        b=mjrsVL3ZtgXtmddrBsbFB3TXO+5l1O7nwYtm+wi5wbYBNpeoYDvG6h9gyjLNrAjRA+
+         ZSIdxYYwfkzKGqNl7tSJRoMIEvNGy5SH5cgfoqdk6EBT3X7Dqd0TR73pwHwyRJbc89fR
+         dW8kFB0kQenbecndRS+C49upA8i/NvbfFcUBBPFPHc9FsJvgY84p24dAjkpfVyKmeI46
+         XCm1nHJn39gtm9wrbUSqK+e52ldtjt4rXZT58q0CYabeiVpNSqJqkRZuXb80TKayovQZ
+         gJELCovHI3ATwN7JsZVsfsFrgnqKOGQ22votHMdmwYJcDPCv1pYel1wFzXQ+HT0OI1j+
+         PY9w==
+X-Gm-Message-State: AJaThX7pcTmCh7rzF233aASTlHyS1gfSscFEHmX3FLpXs/0lxhR7Xe4U
+        V6liprzdqdwsk22wM9gKH4H+BdILfgY=
+X-Google-Smtp-Source: AGs4zMb4E6VbiwvT5Ng1qOMnkMgkPBIumAxvZjt8iY5s8nJESbSUaH1Bz1KtA+ZaWGdEEwKENz4X5w==
+X-Received: by 10.98.99.68 with SMTP id x65mr870569pfb.56.1511911368382;
+        Tue, 28 Nov 2017 15:22:48 -0800 (PST)
+Received: from roshar.svl.corp.google.com ([100.96.218.30])
+        by smtp.gmail.com with ESMTPSA id x77sm273093pfe.61.2017.11.28.15.22.47
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 28 Nov 2017 15:22:47 -0800 (PST)
 From:   Brandon Williams <bmwill@google.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: Bug in pathspec handling (in conjunction with submodules)
-Message-ID: <20171128230624.GA194092@google.com>
-References: <alpine.DEB.2.21.1.1711260210060.6482@virtualbox>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+To:     git@vger.kernel.org
+Cc:     Johannes.Schindelin@gmx.de, pclouds@gmail.com,
+        Brandon Williams <bmwill@google.com>
+Subject: [PATCH] pathspec: only match across submodule boundaries when requested
+Date:   Tue, 28 Nov 2017 15:22:37 -0800
+Message-Id: <20171128232237.54453-1-bmwill@google.com>
+X-Mailer: git-send-email 2.15.0.531.g2ccb3012c9-goog
 In-Reply-To: <alpine.DEB.2.21.1.1711260210060.6482@virtualbox>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+References: <alpine.DEB.2.21.1.1711260210060.6482@virtualbox>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/26, Johannes Schindelin wrote:
-> Hi Duy & Brandon,
-> 
-> in 74ed43711fd (grep: enable recurse-submodules to work on <tree> objects,
-> 2016-12-16), the do_match() function in tree-walk.c was changed so that it
-> can recurse across submodule boundaries.
-> 
-> However, there is a bug, and I *think* there may be two bugs actually. Or
-> even three.
-> 
-> First of all, here is an MCVE that I distilled from
-> https://github.com/git-for-windows/git/issues/1371:
-> 
-> 	git init repo
-> 	cd repo
-> 
-> 	git init submodule
-> 	git -C submodule commit -m initial --allow-empty
-> 
-> 	touch "[bracket]"
-> 	git add "[bracket]"
-> 	git commit -m bracket
-> 	git add submodule
-> 	git commit -m submodule
-> 
-> 	git rev-list HEAD -- "[bracket]"
-> 
-> Nothing fancy, just adding a file with brackets in the name, then a
-> submodule, then showing the commit history filtered by the funny file
-> name.
-> 
-> However, the log prints *both* commits. Clearly the submodule commit
-> should *not* be shown.
-> 
-> Now, how does this all happen?
-> 
-> Since the pathspec contains brackets, parse_pathspec() marks it as
-> containing wildcards and sets nowildcard_len to 0.
-> 
-> Now, note that [bracket] *is* a wildcard expression: it should only match
-> a single character that is one of  a, b, c, e, k, r or t.
-> 
-> I think this is the first bug: `git rev-list` should not even match the
-> commit that adds the file [bracket] because its file name does not match
-> that expression. From where I sit, it would appear that f1a2ddbbc2d
-> (tree_entry_interesting(): optimize wildcard matching when base is
-> matched, 2010-12-15) simply added the fnmatch() code without disabling the
-> literal match_entry() code when the pathspec contains a pattern.
+Commit 74ed43711fd (grep: enable recurse-submodules to work on <tree>
+objects, 2016-12-16) taught 'tree_entry_interesting()' to be able to
+match across submodule boundaries in the presence of wildcards.  This is
+done by performing literal matching up to the first wildcard and then
+punting to the submodule itself to perform more accurate pattern
+matching.  Instead of introducing a new flag to request this behavior,
+commit 74ed43711fd overloaded the already existing 'recursive' flag in
+'struct pathspec' to request this behavior.
 
-I can see both sides to this, wanting to try matching literally first
-and then trying the wildcards, so I don't really have an opinion on
-how/if we should fix that.
+This leads to a bug where whenever any other caller has the 'recursive'
+flag set as well as a pathspec with wildcards that all submodules will
+be indicated as matches.  One simple example of this is:
 
-> 
-> But it does not stop there: there is *another* bug which causes the
-> pattern to somehow match the submodule. I *guess* the idea of
-> https://github.com/git/git/commit/74ed43711#diff-7a08243175f2cae66aedf53f7dce3bdfR1015
-> was to allow a pattern like *.c to match files in a submodule, but the
-> pattern [bracket] should not match any file in submodule/. I think that
-> that code needs to be a little bit more careful to try to match the
-> submodule's name against the pattern (it seems to interpret nowildcard_len
-> == 0 to mean that the wildcard is `*`).
+	git init repo
+	cd repo
 
-This is a much bigger issue and I'm surprised it took this long to find
-this bug.  And of course its due to one of my earlier contributions to
-the project :)
+	git init submodule
+	git -C submodule commit -m initial --allow-empty
 
-> 
-> However, the commit introducing that code wanted to teach *grep* (not
-> *rev-list*) a new trick, and it relies on the `recursive` flag of the
-> pathspec to be set.
+	touch "[bracket]"
+	git add "[bracket]"
+	git commit -m bracket
+	git add submodule
+	git commit -m submodule
 
-This is the root cause of the bug.  The added code to match against
-submodules was intended to allow for matching past submodule boundaries
-for those commands (like grep) which are recursing submodules.  So
-really there should be an additional flag which is passed in to trigger
-this logic instead of relying on the recursive flag of the pathspec.  Or
-we can add a recurse_submodules flag to the pathspec struct and respect
-that flag instead of the 'recursive' flag.
+	git rev-list HEAD -- "[bracket]"
 
-I have a quick patch to do just that which I'll send shortly.
+Fix this by introducing the new flag 'recurse_submodules' in 'struct
+pathspec' and using this flag to determine if matches should be allowed
+to cross submodule boundaries.
 
-> 
-> And now it gets really interesting. Or confusing, depending on your mental
-> condition. This recursive flag of the pathspec is set in
-> ll_diff_tree_paths() (yep, changing the flag in the passed-in opt
-> structure... which I found a bit... unexpected, given the function name, I
-> would have been less surprised if that function only diff'ed the trees and
-> used the options without changing the options). That flag-change was
-> introduced in
-> https://github.com/git/git/commit/bc96cc87dbb2#diff-15203e8cd8ee9191113894de9d97a8a6R149
-> which is another patch that changed the tree diff machinery to accommodate
-> `git grep` (but maybe not really paying a lot of attention to the fact
-> that the same machinery is called repeatedly by the revision machinery,
-> too).
-> 
-> I am really confused by this code mainly due to the fact that the term
-> "recursive" is pretty ambiguous in that context: does it refer to
-> directories/tree objects, or to submodules? I guess it is used for both
-> when there should be two flags so that rev-list can recurse over tree
-> objects but not submodules (unless told to do so).
-> 
-> The problem, of course, is that `git rev-list HEAD -- '[bracket]'` never
-> recurses into the submodule. And therefore, the promised "more accurate
-> matching [...] in the submodule" is never performed. And the commit adding
-> the submodule is never pruned.
-> 
-> Since I am not really familiar with all that tree diff code (and as a
-> general rule to protect my mental health, I try my best to stay away from
-> submodules, too), but you two are, may I ask you gentle people to have a
-> closer look to fix those bugs?
-> 
-> Thanks,
-> Dscho
+Signed-off-by: Brandon Williams <bmwill@google.com>
+---
+ builtin/grep.c                |  1 +
+ pathspec.h                    |  1 +
+ t/t4208-log-magic-pathspec.sh | 17 +++++++++++++++++
+ tree-walk.c                   |  5 +++--
+ 4 files changed, 22 insertions(+), 2 deletions(-)
 
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 5a6cfe6b4..3ca4ac80d 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -1015,6 +1015,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 		       prefix, argv + i);
+ 	pathspec.max_depth = opt.max_depth;
+ 	pathspec.recursive = 1;
++	pathspec.recurse_submodules = !!recurse_submodules;
+ 
+ #ifndef NO_PTHREADS
+ 	if (list.nr || cached || show_in_pager)
+diff --git a/pathspec.h b/pathspec.h
+index 6420d1080..099a170c2 100644
+--- a/pathspec.h
++++ b/pathspec.h
+@@ -24,6 +24,7 @@ struct pathspec {
+ 	int nr;
+ 	unsigned int has_wildcard:1;
+ 	unsigned int recursive:1;
++	unsigned int recurse_submodules:1;
+ 	unsigned magic;
+ 	int max_depth;
+ 	struct pathspec_item {
+diff --git a/t/t4208-log-magic-pathspec.sh b/t/t4208-log-magic-pathspec.sh
+index 935df6a65..bd583af0e 100755
+--- a/t/t4208-log-magic-pathspec.sh
++++ b/t/t4208-log-magic-pathspec.sh
+@@ -93,4 +93,21 @@ test_expect_success 'command line pathspec parsing for "git log"' '
+ 	git log --merge -- a
+ '
+ 
++test_expect_success 'tree_entry_interesting does not match past submodule boundaries' '
++	test_when_finished "rm -rf repo submodule" &&
++	git init submodule &&
++	test_commit -C submodule initial &&
++	git init repo &&
++	>"repo/[bracket]" &&
++	git -C repo add "[bracket]" &&
++	git -C repo commit -m bracket &&
++	git -C repo rev-list HEAD -- "[bracket]" >expect &&
++
++	git -C repo submodule add ../submodule &&
++	git -C repo commit -m submodule &&
++
++	git -C repo rev-list HEAD -- "[bracket]" >actual &&
++	test_cmp expect actual
++'
++
+ test_done
+diff --git a/tree-walk.c b/tree-walk.c
+index 684f0e337..63a87ed66 100644
+--- a/tree-walk.c
++++ b/tree-walk.c
+@@ -1011,7 +1011,8 @@ static enum interesting do_match(const struct name_entry *entry,
+ 				 * character.  More accurate matching can then
+ 				 * be performed in the submodule itself.
+ 				 */
+-				if (ps->recursive && S_ISGITLINK(entry->mode) &&
++				if (ps->recurse_submodules &&
++				    S_ISGITLINK(entry->mode) &&
+ 				    !ps_strncmp(item, match + baselen,
+ 						entry->path,
+ 						item->nowildcard_len - baselen))
+@@ -1060,7 +1061,7 @@ static enum interesting do_match(const struct name_entry *entry,
+ 		 * character.  More accurate matching can then
+ 		 * be performed in the submodule itself.
+ 		 */
+-		if (ps->recursive && S_ISGITLINK(entry->mode) &&
++		if (ps->recurse_submodules && S_ISGITLINK(entry->mode) &&
+ 		    !ps_strncmp(item, match, base->buf + base_offset,
+ 				item->nowildcard_len)) {
+ 			strbuf_setlen(base, base_offset + baselen);
 -- 
-Brandon Williams
+2.15.0.531.g2ccb3012c9-goog
+
