@@ -2,87 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BF0F420954
-	for <e@80x24.org>; Tue, 28 Nov 2017 15:32:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BDE3520954
+	for <e@80x24.org>; Tue, 28 Nov 2017 16:02:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753286AbdK1Pc1 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Nov 2017 10:32:27 -0500
-Received: from mout.gmx.net ([212.227.17.21]:50384 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753391AbdK1PcY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Nov 2017 10:32:24 -0500
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lj4xG-1eq2120XCY-00dHfb; Tue, 28
- Nov 2017 16:32:22 +0100
-Date:   Tue, 28 Nov 2017 16:32:21 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>
-cc:     git@vger.kernel.org
-Subject: Re: bug deleting "unmerged" branch (2.12.3)
-In-Reply-To: <5A1D70FD020000A100029137@gwsmtp1.uni-regensburg.de>
-Message-ID: <alpine.DEB.2.21.1.1711281542400.6482@virtualbox>
-References: <5A1D70FD020000A100029137@gwsmtp1.uni-regensburg.de>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1753230AbdK1QC2 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Nov 2017 11:02:28 -0500
+Received: from mail-qt0-f174.google.com ([209.85.216.174]:45552 "EHLO
+        mail-qt0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752227AbdK1QC1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Nov 2017 11:02:27 -0500
+Received: by mail-qt0-f174.google.com with SMTP id g10so397976qtj.12
+        for <git@vger.kernel.org>; Tue, 28 Nov 2017 08:02:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=mRV9AsOP6L0cA+ddOgrCtAmDOc1lAQDZBKWpMsuSJnk=;
+        b=eQcMeD79qPhRHahGO/5l5enesmYpd0FDe/w2hO6CjrEnEaW4rJ/A7lgjWgouTD8ECx
+         +qbWhHH+XiNWoGx0vUCjLXgeuqr6fi6EDfUu+ud7CqIO/FAOEW1Kb9h+UZrldyI66aLF
+         Qjx7WhkF6tdwwYHwKEad6AyYF/oJDRIKMk9By7zfmlY0SHeVrjiDhOn8aFI8BiRkKf5+
+         1xdgHq/5C9dfyoXA3cuRJrk3wba9cnFCMOZsAFigJEEe3SSRhzm166pDkz4xqb4qw2MQ
+         m/lk8MfRyv9NavScId82X12XPKqWtvBjCDttU3UBgX8MRNgyxyrYyXrG5cRfdjggDjVU
+         kC6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=mRV9AsOP6L0cA+ddOgrCtAmDOc1lAQDZBKWpMsuSJnk=;
+        b=uW9OjOFYPK3zfCBb/E/sMdBFb/RIR5tJvAFIYnqLQexVvtpCRvFoxWPD0rGAfETJWu
+         +hJ4fNANxQbZyZ+J1GbGcSDJnb96AxmPUT87k8bSEnFCFZMXSq9HdKSOurGS8xmXpHS/
+         igGScw5Zpp7K3G+u1lmYhY/OiqZEvsxjZlCHpIPs/3D8dA2wqV9jJjEkgxXnHRtC2OyQ
+         oGiitzKjKvqg4TzXl6tDqPdm2SQIPD98s8rASKsvikMhazasiZLRtInR+RAu5TOKt6V0
+         QHqyV/4RRPYeUTaQsxL0oxl3JXB25dbpusBktL4LAmvgMpnFIJX4k/K3uCbeOPrUvbhi
+         3Utg==
+X-Gm-Message-State: AJaThX4SMSpB8twdSQczjJXIv33Vw3ZVR4Ehx09eZ/8tT9+yJVygmv+H
+        B/bCrzuA7k/w1MpEPVdZfgw=
+X-Google-Smtp-Source: AGs4zMa7901XyjqQVWjow7PDolNXBC8usmd1nCI0XyFbM16dxzXTMatMDs6hWelHTCoB9ycQiZoV9Q==
+X-Received: by 10.200.50.39 with SMTP id x36mr71768271qta.255.1511884946574;
+        Tue, 28 Nov 2017 08:02:26 -0800 (PST)
+Received: from zaya.teonanacatl.net (pool-173-67-181-41.hrbgpa.fios.verizon.net. [173.67.181.41])
+        by smtp.gmail.com with ESMTPSA id e16sm22363350qtk.64.2017.11.28.08.02.24
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 28 Nov 2017 08:02:25 -0800 (PST)
+Date:   Tue, 28 Nov 2017 11:02:22 -0500
+From:   Todd Zullinger <tmz@pobox.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        git <git@vger.kernel.org>, Dominik Mahrer <teddy@teddy.ch>,
+        git-packagers@googlegroups.com,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Jeff King <peff@peff.net>,
+        Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [PATCH] travis-ci: avoid new tcl/tk build requirement
+Message-ID: <20171128160222.GO3693@zaya.teonanacatl.net>
+References: <xmqqlgir6mwk.fsf@gitster.mtv.corp.google.com>
+ <20171128143718.3748-1-tmz@pobox.com>
+ <CAP8UFD1Y_7FcARFoqNKTpDLRxKW1+jCBGAy5+TxL33ui0Hyb8w@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:h8TU9BeRtbNpWm+UkkrBZXIezag2DU4mJReSP6Ip08tzUe3IISy
- KETqFhv8f8VTMtKJWQTqqrkWn3axr80MsGhL3Dg6q3afY2NzcrdSxtlFHk+QfudJfX7gk7g
- WezAZKw381InLVnau6B/598DtgLVS6r1aOZTw0wtJ6Jqmk3ecTh+4kpbOzPGzUrnSVNFb0B
- LewsARJDnfsNafX1xA8lA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:yaHYK8D+xmk=:wJYPo+ityhi1KAmdJjLHxK
- imRb7fxlsJW27vsbH+ucWGd/9laumjsP6PPYJk+7ZkoYPLifg8GLlMce3LNbKWo9WKb09P2Jh
- d07S1obhFRvtVKszaCkphP5aa7UnjHHroWMU4TJCYIBf5xCsrfUiXeZjpDs3lGzeAEwKwD7r3
- eufpQq5iVhCGrMJz7D7BVW5Dwa340e4Tvxol9jUpAzTctnhzSlMSdvPd+xMODfDEu26XGgbvW
- 0eKgjSF9LVxN9fRV1hMOnuQR7pTPnj58QInxXTJFAyCii3UwWMl07QfXMwyh2U1RdjpM5O3A8
- /FPGePWPnZGgyzVSYudX4oD3n0W+TubS201cvTinfNmnl+0jJST68DytHL9pnfXoxEnVR4yt3
- AaX5CjOOE8xMcIdgPKkEWAUey7GMhma7JDdbyZKHYRgDCBT4COIBBi6dPHVzWSO974+qbc8hI
- gEAbB3UyOPmPhs0bKlWRx+3dkhE9ATb2CXpOyTGw0ieiukOXq8yC9HBzCZGhPkY73OoCombuZ
- KYfdUGm4m6xo/CUJys06ov/ov+WIrAi7FYAQj6C8hOeX9Ggqz5NogwEu733/7IksY69Pqae3J
- RkmLJWwqe8P/0b2uJdvna2QE/7xCSahgSOG7G23AVCyB0dafttjw7LGoH2Qunom3GwS9De/xA
- DldH53NdcvBqm/J4yhBBhMIr5+O2AXYx5ukq9VUHhKe+KLnWZ0bv0KLXVZS07Zc/UFx4qQGNO
- 9vsZdRYOvRnhEWvgQmTNEfgTv6U7lQjuqR6U/itZgjn2RD8pt8pNvFAajovSgHjIZgfIjVAEJ
- SwY89qRwrXHeX9rBwhrPQphZXmXC2/2+E0YcqjvG/4GxxYbl7o=
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <CAP8UFD1Y_7FcARFoqNKTpDLRxKW1+jCBGAy5+TxL33ui0Hyb8w@mail.gmail.com>
+User-Agent: Mutt/1.9.1 (2017-09-22)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Ulrich,
-
-On Tue, 28 Nov 2017, Ulrich Windl wrote:
-
-> During a rebase that turned out to be heavier than expected 8-( I
-> decided to keep the old branch by creating a temporary branch name to
-> the commit of the branch to rebase (which was still the old commit ID at
-> that time).
+Christian Couder wrote:
+>> Junio C Hamano wrote:
+>>> It seems that TravisCI objects ;-)
+>>>
+>>>    https://travis-ci.org/git/git/jobs/307745929
+>>
+>> Interesting that the main builds passed.  I don't know what the default
+>> 64-bit linuxinstall looks like in travis, so I presume it includes
+>> tcl/tk or something.
 >
-> When done rebasing, I attached a new name to the new (rebased) branch,
-> deleted the old name (pointing at the same rebase commit), then
-> recreated the old branch from the temporary branch name (created to
-> remember the commit id).
+> Yeah, interesting. I am cc'ing Lars who perhaps knows.
+
+I pulled the travis docker image used in clang/gcc builds[1] and can
+see it has both tcl and tk packages installed.  The linux32 builds use
+a docker image[2] which does not contain tcl or tk.
+
+[1] travisci/ci-garnet:packer-1503972846
+[2] daald/ubuntu32:xenial
+
+If we wanted, we could set BYPASS_TCLTK_CHECK only for the linux32
+builds.  I think it's probably better to do it globally rather than
+rely on the travis containers implicitly having tcl/tk installed.
+
+> The patch looks good to me. Thanks!
 >
-> When I wanted to delete the temporary branch (which is of no use now), I
-> got a message that the branch is unmerged.
+> I wonder if it would be better to squash it into my patch or to keep
+> it separate. I am ok with both ways.
 
-This is actually as designed, at least for performance reasons (it is not
-exactly cheap to figure out whether a given commit is contained in any
-other branch).
+I fine either way too.  This is still just on pu, so squashing it in
+seems like the way to go.  I only made it separate to cause travis to
+run the tests. :)
 
-> I think if more than one branches are pointing to the same commit, one
-> should be allowed to delete all but the last one without warning. Do you
-> agree?
+-- 
+Todd
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In the beginning the Universe was created. This has made a lot of
+people very angry and has been widely regarded as a bad move.
+    -- Douglas Adams
 
-No, respectfully disagree, because I have found myself with branches
-pointing to the same commit, even if the branches served different
-purposes. I really like the current behavior where you can delete a
-branch with `git branch -d` as long as it is contained in its upstream
-branch.
-
-Ciao,
-Johannes
