@@ -2,374 +2,185 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-1.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 79DFF20C13
-	for <e@80x24.org>; Tue, 28 Nov 2017 21:43:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA30820954
+	for <e@80x24.org>; Tue, 28 Nov 2017 23:06:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753030AbdK1VnY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Nov 2017 16:43:24 -0500
-Received: from a7-11.smtp-out.eu-west-1.amazonses.com ([54.240.7.11]:44936
-        "EHLO a7-11.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752829AbdK1VnX (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2017 16:43:23 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1511905401;
-        h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=QcpU0R94shEAMXxQWi2IQBB8V7ueX/qDUmsNKuJZTnA=;
-        b=KC3DXijhlEzx/9ytbXVmgHkO9SsY1wfyvv/bc5bTB87GvQARonJ9yAcOTygt1pPi
-        IUgSpQzbi7BQYejBY4bZ/YYHFyop6j5MGIn6tSKS5VZMcylFLGfM6fx6gzslNhvZXPj
-        qp83vY/Ij97OJorXWXxNRN6QTeQJji1eQf8q2KIA=
-From:   Soukaina NAIT HMID <nhsoukaina@gmail.com>
-To:     git@vger.kernel.org
-Message-ID: <0102016004959a28-410f021b-ac2b-4756-8e55-244071c074b5-000000@eu-west-1.amazonses.com>
-In-Reply-To: <0102015fb0bf2f74-cb456171-fe65-4d83-8784-b553c7c9e584-000000@eu-west-1.amazonses.com>
-References: <0102015fb0bf2f74-cb456171-fe65-4d83-8784-b553c7c9e584-000000@eu-west-1.amazonses.com>
-Subject: [add-default-config] add --default option to git config.
+        id S1751748AbdK1XG3 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Nov 2017 18:06:29 -0500
+Received: from mail-it0-f51.google.com ([209.85.214.51]:38149 "EHLO
+        mail-it0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750904AbdK1XG2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Nov 2017 18:06:28 -0500
+Received: by mail-it0-f51.google.com with SMTP id r6so1832192itr.3
+        for <git@vger.kernel.org>; Tue, 28 Nov 2017 15:06:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=MRY6+AdhaVfcS8rpBTINRWJAyZu0nMWi5NGugFy+wfg=;
+        b=oRaYaVJNafZjcYS+OpX+9PydbV8DjAfnujwvtl8dzVtNn427pjP24TK8/VI7TjeUVv
+         lGb2Q25YNMqkqdOT8N/9Nfxtv4HRzAOs1aNzRWgnz3CLuru7ryj7W3ZnZ2MORiC9eieH
+         WkbOdy2SulqfMSAiS9CY/n4+pjzTVHcDW/eZQcPQllTnm0ChwrGgxDOHuHfayq1QSABM
+         tm2br7aSpGUwokM1pks5H0uZ0YAMUNt2pYdfc5puyyBFLwbuDjBqWte6/ivkw/9bKxTv
+         1eEN5NV8Jd7fMsIAhWXr5K4e73p2AeEtiaKQOApPrZ/cB/ljK/tN2fuft1LUZ+RWOfwn
+         kUvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=MRY6+AdhaVfcS8rpBTINRWJAyZu0nMWi5NGugFy+wfg=;
+        b=UQFwc8DnZHF15kFdnH9FUKfKYV3Mn0qocucxII8lKzk40g+I94qe5xtKe4gBOUmq1m
+         LwYfU1Moa1mwL1SHaVJ4TUeaUYVakwCfFvVh8Et0450oLu4+peoOYhEkT5G71swy4o5l
+         iHUgtWDRdOUeu02t5vGv9jcijj/jTkqJiICzAtm0M3hFdiLEhrSUz+aT6BTrASjzD8ve
+         kuhn9lXXQBHt5te2fl+BVOpIIcZuGjbTEbjZOKrTcWxGt3DbPBQ9xE/YWu4W3cyDmife
+         hA93pDvuGi5b0N+x+Ha5e1GygzMaPtz63zlRXREI0+rw851V7AWwGozTZsumh/suBa1r
+         WA7w==
+X-Gm-Message-State: AJaThX5mDOruvG9PK+duP/djBhhnPY69qE0KGm0qA7RG7qdqy7YxNR+i
+        dhWn4kKQgaJsTOJ42wUv0rkL6Q==
+X-Google-Smtp-Source: AGs4zMbqnNfDOIGz+9+1YpHAy7UjOJoGTNWaOj1TfjubhlrT5O5pw5ioy4SMws7MMyCTbZxglIWlpg==
+X-Received: by 10.36.228.15 with SMTP id o15mr4668430ith.46.1511910386838;
+        Tue, 28 Nov 2017 15:06:26 -0800 (PST)
+Received: from google.com ([2620:0:100e:422:d514:add4:62c9:d57f])
+        by smtp.gmail.com with ESMTPSA id n184sm327713itg.9.2017.11.28.15.06.25
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 28 Nov 2017 15:06:25 -0800 (PST)
+Date:   Tue, 28 Nov 2017 15:06:24 -0800
+From:   Brandon Williams <bmwill@google.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: Bug in pathspec handling (in conjunction with submodules)
+Message-ID: <20171128230624.GA194092@google.com>
+References: <alpine.DEB.2.21.1.1711260210060.6482@virtualbox>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 28 Nov 2017 21:43:21 +0000
-X-SES-Outgoing: 2017.11.28-54.240.7.11
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.2.21.1.1711260210060.6482@virtualbox>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Soukaina NAIT HMID <snaithmid@bloomberg.net>
+On 11/26, Johannes Schindelin wrote:
+> Hi Duy & Brandon,
+> 
+> in 74ed43711fd (grep: enable recurse-submodules to work on <tree> objects,
+> 2016-12-16), the do_match() function in tree-walk.c was changed so that it
+> can recurse across submodule boundaries.
+> 
+> However, there is a bug, and I *think* there may be two bugs actually. Or
+> even three.
+> 
+> First of all, here is an MCVE that I distilled from
+> https://github.com/git-for-windows/git/issues/1371:
+> 
+> 	git init repo
+> 	cd repo
+> 
+> 	git init submodule
+> 	git -C submodule commit -m initial --allow-empty
+> 
+> 	touch "[bracket]"
+> 	git add "[bracket]"
+> 	git commit -m bracket
+> 	git add submodule
+> 	git commit -m submodule
+> 
+> 	git rev-list HEAD -- "[bracket]"
+> 
+> Nothing fancy, just adding a file with brackets in the name, then a
+> submodule, then showing the commit history filtered by the funny file
+> name.
+> 
+> However, the log prints *both* commits. Clearly the submodule commit
+> should *not* be shown.
+> 
+> Now, how does this all happen?
+> 
+> Since the pathspec contains brackets, parse_pathspec() marks it as
+> containing wildcards and sets nowildcard_len to 0.
+> 
+> Now, note that [bracket] *is* a wildcard expression: it should only match
+> a single character that is one of  a, b, c, e, k, r or t.
+> 
+> I think this is the first bug: `git rev-list` should not even match the
+> commit that adds the file [bracket] because its file name does not match
+> that expression. From where I sit, it would appear that f1a2ddbbc2d
+> (tree_entry_interesting(): optimize wildcard matching when base is
+> matched, 2010-12-15) simply added the fnmatch() code without disabling the
+> literal match_entry() code when the pathspec contains a pattern.
 
-Signed-off-by: Soukaina NAIT HMID <snaithmid@bloomberg.net>
----
- Documentation/git-config.txt |   4 ++
- builtin/config.c             |  34 ++++++++-
- config.c                     |  10 +++
- config.h                     |   1 +
- t/t1300-repo-config.sh       | 161 +++++++++++++++++++++++++++++++++++++++++++
- 5 files changed, 209 insertions(+), 1 deletion(-)
+I can see both sides to this, wanting to try matching literally first
+and then trying the wildcards, so I don't really have an opinion on
+how/if we should fix that.
 
-diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-index 4edd09fc6b074..5d5cd58fdae37 100644
---- a/Documentation/git-config.txt
-+++ b/Documentation/git-config.txt
-@@ -179,6 +179,10 @@ See also <<FILES>>.
- 	specified user.  This option has no effect when setting the
- 	value (but you can use `git config section.variable ~/`
- 	from the command line to let your shell do the expansion).
-+--color::
-+	Find the color configured for `name` (e.g. `color.diff.new`) and
-+	output it as the ANSI color escape sequence to the standard
-+	output. 
- 
- -z::
- --null::
-diff --git a/builtin/config.c b/builtin/config.c
-index d13daeeb55927..5e5b998b7c892 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -30,6 +30,7 @@ static int end_null;
- static int respect_includes_opt = -1;
- static struct config_options config_options;
- static int show_origin;
-+static const char *default_value;
- 
- #define ACTION_GET (1<<0)
- #define ACTION_GET_ALL (1<<1)
-@@ -52,6 +53,8 @@ static int show_origin;
- #define TYPE_INT (1<<1)
- #define TYPE_BOOL_OR_INT (1<<2)
- #define TYPE_PATH (1<<3)
-+#define TYPE_COLOR (1<<4)
-+
- 
- static struct option builtin_config_options[] = {
- 	OPT_GROUP(N_("Config file location")),
-@@ -80,11 +83,13 @@ static struct option builtin_config_options[] = {
- 	OPT_BIT(0, "int", &types, N_("value is decimal number"), TYPE_INT),
- 	OPT_BIT(0, "bool-or-int", &types, N_("value is --bool or --int"), TYPE_BOOL_OR_INT),
- 	OPT_BIT(0, "path", &types, N_("value is a path (file or directory name)"), TYPE_PATH),
-+	OPT_BIT(0, "color", &types, N_("find the color configured"), TYPE_COLOR),
- 	OPT_GROUP(N_("Other")),
- 	OPT_BOOL('z', "null", &end_null, N_("terminate values with NUL byte")),
- 	OPT_BOOL(0, "name-only", &omit_values, N_("show variable names only")),
- 	OPT_BOOL(0, "includes", &respect_includes_opt, N_("respect include directives on lookup")),
- 	OPT_BOOL(0, "show-origin", &show_origin, N_("show origin of config (file, standard input, blob, command line)")),
-+	OPT_STRING(0, "default", &default_value, N_("default-value"), N_("sets default value when no value is returned from config")),
- 	OPT_END(),
- };
- 
-@@ -159,6 +164,13 @@ static int format_config(struct strbuf *buf, const char *key_, const char *value
- 				return -1;
- 			strbuf_addstr(buf, v);
- 			free((char *)v);
-+		}
-+		else if (types == TYPE_COLOR) {
-+			char *v = xmalloc(COLOR_MAXLEN);
-+			if (git_config_color(&v, key_, value_) < 0)
-+				return -1;
-+			strbuf_addstr(buf, v);
-+			free((char *)v);
- 		} else if (value_) {
- 			strbuf_addstr(buf, value_);
- 		} else {
-@@ -244,8 +256,16 @@ static int get_value(const char *key_, const char *regex_)
- 	config_with_options(collect_config, &values,
- 			    &given_config_source, &config_options);
- 
--	ret = !values.nr;
-+	if (!values.nr && default_value && types) {
-+		struct strbuf *item;
-+		ALLOC_GROW(values.items, values.nr + 1, values.alloc);
-+		item = &values.items[values.nr++];
-+		if(format_config(item, key_, default_value) < 0){
-+			values.nr = 0;
-+		}
-+	}
- 
-+	ret = !values.nr;
- 	for (i = 0; i < values.nr; i++) {
- 		struct strbuf *buf = values.items + i;
- 		if (do_all || i == values.nr - 1)
-@@ -268,6 +288,7 @@ static int get_value(const char *key_, const char *regex_)
- 	return ret;
- }
- 
-+
- static char *normalize_value(const char *key, const char *value)
- {
- 	if (!value)
-@@ -281,6 +302,17 @@ static char *normalize_value(const char *key, const char *value)
- 		 * when retrieving the value.
- 		 */
- 		return xstrdup(value);
-+	if (types == TYPE_COLOR)
-+	{
-+		char *v = xmalloc(COLOR_MAXLEN);
-+		if (git_config_color(&v, key, value) == 0)
-+		{
-+			free((char *)v);
-+			return xstrdup(value);
-+		}
-+		free((char *)v);
-+		die("cannot parse color '%s'", value);
-+	}
- 	if (types == TYPE_INT)
- 		return xstrfmt("%"PRId64, git_config_int64(key, value));
- 	if (types == TYPE_BOOL)
-diff --git a/config.c b/config.c
-index 903abf9533b18..5c5daffeb6723 100644
---- a/config.c
-+++ b/config.c
-@@ -16,6 +16,7 @@
- #include "string-list.h"
- #include "utf8.h"
- #include "dir.h"
-+#include "color.h"
- 
- struct config_source {
- 	struct config_source *prev;
-@@ -990,6 +991,15 @@ int git_config_pathname(const char **dest, const char *var, const char *value)
- 	return 0;
- }
- 
-+int git_config_color(char **dest, const char *var, const char *value)
-+{
-+	if (!value)
-+		return config_error_nonbool(var);
-+	if (color_parse(value, *dest) < 0)
-+		return -1;
-+	return 0;
-+}
-+
- static int git_default_core_config(const char *var, const char *value)
- {
- 	/* This needs a better name */
-diff --git a/config.h b/config.h
-index a49d264416225..8f8ca6a9b0741 100644
---- a/config.h
-+++ b/config.h
-@@ -72,6 +72,7 @@ extern int git_config_rename_section(const char *, const char *);
- extern int git_config_rename_section_in_file(const char *, const char *, const char *);
- extern int git_config_copy_section(const char *, const char *);
- extern int git_config_copy_section_in_file(const char *, const char *, const char *);
-+extern int git_config_color(char ** dest, const char *var, const char *value);
- extern const char *git_etc_gitconfig(void);
- extern int git_env_bool(const char *, int);
- extern unsigned long git_env_ulong(const char *, unsigned long);
-diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
-index 364a537000bbb..b5804ab05ee3a 100755
---- a/t/t1300-repo-config.sh
-+++ b/t/t1300-repo-config.sh
-@@ -1558,4 +1558,165 @@ test_expect_success '--local requires a repo' '
- 	test_expect_code 128 nongit git config --local foo.bar
- '
- 
-+boolean()
-+{
-+	slot=${3:-no.such.slot} &&
-+	actual=$(git config --default "$1" --bool "$slot") &&
-+	test "$actual" = "$2"
-+}
-+
-+invalid_boolean()
-+{
-+	slot=${2:-no.such.slot} &&
-+	test_must_fail git config --default "$1" --bool "$slot"
-+}
-+
-+test_expect_success 'empty value for boolean' '
-+	boolean "" "false"
-+'
-+
-+test_expect_success 'true' '
-+	boolean "true" "true"
-+'
-+
-+test_expect_success '1 is true' '
-+	boolean "1" "true"
-+'
-+
-+test_expect_success 'non-zero is true' '
-+	boolean "5312" "true"
-+'
-+
-+test_expect_success 'false' '
-+	boolean "false" "false"
-+'
-+
-+test_expect_success '0 is false' '
-+	boolean "0" "false"
-+'
-+
-+test_expect_success 'invalid value' '
-+	invalid_boolean "ab"
-+'
-+
-+test_expect_success 'existing slot has priority = true' '
-+	git config bool.value true &&
-+	boolean "false" "true" "bool.value"
-+'
-+
-+test_expect_success 'existing slot has priority = false' '
-+	git config bool.value false &&
-+	boolean "true" "false" "bool.value"
-+'
-+
-+int()
-+{
-+	slot=${3:-no.such.slot} &&
-+	actual=$(git config --default "$1" --int "$slot") &&
-+	test "$actual" = "$2"
-+}
-+
-+invalid_int()
-+{
-+	slot=${2:-no.such.slot} &&
-+	test_must_fail git config "$1" --int "$slot"
-+}
-+
-+test_expect_success 'empty value for int' '
-+	invalid_int "" ""
-+'
-+
-+test_expect_success 'positive' '
-+	int "12345" "12345"
-+'
-+
-+test_expect_success 'negative' '
-+	int "-679032" "-679032"
-+'
-+
-+test_expect_success 'invalid value' '
-+	invalid_int "abc"
-+'
-+test_expect_success 'existing slot has priority = 123' '
-+	git config int.value 123 &&
-+	int "666" "123" "int.value"
-+'
-+
-+test_expect_success 'existing slot with bad value' '
-+	git config int.value abc &&
-+	invalid_int "123" "int.value"
-+'
-+
-+path()
-+{
-+	slot=${3:-no.such.slot} &&
-+	actual=$(git config --default "$1" --path "$slot") &&
-+	test "$actual" = "$2"
-+}
-+
-+invalid_path()
-+{
-+	slot=${2:-no.such.slot} &&
-+	test_must_fail git config "$1" --path "$slot"
-+}
-+
-+test_expect_success 'empty path is invalid' '
-+	invalid_path "" ""
-+'
-+
-+test_expect_success 'valid path' '
-+	path "/aa/bb/cc" "/aa/bb/cc"
-+'
-+
-+test_expect_success 'existing slot has priority = /to/the/moon' '
-+	git config path.value /to/the/moon &&
-+	path "/to/the/sun" "/to/the/moon" "path.value"
-+'
-+ESC=$(printf '\033')
-+
-+color()
-+{
-+	slot=${3:-no.such.slot} &&
-+	actual=$(git config --default "$1" --color "$slot" ) &&
-+	test "$actual" = "${2:+$ESC}$2"
-+}
-+
-+invalid_color()
-+{
-+	slot=${2:-no.such.slot} &&
-+	test_must_fail git config --default "$1" --color "$slot"
-+}
-+
-+test_expect_success 'reset' '
-+	color "reset" "[m"
-+'
-+
-+test_expect_success 'empty color is empty' '
-+	color "" ""
-+'
-+
-+test_expect_success 'absurdly long color specification' '
-+	color \
-+	  "#ffffff #ffffff bold nobold dim nodim italic noitalic
-+	   ul noul blink noblink reverse noreverse strike nostrike" \
-+	  "[1;2;3;4;5;7;9;22;23;24;25;27;29;38;2;255;255;255;48;2;255;255;255m"
-+'
-+
-+test_expect_success 'color too small' '
-+	invalid_color "-2"
-+'
-+
-+test_expect_success 'color too big' '
-+	invalid_color "256"
-+'
-+
-+test_expect_success 'extra character after color name' '
-+	invalid_color "redX"
-+'
-+
-+test_expect_success 'existing slot has priority = red' '
-+	git config color.value red &&
-+	color "blue" "[31m" "color.value"
-+'
-+
- test_done
+> 
+> But it does not stop there: there is *another* bug which causes the
+> pattern to somehow match the submodule. I *guess* the idea of
+> https://github.com/git/git/commit/74ed43711#diff-7a08243175f2cae66aedf53f7dce3bdfR1015
+> was to allow a pattern like *.c to match files in a submodule, but the
+> pattern [bracket] should not match any file in submodule/. I think that
+> that code needs to be a little bit more careful to try to match the
+> submodule's name against the pattern (it seems to interpret nowildcard_len
+> == 0 to mean that the wildcard is `*`).
 
---
-https://github.com/git/git/pull/431
+This is a much bigger issue and I'm surprised it took this long to find
+this bug.  And of course its due to one of my earlier contributions to
+the project :)
+
+> 
+> However, the commit introducing that code wanted to teach *grep* (not
+> *rev-list*) a new trick, and it relies on the `recursive` flag of the
+> pathspec to be set.
+
+This is the root cause of the bug.  The added code to match against
+submodules was intended to allow for matching past submodule boundaries
+for those commands (like grep) which are recursing submodules.  So
+really there should be an additional flag which is passed in to trigger
+this logic instead of relying on the recursive flag of the pathspec.  Or
+we can add a recurse_submodules flag to the pathspec struct and respect
+that flag instead of the 'recursive' flag.
+
+I have a quick patch to do just that which I'll send shortly.
+
+> 
+> And now it gets really interesting. Or confusing, depending on your mental
+> condition. This recursive flag of the pathspec is set in
+> ll_diff_tree_paths() (yep, changing the flag in the passed-in opt
+> structure... which I found a bit... unexpected, given the function name, I
+> would have been less surprised if that function only diff'ed the trees and
+> used the options without changing the options). That flag-change was
+> introduced in
+> https://github.com/git/git/commit/bc96cc87dbb2#diff-15203e8cd8ee9191113894de9d97a8a6R149
+> which is another patch that changed the tree diff machinery to accommodate
+> `git grep` (but maybe not really paying a lot of attention to the fact
+> that the same machinery is called repeatedly by the revision machinery,
+> too).
+> 
+> I am really confused by this code mainly due to the fact that the term
+> "recursive" is pretty ambiguous in that context: does it refer to
+> directories/tree objects, or to submodules? I guess it is used for both
+> when there should be two flags so that rev-list can recurse over tree
+> objects but not submodules (unless told to do so).
+> 
+> The problem, of course, is that `git rev-list HEAD -- '[bracket]'` never
+> recurses into the submodule. And therefore, the promised "more accurate
+> matching [...] in the submodule" is never performed. And the commit adding
+> the submodule is never pruned.
+> 
+> Since I am not really familiar with all that tree diff code (and as a
+> general rule to protect my mental health, I try my best to stay away from
+> submodules, too), but you two are, may I ask you gentle people to have a
+> closer look to fix those bugs?
+> 
+> Thanks,
+> Dscho
+
+-- 
+Brandon Williams
