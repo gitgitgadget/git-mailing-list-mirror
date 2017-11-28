@@ -2,119 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2CCC520954
-	for <e@80x24.org>; Tue, 28 Nov 2017 14:37:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2E13D20954
+	for <e@80x24.org>; Tue, 28 Nov 2017 14:44:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752749AbdK1OhX (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Nov 2017 09:37:23 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56748 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752446AbdK1OhW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Nov 2017 09:37:22 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2E66496E4A;
-        Tue, 28 Nov 2017 09:37:21 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:date:message-id:in-reply-to:references; s=sasl; bh=V3QD
-        8vcP2Ei2TNvWut5tvKFQg3g=; b=Hic5XBHIW5at4m8JIqW982T/kZjl8y3hmfUB
-        46WX+O52rDwqyk4dcYzjgwNmrJ46+CYUkc31tuY0nN2YaH8xnLU6t7WGEH96hxcq
-        LUfdRp6NB76GT/7YNX8eKe7j1iWOfAl3edDAAa/4QKTpwE4Cwb/NHlIovSj/LJaL
-        BAnlZ2k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
-        nxYtaEv4D4YXwNdpQ4ze0ZuVuI3HvWbxmE3qI566bJPjSMfhEZDCotchtiBRncL+
-        OpYISlhMZeCplSuuWRecvbrunW69kG2xCqtGHJTaRlttENPcqHRsWmnKG2iwGguH
-        zjTVgqLcqxcIMuMBrzwhJs7y0ISodsvEqtNVYuGSs9M=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 26C7296E49;
-        Tue, 28 Nov 2017 09:37:21 -0500 (EST)
-Received: from morphine.paradise.teonanacatl.net (unknown [47.202.94.182])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 185FC96E44;
-        Tue, 28 Nov 2017 09:37:20 -0500 (EST)
-From:   Todd Zullinger <tmz@pobox.com>
+        id S1752086AbdK1OoD (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Nov 2017 09:44:03 -0500
+Received: from mail-pl0-f43.google.com ([209.85.160.43]:43379 "EHLO
+        mail-pl0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751395AbdK1OoD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Nov 2017 09:44:03 -0500
+Received: by mail-pl0-f43.google.com with SMTP id x4so22049plv.10
+        for <git@vger.kernel.org>; Tue, 28 Nov 2017 06:44:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:subject:from:to:cc:in-reply-to:references:date
+         :mime-version:content-transfer-encoding;
+        bh=lYWW/MOWgGvEE+DkcNDjn3FPOTVNBGIO9Ds7XXMGAnc=;
+        b=nmo52fx3xR2qNM8a9ew0r+wwnOTuNZ0ahmnj1dGZhdXMdNUO9z6qe7NHkmNePxSqz+
+         /A4PjCHyXhWn/ByEV+hnaIVtCaANYnL/BM12vBzQjqUWvkBqXd3Xt0sY7SAaR0Gl2yUs
+         Uiu+39/O3Hiil84hWHXiY3omp3mOaknDkU2hb3ntdq3brzrKtSD9m2c4mcW80pRJIMoC
+         zXEjbys7by+bOjqKKvjYCqXJwcE8A6DMPzRyY/wDXbv8D8WNGqMs2f3k6/IAy9IEGYcC
+         y/3TTXXfg6eAgsHC/hEpyUYgBWCBMQTxs8RAqYZ+W+MKDcCqg+1I/EJi4/H6xzHzlBWB
+         E4Nw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:subject:from:to:cc:in-reply-to
+         :references:date:mime-version:content-transfer-encoding;
+        bh=lYWW/MOWgGvEE+DkcNDjn3FPOTVNBGIO9Ds7XXMGAnc=;
+        b=AzADiF+vRomO24LPg/9cOJde1ncq57DjHqzkTmkEL+T5Q7p+wwwsv2+sZigUFwLsDv
+         HMrq92t8yjEjAonNtX5zTorNTZOYiIyVbX+APLGWQb7jH/3uAf4QplkoPAHWVj6xQwze
+         K3d9ySLMbRDa5UIBOa8l+LXuxGAcxhp91x4wYKqehvkcwrJH5Cy5wo3id2U2hXN0XdHL
+         F9SZme0LGZacWJEZaDKzwEMhn78uF2qiwRRujERqrwBPbbtu/lA3e6RLhSdrcYTsqIxy
+         +H6ENbWQuturamdzocq5r4a3ufeuc0LSKrabzpl04nf3bvQp8ds6DoBWbc7n9TpwupjH
+         Z98A==
+X-Gm-Message-State: AJaThX72DbW+qiovtHt6ZPByCn6IrTo8Cul5N+1OWTUHe4QpWsPiRMmC
+        f6ogRKm799kMj0TVG9+gDaZ1+Gl6
+X-Google-Smtp-Source: AGs4zMZ4GY75e9wAKDGe7kClSrn9gBtIGamqDnxYpsj1f9Y/NC1v0IWaBpXUlvMPZtlfMqRTvCUcOQ==
+X-Received: by 10.84.231.196 with SMTP id g4mr35308810pln.62.1511880242311;
+        Tue, 28 Nov 2017 06:44:02 -0800 (PST)
+Received: from unique-pc ([2405:204:7344:993e:9a3:d467:14f5:495b])
+        by smtp.gmail.com with ESMTPSA id t4sm49374686pfd.110.2017.11.28.06.43.59
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 28 Nov 2017 06:44:01 -0800 (PST)
+Message-ID: <1511880237.10193.5.camel@gmail.com>
+Subject: Re: [PATCH v2 2/2] Doc/check-ref-format: clarify information about
+ @{-N} syntax
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        git <git@vger.kernel.org>, Dominik Mahrer <teddy@teddy.ch>,
-        git-packagers@googlegroups.com,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Jeff King <peff@peff.net>
-Subject: [PATCH] travis-ci: avoid new tcl/tk build requirement
-Date:   Tue, 28 Nov 2017 09:37:18 -0500
-Message-Id: <20171128143718.3748-1-tmz@pobox.com>
-X-Mailer: git-send-email 2.15.0
-In-Reply-To: <xmqqlgir6mwk.fsf@gitster.mtv.corp.google.com>
-References: <xmqqlgir6mwk.fsf@gitster.mtv.corp.google.com>
-X-Pobox-Relay-ID: A3D95364-D449-11E7-A9CE-8EF31968708C-09356542!pb-smtp1.pobox.com
+Cc:     Git mailing list <git@vger.kernel.org>
+In-Reply-To: <xmqqd14386sw.fsf@gitster.mtv.corp.google.com>
+References: <xmqqpo8dn1jd.fsf@gitster.mtv.corp.google.com>
+         <20171127172834.6396-1-kaartic.sivaraam@gmail.com>
+         <20171127172834.6396-2-kaartic.sivaraam@gmail.com>
+         <xmqqd14386sw.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset="ISO-8859-15"
+Date:   Tue, 28 Nov 2017 20:13:57 +0530
+Mime-Version: 1.0
+X-Mailer: Evolution 3.22.6-1+deb9u1 
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A build requirement on tcl/tk was added in 01c54284f1 (Makefile: check
-that tcl/tk is installed, 2017-11-20).  For building and running the
-tests, we don't need tcl/tk installed.  Bypass the requirement.
+On Tue, 2017-11-28 at 11:40 +0900, Junio C Hamano wrote:
+> Kaartic Sivaraam <kaartic.sivaraam@gmail.com> writes:
+> 
+> > When the N-th previous thing checked out sytax is used with
+> > '--branch' option of check-ref-format the results might not
+> > always be a valid branch name
+> 
+> I wonder if you want to rephrase this, because 40-hex object name is
+> syntactically a valid branch name.  It's (1) cumbersome to type and
+> (2) may not be what the user expects.
+> 
 
-Signed-off-by: Todd Zullinger <tmz@pobox.com>
----
+You're right. Actually a previous draft of that log message did say
+something like,
 
-Junio C Hamano wrote:
-> It seems that TravisCI objects ;-)
->
->    https://travis-ci.org/git/git/jobs/307745929
+	Though a commit-hash might be a valid branch name, it isn't
+	something that's expected by the users of "check-ref-format".
 
-Interesting that the main builds passed.  I don't know what the default
-64-bit linuxinstall looks like in travis, so I presume it includes
-tcl/tk or something.
+I removed as I thought it would be unnecessary. It seems I took the
+wrong decision. Will fix it. :-)
 
-In any case, perhaps something like this is what we want?  We could use
-NO_TCLTK or ensure that tcl/tk is installed in all environments.  I used
-the BYPASS_TCLTK_CHECK option since the tests have been running without
-tcl/tk previously.  If they become required for the tests, this can be
-adjusted.
+> I have a mild suspicion that "git checkout -B @{-1}" would want to
+> error out instead of creating a valid new branch whose name is
+> 40-hex that happen to be the name of the commit object you were
+> detached at previously.
+> 
 
-I have a travis job running with this change here:
+I thought this the other way round. Rather than letting the callers
+error out when @{-N} didn't expand to a branch name, I thought we
+should not be expanding @{-N} syntax for "check-ref-format --branch" at
+all to make a "stronger guarantee" that the result is "always" a valid
+branch name. Then I thought it might be too restrictive and didn't
+mention it. So, I dunno.
 
-    https://travis-ci.org/tmzullinger/git/builds/308452464
 
-So far the only failure is (what looks like) an unrelated one in the
-GETTEXT_POISON build.
+> I am not sure if "check-ref-format --branch" should the same; it is
+> more about the syntax and the 40-hex _is_ valid there, so...
 
- .travis.yml              | 1 +
- ci/run-linux32-docker.sh | 1 +
- 2 files changed, 2 insertions(+)
+I'm not sure what you were trying to say here, sorry.
 
-diff --git a/.travis.yml b/.travis.yml
-index 281f101f31..9e57caa83d 100644
---- a/.travis.yml
-+++ b/.travis.yml
-@@ -23,6 +23,7 @@ addons:
- 
- env:
-   global:
-+    - BYPASS_TCLTK_CHECK=1
-     - DEVELOPER=1
-     # The Linux build installs the defined dependency versions below.
-     # The OS X build installs the latest available versions. Keep that
-diff --git a/ci/run-linux32-docker.sh b/ci/run-linux32-docker.sh
-index 0edf63acfa..8c2b32f7b3 100755
---- a/ci/run-linux32-docker.sh
-+++ b/ci/run-linux32-docker.sh
-@@ -13,6 +13,7 @@ docker pull daald/ubuntu32:xenial
- 
- docker run \
- 	--interactive \
-+	--env BYPASS_TCLTK_CHECK \
- 	--env DEVELOPER \
- 	--env DEFAULT_TEST_TARGET \
- 	--env GIT_PROVE_OPTS \
+
 -- 
-2.15.0
-
+Kaartic
