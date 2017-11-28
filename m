@@ -2,103 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F14A020C11
-	for <e@80x24.org>; Tue, 28 Nov 2017 01:02:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 01F2320C11
+	for <e@80x24.org>; Tue, 28 Nov 2017 01:13:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752635AbdK1BCr (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Nov 2017 20:02:47 -0500
-Received: from mail-vk0-f42.google.com ([209.85.213.42]:35194 "EHLO
-        mail-vk0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751969AbdK1BCq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Nov 2017 20:02:46 -0500
-Received: by mail-vk0-f42.google.com with SMTP id n63so18701633vkf.2
-        for <git@vger.kernel.org>; Mon, 27 Nov 2017 17:02:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=qDON9u/AouBVY/hKNts6FNlYwmzcWM3jRKh/DWuqykM=;
-        b=iCYstWY62nsCDG3NwpfJwJ1jHqHCBNTXqQo5urwZBVm4ASzpHfCVrPCfbCNI6w67qk
-         ADvqDXziIoSMosEjCvupqkx46v6stdPeGt0cN4KxYHAKNFmXeobyLnub1ltecm8PTxKD
-         a2kkoTjgUOztYYke7aVNkwS8YAvaVCoKIZfuVzPoHC2od3kCK5VlDZuYB1BAhSZqqpvY
-         PaIJgooQBbboKYJSF5kydA1fUQ+FwAjhoKHiDtFXUo8jQeJ4CJiTuqtz8y4SwvkKndUs
-         s1y7Wzb+Y9jXF5Zx1BrSUvb58g601ArudwerhaSamdB/UxH0QPO6rDUutsHW8Il/bkiB
-         FOQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=qDON9u/AouBVY/hKNts6FNlYwmzcWM3jRKh/DWuqykM=;
-        b=Q5U2i3cyIYwwHWMfHgrQNChDDmjm+SjkvwwFDJsLPzRTTXOUUSCjeUPpE+d7K1TsR+
-         S7VoHs9Am2ssk7r9fLlGlUQRSfu4gqQW5MwkfhvjWBG/Z9EnX1H9wi2g8Sf7/sY4VJfs
-         GEDWZOiFgEKQOQath0pY5R+aBpNXSpDXB/XTTff+bQ9TMbxttFd7rJ6mbhb8ad1P9zUZ
-         bL98j7w95rUKRD4AB6NEFIuumSYyM7QCdORPrkzY9QskY4rKbEVpC5JFHqGaxfhxQt7t
-         hkX8+7GbarfCSPfYs5UC1Ezz3bFd78ojzZsq3L6WytJvB2Cj6lP4kIEhx34r0V+P3GBH
-         Zb8Q==
-X-Gm-Message-State: AJaThX4qVjQL44jejI9j5tYBdQhB+SMoGiUAWJISgtwqsFPZY4iDstVx
-        AKVe/f/kIn/2BCxpNpGpMZbZf0fjxQ020y/ke/E=
-X-Google-Smtp-Source: AGs4zMb5xu5723Vr19t1WRzCZiKlJKhgTTClNrH2kxTyN1xXmKQlFrNXLu488aFTTJI65uD6wXyNk4cB3pL4JpJjA2A=
-X-Received: by 10.31.12.76 with SMTP id 73mr25855566vkm.114.1511830965921;
- Mon, 27 Nov 2017 17:02:45 -0800 (PST)
+        id S1752709AbdK1BNr (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Nov 2017 20:13:47 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60532 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752452AbdK1BNq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Nov 2017 20:13:46 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2455EC0215;
+        Mon, 27 Nov 2017 20:13:44 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=UmnMQuAHef7zKUVdaQtGpoGMwxo=; b=It3OMY
+        xQGkY4516zbntrkmql7Q2hO0lbWR0dagggrMFlHKjoAtY4U0KwLo/Z/veMYLFShJ
+        6HBZxEoGPVaPwGBBg09y7zhtaOhxy3pfqDwLLzDy79kPPz1FsBv+OPwBlx5+wv7e
+        UsN2PiZG6eRqpRMyRIiZsGn8MCw+o4XHqE7Zw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=gb+GXoD30EPfkmNJNnKrxOc2LVycXIM5
+        XlMvzd76qJpoR75gKQb+vk+HLOYCwkPFDPEbkHc3OZ7hazOs1hb868HlY9VhB7qS
+        yYxSpjyRsyVIkk1ImSq62uectxrkRNDreCFRR2UtVGZFPc6z0BhoA8DbuQT6UBk9
+        hc9bYcGWiyY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1AFBDC0214;
+        Mon, 27 Nov 2017 20:13:44 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 42CCEC0213;
+        Mon, 27 Nov 2017 20:13:43 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Florian Klink <flokli@flokli.de>
+Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net
+Subject: Re: [PATCH v3] git-send-email: honor $PATH for sendmail binary
+References: <20171119123511.pck5aqak4yyc6367@tp.flokli.de>
+        <20171128004904.13978-1-flokli@flokli.de>
+Date:   Tue, 28 Nov 2017 10:13:41 +0900
+In-Reply-To: <20171128004904.13978-1-flokli@flokli.de> (Florian Klink's
+        message of "Tue, 28 Nov 2017 01:49:04 +0100")
+Message-ID: <xmqq609v9pdm.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.176.70.138 with HTTP; Mon, 27 Nov 2017 17:02:45 -0800 (PST)
-In-Reply-To: <xmqqshcz9tqa.fsf@gitster.mtv.corp.google.com>
-References: <20171124195901.2581-1-newren@gmail.com> <xmqq4lpgfkyb.fsf@gitster.mtv.corp.google.com>
- <CABPp-BELci79tuiPFVRKQwm_-j6tN-DxqcKsvjD2xG_8ZWNxGw@mail.gmail.com> <xmqqshcz9tqa.fsf@gitster.mtv.corp.google.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 27 Nov 2017 17:02:45 -0800
-Message-ID: <CABPp-BHt0O_NQtJsAkxxkj0yAvaZDsDtxGJTd9wqmvUOvy7x6w@mail.gmail.com>
-Subject: Re: [PATCH] merge-recursive: ignore_case shouldn't reject intentional removals
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Adam Dinwoodie <adam@dinwoodie.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 602B6ED8-D3D9-11E7-9C1B-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 27, 2017 at 3:39 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Elijah Newren <newren@gmail.com> writes:
->
->>> As a fix, this sorely wants something new in t/ directory.
->>
->> Well, then perhaps I was wrong to submit it independent of my
->> directory rename series.  As noted in the (very lengthy) extended
->> commit message explanation, the assumption the previous code made just
->> happened to work ...
->
-> Here is what I wrote in What's cooking draft (which automatically
-> gets copied to the merge log message and becomes part of release
-> notes when a topic graduates) for this thing.  Am I on the right
-> track?
->
->     The code internal to the recursive merge strategy was not fully
->     prepared to see a path that is renamed to try overwriting another
->     path that is only different in case on case insensitive systems.
->     This does not matter in the current code, but will start to matter
->     once the rename detection logic starts taking hints from nearby
->     paths moving to some directory and moves a path that is otherwise
->     not changed along with them.
+Florian Klink <flokli@flokli.de> writes:
 
-Yes, though I have one minor nit: I'd prefer "a new path" to "a path
-that is otherwise not changed".
+> This extends git-send-email to also consider sendmail binaries in $PATH
+> after checking the (fixed) list of /usr/sbin and /usr/lib, and before
+> falling back to localhost.
+>
+> Signed-off-by: Florian Klink <flokli@flokli.de>
+> ---
 
-(Reason for the nit: "Not changed" to me implies the file existed in
-the merge base and didn't change name on either side of the merge,
-which in turn implies the directory remains on both sides, which means
-there was no directory rename.  Since directory rename detection is
-mostly about moving file adds into the right directory, this seemed
-like the simplest correction.  There are also transitive renames, but
-they're much less common and trying to cover them too might make it
-even harder to parse.)
+Thanks for an update.
 
-As a side note, the two sentences are a little bit unwieldy to try to
-parse.  I couldn't come up with any concrete suggestions to improve
-it, so it's probably fine, but thought I'd mention in case others spot
-an easy way to simplify it.
+In an ideal world where we were introducing git-send-email for the
+first time without any existing users, we would certainly prefer
+things on directories listed in $PATH, and use the two traditional
+hardcoded places merely as fallback, but because we do have existing
+users who have been relying on the code finding /usr/lib/sendmail
+(even when they have something called 'sendmail' that they do not
+want to use on their $PATH) and doing that ideal implementation
+would break things for them.  Those who have /usr/lib/sendmail
+installed that they do not want to use can continue to use
+sendemail.smtpserver---if $PATH were searched first, they could
+instead list the path that has their faviourite sendmail on it
+without setting the configuration, but it does not change the fact
+that they need to do _something_ anyway, so it is not too huge a
+deal.
+
+>  Documentation/git-send-email.txt | 6 +++---
+>  git-send-email.perl              | 4 +++-
+>  2 files changed, 6 insertions(+), 4 deletions(-)
+>
+> diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
+> index bac9014ac..44db25567 100644
+> --- a/Documentation/git-send-email.txt
+> +++ b/Documentation/git-send-email.txt
+> @@ -203,9 +203,9 @@ a password is obtained using 'git-credential'.
+>  	specify a full pathname of a sendmail-like program instead;
+>  	the program must support the `-i` option.  Default value can
+>  	be specified by the `sendemail.smtpServer` configuration
+> -	option; the built-in default is `/usr/sbin/sendmail` or
+> -	`/usr/lib/sendmail` if such program is available, or
+> -	`localhost` otherwise.
+> +	option; the built-in default is to search for `sendmail` in
+> +	`/usr/sbin`, `/usr/lib/sendmail` and $PATH if such program is
+> +	available, falling back to `localhost` otherwise.
+
+"search for `sendmail` in `/usr/sbin`, `/usr/lib/sendmail`" would
+mean we would not be happy with /usr/lib/sendmail but would be with
+either /usr/sbin/sendmail or /usr/lib/sendmail/sendmail, which is
+not what you wanted to say.  I'd do 's|/usr/lib/sendmail|/usr/lib|'
+while queueing.
+
+Thanks again.
+
+>  --smtp-server-port=<port>::
+>  	Specifies a port different from the default port (SMTP
+> diff --git a/git-send-email.perl b/git-send-email.perl
+> index 2208dcc21..edcc6d346 100755
+> --- a/git-send-email.perl
+> +++ b/git-send-email.perl
+> @@ -885,7 +885,9 @@ if (defined $initial_reply_to) {
+>  }
+>  
+>  if (!defined $smtp_server) {
+> -	foreach (qw( /usr/sbin/sendmail /usr/lib/sendmail )) {
+> +	my @sendmail_paths = qw( /usr/sbin/sendmail /usr/lib/sendmail );
+> +	push @sendmail_paths, map {"$_/sendmail"} split /:/, $ENV{PATH};
+> +	foreach (@sendmail_paths) {
+>  		if (-x $_) {
+>  			$smtp_server = $_;
+>  			last;
