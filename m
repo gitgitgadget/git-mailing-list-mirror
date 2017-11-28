@@ -7,79 +7,125 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A324120954
-	for <e@80x24.org>; Tue, 28 Nov 2017 16:16:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6C04920C13
+	for <e@80x24.org>; Tue, 28 Nov 2017 16:34:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753562AbdK1QQu (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Nov 2017 11:16:50 -0500
-Received: from forward100p.mail.yandex.net ([77.88.28.100]:42059 "EHLO
-        forward100p.mail.yandex.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752241AbdK1QQt (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2017 11:16:49 -0500
-X-Greylist: delayed 436 seconds by postgrey-1.27 at vger.kernel.org; Tue, 28 Nov 2017 11:16:48 EST
-Received: from mxback2j.mail.yandex.net (mxback2j.mail.yandex.net [IPv6:2a02:6b8:0:1619::10b])
-        by forward100p.mail.yandex.net (Yandex) with ESMTP id D50515103A24
-        for <git@vger.kernel.org>; Tue, 28 Nov 2017 19:09:30 +0300 (MSK)
-Received: from web21o.yandex.ru (web21o.yandex.ru [2a02:6b8:0:1a2d::5:121])
-        by mxback2j.mail.yandex.net (nwsmtp/Yandex) with ESMTP id 0Q9vD9QUxD-9UomUdRG;
-        Tue, 28 Nov 2017 19:09:30 +0300
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1511885370;
-        bh=i2wDdWQXDgJeSj3xajgTdPwoYcPI7HuQJJqqooHwl1k=;
-        h=From:To:Subject:Message-Id:Date;
-        b=PjyAISECH6HDkZ92Bd9nonHYFK5IRIOerxTGDrKQtAo0k7uJttvbsC91g8+NeMKLq
-         1XmEwI5dqen5g6/wDTnMrQTONE2jEcTJiIylL0Sf0aVBFuTwmqxg1nE4yaPMWH4bJW
-         2E+6g81VitirJQEtR7PwSZDa0eXwelhQJKnG7OME=
-Authentication-Results: mxback2j.mail.yandex.net; dkim=pass header.i=@yandex.ru
-Received: by web21o.yandex.ru with HTTP;
-        Tue, 28 Nov 2017 19:09:30 +0300
-From:   KES <kes-kes@yandex.ru>
-Envelope-From: kes-kes@yandex.com
-To:     git@vger.kernel.org
-Subject: Feature request: Reduce amount of diff in patch
-MIME-Version: 1.0
-Message-Id: <372261511885370@web21o.yandex.ru>
-X-Mailer: Yamail [ http://yandex.ru ] 5.0
-Date:   Tue, 28 Nov 2017 18:09:30 +0200
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain
+        id S1753252AbdK1QeY (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Nov 2017 11:34:24 -0500
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:46395 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752852AbdK1QeX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Nov 2017 11:34:23 -0500
+Received: by mail-pg0-f67.google.com with SMTP id b11so144608pgu.13
+        for <git@vger.kernel.org>; Tue, 28 Nov 2017 08:34:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=7m0h+mjkzZAc21+4OjX8oBRtxunVxHv2u4t4n/q2LYc=;
+        b=Y//4TX28ytO1hgHYQ4LjKS/s1SUWlKOLbXq8SPsXMA1Wh/lIkTzwPo8NSZr+a90tPj
+         Q74f5tTwKoyLm2gs+TCeIGc+JgeB4ZNvGi67D7pOl/orrAhNc6tBGzyRxGAsVk08RFh0
+         JQGg5Rw1Rup/EJnQ9g4CAuYcCAZ8EKtpCGmGRc9b6rkEimor7Ns6ZzkAtoElSEl4OWBI
+         SFc+VgJBixF7YnonhLBmFbsaXb6vPt4WRWV8npKoT9GZ3kDwBKdfPX8dVfsWn06U6ciC
+         vNm3HYVzBQdm7X6Xp1FZfN9zZkLBg5jweg1TtrCfUqzPypEaSPkmZG3elB4H2ctbD6z/
+         bnWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=7m0h+mjkzZAc21+4OjX8oBRtxunVxHv2u4t4n/q2LYc=;
+        b=psUtv4XK5LUowoV86RzfkS5+HoBl3c2hTJCrRBUnW2nWt59d00J9VHRrwiyEe0dlOx
+         NH/U4zfbeNGOcuMX0DPd7dUsctER776HaxmPZrpWw3eFq/SDS+DKUpyzyNyeFuphjnoR
+         RcFYwphn3u69AtnMsCH+4tD3pTInSkeqU4sOtUGMQ2h0eY7TShw1xrPm62KR994Ovv6G
+         Jk1dgms2zNXYawhaYEgmLvytwnHr1gVRS+LC70PWUsuahVYzw6O8qSr4tezCFsYhisEx
+         +65HoV5f8dFf3Ukri5xfddqt/2m0JkbzuoSy41hNN8u0icWGDPAta0nJ5ZhB5i8YsqyQ
+         zJrQ==
+X-Gm-Message-State: AJaThX6+vzxkwaKw1HAqDz/GFJCnuVQzFs86gCh7ZrAT+D+heA8tH7A1
+        PRl/8zWZ6x1CB3tfhzqmiq2HC1Z0
+X-Google-Smtp-Source: AGs4zMagJOgOIiNRc9UmrYQZagJrHM4AXEeJfTrC/aOEiU0xvSC1AZR16dqXRMbjwUZey41kM7VC7g==
+X-Received: by 10.101.66.11 with SMTP id c11mr40262879pgq.169.1511886862555;
+        Tue, 28 Nov 2017 08:34:22 -0800 (PST)
+Received: from localhost.localdomain ([2405:204:7344:993e:9a3:d467:14f5:495b])
+        by smtp.gmail.com with ESMTPSA id z74sm46183279pfi.123.2017.11.28.08.34.19
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 28 Nov 2017 08:34:21 -0800 (PST)
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git mailing list <git@vger.kernel.org>
+Subject: [PATCH v3 2/2] Doc/check-ref-format: clarify information about @{-N} syntax
+Date:   Tue, 28 Nov 2017 22:04:06 +0530
+Message-Id: <20171128163406.15452-1-kaartic.sivaraam@gmail.com>
+X-Mailer: git-send-email 2.15.0.531.g2ccb3012c
+In-Reply-To: <xmqqd14386sw.fsf@gitster.mtv.corp.google.com>
+References: <xmqqd14386sw.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi.
+When the N-th previous thing checked out syntax (@{-N}) is used
+with '--branch' option of check-ref-format the result might not
+always be a valid branch name (see NOTE below). This is because
+@{-N} is used to refer to the N-th last checked out "thing" which
+might be any commit (sometimes a branch). The documentation thus
+does a wrong thing by promoting it as the "previous branch syntax".
 
-I get often patches which can be minimized:
+So, correctly state @{-N} is the syntax for specifying "N-th last
+thing checked out" and also state that the result of using @{-N}
+might also result in a "commit hash".
 
-@@ -60,11 +64,8 @@ sub _get_filter {
-         address    =>  { -like => \[ '?',  "%$search%" ] },
-         company    =>  { -like => \[ '?',  "%$search%" ] },
-         country_code =>  { '=' => \[ 'UPPER(?)' => $search ] },
--    ]);
+NOTE: Though a commit-hash is a "syntactically" valid branch name,
+it is generally not considered as one for the use cases of
+"git check-ref-format --branch". That's because a user who does
+"git check-ref-format --branch @{-$N}" would except the output
+to be a "existing" branch name apart from it being syntactically
+valid.
+
+Signed-off-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+---
+ Documentation/git-check-ref-format.txt | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
+
+diff --git a/Documentation/git-check-ref-format.txt b/Documentation/git-check-ref-format.txt
+index cf0a0b7df..5ddb562d0 100644
+--- a/Documentation/git-check-ref-format.txt
++++ b/Documentation/git-check-ref-format.txt
+@@ -78,17 +78,20 @@ reference name expressions (see linkgit:gitrevisions[7]):
+ . at-open-brace `@{` is used as a notation to access a reflog entry.
  
--    $users =  $users->search( $filter, {
--        prefetch => { Packages => { Ips => { Subnet => { Server => 'Locality' }}}},
--    });
-+    ]);
+ With the `--branch` option, the command takes a name and checks if
+-it can be used as a valid branch name (e.g. when creating a new
+-branch).  The rule `git check-ref-format --branch $name` implements
++it can be used as a valid branch name e.g. when creating a new branch
++(except for one exception related to the previous checkout syntax
++noted below). The rule `git check-ref-format --branch $name` implements
+ may be stricter than what `git check-ref-format refs/heads/$name`
+ says (e.g. a dash may appear at the beginning of a ref component,
+ but it is explicitly forbidden at the beginning of a branch name).
+ When run with `--branch` option in a repository, the input is first
+-expanded for the ``previous branch syntax''
+-`@{-n}`.  For example, `@{-1}` is a way to refer the last branch you
+-were on.  This option should be used by porcelains to accept this
+-syntax anywhere a branch name is expected, so they can act as if you
+-typed the branch name.
++expanded for the ``previous checkout syntax''
++`@{-n}`.  For example, `@{-1}` is a way to refer the last thing that
++was checkout using "git checkout" operation. This option should be
++used by porcelains to accept this syntax anywhere a branch name is
++expected, so they can act as if you typed the branch name. As an
++exception note that, the ``previous checkout operation'' might result
++in a commit hash when the N-th last thing checked out was not a branch.
  
+ OPTIONS
+ -------
+@@ -116,7 +119,7 @@ OPTIONS
+ EXAMPLES
+ --------
  
-     return $users;
+-* Print the name of the previous branch:
++* Print the name of the previous thing checked out:
+ +
+ ------------
+ $ git check-ref-format --branch @{-1}
+-- 
+2.15.0.531.g2ccb3012c
 
-This patch can be minimized to:
-
-@@ -60,11 +64,8 @@ sub _get_filter {
-         address    =>  { -like => \[ '?',  "%$search%" ] },
-         company    =>  { -like => \[ '?',  "%$search%" ] },
-         country_code =>  { '=' => \[ 'UPPER(?)' => $search ] },
-     ]);
- 
--    $users =  $users->search( $filter, {
--        prefetch => { Packages => { Ips => { Subnet => { Server => 'Locality' }}}},
--    });
-
- 
-     return $users;
-
-May you please fix the git to generate minimized patches?
-
-Thank you
