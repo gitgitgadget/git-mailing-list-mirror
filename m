@@ -7,61 +7,57 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 03CB620954
-	for <e@80x24.org>; Tue, 28 Nov 2017 17:16:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DBBF720954
+	for <e@80x24.org>; Tue, 28 Nov 2017 17:24:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753647AbdK1RQh (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Nov 2017 12:16:37 -0500
-Received: from mail-pf0-f174.google.com ([209.85.192.174]:43186 "EHLO
-        mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752933AbdK1RQf (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Nov 2017 12:16:35 -0500
-Received: by mail-pf0-f174.google.com with SMTP id e3so201569pfi.10
-        for <git@vger.kernel.org>; Tue, 28 Nov 2017 09:16:35 -0800 (PST)
+        id S1752369AbdK1RYv (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Nov 2017 12:24:51 -0500
+Received: from mail-pg0-f42.google.com ([74.125.83.42]:35252 "EHLO
+        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751689AbdK1RYu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Nov 2017 12:24:50 -0500
+Received: by mail-pg0-f42.google.com with SMTP id q20so217306pgv.2
+        for <git@vger.kernel.org>; Tue, 28 Nov 2017 09:24:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:subject:from:to:cc:in-reply-to:references:date
          :mime-version:content-transfer-encoding;
-        bh=i6Noh2iv1TOo+fqVpJZIJsZrLRkPl4SQ0pNgw6XEUKA=;
-        b=Wc50lblzpEKqyeNLf70Aq1/xg0FYWVmbyHluEzePdWNrsaZr3S5bFxMNXe6+BwuAV9
-         kQKb62/d9ChWJxC0eL8Pxi1JOisaPVrjOdVslsX1f6+bEv9Qd9MddrHPwNVrkU+cu/f9
-         5xO2BxD+96FqrheS887Fp+fCW7P5SCZwcuDaMS1lSgygvTBm9GJ5RSdoSeuI3rUMdiIQ
-         bejmu7nqIx5Y1xAdmz54sqf67Qb010+qvh8Isj96y24Gc5MFpF/jYb7Wrn+0WhuAfdF+
-         dahCNwS12KlVMNip+zltKfzpYWs2n3LroeMLKm5gMK4wTtzDyEnGtf2IKdziigUzz52L
-         efJA==
+        bh=Zyaect2BuwK+YoeGkEBIlK+yFSC/1e0Rp6LMD3AdzRI=;
+        b=EKLyVZ7EnSjNdCzH+o9Ge2P2/NU36LlojAF8E9rMsBqeY2F30UCkNifjSSkrVJUyTT
+         UTId8ivD6Q2Wn4VbcGVVFcort2gwOe9HlnppfIhY0UTAJrP+seqmooaXxxxby64rg8tI
+         0F36aYVy1HgekBaZX6f99sgyvDj7IquEf7Rfa6+e/5X0X7juy1B2C3hyyNr9fhHETLV5
+         XxA5DKBdPXxOliuOIxYOiqjmwl/MqmXzwOKAsEDZzVdGwbd10PKlLjX5C2XzSsZS/Pd6
+         2qVJSo8jBQsZGfbsnLjLvl+SGtNAvQVXpx2SpWg2pOmqjuKbrLkjkq98joHuAiU4lFla
+         xt9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:subject:from:to:cc:in-reply-to
          :references:date:mime-version:content-transfer-encoding;
-        bh=i6Noh2iv1TOo+fqVpJZIJsZrLRkPl4SQ0pNgw6XEUKA=;
-        b=KE43Qs3treAfmVMhmASJUwuErokIKrKOVZjq5519Uf3qXGJurWvk2NQzviACduWCVe
-         28eaMHNmryNcHHx2ZIHDgBekrOBSA9sm4a2GPjTdhsj2v5hkn+HINdlePXaRktQr/vAz
-         RFy3f3N6mhLq8BZ23DcTn6Chw8Tjv3dNKB74DyEX5+KKIZV8i5nuDcnrwvQMeJWh6KnJ
-         tzOIday3rTmcnYQ/YBlO3F2tiA+NPHWP4TTbuy6wQWuaStYO7FxT3n5enjmi04T7l4I9
-         etC7cGq0imrAlupxogLka0XY/zpgdLKdLtBpx6rUVS7a/kBs6MuBo3RXY5XTW/ObuYQm
-         qLtg==
-X-Gm-Message-State: AJaThX71gHGdbVgSBVfS8RFfqfqrt9oFavLCDK9G7sXTf5zbCtcDZHV1
-        xJQktlO5szenRXsBINLMZKmyAE5AAGw=
-X-Google-Smtp-Source: AGs4zMaz6nfzOGUxwqKeq2laHCiQRDsXIzz6XlCnB0hXefHIBmYqVT0NCwFS+nhe/HFfxWX75NNFEQ==
-X-Received: by 10.101.101.143 with SMTP id u15mr35136537pgv.106.1511889394814;
-        Tue, 28 Nov 2017 09:16:34 -0800 (PST)
+        bh=Zyaect2BuwK+YoeGkEBIlK+yFSC/1e0Rp6LMD3AdzRI=;
+        b=oxAzGjLpNiQJiBdvHs+bVXfZX6raCjJpNEHSl6hHd+Gq0hTmp+ZtsykPf4THpe7BaO
+         7o3qd8gST55TNVIzkQev24X1M+iDrYOyYt1E6QsUK2It6vnq7JLXZYSssnMZcEFlQOA7
+         tq5kHCSbzHbvb7eNTd4TFamxrcGhCOg0MlKa4to00qGOZUQ7hbweL52uXPTdOBMSokAI
+         KKR67WqjBqmYdg1OIVD7ENGEFr/jE2c+NMbUe91p7FrV/7wtINalk6NNwqMcZCPbpole
+         vBZBIKMd1Wo4kEd2T8eiqO1iu5wpZ7CUfP8ng2+chQcWzM7rEVPZoQjRfdSkWxU0AEfM
+         GAig==
+X-Gm-Message-State: AJaThX4jjF6HJ8ZZAoUw0vRixxK5Y0NVjvs1guh3Js6+XI3Mm4BQdaGw
+        ceuNM2TfXtWR6GFm/KFZqfU=
+X-Google-Smtp-Source: AGs4zMaSU0sVKKBk7fXyeSV7abXPdqEPJGfs0gYZ+CXcuZwMiZ7tS72nfjzlGmWG6TQk3pCTfubpTQ==
+X-Received: by 10.99.109.73 with SMTP id i70mr17569079pgc.258.1511889890425;
+        Tue, 28 Nov 2017 09:24:50 -0800 (PST)
 Received: from unique-pc ([2405:204:7344:993e:9a3:d467:14f5:495b])
-        by smtp.gmail.com with ESMTPSA id b187sm20497225pfg.109.2017.11.28.09.16.32
+        by smtp.gmail.com with ESMTPSA id p189sm52756617pfp.127.2017.11.28.09.24.48
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 28 Nov 2017 09:16:33 -0800 (PST)
-Message-ID: <1511885730.10193.8.camel@gmail.com>
-Subject: Re: [PATCH v2 3/3] rebase: rebasing can also be done when HEAD is
- detached
+        Tue, 28 Nov 2017 09:24:49 -0800 (PST)
+Message-ID: <1511889885.16420.3.camel@gmail.com>
+Subject: Re: Feature request: Reduce amount of diff in patch
 From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git mailing list <git@vger.kernel.org>
-In-Reply-To: <xmqqlgir8770.fsf@gitster.mtv.corp.google.com>
-References: <xmqq60a3xdpw.fsf@gitster.mtv.corp.google.com>
-         <20171127172104.5796-1-kaartic.sivaraam@gmail.com>
-         <20171127172104.5796-4-kaartic.sivaraam@gmail.com>
-         <xmqqlgir8770.fsf@gitster.mtv.corp.google.com>
+To:     KES <kes-kes@yandex.ru>
+Cc:     git@vger.kernel.org
+In-Reply-To: <372261511885370@web21o.yandex.ru>
+References: <372261511885370@web21o.yandex.ru>
 Content-Type: text/plain; charset="ISO-8859-15"
-Date:   Tue, 28 Nov 2017 21:45:30 +0530
+Date:   Tue, 28 Nov 2017 22:54:45 +0530
 Mime-Version: 1.0
 X-Mailer: Evolution 3.22.6-1+deb9u1 
 Content-Transfer-Encoding: 7bit
@@ -70,37 +66,70 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 2017-11-28 at 11:31 +0900, Junio C Hamano wrote:
-> Kaartic Sivaraam <kaartic.sivaraam@gmail.com> writes:
+On Tue, 2017-11-28 at 18:09 +0200, KES wrote:
+> Hi.
 > 
-> > +		if test "$branch_or_commit" = "HEAD" &&
-> > +			 !(git symbolic-ref -q HEAD)
-> 
-> Did you need a subshell here? 
-
-No. That's a consequence of me not remembering that I would span a sub-
-shell with a simple '()' when I was doing that part. (partial
-transition from C to shell)
-
-
->  Now with a proper test with
-> "symbolic-ref -q HEAD", I wonder if you'd need to check if the
-> original was named HEAD in the first place (I do not feel strongly
-> enough to say that checking is wrong, at least not yet, but the
-> above does make me wonder), and instead something like
-> 
-> 	if ! git symbolic-ref -q HEAD
-> 	then
-> 		...
-> 
-> might be sufficient.  I dunno.
+> I get often patches which can be minimized:
 > 
 
-It does  seem you're right. The only thing we would be losing is the
-short-circuiting when $branch_or_commit is not HEAD (which I suspect to
-be the case most of the time). So, I'm not sure if I should remove the
-check (of course, I'll change the check to avoid spawning a sub-shell).
+I guess the one below can't be (see below).
 
 
-Thanks, 
+> @@ -60,11 +64,8 @@ sub _get_filter {
+>          address    =>  { -like => \[ '?',  "%$search%" ] },
+>          company    =>  { -like => \[ '?',  "%$search%" ] },
+>          country_code =>  { '=' => \[ 'UPPER(?)' => $search ] },
+> -    ]);
+>  
+> -    $users =  $users->search( $filter, {
+> -        prefetch => { Packages => { Ips => { Subnet => { Server => 'Locality' }}}},
+> -    });
+> +    ]);
+>  
+>  
+>      return $users;
+> 
+> This patch can be minimized to:
+> 
+> @@ -60,11 +64,8 @@ sub _get_filter {
+>          address    =>  { -like => \[ '?',  "%$search%" ] },
+>          company    =>  { -like => \[ '?',  "%$search%" ] },
+>          country_code =>  { '=' => \[ 'UPPER(?)' => $search ] },
+>      ]);
+>  
+> -    $users =  $users->search( $filter, {
+> -        prefetch => { Packages => { Ips => { Subnet => { Server => 'Locality' }}}},
+> -    });
+> 
+>  
+>      return $users;
+> 
+> May you please fix the git to generate minimized patches?
+> 
+
+You seemed to have overlooked the empty line above the ']);' in the
+original patch. So, your minimized version isn't actually equivalent to
+the original one. Further, when trying to recreate your patch I get the
+following,
+
+diff --git a/diff-test b/diff-test
+index 1d5dc1b..f3ec38f 100644
+--- a/diff-test
++++ b/diff-test
+@@ -1,10 +1,8 @@
+         address    =>  { -like => \[ '?',  "%$search%" ] },
+         company    =>  { -like => \[ '?',  "%$search%" ] },
+         country_code =>  { '=' => \[ 'UPPER(?)' => $search ] },
++
+     ]);
+ 
+-    $users =  $users->search( $filter, {
+-        prefetch => { Packages => { Ips => { Subnet => { Server => 'Locality' }}}},
+-    });
+ 
+     return $users;
+
+I use git built from the source (2.15.0.531.g2ccb3012c)
+
+-- 
 Kaartic
