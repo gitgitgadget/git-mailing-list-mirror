@@ -7,301 +7,269 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7B8AF20954
-	for <e@80x24.org>; Wed, 29 Nov 2017 01:16:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 676D520954
+	for <e@80x24.org>; Wed, 29 Nov 2017 01:16:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752545AbdK2BQB (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Nov 2017 20:16:01 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50156 "EHLO
+        id S1752282AbdK2BPs (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Nov 2017 20:15:48 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57720 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751713AbdK2BP7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Nov 2017 20:15:59 -0500
+        with ESMTP id S1752260AbdK2BPq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Nov 2017 20:15:46 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id DEAC9AF6E8;
-        Tue, 28 Nov 2017 20:15:58 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-        :subject:date:message-id:mime-version:content-type; s=sasl; bh=u
-        iEsQIT6uxphVbPjau3+3sT3uBs=; b=L3/qbuJ6Da7u0OMlkGDZE93r67epv0V97
-        4CV5VQ3UDOxTejSS63YOwnK9VMbg/y+1tzroqALPOnC8Ueurtiq8m6yUNg74MI2u
-        gOUfIXIqssUkmSw6Zyq7zHkcJCyBYpo2NjVaJ+3ZPWUd/M3sORtrfCfsZH7ZbxhX
-        tDlJPQBOKc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-        :date:message-id:mime-version:content-type; q=dns; s=sasl; b=SZv
-        a3ezQ+9WpmkITa0gQwDph/J9lSq6MxZ1ejJWwrBZWfFTkLcSqUD3Bf+i9BL5UUxZ
-        6QdDX4ifZrNPte9xH3uRXpTjPVTkvnVual47A1ijIIuBOkS2LqCPvqjlDoRdTPjy
-        zEG9YjXj4+oYKfT3BpgakaY7rLI7zrF2/Zn0PPIY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D728DAF6E7;
-        Tue, 28 Nov 2017 20:15:58 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3C228B8D37;
+        Tue, 28 Nov 2017 20:15:44 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:date:message-id:mime-version:content-type
+        :content-transfer-encoding; s=sasl; bh=rrQ/ayo0M4B3LYiZOmslW3rlx
+        yc=; b=D0Y1YcCsaTvpboDyntGCcYzcZOh//xNJN0t2lk2X0xB57ngmYSKDyEeaN
+        Ihl8uFFcVuPedaVrobh0BD9G5+LFKXf4QQWCY8XbHu1ke0hQmeAcDUaE4oIpneS9
+        xmRtEvOId/JRX+Ix4uTdToJ1YC1BeNrslwWkS3R2NIPoayZzRo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:date:message-id:mime-version:content-type
+        :content-transfer-encoding; q=dns; s=sasl; b=Y+EW+vFCutAlzyiVUAc
+        JtQ5UiK6v7cPF43rSBKvZp8fL7KKcp7gydY+j7QqJH4uAiqsREEVLAIJnTZD5z17
+        HVDASN9l8sYIyZ3SGhv+YDtJI8ssPiY+dWJRjfSs6SYXnkBs2ZsR1IEQDfu/x5wI
+        nFXX0iDn/ziAXm/VgK8HixtY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 33277B8D36;
+        Tue, 28 Nov 2017 20:15:44 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 67F33AF6DE;
-        Tue, 28 Nov 2017 20:15:46 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8CD2BB8D34;
+        Tue, 28 Nov 2017 20:15:43 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     git@vger.kernel.org
-Subject: A note from the maintainer
-Date:   Tue, 28 Nov 2017 14:20:28 +0900
-Message-ID: <xmqqindt6g1r.fsf@gitster.mtv.corp.google.com>
+Cc:     Linux Kernel <linux-kernel@vger.kernel.org>,
+        git-packagers@googlegroups.com
+Subject: [ANNOUNCE] Git v2.15.1
+Date:   Tue, 28 Nov 2017 14:12:56 +0900
+Message-ID: <xmqqo9nl6g1v.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D3FBD20C-D4A2-11E7-81C5-8EF31968708C-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: D249C950-D4A2-11E7-A635-575F0C78B957-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Welcome to the Git development community.
+The latest maintenance release Git v2.15.1 is now available at
+the usual places.
 
-This message is written by the maintainer and talks about how Git
-project is managed, and how you can work with it.
+The tarballs are found at:
 
-* Mailing list and the community
+    https://www.kernel.org/pub/software/scm/git/
 
-The development is primarily done on the Git mailing list. Help
-requests, feature proposals, bug reports and patches should be sent to
-the list address <git@vger.kernel.org>.  You don't have to be
-subscribed to send messages.  The convention on the list is to keep
-everybody involved on Cc:, so it is unnecessary to say "Please Cc: me,
-I am not subscribed".
+The following public repositories all have a copy of the 'v2.15.1'
+tag and the 'maint' branch that the tag points at:
 
-As an anti-spam measure, the mailing list software rejects messages
-that are not text/plain and drops them on the floor.  If you are a
-GMail user, you'd want to make sure "Plain text mode" is checked.
+  url =3D https://kernel.googlesource.com/pub/scm/git/git
+  url =3D git://repo.or.cz/alt-git.git
+  url =3D https://github.com/gitster/git
 
-Before sending patches, please read Documentation/SubmittingPatches
-and Documentation/CodingGuidelines to familiarize yourself with the
-project convention.
+----------------------------------------------------------------
 
-If you sent a patch and you did not hear any response from anybody for
-several days, it could be that your patch was totally uninteresting,
-but it also is possible that it was simply lost in the noise.  Please
-do not hesitate to send a reminder message in such a case.  Messages
-getting lost in the noise may be a sign that those who can evaluate
-your patch don't have enough mental/time bandwidth to process them
-right at the moment, and it often helps to wait until the list traffic
-becomes calmer before sending such a reminder.
+Git v2.15.1 Release Notes
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-The list archive is available at a few public sites:
+Fixes since v2.15
+-----------------
 
-        http://public-inbox.org/git/
-        http://marc.info/?l=git
-        http://www.spinics.net/lists/git/
+ * TravisCI build updates.
 
-For those who prefer to read it over NNTP:
+ * "auto" as a value for the columnar output configuration ought to
+   judge "is the output consumed by humans?" with the same criteria as
+   "auto" for coloured output configuration, i.e. either the standard
+   output stream is going to tty, or a pager is in use.  We forgot the
+   latter, which has been fixed.
 
-        nntp://news.public-inbox.org/inbox.comp.version-control.git
-	nntp://news.gmane.org/gmane.comp.version-control.git
+ * The experimental "color moved lines differently in diff output"
+   feature was buggy around "ignore whitespace changes" edges, which
+   has been corrected.
 
-are available.
+ * Instead of using custom line comparison and hashing functions to
+   implement "moved lines" coloring in the diff output, use the pair
+   of these functions from lower-layer xdiff/ code.
 
-When you point at a message in a mailing list archive, using its
-message ID is often the most robust (if not very friendly) way to do
-so, like this:
+ * Some codepaths did not check for errors when asking what branch the
+   HEAD points at, which have been fixed.
 
-	http://public-inbox.org/git/Pine.LNX.4.58.0504150753440.7211@ppc970.osdl.org
+ * "git commit", after making a commit, did not check for errors when
+   asking on what branch it made the commit, which has been corrected.
 
-Often these web interfaces accept the message ID with enclosing <>
-stripped (like the above example to point at one of the most important
-message in the Git list).
+ * "git status --ignored -u" did not stop at a working tree of a
+   separate project that is embedded in an ignored directory and
+   listed files in that other project, instead of just showing the
+   directory itself as ignored.
 
-Some members of the development community can sometimes be found on
-the #git and #git-devel IRC channels on Freenode.  Their logs are
-available at:
+ * A broken access to object databases in recent update to "git grep
+   --recurse-submodules" has been fixed.
 
-        http://colabti.org/irclogger/irclogger_log/git
-        http://colabti.org/irclogger/irclogger_log/git-devel
+ * A recent regression in "git rebase -i" that broke execution of git
+   commands from subdirectories via "exec" instruction has been fixed.
 
-There is a volunteer-run newsletter to serve our community ("Git Rev
-News" http://git.github.io/rev_news/rev_news.html).
+ * "git check-ref-format --branch @{-1}" bit a "BUG()" when run
+   outside a repository for obvious reasons; clarify the documentation
+   and make sure we do not even try to expand the at-mark magic in
+   such a case, but still call the validation logic for branch names.
 
-Git is a member project of software freedom conservancy, a non-profit
-organization (https://sfconservancy.org/).  To reach a committee of
-liaisons to the conservancy, contact them at <git@sfconservancy.org>.
+ * Command line completion (in contrib/) update.
 
+ * Description of blame.{showroot,blankboundary,showemail,date}
+   configuration variables have been added to "git config --help".
 
-* Reporting bugs
+ * After an error from lstat(), diff_populate_filespec() function
+   sometimes still went ahead and used invalid data in struct stat,
+   which has been fixed.
 
-When you think git does not behave as you expect, please do not stop
-your bug report with just "git does not work".  "I used git in this
-way, but it did not work" is not much better, neither is "I used git
-in this way, and X happend, which is broken".  It often is that git is
-correct to cause X happen in such a case, and it is your expectation
-that is broken. People would not know what other result Y you expected
-to see instead of X, if you left it unsaid.
+ * UNC paths are also relevant in Cygwin builds and they are now
+   tested just like Mingw builds.
 
-Please remember to always state
+ * Correct start-up sequence so that a repository could be placed
+   immediately under the root directory again (which was broken at
+   around Git 2.13).
 
- - what you wanted to achieve;
+ * The credential helper for libsecret (in contrib/) has been improved
+   to allow possibly prompting the end user to unlock secrets that are
+   currently locked (otherwise the secrets may not be loaded).
 
- - what you did (the version of git and the command sequence to reproduce
-   the behavior);
+ * Updates from GfW project.
 
- - what you saw happen (X above);
+ * "git rebase -i" recently started misbehaving when a submodule that
+   is configured with 'submodule.<name>.ignore' is dirty; this has
+   been corrected.
 
- - what you expected to see (Y above); and
+ * Some error messages did not quote filenames shown in it, which have
+   been fixed.
 
- - how the last two are different.
+ * Building with NO_LIBPCRE1_JIT did not disable it, which has been fixed=
+.
 
-See http://www.chiark.greenend.org.uk/~sgtatham/bugs.html for further
-hints.
+ * We used to add an empty alternate object database to the system
+   that does not help anything; it has been corrected.
 
-If you think you found a security-sensitive issue and want to disclose
-it to us without announcing it to wider public, please contact us at
-our security mailing list <git-security@googlegroups.com>.  This is
-a closed list that is limited to people who need to know early about
-vulnerabilities, including:
+ * Error checking in "git imap-send" for empty response has been
+   improved.
 
-  - people triaging and fixing reported vulnerabilities
-  - people operating major git hosting sites with many users
-  - people packaging and distributing git to large numbers of people
-
-where these issues are discussed without risk of the information
-leaking out before we're ready to make public announcements.
-
-
-* Repositories and documentation.
-
-My public git.git repositories are at:
-
-  git://git.kernel.org/pub/scm/git/git.git/
-  https://kernel.googlesource.com/pub/scm/git/git
-  git://repo.or.cz/alt-git.git/
-  https://github.com/git/git/
-  git://git.sourceforge.jp/gitroot/git-core/git.git/
-  git://git-core.git.sourceforge.net/gitroot/git-core/git-core/
-
-This one shows not just the main integration branches, but also
-individual topics broken out:
-
-  git://github.com/gitster/git/
-
-A few web interfaces are found at:
-
-  http://git.kernel.org/cgit/git/git.git
-  https://kernel.googlesource.com/pub/scm/git/git
-  http://repo.or.cz/w/alt-git.git
-
-Preformatted documentation from the tip of the "master" branch can be
-found in:
-
-  git://git.kernel.org/pub/scm/git/git-{htmldocs,manpages}.git/
-  git://repo.or.cz/git-{htmldocs,manpages}.git/
-  https://github.com/gitster/git-{htmldocs,manpages}.git/
-
-The manual pages formatted in HTML for the tip of 'master' can be
-viewed online at:
-
-  https://git.github.io/htmldocs/git.html
-
-
-* How various branches are used.
-
-There are four branches in git.git repository that track the source tree
-of git: "master", "maint", "next", and "pu".
+ * An ancient bug in "git apply --ignore-space-change" codepath has
+   been fixed.
 
-The "master" branch is meant to contain what are very well tested and
-ready to be used in a production setting.  Every now and then, a
-"feature release" is cut from the tip of this branch.  They used to be
-named with three dotted decimal digits (e.g. "1.8.5"), but recently we
-switched the versioning scheme and "feature releases" are named with
-three-dotted decimal digits that ends with ".0" (e.g. "1.9.0").
+ * There was a recent semantic mismerge in the codepath to write out a
+   section of a configuration section, which has been corrected.
+
+Also contains various documentation updates and code clean-ups.
+
+----------------------------------------------------------------
+
+Changes since v2.15.0 are as follows:
+
+Adam Dinwoodie (3):
+      t5580: add Cygwin support
+      rebase -i: fix comment typo
+      doc/SubmittingPatches: correct subject guidance
+
+Andrey Okoshkin (2):
+      commit: check result of resolve_ref_unsafe
+      diff: fix lstat() error handling in diff_populate_filespec()
+
+Brandon Williams (1):
+      wt-status: actually ignore submodules when requested
+
+Carlos Mart=C3=ADn Nieto (1):
+      diff: --indent-heuristic is no longer experimental
+
+Charles Bailey (2):
+      t4201: make use of abbreviation in the test more robust
+      grep: fix NO_LIBPCRE1_JIT to fully disable JIT
+
+Dennis Kaarsemaker (1):
+      credential-libsecret: unlock locked secrets
+
+Jacob Keller (1):
+      sequencer: pass absolute GIT_DIR to exec commands
+
+Jakub Bere=C5=BCa=C5=84ski (2):
+      t0302: check helper can handle empty credentials
+      wincred: handle empty username/password correctly
+
+Jean Carlo Machado (1):
+      fix typos in 2.15.0 release notes
+
+Jeff King (11):
+      t4015: refactor --color-moved whitespace test
+      t4015: check "negative" case for "-w --color-moved"
+      t4015: test the output of "diff --color-moved -b"
+      diff: fix whitespace-skipping with --color-moved
+      diff: handle NULs in get_string_hash()
+      test-ref-store: avoid passing NULL to printf
+      remote: handle broken symrefs
+      log: handle broken HEAD in decoration check
+      worktree: handle broken symrefs in find_shared_symref()
+      setup: avoid double slashes when looking for HEAD
+      link_alt_odb_entries: make empty input a noop
+
+Johannes Schindelin (5):
+      status: do not get confused by submodules in excluded directories
+      mingw: include the full version information in the resources
+      mingw: add experimental feature to redirect standard handles
+      mingw: optionally redirect stderr/stdout via the same handle
+      mingw: document the standard handle redirection
+
+Junio C Hamano (9):
+      t5601: rm the target file of cp that could still be executing
+      check-ref-format --branch: do not expand @{...} outside repository
+      check-ref-format --branch: strip refs/heads/ using skip_prefix
+      check-ref-format doc: --branch validates and expands <branch>
+      column: do not include pager.c
+      Start preparation for 2.15.1
+      Almost ready for 2.15.1
+      A bit more fixes for 2.15.1
+      Git 2.15.1
+
+Kaartic Sivaraam (1):
+      mailmap: use Kaartic Sivaraam's new address
+
+Kevin Daudt (1):
+      column: show auto columns when pager is active
+
+Martin =C3=85gren (7):
+      grep: take the read-lock when adding a submodule
+      bisect: change calling-convention of `find_bisection()`
+      bisect: fix memory leak in `find_bisection()`
+      bisect: fix off-by-one error in `best_bisection_sorted()`
+      bisect: fix memory leak when returning best element
+      builtin/merge-base: free commit lists
+      reduce_heads: fix memory leaks
+
+Ren=C3=A9 Scharfe (6):
+      sequencer: factor out rewrite_file()
+      sequencer: use O_TRUNC to truncate files
+      imap-send: handle NULL return of next_arg()
+      imap-send: handle missing response codes gracefully
+      apply: avoid out-of-bounds access in fuzzy_matchlines()
+      config: flip return value of write_section()
+
+SZEDER G=C3=A1bor (2):
+      travis-ci: fix running P4 and Git LFS tests in Linux build jobs
+      travis-ci: don't build Git for the static analysis job
+
+Simon Ruderich (2):
+      sequencer.c: check return value of close() in rewrite_file()
+      wrapper.c: consistently quote filenames in error messages
+
+Stefan Beller (3):
+      xdiff-interface: export comparing and hashing strings
+      diff.c: get rid of duplicate implementation
+      config: document blame configuration
+
+Thomas Braun (1):
+      completion: add remaining flags to checkout
+
+Todd Zullinger (3):
+      Replace Free Software Foundation address in license notices
+      Replace Free Software Foundation address in license notices
+      RelNotes: minor typo fixes in 2.15.1 draft
 
-The last such release was 2.15 done on Oct 30th, 2017.  You can expect
-that the tip of the "master" branch is always more stable than any of
-the released versions.
-
-Whenever a feature release is made, "maint" branch is forked off from
-"master" at that point.  Obvious and safe fixes after a feature
-release are applied to this branch and maintenance releases are cut
-from it.  Usually the fixes are merged to the "master" branch first,
-several days before merged to the "maint" branch, to reduce the chance
-of last-minute issues.  The maintenance releases used to be named with
-four dotted decimal, named after the feature release they are updates
-to (e.g. "1.8.5.1" was the first maintenance release for "1.8.5"
-feature release).  These days, maintenance releases are named by
-incrementing the last digit of three-dotted decimal name (e.g. "2.12.1"
-was the first maintenance release for the "2.12" series).
-
-New features never go to the 'maint' branch.  This branch is also
-merged into "master" to propagate the fixes forward as needed.
-
-A new development does not usually happen on "master". When you send a
-series of patches, after review on the mailing list, a separate topic
-branch is forked from the tip of "master" (or somewhere older, especially
-when the topic is about fixing an earlier bug) and your patches are queued
-there, and kept out of "master" while people test it out. The quality of
-topic branches are judged primarily by the mailing list discussions.
-
-Topic branches that are in good shape are merged to the "next" branch. In
-general, the "next" branch always contains the tip of "master".  It might
-not be quite rock-solid, but is expected to work more or less without major
-breakage. The "next" branch is where new and exciting things take place. A
-topic that is in "next" is expected to be polished to perfection before it
-is merged to "master".  Please help this process by building & using the
-"next" branch for your daily work, and reporting any new bugs you find to
-the mailing list, before the breakage is merged down to the "master".
-
-The "pu" (proposed updates) branch bundles all the remaining topic
-branches the maintainer happens to have seen.  There is no guarantee that
-the maintainer has enough bandwidth to pick up any and all topics that
-are remotely promising from the list traffic, so please do not read
-too much into a topic being on (or not on) the "pu" branch.  This
-branch is mainly to remind the maintainer that the topics in them may
-turn out to be interesting when they are polished, nothing more.  The
-topics on this branch aren't usually complete, well tested, or well
-documented and they often need further work.  When a topic that was
-in "pu" proves to be in a testable shape, it is merged to "next".
-
-You can run "git log --first-parent master..pu" to see what topics are
-currently in flight.  Sometimes, an idea that looked promising turns out
-to be not so good and the topic can be dropped from "pu" in such a case.
-The output of the above "git log" talks about a "jch" branch, which is an
-early part of the "pu" branch; that branch contains all topics that
-are in "next" and a bit more (but not all of "pu") and is used by the
-maintainer for his daily work.
-
-The two branches "master" and "maint" are never rewound, and "next"
-usually will not be either.  After a feature release is made from
-"master", however, "next" will be rebuilt from the tip of "master"
-using the topics that didn't make the cut in the feature release.
-
-A natural consequence of how "next" and "pu" bundles topics together
-is that until a topic is merged to "next", updates to it is expected
-by replacing the patch(es) in the topic with an improved version,
-and once a topic is merged to "next", updates to it needs to come as
-incremental patches, pointing out what was wrong in the previous
-patches and how the problem was corrected.
-
-Note that being in "next" is not a guarantee to appear in the next
-release, nor even in any future release.  There were cases that topics
-needed reverting a few commits in them before graduating to "master",
-or a topic that already was in "next" was reverted from "next" because
-fatal flaws were found in it after it was merged to "next".
-
-
-* Other people's trees.
-
-Documentation/SubmittingPatches outlines to whom your proposed changes
-should be sent.  As described in contrib/README, I would delegate fixes
-and enhancements in contrib/ area to the primary contributors of them.
-
-Although the following are included in git.git repository, they have their
-own authoritative repository and maintainers:
-
- - git-gui/ comes from git-gui project, maintained by Pat Thoyts:
-
-        git://repo.or.cz/git-gui.git
-
- - gitk-git/ comes from Paul Mackerras's gitk project:
-
-        git://ozlabs.org/~paulus/gitk
-
- - po/ comes from the localization coordinator, Jiang Xin:
-
-	https://github.com/git-l10n/git-po/
-
-When sending proposed updates and fixes to these parts of the system,
-please base your patches on these trees, not git.git (the former two
-even have different directory structures).
