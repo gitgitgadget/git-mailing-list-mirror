@@ -2,175 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C44AA20954
-	for <e@80x24.org>; Tue, 28 Nov 2017 12:40:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5C12120954
+	for <e@80x24.org>; Tue, 28 Nov 2017 14:04:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752703AbdK1MkC (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Nov 2017 07:40:02 -0500
-Received: from mail-wr0-f177.google.com ([209.85.128.177]:36502 "EHLO
-        mail-wr0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752665AbdK1Mj7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Nov 2017 07:39:59 -0500
-Received: by mail-wr0-f177.google.com with SMTP id y42so207195wrd.3
-        for <git@vger.kernel.org>; Tue, 28 Nov 2017 04:39:59 -0800 (PST)
+        id S1752302AbdK1OEv (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Nov 2017 09:04:51 -0500
+Received: from mail-pl0-f52.google.com ([209.85.160.52]:38304 "EHLO
+        mail-pl0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751838AbdK1OEu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Nov 2017 09:04:50 -0500
+Received: by mail-pl0-f52.google.com with SMTP id s10so242915plj.5
+        for <git@vger.kernel.org>; Tue, 28 Nov 2017 06:04:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=KCjwiklOrpyTh00saXGEM/HWhTi0Pep5nBFLQJhKYAI=;
-        b=Wcd0je+adVQ4tBJkxN9fRsA/by7Ww0P64XKOvvyPcS/34Ef5Fw1k5VSHsfMBQNvdqs
-         IATnuwvtRlpAAKWurfcEIGvJOTriXhfsiRvBoRfoot1oahbjNzABLZTLIIhzXgQHAlgr
-         pLmkUs5WbX5oz9CrgzzVkTvLqXQVRnbR4qVL8v+eZF4+A/pV4JtlJh8iHfIjzOrrul06
-         gWgS6xn2S6skyPxnwX/0mn7yVGnu6cAO4Y9KXnhdAFfH50/Ol54aO4Aq+8bhfRo6vIH5
-         l9lqku1DTscSb9HRTg8AiD0bnsg9yb/zPKDvBc+GlhKI/pSIWnd+iqLvp8AAZgpIrLPv
-         M/qA==
+        h=message-id:subject:from:to:cc:in-reply-to:references:date
+         :mime-version:content-transfer-encoding;
+        bh=gBr5zMi2sO6CvHhakwBcBc3Nzuea5+CcdYLo2jEsV/M=;
+        b=GJmifvwCqgtv8Ehe/+TPeH076SKfPU21z5dBI4IPE2n9dUuKPw2Q2r5Efuk3MyjT8R
+         IgnQG1BgcbxwOUSGjGSvRSSgNXSHzL9gEYAyaf3kITrFxWn6IjBYk9wz6t0y0M3ToKFm
+         krCj6jaJqDZDv1aqHxLDe3QpJdDgJEQt3kxtOWlueSIQMdVvLb6GeVZT8zrlsHxrcCZ2
+         M2hFLcs5a25hjRx7AuOhVIp+xGvcb8kMfBJRbDUNsRJhGuiJPIC4p/iQxWhP1Fdm092g
+         pc62kNRAOwfB6Mmiv6WGeqqMoYa3P73Mm1Bhnk1Aq9Ikl/wHqnbELDb32vcUMN0gDRIW
+         1cbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=KCjwiklOrpyTh00saXGEM/HWhTi0Pep5nBFLQJhKYAI=;
-        b=GAfPwXfts+TI/hgvjYzVsF6PpiQoLTsyDfeLmJgqckwD1kSXObOpyiAu9p5y0mNA3R
-         l1c6VN9/1IEQnLQ2h72jWNHKUqAypjaQ7mJp0c+d7Zfvo5G36NGcKAkPdK3zuqiNh/6s
-         J2Cr6iNFaFW+VGH3E7Bb3a8xsYVhuigqyifRIjYiVheO4p46ISuO3VmNLqFS5MzCbXPt
-         cklU823Yqm6znpVohTFfQ1DWuiIJqeG5zlj1Uyw00Ic3qNBtKczQb4anbXuwn+rO7MGF
-         JIpkUCEGuahK6RpvZUGD3esSZkk8Sm6fBCDXkraHh+NaNVZMzoBvx2eSw6H762a3nQlw
-         0iow==
-X-Gm-Message-State: AJaThX6N4QoRb2+oHIEwFn2gWeTJznoDtbLK23wiVuL7R0inPRND8QU/
-        2Va27xcdxf/SMygDa3IVISo=
-X-Google-Smtp-Source: AGs4zMYv/hr7H6xEj++TR7jTYvM178sId+0zu/Q28EFF4H74gXA5IKxAKA/IiZNcwfzp2ENOqCWi5A==
-X-Received: by 10.223.165.4 with SMTP id i4mr37544033wrb.158.1511872798410;
-        Tue, 28 Nov 2017 04:39:58 -0800 (PST)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id b78sm8706758wmi.18.2017.11.28.04.39.57
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 28 Nov 2017 04:39:57 -0800 (PST)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v3] launch_editor(): indicate that Git waits for user input
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <xmqqefojb9a1.fsf@gitster.mtv.corp.google.com>
-Date:   Tue, 28 Nov 2017 13:39:57 +0100
-Cc:     lars.schneider@autodesk.com, git@vger.kernel.org,
-        sbeller@google.com, sunshine@sunshineco.com,
-        kaartic.sivaraam@gmail.com
-Content-Transfer-Encoding: 7bit
-Message-Id: <B7DA73AD-CD9E-4EB1-AD6D-AAF2B11F93D8@gmail.com>
-References: <20171127134716.69471-1-lars.schneider@autodesk.com> <xmqqefojb9a1.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:message-id:subject:from:to:cc:in-reply-to
+         :references:date:mime-version:content-transfer-encoding;
+        bh=gBr5zMi2sO6CvHhakwBcBc3Nzuea5+CcdYLo2jEsV/M=;
+        b=UXF5KEuwqtCFKZ2OtRLDVxllfLrbhvvHYXkRlXPVV1Eek6XSCP+6uL0b8w07LXSI3M
+         I9om6bJxB/L9HBv2o1Qgj2cu8un44X7zez7U/cggTqsoR4khS0kzsAJU3p2oRvmCWJ7l
+         brkv2NMKJ7jQ5XZpwQcMkrj590Z+5x1lpN++12LlfuYqjXuGoGURtKOhfY6r41mhQmhk
+         U2QSW/jjnYovFXEEpesY3psryXlc00S1UwIZF2RJVIYW4P+UBCT58IPg8mtRaMqxTffT
+         s/K5bWhblnuNbwEM6jvBnx5LUikFwZhRYx3v0VfP93WwwA7O98A98rK9DfYeYtC3qVA/
+         SBmg==
+X-Gm-Message-State: AJaThX4iKY54MD4cpNyYLLGQEEyz4v7KagAKLtGhY7LqjRRUJg5+xIZG
+        v5jnFYhhF1hmE5XtHQUXxMjkZUSM
+X-Google-Smtp-Source: AGs4zMYT6H52vL3/8WDLvYuIUYld9fB9MlteS421nhlNAXSQGwnbGZyixSg6LxIqY7YLH6DwXJXx0A==
+X-Received: by 10.84.174.131 with SMTP id r3mr33754510plb.358.1511877890159;
+        Tue, 28 Nov 2017 06:04:50 -0800 (PST)
+Received: from unique-pc ([2405:204:7344:993e:9a3:d467:14f5:495b])
+        by smtp.gmail.com with ESMTPSA id z78sm58193927pfk.115.2017.11.28.06.04.46
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 28 Nov 2017 06:04:48 -0800 (PST)
+Message-ID: <1511877882.10193.2.camel@gmail.com>
+Subject: Re: [PATCH v2 0/3] rebase: give precise error message
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3124)
+Cc:     Git mailing list <git@vger.kernel.org>
+In-Reply-To: <xmqqpo8387hz.fsf@gitster.mtv.corp.google.com>
+References: <xmqq60a3xdpw.fsf@gitster.mtv.corp.google.com>
+         <20171127172104.5796-1-kaartic.sivaraam@gmail.com>
+         <xmqqpo8387hz.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset="ISO-8859-15"
+Date:   Tue, 28 Nov 2017 19:34:42 +0530
+Mime-Version: 1.0
+X-Mailer: Evolution 3.22.6-1+deb9u1 
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, 2017-11-28 at 11:25 +0900, Junio C Hamano wrote:
+> Kaartic Sivaraam <kaartic.sivaraam@gmail.com> writes:
+> 
+> > 1. "git rebase <upstream> <remote_branch>" does nothing
+> 
+> Not limited to "rebase", you do not muck with remote-tracking branch
+> in your local repository, so it would be a bug if the above updated
+> where the remote-tracking branch points at.
+> 
+> The form of "git rebase" with one extra argument (i.e. not rebasing
+> the history that leads to the current checkout) is mere shorthand of
+> checking that extra thing out before doing the rebase, i.e.
+> 
+> 	$ git rebase origin/next origin/maint
+> 
+> first checks out origin/maint (you'd get on a detached HEAD) and
+> rebase the history leading to the detached HEAD on top of
+> origin/next.  If it fast-forwards (and it should if you are talking
+> about 'maint' and 'next' I publish), you'll end up sitting on a
+> detached HEAD that points at origin/next.
+> 
+> There is nothing to see here.
+> 
 
-> On 28 Nov 2017, at 00:18, Junio C Hamano <gitster@pobox.com> wrote:
-> 
-> lars.schneider@autodesk.com writes:
-> 
->> diff to v2:
->>    - shortened and localized the "waiting" message
->>    - detect "emacsclient" and suppress "waiting" message
-> 
-> Thanks for moving this forward.
-> 
-> 
->> +		static const char *close_notice = NULL;
-> 
-> Because this thing is "static", the variable is NULL when the first
-> call to this function is made, and the value left in the variable
-> when a call returns will be seen by the next call.
-> 
->> +		if (isatty(2) && !close_notice) {
-> 
-> Declaring a "static" variable initialized to NULL and checking its
-> NULL-ness upfront is a common pattern to make sure that the code
-> avoids repeated computation of the same thing.  The body of the if
-> statement is run only when standard error stream is a tty (hinting
-> an interactive session) *and* close_notice is (still) NULL.
-> 
->> +			char *term = getenv("TERM");
->> +
->> +			if (term && strcmp(term, "dumb"))
->> +				/*
->> +				 * go back to the beginning and erase the
->> +				 * entire line if the terminal is capable
->> +				 * to do so, to avoid wasting the vertical
->> +				 * space.
->> +				 */
->> +				close_notice = "\r\033[K";
->> +			else if (term && strstr(term, "emacsclient"))
->> +				/*
->> +				 * `emacsclient` (or `emacsclientw` on Windows) already prints
->> +				 * ("Waiting for Emacs...") if a file is opened for editing.
->> +				 * Therefore, we don't need to print the editor launch info.
->> +				 */
->> +				;
->> +			else
->> +				/* otherwise, complete and waste the line */
->> +				close_notice = _("done.\n");
->> +		}
-> 
-> It assigns a non-NULL value to close_notice unless the editor is
-> emacsclient (modulo the bug that "emacsclient" is to be compared
-> with EDITOR, GIT_EDITOR, core.editor etc. -- git_editor() can be
-> used to pick the right one).  For a user of that particular editor,
-> it is left as NULL.  Because it is unlikely that EDITOR etc. would
-> change across calls to this function, for them, and only for them,
-> the above is computed to yield the same result every time this
-> function is called.
-> 
-> That feels a bit uneven, doesn't it?
-> 
-> There are two possible solutions:
-> 
-> 1. drop "static" from the declaration to stress the fact that the
->   variable and !close_notice in the upfront if() statement is not
->   avoiding repeated computation of the same thing, or
-> 
-> 2. arrange that "emacsclient" case also participates in "avoid
->   repeated computation" dance.  While at it, swap the order of
->   checking isatty(2) and !close_notice (aka "have we done this
->   already?)--because we do not expect us swapping file descriptor
->   #2 inside this single process, we'd be repeatedly asking
->   isatty(2) for the same answer.
-> 
-> The former may be simpler and easier, as an editor invocation would
-> not be a performance critical codepath.
-> 
-> If we want to do the latter, a cleaner way may be to have another
-> static "static int use_notice_checked = 0;" declared, and then
-> 
-> 	if (!use_notice_checked && isatty(2)) {
-> 		... what you currently have, modulo the
-> 		... fix for the editor thing, and set
-> 		... close_notice to a string (or NULL).
->                use_notice_checked = 1;
-> 	}
-> 
-> The users of close_notice after this part that use !close_notice
-> as "do not give the notice at all" flag and also as "this is the
-> string to show after editor comes back" can stay the same if you go
-> this route.  That would be solution 2a.
-> 
-> Of course, you can instead use close_notice = "" (empty string) as a
-> signal "we checked and we know that we are not using the notice
-> thing".  If you go that route, then the users after this if statement
-> that sets up close_notice upon the first call would say !*close_notice
-> instead of !close_notice when they try to see if the notice is in use.
-> That would be solution 2b.
-> 
-> I personally think any one of 1., 2a., or 2b. is fine.
+You're right. It was my mistake. It seems I didn't notice that I was
+already on 'origin/next' before I did,
 
-Thanks for your thoughts! I will go with 1. I also think that this is 
-no performance critical codepath and therefore we should go with the
-simplest/most maintainable solution.
+ 	$ git rebase origin/next origin/maint
+
+So (obviously) I thought it did nothing, sorry.
 
 
-Thanks,
-Lars
+> > 2. It's possible to do "git rebase <upstream> <commit>"
+> 
+> Again, that's designed behaviour you can trigger by giving <commit>
+> (not <branch>).  Very handy when you do not trust your upstream or
+> yourself's ability to resolve potential conflicts as a trial run
+> before really committing to perform the rebase, e.g.
+> 
+> 	$ git rebase origin master^0
+> 
+
+I can't comment about usefulness as I haven't used rebase in this way
+but I'm pretty sure that this should be mentioned in the
+"Documentation" to help those might be in bare need of syntax like this
+to discover it.
+
+Something like the following diff with additional changes to other
+places that refer to <branch>,
+
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index 67d48e688..ba4a545bf 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -9,9 +9,9 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git rebase' [-i | --interactive] [options] [--exec <cmd>] [--onto <newbase>]
+-       [<upstream> [<branch>]]
++       [<upstream> [<ref>]]
+ 'git rebase' [-i | --interactive] [options] [--exec <cmd>] [--onto <newbase>]
+-       --root [<branch>]
++       --root [<ref>]
+ 'git rebase' --continue | --skip | --abort | --quit | --edit-todo
+ 
+ DESCRIPTION
+
+
+If <ref> is the correct substitute <branch>, I could try to send a
+patch that fixes this.
+
+
+-- 
+Kaartic
