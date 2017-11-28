@@ -2,130 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6C04920C13
-	for <e@80x24.org>; Tue, 28 Nov 2017 16:34:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 77D1220954
+	for <e@80x24.org>; Tue, 28 Nov 2017 16:46:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753252AbdK1QeY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Nov 2017 11:34:24 -0500
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:46395 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752852AbdK1QeX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Nov 2017 11:34:23 -0500
-Received: by mail-pg0-f67.google.com with SMTP id b11so144608pgu.13
-        for <git@vger.kernel.org>; Tue, 28 Nov 2017 08:34:23 -0800 (PST)
+        id S1753434AbdK1Qqw (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Nov 2017 11:46:52 -0500
+Received: from mail-pl0-f47.google.com ([209.85.160.47]:37925 "EHLO
+        mail-pl0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752816AbdK1Qqv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Nov 2017 11:46:51 -0500
+Received: by mail-pl0-f47.google.com with SMTP id s10so247242plj.5
+        for <git@vger.kernel.org>; Tue, 28 Nov 2017 08:46:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=7m0h+mjkzZAc21+4OjX8oBRtxunVxHv2u4t4n/q2LYc=;
-        b=Y//4TX28ytO1hgHYQ4LjKS/s1SUWlKOLbXq8SPsXMA1Wh/lIkTzwPo8NSZr+a90tPj
-         Q74f5tTwKoyLm2gs+TCeIGc+JgeB4ZNvGi67D7pOl/orrAhNc6tBGzyRxGAsVk08RFh0
-         JQGg5Rw1Rup/EJnQ9g4CAuYcCAZ8EKtpCGmGRc9b6rkEimor7Ns6ZzkAtoElSEl4OWBI
-         SFc+VgJBixF7YnonhLBmFbsaXb6vPt4WRWV8npKoT9GZ3kDwBKdfPX8dVfsWn06U6ciC
-         vNm3HYVzBQdm7X6Xp1FZfN9zZkLBg5jweg1TtrCfUqzPypEaSPkmZG3elB4H2ctbD6z/
-         bnWw==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=GodPJ9ILQJq5x9gD1zZMeaojkRxvGONp6/uvP4BmlKs=;
+        b=rxEy6vcl3VCIh5mDejEF0mLvIFlpVAcD3UxVaBH0SNZM2gXXkZJ8K56uqOAu7smZm6
+         RPeKnZqGb+eZbHAlrRld4UhoJNL+gRzYgdTTPB2mnejuaI/vcT9Dh/j5dzpEpbnBJ+Gj
+         lusxa2eSzfDmAB3tYBbWdZvtzlf39UbJxedoNhIIbI/f0oN/8rVS2KtYfHumvr7q5Uyy
+         Wl5+kE085TZ1GtyS7fiVQYMdPVhdlqnq8Ul2VrBwwOJKIoDr6YU+EEV2jN0Qf6ODoL4W
+         VP3m7r7ckPQTlmGtUs+QhPV8B1w+gnatzqRr+YgyCaqUX6N8fo1Hhs1A82sE7SK0QGdg
+         PSng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=7m0h+mjkzZAc21+4OjX8oBRtxunVxHv2u4t4n/q2LYc=;
-        b=psUtv4XK5LUowoV86RzfkS5+HoBl3c2hTJCrRBUnW2nWt59d00J9VHRrwiyEe0dlOx
-         NH/U4zfbeNGOcuMX0DPd7dUsctER776HaxmPZrpWw3eFq/SDS+DKUpyzyNyeFuphjnoR
-         RcFYwphn3u69AtnMsCH+4tD3pTInSkeqU4sOtUGMQ2h0eY7TShw1xrPm62KR994Ovv6G
-         Jk1dgms2zNXYawhaYEgmLvytwnHr1gVRS+LC70PWUsuahVYzw6O8qSr4tezCFsYhisEx
-         +65HoV5f8dFf3Ukri5xfddqt/2m0JkbzuoSy41hNN8u0icWGDPAta0nJ5ZhB5i8YsqyQ
-         zJrQ==
-X-Gm-Message-State: AJaThX6+vzxkwaKw1HAqDz/GFJCnuVQzFs86gCh7ZrAT+D+heA8tH7A1
-        PRl/8zWZ6x1CB3tfhzqmiq2HC1Z0
-X-Google-Smtp-Source: AGs4zMagJOgOIiNRc9UmrYQZagJrHM4AXEeJfTrC/aOEiU0xvSC1AZR16dqXRMbjwUZey41kM7VC7g==
-X-Received: by 10.101.66.11 with SMTP id c11mr40262879pgq.169.1511886862555;
-        Tue, 28 Nov 2017 08:34:22 -0800 (PST)
-Received: from localhost.localdomain ([2405:204:7344:993e:9a3:d467:14f5:495b])
-        by smtp.gmail.com with ESMTPSA id z74sm46183279pfi.123.2017.11.28.08.34.19
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=GodPJ9ILQJq5x9gD1zZMeaojkRxvGONp6/uvP4BmlKs=;
+        b=JhxiW1OCXlZDe8fPQLPGMw0JTDTMjtWkMXdajXXO+JuVw81aRqppCEmX9g4ra3TAUK
+         RfBuiZVHCuSod/fnKbpM3P4R5zAOlAi1tRXE/E62kZ4c47oKiF71gwFLo5A2ecthEWS2
+         NW4vKRLB6jTGjwhx1aOpZUCbSvj3/lIZMVWjTH0eGOskNLSEoybibvnj8e8BQbec0Zk0
+         RN6ac86YsThC9RAp0ygR2EVOW9ybWNG4bYQ3WO1TlsMXASZvB+nrrqOHTvhAU6ToINd1
+         wCHRP7n0Z3rohoWGejGNuEUNcCj9dsDsFBuOpDYoU47PdxmyO/JfTv5btoUXor3cz5EQ
+         +tJQ==
+X-Gm-Message-State: AJaThX4cLROgQrYYN6oEqCaV85zKVVaVJlrPyi4Gl1sfz+uU4Q1yKP5J
+        aiHQnDLpnNQQwO3Bfjaih6SEzgWfC0o=
+X-Google-Smtp-Source: AGs4zMar+4q2B7vY3mARhGs9OXDkSwXeaq3W9gjTGvwSoHQEASRzvOCn/2I6PHsNJtUGOR2j0ESgOA==
+X-Received: by 10.84.128.229 with SMTP id a92mr28070047pla.108.1511887610456;
+        Tue, 28 Nov 2017 08:46:50 -0800 (PST)
+Received: from ?IPv6:2405:204:7344:993e:9a3:d467:14f5:495b? ([2405:204:7344:993e:9a3:d467:14f5:495b])
+        by smtp.gmail.com with ESMTPSA id a87sm57987293pfg.159.2017.11.28.08.46.47
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 28 Nov 2017 08:34:21 -0800 (PST)
+        Tue, 28 Nov 2017 08:46:49 -0800 (PST)
+Subject: Re: [RFC PATCH v2] builtin/worktree: enhance worktree removal
+To:     Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Cc:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Git Mailing List <git@vger.kernel.org>
+References: <20883815-0d9b-a4d8-cc93-0eb8b918551f@gmail.com>
+ <20171127173621.6707-1-kaartic.sivaraam@gmail.com>
+ <xmqq7eub85rz.fsf@gitster.mtv.corp.google.com>
+ <CAPig+cT3jbZ=VRWpggw_tvegAGnjGQ0Mxp8m2DdKKPhfKTVEWA@mail.gmail.com>
+ <xmqqy3mr6ocp.fsf@gitster.mtv.corp.google.com>
 From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git mailing list <git@vger.kernel.org>
-Subject: [PATCH v3 2/2] Doc/check-ref-format: clarify information about @{-N} syntax
-Date:   Tue, 28 Nov 2017 22:04:06 +0530
-Message-Id: <20171128163406.15452-1-kaartic.sivaraam@gmail.com>
-X-Mailer: git-send-email 2.15.0.531.g2ccb3012c
-In-Reply-To: <xmqqd14386sw.fsf@gitster.mtv.corp.google.com>
-References: <xmqqd14386sw.fsf@gitster.mtv.corp.google.com>
+Message-ID: <c2e041ab-4c29-99a8-2de9-a68e986c225c@gmail.com>
+Date:   Tue, 28 Nov 2017 22:16:44 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
+MIME-Version: 1.0
+In-Reply-To: <xmqqy3mr6ocp.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When the N-th previous thing checked out syntax (@{-N}) is used
-with '--branch' option of check-ref-format the result might not
-always be a valid branch name (see NOTE below). This is because
-@{-N} is used to refer to the N-th last checked out "thing" which
-might be any commit (sometimes a branch). The documentation thus
-does a wrong thing by promoting it as the "previous branch syntax".
+On Tuesday 28 November 2017 09:34 AM, Junio C Hamano wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+> 
+>> With this approach, validate_worktree() will print an error message
+>> saying that the worktree directory is missing before the control info
+>> is actually removed. Kaartic's original patch silenced the message
+>> (and _all_ error messages from validate_worktree()) by passing 1 as
+>> the second argument. That seemed heavy-handed, so I suggested keeping
+>> the validate_worktree() call as-is but doing the directory-missing
+>> check first as a special case.
+>>
+>> But perhaps that special case isn't necessary.
+> 
+> I do not think the user minds to see "there is no such directory
+> there"; actually that would be beneficial, even.
+> 
+> But you are right; validate_worktree() would need to become aware of
+> the possibility that it can be passed such a "corrupt" worktree to
+> handle if that approach is followed.
+> 
+> The case we are discussing, i.e. the user removed the directory
+> without telling Git to give it a chance to remove control
+> information, may be common enough that it becomes a worthwhile
+> addition to make the "quiet" boolean that occupies a whole int to an
+> unsigned that is a collection of bits, and pass "missing_ok" bit in
+> that flag word to the validate_worktree() to tell that the caller
+> can tolerate the "user removed it while we were looking the other
+> way" case and can handle it gracefully.  But that would be a lot
+> larger change, and "the caller checks before calling validate" as
+> done with this [RFC v2] may be a good way to add the feature with
+> the least impact to the codebase.
+> 
+>> I had envisioned a simple 'goto remove_control_info' rather than extra
+>> nesting or refactoring, but that's a minor point.
+> 
+> Yes, use of goto is also a good way to avoid having to worry about
+> the future evolution of the codeflow in this function.
+> 
+> So perhaps
+> 
+> 	if (the directory is no longer there)
+> 		goto cleanup;
+> 	if (the worktree does not validate)
+> 		return -1;
+> 	... the original code to (carefully) remove the
+> 	... worktree itself
+> 
+> 	cleanup:
+> 
+> 	... remove control info
+> 	... free resources held in variables
+> 	... return from the function
+> 
+> is what we want?
+>
 
-So, correctly state @{-N} is the syntax for specifying "N-th last
-thing checked out" and also state that the result of using @{-N}
-might also result in a "commit hash".
+Probably but I'm not interested in going for a v3 that does that as I 
+just wanted to show that worktree remove could be enhanced in this 
+aspect and show how it could be done. So, I'll leave this in the 
+#leftoverbits for the person who would be re-rolling nd/worktree-move.
 
-NOTE: Though a commit-hash is a "syntactically" valid branch name,
-it is generally not considered as one for the use cases of
-"git check-ref-format --branch". That's because a user who does
-"git check-ref-format --branch @{-$N}" would except the output
-to be a "existing" branch name apart from it being syntactically
-valid.
-
-Signed-off-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
 ---
- Documentation/git-check-ref-format.txt | 19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
-
-diff --git a/Documentation/git-check-ref-format.txt b/Documentation/git-check-ref-format.txt
-index cf0a0b7df..5ddb562d0 100644
---- a/Documentation/git-check-ref-format.txt
-+++ b/Documentation/git-check-ref-format.txt
-@@ -78,17 +78,20 @@ reference name expressions (see linkgit:gitrevisions[7]):
- . at-open-brace `@{` is used as a notation to access a reflog entry.
- 
- With the `--branch` option, the command takes a name and checks if
--it can be used as a valid branch name (e.g. when creating a new
--branch).  The rule `git check-ref-format --branch $name` implements
-+it can be used as a valid branch name e.g. when creating a new branch
-+(except for one exception related to the previous checkout syntax
-+noted below). The rule `git check-ref-format --branch $name` implements
- may be stricter than what `git check-ref-format refs/heads/$name`
- says (e.g. a dash may appear at the beginning of a ref component,
- but it is explicitly forbidden at the beginning of a branch name).
- When run with `--branch` option in a repository, the input is first
--expanded for the ``previous branch syntax''
--`@{-n}`.  For example, `@{-1}` is a way to refer the last branch you
--were on.  This option should be used by porcelains to accept this
--syntax anywhere a branch name is expected, so they can act as if you
--typed the branch name.
-+expanded for the ``previous checkout syntax''
-+`@{-n}`.  For example, `@{-1}` is a way to refer the last thing that
-+was checkout using "git checkout" operation. This option should be
-+used by porcelains to accept this syntax anywhere a branch name is
-+expected, so they can act as if you typed the branch name. As an
-+exception note that, the ``previous checkout operation'' might result
-+in a commit hash when the N-th last thing checked out was not a branch.
- 
- OPTIONS
- -------
-@@ -116,7 +119,7 @@ OPTIONS
- EXAMPLES
- --------
- 
--* Print the name of the previous branch:
-+* Print the name of the previous thing checked out:
- +
- ------------
- $ git check-ref-format --branch @{-1}
--- 
-2.15.0.531.g2ccb3012c
-
+Kaartic
