@@ -2,116 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F1F2120A40
-	for <e@80x24.org>; Wed, 29 Nov 2017 21:13:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F0D720A40
+	for <e@80x24.org>; Wed, 29 Nov 2017 21:29:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752832AbdK2VNA (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Nov 2017 16:13:00 -0500
-Received: from mail-wm0-f52.google.com ([74.125.82.52]:37765 "EHLO
-        mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752418AbdK2VM7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Nov 2017 16:12:59 -0500
-Received: by mail-wm0-f52.google.com with SMTP id f140so8628544wmd.2
-        for <git@vger.kernel.org>; Wed, 29 Nov 2017 13:12:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=cdiXOsLbwsANykBmNnxEwVgUqKGhiflD445bQK0dPYs=;
-        b=lmdGcDVqeGN74dbFdNaUde+Y9/Cq8OXn4HFEgsX0vkIgfPgLbAqGlqjgYEXmDYXI2p
-         rr/DwZISO4z0jqi76GRsAMPoZKG/l1HDM3sbVzV3Vh4HLaZQ1Mragig3WDjmKHLG1GyO
-         Qp0MjUch+hQyYKOXgHK65iJeeyeCKMmjALeiSeje48CYKaUyAq0J08Tixtr3UQdqU63J
-         kwsKPwEqJKBvzFpB7MhcQwGEt1YMJChISUqHQ24Q1MdpXpvVsBsH4ufsCwBSmSOXiMXx
-         ITCl78bafV6BlycZvKvuKyCkiQjyqrKgZ06n9wb3Ulc3NLvo2h3B2SH9sC8muhC8r6qO
-         wYRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=cdiXOsLbwsANykBmNnxEwVgUqKGhiflD445bQK0dPYs=;
-        b=E4M9i5+l/iW3X52oj/w0Gxb5BLdWom39W5ud1sOZBeN3BH9uhG5JXULmaycx1JiyFa
-         V6lLZLzGlkPRKTr2Dib3PWRlAzaONqcvwIiIktdORlqdgsHti32iw6FFbTVwGKwmG19K
-         fDusoNKPPB8jat8aoC3tFUfogRslBT5utnsWc0ZKAq2QDskwYKlKr7PJMWO2fytauXv4
-         RgYSngK4bX3lam8n+asL81df2AacRFw0iWTqcxqs4v0e9h0Ml83l1abv8fAIPSzgKnd/
-         G0HPh5XeHRw1TNnMhp3Sbo2kTAVcW8ZFO6Hvkq3Ixfp6cyEfk0qGLhq/kDG4NvMkBVIF
-         g3Qg==
-X-Gm-Message-State: AJaThX6wMaFikACexvwLyuj1zbBvR+zVDHI/NVtvcJPTl9ScaxyWFBFh
-        uqobhlzoiYOFnWASOVdkpa1aamTt
-X-Google-Smtp-Source: AGs4zMZiq7FCHUgvAxzTpZVVA54bKt9rFm53yej+b8qu5JkXkoBzNXe96pqBnhc9i14xyDYG0KmzJw==
-X-Received: by 10.80.138.99 with SMTP id i90mr9850201edi.207.1511989978253;
-        Wed, 29 Nov 2017 13:12:58 -0800 (PST)
-Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
-        by smtp.gmail.com with ESMTPSA id e29sm2300986edd.44.2017.11.29.13.12.56
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 29 Nov 2017 13:12:57 -0800 (PST)
-Received: from avar by evledraar with local (Exim 4.89)
-        (envelope-from <avarab@gmail.com>)
-        id 1eK9f5-00007B-Qv; Wed, 29 Nov 2017 22:12:55 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Dan Jacques <dnj@google.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, Johannes.Schindelin@gmx.de
-Subject: Re: [PATCH v4 0/4] RUNTIME_PREFIX relocatable Git
-References: <20171129155637.89075-1-dnj@google.com>
-User-agent: Debian GNU/Linux 9.2 (stretch); Emacs 25.1.1; mu4e 0.9.19
-In-reply-to: <20171129155637.89075-1-dnj@google.com>
-Date:   Wed, 29 Nov 2017 22:12:55 +0100
-Message-ID: <87h8tcvlew.fsf@evledraar.booking.com>
+        id S1752279AbdK2V3T (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Nov 2017 16:29:19 -0500
+Received: from mout.gmx.net ([212.227.17.20]:58758 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751687AbdK2V3S (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Nov 2017 16:29:18 -0500
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MgbvP-1eVVwB05gN-00Nwbs; Wed, 29
+ Nov 2017 22:29:16 +0100
+Date:   Wed, 29 Nov 2017 22:29:01 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Brandon Williams <bmwill@google.com>
+cc:     git@vger.kernel.org, pclouds@gmail.com
+Subject: Re: [PATCH] pathspec: only match across submodule boundaries when
+ requested
+In-Reply-To: <20171128232237.54453-1-bmwill@google.com>
+Message-ID: <alpine.DEB.2.21.1.1711292221060.6482@virtualbox>
+References: <alpine.DEB.2.21.1.1711260210060.6482@virtualbox> <20171128232237.54453-1-bmwill@google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:9EWBKRPWfFfWxO5wF47e5zyYbVqrJ4+0nMc3OwBYVBMmkSu5Xke
+ G8gJGSi5/4J80RTMrADoj545fRc2BxwCqAsJrCmgTC5S6XZsPPWCNe6KgN42JMEZyH1QsbL
+ Wk6KmXwyRpDZddLywalMXVx4c6ETYvdhkcc6Qi9FBqEoaU1swOoMyURpEBtHoz/q6QyRzii
+ phVdQgPPFZDgGmhuSbj2Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:kGb48qYAlqg=:jrXaPo0JmMJDM0/vZT8r1O
+ XQmafiVsg2Y456hNNSIp55594nZ2lZz7zgi8sqLhM8AHimF6QuUvO9iMb69w0/pCVef7g1U5T
+ fpEL4VFQEi9gcJ/hHc9SZBilSVDl9QeptqtbjbN0Hhi+tXQnosjwCIKFVUImsBgKIxPVFCktF
+ 7kS3C1OtAXmzk5KRi+dOuSC6YdtOzr0jr+VdA0Bd91yIzAFfU4CuceBddk/T602pjG2ZliB3H
+ lgKQ2FydZ9N4MQsvrghh1c6AiobJeOs7ZAeDO0a82xIIGHaVj+i5vqf1gazRu7DSxl+Pc2YeU
+ L465RW/j0vxbgtAQSaUGcgEPwBYm5JHkir2MNFiofa7wUBUTDN/sRVeYOD+UrbZkmiOKh02Z3
+ kILn9ISuZgFbKJno4GEUGuu2gfxxldip8dm2jUDElGQg2X0ha4mkOvkhndah5zRX05OvLWLlT
+ b2GlXV8XYpB2ZMuVmlBCvlewkLxjEe/GANSuB3mTwlV0rfvpONkF322PPP+MTN3zAvFsFU5rk
+ j/vamwm00Y1OgzVMvvFM7yaSGhabKFVHRk7Cdn7eYAE8Y/NwsrfA9g4pPr+dEqBHjY2TlW3fP
+ PfMLu7B4NgB0QbvKD4bTYDWTtr/XuWw3qsWGX7HWXHL8Z4plUd/lf7CMQLzXm2t+EZQsEem+t
+ DLPgIlj+Dt7PyxGl2psNdSaMlbX3+otrLgnSRU2jkwEBxzngxbKzmc+x/uFiIku2GWMF6o1qW
+ Jh+IyBV/SGFee94KESaA5ERYRbRxsMUlrPf4Lvprq6w0QTXJJzNHBvA0gWVOamLfp5z3EadPv
+ /8r8yLMfeB2oX9R4+E/3C96XK1ZWAxCS+O9NVsU4WM02K1+j4DzDPxo1VkaC5tjVKALUYAy
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Brandon,
 
-On Wed, Nov 29 2017, Dan Jacques jotted:
+On Tue, 28 Nov 2017, Brandon Williams wrote:
 
-> This is a small update to incorporate some Windows fixes from Johannes.
-> At this point, it passes the full test suite on Linux, Mac, and FreeBSD,
-> as well as the Travis.ci test suites, with and without
-> RUNTIME_PREFIX/RUNTIME_PREFIX_PERL flags.
->
-> I'm happy with the patch set, and feel that it is ready to move forward.
-> However, while it's been looked at by several people, and I have
-> incorporated reviewer feedback, the patch set hasn't received any formal
-> LGTM-style responses yet. I'm not sure what standard of review is required
-> to move forward with a patch on this project, so maybe this is totally
-> fine, but I wanted to make sure to point this out.
->
-> I also want to note Ævar Arnfjörð Bjarmason's RFC:
-> https://public-inbox.org/git/20171129153436.24471-1-avarab@gmail.com/T/
->
-> The proposed patch set conflicts with the Perl installation directory
-> changes in this patch set, as avarab@ notes. The proposed Perl installation
-> process would simplify patch 0002 in this patch set. I don't think the
-> landing order is terribly impactful - if this lands first, the patch in the
-> RFC would delete a few more lines, and if this lands later, patch 0002
-> would largely not be necessary.
+> Commit 74ed43711fd (grep: enable recurse-submodules to work on <tree>
+> objects, 2016-12-16) taught 'tree_entry_interesting()' to be able to
+> match across submodule boundaries in the presence of wildcards.  This is
+> done by performing literal matching up to the first wildcard and then
+> punting to the submodule itself to perform more accurate pattern
+> matching.  Instead of introducing a new flag to request this behavior,
+> commit 74ed43711fd overloaded the already existing 'recursive' flag in
+> 'struct pathspec' to request this behavior.
+> 
+> This leads to a bug where whenever any other caller has the 'recursive'
+> flag set as well as a pathspec with wildcards that all submodules will
+> be indicated as matches.  One simple example of this is:
+> 
+> 	git init repo
+> 	cd repo
+> 
+> 	git init submodule
+> 	git -C submodule commit -m initial --allow-empty
+> 
+> 	touch "[bracket]"
+> 	git add "[bracket]"
+> 	git commit -m bracket
+> 	git add submodule
+> 	git commit -m submodule
+> 
+> 	git rev-list HEAD -- "[bracket]"
+> 
+> Fix this by introducing the new flag 'recurse_submodules' in 'struct
+> pathspec' and using this flag to determine if matches should be allowed
+> to cross submodule boundaries.
+> 
+> Signed-off-by: Brandon Williams <bmwill@google.com>
 
-In general this whole thing structurally looks good to me with the
-caveats noted in other review E-Mails.
+Could you also add something like
 
-I haven't done anything but skim the details of the "where's my
-executable" C code though, just looked at what it's doing structurally.
+	This fixes https://github.com/git-for-windows/git/issues/1371
 
-I think it makes sense for this to land first ahead of my patch. This is
-an actual feature you need, whereas I just hate our use of MakeMaker,
-but that can wait, unless you're keen to rebase this on my patch. Would
-probably make your whole diff a bit shorter.
+at the end of the commit message, to keep a reference to the original bug
+report?
 
-The whole converting our absolute to relative paths in the make code is
-unavoidably ugly, but after having an initial knee-jerk reaction to it I
-don't see how it can be avoided. I was hoping most of these paths
-could/would just be a fixed path away from our libexec path, but alas
-due to having had these configurable all along that simplicity seems out
-of reach.
+>  4 files changed, 22 insertions(+), 2 deletions(-)
 
-Maybe I asked this before, but I don't see any obvious reason for why
-RUNTIME_PREFIX_PERL is a different thing than RUNTIME_PREFIX as opposed
-to us just doing the right thing for the perl scripts.
+Phew. That was much smaller than I expected.
+
+> +test_expect_success 'tree_entry_interesting does not match past submodule boundaries' '
+> +	test_when_finished "rm -rf repo submodule" &&
+> +	git init submodule &&
+> +	test_commit -C submodule initial &&
+> +	git init repo &&
+> +	>"repo/[bracket]" &&
+> +	git -C repo add "[bracket]" &&
+> +	git -C repo commit -m bracket &&
+> +	git -C repo rev-list HEAD -- "[bracket]" >expect &&
+> +
+> +	git -C repo submodule add ../submodule &&
+> +	git -C repo commit -m submodule &&
+> +
+> +	git -C repo rev-list HEAD -- "[bracket]" >actual &&
+> +	test_cmp expect actual
+> +'
+
+Nicely prepared for a new hash function, too (no explicit SHA-1).
+
+I wonder, however, why we can't `git checkout -b bracket` and
+`test_when_finished "git checkout master"` and void those many `-C repo`
+options. But then, it is actually one of the shorter test cases, and
+pretty easy to understand.
+
+However, I would still like to see `test_tick`s before those `git commit`
+calls, to make the commit names reproducible.
+
+Thanks,
+Dscho
