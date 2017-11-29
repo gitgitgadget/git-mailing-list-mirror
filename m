@@ -2,86 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8F28020A40
-	for <e@80x24.org>; Wed, 29 Nov 2017 17:59:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9078820A40
+	for <e@80x24.org>; Wed, 29 Nov 2017 18:32:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935228AbdK2R67 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Nov 2017 12:58:59 -0500
-Received: from mail-wm0-f47.google.com ([74.125.82.47]:40157 "EHLO
-        mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935063AbdK2R6z (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Nov 2017 12:58:55 -0500
-Received: by mail-wm0-f47.google.com with SMTP id v19so7674860wmh.5
-        for <git@vger.kernel.org>; Wed, 29 Nov 2017 09:58:54 -0800 (PST)
+        id S1751396AbdK2ScM (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Nov 2017 13:32:12 -0500
+Received: from mail-it0-f42.google.com ([209.85.214.42]:33171 "EHLO
+        mail-it0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751267AbdK2ScK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Nov 2017 13:32:10 -0500
+Received: by mail-it0-f42.google.com with SMTP id o130so27097099itg.0
+        for <git@vger.kernel.org>; Wed, 29 Nov 2017 10:32:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=A4BQ6P9s1S3mqMcHke439TkNSYyEEAp7HzPcvHuqujQ=;
-        b=ihXtkBzvRP2tx6Axrp6y2vBcs4s2gANT/QKubJAYS0Ij+qLJAwTIX95OPt/J4mIKp9
-         RoG5OPCFXy0wGb/RqdC/s4YiZczv5TYtLeL2+paOVDVZ7+KAD4JebJ7jBQLoiU92Ey20
-         ZTmX4yF/ecOfe8ykJ3RBcSdL+Rx/9pso6gjduvbw+r/CLsZEDlGtM4iaHFwjWfXL82ep
-         Hx1PlrrYTkMjR1Aul0eqb/EVsTx/gA6WrzPEwoNqroAVv+RC3O1k+r9hbxw2NJnUcS+A
-         BgoH9QUrv/FhjYd41UBJsbPZp0qOaG4Sm00OzoNGmYM7iUydiMiSBdbQSZy3Q6SXAwp7
-         Z85g==
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=GN0M1kzYn6ur1hjuKJlRoaFgU9Y5JXEw0rcWxAH2hMw=;
+        b=wS1+zB56+4VfJTwYOms6aPIFx0tLpRAeBLX7IIdOJ+EKa+ZLlUNIBzONKHzGqAoHuz
+         PkX/Fst02RgnUBnSzAH5VuJH8LoKWHUIqqiT4IBs5ST2TArWMDeNfsjPRomZelOiMQUJ
+         Le9FplhmgufGmrW/b4xwL+1XCF4cDcJZkedObgFsahKbEHDthz97DCm5dENExElzNcuR
+         KG/fXaDeS9Q5mBHv/yW24Oo5eSYozLiHxYrka8YBHrydo54ptmFdR2rtugMixfifzWg9
+         BMzjvcRzHjmiblnHyoB0ga3pG56BkLjA3VzICeM8Q7P2dbMKDg6jWvQfySSVkT90v6mX
+         cVnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=A4BQ6P9s1S3mqMcHke439TkNSYyEEAp7HzPcvHuqujQ=;
-        b=c81QMkIefQhA/edp5lJwp6vg/GYEa2EjENGW8rHqGOe8s9wAaBeE3Gndusrx/iwajG
-         weOEkt02CXjMA8gwpP4JEyj5ViDrc7j4j3wKw8zWO7R6Tz+AaWDLfhnRM5E8r3OAYDi5
-         MYBx5740oPgLPZYwdBRdXEEcnn7Mwite3QEVwzWKve7AwuRC7bteyr5ra2Boo40roItn
-         rA1yIRZEuZfVROqjN6LYAs4snUGySfbyVXBCBowE1f0pApe2zpvj0Wan/XPQHx/nKBoU
-         W9S64bA2lZg9u5LaQ39KUmcItTfenAruCj0OoUYsNJAZYFRyboyhqImTCScIsZMzHrYO
-         9ETA==
-X-Gm-Message-State: AJaThX7IRbooG7YCA1HzlSgi5ss7A/7Jl4hKq5tsz6ng7ZsNZP1v/vn1
-        UGnzEYbw5kVMeGOxFhEDNwl6rDtqYrYVULwIkCJ9BfCe
-X-Google-Smtp-Source: AGs4zMaxC8zdvofX1xTdKqBB2BRURQ2zB8UReuX+qbcxaXO/sZFaKzNqcawpWelrUDLu2M2k67cpJT0es+3Nyw15jwk=
-X-Received: by 10.80.138.34 with SMTP id i31mr8901823edi.8.1511978333712; Wed,
- 29 Nov 2017 09:58:53 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.80.160.135 with HTTP; Wed, 29 Nov 2017 09:58:53 -0800 (PST)
-From:   =?UTF-8?Q?Rafa=C5=82_Treffler?= <tothamon@gmail.com>
-Date:   Wed, 29 Nov 2017 18:58:53 +0100
-Message-ID: <CAHY8k2DJSQjXrjTq6nysnifNppzLtSsORqseB2J0q1bYnkCF-A@mail.gmail.com>
-Subject: Git filter clean not working when staging files
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=GN0M1kzYn6ur1hjuKJlRoaFgU9Y5JXEw0rcWxAH2hMw=;
+        b=bRJNLXP3c1qlv/VkGY8PKHnVZ1xUahR5AjlviC96uvSiRtgK34IEvk7vM1tF/OoJ8I
+         OYedTtkHUmU1HzUSke2KhEbj1eCSqpBcm1Cox5riLHUCqyYtsZ6cLjox+GpgU1puemGW
+         HpYWjAZhbkoYdYGjOrv2dOU7hu88XEHDA18EBMxuB3ei+SGdTz2LIs4VPduU9KvU9Y2U
+         yZxTVEeXgFZMySSj3NsHOWykehFJ87T0TdVWTN0pwdy07et+MBf9xAijbNzjiV3B4cAw
+         h5LiF+z0Pe9yD5iUdk3lsaDwimEJhIv4niqGkqRG0I2XYsLnbF0Dv98X93XFNR7ZfUNu
+         2iOg==
+X-Gm-Message-State: AJaThX7xFzsucEEYbUFVqMfTTs8c5jQr+btNWCJU/yelgQ3pqlflzPbb
+        sXMB99NQ5zsrAz8mel0l18a3EtvTTFU=
+X-Google-Smtp-Source: AGs4zMYCYfXv5b+TkIcnfZTZokK/bt73BmWI6rDguw1kMhDm1uUJ5JrfiBG6H3PyOkb3+wnDrnapfg==
+X-Received: by 10.36.189.205 with SMTP id x196mr8590903ite.152.1511980329496;
+        Wed, 29 Nov 2017 10:32:09 -0800 (PST)
+Received: from twelve3.mtv.corp.google.com ([100.96.218.44])
+        by smtp.gmail.com with ESMTPSA id b77sm1008043ioj.42.2017.11.29.10.32.08
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 29 Nov 2017 10:32:08 -0800 (PST)
+From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Jonathan Tan <jonathantanmy@google.com>, newren@gmail.com
+Subject: [PATCH on en/rename-progress] diffcore-rename: make diff-tree -l0 mean -l<large>
+Date:   Wed, 29 Nov 2017 10:32:00 -0800
+Message-Id: <20171129183200.178183-1-jonathantanmy@google.com>
+X-Mailer: git-send-email 2.15.0.173.g9268cf4a2.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+In the documentation of diff-tree, it is stated that the -l option
+"prevents rename/copy detection from running if the number of
+rename/copy targets exceeds the specified number". The documentation
+does not mention any special handling for the number 0, but the
+implementation before commit b520abf ("sequencer: warn when internal
+merge may be suboptimal due to renameLimit", 2017-11-14) treated 0 as a
+special value indicating that the rename limit is to be a very large
+number instead.
 
-I've got a question or maybe bug about Git clean filter.
-According to documentation[1] clean should be run when staging files.
-When I'm staging file I see my script was run (I'm logging execution
-into /tmp), but file content is unmodified.
-My script is reading stdin and writing to stdout.
-Nothing breaks in the script, from logs I see the source and modified
-content are proper and I'm returning 0 return code.
+The commit b520abf changed that behavior, treating 0 as 0. Revert this
+behavior to what it was previously. This allows existing scripts and
+tools that use "-l0" to continue working. The alternative (to allow
+"-l0") is probably much less useful, since users can just refrain from
+specifying -M and/or -C to have the same effect.
 
-Is this behavior intended? What should I do to modify the content?
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+Note that this patch is built on en/rename-progress.
 
-Smudge works as intended.
-But I've also noticed that git status runs clean filter but does not
-modify contents.
-Is that also intended?
+We noticed this through an automated test for an internal tool - the
+tool uses git diff-tree with -l0, and no longer produces the same
+results as before.
+---
+ diffcore-rename.c      |  2 ++
+ t/t4001-diff-rename.sh | 15 +++++++++++++++
+ 2 files changed, 17 insertions(+)
 
-Maybe I'm missing something?
-
-If this is not going to work,
-is there other way to modify file content on commit? (so the fixed
-content goes to local repo)
-Any other options ?
-
-[1] https://git-scm.com/book/en/v2/Customizing-Git-Git-Attributes#filters_b
-
+diff --git a/diffcore-rename.c b/diffcore-rename.c
+index 9ca0eaec7..245e999fe 100644
+--- a/diffcore-rename.c
++++ b/diffcore-rename.c
+@@ -392,6 +392,8 @@ static int too_many_rename_candidates(int num_create,
+ 	 *
+ 	 *    num_create * num_src > rename_limit * rename_limit
+ 	 */
++	if (rename_limit <= 0)
++		rename_limit = 32767;
+ 	if ((num_create <= rename_limit || num_src <= rename_limit) &&
+ 	    ((uint64_t)num_create * (uint64_t)num_src
+ 	     <= (uint64_t)rename_limit * (uint64_t)rename_limit))
+diff --git a/t/t4001-diff-rename.sh b/t/t4001-diff-rename.sh
+index 0d1fa45d2..eadf4f624 100755
+--- a/t/t4001-diff-rename.sh
++++ b/t/t4001-diff-rename.sh
+@@ -230,4 +230,19 @@ test_expect_success 'rename pretty print common prefix and suffix overlap' '
+ 	test_i18ngrep " d/f/{ => f}/e " output
+ '
+ 
++test_expect_success 'diff-tree -l0 defaults to a big rename limit, not zero' '
++	test_write_lines line1 line2 line3 >myfile &&
++	git add myfile &&
++	git commit -m x &&
++
++	test_write_lines line1 line2 line4 >myotherfile &&
++	git rm myfile &&
++	git add myotherfile &&
++	git commit -m x &&
++
++	git diff-tree -M -l0 HEAD HEAD^ >actual &&
++	# Verify that a rename from myotherfile to myfile was detected
++	grep "myotherfile.*myfile" actual
++'
++
+ test_done
 -- 
-Thanks for help,
-Rafal
+2.15.0.173.g9268cf4a2.dirty
+
