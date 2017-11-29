@@ -2,170 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 391C620A40
-	for <e@80x24.org>; Wed, 29 Nov 2017 20:03:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 692AE20A40
+	for <e@80x24.org>; Wed, 29 Nov 2017 20:04:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752594AbdK2UDf (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Nov 2017 15:03:35 -0500
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:44943 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752212AbdK2UD0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Nov 2017 15:03:26 -0500
-Received: by mail-wr0-f196.google.com with SMTP id l22so4517537wrc.11
-        for <git@vger.kernel.org>; Wed, 29 Nov 2017 12:03:25 -0800 (PST)
+        id S1752350AbdK2UEZ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Nov 2017 15:04:25 -0500
+Received: from mail-it0-f51.google.com ([209.85.214.51]:46485 "EHLO
+        mail-it0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751676AbdK2UEY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Nov 2017 15:04:24 -0500
+Received: by mail-it0-f51.google.com with SMTP id t1so5478938ite.5
+        for <git@vger.kernel.org>; Wed, 29 Nov 2017 12:04:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=u6bfMv+8iq+jd5gNs803TNAZRfUg+jDEKP+Ch2SD12k=;
-        b=tqzWgJGHvoRfcAaIYK7BvzJ8deXbHlDAi4S3Gr2pwXSjk4i/7kBzhNSWYwmE3PeNz8
-         wgwZe+80Fqfe82l0w0Hi8P5cohkLcy6ega62iLkqBKBN8bwKhSLeN5xQfc0qYM2oEFXC
-         S9o6ySt8s4ZpNVa1KEoJpo9CQyZ1vulMGe8NTCIXUpFWJbIzHp92ON6+DxOj/weWLlEp
-         i5fBZlSHUi8fI8KlPU2Tu9WPVa/959dtEXI8jWmo62rdhyMZg7y/mM1Xikm+/uVFVyLG
-         S7rEpK8BKKWxiF8A1nlwcVizN64GcKXpNO9vT7Kp8NGApJkcLWZPaDIhZw1/H0is7BBh
-         VQUA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=AMIboDWVzrula0JQIeOtnjx7Hk8A7OqwJKij4Fi+R5o=;
+        b=poKg8Weh3FIBo/Z1KyfEosfM0wjoSZ4nM4iy/Lc6EeSiO4KJcqtC34BaVrg/P3t/F1
+         GaYRm1O1t9k6JgW6Yzo6zItHEmk5hett7eEEtcLE+sRS9QMFGZYcvtFQSec/v2w9qWEg
+         wJTXc6WCxdn9mKAJsDpZsHifoKDJwT7UvY+jkj2sfF2DDyIpcR68psdumAz4QjACHz3Z
+         aUem5G6JV+A69RML9TSY3d0In8WAX9Qak1fFE/+/edZcQHjgetZ/zwh6DUXrCIyg/gQB
+         rnHICwzoqenq0DZEx/c0cO1V53PHV0KuLBIVfDIV1J0aYtcJulvjhmR1Wxm/MnoxfTdt
+         2V4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=u6bfMv+8iq+jd5gNs803TNAZRfUg+jDEKP+Ch2SD12k=;
-        b=Hm6RS+XD6zd75MooGZN46koCxmba29nXg63R+cb5SGiZWeKZ+M4whD6bvdo5fJ7hLH
-         J+Z5pJA/g2Rn0aHNehjDyEULBzsl2LeObgdSozXajI5/tfZIb1FihPfyOeEAlRlXCk5F
-         7MFQPg+/m7ooAro0BMLASjRqumaHGC7qhBEZfQp2e8in515QUmFJHVihKRdjhpkprtQo
-         HoTu6zgwGKwJZbPc3tGbX5yFk0sH0biLhT+1ryC2CRA3qufH2GErOPeQZc+hpugrNL1D
-         sHVkK5HyRnRbhm0no1ru6sQ22ysrjZYTpmYUaW5Oc27m5qmieIZW+yP9S/AT+6n0ImFV
-         +M3w==
-X-Gm-Message-State: AJaThX4LJn4qnmYkzQswZgME+fWQA36XtihrKWs1ZE+ElwPZX9/k3VFo
-        /jKCAuQHWWDgnht1BTVCnHd7Tey5
-X-Google-Smtp-Source: AGs4zMbCKjoiL+z3DY6yZVPNHG3FFTvyz/EsLzKKHB+8qwNnLcsBoB8c0tv4JdtaxdDxNbTUSQ3n8Q==
-X-Received: by 10.223.163.216 with SMTP id m24mr25378wrb.107.1511985804680;
-        Wed, 29 Nov 2017 12:03:24 -0800 (PST)
-Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
-        by smtp.gmail.com with ESMTPSA id 90sm4473158wrp.93.2017.11.29.12.03.23
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=AMIboDWVzrula0JQIeOtnjx7Hk8A7OqwJKij4Fi+R5o=;
+        b=nOLx9ApVUYQPigS0O1STXl2rnLaW+aaodFm7uzXVUHsaxMtlMCUXEsSR8EvWgYe4ba
+         aZc/MrcebjT/j/QbOJFXoT6ilRIl0CtJKgsqnplsictwdXHItZvi18CScsLZZ962RxxO
+         TpyBpXVKxk07+rsfSE6Of18aCANqiNqsbJXF6RJNnTVlcxOxI8jAtvZBd9HTEaIYTiVs
+         Zg3ySlXkcNO+HAknpD3OPU8cgo2NWk/tI30dxB8tU9+6mNFz5YZGDKt9f4D2z8BEuxix
+         7RUa36pdpaYBdw+FoETHON9JnpNYghovVEz9s1FV1qN/jXSXxHo0VlXl0UzlRi/grPRc
+         HOHA==
+X-Gm-Message-State: AJaThX4f7mwUC5/GZzZ1vKoDzYmMMq44T6OfSE934EMk6EJpoUNEslal
+        5UxvxN66IMZDIBuGKR7fHR0=
+X-Google-Smtp-Source: AGs4zMbcVtBtF6EVxOc7SZbKe7/0OExJ5qqYzOJUYd+NF0mIsCKFc/b0IaxeUbCB7KxXK8CdE9IU5Q==
+X-Received: by 10.36.208.207 with SMTP id m198mr34823itg.131.1511985863798;
+        Wed, 29 Nov 2017 12:04:23 -0800 (PST)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id r17sm1088929ioe.88.2017.11.29.12.04.22
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 29 Nov 2017 12:03:23 -0800 (PST)
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>,
-        Paul Smith <paul@mad-scientist.net>,
-        Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v6 4/6] worktree: make add <path> <branch> dwim
-Date:   Wed, 29 Nov 2017 20:04:49 +0000
-Message-Id: <20171129200451.16856-5-t.gummerer@gmail.com>
-X-Mailer: git-send-email 2.15.0.426.gb06021eeb
-In-Reply-To: <20171129200451.16856-1-t.gummerer@gmail.com>
-References: <20171126194356.16187-1-t.gummerer@gmail.com>
- <20171129200451.16856-1-t.gummerer@gmail.com>
+        Wed, 29 Nov 2017 12:04:23 -0800 (PST)
+Date:   Wed, 29 Nov 2017 12:04:21 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH on en/rename-progress] diffcore-rename: make diff-tree
+ -l0 mean -l<large>
+Message-ID: <20171129200421.GB15098@aiede.mtv.corp.google.com>
+References: <20171129183200.178183-1-jonathantanmy@google.com>
+ <CABPp-BHEyXcjFzGvLHToz+2FRMM3g-mUTxn2uf8exQV61qff9w@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CABPp-BHEyXcjFzGvLHToz+2FRMM3g-mUTxn2uf8exQV61qff9w@mail.gmail.com>
+User-Agent: Mutt/1.9.1 (2017-09-22)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently 'git worktree add <path> <branch>', errors out when 'branch'
-is not a local branch.  It has no additional dwim'ing features that one
-might expect.
+Elijah Newren wrote:
+> On Wed, Nov 29, 2017 at 10:32 AM, Jonathan Tan <jonathantanmy@google.com> wrote:
 
-Make it behave more like 'git checkout <branch>' when the branch doesn't
-exist locally, but a remote tracking branch uniquely matches the desired
-branch name, i.e. create a new branch from the remote tracking branch
-and set the upstream to the remote tracking branch.
+>> In the documentation of diff-tree, it is stated that the -l option
+>> "prevents rename/copy detection from running if the number of
+>> rename/copy targets exceeds the specified number". The documentation
+>> does not mention any special handling for the number 0, but the
+>> implementation before commit b520abf ("sequencer: warn when internal
+>> merge may be suboptimal due to renameLimit", 2017-11-14) treated 0 as a
+>> special value indicating that the rename limit is to be a very large
+>> number instead.
+>>
+>> The commit b520abf changed that behavior, treating 0 as 0. Revert this
+>> behavior to what it was previously. This allows existing scripts and
+>> tools that use "-l0" to continue working. The alternative (to allow
+>> "-l0") is probably much less useful, since users can just refrain from
 
-As 'git worktree add' currently just dies in this situation, there are
-no backwards compatibility worries when introducing this feature.
+I think in the parenthesis you mean 'to allow "-l0" to suppress rename
+detection', since this patch is all about allowing '-l0' already.
 
-Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
----
- Documentation/git-worktree.txt |  8 ++++++++
- builtin/worktree.c             | 16 ++++++++++++++++
- t/t2025-worktree-add.sh        | 19 +++++++++++++++++++
- 3 files changed, 43 insertions(+)
+>> specifying -M and/or -C to have the same effect.
+>>
+>> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+>> ---
+>> Note that this patch is built on en/rename-progress.
+>>
+>> We noticed this through an automated test for an internal tool - the
+>> tool uses git diff-tree with -l0, and no longer produces the same
+>> results as before.
+>
+> Thanks for testing that version and sending along the fix.
+>
+> I suspect the commit referenced twice in the commit message should
+> have been 9f7e4bfa3b ("diff: remove silent clamp of renameLimit",
+> 2017-11-13) rather than b520abf ("sequencer: warn when internal merge
+> may be suboptimal due to renameLimit", 2017-11-14).
+>
+> Other than that minor issue, patch and test looks good to me.
 
-diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
-index 15e58b18f7..3044d305a6 100644
---- a/Documentation/git-worktree.txt
-+++ b/Documentation/git-worktree.txt
-@@ -52,6 +52,14 @@ is linked to the current repository, sharing everything except working
- directory specific files such as HEAD, index, etc. `-` may also be
- specified as `<commit-ish>`; it is synonymous with `@{-1}`.
- +
-+If <commit-ish> is a branch name (call it `<branch>` and is not found,
-+and neither `-b` nor `-B` nor `--detach` are used, but there does
-+exist a tracking branch in exactly one remote (call it `<remote>`)
-+with a matching name, treat as equivalent to
-+------------
-+$ git worktree add --track -b <branch> <path> <remote>/<branch>
-+------------
-++
- If `<commit-ish>` is omitted and neither `-b` nor `-B` nor `--detach` used,
- then, as a convenience, a new branch based at HEAD is created automatically,
- as if `-b $(basename <path>)` was specified.
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index ea9678cac8..7021d02585 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -1,4 +1,5 @@
- #include "cache.h"
-+#include "checkout.h"
- #include "config.h"
- #include "builtin.h"
- #include "dir.h"
-@@ -390,6 +391,21 @@ static int add(int ac, const char **av, const char *prefix)
- 		opts.new_branch = xstrndup(s, n);
- 	}
- 
-+	if (ac == 2 && !opts.new_branch && !opts.detach) {
-+		struct object_id oid;
-+		struct commit *commit;
-+		const char *remote;
-+
-+		commit = lookup_commit_reference_by_name(branch);
-+		if (!commit) {
-+			remote = unique_tracking_name(branch, &oid);
-+			if (remote) {
-+				opts.new_branch = branch;
-+				branch = remote;
-+			}
-+		}
-+	}
-+
- 	if (opts.new_branch) {
- 		struct child_process cp = CHILD_PROCESS_INIT;
- 		cp.git_cmd = 1;
-diff --git a/t/t2025-worktree-add.sh b/t/t2025-worktree-add.sh
-index 72e8b62927..96ebc63d04 100755
---- a/t/t2025-worktree-add.sh
-+++ b/t/t2025-worktree-add.sh
-@@ -365,4 +365,23 @@ test_expect_success '--no-track avoids setting up tracking' '
- 	)
- '
- 
-+test_expect_success '"add" <path> <non-existent-branch> fails' '
-+	test_must_fail git worktree add foo non-existent
-+'
-+
-+test_expect_success '"add" <path> <branch> dwims' '
-+	test_when_finished rm -rf repo_upstream repo_dwim foo &&
-+	setup_remote_repo repo_upstream repo_dwim &&
-+	git init repo_dwim &&
-+	(
-+		cd repo_dwim &&
-+		git worktree add ../foo foo
-+	) &&
-+	(
-+		cd foo &&
-+		test_branch_upstream foo repo_upstream foo &&
-+		test_cmp_rev refs/remotes/repo_upstream/foo refs/heads/foo
-+	)
-+'
-+
- test_done
--- 
-2.15.0.426.gb06021eeb
+Thanks, both.  Looking at that patch, the fix is obviously correct.
 
+With Elijah's commit message tweak,
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
