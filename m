@@ -2,169 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 543A320A40
-	for <e@80x24.org>; Wed, 29 Nov 2017 12:28:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 95E5D20A40
+	for <e@80x24.org>; Wed, 29 Nov 2017 13:57:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753021AbdK2M2D (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Nov 2017 07:28:03 -0500
-Received: from mout.gmx.net ([212.227.15.15]:49334 "EHLO mout.gmx.net"
+        id S1752279AbdK2N5d (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Nov 2017 08:57:33 -0500
+Received: from mout.gmx.net ([212.227.17.22]:56733 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751903AbdK2M2B (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Nov 2017 07:28:01 -0500
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LwrPM-1fCwPn3v0i-016PJJ; Wed, 29
- Nov 2017 13:28:00 +0100
-Date:   Wed, 29 Nov 2017 13:27:59 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>
-cc:     git@vger.kernel.org
-Subject: Re: Antw: Re: bug deleting "unmerged" branch (2.12.3)
-In-Reply-To: <5A1E6B27020000A10002916B@gwsmtp1.uni-regensburg.de>
-Message-ID: <alpine.DEB.2.21.1.1711291302370.6482@virtualbox>
-References: <5A1D70FD020000A100029137@gwsmtp1.uni-regensburg.de> <alpine.DEB.2.21.1.1711281542400.6482@virtualbox> <5A1E6B27020000A10002916B@gwsmtp1.uni-regensburg.de>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751486AbdK2N5c (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Nov 2017 08:57:32 -0500
+Received: from localhost.localdomain ([65.55.188.220]) by mail.gmx.com
+ (mrgmx103 [212.227.17.168]) with ESMTPSA (Nemesis) id
+ 0LyEUz-1fEICC2VZF-015ZDP; Wed, 29 Nov 2017 14:57:30 +0100
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+To:     git-for-windows@googlegroups.com, git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [ANNOUNCE] Git for Windows 2.15.1
+Date:   Wed, 29 Nov 2017 13:57:23 +0000
+Message-Id: <20171129135723.11664-1-johannes.schindelin@gmx.de>
+X-Mailer: git-send-email 2.15.1.windows.1
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:Gn9y+q35F5WFAEXT0qfNziBF/IIpYphBtlV73zmw6huOKQqKZnp
- FSv+/0UiKVvtHj2Cbtglb4Ueft1MFtLKpPBMddn7KFeWxGFEdrv5IZc//pvJh0ifmo5s4VH
- uOwjgYEqzAJrTLTW6NMFh/0xxcRat4Q8zrR3rRUYCiqMP5QAZw7qGu62P0wU4PmJQNmlwQV
- rGJYKYSZUluKAyt+Jcr0g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:DIRUg6Lsfqg=:WKhtnBOCiwEgik6eeoZJ98
- pbk94pYpLRIMT8L5XjPe7Kl1/lUeDuLM0YBIz2vsHbTi/QCdxmPFoIq3sGg/tS6nUBkhK2ULq
- PwoQ0OouRUWEt3uph/4Sd0ai+r+dO48u5nRtqdccMLaqy/h0cbZgWwX/EQ2uu6coBut2Z2IJY
- 8MM1OH+G3cuecdUf1oGZI3jZSxqgFCJjHBUm4yhniA1a3bfhxP1tRwzn6/8NIz7CCXZ4W04oz
- ON0yjrU0k9tF2yIgZJS1b7WGccUA/p5CMhiP9zLn4W1o8sV5QqDuMtz1pWgyro60ZAdeq6nYM
- EO3CGmWPa/gekujF6txMkc0Oq1hMU/TXAvvAtadeBrDfeNROQ80ZblK9QYWuZwpI0St0It4HR
- SU7Z6B2C1sI4w7s+crdszH3f0CZiwB8MPDAVDvSfntdt6Qo6y2eAoMy4y2t//ffbI+Xzz0EQ6
- DVt66LyXDXmrG7mKS5iumD+crZWemVd6QwhjLhnl19Wd7sQT/DiqXSxfHEjMHBrekBreURkvD
- wA0bl2s10MelUU9nA/9p85IJ2KQLQSouUjjMlQtXFgFdOaFInCx0HFMsxfS29wO/CY7+R5ITI
- A5j/O3kJW+N0A6NS338+CW0qd2AjMh7OZEw0FcJ+0c+Q0PccbECYa14WJXeZ0YAKQpULvMXLK
- vd1P6mnrkk6rVsAJeQXlwhbbKbyWg+1KfA1frqa07g9XRzLfPHovnerYZm+/QysMyHHdVS84y
- VWutmleP26/yXv9xshSzMLxuRChiZyODJtnR8xuivzZGsURtAX1t+zhczORKNrXY+jTgfplKV
- vqK1VyABS43dL8or9IwOlEiHcWswGpWQeNkX3Dn8P/edbZVvjU=
+Fcc:    Sent
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:gNt0MQKpkgXUxP2WDOTzImQsDUUNVcsM4TBq3+8bCpcZtPtFunJ
+ exqi8YlFLDyCevnewTaA8qWTxtnjXJb+v235mdDYKkWw2dzBv7KlbWzKejnzZe/97J7UUr0
+ WKx9wHaJssb01Du9szmJ/rjLUh4SCwSeOHj4wn4KbPxZeVEEEn1dp5oaoEkFKsnWP6LpzDo
+ 423oOEIc7CO81KP/wKLOQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:dG0U9v65/VA=:onmRJBknyTWeb+eyD+2xmN
+ MuXQHHhPVw+APJQf8PwGVt0zw7/SKYt6DLTI84tK2xU46uxuyMiOgcq1S8uO3zFqowI8JGmwA
+ /IaJy2MvapGgjA6qQ3Te/0VbmKzmLeeVcip6WEO0yBZuRba+de6h5668xtARoafZRG/KFF8Mj
+ fTdkO9yC20zsYj3wmrpNUC57daOuBYz7SchQYI4OLmLAf1zQnW7tN8+bptVJoHFFMoq0ZhVYQ
+ LG5x7e/5y2i8LJOE9mAFqbJnvF48BdCHfsV9OEqPIAGpbj77XNby3MyRQS/YWthfcFgoeuhgR
+ xM3skvQaVK4VwnvRWjbjA5nThDY+jdhW03079tbGuaCn8u55Q9cIk4kjT4A2EXDgEkc5vXYQb
+ 71t6NGg5xpSbC3EeuEq8BfhtlQYW0rDn5IcEzvwHMCpL05RuUuNyIi/WyG42DI6pJWrT+49y3
+ OulmQvCkNJKVOUoZKtltTqtzO9twjvC+vLg3r07F0bcPTAamZkiczKao0oPkq4M89HvRoyYo/
+ EqYQxATVVY8t1pWbwuX/vXyUx/aw3TLwKBqfC+bHEblgaNk8MvTB4YXNo0Pf9qAE9HMEC7rId
+ 87IOC0rai4Ia45CHIPDUp0QUOjM1rISazeKHAMmMryLWI4AeHcW1p2cYNM/ZCRquLF22ZSETa
+ hxaO2JpK17HPmnUwDJzAP7npDZq/HHCAelcTOYvbq5O/O1yulXERIAunZHa7O1X8nieCvBJfx
+ tpfouQJOs9x61+TSOIdFmZXXBV6dkPx2duTtfzIoWooWcAESx/yp+XZ7VAhOyTtiufRwNsezs
+ IKX6SAiruOjwZ3uSetVMPz9Fox8HgkNSqjZDZkDHDdxUVr6LDA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Ulrich,
+Dear Git users,
 
-On Wed, 29 Nov 2017, Ulrich Windl wrote:
+It is my pleasure to announce that Git for Windows 2.15.1 is available from:
 
-> > On Tue, 28 Nov 2017, Ulrich Windl wrote:
-> > 
-> >> During a rebase that turned out to be heavier than expected 8-( I
-> >> decided to keep the old branch by creating a temporary branch name to
-> >> the commit of the branch to rebase (which was still the old commit ID
-> >> at that time).
-> >>
-> >> When done rebasing, I attached a new name to the new (rebased)
-> >> branch, deleted the old name (pointing at the same rebase commit),
-> >> then recreated the old branch from the temporary branch name (created
-> >> to remember the commit id).
-> >>
-> >> When I wanted to delete the temporary branch (which is of no use
-> >> now), I got a message that the branch is unmerged.
-> > 
-> > This is actually as designed, at least for performance reasons (it is
-> > not exactly cheap to figure out whether a given commit is contained in
-> > any other branch).
-> > 
-> >> I think if more than one branches are pointing to the same commit,
-> >> one should be allowed to delete all but the last one without warning.
-> >> Do you agree?
-> > 
-> > No, respectfully disagree, because I have found myself with branches
-> > pointing to the same commit, even if the branches served different
-> > purposes. I really like the current behavior where you can delete a
-> > branch with `git branch -d` as long as it is contained in its upstream
-> > branch.
-> 
-> I'm not talking about the intention of a branch, but of the state of a
-> branch: If multiple branches point (not "contain") the same commit, they
-> are equivalent (besides the name) at that moment.
+	https://git-for-windows.github.io/
 
-I did a poor job of explaining myself, please let me try again. I'll give
-you one concrete example:
+Changes since Git for Windows v2.15.0 (October 30th 2017)
 
-Recently, while working on some topic, I stumbled over a bug and committed
-a bug fix, then committed that and branched off a new branch to remind
-myself to rebase the bug fix and contribute it.
+New Features
 
-At that point, those branches were at the same revision, but distinctly
-not equivalent (except in just one, very narrow sense of the word, which I
-would argue is the wrong interpretation in this context).
+  * Comes with Git v2.15.1.
+  * Operations in massively-sparse worktrees are now much faster if
+    core.fscache = true.
+  * It is now possible to configure nano or Notepad++ as Git's default
+    editor instead of vim.
+  * Comes with OpenSSL v1.0.2m.
+  * Git for Windows' updater now uses non-intrusive toast notifications
+    on Windows 8, 8.1 and 10.
+  * Running git fetch in a repository with lots of refs is now
+    considerably faster.
+  * Comes with cURL v7.57.0.
 
-Sadly, I was called away at that moment to take care of something
-completely different. Even if I had not been, the worktree with the first
-branch would still have been at that revision for a longer time, as I had
-to try out a couple of changes before I could commit.
+Bug Fixes
 
-This is just one example where the idea backfires that you can safely
-delete one of two branches that happen to point at the same commit at the
-same time.
+  * The experimental --show-ignored-directory option of git status
+    which was removed in Git for Windows v2.15.0 without warning has
+    been reintroduced as a deprecated option.
+  * The git update command (to auto-update Git for Windows) will now
+    work also work behind proxies.
 
-I am sure that you possess vivid enough of an imagination to come up with
-plenty more examples where that is the case.
-
-> As no program can predict the future or the intentions of the user, it
-> should be safe to delete the branch, because it can easily be recreated
-> (from the remaining branches pointing to the same commit).
-
-Yes, no program can predict the future (at least *accurately*).
-
-No, it is not safe to delete that branch. Especially if you take the
-current paradigm of "it is safe to delete a branch if it is up-to-date
-with, or at least fast-forwardable to, its upstream branch" into account.
-
-And no, a branch cannot easily be recreated from the remaining branches in
-the future, as branches can have different reflogs (and they are lost when
-deleting the branch).
-
-> It shouldn't need a lot of computational power to find out when multiple
-> branches point to the same commit.
-
-Sure, that test can even be scripted easily by using the `git for-each-ref
---points-at=<revision>` command.
-
-By the way, if you are still convinced that my argument is flawed and that
-it should be considered safe to delete a branch if any other branch points
-to the same revision, I encourage you to work on a patch to make it so.
-
-For maximum chance of getting included, you would want to guard this
-behind a new config setting, say, branch.deleteRedundantIsSafe, parse it
-here:
-
-https://github.com/git/git/blob/v2.15.1/config.c#L1260-L1288
-
-or here:
-
-https://github.com/git/git/blob/v2.15.1/builtin/branch.c#L78-L97
-
-document it here:
-
-https://github.com/git/git/blob/v2.15.1/Documentation/git-branch.txt
-
-and here:
-
-https://github.com/git/git/blob/v2.15.1/Documentation/config.txt#L969
-
-and handle it here:
-
-https://github.com/git/git/blob/v2.15.1/builtin/branch.c#L185-L288
-
-(look for the places where `force` is used, likely just before the call to
-`check_branch_commit()`).
-
-The way you'd want it to handle is most lilkely by imitating the
-`--points-at` code here:
-https://github.com/git/git/blob/v2.15.1/builtin/for-each-ref.c#L42
+Filename | SHA-256
+-------- | -------
+Git-2.15.1-64-bit.exe | a2ba53197db79b361502836eecf97f09881703148774f9b4e9e6749d41d4ff71
+Git-2.15.1-32-bit.exe | 73154bdfd1ad4ced8612d97b95603ff2b2383db9d46b4c308827fb5233d52592
+PortableGit-2.15.1-64-bit.7z.exe | 94d485454af33a32d08680950aaf38f0825a189ef8b617054b81b2c48d817699
+PortableGit-2.15.1-32-bit.7z.exe | 7d804748a7de735133d78c5420d9b338379123734509415035593e106b03515a
+MinGit-2.15.1-64-bit.zip | 5e38d13241b0742e6673bc5116ac82e851dd1fad01c660c943017f4549b6afea
+MinGit-2.15.1-32-bit.zip | 2fc85f67cabe3c13aceb6868b4bb6bda28ddfecd6f32d7e0da9ddce8cee9b940
+MinGit-2.15.1-busybox-64-bit.zip | 02611486e3c8c427f09d2c4639484cd604ea812471248ae928960f1e0dc59633
+MinGit-2.15.1-busybox-32-bit.zip | a6dfb770f5cfa7b120ba49922d3434577b8601c5d322ad473dd2e2adc91e92b3
+Git-2.15.1-64-bit.tar.bz2 | bb630e5f3d7b650db67134b0187cf0cb8f5ed75990838ee65fed85e21777f08a
+Git-2.15.1-32-bit.tar.bz2 | ec3938e161ac1bbcf2b4f5d41fae1c05ea229fa0276b4db8530ec50b69131832
 
 Ciao,
 Johannes
