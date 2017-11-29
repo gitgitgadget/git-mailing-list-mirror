@@ -7,36 +7,36 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BBDC720954
-	for <e@80x24.org>; Wed, 29 Nov 2017 01:44:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2E8F920954
+	for <e@80x24.org>; Wed, 29 Nov 2017 01:44:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753358AbdK2BoH (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Nov 2017 20:44:07 -0500
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:58626 "EHLO
+        id S1752953AbdK2BoM (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Nov 2017 20:44:12 -0500
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:58650 "EHLO
         mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753343AbdK2BoF (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2017 20:44:05 -0500
+        by vger.kernel.org with ESMTP id S1753361AbdK2BoI (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2017 20:44:08 -0500
 Received: from pps.filterd (m0096528.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id vAT1bt9j003275;
+        by mx0a-00153501.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id vAT1c6As003305;
         Tue, 28 Nov 2017 17:42:39 -0800
 Authentication-Results: ppops.net;
         spf=softfail smtp.mailfrom=newren@gmail.com
 Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2ef69q4mx3-3;
+        by mx0a-00153501.pphosted.com with ESMTP id 2ef69q4mx5-3;
         Tue, 28 Nov 2017 17:42:39 -0800
-Received: from mxw1.palantir.com (new-smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id 0763122157CA;
+Received: from mxw1.palantir.com (smtp.yojoe.local [172.19.0.45])
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id 7B53722157CE;
         Tue, 28 Nov 2017 17:42:39 -0800 (PST)
 Received: from newren2-linux.yojoe.local (newren2-linux.dyn.yojoe.local [10.100.68.32])
-        by smtp.yojoe.local (Postfix) with ESMTP id F22032CDF15;
-        Tue, 28 Nov 2017 17:42:38 -0800 (PST)
+        by smtp.yojoe.local (Postfix) with ESMTP id 60C762CDF15;
+        Tue, 28 Nov 2017 17:42:39 -0800 (PST)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, gitster@pobox.com,
         Elijah Newren <newren@gmail.com>
-Subject: [PATCH v4 25/34] merge-recursive: add computation of collisions due to dir rename & merging
-Date:   Tue, 28 Nov 2017 17:42:28 -0800
-Message-Id: <20171129014237.32570-26-newren@gmail.com>
+Subject: [PATCH v4 33/34] merge-recursive: avoid spurious rename/rename conflict from dir renames
+Date:   Tue, 28 Nov 2017 17:42:36 -0800
+Message-Id: <20171129014237.32570-34-newren@gmail.com>
 X-Mailer: git-send-email 2.15.0.408.g850bc54b15
 In-Reply-To: <20171129014237.32570-1-newren@gmail.com>
 References: <20171129014237.32570-1-newren@gmail.com>
@@ -47,7 +47,7 @@ X-Proofpoint-SPF-Record: v=spf1 redirect=_spf.google.com
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,, definitions=2017-11-28_13:,,
  signatures=0
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=13 phishscore=0 bulkscore=0 spamscore=0
+ malwarescore=0 suspectscore=15 phishscore=0 bulkscore=0 spamscore=0
  clxscore=1034 lowpriorityscore=0 impostorscore=0 adultscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.0.1-1709140000
  definitions=main-1711290020
@@ -56,197 +56,177 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-directory renaming and merging can cause one or more files to be moved to
-where an existing file is, or to cause several files to all be moved to
-the same (otherwise vacant) location.  Add checking and reporting for suc=
-h
-cases, falling back to no-directory-rename handling for such paths.
+If a file on one side of history was renamed, and merely modified on the
+other side, then applying a directory rename to the modified side gives u=
+s
+a rename/rename(1to2) conflict.  We should only apply directory renames t=
+o
+pairs representing either adds or renames.
+
+Making this change means that a directory rename testcase that was
+previously reported as a rename/delete conflict will now be reported as a
+modify/delete conflict.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-recursive.c | 123 ++++++++++++++++++++++++++++++++++++++++++++++++=
-++++--
- 1 file changed, 120 insertions(+), 3 deletions(-)
+ merge-recursive.c                   |  4 +--
+ t/t6043-merge-rename-directories.sh | 55 +++++++++++++++++--------------=
+------
+ 2 files changed, 27 insertions(+), 32 deletions(-)
 
 diff --git a/merge-recursive.c b/merge-recursive.c
-index 6bd4f34d55..9e31baaf33 100644
+index fe42cabad0..d00786f719 100644
 --- a/merge-recursive.c
 +++ b/merge-recursive.c
-@@ -1416,6 +1416,31 @@ static int tree_has_path(struct tree *tree, const =
-char *path)
- 			       hashy, &mode_o);
- }
+@@ -1951,7 +1951,7 @@ static void compute_collisions(struct hashmap *coll=
+isions,
+ 		char *new_path;
+ 		struct diff_filepair *pair =3D pairs->queue[i];
 =20
-+/*
-+ * Return a new string that replaces the beginning portion (which matche=
-s
-+ * entry->dir), with entry->new_dir.  In perl-speak:
-+ *   new_path_name =3D (old_path =3D~ s/entry->dir/entry->new_dir/);
-+ * NOTE:
-+ *   Caller must ensure that old_path starts with entry->dir + '/'.
-+ */
-+static char *apply_dir_rename(struct dir_rename_entry *entry,
-+			      const char *old_path)
-+{
-+	struct strbuf new_path =3D STRBUF_INIT;
-+	int oldlen, newlen;
-+
-+	if (entry->non_unique_new_dir)
-+		return NULL;
-+
-+	oldlen =3D strlen(entry->dir);
-+	newlen =3D entry->new_dir.len + (strlen(old_path) - oldlen) + 1;
-+	strbuf_grow(&new_path, newlen);
-+	strbuf_addbuf(&new_path, &entry->new_dir);
-+	strbuf_addstr(&new_path, &old_path[oldlen]);
-+
-+	return strbuf_detach(&new_path, NULL);
-+}
-+
- static void get_renamed_dir_portion(const char *old_path, const char *ne=
-w_path,
- 				    char **old_dir, char **new_dir)
- {
-@@ -1654,6 +1679,84 @@ static struct hashmap *get_directory_renames(struc=
-t diff_queue_struct *pairs,
- 	return dir_renames;
- }
+-		if (pair->status =3D=3D 'D')
++		if (pair->status !=3D 'A' && pair->status !=3D 'R')
+ 			continue;
+ 		dir_rename_ent =3D check_dir_renamed(pair->two->path,
+ 						   dir_renames);
+@@ -2178,7 +2178,7 @@ static struct string_list *get_renames(struct merge=
+_options *o,
+ 		struct diff_filepair *pair =3D pairs->queue[i];
+ 		char *new_path; /* non-NULL only with directory renames */
 =20
-+static struct dir_rename_entry *check_dir_renamed(const char *path,
-+						  struct hashmap *dir_renames)
-+{
-+	char temp[PATH_MAX];
-+	char *end;
-+	struct dir_rename_entry *entry;
-+
-+	strcpy(temp, path);
-+	while ((end =3D strrchr(temp, '/'))) {
-+		*end =3D '\0';
-+		entry =3D dir_rename_find_entry(dir_renames, temp);
-+		if (entry)
-+			return entry;
-+	}
-+	return NULL;
-+}
-+
-+static void compute_collisions(struct hashmap *collisions,
-+			       struct hashmap *dir_renames,
-+			       struct diff_queue_struct *pairs)
-+{
-+	int i;
-+
-+	/*
-+	 * Multiple files can be mapped to the same path due to directory
-+	 * renames done by the other side of history.  Since that other
-+	 * side of history could have merged multiple directories into one,
-+	 * if our side of history added the same file basename to each of
-+	 * those directories, then all N of them would get implicitly
-+	 * renamed by the directory rename detection into the same path,
-+	 * and we'd get an add/add/.../add conflict, and all those adds
-+	 * from *this* side of history.  This is not representable in the
-+	 * index, and users aren't going to easily be able to make sense of
-+	 * it.  So we need to provide a good warning about what's
-+	 * happening, and fall back to no-directory-rename detection
-+	 * behavior for those paths.
-+	 *
-+	 * See testcases 9e and all of section 5 from t6043 for examples.
-+	 */
-+	collision_init(collisions);
-+
-+	for (i =3D 0; i < pairs->nr; ++i) {
-+		struct dir_rename_entry *dir_rename_ent;
-+		struct collision_entry *collision_ent;
-+		char *new_path;
-+		struct diff_filepair *pair =3D pairs->queue[i];
-+
-+		if (pair->status =3D=3D 'D')
-+			continue;
-+		dir_rename_ent =3D check_dir_renamed(pair->two->path,
-+						   dir_renames);
-+		if (!dir_rename_ent)
-+			continue;
-+
-+		new_path =3D apply_dir_rename(dir_rename_ent, pair->two->path);
-+		if (!new_path)
-+			/*
-+			 * dir_rename_ent->non_unique_new_path is true, which
-+			 * means there is no directory rename for us to use,
-+			 * which means it won't cause us any additional
-+			 * collisions.
-+			 */
-+			continue;
-+		collision_ent =3D collision_find_entry(collisions, new_path);
-+		if (!collision_ent) {
-+			collision_ent =3D xcalloc(1,
-+						sizeof(struct collision_entry));
-+			hashmap_entry_init(collision_ent, strhash(new_path));
-+			hashmap_put(collisions, collision_ent);
-+			collision_ent->target_file =3D new_path;
-+		} else {
-+			free(new_path);
-+		}
-+		string_list_insert(&collision_ent->source_files,
-+				   pair->two->path);
-+	}
-+}
-+
- /*
-  * Get information of all renames which occurred in 'pairs', making use =
-of
-  * any implicit directory renames inferred from the other side of histor=
-y.
-@@ -1663,6 +1766,7 @@ static struct hashmap *get_directory_renames(struct=
- diff_queue_struct *pairs,
-  */
- static struct string_list *get_renames(struct merge_options *o,
- 				       struct diff_queue_struct *pairs,
-+				       struct hashmap *dir_renames,
- 				       struct tree *tree,
- 				       struct tree *o_tree,
- 				       struct tree *a_tree,
-@@ -1670,8 +1774,12 @@ static struct string_list *get_renames(struct merg=
-e_options *o,
- 				       struct string_list *entries)
- {
- 	int i;
-+	struct hashmap collisions;
-+	struct hashmap_iter iter;
-+	struct collision_entry *e;
- 	struct string_list *renames;
+-		if (pair->status =3D=3D 'D') {
++		if (pair->status !=3D 'A' && pair->status !=3D 'R') {
+ 			diff_free_filepair(pair);
+ 			continue;
+ 		}
+diff --git a/t/t6043-merge-rename-directories.sh b/t/t6043-merge-rename-d=
+irectories.sh
+index 5a750d5511..8ed85c79de 100755
+--- a/t/t6043-merge-rename-directories.sh
++++ b/t/t6043-merge-rename-directories.sh
+@@ -2000,18 +2000,23 @@ test_expect_success '8b-check: Dual-directory ren=
+ame, one into the others way, w
+ 	)
+ '
 =20
-+	compute_collisions(&collisions, dir_renames, pairs);
- 	renames =3D xcalloc(1, sizeof(struct string_list));
-=20
- 	for (i =3D 0; i < pairs->nr; ++i) {
-@@ -1702,6 +1810,13 @@ static struct string_list *get_renames(struct merg=
-e_options *o,
- 		item =3D string_list_insert(renames, pair->one->path);
- 		item->util =3D re;
- 	}
+-# Testcase 8c, rename+modify/delete
+-#   (Related to testcases 5b and 8d)
++# Testcase 8c, modify/delete or rename+modify/delete?
++#   (Related to testcases 5b, 8d, and 9h)
+ #   Commit O: z/{b,c,d}
+ #   Commit A: y/{b,c}
+ #   Commit B: z/{b,c,d_modified,e}
+-#   Expected: y/{b,c,e}, CONFLICT(rename+modify/delete: x/d -> y/d or de=
+leted)
++#   Expected: y/{b,c,e}, CONFLICT(modify/delete: on z/d)
+ #
+-#   Note: This testcase doesn't present any concerns for me...until you
+-#         compare it with testcases 5b and 8d.  See notes in 8d for more
+-#         details.
+-
+-test_expect_success '8c-setup: rename+modify/delete' '
++#   Note: It could easily be argued that the correct resolution here is
++#         y/{b,c,e}, CONFLICT(rename/delete: z/d -> y/d vs deleted)
++#         and that the modifed version of d should be present in y/ afte=
+r
++#         the merge, just marked as conflicted.  Indeed, I previously di=
+d
++#         argue that.  But applying directory renames to the side of
++#         history where a file is merely modified results in spurious
++#         rename/rename(1to2) conflicts -- see testcase 9h.  See also
++#         notes in 8d.
 +
-+	hashmap_iter_init(&collisions, &iter);
-+	while ((e =3D hashmap_iter_next(&iter))) {
-+		free(e->target_file);
-+		string_list_clear(&e->source_files, 0);
-+	}
-+	hashmap_free(&collisions, 1);
- 	return renames;
- }
++test_expect_success '8c-setup: modify/delete or rename+modify/delete?' '
+ 	test_create_repo 8c &&
+ 	(
+ 		cd 8c &&
+@@ -2044,29 +2049,29 @@ test_expect_success '8c-setup: rename+modify/dele=
+te' '
+ 	)
+ '
 =20
-@@ -2011,9 +2126,11 @@ static int handle_renames(struct merge_options *o,
- 					 dir_re_head, head,
- 					 dir_re_merge, merge);
+-test_expect_success '8c-check: rename+modify/delete' '
++test_expect_success '8c-check: modify/delete or rename+modify/delete' '
+ 	(
+ 		cd 8c &&
 =20
--	ri->head_renames  =3D get_renames(o, head_pairs, head,
--					 common, head, merge, entries);
--	ri->merge_renames =3D get_renames(o, merge_pairs, merge,
-+	ri->head_renames  =3D get_renames(o, head_pairs,
-+					dir_re_merge, head,
-+					common, head, merge, entries);
-+	ri->merge_renames =3D get_renames(o, merge_pairs,
-+					dir_re_head, merge,
- 					 common, head, merge, entries);
- 	clean =3D process_renames(o, ri->head_renames, ri->merge_renames);
+ 		git checkout A^0 &&
+=20
+ 		test_must_fail git merge -s recursive B^0 >out &&
+-		test_i18ngrep "CONFLICT (rename/delete).* z/d.*y/d" out &&
++		test_i18ngrep "CONFLICT (modify/delete).* z/d" out &&
+=20
+-		test 4 -eq $(git ls-files -s | wc -l) &&
+-		test 1 -eq $(git ls-files -u | wc -l) &&
++		test 5 -eq $(git ls-files -s | wc -l) &&
++		test 2 -eq $(git ls-files -u | wc -l) &&
+ 		test 1 -eq $(git ls-files -o | wc -l) &&
+=20
+ 		git rev-parse >actual \
+-			:0:y/b :0:y/c :0:y/e :3:y/d &&
++			:0:y/b :0:y/c :0:y/e :1:z/d :3:z/d &&
+ 		git rev-parse >expect \
+-			O:z/b O:z/c B:z/e B:z/d &&
++			O:z/b O:z/c B:z/e O:z/d B:z/d &&
+ 		test_cmp expect actual &&
+=20
+-		test_must_fail git rev-parse :1:y/d &&
+-		test_must_fail git rev-parse :2:y/d &&
+-		git ls-files -s y/d | grep ^100755 &&
+-		test -f y/d
++		test_must_fail git rev-parse :2:z/d &&
++		git ls-files -s z/d | grep ^100755 &&
++		test -f z/d &&
++		! test -f y/d
+ 	)
+ '
+=20
+@@ -2080,16 +2085,6 @@ test_expect_success '8c-check: rename+modify/delet=
+e' '
+ #
+ #   Note: It would also be somewhat reasonable to resolve this as
+ #             y/{b,c,e}, CONFLICT(rename/delete: x/d -> y/d or deleted)
+-#   The logic being that the only difference between this testcase and 8=
+c
+-#   is that there is no modification to d.  That suggests that instead o=
+f a
+-#   rename/modify vs. delete conflict, we should just have a rename/dele=
+te
+-#   conflict, otherwise we are being inconsistent.
+-#
+-#   However...as far as consistency goes, we didn't report a conflict fo=
+r
+-#   path d_1 in testcase 5b due to a different file being in the way.  S=
+o,
+-#   we seem to be forced to have cases where users can change things
+-#   slightly and get what they may perceive as inconsistent results.  It
+-#   would be nice to avoid that, but I'm not sure I see how.
+ #
+ #   In this case, I'm leaning towards: commit A was the one that deleted=
+ z/d
+ #   and it did the rename of z to y, so the two "conflicts" (rename vs.
+@@ -2804,7 +2799,7 @@ test_expect_success '9h-setup: Avoid dir rename on =
+merely modified path' '
+ 	)
+ '
+=20
+-test_expect_failure '9h-check: Avoid dir rename on merely modified path'=
+ '
++test_expect_success '9h-check: Avoid dir rename on merely modified path'=
+ '
+ 	(
+ 		cd 9h &&
+=20
+@@ -3785,7 +3780,7 @@ test_expect_success '12c-setup: Moving one director=
+y hierarchy into another w/ c
+ 	)
+ '
+=20
+-test_expect_failure '12c-check: Moving one directory hierarchy into anot=
+her w/ content merge' '
++test_expect_success '12c-check: Moving one directory hierarchy into anot=
+her w/ content merge' '
+ 	(
+ 		cd 12c &&
 =20
 --=20
 2.15.0.408.g850bc54b15
