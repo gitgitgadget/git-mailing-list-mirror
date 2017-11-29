@@ -7,36 +7,36 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C63AC20954
-	for <e@80x24.org>; Wed, 29 Nov 2017 01:44:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A3A420954
+	for <e@80x24.org>; Wed, 29 Nov 2017 01:44:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753299AbdK2Bn6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Nov 2017 20:43:58 -0500
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:55484 "EHLO
+        id S1753390AbdK2Bof (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Nov 2017 20:44:35 -0500
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:55494 "EHLO
         mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753244AbdK2Bnz (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2017 20:43:55 -0500
+        by vger.kernel.org with ESMTP id S1753246AbdK2Bn4 (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2017 20:43:56 -0500
 Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id vAT1dBho004738;
-        Tue, 28 Nov 2017 17:42:38 -0800
+        by mx0a-00153501.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id vAT1d791004735;
+        Tue, 28 Nov 2017 17:42:39 -0800
 Authentication-Results: ppops.net;
         spf=softfail smtp.mailfrom=newren@gmail.com
 Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2ef78pmm12-1;
-        Tue, 28 Nov 2017 17:42:38 -0800
+        by mx0a-00153501.pphosted.com with ESMTP id 2ef78pmm13-3;
+        Tue, 28 Nov 2017 17:42:39 -0800
 Received: from mxw1.palantir.com (new-smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id 5425422157C9;
-        Tue, 28 Nov 2017 17:42:38 -0800 (PST)
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id 5207022157CC;
+        Tue, 28 Nov 2017 17:42:39 -0800 (PST)
 Received: from newren2-linux.yojoe.local (newren2-linux.dyn.yojoe.local [10.100.68.32])
-        by smtp.yojoe.local (Postfix) with ESMTP id 436712CDF17;
-        Tue, 28 Nov 2017 17:42:38 -0800 (PST)
+        by smtp.yojoe.local (Postfix) with ESMTP id 4AA9E2CDE74;
+        Tue, 28 Nov 2017 17:42:39 -0800 (PST)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, gitster@pobox.com,
         Elijah Newren <newren@gmail.com>
-Subject: [PATCH v4 09/34] directory rename detection: testcases checking which side did the rename
-Date:   Tue, 28 Nov 2017 17:42:12 -0800
-Message-Id: <20171129014237.32570-10-newren@gmail.com>
+Subject: [PATCH v4 30/34] merge-recursive: fix overwriting dirty files involved in renames
+Date:   Tue, 28 Nov 2017 17:42:33 -0800
+Message-Id: <20171129014237.32570-31-newren@gmail.com>
 X-Mailer: git-send-email 2.15.0.408.g850bc54b15
 In-Reply-To: <20171129014237.32570-1-newren@gmail.com>
 References: <20171129014237.32570-1-newren@gmail.com>
@@ -47,7 +47,7 @@ X-Proofpoint-SPF-Record: v=spf1 redirect=_spf.google.com
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,, definitions=2017-11-28_13:,,
  signatures=0
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
+ malwarescore=0 suspectscore=15 phishscore=0 bulkscore=0 spamscore=0
  clxscore=1034 lowpriorityscore=0 impostorscore=0 adultscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.0.1-1709140000
  definitions=main-1711290020
@@ -56,359 +56,290 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This fixes an issue that existed before my directory rename detection
+patches that affects both normal renames and renames implied by
+directory rename detection.  Additional codepaths that only affect
+overwriting of directy files that are involved in directory rename
+detection will be added in a subsequent commit.
+
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- t/t6043-merge-rename-directories.sh | 321 ++++++++++++++++++++++++++++++=
-++++++
- 1 file changed, 321 insertions(+)
+ merge-recursive.c                   | 85 ++++++++++++++++++++++++++++---=
+------
+ merge-recursive.h                   |  2 +
+ t/t3501-revert-cherry-pick.sh       |  2 +-
+ t/t6043-merge-rename-directories.sh |  2 +-
+ t/t7607-merge-overwrite.sh          |  2 +-
+ unpack-trees.c                      |  4 +-
+ unpack-trees.h                      |  4 ++
+ 7 files changed, 77 insertions(+), 24 deletions(-)
 
+diff --git a/merge-recursive.c b/merge-recursive.c
+index e77d2b043d..2b8a5ca03b 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -334,32 +334,37 @@ static void init_tree_desc_from_tree(struct tree_de=
+sc *desc, struct tree *tree)
+ 	init_tree_desc(desc, tree->buffer, tree->size);
+ }
+=20
+-static int git_merge_trees(int index_only,
++static int git_merge_trees(struct merge_options *o,
+ 			   struct tree *common,
+ 			   struct tree *head,
+ 			   struct tree *merge)
+ {
+ 	int rc;
+ 	struct tree_desc t[3];
+-	struct unpack_trees_options opts;
+=20
+-	memset(&opts, 0, sizeof(opts));
+-	if (index_only)
+-		opts.index_only =3D 1;
++	memset(&o->unpack_opts, 0, sizeof(o->unpack_opts));
++	if (o->call_depth)
++		o->unpack_opts.index_only =3D 1;
+ 	else
+-		opts.update =3D 1;
+-	opts.merge =3D 1;
+-	opts.head_idx =3D 2;
+-	opts.fn =3D threeway_merge;
+-	opts.src_index =3D &the_index;
+-	opts.dst_index =3D &the_index;
+-	setup_unpack_trees_porcelain(&opts, "merge");
++		o->unpack_opts.update =3D 1;
++	o->unpack_opts.merge =3D 1;
++	o->unpack_opts.head_idx =3D 2;
++	o->unpack_opts.fn =3D threeway_merge;
++	o->unpack_opts.src_index =3D &the_index;
++	o->unpack_opts.dst_index =3D &the_index;
++	setup_unpack_trees_porcelain(&o->unpack_opts, "merge");
+=20
+ 	init_tree_desc_from_tree(t+0, common);
+ 	init_tree_desc_from_tree(t+1, head);
+ 	init_tree_desc_from_tree(t+2, merge);
+=20
+-	rc =3D unpack_trees(3, t, &opts);
++	rc =3D unpack_trees(3, t, &o->unpack_opts);
++	/*
++	 * unpack_trees NULLifies src_index, but it's used in verify_uptodate,
++	 * so set to the new index which will usually have modification
++	 * timestamp info copied over.
++	 */
++	o->unpack_opts.src_index =3D &the_index;
+ 	cache_tree_free(&active_cache_tree);
+ 	return rc;
+ }
+@@ -792,6 +797,20 @@ static int would_lose_untracked(const char *path)
+ 	return !was_tracked(path) && file_exists(path);
+ }
+=20
++static int was_dirty(struct merge_options *o, const char *path)
++{
++	struct cache_entry *ce;
++	int dirty =3D 1;
++
++	if (o->call_depth || !was_tracked(path))
++		return !dirty;
++
++	ce =3D cache_file_exists(path, strlen(path), ignore_case);
++	dirty =3D (ce->ce_stat_data.sd_mtime.sec > 0 &&
++		 verify_uptodate(ce, &o->unpack_opts) !=3D 0);
++	return dirty;
++}
++
+ static int make_room_for_path(struct merge_options *o, const char *path)
+ {
+ 	int status, i;
+@@ -2645,6 +2664,7 @@ static int handle_modify_delete(struct merge_option=
+s *o,
+=20
+ static int merge_content(struct merge_options *o,
+ 			 const char *path,
++			 int file_in_way,
+ 			 struct object_id *o_oid, int o_mode,
+ 			 struct object_id *a_oid, int a_mode,
+ 			 struct object_id *b_oid, int b_mode,
+@@ -2719,7 +2739,7 @@ static int merge_content(struct merge_options *o,
+ 				return -1;
+ 	}
+=20
+-	if (df_conflict_remains) {
++	if (df_conflict_remains || file_in_way) {
+ 		char *new_path;
+ 		if (o->call_depth) {
+ 			remove_file_from_cache(path);
+@@ -2753,6 +2773,30 @@ static int merge_content(struct merge_options *o,
+ 	return mfi.clean;
+ }
+=20
++static int conflict_rename_normal(struct merge_options *o,
++				  const char *path,
++				  struct object_id *o_oid, unsigned int o_mode,
++				  struct object_id *a_oid, unsigned int a_mode,
++				  struct object_id *b_oid, unsigned int b_mode,
++				  struct rename_conflict_info *ci)
++{
++	int clean_merge;
++	int file_in_the_way =3D 0;
++
++	if (was_dirty(o, path)) {
++		file_in_the_way =3D 1;
++		output(o, 1, _("Refusing to lose dirty file at %s"), path);
++	}
++
++	/* Merge the content and write it out */
++	clean_merge =3D merge_content(o, path, file_in_the_way,
++				    o_oid, o_mode, a_oid, a_mode, b_oid, b_mode,
++				    ci);
++	if (clean_merge > 0 && file_in_the_way)
++		clean_merge =3D 0;
++	return clean_merge;
++}
++
+ /* Per entry merge function */
+ static int process_entry(struct merge_options *o,
+ 			 const char *path, struct stage_data *entry)
+@@ -2772,9 +2816,12 @@ static int process_entry(struct merge_options *o,
+ 		switch (conflict_info->rename_type) {
+ 		case RENAME_NORMAL:
+ 		case RENAME_ONE_FILE_TO_ONE:
+-			clean_merge =3D merge_content(o, path,
+-						    o_oid, o_mode, a_oid, a_mode, b_oid, b_mode,
+-						    conflict_info);
++			clean_merge =3D conflict_rename_normal(o,
++							     path,
++							     o_oid, o_mode,
++							     a_oid, a_mode,
++							     b_oid, b_mode,
++							     conflict_info);
+ 			break;
+ 		case RENAME_DIR:
+ 			clean_merge =3D 1;
+@@ -2870,7 +2917,7 @@ static int process_entry(struct merge_options *o,
+ 	} else if (a_oid && b_oid) {
+ 		/* Case C: Added in both (check for same permissions) and */
+ 		/* case D: Modified in both, but differently. */
+-		clean_merge =3D merge_content(o, path,
++		clean_merge =3D merge_content(o, path, 0 /* file_in_way */,
+ 					    o_oid, o_mode, a_oid, a_mode, b_oid, b_mode,
+ 					    NULL);
+ 	} else if (!o_oid && !a_oid && !b_oid) {
+@@ -2904,7 +2951,7 @@ int merge_trees(struct merge_options *o,
+ 		return 1;
+ 	}
+=20
+-	code =3D git_merge_trees(o->call_depth, common, head, merge);
++	code =3D git_merge_trees(o, common, head, merge);
+=20
+ 	if (code !=3D 0) {
+ 		if (show(o, 4) || o->call_depth)
+diff --git a/merge-recursive.h b/merge-recursive.h
+index e1be27f57c..a557201a50 100644
+--- a/merge-recursive.h
++++ b/merge-recursive.h
+@@ -1,6 +1,7 @@
+ #ifndef MERGE_RECURSIVE_H
+ #define MERGE_RECURSIVE_H
+=20
++#include "unpack-trees.h"
+ #include "string-list.h"
+=20
+ struct merge_options {
+@@ -27,6 +28,7 @@ struct merge_options {
+ 	struct strbuf obuf;
+ 	struct hashmap current_file_dir_set;
+ 	struct string_list df_conflict_file_set;
++	struct unpack_trees_options unpack_opts;
+ };
+=20
+ struct dir_rename_entry {
+diff --git a/t/t3501-revert-cherry-pick.sh b/t/t3501-revert-cherry-pick.s=
+h
+index 783bdbf59d..0d89f6d0f6 100755
+--- a/t/t3501-revert-cherry-pick.sh
++++ b/t/t3501-revert-cherry-pick.sh
+@@ -141,7 +141,7 @@ test_expect_success 'cherry-pick "-" works with argum=
+ents' '
+ 	test_cmp expect actual
+ '
+=20
+-test_expect_failure 'cherry-pick works with dirty renamed file' '
++test_expect_success 'cherry-pick works with dirty renamed file' '
+ 	test_commit to-rename &&
+ 	git checkout -b unrelated &&
+ 	test_commit unrelated &&
 diff --git a/t/t6043-merge-rename-directories.sh b/t/t6043-merge-rename-d=
 irectories.sh
-index 29b2af7f19..5db2986de8 100755
+index b1ca3d18e5..9b16280d5e 100755
 --- a/t/t6043-merge-rename-directories.sh
 +++ b/t/t6043-merge-rename-directories.sh
-@@ -1138,4 +1138,325 @@ test_expect_failure '5d-check: Directory/file/fil=
-e conflict due to directory ren
- #   back to old handling.  But, sadly, see testcases 8a and 8b.
- ########################################################################=
-###
+@@ -3157,7 +3157,7 @@ test_expect_success '11a-setup: Avoid losing dirty =
+contents with simple rename'
+ 	)
+ '
 =20
-+
-+########################################################################=
-###
-+# SECTION 6: Same side of the merge was the one that did the rename
-+#
-+# It may sound obvious that you only want to apply implicit directory
-+# renames to directories if the _other_ side of history did the renaming=
-.
-+# If you did make an implementation that didn't explicitly enforce this
-+# rule, the majority of cases that would fall under this section would
-+# also be solved by following the rules from the above sections.  But
-+# there are still a few that stick out, so this section covers them just
-+# to make sure we also get them right.
-+########################################################################=
-###
-+
-+# Testcase 6a, Tricky rename/delete
-+#   Commit O: z/{b,c,d}
-+#   Commit A: z/b
-+#   Commit B: y/{b,c}, z/d
-+#   Expected: y/b, CONFLICT(rename/delete, z/c -> y/c vs. NULL)
-+#   Note: We're just checking here that the rename of z/b and z/c to put
-+#         them under y/ doesn't accidentally catch z/d and make it look =
-like
-+#         it is also involved in a rename/delete conflict.
-+
-+test_expect_success '6a-setup: Tricky rename/delete' '
-+	test_create_repo 6a &&
-+	(
-+		cd 6a &&
-+
-+		mkdir z &&
-+		echo b >z/b &&
-+		echo c >z/c &&
-+		echo d >z/d &&
-+		git add z &&
-+		test_tick &&
-+		git commit -m "O" &&
-+
-+		git branch O &&
-+		git branch A &&
-+		git branch B &&
-+
-+		git checkout A &&
-+		git rm z/c &&
-+		git rm z/d &&
-+		test_tick &&
-+		git commit -m "A" &&
-+
-+		git checkout B &&
-+		mkdir y &&
-+		git mv z/b y/ &&
-+		git mv z/c y/ &&
-+		test_tick &&
-+		git commit -m "B"
-+	)
-+'
-+
-+test_expect_success '6a-check: Tricky rename/delete' '
-+	(
-+		cd 6a &&
-+
-+		git checkout A^0 &&
-+
-+		test_must_fail git merge -s recursive B^0 >out &&
-+		test_i18ngrep "CONFLICT (rename/delete).*z/c.*y/c" out &&
-+
-+		test 2 -eq $(git ls-files -s | wc -l) &&
-+		test 1 -eq $(git ls-files -u | wc -l) &&
-+		test 1 -eq $(git ls-files -o | wc -l) &&
-+
-+		git rev-parse >actual \
-+			:0:y/b :3:y/c &&
-+		git rev-parse >expect \
-+			O:z/b O:z/c &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+# Testcase 6b, Same rename done on both sides
-+#   (Related to testcases 6c and 8e)
-+#   Commit O: z/{b,c}
-+#   Commit A: y/{b,c}
-+#   Commit B: y/{b,c}, z/d
-+#   Expected: y/{b,c}, z/d
-+#   Note: If we did directory rename detection here, we'd move z/d into =
-y/,
-+#         but B did that rename and still decided to put the file into z=
-/,
-+#         so we probably shouldn't apply directory rename detection for =
-it.
-+
-+test_expect_success '6b-setup: Same rename done on both sides' '
-+	test_create_repo 6b &&
-+	(
-+		cd 6b &&
-+
-+		mkdir z &&
-+		echo b >z/b &&
-+		echo c >z/c &&
-+		git add z &&
-+		test_tick &&
-+		git commit -m "O" &&
-+
-+		git branch O &&
-+		git branch A &&
-+		git branch B &&
-+
-+		git checkout A &&
-+		git mv z y &&
-+		test_tick &&
-+		git commit -m "A" &&
-+
-+		git checkout B &&
-+		git mv z y &&
-+		mkdir z &&
-+		echo d >z/d &&
-+		git add z/d &&
-+		test_tick &&
-+		git commit -m "B"
-+	)
-+'
-+
-+test_expect_success '6b-check: Same rename done on both sides' '
-+	(
-+		cd 6b &&
-+
-+		git checkout A^0 &&
-+
-+		git merge -s recursive B^0 &&
-+
-+		test 3 -eq $(git ls-files -s | wc -l) &&
-+		test 0 -eq $(git ls-files -u | wc -l) &&
-+		test 0 -eq $(git ls-files -o | wc -l) &&
-+
-+		git rev-parse >actual \
-+			HEAD:y/b HEAD:y/c HEAD:z/d &&
-+		git rev-parse >expect \
-+			O:z/b O:z/c B:z/d &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+# Testcase 6c, Rename only done on same side
-+#   (Related to testcases 6b and 8e)
-+#   Commit O: z/{b,c}
-+#   Commit A: z/{b,c} (no change)
-+#   Commit B: y/{b,c}, z/d
-+#   Expected: y/{b,c}, z/d
-+#   NOTE: Seems obvious, but just checking that the implementation doesn=
-'t
-+#         "accidentally detect a rename" and give us y/{b,c,d}.
-+
-+test_expect_success '6c-setup: Rename only done on same side' '
-+	test_create_repo 6c &&
-+	(
-+		cd 6c &&
-+
-+		mkdir z &&
-+		echo b >z/b &&
-+		echo c >z/c &&
-+		git add z &&
-+		test_tick &&
-+		git commit -m "O" &&
-+
-+		git branch O &&
-+		git branch A &&
-+		git branch B &&
-+
-+		git checkout A &&
-+		test_tick &&
-+		git commit --allow-empty -m "A" &&
-+
-+		git checkout B &&
-+		git mv z y &&
-+		mkdir z &&
-+		echo d >z/d &&
-+		git add z/d &&
-+		test_tick &&
-+		git commit -m "B"
-+	)
-+'
-+
-+test_expect_success '6c-check: Rename only done on same side' '
-+	(
-+		cd 6c &&
-+
-+		git checkout A^0 &&
-+
-+		git merge -s recursive B^0 &&
-+
-+		test 3 -eq $(git ls-files -s | wc -l) &&
-+		test 0 -eq $(git ls-files -u | wc -l) &&
-+		test 0 -eq $(git ls-files -o | wc -l) &&
-+
-+		git rev-parse >actual \
-+			HEAD:y/b HEAD:y/c HEAD:z/d &&
-+		git rev-parse >expect \
-+			O:z/b O:z/c B:z/d &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+# Testcase 6d, We don't always want transitive renaming
-+#   (Related to testcase 1c)
-+#   Commit O: z/{b,c}, x/d
-+#   Commit A: z/{b,c}, x/d (no change)
-+#   Commit B: y/{b,c}, z/d
-+#   Expected: y/{b,c}, z/d
-+#   NOTE: Again, this seems obvious but just checking that the implement=
-ation
-+#         doesn't "accidentally detect a rename" and give us y/{b,c,d}.
-+
-+test_expect_success '6d-setup: We do not always want transitive renaming=
+-test_expect_failure '11a-check: Avoid losing dirty contents with simple =
+rename' '
++test_expect_success '11a-check: Avoid losing dirty contents with simple =
+rename' '
+ 	(
+ 		cd 11a &&
+=20
+diff --git a/t/t7607-merge-overwrite.sh b/t/t7607-merge-overwrite.sh
+index 00617dadf8..e44fb50173 100755
+--- a/t/t7607-merge-overwrite.sh
++++ b/t/t7607-merge-overwrite.sh
+@@ -92,7 +92,7 @@ test_expect_success 'will not overwrite removed file wi=
+th staged changes' '
+ 	test_cmp important c1.c
+ '
+=20
+-test_expect_failure 'will not overwrite unstaged changes in renamed file=
 ' '
-+	test_create_repo 6d &&
-+	(
-+		cd 6d &&
-+
-+		mkdir z &&
-+		echo b >z/b &&
-+		echo c >z/c &&
-+		mkdir x &&
-+		echo d >x/d &&
-+		git add z x &&
-+		test_tick &&
-+		git commit -m "O" &&
-+
-+		git branch O &&
-+		git branch A &&
-+		git branch B &&
-+
-+		git checkout A &&
-+		test_tick &&
-+		git commit --allow-empty -m "A" &&
-+
-+		git checkout B &&
-+		git mv z y &&
-+		git mv x z &&
-+		test_tick &&
-+		git commit -m "B"
-+	)
-+'
-+
-+test_expect_success '6d-check: We do not always want transitive renaming=
++test_expect_success 'will not overwrite unstaged changes in renamed file=
 ' '
-+	(
-+		cd 6d &&
+ 	git reset --hard c1 &&
+ 	git mv c1.c other.c &&
+ 	git commit -m rename &&
+diff --git a/unpack-trees.c b/unpack-trees.c
+index bf8b602901..5b922c1939 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -1486,8 +1486,8 @@ static int verify_uptodate_1(const struct cache_ent=
+ry *ce,
+ 		add_rejected_path(o, error_type, ce->name);
+ }
+=20
+-static int verify_uptodate(const struct cache_entry *ce,
+-			   struct unpack_trees_options *o)
++int verify_uptodate(const struct cache_entry *ce,
++		    struct unpack_trees_options *o)
+ {
+ 	if (!o->skip_sparse_checkout && (ce->ce_flags & CE_NEW_SKIP_WORKTREE))
+ 		return 0;
+diff --git a/unpack-trees.h b/unpack-trees.h
+index 6c48117b84..41178ada94 100644
+--- a/unpack-trees.h
++++ b/unpack-trees.h
+@@ -1,6 +1,7 @@
+ #ifndef UNPACK_TREES_H
+ #define UNPACK_TREES_H
+=20
++#include "tree-walk.h"
+ #include "string-list.h"
+=20
+ #define MAX_UNPACK_TREES 8
+@@ -78,6 +79,9 @@ struct unpack_trees_options {
+ extern int unpack_trees(unsigned n, struct tree_desc *t,
+ 		struct unpack_trees_options *options);
+=20
++int verify_uptodate(const struct cache_entry *ce,
++		    struct unpack_trees_options *o);
 +
-+		git checkout A^0 &&
-+
-+		git merge -s recursive B^0 &&
-+
-+		test 3 -eq $(git ls-files -s | wc -l) &&
-+		test 0 -eq $(git ls-files -u | wc -l) &&
-+		test 0 -eq $(git ls-files -o | wc -l) &&
-+
-+		git rev-parse >actual \
-+			HEAD:y/b HEAD:y/c HEAD:z/d &&
-+		git rev-parse >expect \
-+			O:z/b O:z/c O:x/d &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+# Testcase 6e, Add/add from one-side
-+#   Commit O: z/{b,c}
-+#   Commit A: z/{b,c} (no change)
-+#   Commit B: y/{b,c,d_1}, z/d_2
-+#   Expected: y/{b,c,d_1}, z/d_2
-+#   NOTE: Again, this seems obvious but just checking that the implement=
-ation
-+#         doesn't "accidentally detect a rename" and give us y/{b,c} +
-+#         add/add conflict on y/d_1 vs y/d_2.
-+
-+test_expect_success '6e-setup: Add/add from one side' '
-+	test_create_repo 6e &&
-+	(
-+		cd 6e &&
-+
-+		mkdir z &&
-+		echo b >z/b &&
-+		echo c >z/c &&
-+		git add z &&
-+		test_tick &&
-+		git commit -m "O" &&
-+
-+		git branch O &&
-+		git branch A &&
-+		git branch B &&
-+
-+		git checkout A &&
-+		test_tick &&
-+		git commit --allow-empty -m "A" &&
-+
-+		git checkout B &&
-+		git mv z y &&
-+		echo d1 > y/d &&
-+		mkdir z &&
-+		echo d2 > z/d &&
-+		git add y/d z/d &&
-+		test_tick &&
-+		git commit -m "B"
-+	)
-+'
-+
-+test_expect_success '6e-check: Add/add from one side' '
-+	(
-+		cd 6e &&
-+
-+		git checkout A^0 &&
-+
-+		git merge -s recursive B^0 &&
-+
-+		test 4 -eq $(git ls-files -s | wc -l) &&
-+		test 0 -eq $(git ls-files -u | wc -l) &&
-+		test 0 -eq $(git ls-files -o | wc -l) &&
-+
-+		git rev-parse >actual \
-+			HEAD:y/b HEAD:y/c HEAD:y/d HEAD:z/d &&
-+		git rev-parse >expect \
-+			O:z/b O:z/c B:y/d B:z/d &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+########################################################################=
-###
-+# Rules suggested by section 6:
-+#
-+#   Only apply implicit directory renames to directories if the other
-+#   side of history is the one doing the renaming.
-+########################################################################=
-###
-+
- test_done
+ int threeway_merge(const struct cache_entry * const *stages,
+ 		   struct unpack_trees_options *o);
+ int twoway_merge(const struct cache_entry * const *src,
 --=20
 2.15.0.408.g850bc54b15
 
