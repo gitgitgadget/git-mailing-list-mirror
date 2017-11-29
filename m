@@ -2,98 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 95E5D20A40
-	for <e@80x24.org>; Wed, 29 Nov 2017 13:57:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F0C9E20A40
+	for <e@80x24.org>; Wed, 29 Nov 2017 14:27:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752279AbdK2N5d (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Nov 2017 08:57:33 -0500
-Received: from mout.gmx.net ([212.227.17.22]:56733 "EHLO mout.gmx.net"
+        id S1755004AbdK2O1m (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Nov 2017 09:27:42 -0500
+Received: from mout.gmx.net ([212.227.15.15]:51356 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751486AbdK2N5c (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Nov 2017 08:57:32 -0500
-Received: from localhost.localdomain ([65.55.188.220]) by mail.gmx.com
- (mrgmx103 [212.227.17.168]) with ESMTPSA (Nemesis) id
- 0LyEUz-1fEICC2VZF-015ZDP; Wed, 29 Nov 2017 14:57:30 +0100
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-To:     git-for-windows@googlegroups.com, git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [ANNOUNCE] Git for Windows 2.15.1
-Date:   Wed, 29 Nov 2017 13:57:23 +0000
-Message-Id: <20171129135723.11664-1-johannes.schindelin@gmx.de>
-X-Mailer: git-send-email 2.15.1.windows.1
-Content-Type: text/plain; charset=UTF-8
+        id S1752830AbdK2O1l (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Nov 2017 09:27:41 -0500
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MXIcX-1efDDy3Cp3-00WFbx; Wed, 29
+ Nov 2017 15:27:39 +0100
+Date:   Wed, 29 Nov 2017 15:27:39 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Robert Abel <rabel@robertabel.eu>
+cc:     git@vger.kernel.org
+Subject: Re: [PATCH] git-prompt: fix reading files with windows line
+ endings
+In-Reply-To: <20171128201818.4132-2-rabel@robertabel.eu>
+Message-ID: <alpine.DEB.2.21.1.1711291519290.6482@virtualbox>
+References: <20171128201818.4132-1-rabel@robertabel.eu> <20171128201818.4132-2-rabel@robertabel.eu>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Fcc:    Sent
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:gNt0MQKpkgXUxP2WDOTzImQsDUUNVcsM4TBq3+8bCpcZtPtFunJ
- exqi8YlFLDyCevnewTaA8qWTxtnjXJb+v235mdDYKkWw2dzBv7KlbWzKejnzZe/97J7UUr0
- WKx9wHaJssb01Du9szmJ/rjLUh4SCwSeOHj4wn4KbPxZeVEEEn1dp5oaoEkFKsnWP6LpzDo
- 423oOEIc7CO81KP/wKLOQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:dG0U9v65/VA=:onmRJBknyTWeb+eyD+2xmN
- MuXQHHhPVw+APJQf8PwGVt0zw7/SKYt6DLTI84tK2xU46uxuyMiOgcq1S8uO3zFqowI8JGmwA
- /IaJy2MvapGgjA6qQ3Te/0VbmKzmLeeVcip6WEO0yBZuRba+de6h5668xtARoafZRG/KFF8Mj
- fTdkO9yC20zsYj3wmrpNUC57daOuBYz7SchQYI4OLmLAf1zQnW7tN8+bptVJoHFFMoq0ZhVYQ
- LG5x7e/5y2i8LJOE9mAFqbJnvF48BdCHfsV9OEqPIAGpbj77XNby3MyRQS/YWthfcFgoeuhgR
- xM3skvQaVK4VwnvRWjbjA5nThDY+jdhW03079tbGuaCn8u55Q9cIk4kjT4A2EXDgEkc5vXYQb
- 71t6NGg5xpSbC3EeuEq8BfhtlQYW0rDn5IcEzvwHMCpL05RuUuNyIi/WyG42DI6pJWrT+49y3
- OulmQvCkNJKVOUoZKtltTqtzO9twjvC+vLg3r07F0bcPTAamZkiczKao0oPkq4M89HvRoyYo/
- EqYQxATVVY8t1pWbwuX/vXyUx/aw3TLwKBqfC+bHEblgaNk8MvTB4YXNo0Pf9qAE9HMEC7rId
- 87IOC0rai4Ia45CHIPDUp0QUOjM1rISazeKHAMmMryLWI4AeHcW1p2cYNM/ZCRquLF22ZSETa
- hxaO2JpK17HPmnUwDJzAP7npDZq/HHCAelcTOYvbq5O/O1yulXERIAunZHa7O1X8nieCvBJfx
- tpfouQJOs9x61+TSOIdFmZXXBV6dkPx2duTtfzIoWooWcAESx/yp+XZ7VAhOyTtiufRwNsezs
- IKX6SAiruOjwZ3uSetVMPz9Fox8HgkNSqjZDZkDHDdxUVr6LDA=
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:dj6M9ar9RxU/0Y3jEBM++YkvCym9POzOrs7YjlLdDf161mD1tzu
+ t31cIolg6O3A0mBE/5a18A8OEVFHkCNNT6+GK8+VWBx+6KvWx9Ts7XTZHoxqZqDkdB8UP+p
+ itJx1K9HbY8/DZfOWsA48kp2rS6JzA4sKFB2lbHZIGSnU+9+D0l12tGaAUJKdhRQM7Dk9TW
+ jiR0xv852tzDSrizSczxw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:4fKPq/Wlj4o=:vphMGWQQgaqOYPLAwqXwoz
+ 1Rw+yK4d6QhmeLYKgBQkS/MTJHZGCHSiX0Ci9qs/MeGdvwgUGquxmWENH+W+Ax8rTcFbD7d64
+ MnN6ru1exnLv2vtjGT5rRadrVjLfFbf3Ue2fgb25b0QsOHK+8cLdoQHhzempjMApVi3GPYTo+
+ 8pYgsINNXqeftkFUAFSS4R7W9RdqslvO2zGsxupuePvCaiHQZrFH7omzESx/J6NprMMaqwKIz
+ FRJKaytAyE946usM4Pn9BfKWtQc2iPotaCf1KLDP4ugdo/7X+7DKMElAnMoALwWPdyrPykaoq
+ 5lK70/7MmgvRknCVtUVykmf6JHXzK2IH8sYbIbtoRXiaFjNhr6WeHtwUOAptCVYmXLotoa56Z
+ Jup88ROLZoFEoSlMh9kBsiElmfrbW4KUinyxuuH+G3hjRKZ792gsC8fLFh8ZmH614zxwx1FF2
+ 0oGytLvSp5la2dBwMuQe4Bm26s3eNMndYmk7zLlhOLhhmrMogjt6D7gy6U77kKrxqoSjdvQJc
+ Ciu5hGX8V4RokHzzjIxN1R3TvQ9senGwgpH6Nmwb2GeQDmoy+wWkf1eLt8GOPLXcupV+Evc+t
+ eI8stobb8J700Q+jcDUJcUF9HMq3D8BCB6BLKlftNpgnCOOyv1o1xh6Uj5dIkxLPm4OEab9Jc
+ YQNdFqPp5/uppoVFMWYjVLs1YTlsbI/25VzkexBYMucycJHIoBBw68FK8Nx/nfkz3444hSpML
+ cH3DcUatndkSphlVm5vsLO5S0e2iF7PpwbfJoFWY3pWSVobziWAzHvLzvPwv+mPR5r89LglOG
+ 81cY3cXfT8iEiP0oPXUQA6eHmle+Kg/ELZLZPAMuws9zMorKTo=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Git users,
+Hi Robert,
 
-It is my pleasure to announce that Git for Windows 2.15.1 is available from:
+On Tue, 28 Nov 2017, Robert Abel wrote:
 
-	https://git-for-windows.github.io/
+> If any of the files read by __git_eread have \r\n line endings, read
+> will only strip \n, leaving \r. This results in an ugly prompt, where
+> instead of
+> 
+>     user@pc MINGW64 /path/to/repo (BARE:master)
+> 
+> the last parenthesis is printed over the beginning of the prompt like
+> 
+>     )ser@pc MINGW64 /path/to/repo (BARE:master
 
-Changes since Git for Windows v2.15.0 (October 30th 2017)
+Thats' unfortunate, and obviously something to fix.
 
-New Features
+> diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
+> index c6cbef38c2..71a64e7959 100644
+> --- a/contrib/completion/git-prompt.sh
+> +++ b/contrib/completion/git-prompt.sh
+> @@ -282,7 +282,7 @@ __git_eread ()
+>  {
+>  	local f="$1"
+>  	shift
+> -	test -r "$f" && read "$@" <"$f"
+> +	test -r "$f" && read "$@" <"$f" && export $@="${!@%$'\r'}"
 
-  * Comes with Git v2.15.1.
-  * Operations in massively-sparse worktrees are now much faster if
-    core.fscache = true.
-  * It is now possible to configure nano or Notepad++ as Git's default
-    editor instead of vim.
-  * Comes with OpenSSL v1.0.2m.
-  * Git for Windows' updater now uses non-intrusive toast notifications
-    on Windows 8, 8.1 and 10.
-  * Running git fetch in a repository with lots of refs is now
-    considerably faster.
-  * Comes with cURL v7.57.0.
+As far as I understand, $'\r' is a Bash-only construct, and this file
+(git-prompt.sh) is targeting other Unix shells, too.
 
-Bug Fixes
+So how about using `tr -d '\r' <"$f" | read "$@"` instead?
 
-  * The experimental --show-ignored-directory option of git status
-    which was removed in Git for Windows v2.15.0 without warning has
-    been reintroduced as a deprecated option.
-  * The git update command (to auto-update Git for Windows) will now
-    work also work behind proxies.
+Or maybe keep with the Bash construct, but guarded behind a test that we
+area actually running in Bash? Something like
 
-Filename | SHA-256
--------- | -------
-Git-2.15.1-64-bit.exe | a2ba53197db79b361502836eecf97f09881703148774f9b4e9e6749d41d4ff71
-Git-2.15.1-32-bit.exe | 73154bdfd1ad4ced8612d97b95603ff2b2383db9d46b4c308827fb5233d52592
-PortableGit-2.15.1-64-bit.7z.exe | 94d485454af33a32d08680950aaf38f0825a189ef8b617054b81b2c48d817699
-PortableGit-2.15.1-32-bit.7z.exe | 7d804748a7de735133d78c5420d9b338379123734509415035593e106b03515a
-MinGit-2.15.1-64-bit.zip | 5e38d13241b0742e6673bc5116ac82e851dd1fad01c660c943017f4549b6afea
-MinGit-2.15.1-32-bit.zip | 2fc85f67cabe3c13aceb6868b4bb6bda28ddfecd6f32d7e0da9ddce8cee9b940
-MinGit-2.15.1-busybox-64-bit.zip | 02611486e3c8c427f09d2c4639484cd604ea812471248ae928960f1e0dc59633
-MinGit-2.15.1-busybox-32-bit.zip | a6dfb770f5cfa7b120ba49922d3434577b8601c5d322ad473dd2e2adc91e92b3
-Git-2.15.1-64-bit.tar.bz2 | bb630e5f3d7b650db67134b0187cf0cb8f5ed75990838ee65fed85e21777f08a
-Git-2.15.1-32-bit.tar.bz2 | ec3938e161ac1bbcf2b4f5d41fae1c05ea229fa0276b4db8530ec50b69131832
+	test -z "$BASH" || IFS=$' \t\r\n'
 
 Ciao,
 Johannes
