@@ -2,212 +2,374 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E643920A40
-	for <e@80x24.org>; Wed, 29 Nov 2017 14:38:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7FB5F20A40
+	for <e@80x24.org>; Wed, 29 Nov 2017 14:51:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753894AbdK2Oia (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Nov 2017 09:38:30 -0500
-Received: from mail-co1nam03on0106.outbound.protection.outlook.com ([104.47.40.106]:37633
-        "EHLO NAM03-CO1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1752853AbdK2OiZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Nov 2017 09:38:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=autodesk.com;
- s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=p30mL/NVtJxb0/1Li08agG6oi0M14h7TYyFbgl8zLhY=;
- b=j0E6Ty2qj/mejNWKXq40nj5af6cIPjm224d/44eRAF26oCvPk07uK0NwKi38P+xA5Bk2EakWDOP1ADrOglTVTxnTLPp1JwhqkMOOxKse4xIl8AbBc9OUcRnydUNj+07ZbI4oXvoEYMVVX8j1qU/Xig5R39hh6WUPYlSx07uSJok=
-Authentication-Results: spf=none (sender IP is )
- smtp.mailfrom=lars.schneider@autodesk.com; 
-Received: from slxbook4.ads.autodesk.com (62.159.156.210) by
- BN6P136MB0017.NAMP136.PROD.OUTLOOK.COM (129.75.91.24) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P256) id
- 15.20.239.11; Wed, 29 Nov 2017 14:38:21 +0000
-From:   lars.schneider@autodesk.com
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, sbeller@google.com, sunshine@sunshineco.com,
-        kaartic.sivaraam@gmail.com, sandals@crustytoothpaste.net,
-        peff@peff.net, Lars Schneider <larsxschneider@gmail.com>
-Subject: [PATCH v4 2/2] launch_editor(): indicate that Git waits for user input
-Date:   Wed, 29 Nov 2017 15:37:52 +0100
-Message-Id: <20171129143752.60553-3-lars.schneider@autodesk.com>
-X-Mailer: git-send-email 2.15.0
-In-Reply-To: <20171129143752.60553-1-lars.schneider@autodesk.com>
-References: <20171129143752.60553-1-lars.schneider@autodesk.com>
+        id S932608AbdK2Ovi (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Nov 2017 09:51:38 -0500
+Received: from siwi.pair.com ([209.68.5.199]:18533 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753395AbdK2Ovh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Nov 2017 09:51:37 -0500
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 4C1C1844DA;
+        Wed, 29 Nov 2017 09:51:36 -0500 (EST)
+Received: from [10.160.98.77] (unknown [167.220.148.86])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id E82B1844D4;
+        Wed, 29 Nov 2017 09:51:35 -0500 (EST)
+Subject: Re: [PATCH v5 5/6] rev-list: add list-objects filtering support
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
+        jonathantanmy@google.com, Jeff Hostetler <jeffhost@microsoft.com>
+References: <20171121205852.15731-1-git@jeffhostetler.com>
+ <20171121205852.15731-6-git@jeffhostetler.com>
+ <20171122200853.GB11671@aiede.mtv.corp.google.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <679d4985-884a-c27e-8dd4-10d79b60534d@jeffhostetler.com>
+Date:   Wed, 29 Nov 2017 09:51:35 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [62.159.156.210]
-X-ClientProxiedBy: VI1PR04CA0066.eurprd04.prod.outlook.com (10.170.225.37) To
- BN6P136MB0017.NAMP136.PROD.OUTLOOK.COM (129.75.91.24)
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 284d6fc2-4d02-4b40-24bb-08d53736d793
-X-MS-Office365-Filtering-HT: Tenant
-X-Microsoft-Antispam: UriScan:;BCL:0;PCL:0;RULEID:(5600026)(4604075)(4534020)(4602075)(4627115)(201703031133081)(201702281549075)(48565401081)(2017052603271);SRVR:BN6P136MB0017;
-X-Microsoft-Exchange-Diagnostics: 1;BN6P136MB0017;3:tDE0qC4SmDOkXa1u+eY133pHA+3Jt8nrFkmlningskRFuWAiN1ZObGOXsirWB29SXP1zBMv6RUlXQLfrTi8r6LNIFbrRwPGMuRY+O/xkjI+MCQP9BKicofTNk1v8CKL5Kndo0bvfBu6pOKvpcVY/Ccbvt9FJ3/8VuCpF7N/BVYMOovci3RkPwpNy8SLy9FY3vJcQpt4AUjIRtzjTMIWYGK6rQnmqm9t/8bSFkFr9ijI8maiI3Nm8bMLUZv2f4Fcz;25:ewbRQKbvFWjDnBo27VoSCdMXKbDEbInTqyZXhRVs2kCKa0v5CQI4YK33kOXsCbiPOy4CNf6XiifMx6hEJUDgu+l6jFLA/YYlmbYXCUgQEoJRQqYj3KrVRQGQMva8tze5s1ars9ZDouajVAzycsxIkMKwzdCUbxbbFddguvTaET0NGLaqHyPoeSaotdOMEvm7Cj6ssYaaWMEz7Vtp9oX+3zDt5myGzDJZiZl1mtoO5iv+72wC+Ml2XT6pYUnXeiMFk7T0Ei2Lv/2Ab+HE/Lxm2cbUNHHW++rjmiAxOtxmz+6S7LXxdCZdOiLofxMECWUWu24kBZABVbG0Zt++lxTrYw==;31:0oXhJgv+3pQcwWTvnAA7bginJ8Hz58Ag+9jsw9dSpSpN+JeiDqjASxaJKm74Mg0r2tK54eegnhtsnYXz4S9d3jt1jVVABNPx37c8qMSP9eK6XtzLma1RmKNJeCz4qOfBMmp93gdqKW1RNRVOZJxacEP4zNolX9HKrYf8FJouzy8fYYPOcH94NpgBgZA7L0ib8TrDOY0YVOKgxQrHu4rv1JY57iR6ucD1RWmlfSuJhx0=
-X-MS-TrafficTypeDiagnostic: BN6P136MB0017:
-X-Microsoft-Exchange-Diagnostics: 1;BN6P136MB0017;20:zRItf/g6/lU3vpJV2cEdOl1qnQCThlsiIGohY0br/5FtuHC/Y/WxYJh3eBa1sWmtQU7tlEGp0I5KfI/X5Nr0jZfhhdS37x477uicAJtaSaaj3Qhntrd16GTeRGClqUK8mjkiB7v6GxZe4nMHJ2+FLbJx1HHCh90mCEgrVrEADfIRHcR/Dz61/shOTeR+jH1qeq+imetd0irIbIVF77orOqL99ou6r3ec+YodwcI3GpFzkF9HTMPbm0BDUicnEE+HYnUx8QPku982lqn1KD+r/YEHg78Q0zWmor4dyZxMtsrStlYMicWKRQTIRKP9BtCZuRAxdHzkgEOB7hDbxMepiwZT0L1CjG0VKIv1sOpmkVG/2/4WpEO8BfGAay9p6IZw+J6RjgV6o0gmKm1VTco64zd58k8VxsXQDaOBEsij1S5ZTwBIAB2Dh+svTPftuNazNIqfdDTkhRDxv/ETCgl6cW1zEP4eOGWnlJHFkya9SfdJq2M2Lcqac1UkdtRcUQoXrvUPBO2vv92H0l4xg87j7Fae1QnMDev9OVzXRSCf/NFXSc6LHUzOUuwysLpyzZmD/mP+TBchJv3ZISLajyxmZena9jVkf0IrukG1NQodvBo=
-X-Microsoft-Antispam-PRVS: <BN6P136MB0017DA0487009B02FA8F795EE83B0@BN6P136MB0017.NAMP136.PROD.OUTLOOK.COM>
-X-Exchange-Antispam-Report-Test: UriScan:(35073007944872)(100324003535756);
-X-Exchange-Antispam-Report-CFA-Test: BCL:0;PCL:0;RULEID:(6040450)(2401047)(5005006)(8121501046)(3231022)(10201501046)(3002001)(93006095)(93001095)(6055026)(6041248)(20161123555025)(20161123564025)(20161123558100)(20161123562025)(201703131423075)(201702281528075)(201703061421075)(201703061406153)(20161123560025)(6072148)(201708071742011);SRVR:BN6P136MB0017;BCL:0;PCL:0;RULEID:(100000803101)(100110400095);SRVR:BN6P136MB0017;
-X-Microsoft-Exchange-Diagnostics: 1;BN6P136MB0017;4:ycwn3a/RvnX2IV8JjTNu2FuytIrqHxDvQ08a6Xy0xjAwlrome8epkB9rYto3xBZQHSlsK0+lyYJuEd7+MmP/7Y3OI429SQkVsFWZJ1bqGy0ppVC/4lfVlbFO2GOf0unwzUDBBUV9zQmZyMvX0oQ7rKtlRrugfttEw7DJ2aiVR/X6aau17X7iRW6gFzRFxDGCEUWTBznqCsSmvkW5sifW46gx4RwI50OuVvVjeeh4g3ZmkdAJkPbuZgc7002stwGLhKY2f016Tmi9mF48d1w6ylD//bdw2h1EhUQDbvp5YjjvxLE3uYE6Q6zCZlpVZXQpdIuxJQK7umUsLQ8Ksy6IYuts7ffUE9pfUyv0gK4vNZI=
-X-Forefront-PRVS: 05066DEDBB
-X-Forefront-Antispam-Report: SFV:NSPM;SFS:(10019020)(6009001)(376002)(39860400002)(346002)(366004)(189002)(199003)(5660300001)(2950100002)(53936002)(6666003)(6916009)(101416001)(50986999)(76176999)(9686003)(575784001)(305945005)(8676002)(86362001)(189998001)(36756003)(8936002)(16586007)(25786009)(81156014)(81166006)(4326008)(85782001)(105586002)(51416003)(52116002)(7696005)(6116002)(66066001)(8656006)(1076002)(7736002)(2906002)(50226002)(478600001)(106356001)(3846002)(68736007)(2351001)(2361001)(39060400002)(16526018)(47776003)(316002)(33646002)(6486002)(48376002)(97736004)(50466002)(85772001);DIR:OUT;SFP:1102;SCL:1;SRVR:BN6P136MB0017;H:slxbook4.ads.autodesk.com;FPR:;SPF:None;PTR:InfoNoRecords;MX:1;A:1;LANG:en;
-Received-SPF: None (protection.outlook.com: autodesk.com does not designate
- permitted sender hosts)
-X-Microsoft-Exchange-Diagnostics: =?us-ascii?Q?1;BN6P136MB0017;23:NgecxWiegL6PHOEQxOl1n89tHIwXavnChLGPV8Yn2?=
- =?us-ascii?Q?rIm/M67eOF48AuO3RYjKaCL2pq6yQf98NjjmJClmP1nTpS16y+lghsFJX+I7?=
- =?us-ascii?Q?J9sMLmhU00Gk56Ddsf4r2MOV/VlUa6OUdlMoPYkVsMSlSqCBqzpaWGMkKVJP?=
- =?us-ascii?Q?PVooryrgpK239deeWFweXTq5JiBO+NrY/0mXKzj2dwcraIWUZn5+HW4VcqfH?=
- =?us-ascii?Q?uJZfvhuvyMy8faArzSUSwvf1Xji44spoHn6+0kniN6TBDF6yV5jZCLjYZwXb?=
- =?us-ascii?Q?0azXTGh5kXXekMoZF43ke15Fil4ol/weJ/zjySjbsmUbmXeh6Kzjj9+Bq84C?=
- =?us-ascii?Q?np4+Nu7xDU2D/61eBk9ZlZ7QYx5gbiUbHiW0JC/wWig3puObYxdwUJUamVyt?=
- =?us-ascii?Q?eHv8RKmRb6USZ4jSBGfIngHbfYdOvTqDpFkIa7cg4zLZ/UTfZ3tXmHQQCgwC?=
- =?us-ascii?Q?nd2m34FlFg2yS10sXGWMy21s7C4TRL+iIpR5veZzmeu2kJWNt/Kus6EqCYXP?=
- =?us-ascii?Q?hrYmJgus0uieCslWB8rLj6HNAI9tA8E6+7jaKiFozAfYrPRnAMUJXqtGlAhc?=
- =?us-ascii?Q?dn2yPxFaG7TRzN7ZNboccVQlQnB2/hifF0B0Hy61Vm7U68m+z4a1JNyhGyit?=
- =?us-ascii?Q?U+DLkth2a/hErd/v/fcUogcvaWGcGJbMGZMt+9Bl4hUul3O/zEA5Xvrg+ZlC?=
- =?us-ascii?Q?0thvcmWDpcLCKEiK1dHsAIoqNLarHYj/WbvC7/MVFo8FlECBgAbV10PdJU9N?=
- =?us-ascii?Q?I/avWJsASeETx/OgTycYk1ziycqC7F78aEQB125QdtAcymVI46V1/bJF6lTv?=
- =?us-ascii?Q?lL0/weAwXvLvRQAbLHxhpXVNXrDQqbUFSeTHL5JUqnLtS8GuSj97dQXs1FH/?=
- =?us-ascii?Q?CozMiOs7IaE+qdKccReqKsc7wSYuTX79yJeqNpAi8+JmHLIIz9GAtOOCnDB/?=
- =?us-ascii?Q?oDEWxIClKmAWKKoHHh/aevbB06qA4+qrNUZ77kOwLUvtPz8bGnFf3LH33+pT?=
- =?us-ascii?Q?R/MfhahiNpMXfjmB/ns8D1ZNeiJuNL+E9LnCEbrogVD+SPqwp7obqcQzr2/z?=
- =?us-ascii?Q?QSAi77sdk+kLzWloyJmhzALHFcJkLqGVMy6rNASpibnM/NflTrGeO/TdqnRJ?=
- =?us-ascii?Q?pAby3GHC2e/Gpa2gNujj65ZCiNj+wNO1tL9bYEDobURVyt0w5duUN/wVW/qY?=
- =?us-ascii?Q?LKegCQUwKV108GLlV0A1HpIxH4xYcIhwtacGK0hwL0W6hRF0jfo9Z15XGB/z?=
- =?us-ascii?Q?70xbCot2dbAoIjCf3S+/rraQN0Yu3vGnV9lw8x4Evwwgqt2EwWZR+5c925sJ?=
- =?us-ascii?B?Zz09?=
-X-Microsoft-Exchange-Diagnostics: 1;BN6P136MB0017;6:RrzMXyHPn9NG5K7c1i9vmHAVrxL0aE7C9blkBeEdP0c+Xqz3vA3SXmUea/KRiznEFXCJKgN1ULStayxTIP2FV9cyU5x3bcR6+q72gl2cfWrQ3YGumi6LL3ISF3CcuIH881MYGGf8ejVN4iYSuka8yRtOUviEQ2cF/AXIWguHmsvMXcxag+UuOQnjyERh1juHYCr83SLkK89EvCVzgtCJv6p6QChgm39a7hBPnV67n2vTSAIufc75xumnN+/nHhXPE6b45Xr60vV+a5fG3uhRRp6sSvODiuj2d/I7XbHgK7hT4cZZER9BBv0keomDdr1HnqJK4Jqj7TGTofJ4KDyVQcWyKBYfTjHIqPBs8m1YEMI=;5:SuPqz4N5Xgt/JCZZyuTb3AN7lz49tXz4Zr304Qen8XKfQ9l6pCxKuutuvrX4WsfR1devtn44wvXYxXPE05owCT93uhUBHqSE51JoCwbshf7989ZBpzF/Rb7UY3tSPRuoqqsqBWja73hIL5A2y2htxjovVq+lO1LqKG3sV6+F8y4=;24:TppAERUXlbp5knDtm8kcE8ad977Hi2NJl64y9NQDYWKkku/HX1TNNBjDTx9k/FtUrhkTnWVGfL5HBM3fh++HbGi6yO7mFR3SDA+75IvWQAo=;7:8BQKpvj/E2eV+b4xZG3E53vjxEyTZJZotUM+pzCCwI3ihpw/snpB3AtMDlWfpnqm5xEVEgN1rQCfjp8QkkD5p2Cu8L5zIP06uvCTnhxPkZ7zx4lU/65UVKkVfPmjRlZ33KZDMuePfUJYJyP7a5Gj+5ZvP6SPweE+5KSILww2iquIrVtYwCNlz0N/YELxUMsm/Wy3U18bUN34Od9azPqSwxyek0/MSlIuBVAo1ml7mpjoJSZO1kEDpQ770szm/xso
-SpamDiagnosticOutput: 1:99
-SpamDiagnosticMetadata: NSPM
-X-Microsoft-Exchange-Diagnostics: 1;BN6P136MB0017;20:9VzmvznpVjPOjfQIP0qMIMHoEtjubflb6y3NV/JPVeBxTGuCx8nJmqKDCaXiMYC9+tRgyQ3VXoHL/uhzjZaPnWaMffJW+GEEoUVvDGCFvM/3FIS4xYbwDeUE+82fg/FQoCOPpsyrcpk8bj9JHBRWK6MBWJwYJ49EhxZChtYf354=
-X-OriginatorOrg: autodesk.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Nov 2017 14:38:21.2767 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 284d6fc2-4d02-4b40-24bb-08d53736d793
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 67bff79e-7f91-4433-a8e5-c9252d2ddc1d
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN6P136MB0017
+In-Reply-To: <20171122200853.GB11671@aiede.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Lars Schneider <larsxschneider@gmail.com>
 
-When a graphical GIT_EDITOR is spawned by a Git command that opens
-and waits for user input (e.g. "git rebase -i"), then the editor window
-might be obscured by other windows. The user may be left staring at the
-original Git terminal window without even realizing that s/he needs to
-interact with another window before Git can proceed. To this user Git
-appears hanging.
 
-Print a message that Git is waiting for editor input in the original
-terminal and get rid of it when the editor returns.
+On 11/22/2017 3:08 PM, Jonathan Nieder wrote:
+> Hi,
+> 
+> Jeff Hostetler wrote:
+> 
+>> Teach rev-list to use the filtering provided by the
+>> traverse_commit_list_filtered() interface to omit
+>> unwanted objects from the result.
+>>
+>> Object filtering is only allowed when one of the "--objects*"
+>> options are used.
+> 
+> micronit: the line widths seem to be uneven in these commit messages,
+> which is a bit distracting when reading.
 
-No message is printed in a "dumb" terminal as it would not be possible
-to remove the message after the editor returns. This should not be a
-problem as this feature is targeted at novice Git users and they are
-unlikely to work with a "dumb" terminal.
+ok
 
-Power users might not want to see this message or their editor might
-already print such a message (e.g. emacsclient). Allow these users to
-suppress the message by disabling the "advice.waitingForEditor" config.
+> 
+>> When the "--filter-print-omitted" option is used, the omitted
+>> objects are printed at the end.  These are marked with a "~".
+>> This option can be combined with "--quiet" to get a list of
+>> just the omitted objects.
+> 
+> Neat.  Can you give a quick example?
 
-The standard advise() function is not used here as it would always add
-a newline which would make deleting the message harder.
+I can put part of this in the V6 version, but here is a quick example.
 
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
----
- Documentation/config.txt |  3 +++
- advice.c                 |  2 ++
- advice.h                 |  1 +
- editor.c                 | 15 +++++++++++++++
- 4 files changed, 21 insertions(+)
+     $ git rev-list --objects HEAD
+     0629eb0173b5de0fb664e24bd4292988b2af1290
+     b2eaab8088df7ddad7f134e7b5144892b9646749
+     21b9d3ce3550213ac7de1391a518ab83f16912a2
+     3760f5a324c290c4f3518f087e2bdedd9d8f9ce4 large.1000
+     b3b5c5d37a767d73101e5a27393af2682bda4fd7 large.10000
+     472cd9f4ed2a4804bcc2a2865e1a3ae00742eb01
+     
+     $ git rev-list --objects HEAD --filter=blob:none --filter-print-omitted
+     0629eb0173b5de0fb664e24bd4292988b2af1290
+     b2eaab8088df7ddad7f134e7b5144892b9646749
+     21b9d3ce3550213ac7de1391a518ab83f16912a2
+     472cd9f4ed2a4804bcc2a2865e1a3ae00742eb01
+     ~3760f5a324c290c4f3518f087e2bdedd9d8f9ce4
+     ~b3b5c5d37a767d73101e5a27393af2682bda4fd7
+     
+     $ git rev-list --objects HEAD --filter=blob:limit=5000 --filter-print-omitted
+     0629eb0173b5de0fb664e24bd4292988b2af1290
+     b2eaab8088df7ddad7f134e7b5144892b9646749
+     21b9d3ce3550213ac7de1391a518ab83f16912a2
+     3760f5a324c290c4f3518f087e2bdedd9d8f9ce4 large.1000
+     472cd9f4ed2a4804bcc2a2865e1a3ae00742eb01
+     ~b3b5c5d37a767d73101e5a27393af2682bda4fd7
+     
+     $ git rev-list --objects HEAD --filter=blob:limit=5000 --filter-print-omitted --quiet
+     ~b3b5c5d37a767d73101e5a27393af2682bda4fd7
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 671fcbaa0f..de64201e82 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -354,6 +354,9 @@ advice.*::
- 	ignoredHook::
- 		Advice shown if an hook is ignored because the hook is not
- 		set as executable.
-+	waitingForEditor::
-+		Print a message to the terminal whenever Git is waiting for
-+		editor input from the user.
- --
- 
- core.fileMode::
-diff --git a/advice.c b/advice.c
-index c6169bcb52..406efc183b 100644
---- a/advice.c
-+++ b/advice.c
-@@ -18,6 +18,7 @@ int advice_object_name_warning = 1;
- int advice_rm_hints = 1;
- int advice_add_embedded_repo = 1;
- int advice_ignored_hook = 1;
-+int advice_waiting_for_editor = 1;
- 
- static struct {
- 	const char *name;
-@@ -40,6 +41,7 @@ static struct {
- 	{ "rmhints", &advice_rm_hints },
- 	{ "addembeddedrepo", &advice_add_embedded_repo },
- 	{ "ignoredhook", &advice_ignored_hook },
-+	{ "waitingforeditor", &advice_waiting_for_editor },
- 
- 	/* make this an alias for backward compatibility */
- 	{ "pushnonfastforward", &advice_push_update_rejected }
-diff --git a/advice.h b/advice.h
-index f525d6f89c..70568fa792 100644
---- a/advice.h
-+++ b/advice.h
-@@ -20,6 +20,7 @@ extern int advice_object_name_warning;
- extern int advice_rm_hints;
- extern int advice_add_embedded_repo;
- extern int advice_ignored_hook;
-+extern int advice_waiting_for_editor;
- 
- int git_default_advice_config(const char *var, const char *value);
- __attribute__((format (printf, 1, 2)))
-diff --git a/editor.c b/editor.c
-index c65ea698eb..cdad4f74ec 100644
---- a/editor.c
-+++ b/editor.c
-@@ -45,6 +45,13 @@ int launch_editor(const char *path, struct strbuf *buffer, const char *const *en
- 		const char *args[] = { editor, real_path(path), NULL };
- 		struct child_process p = CHILD_PROCESS_INIT;
- 		int ret, sig;
-+		int print_waiting_for_editor = advice_waiting_for_editor &&
-+			isatty(2) && !is_terminal_dumb();
-+
-+		if (print_waiting_for_editor) {
-+			fprintf(stderr, _("hint: Waiting for your editor input..."));
-+			fflush(stderr);
-+		}
- 
- 		p.argv = args;
- 		p.env = env;
-@@ -63,6 +70,14 @@ int launch_editor(const char *path, struct strbuf *buffer, const char *const *en
- 		if (ret)
- 			return error("There was a problem with the editor '%s'.",
- 					editor);
-+
-+		if (print_waiting_for_editor)
-+			/*
-+			 * go back to the beginning and erase the
-+			 * entire line to avoid wasting the vertical
-+			 * space.
-+			 */
-+			fputs("\r\033[K", stderr);
- 	}
- 
- 	if (!buffer)
--- 
-2.15.0
+
+> 
+> Using --quiet for this feels a bit odd, since it previously meant
+> to print nothing to stdout.  I wonder if there's another way ---
+> e.g.
+> 
+> 	--print-omitted=(yes|no|only)
+
+Yeah, now that you say that it does seem a little odd.  I could
+go either way here.  My expected usage was to be able to do a
+commits-and-trees fetch and then do before doing a checkout, do
+a narrow fetch of just the blobs in the tip that were omitted
+when the commit and trees were received.
+
+> 
+> If I wanted to list all objects matching a filter, even objects
+> that are not reachable from any ref, is there a way to do that?
+> (Just curious, trying to think about this interface.)
+
+I'm building on rev-list, so you can give it one or more refs or
+revision ranges and it will traverse all of them and print any OIDs
+it finds during the traversal.
+
+I don't know of any way to visit unreachable objects, without using
+something like GC.
+
+> 
+>> Add t6112 test.
+> 
+> This part doesn't need to be in the commit message.  More generally,
+> anything I could more easily learn from the code or diffstat doesn't
+> need to be in the commit message: the commit message is about the
+> "why" more than the details of what in the code changed.
+> 
+
+ok
+
+>> In the future, we will introduce a "partial clone" mechanism
+>> wherein an object in a repo, obtained from a remote, may
+>> reference a missing object that can be dynamically fetched from
+>> that remote once needed.  This "partial clone" mechanism will
+>> have a way, sometimes slow, of determining if a missing link
+>> is one of the links expected to be produced by this mechanism.
+> 
+> Does this mean the <filter-spec>s will be part of the wire protocol?
+> I'll look more carefully at them below with that in mind.
+
+yes.  a later commit will send the given <filter-spec> to the
+server.  the idea is that clone and fetch will accept a filter
+argument, pass that to the server, and have upload-pack/pack-objects
+generate an incomplete packfile that omits unwanted objects.
+
+so you could do something like:
+
+     $ git clone --no-checkout --filter=blob:none URL .
+
+then either [1] explicitly request the omitted blobs/objects for a
+tip commit or (in the case of a sparse-checkout) just the blobs
+for a portion of a tip commit and then do a normal checkout.
+or [2] rely on the (future) fetch-objects code to dynamically
+fetch the required omitted blobs during a checkout.
+
+Or if you know you (probably) never want gigantic blobs, do
+something like:
+
+     $ git clone --filter=blob:limit=1m URL .
+
+which would give you a mostly complete view repo, but just exclude
+files > 1MB.  Those blobs could then be demand loaded as needed
+later.
+
+
+> 
+>> This patch introduces handling of missing objects to help
+>> debugging and development of the "partial clone" mechanism,
+>> and once the mechanism is implemented, for a power user to
+>> perform operations that are missing-object aware without
+>> incurring the cost of checking if a missing link is expected.
+> 
+> I had trouble understanding what this paragraph is about.  Can you
+> give an example?
+
+The concept of filtering during a clone or fetch leads to
+intentionally omitted objects (from the point of view of the
+filter-er -- usually the server).  The receiving client now
+has "intentionally missing" objects.  The "promisor" concept
+will be introduced later to address them.
+
+Certain git operations fail when there are missing objects
+(because git assumes any missing object is a corruption of some
+kind).  There are times, however, when we want to allow the
+operation to continue without error and without accidentally
+demand loading the missing objects.
+
+In the context of this commit, I added an option to rev-list
+to print the missing objects seen during a traversal.  This
+is independent of filtering.  For example, the client could
+do a partial clone and then ask to see what blobs it would
+need to checkout master:
+
+     $ git clone --no-checkout --filter=blob:none URL .
+     [...]
+
+     $ git rev-list --objects HEAD --filter=blob:none --filter-print-omitted --quiet
+     ~975fbec8256d3e8a3797e7a3611380f27c49f4ac
+     ~3760f5a324c290c4f3518f087e2bdedd9d8f9ce4
+     ~587be6b4c3f93f93c489c0111bba5596147a26cb
+
+     $ git rev-list --objects master --missing=print --quiet
+     ?975fbec8256d3e8a3797e7a3611380f27c49f4ac
+     ?3760f5a324c290c4f3518f087e2bdedd9d8f9ce4
+     ?587be6b4c3f93f93c489c0111bba5596147a26cb
+
+Note that this 2nd invocation of rev-list does not know about the
+filtering criteria used for the clone (or the last fetch); it
+just knows what blobs are currently missing from the local repo.
+
+Note that the missing-list may be a subset of that printed by
+the --filter-print-omitted option because of demand loading
+or changing filter criteria over successive fetches.  So there
+may be fewer actual missing blobs than what a filtering traversal
+would report.
+
+So the 2nd invocation can be used as debugging for later
+partial clone, partial fetch, and pack-object commands.
+As of this state in the patch series (part 1), the --missing
+option is mainly for debugging.
+
+I also allow --missing=allow-any to not complain if any
+objects are missing.  In a later commit we'll add --missing=allow-promisor
+to say only allow intentionally missing objects, but still fail
+for unexpected missing objects (corruptions).
+
+This is better seen in the next commit in this series which
+adds the --missing option to pack-objects.  Normally, pack-objects
+would only be run on a server with a complete view of the repo,
+but it could be run on a partial clone and that invocation would
+stumble over missing objects.  So in that more advanced usage,
+it could be helpful.  For example, a repo serving as a proxy
+could do a partial clone/fetch to avoid large objects and serve
+that same subset to end-clients without fear of getting a missing
+object error.
+
+> 
+>> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+>> ---
+>>   Documentation/git-rev-list.txt      |   4 +-
+>>   Documentation/rev-list-options.txt  |  36 ++++++
+>>   builtin/rev-list.c                  | 108 ++++++++++++++++-
+>>   t/t6112-rev-list-filters-objects.sh | 225 ++++++++++++++++++++++++++++++++++++
+>>   4 files changed, 370 insertions(+), 3 deletions(-)
+>>   create mode 100755 t/t6112-rev-list-filters-objects.sh
+> 
+> Looks reasonably concise, good.
+> 
+> [...]
+>> --- a/Documentation/git-rev-list.txt
+>> +++ b/Documentation/git-rev-list.txt
+>> @@ -47,7 +47,9 @@ SYNOPSIS
+>>   	     [ --fixed-strings | -F ]
+>>   	     [ --date=<format>]
+>>   	     [ [ --objects | --objects-edge | --objects-edge-aggressive ]
+>> -	       [ --unpacked ] ]
+>> +	       [ --unpacked ]
+>> +	       [ --filter=<filter-spec> [ --filter-print-omitted ] ] ]
+> 
+> Does this mean --filter is only useful with --objects?  E.g. I can't
+> use it to filter commits?
+
+Right --filter only works with --objects because we need
+to force the full traversal of each commit.  And right, I'm
+not looking to filter commits at this point.  rev-list and friends
+already have command line args to handle various refs and ranges.
+And we already have shallow clone.  So I didn't want to alter the
+existing commit iteration mechanism.
+
+> 
+>> +	     [ --missing=<missing-action> ]
+> 
+> --missing=(error|allow-any|print) would be more informative and about
+> equally concise.
+> 
+> Since this is mainly for debugging, does it have a different
+> compatibility guarantee from other options?  Could it be named
+> accordingly to set expectations?
+
+that version of the doc formatting is fine.
+
+as for the naming, i'd rather keep it as is since i think it will
+have uses than just debugging.
+
+
+> 
+> [...]
+>> +The form '--filter=blob:none' omits all blobs.
+> 
+> Sounds sensible.
+> 
+>> ++
+>> +The form '--filter=blob:limit=<n>[kmg]' omits blobs larger than n bytes
+>> +or units.  The value may be zero.
+> 
+> On second thought, doesn't blob:limit=0 mean blob:none is not needed?
+> Is it for future consistency with tree:none?
+
+yes, blob:none and blob:limit=0 now mean the same thing.  they didn't
+at one point -- an earlier version of the latter also included an ".git*"
+special files regardless of size.  that got taken out recently.  so i'm
+ok with getting rid of the former if we want.
+
+WRT to tree:none, i have not gone deep on any tree filters yet.  But I
+could envision, a tree:none and maybe an enhanced sparse filter.
+Mainly because I was focusing on blobs.
+
+There are some round-trip issues with filtering trees that we'll get
+into later with fetch and/or dynamic object loading and I wanted to
+avoid that for the moment.
+
+> 
+> What units do [kmg] use? Are they GB, GiB, or one of the variants in
+> between?
+
+powers of 1024.  i'll add that to the text.  thanks.
+
+> 
+>> ++
+>> +The form '--filter=sparse:oid=<oid-ish>' uses a sparse-checkout
+>> +specification contained in the object (or the object that the expression
+>> +evaluates to) to omit blobs that would not be not required for a
+>> +sparse checkout on the requested refs.
+> 
+> This one makes me a little nervous because it would mean we're
+> planning on adding sparse-checkout specifications to the wire
+> protocol.  Maybe that's okay --- they're already part of the on-disk
+> format --- but it makes me nervous because the sparse-checkout format
+> is not so great, as I believe MS has already noticed.
+> 
+> What is an <oid-ish>?  Can it just say <blob>?  How would this one
+> work when passed over the wire?
+
+I should have said <blob-ish>.  If I want to do a partial clone that
+only gives me the blobs that I would need to do a sparse checkout,
+I could use this.  I suggest a <blob-ish> here so that the client
+could say something like "<ref>:<path>" (e.g. "master:my_work_area.txt")
+in addition to allowing an actual SHA1.  Much more convenient when
+the client doesn't yet have the repo cloned and can't lookup any SHAs
+locally.
+
+> 
+>> ++
+>> +The form '--filter=sparse:path=<path>' similarly uses a sparse-checkout
+>> +specification contained in <path>.
+> 
+> Is this <path> relative to the cwd of the caller, or is it within some
+> commit?
+
+I initially envisioned this for local debugging so that I could
+say "git fetch --filter=sparse:path=.git/info/sparse-checkout".
+I currently allow it in the protocol to the server as I think
+there may be uses for it (with appropriate guards).
+
+> 
+> Sorry it took so long to send this feedback / these questions.
+> Hopefully it's useful nevertheless.
+> 
+> Thanks and hope that helps,
+> Jonathan
+> 
+
+Very helpful.  Thanks!
+Jeff
 
