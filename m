@@ -2,221 +2,680 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 78DAF20A40
-	for <e@80x24.org>; Wed, 29 Nov 2017 19:11:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4C44920A40
+	for <e@80x24.org>; Wed, 29 Nov 2017 19:54:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751982AbdK2TLH (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Nov 2017 14:11:07 -0500
-Received: from bsmtp.bon.at ([213.33.87.14]:28615 "EHLO bsmtp.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751443AbdK2TLF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Nov 2017 14:11:05 -0500
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp.bon.at (Postfix) with ESMTPSA id 3yn99g0qklz5tlK;
-        Wed, 29 Nov 2017 20:11:03 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 9B197211E;
-        Wed, 29 Nov 2017 20:11:02 +0100 (CET)
-Subject: Re: [SCRIPT/RFC 0/3] git-commit --onto-parent (three-way merge, no
- working tree file changes)
-To:     Igor Djordjevic <igor.d.djordjevic@gmail.com>
-Cc:     git@vger.kernel.org, Nikolay Shustov <nikolay.shustov@gmail.com>,
-        Johannes Schneider <mailings@cedarsoft.com>,
-        Patrik Gornicz <patrik-git@mail.pgornicz.com>,
-        Martin Waitz <tali@admingilde.org>,
-        Shawn Pearce <spearce@spearce.org>,
-        Sam Vilain <sam@vilain.net>, Jakub Narebski <jnareb@gmail.com>
-References: <8998e832-f49f-4de4-eb8d-a7934fba97b5@gmail.com>
- <d5f243a5-6e35-f3fc-4daf-6e1376bef897@kdbg.org>
- <203a75c8-0c58-253c-2c18-05450f7ae49b@gmail.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <ea156b8b-29d8-7501-b5a5-a29cfbd7d1d6@kdbg.org>
-Date:   Wed, 29 Nov 2017 20:11:02 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.0
+        id S1752324AbdK2Tyo (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Nov 2017 14:54:44 -0500
+Received: from mail-wr0-f180.google.com ([209.85.128.180]:35083 "EHLO
+        mail-wr0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752014AbdK2Tym (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Nov 2017 14:54:42 -0500
+Received: by mail-wr0-f180.google.com with SMTP id g53so4528146wra.2
+        for <git@vger.kernel.org>; Wed, 29 Nov 2017 11:54:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=loNzeP3wzsEm7Oi2mMvSzhexblfuf4wizW5CQz57Cck=;
+        b=GUtDWhJHB3DUgYqH5hgziRRrHmfBqHWhRDDIlZD4/lpnbDpcPRWhegYazbZNCHPOa+
+         da7C8NaWu/4uzVrqq2awVS56mlkgk4pZr/F2DBkTNYoIVf0HEBMjwgY5HNqX2iWqtAIp
+         ZutnwNuQnOhI1vX0/n+ghIxSNTwi4neEeHXr46mfKR3ochw3lsDG+1c+KtEPA6cSwiIL
+         4MelxkCGWi0qHwBLMIef0zhYit37HbBTB5wxxXv9ixVvXuyXcNAylNSIj83hHrsdNixi
+         9p1gWsXrDpi5yy5axRVq2phM2U8QCoNj7vqxUVge7NLUaZePZQis1Hf6l3Gdwkkuxjq1
+         s5gg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=loNzeP3wzsEm7Oi2mMvSzhexblfuf4wizW5CQz57Cck=;
+        b=JkyiEAlaz/IY+DBd4VNTncmf4nLVIcITjAY2CG33/afMgusqfwoVBQTEfYiWGLEFSK
+         CP/2bQp768Gw73LJjtcqmhabbtYpF/DkDhyjUyqSPIepRXQtSjSEmnW+QNIfZO2u7Rhe
+         gDv9hp9kgRTVoy88VeF8DWveqM2dbV3cFpqO72AT825NiKrb/MgpZXluf4Izx6dIOthk
+         tXD/yNlH56CoUjys2auLROoPVJU51oNeyekHWWj72wLvdM5yORA4VLsYZUXnmAkap5ZQ
+         ImJihehOmxmTOGdqqhgmif0sleLnNvo7fcNOIuWhkccM19c4Yc2lsibBNAMJEUtjFy+M
+         4rdw==
+X-Gm-Message-State: AJaThX6qdci8zqEsHaskAWGy7afp7FGZwunbK+kykNZD1hSGug6D5TgH
+        pwJtB+CTG8k0M/rEG54hs2fpeQs8
+X-Google-Smtp-Source: AGs4zMYUgMiIzrDnCB4HqCEcH3+FmlgzgJ6qhcRH8iSfx36UTF5HI1r6dEn2XMVky9bmVw25DGKDEQ==
+X-Received: by 10.223.171.202 with SMTP id s68mr11254wrc.13.1511985280039;
+        Wed, 29 Nov 2017 11:54:40 -0800 (PST)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id i1sm900346wri.34.2017.11.29.11.54.38
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 29 Nov 2017 11:54:38 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Dan Jacques <dnj@google.com>,
+        Alex Riesen <alexander.riesen@cetitec.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Brandon Casey <drafnel@gmail.com>, Petr Baudis <pasky@ucw.cz>,
+        Gerrit Pape <pape@smarden.org>,
+        "martin f . krafft" <madduck@madduck.net>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH] Makefile: replace perl/Makefile.PL with simple make rules
+Date:   Wed, 29 Nov 2017 19:54:30 +0000
+Message-Id: <20171129195430.10069-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.15.0.403.gc27cc4dac6
+In-Reply-To: <20171129153436.24471-1-avarab@gmail.com>
+References: <20171129153436.24471-1-avarab@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <203a75c8-0c58-253c-2c18-05450f7ae49b@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 28.11.2017 um 02:15 schrieb Igor Djordjevic:
-> On 27/11/2017 22:54, Johannes Sixt wrote:
->>
->> I my opinion, putting the focus on integration merge commits and the
->> desire to automate the re-merge step brings in a LOT of complexity in
->> the implementation for a very specific use-case that does not
->> necessarily help other cases.
-> 
-> It might seem more complex than it is, until you examine the guts to
-> see how it really works :)
-> 
-> Basic concept is pretty simple, as I actually don`t automate
-> anything, at least not in terms of what would manual user steps look
-> like - for example, there`s no real re-merge step in terms of
-> actually redoing the merge, I just reuse what was already there in a
-> very clean way, I would think (supported by my current, humble
-> knowledge, still).
-> 
-> The only merge that could possibly ever happen is upon committing
-> desired subset of changes onto parent, and that shouldn`t be too
-> complex by definition, otherwise that commit doesn`t really belong
-> there in the first place, if it can`t be meaningfully applied where
-> we want it (for now, at least).
-> 
-> That said, the whole operation of "posting on parent and re-merging
-> everything", the way it looks like from the outside, could end just
-> with a simple diff-apply-commit-commit internally, no merges at all.
-> Only if simple `git apply` fails, we try some trivial merging - and
-> all that inside separate (parent) index only, not touching original
-> HEAD index nor working tree, staying pristine for the whole process,
-> untouched.
-> 
-> Once done, you should be in the very same situation you started from,
-> nothing changed, just having your history tweaked a bit to tell a
-> different story on how you got there (now including a commit you
-> posted on your HEAD`s parent).
+Replace the perl/Makefile.PL and the fallback perl/Makefile used under
+NO_PERL_MAKEMAKER=NoThanks with a much simpler implementation heavily
+inspired by how the i18n infrastructure's build process works[1].
 
-Ok, then please explain, how this process should work in my workflow and 
-with the `commit --onto-parent` feature that you have in mind. I have an 
-integration branch (which is a throw-away type, so you can mangle it in 
-any way you want); it is a series of merges:
+The reason for having the Makefile.PL in the first place is that it
+was initially[2] building a perl C binding to interface with libgit,
+this functionality, that was removed[3] before Git.pm ever made it to
+the master branch.
 
-  ...A    ...C          <- topics A, C
-      \       \
-    ---o---o---o---o    <- integration
-          /       /
-      ...B    ...D      <- topics B, D
+We've since since started maintaining a fallback perl/Makefile, as
+MakeMaker wouldn't work on some platforms[4]. That's just the tip of
+the iceberg. We have the PM.stamp hack in the top-level Makefile[5] to
+detect whether we need to regenerate the perl/perl.mak, which I fixed
+just recently to deal with issues like the perl version changing from
+under us[6].
 
-Now I find a bug in topic B. Assume that the merges of C and D have 
-textual conflicts with the integration branch (but not with B) and/or 
-may be evil. What should I do?
+There is absolutely no reason for why this needs to be so complex
+anymore. All we're getting out of this elaborate Rube Goldberg machine
+was copying perl/* to perl/blib/* as we do a string-replacement on
+the *.pm files to hardcode @@LOCALEDIR@@ in the source.
 
-With git-post, I make a fixup commit commit on the integration branch, 
-then `git post B && git merge B`:
+So replace the whole thing with something that's pretty much a copy of
+how we generate po/build/**.mo from po/*.po, just with a small sed(1)
+command instead of msgfmt. As that's being done rename the files
+from *.pm to *.pmc just to indicate that they're genreated (see
+"perldoc -f require").
 
-  ...A    ...C                  <- topics A, C
-      \       \
-    ---o---o---o---o---f---F    <- integration
-          /       /       /
-      ...B    ...D       /      <- topic D
-          \             /
-           f'----------'        <- topic B
+While I'm at it, change the fallback for Error.pm from being something
+where we'll ship our own Error.pm if one doesn't exist at build time
+to one where we just use a Git::Error wrapper that'll always prefer
+the system-wide Error.pm, only falling back to our own copy if it
+really doesn't exist at runtime. It's now shipped as
+Git::FromCPAN::Error, making it easy to add other modules to
+Git::FromCPAN::* in the future if that's needed.
 
-The merge F does not introduce any changes on the integration branch, so 
-I do not need it, but it helps keep topic B off radar when I ask `git 
-branch --no-merged` later.
+Functional changes:
 
-> Don`t let "usual/preferred/recommended" Git workflow distract you too
-> much - one of the reasons I made this is because it also allows _kind
-> of_ "vanilla Git" patch queue, where you can quickly work on top of
-> the merge head, pushing commits onto parents below, being tips of
-> your "queues", putting you up to speed without a need to ever switch
-> a branch (hypothetically), until satisfied with what you have, where
-> you can slow down and polish each branch separately, as usual.
-> 
-> Like working on multiple branches at the same time, in the manner
-> similar to what `git add --patch` allows in regards to working on
-> multiple commits at the same time. This just takes it on yet another
-> level... hopefully :)
+ * This will not always install into perl's idea of its global
+   "installsitelib". This only potentially matters for packagers that
+   need to expose Git.pm for non-git use, and as explained in the
+   INSTALL file there's a trivial workaround.
 
-'kay, I'm not eagerly waiting for this particular next level (I prefer 
-to keep things plain and simple), but I would never say this were a 
-broken workflow. ;)
+ * The scripts themselves will 'use lib' the target directory, but if
+   INSTLIBDIR is set it overrides it. It doesn't have to be this way,
+   it could be set in addition to INSTLIBDIR, but my reading of [7] is
+   that this is the desired behavior.
 
->> In your scenario above, it would certainly not be too bad if you
->> forgo the automatic merge and have the user issue a merge command
->> manually. The resulting history could look like this:
->>
->> (3)         o---o---A---X    (topicA)
->>             /         \   \
->>            /           M1--M2 (test, HEAD)
->>           /           /||
->>       ---o---o---M---' ||     (master)
->>           \   \       / |
->>            \   o-----B /      (topicB)
->>             \         /
->>              o---o---C        (topicC)
->>
->> I.e., commit --onto-parent A produced commit X, but M2 was then a
->> regular manual merge. (Of course, I am assuming that the merge
->> commits are dispensible, and only the resulting tree is of
->> interest.)
-> 
-> I see - and what you`re asking for is what I already envisioned and
-> hoped to get some more feedback about, here`s excerpt from
-> [SCRIPT/RFC 3/3] git-commit--onto-parent.sh[1] (I guess you didn`t
-> have time to checked that one yet?):
+ * We don't build the Git(3) Git::I18N(3) etc. man pages from the
+   embedded perldoc. I suspect nobody really cares, these are mostly
+   internal APIs, and if someone's developing against them they likely
+   know enough to issue a "perldoc" against the installed file to get
+   the same result.
 
-I did have a brief look, but I stopped when I saw
+   But this is a change in how Git is installed now on e.g. CentOS &
+   Debian which carry these manpages. They could be added (via
+   pod2man) if anyone really cares.
 
-	# Remove entry from HEAD reflog, not to pollute it with
-	# uninteresting in-between steps we take, leaking implementation
-	# details to end user.
+   I doubt they will. The reason these were built in the first place
+   was as a side-effect of how ExtUtils::MakeMaker works.
 
-It's a clear sign for me that's something wrong. It is not just reflogs 
-that can become stale, but all operations that follow the `git commit` 
-can fail. How do you clean up such a mess?
+1. 5e9637c629 ("i18n: add infrastructure for translating Git with
+   gettext", 2011-11-18)
 
-> 
->    For example, it might make sense to separate commit creation (on
->    current HEAD`s parent) and its actual re-merging into integration
->    test branch, where "--remerge" (or something) parameter would be used
->    on top of "--onto-parent" to trigger both, if/when desired.
->    
->    Another direction to think in might be introducing more general
->    "--onto" parameter, too (or instead), without "parent" restriction,
->    allowing to record a commit on top of any arbitrary commit (other
->    than HEAD). This could even be defaulted to "git commit <commit-ish>"
->    (no option needed), where current "git commit" behaviour would then
->    just be a special case of omitted <commit-ish> defaulting to HEAD,
->    aligning well with other Git commands sharing the same behaviour.
-> 
-> So I definitely look forward decoupling these two ((1) commit to
-> parent and (2) remerge), with enough discussion flowing :)
-> 
-> Heck, even "to parent" is an artificial/imposed restriction now, in
-> reality you could commit on top of any other commit you want (without
-> switching branches)... but let`s take one step at a time.
-> 
-> Just note that omitting the remerge step is what actually makes the
-> logic more complex, as we now need to change the original situation,
-> too, both HEAD index and working tree, to remove changes which we
-> committed elsewhere (without "merging" back in).
+2. b1edc53d06 ("Introduce Git.pm (v4)", 2006-06-24)
 
-The "complex situation" I had in mind was not so much about the user's 
-view, but how the implementation has to work when there are errors.
+3. 18b0fc1ce1 ("Git.pm: Kill Git.xs for now", 2006-09-23)
 
->>From what I understand, your `git-post` makes a commit where you are 
-> _and copies_ it over to destination, so you end up with same changes
-> in two places (two commits). More, you seem to keep working on top of
-> your previous commit(s), which seems logical, later "posting" it
-> where desired - so after the fact. It also means you do still have
-> all your "fix" commits in HEAD while you work on them (and until you
-> git-post and abandon them, discarding the integration branch).
+4. f848718a69 ("Make perl/ build procedure ActiveState friendly.",
+   2006-12-04)
 
-Just to clarify: git-post only copies existing commits, but does not 
-make the original itself.
+5. ee9be06770 ("perl: detect new files in MakeMaker builds",
+   2012-07-27)
 
-> 
-> But `git commit --onto-parent` proposed here does the commit on
-> destination only, where later "remerge" is crucial part of still
-> keeping that commit changes in the current HEAD working tree as well,
-> so you can still keep working on top of them.
-> 
-> Could it be that you`re looking at `git commit --onto-parent` from an
-> unexpected perspective (through your `git-post`, being conceptually
-> different)...?
+6. c59c4939c2 ("perl: regenerate perl.mak if perl -V changes",
+   2017-03-29)
 
-That may be the case. I'm very interested in your answer to my challenge 
-above.
+7. 0386dd37b1 ("Makefile: add PERLLIB_EXTRA variable that adds to
+   default perl path", 2013-11-15)
 
--- Hannes
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+
+Here's the non-RFC version. I think this is ready to be applied,
+fixing that issue with Error.pm was easier than I thought.
+
+ INSTALL                                          | 17 ++++-
+ Makefile                                         | 53 +++++++-------
+ contrib/examples/git-difftool.perl               |  2 +-
+ git-send-email.perl                              |  2 +-
+ perl/.gitignore                                  |  9 +--
+ perl/Git.pm                                      |  2 +-
+ perl/Git/Error.pm                                | 47 +++++++++++++
+ perl/{private-Error.pm => Git/FromCPAN/Error.pm} |  0
+ perl/Git/I18N.pm                                 |  2 +-
+ perl/Makefile                                    | 90 ------------------------
+ perl/Makefile.PL                                 | 62 ----------------
+ t/perf/aggregate.perl                            |  2 +-
+ t/test-lib.sh                                    |  2 +-
+ wrap-for-bin.sh                                  |  2 +-
+ 14 files changed, 95 insertions(+), 197 deletions(-)
+ create mode 100644 perl/Git/Error.pm
+ rename perl/{private-Error.pm => Git/FromCPAN/Error.pm} (100%)
+ delete mode 100644 perl/Makefile
+ delete mode 100644 perl/Makefile.PL
+
+diff --git a/INSTALL b/INSTALL
+index ffb071e9f0..822ed16095 100644
+--- a/INSTALL
++++ b/INSTALL
+@@ -84,9 +84,24 @@ Issues of note:
+ 
+ 	GIT_EXEC_PATH=`pwd`
+ 	PATH=`pwd`:$PATH
+-	GITPERLLIB=`pwd`/perl/blib/lib
++	GITPERLLIB=`pwd`/perl/build
+ 	export GIT_EXEC_PATH PATH GITPERLLIB
+ 
++ - By default (unless NO_PERL is provided) Git will ship various perl
++   scripts & libraries it needs. However, for simplicity it doesn't
++   use the ExtUtils::MakeMaker toolchain to decide where to place the
++   perl libraries. Depending on the system this can result in the perl
++   libraries not being where you'd like them if they're expected to be
++   used by things other than Git itself.
++
++   Manually supplying a perllibdir prefix should fix this, if this is
++   a problem you care about, e.g.:
++
++       prefix=/usr perllibdir=/usr/$(/usr/bin/perl -MConfig -wle 'print substr $Config{installsitelib}, 1 + length $Config{siteprefixexp}')
++
++   Will result in e.g. perllibdir=/usr/share/perl/5.26.1 on Debian,
++   perllibdir=/usr/share/perl5 (which we'd use by default) on CentOS.
++
+  - Git is reasonably self-sufficient, but does depend on a few external
+    programs and libraries.  Git can be used without most of them by adding
+    the approriate "NO_<LIBRARY>=YesPlease" to the make command line or
+diff --git a/Makefile b/Makefile
+index e53750ca01..e3c382f120 100644
+--- a/Makefile
++++ b/Makefile
+@@ -295,9 +295,6 @@ all::
+ #
+ # Define PERL_PATH to the path of your Perl binary (usually /usr/bin/perl).
+ #
+-# Define NO_PERL_MAKEMAKER if you cannot use Makefiles generated by perl's
+-# MakeMaker (e.g. using ActiveState under Cygwin).
+-#
+ # Define NO_PERL if you do not want Perl scripts or libraries at all.
+ #
+ # Define PYTHON_PATH to the path of your Python binary (often /usr/bin/python
+@@ -473,6 +470,7 @@ gitexecdir = libexec/git-core
+ mergetoolsdir = $(gitexecdir)/mergetools
+ sharedir = $(prefix)/share
+ gitwebdir = $(sharedir)/gitweb
++perllibdir = $(sharedir)/perl5
+ localedir = $(sharedir)/locale
+ template_dir = share/git-core/templates
+ htmldir = $(prefix)/share/doc/git-doc
+@@ -486,7 +484,7 @@ mandir_relative = $(patsubst $(prefix)/%,%,$(mandir))
+ infodir_relative = $(patsubst $(prefix)/%,%,$(infodir))
+ htmldir_relative = $(patsubst $(prefix)/%,%,$(htmldir))
+ 
+-export prefix bindir sharedir sysconfdir gitwebdir localedir
++export prefix bindir sharedir sysconfdir gitwebdir perllibdir localedir
+ 
+ CC = cc
+ AR = ar
+@@ -1525,9 +1523,6 @@ ifdef SHA1_MAX_BLOCK_SIZE
+ 	LIB_OBJS += compat/sha1-chunked.o
+ 	BASIC_CFLAGS += -DSHA1_MAX_BLOCK_SIZE="$(SHA1_MAX_BLOCK_SIZE)"
+ endif
+-ifdef NO_PERL_MAKEMAKER
+-	export NO_PERL_MAKEMAKER
+-endif
+ ifdef NO_HSTRERROR
+ 	COMPAT_CFLAGS += -DNO_HSTRERROR
+ 	COMPAT_OBJS += compat/hstrerror.o
+@@ -1716,6 +1711,7 @@ bindir_SQ = $(subst ','\'',$(bindir))
+ bindir_relative_SQ = $(subst ','\'',$(bindir_relative))
+ mandir_relative_SQ = $(subst ','\'',$(mandir_relative))
+ infodir_relative_SQ = $(subst ','\'',$(infodir_relative))
++perllibdir_SQ = $(subst ','\'',$(perllibdir))
+ localedir_SQ = $(subst ','\'',$(localedir))
+ gitexecdir_SQ = $(subst ','\'',$(gitexecdir))
+ template_dir_SQ = $(subst ','\'',$(template_dir))
+@@ -1824,9 +1820,6 @@ all::
+ ifndef NO_TCLTK
+ 	$(QUIET_SUBDIR0)git-gui $(QUIET_SUBDIR1) gitexecdir='$(gitexec_instdir_SQ)' all
+ 	$(QUIET_SUBDIR0)gitk-git $(QUIET_SUBDIR1) all
+-endif
+-ifndef NO_PERL
+-	$(QUIET_SUBDIR0)perl $(QUIET_SUBDIR1) PERL_PATH='$(PERL_PATH_SQ)' prefix='$(prefix_SQ)' localedir='$(localedir_SQ)' all
+ endif
+ 	$(QUIET_SUBDIR0)templates $(QUIET_SUBDIR1) SHELL_PATH='$(SHELL_PATH_SQ)' PERL_PATH='$(PERL_PATH_SQ)'
+ 
+@@ -1907,7 +1900,8 @@ common-cmds.h: $(wildcard Documentation/git-*.txt)
+ 
+ SCRIPT_DEFINES = $(SHELL_PATH_SQ):$(DIFF_SQ):$(GIT_VERSION):\
+ 	$(localedir_SQ):$(NO_CURL):$(USE_GETTEXT_SCHEME):$(SANE_TOOL_PATH_SQ):\
+-	$(gitwebdir_SQ):$(PERL_PATH_SQ):$(SANE_TEXT_GREP):$(PAGER_ENV)
++	$(gitwebdir_SQ):$(PERL_PATH_SQ):$(SANE_TEXT_GREP):$(PAGER_ENV):\
++	$(perllibdir_SQ)
+ define cmd_munge_script
+ $(RM) $@ $@+ && \
+ sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
+@@ -1951,29 +1945,17 @@ git.res: git.rc GIT-VERSION-FILE
+ $(SCRIPT_PERL_GEN): GIT-BUILD-OPTIONS
+ 
+ ifndef NO_PERL
+-$(SCRIPT_PERL_GEN): perl/perl.mak
+-
+-perl/perl.mak: perl/PM.stamp
+-
+-perl/PM.stamp: FORCE
+-	@$(FIND) perl -type f -name '*.pm' | sort >$@+ && \
+-	$(PERL_PATH) -V >>$@+ && \
+-	{ cmp $@+ $@ >/dev/null 2>/dev/null || mv $@+ $@; } && \
+-	$(RM) $@+
++$(SCRIPT_PERL_GEN):
+ 
+-perl/perl.mak: GIT-CFLAGS GIT-PREFIX perl/Makefile perl/Makefile.PL
+-	$(QUIET_SUBDIR0)perl $(QUIET_SUBDIR1) PERL_PATH='$(PERL_PATH_SQ)' prefix='$(prefix_SQ)' $(@F)
+-
+-PERL_DEFINES = $(PERL_PATH_SQ):$(PERLLIB_EXTRA_SQ)
+-$(SCRIPT_PERL_GEN): % : %.perl perl/perl.mak GIT-PERL-DEFINES GIT-VERSION-FILE
++PERL_DEFINES = $(PERL_PATH_SQ):$(PERLLIB_EXTRA_SQ):$(perllibdir_SQ)
++$(SCRIPT_PERL_GEN): % : %.perl GIT-PERL-DEFINES GIT-VERSION-FILE
+ 	$(QUIET_GEN)$(RM) $@ $@+ && \
+-	INSTLIBDIR=`MAKEFLAGS= $(MAKE) -C perl -s --no-print-directory instlibdir` && \
+ 	INSTLIBDIR_EXTRA='$(PERLLIB_EXTRA_SQ)' && \
+ 	INSTLIBDIR="$$INSTLIBDIR$${INSTLIBDIR_EXTRA:+:$$INSTLIBDIR_EXTRA}" && \
+ 	sed -e '1{' \
+ 	    -e '	s|#!.*perl|#!$(PERL_PATH_SQ)|' \
+ 	    -e '	h' \
+-	    -e '	s=.*=use lib (split(/$(pathsep)/, $$ENV{GITPERLLIB} || "'"$$INSTLIBDIR"'"));=' \
++	    -e '	s=.*=use lib (split(/$(pathsep)/, $$ENV{GITPERLLIB} || "'"$$INSTLIBDIR"'" || "'"$(perllibdir_SQ)"'"));=' \
+ 	    -e '	H' \
+ 	    -e '	x' \
+ 	    -e '}' \
+@@ -2291,6 +2273,17 @@ endif
+ po/build/locale/%/LC_MESSAGES/git.mo: po/%.po
+ 	$(QUIET_MSGFMT)mkdir -p $(dir $@) && $(MSGFMT) -o $@ $<
+ 
++PMFILES := $(wildcard perl/*.pm perl/*/*.pm perl/*/*/*.pm perl/*/*/*/*.pm)
++PMCFILES := $(patsubst perl/%.pm,perl/build/%.pmc,$(PMFILES))
++
++ifndef NO_PERL
++all:: $(PMCFILES)
++endif
++
++perl/build/%.pmc: perl/%.pm
++	$(QUIET_GEN)mkdir -p $(dir $@) && \
++	sed -e 's|@@LOCALEDIR@@|$(localedir_SQ)|g' < $< > $@
++
+ FIND_SOURCE_FILES = ( \
+ 	git ls-files \
+ 		'*.[hcS]' \
+@@ -2550,7 +2543,9 @@ ifndef NO_GETTEXT
+ 	(cd '$(DESTDIR_SQ)$(localedir_SQ)' && umask 022 && $(TAR) xof -)
+ endif
+ ifndef NO_PERL
+-	$(MAKE) -C perl prefix='$(prefix_SQ)' DESTDIR='$(DESTDIR_SQ)' install
++	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(perllibdir_SQ)'
++	(cd perl/build && $(TAR) cf - .) | \
++	(cd '$(DESTDIR_SQ)$(perllibdir_SQ)' && umask 022 && $(TAR) xof -)
+ 	$(MAKE) -C gitweb install
+ endif
+ ifndef NO_TCLTK
+@@ -2697,7 +2692,7 @@ clean: profile-clean coverage-clean
+ 	$(MAKE) -C Documentation/ clean
+ ifndef NO_PERL
+ 	$(MAKE) -C gitweb clean
+-	$(MAKE) -C perl clean
++	$(RM) -r perl/build/
+ endif
+ 	$(MAKE) -C templates/ clean
+ 	$(MAKE) -C t/ clean
+diff --git a/contrib/examples/git-difftool.perl b/contrib/examples/git-difftool.perl
+index df59bdfe97..fb0fd0b84b 100755
+--- a/contrib/examples/git-difftool.perl
++++ b/contrib/examples/git-difftool.perl
+@@ -13,7 +13,7 @@
+ use 5.008;
+ use strict;
+ use warnings;
+-use Error qw(:try);
++use Git::Error qw(:try);
+ use File::Basename qw(dirname);
+ use File::Copy;
+ use File::Find;
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 2208dcc213..88a0edcd7d 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -26,7 +26,7 @@ use Text::ParseWords;
+ use Term::ANSIColor;
+ use File::Temp qw/ tempdir tempfile /;
+ use File::Spec::Functions qw(catdir catfile);
+-use Error qw(:try);
++use Git::Error qw(:try);
+ use Cwd qw(abs_path cwd);
+ use Git;
+ use Git::I18N;
+diff --git a/perl/.gitignore b/perl/.gitignore
+index 0f1fc27f86..84c048a73c 100644
+--- a/perl/.gitignore
++++ b/perl/.gitignore
+@@ -1,8 +1 @@
+-perl.mak
+-perl.mak.old
+-MYMETA.json
+-MYMETA.yml
+-blib
+-blibdirs
+-pm_to_blib
+-PM.stamp
++/build/
+diff --git a/perl/Git.pm b/perl/Git.pm
+index ffa09ace92..02a3871e94 100644
+--- a/perl/Git.pm
++++ b/perl/Git.pm
+@@ -101,7 +101,7 @@ increase notwithstanding).
+ 
+ 
+ use Carp qw(carp croak); # but croak is bad - throw instead
+-use Error qw(:try);
++use Git::Error qw(:try);
+ use Cwd qw(abs_path cwd);
+ use IPC::Open2 qw(open2);
+ use Fcntl qw(SEEK_SET SEEK_CUR);
+diff --git a/perl/Git/Error.pm b/perl/Git/Error.pm
+new file mode 100644
+index 0000000000..a0cd3b8280
+--- /dev/null
++++ b/perl/Git/Error.pm
+@@ -0,0 +1,47 @@
++package Git::Error;
++use 5.008;
++use strict;
++use warnings;
++
++=head1 NAME
++
++Git::Error - Wrapper for the L<Error> module, in case it's not installed
++
++=head1 DESCRIPTION
++
++Wraps the import function for the L<Error> module. The L<Git> module
++must be imported first.
++
++This module is only intended to be used for code shipping in the
++C<git.git> repository. Use it for anything else at your peril!
++
++=cut
++
++sub import {
++    shift;
++    my $caller = caller;
++
++    eval {
++	require Error;
++	1;
++    } or do {
++	my $error = $@ || "Zombie Error";
++
++	my $Git_pm_path = $INC{"Git.pm"} || die "BUG: Should have loaded the Git module first!";
++
++	require File::Basename;
++	my $Git_pm_root = File::Basename::dirname($Git_pm_path) || die "BUG: Can't figure out dirname from '$Git_pm_path'!";
++
++	require File::Spec;
++	my $Git_pm_FromCPAN_root = File::Spec->catdir($Git_pm_root, qw(Git FromCPAN));
++	die "BUG: '$Git_pm_FromCPAN_root' should be a directory!" unless -d $Git_pm_FromCPAN_root;
++
++	local @INC = ($Git_pm_FromCPAN_root, @INC);
++	require Error;
++    };
++
++    local @_ = ($caller, @_);
++    goto &Error::import;
++}
++
++1;
+diff --git a/perl/private-Error.pm b/perl/Git/FromCPAN/Error.pm
+similarity index 100%
+rename from perl/private-Error.pm
+rename to perl/Git/FromCPAN/Error.pm
+diff --git a/perl/Git/I18N.pm b/perl/Git/I18N.pm
+index 836a5c2382..dba96fff0a 100644
+--- a/perl/Git/I18N.pm
++++ b/perl/Git/I18N.pm
+@@ -18,7 +18,7 @@ our @EXPORT_OK = @EXPORT;
+ 
+ sub __bootstrap_locale_messages {
+ 	our $TEXTDOMAIN = 'git';
+-	our $TEXTDOMAINDIR = $ENV{GIT_TEXTDOMAINDIR} || '++LOCALEDIR++';
++	our $TEXTDOMAINDIR = $ENV{GIT_TEXTDOMAINDIR} || '@@LOCALEDIR@@';
+ 
+ 	require POSIX;
+ 	POSIX->import(qw(setlocale));
+diff --git a/perl/Makefile b/perl/Makefile
+deleted file mode 100644
+index f657de20e3..0000000000
+--- a/perl/Makefile
++++ /dev/null
+@@ -1,90 +0,0 @@
+-#
+-# Makefile for perl support modules and routine
+-#
+-makfile:=perl.mak
+-modules =
+-
+-PERL_PATH_SQ = $(subst ','\'',$(PERL_PATH))
+-prefix_SQ = $(subst ','\'',$(prefix))
+-localedir_SQ = $(subst ','\'',$(localedir))
+-
+-ifndef V
+-	QUIET = @
+-endif
+-
+-all install instlibdir: $(makfile)
+-	$(QUIET)$(MAKE) -f $(makfile) $@
+-
+-clean:
+-	$(QUIET)test -f $(makfile) && $(MAKE) -f $(makfile) $@ || exit 0
+-	$(RM) ppport.h
+-	$(RM) $(makfile)
+-	$(RM) $(makfile).old
+-	$(RM) PM.stamp
+-
+-$(makfile): PM.stamp
+-
+-ifdef NO_PERL_MAKEMAKER
+-instdir_SQ = $(subst ','\'',$(prefix)/lib)
+-
+-modules += Git
+-modules += Git/I18N
+-modules += Git/IndexInfo
+-modules += Git/Packet
+-modules += Git/SVN
+-modules += Git/SVN/Memoize/YAML
+-modules += Git/SVN/Fetcher
+-modules += Git/SVN/Editor
+-modules += Git/SVN/GlobSpec
+-modules += Git/SVN/Log
+-modules += Git/SVN/Migration
+-modules += Git/SVN/Prompt
+-modules += Git/SVN/Ra
+-modules += Git/SVN/Utils
+-
+-$(makfile): ../GIT-CFLAGS Makefile
+-	echo all: private-Error.pm Git.pm Git/I18N.pm > $@
+-	set -e; \
+-	for i in $(modules); \
+-	do \
+-		if test $$i = $${i%/*}; \
+-		then \
+-			subdir=; \
+-		else \
+-			subdir=/$${i%/*}; \
+-		fi; \
+-		echo '	$(RM) blib/lib/'$$i'.pm' >> $@; \
+-		echo '	mkdir -p blib/lib'$$subdir >> $@; \
+-		echo '	cp '$$i'.pm blib/lib/'$$i'.pm' >> $@; \
+-	done
+-	echo '	$(RM) blib/lib/Error.pm' >> $@
+-	'$(PERL_PATH_SQ)' -MError -e 'exit($$Error::VERSION < 0.15009)' || \
+-	echo '	cp private-Error.pm blib/lib/Error.pm' >> $@
+-	echo install: >> $@
+-	set -e; \
+-	for i in $(modules); \
+-	do \
+-		if test $$i = $${i%/*}; \
+-		then \
+-			subdir=; \
+-		else \
+-			subdir=/$${i%/*}; \
+-		fi; \
+-		echo '	$(RM) "$$(DESTDIR)$(instdir_SQ)/'$$i'.pm"' >> $@; \
+-		echo '	mkdir -p "$$(DESTDIR)$(instdir_SQ)'$$subdir'"' >> $@; \
+-		echo '	cp '$$i'.pm "$$(DESTDIR)$(instdir_SQ)/'$$i'.pm"' >> $@; \
+-	done
+-	echo '	$(RM) "$$(DESTDIR)$(instdir_SQ)/Error.pm"' >> $@
+-	'$(PERL_PATH_SQ)' -MError -e 'exit($$Error::VERSION < 0.15009)' || \
+-	echo '	cp private-Error.pm "$$(DESTDIR)$(instdir_SQ)/Error.pm"' >> $@
+-	echo instlibdir: >> $@
+-	echo '	echo $(instdir_SQ)' >> $@
+-else
+-$(makfile): Makefile.PL ../GIT-CFLAGS
+-	$(PERL_PATH) $< PREFIX='$(prefix_SQ)' INSTALL_BASE='' --localedir='$(localedir_SQ)'
+-endif
+-
+-# this is just added comfort for calling make directly in perl dir
+-# (even though GIT-CFLAGS aren't used yet. If ever)
+-../GIT-CFLAGS:
+-	$(MAKE) -C .. GIT-CFLAGS
+diff --git a/perl/Makefile.PL b/perl/Makefile.PL
+deleted file mode 100644
+index 3f29ba98a6..0000000000
+--- a/perl/Makefile.PL
++++ /dev/null
+@@ -1,62 +0,0 @@
+-use strict;
+-use warnings;
+-use ExtUtils::MakeMaker;
+-use Getopt::Long;
+-use File::Find;
+-
+-# Don't forget to update the perl/Makefile, too.
+-# Don't forget to test with NO_PERL_MAKEMAKER=YesPlease
+-
+-# Sanity: die at first unknown option
+-Getopt::Long::Configure qw/ pass_through /;
+-
+-my $localedir = '';
+-GetOptions("localedir=s" => \$localedir);
+-
+-sub MY::postamble {
+-	return <<'MAKE_FRAG';
+-instlibdir:
+-	@echo '$(INSTALLSITELIB)'
+-
+-ifneq (,$(DESTDIR))
+-ifeq (0,$(shell expr '$(MM_VERSION)' '>' 6.10))
+-$(error ExtUtils::MakeMaker version "$(MM_VERSION)" is older than 6.11 and so \
+-	is likely incompatible with the DESTDIR mechanism.  Try setting \
+-	NO_PERL_MAKEMAKER=1 instead)
+-endif
+-endif
+-
+-MAKE_FRAG
+-}
+-
+-# Find all the .pm files in "Git/" and Git.pm
+-my %pm;
+-find sub {
+-	return unless /\.pm$/;
+-
+-	# sometimes File::Find prepends a ./  Strip it.
+-	my $pm_path = $File::Find::name;
+-	$pm_path =~ s{^\./}{};
+-
+-	$pm{$pm_path} = '$(INST_LIBDIR)/'.$pm_path;
+-}, "Git", "Git.pm";
+-
+-
+-# We come with our own bundled Error.pm. It's not in the set of default
+-# Perl modules so install it if it's not available on the system yet.
+-if ( !eval { require Error } || $Error::VERSION < 0.15009) {
+-	$pm{'private-Error.pm'} = '$(INST_LIBDIR)/Error.pm';
+-}
+-
+-# redirect stdout, otherwise the message "Writing perl.mak for Git"
+-# disrupts the output for the target 'instlibdir'
+-open STDOUT, ">&STDERR";
+-
+-WriteMakefile(
+-	NAME            => 'Git',
+-	VERSION_FROM    => 'Git.pm',
+-	PM		=> \%pm,
+-	PM_FILTER	=> qq[\$(PERL) -pe "s<\\Q++LOCALEDIR++\\E><$localedir>"],
+-	MAKEFILE	=> 'perl.mak',
+-	INSTALLSITEMAN3DIR => '$(SITEPREFIX)/share/man/man3'
+-);
+diff --git a/t/perf/aggregate.perl b/t/perf/aggregate.perl
+index 1dbc85b214..0ef5cf1c60 100755
+--- a/t/perf/aggregate.perl
++++ b/t/perf/aggregate.perl
+@@ -1,6 +1,6 @@
+ #!/usr/bin/perl
+ 
+-use lib '../../perl/blib/lib';
++use lib '../../perl/build';
+ use strict;
+ use warnings;
+ use Git;
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 116bd6a70c..69d81e1c97 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -919,7 +919,7 @@ then
+ 	fi
+ fi
+ 
+-GITPERLLIB="$GIT_BUILD_DIR"/perl/blib/lib:"$GIT_BUILD_DIR"/perl/blib/arch/auto/Git
++GITPERLLIB="$GIT_BUILD_DIR"/perl/build
+ export GITPERLLIB
+ test -d "$GIT_BUILD_DIR"/templates/blt || {
+ 	error "You haven't built things yet, have you?"
+diff --git a/wrap-for-bin.sh b/wrap-for-bin.sh
+index 22b6e4948f..7a8429bcc9 100644
+--- a/wrap-for-bin.sh
++++ b/wrap-for-bin.sh
+@@ -14,7 +14,7 @@ else
+ 	GIT_TEMPLATE_DIR='@@BUILD_DIR@@/templates/blt'
+ 	export GIT_TEMPLATE_DIR
+ fi
+-GITPERLLIB='@@BUILD_DIR@@/perl/blib/lib'"${GITPERLLIB:+:$GITPERLLIB}"
++GITPERLLIB='@@BUILD_DIR@@/perl/build'"${GITPERLLIB:+:$GITPERLLIB}"
+ GIT_TEXTDOMAINDIR='@@BUILD_DIR@@/po/build/locale'
+ PATH='@@BUILD_DIR@@/bin-wrappers:'"$PATH"
+ 
+-- 
+2.15.0.403.gc27cc4dac6
+
