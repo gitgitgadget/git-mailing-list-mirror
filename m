@@ -7,132 +7,128 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6B1AE20A40
-	for <e@80x24.org>; Wed, 29 Nov 2017 20:23:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9F57E20A40
+	for <e@80x24.org>; Wed, 29 Nov 2017 21:00:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753233AbdK2UXZ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Nov 2017 15:23:25 -0500
-Received: from mail-it0-f68.google.com ([209.85.214.68]:44302 "EHLO
-        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753065AbdK2UXI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Nov 2017 15:23:08 -0500
-Received: by mail-it0-f68.google.com with SMTP id b5so5569097itc.3
-        for <git@vger.kernel.org>; Wed, 29 Nov 2017 12:23:08 -0800 (PST)
+        id S1752767AbdK2VA2 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Nov 2017 16:00:28 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:46512 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752647AbdK2VA1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Nov 2017 16:00:27 -0500
+Received: by mail-wm0-f67.google.com with SMTP id r78so9041209wme.5
+        for <git@vger.kernel.org>; Wed, 29 Nov 2017 13:00:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=X41Q+UNVlp9lT1Ae9EaQ3CUIYCeZ4EA36y4d/WUPhzs=;
-        b=HKtrg/lAIoX2z1ME8hWqqH5pMpXxV0pq8Spt3clQAuT2VKTNn77ETvVV5z+c8u/Jyl
-         spDOfSHE8fNSWmCJU4Rhktuk9GVplDAKyePIVFf6UnUCROUHDIgpHNfdM1AplZw5jwVe
-         nfI6TaWfFYQvnqLHhy/qyCzOYfCbFHiSzgGLPcAP01AQu93YIRjc9mqS2fkJp3egeyp8
-         SXlZRxPserRl1wY2V3Tg9BgV07z3vhA7j16rn1vrhOI+cQTsWDlEUY7cV9LB4bO/RLho
-         Akc6YIdr7SEDUWEe4H+iKe+GJrIQB7B32ISVMfYaeA/yS0Ozjr3ug8QgObwW2B5a74+h
-         r0fw==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=yVFwzj95n+LhAELS5zfmQc1F95EXT7GuIQbEuPZhfb0=;
+        b=tyBqBXS+ElwjcEu/sJR1CvcyjbRNahSOKaWxgAPcDrGv7Te+mulu5KENzkXUOkV7VQ
+         NVMBcCpNUfQwyOo0kMsC+mHe6cJdy9yGL0T+f6aPkEzxIENs5aBLgvjwschNb2gdIh7+
+         Y4uqPMXec/bFnKCrNDtqpyeSv9CxAZuaRwBx4t8Zp9nTcqhjPRQskmYvqWuWw2+xWxHK
+         ppDPS3bShMpfoHObq/5Uu0K7ivbEdT+odPlPWDdDZhwIBLKMk14gjkEqDh/T0MjE0Dvf
+         RB/P4UXvSb/MExoznxTokO1IXHrVOj3rdho503KaC+xyZdS+ll/G1dqnMDnL7zgIPk8l
+         up5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=X41Q+UNVlp9lT1Ae9EaQ3CUIYCeZ4EA36y4d/WUPhzs=;
-        b=OGXqak7UlcuFsr9kE+uQC4at2AhmdYe7uyaXmjyRkKSwiiWWaokgkqYALhkxbj7TQb
-         J1IQFWM9rZ10dfgy6tK7GRut2Z6034TgXmRWsXy0m92KjKu1M0GXz3k9Ma+0fn23GlcO
-         SO44cQ+VEjKVLdWudiizt1Td1EcVJIZLSIl6P/oX4BvaUXgHR8sRnKm/5gHorMWzE0Km
-         N7f37YczGWavVjlM1TRf5FK+rLi54URKyKCpHKdL9yyBSEWHdy/6cwyX15qTGEaN1MPc
-         v8dpSE54fr4MCQfOBl1fJQkBcZQa2gIOh6pY0XdqoG78Igs8oj96Ao9OaY8h18qy6XE1
-         0YEA==
-X-Gm-Message-State: AJaThX48YosqfOCMtOgGedmmK9XKwzAo2Cul3P/oS1LSaAHuyo6j1/Wz
-        Uo9+lQZJPFgWcX9dOb9Sh0o=
-X-Google-Smtp-Source: AGs4zMYZx5aL9hUZ29EYVmObTTMM786Ge1j4bwYI5CfgaT1VdftNordDJiq5XK8ZQJoNEYX2vB8YSg==
-X-Received: by 10.36.154.71 with SMTP id l68mr38871ite.57.1511986988169;
-        Wed, 29 Nov 2017 12:23:08 -0800 (PST)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id 137sm1381859itl.35.2017.11.29.12.23.06
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=yVFwzj95n+LhAELS5zfmQc1F95EXT7GuIQbEuPZhfb0=;
+        b=AgjZmF1mgJqNgyNvkX5hZ07YVqle45fKHGcOMUq3w6vNxohgCu86tr0gf6jcDah/Qq
+         H88RfZtbREzQZmiT9pIyuwoeuRdfbE5GUecB6AdPw1tE12HGRrtUOKTYV8/NL5F1elhX
+         oOfRiWxnfFuANU85+ZTcpHRWiblTGoHB4QYHeWXjo4KenmRWz3OjIxm0ycVZvFUhFmZY
+         aJganwdK8AOytLrAHEkKw4ZeWI+I7nj96ZnEqqc8gYJuqlWrQOwhBs1E+NtLrkTrdaNR
+         VVe17mBxG/Gpy5J00E//PTljQ95jCrNmKpcLJplWCB/inDWFwvX3XyFWJCfN3/NWJIwc
+         Uvrw==
+X-Gm-Message-State: AJaThX5e8WFHM3lwZV3JmNwxL9nQBcIbKzLVa39zrvcbzn0aJ2QB50OV
+        vMhgrZxR7EOjogkOrsYgrVhiw/Jz
+X-Google-Smtp-Source: AGs4zMYcypTOIhbiK1Xs8nTcWApfg7mb552eUxY2+ldqeyoArfXbiNXgu1vkAd3TTikyhk5x6B8vnA==
+X-Received: by 10.80.133.193 with SMTP id q1mr9453679edh.50.1511989225884;
+        Wed, 29 Nov 2017 13:00:25 -0800 (PST)
+Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
+        by smtp.gmail.com with ESMTPSA id 4sm1965979edf.81.2017.11.29.13.00.24
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 29 Nov 2017 12:23:07 -0800 (PST)
-Date:   Wed, 29 Nov 2017 12:23:05 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, newren@gmail.com,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH on en/rename-progress v2] diffcore-rename: make diff-tree
- -l0 mean -l<large>
-Message-ID: <20171129202305.GC15098@aiede.mtv.corp.google.com>
-References: <20171129183200.178183-1-jonathantanmy@google.com>
- <20171129201154.192379-1-jonathantanmy@google.com>
+        Wed, 29 Nov 2017 13:00:24 -0800 (PST)
+Received: from avar by evledraar with local (Exim 4.89)
+        (envelope-from <avarab@gmail.com>)
+        id 1eK9Sx-0008Qh-Ld; Wed, 29 Nov 2017 22:00:23 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Dan Jacques <dnj@google.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, Johannes.Schindelin@gmx.de
+Subject: Re: [PATCH v4 3/4] Makefile: add Perl runtime prefix support
+References: <20171129155637.89075-1-dnj@google.com> <20171129155637.89075-4-dnj@google.com>
+User-agent: Debian GNU/Linux 9.2 (stretch); Emacs 25.1.1; mu4e 0.9.19
+In-reply-to: <20171129155637.89075-4-dnj@google.com>
+Date:   Wed, 29 Nov 2017 22:00:23 +0100
+Message-ID: <87k1y8vlzs.fsf@evledraar.booking.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20171129201154.192379-1-jonathantanmy@google.com>
-User-Agent: Mutt/1.9.1 (2017-09-22)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan wrote:
 
-> In the documentation of diff-tree, it is stated that the -l option
-> "prevents rename/copy detection from running if the number of
-> rename/copy targets exceeds the specified number". The documentation
-> does not mention any special handling for the number 0, but the
-> implementation before commit 9f7e4bfa3b ("diff: remove silent clamp of
-> renameLimit", 2017-11-13) treated 0 as a special value indicating that
-> the rename limit is to be a very large number instead.
->
-> The commit 9f7e4bfa3b changed that behavior, treating 0 as 0. Revert
-> this behavior to what it was previously. This allows existing scripts
-> and tools that use "-l0" to continue working. The alternative (to have
-> "-l0" suppress rename detection) is probably much less useful, since
-> users can just refrain from specifying -M and/or -C to have the same
-> effect.
->
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-> ---
-> v2 is exactly the same as previously, except that the commit message is
-> changed following Elijah Newren's and Jonathan Nieder's comments.
->
->  diffcore-rename.c      |  2 ++
->  t/t4001-diff-rename.sh | 15 +++++++++++++++
->  2 files changed, 17 insertions(+)
+On Wed, Nov 29 2017, Dan Jacques jotted:
 
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-
-Thanks again.
-
-> diff --git a/diffcore-rename.c b/diffcore-rename.c
-> index 9ca0eaec7..245e999fe 100644
-> --- a/diffcore-rename.c
-> +++ b/diffcore-rename.c
-> @@ -392,6 +392,8 @@ static int too_many_rename_candidates(int num_create,
->  	 *
->  	 *    num_create * num_src > rename_limit * rename_limit
->  	 */
-> +	if (rename_limit <= 0)
-> +		rename_limit = 32767;
->  	if ((num_create <= rename_limit || num_src <= rename_limit) &&
->  	    ((uint64_t)num_create * (uint64_t)num_src
->  	     <= (uint64_t)rename_limit * (uint64_t)rename_limit))
-> diff --git a/t/t4001-diff-rename.sh b/t/t4001-diff-rename.sh
-> index 0d1fa45d2..eadf4f624 100755
-> --- a/t/t4001-diff-rename.sh
-> +++ b/t/t4001-diff-rename.sh
-> @@ -230,4 +230,19 @@ test_expect_success 'rename pretty print common prefix and suffix overlap' '
->  	test_i18ngrep " d/f/{ => f}/e " output
->  '
->  
-> +test_expect_success 'diff-tree -l0 defaults to a big rename limit, not zero' '
-> +	test_write_lines line1 line2 line3 >myfile &&
-> +	git add myfile &&
-> +	git commit -m x &&
+> Add a new Makefile flag, RUNTIME_PREFIX_PERL, which, when enabled,
+> configures Perl scripts to locate the Git installation's Perl support
+> libraries by resolving against the script's path, rather than
+> hard-coding that path at build-time.
+> [...]
+> diff --git a/perl/header_runtime_prefix.pl.template b/perl/header_runtime_prefix.pl.template
+> new file mode 100644
+> index 000000000..fb9a9924d
+> --- /dev/null
+> +++ b/perl/header_runtime_prefix.pl.template
+> @@ -0,0 +1,24 @@
+> +# BEGIN RUNTIME_PREFIX_PERL generated code.
+> +#
+> +# This finds our Git::* libraries relative to the script's runtime path.
+> +BEGIN {
+> +	use lib split /@@PATHSEP@@/,
+> +	(
+> +		$ENV{GITPERLLIB}
+> +		||
+> +		do {
+> +			require FindBin;
+> +			require File::Spec;
+> +			my $gitexecdir_relative = '@@GITEXECDIR@@';
+> +			my $perllibdir_relative = '@@PERLLIBDIR@@';
 > +
-> +	test_write_lines line1 line2 line4 >myotherfile &&
-> +	git rm myfile &&
-> +	git add myotherfile &&
-> +	git commit -m x &&
-> +
-> +	git diff-tree -M -l0 HEAD HEAD^ >actual &&
-> +	# Verify that a rename from myotherfile to myfile was detected
-> +	grep "myotherfile.*myfile" actual
-> +'
-> +
->  test_done
+> +			($FindBin::Bin =~ m=${gitexecdir_relative}$=) ||
+> +			    die('Unrecognized runtime path.');
+> +			my $prefix = substr($FindBin::Bin, 0, -length($gitexecdir_relative));
+> +			my $perllibdir = File::Spec->catdir($prefix, $perllibdir_relative);
+> +			(-e $perllibdir) || die("Invalid library path: $perllibdir");
+> +			$perllibdir;
+> +		}
+> +	);
+> +}
+> +# END RUNTIME_PREFIX_PERL generated code.
+
+Ah, I see. To answer my own question in
+<87lgiovokg.fsf@evledraar.booking.com> you're making this stuff a
+relative path so you can use it here later on. I.e. we $FindBin::Bin,
+and then go from there. Makes sense.
+
+We could use $ENV{GIT_EXEC_PATH} instead of FindBin here though, I
+missed that the first time. But that's just a nano-optimization. I just
+wondered whether git wasn't already passing us this info.
+
+There is one remaining bug here. Git::I18N isn't doing the right thing,
+I installed in /tmp/git and moved to /tmp/git2, and it has:
+
+    our $TEXTDOMAINDIR = $ENV{GIT_TEXTDOMAINDIR} || '/tmp/git/share/locale';
+
+And GIT_TEXTDOMAINDIR is not passed by git (it's only used for the tests
+IIRC). Would need a similar treatment as this. Easiest to just set the
+path we find here in $Git::Whatever and pick it up in $Git::I18N later,
+it's not like anyone uses it outside of git.git.
+
+But that does raise a more general concern for me. Isn't there some way
+we can run the test suite against an installed git (don't remember),
+then build, install, move the dir, and run the tests from the moved dir.
+
+That would have caught this bug, and anything else that may be lurking
+still.
