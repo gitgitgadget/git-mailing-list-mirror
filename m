@@ -2,92 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF38E20A40
-	for <e@80x24.org>; Wed, 29 Nov 2017 21:41:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 94F5620A40
+	for <e@80x24.org>; Wed, 29 Nov 2017 22:09:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752410AbdK2VlA (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Nov 2017 16:41:00 -0500
-Received: from mout.gmx.net ([212.227.17.22]:53716 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751995AbdK2Vk7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Nov 2017 16:40:59 -0500
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Meduu-1eVEq50kuG-00OD7h; Wed, 29
- Nov 2017 22:40:53 +0100
-Date:   Wed, 29 Nov 2017 22:40:52 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     liam Beguin <liambeguin@gmail.com>
-cc:     git@vger.kernel.org, gitster@pobox.com, avarab@gmail.com
-Subject: Re: [PATCH 4/5] rebase -i: learn to abbreviate command names
-In-Reply-To: <b4331bb3-db5d-e4f5-54db-f04d77385ae7@gmail.com>
-Message-ID: <alpine.DEB.2.21.1.1711292236010.6482@virtualbox>
-References: <20171127045514.25647-1-liambeguin@gmail.com> <20171127045514.25647-5-liambeguin@gmail.com> <alpine.DEB.2.21.1.1711272344290.6482@virtualbox> <b4331bb3-db5d-e4f5-54db-f04d77385ae7@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1752157AbdK2WJh (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Nov 2017 17:09:37 -0500
+Received: from mxf98a.netcup.net ([46.38.249.138]:58822 "EHLO
+        mxf98a.netcup.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752069AbdK2WJg (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Nov 2017 17:09:36 -0500
+Received: from [192.168.178.21] (x4d071942.dyn.telefonica.de [77.7.25.66])
+        by mxf98a.netcup.net (Postfix) with ESMTPSA id DD720140CDD;
+        Wed, 29 Nov 2017 23:09:34 +0100 (CET)
+Authentication-Results: mxf98a;
+        spf=pass (sender IP is 77.7.25.66) smtp.mailfrom=rabel@robertabel.eu smtp.helo=[192.168.178.21]
+Received-SPF: pass (mxf98a: connection is authenticated)
+Subject: Re: [PATCH] git-prompt: fix reading files with windows line endings
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org
+References: <20171128201818.4132-1-rabel@robertabel.eu>
+ <20171128201818.4132-2-rabel@robertabel.eu>
+ <alpine.DEB.2.21.1.1711291519290.6482@virtualbox>
+From:   Robert Abel <rabel@robertabel.eu>
+Message-ID: <d57e4cb9-b0b4-314e-370a-e0db58a2a7da@robertabel.eu>
+Date:   Wed, 29 Nov 2017 23:09:34 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:UPffKZDvFtopUtyHYivha5seMs8B/2/OPfisn94CaI7ucMvn2cX
- 9e8kqCtDjwXojlRO6iPAVjyLDpCXNAK+9/LT6HBZjY4ehT3iRLQIser4LjViuVbwvtgd3Zz
- +IF/t8Q3xpG5NHsCXsXe+EdBsbJQp6/5JiHcz1pipmGuFnvalFzz6FW3O6OKbAtmGfIQXA6
- B4hOmbN5tFKoUkMUCYwFA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:75GjvsJ5ByU=:tCDY+BwrWdo7Iy2C+kjEAn
- 6w6UBN09hJZ95P9aiyjs8LsnaG2YNZcJGCZhV7IT2QwQ1bvcE8G2ITcSSy2HBcYnnR2sxAATh
- CIPykdX/0r7K4KHvhpyAtLqsanLaUj6IIYlQkpB6qMFK/HSHSuUMmc+peJM/S7uiwTY8v/fR+
- 7hdY52hSeKjp71zzj110bTViEqKoas0X0/U/LCfpk8L1QDtNQ6/YaaUdj+TAJrGizHeNaSmp2
- FcV+Hhktswt2AgjeZ1KaxqOtacswI++kFq32iXvcl1U8Z3NpiRJIXcbj+q+jpAAoR9AQsMyYv
- SWwxu6GU/KiG1IdmZS3nvb5BW+TmmUtma/eu2bdVnZ8g74b2nlUkrpFbJMpbt/U56khRzFtag
- /sZA1WolGKVDksOr23KKhw4BNKMFgPfAKHaGdR/W26k+Yci9ZkRtQpvMhXqdkbWKM0YSX4YF8
- uqr3yA3/GDIjJ7uEboGXZww/K8YCmW6R4IJGLsQlXaL7SZjGCVdNP6Ueu33FPm+cLYAm6LlpV
- laUw3aqUh7Hp0lXB4onSmwWp7sIcKiE0+n+wM1xaoXTBZSYuyRfOqbd9T8bkZBvowzZvIFsd0
- 0QVUzdiwKbuqErssDsV2PZtaFBaNPIk9tb53JPz9iXt0l89XlvlbCNiKQdGbrNzcID5PtLZy5
- bvBJqRSs6USbXYgyRszpq+8MmHKCoHhU8mI7RIy5BN2sFy7P68l5dvkWIyChxIu8b0gzm0RNm
- bVWWVkQdz/nU3/ynrhOONXHXQJ+jJYUECLd2pZRdPfoGCMpPkhvPN0viwHSp9GvdRn2SRl8yk
- reyScvBbsFeovT9UqlhOm5E5pHfUxmPt0OxN0SCGj9tfFLFn4o=
+In-Reply-To: <alpine.DEB.2.21.1.1711291519290.6482@virtualbox>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-PPP-Message-ID: <20171129220934.12978.54833@mxf98a.netcup.net>
+X-PPP-Vhost: robertabel.eu
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Liam,
+Hi Johannes,
 
-On Tue, 28 Nov 2017, liam Beguin wrote:
-
-> On 27/11/17 06:04 PM, Johannes Schindelin wrote:
-> > 
-> > On Sun, 26 Nov 2017, Liam Beguin wrote:
-> > 
-> >> @@ -2483,7 +2491,9 @@ int sequencer_make_script(int keep_empty, FILE *out,
-> >>  		strbuf_reset(&buf);
-> >>  		if (!keep_empty && is_original_commit_empty(commit))
-> >>  			strbuf_addf(&buf, "%c ", comment_line_char);
-> >> -		strbuf_addf(&buf, "pick %s ", oid_to_hex(&commit->object.oid));
-> >> +		strbuf_addf(&buf, "%s %s ",
-> >> +			    abbreviate_commands ? "p" : "pick",
-> >> +			    oid_to_hex(&commit->object.oid));
-> > 
-> > I guess the compiler will optimize this code so that the conditional
-> > is evaluated only once. Not that this is performance critical ;-)
+On 29 Nov 2017 15:27, Johannes Schindelin wrote:
+>> diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
+>> index c6cbef38c2..71a64e7959 100644
+>> --- a/contrib/completion/git-prompt.sh
+>> +++ b/contrib/completion/git-prompt.sh
+>> @@ -282,7 +282,7 @@ __git_eread ()
+>>  {
+>>  	local f="$1"
+>>  	shift
+>> -	test -r "$f" && read "$@" <"$f"
+>> +	test -r "$f" && read "$@" <"$f" && export $@="${!@%$'\r'}"
 > 
-> Is your guess enough? :-) If not, how could I make sure this is
-> optimized?  Should I do that check before the while() loop?
+> As far as I understand, $'\r' is a Bash-only construct, and this file
+> (git-prompt.sh) is targeting other Unix shells, too.
 
-I am a fan of not relying too heavily on compiler optimization and e.g.
-extract code from loops when it does not need to be evaluated every single
-iteration. In this case:
+Sorry, I wasn't really aware about this bash-ism. I agree that a generic
+solution would be best.
 
-	const char *pick = abbreviate_commands ? "p" : "pick";
-	...
-		strbuf_addf(&buf, "%s %s ", pick,
-			    oid_to_hex(&commit->object.oid));
+> So how about using `tr -d '\r' <"$f" | read "$@"` instead?
 
-But given Junio's comment that the assignment of `first` was too far away
-from the line where it is used for his taste, I guess he will argue (once
-again) the exact opposite of me.
+That doesn't work for me. Apparently, the variable is always reset to ""
+and hence the prompt will always display the shortened sha1.
+Maybe it has something to do with variable scoping inside the backtick
+evaluation?
 
-Ciao,
-Dscho
+> Or maybe keep with the Bash construct, but guarded behind a test that we
+> area actually running in Bash? Something like
+> 
+> 	test -z "$BASH" || IFS=$' \t\r\n'
+
+Actually, this got me thinking and reading the POSIX.1-2008, specifically
+http://pubs.opengroup.org/onlinepubs/9699919799/utilities/read.html.
+
+It seems POSIX states that IFS should be supported by read. This means
+that it should be okay to just do
+
+> test -r "$f" && IFS=" \t\r\n" read "$@" < "$f"
+
+This would also get rid of the export and avoid introducing backtick
+evaluation.
+
+Regards,
+
+Robert
