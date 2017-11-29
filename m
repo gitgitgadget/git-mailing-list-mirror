@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9F57E20A40
-	for <e@80x24.org>; Wed, 29 Nov 2017 21:00:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B183F20A40
+	for <e@80x24.org>; Wed, 29 Nov 2017 21:04:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752767AbdK2VA2 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Nov 2017 16:00:28 -0500
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:46512 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752647AbdK2VA1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Nov 2017 16:00:27 -0500
-Received: by mail-wm0-f67.google.com with SMTP id r78so9041209wme.5
-        for <git@vger.kernel.org>; Wed, 29 Nov 2017 13:00:26 -0800 (PST)
+        id S1752791AbdK2VEv (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Nov 2017 16:04:51 -0500
+Received: from mail-wm0-f49.google.com ([74.125.82.49]:47007 "EHLO
+        mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752219AbdK2VEu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Nov 2017 16:04:50 -0500
+Received: by mail-wm0-f49.google.com with SMTP id r78so9062367wme.5
+        for <git@vger.kernel.org>; Wed, 29 Nov 2017 13:04:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
          :message-id:mime-version;
-        bh=yVFwzj95n+LhAELS5zfmQc1F95EXT7GuIQbEuPZhfb0=;
-        b=tyBqBXS+ElwjcEu/sJR1CvcyjbRNahSOKaWxgAPcDrGv7Te+mulu5KENzkXUOkV7VQ
-         NVMBcCpNUfQwyOo0kMsC+mHe6cJdy9yGL0T+f6aPkEzxIENs5aBLgvjwschNb2gdIh7+
-         Y4uqPMXec/bFnKCrNDtqpyeSv9CxAZuaRwBx4t8Zp9nTcqhjPRQskmYvqWuWw2+xWxHK
-         ppDPS3bShMpfoHObq/5Uu0K7ivbEdT+odPlPWDdDZhwIBLKMk14gjkEqDh/T0MjE0Dvf
-         RB/P4UXvSb/MExoznxTokO1IXHrVOj3rdho503KaC+xyZdS+ll/G1dqnMDnL7zgIPk8l
-         up5g==
+        bh=hQ7rqdavMbFQHA8+z47b9+vrn/Chu+dRtW+9FL7K0zs=;
+        b=KehAkIzJX0+RgB/fet21HX7vEdRnjdN6O5JA+FUP25qgNQxs2TmolsT22pfSGdXI/7
+         KwsUszEa3Njr1uzMFFD27Lke7C9GfZXrQqpIGlTVJLpk3eaP+zjQoLsTFJC/YclsuBx0
+         md282RhDVlEYi2ISX0WuOOQNLkrRTjOmxLAoeK/4djaGynQej3X63yzO7EVNFyOvW+uN
+         XLmGMkZ7JXiBWKmUYEjbe1H0gi6QohI2w3Vb6OjAlSbnK0yDh9d3ay1P/jA3I8WGZbO7
+         yurlnIo+wZJ5e496evwcd99A6Q5aTH2s2XNP76Kh6/mR8zgvNL5AQNPDesXIrO9VTS/T
+         r3Xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
          :in-reply-to:date:message-id:mime-version;
-        bh=yVFwzj95n+LhAELS5zfmQc1F95EXT7GuIQbEuPZhfb0=;
-        b=AgjZmF1mgJqNgyNvkX5hZ07YVqle45fKHGcOMUq3w6vNxohgCu86tr0gf6jcDah/Qq
-         H88RfZtbREzQZmiT9pIyuwoeuRdfbE5GUecB6AdPw1tE12HGRrtUOKTYV8/NL5F1elhX
-         oOfRiWxnfFuANU85+ZTcpHRWiblTGoHB4QYHeWXjo4KenmRWz3OjIxm0ycVZvFUhFmZY
-         aJganwdK8AOytLrAHEkKw4ZeWI+I7nj96ZnEqqc8gYJuqlWrQOwhBs1E+NtLrkTrdaNR
-         VVe17mBxG/Gpy5J00E//PTljQ95jCrNmKpcLJplWCB/inDWFwvX3XyFWJCfN3/NWJIwc
-         Uvrw==
-X-Gm-Message-State: AJaThX5e8WFHM3lwZV3JmNwxL9nQBcIbKzLVa39zrvcbzn0aJ2QB50OV
-        vMhgrZxR7EOjogkOrsYgrVhiw/Jz
-X-Google-Smtp-Source: AGs4zMYcypTOIhbiK1Xs8nTcWApfg7mb552eUxY2+ldqeyoArfXbiNXgu1vkAd3TTikyhk5x6B8vnA==
-X-Received: by 10.80.133.193 with SMTP id q1mr9453679edh.50.1511989225884;
-        Wed, 29 Nov 2017 13:00:25 -0800 (PST)
+        bh=hQ7rqdavMbFQHA8+z47b9+vrn/Chu+dRtW+9FL7K0zs=;
+        b=guX5GCnDn7rylKCbh7FcYuwV8HDe8T/YE+OPViwBspskAzccGMrt4thbQkD76zzIHn
+         xjUqyepyZ+e2eHF5Ea+W4vcjTT4FNXxZ/XsmymeZrNO6uZd9neTdDXOC72ixS1Hr8fD+
+         eXvVSLQmrjvdnEs3otwrcjhtPDD2i3ieqJX5w20Z9vGMb5x6+mqye1M8ZGbaDfW3UBix
+         X+baEjdv0GrU9OHucCXQauGDi3rKg1d44QLJxbt/IbrC5AQXgogXdEwzmWq6GLKIGV4a
+         ass2pV5qvk8si+S13K9D86Nv39oKsMyNPZZeZwwDFVxEYLI1Ghx7o3bgrbCTZ4TlDnm1
+         PxvA==
+X-Gm-Message-State: AJaThX5UJDIPkhf7ig1DxvaG9zA4p+wHllCTIjrxi2DLq+DPzT+s7L/R
+        jLNIf0hOJKWfAIkFEvIDx4g=
+X-Google-Smtp-Source: AGs4zMZWX6Z0AeqpmQF9CG8TRRcvDrqjdrTr+dDidgB9QCsOhuLNrHY67PKmzTJCRjB5cppwQRJsUQ==
+X-Received: by 10.80.149.141 with SMTP id w13mr9480535eda.79.1511989489589;
+        Wed, 29 Nov 2017 13:04:49 -0800 (PST)
 Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
-        by smtp.gmail.com with ESMTPSA id 4sm1965979edf.81.2017.11.29.13.00.24
+        by smtp.gmail.com with ESMTPSA id c25sm2557355edb.52.2017.11.29.13.04.48
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 29 Nov 2017 13:00:24 -0800 (PST)
+        Wed, 29 Nov 2017 13:04:48 -0800 (PST)
 Received: from avar by evledraar with local (Exim 4.89)
         (envelope-from <avarab@gmail.com>)
-        id 1eK9Sx-0008Qh-Ld; Wed, 29 Nov 2017 22:00:23 +0100
+        id 1eK9XD-0008Tf-TL; Wed, 29 Nov 2017 22:04:47 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Dan Jacques <dnj@google.com>
 Cc:     git@vger.kernel.org, gitster@pobox.com, Johannes.Schindelin@gmx.de
@@ -59,8 +59,8 @@ Subject: Re: [PATCH v4 3/4] Makefile: add Perl runtime prefix support
 References: <20171129155637.89075-1-dnj@google.com> <20171129155637.89075-4-dnj@google.com>
 User-agent: Debian GNU/Linux 9.2 (stretch); Emacs 25.1.1; mu4e 0.9.19
 In-reply-to: <20171129155637.89075-4-dnj@google.com>
-Date:   Wed, 29 Nov 2017 22:00:23 +0100
-Message-ID: <87k1y8vlzs.fsf@evledraar.booking.com>
+Date:   Wed, 29 Nov 2017 22:04:47 +0100
+Message-ID: <87indsvlsg.fsf@evledraar.booking.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
@@ -71,21 +71,7 @@ X-Mailing-List: git@vger.kernel.org
 
 On Wed, Nov 29 2017, Dan Jacques jotted:
 
-> Add a new Makefile flag, RUNTIME_PREFIX_PERL, which, when enabled,
-> configures Perl scripts to locate the Git installation's Perl support
-> libraries by resolving against the script's path, rather than
-> hard-coding that path at build-time.
-> [...]
-> diff --git a/perl/header_runtime_prefix.pl.template b/perl/header_runtime_prefix.pl.template
-> new file mode 100644
-> index 000000000..fb9a9924d
-> --- /dev/null
-> +++ b/perl/header_runtime_prefix.pl.template
-> @@ -0,0 +1,24 @@
-> +# BEGIN RUNTIME_PREFIX_PERL generated code.
-> +#
-> +# This finds our Git::* libraries relative to the script's runtime path.
-> +BEGIN {
+
 > +	use lib split /@@PATHSEP@@/,
 > +	(
 > +		$ENV{GITPERLLIB}
@@ -107,28 +93,11 @@ On Wed, Nov 29 2017, Dan Jacques jotted:
 > +}
 > +# END RUNTIME_PREFIX_PERL generated code.
 
-Ah, I see. To answer my own question in
-<87lgiovokg.fsf@evledraar.booking.com> you're making this stuff a
-relative path so you can use it here later on. I.e. we $FindBin::Bin,
-and then go from there. Makes sense.
+Noticed after I sent the last E-Mail, this is missing @@INSTLIBDIR@@
+which per my reading of it being initially introduced should be here in
+addition to this relative path.
 
-We could use $ENV{GIT_EXEC_PATH} instead of FindBin here though, I
-missed that the first time. But that's just a nano-optimization. I just
-wondered whether git wasn't already passing us this info.
-
-There is one remaining bug here. Git::I18N isn't doing the right thing,
-I installed in /tmp/git and moved to /tmp/git2, and it has:
-
-    our $TEXTDOMAINDIR = $ENV{GIT_TEXTDOMAINDIR} || '/tmp/git/share/locale';
-
-And GIT_TEXTDOMAINDIR is not passed by git (it's only used for the tests
-IIRC). Would need a similar treatment as this. Easiest to just set the
-path we find here in $Git::Whatever and pick it up in $Git::I18N later,
-it's not like anyone uses it outside of git.git.
-
-But that does raise a more general concern for me. Isn't there some way
-we can run the test suite against an installed git (don't remember),
-then build, install, move the dir, and run the tests from the moved dir.
-
-That would have caught this bug, and anything else that may be lurking
-still.
+My reading of the intial patch that added it, as indicated in my patch,
+is that it's the dir we're going to be installing our libs to, so I
+didn't fiddle with it, but I think with your patches we need that dir
+*and* or own $perllibdir.
