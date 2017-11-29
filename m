@@ -2,155 +2,161 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 91EF720954
-	for <e@80x24.org>; Wed, 29 Nov 2017 02:01:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CDFA620954
+	for <e@80x24.org>; Wed, 29 Nov 2017 02:06:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752298AbdK2CB2 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Nov 2017 21:01:28 -0500
-Received: from mail-io0-f194.google.com ([209.85.223.194]:32831 "EHLO
-        mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752127AbdK2CB1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Nov 2017 21:01:27 -0500
-Received: by mail-io0-f194.google.com with SMTP id t196so2113837iof.0
-        for <git@vger.kernel.org>; Tue, 28 Nov 2017 18:01:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:subject:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=qlot8qvy7sOyx6qnF+aYuLdntTugjyci2H3Y7OAeAfY=;
-        b=KUjviq95y2BG6TFyIAgH/Fi4LBMrorjuUXmUvM0N+rYb1al2hbddKZa0cBhEychgTX
-         CVC9QdNTTBJSAgSUiXHbCCaMpNqbhUQmKhr2+ji6UvxVY6SVwJXdTSJpVYPvPrRbc2pD
-         B1Jdvmqug2GBJTHLTM7NF5nWpqfv2vixplodmDO99G37fRjYpz+E8AEydL6DabOBx19a
-         agZc9hnK5wkwSB3Llhhr8yJDem8A7XmU0ODqYi5EKkGp15OPkrOMjVj0WYbm7ZA2+boy
-         bcpHj/nVRj88L80i7JtPYwXFZ2A438mRxw4Ic1Qoh/MwGJl9F7fWpA2yNjDhoG9VzpkK
-         izyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:subject:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=qlot8qvy7sOyx6qnF+aYuLdntTugjyci2H3Y7OAeAfY=;
-        b=pFuJ8bECd1TamXOfZxAHaqBat1nPYgGz5+WfOtiq/aprw2zaQ2fZSdluC63+fas+Kk
-         tCPPGenIL7it76+sgLSMwvoB3soV25OXXRxvArQnI/ZMlgfq9a9FnP2CLiMccWR5ELG3
-         xcJw11s2iY+i7AiNRYLgLzrLxTpyJVfEGpB3HmPV11Y72SEclRS8qB10E/ZqXorUlW0v
-         2LIoAArUARqNhBlyioUACKAH2b0IocpR6oEX75Nm6Wt0vISfeLUMZ0lKdOx+2bsjQowu
-         1sn3/1Wx+B8Yz0nqhMYljAMcGVfjl6E/QoyLIWDFql6eOgSGgJmkCqwBzEtgyFxsOLa5
-         v32g==
-X-Gm-Message-State: AJaThX54fnmJ6KMNo1QdKAsuY7X9deQq4L7Xy7pgxQMwugJZJWEw6n8w
-        XrIlVvIRZMN1kRzBK+WUkEA/0ayZ6+w=
-X-Google-Smtp-Source: AGs4zMZinNWIS6MqPz6Id4AuF4a1/p+uiEArEt5Nwvg6dbyhcPPPn02VNFGFGzG9T1Sv6x0z5ezmng==
-X-Received: by 10.107.148.3 with SMTP id w3mr1573452iod.161.1511920886685;
-        Tue, 28 Nov 2017 18:01:26 -0800 (PST)
-Received: from [192.168.3.104] (24-212-246-46.cable.teksavvy.com. [24.212.246.46])
-        by smtp.gmail.com with ESMTPSA id e203sm466667itb.32.2017.11.28.18.01.25
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 28 Nov 2017 18:01:26 -0800 (PST)
-From:   liam Beguin <liambeguin@gmail.com>
-Subject: Re: [PATCH 3/5] rebase -i: add exec commands via the rebase--helper
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de, avarab@gmail.com
-References: <20171127045514.25647-1-liambeguin@gmail.com>
- <20171127045514.25647-4-liambeguin@gmail.com>
- <xmqq609we20v.fsf@gitster.mtv.corp.google.com>
-Message-ID: <46cf2ed9-ea95-5ba9-e0f1-3ed7b524279e@gmail.com>
-Date:   Tue, 28 Nov 2017 21:01:25 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
+        id S1752540AbdK2CGZ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Nov 2017 21:06:25 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:56238 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752143AbdK2CGX (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2017 21:06:23 -0500
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id E030C6046D;
+        Wed, 29 Nov 2017 02:06:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1511921182;
+        bh=m4pSoxviaPywhOLurPn73Zyp/SK/U0rRQ1wZM1Q8NIY=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=Zuvo6q0SpqboAopjs9ANMjj8RXIccAU9xHj2cx/n534UiRUSWSOC8Owh8I4AtM3ff
+         YOM/7875Nof6d0fgC9TdNb10V0Lh5cnqduv9OQx2kb0OeAe3nDUJyMC4Z+vig2bw7/
+         Is/PPjSLLsQtXYZhIXyhCkaRb+2TmONWEu8LeZB8d36q7zMxsz+pyLl30KHuLZ5ptl
+         fxySY4ewkwjzchjBVFWxUMgcA3lATdGCeO2In+cGb+uMpzVdWJK0Li9OfTcSfvPw8g
+         KlOvQrSvtuK181qV4QTPYrkU2Odkw124W5ZhmF7+NL1dqiEtF8jv0YJaJA3V82fkrm
+         x2unPyZQoJJrxQlNftmrl9+CBpVW2k1mZr4Wcx9Mbf/hIEPWeZDOvRZbNEO8Zi/c+M
+         U6M/LqCHgIfUevAk5E/nYyF54FzwnvEHDdXSsGZpD5UvolpTL3Uml8RQF5U+ybex2J
+         r+5rFxh5TYiroCJIKXBzIroU6ZpprdyQ1NsUKsT7A5VQD0iJ9NV
+Date:   Wed, 29 Nov 2017 02:06:16 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Jeff King <peff@peff.net>
+Cc:     lars.schneider@autodesk.com, git@vger.kernel.org,
+        gitster@pobox.com, sbeller@google.com, sunshine@sunshineco.com,
+        kaartic.sivaraam@gmail.com,
+        Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [PATCH v3] launch_editor(): indicate that Git waits for user
+ input
+Message-ID: <20171129020616.GC598034@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jeff King <peff@peff.net>, lars.schneider@autodesk.com,
+        git@vger.kernel.org, gitster@pobox.com, sbeller@google.com,
+        sunshine@sunshineco.com, kaartic.sivaraam@gmail.com,
+        Lars Schneider <larsxschneider@gmail.com>
+References: <20171127134716.69471-1-lars.schneider@autodesk.com>
+ <20171127200932.GA558049@genre.crustytoothpaste.net>
+ <20171127230520.GA29636@sigill.intra.peff.net>
 MIME-Version: 1.0
-In-Reply-To: <xmqq609we20v.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="XMCwj5IQnwKtuyBG"
+Content-Disposition: inline
+In-Reply-To: <20171127230520.GA29636@sigill.intra.peff.net>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.12.0-2-amd64)
+User-Agent: Mutt/1.9.1 (2017-09-22)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
 
-On 27/11/17 12:14 AM, Junio C Hamano wrote:
-> Liam Beguin <liambeguin@gmail.com> writes:
-> 
->> diff --git a/sequencer.c b/sequencer.c
->> index fa94ed652d2c..810b7850748e 100644
->> --- a/sequencer.c
->> +++ b/sequencer.c
->> @@ -2492,6 +2492,52 @@ int sequencer_make_script(int keep_empty, FILE *out,
->>  	return 0;
->>  }
->>  
->> +int add_exec_commands(const char *command)
->> +{
-> 
-> As the name of a public function, it does not feel that this hints
-> it strongly enough that it is from and a part of sequencer.c API.
-> 
->> +	const char *todo_file = rebase_path_todo();
->> +	struct todo_list todo_list = TODO_LIST_INIT;
->> +	int fd, res, i, first = 1;
->> +	FILE *out;
-> 
-> Having had to scan backwards while trying to see what the loop that
-> uses this variable is doing and if it gets affected by things that
-> happened before we entered the loop, I'd rather not to see 'first'
-> initialized here, left unused for quite some time until the loop is
-> entered.  It would make it a lot easier to follow if it is declared
-> and left uninitilized here, and set to 1 immediately before the
-> for() loop that uses it.
-> 
+--XMCwj5IQnwKtuyBG
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I agree that moving 'first = 1' just above the for() loop makes it
-more obvious. I'm not quite fond of how this is implemented, I just
-'translated' the shell code and was hoping on maybe a few comments
-on how to improve it.
+On Mon, Nov 27, 2017 at 06:05:20PM -0500, Jeff King wrote:
+> On Mon, Nov 27, 2017 at 08:09:32PM +0000, brian m. carlson wrote:
+>=20
+> > > Show a message in the original terminal and get rid of it when the
+> > > editor returns.
+> > [...]
+> >=20
+> > Sorry for coming to the topic so late, but it occurred to me that we
+> > might want to conditionalize this on an advice.* flag.  I expect there
+> > are some people who will never want to see this, and letting them turn
+> > it off would be good.
+>=20
+> I am torn between saying "yes please, I would absolutely set such an
+> option myself" and "if we need advice.*, that is a good sign that the
+> feature is mis-designed".
 
->> +
->> +	strbuf_reset(&todo_list.buf);
->> +	fd = open(todo_file, O_RDONLY);
->> +	if (fd < 0)
->> +		return error_errno(_("could not open '%s'"), todo_file);
->> +	if (strbuf_read(&todo_list.buf, fd, 0) < 0) {
->> +		close(fd);
->> +		return error(_("could not read '%s'."), todo_file);
->> +	}
->> +	close(fd);
-> 
-> Is this strbuf_read_file() written in longhand?
+I myself would also set such an option.  More importantly, I think there
+are other developers who would complain about such a message, and I'd
+like to give them an easy way to turn it off.
 
-Thanks for pointing this out! I'll update. And as Johannes pointed out,
-I've copied this from surrounding functions, I'll add a preparatory path
-to update those too.
+Note that I am not altogether opposed to advice.*, since I personally
+find it helpful in certain cases as an aide-m=C3=A9moire of what state my
+branch is in.
 
-> 
->> +	res = parse_insn_buffer(todo_list.buf.buf, &todo_list);
->> +	if (res) {
->> +		todo_list_release(&todo_list);
->> +		return error(_("unusable todo list: '%s'"), todo_file);
->> +	}
->> +
->> +	out = fopen(todo_file, "w");
->> +	if (!out) {
->> +		todo_list_release(&todo_list);
->> +		return error(_("unable to open '%s' for writing"), todo_file);
->> +	}
->> +	for (i = 0; i < todo_list.nr; i++) {
->> +		struct todo_item *item = todo_list.items + i;
->> +		int bol = item->offset_in_buf;
->> +		const char *p = todo_list.buf.buf + bol;
->> +		int eol = i + 1 < todo_list.nr ?
->> +			todo_list.items[i + 1].offset_in_buf :
->> +			todo_list.buf.len;
-> 
-> Should bol and eol be of type size_t instead?  The values that get
-> assigned to them from other structures are.
-> 
+> Let me elaborate a bit on the latter.
+>=20
+> My gut feeling is that this is absolutely the wrong place to put a
+> message like this. We don't know enough about what the editor is doing,
+> so we have to take pains to avoid a crufty message in the terminal,
+> including:
+>=20
+>   - playing ANSI-term trickery to erase the message
+>=20
+>   - hard-coding (!) emacsclient as a special case
 
-Will do.
-Thanks, 
+I agree that the editor is the right place to put this, but I also
+understand that the people most likely to be helped by this are the
+least likely to write such scripting.  I think this is especially so
+because in my experience newer, less advanced users are more likely than
+not to use graphical editors.
 
-Liam
+Git is an extraordinarily powerful piece of software, but it's also hard
+for people to use (judging by my Twitter feed), so if we can make it
+less painful for new users, I'm okay with an advice.* setting.
+
+I'm slightly negative on hard-coding emacsclient, since I'm sure someone
+will come up with another editor that does the same thing, and then we'd
+have to update it.
+
+> If the anti-cruft techniques I mentioned above work well in practice,
+> then we get to have our cake and eat it, too. If they don't, then I'm
+> not sure if the tradeoff is worth it.
+
+I have a feeling that this may not work properly in editors that don't
+support the concept of xterm alternate screens (such as the Linux
+console) where the editor window is left on the screen, but it may be
+that it works fine and I've just misunderstood how it's supposed to
+work.  It may also be that we don't care about such cases, as any cruft
+would have already scrolled off the screen.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
+https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: https://keybase.io/bk2204
+
+--XMCwj5IQnwKtuyBG
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.2 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAloeFhgACgkQv1NdgR9S
+9ovZ3xAAmK8VRQr6gRwHT6TguLjtQU6nvetICa5qYipy0T/fFE66Q2ldudDO+1Wx
+DJsAp3ylu71DtsRVJh1RAittWUU26BYU6Y/IxA9g0nKrb9jvXy2U2h5EwCr0Eg7U
+xzCZZ/fuR9IDc113HUQ778Pi/eMsvHcf3B0AH2Z8h5Bzet2RxlQ4iWh6mcOFSiMH
+8MpSwgcNVpaXcHP6mmy461nhoOEMK18GYl5PT8dQe2uIKMJm5dK3zxTbPjjA9cYO
+3Y2bJO0CJ2dvbr6q3asqw4yT58utDu7K2u/WnsW9HNSJ3MjqcBa1sYqBLogGkc5P
+CAuxQl6Gh1ugaoZVcyeqI2+CFWeWqMThU1YkitgDJmlcGbJnzOP9tjD3iwjPLDTC
+0iqUXlNEUC5pUchGvEUNlo3cuxGrPaHcsg0tTGvb+dHkc4OJHMX4EYllILNaY3uw
+YGGa3Xq2T6pN+lfjXf7rBkCu/xon1O1daP+GQ6ZpRHnJOSiNVOXMpEs41l3nii67
+3Fj0UzW8Q4J0hRaFsu05DAg8f4TTHKKD74STmTSA2h4AssoVndDGYgUweK4Z9F1s
+/9t62e6spMblY2WzfcC8LC42CJqIu7zmsrq8O1u8hI/7LgvORqdthbHWkrjDkqoP
+ISJfaWi6VzRpq4FbKYmQRsF28qoJ7x3TDOeTrZyS3jfs8JuC6ok=
+=fy6/
+-----END PGP SIGNATURE-----
+
+--XMCwj5IQnwKtuyBG--
