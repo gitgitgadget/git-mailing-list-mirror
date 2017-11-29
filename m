@@ -2,127 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9078820A40
-	for <e@80x24.org>; Wed, 29 Nov 2017 18:32:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 093C320A40
+	for <e@80x24.org>; Wed, 29 Nov 2017 18:35:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751396AbdK2ScM (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Nov 2017 13:32:12 -0500
-Received: from mail-it0-f42.google.com ([209.85.214.42]:33171 "EHLO
-        mail-it0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751267AbdK2ScK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Nov 2017 13:32:10 -0500
-Received: by mail-it0-f42.google.com with SMTP id o130so27097099itg.0
-        for <git@vger.kernel.org>; Wed, 29 Nov 2017 10:32:10 -0800 (PST)
+        id S1751708AbdK2SfZ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Nov 2017 13:35:25 -0500
+Received: from mail-wr0-f170.google.com ([209.85.128.170]:37495 "EHLO
+        mail-wr0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751687AbdK2SfY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Nov 2017 13:35:24 -0500
+Received: by mail-wr0-f170.google.com with SMTP id k61so4292644wrc.4
+        for <git@vger.kernel.org>; Wed, 29 Nov 2017 10:35:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=GN0M1kzYn6ur1hjuKJlRoaFgU9Y5JXEw0rcWxAH2hMw=;
-        b=wS1+zB56+4VfJTwYOms6aPIFx0tLpRAeBLX7IIdOJ+EKa+ZLlUNIBzONKHzGqAoHuz
-         PkX/Fst02RgnUBnSzAH5VuJH8LoKWHUIqqiT4IBs5ST2TArWMDeNfsjPRomZelOiMQUJ
-         Le9FplhmgufGmrW/b4xwL+1XCF4cDcJZkedObgFsahKbEHDthz97DCm5dENExElzNcuR
-         KG/fXaDeS9Q5mBHv/yW24Oo5eSYozLiHxYrka8YBHrydo54ptmFdR2rtugMixfifzWg9
-         BMzjvcRzHjmiblnHyoB0ga3pG56BkLjA3VzICeM8Q7P2dbMKDg6jWvQfySSVkT90v6mX
-         cVnA==
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=JtgbGYRn/bk2+HYX9E2a5bP0Y/0UntT/fgUK+BBy9Zc=;
+        b=RN+FIr5MLEP9IS1CxX+gdDdM3tNTPeELd07sF9a7PGiB2eL25u0yDSLcfYRko50AS5
+         dlzfDg5uu/8JblHvlJmkTAM7u/s16hDR2L4/+O+UnMp4jkXvrbaunhFOvVs9J9ToFEeM
+         NB42Gwq7rNxr0bnr9fTeH4E6+ccXQXh4d65uHtvwr5DGLQ0KXZEi00NwIoG63VBmqEUb
+         sgE2lrVdgiqcznbB7NwsfX5MKNWAfa/BkAj1lzAY5GS+hQ3f7uB9CHzchUx+2aHlzNfX
+         SLnPHDcBihaDmh0FODTop1UNabxfMKsK4JlVfQq5Y50qiD/nrbxJp19OcNmi2LSux2QG
+         gBUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=GN0M1kzYn6ur1hjuKJlRoaFgU9Y5JXEw0rcWxAH2hMw=;
-        b=bRJNLXP3c1qlv/VkGY8PKHnVZ1xUahR5AjlviC96uvSiRtgK34IEvk7vM1tF/OoJ8I
-         OYedTtkHUmU1HzUSke2KhEbj1eCSqpBcm1Cox5riLHUCqyYtsZ6cLjox+GpgU1puemGW
-         HpYWjAZhbkoYdYGjOrv2dOU7hu88XEHDA18EBMxuB3ei+SGdTz2LIs4VPduU9KvU9Y2U
-         yZxTVEeXgFZMySSj3NsHOWykehFJ87T0TdVWTN0pwdy07et+MBf9xAijbNzjiV3B4cAw
-         h5LiF+z0Pe9yD5iUdk3lsaDwimEJhIv4niqGkqRG0I2XYsLnbF0Dv98X93XFNR7ZfUNu
-         2iOg==
-X-Gm-Message-State: AJaThX7xFzsucEEYbUFVqMfTTs8c5jQr+btNWCJU/yelgQ3pqlflzPbb
-        sXMB99NQ5zsrAz8mel0l18a3EtvTTFU=
-X-Google-Smtp-Source: AGs4zMYCYfXv5b+TkIcnfZTZokK/bt73BmWI6rDguw1kMhDm1uUJ5JrfiBG6H3PyOkb3+wnDrnapfg==
-X-Received: by 10.36.189.205 with SMTP id x196mr8590903ite.152.1511980329496;
-        Wed, 29 Nov 2017 10:32:09 -0800 (PST)
-Received: from twelve3.mtv.corp.google.com ([100.96.218.44])
-        by smtp.gmail.com with ESMTPSA id b77sm1008043ioj.42.2017.11.29.10.32.08
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 29 Nov 2017 10:32:08 -0800 (PST)
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>, newren@gmail.com
-Subject: [PATCH on en/rename-progress] diffcore-rename: make diff-tree -l0 mean -l<large>
-Date:   Wed, 29 Nov 2017 10:32:00 -0800
-Message-Id: <20171129183200.178183-1-jonathantanmy@google.com>
-X-Mailer: git-send-email 2.15.0.173.g9268cf4a2.dirty
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=JtgbGYRn/bk2+HYX9E2a5bP0Y/0UntT/fgUK+BBy9Zc=;
+        b=fubpHh4eluy2sNIcBB7O+ArwrsLX7uftRtQZfWQcCJdGWboPKlVy6X7KfRtBNWld91
+         c2OonWqOiJ7w43PAe50fnNZeO4RXqcMFUHTXaDJ/e6IJGDWzLluDzPsLYehNAtMYOyge
+         4WlALE0wp7jlQr/mcEq5PZDn2VhVdORQNhrYws5pPu78INoSp24B82vbK6Gt3GclAK/4
+         ivekA2VhcGXV+PXVGFg/DUxpA068v+O+GtGwmRLLLUogItR6lm8hW5pjkJHDTYSVjrUf
+         ACZ6CojhF+0xKXt1cVdzfGYbW53ADZGBx/N7gRF9qrxs35H3nnQll6WjW+tz2ENSNxsA
+         Rk+w==
+X-Gm-Message-State: AJaThX53eoLTOt/Kt1TPngblml6JIqGnlDO5Pwak3h2HpKWCP0TRYyVm
+        KZHPhOwbFquYF3rdiTewOVI=
+X-Google-Smtp-Source: AGs4zMYKF/6mVL1LEcvh8QFyraHrg6VIOv3wnCuNd/kQeB1VG7V1er18qymqTrDQsRasLoZIdUBoXA==
+X-Received: by 10.223.179.26 with SMTP id j26mr3534935wrd.123.1511980523675;
+        Wed, 29 Nov 2017 10:35:23 -0800 (PST)
+Received: from laptop.local (host-78-145-151-122.as13285.net. [78.145.151.122])
+        by smtp.gmail.com with ESMTPSA id t135sm1728692wmt.24.2017.11.29.10.35.22
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 29 Nov 2017 10:35:22 -0800 (PST)
+Date:   Wed, 29 Nov 2017 18:35:16 +0000
+From:   Thomas Adam <thomas@xteddy.org>
+To:     lars.schneider@autodesk.com
+Cc:     git@vger.kernel.org, gitster@pobox.com, sbeller@google.com,
+        sunshine@sunshineco.com, kaartic.sivaraam@gmail.com,
+        sandals@crustytoothpaste.net, peff@peff.net,
+        Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [PATCH v4 0/2] launch_editor(): indicate that Git waits for user
+ input
+Message-ID: <20171129183514.wze5trxjfgqxqs7z@laptop.local>
+References: <20171129143752.60553-1-lars.schneider@autodesk.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20171129143752.60553-1-lars.schneider@autodesk.com>
+User-Agent: NeoMutt/20170714-87-e4144b (1.8.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the documentation of diff-tree, it is stated that the -l option
-"prevents rename/copy detection from running if the number of
-rename/copy targets exceeds the specified number". The documentation
-does not mention any special handling for the number 0, but the
-implementation before commit b520abf ("sequencer: warn when internal
-merge may be suboptimal due to renameLimit", 2017-11-14) treated 0 as a
-special value indicating that the rename limit is to be a very large
-number instead.
+On Wed, Nov 29, 2017 at 03:37:50PM +0100, lars.schneider@autodesk.com wrote:
+> +		if (print_waiting_for_editor) {
+> +			fprintf(stderr, _("hint: Waiting for your editor input..."));
+>  			fflush(stderr);
 
-The commit b520abf changed that behavior, treating 0 as 0. Revert this
-behavior to what it was previously. This allows existing scripts and
-tools that use "-l0" to continue working. The alternative (to allow
-"-l0") is probably much less useful, since users can just refrain from
-specifying -M and/or -C to have the same effect.
+Just FYI, stderr is typically unbuffered on most systems I've used, and
+although the call to fflush() is harmless, I suspect it's not having any
+effect.  That said, there's plenty of other places in Git which seems to think
+fflush()ing stderr actually does something.
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
-Note that this patch is built on en/rename-progress.
-
-We noticed this through an automated test for an internal tool - the
-tool uses git diff-tree with -l0, and no longer produces the same
-results as before.
----
- diffcore-rename.c      |  2 ++
- t/t4001-diff-rename.sh | 15 +++++++++++++++
- 2 files changed, 17 insertions(+)
-
-diff --git a/diffcore-rename.c b/diffcore-rename.c
-index 9ca0eaec7..245e999fe 100644
---- a/diffcore-rename.c
-+++ b/diffcore-rename.c
-@@ -392,6 +392,8 @@ static int too_many_rename_candidates(int num_create,
- 	 *
- 	 *    num_create * num_src > rename_limit * rename_limit
- 	 */
-+	if (rename_limit <= 0)
-+		rename_limit = 32767;
- 	if ((num_create <= rename_limit || num_src <= rename_limit) &&
- 	    ((uint64_t)num_create * (uint64_t)num_src
- 	     <= (uint64_t)rename_limit * (uint64_t)rename_limit))
-diff --git a/t/t4001-diff-rename.sh b/t/t4001-diff-rename.sh
-index 0d1fa45d2..eadf4f624 100755
---- a/t/t4001-diff-rename.sh
-+++ b/t/t4001-diff-rename.sh
-@@ -230,4 +230,19 @@ test_expect_success 'rename pretty print common prefix and suffix overlap' '
- 	test_i18ngrep " d/f/{ => f}/e " output
- '
- 
-+test_expect_success 'diff-tree -l0 defaults to a big rename limit, not zero' '
-+	test_write_lines line1 line2 line3 >myfile &&
-+	git add myfile &&
-+	git commit -m x &&
-+
-+	test_write_lines line1 line2 line4 >myotherfile &&
-+	git rm myfile &&
-+	git add myotherfile &&
-+	git commit -m x &&
-+
-+	git diff-tree -M -l0 HEAD HEAD^ >actual &&
-+	# Verify that a rename from myotherfile to myfile was detected
-+	grep "myotherfile.*myfile" actual
-+'
-+
- test_done
--- 
-2.15.0.173.g9268cf4a2.dirty
-
+-- Thomas Adam
