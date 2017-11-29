@@ -2,106 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5232020C11
-	for <e@80x24.org>; Wed, 29 Nov 2017 06:47:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4EB9B20C11
+	for <e@80x24.org>; Wed, 29 Nov 2017 08:07:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751444AbdK2GrH (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Nov 2017 01:47:07 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59891 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751054AbdK2GrG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Nov 2017 01:47:06 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7996FB4382;
-        Wed, 29 Nov 2017 01:47:05 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=T9K0YqTZ2bbjGkL3PIy5WnwTTA4=; b=GnBlhL
-        ckXCTZU2yh2bwomdSqRQea2NFD/aJMXP594NfGhmUS5BK1LxNrbbGve8Cd2syAwY
-        6VSsDLvHqckREQob+HyMdmKJD0B9ez4QobctZ3tIrMbLi9kzh+9l3V6LVQYA4NNO
-        GcYkOMfG6S5uYN3b9nejt3jv4fql3n1PaSIno=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=DDuj1G/klpYZkNAaIDI0+STiwtcIKxq/
-        AIliNDKUNi0c5le5IsCI+mEDiqjsFbzOjfjIlLgVkiP3yLpYKbnoVawNiUmrBlTS
-        ZAbfmK9LmEmxfUpnjCWFGBHDmjfjwVq7EtRU5XZt74VhkKAj1GYIU2P7ZU2oilvV
-        QonsRBYXWwU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 718E8B4381;
-        Wed, 29 Nov 2017 01:47:05 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E2371B4380;
-        Wed, 29 Nov 2017 01:47:04 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc:     Git mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH v2 0/3] rebase: give precise error message
-References: <xmqq60a3xdpw.fsf@gitster.mtv.corp.google.com>
-        <20171127172104.5796-1-kaartic.sivaraam@gmail.com>
-        <xmqqpo8387hz.fsf@gitster.mtv.corp.google.com>
-        <1511877882.10193.2.camel@gmail.com>
-        <xmqqzi7654hx.fsf@gitster.mtv.corp.google.com>
-        <1511925118.2486.2.camel@gmail.com>
-Date:   Wed, 29 Nov 2017 15:47:03 +0900
-In-Reply-To: <1511925118.2486.2.camel@gmail.com> (Kaartic Sivaraam's message
-        of "Wed, 29 Nov 2017 08:41:58 +0530")
-Message-ID: <xmqqshcx4m54.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1753243AbdK2IHO (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Nov 2017 03:07:14 -0500
+Received: from mail-it0-f42.google.com ([209.85.214.42]:46314 "EHLO
+        mail-it0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751781AbdK2IHM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Nov 2017 03:07:12 -0500
+Received: by mail-it0-f42.google.com with SMTP id t1so2991292ite.5
+        for <git@vger.kernel.org>; Wed, 29 Nov 2017 00:07:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=sourcegraph.com; s=google;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=BeyzVy6T0pKtuViB77sYNCVt0jh3slB76mX9Rpqtpi8=;
+        b=MTUkHO5Q4YwVzi51xZy1DywOEFOUO7rQugusbRcZLobspg8/Mimk5opoT3gJx6GWJD
+         C2XSNEWhFgonAwMOLqT6juPtoELIr0c7kqwTdOnGeekavLruZaPm/+Wnl7BmCvI3rUWk
+         vHiTce8V5CHW/eGaR8scC/b4HJseov5FpFkoxHw1TlHY7C+75DwHRIueKcy1C3YbM9lp
+         752x8sTPrAx9hdMTYjl+z+N06DsDFEARIyQQA5+QZQfhJY3/Nn9iRK8F8OVscnEIMF7c
+         NZGDiy9YYRbfgYFglmXywlzL91IP7XhWIAbcICFnGqDjo9UqavRTBNRTAXzvZ4vOPNeV
+         2fXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=BeyzVy6T0pKtuViB77sYNCVt0jh3slB76mX9Rpqtpi8=;
+        b=DNuu7HWVgspbZFsDHTFfb49iJTAxdqVMWIoQhqdhchX3mhOnXRzPGhR/5Y+cYLfSlw
+         QmR96DAalN7fBVBybdHsu5q5BSK2WS+JsgqmAH/2eDVw0zfDlDAn/yjFw2WOrym/DMte
+         HlgWtY04+pqhm3UwQlZrb/5hA2NAwkb3fEWM8AcX5+MwN5dL1urNlXKYoP3vyGcJceuQ
+         j5Fn4pABljuZPEtVbq57SSJpQZZMywEyusqgfdJnl4wbfOSMg/dqaXx52qjsA9/akpQn
+         mCYxllUnzASFJm4KJJRRFWz4YLGp9AD+I1ckoCFPljbuWisA2imcg02vR6yEWev/JGHI
+         Nunw==
+X-Gm-Message-State: AJaThX4DWMz+AwGJ6pvYipYJf6+849Zx4/xwGbco9tyGbHhx68dnP3nC
+        UE18bopAkWr2FXA0h1eNikRIQD/M2RAOsFvwazuCsWqm87o=
+X-Google-Smtp-Source: AGs4zMbeHahOOL40K4JfNHdCjx1rawW+8jl2/Mhq8jXMIb6HsvG5cuUreb8nTu5/KrtE63aZDFDOcraEkvIbpGrB+rc=
+X-Received: by 10.36.181.80 with SMTP id j16mr6637434iti.118.1511942831343;
+ Wed, 29 Nov 2017 00:07:11 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1C7EA5E4-D4D1-11E7-8ABE-8EF31968708C-77302942!pb-smtp1.pobox.com
+Received: by 10.2.165.7 with HTTP; Wed, 29 Nov 2017 00:06:51 -0800 (PST)
+From:   Nick Snyder <nick@sourcegraph.com>
+Date:   Wed, 29 Nov 2017 00:06:51 -0800
+Message-ID: <CA+SQVf1W6BhNyB6bGxh7WfCwb6+E3pNjHLeS4xDYPJ6BLT8cng@mail.gmail.com>
+Subject: git blame --reverse doesn't find line in HEAD
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Kaartic Sivaraam <kaartic.sivaraam@gmail.com> writes:
+I have a repo that reproduces a behavior with `git blame --reverse`
+that surprises me. https://github.com/nicksnyder/git-blame-bug
 
->> I do not think the above is a good change in the first place for at
->> least two reasons.  By saying <ref>, the updated text says "not just
->> branches but you can also give tags and remote-tracking branches".
->
-> I used <ref> as you could actually use tags, remote-tracking branches
-> and even "notes" ...
-> ...
-> It just works (of course, I couldn't understand what it did)! I didn't
-> want to lie to the user. So, I used <ref>. So, should we just update
-> the <branch> part of the doc or should we update the code for 'rebase'?
-> I'm unsure.
+The readme explains the observed behavior and what I expected to
+happen. I will inline the readme at the bottom of this message for
+convenience.
 
-By saying <ref>, you are not covering these cases
+Am I misunderstanding --reverse or is this a bug?
 
-	git rebase master HEAD^0
-	git rebase master pu^2
+Thanks!
+Nick
 
-where the command gets non refs.
+$ git --version
+git version 2.15.0
 
-Most of the time, people use a <branch>, and rare cases like these
-what a user can give is not restricted to a <ref>, so there is *no*
-value in replacing <branch> with <ref>.  If we needed to replace it
-with something, replacing <branch> with [<branch> | <commit-ish>] is
-not wrong per-se, but I do not think it is an improvement.
+Blame of L465 in Tree.tsx at HEAD (ca0fb5) points to L463 at 199ee7
 
-As <branch> is merely a kind of <commit-ish>, it may be tempting to
-instead replace <branch> with <commit-ish>, but I do not think it is
-a good idea, either.  No matter what you write there in the synopsis
-(and let's call it X), the description would have to say "when X is
-the name of a branch, that branch is checked out, its history gets
-rebased, and at the end, the tip of that branch points at the
-result.  When X is not a branch but just a commit-ish, the HEAD is
-detached at that commit, its history gets rebased and you'll be left
-in that state".  Having <branch> in that sentence is clear enough
-and any intelligent reader would understand what we mean by that
-notation: we are showing there can be various things that can come
-on the command line depicted in the SYNOPSIS section at the point
-where we have a placeholder called <branch>, and the argument does
-not necessarily have to be the name of a branch.
+$ git blame -p -L465,465 Tree.tsx
+199ee75d1240ae72cd965f62aceeb301ab64e1bd 463 465 1
+filename Tree.tsx
+            public shouldComponentUpdate(nextProps: TileProps): boolean {
 
+EXPECTED: Reverse blame of L463 at 199ee7 points to L465 at the
+lastest commit in the repo (at least ca0fb5).
+ACTUAL: Reverse blame of L463 at 199ee7 points to L463 at 199ee7.
 
+$ git blame -p -L463,463 --reverse 199ee7.. Tree.tsx
+199ee75d1240ae72cd965f62aceeb301ab64e1bd 463 463 1
+boundary
+previous ca0fb5a2d61cb16909bcb06f49dd5448a26f32b1 Tree.tsx
+filename Tree.tsx
+            public shouldComponentUpdate(nextProps: TileProps): boolean {
+
+The line in question is in the diff (git diff 199ee7..ca0fb5), but
+that particular line is neither added nor deleted, so I don't know why
+blame would think it is deleted.
+
+Relevant hunk in diff:
+
+@@ -452,28 +462,17 @@ export class LayerTile extends
+React.Component<TileProps, {}> {
+         }
+     }
+
+-    public validTokenRange(props: TileProps): boolean {
+-        if (props.selectedPath === '') {
+-            return true
+-        }
+-        const token = props.selectedPath.split('/').pop()!
+-        return token >= this.first && token <= this.last
+-    }
+-
+     public shouldComponentUpdate(nextProps: TileProps): boolean {
+-        const lastValid = this.validTokenRange(this.props)
+-        const nextValid = this.validTokenRange(nextProps)
+-        if (!lastValid && !nextValid) {
+-            // short circuit
+-            return false
++        if (isEqualOrAncestor(this.props.selectedDir,
+this.props.currSubpath)) {
++            return true
+         }
+-        if (isEqualOrAncestor(this.props.selectedDir,
+this.props.currSubpath) && lastValid) {
++        if (nextProps.selectedDir === nextProps.currSubpath) {
+             return true
+         }
+-        if (nextProps.selectedDir === nextProps.currSubpath &&
+this.validTokenRange(nextProps)) {
++        if (getParentDir(nextProps.selectedDir) === nextProps.currSubpath) {
+             return true
+         }
+-        if (getParentDir(nextProps.selectedDir) ===
+nextProps.currSubpath && this.validTokenRange(nextProps)) {
++        if (!isEqual(nextProps.pathSplits, this.props.pathSplits)) {
+             return true
+         }
+         return false
