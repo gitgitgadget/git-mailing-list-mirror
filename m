@@ -7,36 +7,36 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2A3A420954
-	for <e@80x24.org>; Wed, 29 Nov 2017 01:44:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 18F7820954
+	for <e@80x24.org>; Wed, 29 Nov 2017 01:44:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753390AbdK2Bof (ORCPT <rfc822;e@80x24.org>);
+        id S1753379AbdK2Bof (ORCPT <rfc822;e@80x24.org>);
         Tue, 28 Nov 2017 20:44:35 -0500
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:55494 "EHLO
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:55504 "EHLO
         mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753246AbdK2Bn4 (ORCPT
+        by vger.kernel.org with ESMTP id S1752860AbdK2Bn4 (ORCPT
         <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2017 20:43:56 -0500
 Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id vAT1d791004735;
+        by mx0a-00153501.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id vAT1dBhq004738;
         Tue, 28 Nov 2017 17:42:39 -0800
 Authentication-Results: ppops.net;
         spf=softfail smtp.mailfrom=newren@gmail.com
 Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2ef78pmm13-3;
+        by mx0a-00153501.pphosted.com with ESMTP id 2ef78pmm12-3;
         Tue, 28 Nov 2017 17:42:39 -0800
 Received: from mxw1.palantir.com (new-smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id 5207022157CC;
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id 4A13D22157C4;
         Tue, 28 Nov 2017 17:42:39 -0800 (PST)
 Received: from newren2-linux.yojoe.local (newren2-linux.dyn.yojoe.local [10.100.68.32])
-        by smtp.yojoe.local (Postfix) with ESMTP id 4AA9E2CDE74;
+        by smtp.yojoe.local (Postfix) with ESMTP id 410C22CDF16;
         Tue, 28 Nov 2017 17:42:39 -0800 (PST)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, gitster@pobox.com,
         Elijah Newren <newren@gmail.com>
-Subject: [PATCH v4 30/34] merge-recursive: fix overwriting dirty files involved in renames
-Date:   Tue, 28 Nov 2017 17:42:33 -0800
-Message-Id: <20171129014237.32570-31-newren@gmail.com>
+Subject: [PATCH v4 29/34] merge-recursive: avoid clobbering untracked files with directory renames
+Date:   Tue, 28 Nov 2017 17:42:32 -0800
+Message-Id: <20171129014237.32570-30-newren@gmail.com>
 X-Mailer: git-send-email 2.15.0.408.g850bc54b15
 In-Reply-To: <20171129014237.32570-1-newren@gmail.com>
 References: <20171129014237.32570-1-newren@gmail.com>
@@ -56,290 +56,131 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This fixes an issue that existed before my directory rename detection
-patches that affects both normal renames and renames implied by
-directory rename detection.  Additional codepaths that only affect
-overwriting of directy files that are involved in directory rename
-detection will be added in a subsequent commit.
-
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-recursive.c                   | 85 ++++++++++++++++++++++++++++---=
-------
- merge-recursive.h                   |  2 +
- t/t3501-revert-cherry-pick.sh       |  2 +-
- t/t6043-merge-rename-directories.sh |  2 +-
- t/t7607-merge-overwrite.sh          |  2 +-
- unpack-trees.c                      |  4 +-
- unpack-trees.h                      |  4 ++
- 7 files changed, 77 insertions(+), 24 deletions(-)
+ merge-recursive.c                   | 42 +++++++++++++++++++++++++++++++=
+++++--
+ t/t6043-merge-rename-directories.sh |  6 +++---
+ 2 files changed, 43 insertions(+), 5 deletions(-)
 
 diff --git a/merge-recursive.c b/merge-recursive.c
-index e77d2b043d..2b8a5ca03b 100644
+index cdf8588c75..e77d2b043d 100644
 --- a/merge-recursive.c
 +++ b/merge-recursive.c
-@@ -334,32 +334,37 @@ static void init_tree_desc_from_tree(struct tree_de=
-sc *desc, struct tree *tree)
- 	init_tree_desc(desc, tree->buffer, tree->size);
- }
-=20
--static int git_merge_trees(int index_only,
-+static int git_merge_trees(struct merge_options *o,
- 			   struct tree *common,
- 			   struct tree *head,
- 			   struct tree *merge)
- {
- 	int rc;
- 	struct tree_desc t[3];
--	struct unpack_trees_options opts;
-=20
--	memset(&opts, 0, sizeof(opts));
--	if (index_only)
--		opts.index_only =3D 1;
-+	memset(&o->unpack_opts, 0, sizeof(o->unpack_opts));
-+	if (o->call_depth)
-+		o->unpack_opts.index_only =3D 1;
- 	else
--		opts.update =3D 1;
--	opts.merge =3D 1;
--	opts.head_idx =3D 2;
--	opts.fn =3D threeway_merge;
--	opts.src_index =3D &the_index;
--	opts.dst_index =3D &the_index;
--	setup_unpack_trees_porcelain(&opts, "merge");
-+		o->unpack_opts.update =3D 1;
-+	o->unpack_opts.merge =3D 1;
-+	o->unpack_opts.head_idx =3D 2;
-+	o->unpack_opts.fn =3D threeway_merge;
-+	o->unpack_opts.src_index =3D &the_index;
-+	o->unpack_opts.dst_index =3D &the_index;
-+	setup_unpack_trees_porcelain(&o->unpack_opts, "merge");
-=20
- 	init_tree_desc_from_tree(t+0, common);
- 	init_tree_desc_from_tree(t+1, head);
- 	init_tree_desc_from_tree(t+2, merge);
-=20
--	rc =3D unpack_trees(3, t, &opts);
-+	rc =3D unpack_trees(3, t, &o->unpack_opts);
-+	/*
-+	 * unpack_trees NULLifies src_index, but it's used in verify_uptodate,
-+	 * so set to the new index which will usually have modification
-+	 * timestamp info copied over.
-+	 */
-+	o->unpack_opts.src_index =3D &the_index;
- 	cache_tree_free(&active_cache_tree);
- 	return rc;
- }
-@@ -792,6 +797,20 @@ static int would_lose_untracked(const char *path)
- 	return !was_tracked(path) && file_exists(path);
- }
-=20
-+static int was_dirty(struct merge_options *o, const char *path)
-+{
-+	struct cache_entry *ce;
-+	int dirty =3D 1;
-+
-+	if (o->call_depth || !was_tracked(path))
-+		return !dirty;
-+
-+	ce =3D cache_file_exists(path, strlen(path), ignore_case);
-+	dirty =3D (ce->ce_stat_data.sd_mtime.sec > 0 &&
-+		 verify_uptodate(ce, &o->unpack_opts) !=3D 0);
-+	return dirty;
-+}
-+
- static int make_room_for_path(struct merge_options *o, const char *path)
- {
- 	int status, i;
-@@ -2645,6 +2664,7 @@ static int handle_modify_delete(struct merge_option=
+@@ -1138,6 +1138,26 @@ static int conflict_rename_dir(struct merge_option=
 s *o,
+ {
+ 	const struct diff_filespec *dest =3D pair->two;
 =20
- static int merge_content(struct merge_options *o,
- 			 const char *path,
-+			 int file_in_way,
- 			 struct object_id *o_oid, int o_mode,
- 			 struct object_id *a_oid, int a_mode,
- 			 struct object_id *b_oid, int b_mode,
-@@ -2719,7 +2739,7 @@ static int merge_content(struct merge_options *o,
- 				return -1;
- 	}
-=20
--	if (df_conflict_remains) {
-+	if (df_conflict_remains || file_in_way) {
- 		char *new_path;
- 		if (o->call_depth) {
- 			remove_file_from_cache(path);
-@@ -2753,6 +2773,30 @@ static int merge_content(struct merge_options *o,
- 	return mfi.clean;
- }
-=20
-+static int conflict_rename_normal(struct merge_options *o,
-+				  const char *path,
-+				  struct object_id *o_oid, unsigned int o_mode,
-+				  struct object_id *a_oid, unsigned int a_mode,
-+				  struct object_id *b_oid, unsigned int b_mode,
-+				  struct rename_conflict_info *ci)
-+{
-+	int clean_merge;
-+	int file_in_the_way =3D 0;
++	if (!o->call_depth && would_lose_untracked(dest->path)) {
++		char *alt_path =3D unique_path(o, dest->path, rename_branch);
 +
-+	if (was_dirty(o, path)) {
-+		file_in_the_way =3D 1;
-+		output(o, 1, _("Refusing to lose dirty file at %s"), path);
++		output(o, 1, _("Error: Refusing to lose untracked file at %s; "
++			       "writing to %s instead."),
++		       dest->path, alt_path);
++		/*
++		 * Write the file in worktree at alt_path, but not in the
++		 * index.  Instead, write to dest->path for the index but
++		 * only at the higher appropriate stage.
++		 */
++		if (update_file(o, 0, &dest->oid, dest->mode, alt_path))
++			return -1;
++		free(alt_path);
++		return update_stages(o, dest->path, NULL,
++				     rename_branch =3D=3D o->branch1 ? dest : NULL,
++				     rename_branch =3D=3D o->branch1 ? NULL : dest);
 +	}
 +
-+	/* Merge the content and write it out */
-+	clean_merge =3D merge_content(o, path, file_in_the_way,
-+				    o_oid, o_mode, a_oid, a_mode, b_oid, b_mode,
-+				    ci);
-+	if (clean_merge > 0 && file_in_the_way)
-+		clean_merge =3D 0;
-+	return clean_merge;
-+}
-+
- /* Per entry merge function */
- static int process_entry(struct merge_options *o,
- 			 const char *path, struct stage_data *entry)
-@@ -2772,9 +2816,12 @@ static int process_entry(struct merge_options *o,
- 		switch (conflict_info->rename_type) {
- 		case RENAME_NORMAL:
- 		case RENAME_ONE_FILE_TO_ONE:
--			clean_merge =3D merge_content(o, path,
--						    o_oid, o_mode, a_oid, a_mode, b_oid, b_mode,
--						    conflict_info);
-+			clean_merge =3D conflict_rename_normal(o,
-+							     path,
-+							     o_oid, o_mode,
-+							     a_oid, a_mode,
-+							     b_oid, b_mode,
-+							     conflict_info);
- 			break;
- 		case RENAME_DIR:
- 			clean_merge =3D 1;
-@@ -2870,7 +2917,7 @@ static int process_entry(struct merge_options *o,
- 	} else if (a_oid && b_oid) {
- 		/* Case C: Added in both (check for same permissions) and */
- 		/* case D: Modified in both, but differently. */
--		clean_merge =3D merge_content(o, path,
-+		clean_merge =3D merge_content(o, path, 0 /* file_in_way */,
- 					    o_oid, o_mode, a_oid, a_mode, b_oid, b_mode,
- 					    NULL);
- 	} else if (!o_oid && !a_oid && !b_oid) {
-@@ -2904,7 +2951,7 @@ int merge_trees(struct merge_options *o,
- 		return 1;
++	/* Update dest->path both in index and in worktree */
+ 	if (update_file(o, 1, &dest->oid, dest->mode, dest->path))
+ 		return -1;
+ 	return 0;
+@@ -1156,7 +1176,8 @@ static int handle_change_delete(struct merge_option=
+s *o,
+ 	const char *update_path =3D path;
+ 	int ret =3D 0;
+=20
+-	if (dir_in_way(path, !o->call_depth, 0)) {
++	if (dir_in_way(path, !o->call_depth, 0) ||
++	    (!o->call_depth && would_lose_untracked(path))) {
+ 		update_path =3D alt_path =3D unique_path(o, path, change_branch);
  	}
 =20
--	code =3D git_merge_trees(o->call_depth, common, head, merge);
-+	code =3D git_merge_trees(o, common, head, merge);
-=20
- 	if (code !=3D 0) {
- 		if (show(o, 4) || o->call_depth)
-diff --git a/merge-recursive.h b/merge-recursive.h
-index e1be27f57c..a557201a50 100644
---- a/merge-recursive.h
-+++ b/merge-recursive.h
-@@ -1,6 +1,7 @@
- #ifndef MERGE_RECURSIVE_H
- #define MERGE_RECURSIVE_H
-=20
-+#include "unpack-trees.h"
- #include "string-list.h"
-=20
- struct merge_options {
-@@ -27,6 +28,7 @@ struct merge_options {
- 	struct strbuf obuf;
- 	struct hashmap current_file_dir_set;
- 	struct string_list df_conflict_file_set;
-+	struct unpack_trees_options unpack_opts;
- };
-=20
- struct dir_rename_entry {
-diff --git a/t/t3501-revert-cherry-pick.sh b/t/t3501-revert-cherry-pick.s=
-h
-index 783bdbf59d..0d89f6d0f6 100755
---- a/t/t3501-revert-cherry-pick.sh
-+++ b/t/t3501-revert-cherry-pick.sh
-@@ -141,7 +141,7 @@ test_expect_success 'cherry-pick "-" works with argum=
-ents' '
- 	test_cmp expect actual
- '
-=20
--test_expect_failure 'cherry-pick works with dirty renamed file' '
-+test_expect_success 'cherry-pick works with dirty renamed file' '
- 	test_commit to-rename &&
- 	git checkout -b unrelated &&
- 	test_commit unrelated &&
+@@ -1282,6 +1303,12 @@ static int handle_file(struct merge_options *o,
+ 			dst_name =3D unique_path(o, rename->path, cur_branch);
+ 			output(o, 1, _("%s is a directory in %s adding as %s instead"),
+ 			       rename->path, other_branch, dst_name);
++		} else if (!o->call_depth &&
++			   would_lose_untracked(rename->path)) {
++			dst_name =3D unique_path(o, rename->path, cur_branch);
++			output(o, 1, _("Refusing to lose untracked file at %s; "
++				       "adding as %s instead"),
++			       rename->path, dst_name);
+ 		}
+ 	}
+ 	if ((ret =3D update_file(o, 0, &rename->oid, rename->mode, dst_name)))
+@@ -1407,7 +1434,18 @@ static int conflict_rename_rename_2to1(struct merg=
+e_options *o,
+ 		char *new_path2 =3D unique_path(o, path, ci->branch2);
+ 		output(o, 1, _("Renaming %s to %s and %s to %s instead"),
+ 		       a->path, new_path1, b->path, new_path2);
+-		remove_file(o, 0, path, 0);
++		if (would_lose_untracked(path))
++			/*
++			 * Only way we get here is if both renames were from
++			 * a directory rename AND user had an untracked file
++			 * at the location where both files end up after the
++			 * two directory renames.  See testcase 10d of t6043.
++			 */
++			output(o, 1, _("Refusing to lose untracked file at "
++				       "%s, even though it's in the way."),
++			       path);
++		else
++			remove_file(o, 0, path, 0);
+ 		ret =3D update_file(o, 0, &mfi_c1.oid, mfi_c1.mode, new_path1);
+ 		if (!ret)
+ 			ret =3D update_file(o, 0, &mfi_c2.oid, mfi_c2.mode,
 diff --git a/t/t6043-merge-rename-directories.sh b/t/t6043-merge-rename-d=
 irectories.sh
-index b1ca3d18e5..9b16280d5e 100755
+index 261fb4917d..b1ca3d18e5 100755
 --- a/t/t6043-merge-rename-directories.sh
 +++ b/t/t6043-merge-rename-directories.sh
-@@ -3157,7 +3157,7 @@ test_expect_success '11a-setup: Avoid losing dirty =
-contents with simple rename'
+@@ -2873,7 +2873,7 @@ test_expect_success '10b-setup: Overwrite untracked=
+ with dir rename + delete' '
  	)
  '
 =20
--test_expect_failure '11a-check: Avoid losing dirty contents with simple =
-rename' '
-+test_expect_success '11a-check: Avoid losing dirty contents with simple =
-rename' '
+-test_expect_failure '10b-check: Overwrite untracked with dir rename + de=
+lete' '
++test_expect_success '10b-check: Overwrite untracked with dir rename + de=
+lete' '
  	(
- 		cd 11a &&
+ 		cd 10b &&
 =20
-diff --git a/t/t7607-merge-overwrite.sh b/t/t7607-merge-overwrite.sh
-index 00617dadf8..e44fb50173 100755
---- a/t/t7607-merge-overwrite.sh
-+++ b/t/t7607-merge-overwrite.sh
-@@ -92,7 +92,7 @@ test_expect_success 'will not overwrite removed file wi=
-th staged changes' '
- 	test_cmp important c1.c
+@@ -2944,7 +2944,7 @@ test_expect_success '10c-setup: Overwrite untracked=
+ with dir rename/rename(1to2)
+ 	)
  '
 =20
--test_expect_failure 'will not overwrite unstaged changes in renamed file=
-' '
-+test_expect_success 'will not overwrite unstaged changes in renamed file=
-' '
- 	git reset --hard c1 &&
- 	git mv c1.c other.c &&
- 	git commit -m rename &&
-diff --git a/unpack-trees.c b/unpack-trees.c
-index bf8b602901..5b922c1939 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -1486,8 +1486,8 @@ static int verify_uptodate_1(const struct cache_ent=
-ry *ce,
- 		add_rejected_path(o, error_type, ce->name);
- }
+-test_expect_failure '10c-check: Overwrite untracked with dir rename/rena=
+me(1to2)' '
++test_expect_success '10c-check: Overwrite untracked with dir rename/rena=
+me(1to2)' '
+ 	(
+ 		cd 10c &&
 =20
--static int verify_uptodate(const struct cache_entry *ce,
--			   struct unpack_trees_options *o)
-+int verify_uptodate(const struct cache_entry *ce,
-+		    struct unpack_trees_options *o)
- {
- 	if (!o->skip_sparse_checkout && (ce->ce_flags & CE_NEW_SKIP_WORKTREE))
- 		return 0;
-diff --git a/unpack-trees.h b/unpack-trees.h
-index 6c48117b84..41178ada94 100644
---- a/unpack-trees.h
-+++ b/unpack-trees.h
-@@ -1,6 +1,7 @@
- #ifndef UNPACK_TREES_H
- #define UNPACK_TREES_H
+@@ -3013,7 +3013,7 @@ test_expect_success '10d-setup: Delete untracked wi=
+th dir rename/rename(2to1)' '
+ 	)
+ '
 =20
-+#include "tree-walk.h"
- #include "string-list.h"
+-test_expect_failure '10d-check: Delete untracked with dir rename/rename(=
+2to1)' '
++test_expect_success '10d-check: Delete untracked with dir rename/rename(=
+2to1)' '
+ 	(
+ 		cd 10d &&
 =20
- #define MAX_UNPACK_TREES 8
-@@ -78,6 +79,9 @@ struct unpack_trees_options {
- extern int unpack_trees(unsigned n, struct tree_desc *t,
- 		struct unpack_trees_options *options);
-=20
-+int verify_uptodate(const struct cache_entry *ce,
-+		    struct unpack_trees_options *o);
-+
- int threeway_merge(const struct cache_entry * const *stages,
- 		   struct unpack_trees_options *o);
- int twoway_merge(const struct cache_entry * const *src,
 --=20
 2.15.0.408.g850bc54b15
 
