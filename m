@@ -7,36 +7,36 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CC11020954
-	for <e@80x24.org>; Wed, 29 Nov 2017 01:44:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C63AC20954
+	for <e@80x24.org>; Wed, 29 Nov 2017 01:44:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753312AbdK2Bn7 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Nov 2017 20:43:59 -0500
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:55472 "EHLO
+        id S1753299AbdK2Bn6 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Nov 2017 20:43:58 -0500
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:55484 "EHLO
         mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753238AbdK2Bnz (ORCPT
+        by vger.kernel.org with ESMTP id S1753244AbdK2Bnz (ORCPT
         <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2017 20:43:55 -0500
 Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id vAT1d790004735;
-        Tue, 28 Nov 2017 17:42:39 -0800
+        by mx0a-00153501.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id vAT1dBho004738;
+        Tue, 28 Nov 2017 17:42:38 -0800
 Authentication-Results: ppops.net;
         spf=softfail smtp.mailfrom=newren@gmail.com
 Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2ef78pmm13-2;
+        by mx0a-00153501.pphosted.com with ESMTP id 2ef78pmm12-1;
         Tue, 28 Nov 2017 17:42:38 -0800
 Received: from mxw1.palantir.com (new-smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id CEFCB22157C9;
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id 5425422157C9;
         Tue, 28 Nov 2017 17:42:38 -0800 (PST)
 Received: from newren2-linux.yojoe.local (newren2-linux.dyn.yojoe.local [10.100.68.32])
-        by smtp.yojoe.local (Postfix) with ESMTP id C5C562CDE74;
+        by smtp.yojoe.local (Postfix) with ESMTP id 436712CDF17;
         Tue, 28 Nov 2017 17:42:38 -0800 (PST)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, gitster@pobox.com,
         Elijah Newren <newren@gmail.com>
-Subject: [PATCH v4 20/34] merge-recursive: add a new hashmap for storing directory renames
-Date:   Tue, 28 Nov 2017 17:42:23 -0800
-Message-Id: <20171129014237.32570-21-newren@gmail.com>
+Subject: [PATCH v4 09/34] directory rename detection: testcases checking which side did the rename
+Date:   Tue, 28 Nov 2017 17:42:12 -0800
+Message-Id: <20171129014237.32570-10-newren@gmail.com>
 X-Mailer: git-send-email 2.15.0.408.g850bc54b15
 In-Reply-To: <20171129014237.32570-1-newren@gmail.com>
 References: <20171129014237.32570-1-newren@gmail.com>
@@ -56,81 +56,359 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This just adds dir_rename_entry and the associated functions; code using
-these will be added in subsequent commits.
-
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-recursive.c | 35 +++++++++++++++++++++++++++++++++++
- merge-recursive.h |  8 ++++++++
- 2 files changed, 43 insertions(+)
+ t/t6043-merge-rename-directories.sh | 321 ++++++++++++++++++++++++++++++=
+++++++
+ 1 file changed, 321 insertions(+)
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 4adff2d538..0cb27c66e2 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -49,6 +49,41 @@ static unsigned int path_hash(const char *path)
- 	return ignore_case ? strihash(path) : strhash(path);
- }
+diff --git a/t/t6043-merge-rename-directories.sh b/t/t6043-merge-rename-d=
+irectories.sh
+index 29b2af7f19..5db2986de8 100755
+--- a/t/t6043-merge-rename-directories.sh
++++ b/t/t6043-merge-rename-directories.sh
+@@ -1138,4 +1138,325 @@ test_expect_failure '5d-check: Directory/file/fil=
+e conflict due to directory ren
+ #   back to old handling.  But, sadly, see testcases 8a and 8b.
+ ########################################################################=
+###
 =20
-+static struct dir_rename_entry *dir_rename_find_entry(struct hashmap *ha=
-shmap,
-+						      char *dir)
-+{
-+	struct dir_rename_entry key;
 +
-+	if (dir =3D=3D NULL)
-+		return NULL;
-+	hashmap_entry_init(&key, strhash(dir));
-+	key.dir =3D dir;
-+	return hashmap_get(hashmap, &key, NULL);
-+}
++########################################################################=
+###
++# SECTION 6: Same side of the merge was the one that did the rename
++#
++# It may sound obvious that you only want to apply implicit directory
++# renames to directories if the _other_ side of history did the renaming=
+.
++# If you did make an implementation that didn't explicitly enforce this
++# rule, the majority of cases that would fall under this section would
++# also be solved by following the rules from the above sections.  But
++# there are still a few that stick out, so this section covers them just
++# to make sure we also get them right.
++########################################################################=
+###
 +
-+static int dir_rename_cmp(void *unused_cmp_data,
-+			  const struct dir_rename_entry *e1,
-+			  const struct dir_rename_entry *e2,
-+			  const void *unused_keydata)
-+{
-+	return strcmp(e1->dir, e2->dir);
-+}
++# Testcase 6a, Tricky rename/delete
++#   Commit O: z/{b,c,d}
++#   Commit A: z/b
++#   Commit B: y/{b,c}, z/d
++#   Expected: y/b, CONFLICT(rename/delete, z/c -> y/c vs. NULL)
++#   Note: We're just checking here that the rename of z/b and z/c to put
++#         them under y/ doesn't accidentally catch z/d and make it look =
+like
++#         it is also involved in a rename/delete conflict.
 +
-+static void dir_rename_init(struct hashmap *map)
-+{
-+	hashmap_init(map, (hashmap_cmp_fn) dir_rename_cmp, NULL, 0);
-+}
++test_expect_success '6a-setup: Tricky rename/delete' '
++	test_create_repo 6a &&
++	(
++		cd 6a &&
 +
-+static void dir_rename_entry_init(struct dir_rename_entry *entry,
-+				  char *directory)
-+{
-+	hashmap_entry_init(entry, strhash(directory));
-+	entry->dir =3D directory;
-+	entry->non_unique_new_dir =3D 0;
-+	strbuf_init(&entry->new_dir, 0);
-+	string_list_init(&entry->possible_new_dirs, 0);
-+}
++		mkdir z &&
++		echo b >z/b &&
++		echo c >z/c &&
++		echo d >z/d &&
++		git add z &&
++		test_tick &&
++		git commit -m "O" &&
 +
- static void flush_output(struct merge_options *o)
- {
- 	if (o->buffer_output < 2 && o->obuf.len) {
-diff --git a/merge-recursive.h b/merge-recursive.h
-index 80d69d1401..d7f4cc80c1 100644
---- a/merge-recursive.h
-+++ b/merge-recursive.h
-@@ -29,6 +29,14 @@ struct merge_options {
- 	struct string_list df_conflict_file_set;
- };
-=20
-+struct dir_rename_entry {
-+	struct hashmap_entry ent; /* must be the first member! */
-+	char *dir;
-+	unsigned non_unique_new_dir:1;
-+	struct strbuf new_dir;
-+	struct string_list possible_new_dirs;
-+};
++		git branch O &&
++		git branch A &&
++		git branch B &&
 +
- /* merge_trees() but with recursive ancestor consolidation */
- int merge_recursive(struct merge_options *o,
- 		    struct commit *h1,
++		git checkout A &&
++		git rm z/c &&
++		git rm z/d &&
++		test_tick &&
++		git commit -m "A" &&
++
++		git checkout B &&
++		mkdir y &&
++		git mv z/b y/ &&
++		git mv z/c y/ &&
++		test_tick &&
++		git commit -m "B"
++	)
++'
++
++test_expect_success '6a-check: Tricky rename/delete' '
++	(
++		cd 6a &&
++
++		git checkout A^0 &&
++
++		test_must_fail git merge -s recursive B^0 >out &&
++		test_i18ngrep "CONFLICT (rename/delete).*z/c.*y/c" out &&
++
++		test 2 -eq $(git ls-files -s | wc -l) &&
++		test 1 -eq $(git ls-files -u | wc -l) &&
++		test 1 -eq $(git ls-files -o | wc -l) &&
++
++		git rev-parse >actual \
++			:0:y/b :3:y/c &&
++		git rev-parse >expect \
++			O:z/b O:z/c &&
++		test_cmp expect actual
++	)
++'
++
++# Testcase 6b, Same rename done on both sides
++#   (Related to testcases 6c and 8e)
++#   Commit O: z/{b,c}
++#   Commit A: y/{b,c}
++#   Commit B: y/{b,c}, z/d
++#   Expected: y/{b,c}, z/d
++#   Note: If we did directory rename detection here, we'd move z/d into =
+y/,
++#         but B did that rename and still decided to put the file into z=
+/,
++#         so we probably shouldn't apply directory rename detection for =
+it.
++
++test_expect_success '6b-setup: Same rename done on both sides' '
++	test_create_repo 6b &&
++	(
++		cd 6b &&
++
++		mkdir z &&
++		echo b >z/b &&
++		echo c >z/c &&
++		git add z &&
++		test_tick &&
++		git commit -m "O" &&
++
++		git branch O &&
++		git branch A &&
++		git branch B &&
++
++		git checkout A &&
++		git mv z y &&
++		test_tick &&
++		git commit -m "A" &&
++
++		git checkout B &&
++		git mv z y &&
++		mkdir z &&
++		echo d >z/d &&
++		git add z/d &&
++		test_tick &&
++		git commit -m "B"
++	)
++'
++
++test_expect_success '6b-check: Same rename done on both sides' '
++	(
++		cd 6b &&
++
++		git checkout A^0 &&
++
++		git merge -s recursive B^0 &&
++
++		test 3 -eq $(git ls-files -s | wc -l) &&
++		test 0 -eq $(git ls-files -u | wc -l) &&
++		test 0 -eq $(git ls-files -o | wc -l) &&
++
++		git rev-parse >actual \
++			HEAD:y/b HEAD:y/c HEAD:z/d &&
++		git rev-parse >expect \
++			O:z/b O:z/c B:z/d &&
++		test_cmp expect actual
++	)
++'
++
++# Testcase 6c, Rename only done on same side
++#   (Related to testcases 6b and 8e)
++#   Commit O: z/{b,c}
++#   Commit A: z/{b,c} (no change)
++#   Commit B: y/{b,c}, z/d
++#   Expected: y/{b,c}, z/d
++#   NOTE: Seems obvious, but just checking that the implementation doesn=
+'t
++#         "accidentally detect a rename" and give us y/{b,c,d}.
++
++test_expect_success '6c-setup: Rename only done on same side' '
++	test_create_repo 6c &&
++	(
++		cd 6c &&
++
++		mkdir z &&
++		echo b >z/b &&
++		echo c >z/c &&
++		git add z &&
++		test_tick &&
++		git commit -m "O" &&
++
++		git branch O &&
++		git branch A &&
++		git branch B &&
++
++		git checkout A &&
++		test_tick &&
++		git commit --allow-empty -m "A" &&
++
++		git checkout B &&
++		git mv z y &&
++		mkdir z &&
++		echo d >z/d &&
++		git add z/d &&
++		test_tick &&
++		git commit -m "B"
++	)
++'
++
++test_expect_success '6c-check: Rename only done on same side' '
++	(
++		cd 6c &&
++
++		git checkout A^0 &&
++
++		git merge -s recursive B^0 &&
++
++		test 3 -eq $(git ls-files -s | wc -l) &&
++		test 0 -eq $(git ls-files -u | wc -l) &&
++		test 0 -eq $(git ls-files -o | wc -l) &&
++
++		git rev-parse >actual \
++			HEAD:y/b HEAD:y/c HEAD:z/d &&
++		git rev-parse >expect \
++			O:z/b O:z/c B:z/d &&
++		test_cmp expect actual
++	)
++'
++
++# Testcase 6d, We don't always want transitive renaming
++#   (Related to testcase 1c)
++#   Commit O: z/{b,c}, x/d
++#   Commit A: z/{b,c}, x/d (no change)
++#   Commit B: y/{b,c}, z/d
++#   Expected: y/{b,c}, z/d
++#   NOTE: Again, this seems obvious but just checking that the implement=
+ation
++#         doesn't "accidentally detect a rename" and give us y/{b,c,d}.
++
++test_expect_success '6d-setup: We do not always want transitive renaming=
+' '
++	test_create_repo 6d &&
++	(
++		cd 6d &&
++
++		mkdir z &&
++		echo b >z/b &&
++		echo c >z/c &&
++		mkdir x &&
++		echo d >x/d &&
++		git add z x &&
++		test_tick &&
++		git commit -m "O" &&
++
++		git branch O &&
++		git branch A &&
++		git branch B &&
++
++		git checkout A &&
++		test_tick &&
++		git commit --allow-empty -m "A" &&
++
++		git checkout B &&
++		git mv z y &&
++		git mv x z &&
++		test_tick &&
++		git commit -m "B"
++	)
++'
++
++test_expect_success '6d-check: We do not always want transitive renaming=
+' '
++	(
++		cd 6d &&
++
++		git checkout A^0 &&
++
++		git merge -s recursive B^0 &&
++
++		test 3 -eq $(git ls-files -s | wc -l) &&
++		test 0 -eq $(git ls-files -u | wc -l) &&
++		test 0 -eq $(git ls-files -o | wc -l) &&
++
++		git rev-parse >actual \
++			HEAD:y/b HEAD:y/c HEAD:z/d &&
++		git rev-parse >expect \
++			O:z/b O:z/c O:x/d &&
++		test_cmp expect actual
++	)
++'
++
++# Testcase 6e, Add/add from one-side
++#   Commit O: z/{b,c}
++#   Commit A: z/{b,c} (no change)
++#   Commit B: y/{b,c,d_1}, z/d_2
++#   Expected: y/{b,c,d_1}, z/d_2
++#   NOTE: Again, this seems obvious but just checking that the implement=
+ation
++#         doesn't "accidentally detect a rename" and give us y/{b,c} +
++#         add/add conflict on y/d_1 vs y/d_2.
++
++test_expect_success '6e-setup: Add/add from one side' '
++	test_create_repo 6e &&
++	(
++		cd 6e &&
++
++		mkdir z &&
++		echo b >z/b &&
++		echo c >z/c &&
++		git add z &&
++		test_tick &&
++		git commit -m "O" &&
++
++		git branch O &&
++		git branch A &&
++		git branch B &&
++
++		git checkout A &&
++		test_tick &&
++		git commit --allow-empty -m "A" &&
++
++		git checkout B &&
++		git mv z y &&
++		echo d1 > y/d &&
++		mkdir z &&
++		echo d2 > z/d &&
++		git add y/d z/d &&
++		test_tick &&
++		git commit -m "B"
++	)
++'
++
++test_expect_success '6e-check: Add/add from one side' '
++	(
++		cd 6e &&
++
++		git checkout A^0 &&
++
++		git merge -s recursive B^0 &&
++
++		test 4 -eq $(git ls-files -s | wc -l) &&
++		test 0 -eq $(git ls-files -u | wc -l) &&
++		test 0 -eq $(git ls-files -o | wc -l) &&
++
++		git rev-parse >actual \
++			HEAD:y/b HEAD:y/c HEAD:y/d HEAD:z/d &&
++		git rev-parse >expect \
++			O:z/b O:z/c B:y/d B:z/d &&
++		test_cmp expect actual
++	)
++'
++
++########################################################################=
+###
++# Rules suggested by section 6:
++#
++#   Only apply implicit directory renames to directories if the other
++#   side of history is the one doing the renaming.
++########################################################################=
+###
++
+ test_done
 --=20
 2.15.0.408.g850bc54b15
 
