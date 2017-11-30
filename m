@@ -2,111 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0473220C11
-	for <e@80x24.org>; Thu, 30 Nov 2017 14:24:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B199C20C11
+	for <e@80x24.org>; Thu, 30 Nov 2017 14:43:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752538AbdK3OYL (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Nov 2017 09:24:11 -0500
-Received: from siwi.pair.com ([209.68.5.199]:18751 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751474AbdK3OYJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Nov 2017 09:24:09 -0500
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 1D975844EE;
-        Thu, 30 Nov 2017 09:24:09 -0500 (EST)
-Received: from [10.160.98.77] (unknown [167.220.148.86])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id E1C18844E3;
-        Thu, 30 Nov 2017 09:24:08 -0500 (EST)
-Subject: Re: How hard would it be to implement sparse fetching/pulling?
-To:     Vitaly Arbuzov <vit@uber.com>, git@vger.kernel.org
-References: <CANxXvsMbpBOSRKaAi8iVUikfxtQp=kofZ60N0pHXs+R+q1k3_Q@mail.gmail.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <e2d5470b-9252-07b4-f3cf-57076d103a17@jeffhostetler.com>
-Date:   Thu, 30 Nov 2017 09:24:08 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.4.0
+        id S1752831AbdK3OnB (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Nov 2017 09:43:01 -0500
+Received: from mail-wr0-f177.google.com ([209.85.128.177]:33617 "EHLO
+        mail-wr0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752202AbdK3OnA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Nov 2017 09:43:00 -0500
+Received: by mail-wr0-f177.google.com with SMTP id v22so6845687wrb.0
+        for <git@vger.kernel.org>; Thu, 30 Nov 2017 06:42:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=RJyEkgQyeczzwVuXKnK+Pmpb+E6X27/qbixEtHo7vjs=;
+        b=Y+BEj26rZWKRXbCs2BMS+RypkUUS07pz1yy9yRfPH5IoosxyPKufdlaJH5Dho65X6s
+         /u3vVHDtJzHKHcUf6NYd3+Oa5mHQ3sTqehO2SQjRJaCuveZZWfR5zr7/S3uot7mNX/L6
+         7vWF9WbotfAzQRyuEm2Iw/Oq9OJsL6+oT/A4vlTZcxWsmPEKFcWqoFr1G4PDfH9yZaiO
+         IaDtjAtRbSUDpIaiXKnm3qc4BEGF/3X319xCIMp4Mj2NJMl5l/AFU5y/gh5gj0pL5H7H
+         f+Kxi5suZjUHSoc6gx1S8Zgjq9Xrw/KhptFJketUr21mY8l9eIzXw5W7wbKh654MPbm9
+         P2tQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=RJyEkgQyeczzwVuXKnK+Pmpb+E6X27/qbixEtHo7vjs=;
+        b=Ts0vq1cN7+IqCAvLLYm9MdHnz8r6MW1rKs3nBERrjJxr4oDTqGK0Zk/pBf3uarsIuA
+         ex3HGXqQX202UPXOSjqxkNhtLqHmSEqUquVqKD4IVMQypXpgLinHkpqz1wt301b6o84z
+         EeEwJ2jfZjLslAYEZeerFpQpQJiefdN0faX3d3DV9rKFAOyemdlgH57WKUhplbx+lq3U
+         gv8i/VZIgLdfyv2nx/ZHc3pjVE8Gz9mirTuD1+0WhzmiK/Qc10ivxfRGE+CXOgxvSMa/
+         LOb8+vzhkTy07ia1Xgn5GAnan/N7tw5x4Lt9PL6DSLOHb9iddeWtfdjtOWbj4iz9+/4S
+         PkWA==
+X-Gm-Message-State: AJaThX4yrb2x3ZRTdPotmDXLw2Q7zqfGLbmtetvCOvZ8QpNYZHZuQPs2
+        H0A+hyorBJiIyEprHK3wVBw=
+X-Google-Smtp-Source: AGs4zMaqtCJsJPYBjCikJzkkUYVRo0/jAi/ak/XYvZ1Z7VVfDQjgJ1rFk/Y1bGAuuhWkYomH5CdpsQ==
+X-Received: by 10.223.199.70 with SMTP id b6mr2171501wrh.25.1512052979170;
+        Thu, 30 Nov 2017 06:42:59 -0800 (PST)
+Received: from laptop ([213.123.51.170])
+        by smtp.gmail.com with ESMTPSA id c54sm6520564wra.84.2017.11.30.06.42.57
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 30 Nov 2017 06:42:58 -0800 (PST)
+Date:   Thu, 30 Nov 2017 14:42:57 +0000
+From:   Thomas Adam <thomas@xteddy.org>
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     Thomas Adam <thomas@xteddy.org>,
+        Lars Schneider <lars.schneider@autodesk.com>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>, sunshine@sunshineco.com,
+        kaartic.sivaraam@gmail.com, sandals@crustytoothpaste.net,
+        peff@peff.net
+Subject: Re: [PATCH v4 0/2] launch_editor(): indicate that Git waits for user
+ input
+Message-ID: <20171130144255.5w72jcpz4a5igiro@laptop>
+References: <20171129143752.60553-1-lars.schneider@autodesk.com>
+ <20171129183514.wze5trxjfgqxqs7z@laptop.local>
+ <C91E8F24-DD13-4FEC-BAB3-A8B8F2DBBA8D@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CANxXvsMbpBOSRKaAi8iVUikfxtQp=kofZ60N0pHXs+R+q1k3_Q@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <C91E8F24-DD13-4FEC-BAB3-A8B8F2DBBA8D@gmail.com>
+User-Agent: NeoMutt/20171013-21-a9a9c7-dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On 11/29/2017 10:16 PM, Vitaly Arbuzov wrote:
-> Hi guys,
+On Thu, Nov 30, 2017 at 02:55:35PM +0100, Lars Schneider wrote:
 > 
-> I'm looking for ways to improve fetch/pull/clone time for large git
-> (mono)repositories with unrelated source trees (that span across
-> multiple services).
-> I've found sparse checkout approach appealing and helpful for most of
-> client-side operations (e.g. status, reset, commit, etc.)
-> The problem is that there is no feature like sparse fetch/pull in git,
-> this means that ALL objects in unrelated trees are always fetched.
-> It may take a lot of time for large repositories and results in some
-> practical scalability limits for git.
-> This forced some large companies like Facebook and Google to move to
-> Mercurial as they were unable to improve client-side experience with
-> git while Microsoft has developed GVFS, which seems to be a step back
-> to CVCS world.
+> > On 29 Nov 2017, at 19:35, Thomas Adam <thomas@xteddy.org> wrote:
+> > 
+> > On Wed, Nov 29, 2017 at 03:37:50PM +0100, lars.schneider@autodesk.com wrote:
+> >> +		if (print_waiting_for_editor) {
+> >> +			fprintf(stderr, _("hint: Waiting for your editor input..."));
+> >> 			fflush(stderr);
+> > 
+> > Just FYI, stderr is typically unbuffered on most systems I've used, and
+> > although the call to fflush() is harmless, I suspect it's not having any
+> > effect.  That said, there's plenty of other places in Git which seems to think
+> > fflush()ing stderr actually does something.
 > 
-> I want to get a feedback (from more experienced git users than I am)
-> on what it would take to implement sparse fetching/pulling.
-> (Downloading only objects related to the sparse-checkout list)
-> Are there any issues with missing hashes?
-> Are there any fundamental problems why it can't be done?
-> Can we get away with only client-side changes or would it require
-> special features on the server side?
-> 
-> If we had such a feature then all we would need on top is a separate
-> tool that builds the right "sparse" scope for the workspace based on
-> paths that developer wants to work on.
-> 
-> In the world where more and more companies are moving towards large
-> monorepos this improvement would provide a good way of scaling git to
-> meet this demand.
-> 
-> PS. Please don't advice to split things up, as there are some good
-> reasons why many companies decide to keep their code in the monorepo,
-> which you can easily find online. So let's keep that part out the
-> scope.
-> 
-> -Vitaly
-> 
+> I agree with the "unbuffered" statement. I am surprised that you expect fflush()
+> to do nothing in that situation... but I am no expert in that area. Can you
+> point me to some documentation?
 
+Because stderr is unbuffered, it will get printed immediately.
 
-This work is in-progress now.  A short summary can be found in [1]
-of the current parts 1, 2, and 3.
+> In any way, would all this be a problem here? The worst that could happen would
+> be that the user would not see the message, right?
 
-> * jh/object-filtering (2017-11-22) 6 commits
-> * jh/fsck-promisors (2017-11-22) 10 commits
-> * jh/partial-clone (2017-11-22) 14 commits
+Correct -- I only bring this up because your interdiff showed you added the
+fflush() call and I was merely pointing that out.  I don't expect you to
+change it.
 
-[1] https://public-inbox.org/git/xmqq1skh6fyz.fsf@gitster.mtv.corp.google.com/T/
+> Are you aware of stderr usage in Git that could cause more trouble?
 
-I have a branch that contains V5 all 3 parts:
-https://github.com/jeffhostetler/git/tree/core/pc5_p3
+No.  It'll all be fine.
 
-This is a WIP, so there are some rough edges....
-I hope to have a V6 out before the weekend with some
-bug fixes and cleanup.
-
-Please give it a try and see if it fits your needs.
-Currently, there are filter methods to filter all blobs,
-all large blobs, and one to match a sparse-checkout
-specification.
-
-Let me know if you have any questions or problems.
-
-Thanks,
-Jeff
+-- Thomas Adam
