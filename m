@@ -2,84 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.4 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD,
+	UNWANTED_LANGUAGE_BODY shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2462820954
-	for <e@80x24.org>; Thu, 30 Nov 2017 10:00:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B40F320954
+	for <e@80x24.org>; Thu, 30 Nov 2017 10:07:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750948AbdK3KAk (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Nov 2017 05:00:40 -0500
-Received: from smtpout13.r2.mail-out.ovh.net ([54.36.141.13]:42893 "EHLO
-        smtpout13.r2.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1750761AbdK3KAk (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2017 05:00:40 -0500
-X-Greylist: delayed 573 seconds by postgrey-1.27 at vger.kernel.org; Thu, 30 Nov 2017 05:00:39 EST
-Received: from ex2.mail.ovh.net (gw1.ex2.mail.ovh.net [164.132.80.186])
-        by mo512.mail-out.ovh.net (Postfix) with ESMTPS id 5CA0E9EB702;
-        Thu, 30 Nov 2017 10:51:03 +0100 (CET)
-Received: from [10.0.2.127] (86.200.158.244) by EX7.indiv2.local (172.16.2.7)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.669.32; Thu, 30
- Nov 2017 10:51:03 +0100
-Subject: Re: imap-send with gmail: curl_easy_perform() failed: URL using
- bad/illegal format or missing URL
-To:     Daniel Stenberg <daniel@haxx.se>,
-        Nicolas Morey-Chaisemartin <NMoreyChaisemartin@suse.de>
-CC:     Jonathan Nieder <jrnieder@gmail.com>,
-        Doron Behar <doron.behar@gmail.com>, <git@vger.kernel.org>
+        id S1750849AbdK3KHr (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Nov 2017 05:07:47 -0500
+Received: from mx2.suse.de ([195.135.220.15]:50201 "EHLO mx2.suse.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750760AbdK3KHq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Nov 2017 05:07:46 -0500
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Received: from relay1.suse.de (charybdis-ext.suse.de [195.135.220.254])
+        by mx2.suse.de (Postfix) with ESMTP id 8B7C0AAA3;
+        Thu, 30 Nov 2017 10:07:45 +0000 (UTC)
+From:   Nicolas Morey-Chaisemartin <nmoreychaisemartin@suse.com>
+Subject: [PATCH] imap-send: URI encode server folder
+To:     git@vger.kernel.org
+Cc:     daniel@haxx.se, jrnieder@gmail.com, doron.behar@gmail.com,
+        peff@peff.net
 References: <20171129171301.l3coiflkfyy533yz@NUC.localdomain>
- <20171130020445.GF15098@aiede.mtv.corp.google.com>
- <50fb321e-bbfc-adae-992d-eea1b818171e@suse.de>
- <alpine.DEB.2.20.1711301041250.30591@tvnag.unkk.fr>
-From:   Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>
-Openpgp: preference=signencrypt
-Message-ID: <44bbb765-fb0d-5b80-c697-76a9b6ff0811@morey-chaisemartin.com>
-Date:   Thu, 30 Nov 2017 10:51:01 +0100
+Message-ID: <18c9478b-19fc-69f2-229f-67c05a42d4f5@suse.com>
+Date:   Thu, 30 Nov 2017 11:07:44 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:57.0) Gecko/20100101
  Thunderbird/57.0
 MIME-Version: 1.0
-In-Reply-To: <alpine.DEB.2.20.1711301041250.30591@tvnag.unkk.fr>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20171129171301.l3coiflkfyy533yz@NUC.localdomain>
+Content-Type: text/plain; charset=windows-1252
 Content-Language: fr-xx-classique+reforme1990
-X-Originating-IP: [86.200.158.244]
-X-ClientProxiedBy: CAS3.indiv2.local (172.16.1.3) To EX7.indiv2.local
- (172.16.2.7)
-X-Ovh-Tracer-Id: 15314490536864835549
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedtuddrtdeggddtlecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+URI encode the server folder string before passing it to libcurl.
+This fixes the access to the draft folder on Gmail accounts (named [Gmail]/Drafts)
 
+Reported-by: Doron Behar <doron.behar@gmail.com>
+Signed-off-by: Nicolas Morey-Chaisemartin <NMoreyChaisemartin@suse.com>
+---
+ imap-send.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-Le 30/11/2017 à 10:46, Daniel Stenberg a écrit :
-> On Thu, 30 Nov 2017, Nicolas Morey-Chaisemartin wrote:
->
->> This is due to the weird "[Gmail]" prefix in the folder.
->> I tried manually replacing it with:
->>         folder = %5BGmail%5D/Drafts
->> in .git/config and it works.
->>
->> curl is doing some fancy handling with brackets and braces. It make sense for multiple FTP downloads like ftp://ftp.numericals.com/file[1-100].txt, not in our case. The curl command line has a --globoff argument to disable this "regexp" support and it seems to fix the gmail case. However I couldn't find a way to change this value through the API...
->
-> That's just a feature of the command line tool, "globbing" isn't a function provided by the library. libcurl actually "just" expects a plain old URL.
->
-Yep that what I figured looking a bit further in the code.
+diff --git a/imap-send.c b/imap-send.c
+index 54e6a80fd..36c7c1b4f 100644
+--- a/imap-send.c
++++ b/imap-send.c
+@@ -1412,6 +1412,7 @@ static CURL *setup_curl(struct imap_server_conf *srvc, struct credential *cred)
+ {
+ 	CURL *curl;
+ 	struct strbuf path = STRBUF_INIT;
++	char *uri_encoded_folder;
+ 
+ 	if (curl_global_init(CURL_GLOBAL_ALL) != CURLE_OK)
+ 		die("curl_global_init failed");
+@@ -1429,7 +1430,12 @@ static CURL *setup_curl(struct imap_server_conf *srvc, struct credential *cred)
+ 	strbuf_addstr(&path, server.host);
+ 	if (!path.len || path.buf[path.len - 1] != '/')
+ 		strbuf_addch(&path, '/');
+-	strbuf_addstr(&path, server.folder);
++
++	uri_encoded_folder = curl_easy_escape(curl, server.folder, 0);
++	if (!uri_encoded_folder)
++		die("failed to encode server folder");
++	strbuf_addstr(&path, uri_encoded_folder);
++	curl_free(uri_encoded_folder);
+ 
+ 	curl_easy_setopt(curl, CURLOPT_URL, path.buf);
+ 	strbuf_release(&path);
+-- 
+2.15.1.272.g8e603414b
 
-> But with the risk of falling through the cracks into the rathole that is "what is a URL" (I've blogged about the topic several times in the past and I will surely do it again in the future):
->
-> A "legal" URL (as per RFC 3986) does not contain brackets, such symbols should be used URL encoded: %5B and %5D.
->
-> This said: I don't know exactly why brackets cause a problem in this case. It could still be worth digging into and see if libcurl could deal with them better here...
->
-
-It would make sense to have a way to ask libcurl to URI encode for us. I'm guessing there's already the code for that somewhere in curl and we would be wise to use it.
-But to work wqith older version we'll have to do it ourselves anyway.
-
-Nicolas
