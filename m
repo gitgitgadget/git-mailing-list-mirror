@@ -2,91 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EC72F20A40
-	for <e@80x24.org>; Thu, 30 Nov 2017 01:08:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ACED120A40
+	for <e@80x24.org>; Thu, 30 Nov 2017 01:44:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752734AbdK3BIX (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Nov 2017 20:08:23 -0500
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:45281 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752106AbdK3BIW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Nov 2017 20:08:22 -0500
-Received: by mail-wm0-f68.google.com with SMTP id 9so9874905wme.4
-        for <git@vger.kernel.org>; Wed, 29 Nov 2017 17:08:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:mime-version
-         :content-transfer-encoding;
-        bh=x/PmzK4bjjQJACVzVYTFzto1hmJWVC6QMbPe/4zv+a4=;
-        b=nKISJGU8lkJ47GnOAgz/PNzgT8KdxP0rT2GpjhcKy+aU9AnJTeRMWkykmALJikFV6T
-         KoVRsTe2MWWvzd3wDIRhepX7rYuKpTnFpSAKCC6yZmKOCITV8dJqMLLOsrniI78N990T
-         5agDknWRf0PhKv9Vp+QG1wZiRqmvqQfmbKcSwvTnp4gy0z2IWj73fei1OxtAEhUtYrEY
-         WCPYTzuSmoAEl1IC/2f5kE9GdNs1SferdbkHMcFJwMg2iksDpJwh1LWna44lRCP3qwWm
-         +Hq9ZSL3lP10Yj83ZJM1R0CFd+pTX6KLSFlufy+WAXi6dqhOm0mDvHzyXiv+ifARuoK2
-         O3nA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :mime-version:content-transfer-encoding;
-        bh=x/PmzK4bjjQJACVzVYTFzto1hmJWVC6QMbPe/4zv+a4=;
-        b=hRjyCXuS3AL5kOKlciDPHVhyTyzIdHfZvep1PGIXPVi/tbYBevilSGJ01cDO3cgY/7
-         vcPdPMe57h1P6NxU/4OfOL0f4/XFnotm/N+To3pFQOHFiFJfaiH8+NIJRcHD3iQnxScg
-         zDY5M7clI2qPapi4+lkSAz6kKnKtVGbzbrLdG2QQd4oBogeRdTUQM1NTirBqV0xaKMw/
-         smPfRopsewLdplBsgRdkbb4vEdrgLbwgGNlRkgu+9zkxC0OpWEYHzqtX2x9nDmpDxWsD
-         BCswgU5oHnA7JdYeaEflkhdB3LHIV5fjFYFDE7mxgHdyeA3F55+u/LU53MWw7Xu8VSuY
-         KnwQ==
-X-Gm-Message-State: AJaThX6l4vgwo9IUGmEzdrryWk4grtPsK1oQiz8gGOCAlVsMFG8Z1/Ec
-        ne8vjSPt12iVdxycICio1y89qA==
-X-Google-Smtp-Source: AGs4zMasjOA1fXvyrsvBBKgm+zO8irZQawxoNZFlgoYNvo52WzLc4nTrCBw9CbSSWPAqJQzNynCC/A==
-X-Received: by 10.28.235.22 with SMTP id j22mr489017wmh.68.1512004101255;
-        Wed, 29 Nov 2017 17:08:21 -0800 (PST)
-Received: from localhost.localdomain (x590c6a79.dyn.telefonica.de. [89.12.106.121])
-        by smtp.gmail.com with ESMTPSA id r19sm1211776wrg.83.2017.11.29.17.08.19
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 29 Nov 2017 17:08:20 -0800 (PST)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Robert Abel <rabel@robertabel.eu>, git@vger.kernel.org
-Subject: Re: [PATCH] git-prompt: fix reading files with windows line endings
-Date:   Thu, 30 Nov 2017 02:08:11 +0100
-Message-Id: <20171130010811.17369-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.15.0.441.g0a121d649
-In-Reply-To: <alpine.DEB.2.21.1.1711291519290.6482@virtualbox>
+        id S1753341AbdK3BoY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Nov 2017 20:44:24 -0500
+Received: from mout.gmx.net ([212.227.15.18]:54264 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753305AbdK3BoX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Nov 2017 20:44:23 -0500
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Mg3Vt-1eW07F3RjR-00NQpn; Thu, 30
+ Nov 2017 02:44:20 +0100
+Date:   Thu, 30 Nov 2017 02:44:05 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Igor Djordjevic <igor.d.djordjevic@gmail.com>
+cc:     git-for-windows@googlegroups.com, git@vger.kernel.org
+Subject: Re: [ANNOUNCE] Git for Windows 2.15.1
+In-Reply-To: <af169d17-708e-5ec0-53ee-b85df76e67c2@gmail.com>
+Message-ID: <alpine.DEB.2.21.1.1711300238520.6482@virtualbox>
+References: <20171129135723.11664-1-johannes.schindelin@gmx.de> <af169d17-708e-5ec0-53ee-b85df76e67c2@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:tXDP/g3i8PWgIKePOtqhGSCOe+ZtXooIT4BMQfgaiibtEcebLoR
+ BzNaD6Q7kCT/Gq4CLV+O9T/E0ojmCBs65pa2OD0mFJK4YXWMOeZ8WHnuuyOU06XMC85bTBy
+ KR3plCTRl76S0cD1pa2F2PL6DyS4NguUwW7gLdmcnVk+YdDEIyIcytqQk+UEgfWvEmEaJ8s
+ g14HHcr3t3oqJSlN9Q0UA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:G6li2gRjbqE=:hwLKgCOB57pkUu4s9jJuUd
+ 4RVDUI8byFSjK3uyZF54aK8b9vS6UVu6Uzp2Q6b00s2s2m5veSTh+w5WQE0unQA+T5dRPcjzQ
+ EROXq6fvSlbAvmU8mMQREni0V/Ji2vv5bKQvA1riztSbi8ND60RONof4RrnWc4zfcFXVMAVx5
+ f0kAQm8bgzRIc9ieFufa7r9GguCDGYY2548ibR5co8g8OaM5Xp/2/U+GD8wgO5TdE4Hgif8kA
+ wWMKj5/ZHGfifSpvM6bBGeYpaUaHXoXBuI7Vt9au7zcucTAFyrEtLg8KYELmfkaTU7fx/y/ee
+ yTSFVYW9QQrbsZwFMKPvJY7KmObJ1Umn+0LgKslQ3kRm7Uk1daPr6NuCBQlVEjd3eOLPkrptV
+ ROOM0zx880BFz+wsQEVKTPgPNI8PjEc6x0lBVMqp8bK3WX8GdL6tVQQyasGnrehPywCJWQsJl
+ +MZBzF7xOFzYnjg0wJ/ZzeF1XizZj33TlGnqo33y3fyyobGxVXjUnzX4F8C1OSRcJFWLqY+N7
+ tT6mAKtnvBKAtDDwz3lel1IbvpD1EHJZwA4qhc+hiBBFbWUwkxsKR33zb05wgl7HkqO0K37fL
+ 0rZi6aQY3aO4ZB0+iT1H7hODRwqaiN2yd2steucUM2G6xx4EVuzMNS+4AHAyhVTqjlRJGUWhT
+ tZYpQbN2Dz0HVVGnSKRWcrMuHB9Bjs7eqNQ9vUv4O12EinHmC2Hr5DLxgWD6ODSUTZ1Nfq7a0
+ S6LYDgJzR4Z0jAvvYsV2/ARt9rBINOqT8Vwu9mU1auL1v/Sn4uKjLVbeDvpmGLUxxJ96EtdTQ
+ jVYzURjK1x9MflRzJhMOTWa2ZVhOIrP7xc6+H+P4JccVe0vv44=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> > diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
-> > index c6cbef38c2..71a64e7959 100644
-> > --- a/contrib/completion/git-prompt.sh
-> > +++ b/contrib/completion/git-prompt.sh
-> > @@ -282,7 +282,7 @@ __git_eread ()
-> >  {
-> >  	local f="$1"
-> >  	shift
-> > -	test -r "$f" && read "$@" <"$f"
-> > +	test -r "$f" && read "$@" <"$f" && export $@="${!@%$'\r'}"
+Hi Buga,
 
-I don't think that export is necessary here.
+On Thu, 30 Nov 2017, Igor Djordjevic wrote:
 
-> As far as I understand, $'\r' is a Bash-only construct, and this file
-> (git-prompt.sh) is targeting other Unix shells, too.
+> On 29/11/2017 14:57, Johannes Schindelin wrote:
+> > 
+> >   * It is now possible to configure nano or Notepad++ as Git's
+> >     default editor instead of vim.
+> 
+> This seems as a really nice option, as it could\should greatly help 
+> Windows people in lowering friction in first encounter with Git (for 
+> Windows).
+> 
+> Being pretty unfamiliar with Linux and its tools at the time, I 
+> remember the initial frustration in trying to do what otherwise felt 
+> as a no-brain, simple and trivial task - write the damn commit 
+> message after `git commit`, lol. Even had to kill the bash window a 
+> few times, not knowing what to do, where it was clear it was 
+> expecting something from me :$
+> 
+> I later learned about vim, like getting started with Git wasn`t hard 
+> enough... :) As soon as I found it being a possibility, I`ve set 
+> Notepad++ as my default editor.
 
-The only other shell the prompt (and completion) script is targeting
-is ZSH, and ZSH understands this construct.  We already use this
-construct to set IFS in several places in both scripts for a long
-time, so it should be fine here, too.
+Thanks for this entertaining personal account!
 
+And yes, you guessed it, I wanted this option for a long time, but never
+got around to it (always hoping that somebody would beat me to it...). BTW
+this installer page is probably far from done, there is a lot of room for
+improvement, e.g. this up-for-grabs ticket:
 
-Gábor
+	https://github.com/git-for-windows/git/issues/1356
 
+(hint, hint ;-))
+
+> That said, what is the Notepad++ as default editor option doing, just 
+> setting:
+> 
+> [core]
+> 	editor = 'F:/Install/Notepad++/notepad++.exe' -multiInst -notabbar -nosession
+> 
+> ... inside users` .gitconfig (`git config --global`)?
+
+As you found out, it is set in the system config. There are two reasons
+for that:
+
+- the installer runs as administrator, so it cannot know for which user you
+  want to configure Notepad++
+
+- in case the user does not like the setting (as in your case), they can
+  still override it in their $HOME forever.
+
+Ciao,
+Johannes
