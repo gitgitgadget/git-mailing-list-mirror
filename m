@@ -2,93 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CA5F320A40
-	for <e@80x24.org>; Thu, 30 Nov 2017 00:16:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C5FA020A40
+	for <e@80x24.org>; Thu, 30 Nov 2017 00:21:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752960AbdK3AQR (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Nov 2017 19:16:17 -0500
-Received: from mail-io0-f172.google.com ([209.85.223.172]:35833 "EHLO
-        mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752716AbdK3AQQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Nov 2017 19:16:16 -0500
-Received: by mail-io0-f172.google.com with SMTP id q15so5674952ioh.2
-        for <git@vger.kernel.org>; Wed, 29 Nov 2017 16:16:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=KIAcX8MVCbSAJY0otMqwr0LOAnMqrn6c8AdrCxKmVww=;
-        b=oyH1tnfxocXI2oKHPSxHp0Q4PhyF9fLBd6tSF64hNM6GEtzoYYTBn+PE1nRML8fqAg
-         YqiuVQcsGYmOU1+p9Ldhn6oD/KK832xOkbxHkgt0ublxacDxyglbQSiCqYgCeC0hjqy8
-         eZR0ZLsGTNczKpf9y1wV4Qn4xARtoLfqIY8pr1F9JtiTjWBuQUxeFPD7Y5kDoh5f8FYJ
-         ECb9pBABVy29MNShNrhpO6WJbyWcFZpf43vmlaXB0+Wu2zjU2xnPRqRJu40htUoHDQPz
-         aGkhG7vwJqoaKDXQOnxtZMJh9vnDDmw+O5XqPnTF/GGFTvPVARXeN864X1GM2mxEO9AS
-         WFuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=KIAcX8MVCbSAJY0otMqwr0LOAnMqrn6c8AdrCxKmVww=;
-        b=jn58eRWtxRxBOYA81Y8itHRuvG/A+eaIe57Z1h5R3RyPxLL7p8bxFVF4vUeer0z2IU
-         AsyZmXb/IemxiDHsD4YnFFpGjUtJyZr1/V9VT/4l6N/dSQmyiKdA2zX4cmIh9bOZvKWP
-         ZlKauh2tgVgvg0Bpym62ab9/YObOVGi9Jzz87TkkbyH75nigsgs2lCr14ChR/QkEPcK/
-         ONjOeGeG27Bhk1GRPMLKQ0eDQ+HEeHVYLYt71fFErQyiK+zLSCwkA/LDb/ddQKImarCR
-         YGwb0As2v+ipJ0Ux+Cbwarjv+0rcCFrIpPcABNCBdeog+LjlwKo5GraTyNexXb/562KV
-         Z07w==
-X-Gm-Message-State: AJaThX5OlUpLVRxIBZDpKAZufFRRVqgsHRZZGZbGuuWIaAzW2wyP7qlX
-        njjf9i+YyjZiAoKCuNZ0xqo=
-X-Google-Smtp-Source: AGs4zMZvAsib3ctzn4sRjDDoGI9/QuOj/zECLqpzzZMa1DbjmS/wiO7e6dGtuBPa7uSkSWqtmmMmFw==
-X-Received: by 10.107.198.3 with SMTP id w3mr5902787iof.90.1512000975618;
-        Wed, 29 Nov 2017 16:16:15 -0800 (PST)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id i195sm1326206ioi.44.2017.11.29.16.16.14
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 29 Nov 2017 16:16:14 -0800 (PST)
-Date:   Wed, 29 Nov 2017 16:16:12 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH] hashmap: adjust documentation to reflect reality
-Message-ID: <20171130001612.GE15098@aiede.mtv.corp.google.com>
-References: <466dd5331907754ca5c25cc83173ca895220ca81.1511999045.git.johannes.schindelin@gmx.de>
+        id S1753505AbdK3AVl (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Nov 2017 19:21:41 -0500
+Received: from mout.gmx.net ([212.227.15.19]:63039 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753339AbdK3AVk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Nov 2017 19:21:40 -0500
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MCcvy-1eSU520ucE-009Nfl; Thu, 30
+ Nov 2017 01:21:38 +0100
+Date:   Thu, 30 Nov 2017 01:21:37 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Robert Abel <rabel@robertabel.eu>
+cc:     git@vger.kernel.org
+Subject: Re: [PATCH] git-prompt: fix reading files with windows line
+ endings
+In-Reply-To: <d57e4cb9-b0b4-314e-370a-e0db58a2a7da@robertabel.eu>
+Message-ID: <alpine.DEB.2.21.1.1711300100320.6482@virtualbox>
+References: <20171128201818.4132-1-rabel@robertabel.eu> <20171128201818.4132-2-rabel@robertabel.eu> <alpine.DEB.2.21.1.1711291519290.6482@virtualbox> <d57e4cb9-b0b4-314e-370a-e0db58a2a7da@robertabel.eu>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <466dd5331907754ca5c25cc83173ca895220ca81.1511999045.git.johannes.schindelin@gmx.de>
-User-Agent: Mutt/1.9.1 (2017-09-22)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:STqpkgWgWd7SvgmjGDkUSkeLIQISYb7MT6eYP055NrG2KwX4uOb
+ PEts7EKskJJCsOx+aV8gYPqh25ir4m0qCghfM+SXK5fEY6O2KBzwemUJ59+tp5U3cgRIg/x
+ Vqz459acR+4PAscGT4ldI5H/9mNXP7RPIG3XSwAye78xz8JCfL0+ouuAis9T0LCZCb+YZ4+
+ SEqPMTiYbKTbAKFg8/W1g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:QIXCcJCSS+4=:gN/kbmJf9zsqvb/aHm0Dso
+ x7O74pOGprTsGGjrTv6mKUFDhrj47uNIIT1HJ9ZQvALoNHO3uV/odN+3UlZjdzBsfAIf9Odyj
+ BUYaImYJB12jhbFBdcM23UI43In8ZfHDR1MzDwX0pTSNQ3Yu0WZxfSpAm1qaqdW70XTEa1fUz
+ jeowTTgC74ki5c2+9bGiYQ4Dm9yOk8h5XCRGXKcbzEASldj4Rmc0ab8f/r4H2TUUrn7eLgmOB
+ vnR3MKQp13AoYazY9adogGC7UsCvjH3nMo/66GSwWQ0uw0ZE7KYcausOrJ458TzseHTRxhPdW
+ ISHnb/JnnLq/t/kV0nwTPkv4Kv1k0dwbMqwPZPZbJghtWknvE+ozhOb6jbKUdvUwo2E4Es3oA
+ 4A6qkVNYvA9sGHuU9EYhqgXjIgVy2klEVP+I7lc761EiymKz6B8wr2TYyLvPxbb3dzDcYoXW4
+ yRUVl6Gdy9H/2pC6p/r1wPjxujpjzHtjj7WJZQNb+ETcG7LX0QWQ55ZGC75wTCWZLv2008zN7
+ 1XnTg+Z6SjeC5cHK3QhN9oBXbmP/xIgyqqIWGmOuLS1QjRMN2G6vF42BTbATCbEGb1KjPznUy
+ xE+Bh+qK50gzkd40z19cawushV/d8Nop5T637BJAXnOwR1OXneBsDhsGOX6QSbbwExi39M5FF
+ hed0ZbiGmLjIWsuqh4uFAW5Q4swOhspyvtK8MQcgWMIT9CxT3e2817ZFaXL+agRgMhVVWIRcy
+ /qgXH6vZ1kjby4SMLL0FHYaxgQzYQpUrud8WJRqufOfAAq/V6XSi0mT15opWkNK1nwwtalfRY
+ 9mAV0cMtkoZBYWI57KglYTSGLj4+1qrmf2HfQyAnWvwbQpPoL0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin wrote:
+Hi Robert,
 
-> The hashmap API is just complicated enough that even at least one
-> long-time Git contributor has to look up how to use it every time he
-> finds a new use case. When that happens, it is really useful if the
-> provided example code is correct...
+On Wed, 29 Nov 2017, Robert Abel wrote:
+
+> On 29 Nov 2017 15:27, Johannes Schindelin wrote:
 >
-> While at it, "fix a memory leak", avoid statements before variable
-> declarations, fix a const -> no-const cast, several %l specifiers (which
-> want to be %ld), avoid using an undefined constant, call scanf()
-> correctly, use FLEX_ALLOC_STR() where appropriate, and adjust the style
-> here and there.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  hashmap.h | 60 +++++++++++++++++++++++++++++-------------------------------
->  1 file changed, 29 insertions(+), 31 deletions(-)
+> > Or maybe keep with the Bash construct, but guarded behind a test that we
+> > area actually running in Bash? Something like
+> > 
+> > 	test -z "$BASH" || IFS=$' \t\r\n'
+> 
+> Actually, this got me thinking and reading the POSIX.1-2008, specifically
+> http://pubs.opengroup.org/onlinepubs/9699919799/utilities/read.html.
+> 
+> It seems POSIX states that IFS should be supported by read.
 
-Yay, thanks for this.
+Yes, that's what I meant: you could use IFS.
 
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+> This means that it should be okay to just do
+> 
+> > test -r "$f" && IFS=" \t\r\n" read "$@" < "$f"
 
-Follow-on idea for the interested: would making a test that extracts
-this sample code from hashmap.h and confirms it still works be a crazy
-idea?
+I am afraid that this won't work: when I call
+
+	printf '123\r\n' |
+	while IFS=" \t\r\n" read line
+	do
+		printf '%s' "$line" |
+		hexdump -C
+	done
+
+it prints
+
+	00000000  31 32 33 0d                               |123.|
+	00000004
+
+If I replace the double-quoted IFS by the dollar-single-quoted one, it
+works again. I think the reason is that \t, \r and \n are used literally
+when double-quoted, not as <HT>, <CR> and <LF>.
+
+Ciao,
+Johannes
