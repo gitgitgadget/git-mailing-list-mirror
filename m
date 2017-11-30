@@ -7,135 +7,62 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EA9DF20C11
-	for <e@80x24.org>; Thu, 30 Nov 2017 17:01:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8FD4620C11
+	for <e@80x24.org>; Thu, 30 Nov 2017 17:05:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753833AbdK3RBZ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Nov 2017 12:01:25 -0500
-Received: from mail-wr0-f182.google.com ([209.85.128.182]:37365 "EHLO
-        mail-wr0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752286AbdK3RBW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Nov 2017 12:01:22 -0500
-Received: by mail-wr0-f182.google.com with SMTP id k61so7308955wrc.4
-        for <git@vger.kernel.org>; Thu, 30 Nov 2017 09:01:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=uber.com; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=g71yoG/o6Ouk3xxxuwaajGIqtKF7KGC8uX64YBDMnDY=;
-        b=YWSJ4eFMaEkuf83R5ZfN2IzLdT3jYVs8M7m2NhmK9348kXfYJS9vaEle5O7hQ851ig
-         oKUCOHlmK8xeD62/Ev/SToOnXbp7crXqsSKx3uS0j/SeuyuK4hqncBGZbxxUsIIIi2z8
-         WS90J6FPfR2TsBPBp0qATJKLCc/wy1bRfkDUY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=g71yoG/o6Ouk3xxxuwaajGIqtKF7KGC8uX64YBDMnDY=;
-        b=lENb+2aK9JnyrOvQFvmI7Zj0bYsa7psDJs9ooFxvXOe8xCauozCCiFiwADnGUcd5rH
-         g9beJjkbb0diUMQTr7DFT/XypM4neduY6ZW1SgXEB+2DvvcF1bG5JUs+E5qJaOTJsi6B
-         0f82yyXsUkt8eL+WKCmreFlHZI0QYC8Dl9zL0gkgzpbW+dC3eazhTi3+Th+4zszOU1KO
-         ejQErDsmfO4j49Ui/EXr2QrghEIOw/9NHywkR/EbeE7u+n8mEdwpn1Lb20zqNAAN3Ggq
-         0xOnso8jpGij4vT87P8MbumrbxHMqcPPVhvJt/WsjKpPGLzzS8+Df1w4v48iP5BBPIMG
-         LRQQ==
-X-Gm-Message-State: AJaThX4clvOZX8Ghx4DqM/9qzCEKXd2SUfFX+51gDlhXugOYG9UBHnZr
-        GtIfFkfpexeV05FYjLk2vxh8vKzBh1uabaaPb6vj
-X-Google-Smtp-Source: AGs4zMZT2R1BxsmQK0nyi5d7HrL2XGnM5whm9NEY/8NZ5GdPFhh3ZAVBpYOttQeXqX8wc5bHTp9uab1Wy+GkER6yM/E=
-X-Received: by 10.223.197.131 with SMTP id m3mr2749151wrg.203.1512061281359;
- Thu, 30 Nov 2017 09:01:21 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.28.213.12 with HTTP; Thu, 30 Nov 2017 09:01:00 -0800 (PST)
-In-Reply-To: <e2d5470b-9252-07b4-f3cf-57076d103a17@jeffhostetler.com>
-References: <CANxXvsMbpBOSRKaAi8iVUikfxtQp=kofZ60N0pHXs+R+q1k3_Q@mail.gmail.com>
- <e2d5470b-9252-07b4-f3cf-57076d103a17@jeffhostetler.com>
-From:   Vitaly Arbuzov <vit@uber.com>
-Date:   Thu, 30 Nov 2017 09:01:00 -0800
-Message-ID: <CANxXvsNWgYda_unSWoiEnfZnEuX8ktkAD-d_ynVtsTbkOKqeCg@mail.gmail.com>
-Subject: Re: How hard would it be to implement sparse fetching/pulling?
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     git@vger.kernel.org
+        id S1752882AbdK3RFK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Nov 2017 12:05:10 -0500
+Received: from hapkido.dreamhost.com ([66.33.216.122]:37879 "EHLO
+        hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751862AbdK3RFJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Nov 2017 12:05:09 -0500
+Received: from homiemail-a11.g.dreamhost.com (sub3.mail.dreamhost.com [69.163.253.7])
+        by hapkido.dreamhost.com (Postfix) with ESMTP id 30BDF935F8
+        for <git@vger.kernel.org>; Thu, 30 Nov 2017 09:05:09 -0800 (PST)
+Received: from homiemail-a11.g.dreamhost.com (localhost [127.0.0.1])
+        by homiemail-a11.g.dreamhost.com (Postfix) with ESMTP id B5FA3314C06D
+        for <git@vger.kernel.org>; Thu, 30 Nov 2017 09:05:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=novalis.org; h=message-id
+        :subject:from:to:date:content-type:mime-version:
+        content-transfer-encoding; s=novalis.org; bh=W8qY+ShhqVFajM80Y4J
+        5lKzA+uc=; b=bEWQiBGQPCtEn4H3gWDLuKgrBqwtq9o6VP1x+yJrYec5pid/Run
+        1ZDKCG1RhQeL0FWv3E8gVYsUTuuMIT7D4oNx9KSagtND3JYf4q7SZwGf2DmHol9v
+        eGU6mnATlrwN9byetMLDDZO2TMy405W3rG5y1opBA0PUchc3rwBPOFpY=
+Received: from corey (unknown [38.27.161.17])
+        (using TLSv1 with cipher AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: novalis@novalis.org)
+        by homiemail-a11.g.dreamhost.com (Postfix) with ESMTPSA id 78BEB314C066
+        for <git@vger.kernel.org>; Thu, 30 Nov 2017 09:05:08 -0800 (PST)
+Message-ID: <1512061507.9882.374.camel@novalis.org>
+Subject: git reset <tree-ish> <paths> of addition of a submodule?
+From:   David Turner <novalis@novalis.org>
+To:     git@vger.kernel.org
+Date:   Thu, 30 Nov 2017 12:05:07 -0500
 Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.22.6-1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey Jeff,
+git submodule add https://my-git-repo blort
+git commit -m 'add a submodule'
+git reset HEAD^ blort
 
-It's great, I didn't expect that anyone is actively working on this.
-I'll check out your branch, meanwhile do you have any design docs that
-describe these changes or can you define high level goals that you
-want to achieve?
+The reset deletes the gitlink, but does not delete the entry in
+.gitmodules.  On one hand, this is exactly what the user asked for --
+they wanted the path 'blort' to be changed in the index, and that's
+what they got.  On the other hand, the behavior differs from git rm,
+and seems confusing: most folks don't want an entry in .gitmodules
+which doesn't correspond to a gitlink.  
 
-On Thu, Nov 30, 2017 at 6:24 AM, Jeff Hostetler <git@jeffhostetler.com> wrote:
->
->
-> On 11/29/2017 10:16 PM, Vitaly Arbuzov wrote:
->>
->> Hi guys,
->>
->> I'm looking for ways to improve fetch/pull/clone time for large git
->> (mono)repositories with unrelated source trees (that span across
->> multiple services).
->> I've found sparse checkout approach appealing and helpful for most of
->> client-side operations (e.g. status, reset, commit, etc.)
->> The problem is that there is no feature like sparse fetch/pull in git,
->> this means that ALL objects in unrelated trees are always fetched.
->> It may take a lot of time for large repositories and results in some
->> practical scalability limits for git.
->> This forced some large companies like Facebook and Google to move to
->> Mercurial as they were unable to improve client-side experience with
->> git while Microsoft has developed GVFS, which seems to be a step back
->> to CVCS world.
->>
->> I want to get a feedback (from more experienced git users than I am)
->> on what it would take to implement sparse fetching/pulling.
->> (Downloading only objects related to the sparse-checkout list)
->> Are there any issues with missing hashes?
->> Are there any fundamental problems why it can't be done?
->> Can we get away with only client-side changes or would it require
->> special features on the server side?
->>
->> If we had such a feature then all we would need on top is a separate
->> tool that builds the right "sparse" scope for the workspace based on
->> paths that developer wants to work on.
->>
->> In the world where more and more companies are moving towards large
->> monorepos this improvement would provide a good way of scaling git to
->> meet this demand.
->>
->> PS. Please don't advice to split things up, as there are some good
->> reasons why many companies decide to keep their code in the monorepo,
->> which you can easily find online. So let's keep that part out the
->> scope.
->>
->> -Vitaly
->>
->
->
-> This work is in-progress now.  A short summary can be found in [1]
-> of the current parts 1, 2, and 3.
->
->> * jh/object-filtering (2017-11-22) 6 commits
->> * jh/fsck-promisors (2017-11-22) 10 commits
->> * jh/partial-clone (2017-11-22) 14 commits
->
->
-> [1]
-> https://public-inbox.org/git/xmqq1skh6fyz.fsf@gitster.mtv.corp.google.com/T/
->
-> I have a branch that contains V5 all 3 parts:
-> https://github.com/jeffhostetler/git/tree/core/pc5_p3
->
-> This is a WIP, so there are some rough edges....
-> I hope to have a V6 out before the weekend with some
-> bug fixes and cleanup.
->
-> Please give it a try and see if it fits your needs.
-> Currently, there are filter methods to filter all blobs,
-> all large blobs, and one to match a sparse-checkout
-> specification.
->
-> Let me know if you have any questions or problems.
->
-> Thanks,
-> Jeff
+If reset isn't the right thing for me to do when I want to say "oops"
+about adding a submodule, then what is?  I could do:
+git reset HEAD^ blort .gitmodules
+but what if I added two submodules and only wanted to undo the addition
+of one?
+
+
