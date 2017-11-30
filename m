@@ -2,81 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 89BDC20C11
-	for <e@80x24.org>; Thu, 30 Nov 2017 17:45:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6970520C11
+	for <e@80x24.org>; Thu, 30 Nov 2017 17:53:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753411AbdK3RpC (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Nov 2017 12:45:02 -0500
-Received: from cloud.peff.net ([104.130.231.41]:44516 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1753296AbdK3RpB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Nov 2017 12:45:01 -0500
-Received: (qmail 14636 invoked by uid 109); 30 Nov 2017 17:45:01 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 30 Nov 2017 17:45:01 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28847 invoked by uid 111); 30 Nov 2017 17:45:20 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Thu, 30 Nov 2017 12:45:20 -0500
-Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 30 Nov 2017 12:45:00 -0500
-Date:   Thu, 30 Nov 2017 12:45:00 -0500
-From:   Jeff King <peff@peff.net>
-To:     Heiko Voigt <hvoigt@hvoigt.net>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Junio C Hamano <gitster@pobox.com>, hsed@unimetic.com,
-        git <git@vger.kernel.org>
-Subject: Re: [PATCH V4] config: add --expiry-date
-Message-ID: <20171130174500.GA16245@sigill.intra.peff.net>
-References: <xmqqlgj7xcuf.fsf@gitster.mtv.corp.google.com>
- <20171118022727.30179-1-hsed@unimetic.com>
- <xmqq8tf4qmu8.fsf@gitster.mtv.corp.google.com>
- <20171120170443.awpvcuubsi5o6zmp@sigill.intra.peff.net>
- <CAGZ79ka+5o07cz4A8=Gu_VqO1hYqqO=8Ju1uAaDY23s7xjCWvw@mail.gmail.com>
- <20171120203702.mdd3hkwezxyf7vtg@sigill.intra.peff.net>
- <20171130111849.GA98794@book.hvoigt.net>
+        id S1753656AbdK3RxS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Nov 2017 12:53:18 -0500
+Received: from mail-qt0-f195.google.com ([209.85.216.195]:40110 "EHLO
+        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753356AbdK3RxR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Nov 2017 12:53:17 -0500
+Received: by mail-qt0-f195.google.com with SMTP id u42so9780681qte.7
+        for <git@vger.kernel.org>; Thu, 30 Nov 2017 09:53:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=3VHsBVt/8sGSgIDq6pHkXt5fxyr4j06s18zh09QE7sE=;
+        b=g6eQYzbHzpU9HzyQ9Oc9i558dpdv3mHAaM6SiKwmBN7PcZy6oDAErz0pOpPgPRIsMA
+         FmC6tD4MtEiGwsomXB9n2Lr7n6o99fIBj/rAwxs6ySdRXCpKxAuzaJHs9iktpazVC95n
+         Pe0lYHOEVT16bvGi+JTiMzlIKhGLiJvld7787++UbOEqMHOsgG2tWt28RRp1oce+3S9j
+         GIStpItncAs7+P9bN8UKIZNiCQDkR710AubSRtW/I4gOssQLsjxRH7bpGTXSiNhm7LZN
+         usEnot3XRsN4j0RUfXmUWVAaBi++8gBS+zquWziBeF0ps6I6xQzREludHCtO9ETmDPRy
+         Rl/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=3VHsBVt/8sGSgIDq6pHkXt5fxyr4j06s18zh09QE7sE=;
+        b=oeHo0nSJpMYXlaYnzh5D4O0pQyjuelQuW3RvhZL+w7KtaQh5qepJrQqBHtSocYIsav
+         nPNB1Cqk7/Yw5XjOHuhOTr1WH+CRejjqNsz5CT2Tapw/TPrk8aQOCHfbXenblYFM3eKw
+         q0K3fP/Y6XuCS7ddxkhih778MiV5gVsKsYUxvEWdBIjU4jITkULkGdh0ET/uG1u1E4AS
+         WO1EAB/UPX1RQSZShIRNzUbuhb47ywaKu97zVG4lilDORdJqfmREKcuyY7V8JCDFRmAQ
+         YiTiI2OyP622HSX53ZRdi/VPftw8rxPlO709B1jAc3TvX/k5R4p2no7VjZEz5DiPd3jf
+         6V4Q==
+X-Gm-Message-State: AKGB3mLceVDQteECzu8tPjT6iIXRnTcW+TYGz4CK9nt0s9cTgRpxVWVU
+        WTAOfKdpQ5n//n5CyZKs+xd/yCLFmajtYL44ujs=
+X-Google-Smtp-Source: AGs4zMbHR9++h3Ts1APYS3K02on2gK0LupLAMf8hSYt1qQU99JxVmEghXkhrYvh6qfgyoi1HGhKRd3sOONbZrV6lQV8=
+X-Received: by 10.200.39.104 with SMTP id h37mr4692101qth.114.1512064396624;
+ Thu, 30 Nov 2017 09:53:16 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20171130111849.GA98794@book.hvoigt.net>
+Received: by 10.12.198.4 with HTTP; Thu, 30 Nov 2017 09:53:16 -0800 (PST)
+In-Reply-To: <18c9478b-19fc-69f2-229f-67c05a42d4f5@suse.com>
+References: <20171129171301.l3coiflkfyy533yz@NUC.localdomain> <18c9478b-19fc-69f2-229f-67c05a42d4f5@suse.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 30 Nov 2017 12:53:16 -0500
+X-Google-Sender-Auth: ydh3unIcYk--vua_sqKvHx-UJfc
+Message-ID: <CAPig+cSEYHfupRt+-0sZK6H3_WcT_=wdNB2FfdYuB6geGQYZ3A@mail.gmail.com>
+Subject: Re: [PATCH] imap-send: URI encode server folder
+To:     Nicolas Morey-Chaisemartin <nmoreychaisemartin@suse.com>
+Cc:     Git List <git@vger.kernel.org>, daniel@haxx.se,
+        Jonathan Nieder <jrnieder@gmail.com>, doron.behar@gmail.com,
+        Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 30, 2017 at 12:18:49PM +0100, Heiko Voigt wrote:
+On Thu, Nov 30, 2017 at 5:07 AM, Nicolas Morey-Chaisemartin
+<nmoreychaisemartin@suse.com> wrote:
+> URI encode the server folder string before passing it to libcurl.
+> This fixes the access to the draft folder on Gmail accounts (named [Gmail]/Drafts)
 
-> > Fine by me. While I think the original intent was to be more lenient to
-> > malformed .gitmodules, it's not like we're seeing bug reports about it.
-> 
-> My original intent was not about being more lenient about malformed
-> .gitmodules but having a way to deal with repository history that might
-> have a malformed .gitmodules in its history. Since depending on the
-> branch it is on it might be quite carved in stone.
-> On an active project it would not be that easy to rewrite history to get
-> out of that situation.
-> 
-> When a .gitmodules file in the worktree is malformed it is easy to fix.
-> That is not the case when we are reading configurations from blobs.
-> 
-> My guess why there are no reports is that maybe not too many users are
-> using this infrastructure yet, plus it is probably seldom that someone
-> edits the .gitmodules file by hand which could lead to such a situation.
-> But if such an error occurs it will be very annoying if we die while
-> parsing submodule configurations. The only solution I see currently is
-> to turn submodule recursion off completely.
-> 
-> But maybe I am being overly cautious here.
+For someone reading this commit message in the future -- someone who
+didn't follow the email thread which led to this patch -- "this fixes"
+doesn't say much about the actual problem being addressed. Can you
+expand the commit message a bit to make it more self-contained? At
+minimum, perhaps show the error message you were experiencing, and
+cite (as Daniel pointed out) RFC 3986 and the bit about a "legal" URL
+not containing brackets.
 
-Ah, OK, that makes a lot of sense to me. Thanks for explaining.
+Also, a natural question which pops into the head of someone reading
+this patch is whether other parts of the URL (host, user, etc.) also
+need to be handled similarly. It's possible that you audited the code
+and determined that they are handled fine already, but the reader of
+the commit message is unable to infer that. Consequently, it might be
+nice to have a sentence about that, as well ("other parts of the URL
+are already encoded, thus are fine" or "other parts of the URL are not
+subject to this problem because ...").
 
-I agree that is a good goal to shoot for in the long term. It's not the
-end of the world if there are a few code paths that may die() for now,
-but we should try not to add more, and eventually weed out the ones that
-do.
+The patch itself looks okay (from a cursory read).
 
--Peff
+Thanks.
+
+> Reported-by: Doron Behar <doron.behar@gmail.com>
+> Signed-off-by: Nicolas Morey-Chaisemartin <NMoreyChaisemartin@suse.com>
+> ---
+>  imap-send.c | 8 +++++++-
+>  1 file changed, 7 insertions(+), 1 deletion(-)
+>
+> diff --git a/imap-send.c b/imap-send.c
+> index 54e6a80fd..36c7c1b4f 100644
+> --- a/imap-send.c
+> +++ b/imap-send.c
+> @@ -1412,6 +1412,7 @@ static CURL *setup_curl(struct imap_server_conf *srvc, struct credential *cred)
+>  {
+>         CURL *curl;
+>         struct strbuf path = STRBUF_INIT;
+> +       char *uri_encoded_folder;
+>
+>         if (curl_global_init(CURL_GLOBAL_ALL) != CURLE_OK)
+>                 die("curl_global_init failed");
+> @@ -1429,7 +1430,12 @@ static CURL *setup_curl(struct imap_server_conf *srvc, struct credential *cred)
+>         strbuf_addstr(&path, server.host);
+>         if (!path.len || path.buf[path.len - 1] != '/')
+>                 strbuf_addch(&path, '/');
+> -       strbuf_addstr(&path, server.folder);
+> +
+> +       uri_encoded_folder = curl_easy_escape(curl, server.folder, 0);
+> +       if (!uri_encoded_folder)
+> +               die("failed to encode server folder");
+> +       strbuf_addstr(&path, uri_encoded_folder);
+> +       curl_free(uri_encoded_folder);
+>
+>         curl_easy_setopt(curl, CURLOPT_URL, path.buf);
+>         strbuf_release(&path);
+> --
+> 2.15.1.272.g8e603414b
