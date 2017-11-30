@@ -7,92 +7,71 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C5FA020A40
-	for <e@80x24.org>; Thu, 30 Nov 2017 00:21:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9AF8C20A40
+	for <e@80x24.org>; Thu, 30 Nov 2017 00:36:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753505AbdK3AVl (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Nov 2017 19:21:41 -0500
-Received: from mout.gmx.net ([212.227.15.19]:63039 "EHLO mout.gmx.net"
+        id S1753721AbdK3Ago (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Nov 2017 19:36:44 -0500
+Received: from mout.gmx.net ([212.227.15.19]:59830 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753339AbdK3AVk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Nov 2017 19:21:40 -0500
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MCcvy-1eSU520ucE-009Nfl; Thu, 30
- Nov 2017 01:21:38 +0100
-Date:   Thu, 30 Nov 2017 01:21:37 +0100 (CET)
+        id S1753718AbdK3Agn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Nov 2017 19:36:43 -0500
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LaXEN-1eyGIT1Jct-00mGA0; Thu, 30
+ Nov 2017 01:36:38 +0100
+Date:   Thu, 30 Nov 2017 01:36:37 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Robert Abel <rabel@robertabel.eu>
-cc:     git@vger.kernel.org
-Subject: Re: [PATCH] git-prompt: fix reading files with windows line
- endings
-In-Reply-To: <d57e4cb9-b0b4-314e-370a-e0db58a2a7da@robertabel.eu>
-Message-ID: <alpine.DEB.2.21.1.1711300100320.6482@virtualbox>
-References: <20171128201818.4132-1-rabel@robertabel.eu> <20171128201818.4132-2-rabel@robertabel.eu> <alpine.DEB.2.21.1.1711291519290.6482@virtualbox> <d57e4cb9-b0b4-314e-370a-e0db58a2a7da@robertabel.eu>
+To:     Jonathan Tan <jonathantanmy@google.com>
+cc:     gitster@pobox.com, git@vger.kernel.org, sbeller@google.com
+Subject: Re: [PATCH v3] diff: support anchoring line(s)
+In-Reply-To: <20171128184703.155931-1-jonathantanmy@google.com>
+Message-ID: <alpine.DEB.2.21.1.1711300134560.6482@virtualbox>
+References: <xmqq1skj9o7r.fsf@gitster.mtv.corp.google.com> <20171128184703.155931-1-jonathantanmy@google.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:STqpkgWgWd7SvgmjGDkUSkeLIQISYb7MT6eYP055NrG2KwX4uOb
- PEts7EKskJJCsOx+aV8gYPqh25ir4m0qCghfM+SXK5fEY6O2KBzwemUJ59+tp5U3cgRIg/x
- Vqz459acR+4PAscGT4ldI5H/9mNXP7RPIG3XSwAye78xz8JCfL0+ouuAis9T0LCZCb+YZ4+
- SEqPMTiYbKTbAKFg8/W1g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:QIXCcJCSS+4=:gN/kbmJf9zsqvb/aHm0Dso
- x7O74pOGprTsGGjrTv6mKUFDhrj47uNIIT1HJ9ZQvALoNHO3uV/odN+3UlZjdzBsfAIf9Odyj
- BUYaImYJB12jhbFBdcM23UI43In8ZfHDR1MzDwX0pTSNQ3Yu0WZxfSpAm1qaqdW70XTEa1fUz
- jeowTTgC74ki5c2+9bGiYQ4Dm9yOk8h5XCRGXKcbzEASldj4Rmc0ab8f/r4H2TUUrn7eLgmOB
- vnR3MKQp13AoYazY9adogGC7UsCvjH3nMo/66GSwWQ0uw0ZE7KYcausOrJ458TzseHTRxhPdW
- ISHnb/JnnLq/t/kV0nwTPkv4Kv1k0dwbMqwPZPZbJghtWknvE+ozhOb6jbKUdvUwo2E4Es3oA
- 4A6qkVNYvA9sGHuU9EYhqgXjIgVy2klEVP+I7lc761EiymKz6B8wr2TYyLvPxbb3dzDcYoXW4
- yRUVl6Gdy9H/2pC6p/r1wPjxujpjzHtjj7WJZQNb+ETcG7LX0QWQ55ZGC75wTCWZLv2008zN7
- 1XnTg+Z6SjeC5cHK3QhN9oBXbmP/xIgyqqIWGmOuLS1QjRMN2G6vF42BTbATCbEGb1KjPznUy
- xE+Bh+qK50gzkd40z19cawushV/d8Nop5T637BJAXnOwR1OXneBsDhsGOX6QSbbwExi39M5FF
- hed0ZbiGmLjIWsuqh4uFAW5Q4swOhspyvtK8MQcgWMIT9CxT3e2817ZFaXL+agRgMhVVWIRcy
- /qgXH6vZ1kjby4SMLL0FHYaxgQzYQpUrud8WJRqufOfAAq/V6XSi0mT15opWkNK1nwwtalfRY
- 9mAV0cMtkoZBYWI57KglYTSGLj4+1qrmf2HfQyAnWvwbQpPoL0=
+X-Provags-ID: V03:K0:qUlMWZ9lvZWbPrsXTMkxTDna/ybj8inDQPDgnozKx9TiflxJcJZ
+ NTduo3TiXlHw+1/jK4FwECdo6FYJ5Z53veGazNsc+m6w2b0U7BDJKotyYm4l3wS4B2jgDkF
+ AHV6myQRrH2vSTyXBHKzQp3Pca3NNSvYDsSDGLIx/4TYKlsLwrctjhzX4FZPYkTPv1lswzP
+ xhYxHl2pCCzyUJ2SDLlYA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:MxPQjBGHs/8=:kaxhWX5Wx6FMYpKfkM/TQa
+ xvZdhAPHLbVqjY5iCuXydnlB5W7EOFDX8AcJIvbPaWi39KNwBWsrS9BiOTeBnYELXJS0PLOZY
+ JuwkbQonrJGLmQSKTzdcAsAyI84LjLjagB+FIEqXEwlvibYmplqFaJ02gtLf2Fm1aRZrsBJDs
+ sDApuxS8hXSCWt6FIrU0gw0ljmWpe6+4mP0UaBfhTc2K/AVR69QLdNPmuZlgwJ6niRZljxkzb
+ jJt6DERseld8On2LtGgLYF1cj6WlkvYv9YtFXdArREOPPTAugHxqgfR8hJ4ZeHm1SgRseDofQ
+ dlAKm3NvsMrnuN6LJp/eO67EKwiYSkP5JhuOqmE4sOLKjdnlF0gXAtUdOse9DH7OalqxOvFbl
+ MN6tRZFhnhkgg1KFP8DuSVCB7+raPHpe3Xb+/porBpe3R3Q/VyXnfMUH+U1as8tMOe4/jQGfW
+ mVxoUgrSg2YmUkwERadpPnKGWJY0jcHowOGJLhsJ+YEsbVw5I9ufEzi6XN8T/NQI1Jkqdbums
+ FdVrRcGlJeFS+IupPhtQ2/qkevH4Lop34zEnPACCHSiM88CpjDMq91inT3pYoi3dEktiMxhrT
+ sPWRXOrTXD7LedXXW5U7JF2Ak1zmCwceC/RllR7mVz16vsKp1/RmqQ8dlHjRr+zO2g/YC3jC8
+ AEmjodZPIqqv7ocL9L6HjuUPPIf8vzn4y5kJVTpxP2HqM8FJu96XSmvODNgKQKc2c5Kz/BOX3
+ bqWab2zXEbBVS5wm6J8sjdbPeUVFhU6QUPqXhrHwwry5fOPN4bVe6WDH7n+lwbwmlCU8l9eOu
+ cGxT5ZciUwlVnWd1kcE6coIFL9L04n7xdMCJ7/+Hq3gTnjupFo=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Robert,
+Hi Jonathan,
 
-On Wed, 29 Nov 2017, Robert Abel wrote:
+On Tue, 28 Nov 2017, Jonathan Tan wrote:
 
-> On 29 Nov 2017 15:27, Johannes Schindelin wrote:
->
-> > Or maybe keep with the Bash construct, but guarded behind a test that we
-> > area actually running in Bash? Something like
-> > 
-> > 	test -z "$BASH" || IFS=$' \t\r\n'
-> 
-> Actually, this got me thinking and reading the POSIX.1-2008, specifically
-> http://pubs.opengroup.org/onlinepubs/9699919799/utilities/read.html.
-> 
-> It seems POSIX states that IFS should be supported by read.
+> @@ -4607,7 +4627,14 @@ int diff_opt_parse(struct diff_options *options,
+>  		DIFF_XDL_CLR(options, NEED_MINIMAL);
+>  		options->xdl_opts &= ~XDF_DIFF_ALGORITHM_MASK;
+>  		options->xdl_opts |= value;
+> +		if (value == XDF_PATIENCE_DIFF)
+> +			clear_patience_anchors(options);
+>  		return argcount;
+> +	} else if (skip_prefix(arg, "--anchored=", &arg)) {
+> +		options->xdl_opts = DIFF_WITH_ALG(options, PATIENCE_DIFF);
+> +		ALLOC_GROW(options->anchors, options->anchors_nr + 1,
+> +			   options->anchors_alloc);
+> +		options->anchors[options->anchors_nr++] = xstrdup(arg);
 
-Yes, that's what I meant: you could use IFS.
-
-> This means that it should be okay to just do
-> 
-> > test -r "$f" && IFS=" \t\r\n" read "$@" < "$f"
-
-I am afraid that this won't work: when I call
-
-	printf '123\r\n' |
-	while IFS=" \t\r\n" read line
-	do
-		printf '%s' "$line" |
-		hexdump -C
-	done
-
-it prints
-
-	00000000  31 32 33 0d                               |123.|
-	00000004
-
-If I replace the double-quoted IFS by the dollar-single-quoted one, it
-works again. I think the reason is that \t, \r and \n are used literally
-when double-quoted, not as <HT>, <CR> and <LF>.
+I looked and failed to find the code that releases this array after the
+diff is done... did I miss anything?
 
 Ciao,
-Johannes
+Dscho
