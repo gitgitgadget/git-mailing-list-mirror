@@ -2,192 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0D0CA20A40
-	for <e@80x24.org>; Wed, 29 Nov 2017 23:52:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B790120C13
+	for <e@80x24.org>; Thu, 30 Nov 2017 00:06:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752771AbdK2XwL (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Nov 2017 18:52:11 -0500
-Received: from mout.gmx.net ([212.227.17.22]:50406 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752448AbdK2XwK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Nov 2017 18:52:10 -0500
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MKt5A-1eKC950Odk-0005TD; Thu, 30
- Nov 2017 00:52:03 +0100
-Date:   Thu, 30 Nov 2017 00:51:41 +0100 (CET)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>
-Subject: [PATCH] hashmap: adjust documentation to reflect reality
-Message-ID: <466dd5331907754ca5c25cc83173ca895220ca81.1511999045.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1753481AbdK3AGY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Nov 2017 19:06:24 -0500
+Received: from mail-wm0-f54.google.com ([74.125.82.54]:44308 "EHLO
+        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752838AbdK3AGX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Nov 2017 19:06:23 -0500
+Received: by mail-wm0-f54.google.com with SMTP id t8so9703551wmc.3
+        for <git@vger.kernel.org>; Wed, 29 Nov 2017 16:06:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=phBLiaCZonF9BAq4cFR4vqfQggyZZ+eFXM+Z41lpKT8=;
+        b=kvDv6OBJeD0x0pHdn7GUbpfeQc9sf+MFoZA4gWwWhNrIa3U+a/Sh0113Zo1im9U+T0
+         1By+xT+VtTuP/wlgP7j58gHKspHZUVbPWaFpfmQnxEf4bOLodyjWdskVMzVry2GO5jMH
+         ZnL1BU0t7b/7kmb+LRZIc83TXKG1mUB5sfM8O3Q9zQmJTMpxWEcYTqPptNN69qHpM1XW
+         0FYW1D2UWOZRhziBs4cWlrok8+c+XRPiw+kUjGYCkqAT9J1B8JQ5CcxKu2oCLxKv1+YB
+         kfSXdQbtR2Kt/dmFTtOXZzFSjvq5SSpFImqsBgZuIlzwx9UW5DMcpPKxnIeebyG3/xd1
+         5Yag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=phBLiaCZonF9BAq4cFR4vqfQggyZZ+eFXM+Z41lpKT8=;
+        b=LPT3GX5nhqe9xpx5aE4zFcAPwGTqaUZl+x26l6mA5cZC+afWl41TImGNJA1SoayFla
+         QkxMdFm+5JKdLC4VTWZDuZCVHGX5g53huEl72C7kh8u/WLGy9yCauZJiINjB9RkVp1N3
+         cX/6WIIUCJ1nPsY3mZBkxNjFY8ojBpIDcg2kHRMm9lZpRzuYQZjdyifxFMZvM2AVdJDb
+         5M096DMzkGrWEOXcDXZttdEw+COLf9YCv6Ni7TOIDzDnMzN/KT7/XjUS9qR3v5VTkTfF
+         H828JlJWDAM8cPCanY9vtKsw5kaEovXWCQuseekdGl6nhic52fKK+DIIl+W/UVlOxRr8
+         qF5Q==
+X-Gm-Message-State: AJaThX7wqdt68zjucqJsgH5NxWLfy1NG68yRDdR5wlrs3F1U13x5M9D0
+        x8R39qnM6FGBuGS4+tQ1h8Xh5a54jGc=
+X-Google-Smtp-Source: AGs4zMYr3ckA9mRMMXmZa/OEeecfsuZ30RIKfeFaX47BkKeoQQNT1b0NtHiHoYhpo1gV38/wJh9rOw==
+X-Received: by 10.28.149.203 with SMTP id x194mr324176wmd.145.1512000382091;
+        Wed, 29 Nov 2017 16:06:22 -0800 (PST)
+Received: from [192.168.5.102] (cable-24-135-61-30.dynamic.sbb.rs. [24.135.61.30])
+        by smtp.gmail.com with ESMTPSA id i8sm412288wmh.42.2017.11.29.16.06.20
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 29 Nov 2017 16:06:21 -0800 (PST)
+Subject: Re: [ANNOUNCE] Git for Windows 2.15.1
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <20171129135723.11664-1-johannes.schindelin@gmx.de>
+Cc:     git-for-windows@googlegroups.com, git@vger.kernel.org
+From:   Igor Djordjevic <igor.d.djordjevic@gmail.com>
+Message-ID: <af169d17-708e-5ec0-53ee-b85df76e67c2@gmail.com>
+Date:   Thu, 30 Nov 2017 01:06:17 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:WXBMnXM8jijUVqAMtNWh4opPjkNUneHzVKaZXNV2ZmHiZp90zwD
- /EwziYtjhOpw0fRKj6s0uUhZ1mVdGP6JlviVs4mDDdjfZsKQJPx8ZQHKsbabzdqTPC3vw4O
- vsc+0wd50WWZkjuBbTinTTEz4yiCUPA1J5rMF5TNTFSRSu15fmlUkRnH2/TAzYvuzDA6zrA
- SsF3NFUzhwd8San8Tavtg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:zjM1XYi/Cms=:sOe+euwsC1OrZwJnKRb46t
- FN4Jrikd/egOAqFE7nnok6thtZGmmeCuKEgyzeWaDjufOqkm0rdETJCM+fjNch0yiqz6MAKHo
- vHpCmz5AjS0t6QSjlAf7d51QpZj75kTYcT+QZyaFoGNkhAfTpx0heJy6r7SC8koL1JDZAC3ST
- qni8AC3VBj+aX0qHej1m3BIsvqlOAHU6PKB9J7Q8/9QdJSFamzdyyVwgTU/4b0eUQLs8KtO1M
- kQcLZCmExk0OXDNKpOm+KS9mzbk6jiX/lqKTJqM712VD5/qCQg5g2Tvw/vnPwx8OetxlXRPVt
- gCdwLIkee5Of782XLne4y43M8szVotgxpfcQn1hH8fX+Lgnt0k0tUok/rpHO5v23YL7OmcmSw
- 0m6wtnra7TyEni8sDsb9Qsq6aZkpNwkRt1ylA21KmDNvvCXOh7MlUDSt/AfrD3PtXF1orD+/L
- vNO/0jvwMof3ISg4iFJP/qK9jKq5/zE7vngS3eYEEO5kFhpqi3o9/T/mjj4mmmen9tg1i/JqU
- fYjRGhhEZwgjQJ87lJHdHAvFy1ztcgWrHN4BXYhrdpl3bJiQBNjyGVRGyMOlMRXF1k/gGL/pj
- /m2fwgjagS1PaQxwaLV0WfSq24Eh9mFy0abnTOMaZ7UJyDeO5srPIYdJ3VxzrcoizjLDDrQtZ
- IpZUXf3xkrHGFvdnnIZMuOcVL2jbWUt81VQiEjJSRBOaP3wIc0FCgYgF/k/qQ/kvAizludTGE
- oW+vIzLv/b/BhspQbSbMHnqBOVfaxj6cFEP4DLm+qdf2YvcUxydRCbmmHiEk4ANoa4erk4MlR
- fEF5GlSmDX/Nj0A09YuR7t8V+zqYNgwONr4yn1Ztv85lMIDMcb6TeQZyUQDzQshFjNvmuIE
+In-Reply-To: <20171129135723.11664-1-johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The hashmap API is just complicated enough that even at least one
-long-time Git contributor has to look up how to use it every time he
-finds a new use case. When that happens, it is really useful if the
-provided example code is correct...
+Hi Johannes,
 
-While at it, "fix a memory leak", avoid statements before variable
-declarations, fix a const -> no-const cast, several %l specifiers (which
-want to be %ld), avoid using an undefined constant, call scanf()
-correctly, use FLEX_ALLOC_STR() where appropriate, and adjust the style
-here and there.
+On 29/11/2017 14:57, Johannes Schindelin wrote:
+> 
+>   * It is now possible to configure nano or Notepad++ as Git's
+>     default editor instead of vim.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- hashmap.h | 60 +++++++++++++++++++++++++++++-------------------------------
- 1 file changed, 29 insertions(+), 31 deletions(-)
+This seems as a really nice option, as it could\should greatly help 
+Windows people in lowering friction in first encounter with Git (for 
+Windows).
 
-diff --git a/hashmap.h b/hashmap.h
-index 7cb29a6aede..7ce79f3f72c 100644
---- a/hashmap.h
-+++ b/hashmap.h
-@@ -18,75 +18,71 @@
-  *
-  * #define COMPARE_VALUE 1
-  *
-- * static int long2string_cmp(const struct long2string *e1,
-+ * static int long2string_cmp(const void *hashmap_cmp_fn_data,
-+ *                            const struct long2string *e1,
-  *                            const struct long2string *e2,
-- *                            const void *keydata, const void *userdata)
-+ *                            const void *keydata)
-  * {
-- *     char *string = keydata;
-- *     unsigned *flags = (unsigned*)userdata;
-+ *     const char *string = keydata;
-+ *     unsigned flags = *(unsigned *)hashmap_cmp_fn_data;
-  *
-  *     if (flags & COMPARE_VALUE)
-- *         return !(e1->key == e2->key) || (keydata ?
-- *                  strcmp(e1->value, keydata) : strcmp(e1->value, e2->value));
-+ *         return e1->key != e2->key ||
-+ *                  strcmp(e1->value, string ? string : e2->value);
-  *     else
-- *         return !(e1->key == e2->key);
-+ *         return e1->key != e2->key;
-  * }
-  *
-  * int main(int argc, char **argv)
-  * {
-  *     long key;
-- *     char *value, *action;
-- *
-- *     unsigned flags = ALLOW_DUPLICATE_KEYS;
-+ *     char value[255], action[32];
-+ *     unsigned flags = 0;
-  *
-  *     hashmap_init(&map, (hashmap_cmp_fn) long2string_cmp, &flags, 0);
-  *
-- *     while (scanf("%s %l %s", action, key, value)) {
-+ *     while (scanf("%s %ld %s", action, &key, value)) {
-  *
-  *         if (!strcmp("add", action)) {
-  *             struct long2string *e;
-- *             e = malloc(sizeof(struct long2string) + strlen(value));
-+ *             FLEX_ALLOC_STR(e, value, value);
-  *             hashmap_entry_init(e, memhash(&key, sizeof(long)));
-  *             e->key = key;
-- *             memcpy(e->value, value, strlen(value));
-  *             hashmap_add(&map, e);
-  *         }
-  *
-  *         if (!strcmp("print_all_by_key", action)) {
-- *             flags &= ~COMPARE_VALUE;
-- *
-- *             struct long2string k;
-+ *             struct long2string k, *e;
-  *             hashmap_entry_init(&k, memhash(&key, sizeof(long)));
-  *             k.key = key;
-  *
-- *             struct long2string *e = hashmap_get(&map, &k, NULL);
-+ *             flags &= ~COMPARE_VALUE;
-+ *             e = hashmap_get(&map, &k, NULL);
-  *             if (e) {
-- *                 printf("first: %l %s\n", e->key, e->value);
-- *                 while (e = hashmap_get_next(&map, e))
-- *                     printf("found more: %l %s\n", e->key, e->value);
-+ *                 printf("first: %ld %s\n", e->key, e->value);
-+ *                 while ((e = hashmap_get_next(&map, e)))
-+ *                     printf("found more: %ld %s\n", e->key, e->value);
-  *             }
-  *         }
-  *
-  *         if (!strcmp("has_exact_match", action)) {
-- *             flags |= COMPARE_VALUE;
-- *
-  *             struct long2string *e;
-- *             e = malloc(sizeof(struct long2string) + strlen(value));
-+ *             FLEX_ALLOC_STR(e, value, value);
-  *             hashmap_entry_init(e, memhash(&key, sizeof(long)));
-  *             e->key = key;
-- *             memcpy(e->value, value, strlen(value));
-  *
-- *             printf("%s found\n", hashmap_get(&map, e, NULL) ? "" : "not");
-+ *             flags |= COMPARE_VALUE;
-+ *             printf("%sfound\n", hashmap_get(&map, e, NULL) ? "" : "not ");
-+ *             free(e);
-  *         }
-  *
-  *         if (!strcmp("has_exact_match_no_heap_alloc", action)) {
-- *             flags |= COMPARE_VALUE;
-- *
-- *             struct long2string e;
-- *             hashmap_entry_init(e, memhash(&key, sizeof(long)));
-- *             e.key = key;
-+ *             struct long2string k;
-+ *             hashmap_entry_init(&k, memhash(&key, sizeof(long)));
-+ *             k.key = key;
-  *
-- *             printf("%s found\n", hashmap_get(&map, e, value) ? "" : "not");
-+ *             flags |= COMPARE_VALUE;
-+ *             printf("%sfound\n", hashmap_get(&map, &k, value) ? "" : "not ");
-  *         }
-  *
-  *         if (!strcmp("end", action)) {
-@@ -94,6 +90,8 @@
-  *             break;
-  *         }
-  *     }
-+ *
-+ *     return 0;
-  * }
-  */
- 
+Being pretty unfamiliar with Linux and its tools at the time, I 
+remember the initial frustration in trying to do what otherwise felt 
+as a no-brain, simple and trivial task - write the damn commit 
+message after `git commit`, lol. Even had to kill the bash window a 
+few times, not knowing what to do, where it was clear it was 
+expecting something from me :$
 
-base-commit: 1a4e40aa5dc16564af879142ba9dfbbb88d1e5ff
--- 
-2.15.0.windows.1.22.g2b9dc9b294f
+I later learned about vim, like getting started with Git wasn`t hard 
+enough... :) As soon as I found it being a possibility, I`ve set 
+Notepad++ as my default editor.
 
-Published-As: https://github.com/dscho/git/releases/tag/fix-hashmap-documentation-v1
-Fetch-It-Via: git fetch https://github.com/dscho/git fix-hashmap-documentation-v1
+That said, what is the Notepad++ as default editor option doing, just 
+setting:
+
+[core]
+	editor = 'F:/Install/Notepad++/notepad++.exe' -multiInst -notabbar -nosession
+
+... inside users` .gitconfig (`git config --global`)? Asking because 
+I already had it there, and seems the option made no difference, so 
+I`m not sure if it actually worked.
+
+Otherwise, I guess I can dig the answer up from the installer code as 
+well... :)
+
+Thanks for yet another Git for Windows release.
+
+Regards, Buga
+
+p.s. Ok, It seems it actually went to `git config --system` instead, 
+like:
+
+[core]
+	editor = 'F:\\Install\\Notepad++\\notepad++.exe' -multiInst -notabbar -nosession -noPlugin
+
+I removed my original (user) configuration, and it still works (minus 
+plugins, due to that last parameter), so all good :)
+
+Plugins do come in handy for me, though, like spell-check when 
+writing commit messages, so I`ll just stick with my option for now.
