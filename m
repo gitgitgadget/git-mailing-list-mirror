@@ -2,98 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A9A2620C11
-	for <e@80x24.org>; Thu, 30 Nov 2017 15:48:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EA9DF20C11
+	for <e@80x24.org>; Thu, 30 Nov 2017 17:01:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751890AbdK3Psu (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Nov 2017 10:48:50 -0500
-Received: from siwi.pair.com ([209.68.5.199]:60022 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751498AbdK3Pst (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Nov 2017 10:48:49 -0500
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 025FD8450E;
-        Thu, 30 Nov 2017 10:48:49 -0500 (EST)
-Received: from [10.160.98.77] (unknown [167.220.148.86])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id BB4188450D;
-        Thu, 30 Nov 2017 10:48:48 -0500 (EST)
-Subject: Re: [git-users] How hard would it be to implement sparse
- fetching/pulling?
-To:     Konstantin Khomoutov <kostix@bswap.ru>,
-        vit via Git for human beings <git-users@googlegroups.com>
-Cc:     git@vger.kernel.org, Vitaly Arbuzov <vit@uber.com>
-References: <bb89278c-9e79-489d-a19d-681b4e231d10@googlegroups.com>
- <20171130081232.7hk73s5d62gmpqdz@tigra>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <11be7135-29a4-5f4a-2d61-ffe16a965cd5@jeffhostetler.com>
-Date:   Thu, 30 Nov 2017 10:48:48 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.4.0
+        id S1753833AbdK3RBZ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Nov 2017 12:01:25 -0500
+Received: from mail-wr0-f182.google.com ([209.85.128.182]:37365 "EHLO
+        mail-wr0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752286AbdK3RBW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Nov 2017 12:01:22 -0500
+Received: by mail-wr0-f182.google.com with SMTP id k61so7308955wrc.4
+        for <git@vger.kernel.org>; Thu, 30 Nov 2017 09:01:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=uber.com; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=g71yoG/o6Ouk3xxxuwaajGIqtKF7KGC8uX64YBDMnDY=;
+        b=YWSJ4eFMaEkuf83R5ZfN2IzLdT3jYVs8M7m2NhmK9348kXfYJS9vaEle5O7hQ851ig
+         oKUCOHlmK8xeD62/Ev/SToOnXbp7crXqsSKx3uS0j/SeuyuK4hqncBGZbxxUsIIIi2z8
+         WS90J6FPfR2TsBPBp0qATJKLCc/wy1bRfkDUY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=g71yoG/o6Ouk3xxxuwaajGIqtKF7KGC8uX64YBDMnDY=;
+        b=lENb+2aK9JnyrOvQFvmI7Zj0bYsa7psDJs9ooFxvXOe8xCauozCCiFiwADnGUcd5rH
+         g9beJjkbb0diUMQTr7DFT/XypM4neduY6ZW1SgXEB+2DvvcF1bG5JUs+E5qJaOTJsi6B
+         0f82yyXsUkt8eL+WKCmreFlHZI0QYC8Dl9zL0gkgzpbW+dC3eazhTi3+Th+4zszOU1KO
+         ejQErDsmfO4j49Ui/EXr2QrghEIOw/9NHywkR/EbeE7u+n8mEdwpn1Lb20zqNAAN3Ggq
+         0xOnso8jpGij4vT87P8MbumrbxHMqcPPVhvJt/WsjKpPGLzzS8+Df1w4v48iP5BBPIMG
+         LRQQ==
+X-Gm-Message-State: AJaThX4clvOZX8Ghx4DqM/9qzCEKXd2SUfFX+51gDlhXugOYG9UBHnZr
+        GtIfFkfpexeV05FYjLk2vxh8vKzBh1uabaaPb6vj
+X-Google-Smtp-Source: AGs4zMZT2R1BxsmQK0nyi5d7HrL2XGnM5whm9NEY/8NZ5GdPFhh3ZAVBpYOttQeXqX8wc5bHTp9uab1Wy+GkER6yM/E=
+X-Received: by 10.223.197.131 with SMTP id m3mr2749151wrg.203.1512061281359;
+ Thu, 30 Nov 2017 09:01:21 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20171130081232.7hk73s5d62gmpqdz@tigra>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Received: by 10.28.213.12 with HTTP; Thu, 30 Nov 2017 09:01:00 -0800 (PST)
+In-Reply-To: <e2d5470b-9252-07b4-f3cf-57076d103a17@jeffhostetler.com>
+References: <CANxXvsMbpBOSRKaAi8iVUikfxtQp=kofZ60N0pHXs+R+q1k3_Q@mail.gmail.com>
+ <e2d5470b-9252-07b4-f3cf-57076d103a17@jeffhostetler.com>
+From:   Vitaly Arbuzov <vit@uber.com>
+Date:   Thu, 30 Nov 2017 09:01:00 -0800
+Message-ID: <CANxXvsNWgYda_unSWoiEnfZnEuX8ktkAD-d_ynVtsTbkOKqeCg@mail.gmail.com>
+Subject: Re: How hard would it be to implement sparse fetching/pulling?
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hey Jeff,
 
+It's great, I didn't expect that anyone is actively working on this.
+I'll check out your branch, meanwhile do you have any design docs that
+describe these changes or can you define high level goals that you
+want to achieve?
 
-On 11/30/2017 3:12 AM, Konstantin Khomoutov wrote:
-> On Wed, Nov 29, 2017 at 06:42:54PM -0800, vit via Git for human beings wrote:
-> 
+On Thu, Nov 30, 2017 at 6:24 AM, Jeff Hostetler <git@jeffhostetler.com> wrote:
+>
+>
+> On 11/29/2017 10:16 PM, Vitaly Arbuzov wrote:
+>>
+>> Hi guys,
+>>
 >> I'm looking for ways to improve fetch/pull/clone time for large git
->> (mono)repositories with unrelated source trees (that span across multiple
->> services).
+>> (mono)repositories with unrelated source trees (that span across
+>> multiple services).
 >> I've found sparse checkout approach appealing and helpful for most of
->> client-side operations (e.g. status, reset, commit, add etc)
->> The problem is that there is no feature like sparse fetch/pull in git, this
->> means that ALL objects in unrelated trees are always fetched.
->> It takes a lot of time for large repositories and results in some practical
->> scalability limits for git.
+>> client-side operations (e.g. status, reset, commit, etc.)
+>> The problem is that there is no feature like sparse fetch/pull in git,
+>> this means that ALL objects in unrelated trees are always fetched.
+>> It may take a lot of time for large repositories and results in some
+>> practical scalability limits for git.
 >> This forced some large companies like Facebook and Google to move to
->> Mercurial as they were unable to improve client-side experience with git
->> and Microsoft has developed GVFS which seems to be a step back to CVCS
->> world.
-> [...]
-> 
-> (To anyone interested, there's a cross-post to the main Git list which
-> Vitaly failed to mention: [1]. I think it could spark some interesting
-> discussion.)
-> 
-> As to the essence of the question, I think you blame GVFS for no real
-> reason. While Microsoft is being Microsoft — their implementation of
-> GVFS is written in .NET and *requires* Windows 10 (this one is beyond
-> me), it's based on an open protocol [2] which basically assumes the
-> presence of a RESTful HTTP endpoint at the "Git server side" and
-> apparently designed to work well with the repository format the current
-> stock Git uses which makes it implementable on both sides by anyone
-> interested.
-> 
-> The second hint I have is that the idea of fetching data lazily
-> is being circulated among the Git developers for some time already, and
-> something is really being done in this venue so you could check and see
-> what's there [3, 4] and maybe trial it and help out those who works on this
-> stuff.
-> 
-> 1. https://public-inbox.org/git/CANxXvsMbpBOSRKaAi8iVUikfxtQp=kofZ60N0pHXs+R+q1k3_Q@mail.gmail.com/
-> 2. https://github.com/Microsoft/GVFS/blob/master/Protocol.md
-> 3. https://public-inbox.org/git/?q=lazy+fetch
-> 4. https://public-inbox.org/git/?q=partial+clone
-> 
-
-For completeness with the git-users mailing list.
-Here is info on the work-in-progress for this feature.
-
-https://public-inbox.org/git/e2d5470b-9252-07b4-f3cf-57076d103a17@jeffhostetler.com/
-
-Jeff
-
+>> Mercurial as they were unable to improve client-side experience with
+>> git while Microsoft has developed GVFS, which seems to be a step back
+>> to CVCS world.
+>>
+>> I want to get a feedback (from more experienced git users than I am)
+>> on what it would take to implement sparse fetching/pulling.
+>> (Downloading only objects related to the sparse-checkout list)
+>> Are there any issues with missing hashes?
+>> Are there any fundamental problems why it can't be done?
+>> Can we get away with only client-side changes or would it require
+>> special features on the server side?
+>>
+>> If we had such a feature then all we would need on top is a separate
+>> tool that builds the right "sparse" scope for the workspace based on
+>> paths that developer wants to work on.
+>>
+>> In the world where more and more companies are moving towards large
+>> monorepos this improvement would provide a good way of scaling git to
+>> meet this demand.
+>>
+>> PS. Please don't advice to split things up, as there are some good
+>> reasons why many companies decide to keep their code in the monorepo,
+>> which you can easily find online. So let's keep that part out the
+>> scope.
+>>
+>> -Vitaly
+>>
+>
+>
+> This work is in-progress now.  A short summary can be found in [1]
+> of the current parts 1, 2, and 3.
+>
+>> * jh/object-filtering (2017-11-22) 6 commits
+>> * jh/fsck-promisors (2017-11-22) 10 commits
+>> * jh/partial-clone (2017-11-22) 14 commits
+>
+>
+> [1]
+> https://public-inbox.org/git/xmqq1skh6fyz.fsf@gitster.mtv.corp.google.com/T/
+>
+> I have a branch that contains V5 all 3 parts:
+> https://github.com/jeffhostetler/git/tree/core/pc5_p3
+>
+> This is a WIP, so there are some rough edges....
+> I hope to have a V6 out before the weekend with some
+> bug fixes and cleanup.
+>
+> Please give it a try and see if it fits your needs.
+> Currently, there are filter methods to filter all blobs,
+> all large blobs, and one to match a sparse-checkout
+> specification.
+>
+> Let me know if you have any questions or problems.
+>
+> Thanks,
+> Jeff
