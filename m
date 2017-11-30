@@ -2,123 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6DFE720C11
-	for <e@80x24.org>; Thu, 30 Nov 2017 20:51:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6D5F820C11
+	for <e@80x24.org>; Thu, 30 Nov 2017 21:00:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751376AbdK3Uvk (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Nov 2017 15:51:40 -0500
-Received: from cloud.peff.net ([104.130.231.41]:44816 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750903AbdK3Uvj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Nov 2017 15:51:39 -0500
-Received: (qmail 22694 invoked by uid 109); 30 Nov 2017 20:51:39 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 30 Nov 2017 20:51:39 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 32254 invoked by uid 111); 30 Nov 2017 20:51:58 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Thu, 30 Nov 2017 15:51:58 -0500
-Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 30 Nov 2017 15:51:37 -0500
-Date:   Thu, 30 Nov 2017 15:51:37 -0500
-From:   Jeff King <peff@peff.net>
-To:     lars.schneider@autodesk.com
-Cc:     git@vger.kernel.org, gitster@pobox.com, sbeller@google.com,
-        sunshine@sunshineco.com, kaartic.sivaraam@gmail.com,
-        sandals@crustytoothpaste.net,
-        Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [PATCH v4 2/2] launch_editor(): indicate that Git waits for user
- input
-Message-ID: <20171130205137.GC3313@sigill.intra.peff.net>
-References: <20171129143752.60553-1-lars.schneider@autodesk.com>
- <20171129143752.60553-3-lars.schneider@autodesk.com>
+        id S1750995AbdK3U75 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Nov 2017 15:59:57 -0500
+Received: from mail-it0-f68.google.com ([209.85.214.68]:44187 "EHLO
+        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750842AbdK3U74 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Nov 2017 15:59:56 -0500
+Received: by mail-it0-f68.google.com with SMTP id b5so63728itc.3
+        for <git@vger.kernel.org>; Thu, 30 Nov 2017 12:59:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=yDAZUPjYSN5iswOtUEaVCGpIUkUwLeS8uyPn6wnqyCY=;
+        b=NFNDjaKT1IzA6u7evQfQapfFD+d1N9m5L9G0teHvgwcemsjutUU+P7sXAROzsOhchG
+         s8cCLoMgKeBWUruyhdT68FTp34cjGQywxrBVoR77gv8kr0uWWQqWpydfDD13A8gafzHb
+         31DqYUvVu9aEF7JvewvWk7K6n0khqGKL8IbqM+IzXuXQOjqJd3F05aiAxq9dRuLfFtZi
+         WH4LNRPc+SmSouCPVHnX6qjk5z75MUQ+j1HcRIwjJ7U6TLwpybnqQ5bRkqmrxcjsnhDg
+         jMk+8pnqo1UOyS/WTPMfq/cYPZGOrcEHy3H2hCiM5q8hmBXcbrTY26R6fFQxQfWwj0du
+         ItJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=yDAZUPjYSN5iswOtUEaVCGpIUkUwLeS8uyPn6wnqyCY=;
+        b=MgI+25R5YNrPWODP+6g8SMs2lWtPPWFUdpyb1t8UZZYvHU3d+IkSTsIfu5CXPVQ0bj
+         ibfLTVR3SHt1jgY6NXM5Kkhb0iN+GDl6c1N+sFO6d0jUmmWeGMCtqV84CGO0ZaNHo4V+
+         GwTlPQopyNxR1hZCbys+CqIur3cotjXNag07V9Ro49unRy0LKc23yn/QlL1hGkYzc3hA
+         S1n9EYIRZtJfu7g1unk+7tcf+phjxj/9yajc8Ty9kmoMgqPgiG3fwv3bMyyQAT+UrACy
+         RvEdh9u0xkxWeX93eCSDE/gKq8n05gdLaaLnpPIjCqCk3OiTFIXjhSeHcA0NalY0rZSH
+         OqMQ==
+X-Gm-Message-State: AJaThX61QgPq0U8YZy/5c2Fqaa0BapKdVYmnkKr53mJGvA3F0QxqCb51
+        Z+CvwsQakpT2EQ65VamxRoU=
+X-Google-Smtp-Source: AGs4zMZmkIny2Hft/F0psdhCNMNJG56cIKQ9aojHfRvEpAILziFscz0QSHQOaJj0LJkYWbGvfOdEJw==
+X-Received: by 10.36.222.68 with SMTP id d65mr5321018itg.67.1512075595714;
+        Thu, 30 Nov 2017 12:59:55 -0800 (PST)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id m31sm2660896iti.3.2017.11.30.12.59.54
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 30 Nov 2017 12:59:55 -0800 (PST)
+Date:   Thu, 30 Nov 2017 12:59:52 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Dan Jacques <dnj@google.com>,
+        Alex Riesen <alexander.riesen@cetitec.com>,
+        Brandon Casey <drafnel@gmail.com>, Petr Baudis <pasky@ucw.cz>,
+        Gerrit Pape <pape@smarden.org>,
+        "martin f . krafft" <madduck@madduck.net>, Eric Wong <e@80x24.org>
+Subject: Re: [PATCH] Makefile: replace perl/Makefile.PL with simple make rules
+Message-ID: <20171130205952.GB20640@aiede.mtv.corp.google.com>
+References: <20171129153436.24471-1-avarab@gmail.com>
+ <20171129195430.10069-1-avarab@gmail.com>
+ <20171130021137.GG15098@aiede.mtv.corp.google.com>
+ <87fu8wumy6.fsf@evledraar.booking.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20171129143752.60553-3-lars.schneider@autodesk.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87fu8wumy6.fsf@evledraar.booking.com>
+User-Agent: Mutt/1.9.1 (2017-09-22)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 29, 2017 at 03:37:52PM +0100, lars.schneider@autodesk.com wrote:
+Ævar Arnfjörð Bjarmason wrote:
+> On Thu, Nov 30 2017, Jonathan Nieder jotted:
+>> Ævar Arnfjörð Bjarmason wrote:
 
-> No message is printed in a "dumb" terminal as it would not be possible
-> to remove the message after the editor returns. This should not be a
-> problem as this feature is targeted at novice Git users and they are
-> unlikely to work with a "dumb" terminal.
+>>>  * We don't build the Git(3) Git::I18N(3) etc. man pages from the
+>>>    embedded perldoc. I suspect nobody really cares, these are mostly
+>>>    internal APIs, and if someone's developing against them they likely
+>>>    know enough to issue a "perldoc" against the installed file to get
+>>>    the same result.
+[...]
+>> Debian cares (see
+>> https://www.debian.org/doc/packaging-manuals/perl-policy/ch-module_packages.html
+>> for details).
+[...]
+> It just says you have to install the manpages in such-and-such a place,
+> but I don't have any. There, policy issue fixed :)
+>
+> More seriously, it seems to me that the only reason we have these
+> manpages in the first place is because of emergent effects. *Maybe* I'm
+> wrong about someone using Git.pm as an external API, is that the case?
 
-I think novice users could end up in this situation with something like:
+Yeah, people really do use Git.pm as an external API.
 
-  ssh remote_host git commit
+Unlike e.g. something on CPAN, its API stability guarantees are not
+great, so I am not saying I recommend it, but people have been using
+it that way.
 
-But then I'd expect most terminal-based editors to give some sort of
-error in that situation, too. And at any rate, the worst case is that
-they get no special "waiting..." message from Git, which is already the
-status quo.  So it's probably not worth worrying about such an obscure
-case.
+If we want to prevent this, then we should not be installing it in the
+public perl module path.  Or we should at least add a note to the
+manpages we ship :) to recommend not using it.
 
-> Power users might not want to see this message or their editor might
-> already print such a message (e.g. emacsclient). Allow these users to
-> suppress the message by disabling the "advice.waitingForEditor" config.
-
-I'm happy to see the hard-coded emacsclient behavior go. Hopefully we
-won't see too many complaints about people having to set the advice
-flag.
-
-> The standard advise() function is not used here as it would always add
-> a newline which would make deleting the message harder.
-
-I tried to think of ways this "show a message and then delete it" could
-go wrong. It should work OK with editors that just do curses-like
-things, taking over the terminal and then restoring it at the end.
-
-It does behave in a funny way if the editor produces actual lines of
-output outside of the curses handling. E.g. (I just quit vim
-immediately, hence the aborting message):
-
-  $ GIT_EDITOR='echo foo; vim' git commit
-  hint: Waiting for your editor input...foo
-  Aborting commit due to empty commit message.
-
-our "foo" gets tacked onto the hint line, and then our deletion does
-nothing (because the newline after "foo" bumped us to a new line, and
-there was nothing on that line to erase).
-
-An even worse case (and yes, this is really reaching) is:
-
-  $ GIT_EDITOR='echo one; printf "two\\r"; vim' git commit
-  hint: Waiting for your editor input...one
-  Aborting commit due to empty commit message.
-
-There we ate the "two" line.
-
-These are obviously the result of devils-advocate poking at the feature.
-I doubt any editor would end its output with a CR. But the first case is
-probably going to be common, especially for actual graphical editors. We
-know that emacsclient prints its own line, and I wouldn't be surprised
-if other graphical editors spew some telemetry to stderr (certainly
-anything built against GTK tends to do so).
-
-I don't think there's a good way around it. Portably saying "delete
-_this_ line that I wrote earlier" would probably require libcurses or
-similar. So maybe we just live with it. The deletion magic makes the
-common cases better (a terminal editor that doesn't print random
-lines, or a graphical editor that is quiet), and everyone else can flip
-the advice switch if they need to. I dunno.
-
-> ---
->  Documentation/config.txt |  3 +++
->  advice.c                 |  2 ++
->  advice.h                 |  1 +
->  editor.c                 | 15 +++++++++++++++
->  4 files changed, 21 insertions(+)
-
-The patch itself looks fine, as far as correctly implementing the
-design.
-
--Peff
+Thanks,
+Jonathan
