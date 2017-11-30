@@ -6,66 +6,83 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DC24E20954
-	for <e@80x24.org>; Thu, 30 Nov 2017 10:35:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 07B7E20954
+	for <e@80x24.org>; Thu, 30 Nov 2017 11:58:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751465AbdK3Kfx (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Nov 2017 05:35:53 -0500
-Received: from smtp1.de.adit-jv.com ([62.225.105.245]:38444 "EHLO
-        smtp1.de.adit-jv.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750760AbdK3Kfw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Nov 2017 05:35:52 -0500
-Received: from localhost (smtp1.de.adit-jv.com [127.0.0.1])
-        by smtp1.de.adit-jv.com (Postfix) with ESMTP id D984C3C0062;
-        Thu, 30 Nov 2017 11:35:49 +0100 (CET)
-Received: from smtp1.de.adit-jv.com ([127.0.0.1])
-        by localhost (smtp1.de.adit-jv.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id AaPIdzHMUnQ2; Thu, 30 Nov 2017 11:35:43 +0100 (CET)
-Received: from HI2EXCH01.adit-jv.com (hi2exch01.adit-jv.com [10.72.92.24])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by smtp1.de.adit-jv.com (Postfix) with ESMTPS id 9062A3C0034;
-        Thu, 30 Nov 2017 11:35:43 +0100 (CET)
-Received: from vmlxhi-102.adit-jv.com (10.72.93.184) by HI2EXCH01.adit-jv.com
- (10.72.92.24) with Microsoft SMTP Server (TLS) id 14.3.361.1; Thu, 30 Nov
- 2017 11:35:43 +0100
-Date:   Thu, 30 Nov 2017 11:35:39 +0100
-From:   Eugeniu Rosca <erosca@de.adit-jv.com>
-To:     Junio C Hamano <gitster@pobox.com>
-CC:     <git@vger.kernel.org>
-Subject: Re: Make patch-id more flexible?
-Message-ID: <20171130103539.GA19237@vmlxhi-102.adit-jv.com>
-References: <20171124073327.GA15188@vmlxhi-102.adit-jv.com>
- <xmqqlgiwm7x1.fsf@gitster.mtv.corp.google.com>
+        id S1751157AbdK3L6L (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Nov 2017 06:58:11 -0500
+Received: from smtprelay01.ispgateway.de ([80.67.31.24]:27933 "EHLO
+        smtprelay01.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750918AbdK3L6K (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Nov 2017 06:58:10 -0500
+X-Greylist: delayed 2355 seconds by postgrey-1.27 at vger.kernel.org; Thu, 30 Nov 2017 06:58:10 EST
+Received: from [91.248.197.178] (helo=book.hvoigt.net)
+        by smtprelay01.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.89)
+        (envelope-from <hvoigt@hvoigt.net>)
+        id 1eKMri-0004Rt-HZ; Thu, 30 Nov 2017 12:18:50 +0100
+Date:   Thu, 30 Nov 2017 12:18:49 +0100
+From:   Heiko Voigt <hvoigt@hvoigt.net>
+To:     Jeff King <peff@peff.net>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Junio C Hamano <gitster@pobox.com>, hsed@unimetic.com,
+        git <git@vger.kernel.org>
+Subject: Re: [PATCH V4] config: add --expiry-date
+Message-ID: <20171130111849.GA98794@book.hvoigt.net>
+References: <xmqqlgj7xcuf.fsf@gitster.mtv.corp.google.com>
+ <20171118022727.30179-1-hsed@unimetic.com>
+ <xmqq8tf4qmu8.fsf@gitster.mtv.corp.google.com>
+ <20171120170443.awpvcuubsi5o6zmp@sigill.intra.peff.net>
+ <CAGZ79ka+5o07cz4A8=Gu_VqO1hYqqO=8Ju1uAaDY23s7xjCWvw@mail.gmail.com>
+ <20171120203702.mdd3hkwezxyf7vtg@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqlgiwm7x1.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Originating-IP: [10.72.93.184]
+In-Reply-To: <20171120203702.mdd3hkwezxyf7vtg@sigill.intra.peff.net>
+User-Agent: Mutt/1.9.0 (2017-09-02)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello Junio,
-
-> > file-names. Here comes my actual question. Would it be conceptually fine
-> > to implement some `git patch-id` parameter, which would allow ignoring
-> > the file-names (or reducing those to their `basename`) before computing
-> > the patch id? Or would it break the concept of patch id (which shouldn't
-> > accept variations)?
+On Mon, Nov 20, 2017 at 03:37:03PM -0500, Jeff King wrote:
+> On Mon, Nov 20, 2017 at 12:28:11PM -0800, Stefan Beller wrote:
 > 
-> My gut feeling is that a tool like that would be fine as long as it
-> is local to your organization and is not called "git patch-id"; it
-> may be useful in the situation you described, but as you mention
-> above, it feels that it is differnt from what a patch-id is.
+> > > +cc Stefan, who added the die(). It may be that we don't care that much
+> > > these days about recovering from broken .gitmodules files.
+> > 
+> > By that you mean commits like 37f52e9344 (submodule-config:
+> > keep shallow recommendation around, 2016-05-26) for example?
+> > That adds a git_config_bool to the submodule config machinery.
 > 
+> I actually meant ea2fa5a338 (submodule-config: keep update strategy
+> around, 2016-02-29), which adds an actual die() into parse_config(). But
+> yeah, I think the end result is the same.
+> 
+> > I agree that we'd want to be more careful, but for now I'd put it to the
+> > #leftoverbits.
+> 
+> Fine by me. While I think the original intent was to be more lenient to
+> malformed .gitmodules, it's not like we're seeing bug reports about it.
 
-Thank you very much for your feedback. That's exactly I was looking for.
-A clear statement from the maintainer. We will live then with a custom
-tool that acts like `git patch-id`, just strips the patches from
-file-names before computing the hash.
+My original intent was not about being more lenient about malformed
+.gitmodules but having a way to deal with repository history that might
+have a malformed .gitmodules in its history. Since depending on the
+branch it is on it might be quite carved in stone.
+On an active project it would not be that easy to rewrite history to get
+out of that situation.
 
-Best regards,
-Eugeniu.
+When a .gitmodules file in the worktree is malformed it is easy to fix.
+That is not the case when we are reading configurations from blobs.
+
+My guess why there are no reports is that maybe not too many users are
+using this infrastructure yet, plus it is probably seldom that someone
+edits the .gitmodules file by hand which could lead to such a situation.
+But if such an error occurs it will be very annoying if we die while
+parsing submodule configurations. The only solution I see currently is
+to turn submodule recursion off completely.
+
+But maybe I am being overly cautious here.
+
+Cheers Heiko
