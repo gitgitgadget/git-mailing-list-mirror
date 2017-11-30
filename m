@@ -7,118 +7,106 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8C4BE20A40
-	for <e@80x24.org>; Thu, 30 Nov 2017 02:04:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B6B8420A40
+	for <e@80x24.org>; Thu, 30 Nov 2017 02:11:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752880AbdK3CEv (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Nov 2017 21:04:51 -0500
-Received: from mail-io0-f194.google.com ([209.85.223.194]:38785 "EHLO
+        id S1752939AbdK3CLm (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Nov 2017 21:11:42 -0500
+Received: from mail-io0-f194.google.com ([209.85.223.194]:34963 "EHLO
         mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752838AbdK3CEu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Nov 2017 21:04:50 -0500
-Received: by mail-io0-f194.google.com with SMTP id d14so5864989ioc.5
-        for <git@vger.kernel.org>; Wed, 29 Nov 2017 18:04:50 -0800 (PST)
+        with ESMTP id S1752449AbdK3CLl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Nov 2017 21:11:41 -0500
+Received: by mail-io0-f194.google.com with SMTP id q15so5894019ioh.2
+        for <git@vger.kernel.org>; Wed, 29 Nov 2017 18:11:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=uevIV+1eCRj5F1qM8MI5HQM1hl6qxppYAEJJOpbBOQQ=;
-        b=orNxo8AiWGu/cWaGTKUQPDjN40FH+vzm0CN+X3SgzLU4MJoc4vTQhrFdVocxTtK92x
-         CaJ9Nvl9ciaAnhugwoF0rwzDVrVtzfbYuToN99VXIbmdWlVjrptL57KoHDK406vWFBSW
-         4MihMsPCv/hBAA7muKS43h+ZDHETrrv5Xj0e8xpJkxXwp+4X0t+oQ7BnuXgojRDCXRny
-         hjRAjWp8g8pfg0CFzcdmQYt7XqhxtUl+iiExQ8MzqSV0Jqe3rR4KvyEZZ2hgJkCLV+OR
-         5fnV02p1bU/Gjnnzo/ESDiLgtUwWTC8NUNluT2OAkukZ5zKEOsNNY+nUEIi89QlkWksp
-         t+5w==
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=IM+EMg5ZaYuebtATT/qR3uaiMkEp9Okmvcc2fceuYC8=;
+        b=GhQ7LL2hMUPCcovFeNfZI+1eADDXaZqWhFLulYDEw0N2PxCQ2aiwX/hauVxE1vH1u/
+         Ch2N/DEVRqIbeQJu/XLUfBUXuVy0Vh+d/tWANDnU1fx1GkEGeetTRVMKDicX4cODyZBv
+         7OzABFs5yaM5EwRbBmTtbCty8IXFsPfdB65LTGGoY5Vsp6kNQYwK+m2T5plkkLlV6zvy
+         C/Xu50721s7+hT0bitxP+Llwq6O//dy9OueJTcruEW5NmFzff8+4B2S1xy+WQ8e1wlu+
+         0YG6IGyH+Zj4ufCcdT+Kt6CjRnTI+5Rh9GVobKlMOgYWetdtLkzOcrE56pL7Ak3CDnIS
+         ca0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=uevIV+1eCRj5F1qM8MI5HQM1hl6qxppYAEJJOpbBOQQ=;
-        b=imEXmCUgFfW+UQ8LB/56uapNZXHa56DUgd87Y5D6J9d3Fm2SuFuxLUdvFZtk7F3ytb
-         3cdwJV+Zsa2kKqVSyDjIu0770v77A+CD2r+TVsO7VNx1QOj7V2xla4imqtAiylsog1jB
-         Bc2qG/nfigf3zAyUqTIb90yATZpDZSIIf405qFmQXOMY1maZqf/PVUuiDTZ/ODtn8QcK
-         81vwSmnBn+zbEHKQuxu/Oc8/hwI7qnQekfgkJDaOrVQYy1xineTR+3tNOumOul3z/Dfj
-         gHEmkRdD/+1mc9R4R5Lxf1mkJqM6oR2z7eoDMtcB8qUn0KBVtUGQvOLGrT4R3EMBH6lf
-         LhJw==
-X-Gm-Message-State: AJaThX5GXeTCIusIjBiJBla/7ADoQiNSMvTIDOUG5Y9J7Y5mwn5wAtIf
-        hca5EKfsqHepoKhu8HoYUiIYN28E
-X-Google-Smtp-Source: AGs4zMa54/g9LGNozN5Olzn98Wq7sHPzAz5qePABmj5s0X3QMAzdE0c/WBqvLC2xCya92qH2jjPrUw==
-X-Received: by 10.107.15.202 with SMTP id 71mr6054712iop.146.1512007488356;
-        Wed, 29 Nov 2017 18:04:48 -0800 (PST)
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=IM+EMg5ZaYuebtATT/qR3uaiMkEp9Okmvcc2fceuYC8=;
+        b=A+F9PtbBvmJmPa48TfaiK4pHdb9yc7eCEEqyvGUjzSJfA+ejRdcFdGowJ+3lYBPq67
+         4EJTjl6k7cc5aIdBwEMP3fNsSSJDeyGhjavIYalO6MuwRlwTGSbjD8Q7r8bIDMgwgEGs
+         g36Q5KnqoFb31OLd6VYLZ4t4EH9iyGX6JYmX5RkNxlUHaKasKF8iLLCW6lC3kumJlOdO
+         xCxKqRjSqrkzwNfdGjFBHqoql4e8mUPcjWftmYE3I0t7uE34jQbSnah0PzIxWYsdPR/g
+         vtWwXGU1dR/0d5dsqRl5RYxJEak3SsonlPVsATnofei/ubijvVKs5JMtXgCy5S1ZL9VV
+         SJOA==
+X-Gm-Message-State: AJaThX4TrGVjHlpnvgreLmugHSdoLIkCaUIBqQ9JbOwQAQbSPVBJ/TX7
+        VbAU+fvL95IkqLAzR4Ey6Ac=
+X-Google-Smtp-Source: AGs4zMYxHiPV+Y70A8Ig1+N8dqFeqt8ktTTMkQ1cJ71wJ+fmHCZ1GGQV+WB4KeXytx82gc7pY+UqUA==
+X-Received: by 10.107.169.6 with SMTP id s6mr6270982ioe.103.1512007900591;
+        Wed, 29 Nov 2017 18:11:40 -0800 (PST)
 Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id g100sm1399590iod.84.2017.11.29.18.04.47
+        by smtp.gmail.com with ESMTPSA id j204sm1697513itj.16.2017.11.29.18.11.39
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 29 Nov 2017 18:04:47 -0800 (PST)
-Date:   Wed, 29 Nov 2017 18:04:45 -0800
+        Wed, 29 Nov 2017 18:11:39 -0800 (PST)
+Date:   Wed, 29 Nov 2017 18:11:37 -0800
 From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Doron Behar <doron.behar@gmail.com>
-Cc:     git@vger.kernel.org,
-        Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>
-Subject: Re: imap-send with gmail: curl_easy_perform() failed: URL using
- bad/illegal format or missing URL
-Message-ID: <20171130020445.GF15098@aiede.mtv.corp.google.com>
-References: <20171129171301.l3coiflkfyy533yz@NUC.localdomain>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Dan Jacques <dnj@google.com>,
+        Alex Riesen <alexander.riesen@cetitec.com>,
+        Brandon Casey <drafnel@gmail.com>, Petr Baudis <pasky@ucw.cz>,
+        Gerrit Pape <pape@smarden.org>,
+        "martin f . krafft" <madduck@madduck.net>
+Subject: Re: [PATCH] Makefile: replace perl/Makefile.PL with simple make rules
+Message-ID: <20171130021137.GG15098@aiede.mtv.corp.google.com>
+References: <20171129153436.24471-1-avarab@gmail.com>
+ <20171129195430.10069-1-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20171129171301.l3coiflkfyy533yz@NUC.localdomain>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20171129195430.10069-1-avarab@gmail.com>
 User-Agent: Mutt/1.9.1 (2017-09-22)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-(+cc: Nicolas)
 Hi,
 
-Doron Behar wrote:
+Ævar Arnfjörð Bjarmason wrote:
 
-> I'm trying to send a patch with the command `git imap-send`, I used the
-> examples in the manual page as the main reference for my configuration:
+> Replace the perl/Makefile.PL and the fallback perl/Makefile used under
+> NO_PERL_MAKEMAKER=NoThanks with a much simpler implementation heavily
+> inspired by how the i18n infrastructure's build process works[1].
+
+Yay!  This looks exciting.
+
+One quick comment:
+
+[...]
+>  * We don't build the Git(3) Git::I18N(3) etc. man pages from the
+>    embedded perldoc. I suspect nobody really cares, these are mostly
+>    internal APIs, and if someone's developing against them they likely
+>    know enough to issue a "perldoc" against the installed file to get
+>    the same result.
 >
-> ```
-> [imap]
-> 	folder = "[Gmail]/Drafts"
-> 	host = imaps://imap.gmail.com
-> 	user = doron.behar@gmail.com
-> 	port = 993
-> 	sslverify = false
-> ```
+>    But this is a change in how Git is installed now on e.g. CentOS &
+>    Debian which carry these manpages. They could be added (via
+>    pod2man) if anyone really cares.
 >
-> This is my `cat patch.out | git imap-send` output:
->
-> ```
-> Password for 'imaps://doron.behar@gmail.com@imap.gmail.com':
-> sending 3 messages
-> curl_easy_perform() failed: URL using bad/illegal format or missing URL
-> ```
+>    I doubt they will. The reason these were built in the first place
+>    was as a side-effect of how ExtUtils::MakeMaker works.
 
-Thanks for reporting this.  I suspect this is related to
-v2.15.0-rc0~63^2 (imap-send: use curl by default when possible,
-2017-09-14) --- e.g. perhaps our custom IMAP code was doing some
-escaping on the username that libcurl does not do.
+Debian cares (see
+https://www.debian.org/doc/packaging-manuals/perl-policy/ch-module_packages.html
+for details).
 
-"man git imap-send" says this is a recommended configuration, so I
-don't think it's a configuration error.
-
-What platform are you on?  What version of libcurl are you using?
-
-In libcurl::lib/easy.c I am also seeing
-
-    if(mcode)
-      return CURLE_URL_MALFORMAT; /* TODO: return a proper error! */
-
-which looks suspicious.
-
-Nicolas, am I on the right track?
+I'll try applying this patch and seeing what happens some time this
+week.
 
 Thanks,
 Jonathan
-
-> The URI doesn't seem OK to me, I tried using `imap.user = doron.behar` and the
-> URI was `imaps://doron.behar@imap.gmail.com` but that ended up with the same
-> error as in the previous case.
->
-> I would love to get some help here, a Google Search didn't help as well.
->
-> Thanks.
