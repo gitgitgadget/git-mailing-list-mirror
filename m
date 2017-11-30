@@ -2,95 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9E96020A40
-	for <e@80x24.org>; Thu, 30 Nov 2017 03:07:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 63AA920A40
+	for <e@80x24.org>; Thu, 30 Nov 2017 03:17:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753082AbdK3DHb (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Nov 2017 22:07:31 -0500
-Received: from cloud.peff.net ([104.130.231.41]:44034 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751961AbdK3DHa (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Nov 2017 22:07:30 -0500
-Received: (qmail 7526 invoked by uid 109); 30 Nov 2017 03:07:30 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 30 Nov 2017 03:07:30 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 24581 invoked by uid 111); 30 Nov 2017 03:07:48 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Wed, 29 Nov 2017 22:07:48 -0500
-Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 29 Nov 2017 22:07:28 -0500
-Date:   Wed, 29 Nov 2017 22:07:28 -0500
-From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH] hashmap: adjust documentation to reflect reality
-Message-ID: <20171130030727.GA24732@sigill.intra.peff.net>
-References: <466dd5331907754ca5c25cc83173ca895220ca81.1511999045.git.johannes.schindelin@gmx.de>
+        id S1753285AbdK3DRI (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Nov 2017 22:17:08 -0500
+Received: from mail-wm0-f45.google.com ([74.125.82.45]:42062 "EHLO
+        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752684AbdK3DRH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Nov 2017 22:17:07 -0500
+Received: by mail-wm0-f45.google.com with SMTP id l141so10257518wmg.1
+        for <git@vger.kernel.org>; Wed, 29 Nov 2017 19:17:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=uber.com; s=google;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=j2gO+CnJd/JW3DmYyQ7AMPpww98XpherzQX0iaGEn1o=;
+        b=cXhxvTJ+2od1U6EuNFRKv9Ocn89QCXyj5ODngFigpEvbbG35e2jeHZTPEW1p3I5sTu
+         00BA506osoC1Win+ixBUw4FvHIOsk1yOVWxE7o3b4GMWem7L5A3mn7xx9KSuHs7ahyGj
+         KFIgjJaZiPh8BKT1w4URi/XVe3ghR9oGKLdkU=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=j2gO+CnJd/JW3DmYyQ7AMPpww98XpherzQX0iaGEn1o=;
+        b=kLdV+GJLz/wtTqGTVtVuoRSpGzrXjqkMiIFDLYjAmb+/FodFeWMagohcWcsoOYKrCl
+         yA3gI4Hf91gYNMsi3U3DOHaAenbXnVo2yWdWN7Tjuj7XfiMbkNKJ3CZH4TfmtALUUK9l
+         hQDtzx8+5dg11q4Zdf2zskAoijgIqbmK/QH5oicDjwB+VzsiAHjgb+oMaE0sgmTQ125T
+         tH3qB3RKUiQSNlTUeyjcRQYvBJsNp231QaidX2gkZpz493wFCPxMoTJfeP6VqeKWGGvv
+         3Y7j3HRn21NwaCgAMCF0uJ6acs7/BNpMSlMV/s2VeKpwpIk18NrOI9ZacC31bXJKTO/y
+         KKug==
+X-Gm-Message-State: AJaThX7MRsOTlLEar2Ib3FW6enX/VsPakFOdbdfte6c+WoQa6zjlkYdW
+        c91ytnaLZgmP74Y9DKUZkfK9dFMNhDzBM1uNJrFjvl4=
+X-Google-Smtp-Source: AGs4zMYjG5+4BifP83TdPMiAH5LhaPeODNy0E+kuxJZtl9Vw05gaIokZKv6uGLxyYXMH0AF2O4IXJcV49pVZ8Lzo/hw=
+X-Received: by 10.28.33.66 with SMTP id h63mr695728wmh.152.1512011826427; Wed,
+ 29 Nov 2017 19:17:06 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <466dd5331907754ca5c25cc83173ca895220ca81.1511999045.git.johannes.schindelin@gmx.de>
+Received: by 10.28.213.12 with HTTP; Wed, 29 Nov 2017 19:16:45 -0800 (PST)
+From:   Vitaly Arbuzov <vit@uber.com>
+Date:   Wed, 29 Nov 2017 19:16:45 -0800
+Message-ID: <CANxXvsMbpBOSRKaAi8iVUikfxtQp=kofZ60N0pHXs+R+q1k3_Q@mail.gmail.com>
+Subject: How hard would it be to implement sparse fetching/pulling?
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 30, 2017 at 12:51:41AM +0100, Johannes Schindelin wrote:
+Hi guys,
 
-> The hashmap API is just complicated enough that even at least one
-> long-time Git contributor has to look up how to use it every time he
-> finds a new use case. When that happens, it is really useful if the
-> provided example code is correct...
-> 
-> While at it, "fix a memory leak", avoid statements before variable
-> declarations, fix a const -> no-const cast, several %l specifiers (which
-> want to be %ld), avoid using an undefined constant, call scanf()
-> correctly, use FLEX_ALLOC_STR() where appropriate, and adjust the style
-> here and there.
+I'm looking for ways to improve fetch/pull/clone time for large git
+(mono)repositories with unrelated source trees (that span across
+multiple services).
+I've found sparse checkout approach appealing and helpful for most of
+client-side operations (e.g. status, reset, commit, etc.)
+The problem is that there is no feature like sparse fetch/pull in git,
+this means that ALL objects in unrelated trees are always fetched.
+It may take a lot of time for large repositories and results in some
+practical scalability limits for git.
+This forced some large companies like Facebook and Google to move to
+Mercurial as they were unable to improve client-side experience with
+git while Microsoft has developed GVFS, which seems to be a step back
+to CVCS world.
 
-Heh, that's quite a list of faults for what's supposed to be simple
-example code. ;)
+I want to get a feedback (from more experienced git users than I am)
+on what it would take to implement sparse fetching/pulling.
+(Downloading only objects related to the sparse-checkout list)
+Are there any issues with missing hashes?
+Are there any fundamental problems why it can't be done?
+Can we get away with only client-side changes or would it require
+special features on the server side?
 
-Your improvements all look good to me, and I'd be happy to see this
-applied as-is. But here are two possible suggestions:
+If we had such a feature then all we would need on top is a separate
+tool that builds the right "sparse" scope for the workspace based on
+paths that developer wants to work on.
 
-> diff --git a/hashmap.h b/hashmap.h
-> index 7cb29a6aede..7ce79f3f72c 100644
-> --- a/hashmap.h
-> +++ b/hashmap.h
-> @@ -18,75 +18,71 @@
->   *
->   * #define COMPARE_VALUE 1
->   *
-> - * static int long2string_cmp(const struct long2string *e1,
-> + * static int long2string_cmp(const void *hashmap_cmp_fn_data,
-> + *                            const struct long2string *e1,
->   *                            const struct long2string *e2,
-> - *                            const void *keydata, const void *userdata)
-> + *                            const void *keydata)
+In the world where more and more companies are moving towards large
+monorepos this improvement would provide a good way of scaling git to
+meet this demand.
 
-If these struct pointers became "const void *", then we would not need
-to cast the function pointer here:
+PS. Please don't advice to split things up, as there are some good
+reasons why many companies decide to keep their code in the monorepo,
+which you can easily find online. So let's keep that part out the
+scope.
 
->   *     hashmap_init(&map, (hashmap_cmp_fn) long2string_cmp, &flags, 0);
-
-which would mean that the original problem you are fixing would have
-been caught by the compiler, rather than probably segfaulting at
-runtime.
-
-My second suggestion (which I'm on the fence about) is: would it better
-to just say "see t/helper/test-hashmap.c for a representative example?"
-
-I'm all for code examples in documentation, but this one is quite
-complex. The code in test-hashmap.c is not much more complex, and is at
-least guaranteed to compile and run. It doesn't show off how to combine
-a flex-array with a hashmap as well, but I'm not sure how important that
-is. So I could go either way.
-
--Peff
+-Vitaly
