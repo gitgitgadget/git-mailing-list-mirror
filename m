@@ -6,107 +6,103 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF81F20C11
-	for <e@80x24.org>; Thu, 30 Nov 2017 21:31:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 136C720C11
+	for <e@80x24.org>; Thu, 30 Nov 2017 22:03:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750890AbdK3VbI (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Nov 2017 16:31:08 -0500
-Received: from cloud.peff.net ([104.130.231.41]:44864 "HELO cloud.peff.net"
+        id S1750994AbdK3WDS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Nov 2017 17:03:18 -0500
+Received: from cloud.peff.net ([104.130.231.41]:44900 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750747AbdK3VbH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Nov 2017 16:31:07 -0500
-Received: (qmail 24393 invoked by uid 109); 30 Nov 2017 21:31:07 -0000
+        id S1750926AbdK3WDS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Nov 2017 17:03:18 -0500
+Received: (qmail 25819 invoked by uid 109); 30 Nov 2017 22:03:18 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 30 Nov 2017 21:31:07 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 30 Nov 2017 22:03:18 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 32537 invoked by uid 111); 30 Nov 2017 21:31:26 -0000
+Received: (qmail 32695 invoked by uid 111); 30 Nov 2017 22:03:36 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Thu, 30 Nov 2017 16:31:26 -0500
+ by peff.net (qpsmtpd/0.94) with ESMTPA; Thu, 30 Nov 2017 17:03:36 -0500
 Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 30 Nov 2017 16:31:05 -0500
-Date:   Thu, 30 Nov 2017 16:31:05 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 30 Nov 2017 17:03:15 -0500
+Date:   Thu, 30 Nov 2017 17:03:15 -0500
 From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Dan Jacques <dnj@google.com>,
-        Alex Riesen <alexander.riesen@cetitec.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Brandon Casey <drafnel@gmail.com>, Petr Baudis <pasky@ucw.cz>,
-        Gerrit Pape <pape@smarden.org>,
-        "martin f . krafft" <madduck@madduck.net>
-Subject: Re: [PATCH] Makefile: replace perl/Makefile.PL with simple make rules
-Message-ID: <20171130213105.GA8861@sigill.intra.peff.net>
-References: <20171129153436.24471-1-avarab@gmail.com>
- <20171129195430.10069-1-avarab@gmail.com>
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v5 4/6] list-objects: filter objects in
+ traverse_commit_list
+Message-ID: <20171130220315.GA13784@sigill.intra.peff.net>
+References: <20171121205852.15731-1-git@jeffhostetler.com>
+ <20171121205852.15731-5-git@jeffhostetler.com>
+ <CAGZ79kZR-W-_JJi7zptiGgv=W7KpNMaSEbmmxrXcKovznK9E7Q@mail.gmail.com>
+ <21fbd685-2c96-91b9-700e-8902a6e99c08@jeffhostetler.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20171129195430.10069-1-avarab@gmail.com>
+In-Reply-To: <21fbd685-2c96-91b9-700e-8902a6e99c08@jeffhostetler.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 29, 2017 at 07:54:30PM +0000, Ævar Arnfjörð Bjarmason wrote:
+On Mon, Nov 27, 2017 at 02:39:43PM -0500, Jeff Hostetler wrote:
 
-> Replace the perl/Makefile.PL and the fallback perl/Makefile used under
-> NO_PERL_MAKEMAKER=NoThanks with a much simpler implementation heavily
-> inspired by how the i18n infrastructure's build process works[1].
+> On 11/22/2017 5:56 PM, Stefan Beller wrote:
+> > On Tue, Nov 21, 2017 at 12:58 PM, Jeff Hostetler <git@jeffhostetler.com> wrote:
+> > > +       assert(arg);
+> > > +       assert(!unset);
+> > 
+> > I count 16 asserts in this patch. Is that really needed?
+> > Either omit them or use BUG if we want to rely on user
+> > bug reports when these conditions trigger, as assert is unreliable
+> > due to its dependence on the NDEBUG flag.
+> 
+> Yes, there are a few asserts in the code.  Old habits....
+> 
+> I could remove some/all of them, but personally I feel they
+> have merit and hint to the mindset of the author for future
+> readers of the code.  Are there other opinions?
 
-I'm very happy to see the recursive make invocation go away. The perl
-makefile generation was one of the few places where parallel make could
-racily get confused (though I haven't seen that for a while, so maybe it
-was fixed alongside some of the other .stamp work you did).
+I think I'd prefer in general to see assertions remain in one form or
+another, if only because of the documentation benefits you mention here.
 
-> The reason for having the Makefile.PL in the first place is that it
-> was initially[2] building a perl C binding to interface with libgit,
-> this functionality, that was removed[3] before Git.pm ever made it to
-> the master branch.
+I do think there's such a thing as too many asserts, but I don't think I
+see that here. "Too many" would probably be something like asserting
+things that are a normal part of the contract (so "assert(foo)" on
+every pointer parameter coming in to make sure it's not NULL).
 
-Thanks for doing all this history digging. I agree that it doesn't seem
-like there's really any reason to carry the complexity. Of your
-functional changes, the only one that gives me pause is:
+I thought at first that's what was happening with the ones quoted above,
+but it's actually documenting that no, we do not support "--no-filter"
+in opt_parse_list_objects_filter (which is really checking that we're in
+sync with the PARSE_OPT_NONEG found elsewhere).
 
->  * This will not always install into perl's idea of its global
->    "installsitelib". This only potentially matters for packagers that
->    need to expose Git.pm for non-git use, and as explained in the
->    INSTALL file there's a trivial workaround.
+So arguably my confusion argues that this one ought to have a custom
+message or a comment.
 
-This could be a minor hiccup for people using Git.pm from other scripts.
-But maybe only in funny setups? It seems like $prefix/share/perl5 would
-be in most people's @INC unless they are doing something exotic.
+Of course, it also makes me wonder whether we ought to just support
+--no-filter. Shouldn't it just set us back to FILTER_DISABLED?
 
->  * We don't build the Git(3) Git::I18N(3) etc. man pages from the
->    embedded perldoc. I suspect nobody really cares, these are mostly
->    internal APIs, and if someone's developing against them they likely
->    know enough to issue a "perldoc" against the installed file to get
->    the same result.
+> Personally, I think it might be awkward to keep repeating
+> something like:
+> 
+>     if (!c)
+>         BUG(msg);
+> 
+> Do we want to think about a macro that builds on BUG() and
+> does the test?
+> 
+> Something like:
+>     #define ASSERT_OR_BUG(c) do { if (!(c)) BUG("%s", #c); } while (0)
 
-I don't have a real opinion on this, but it sounds from the rest of the
-thread like we should maybe build these to be on the safe side.
+Yeah, I think that was where the other thread[1] led to. IMHO that's
+probably what BUG_ON() ought to do (though personally I'm fine with just
+continuing to use assert for simple cases).
 
-> @@ -2291,6 +2273,17 @@ endif
->  po/build/locale/%/LC_MESSAGES/git.mo: po/%.po
->  	$(QUIET_MSGFMT)mkdir -p $(dir $@) && $(MSGFMT) -o $@ $<
->  
-> +PMFILES := $(wildcard perl/*.pm perl/*/*.pm perl/*/*/*.pm perl/*/*/*/*.pm)
-
-Yuck. :) I don't think there's a better wildcard solution within make,
-though. And I'd rather see this than doing a $(shell) to "find" or
-similar.
-
-The other option is to actually list the files, as we do for .o files.
-That's a minor pain to update, but it would allow things like
-differentiating which ones get their documentation built.
-
-> +PMCFILES := $(patsubst perl/%.pm,perl/build/%.pmc,$(PMFILES))
-
-TIL about pmc files. It sounds like they've had a storied history, but
-should be supported everywhere.
-
-> [...]
-
-The rest of the patch all looked good to me. Thanks for working on this.
+I think we can sidestep the whole variadic-macros thing mentioned in
+that thread since we don't take a custom message.
 
 -Peff
+
+[1] https://public-inbox.org/git/20171122223827.26773-1-sbeller@google.com/
