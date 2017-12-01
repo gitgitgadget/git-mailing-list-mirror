@@ -7,129 +7,79 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CA50920C11
-	for <e@80x24.org>; Fri,  1 Dec 2017 03:04:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7E5A720C11
+	for <e@80x24.org>; Fri,  1 Dec 2017 03:05:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752584AbdLADD5 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Nov 2017 22:03:57 -0500
-Received: from mail-it0-f66.google.com ([209.85.214.66]:41112 "EHLO
-        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752418AbdLADCh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Nov 2017 22:02:37 -0500
-Received: by mail-it0-f66.google.com with SMTP id x28so955262ita.0
-        for <git@vger.kernel.org>; Thu, 30 Nov 2017 19:02:36 -0800 (PST)
+        id S1752597AbdLADE5 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Nov 2017 22:04:57 -0500
+Received: from mail-it0-f67.google.com ([209.85.214.67]:34292 "EHLO
+        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752511AbdLADE4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Nov 2017 22:04:56 -0500
+Received: by mail-it0-f67.google.com with SMTP id m11so3026880iti.1
+        for <git@vger.kernel.org>; Thu, 30 Nov 2017 19:04:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=djqFmBIPJs0urYyGgXMRJn8KCOCr2I8sFW5UFzGtlkI=;
-        b=K4mhm678ld+O/P/xj+9ElOkZJfcozamZZhXGWPO/qeCHgdQDl6CfPBqqh+7oP9vQUl
-         b5+xRF1gsogtBXK1SIIpY8755+C6p4GNRPad/xzCjN+WPU3+InHeNXViK808wcD6+9VZ
-         xV3fOcgoNqvcuReSGvF30jmWnhailk514x8kHz9ATf8ygpHIk+5qZiz5U6Y2slUJNQeG
-         1CGBDU255ii8Xl+7qOXNS88anIDyKMKJ8JWNKizXjHZKrO0Y4hBJgTFMLEgv3HhxUvDo
-         O3LfHvxpdlNCGL8N2ZeMSQIkvZoD8KyrrgTiDzwLIXPseTd9ribnM9/o3N5k86bjyOqa
-         tP+A==
+        bh=2gORYBVhLgzhoF7x/Jm1xb7t1cjJUqsjKZCElwAO4lE=;
+        b=laXZ7+ViirAGxjNvKx7ruy99KR6oABEYm4m7ibCJQ0BWD+oEK+VaKEzJofWtjVCHUq
+         GLeLuqRCQ1X5XKdlz1IXCGCKbvLgX3juS3ovkNjpZE3RQA5IG40eF/OXc0k1WNmtT8jC
+         R7tpZCp/0zf5s2VIH9KxjTDnYXB8ZybWvbgBQz+Bg3tieoxSAUxlw2xrn8vbVBrXfbOH
+         /Smss/71OO/Jyiyp4Dq3eEI6sKX6+6WjnZL+9x5tW+KmXvLnXQ3H8EKw57HhnIvbRsB6
+         P1YFKynfdgQ+Uuq1iMxa9kb7oV46qnEnP1UYmv5qK2rtpT198Fk1RKohzfscYySmSbw0
+         cSsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=djqFmBIPJs0urYyGgXMRJn8KCOCr2I8sFW5UFzGtlkI=;
-        b=We/87zWa07P1foLuC1JSvS6zcfk4VGr3UomxvlBC3lGGwqU/kTuskWIU6iNofcACrM
-         0UI5vq7OIZyf2IvSbK6E61kyLzo9iA2m81Taj8IP2wNFswnWy1QApSAdpnmbFpL0Fh83
-         RQ2B6qqgXNrzfB0BbOhWcBQZ2WE7d2pe4Nbo5ifIe6UEaNTRuu9kZzGhb+AYahN8IwIk
-         jVjFCPNVkPzKg04LIBUhJ4T7lOIJU9n/wtRM5TYJ9tXxgbCAuij85TZCx0CY9WYwn23c
-         6Bx7QzPbpMpfYc0SNn+PXV12yvohovyUXCH5KeDF8oByLzwwmOqBXJ22BKYQhefp3jVA
-         P2Tg==
-X-Gm-Message-State: AJaThX7/LAELHwEoBj8mPaMzeS3x1bUJXWg1JkuhdwdeldlTO+HpqdQX
-        B318OF6FUux8OVhYW/yW6qc=
-X-Google-Smtp-Source: AGs4zMZ77hAz8SQwjaJ0J7z8fH8hmNLaEZms2x+paniePQj9E2ReFO5soW89cuFK7Q+WJTLweOBbgg==
-X-Received: by 10.36.214.132 with SMTP id o126mr73501itg.80.1512097356199;
-        Thu, 30 Nov 2017 19:02:36 -0800 (PST)
+        bh=2gORYBVhLgzhoF7x/Jm1xb7t1cjJUqsjKZCElwAO4lE=;
+        b=j6lrrlfuPT1BtllKFMxE5R6HG2bfyAKEcPmB8gXuVerAOZGKccdApGXjhJkZqPAp3J
+         9U8VTFflpvUlyx46b8ULUxpCAX7lqvWRputv9o9woitRi9y/s7C9gPEN5/jxp0Y6IVWb
+         tzroULNDjGgfUFNClB8krbCr/Ph/t+f3rZoga+V0BGE8dfSfWZoSbInoybo8f5ZOSJ+X
+         MGVHMzB+StpVoHd3IL7Sx7L88mHtROm+aQes6TPVIX/4hloUb4tbwX60wFmetUF8Flwi
+         cYIJlivUtgiL8wiuUEi6+tHzbJpwK1HsdHYFz+7Y5GW3/oxO+c4qt4N7w1SLsMXWT4Po
+         vPrQ==
+X-Gm-Message-State: AKGB3mLDAZ7MKNcSR/15nUd12nH5XIPxdUzIS5HGa405SZ4BiQjDonWZ
+        A0Yj6G9I3CFrzodaW7y0zg4=
+X-Google-Smtp-Source: AGs4zMYHkRGZHjUCJ83C12Q1xGImX7/d04kPvn7PC077Tg9QMcLWHVgZ6dMR6LYageVbRWhjsftgvw==
+X-Received: by 10.36.73.9 with SMTP id z9mr91023ita.36.1512097495478;
+        Thu, 30 Nov 2017 19:04:55 -0800 (PST)
 Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id j193sm2801968ita.36.2017.11.30.19.02.35
+        by smtp.gmail.com with ESMTPSA id v76sm5750itb.1.2017.11.30.19.04.54
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 30 Nov 2017 19:02:35 -0800 (PST)
-Date:   Thu, 30 Nov 2017 19:02:34 -0800
+        Thu, 30 Nov 2017 19:04:55 -0800 (PST)
+Date:   Thu, 30 Nov 2017 19:04:53 -0800
 From:   Jonathan Nieder <jrnieder@gmail.com>
 To:     Todd Zullinger <tmz@pobox.com>
 Cc:     git@vger.kernel.org, Eric Wong <e@80x24.org>
-Subject: Re: [PATCH 2/2] t/lib-git-svn.sh: improve svnserve tests with
- parallel make test
-Message-ID: <20171201030234.GF20640@aiede.mtv.corp.google.com>
+Subject: Re: [PATCH 1/2] t/lib-git-svn: whitespace cleanup
+Message-ID: <20171201030453.GG20640@aiede.mtv.corp.google.com>
 References: <20171201023239.26153-1-tmz@pobox.com>
- <20171201023239.26153-3-tmz@pobox.com>
+ <20171201023239.26153-2-tmz@pobox.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20171201023239.26153-3-tmz@pobox.com>
+In-Reply-To: <20171201023239.26153-2-tmz@pobox.com>
 User-Agent: Mutt/1.9.1 (2017-09-22)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
 Todd Zullinger wrote:
 
-> Previously, setting SVNSERVE_PORT enabled several tests which require a
-> local svnserve daemon to be run (in t9113 & t9126).  The tests share the
-> setup of the local svnserve via `start_svnserve()`.  The function uses
-> the svnserve option `--listen-once` which causes svnserve to accept one
-> connection on the port, serve it, and exit.  When running the tests in
-> parallel this fails if one test tries to start svnserve while the other
-> is still running.
-
-I had trouble reading this because I didn't know what previous time it
-was referring to.  Is it about how the option currently behaves?
-
-(Git's commit messages tend to use the present tense to describe the
-behavior before the patch, like a bug report, and the imperative to
-describe the change the patch proposes to make, like an impolite bug
-report. :))
-
-> Use the test number as the svnserve port (similar to httpd tests) to
-> avoid port conflicts.  Set GIT_TEST_SVNSERVE to any value other than
-> 'false' or 'auto' to enable these tests.
-
-This uses imperative in two ways and also ended up confusing me.  The
-second one is a direction to me, not Git, right?  How about:
-
-	Use the test number instead of $SVNSERVE_PORT as the svnserve
-	port (similar to httpd tests) to avoid port conflicts.
-	Developers can set GIT_TEST_SVNSERVE to any value other than
-	'false' or 'auto' to enable these tests.
+> Subject: t/lib-git-svn: whitespace cleanup
 >
 > Signed-off-by: Todd Zullinger <tmz@pobox.com>
 > ---
->  t/lib-git-svn.sh | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
+>  t/lib-git-svn.sh | 22 +++++++++++-----------
+>  1 file changed, 11 insertions(+), 11 deletions(-)
 
-The patch looks good.  Thanks.
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+Thanks.
 
-> diff --git a/t/lib-git-svn.sh b/t/lib-git-svn.sh
-> index 84366b2624..4c1f81f167 100644
-> --- a/t/lib-git-svn.sh
-> +++ b/t/lib-git-svn.sh
-> @@ -110,14 +110,16 @@ EOF
->  }
->  
->  require_svnserve () {
-> -	if test -z "$SVNSERVE_PORT"
-> +	test_tristate GIT_TEST_SVNSERVE
-> +	if ! test "$GIT_TEST_SVNSERVE" = true
->  	then
-> -		skip_all='skipping svnserve test. (set $SVNSERVE_PORT to enable)'
-> +		skip_all='skipping svnserve test. (set $GIT_TEST_SVNSERVE to enable)'
->  		test_done
->  	fi
->  }
->  
->  start_svnserve () {
-> +	SVNSERVE_PORT=${SVNSERVE_PORT-${this_test#t}}
->  	svnserve --listen-port $SVNSERVE_PORT \
->  		 --root "$rawsvnrepo" \
->  		 --listen-once \
-> -- 
-> 2.15.1
-> 
+nit: it would have been a tiny bit easier to review if the commit
+message mentioned that this is only changing the indentation from an
+inconsistent space/tab mixture to tabs and isn't making any other
+changes.
