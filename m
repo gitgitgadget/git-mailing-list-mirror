@@ -2,101 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 04D7320C11
-	for <e@80x24.org>; Fri,  1 Dec 2017 03:57:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 96BAB20C13
+	for <e@80x24.org>; Fri,  1 Dec 2017 04:11:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752346AbdLAD5I (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Nov 2017 22:57:08 -0500
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:44518 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752135AbdLAD5H (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Nov 2017 22:57:07 -0500
-Received: by mail-pf0-f195.google.com with SMTP id m26so4077018pfj.11
-        for <git@vger.kernel.org>; Thu, 30 Nov 2017 19:57:06 -0800 (PST)
+        id S1752215AbdLAELi (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Nov 2017 23:11:38 -0500
+Received: from mail-qt0-f182.google.com ([209.85.216.182]:45510 "EHLO
+        mail-qt0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752129AbdLAELh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Nov 2017 23:11:37 -0500
+Received: by mail-qt0-f182.google.com with SMTP id g10so11547720qtj.12
+        for <git@vger.kernel.org>; Thu, 30 Nov 2017 20:11:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=kaawt2uDDPl0dl2t85ZKuJ5IbhxEchIpfQfhEWccopc=;
-        b=szRBq+FJz+XXFTCOBpuvBiMUc2JWjehO+izQ36qSzefb5fq/ctfWW8Y4PJa1tJxn16
-         hxkVWQ3O/vNV47ItAEE0naMWRYiogF8QJWquTOPWmwPgtSU0GnO4l3TQmkgrcLPD6zhN
-         NnRQvcjEBOLH/HJ3SLkCzBmgYDen4+nLiNpQm/4Xsdf0l2BiqvGKQX0r03Q5lLQtbngg
-         EUIEOEfFgHEphIRMCCNXL6a4zcDfEoGVl/1/Oei1lDioc/u9vrCURVBMvkz6vm9UOuY3
-         Hz5LbQt3xWifj1aPNxiiyJzAmoLw6ux9jcVU1iUmEonaysHhYwmcZUpMA4yTTG3LFSMk
-         bIUg==
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=i2/qXp8tLuaKDeGjNLUWpi/Flx85lBlZvz5a/LnPOKY=;
+        b=jr8RqyifMS2UVFQSKbqyZSur4bPjYk2iulDidzLGQQwp7xUF/uJH+KNTMSEyv9ROjz
+         jwnZgOEHjxa2hHQ4ZGzcAoPGK28dcnx6XTiV8sF3XLfLKmnCQmuCVZxNwpF1aVvYyM4v
+         FqpOTuKZT2ct7MwZObBa6PrloaZXOm5OKR8JMpOUZjAWh1JB70NViOpD5X3VsKp4gpO+
+         lQ70hUkMW2BrRS4pnMVGNge/xlMGlh1HGzoxkSOCh+DWneKPt51DCfMvQAkZzpmqyUFT
+         rCJRxtG5zAjK+yMtxKYwIBiTrq5fiPTNUiTBb8e4ITLofsgro8Dd4TLAOanuicgIkaER
+         5RkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=kaawt2uDDPl0dl2t85ZKuJ5IbhxEchIpfQfhEWccopc=;
-        b=q1u2oBDwAA+SFYh9cGHVs/ENA9DYqDUyz6yEzDVmVZfM4Z3Oiks4v3mTrMwsEr7hFV
-         ar0xwJa4vxaop/0isYKHRKMbjKP2WGdrKMDdvrvyVmhcaPtvAu8ciL5E7PdiLkydEVnB
-         MWRu8kwsOuAF02jT66+Zll90iYMCAtVL81MKnVoNAAUXb6Y65vgj45rp8xVgO4CT/tS0
-         uDFqkiR0Jpghf+ZkjkzdLYgpW439Wob/GAtFL4sY1bxEESMrliq91brbtm+YoeDvU5q9
-         8uj6Zie1Mit7yF1k9KG9h/OBurcQ+NBbpGiHQPkL2s9YVUAMgSlQe2ofFN8PAXDqZHhr
-         vVJw==
-X-Gm-Message-State: AJaThX4mRISC8G+D20sJzoxN1LnHgtDhCwm/9zdhuvyZ3Iw7uDocO/QC
-        tOHRF77DsXBwsAANj1aBvlw=
-X-Google-Smtp-Source: AGs4zMZs9Ci5LH5qXD1qROVM6E6Ny+0U0eyCq+NjQKIv/MTSps3Nvhg0qYHHa8iJ5WcFfnC1uR4TxA==
-X-Received: by 10.98.58.208 with SMTP id v77mr4578449pfj.150.1512100626671;
-        Thu, 30 Nov 2017 19:57:06 -0800 (PST)
-Received: from [192.168.206.100] ([117.249.175.222])
-        by smtp.gmail.com with ESMTPSA id m22sm9712047pfg.120.2017.11.30.19.57.02
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 30 Nov 2017 19:57:05 -0800 (PST)
-Subject: Re: [PATCH v4 2/2] launch_editor(): indicate that Git waits for user
- input
-To:     Jeff King <peff@peff.net>, lars.schneider@autodesk.com
-Cc:     git@vger.kernel.org, gitster@pobox.com, sbeller@google.com,
-        sunshine@sunshineco.com, sandals@crustytoothpaste.net,
-        Lars Schneider <larsxschneider@gmail.com>
-References: <20171129143752.60553-1-lars.schneider@autodesk.com>
- <20171129143752.60553-3-lars.schneider@autodesk.com>
- <20171130205137.GC3313@sigill.intra.peff.net>
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Message-ID: <2f8d6037-b7cf-64e0-3cb6-6b684faa3144@gmail.com>
-Date:   Fri, 1 Dec 2017 09:26:58 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.4.0
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=i2/qXp8tLuaKDeGjNLUWpi/Flx85lBlZvz5a/LnPOKY=;
+        b=JIs7o7nc2Wlu4zZqHEQoivs1ZtSJz3Jo6DrK5SC4DcsQVEqxx5+xecngiV4GU7Dvvo
+         LNr9dQ6YJM8anPtXH3Le8ddygKh5tUzdehDJKwzWCFNb79BoFUSF4NQ8awg+8tubIg6e
+         9QOE/08JaLc883JMbvC1XdHDFOnG3MIAxgq2EcIyRWYzMhZJ3vJvCntApuba49jguqJN
+         yBnQchotMYYeU3pnlmoMIBT+/4Zw1OLcR6wnJ8LuZbDhycgoeR0qQt0oCuSviFUOfN7T
+         IHIUpbD5DqW5NPEtCJZ2NMljVveYznZ1Y4zAtNybbfr/xqbYxTeZKbZGHkOB9zUYQ7gs
+         +pWg==
+X-Gm-Message-State: AKGB3mLa1i3H9/Z634nWuAeixQNdzAJxqx8AAOerHmJgOBs9IrosAIri
+        QpkmVkzMjCZjScML/l44I1/3T10A
+X-Google-Smtp-Source: AGs4zMb/YfjS+FLntOWgwA/Vdw41Rc73XWPS15I05RR4o3bPbEgZGoNwvGOGTp5FbMVzBc2loo0qiA==
+X-Received: by 10.200.41.120 with SMTP id z53mr7077585qtz.305.1512101496670;
+        Thu, 30 Nov 2017 20:11:36 -0800 (PST)
+Received: from zaya.teonanacatl.net (pool-173-67-181-41.hrbgpa.fios.verizon.net. [173.67.181.41])
+        by smtp.gmail.com with ESMTPSA id a17sm3980024qth.17.2017.11.30.20.11.35
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 30 Nov 2017 20:11:36 -0800 (PST)
+Date:   Thu, 30 Nov 2017 23:11:34 -0500
+From:   Todd Zullinger <tmz@pobox.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git@vger.kernel.org, Eric Wong <e@80x24.org>
+Subject: Re: [PATCH 2/2] t/lib-git-svn.sh: improve svnserve tests with
+ parallel make test
+Message-ID: <20171201041133.GF3693@zaya.teonanacatl.net>
+References: <20171201023239.26153-1-tmz@pobox.com>
+ <20171201023239.26153-3-tmz@pobox.com>
+ <20171201030234.GF20640@aiede.mtv.corp.google.com>
+ <20171201034519.GE3693@zaya.teonanacatl.net>
+ <20171201035340.GJ20640@aiede.mtv.corp.google.com>
 MIME-Version: 1.0
-In-Reply-To: <20171130205137.GC3313@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20171201035340.GJ20640@aiede.mtv.corp.google.com>
+User-Agent: Mutt/1.9.1 (2017-09-22)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Friday 01 December 2017 02:21 AM, Jeff King wrote:
+Jonathan Nieder wrote:
+> Yep, with this description it is 
+> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+>
+> Thanks for putting up with my nits. :)
 
-> These are obviously the result of devils-advocate poking at the feature.
-> I doubt any editor would end its output with a CR. But the first case is
-> probably going to be common, especially for actual graphical editors. We
-> know that emacsclient prints its own line, and I wouldn't be surprised
-> if other graphical editors spew some telemetry to stderr (certainly
-> anything built against GTK tends to do so).
-> 
+Thank you for taking the time and looking at the details. :)
 
-Yeah, at times 'gedit' does do what you say. And if the user 
-(surprisingly!) uses an IDE such as "eclipse" or a hackable text editor 
-"atom" (of course with the '-f' option) for entering his commit message 
-it is likely to happen all the time for him.
+I'll send a v2 with the changes in the morning, in case there are any 
+other comments (but mostly because it's late and time for a swim).
 
+-- 
+Todd
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+It is impossible to enjoy idling thoroughly unless one has plenty of
+work to do.
+    -- Jerome K. Jerome
 
-> I don't think there's a good way around it. Portably saying "delete
-> _this_ line that I wrote earlier" would probably require libcurses or
-> similar. So maybe we just live with it. The deletion magic makes the
-> common cases better (a terminal editor that doesn't print random
-> lines, or a graphical editor that is quiet), and everyone else can flip
-> the advice switch if they need to. I dunno.
-> 
-
----
-Kaartic
