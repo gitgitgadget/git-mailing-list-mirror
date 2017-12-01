@@ -2,127 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4A7B120C11
-	for <e@80x24.org>; Fri,  1 Dec 2017 03:40:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 571B020C11
+	for <e@80x24.org>; Fri,  1 Dec 2017 03:42:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752217AbdLADkv (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Nov 2017 22:40:51 -0500
-Received: from mail-qt0-f172.google.com ([209.85.216.172]:41372 "EHLO
-        mail-qt0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751846AbdLADku (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Nov 2017 22:40:50 -0500
-Received: by mail-qt0-f172.google.com with SMTP id i40so11548647qti.8
-        for <git@vger.kernel.org>; Thu, 30 Nov 2017 19:40:50 -0800 (PST)
+        id S1752297AbdLADmH (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Nov 2017 22:42:07 -0500
+Received: from mail-pl0-f67.google.com ([209.85.160.67]:38964 "EHLO
+        mail-pl0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752221AbdLADmG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Nov 2017 22:42:06 -0500
+Received: by mail-pl0-f67.google.com with SMTP id bi12so5524806plb.6
+        for <git@vger.kernel.org>; Thu, 30 Nov 2017 19:42:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=wokrEc4IBQ7r95t9AtyW6w2vjJRmLCza0qU+Io96Zvo=;
-        b=n4Pl9r3FuSota900ByO/3h8FxEpxMEvqMTsl6mzCnIfWh9+ZANuvD4kQ8CNylOEfcO
-         6shZ8pCpSjikSPS7Vge/NmelI6npOak/NLvDjFWKC5gvMiHITAZhIFtFmkmRkujsSfmA
-         SI/iMYxMVFw/1Oxf08zHZSN0qU1qDDMlf3onunqzDYoQNNns1T2RSE+JMv2IcUbjQ6d+
-         sJbL5sPWJaVEGs8Li7zZtcG4vskg56LXUeEIzumVm4b1diFZgu14FbLK06vJXr/hw+oJ
-         v9Ysj1kd8nTem7ARw0OoTuNHRFw8okPqOxN5jOT4zGtbIVxVkag41qstqzYAIvt2uOge
-         FIbw==
+        h=message-id:subject:from:to:cc:in-reply-to:references:date
+         :mime-version:content-transfer-encoding;
+        bh=XsHcebwYMfc7q4O/R2WhkeNKMZiITHGp53WE6eP5T30=;
+        b=TmA9DequMHpYYK3VMJ0mCs8ICAvUrtE8m/S6oqFs/B21fSlbkjZChekGB9lBk/UhzA
+         x8RqI9L94V8ISeWjt4pxGliuphzZRWjqEAa3uCTe6j3Lb/BfMdGUQSLavEuIQJrC0/8J
+         D/sFAJaigRMsnZcmksh+TLNqRn4XZjFCl/Fjy3quPeNYNBfiKN+nsL9K3sMSqlb98uUI
+         GgrwhyZESM3iWCNssYP0uXh/eY2uzgPrzvNIST/SQWPGeBma8bEvf9K8jNG9QIluE+6j
+         ZAXRvAkKML2ardPOlV/yInYnvCLk7LD0uzW9lkwtZ06Z7me8nOOJUBUzJwTjHDBQtan1
+         34UA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=wokrEc4IBQ7r95t9AtyW6w2vjJRmLCza0qU+Io96Zvo=;
-        b=IBw3POyx27gJ0HqvFMSa580k7bi7u7WMf0eL0LMuqqMlszgISkD6WGPrn3F/Z5gbnc
-         +cszKLG8mpcGmFnMLwnT3z3t9CiqfpRH/av4ofIn3DIlg3nu98F2VlUr/aN7nnbzvZhC
-         4VezvE2Gy9hxkYBn6C8vufiYAJHZAIumbdqpmJXPXZocJqvyqGxclzmeH//Zv0oMnUNi
-         WwEXCc/COubRc+hi2DuWhyKP4CFrsoARChzXSkWh9cZZdOAmRPpITFcPSL0pEvyKD9LF
-         BDlhz5RoQtOFvxRKI07txxt5ftFJH70unVURq4nWdNx/5G3u00P2XSiHIwoB4lutRi1G
-         Rn6w==
-X-Gm-Message-State: AKGB3mIBmMmiAa38gJWGpY90Pt4P7ts6S+rqlWK3tpsqDOad1OFx0MWq
-        mSKnnVbIUun61zqHjOwwUmg=
-X-Google-Smtp-Source: AGs4zMZl7eC6z+ekGg715ZgX/MDPbZ5o337Q/jXR/BT8BK56h1hMtFsNBzUWDsO+3u0X8F3Hu36pcw==
-X-Received: by 10.200.42.14 with SMTP id k14mr6719389qtk.20.1512099649659;
-        Thu, 30 Nov 2017 19:40:49 -0800 (PST)
-Received: from zaya.teonanacatl.net (pool-173-67-181-41.hrbgpa.fios.verizon.net. [173.67.181.41])
-        by smtp.gmail.com with ESMTPSA id w143sm3907374qka.84.2017.11.30.19.40.48
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 30 Nov 2017 19:40:49 -0800 (PST)
-Date:   Thu, 30 Nov 2017 22:40:47 -0500
-From:   Todd Zullinger <tmz@pobox.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     git@vger.kernel.org, Eric Wong <e@80x24.org>
-Subject: Re: [PATCH 0/2] t/lib-git-svn.sh: improve svnserve tests with
- parallel make test
-Message-ID: <20171201034047.GC3693@zaya.teonanacatl.net>
-References: <20171201023239.26153-1-tmz@pobox.com>
- <20171201030727.GH20640@aiede.mtv.corp.google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20171201030727.GH20640@aiede.mtv.corp.google.com>
-User-Agent: Mutt/1.9.1 (2017-09-22)
+        h=x-gm-message-state:message-id:subject:from:to:cc:in-reply-to
+         :references:date:mime-version:content-transfer-encoding;
+        bh=XsHcebwYMfc7q4O/R2WhkeNKMZiITHGp53WE6eP5T30=;
+        b=tYKNtYrLI+nR8PwE0WonT/id/JOir6dSZfYo2eTlNafAwRYqNnLKqBLkhi+bJ76kTC
+         +ukUjnKxM3JAGW/vTk0I95w2OrdR9r8K9QXtruCSY/X0/QJt+oVzLXoUcQ85kxSRSdEJ
+         igo1W8LpqOGDYXMW1fzyQY1iyOBWuIkjWZg5PlNrYX1ULqakSC8xh6HlAWe4jUSGoPW5
+         QpaL5f2F4QnbehkK1vRBgfcA4LumnSTqekRhq6VaHk9Lb+4nhfPpAqR2SPg3hUK1Gp+A
+         r+aYcGnClt71+C+Rw0ZqG7lHz5dCnWq1RWyumClcCLzhou4EvUb5EF8qLdja54D77UlM
+         KvIw==
+X-Gm-Message-State: AJaThX4Kaf1N/PMl0FTx9cUZZqPHVakAc7av9QZspK9y07MkChColZrC
+        1uPir3HKBZuwRsH4+T3VSQw=
+X-Google-Smtp-Source: AGs4zMY/jiGgw7SPPhW0HBNXecim3b5fPWpys5J/+3dKVF6HnwtzPeN7tmqq13d6JnrvcLJUqRHVJw==
+X-Received: by 10.84.238.140 with SMTP id v12mr4760506plk.356.1512099725925;
+        Thu, 30 Nov 2017 19:42:05 -0800 (PST)
+Received: from unique-pc ([117.249.175.222])
+        by smtp.gmail.com with ESMTPSA id 77sm10033240pfh.43.2017.11.30.19.42.01
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 30 Nov 2017 19:42:05 -0800 (PST)
+Message-ID: <1512099716.7882.2.camel@gmail.com>
+Subject: Re: [PATCH v4 0/2] launch_editor(): indicate that Git waits for
+ user input
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+To:     Andreas Schwab <schwab@linux-m68k.org>,
+        Thomas Adam <thomas@xteddy.org>,
+        Lars Schneider <larsxschneider@gmail.com>
+Cc:     Lars Schneider <lars.schneider@autodesk.com>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>, sunshine@sunshineco.com,
+        sandals@crustytoothpaste.net, peff@peff.net
+In-Reply-To: <87a7z3re9a.fsf@linux-m68k.org>
+References: <20171129143752.60553-1-lars.schneider@autodesk.com>
+         <20171129183514.wze5trxjfgqxqs7z@laptop.local>
+         <C91E8F24-DD13-4FEC-BAB3-A8B8F2DBBA8D@gmail.com>
+         <20171130144255.5w72jcpz4a5igiro@laptop> <87a7z3re9a.fsf@linux-m68k.org>
+Content-Type: text/plain; charset="ISO-8859-15"
+Date:   Fri, 01 Dec 2017 09:11:56 +0530
+Mime-Version: 1.0
+X-Mailer: Evolution 3.22.6-1+deb9u1 
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jonathan,
+On Thu, 2017-11-30 at 16:13 +0100, Andreas Schwab wrote:
+> On Nov 30 2017, Thomas Adam <thomas@xteddy.org> wrote:
+> 
+> > On Thu, Nov 30, 2017 at 02:55:35PM +0100, Lars Schneider wrote:
+> > > 
+> > > > On 29 Nov 2017, at 19:35, Thomas Adam <thomas@xteddy.org> wrote:
+> > > > 
+> > > > On Wed, Nov 29, 2017 at 03:37:50PM +0100, lars.schneider@autodesk.com wrote:
+> > > > > +		if (print_waiting_for_editor) {
+> > > > > +			fprintf(stderr, _("hint: Waiting for your editor input..."));
+> > > > > 			fflush(stderr);
+> > > > 
+> > > > Just FYI, stderr is typically unbuffered on most systems I've used, and
+> > > > although the call to fflush() is harmless, I suspect it's not having any
+> > > > effect.  That said, there's plenty of other places in Git which seems to think
+> > > > fflush()ing stderr actually does something.
+> > > 
+> > > I agree with the "unbuffered" statement. I am surprised that you expect fflush()
+> > > to do nothing in that situation... but I am no expert in that area. Can you
+> > > point me to some documentation?
+> > 
+> > Because stderr is unbuffered, it will get printed immediately.
+> 
+> POSIX only requires stderr to be "not fully buffered".  If it is line
+> buffered, the message may not appear immediately.
+> 
 
-Jonathan Nieder wrote:
-> Todd Zullinger wrote:
->
->> These tests are not run by default nor are they enabled in travis-ci.  I
->> don't know how much testing they get in user or other packager builds.
->>
->> I've been slowly increasing the test suite usage in fedora builds.  I
->> ran into this while testing locally with parallel make test.  The
->> official fedora builds don't run in parallel (yet), as even before I ran
->> into this issue, builds on the fedora builders randomly failed too
->> often.  I'm hoping to eventually enable parallel tests by default
->> though, since it's so much faster.
->
-> This background could go in the commit message for patch 2, but it
-> also speaks for itself as an obviously good change so I could go
-> either way.
+I guess Junio's reply for the same "unbuffered" question I asked for an
+earlier version of this patch (now, a series) might be relevant here,
 
-Heh.  If there's something in there in particular that seems useful, I
-can certainly add it.  I'm not sure what parts of this text would be
-beneficial to someone down the line though.
+> > Being curious again, is flushing 'stderr' required ? AFAIK, 'stderr'
+> > is unbuffered by default and I didn't notice any calls that changed
+> > the buffering mode of it along this code path.
+> 
+> "By default" is the key phrase.  The code is merely being defensive
+> to changes in other area of the code.
 
-I usually err on the 'too much information' side of commit messages.
-I'm happy that it's much harder to do that here.  I'd rather have to
-skim a long message than wonder about the motivation for a change.
+cf. <xmqq8tf3oz3n.fsf@gitster.mtv.corp.google.com>
 
->> I'm not sure if there's any objection to changing the variable needed to
->> enable the tests from SVNSERVE_PORT to GIT_TEST_SVNSERVE.  The way
->> SVNSERVE_PORT is set in this patch should allow the port to be set
->> explicitly, in case someone requires that -- and they understand that it
->> can fail if running parallel tests, of course.  Whether that's a
->> feature or a bug, I'm not sure. :)
->
-> micronit: can this just say something like
->
-> 	Patch 2 is the important one --- see that one for rationale.
->
-> 	Patch 1 is an optional preparatory style cleanup.
->
-> next time?  That way, you get an automatic guarantee that all the
-> important information is available in "git log" output to people who
-> need it later.
-
-Yeah, I'll try to remember that.  I started this without the
-whitespace cleanup and as I was writing in the single patch
-description that I didn't think the whitespace cleanup was warranted,
-I talked myself into doing it as the prep patch. :)
-
-Thanks,
 
 -- 
-Todd
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Tradition: Just because you've always done it that way doesn't mean
-it's not incredibly stupid.
-    -- Demotivators (www.despair.com)
-
+Kaartic
