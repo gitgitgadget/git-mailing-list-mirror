@@ -2,78 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C0C3B20954
-	for <e@80x24.org>; Fri,  1 Dec 2017 14:32:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1764720C13
+	for <e@80x24.org>; Fri,  1 Dec 2017 14:50:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752734AbdLAOcO (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Dec 2017 09:32:14 -0500
-Received: from mout.gmx.net ([212.227.17.21]:53374 "EHLO mout.gmx.net"
+        id S1752743AbdLAOuz (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Dec 2017 09:50:55 -0500
+Received: from siwi.pair.com ([209.68.5.199]:40472 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752650AbdLAOcN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Dec 2017 09:32:13 -0500
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MTBfe-1eV7Ow3BLy-00S5OE; Fri, 01
- Dec 2017 15:32:08 +0100
-Date:   Fri, 1 Dec 2017 15:32:07 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-cc:     git@vger.kernel.org
-Subject: jn/reproducible-build, was Re: What's cooking in git.git (Nov 2017,
- #08; Tue, 28)
-In-Reply-To: <xmqq1skh6fyz.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.21.1.1712011526490.98586@virtualbox>
-References: <xmqq1skh6fyz.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751677AbdLAOuz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Dec 2017 09:50:55 -0500
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 8F36384560;
+        Fri,  1 Dec 2017 09:50:54 -0500 (EST)
+Received: from [192.168.1.71] (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 73D738455F;
+        Fri,  1 Dec 2017 09:50:54 -0500 (EST)
+Subject: Re: How hard would it be to implement sparse fetching/pulling?
+To:     Vitaly Arbuzov <vit@uber.com>
+Cc:     git@vger.kernel.org
+References: <CANxXvsMbpBOSRKaAi8iVUikfxtQp=kofZ60N0pHXs+R+q1k3_Q@mail.gmail.com>
+ <e2d5470b-9252-07b4-f3cf-57076d103a17@jeffhostetler.com>
+ <CANxXvsNWgYda_unSWoiEnfZnEuX8ktkAD-d_ynVtsTbkOKqeCg@mail.gmail.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <172c1b03-3f44-2828-b3a6-52a6b9eac376@jeffhostetler.com>
+Date:   Fri, 1 Dec 2017 09:50:53 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:fsN8Uur3V8Zid6lzWq8R/3pwHGcnpTbFftD11bElkXuyLZ0ERhp
- Qxxzqigx063w3W4S1qs0KYSjB1ouig6vROWZAYoHWjUAGf7oQv8eOGYXfg1gXkHb9a8ZV2M
- GJDm2ROeGZgd4nV4TClHHLIyVFz9crwEZqMDlPvtULJ2B48yHQMF297QdYkKC9rWgk4zF4D
- LOBTski1TUDiEUuoqZhnA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:06N9sHeWQSE=:hYuyIvyzXynX9QA8p+3l1A
- +uY1grpFwUZJMiI6jQtB+YzP3D6xqknK772lhM1m+3OIgoxuuaWt6/SoWhLtT9tuNo2eES9tj
- Kb9r6P1ap99x2VTSF6Z+CkQ1YIaagcgoxdV2xjR5ckbNCYryGpQzenLqwlaAUBwC1JXOhhhB9
- +HAm1bK7/XQixRgaY/bjTxseYEUMk9PBZc+99As4W2Pxh3zRP9v5mmhfTXQB/USgyO0hUhg4j
- Xoso1f/gM/w8j5YZBFJ4I168eBQCVNdnmp39Gt1jcWOaF3q3Gd0hLkQhPs+MWyB3Qq+jcj2Sf
- +W0A7boLy96+p6L75TfzBt2gu4NKZJiKmM6DOfpzkiANUnRovhvZpgycl7WnZQHWyLgBis3ak
- PxoICK5WEaN5sD5BG+QH5DxjKGgaKxp8SUiqmelt5dnDSumWv+pkzVfVFoxwHU7PRDRgU/FWm
- 7pcf3qgAE1tstqALj+ocVYZeK2WUkM/DTBgDQte+H8XkveYUvekr+JO0uK5QRsHpQPwIZ3f2U
- JaCTs52OvSrgJQ4613zazW68hULkDjNttMaJjYJ6t9gZg7Gm6FYVYQtdRPNZEdHLfca6L/Gj5
- tiWniVjvcNfScsHoDMqFSpKuo6ykbaIpnWVO4aL919V8esIQXowIchYAkojdqKgxdI8mEE5q/
- AnVPQAF+6WnzP5CDyqnKYVpDsJ/eArJW6ltVXmaArEOoQVAluCkbqBbo2ypjeK7b3lzp/++SI
- 7ANRpzcuBtFrj1bEmglDMnSKorDCrhP5i/W8vilGqncYRPqtFwS84ehW1ko86rQZJ8OrDANmV
- Yi2LqhLJcd4wR9/27+tkTWeWMJm1J9H21CgzX+UYAVDSJnSOvE=
+In-Reply-To: <CANxXvsNWgYda_unSWoiEnfZnEuX8ktkAD-d_ynVtsTbkOKqeCg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio & Jonathan (Nieder, there is another active Jonathan again),
 
-On Wed, 29 Nov 2017, Junio C Hamano wrote:
 
-> * jn/reproducible-build (2017-11-22) 3 commits
->   (merged to 'next' on 2017-11-27 at 6ae6946f8c)
->  + Merge branch 'jn/reproducible-build' of ../git-gui into jn/reproducible-build
->  + git-gui: sort entries in optimized tclIndex
->  + generate-cmdlist: avoid non-deterministic output
+On 11/30/2017 12:01 PM, Vitaly Arbuzov wrote:
+> Hey Jeff,
 > 
->  The build procedure has been taught to avoid some unnecessary
->  instability in the build products.
+> It's great, I didn't expect that anyone is actively working on this.
+> I'll check out your branch, meanwhile do you have any design docs that
+> describe these changes or can you define high level goals that you
+> want to achieve?
+> 
 
-I like this, from a purely security-informed point of view. Maybe there
-would be a way to integrate this with the Continuous Testing we do? Like,
-letting Travis verify that the binaries built from a certain Debian
-package are really identical to the binaries built from the corresponding
-commit? But I guess Travis is the wrong vehicle for this, as Travis needs
-a *commit* to be pushed, not a new package to be made available via apt...
+There are no summary docs in a traditional sense.
+The patch series does have updated docs which show
+the changes to some of the commands and protocols.
+I would start there.
 
-Ciao,
-Dscho
+Jeff
+
