@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E5A720C11
-	for <e@80x24.org>; Fri,  1 Dec 2017 03:05:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2E32520C11
+	for <e@80x24.org>; Fri,  1 Dec 2017 03:07:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752597AbdLADE5 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Nov 2017 22:04:57 -0500
-Received: from mail-it0-f67.google.com ([209.85.214.67]:34292 "EHLO
-        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752511AbdLADE4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Nov 2017 22:04:56 -0500
-Received: by mail-it0-f67.google.com with SMTP id m11so3026880iti.1
-        for <git@vger.kernel.org>; Thu, 30 Nov 2017 19:04:55 -0800 (PST)
+        id S1752384AbdLADHb (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Nov 2017 22:07:31 -0500
+Received: from mail-it0-f50.google.com ([209.85.214.50]:36534 "EHLO
+        mail-it0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752129AbdLADHa (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Nov 2017 22:07:30 -0500
+Received: by mail-it0-f50.google.com with SMTP id d16so965824itj.1
+        for <git@vger.kernel.org>; Thu, 30 Nov 2017 19:07:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=2gORYBVhLgzhoF7x/Jm1xb7t1cjJUqsjKZCElwAO4lE=;
-        b=laXZ7+ViirAGxjNvKx7ruy99KR6oABEYm4m7ibCJQ0BWD+oEK+VaKEzJofWtjVCHUq
-         GLeLuqRCQ1X5XKdlz1IXCGCKbvLgX3juS3ovkNjpZE3RQA5IG40eF/OXc0k1WNmtT8jC
-         R7tpZCp/0zf5s2VIH9KxjTDnYXB8ZybWvbgBQz+Bg3tieoxSAUxlw2xrn8vbVBrXfbOH
-         /Smss/71OO/Jyiyp4Dq3eEI6sKX6+6WjnZL+9x5tW+KmXvLnXQ3H8EKw57HhnIvbRsB6
-         P1YFKynfdgQ+Uuq1iMxa9kb7oV46qnEnP1UYmv5qK2rtpT198Fk1RKohzfscYySmSbw0
-         cSsQ==
+        bh=xsasFxVm3XvdVNmbp2RRzQuR0fNmI6scYHZynxYGAsA=;
+        b=mZkL7ZZGhONmXMWb+lfF2BzTtW1v9mZg7e/maTVuW5+QBhTqUQ7K1ny+35tMV682F4
+         6GlAWOlIUxV43eLQ9+rYI4u/DzyKhf/9oySa3/ydG/bCviuFR3MGWtqOML4/yHp0INod
+         ji1AxRcMgokcGae7E3Tjhrhf/DTE7ANiqdBkEhxicE08EKh2JjF/beAji4R5t06VEbjv
+         INBXhzQceb5kuSFC4nKFoE0YPKV40xBN6b5NHgptlLc+aJK9gXxyqEOMBCK7aiqUcejk
+         YNYkozdW1uKzf6GNhFIoGFFdJafi0S/eqTtIj6p1T1JuL7usUQKt4O3dxDbjv0jfnABs
+         WNvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=2gORYBVhLgzhoF7x/Jm1xb7t1cjJUqsjKZCElwAO4lE=;
-        b=j6lrrlfuPT1BtllKFMxE5R6HG2bfyAKEcPmB8gXuVerAOZGKccdApGXjhJkZqPAp3J
-         9U8VTFflpvUlyx46b8ULUxpCAX7lqvWRputv9o9woitRi9y/s7C9gPEN5/jxp0Y6IVWb
-         tzroULNDjGgfUFNClB8krbCr/Ph/t+f3rZoga+V0BGE8dfSfWZoSbInoybo8f5ZOSJ+X
-         MGVHMzB+StpVoHd3IL7Sx7L88mHtROm+aQes6TPVIX/4hloUb4tbwX60wFmetUF8Flwi
-         cYIJlivUtgiL8wiuUEi6+tHzbJpwK1HsdHYFz+7Y5GW3/oxO+c4qt4N7w1SLsMXWT4Po
-         vPrQ==
-X-Gm-Message-State: AKGB3mLDAZ7MKNcSR/15nUd12nH5XIPxdUzIS5HGa405SZ4BiQjDonWZ
-        A0Yj6G9I3CFrzodaW7y0zg4=
-X-Google-Smtp-Source: AGs4zMYHkRGZHjUCJ83C12Q1xGImX7/d04kPvn7PC077Tg9QMcLWHVgZ6dMR6LYageVbRWhjsftgvw==
-X-Received: by 10.36.73.9 with SMTP id z9mr91023ita.36.1512097495478;
-        Thu, 30 Nov 2017 19:04:55 -0800 (PST)
+        bh=xsasFxVm3XvdVNmbp2RRzQuR0fNmI6scYHZynxYGAsA=;
+        b=nX0arqP7JNDYXyVwhXsWa4i/ouGqTRskMD5fvU+wPQoIUjL/hXJ8KGeb9Axd9X/A1p
+         1O/ELcVsSw+54ZGoyOF9QNkD2hkyUQRplM50wvh2CiPgEHG40qHmrg2e0nVr02yMWkoj
+         57lyLj76F4TUMpfI4HPg7Yw5BFJfVl02fnVHSi3VIe91Czbp5w9I+z8HtgcnaY+XQk8/
+         3h2u5NHkS3iGApH8Ogdf1e+SyVAm6zIsOJ1Imq7MsdWYNUt00sf12y+6oaL1cGaHGYWv
+         7tvItTVmDglkZ+PDzRq/DiPXFcoV383m17+0QJutNCJu2Ewe/aR5N4ubyPM+tZ7xmpz7
+         rwxw==
+X-Gm-Message-State: AJaThX6c0sfwWrpzhVKosfLuVTCMDDHJyvc84UdUEmSGS/qEGi/phOTi
+        qad7EiYKfedhCkP0xcZbM4A=
+X-Google-Smtp-Source: AGs4zMa6ZIbhYZvpjod6aMPRIfN4aT8QJvnr1Y+31JLpWWNeKQe6mfv8wuml4ezHb1jxp2oAqcvWAw==
+X-Received: by 10.36.184.134 with SMTP id m128mr81507ite.96.1512097649251;
+        Thu, 30 Nov 2017 19:07:29 -0800 (PST)
 Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id v76sm5750itb.1.2017.11.30.19.04.54
+        by smtp.gmail.com with ESMTPSA id g1sm4892itg.10.2017.11.30.19.07.28
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 30 Nov 2017 19:04:55 -0800 (PST)
-Date:   Thu, 30 Nov 2017 19:04:53 -0800
+        Thu, 30 Nov 2017 19:07:28 -0800 (PST)
+Date:   Thu, 30 Nov 2017 19:07:27 -0800
 From:   Jonathan Nieder <jrnieder@gmail.com>
 To:     Todd Zullinger <tmz@pobox.com>
 Cc:     git@vger.kernel.org, Eric Wong <e@80x24.org>
-Subject: Re: [PATCH 1/2] t/lib-git-svn: whitespace cleanup
-Message-ID: <20171201030453.GG20640@aiede.mtv.corp.google.com>
+Subject: Re: [PATCH 0/2] t/lib-git-svn.sh: improve svnserve tests with
+ parallel make test
+Message-ID: <20171201030727.GH20640@aiede.mtv.corp.google.com>
 References: <20171201023239.26153-1-tmz@pobox.com>
- <20171201023239.26153-2-tmz@pobox.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20171201023239.26153-2-tmz@pobox.com>
+In-Reply-To: <20171201023239.26153-1-tmz@pobox.com>
 User-Agent: Mutt/1.9.1 (2017-09-22)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -69,17 +69,36 @@ X-Mailing-List: git@vger.kernel.org
 
 Todd Zullinger wrote:
 
-> Subject: t/lib-git-svn: whitespace cleanup
+> These tests are not run by default nor are they enabled in travis-ci.  I
+> don't know how much testing they get in user or other packager builds.
 >
-> Signed-off-by: Todd Zullinger <tmz@pobox.com>
-> ---
->  t/lib-git-svn.sh | 22 +++++++++++-----------
->  1 file changed, 11 insertions(+), 11 deletions(-)
+> I've been slowly increasing the test suite usage in fedora builds.  I
+> ran into this while testing locally with parallel make test.  The
+> official fedora builds don't run in parallel (yet), as even before I ran
+> into this issue, builds on the fedora builders randomly failed too
+> often.  I'm hoping to eventually enable parallel tests by default
+> though, since it's so much faster.
 
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-Thanks.
+This background could go in the commit message for patch 2, but it
+also speaks for itself as an obviously good change so I could go
+either way.
 
-nit: it would have been a tiny bit easier to review if the commit
-message mentioned that this is only changing the indentation from an
-inconsistent space/tab mixture to tabs and isn't making any other
-changes.
+> I'm not sure if there's any objection to changing the variable needed to
+> enable the tests from SVNSERVE_PORT to GIT_TEST_SVNSERVE.  The way
+> SVNSERVE_PORT is set in this patch should allow the port to be set
+> explicitly, in case someone requires that -- and they understand that it
+> can fail if running parallel tests, of course.  Whether that's a
+> feature or a bug, I'm not sure. :)
+
+micronit: can this just say something like
+
+	Patch 2 is the important one --- see that one for rationale.
+
+	Patch 1 is an optional preparatory style cleanup.
+
+next time?  That way, you get an automatic guarantee that all the
+important information is available in "git log" output to people who
+need it later.
+
+Thanks,
+Jonathan
