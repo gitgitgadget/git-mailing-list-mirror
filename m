@@ -7,88 +7,96 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 21E9220C11
-	for <e@80x24.org>; Fri,  1 Dec 2017 03:56:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 04D7320C11
+	for <e@80x24.org>; Fri,  1 Dec 2017 03:57:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752282AbdLAD4R (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Nov 2017 22:56:17 -0500
-Received: from mail-it0-f65.google.com ([209.85.214.65]:35942 "EHLO
-        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752129AbdLAD4Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Nov 2017 22:56:16 -0500
-Received: by mail-it0-f65.google.com with SMTP id d16so1056039itj.1
-        for <git@vger.kernel.org>; Thu, 30 Nov 2017 19:56:16 -0800 (PST)
+        id S1752346AbdLAD5I (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Nov 2017 22:57:08 -0500
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:44518 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752135AbdLAD5H (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Nov 2017 22:57:07 -0500
+Received: by mail-pf0-f195.google.com with SMTP id m26so4077018pfj.11
+        for <git@vger.kernel.org>; Thu, 30 Nov 2017 19:57:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=FhgtsBIA2C8ukHp/E+qkXru0RtLEuUvBOM99ZMj3wNg=;
-        b=qvaAurwP2hKN1r5Mg5zM6gckPTU8SwlzrCPHBFq7HHTzbKMzQ671Msf/e3anCashDP
-         SnQU7abb+ywGt7envMtaA1vKjhFxNp9LOiPwhkPKb4ZiagF96FwiIuC/W8B1FwJdbU6n
-         +TollpqgjmzyHOlkHJdG+SY4NxSQLzRhLnLkKqqgB0GXjKY+yURRHSNUaY1btkSFbz5K
-         KN/d3/0Sr68bKVMJRygK4ZpmUMygGCwWGjv7xU5VgAHaBK+I4lw9i7j0z9JcFpYRcs4r
-         VaMA1+kjR2NzoElpGZ7pU0bRndQc1N5kAa+WlR58uAotdsnru4eK/b2YKnxlkK2jBCwN
-         GINQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=kaawt2uDDPl0dl2t85ZKuJ5IbhxEchIpfQfhEWccopc=;
+        b=szRBq+FJz+XXFTCOBpuvBiMUc2JWjehO+izQ36qSzefb5fq/ctfWW8Y4PJa1tJxn16
+         hxkVWQ3O/vNV47ItAEE0naMWRYiogF8QJWquTOPWmwPgtSU0GnO4l3TQmkgrcLPD6zhN
+         NnRQvcjEBOLH/HJ3SLkCzBmgYDen4+nLiNpQm/4Xsdf0l2BiqvGKQX0r03Q5lLQtbngg
+         EUIEOEfFgHEphIRMCCNXL6a4zcDfEoGVl/1/Oei1lDioc/u9vrCURVBMvkz6vm9UOuY3
+         Hz5LbQt3xWifj1aPNxiiyJzAmoLw6ux9jcVU1iUmEonaysHhYwmcZUpMA4yTTG3LFSMk
+         bIUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=FhgtsBIA2C8ukHp/E+qkXru0RtLEuUvBOM99ZMj3wNg=;
-        b=kwL1b/IFgkW/DG//UQGX7MW/iVT0MQC9MymGbD8Vo+81Rj19nEy6xoFvNfGT/Hp9D7
-         ofwNj1lbB7hv+eO3kvC32+TboGThcomuO38hevg72nX4+QExS/o9DzMGs/pQvWMcxDnl
-         +QN9swIAcFzQgWB25quX1uoLH9KiXWjFlTQlvrDbVJK/iIElxz+CtwygIRcbU2qD280O
-         ixbV7ayngySUhdq+yJZDlfnJCWWHlfp9njpICLrp5nLsgI+TJjy9vR81KeKQL8wd05/K
-         s6wwdnMRCqj7U+k/vsx8p7pCQyQbVJLDK5O7XpHd5dQzwWHd+oO9l+PRga9iT8ZTFod+
-         516Q==
-X-Gm-Message-State: AKGB3mJwPqFD37q9BTWFXWErWxhDBrlCwGNEM33zQu5gJo9A1FlwZPCz
-        wWp2Gvh5MQCs5vDTPyIgAZE=
-X-Google-Smtp-Source: AGs4zMZhIAui/nwOnkt3Y7Sbj6jepeyT8VzwSn0YW2cBaP8sraxE7WUzDxIFLHFdByicVK3qALg8fA==
-X-Received: by 10.36.138.1 with SMTP id v1mr179800itd.103.1512100575594;
-        Thu, 30 Nov 2017 19:56:15 -0800 (PST)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id c8sm40645itg.15.2017.11.30.19.56.14
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 30 Nov 2017 19:56:15 -0800 (PST)
-Date:   Thu, 30 Nov 2017 19:56:13 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Todd Zullinger <tmz@pobox.com>
-Cc:     git@vger.kernel.org, Eric Wong <e@80x24.org>
-Subject: Re: [PATCH 1/2] t/lib-git-svn: whitespace cleanup
-Message-ID: <20171201035613.GK20640@aiede.mtv.corp.google.com>
-References: <20171201023239.26153-1-tmz@pobox.com>
- <20171201023239.26153-2-tmz@pobox.com>
- <20171201030453.GG20640@aiede.mtv.corp.google.com>
- <20171201034212.GD3693@zaya.teonanacatl.net>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=kaawt2uDDPl0dl2t85ZKuJ5IbhxEchIpfQfhEWccopc=;
+        b=q1u2oBDwAA+SFYh9cGHVs/ENA9DYqDUyz6yEzDVmVZfM4Z3Oiks4v3mTrMwsEr7hFV
+         ar0xwJa4vxaop/0isYKHRKMbjKP2WGdrKMDdvrvyVmhcaPtvAu8ciL5E7PdiLkydEVnB
+         MWRu8kwsOuAF02jT66+Zll90iYMCAtVL81MKnVoNAAUXb6Y65vgj45rp8xVgO4CT/tS0
+         uDFqkiR0Jpghf+ZkjkzdLYgpW439Wob/GAtFL4sY1bxEESMrliq91brbtm+YoeDvU5q9
+         8uj6Zie1Mit7yF1k9KG9h/OBurcQ+NBbpGiHQPkL2s9YVUAMgSlQe2ofFN8PAXDqZHhr
+         vVJw==
+X-Gm-Message-State: AJaThX4mRISC8G+D20sJzoxN1LnHgtDhCwm/9zdhuvyZ3Iw7uDocO/QC
+        tOHRF77DsXBwsAANj1aBvlw=
+X-Google-Smtp-Source: AGs4zMZs9Ci5LH5qXD1qROVM6E6Ny+0U0eyCq+NjQKIv/MTSps3Nvhg0qYHHa8iJ5WcFfnC1uR4TxA==
+X-Received: by 10.98.58.208 with SMTP id v77mr4578449pfj.150.1512100626671;
+        Thu, 30 Nov 2017 19:57:06 -0800 (PST)
+Received: from [192.168.206.100] ([117.249.175.222])
+        by smtp.gmail.com with ESMTPSA id m22sm9712047pfg.120.2017.11.30.19.57.02
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 30 Nov 2017 19:57:05 -0800 (PST)
+Subject: Re: [PATCH v4 2/2] launch_editor(): indicate that Git waits for user
+ input
+To:     Jeff King <peff@peff.net>, lars.schneider@autodesk.com
+Cc:     git@vger.kernel.org, gitster@pobox.com, sbeller@google.com,
+        sunshine@sunshineco.com, sandals@crustytoothpaste.net,
+        Lars Schneider <larsxschneider@gmail.com>
+References: <20171129143752.60553-1-lars.schneider@autodesk.com>
+ <20171129143752.60553-3-lars.schneider@autodesk.com>
+ <20171130205137.GC3313@sigill.intra.peff.net>
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Message-ID: <2f8d6037-b7cf-64e0-3cb6-6b684faa3144@gmail.com>
+Date:   Fri, 1 Dec 2017 09:26:58 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20171201034212.GD3693@zaya.teonanacatl.net>
-User-Agent: Mutt/1.9.1 (2017-09-22)
+In-Reply-To: <20171130205137.GC3313@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Todd Zullinger wrote:
-> Jonathan Nieder wrote:
+On Friday 01 December 2017 02:21 AM, Jeff King wrote:
 
->> nit: it would have been a tiny bit easier to review if the commit
->> message mentioned that this is only changing the indentation from an
->> inconsistent space/tab mixture to tabs and isn't making any other
->> changes.
->
-> If only you saw how many times I typed a subject and changed it
-> before settling on the terse version...
+> These are obviously the result of devils-advocate poking at the feature.
+> I doubt any editor would end its output with a CR. But the first case is
+> probably going to be common, especially for actual graphical editors. We
+> know that emacsclient prints its own line, and I wouldn't be surprised
+> if other graphical editors spew some telemetry to stderr (certainly
+> anything built against GTK tends to do so).
+> 
 
-Heh.  No worries, it was a really small nit.
+Yeah, at times 'gedit' does do what you say. And if the user 
+(surprisingly!) uses an IDE such as "eclipse" or a hackable text editor 
+"atom" (of course with the '-f' option) for entering his commit message 
+it is likely to happen all the time for him.
 
-> How about:
->
->    t/lib-git-svn: cleanup inconsistent tab/space usage
->
-> ?
 
-Sure, looks good.
+> I don't think there's a good way around it. Portably saying "delete
+> _this_ line that I wrote earlier" would probably require libcurses or
+> similar. So maybe we just live with it. The deletion magic makes the
+> common cases better (a terminal editor that doesn't print random
+> lines, or a graphical editor that is quiet), and everyone else can flip
+> the advice switch if they need to. I dunno.
+> 
 
-Thanks again,
-Jonathan
+---
+Kaartic
