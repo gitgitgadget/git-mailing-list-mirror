@@ -6,59 +6,260 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8F91720954
-	for <e@80x24.org>; Fri,  1 Dec 2017 17:22:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6CC5020954
+	for <e@80x24.org>; Fri,  1 Dec 2017 17:23:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752322AbdLARWK convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Fri, 1 Dec 2017 12:22:10 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:23750 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751390AbdLARVo (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Dec 2017 12:21:44 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.136.74])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id vB1HLgw9038838
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO)
-        for <git@vger.kernel.org>; Fri, 1 Dec 2017 12:21:43 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     <git@vger.kernel.org>
-Subject: [RFE] Inverted sparseness
-Date:   Fri, 1 Dec 2017 12:21:37 -0500
-Message-ID: <004201d36ac8$db62b900$92282b00$@nexbridge.com>
+        id S1751576AbdLARXo (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Dec 2017 12:23:44 -0500
+Received: from siwi.pair.com ([209.68.5.199]:20757 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751201AbdLARXn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Dec 2017 12:23:43 -0500
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 44D1D844B1;
+        Fri,  1 Dec 2017 12:23:42 -0500 (EST)
+Received: from [192.168.1.71] (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 7C196844B0;
+        Fri,  1 Dec 2017 12:23:41 -0500 (EST)
+Subject: Re: How hard would it be to implement sparse fetching/pulling?
+To:     Philip Oakley <philipoakley@iee.org>, Vitaly Arbuzov <vit@uber.com>
+Cc:     Git List <git@vger.kernel.org>
+References: <CANxXvsMbpBOSRKaAi8iVUikfxtQp=kofZ60N0pHXs+R+q1k3_Q@mail.gmail.com>
+ <e2d5470b-9252-07b4-f3cf-57076d103a17@jeffhostetler.com>
+ <CANxXvsNWgYda_unSWoiEnfZnEuX8ktkAD-d_ynVtsTbkOKqeCg@mail.gmail.com>
+ <CANxXvsO0xk3K8Wx9pmX1qST1=43BkrKWOcCZjJ8vVcBFYVRB0A@mail.gmail.com>
+ <C89EEDA4D8F84C6290111C04ADAE6872@PhilipOakley>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <0e851e08-0dcc-da3b-b2c4-42afcdbf6ca4@jeffhostetler.com>
+Date:   Fri, 1 Dec 2017 12:23:40 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AdNqyGs8lMgHRSeGSHuQ6x9luum0pg==
+In-Reply-To: <C89EEDA4D8F84C6290111C04ADAE6872@PhilipOakley>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I recently encountered a really strange use-case relating to sparse clone/fetch that is really backwards from the discussion that has been going on, and well, I'm a bit embarrassed to bring it up, but I have no good solution including building a separate data store that will end up inconsistent with repositories (a bad solution).  The use-case is as follows:
-
-Given a backbone of multiple git repositories spread across an organization with a server farm and upstream vendors.
-The vendor delivers code by having the client perform git pull into a specific branch.
-The customer may take the code as is or merge in customizations.
-The vendor wants to know exactly what commit of theirs is installed on each server, in near real time.
-The customer is willing to push the commit-ish to the vendor's upstream repo but does not want, by default, to share the actual commit contents for security reasons.
-	Realistically, the vendor needs to know that their own commit id was put somewhere (process exists to track this, so not part of the use-case) and whether there is a subsequent commit contributed by the customer, but the content is not relevant initially.
-
-After some time, the vendor may request the commit contents from the customer in order to satisfy support requirements - a.k.a. a defect was found but has to be resolved.
-The customer would then perform a deeper push that looks a lot like a "slightly" symmetrical operation of a deep fetch following a prior sparse fetch to supply the vendor with the specific commit(s).
-
-This is not hard to realize if the sparse commit is HEAD on a branch, but if its inside a tree, well, I don't even know where to start. To self-deprecate, this is likely a bad idea, but it has come up a few times.
-
-Thoughts? Nasty Remarks?
-
-Randall
-
--- Brief whoami: NonStop&UNIX developer since approximately UNIX(421664400)/NonStop(211288444200000000) 
--- In my real life, I talk too much.
 
 
+On 11/30/2017 6:43 PM, Philip Oakley wrote:
+> From: "Vitaly Arbuzov" <vit@uber.com>
+[...]
+> comments below..
+>>
+>> On Thu, Nov 30, 2017 at 9:01 AM, Vitaly Arbuzov <vit@uber.com> wrote:
+>>> Hey Jeff,
+>>>
+>>> It's great, I didn't expect that anyone is actively working on this.
+>>> I'll check out your branch, meanwhile do you have any design docs that
+>>> describe these changes or can you define high level goals that you
+>>> want to achieve?
+>>>
+>>> On Thu, Nov 30, 2017 at 6:24 AM, Jeff Hostetler <git@jeffhostetler.com>
+>>> wrote:
+>>>>
+>>>>
+>>>> On 11/29/2017 10:16 PM, Vitaly Arbuzov wrote:
+[...]
+>>>>>
+> 
+> I have, for separate reasons been _thinking_ about the issue ($dayjob is in
+> defence, so a similar partition would be useful).
+> 
+> The changes would almost certainly need to be server side (as well as 
+> client
+> side), as it is the server that decides what is sent over the wire in 
+> the pack files, which would need to be a 'narrow' pack file.
+
+Yes, there will need to be both client and server changes.
+In the current 3 part patch series, the client sends a "filter_spec"
+to the server as part of the fetch-pack/upload-pack protocol.
+If the server chooses to honor it, upload-pack passes the filter_spec
+to pack-objects to build an "incomplete" packfile omitting various
+objects (currently blobs).  Proprietary servers will need similar
+changes to support this feature.
+
+Discussing this feature in the context of the defense industry
+makes me a little nervous.  (I used to be in that area.)
+What we have in the code so far may be a nice start, but
+probably doesn't have the assurances that you would need
+for actual deployment.  But it's a start....
+
+> 
+>>>>> If we had such a feature then all we would need on top is a separate
+>>>>> tool that builds the right "sparse" scope for the workspace based on
+>>>>> paths that developer wants to work on.
+>>>>>
+>>>>> In the world where more and more companies are moving towards large
+>>>>> monorepos this improvement would provide a good way of scaling git to
+>>>>> meet this demand.
+> 
+> The 'companies' problem is that it tends to force a client-server, 
+> always-on
+> on-line mentality. I'm also wanting the original DVCS off-line 
+> capability to
+> still be available, with _user_ control, in a generic sense, of what they
+> have locally available (including files/directories they have not yet 
+> looked
+> at, but expect to have. IIUC Jeff's work is that on-line view, without the
+> off-line capability.
+> 
+> I'd commented early in the series at [1,2,3].
+
+Yes, this does tend to lead towards an always-online mentality.
+However, there are 2 parts:
+[a] dynamic object fetching for missing objects, such as during a
+     random command like diff or blame or merge.  We need this
+     regardless of usage -- because we can't always predict (or
+     dry-run) every command the user might run in advance.
+[b] batch fetch mode, such as using partial-fetch to match your
+     sparse-checkout so that you always have the blobs of interest
+     to you.  And assuming you don't wander outside of this subset
+     of the tree, you should be able to work offline as usual.
+If you can work within the confines of [b], you wouldn't need to
+always be online.
+
+We might also add a part [c] with explicit commands to back-fill or
+alter your incomplete view of the ODB (as I explained in response
+to the "git diff <commit1> <commit2>" comment later in this thread.
+
+
+> At its core, my idea was to use the object store to hold markers for the
+> 'not yet fetched' objects (mainly trees and blobs). These would be in a 
+> known fixed format, and have the same effect (conceptually) as the 
+> sub-module markers - they _confirm_ the oid, yet say 'not here, try 
+> elsewhere'.
+
+We do have something like this.  Jonathan can explain better than I, but
+basically, we denote possibly incomplete packfiles from partial clones
+and fetches as "promisor" and have special rules in the code to assert
+that a missing blob referenced from a "promisor" packfile is OK and can
+be fetched later if necessary from the "promising" remote.
+
+The main problem with markers or other lists of missing objects is
+that it has scale problems for large repos.  Suppose I have 100M
+blobs in my repo.  If I do a blob:none clone, I'd have 100M missing
+blobs that would need tracking.  If I then do a batch fetch of the
+blobs needed to do a sparse checkout of HEAD, I'd have to remove
+those entries from the tracking data.  Not impossible, but not
+speedy either.
+
+> 
+> The comaprison with submodules mean there is the same chance of
+> de-synchronisation with triangular and upstream servers, unless managed.
+> 
+> The server side, as noted, will need to be included as it is the one that
+> decides the pack file.
+> 
+> Options for a server management are:
+> 
+> - "I accept narrow packs?" No; yes
+> 
+> - "I serve narrow packs?" No; yes.
+> 
+> - "Repo completeness checks on reciept": (must be complete) || (allow 
+> narrow to nothing).
+
+we have new config settings for the server to allow/reject
+partial clones.
+
+and we have code in fsck/gc to handle these incomplete packfiles.
+
+> 
+> For server farms (e.g. Github..) the settings could be global, or by repo.
+> (note that the completeness requirement and narrow reciept option are not
+> incompatible - the recipient server can reject the pack from a narrow
+> subordinate as incomplete - see below)
+
+For now our scope is limited to partial clone and fetch.  We've not
+considered push.
+
+> 
+> * Marking of 'missing' objects in the local object store, and on the wire.
+> The missing objects are replaced by a place holder object, which used the
+> same oid/sha1, but has a short fixed length, with content “GitNarrowObject
+> <oid>”. The chance that that string would actually have such an oid 
+> clash is
+> the same as all other object hashes, so is a *safe* self-referential 
+> device.
+
+Again, there is a scale problem here.  If I have 100M missing blobs,
+I can't afford to create 100M loose place holder files.  Or juggle
+a 2GB file of missing objects on various operations.
+
+> 
+> 
+> * The stored object already includes length (and inferred type), so we do
+> know what it stands in for. Thus the local index (index file) should be 
+> able
+> to be recreated from the object store alone (including the ‘promised /
+> narrow / missing’ files/directory markers)
+> 
+> * the ‘same’ as sub-modules.
+> The potential for loss of synchronisation with a golden complete repo is
+> just the same as for sub-modules. (We expected object/commit X here, but 
+> it’s not in the store). This could happen with a small user group who 
+> have locally narrow clones, who interact with their local narrow server 
+> for ‘backup’, and then fail to push further upstream to a server that 
+> mandates completeness. They could create a death by a thousand narrow 
+> cuts. Having a golden upstream config reference (indicating which is the 
+> upstream) could allow checks to ensure that doesn’t happen.
+> 
+> The fsck can be taught the config option of 'allowNarrow'.
+
+We've updated fsck to be aware of partial clones.
+
+> 
+> The narrowness would be defined in a locally stored '.gitNarrowIgnore' file
+> (which can include the size constraints being developed elsewhere on the
+> list)
+> 
+> As a safety it could be that the .gitNarrowIgnore is sent with the pack so
+> that fold know what they missed, and fsck could check that they are locally
+> not narrower than some specific project .gitNarrowIgnore spec.
+
+Currently, we store the filter_spec used for the partial clone (or the
+first partial fetch) as a default for subsequent fetches, but we limit
+it there.  That is, for operations like checkout or blame or whatever,
+it doesn't matter why a blob is missing or what filter criteria was
+used to cause it to be omitted -- just that it is.  Any time we need
+a missing object, we have to go get it -- whether that is via dynamic
+or bulk fetching.
+
+> 
+> The benefit of this that the off-line operation capability of Git 
+> continues,
+> which GVFS doesn’t quite do (accidental lock in to a client-server model 
+> aka
+> all those other VCS systems).
+
+Yes, there are limitations of GVFS and you must be online to use it.
+It essentially does a blob:none filter and dynamically faults in every
+blob.  (But it is also using a kernel driver and daemon to dynamically
+populate the file system when a file is first opened for writing --
+much like copy-on-write virtual memory.  And yes, these 2 operations
+are independent, but currently combined in the GVFS code.)
+
+And yes, there is work here to make sure that most normal
+operations can continue to work offline.
+
+
+> 
+> I believe that its all doable, and that Jeff H's work already puts much of
+> it in place, or touches those places
+> 
+> That said, it has been just _thinking_, without sufficient time to delve
+> into the code.
+> 
+> Phil
+[...]
+
+Thanks
+Jeff
 
