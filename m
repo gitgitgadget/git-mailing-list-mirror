@@ -2,92 +2,172 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7976B20954
-	for <e@80x24.org>; Fri,  1 Dec 2017 18:19:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A542D20954
+	for <e@80x24.org>; Fri,  1 Dec 2017 18:22:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751950AbdLASTD (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Dec 2017 13:19:03 -0500
-Received: from siwi.pair.com ([209.68.5.199]:11468 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751701AbdLASTD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Dec 2017 13:19:03 -0500
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id B42358456B;
-        Fri,  1 Dec 2017 13:19:02 -0500 (EST)
-Received: from [192.168.1.71] (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 89A4084569;
-        Fri,  1 Dec 2017 13:19:02 -0500 (EST)
-Subject: Re: [RFE] Inverted sparseness
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>, git@vger.kernel.org
-References: <004201d36ac8$db62b900$92282b00$@nexbridge.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <bdd01692-198a-f5ec-3c88-7d99e4adced5@jeffhostetler.com>
-Date:   Fri, 1 Dec 2017 13:19:01 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.4.0
+        id S1751958AbdLASWl (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Dec 2017 13:22:41 -0500
+Received: from cloud.peff.net ([104.130.231.41]:45750 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1750914AbdLASWk (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Dec 2017 13:22:40 -0500
+Received: (qmail 18215 invoked by uid 109); 1 Dec 2017 18:22:40 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 01 Dec 2017 18:22:40 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 8088 invoked by uid 111); 1 Dec 2017 18:22:59 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with ESMTPA; Fri, 01 Dec 2017 13:22:59 -0500
+Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 01 Dec 2017 13:22:38 -0500
+Date:   Fri, 1 Dec 2017 13:22:38 -0500
+From:   Jeff King <peff@peff.net>
+To:     Derrick Stolee <dstolee@microsoft.com>
+Cc:     git@vger.kernel.org, git@jeffhostetler.com, stolee@gmail.com
+Subject: Re: [PATCH] sha1_file: use strbuf_add() instead of strbuf_addf()
+Message-ID: <20171201182238.GA27688@sigill.intra.peff.net>
+References: <20171201174956.143245-1-dstolee@microsoft.com>
 MIME-Version: 1.0
-In-Reply-To: <004201d36ac8$db62b900$92282b00$@nexbridge.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20171201174956.143245-1-dstolee@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Dec 01, 2017 at 12:49:56PM -0500, Derrick Stolee wrote:
 
+> Replace use of strbuf_addf() with strbuf_add() when enumerating
+> loose objects in for_each_file_in_obj_subdir(). Since we already
+> check the length and hex-values of the string before consuming
+> the path, we can prevent extra computation by using the lower-
+> level method.
 
-On 12/1/2017 12:21 PM, Randall S. Becker wrote:
-> I recently encountered a really strange use-case relating to sparse clone/fetch that is really backwards from the discussion that has been going on, and well, I'm a bit embarrassed to bring it up, but I have no good solution including building a separate data store that will end up inconsistent with repositories (a bad solution).  The use-case is as follows:
+Makes sense. It's a shame that "addf" is turning out to be so slow (I'm
+still mildly curious if that differs between Windows and glibc, but
+there are so many other variables between the two platforms it's hard to
+test).
+
+> One consumer of for_each_file_in_obj_subdir() is the abbreviation
+> code. OID abbreviations use a cached list of loose objects (per
+> object subdirectory) to make repeated queries fast, but there is
+> significant cache load time when there are many loose objects.
 > 
-> Given a backbone of multiple git repositories spread across an organization with a server farm and upstream vendors.
-> The vendor delivers code by having the client perform git pull into a specific branch.
-> The customer may take the code as is or merge in customizations.
-> The vendor wants to know exactly what commit of theirs is installed on each server, in near real time.
-> The customer is willing to push the commit-ish to the vendor's upstream repo but does not want, by default, to share the actual commit contents for security reasons.
-> 	Realistically, the vendor needs to know that their own commit id was put somewhere (process exists to track this, so not part of the use-case) and whether there is a subsequent commit contributed by the customer, but the content is not relevant initially.
+> Most repositories do not have many loose objects before repacking,
+> but in the GVFS case the repos can grow to have millions of loose
+> objects. Profiling 'git log' performance in GitForWindows on a
+> GVFS-enabled repo with ~2.5 million loose objects revealed 12% of
+> the CPU time was spent in strbuf_addf().
+
+Yeah, we haven't heavily micro-optimized the case for having lots of
+loose objects. The general philosophy about having lots of loose objects
+is: don't. You're generally going to pay a system call for each access,
+which is much heavier-weight than packfiles.
+
+I think abbreviation-finding is the exception there, though, because we
+literally just readdir() the entries and never do anything else with
+them.
+
+> Add a new performance test to p4211-line-log.sh that is more
+> sensitive to this cache-loading. By limiting to 1000 commits, we
+> more closely resemble user wait time when reading history into a
+> pager.
 > 
-> After some time, the vendor may request the commit contents from the customer in order to satisfy support requirements - a.k.a. a defect was found but has to be resolved.
-> The customer would then perform a deeper push that looks a lot like a "slightly" symmetrical operation of a deep fetch following a prior sparse fetch to supply the vendor with the specific commit(s).
+> For a copy of the Linux repo with two ~512 MB packfiles and ~572K
+> loose objects, running 'git log --oneline --raw --parents -1000'
+> had the following performance:
 > 
-> This is not hard to realize if the sparse commit is HEAD on a branch, but if its inside a tree, well, I don't even know where to start. To self-deprecate, this is likely a bad idea, but it has come up a few times.
-> 
-> Thoughts? Nasty Remarks?
-> 
-> Randall
+>  HEAD~1            HEAD
+> ----------------------------------------
+>  7.70(7.15+0.54)   7.44(7.09+0.29) -3.4%
 
-Perhaps I'm not understanding the subtleties of what you're describing,
-but could you do this with stock git functionality.
+Thanks for including numbers. I think the setup here highlights a
+weakness of the perf suite that we've discussed: if there's a
+performance regression for your case, nobody is likely to notice because
+they won't test on a repo with 500k loose objects.
 
-Let the vendor publish a "well known branch" for the client.
-Let the client pull that and build.
-Let the client create a branch set to the same commit that they fetched.
-Let the client push that branch as a client-specific branch to
-the vendor to indicate that that is the official release they
-are based on.
+Probably "repo with a bunch of loose objects" ought to be a stock
+repository profile for doing regression runs.
 
-Then the vendor would know the official commit that the client was
-using.
+> diff --git a/sha1_file.c b/sha1_file.c
+> index 8ae6cb6285..2160323c4a 100644
 
-If the client makes local changes, does the vendor really need the
-SHA of those -- without the actual content?  I mean any SHA would
-do right?  Perhaps let the client create a second client-specific
-branch (set to the same commit as the first) to indicate they had
-mods.
+This overall looks good, but I noticed one bug and a few cosmetic
+improvements.
 
-Later, when the vendor needs the actual client changes, the client
-does a normal push to this 2nd client-specific branch at the vendor.
-This would send everything that the client has done to the code
-since the official release.
+> --- a/sha1_file.c
+> +++ b/sha1_file.c
+> @@ -1914,17 +1914,18 @@ int for_each_file_in_obj_subdir(unsigned int subdir_nr,
+>  	}
+>  
+>  	oid.hash[0] = subdir_nr;
+> +	strbuf_add(path, "/", 1);
 
-I'm not sure what you mean about "it is inside a tree".
+Maybe:
 
-Hope this helps,
-Jeff
+  strbuf_addch(path, '/');
 
+would be a bit more readable (it's also a tiny bit faster, but this
+isn't part of the tight loop).
+
+> +	baselen = path->len;
+
+We set this here so that the '/' is included as part of the base. Makes
+sense, but can we now drop the earlier setting of baselen before the
+opendir() call?
+
+>  	while ((de = readdir(dir))) {
+>  		if (is_dot_or_dotdot(de->d_name))
+>  			continue;
+>  
+> -		strbuf_setlen(path, baselen);
+> -		strbuf_addf(path, "/%s", de->d_name);
+> -
+>  		if (strlen(de->d_name) == GIT_SHA1_HEXSZ - 2 &&
+>  		    !hex_to_bytes(oid.hash + 1, de->d_name,
+>  				  GIT_SHA1_RAWSZ - 1)) {
+> +			strbuf_setlen(path, baselen);
+> +			strbuf_add(path, de->d_name, GIT_SHA1_HEXSZ - 2);
+
+Moving this code into the conditional makes sense here, since that's
+where we know the actual size. But what about the case when we _don't_
+hit this conditional. We still do:
+
+  if (cruft_cb)
+        cruft_cb(path->buf);
+
+which is now broken (it will just get the directory name without the
+entry appended).
+
+I think the optimized versions probably needs to be something more like:
+
+  while (de = readdir(...)) {
+      strbuf_setlen(path, baselen);
+      if (size is HEXSZ - 2) {
+          strbuf_add(path, de->d_name, HEXSZ - 2);
+	  obj_cb(path->buf);
+      } else if (cruft_cb) {
+          strbuf_addstr(path, de->d_name);
+	  cruft_cb(path->buf);
+      }
+  }
+
+Two other thoughts:
+
+  - from past discussions, I suspect most of your performance
+    improvement actually comes from avoiding addf(), and the difference
+    between addstr() and add() may be negligible here. It might be worth
+    timing strbuf_addstr(). If that's similarly fast, that means we
+    could keep the logic out of the conditional entirely.
+
+  - there's an extra micro-optimization there, which is that if there's
+    no obj_cb, we have no need to assemble the full path at all. I doubt
+    it makes much of a difference, as most callers would pass an object
+    callback (I'd be surprised if we even have one that doesn't).
+
+-Peff
