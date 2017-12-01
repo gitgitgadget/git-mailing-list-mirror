@@ -2,82 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E29A20954
-	for <e@80x24.org>; Fri,  1 Dec 2017 18:18:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7976B20954
+	for <e@80x24.org>; Fri,  1 Dec 2017 18:19:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751855AbdLASSx (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Dec 2017 13:18:53 -0500
-Received: from mail-qk0-f172.google.com ([209.85.220.172]:32867 "EHLO
-        mail-qk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751845AbdLASSw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Dec 2017 13:18:52 -0500
-Received: by mail-qk0-f172.google.com with SMTP id 63so14314111qke.0
-        for <git@vger.kernel.org>; Fri, 01 Dec 2017 10:18:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=mtkRpokvPm7+aASxa+hUCDjg3hDlSkvh9QEzvshykhs=;
-        b=TAhy5Ulp09aXdgHK0+ByLvYctHFFdFq8DvMczoHTMpMyA3TFmkH6tGIkoDLfmRepv7
-         6lLVsDllNjSa97j0OvtejXWSn51TsyLwiYms9X3ROOW5BQrVCGgQ3gJK/4hlfSSpploZ
-         z2HsMw8VBqePEUXK5+uBr6xvhRJ53rDYd1rwf83BwxAZjNG9HtM0Rmw3SNb+ygsSocRH
-         sqeH2PrgGJZFJmWbJCl+9JxaAs89BVAqloEYRJCkuM3rosEC1P8pI61uAEmk9E0BX67+
-         8OsgICIKUprHXJo2NSjyh/B/yHpYcxMyMouCwX9pK6JC2lWOgPLri/1wA/28bDAIobhP
-         wSVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=mtkRpokvPm7+aASxa+hUCDjg3hDlSkvh9QEzvshykhs=;
-        b=oLtlzaJS5AoaZDPLq7MqnbvZSf3t9CM9QPfnQj7vNLncNQMF3i7JEVqfBQufHvB5Hn
-         xjy+UNRW0Aa71UuGBe6PotsB7K+Bz8jDYYl7+eTPI6x/8fveWoA21vC/kbSlrrxrCYji
-         nWhcybR0NT0bjREdeMvrpW586cTG8dMAWkhZd0o+na07/8EnVEvlkNQd5sc9gTZkRhDO
-         NhGcKsG9pL/2J/mZj08H5chva63KwEB68eOl40tjMXZyPDs4y1uMdhwjFa/UqMfPkVGk
-         oX1yz/7XhlGfxQ/qUlA9U0WPlMn/cLsn3oMYT0VAbT6BA198kj8dUWqG36F0/IGPH4pu
-         AWbw==
-X-Gm-Message-State: AKGB3mIX6QELkpdSQG0oZtSzOOXg21cpjBFgRcw7L0UKXD+dMTdEH4ck
-        KfX/PNQgS+vZUkhq4yZIxM43zg==
-X-Google-Smtp-Source: AGs4zMZMGnr7pVAaNPuGL/VPPEtKZbY+Hod7Q0r96fwn6qOmXBsAl+FP+H31qIKWZtFFmzN3lFnKTA==
-X-Received: by 10.55.27.219 with SMTP id m88mr9278141qkh.334.1512152331332;
-        Fri, 01 Dec 2017 10:18:51 -0800 (PST)
-Received: from dnj-macbookpro.roam.corp.google.com.com ([100.67.16.103])
-        by smtp.gmail.com with ESMTPSA id l52sm5156373qta.12.2017.12.01.10.18.50
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Fri, 01 Dec 2017 10:18:50 -0800 (PST)
-From:   Dan Jacques <dnj@google.com>
-To:     j6t@kdbg.org
-Cc:     Johannes.Schindelin@gmx.de, avarab@gmail.com, dnj@google.com,
-        git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH v4 1/4] Makefile: generate Perl header from template file
-Date:   Fri,  1 Dec 2017 13:18:45 -0500
-Message-Id: <20171201181845.8454-1-dnj@google.com>
-X-Mailer: git-send-email 2.15.0.chromium12
-In-Reply-To: <97acc3d3-5c6a-2e65-a372-24def5b21d54@kdbg.org>
-References: <97acc3d3-5c6a-2e65-a372-24def5b21d54@kdbg.org>
+        id S1751950AbdLASTD (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Dec 2017 13:19:03 -0500
+Received: from siwi.pair.com ([209.68.5.199]:11468 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751701AbdLASTD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Dec 2017 13:19:03 -0500
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id B42358456B;
+        Fri,  1 Dec 2017 13:19:02 -0500 (EST)
+Received: from [192.168.1.71] (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 89A4084569;
+        Fri,  1 Dec 2017 13:19:02 -0500 (EST)
+Subject: Re: [RFE] Inverted sparseness
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>, git@vger.kernel.org
+References: <004201d36ac8$db62b900$92282b00$@nexbridge.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <bdd01692-198a-f5ec-3c88-7d99e4adced5@jeffhostetler.com>
+Date:   Fri, 1 Dec 2017 13:19:01 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
+MIME-Version: 1.0
+In-Reply-To: <004201d36ac8$db62b900$92282b00$@nexbridge.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 1 Dec 2017, Johannes Sixt wrote:
 
->>> This doesn't work, unfortunately. When $(pathsep) is ';', we get an
->>> incomplete sed expression because ';' is also a command separator in the sed language.
->>
->> Funny, I tried this also with ';' as pathsep, and it worked in the Git for
->> Windows SDK...
->
-> My ancient sed vs. your modern sed, perhaps? I can check this on Monday.
 
-If you wouldn't mind, that would be much appreciated. Did you actually observe
-this issue, or is it just coming up in review?
+On 12/1/2017 12:21 PM, Randall S. Becker wrote:
+> I recently encountered a really strange use-case relating to sparse clone/fetch that is really backwards from the discussion that has been going on, and well, I'm a bit embarrassed to bring it up, but I have no good solution including building a separate data store that will end up inconsistent with repositories (a bad solution).  The use-case is as follows:
+> 
+> Given a backbone of multiple git repositories spread across an organization with a server farm and upstream vendors.
+> The vendor delivers code by having the client perform git pull into a specific branch.
+> The customer may take the code as is or merge in customizations.
+> The vendor wants to know exactly what commit of theirs is installed on each server, in near real time.
+> The customer is willing to push the commit-ish to the vendor's upstream repo but does not want, by default, to share the actual commit contents for security reasons.
+> 	Realistically, the vendor needs to know that their own commit id was put somewhere (process exists to track this, so not part of the use-case) and whether there is a subsequent commit contributed by the customer, but the content is not relevant initially.
+> 
+> After some time, the vendor may request the commit contents from the customer in order to satisfy support requirements - a.k.a. a defect was found but has to be resolved.
+> The customer would then perform a deeper push that looks a lot like a "slightly" symmetrical operation of a deep fetch following a prior sparse fetch to supply the vendor with the specific commit(s).
+> 
+> This is not hard to realize if the sparse commit is HEAD on a branch, but if its inside a tree, well, I don't even know where to start. To self-deprecate, this is likely a bad idea, but it has come up a few times.
+> 
+> Thoughts? Nasty Remarks?
+> 
+> Randall
 
-I am not a `sed` wizard, but perhaps the tool is ignoring the semicolon because
-it's in the middle of the "s" expression? The shell may similarly be ignoring it
-because it's nested in between single-quotes?
+Perhaps I'm not understanding the subtleties of what you're describing,
+but could you do this with stock git functionality.
 
--Dan
+Let the vendor publish a "well known branch" for the client.
+Let the client pull that and build.
+Let the client create a branch set to the same commit that they fetched.
+Let the client push that branch as a client-specific branch to
+the vendor to indicate that that is the official release they
+are based on.
+
+Then the vendor would know the official commit that the client was
+using.
+
+If the client makes local changes, does the vendor really need the
+SHA of those -- without the actual content?  I mean any SHA would
+do right?  Perhaps let the client create a second client-specific
+branch (set to the same commit as the first) to indicate they had
+mods.
+
+Later, when the vendor needs the actual client changes, the client
+does a normal push to this 2nd client-specific branch at the vendor.
+This would send everything that the client has done to the code
+since the official release.
+
+I'm not sure what you mean about "it is inside a tree".
+
+Hope this helps,
+Jeff
+
