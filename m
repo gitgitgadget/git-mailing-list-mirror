@@ -2,129 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CDDFD20C11
-	for <e@80x24.org>; Fri,  1 Dec 2017 03:37:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DBDA920C11
+	for <e@80x24.org>; Fri,  1 Dec 2017 03:40:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752193AbdLADhr (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Nov 2017 22:37:47 -0500
-Received: from mail-wm0-f44.google.com ([74.125.82.44]:39119 "EHLO
-        mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751303AbdLADhq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Nov 2017 22:37:46 -0500
-Received: by mail-wm0-f44.google.com with SMTP id i11so1151528wmf.4
-        for <git@vger.kernel.org>; Thu, 30 Nov 2017 19:37:46 -0800 (PST)
+        id S1752157AbdLADkO (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Nov 2017 22:40:14 -0500
+Received: from mail-qk0-f175.google.com ([209.85.220.175]:42983 "EHLO
+        mail-qk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751846AbdLADkN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Nov 2017 22:40:13 -0500
+Received: by mail-qk0-f175.google.com with SMTP id a71so11627028qkc.9
+        for <git@vger.kernel.org>; Thu, 30 Nov 2017 19:40:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=uber.com; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=bWbcxVXLGA7o6jrtmNu1Uc8wkBVg6Tu2Rz5ZYuT/n6c=;
-        b=xwmvuIh69MPE33FvTQj6Zi6XPT6m40/6QOIIRDYLBpmO8hhSVNJj/2RaGmpnstKgmX
-         VoIPr4AGAs83DDL7LnnlmwFQ7V6XeNoEeXiGdO++tXrbHd4IIkc19wIUn3VJyC+UdpTn
-         LVDGNx8o8r42/XWXmYrXQbYmFXzxCv1ADRXFM=
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=UZ8CPBxB8q0ex/sx7TaWTKJ3wseBREFCsc4oZL59xuk=;
+        b=eA0iPF2KRvMR5869CnTu2xsuPkVU05LUGwv1CK0tyipAQaSb2EcyPo+34/zRmBwJJH
+         E5vfK2+8Z1HPe3Y7MXofQ/000LQ4o2DPqBGANSRPt1/fYdKmVELNa53o91QQ2kXMFDfw
+         o6NG5u8+TFFJnUvmWTWnf0fZCmTCATrn/81PhhlDQyKf21UwFPzEmcDMlklf49PgS5v1
+         pNogbS4dYDJxYdm9ac8mYvACK42XC7wK0Vug0f3k0bQJydSTzNkJuJscg4DkavaT/Mrj
+         SvpmU2yRK6sSJjDSJdB6Z6UXybZ0YqOY2F7zS3Khmbg2yJA4d3gaXtmy5LssMR+2JwtT
+         P8bQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=bWbcxVXLGA7o6jrtmNu1Uc8wkBVg6Tu2Rz5ZYuT/n6c=;
-        b=j/UqVhpgRV47P6OoV1IpAm5WdBPQArisDZFcHboq/GENJUehqrhLG3S52j7nvqYU2o
-         k/Amrqm8e5KoC10XyF1ZmaRArHI9tTihpjjwevQBK+SYO3t4+SgvdPAjz5Crr3XqtX3W
-         czOVpdT50DriNoI6cw/Jmob9COp862MffyX6Pytav4jwM51fxretoWg4qhTu5QzQPlMd
-         Brbz51xg/lYPpx3MsMHH07s0Q2VOyD6aeCMDhUncZA8LmAWm1vPYvGJbyV4fNBTj7IRG
-         BYoeYKaA3yIJeCDIWNWdXLGg3bQ1iG6nCQL78buCpuITgcRnI1Ia7ZRipzIrwdOkDxfs
-         tJQg==
-X-Gm-Message-State: AJaThX7piHiIn7nrYlzIQyq4ONhDBkDQKz6BGgpDGrPew7wkM5lt4upI
-        hIePOyW1OLcFJweomkwQ7GcFsRa1ZHYBSWeROb5p
-X-Google-Smtp-Source: AGs4zMa4k7G7Tr1lCPhHBBH9BQT1HBHWcCJYAuBQ/53TWYM3UBckz0PFJmdAbZHKX/lWogkqkmtxWl7Zx+y78cijZU8=
-X-Received: by 10.28.16.78 with SMTP id 75mr65402wmq.16.1512099465429; Thu, 30
- Nov 2017 19:37:45 -0800 (PST)
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=UZ8CPBxB8q0ex/sx7TaWTKJ3wseBREFCsc4oZL59xuk=;
+        b=baIQf+LlWoRJTYdCAcJqiOi6L8DRL0F1lbUuYNCPs7kqF47Z4mZ6p8o14I46EKb6Hb
+         6UfEQJyprdCUHQLguLXM4LITEKDzyTcEwmJK0kgQ0aTn46RebxaZ4gnKK8oq7O4Hp5Hj
+         pbU2F4GOEGe/9Bz0WHT7+0VlAzTuu6faphsaUV1Yjc0ous61CPWK3gc+wTCpq3PnglDZ
+         JCIG/gaJbHXyVHXTvYSHiVP1BRAnxU0HqSh4YQBtjpYwX3aIdbACx54divPfxc+xNxZx
+         ma8KAAyN4ccqXoD7s7wFSS6JmNNSuLdXQIGsgiG5lIkwJI8E8SXWRPKiJn5JqH9q1lJG
+         GYkw==
+X-Gm-Message-State: AKGB3mKB0B4xoeXUJQTrtHcXTUWN8YKGaM705Uwan9VnH5GtRguiU87x
+        6d/437+QGx07E59EbLSzNtguNVve
+X-Google-Smtp-Source: AGs4zMb5N+ynXgMfRFcI7+p9HDZmm2jSA702cM4LYmc5+4wZxEei+KOH9WSc2RrtSCXT4sWyXxUixA==
+X-Received: by 10.55.168.76 with SMTP id r73mr5866184qke.202.1512099612848;
+        Thu, 30 Nov 2017 19:40:12 -0800 (PST)
+Received: from zaya.teonanacatl.net (pool-173-67-181-41.hrbgpa.fios.verizon.net. [173.67.181.41])
+        by smtp.gmail.com with ESMTPSA id d205sm3933492qke.21.2017.11.30.19.40.10
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 30 Nov 2017 19:40:11 -0800 (PST)
+Date:   Thu, 30 Nov 2017 22:40:07 -0500
+From:   Todd Zullinger <tmz@pobox.com>
+To:     Eric Wong <e@80x24.org>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 0/2] t/lib-git-svn.sh: improve svnserve tests with
+ parallel make test
+Message-ID: <20171201034006.GB3693@zaya.teonanacatl.net>
+References: <20171201023239.26153-1-tmz@pobox.com>
+ <20171201025600.GA29213@starla>
 MIME-Version: 1.0
-Received: by 10.28.213.12 with HTTP; Thu, 30 Nov 2017 19:37:24 -0800 (PST)
-In-Reply-To: <20171201025106.GD20640@aiede.mtv.corp.google.com>
-References: <CANxXvsMbpBOSRKaAi8iVUikfxtQp=kofZ60N0pHXs+R+q1k3_Q@mail.gmail.com>
- <e2d5470b-9252-07b4-f3cf-57076d103a17@jeffhostetler.com> <CANxXvsNWgYda_unSWoiEnfZnEuX8ktkAD-d_ynVtsTbkOKqeCg@mail.gmail.com>
- <CANxXvsO0xk3K8Wx9pmX1qST1=43BkrKWOcCZjJ8vVcBFYVRB0A@mail.gmail.com>
- <C89EEDA4D8F84C6290111C04ADAE6872@PhilipOakley> <CANxXvsM-q-MH3y94=tW8GmbWNjvrskPoGEhOkyAzsbZd8RrRbg@mail.gmail.com>
- <CANxXvsNuEmo+uaRY8t44csqzXAk3rS+D9E=LMvaLcZeg-aLvRw@mail.gmail.com> <20171201025106.GD20640@aiede.mtv.corp.google.com>
-From:   Vitaly Arbuzov <vit@uber.com>
-Date:   Thu, 30 Nov 2017 19:37:24 -0800
-Message-ID: <CANxXvsM4MNuXAgy51ke09u1HZqwZfmhS4-yM1bvAKc+ZniRadg@mail.gmail.com>
-Subject: Re: How hard would it be to implement sparse fetching/pulling?
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Philip Oakley <philipoakley@iee.org>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20171201025600.GA29213@starla>
+User-Agent: Mutt/1.9.1 (2017-09-22)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Makes sense, I think this perfectly aligns with our needs too.
-Let me dive deeper into those patches and previous discussions, that
-you've kindly shared above, so I better understand details.
+Hi Eric,
 
-I'm very excited about what you guys already did, it's a big deal for
-the community!
+Eric Wong wrote:
+> I'm fine with this for now.  Since svnserve (and git-daemon)
+> both support inetd behavior, I think we can eventually have a
+> test helper which binds random ports and pretends to be an
+> inetd, letting the test run without any special setup.
+>
+> It would let multiple test instances run in parallel, even.
 
+Indeed, that would be a nice general improvement. :)
 
-On Thu, Nov 30, 2017 at 6:51 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Hi Vitaly,
->
-> Vitaly Arbuzov wrote:
->
->> I think it would be great if we high level agree on desired user
->> experience, so let me put a few possible use cases here.
->
-> I think one thing this thread is pointing to is a lack of overview
-> documentation about how the 'partial clone' series currently works.
-> The basic components are:
->
->  1. extending git protocol to (1) allow fetching only a subset of the
->     objects reachable from the commits being fetched and (2) later,
->     going back and fetching the objects that were left out.
->
->     We've also discussed some other protocol changes, e.g. to allow
->     obtaining the sizes of un-fetched objects without fetching the
->     objects themselves
->
->  2. extending git's on-disk format to allow having some objects not be
->     present but only be "promised" to be obtainable from a remote
->     repository.  When running a command that requires those objects,
->     the user can choose to have it either (a) error out ("airplane
->     mode") or (b) fetch the required objects.
->
->     It is still possible to work fully locally in such a repo, make
->     changes, get useful results out of "git fsck", etc.  It is kind of
->     similar to the existing "shallow clone" feature, except that there
->     is a more straightforward way to obtain objects that are outside
->     the "shallow" clone when needed on demand.
->
->  3. improving everyday commands to require fewer objects.  For
->     example, if I run "git log -p", then I way to see the history of
->     most files but I don't necessarily want to download large binary
->     files just to print 'Binary files differ' for them.
->
->     And by the same token, we might want to have a mode for commands
->     like "git log -p" to default to restricting to a particular
->     directory, instead of downloading files outside that directory.
->
->     There are some fundamental changes to make in this category ---
->     e.g. modifying the index format to not require entries for files
->     outside the sparse checkout, to avoid having to download the
->     trees for them.
->
-> The overall goal is to make git scale better.
->
-> The existing patches do (1) and (2), though it is possible to do more
-> in those categories. :)  We have plans to work on (3) as well.
->
-> These are overall changes that happen at a fairly low level in git.
-> They mostly don't require changes command-by-command.
->
-> Thanks,
-> Jonathan
+Thanks,
+
+-- 
+Todd
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Suppose I were a member of Congress, and suppose I were an idiot. But,
+I repeat myself.
+    -- Mark Twain
+
