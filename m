@@ -2,132 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2358D20C11
-	for <e@80x24.org>; Fri,  1 Dec 2017 03:45:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8755B20C11
+	for <e@80x24.org>; Fri,  1 Dec 2017 03:53:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752209AbdLADpY (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Nov 2017 22:45:24 -0500
-Received: from mail-qt0-f179.google.com ([209.85.216.179]:46556 "EHLO
-        mail-qt0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752135AbdLADpX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Nov 2017 22:45:23 -0500
-Received: by mail-qt0-f179.google.com with SMTP id r39so11492399qtr.13
-        for <git@vger.kernel.org>; Thu, 30 Nov 2017 19:45:23 -0800 (PST)
+        id S1752221AbdLADxo (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Nov 2017 22:53:44 -0500
+Received: from mail-it0-f42.google.com ([209.85.214.42]:39703 "EHLO
+        mail-it0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752129AbdLADxn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Nov 2017 22:53:43 -0500
+Received: by mail-it0-f42.google.com with SMTP id 68so1031249ite.4
+        for <git@vger.kernel.org>; Thu, 30 Nov 2017 19:53:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+        h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=pnSIMjSWlx5fzkWpsD7O7wSe/3vAM972Kg/7D5vz5hA=;
-        b=azoox5gVO/QgjJMfRa/hdFfEnA6IfmOjIaeoLV+5oTNVKOUBdm6oqYZRexwwEyySZW
-         NWC6HfmgAkArsAJ/H4wPOhstCD5LmLRGSTqVGpO2UUfMVxviL0YEJGMzPB6x7c7BKuJW
-         ITQ3E+Ri+ymAxZFzD0QhiK2S7iW0lhbE+LjaHa3bWOLVF2faaIeUIp1kLpD9Cbzzs5Yl
-         DCg83K12jb59v+GwLyjG2OjADwBcu+2FS17mnt1DtN9px0wjWOR54yw5pjlbJYGuuo8w
-         S+WhkSW0yzcEjmZ3RAhdpbRarry+ImfTlvs6jaTnv/VEQAk5vZmcfWToVlzVC22aRLJT
-         aPOQ==
+        bh=2lbz+FNy5Tj1Rb4pyu5YzTZs/rnZAmZ13LG1Iva1G7g=;
+        b=ZfDkGDzMVNC6yLamQMn5uihUi0ABR6JcFc7LTENK9cmnAbbFTylDAk/PRL+9HRMzKm
+         Cv1qL+NWcAES0YwgeAeEDj12VYnhZShyVpMLKXT0DctNKShLPxvhp1WKOuz6HveowN8a
+         YwepfyVtu2OSad1frEwIxTXzhtsUZWA8XHKGTfOUkx6uxfbHbiSUKmCQ7FgC7JTag1DI
+         /WEV9ZiyLK3m8jjmIIil/if70rg2Ag3TG2T7Ve7O0MIozCvFDNIbPRtotSMQoLCcXSiU
+         o3bkkBx5KcY77cxYJNVWczMYGM71qTA1APrps5bUDwRpBqMvkkmzTRKGD5/JDUsCgZ58
+         fdJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=pnSIMjSWlx5fzkWpsD7O7wSe/3vAM972Kg/7D5vz5hA=;
-        b=S3x3khgxHpzElIFd/Qp2RE2+8WUoPj+celmtBRGS5pKxOIEUZcc7tLZAS5x+HmRTuU
-         xIX9c2CcMJ1XC7NkeQ4ziy7W62cqbZzrrc0+sEMN1mj7IV2N/ui+bSMt0gsr7opTR8e+
-         KT4608nQyWFeDJWqc8rnpOcFIP+LIztJ5aNxyYCnrIqZ3vWPcIyr6liVhmqj4nh9Y97M
-         V/IP1qjWJbS47awOnq2gWYQ5hUuNXCazQRwSPDTZhtaUpEH1fiGCW49wkyY/bRNK645M
-         kQtmSaEUqNYtyCekXAqFCgueyPT0MPAJvCXcEvSAQF5xuQWDal9RPQ6wjVuWSGw61bTE
-         XELQ==
-X-Gm-Message-State: AKGB3mJcJ898IW2GVc7hcA+UIu2KlVKY/jjWCP47wFwtlEQEAHWJ4z3S
-        L3J22VFvI8SibpY5c4+cglc=
-X-Google-Smtp-Source: AGs4zMZ4VlfYdu/uRlLiNVj5n3zanuEiF3FRfR1KYp+6/sT3mYAbsIaZ26xG13s11a74hOk7ugMBuQ==
-X-Received: by 10.200.20.152 with SMTP id l24mr6860620qtj.31.1512099922427;
-        Thu, 30 Nov 2017 19:45:22 -0800 (PST)
-Received: from zaya.teonanacatl.net (pool-173-67-181-41.hrbgpa.fios.verizon.net. [173.67.181.41])
-        by smtp.gmail.com with ESMTPSA id o65sm3946753qka.86.2017.11.30.19.45.21
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 30 Nov 2017 19:45:21 -0800 (PST)
-Date:   Thu, 30 Nov 2017 22:45:19 -0500
-From:   Todd Zullinger <tmz@pobox.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=2lbz+FNy5Tj1Rb4pyu5YzTZs/rnZAmZ13LG1Iva1G7g=;
+        b=BaU0yziPQ8vib/FAlxeCGuD6NfrXpHxm5yAJGwU/+N+ANlFvpjbcviyk3i2Lz/cRWA
+         MudphbcHI1iu0lzJbSpVSNoRlLrBAaS/6AEJTrJanlwdTX9lxlAwkLfRuhlNUoc2kMX6
+         PUHt6t9TYQiW2ngCzea/hTGOeBuRGMZ596AZrQt11ofoty6WqqdURRIBsPZD550P+oQN
+         6NqvBGUiLW7w8ykOsutWmf3JpfZ6BGptkuGPLVPEcIIFjSams0uT+OkU6VanxSB6Ci4i
+         IU/rZzqoxmf7Mmm+NOJ9y5oB6ktvEM3KL/6mMpnnJMO9vQ3XvVmOBA0EB38lai2u7hCF
+         hF9Q==
+X-Gm-Message-State: AKGB3mK4+HpZBb9xi8dsSgTCHTSqLhS4RWm+TlRBqWM5oP3MPHhIkFV5
+        xdsFPXbTymW/5KgnCRDiCf49uwmX
+X-Google-Smtp-Source: AGs4zMY0ttDJflz7+Z1Mh0Qv1rKHTKywuE8jFftsrSU+DQihWmZeH222aDxSRWF2PPLetzfuutAlOQ==
+X-Received: by 10.36.19.81 with SMTP id 78mr167783itz.143.1512100422673;
+        Thu, 30 Nov 2017 19:53:42 -0800 (PST)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id x16sm1553006ioi.62.2017.11.30.19.53.41
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 30 Nov 2017 19:53:42 -0800 (PST)
+Date:   Thu, 30 Nov 2017 19:53:40 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Todd Zullinger <tmz@pobox.com>
 Cc:     git@vger.kernel.org, Eric Wong <e@80x24.org>
 Subject: Re: [PATCH 2/2] t/lib-git-svn.sh: improve svnserve tests with
  parallel make test
-Message-ID: <20171201034519.GE3693@zaya.teonanacatl.net>
+Message-ID: <20171201035340.GJ20640@aiede.mtv.corp.google.com>
 References: <20171201023239.26153-1-tmz@pobox.com>
  <20171201023239.26153-3-tmz@pobox.com>
  <20171201030234.GF20640@aiede.mtv.corp.google.com>
+ <20171201034519.GE3693@zaya.teonanacatl.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20171201030234.GF20640@aiede.mtv.corp.google.com>
+In-Reply-To: <20171201034519.GE3693@zaya.teonanacatl.net>
 User-Agent: Mutt/1.9.1 (2017-09-22)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jonathan,
+Todd Zullinger wrote:
 
-Jonathan Nieder wrote:
-> Todd Zullinger wrote:
+> Much better, thank you.  How about this for the full commit message:
 >
->> Previously, setting SVNSERVE_PORT enabled several tests which require a
->> local svnserve daemon to be run (in t9113 & t9126).  The tests share the
->> setup of the local svnserve via `start_svnserve()`.  The function uses
->> the svnserve option `--listen-once` which causes svnserve to accept one
->> connection on the port, serve it, and exit.  When running the tests in
->> parallel this fails if one test tries to start svnserve while the other
->> is still running.
+>    t/lib-git-svn.sh: improve svnserve tests with parallel make test
 >
-> I had trouble reading this because I didn't know what previous time it
-> was referring to.  Is it about how the option currently behaves?
+>    Setting SVNSERVE_PORT enables several tests which require a local
+>    svnserve daemon to be run (in t9113 & t9126).  The tests share setup of
+>    the local svnserve via `start_svnserve()`.  The function uses svnserve's
+>    `--listen-once` option, which causes svnserve to accept one connection
+>    on the port, serve it, and exit.  When running the tests in parallel
+>    this fails if one test tries to start svnserve while the other is still
+>    running.
 >
-> (Git's commit messages tend to use the present tense to describe the
-> behavior before the patch, like a bug report, and the imperative to
-> describe the change the patch proposes to make, like an impolite bug
-> report. :))
-
-This is what I get for skipping grammar classes to go hiking in my
-youth.  But I'm sure I'd do it all again, if given the chance. ;)
-
->> Use the test number as the svnserve port (similar to httpd tests) to
->> avoid port conflicts.  Set GIT_TEST_SVNSERVE to any value other than
->> 'false' or 'auto' to enable these tests.
+>    Use the test number as the svnserve port (similar to httpd tests) to
+>    avoid port conflicts.  Developers can set GIT_TEST_SVNSERVE to any value
+>    other than 'false' or 'auto' to enable these tests.
 >
-> This uses imperative in two ways and also ended up confusing me.  The
-> second one is a direction to me, not Git, right?  How about:
->
-> 	Use the test number instead of $SVNSERVE_PORT as the svnserve
-> 	port (similar to httpd tests) to avoid port conflicts.
-> 	Developers can set GIT_TEST_SVNSERVE to any value other than
-> 	'false' or 'auto' to enable these tests.
+> ?
 
-Much better, thank you.  How about this for the full commit message:
+Yep, with this description it is
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-    t/lib-git-svn.sh: improve svnserve tests with parallel make test
+Thanks for putting up with my nits. :)
 
-    Setting SVNSERVE_PORT enables several tests which require a local
-    svnserve daemon to be run (in t9113 & t9126).  The tests share setup of
-    the local svnserve via `start_svnserve()`.  The function uses svnserve's
-    `--listen-once` option, which causes svnserve to accept one connection
-    on the port, serve it, and exit.  When running the tests in parallel
-    this fails if one test tries to start svnserve while the other is still
-    running.
-
-    Use the test number as the svnserve port (similar to httpd tests) to
-    avoid port conflicts.  Developers can set GIT_TEST_SVNSERVE to any value
-    other than 'false' or 'auto' to enable these tests.
-
-?
-
-Thanks,
-
--- 
-Todd
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Curiosity killed the cat, but for awhile I was a suspect.
-    -- Steven Wright
-
+Jonathan
