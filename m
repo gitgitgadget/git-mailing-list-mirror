@@ -2,103 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F1ACF20954
-	for <e@80x24.org>; Fri,  1 Dec 2017 15:41:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 65CF420954
+	for <e@80x24.org>; Fri,  1 Dec 2017 15:57:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751596AbdLAPl5 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Dec 2017 10:41:57 -0500
-Received: from mail-wr0-f172.google.com ([209.85.128.172]:45626 "EHLO
-        mail-wr0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751163AbdLAPl4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Dec 2017 10:41:56 -0500
-Received: by mail-wr0-f172.google.com with SMTP id h1so10528409wre.12
-        for <git@vger.kernel.org>; Fri, 01 Dec 2017 07:41:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=k2IxAw48FpTn4yOeLyuiabomVupJRZUbF7/XtTlFlFM=;
-        b=f4BqIEAcukmJAHdokermQi5RMs5flHJb3cN+QcjhzrWURMYhlf30hnxZxCPHyRVaU8
-         pFus765dzVhreraHK8sC+AJEev4de5ZgWyupkiF8m2/7mG3Bc+LGM6i9vIFav7yEwrlb
-         APjRkOBsbxBYUjzCiJHk4Cg59nT5coYi43SFd7eJSqptXpGylIokZkmRP6vpWaQdn3xa
-         0b2YBCSMZvyCUcMZL+5CtY7+VYD5qDDxQBRZSuTp+J4q7FmFcOOat6+rH8/+kWPvPPGI
-         zfIbYlEV20pp9sk32AQfXNZOXvGNsmVuWznmOrMkKyW8cE2r0Mr35ZmOQNm13im/1Iwq
-         njwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=k2IxAw48FpTn4yOeLyuiabomVupJRZUbF7/XtTlFlFM=;
-        b=SIUgbI8FxiVpZfyjkWhHgpiR7rQR1k96lKFDNFz41cjwz2SSeyCHP7isl0Cwy4cUlT
-         nlrrf9WY9opJ2dFtRcbev9/OSRRAYmO4rh1PIqhgdMKuySF8brWCvesnJjjZqIqGBF9N
-         y152ysD0Db9X4vpzqAbALbDqcqtxK+tpXF/pFtfc1oeL7F4ZRtuRqMDualXprlU6Z84Z
-         5NHgKNIcL0mmRxs8c5xT+Fg+T48TVTHvWr1zURbOfL5ex0lqSFArRIZtWMt6s3eYs96Y
-         iWg/uCK00a/NFi3a5Xfy2oopepoXDjhgZD6yheSH6EyE27WsEQfEhls44H9ZcJv6EnhB
-         scxQ==
-X-Gm-Message-State: AJaThX7WsojN7cwi2sC0IC1ToMTDdxljpHkxolupXf5resbXkj3+y0OL
-        8TWhHZPI7LKfnAqMEXX22+k=
-X-Google-Smtp-Source: AGs4zMZQYv5lwuV6bLOaUGW2O1GYKWhlMOOjspH5pDY2ZPigh9w1eYOebXfCTdztrP49nGjndGjqlw==
-X-Received: by 10.223.197.131 with SMTP id m3mr6019859wrg.203.1512142915769;
-        Fri, 01 Dec 2017 07:41:55 -0800 (PST)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id m50sm10744644wrm.12.2017.12.01.07.41.54
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 01 Dec 2017 07:41:54 -0800 (PST)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: jn/reproducible-build, was Re: What's cooking in git.git (Nov 2017, #08; Tue, 28)
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <alpine.DEB.2.21.1.1712011526490.98586@virtualbox>
-Date:   Fri, 1 Dec 2017 16:41:53 +0100
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <D62C3AE5-D335-4325-AA26-209CA0570479@gmail.com>
-References: <xmqq1skh6fyz.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.21.1.1712011526490.98586@virtualbox>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-X-Mailer: Apple Mail (2.3124)
+        id S1752130AbdLAP5A (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Dec 2017 10:57:00 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61322 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752138AbdLAP46 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Dec 2017 10:56:58 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 94636C9836;
+        Fri,  1 Dec 2017 10:56:57 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:date:message-id:in-reply-to:references:in-reply-to
+        :references; s=sasl; bh=DOkuMucElbUeQEiAeZEmoaeWt+8=; b=bthKzE7G
+        pR1PvRv7+shUtjLpLPT4CxON6jzATD+gd7VNJoxXDthQ8RrUsnDGOn7qZ1NtMgUt
+        wv8o9QCMIU0t4TOdzv5wICU1VJeI12JrfWUkPreS1a1DmNu0lw60A2Cnb0Gr0tgc
+        0qv4W+07nPAMQ0ptxhQ2ZSoIoJAz4knj0yI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:date:message-id:in-reply-to:references:in-reply-to
+        :references; q=dns; s=sasl; b=W0iR805wfrFFgvC04Pg41ABQ4qUc6EYkwI
+        Cluzd0VXzQv8p2VyGkuVfY5Viy0rDHwkRuiPbjHijgnnLdfBYCgUZnlPmjJUjcz8
+        abqSJ+EZfeBnYQWvlnu8WMpuzoQ7by4ZBru3Hdb/Zq3YhPaerxUKC+B7NkNi9yha
+        wHea/YAnA=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8C887C9835;
+        Fri,  1 Dec 2017 10:56:57 -0500 (EST)
+Received: from morphine.paradise.teonanacatl.net (unknown [47.202.94.182])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DE772C9832;
+        Fri,  1 Dec 2017 10:56:55 -0500 (EST)
+From:   Todd Zullinger <tmz@pobox.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Eric Wong <e@80x24.org>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH v2 2/2] t/lib-git-svn.sh: improve svnserve tests with parallel make test
+Date:   Fri,  1 Dec 2017 10:56:53 -0500
+Message-Id: <20171201155653.29553-2-tmz@pobox.com>
+X-Mailer: git-send-email 2.15.1
+In-Reply-To: <20171201155653.29553-1-tmz@pobox.com>
+References: <20171201155653.29553-1-tmz@pobox.com>
+In-Reply-To: <20171201153241.27071-1-tmz@pobox.com>
+References: <20171201041133.GF3693@zaya.teonanacatl.net> <20171201153241.27071-1-tmz@pobox.com>
+X-Pobox-Relay-ID: 422ECAFE-D6B0-11E7-96F2-575F0C78B957-09356542!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Setting SVNSERVE_PORT enables several tests which require a local
+svnserve daemon to be run (in t9113 & t9126).  The tests share setup of
+the local svnserve via `start_svnserve()`.  The function uses svnserve's
+`--listen-once` option, which causes svnserve to accept one connection
+on the port, serve it, and exit.  When running the tests in parallel
+this fails if one test tries to start svnserve while the other is still
+running.
 
-> On 01 Dec 2017, at 15:32, Johannes Schindelin =
-<johannes.schindelin@gmx.de> wrote:
->=20
-> Hi Junio & Jonathan (Nieder, there is another active Jonathan again),
->=20
-> On Wed, 29 Nov 2017, Junio C Hamano wrote:
->=20
->> * jn/reproducible-build (2017-11-22) 3 commits
->>  (merged to 'next' on 2017-11-27 at 6ae6946f8c)
->> + Merge branch 'jn/reproducible-build' of ../git-gui into =
-jn/reproducible-build
->> + git-gui: sort entries in optimized tclIndex
->> + generate-cmdlist: avoid non-deterministic output
->>=20
->> The build procedure has been taught to avoid some unnecessary
->> instability in the build products.
->=20
-> I like this, from a purely security-informed point of view. Maybe =
-there
-> would be a way to integrate this with the Continuous Testing we do? =
-Like,
-> letting Travis verify that the binaries built from a certain Debian
-> package are really identical to the binaries built from the =
-corresponding
-> commit? But I guess Travis is the wrong vehicle for this, as Travis =
-needs
-> a *commit* to be pushed, not a new package to be made available via =
-apt...
+Use the test number as the svnserve port (similar to httpd tests) to
+avoid port conflicts.  Developers can set GIT_TEST_SVNSERVE to any value
+other than 'false' or 'auto' to enable these tests.
 
-That's a neat idea. We could make TravisCI publish the hashes of our
-release builds and then people could check them against the builds that
-they have installed. Could that add value as a start?
+Acked-by: Eric Wong <e@80x24.org>
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Todd Zullinger <tmz@pobox.com>
+---
+ t/lib-git-svn.sh | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-- Lars=
+diff --git a/t/lib-git-svn.sh b/t/lib-git-svn.sh
+index 84366b2624..4c1f81f167 100644
+--- a/t/lib-git-svn.sh
++++ b/t/lib-git-svn.sh
+@@ -110,14 +110,16 @@ EOF
+ }
+ 
+ require_svnserve () {
+-	if test -z "$SVNSERVE_PORT"
++	test_tristate GIT_TEST_SVNSERVE
++	if ! test "$GIT_TEST_SVNSERVE" = true
+ 	then
+-		skip_all='skipping svnserve test. (set $SVNSERVE_PORT to enable)'
++		skip_all='skipping svnserve test. (set $GIT_TEST_SVNSERVE to enable)'
+ 		test_done
+ 	fi
+ }
+ 
+ start_svnserve () {
++	SVNSERVE_PORT=${SVNSERVE_PORT-${this_test#t}}
+ 	svnserve --listen-port $SVNSERVE_PORT \
+ 		 --root "$rawsvnrepo" \
+ 		 --listen-once \
+-- 
+2.15.1
+
