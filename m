@@ -2,150 +2,150 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,STOX_REPLY_TYPE,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AD2A320A40
-	for <e@80x24.org>; Sat,  2 Dec 2017 20:56:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9FC5320A40
+	for <e@80x24.org>; Sat,  2 Dec 2017 21:27:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752259AbdLBU4r (ORCPT <rfc822;e@80x24.org>);
-        Sat, 2 Dec 2017 15:56:47 -0500
-Received: from smtp-out-2.talktalk.net ([62.24.135.66]:22176 "EHLO
-        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752192AbdLBU4q (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Dec 2017 15:56:46 -0500
-Received: from PhilipOakley ([92.29.14.162])
-        by smtp.talktalk.net with SMTP
-        id LEq5ewYcCNSVVLEq5eYdLP; Sat, 02 Dec 2017 20:56:45 +0000
-X-Originating-IP: [92.29.14.162]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=NYGW7yL4 c=1 sm=1 tr=0 a=NXc+vVEgz70gitWznrz3ig==:117
- a=NXc+vVEgz70gitWznrz3ig==:17 a=8nJEP1OIZ-IA:10 a=ybZZDoGAAAAA:8
- a=VwQbUJbxAAAA:8 a=h_5V94UaQotAFXL730YA:9 a=wPNLvfGTeEIA:10
- a=0RhZnL1DYvcuLYC8JZ5M:22 a=AjGcO6oz07-iQ99wixmX:22
-Message-ID: <7973FF5C21C64E6492828DD0B91F5AF7@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:   "Philip Oakley" <philipoakley@iee.org>
-To:     "Ulrich Windl" <Ulrich.Windl@rz.uni-regensburg.de>
-Cc:     <git@vger.kernel.org>, <gitster@pobox.com>
-References: <5A1D70FD020000A100029137@gwsmtp1.uni-regensburg.de><5A1D70FD020000A100029137@gwsmtp1.uni-regensburg.de> (Ulrich Windl's message of "Tue, 28 Nov 2017 15:21:49 +0100") <xmqqtvxd6gu9.fsf@gitster.mtv.corp.google.com> <5A1E70AA020000A100029175@gwsmtp1.uni-regensburg.de>
-Subject: Re: Re: bug deleting "unmerged" branch (2.12.3)
-Date:   Sat, 2 Dec 2017 20:56:44 -0000
-Organization: OPDS
+        id S1752274AbdLBV1W (ORCPT <rfc822;e@80x24.org>);
+        Sat, 2 Dec 2017 16:27:22 -0500
+Received: from mail-wm0-f50.google.com ([74.125.82.50]:46572 "EHLO
+        mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752232AbdLBV1V (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Dec 2017 16:27:21 -0500
+Received: by mail-wm0-f50.google.com with SMTP id r78so8899089wme.5
+        for <git@vger.kernel.org>; Sat, 02 Dec 2017 13:27:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=fjcqqM6sy3uTxVxlCaymHri3y8pqLwVB7NBfJqb6fIs=;
+        b=aArXLYnhCChTsCo4duCwYvi7WQ26xa6zaAisuE94JPAGJ3Q+dvMRR3n/suHinLRpPj
+         kmabb/Vqn8+22gL8MAMGbEdFY0VQC+IHbzaIoSVuxGrwcIs48fMcEa/I3pSx0eho4DRs
+         IbZ/VsWNXG4BB5g08Nexb3OGFcTo9I+hb1IqbFzUXdhKWSwajghBRUptq5JYl6bxhU6T
+         aYAxPtYp+aIjvNVwQ/91z/okX/dkeu/RHpm5wd9Q/K+pyIXgN9d1BdGS+k/IeCKDL+a7
+         pdqrRJ84j8K6TKcrElSInLlf2lNFn2QbOyxHVk16B5S6VnOFSPkV5scOVDqfgszEroCE
+         2RMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=fjcqqM6sy3uTxVxlCaymHri3y8pqLwVB7NBfJqb6fIs=;
+        b=dhJV8fG7wwt6gOGMwQtfbtMcd+tPeFTeHuIGUwGmvZa5Idu7PiaQ0h7MF2sl4x9V8F
+         spSJH/J+2sp4napEaMOOSVTFzKci5frIbDVBC/CpkDyXksigO/NoCXztHG6uTuMSZYUq
+         jJ4Zdn28nW5Yi1O/J4aIjn0FwyWdufH/8H0vedX6PLl7dwBXneInfdP7z8FpMr/Zz/Qk
+         SvsFCRPDEEhQqH0MXXPX1aFLOAaFRJtjc0N8MtbE0Hps3R9i3FbXyI2oPxGeCBzcV/9U
+         4Ds29Iu/1ofLwZiGNY3WNlAvbRunRY7YUXhiVWUxPi4uyJvbrrcCDU5aJZXE921JTI9F
+         NdeA==
+X-Gm-Message-State: AKGB3mL+EmdUQYf+6WK1CfLeB/+6wt7OfhSt+0ogUq/Nkr7ihkEDoTXl
+        8DexF5DwaMvZUIShIb9vptLfrtNOMnCRblJDa3Y=
+X-Google-Smtp-Source: AGs4zMZ0HJJAQx9dDKA8gCHCdYlWuqf87FEzR0GTH/jXQMVb8U+xhURmbLxxTVi79eAiaEphdyVXzKQJjVNGRKxFDGw=
+X-Received: by 10.28.107.211 with SMTP id a80mr3827574wmi.71.1512250039633;
+ Sat, 02 Dec 2017 13:27:19 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="iso-8859-1";
-        reply-type=original
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-Antivirus: AVG (VPS 171202-2, 02/12/2017), Outbound message
-X-Antivirus-Status: Clean
-X-CMAE-Envelope: MS4wfComjzv8xtfIOvuqtzSZl24hPSUAAmKwxpd6U3b48gzP9t1MA1ynQc/s/oBL+9tTSkcXE4nH66NyIm+ErZcjroX6v5fbVp3BjntlKniFLMjv6y5NV2tJ
- pENW2uc41MWCHyPu8uEDbqEJD0VHG4M56A2JSXo3PYnRiRWbWKGkaQ+Q5a5B63FUVOanENcPXxcLCwZBCg5RHsLkYNNgTSng7z9dIXb9ae0qJtwRO+ggglee
- 02dLD/11/eaiE2t5RnA9jg==
+Received: by 10.28.151.203 with HTTP; Sat, 2 Dec 2017 13:26:59 -0800 (PST)
+In-Reply-To: <CACBZZX4SM45hgA=PW0MEP9Ea0OG_8OTb5U7JCOX7xnd=hT5n3A@mail.gmail.com>
+References: <201711231458.vANEwUMK048049@elephants.elehost.com>
+ <003c01d3646c$df78fc50$9e6af4f0$@nexbridge.com> <CAPkN8xJBWRs-2DxViBACLKzAbD1_EBA2MvmWVZmWgL+Sg72znw@mail.gmail.com>
+ <CACBZZX4SM45hgA=PW0MEP9Ea0OG_8OTb5U7JCOX7xnd=hT5n3A@mail.gmail.com>
+From:   anatoly techtonik <techtonik@gmail.com>
+Date:   Sun, 3 Dec 2017 00:26:59 +0300
+Message-ID: <CAPkN8xKDQrf+LMpj9GHw9n_crJ1UUwq7Zek+Z1dgQ0n2Jz5U6g@mail.gmail.com>
+Subject: Re: Re: Unify annotated and non-annotated tags
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     "Randall S. Becker" <rsbecker@nexbridge.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Igor Djordjevic <igor.d.djordjevic@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Ulrich Windl" <Ulrich.Windl@rz.uni-regensburg.de>
-To: <gitster@pobox.com>
-Cc: <git@vger.kernel.org>
-Sent: Wednesday, November 29, 2017 8:32 AM
-Subject: Antw: Re: bug deleting "unmerged" branch (2.12.3)
-
-
+On Fri, Nov 24, 2017 at 1:24 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> On Fri, Nov 24, 2017 at 10:52 AM, anatoly techtonik <techtonik@gmail.com>=
+ wrote:
+>> On Thu, Nov 23, 2017 at 6:08 PM, Randall S. Becker
+>> <rsbecker@nexbridge.com> wrote:
+>>> On 2017-11-23 02:31 (GMT-05:00) anatoly techtonik wrote
+>>>>Subject: Re: Unify annotated and non-annotated tags
+>>>>On Sat, Nov 11, 2017 at 5:06 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+>>>>> Igor Djordjevic <igor.d.djordjevic@gmail.com> writes:
+>>>>>
+>>>>>> If you would like to mimic output of "git show-ref", repeating
+>>>>>> commits for each tag pointing to it and showing full tag name as
+>>>>>> well, you could do something like this, for example:
+>>>>>>
+>>>>>>       for tag in $(git for-each-ref --format=3D"%(refname)" refs/tag=
+s)
+>>>>>>       do
+>>>>>>               printf '%s %s\n' "$(git rev-parse $tag^0)" "$tag"
+>>>>>>       done
+>>>>>>
+>>>>>>
+>>>>>> Hope that helps a bit.
+>>>>>
+>>>>> If you use for-each-ref's --format option, you could do something
+>>>>> like (pardon a long line):
+>>>>>
+>>>>> git for-each-ref --format=3D'%(if)%(*objectname)%(then)%(*objectname)=
+%(else)%(objectname)%(end) %(refname)' refs/tags
+>>>>>
+>>>>> without any loop, I would think.
+>>>>Thanks. That helps.
+>>>>So my proposal is to get rid of non-annotated tags, so to get all
+>>>>tags with commits that they point to, one would use:
+>>>>git for-each-ref --format=3D'%(*objectname) %(refname)' refs/tags>
+>>>>For so-called non-annotated tags just leave the message empty.
+>>>>I don't see why anyone would need non-annotated tags though.
+>>>
+>>> I have seen non-annotated tags used in automations (not necessarily wel=
+l written ones) that create tags as a record of automation activity. I am n=
+ot sure we should be writing off the concept of unannotated tags entirely. =
+This may cause breakage based on existing expectations of how tags work at =
+present. My take is that tags should include whodunnit, even if it's just t=
+he version of the automation being used, but I don't always get to have my =
+wishes fulfilled. In essence, whatever behaviour a non-annotated tag has no=
+w may need to be emulated in future even if reconciliation happens. An opti=
+on to preserve empty tag compatibility with pre-2.16 behaviour, perhaps? Sa=
+dly, I cannot supply examples of this usage based on a human memory page-fa=
+ult and NDAs.
+>>
+>> Are there any windows for backward compatibility breaks, or git is
+>> doomed to preserve it forever?
+>> Automation without support won't survive for long, and people who rely
+>> on that, like Chromium team, usually hard set the version used.
 >
->> "Ulrich Windl" <Ulrich.Windl@rz.uni-regensburg.de> writes:
->>
->>> I think if more than one branches are pointing to the same commit,
->>> one should be allowed to delete all but the last one without
->>> warning. Do you agree?
->>
->> That comes from a viewpoint that the only purpose "branch -d" exists
->> in addition to "branch -D" is to protect objects from "gc".  Those
->> who added the safety feature may have shared that view originally,
->> but it turns out that it protects another important thing you are
->> forgetting.
->>
->> Imagine that two topics, 'topicA' and 'topicB', were independently
->> forked from 'master', and then later we wanted to add a feature that
->> depends on these two topics.  Since the 'feature' forked, there may
->> have been other developments, and we ended up in this topology:
->>
->>     ---o---o---o---o---o---M
->>         \   \
->>          \   o---A---o---F
->>           \         /
->>            o---o---o---o---B
->>
->> where A, B and F are the tips of 'topicA', 'topicB' and 'feature'
->> branches right now [*1*].
->>
->> Now imagine we are on 'master' and just made 'topicB' graduate.  We
->> would have this topology.
->>
->>     ---o---o---o---o---o---o---M
->>         \   \                 /
->>          \   o---A---o---F   /
->>           \         /       /
->>            o---o---o---o---B
->>
->> While we do have 'topicA' and 'feature' branches still in flight,
->> we are done with 'topicB'.  Even though the tip of 'topicA' is
->> reachable from the tip of 'feature', the fact that the branch points
->> at 'A' is still relevant.  If we lose that information right now,
->> we'd have to go find it when we (1) want to further enhance the
->> topic by checking out and building on 'topicA', and (2) want to
->> finally get 'topicA' graduate to 'master'.
->>
->> Because removal of a topic (in this case 'topicB') is often done
->> after a merge of that topic is made into an integration branch,
->> "branch -d" that protects branches that are yet to be merged to the
->> current branch catches you if you said "branch -d topic{A,B}" (or
->> other equivalent forms, most likely you'd have a script that spits
->> out list of branches and feed it to "xargs branch -d").
->>
->> So, no, I do not agree.
+> Git is not doomed to preserve anything forever. We've gradually broken
+> backwards compatibility for a few core things like these.
 >
-> Hi!
+> However, just as a bystander reading this thread I haven't seen any
+> compelling reason for why these should be removed. You initially had
+> questions about how to extract info about them, which you got answers
+> to.
 >
-> I can follow your argumentation, but I fail to see that your branches A 
-> and B point to the same commit (which is what I was talking about). So my 
-> situation would be:
->
-> o---oA,B
->
-> I still think I could safely remove either A or B, even when the branch 
-> (identified by the commit, not by the name) is unmerged. What did I miss?
+> So what reasons remain for why they need to be removed?
 
-I think it was that currently you are on M, and neither A nor B are 
-ancestors (i.e. merged) of M.
+To reduce complexity and prior knowledge when dealing with Git tags.
 
-As Junio said:- "branch -d" protects branches that are yet to be merged to 
-the **current branch**.
+For example, http://readthedocs.io/ site contains a lot of broken
+"Edit on GitHub" links, for example - http://git-memo.readthedocs.io/en/sta=
+ble/
 
-[I said the same in another part of the thread. The question now would be 
-what needs changing? the error/warning message, the docs, something else?]
+And it appeared that the reason for that is discrepancy between git
+annotated and non-annotated tags. The pull request that fixes the issue
+after it was researched and understood is simple
+https://github.com/rtfd/readthedocs.org/pull/3302
 
->
-> Regards,
-> Ulrich
->
->>
->>
->> [Footnotes]
->>
->> *1* Since the 'feature' started developing, there were a few commits
->>     added to 'topicB' but because the feature does not depend on
->>     these enhancements to that topic, B is ahead of the commit that
->>     was originally merged with the tip of 'topicA' to form the
->>     'feature' branch.
-> 
-
+However, while looking through linked issues and PRs, one can try to
+imagine how many days it took for people to come up with the solution,
+which came from this thread.
+--=20
+anatoly t.
