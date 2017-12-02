@@ -7,146 +7,94 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 215D520A40
-	for <e@80x24.org>; Sat,  2 Dec 2017 18:29:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 87CF020A40
+	for <e@80x24.org>; Sat,  2 Dec 2017 20:00:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751919AbdLBS3e (ORCPT <rfc822;e@80x24.org>);
-        Sat, 2 Dec 2017 13:29:34 -0500
-Received: from mail-it0-f51.google.com ([209.85.214.51]:41922 "EHLO
-        mail-it0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751806AbdLBS3d (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Dec 2017 13:29:33 -0500
-Received: by mail-it0-f51.google.com with SMTP id x28so5904458ita.0
-        for <git@vger.kernel.org>; Sat, 02 Dec 2017 10:29:32 -0800 (PST)
+        id S1752119AbdLBT6q (ORCPT <rfc822;e@80x24.org>);
+        Sat, 2 Dec 2017 14:58:46 -0500
+Received: from mail-it0-f44.google.com ([209.85.214.44]:39118 "EHLO
+        mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752027AbdLBT6p (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Dec 2017 14:58:45 -0500
+Received: by mail-it0-f44.google.com with SMTP id 68so5939045ite.4
+        for <git@vger.kernel.org>; Sat, 02 Dec 2017 11:58:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=a4Uov+bmO6M4RBYPSAzHDqDKn3GpaADV0gwREMS+XZE=;
-        b=uiqBhQw82PUxKb+xD+m8LW08ZPCzFSWIPK2uj56Uafpc/ACr9l3JDSQY1rR3Bxxqp4
-         BB9gsYXLaHlLjvZwFAw41maHjHCJ6mjeJqUdZF99WJf85JDMdkLKHl5pNZin1aNim6cY
-         u+3UNzhfstFuCEjeYh1NIJCfEDz+XhwWFTfGgVsOB2C99m4zHUG1lsf0zjeCCfwdvRma
-         E6iyF+YULdBdgsExdy/+ShGbG/awm25h/ikbEaeW2lM4SaOC4l4tyQVLJ3ehcrDYDgZE
-         7/pfQPfJTsa05VOg2m0/Cw7iiGgsZWlNtgqj81NlrzBT7r29SmCbifF31BnHCRTe5RCk
-         MmJQ==
+        bh=k7dTwI177ymCcUj46C6jjX7diy0bc+iWexa1LEfWG6c=;
+        b=bvXSvEmeauooNBv4PkY72S0caaaAl2RxvBjko/AF0OOlK5OUOE+B96KcwytM1Z5O/f
+         qD11Prq7dgzi/GX82k6xxzJmB0w+rWrKR3udG0Wr7a8ak+d306WLvS5vLJ76f4NX1CUo
+         nxLcjdGEPYEQn2RTxh2oHndUt6NkNLtgFAjgo2ajQqk/ObOzhqCYQ0aK+BIIyPWHQkg4
+         ZY27RzNwY9TQk2o/daZ0ZdUlb6+IN/YGH83ulDrXOdhlb8nQYmqu1FbUNkDqj7OatHNu
+         jrTL0VLWS7FyP1UkeStXk1fffC5Z/JL43vap5Wz2cWp9dXyzvNqR6VfNhlP5haNAkEem
+         hATQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=a4Uov+bmO6M4RBYPSAzHDqDKn3GpaADV0gwREMS+XZE=;
-        b=sRjDZtxCFJH5Qp46GL+XZdf/aJNjZ8OylWHWQ3ZQHChkFqd4NFI7yRHwqw57dNWzxA
-         zugbzT89mZ4WfBRC5wg/IwSTgsiBMNlxkatt0TndlHPqhhCRPeOLiEI88yK1BYkEt5DI
-         w316tHTDo0qhd6+Xps/BiIZzaypDYe441taP9Jy9nYrOojTxD7FVviz+wPfhEe9Fad5Q
-         BBw46TLfUwO84J75KcUi3HsM3zhbfbDoqnh3YE5Aa5iCPpBP0fP2VU8zXh2rHLhMJiOF
-         3wJv6MHNiRpoyY/55zdmvicK1yluU2LT0DRQkFNuuqZS/P/gc6pLc4pp7Yx4QinHaVS9
-         PE0Q==
-X-Gm-Message-State: AKGB3mIQw2qeVKp/kKtL/dlEpbGjg/SE+tsOYFRPGHYEAMBQ0jYFQPGf
-        16cH+VltC5LpskY6DzeE151XYyQwx3nx6fJh4Qg=
-X-Google-Smtp-Source: AGs4zMY+dkvfIqVeLKcRlLDGq9kHZimHLbC6l+YHWh/vm46hsERfaC1Q6MTu2VQIWNtyjfQJhcM6h1bA6AEZsBczjb8=
-X-Received: by 10.36.228.68 with SMTP id o65mr7280081ith.128.1512239372114;
- Sat, 02 Dec 2017 10:29:32 -0800 (PST)
+        bh=k7dTwI177ymCcUj46C6jjX7diy0bc+iWexa1LEfWG6c=;
+        b=a1FCrz1f/d1opCyxdQ6AXlOoNeQUwEIjVczbuEJiKlaLZooZ8BmTy9MdQ0NwP5/mPR
+         x7u1wSPFw9oflfRgn+MZeWFo7YQd6GIeV9tKBYhJQESJyx5q5SJTCuRV19es2gL3+gI/
+         ig87vIUcX2b3HtYvHFFav5vpdPdWwUFXU73QvtDCIhnKAMYLsok/NN/Th2ycdOUyR8mA
+         PVFi1iQOJ43qAGRUdE0bGxIzWcA0n0BgzrtudrF/3Mcd3uOVi5/Ea0rbIMg8tvUrToqe
+         2E7gemK5LevtIneyj1EpFegwHt9kF3ZL89KRLylnpuPwpebPvWRi4cpl9jAQXlECRbhC
+         Ymdw==
+X-Gm-Message-State: AKGB3mI1F7osT9B22UeeHNdBiEF3LuIiOo4MmKJip8iLiWSV/5DDTfzi
+        3aKrkmM5U8VxmOGvXJspigiru15qeVkvI/esOV8=
+X-Google-Smtp-Source: AGs4zMbgqVzaEUh7AVGSlB7XxJZDEoNq/J2RsUozkBWr6pdLz0oZ+TvQ7GtjZ/sfkIvuq1aR5WGhn9OUirrQs7A561o=
+X-Received: by 10.36.90.11 with SMTP id v11mr6945504ita.127.1512244724464;
+ Sat, 02 Dec 2017 11:58:44 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.79.28.137 with HTTP; Sat, 2 Dec 2017 10:29:31 -0800 (PST)
-In-Reply-To: <20171121210720.21376-9-git@jeffhostetler.com>
-References: <20171121210720.21376-1-git@jeffhostetler.com> <20171121210720.21376-9-git@jeffhostetler.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sat, 2 Dec 2017 19:29:31 +0100
-Message-ID: <CAP8UFD2Q075aKG0yEbOy-W2+NSa6n8AEVu=yWn9q=xSnQwn5=g@mail.gmail.com>
-Subject: Re: [PATCH v5 08/10] sha1_file: support lazily fetching missing objects
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Jonathan Tan <jonathantanmy@google.com>
+Received: by 10.36.169.76 with HTTP; Sat, 2 Dec 2017 11:58:44 -0800 (PST)
+In-Reply-To: <CAE5ih78GOFqe_Vb3k_-jPiS7zbX1EdvYmsUyWvKKy=xOH9WrcQ@mail.gmail.com>
+References: <CAL1_K8AYf1jKDO8+czcqkUxDAuOODgKv9avaiikWi+4zpqenMQ@mail.gmail.com>
+ <57A92686-9161-4234-8341-CD6FAD7AE049@gmail.com> <CAL1_K8C3bNMae6PFk73c7n6AvnbO=5Sujz3oqL_jBj=DpiEO1g@mail.gmail.com>
+ <A6F43B7B-F0AF-46E7-B34B-7D54493E2C8B@gmail.com> <CAL1_K8A=7xmLCYzWa0ejtwjy9P+rD+D0cqz+kOXCaQWOgQfuEw@mail.gmail.com>
+ <CAE5ih78GOFqe_Vb3k_-jPiS7zbX1EdvYmsUyWvKKy=xOH9WrcQ@mail.gmail.com>
+From:   Patrick Rouleau <prouleau72@gmail.com>
+Date:   Sat, 2 Dec 2017 14:58:44 -0500
+Message-ID: <CAL1_K8DGVzcbWFPz3vbEntB08sEhrV-j-sLxAh0QhV=8KRGf-Q@mail.gmail.com>
+Subject: Re: git-p4: cloning with a change number does not import all files
+To:     Luke Diamand <luke@diamand.org>
+Cc:     Lars Schneider <larsxschneider@gmail.com>,
+        Git Users <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 21, 2017 at 10:07 PM, Jeff Hostetler <git@jeffhostetler.com> wrote:
-> From: Jonathan Tan <jonathantanmy@google.com>
+On Sat, Dec 2, 2017 at 12:55 PM, Luke Diamand <luke@diamand.org> wrote:
+> I think I've sort of stumbled across something like the problem you've
+> described in the past. Perhaps the files you need have been deleted
+> and then re-integrated or some such.
+>
+> Would you be able to take a look at some files with this problem and
+> see if you can spot what's happened to it ("p4 changes" and perhaps
+> "p4 changes -i").
 
-> diff --git a/sha1_file.c b/sha1_file.c
-> index 10c3a00..fc7718a 100644
-> --- a/sha1_file.c
-> +++ b/sha1_file.c
-> @@ -29,6 +29,7 @@
->  #include "mergesort.h"
->  #include "quote.h"
->  #include "packfile.h"
-> +#include "fetch-object.h"
->
->  const unsigned char null_sha1[GIT_MAX_RAWSZ];
->  const struct object_id null_oid;
-> @@ -1144,6 +1145,8 @@ static int sha1_loose_object_info(const unsigned char *sha1,
->         return (status < 0) ? status : 0;
->  }
->
-> +int fetch_if_missing = 1;
-> +
->  int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi, unsigned flags)
->  {
->         static struct object_info blank_oi = OBJECT_INFO_INIT;
-> @@ -1152,6 +1155,7 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi,
->         const unsigned char *real = (flags & OBJECT_INFO_LOOKUP_REPLACE) ?
->                                     lookup_replace_object(sha1) :
->                                     sha1;
-> +       int already_retried = 0;
->
->         if (!oi)
->                 oi = &blank_oi;
-> @@ -1176,28 +1180,36 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi,
->                 }
->         }
->
-> -       if (!find_pack_entry(real, &e)) {
-> -               /* Most likely it's a loose object. */
-> -               if (!sha1_loose_object_info(real, oi, flags))
-> -                       return 0;
-> +retry:
-> +       if (find_pack_entry(real, &e))
-> +               goto found_packed;
->
-> -               /* Not a loose object; someone else may have just packed it. */
-> -               if (flags & OBJECT_INFO_QUICK) {
-> -                       return -1;
-> -               } else {
-> -                       reprepare_packed_git();
-> -                       if (!find_pack_entry(real, &e))
-> -                               return -1;
-> -               }
-> +       /* Most likely it's a loose object. */
-> +       if (!sha1_loose_object_info(real, oi, flags))
-> +               return 0;
-> +
-> +       /* Not a loose object; someone else may have just packed it. */
-> +       reprepare_packed_git();
-> +       if (find_pack_entry(real, &e))
-> +               goto found_packed;
-> +
-> +       /* Check if it is a missing object */
-> +       if (fetch_if_missing && repository_format_partial_clone &&
-> +           !already_retried) {
-> +               fetch_object(repository_format_partial_clone, real);
-> +               already_retried = 1;
-> +               goto retry;
->         }
->
-> +       return -1;
-> +
-> +found_packed:
->         if (oi == &blank_oi)
->                 /*
->                  * We know that the caller doesn't actually need the
->                  * information below, so return early.
->                  */
->                 return 0;
-> -
->         rtype = packed_object_info(e.p, e.offset, oi);
->         if (rtype < 0) {
->                 mark_bad_packed_object(e.p, real);
+Sorry, but these commands only show the date and an extract of the commit
+message.
 
-The above is adding 2 different gotos into this function while there
-are quite simple ways to avoid them. See
-https://public-inbox.org/git/CAP8UFD2THRj7+RXmismUtUOpXQv4wM7aZsejpd_FHEOycP+ZJA@mail.gmail.com/
-and the follow up email in the thread.
+>
+> One thing that can certainly happen is that Perforce gets *very*
+> confused if you start getting too clever with symlinked directories,
+> and git-p4 can only do so much in the face of this. But it may be
+> something else.
+
+Overall, the depot history is very "messy". It contains a lot of projects. The
+project on which I work has reach v5 and it has been branched from v4.
+From p4v's "show graph", I can see there was a 'main' branch at some point,
+but it doesn't exist anymore.
+
+One of the files missing from my clone only has 2 revisions and it was created
+in the v5 branch. It was created at 608436 and modified at 608816. I cloned
+from 610443, mainly because we added a feature branch and I want to access
+it from git too (610443 is one month before the branch creation).
+
+I will play a little bit with p4 to see if I can locate where the problem comes
+from and maybe hack git-p4 to make it more verbose.
+
+Thanks,
+P. Rouleau
