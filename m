@@ -2,66 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3395320C11
-	for <e@80x24.org>; Sun,  3 Dec 2017 21:20:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4474820C11
+	for <e@80x24.org>; Sun,  3 Dec 2017 21:29:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752760AbdLCVUM (ORCPT <rfc822;e@80x24.org>);
-        Sun, 3 Dec 2017 16:20:12 -0500
-Received: from mail2-relais-roc.national.inria.fr ([192.134.164.83]:3673 "EHLO
-        mail2-relais-roc.national.inria.fr" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752757AbdLCVUL (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 3 Dec 2017 16:20:11 -0500
-X-IronPort-AV: E=Sophos;i="5.45,355,1508796000"; 
-   d="scan'208";a="303755596"
-Received: from orange.lip.ens-lyon.fr ([140.77.14.54])
-  by mail2-relais-roc.national.inria.fr with ESMTP/TLS/AES128-GCM-SHA256; 03 Dec 2017 22:20:07 +0100
-From:   Matthieu Moy <Matthieu.Moy@univ-lyon1.fr>
-To:     Nathan PAYRE <second.payre@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Ryan Anderson <ryan@michonline.com>,
-        "e\@80x24.org" <e@80x24.org>, Junio C Hamano <gitster@pobox.com>,
-        PAYRE NATHAN p1508475 <nathan.payre@etu.univ-lyon1.fr>,
-        ALBERTIN TIMOTHEE p1514771 
-        <timothee.albertin@etu.univ-lyon1.fr>,
-        BENSOUSSAN--BOHM DANIEL p1507430 
-        <daniel.bensoussan--bohm@etu.univ-lyon1.fr>
-Subject: Re: [PATCH] send-email: extract email-parsing code into a subroutine
-References: <20171202170220.10073-1-second.payre@gmail.com>
-        <445d0838cf2a4107bad95d5cc2d38a05@BPMBX2013-01.univ-lyon1.fr>
-Date:   Sun, 03 Dec 2017 22:20:00 +0100
-In-Reply-To: <445d0838cf2a4107bad95d5cc2d38a05@BPMBX2013-01.univ-lyon1.fr>
-        (Nathan PAYRE's message of "Sat, 2 Dec 2017 17:11:45 +0000")
-Message-ID: <q7h9zi6zpkzj.fsf@orange.lip.ens-lyon.fr>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        id S1752585AbdLCV27 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 3 Dec 2017 16:28:59 -0500
+Received: from mout.gmx.net ([212.227.17.20]:62043 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752499AbdLCV26 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Dec 2017 16:28:58 -0500
+Received: from bedhanger.strangled.net ([188.193.86.106]) by mail.gmx.com
+ (mrgmx101 [212.227.17.168]) with ESMTPSA (Nemesis) id
+ 0LoaCE-1f26Yr1922-00ga9X; Sun, 03 Dec 2017 22:28:19 +0100
+From:   Ann T Ropea <bedhanger@gmx.de>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Philip Oakley <philipoakley@iee.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Daniel Barkalow <barkalow@iabervon.org>,
+        Ann T Ropea <bedhanger@gmx.de>
+Subject: Re: [PATCH v5 1/7] Documentation: revisions: fix typo: "three dot" ---> "three-dot" (in line with "two-dot").
+Date:   Sun,  3 Dec 2017 22:27:37 +0100
+Message-Id: <20171203212743.10228-1-bedhanger@gmx.de>
+X-Mailer: git-send-email 2.13.6
+References: <20171119184113.16630-1-bedhanger@gmx.de> <20171113223654.27732-1-bedhanger@gmx.de> <83D263E58ABD46188756D41FE311E469@PhilipOakley> <xmqqfu9pmsx3.fsf@gitster.mtv.corp.google.com> <20171113223654.27732-3-bedhanger@gmx.de> <xmqq1sl17e1u.fsf@gitster.mtv.corp.google.com> <20171119184113.16630-5-bedhanger@gmx.de> <xmqqzi7hlhkx.fsf@gitster.mtv.corp.google.com> <5AE7AD53CF184A27BF8F484D415083D9@PhilipOakley> <xmqqo9nuuadm.fsf@gitster.mtv.corp.google.com> <FDCFD8EC7A754412A6369F03E91926C5@PhilipOakley> <CAPig+cT-r0uLLv_GyTRddPe=ATX883S1jt-8gc=ANZW21S81Mg@mail.gmail.com> <CAPig+cT4MvjLDvFEB6hJOSip=dqkp10ydnpfnoUabK=53OmQkw@mail.gmail.com> <20171124235330.15157-1-bedhanger@gmx.de> <xmqq4lpjkl4g.fsf@gitster.mtv.corp.google.com> <xmqqd145k9td.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <xmqqd145k9td.fsf@gitster.mtv.corp.google.com>
+X-Provags-ID: V03:K0:BHtTfA+u256qkzUkHLLV66Y1e3JceXlKxn0D8Wo0XMpMETOYMAv
+ KtcRp4JRoJOZ1R0NRJHqxGFX911XG2iNM4iSeLsgEpwTipA26ZyzWipykUEmwOODMA44CI9
+ Cc4XaRgHHpcWWXUoBcjgf3uIDFLWJMe94wvwvuN5aEhRNGIvnv4oiwscALndSwqU6fyMHR3
+ ktkt5nDzUMtpO3WNTY5Ug==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:/Uj2HNXQFKQ=:qhw9cx9tWekpe6KuFWn9nN
+ +DFNKq+DLqqRxw8fFnIRMIOP2UBhs+E9c6g6iFu2oxQwM1sM6fWaRIfrQ7uDDfTT61oTcUOkZ
+ 8Uj47f1tM0Yym15OIrZ/XYmQrWxVUhChtKgEsQGcBoKLRNbYQzNRw6XKWYqxkjaF3U9AyePI1
+ hR391DVwIbSUADQVDoL04VBPnSIpnEE678z7F1AVZElwnYqhWYte89CSIRb/DpS9bgaTTpV9o
+ 8DzO516T56u8mxojsw7w/dGl0bbhrtN8Hhs6TpDuhVegrXwtQqj1KKNZzJUx7dLJujPUIu8a4
+ /IwQdlVz1a9JoOQ9Kn9izZBExdvrTxvvw4INS3/V3tnVmXR/WHoJeAzypeACYqW0nOn1Eiak6
+ yVIZK/52o+CBfkg3/4Cw6jx6Va/wFtVD3fLvfAxgIhcXm9uVBgbUgtd3+RJlu+N7tKnnLfCSV
+ hmWSUZjApAzax8PkX9JxPSaBpUjXYRiQABJvbznoxPFB0P8TgdQckfGi7rmq8Ojyqd39+AwP8
+ ctoDzX56GVW27LlYnGOOZS87PnPVcqVkxpdSWYJwipbEy3XBLg6wWP59T28eelaGcOSvdE88j
+ 9VoMzeEJEnX4XDrobb1aSKkMj2uMGiYcEaXxaMi7BOUxvhIecww9J9rYpmDPhNSWzFl2HnrEH
+ tzvkxJZ1QagDCifo6QkUwGzcw/FmNtrPNIbA3ULZFLX9S8pb+heWO3FDmcVgdyCMaMyuWgPPC
+ lp71alm688vJLlkkyLfqyHRjZmQwCyKiRTunl0VoL+gGSOCN5HFVoliq8+iAwIGfY5p7CGZEU
+ KylwCSUia9lqwGQBMTPMaGxpv3Zig==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nathan PAYRE <second.payre@gmail.com> writes:
+Signed-off-by: Ann T Ropea <bedhanger@gmx.de>
+---
+v2: rename patch series & focus on removal of ellipses
+v3: env var instead of config option, use one-line comments where appropriate, preserve indent level
+v4: improve env var handling (rename, helper func to query, docu)
+v5: rewrite series to take Junio's comments in <xmqqd145k9td.fsf@gitster.mtv.corp.google.com> aboard
+ Documentation/revisions.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> I found a mistake in my signed-off-by, please replace
-> <nathan.payre@etu.univ-lyon1.fr.> by <second.payre@gmail.com>
-
-I think you want exactly the opposite of this. You're contributing as a
-Lyon 1 student, hence your identity is @etu.univ-lyon1.fr. Your Gmail
-adress is used only for technical reasons.
-
-OTOH, you are missing the first line From: ... @..univ-lyon1.fr in your
-message.
-
-See how you did it:
-
-https://public-inbox.org/git/20171012091727.30759-1-second.payre@gmail.com/
-
-(The sign-off was wrong in this one, but the From was OK)
-
+diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
+index 61277469c874..dfcc49c72c0f 100644
+--- a/Documentation/revisions.txt
++++ b/Documentation/revisions.txt
+@@ -271,7 +271,7 @@ The '..' (two-dot) Range Notation::
+  for commits that are reachable from r2 excluding those that are reachable
+  from r1 by '{caret}r1 r2' and it can be written as 'r1..r2'.
+ 
+-The '...' (three dot) Symmetric Difference Notation::
++The '...' (three-dot) Symmetric Difference Notation::
+  A similar notation 'r1\...r2' is called symmetric difference
+  of 'r1' and 'r2' and is defined as
+  'r1 r2 --not $(git merge-base --all r1 r2)'.
 -- 
-Matthieu Moy
-https://matthieu-moy.fr/
+2.13.6
+
