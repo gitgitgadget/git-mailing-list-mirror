@@ -2,71 +2,154 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-0.1 required=3.0 tests=BAYES_20,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4301820C11
-	for <e@80x24.org>; Sun,  3 Dec 2017 14:15:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F2F120C11
+	for <e@80x24.org>; Sun,  3 Dec 2017 15:06:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752088AbdLCOP2 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 3 Dec 2017 09:15:28 -0500
-Received: from mail-yw0-f195.google.com ([209.85.161.195]:45754 "EHLO
-        mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751177AbdLCOP2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Dec 2017 09:15:28 -0500
-Received: by mail-yw0-f195.google.com with SMTP id y187so5745079ywd.12
-        for <git@vger.kernel.org>; Sun, 03 Dec 2017 06:15:27 -0800 (PST)
+        id S1752497AbdLCPGG (ORCPT <rfc822;e@80x24.org>);
+        Sun, 3 Dec 2017 10:06:06 -0500
+Received: from mail-it0-f65.google.com ([209.85.214.65]:38624 "EHLO
+        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752482AbdLCPGE (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Dec 2017 10:06:04 -0500
+Received: by mail-it0-f65.google.com with SMTP id r6so1111759itr.3
+        for <git@vger.kernel.org>; Sun, 03 Dec 2017 07:06:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=content-transfer-encoding:from:mime-version:date:subject:message-id
-         :to;
-        bh=tGwmFB2G5be1jHnWRMGE/RQXQ3e39lnVk2uO1+72/gw=;
-        b=YfPvoQSPMrOjaGb/TvTs1rSntzG2K/whBNYXErTtw0R1NHARaynycmXgpKha+Zf25B
-         1saemkl9TmkKT/U28lAg6CAa2Vo0remnztoquzq2mz0HdKaTCvPZy3+85iztHpvJZyRc
-         ehhE4F9tqi1nMqB1FPMU899SDfg1MsTx4CorTCelRYm2FO1USdCbJtSwgA3ihJ6p0VUE
-         FRfpnRaQUlVBnpH3v0jGR8bv9OlXtO3WdE8+qq6woi+r1CcZL3ewWO/onWDUZA3gmiMf
-         Rei9sui84t9ElB8VngWIuOBXSTErhVNHt/tbZ+DUYAJOgh/AxgnuzYLA7Cyow/R8596w
-         SwtQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=d5mv68UpeLEme4n1gkVxLDSV59wvEwV+r5FexOsToCU=;
+        b=bk3zqsj6DzSB6ZdCXWbjaE1MuFNYWa1LDOv2MudOOy9ntCBR+ZczzhucDdAU3Sfrbk
+         UFJMNu7o9X/GxPH8mTx3JpPbdVuaLDYSLZJ3s6w547UUiLK0sdRKWra5JLoFV+hfxIfR
+         MJ4CyIN2nhEj+gaH/wkm1IFk790rzDEumGYEYRotp6EiGICYPf3KlTz6t1ob3nCbpf9o
+         5wHmPcd8ad/cR+pJlmqQySvpkPBYS2wcTMMqwrFvLnNLrTjftf2biYvC1/aa/sEMfIWL
+         ZC6W5orD0dz045mmf2sBqS361t7LVP2bA53kbsnW+hLBogchVKhiooawkWxFMW0w21QN
+         fdcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:content-transfer-encoding:from:mime-version:date
-         :subject:message-id:to;
-        bh=tGwmFB2G5be1jHnWRMGE/RQXQ3e39lnVk2uO1+72/gw=;
-        b=Ajz8siyqrm4cdoeGBa6FgngBwJ6w+fvINXQcahmfjLw96Et2+Dtxe6nKFMcKuoc9+O
-         RsHfnya01pe8gtJWEVsbRrwCHmXI+zhLCaHt6enWP/NgFPhF5ToqpjcqlY+IFhv+Q3wB
-         6oinOWcl0fHm6kNKEB9YHZ9Ua/d+KvobZbyDHxJ6a/TlftnUVUQRrrhg4HUoy17+eqJj
-         QhZHKMQeoYHiYtIsCZr+HLNM7xS0sl/9ThxaZ7bnx93SkJAfI2zasJcK4N5qWjRazpKX
-         wCPJsqMR/4qez5YKOaxLGLfoPf7DRG4ZzQkywtdh7MG3salK/E5eB/x15fBfsJRPCTQ1
-         aonA==
-X-Gm-Message-State: AJaThX4ojogqNRTWWpteEfD+YChtQ96bwni1B+2Y/04rM8Vs13KuzdLX
-        YnrLu5UrdZ3uZYDS+DJICoxag07/yMo=
-X-Google-Smtp-Source: AGs4zMbGPJbVneS0aDw1qOOMWHPKnXJEwy+vy6grPh9nrUPOsmxyvWQ0uBfd75qclxjBEVYe1QX/Gw==
-X-Received: by 10.129.157.87 with SMTP id u84mr8176881ywg.232.1512310527341;
-        Sun, 03 Dec 2017 06:15:27 -0800 (PST)
-Received: from ?IPv6:2600:1:f208:4f2f:4cb4:959b:abe8:176b? ([2600:1:f208:4f2f:4cb4:959b:abe8:176b])
-        by smtp.gmail.com with ESMTPSA id y188sm4896555ywc.27.2017.12.03.06.15.26
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 03 Dec 2017 06:15:26 -0800 (PST)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-From:   Jacob Chassereau <chassereaujacob0@gmail.com>
-Mime-Version: 1.0 (1.0)
-Date:   Sun, 3 Dec 2017 09:15:25 -0500
-Subject: DARPA icon test
-Message-Id: <9B0EDF8D-E911-4544-BBF2-DFABAE317009@gmail.com>
-To:     Chassereau Jacob <jakechassereau@gmail.com>, help@asmallorange.com,
-        git@vger.kernel.org, feedback@mxtoolbox.com, PRAcomments@doc.gov,
-        AOLcopyright@aol.com
-X-Mailer: iPhone Mail (15B202)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=d5mv68UpeLEme4n1gkVxLDSV59wvEwV+r5FexOsToCU=;
+        b=kvDXG9c2MGMhTKORdHBfit0d+1mP4Xi2PRPNjzmQa3QyMjcVGqNvyCauotc5SS7DtQ
+         vgfbghRwPRll+4wBN5nVVrk/PEDNW32TCRScrotsjILCiaooCUsz6O6IP0lQ/w/TlBQ6
+         3tfxTlT7X6mvubLh8VSBT4lPg9YyJzYFuCKYEuGU5WfnzSivC7dFQP85WJ7kfo+18in1
+         v5sMOOqU5lumGmW7sdkoZpoEsOMJIcjlBgUB9G1bt9w0/Tlt0roXkqMcGo2u/xss/g++
+         ynv3yRm5JC2yq5vYEQHQjOM/DvouRXu5WySWHcvxqn6781Epc2tCAk+K8l3QJ2IcKT2a
+         PiIg==
+X-Gm-Message-State: AKGB3mKYRKaL55LS7R4jjePBtRzptkLCfyl8nyJv0LSZ0+t6IbMXt4JN
+        IVB92G/cGs5+FghjGNalqtwzrmVDcoLvD3k4VWs=
+X-Google-Smtp-Source: AGs4zMYcfha5Ag/U1Moe7AoitswiLVryixhtmDZ4hG65mPLw7bBKLgj1bchkZyyXvOH16Cs5T8aFU+Nbh5z8cDdMgu0=
+X-Received: by 10.36.20.68 with SMTP id 65mr1108410itg.147.1512313563097; Sun,
+ 03 Dec 2017 07:06:03 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.107.26.207 with HTTP; Sun, 3 Dec 2017 07:06:02 -0800 (PST)
+In-Reply-To: <20171201234556.GE18220@aiede.mtv.corp.google.com>
+References: <CANtxn9J9O+PADxpWa0JCcgwwk_tC5DuJGUruULN2fGP3knZ-Sw@mail.gmail.com>
+ <20161204204057.32dnkjx6ixv3swez@gmail.com> <CANtxn9K9tzmbea1Dx9Z37GNfA9QfCX0gm-XHjJxieJN6bc6D-A@mail.gmail.com>
+ <CANtxn9KjTToqXKeO1mM8c6kD+jLf8QcAVXF46tX61uQB7YdKYA@mail.gmail.com>
+ <20171201234013.GD18220@aiede.mtv.corp.google.com> <20171201234556.GE18220@aiede.mtv.corp.google.com>
+From:   Timon <timon37@gmail.com>
+Date:   Sun, 3 Dec 2017 16:06:02 +0100
+Message-ID: <CANtxn9+Ey8RpmcYojEp0Drf0b6Thb-6GxsKZSRmQEniFsE+k_g@mail.gmail.com>
+Subject: Re: [PATCH] git-gui: allow Ctrl+T to toggle multiple paths (Re: [BUG]
+ git gui can't commit multiple files)
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Pat Thoyts <patthoyts@users.sourceforge.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 12/2/17, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Jonathan Nieder wrote:
+>
+>> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>> Subject: git-gui: allow Ctrl+T to toggle multiple paths
+>>
+>> In the Unstaged Changes panel, selecting multiple lines (using
+>> shift+click) and pressing ctrl+t to stage them causes one file to be
+>> staged instead of all of the selected files.  The same also happens
+>> when unstaging files.
+>>
+>> This regression appears to have been introduced by gitgui-0.21.0~7^2~1
+>> (Allow keyboard control to work in the staging widgets, 2016-10-01).
+>>
+>> Also reported by zosrothko as a Git-for-Windows issue:
+>> https://github.com/git-for-windows/git/issues/1012
+>>
+>> [jn: fleshed out commit message]
+>>
+>> Reported-by: Timon <timon37@gmail.com>
+>> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+>> Signed-off-by: Jonathan Nieder <jrn@google.com>
+>
+> Gah, this should say:
+>
+> Signed-off-by; Jonathan Nieder <jrnieder@gmail.com>
+>
+> [...]
+>>> I applied it locally to git-2.15.0 and can confirm it fixed the problem
+>>> for me.
+>>> If you need any more info/help from me, or would like me to test
+>>> anything, feel free to ask.
+>>
+>> Thanks for this pointer.  I'm including the patch here so the project
+>> can consider applying it (it doesn't appear to have been sent upstream
+>> before).  I have not tested it or verified the claim it makes about
+>> what change introduced this regression --- if you're able to help with
+>> that, that would be welcome.
+>
+> Can you bisect?  That is:
+>
+>  git clone git://repo.or.cz/git-gui
+>  cd git-gui
+>  git bisect start
+>  git bisect good gitgui-0.20.0
+>  git bisect bad gitgui-0.21.0
+>
+> Then cut to the chase:
+>
+>  git checkout gitgui-0.21.0~7^2~1
+>  ... test test test ...
+>  git bisect (good|bad)
+>
+>  git checkout gitgui-0.21.0~7^2~1^
+>  ... test test test ...
+>  git bisect (good|bad)
+>
+> and follow the instructions if it suggests testing additional versions.
+>
+> Then I'll be happy to re-send the patch with the results from your
+> testing.
+>
+> Thanks again,
+> Jonathan
+>
 
-https://www.w3.org/Icons/DARPA/inline.html
+Did the testing and it went smoothly with the outcome:
 
+088ad75dc279614849f92e5ae0a2b579b26719eb is the first bad commit
+commit 088ad75dc279614849f92e5ae0a2b579b26719eb
+Author: Pat Thoyts <patthoyts@users.sourceforge.net>
+Date:   Sat Oct 1 22:04:39 2016 +0100
 
-Sent from my iPhone
+    Allow keyboard control to work in the staging widgets.
+
+    Keyboard focus was restricted to the commit message widget and users were
+    forced to use the mouse to select files in the workdir widget and only then
+    could use a key combination to stage the file.
+    It is now possible to use key navigation (Ctrl-Tab, arrow keys and Ctrl-T
+    or Ctrl-U) to stage and unstage files.
+    Suggested by @koppor in git-for-window/git issue #859
+
+    Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
+
+:100755 100755 11048c7a0e94f598b168de98d18fda9aea420c7d
+ec1cc43e8f73acd3d52047ece4dfab5edeb6ffb4 M	git-gui.sh
