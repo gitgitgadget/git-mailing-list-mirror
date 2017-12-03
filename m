@@ -7,55 +7,52 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8D7A320A40
-	for <e@80x24.org>; Sun,  3 Dec 2017 01:52:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6280320A40
+	for <e@80x24.org>; Sun,  3 Dec 2017 02:08:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752585AbdLCBwG (ORCPT <rfc822;e@80x24.org>);
-        Sat, 2 Dec 2017 20:52:06 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:65006 "EHLO
+        id S1752001AbdLCCIG (ORCPT <rfc822;e@80x24.org>);
+        Sat, 2 Dec 2017 21:08:06 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54863 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752469AbdLCBwF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Dec 2017 20:52:05 -0500
+        with ESMTP id S1751874AbdLCCIF (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Dec 2017 21:08:05 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 607DBB424B;
-        Sat,  2 Dec 2017 20:52:04 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C0057B9281;
+        Sat,  2 Dec 2017 21:08:04 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=gcmr0yupcyR34dISGklVV0ZQ/zo=; b=QE/Tb4
-        wWQ6q3k8Yue5VCsCXNcRQO4dYUWMjZ1pFdEUT1sE9Ih62BMVaJvxDgmTDc1TFW4A
-        W9D/Tb+fbhIXNc0DzqgiGiFTdR1TVOceTz5ebds3d4PHYOmYPAaewdUfuZEm2ifY
-        pGdODjZsd2fvKfD1ROrP7VUI8fybgPLxcJurY=
+        :content-type; s=sasl; bh=NcjHuZkWJIDJXEKL9ITUzh7pTXU=; b=FF8Ert
+        ioncFYsXTu4fMvLVeSkznoOeW6KYhhIfhb3gZG3OK0FiLwoSSPNZeBwQEMLyAwNo
+        tE5adS58uV8rKzuBPqdq7sHAe6Qy6+gT4rc7mYUaR901RjX4hLEToiT+OKEVtUfa
+        4O0omhBqB34zR1i9kIZKEJ2uecsSoawQhHAik=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=NkW62+vd5fFSvAM7MSakSGrwscaBcAi1
-        fIiRnRyAzfbayHMpr7s27n2qN6NF8xqKkR7Arn0YVA+cC2pjBhHZ51weXh1dJ3Jb
-        eE/r5pf9FXH+QBrDSdxM4IrMV8OZbxf4vZ9SUYyp3nZxx6WhGiqaQlcgeYJeLXFk
-        6XKwRzNN2/0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 56346B424A;
-        Sat,  2 Dec 2017 20:52:04 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=Hob8rveJmyaMzeiAGdj+bED+vR91QUUM
+        19da442YdE40eZAAM9bCCZ/n15LT2K3mid6009sUU/wTplmzlFikmkqtiLdyAHLJ
+        DL0PlrgS4/4Am2DR0rLviiwtpT8Yi1t80Gm06EaJQH5A7IxRmYYiEeG+qEt0TeMq
+        p5m+qaHuwu8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B8179B9280;
+        Sat,  2 Dec 2017 21:08:04 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C427FB4249;
-        Sat,  2 Dec 2017 20:52:03 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id EAA78B927F;
+        Sat,  2 Dec 2017 21:08:03 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
 Cc:     Git mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH v2 2/2] Doc/check-ref-format: clarify information about @{-N} syntax
-References: <xmqqpo8dn1jd.fsf@gitster.mtv.corp.google.com>
-        <20171127172834.6396-1-kaartic.sivaraam@gmail.com>
-        <20171127172834.6396-2-kaartic.sivaraam@gmail.com>
-        <xmqqd14386sw.fsf@gitster.mtv.corp.google.com>
-        <1511880237.10193.5.camel@gmail.com>
-Date:   Sat, 02 Dec 2017 17:52:02 -0800
-In-Reply-To: <1511880237.10193.5.camel@gmail.com> (Kaartic Sivaraam's message
-        of "Tue, 28 Nov 2017 20:13:57 +0530")
-Message-ID: <xmqqa7z0lgsd.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH v3 2/2] Doc/check-ref-format: clarify information about @{-N} syntax
+References: <xmqqd14386sw.fsf@gitster.mtv.corp.google.com>
+        <20171128163406.15452-1-kaartic.sivaraam@gmail.com>
+Date:   Sat, 02 Dec 2017 18:08:02 -0800
+In-Reply-To: <20171128163406.15452-1-kaartic.sivaraam@gmail.com> (Kaartic
+        Sivaraam's message of "Tue, 28 Nov 2017 22:04:06 +0530")
+Message-ID: <xmqq609olg1p.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 8F749CD6-D7CC-11E7-AED1-8EF31968708C-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: CBC140B6-D7CE-11E7-8393-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -63,73 +60,98 @@ X-Mailing-List: git@vger.kernel.org
 
 Kaartic Sivaraam <kaartic.sivaraam@gmail.com> writes:
 
->> I have a mild suspicion that "git checkout -B @{-1}" would want to
->> error out instead of creating a valid new branch whose name is
->> 40-hex that happen to be the name of the commit object you were
->> detached at previously.
+> When the N-th previous thing checked out syntax (@{-N}) is used
+> with '--branch' option of check-ref-format the result might not
+> always be a valid branch name (see NOTE below). This is because
+> @{-N} is used to refer to the N-th last checked out "thing" which
+> might be any commit (sometimes a branch). The documentation thus
+> does a wrong thing by promoting it as the "previous branch syntax".
 >
-> I thought this the other way round. Rather than letting the callers
-> error out when @{-N} didn't expand to a branch name, I thought we
-> should not be expanding @{-N} syntax for "check-ref-format --branch" at
-> all to make a "stronger guarantee" that the result is "always" a valid
-> branch name. Then I thought it might be too restrictive and didn't
-> mention it. So, I dunno.
+> So, correctly state @{-N} is the syntax for specifying "N-th last
+> thing checked out" and also state that the result of using @{-N}
+> might also result in a "commit hash".
 >
->
->> I am not sure if "check-ref-format --branch" should the same; it is
->> more about the syntax and the 40-hex _is_ valid there, so...
->
-> I'm not sure what you were trying to say here, sorry.
+> NOTE: Though a commit-hash is a "syntactically" valid branch name,
+> it is generally not considered as one for the use cases of
+> "git check-ref-format --branch". That's because a user who does
+> "git check-ref-format --branch @{-$N}" would except the output
+> to be a "existing" branch name apart from it being syntactically
+> valid.
 
-The "am not sure if" comes from this question: should these two be
-equivalent?
+s/except/expect/ I suspect.  But I do not think this description is
+correct.  "check-ref-format --branch @{-1}", when you come from the
+detached HEAD state, happily report success so it does not hold that
+it is "generally not considered".
 
-    $ git check-ref-format --branch @{-1}
-    $ git check-ref-format --branch $(git rev-parse --verify @{-1})
+Unless you are saying "check-ref-format --branch" is buggy, that is.
+If so, we shouldn't be casting that buggy behaviour in stone by
+documenting, but should be fixing it.
 
-If they should be equivalent (and I think the current implementation
-says they are), then the answer to "if ... should do the same?"
-becomes "no, we should not error out".
+But because this patch is about documenting, the farthest you can go
+is to say that "check-ref-format --branch only checks if the name is
+syntactically valid, and if you came from a detached HEAD, or if you
+came from a branch that you deleted since then, the command will say
+'yes, that looks like a good branch name to use'.  That may not
+match what you expect, but that is the way it is.  Get used to it
+and that is why we document that behaviour here."
 
-Stepping back a bit, the mild suspicion above says
+And the paragraph that leads to this NOTE and this NOTE itself are
+both misleading from that point of view.  The result *is* always a
+valid branch name, but it may not name a branch that currently
+exists or ever existed.
 
-    $ git checkout HEAD^0
-    ... do things ...
-    $ git checkout -b temp
-    ... do more things ...
-    $ git checkout -B @{-1}
+Taking the above together, perhaps.
 
-that creates a new branch whose name is 40-hex of a commit that
-happens to be where we started the whole dance *is* a bug.  No sane
-user expects that to happen, and the last step "checkout -B @{-1}"
-should result in an error instead [*1*].
+    When the N-th previous thing checked out syntax (@{-N}) is used
+    with '--branch' option of check-ref-format the result may not be
+    the name of a branch that currently exists or ever existed.
+    This is because @{-N} is used to refer to the N-th last checked
+    out "thing", which might be any commit (sometimes a branch) in
+    the detached HEAD state. The documentation thus does a wrong
+    thing by promoting it as the "previous branch syntax".
 
-I was wondering if "git check-ref-format --branch @{-1}", when used
-in place of "checkout -B @{-1}" in the above sequence, should or
-should not fail.  It really boils down to this question: what @{-1}
-expands to and what the user wants to do with it.
+    State that @{-N} is the syntax for specifying "N-th last thing
+    checked out" and also state that the result of using @{-N} might
+    also result in an commit object name.
 
-In the context of getting a revision (i.e. "rev-parse @{-1}") where
-we are asking what the object name is, the value of the detached
-HEAD we were on previously is a valid answer we are "expanding @{-1}
-to".  If we were on a concrete branch and @{-1} yields a concrete
-branch name, then rev-parse would turn that into an object name, and
-in the end, in either case, the object name is what we wanted to
-get.  So we do not want to error this out.
+> diff --git a/Documentation/git-check-ref-format.txt b/Documentation/git-check-ref-format.txt
+> index cf0a0b7df..5ddb562d0 100644
+> --- a/Documentation/git-check-ref-format.txt
+> +++ b/Documentation/git-check-ref-format.txt
+> @@ -78,17 +78,20 @@ reference name expressions (see linkgit:gitrevisions[7]):
+>  . at-open-brace `@{` is used as a notation to access a reflog entry.
+>  
+>  With the `--branch` option, the command takes a name and checks if
+> -it can be used as a valid branch name (e.g. when creating a new
+> -branch).  The rule `git check-ref-format --branch $name` implements
+> +it can be used as a valid branch name e.g. when creating a new branch
+> +(except for one exception related to the previous checkout syntax
+> +noted below). The rule `git check-ref-format --branch $name` implements
 
-But a user of "git check-ref-format --branch" is not asking about
-the object name ("git rev-parse" would have been used otherwise).
-Which argues for erroring out "check-ref-format --branch @{-1}" if
-we were not on a branch in the previous state.
+And "except for" is also wrong here.  40-hex still *IS* a valid
+branch name; it is just it may not be what we expect.  So perhaps
+rephrase it to something like "(but be cautious when using the
+previous checkout syntax that may refer to a detached HEAD state)".
 
-And that argues for erroring out "check-ref-format --branch @{-1}"
-in such a case, i.e. declaring that the first two commands in this
-message are not equivalent.
+>  may be stricter than what `git check-ref-format refs/heads/$name`
+>  says (e.g. a dash may appear at the beginning of a ref component,
+>  but it is explicitly forbidden at the beginning of a branch name).
+>  When run with `--branch` option in a repository, the input is first
+> -expanded for the ``previous branch syntax''
+> -`@{-n}`.  For example, `@{-1}` is a way to refer the last branch you
+> -were on.  This option should be used by porcelains to accept this
+> -syntax anywhere a branch name is expected, so they can act as if you
+> -typed the branch name.
+> +expanded for the ``previous checkout syntax''
+> +`@{-n}`.  For example, `@{-1}` is a way to refer the last thing that
+> +was checkout using "git checkout" operation. This option should be
 
+s/was checkout/was checked out/;
 
-[Footnote]
+> +used by porcelains to accept this syntax anywhere a branch name is
+> +expected, so they can act as if you typed the branch name. As an
+> +exception note that, the ``previous checkout operation'' might result
+> +in a commit hash when the N-th last thing checked out was not a branch.
 
-*1* "It should instead detach HEAD at that commit if @{-1} refers to
-    a detached HEAD state" is not a good suggestion (we wouldn't
-    have "-B" if a mere branch switching is desired).
-    
+s/a commit hash/a commit object name/;
+
