@@ -2,163 +2,189 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,STOX_REPLY_TYPE,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E46D420C11
-	for <e@80x24.org>; Sun,  3 Dec 2017 23:01:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0D7A720C11
+	for <e@80x24.org>; Sun,  3 Dec 2017 23:14:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752434AbdLCXBf (ORCPT <rfc822;e@80x24.org>);
-        Sun, 3 Dec 2017 18:01:35 -0500
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:42012 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751781AbdLCXBe (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Dec 2017 18:01:34 -0500
-Received: by mail-wm0-f66.google.com with SMTP id l141so2807511wmg.1
-        for <git@vger.kernel.org>; Sun, 03 Dec 2017 15:01:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=basY/uTRCxlNSo06ATv8mWMMoMwhsAyQu11/srJTfas=;
-        b=A37N5ElXhEU77rRitkwjtno/d1k2EZwKF5mVj+0Sn7P39PhcAtqQa4MUz5DvAYG5QK
-         BtgeN/ngUknkNL7JZaDI39xIbiZGSAR5Qjs6aUobuZvVVjqXGb37ksguF1Dt3G1KmW4i
-         em8aU90E7YCPR/0YARN+5DPGFir4T19bxlKHFLpy9JDv+d3W4tAWNTntp6wODV9yr9tx
-         6pw+9YbyVrSVAZKkbTuJu5sVRuH0IIodk4Zuj7ReItsWOmNCM23Uk+0Mis/YaVQSvftc
-         O5cZYxVBxjDtFlHG6tigkW83dBe5QhTqjJ0M+gd+p59eWZoOXibWYBbqojXAkEHXK20A
-         bWgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=basY/uTRCxlNSo06ATv8mWMMoMwhsAyQu11/srJTfas=;
-        b=r9pnjS+jwcf1dX1flotLRVLFL7I38AgA3pIrqVOvtLFQ4Hpnva0mHeMYt7Ht7htVyk
-         Ir6s13hwfmu73vXSSfppVJjZroxoIgsC4JYzvLjvfV4vQipEwhZQSkjduPJVqX0vyqk+
-         ZlPgPAW8PoBNKLfoQNGVc5M8pxzVD3zgMe9YNS5oEE6oPjS3sylJ6QDRZqiQkRosM+O2
-         dnMrh7WH9bXzy+G3Fuiu1tpA5t/0HesWp6kI9HAJpixv/He5UecKxGIV0qbNrxTT58PR
-         yUmg8ayIFpT3WXOmeOM8LQKYQCc06FIypdwPFskGUtFbTY1uLSYL/jl+9EF0AB55lqa7
-         H/rA==
-X-Gm-Message-State: AKGB3mIgERa8A5Goqy5O+FmqVlFfjePox9/1NUDyzmjuFbf2Gt1yUOlS
-        E1DPjar4gvOwRbB4bL9kCGE=
-X-Google-Smtp-Source: AGs4zMYgTPZvjlxqxYp1oVz90WpplOOsNpRvIO3Hg7Ndf9f5WLVBZKBvdLys0m2W6HxuWmPOVxeR4w==
-X-Received: by 10.28.127.22 with SMTP id a22mr1615704wmd.12.1512342093078;
-        Sun, 03 Dec 2017 15:01:33 -0800 (PST)
-Received: from [192.168.5.102] (cable-24-135-61-30.dynamic.sbb.rs. [24.135.61.30])
-        by smtp.gmail.com with ESMTPSA id e132sm2228773wmd.40.2017.12.03.15.01.31
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 03 Dec 2017 15:01:31 -0800 (PST)
-Subject: Re: [SCRIPT/RFC 0/3] git-commit --onto-parent (three-way merge, no
- working tree file changes)
-To:     Chris Nerwert <a.lozovsky@gmail.com>
-Cc:     git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
-        Nikolay Shustov <nikolay.shustov@gmail.com>,
-        Johannes Schneider <mailings@cedarsoft.com>,
-        Patrik Gornicz <patrik-git@mail.pgornicz.com>,
-        Martin Waitz <tali@admingilde.org>,
-        Shawn Pearce <spearce@spearce.org>,
-        Sam Vilain <sam@vilain.net>, Jakub Narebski <jnareb@gmail.com>
-References: <8998e832-f49f-4de4-eb8d-a7934fba97b5@gmail.com>
- <0F30BEF8-A9F7-43B9-BC89-4B9CD7AF3E16@gmail.com>
-From:   Igor Djordjevic <igor.d.djordjevic@gmail.com>
-Message-ID: <bfc4df2c-2e31-bb83-832d-92e41d09b976@gmail.com>
-Date:   Mon, 4 Dec 2017 00:01:30 +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.4.0
+        id S1752801AbdLCXOM (ORCPT <rfc822;e@80x24.org>);
+        Sun, 3 Dec 2017 18:14:12 -0500
+Received: from smtp-out-1.talktalk.net ([62.24.135.65]:57095 "EHLO
+        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752402AbdLCXOL (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Dec 2017 18:14:11 -0500
+Received: from PhilipOakley ([92.29.14.162])
+        by smtp.talktalk.net with SMTP
+        id LdSaepA5SmITaLdSaeVzUP; Sun, 03 Dec 2017 23:14:09 +0000
+X-Originating-IP: [92.29.14.162]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=W/RIbVek c=1 sm=1 tr=0 a=NXc+vVEgz70gitWznrz3ig==:117
+ a=NXc+vVEgz70gitWznrz3ig==:17 a=IkcTkHD0fZMA:10 a=Dx4yW56zAAAA:8
+ a=JZQsxJmmSXodm_RELncA:9 a=eWQgC80g4mGystdA:21 a=AgB3QmJ7P7vHaNv3:21
+ a=QEXdDO2ut3YA:10 a=X_u8qhY6y2Nm79co_leF:22
+Message-ID: <A05AA29AD20041A2B31E7A5CD56BB682@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>,
+        "'Jeff Hostetler'" <git@jeffhostetler.com>, <git@vger.kernel.org>
+References: <004201d36ac8$db62b900$92282b00$@nexbridge.com> <bdd01692-198a-f5ec-3c88-7d99e4adced5@jeffhostetler.com> <004701d36ad2$9a7fcea0$cf7f6be0$@nexbridge.com>
+Subject: Re: [RFE] Inverted sparseness
+Date:   Sun, 3 Dec 2017 23:14:09 -0000
+Organization: OPDS
 MIME-Version: 1.0
-In-Reply-To: <0F30BEF8-A9F7-43B9-BC89-4B9CD7AF3E16@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+Content-Type: text/plain;
+        format=flowed;
+        charset="UTF-8";
+        reply-type=original
 Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-Antivirus: AVG (VPS 171203-0, 03/12/2017), Outbound message
+X-Antivirus-Status: Clean
+X-CMAE-Envelope: MS4wfORYh4r0wvT1CD8fgt/wBt48Yjj4Q+0neTEQ26ZWAlhDF1Zb231/d28gTi7uX4sadpXLbaia8wy5tXOykQxDrYcUnHHgaRdzzG4LCnfXEZBLtpf+6rq3
+ auzGRiucbOEWElAkqHCA6ryPyiu/D+2ahy5QNsGnqPTHOBRob0mLmDmHAKTiAdnd8aneQ0wp1Z+G6HZzQHXI5RU+iO68kzYCGUhN1YGgGjIR6R6OXNB7CVMR
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Chris,
+From: "Randall S. Becker" <rsbecker@nexbridge.com>
+Sent: Friday, December 01, 2017 6:31 PM
+> On December 1, 2017 1:19 PM, Jeff Hostetler wrote:
+>>On 12/1/2017 12:21 PM, Randall S. Becker wrote:
+>>> I recently encountered a really strange use-case relating to sparse 
+>>> clone/fetch that is really backwards from the discussion that has been 
+>>> going on, and well, I'm a bit embarrassed to bring it up, but I have no 
+>>> good solution including building a separate data store that will end up 
+>>> inconsistent with repositories (a bad solution).  The use-case is as 
+>>> follows:
+>>>
+>>> Given a backbone of multiple git repositories spread across an 
+>>> organization with a server farm and upstream vendors.
+>>> The vendor delivers code by having the client perform git pull into a 
+>>> specific branch.
+>>> The customer may take the code as is or merge in customizations.
+>>> The vendor wants to know exactly what commit of theirs is installed on 
+>>> each server, in near real time.
+>>> The customer is willing to push the commit-ish to the vendor's upstream 
+>>> repo but does not want, by default, to share the actual commit contents 
+>>> for security reasons.
+>>> Realistically, the vendor needs to know that their own commit id was put 
+>>> somewhere (process exists to track this, so not part of the use-case) 
+>>> and whether there is a subsequent commit contributed >by the customer, 
+>>> but the content is not relevant initially.
+>>>
+>>> After some time, the vendor may request the commit contents from the 
+>>> customer in order to satisfy support requirements - a.k.a. a defect was 
+>>> found but has to be resolved.
+>>> The customer would then perform a deeper push that looks a lot like a 
+>>> "slightly" symmetrical operation of a deep fetch following a prior 
+>>> sparse fetch to supply the vendor with the specific commit(s).
+>
+>>Perhaps I'm not understanding the subtleties of what you're describing, 
+>>but could you do this with stock git functionality.
+>
+>>Let the vendor publish a "well known branch" for the client.
+>>Let the client pull that and build.
+>>Let the client create a branch set to the same commit that they fetched.
+>>Let the client push that branch as a client-specific branch to the vendor 
+>>to indicate that that is the official release they are based on.
+>
+>>Then the vendor would know the official commit that the client was using.
+> This is the easy part, and it doesn't require anything sparse to exist.
+>
+>>If the client makes local changes, does the vendor really need the SHA of 
+>>those -- without the actual content?
+>>I mean any SHA would do right?  Perhaps let the client create a second 
+>>client-specific branch (set to
+>> the same commit as the first) to indicate they had mods.
+>>Later, when the vendor needs the actual client changes, the client does a 
+>>normal push to this 2nd client-specific branch at the vendor.
+>>This would send everything that the client has done to the code since the 
+>>official release.
+>
+> What I should have added to the use-case was that there is a strong audit 
+> requirement (regulatory, actually) involved that the SHA is exact, 
+> immutable, and cannot be substitute or forged (one of the reasons git is 
+> in such high regard). So, no I can't arrange a fake SHA to represent a SHA 
+> to be named later. It SHA of the installed commit is part of the official 
+> record of what happened on the specific server, so I'm stuck with it.
+>
+>>I'm not sure what you mean about "it is inside a tree".
+>
+> m---a---b---c---H1
+>          `---d---H2
+>
+> d would be at a head. b would be inside. Determining content of c is 
+> problematic if b is sparse, so I'm really unsure that any of this is 
+> possible.
+>
+> Cheers,
+> Randall
+>
+> -- Brief whoami: NonStop&UNIX developer since approximately 
+> UNIX(421664400)/NonStop(211288444200000000)
+> -- In my real life, I talk too much.
 
-On 30/11/2017 23:40, Chris Nerwert wrote:
-> 
-> I'm actually doing the described workflow quite often with git rebase
-> when working on a topic. Given the following structure:
-> 
->   ---o               (master)
->       \
->        o---A---B---C (topic)
-> 
-> When I want to make changes to commit A one option is to make them
-> directly on topic, then do "git commit --fixup A", and then eventual
-> interactive rebase onto master will clean them up:
-> 
->   ---o                     (master)
->       \
->        o---A---B---C---f!A (topic)
-> 
-> However, sometimes this breaks when changes in B or C conflict
-> somehow with A (which may happen quite a lot during development of a
-> topic), so the rebase will not apply cleanly. So sometimes I make a
-> temporary branch from A, commit the fixup there:
-> 
->   ---o               (master)
->       \
->        o---A---B---C (topic)
->             \
->              f!A     (temp)
-> 
-> and then use "git rebase --onto temp A topic" to move the topic back
-> on track:
-> 
->   ---o                     (master)
->       \
->        o---A---f!A         (temp)
->                   \
->                    B'---C' (topic)
-> 
-> after which the final cleanup rebase is much easier to do.
-> 
-> Obviously, all the branch switching and rebasing does take its tall
-> on file modifications.
+I think I get the jist of your use case. Would I be right that you don't 
+have a true working solution yet? i.e. that it's a problem that is almost 
+sorted but falls down at the last step.
 
-From use case you described (and which I often experience myself), it 
-seems plain "git commit --onto A" would be of help here, committing 
-fixup onto A directly, without a need to switch to it (branch or 
-not), a case I`m discussing with Hannes in that other sub-thread[1] of 
-this e-mail, too.
+If one pretended that this was a single development shop, and the various 
+vendors, clients and customers as being independent devolopers, each of whom 
+is over protective of their code, it may give a better view that maps onto 
+classic feature development diagrams. (i.e draw the answer for local devs, 
+then mark where the splits happen)
 
-But from there, your flow takes a different direction, using rebase, 
-while this whole thread started around some merge-like functionality.
+In particular, I think you could use a notional regulator's view that the 
+whole code base is part of a large Git heirarchy of branches and merges, and 
+that some of the feature loops are only available via the particular 
+developer that worked on that feature.
 
-I can imagine a user interface doing what you (and I) would like, 
-something like:
+This would mean that from a regulatory overview there is a merge commit in 
+the 'main' (master) heirachy that has the main and feature commits listed, 
+and the feature commit is probably an --allow-empty commit (that has an 
+empty tree if they are that paranoid) that says 'function X released' (and 
+probably tagged), and that release commit then has, as its parent, the true 
+release commit, with the true code tree. The latter commit isn't actually 
+being shown to you!
 
-(1) git commit --onto A --rebase
+At this point the potential for using the graft capability comes in (as a 
+regulated method!). Locally the graft records the missing line of pearls for 
+that paranoid dev/vendor/customer/client. The whole git heirachy still 
+works.
 
-..., where your changes would first be committed onto commit A, and 
-then commits from A (excluded) to HEAD (included) rebased onto this 
-new commit.
+The question is how to get that  release commit with its empty tree, and its 
+tag, to you from the dev. I'd guess that a fast-export of just that 
+tag/commit/empty tree would allow you to bring in that sentinel point to 
+your heirachy (initially as a psuedo --root), and then graft it on. (I 
+haven't checked if fast-export allows such specificity, but it's a method)
 
-BUT, as far as it seems to me, rebase currently touches working tree 
-for each operation (am I wrong here?), so once the rebase sequence is 
-initiated, it would internally still need to checkout to your new 
-fixup commit (on top of A), and then proceed applying changes and 
-changing working tree with each commit being rebased, overall failing 
-to address your main concern - needless (untouched) file 
-modifications, even in case of no conflicts.
+You can now form the merge commit and have regulatory oversight and the full 
+git validation and verification capability, as long as your web of trust 
+extends to the regulator looking effectively across the air gap. It's a 
+fresh way of seeing the web of trust.
 
-I find this scenario quite interesting as well, but I`m afraid it may 
-currently be out of scope of what I`m trying to accomplish with "git 
-commit --onto[-parent]", for the most part because it looks like it 
-would need "index only rebase" first (not touching working tree, that 
-is)...?
+Thus you/they have various "shallow clones", but with gaps and islands in 
+the shallowness....  and those gaps are spanned by grafts (which are 
+audited). The `git-replace` may also be an option, but I don't think it's 
+quite right for this case. You just have a temporary gap in the history, and 
+with fast export
 
-If we had that, it would/should be pretty easy to add it into the mix 
-with "git commit --onto" here, ending up with something as imagined 
-in command line (1) above :) I`ll make a note of it, thanks.
+If using the empty tree part doesn't pass muster (i.e. showing nothing isn't 
+sufficient), then the narrow clone could come into play to limit what parts 
+of the trees are widely visible, but mainly its using the grafts to cover 
+the regulatory gap, and (for the moment) using fast-export to transfer the 
+singleton commit / tags
 
-Any further help appreciated, of course :)
+Oh Just remembered, there is the newish capability to fetch random blobs, so 
+that may help.
 
-Regards, Buga
+Philip
 
-[1] https://public-inbox.org/git/0F30BEF8-A9F7-43B9-BC89-4B9CD7AF3E16@gmail.com/T/#me830a80d745df60ae8bd6a2e67eee4bd4dabf56c
+
