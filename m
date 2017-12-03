@@ -2,141 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 16BF120A40
-	for <e@80x24.org>; Sun,  3 Dec 2017 00:45:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8522320A40
+	for <e@80x24.org>; Sun,  3 Dec 2017 00:46:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752510AbdLCApt (ORCPT <rfc822;e@80x24.org>);
-        Sat, 2 Dec 2017 19:45:49 -0500
-Received: from mail-qt0-f196.google.com ([209.85.216.196]:43143 "EHLO
-        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751533AbdLCAps (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Dec 2017 19:45:48 -0500
-Received: by mail-qt0-f196.google.com with SMTP id w10so17342265qtb.10
-        for <git@vger.kernel.org>; Sat, 02 Dec 2017 16:45:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=8FWpKL/tCLktE7FqQXvaAxn0OReFP5vg9W0rAs+Q1AM=;
-        b=VyZnvP1xVpKmvbh7ritudVFkmMmIlg8jqaE3/xFdc9e5qK460wo3CXpzw5rUwzeCas
-         /qzMYiDo58cl77Wm/vBCVZnFgNLQ+/Zh02G/ZY4OVO0F1h6TxL8OSnmlfGRFf0cleZM1
-         ydLWGyv5s4jqShjo+/fA1KZQ0zfULh25rUe2ocRP/ROQDxlNHQV0YwrwbX+hrnujxdsT
-         2nrTO00+e2t1b592HfIxqAku+P/utnMl/lUB6wIpjBXgbqfOlWFtaBgZ0jPTvgxI4+Nd
-         YM3NKWpZqikc7pYLFRQ71IYuwfRwRNJePdB6s59Py3LtkDz7DYr0wv72RPAkm2OG5Y5g
-         gG8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=8FWpKL/tCLktE7FqQXvaAxn0OReFP5vg9W0rAs+Q1AM=;
-        b=ofdjYz13Mgk2HKUqoIA6joX2ZYsFaG3xPxwo9VfrIwAEMWt27w8NJA9VUu3GYIuIDG
-         FVB9keUcwm2GmL1kWIomGvBdAFZymfG/DKWMJnldvV3QPXJjnbpr2Azwe6+cDujnZrQg
-         KtabLC+2AYIdaapaHuv8IxqeGNwOtowQi5r3pAez4OCd3bryfKmzM/9jC2j/Ksea4Rqz
-         2HdQ+D+6NuLFaB0ZwJopkI5PeSWqO1yNXw+URojXdoDRySpZZha1ZxT1HAVIMVXYCV7L
-         8KipCj8Gzd5LzFuGMuiQrYX6NfIYtxMXQ3xqZel/IHqxZyPoH8YSJSS+gh2P72SrvLbO
-         dD2Q==
-X-Gm-Message-State: AKGB3mIT/TCtv1WGbsiKZdl598cmEBdarDNMfeZEWEjX/YtGvXWZ4S3I
-        ldPAVhGnWQroXgheZIXOo+XmtAquj1o=
-X-Google-Smtp-Source: AGs4zMYrUhmx2+nKvr4ww6hD1uO2rt+MRBIZyv2V6/j5aT7/8vH5+VV2qfjaon1htP0yr8Mkele7Rg==
-X-Received: by 10.237.57.36 with SMTP id l33mr15325151qte.324.1512261947127;
-        Sat, 02 Dec 2017 16:45:47 -0800 (PST)
-Received: from zaya.teonanacatl.net (pool-173-67-181-41.hrbgpa.fios.verizon.net. [173.67.181.41])
-        by smtp.gmail.com with ESMTPSA id u3sm6953580qka.39.2017.12.02.16.45.45
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sat, 02 Dec 2017 16:45:46 -0800 (PST)
-Date:   Sat, 2 Dec 2017 19:45:43 -0500
-From:   Todd Zullinger <tmz@pobox.com>
-To:     Shikher Verma <root@shikherverma.com>
-Cc:     gitster@pobox.com, git@vger.kernel.org, santiago@nyu.edu,
-        sbeller@google.com
-Subject: Re: [PATCH] Add a sample hook which saves push certs as notes
-Message-ID: <20171203004543.GO3693@zaya.teonanacatl.net>
-References: <xmqqtvzzqt5u.fsf@gitster.mtv.corp.google.com>
- <20171202091248.6037-1-root@shikherverma.com>
+        id S1752538AbdLCAqK (ORCPT <rfc822;e@80x24.org>);
+        Sat, 2 Dec 2017 19:46:10 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58648 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751533AbdLCAqJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Dec 2017 19:46:09 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2A5F6B37DF;
+        Sat,  2 Dec 2017 19:46:09 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=/HS4JkcvaoykTTsA5bm53EB7SDQ=; b=RfjB+e
+        RvUSxeVns5XFeWkoT6gq8UYLAvGZXEwuplmICZ5fQmdpC8oECAtLFn28+lB0aVtj
+        A28HmlxoWX4uEOslov2RbVcedf0BwfxROefUZlvzb+rHVZ6SC6pb0W66L4jS3LaJ
+        xrEB0aJrM7C430staKxaOQjtReLE0ZMs0mxkk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=hk6y7puH7QUhREUeWWc/6lt7Nt0o0JvR
+        uo/T6EeEbZsSwPVCAktPqgjNULYWLXRiB3Qr7IunRokBjX9brPARnA1bnx8H4NO0
+        FNWU29IIU0kT7MYKIgfyaFNjcjaIng0esm4/zvNLX/JKgV4Dwfo2HLbnJvRqhnaD
+        VROMsD+CbNM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 212A6B37DD;
+        Sat,  2 Dec 2017 19:46:09 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 85DF9B37DC;
+        Sat,  2 Dec 2017 19:46:08 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Max Kirillov <max@max630.net>
+Cc:     Jeff King <peff@peff.net>, Eric Sunshine <sunshine@sunshineco.com>,
+        Florian Manschwetus <manschwetus@cs-software-gmbh.de>,
+        Chris Packham <judge.packham@gmail.com>,
+        Konstantin Khomoutov <kostix+git@007spb.ru>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH v6 2/2] t5560-http-backend-noserver.sh: add CONTENT_LENGTH cases
+References: <20171126193813.12531-1-max@max630.net>
+        <20171126193813.12531-3-max@max630.net>
+        <CAPig+cROFS+3Yon2CFr-aPUGzDY4WVbU8kHbBx68O3M8k5eeug@mail.gmail.com>
+        <20171126224051.GF26158@jessie.local>
+        <20171129032632.GC32345@sigill.intra.peff.net>
+        <20171129051919.GH26158@jessie.local>
+Date:   Sat, 02 Dec 2017 16:46:07 -0800
+In-Reply-To: <20171129051919.GH26158@jessie.local> (Max Kirillov's message of
+        "Wed, 29 Nov 2017 07:19:19 +0200")
+Message-ID: <xmqq374smyeo.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20171202091248.6037-1-root@shikherverma.com>
-User-Agent: Mutt/1.9.1 (2017-09-22)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 59FB70A6-D7C3-11E7-B405-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Shikher,
+Max Kirillov <max@max630.net> writes:
 
-I'm not familiar with push certs, but I did notice some general issues
-in the sample hook.  I hope they're helpful.
+> If nobody objects changing the user-visible behavior, I'll
+> consider using this.
 
-Shikher Verma wrote:
-> index 000000000..b4366e43f
-> --- /dev/null
-> +++ b/templates/hooks--post-receive.sample
-> +#!/bin/sh
-...
-> +if test -z GIT_PUSH_CERT ; then
-> +    exit 0
-> +fi
+What user-visible behaviour?  A user tries to use a new test helper
+introduced by the previous round and does not find it?  That's OK.
 
-The $ is missing from GIT_PUSH_CERT.  test -z GIT_PUSH_CERT will
-always be false. :)
+> PS: I'll respond to your other reply a bit later.
 
-The variable should also be quoted.  Not all sh implementations accept
-a missing argument to test -z, as bash does.
-
-More minor, Documentation/CodingGuidelines suggests placing 'then' on
-a new line:
-
-    if test -z "$GIT_PUSH_CERT"
-    then
-        exit 0
-    fi
-
-(There is plenty of code that doesn't follow that, so I don't know how
-strong that preference is.)
-
-This could also be written as:
-
-    test -z "$GIT_PUSH_CERT" && exit 0
-
-I don't know if there's any general preference to shorten it in git's
-code or not.
-
-> +push_cert=$(git cat-file -p  $GIT_PUSH_CERT)
-
-Very minor: there's an extra space before the variable here.
-
-(I also noticed the tests which use $GIT_PUSH_CERT, like t5534, use
-'cat-file blob ...' rather than 'cat-file -p ...'.  I don't know if
-that's much safer/better than letting cat-file guess the object type
-in the hook.  I have no idea if there's a chance that "$GIT_PUSH_CERT"
-has some unexpected, non-blob object type.)
-
-> +while read oval nval ref
-> +do
-> +	# Verify that the ref update matches that in push certificate.
-> +	if [[ $push_cert == *$oval" "$nval" "$ref* ]]; then
-
-[[ isn't portable across all the sh implementations git strives to
-support, as far as I know.
-
-The minor point about 'then' on new line is applicable here too.  It
-would also better match the outer 'while' loop.
-
-> +		# add the push cert as note (namespaced pushcerts) to nval.
-> +		git notes --ref=pushcerts add -m "$push_cert" $nval -f
-> +	fi
-> +done
-
--- 
-Todd
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Learn from the mistakes of others--you can never live long enough to
-make them all yourself.
-    -- John Luther
-
+Thanks.  
