@@ -2,78 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EDE8D20A40
-	for <e@80x24.org>; Sun,  3 Dec 2017 02:37:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 86B9720A40
+	for <e@80x24.org>; Sun,  3 Dec 2017 02:50:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752515AbdLCChr (ORCPT <rfc822;e@80x24.org>);
-        Sat, 2 Dec 2017 21:37:47 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:52125 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751878AbdLCChq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Dec 2017 21:37:46 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 38FBAB4B4C;
-        Sat,  2 Dec 2017 21:37:46 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=PgSKXkuYWFOF5hU7RaxdDI22jUQ=; b=jcpjKc
-        t2+bb7UROPPkq4oDJ4Y3B+wrW/DqAVdLezivPMNmds8S3B1xxrx6WH61fokJUq2x
-        hZHy+HVlBJytdKgxYB0wDouBzLDSeDMaDp9MC5YmMA+mAZYo6t5LWbzOGfhKV3BR
-        B5YyNzkQHw2maDR/oAaHoFwfrEYMq61rzBkrA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=JhOJeja8isvyaW/+Mgwl5Sjwewu+3olG
-        RU/488BHBYhPBNTUf/QzYdAzT9Au4JFa8l1Cm+nwIp8Z2YhPJ1A4Cb2VdK9sJ9Rk
-        mRkTLpGBjp/77nc4GvtsETnIXESG241k7blILUiRc13tFN14kzhhRQNeemm7Uw9Y
-        5+Y5lBKt4dY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 30872B4B4B;
-        Sat,  2 Dec 2017 21:37:46 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6B26DB4B49;
-        Sat,  2 Dec 2017 21:37:45 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Philip Oakley" <philipoakley@iee.org>
-Cc:     "Ulrich Windl" <Ulrich.Windl@rz.uni-regensburg.de>,
-        <git@vger.kernel.org>
-Subject: Re: bug deleting "unmerged" branch (2.12.3)
-References: <5A1D70FD020000A100029137@gwsmtp1.uni-regensburg.de>
-        <5A1D70FD020000A100029137@gwsmtp1.uni-regensburg.de>
-        <xmqqtvxd6gu9.fsf@gitster.mtv.corp.google.com>
-        <5A1E70AA020000A100029175@gwsmtp1.uni-regensburg.de>
-        <7973FF5C21C64E6492828DD0B91F5AF7@PhilipOakley>
-Date:   Sat, 02 Dec 2017 18:37:44 -0800
-In-Reply-To: <7973FF5C21C64E6492828DD0B91F5AF7@PhilipOakley> (Philip Oakley's
-        message of "Sat, 2 Dec 2017 20:56:44 -0000")
-Message-ID: <xmqq1skcleo7.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1752564AbdLCCuB (ORCPT <rfc822;e@80x24.org>);
+        Sat, 2 Dec 2017 21:50:01 -0500
+Received: from cloud.peff.net ([104.130.231.41]:46520 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751878AbdLCCuA (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Dec 2017 21:50:00 -0500
+Received: (qmail 8638 invoked by uid 109); 3 Dec 2017 02:50:01 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 03 Dec 2017 02:50:01 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 15041 invoked by uid 111); 3 Dec 2017 02:50:20 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with ESMTPA; Sat, 02 Dec 2017 21:50:20 -0500
+Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 02 Dec 2017 21:49:58 -0500
+Date:   Sat, 2 Dec 2017 21:49:58 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Max Kirillov <max@max630.net>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Florian Manschwetus <manschwetus@cs-software-gmbh.de>,
+        Chris Packham <judge.packham@gmail.com>,
+        Konstantin Khomoutov <kostix+git@007spb.ru>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH v6 1/2] http-backend: respect CONTENT_LENGTH as specified
+ by rfc3875
+Message-ID: <20171203024958.GA31493@sigill.intra.peff.net>
+References: <20171126193813.12531-1-max@max630.net>
+ <20171126193813.12531-2-max@max630.net>
+ <20171129032214.GB32345@sigill.intra.peff.net>
+ <xmqqr2sclj2q.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F19918A0-D7D2-11E7-BD34-8EF31968708C-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqr2sclj2q.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Philip Oakley" <philipoakley@iee.org> writes:
+On Sat, Dec 02, 2017 at 05:02:37PM -0800, Junio C Hamano wrote:
 
-> I think it was that currently you are on M, and neither A nor B are
-> ancestors (i.e. merged) of M.
->
-> As Junio said:- "branch -d" protects branches that are yet to be
-> merged to the **current branch**.
+> Jeff King <peff@peff.net> writes:
+> 
+> >   3. For large inputs (like incoming packfiles), we connect the
+> >      descriptor directly to index-pack or unpack-objects, and they try
+> >      to read to EOF.
+> >
+> >      For a well-formed pack, I _think_ this would work OK. We'd see the
+> >      end of the pack and quit (there's a check for garbage at the end of
+> >      the pack, but it triggers only for the non-pipe case).
+> >
+> >      For a truncated input, we'd hang forever rather than report an
+> >      error.
+> 
+> Hmm.  index-pack and/or unpack-objects would be fed directly from
+> the incoming pipe, they are not told how many bytes to expect (by
+> design), so they try to read to EOF, which may come after the end of
+> the pack-stream data, and they write the remaining junk to their
+> standard output IIRC.
+> 
+> For a well-formed pack, the above is what should heppen.
 
-Actually, I think people loosened this over time and removal of
-branch X is not rejected even if the range HEAD..X is not empty, as
-long as X is marked to integrate with/build on something else with
-branch.X.{remote,merge} and the range X@{upstream}..X is empty.
+Yeah, there should be zero bytes of "remaining junk" in the normal
+well-formed case. And as long as the webserver does not mind us asking
+to read() a few extra bytes, we are fine (it tells us there are no more
+bytes available right now). The original problem report with IIS was
+that it would hang trying to read() that any final EOF, and I don't
+think that would happen here.
 
-So the stress of "current branch" above you added is a bit of a
-white lie.
+I wouldn't be surprised if there are webservers or situations where that
+extra read() behaves badly (e.g., because it is connected directly to
+the client socket and the client is trying to pipeline requests or
+something).
+
+> I am having trouble trying to come up with a case where the input
+> stream is mangled and we cannot detect where the end of the
+> pack-stream is without reading more than we will be fed through the
+> pipe, and yet we do not trigger an "we tried to read because the data
+> we received so far is incomplete, and got an EOF" error.
+> 
+> Wouldn't "early EOF" trigger in the fill() helper that these two
+> programs have (but not share X-<)?
+
+I think the original problem was the opposite of "early EOF": the other
+side of the pipe never gives us EOF at all. So imagine the pack is
+mangled so that the zlib stream of an object never ends, and just keeps
+asking for more data. Eventually our fill() will block trying to get
+data that is not there. On an Apache server, the webserver would know
+there is nothing left to send us and close() the pipe, and we'd get EOF.
+But on IIS, I think the pipe remains open and we'd just block
+indefinitely trying to read().
+
+I don't have such a setup to test on, and it's possible I'm
+mis-interpreting or mis-remembering the discussion around the original
+patch.
+
+-Peff
