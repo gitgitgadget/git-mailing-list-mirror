@@ -2,118 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2B6BA20954
-	for <e@80x24.org>; Sun,  3 Dec 2017 06:36:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 00D5B20954
+	for <e@80x24.org>; Sun,  3 Dec 2017 09:36:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752059AbdLCGgp (ORCPT <rfc822;e@80x24.org>);
-        Sun, 3 Dec 2017 01:36:45 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57962 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751790AbdLCGgo (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Dec 2017 01:36:44 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7E548B6C4B;
-        Sun,  3 Dec 2017 01:36:43 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=2DYUwnNIJih/AG567rx1gxK29mg=; b=Xjt8ti
-        6kRs0Rst1Xj4DrK1IAPknwB17JxPw0UUJUyP3mli+l0+WegPLpWEXH5WSqxoAURq
-        MVnnsECu9YxZnwbCXj1+MtLWfNGBJ3HRJaEIr25+kNh7TDGIqIdPjePQ/sLR5bzS
-        2h9OhzHH1xC0s/3MKcyDcuec0ARI/YurefyN0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=v5bvnBO1DAzjKh5VOy370kbOACQjGZ2K
-        JN9y7ByB3xQx2FnDrhxkb5FAka48EI7D5K3I9Xp1eCF1ca9dS+xQ+QZ8nwrBlEog
-        6i+igckNU08IThd1SYq0Hgv2G/mpFVZRSznQqox/kc4CAuujClAOthWVPyD/kM4q
-        uy5Ovpb4f/0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 74F4CB6C4A;
-        Sun,  3 Dec 2017 01:36:43 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C206AB6C46;
-        Sun,  3 Dec 2017 01:36:42 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Timothee Albertin <timothee.albertin@gmail.com>
-Cc:     git@vger.kernel.org,
-        Timothee Albertin <timothee.albertin@etu.univ-lyon1.fr>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Matthieu Moy <matthieu.moy@univ-lyon1.fr>,
-        Daniel Bensoussan <daniel.bensoussan--bohm@etu.univ-lyon1.fr>,
-        Nathan Payre <nathan.payre@etu.univ-lyon1.fr>
-Subject: Re: [PATCH] doc: clarify triangular workflow
-References: <1512034932-14499-1-git-send-email-timothee.albertin@etu.univ-lyon1.fr>
-Date:   Sat, 02 Dec 2017 22:36:41 -0800
-In-Reply-To: <1512034932-14499-1-git-send-email-timothee.albertin@etu.univ-lyon1.fr>
-        (Timothee Albertin's message of "Thu, 30 Nov 2017 10:42:12 +0100")
-Message-ID: <xmqqwp24iah2.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751560AbdLCJgK (ORCPT <rfc822;e@80x24.org>);
+        Sun, 3 Dec 2017 04:36:10 -0500
+Received: from mail-wm0-f47.google.com ([74.125.82.47]:43856 "EHLO
+        mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750782AbdLCJgI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Dec 2017 04:36:08 -0500
+Received: by mail-wm0-f47.google.com with SMTP id n138so1002644wmg.2
+        for <git@vger.kernel.org>; Sun, 03 Dec 2017 01:36:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=POt3KiTUm3VOuhnML4pyEN3j6GiwumwpIFV+jPTfUxg=;
+        b=AmuULoRvGRmzsSeX5rhx5RqNofig5RpnEIXXonNztOKyBCZiO2ewH7yDP9mEpl7ZIk
+         x1oIFE3oNs8+vZdqVqfFjohqzDcnJrpFcIQpxlPGBP67qgSef2MkCo7Bz09sMSULvJnb
+         cUNzacuWyHN6+WKrSXyriFgj30uizOo2j0MK4230WBy4e+rMMxzpnNlf20ti4LcVt+EH
+         1bKVLY5nSdab0F5bNO2NTCsPJFoATCvbP94xfPFXf/ymk1UxNPDlvpPhQphpz+cyC5xQ
+         x/mo8NIdETRivXurcc5ewKl6pdVbE+5iQhxhK3g5ajAFvK8qQsIgUHyvrKtpuQ/oEEze
+         pR6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=POt3KiTUm3VOuhnML4pyEN3j6GiwumwpIFV+jPTfUxg=;
+        b=gIbfKx9MsOxuZ2AZTImFhVTGEPEutHS3tmqNOJ7h6icqUZeq2EBAuX4o4W6qhAprVt
+         DemFTqB0Uir5+IIuQTNN/Se6TpX7yfkUF6IYMu361I9je/mA9AHfCsJEPwcyBi0aVjFS
+         7O6eyX5qcfDMxUnx4Ve8TnD5MCA7cQLyHSPZFMaRtaPegYlZTjQ5Pw0FOaJ8zwiifw4r
+         t6lu5ZdkDXQ/A9VNXadajAYAGuScSecAsVqg4uBv4KC37LSh6pWOv/BBIqdm6Fv2b8ss
+         4Ip5hcIH34O+Jjz5Y5q+dQ8M3gjrnLfRXcjokKwxK6Tk8npse1eS9zH0jAvgbigynble
+         ZBaw==
+X-Gm-Message-State: AJaThX7wqgZvtqHxLtuDa2PsT/BZrlLdchG60UEoemr8+9hzoUgeQ9JK
+        S2As7RQHw0Eof7OH783Ui/o=
+X-Google-Smtp-Source: AGs4zMawNOyGVGt+pcZKR8XdO8NDUWxl0HRbtz+hPRMkX9S18vfnsKZPrQCqAKpD07xljECp7SpUBg==
+X-Received: by 10.80.163.138 with SMTP id s10mr25248153edb.302.1512293767480;
+        Sun, 03 Dec 2017 01:36:07 -0800 (PST)
+Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
+        by smtp.gmail.com with ESMTPSA id h16sm6638267edj.34.2017.12.03.01.36.06
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 03 Dec 2017 01:36:07 -0800 (PST)
+Received: from avar by evledraar with local (Exim 4.89)
+        (envelope-from <avarab@gmail.com>)
+        id 1eLQXF-0007Qj-Jz; Sun, 03 Dec 2017 10:26:05 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Sixt <j6t@kdbg.org>, Dan Jacques <dnj@google.com>,
+        git@vger.kernel.org, Johannes.Schindelin@gmx.de
+Subject: Re: [PATCH v4 1/4] Makefile: generate Perl header from template file
+References: <20171129155637.89075-1-dnj@google.com> <20171129155637.89075-2-dnj@google.com> <3c897f4c-0cb5-ca44-f144-598a623c1dc3@kdbg.org> <xmqqr2scjsb4.fsf@gitster.mtv.corp.google.com>
+User-agent: Debian GNU/Linux 9.2 (stretch); Emacs 25.1.1; mu4e 0.9.19
+In-reply-to: <xmqqr2scjsb4.fsf@gitster.mtv.corp.google.com>
+Date:   Sun, 03 Dec 2017 10:26:05 +0100
+Message-ID: <87a7z0upqq.fsf@evledraar.booking.com>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 535AF29A-D7F4-11E7-AAAD-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Timothee Albertin <timothee.albertin@gmail.com> writes:
 
-> diff --git a/Documentation/gitworkflows.txt b/Documentation/gitworkflows.txt
-> index 02569d0..21f6dc8 100644
-> --- a/Documentation/gitworkflows.txt
-> +++ b/Documentation/gitworkflows.txt
-> @@ -407,8 +407,8 @@ follows.
->  `git pull <url> <branch>`
->  =====================================
->  
-> -Occasionally, the maintainer may get merge conflicts when he tries to
-> -pull changes from downstream.  In this case, he can ask downstream to
-> +Occasionally, the maintainers may get merge conflicts when they try to
-> +pull changes from downstream.  In this case, they can ask downstream to
->  do the merge and resolve the conflicts themselves (perhaps they will
->  know better how to resolve them).  It is one of the rare cases where
->  downstream 'should' merge from upstream.
+On Sun, Dec 03 2017, Junio C. Hamano jotted:
 
-The document starts with
+> Johannes Sixt <j6t@kdbg.org> writes:
+>
+>>> +	sed -e 's=@@PATHSEP@@=$(pathsep)=g' \
+>>
+>> This doesn't work, unfortunately. When $(pathsep) is ';', we get an
+>> incomplete sed expression because ';' is also a command separator in
+>> the sed language.
+>
+> It is correct that ';' can be and does get used in place of LF when
+> writing a script on a single line, but even then, as part of a
+> string argument to 's' command (and also others), there is no need
+> to quote ';' or otherwise treat it any specially, as the commands
+> know what their syntax is (e.g. 's=string=replacement=' after seeing
+> the first '=' knows that it needs to find one unquoted '=' to find
+> the end of the first argument, and another to find the end of the
+> replacement string, and ';' seen during that scanning would not have
+> any special meaning).
+>
+> If your sed is so broken and does not satisfy the above expectation,
+> t6023 would not work for you, I would gess.
+>
+> t/t6023-merge-file.sh:sed -e "s/deerit.\$/deerit;/" -e "s/me;\$/me./" < new5.txt > new6.txt
+> t/t6023-merge-file.sh:sed -e "s/deerit.\$/deerit,/" -e "s/me;\$/me,/" < new5.txt > new7.txt
+> t/t6023-merge-file.sh:sed -e 's/deerit./&%%%%/' -e "s/locavit,/locavit;/"< new6.txt | tr '%' '\012' > new8.txt
 
-    This document attempts to write down and motivate some of the
-    workflow elements used for `git.git` itself.  Many ideas apply
-    in general, though the full workflow is rarely required for
-    smaller projects with fewer people involved.
+Since this whole thing is guarded by "ifndef NO_PERL" Dan could just be
+using "perl -pe" here instead of fiddling around with the portability
+edge cases of sed, e.g.:
 
-and makes me wonder (note: I am not involved in writing any of the
-existing text in this document) how much material foreign to the
-actual workflow used for `git.git` should go in here.  Having
-multiple maintainers at the same time is not a workflow element that
-we have ever used, for example, so I am not sure about the change in
-the above paragraph.
-
-> +TRIANGULAR WORKFLOW
-> +-------------------
-
-I really hate to say this.  Before I made comment on the last round
-that tried to add this section, I didn't read the original closely
-enough.  
-
-The thing is, it does already cover the triangular workflow in the
-"Merge workflow" section (you may need to already know what you are
-reading to realize that fact, though).  The text in the existing
-"Merge workflow" section where requestor pushes to somewhere for the
-maintainer to pull from may not be immediately obvious, and it may
-be worthwhile to improve it, but I find it highly misleading to add
-an entirely new section as if it is describing yet another separate
-workflow that is different from anything that is already described
-in the document.  It is not.
-
-A replacement of the entire section (but I'd recommend keeping the
-"Merge workflow" title, which contrasts well with the other "Patch
-workflow" that follows), or a separate document that is referred to
-with "see that other one for a lengthier description" by the
-existing "Merge workflow" section, or somewhere in between, might be
-a more acceptable organization, though.
+    perl -pe 's[foo][bar[g' <in >out
