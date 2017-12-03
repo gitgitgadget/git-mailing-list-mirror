@@ -7,18 +7,18 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E965020C11
-	for <e@80x24.org>; Sun,  3 Dec 2017 21:29:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B955D20C11
+	for <e@80x24.org>; Sun,  3 Dec 2017 21:29:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752689AbdLCV32 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 3 Dec 2017 16:29:28 -0500
-Received: from mout.gmx.net ([212.227.17.20]:54727 "EHLO mout.gmx.net"
+        id S1752690AbdLCV3a (ORCPT <rfc822;e@80x24.org>);
+        Sun, 3 Dec 2017 16:29:30 -0500
+Received: from mout.gmx.net ([212.227.17.22]:61782 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751557AbdLCV31 (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1752274AbdLCV31 (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 3 Dec 2017 16:29:27 -0500
 Received: from bedhanger.strangled.net ([188.193.86.106]) by mail.gmx.com
  (mrgmx101 [212.227.17.168]) with ESMTPSA (Nemesis) id
- 0Lv9lm-1f4Bzq1dkg-010Nia; Sun, 03 Dec 2017 22:28:52 +0100
+ 0M7TQZ-1fGcBH2oo3-00xMzn; Sun, 03 Dec 2017 22:28:52 +0100
 From:   Ann T Ropea <bedhanger@gmx.de>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Philip Oakley <philipoakley@iee.org>,
@@ -26,49 +26,43 @@ Cc:     Philip Oakley <philipoakley@iee.org>,
         Git Mailing List <git@vger.kernel.org>,
         Daniel Barkalow <barkalow@iabervon.org>,
         Ann T Ropea <bedhanger@gmx.de>
-Subject: Re: [PATCH v5 4/7] checkout: describe_detached_head: remove ellipsis after committish
-Date:   Sun,  3 Dec 2017 22:27:40 +0100
-Message-Id: <20171203212743.10228-4-bedhanger@gmx.de>
+Subject: Re: [PATCH v5 6/7] diff: diff_aligned_abbrev: remove ellipsis after abbreviated SHA-1 value
+Date:   Sun,  3 Dec 2017 22:27:42 +0100
+Message-Id: <20171203212743.10228-6-bedhanger@gmx.de>
 X-Mailer: git-send-email 2.13.6
 In-Reply-To: <20171203212743.10228-1-bedhanger@gmx.de>
 References: <20171203212743.10228-1-bedhanger@gmx.de>
 References: <20171119184113.16630-1-bedhanger@gmx.de> <20171113223654.27732-1-bedhanger@gmx.de> <83D263E58ABD46188756D41FE311E469@PhilipOakley> <xmqqfu9pmsx3.fsf@gitster.mtv.corp.google.com> <20171113223654.27732-3-bedhanger@gmx.de> <xmqq1sl17e1u.fsf@gitster.mtv.corp.google.com> <20171119184113.16630-5-bedhanger@gmx.de> <xmqqzi7hlhkx.fsf@gitster.mtv.corp.google.com> <5AE7AD53CF184A27BF8F484D415083D9@PhilipOakley> <xmqqo9nuuadm.fsf@gitster.mtv.corp.google.com> <FDCFD8EC7A754412A6369F03E91926C5@PhilipOakley> <CAPig+cT-r0uLLv_GyTRddPe=ATX883S1jt-8gc=ANZW21S81Mg@mail.gmail.com> <CAPig+cT4MvjLDvFEB6hJOSip=dqkp10ydnpfnoUabK=53OmQkw@mail.gmail.com> <20171124235330.15157-1-bedhanger@gmx.de> <xmqq4lpjkl4g.fsf@gitster.mtv.corp.google.com> <xmqqd145k9td.fsf@gitster.mtv.corp.google.com>
 In-Reply-To: <xmqqd145k9td.fsf@gitster.mtv.corp.google.com>
-X-Provags-ID: V03:K0:4jNfLBFSD1UsYCHKM3/Z6hHJZWWEiMLYqN9ypmnUkwVKRuiDh7v
- WJj4ZlBRUZzKOX0MJq992fTQ3GaA6aZSBGQeTf5Fwywj5NLnT6krgtv8K5QwH3q2IoPU7se
- NpB3my9dvb0JE06g8ONaHhogg/cd6dJIzkAT98avRI7cNl5YxfK6iXL2Bp14jGbwAdGG5yW
- eDcPlt7Fg2uYASF2a+3hA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:gTxz9XE3Ly4=:WbrkDfsCDrPJzkZpJNqk4+
- 9PkBI9N/aAaYc3RtxvdC/+h4U5dbK2p98E4tBPet0YxOMWTf0KupI0l1fAmCB5UHFlkYLdvA+
- aZbuFl3vyMc5zT9F87Qwt/zzvXjSU7rKU04Aky6lXBDsE+TSUrcVKD2kmF6pN14nfv3pOFBs5
- MQmpf0VYhDgz2b6RaUn54N09kjmZXCDdtioAhqKESkeEG7lFlSeHLD720AmJBlQWduQrcD5Dv
- c6xoFMu4rCVFfEpDPfjnsDcLStAsMmHnoO5JAph0kXC9W41GCyVQSEO1CQDdEsK3uckugWwS2
- /aEHS4iesMhUkofPtB8qzmacZwt08sVTaU+KdExFhCLH8JUuAlRVctnRqUZFmRdGKlEqkpsD4
- pLYaliE9ZrbKQTDejhWSy5fkuJ0PMGZYrRKnt2mAP1muOj7LDNKR85nT3LoKBkvbq8NFyt9Ce
- jfxcy67/Mwwu2srvL4B/g+GftkwUpy4WNNaDqqsXX2l7Wkt1QH6XX4EeKwDAdu9pxjui9Xdz6
- Frra46qFy6nj5Orthx4LrWWNJalc+9KIOWYBNKicQH6jeEKVZ4WhfTIq/fO67K80bQS6UIwGl
- NCxTzwpna72Isfsli47cr9EvyxgzWR/TeT57m2CycmnD9Ihu8ImdyTZPJDow9BdN8lba58Haz
- HWt+F1ArpUn5RlM1CY+LmcYHyHlCyJFN8pxldN2CPNgMSa/i2nfwBh5dfJSdSro8m0HctCaQ0
- ARdAWBCYnohBhSIYDQLC23E0HdRaM/MDq+095B07KbAgLc9ooQwgMQh1f/FTbiA78dUAC97Cg
- lvcsY+Es2KFfzZet7MdYgtnEvuKng==
+X-Provags-ID: V03:K0:xmTfxe5sjJ/KzbFi/7pnxNx6z38x+mYx8SxIBWTqvcnpMJ0rFX6
+ Qw4J7Y0MYw14ODXzvZZa0D4zNd6QWodjdo6H+Y2uAwSSQaFDnjzRKgznRl0YYd0S9mK0pfd
+ d0onSJef0WnJI4v12ok0rrF9yYmgA1y5cVAscBh5hv75WZ4/zVNumi3loXN8HyE4oqVjwM8
+ 7YNB/Tvyc8oYswMt3GHtw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:J5NsCm49xFY=:+T2pHFd0iJBBBmFAsFwMq+
+ a6dtxzP29UuwXLhgK9TtvyK6Ej9SMwxZyTuapWjEDs+VKqWo++DGtWAK9Wh8JtdjkxXvDhyLj
+ dPNj3WaapjXjfbusV2xuj4J5qZxYeC74jVtgoRdYKY5EpczB0Z1b8r8UROq0rU5FEbUe8ZFTz
+ QQfa7H9lRxr4xRIXRZRuAy3x3MYwk6qc8/No1BF7olZ+49xye/aNwqN+/Ib0AW/B9TkdDwLfY
+ VyGhCkAU+3/y+HfMgCti05iTxvILlEkp9Om+onbLdw8cS0+hLzRze0AfPpV+dpcpW/41tXB4r
+ zsqd/pM2WsKOXapnW0p5tkLiv3m54fnUdEpqs1HbX2X7yww9/bpmva0/WMYTHbnwi/44Qh/9V
+ AOg2VHiYBxxrrwfnnkEcmCpMSWPuaJJazCBP6PocujRne+3MvnvtpLZ3Vr14osg7HPyf1yWCa
+ 3eD4e3Bu/SDYo5reseJydGZY43vzzUhhbTvh/fvATlvqcHw09L7zubk3sJu3zQCfxHZNwdnUA
+ PoiANmSDskSdUlVaPQ5xuvAxGuLmrtLDWw2MOnqZa7vMVpX+hO0caQCjEOkiy5b6AcuXT9v4r
+ WGUUVKHbMWuXicPyIjS3707cI0WZr+adSNiMzxTZIssIU9TfRoYLp8X0jA96r68MO9TsMTBWG
+ biguYgYuofK95M62T86NaondiRJHMTUjfyGpWYOzfWUtKrHbh5zv9tAl65tpwRw02pnicDHxE
+ 2OWAewXo5skRpW5ZIV/e7oKtGeYicCs6TvxSMayvHc/Bbnu8e4RBXeHbWbFg/G+1cKLdxt65B
+ KvcnvT96ny8m2Bx6ZnvOgUxMhKJrA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We do not want an ellipsis displayed following an (abbreviated) SHA-1
-value.
+Neither Git nor the user are in need of this (visual) aid anymore, but
+we must offer a transition period.
 
-The days when this was necessary to indicate the truncation to
-lower-level Git commands and/or the user are bygone.
+A follow-up patch (series) will rectify the situation by covering the
+new output format as well as the backward compatible one.
 
-However, to ease the transition, the ellipsis will still be printed if
-the user sets the environment variable GIT_PRINT_SHA1_ELLIPSIS to "yes".
-
-Correct documentation with respect to what describe_detached_head prints
-when GIT_PRINT_SHA1_ELLIPSIS is not set as indicated above.
-
-Add tests for the old and new behaviour.
+Also, fix a typo: "abbbreviated" ---> "abbreviated".
 
 Signed-off-by: Ann T Ropea <bedhanger@gmx.de>
 ---
@@ -76,162 +70,35 @@ v2: rename patch series & focus on removal of ellipses
 v3: env var instead of config option, use one-line comments where appropriate, preserve indent level
 v4: improve env var handling (rename, helper func to query, docu)
 v5: rewrite series to take Junio's comments in <xmqqd145k9td.fsf@gitster.mtv.corp.google.com> aboard
- Documentation/user-manual.txt |   2 +-
- builtin/checkout.c            |  10 +++-
- t/t2020-checkout-detach.sh    | 106 ++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 115 insertions(+), 3 deletions(-)
+ diff.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-index 497e82e88dd0..eff78902742a 100644
---- a/Documentation/user-manual.txt
-+++ b/Documentation/user-manual.txt
-@@ -319,7 +319,7 @@ do so (now or later) by using -b with the checkout command again. Example:
+diff --git a/diff.c b/diff.c
+index 2ebe2227b467..a187c670df6b 100644
+--- a/diff.c
++++ b/diff.c
+@@ -4902,14 +4902,20 @@ const char *diff_aligned_abbrev(const struct object_id *oid, int len)
+ 	int abblen;
+ 	const char *abbrev;
  
-   git checkout -b new_branch_name
++	/* Do we want all 40 hex characters? */
+ 	if (len == GIT_SHA1_HEXSZ)
+ 		return oid_to_hex(oid);
  
--HEAD is now at 427abfa... Linux v2.6.17
-+HEAD is now at 427abfa Linux v2.6.17
- ------------------------------------------------
++	/* An abbreviated value is fine, possibly followed by an ellipsis. */
+ 	abbrev = diff_abbrev_oid(oid, len);
++
++	if (!print_sha1_ellipsis())
++		return abbrev;
++
+ 	abblen = strlen(abbrev);
  
- The HEAD then refers to the SHA-1 of the commit instead of to a branch,
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 3faae382de4f..b0499542158f 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -400,10 +400,16 @@ static void show_local_changes(struct object *head,
- static void describe_detached_head(const char *msg, struct commit *commit)
- {
- 	struct strbuf sb = STRBUF_INIT;
-+
- 	if (!parse_commit(commit))
- 		pp_commit_easy(CMIT_FMT_ONELINE, commit, &sb);
--	fprintf(stderr, "%s %s... %s\n", msg,
--		find_unique_abbrev(commit->object.oid.hash, DEFAULT_ABBREV), sb.buf);
-+	if (print_sha1_ellipsis()) {
-+		fprintf(stderr, "%s %s... %s\n", msg,
-+			find_unique_abbrev(commit->object.oid.hash, DEFAULT_ABBREV), sb.buf);
-+	} else {
-+		fprintf(stderr, "%s %s %s\n", msg,
-+			find_unique_abbrev(commit->object.oid.hash, DEFAULT_ABBREV), sb.buf);
-+	}
- 	strbuf_release(&sb);
- }
- 
-diff --git a/t/t2020-checkout-detach.sh b/t/t2020-checkout-detach.sh
-index fbb4ee9bb42d..9d42e38ed905 100755
---- a/t/t2020-checkout-detach.sh
-+++ b/t/t2020-checkout-detach.sh
-@@ -186,4 +186,110 @@ test_expect_success 'no advice given for explicit detached head state' '
- 	test_cmp expect.no-advice actual
- '
- 
-+# Detached HEAD tests for GIT_PRINT_SHA1_ELLIPSIS
-+
-+# The first detach operation is more chatty than the following ones.
-+cat > 1st_detach <<'EOF'
-+Note: checking out 'HEAD^'.
-+
-+You are in 'detached HEAD' state. You can look around, make experimental
-+changes and commit them, and you can discard any commits you make in this
-+state without impacting any branches by performing another checkout.
-+
-+If you want to create a new branch to retain commits you create, you may
-+do so (now or later) by using -b with the checkout command again. Example:
-+
-+  git checkout -b <new-branch-name>
-+
-+HEAD is now at 7c7cd714e262 three
-+EOF
-+# The remaining ones just show info about previous and current HEADs.
-+cat > 2nd_detach <<'EOF'
-+Previous HEAD position was 7c7cd714e262 three
-+HEAD is now at 139b20d8e6c5 two
-+EOF
-+cat > 3rd_detach <<'EOF'
-+Previous HEAD position was 139b20d8e6c5 two
-+HEAD is now at d79ce1670bdc one
-+EOF
-+test_expect_success 'describe_detached_head prints no SHA-1 ellipsis when not asked to' '
-+	reset && check_not_detached && unset GIT_PRINT_SHA1_ELLIPSIS &&
-+
-+	# Various ways of *not* asking for ellipses
-+
-+	unset GIT_PRINT_SHA1_ELLIPSIS && git -c 'core.abbrev=12' checkout HEAD^ 1> actual 2>&1 &&
-+	check_detached &&
-+	test_cmp 1st_detach actual && unset GIT_PRINT_SHA1_ELLIPSIS &&
-+
-+	GIT_PRINT_SHA1_ELLIPSIS="no" git -c 'core.abbrev=12' checkout HEAD^ 1> actual 2>&1 &&
-+	check_detached &&
-+	test_cmp 2nd_detach actual && unset GIT_PRINT_SHA1_ELLIPSIS &&
-+
-+	GIT_PRINT_SHA1_ELLIPSIS= git -c 'core.abbrev=12' checkout HEAD^ 1> actual 2>&1 &&
-+	check_detached &&
-+	test_cmp 3rd_detach actual && unset GIT_PRINT_SHA1_ELLIPSIS &&
-+
-+	# We only have four commits, but we can re-use them
-+	reset && check_not_detached && unset GIT_PRINT_SHA1_ELLIPSIS &&
-+
-+	# Make no mention of the env var at all
-+	git -c 'core.abbrev=12' checkout HEAD^ 1> actual 2>&1 &&
-+	check_detached &&
-+	test_cmp 1st_detach actual && unset GIT_PRINT_SHA1_ELLIPSIS &&
-+
-+	GIT_PRINT_SHA1_ELLIPSIS='nope' && export GIT_PRINT_SHA1_ELLIPSIS && git -c 'core.abbrev=12' checkout HEAD^ 1> actual 2>&1 &&
-+	check_detached &&
-+	test_cmp 2nd_detach actual && unset GIT_PRINT_SHA1_ELLIPSIS &&
-+
-+	GIT_PRINT_SHA1_ELLIPSIS=nein && export GIT_PRINT_SHA1_ELLIPSIS && git -c 'core.abbrev=12' checkout HEAD^ 1> actual 2>&1 &&
-+	check_detached &&
-+	test_cmp 3rd_detach actual && unset GIT_PRINT_SHA1_ELLIPSIS &&
-+
-+	true
-+'
-+
-+# The first detach operation is more chatty than the following ones.
-+cat > 1st_detach <<'EOF'
-+Note: checking out 'HEAD^'.
-+
-+You are in 'detached HEAD' state. You can look around, make experimental
-+changes and commit them, and you can discard any commits you make in this
-+state without impacting any branches by performing another checkout.
-+
-+If you want to create a new branch to retain commits you create, you may
-+do so (now or later) by using -b with the checkout command again. Example:
-+
-+  git checkout -b <new-branch-name>
-+
-+HEAD is now at 7c7cd714e262... three
-+EOF
-+# The remaining ones just show info about previous and current HEADs.
-+cat > 2nd_detach <<'EOF'
-+Previous HEAD position was 7c7cd714e262... three
-+HEAD is now at 139b20d8e6c5... two
-+EOF
-+cat > 3rd_detach <<'EOF'
-+Previous HEAD position was 139b20d8e6c5... two
-+HEAD is now at d79ce1670bdc... one
-+EOF
-+test_expect_success 'describe_detached_head does print SHA-1 ellipsis when asked to' '
-+	reset && check_not_detached && unset GIT_PRINT_SHA1_ELLIPSIS &&
-+
-+	# Various ways of asking for ellipses...
-+
-+	GIT_PRINT_SHA1_ELLIPSIS="yes" && export GIT_PRINT_SHA1_ELLIPSIS && git -c 'core.abbrev=12' checkout HEAD^ 1> actual 2>&1 &&
-+	check_detached &&
-+	test_cmp 1st_detach actual && unset GIT_PRINT_SHA1_ELLIPSIS &&
-+
-+	GIT_PRINT_SHA1_ELLIPSIS='yes' git -c 'core.abbrev=12' checkout HEAD^ 1> actual 2>&1 &&
-+	check_detached &&
-+	test_cmp 2nd_detach actual && unset GIT_PRINT_SHA1_ELLIPSIS &&
-+
-+	GIT_PRINT_SHA1_ELLIPSIS=yes git -c 'core.abbrev=12' checkout HEAD^ 1> actual 2>&1 &&
-+	check_detached &&
-+	test_cmp 3rd_detach actual && unset GIT_PRINT_SHA1_ELLIPSIS &&
-+
-+	true
-+'
-+
- test_done
+ 	/*
+-	 * In well-behaved cases, where the abbbreviated result is the
++	 * In well-behaved cases, where the abbreviated result is the
+ 	 * same as the requested length, append three dots after the
+ 	 * abbreviation (hence the whole logic is limited to the case
+ 	 * where abblen < 37); when the actual abbreviated result is a
 -- 
 2.13.6
 
