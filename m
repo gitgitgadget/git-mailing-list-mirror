@@ -2,339 +2,172 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 35EFD20C11
-	for <e@80x24.org>; Sun,  3 Dec 2017 23:41:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E242520C11
+	for <e@80x24.org>; Sun,  3 Dec 2017 23:44:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752488AbdLCXlG (ORCPT <rfc822;e@80x24.org>);
-        Sun, 3 Dec 2017 18:41:06 -0500
-Received: from mail-yb0-f172.google.com ([209.85.213.172]:39734 "EHLO
-        mail-yb0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752369AbdLCXlF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Dec 2017 18:41:05 -0500
-Received: by mail-yb0-f172.google.com with SMTP id b73so2495423yba.6
-        for <git@vger.kernel.org>; Sun, 03 Dec 2017 15:41:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=wqhb5AvE2ntdaZE4QCbd127948fyk/l7Yc8lgGbPjN4=;
-        b=h/rTlVlpTNEi27OPGMfgazD4AefQtGTcfBzlKMUKAgNMO68AazEccfpyCLwWgzNABm
-         40bMVZtdO0zpzvkRweNMdr8VHTSDem8Y5MnaSLq/cgMBIayBlkloLtln9L+GCUKaps/s
-         gQUf29dl1k4PKqk6MI3TkkYwGetqIPZ8XszQ9XrAqpZnKajiP4uYrmEWKZ9Ffym3MIlL
-         Z/zS79OLsnZJrf/rtgGT1Vxg8wmJpYVSK/tHDXAGLrIJYl5cNKqc1wGl4lSqjh1BpDCx
-         3qB20ui+L+PxpMXJ61yjlUpfRdRMmwj7kX26e+z0MP4uu0Vj+1xgsCVeHC2KyVYumt4r
-         SEwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=wqhb5AvE2ntdaZE4QCbd127948fyk/l7Yc8lgGbPjN4=;
-        b=FLseTmrZ4iYVs9GE7G19vNjGm/oJWC+u7KG9IQKpOpLQsMU2dcnXTXa4ERwF7i9ivW
-         ++O9wCVJ7Nbi0GO/v+1gJ06NvWSHJB/7m0TKgubT8c8XoDhVDj40bwGx+Xuu6+7SeqI+
-         dCr6zu/irjM6v3OixRlbknKaUpdxeJK1cO0Knq/7b0260ws1P2cyOJLo8Q/vv7J+suzK
-         Egrc6R5ksGaejnWQHs3hGbQILKxPrCTftqQ1vXlpEVa9Xwn9wAmo9YEPYrd320A4CwcL
-         9/isXhKojYo38//tqauTP6cQbVEo9lvifL80YLkvjfaKW/ZvT2kkAjZ2uXRpqOE+eiKt
-         K/FA==
-X-Gm-Message-State: AKGB3mJ7eRwPzEckRocQAY+QCJHAFwB8Hzt6lPbCFAnbjeMpFdW/BVYi
-        HkUKFk5KSif56EFrzlYLlN9HpqLF8t6v5kqO4Fc=
-X-Google-Smtp-Source: AGs4zMaveR0bFHhtSG3pRVdKovXYMG69hxdu8YIYnxUW86EZxB95zE331hDhFUhWxO+RyGsc5ENqOui3NY3sOgL0KyI=
-X-Received: by 10.37.55.75 with SMTP id e72mr3225083yba.8.1512344464940; Sun,
- 03 Dec 2017 15:41:04 -0800 (PST)
+        id S1752570AbdLCXo3 convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Sun, 3 Dec 2017 18:44:29 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:58113 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752369AbdLCXo2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Dec 2017 18:44:28 -0500
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.136.74])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id vB3NiNtC028025
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Sun, 3 Dec 2017 18:44:24 -0500 (EST)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Philip Oakley'" <philipoakley@iee.org>,
+        "'Jeff Hostetler'" <git@jeffhostetler.com>, <git@vger.kernel.org>
+References: <004201d36ac8$db62b900$92282b00$@nexbridge.com> <bdd01692-198a-f5ec-3c88-7d99e4adced5@jeffhostetler.com> <004701d36ad2$9a7fcea0$cf7f6be0$@nexbridge.com> <A05AA29AD20041A2B31E7A5CD56BB682@PhilipOakley>
+In-Reply-To: <A05AA29AD20041A2B31E7A5CD56BB682@PhilipOakley>
+Subject: RE: [RFE] Inverted sparseness
+Date:   Sun, 3 Dec 2017 18:44:16 -0500
+Message-ID: <004c01d36c90$a4f27580$eed76080$@nexbridge.com>
 MIME-Version: 1.0
-Received: by 10.129.135.70 with HTTP; Sun, 3 Dec 2017 15:41:04 -0800 (PST)
-In-Reply-To: <874lp7v5du.fsf@evledraar.booking.com>
-References: <20171202170220.10073-1-second.payre@gmail.com> <874lp7v5du.fsf@evledraar.booking.com>
-From:   Nathan PAYRE <second.payre@gmail.com>
-Date:   Mon, 4 Dec 2017 00:41:04 +0100
-Message-ID: <CAGb4CBUY0QVOHqAFDi6kSVmK48PzKKTuXR2F_Nr+6cHHUhxBzQ@mail.gmail.com>
-Subject: Re: [PATCH] send-email: extract email-parsing code into a subroutine
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Ryan Anderson <ryan@michonline.com>, e@80x24.org,
-        Junio C Hamano <gitster@pobox.com>,
-        Nathan Payre <nathan.payre@etu.univ-lyon1.fr>,
-        Matthieu Moy <matthieu.moy@univ-lyon1.fr>,
-        Timothee Albertin <timothee.albertin@etu.univ-lyon1.fr>,
-        Daniel Bensoussan <daniel.bensoussan--bohm@etu.univ-lyon1.fr>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQIMw3dWTpn6gCmf6prp0zs6Tn9TmQL9821xAlrVLg0B24cyfqKF9W1Q
+Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I've tested your code, and after few changes it's works perfectly!
-The code looks better now.
-Thanks a lot for your review.
+On December 3, 2017 6:14 PM, Philip Oakley wrote a nugget of wisdom: 
+>From: "Randall S. Becker" <rsbecker@nexbridge.com>
+>Sent: Friday, December 01, 2017 6:31 PM
+>> On December 1, 2017 1:19 PM, Jeff Hostetler wrote:
+>>>On 12/1/2017 12:21 PM, Randall S. Becker wrote:
+>>>> I recently encountered a really strange use-case relating to sparse 
+>>>> clone/fetch that is really backwards from the discussion that has 
+>>>> been going on, and well, I'm a bit embarrassed to bring it up, but I 
+>>>> have no good solution including building a separate data store that 
+>>>> will end up inconsistent with repositories (a bad solution).  The 
+>>>> use-case is as
+>>>> follows:
+>>>>
+>>>> Given a backbone of multiple git repositories spread across an 
+>>>> organization with a server farm and upstream vendors.
+>>>> The vendor delivers code by having the client perform git pull into 
+>>>> a specific branch.
+>>>> The customer may take the code as is or merge in customizations.
+>>>> The vendor wants to know exactly what commit of theirs is installed 
+>>>> on each server, in near real time.
+>>>> The customer is willing to push the commit-ish to the vendor's 
+>>>> upstream repo but does not want, by default, to share the actual 
+>>>> commit contents for security reasons.
+>>>> Realistically, the vendor needs to know that their own commit id was 
+>>>> put somewhere (process exists to track this, so not part of the 
+>>>> use-case) and whether there is a subsequent commit contributed >by 
+>>>> the customer, but the content is not relevant initially.
+>>>>
+>>>> After some time, the vendor may request the commit contents from the 
+>>>> customer in order to satisfy support requirements - a.k.a. a defect 
+>>>> was found but has to be resolved.
+>>>> The customer would then perform a deeper push that looks a lot like 
+>>>> a "slightly" symmetrical operation of a deep fetch following a prior 
+>>>> sparse fetch to supply the vendor with the specific commit(s).
+>>
+>>>Perhaps I'm not understanding the subtleties of what you're 
+>>>describing, but could you do this with stock git functionality.
+>>
+>>>Let the vendor publish a "well known branch" for the client.
+>>>Let the client pull that and build.
+>>>Let the client create a branch set to the same commit that they fetched.
+>>>Let the client push that branch as a client-specific branch to the 
+>>>vendor to indicate that that is the official release they are based on.
+>>
+>>>Then the vendor would know the official commit that the client was using.
+>> This is the easy part, and it doesn't require anything sparse to exist.
+>>
+>>>If the client makes local changes, does the vendor really need the SHA 
+>>>of those -- without the actual content?
+>>>I mean any SHA would do right?  Perhaps let the client create a second 
+>>>client-specific branch (set to  the same commit as the first) to 
+>>>indicate they had mods.
+>>>Later, when the vendor needs the actual client changes, the client 
+>>>does a normal push to this 2nd client-specific branch at the vendor.
+>>>This would send everything that the client has done to the code since 
+>>>the official release.
+>>
+>> What I should have added to the use-case was that there is a strong 
+>> audit requirement (regulatory, actually) involved that the SHA is 
+>> exact, immutable, and cannot be substitute or forged (one of the 
+>> reasons git is in such high regard). So, no I can't arrange a fake SHA 
+>> to represent a SHA to be named later. It SHA of the installed commit 
+>> is part of the official record of what happened on the specific server, so I'm stuck with it.
+>>
+>>>I'm not sure what you mean about "it is inside a tree".
+>>
+>> m---a---b---c---H1
+>>          `---d---H2
+>>
+>> d would be at a head. b would be inside. Determining content of c is 
+>> problematic if b is sparse, so I'm really unsure that any of this is 
+>> possible.
 
-2017-12-03 23:00 GMT+01:00 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@g=
-mail.com>:
->
-> On Sat, Dec 02 2017, Payre Nathan jotted:
->
->> From: Nathan Payre <second.payre@gmail.com>
->>
->> The existing code mixes parsing of email header with regular
->> expression and actual code. Extract the parsing code into a new
->> subroutine 'parse_header_line()'. This improves the code readability
->> and make parse_header_line reusable in other place.
->>
->> Signed-off-by: Nathan Payre <nathan.payre@etu.univ-lyon1.fr>
->> Signed-off-by: Matthieu Moy <matthieu.moy@univ-lyon1.fr>
->> Signed-off-by: Timothee Albertin <timothee.albertin@etu.univ-lyon1.fr>
->> Signed-off-by: Daniel Bensoussan <daniel.bensoussan--bohm@etu.univ-lyon1=
-.fr>
->> ---
->>
->> This patch is a first step to implement a new feature.
->> See new feature discussion here: https://public-inbox.org/git/2017103022=
-3444.5052-1-nathan.payre@etu.univ-lyon1.fr/
->>
->>  git-send-email.perl | 106 +++++++++++++++++++++++++++++++++++++++------=
--------
->>  1 file changed, 80 insertions(+), 26 deletions(-)
->>
->> diff --git a/git-send-email.perl b/git-send-email.perl
->> index 2208dcc21..98c2e461c 100755
->> --- a/git-send-email.perl
->> +++ b/git-send-email.perl
->> @@ -715,41 +715,64 @@ EOT3
->>       if (!defined $compose_encoding) {
->>               $compose_encoding =3D "UTF-8";
->>       }
->> -     while(<$c>) {
->> +
->> +     my %parsed_email;
->> +     while (<$c>) {
->>               next if m/^GIT:/;
->> -             if ($in_body) {
->> -                     $summary_empty =3D 0 unless (/^\n$/);
->> -             } elsif (/^\n$/) {
->> -                     $in_body =3D 1;
->> -                     if ($need_8bit_cte) {
->> +             parse_header_line($_, \%parsed_email);
->> +             if (/^\n$/i) {
->> +                     while (my $row =3D <$c>) {
->> +                             if (!($row =3D~ m/^GIT:/)) {
->> +                                     $parsed_email{'body'} =3D $parsed_=
-email{'body'} . $row;
->> +                             }
->> +                     }
->> +             }
->> +     }
->> +     if ($parsed_email{'from'}) {
->> +             $sender =3D $parsed_email{'from'};
->> +     }
->> +     if ($parsed_email{'in_reply_to'}) {
->> +             $initial_reply_to =3D $parsed_email{'in_reply_to'};
->> +     }
->> +     if ($parsed_email{'subject'}) {
->> +             $initial_subject =3D $parsed_email{'subject'};
->> +             print $c2 "Subject: " .
->> +                     quote_subject($parsed_email{'subject'}, $compose_e=
-ncoding) .
->> +                     "\n";
->> +     }
->> +     if ($parsed_email{'mime-version'}) {
->> +             $need_8bit_cte =3D 0;
->> +     }
->> +     if ($need_8bit_cte) {
->> +             if ($parsed_email{'content-type'}) {
->> +                             print $c2 "MIME-Version: 1.0\n",
->> +                                      "Content-Type: $parsed_email{'con=
-tent-type'};",
->> +                                      "Content-Transfer-Encoding: 8bit\=
-n";
->> +                     } else {
->>                               print $c2 "MIME-Version: 1.0\n",
->>                                        "Content-Type: text/plain; ",
->> -                                        "charset=3D$compose_encoding\n"=
-,
->> +                                      "charset=3D$compose_encoding\n",
->>                                        "Content-Transfer-Encoding: 8bit\=
-n";
->>                       }
->> -             } elsif (/^MIME-Version:/i) {
->> -                     $need_8bit_cte =3D 0;
->> -             } elsif (/^Subject:\s*(.+)\s*$/i) {
->> -                     $initial_subject =3D $1;
->> -                     my $subject =3D $initial_subject;
->> -                     $_ =3D "Subject: " .
->> -                             quote_subject($subject, $compose_encoding)=
- .
->> -                             "\n";
->> -             } elsif (/^In-Reply-To:\s*(.+)\s*$/i) {
->> -                     $initial_reply_to =3D $1;
->> -                     next;
->> -             } elsif (/^From:\s*(.+)\s*$/i) {
->> -                     $sender =3D $1;
->> -                     next;
->> -             } elsif (/^(?:To|Cc|Bcc):/i) {
->> -                     print __("To/Cc/Bcc fields are not interpreted yet=
-, they have been ignored\n");
->> -                     next;
->> -             }
->> -             print $c2 $_;
->>       }
->> +     if ($parsed_email{'body'}) {
->> +             $summary_empty =3D 0;
->> +             print $c2 "\n$parsed_email{'body'}\n";
->> +     }
->> +
->>       close $c;
->>       close $c2;
->>
->> +     open $c2, "<", $compose_filename . ".final"
->> +             or die sprintf(__("Failed to open %s.final: %s"), $compose=
-_filename, $!);
->> +
->> +     print "affichage : \n";
->> +     while (<$c2>) {
->> +             print $_;
->> +     }
->> +
->> +     close $c2;
->> +
->>       if ($summary_empty) {
->>               print __("Summary email is empty, skipping it\n");
->>               $compose =3D -1;
->> @@ -792,6 +815,37 @@ sub ask {
->>       return;
->>  }
->>
->> +sub parse_header_line {
->> +     my $lines =3D shift;
->> +     my $parsed_line =3D shift;
->> +
->> +     foreach (split(/\n/, $lines)) {
->> +             if (/^From:\s*(.+)$/i) {
->> +                     $parsed_line->{'from'} =3D $1;
->> +             } elsif (/^To:\s*(.+)$/i) {
->> +                     $parsed_line->{'to'} =3D [ parse_address_line($1) =
-];
->> +             } elsif (/^Cc:\s*(.+)$/i) {
->> +                     $parsed_line->{'cc'} =3D [ parse_address_line($1) =
-];
->> +             } elsif (/^Bcc:\s*(.+)$/i) {
->> +                     $parsed_line->{'bcc'} =3D [ parse_address_line($1)=
- ];
->> +             } elsif (/^Subject:\s*(.+)\s*$/i) {
->> +                     $parsed_line->{'subject'} =3D $1;
->> +             } elsif (/^Date: (.*)/i) {
->> +                     $parsed_line->{'date'} =3D $1;
->> +             } elsif (/^In-Reply-To:\s*(.+)\s*$/i) {
->> +                     $parsed_line->{'in_reply_to'} =3D $1;
->> +             } elsif (/^Message-ID: (.*)$/i) {
->> +                     $parsed_line->{'message_id'} =3D $1;
->> +             } elsif (/^MIME-Version:$/i) {
->> +                     $parsed_line->{'mime-version'} =3D $1;
->> +             } elsif (/^Content-Type:\s+(.*)\s*$/i) {
->> +                     $parsed_line->{'content-type'} =3D $1;
->> +             } elsif (/^References:\s+(.*)/i) {
->> +                     $parsed_line->{'references'} =3D $1;
->> +             }
->> +     }
->> +}
->> +
->>  my %broken_encoding;
->>
->>  sub file_declares_8bit_cte {
->
-> I haven't read the patches that follow. Completely untested, But just a
-> diff on top I came up with while reading this:
->
-> Rationale:
->
->  * Once you start passing $_ to functions you should probably just give
->    it a name.
->
->  * !($x =3D~ m//) you can just write as $x !~ m//
->
->  * There's a lot of copy/paste programming in parse_header_line() and an
->    inconsistency between you seeing A-Header and turning it into either
->    a_header or a-header. If you just stick with a-header and use dash
->    you end up with just two cases.
->
->    The resulting line is quite long, so it's worth doing:
->
->    my $header_parsed   =3D join "|", qw(To CC ...);
->    my $header_unparsed =3D join "|", qw(From Subject Message-ID ...);
->    [...]
->    if ($str =3D~ /^($header_unparsed)
->
->
-> diff --git a/git-send-email.perl b/git-send-email.perl
-> index 98c2e461cf..3696cad456 100755
-> --- a/git-send-email.perl
-> +++ b/git-send-email.perl
-> @@ -717,12 +717,12 @@ EOT3
->         }
->
->         my %parsed_email;
-> -       while (<$c>) {
-> -               next if m/^GIT:/;
-> -               parse_header_line($_, \%parsed_email);
-> -               if (/^\n$/i) {
-> +       while (my $line =3D <$c>) {
-> +               next if $line =3D~ m/^GIT:/;
-> +               parse_header_line($line, \%parsed_email);
-> +               if ($line =3D~ /^\n$/i) {
->                         while (my $row =3D <$c>) {
-> -                               if (!($row =3D~ m/^GIT:/)) {
-> +                               if ($row !~ m/^GIT:/) {
->                                         $parsed_email{'body'} =3D $parsed=
-_email{'body'} . $row;
->                                 }
->                         }
-> @@ -731,7 +731,7 @@ EOT3
->         if ($parsed_email{'from'}) {
->                 $sender =3D $parsed_email{'from'};
->         }
-> -       if ($parsed_email{'in_reply_to'}) {
-> +       if ($parsed_email{'in-reply-to'}) {
->                 $initial_reply_to =3D $parsed_email{'in_reply_to'};
->         }
->         if ($parsed_email{'subject'}) {
-> @@ -820,28 +820,10 @@ sub parse_header_line {
->         my $parsed_line =3D shift;
->
->         foreach (split(/\n/, $lines)) {
-> -               if (/^From:\s*(.+)$/i) {
-> -                       $parsed_line->{'from'} =3D $1;
-> -               } elsif (/^To:\s*(.+)$/i) {
-> -                       $parsed_line->{'to'} =3D [ parse_address_line($1)=
- ];
-> -               } elsif (/^Cc:\s*(.+)$/i) {
-> -                       $parsed_line->{'cc'} =3D [ parse_address_line($1)=
- ];
-> -               } elsif (/^Bcc:\s*(.+)$/i) {
-> -                       $parsed_line->{'bcc'} =3D [ parse_address_line($1=
-) ];
-> -               } elsif (/^Subject:\s*(.+)\s*$/i) {
-> -                       $parsed_line->{'subject'} =3D $1;
-> -               } elsif (/^Date: (.*)/i) {
-> -                       $parsed_line->{'date'} =3D $1;
-> -               } elsif (/^In-Reply-To:\s*(.+)\s*$/i) {
-> -                       $parsed_line->{'in_reply_to'} =3D $1;
-> -               } elsif (/^Message-ID: (.*)$/i) {
-> -                       $parsed_line->{'message_id'} =3D $1;
-> -               } elsif (/^MIME-Version:$/i) {
-> -                       $parsed_line->{'mime-version'} =3D $1;
-> -               } elsif (/^Content-Type:\s+(.*)\s*$/i) {
-> -                       $parsed_line->{'content-type'} =3D $1;
-> -               } elsif (/^References:\s+(.*)/i) {
-> -                       $parsed_line->{'references'} =3D $1;
-> +               if (/^(To|Cc|Bcc):\s*(.+)$/i) {
-> +                       $parsed_line->{lc $1} =3D [ parse_address_line($2=
-) ];
-> +               } elsif (/^(From|Subject|Date|In-Reply-To|Message-ID|MIME=
--Version|Content-Type|References):\s*(.+)\s*$/i) {
-> +                       $parsed_line->{lc $1} =3D $2;
->                 }
->         }
->  }
+>I think I get the jist of your use case. Would I be right that you don't have a true working
+>solution yet? i.e. that it's a problem that is almost sorted but falls down at the last step.
+
+>If one pretended that this was a single development shop, and the various vendors, clients
+>and customers as being independent devolopers, each of whom is over protective of their
+>code, it may give a better view that maps onto classic feature development diagrams.
+>(i.e draw the answer for local devs, then mark where the splits happen)
+
+>In particular, I think you could use a notional regulator's view that the whole code base is
+>part of a large Git heirarchy of branches and merges, and that some of the feature loops
+>are only available via the particular developer that worked on that feature.
+
+>This would mean that from a regulatory overview there is a merge commit in the 'main'
+>(master) heirachy that has the main and feature commits listed, and the feature commit
+>is probably an --allow-empty commit (that has an empty tree if they are that paranoid) that
+>says 'function X released' (and probably tagged), and that release commit then has, as its
+>parent, the true release commit, with the true code tree. The latter commit isn't actually being
+>shown to you!
+
+>At this point the potential for using the graft capability comes in (as a regulated method!). 
+>Locally the graft records the missing line of pearls for that paranoid dev/vendor/customer/client. 
+>The whole git heirachy still works.
+
+>The question is how to get that  release commit with its empty tree, and its tag, to you from
+>the dev. I'd guess that a fast-export of just that tag/commit/empty tree would allow you to
+>bring in that sentinel point to your heirachy (initially as a psuedo --root), and then graft it
+>on. (I haven't checked if fast-export allows such specificity, but it's a method)
+
+>You can now form the merge commit and have regulatory oversight and the full git validation
+>and verification capability, as long as your web of trust extends to the regulator looking
+>effectively across the air gap. It's a fresh way of seeing the web of trust.
+
+>Thus you/they have various "shallow clones", but with gaps and islands in the shallowness.... 
+>and those gaps are spanned by grafts (which are audited). The `git-replace` may also be an
+>option, but I don't think it's quite right for this case. You just have a temporary gap in
+>the history, and with fast export
+
+>If using the empty tree part doesn't pass muster (i.e. showing nothing isn't sufficient), 
+>then the narrow clone could come into play to limit what parts of the trees are widely
+>visible, but mainly its using the grafts to cover the regulatory gap, and (for the moment) 
+>using fast-export to transfer the singleton commit / tags
+
+>Oh Just remembered, there is the newish capability to fetch random blobs, so that may help.
+
+I think you hit the nail on the head pretty well. We're currently at 2.3.7, with a push to 2.15.1 this week, so I'm looking forward to trying this. My two worries are whether the empty tree is acceptable (it should be to the client, and might be to the vendor), and doing this reliably (semi-automated) so the user base does not have to worry about the gory details of doing this. The unit tests for it are undoubtedly going to give me headaches.
+
+Thanks for the advice. Islands of shallowness are a really descriptive image for what this is. So identifying that there are shoals (to extend the metaphor somewhat), will be crucial to this adventure.
+
+Cheers,
+Randall
+
+-- Brief whoami: NonStop&UNIX developer since approximately UNIX(421664400)/NonStop(211288444200000000) 
+-- In my real life, I talk too much.
+
+
+
