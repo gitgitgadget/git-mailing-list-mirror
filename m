@@ -2,197 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DE4A420C11
-	for <e@80x24.org>; Sun,  3 Dec 2017 22:18:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7243820C11
+	for <e@80x24.org>; Sun,  3 Dec 2017 22:49:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752772AbdLCWSX (ORCPT <rfc822;e@80x24.org>);
-        Sun, 3 Dec 2017 17:18:23 -0500
-Received: from mail-it0-f67.google.com ([209.85.214.67]:43207 "EHLO
-        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752515AbdLCWSF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Dec 2017 17:18:05 -0500
-Received: by mail-it0-f67.google.com with SMTP id u62so8423684ita.2
-        for <git@vger.kernel.org>; Sun, 03 Dec 2017 14:18:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=iLmweHMOI8yVB/LmnXQBPGw4w/1Hxpf6MGDyEVl5aQ8=;
-        b=rtjrLGjlZRKegYe5U1vgVr8xzMPyDAL2BWXKmlliCWLNzKcX0p985vJWrCnqGgvmPH
-         3m+fDZsMy+kDxDj3nyfuZRoWI1sPxlPbnSvl71FZ0oAxUubQaFuwYQS11vLYouFhwnsk
-         TkI5REc06tphLIM/C4iJnJ0YckGgaGd5bvBWzWiab1dxzQHF0JGAdbhJkCgEXXzHjkKd
-         Q3qgbC9JeiR8AtSRXDnx7Kd0LtU86SfudYFYFslm0fCYEyk+F0gDqN8N+/umgkIpywRh
-         xRJ65DPyg4do5UANwmKTVr4iVQbkoZCvJhZivgYiYUPl3hQGoyu6GC+kk973T+YtGHDP
-         qX3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=iLmweHMOI8yVB/LmnXQBPGw4w/1Hxpf6MGDyEVl5aQ8=;
-        b=ZZg+ThxTD3zxSZrT3QCb26Uh5l97N3FlETdxSH/45elFGvbEwtmmvBUsWcFiIa1/1l
-         HIBZ7MEyB6ll0PwCQAB5BuT2dTU33KmkBpitCtsa1IhjfENJ3sH8sqjKmwoxF9gNsthl
-         IVMYB1dyUP5OnJq4SqdG+zdiJqVu4mXzPD5HwbFmubWYH/BNwOtswC9S2tZloAS0zEqM
-         4UKr6H3bpnJ+LzzL/brEGcYEEY6YYOmAKdxtO2TFbzoo3XOcjhbk+ZLuYEDG1FoA5van
-         /5DP2IwBHAkcHupcT8dsH5r2vcjwE0BQD8FLRcZz9VscHA2fWuG8aekoOLZIbQvUXQHi
-         lafA==
-X-Gm-Message-State: AKGB3mIelePzCd15eOqQEWZTrjKwsxIZ6VtYcTOcX6dw5Aj4X7yFkvIb
-        Dyb2X6OnKhW+VQFioK2mLDVT6Zn4
-X-Google-Smtp-Source: AGs4zMYa3S2KS3Gz8Gkv2ZegHtRB9X/yUjXhIwmyGwsas5jL7SkfPrRWjIcf7QKmX8WMutuh+41nRA==
-X-Received: by 10.36.90.11 with SMTP id v11mr2107392ita.127.1512339484801;
-        Sun, 03 Dec 2017 14:18:04 -0800 (PST)
-Received: from localhost.localdomain (24-212-246-46.cable.teksavvy.com. [24.212.246.46])
-        by smtp.gmail.com with ESMTPSA id c141sm5207054ioe.13.2017.12.03.14.18.03
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 03 Dec 2017 14:18:04 -0800 (PST)
-From:   Liam Beguin <liambeguin@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Johannes.Schindelin@gmx.de, gitster@pobox.com, peff@peff.net,
-        Liam Beguin <liambeguin@gmail.com>
-Subject: [PATCH v2 8/9] rebase -i: learn to abbreviate command names
-Date:   Sun,  3 Dec 2017 17:17:20 -0500
-Message-Id: <20171203221721.16462-9-liambeguin@gmail.com>
-X-Mailer: git-send-email 2.15.1.280.g10402c1f5b5c
-In-Reply-To: <20171203221721.16462-1-liambeguin@gmail.com>
-References: <20171127045514.25647-1-liambeguin@gmail.com>
- <20171203221721.16462-1-liambeguin@gmail.com>
+        id S1752638AbdLCWtD (ORCPT <rfc822;e@80x24.org>);
+        Sun, 3 Dec 2017 17:49:03 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64988 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752144AbdLCWtC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Dec 2017 17:49:02 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6DA98C3CBB;
+        Sun,  3 Dec 2017 17:49:01 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=DvT6fFIhEFPzi6O+Crx2aN9wKSI=; b=Ys1jZP
+        9K/XKlm68m2EdQxaLH5Fwc6ej2OKeEwzE/gRgfL3TBxD5KX1YVLlwcrjvhPCZ7sI
+        l4hP3nqufK8Bw0a6mEp0g/+SY0BZXecAZukjOmyy8CtXSZRsF1O5tw+2KrvhEjQs
+        imF2O0U0mrYFyq02/dho+oPTlwt/birFNrS8Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=cDkEabCl6MvcNeHisR7Au4ITiTHBotcN
+        byQfOMPvflYInJFLPnnd1VGnDNJtg0nTxIXhdb2eaG1FCSn3o2CzCl2mLlIlzm4X
+        A7lR3qV+tqGf52rBqb/QvzQXYOjyUsfHbbXUVlfQHldrAejW8OwybFgcSxc0H9VU
+        I3WSrt5G72k=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 61640C3CB8;
+        Sun,  3 Dec 2017 17:49:01 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 97499C3CB4;
+        Sun,  3 Dec 2017 17:49:00 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git <git@vger.kernel.org>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH 1/3] git-compat-util: introduce skip_to_opt_val()
+References: <20171203170415.15939-1-chriscool@tuxfamily.org>
+        <xmqqk1y3ira9.fsf@gitster.mtv.corp.google.com>
+        <CAP8UFD2OSsqzhyAL-QG1TOowB-xgbf=kC9wHre+FLc+0J1Xy+Q@mail.gmail.com>
+Date:   Sun, 03 Dec 2017 14:48:59 -0800
+In-Reply-To: <CAP8UFD2OSsqzhyAL-QG1TOowB-xgbf=kC9wHre+FLc+0J1Xy+Q@mail.gmail.com>
+        (Christian Couder's message of "Sun, 3 Dec 2017 21:34:29 +0100")
+Message-ID: <xmqqfu8rig10.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2764FFC2-D87C-11E7-A8D5-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-`git rebase -i` already know how to interpret single-letter command
-names. Teach it to generate the todo list with these same abbreviated
-names.
+Christian Couder <christian.couder@gmail.com> writes:
 
-Based-on-patch-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Signed-off-by: Liam Beguin <liambeguin@gmail.com>
----
- Documentation/rebase-config.txt | 20 ++++++++++++++++++++
- builtin/rebase--helper.c        |  3 +++
- sequencer.c                     | 16 ++++++++++++++--
- sequencer.h                     |  1 +
- 4 files changed, 38 insertions(+), 2 deletions(-)
+> Anyway there is a design choice to be made. Adding a "const char
+> *default" argument makes the function more generic,...
 
-diff --git a/Documentation/rebase-config.txt b/Documentation/rebase-config.txt
-index 30ae08cb5a4b..42e1ba757564 100644
---- a/Documentation/rebase-config.txt
-+++ b/Documentation/rebase-config.txt
-@@ -30,3 +30,23 @@ rebase.instructionFormat::
- 	A format string, as specified in linkgit:git-log[1], to be used for the
- 	todo list during an interactive rebase.  The format will
- 	automatically have the long commit hash prepended to the format.
-+
-+rebase.abbreviateCommands::
-+	If set to true, `git rebase` will use abbreviated command names in the
-+	todo list resulting in something like this:
-++
-+-------------------------------------------
-+	p deadbee The oneline of the commit
-+	p fa1afe1 The oneline of the next commit
-+	...
-+-------------------------------------------
-++
-+instead of:
-++
-+-------------------------------------------
-+	pick deadbee The oneline of the commit
-+	pick fa1afe1 The oneline of the next commit
-+	...
-+-------------------------------------------
-++
-+Defaults to false.
-diff --git a/builtin/rebase--helper.c b/builtin/rebase--helper.c
-index 03337e1484a2..2c51ddcfd3dd 100644
---- a/builtin/rebase--helper.c
-+++ b/builtin/rebase--helper.c
-@@ -13,6 +13,7 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
- {
- 	struct replay_opts opts = REPLAY_OPTS_INIT;
- 	unsigned flags = 0, keep_empty = 0;
-+	int abbreviate_commands = 0;
- 	enum {
- 		CONTINUE = 1, ABORT, MAKE_SCRIPT, SHORTEN_OIDS, EXPAND_OIDS,
- 		CHECK_TODO_LIST, SKIP_UNNECESSARY_PICKS, REARRANGE_SQUASH,
-@@ -43,6 +44,7 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
- 	};
- 
- 	git_config(git_default_config, NULL);
-+	git_config_get_bool("rebase.abbreviatecommands", &abbreviate_commands);
- 
- 	opts.action = REPLAY_INTERACTIVE_REBASE;
- 	opts.allow_ff = 1;
-@@ -52,6 +54,7 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
- 			builtin_rebase_helper_usage, PARSE_OPT_KEEP_ARGV0);
- 
- 	flags |= keep_empty ? TODO_LIST_KEEP_EMPTY : 0;
-+	flags |= abbreviate_commands ? TODO_LIST_ABBREVIATE_CMDS : 0;
- 	flags |= command == SHORTEN_OIDS ? TODO_LIST_SHORTED_IDS : 0;
- 
- 	if (command == CONTINUE && argc == 1)
-diff --git a/sequencer.c b/sequencer.c
-index bd047737082d..b752dcc52982 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -795,6 +795,13 @@ static const char *command_to_string(const enum todo_command command)
- 	die("Unknown command: %d", command);
- }
- 
-+static const char command_to_char(const enum todo_command command)
-+{
-+	if (command < TODO_COMMENT && todo_command_info[command].c)
-+		return todo_command_info[command].c;
-+	return comment_line_char;
-+}
-+
- static int is_noop(const enum todo_command command)
- {
- 	return TODO_NOOP <= command;
-@@ -2453,6 +2460,7 @@ int sequencer_make_script(FILE *out, int argc, const char **argv,
- 	struct rev_info revs;
- 	struct commit *commit;
- 	int keep_empty = flags & TODO_LIST_KEEP_EMPTY;
-+	const char *insn = flags & TODO_LIST_ABBREVIATE_CMDS ? "p" : "pick";
- 
- 	init_revisions(&revs, NULL);
- 	revs.verbose_header = 1;
-@@ -2485,7 +2493,8 @@ int sequencer_make_script(FILE *out, int argc, const char **argv,
- 		strbuf_reset(&buf);
- 		if (!keep_empty && is_original_commit_empty(commit))
- 			strbuf_addf(&buf, "%c ", comment_line_char);
--		strbuf_addf(&buf, "pick %s ", oid_to_hex(&commit->object.oid));
-+		strbuf_addf(&buf, "%s %s ", insn,
-+			    oid_to_hex(&commit->object.oid));
- 		pretty_print_commit(&pp, commit, &buf);
- 		strbuf_addch(&buf, '\n');
- 		fputs(buf.buf, out);
-@@ -2558,7 +2567,10 @@ int transform_todo_insn(unsigned flags)
- 		}
- 
- 		/* add command to the buffer */
--		strbuf_addstr(&buf, command_to_string(item->command));
-+		if (flags & TODO_LIST_ABBREVIATE_CMDS)
-+			strbuf_addch(&buf, command_to_char(item->command));
-+		else
-+			strbuf_addstr(&buf, command_to_string(item->command));
- 
- 		/* add commit id */
- 		if (item->commit) {
-diff --git a/sequencer.h b/sequencer.h
-index e4a9d2419883..468ee79fb72d 100644
---- a/sequencer.h
-+++ b/sequencer.h
-@@ -47,6 +47,7 @@ int sequencer_remove_state(struct replay_opts *opts);
- 
- #define TODO_LIST_KEEP_EMPTY (1U << 0)
- #define TODO_LIST_SHORTED_IDS (1U << 1)
-+#define TODO_LIST_ABBREVIATE_CMDS (1U << 2)
- int sequencer_make_script(FILE *out, int argc, const char **argv,
- 			  unsigned flags);
- 
--- 
-2.15.1.280.g10402c1f5b5c
+I didn't suggest anything of that sort, and I do not understand why
+you are repeatedly talking about "default" that you considered and
+rejected, as if it were an alternative viable option.  I agree that
+"default" is not yet a good idea and it is a solution to a problem
+that is not yet shown to exist.  
+
+On the other hand, just assigning NULL to *arg when you did not see
+a delimiting '=', on the other hand, is an alternative option that
+is viable.
+
+> .... I think setting
+> "arg" to NULL increases the risk of crashes and makes it too easy to
+> make "--key" and "--key=" behave differently which I think is not
+> consistent and not intuitive.
+
+So now this is very specific to the need of command line argument
+parsing and is not a generic thing?  You cannot have your cake and
+eat it too, though.
 
