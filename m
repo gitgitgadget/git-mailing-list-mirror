@@ -2,110 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BD40420954
-	for <e@80x24.org>; Mon,  4 Dec 2017 17:59:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 97AF620954
+	for <e@80x24.org>; Mon,  4 Dec 2017 18:08:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751718AbdLDR7C (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Dec 2017 12:59:02 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56125 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751246AbdLDR7B (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Dec 2017 12:59:01 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 29629CB8C2;
-        Mon,  4 Dec 2017 12:59:00 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=cGAmWjtcyVOl6Esu0XIH7j/4c3g=; b=ahuqg7
-        tOuVDx+gYDg0hY6rHkLdhadXtaWF4Dsjv7RzZQ7lWKZ1PfjMsZBQHKnQjcm/ny1b
-        PJXPEpVWtZCia+5j3lQ75KWVlY5B3KpjDTebulvxoWVVUPypgg1S7eW7eel4xEPw
-        h+B/x0N7slhTfIGqHA30jfIxy0WvCpToCQpqw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=qgJVqs/dviesGLDHkI8h/spfZwTNG/fN
-        G6/+Rd0GOqQlEfh2WkP3kqgDPYtCvpeJ8plhOlIJQOKiO/dk8fkODtiS3epNasAW
-        AMmhKJMunedfzb3ixk1cxKXwdmyuy+9m8rAsVAhFMrf+J4mUI/JDdDNy3x8ufvu8
-        bwTKytDlW64=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 20F49CB8C1;
-        Mon,  4 Dec 2017 12:59:00 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 885E9CB8C0;
-        Mon,  4 Dec 2017 12:58:59 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Robert Abel <rabel@robertabel.eu>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] git-prompt: make __git_eread intended use explicit
-References: <alpine.DEB.2.21.1.1712011143320.98586@virtualbox>
-        <20171201233133.30011-1-rabel@robertabel.eu>
-Date:   Mon, 04 Dec 2017 09:58:58 -0800
-In-Reply-To: <20171201233133.30011-1-rabel@robertabel.eu> (Robert Abel's
-        message of "Sat, 2 Dec 2017 00:31:32 +0100")
-Message-ID: <xmqqindmml25.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751570AbdLDSI1 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Dec 2017 13:08:27 -0500
+Received: from mail-it0-f43.google.com ([209.85.214.43]:41009 "EHLO
+        mail-it0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751919AbdLDSI0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Dec 2017 13:08:26 -0500
+Received: by mail-it0-f43.google.com with SMTP id x28so14962319ita.0
+        for <git@vger.kernel.org>; Mon, 04 Dec 2017 10:08:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=RhUnYk17WxId3OyGHVuxVmSVvq7sE7mS+43fAd4kdvs=;
+        b=JM1G1Gl6Ms6FZ0CvUzn0WAORvne5lzCsdFuM9uBMHj9FeYel+N0MbN/SRXqXlSP408
+         IloXG81Xxxh64FXq7RMOMODHz7GqNKovUtXq1zsu+CcHXFk7MCFCWpjwNEZmakddtx0K
+         UCIPcKIdJj+SpOE+bLTu7FhyXzOIFHnbOuUsTouKoxjgFTLF9f9mQWDvz3N1tOVLyNtI
+         YIsC58TGlnxuywrnTPdGh57MLLmejlctpg4PXf+Kj+6tGz0yNq1IjdqUu5qC4a0BOWFh
+         uFfyxlhK5SLUQY4ZDP/MnoP0oWlswT0gn43ErEnINebQRAl/MUvjsODOpxAD65Otwo2v
+         Nu5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=RhUnYk17WxId3OyGHVuxVmSVvq7sE7mS+43fAd4kdvs=;
+        b=RAN81kWjnSbbZgrJII98yIfVy11KLL4Redif4vc4kRz79ZfYjOh/emVEUCDKXVvx6f
+         4b9PsZYaoixlyBbq0BsjA8aTWD1iRRU2hOKFl0qix0BnXawrkPxH57QFsd4lC/hMSHcd
+         N8ujPAJv73C3l+3jujpj41DO2DmAFS13Y8R9pQrO0jQaOxj6Y2GOhNOdex49hbv23dgg
+         HbjPpr7TNY163LmfAPVCD8XJVkuOpMz2A65NT1dbLza5DfGQONqH1R6iIy9iCArTAEg8
+         EHvKiSiKCjJJZTiyFeDKgSaXkdPpQ5nODjJXgz0P2/Lc2eOLUO3YrEASgcjTds9MWjuF
+         sUyw==
+X-Gm-Message-State: AJaThX4qJNVokio6hEcNGm9Z6YONEkt3dy1TR2hv4HnvHgHqqKhtuSt7
+        ZJ8/GY0M33ZTo9eBO0/lwhGjto3GTty1l/sJUsQ=
+X-Google-Smtp-Source: AGs4zMYFXIFlzEakC175+QCXLrnXoCGtJvpIXYVG01HXBJ5Lzfc0degkNkMI3bfLATDB5uvf+FgkV9QjmXCbkDRuFdE=
+X-Received: by 10.107.6.81 with SMTP id 78mr25124840iog.204.1512410905767;
+ Mon, 04 Dec 2017 10:08:25 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: CDF4133C-D91C-11E7-A167-8EF31968708C-77302942!pb-smtp1.pobox.com
+Received: by 10.107.200.11 with HTTP; Mon, 4 Dec 2017 10:08:04 -0800 (PST)
+In-Reply-To: <xmqqzi6ympi9.fsf@gitster.mtv.corp.google.com>
+References: <20171129195430.10069-1-avarab@gmail.com> <20171203115941.16674-1-avarab@gmail.com>
+ <xmqqzi6ympi9.fsf@gitster.mtv.corp.google.com>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Mon, 4 Dec 2017 19:08:04 +0100
+Message-ID: <CACBZZX6mEzrTdD=B7gAeLSufPR-ZEj8wO8kXsJmrJFtSbT35yQ@mail.gmail.com>
+Subject: Re: [PATCH v2] Makefile: replace perl/Makefile.PL with simple make rules
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Dan Jacques <dnj@google.com>,
+        Alex Riesen <alexander.riesen@cetitec.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Brandon Casey <drafnel@gmail.com>, Petr Baudis <pasky@ucw.cz>,
+        Gerrit Pape <pape@smarden.org>,
+        "martin f . krafft" <madduck@madduck.net>, Eric Wong <e@80x24.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Robert Abel <rabel@robertabel.eu> writes:
-
-> __git_eread is used to read a single line of a given file (if it exists)
-> into a variable without the EOL. All six current users of __git_eread
-> use it that way and don't expect multi-line content.
-
-Changing $@ to $2 does not change whether this is about "multi-line"
-or not.  What you are changing is that the original was prepared to
-be given two or more variable names, and split an input line at IFS
-into multiple tokens to be assigned to these variables, but with
-this change, the caller can only use one variable and this function
-will not split the line and store it into that single variable.
-
-The above can easily be fixed with a bit of rewording, perhaps like:
-
-    ... that way.  We do not need to split the line into tokens and
-    assign them to multiple variables---reading only into a single
-    variable needs to be supported.
-
-While reviewing this patch, I also wondered if the "read" wants to
-become "read -r" or something that is even safer than simply
-avoiding tokenization, but after scanning to see exactly which files
-__git_eread is used to read from, I do not think it matters (the
-input will not have a backslash that would want to be protected from
-'read'), so this should be OK.
-
-> Signed-off-by: Robert Abel <rabel@robertabel.eu>
-> ---
->  contrib/completion/git-prompt.sh | 7 ++++---
->  1 file changed, 4 insertions(+), 3 deletions(-)
+On Mon, Dec 4, 2017 at 5:22 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> I did this immediately after applying; please double check.
 >
-> diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
-> index c6cbef38c..41a471957 100644
-> --- a/contrib/completion/git-prompt.sh
-> +++ b/contrib/completion/git-prompt.sh
-> @@ -278,11 +278,12 @@ __git_ps1_colorize_gitstring ()
->  	r="$c_clear$r"
->  }
->  
-> +# Helper function to read the first line of a file into a variable.
-> +# __git_eread requires 2 arguments, the file path and the name of the
-> +# variable, in that order.
->  __git_eread ()
->  {
-> -	local f="$1"
-> -	shift
-> -	test -r "$f" && read "$@" <"$f"
-> +	test -r "$1" && read "$2" <"$1"
->  }
->  
->  # __git_ps1 accepts 0 or 1 arguments (i.e., format string)
+> Thanks.
+
+Thanks. Looks good to me. I'll incorporate that info future
+submissions if there's more stuff to fix, but for now if you could
+queue it like that that would be great.
+
+> 1: da337670f5 ! 1: aeae85bdd0 Makefile: replace perl/Makefile.PL with simple make rules
+>     @@ -27,7 +27,7 @@
+>          So replace the whole thing with something that's pretty much a copy of
+>          how we generate po/build/**.mo from po/*.po, just with a small sed(1)
+>          command instead of msgfmt. As that's being done rename the files
+>     -    from *.pm to *.pmc just to indicate that they're genreated (see
+>     +    from *.pm to *.pmc just to indicate that they're generated (see
+>          "perldoc -f require").
+>
+>          While I'm at it, change the fallback for Error.pm from being something
+>     @@ -50,9 +50,9 @@
+>             it could be set in addition to INSTLIBDIR, but my reading of [7] is
+>             that this is the desired behavior.
+>
+>     -     * We don't man pages for all of the perl modules as we used t, only
+>     -       Git(3pm). As discussed on-list[8] that we were building installed
+>     -       manpages for purely internal APIs like Git::I18N or
+>     +     * We don't build man pages for all of the perl modules as we used to,
+>     +       only Git(3pm). As discussed on-list[8] that we were building
+>     +       installed manpages for purely internal APIs like Git::I18N or
+>             private-Error.pm was always a bug anyway, and all the Git::SVN::*
+>             ones say they're internal APIs.
+>
+> :
