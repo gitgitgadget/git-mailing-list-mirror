@@ -7,105 +7,94 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2C58620954
-	for <e@80x24.org>; Mon,  4 Dec 2017 18:30:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9D79720954
+	for <e@80x24.org>; Mon,  4 Dec 2017 18:44:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751756AbdLDSat (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Dec 2017 13:30:49 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56392 "EHLO
+        id S1752538AbdLDSoG (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Dec 2017 13:44:06 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:63904 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751208AbdLDSar (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Dec 2017 13:30:47 -0500
+        with ESMTP id S1752503AbdLDSoE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Dec 2017 13:44:04 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A00D8CBFF6;
-        Mon,  4 Dec 2017 13:30:46 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8C4C6A6DF3;
+        Mon,  4 Dec 2017 13:44:03 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ZaxyY1hsvTvmBqRY+yWBv0WlJ0s=; b=tLfkwV
-        zOr34eTf+hx+eIEVmce73S22AgRt8mx0AKBItmlQZLQmtrxRDxQrJmHnGCUimSpV
-        JbKss+LBd6L8gU8qDsiXPHG8w/Lmbm3lZPtrieL85xyGAJh6VutCgxKEsbdaLS4O
-        l9LPJoeu0GER9zahMKHpYBJPh23dXsCixlT0o=
+        :content-type; s=sasl; bh=2mo6IjXguwcUtkb9mT+M8pe8F6o=; b=ey8iwp
+        Zvwda9Z5f53+IkbkzdCadlJ/Y7ELnbzRfIpg10TU9omrLxjwc+pM202GK1oVHmgZ
+        6CfIa3EgoloFkIZYmPV53SoY7/a/EDJlJJbq4IsW/d1QPXLYpTwGKIPKlnAJJHYr
+        PSpTjipzy0hN37aa5UVS/xxi+bBW9Xz7xWWGY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=leK7c0DtUiKNpdOSdJDV5jX/m+a80Vjl
-        j5lfhPyTpbwYpaOo41ziqN6oeWx09igj8gVAQVcPFIh/uk2EMlIjMDRF/KPpqvlj
-        UWT8EYb3/xqmWGJXnMFVXDiHNoGwrHMJUXCP8BQ+8/xBtsjh8kbibTnn7VqIYN+U
-        8TF9aScclWE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8F51BCBFF5;
-        Mon,  4 Dec 2017 13:30:46 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=AQVCTER/ht7bR6QOMDNucHUhvKzIVIDL
+        KXElUrp93b5X1UrQmTDGzFGE4LxD0jJ04SU7hfVPTdNl82CeM34dml9Jt+qQ1rzn
+        tC9lyGe3a7zOmqPS5y1BEaq5GCMiJALGO3fOI2pKYEb9z7R1GIZTza09IKJ4Vuoh
+        81e67b5slAI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 73E45A6DF1;
+        Mon,  4 Dec 2017 13:44:03 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E5CB9CBFF4;
-        Mon,  4 Dec 2017 13:30:45 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8B402A6DEF;
+        Mon,  4 Dec 2017 13:44:02 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Phillip Wood <phillip.wood@talktalk.net>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Adam Dinwoodie <adam@dinwoodie.org>,
-        Stefan Beller <sbeller@google.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v4 7/9] sequencer: load commit related config
-References: <20170925101041.18344-1-phillip.wood@talktalk.net>
-        <20171124110758.9406-1-phillip.wood@talktalk.net>
-        <20171124110758.9406-8-phillip.wood@talktalk.net>
-Date:   Mon, 04 Dec 2017 10:30:44 -0800
-In-Reply-To: <20171124110758.9406-8-phillip.wood@talktalk.net> (Phillip Wood's
-        message of "Fri, 24 Nov 2017 11:07:56 +0000")
-Message-ID: <xmqqd13umjl7.fsf@gitster.mtv.corp.google.com>
+To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc:     Git mailing list <git@vger.kernel.org>
+Subject: Re: [PATCH v2 2/2] Doc/check-ref-format: clarify information about @{-N} syntax
+References: <xmqqpo8dn1jd.fsf@gitster.mtv.corp.google.com>
+        <20171127172834.6396-1-kaartic.sivaraam@gmail.com>
+        <20171127172834.6396-2-kaartic.sivaraam@gmail.com>
+        <xmqqd14386sw.fsf@gitster.mtv.corp.google.com>
+        <1511880237.10193.5.camel@gmail.com>
+        <xmqqa7z0lgsd.fsf@gitster.mtv.corp.google.com>
+        <1512408328.15792.5.camel@gmail.com>
+Date:   Mon, 04 Dec 2017 10:44:00 -0800
+In-Reply-To: <1512408328.15792.5.camel@gmail.com> (Kaartic Sivaraam's message
+        of "Mon, 04 Dec 2017 22:55:28 +0530")
+Message-ID: <xmqq8teimiz3.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 3E4959B8-D921-11E7-8192-8EF31968708C-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 191A404C-D923-11E7-929E-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood <phillip.wood@talktalk.net> writes:
+Kaartic Sivaraam <kaartic.sivaraam@gmail.com> writes:
 
-> --- a/builtin/rebase--helper.c
-> +++ b/builtin/rebase--helper.c
-> @@ -9,6 +9,17 @@ static const char * const builtin_rebase_helper_usage[] = {
->  	NULL
->  };
->  
-> +static int git_rebase_helper_config(const char *k, const char *v, void *cb)
-> +{
-> +	int status;
-> +
-> +	status = git_sequencer_config(k, v, NULL);
-> +	if (status)
-> +		return status;
-> +
-> +	return git_default_config(k, v, NULL);
-> +}
-> +
+>> Stepping back a bit, the mild suspicion above says
+>> 
+>>     $ git checkout HEAD^0
+>>     ... do things ...
+>>     $ git checkout -b temp
+>>     ... do more things ...
+>>     $ git checkout -B @{-1}
+>> 
+>> that creates a new branch whose name is 40-hex of a commit that
+>> happens to be where we started the whole dance *is* a bug.  No sane
+>> user expects that to happen, and the last step "checkout -B @{-1}"
+>> should result in an error instead [*1*].
+>> 
+>> I was wondering if "git check-ref-format --branch @{-1}", when used
+>> in place of "checkout -B @{-1}" in the above sequence,
+>
+> I guess you mean '... "git checkout -B $(git check-ref-format --branch
+> @{-1}", when used in place of "git checkout -B @{-1}" ...' ?
 
-Sorry for spotting the problem this late, but this code is
-unfortunate and we will need to revisit it later; we may want to do
-so sooner rather than later.
+No you guessed wrong.  I was (and am) wondering if the last step in
+the following sequence should fail.
 
-When k,v is a valid configuration that is handled by
-sequencer_config() successfully, this code still needs to call into
-default_config() with the same k,v, only to get it ignored.
+>>     $ git checkout HEAD^0
+>>     ... do things ...
+>>     $ git checkout -b temp
+>>     ... do more things ...
+>>     $ git check-ref-format --branch @{-1}
 
-The problem lies in the (mis)design of git_sequencer_config().  The
-function should either allow the caller to notice that (k,v) has
-already been handled, or be the last one in the callback by making a
-call to default_config() itself.
-
-For the former, because this helper does not have to be called
-directly as a git_config() callback, but instead it is always meant
-to be called indirectly from another git_config() callback (like
-git_rebase_helper_config() here, and common_config() in
-builtin/revert.c like we see below), it does *not* have to be
-constrained by the function signature required for it to be a config
-callback.  It could take a pointer to an int that stores if 'k' was
-handled inside the function,
-
-    int git_sequencer_config_helper(char *k, char *v, int *handled);
-
-for example.
+And I am leaning towards saying that it is a bug that it does not
+fail; @{-1} is a detached HEAD and not a concrete branch name in
+this case, so "check-ref-format --branch" should at least notice
+and say that it is a request that may lead to a nonsense next step
+(which is to create a branch with that 40-hex name).
