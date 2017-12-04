@@ -2,108 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7958920C11
-	for <e@80x24.org>; Mon,  4 Dec 2017 04:29:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B395220A40
+	for <e@80x24.org>; Mon,  4 Dec 2017 07:25:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753002AbdLDE3R (ORCPT <rfc822;e@80x24.org>);
-        Sun, 3 Dec 2017 23:29:17 -0500
-Received: from mail-ua0-f195.google.com ([209.85.217.195]:39338 "EHLO
-        mail-ua0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752929AbdLDE3Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Dec 2017 23:29:16 -0500
-Received: by mail-ua0-f195.google.com with SMTP id i20so9525266uak.6
-        for <git@vger.kernel.org>; Sun, 03 Dec 2017 20:29:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=MEr23SpuwjRYsNmfTzkScIUv88X1NOQKDbITLvnB/ac=;
-        b=SIc/qga9vI6GZT3xpKafr7FOI18EN7gHwM5hsX3vvFA94Bmj1HoWzkhluiMGZ1qIbG
-         lU+yfnrNIhXQYZi2YFHZso/DjqrO2J2xhg5s0c4H0lKWTkZNmuwzQjA5Pc/ZJzX5KFVD
-         Xl1wFAZZibcgyHrauyHikuxN69nwset49Ze+ykiPrswNPXjuZumNaZpcKCPUCYKn5Z7b
-         VfZ6mA27G9tNEX8XmraYbDeRhXQTPypcwyDllQR6be9KPJCPjopP+zXtgBwFOAQRMOWS
-         FJFZLXnSP4McpfHnpftUH1W8ME8KC/JunhlX1KdaZDBK+V7Y3a8H6x4+6Xdc7fBljkvm
-         t1XA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=MEr23SpuwjRYsNmfTzkScIUv88X1NOQKDbITLvnB/ac=;
-        b=KQ3GmI3nM0en+h+747ESJ+CyeG4T4yRexyTKrwuVdAoMjEw9oc/SQtE858+7WQ66uH
-         kqwrGvSICX4x81NBfNhhXrydNIArw9PudUjAzruhR2sGvsfIIAQzPoeUveHp/1dnkB42
-         9HgPTIKs3GDH+tQRxOs0xMavpUtj/nezHGGml+YkrQPo+7WNj0uMNvEQwFvkBD2fPvbO
-         u2F3V5zhKIeOgRsWc2i6VyaQVdMTXUewInKY6wuNXoH/PiVFQqzUr4+8XAfCtAmD3VT/
-         mIgJfhk+obKds2wNLdYUto4XCl/eToJeI891dzQd0dTYMLMPjIvFJJwAboffEeoZW7gd
-         7f0g==
-X-Gm-Message-State: AKGB3mLFmP2CYjRrtc5lWb/bqpgzTiqnkmyvA82fTjQApBa1idQHvBIh
-        OHTJiyemZV4c82PcdrzZglBFGsKoDYPA96y7zBI=
-X-Google-Smtp-Source: AGs4zMYjSxh5/fhdnyh812Py9ydykAzhnjGPzgbRZkGfd9lXZOrR2jm/WT1LQuTeYds68ORVkzryGOA6ZXWReZRLock=
-X-Received: by 10.176.75.111 with SMTP id i47mr10792687uaf.100.1512361755661;
- Sun, 03 Dec 2017 20:29:15 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.176.73.240 with HTTP; Sun, 3 Dec 2017 20:29:15 -0800 (PST)
-In-Reply-To: <20171201055933.19368-1-kaartic.sivaraam@gmail.com>
-References: <20171129034620.4719-1-kaartic.sivaraam@gmail.com> <20171201055933.19368-1-kaartic.sivaraam@gmail.com>
-From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Date:   Mon, 4 Dec 2017 05:29:15 +0100
-Message-ID: <CAM0VKjmy8J5VnROyv_O=iVdwn2yELUjPv=XNu6JzJ+OePWbh4w@mail.gmail.com>
-Subject: Re: [PATCH v5 4/4] builtin/branch: strip refs/heads/ using skip_prefix
-To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
+        id S1752970AbdLDHZI (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Dec 2017 02:25:08 -0500
+Received: from mo4-p00-ob.smtp.rzone.de ([81.169.146.220]:25990 "EHLO
+        mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752830AbdLDHZH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Dec 2017 02:25:07 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1512372305;
+        s=domk; d=cs-software-gmbh.de;
+        h=MIME-Version:Content-Transfer-Encoding:Content-Type:
+        Content-Language:In-Reply-To:References:Message-ID:Date:Subject:CC:To:
+        From:X-RZG-CLASS-ID:X-RZG-AUTH:Accept-Language:Auto-Submitted:Cc:Date:
+        From:Message-ID:References:Reply-To:Resent-Cc:Resent-Date:Resent-From:
+        Resent-To:Sender:Subject:To:Content-Alternative:Content-Description:
+        Content-Disposition:Content-Duration:Content-Features:Content-ID:
+        Content-Language:Content-Location:Content-MD5:
+        Content-Transfer-Encoding:Content-Type:MIME-Version;
+        bh=JBLoVAFPc3KpcYgtA3cEQb+KcTQ9VUu8ZwFf2Fs0Kcs=;
+        b=fKvlAzRwGL/oIPewEJwEV3+xqqJJH0p1kQINokScQNnK2vCDvTXLcLo1owfg790/QN
+        5KdXgu5VUYoXFud23F9jOY9q0Rjw4sP9CIktvbRo1X/fn+Bzkh9l8nGBbfRMSp45SJg1
+        EDMMD6PNsiCEVw0Wwbw/2pOj9K2q14RaZSFu0=
+X-RZG-AUTH: :LWABbUmIevNaG8tCOliF7QMk1+ctV4c3xgfkpNE0NajOhmQxl91LCNFTJgA=
+X-RZG-CLASS-ID: mo00
+Received: from remote.CS-SOFTWARE.local (b2b-78-94-62-122.unitymedia.biz [78.94.62.122])
+        by post.strato.de (RZmta 42.10 DYNA|AUTH)
+        with ESMTPA id 302409tB47IwiWb;
+        Mon, 4 Dec 2017 08:18:58 +0100 (CET)
+Received: from SERVER2011.CS-SOFTWARE.local ([fe80::5168:c363:4af8:7565]) by
+ SERVER2011.CS-SOFTWARE.local ([fe80::5168:c363:4af8:7565%11]) with mapi id
+ 14.01.0438.000; Mon, 4 Dec 2017 08:18:57 +0100
+From:   Florian Manschwetus <manschwetus@cs-software-gmbh.de>
+To:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+CC:     Max Kirillov <max@max630.net>,
         Eric Sunshine <sunshine@sunshineco.com>,
-        Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Chris Packham <judge.packham@gmail.com>,
+        Konstantin Khomoutov <kostix+git@007spb.ru>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: AW: [PATCH v6 1/2] http-backend: respect CONTENT_LENGTH as
+ specified by rfc3875
+Thread-Topic: [PATCH v6 1/2] http-backend: respect CONTENT_LENGTH as
+ specified by rfc3875
+Thread-Index: AQHTa/zzit9rtTRuV0aXVXOBL7yf6aMyx+Zg
+Date:   Mon, 4 Dec 2017 07:18:55 +0000
+Message-ID: <F0F5A56A22F20D4CB4A03BB8D66587970253F87B86@SERVER2011.CS-SOFTWARE.local>
+References: <20171126193813.12531-1-max@max630.net>
+        <20171126193813.12531-2-max@max630.net>
+        <20171129032214.GB32345@sigill.intra.peff.net>
+        <xmqqr2sclj2q.fsf@gitster.mtv.corp.google.com>
+        <20171203024958.GA31493@sigill.intra.peff.net>
+ <xmqq1skcjqer.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <xmqq1skcjqer.fsf@gitster.mtv.corp.google.com>
+Accept-Language: de-DE, en-US
+Content-Language: de-DE
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [192.168.1.154]
+x-pmwin-version: 3.1.2.0, Antivirus-Engine: 3.69.2, Antivirus-Data: 5.46
+Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 1, 2017 at 6:59 AM, Kaartic Sivaraam
-<kaartic.sivaraam@gmail.com> wrote:
-> Sorry, missed a ';' in v4.
->
-> The surprising thing I discovered in the TravisCI build for v4
-> was that apart from the 'Documentation' build the 'Static Analysis'
-> build passed, with the following output,
->
-> -- <snip>
-> $ ci/run-static-analysis.sh
-> GIT_VERSION =3D 2.13.1.1972.g6ced3f745
->      SPATCH contrib/coccinelle/array.cocci
->      SPATCH result: contrib/coccinelle/array.cocci.patch
->      SPATCH contrib/coccinelle/free.cocci
->      SPATCH contrib/coccinelle/object_id.cocci
->      SPATCH contrib/coccinelle/qsort.cocci
->      SPATCH contrib/coccinelle/strbuf.cocci
->      SPATCH result: contrib/coccinelle/strbuf.cocci.patch
->      SPATCH contrib/coccinelle/swap.cocci
->      SPATCH contrib/coccinelle/xstrdup_or_null.cocci
->
-> The command "ci/run-static-analysis.sh" exited with 0.
+Hi All,
+I could provide a bash script I used in between to make this working with I=
+IS, without fixing http-backend binary, maybe this helps to understand how =
+this cases might be handled.
 
-Perhaps Coccinelle should have errored out, or perhaps its 0 exit code
-means "I didn't find any code matching any of the semantic patches that
-required transformation".
-
-> I guess static analysis tools make an assumption that the source
-> code is syntactically valid for them to work correctly. So, I guess
-> we should at least make sure the code 'compiles' before running
-> the static analysis tool even though we don't build it completely.
-> I'm not sure if it's a bad thing to run the static analysis on code
-> that isn't syntactically valid, though.
-
-Travis CI already runs 6 build jobs compiling Git.  And that is in
-addition to the one that you should have run yourself before even
-thinking about submitting v4 ;)  That's plenty to catch errors like
-these.  And if any of those builds fail because Git can't be built or
-because of a test failure, then Coccinelle's success doesn't matter at
-all, because the commit is toast anyway.
+Mit freundlichen Gr=FC=DFen / With kind regards
+Florian Manschwetus
 
 
-G=C3=A1bor
+
+> -----Urspr=FCngliche Nachricht-----
+> Von: Junio C Hamano [mailto:gitster@pobox.com]
+> Gesendet: Sonntag, 3. Dezember 2017 07:07
+> An: Jeff King
+> Cc: Max Kirillov; Eric Sunshine; Florian Manschwetus; Chris Packham;
+> Konstantin Khomoutov; git@vger.kernel.org
+> Betreff: Re: [PATCH v6 1/2] http-backend: respect CONTENT_LENGTH as
+> specified by rfc3875
+>=20
+> Jeff King <peff@peff.net> writes:
+>=20
+> > ... Eventually our fill() will block trying to get data that is not
+> > there. On an Apache server, the webserver would know there is nothing
+> > left to send us and close() the pipe, and we'd get EOF.
+> > But on IIS, I think the pipe remains open and we'd just block
+> > indefinitely trying to read().
+>=20
+> Ah, yeah, under that scenario, trusting content-length and trying to read=
+,
+> waiting for input that would never come, will be a problem, and it would
+> probably want to get documented.
+
