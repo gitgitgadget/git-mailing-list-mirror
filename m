@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B1AF920954
-	for <e@80x24.org>; Mon,  4 Dec 2017 23:59:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0DFD720954
+	for <e@80x24.org>; Mon,  4 Dec 2017 23:59:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752143AbdLDX7h (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Dec 2017 18:59:37 -0500
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:43847 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752042AbdLDX7W (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Dec 2017 18:59:22 -0500
-Received: by mail-pg0-f65.google.com with SMTP id b18so9384998pgv.10
-        for <git@vger.kernel.org>; Mon, 04 Dec 2017 15:59:22 -0800 (PST)
+        id S1752155AbdLDX7j (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Dec 2017 18:59:39 -0500
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:42555 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751514AbdLDX7X (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Dec 2017 18:59:23 -0500
+Received: by mail-pg0-f66.google.com with SMTP id e14so9384781pgr.9
+        for <git@vger.kernel.org>; Mon, 04 Dec 2017 15:59:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=5DVxnT0MhvA38PunuouMateX+8xkbc/6ADwghkdnHZE=;
-        b=egvrkQ60l2yNhwKbnESDGD5VCaXO4P6gS2HbMzWHL4tZFog1pYbtjRHHUxuDflwUsd
-         KOjAn52eRRLebLKlwIDfqPNjwiriv57ET+5m4t7AhnlO3zXbh/mqrEjHwA9sGe1pGCPh
-         ebhrgNAAqKdFO7qwBLyEC2JWf3+4JbYIT38lHWfMwzz6C8g9O901oYKhMaw++v4rYC0C
-         f5Xq014waGptkgTX9FNgQLfccSEmgqvLhhfNJfjIJGwOaUF3kn+4hyCHjdOJnlWoT6RU
-         VQNJUrNdWmagArfy+cc7Wlklwhtk716J60QQjYJmoFt1cWVuK+CsthFD48KkD9CozP4S
-         UINg==
+        bh=R+8+7RuZTObIJ4hK8MTm9iSFTWtWcTQI48AEPE8N+Ok=;
+        b=Tu0xVIaMN3GH+5NM7WzU1wSjO8uTpVzPilnJtug00zCoH4YZA7I26he3QjnErFpxpC
+         axGMmz20TvREk0S9qb+vgnVKcb4dNpjpIbXJkUh95fwTtJgdL4jqhmxo4N/elZJXNbpz
+         C9uu33EEInLLOxYXG5wfX7DlioHCpOVRuBwQfMWLk0FxNufo3G4UdCsMnVS/UEDEafWR
+         5ntlZuSqFGVR2GNFeppHMxkgAny2rcr+X9Fdta+oIPav7W8/BL5Z/oX6nCWMRw0i/oZM
+         GEZS5meByTqBp2dbKHLBEeXQSqYq6X+EE/OyTeP094glWomfvtzaErT2ygiMzA2qAZWq
+         U+Xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=5DVxnT0MhvA38PunuouMateX+8xkbc/6ADwghkdnHZE=;
-        b=O6yJNMjNW/fyzaf0UOl6/BxrZvFQ4QhFDnVUXfl2JTPHs4NqPviV10Fl/wmRztydiZ
-         sZCZAA3q90DWxHNaiRBkl4n/G+EIGdWNOjoHCJbgfArgCC2DxSNSbnwoEgtgEyosyVJE
-         D/h9JHhB+Ri4Ncq4UrK7F5BZagW4B1opTZGxHtDPfmZ9zmgkabuMtwRe97VkQxeQiYeF
-         HVhriGfdB/24OcY1yqp+Anl27BAOwMxjq8+ddTPYIl+UKpB+C4AltyF4bmQQgqVDm/JW
-         HadVK1KfWGjT0And9w86etjJeXDr+180YU24JmpmbcgGor6f/ZsgnTBUo0Jc/o5i2Fni
-         +O9A==
-X-Gm-Message-State: AKGB3mK5x5otlghds7DiRj39wOzp2fSAOg3rdEbVwTR6AMgL4z9loUES
-        B+XwtZWHckHo56eSnXjRU92N/d1B/Wk=
-X-Google-Smtp-Source: AGs4zMbq7sZtFElq6ydXLftMibTblN3rNtT5SP3oYxbdnpQMJ55drYhh2k0YkOl8jcHyCWGfHmVU9w==
-X-Received: by 10.159.254.8 with SMTP id r8mr3282070pls.291.1512431961413;
-        Mon, 04 Dec 2017 15:59:21 -0800 (PST)
+        bh=R+8+7RuZTObIJ4hK8MTm9iSFTWtWcTQI48AEPE8N+Ok=;
+        b=JmoIpfgKSj5qDQcAZJ6e2DdMN6vPnMz+EkVS+j/J2YxPOyhL0Cu8hKnutflU0xmpQl
+         VzAfNY8QVRZij6AwHDinLV46gF7+IH8XfUIdwlZFynvHm99OQ2a0hwOlskVMj3z8JzIc
+         aKs3vdCj5jiCHLcW/IprA5S+3dZ7JemZsvwKU52P8x58dgWQJu4vIh4mdQ15t4VTnTwW
+         sQBl+qXlyX8q0n4bLRThwAof8ePEqyRQJREgyCbrITXfeQbCSLiXXc6WRSwsyH046gdW
+         pb5gLctLStYXpeQqD9WbN8gvaHbzdDeZLKl9lk0XEBe5dfocXtE7UupNGPT9tyTUOSgw
+         iNVQ==
+X-Gm-Message-State: AJaThX4qakZ9gvHQUEkvkfFOs9pZeVE/TC17iP0LycsdF0otIwH073Fh
+        Q7FmCIQmERCRHiEIwZBC1HZ7DiQEQHI=
+X-Google-Smtp-Source: AGs4zMZSt0aclYJmXqugKa5vzHF8XI6i9t8AfufY+BgTVTutqW9May81MX5yu9vfyDKg8NbycAMDJw==
+X-Received: by 10.98.35.144 with SMTP id q16mr19369777pfj.13.1512431962652;
+        Mon, 04 Dec 2017 15:59:22 -0800 (PST)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id b187sm24939223pfg.109.2017.12.04.15.59.19
+        by smtp.gmail.com with ESMTPSA id b187sm24939223pfg.109.2017.12.04.15.59.21
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 04 Dec 2017 15:59:20 -0800 (PST)
+        Mon, 04 Dec 2017 15:59:21 -0800 (PST)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     Brandon Williams <bmwill@google.com>
-Subject: [WIP 11/15] serve: introduce git-serve
-Date:   Mon,  4 Dec 2017 15:58:19 -0800
-Message-Id: <20171204235823.63299-12-bmwill@google.com>
+Subject: [WIP 12/15] ls-refs: introduce ls-refs server command
+Date:   Mon,  4 Dec 2017 15:58:20 -0800
+Message-Id: <20171204235823.63299-13-bmwill@google.com>
 X-Mailer: git-send-email 2.15.1.424.g9478a66081-goog
 In-Reply-To: <20171204235823.63299-1-bmwill@google.com>
 References: <20171020171839.4188-1-bmwill@google.com>
@@ -63,323 +63,179 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Introduce git-serve, the base server for protocol version 2.
-
-When connecting to a server supporting protocol version 2, the server
-will send a list all of its capabilities and then wait for the client to
-send a command request.  Some capabilities advertised are 'commands'
-which the client can request (push and fetch are examples of such
-commands).  A command request is comprised of a list of capabilities,
-including a command request "command=<command>", a delimiter packet,
-followed by a list of parameters for the requested command.
-
-At the end of each command a client can request that another command be
-executed or can terminate the connection by sending a flush packet.
+Introduce the ls-refs server command.  In protocol v2, the ls-refs
+command is used to request the ref advertisement from the server.  Since
+it is a command which can be requested (as opposed to manditory in v1),
+a clinet can sent a number of parameters in its request to limit the ref
+advertisement based on provided ref-patterns.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- .gitignore      |   1 +
- Makefile        |   2 +
- builtin.h       |   1 +
- builtin/serve.c |  25 ++++++++
- git.c           |   1 +
- serve.c         | 185 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- serve.h         |   6 ++
- 7 files changed, 221 insertions(+)
- create mode 100644 builtin/serve.c
- create mode 100644 serve.c
- create mode 100644 serve.h
+ Makefile  |  1 +
+ ls-refs.c | 96 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ ls-refs.h |  9 ++++++
+ serve.c   |  8 ++++++
+ 4 files changed, 114 insertions(+)
+ create mode 100644 ls-refs.c
+ create mode 100644 ls-refs.h
 
-diff --git a/.gitignore b/.gitignore
-index 833ef3b0b..2d0450c26 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -140,6 +140,7 @@
- /git-rm
- /git-send-email
- /git-send-pack
-+/git-serve
- /git-sh-i18n
- /git-sh-i18n--envsubst
- /git-sh-setup
 diff --git a/Makefile b/Makefile
-index 86394b69d..710672cf4 100644
+index 710672cf4..be3c2f98b 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -862,6 +862,7 @@ LIB_OBJS += revision.o
- LIB_OBJS += run-command.o
- LIB_OBJS += send-pack.o
- LIB_OBJS += sequencer.o
-+LIB_OBJS += serve.o
- LIB_OBJS += server-info.o
- LIB_OBJS += setup.o
- LIB_OBJS += sha1-array.o
-@@ -995,6 +996,7 @@ BUILTIN_OBJS += builtin/rev-parse.o
- BUILTIN_OBJS += builtin/revert.o
- BUILTIN_OBJS += builtin/rm.o
- BUILTIN_OBJS += builtin/send-pack.o
-+BUILTIN_OBJS += builtin/serve.o
- BUILTIN_OBJS += builtin/shortlog.o
- BUILTIN_OBJS += builtin/show-branch.o
- BUILTIN_OBJS += builtin/show-ref.o
-diff --git a/builtin.h b/builtin.h
-index f332a1257..3f3fdfc28 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -215,6 +215,7 @@ extern int cmd_rev_parse(int argc, const char **argv, const char *prefix);
- extern int cmd_revert(int argc, const char **argv, const char *prefix);
- extern int cmd_rm(int argc, const char **argv, const char *prefix);
- extern int cmd_send_pack(int argc, const char **argv, const char *prefix);
-+extern int cmd_serve(int argc, const char **argv, const char *prefix);
- extern int cmd_shortlog(int argc, const char **argv, const char *prefix);
- extern int cmd_show(int argc, const char **argv, const char *prefix);
- extern int cmd_show_branch(int argc, const char **argv, const char *prefix);
-diff --git a/builtin/serve.c b/builtin/serve.c
+@@ -807,6 +807,7 @@ LIB_OBJS += list-objects.o
+ LIB_OBJS += ll-merge.o
+ LIB_OBJS += lockfile.o
+ LIB_OBJS += log-tree.o
++LIB_OBJS += ls-refs.o
+ LIB_OBJS += mailinfo.o
+ LIB_OBJS += mailmap.o
+ LIB_OBJS += match-trees.o
+diff --git a/ls-refs.c b/ls-refs.c
 new file mode 100644
-index 000000000..2ecaad3b6
+index 000000000..591dd105d
 --- /dev/null
-+++ b/builtin/serve.c
-@@ -0,0 +1,25 @@
-+#include "cache.h"
-+#include "builtin.h"
-+#include "parse-options.h"
-+#include "serve.h"
-+
-+static char const * const grep_usage[] = {
-+	N_("git serve [<options>]"),
-+	NULL
-+};
-+
-+int cmd_serve(int argc, const char **argv, const char *prefix)
-+{
-+
-+	struct option options[] = {
-+		OPT_END()
-+	};
-+
-+	/* ignore all unknown cmdline switches for now */
-+	argc = parse_options(argc, argv, prefix, options, grep_usage,
-+			     PARSE_OPT_KEEP_DASHDASH |
-+			     PARSE_OPT_KEEP_UNKNOWN);
-+	serve();
-+
-+	return 0;
-+}
-diff --git a/git.c b/git.c
-index e32e16f2d..527086eaf 100644
---- a/git.c
-+++ b/git.c
-@@ -457,6 +457,7 @@ static struct cmd_struct commands[] = {
- 	{ "revert", cmd_revert, RUN_SETUP | NEED_WORK_TREE },
- 	{ "rm", cmd_rm, RUN_SETUP },
- 	{ "send-pack", cmd_send_pack, RUN_SETUP },
-+	{ "serve", cmd_serve, RUN_SETUP },
- 	{ "shortlog", cmd_shortlog, RUN_SETUP_GENTLY | USE_PAGER },
- 	{ "show", cmd_show, RUN_SETUP },
- 	{ "show-branch", cmd_show_branch, RUN_SETUP },
-diff --git a/serve.c b/serve.c
-new file mode 100644
-index 000000000..476e73b54
---- /dev/null
-+++ b/serve.c
-@@ -0,0 +1,185 @@
++++ b/ls-refs.c
+@@ -0,0 +1,96 @@
 +#include "cache.h"
 +#include "repository.h"
-+#include "config.h"
-+#include "pkt-line.h"
-+#include "version.h"
++#include "refs.h"
++#include "remote.h"
 +#include "argv-array.h"
-+#include "serve.h"
++#include "ls-refs.h"
++#include "pkt-line.h"
 +
-+static int agent_advertise(struct repository *r,
-+			   struct strbuf *value)
++struct ls_refs_data {
++	unsigned peel;
++	unsigned symrefs;
++	struct argv_array patterns;
++};
++
++/*
++ * Is there one among the list of patterns that match the tail part
++ * of the path?
++ */
++static int tail_match(const char **pattern, const char *path)
 +{
-+	strbuf_addstr(value, git_user_agent_sanitized());
++	const char *p;
++	char *pathbuf;
++
++	if (!pattern)
++		return 1; /* no restriction */
++
++	pathbuf = xstrfmt("/%s", path);
++	while ((p = *(pattern++)) != NULL) {
++		if (!wildmatch(p, pathbuf, 0)) {
++			free(pathbuf);
++			return 1;
++		}
++	}
++	free(pathbuf);
++	return 0;
++}
++
++static int send_ref(const char *refname, const struct object_id *oid,
++		    int flag, void *cb_data)
++{
++	struct ls_refs_data *data = cb_data;
++	const char *refname_nons = strip_namespace(refname);
++	struct strbuf refline = STRBUF_INIT;
++
++	if (data->patterns.argc && !tail_match(data->patterns.argv, refname))
++		return 0;
++
++	strbuf_addf(&refline, "%s %s", oid_to_hex(oid), refname_nons);
++	if (data->symrefs && flag & REF_ISSYMREF) {
++		struct object_id unused;
++		const char *symref_target = resolve_ref_unsafe(refname, 0,
++							       unused.hash,
++							       &flag);
++
++		if (!symref_target)
++			die("'%s' is a symref but it is not?", refname);
++
++		strbuf_addf(&refline, " %s", symref_target);
++	}
++
++	strbuf_addch(&refline, '\n');
++
++	packet_write(1, refline.buf, refline.len);
++	if (data->peel) {
++		struct object_id peeled;
++		if (!peel_ref(refname, peeled.hash))
++			packet_write_fmt(1, "%s %s^{}\n", oid_to_hex(&peeled),
++					 refname_nons);
++	}
++
++	strbuf_release(&refline);
++	return 0;
++}
++
++int ls_refs(struct repository *r, struct argv_array *keys, struct argv_array *args)
++{
++	int i;
++	struct ls_refs_data data = { 0, 0, ARGV_ARRAY_INIT };
++
++	for (i = 0; i < args->argc; i++) {
++		if (!strcmp("--peeled", args->argv[i]))
++			data.peel = 1;
++		else if (!strcmp("--symrefs", args->argv[i]))
++			data.symrefs = 1;
++		else
++			/* Pattern */
++			argv_array_pushf(&data.patterns, "*/%s", args->argv[i]);
++
++	}
++
++	head_ref_namespaced(send_ref, &data);
++	for_each_namespaced_ref(send_ref, &data);
++	packet_flush(1);
++	argv_array_clear(&data.patterns);
++	return 0;
++}
+diff --git a/ls-refs.h b/ls-refs.h
+new file mode 100644
+index 000000000..9e4c57bfe
+--- /dev/null
++++ b/ls-refs.h
+@@ -0,0 +1,9 @@
++#ifndef LS_REFS_H
++#define LS_REFS_H
++
++struct repository;
++struct argv_array;
++extern int ls_refs(struct repository *r, struct argv_array *keys,
++		   struct argv_array *args);
++
++#endif /* LS_REFS_H */
+diff --git a/serve.c b/serve.c
+index 476e73b54..36f77c365 100644
+--- a/serve.c
++++ b/serve.c
+@@ -4,8 +4,15 @@
+ #include "pkt-line.h"
+ #include "version.h"
+ #include "argv-array.h"
++#include "ls-refs.h"
+ #include "serve.h"
+ 
++static int always_advertise(struct repository *r,
++			    struct strbuf *value)
++{
 +	return 1;
 +}
 +
-+struct protocol_capability {
-+	const char *name;
-+	int advertised; /* capability was advertised */
-+	/* int advertise(struct strbuf *value, struct repository *r) */
-+	int (*advertise)(struct repository *r, struct strbuf *value);
-+	/* int command(struct repository *r, struct argv_array *keys, struct argv_array *args)*/
-+	int (*command)(struct repository *r,
-+		       struct argv_array *keys,
-+		       struct argv_array *args);
-+};
-+
-+static struct protocol_capability capabilities[] = {
-+	{ "agent", 0, agent_advertise, NULL },
-+};
-+
-+static void advertise_capabilities(void)
-+{
-+	struct strbuf capability = STRBUF_INIT;
-+	struct strbuf value = STRBUF_INIT;
-+	int i;
-+
-+	for (i = 0; i < ARRAY_SIZE(capabilities); i++) {
-+		struct protocol_capability *c = &capabilities[i];
-+
-+		c->advertised = c->advertise(the_repository, &value);
-+		if (c->advertised) {
-+			strbuf_addstr(&capability, c->name);
-+
-+			if (value.len) {
-+				strbuf_addch(&capability, '=');
-+				strbuf_addbuf(&capability, &value);
-+			}
-+
-+			strbuf_addch(&capability, '\n');
-+			packet_write(1, capability.buf, capability.len);
-+		}
-+
-+		strbuf_reset(&capability);
-+		strbuf_reset(&value);
-+	}
-+
-+	packet_flush(1);
-+	strbuf_release(&capability);
-+	strbuf_release(&value);
-+}
-+
-+static struct protocol_capability *get_capability(const char *key)
-+{
-+	int i;
-+
-+	if (!key)
-+		return NULL;
-+
-+	for (i = 0; i < ARRAY_SIZE(capabilities); i++) {
-+		struct protocol_capability *c = &capabilities[i];
-+		const char *out;
-+		if (skip_prefix(key, c->name, &out) && (!*out || *out == '='))
-+			return c;
-+	}
-+
-+	return NULL;
-+}
-+
-+static int is_valid_capability(const char *key)
-+{
-+	const struct protocol_capability *c = get_capability(key);
-+
-+	return c && c->advertised;
-+}
-+
-+static int is_command(const char *key, struct protocol_capability **command)
-+{
-+	const char *out;
-+
-+	if (skip_prefix(key, "command=", &out)) {
-+		struct protocol_capability *cmd = get_capability(out);
-+
-+		if (!cmd || !cmd->advertised || !cmd->command)
-+			die("invalid cmd '%s'", out);
-+		if (*command)
-+			die("command already requested");
-+
-+		*command = cmd;
-+		return 1;
-+	}
-+
-+	return 0;
-+}
-+
-+#define PROCESS_REQUEST_KEYS 0
-+#define PROCESS_REQUEST_ARGS 1
-+#define PROCESS_REQUEST_DONE 2
-+
-+static int process_request(void)
-+{
-+	int state = PROCESS_REQUEST_KEYS;
-+	struct packet_reader reader;
-+	struct argv_array keys = ARGV_ARRAY_INIT;
-+	struct argv_array args = ARGV_ARRAY_INIT;
-+	struct protocol_capability *command = NULL;
-+
-+	packet_reader_init(&reader, 0, NULL, 0);
-+
-+	while (state != PROCESS_REQUEST_DONE) {
-+		switch (packet_reader_read(&reader)) {
-+		case PACKET_READ_ERROR:
-+			BUG("invalid state");
-+		case PACKET_READ_NORMAL:
-+			break;
-+		case PACKET_READ_FLUSH:
-+			state = PROCESS_REQUEST_DONE;
-+			continue;
-+		case PACKET_READ_DELIM:
-+			if (state != PROCESS_REQUEST_KEYS)
-+				die("protocol error");
-+			state = PROCESS_REQUEST_ARGS;
-+			/*
-+			 * maybe include a check to make sure that a
-+			 * command/capabilities were given.
-+			 */
-+			continue;
-+		}
-+
-+		switch (state) {
-+		case PROCESS_REQUEST_KEYS:
-+			/* collect request; a sequence of keys and values */
-+			if (is_command(reader.line, &command) ||
-+			    is_valid_capability(reader.line))
-+				argv_array_push(&keys, reader.line);
-+			break;
-+		case PROCESS_REQUEST_ARGS:
-+			/* collect arguments for the requested command */
-+			argv_array_push(&args, reader.line);
-+			break;
-+		case PROCESS_REQUEST_DONE:
-+			continue;
-+		default:
-+			BUG("invalid state");
-+		}
-+	}
-+
-+	/*
-+	 * If no command and no keys were given then the client wanted to
-+	 * terminate the connection.
-+	 */
-+	if (!keys.argc && !args.argc)
-+		return 1;
-+
-+	if (!command)
-+		die("no command requested");
-+
-+	command->command(the_repository, &keys, &args);
-+
-+	argv_array_clear(&keys);
-+	argv_array_clear(&args);
-+	return 0;
-+}
-+
-+/* Main serve loop for protocol version 2 */
-+void serve(void)
-+{
-+	/* serve by default supports v2 */
-+	packet_write_fmt(1, "version 2\n");
-+
-+	advertise_capabilities();
-+
-+	for (;;)
-+		if (process_request())
-+			break;
-+}
-diff --git a/serve.h b/serve.h
-new file mode 100644
-index 000000000..1ed9685ca
---- /dev/null
-+++ b/serve.h
-@@ -0,0 +1,6 @@
-+#ifndef SERVE_H
-+#define SERVE_H
-+
-+extern void serve(void);
-+
-+#endif /* SERVE_H */
+ static int agent_advertise(struct repository *r,
+ 			   struct strbuf *value)
+ {
+@@ -26,6 +33,7 @@ struct protocol_capability {
+ 
+ static struct protocol_capability capabilities[] = {
+ 	{ "agent", 0, agent_advertise, NULL },
++	{ "ls-refs", 0, always_advertise, ls_refs },
+ };
+ 
+ static void advertise_capabilities(void)
 -- 
 2.15.1.424.g9478a66081-goog
 
