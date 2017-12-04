@@ -2,105 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0094320954
-	for <e@80x24.org>; Mon,  4 Dec 2017 19:33:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 44F8920954
+	for <e@80x24.org>; Mon,  4 Dec 2017 19:42:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751428AbdLDTda (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Dec 2017 14:33:30 -0500
-Received: from mail-qt0-f179.google.com ([209.85.216.179]:39124 "EHLO
-        mail-qt0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750995AbdLDTd3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Dec 2017 14:33:29 -0500
-Received: by mail-qt0-f179.google.com with SMTP id k19so23706601qtj.6
-        for <git@vger.kernel.org>; Mon, 04 Dec 2017 11:33:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=c8orId5vyLIG8PR3PEXgTZvlN3pYYEL/W71BMDw7YUg=;
-        b=VRqE1V9kid6yR00/8JfOofBKAgRjz1+gcwcGahDR3TW79tstmttfEmskYNk5HFmSjj
-         G87w2RmJ6+lZYZhGAG3h4yI5QYJXrJYf12oIdGyIlQViNvCIB3PawFUjIJ2J+Fr601Ae
-         Sj2zj6l7jqHE5KLvfZ/4sQJpsOK9E/FGGVWBPCK7xE7s6QY+hv0PKv+BOg0HrMpWrldo
-         ouLj3qex3VxtP2Am/eSVd3KlKhVq/AwXKqhhVaoF88156Eq9l37XQjxwm8acsfSUlLk6
-         JGyZtKVoghGM7OLPG9phd5XN+89gohHPg3u12TopvpA1sWO7Wj89WTl+o4TCf35pjlXr
-         fBxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=c8orId5vyLIG8PR3PEXgTZvlN3pYYEL/W71BMDw7YUg=;
-        b=uD4UlHAZN7Jy2fpO6h9bK/f+BdrwwaWScHqL+JhhluuVFmwSMJmxI58RRiU+SNLJJ3
-         CfJhkmLrLJ9YIzu5s6KiHx3eQkNjyY5VBLsQmFMyGEW6JC97eg51oM/7JuqtxjIE/dsq
-         Cy84icVzig4X00rSAOmmmOVkoLXyEpimeeESfDFUxNC1eZrTiguniPLlTrGl8B/pCyhF
-         eQAtkmb4f5Jl0bYpC/Gx+xcISNHc3S+O1hnbRKlBcv1NXRDt5PqfQcpqiAYfAYUlJHQL
-         t90xPx2Mpt+lXT+SAbyRXDxRvZlkYmP6Cc1BsfidB2u09025Pm4rQHsB40T/Ocd9JLJ3
-         dpBg==
-X-Gm-Message-State: AKGB3mKu+VJH4q9aGwpm15q1Dwtetn6YBH0aeW7yJma2Bcj2rjnHPKh5
-        BYybmCZGZ1qxYy3eyhNah4R86B61VV2C40NJ7E13Qmbl1L8=
-X-Google-Smtp-Source: AGs4zMZ9nH+IeMBBx/WM+zKIfQBUbytDu9LaAqnWdLapUWerZJbL42uvHoKoe/XxWppxmSK+3N1YwVxJGBS2vZj5bDU=
-X-Received: by 10.55.143.134 with SMTP id r128mr19977488qkd.320.1512416008903;
- Mon, 04 Dec 2017 11:33:28 -0800 (PST)
+        id S1752065AbdLDTmv (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Dec 2017 14:42:51 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52680 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751788AbdLDTms (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Dec 2017 14:42:48 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 840A4CD0A2;
+        Mon,  4 Dec 2017 14:42:47 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=UzEEnf6ry+G4
+        hBv1v628NIPQOAs=; b=c+cQP79TuUuhb3i1eaLILHk4QuhqLR71Y7+WaIDiuNBv
+        XyMETDg9oPv0NK4D/3N+wk8h+2saVMNL+E9Nb3WWiJzZLDJv57IkyGZcf26487zd
+        hmO5L1atrbtT1MiFRd1SsS2HgpN+zkkN0K3HiKc9IuoIbniIOIBQJmw3Al+dH8g=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=vpqgXN
+        oZPSdfC/yLcpJYQTxk4MJ3s5baWFcsoWc4qByqOLjA+uvzTEaWoGDc4pYfRYCz7z
+        +/7ICpzoRaCm/YWfq6lMXW2NXIPR+1Ah5JRZItXEKyN7Eyp8a6jdLluqASEsJgg+
+        bDTeL/KfxUVku0iMICApE+M1qoZzsY3FxepS8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7B851CD0A1;
+        Mon,  4 Dec 2017 14:42:47 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C6217CD0A0;
+        Mon,  4 Dec 2017 14:42:46 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Dan Jacques <dnj@google.com>,
+        Alex Riesen <alexander.riesen@cetitec.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Brandon Casey <drafnel@gmail.com>, Petr Baudis <pasky@ucw.cz>,
+        Gerrit Pape <pape@smarden.org>,
+        "martin f . krafft" <madduck@madduck.net>, Eric Wong <e@80x24.org>
+Subject: Re: [PATCH v2] Makefile: replace perl/Makefile.PL with simple make rules
+References: <20171129195430.10069-1-avarab@gmail.com>
+        <20171203115941.16674-1-avarab@gmail.com>
+        <xmqqzi6ympi9.fsf@gitster.mtv.corp.google.com>
+        <CACBZZX6mEzrTdD=B7gAeLSufPR-ZEj8wO8kXsJmrJFtSbT35yQ@mail.gmail.com>
+Date:   Mon, 04 Dec 2017 11:42:45 -0800
+In-Reply-To: <CACBZZX6mEzrTdD=B7gAeLSufPR-ZEj8wO8kXsJmrJFtSbT35yQ@mail.gmail.com>
+        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Mon, 4 Dec
+ 2017 19:08:04
+        +0100")
+Message-ID: <xmqq4lp6mg96.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.140.85.179 with HTTP; Mon, 4 Dec 2017 11:33:28 -0800 (PST)
-In-Reply-To: <CA+P7+xonU838dOAzsUY4KmweYyM-NLFQeKVYD9jYM7i5EuWXcw@mail.gmail.com>
-References: <CABPp-BHDrw_dAESic3xK7kC3jMgKeNQuPQF69OpbVYhRkbhJsw@mail.gmail.com>
- <CAGZ79kbRY1gY8L361o568391Efoa1epZ1dFQZcTqJiOE7EAJfw@mail.gmail.com>
- <CA+P7+xorpJGrn=5zTrAPVDwHLkU5vCphOrebkH_d+MxV1k1oRg@mail.gmail.com>
- <CABPp-BFdJr8AL3hJSSLiqwPJMt6LZcLOEcTtxz1vohEuw==wKg@mail.gmail.com> <CA+P7+xonU838dOAzsUY4KmweYyM-NLFQeKVYD9jYM7i5EuWXcw@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 4 Dec 2017 11:33:28 -0800
-Message-ID: <CAGZ79kYbhTyHRMRvZaq3SC7MpxdruXsr+4nKGo-4RojjymwYVA@mail.gmail.com>
-Subject: Re: submodules and merging (Was: Re: [PATCH 02/30] merge-recursive:
- Fix logic ordering issue)
-To:     Jacob Keller <jacob.keller@gmail.com>
-Cc:     Elijah Newren <newren@gmail.com>, git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 4DB94FF2-D92B-11E7-9660-8EF31968708C-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Nov 25, 2017 at 9:59 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
-> On Sat, Nov 25, 2017 at 2:37 PM, Elijah Newren <newren@gmail.com> wrote:
->> On Wed, Nov 15, 2017 at 9:13 AM, Jacob Keller <jacob.keller@gmail.com> wrote:
->>> On Tue, Nov 14, 2017 at 10:13 AM, Stefan Beller <sbeller@google.com> wrote:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+
+> On Mon, Dec 4, 2017 at 5:22 PM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+>> I did this immediately after applying; please double check.
 >>
->>>> But this line of though might be distracting from your original point,
->>>> which was that we have so much to keep in mind when doing tree
->>>> operations (flags, D/F conflicts, now submodules too). I wonder how
->>>> a sensible refactoring would look like to detangle all these aspects,
->>>> but still keeping Git fast and not overengineered.
->>>
->>> I think given how complex a lot of these code paths are, that an
->>> attempt to refactor it a bit to detangle some of the mess would be
->>> well worth the time. I'd suspect it might make handling the more
->>> complex task of actually resolving conflicts to be easier, so the
->>> effort to clean up the code here should be worth it.
->>
->> I think changing from a 4-way merge to a 3-way merge would make things
->> much better, as Junio outlined here:
->>
->> https://public-inbox.org/git/xmqqd147kpdm.fsf@gitster.mtv.corp.google.com/
->>
->> I don't know of any way to detangle the other aspects, yet.
+>> Thanks.
+>
+> Thanks. Looks good to me. I'll incorporate that info future
+> submissions if there's more stuff to fix, but for now if you could
+> queue it like that that would be great.
 
-Jonathan Nieder and me tried some pair programming some time ago[1]
-plumbing the repository object through most of the low level internals, which
-would help in detangling submodule merges as then these merges could
-be done in-core, just as Junio laid out.
+Well the thing is that I cannot queue this and Dan's at the same
+time, while both of these topics are expected to be in flux.  For
+today's pushout, I tentatively kicked out Dan's relative path series
+and queued this one to see how well it works with the rest of the
+system, after giving this patch another round of reading.
 
-[1] https://github.com/stefanbeller/git/tree/object-store-jrn-rebased
+It seemed that Dan was happy with (an earlier draft of?) this
+build procedure simplification patch, so hopefully we can solidify
+this one reasonably quickly and ask the relative path series to be
+rebuilt on top of it?
 
-> I agree, that is absolutely a (big) step in the right direction.
-
-
-I agree as well; A better (abstracted) merge backend would be huge for
-the future of Git.
-
-Thanks,
-Stefan
+Thanks.
