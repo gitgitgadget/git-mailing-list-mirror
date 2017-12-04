@@ -2,246 +2,180 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,STOX_REPLY_TYPE,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3DA6A20A40
-	for <e@80x24.org>; Mon,  4 Dec 2017 11:54:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E34D220954
+	for <e@80x24.org>; Mon,  4 Dec 2017 12:57:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752733AbdLDLye (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Dec 2017 06:54:34 -0500
-Received: from smtp-out-4.talktalk.net ([62.24.135.68]:14757 "EHLO
-        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752337AbdLDLyd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Dec 2017 06:54:33 -0500
-Received: from PhilipOakley ([92.29.14.162])
-        by smtp.talktalk.net with SMTP
-        id LpKPelamnAp17LpKPeihW8; Mon, 04 Dec 2017 11:54:31 +0000
-X-Originating-IP: [92.29.14.162]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=EsGilWUA c=1 sm=1 tr=0 a=NXc+vVEgz70gitWznrz3ig==:117
- a=NXc+vVEgz70gitWznrz3ig==:17 a=IkcTkHD0fZMA:10 a=Dx4yW56zAAAA:8
- a=OZb2GmwHAAAA:8 a=ynqt2PpbALIs5K6zPhQA:9 a=hFDPbFIwl7jBYoJK:21
- a=GnUaZLw5kVAfqod1:21 a=QEXdDO2ut3YA:10 a=Ae5Vi59wRiAA:10
- a=X_u8qhY6y2Nm79co_leF:22 a=wj0ftk-VCXe01qMXqj34:22
-Message-ID: <0789FA44BEE345F3B1E664A317C79564@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:   "Philip Oakley" <philipoakley@iee.org>
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>,
-        "'Jeff Hostetler'" <git@jeffhostetler.com>,
-        "Git List" <git@vger.kernel.org>
-References: <004201d36ac8$db62b900$92282b00$@nexbridge.com> <bdd01692-198a-f5ec-3c88-7d99e4adced5@jeffhostetler.com> <004701d36ad2$9a7fcea0$cf7f6be0$@nexbridge.com> <A05AA29AD20041A2B31E7A5CD56BB682@PhilipOakley> <004c01d36c90$a4f27580$eed76080$@nexbridge.com>
-Subject: Re: [RFE] Inverted sparseness
-Date:   Mon, 4 Dec 2017 11:54:30 -0000
-Organization: OPDS
-MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="UTF-8";
-        reply-type=original
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-Antivirus: AVG (VPS 171203-0, 03/12/2017), Outbound message
-X-Antivirus-Status: Clean
-X-CMAE-Envelope: MS4wfJuADVfchRTw8hIprYa1RuALPvw+DXMaYC+c2dQk+A8VgRzW1MPR+ecKqztu7JMBhWjuk0ok8sGSicrfBkcaN4nljKznbWF5ANNm296v6OXJWvGsIjeh
- DRgNDNs+OcCTzI3lGlP9OsBRiJwdZy39y6P4+KvgJcEyT2KXbyfyOr+Gx5ad3C6sEBH5earzoqZMt4bHrG1Ef+8/+aBbFwbeLKM74EKdxMMqR6UM37Jd4asf
+        id S1753980AbdLDM5R (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Dec 2017 07:57:17 -0500
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:38325 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753167AbdLDM5Q (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Dec 2017 07:57:16 -0500
+Received: by mail-wm0-f66.google.com with SMTP id 64so14047037wme.3
+        for <git@vger.kernel.org>; Mon, 04 Dec 2017 04:57:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=IYeLCAORhQ5uCE5k6ft8U7glLyX2ABFVX26TTvwD2tc=;
+        b=pCgnp1jeGOdJAoLiLwK+w+EXSUt9elIbYTRLdmF4ATa4+4kyVUisYaKy3BMVnEV3BX
+         bfcAkiDqiNLZrQxsZmuFwjoxxipXW8BJCSSTRYtWaTpWpn7J1neBYe9COBmsj1fnpXxA
+         DUarJopRaIQbJUOmwhioVSjsc7zwVuGIC7ulD/UFAcWm2eWC68uaaeR0FTSloXWf6cSG
+         3GMIf2+xxt5kGYMKG7qivXV1F6Md32iq7HYG6PEqlJAjs41ssKtITr/wstP5u/dWXNml
+         lcns7BRoIEFFMZ8cxKdVvH00bNm/ZW1x6H7q2ZMoURb7DRBwOLGmGFjWA+qv6mqNGEtI
+         56lw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=IYeLCAORhQ5uCE5k6ft8U7glLyX2ABFVX26TTvwD2tc=;
+        b=YchvUWA7Ulo8V3GcvGqKHJqR7hbsd6lUxoQVUGVZAwz3SMZ6nwC0d3ujh3T2NBM2Bz
+         NnO5NKrrnU6UJjNnqpm19uDa4hy+0J4gYOgKj/uu9AKB/xOKLn2uMwyMUllOsSNYnmBs
+         fbPB7FsUbh9+5IP64zEU8lSqrSrVsSRgJk+3CGkB92GtIJoDziIqY27NI8ueridWJMFy
+         UtrH1TcoIkoJ+VKaUMYXU+nLgTfNQcdFI0mYtgEArGw1FCS1gSR+sMXStu8Wx581LxR8
+         K86STuazkAOxbftIIkczwPBezJ7BgwZcv11mFf1kSiwnGTdDzNtRCuye1xl2E66ES/zy
+         73ng==
+X-Gm-Message-State: AKGB3mLV0UCwYnmFCf+f9FazNnFGVQuN4W5Z4aG+6gi92DGttEIXV/KF
+        6uPNdQspPeuixzh46GveMnLGuEoC
+X-Google-Smtp-Source: AGs4zMag92GHLyq/SE1UHvrN4aA2MOK88EHqnAVEmimk4yIwJu9rayOE0yYFyXE2XgCBTJbCKaTy4Q==
+X-Received: by 10.28.72.9 with SMTP id v9mr7624913wma.102.1512392234737;
+        Mon, 04 Dec 2017 04:57:14 -0800 (PST)
+Received: from localhost.localdomain ([195.68.12.6])
+        by smtp.gmail.com with ESMTPSA id 30sm12456948wrl.22.2017.12.04.04.57.13
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 04 Dec 2017 04:57:14 -0800 (PST)
+From:   Christian Couder <christian.couder@gmail.com>
+X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Donald R Laster Jr <laster@dlaster.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH v2 1/4] git-compat-util: introduce skip_to_optional_val()
+Date:   Mon,  4 Dec 2017 13:56:14 +0100
+Message-Id: <20171204125617.4931-1-chriscool@tuxfamily.org>
+X-Mailer: git-send-email 2.15.1.274.g3f22e311ce.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Randall S. Becker"  :December 03, 2017 11:44 PM
-On December 3, 2017 6:14 PM, Philip Oakley wrote a nugget of wisdom:
->From: "Randall S. Becker" <rsbecker@nexbridge.com>
->Sent: Friday, December 01, 2017 6:31 PM
->> On December 1, 2017 1:19 PM, Jeff Hostetler wrote:
->>>On 12/1/2017 12:21 PM, Randall S. Becker wrote:
->>>> I recently encountered a really strange use-case relating to sparse
->>>> clone/fetch that is really backwards from the discussion that has
->>>> been going on, and well, I'm a bit embarrassed to bring it up, but I
->>>> have no good solution including building a separate data store that
->>>> will end up inconsistent with repositories (a bad solution).  The
->>>> use-case is as
->>>> follows:
->>>>
->>>> Given a backbone of multiple git repositories spread across an
->>>> organization with a server farm and upstream vendors.
->>>> The vendor delivers code by having the client perform git pull into
->>>> a specific branch.
->>>> The customer may take the code as is or merge in customizations.
->>>> The vendor wants to know exactly what commit of theirs is installed
->>>> on each server, in near real time.
->>>> The customer is willing to push the commit-ish to the vendor's
->>>> upstream repo but does not want, by default, to share the actual
->>>> commit contents for security reasons.
->>>> Realistically, the vendor needs to know that their own commit id was
->>>> put somewhere (process exists to track this, so not part of the
->>>> use-case) and whether there is a subsequent commit contributed >by
->>>> the customer, but the content is not relevant initially.
->>>>
->>>> After some time, the vendor may request the commit contents from the
->>>> customer in order to satisfy support requirements - a.k.a. a defect
->>>> was found but has to be resolved.
->>>> The customer would then perform a deeper push that looks a lot like
->>>> a "slightly" symmetrical operation of a deep fetch following a prior
->>>> sparse fetch to supply the vendor with the specific commit(s).
->>
->>>Perhaps I'm not understanding the subtleties of what you're
->>>describing, but could you do this with stock git functionality.
->>
->>>Let the vendor publish a "well known branch" for the client.
->>>Let the client pull that and build.
->>>Let the client create a branch set to the same commit that they fetched.
->>>Let the client push that branch as a client-specific branch to the
->>>vendor to indicate that that is the official release they are based on.
->>
->>>Then the vendor would know the official commit that the client was using.
->> This is the easy part, and it doesn't require anything sparse to exist.
->>
->>>If the client makes local changes, does the vendor really need the SHA
->>>of those -- without the actual content?
->>>I mean any SHA would do right?  Perhaps let the client create a second
->>>client-specific branch (set to  the same commit as the first) to
->>>indicate they had mods.
->>>Later, when the vendor needs the actual client changes, the client
->>>does a normal push to this 2nd client-specific branch at the vendor.
->>>This would send everything that the client has done to the code since
->>>the official release.
->>
->> What I should have added to the use-case was that there is a strong
->> audit requirement (regulatory, actually) involved that the SHA is
->> exact, immutable, and cannot be substitute or forged (one of the
->> reasons git is in such high regard). So, no I can't arrange a fake SHA
->> to represent a SHA to be named later. It SHA of the installed commit
->> is part of the official record of what happened on the specific server,
->> so I'm stuck with it.
->>
->>>I'm not sure what you mean about "it is inside a tree".
->>
->> m---a---b---c---H1
->>          `---d---H2
->>
->> d would be at a head. b would be inside. Determining content of c is
->> problematic if b is sparse, so I'm really unsure that any of this is
->> possible.
+From: Christian Couder <christian.couder@gmail.com>
 
->I think I get the jist of your use case. Would I be right that you don't
->have a true working
->solution yet? i.e. that it's a problem that is almost sorted but falls down
->at the last step.
+We often accept both a "--key" option and a "--key=<val>" option.
 
->If one pretended that this was a single development shop, and the various
->vendors, clients
->and customers as being independent devolopers, each of whom is over
->protective of their
->code, it may give a better view that maps onto classic feature development
->diagrams.
->(i.e draw the answer for local devs, then mark where the splits happen)
+These options currently are parsed using something like:
 
->In particular, I think you could use a notional regulator's view that the
->whole code base is
->part of a large Git heirarchy of branches and merges, and that some of the
->feature loops
->are only available via the particular developer that worked on that
->feature.
+if (!strcmp(arg, "--key")) {
+	/* do something */
+} else if (skip_prefix(arg, "--key=", &arg)) {
+	/* do something with arg */
+}
 
->This would mean that from a regulatory overview there is a merge commit in
->the 'main'
->(master) heirachy that has the main and feature commits listed, and the
->feature commit
->is probably an --allow-empty commit (that has an empty tree if they are
->that paranoid) that
->says 'function X released' (and probably tagged), and that release commit
->then has, as its
->parent, the true release commit, with the true code tree. The latter commit
->isn't actually being
->shown to you!
+which is a bit cumbersome compared to just:
 
->At this point the potential for using the graft capability comes in (as a
->regulated method!).
->Locally the graft records the missing line of pearls for that paranoid
->dev/vendor/customer/client.
->The whole git heirachy still works.
+if (skip_to_optional_val(arg, "--key", &arg)) {
+	/* do something with arg */
+}
 
->The question is how to get that  release commit with its empty tree, and
->its tag, to you from
->the dev. I'd guess that a fast-export of just that tag/commit/empty tree
->would allow you to
->bring in that sentinel point to your heirachy (initially as a
->psuedo --root), and then graft it
->on. (I haven't checked if fast-export allows such specificity, but it's a
->method)
+This also introduces skip_to_optional_val_default() for the few
+cases where something different should be done when the first
+argument is exactly "--key" than when it is exactly "--key=".
 
->You can now form the merge commit and have regulatory oversight and the
->full git validation
->and verification capability, as long as your web of trust extends to the
->regulator looking
->effectively across the air gap. It's a fresh way of seeing the web of
->trust.
+In general it is better for UI consistency and simplicity if
+"--key" and "--key=" do the same thing though, so that using
+skip_to_optional_val() should be encouraged compared to
+skip_to_optional_val_default().
 
->Thus you/they have various "shallow clones", but with gaps and islands in
->the shallowness....
->and those gaps are spanned by grafts (which are audited). The `git-replace`
->may also be an
->option, but I don't think it's quite right for this case. You just have a
->temporary gap in
->the history, and with fast export
+Note that these functions can be used to parse any "key=value"
+string where "key" is also considered as valid, not just
+command line options.
 
->If using the empty tree part doesn't pass muster (i.e. showing nothing
->isn't sufficient),
->then the narrow clone could come into play to limit what parts of the trees
->are widely
->visible, but mainly its using the grafts to cover the regulatory gap, and
->(for the moment)
->using fast-export to transfer the singleton commit / tags
-
->Oh Just remembered, there is the newish capability to fetch random blobs,
->so that may help.
-
-Randall said>
-I think you hit the nail on the head pretty well. We're currently at 2.3.7,
-with a push to 2.15.1 this week, so I'm looking forward to trying this. My
-two worries are whether the empty tree is acceptable (it should be to the
-client, and might be to the vendor), and doing this reliably
-(semi-automated) so the user base does not have to worry about the gory
-details of doing this. The unit tests for it are undoubtedly going to give
-me headaches.
-
-Thanks for the advice. Islands of shallowness are a really descriptive image
-for what this is. So identifying that there are shoals (to extend the
-metaphor somewhat), will be crucial to this adventure.
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
+ git-compat-util.h | 23 +++++++++++++++++++++++
+ strbuf.c          | 20 ++++++++++++++++++++
+ 2 files changed, 43 insertions(+)
 
-An overnight sleep remined me that the ideal way of transferring across the 
-air gap is *Obviously* the use of `git bundle`
+After thinking about it a bit more and taking a look at the
+current code, I thought that it was probably best to have
+both skip_to_optional_val() and skip_to_optional_val_default().
 
-Bundle allows you to specify the exact revisions (the tag and commits) in 
-the bundle that is sneakernet transferred (or email) between the repos.
+The changes compared to previous version are:
 
-I'm also thinking that the vendor/client/customet should also have, on their 
-side, one of the empty merge commits that shows both the original fork-point 
-(aka merge base) and their current (empty) release commit. This provides the 
-authentication and verification that they have used the right base commit 
-for their ox-bow lake of disconnected development (Oh the metaphors just 
-keep coming). It also provies a place for the automated/scripted graft to 
-get the two ends of the graft from, and check they are valid.
+  - 2 new functions instead of 1
+  - "optional" instead of "opt" in the function names
+  - the big function is not inlined
+  - more code in diff.c is simplified using the functions 
 
-It would be very easy for transcription errors to sneak in at that step of 
-recording the fork-point (which would be a bit of unexpected river capture - 
-https://phys.org/news/2017-04-retreating-yukon-glacier-river.html), so 
-making the client also do it removes that concern.
-
-The creation of client side and your side empty-merges should also create a 
-criss-cross plaiting that locks the two processes together - it's almost a 
-block-chain!
-
-Hope it goes well. It would be great to hear the result.
---
-Philip
-
+diff --git a/git-compat-util.h b/git-compat-util.h
+index cedad4d581..2858d66f85 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -484,6 +484,29 @@ static inline int skip_prefix(const char *str, const char *prefix,
+ 	return 0;
+ }
+ 
++/*
++ * If the string "str" is the same as the string in "prefix", then the "val"
++ * parameter is set to the "def" parameter and 1 is returned.
++ * If the string "str" begins with the string found in "prefix" and then a
++ * "=" sign, then the "val" parameter is set to "str + strlen(prefix) + 1"
++ * (i.e., to the point in the string right after the prefix and the "=" sign),
++ * and 1 is returned.
++ *
++ * Otherwise, return 0 and leave "val" untouched.
++ *
++ * When we accept both a "--key" and a "--key=<val>" option, this function
++ * can be used instead of !strcmp(arg, "--key") and then
++ * skip_prefix(arg, "--key=", &arg) to parse such an option.
++ */
++int skip_to_optional_val_default(const char *str, const char *prefix,
++				 const char **val, const char *def);
++
++static inline int skip_to_optional_val(const char *str, const char *prefix,
++				       const char **val)
++{
++	return skip_to_optional_val_default(str, prefix, val, "");
++}
++
+ /*
+  * Like skip_prefix, but promises never to read past "len" bytes of the input
+  * buffer, and returns the remaining number of bytes in "out" via "outlen".
+diff --git a/strbuf.c b/strbuf.c
+index 323c49ceb3..3430499f9e 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -11,6 +11,26 @@ int starts_with(const char *str, const char *prefix)
+ 			return 0;
+ }
+ 
++int skip_to_optional_val_default(const char *str, const char *prefix,
++				 const char **val, const char *def)
++{
++	const char *p;
++
++	if (!skip_prefix(str, prefix, &p))
++		return 0;
++
++	if (!*p) {
++		*val = def;
++		return 1;
++	}
++
++	if (*p != '=')
++		return 0;
++
++	*val = p + 1;
++	return 1;
++}
++
+ /*
+  * Used as the default ->buf value, so that people can always assume
+  * buf is non NULL and ->buf is NUL terminated even for a freshly
+-- 
+2.15.1.274.g3f22e311ce.dirty
 
