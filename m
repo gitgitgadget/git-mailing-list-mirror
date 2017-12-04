@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 15C6720954
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4150E20954
 	for <e@80x24.org>; Mon,  4 Dec 2017 23:59:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751756AbdLDX7M (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Dec 2017 18:59:12 -0500
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:38224 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750995AbdLDX7I (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Dec 2017 18:59:08 -0500
-Received: by mail-pf0-f195.google.com with SMTP id u25so9798943pfg.5
-        for <git@vger.kernel.org>; Mon, 04 Dec 2017 15:59:08 -0800 (PST)
+        id S1751894AbdLDX7O (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Dec 2017 18:59:14 -0500
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:39383 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751630AbdLDX7K (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Dec 2017 18:59:10 -0500
+Received: by mail-pf0-f194.google.com with SMTP id l24so9800349pfj.6
+        for <git@vger.kernel.org>; Mon, 04 Dec 2017 15:59:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ER7Xijl1ZztSl9Vl5Zd8y8+vksF9HiZJfUJOBoh/5Ek=;
-        b=r5O+Zi/7GQeCgDlv97X6dsr+1ktYB7KfIqTx6oZq4SBQs44Pn0CeT+bHpiKZOQ2rXL
-         OynjdKeLNaerDYcnEY7rYnQa0SkXNy2EL0xvrBc7TLpn3AdtUXinY2mptYCxuVuHETwj
-         /Dl5zRrBVJc70FoVlba2fuTvETItdNm2AkVNyi9wKUeRLLlVphyvcsU2/dOHbcxmJw9n
-         Yn5O1snKtt4MU6HSgXOFTPYYjx/jUKCKyIr5xHetzNyQJXVzZ7D+3WoON7yn0cyXOYTH
-         hEWhiP5zvbIfYldcSKjpFSjfHwAaUH6us3nVi8ivZ8A+RJZMpLPldhG1ItaI8t7h6HsA
-         dwmg==
+        bh=+POLUs7CSX+Jm+fptdaJGmU/XUSw6JkdJ5Zv/K/mwvM=;
+        b=CKu0g1dg39PzBQmWHff3hCPz78A7yJlz+NonsBfG0y4nI1AScFRdOLU1UVt5l/Da9A
+         /kb3R98PNlv+Z+IbHUbwGenCOmvJn23fPP3tnsRqzg2bHKXqWg/BnO1PiOBD/iKYO0XC
+         7X8HRAl4MDov1LUZosOUNg9SnjVuFOdznril5njNMX/jiEUFGYykEEfq+Q+L8ySH0t4R
+         cU9IMs/+rvgpbFxOM9ojQ9TLkR+ZWt61iuo5bi0qVmBtwFlU9T7kaYGP+AqtwZXv2Yb2
+         EnyQemNFXuNeXfDtc32+SNBg39WUaDxuJFtHi+2YpGQB/HewFUZquSePbUWUrN6mCI6s
+         xseQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=ER7Xijl1ZztSl9Vl5Zd8y8+vksF9HiZJfUJOBoh/5Ek=;
-        b=lxuSbfmcxky1w7rnd8Ad7Hejvnrq1l7xsRVm1EE6OKYg+OY1n3zH7mRdveOlqhMchi
-         EAd+MqnPp0Oa/GUovRhwtr3wwXReFAQBkKP8ex3jzM+j9yUiQDSUOUPSsrTaEKOCtPSz
-         7nVDzXHdmWfLbejE+/5sW95cBH51calo5VYtt0IFH+IE9BBGsktoPbRsPnOjwgJE2yZV
-         OLfIfqRsHIxgSA3xw+zTNXb/4xPnNwDLeSq0ndyVHpkmGYNRhFoMnCpoc1lcwSvTp+OC
-         JmImxUkNFSbO3dabn9BzDSgdSFLQIMjc6iPIjeXB7aEnXZw4PkIAzF8GvQqIho6UPAx8
-         M/rg==
-X-Gm-Message-State: AKGB3mJFyQVvo9m7DZBi4/J0Q44fThavfuzugEVT+wn04/VZKyu18srX
-        2w+lEHlaINf2wVrGHdsANf2TpIRDClQ=
-X-Google-Smtp-Source: AGs4zMZzjESgm+3a/3q5Q4B7WP/n+BjYPvkIi+/UIfqxJ8wv/Qg1OUQSntrdzBH5GIZlWyIkkyElwA==
-X-Received: by 10.99.151.2 with SMTP id n2mr2446018pge.374.1512431947664;
-        Mon, 04 Dec 2017 15:59:07 -0800 (PST)
+        bh=+POLUs7CSX+Jm+fptdaJGmU/XUSw6JkdJ5Zv/K/mwvM=;
+        b=os0H/jT2AnpGe1yW/+mLwzn2PhduibHLGaSHzvZ1kdA7JIzFF1P8guFkCr6jFxY/Ep
+         nE93fmwsm8vEgQV8ZCrU6oZY6ILfgQv4KZnoVkPRVEqK9LxN+KIwvZQ89rOfRNCaEHQt
+         Rr8VVxQYGSQyzq5JSxA0Xf64TGe2t68mhLRlJuslUBUsmjZcM74ubf/FUus2aTf4nqNL
+         /I/l4JeW1RXl4GFCB5IJg4pUa1PPf1X4+DQYRRmNZWheGNO+5L3FJtMVzhbW3fz/RyAl
+         JuhZ3wZy74d4kZFlZhf35aDj2uR5CvU0651dquSKrAXALJH8FP1bFRrC1mYcMa/VcYfQ
+         Qdmg==
+X-Gm-Message-State: AJaThX4t4z1xU9uSVRgIsTAxjByhqy057Rjd4iBKIl43L5MhPVYkdPwp
+        aghAtydJI+v5Rp+g9VGsLumL+OlDhcs=
+X-Google-Smtp-Source: AGs4zMbMfWua2xbhhc6LZRZ/M649VtYRTzkBJeTPv/I/Jc6GrRzElT70U7RGwCxGIs5q6c5kimiuaw==
+X-Received: by 10.159.254.4 with SMTP id r4mr16356444pls.11.1512431949511;
+        Mon, 04 Dec 2017 15:59:09 -0800 (PST)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id b187sm24939223pfg.109.2017.12.04.15.59.06
+        by smtp.gmail.com with ESMTPSA id b187sm24939223pfg.109.2017.12.04.15.59.07
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 04 Dec 2017 15:59:06 -0800 (PST)
+        Mon, 04 Dec 2017 15:59:08 -0800 (PST)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     Brandon Williams <bmwill@google.com>
-Subject: [WIP 02/15] pkt-line: introduce struct packet_reader
-Date:   Mon,  4 Dec 2017 15:58:10 -0800
-Message-Id: <20171204235823.63299-3-bmwill@google.com>
+Subject: [WIP 03/15] pkt-line: add delim packet support
+Date:   Mon,  4 Dec 2017 15:58:11 -0800
+Message-Id: <20171204235823.63299-4-bmwill@google.com>
 X-Mailer: git-send-email 2.15.1.424.g9478a66081-goog
 In-Reply-To: <20171204235823.63299-1-bmwill@google.com>
 References: <20171020171839.4188-1-bmwill@google.com>
@@ -63,120 +63,104 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sometimes it is advantageous to be able to peek the next packet line
-without consuming it (e.g. to be able to determine the protocol version
-a server is speaking).  In order to do that introduce 'struct
-packet_reader' which is an abstraction around the normal packet reading
-logic.  This enables a caller to be able to peek a single line at a time
-using 'packet_reader_peek()' and having a caller consume a line by
-calling 'packet_reader_read()'.
+One of the design goals of protocol-v2 is to improve the semantics of
+flush packets.  Currently in protocol-v1, flush packets are used both to
+indicate a break in a list of packet lines as well as an indication that
+one side has finished speaking.  This makes it particularly difficult
+to implement proxies as a proxy would need to completely understand git
+protocol instead of simply looking for a flush packet.
+
+To do this, introduce the special deliminator packet '0001'.  A delim
+packet can then be used as a deliminator between lists of packet lines
+while flush packets can be reserved to indicate the end of a response.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- pkt-line.c | 61 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- pkt-line.h | 20 ++++++++++++++++++++
- 2 files changed, 81 insertions(+)
+ pkt-line.c | 19 ++++++++++++++++++-
+ pkt-line.h |  3 +++
+ 2 files changed, 21 insertions(+), 1 deletion(-)
 
 diff --git a/pkt-line.c b/pkt-line.c
-index ac619f05b..518109bbe 100644
+index 518109bbe..222e1e310 100644
 --- a/pkt-line.c
 +++ b/pkt-line.c
-@@ -406,3 +406,64 @@ ssize_t read_packetized_to_strbuf(int fd_in, struct strbuf *sb_out)
- 	}
- 	return sb_out->len - orig_len;
+@@ -91,6 +91,12 @@ void packet_flush(int fd)
+ 	write_or_die(fd, "0000", 4);
  }
-+
-+/* Packet Reader Functions */
-+void packet_reader_init(struct packet_reader *reader, int fd,
-+			char *src_buffer, size_t src_len)
+ 
++void packet_delim(int fd)
 +{
-+	reader->fd = fd;
-+	reader->src_buffer = src_buffer;
-+	reader->src_len = src_len;
-+	reader->buffer = packet_buffer;
-+	reader->buffer_size = sizeof(packet_buffer);
-+	reader->options = PACKET_READ_CHOMP_NEWLINE | PACKET_READ_GENTLE_ON_EOF;
-+
-+	reader->line = NULL;
-+	reader->line_peeked = 0;
-+	reader->pktlen = 0;
-+	reader->status = PACKET_READ_ERROR;
++	packet_trace("0001", 4, 1);
++	write_or_die(fd, "0001", 4);
 +}
 +
-+enum packet_read_status packet_reader_read(struct packet_reader *reader)
+ int packet_flush_gently(int fd)
+ {
+ 	packet_trace("0000", 4, 1);
+@@ -105,6 +111,12 @@ void packet_buf_flush(struct strbuf *buf)
+ 	strbuf_add(buf, "0000", 4);
+ }
+ 
++void packet_buf_delim(struct strbuf *buf)
 +{
-+	if (reader->line_peeked) {
-+		reader->line_peeked = 0;
-+		return reader->status;
-+	}
-+
-+	reader->status = packet_read_with_status(reader->fd,
-+						 &reader->src_buffer,
-+						 &reader->src_len,
-+						 reader->buffer,
-+						 reader->buffer_size,
-+						 &reader->pktlen,
-+						 reader->options);
-+
-+	switch (reader->status) {
-+	case PACKET_READ_ERROR:
-+		reader->pktlen = -1;
-+		reader->line = NULL;
-+		break;
-+	case PACKET_READ_NORMAL:
-+		reader->line = reader->buffer;
-+		break;
-+	case PACKET_READ_FLUSH:
-+		reader->pktlen = 0;
-+		reader->line = NULL;
-+		break;
-+	}
-+
-+	return reader->status;
++	packet_trace("0001", 4, 1);
++	strbuf_add(buf, "0001", 4);
 +}
 +
-+enum packet_read_status packet_reader_peek(struct packet_reader *reader)
-+{
-+	/* Only allow peeking a single line */
-+	if (reader->line_peeked)
-+		return reader->status;
-+
-+	/* Peek a line by reading it and setting peeked flag */
-+	packet_reader_read(reader);
-+	reader->line_peeked = 1;
-+	return reader->status;
-+}
+ static void set_packet_header(char *buf, const int size)
+ {
+ 	static char hexchar[] = "0123456789abcdef";
+@@ -297,7 +309,10 @@ enum packet_read_status packet_read_with_status(int fd, char **src_buffer, size_
+ 	if (len == 0) {
+ 		packet_trace("0000", 4, 0);
+ 		return PACKET_READ_FLUSH;
+-	} else if (len >= 1 && len <= 3) {
++	} else if (len == 1) {
++		packet_trace("0001", 4, 0);
++		return PACKET_READ_DELIM;
++	} else if (len >= 2 && len <= 3) {
+ 		die("protocol error: bad line length character: %.4s", linelen);
+ 	}
+ 
+@@ -333,6 +348,7 @@ int packet_read(int fd, char **src_buffer, size_t *src_len,
+ 		break;
+ 	case PACKET_READ_NORMAL:
+ 		break;
++	case PACKET_READ_DELIM:
+ 	case PACKET_READ_FLUSH:
+ 		pktlen = 0;
+ 		break;
+@@ -447,6 +463,7 @@ enum packet_read_status packet_reader_read(struct packet_reader *reader)
+ 	case PACKET_READ_NORMAL:
+ 		reader->line = reader->buffer;
+ 		break;
++	case PACKET_READ_DELIM:
+ 	case PACKET_READ_FLUSH:
+ 		reader->pktlen = 0;
+ 		reader->line = NULL;
 diff --git a/pkt-line.h b/pkt-line.h
-index f1545929b..2b5c7cf11 100644
+index 2b5c7cf11..49ec80c80 100644
 --- a/pkt-line.h
 +++ b/pkt-line.h
-@@ -104,6 +104,26 @@ char *packet_read_line_buf(char **src_buf, size_t *src_len, int *size);
+@@ -20,8 +20,10 @@
+  * side can't, we stay with pure read/write interfaces.
   */
- ssize_t read_packetized_to_strbuf(int fd_in, struct strbuf *sb_out);
- 
-+struct packet_reader {
-+	int fd;
-+	char *src_buffer;
-+	size_t src_len;
-+
-+	char *buffer;
-+	unsigned buffer_size;
-+	int options;
-+
-+	enum packet_read_status status;
-+	int pktlen;
-+	const char *line;
-+	int line_peeked;
-+};
-+
-+extern void packet_reader_init(struct packet_reader *reader, int fd,
-+			       char *src_buffer, size_t src_len);
-+extern enum packet_read_status packet_reader_read(struct packet_reader *reader);
-+extern enum packet_read_status packet_reader_peek(struct packet_reader *reader);
-+
- #define DEFAULT_PACKET_MAX 1000
- #define LARGE_PACKET_MAX 65520
- #define LARGE_PACKET_DATA_MAX (LARGE_PACKET_MAX - 4)
+ void packet_flush(int fd);
++void packet_delim(int fd);
+ void packet_write_fmt(int fd, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
+ void packet_buf_flush(struct strbuf *buf);
++void packet_buf_delim(struct strbuf *buf);
+ void packet_write(int fd_out, const char *buf, size_t size);
+ void packet_buf_write(struct strbuf *buf, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
+ int packet_flush_gently(int fd);
+@@ -64,6 +66,7 @@ enum packet_read_status {
+ 	PACKET_READ_ERROR = -1,
+ 	PACKET_READ_NORMAL,
+ 	PACKET_READ_FLUSH,
++	PACKET_READ_DELIM,
+ };
+ #define PACKET_READ_GENTLE_ON_EOF (1u<<0)
+ #define PACKET_READ_CHOMP_NEWLINE (1u<<1)
 -- 
 2.15.1.424.g9478a66081-goog
 
