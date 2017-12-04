@@ -2,86 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D249620954
-	for <e@80x24.org>; Mon,  4 Dec 2017 23:46:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 721DD20954
+	for <e@80x24.org>; Mon,  4 Dec 2017 23:49:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752255AbdLDXqM (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Dec 2017 18:46:12 -0500
-Received: from mail-it0-f53.google.com ([209.85.214.53]:35930 "EHLO
-        mail-it0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752020AbdLDXqJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Dec 2017 18:46:09 -0500
-Received: by mail-it0-f53.google.com with SMTP id d16so11012765itj.1
-        for <git@vger.kernel.org>; Mon, 04 Dec 2017 15:46:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=ZP1Reo42OGVKRM9wwDuku6qZyk3WSdf1vc1Z8eKNDUU=;
-        b=W1ZjykLStQe4PmiYuryGA05IYKgMTAM2YHCeoQr/9Q38RWa/lLPfOWIBd65nMQG41u
-         SeXJmuUe4p84IpKHpr+V/kfOIoJUqrCpSs5FZ2vO8gCrajqh8ySN2Mhc5tRjNsRt6P5D
-         x/jz3fuGyAUgRvea/1Jifck7aKJkki6tiUz6iHkVGLmYjbL/Z8x12mvKTgfQKRORTUCq
-         YUJ1TROYh+eVw36pt1yefslFOlKShWQO6yRYpIDdC4fGym2VeJGZre7ppXU21U83C9ck
-         uQlryUoSeyLD8VGtMbLBQJbsyRy9sj+adHguie1GGfWX/rWYzS9OoWu0Kv3LSAcALA6o
-         I0IA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=ZP1Reo42OGVKRM9wwDuku6qZyk3WSdf1vc1Z8eKNDUU=;
-        b=XC+18719+PtyqLMD3o/Ch4ORlOc+napPr00gs1J4dHCbMxEyWKF8W5NHtBHYtipNPO
-         6HeC0FHvAjCfqOwOci2/YbgeFAIzQbG6iawfpcC7CwDUPd2qn0rffvF74ELbx/r0zZvT
-         Q7NmvNf7zE6AbgOv/6SqKJusiwSKns/vTgJxG5D0nBxOj/lFdvFs948GRtOiCTiD4GG1
-         /SGtJdy8GN4ZYXAVc0D+qxJKimpFfjbPGfLGABXKFJSENKSjSGaJ+UdkZstTYR0PBS0t
-         jLvCPtv02Q3jBl8Kggyh8VCHDdoBaIttR/mEKzoHwzjtUWdgw6bmQEC/CAdtqagnuRls
-         w4KA==
-X-Gm-Message-State: AKGB3mI6fhlaJ6+0pss9XiEUFf3CvLu8FFbf10nHiKSqUY8AbKYR3qKK
-        HJwOxObQLmvdudRfnthWkAkKsA==
-X-Google-Smtp-Source: AGs4zMa4V9rW5vjcgxkZvWRHqhL7aBbVhrSRr3ed5vk+p2AzVMlYSRaJCWXY+Lvbdv+UQScmFmHPRg==
-X-Received: by 10.36.162.76 with SMTP id o12mr6940418iti.76.1512431168828;
-        Mon, 04 Dec 2017 15:46:08 -0800 (PST)
-Received: from twelve3.mtv.corp.google.com ([2620:0:100e:422:e1ac:91cb:ab21:275])
-        by smtp.gmail.com with ESMTPSA id v65sm4412814itb.30.2017.12.04.15.46.08
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 04 Dec 2017 15:46:08 -0800 (PST)
-Date:   Mon, 4 Dec 2017 15:46:07 -0800
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de
-Subject: Re: What's cooking in git.git (Dec 2017, #01; Mon, 4)
-Message-Id: <20171204154607.2e29acc6eb269ce4c96ee9a2@google.com>
-In-Reply-To: <xmqqmv2ykvy4.fsf@gitster.mtv.corp.google.com>
-References: <xmqqmv2ykvy4.fsf@gitster.mtv.corp.google.com>
-X-Mailer: Sylpheed 3.4.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+        id S1751756AbdLDXtr (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Dec 2017 18:49:47 -0500
+Received: from mxf98a.netcup.net ([46.38.249.138]:56267 "EHLO
+        mxf98a.netcup.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751156AbdLDXtq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Dec 2017 18:49:46 -0500
+Received: from desky.robertabel.eu (x4d077b3a.dyn.telefonica.de [77.7.123.58])
+        by mxf98a.netcup.net (Postfix) with ESMTPSA id 819D714080D;
+        Tue,  5 Dec 2017 00:49:45 +0100 (CET)
+Authentication-Results: mxf98a;
+        spf=pass (sender IP is 77.7.123.58) smtp.mailfrom=rabel@robertabel.eu smtp.helo=desky.robertabel.eu
+Received-SPF: pass (mxf98a: connection is authenticated)
+From:   Robert Abel <rabel@robertabel.eu>
+To:     git@vger.kernel.org
+Cc:     Robert Abel <rabel@robertabel.eu>
+Subject: [PATCH v3 1/2] git-prompt: make __git_eread intended use explicit
+Date:   Tue,  5 Dec 2017 00:49:22 +0100
+Message-Id: <20171204234923.9600-1-rabel@robertabel.eu>
+X-Mailer: git-send-email 2.13.0.windows.1
+In-Reply-To: <20171201233133.30011-1-rabel@robertabel.eu>
+References: <20171201233133.30011-1-rabel@robertabel.eu>
+X-PPP-Message-ID: <20171204234945.18542.94088@mxf98a.netcup.net>
+X-PPP-Vhost: robertabel.eu
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 04 Dec 2017 13:46:43 -0800
-Junio C Hamano <gitster@pobox.com> wrote:
+__git_eread is used to read a single line of a given file (if it exists)
+into a single variable without the EOL. All six current users of __git_eread
+use it that way and don't expect multi-line content.
 
-> * jt/diff-anchored-patience (2017-11-28) 1 commit
->  - diff: support anchoring line(s)
-> 
->  "git diff" learned a variant of the "--patience" algorithm, to
->  which the user can specify which 'unique' line to be used as
->  anchoring points.
+Therefore, this patch removes the unused capability to split file conents into
+tokens by passing multiple variable names. Add a comment and explicitly use $2
+instead of $@ to read the file into one variable.
 
-Is there anything I can do to progress this? Johannes Schindelin wrote
-that he is in favor of this feature [1]. He also remarked on the fact
-that the anchors are not freed [2], but I have replied [3] that it seems
-that diff arguments are not freed in general (so there would be no good
-place to put the freeing statements).
+Signed-off-by: Robert Abel <rabel@robertabel.eu>
+---
+ contrib/completion/git-prompt.sh | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-[1] https://public-inbox.org/git/alpine.DEB.2.21.1.1712011447550.98586@virtualbox/
-[2] https://public-inbox.org/git/alpine.DEB.2.21.1.1711300134560.6482@virtualbox/
-[3] https://public-inbox.org/git/20171130152605.1b775e9cc2ddd7f917424448@google.com/
+diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
+index c6cbef38c2..41a471957a 100644
+--- a/contrib/completion/git-prompt.sh
++++ b/contrib/completion/git-prompt.sh
+@@ -278,11 +278,12 @@ __git_ps1_colorize_gitstring ()
+ 	r="$c_clear$r"
+ }
+ 
++# Helper function to read the first line of a file into a variable.
++# __git_eread requires 2 arguments, the file path and the name of the
++# variable, in that order.
+ __git_eread ()
+ {
+-	local f="$1"
+-	shift
+-	test -r "$f" && read "$@" <"$f"
++	test -r "$1" && read "$2" <"$1"
+ }
+ 
+ # __git_ps1 accepts 0 or 1 arguments (i.e., format string)
+-- 
+2.13.0.windows.1
+
