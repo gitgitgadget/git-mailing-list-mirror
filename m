@@ -2,113 +2,243 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 575D720C13
-	for <e@80x24.org>; Mon,  4 Dec 2017 23:04:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3E0CE20954
+	for <e@80x24.org>; Mon,  4 Dec 2017 23:15:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751718AbdLDXD7 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Dec 2017 18:03:59 -0500
-Received: from mail-it0-f65.google.com ([209.85.214.65]:45031 "EHLO
-        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751436AbdLDXD6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Dec 2017 18:03:58 -0500
-Received: by mail-it0-f65.google.com with SMTP id b5so16965103itc.3
-        for <git@vger.kernel.org>; Mon, 04 Dec 2017 15:03:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=73DYDM7N1/SNT0UGSzkyUXi+hjxHJMgVWLHvBkCE8nM=;
-        b=fuT7FXsrbu1k4fxpL8K0DnZF+5fze6jc5I6OU/03tsO5P1jNUhWT2dgf+O9GsRJcO9
-         UBfiFLrj+S37SlkqRt4EOhKNiG6ZfjkMmZoyxxHSTiAHJAwFGSEJBZo4JsH0lofP6T1w
-         ZyFwPJcDF3yzjyQmB7UdoVKwYxKoCU13cosXK0QV3sJoh8BUx7wSPdN+l10DhO9+BiDh
-         U7tbGDbmlEqQzH9M4+K/RTgxIiFI1X6qtc6ycIq/M4acQR58LIkNqYrqaBEvhh+y9NA6
-         MnZpamuWlTa/Ky0tj7vD+CBJH2RX1UpfL0MzCEKnIjaJMHRJmNJldoVnMCmS1lr9fM0M
-         uHyg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=73DYDM7N1/SNT0UGSzkyUXi+hjxHJMgVWLHvBkCE8nM=;
-        b=rBhPOlFUFZ071oNVnAqq5CKDfjbtar2kX8AwyY3quzvevtqbUfck1wTppjr4YBWIB3
-         bTLmqnjP23LDCJhHmiVn1Z4Kad5vhUxgoeTLqWa0bv7mhNpLRihQWTEU58gxcDojI7PR
-         OJ0HFqAcsRjnnZjvQvJxiqAM2NXxX/xGLS6PcgWcDsk3mq7KMrTDHe8nC0VT51IVt3f0
-         sfapj6P+TaQTYSeG/n6KRBeTMmCxHL4s84Io6whBTdz/XsxhLSwzZc5sQdkP3yTudBo+
-         DIe82PXZSd6r4xjtR2zcyHQjuQCgSsu5ayCHPUz9WX+HMutS860Qn6CgMk58DiC/vxN5
-         Z++g==
-X-Gm-Message-State: AKGB3mKsks1VDS+uEOcLdgYMAXzZGg+dYHY7Ut/0oeq5aY86UrL8W+i8
-        +hpl7+yt2enYGMoyXkJWk2Bgu2a8gv8=
-X-Google-Smtp-Source: AGs4zMaZexiVwxVn1/7kcZFI/+WpYoqpGKJAuVFIYHPdnX9YDc0DxVHNSY10tvyJaNgrDmeNhcKgcg==
-X-Received: by 10.107.53.130 with SMTP id k2mr5269688ioo.293.1512428637771;
-        Mon, 04 Dec 2017 15:03:57 -0800 (PST)
-Received: from google.com ([2620:0:100e:422:f83a:9bb:41ed:d5e6])
-        by smtp.gmail.com with ESMTPSA id x16sm5397305ioi.62.2017.12.04.15.03.56
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 04 Dec 2017 15:03:56 -0800 (PST)
-Date:   Mon, 4 Dec 2017 15:03:55 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Ben Boeckel <ben.boeckel@kitware.com>
-Cc:     git@vger.kernel.org, brad.king@kitware.com
-Subject: Re: gitattributes not read for diff-tree anymore in 2.15?
-Message-ID: <20171204230355.GA52452@google.com>
-References: <20171204212255.GA19059@megas.kitware.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20171204212255.GA19059@megas.kitware.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        id S1751989AbdLDXPC (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Dec 2017 18:15:02 -0500
+Received: from mout.gmx.net ([212.227.15.15]:62092 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751741AbdLDXPB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Dec 2017 18:15:01 -0500
+Received: from bedhanger.strangled.net ([188.193.86.106]) by mail.gmx.com
+ (mrgmx003 [212.227.17.190]) with ESMTPSA (Nemesis) id
+ 0MSutp-1eTNv91EsX-00Rrrl; Tue, 05 Dec 2017 00:14:22 +0100
+From:   Ann T Ropea <bedhanger@gmx.de>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Philip Oakley <philipoakley@iee.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Daniel Barkalow <barkalow@iabervon.org>,
+        Ann T Ropea <bedhanger@gmx.de>
+Subject: Re: [PATCH v6 4/7] checkout: describe_detached_head: remove ellipsis after committish
+Date:   Tue,  5 Dec 2017 00:13:13 +0100
+Message-Id: <20171204231313.17929-1-bedhanger@gmx.de>
+X-Mailer: git-send-email 2.13.6
+References: <20171203212743.10228-1-bedhanger@gmx.de> <20171119184113.16630-1-bedhanger@gmx.de> <20171113223654.27732-1-bedhanger@gmx.de> <83D263E58ABD46188756D41FE311E469@PhilipOakley> <xmqqfu9pmsx3.fsf@gitster.mtv.corp.google.com> <20171113223654.27732-3-bedhanger@gmx.de> <xmqq1sl17e1u.fsf@gitster.mtv.corp.google.com> <20171119184113.16630-5-bedhanger@gmx.de> <xmqqzi7hlhkx.fsf@gitster.mtv.corp.google.com> <5AE7AD53CF184A27BF8F484D415083D9@PhilipOakley> <xmqqo9nuuadm.fsf@gitster.mtv.corp.google.com> <FDCFD8EC7A754412A6369F03E91926C5@PhilipOakley> <CAPig+cT-r0uLLv_GyTRddPe=ATX883S1jt-8gc=ANZW21S81Mg@mail.gmail.com> <CAPig+cT4MvjLDvFEB6hJOSip=dqkp10ydnpfnoUabK=53OmQkw@mail.gmail.com> <20171124235330.15157-1-bedhanger@gmx.de> <xmqq4lpjkl4g.fsf@gitster.mtv.corp.google.com> <xmqqd145k9td.fsf@gitster.mtv.corp.google.com> <20171203212743.10228-4-bedhanger@gmx.de> <xmqqshcqmoe7.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <xmqqshcqmoe7.fsf@gitster.mtv.corp.google.com>
+X-Provags-ID: V03:K0:vq2kGg584TWxqsdvyAq2ULcWiCKmoLYfvCQoF/hu0q0o5w8W1VB
+ tjY+Z3fmIehg/tJPGznFtCgFh3eYX8noRkHPhshQj2tx08dIOCfW8SIpMOQsk5gZzOgam7I
+ XpfcoeYKccapH1INfDe7tb6VpuXHxOMvTGh94OL5YLO1PtRgo6P/6xGJJHPzs14kWPuYQ8J
+ qG5iDpaknjypWbSy960Og==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:CQG7ybJyrwU=:mTM8AQP6nQcbeTQfKNl2qJ
+ PxU1yajOMG1Vc2gLhh7xNMpCEyM0GQU5PyDNcdJ0iLxiE58MYndJRRDT6uXKssk0NxR82Ydfo
+ q16vVSwKQjr3pPorwRisjq2aJtdfE88bFIsiZV3ct02aEYMtSx+K/tFbtksxHA52AOHguudTE
+ zdrSKMqPZfwF68KYrwKOqeAtYk708KzmWHHBlzWjxRsBjF7gn3vjY7p6JMLArD+gWalBqL6DE
+ fH3cwYYwmIWJjmFIvwq4GEBzvrwiyHMwkcYUaI3q2SIzw+ATr/6r3HKjJh4UPvfD5VlWIjHlW
+ b6kQA5uwibMO9SPyobFk5sBunYKYzbQYPc1K2EK7CyhFiAlkuV11ODtRIrFwrxUc1I2fY48xL
+ 3UgHzPKR994YUD9i1dUGY7gys/LTSHGPXCb08ZHiAzE4wL3qATA+KwQKGy8i0eDx2RXv7YfZp
+ 69aYAruapW4+HJEWjSAGXcNm9lBSb3tjfTubD78Wol5Xol/Go7ZedCORaT+f37N7JUZtxZVJz
+ EksnR5ldqo6qIKBEBLQJcLNZBAnb4HE3sIKad1slQSBbEr473iK1SfFxOhVK1u5biF1flL5Mx
+ NQ+1nFM5RiqRkQ2esohxPJS/MnJ2xenkm97CkF9fYGONw6hLZroW43LVW89Fsyvvo/zTOqPEJ
+ hgHxN6FTJOnIAqgIpKiIG30UPhdw8PPmOfSZ2Avi8RyWFiJWME/AKRcuWvzhxgKv6Zm6iXoAQ
+ 2RBtpG6p4E3+lu9/vAExEW7Ydo1u0Wt5r0by1ksYJU3acLEhoCUDjs0EtAe8lGHtN2PZqThfO
+ L72eo3jVza2dpddsUif1ilrmgQuGstRuSTYSWKPdanKHRsjZsI=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/04, Ben Boeckel wrote:
-> Hi,
-> 
-> I've bisected a failure in our test suite to this commit:
-> 
->     commit 557a5998df19faf8641acfc5b6b1c3c2ba64dca9 (HEAD, refs/bisect/bad)
->     Author: Brandon Williams <bmwill@google.com>
->     Date:   Thu Aug 3 11:20:00 2017 -0700
-> 
->         submodule: remove gitmodules_config
-> 
->         Now that the submodule-config subsystem can lazily read the gitmodules
->         file we no longer need to explicitly pre-read the gitmodules by calling
->         'gitmodules_config()' so let's remove it.
-> 
->         Signed-off-by: Brandon Williams <bmwill@google.com>
->         Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> 
-> Which is tags/v2.15.0-rc0~120^2.
-> 
-> Our test suite is in a Rust project here:
-> 
->     https://gitlab.kitware.com/utils/rust-git-checks
-> 
-> and the failing test(s) can be run using:
-> 
->     cargo test whitespace_all_ignored
-> 
-> The test checks that when `.gitattributes` says that whitespace errors
-> should be ignored, they aren't reported as errors. My guess is that not
-> reading the gitmodules configuration also skips reading attributes
-> files. Is this reasoning correct?
-> 
-> Thanks,
-> 
-> --Ben
+We do not want an ellipsis displayed following an (abbreviated) SHA-1
+value.
 
-Reading the attributes files should be done regardless if the gitmodules
-file is read.  The gitmodules file should only come into play if you are
-dealing with submodules.
+The days when this was necessary to indicate the truncation to
+lower-level Git commands and/or the user are bygone.
 
-Do you mind providing a reproduction recipe with expected outcome vs
-actual outcome and I can take a closer look.
+However, to ease the transition, the ellipsis will still be printed if
+the user sets the environment variable GIT_PRINT_SHA1_ELLIPSIS to "yes".
 
+Correct documentation with respect to what describe_detached_head prints
+when GIT_PRINT_SHA1_ELLIPSIS is not set as indicated above.
+
+Add tests for the old and new behaviour.
+
+Signed-off-by: Ann T Ropea <bedhanger@gmx.de>
+---
+v2: rename patch series & focus on removal of ellipses
+v3: env var instead of config option, use one-line comments where appropriate, preserve indent level
+v4: improve env var handling (rename, helper func to query, docu)
+v5: rewrite series to take Junio's comments in <xmqqd145k9td.fsf@gitster.mtv.corp.google.com> aboard
+v6: polish to take Junio's comments from <xmqqshcqmoe7.fsf@gitster.mtv.corp.google.com> into account
+ Documentation/user-manual.txt |   2 +-
+ builtin/checkout.c            |  10 +++-
+ t/t2020-checkout-detach.sh    | 114 ++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 123 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+index 497e82e88dd0..eff78902742a 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -319,7 +319,7 @@ do so (now or later) by using -b with the checkout command again. Example:
+ 
+   git checkout -b new_branch_name
+ 
+-HEAD is now at 427abfa... Linux v2.6.17
++HEAD is now at 427abfa Linux v2.6.17
+ ------------------------------------------------
+ 
+ The HEAD then refers to the SHA-1 of the commit instead of to a branch,
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 3faae382de4f..b0499542158f 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -400,10 +400,16 @@ static void show_local_changes(struct object *head,
+ static void describe_detached_head(const char *msg, struct commit *commit)
+ {
+ 	struct strbuf sb = STRBUF_INIT;
++
+ 	if (!parse_commit(commit))
+ 		pp_commit_easy(CMIT_FMT_ONELINE, commit, &sb);
+-	fprintf(stderr, "%s %s... %s\n", msg,
+-		find_unique_abbrev(commit->object.oid.hash, DEFAULT_ABBREV), sb.buf);
++	if (print_sha1_ellipsis()) {
++		fprintf(stderr, "%s %s... %s\n", msg,
++			find_unique_abbrev(commit->object.oid.hash, DEFAULT_ABBREV), sb.buf);
++	} else {
++		fprintf(stderr, "%s %s %s\n", msg,
++			find_unique_abbrev(commit->object.oid.hash, DEFAULT_ABBREV), sb.buf);
++	}
+ 	strbuf_release(&sb);
+ }
+ 
+diff --git a/t/t2020-checkout-detach.sh b/t/t2020-checkout-detach.sh
+index fbb4ee9bb42d..3a37e07531ce 100755
+--- a/t/t2020-checkout-detach.sh
++++ b/t/t2020-checkout-detach.sh
+@@ -186,4 +186,118 @@ test_expect_success 'no advice given for explicit detached head state' '
+ 	test_cmp expect.no-advice actual
+ '
+ 
++# Detached HEAD tests for GIT_PRINT_SHA1_ELLIPSIS (new format)
++test_expect_success 'describe_detached_head prints no SHA-1 ellipsis when not asked to' "
++
++	# The first detach operation is more chatty than the following ones.
++	cat 1>1st_detach <<'EOF' &&
++Note: checking out 'HEAD^'.
++
++You are in 'detached HEAD' state. You can look around, make experimental
++changes and commit them, and you can discard any commits you make in this
++state without impacting any branches by performing another checkout.
++
++If you want to create a new branch to retain commits you create, you may
++do so (now or later) by using -b with the checkout command again. Example:
++
++  git checkout -b <new-branch-name>
++
++HEAD is now at 7c7cd714e262 three
++EOF
++
++	# The remaining ones just show info about previous and current HEADs.
++	cat 1>2nd_detach <<'EOF' &&
++Previous HEAD position was 7c7cd714e262 three
++HEAD is now at 139b20d8e6c5 two
++EOF
++
++	cat 1>3rd_detach <<'EOF' &&
++Previous HEAD position was 139b20d8e6c5 two
++HEAD is now at d79ce1670bdc one
++EOF
++
++	reset && check_not_detached && sane_unset GIT_PRINT_SHA1_ELLIPSIS &&
++
++	# Various ways of *not* asking for ellipses
++
++	sane_unset GIT_PRINT_SHA1_ELLIPSIS && git -c 'core.abbrev=12' checkout HEAD^ 1>actual 2>&1 &&
++	check_detached &&
++	test_i18ncmp 1st_detach actual && sane_unset GIT_PRINT_SHA1_ELLIPSIS &&
++
++	GIT_PRINT_SHA1_ELLIPSIS="no" git -c 'core.abbrev=12' checkout HEAD^ 1>actual 2>&1 &&
++	check_detached &&
++	test_i18ncmp 2nd_detach actual && sane_unset GIT_PRINT_SHA1_ELLIPSIS &&
++
++	GIT_PRINT_SHA1_ELLIPSIS= git -c 'core.abbrev=12' checkout HEAD^ 1>actual 2>&1 &&
++	check_detached &&
++	test_i18ncmp 3rd_detach actual && sane_unset GIT_PRINT_SHA1_ELLIPSIS &&
++
++	# We only have four commits, but we can re-use them
++	reset && check_not_detached && sane_unset GIT_PRINT_SHA1_ELLIPSIS &&
++
++	# Make no mention of the env var at all
++	git -c 'core.abbrev=12' checkout HEAD^ 1>actual 2>&1 &&
++	check_detached &&
++	test_i18ncmp 1st_detach actual && sane_unset GIT_PRINT_SHA1_ELLIPSIS &&
++
++	GIT_PRINT_SHA1_ELLIPSIS='nope' && export GIT_PRINT_SHA1_ELLIPSIS && git -c 'core.abbrev=12' checkout HEAD^ 1>actual 2>&1 &&
++	check_detached &&
++	test_i18ncmp 2nd_detach actual && sane_unset GIT_PRINT_SHA1_ELLIPSIS &&
++
++	GIT_PRINT_SHA1_ELLIPSIS=nein && export GIT_PRINT_SHA1_ELLIPSIS && git -c 'core.abbrev=12' checkout HEAD^ 1>actual 2>&1 &&
++	check_detached &&
++	test_i18ncmp 3rd_detach actual && sane_unset GIT_PRINT_SHA1_ELLIPSIS &&
++
++	true
++"
++
++# Detached HEAD tests for GIT_PRINT_SHA1_ELLIPSIS (old format)
++test_expect_success 'describe_detached_head does print SHA-1 ellipsis when asked to' "
++
++	# The first detach operation is more chatty than the following ones.
++	cat 1>1st_detach <<'EOF' &&
++Note: checking out 'HEAD^'.
++
++You are in 'detached HEAD' state. You can look around, make experimental
++changes and commit them, and you can discard any commits you make in this
++state without impacting any branches by performing another checkout.
++
++If you want to create a new branch to retain commits you create, you may
++do so (now or later) by using -b with the checkout command again. Example:
++
++  git checkout -b <new-branch-name>
++
++HEAD is now at 7c7cd714e262... three
++EOF
++
++	# The remaining ones just show info about previous and current HEADs.
++	cat 1>2nd_detach <<'EOF' &&
++Previous HEAD position was 7c7cd714e262... three
++HEAD is now at 139b20d8e6c5... two
++EOF
++
++	cat 1>3rd_detach <<'EOF' &&
++Previous HEAD position was 139b20d8e6c5... two
++HEAD is now at d79ce1670bdc... one
++EOF
++
++	reset && check_not_detached && sane_unset GIT_PRINT_SHA1_ELLIPSIS &&
++
++	# Various ways of asking for ellipses...
++
++	GIT_PRINT_SHA1_ELLIPSIS="yes" && export GIT_PRINT_SHA1_ELLIPSIS && git -c 'core.abbrev=12' checkout HEAD^ 1>actual 2>&1 &&
++	check_detached &&
++	test_i18ncmp 1st_detach actual && sane_unset GIT_PRINT_SHA1_ELLIPSIS &&
++
++	GIT_PRINT_SHA1_ELLIPSIS='yes' git -c 'core.abbrev=12' checkout HEAD^ 1>actual 2>&1 &&
++	check_detached &&
++	test_i18ncmp 2nd_detach actual && sane_unset GIT_PRINT_SHA1_ELLIPSIS &&
++
++	GIT_PRINT_SHA1_ELLIPSIS=yes git -c 'core.abbrev=12' checkout HEAD^ 1>actual 2>&1 &&
++	check_detached &&
++	test_i18ncmp 3rd_detach actual && sane_unset GIT_PRINT_SHA1_ELLIPSIS &&
++
++	true
++"
++
+ test_done
 -- 
-Brandon Williams
+2.13.6
+
