@@ -2,88 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7CA9D20954
-	for <e@80x24.org>; Mon,  4 Dec 2017 21:40:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 914DA20954
+	for <e@80x24.org>; Mon,  4 Dec 2017 21:42:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752852AbdLDVkQ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Dec 2017 16:40:16 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57679 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752538AbdLDVkN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Dec 2017 16:40:13 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 07DBCAF2ED;
-        Mon,  4 Dec 2017 16:40:13 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Q/Al9peHScYdEi+ebkhDSnuyeJo=; b=RWbsEL
-        IXWxLT5MrGlEnrfmodBKlf15FocRB0KOBhUbs2gXU+qdMEet233O3dL5+HlNSqg4
-        qNFtJJihVkQGvwveNWOE/oJMFi22+VN7TCkuDKiA3dLaQMt5DoeXZR1NkSf/19vd
-        qkT2NrTWgZLEquCb1Wggq/Yq9HeAb+TRsezYk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=lDoLbG/wgiHOhuVnMpE/6ZTR4I8PIKux
-        lRYcBu4yLWLWAvAaYN31JJZP46/6/CUGzXFPunZmiqOFZDbxZfvXvlce1g8Vz2T/
-        lQS+bQQh6cXDuzZx7Mr/52cbQ9s3JWmeaF7jqaiREl2pmxsquP03qAAp0uCKwRSS
-        94O0wUhzWUg=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id F245EAF2EC;
-        Mon,  4 Dec 2017 16:40:12 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5FF8DAF2EB;
-        Mon,  4 Dec 2017 16:40:12 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Lars Schneider <larsxschneider@gmail.com>,
-        Lars Schneider <lars.schneider@autodesk.com>,
-        Git List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        kaartic.sivaraam@gmail.com, sandals@crustytoothpaste.net
-Subject: Re: [PATCH v4 2/2] launch_editor(): indicate that Git waits for user input
+        id S1752730AbdLDVmY (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Dec 2017 16:42:24 -0500
+Received: from cloud.peff.net ([104.130.231.41]:47930 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1752310AbdLDVmX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Dec 2017 16:42:23 -0500
+Received: (qmail 10172 invoked by uid 109); 4 Dec 2017 21:42:23 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 04 Dec 2017 21:42:23 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 27270 invoked by uid 111); 4 Dec 2017 21:42:43 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with ESMTPA; Mon, 04 Dec 2017 16:42:43 -0500
+Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 04 Dec 2017 16:42:21 -0500
+Date:   Mon, 4 Dec 2017 16:42:21 -0500
+From:   Jeff King <peff@peff.net>
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        lars.schneider@autodesk.com, git@vger.kernel.org,
+        gitster@pobox.com, sbeller@google.com, sunshine@sunshineco.com,
+        sandals@crustytoothpaste.net
+Subject: Re: [PATCH v4 2/2] launch_editor(): indicate that Git waits for user
+ input
+Message-ID: <20171204214221.GB21552@sigill.intra.peff.net>
 References: <20171129143752.60553-1-lars.schneider@autodesk.com>
-        <20171129143752.60553-3-lars.schneider@autodesk.com>
-        <20171130205137.GC3313@sigill.intra.peff.net>
-        <xmqqvahojssu.fsf@gitster.mtv.corp.google.com>
-        <D3A5C7E6-A63C-431C-97B5-070632EE3540@gmail.com>
-        <20171204173223.GF13332@sigill.intra.peff.net>
-Date:   Mon, 04 Dec 2017 13:40:11 -0800
-In-Reply-To: <20171204173223.GF13332@sigill.intra.peff.net> (Jeff King's
-        message of "Mon, 4 Dec 2017 12:32:23 -0500")
-Message-ID: <xmqqr2sakw90.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+ <20171129143752.60553-3-lars.schneider@autodesk.com>
+ <20171130205137.GC3313@sigill.intra.peff.net>
+ <BB878570-F214-4BAA-AB58-4A9C0F8F80AB@gmail.com>
+ <20171201182924.GB27688@sigill.intra.peff.net>
+ <aacb7604-edc3-a920-da43-701b57045956@gmail.com>
+ <D330CEDD-7F6B-49DB-A30E-EE0BDB80E28A@gmail.com>
+ <20171204172623.GD13332@sigill.intra.peff.net>
+ <07CF6EAE-815E-4846-887D-560F2459E69D@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B538565E-D93B-11E7-BE9A-575F0C78B957-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <07CF6EAE-815E-4846-887D-560F2459E69D@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Mon, Dec 04, 2017 at 10:31:15PM +0100, Lars Schneider wrote:
 
-> On Sun, Dec 03, 2017 at 01:47:04PM +0100, Lars Schneider wrote:
->
->> I am on the fence here. I like consistency but I don't want to
->> bother Git users.
->> 
->> @Peff: Do you lean into either direction? Could you imagine that
->> novice/regular users are bothered? (I don't expect experts to be
->> bothered too much as they would likely be able to find and set 
->> the advice config).
->
-> I also am on the fence, and am OK with any of the options discussed.
->
-> But now I've said my reservations on the list, so I can say "I told you
-> so" if people complain (and naturally refuse to admit my objections if
-> people love it). :)
+> >> I would like to add "for your input" or "for you" to convey 
+> >> that Git is not waiting for the machine but for the user.
+> >> 
+> >>    "hint: Launched editor. Waiting for your input..."
+> >> 
+> >> Would that work for you?
+> > 
+> > I guess "input" was the part that I found funny/confusing. The only
+> > thing we know is that we're waiting on the editor process to finish, and
+> > everything else is making assumptions about what's happening in the
+> > editor.
+> 
+> I see. How about:
+> 
+> "hint: Launched editor. Waiting for your action..."
+> (my preference)
+> 
+> or
+> 
+> "hint: Launched editor. Waiting for you..."
 
-Heh.  I am even OK with not doing anything for that matter ;-)
+Better, IMHO, though I still think literally saying:
 
+  hint: Waiting for your editor to exit...
+
+is the most accurate, which I think makes it clear that you must _exit_
+your editor, not just save and close the file.
+
+I dunno, maybe that is being overly paranoid. Certainly I have seen
+graphical programs that have a mismatch with the one-process-per-action
+way that most terminal editors view the world, and would hang around
+even after the user thinks they are done editing. But at the same time,
+those programs are unlikely to work well as $GIT_EDITOR in the first
+place, because running them from the terminal may just open a new window
+in an existing session and exit immediately (which is the opposite
+problem -- the editor exited before the user actually did their thing).
+
+So I'm not sure if that would be a problem in practice or not. I'm too
+mired in the vim world to have any real data. Somebody like you who is
+supporting a large number of less-Unixy users probably has more
+perspective there.
+
+-Peff
