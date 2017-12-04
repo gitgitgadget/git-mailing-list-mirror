@@ -2,115 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EC2D420954
-	for <e@80x24.org>; Mon,  4 Dec 2017 14:31:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BBE4220954
+	for <e@80x24.org>; Mon,  4 Dec 2017 14:31:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754157AbdLDObK (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Dec 2017 09:31:10 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51754 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752768AbdLDObJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Dec 2017 09:31:09 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8E9DAC898A;
-        Mon,  4 Dec 2017 09:31:08 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=atwmKwHM3ymvXa551GitJjpr8/0=; b=iAVg/W
-        lNfMmddzY9IhMCUh2zZOmjHup32pJcUiaiwm9L0c7cLdZruqhgTyELPyz0+WXv+k
-        8+MpnBLV2IORkL5k/UN9ytq5NUw39Ib1k6Hn6PtBvNvGkgzUhIdwJ6lFQyrnzJaX
-        NyyM6Wr/fZKb9uG0RG7P7umgJIHRWcc8QTn5g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=DU9PKYt40MQlbghC77CSet/2NqbzaWjh
-        WZC63agmYpv11l/A5iFuKzN1cIQ4RffekVImOJMPkQOb+XMTPbw99H4ZxFwu/s0K
-        44MDjDErOnRp0v5iWp//T1V3++f0TRVmk3laJxBndDjVYl1Q1XsQeEOYGUi51cyi
-        biGM/sl5iTU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 86860C8989;
-        Mon,  4 Dec 2017 09:31:08 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CBC16C8987;
-        Mon,  4 Dec 2017 09:31:07 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org, Donald R Laster Jr <laster@dlaster.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v2 1/4] git-compat-util: introduce skip_to_optional_val()
-References: <20171204125617.4931-1-chriscool@tuxfamily.org>
-Date:   Mon, 04 Dec 2017 06:31:06 -0800
-In-Reply-To: <20171204125617.4931-1-chriscool@tuxfamily.org> (Christian
-        Couder's message of "Mon, 4 Dec 2017 13:56:14 +0100")
-Message-ID: <xmqq8teio991.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1754116AbdLDObp (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Dec 2017 09:31:45 -0500
+Received: from mout.gmx.net ([212.227.15.19]:54865 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754026AbdLDObo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Dec 2017 09:31:44 -0500
+Received: from virtualbox ([95.208.58.62]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lpspj-1eyl5t2Vk7-00fhlw; Mon, 04
+ Dec 2017 15:31:26 +0100
+Date:   Mon, 4 Dec 2017 15:31:22 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     =?UTF-8?Q?=C5=81ukasz_Stelmach?= <l.stelmach@samsung.com>
+cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
+        Pat Thoyts <patthoyts@users.sourceforge.net>,
+        =?UTF-8?Q?=C5=81ukasz_Stelmach?= <stlman@poczta.fm>
+Subject: Re: [PATCH v2] git-gui: Prevent double UTF-8 conversion
+In-Reply-To: <20171202122046.6033-1-l.stelmach@samsung.com>
+Message-ID: <alpine.DEB.2.21.1.1712041521330.98586@virtualbox>
+References: <20171202122046.6033-1-l.stelmach@samsung.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C43A9824-D8FF-11E7-A40A-8EF31968708C-77302942!pb-smtp1.pobox.com
+Content-Type: multipart/mixed; boundary="8323329-1700032577-1512397886=:98586"
+X-Provags-ID: V03:K0:mgd+3/Kontm8KApWFgm+kxfaPaiTg8Upyemy1imhjF8H7W3c74d
+ w1tKd0qz1M7H5WNT7EIu0U00Vlm5ypoEcSA270UzXVtxD3Ew3e1SFfrEX8m2lRZM3kPSivP
+ zV4sxpEWeXJY1qYvWS5JbjOMo4X2jm4uNXASUoXjaNs5TeutGTuqTZLNEtyyOgKCfdnZUws
+ rKeDkxLepS96webKIve+g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:mJS57rxGjBU=:iq0OmuJ11G2YywQ469/TEh
+ aHef/lhBG98IMtNwDjvM7g+udx5fEkDHKU6L7PIh/QOFT/yPByz+u78hAnWLOkN2kPeKuzgte
+ e9nNko0uaVWvPhgNhPghQpSvJM7gZ6sY9PVq1fgUYSMTHym20F4p//BQZ3E25o/B08xmWQLUF
+ rw5OIM3jUwitQwkKJRdRN372k/jn07pq4fVZX2cDZ8hvK5ANHZ3wNq2Tv+C6wmn/HSOYcN++z
+ gV60Xn+Lg3qcBtXtxEKSwBV/V7KjLD2d3JUyFZvV7uI2OhoW69NvYv0n9Uq1BrEILJO2lP3A4
+ J7uwDO+3M//Cw7PmBA9V2yviYBH3md9O4M2TocPWp04T+C4iZ6fuAhhU2FsZc6wUT7nCRak9k
+ EKuD8vAgHlXZwW4lDgnZce6sRPuYJogiGu/EgGXTKC03Qo/0v8NNwAcMVexO0b66m0wtlZaSo
+ ykxLJiT6yY1tWlMumTT0Mz37d08QMVeSMkWf+PZAOHqEjbT/TTEFAZJrhhEX0JYarMBxShtLy
+ kSdYjSGFxKAVrOS+W/NfE0KF6onF/xjOfpoRBWRoYXfa0Qk0Yv5uoNr2fscioUk4+VTeh6S8V
+ 0JYKqDM2+aQwV34vRFsi1xTEr9eUTycPv9YKyymFWgGptpw3Ae/wibIuXPFPK9iV2IAr8zXqa
+ q930WIvvQJcp4BgppmBtnfx6recq9rM72qSIwPIOFhOp51zBAhm7rUSUqU+/eyxTgGX9FlI+N
+ ybTck0eOTfn93l0C6XXbNHf1yineBG5leK7hBu2aVu9P8R3h68KpoaSEeMlR4rMeLJyVIHOoN
+ VoBm1qvzVp2LJeWmvNn+50F/p5pitvHw0sT46XklcOKUQPRiT4=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> From: Christian Couder <christian.couder@gmail.com>
->
-> We often accept both a "--key" option and a "--key=<val>" option.
->
-> These options currently are parsed using something like:
->
-> if (!strcmp(arg, "--key")) {
-> 	/* do something */
-> } else if (skip_prefix(arg, "--key=", &arg)) {
-> 	/* do something with arg */
-> }
->
-> which is a bit cumbersome compared to just:
->
-> if (skip_to_optional_val(arg, "--key", &arg)) {
-> 	/* do something with arg */
-> }
->
-> This also introduces skip_to_optional_val_default() for the few
-> cases where something different should be done when the first
-> argument is exactly "--key" than when it is exactly "--key=".
->
-> In general it is better for UI consistency and simplicity if
-> "--key" and "--key=" do the same thing though, so that using
-> skip_to_optional_val() should be encouraged compared to
-> skip_to_optional_val_default().
->
-> Note that these functions can be used to parse any "key=value"
-> string where "key" is also considered as valid, not just
-> command line options.
->
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-> ---
->  git-compat-util.h | 23 +++++++++++++++++++++++
->  strbuf.c          | 20 ++++++++++++++++++++
->  2 files changed, 43 insertions(+)
->
-> After thinking about it a bit more and taking a look at the
-> current code, I thought that it was probably best to have
-> both skip_to_optional_val() and skip_to_optional_val_default().
+--8323329-1700032577-1512397886=:98586
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-I guess we came to the same conclusion independently while our mails
-crossed ;-)
+Hi =C5=81ukasz,
 
->   - 2 new functions instead of 1
->   - "optional" instead of "opt" in the function names
+On Sat, 2 Dec 2017, =C5=81ukasz Stelmach wrote:
 
-I thought that the more important part you agreed was s/val/arg/,
-though.
+> Convert author's name from the UTF-8 (or any other) encoding in
+> load_last_commit function the same way commit message is converted.
+>=20
+> Amending commits in git-gui without such conversion breaks UTF-8
+> strings. For example, "\305\201ukasz" (as written by git cat-file) become=
+s
+> "\303\205\302\201ukasz" in an amended commit.
 
-I had a few small comments on later steps, but I think these are
-moving in the right direction.
+Okay, that makes the issue a lot clearer to me (the explicit mention of
+"author's name", that is).
 
-Thanks.
+> diff --git a/git-gui/lib/commit.tcl b/git-gui/lib/commit.tcl
+> index 83620b7cb..f820c24bf 100644
+> --- a/git-gui/lib/commit.tcl
+> +++ b/git-gui/lib/commit.tcl
+> @@ -34,9 +34,7 @@ You are currently in the middle of a merge that has not=
+ been fully completed.  Y
+>  =09=09=09=09=09lappend parents [string range $line 7 end]
+>  =09=09=09=09} elseif {[string match {encoding *} $line]} {
+>  =09=09=09=09=09set enc [string tolower [string range $line 9 end]]
+> -=09=09=09=09} elseif {[regexp "author (.*)\\s<(.*)>\\s(\\d.*$)" $line al=
+l name email time]} {
+> -=09=09=09=09=09set commit_author [list name $name email $email date $tim=
+e]
+> -=09=09=09=09}
+> +=09=09=09=09} elseif {[regexp "author (.*)\\s<(.*)>\\s(\\d.*$)" $line al=
+l name email time]} { }
+>  =09=09=09}
+
+This looks wrong, as the commit_author would now also be set if the header
+was not found (mind you, this would make for an incorrect Git commit, but
+the code explicitly tries to set commit_author only in the case that the
+author line was found.
+
+But we cannot set commit_author here because the encoding is read as
+another header line (and in a valid commit object, the encoding line (if
+any) has to be *below* the author line).
+
+So it *has* to be this way. Maybe mention this in the commit message, to
+avoid head-scratching?
+
+However, I would still recommend to `set name ""` before the loop parsing
+the header, and...
+
+>  =09=09=09set msg [read $fd]
+>  =09=09=09close $fd
+> @@ -44,7 +42,9 @@ You are currently in the middle of a merge that has not=
+ been fully completed.  Y
+>  =09=09=09set enc [tcl_encoding $enc]
+>  =09=09=09if {$enc ne {}} {
+>  =09=09=09=09set msg [encoding convertfrom $enc $msg]
+> +=09=09=09=09set name [encoding convertfrom $enc $name]
+>  =09=09=09}
+> +=09=09=09set commit_author [list name $name email $email date $time]
+
+Guarding this assignment in an `if {$name ne ""} { ... }`, just in case.
+
+>  =09=09=09set msg [string trim $msg]
+>  =09=09} err]} {
+>  =09=09error_popup [strcat [mc "Error loading commit data for amend:"] "\=
+n\n$err"]
+
+Thanks,
+Johannes
+--8323329-1700032577-1512397886=:98586--
