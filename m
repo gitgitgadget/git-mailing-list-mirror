@@ -2,102 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 97AF620954
-	for <e@80x24.org>; Mon,  4 Dec 2017 18:08:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2C58620954
+	for <e@80x24.org>; Mon,  4 Dec 2017 18:30:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751570AbdLDSI1 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Dec 2017 13:08:27 -0500
-Received: from mail-it0-f43.google.com ([209.85.214.43]:41009 "EHLO
-        mail-it0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751919AbdLDSI0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Dec 2017 13:08:26 -0500
-Received: by mail-it0-f43.google.com with SMTP id x28so14962319ita.0
-        for <git@vger.kernel.org>; Mon, 04 Dec 2017 10:08:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=RhUnYk17WxId3OyGHVuxVmSVvq7sE7mS+43fAd4kdvs=;
-        b=JM1G1Gl6Ms6FZ0CvUzn0WAORvne5lzCsdFuM9uBMHj9FeYel+N0MbN/SRXqXlSP408
-         IloXG81Xxxh64FXq7RMOMODHz7GqNKovUtXq1zsu+CcHXFk7MCFCWpjwNEZmakddtx0K
-         UCIPcKIdJj+SpOE+bLTu7FhyXzOIFHnbOuUsTouKoxjgFTLF9f9mQWDvz3N1tOVLyNtI
-         YIsC58TGlnxuywrnTPdGh57MLLmejlctpg4PXf+Kj+6tGz0yNq1IjdqUu5qC4a0BOWFh
-         uFfyxlhK5SLUQY4ZDP/MnoP0oWlswT0gn43ErEnINebQRAl/MUvjsODOpxAD65Otwo2v
-         Nu5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=RhUnYk17WxId3OyGHVuxVmSVvq7sE7mS+43fAd4kdvs=;
-        b=RAN81kWjnSbbZgrJII98yIfVy11KLL4Redif4vc4kRz79ZfYjOh/emVEUCDKXVvx6f
-         4b9PsZYaoixlyBbq0BsjA8aTWD1iRRU2hOKFl0qix0BnXawrkPxH57QFsd4lC/hMSHcd
-         N8ujPAJv73C3l+3jujpj41DO2DmAFS13Y8R9pQrO0jQaOxj6Y2GOhNOdex49hbv23dgg
-         HbjPpr7TNY163LmfAPVCD8XJVkuOpMz2A65NT1dbLza5DfGQONqH1R6iIy9iCArTAEg8
-         EHvKiSiKCjJJZTiyFeDKgSaXkdPpQ5nODjJXgz0P2/Lc2eOLUO3YrEASgcjTds9MWjuF
-         sUyw==
-X-Gm-Message-State: AJaThX4qJNVokio6hEcNGm9Z6YONEkt3dy1TR2hv4HnvHgHqqKhtuSt7
-        ZJ8/GY0M33ZTo9eBO0/lwhGjto3GTty1l/sJUsQ=
-X-Google-Smtp-Source: AGs4zMYFXIFlzEakC175+QCXLrnXoCGtJvpIXYVG01HXBJ5Lzfc0degkNkMI3bfLATDB5uvf+FgkV9QjmXCbkDRuFdE=
-X-Received: by 10.107.6.81 with SMTP id 78mr25124840iog.204.1512410905767;
- Mon, 04 Dec 2017 10:08:25 -0800 (PST)
+        id S1751756AbdLDSat (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Dec 2017 13:30:49 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56392 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751208AbdLDSar (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Dec 2017 13:30:47 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A00D8CBFF6;
+        Mon,  4 Dec 2017 13:30:46 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ZaxyY1hsvTvmBqRY+yWBv0WlJ0s=; b=tLfkwV
+        zOr34eTf+hx+eIEVmce73S22AgRt8mx0AKBItmlQZLQmtrxRDxQrJmHnGCUimSpV
+        JbKss+LBd6L8gU8qDsiXPHG8w/Lmbm3lZPtrieL85xyGAJh6VutCgxKEsbdaLS4O
+        l9LPJoeu0GER9zahMKHpYBJPh23dXsCixlT0o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=leK7c0DtUiKNpdOSdJDV5jX/m+a80Vjl
+        j5lfhPyTpbwYpaOo41ziqN6oeWx09igj8gVAQVcPFIh/uk2EMlIjMDRF/KPpqvlj
+        UWT8EYb3/xqmWGJXnMFVXDiHNoGwrHMJUXCP8BQ+8/xBtsjh8kbibTnn7VqIYN+U
+        8TF9aScclWE=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8F51BCBFF5;
+        Mon,  4 Dec 2017 13:30:46 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E5CB9CBFF4;
+        Mon,  4 Dec 2017 13:30:45 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Phillip Wood <phillip.wood@talktalk.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Adam Dinwoodie <adam@dinwoodie.org>,
+        Stefan Beller <sbeller@google.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v4 7/9] sequencer: load commit related config
+References: <20170925101041.18344-1-phillip.wood@talktalk.net>
+        <20171124110758.9406-1-phillip.wood@talktalk.net>
+        <20171124110758.9406-8-phillip.wood@talktalk.net>
+Date:   Mon, 04 Dec 2017 10:30:44 -0800
+In-Reply-To: <20171124110758.9406-8-phillip.wood@talktalk.net> (Phillip Wood's
+        message of "Fri, 24 Nov 2017 11:07:56 +0000")
+Message-ID: <xmqqd13umjl7.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.107.200.11 with HTTP; Mon, 4 Dec 2017 10:08:04 -0800 (PST)
-In-Reply-To: <xmqqzi6ympi9.fsf@gitster.mtv.corp.google.com>
-References: <20171129195430.10069-1-avarab@gmail.com> <20171203115941.16674-1-avarab@gmail.com>
- <xmqqzi6ympi9.fsf@gitster.mtv.corp.google.com>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Mon, 4 Dec 2017 19:08:04 +0100
-Message-ID: <CACBZZX6mEzrTdD=B7gAeLSufPR-ZEj8wO8kXsJmrJFtSbT35yQ@mail.gmail.com>
-Subject: Re: [PATCH v2] Makefile: replace perl/Makefile.PL with simple make rules
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Dan Jacques <dnj@google.com>,
-        Alex Riesen <alexander.riesen@cetitec.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Brandon Casey <drafnel@gmail.com>, Petr Baudis <pasky@ucw.cz>,
-        Gerrit Pape <pape@smarden.org>,
-        "martin f . krafft" <madduck@madduck.net>, Eric Wong <e@80x24.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3E4959B8-D921-11E7-8192-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 4, 2017 at 5:22 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> I did this immediately after applying; please double check.
->
-> Thanks.
+Phillip Wood <phillip.wood@talktalk.net> writes:
 
-Thanks. Looks good to me. I'll incorporate that info future
-submissions if there's more stuff to fix, but for now if you could
-queue it like that that would be great.
+> --- a/builtin/rebase--helper.c
+> +++ b/builtin/rebase--helper.c
+> @@ -9,6 +9,17 @@ static const char * const builtin_rebase_helper_usage[] = {
+>  	NULL
+>  };
+>  
+> +static int git_rebase_helper_config(const char *k, const char *v, void *cb)
+> +{
+> +	int status;
+> +
+> +	status = git_sequencer_config(k, v, NULL);
+> +	if (status)
+> +		return status;
+> +
+> +	return git_default_config(k, v, NULL);
+> +}
+> +
 
-> 1: da337670f5 ! 1: aeae85bdd0 Makefile: replace perl/Makefile.PL with simple make rules
->     @@ -27,7 +27,7 @@
->          So replace the whole thing with something that's pretty much a copy of
->          how we generate po/build/**.mo from po/*.po, just with a small sed(1)
->          command instead of msgfmt. As that's being done rename the files
->     -    from *.pm to *.pmc just to indicate that they're genreated (see
->     +    from *.pm to *.pmc just to indicate that they're generated (see
->          "perldoc -f require").
->
->          While I'm at it, change the fallback for Error.pm from being something
->     @@ -50,9 +50,9 @@
->             it could be set in addition to INSTLIBDIR, but my reading of [7] is
->             that this is the desired behavior.
->
->     -     * We don't man pages for all of the perl modules as we used t, only
->     -       Git(3pm). As discussed on-list[8] that we were building installed
->     -       manpages for purely internal APIs like Git::I18N or
->     +     * We don't build man pages for all of the perl modules as we used to,
->     +       only Git(3pm). As discussed on-list[8] that we were building
->     +       installed manpages for purely internal APIs like Git::I18N or
->             private-Error.pm was always a bug anyway, and all the Git::SVN::*
->             ones say they're internal APIs.
->
-> :
+Sorry for spotting the problem this late, but this code is
+unfortunate and we will need to revisit it later; we may want to do
+so sooner rather than later.
+
+When k,v is a valid configuration that is handled by
+sequencer_config() successfully, this code still needs to call into
+default_config() with the same k,v, only to get it ignored.
+
+The problem lies in the (mis)design of git_sequencer_config().  The
+function should either allow the caller to notice that (k,v) has
+already been handled, or be the last one in the callback by making a
+call to default_config() itself.
+
+For the former, because this helper does not have to be called
+directly as a git_config() callback, but instead it is always meant
+to be called indirectly from another git_config() callback (like
+git_rebase_helper_config() here, and common_config() in
+builtin/revert.c like we see below), it does *not* have to be
+constrained by the function signature required for it to be a config
+callback.  It could take a pointer to an int that stores if 'k' was
+handled inside the function,
+
+    int git_sequencer_config_helper(char *k, char *v, int *handled);
+
+for example.
