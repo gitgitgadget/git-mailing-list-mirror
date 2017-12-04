@@ -2,109 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9BC6320954
-	for <e@80x24.org>; Mon,  4 Dec 2017 19:45:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 64D3B20954
+	for <e@80x24.org>; Mon,  4 Dec 2017 19:51:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752172AbdLDTpi (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Dec 2017 14:45:38 -0500
-Received: from mail-qt0-f171.google.com ([209.85.216.171]:44324 "EHLO
-        mail-qt0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752096AbdLDTpg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Dec 2017 14:45:36 -0500
-Received: by mail-qt0-f171.google.com with SMTP id m59so6515636qte.11
-        for <git@vger.kernel.org>; Mon, 04 Dec 2017 11:45:36 -0800 (PST)
+        id S1751741AbdLDTv0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Dec 2017 14:51:26 -0500
+Received: from mail-yw0-f174.google.com ([209.85.161.174]:35916 "EHLO
+        mail-yw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751205AbdLDTvZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Dec 2017 14:51:25 -0500
+Received: by mail-yw0-f174.google.com with SMTP id r205so7149525ywb.3
+        for <git@vger.kernel.org>; Mon, 04 Dec 2017 11:51:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=hunwpWx0O2/1PWmmP8vhmpZHOxdUlF399kl5C/r6u6k=;
-        b=E28g2MYgOVB8ULUoFDhIemHR4J9dnhzHurPnDCDFSwPjbE50u9WjVICZX2+gJ9cm5H
-         fPNVei/GsG4NZtZlilOqZTXerTbg+usJbcRA6KksrvJrM4MlQ03eznl/nUlOnAC/O2Xg
-         N0PHElTN7WoHuI/KCtFi1kgpfECIThj5Nh9eB3yVuEs6Ij0fhFBu+3tv0BZS8yU6w9Z9
-         FCabv9rP5BV9vDxhpR3SHScYoaAPiw5Ef6vTtA1KGNbQVVBG5BZ1scCOqQIrsMoD19Hs
-         7/zVOBMOU8Kw5HbMLDjTyRribNmRpxrcvpVPTTPO5BbxuKTRzXVKxwqJbw+e2S/Q/ER+
-         cQRA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=2W1Hi+CwVgkGE/YSrtZrWV4CmNBOTvtfAl8xQZZo+h0=;
+        b=OChWqWQOYaZXxHMjYuIaxSz12kO0RMCXZwN5uw+285uBDh8wrBwyrn6CmVmmZqEwXr
+         h+FNGrpw/A9hy7FpO/A63MEsRm5kuxKCbN311idlmNOylYUX8tKtTFQ3YLz83c6ZYuIW
+         yB0Oc+yZu/yrET5jzkJuqhdLsLJkB8n0nabi/V/BzYnc3e+yAgXX1NnBL0RcYgCKN9TH
+         6kVlInBHEdRc/THXScs2tjkAr6YSLmKTrRoHC2/ev911fsv+6/+Quv1Qei5aZAlkFcdN
+         5tVgYOQyFertVpB2DeAi8sCyA/1BNOMI2/Ekg9kEszpD8Y0/pHkXNJdMvwJR6jCoUD5a
+         iieQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=hunwpWx0O2/1PWmmP8vhmpZHOxdUlF399kl5C/r6u6k=;
-        b=cazcTsA0ZuJEFw92s9V0Dy5EvgiLKOt3xJkC5o8uk7owio2U1nOYtet9674e9GAVjK
-         uJednFiltdgejl4eAXVIqYvlJDFGLT2973jXcaDoANi8DcPtPyLMz9FKK8aVqZuBr0JI
-         2jn8gZ/72/R/2c0+hQW5QSULikvmRAzAjdotEEyRs7noC/iKGs43Nk6n5wWNiejlGpGr
-         lvX7ClkVkS3IOAgdgzaXWBY6QkB3J8pYBJ2y7QlKzZPvKcXNcdJ4WT0bsEkDrxaoR9e9
-         SQJyXOFo5jjFKbgP0H20kCMGoWbjP/1Xm8JuBraQGnR7FfFa7q3iSNwMy6agexzT6KyD
-         d4fA==
-X-Gm-Message-State: AKGB3mKnl9grBX6W+hWR+jO69pVdO7FP2ic7ogM+zsVNYU6qv1OrJrx7
-        bbWyGIVNva+Cc/aNm2dZMpLmmowekCju5IVgZ3WAXg==
-X-Google-Smtp-Source: AGs4zMY2xSm8iyV0oSsOi5zIcNq2r1hmNxUIvHK3Q9qRLyyWS6T033Q+Vr+8tbzsTAhhIOAC1m+WTIpiEXFqOpPsvKM=
-X-Received: by 10.237.42.22 with SMTP id c22mr69803qtd.162.1512416735323; Mon,
- 04 Dec 2017 11:45:35 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.140.85.179 with HTTP; Mon, 4 Dec 2017 11:45:34 -0800 (PST)
-In-Reply-To: <20171130152605.1b775e9cc2ddd7f917424448@google.com>
-References: <xmqq1skj9o7r.fsf@gitster.mtv.corp.google.com> <20171128184703.155931-1-jonathantanmy@google.com>
- <alpine.DEB.2.21.1.1711300134560.6482@virtualbox> <20171130152605.1b775e9cc2ddd7f917424448@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 4 Dec 2017 11:45:34 -0800
-Message-ID: <CAGZ79kZ7EvpOUgdkMe=+nx1qV23jvDaY4-GVzjmtN_hnJ71bag@mail.gmail.com>
-Subject: Re: [PATCH v3] diff: support anchoring line(s)
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=2W1Hi+CwVgkGE/YSrtZrWV4CmNBOTvtfAl8xQZZo+h0=;
+        b=Ibh07cTOR7IT2j4wp29Pb3AX0MzJZHpYbjW6a+lEGxzCRGAxg3DSTcc3HfMH+F4Zs0
+         JpPZpP8I91namSIcTs1fbMKwwhE5FTiGkTEYmR6qBXe5+Oo+FT34djL60H1QQLz4WS/k
+         /Pzu/Q3gp3m6sGMNzKa3hQMiF9Q3NrchgLHAdXFEF36SktzrF9xtEpOHUuKBYSK5ef+z
+         vhOyKagOptZPR6zhHo4PKOzG8kTO7IlsYSgJwT6L28H5PldGelq8E5qMvMi+/C3raSlw
+         DcI2nWiq+Tek4mPMIQplvCEFZCxkSGJzFZoLhadiJg1UT34ZvQVwMqidKZXYOxVgPnB/
+         4GsQ==
+X-Gm-Message-State: AJaThX5kJsieIvMnU6GVTHLe3WTdkQugGd6eqr8/jWALPnLr3ZEUo6hq
+        f9Kq0K4opEr8pzYG5puMrTKd8Q==
+X-Google-Smtp-Source: AGs4zMYTsWGdK+U4xeeue27egn5n0+bHSlVQcGX46H9mv4zBdvzme/qzToz2JBTNnnGlwYQ7N7yJAw==
+X-Received: by 10.129.229.14 with SMTP id s14mr11181698ywl.392.1512417084372;
+        Mon, 04 Dec 2017 11:51:24 -0800 (PST)
+Received: from dnj.pit.corp.google.com ([2620:0:1019:0:5840:7173:18ff:ed41])
+        by smtp.gmail.com with ESMTPSA id z145sm4089199ywg.76.2017.12.04.11.51.22
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 04 Dec 2017 11:51:23 -0800 (PST)
+From:   Dan Jacques <dnj@google.com>
+To:     gitster@pobox.com
+Cc:     alexander.riesen@cetitec.com, avarab@gmail.com, dnj@google.com,
+        drafnel@gmail.com, e@80x24.org, git@vger.kernel.org,
+        jrnieder@gmail.com, madduck@madduck.net, pape@smarden.org,
+        pasky@ucw.cz, peff@peff.net
+Subject: Re: [PATCH v2] Makefile: replace perl/Makefile.PL with simple make rules
+Date:   Mon,  4 Dec 2017 14:51:21 -0500
+Message-Id: <20171204195121.6647-1-dnj@google.com>
+X-Mailer: git-send-email 2.15.0.chromium12
+In-Reply-To: <xmqq4lp6mg96.fsf@gitster.mtv.corp.google.com>
+References: <xmqq4lp6mg96.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 30, 2017 at 3:26 PM, Jonathan Tan <jonathantanmy@google.com> wrote:
-> On Thu, 30 Nov 2017 01:36:37 +0100 (CET)
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+Junio C Hamano writes:
+
+> Well the thing is that I cannot queue this and Dan's at the same
+> time, while both of these topics are expected to be in flux.  For
+> today's pushout, I tentatively kicked out Dan's relative path series
+> and queued this one to see how well it works with the rest of the
+> system, after giving this patch another round of reading.
 >
->> Hi Jonathan,
->>
->> On Tue, 28 Nov 2017, Jonathan Tan wrote:
->>
->> > @@ -4607,7 +4627,14 @@ int diff_opt_parse(struct diff_options *options,
->> >             DIFF_XDL_CLR(options, NEED_MINIMAL);
->> >             options->xdl_opts &= ~XDF_DIFF_ALGORITHM_MASK;
->> >             options->xdl_opts |= value;
->> > +           if (value == XDF_PATIENCE_DIFF)
->> > +                   clear_patience_anchors(options);
->> >             return argcount;
->> > +   } else if (skip_prefix(arg, "--anchored=", &arg)) {
->> > +           options->xdl_opts = DIFF_WITH_ALG(options, PATIENCE_DIFF);
->> > +           ALLOC_GROW(options->anchors, options->anchors_nr + 1,
->> > +                      options->anchors_alloc);
->> > +           options->anchors[options->anchors_nr++] = xstrdup(arg);
->>
->> I looked and failed to find the code that releases this array after the
->> diff is done... did I miss anything?
->
-> You didn't miss anything. As far as I can tell, occurrences of struct
-> diff_options live throughout the lifetime of an invocation of Git and
-> are not freed. (Even if the struct itself is allocated on the stack, its
-> pathspec has some elements allocated on the heap.)
+> It seemed that Dan was happy with (an earlier draft of?) this
+> build procedure simplification patch, so hopefully we can solidify
+> this one reasonably quickly and ask the relative path series to be
+> rebuilt on top of it?
 
-I thought at least for the intra-line word diff, which allocates its own
-diff options struct, we'd clear them, but looking around we seem to leak
-the diff options consistently. (builtin/blame.c is nice enough to
-`clear_pathspec(&diff_opts.pathspec)`, but that's about it, no other
-command takes care of the cruft.
+Sounds good to me! I'm in no rush, and if this is moving forward I'm more
+than happy to wait for it to land and rebase on top.
 
-I wonder if diff_flush might be a good place to clean up the diff options
-and after the flush the diff options are declared invalid?
+I didn't want to weigh in too heavily on the actual details of this patch
+since I think the majority stakeholders are the folks who maintain the Perl
+subsystem and those who build distribution packages. My work on Perl only
+touches installation as a means to an end, and avarab@'s work does simplify
+this for me.
 
-> test_expect_success '--anchored with non-unique line has no effect'
-
-okay, if it turns out we need this case in the future we can still come up
-with ideas.
-
-Thanks,
-Stefan
+Cheers, and thanks!
+-Dan
