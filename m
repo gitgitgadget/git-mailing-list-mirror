@@ -3,106 +3,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B395220A40
-	for <e@80x24.org>; Mon,  4 Dec 2017 07:25:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D43E120A40
+	for <e@80x24.org>; Mon,  4 Dec 2017 07:59:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752970AbdLDHZI (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Dec 2017 02:25:08 -0500
-Received: from mo4-p00-ob.smtp.rzone.de ([81.169.146.220]:25990 "EHLO
-        mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752830AbdLDHZH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Dec 2017 02:25:07 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1512372305;
-        s=domk; d=cs-software-gmbh.de;
-        h=MIME-Version:Content-Transfer-Encoding:Content-Type:
-        Content-Language:In-Reply-To:References:Message-ID:Date:Subject:CC:To:
-        From:X-RZG-CLASS-ID:X-RZG-AUTH:Accept-Language:Auto-Submitted:Cc:Date:
-        From:Message-ID:References:Reply-To:Resent-Cc:Resent-Date:Resent-From:
-        Resent-To:Sender:Subject:To:Content-Alternative:Content-Description:
-        Content-Disposition:Content-Duration:Content-Features:Content-ID:
-        Content-Language:Content-Location:Content-MD5:
-        Content-Transfer-Encoding:Content-Type:MIME-Version;
-        bh=JBLoVAFPc3KpcYgtA3cEQb+KcTQ9VUu8ZwFf2Fs0Kcs=;
-        b=fKvlAzRwGL/oIPewEJwEV3+xqqJJH0p1kQINokScQNnK2vCDvTXLcLo1owfg790/QN
-        5KdXgu5VUYoXFud23F9jOY9q0Rjw4sP9CIktvbRo1X/fn+Bzkh9l8nGBbfRMSp45SJg1
-        EDMMD6PNsiCEVw0Wwbw/2pOj9K2q14RaZSFu0=
-X-RZG-AUTH: :LWABbUmIevNaG8tCOliF7QMk1+ctV4c3xgfkpNE0NajOhmQxl91LCNFTJgA=
-X-RZG-CLASS-ID: mo00
-Received: from remote.CS-SOFTWARE.local (b2b-78-94-62-122.unitymedia.biz [78.94.62.122])
-        by post.strato.de (RZmta 42.10 DYNA|AUTH)
-        with ESMTPA id 302409tB47IwiWb;
-        Mon, 4 Dec 2017 08:18:58 +0100 (CET)
-Received: from SERVER2011.CS-SOFTWARE.local ([fe80::5168:c363:4af8:7565]) by
- SERVER2011.CS-SOFTWARE.local ([fe80::5168:c363:4af8:7565%11]) with mapi id
- 14.01.0438.000; Mon, 4 Dec 2017 08:18:57 +0100
-From:   Florian Manschwetus <manschwetus@cs-software-gmbh.de>
-To:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-CC:     Max Kirillov <max@max630.net>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Chris Packham <judge.packham@gmail.com>,
-        Konstantin Khomoutov <kostix+git@007spb.ru>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: AW: [PATCH v6 1/2] http-backend: respect CONTENT_LENGTH as
- specified by rfc3875
-Thread-Topic: [PATCH v6 1/2] http-backend: respect CONTENT_LENGTH as
- specified by rfc3875
-Thread-Index: AQHTa/zzit9rtTRuV0aXVXOBL7yf6aMyx+Zg
-Date:   Mon, 4 Dec 2017 07:18:55 +0000
-Message-ID: <F0F5A56A22F20D4CB4A03BB8D66587970253F87B86@SERVER2011.CS-SOFTWARE.local>
-References: <20171126193813.12531-1-max@max630.net>
-        <20171126193813.12531-2-max@max630.net>
-        <20171129032214.GB32345@sigill.intra.peff.net>
-        <xmqqr2sclj2q.fsf@gitster.mtv.corp.google.com>
-        <20171203024958.GA31493@sigill.intra.peff.net>
- <xmqq1skcjqer.fsf@gitster.mtv.corp.google.com>
-In-Reply-To: <xmqq1skcjqer.fsf@gitster.mtv.corp.google.com>
-Accept-Language: de-DE, en-US
-Content-Language: de-DE
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [192.168.1.154]
-x-pmwin-version: 3.1.2.0, Antivirus-Engine: 3.69.2, Antivirus-Data: 5.46
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+        id S1753187AbdLDH7O (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Dec 2017 02:59:14 -0500
+Received: from mail-it0-f68.google.com ([209.85.214.68]:40110 "EHLO
+        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752865AbdLDH7N (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Dec 2017 02:59:13 -0500
+Received: by mail-it0-f68.google.com with SMTP id f190so4507575ita.5
+        for <git@vger.kernel.org>; Sun, 03 Dec 2017 23:59:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=uYUI4wuSUrkHGCk4B0haAsDn5YWKKwhi00edMGyRf9U=;
+        b=FBrwvn1ESIci+GAfD7PA8uTNEU0R2gptKCMca8stRv+WtIHyGnsRQK/soOucyxhcJC
+         tj+ri4p99ArpJTQr35118DPSm7Q3SdJkVq2h5SmLeSi7tDPVXcKuSIBIBpeZ3y1F8e42
+         uTWB/p4mT9Z/Gy8oNktOL/1xca2Cy9J2zgMYf3EV403WBZ2YvGuLE1MM0if5ANV5Fej9
+         UODUoKefORnKrk/y+uwezpvp2paUh3SvyDqf1O+76IbwfMwHqd3g4ldXa+q05Ejxg99R
+         OYI9u9GV4LgS/RCLhlOPNzKkkL8gzUdROZeP6hUXkngjFvotSwlvub7Au1tY9VmL1sos
+         3n/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=uYUI4wuSUrkHGCk4B0haAsDn5YWKKwhi00edMGyRf9U=;
+        b=IZ4dCoplow1krv3QZZDFkG7ekao/TJ95XLVk4KCCKT7wDjwBP0B4lRmuhZ6yOnvAjk
+         38ulkSewUHWGk/x7V10WLpVzx1RceD2eJ2CtOBybiM+txF6hYB5/iqOyk2zoFldD8qzk
+         OF/nOuDwkfomDMItAviHSclVHlCGdc6aOBLi8UPKKuA0XLxYIGPDUrkQ3Xlty8E+fOKZ
+         aKQIT1NDB/b2tmzeCz1esK7dArhUzffvXpUTWvXa+VFBG4El8J4IebVcx36CoEwamjA4
+         YHa2kSMg/eaPVDjX5rb+UuNjEKSlNfbSRpT8iCyoAm/0Lqq+QKMor2gpIdXtyl0uPHry
+         rZGA==
+X-Gm-Message-State: AKGB3mLj06Nns6VrdbMRvcJXnh08KfJdSk0VclRxt5IHs5izskMhH9PO
+        xdQ+QkceR8ki4Kn8ZYpe1PfCBKSuXqhxfVaANT0=
+X-Google-Smtp-Source: AGs4zMZsYjWGQZDfg/vjNJ5F57FtvYvodEeSZUTKRtMTVR8O8VSozGjt+UcZn+OSMy391dbGYZctkw0zPqZ0EOEihUg=
+X-Received: by 10.36.228.68 with SMTP id o65mr12694302ith.128.1512374353070;
+ Sun, 03 Dec 2017 23:59:13 -0800 (PST)
 MIME-Version: 1.0
+Received: by 10.79.28.137 with HTTP; Sun, 3 Dec 2017 23:59:12 -0800 (PST)
+In-Reply-To: <xmqqfu8rig10.fsf@gitster.mtv.corp.google.com>
+References: <20171203170415.15939-1-chriscool@tuxfamily.org>
+ <xmqqk1y3ira9.fsf@gitster.mtv.corp.google.com> <CAP8UFD2OSsqzhyAL-QG1TOowB-xgbf=kC9wHre+FLc+0J1Xy+Q@mail.gmail.com>
+ <xmqqfu8rig10.fsf@gitster.mtv.corp.google.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Mon, 4 Dec 2017 08:59:12 +0100
+Message-ID: <CAP8UFD0UH62fyLLAx8QP37L22if9zGjX=7f_c23asOFiKEEB7Q@mail.gmail.com>
+Subject: Re: [PATCH 1/3] git-compat-util: introduce skip_to_opt_val()
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>,
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi All,
-I could provide a bash script I used in between to make this working with I=
-IS, without fixing http-backend binary, maybe this helps to understand how =
-this cases might be handled.
+On Sun, Dec 3, 2017 at 11:48 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Christian Couder <christian.couder@gmail.com> writes:
+>
+>> Anyway there is a design choice to be made. Adding a "const char
+>> *default" argument makes the function more generic,...
+>
+> I didn't suggest anything of that sort, and I do not understand why
+> you are repeatedly talking about "default" that you considered and
+> rejected, as if it were an alternative viable option.  I agree that
+> "default" is not yet a good idea and it is a solution to a problem
+> that is not yet shown to exist.
+>
+> On the other hand, just assigning NULL to *arg when you did not see
+> a delimiting '=', on the other hand, is an alternative option that
+> is viable.
 
-Mit freundlichen Gr=FC=DFen / With kind regards
-Florian Manschwetus
+What I am saying is that I'd rather have a lot of code like:
 
+        if (skip_to_optional_val(arg, "--key", &arg, "") /* the last
+argument is the default value */
+                do_something(arg);
 
+than a lot of code like this:
 
-> -----Urspr=FCngliche Nachricht-----
-> Von: Junio C Hamano [mailto:gitster@pobox.com]
-> Gesendet: Sonntag, 3. Dezember 2017 07:07
-> An: Jeff King
-> Cc: Max Kirillov; Eric Sunshine; Florian Manschwetus; Chris Packham;
-> Konstantin Khomoutov; git@vger.kernel.org
-> Betreff: Re: [PATCH v6 1/2] http-backend: respect CONTENT_LENGTH as
-> specified by rfc3875
->=20
-> Jeff King <peff@peff.net> writes:
->=20
-> > ... Eventually our fill() will block trying to get data that is not
-> > there. On an Apache server, the webserver would know there is nothing
-> > left to send us and close() the pipe, and we'd get EOF.
-> > But on IIS, I think the pipe remains open and we'd just block
-> > indefinitely trying to read().
->=20
-> Ah, yeah, under that scenario, trusting content-length and trying to read=
-,
-> waiting for input that would never come, will be a problem, and it would
-> probably want to get documented.
+        if (skip_to_optional_val(arg, "--key", &arg) /* no default can
+be passed, NULL is the default */
+                do_something(arg ? arg : "");
 
+because in the former case the `arg ? arg : ""` pattern is captured
+inside the function, so the code is simpler.
+
+In the few cases where do_something() accepts NULL and does something
+different with it, the former can be changed to:
+
+        if (skip_to_optional_val(arg, "--key", &arg, NULL) /* the last
+argument is the default value */
+                do_something(arg);
+
+So yeah I rejected it, but my preference is not strong and I never
+said or thought that it was not viable. I just think that there are
+few cases that might benefit. So the benefits are not big and it might
+be better for consistency and simplicity of the UI to nudge people to
+make "--key" and "--key=" behave the same. That's why having "" as the
+default and no default argument is a little better in my opinion.
+
+>> .... I think setting
+>> "arg" to NULL increases the risk of crashes and makes it too easy to
+>> make "--key" and "--key=" behave differently which I think is not
+>> consistent and not intuitive.
+>
+> So now this is very specific to the need of command line argument
+> parsing and is not a generic thing?  You cannot have your cake and
+> eat it too, though.
+
+I think that even when we are not parsing options, it is probably good
+in general for UI consistency and simplicity that "key" and "key=" are
+interpreted in the same way.
