@@ -7,91 +7,100 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5B2B720954
-	for <e@80x24.org>; Mon,  4 Dec 2017 19:25:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0094320954
+	for <e@80x24.org>; Mon,  4 Dec 2017 19:33:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751744AbdLDTZA (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Dec 2017 14:25:00 -0500
-Received: from mail-qt0-f174.google.com ([209.85.216.174]:45041 "EHLO
-        mail-qt0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750854AbdLDTY7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Dec 2017 14:24:59 -0500
-Received: by mail-qt0-f174.google.com with SMTP id m59so6374924qte.11
-        for <git@vger.kernel.org>; Mon, 04 Dec 2017 11:24:59 -0800 (PST)
+        id S1751428AbdLDTda (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Dec 2017 14:33:30 -0500
+Received: from mail-qt0-f179.google.com ([209.85.216.179]:39124 "EHLO
+        mail-qt0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750995AbdLDTd3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Dec 2017 14:33:29 -0500
+Received: by mail-qt0-f179.google.com with SMTP id k19so23706601qtj.6
+        for <git@vger.kernel.org>; Mon, 04 Dec 2017 11:33:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=s49cN7Vz7NbgRhGL9wj7SsFzshHXWz7BaUT190vDoUM=;
-        b=hIrj0lD39q46EkkNnuATRbr+661tDiSTcfQcl/nePeEDZ3Rg/ZseD3XoGx+15eoh8P
-         oz887FAAcpDVyGklWC/WALCTie0UxwED9NWDpgLfmglXNkLBq9GnIn5h1zHHZOnP0KEI
-         vn9ePzPVg/5DRd0uVveoLiuixJ5iSCU1sE1S7d5jbAavdpONrd4I/w2XeQulPqn0SX4l
-         yu80jSarjvKB4Abvq99l0e8HeqLGbu986mXkZQ2WaV8tGENSnypEy1clirbN44CcsKXW
-         3XS4jFVesYWJZmi64bV1L4knLIFfdT1NhAZBEMGhojOIvYlS5q1jeFqV7tJbo+v012yB
-         +KMQ==
+        bh=c8orId5vyLIG8PR3PEXgTZvlN3pYYEL/W71BMDw7YUg=;
+        b=VRqE1V9kid6yR00/8JfOofBKAgRjz1+gcwcGahDR3TW79tstmttfEmskYNk5HFmSjj
+         G87w2RmJ6+lZYZhGAG3h4yI5QYJXrJYf12oIdGyIlQViNvCIB3PawFUjIJ2J+Fr601Ae
+         Sj2zj6l7jqHE5KLvfZ/4sQJpsOK9E/FGGVWBPCK7xE7s6QY+hv0PKv+BOg0HrMpWrldo
+         ouLj3qex3VxtP2Am/eSVd3KlKhVq/AwXKqhhVaoF88156Eq9l37XQjxwm8acsfSUlLk6
+         JGyZtKVoghGM7OLPG9phd5XN+89gohHPg3u12TopvpA1sWO7Wj89WTl+o4TCf35pjlXr
+         fBxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=s49cN7Vz7NbgRhGL9wj7SsFzshHXWz7BaUT190vDoUM=;
-        b=oN9mxVc30nm6BcopBWbcqt5ceS0oVKBLrMMvXlDuTdYcuCGRRi+jzdORxn4ESE97EY
-         XFVc1IzN8ht2XTWN2gJZwXnaxuKZD1pKMu3U9lVaUCG2IxJe6ecH+Ce9NcVqnJZvcvBv
-         NBY/adsR087TbtCQJ0RKhBRPvUdiLvqrgH7fryr694pFf3tJs3cqvIY6Kc3fTdszlwJc
-         jydnnhSNNdIk+NpiD/B8FNNPcmNgm4BZz4E1fr8AMbz82wUgrIG42C9fxIw+msUH8YdO
-         oVwBiwnU+pJNgDTWqSf3cMauSFQLIrikPW4UbxPyPDgZxdlGHJIFDI/ZPT50HNH2CiIF
-         pnPQ==
-X-Gm-Message-State: AKGB3mKuJWRoqrlwuz7bNIDhsi3u9QGXvsosQPv+yQphbygrL0r3YuMj
-        lua95iU0HnqufWBEORxiRynB1CnXZqXfAfqmjDSw8k8wk0g=
-X-Google-Smtp-Source: AGs4zMbtCi24Q5hty1L8oYRIOnDI3JduTsDGYYMeudd2V4avCc63ayK4A9oDR5Q/qU6u7ww3CGET9KSi5rtulv6+pVQ=
-X-Received: by 10.200.6.130 with SMTP id f2mr53850qth.140.1512415498348; Mon,
- 04 Dec 2017 11:24:58 -0800 (PST)
+        bh=c8orId5vyLIG8PR3PEXgTZvlN3pYYEL/W71BMDw7YUg=;
+        b=uD4UlHAZN7Jy2fpO6h9bK/f+BdrwwaWScHqL+JhhluuVFmwSMJmxI58RRiU+SNLJJ3
+         CfJhkmLrLJ9YIzu5s6KiHx3eQkNjyY5VBLsQmFMyGEW6JC97eg51oM/7JuqtxjIE/dsq
+         Cy84icVzig4X00rSAOmmmOVkoLXyEpimeeESfDFUxNC1eZrTiguniPLlTrGl8B/pCyhF
+         eQAtkmb4f5Jl0bYpC/Gx+xcISNHc3S+O1hnbRKlBcv1NXRDt5PqfQcpqiAYfAYUlJHQL
+         t90xPx2Mpt+lXT+SAbyRXDxRvZlkYmP6Cc1BsfidB2u09025Pm4rQHsB40T/Ocd9JLJ3
+         dpBg==
+X-Gm-Message-State: AKGB3mKu+VJH4q9aGwpm15q1Dwtetn6YBH0aeW7yJma2Bcj2rjnHPKh5
+        BYybmCZGZ1qxYy3eyhNah4R86B61VV2C40NJ7E13Qmbl1L8=
+X-Google-Smtp-Source: AGs4zMZ9nH+IeMBBx/WM+zKIfQBUbytDu9LaAqnWdLapUWerZJbL42uvHoKoe/XxWppxmSK+3N1YwVxJGBS2vZj5bDU=
+X-Received: by 10.55.143.134 with SMTP id r128mr19977488qkd.320.1512416008903;
+ Mon, 04 Dec 2017 11:33:28 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.140.85.179 with HTTP; Mon, 4 Dec 2017 11:24:57 -0800 (PST)
-In-Reply-To: <20171124110758.9406-10-phillip.wood@talktalk.net>
-References: <20170925101041.18344-1-phillip.wood@talktalk.net>
- <20171124110758.9406-1-phillip.wood@talktalk.net> <20171124110758.9406-10-phillip.wood@talktalk.net>
+Received: by 10.140.85.179 with HTTP; Mon, 4 Dec 2017 11:33:28 -0800 (PST)
+In-Reply-To: <CA+P7+xonU838dOAzsUY4KmweYyM-NLFQeKVYD9jYM7i5EuWXcw@mail.gmail.com>
+References: <CABPp-BHDrw_dAESic3xK7kC3jMgKeNQuPQF69OpbVYhRkbhJsw@mail.gmail.com>
+ <CAGZ79kbRY1gY8L361o568391Efoa1epZ1dFQZcTqJiOE7EAJfw@mail.gmail.com>
+ <CA+P7+xorpJGrn=5zTrAPVDwHLkU5vCphOrebkH_d+MxV1k1oRg@mail.gmail.com>
+ <CABPp-BFdJr8AL3hJSSLiqwPJMt6LZcLOEcTtxz1vohEuw==wKg@mail.gmail.com> <CA+P7+xonU838dOAzsUY4KmweYyM-NLFQeKVYD9jYM7i5EuWXcw@mail.gmail.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 4 Dec 2017 11:24:57 -0800
-Message-ID: <CAGZ79kY0YC+3kpYWDFi=bW0m-KFUpqexc3gxe-a5gS3YTn89bg@mail.gmail.com>
-Subject: Re: [PATCH v4 9/9] t3512/t3513: remove KNOWN_FAILURE_CHERRY_PICK_SEES_EMPTY_COMMIT=1
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Adam Dinwoodie <adam@dinwoodie.org>
+Date:   Mon, 4 Dec 2017 11:33:28 -0800
+Message-ID: <CAGZ79kYbhTyHRMRvZaq3SC7MpxdruXsr+4nKGo-4RojjymwYVA@mail.gmail.com>
+Subject: Re: submodules and merging (Was: Re: [PATCH 02/30] merge-recursive:
+ Fix logic ordering issue)
+To:     Jacob Keller <jacob.keller@gmail.com>
+Cc:     Elijah Newren <newren@gmail.com>, git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 24, 2017 at 3:07 AM, Phillip Wood <phillip.wood@talktalk.net> wrote:
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->
-> Now that the sequencer creates commits without forking 'git commit' it
-> does not see an empty commit in these tests which fixes the known
-> breakage. Note that logic for handling
-> KNOWN_FAILURE_CHERRY_PICK_SEES_EMPTY_COMMIT=1 is not removed from
-> lib-submodule-update.sh as it is still used by other tests.
->
-> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> ---
->
-> Notes:
->     The output of the tests with after the previous patch looks like the
->     output of the merge tests (see below), so I'm hopeful that this is a
->     genuine fix, but someone who knows about submodules should check that
->     things are in fact working properly now.
+On Sat, Nov 25, 2017 at 9:59 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
+> On Sat, Nov 25, 2017 at 2:37 PM, Elijah Newren <newren@gmail.com> wrote:
+>> On Wed, Nov 15, 2017 at 9:13 AM, Jacob Keller <jacob.keller@gmail.com> wrote:
+>>> On Tue, Nov 14, 2017 at 10:13 AM, Stefan Beller <sbeller@google.com> wrote:
+>>
+>>>> But this line of though might be distracting from your original point,
+>>>> which was that we have so much to keep in mind when doing tree
+>>>> operations (flags, D/F conflicts, now submodules too). I wonder how
+>>>> a sensible refactoring would look like to detangle all these aspects,
+>>>> but still keeping Git fast and not overengineered.
+>>>
+>>> I think given how complex a lot of these code paths are, that an
+>>> attempt to refactor it a bit to detangle some of the mess would be
+>>> well worth the time. I'd suspect it might make handling the more
+>>> complex task of actually resolving conflicts to be easier, so the
+>>> effort to clean up the code here should be worth it.
+>>
+>> I think changing from a 4-way merge to a 3-way merge would make things
+>> much better, as Junio outlined here:
+>>
+>> https://public-inbox.org/git/xmqqd147kpdm.fsf@gitster.mtv.corp.google.com/
+>>
+>> I don't know of any way to detangle the other aspects, yet.
 
-Looking at the patch only (in combination with the history of the
-submodule tests,
-283f56a40b (cherry-pick: add t3512 for submodule updates, 2014-06-15))
-this patch
-looks good to me. I wonder though if this needs to be squashed in another commit
-to keep the test suite working for each patch and have no intermittent
-failure in the
-series.
+Jonathan Nieder and me tried some pair programming some time ago[1]
+plumbing the repository object through most of the low level internals, which
+would help in detangling submodule merges as then these merges could
+be done in-core, just as Junio laid out.
+
+[1] https://github.com/stefanbeller/git/tree/object-store-jrn-rebased
+
+> I agree, that is absolutely a (big) step in the right direction.
+
+
+I agree as well; A better (abstracted) merge backend would be huge for
+the future of Git.
 
 Thanks,
 Stefan
