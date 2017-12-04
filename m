@@ -2,99 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9D79720954
-	for <e@80x24.org>; Mon,  4 Dec 2017 18:44:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1441320954
+	for <e@80x24.org>; Mon,  4 Dec 2017 19:08:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752538AbdLDSoG (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Dec 2017 13:44:06 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63904 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752503AbdLDSoE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Dec 2017 13:44:04 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8C4C6A6DF3;
-        Mon,  4 Dec 2017 13:44:03 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=2mo6IjXguwcUtkb9mT+M8pe8F6o=; b=ey8iwp
-        Zvwda9Z5f53+IkbkzdCadlJ/Y7ELnbzRfIpg10TU9omrLxjwc+pM202GK1oVHmgZ
-        6CfIa3EgoloFkIZYmPV53SoY7/a/EDJlJJbq4IsW/d1QPXLYpTwGKIPKlnAJJHYr
-        PSpTjipzy0hN37aa5UVS/xxi+bBW9Xz7xWWGY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=AQVCTER/ht7bR6QOMDNucHUhvKzIVIDL
-        KXElUrp93b5X1UrQmTDGzFGE4LxD0jJ04SU7hfVPTdNl82CeM34dml9Jt+qQ1rzn
-        tC9lyGe3a7zOmqPS5y1BEaq5GCMiJALGO3fOI2pKYEb9z7R1GIZTza09IKJ4Vuoh
-        81e67b5slAI=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 73E45A6DF1;
-        Mon,  4 Dec 2017 13:44:03 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8B402A6DEF;
-        Mon,  4 Dec 2017 13:44:02 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc:     Git mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH v2 2/2] Doc/check-ref-format: clarify information about @{-N} syntax
-References: <xmqqpo8dn1jd.fsf@gitster.mtv.corp.google.com>
-        <20171127172834.6396-1-kaartic.sivaraam@gmail.com>
-        <20171127172834.6396-2-kaartic.sivaraam@gmail.com>
-        <xmqqd14386sw.fsf@gitster.mtv.corp.google.com>
-        <1511880237.10193.5.camel@gmail.com>
-        <xmqqa7z0lgsd.fsf@gitster.mtv.corp.google.com>
-        <1512408328.15792.5.camel@gmail.com>
-Date:   Mon, 04 Dec 2017 10:44:00 -0800
-In-Reply-To: <1512408328.15792.5.camel@gmail.com> (Kaartic Sivaraam's message
-        of "Mon, 04 Dec 2017 22:55:28 +0530")
-Message-ID: <xmqq8teimiz3.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1752248AbdLDTIh (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Dec 2017 14:08:37 -0500
+Received: from mail-qt0-f170.google.com ([209.85.216.170]:43146 "EHLO
+        mail-qt0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750854AbdLDTIg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Dec 2017 14:08:36 -0500
+Received: by mail-qt0-f170.google.com with SMTP id w10so23513021qtb.10
+        for <git@vger.kernel.org>; Mon, 04 Dec 2017 11:08:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=fTIfxFb6SJan57EC/qXmmpMhF8VVLX/KKoqsfO55+64=;
+        b=ddXV7q9eiF0plIqQZBhuuT5fBYzInlxQzO8e7D/WWpYCKK2BkBfsv8BzN8yx+EGQEg
+         eUNKaHvS+0+mQJJ/1ZpvvN2dDRb7TwXvaKwZCueRdLSTeGt4jg+XD1uKZrcwnpV+Z0t9
+         dsAIazs/HzCy+WBNU7Q31Lwd9EP0jJCMA43a31ouedE+LdhY1BZ0i1kRO+g+omePuhrr
+         vVBOBMVMJj39/iItIBfE4ZqKumqsJmi45qBI16xXIsoOCvVVkE1kZ3NXJcl1v0rDRgMD
+         si4BAqc/lU8wub/WLw4OuWuIcmshu/h40Wn5ak9apsEFlIg3xBNwkyQH6COez4lV9Sje
+         TFcQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=fTIfxFb6SJan57EC/qXmmpMhF8VVLX/KKoqsfO55+64=;
+        b=tIEE66hisXYL1aNRUVKLA2TpTfX5pE35z44bdiSPmzJ3ZF+sNinwxvaWhq3W7UhoLq
+         igLXakOya4E2MqGe4xi0jnHFUM3JW2X4Q8sCGGerEws+hcjZo8O92pjjHkkaOvT641j+
+         WcwO/UbnrAY7cp9WzxTyHbzOrNlSBGfRyPT4L3Y4RxW0ACLfXvBeqD4c+Yc+HGBKxzLq
+         1Et/cJ0f+Ur+MFCMaE+eO+ROOmui0R82sWuCjLSxMRbmyxi/1Bs91VWoz/lU1SZ1C8Xa
+         nsJY4X80b/PCx44GvSZ8WI+pEoBd4NV92dbNlbBmEtiVFw8dAfhp47Q6wHUyjFt1e6wf
+         V4pg==
+X-Gm-Message-State: AKGB3mJ81g3ynNhft0lP07XgDCVPNMoboSNLmHITQaPV2jH69DrhQYS6
+        7z6qmzwdRy+bYzx8vhokUcLC/UYAT3VsG/lAwEj+sA==
+X-Google-Smtp-Source: AGs4zMZ3Ygf9zhuvZ/7iA1mnVby5MPxUWDydzAtva7XZo1XxfvMzPrr/XbWvQ49QxDio3O7a+KDmsf9iSnGbpAi92B0=
+X-Received: by 10.55.203.156 with SMTP id u28mr21121901qkl.353.1512414515750;
+ Mon, 04 Dec 2017 11:08:35 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 191A404C-D923-11E7-929E-575F0C78B957-77302942!pb-smtp2.pobox.com
+Received: by 10.140.85.179 with HTTP; Mon, 4 Dec 2017 11:08:35 -0800 (PST)
+In-Reply-To: <xmqqindojrw1.fsf@gitster.mtv.corp.google.com>
+References: <466dd5331907754ca5c25cc83173ca895220ca81.1511999045.git.johannes.schindelin@gmx.de>
+ <20171130030727.GA24732@sigill.intra.peff.net> <xmqqindojrw1.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 4 Dec 2017 11:08:35 -0800
+Message-ID: <CAGZ79kbDevUjjAzvfa-Un6=fnFZu+kLx7bF3vuheXZdxJWvaRw@mail.gmail.com>
+Subject: Re: [PATCH] hashmap: adjust documentation to reflect reality
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Kaartic Sivaraam <kaartic.sivaraam@gmail.com> writes:
-
->> Stepping back a bit, the mild suspicion above says
->> 
->>     $ git checkout HEAD^0
->>     ... do things ...
->>     $ git checkout -b temp
->>     ... do more things ...
->>     $ git checkout -B @{-1}
->> 
->> that creates a new branch whose name is 40-hex of a commit that
->> happens to be where we started the whole dance *is* a bug.  No sane
->> user expects that to happen, and the last step "checkout -B @{-1}"
->> should result in an error instead [*1*].
->> 
->> I was wondering if "git check-ref-format --branch @{-1}", when used
->> in place of "checkout -B @{-1}" in the above sequence,
+On Sat, Dec 2, 2017 at 9:35 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jeff King <peff@peff.net> writes:
 >
-> I guess you mean '... "git checkout -B $(git check-ref-format --branch
-> @{-1}", when used in place of "git checkout -B @{-1}" ...' ?
+>> My second suggestion (which I'm on the fence about) is: would it better
+>> to just say "see t/helper/test-hashmap.c for a representative example?"
 
-No you guessed wrong.  I was (and am) wondering if the last step in
-the following sequence should fail.
+I think that may be better in the long run, indeed.
 
->>     $ git checkout HEAD^0
->>     ... do things ...
->>     $ git checkout -b temp
->>     ... do more things ...
->>     $ git check-ref-format --branch @{-1}
+>
+> I also had the same thought.  It is rather unwieldy to ask people to
+> lift code from comment text, and it is also hard to maintain such a
+> commented out code to make sure it is up to date.
+>
+>> I'm all for code examples in documentation, but this one is quite
+>> complex. The code in test-hashmap.c is not much more complex, and is at
+>> least guaranteed to compile and run.
+>
+> Yup.  Exactly.
+>
+>> It doesn't show off how to combine a flex-array with a hashmap as
+>> well, but I'm not sure how important that is. So I could go either
+>> way.
 
-And I am leaning towards saying that it is a bug that it does not
-fail; @{-1} is a detached HEAD and not a concrete branch name in
-this case, so "check-ref-format --branch" should at least notice
-and say that it is a request that may lead to a nonsense next step
-(which is to create a branch with that 40-hex name).
+We could add that example to the test helper as then we have a good (tested)
+example for that case, too.
+
+> In any case, keeping a bad example as-is is less good than replacing
+> it with a corrected one, so I do not mind taking this patch as an
+> immediate first step, whether we later decide to remove it and refer
+> to an external file that has a real example that will be easier to
+> maintain and use.
+>
+> Thanks.
+
+Thanks for taking this and building on top,
+Stefan
