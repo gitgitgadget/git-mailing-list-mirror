@@ -2,70 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0E6ED20954
-	for <e@80x24.org>; Mon,  4 Dec 2017 22:22:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6AB5320954
+	for <e@80x24.org>; Mon,  4 Dec 2017 22:27:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751982AbdLDWWr (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Dec 2017 17:22:47 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56404 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751934AbdLDWWr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Dec 2017 17:22:47 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6F547AFECF;
-        Mon,  4 Dec 2017 17:22:46 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=/kg62ffz3I4/6nliHbCUfEw1IOk=; b=YZprVL
-        3SBc6T53kPElhXNfNPjj4YfkyNsODGq0nPnA6GJ/wPq5SrHL6zgdih5T758I0VUA
-        0mwoiy03m5+Ahxm7/CDx1pUMtVJZ/1MR9cxClDlyW/TDzbh+A1QND9buL+woElJl
-        9z7CIjENdpbxNLz7zQT45TrljTllI1Ur0ocU4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=G1gUO9cHAw5l1bGeiLpcdy/aAnFqQWCY
-        GszWpQBoOmpdFpqGTGNiw4C5c8yn4Y2cLOYQ1Nh9ON542wCugcreQUYqQMEKJ3WA
-        cLWydy4Tz2pyjXLoSign9+Jpq8clcVhNVP82I4YeKuKLVMFDylK4cmeC6GYllAkW
-        6Shv9ryQ4Xg=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 649DCAFECE;
-        Mon,  4 Dec 2017 17:22:46 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C7166AFECD;
-        Mon,  4 Dec 2017 17:22:45 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     lars.schneider@autodesk.com, git@vger.kernel.org,
-        Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [PATCH 0/2] fix v2.15 progress regression
-References: <20171204203647.30546-1-lars.schneider@autodesk.com>
-        <20171204213350.GA21552@sigill.intra.peff.net>
-        <xmqqvahmkwbi.fsf@gitster.mtv.corp.google.com>
-        <20171204220228.GA29422@sigill.intra.peff.net>
-Date:   Mon, 04 Dec 2017 14:22:44 -0800
-In-Reply-To: <20171204220228.GA29422@sigill.intra.peff.net> (Jeff King's
-        message of "Mon, 4 Dec 2017 17:02:28 -0500")
-Message-ID: <xmqqindmkua3.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1752274AbdLDW1H (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Dec 2017 17:27:07 -0500
+Received: from mail-ua0-f170.google.com ([209.85.217.170]:40817 "EHLO
+        mail-ua0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751628AbdLDW0x (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Dec 2017 17:26:53 -0500
+Received: by mail-ua0-f170.google.com with SMTP id i92so13757216uad.7
+        for <git@vger.kernel.org>; Mon, 04 Dec 2017 14:26:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=OpIGw8l/sfEAz67WTjWzVTPO0SFroL1XO+E1OQKqEbw=;
+        b=ZxdmZ1IYo5OmdZf5VJUAegoLODr7yTdazs51PO7Kg05jiLiWaBIWVkwRkC9ZT+LYok
+         EEF8dO0SMg3PgwjtswrwCxO2NlJoMfKjM1trIqiQXLrf4xlwtnxuQMhfEaPyQ0eQkDKF
+         PqRy+ADSb8W4Ak6N83ilSZqG2CnzlwRdx3mHxhhRUJxEBCMX3LwDzsWMXDJ+wpMbdc/j
+         6qBVJ6MVqtpjyL4TRLSoaSGYDRCrHqg6YQopssnslABnzTijZLT02tV6AJq9sYdZrFSB
+         0nJ2zBpy6UuPzAiaUSTaF7x0ByoR5+rtRJYY2G2/4SoiIP13AdIUyWx/RVLIQMb0OP0s
+         ciWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=OpIGw8l/sfEAz67WTjWzVTPO0SFroL1XO+E1OQKqEbw=;
+        b=OAIHHhiuO+K4TvhAKu5UdtLTjJ3Vx9/1wks0JyxhmWi5aAevAulwHYJ8a78LZ9TmYh
+         Wb5iECRP3kfDPufp9SkB/RfVLlL/2w2qKLMnYkzpzpE6EGSfokhw/Og0xkDe9JzRs6M1
+         /DHFn46Lxu4L5AESbirSK713GKZVe/7tQL30GMmnDt3plDQRyRKY+jty/f1+hHjWGFab
+         kIptXwbhdnxgBWjy2NPJBv9wgls2Z3sms8QlpIH+MHPMgO6/9+1WrEt+yelKM1Zgofkg
+         65HXnouJpuk7XH1Euo09Heb47IfcW3mecuPod+5LkilIlhqddmaQy9TOHaf+F/0i0usm
+         AaUg==
+X-Gm-Message-State: AKGB3mKRhgzmfZdKme8px8NHTvogs0NOEcV3Z7+QXSyqNkRu4r1QItyR
+        Y+9j0MHzkJ4dfEVAEhXKOY0u1khpUl5l30Bbq10=
+X-Google-Smtp-Source: AGs4zMZvY7G2bPy6SOvBKFzIT+deKDHFRBcvLCsdX1uiWJoqTtXlxcNXwJmFFTRiCf/+KC9J8jEmev8UQMIeW7ZW9+Q=
+X-Received: by 10.176.65.135 with SMTP id 7mr1168098uap.127.1512426412420;
+ Mon, 04 Dec 2017 14:26:52 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A72391B8-D941-11E7-B6E0-575F0C78B957-77302942!pb-smtp2.pobox.com
+Received: by 10.176.70.138 with HTTP; Mon, 4 Dec 2017 14:26:51 -0800 (PST)
+In-Reply-To: <xmqqmv2ykvy4.fsf@gitster.mtv.corp.google.com>
+References: <xmqqmv2ykvy4.fsf@gitster.mtv.corp.google.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 4 Dec 2017 14:26:51 -0800
+Message-ID: <CABPp-BEoiCrMwKf9u7pdaOkYzE5Q6daJs7N2U05pGjERHzu2Gg@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Dec 2017, #01; Mon, 4)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Mon, Dec 4, 2017 at 1:46 PM, Junio C Hamano <gitster@pobox.com> wrote:
 
-> Here's what I think we should do: fix the bug in the minimal way, and
-> then drop the useless code. It's worth doing in two steps, because we
-> may decide to resurrect the feature later, and it would then just be a
-> straight revert of the second commit.
+> * en/rename-directory-detection (2017-11-21) 33 commits
+<snip>
+>  Rename detection logic in "diff" family that is used in "merge" has
+>  learned to guess when all of x/a, x/b and x/c have moved to z/a,
+>  z/b and z/c, it is likely that x/d added in the meantime would also
+>  want to move to z/d by taking the hint that the entire directory
+>  'x' moved to 'z'.
 
-Yup.  Thanks; will queue.
+It appears that you're still using V3 of my directory rename detection
+series; I got some feedback from Stefan and Johannes on that series
+(including compilation failures on Windows) and believe I have
+addressed all of it in V4, which can be found here:
+   https://public-inbox.org/git/20171129014237.32570-1-newren@gmail.com/
