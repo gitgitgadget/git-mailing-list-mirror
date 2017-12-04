@@ -2,73 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9BCA920954
-	for <e@80x24.org>; Mon,  4 Dec 2017 21:39:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7CA9D20954
+	for <e@80x24.org>; Mon,  4 Dec 2017 21:40:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752656AbdLDVjm (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Dec 2017 16:39:42 -0500
-Received: from sub3.mail.dreamhost.com ([69.163.253.7]:50969 "EHLO
-        homiemail-a11.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752538AbdLDVjm (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2017 16:39:42 -0500
-Received: from homiemail-a11.g.dreamhost.com (localhost [127.0.0.1])
-        by homiemail-a11.g.dreamhost.com (Postfix) with ESMTP id 74565314C069;
-        Mon,  4 Dec 2017 13:39:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=novalis.org; h=message-id
-        :subject:from:to:cc:date:content-type:mime-version:
-        content-transfer-encoding; s=novalis.org; bh=XlAEC4x3hfd4p5jxQ/v
-        +lwe4l0w=; b=QcHYbju8HAERg/wrzYffcejvjwaGRESvICYdpAsWEH3TbXhFZdk
-        lsAPD5yue+1WDJ7/Cmk/SO40mN5bHimD2B81ffaUcQMn8ocdvhSMVsTtbBGR8lOB
-        f0JKD/RB+qzAcTboxsioRkknmuaZzq1cTz6FcBtW8etLwiX5fjAgpoJU=
-Received: from corey (unknown [38.27.161.17])
-        (using TLSv1 with cipher AES256-SHA (256/256 bits))
+        id S1752852AbdLDVkQ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Dec 2017 16:40:16 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57679 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752538AbdLDVkN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Dec 2017 16:40:13 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 07DBCAF2ED;
+        Mon,  4 Dec 2017 16:40:13 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Q/Al9peHScYdEi+ebkhDSnuyeJo=; b=RWbsEL
+        IXWxLT5MrGlEnrfmodBKlf15FocRB0KOBhUbs2gXU+qdMEet233O3dL5+HlNSqg4
+        qNFtJJihVkQGvwveNWOE/oJMFi22+VN7TCkuDKiA3dLaQMt5DoeXZR1NkSf/19vd
+        qkT2NrTWgZLEquCb1Wggq/Yq9HeAb+TRsezYk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=lDoLbG/wgiHOhuVnMpE/6ZTR4I8PIKux
+        lRYcBu4yLWLWAvAaYN31JJZP46/6/CUGzXFPunZmiqOFZDbxZfvXvlce1g8Vz2T/
+        lQS+bQQh6cXDuzZx7Mr/52cbQ9s3JWmeaF7jqaiREl2pmxsquP03qAAp0uCKwRSS
+        94O0wUhzWUg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id F245EAF2EC;
+        Mon,  4 Dec 2017 16:40:12 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: novalis@novalis.org)
-        by homiemail-a11.g.dreamhost.com (Postfix) with ESMTPSA id 1FED9314C066;
-        Mon,  4 Dec 2017 13:39:41 -0800 (PST)
-Message-ID: <1512423580.9882.405.camel@novalis.org>
-Subject: submodule modify/delete wrong message
-From:   David Turner <novalis@novalis.org>
-To:     git@vger.kernel.org
-Cc:     brock.peabody@gmail.com
-Date:   Mon, 04 Dec 2017 16:39:40 -0500
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.22.6-1 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5FF8DAF2EB;
+        Mon,  4 Dec 2017 16:40:12 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Lars Schneider <larsxschneider@gmail.com>,
+        Lars Schneider <lars.schneider@autodesk.com>,
+        Git List <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        kaartic.sivaraam@gmail.com, sandals@crustytoothpaste.net
+Subject: Re: [PATCH v4 2/2] launch_editor(): indicate that Git waits for user input
+References: <20171129143752.60553-1-lars.schneider@autodesk.com>
+        <20171129143752.60553-3-lars.schneider@autodesk.com>
+        <20171130205137.GC3313@sigill.intra.peff.net>
+        <xmqqvahojssu.fsf@gitster.mtv.corp.google.com>
+        <D3A5C7E6-A63C-431C-97B5-070632EE3540@gmail.com>
+        <20171204173223.GF13332@sigill.intra.peff.net>
+Date:   Mon, 04 Dec 2017 13:40:11 -0800
+In-Reply-To: <20171204173223.GF13332@sigill.intra.peff.net> (Jeff King's
+        message of "Mon, 4 Dec 2017 12:32:23 -0500")
+Message-ID: <xmqqr2sakw90.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: B538565E-D93B-11E7-BE9A-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When merging with a submodule modify/delete conflict (i.e. I've deleted
-the submodule, and I'm merging in a branch that modified it), git lies
-about what it is doing:
+Jeff King <peff@peff.net> writes:
 
-"CONFLICT (modify/delete): submodule deleted in HEAD and modified in
-submodules. Version submodules of submodule left in tree at
-submodule~submodules.
-Automatic merge failed; fix conflicts and then commit the result."
+> On Sun, Dec 03, 2017 at 01:47:04PM +0100, Lars Schneider wrote:
+>
+>> I am on the fence here. I like consistency but I don't want to
+>> bother Git users.
+>> 
+>> @Peff: Do you lean into either direction? Could you imagine that
+>> novice/regular users are bothered? (I don't expect experts to be
+>> bothered too much as they would likely be able to find and set 
+>> the advice config).
+>
+> I also am on the fence, and am OK with any of the options discussed.
+>
+> But now I've said my reservations on the list, so I can say "I told you
+> so" if people complain (and naturally refuse to admit my objections if
+> people love it). :)
 
-In fact, the working tree does not contain anything named
-'submodule~submodules'.  
+Heh.  I am even OK with not doing anything for that matter ;-)
 
-In addition, I would ordinarily resolve a conflict like this by using
-'git rm'. Here, this gives a warning:
-
-$ git rm submodule
-submodule: needs merge
-rm 'submodule'
-warning: Could not find section in .gitmodules where path=submodule
-
-Git's behavior here is significantly better than liggit2's (which tries
-to check out 'submodule' as if it were a blob, and fails to do so), but
-it's still confusing.
-
-It's not clear to me what the correct behavior is here.  Maybe it's
-sufficient to just fix the message?
