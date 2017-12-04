@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D1B8D20954
-	for <e@80x24.org>; Mon,  4 Dec 2017 23:59:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 66B7B20954
+	for <e@80x24.org>; Mon,  4 Dec 2017 23:59:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752035AbdLDX7W (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Dec 2017 18:59:22 -0500
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:44103 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751514AbdLDX7Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Dec 2017 18:59:16 -0500
-Received: by mail-pf0-f194.google.com with SMTP id m26so9792597pfj.11
-        for <git@vger.kernel.org>; Mon, 04 Dec 2017 15:59:16 -0800 (PST)
+        id S1751982AbdLDX7S (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Dec 2017 18:59:18 -0500
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:34144 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751980AbdLDX7P (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Dec 2017 18:59:15 -0500
+Received: by mail-pf0-f193.google.com with SMTP id a90so9815704pfk.1
+        for <git@vger.kernel.org>; Mon, 04 Dec 2017 15:59:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=gFCnNA2p2ogrVIaqpLm410K+x4RmzphFhJvw2xk0RaY=;
-        b=EwTp9f7eesbKiHZz6dr33iHpxARdNJo+Bdoy3KbtWlWViRzv2yoQLFyPEelzJwnXLx
-         RLKUlntWShuukeGOYppOn/gd+fENDeTnS/LnfWHF88Tcr/hCB4bFgDOGQWiu1siJjD15
-         7m2ctrt6zQPA0y/8RkOQyAglp5Xdix89ctPe367Zkgbmvc42nfNEDD9c4RmkPsOZbG6W
-         3m+VJk0UpgpiESJb4ELjWPZWR0Xvbya5Gg7+hLVqV6RqnS2FRtNzGQXZBWM9+Ix+iewq
-         xvb2lWl0G9z1mN4eHNvzbCNiDRspNkuXVBRVeI/wTrABYxfc1apZmkvQ3yop3/pG6J6U
-         i3QQ==
+        bh=zWNzuFaTijiv75ae7lurm1eskwR3lUPUFEbAE4CNomA=;
+        b=O2ISSnaR2S3dUxyhKs2WfQ+QzPGVUr8q2m+jrV3viA8lkbSADbrExi/7CqAPZhNHGC
+         2bT/n1LUhtQ/fobYDOe4v3DNzxvsP2CGn+3kUJSKYgkKiSh7PWHRdQLOvO9BK5h5EWRn
+         jFNxD+30YbH4wtLbU5xkrztZCO4gwCPOFyvqJ7wtlVVJVvUEvPjbiYFrHmPNlpO7h8vu
+         myVsCi5V3IFrxNFvwOI9qORSWyM+xlcdA175LtDG63SP/VrbVB77/Hvxo8tBanfn93GB
+         SWAfa2/QRlfWqXyuFK2GTwTSGnXoG7mWz/a8nM6onAxflLaniha8GuX77gn1KZOaRyjB
+         GMCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=gFCnNA2p2ogrVIaqpLm410K+x4RmzphFhJvw2xk0RaY=;
-        b=cKwuhpPLx1uaUA/1ajAhdM0uUooxiT7e0BQpmyXn/0c56AwEccuy+jhZmfRvMcU9m/
-         AL1NMebLzK+05ZzhCsHMwiOj2l4twK7Nih5/g/5j++pvbXdqotzwGd4xS/G5qyS+E/Tk
-         6iIHipP9svT259d3H9hNkK7xG3dHaeYBgZrk3J6x/1fytwXlF3a0rxVXgIHbf4LiCs99
-         5SjMlYwtDPZnWjqWotZMOc5w0tix7y3BNo981fwsqugv+9gJ2LYK6oBqndmq7FLHJk2K
-         9w2CWxHQIS40PGU3DPelKPLoZ5dkcL56+GVdvDMGXyW2h4m4XSS+Z3DggGOWXB489ctz
-         uHfw==
-X-Gm-Message-State: AJaThX6wRNyNBwV7weYCq5SjFyqj2bLA7K/g6XuQQMx4ehZys2Gvzhov
-        VyLsDyIQ09VMPGCBTTWuj+D8O3z0OG0=
-X-Google-Smtp-Source: AGs4zMagJR8fG5FNssd/HYVrlbOOBtRaB67J+QE+KUpO4vgE1MGSeJ5F5WFKdouDxyBc30BmWbojgA==
-X-Received: by 10.84.193.36 with SMTP id e33mr16529660pld.313.1512431955636;
-        Mon, 04 Dec 2017 15:59:15 -0800 (PST)
-Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id b187sm24939223pfg.109.2017.12.04.15.59.14
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        bh=zWNzuFaTijiv75ae7lurm1eskwR3lUPUFEbAE4CNomA=;
+        b=bt0eLORmQZt+S869ylLTgozrsTeGh5CRa1YueH/mu2v+E1jhxuIyd90lxS7AjSn0Ac
+         6v45+i15E91yJFdF7nCnaqPG5/Gv/KRHIpcDsyHGLmcaHJfM3+QeIRcoaYxieF6NC+Ot
+         GU80117m/ue/rbBidyUV9+K/8miE2MFrcVDEMRpb0F95dLi2Zsim2lSJ6YNBjUV4kBJZ
+         qH2E64V/iKKfn8Gc5f5l6Oybg/Ne3yDjx3zhu0mE7DSlcakhLR5CjkTk9OusFCW1FqkK
+         CpC2KWvr8en6bT5xQLG0gke/qutI37pPw5M+iLZ3ptPxb8ICaK89SgoXlxEFH8++Y0cb
+         VFlQ==
+X-Gm-Message-State: AJaThX4m1owy7Bpdcb8o+TIRd7yaNH+vpm80z5CBmcXicHv9IZQPiZ3G
+        hNhsDiPB5lH9pHCdMNv6aL1Ny81bHQk=
+X-Google-Smtp-Source: AGs4zMbqQXLkFXNvHlNRLD4jXXH7TOM0oAbUE9++rdXTsIS/6+QUwmydpS3BvWNBadJGL8Ts0Id7OA==
+X-Received: by 10.101.64.130 with SMTP id t2mr15041823pgp.299.1512431954157;
         Mon, 04 Dec 2017 15:59:14 -0800 (PST)
+Received: from roshar.svl.corp.google.com ([100.96.218.30])
+        by smtp.gmail.com with ESMTPSA id b187sm24939223pfg.109.2017.12.04.15.59.12
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 04 Dec 2017 15:59:12 -0800 (PST)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     Brandon Williams <bmwill@google.com>
-Subject: [WIP 07/15] connect: convert get_remote_heads to use struct packet_reader
-Date:   Mon,  4 Dec 2017 15:58:15 -0800
-Message-Id: <20171204235823.63299-8-bmwill@google.com>
+Subject: [WIP 06/15] transport: use get_refs_via_connect to get refs
+Date:   Mon,  4 Dec 2017 15:58:14 -0800
+Message-Id: <20171204235823.63299-7-bmwill@google.com>
 X-Mailer: git-send-email 2.15.1.424.g9478a66081-goog
 In-Reply-To: <20171204235823.63299-1-bmwill@google.com>
 References: <20171020171839.4188-1-bmwill@google.com>
@@ -63,194 +63,51 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In order to allow for better control flow when protocol_v2 is introduced
-convert 'get_remote_heads()' to use 'struct packet_reader' to read
-packet lines.  This enables a client to be able to peek the first line
-of a server's response (without consuming it) in order to determine the
-protocol version its speaking and then passing control to the
-appropriate handler.
-
-This is needed because the initial response from a server speaking
-protocol_v0 includes the first ref, while subsequent protocol versions
-respond with a version line.  We want to be able to read this first line
-without consuming the first ref sent in the protocol_v0 case so that the
-protocol version the server is speaking can be determined outside of
-'get_remote_heads()' in a future patch.
+Remove code duplication and use the existing 'get_refs_via_connect()'
+function to retrieve a remote's heads in 'fetch_refs_via_pack()' and
+'git_transport_push()'.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- connect.c | 125 +++++++++++++++++++++++++++++++++++---------------------------
- 1 file changed, 70 insertions(+), 55 deletions(-)
+ transport.c | 18 ++++--------------
+ 1 file changed, 4 insertions(+), 14 deletions(-)
 
-diff --git a/connect.c b/connect.c
-index 7fbd396b3..f79ea9179 100644
---- a/connect.c
-+++ b/connect.c
-@@ -48,6 +48,12 @@ int check_ref_type(const struct ref *ref, int flags)
+diff --git a/transport.c b/transport.c
+index d75ff0514..7c969f285 100644
+--- a/transport.c
++++ b/transport.c
+@@ -230,12 +230,8 @@ static int fetch_refs_via_pack(struct transport *transport,
+ 	args.cloning = transport->cloning;
+ 	args.update_shallow = data->options.update_shallow;
  
- static void die_initial_contact(int unexpected)
- {
-+	/*
-+	 * A hang-up after seeing some response from the other end
-+	 * means that it is unexpected, as we know the other end is
-+	 * willing to talk to us.  A hang-up before seeing any
-+	 * response does not necessarily mean an ACL problem, though.
-+	 */
- 	if (unexpected)
- 		die(_("The remote end hung up upon initial contact"));
- 	else
-@@ -56,6 +62,41 @@ static void die_initial_contact(int unexpected)
- 		      "and the repository exists."));
- }
- 
-+static enum protocol_version discover_version(struct packet_reader *reader)
-+{
-+	enum protocol_version version = protocol_unknown_version;
-+
-+	/*
-+	 * Peek the first line of the server's response to
-+	 * determine the protocol version the server is speaking.
-+	 */
-+	switch (packet_reader_peek(reader)) {
-+	case PACKET_READ_ERROR:
-+		die_initial_contact(0);
-+	case PACKET_READ_FLUSH:
-+	case PACKET_READ_DELIM:
-+		version = protocol_v0;
-+		break;
-+	case PACKET_READ_NORMAL:
-+		version = determine_protocol_version_client(reader->line);
-+		break;
-+	}
-+
-+	/* Maybe process capabilities here, at least for v2 */
-+	switch (version) {
-+	case protocol_v1:
-+		/* Read the peeked version line */
-+		packet_reader_read(reader);
-+		break;
-+	case protocol_v0:
-+		break;
-+	case protocol_unknown_version:
-+		BUG("ERROR");
-+	}
-+
-+	return version;
-+}
-+
- static void parse_one_symref_info(struct string_list *symref, const char *val, int len)
- {
- 	char *sym, *target;
-@@ -109,44 +150,10 @@ static void annotate_refs_with_symref_info(struct ref *ref)
- 	string_list_clear(&symref, 0);
- }
- 
--/*
-- * Read one line of a server's ref advertisement into packet_buffer.
-- */
--static int read_remote_ref(int in, char **src_buf, size_t *src_len,
--			   int *responded)
--{
--	int len = packet_read(in, src_buf, src_len,
--			      packet_buffer, sizeof(packet_buffer),
--			      PACKET_READ_GENTLE_ON_EOF |
--			      PACKET_READ_CHOMP_NEWLINE);
--	const char *arg;
--	if (len < 0)
--		die_initial_contact(*responded);
--	if (len > 4 && skip_prefix(packet_buffer, "ERR ", &arg))
--		die("remote error: %s", arg);
--
--	*responded = 1;
--
--	return len;
--}
--
--#define EXPECTING_PROTOCOL_VERSION 0
--#define EXPECTING_FIRST_REF 1
--#define EXPECTING_REF 2
--#define EXPECTING_SHALLOW 3
--
--/* Returns 1 if packet_buffer is a protocol version pkt-line, 0 otherwise. */
--static int process_protocol_version(void)
--{
--	switch (determine_protocol_version_client(packet_buffer)) {
--	case protocol_v1:
--		return 1;
--	case protocol_v0:
--		return 0;
--	default:
--		die("server is speaking an unknown protocol");
+-	if (!data->got_remote_heads) {
+-		connect_setup(transport, 0);
+-		get_remote_heads(data->fd[0], NULL, 0, &refs_tmp, 0,
+-				 NULL, &data->shallow);
+-		data->got_remote_heads = 1;
 -	}
--}
-+#define EXPECTING_FIRST_REF 0
-+#define EXPECTING_REF 1
-+#define EXPECTING_SHALLOW 2
-+#define EXPECTING_DONE 3
++	if (!data->got_remote_heads)
++		refs_tmp = get_refs_via_connect(transport, 0);
  
- static void process_capabilities(int *len)
- {
-@@ -230,28 +237,34 @@ struct ref **get_remote_heads(int in, char *src_buf, size_t src_len,
- 			      struct oid_array *shallow_points)
- {
- 	struct ref **orig_list = list;
-+	int len = 0;
-+	int state = EXPECTING_FIRST_REF;
-+	struct packet_reader reader;
-+	const char *arg;
+ 	refs = fetch_pack(&args, data->fd, data->conn,
+ 			  refs_tmp ? refs_tmp : transport->remote_refs,
+@@ -542,14 +538,8 @@ static int git_transport_push(struct transport *transport, struct ref *remote_re
+ 	struct send_pack_args args;
+ 	int ret;
  
--	/*
--	 * A hang-up after seeing some response from the other end
--	 * means that it is unexpected, as we know the other end is
--	 * willing to talk to us.  A hang-up before seeing any
--	 * response does not necessarily mean an ACL problem, though.
--	 */
--	int responded = 0;
--	int len;
--	int state = EXPECTING_PROTOCOL_VERSION;
-+	packet_reader_init(&reader, in, src_buf, src_len);
-+
-+	discover_version(&reader);
+-	if (!data->got_remote_heads) {
+-		struct ref *tmp_refs;
+-		connect_setup(transport, 1);
+-
+-		get_remote_heads(data->fd[0], NULL, 0, &tmp_refs, REF_NORMAL,
+-				 NULL, &data->shallow);
+-		data->got_remote_heads = 1;
+-	}
++	if (!data->got_remote_heads)
++		get_refs_via_connect(transport, 1);
  
- 	*list = NULL;
- 
--	while ((len = read_remote_ref(in, &src_buf, &src_len, &responded))) {
-+	while (state != EXPECTING_DONE) {
-+		switch (packet_reader_read(&reader)) {
-+		case PACKET_READ_ERROR:
-+			die_initial_contact(1);
-+		case PACKET_READ_NORMAL:
-+			len = reader.pktlen;
-+			if (len > 4 && skip_prefix(packet_buffer, "ERR ", &arg))
-+				die("remote error: %s", arg);
-+			break;
-+		case PACKET_READ_FLUSH:
-+			state = EXPECTING_DONE;
-+			break;
-+		case PACKET_READ_DELIM:
-+			die("invalid packet\n");
-+		}
-+
- 		switch (state) {
--		case EXPECTING_PROTOCOL_VERSION:
--			if (process_protocol_version()) {
--				state = EXPECTING_FIRST_REF;
--				break;
--			}
--			state = EXPECTING_FIRST_REF;
--			/* fallthrough */
- 		case EXPECTING_FIRST_REF:
- 			process_capabilities(&len);
- 			if (process_dummy_ref()) {
-@@ -269,6 +282,8 @@ struct ref **get_remote_heads(int in, char *src_buf, size_t src_len,
- 			if (process_shallow(len, shallow_points))
- 				break;
- 			die("protocol error: unexpected '%s'", packet_buffer);
-+		case EXPECTING_DONE:
-+			break;
- 		default:
- 			die("unexpected state %d", state);
- 		}
+ 	memset(&args, 0, sizeof(args));
+ 	args.send_mirror = !!(flags & TRANSPORT_PUSH_MIRROR);
 -- 
 2.15.1.424.g9478a66081-goog
 
