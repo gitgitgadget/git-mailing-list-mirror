@@ -7,46 +7,47 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E34D220954
-	for <e@80x24.org>; Mon,  4 Dec 2017 12:57:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 975D920954
+	for <e@80x24.org>; Mon,  4 Dec 2017 12:57:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753980AbdLDM5R (ORCPT <rfc822;e@80x24.org>);
+        id S1753989AbdLDM5V (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Dec 2017 07:57:21 -0500
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:42949 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752428AbdLDM5R (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 4 Dec 2017 07:57:17 -0500
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:38325 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753167AbdLDM5Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Dec 2017 07:57:16 -0500
-Received: by mail-wm0-f66.google.com with SMTP id 64so14047037wme.3
-        for <git@vger.kernel.org>; Mon, 04 Dec 2017 04:57:15 -0800 (PST)
+Received: by mail-wr0-f194.google.com with SMTP id s66so17151218wrc.9
+        for <git@vger.kernel.org>; Mon, 04 Dec 2017 04:57:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=IYeLCAORhQ5uCE5k6ft8U7glLyX2ABFVX26TTvwD2tc=;
-        b=pCgnp1jeGOdJAoLiLwK+w+EXSUt9elIbYTRLdmF4ATa4+4kyVUisYaKy3BMVnEV3BX
-         bfcAkiDqiNLZrQxsZmuFwjoxxipXW8BJCSSTRYtWaTpWpn7J1neBYe9COBmsj1fnpXxA
-         DUarJopRaIQbJUOmwhioVSjsc7zwVuGIC7ulD/UFAcWm2eWC68uaaeR0FTSloXWf6cSG
-         3GMIf2+xxt5kGYMKG7qivXV1F6Md32iq7HYG6PEqlJAjs41ssKtITr/wstP5u/dWXNml
-         lcns7BRoIEFFMZ8cxKdVvH00bNm/ZW1x6H7q2ZMoURb7DRBwOLGmGFjWA+qv6mqNGEtI
-         56lw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=5VtlZn8S4zys0soTj+wy5coicqrWcLnf4XXNWDxnVII=;
+        b=KFGtqacwLy9hL3UHIToJhWleAHPVIj+OzohUd8ZFEmvqmQifNNO3NZaVSHB7HcmigD
+         hPNnmuiETc/t0gKL09UHrPP51k4Ajh+tPXC6beCxGdP/8g0rNVrrDafyPz5v5XISmXSo
+         +SaOd1ft4HPoaQlx3gP48CjD4eDWHy31ZdJZE2Xxuc/lbUAIDtcpsnEqvdrf3syBXL2e
+         Ne8SJwH+nJJedHawXWzZKsHSVCJFKgmUVYfOvdnsg4c9f1QWl3IY6McDDd7iRHLb9xJV
+         VWdWo6cUHQEVM3gHllbsS6F3TWvQmEy0Evrh11Pk+IdKogyT6zFrvIenExt0WqWXLJJ3
+         sLRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=IYeLCAORhQ5uCE5k6ft8U7glLyX2ABFVX26TTvwD2tc=;
-        b=YchvUWA7Ulo8V3GcvGqKHJqR7hbsd6lUxoQVUGVZAwz3SMZ6nwC0d3ujh3T2NBM2Bz
-         NnO5NKrrnU6UJjNnqpm19uDa4hy+0J4gYOgKj/uu9AKB/xOKLn2uMwyMUllOsSNYnmBs
-         fbPB7FsUbh9+5IP64zEU8lSqrSrVsSRgJk+3CGkB92GtIJoDziIqY27NI8ueridWJMFy
-         UtrH1TcoIkoJ+VKaUMYXU+nLgTfNQcdFI0mYtgEArGw1FCS1gSR+sMXStu8Wx581LxR8
-         K86STuazkAOxbftIIkczwPBezJ7BgwZcv11mFf1kSiwnGTdDzNtRCuye1xl2E66ES/zy
-         73ng==
-X-Gm-Message-State: AKGB3mLV0UCwYnmFCf+f9FazNnFGVQuN4W5Z4aG+6gi92DGttEIXV/KF
-        6uPNdQspPeuixzh46GveMnLGuEoC
-X-Google-Smtp-Source: AGs4zMag92GHLyq/SE1UHvrN4aA2MOK88EHqnAVEmimk4yIwJu9rayOE0yYFyXE2XgCBTJbCKaTy4Q==
-X-Received: by 10.28.72.9 with SMTP id v9mr7624913wma.102.1512392234737;
-        Mon, 04 Dec 2017 04:57:14 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=5VtlZn8S4zys0soTj+wy5coicqrWcLnf4XXNWDxnVII=;
+        b=OxCBfXo3PrFZMoBmg3Tf1OPUSj1bBJNZeCKDzx3t2c6l2G9HaK/9P6/VX2gNLtOi9T
+         n01NlRz8NHhkilczx1989gGAb206MKke3tscB8w+/5TgeZWJWA5Vb4NDtocOemNMtT7w
+         kgdAFX7s//KJSC5ZBpGAOLbILqhYA5h31MDe/b3O/HKkd8HFQL9twFWYP/HwtyQLGfPA
+         YgJKUkixZqd1JC8xBapuJa8ExDh0eQCO57jup44Pn0HEBp8laB0nH13oqrcty8JE+d+/
+         mP2ejlDB13+SDCIFR5FE8tjFN89zcJaonZXil6hZaYbxtdL+fAnX1eTkd73FVNUm5Tkh
+         SKrA==
+X-Gm-Message-State: AJaThX4r9AU9CDxqpNIyyNLnsQIQ7iOeAP0qufuWjE1jnpNrGQiVb1Cb
+        0Z98XSPEAgdLxyq8yswrSlHj+NNz
+X-Google-Smtp-Source: AGs4zMbTU5hdhTkdT2ChFgRUxwu6y467wrEMeY5Ti57SYUwMpXA2p9CaIbVyeXLweHiPBHDpl9bwYQ==
+X-Received: by 10.223.135.243 with SMTP id c48mr11913177wrc.140.1512392235941;
+        Mon, 04 Dec 2017 04:57:15 -0800 (PST)
 Received: from localhost.localdomain ([195.68.12.6])
-        by smtp.gmail.com with ESMTPSA id 30sm12456948wrl.22.2017.12.04.04.57.13
+        by smtp.gmail.com with ESMTPSA id 30sm12456948wrl.22.2017.12.04.04.57.14
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 04 Dec 2017 04:57:14 -0800 (PST)
+        Mon, 04 Dec 2017 04:57:15 -0800 (PST)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -54,10 +55,12 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Donald R Laster Jr <laster@dlaster.com>,
         Christian Couder <christian.couder@gmail.com>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v2 1/4] git-compat-util: introduce skip_to_optional_val()
-Date:   Mon,  4 Dec 2017 13:56:14 +0100
-Message-Id: <20171204125617.4931-1-chriscool@tuxfamily.org>
+Subject: [PATCH v2 2/4] index-pack: use skip_to_optional_val()
+Date:   Mon,  4 Dec 2017 13:56:15 +0100
+Message-Id: <20171204125617.4931-2-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.15.1.274.g3f22e311ce.dirty
+In-Reply-To: <20171204125617.4931-1-chriscool@tuxfamily.org>
+References: <20171204125617.4931-1-chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -65,117 +68,43 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Christian Couder <christian.couder@gmail.com>
 
-We often accept both a "--key" option and a "--key=<val>" option.
-
-These options currently are parsed using something like:
-
-if (!strcmp(arg, "--key")) {
-	/* do something */
-} else if (skip_prefix(arg, "--key=", &arg)) {
-	/* do something with arg */
-}
-
-which is a bit cumbersome compared to just:
-
-if (skip_to_optional_val(arg, "--key", &arg)) {
-	/* do something with arg */
-}
-
-This also introduces skip_to_optional_val_default() for the few
-cases where something different should be done when the first
-argument is exactly "--key" than when it is exactly "--key=".
-
-In general it is better for UI consistency and simplicity if
-"--key" and "--key=" do the same thing though, so that using
-skip_to_optional_val() should be encouraged compared to
-skip_to_optional_val_default().
-
-Note that these functions can be used to parse any "key=value"
-string where "key" is also considered as valid, not just
-command line options.
+Let's simplify index-pack option parsing using
+skip_to_optional_val().
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- git-compat-util.h | 23 +++++++++++++++++++++++
- strbuf.c          | 20 ++++++++++++++++++++
- 2 files changed, 43 insertions(+)
+ builtin/index-pack.c | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
-After thinking about it a bit more and taking a look at the
-current code, I thought that it was probably best to have
-both skip_to_optional_val() and skip_to_optional_val_default().
-
-The changes compared to previous version are:
-
-  - 2 new functions instead of 1
-  - "optional" instead of "opt" in the function names
-  - the big function is not inlined
-  - more code in diff.c is simplified using the functions 
-
-diff --git a/git-compat-util.h b/git-compat-util.h
-index cedad4d581..2858d66f85 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -484,6 +484,29 @@ static inline int skip_prefix(const char *str, const char *prefix,
- 	return 0;
- }
- 
-+/*
-+ * If the string "str" is the same as the string in "prefix", then the "val"
-+ * parameter is set to the "def" parameter and 1 is returned.
-+ * If the string "str" begins with the string found in "prefix" and then a
-+ * "=" sign, then the "val" parameter is set to "str + strlen(prefix) + 1"
-+ * (i.e., to the point in the string right after the prefix and the "=" sign),
-+ * and 1 is returned.
-+ *
-+ * Otherwise, return 0 and leave "val" untouched.
-+ *
-+ * When we accept both a "--key" and a "--key=<val>" option, this function
-+ * can be used instead of !strcmp(arg, "--key") and then
-+ * skip_prefix(arg, "--key=", &arg) to parse such an option.
-+ */
-+int skip_to_optional_val_default(const char *str, const char *prefix,
-+				 const char **val, const char *def);
-+
-+static inline int skip_to_optional_val(const char *str, const char *prefix,
-+				       const char **val)
-+{
-+	return skip_to_optional_val_default(str, prefix, val, "");
-+}
-+
- /*
-  * Like skip_prefix, but promises never to read past "len" bytes of the input
-  * buffer, and returns the remaining number of bytes in "out" via "outlen".
-diff --git a/strbuf.c b/strbuf.c
-index 323c49ceb3..3430499f9e 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -11,6 +11,26 @@ int starts_with(const char *str, const char *prefix)
- 			return 0;
- }
- 
-+int skip_to_optional_val_default(const char *str, const char *prefix,
-+				 const char **val, const char *def)
-+{
-+	const char *p;
-+
-+	if (!skip_prefix(str, prefix, &p))
-+		return 0;
-+
-+	if (!*p) {
-+		*val = def;
-+		return 1;
-+	}
-+
-+	if (*p != '=')
-+		return 0;
-+
-+	*val = p + 1;
-+	return 1;
-+}
-+
- /*
-  * Used as the default ->buf value, so that people can always assume
-  * buf is non NULL and ->buf is NUL terminated even for a freshly
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index 8ec459f522..20b4b85a6a 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -1660,10 +1660,7 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
+ 				from_stdin = 1;
+ 			} else if (!strcmp(arg, "--fix-thin")) {
+ 				fix_thin_pack = 1;
+-			} else if (!strcmp(arg, "--strict")) {
+-				strict = 1;
+-				do_fsck_object = 1;
+-			} else if (skip_prefix(arg, "--strict=", &arg)) {
++			} else if (skip_to_optional_val(arg, "--strict", &arg)) {
+ 				strict = 1;
+ 				do_fsck_object = 1;
+ 				fsck_set_msg_types(&fsck_options, arg);
+@@ -1679,10 +1676,8 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
+ 				verify = 1;
+ 				show_stat = 1;
+ 				stat_only = 1;
+-			} else if (!strcmp(arg, "--keep")) {
+-				keep_msg = "";
+-			} else if (starts_with(arg, "--keep=")) {
+-				keep_msg = arg + 7;
++			} else if (skip_to_optional_val(arg, "--keep", &keep_msg)) {
++				; /* nothing to do */
+ 			} else if (starts_with(arg, "--threads=")) {
+ 				char *end;
+ 				nr_threads = strtoul(arg+10, &end, 0);
 -- 
 2.15.1.274.g3f22e311ce.dirty
 
