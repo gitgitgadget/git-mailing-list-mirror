@@ -2,126 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,STOX_REPLY_TYPE,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EA57220A40
-	for <e@80x24.org>; Tue,  5 Dec 2017 22:19:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 07E6E20A40
+	for <e@80x24.org>; Tue,  5 Dec 2017 22:21:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752352AbdLEWTU (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Dec 2017 17:19:20 -0500
-Received: from smtp-out-4.talktalk.net ([62.24.135.68]:6472 "EHLO
-        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752302AbdLEWTU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Dec 2017 17:19:20 -0500
-Received: from PhilipOakley ([92.29.14.162])
-        by smtp.talktalk.net with SMTP
-        id MLYbeoqxVAp17MLYbejRRG; Tue, 05 Dec 2017 22:19:18 +0000
-X-Originating-IP: [92.29.14.162]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=EsGilWUA c=1 sm=1 tr=0 a=NXc+vVEgz70gitWznrz3ig==:117
- a=NXc+vVEgz70gitWznrz3ig==:17 a=IkcTkHD0fZMA:10 a=Dx4yW56zAAAA:8
- a=kuvQDUYgI6n_t7CoH0kA:9 a=QEXdDO2ut3YA:10 a=X_u8qhY6y2Nm79co_leF:22
-Message-ID: <F5CBA33407434DD9A31D674581B65330@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:   "Philip Oakley" <philipoakley@iee.org>
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>,
-        "'Jeff Hostetler'" <git@jeffhostetler.com>, <git@vger.kernel.org>
-Cc:     "'Vitaly Arbuzov'" <vit@uber.com>
-References: <001e01d36e01$7f145d20$7d3d1760$@nexbridge.com>
-Subject: Re: [RFE] Inverted sparseness (amended)
-Date:   Tue, 5 Dec 2017 22:19:16 -0000
-Organization: OPDS
+        id S1752659AbdLEWVU (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Dec 2017 17:21:20 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50018 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752660AbdLEWVG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Dec 2017 17:21:06 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1C412B8DC7;
+        Tue,  5 Dec 2017 17:21:06 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=4D4EPfyPliDZ/2xbbnWLOixuY3U=; b=WGUgvv
+        9Y1uEqHYQZybNvDaA4yB36/ExHNvY+8aNNqgHCkKDMmvpKZABi5xzmohNPq/ALjB
+        x8bSyHi3FnyLWDXXuVf2iJbyjqTxfgxILqx/sIhVwf5Qt1zbBEep+VE1fbwYmG8E
+        OL/noL+bUmtCTj+wKOE34vLwvOFnEyWfX0Kdk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=i/kmP+vCP7B5dC4uQSVwNij0fMly09bz
+        IagGEqPrkPhCNTVM+JqbhPQGaqz7/ppkLj2H8WFIJxoTVdO87xpp86SuGcoHO5Lx
+        n0t5V44EFS3nvBjGlZ6E73MVIaySzTDt6NoJ6q9gYEGQ2pqSjH9GjCgd+pHHaRct
+        Ju6hj8k498s=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 14378B8DC6;
+        Tue,  5 Dec 2017 17:21:06 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 82B02B8DC1;
+        Tue,  5 Dec 2017 17:21:05 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Liam Beguin <liambeguin@gmail.com>
+Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de, peff@peff.net
+Subject: Re: [PATCH v2 0/9] rebase -i: add config to abbreviate command names
+References: <20171127045514.25647-1-liambeguin@gmail.com>
+        <20171205175235.32319-1-liambeguin@gmail.com>
+Date:   Tue, 05 Dec 2017 14:21:04 -0800
+In-Reply-To: <20171205175235.32319-1-liambeguin@gmail.com> (Liam Beguin's
+        message of "Tue, 5 Dec 2017 12:52:26 -0500")
+Message-ID: <xmqq374oizov.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="UTF-8";
-        reply-type=original
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-Antivirus: AVG (VPS 171204-2, 04/12/2017), Outbound message
-X-Antivirus-Status: Clean
-X-CMAE-Envelope: MS4wfI9XAe3pVq/Jyn07i/yZZhF57YjwF/I55tL2au0cztpTbuIz1iEmFZm4cc3c4fCjorZl54J6BpqDnNM5M+gyz0HBCHbrG7Rn+QssviV8KGqSyvhdNpA7
- tLbmAoq0x1SNEFchguI9Hn8HPa+AqcKY30+/wB3ugq0pRtr2Itql9pqnymaIhlGtltvd883zvY1xvqulvnYpIx/rwv4IxFzTKHUsUG7wyMNDlkwhOCMByW0o
- UlZvtvIbOPS8XmyGSqK0sA==
+Content-Type: text/plain
+X-Pobox-Relay-ID: 95C79170-DA0A-11E7-B8A6-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Randall S. Becker" <rsbecker@nexbridge.com>
-On December 3, 2017 6:14 PM, Philip Oakley wrote a nugget of wisdom:
->From: "Randall S. Becker" <rsbecker@nexbridge.com>
-[...]
+Liam Beguin <liambeguin@gmail.com> writes:
 
->If using the empty tree part doesn't pass muster (i.e. showing nothing
->isn't sufficient), then the narrow clone could come into play to limit
->what parts of the trees are widely visible, but mainly its using the
->grafts to cover the regulatory gap, and (for the moment) using
->fast-export to transfer the singleton commit / tags
+> This series will add the 'rebase.abbreviateCommands' configuration
+> option to allow `git rebase -i` to default to the single-letter command
+> names when generating the todo list.
+>
+> Using single-letter command names can present two benefits. First, it
+> makes it easier to change the action since you only need to replace a
+> single character (i.e.: in vim "r<character>" instead of
+> "ciw<character>").  Second, using this with a large enough value of
+> 'core.abbrev' enables the lines of the todo list to remain aligned
+> making the files easier to read.
+>
+> Changes in V2:
+> - Refactor and rename 'transform_todo_ids'
+> - Replace SHA-1 by OID in rebase--helper.c
+> - Update todo list related functions to take a generic 'flags' parameter
+> - Rename 'add_exec_commands' function to 'sequencer_add_exec_commands'
+> - Rename 'add-exec' option to 'add-exec-commands'
+> - Use 'strbur_read_file' instead of rewriting it
+> - Make 'command_to_char' return 'comment_char_line' if no single-letter
+>   command name is defined
+> - Combine both tests into a single test case
+> - Update commit messages
+>
+> Changes in V2:
+> - Rename 'transform_todo_insn' to 'transform_todos'
+> - Fix flag name TODO_LIST_SHORTE{D,N}_IDS
 
->Oh Just remembered, there is the newish capability to fetch random blobs, 
->so that may help.
+I've replaced this series and pushed out the result.
 
-I think you hit the nail on the head pretty well. We're currently at 2.3.7, 
-with a push to 2.15.1 this week, so I'm looking forward to trying this. My 
-two worries are whether the empty tree is acceptable (it should be to the 
-client, and might be to the vendor), and doing this reliably 
-(semi-automated) so the user base does not have to worry about the gory 
-details of doing this. The unit tests for it are undoubtedly going to give 
-me headaches.
-
-Thanks for the advice. Islands of shallowness are a really descriptive image 
-for what this is. So identifying that there are shoals (to extend the 
-metaphor somewhat), will be crucial to this adventure.
-
-These islands of shallowness, however, are also concerns as described in the 
-[Re: How hard would it be to implement sparse fetching/pulling?] thread. The 
-matter of the security audit is important here also:
-> I'm just thinking that even if we get a *perfectly working* partial 
-> clone/fetch/push/etc. that it would not pass a security audit.
-
-
-Philip says:
-I'd totally disagree in the sense that if we had a submodule anywhere_ in 
-the repo that would be an independent island of code, and we are quite happy 
-with that - we use the web of trust with the auditors for them to go check, 
-separately, the oid of the independent portion, which may be at another site 
-or another vendor/client. That's OK, so what's the problem here...
-
-We do the same for pinning the tips and tails of the lines of development 
-that make for the shallowness and narrowness that create these shoals, and 
-oxbows of development. Managing them is normal human activity, with the 
-technical support that the Git chain provides - so much better than previous 
-'versioning systems' that we see regularly in engineering, with backdoor 
-tweaks etc.
-
-The key is to ensure that there is a proper hand holding across the air 
-gaps, such that the oids exist both sides of the gaps, and a properly built 
-on, such that the hash chain is unbroken. It's a similar negotiation to 
-those used for establishing web security between IP clients, so it is 
-doable. But you are right to have concerns and suspisions to ensure that it 
-is all tested and verified
---
-Philip (sorry about the poor quoting of the reply)
-
-
-
-
-Not having the capability would similarly cause a failure of a security 
-audit.
-
-Cheers,
-Randall
-
--- Brief whoami: NonStop&UNIX developer since approximately 
-UNIX(421664400)/NonStop(211288444200000000)
--- In my real life, I talk too much.
-
-
-
+Thanks.
