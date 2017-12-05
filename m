@@ -2,110 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D30DB20A40
-	for <e@80x24.org>; Tue,  5 Dec 2017 17:53:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BD1A620A40
+	for <e@80x24.org>; Tue,  5 Dec 2017 18:16:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752357AbdLERxP (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Dec 2017 12:53:15 -0500
-Received: from mail-it0-f66.google.com ([209.85.214.66]:32964 "EHLO
-        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752690AbdLERw6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Dec 2017 12:52:58 -0500
-Received: by mail-it0-f66.google.com with SMTP id o130so17766407itg.0
-        for <git@vger.kernel.org>; Tue, 05 Dec 2017 09:52:58 -0800 (PST)
+        id S1752552AbdLESQt (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Dec 2017 13:16:49 -0500
+Received: from mail-it0-f46.google.com ([209.85.214.46]:37724 "EHLO
+        mail-it0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752179AbdLESQs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Dec 2017 13:16:48 -0500
+Received: by mail-it0-f46.google.com with SMTP id d137so3709799itc.2
+        for <git@vger.kernel.org>; Tue, 05 Dec 2017 10:16:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=yP1aIXvwDLUhIcuz2iKmW6Vwo55W7Gn7/vH3srC3mb0=;
-        b=o7qTIZd9sMpJbVfn9oxRuog/T5xSfnMuUpbv8YnyrPjg90HHfjMMdCp3h/99vjKayH
-         rEAEkaf0ZdPQCpSqQlx5S05mca7GZyiCWin3Dn5KcXHyG+c2P3E4TNk6wiLbESLCf5u+
-         HHOjXf6VGHY5sWomjSsfLLJSRtzUpOBdpHFwxmrIdHRuUGW2P7nD64C/Xk5fjb3uHmYs
-         zePoUUY/Dh+ZULO9ScGjVKR2XxAJ1pEcPL5yWVnP2MsyJQfKxulXCrJCebNsSN2Kg38x
-         T8toVcgyYZg9qjlLGsjbqEZHAX2xVbtYJw8Xw+6frMOBtf/LyBwpiPFhnHdn1odw71ge
-         +fxw==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Yl5IUNnh8q0G+bZ2pIpLFF6a5fPe2/oe9sWlY3ZLWJM=;
+        b=By37tFNdkww/P8nDd/coNcndzA085aHSK/N6lNIAZy3uJh9axYz1ebn35i9N8l/e/P
+         oW3k09yUO/wDur10cHaF0MzhLCPFoiGqxUtGohZ88zRzsX8ysDLtzA4a294+DmjRA6NR
+         p1VGsT63ggKC/4upbquIAqzQx9PkgYaILP2MQAlJ/lvVAJZ9chKdsjt18/xo9l0Z4ota
+         8ZgzP8m1Hgg15PlvDZxJ6QAYqcsaG3VNHYOsOJ0NI2l5LXAPUlK4Iy//knz4FXC7zfCM
+         POX23fm9ISXSIRlGEUud0MY2OaZIOwg5Vpv7mIbSRdYzYg+eTRYECsS51SxoSmST+gcB
+         CoSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=yP1aIXvwDLUhIcuz2iKmW6Vwo55W7Gn7/vH3srC3mb0=;
-        b=ib1DTg7LNrBOr5jwVYzmr0yqFhRM0GZFOU8m4BDCt3+pO5qOBQ+mQiMXzeUrpjwbpl
-         K7sGPfq8c9kkH3mrMEZJcfCXsfvpFDJubQYMuikQBmUqPhUYWBgvTCHO4Oy3FlvXDX3T
-         DyKU3/WYfJn+WBO/w/A9ympJgmbeZCtVcIWN2b2CdWP1bCrgWbTmU1ziN0/ILofjz2Le
-         6bpMXL7dF0p5tcY9dwA8OtJTs/PJVj5DH3Mh26DYhoblIa23u66OhnUQ81ViAn7x087K
-         kWVuW/hveaKQbNC2HNwDdAt5AYOlzZAzJm+tEL/B183KVWVOdrgEZhLWC96IjuPQxQTL
-         MrIA==
-X-Gm-Message-State: AKGB3mIMKUcnLbb4xkaohQA9syJgu+g1G3LPq+9ltb0k6CIbIBG2Um+Y
-        fyc+uUyvZyoZBYRu6hRN+ks3Zyo2BD8=
-X-Google-Smtp-Source: AGs4zMaax38pwlYUQZVD0VaTONpTsNZJ9/j0GtQd3H+uYFhaqx1qt5ZFet2lBN9+aM3PertgbCJarA==
-X-Received: by 10.107.53.130 with SMTP id k2mr8896112ioo.293.1512496378096;
-        Tue, 05 Dec 2017 09:52:58 -0800 (PST)
-Received: from localhost.localdomain (24-212-246-46.cable.teksavvy.com. [24.212.246.46])
-        by smtp.gmail.com with ESMTPSA id i195sm264737ioi.44.2017.12.05.09.52.56
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 05 Dec 2017 09:52:57 -0800 (PST)
-From:   Liam Beguin <liambeguin@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Johannes.Schindelin@gmx.de, gitster@pobox.com, peff@peff.net,
-        Liam Beguin <liambeguin@gmail.com>
-Subject: [PATCH v3 9/9] t3404: add test case for abbreviated commands
-Date:   Tue,  5 Dec 2017 12:52:35 -0500
-Message-Id: <20171205175235.32319-10-liambeguin@gmail.com>
-X-Mailer: git-send-email 2.15.1.280.gbdce6e0789cb
-In-Reply-To: <20171205175235.32319-1-liambeguin@gmail.com>
-References: <20171127045514.25647-1-liambeguin@gmail.com>
- <20171205175235.32319-1-liambeguin@gmail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Yl5IUNnh8q0G+bZ2pIpLFF6a5fPe2/oe9sWlY3ZLWJM=;
+        b=Lw/rtJnrIvNetn7bUwZbS332Sw0dH0o5ENe+geyuHmbTP4DtjPDL5asGT2BjAzJKS0
+         1EhQawNi2AFGghj9dUY0cfUabFdRHcCLxy87bk1TSNROLUkAFgE4Y/XpSDN4C0Vu5nUp
+         2edIDvqZ5LWIaVA3z6Z6uldAHKjKQtGvR76nIXvLpUZFNY94UEJ7B3Md2/o1MQxINF02
+         wntOWutgvrRZjUXanZ9BujVjONWwJMP2HcXpNgqDiRzdT+bH+g1iOjHNgL11jz+1e4z6
+         Hm2wlH5bBqCYbyqimHDEyJOVQS5l1j3caQRJyYepO3aI/Edm2I0PYdcR7ZC1EU6EjwjR
+         /FSA==
+X-Gm-Message-State: AKGB3mIvVlG7uD4iyngKdqP6HMxqic/G3JkhM/Ihn9b/xWGWw/k2rfEl
+        2KFTW7q0fu1SKumtWq9H3IM2Gw==
+X-Google-Smtp-Source: AGs4zMb2k/UJq4LcKDluVlS83bnT1DFntZUd+LcPNs2ChCA6Ff+CPz0Rhr6dHmsPZgGZ4lRgfUUQLA==
+X-Received: by 10.36.221.216 with SMTP id t207mr10095673itf.112.1512497807576;
+        Tue, 05 Dec 2017 10:16:47 -0800 (PST)
+Received: from google.com ([2620:0:100e:422:f83a:9bb:41ed:d5e6])
+        by smtp.gmail.com with ESMTPSA id m91sm280761iod.76.2017.12.05.10.16.46
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 05 Dec 2017 10:16:46 -0800 (PST)
+Date:   Tue, 5 Dec 2017 10:16:45 -0800
+From:   Brandon Williams <bmwill@google.com>
+To:     Ben Boeckel <ben.boeckel@kitware.com>
+Cc:     git@vger.kernel.org, brad.king@kitware.com
+Subject: Re: gitattributes not read for diff-tree anymore in 2.15?
+Message-ID: <20171205181645.GA159917@google.com>
+References: <20171204212255.GA19059@megas.kitware.com>
+ <20171204230355.GA52452@google.com>
+ <20171205154244.GA16581@megas.kitware.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20171205154244.GA16581@megas.kitware.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Make sure the todo list ends up using single-letter command
-abbreviations when the rebase.abbreviateCommands is enabled.
-This configuration option should not change anything else.
+On 12/05, Ben Boeckel wrote:
+> On Mon, Dec 04, 2017 at 15:03:55 -0800, Brandon Williams wrote:
+> > Reading the attributes files should be done regardless if the gitmodules
+> > file is read.  The gitmodules file should only come into play if you are
+> > dealing with submodules.
+> 
+> Yeah, it doesn't seem to make sense why this commit breaks us, but there
+> it is *shrug*.
 
-Signed-off-by: Liam Beguin <liambeguin@gmail.com>
----
- t/t3404-rebase-interactive.sh | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+While it doesn't make the most sense, I still wouldn't be surprised if I
+missed something when writing that patch that inadvertently caused an
+issue.
 
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index 6a82d1ed876d..481a3500900d 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -1260,6 +1260,28 @@ test_expect_success 'rebase -i respects rebase.missingCommitsCheck = error' '
- 	test B = $(git cat-file commit HEAD^ | sed -ne \$p)
- '
- 
-+test_expect_success 'respects rebase.abbreviateCommands with fixup, squash and exec' '
-+	rebase_setup_and_clean abbrevcmd &&
-+	test_commit "first" file1.txt "first line" first &&
-+	test_commit "second" file1.txt "another line" second &&
-+	test_commit "fixup! first" file2.txt "first line again" first_fixup &&
-+	test_commit "squash! second" file1.txt "another line here" second_squash &&
-+	cat >expected <<-EOF &&
-+	p $(git rev-list --abbrev-commit -1 first) first
-+	f $(git rev-list --abbrev-commit -1 first_fixup) fixup! first
-+	x git show HEAD
-+	p $(git rev-list --abbrev-commit -1 second) second
-+	s $(git rev-list --abbrev-commit -1 second_squash) squash! second
-+	x git show HEAD
-+	EOF
-+	git checkout abbrevcmd &&
-+	set_cat_todo_editor &&
-+	test_config rebase.abbreviateCommands true &&
-+	test_must_fail git rebase -i --exec "git show HEAD" \
-+		--autosquash master >actual &&
-+	test_cmp expected actual
-+'
-+
- test_expect_success 'static check of bad command' '
- 	rebase_setup_and_clean bad-cmd &&
- 	set_fake_editor &&
+> 
+> > Do you mind providing a reproduction recipe with expected outcome vs
+> > actual outcome and I can take a closer look.
+> 
+> I'll work on one. It isn't as simple as I thought it was :) . The setup
+> we do before running the checks is apparently involved as running it
+> from the command line is not exhibiting the difference.
+> 
+> --Ben
+
+Perfect, thanks!
+
 -- 
-2.15.1.280.g10402c1f5b5c
-
+Brandon Williams
