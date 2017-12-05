@@ -2,78 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 03DE720A40
-	for <e@80x24.org>; Tue,  5 Dec 2017 19:57:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9130320A40
+	for <e@80x24.org>; Tue,  5 Dec 2017 20:02:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751530AbdLET5V (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Dec 2017 14:57:21 -0500
-Received: from mail-qt0-f181.google.com ([209.85.216.181]:44007 "EHLO
-        mail-qt0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751112AbdLET5T (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Dec 2017 14:57:19 -0500
-Received: by mail-qt0-f181.google.com with SMTP id w10so3653310qtb.10
-        for <git@vger.kernel.org>; Tue, 05 Dec 2017 11:57:19 -0800 (PST)
+        id S1751821AbdLEUCg (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Dec 2017 15:02:36 -0500
+Received: from mail-it0-f68.google.com ([209.85.214.68]:36488 "EHLO
+        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751286AbdLEUCf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Dec 2017 15:02:35 -0500
+Received: by mail-it0-f68.google.com with SMTP id d16so4428417itj.1
+        for <git@vger.kernel.org>; Tue, 05 Dec 2017 12:02:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=JwCqbGAoclroGMU/+iLSp2QUKVlZe6BNoAeP5OMzVR8=;
-        b=E4dr+8p2mUUTNk26oI7hCWvRwUvwK7X2Tz/BTYiUNRZhsgfKhKKh6tI7YVkNHsp9k6
-         6IWR+xrVVJLEvchnmWJDpKH55FszJSQSwTeiXJOBa26/89w4xkd0EqH5RxAhPzrc4+LD
-         m6wt/gRS4A7EE5Z9plLPSVirVIV3tPZUC8GeF7hzckweUHs5PUcn3u5BshKMn/RvX0Tm
-         HyIGtwrjpnql/S4lbgiSWx9cMqv252FVwWpBVOwGOYkbOZoxRoEoUwlva8pAQ+HtDV7x
-         6c1V3cXivXawYIHXFUMAS8aiNJEbluoFn5n2XYuUgMfu2Qrx5XUZ4IpcIXe11/orm3bL
-         D+aw==
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=dSRAFXv/6c2qNWaKh1ys1PGPZi4OcEVk3cm/Ef3w6Kg=;
+        b=ZN6dp8GhUzsdPqdVyRHckKNh7NcVjmu1gCEExz9hcIW5poX0OjUsA94SxsK92Vbswi
+         H0cnAA8JQVdcm++4TVEnExhxVnIKaRdld6VFc7JVLmVkuPjgx7ofL797ZyK5m7F0Zpca
+         X/rmg1YzkjrQluIXvdGCgYpSu2nZvSD030fDgeEei5Pbw5xhqux1fD5I/G/yaUUx4+C3
+         Z4szrHqBm4mY1QHDNtd+kMBeTUhGXYJEYEztCPFm5KUg0gVHrfkFspN4q87rhIOBWMZ3
+         3M1FBmCkJdKRzdktZVpfWpq82JMJ0kjxZFYLSczM0q6iDPie+B7iOdPYafDufngC6ycs
+         QY7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=JwCqbGAoclroGMU/+iLSp2QUKVlZe6BNoAeP5OMzVR8=;
-        b=muth7oVYbweQ/n+sXwLew0thgm8+jHv2nKtoivLDc49C7RYQid3NGyDioeA5xLtn/4
-         ne3bH5YWOjeWZmwVMQ/A98s/ra3KLhFKcpbG/ub2RkbrREfxNiSvlHV9gLTEyMUl4NMV
-         h0GgAzJ3SvkTXyve7lnS+jWnQijm2OqDVW2/WuwABg6kHxU/yXNg37hkIrlcB4GuGacw
-         qjIyZZtDAaaJ84zZR7xEz1jOvupkBKT1J9lf0FmG8nc+f/hTeIeyLCnrYmLTGmrcdmWB
-         bj/TpLTNMumxUIpRZfAQWeLsP8vuNu0ED9SmrMb1/CRIkrPU8q3DEjGUoUMbHmKCFQRb
-         0riQ==
-X-Gm-Message-State: AKGB3mLj+FUdSv93qM2xk/E4FIGGI02vybZRmxM+/IgWeTucUc2iTtkL
-        d8GSQC9g/W4Ei2ipBYdfamfO1SqgMBr3WaWqSX8kVw==
-X-Google-Smtp-Source: AGs4zMZv1u7g6LGwaVB68SN1Bv0eVKGimuUrcXn56Vo8xqEYiv/nVYXAL0ho9sn7vnv0MkeKaHFFgu8YNjoPm+JBaUo=
-X-Received: by 10.237.42.22 with SMTP id c22mr2637484qtd.162.1512503838872;
- Tue, 05 Dec 2017 11:57:18 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.140.85.179 with HTTP; Tue, 5 Dec 2017 11:57:18 -0800 (PST)
-In-Reply-To: <14e821d45e4ac2faea1f9023d43c43c4675672e7.1512168087.git.jonathantanmy@google.com>
-References: <cover.1512168087.git.jonathantanmy@google.com> <14e821d45e4ac2faea1f9023d43c43c4675672e7.1512168087.git.jonathantanmy@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 5 Dec 2017 11:57:18 -0800
-Message-ID: <CAGZ79kZgzWRSmXv0JOryhYKU7gnZw2DvEK7e7MXjv7MWCF6T7Q@mail.gmail.com>
-Subject: Re: [WIP 1/2] submodule: refactor acquisition of superproject info
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jacob Keller <jacob.keller@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=dSRAFXv/6c2qNWaKh1ys1PGPZi4OcEVk3cm/Ef3w6Kg=;
+        b=NCsie85/gMCEnKDaBC/x5kzAJSIOJXwW0SETBGdvjvAc39pYckTSmchjdeZ3HzJdqP
+         5Lo1RNqBAOzpIaJOX79iDajFUA6sYQWgbuGkr0H2t4woVwNqDygs+g003sSnsW+/tksU
+         Yo5/QOc/yPQT79PEyIe83zF8yFSa41ICQv3dQ2Gy+rnPDjbvQSzql7wFn9IsXJ53ADX4
+         08Fs1BzOlB8J+OaQ0CTD6bg0UKKPxx2XuCh8aIuzZ04v3yirSmxbt/CF5jl5ymgUUshD
+         X2vHiAzIMGOpBLI1GuJS8g16FM81TiLw8tF9p0fHz2xztuDD3/9h4E+S23rqB7BrcPqD
+         hkFQ==
+X-Gm-Message-State: AKGB3mItzYtVCYP829+P6hldAZeMEiixbk45PnDgfZt+48a2SxHSU0ac
+        SjjCJE2QPjO+dZa3B8I1ZlaW7r4F/Y8=
+X-Google-Smtp-Source: AGs4zMYSZEAZt50n1t25NkTJnihw1wZ7toA+RpzNe2UN7r1w9tsrnS+96BA2dKrXUQwxVACGnI0XPA==
+X-Received: by 10.36.196.85 with SMTP id v82mr1714043itf.136.1512504154942;
+        Tue, 05 Dec 2017 12:02:34 -0800 (PST)
+Received: from twelve3.mtv.corp.google.com ([2620:0:100e:422:7cdf:8835:5040:e17a])
+        by smtp.gmail.com with ESMTPSA id j204sm547721itj.16.2017.12.05.12.02.33
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 05 Dec 2017 12:02:34 -0800 (PST)
+Date:   Tue, 5 Dec 2017 12:02:33 -0800
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
+        christian.couder@gmail.com, Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v6 00/12] Partial clone part 2: fsck and promisors
+Message-Id: <20171205120233.02cb5850ead14137c2a426c0@google.com>
+In-Reply-To: <20171205165854.64979-1-git@jeffhostetler.com>
+References: <20171205165854.64979-1-git@jeffhostetler.com>
+X-Mailer: Sylpheed 3.4.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 1, 2017 at 2:50 PM, Jonathan Tan <jonathantanmy@google.com> wrote:
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-> ---
->  submodule.c | 76 +++++++++++++++++++++++++++++++++++++------------------------
->  submodule.h |  3 +++
+On Tue,  5 Dec 2017 16:58:42 +0000
+Jeff Hostetler <git@jeffhostetler.com> wrote:
 
+> From: Jeff Hostetler <jeffhost@microsoft.com>
+> 
+> This is V6 of part 2 of partial clone.  This assumes V6 of part 1
+> is already present.  This version fixes a problem in fetch-pack
+> observed in V5.  It also contains 2 "fixup" commits that are
+> WIP responses to comments on V5.
 
-This patch reads very similar to [1], which was a preparation part of the series
-"[RFC PATCH 0/4] git-status reports relation to superproject"; there
-we also need
-the same information about the superproject. I'll take a closer look
-and compare these
-two patches if it turns out we want to go this way long term.
+A note on the fix of a problem in fetch-pack observed in V5: to do this,
+I renamed the "no_haves" setting to "no_dependents", since this setting
+now has a broader effect than merely suppressing "have" lines. This
+setting is described in patch 7 ("introduce fetch-object: fetch one
+promisor object").
 
-[1] https://public-inbox.org/git/20171108195509.7839-3-sbeller@google.com/
+> Part 2 is concerned with fsck, gc, initial support for dynamic
+> object fetching, and tracking promisor objects.  Jonathan Tan
+> originally developed this code.  I have moved it on top of
+> part 1 and updated it slightly.
+
+Thanks. I checked the diff between this and V5 and it looks as I
+expected. ("git am -3" didn't work on the patches as e-mailed to the
+list, though - I had to use the one hosted at GitHub [1].)
+
+[1] https://github.com/jeffhostetler/git/tree/core/pc6_p2
