@@ -2,157 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A005920C11
-	for <e@80x24.org>; Tue,  5 Dec 2017 10:22:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2555220C11
+	for <e@80x24.org>; Tue,  5 Dec 2017 10:37:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753236AbdLEKWO (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Dec 2017 05:22:14 -0500
-Received: from mail-wm0-f54.google.com ([74.125.82.54]:43831 "EHLO
-        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752783AbdLEKWL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Dec 2017 05:22:11 -0500
-Received: by mail-wm0-f54.google.com with SMTP id n138so270823wmg.2
-        for <git@vger.kernel.org>; Tue, 05 Dec 2017 02:22:10 -0800 (PST)
+        id S1753275AbdLEKhc (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Dec 2017 05:37:32 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:43614 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752911AbdLEKhb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Dec 2017 05:37:31 -0500
+Received: by mail-wm0-f67.google.com with SMTP id n138so351408wmg.2
+        for <git@vger.kernel.org>; Tue, 05 Dec 2017 02:37:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=olahRjH8CAK/Nw0saV5Cb22b5tKLeChKR7l7fG8c4YY=;
-        b=SWr0H/85jOIfNDFPl/lkIDiUWiy10VzAXA0Aqb6vkoaUDOJg9ae40qFI32cHzc1+aO
-         YKeQPQIkI6HczXC4Uf8Pkc5omXh0pLXFOVf/opRgOMem1mQsikq+WtVHYPbwod0G+Ft1
-         hHI/5My/gmahm2+379eTmXEdL3OykSNGPDTvTZk95D5Glk2h21bQ58J5cIWDutc9HXLm
-         y57MOU5mXTNTh53LMuq37UrfGS/cqAKzpK91sKNUn0SsM3yDkKvrZYxhBToQNOQ2sBXP
-         r1ZyZyuIvnyvNfFF5Uj6Fkh12uAEO6PNhdk7wNH9GiugSN7aPDjanWaJzwv+YzP/56qO
-         BfNA==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=WzZw2UawfsAE9l6Hd5MH8lOzuzUpQ2lyMZCRtMgdKeM=;
+        b=Oo+MA4fM5l9edqrAJQmysVddQbk44KEi95mcAZizui8wV8RDB4aXqeQWLp/p5njUeA
+         wUew7Jng5aXFULchgoVCI9OruOrKffP7D5q9Sl3UVaHWVCtJGP24znMoUWv1/zz2CgXo
+         wobZdLs8g0TxzpnhXhhSc+zbOKfwxfGBN8exK7LcVeOiSjhyO1UK2CqkaUSpwFelkN2S
+         ECU2Vvl7vM4UdPe1X0w0PeoEeB+LOvcXjHSU09sVYbrb9/fAyIRhJhhqpUEwReCT9oP/
+         RBG8lcU/8Dx62z9muk6BfySu7VYYRrw1bZhClVMCeBxxQypWDd8mpVVaI8FnYZdBB6ZP
+         b7og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=olahRjH8CAK/Nw0saV5Cb22b5tKLeChKR7l7fG8c4YY=;
-        b=uFM5kHlmh4ZwO8z1ahfelkXJ3gK1ONxoG0uCrsZadkMxIxcs72vbDAVoIJITd09A5q
-         Kv4Ee8WWXoTm56ZhI57Is9NVxAFidAX/15kDEXoeMMY53XJmF9tWgkXzUnrA02nQRMY/
-         EdZeQdF07bwp9Pna0ILahx24loArstJvBIIo0tjsC/8WMR3F4QwpSpYfO5fLdq23//5T
-         xiafswPLtQmeymU2PYqnRuNw/valKon1KnizPywlsiEYmh6nHxWrPUeRk3L1be9wcPXU
-         5DWeu/LuWMaBDuH52bpQt55kkMLBOUFcNQSSkph7TXJQGx1DVUoIzZkZ9WuERvTmWLqU
-         ZsoQ==
-X-Gm-Message-State: AJaThX5NDcTHr38Tl6GHeiQHa7aWkEu8HqzNDUKQfYhXIsKQYVlbMJ3Y
-        PwtTZyWQ6+I0LwrT/0F0oWw=
-X-Google-Smtp-Source: AGs4zMapjDTWBKdvP00ZZYpseDPxdJSrnOYOhAjJ73Dj89zp8IhJEklD6/ZrSgh60f4uX1TJPIwglw==
-X-Received: by 10.80.209.193 with SMTP id i1mr34531332edg.107.1512469329916;
-        Tue, 05 Dec 2017 02:22:09 -0800 (PST)
-Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
-        by smtp.gmail.com with ESMTPSA id a16sm60455edd.19.2017.12.05.02.22.08
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 05 Dec 2017 02:22:09 -0800 (PST)
-Received: from avar by evledraar with local (Exim 4.89)
-        (envelope-from <avarab@gmail.com>)
-        id 1eMAMa-00076c-5j; Tue, 05 Dec 2017 11:22:08 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=WzZw2UawfsAE9l6Hd5MH8lOzuzUpQ2lyMZCRtMgdKeM=;
+        b=niAXtItKvXpv9O2fDNN6AzdJEc4tY65jw0gQtk0eCXJS/IS+Q38sqmZ0x7gMrc4ZiK
+         VW6dnjI8kUjAqlobwUYOfqXAksoeSOj0UOq2BI+wnHosqTN9s+HUq72tk/jnQfUpC4HW
+         CR/iFI/3bz7sH+nkWKjptHeyDUZwE5AJAGOVf9v3rg/vf30Er8OZevJAqAddiInWRAyM
+         DsxddqcN6N/mXmWD2IiR5ZtKXHss8khJMN6a5uKvnwYBDhlAJxEavbT6uS3tGfDMcOaO
+         feJhYGcLE8UHw/fhGx4Y2Ou/5uyqnlKPR9hZT5AYB0LkjG9HGv1Li+XyzW3KkmGHgdpZ
+         mGCQ==
+X-Gm-Message-State: AKGB3mKfedlOiGYL0Txc9z9mGQFPcHvXrml1S2pmUAqEuqwFyEy8pMBC
+        NmhMTvVNcrB3cUsREu6+5hs=
+X-Google-Smtp-Source: AGs4zMYDUkZVPPDJbYWzDjUno1sVXi2+G02/mKswVK8hvYcMBDzsxDm9LpEA+pPV9qVs0ASJxI9h1g==
+X-Received: by 10.28.239.4 with SMTP id n4mr362577wmh.31.1512470250291;
+        Tue, 05 Dec 2017 02:37:30 -0800 (PST)
+Received: from [10.146.248.68] ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id c2sm18986931wrg.57.2017.12.05.02.37.29
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 05 Dec 2017 02:37:29 -0800 (PST)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH 2/2] progress: drop delay-threshold code
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <20171204220700.GB18828@sigill.intra.peff.net>
+Date:   Tue, 5 Dec 2017 11:37:30 +0100
+Cc:     Junio C Hamano <gitster@pobox.com>, lars.schneider@autodesk.com,
+        git@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+Message-Id: <BBE0F8C1-2B9E-42B6-AE47-90C8A62A4F84@gmail.com>
+References: <20171204220228.GA29422@sigill.intra.peff.net> <20171204220700.GB18828@sigill.intra.peff.net>
 To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Takashi Iwai <tiwai@suse.de>,
-        Brandon Williams <bmwill@google.com>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 3/4] Makefile: use the sha1collisiondetection submodule by default
-References: <20171128213214.12477-1-avarab@gmail.com> <20171128213214.12477-4-avarab@gmail.com> <20171205070249.GC4788@sigill.intra.peff.net>
-User-agent: Debian GNU/Linux 9.2 (stretch); Emacs 25.1.1; mu4e 0.9.19
-In-reply-to: <20171205070249.GC4788@sigill.intra.peff.net>
-Date:   Tue, 05 Dec 2017 11:22:08 +0100
-Message-ID: <87bmjdscdr.fsf@evledraar.booking.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-[Forgot to CC Stefan & Brandon who were involved in previous
-discussions]
+> On 04 Dec 2017, at 23:07, Jeff King <peff@peff.net> wrote:
+> 
+> From: Lars Schneider <larsxschneider@gmail.com>
+> 
+> Since 180a9f2268 (provide a facility for "delayed" progress
+> reporting, 2007-04-20), the progress code has allowed
+> callers to skip showing progress if they have reached a
+> percentage-threshold of the total work before the delay
+> period passes.
+> 
+> But since 8aade107dd (progress: simplify "delayed" progress
+> API, 2017-08-19), that parameter is not available to outside
+> callers (we always passed zero after that commit, though
+> that was corrected in the previous commit to "100%").
+> 
+> Let's drop the threshold code, which never triggers in
+> any meaningful way.
+> 
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> I tweaked your patch slightly to clean up the now-simplified
+> conditional.
 
-On Tue, Dec 05 2017, Jeff King jotted:
+Your first patch ("progress: set default delay threshold to 100%, not 0%")
+as well as the modifications to this one look good to me. Feel free
+to add my "Signed-off-by: Lars Schneider <larsxschneider@gmail.com>".
 
-> On Tue, Nov 28, 2017 at 09:32:13PM +0000, Ævar Arnfjörð Bjarmason wrote:
->
->> Change the build process so that instead of needing to supply
->> DC_SHA1_SUBMODULE=YesPlease to use the sha1collisiondetection
->> submodule instead of the copy of the same code shipped in the sha1dc
->> directory, it uses the submodule by default unless
->> NO_DC_SHA1_SUBMODULE=UnfortunatelyYes is supplied.
->>
->> This reverses the logic added by me in 86cfd61e6b ("sha1dc: optionally
->> use sha1collisiondetection as a submodule", 2017-07-01). Git has now
->> shipped with the submodule in git.git for two major releases, if we're
->> ever going to migrate to fully using it instead of perpetually
->> maintaining both sha1collisiondetection and the sha1dc directory this
->> is a logical first step.
->>
->> This change removes the "auto" logic Junio added in
->> cac87dc01d ("sha1collisiondetection: automatically enable when
->> submodule is populated", 2017-07-01), I feel that automatically
->> falling back to using sha1dc would defeat the point, which is to smoke
->> out any remaining users of git.git who have issues cloning the
->> submodule for whatever reason.
->
-> I'm not sure how I feel about this. I see your point that there's no
-> real value in maintaining two systems indefinitely.  At the same time, I
-> wonder how much value the submodule strategy is actually bringing us.
->
-> IOW, are we agreed that the path forward is to get everybody using the
-> submodule?
->
-> It seems like it's going to cause some minor pain for CI and packaging
-> systems that now need to care about submodules (so at least flipping the
-> switch, but maybe also dealing with having a network dependency for the
-> build that was not already there).
->
-> I'll admit I'm more sensitive to this than most people, since I happen
-> to maintain a fork of Git that I run through an internal CI system. And
-> that CI otherwise depends only on the locally-held fork, not any
-> external resources. But I'm probably in a fairly unique situation there.
+Thanks,
+Lars
 
-In no particular order:
 
- * I don't feel strongly about 2-4/4 in this series. I just hacked this
-   up because it occurred to me that I'd left this sha1dc stuff in some
-   in-between state and we'd talked about eventually moving forward with
-   this.
-
-   We've had two releases with the submodule being purely optional, if
-   we're going to keep it it seems logical to start at least using it by
-   default.
-
-   The main thing I want is for the answer to "why do we have the same
-   code twice in git.git" to not be "Ævar added a submodule and never
-   followed up" :)
-
- * The main benefit of doing 3-4/4 is to get the git project itself to
-   dogfood submodules & have the entire community enjoy the resulting
-   fixes that'll come out of that. Not that it's a big bother for us to
-   maintain the sha1dc/ & sha1collisiondetection/ directories and we
-   need to have a submodule for our own use.
-
- * We'll never find out whether submodules are a hassle for downstream
-   git.git consumers without something like 3/4, where you'll need to at
-   least supply NO_DC_SHA1_SUBMODULE=UnfortunatelyYes so we'll get
-   people coming out of the woodworks complaining that we've broken
-   their workflows, right now with "auto" they won't even notice.
-
- * The network dependency for internal builds is a bit of a pain, but
-   with this 3/4 you can still just supply
-   NO_DC_SHA1_SUBMODULE=UnfortunatelyYes and it'll work. With 4/4 and a
-   hard dependency it won't be so easy, you'll need to clone
-   sha1collisiondetection internally somewhere and use url.X.insteadOf=Y
-   to rewrite the submodule URL.
-
- * I forgot to note: Since git-archive doesn't include submodules
-   (missing that feature) 4/4 is blocking on either just hacking the
-   "make dist" target in git.git to monkeypatch it into the tarball (we
-   already do this for other stuff), or making git-archive support a
-   --recurse-submodules option.
+PS: How do you generate the commit references "hash (first line, date)"?
+Git log pretty print?
