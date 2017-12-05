@@ -2,108 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4932820A40
-	for <e@80x24.org>; Tue,  5 Dec 2017 12:13:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2B3F020A40
+	for <e@80x24.org>; Tue,  5 Dec 2017 12:28:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752514AbdLEMNz (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Dec 2017 07:13:55 -0500
-Received: from smtp-out-1.talktalk.net ([62.24.135.65]:27809 "EHLO
-        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752457AbdLEMNy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Dec 2017 07:13:54 -0500
-Received: from [192.168.2.201] ([92.22.34.132])
-        by smtp.talktalk.net with SMTP
-        id MC6ieuqjNmITaMC6iecjj7; Tue, 05 Dec 2017 12:13:53 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1512476033;
-        bh=86b4UvVhzuKY2GsmIyC4i40VPPy4yQGaq5WPOeZWXUc=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=IsTvGGUBF03a1tg6cyRmeTMB+zGbA59Rze895+11HjSykZkvrEgy5/lvIx8xXtRwJ
-         9+XsMtuNkdICDTROPJe7LgNrWVxKMfsw/Ld3DYj0K1iEpDQt5nFxpnYeLiR1/DvwzU
-         wbQgShLaqPs40DEpB5MkxjcBGaCp3/e3DV1P/Jg4=
-X-Originating-IP: [92.22.34.132]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=W/RIbVek c=1 sm=1 tr=0 a=2gYdyS03q/cwff7SV6P5Ng==:117
- a=2gYdyS03q/cwff7SV6P5Ng==:17 a=IkcTkHD0fZMA:10 a=nN7BH9HXAAAA:8
- a=evINK-nbAAAA:8 a=dx0h5xWqsLAQqm0PWF8A:9 a=hldk4wxsXOldEnRG:21
- a=Ij6VUFOfSY8puil7:21 a=QEXdDO2ut3YA:10 a=RfR_gqz1fSpA9VikTjo0:22
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v4 9/9] t3512/t3513: remove
- KNOWN_FAILURE_CHERRY_PICK_SEES_EMPTY_COMMIT=1
-To:     Stefan Beller <sbeller@google.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Adam Dinwoodie <adam@dinwoodie.org>
-References: <20170925101041.18344-1-phillip.wood@talktalk.net>
- <20171124110758.9406-1-phillip.wood@talktalk.net>
- <20171124110758.9406-10-phillip.wood@talktalk.net>
- <CAGZ79kY0YC+3kpYWDFi=bW0m-KFUpqexc3gxe-a5gS3YTn89bg@mail.gmail.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <9c184a5a-b45b-efd1-449f-a18e2dee0ef3@talktalk.net>
-Date:   Tue, 5 Dec 2017 12:13:51 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.4.0
-MIME-Version: 1.0
-In-Reply-To: <CAGZ79kY0YC+3kpYWDFi=bW0m-KFUpqexc3gxe-a5gS3YTn89bg@mail.gmail.com>
+        id S1752291AbdLEM2Z (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Dec 2017 07:28:25 -0500
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:47032 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752035AbdLEM2Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Dec 2017 07:28:24 -0500
+Received: by mail-wm0-f68.google.com with SMTP id r78so932218wme.5
+        for <git@vger.kernel.org>; Tue, 05 Dec 2017 04:28:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=Sq2qGIK0dmDBohZYfcv8MNO971WJ/u8SFQM596Gt+YI=;
+        b=m9kk54PoO3mt0gnU7QI9NSk9TG8YZFgGMVhSmjvk8eWU9Kmia+aXZnSwQClLjcuyoe
+         DUQk7PxrYZ5jYjKQPIS8HTA9BkpG5mFXb7mkKR8lppMR3q8RTlj5C9LtVZXhYwcTiEh4
+         gaYd53vlcXjIm5MzBapDG8EGvgPxlzDJrGgdlggfLl9dsGS4o9sr9fA67Vjwv3S3kTjY
+         YosRHWcqpef3JCXwjLRuKgmEtCsZz1F/MxCyIt0Qv3xvlOcSTAiRa2EgvJnjNc87AkeI
+         U4DBf3ZqVKFa8nitZHmcgXn8h7z0Y2igDUrCmKLtme4tdGQ6nWYR15s1FCzVGWxjrnr/
+         MQ9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=Sq2qGIK0dmDBohZYfcv8MNO971WJ/u8SFQM596Gt+YI=;
+        b=YTuKTwSxfRuEje5wHFTDvgYvuXeqVuiGJIyOeKuZles49mQWvhcV+FsAa/9iXqNMS5
+         iVoHpgBll2zsCPX/53ktkDr1x86NOTeMsRguUpBy6s3ZTq8CI5g8WcRfXQBZogGWGRJ2
+         JBN3WmPuDTjxeZ1+Oh3E9TjL+ELw1NllPpGfft2dtrgfEduTCzIs9Y4cZWxwCqdncg+x
+         j+BrqJeWytQzQdBK1IVwzq9/qLZsIDP8FK/yBDTn9Q20BYM9Fd6qD8VQtnUYA+dIw4Hr
+         oQtLByAb076oUirnjGc4LCTTp79VutfJbzgd1gqnHhv746nItWDMAR6XzcYqp3OEeaEP
+         XBug==
+X-Gm-Message-State: AKGB3mL6nKrLAnJWBVsxxusLG2hEk/se+o4a+4ErnH2cm6OvWP6uRQ5V
+        Vp+Pn/ysqgI3TAxpip+H4GE=
+X-Google-Smtp-Source: AGs4zMYPen86wMHkNBPgOvEimODATbwv972/r1lF0EWsHEwlpJp7WPc+Mi2J0BWZE2EXNUoHhwChlQ==
+X-Received: by 10.80.153.210 with SMTP id n18mr3611337edb.281.1512476903487;
+        Tue, 05 Dec 2017 04:28:23 -0800 (PST)
+Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id b2sm167768edd.26.2017.12.05.04.28.22
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 05 Dec 2017 04:28:22 -0800 (PST)
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfNHI4YH9Sg3SU+E7iEhxTwjfm8bDgFYiA8c1/xs51ExmGpMGAjYsopXDjGa2DKQf8NKZ5kU6plZVQw1ANk/PVd03hrauePKhqkdg3zseKdT26EgrmYWD
- U9dj1djcymoG0TU6WP3bQv9as8OfjVps9sbfJ/5PHSLnadC0BlHJk4auw8bKbzRcgF5WttJ1ix9FZIcE2Q56OfwIddjbP7wj1qP0nRroLtSn+lVuF5LWpu7M
- Hko2hngZ2q26U1LE8Zmb30vqKT5v3mDpftrbH6B7CmLpGtwnhLyGByrLHVzivpYMHZrAVvp62fdNVZcwpWItlFYj++Gwvef+lwneqBQjMHLiST2ezUfiDxFU
- sOlG+gj4VUhr7I9JrjvacKeA5Ejbew==
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH 2/2] progress: drop delay-threshold code
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <CACBZZX63ZhOHXmgerpJHc+ri_-w=QUyOQ7feWHxyDwPhN8hnDg@mail.gmail.com>
+Date:   Tue, 5 Dec 2017 13:28:21 +0100
+Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        lars.schneider@autodesk.com, Git Mailing List <git@vger.kernel.org>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <05818F78-7A4C-4ABE-B1C5-87D6991C98D8@gmail.com>
+References: <20171204220228.GA29422@sigill.intra.peff.net> <20171204220700.GB18828@sigill.intra.peff.net> <BBE0F8C1-2B9E-42B6-AE47-90C8A62A4F84@gmail.com> <CACBZZX63ZhOHXmgerpJHc+ri_-w=QUyOQ7feWHxyDwPhN8hnDg@mail.gmail.com>
+To:     =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 04/12/17 19:24, Stefan Beller wrote:
-> On Fri, Nov 24, 2017 at 3:07 AM, Phillip Wood <phillip.wood@talktalk.net> wrote:
->> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->>
->> Now that the sequencer creates commits without forking 'git commit' it
->> does not see an empty commit in these tests which fixes the known
->> breakage. Note that logic for handling
->> KNOWN_FAILURE_CHERRY_PICK_SEES_EMPTY_COMMIT=1 is not removed from
->> lib-submodule-update.sh as it is still used by other tests.
->>
->> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
->> ---
->>
->> Notes:
->>     The output of the tests with after the previous patch looks like the
->>     output of the merge tests (see below), so I'm hopeful that this is a
->>     genuine fix, but someone who knows about submodules should check that
->>     things are in fact working properly now.
-> 
-> Looking at the patch only (in combination with the history of the
-> submodule tests,
-> 283f56a40b (cherry-pick: add t3512 for submodule updates, 2014-06-15))
-> this patch
-> looks good to me. I wonder though if this needs to be squashed in another commit
-> to keep the test suite working for each patch and have no intermittent
-> failure in the
-> series.
 
-Hi Stefan
+> On 05 Dec 2017, at 12:10, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason =
+<avarab@gmail.com> wrote:
+>=20
+> On Tue, Dec 5, 2017 at 11:37 AM, Lars Schneider
+> <larsxschneider@gmail.com> wrote:
+>>=20
+>>> On 04 Dec 2017, at 23:07, Jeff King <peff@peff.net> wrote:
+>>>=20
+>>> From: Lars Schneider <larsxschneider@gmail.com>
+>>>=20
+>>> Since 180a9f2268 (provide a facility for "delayed" progress
+>>> reporting, 2007-04-20), the progress code has allowed
+>>> callers to skip showing progress if they have reached a
+>>> percentage-threshold of the total work before the delay
+>>> period passes.
+>>>=20
+>>> But since 8aade107dd (progress: simplify "delayed" progress
+>>> API, 2017-08-19), that parameter is not available to outside
+>>> callers (we always passed zero after that commit, though
+>>> that was corrected in the previous commit to "100%").
+>>>=20
+>>> Let's drop the threshold code, which never triggers in
+>>> any meaningful way.
+>>>=20
+>>> Signed-off-by: Jeff King <peff@peff.net>
+>>> ---
+>>> I tweaked your patch slightly to clean up the now-simplified
+>>> conditional.
+>>=20
+>> Your first patch ("progress: set default delay threshold to 100%, not =
+0%")
+>> as well as the modifications to this one look good to me. Feel free
+>> to add my "Signed-off-by: Lars Schneider <larsxschneider@gmail.com>".
+>>=20
+>> Thanks,
+>> Lars
+>>=20
+>>=20
+>> PS: How do you generate the commit references "hash (first line, =
+date)"?
+>> Git log pretty print?
+>=20
+> $ git grep -A5 'Copy commit summary' Documentation/SubmittingPatches
+> Documentation/SubmittingPatches:151:The "Copy commit summary" command
+> of gitk can be used to obtain this
+> Documentation/SubmittingPatches-152-format, or this invocation of `git =
+show`:
+> Documentation/SubmittingPatches-153-
+> Documentation/SubmittingPatches-154-....
+> Documentation/SubmittingPatches-155-    git show -s --date=3Dshort
+> --pretty=3D'format:%h ("%s", %ad)' <commit>
 
-Thanks for looking at this, it's good to know you think it's OK. I'll
-leave it to Junio's discretion whether to squash this into the previous
-patch
-
-Thanks again
-
-Phillip
-
-> Thanks,
-> Stefan
-> 
-
+Thanks :-)=
