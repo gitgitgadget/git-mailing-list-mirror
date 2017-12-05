@@ -2,81 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5CB8220A40
-	for <e@80x24.org>; Tue,  5 Dec 2017 19:50:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 03DE720A40
+	for <e@80x24.org>; Tue,  5 Dec 2017 19:57:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752445AbdLETu5 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Dec 2017 14:50:57 -0500
-Received: from mail-it0-f65.google.com ([209.85.214.65]:45269 "EHLO
-        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752099AbdLETtl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Dec 2017 14:49:41 -0500
-Received: by mail-it0-f65.google.com with SMTP id z6so4428157iti.4
-        for <git@vger.kernel.org>; Tue, 05 Dec 2017 11:49:41 -0800 (PST)
+        id S1751530AbdLET5V (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Dec 2017 14:57:21 -0500
+Received: from mail-qt0-f181.google.com ([209.85.216.181]:44007 "EHLO
+        mail-qt0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751112AbdLET5T (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Dec 2017 14:57:19 -0500
+Received: by mail-qt0-f181.google.com with SMTP id w10so3653310qtb.10
+        for <git@vger.kernel.org>; Tue, 05 Dec 2017 11:57:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=0oSVMIpA9trSIR9HUZkF57CxQgP577PdZQIfV+NYGXA=;
-        b=dZ3VA3mtl2mq/eUK7UYweqgVaDK1MXBXYewmsPO1DTsbxyqGFggfiKDMusGmBXkMAV
-         NsLGGoBTLyM2tTKQnDJ5WoFclJpXfbEi8ZFaHm0KChQnmYymxVN4J5JFFQ0TueHJQQqV
-         uGgnF3or39kUf3kIIhyX2edoyPE+jXnYAPfo/iBg8k6f3FQ1XeeUlF9JNq0g6o2PW51t
-         edp0st85mM03tCVVuOCzYLLl5zlQL3fQ5RZCxYEkoovtd8G3Fhx57pxxilXfXmfXnOxc
-         NF+v1W3kgi3+mxEOnaI++os1nUw0hTdni1nCicwhRwjluEbfhrTcQpZwLLhPQrwrJXu7
-         L50Q==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=JwCqbGAoclroGMU/+iLSp2QUKVlZe6BNoAeP5OMzVR8=;
+        b=E4dr+8p2mUUTNk26oI7hCWvRwUvwK7X2Tz/BTYiUNRZhsgfKhKKh6tI7YVkNHsp9k6
+         6IWR+xrVVJLEvchnmWJDpKH55FszJSQSwTeiXJOBa26/89w4xkd0EqH5RxAhPzrc4+LD
+         m6wt/gRS4A7EE5Z9plLPSVirVIV3tPZUC8GeF7hzckweUHs5PUcn3u5BshKMn/RvX0Tm
+         HyIGtwrjpnql/S4lbgiSWx9cMqv252FVwWpBVOwGOYkbOZoxRoEoUwlva8pAQ+HtDV7x
+         6c1V3cXivXawYIHXFUMAS8aiNJEbluoFn5n2XYuUgMfu2Qrx5XUZ4IpcIXe11/orm3bL
+         D+aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=0oSVMIpA9trSIR9HUZkF57CxQgP577PdZQIfV+NYGXA=;
-        b=acmQtKQTMlEQHrVpzZ7foZHqUSr2fw/3PyYLOQYZpy64joqhpOSZCU/t4Fpf81tcNL
-         TGQ5/8cNEjkhsubsbm1H/0SWfXwVxT3gB0jk0AbZaxoEmcej8pdCFC4cTTTKBGgfiStp
-         nCtrmSrygf4+sNui02o+kby99UiCRa876yFQDMR5D+Oupd4an321WrveQN0DJinIGjDA
-         rxuNKA3TEfT2cY1Avh2/iTfBS/qqlMB+MNDV+LzvD/qnB22pq2BBDoh8bCNdXGeyE+0Z
-         mNaoCqvx5r74rNoYODZQWTqxSxlyMl0ZUKAAUIc04133Rk8jR1aXwHW+Bof/lx33xsDM
-         97yQ==
-X-Gm-Message-State: AJaThX5k+zVAqRWKBMoxCijh/KhPVnokGjm2TBAjcjLZdX2b8SHfLiFf
-        aLvjFrYik80ZtIsELX+NXVAppG8F
-X-Google-Smtp-Source: AGs4zMaWbfZ1+wcniHSxjxtCtP9n+k+foIJXP0UqwerS5OYvxOeGIEs8MO81niUXhGpsXoHx++hLVg==
-X-Received: by 10.36.88.134 with SMTP id f128mr20818914itb.116.1512503380823;
-        Tue, 05 Dec 2017 11:49:40 -0800 (PST)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id b34sm528342itd.31.2017.12.05.11.49.38
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 05 Dec 2017 11:49:39 -0800 (PST)
-Date:   Tue, 5 Dec 2017 11:49:37 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v1 1/2] t/README: remove mention of adding copyright
- notices
-Message-ID: <20171205194937.GB8183@aiede.mtv.corp.google.com>
-References: <20171126202100.1658-1-t.gummerer@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=JwCqbGAoclroGMU/+iLSp2QUKVlZe6BNoAeP5OMzVR8=;
+        b=muth7oVYbweQ/n+sXwLew0thgm8+jHv2nKtoivLDc49C7RYQid3NGyDioeA5xLtn/4
+         ne3bH5YWOjeWZmwVMQ/A98s/ra3KLhFKcpbG/ub2RkbrREfxNiSvlHV9gLTEyMUl4NMV
+         h0GgAzJ3SvkTXyve7lnS+jWnQijm2OqDVW2/WuwABg6kHxU/yXNg37hkIrlcB4GuGacw
+         qjIyZZtDAaaJ84zZR7xEz1jOvupkBKT1J9lf0FmG8nc+f/hTeIeyLCnrYmLTGmrcdmWB
+         bj/TpLTNMumxUIpRZfAQWeLsP8vuNu0ED9SmrMb1/CRIkrPU8q3DEjGUoUMbHmKCFQRb
+         0riQ==
+X-Gm-Message-State: AKGB3mLj+FUdSv93qM2xk/E4FIGGI02vybZRmxM+/IgWeTucUc2iTtkL
+        d8GSQC9g/W4Ei2ipBYdfamfO1SqgMBr3WaWqSX8kVw==
+X-Google-Smtp-Source: AGs4zMZv1u7g6LGwaVB68SN1Bv0eVKGimuUrcXn56Vo8xqEYiv/nVYXAL0ho9sn7vnv0MkeKaHFFgu8YNjoPm+JBaUo=
+X-Received: by 10.237.42.22 with SMTP id c22mr2637484qtd.162.1512503838872;
+ Tue, 05 Dec 2017 11:57:18 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20171126202100.1658-1-t.gummerer@gmail.com>
-User-Agent: Mutt/1.9.1 (2017-09-22)
+Received: by 10.140.85.179 with HTTP; Tue, 5 Dec 2017 11:57:18 -0800 (PST)
+In-Reply-To: <14e821d45e4ac2faea1f9023d43c43c4675672e7.1512168087.git.jonathantanmy@google.com>
+References: <cover.1512168087.git.jonathantanmy@google.com> <14e821d45e4ac2faea1f9023d43c43c4675672e7.1512168087.git.jonathantanmy@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 5 Dec 2017 11:57:18 -0800
+Message-ID: <CAGZ79kZgzWRSmXv0JOryhYKU7gnZw2DvEK7e7MXjv7MWCF6T7Q@mail.gmail.com>
+Subject: Re: [WIP 1/2] submodule: refactor acquisition of superproject info
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jacob Keller <jacob.keller@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Fri, Dec 1, 2017 at 2:50 PM, Jonathan Tan <jonathantanmy@google.com> wrote:
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> ---
+>  submodule.c | 76 +++++++++++++++++++++++++++++++++++++------------------------
+>  submodule.h |  3 +++
 
-Thomas Gummerer wrote:
 
-> We generally no longer include copyright notices in new test scripts.
-> However t/README still mentions it as something to include at the top of
-> every new script.
+This patch reads very similar to [1], which was a preparation part of the series
+"[RFC PATCH 0/4] git-status reports relation to superproject"; there
+we also need
+the same information about the superproject. I'll take a closer look
+and compare these
+two patches if it turns out we want to go this way long term.
 
-Where can I read more about this change?  Was it a deliberate change
-or something that simply happened?
-
-Thanks,
-Jonathan
+[1] https://public-inbox.org/git/20171108195509.7839-3-sbeller@google.com/
