@@ -6,30 +6,30 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8F6FB20A40
-	for <e@80x24.org>; Tue,  5 Dec 2017 17:03:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D850E20A40
+	for <e@80x24.org>; Tue,  5 Dec 2017 17:03:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753187AbdLERD3 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Dec 2017 12:03:29 -0500
-Received: from siwi.pair.com ([209.68.5.199]:15291 "EHLO siwi.pair.com"
+        id S1753181AbdLERDa (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Dec 2017 12:03:30 -0500
+Received: from siwi.pair.com ([209.68.5.199]:15302 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753148AbdLERDR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Dec 2017 12:03:17 -0500
+        id S1753163AbdLERDQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Dec 2017 12:03:16 -0500
 Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id E0FA0844E4;
+        by siwi.pair.com (Postfix) with ESMTP id 45AF8844E2;
         Tue,  5 Dec 2017 12:03:16 -0500 (EST)
 Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 682FD844DE;
-        Tue,  5 Dec 2017 12:03:16 -0500 (EST)
+        by siwi.pair.com (Postfix) with ESMTPSA id C10A0844DE;
+        Tue,  5 Dec 2017 12:03:15 -0500 (EST)
 From:   Jeff Hostetler <git@jeffhostetler.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, jonathantanmy@google.com,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v6 11/14] clone: partial clone
-Date:   Tue,  5 Dec 2017 17:02:51 +0000
-Message-Id: <20171205170254.65293-12-git@jeffhostetler.com>
+Subject: [PATCH v6 10/14] partial-clone: define partial clone settings in config
+Date:   Tue,  5 Dec 2017 17:02:50 +0000
+Message-Id: <20171205170254.65293-11-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20171205170254.65293-1-git@jeffhostetler.com>
 References: <20171205170254.65293-1-git@jeffhostetler.com>
@@ -38,161 +38,205 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jonathan Tan <jonathantanmy@google.com>
+From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+Create get and set routines for "partial clone" config settings.
+These will be used in a future commit by clone and fetch to
+remember the promisor remote and the default filter-spec.
+
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- builtin/clone.c  | 22 ++++++++++++++++++++--
- t/t5601-clone.sh | 49 +++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 69 insertions(+), 2 deletions(-)
+ cache.h                       |  1 +
+ config.c                      |  5 +++
+ environment.c                 |  1 +
+ list-objects-filter-options.c | 90 +++++++++++++++++++++++++++++++++++--------
+ list-objects-filter-options.h |  6 +++
+ 5 files changed, 88 insertions(+), 15 deletions(-)
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index dbddd98..f519bd4 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -26,6 +26,7 @@
- #include "run-command.h"
- #include "connected.h"
- #include "packfile.h"
-+#include "list-objects-filter-options.h"
+diff --git a/cache.h b/cache.h
+index 6980072..bccc510 100644
+--- a/cache.h
++++ b/cache.h
+@@ -861,6 +861,7 @@ extern int grafts_replace_parents;
+ #define GIT_REPO_VERSION_READ 1
+ extern int repository_format_precious_objects;
+ extern char *repository_format_partial_clone;
++extern const char *core_partial_clone_filter_default;
  
- /*
-  * Overall FIXMEs:
-@@ -60,6 +61,7 @@ static struct string_list option_optional_reference = STRING_LIST_INIT_NODUP;
- static int option_dissociate;
- static int max_jobs = -1;
- static struct string_list option_recurse_submodules = STRING_LIST_INIT_NODUP;
-+static struct list_objects_filter_options filter_options;
- 
- static int recurse_submodules_cb(const struct option *opt,
- 				 const char *arg, int unset)
-@@ -135,6 +137,7 @@ static struct option builtin_clone_options[] = {
- 			TRANSPORT_FAMILY_IPV4),
- 	OPT_SET_INT('6', "ipv6", &family, N_("use IPv6 addresses only"),
- 			TRANSPORT_FAMILY_IPV6),
-+	OPT_PARSE_LIST_OBJECTS_FILTER(&filter_options),
- 	OPT_END()
- };
- 
-@@ -886,6 +889,8 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	struct refspec *refspec;
- 	const char *fetch_pattern;
- 
-+	fetch_if_missing = 0;
-+
- 	packet_trace_identity("clone");
- 	argc = parse_options(argc, argv, prefix, builtin_clone_options,
- 			     builtin_clone_usage, 0);
-@@ -1073,6 +1078,8 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 			warning(_("--shallow-since is ignored in local clones; use file:// instead."));
- 		if (option_not.nr)
- 			warning(_("--shallow-exclude is ignored in local clones; use file:// instead."));
-+		if (filter_options.choice)
-+			warning(_("--filter is ignored in local clones; use file:// instead."));
- 		if (!access(mkpath("%s/shallow", path), F_OK)) {
- 			if (option_local > 0)
- 				warning(_("source repository is shallow, ignoring --local"));
-@@ -1104,7 +1111,13 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 		transport_set_option(transport, TRANS_OPT_UPLOADPACK,
- 				     option_upload_pack);
- 
--	if (transport->smart_options && !deepen)
-+	if (filter_options.choice) {
-+		transport_set_option(transport, TRANS_OPT_LIST_OBJECTS_FILTER,
-+				     filter_options.filter_spec);
-+		transport_set_option(transport, TRANS_OPT_FROM_PROMISOR, "1");
-+	}
-+
-+	if (transport->smart_options && !deepen && !filter_options.choice)
- 		transport->smart_options->check_self_contained_and_connected = 1;
- 
- 	refs = transport_get_remote_refs(transport);
-@@ -1164,13 +1177,17 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	write_refspec_config(src_ref_prefix, our_head_points_at,
- 			remote_head_points_at, &branch_top);
- 
-+	if (filter_options.choice)
-+		partial_clone_register("origin", &filter_options);
-+
- 	if (is_local)
- 		clone_local(path, git_dir);
- 	else if (refs && complete_refs_before_fetch)
- 		transport_fetch_refs(transport, mapped_refs);
- 
- 	update_remote_refs(refs, mapped_refs, remote_head_points_at,
--			   branch_top.buf, reflog_msg.buf, transport, !is_local);
-+			   branch_top.buf, reflog_msg.buf, transport,
-+			   !is_local && !filter_options.choice);
- 
- 	update_head(our_head_points_at, remote_head, reflog_msg.buf);
- 
-@@ -1191,6 +1208,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ struct repository_format {
+ 	int version;
+diff --git a/config.c b/config.c
+index adb7d7a..adeee04 100644
+--- a/config.c
++++ b/config.c
+@@ -1241,6 +1241,11 @@ static int git_default_core_config(const char *var, const char *value)
+ 		return 0;
  	}
  
- 	junk_mode = JUNK_LEAVE_REPO;
-+	fetch_if_missing = 1;
- 	err = checkout(submodule_progress);
++	if (!strcmp(var, "core.partialclonefilter")) {
++		return git_config_string(&core_partial_clone_filter_default,
++					 var, value);
++	}
++
+ 	/* Add other config variables here and to Documentation/config.txt. */
+ 	return 0;
+ }
+diff --git a/environment.c b/environment.c
+index e52aab3..7537565 100644
+--- a/environment.c
++++ b/environment.c
+@@ -28,6 +28,7 @@ int warn_on_object_refname_ambiguity = 1;
+ int ref_paranoia = -1;
+ int repository_format_precious_objects;
+ char *repository_format_partial_clone;
++const char *core_partial_clone_filter_default;
+ const char *git_commit_encoding;
+ const char *git_log_output_encoding;
+ const char *apply_default_whitespace;
+diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
+index 4c5b34e..5c47e2b 100644
+--- a/list-objects-filter-options.c
++++ b/list-objects-filter-options.c
+@@ -21,29 +21,36 @@
+  * subordinate commands when necessary.  We also "intern" the arg for
+  * the convenience of the current command.
+  */
+-int parse_list_objects_filter(struct list_objects_filter_options *filter_options,
+-			      const char *arg)
++static int gently_parse_list_objects_filter(
++	struct list_objects_filter_options *filter_options,
++	const char *arg,
++	struct strbuf *errbuf)
+ {
+ 	const char *v0;
  
- 	strbuf_release(&reflog_msg);
-diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index 9c56f77..6d37c6d 100755
---- a/t/t5601-clone.sh
-+++ b/t/t5601-clone.sh
-@@ -571,4 +571,53 @@ test_expect_success 'GIT_TRACE_PACKFILE produces a usable pack' '
- 	git -C replay.git index-pack -v --stdin <tmp.pack
- '
+-	if (filter_options->choice)
+-		die(_("multiple object filter types cannot be combined"));
++	if (filter_options->choice) {
++		if (errbuf) {
++			strbuf_init(errbuf, 0);
++			strbuf_addstr(
++				errbuf,
++				_("multiple filter-specs cannot be combined"));
++		}
++		return 1;
++	}
  
-+partial_clone () {
-+	       SERVER="$1" &&
-+	       URL="$2" &&
-+
-+	rm -rf "$SERVER" client &&
-+	test_create_repo "$SERVER" &&
-+	test_commit -C "$SERVER" one &&
-+	HASH1=$(git hash-object "$SERVER/one.t") &&
-+	git -C "$SERVER" revert HEAD &&
-+	test_commit -C "$SERVER" two &&
-+	HASH2=$(git hash-object "$SERVER/two.t") &&
-+	test_config -C "$SERVER" uploadpack.allowfilter 1 &&
-+	test_config -C "$SERVER" uploadpack.allowanysha1inwant 1 &&
-+
-+	git clone --filter=blob:limit=0 "$URL" client &&
-+
-+	git -C client fsck &&
-+
-+	# Ensure that unneeded blobs are not inadvertently fetched.
-+	test_config -C client extensions.partialclone "not a remote" &&
-+	test_must_fail git -C client cat-file -e "$HASH1" &&
-+
-+	# But this blob was fetched, because clone performs an initial checkout
-+	git -C client cat-file -e "$HASH2"
+ 	filter_options->filter_spec = strdup(arg);
+ 
+ 	if (!strcmp(arg, "blob:none")) {
+ 		filter_options->choice = LOFC_BLOB_NONE;
+ 		return 0;
+-	}
+ 
+-	if (skip_prefix(arg, "blob:limit=", &v0)) {
+-		if (!git_parse_ulong(v0, &filter_options->blob_limit_value))
+-			die(_("invalid filter-spec expression '%s'"), arg);
+-		filter_options->choice = LOFC_BLOB_LIMIT;
+-		return 0;
+-	}
++	} else if (skip_prefix(arg, "blob:limit=", &v0)) {
++		if (git_parse_ulong(v0, &filter_options->blob_limit_value)) {
++			filter_options->choice = LOFC_BLOB_LIMIT;
++			return 0;
++		}
+ 
+-	if (skip_prefix(arg, "sparse:oid=", &v0)) {
++	} else if (skip_prefix(arg, "sparse:oid=", &v0)) {
+ 		struct object_context oc;
+ 		struct object_id sparse_oid;
+ 
+@@ -57,15 +64,27 @@ int parse_list_objects_filter(struct list_objects_filter_options *filter_options
+ 			filter_options->sparse_oid_value = oiddup(&sparse_oid);
+ 		filter_options->choice = LOFC_SPARSE_OID;
+ 		return 0;
+-	}
+ 
+-	if (skip_prefix(arg, "sparse:path=", &v0)) {
++	} else if (skip_prefix(arg, "sparse:path=", &v0)) {
+ 		filter_options->choice = LOFC_SPARSE_PATH;
+ 		filter_options->sparse_path_value = strdup(v0);
+ 		return 0;
+ 	}
+ 
+-	die(_("invalid filter-spec expression '%s'"), arg);
++	if (errbuf) {
++		strbuf_init(errbuf, 0);
++		strbuf_addf(errbuf, "invalid filter-spec '%s'", arg);
++	}
++	memset(filter_options, 0, sizeof(*filter_options));
++	return 1;
 +}
 +
-+test_expect_success 'partial clone' '
-+	partial_clone server "file://$(pwd)/server"
-+'
++int parse_list_objects_filter(struct list_objects_filter_options *filter_options,
++			      const char *arg)
++{
++	struct strbuf buf = STRBUF_INIT;
++	if (gently_parse_list_objects_filter(filter_options, arg, &buf))
++		die("%s", buf.buf);
+ 	return 0;
+ }
+ 
+@@ -90,3 +109,44 @@ void list_objects_filter_release(
+ 	free(filter_options->sparse_path_value);
+ 	memset(filter_options, 0, sizeof(*filter_options));
+ }
 +
-+test_expect_success 'partial clone: warn if server does not support object filtering' '
-+	rm -rf server client &&
-+	test_create_repo server &&
-+	test_commit -C server one &&
++void partial_clone_register(
++	const char *remote,
++	const struct list_objects_filter_options *filter_options)
++{
++	/*
++	 * Record the name of the partial clone remote in the
++	 * config and in the global variable -- the latter is
++	 * used throughout to indicate that partial clone is
++	 * enabled and to expect missing objects.
++	 */
++	if (repository_format_partial_clone &&
++	    *repository_format_partial_clone &&
++	    strcmp(remote, repository_format_partial_clone))
++		die(_("cannot change partial clone promisor remote"));
 +
-+	git clone --filter=blob:limit=0 "file://$(pwd)/server" client 2> err &&
++	git_config_set("core.repositoryformatversion", "1");
++	git_config_set("extensions.partialclone", remote);
 +
-+	test_i18ngrep "filtering not recognized by server" err
-+'
++	repository_format_partial_clone = xstrdup(remote);
 +
-+. "$TEST_DIRECTORY"/lib-httpd.sh
-+start_httpd
++	/*
++	 * Record the initial filter-spec in the config as
++	 * the default for subsequent fetches from this remote.
++	 */
++	core_partial_clone_filter_default =
++		xstrdup(filter_options->filter_spec);
++	git_config_set("core.partialclonefilter",
++		       core_partial_clone_filter_default);
++}
 +
-+test_expect_success 'partial clone using HTTP' '
-+	partial_clone "$HTTPD_DOCUMENT_ROOT_PATH/server" "$HTTPD_URL/smart/server"
-+'
++void partial_clone_get_default_filter_spec(
++	struct list_objects_filter_options *filter_options)
++{
++	/*
++	 * Parse default value, but silently ignore it if it is invalid.
++	 */
++	gently_parse_list_objects_filter(filter_options,
++					 core_partial_clone_filter_default,
++					 NULL);
++}
+diff --git a/list-objects-filter-options.h b/list-objects-filter-options.h
+index eea44a1..1143539 100644
+--- a/list-objects-filter-options.h
++++ b/list-objects-filter-options.h
+@@ -58,4 +58,10 @@ int opt_parse_list_objects_filter(const struct option *opt,
+ void list_objects_filter_release(
+ 	struct list_objects_filter_options *filter_options);
+ 
++void partial_clone_register(
++	const char *remote,
++	const struct list_objects_filter_options *filter_options);
++void partial_clone_get_default_filter_spec(
++	struct list_objects_filter_options *filter_options);
 +
-+stop_httpd
-+
- test_done
+ #endif /* LIST_OBJECTS_FILTER_OPTIONS_H */
 -- 
 2.9.3
 
