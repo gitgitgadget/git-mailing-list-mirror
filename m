@@ -2,103 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3ABF020A40
-	for <e@80x24.org>; Tue,  5 Dec 2017 21:26:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2055C20A40
+	for <e@80x24.org>; Tue,  5 Dec 2017 21:35:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751432AbdLEV03 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Dec 2017 16:26:29 -0500
-Received: from mail-it0-f44.google.com ([209.85.214.44]:46641 "EHLO
-        mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751286AbdLEV02 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Dec 2017 16:26:28 -0500
-Received: by mail-it0-f44.google.com with SMTP id t1so4735472ite.5
-        for <git@vger.kernel.org>; Tue, 05 Dec 2017 13:26:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=d1z4Jtbz1tq2HmM+T/81ty4QJ9VW4kbcTl2qjjWlzFA=;
-        b=bKOVYKy5VPiws1wm2EMa6HFROgQmVUEepS2mpUpe+y7I0RUF6lIE04b8XPAGX4xogI
-         TxBoyCGr4+1MXfQhpt7OYBGFHnNnq0kiIFxcTMsDp4/wt5HxGpN0JYbiYOzyNBMP2721
-         iX42zfDq10nzQulNnLhxUfV5igoBGb4r7CSAnA9GqQaA/ewbHtmifUXsHOyLBDSY3/gX
-         AFp4LefBc/2Q2nFFqvAf8At6HVZimjM6CRf9PawCiSXWCSm8gquuy1Kmir5sr4ZTYVm6
-         gw2gzFR1BLnmW2+yvaa8QeWNBJ9kuQSIjd7IRVOJlOFUfbGWuVqsgkHhaxNsg9znGlYz
-         b3Ag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=d1z4Jtbz1tq2HmM+T/81ty4QJ9VW4kbcTl2qjjWlzFA=;
-        b=A1XdVWjZKGrlFQBuEPK7G4qGOtu3TDduXdAcJCDifcjarhH3BsOfmDg38koEcDyS0X
-         jb0sQBsRSnoo+BzZ1Jcvbc7OnIdPJiYVegbJi//RsDRXwoX6t3m9lv70uodVvXUMDlCK
-         OUIGbWNTvYM8U3NBPUqDLwXHmayu9Y2eTFFQLRZ8t2UGBrYEPXAer/dG78Kby1RYlAG3
-         0GBnpGe0QBGcPecf0npA/0hvbA/1lsYpKq5Bh4Jm47XdYPh3StwidGttAxELrkHOA4xx
-         gRUn7F/fl+FhxO4qb0oZ8WsmAGjpyLfryEKoHiafPBaJ81Hdn+isoqLm4K2ot5McUO+p
-         Z3Tg==
-X-Gm-Message-State: AKGB3mKuf41U3GU/IHZbZy+K24Ggdneg/OomJ26teNol8+EKqTyxsxbk
-        WLQjxKqu9SMdspzC9CC1KNlAOg==
-X-Google-Smtp-Source: AGs4zMa23HaWlhE6vyDSgY9ofjiR7hEm/rGrmV9Wn+Rf6ue+85et55uoiY7W+6pcyiCJlEdBXbMdMw==
-X-Received: by 10.36.127.198 with SMTP id r189mr10702931itc.116.1512509187776;
-        Tue, 05 Dec 2017 13:26:27 -0800 (PST)
-Received: from dnj.pit.corp.google.com ([2620:0:1019:0:5840:7173:18ff:ed41])
-        by smtp.gmail.com with ESMTPSA id f68sm448401iod.36.2017.12.05.13.26.26
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 05 Dec 2017 13:26:27 -0800 (PST)
-From:   Dan Jacques <dnj@google.com>
-To:     j6t@kdbg.org
-Cc:     Johannes.Schindelin@gmx.de, avarab@gmail.com, dnj@google.com,
-        git@vger.kernel.org, gitster@pobox.com
+        id S1751904AbdLEVfJ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Dec 2017 16:35:09 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60626 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751823AbdLEVfJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Dec 2017 16:35:09 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6B990C28A9;
+        Tue,  5 Dec 2017 16:35:08 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=lSf73wWAzsxS
+        0cfjv5e/xynlp0M=; b=F+/nWbN7uB7K8pkcaAWYkceyyJzsaDI/aO+bxJ0cf9Xr
+        bIQAIWwzPAI9/MTzhpiGAAbqmaaScglPZ8Rv7loJ+q1IjM3yCg0zdpvsifYWbGWm
+        dvqiAuG1a4p2+A2STSSq/DnRIZeAQBGf4ONGibSvpUmM5iBSk+wnStUMFXdAIoY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=o8vvvR
+        T5uG4mRlsN9WIZfkEPnzttyQkOWNoj1SRy8bWUHwZT5POjw6Y18icY0xMQANP3GU
+        J2aoNQalP49Y5Kt8EYf4AOPokA+dSSYir3M9pHoPx/k0U7mxUNqWcBxgPpMjoyaX
+        UPX1xaQQrY/VWzbdK/Ead0Q4z4FGqfARhzp1w=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 635DDC28A8;
+        Tue,  5 Dec 2017 16:35:08 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D1408C28A7;
+        Tue,  5 Dec 2017 16:35:07 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Dan Jacques <dnj@google.com>
+Cc:     j6t@kdbg.org, Johannes.Schindelin@gmx.de, avarab@gmail.com,
+        git@vger.kernel.org
 Subject: Re: [PATCH v4 1/4] Makefile: generate Perl header from template file
-Date:   Tue,  5 Dec 2017 16:26:25 -0500
-Message-Id: <20171205212625.6616-1-dnj@google.com>
-X-Mailer: git-send-email 2.15.0.chromium12
-In-Reply-To: <f0ad1ad4-67d8-21e2-fdd0-0a08328c1eaa@kdbg.org>
 References: <f0ad1ad4-67d8-21e2-fdd0-0a08328c1eaa@kdbg.org>
+        <20171205212625.6616-1-dnj@google.com>
+Date:   Tue, 05 Dec 2017 13:35:06 -0800
+In-Reply-To: <20171205212625.6616-1-dnj@google.com> (Dan Jacques's message of
+        "Tue, 5 Dec 2017 16:26:25 -0500")
+Message-ID: <xmqq7eu0j1th.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 2A138CF0-DA04-11E7-9E08-575F0C78B957-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt wrote:
+Dan Jacques <dnj@google.com> writes:
 
-> I don't know what I tested last week; most likely not the version of the
-> patch I quoted above.
+> Thanks for checking! The patch that you quoted above looks like it's fr=
+om
+> this "v4" thread; however, the patch that you are diffing against in yo=
+ur
+> latest reply seems like it is from an earlier version.
 >
-> Today's version, with the tip at 5d7f59c391ce, is definitely bogus
-> with its quoting. It needs the patch below, otherwise an unquoted
-> semicolon may be expanded from $(pathsep). This would terminate the sed
-> command, of course.
+> I believe that the $(pathsep) changes in your proposed patch are alread=
+y
+> present in v4,...
 
-Thanks for checking! The patch that you quoted above looks like it's from
-this "v4" thread; however, the patch that you are diffing against in your
-latest reply seems like it is from an earlier version.
+You're of course right.  The patches I had in my tree are outdated.
 
-I believe that the $(pathsep) changes in your proposed patch are already
-present in v4, having been caught by Johannes, so perhaps you were using
-an older version of the patch as the diffbase? That change only appeared in
-v4, so any older version would have had the previous incorrect quoting.
+Will replace, even though I won't be merging them to 'pu' while we
+wait for =C3=86var's perl build procedure update to stabilize.
 
-I think the reason that is necessary to remove the single quotes is not
-because the ";" is terminating the `sed` expression, but because it's
-terminating the entire shell stanza, causing the shell to execute two
-commands:
-
-1) {"sed" "-e" "s=@@PATHSEP@@="}
-2) {"=g" "-e" "s=@@INSTLIBDIR@@=..." ...}
-
-By including the ";" within the single-tick-protected `sed` argument, the
-shell receives the entire block, "s=@@PATHSEP@@=;=", as a single string.
-
-Also see Johannes' explanation here:
-https://github.com/danjacques/git/pull/1/commits/57dc265478692ea2a395fc61fa122cb73ce58dc3
-
-Could you apply this v4 patch series and confirm that it is working for
-you? Or, if I am mistaken and your patch is correctly against this "v4"
-patch series, let me know and I'll try and figure out what I'm missing.
-
-Thanks again!
--Dan
+Thanks.
