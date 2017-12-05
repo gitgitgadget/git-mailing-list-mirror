@@ -2,112 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8DA0D20A40
-	for <e@80x24.org>; Tue,  5 Dec 2017 14:42:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1D41020A40
+	for <e@80x24.org>; Tue,  5 Dec 2017 15:30:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752362AbdLEOmd (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Dec 2017 09:42:33 -0500
-Received: from mail-it0-f45.google.com ([209.85.214.45]:37559 "EHLO
-        mail-it0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752179AbdLEOmc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Dec 2017 09:42:32 -0500
-Received: by mail-it0-f45.google.com with SMTP id d137so2020882itc.2
-        for <git@vger.kernel.org>; Tue, 05 Dec 2017 06:42:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=dn6Umcshbb3YM9MJN7pNuU5+8Lf8h7CQyxrOaX7n1IQ=;
-        b=i7jW4rFQZrfsux9U6apBh6wlbYQpr0z1XjrRzWoxShJJjcM+0q+CB9KTeGyRf1iJPg
-         PYF1blEYBMWe+eUCOMn6Z+49daFt+sATpAZ/LM4PggYHZr/iA6pN/aR1jRSrotSuc+C4
-         Vo4IhFMwukrtuuaa1nEoW+47LGnwX+B7C+TDf+CYDS8T7ZDAgdvNAbuFvUlUVk4b/1p3
-         F3+vbK3eow9npYR7IKC9r5M8v9RfNw9O/wvpk8+7PAOrnLpt64nCwRDIyTfwEx/4FbdZ
-         MU+Qz4ZvpFuc54uUpCazUFLDHI+lrq2TnAZwd8AGxQAe4scid8m2rJ/QFR37KpBzfJS+
-         +Ujg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=dn6Umcshbb3YM9MJN7pNuU5+8Lf8h7CQyxrOaX7n1IQ=;
-        b=R8rhOTV5H1zi6Qi2yatOnJXlgeD5oMYySG7EqaCN43unCA212ky1byHOGVYKQNkVGz
-         IydrrcIj6nq8v1QvstAyETYIrGhSZ60GEeKDpo7CUf8sGncUPA81Yz03DMHmZ1Lalox9
-         R3GLte2SAYoLDnyhZs8izsyVUu3SPvGY+55rv5VLE0vW6Qfz3yqsc3ShzzvZNDJuIWce
-         2NeAtFVcCKBQUAW9xfx8d/8BKJzfEv31AvHUlPLrKuY1oIupSb9WcKJGnNmkDJfmhta6
-         vGt44B8oaTSBgvqgga9R+/QogG8mMazW1xCWZsHIOi7r8K68ARmmMjETdcxKqgPMTEd4
-         lrkA==
-X-Gm-Message-State: AJaThX7HTfyo40uMe0o3bjcSH2BZoDZiFhHgh9qs6Z7Wo+U4+92BgNrg
-        YYdq1bDW9JarOnJkZEhR1WM=
-X-Google-Smtp-Source: AGs4zMbj5NIsuVMabjRsyI8GyzwkAK/vfeaUvakmshB6UPjEjQMSBQ2QoW0VkZHySP5L7cPF09dtkA==
-X-Received: by 10.107.141.199 with SMTP id p190mr28215771iod.269.1512484949687;
-        Tue, 05 Dec 2017 06:42:29 -0800 (PST)
-Received: from [192.168.3.104] (24-212-246-46.cable.teksavvy.com. [24.212.246.46])
-        by smtp.gmail.com with ESMTPSA id m72sm112927ioe.40.2017.12.05.06.42.28
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 05 Dec 2017 06:42:29 -0800 (PST)
-Subject: Re: [PATCH v2 6/9] rebase -i: update functions to use a flags
- parameter
-To:     "Kerry, Richard" <richard.kerry@atos.net>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        "peff@peff.net" <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-References: <20171127045514.25647-1-liambeguin@gmail.com>
- <20171203221721.16462-1-liambeguin@gmail.com>
- <20171203221721.16462-7-liambeguin@gmail.com>
- <alpine.DEB.2.21.1.1712041643250.98586@virtualbox>
- <22f665eb-0ed1-27d4-7184-e6063ea5b47e@gmail.com>
- <xmqqwp21jqpl.fsf@gitster.mtv.corp.google.com>
- <HE1PR0201MB19938A1581F799CB9D48AE999C3D0@HE1PR0201MB1993.eurprd02.prod.outlook.com>
-From:   liam Beguin <liambeguin@gmail.com>
-Message-ID: <a80f0166-3c3f-85aa-9961-67b1032a96b0@gmail.com>
-Date:   Tue, 5 Dec 2017 09:42:28 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
+        id S1752577AbdLEPak (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Dec 2017 10:30:40 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57731 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751416AbdLEPaj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Dec 2017 10:30:39 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A0705B2689;
+        Tue,  5 Dec 2017 10:30:38 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Zu1l6xYfbwy3yHkKP2tRt9CWwFA=; b=tlP8Tu
+        Z0qkT5XpSaOCtAI/s+qHUWWcIaOm1GHrD+YY9iv1eTZfDeZ6vEm5nf4KMQ/BB7Tk
+        cvU5xrUFP12Eul6z20qqrUwBGDEJnQvxkRePHRU9DaKQObcDOFJ0HW4yI4zIC4PW
+        4aDl6ldHV5Yf79S+v09okDi5ofpDmDDWKPthw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=oyV95imKMIoooBotr643aPZO+BOmY7f9
+        xWMNGTRiYeFgo68EubZQPnkFYAX48Acrd6iOFehL5S+316bJSazAaziQoY47ZP6Y
+        l1z7VHaA3rtDa+6g67NHO03KB6Pg7AqQncQi+OoCEF6R4kHpwgXPWe/i8jgoH7Us
+        GSrhlb5lWmo=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 97791B2688;
+        Tue,  5 Dec 2017 10:30:38 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F05C6B2686;
+        Tue,  5 Dec 2017 10:30:37 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Nicolas Morey-Chaisemartin <nmoreychaisemartin@suse.com>,
+        Git List <git@vger.kernel.org>, daniel@haxx.se,
+        Jonathan Nieder <jrnieder@gmail.com>, doron.behar@gmail.com,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH] imap-send: URI encode server folder
+References: <20171129171301.l3coiflkfyy533yz@NUC.localdomain>
+        <18c9478b-19fc-69f2-229f-67c05a42d4f5@suse.com>
+        <CAPig+cSEYHfupRt+-0sZK6H3_WcT_=wdNB2FfdYuB6geGQYZ3A@mail.gmail.com>
+Date:   Tue, 05 Dec 2017 07:30:36 -0800
+In-Reply-To: <CAPig+cSEYHfupRt+-0sZK6H3_WcT_=wdNB2FfdYuB6geGQYZ3A@mail.gmail.com>
+        (Eric Sunshine's message of "Thu, 30 Nov 2017 12:53:16 -0500")
+Message-ID: <xmqqd13tjioz.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <HE1PR0201MB19938A1581F799CB9D48AE999C3D0@HE1PR0201MB1993.eurprd02.prod.outlook.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3EA7DCF8-D9D1-11E7-B922-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-On 05/12/17 07:41 AM, Kerry, Richard wrote:
-> 
-> "Shorted" is what happens when you put a piece of wire across the terminals of a battery ... (bang, smoke, etc).
-> It's short for "short-circuited".
-> Yes, I think you mean "shortened" in this case.
-> 
+> ... Can you
+> expand the commit message a bit to make it more self-contained? At
+> minimum, perhaps show the error message you were experiencing, and
+> cite (as Daniel pointed out) RFC 3986 and the bit about a "legal" URL
+> not containing brackets.
 
-Thanks for the explanation.
-Sorry, my eyes stopped at the lowercase 's' in Johannes message.
-Will fix.
+Thanks for a good suggestion.
 
-> Regards,
-> Richard.
-> 
-> 
-> 
-> Richard Kerry
-> BNCS Engineer, SI SOL Telco & Media Vertical Practice
-> 
-> T: +44 (0)20 3618 2669
-> M: +44 (0)7812 325518
-> Lync: +44 (0) 20 3618 0778
-> Room G300, Stadium House, Wood Lane, London, W12 7TA
-> richard.kerry@atos.net
-> 
-> 
 
-[...]
-
-Thanks,
-Liam
+>
+> Also, a natural question which pops into the head of someone reading
+> this patch is whether other parts of the URL (host, user, etc.) also
+> need to be handled similarly. It's possible that you audited the code
+> and determined that they are handled fine already, but the reader of
+> the commit message is unable to infer that. Consequently, it might be
+> nice to have a sentence about that, as well ("other parts of the URL
+> are already encoded, thus are fine" or "other parts of the URL are not
+> subject to this problem because ...").
+>
+> The patch itself looks okay (from a cursory read).
+>
+> Thanks.
+>
+>> Reported-by: Doron Behar <doron.behar@gmail.com>
+>> Signed-off-by: Nicolas Morey-Chaisemartin <NMoreyChaisemartin@suse.com>
+>> ---
+>>  imap-send.c | 8 +++++++-
+>>  1 file changed, 7 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/imap-send.c b/imap-send.c
+>> index 54e6a80fd..36c7c1b4f 100644
+>> --- a/imap-send.c
+>> +++ b/imap-send.c
+>> @@ -1412,6 +1412,7 @@ static CURL *setup_curl(struct imap_server_conf *srvc, struct credential *cred)
+>>  {
+>>         CURL *curl;
+>>         struct strbuf path = STRBUF_INIT;
+>> +       char *uri_encoded_folder;
+>>
+>>         if (curl_global_init(CURL_GLOBAL_ALL) != CURLE_OK)
+>>                 die("curl_global_init failed");
+>> @@ -1429,7 +1430,12 @@ static CURL *setup_curl(struct imap_server_conf *srvc, struct credential *cred)
+>>         strbuf_addstr(&path, server.host);
+>>         if (!path.len || path.buf[path.len - 1] != '/')
+>>                 strbuf_addch(&path, '/');
+>> -       strbuf_addstr(&path, server.folder);
+>> +
+>> +       uri_encoded_folder = curl_easy_escape(curl, server.folder, 0);
+>> +       if (!uri_encoded_folder)
+>> +               die("failed to encode server folder");
+>> +       strbuf_addstr(&path, uri_encoded_folder);
+>> +       curl_free(uri_encoded_folder);
+>>
+>>         curl_easy_setopt(curl, CURLOPT_URL, path.buf);
+>>         strbuf_release(&path);
+>> --
+>> 2.15.1.272.g8e603414b
