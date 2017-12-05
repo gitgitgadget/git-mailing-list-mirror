@@ -2,68 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 16DF920C11
-	for <e@80x24.org>; Tue,  5 Dec 2017 07:01:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DC1E220C11
+	for <e@80x24.org>; Tue,  5 Dec 2017 07:02:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751894AbdLEHBn (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Dec 2017 02:01:43 -0500
-Received: from mxf98a.netcup.net ([46.38.249.138]:45496 "EHLO
-        mxf98a.netcup.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750820AbdLEHBm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Dec 2017 02:01:42 -0500
-Received: from [192.168.178.21] (x4d075e6a.dyn.telefonica.de [77.7.94.106])
-        by mxf98a.netcup.net (Postfix) with ESMTPSA id 87AC1140CAE;
-        Tue,  5 Dec 2017 08:01:41 +0100 (CET)
-Authentication-Results: mxf98a;
-        spf=pass (sender IP is 77.7.94.106) smtp.mailfrom=rabel@robertabel.eu smtp.helo=[192.168.178.21]
-Received-SPF: pass (mxf98a: connection is authenticated)
-Subject: Re: [PATCH v2 1/2] git-prompt: make __git_eread intended use explicit
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-References: <alpine.DEB.2.21.1.1712011143320.98586@virtualbox>
- <20171201233133.30011-1-rabel@robertabel.eu>
- <xmqqindmml25.fsf@gitster.mtv.corp.google.com>
- <e8d35c35-ffd5-ef10-bc6a-0834c1703995@robertabel.eu>
- <xmqqd13ukohs.fsf@gitster.mtv.corp.google.com>
-From:   Robert Abel <rabel@robertabel.eu>
-Message-ID: <818f414b-76ab-6e1d-0c5c-7f9959223e64@robertabel.eu>
-Date:   Tue, 5 Dec 2017 08:01:41 +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.0
+        id S1752197AbdLEHCw (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Dec 2017 02:02:52 -0500
+Received: from cloud.peff.net ([104.130.231.41]:48322 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1750740AbdLEHCv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Dec 2017 02:02:51 -0500
+Received: (qmail 29955 invoked by uid 109); 5 Dec 2017 07:02:51 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 05 Dec 2017 07:02:51 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 29844 invoked by uid 111); 5 Dec 2017 07:03:12 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with ESMTPA; Tue, 05 Dec 2017 02:03:12 -0500
+Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 05 Dec 2017 02:02:50 -0500
+Date:   Tue, 5 Dec 2017 02:02:50 -0500
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Takashi Iwai <tiwai@suse.de>
+Subject: Re: [PATCH 3/4] Makefile: use the sha1collisiondetection submodule
+ by default
+Message-ID: <20171205070249.GC4788@sigill.intra.peff.net>
+References: <20171128213214.12477-1-avarab@gmail.com>
+ <20171128213214.12477-4-avarab@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqqd13ukohs.fsf@gitster.mtv.corp.google.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-PPP-Message-ID: <20171205070141.8096.99089@mxf98a.netcup.net>
-X-PPP-Vhost: robertabel.eu
+In-Reply-To: <20171128213214.12477-4-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On Tue, Nov 28, 2017 at 09:32:13PM +0000, Ævar Arnfjörð Bjarmason wrote:
 
-On 05 Dec 2017 01:27, Junio C Hamano wrote:
-> I know all of the above, but I think you misunderstood the point I
-> wanted to raise, so let me try again.  The thing is, none of what
-> you just wrote changes the fact that lack of callers that want to do
-> "multi-line" is IRRELEVANT.
+> Change the build process so that instead of needing to supply
+> DC_SHA1_SUBMODULE=YesPlease to use the sha1collisiondetection
+> submodule instead of the copy of the same code shipped in the sha1dc
+> directory, it uses the submodule by default unless
+> NO_DC_SHA1_SUBMODULE=UnfortunatelyYes is supplied.
+> 
+> This reverses the logic added by me in 86cfd61e6b ("sha1dc: optionally
+> use sha1collisiondetection as a submodule", 2017-07-01). Git has now
+> shipped with the submodule in git.git for two major releases, if we're
+> ever going to migrate to fully using it instead of perpetually
+> maintaining both sha1collisiondetection and the sha1dc directory this
+> is a logical first step.
+> 
+> This change removes the "auto" logic Junio added in
+> cac87dc01d ("sha1collisiondetection: automatically enable when
+> submodule is populated", 2017-07-01), I feel that automatically
+> falling back to using sha1dc would defeat the point, which is to smoke
+> out any remaining users of git.git who have issues cloning the
+> submodule for whatever reason.
 
-I disagree. The commit comment is meant to give context to the
-introduced changes. One change is the  additional comment for
-__git_eread, which now clearly states that only a single line is read.
+I'm not sure how I feel about this. I see your point that there's no
+real value in maintaining two systems indefinitely.  At the same time, I
+wonder how much value the submodule strategy is actually bringing us.
 
-I'm well aware that I'm not breaking reading multiple lines, because
-that never worked in the first place. Thus, it was never the indented
-use for __git_eread as I see it. I explicitly want to include that
-information in my commit message to pay it forward to the next person
-working on the prompt.
+IOW, are we agreed that the path forward is to get everybody using the
+submodule?
 
-Regards,
+It seems like it's going to cause some minor pain for CI and packaging
+systems that now need to care about submodules (so at least flipping the
+switch, but maybe also dealing with having a network dependency for the
+build that was not already there).
 
-Robert
+I'll admit I'm more sensitive to this than most people, since I happen
+to maintain a fork of Git that I run through an internal CI system. And
+that CI otherwise depends only on the locally-held fork, not any
+external resources. But I'm probably in a fairly unique situation there.
+
+-Peff
