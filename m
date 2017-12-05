@@ -2,94 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9130320A40
-	for <e@80x24.org>; Tue,  5 Dec 2017 20:02:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 45BE420A40
+	for <e@80x24.org>; Tue,  5 Dec 2017 20:07:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751821AbdLEUCg (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Dec 2017 15:02:36 -0500
-Received: from mail-it0-f68.google.com ([209.85.214.68]:36488 "EHLO
-        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751286AbdLEUCf (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Dec 2017 15:02:35 -0500
-Received: by mail-it0-f68.google.com with SMTP id d16so4428417itj.1
-        for <git@vger.kernel.org>; Tue, 05 Dec 2017 12:02:35 -0800 (PST)
+        id S1751990AbdLEUHc (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Dec 2017 15:07:32 -0500
+Received: from mail-io0-f177.google.com ([209.85.223.177]:47035 "EHLO
+        mail-io0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751864AbdLEUHb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Dec 2017 15:07:31 -0500
+Received: by mail-io0-f177.google.com with SMTP id x129so56776iod.13
+        for <git@vger.kernel.org>; Tue, 05 Dec 2017 12:07:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=dSRAFXv/6c2qNWaKh1ys1PGPZi4OcEVk3cm/Ef3w6Kg=;
-        b=ZN6dp8GhUzsdPqdVyRHckKNh7NcVjmu1gCEExz9hcIW5poX0OjUsA94SxsK92Vbswi
-         H0cnAA8JQVdcm++4TVEnExhxVnIKaRdld6VFc7JVLmVkuPjgx7ofL797ZyK5m7F0Zpca
-         X/rmg1YzkjrQluIXvdGCgYpSu2nZvSD030fDgeEei5Pbw5xhqux1fD5I/G/yaUUx4+C3
-         Z4szrHqBm4mY1QHDNtd+kMBeTUhGXYJEYEztCPFm5KUg0gVHrfkFspN4q87rhIOBWMZ3
-         3M1FBmCkJdKRzdktZVpfWpq82JMJ0kjxZFYLSczM0q6iDPie+B7iOdPYafDufngC6ycs
-         QY7A==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=CPy37iQuoRzmdxffqwC5Y0syxO4h3EJ6ykbSS+MYVvs=;
+        b=qj8gPP/DrBaBHrQHuyVQ6BU9GK706Idu/AMFigscSg7OEYnHZzeaIigVt3sB/CqLUP
+         xwshtrda/6mstrmRIXrwP1HuOXkW92CTHfoupXyGer2jH1Oze+xWsXVrAqGyvGgvUf6c
+         0Jy0FM69eUNI3uP1uJDiYt5s00XRIqegrE4AR8XWcS9VyrktbIvPyRpItmEz8SbHBewy
+         usoFfITE+HwSntOnlV28p2DCMaUYSxP/tkOD0kKnMFLNYsDgTqtDxuqMOggiHj0xY7AJ
+         jWO9p3FF9tHAySI9FwAl+1qYo3TvB0dD4Y50wC7OGU/8nPLvG22XpheEbfZs55IgQi4c
+         tBEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=dSRAFXv/6c2qNWaKh1ys1PGPZi4OcEVk3cm/Ef3w6Kg=;
-        b=NCsie85/gMCEnKDaBC/x5kzAJSIOJXwW0SETBGdvjvAc39pYckTSmchjdeZ3HzJdqP
-         5Lo1RNqBAOzpIaJOX79iDajFUA6sYQWgbuGkr0H2t4woVwNqDygs+g003sSnsW+/tksU
-         Yo5/QOc/yPQT79PEyIe83zF8yFSa41ICQv3dQ2Gy+rnPDjbvQSzql7wFn9IsXJ53ADX4
-         08Fs1BzOlB8J+OaQ0CTD6bg0UKKPxx2XuCh8aIuzZ04v3yirSmxbt/CF5jl5ymgUUshD
-         X2vHiAzIMGOpBLI1GuJS8g16FM81TiLw8tF9p0fHz2xztuDD3/9h4E+S23rqB7BrcPqD
-         hkFQ==
-X-Gm-Message-State: AKGB3mItzYtVCYP829+P6hldAZeMEiixbk45PnDgfZt+48a2SxHSU0ac
-        SjjCJE2QPjO+dZa3B8I1ZlaW7r4F/Y8=
-X-Google-Smtp-Source: AGs4zMYSZEAZt50n1t25NkTJnihw1wZ7toA+RpzNe2UN7r1w9tsrnS+96BA2dKrXUQwxVACGnI0XPA==
-X-Received: by 10.36.196.85 with SMTP id v82mr1714043itf.136.1512504154942;
-        Tue, 05 Dec 2017 12:02:34 -0800 (PST)
-Received: from twelve3.mtv.corp.google.com ([2620:0:100e:422:7cdf:8835:5040:e17a])
-        by smtp.gmail.com with ESMTPSA id j204sm547721itj.16.2017.12.05.12.02.33
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 05 Dec 2017 12:02:34 -0800 (PST)
-Date:   Tue, 5 Dec 2017 12:02:33 -0800
-From:   Jonathan Tan <jonathantanmy@google.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=CPy37iQuoRzmdxffqwC5Y0syxO4h3EJ6ykbSS+MYVvs=;
+        b=kkn+G9k88K6zuhMKkfi0uyBT6IzF9FF9atUgcpzbYzK6eYoSbgtL54X5CUDNkZElaO
+         f7Mkywtm7/+sFI6C5jQJBTgKRf5ZAoyIRTRi7D3FXfTv5fxq/K/mMbq3W11HCtfyMT6I
+         BXhfnV233tIKjVsH5qEWzEii+iZ7naS4F50KLhSendKQHk7NKrCDVAw96uZS9mKS3STm
+         zmQmyLFIkg+TYuM5QLYIMzQoCa4zZW90bZgtF/Y5xvSKhoiU4i0wkRGX1EnPa3BPJNbL
+         QtiZvutrmw+MhIZDSBXYqMekGbooxa7pvF9cTWH0tjYCMbXL9f0WrWusEymugU0yMBqR
+         nLQw==
+X-Gm-Message-State: AKGB3mIRmQx7/Y2b3VZlCv7sOGXH5D+QKhNfsaJodw6F7cbJNWYDfEgB
+        q9ElCemVLfb9dvwDvOm3NAA=
+X-Google-Smtp-Source: AGs4zMbAsGtjz2asOrbccCZXwrzlzGf4Yyqt54eaurf3gFAAJWgEIeBspSZOD5lH7Js/dv/1zd+3hA==
+X-Received: by 10.107.139.196 with SMTP id n187mr25867653iod.54.1512504450241;
+        Tue, 05 Dec 2017 12:07:30 -0800 (PST)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id p198sm544007itp.11.2017.12.05.12.07.28
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 05 Dec 2017 12:07:28 -0800 (PST)
+Date:   Tue, 5 Dec 2017 12:07:26 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
 To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
-        christian.couder@gmail.com, Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v6 00/12] Partial clone part 2: fsck and promisors
-Message-Id: <20171205120233.02cb5850ead14137c2a426c0@google.com>
-In-Reply-To: <20171205165854.64979-1-git@jeffhostetler.com>
-References: <20171205165854.64979-1-git@jeffhostetler.com>
-X-Mailer: Sylpheed 3.4.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Cc:     Philip Oakley <philipoakley@iee.org>,
+        Vitaly Arbuzov <vit@uber.com>, Git List <git@vger.kernel.org>
+Subject: Re: How hard would it be to implement sparse fetching/pulling?
+Message-ID: <20171205200726.GC8183@aiede.mtv.corp.google.com>
+References: <CANxXvsMbpBOSRKaAi8iVUikfxtQp=kofZ60N0pHXs+R+q1k3_Q@mail.gmail.com>
+ <e2d5470b-9252-07b4-f3cf-57076d103a17@jeffhostetler.com>
+ <CANxXvsNWgYda_unSWoiEnfZnEuX8ktkAD-d_ynVtsTbkOKqeCg@mail.gmail.com>
+ <CANxXvsO0xk3K8Wx9pmX1qST1=43BkrKWOcCZjJ8vVcBFYVRB0A@mail.gmail.com>
+ <C89EEDA4D8F84C6290111C04ADAE6872@PhilipOakley>
+ <0e851e08-0dcc-da3b-b2c4-42afcdbf6ca4@jeffhostetler.com>
+ <6C1247A43F8841F98E070C264045BF49@PhilipOakley>
+ <7bcdbd52-0cfa-58b2-e40a-1852cc70ce69@jeffhostetler.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <7bcdbd52-0cfa-58b2-e40a-1852cc70ce69@jeffhostetler.com>
+User-Agent: Mutt/1.9.1 (2017-09-22)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue,  5 Dec 2017 16:58:42 +0000
-Jeff Hostetler <git@jeffhostetler.com> wrote:
+Hi,
 
-> From: Jeff Hostetler <jeffhost@microsoft.com>
-> 
-> This is V6 of part 2 of partial clone.  This assumes V6 of part 1
-> is already present.  This version fixes a problem in fetch-pack
-> observed in V5.  It also contains 2 "fixup" commits that are
-> WIP responses to comments on V5.
+Jeff Hostetler wrote:
+> On 12/2/2017 1:24 PM, Philip Oakley wrote:
+>> From: "Jeff Hostetler" <git@jeffhostetler.com>
+>> Sent: Friday, December 01, 2017 5:23 PM
 
-A note on the fix of a problem in fetch-pack observed in V5: to do this,
-I renamed the "no_haves" setting to "no_dependents", since this setting
-now has a broader effect than merely suppressing "have" lines. This
-setting is described in patch 7 ("introduce fetch-object: fetch one
-promisor object").
+>>> Discussing this feature in the context of the defense industry
+>>> makes me a little nervous.  (I used to be in that area.)
+>>
+>> I'm viewing the desire for codebase partitioning from a soft layering
+>> of risk view (perhaps a more UK than USA approach ;-)
+>
+> I'm not sure I know what this means or how the UK defense
+> security models/policy/procedures are different from the US,
+> so I can't say much here.  I'm just thinking that even if we
+> get a *perfectly working* partial clone/fetch/push/etc. that
+> it would not pass a security audit.  I might be wrong here
+> (and I'm no expert on the subject), but I think they would
+> push you towards a different solution architecture.
 
-> Part 2 is concerned with fsck, gc, initial support for dynamic
-> object fetching, and tracking promisor objects.  Jonathan Tan
-> originally developed this code.  I have moved it on top of
-> part 1 and updated it slightly.
+I'm pretty ignorant about the defense industry, but a few more
+comments:
 
-Thanks. I checked the diff between this and V5 and it looks as I
-expected. ("git am -3" didn't work on the patches as e-mailed to the
-list, though - I had to use the one hosted at GitHub [1].)
+- gitolite implements some features on top of git's server code that I
+  consider to be important for security.  So much so that I've been
+  considering what it would take to remove the git-shell command from
+  git.git and move it to the gitolite project where people would be
+  better equipped to use it in an appropriate context
 
-[1] https://github.com/jeffhostetler/git/tree/core/pc6_p2
+- in particular, git's reachability checking code could use some
+  hardening/improvement.  In particular, think of edge cases like
+  where someone pushes a pack with deltas referring to objects they
+  should not be able to reach.
+
+- Anyone willing to audit git code's security wins my approval.
+  Please, please, audit git code and report the issues you find. :)
+
+[...]
+> Also omitting certain trees means you now (obviously) have both missing
+> trees and blobs.  And both need to be dynamically or batch fetched as
+> needed.  And certain operations will need multiple round trips to fully
+> resolve -- fault in a tree and then fault in blobs referenced by it.
+
+For omitting trees, we will need to modify the index format, since the
+index has entries for all paths today.  That's on the roadmap but has
+not been implemented yet.
+
+Thanks,
+Jonathan
