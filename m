@@ -2,136 +2,152 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BA2B120A40
-	for <e@80x24.org>; Tue,  5 Dec 2017 14:16:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E8BB820A40
+	for <e@80x24.org>; Tue,  5 Dec 2017 14:23:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752336AbdLEOQy (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Dec 2017 09:16:54 -0500
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:38180 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752415AbdLEOQr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Dec 2017 09:16:47 -0500
-Received: by mail-wm0-f68.google.com with SMTP id 64so1534978wme.3
-        for <git@vger.kernel.org>; Tue, 05 Dec 2017 06:16:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=MBTlmnCErAVA4YH6Eo2CwwoU6RNgncpaYfyzw0+fSf8=;
-        b=t56EK6kDDfVMkkzDvY1BSwiCjK1uWbkEEAVLytNTm9zFpUdD4qp93OKrCKHsQ+xit6
-         L5pRfVg0ZRkGpAmU2oAMg6WfXd8F21/4ZO/7htkolydE4asilhXkBI6blwP5x3/qTsrD
-         0Q4l0Db70YrQD1otqd5kS9I7fWJaD5T1P2jwk+rrLDd1OfbkvQ0UISkoWjGbX1TF9Wjx
-         AxOgzfyx+ZXdhn4OrbnAYGsivNkpxgUn4hSDRtW8VI6Bg5bn9zpk0xBFFPZeHEhn1J6I
-         YtVdArPJglLrxn9Mk97wZSpOrA5xpTfcud70oGLKkXxCtiE64e1zOWhmHkiiRQsCxl7s
-         Ro0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=MBTlmnCErAVA4YH6Eo2CwwoU6RNgncpaYfyzw0+fSf8=;
-        b=Py/CfN4hIVpTQgeUAcasvD1/Ldz7acrohGWKfgf06v8gST9k6Gevsz767cj4XmsSAZ
-         IBTXozdMh385jX9wqPFfNfCLKmxkWwxXc8eOPEXyUwYS1QZHz5UkJ0mHaKKoplHrk+6y
-         Syid63W0TktzLMWSXiLm6EE3pLDNG/pzeY4m4AqSSDQ63PxG6KhQ1OGWUUVL4Nb70cVH
-         9iT6fAmjlTubjry64NjH5lemLcylTO5xsGLuf9q7DA7NAe9KWckl5yLjoT/XrKX9FEgZ
-         VADIFjIrutR9VjQg5DZtoH3udYCTrLYvKwfgnefPKFeYHFgNz+FpDub4w9TfuPtyer0z
-         EK9w==
-X-Gm-Message-State: AJaThX6wyv68JZDKk0DvoU4/ky3biZ2Kx7gU1oaEu4xweHIj8F+TKk1f
-        BoHNH2JCxegQApPoLdZD2Bc=
-X-Google-Smtp-Source: AGs4zMaeXtTAYclwoPeHwJeN1KU+aiTD8b4pRLEnqMGsOi57voSEOuDKmwFef5jMOW4NZWsaJ9LDTg==
-X-Received: by 10.80.205.218 with SMTP id h26mr35313335edj.157.1512483405876;
-        Tue, 05 Dec 2017 06:16:45 -0800 (PST)
-Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
-        by smtp.gmail.com with ESMTPSA id h56sm255348ede.45.2017.12.05.06.16.41
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 05 Dec 2017 06:16:41 -0800 (PST)
-Received: from avar by evledraar with local (Exim 4.89)
-        (envelope-from <avarab@gmail.com>)
-        id 1eME1Z-0004rW-4u; Tue, 05 Dec 2017 15:16:41 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Takashi Iwai <tiwai@suse.de>,
-        Brandon Williams <bmwill@google.com>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 3/4] Makefile: use the sha1collisiondetection submodule by default
-References: <20171128213214.12477-1-avarab@gmail.com> <20171128213214.12477-4-avarab@gmail.com> <20171205070249.GC4788@sigill.intra.peff.net> <87bmjdscdr.fsf@evledraar.booking.com> <xmqqh8t5jp9e.fsf@gitster.mtv.corp.google.com>
-User-agent: Debian GNU/Linux 9.2 (stretch); Emacs 25.1.1; mu4e 0.9.19
-In-reply-to: <xmqqh8t5jp9e.fsf@gitster.mtv.corp.google.com>
-Date:   Tue, 05 Dec 2017 15:16:41 +0100
-Message-ID: <87a7yxs1iu.fsf@evledraar.booking.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+        id S1752561AbdLEOXq (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Dec 2017 09:23:46 -0500
+Received: from mailout1.w1.samsung.com ([210.118.77.11]:34220 "EHLO
+        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752366AbdLEOXp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Dec 2017 09:23:45 -0500
+Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
+        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20171205142343euoutp01a354f73a0c0a7cf016adf1ed534ea0a2~9bAYlT8P_1496814968euoutp01k;
+        Tue,  5 Dec 2017 14:23:43 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20171205142343euoutp01a354f73a0c0a7cf016adf1ed534ea0a2~9bAYlT8P_1496814968euoutp01k
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1512483823;
+        bh=lRJa+fs2Nxp7QGdotTuU7Z2uv7/Kfwp+nH3c1UgykCQ=;
+        h=From:To:Cc:Subject:Date:In-reply-to:References:From;
+        b=Am77T9yQRPpUyQU11bRvYLUUtU30xXgG3Mw+6V1R7BsU4QigRG43tQ4Q0KHmmR1T2
+         OaI7DKAI8bvcWF1wKowMchAMXU0G38PzlZPrWsAXdtJ5vZ2Vjr/sfYfyycVhOmoyF9
+         dxM30M6C37xkJ/moX5ZvHg2vFqBTPJApF3TfEG5s=
+Received: from eusmges5.samsung.com (unknown [203.254.199.245]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
+        20171205142342eucas1p153442de3616248ecb2375bf93f3cc3e3~9bAXz9bPL3090930909eucas1p1V;
+        Tue,  5 Dec 2017 14:23:42 +0000 (GMT)
+Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
+        eusmges5.samsung.com (EUCPMTA) with SMTP id D7.15.12743.EEBA62A5; Tue,  5
+        Dec 2017 14:23:42 +0000 (GMT)
+Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
+        20171205142341eucas1p2b30072c799c8787f1b66db2fd4bac1a2~9bAXKZD2X1823518235eucas1p2m;
+        Tue,  5 Dec 2017 14:23:41 +0000 (GMT)
+X-AuditID: cbfec7f5-f79d06d0000031c7-f8-5a26abee2100
+Received: from eusync3.samsung.com ( [203.254.199.213]) by
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id 76.E5.20118.DEBA62A5; Tue,  5
+        Dec 2017 14:23:41 +0000 (GMT)
+MIME-version: 1.0
+Content-transfer-encoding: 8BIT
+Content-type: text/plain; charset="UTF-8"
+Received: from localhost ([106.116.147.110]) by eusync3.samsung.com (Oracle
+        Communications Messaging Server 7.0.5.31.0 64bit (built May  5 2014)) with
+        ESMTPA id <0P0H00BJRRZHF840@eusync3.samsung.com>; Tue, 05 Dec 2017 14:23:41
+        +0000 (GMT)
+From:   =?UTF-8?q?=C5=81ukasz=20Stelmach?= <l.stelmach@samsung.com>
+To:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     =?UTF-8?q?=C5=81ukasz=20Stelmach?= <l.stelmach@samsung.com>,
+        Pat Thoyts <patthoyts@users.sourceforge.net>,
+        =?UTF-8?q?=C5=81ukasz=20Stelmch?= <stlman@poczta.fm>
+Subject: [PATCH v3] git-gui: Prevent double UTF-8 conversion
+Date:   Tue, 05 Dec 2017 15:23:26 +0100
+Message-id: <20171205142326.6140-1-l.stelmach@samsung.com>
+X-Mailer: git-send-email 2.11.0
+In-reply-to: <20171202122046.6033-1-l.stelmach@samsung.com>
+Organization: Samsung R&D Institute Poland
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpmleLIzCtJLcpLzFFi42LZduzned13q9WiDK51SFp0Xelmsuhf3sVm
+        cfPQCkaLd523WSwW3exicmD1+PAxzqOx4QOTR9+WVYweTafaWT0+b5ILYI3isklJzcksSy3S
+        t0vgynj2+wRLwRWBiu/7f7I0MH7i6WLk5JAQMJH4cOgGI4QtJnHh3no2EFtIYCmjxLF1Vl2M
+        XED2Z0aJG/PWscI0XHy+nRkisYxRonXRJLAOXgFBiR+T77F0MXJwMAvISxy5lA0SZhbQlNi6
+        ez07xNAvjBI7HzqB2GwCjhL9S0+AzRQR8JSY9+MIC8hMZoHljBI9zfeYQBLCAjYSe7rngV3H
+        IqAqMfnMd6hdVhIP/s5igjhIXmJX20WwQZwC1hJPJvaD1fMLaEmsabrOAlFzgE2ic5IWyG0S
+        Ai4Sy69JQ4SFJV4d38IOYctIXJ7cDXaDhEA/o8Th+d+hElMYJRYvdICwrSX+rJrIBvEYn8Sk
+        bdOZIWbySnS0CUGUeEgcm38Baq2jRNvOl4yQsOpjlFiwfwLjBEb5WUjBNQsRXLOQgmsBI/Mq
+        RpHU0uLc9NRiU73ixNzi0rx0veT83E2MwKRx+t/xrzsYlx6zOsQowMGoxMO7YpZalBBrYllx
+        Ze4hRgkOZiURXuZ+oBBvSmJlVWpRfnxRaU5q8SFGaQ4WJXFe26i2SCGB9MSS1OzU1ILUIpgs
+        EwenVAOjSLL7/TbFhCPl91x338/YzC3C/Oq07+yl22O6uf5O6/mskbTt0HS3APbZy/2ljaJF
+        In80XGCqfSKk0h74r+vjq5kLln7o+q/MtM6z/1LSZqYjWj90J5Tettrflb1zYshUPTGnj2IB
+        Fr8EP56u+jC940fJnt2Wua/iDv0NnDGBdQObmcvyG19dlViKMxINtZiLihMB3jVvLRYDAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrFLMWRmVeSWpSXmKPExsVy+t/xq7pvV6tFGbzstrboutLNZNG/vIvN
+        4uahFYwW7zpvs1gsutnF5MDq8eFjnEdjwwcmj74tqxg9mk61s3p83iQXwBrFZZOSmpNZllqk
+        b5fAlfHs9wmWgisCFd/3/2RpYPzE08XIySEhYCJx8fl2ZghbTOLCvfVsILaQwBJGiZfvfUBs
+        XgFBiR+T77F0MXJwMAvISxy5lA0SZhZQl5g0bxFQKxdQ+TdGiblbfrODJNgEHCX6l55gBbFF
+        BDwl5v04wgJSxCywnFFi27a/YEXCAjYSe7rnMYLYLAKqEpPPfGeDWGYl8eDvLCaIg+QldrVd
+        BBvEKWAt8WRiPyPEcVYSx1r3gtXzC2hJrGm6zjKBUXAWkltnIdw6C8mtCxiZVzGKpJYW56bn
+        FhvpFSfmFpfmpesl5+duYgSG+LZjP7fsYOx6F3yIUYCDUYmHd8UstSgh1sSy4srcQ4wSHMxK
+        IrzM/UAh3pTEyqrUovz4otKc1OJDjNIcLErivL17VkcKCaQnlqRmp6YWpBbBZJk4OKUaGBU8
+        9oYv/WYSybMviGO1knb0r2/qzoVXgqf4dkzumy6WmMPr/LWmemZprVy4/ww285U9DEfO3uiM
+        neb760BL53Xr/tuaE3u/aJgcFvc8NV/0mJyhjGzn79q420vLrkl9fvVykWSu49WLAezdYRYW
+        dS99V+17vttq+q3V9XrOm5dkR16o/NlwVImlOCPRUIu5qDgRAFy4ZpltAgAA
+X-CMS-MailID: 20171205142341eucas1p2b30072c799c8787f1b66db2fd4bac1a2
+X-Msg-Generator: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20171205142341eucas1p2b30072c799c8787f1b66db2fd4bac1a2
+X-RootMTR: 20171205142341eucas1p2b30072c799c8787f1b66db2fd4bac1a2
+References: <20171202122046.6033-1-l.stelmach@samsung.com>
+        <CGME20171205142341eucas1p2b30072c799c8787f1b66db2fd4bac1a2@eucas1p2.samsung.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Convert author's name and e-mail address from the UTF-8 (or any other)
+encoding in load_last_commit function the same way commit message is
+converted.
 
-On Tue, Dec 05 2017, Junio C. Hamano jotted:
+Amending commits in git-gui without such conversion breaks UTF-8
+strings. For example, "\305\201ukasz" (as written by git cat-file) becomes
+"\303\205\302\201ukasz" in an amended commit.
 
-> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
->
->>> I'm not sure how I feel about this. I see your point that there's no
->>> real value in maintaining two systems indefinitely.  At the same time, I
->>> wonder how much value the submodule strategy is actually bringing us.
->>>
->>> IOW, are we agreed that the path forward is to get everybody using the
->>> submodule?
->> ...
->> In no particular order:
->>
->>  * I don't feel strongly about 2-4/4 in this series. I just hacked this
->>    up because it occurred to me that I'd left this sha1dc stuff in some
->>    in-between state and we'd talked about eventually moving forward with
->>    this.
->
-> Good.
->
->>    We've had two releases with the submodule being purely optional, if
->>    we're going to keep it it seems logical to start at least using it by
->>    default.
->
-> With a need for a patch like 1/4, I suspect two release cycles is
-> way too short for making a move like 2-4/4, though.
+Signed-off-by: Łukasz Stelmach <l.stelmach@samsung.com>
+---
+ git-gui/lib/commit.tcl | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-You're conflating two unrelated things, which to be fair I'm confusingly
-doing by submitting all this together.
+diff --git a/git-gui/lib/commit.tcl b/git-gui/lib/commit.tcl
+index 83620b7cb..75ea965da 100644
+--- a/git-gui/lib/commit.tcl
++++ b/git-gui/lib/commit.tcl
+@@ -25,6 +25,8 @@ You are currently in the middle of a merge that has not been fully completed.  Y
+ 	set msg {}
+ 	set parents [list]
+ 	if {[catch {
++			set name ""
++			set email ""
+ 			set fd [git_read cat-file commit $curHEAD]
+ 			fconfigure $fd -encoding binary -translation lf
+ 			# By default commits are assumed to be in utf-8
+@@ -34,9 +36,7 @@ You are currently in the middle of a merge that has not been fully completed.  Y
+ 					lappend parents [string range $line 7 end]
+ 				} elseif {[string match {encoding *} $line]} {
+ 					set enc [string tolower [string range $line 9 end]]
+-				} elseif {[regexp "author (.*)\\s<(.*)>\\s(\\d.*$)" $line all name email time]} {
+-					set commit_author [list name $name email $email date $time]
+-				}
++				} elseif {[regexp "author (.*)\\s<(.*)>\\s(\\d.*$)" $line all name email time]} { }
+ 			}
+ 			set msg [read $fd]
+ 			close $fd
+@@ -44,7 +44,13 @@ You are currently in the middle of a merge that has not been fully completed.  Y
+ 			set enc [tcl_encoding $enc]
+ 			if {$enc ne {}} {
+ 				set msg [encoding convertfrom $enc $msg]
++				set name [encoding convertfrom $enc $name]
++				set email [encoding convertfrom $enc $email]
+ 			}
++			if {$name ne {} && $email ne {}} {
++				set commit_author [list name $name email $email date $time]
++			}
++
+ 			set msg [string trim $msg]
+ 		} err]} {
+ 		error_popup [strcat [mc "Error loading commit data for amend:"] "\n\n$err"]
+-- 
+2.11.0
 
-1) Since 2.14 we've had the "auto" rule and
-   DC_SHA1_SUBMODULE=[YesPlease|auto], so we'll prefer the submodule if
-   it's there. So we've been testing if the mere presence of a
-   .gitmodules breaks something for someone, seems like it doesn't.
-
-2) Then in the 2.15 release Takashi Iwai submitted a feature to link to
-   an external SHA1DC. This is used in the SuSE 2.15 package here:
-   http://download.opensuse.org/tumbleweed/repo/src-oss/suse/src/
-
-   However, as you'll see if you extract that package they don't run
-   into that bug, because they're building it from a tarball which has
-   an empty sha1collisiondetection/ directory as noted in my
-   87bmjdscdr.fsf@evledraar.booking.com.
-
-   Takashi *would* run into an error with my 1/4 if he was building from
-   git.git, or if "make dist" included sha1collisiondetection/, but I
-   don't see a reason to hold anything back back on that account. The
-   only users of DC_SHA1_EXTERNAL=YesPlease are going to be packagers
-   who know what they're doing, and if we start erroring out for them on
-   this obscure option that's going to be trivially solved.
-
-I don't see why this obscure edge case with #2 should keep us from
-deciding whatever we'd decide with #1. They're really unrelated, #2
-practically speaking only impacts tarball consumers, #1 impacts git.git
-users.
-
-It seems logical to me if we're going to move forward with #1 at all by
-first making the submodule the default & then depending on how that
-turns out making it a hard dependency, we'd do it now.
-
-We'll learn nothing new by shipping a 2.16 with DC_SHA1_SUBMODULE=auto
-that we haven't already learned in 2.14 & 2.15.
