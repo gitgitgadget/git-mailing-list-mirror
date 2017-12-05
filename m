@@ -6,30 +6,30 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 502CD20A40
-	for <e@80x24.org>; Tue,  5 Dec 2017 17:03:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8F6FB20A40
+	for <e@80x24.org>; Tue,  5 Dec 2017 17:03:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753179AbdLERD1 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Dec 2017 12:03:27 -0500
-Received: from siwi.pair.com ([209.68.5.199]:15323 "EHLO siwi.pair.com"
+        id S1753187AbdLERD3 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Dec 2017 12:03:29 -0500
+Received: from siwi.pair.com ([209.68.5.199]:15291 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753168AbdLERDT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Dec 2017 12:03:19 -0500
+        id S1753148AbdLERDR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Dec 2017 12:03:17 -0500
 Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 31576844E6;
-        Tue,  5 Dec 2017 12:03:18 -0500 (EST)
+        by siwi.pair.com (Postfix) with ESMTP id E0FA0844E4;
+        Tue,  5 Dec 2017 12:03:16 -0500 (EST)
 Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id AB027844DE;
-        Tue,  5 Dec 2017 12:03:17 -0500 (EST)
+        by siwi.pair.com (Postfix) with ESMTPSA id 682FD844DE;
+        Tue,  5 Dec 2017 12:03:16 -0500 (EST)
 From:   Jeff Hostetler <git@jeffhostetler.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, jonathantanmy@google.com,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v6 13/14] fetch-pack: restore save_commit_buffer after use
-Date:   Tue,  5 Dec 2017 17:02:53 +0000
-Message-Id: <20171205170254.65293-14-git@jeffhostetler.com>
+Subject: [PATCH v6 11/14] clone: partial clone
+Date:   Tue,  5 Dec 2017 17:02:51 +0000
+Message-Id: <20171205170254.65293-12-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20171205170254.65293-1-git@jeffhostetler.com>
 References: <20171205170254.65293-1-git@jeffhostetler.com>
@@ -40,58 +40,159 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jonathan Tan <jonathantanmy@google.com>
 
-In fetch-pack, the global variable save_commit_buffer is set to 0, but
-not restored to its original value after use.
-
-In particular, if show_log() (in log-tree.c) is invoked after
-fetch_pack() in the same process, show_log() will return before printing
-out the commit message (because the invocation to
-get_cached_commit_buffer() returns NULL, because the commit buffer was
-not saved). I discovered this when attempting to run "git log -S" in a
-partial clone, triggering the case where revision walking lazily loads
-missing objects.
-
-Therefore, restore save_commit_buffer to its original value after use.
-
-An alternative to solve the problem I had is to replace
-get_cached_commit_buffer() with get_commit_buffer(). That invocation was
-introduced in commit a97934d ("use get_cached_commit_buffer where
-appropriate", 2014-06-13) to replace "commit->buffer" introduced in
-commit 3131b71 ("Add "--show-all" revision walker flag for debugging",
-2008-02-13). In the latter commit, the commit author seems to be
-deciding between not showing an unparsed commit at all and showing an
-unparsed commit without the message (which is what the commit does), and
-did not mention parsing the unparsed commit, so I prefer to preserve the
-existing behavior.
-
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- fetch-pack.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ builtin/clone.c  | 22 ++++++++++++++++++++--
+ t/t5601-clone.sh | 49 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 69 insertions(+), 2 deletions(-)
 
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 3c5f064..773453c 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -717,6 +717,7 @@ static int everything_local(struct fetch_pack_args *args,
- {
- 	struct ref *ref;
- 	int retval;
-+	int old_save_commit_buffer = save_commit_buffer;
- 	timestamp_t cutoff = 0;
+diff --git a/builtin/clone.c b/builtin/clone.c
+index dbddd98..f519bd4 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -26,6 +26,7 @@
+ #include "run-command.h"
+ #include "connected.h"
+ #include "packfile.h"
++#include "list-objects-filter-options.h"
  
- 	save_commit_buffer = 0;
-@@ -786,6 +787,9 @@ static int everything_local(struct fetch_pack_args *args,
- 		print_verbose(args, _("already have %s (%s)"), oid_to_hex(remote),
- 			      ref->name);
+ /*
+  * Overall FIXMEs:
+@@ -60,6 +61,7 @@ static struct string_list option_optional_reference = STRING_LIST_INIT_NODUP;
+ static int option_dissociate;
+ static int max_jobs = -1;
+ static struct string_list option_recurse_submodules = STRING_LIST_INIT_NODUP;
++static struct list_objects_filter_options filter_options;
+ 
+ static int recurse_submodules_cb(const struct option *opt,
+ 				 const char *arg, int unset)
+@@ -135,6 +137,7 @@ static struct option builtin_clone_options[] = {
+ 			TRANSPORT_FAMILY_IPV4),
+ 	OPT_SET_INT('6', "ipv6", &family, N_("use IPv6 addresses only"),
+ 			TRANSPORT_FAMILY_IPV6),
++	OPT_PARSE_LIST_OBJECTS_FILTER(&filter_options),
+ 	OPT_END()
+ };
+ 
+@@ -886,6 +889,8 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	struct refspec *refspec;
+ 	const char *fetch_pattern;
+ 
++	fetch_if_missing = 0;
++
+ 	packet_trace_identity("clone");
+ 	argc = parse_options(argc, argv, prefix, builtin_clone_options,
+ 			     builtin_clone_usage, 0);
+@@ -1073,6 +1078,8 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 			warning(_("--shallow-since is ignored in local clones; use file:// instead."));
+ 		if (option_not.nr)
+ 			warning(_("--shallow-exclude is ignored in local clones; use file:// instead."));
++		if (filter_options.choice)
++			warning(_("--filter is ignored in local clones; use file:// instead."));
+ 		if (!access(mkpath("%s/shallow", path), F_OK)) {
+ 			if (option_local > 0)
+ 				warning(_("source repository is shallow, ignoring --local"));
+@@ -1104,7 +1111,13 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 		transport_set_option(transport, TRANS_OPT_UPLOADPACK,
+ 				     option_upload_pack);
+ 
+-	if (transport->smart_options && !deepen)
++	if (filter_options.choice) {
++		transport_set_option(transport, TRANS_OPT_LIST_OBJECTS_FILTER,
++				     filter_options.filter_spec);
++		transport_set_option(transport, TRANS_OPT_FROM_PROMISOR, "1");
++	}
++
++	if (transport->smart_options && !deepen && !filter_options.choice)
+ 		transport->smart_options->check_self_contained_and_connected = 1;
+ 
+ 	refs = transport_get_remote_refs(transport);
+@@ -1164,13 +1177,17 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	write_refspec_config(src_ref_prefix, our_head_points_at,
+ 			remote_head_points_at, &branch_top);
+ 
++	if (filter_options.choice)
++		partial_clone_register("origin", &filter_options);
++
+ 	if (is_local)
+ 		clone_local(path, git_dir);
+ 	else if (refs && complete_refs_before_fetch)
+ 		transport_fetch_refs(transport, mapped_refs);
+ 
+ 	update_remote_refs(refs, mapped_refs, remote_head_points_at,
+-			   branch_top.buf, reflog_msg.buf, transport, !is_local);
++			   branch_top.buf, reflog_msg.buf, transport,
++			   !is_local && !filter_options.choice);
+ 
+ 	update_head(our_head_points_at, remote_head, reflog_msg.buf);
+ 
+@@ -1191,6 +1208,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
  	}
-+
-+	save_commit_buffer = old_save_commit_buffer;
-+
- 	return retval;
- }
  
+ 	junk_mode = JUNK_LEAVE_REPO;
++	fetch_if_missing = 1;
+ 	err = checkout(submodule_progress);
+ 
+ 	strbuf_release(&reflog_msg);
+diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+index 9c56f77..6d37c6d 100755
+--- a/t/t5601-clone.sh
++++ b/t/t5601-clone.sh
+@@ -571,4 +571,53 @@ test_expect_success 'GIT_TRACE_PACKFILE produces a usable pack' '
+ 	git -C replay.git index-pack -v --stdin <tmp.pack
+ '
+ 
++partial_clone () {
++	       SERVER="$1" &&
++	       URL="$2" &&
++
++	rm -rf "$SERVER" client &&
++	test_create_repo "$SERVER" &&
++	test_commit -C "$SERVER" one &&
++	HASH1=$(git hash-object "$SERVER/one.t") &&
++	git -C "$SERVER" revert HEAD &&
++	test_commit -C "$SERVER" two &&
++	HASH2=$(git hash-object "$SERVER/two.t") &&
++	test_config -C "$SERVER" uploadpack.allowfilter 1 &&
++	test_config -C "$SERVER" uploadpack.allowanysha1inwant 1 &&
++
++	git clone --filter=blob:limit=0 "$URL" client &&
++
++	git -C client fsck &&
++
++	# Ensure that unneeded blobs are not inadvertently fetched.
++	test_config -C client extensions.partialclone "not a remote" &&
++	test_must_fail git -C client cat-file -e "$HASH1" &&
++
++	# But this blob was fetched, because clone performs an initial checkout
++	git -C client cat-file -e "$HASH2"
++}
++
++test_expect_success 'partial clone' '
++	partial_clone server "file://$(pwd)/server"
++'
++
++test_expect_success 'partial clone: warn if server does not support object filtering' '
++	rm -rf server client &&
++	test_create_repo server &&
++	test_commit -C server one &&
++
++	git clone --filter=blob:limit=0 "file://$(pwd)/server" client 2> err &&
++
++	test_i18ngrep "filtering not recognized by server" err
++'
++
++. "$TEST_DIRECTORY"/lib-httpd.sh
++start_httpd
++
++test_expect_success 'partial clone using HTTP' '
++	partial_clone "$HTTPD_DOCUMENT_ROOT_PATH/server" "$HTTPD_URL/smart/server"
++'
++
++stop_httpd
++
+ test_done
 -- 
 2.9.3
 
