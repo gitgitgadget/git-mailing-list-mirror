@@ -2,146 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0A6A220C13
-	for <e@80x24.org>; Tue,  5 Dec 2017 05:20:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 775B520C11
+	for <e@80x24.org>; Tue,  5 Dec 2017 06:53:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751062AbdLEFUr (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Dec 2017 00:20:47 -0500
-Received: from mail-it0-f49.google.com ([209.85.214.49]:37527 "EHLO
-        mail-it0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750820AbdLEFUq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Dec 2017 00:20:46 -0500
-Received: by mail-it0-f49.google.com with SMTP id d137so12355869itc.2
-        for <git@vger.kernel.org>; Mon, 04 Dec 2017 21:20:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=5PC5952XEUZcae3MlUpdjqNZysp2HKFoDSIWhs76wXI=;
-        b=OI2wvcolChy1xTr6O3ReA/MIzB0Skpk2CS0SJjvYq1yb6Q8UOj44ESxa/kzfB8tpl6
-         yqzbURoRlUIwzug6Vukiv2yFE0+p8LlROeWcex3DdIAKVBVLBfmppFDCvlWnT6W/qvth
-         ECvBxTRN+O8X+5SqZCGS8i6/O86DNelvwywmd4vLCRE783a1K+JYa1ENKS3I26n90w1O
-         rNJuuxI7mHrTqIBsBTtoDiPiFFCp3ZCgWXQBCmorHFnGUOiHcn1IQyluPR5e6YNQVInt
-         2NbS6fuW287HDawMebDh+d3FDQiFDoRNW655BXqKfBu1iGcvusC1QZC0XMQQCxO10LD9
-         XIrg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=5PC5952XEUZcae3MlUpdjqNZysp2HKFoDSIWhs76wXI=;
-        b=nPSzFjDbitwW28XzwkbCBuxJ1WSABN3Qzs8EBRZ+ci/RNdj2hJxgoydqVHS3Ov7bXH
-         tSRXh5YADwVuH/jMGUHvS9krtiChr0TMvrtFFUa5zEirYC2Tc72N+yP2dAQxWRb0Ehrh
-         4XJkVOJnfiRy9omSKQWgD511d4Z8D1P990qPqaqeEr4SmaexiEgZP2972ESHXYVoBX7n
-         9AIMjwyETs+X7+VFQ9GI/QKC6yxiN+89ZuFvAEk8tdRBewEh3/l4OWkZwNHsSq34rsbE
-         GKPH1bh99/fCJp7dlWrEl+cX01Ete56TOTNe1p+inKUOPF5WU95ubEg21Hw9lGNCvQmG
-         00Zg==
-X-Gm-Message-State: AJaThX7tp14I5gox2PZMP7clAxTCSRa3u5GHwSGKaHdMNdSWr8BBdb2+
-        h381GwR0x7RL/DZMI2HjRxWy0Gnt
-X-Google-Smtp-Source: AGs4zMa5n7IUxXgTN42FGzhDfnc/hr3RZrk11oEqo7ByBIJmfv4TDZBc7A2U1d0TH6vJ5406xwQtrA==
-X-Received: by 10.107.132.19 with SMTP id g19mr25754767iod.47.1512451245533;
-        Mon, 04 Dec 2017 21:20:45 -0800 (PST)
-Received: from [192.168.206.100] ([117.243.21.132])
-        by smtp.gmail.com with ESMTPSA id m123sm4025734iom.71.2017.12.04.21.20.42
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 04 Dec 2017 21:20:44 -0800 (PST)
-Subject: Re: [PATCH v2 2/2] Doc/check-ref-format: clarify information about
- @{-N} syntax
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git mailing list <git@vger.kernel.org>
-References: <xmqqpo8dn1jd.fsf@gitster.mtv.corp.google.com>
- <20171127172834.6396-1-kaartic.sivaraam@gmail.com>
- <20171127172834.6396-2-kaartic.sivaraam@gmail.com>
- <xmqqd14386sw.fsf@gitster.mtv.corp.google.com>
- <1511880237.10193.5.camel@gmail.com>
- <xmqqa7z0lgsd.fsf@gitster.mtv.corp.google.com>
- <1512408328.15792.5.camel@gmail.com>
- <xmqq8teimiz3.fsf@gitster.mtv.corp.google.com>
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Message-ID: <55d5598e-7c4e-c4ea-53a4-7fece0ea4d38@gmail.com>
-Date:   Tue, 5 Dec 2017 10:50:40 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.4.0
+        id S1751809AbdLEGxc (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Dec 2017 01:53:32 -0500
+Received: from cloud.peff.net ([104.130.231.41]:48290 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751255AbdLEGxc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Dec 2017 01:53:32 -0500
+Received: (qmail 29622 invoked by uid 109); 5 Dec 2017 06:53:31 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 05 Dec 2017 06:53:31 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 29790 invoked by uid 111); 5 Dec 2017 06:53:52 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with ESMTPA; Tue, 05 Dec 2017 01:53:52 -0500
+Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 05 Dec 2017 01:53:29 -0500
+Date:   Tue, 5 Dec 2017 01:53:29 -0500
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Takashi Iwai <tiwai@suse.de>
+Subject: Re: [PATCH 1/4] Makefile: don't error out under DC_SHA1_EXTERNAL if
+ DC_SHA1_SUBMODULE=auto
+Message-ID: <20171205065329.GA4788@sigill.intra.peff.net>
+References: <20171128213214.12477-1-avarab@gmail.com>
+ <20171128213214.12477-2-avarab@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqq8teimiz3.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20171128213214.12477-2-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tuesday 05 December 2017 12:14 AM, Junio C Hamano wrote:
-> Kaartic Sivaraam <kaartic.sivaraam@gmail.com> writes:
+On Tue, Nov 28, 2017 at 09:32:11PM +0000, Ævar Arnfjörð Bjarmason wrote:
+
+> Fix a logic error in the initial introduction of DC_SHA1_EXTERNAL. If
+> git.git has a sha1collisiondetection submodule checked out the logic
+> to set DC_SHA1_SUBMODULE=auto would interact badly with the check for
+> whether DC_SHA1_SUBMODULE was set.
 > 
->>> Stepping back a bit, the mild suspicion above says
->>>
->>>      $ git checkout HEAD^0
->>>      ... do things ...
->>>      $ git checkout -b temp
->>>      ... do more things ...
->>>      $ git checkout -B @{-1}
->>>
->>> that creates a new branch whose name is 40-hex of a commit that
->>> happens to be where we started the whole dance *is* a bug.  No sane
->>> user expects that to happen, and the last step "checkout -B @{-1}"
->>> should result in an error instead [*1*].
->>>
->>> I was wondering if "git check-ref-format --branch @{-1}", when used
->>> in place of "checkout -B @{-1}" in the above sequence,
->>
->> I guess you mean '... "git checkout -B $(git check-ref-format --branch
->> @{-1}", when used in place of "git checkout -B @{-1}" ...' ?
+> It would error out, meaning that there's no way to build git with
+> DC_SHA1_EXTERNAL=YesPlease without deinit-ing the submodule.
 > 
-> No you guessed wrong.  I was (and am) wondering if the last step in
-> the following sequence should fail.
->>>      $ git checkout HEAD^0
->>>      ... do things ...
->>>      $ git checkout -b temp
->>>      ... do more things ...
->>>      $ git check-ref-format --branch @{-1}
-> 
+> Instead, adjust the logic to only fire if the variable is to something
+> else than "auto" which would mean it's a mistake on the part of
+> whoever's building git, not just the Makefile tripping over its own
+> logic.
 
-Ok. Now I get what you say.
+This all makes sense, and I agree your patch is an improvement.
 
+One minor whitespace nit:
 
-> And I am leaning towards saying that it is a bug that it does not
-> fail; @{-1} is a detached HEAD and not a concrete branch name in
-> this case, 
+> diff --git a/Makefile b/Makefile
+> index e53750ca01..8fe8278126 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -1497,7 +1497,9 @@ else
+>  	LIB_OBJS += sha1dc_git.o
+>  ifdef DC_SHA1_EXTERNAL
+>  	ifdef DC_SHA1_SUBMODULE
+> +ifneq ($(DC_SHA1_SUBMODULE),auto)
+>  $(error Only set DC_SHA1_EXTERNAL or DC_SHA1_SUBMODULE, not both)
+> +endif
+>  	endif
 
-It seems your thought is similar to the following thought that I 
-expressed in [1],
+The indentation here is funky. Unfortunately I think $(error) can't be
+tab-indented, so it has to either stay at the left-most side, or we have
+to use spaces.
 
--- 8< --
-> 
-> I thought this the other way round. Rather than letting the callers
-> error out when @{-N} didn't expand to a branch name, I thought we
-> should not be expanding @{-N} syntax for "check-ref-format --branch" at
-> all to make a "stronger guarantee" that the result is "always" a valid
-> branch name. Then I thought it might be too restrictive and didn't
-> mention it. So, I dunno.
+But the ifneq/endif pair can be indented. Ordinarily I'd say it's fine
+to keep it at the outermost (because of the weird error indent), but
+note that we're _inside_ an already-indented ifdef/endif pair. We should
+either stay inside there, or we should put the outer one to the left for
+consistency.
 
--- >8 --
-
-
-
-> so "check-ref-format --branch" should at least notice
-> and say that it is a request that may lead to a nonsense next step
-> (which is to create a branch with that 40-hex name).
-> 
-
-Makes sense, this should at least be noted in the Documentation. Is that 
-what you had in mind too or do you expect 'check-ref-format' to do 
-something else too?
-
-
-[1]: https://public-inbox.org/git/1511880237.10193.5.camel@gmail.com/
-
----
-Kaartic
+-Peff
