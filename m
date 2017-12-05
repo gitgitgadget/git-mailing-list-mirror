@@ -6,30 +6,30 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 44BDD20A40
-	for <e@80x24.org>; Tue,  5 Dec 2017 17:03:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 05D0620A40
+	for <e@80x24.org>; Tue,  5 Dec 2017 17:03:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753173AbdLERDV (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Dec 2017 12:03:21 -0500
-Received: from siwi.pair.com ([209.68.5.199]:15316 "EHLO siwi.pair.com"
+        id S1752894AbdLERDZ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Dec 2017 12:03:25 -0500
+Received: from siwi.pair.com ([209.68.5.199]:15330 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753164AbdLERDS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Dec 2017 12:03:18 -0500
+        id S1752819AbdLERDT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Dec 2017 12:03:19 -0500
 Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 8905D844E5;
-        Tue,  5 Dec 2017 12:03:17 -0500 (EST)
+        by siwi.pair.com (Postfix) with ESMTP id CC5F3844E8;
+        Tue,  5 Dec 2017 12:03:18 -0500 (EST)
 Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 0F85E844DE;
-        Tue,  5 Dec 2017 12:03:16 -0500 (EST)
+        by siwi.pair.com (Postfix) with ESMTPSA id 5421C844DE;
+        Tue,  5 Dec 2017 12:03:18 -0500 (EST)
 From:   Jeff Hostetler <git@jeffhostetler.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, jonathantanmy@google.com,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v6 12/14] unpack-trees: batch fetching of missing blobs
-Date:   Tue,  5 Dec 2017 17:02:52 +0000
-Message-Id: <20171205170254.65293-13-git@jeffhostetler.com>
+Subject: [PATCH v6 14/14] t5616: end-to-end tests for partial clone
+Date:   Tue,  5 Dec 2017 17:02:54 +0000
+Message-Id: <20171205170254.65293-15-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20171205170254.65293-1-git@jeffhostetler.com>
 References: <20171205170254.65293-1-git@jeffhostetler.com>
@@ -38,199 +38,147 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jonathan Tan <jonathantanmy@google.com>
+From: Jeff Hostetler <jeffhost@microsoft.com>
 
-When running checkout, first prefetch all blobs that are to be updated
-but are missing. This means that only one pack is downloaded during such
-operations, instead of one per missing blob.
+Additional end-to-end tests for partial clone.
 
-This operates only on the blob level - if a repository has a missing
-tree, they are still fetched one at a time.
-
-This does not use the delayed checkout mechanism introduced in commit
-2841e8f ("convert: add "status=delayed" to filter process protocol",
-2017-06-30) due to significant conceptual differences - in particular,
-for partial clones, we already know what needs to be fetched based on
-the contents of the local repo alone, whereas for status=delayed, it is
-the filter process that tells us what needs to be checked in the end.
-
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- fetch-object.c   | 26 ++++++++++++++++++++++----
- fetch-object.h   |  5 +++++
- t/t5601-clone.sh | 52 ++++++++++++++++++++++++++++++++++++++++++++++++++++
- unpack-trees.c   | 22 ++++++++++++++++++++++
- 4 files changed, 101 insertions(+), 4 deletions(-)
+ t/t5616-partial-clone.sh | 125 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 125 insertions(+)
+ create mode 100755 t/t5616-partial-clone.sh
 
-diff --git a/fetch-object.c b/fetch-object.c
-index 258fcfa..853624f 100644
---- a/fetch-object.c
-+++ b/fetch-object.c
-@@ -5,11 +5,10 @@
- #include "transport.h"
- #include "fetch-object.h"
- 
--void fetch_object(const char *remote_name, const unsigned char *sha1)
-+static void fetch_refs(const char *remote_name, struct ref *ref)
- {
- 	struct remote *remote;
- 	struct transport *transport;
--	struct ref *ref;
- 	int original_fetch_if_missing = fetch_if_missing;
- 
- 	fetch_if_missing = 0;
-@@ -18,10 +17,29 @@ void fetch_object(const char *remote_name, const unsigned char *sha1)
- 		die(_("Remote with no URL"));
- 	transport = transport_get(remote, remote->url[0]);
- 
--	ref = alloc_ref(sha1_to_hex(sha1));
--	hashcpy(ref->old_oid.hash, sha1);
- 	transport_set_option(transport, TRANS_OPT_FROM_PROMISOR, "1");
- 	transport_set_option(transport, TRANS_OPT_NO_DEPENDENTS, "1");
- 	transport_fetch_refs(transport, ref);
- 	fetch_if_missing = original_fetch_if_missing;
- }
+diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
+new file mode 100755
+index 0000000..fa573f8
+--- /dev/null
++++ b/t/t5616-partial-clone.sh
+@@ -0,0 +1,125 @@
++#!/bin/sh
 +
-+void fetch_object(const char *remote_name, const unsigned char *sha1)
-+{
-+	struct ref *ref = alloc_ref(sha1_to_hex(sha1));
-+	hashcpy(ref->old_oid.hash, sha1);
-+	fetch_refs(remote_name, ref);
-+}
++test_description='git partial clone'
 +
-+void fetch_objects(const char *remote_name, const struct oid_array *to_fetch)
-+{
-+	struct ref *ref = NULL;
-+	int i;
++. ./test-lib.sh
 +
-+	for (i = 0; i < to_fetch->nr; i++) {
-+		struct ref *new_ref = alloc_ref(oid_to_hex(&to_fetch->oid[i]));
-+		oidcpy(&new_ref->old_oid, &to_fetch->oid[i]);
-+		new_ref->next = ref;
-+		ref = new_ref;
-+	}
-+	fetch_refs(remote_name, ref);
-+}
-diff --git a/fetch-object.h b/fetch-object.h
-index f371300..4b269d0 100644
---- a/fetch-object.h
-+++ b/fetch-object.h
-@@ -1,6 +1,11 @@
- #ifndef FETCH_OBJECT_H
- #define FETCH_OBJECT_H
- 
-+#include "sha1-array.h"
++# create a normal "src" repo where we can later create new commits.
++# expect_1.oids will contain a list of the OIDs of all blobs.
++test_expect_success 'setup normal src repo' '
++	echo "{print \$1}" >print_1.awk &&
++	echo "{print \$2}" >print_2.awk &&
 +
- extern void fetch_object(const char *remote_name, const unsigned char *sha1);
- 
-+extern void fetch_objects(const char *remote_name,
-+			  const struct oid_array *to_fetch);
-+
- #endif
-diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index 6d37c6d..13610b7 100755
---- a/t/t5601-clone.sh
-+++ b/t/t5601-clone.sh
-@@ -611,6 +611,58 @@ test_expect_success 'partial clone: warn if server does not support object filte
- 	test_i18ngrep "filtering not recognized by server" err
- '
- 
-+test_expect_success 'batch missing blob request during checkout' '
-+	rm -rf server client &&
-+
-+	test_create_repo server &&
-+	echo a >server/a &&
-+	echo b >server/b &&
-+	git -C server add a b &&
-+
-+	git -C server commit -m x &&
-+	echo aa >server/a &&
-+	echo bb >server/b &&
-+	git -C server add a b &&
-+	git -C server commit -m x &&
-+
-+	test_config -C server uploadpack.allowfilter 1 &&
-+	test_config -C server uploadpack.allowanysha1inwant 1 &&
-+
-+	git clone --filter=blob:limit=0 "file://$(pwd)/server" client &&
-+
-+	# Ensure that there is only one negotiation by checking that there is
-+	# only "done" line sent. ("done" marks the end of negotiation.)
-+	GIT_TRACE_PACKET="$(pwd)/trace" git -C client checkout HEAD^ &&
-+	grep "git> done" trace >done_lines &&
-+	test_line_count = 1 done_lines
++	git init src &&
++	for n in 1 2 3 4
++	do
++		echo "This is file: $n" > src/file.$n.txt
++		git -C src add file.$n.txt
++		git -C src commit -m "file $n"
++		git -C src ls-files -s file.$n.txt >>temp
++	done &&
++	awk -f print_2.awk <temp | sort >expect_1.oids &&
++	test "$(wc -l <expect_1.oids)" = "4"
 +'
 +
-+test_expect_success 'batch missing blob request does not inadvertently try to fetch gitlinks' '
-+	rm -rf server client &&
-+
-+	test_create_repo repo_for_submodule &&
-+	test_commit -C repo_for_submodule x &&
-+
-+	test_create_repo server &&
-+	echo a >server/a &&
-+	echo b >server/b &&
-+	git -C server add a b &&
-+	git -C server commit -m x &&
-+
-+	echo aa >server/a &&
-+	echo bb >server/b &&
-+	# Also add a gitlink pointing to an arbitrary repository
-+	git -C server submodule add "$(pwd)/repo_for_submodule" c &&
-+	git -C server add a b c &&
-+	git -C server commit -m x &&
-+
-+	test_config -C server uploadpack.allowfilter 1 &&
-+	test_config -C server uploadpack.allowanysha1inwant 1 &&
-+
-+	# Make sure that it succeeds
-+	git clone --filter=blob:limit=0 "file://$(pwd)/server" client
++# bare clone "src" giving "srv.bare" for use as our server.
++test_expect_success 'setup bare clone for server' '
++	git clone --bare "file://$(pwd)/src" srv.bare &&
++	git -C srv.bare config --local uploadpack.allowfilter 1 &&
++	git -C srv.bare config --local uploadpack.allowanysha1inwant 1
 +'
 +
- . "$TEST_DIRECTORY"/lib-httpd.sh
- start_httpd
- 
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 71b70cc..73a1cdb 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -14,6 +14,7 @@
- #include "dir.h"
- #include "submodule.h"
- #include "submodule-config.h"
-+#include "fetch-object.h"
- 
- /*
-  * Error messages expected by scripts out of plumbing commands such as
-@@ -369,6 +370,27 @@ static int check_updates(struct unpack_trees_options *o)
- 		load_gitmodules_file(index, &state);
- 
- 	enable_delayed_checkout(&state);
-+	if (repository_format_partial_clone && o->update && !o->dry_run) {
-+		/*
-+		 * Prefetch the objects that are to be checked out in the loop
-+		 * below.
-+		 */
-+		struct oid_array to_fetch = OID_ARRAY_INIT;
-+		int fetch_if_missing_store = fetch_if_missing;
-+		fetch_if_missing = 0;
-+		for (i = 0; i < index->cache_nr; i++) {
-+			struct cache_entry *ce = index->cache[i];
-+			if ((ce->ce_flags & CE_UPDATE) &&
-+			    !S_ISGITLINK(ce->ce_mode)) {
-+				if (!has_object_file(&ce->oid))
-+					oid_array_append(&to_fetch, &ce->oid);
-+			}
-+		}
-+		if (to_fetch.nr)
-+			fetch_objects(repository_format_partial_clone,
-+				      &to_fetch);
-+		fetch_if_missing = fetch_if_missing_store;
-+	}
- 	for (i = 0; i < index->cache_nr; i++) {
- 		struct cache_entry *ce = index->cache[i];
- 
++# do basic partial clone from "srv.bare"
++# confirm we are missing all of the known blobs.
++# confirm partial clone was registered in the local config.
++test_expect_success 'do partial clone 1' '
++	git clone --no-checkout --filter=blob:none "file://$(pwd)/srv.bare" pc1 &&
++	git -C pc1 rev-list HEAD --quiet --objects --missing=print \
++		| awk -f print_1.awk \
++		| sed "s/?//" \
++		| sort >observed.oids &&
++	test_cmp expect_1.oids observed.oids &&
++	test "$(git -C pc1 config --local core.repositoryformatversion)" = "1" &&
++	test "$(git -C pc1 config --local extensions.partialclone)" = "origin" &&
++	test "$(git -C pc1 config --local core.partialclonefilter)" = "blob:none"
++'
++
++# checkout master to force dynamic object fetch of blobs at HEAD.
++# confirm we now have the expected blobs in a new packfile.
++test_expect_success 'verify checkout with dynamic object fetch' '
++	git -C pc1 checkout master &&
++	(	cd pc1/.git/objects/pack;
++		git verify-pack -v *.pack
++	) >temp &&
++	grep blob <temp \
++		| awk -f print_1.awk \
++		| sort >observed.oids &&
++	test_cmp expect_1.oids observed.oids
++'
++
++# create new commits in "src" repo and push to "srv.bare".
++# repack srv.bare just to make it easy to count the blobs.
++# expect_2.oids will contain a list of the OIDs of all blobs.
++test_expect_success 'push new commits to server' '
++	git -C src remote add srv "file://$(pwd)/srv.bare" &&
++	for x in a b c d
++	do
++		echo "Mod $x" >>src/file.1.txt
++		git -C src add file.1.txt
++		git -C src commit -m "mod $x"
++	done &&
++	git -C src push -u srv master &&
++	git -C srv.bare repack &&
++	(	cd srv.bare/objects/pack;
++		git verify-pack -v *.pack
++	) >temp &&
++	grep blob <temp \
++		| awk -f print_1.awk \
++		| sort >expect_2.oids &&
++	test "$(wc -l <expect_2.oids)" = "8" &&
++	git -C src blame master -- file.1.txt >expect.blame
++'
++
++# fetch in the partial clone repo from the server (the promisor remote).
++# verify that fetch was a "partial fetch".
++# [] that it inherited the filter settings
++# [] that is DOES NOT have the new blobs.
++test_expect_success 'partial fetch inherits filter settings' '
++	git -C pc1 fetch origin &&
++	(	cd pc1/.git/objects/pack;
++		git verify-pack -v *.pack
++	) >temp &&
++	grep blob <temp \
++		| awk -f print_1.awk \
++		| sort >observed.oids &&
++	test_cmp expect_1.oids observed.oids
++'
++
++# force dynamic object fetch using diff.
++# we should only get 1 new blob (for the file in origin/master).
++# it should be in a new packfile (since the promisor boundary is
++# currently a packfile, it should not get unpacked upon receipt.)
++test_expect_success 'verify diff causes dynamic object fetch' '
++	test "$(wc -l <observed.oids)" = "4" &&
++		cat observed.oids &&
++	git -C pc1 diff master..origin/master -- file.1.txt &&
++	(	cd pc1/.git/objects/pack;
++		git verify-pack -v *.pack
++	) >temp &&
++	grep blob <temp \
++		| awk -f print_1.awk \
++		| sort >observed.oids &&
++		cat observed.oids &&
++	test "$(wc -l <observed.oids)" = "4"
++'
++
++# force dynamic object fetch using blame.
++# we should get the intermediate blobs for the file.
++# we may get multiple packfiles (one for each blob/commit) or
++# we may get a single new packfile, but we don't care.
++test_expect_success 'verify blame causes dynamic object fetch' '
++	git -C pc1 blame origin/master -- file.1.txt >observed.blame &&
++	test_cmp expect.blame observed.blame
++'
++
++test_done
 -- 
 2.9.3
 
