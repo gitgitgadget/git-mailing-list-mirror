@@ -2,58 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6720220C11
-	for <e@80x24.org>; Tue,  5 Dec 2017 06:55:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 16DF920C11
+	for <e@80x24.org>; Tue,  5 Dec 2017 07:01:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751934AbdLEGzR (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Dec 2017 01:55:17 -0500
-Received: from cloud.peff.net ([104.130.231.41]:48308 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751325AbdLEGzQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Dec 2017 01:55:16 -0500
-Received: (qmail 29707 invoked by uid 109); 5 Dec 2017 06:55:16 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 05 Dec 2017 06:55:16 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 29811 invoked by uid 111); 5 Dec 2017 06:55:37 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Tue, 05 Dec 2017 01:55:37 -0500
-Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 05 Dec 2017 01:55:14 -0500
-Date:   Tue, 5 Dec 2017 01:55:14 -0500
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Takashi Iwai <tiwai@suse.de>
-Subject: Re: [PATCH 2/4] sha1dc_git.h: re-arrange an ifdef chain for a
- subsequent change
-Message-ID: <20171205065514.GB4788@sigill.intra.peff.net>
-References: <20171128213214.12477-1-avarab@gmail.com>
- <20171128213214.12477-3-avarab@gmail.com>
+        id S1751894AbdLEHBn (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Dec 2017 02:01:43 -0500
+Received: from mxf98a.netcup.net ([46.38.249.138]:45496 "EHLO
+        mxf98a.netcup.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750820AbdLEHBm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Dec 2017 02:01:42 -0500
+Received: from [192.168.178.21] (x4d075e6a.dyn.telefonica.de [77.7.94.106])
+        by mxf98a.netcup.net (Postfix) with ESMTPSA id 87AC1140CAE;
+        Tue,  5 Dec 2017 08:01:41 +0100 (CET)
+Authentication-Results: mxf98a;
+        spf=pass (sender IP is 77.7.94.106) smtp.mailfrom=rabel@robertabel.eu smtp.helo=[192.168.178.21]
+Received-SPF: pass (mxf98a: connection is authenticated)
+Subject: Re: [PATCH v2 1/2] git-prompt: make __git_eread intended use explicit
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+References: <alpine.DEB.2.21.1.1712011143320.98586@virtualbox>
+ <20171201233133.30011-1-rabel@robertabel.eu>
+ <xmqqindmml25.fsf@gitster.mtv.corp.google.com>
+ <e8d35c35-ffd5-ef10-bc6a-0834c1703995@robertabel.eu>
+ <xmqqd13ukohs.fsf@gitster.mtv.corp.google.com>
+From:   Robert Abel <rabel@robertabel.eu>
+Message-ID: <818f414b-76ab-6e1d-0c5c-7f9959223e64@robertabel.eu>
+Date:   Tue, 5 Dec 2017 08:01:41 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.0
 MIME-Version: 1.0
+In-Reply-To: <xmqqd13ukohs.fsf@gitster.mtv.corp.google.com>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20171128213214.12477-3-avarab@gmail.com>
+X-PPP-Message-ID: <20171205070141.8096.99089@mxf98a.netcup.net>
+X-PPP-Vhost: robertabel.eu
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 28, 2017 at 09:32:12PM +0000, Ævar Arnfjörð Bjarmason wrote:
+Hi Junio,
 
-> A subsequent change will change the semantics of DC_SHA1_SUBMODULE in
-> a way that would require moving these checks around, so start by
-> moving them around without any functional changes.
+On 05 Dec 2017 01:27, Junio C Hamano wrote:
+> I know all of the above, but I think you misunderstood the point I
+> wanted to raise, so let me try again.  The thing is, none of what
+> you just wrote changes the fact that lack of callers that want to do
+> "multi-line" is IRRELEVANT.
 
-OK. This flips the priority, but we're assuming that the Makefile
-doesn't allow you to actually set both flags (at least not easily). And
-I think that is the case, even after your loosening of the error for
-"auto" in the previous patch, because the whole DC_SHA1_SUBMODULE
-code-path is in the "else" block for DC_SHA1_EXTERNAL. Good.
+I disagree. The commit comment is meant to give context to the
+introduced changes. One change is the  additional comment for
+__git_eread, which now clearly states that only a single line is read.
 
--Peff
+I'm well aware that I'm not breaking reading multiple lines, because
+that never worked in the first place. Thus, it was never the indented
+use for __git_eread as I see it. I explicitly want to include that
+information in my commit message to pay it forward to the next person
+working on the prompt.
+
+Regards,
+
+Robert
