@@ -2,218 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2609220A40
-	for <e@80x24.org>; Tue,  5 Dec 2017 17:04:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B9F9920A40
+	for <e@80x24.org>; Tue,  5 Dec 2017 17:09:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752909AbdLERD6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Dec 2017 12:03:58 -0500
-Received: from siwi.pair.com ([209.68.5.199]:40163 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752994AbdLERDL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Dec 2017 12:03:11 -0500
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 955B2844E4;
-        Tue,  5 Dec 2017 12:03:10 -0500 (EST)
-Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S1753043AbdLERJQ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Dec 2017 12:09:16 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55531 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752931AbdLERJP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Dec 2017 12:09:15 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A03BBBECF0;
+        Tue,  5 Dec 2017 12:09:14 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=UF4GzFiDHPHZCijDAOnTBJQXar0=; b=whFvgG
+        e0ZtePOyyOFkyvdD2cqQyNpe0+yxt+6vMAx40f4gT3/ouRJbKLpOuYJ4DU5LkaT1
+        t7XcFKt1ooXhBSsMsYXXycOWRYt4grfXGKNXY7gFl7y356zZ+GiGp8XcEIZUAGEU
+        caJ9qxgKoxUoztup1rZ+smBUhYPklG3tJASZk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=vYUXHYk2jlRJOjkbjtg5tHbWdhNKkyrw
+        1AXN0o/QiJFbqIooo46zbY+/EXxm7NPdUGSm35VgJMIz6it38Q7aWJrj9TkT1NZl
+        XsnPGgCvQOKVxzlfL+tAghPgbH9L9OwE/1zCcbAQrv1on5PlRf8e9Y/z8N6qMDax
+        sbZ43h1D2vI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9870DBECEF;
+        Tue,  5 Dec 2017 12:09:14 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 2DD6C844DE;
-        Tue,  5 Dec 2017 12:03:10 -0500 (EST)
-From:   Jeff Hostetler <git@jeffhostetler.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net, jonathantanmy@google.com,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v6 01/14] upload-pack: add object filtering for partial clone
-Date:   Tue,  5 Dec 2017 17:02:41 +0000
-Message-Id: <20171205170254.65293-2-git@jeffhostetler.com>
-X-Mailer: git-send-email 2.9.3
-In-Reply-To: <20171205170254.65293-1-git@jeffhostetler.com>
-References: <20171205170254.65293-1-git@jeffhostetler.com>
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 07C73BECEE;
+        Tue,  5 Dec 2017 12:09:13 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] Documentation/git-clone: improve description for submodule recursing
+References: <20171205025332.9835-1-sbeller@google.com>
+Date:   Tue, 05 Dec 2017 09:09:12 -0800
+In-Reply-To: <20171205025332.9835-1-sbeller@google.com> (Stefan Beller's
+        message of "Mon, 4 Dec 2017 18:53:32 -0800")
+Message-ID: <xmqqvahlhzk7.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 04DB0B22-D9DF-11E7-99A8-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff Hostetler <jeffhost@microsoft.com>
+Stefan Beller <sbeller@google.com> writes:
 
-Teach upload-pack to negotiate object filtering over the protocol and
-to send filter parameters to pack-objects.  This is intended for partial
-clone and fetch.
+> There have been a few complaints on the mailing list that git-clone doesn't
+> respect the `submodule.recurse` setting, which every other command (that
+> potentially knows how to deal with submodules) respects.  In case of clone
+> this is not beneficial to respect as the user may not want to obtain all
+> submodules (assuming a pathspec of '.').
+>
+> Improve the documentation such that the pathspec is mentioned in the
+> synopsis to alleviate the confusion around the submodule recursion flag
+> in git-clone.
+>
+> While at it clarify that the option can be given multiple times for complex\
+> pathspecs.
 
-The idea to make upload-pack configurable using uploadpack.allowFilter
-comes from Jonathan Tan's work in [1].
+Well written (modulo the backslash there, which I can easily remove
+while queuing).
 
-[1] https://public-inbox.org/git/f211093280b422c32cc1b7034130072f35c5ed51.1506714999.git.jonathantanmy@google.com/
-
-Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
----
- Documentation/config.txt                          |  4 ++++
- Documentation/technical/pack-protocol.txt         |  8 +++++++
- Documentation/technical/protocol-capabilities.txt |  8 +++++++
- upload-pack.c                                     | 26 ++++++++++++++++++++++-
- 4 files changed, 45 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 1ac0ae6..e528210 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -3268,6 +3268,10 @@ uploadpack.packObjectsHook::
- 	was run. I.e., `upload-pack` will feed input intended for
- 	`pack-objects` to the hook, and expects a completed packfile on
- 	stdout.
-+
-+uploadpack.allowFilter::
-+	If this option is set, `upload-pack` will advertise partial
-+	clone and partial fetch object filtering.
- +
- Note that this configuration variable is ignored if it is seen in the
- repository-level config (this is a safety measure against fetching from
-diff --git a/Documentation/technical/pack-protocol.txt b/Documentation/technical/pack-protocol.txt
-index ed1eae8..a43a113 100644
---- a/Documentation/technical/pack-protocol.txt
-+++ b/Documentation/technical/pack-protocol.txt
-@@ -212,6 +212,7 @@ out of what the server said it could do with the first 'want' line.
-   upload-request    =  want-list
- 		       *shallow-line
- 		       *1depth-request
-+		       [filter-request]
- 		       flush-pkt
- 
-   want-list         =  first-want
-@@ -227,6 +228,8 @@ out of what the server said it could do with the first 'want' line.
-   additional-want   =  PKT-LINE("want" SP obj-id)
- 
-   depth             =  1*DIGIT
-+
-+  filter-request    =  PKT-LINE("filter" SP filter-spec)
- ----
- 
- Clients MUST send all the obj-ids it wants from the reference
-@@ -249,6 +252,11 @@ complete those commits. Commits whose parents are not received as a
- result are defined as shallow and marked as such in the server. This
- information is sent back to the client in the next step.
- 
-+The client can optionally request that pack-objects omit various
-+objects from the packfile using one of several filtering techniques.
-+These are intended for use with partial clone and partial fetch
-+operations.  See `rev-list` for possible "filter-spec" values.
-+
- Once all the 'want's and 'shallow's (and optional 'deepen') are
- transferred, clients MUST send a flush-pkt, to tell the server side
- that it is done sending the list.
-diff --git a/Documentation/technical/protocol-capabilities.txt b/Documentation/technical/protocol-capabilities.txt
-index 26dcc6f..332d209 100644
---- a/Documentation/technical/protocol-capabilities.txt
-+++ b/Documentation/technical/protocol-capabilities.txt
-@@ -309,3 +309,11 @@ to accept a signed push certificate, and asks the <nonce> to be
- included in the push certificate.  A send-pack client MUST NOT
- send a push-cert packet unless the receive-pack server advertises
- this capability.
-+
-+filter
-+------
-+
-+If the upload-pack server advertises the 'filter' capability,
-+fetch-pack may send "filter" commands to request a partial clone
-+or partial fetch and request that the server omit various objects
-+from the packfile.
-diff --git a/upload-pack.c b/upload-pack.c
-index e25f725..e6d38b9 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -10,6 +10,8 @@
- #include "diff.h"
- #include "revision.h"
- #include "list-objects.h"
-+#include "list-objects-filter.h"
-+#include "list-objects-filter-options.h"
- #include "run-command.h"
- #include "connect.h"
- #include "sigchain.h"
-@@ -18,6 +20,7 @@
- #include "parse-options.h"
- #include "argv-array.h"
- #include "prio-queue.h"
-+#include "quote.h"
- 
- static const char * const upload_pack_usage[] = {
- 	N_("git upload-pack [<options>] <dir>"),
-@@ -64,6 +67,10 @@ static int advertise_refs;
- static int stateless_rpc;
- static const char *pack_objects_hook;
- 
-+static int filter_capability_requested;
-+static int filter_advertise;
-+static struct list_objects_filter_options filter_options;
-+
- static void reset_timeout(void)
- {
- 	alarm(timeout);
-@@ -131,6 +138,12 @@ static void create_pack_file(void)
- 		argv_array_push(&pack_objects.args, "--delta-base-offset");
- 	if (use_include_tag)
- 		argv_array_push(&pack_objects.args, "--include-tag");
-+	if (filter_options.filter_spec) {
-+		struct strbuf buf = STRBUF_INIT;
-+		sq_quote_buf(&buf, filter_options.filter_spec);
-+		argv_array_pushf(&pack_objects.args, "--filter=%s", buf.buf);
-+		strbuf_release(&buf);
-+	}
- 
- 	pack_objects.in = -1;
- 	pack_objects.out = -1;
-@@ -794,6 +807,12 @@ static void receive_needs(void)
- 			deepen_rev_list = 1;
- 			continue;
- 		}
-+		if (skip_prefix(line, "filter ", &arg)) {
-+			if (!filter_capability_requested)
-+				die("git upload-pack: filtering capability not negotiated");
-+			parse_list_objects_filter(&filter_options, arg);
-+			continue;
-+		}
- 		if (!skip_prefix(line, "want ", &arg) ||
- 		    get_oid_hex(arg, &oid_buf))
- 			die("git upload-pack: protocol error, "
-@@ -821,6 +840,8 @@ static void receive_needs(void)
- 			no_progress = 1;
- 		if (parse_feature_request(features, "include-tag"))
- 			use_include_tag = 1;
-+		if (parse_feature_request(features, "filter"))
-+			filter_capability_requested = 1;
- 
- 		o = parse_object(&oid_buf);
- 		if (!o) {
-@@ -940,7 +961,7 @@ static int send_ref(const char *refname, const struct object_id *oid,
- 		struct strbuf symref_info = STRBUF_INIT;
- 
- 		format_symref_info(&symref_info, cb_data);
--		packet_write_fmt(1, "%s %s%c%s%s%s%s%s agent=%s\n",
-+		packet_write_fmt(1, "%s %s%c%s%s%s%s%s%s agent=%s\n",
- 			     oid_to_hex(oid), refname_nons,
- 			     0, capabilities,
- 			     (allow_unadvertised_object_request & ALLOW_TIP_SHA1) ?
-@@ -949,6 +970,7 @@ static int send_ref(const char *refname, const struct object_id *oid,
- 				     " allow-reachable-sha1-in-want" : "",
- 			     stateless_rpc ? " no-done" : "",
- 			     symref_info.buf,
-+			     filter_advertise ? " filter" : "",
- 			     git_user_agent_sanitized());
- 		strbuf_release(&symref_info);
- 	} else {
-@@ -1027,6 +1049,8 @@ static int upload_pack_config(const char *var, const char *value, void *unused)
- 	} else if (current_config_scope() != CONFIG_SCOPE_REPO) {
- 		if (!strcmp("uploadpack.packobjectshook", var))
- 			return git_config_string(&pack_objects_hook, var, value);
-+	} else if (!strcmp("uploadpack.allowfilter", var)) {
-+		filter_advertise = git_config_bool(var, value);
- 	}
- 	return parse_hide_refs_config(var, value, "uploadpack");
- }
--- 
-2.9.3
-
+>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  Documentation/git-clone.txt | 19 +++++++++++--------
+>  1 file changed, 11 insertions(+), 8 deletions(-)
+>
+> diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+> index 83c8e9b394..42ca7b5095 100644
+> --- a/Documentation/git-clone.txt
+> +++ b/Documentation/git-clone.txt
+> @@ -14,7 +14,7 @@ SYNOPSIS
+>  	  [-o <name>] [-b <name>] [-u <upload-pack>] [--reference <repository>]
+>  	  [--dissociate] [--separate-git-dir <git dir>]
+>  	  [--depth <depth>] [--[no-]single-branch] [--no-tags]
+> -	  [--recurse-submodules] [--[no-]shallow-submodules]
+> +	  [--recurse-submodules[=<pathspec>]] [--[no-]shallow-submodules]
+>  	  [--jobs <n>] [--] <repository> [<directory>]
+>  
+>  DESCRIPTION
+> @@ -231,14 +231,17 @@ branch of some repository for search indexing.
+>  	After the clone is created, initialize and clone submodules
+>  	within based on the provided pathspec.  If no pathspec is
+>  	provided, all submodules are initialized and cloned.
+> -	Submodules are initialized and cloned using their default
+> -	settings.  The resulting clone has `submodule.active` set to
+> +	This option can be given multiple times for pathspecs consisting
+> +	of multiple entries.  The resulting clone has `submodule.active` set to
+>  	the provided pathspec, or "." (meaning all submodules) if no
+> -	pathspec is provided.  This is equivalent to running
+> -	`git submodule update --init --recursive` immediately after
+> -	the clone is finished. This option is ignored if the cloned
+> -	repository does not have a worktree/checkout (i.e. if any of
+> -	`--no-checkout`/`-n`, `--bare`, or `--mirror` is given)
+> +	pathspec is provided.
+> ++
+> +Submodules are initialized and cloned using their default settings. This is
+> +equivalent to running
+> +`git submodule update --init --recursive <pathspec>` immediately after
+> +the clone is finished. This option is ignored if the cloned repository does
+> +not have a worktree/checkout (i.e. if any of `--no-checkout`/`-n`, `--bare`,
+> +or `--mirror` is given)
+>  
+>  --[no-]shallow-submodules::
+>  	All submodules which are cloned will be shallow with a depth of 1.
