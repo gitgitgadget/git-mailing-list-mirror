@@ -2,122 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D8DCF20C11
-	for <e@80x24.org>; Wed,  6 Dec 2017 21:43:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8E50F20C11
+	for <e@80x24.org>; Wed,  6 Dec 2017 21:45:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752317AbdLFVnq (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Dec 2017 16:43:46 -0500
-Received: from cloud.peff.net ([104.130.231.41]:50244 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1752134AbdLFVnq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Dec 2017 16:43:46 -0500
-Received: (qmail 21232 invoked by uid 109); 6 Dec 2017 21:43:46 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 06 Dec 2017 21:43:46 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15229 invoked by uid 111); 6 Dec 2017 21:44:06 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Wed, 06 Dec 2017 16:44:06 -0500
-Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 06 Dec 2017 16:43:44 -0500
-Date:   Wed, 6 Dec 2017 16:43:44 -0500
-From:   Jeff King <peff@peff.net>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] 'unsigned long' to 'size_t' conversion
-Message-ID: <20171206214343.GA19469@sigill.intra.peff.net>
-References: <a660460d-b294-5113-bfaf-d98bcf99bad5@gmail.com>
+        id S1752237AbdLFVpf (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Dec 2017 16:45:35 -0500
+Received: from mail-qt0-f176.google.com ([209.85.216.176]:42225 "EHLO
+        mail-qt0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752150AbdLFVpe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Dec 2017 16:45:34 -0500
+Received: by mail-qt0-f176.google.com with SMTP id g9so12694582qth.9
+        for <git@vger.kernel.org>; Wed, 06 Dec 2017 13:45:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=4m8b503aOBsPkbG7/ftv8DDOEjJg6+sRW+LRxodF8M8=;
+        b=gzBxQB+O9o9i4jp6PrRuit06s3KjW7zH6YVJ/0utnipzv2tXiyjZNXM+fzPnSxXD9H
+         472Q2fx0/MfxrJCQIGOQPLGxplzL72i7mNDaxDw0rgD8ZtdM96MyHUx/Dx48HGIavRbj
+         dD3Cu/28WUZ4YVkUiXXlT0xCZGJeVLNQe8Uadoj9F3l4Ok/+YIYbl1bIJIqZrv3dLYAK
+         fkvu3KRxhPACF6cukqPdgJQeJ67Hixii+uHQC20vOuLZa7c4dMskyezbbaexGtnQrAKe
+         qEvC6mnZIhyCVAAZC+MDUfqduAP8kSweTI7hBaC7ty7BkpDlR7ktUciq/6UBEevIANxp
+         qWpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=4m8b503aOBsPkbG7/ftv8DDOEjJg6+sRW+LRxodF8M8=;
+        b=t5iS8OcJFRvx/n6jYUHHBDiO3BqfWvGPzyf2bSV2g1SVZMBvrUoC4K3cxErNKYQ6Fe
+         Qn96cCMCunN0syRf94J5Bfbvp/1kPHxBr1BNI4yBRFuZfIQc/J0M8nB+yULIS4G10wof
+         g90gS+bwM0UpYbSfA7pDHBX57yLIq59zs6xEcGBNwbC9GKV+/O3OavM7+5teim+s6rpG
+         OCBPxvWa0OdZe7TnwzZVMwxzsYd7PIPN4FbyW1bhpH6QCKVjx0t4uhjlARp2+Vw4p4Bu
+         uEaPEekxF/mBKPjQLtO3GnfK7uSZ4aKy5ZQOV5r3JA/+be5HUIlB8flcEjydH/hMTOsf
+         XAFA==
+X-Gm-Message-State: AKGB3mJsaOXo26CChjoP0twQD1M66UB6SlK8/bTCo2s4IXOghSqJLNY5
+        uPV3EwI9cmvPfElZjSmQ3jX0cFHlX+q9Y+8J18Y=
+X-Google-Smtp-Source: AGs4zMaIjxTQDxL//FWfFbKY4da05T3xTFiVb21bwKvS0DBLpRHiDlTiRuTCs22zHXJGwxmXjI4pD5EhN7XoM/F+efM=
+X-Received: by 10.237.59.22 with SMTP id p22mr6555628qte.34.1512596734018;
+ Wed, 06 Dec 2017 13:45:34 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <a660460d-b294-5113-bfaf-d98bcf99bad5@gmail.com>
+Received: by 10.12.198.4 with HTTP; Wed, 6 Dec 2017 13:45:33 -0800 (PST)
+In-Reply-To: <DA0A42D68346B1469147552440A64503C60832DB@ORSMSX105.amr.corp.intel.com>
+References: <DA0A42D68346B1469147552440A64503C60832DB@ORSMSX105.amr.corp.intel.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 6 Dec 2017 16:45:33 -0500
+X-Google-Sender-Auth: nYuRm4Se3UxVIOOB-y9y7PAV2L4
+Message-ID: <CAPig+cQXeC5Nh+=rO9U46PNgnNALd4H3on+feo_NzMg45HqUkQ@mail.gmail.com>
+Subject: Re: 'git worktree add' does not fire post-checkout hook
+To:     "Gumbel, Matthew K" <matthew.k.gumbel@intel.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 06, 2017 at 10:08:23AM -0500, Derrick Stolee wrote:
+On Wed, Dec 6, 2017 at 4:00 PM, Gumbel, Matthew K
+<matthew.k.gumbel@intel.com> wrote:
+> I've noticed that when I run 'git worktree add /path/to/new/tree',
+> the post-checkout hook does not fire, even though the worktree
+> manpage explicitly states that "worktree add" will, "Create <path>
+> and checkout <branch> into it."
+>
+> Is this the intended behavior? Seems like maybe a bug, but I'm not
+> sure.
 
-> There are several places in Git where we refer to the size of an object by
-> an 'unsigned long' instead of a 'size_t'. In 64-bit Linux, 'unsigned long'
-> is 8 bytes, but in 64-bit Windows it is 4 bytes.
-> 
-> The main issue with this conversion is that large objects fail to load (they
-> seem to hash and store just fine). For example, the following 'blob8gb' is
-> an 8 GB file where the ith byte is equal to i % 256:
+Seems like an oversight. Given that 'git worktree' is like a cross of
+'git clone' and 'git checkout', both of which run that hook, it seems
+reasonable that 'git-worktree' should do so, as well.
 
-Yeah, I think there's widespread agreement that this needs fixing. It's
-just big enough that nobody has tackled it. If you're willing, that
-sounds great to me. ;)
-
-> In my opinion, the correct thing to do would be to replace all 'unsigned
-> long's that refer to an object size and replace them with 'size_t'. However,
-> a simple "git grep 'unsigned long size'" reveals 194 results, and there are
-> other permutations of names and pointer types all over.
-
-Yep. I think it's actually even trickier than that, though. Something
-like off_t is probably the right type for the abstract concept of an
-object size, since objects can be larger than the address space (in
-which case we'd generally hit streaming code paths when possible).
-
-But then of course we'd want to use size_t for objects that we've
-actually placed into a buffers. At first glance it might be OK to just
-use a larger type everywhere, but I think that runs into some funny
-situations. For instance, you would not want to pass an off_t to
-xmalloc(), as it is truncated (which may lead to a too-small buffer and
-then a heap-smashing overflow).
-
-So in an ideal world it is something like:
-
-  - abstract object types are always off_t
-
-  - lower-level code that takes an object in a buffer always uses size_t
-
-  - at the conversion point, we must always use xsize_t() to catch
-    conversion problems.
-
-  - Any time that xsize_t() might die is a place where the caller should
-    probably figure out if it can use a streaming code path for large
-    objects.
-
-> This conversion would be a significant patch, so I wanted to get the
-> community's thoughts on this conversion.
-> 
-> If there are small, isolated chunks that can be done safely, then this may
-> be a good target for a first patch.
-
-Yes, I agree this probably has to be done incrementally. The threads
-Thomas linked might be good starting points. But do be careful with
-incremental changes that you don't introduce any spots where we might
-get a value mismatch that used to be consistently truncated. E.g., this
-code is wrong but not a security problem:
-
-  size_t full_len = strlen(src); /* ok */
-  unsigned long len = full_len; /* possible truncation! */
-  char *dst = xmalloc(len); /* buffer possibly smaller than full_len */
-  memcpy(dst, src, len); /* copies truncated value */
-
-But this has a vulnerability:
-
-  memcpy(dst, src, full_len); /* whoops, buffer is too small! */
-
-Obviously this is a stupid toy example, but in the real world things
-like that "unsigned long" assignment happen via implicit conversion in
-function parameters. Or we never have "full_len" in the first place, and
-instead build it up over a series of operations that write into the
-buffer. Etc.
-
-I made a pass over the whole code-base a while back to fix any existing
-problems and introduce helpers to make it harder to get this wrong
-(e.g., by making sure a consistent value is used for allocating and
-populating a buffer). So I _hope_ that it should be hard to accidentally
-regress any code by switching out types. But it's something to be aware
-of.
-
--Peff
+If you'd like to get your feet wet at contributing to the Git project,
+this might be a good first dip, as it looks like an easy fix (a one-
+or two-liner). The only thing which needs a bit of care is to skip the
+hook when --no-checkout is specified. Other than that, 'githooks'
+documentation would need an update to mention that git-worktree also
+runs the hook, and t2025-worktree-add.sh would want a couple new tests
+(which would probably be the most complex part of the patch).
