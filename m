@@ -2,143 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1F80920954
-	for <e@80x24.org>; Wed,  6 Dec 2017 08:48:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BAF7520C11
+	for <e@80x24.org>; Wed,  6 Dec 2017 14:02:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754028AbdLFIsg (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Dec 2017 03:48:36 -0500
-Received: from cloud.peff.net ([104.130.231.41]:49688 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1753998AbdLFIsg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Dec 2017 03:48:36 -0500
-Received: (qmail 9037 invoked by uid 109); 6 Dec 2017 08:48:35 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 06 Dec 2017 08:48:35 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9804 invoked by uid 111); 6 Dec 2017 08:48:56 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Wed, 06 Dec 2017 03:48:56 -0500
-Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 06 Dec 2017 03:48:33 -0500
-Date:   Wed, 6 Dec 2017 03:48:33 -0500
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     "Randall S. Becker" <rsbecker@nexbridge.com>, git@vger.kernel.org
-Subject: Re: Documentation Breakage at 2.5.6
-Message-ID: <20171206084833.GA9501@sigill.intra.peff.net>
-References: <008d01d36e48$747cc130$5d764390$@nexbridge.com>
- <877eu0uvb2.fsf@evledraar.gmail.com>
+        id S1751628AbdLFOCq (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Dec 2017 09:02:46 -0500
+Received: from mail-wr0-f176.google.com ([209.85.128.176]:38952 "EHLO
+        mail-wr0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751474AbdLFOCp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Dec 2017 09:02:45 -0500
+Received: by mail-wr0-f176.google.com with SMTP id a41so4023952wra.6
+        for <git@vger.kernel.org>; Wed, 06 Dec 2017 06:02:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=s8NmqK3f35KzmkGtviGDnVF66MFcM/gK8Bzk3NbQ+OI=;
+        b=t5VOCnjpF1qHGQqvgavjDBQ2/0UyWDu+tI1UdeHbDEwGlDzMkcbmGPR9/FFD1/jLUy
+         ic/H4pbrPDmpWtUblLIMYRpAZGvnBGdEgqUseJwOCds0bqHZ20JhBe3HA6lCk3O5Zs35
+         yUJbJHoDCtrXEUQl/M9xsAzAdvR0fJJnQhEFqP/DjNgwmLEWpM/6uk19b7LOgofSaHXi
+         lyR4UT2tDo6E8kJCJ/Z1Ly9kuX+W8ciYMP5SnbDpHtiBtktbQfMXglFAwhCzRffwFnkH
+         /Aou3jpsLlnPq2Ob2oxTLJ2Ozwte/SlWxZ1GgWJjpjNVLHRRxfg1ch+kFPF51beedlO2
+         3w6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=s8NmqK3f35KzmkGtviGDnVF66MFcM/gK8Bzk3NbQ+OI=;
+        b=qRKwbYEYOCp4AQj1b11/LlqJTGutUGIyiOUl+yYE1lq2NIosB8EcGhy3Go0JTHl19I
+         CWrjGl0tHEPWpApCggp2ROH5U5KSJ3Z4tmAPgFyqEmyYG+O3pJKUysACeNLNOvhW7ZVn
+         6a1GGks5oZ1Rk0RcLzBtDcIdSE9o4XWusA1mlTP2tYyH+syQ0pJ4kgaK5o8a9p29wrfp
+         ahOYIGWxb2ZmgC3OqOHbjj2INMWibF7VFSW6tdKM0Zb6uX0iZiiC/woJyZXOhR+ffyB9
+         2a6Yybw0YgNoTPCbuJ/y6Wlga6Ww/aPl9/4MPOJ543w3xyVPETn9q7zAxPAnW9rmys1O
+         RPlg==
+X-Gm-Message-State: AJaThX5nhml15UCNNUY+OCbzRW+glz2ZoBgfJ1gSxzKUwcVQPyBUZcst
+        hjAO8xRAhFdaDf9/JCVk2InmTM3EJBNDbQetyOmyhQ==
+X-Google-Smtp-Source: AGs4zMYr1VEYuUwByVqK6d7vTQrAwWKfBGnPSJSVlouB1nAxWMZZYQ1AR9emOlxJjK30vswm6U+yZsSKXy595Rmm7iQ=
+X-Received: by 10.223.190.134 with SMTP id i6mr19628614wrh.177.1512568963968;
+ Wed, 06 Dec 2017 06:02:43 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <877eu0uvb2.fsf@evledraar.gmail.com>
+Received: by 10.28.18.194 with HTTP; Wed, 6 Dec 2017 06:02:43 -0800 (PST)
+From:   Saurabh Dixit <isaurabhdixit@gmail.com>
+Date:   Wed, 6 Dec 2017 19:32:43 +0530
+Message-ID: <CADbksagO806a=nJpQ-uUe83Ne=NdM6TvKBRu=a7OO_MzTRi68Q@mail.gmail.com>
+Subject: Git Repository Migration
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 06, 2017 at 09:14:57AM +0100, Ævar Arnfjörð Bjarmason wrote:
+Hi,
 
-> > I'm trying to upgrade the NonStop port from 2.3.7 upward eventually to
-> > 2.15.1 and hit a snag on documentation. The xmlto component is a bit new to
-> > me and I hit the following error:
+I am new here. I just wondered if the Merge Requests (aka., Pull
+Requests on GitHub) are also imported or cloned while
+cloning/importing a Git repository, say from GitHub to BitBucket.
+While I consider that, it may not be possible because of the URL to a
+remote is already set and cannot be altered while the Import/Clone ( I
+could be wrong at the assumption); I am curious to know what actually
+goes behind the scene.
 
-Did it work before in v2.3.7? If so, can you bisect to the breakage?
+Best regards,
 
-> >     XMLTO git-remote-testgit.1
-> > xmlto: /home/git/git/Documentation/git-remote-testgit.xml does not validate
-> > (status 3)
-> > xmlto: Fix document syntax or use --skip-validation option
-> > I/O error : Attempt to load network entity
-> > http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd
-> > /home/git/git/Documentation/git-remote-testgit.xml:2: warning: failed to
-> > load external entity
-> > "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd"
-> > D DocBook XML V4.5//EN"
-> > "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd"
-> >
-> > ^
-> > I/O error : Attempt to load network entity
-> > http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd
-> > warning: failed to load external entity
-> > "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd"
-> > validity error : Could not load the external subset
-> > http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd
-
-Those URLs are the "official" names of the docbook DTDs. But normally
-you'd have a local copy, along with a mapping from the official name to
-your local copy. The XML term for that mapping is a "catalog", and it
-looks something like this:
-
-  $ grep oasis-open /etc/xml/catalog
-  <delegateSystem systemIdStartString="http://www.oasis-open.org/docbook/xml/" catalog="file:///etc/xml/docbook-xml.xml"/>
-
-That just points to another local catalog, which has:
-
-  $ grep 4.5/docbookx.dtd /etc/xml/docbook-xml.xml
-  <delegateSystem systemIdStartString="http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" catalog="file:///usr/share/xml/docbook/schema/dtd/4.5/catalog.xml"/>
-  <delegateSystem systemIdStartString="http://docbook.org/xml/4.5/docbookx.dtd" catalog="file:///usr/share/xml/docbook/schema/dtd/4.5/catalog.xml"/>
-
-So my guess is that your problem is one of:
-
-  1. You don't have docbook 4.5 installed on your system.
-
-or
-
-  2. You don't have a correctly built catalog file, or xmlto isn't
-     pointing to it for some reason (on Debian, this is normally built
-     by the post-install script of packages that contain xml).
-
-And xmlto (actually, probably xsltproc that it's calling) is unwilling
-or unable to hit the network to pull down those entities.
-
-Those are all somewhat vague guesses based on past troubles I've had
-with broken xml setups. I'm far from an expert on xml processing (and
-I'd just as soon keep it that way).
-
-> I don't know if this helps, but here with xmlto 0.0.28 on Debian if I
-> apply this the docs still build:
-> 
->     diff --git a/Documentation/texi.xsl b/Documentation/texi.xsl
->     index 0f8ff07eca..332a65558d 100644
->     --- a/Documentation/texi.xsl
->     +++ b/Documentation/texi.xsl
->     @@ -7,7 +7,7 @@
->      <xsl:output method="xml"
->                 encoding="UTF-8"
->                 doctype-public="-//OASIS//DTD DocBook XML V4.5//EN"
->     -           doctype-system="http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" />
->     +           doctype-system="http://example.org/docbook/xml/4.5/docbookx.dtd" />
-> 
-> So whatever's needing to remote fetch those resources doesn't seem to
-> cause the same error for me.
-
-I think that would come into play only if you try to build
-"gitman.info", which isn't one of the default targets.
-
-The string that Randall is seeing is in git-remote-testgit.xml, so it's
-probably be generated by the "docbook" backend of asciidoc.
-
-One alternative is to try to avoid docbook entirely. The only way to get
-manpages with asciidoc is to generate docbook and then process it, but:
-
- - you can generate HTML directly (and "make -C Documentation html" does
-   this). Perhaps not as nice, but you still at least have some
-   documentation.
-
- - asciidoctor can generate manpages directly. I don't think our
-   Makefile supports that now, but it might not be too hard to hack in
-   (we already have some basic asciidoctor support). I'm not sure how
-   hard it would be to get Ruby running on NonStop
-
-And of course one final option is to generate the manpages elsewhere and
-copy them in, since they're platform-independent. In fact, that's what
-quick-install-man should do (you just have to clone Junio's git-manpages
-repository -- see the INSTALL file).
-
--Peff
+Saurabh Dixit
+Opensource Enthusiast
