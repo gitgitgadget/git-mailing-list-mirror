@@ -2,115 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A6ABD20C11
-	for <e@80x24.org>; Wed,  6 Dec 2017 18:10:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7AE9920C11
+	for <e@80x24.org>; Wed,  6 Dec 2017 18:25:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752160AbdLFSKH (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Dec 2017 13:10:07 -0500
-Received: from mail-it0-f46.google.com ([209.85.214.46]:43073 "EHLO
-        mail-it0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751788AbdLFSKG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Dec 2017 13:10:06 -0500
-Received: by mail-it0-f46.google.com with SMTP id u62so8447153ita.2
-        for <git@vger.kernel.org>; Wed, 06 Dec 2017 10:10:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=FaqcrCywaJVYXN4LJ0laNLN0+M7TRACt6IppZzAsVx8=;
-        b=vvWfYmEpYo0OP5EwvUu07M090kbZaqVgfEBQ0zci7TqszuHhxgK2X7J85KGrNK6B0P
-         08A0lVlXPzQm3B7yXAA44nGvDIv7nUgfq1Q0uljd/P6iwf7OCBWYN9wPnLcymmpZn3Mp
-         cNMUVpbjVfh18xDaHg1bOX9X/plSYIJgrBQ3ReeXOWjMxrlOsZzM9rIe84jigOr2BmuX
-         ksdgLuHczgM+rOs0MV7CW9Cfq3/MM1NPLzwhUp51IEaqJKEdOg1g+ZGutS8dMMnINqJO
-         dyVzbhhOFqoYFO7NyB9bP4n0HtijqT09FxJiiHiVH+Kk/eA3fGz0j4o8f4ETkHr24MXu
-         Hy1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=FaqcrCywaJVYXN4LJ0laNLN0+M7TRACt6IppZzAsVx8=;
-        b=h8XJ8hNKQ1k0oRijsswC/k36baPGybGmStw0732PmoxFrBDh+qqs3ho7tVvYHasAmQ
-         /mg4i/ifrkdZNw0+USWfzYZ/YJfshPEnBwJD4tPnmyqsnlKWe9KI6B7wS4rT5R8MeSUA
-         J17QPjM/wFXmlNZO5vfRJvChv5NrHVrw2ZfeiF2ooaS9MycqX+eglosV+DL2KkjnUJng
-         qxPKm7fVg90mPJPven/ekTvP95aae9MJwBD80t1uksGPCEwL2oF61gyyhdjk7Hq8vrDp
-         HE0+3KbzizbTOyHBSgdw//yL2SCAiUtV535/zAGoFFpQJu6FYqYrKSQWx32ArzXapy+L
-         ZdNw==
-X-Gm-Message-State: AJaThX5bfZPoU5C3BUf2M2e8ob8nUtpw0fSzSWSTn0t0rmq+w2PwcdaO
-        AuzHTq1vESwE5XXj2H56gQVokQ==
-X-Google-Smtp-Source: AGs4zMbiFC8FzIrGRxx4xnThpo/cdk3SpiOFeAyS+7165itkqmQ1/nbPpTCHrEE6/VBkSzGtvAbHwQ==
-X-Received: by 10.107.47.234 with SMTP id v103mr32388247iov.96.1512583805111;
-        Wed, 06 Dec 2017 10:10:05 -0800 (PST)
-Received: from google.com ([2620:0:100e:422:cc82:408c:b424:d98c])
-        by smtp.gmail.com with ESMTPSA id e185sm1797194itb.27.2017.12.06.10.10.03
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 06 Dec 2017 10:10:04 -0800 (PST)
-Date:   Wed, 6 Dec 2017 10:10:02 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] 'unsigned long' to 'size_t' conversion
-Message-ID: <20171206181002.GA59217@google.com>
-References: <a660460d-b294-5113-bfaf-d98bcf99bad5@gmail.com>
+        id S1752166AbdLFSZ3 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Dec 2017 13:25:29 -0500
+Received: from bsmtp.bon.at ([213.33.87.14]:43179 "EHLO bsmtp.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751598AbdLFSZ2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Dec 2017 13:25:28 -0500
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp.bon.at (Postfix) with ESMTPSA id 3ysRqp3TQfz5tlC;
+        Wed,  6 Dec 2017 19:25:26 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 9436B29D9;
+        Wed,  6 Dec 2017 19:25:25 +0100 (CET)
+Subject: Re: [PATCH v4 1/4] Makefile: generate Perl header from template file
+To:     Dan Jacques <dnj@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Johannes.Schindelin@gmx.de,
+        avarab@gmail.com, git@vger.kernel.org
+References: <f0ad1ad4-67d8-21e2-fdd0-0a08328c1eaa@kdbg.org>
+ <20171205212625.6616-1-dnj@google.com>
+ <xmqq7eu0j1th.fsf@gitster.mtv.corp.google.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <e0a22ee4-9503-760f-293c-be56fa46fa04@kdbg.org>
+Date:   Wed, 6 Dec 2017 19:25:25 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a660460d-b294-5113-bfaf-d98bcf99bad5@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <xmqq7eu0j1th.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/06, Derrick Stolee wrote:
-> There are several places in Git where we refer to the size of an
-> object by an 'unsigned long' instead of a 'size_t'. In 64-bit Linux,
-> 'unsigned long' is 8 bytes, but in 64-bit Windows it is 4 bytes.
+Am 05.12.2017 um 22:35 schrieb Junio C Hamano:
+> Dan Jacques <dnj@google.com> writes:
 > 
-> The main issue with this conversion is that large objects fail to
-> load (they seem to hash and store just fine). For example, the
-> following 'blob8gb' is an 8 GB file where the ith byte is equal to i
-> % 256:
+>> Thanks for checking! The patch that you quoted above looks like it's from
+>> this "v4" thread; however, the patch that you are diffing against in your
+>> latest reply seems like it is from an earlier version.
+>>
+>> I believe that the $(pathsep) changes in your proposed patch are already
+>> present in v4,...
 > 
-> $ git hash-object -w --no-filters blob8gb
-> 5391939346b98600acc0283dda24649450cec51f
+> You're of course right.  The patches I had in my tree are outdated.
 > 
-> $ git cat-file -s 5391939346b98600acc0283dda24649450cec51f
-> error: bad object header
-> fatal: git cat-file: could not get object info
-> 
-> An existing discussion can be found here:
-> https://github.com/git-for-windows/git/issues/1063
-> 
-> The error message results from unpack_object_header_buffer() which
-> had its most-recent meaningful change in 'ea4f9685:
-> unpack_object_header_buffer(): clear the size field upon error' (in
-> 2011).
-> 
-> In my opinion, the correct thing to do would be to replace all
-> 'unsigned long's that refer to an object size and replace them with
-> 'size_t'. However, a simple "git grep 'unsigned long size'" reveals
-> 194 results, and there are other permutations of names and pointer
-> types all over.
-> 
-> This conversion would be a significant patch, so I wanted to get the
-> community's thoughts on this conversion.
-> 
-> If there are small, isolated chunks that can be done safely, then
-> this may be a good target for a first patch.
+> Will replace, even though I won't be merging them to 'pu' while we
+> wait for Ævar's perl build procedure update to stabilize.
 
-I think that an effort like this would definitely be worthwhile.  Much
-like the unsigned char[20] -> struct object_id conversion I would think
-that the best way to go about such a conversion would be to do it in
-small chunks as you've mentioned.  That way you are only causing churn
-in hopefully small parts of the code base at a time instead of one
-monolithic change that is sure to cause conflicts.
+The updated series works for me now. Nevertheless, I suggest to squash
+in the following change to protect against IFS and globbing characters in
+$INSTLIBDIR.
 
--- 
-Brandon Williams
+diff --git a/Makefile b/Makefile
+index 7ac4458f11..08c78a1a63 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2072,7 +2072,7 @@ GIT-PERL-HEADER: $(PERL_HEADER_TEMPLATE) GIT-PERL-DEFINES perl/perl.mak Makefile
+ 	INSTLIBDIR_EXTRA='$(PERLLIB_EXTRA_SQ)' && \
+ 	INSTLIBDIR="$$INSTLIBDIR$${INSTLIBDIR_EXTRA:+:$$INSTLIBDIR_EXTRA}" && \
+ 	sed -e 's=@@PATHSEP@@=$(pathsep)=g' \
+-	    -e 's=@@INSTLIBDIR@@='$$INSTLIBDIR'=g' \
++	    -e 's=@@INSTLIBDIR@@='"$$INSTLIBDIR"'=g' \
+ 	    -e 's=@@GITEXECDIR@@=$(gitexecdir_relative_SQ)=g' \
+ 	    -e 's=@@PERLLIBDIR@@=$(perllibdir_relative_SQ)=g' \
+ 	    $< >$@+ && \
