@@ -2,96 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-1.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 682D020C11
-	for <e@80x24.org>; Wed,  6 Dec 2017 18:00:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A6ABD20C11
+	for <e@80x24.org>; Wed,  6 Dec 2017 18:10:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752296AbdLFSAg (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Dec 2017 13:00:36 -0500
-Received: from mail-it0-f50.google.com ([209.85.214.50]:37972 "EHLO
-        mail-it0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751680AbdLFSAf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Dec 2017 13:00:35 -0500
-Received: by mail-it0-f50.google.com with SMTP id r6so8227660itr.3
-        for <git@vger.kernel.org>; Wed, 06 Dec 2017 10:00:35 -0800 (PST)
+        id S1752160AbdLFSKH (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Dec 2017 13:10:07 -0500
+Received: from mail-it0-f46.google.com ([209.85.214.46]:43073 "EHLO
+        mail-it0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751788AbdLFSKG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Dec 2017 13:10:06 -0500
+Received: by mail-it0-f46.google.com with SMTP id u62so8447153ita.2
+        for <git@vger.kernel.org>; Wed, 06 Dec 2017 10:10:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sourcegraph.com; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Y4BGfJ1ZwhPyUS+mbR8V0vjgtAjfYerjZJjUw+0oWAY=;
-        b=dW38FTK3F5q6g2rLD8256vW85EJI6m9xfFhs5sPUi+0XtZ4Ec6HnIrzO4U3SKj9fYT
-         VQSUq25xwsoPnv4Xs7vW6C4WTsfOa9NpPB8+Tp014mHUs0JLYDzQXtz8iZwcKD+KyQA6
-         nlZjTzDA15pbLS55A3LK5lDhlkIgHWLyVlLLU4Rg7ieJUQH/gA4UnpNavXsyK4J+nzdr
-         efhAr4c++y0Ye6BokyY6E6KKbYf/Mca5UzkkzXfWABOT2MJo3tOmhs+yiats8qYDbUAx
-         ssWCr5MaAnk1kk6Epr4QrpyR9WyOWhjesDCNOu2Bx8z0Go+rbdrlkZV6Zcs2pwtllkZM
-         ykzQ==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=FaqcrCywaJVYXN4LJ0laNLN0+M7TRACt6IppZzAsVx8=;
+        b=vvWfYmEpYo0OP5EwvUu07M090kbZaqVgfEBQ0zci7TqszuHhxgK2X7J85KGrNK6B0P
+         08A0lVlXPzQm3B7yXAA44nGvDIv7nUgfq1Q0uljd/P6iwf7OCBWYN9wPnLcymmpZn3Mp
+         cNMUVpbjVfh18xDaHg1bOX9X/plSYIJgrBQ3ReeXOWjMxrlOsZzM9rIe84jigOr2BmuX
+         ksdgLuHczgM+rOs0MV7CW9Cfq3/MM1NPLzwhUp51IEaqJKEdOg1g+ZGutS8dMMnINqJO
+         dyVzbhhOFqoYFO7NyB9bP4n0HtijqT09FxJiiHiVH+Kk/eA3fGz0j4o8f4ETkHr24MXu
+         Hy1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Y4BGfJ1ZwhPyUS+mbR8V0vjgtAjfYerjZJjUw+0oWAY=;
-        b=CX5HE/c6PrhwK1COdIMPe3h7B9l47II7jlF50aFIqmLZQPyG3N6SEM35zpDy7UHV0D
-         7+K1c41XAOOVu5jeTqpRsd/w7ve6Ei8JFoRqQ34sXGTPjThlaKq0vMXqzKBq+FuoSsIb
-         yqUrmvBOduAT+c9JJHbMbk0Lkmobb90frSGBO0d8IWfdzz1XrfJnorjD4M4NUM3QXBfy
-         QmoQ79JNSaPsJY/lex9mMKIiSJCyaumdpomixgyhLMupM+/JfBxiqt+4hn80RKYYI9AT
-         a38w0ypMFzVZ8uf59OmeTTw2/QaggBKEpBHRvt9L8nY1gn4CCf/41WrWFWSW1V2WMgLl
-         p+PQ==
-X-Gm-Message-State: AKGB3mLqeAk3kBHWP39IC11byctACnApEucPvu7ivGe25O4weXypla3Y
-        bYVN89JEytAWBKnUHWFQnEuleyrl+T5tZEakHFze/LyhKJs=
-X-Google-Smtp-Source: AGs4zMZM/2JRGs9VG1sXW5zeugapandrFPvhonCBFqgTGW2geIYQwwtofX9n/Vs8gIqy1O7Yw9BVppM9aRlBw9919K0=
-X-Received: by 10.36.7.12 with SMTP id f12mr13909897itf.86.1512583234897; Wed,
- 06 Dec 2017 10:00:34 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=FaqcrCywaJVYXN4LJ0laNLN0+M7TRACt6IppZzAsVx8=;
+        b=h8XJ8hNKQ1k0oRijsswC/k36baPGybGmStw0732PmoxFrBDh+qqs3ho7tVvYHasAmQ
+         /mg4i/ifrkdZNw0+USWfzYZ/YJfshPEnBwJD4tPnmyqsnlKWe9KI6B7wS4rT5R8MeSUA
+         J17QPjM/wFXmlNZO5vfRJvChv5NrHVrw2ZfeiF2ooaS9MycqX+eglosV+DL2KkjnUJng
+         qxPKm7fVg90mPJPven/ekTvP95aae9MJwBD80t1uksGPCEwL2oF61gyyhdjk7Hq8vrDp
+         HE0+3KbzizbTOyHBSgdw//yL2SCAiUtV535/zAGoFFpQJu6FYqYrKSQWx32ArzXapy+L
+         ZdNw==
+X-Gm-Message-State: AJaThX5bfZPoU5C3BUf2M2e8ob8nUtpw0fSzSWSTn0t0rmq+w2PwcdaO
+        AuzHTq1vESwE5XXj2H56gQVokQ==
+X-Google-Smtp-Source: AGs4zMbiFC8FzIrGRxx4xnThpo/cdk3SpiOFeAyS+7165itkqmQ1/nbPpTCHrEE6/VBkSzGtvAbHwQ==
+X-Received: by 10.107.47.234 with SMTP id v103mr32388247iov.96.1512583805111;
+        Wed, 06 Dec 2017 10:10:05 -0800 (PST)
+Received: from google.com ([2620:0:100e:422:cc82:408c:b424:d98c])
+        by smtp.gmail.com with ESMTPSA id e185sm1797194itb.27.2017.12.06.10.10.03
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 06 Dec 2017 10:10:04 -0800 (PST)
+Date:   Wed, 6 Dec 2017 10:10:02 -0800
+From:   Brandon Williams <bmwill@google.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC] 'unsigned long' to 'size_t' conversion
+Message-ID: <20171206181002.GA59217@google.com>
+References: <a660460d-b294-5113-bfaf-d98bcf99bad5@gmail.com>
 MIME-Version: 1.0
-Received: by 10.2.165.7 with HTTP; Wed, 6 Dec 2017 10:00:14 -0800 (PST)
-In-Reply-To: <xmqqh8t3hiuq.fsf@gitster.mtv.corp.google.com>
-References: <CA+SQVf1W6BhNyB6bGxh7WfCwb6+E3pNjHLeS4xDYPJ6BLT8cng@mail.gmail.com>
- <CA+SQVf24rcQ1iKAQBW0Ky7Qm8zuF3Esw8qMKvG+KCbCA-mCcfA@mail.gmail.com> <xmqqh8t3hiuq.fsf@gitster.mtv.corp.google.com>
-From:   Nick Snyder <nick@sourcegraph.com>
-Date:   Wed, 6 Dec 2017 10:00:14 -0800
-Message-ID: <CA+SQVf14g4zBP14BHEZQkyeqUE5Oqif3bUVADEwBZQTSwE=bKA@mail.gmail.com>
-Subject: Re: git blame --reverse doesn't find line in HEAD
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a660460d-b294-5113-bfaf-d98bcf99bad5@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Can you bisect to see when the feature stopped working as you expect?
+On 12/06, Derrick Stolee wrote:
+> There are several places in Git where we refer to the size of an
+> object by an 'unsigned long' instead of a 'size_t'. In 64-bit Linux,
+> 'unsigned long' is 8 bytes, but in 64-bit Windows it is 4 bytes.
+> 
+> The main issue with this conversion is that large objects fail to
+> load (they seem to hash and store just fine). For example, the
+> following 'blob8gb' is an 8 GB file where the ith byte is equal to i
+> % 256:
+> 
+> $ git hash-object -w --no-filters blob8gb
+> 5391939346b98600acc0283dda24649450cec51f
+> 
+> $ git cat-file -s 5391939346b98600acc0283dda24649450cec51f
+> error: bad object header
+> fatal: git cat-file: could not get object info
+> 
+> An existing discussion can be found here:
+> https://github.com/git-for-windows/git/issues/1063
+> 
+> The error message results from unpack_object_header_buffer() which
+> had its most-recent meaningful change in 'ea4f9685:
+> unpack_object_header_buffer(): clear the size field upon error' (in
+> 2011).
+> 
+> In my opinion, the correct thing to do would be to replace all
+> 'unsigned long's that refer to an object size and replace them with
+> 'size_t'. However, a simple "git grep 'unsigned long size'" reveals
+> 194 results, and there are other permutations of names and pointer
+> types all over.
+> 
+> This conversion would be a significant patch, so I wanted to get the
+> community's thoughts on this conversion.
+> 
+> If there are small, isolated chunks that can be done safely, then
+> this may be a good target for a first patch.
 
-I will see if I can do that but might take some time.
+I think that an effort like this would definitely be worthwhile.  Much
+like the unsigned char[20] -> struct object_id conversion I would think
+that the best way to go about such a conversion would be to do it in
+small chunks as you've mentioned.  That way you are only causing churn
+in hopefully small parts of the code base at a time instead of one
+monolithic change that is sure to cause conflicts.
 
-> It finds up to which commit each line survived without getting touched since the oldest commit in the range.
-
-Right, this is where it is failing in my case.
-
-With a history like this:
-A <- B <- C <- HEAD
-
-I have a particular line in C (HEAD) that blames to commit A.
-If I run a git blame --reverse starting at commit A for that line, it
-doesn't give me back C, it gives me back B instead.
-The line is not added/deleted/moved between B and C.
-
-
-
-On Wed, Dec 6, 2017 at 9:22 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Nick Snyder <nick@sourcegraph.com> writes:
->
->> This can be reproduced on Linux and Mac. This behavior seems to be a bug.
->
-> Can you bisect to see when the feature stopped working as you expect?
->
-> Unlike a forward blame, where the command tries to find a commit
-> that is responsible for a line being in the final result (i.e.
-> typically, HEAD), a reverse blame is not about finding a commit
-> that is responsible for a line (that used to be in the oldest
-> commit) not being in a more recent codebase.  It finds up to which
-> commit each line survived without getting touched since the oldest
-> commit in the range.
->
+-- 
+Brandon Williams
