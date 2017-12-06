@@ -2,198 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7CF8F20C11
-	for <e@80x24.org>; Wed,  6 Dec 2017 16:05:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2868620C11
+	for <e@80x24.org>; Wed,  6 Dec 2017 16:40:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752511AbdLFQE6 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Dec 2017 11:04:58 -0500
-Received: from cisrsmtp.univ-lyon1.fr ([134.214.188.146]:54793 "EHLO
-        cisrsmtp.univ-lyon1.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752182AbdLFQE4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Dec 2017 11:04:56 -0500
-Received: from localhost (localhost [127.0.0.1])
-        by cisrsmtp.univ-lyon1.fr (Postfix) with ESMTP id E56CEA0049
-        for <git@vger.kernel.org>; Wed,  6 Dec 2017 16:33:20 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at cisrsmtp.univ-lyon1.fr
-Received: from cisrsmtp.univ-lyon1.fr ([127.0.0.1])
-        by localhost (cisrsmtp.univ-lyon1.fr [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id sL5WQVoC0m9e for <git@vger.kernel.org>;
-        Wed,  6 Dec 2017 16:33:18 +0100 (CET)
-Received: from BEMBX2013-01.univ-lyon1.fr (bembx2013-01.univ-lyon1.fr [134.214.201.247])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+        id S1752151AbdLFQk0 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Dec 2017 11:40:26 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55836 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752484AbdLFQkV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Dec 2017 11:40:21 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 39295AD80C;
+        Wed,  6 Dec 2017 11:40:20 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=amzsZgN69UqjBrk6kzwSmvOyalc=; b=AsjbmJ
+        n8kwz2ea6hDTsoQm5B7bkQwdKoXJp4iElybyyQdt4/GFA88CnBnB0VgNfwwVJR92
+        chCYzErqDH9z/BAIPr8xyonwtDSr67CU+uECU/q/dyMZ+MjOSJ3x4ucRBjulkYN3
+        renKpZN3lvxwG3YOD7EiZATSs+H+mKm/gfW28=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=QepyCv9KG0O19KYqXX/qWQt4GqRk5mfl
+        Qy0puvIrhGpbod4cbxoryRfzS58zBkS65sdHCP915KJGclD2hhyvT0nMJORmcCPl
+        sjhRoA1lDCSzODptGtUAaLp/1ySQi3XYv0qO2yewSiDvPXr6+Coo3BHZOjmKM8YQ
+        OQnVF4kquGQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2F639AD809;
+        Wed,  6 Dec 2017 11:40:20 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by cisrsmtp.univ-lyon1.fr (Postfix) with ESMTPS id 3E2CCA0395
-        for <git@vger.kernel.org>; Wed,  6 Dec 2017 16:33:11 +0100 (CET)
-Received: from localhost.localdomain (134.214.126.172) by
- BEMBX2013-01.univ-lyon1.fr (134.214.201.247) with Microsoft SMTP Server (TLS)
- id 15.0.1263.5; Wed, 6 Dec 2017 16:33:10 +0100
-From:   Nathan Payre <nathan.payre@etu.univ-lyon1.fr>
-To:     <git@vger.kernel.org>
-CC:     Nathan Payre <nathan.payre@etu.univ-lyon1.fr>,
-        Matthieu Moy <matthieu.moy@univ-lyon1.fr>,
-        Timothee Albertin <timothee.albertin@etu.univ-lyon1.fr>,
-        Daniel Bensoussan <daniel.bensoussan--bohm@etu.univ-lyon1.fr>
-Subject: [PATCH v2] send-email: extract email-parsing code into a subroutine
-Date:   Wed, 6 Dec 2017 16:32:23 +0100
-Message-ID: <20171206153223.24102-1-nathan.payre@etu.univ-lyon1.fr>
-X-Mailer: git-send-email 2.15.0.318.g489161bc1
-In-Reply-To: <CAGb4CBUY0QVOHqAFDi6kSVmK48PzKKTuXR2F_Nr+6cHHUhxBzQ@mail.gmail.com>
-References: <CAGb4CBUY0QVOHqAFDi6kSVmK48PzKKTuXR2F_Nr+6cHHUhxBzQ@mail.gmail.com>
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 993DCAD807;
+        Wed,  6 Dec 2017 11:40:19 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>
+Cc:     <git@vger.kernel.org>
+Subject: Re: [RFE] install-doc-quick.sh should accept a commit-ish
+References: <002701d36eaa$ef39bab0$cdad3010$@nexbridge.com>
+Date:   Wed, 06 Dec 2017 08:40:18 -0800
+In-Reply-To: <002701d36eaa$ef39bab0$cdad3010$@nexbridge.com> (Randall
+        S. Becker's message of "Wed, 6 Dec 2017 10:57:30 -0500")
+Message-ID: <xmqqtvx3hkst.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [134.214.126.172]
-X-ClientProxiedBy: JEMBX2013-02.univ-lyon1.fr (134.214.201.250) To
- BEMBX2013-01.univ-lyon1.fr (134.214.201.247)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 257B626C-DAA4-11E7-BE69-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The existing code mixes parsing of email header with regular
-expression and actual code. Extract the parsing code into a new
-subroutine 'parse_header_line()'. This improves the code readability
-and make parse_header_line reusable in other place.
+"Randall S. Becker" <rsbecker@nexbridge.com> writes:
 
-Signed-off-by: Nathan Payre <nathan.payre@etu.univ-lyon1.fr>
-Signed-off-by: Matthieu Moy <matthieu.moy@univ-lyon1.fr>
-Signed-off-by: Timothee Albertin <timothee.albertin@etu.univ-lyon1.fr>
-Signed-off-by: Daniel Bensoussan <daniel.bensoussan--bohm@etu.univ-lyon1.fr>
-Thanks-to: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- git-send-email.perl | 100 ++++++++++++++++++++++++++++++++++++++--------------
- 1 file changed, 73 insertions(+), 27 deletions(-)
+> Having the git-manpages repo available is fantastic for platforms
+> that cannot easily build documentation on demand, for example,
+> when too many dependencies that do not build properly.
+>
+> It would be really nice to have a version of install-doc-quick.sh to either:
+>
+> 1. Use whatever version is checked out in git-manpages; or
+>
+> 2. Use the proper commit associated with the git commit being installed (0a8e923 for v2.6.0 , as an example); or
+>
+> 3. Allow the commit to be passed through the Documentation Makefile on demand so that any version of documentation can be installed.
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 2208dcc21..db16e4dec 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -715,41 +715,73 @@ EOT3
- 	if (!defined $compose_encoding) {
- 		$compose_encoding = "UTF-8";
- 	}
--	while(<$c>) {
--		next if m/^GIT:/;
--		if ($in_body) {
--			$summary_empty = 0 unless (/^\n$/);
--		} elsif (/^\n$/) {
--			$in_body = 1;
--			if ($need_8bit_cte) {
-+
-+    my %parsed_email;
-+	$parsed_email{'body'} = '';
-+    while (my $line = <$c>) {
-+	    next if $line =~ m/^GIT:/;
-+	    parse_header_line($line, \%parsed_email);
-+	    if ($line =~ /^\n$/i) {
-+	        while (my $body_line = <$c>) {
-+                if ($body_line !~ m/^GIT:/) {
-+                    $parsed_email{'body'} = $parsed_email{'body'} . $body_line;
-+                }
-+	        }
-+		}
-+		print "la : $line\n";
-+	}
-+
-+	if ($parsed_email{'from'}) {
-+		$sender = $parsed_email{'from'};
-+	}
-+	if ($parsed_email{'in-reply-to'}) {
-+		$initial_reply_to = $parsed_email{'in-reply-to'};
-+	}
-+	if ($parsed_email{'subject'}) {
-+		$initial_subject = $parsed_email{'subject'};
-+		print $c2 "Subject: " .
-+			quote_subject($parsed_email{'subject'}, $compose_encoding) .
-+			"\n";
-+	}
-+	if ($parsed_email{'mime-version'}) {
-+		print "CASE 0\n";
-+		$need_8bit_cte = 0;
-+		print $c2 "MIME-Version: $parsed_email{'mime-version'}\n",
-+					"Content-Type: $parsed_email{'content-type'};\n",
-+					"Content-Transfer-Encoding: $parsed_email{'content-transfer-encoding'}\n";
-+	}
-+	if ($need_8bit_cte) {
-+		if ($parsed_email{'content-type'}) {
-+				print "CASE 1\n";
-+				print $c2 "MIME-Version: 1.0\n",
-+					 "Content-Type: $parsed_email{'content-type'};",
-+					 "Content-Transfer-Encoding: 8bit\n";
-+			} else {
-+				print "CASE 2\n";
- 				print $c2 "MIME-Version: 1.0\n",
- 					 "Content-Type: text/plain; ",
--					   "charset=$compose_encoding\n",
-+					 "charset=$compose_encoding\n",
- 					 "Content-Transfer-Encoding: 8bit\n";
- 			}
--		} elsif (/^MIME-Version:/i) {
--			$need_8bit_cte = 0;
--		} elsif (/^Subject:\s*(.+)\s*$/i) {
--			$initial_subject = $1;
--			my $subject = $initial_subject;
--			$_ = "Subject: " .
--				quote_subject($subject, $compose_encoding) .
--				"\n";
--		} elsif (/^In-Reply-To:\s*(.+)\s*$/i) {
--			$initial_reply_to = $1;
--			next;
--		} elsif (/^From:\s*(.+)\s*$/i) {
--			$sender = $1;
--			next;
--		} elsif (/^(?:To|Cc|Bcc):/i) {
--			print __("To/Cc/Bcc fields are not interpreted yet, they have been ignored\n");
--			next;
--		}
--		print $c2 $_;
- 	}
-+	if ($parsed_email{'body'}) {
-+		$summary_empty = 0;
-+		print $c2 "\n$parsed_email{'body'}\n";
-+	}
-+
- 	close $c;
- 	close $c2;
- 
-+	open $c2, "<", $compose_filename . ".final"
-+		or die sprintf(__("Failed to open %s.final: %s"), $compose_filename, $!);
-+
-+	print "affichage : \n";
-+	while (<$c2>) {
-+		print $_;
-+	}
-+
-+	close $c2;
-+
- 	if ($summary_empty) {
- 		print __("Summary email is empty, skipping it\n");
- 		$compose = -1;
-@@ -792,6 +824,20 @@ sub ask {
- 	return;
- }
- 
-+sub parse_header_line {
-+	my $lines = shift;
-+	my $parsed_line = shift;
-+
-+	foreach (split(/\n/, $lines)) {
-+		if (/^(To|Cc|Bcc):\s*(.+)$/i) {
-+		        $parsed_line->{lc $1} = [ parse_address_line($2) ];
-+		} elsif (/^(From|Subject|Date|In-Reply-To|Message-ID|MIME-Version|Content-Type|Content-Transfer-Encoding|References):\s*(.+)\s*$/i) {
-+		        $parsed_line->{lc $1} = $2;
-+		}
-+	}
-+}
-+
-+
- my %broken_encoding;
- 
- sub file_declares_8bit_cte {
--- 
-2.15.1
+Do you mean something like this so that you can say "not the tip of
+the master branch but this one?"
 
+ Documentation/install-doc-quick.sh | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/install-doc-quick.sh b/Documentation/install-doc-quick.sh
+index 327f69bcf5..83764f7537 100755
+--- a/Documentation/install-doc-quick.sh
++++ b/Documentation/install-doc-quick.sh
+@@ -3,8 +3,9 @@
+ 
+ repository=${1?repository}
+ destdir=${2?destination}
++head=${3+master}
++GIT_DIR=
+ 
+-head=master GIT_DIR=
+ for d in "$repository/.git" "$repository"
+ do
+ 	if GIT_DIR="$d" git rev-parse refs/heads/master >/dev/null 2>&1
