@@ -2,95 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,BODY_URI_ONLY,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8B4BC20C11
-	for <e@80x24.org>; Wed,  6 Dec 2017 15:57:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F0E7220C11
+	for <e@80x24.org>; Wed,  6 Dec 2017 16:03:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752452AbdLFP5o convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Wed, 6 Dec 2017 10:57:44 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:32169 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752085AbdLFP5j (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Dec 2017 10:57:39 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.136.74])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id vB6Fvbsk053057
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO)
-        for <git@vger.kernel.org>; Wed, 6 Dec 2017 10:57:37 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     <git@vger.kernel.org>
-Subject: [RFE] install-doc-quick.sh should accept a commit-ish
-Date:   Wed, 6 Dec 2017 10:57:30 -0500
-Message-ID: <002701d36eaa$ef39bab0$cdad3010$@nexbridge.com>
+        id S1751748AbdLFQD3 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Dec 2017 11:03:29 -0500
+Received: from mout.web.de ([212.227.17.12]:57214 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752079AbdLFQD3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Dec 2017 11:03:29 -0500
+Received: from macce.local ([195.198.252.176]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0Md4pC-1eeplw36oc-00IE71; Wed, 06
+ Dec 2017 17:03:22 +0100
+Subject: Re: What's cooking in git.git (Dec 2017, #01; Mon, 4)
+To:     Lars Schneider <larsxschneider@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+References: <xmqqmv2ykvy4.fsf@gitster.mtv.corp.google.com>
+ <DA960DCE-0635-47CF-B3C4-8133021799F1@gmail.com>
+From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Message-ID: <0c2aa5cd-55d3-28ea-8577-b8b2839fd4c2@web.de>
+Date:   Wed, 6 Dec 2017 17:03:17 +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:52.0)
+ Gecko/20100101 Thunderbird/52.5.0
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AdNuqiKQI6jmCBQETJqFYfgTEuhzbw==
-Content-Language: en-ca
+In-Reply-To: <DA960DCE-0635-47CF-B3C4-8133021799F1@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:exXBGU/EvhH5bE2SB98sqjeedUoXB/3CF7rgmSiXQaIFAY82TLt
+ nmurEwGQEnoNCeaSXAvukPcr7MaLoc6PpEdGWfEeiUSkWNVFNnavbwih0HLI49HBfXmc2bx
+ 7gBY1+sbplLGhLI4OhpK8TlXrASuw93X6XxMCfSV8HdYjtWKmx7g0rwApl9V2aMNO/sUJTx
+ Ir+vAzYpFT3NQP9tA3YXQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:5HfEZ3weHpI=:uEToBSaYpRrWO37cGKv48l
+ v5ojEBpYogpRG05J06LJdEyKkHZ75m9o4dXW3Y0ab8/+6zmeY8V/7X+PNN8nG941yJwWaTgdT
+ LQuoyet8jb8f3BXwyrwiHF/W7Sc2lJbTbz5wPqu/SAKk3PnCyH+TZtwMH6GzJsxXSwUXuTTJm
+ zy4srdv8dQtpc0VPYmrP8cG46ceNtcxv2T6vWsu8RMx8nIbxAQbuiYfzh84Hhn6vdxt/h/y0U
+ t695qyoGR4wtYkRrAsEXI1t91/+7y5nTQAaoJibzbhI9YuKyX35dLK9BLut7GhgYw2o58hWCy
+ osDfzV3vUYwI0jcEOFOGvFpNa4I1MJjryYl7NpvcEHY9Yfhy6iXpTPmRV4V/LVni1bHFeD5+M
+ NNCajW5kSMZHgkiV5kvYk3NFVuFr7l228/pUdpjg7k0AKgrLA4CASb/1JE5Gd1kE4jMKDU7jL
+ HlQCGb0lnwGFiRFPvRVjf79cEtSEAY9SG45C0BY0RD5Cxa7r7gf2OlIE4AQj0lwy+08UwlQG0
+ Ul9snGKMFNJoxIMp0zvbLqoCETqPQxV9e+ptIi/7YeUs2bIwSlcmut2lWC1NxUf2FAMZFqmaj
+ kl6xBYHvmq2YvRUCGTNkJ9VVcIMyVgSpFLnZ+Sg83Gk0Lr1WI7WznMxW14aFxhqyPXLU0RWET
+ 7sgekMh86z/El6X9lMLW9nMBk42HMgTI7SrVB1fjOzuhVbwiJorsl7ANb4oLJ1xfA+nzZkCVE
+ qrtwmKU/SqEyoaHi0BH3T9zX4iORuwc5gb/O0pK1a+9nTlII6w4ljJZ4ysMuCftHMFVZI66L0
+ zDiZjISth7S7Ztoj5xRMN2LFHgE9l4vMA2X0LLK4yzLaA85fE4=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Other thread attached as context.
+On 2017-12-06 16:14, Lars Schneider wrote:
+> 
+>> On 04 Dec 2017, at 22:46, Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>>
+>> * tb/check-crlf-for-safe-crlf (2017-11-27) 1 commit
+>> - convert: tighten the safe autocrlf handling
+>>
+>> The "safe crlf" check incorrectly triggered for contents that does
+>> not use CRLF as line endings, which has been corrected.
+>>
+>> Will merge to 'next'.
+>>
+> 
+> Looks like t0027-auto-crlf.sh is failing on Windows:
+> https://travis-ci.org/git/git/jobs/312135514
+> 
+> Could that patch be related?
+> 
+> - Lars
+> 
+Chances are high, I will have a look.
+Thanks for noticing.
 
-Having the git-manpages repo available is fantastic for platforms that cannot easily build documentation on demand, for example, when too many dependencies that do not build properly. 
-
-It would be really nice to have a version of install-doc-quick.sh to either:
-
-1. Use whatever version is checked out in git-manpages; or
-
-2. Use the proper commit associated with the git commit being installed (0a8e923 for v2.6.0 , as an example); or
-
-3. Allow the commit to be passed through the Documentation Makefile on demand so that any version of documentation can be installed.
-
-Thanks,
-Randall
-P.S. If the idea is liked, I can try to make this happen.
-
------Original Message-----
-From: git-owner@vger.kernel.org [mailto:git-owner@vger.kernel.org] On Behalf Of Randall S. Becker
-Sent: December 6, 2017 10:43 AM
-To: 'Jeff King' <peff@peff.net>; 'Ævar Arnfjörð Bjarmason' <avarab@gmail.com>; 'Junio C Hamano' <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: RE: Documentation Breakage at 2.5.6
-
------Original Message-----
-On December 6, 2017 3:49 AM, Jeff King wrote:
->On Wed, Dec 06, 2017 at 09:14:57AM +0100, Ævar Arnfjörð Bjarmason wrote:
->> > I'm trying to upgrade the NonStop port from 2.3.7 upward eventually 
->> > to
->> > 2.15.1 and hit a snag on documentation. The xmlto component is a 
->> > bit new to me and I hit the following error:
->Did it work before in v2.3.7? If so, can you bisect to the breakage?
-It worked fine at 2.3.7. No seeming dependency on docbook at that point - it was never on my system.
-
->One alternative is to try to avoid docbook entirely. The only way to get manpages with asciidoc is to generate docbook and then process it, but:
-I have asciidoc installed, but using it via Make?
-
-> - you can generate HTML directly (and "make -C Documentation html" 
-> does  this). Perhaps not as nice, but you still at least have some
->   documentation.
-Not an option. I need git help to work.
-
-> - asciidoctor can generate manpages directly. I don't think our
->   Makefile supports that now, but it might not be too hard to hack in  
-> (we already have some basic asciidoctor support). I'm not sure how
- > hard it would be to get Ruby running on NonStop Ruby runs fine. I'm a bit out of my configuration depth here.
-
->And of course one final option is to generate the manpages elsewhere and copy them in, since they're platform-independent.
->In fact, that's what quick-install-man should do (you just have to clone Junio's >git-manpages repository -- see the INSTALL file).
-
-I've gone down this path and it works. Much cleaner in fact. Dependencies of docbook (jade) are too reliant on GCC C++ forms to port to the platform - not to mention being SVN, which is culturally uncomfortable 😉
-
-One request to Junio: Would it be possible to tag the commits to align with the tags in the main repo? That way, I can build a nice little Jenkins job to automatically fetch the correct commit for man pages when packaging up a release.
-
--Peff
 
