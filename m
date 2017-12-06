@@ -2,75 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DED2420C11
-	for <e@80x24.org>; Wed,  6 Dec 2017 16:48:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1EF8620C11
+	for <e@80x24.org>; Wed,  6 Dec 2017 16:48:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752336AbdLFQsV (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Dec 2017 11:48:21 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:65303 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751711AbdLFQsP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Dec 2017 11:48:15 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9FC08C5FE5;
-        Wed,  6 Dec 2017 11:48:14 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=T69sghCATGJ/
-        fdtqD3iJH8k0+RY=; b=wrSjUKmD6QRR6eVPYjikCceLzzYz6c/fO6wiVWQyDO8q
-        ciFZchNMEiE7vsGl436i7d09DmEJkRTGv/DnFNQqLbz/Y4RV1/jH1KWm8QRQp4Nl
-        //hAgEb45a4h4xOQb6lUMks6fkJKr7O5QYpvY/ABarVaGwtpvf86Ac0ypAAqDrs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=tGy8AI
-        iOp3dDW5sqsU5SVMGi8eUUQbqNbb3HEZWGmzblnF2uwFbs/w72I51cYVJoDX8BMZ
-        +jykYg4IWUi5+jH3N4cYDcfvNzoh0bNxjjWqUn+yCr6B8TZgf/DvN7dsvL0ffS6G
-        zt0M5R4xtUxdkr1rEI5E0gCnt0A1YcVZ//wuo=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 98278C5FE4;
-        Wed,  6 Dec 2017 11:48:14 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D734CC5FE3;
-        Wed,  6 Dec 2017 11:48:13 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Cc:     Lars Schneider <larsxschneider@gmail.com>, git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Dec 2017, #01; Mon, 4)
-References: <xmqqmv2ykvy4.fsf@gitster.mtv.corp.google.com>
-        <DA960DCE-0635-47CF-B3C4-8133021799F1@gmail.com>
-        <0c2aa5cd-55d3-28ea-8577-b8b2839fd4c2@web.de>
-Date:   Wed, 06 Dec 2017 08:48:12 -0800
-In-Reply-To: <0c2aa5cd-55d3-28ea-8577-b8b2839fd4c2@web.de> ("Torsten
-        =?utf-8?Q?B=C3=B6gershausen=22's?= message of "Wed, 6 Dec 2017 17:03:17
- +0100")
-Message-ID: <xmqqlgifhkfn.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1752599AbdLFQso (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Dec 2017 11:48:44 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:26315 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751827AbdLFQsn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Dec 2017 11:48:43 -0500
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.136.74])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id vB6Gmetj055197
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Wed, 6 Dec 2017 11:48:40 -0500 (EST)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Junio C Hamano'" <gitster@pobox.com>
+Cc:     <git@vger.kernel.org>
+References: <002701d36eaa$ef39bab0$cdad3010$@nexbridge.com> <xmqqtvx3hkst.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <xmqqtvx3hkst.fsf@gitster.mtv.corp.google.com>
+Subject: RE: [RFE] install-doc-quick.sh should accept a commit-ish
+Date:   Wed, 6 Dec 2017 11:48:33 -0500
+Message-ID: <004001d36eb2$10f8ef20$32eacd60$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 4028A70E-DAA5-11E7-9809-8EF31968708C-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+        charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQICkUn7lL/zXxjqd6+ejk5GFK/TrwJ08QvsosSZLJA=
+Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+On December 6, 2017 11:40 AM, Junio C Hamano wrote:
+>"Randall S. Becker" <rsbecker@nexbridge.com> writes:
+>> Having the git-manpages repo available is fantastic for platforms that 
+>> cannot easily build documentation on demand, for example, when too 
+>> many dependencies that do not build properly.
+>> It would be really nice to have a version of install-doc-quick.sh to
+either:
+>> 1. Use whatever version is checked out in git-manpages; or
+>> 2. Use the proper commit associated with the git commit being 
+>> installed (0a8e923 for v2.6.0 , as an example); or
+>> 3. Allow the commit to be passed through the Documentation Makefile on
+demand so that any version of documentation can be installed.
 
->> Looks like t0027-auto-crlf.sh is failing on Windows:
->> https://travis-ci.org/git/git/jobs/312135514
->>=20
->> Could that patch be related?
->>=20
->> - Lars
->>=20
-> Chances are high, I will have a look.
-> Thanks for noticing.
+>Do you mean something like this so that you can say "not the tip of the
+master branch but this one?"
 
-Thanks.
+> Documentation/install-doc-quick.sh | 3 ++-
+> 1 file changed, 2 insertions(+), 1 deletion(-)
+
+>diff --git a/Documentation/install-doc-quick.sh
+b/Documentation/install-doc-quick.sh
+>index 327f69bcf5..83764f7537 100755
+>--- a/Documentation/install-doc-quick.sh
+>+++ b/Documentation/install-doc-quick.sh
+>@@ -3,8 +3,9 @@
+ 
+> repository=${1?repository}
+> destdir=${2?destination}
+>+head=${3+master}
+>+GIT_DIR=
+ 
+>-head=master GIT_DIR=
+> for d in "$repository/.git" "$repository"
+> do
+> 	if GIT_DIR="$d" git rev-parse refs/heads/master >/dev/null 2>&1
+
+Providing I can pass that through make via something like quick-install-man
+head=commit-ish, that's what I'm hoping.
+
+Cheers,
+Randall
+
+
