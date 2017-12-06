@@ -2,86 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1EF8620C11
-	for <e@80x24.org>; Wed,  6 Dec 2017 16:48:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7DD9120C11
+	for <e@80x24.org>; Wed,  6 Dec 2017 16:48:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752599AbdLFQso (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Dec 2017 11:48:44 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:26315 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751827AbdLFQsn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Dec 2017 11:48:43 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.136.74])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id vB6Gmetj055197
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Wed, 6 Dec 2017 11:48:40 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Junio C Hamano'" <gitster@pobox.com>
-Cc:     <git@vger.kernel.org>
-References: <002701d36eaa$ef39bab0$cdad3010$@nexbridge.com> <xmqqtvx3hkst.fsf@gitster.mtv.corp.google.com>
-In-Reply-To: <xmqqtvx3hkst.fsf@gitster.mtv.corp.google.com>
-Subject: RE: [RFE] install-doc-quick.sh should accept a commit-ish
-Date:   Wed, 6 Dec 2017 11:48:33 -0500
-Message-ID: <004001d36eb2$10f8ef20$32eacd60$@nexbridge.com>
+        id S1752452AbdLFQsx (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Dec 2017 11:48:53 -0500
+Received: from wp156.webpack.hosteurope.de ([80.237.132.163]:57002 "EHLO
+        wp156.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752162AbdLFQsw (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2017 11:48:52 -0500
+Received: from p5099125b.dip0.t-ipconnect.de ([80.153.18.91] helo=[192.168.100.43]); authenticated
+        by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        id 1eMcsK-0004jH-My; Wed, 06 Dec 2017 17:48:48 +0100
+Subject: Re: [RFC] 'unsigned long' to 'size_t' conversion
+To:     Derrick Stolee <stolee@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Cc:     Jeff Hostetler <git@jeffhostetler.com>, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>
+References: <a660460d-b294-5113-bfaf-d98bcf99bad5@gmail.com>
+From:   Thomas Braun <thomas.braun@virtuell-zuhause.de>
+Message-ID: <0e22c1cf-57df-fe6c-c63f-d8a219e80aa1@virtuell-zuhause.de>
+Date:   Wed, 6 Dec 2017 17:48:43 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.0
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
+In-Reply-To: <a660460d-b294-5113-bfaf-d98bcf99bad5@gmail.com>
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQICkUn7lL/zXxjqd6+ejk5GFK/TrwJ08QvsosSZLJA=
-Content-Language: en-ca
+X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1512578932;80cbb6b2;
+X-HE-SMSGID: 1eMcsK-0004jH-My
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On December 6, 2017 11:40 AM, Junio C Hamano wrote:
->"Randall S. Becker" <rsbecker@nexbridge.com> writes:
->> Having the git-manpages repo available is fantastic for platforms that 
->> cannot easily build documentation on demand, for example, when too 
->> many dependencies that do not build properly.
->> It would be really nice to have a version of install-doc-quick.sh to
-either:
->> 1. Use whatever version is checked out in git-manpages; or
->> 2. Use the proper commit associated with the git commit being 
->> installed (0a8e923 for v2.6.0 , as an example); or
->> 3. Allow the commit to be passed through the Documentation Makefile on
-demand so that any version of documentation can be installed.
+Am 06.12.2017 um 16:08 schrieb Derrick Stolee:
 
->Do you mean something like this so that you can say "not the tip of the
-master branch but this one?"
+Hi Derrick,
 
-> Documentation/install-doc-quick.sh | 3 ++-
-> 1 file changed, 2 insertions(+), 1 deletion(-)
+> If there are small, isolated chunks that can be done safely, then this
+> may be a good target for a first patch.
 
->diff --git a/Documentation/install-doc-quick.sh
-b/Documentation/install-doc-quick.sh
->index 327f69bcf5..83764f7537 100755
->--- a/Documentation/install-doc-quick.sh
->+++ b/Documentation/install-doc-quick.sh
->@@ -3,8 +3,9 @@
- 
-> repository=${1?repository}
-> destdir=${2?destination}
->+head=${3+master}
->+GIT_DIR=
- 
->-head=master GIT_DIR=
-> for d in "$repository/.git" "$repository"
-> do
-> 	if GIT_DIR="$d" git rev-parse refs/heads/master >/dev/null 2>&1
+Here are some pointers to past discussions:
+-
+https://public-inbox.org/git/trinity-9f703269-6f73-4f6d-b90b-45e09e1c094c-1489582854278@3capp-gmx-bs66/
+-
+https://public-inbox.org/git/1502527643-21944-1-git-send-email-martin@mail.zuhause/
 
-Providing I can pass that through make via something like quick-install-man
-head=commit-ish, that's what I'm hoping.
+I'm posting this mainly so that we can avoid, if possible, duplicated work.
 
-Cheers,
-Randall
-
-
+Hope that helps,
+Thomas
