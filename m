@@ -2,199 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CB94720C11
-	for <e@80x24.org>; Wed,  6 Dec 2017 15:38:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 04C2820C11
+	for <e@80x24.org>; Wed,  6 Dec 2017 15:41:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751604AbdLFPio (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Dec 2017 10:38:44 -0500
-Received: from cisrsmtp.univ-lyon1.fr ([134.214.188.146]:53174 "EHLO
-        cisrsmtp.univ-lyon1.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751500AbdLFPin (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Dec 2017 10:38:43 -0500
-X-Greylist: delayed 321 seconds by postgrey-1.27 at vger.kernel.org; Wed, 06 Dec 2017 10:38:43 EST
-Received: from localhost (localhost [127.0.0.1])
-        by cisrsmtp.univ-lyon1.fr (Postfix) with ESMTP id 7BCFEA0397
-        for <git@vger.kernel.org>; Wed,  6 Dec 2017 16:38:42 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at cisrsmtp.univ-lyon1.fr
-Received: from cisrsmtp.univ-lyon1.fr ([127.0.0.1])
-        by localhost (cisrsmtp.univ-lyon1.fr [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id aNIicpfgMjdX for <git@vger.kernel.org>;
-        Wed,  6 Dec 2017 16:38:41 +0100 (CET)
-Received: from BEMBX2013-01.univ-lyon1.fr (bembx2013-01.univ-lyon1.fr [134.214.201.247])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by cisrsmtp.univ-lyon1.fr (Postfix) with ESMTPS id 4CFD2A0390
-        for <git@vger.kernel.org>; Wed,  6 Dec 2017 16:38:41 +0100 (CET)
-Received: from localhost.localdomain (134.214.126.172) by
- BEMBX2013-01.univ-lyon1.fr (134.214.201.247) with Microsoft SMTP Server (TLS)
- id 15.0.1263.5; Wed, 6 Dec 2017 16:38:40 +0100
-From:   Nathan Payre <nathan.payre@etu.univ-lyon1.fr>
-To:     <git@vger.kernel.org>
-CC:     Nathan Payre <nathan.payre@etu.univ-lyon1.fr>,
-        Matthieu Moy <matthieu.moy@univ-lyon1.fr>,
-        Timothee Albertin <timothee.albertin@etu.univ-lyon1.fr>,
-        Daniel Bensoussan <daniel.bensoussan--bohm@etu.univ-lyon1.fr>
-Subject: [PATCH v2] send-email: extract email-parsing code into a subroutine
-Date:   Wed, 6 Dec 2017 16:38:21 +0100
-Message-ID: <20171206153821.24435-1-nathan.payre@etu.univ-lyon1.fr>
-X-Mailer: git-send-email 2.15.0.318.g489161bc1
-In-Reply-To: <xmqqlgiiobcy.fsf@gitster.mtv.corp.google.com>
-References: <xmqqlgiiobcy.fsf@gitster.mtv.corp.google.com>
+        id S1752325AbdLFPk5 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Dec 2017 10:40:57 -0500
+Received: from mail-io0-f175.google.com ([209.85.223.175]:35204 "EHLO
+        mail-io0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751530AbdLFPk4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Dec 2017 10:40:56 -0500
+Received: by mail-io0-f175.google.com with SMTP id q15so3092857ioh.2
+        for <git@vger.kernel.org>; Wed, 06 Dec 2017 07:40:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=sourcegraph.com; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=bQp+DEj5UIhbpacfzwr8E3ramTad08L2Pj19lUTcX5Q=;
+        b=B3Yr6xhQ+ybGS1GjnubjygQHVg1WKlJ5/+kI+u3vscu5tjZiMBM9GUjnG02awPDUPg
+         RbrYPJgrqDjQT3jI8TtJ+BuNlXtmD4DqeCmYoG2RmSMbtmP8NAqraIWsElk2oCH6RkzS
+         6DGomY8q4QB5GQDITgqSX9Wimd6B8xgqV8b+XNC1C30VAQuadiZX5jA7WAeqoZXj+AyH
+         tEx8dtCSgu7RVfBwBvSBt4MhCZTP+CzpEUEu/Qk7Ws3Wf9dgDwaK32NLcH/ikCGXkolG
+         Cb5XuSySO6LAloF6hSWDli0pk1tTGEwgh/uCoURXeXIlZIzQNyjKQ2ZKbXYlxZm4N6VS
+         Hy/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=bQp+DEj5UIhbpacfzwr8E3ramTad08L2Pj19lUTcX5Q=;
+        b=YPdsY5bbBPYvjoVKVwH+7Mv0uqbxOQdsfw4nd8NuVqueXjpHfsBppCiF0VSo+MXWkO
+         PHASM3yjAmSD3RMx3pMLOSVFVTWMqmuM2ZcyVbvZq8Hvc2vd6E5oxS5h3+F+908R4zha
+         2cP7h9tGpkxLlw9BEA8fAjGxM0kqNC0Kfsh9TOHSMFC8doA/Lxf0BTReLCtK4wGVIsRg
+         0rVAs21g4qdh9qc7+DykG35pvrhyeTHU54m1FvyMoU6aiNHHg4PVCasVuUHSnYS8e+/S
+         g9jxdWdvhxHeIiaDtiabto9g7byIUSNICPzeuFXfC8H/JZwBD8W1m9jxTdidD2o9lh7g
+         fo/A==
+X-Gm-Message-State: AJaThX640cDt5XmnIIvy/jkD4GgM2hjds3LGGVdI4lLkh3RKbFv5Yj2n
+        Lio2Ir3zSRu6LxTUAcRIou0cxCPED7j7hQKS//Wk/tCG
+X-Google-Smtp-Source: AGs4zMbsuDRQz7gzxRe0LkgRtSombL7dTN/1kTdJa9GRDEgdiJLKIpPZDceSKMel/dT8etctVLS66maVR/d3Gy5JUL4=
+X-Received: by 10.107.88.7 with SMTP id m7mr34121189iob.65.1512574855942; Wed,
+ 06 Dec 2017 07:40:55 -0800 (PST)
 MIME-Version: 1.0
+Received: by 10.2.165.7 with HTTP; Wed, 6 Dec 2017 07:40:35 -0800 (PST)
+In-Reply-To: <CA+SQVf1W6BhNyB6bGxh7WfCwb6+E3pNjHLeS4xDYPJ6BLT8cng@mail.gmail.com>
+References: <CA+SQVf1W6BhNyB6bGxh7WfCwb6+E3pNjHLeS4xDYPJ6BLT8cng@mail.gmail.com>
+From:   Nick Snyder <nick@sourcegraph.com>
+Date:   Wed, 6 Dec 2017 07:40:35 -0800
+Message-ID: <CA+SQVf24rcQ1iKAQBW0Ky7Qm8zuF3Esw8qMKvG+KCbCA-mCcfA@mail.gmail.com>
+Subject: Re: git blame --reverse doesn't find line in HEAD
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [134.214.126.172]
-X-ClientProxiedBy: BEMBX2013-01.univ-lyon1.fr (134.214.201.247) To
- BEMBX2013-01.univ-lyon1.fr (134.214.201.247)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The existing code mixes parsing of email header with regular
-expression and actual code. Extract the parsing code into a new
-subroutine 'parse_header_line()'. This improves the code readability
-and make parse_header_line reusable in other place.
+This can be reproduced on Linux and Mac. This behavior seems to be a bug.
 
-Signed-off-by: Nathan Payre <nathan.payre@etu.univ-lyon1.fr>
-Signed-off-by: Matthieu Moy <matthieu.moy@univ-lyon1.fr>
-Signed-off-by: Timothee Albertin <timothee.albertin@etu.univ-lyon1.fr>
-Signed-off-by: Daniel Bensoussan <daniel.bensoussan--bohm@etu.univ-lyon1.fr>
-Thanks-to: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- git-send-email.perl | 100 ++++++++++++++++++++++++++++++++++++++--------------
- 1 file changed, 73 insertions(+), 27 deletions(-)
-
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 2208dcc21..db16e4dec 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -715,41 +715,73 @@ EOT3
- 	if (!defined $compose_encoding) {
- 		$compose_encoding = "UTF-8";
- 	}
--	while(<$c>) {
--		next if m/^GIT:/;
--		if ($in_body) {
--			$summary_empty = 0 unless (/^\n$/);
--		} elsif (/^\n$/) {
--			$in_body = 1;
--			if ($need_8bit_cte) {
-+
-+    my %parsed_email;
-+	$parsed_email{'body'} = '';
-+    while (my $line = <$c>) {
-+	    next if $line =~ m/^GIT:/;
-+	    parse_header_line($line, \%parsed_email);
-+	    if ($line =~ /^\n$/i) {
-+	        while (my $body_line = <$c>) {
-+                if ($body_line !~ m/^GIT:/) {
-+                    $parsed_email{'body'} = $parsed_email{'body'} . $body_line;
-+                }
-+	        }
-+		}
-+		print "la : $line\n";
-+	}
-+
-+	if ($parsed_email{'from'}) {
-+		$sender = $parsed_email{'from'};
-+	}
-+	if ($parsed_email{'in-reply-to'}) {
-+		$initial_reply_to = $parsed_email{'in-reply-to'};
-+	}
-+	if ($parsed_email{'subject'}) {
-+		$initial_subject = $parsed_email{'subject'};
-+		print $c2 "Subject: " .
-+			quote_subject($parsed_email{'subject'}, $compose_encoding) .
-+			"\n";
-+	}
-+	if ($parsed_email{'mime-version'}) {
-+		print "CASE 0\n";
-+		$need_8bit_cte = 0;
-+		print $c2 "MIME-Version: $parsed_email{'mime-version'}\n",
-+					"Content-Type: $parsed_email{'content-type'};\n",
-+					"Content-Transfer-Encoding: $parsed_email{'content-transfer-encoding'}\n";
-+	}
-+	if ($need_8bit_cte) {
-+		if ($parsed_email{'content-type'}) {
-+				print "CASE 1\n";
-+				print $c2 "MIME-Version: 1.0\n",
-+					 "Content-Type: $parsed_email{'content-type'};",
-+					 "Content-Transfer-Encoding: 8bit\n";
-+			} else {
-+				print "CASE 2\n";
- 				print $c2 "MIME-Version: 1.0\n",
- 					 "Content-Type: text/plain; ",
--					   "charset=$compose_encoding\n",
-+					 "charset=$compose_encoding\n",
- 					 "Content-Transfer-Encoding: 8bit\n";
- 			}
--		} elsif (/^MIME-Version:/i) {
--			$need_8bit_cte = 0;
--		} elsif (/^Subject:\s*(.+)\s*$/i) {
--			$initial_subject = $1;
--			my $subject = $initial_subject;
--			$_ = "Subject: " .
--				quote_subject($subject, $compose_encoding) .
--				"\n";
--		} elsif (/^In-Reply-To:\s*(.+)\s*$/i) {
--			$initial_reply_to = $1;
--			next;
--		} elsif (/^From:\s*(.+)\s*$/i) {
--			$sender = $1;
--			next;
--		} elsif (/^(?:To|Cc|Bcc):/i) {
--			print __("To/Cc/Bcc fields are not interpreted yet, they have been ignored\n");
--			next;
--		}
--		print $c2 $_;
- 	}
-+	if ($parsed_email{'body'}) {
-+		$summary_empty = 0;
-+		print $c2 "\n$parsed_email{'body'}\n";
-+	}
-+
- 	close $c;
- 	close $c2;
- 
-+	open $c2, "<", $compose_filename . ".final"
-+		or die sprintf(__("Failed to open %s.final: %s"), $compose_filename, $!);
-+
-+	print "affichage : \n";
-+	while (<$c2>) {
-+		print $_;
-+	}
-+
-+	close $c2;
-+
- 	if ($summary_empty) {
- 		print __("Summary email is empty, skipping it\n");
- 		$compose = -1;
-@@ -792,6 +824,20 @@ sub ask {
- 	return;
- }
- 
-+sub parse_header_line {
-+	my $lines = shift;
-+	my $parsed_line = shift;
-+
-+	foreach (split(/\n/, $lines)) {
-+		if (/^(To|Cc|Bcc):\s*(.+)$/i) {
-+		        $parsed_line->{lc $1} = [ parse_address_line($2) ];
-+		} elsif (/^(From|Subject|Date|In-Reply-To|Message-ID|MIME-Version|Content-Type|Content-Transfer-Encoding|References):\s*(.+)\s*$/i) {
-+		        $parsed_line->{lc $1} = $2;
-+		}
-+	}
-+}
-+
-+
- my %broken_encoding;
- 
- sub file_declares_8bit_cte {
--- 
-2.15.1
-
+On Wed, Nov 29, 2017 at 12:06 AM, Nick Snyder <nick@sourcegraph.com> wrote:
+> I have a repo that reproduces a behavior with `git blame --reverse`
+> that surprises me. https://github.com/nicksnyder/git-blame-bug
+>
+> The readme explains the observed behavior and what I expected to
+> happen. I will inline the readme at the bottom of this message for
+> convenience.
+>
+> Am I misunderstanding --reverse or is this a bug?
+>
+> Thanks!
+> Nick
+>
+> $ git --version
+> git version 2.15.0
+>
+> Blame of L465 in Tree.tsx at HEAD (ca0fb5) points to L463 at 199ee7
+>
+> $ git blame -p -L465,465 Tree.tsx
+> 199ee75d1240ae72cd965f62aceeb301ab64e1bd 463 465 1
+> filename Tree.tsx
+>             public shouldComponentUpdate(nextProps: TileProps): boolean {
+>
+> EXPECTED: Reverse blame of L463 at 199ee7 points to L465 at the
+> lastest commit in the repo (at least ca0fb5).
+> ACTUAL: Reverse blame of L463 at 199ee7 points to L463 at 199ee7.
+>
+> $ git blame -p -L463,463 --reverse 199ee7.. Tree.tsx
+> 199ee75d1240ae72cd965f62aceeb301ab64e1bd 463 463 1
+> boundary
+> previous ca0fb5a2d61cb16909bcb06f49dd5448a26f32b1 Tree.tsx
+> filename Tree.tsx
+>             public shouldComponentUpdate(nextProps: TileProps): boolean {
+>
+> The line in question is in the diff (git diff 199ee7..ca0fb5), but
+> that particular line is neither added nor deleted, so I don't know why
+> blame would think it is deleted.
+>
+> Relevant hunk in diff:
+>
+> @@ -452,28 +462,17 @@ export class LayerTile extends
+> React.Component<TileProps, {}> {
+>          }
+>      }
+>
+> -    public validTokenRange(props: TileProps): boolean {
+> -        if (props.selectedPath === '') {
+> -            return true
+> -        }
+> -        const token = props.selectedPath.split('/').pop()!
+> -        return token >= this.first && token <= this.last
+> -    }
+> -
+>      public shouldComponentUpdate(nextProps: TileProps): boolean {
+> -        const lastValid = this.validTokenRange(this.props)
+> -        const nextValid = this.validTokenRange(nextProps)
+> -        if (!lastValid && !nextValid) {
+> -            // short circuit
+> -            return false
+> +        if (isEqualOrAncestor(this.props.selectedDir,
+> this.props.currSubpath)) {
+> +            return true
+>          }
+> -        if (isEqualOrAncestor(this.props.selectedDir,
+> this.props.currSubpath) && lastValid) {
+> +        if (nextProps.selectedDir === nextProps.currSubpath) {
+>              return true
+>          }
+> -        if (nextProps.selectedDir === nextProps.currSubpath &&
+> this.validTokenRange(nextProps)) {
+> +        if (getParentDir(nextProps.selectedDir) === nextProps.currSubpath) {
+>              return true
+>          }
+> -        if (getParentDir(nextProps.selectedDir) ===
+> nextProps.currSubpath && this.validTokenRange(nextProps)) {
+> +        if (!isEqual(nextProps.pathSplits, this.props.pathSplits)) {
+>              return true
+>          }
+>          return false
