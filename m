@@ -2,87 +2,199 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8E71020C11
-	for <e@80x24.org>; Wed,  6 Dec 2017 15:14:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CB94720C11
+	for <e@80x24.org>; Wed,  6 Dec 2017 15:38:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752189AbdLFPOs (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Dec 2017 10:14:48 -0500
-Received: from mail-wr0-f177.google.com ([209.85.128.177]:43125 "EHLO
-        mail-wr0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751709AbdLFPOo (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Dec 2017 10:14:44 -0500
-Received: by mail-wr0-f177.google.com with SMTP id z34so4252264wrz.10
-        for <git@vger.kernel.org>; Wed, 06 Dec 2017 07:14:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=zXxpmGOwNJRbZ7uO8c2J2Vmm3SZJRh10WfIUPo1D/Aw=;
-        b=bMte9N5QMjieRPsJj0NVda+h2nMsNj8ONI5nh6dGi8+usXbmhepv4LQNVgCAGuYVVM
-         gGxnr+QFubGRFalFX+6LXqyts+8lh1/IOhaMkbZkoeHrmbArMY1O4L6OGMd995WVozNH
-         4bnWO6fxxQI/QLYjAaKBAX1AX01ETh2NHQViMrtf8l17BTOsalbJuUSVUVktVHU9ZMsB
-         OhUhehCe5K+aHHuTzr0JRccT2/okRRBZLWFnszRkDF+BNal+1P7YbpdFJaIk2rLoonmo
-         jnZLvSKP9ktXzy1C7w1R1cMy84lTrs3W46fnrHTRlmY7oIz0OpyjSBRHjDJebV0UyKPR
-         I2FA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=zXxpmGOwNJRbZ7uO8c2J2Vmm3SZJRh10WfIUPo1D/Aw=;
-        b=kQELgIcIuzSF4po6ZqsUrSZ+YI7i5tOYU6RcfRQtXu4mwCAw9mW91M4eSUANOPN6oj
-         dZrF5j7NrskljUvakMOfpj+/5Gt/5uUNvCgjCXBYQIr8t4yNyl9gFrFetRhUPBoOWbnd
-         m3Qma6kNwy0JEQiXG/+c3h7VKZ7Z9fLrLbvcBdqVoetqSscsyruUgQXwJFdMw+XkHZZw
-         4F87qapaKmXiJGF8/x58wDqUZ4VyYusV472Pd9Kcui1ytSUEnh0c4r888TVXAh3pPdJW
-         9j6K2RBDuDOrerP5UWsplkMFBfaPf0eyGRLO1OfBxpd1h9C5pJErhRR9+7D/u1rV3EJU
-         1NdA==
-X-Gm-Message-State: AJaThX7s33Cl+fu0J/W7pb1d/cJx0zykDkT0AcNGfI95i4O42tI9X82o
-        nMKmSUDBEbjUVVtOLF2IN1Y=
-X-Google-Smtp-Source: AGs4zMYXV/PRqOD0m67I2rT340LnCt4dGFyfIO15JkA19l0EUWaF73jYGMwld4AT7SBJondmO6buSg==
-X-Received: by 10.223.193.135 with SMTP id x7mr21057229wre.211.1512573283046;
-        Wed, 06 Dec 2017 07:14:43 -0800 (PST)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id v195sm3129377wmf.25.2017.12.06.07.14.41
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 06 Dec 2017 07:14:42 -0800 (PST)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: What's cooking in git.git (Dec 2017, #01; Mon, 4)
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <xmqqmv2ykvy4.fsf@gitster.mtv.corp.google.com>
-Date:   Wed, 6 Dec 2017 16:14:41 +0100
-Cc:     git@vger.kernel.org
-Content-Transfer-Encoding: 7bit
-Message-Id: <DA960DCE-0635-47CF-B3C4-8133021799F1@gmail.com>
-References: <xmqqmv2ykvy4.fsf@gitster.mtv.corp.google.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-X-Mailer: Apple Mail (2.3124)
+        id S1751604AbdLFPio (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Dec 2017 10:38:44 -0500
+Received: from cisrsmtp.univ-lyon1.fr ([134.214.188.146]:53174 "EHLO
+        cisrsmtp.univ-lyon1.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751500AbdLFPin (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Dec 2017 10:38:43 -0500
+X-Greylist: delayed 321 seconds by postgrey-1.27 at vger.kernel.org; Wed, 06 Dec 2017 10:38:43 EST
+Received: from localhost (localhost [127.0.0.1])
+        by cisrsmtp.univ-lyon1.fr (Postfix) with ESMTP id 7BCFEA0397
+        for <git@vger.kernel.org>; Wed,  6 Dec 2017 16:38:42 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at cisrsmtp.univ-lyon1.fr
+Received: from cisrsmtp.univ-lyon1.fr ([127.0.0.1])
+        by localhost (cisrsmtp.univ-lyon1.fr [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id aNIicpfgMjdX for <git@vger.kernel.org>;
+        Wed,  6 Dec 2017 16:38:41 +0100 (CET)
+Received: from BEMBX2013-01.univ-lyon1.fr (bembx2013-01.univ-lyon1.fr [134.214.201.247])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by cisrsmtp.univ-lyon1.fr (Postfix) with ESMTPS id 4CFD2A0390
+        for <git@vger.kernel.org>; Wed,  6 Dec 2017 16:38:41 +0100 (CET)
+Received: from localhost.localdomain (134.214.126.172) by
+ BEMBX2013-01.univ-lyon1.fr (134.214.201.247) with Microsoft SMTP Server (TLS)
+ id 15.0.1263.5; Wed, 6 Dec 2017 16:38:40 +0100
+From:   Nathan Payre <nathan.payre@etu.univ-lyon1.fr>
+To:     <git@vger.kernel.org>
+CC:     Nathan Payre <nathan.payre@etu.univ-lyon1.fr>,
+        Matthieu Moy <matthieu.moy@univ-lyon1.fr>,
+        Timothee Albertin <timothee.albertin@etu.univ-lyon1.fr>,
+        Daniel Bensoussan <daniel.bensoussan--bohm@etu.univ-lyon1.fr>
+Subject: [PATCH v2] send-email: extract email-parsing code into a subroutine
+Date:   Wed, 6 Dec 2017 16:38:21 +0100
+Message-ID: <20171206153821.24435-1-nathan.payre@etu.univ-lyon1.fr>
+X-Mailer: git-send-email 2.15.0.318.g489161bc1
+In-Reply-To: <xmqqlgiiobcy.fsf@gitster.mtv.corp.google.com>
+References: <xmqqlgiiobcy.fsf@gitster.mtv.corp.google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [134.214.126.172]
+X-ClientProxiedBy: BEMBX2013-01.univ-lyon1.fr (134.214.201.247) To
+ BEMBX2013-01.univ-lyon1.fr (134.214.201.247)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+The existing code mixes parsing of email header with regular
+expression and actual code. Extract the parsing code into a new
+subroutine 'parse_header_line()'. This improves the code readability
+and make parse_header_line reusable in other place.
 
-> On 04 Dec 2017, at 22:46, Junio C Hamano <gitster@pobox.com> wrote:
-> 
-> 
-> * tb/check-crlf-for-safe-crlf (2017-11-27) 1 commit
-> - convert: tighten the safe autocrlf handling
-> 
-> The "safe crlf" check incorrectly triggered for contents that does
-> not use CRLF as line endings, which has been corrected.
-> 
-> Will merge to 'next'.
-> 
+Signed-off-by: Nathan Payre <nathan.payre@etu.univ-lyon1.fr>
+Signed-off-by: Matthieu Moy <matthieu.moy@univ-lyon1.fr>
+Signed-off-by: Timothee Albertin <timothee.albertin@etu.univ-lyon1.fr>
+Signed-off-by: Daniel Bensoussan <daniel.bensoussan--bohm@etu.univ-lyon1.fr>
+Thanks-to: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ git-send-email.perl | 100 ++++++++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 73 insertions(+), 27 deletions(-)
 
-Looks like t0027-auto-crlf.sh is failing on Windows:
-https://travis-ci.org/git/git/jobs/312135514
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 2208dcc21..db16e4dec 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -715,41 +715,73 @@ EOT3
+ 	if (!defined $compose_encoding) {
+ 		$compose_encoding = "UTF-8";
+ 	}
+-	while(<$c>) {
+-		next if m/^GIT:/;
+-		if ($in_body) {
+-			$summary_empty = 0 unless (/^\n$/);
+-		} elsif (/^\n$/) {
+-			$in_body = 1;
+-			if ($need_8bit_cte) {
++
++    my %parsed_email;
++	$parsed_email{'body'} = '';
++    while (my $line = <$c>) {
++	    next if $line =~ m/^GIT:/;
++	    parse_header_line($line, \%parsed_email);
++	    if ($line =~ /^\n$/i) {
++	        while (my $body_line = <$c>) {
++                if ($body_line !~ m/^GIT:/) {
++                    $parsed_email{'body'} = $parsed_email{'body'} . $body_line;
++                }
++	        }
++		}
++		print "la : $line\n";
++	}
++
++	if ($parsed_email{'from'}) {
++		$sender = $parsed_email{'from'};
++	}
++	if ($parsed_email{'in-reply-to'}) {
++		$initial_reply_to = $parsed_email{'in-reply-to'};
++	}
++	if ($parsed_email{'subject'}) {
++		$initial_subject = $parsed_email{'subject'};
++		print $c2 "Subject: " .
++			quote_subject($parsed_email{'subject'}, $compose_encoding) .
++			"\n";
++	}
++	if ($parsed_email{'mime-version'}) {
++		print "CASE 0\n";
++		$need_8bit_cte = 0;
++		print $c2 "MIME-Version: $parsed_email{'mime-version'}\n",
++					"Content-Type: $parsed_email{'content-type'};\n",
++					"Content-Transfer-Encoding: $parsed_email{'content-transfer-encoding'}\n";
++	}
++	if ($need_8bit_cte) {
++		if ($parsed_email{'content-type'}) {
++				print "CASE 1\n";
++				print $c2 "MIME-Version: 1.0\n",
++					 "Content-Type: $parsed_email{'content-type'};",
++					 "Content-Transfer-Encoding: 8bit\n";
++			} else {
++				print "CASE 2\n";
+ 				print $c2 "MIME-Version: 1.0\n",
+ 					 "Content-Type: text/plain; ",
+-					   "charset=$compose_encoding\n",
++					 "charset=$compose_encoding\n",
+ 					 "Content-Transfer-Encoding: 8bit\n";
+ 			}
+-		} elsif (/^MIME-Version:/i) {
+-			$need_8bit_cte = 0;
+-		} elsif (/^Subject:\s*(.+)\s*$/i) {
+-			$initial_subject = $1;
+-			my $subject = $initial_subject;
+-			$_ = "Subject: " .
+-				quote_subject($subject, $compose_encoding) .
+-				"\n";
+-		} elsif (/^In-Reply-To:\s*(.+)\s*$/i) {
+-			$initial_reply_to = $1;
+-			next;
+-		} elsif (/^From:\s*(.+)\s*$/i) {
+-			$sender = $1;
+-			next;
+-		} elsif (/^(?:To|Cc|Bcc):/i) {
+-			print __("To/Cc/Bcc fields are not interpreted yet, they have been ignored\n");
+-			next;
+-		}
+-		print $c2 $_;
+ 	}
++	if ($parsed_email{'body'}) {
++		$summary_empty = 0;
++		print $c2 "\n$parsed_email{'body'}\n";
++	}
++
+ 	close $c;
+ 	close $c2;
+ 
++	open $c2, "<", $compose_filename . ".final"
++		or die sprintf(__("Failed to open %s.final: %s"), $compose_filename, $!);
++
++	print "affichage : \n";
++	while (<$c2>) {
++		print $_;
++	}
++
++	close $c2;
++
+ 	if ($summary_empty) {
+ 		print __("Summary email is empty, skipping it\n");
+ 		$compose = -1;
+@@ -792,6 +824,20 @@ sub ask {
+ 	return;
+ }
+ 
++sub parse_header_line {
++	my $lines = shift;
++	my $parsed_line = shift;
++
++	foreach (split(/\n/, $lines)) {
++		if (/^(To|Cc|Bcc):\s*(.+)$/i) {
++		        $parsed_line->{lc $1} = [ parse_address_line($2) ];
++		} elsif (/^(From|Subject|Date|In-Reply-To|Message-ID|MIME-Version|Content-Type|Content-Transfer-Encoding|References):\s*(.+)\s*$/i) {
++		        $parsed_line->{lc $1} = $2;
++		}
++	}
++}
++
++
+ my %broken_encoding;
+ 
+ sub file_declares_8bit_cte {
+-- 
+2.15.1
 
-Could that patch be related?
-
-- Lars
