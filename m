@@ -2,125 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8446320C33
-	for <e@80x24.org>; Thu,  7 Dec 2017 20:13:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9F37B20954
+	for <e@80x24.org>; Thu,  7 Dec 2017 20:20:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752433AbdLGUNu (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Dec 2017 15:13:50 -0500
-Received: from mail-qt0-f169.google.com ([209.85.216.169]:42917 "EHLO
-        mail-qt0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750993AbdLGUNt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Dec 2017 15:13:49 -0500
-Received: by mail-qt0-f169.google.com with SMTP id g9so20778643qth.9
-        for <git@vger.kernel.org>; Thu, 07 Dec 2017 12:13:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=VEyycFtmbfxfADkNBQ0a8nohkNFQKcsKK2XjtHQCa6g=;
-        b=T6jxdYzjsyrmP8yVCyD/qdZ9QeUPsPjJEuBkck33bTvTBjWbFcdiFadnjIB2J+ZAN7
-         tMdWzHeomG94ajsAwwiz9IccZgb46ZdwKDKNXxgIqUU93SVqY/xfxidXUfLB0QpbXf0e
-         7yAiHxyxl87NhRaCq/8AcHDUPqBQ7bkyuORv29Y0K8YGr3q6nq5jm/rMKbAAaJCW2yfE
-         DW/JKeQcfYhM9OkGFVWaRQcPhRX3fFNnyHHAZ6Uo1fTVUzIBLVlySoLh4UNEpC911nmp
-         rzl5sBpNRME9ka/eJHaZ3OvTMytAXa4gLEVfZC6Fb3TORf9vSbcvIb6Zx465riaGQJDv
-         LPUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=VEyycFtmbfxfADkNBQ0a8nohkNFQKcsKK2XjtHQCa6g=;
-        b=PIJ+ReFt7IR4JT6pr3ZTzG8C6tniqrRDrWdNMXahXFJmFWbulw1Toonj63pCcuPq6n
-         M3O7xPzSLqNuyQqSHBvm00+gjRWbG6z+4LLWzaFM2MaQXEnNZrP0cU/zPf8xjUiftj8l
-         2HgTN4EDfHx47yXgWysRzvC8A4XKzSR/7VWWwqK1WiaOhHALHkyApVFNWq4Gwf92FPZC
-         V3es1EzTd7kQrX/B2i9pG4BAW7ZSOTENlvgGWf9DgufwrjX/n44SOhzGxbHRA2s+eF/k
-         wvdyrQNQvRB5a0jGEtLp3iBhi4UrWeyrbR5iZKwf5Gz2Rc+ZGYVkj7PygknB3gxYelzD
-         WUOQ==
-X-Gm-Message-State: AKGB3mIqsH8rZcowZ04xUa7Fun8uMifZfxxVHMFy+JX9cpYW162TmmZi
-        K5UNmjYIUsaA3JpLaO9tbRFU0b42QdriWeG8WjSlrQ==
-X-Google-Smtp-Source: AGs4zMZY8s9v125XUHGB8ppXzloKSqpQP46WcQ/PReFcGYeuBDuhHj5VXD671YXAVvi80CzTp6ccTAXpgZMzM1zUDTA=
-X-Received: by 10.200.44.251 with SMTP id 56mr11717630qtx.87.1512677628293;
- Thu, 07 Dec 2017 12:13:48 -0800 (PST)
+        id S1752705AbdLGUU1 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Dec 2017 15:20:27 -0500
+Received: from mout.web.de ([212.227.15.14]:49448 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752342AbdLGUU0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Dec 2017 15:20:26 -0500
+Received: from [192.168.178.36] ([91.20.50.52]) by smtp.web.de (mrweb002
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0LmLOE-1eweJz09YY-00Zu8a; Thu, 07
+ Dec 2017 21:20:21 +0100
+X-Mozilla-News-Host: news://news.public-inbox.org:119
+To:     Git List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] am: release strbuf after use in split_mail_mbox()
+Message-ID: <ad0af192-1bd4-eee2-d6e8-2f1776e87428@web.de>
+Date:   Thu, 7 Dec 2017 21:20:19 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.0
 MIME-Version: 1.0
-Received: by 10.140.85.179 with HTTP; Thu, 7 Dec 2017 12:13:47 -0800 (PST)
-In-Reply-To: <372261511885370@web21o.yandex.ru>
-References: <372261511885370@web21o.yandex.ru>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 7 Dec 2017 12:13:47 -0800
-Message-ID: <CAGZ79kZt7hysp9Yzj8==nz9FAu3V4KduG9kH2KxhdEK5CTBiqA@mail.gmail.com>
-Subject: Re: Feature request: Reduce amount of diff in patch
-To:     KES <kes-kes@yandex.ru>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:ghPWHz+t6uB/bLSjTQBz3UDS3Zl4qpQCY6+IAo4uiZ+9YU1bWIh
+ ZDwGsLnJQczvybF6eLAg9BGNrw+jw+e3Q8zOd+I2+j3h+TpREnkGR/X7gduc3AfsghbGmew
+ LFNAAlN9STbCG/JFrP9O4LLONT0bkDFLpwCS68Piz+rlEtnDL/x6D1ydGO12wCVyzFs0fyG
+ OdfyTGkTj3TtQkm9i233A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:M+ALhKJcU/s=:XKSwY59oTSickD+4PTw5tA
+ 9zxBf4xTNzE1CI0bwjX/E8F+04W0eqsB3Xnc8me9mauOg+A0Lyd5yt0X0cmYFcVvOvMAcPVpB
+ RD+LibxE7TCh5ChWUwaDCQlrnxHRrabGuajnYZGeZEZDbomVSSy97j8ip3hFePQPPl5v5gpDP
+ M4fNooErJrOM5n9tsn/dQkjKjPyw4aTvccAbw4oGltPo2kESq/KG5HGHQXdNhuUxgBbJOXHv1
+ Uu8VSJ7OVWa6FMk/t3Dla7O21VgPgZ5oNpugOZ6W6JNU3d150KFBAWtUnblPgIz7XUJAhx92N
+ FCBYv+3aaYtWIbMYEdJE2/HSFtmKcffuSI485cnlbC6Nw1ONqe0oTbofYqS57rztxv52Q8nuH
+ zQI7TjCvKowPlYsUmTDRazOcL+62HWQCK4Vta6qAbjvpw9G66a8M2C5BQ/P1ftsr/oUc7xteG
+ 1AFQhIi5IT/hjQjlc57del4o5q/AX3b1JlC6IN8PRBOEnNt0OI6Jt86Gw7LadJKgYb8eiL8kW
+ 8fCiYZQKGxNMD14p565KfnVtjTVsai9FXkilViqn7ih0IxLwz7NAAxlnzIDvYiTVzokYqT6cb
+ n41JkSkwr637POvBfHOXgaqtpYlOwh8RmsxokYDCuRJAvlLUbCDtaV/7HKw8Jssyaj7v0Ic8O
+ nmVYLB1T5iaCZabbaQT65SSi3M5YO4MlI+suMar6ZFQH0DhRvlEC2PkCbHPPnkKO3HHqBSkr7
+ zeJiDq0C9AnoRuUhTH7hOTF4m0wBR65E7Whs0tG8K43zaW7eWFCeslwD79f8aOJMdZMQvQt1b
+ 4qmBTGLXNznrdHwtHz7xBY0rCtWA669ivLwiinb/4vd+Xin8+Q=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 28, 2017 at 8:09 AM, KES <kes-kes@yandex.ru> wrote:
-> Hi.
->
-> I get often patches which can be minimized:
->
-> @@ -60,11 +64,8 @@ sub _get_filter {
->          address    =>  { -like => \[ '?',  "%$search%" ] },
->          company    =>  { -like => \[ '?',  "%$search%" ] },
->          country_code =>  { '=' => \[ 'UPPER(?)' => $search ] },
-> -    ]);
->
-> -    $users =  $users->search( $filter, {
-> -        prefetch => { Packages => { Ips => { Subnet => { Server => 'Locality' }}}},
-> -    });
-> +    ]);
->
->
->      return $users;
->
-> This patch can be minimized to:
->
-> @@ -60,11 +64,8 @@ sub _get_filter {
->          address    =>  { -like => \[ '?',  "%$search%" ] },
->          company    =>  { -like => \[ '?',  "%$search%" ] },
->          country_code =>  { '=' => \[ 'UPPER(?)' => $search ] },
->      ]);
->
-> -    $users =  $users->search( $filter, {
-> -        prefetch => { Packages => { Ips => { Subnet => { Server => 'Locality' }}}},
-> -    });
->
->
->      return $users;
->
-> May you please fix the git to generate minimized patches?
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ builtin/am.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-You can use a different diff algorithm.
-
-       --diff-algorithm={patience|minimal|histogram|myers}
-           Choose a diff algorithm. The variants are as follows:
-
-           default, myers
-               The basic greedy diff algorithm. Currently, this is the
-               default.
-
-           minimal
-               Spend extra time to make sure the smallest possible diff is
-               produced.
-
-           patience
-               Use "patience diff" algorithm when generating patches.
-
-           histogram
-               This algorithm extends the patience algorithm to "support
-               low-occurrence common elements".
-
-           For instance, if you configured diff.algorithm variable to a
-           non-default value and want to use the default one, then you have to
-           use --diff-algorithm=default option.
-
-Soon we'll have another diff algorithm "anchor" that tries to
-keep a given line out of the +/- but rather move other lines around
-the line to give equal results.
+diff --git a/builtin/am.c b/builtin/am.c
+index 02853b3e05..1ac044da2e 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -708,6 +708,7 @@ static int split_mail_mbox(struct am_state *state, const char **paths,
+ {
+ 	struct child_process cp = CHILD_PROCESS_INIT;
+ 	struct strbuf last = STRBUF_INIT;
++	int ret;
+ 
+ 	cp.git_cmd = 1;
+ 	argv_array_push(&cp.args, "mailsplit");
+@@ -721,13 +722,16 @@ static int split_mail_mbox(struct am_state *state, const char **paths,
+ 	argv_array_push(&cp.args, "--");
+ 	argv_array_pushv(&cp.args, paths);
+ 
+-	if (capture_command(&cp, &last, 8))
+-		return -1;
++	ret = capture_command(&cp, &last, 8);
++	if (ret)
++		goto exit;
+ 
+ 	state->cur = 1;
+ 	state->last = strtol(last.buf, NULL, 10);
+ 
+-	return 0;
++exit:
++	strbuf_release(&last);
++	return ret ? -1 : 0;
+ }
+ 
+ /**
+-- 
+2.15.1
