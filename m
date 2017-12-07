@@ -7,92 +7,79 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 555E720954
-	for <e@80x24.org>; Thu,  7 Dec 2017 18:57:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0EDD120954
+	for <e@80x24.org>; Thu,  7 Dec 2017 19:01:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752483AbdLGS5q (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Dec 2017 13:57:46 -0500
-Received: from mail-wm0-f41.google.com ([74.125.82.41]:43798 "EHLO
-        mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750922AbdLGS5p (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Dec 2017 13:57:45 -0500
-Received: by mail-wm0-f41.google.com with SMTP id n138so14801209wmg.2
-        for <git@vger.kernel.org>; Thu, 07 Dec 2017 10:57:44 -0800 (PST)
+        id S1752570AbdLGTBf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Dec 2017 14:01:35 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:38200 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751001AbdLGTBe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Dec 2017 14:01:34 -0500
+Received: by mail-wm0-f67.google.com with SMTP id 64so14642024wme.3
+        for <git@vger.kernel.org>; Thu, 07 Dec 2017 11:01:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=Oo5yc+zPZiPxGij47d7iFdD3kPK25pE2k22Ze13Bfa4=;
-        b=geOFnWbmkOypUx8GcpNpuZ1VO6hqZvkQ9owt/TYNhpEaIQIjfzPi/YoB026jpDBDBB
-         JqJuXszA2YvRnWG9l6l/CFqYJCwp3ZhuXh+QQa/svoluhTYzVOaYMK7YBEU9ESMV/wbZ
-         ZmIUE5LGgrsvh1XxqyT6wO40vyMaB2wMfNVWaUE98tH8L1mBh5A7zz31+kMVO3BufZ1Z
-         eDZNy6gYz0JOrmsjQCSTHzvUb7oFz6GPsWAp9jW+vnhZ4EBjBjW87Yo0fbPTJTytS10M
-         JqOCib8T3EJH3DKkTPT7Uak/RnNeRYVvv6DiwxlzMCmq1YtCGw5nsw74MjJpxRPiJDgS
-         xLUw==
+        bh=JtnrIJICBCVrD+7tzS3c9lE11oPZYRXImYsfNNc8rSQ=;
+        b=u1f/W9T9lYXA6HTE//88mH4mXfCqpyozGbTvw/khFzmuNW8YPdvlWDOsD9gcQ29c2g
+         7v2+dj1RclkH1wFGOTOiPyLW0DHEX5j19KeYiL7SvJ1UaXSxNprMBXu2rmjZuwXaPC2b
+         MDdE0X21vEBXlQm6Tss3l/xTa9l5iP+1LXqwL3/vi/M+tJXZ50EUbJMLYK87TqCGRuqn
+         LAmYmhJlB4Reui2OpOovXliIrGXe9wsvF256uWW5RIVI23f9tOy+I5YSumodP0Adbylx
+         sJqNFZvM5ihBtfxFFHbotDVMImbNjOUE10VlYCSA8wrP+zq/Nejy6tSY/RRTGBbglOKV
+         MkFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=Oo5yc+zPZiPxGij47d7iFdD3kPK25pE2k22Ze13Bfa4=;
-        b=ijXZNZVuKlBI94CJElgkcbqGxTo3g+sBJEFCiQh/rZgE+Uic6F34ytjsjrJp6yspXl
-         n4aTQeXUu5JFPKA9Kv6PNLwM8mxrSpy4VS+xoK5RCNTxwTl0Sze3UsI/FvvEgndi2icI
-         2H0YCGGn4SZUtxNT2FfXPv4IFxl4eRTypytstKKKaFfKSsSlkQk1Co39uzp/riMzRz47
-         qM7p2IEoNuKmmz1tPB0t4u+dMCcnnXtY6MOGVIUEaQC+CnIkyhpzvK2epdb0u/z604o2
-         ec9wAh6xUcrPB1rgBhlf/KNrvbIgCvDu++C/c7m2gdiC7rPoci7rltyWjOkB5/bqYZqw
-         H8YQ==
-X-Gm-Message-State: AJaThX6cfk4hTuf8bR/oQktZdXUGfYaEVqC2cIV6/RQo4/UrHk2VW/S8
-        RVLtPyXnpU+g6VRbxlmC885OapaJt5lxtgjbvzI7CQ==
-X-Google-Smtp-Source: AGs4zMbYOIOLdUH+Cy42P02lVv67TzVt+ZEXN//ALWsSuaGNwWel33sGg/tgOe6O8nb0MT6uyChGgCqbUKvI2CWPWEk=
-X-Received: by 10.80.208.195 with SMTP id g3mr46375787edf.246.1512673064128;
- Thu, 07 Dec 2017 10:57:44 -0800 (PST)
+        bh=JtnrIJICBCVrD+7tzS3c9lE11oPZYRXImYsfNNc8rSQ=;
+        b=OsH9SHRPZmvpQFoQY7oo0PW7iZfIwE4/VJwuVGjLmPH+a1IDnAfoE0wYNl0ujRMo2a
+         F0G5iqmG6HQDxEhqHzQr0IjzZttyNyRW31pP9cQ3lrNRcaGOvNDZu9XU69wdRZTbz3KI
+         qg0PO/IggxGDU7nuovG6XTxkeiLzes4m0e5zTLgMyV7WcbYowzFqGkaBO5IeMBCnvl2K
+         lLKp/DflCCBqDMpIEbjHPJDfgoKiZb7iA7Ly4NLIewlwUePHqfH2xRl6tUDTI4r4RjUr
+         cNCxet1R9uXQBBk4jrlApiRFH4tg3aimR+r289bUWDGSZtssHdYaetfXBiEJ6kJtAN+7
+         JGIw==
+X-Gm-Message-State: AJaThX73HYt5N3NCMN2HuIs+7dAMRxlpDqFX4SxGv0jq7d1f3Zgvm+ga
+        WpnzmQfVWyBqVku/oOsnNTHDgdkurNFltTrMjNb7ug==
+X-Google-Smtp-Source: AGs4zMZfrJGx5csANrzjRM/itJR1Po2wLS87AUHrxqB38pjhLwpSsDvEIC6wOd5Qznq+lxYKVnDmUqMmsbmJOD874Xg=
+X-Received: by 10.80.182.217 with SMTP id f25mr48072035ede.104.1512673293663;
+ Thu, 07 Dec 2017 11:01:33 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.80.174.252 with HTTP; Thu, 7 Dec 2017 10:57:23 -0800 (PST)
-In-Reply-To: <xmqq8teeftn7.fsf@gitster.mtv.corp.google.com>
-References: <CA+P7+xotDPa+=G5ypfyD7gySp6r2SKRAjMSw_0BmvuyyfcjxBw@mail.gmail.com>
- <CA+P7+xouqMi4xo7psM-PmpqcpKre2X1YyYZBLfMDYSSZ8tD_VQ@mail.gmail.com>
- <20171207002234.GA21003@sigill.intra.peff.net> <20171207002439.GB21003@sigill.intra.peff.net>
- <CA+P7+xpoaa5zaF13ageKKjpPKTECU6XjaRdSZy6WOP7Q0TX+yA@mail.gmail.com>
- <20171207005639.GB1975@sigill.intra.peff.net> <CAP8UFD3iL_sRgvhm7YO_jVG5RiNn1=JRW0qvhBEPcUtCorWdYA@mail.gmail.com>
- <xmqq8teeftn7.fsf@gitster.mtv.corp.google.com>
+Received: by 10.80.174.252 with HTTP; Thu, 7 Dec 2017 11:01:12 -0800 (PST)
+In-Reply-To: <xmqq4lp2ftjt.fsf@gitster.mtv.corp.google.com>
+References: <20171207005929.24109-1-jacob.e.keller@intel.com> <xmqq4lp2ftjt.fsf@gitster.mtv.corp.google.com>
 From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Thu, 7 Dec 2017 10:57:23 -0800
-Message-ID: <CA+P7+xrhgbcogxYa38jEu3PuF5hVNNYPjAq031bYE8bgao168Q@mail.gmail.com>
-Subject: Re: git commit file completion recently broke
+Date:   Thu, 7 Dec 2017 11:01:12 -0800
+Message-ID: <CA+P7+xpAFJcvcQ9PN5ZsnQxf8GpSG2yYKSYEg5wHebyCLtvdsw@mail.gmail.com>
+Subject: Re: [PATCH v2] diff: fix --relative without arguments
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Git mailing list <git@vger.kernel.org>
+Cc:     Jacob Keller <jacob.e.keller@intel.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 7, 2017 at 7:24 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Christian Couder <christian.couder@gmail.com> writes:
+On Thu, Dec 7, 2017 at 7:26 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jacob Keller <jacob.e.keller@intel.com> writes:
 >
->>> I do think it may make sense for
->>> the "short" one to use NULL, like:
->>>
->>>   skip_to_optional_val(arg, "--relative, &arg)
->>>
->>> but maybe some other callers would be more inconvenienced (they may have
->>> to current NULL back into the empty string if they want to string
->>> "--foo" the same as "--foo=").
+>> From: Jacob Keller <jacob.keller@gmail.com>
 >>
->> I discussed that with Junio and yeah there are many callers that want
->> "--foo" to be the same as "--foo=".
+>> Recently, commit f7923a5ece00 ("diff: use skip_to_optional_val()",
+>> 2017-12-04) changed how we parsed some diff options, preferring
+>> skip_to_optional_val instead of a more complex skip_prefix() setup.
 >
-> Yup, the original thread has details and me saying that assuming all
-> of them want --foo and --foo= the same is questionable.  The likely
-> fix would be to use the _default variant with NULL, which was added
-> exactly for cases like this.
+> I'd expect a moral equivalent of this squashed in when Christian
+> rerolls the skip-to-optional-val series (with helped-by: attribution
+> to you, probably).  It does not make much sense to leave the initial
+> breakage like this one in the history.
 >
+> Thanks.
 
-Slightly more complex. You have to use the _default variant, pass in
-arg instead of options->prefix, and then make sure arg was set before
-overwriting options->prefix. If you just use _default with NULL, it
-will not quite fix the problem.
+Quite correct. I'll be sending a patch with just new tests shortly.
 
 Thanks,
 Jake
