@@ -7,84 +7,84 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D478320954
-	for <e@80x24.org>; Thu,  7 Dec 2017 15:17:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F09E820C33
+	for <e@80x24.org>; Thu,  7 Dec 2017 15:17:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753716AbdLGPRL (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Dec 2017 10:17:11 -0500
+        id S1753583AbdLGPRJ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Dec 2017 10:17:09 -0500
 Received: from mail-by2nam01on0119.outbound.protection.outlook.com ([104.47.34.119]:13483
         "EHLO NAM01-BY2-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1753562AbdLGPRG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Dec 2017 10:17:06 -0500
+        id S1753147AbdLGPRI (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Dec 2017 10:17:08 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=autodesk.com;
  s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=dYQzJx7hFMDxFEFrfdkRyLwUIoiJmKXZFeesxSjHhjs=;
- b=E7wedAPnOXc5yGuTGMyaiMcWm3Oi5gXU5trWuG67NxpdtrVGfhRo52ZENMIsDSMBIAxj2QKRI+THer3v1jm2XqnThzL86YjxocGpdYAB0Ztt2O0gUPUFtlqUGPRIoU97K4oNqr05aQI6Bf+0lJ+UsmzTAXC3x6k+OtB4UPYAAIM=
+ bh=CMNE7YkWajIgEVF3Oxd7ZzP6Hb0AjoPgcD5lu3kCRLw=;
+ b=b39fWPrBPZNE5TQY9TZYf1nCCQrklpgDiTr6cI53HmVTy1Pl1VJq+u6TVGj3iGcMZyPh3nFN5BH0F6uUhXE/6xL+mmzybfdAI5F0fZABEYaQsHTRZfSxe4oR41BRuVGjMjxz+Somrk0oWef3NBDRNDl7gCmQqGZFCImO/9ku+a0=
 Authentication-Results: spf=none (sender IP is )
  smtp.mailfrom=lars.schneider@autodesk.com; 
 Received: from slxbook4.ads.autodesk.com (62.159.156.210) by
  DM5P136MB0027.NAMP136.PROD.OUTLOOK.COM (129.75.96.154) with Microsoft SMTP
  Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P256) id
- 15.20.282.13; Thu, 7 Dec 2017 15:17:01 +0000
+ 15.20.282.13; Thu, 7 Dec 2017 15:17:03 +0000
 From:   lars.schneider@autodesk.com
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, sbeller@google.com, sunshine@sunshineco.com,
         kaartic.sivaraam@gmail.com, sandals@crustytoothpaste.net,
         peff@peff.net, Lars Schneider <larsxschneider@gmail.com>
-Subject: [PATCH v5 0/2] launch_editor(): indicate that Git waits for user input
-Date:   Thu,  7 Dec 2017 16:16:39 +0100
-Message-Id: <20171207151641.75065-1-lars.schneider@autodesk.com>
+Subject: [PATCH v5 1/2] refactor "dumb" terminal determination
+Date:   Thu,  7 Dec 2017 16:16:40 +0100
+Message-Id: <20171207151641.75065-2-lars.schneider@autodesk.com>
 X-Mailer: git-send-email 2.15.1
+In-Reply-To: <20171207151641.75065-1-lars.schneider@autodesk.com>
+References: <20171207151641.75065-1-lars.schneider@autodesk.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Originating-IP: [62.159.156.210]
 X-ClientProxiedBy: VI1P193CA0018.EURP193.PROD.OUTLOOK.COM (10.175.177.156) To
  DM5P136MB0027.NAMP136.PROD.OUTLOOK.COM (129.75.96.154)
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 464611c5-d6e2-4055-e4bd-08d53d8591c8
+X-MS-Office365-Filtering-Correlation-Id: b08279ab-28a6-4594-ad24-08d53d859335
 X-MS-Office365-Filtering-HT: Tenant
 X-Microsoft-Antispam: UriScan:;BCL:0;PCL:0;RULEID:(5600026)(4604075)(4534020)(4602075)(4627115)(201703031133081)(201702281549075)(48565401081)(2017052603286);SRVR:DM5P136MB0027;
-X-Microsoft-Exchange-Diagnostics: 1;DM5P136MB0027;3:ip5dEUOsbiwN2jc3WRQIBZVF39LcK7XWkcyLYPNMhf6rpnyJaU/0cQdjHBpER+5+Ny1N0hz5lTUyjkbnwf42jtNY8tg5V8BAN3elPrbqM178UD53xAz04Byhy17kBEH3GXBVXhlpYyEGboBkyL+WccjpWf+eA5USnanPCoIlBMeMmeFNAChYcBKCJAI4ZopPEHVyMWCKwktZstHf8kGhPPsIj6LPrztioedYI5AzOexggYHb9pWFnqUhzhv2cReH;25:hzOjZcc7uLc6wizK5RGATt+ghnVDI/cnKuo4aeJ4eB/yPm0F52h90igcfjbauzMi+thP32MZd+mCLhP8lqlV2efd8fehkJ8Ib6Q1oLgtXArVNj4tuHw2S1+NvVxeo3i467lCu2JxpWOT5USZS8AdjAd3yi/s47YZTEb4Can9RUPQ0Q7IkHOt8dLYCXDhSKZM2XhDxwmP3iK4omXSkgX5ObjemgHIVw776Gsl02Wp31tFAo/HgzBF8Sny9JQdgpdu7rvB2ckUAS2N/FV+ELqxIGp2RK8vt9iIy2Q1w0YWABB8CzBJeCMU6Yb08R4TDp9dzXud85bzf8Un67UKz/CtqA==;31:Soicg+6VFC5zgUtjBLlhmNaj8qtGGAUTk5CJJRjD9vnN/8NcyvzrbL44cvRmecgLl3S22WuxbdjLPsWgPzzzeQQoxcvpNGpBdLm7cIu5K5YRS0CwyxHjZLN0lJEAKtrsK1+2tiqfkvw2yp6eefFxiZTzWDwlDDLCY6rEUW6CykZMHzr1TtRefQ8LZ0vThuAxmSFjwywZsbgvCdCsZ35E+HRFOkXfAIi/bdUA9OVNYzk=
+X-Microsoft-Exchange-Diagnostics: 1;DM5P136MB0027;3:5tYFOOww5m7hrCJgpCBZmxRurcXb4nR/hGyZLWqRSm3zn5eJgFNl3fYYeqf0r04PB8h1SV/Bz3Y9EdDXd5Plw/VL63Yl4FRHIjH3/i36HKdWJFsIqj/iH8KbgDKJh8RsagxqdfHY8mFKx4tgJu7K+FoeG6owEw30RClSoYhAMUVfYGAmJqdRonHiYQnrKc67VbPN40euNepvbhqytG6zmynM2WACZLIzBaoaiusVmM7yXkm+U6CAtVui2H87INAX;25:zIHztr6RJoubG4y9FKvQY6KjxS/Ofbus0qJUNbOgjtuRSxBQzvTmdRtV13fenE5AWTR5po/fPCB3V724j1rUjyCjGIH9aBw0Ofv0FsuuzHjNA9DR+d/u1rwMuozL7tXXhnqvIIja3plHIFBF+gsQDHlv9ycMNaKbqyZlboTrE63zw9TcLeAcUixfqGNvOOfPjl4o4zhgkNHja4Evh9ot79jYWuMwNPyCvi11pJdWyGLqCOPhjVaaLo2jQ1Qfq5aN6Tg/sRYUOeL26ZprSkPr+6znWem/xomHj6duVp5gau5GNxNCe9oCqOr2te8/GP85155m2UM8AKPAK806fzCUGw==;31:LKsBkbYeyVJhNWLDv7MWgEZUexovfsCKHpI4bCZMlkVB8uaEUa7SNTYzJE6WUyco/EM80bDhXIgNod1qhyDghb+PhH9GioO9b4XlMIrgRBeyn2qFKNrpL4G9c7wxSyPkB1+NwjS0LFAW/JJQ0xT2V/+5HrgXafrYNe6NNB1s3qLgWCZIvoxJJA7JfW6C8Kl9ee/jTd3AUmaN/Y+mFNl6j4uevktRpsDWwBQz/NhA35E=
 X-MS-TrafficTypeDiagnostic: DM5P136MB0027:
-X-Microsoft-Exchange-Diagnostics: 1;DM5P136MB0027;20:b8t8mIgx+gBKVeC5u5+W3ESLbrydBULVkghqDnfxW2WxBmEDaC8Ld5ESxpNu8RtJtZLs/D/ueowEUBOkX3MxnpPAcSy80H9whZ/rDtXvsmTp7K519FRfcWRIaVpU9118egCebPv/oVrwcyctbNjlUmiSdAToNMysOELtUKevFideCwhEZ4UN47f3YLCD6JzFxvp/XYgmv4SgaW+/yBP77yYqC2pqqfQLrhggUyOhYDMqDQTngfoGlgnHQ9HZ5ocfNZWLzH2LsvkTrWbMsiRT9LXrCx/fyknvkJOYr21TAew/aI6IxiqFeTtM6y5ler/QUtvYzVGfzMhnJe6wuXFn58FvnviAlb96P4y65sCYpyWee7fTSKFX8FRVUqZCw9cpU0NF6YVXlA0GqoAr6u8U0MsuccvKCP7Harys/XO+Zy5sXy+huH1cWK5a8hWGlOHaLReskIDJVgW1ROUSQ2WU6moJ+eio6WEEYnTDrRpwU2CU1JfdSK+YWQgn3JlVTmuw7Md56aSINQUzlY2sonoWwVmWbHGaBMwsORGv3+KtP+MQ+WMFkILJoXMjw4UMIUu9DXSb/s32G66sn4vOm8Gfs/g4eu1bs+Wte9NkNlXc+MU=
-X-Microsoft-Antispam-PRVS: <DM5P136MB0027315A6D24C50FC648F9D3E8330@DM5P136MB0027.NAMP136.PROD.OUTLOOK.COM>
-X-Exchange-Antispam-Report-Test: UriScan:(166708455590820)(211936372134217)(61196332173343);
-X-Exchange-Antispam-Report-CFA-Test: BCL:0;PCL:0;RULEID:(6040450)(2401047)(8121501046)(5005006)(93006095)(93001095)(10201501046)(3002001)(3231022)(920507027)(6055026)(6041248)(201703131423075)(201702281528075)(201703061421075)(201703061406153)(20161123562025)(20161123558100)(20161123555025)(20161123564025)(20161123560025)(6072148)(201708071742011);SRVR:DM5P136MB0027;BCL:0;PCL:0;RULEID:(100000803101)(100110400095);SRVR:DM5P136MB0027;
-X-Microsoft-Exchange-Diagnostics: 1;DM5P136MB0027;4:IaBFo/IxZUYkuMaycDwi/zHRmMCWzvNtG+4KZICUtVnMIzPC213PBRMNpAWUuU+NCadLecXlhb/XoNWNWJ50S8Ro/FhLW7IIRLifm7x6G1HXl76LLocQEfs5Xi2Nx06kh2fN5aqBDY/7ymKe8X1em+0dIJBRYMpcp7ZCUYuV04FgOlOBWY0kkq35phhFS35cSqCblt43ytAQxnypawkgqy/IJmXPY7eFIfc6vmTIhps/UO87Ben7stxTuVjODd8ndupsR3xiBedllmq88/vhg3mqP/SXzuw+jqAnbZXrHTsAhzD2i5hS/TAu6hasd6yL4ppxzHVRZNTdM7wI0J0MNVEQ3blosPPrLYkIIKzAqLS4HEvMyv4ge9faaWWKrnut
+X-Microsoft-Exchange-Diagnostics: 1;DM5P136MB0027;20:vXxeZyGsC7Ko3Rl6JcG8ydZx+vLfUyqyf33eaAyW0XXCjU7XA8WC3lzHPI8niLg8OjfHCiUgF4+w+MxgYbgyX9BCxhkwF51WqhdwkGV6P6spra5SK7Paz+p5Ou9/C1fJTxqWJSEL/22yTv9mnmW4qw6whZEDJ6xJW1zoZuQY9jQQQIweqaxavbENyiBsgdaY5FKuf1oNzFEylOSsY2tpjQUYihGwzm8se7MDgzB/L/opUuvWz+fBe2Rfwjdo2MK8h8bAL0uZehoGSeeZg9uu0gH8TN8M0k8aCAM4xcEuMDjVYBfL/1t7hSJDk5Z38o3d00FT5xF+4uJK73184S3QBb/O2vx7RtnL2v5BiiwXmR7zKJvQsECV6VTT4XTpuExPT5ZA1nT7CXg5BerGGHsab8QE6ZlwyuJ6RWlh0Q7XNPF0QqCvsLlNLTGDT8Irnrah0FT5yEWUAndfG9IEmaBPq6QiWRWGMxJJOW1H/ZkBUXOQFFyAfkrvbgC1Lq8BcE6nwHzMfbWC1/a9qgh5ZlUl3Ce59+te0zXLUMU/OTDK6Qk1BgXSKH0RfgafO7VkSICYH6vaVfaOB2IpJGBrgRhmvtKkuPbH9wCyloR+q4oPtJs=;4:bqM0TRh7LjX2OzTQIX8guKhSSX85dRsXyFBGwEg3QRBzKzKlaKbiTGDn81ai/JqdtKjN6n5OeME8/lxbyEYnvUUJyyIE0vflOSQcFctVCZRdGAi6UrMHnq+9Yz+bA1OeF57zHS57vC0O3MYuL//luOZEugvVIxqhQSp5NpXQzu2TuN2PCKl7ORFM6YLsX/gbnFKXRO9iU7gniEHHlQ3NOjB35g8N6NvveQTA09cVl4iWP872Ea2xzimpjONVAB9qfNRcqhNjAn7dh6hmymrj6g==
+X-Microsoft-Antispam-PRVS: <DM5P136MB00275A9B5F1D8FD0E155989AE8330@DM5P136MB0027.NAMP136.PROD.OUTLOOK.COM>
+X-Exchange-Antispam-Report-Test: UriScan:;
+X-Exchange-Antispam-Report-CFA-Test: BCL:0;PCL:0;RULEID:(6040450)(2401047)(8121501046)(5005006)(93006095)(93001095)(10201501046)(3002001)(3231022)(6055026)(6041248)(201703131423075)(201702281528075)(201703061421075)(201703061406153)(20161123562025)(20161123558100)(20161123555025)(20161123564025)(20161123560025)(6072148)(201708071742011);SRVR:DM5P136MB0027;BCL:0;PCL:0;RULEID:(100000803101)(100110400095);SRVR:DM5P136MB0027;
 X-Forefront-PRVS: 05143A8241
-X-Forefront-Antispam-Report: SFV:NSPM;SFS:(10019020)(376002)(346002)(39860400002)(366004)(51914003)(189003)(199004)(81166006)(52116002)(7696005)(51416003)(85782001)(16526018)(7736002)(8936002)(50226002)(966005)(68736007)(81156014)(8676002)(4326008)(478600001)(2906002)(34040400001)(6486002)(305945005)(9686003)(6306002)(86362001)(53936002)(97736004)(39060400002)(2361001)(8656006)(316002)(2351001)(106356001)(33646002)(105586002)(6116002)(1076002)(66066001)(5660300001)(6666003)(25786009)(50466002)(101416001)(36756003)(6916009)(48376002)(3846002)(47776003)(16586007)(85772001);DIR:OUT;SFP:1102;SCL:1;SRVR:DM5P136MB0027;H:slxbook4.ads.autodesk.com;FPR:;SPF:None;PTR:InfoNoRecords;MX:1;A:1;LANG:en;
+X-Forefront-Antispam-Report: SFV:NSPM;SFS:(10019020)(376002)(346002)(39860400002)(366004)(189003)(199004)(81166006)(52116002)(7696005)(51416003)(76176011)(85782001)(16526018)(7736002)(8936002)(50226002)(68736007)(81156014)(8676002)(4326008)(478600001)(2906002)(6486002)(305945005)(9686003)(86362001)(53936002)(97736004)(39060400002)(2361001)(8656006)(316002)(2351001)(106356001)(33646002)(105586002)(6116002)(1076002)(66066001)(5660300001)(6666003)(2950100002)(25786009)(50466002)(101416001)(36756003)(6916009)(48376002)(3846002)(47776003)(16586007)(85772001);DIR:OUT;SFP:1102;SCL:1;SRVR:DM5P136MB0027;H:slxbook4.ads.autodesk.com;FPR:;SPF:None;PTR:InfoNoRecords;MX:1;A:1;LANG:en;
 Received-SPF: None (protection.outlook.com: autodesk.com does not designate
  permitted sender hosts)
-X-Microsoft-Exchange-Diagnostics: =?us-ascii?Q?1;DM5P136MB0027;23:LjlNH9xS4eO3shtyWnQByjj1FA9EhUMd5gdv0GpKN?=
- =?us-ascii?Q?jQ6wHx25D1od51RGRgPd4cyQxy17cKtm1f8dj6gDqX8iXHuUiQI0zTBz92EO?=
- =?us-ascii?Q?jBV7YiCOaXDYBFPLMpSHg8+OiSMy6u+Jmm/EAWFLaMVkIYa9n9bvthGJTe5p?=
- =?us-ascii?Q?HviLLsujTsWvdmkpbM8hLcZ4boYJMqhAPpdl9/310sgudET5isvLu29stSpO?=
- =?us-ascii?Q?pkx+qAQVoNlJMXlWneGB7vgmzADVDAfOfy616Ttdbjapid/4X/PIRE+W7tqM?=
- =?us-ascii?Q?zvook0XOBF+ga7unWgGVDssVzEQX419PnGs4QM0zCA0owbw0TwY4MNPWG67o?=
- =?us-ascii?Q?pMOQ8Ga36nlev0N94tZy/a8eAtjiQUK7DEGg2bYB0T5E48dq8+gQ+JEHUruI?=
- =?us-ascii?Q?7/sbmd1JVYCweh6rZGqaf/uDjixQS3GcSDDztDPNcwZj6YkVoY/JP0YtYBY6?=
- =?us-ascii?Q?Hazf4RlHDKQ9oAiqRqx7ONADEU0jBZC5g3/UvCCsefTwehJvIiml17LKK+5g?=
- =?us-ascii?Q?3Eqkoi7HmyaszOQlIyb12uz0NyIjEBJ9h/+YNQu+DtvqATfzNEgqnMdhkhMq?=
- =?us-ascii?Q?FS3JDq37TDYT1JQyoYnQGx2pxOs5QOwl4qJaoxjwaeaQs8HysgKYScICJRNN?=
- =?us-ascii?Q?IWQocxUwi51rTbXngt+5vKV6YpfFVwDJdmmO34tMI/B0rt30QHMFsRqYTPw7?=
- =?us-ascii?Q?yfztVmCs2agIt0nGaOBQnnKJTYlXcsEQWpL6uZ3hwa+6CO8qRU8Mvf8FG6ej?=
- =?us-ascii?Q?XGayeGPTbPn0f0fbLyOgD4q8AUPE1fdPYlaehhM2+u3OqCLh2aG6eZf9j+Sg?=
- =?us-ascii?Q?Ov/IR9qSOSdUUFIQxTUWZuiG9PV9SfwLwBtv887ZARhJvnSsrWvKlfi1cN9B?=
- =?us-ascii?Q?p/Qg8H2aLCkK16XghqTTD6vrfPRMz4i6nUfgCFilWaG02vBxbsVQJv8rGtaY?=
- =?us-ascii?Q?N/IZQzWCdpawiy/1DKswhHw5Vtku1oldGZlamKeNvtb97YpXpj8SkUySWyls?=
- =?us-ascii?Q?1P3A2zWbae9hQ6Tm540fdGSo+yimmXMdbo9bC2yk7TIbS0PrWNQoZgc554EU?=
- =?us-ascii?Q?sLL6V+YaktEmnBQ6K8hxE5Sc8YQyMVl3NstRAiPN4/O2nou+nRhs5UYhgmHJ?=
- =?us-ascii?Q?e+ir+RpcnRXqyjVx3gnt7tFQI+72+DgoPLThONJAiT68uF2W16Ij/kVjBwf5?=
- =?us-ascii?Q?RTgJ2Z0UoTF9lcyR+18s7ECNbqB7ZkrkBxbBZ/05PQ0l6sh1k/Be3+Unw=3D?=
- =?us-ascii?Q?=3D?=
-X-Microsoft-Exchange-Diagnostics: 1;DM5P136MB0027;6:NFx7r+lK92mf6333y5mmJd+Cwt5m2xp0dHXlpZVJ44fnOudrWO3r1Mtkktp9zhyX/Tkt2fvQbfR4xchhAsArIma4sHDtsXKvE+HENUjUyElE4gf+yvSrATe/P8JdiidpgHwvlsbfR6IIgmz3dK7MrsufgAu+fLhR/6hQptj1AEySEjPAF8nXbBEgZwI3JEdH4wIO3O7IBrBRFt0s6MmizCUqyslVzgpEd3cM1a60APQM2OsOcQuf7z3XboMn5k2vPs93OVUPXf8umd7KfLwMCYYgdeocpgUzjq33Ceb+Ef/6cskOMlJsoKzYL7mO+F9w2KhJT+0fSN53RS5sW0xJ6umDSOk+MIXeJ2+XHOEVaIw=;5:ptkR8BOiNT00gWHshUnysSyHNRaDugXXYyKU8riMz+R0qoaF3A08R8jilot3Pujmx0IEBUHJYEigxerDMPKr4BARsc2Ek3Z9T7xnpK5cleqBFd7GX0a8pxBcoXDWj02aWbOCiMqVzU/sqyLoS9ljDPD9ZbsKqa30FVsXeGQyUH0=;24:1p35nE4FD2eutEH88NoZdRedsnG59lcb7Yh05PZiFDhQySlclU7vfgLrGL7ujseO8HflGK/F7OTZv43CiwBXXQklhh7C0cVf131GdneQJQM=;7:s8e1U5khiKtqS05UQ3HSAm2MWmfC+/qViMPZ/ZzfKCaGAJtiNA5bcxn9E3vE12R7haa5zzWVTsX7VzHNOsdy7tbwKi6ST1Bx/WEkTVlEhE/WsHI/vLTEDdpOABLOZSU7hv/sk1WwQLVv4HTD9TNkigX1x641kTxk2HgNdjbfik2EUmW6JUDFNp/wjhXehXW0g//2xoyefEx8cGg2txYy7RCTVZOuC50jSVe7TWsFPtnKaHDoeqjVnM7Mh7wL8dXU
+X-Microsoft-Exchange-Diagnostics: =?us-ascii?Q?1;DM5P136MB0027;23:NvDbQ+Sm/gQbsbZk+ZrwgNiA82eOMOCCx5uMOsdlj?=
+ =?us-ascii?Q?D6Hz7PJEf1HYQB+9ALRpr/JTj8mCskIO9mncX+T17xbZa0IJRGbgZGs5eioW?=
+ =?us-ascii?Q?RdJQSvbF+XZ1KIZsuBPsfcFCt8kj/OJuq0CnT3vANcRdEO/HryNGDmjzxAQY?=
+ =?us-ascii?Q?uLpo7E8jPnnQbOQBHqJEjE9Toxzgr3Dok5+PkKaK0avjhA21Y/iYo+YVMynS?=
+ =?us-ascii?Q?SxwrZlAM+BUtPG7DVaeFRwJ1agIVasFyZjcZVumEgFkCceuezbwMBqe7sY7/?=
+ =?us-ascii?Q?BLOjPpRaKMjy/QuPCV6SIIbCryvY1PIQmdPmLyIYYhWgTOTb/HjbXhWtxH8y?=
+ =?us-ascii?Q?alOUtI9YOcuJUtB/CZuskEv6URzoF/vs/vcMZ9iybNMFRkqJBp8HpT27+GnS?=
+ =?us-ascii?Q?y4uFXJqrCgH7e5J8+HgxGFvOvPuJeq9a5YB1l1dWVRA21MppcDwQk7Xea5XJ?=
+ =?us-ascii?Q?k2ku4HZ77MQ7OqgFejRTOvPrqNrZuYcB/VxZCaY7LCu6l6XEF7R84/XOZjFV?=
+ =?us-ascii?Q?AbnPqH76rQADWEwSjxF/lVxNfoT8UOJ5msDZ2zn0f1faJXGFaioqOV5c0A18?=
+ =?us-ascii?Q?Fzpy+8w8Q775aXo1LXXwqPnnRULPeUs3VdCBg6kf5W1rIcXeRviSXrhh+8ps?=
+ =?us-ascii?Q?/Eg5mjr0P0vn5//kYeE/AupU4vXCoB5k21V8EDl4pZ7HCEiW+vRIsyyF5/vk?=
+ =?us-ascii?Q?hJl6hBY9/JTxNrYRy0hTe4kKAAQsfspjeQkrnoAiZ6M4XYdzJXpFaT666js9?=
+ =?us-ascii?Q?PWa7w6OPVQQ/NH+NJ3ffg2AgADbQ7morI1MWOCv/FnCBn+hlZuf6Zn1kqGBp?=
+ =?us-ascii?Q?ZsHsxx5YpY1ZkNDLht3tzWnuorMwxvFtRbKSqRJI/NTD+VEvQKjl+7izpSNs?=
+ =?us-ascii?Q?CKTFqy68RvaV/ipcttgKsqwMKom3k6vL6ezdrj4BokDswMTj+Er7H6baXNUM?=
+ =?us-ascii?Q?ucBiQ8G137/3FX1HvPrI5sCsoUe8VShYwV0eCHs8i3Nq5iRyXxR9h5FXXcfY?=
+ =?us-ascii?Q?Tf/HKbeuFe2dGMo1Bhel/4+8u4mRh+XtABljCvHmCWFOSKt0vUdq9tKeQTW9?=
+ =?us-ascii?Q?tds6FXl8CgzTzEJW/QN3VGpgxyDAGb0InC8JXN3gcBqY6+MtP7VfBh2kxttn?=
+ =?us-ascii?Q?U0Ftao1KLT/n9/zYex8NGl6L89ERmedxWoNF8qB1d2wbMqYSyB33YCZCb7CX?=
+ =?us-ascii?Q?yCW+Su905i6HOdD0IUZNJvrFrmt3furgYv2?=
+X-Microsoft-Exchange-Diagnostics: 1;DM5P136MB0027;6:DPrIqNnXg0B533PVEKYtE9RtjaYuCM2liHQ8lS6q5GgjH/9bEMxcO/AmagFftgxgSlhAOsvY9Ln0A/tczko2lZMYYWNCtvDeGI98JfgRi7sdH/0rD1YqD1Ng5YrXS/c4Xyxl/VPL4W2EFDHE9bEHGcsS0mHqyJwrwTFz29WdVG2/hbDLoOxfRCE+w7HJWkpFETiEENzi0Lg99kYjgsLDEtwtDSX9SJCj+envEBYxJ49Rxd49hCVXvluK0k451qyluDY9KvsMv81nIpULrJOAgpZHD8eWkMJnpx7bl0lcPjtDpFIYL8a9L/2vMeFXfCghQpVmAMAW6MHBdYGZ25WBDuzrlbTgfjsWQOl+kWkFU5I=;5:e4oFVc6CHZiUpYCjDSNCJTES6XDAJNg6FHX65FiR94ILA9sDILLPqPpcVzjfoPmHjHUydN+9W7E/cN3XbXy3k8S95zMZ98GR/+ychyc0ACo090gq4EiGCzByqo6y1W2SxJjG2vTNOS/njM7DdzlsPvx21wJaVQirkGqQSSu+zwI=;24:GtvCk2VMjoH5tnQ1qP/dThFPkXsi8uG+NkPh6uQ2ftDfJ+nTYTtuWMSbzzPYfbRfMaFCpI1yZF7Dj/FQFt/y0SHtKFpWp8Ck+HheYaggaDI=;7:v032vPQFDXN2mVPD4YCUdeBCrMu0F2Qj1Zu984J/ALt5v+nHO/HzKWH8QSClLU2aOXdU2pnQ9XR+9W5nPw/KTfhvZ42qfU65AZaHr6PIq1jYKbQtmdKo1lC925iaY+Ic5nibsbvfn8jpy8MmR/f/fYlL5Eht9FfwBLu5wKpONWSJxuooSxsj9OnMKtMwEeHymSyAtJ0VVeT2qV2HK/U4yD3jgg5XF4MO+pE8GCQS7ZYnRXphpfM/CqPAbvZJ/3mA
 SpamDiagnosticOutput: 1:99
 SpamDiagnosticMetadata: NSPM
-X-Microsoft-Exchange-Diagnostics: 1;DM5P136MB0027;20:lbtxl9fDF7ZCnfhFFLwnkm+ZAI1Ybnsvn7a3PeYmhhF4wzW0BJAJ0SdM1m0T310H5ABLAyDa4eJpYEQMbrSg8aCvRb2B16yhQdajR0rzXtDmULTp+083Dn3QRz1LGX2gAwAvb4/vvhANRCDE8LwjhXptgJahlVg5zqET0+oP7vc=
+X-Microsoft-Exchange-Diagnostics: 1;DM5P136MB0027;20:DIjRXavbk+VPQ5BPyOhOZWpIyP4skPpaaacr8AhRu+WVQYF5wFKFVnry7WJ1uHe7kl+SkhRyvaLWqd8Fzp2h/Qa256xl2yTZ6u8UhId9rw47nmlzMm3CcHdgp222zYo3MROMjfBiavbse01pt2e6qWjsNRHYTGaSPTWGoO++zp8=
 X-OriginatorOrg: autodesk.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Dec 2017 15:17:01.2974 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 464611c5-d6e2-4055-e4bd-08d53d8591c8
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Dec 2017 15:17:03.3443 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: b08279ab-28a6-4594-ad24-08d53d859335
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 67bff79e-7f91-4433-a8e5-c9252d2ddc1d
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM5P136MB0027
@@ -95,95 +95,87 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Lars Schneider <larsxschneider@gmail.com>
 
-Hi,
+Move the code to detect "dumb" terminals into a single location. This
+avoids duplicating the terminal detection code yet again in a subsequent
+commit.
 
-Patch 1/2: No change. The patch got "looks good to me" from Peff [1]
+Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+---
+ cache.h    | 1 +
+ color.c    | 3 +--
+ editor.c   | 9 +++++++--
+ sideband.c | 5 ++---
+ 4 files changed, 11 insertions(+), 7 deletions(-)
 
-Patch 2/2: I changed the waiting message to our bikeshedding result [2] and
-           I enabled the waiting message on dumb terminals for consistency.
-
-I also tested the patch on OS X and Windows with smart and dumb terminals.
-
-Thanks for the reviews,
-Lars
-
-
-[1] https://public-inbox.org/git/20171130203042.GB3313@sigill.intra.peff.net/
-[2] https://public-inbox.org/git/20171204220908.GA8184@sigill.intra.peff.net/
-
-RFC: https://public-inbox.org/git/274B4850-2EB7-4BFA-A42C-25A573254969@gmail.com/
- v1: https://public-inbox.org/git/xmqqr2syvjxb.fsf@gitster.mtv.corp.google.com/
- v2: https://public-inbox.org/git/20171117135109.18071-1-lars.schneider@autodesk.com/
- v3: https://public-inbox.org/git/20171127134716.69471-1-lars.schneider@autodesk.com/
- v4: https://public-inbox.org/git/20171129143752.60553-1-lars.schneider@autodesk.com/
-
-
-Base Ref: master
-Web-Diff: https://github.com/larsxschneider/git/commit/c00d4de8cf
-Checkout: git fetch https://github.com/larsxschneider/git editor-v5 && git checkout c00d4de8cf
-
-
-### Interdiff (v4..v5):
-
+diff --git a/cache.h b/cache.h
+index 89f5d24579..3842fc097c 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1469,6 +1469,7 @@ extern const char *ident_default_name(void);
+ extern const char *ident_default_email(void);
+ extern const char *git_editor(void);
+ extern const char *git_pager(int stdout_is_tty);
++extern int is_terminal_dumb(void);
+ extern int git_ident_config(const char *, const char *, void *);
+ extern void reset_ident_date(void);
+ 
+diff --git a/color.c b/color.c
+index 9a9261ac16..d48dd947c9 100644
+--- a/color.c
++++ b/color.c
+@@ -329,8 +329,7 @@ static int check_auto_color(void)
+ 	if (color_stdout_is_tty < 0)
+ 		color_stdout_is_tty = isatty(1);
+ 	if (color_stdout_is_tty || (pager_in_use() && pager_use_color)) {
+-		char *term = getenv("TERM");
+-		if (term && strcmp(term, "dumb"))
++		if (!is_terminal_dumb())
+ 			return 1;
+ 	}
+ 	return 0;
 diff --git a/editor.c b/editor.c
-index cdad4f74ec..d52017363c 100644
+index 7519edecdc..c65ea698eb 100644
 --- a/editor.c
 +++ b/editor.c
-@@ -45,11 +45,17 @@ int launch_editor(const char *path, struct strbuf *buffer, const char *const *en
- 		const char *args[] = { editor, real_path(path), NULL };
- 		struct child_process p = CHILD_PROCESS_INIT;
- 		int ret, sig;
--		int print_waiting_for_editor = advice_waiting_for_editor &&
--			isatty(2) && !is_terminal_dumb();
-+		int print_waiting_for_editor = advice_waiting_for_editor && isatty(2);
-
- 		if (print_waiting_for_editor) {
--			fprintf(stderr, _("hint: Waiting for your editor input..."));
-+			fprintf(stderr,
-+				_("hint: Waiting for your editor to close the file... "));
-+			if (is_terminal_dumb())
-+				/*
-+				 * A dumb terminal cannot erase the line later on. Add a
-+				 * newline to separate the hint from subsequent output.
-+				 */
-+				fprintf(stderr, "\n");
- 			fflush(stderr);
- 		}
-
-@@ -71,11 +77,10 @@ int launch_editor(const char *path, struct strbuf *buffer, const char *const *en
- 			return error("There was a problem with the editor '%s'.",
- 					editor);
-
--		if (print_waiting_for_editor)
-+		if (print_waiting_for_editor && !is_terminal_dumb())
- 			/*
--			 * go back to the beginning and erase the
--			 * entire line to avoid wasting the vertical
--			 * space.
-+			 * Go back to the beginning and erase the entire line to
-+			 * avoid wasting the vertical space.
- 			 */
- 			fputs("\r\033[K", stderr);
- 	}
-
-
-### Patches
-
-Lars Schneider (2):
-  refactor "dumb" terminal determination
-  launch_editor(): indicate that Git waits for user input
-
- Documentation/config.txt |  3 +++
- advice.c                 |  2 ++
- advice.h                 |  1 +
- cache.h                  |  1 +
- color.c                  |  3 +--
- editor.c                 | 29 +++++++++++++++++++++++++++--
- sideband.c               |  5 ++---
- 7 files changed, 37 insertions(+), 7 deletions(-)
-
-
-base-commit: 89ea799ffcc5c8a0547d3c9075eb979256ee95b8
---
+@@ -7,11 +7,16 @@
+ #define DEFAULT_EDITOR "vi"
+ #endif
+ 
++int is_terminal_dumb(void)
++{
++	const char *terminal = getenv("TERM");
++	return !terminal || !strcmp(terminal, "dumb");
++}
++
+ const char *git_editor(void)
+ {
+ 	const char *editor = getenv("GIT_EDITOR");
+-	const char *terminal = getenv("TERM");
+-	int terminal_is_dumb = !terminal || !strcmp(terminal, "dumb");
++	int terminal_is_dumb = is_terminal_dumb();
+ 
+ 	if (!editor && editor_program)
+ 		editor = editor_program;
+diff --git a/sideband.c b/sideband.c
+index 1e4d684d6c..6d7f943e43 100644
+--- a/sideband.c
++++ b/sideband.c
+@@ -20,13 +20,12 @@
+ 
+ int recv_sideband(const char *me, int in_stream, int out)
+ {
+-	const char *term, *suffix;
++	const char *suffix;
+ 	char buf[LARGE_PACKET_MAX + 1];
+ 	struct strbuf outbuf = STRBUF_INIT;
+ 	int retval = 0;
+ 
+-	term = getenv("TERM");
+-	if (isatty(2) && term && strcmp(term, "dumb"))
++	if (isatty(2) && !is_terminal_dumb())
+ 		suffix = ANSI_SUFFIX;
+ 	else
+ 		suffix = DUMB_SUFFIX;
+-- 
 2.15.1
 
