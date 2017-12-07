@@ -2,82 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6C1F820C34
-	for <e@80x24.org>; Thu,  7 Dec 2017 17:30:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 729AF20954
+	for <e@80x24.org>; Thu,  7 Dec 2017 17:40:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756825AbdLGRat (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Dec 2017 12:30:49 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60141 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1757023AbdLGRai (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Dec 2017 12:30:38 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id DD8B6C1EE9;
-        Thu,  7 Dec 2017 12:30:37 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:date:message-id:in-reply-to:references; s=sasl; bh=b2pn
-        ShGc+IpwIGhY8BL+xOjS8XQ=; b=Oev118WjpQruIJUh/Uh4SrHdRrI/jaXvcNPV
-        HGT+hMZo4VfJ6/bKxCNyh2oVb/OdYOtSRNj2KyBkzvFBEBakUsc1S134oNDE8wKN
-        3k2gdTWBLQN3xwYzXO/OnrY0hK8wEcluiqVOMXo5dAW2K7rh4W6m9dgdhKsUoIEn
-        kbQZzh4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
-        BKVrPAgOsT2B6hf5YCkSEWnyTJA9XuCUMVtvYaRtQf2573+DM6tDG2I9Dbu6Y9CR
-        URmPyiLqSKP6vkEAwAgGgWjBwKtbK/tByi2dal8a9nPkXsX+RU+wPQt7Y67eu8aZ
-        lnhago2YFW+LZEoK7PPWJXtHj7dyIZHgZOYo1+/4XBA=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D4FAAC1EE8;
-        Thu,  7 Dec 2017 12:30:37 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 43458C1EE7;
-        Thu,  7 Dec 2017 12:30:37 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Cc:     christian.couder@gmail.com, peff@peff.net, jacob.e.keller@intel.com
-Subject: [PATCH v2 5/7] diff: use skip-to-optional-val in parsing --relative
-Date:   Thu,  7 Dec 2017 09:30:32 -0800
-Message-Id: <20171207173034.12865-2-gitster@pobox.com>
-X-Mailer: git-send-email 2.15.1-480-gbc5668f98a
-In-Reply-To: <20171207173034.12865-1-gitster@pobox.com>
-References: <20171207003517.11729-1-jacob.e.keller@intel.com>
- <20171207173034.12865-1-gitster@pobox.com>
-X-Pobox-Relay-ID: 568DDAD0-DB74-11E7-89E1-575F0C78B957-77302942!pb-smtp2.pobox.com
+        id S1753011AbdLGRkg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Dec 2017 12:40:36 -0500
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:33079 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753054AbdLGRh4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Dec 2017 12:37:56 -0500
+Received: by mail-pg0-f68.google.com with SMTP id g7so4953511pgs.0
+        for <git@vger.kernel.org>; Thu, 07 Dec 2017 09:37:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=l20RXw326e8R9WI2qfK2CuUV0zWBosHyMpx66yvSNtg=;
+        b=rAMcnMin/khQhXgQjDCaDJWOPLZ33hX2y1P6a751TkbQSI1gHYr1zaWs9lYZSp0dAB
+         Qc2HDlUAfT4LJ6LFX43wgSKonvLHGWJA000Dtokdl0VZYDFnLMyXbUcXjL/ofP+CYXNC
+         AXziHy7Ydk8J6uGWMi5AjUhl0rGL9Y9ae0sEjL6/AOVbcCG1JRvqk1FvOj7PM1BnLSfE
+         CuKwEXfGE0j16kTcmbYid2ybkntGsqiPIgdNScRshWuF7mqI/kT2OU9T4g8q8sbeI+0k
+         uqPgYD1CZCDiW8MXM3vTQReOnsxv9J4XqaIfVa47Mx+h2cUShvA3BsyQJYl11U3w3FNf
+         xipw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=l20RXw326e8R9WI2qfK2CuUV0zWBosHyMpx66yvSNtg=;
+        b=fJ85zg06JbqLsSJkziXyu5UZePCuZzZHH1tBGMo2/Jfm9rX88oxPnp5tiHLswJSMUq
+         qwu7O52xB3MJ69SZH8OOLaGrqMfYdoxgX3Ty84CqCpQdvYGNp8gC4aLvwV8+YgI0QdEp
+         vSOYnLRi3h5C+WJlknHYmAY40vcLZdgjSrxq2fmQiuctlcxZm26wh+VkfgSOrpsUj7Kx
+         ZGK+ntGi1UwuY3LnP50DFiVs/1QFih3Qk8ZjVIEJ4dl44NV5qCiSGv9VHjDydhUfM6U1
+         C1/NkPnbLXVrf3r7SSUd4EB698nEv3pitEVc0hEouipkUs7+6svYp9+bsxRaLtlbNR39
+         aizA==
+X-Gm-Message-State: AJaThX7qjIlB60sJhAL2CT+YUWWO2QdDAC2r+kF2Il2AUkElRqqS+Y7K
+        zE721tw3I/JcNpj36plf8Jw=
+X-Google-Smtp-Source: AGs4zMYBciZBVycU93jFBOadPkfn+Yz+sL2QjByT8rTr3AhfkBQwT42IhLt42KlnAom5TRN6PCNZmA==
+X-Received: by 10.99.115.9 with SMTP id o9mr26264174pgc.198.1512668276122;
+        Thu, 07 Dec 2017 09:37:56 -0800 (PST)
+Received: from ?IPv6:2405:204:71ce:188a:cb7b:a122:cf1e:bf1e? ([2405:204:71ce:188a:cb7b:a122:cf1e:bf1e])
+        by smtp.gmail.com with ESMTPSA id q74sm9823548pfd.134.2017.12.07.09.37.48
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 07 Dec 2017 09:37:55 -0800 (PST)
+Subject: Re: [PATCH v5 2/2] launch_editor(): indicate that Git waits for user
+ input
+To:     Junio C Hamano <gitster@pobox.com>,
+        Lars Schneider <larsxschneider@gmail.com>
+Cc:     Lars Schneider <lars.schneider@autodesk.com>, git@vger.kernel.org,
+        sbeller@google.com, sunshine@sunshineco.com,
+        sandals@crustytoothpaste.net, peff@peff.net
+References: <20171207151641.75065-1-lars.schneider@autodesk.com>
+ <20171207151641.75065-3-lars.schneider@autodesk.com>
+ <xmqqr2s6ee7e.fsf@gitster.mtv.corp.google.com>
+ <FCBDBD58-0593-4FFC-B574-61D67CAF13C6@gmail.com>
+ <D17F94FA-702E-4E37-BDA5-94F0FFD5BD01@gmail.com>
+ <xmqqmv2uec0p.fsf@gitster.mtv.corp.google.com>
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Message-ID: <dfb2cde5-a499-8da3-9695-8c8fd46a96ad@gmail.com>
+Date:   Thu, 7 Dec 2017 23:07:46 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
+MIME-Version: 1.0
+In-Reply-To: <xmqqmv2uec0p.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- diff.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+On Thursday 07 December 2017 10:00 PM, Junio C Hamano wrote:
+> +
+> +		if (print_waiting_for_editor) {
+> +			/*
+> +			 * A dumb terminal cannot erase the line later on. Add a
+> +			 * newline to separate the hint from subsequent output.
+> +			 *
 
-diff --git a/diff.c b/diff.c
-index cd032c6367..e99ac6ec8a 100644
---- a/diff.c
-+++ b/diff.c
-@@ -4563,11 +4563,10 @@ int diff_opt_parse(struct diff_options *options,
- 		options->flags.rename_empty = 1;
- 	else if (!strcmp(arg, "--no-rename-empty"))
- 		options->flags.rename_empty = 0;
--	else if (!strcmp(arg, "--relative"))
-+	else if (skip_to_optional_val_default(arg, "--relative", &arg, NULL)) {
- 		options->flags.relative_name = 1;
--	else if (skip_prefix(arg, "--relative=", &arg)) {
--		options->flags.relative_name = 1;
--		options->prefix = arg;
-+		if (arg)
-+			options->prefix = arg;
- 	}
- 
- 	/* xdiff options */
--- 
-2.15.1-480-gbc5668f98a
+
+> +			 * In case the editor emits further cruft after what
+> +			 * we wrote above, separate it from our message with SP.
+
+I guess this part of the comment could be improved a little. I currently 
+interpret it as "See if the editor emits further cruft, print a space in 
+that case". Though, it's not what we are doing. Something like the 
+following, perhaps?
+
+      In a non-dumb terminal, separate our message from further cruft
+      that might be emitted by the editor with SP.
+
+
+
+> +			 */
+> +			const char term = is_terminal_dumb() ? '\n' : ' ';
+> +
+> +			fprintf(stderr,
+> +				_("hint: Waiting for your editor to close the file...%c"),
+> +				term);
+> +			fflush(stderr);
+> +		}
+>   
+>   		p.argv = args;
+>   		p.env = env;
+> @@ -63,6 +80,13 @@ int launch_editor(const char *path, struct strbuf *buffer, const char *const *en
+>   		if (ret)
+>   			return error("There was a problem with the editor '%s'.",
+>   					editor);
+> +
+> +		if (print_waiting_for_editor && !is_terminal_dumb())
+> +			/*
+> +			 * Go back to the beginning and erase the entire line to
+> +			 * avoid wasting the vertical space.
+> +			 */
+> +			fputs("\r\033[K", stderr);
+>   	}
+>   
+>   	if (!buffer)
+> 
 
