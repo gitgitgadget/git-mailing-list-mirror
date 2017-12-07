@@ -2,77 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8E17620954
-	for <e@80x24.org>; Thu,  7 Dec 2017 16:15:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 18F0320954
+	for <e@80x24.org>; Thu,  7 Dec 2017 16:16:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752336AbdLGQP1 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Dec 2017 11:15:27 -0500
-Received: from mout.gmx.net ([212.227.15.18]:58789 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750886AbdLGQOv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Dec 2017 11:14:51 -0500
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Mcmmn-1eeEgp3aeP-00I0MK; Thu, 07
- Dec 2017 17:14:46 +0100
-Date:   Thu, 7 Dec 2017 17:14:46 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
+        id S1752623AbdLGQQR (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Dec 2017 11:16:17 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:44996 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750981AbdLGQQP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Dec 2017 11:16:15 -0500
+Received: by mail-wm0-f67.google.com with SMTP id t8so13980258wmc.3
+        for <git@vger.kernel.org>; Thu, 07 Dec 2017 08:16:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=PZZRYCXIhZbhK1M9SOkjdC9T8sQ2vw6EWBizNt1Kywk=;
+        b=qME4w2QM41C7AulPhfjRXMBHGrkegVa+8rv5xaGaFPNyaHLgRjzhycwh8whmWFM8pj
+         UouBItqEFYNpp29thxzpYRys2eOBfI82MO5GkffVi6nZA87Maz5QGa0YafzhEAjdiG0K
+         UfzyK34KOrkNg0IQUV301hV7SLEbeL7TkCi//rwrLjR1RmRh/9rkE5uOT4W5WMKN0Tw5
+         n2tGm0tM+4+gMVeQMUonPf8HHMyz98JuB7v9i4JWRzgF4GGhUgFJjURradTnnSuOP3Ve
+         oGQQLQeh+rKIXZdwJbyHEIb2o+srJCJ9iFSpmy1nKaloV7hmmESebhWsLxg8RQOYBS1z
+         NyTg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=PZZRYCXIhZbhK1M9SOkjdC9T8sQ2vw6EWBizNt1Kywk=;
+        b=RTBppPo1IlsyE48OKMwXzxC6lGOO8H41Yulet1RuA+7+ZPpcwh/NLVSaGGKkNMyh5S
+         WRr/cSnsODX5/lk9QKlHbFiIQf5R6U+dp4JPpLu5bVCe+dBrZTn1hTZAT+3k+uoctLA1
+         gvEYfVLz5oQEnc/beGupcdZaQI4gctkki9LMypQCepVPIFdqXy9WM3Rz3oPyg3dRgjC6
+         SPbels+omqynmFT0vWw0Fent/pIRWHg/RxP1IsQI3ypRyhoZV3L/Cc5YU18oQiMF6bte
+         MZ0WVBjJ+oehilIeaSoRd/QMv1IvJi64LVhWodGsidTv419mKp0qEvcDAPZ3DrSTmNQW
+         sB2g==
+X-Gm-Message-State: AKGB3mLA/jIeO7u5+oO/i6HmNnKlLMPiMZNibkJYY8gCPmW0NKLobBTp
+        Rg+vbG8dSieazG2iC+ZArxQ=
+X-Google-Smtp-Source: AGs4zMa1PCqEeDsCQ9mDNPg8GS4TN9yygXsfno0JZbJCRZStjypT7ldQjFU8meLWdrZDo7g+oDEGqQ==
+X-Received: by 10.28.5.201 with SMTP id 192mr1559265wmf.142.1512663374725;
+        Thu, 07 Dec 2017 08:16:14 -0800 (PST)
+Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id q74sm6425034wmg.22.2017.12.07.08.16.13
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 07 Dec 2017 08:16:14 -0800 (PST)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH v5 2/2] launch_editor(): indicate that Git waits for user input
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <FCBDBD58-0593-4FFC-B574-61D67CAF13C6@gmail.com>
+Date:   Thu, 7 Dec 2017 17:16:13 +0100
+Cc:     Lars Schneider <lars.schneider@autodesk.com>, git@vger.kernel.org,
+        sbeller@google.com, sunshine@sunshineco.com,
+        kaartic.sivaraam@gmail.com, sandals@crustytoothpaste.net,
+        peff@peff.net
+Content-Transfer-Encoding: 7bit
+Message-Id: <D17F94FA-702E-4E37-BDA5-94F0FFD5BD01@gmail.com>
+References: <20171207151641.75065-1-lars.schneider@autodesk.com> <20171207151641.75065-3-lars.schneider@autodesk.com> <xmqqr2s6ee7e.fsf@gitster.mtv.corp.google.com> <FCBDBD58-0593-4FFC-B574-61D67CAF13C6@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-cc:     Brandon Williams <bmwill@google.com>, git@vger.kernel.org
-Subject: Re: [WIP 04/15] upload-pack: convert to a builtin
-In-Reply-To: <xmqqr2s7frga.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.21.1.1712071658120.4318@virtualbox>
-References: <20171020171839.4188-1-bmwill@google.com>        <20171204235823.63299-1-bmwill@google.com>        <20171204235823.63299-5-bmwill@google.com> <xmqqr2s7frga.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:nDUVwCLkKOu7KTUCrSsL/I/WwWACodEINsBB/jsd0xpjrYsGU6r
- 14MmZSSRYzkAHmZejSbQe/FbhVczDNUIqAxMSSguXxo8QldG5oFQvOMnqrP5DijhJ6B4wt8
- Q37O9z1FPBp0bgfQ6GpygDDap+5B54XQgCrl5FTuCUlebcyrO6pRBWDl1HhtL57n3wm+ViT
- X2ORSaeCKiYjDqAoKQW4w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:MlHaSQP4FIY=:5U4eKeEfkhqXnU6ko/bAgZ
- yQYW0vRojIxv29TFjkqY6lYiF+2tCZITtd+43xpJKi1UqYCMWL0XMxJaruEXkAvThqYN35XvQ
- jOYDnazPw8p9v1SmMTIRboIVp7DaRx5un3OB8R+/WHu7XM7QEE1rsQ50/6CBfFe2xrjs6QZDi
- kgnuf31h/9rd2VaWRLB6sWm3/SDf5Dz9LE/g0GiHvfgZvm90He64BmhGBGqDKo9TBcL88WhOn
- 5+kuWILuUUZzMpTaeOLXph40zTzFMFwfyTQjteQKo6yBkirKdgqj695bHyLCn1zseyz3+6c06
- Ty0eU3V6T89J2U/43UjUCKsiUISXDFBu+4ZmIxnqxRNncobOKlXFoxOJtipOEnT4vkXmNRlsh
- pyxRVsYleNaSclzdsw0KH2juR45KVpDg5NXdFUKczkC2p8EWDvqE9Du01mmUWwxxzKPCgvX7d
- SSoHnuDwg+F4+YqF2xVWm/Vhq3O57CPiqEJW0kIB6UuUoLflEYOrJHzExlqxXhnkmOyU6k49F
- zwzMzwysYWAar3GmZ+l6x9FD1OmoYqo2ltY2iZEClSf3Bi4wOhuLBbZ53JwnMhvEhGxWAxErZ
- WdzfqUvqSFyCWtUNM8A4C1ztQmjRM0HxNCChTkeo7qiFJ5iDWKT4gGSdDJ1gKOrb/F7c0PsZT
- fdTTsWvnFPVGSlv+KUuHQe0RU7epwI80SJHw+vMc/HYKf9B98n4BsNRZq1Joltoej6e68WPHE
- /z7QRpFyFmcVNj6SVtti96PPk93Kiqr2eJE2EaYrZMXxXW12nxejY4V63pTjfhtvWa0FYM9UH
- V9H6S/ZjbnzfDsSMKYpbEXnut7SnPWFAhPWK4NVYKQ3qkv1EUg=
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
 
-On Wed, 6 Dec 2017, Junio C Hamano wrote:
-
-> Brandon Williams <bmwill@google.com> writes:
+> On 07 Dec 2017, at 16:48, Lars Schneider <larsxschneider@gmail.com> wrote:
 > 
-> > In order to allow for code sharing with the server-side of fetch in
-> > protocol-v2 convert upload-pack to be a builtin.
-> >
-> > Signed-off-by: Brandon Williams <bmwill@google.com>
-> > ---
 > 
-> This looks obvious and straight-forward to a cursory look.
+>> On 07 Dec 2017, at 16:43, Junio C Hamano <gitster@pobox.com> wrote:
+>> 
+>> lars.schneider@autodesk.com writes:
+>> ...
 > 
-> I vaguely recalled and feared that we on purpose kept this program
-> separate from the rest of the system for a reason, but my mailing
-> list search is coming up empty.
+> How about this?
+> 
+> 			fprintf(stderr,
+> 				_("hint: Waiting for your editor to close the file..."));
+> 			if (is_terminal_dumb())
+> 				/*
+> 				 * A dumb terminal cannot erase the line later on. Add a
+> 				 * newline to separate the hint from subsequent output.
+> 				 */
+> 				fprintf(stderr, "\n")
+> 			else
+> 				fprintf(stderr, " ")
+> 
 
-I only recall that we kept it in the bin/ directory (as opposed to
-mlibexec/git-core/) to help with fetching via SSH.
+I forgot the ";" ... switching between programming languages ;-)
 
-Ciao,
-Dscho
+			if (is_terminal_dumb())
+				/*
+				 * A dumb terminal cannot erase the line later on. Add a
+				 * newline to separate the hint from subsequent output.
+				 */
+				fprintf(stderr, "\n");
+			else
+				fprintf(stderr, " ");
+
+
+
+> Can you squash that if you like it?
+> 
+> Thanks,
+> Lars
+
