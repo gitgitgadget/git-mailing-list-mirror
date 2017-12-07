@@ -2,124 +2,155 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AD7C320954
-	for <e@80x24.org>; Thu,  7 Dec 2017 19:04:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 48C1C20954
+	for <e@80x24.org>; Thu,  7 Dec 2017 19:06:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752680AbdLGTEu (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Dec 2017 14:04:50 -0500
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:41546 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752672AbdLGTEt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Dec 2017 14:04:49 -0500
-Received: by mail-pf0-f196.google.com with SMTP id j28so5359963pfk.8
-        for <git@vger.kernel.org>; Thu, 07 Dec 2017 11:04:49 -0800 (PST)
+        id S1752194AbdLGTGx (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Dec 2017 14:06:53 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:35901 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751288AbdLGTGw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Dec 2017 14:06:52 -0500
+Received: by mail-wm0-f67.google.com with SMTP id b76so14812938wmg.1
+        for <git@vger.kernel.org>; Thu, 07 Dec 2017 11:06:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=eOV0BRAfpsbIdW6Iy1dqXOaGRetxoMSIDL7ALj0VT9c=;
-        b=cYRNw3fXG23xTgPFvk061VoUFNy4knYMI1Zz1uR5e5yRWTApUfxq2WNwxs6LU3+FwA
-         rDmH6iLTDDj1V5BmA3eP91uRDlbyRsmnxHyMQRv7YbrzQOMxd4ScUrsHUGQDDIUKLczH
-         ic7nvst+NCBP9VfUFM3Ldw/7xM5atIQy0yQDWehgBe90j5DTSAUqAC408yGaqPAvUSf3
-         DD9o2WfWiqKvrhP5q0shbz7IyF2uDaa1q/+rdERiQEEpfyGr805kiK6p9+442o/zsHCg
-         cN9BEpXQAvBkuecF+maaB0GoFFZeO9NPRQWTV9SXeY3+zjtlGBetV6Zph0CGM8ba43S7
-         g3VQ==
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=b/zR3Ke1gGThjv9x/omtWK9U5E2NNz6SwupvAspwfvI=;
+        b=aGUZo8g5W06s+lUwYSho/8fxOXKUMG3y+X4ZGgmMCtfUt394G4JavlPnpaXY/0Utzo
+         Nyu5a8gx4c9Cnhoa8n8SorQ6h6laxTqa5/LTa+gCrrOpjWNz/khwvnKKFdbctGy/+MFL
+         9xIjC5bx1jvlh9JFNAVeMPx7dnYkJqgEfOvpuhZq86fMeM585C29S0uZpuGyBgm+h+Kj
+         obAoJM/ahwtPUISUNVzU2zaQ6UunJki3X/hkMLo1i5U8GGqv0r1En9hFEKenz51N9ooe
+         3uh6v9Lq8++niLjfGpuxwKAqUnDZeMFR5phV/V+nX+hSKOTxQCzrBHeCuBBw8+6YM6Bp
+         QVsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=eOV0BRAfpsbIdW6Iy1dqXOaGRetxoMSIDL7ALj0VT9c=;
-        b=anBuEPgzI9Hj9TxWGX3lE9rOlH8gcfs/9KkgTAP3WxB7rtwwkyvQ0bnOx2CReiu/7N
-         cTUT7crTV6T4ffacpbvYkPe5vEl+A+8CMU0/antOXhiv32n9pSnp8a50splvuPuyIAud
-         7Mi3Io5kGdf2otV2JFVJS7dAuDxROA3QEBcLjStn885DpatrckzwyqyBauf0bysrGUSn
-         tEzd3HNMgNrv5BbCg/t1MB9MwEvfAoiz+T+zHCSFBNLPbppHdEenp+b7NRwdFSLox3qC
-         T6pvo9yybMkhN1DkCfrMJdKopgeaHtCEaNBTMa5PTygFtGBb1DRLqgwimCU2KTWATtmT
-         X3cw==
-X-Gm-Message-State: AJaThX66PVBXT85SABzD4PixnZfhWC9Hmmdk2xoI3A456EOMUOsTIsT9
-        4iFJ0SON0y4Cn+8ocqrOw0d8KQ==
-X-Google-Smtp-Source: AGs4zMaYRypmUvnT9hxEx/0oMBSXhQ/VKvkP0dTQ1GGSZqlM1YmaMc3Z3GHoQ7on8KbNTZHMk3UbOg==
-X-Received: by 10.84.196.164 with SMTP id l33mr24131862pld.19.1512673488932;
-        Thu, 07 Dec 2017 11:04:48 -0800 (PST)
-Received: from google.com ([2620:0:100e:422:949a:89bd:af08:7a9c])
-        by smtp.gmail.com with ESMTPSA id d2sm10607560pfe.164.2017.12.07.11.04.47
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 07 Dec 2017 11:04:47 -0800 (PST)
-Date:   Thu, 7 Dec 2017 11:04:46 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [WIP 08/15] connect: discover protocol version outside of
- get_remote_heads
-Message-ID: <20171207190446.GB152943@google.com>
-References: <20171020171839.4188-1-bmwill@google.com>
- <20171204235823.63299-1-bmwill@google.com>
- <20171204235823.63299-9-bmwill@google.com>
- <xmqq7etye5il.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=b/zR3Ke1gGThjv9x/omtWK9U5E2NNz6SwupvAspwfvI=;
+        b=UePnhJpWRaS/Vywusl8CUbJQPQnPyL3+FneDdcKnhfMEycM/yriy3bZKIOKjXK+Smr
+         VXvS23sM8vATQmxDz28OLlG3hvAtwMU3TdU9YW6OxCOs+ZrkyEORyL2Duszo7bY3f+AK
+         kA+szFkz7ao0mEmXFAYRjsSDz1f1+hkcNJuCHK89QRbdPXKNCZH20KmLR46XebrtLReD
+         tFNu4kcjDRag1i7b4d2iO9+8A1vnmN29hxclXc7b3yzhNbnjzvSg3db+AW1FQyXoKD4g
+         uvzqQ7YAnk9SLdxNMbNUutJTjioRxA6qyNSwd3e27f3aRTM/7B5Wn/Yonlr4JSKmasrI
+         y6BA==
+X-Gm-Message-State: AJaThX5O+UL+Dg0cFCIDaVZTJUoPRU61zw+OWW7De+g3pdXL0CT5I8o1
+        WRit8uoZ9WJPDVocE82hmw+D8aXbdX43tvyQ1mE=
+X-Google-Smtp-Source: AGs4zMbClB68z+2AzUoM8PoLMHYWruUebJw/ObQi11r0LkhxKlb5QEISVUZJaqFjzNuLPUWPNoCt8vtvshJZH9bD+lQ=
+X-Received: by 10.80.137.147 with SMTP id g19mr46385671edg.293.1512673610616;
+ Thu, 07 Dec 2017 11:06:50 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq7etye5il.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Received: by 10.80.174.252 with HTTP; Thu, 7 Dec 2017 11:06:29 -0800 (PST)
+In-Reply-To: <20171207173034.12865-4-gitster@pobox.com>
+References: <20171207003517.11729-1-jacob.e.keller@intel.com>
+ <20171207173034.12865-1-gitster@pobox.com> <20171207173034.12865-4-gitster@pobox.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Thu, 7 Dec 2017 11:06:29 -0800
+Message-ID: <CA+P7+xoYEQ8sD+hSk+N95xAaRkMo15+kDRNB5rH5dgbGCfPieQ@mail.gmail.com>
+Subject: Re: [PATCH v2 7/7] t4045: test 'diff --relative' for real
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git mailing list <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Jacob Keller <jacob.e.keller@intel.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/07, Junio C Hamano wrote:
-> Brandon Williams <bmwill@google.com> writes:
-> 
-> > @@ -193,7 +195,17 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
-> >  		if (!conn)
-> >  			return args.diag_url ? 0 : 1;
-> >  	}
-> > -	get_remote_heads(fd[0], NULL, 0, &ref, 0, NULL, &shallow);
-> > +
-> > +	packet_reader_init(&reader, fd[0], NULL, 0);
-> > +
-> > +	switch (discover_version(&reader)) {
-> > +	case protocol_v1:
-> > +	case protocol_v0:
-> > +		get_remote_heads(&reader, &ref, 0, NULL, &shallow);
-> > +		break;
-> > +	case protocol_unknown_version:
-> > +		BUG("unknown protocol version");
-> > +	}
-> 
-> We see quite a few hunks just like this one appear in this patch.
-> The repetition is a bit disturbing.  I wonder if we want a wrapper
-> around the "reader-init && discover-version && return an error if
-> the protocol version is not known" dance.  That would allow us to
-> write this part of the code like so:
-> 
-> 	struct packet_reader reader;
-> 
-> 	if (connection_preamble(&reader, fd[0]))
-> 		die("unknown protocol version");
-> 	get_remote_heads(&reader, &ref, 0, NULL, &shallow);
-> 
-> or something like that.
-> 
-> By the way, is that really a BUG()?  Getting a connection and the
-> other end declaring a protocol version you do not yet understand is
-> not a bug in your program---it is a normal runtime error, no?
+On Thu, Dec 7, 2017 at 9:30 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> The existing tests only checked how well -relative=<dir> work,
+> without testing --relative (without any value).
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  t/t4045-diff-relative.sh | 24 ++++++++++++++++++++----
+>  1 file changed, 20 insertions(+), 4 deletions(-)
+>
+> diff --git a/t/t4045-diff-relative.sh b/t/t4045-diff-relative.sh
+> index fefd2f3f81..815cdd7295 100755
+> --- a/t/t4045-diff-relative.sh
+> +++ b/t/t4045-diff-relative.sh
+> @@ -25,7 +25,10 @@ check_diff () {
+>         +other content
+>         EOF
+>         test_expect_success "-p $*" "
+> -               git diff -p $* HEAD^ >actual &&
+> +               (
+> +                       test -z "$in_there" || cd "$in_there"
+> +                       git diff -p $* HEAD^
+> +               ) >actual &&
+>                 test_cmp expected actual
+>         "
+>  }
+> @@ -38,7 +41,10 @@ check_numstat () {
+>         EOF
+>         test_expect_success "--numstat $*" "
+>                 echo '1 0       $expect' >expected &&
+> -               git diff --numstat $* HEAD^ >actual &&
+> +               (
+> +                       test -z "$in_there" || cd "$in_there"
+> +                       git diff --numstat $* HEAD^
+> +               ) >actual &&
+>                 test_cmp expected actual
+>         "
+>  }
+> @@ -51,7 +57,10 @@ check_stat () {
+>          1 file changed, 1 insertion(+)
+>         EOF
+>         test_expect_success "--stat $*" "
+> -               git diff --stat $* HEAD^ >actual &&
+> +               (
+> +                       test -z "$in_there" || cd "$in_there"
+> +                       git diff --stat $* HEAD^
+> +               ) >actual &&
+>                 test_i18ncmp expected actual
+>         "
+>  }
+> @@ -63,15 +72,22 @@ check_raw () {
+>         :000000 100644 0000000000000000000000000000000000000000 25c05ef3639d2d270e7fe765a67668f098092bc5 A      $expect
+>         EOF
+>         test_expect_success "--raw $*" "
+> -               git diff --no-abbrev --raw $* HEAD^ >actual &&
+> +               (
+> +                       test -z "$in_there" || cd "$in_there"
+> +                       git diff --no-abbrev --raw $* HEAD^ >actual
+> +               ) &&
 
-While we could wrap the preamble into a function it sort of defeats the
-purpose since you want to be able to call different functions based on
-the protocol version you're speaking.  That way you can have hard
-separations between the code paths which operate on v0/v1 and v2.
+You could avoid the subshell by just passing $in_there to -C on the
+git commands. Same for the other tests. If you quote it, -C
+'$in_there', then it will work regardless of if in_there is set or
+not, (-C with an empty string doesn't cd anywhere). I think this is
+generally preferable for tests given it helps avoid unnecessary
+subshells when testing on Windows..?
 
-As for that case being a BUG, yes it should be a BUG.  the
-discover_version function won't ever return a protocol_unknown_version
-value.  Its only there to make sure the switch cases are exhaustive and
-cover all the enum values.  That does bring up a good point though.
-This error should be handled as a run-time error and not a BUG in
-discover_version, which I'll fix.
+>                 test_cmp expected actual
+>         "
+>  }
+>
+>  for type in diff numstat stat raw
+>  do
+> +       in_there=
+>         check_$type file2 --relative=subdir/
+>         check_$type file2 --relative=subdir
+> +       in_there=subdir
+> +       check_$type file2 --relative
+> +       in_there=
+>         check_$type dir/file2 --relative=sub
+>  done
+>
 
+This isn't quite what I had in mind for the directory parameter. I
+passed it as an extra argument, but I think this is probably more
+sensible.
 
--- 
-Brandon Williams
+> --
+> 2.15.1-480-gbc5668f98a
+>
