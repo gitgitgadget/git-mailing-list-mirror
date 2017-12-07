@@ -2,96 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6521420954
-	for <e@80x24.org>; Thu,  7 Dec 2017 18:51:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 555E720954
+	for <e@80x24.org>; Thu,  7 Dec 2017 18:57:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750973AbdLGSvC (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Dec 2017 13:51:02 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50227 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750882AbdLGSvB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Dec 2017 13:51:01 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8F1EFC26E6;
-        Thu,  7 Dec 2017 13:51:00 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=9XZFP4UEwUOSz+YDSOX4/daCE8c=; b=vt72wt
-        HEAgwC4iJFdBoA6I4tKrfisNPNcjZVNntZjKXlcOJNxoc3yw4bkHVz9jECjzpQb8
-        AboBbv7MkHgOgHYSCzcdbOgA+BtEJuDHxQXQozDMoDg7bnpuXY3LOXrVusckTaVp
-        ics1d4dKg2eGuG4JGbHM0GjSYEdLPFILumWCc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=PQCH7u+63kjN7FHrxjMmOVNXFwaoOIIk
-        tUc9q/dTrMp3rfG3/p/pmUsjVAnZEpJ6nBXkpeeIGGqaRR+IwHH701HFmMgo+StZ
-        9xgIlAI99cFEtAUZed8Jm+ulZm352esIjLPbMU5aTDnh7kKYoJiPZMVViJOnPchU
-        vuoh4gsUshk=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 83D1BC26E5;
-        Thu,  7 Dec 2017 13:51:00 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E2C69C26E4;
-        Thu,  7 Dec 2017 13:50:59 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [WIP 08/15] connect: discover protocol version outside of get_remote_heads
-References: <20171020171839.4188-1-bmwill@google.com>
-        <20171204235823.63299-1-bmwill@google.com>
-        <20171204235823.63299-9-bmwill@google.com>
-Date:   Thu, 07 Dec 2017 10:50:58 -0800
-In-Reply-To: <20171204235823.63299-9-bmwill@google.com> (Brandon Williams's
-        message of "Mon, 4 Dec 2017 15:58:16 -0800")
-Message-ID: <xmqq7etye5il.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1752483AbdLGS5q (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Dec 2017 13:57:46 -0500
+Received: from mail-wm0-f41.google.com ([74.125.82.41]:43798 "EHLO
+        mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750922AbdLGS5p (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Dec 2017 13:57:45 -0500
+Received: by mail-wm0-f41.google.com with SMTP id n138so14801209wmg.2
+        for <git@vger.kernel.org>; Thu, 07 Dec 2017 10:57:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Oo5yc+zPZiPxGij47d7iFdD3kPK25pE2k22Ze13Bfa4=;
+        b=geOFnWbmkOypUx8GcpNpuZ1VO6hqZvkQ9owt/TYNhpEaIQIjfzPi/YoB026jpDBDBB
+         JqJuXszA2YvRnWG9l6l/CFqYJCwp3ZhuXh+QQa/svoluhTYzVOaYMK7YBEU9ESMV/wbZ
+         ZmIUE5LGgrsvh1XxqyT6wO40vyMaB2wMfNVWaUE98tH8L1mBh5A7zz31+kMVO3BufZ1Z
+         eDZNy6gYz0JOrmsjQCSTHzvUb7oFz6GPsWAp9jW+vnhZ4EBjBjW87Yo0fbPTJTytS10M
+         JqOCib8T3EJH3DKkTPT7Uak/RnNeRYVvv6DiwxlzMCmq1YtCGw5nsw74MjJpxRPiJDgS
+         xLUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Oo5yc+zPZiPxGij47d7iFdD3kPK25pE2k22Ze13Bfa4=;
+        b=ijXZNZVuKlBI94CJElgkcbqGxTo3g+sBJEFCiQh/rZgE+Uic6F34ytjsjrJp6yspXl
+         n4aTQeXUu5JFPKA9Kv6PNLwM8mxrSpy4VS+xoK5RCNTxwTl0Sze3UsI/FvvEgndi2icI
+         2H0YCGGn4SZUtxNT2FfXPv4IFxl4eRTypytstKKKaFfKSsSlkQk1Co39uzp/riMzRz47
+         qM7p2IEoNuKmmz1tPB0t4u+dMCcnnXtY6MOGVIUEaQC+CnIkyhpzvK2epdb0u/z604o2
+         ec9wAh6xUcrPB1rgBhlf/KNrvbIgCvDu++C/c7m2gdiC7rPoci7rltyWjOkB5/bqYZqw
+         H8YQ==
+X-Gm-Message-State: AJaThX6cfk4hTuf8bR/oQktZdXUGfYaEVqC2cIV6/RQo4/UrHk2VW/S8
+        RVLtPyXnpU+g6VRbxlmC885OapaJt5lxtgjbvzI7CQ==
+X-Google-Smtp-Source: AGs4zMbYOIOLdUH+Cy42P02lVv67TzVt+ZEXN//ALWsSuaGNwWel33sGg/tgOe6O8nb0MT6uyChGgCqbUKvI2CWPWEk=
+X-Received: by 10.80.208.195 with SMTP id g3mr46375787edf.246.1512673064128;
+ Thu, 07 Dec 2017 10:57:44 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 911434C8-DB7F-11E7-83E4-8EF31968708C-77302942!pb-smtp1.pobox.com
+Received: by 10.80.174.252 with HTTP; Thu, 7 Dec 2017 10:57:23 -0800 (PST)
+In-Reply-To: <xmqq8teeftn7.fsf@gitster.mtv.corp.google.com>
+References: <CA+P7+xotDPa+=G5ypfyD7gySp6r2SKRAjMSw_0BmvuyyfcjxBw@mail.gmail.com>
+ <CA+P7+xouqMi4xo7psM-PmpqcpKre2X1YyYZBLfMDYSSZ8tD_VQ@mail.gmail.com>
+ <20171207002234.GA21003@sigill.intra.peff.net> <20171207002439.GB21003@sigill.intra.peff.net>
+ <CA+P7+xpoaa5zaF13ageKKjpPKTECU6XjaRdSZy6WOP7Q0TX+yA@mail.gmail.com>
+ <20171207005639.GB1975@sigill.intra.peff.net> <CAP8UFD3iL_sRgvhm7YO_jVG5RiNn1=JRW0qvhBEPcUtCorWdYA@mail.gmail.com>
+ <xmqq8teeftn7.fsf@gitster.mtv.corp.google.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Thu, 7 Dec 2017 10:57:23 -0800
+Message-ID: <CA+P7+xrhgbcogxYa38jEu3PuF5hVNNYPjAq031bYE8bgao168Q@mail.gmail.com>
+Subject: Re: git commit file completion recently broke
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brandon Williams <bmwill@google.com> writes:
+On Thu, Dec 7, 2017 at 7:24 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Christian Couder <christian.couder@gmail.com> writes:
+>
+>>> I do think it may make sense for
+>>> the "short" one to use NULL, like:
+>>>
+>>>   skip_to_optional_val(arg, "--relative, &arg)
+>>>
+>>> but maybe some other callers would be more inconvenienced (they may have
+>>> to current NULL back into the empty string if they want to string
+>>> "--foo" the same as "--foo=").
+>>
+>> I discussed that with Junio and yeah there are many callers that want
+>> "--foo" to be the same as "--foo=".
+>
+> Yup, the original thread has details and me saying that assuming all
+> of them want --foo and --foo= the same is questionable.  The likely
+> fix would be to use the _default variant with NULL, which was added
+> exactly for cases like this.
+>
 
-> @@ -193,7 +195,17 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
->  		if (!conn)
->  			return args.diag_url ? 0 : 1;
->  	}
-> -	get_remote_heads(fd[0], NULL, 0, &ref, 0, NULL, &shallow);
-> +
-> +	packet_reader_init(&reader, fd[0], NULL, 0);
-> +
-> +	switch (discover_version(&reader)) {
-> +	case protocol_v1:
-> +	case protocol_v0:
-> +		get_remote_heads(&reader, &ref, 0, NULL, &shallow);
-> +		break;
-> +	case protocol_unknown_version:
-> +		BUG("unknown protocol version");
-> +	}
+Slightly more complex. You have to use the _default variant, pass in
+arg instead of options->prefix, and then make sure arg was set before
+overwriting options->prefix. If you just use _default with NULL, it
+will not quite fix the problem.
 
-We see quite a few hunks just like this one appear in this patch.
-The repetition is a bit disturbing.  I wonder if we want a wrapper
-around the "reader-init && discover-version && return an error if
-the protocol version is not known" dance.  That would allow us to
-write this part of the code like so:
-
-	struct packet_reader reader;
-
-	if (connection_preamble(&reader, fd[0]))
-		die("unknown protocol version");
-	get_remote_heads(&reader, &ref, 0, NULL, &shallow);
-
-or something like that.
-
-By the way, is that really a BUG()?  Getting a connection and the
-other end declaring a protocol version you do not yet understand is
-not a bug in your program---it is a normal runtime error, no?
+Thanks,
+Jake
