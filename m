@@ -2,102 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 040F920954
-	for <e@80x24.org>; Thu,  7 Dec 2017 19:51:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 98AA020954
+	for <e@80x24.org>; Thu,  7 Dec 2017 19:54:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752433AbdLGTvx (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Dec 2017 14:51:53 -0500
-Received: from mail-it0-f65.google.com ([209.85.214.65]:44632 "EHLO
-        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752078AbdLGTvv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Dec 2017 14:51:51 -0500
-Received: by mail-it0-f65.google.com with SMTP id b5so17551028itc.3
-        for <git@vger.kernel.org>; Thu, 07 Dec 2017 11:51:50 -0800 (PST)
+        id S1752449AbdLGTyY (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Dec 2017 14:54:24 -0500
+Received: from mail-wm0-f48.google.com ([74.125.82.48]:45410 "EHLO
+        mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750828AbdLGTyX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Dec 2017 14:54:23 -0500
+Received: by mail-wm0-f48.google.com with SMTP id 9so15047910wme.4
+        for <git@vger.kernel.org>; Thu, 07 Dec 2017 11:54:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=6C5SUKsz707ukkmhrDTlQsTjM94yfdX7mOeeuHGdfaI=;
-        b=pKa3v+DeFGQVtvVILaeJnM5rqYClE3uYpYYpf2W1iAX2/cMs/qneoRhWgnpY69xLBl
-         bVUNFdYYY3RsTFnpXj3LNMlUe033OWATUCs2qsbrdG35s8/ck7bvpP8BxlGl+RQpIsJl
-         8hmR8McvQ4LOWhlJd6+ANHKx0UC90+FAYQ9/Z56Z0Ka9cci31LwjtIN8d5TExSs/pu4w
-         zzl6BD3OFdN+5mgVSS2pwlV6omtYJpoGQ3dZU/JQAeSCPrCu5+QdQXa/KB/ckCC0b4x7
-         cE/eIljX7Otq6T8is1N2uCkkTVLMqemAjIajXpzQeu17s/nBpWPlkFiQ2QoTLkX7KMXi
-         31mQ==
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Go/g9mDz3FZUbWI1j+AXPXWZVTlp5br4pQy+a/v5tP4=;
+        b=JxSqFRtgqKTAAJrebQNSWOLhvFkAMUkgB2QLsQnW0ekjw2iXxFUNzg+2clEnJ/vHgp
+         gfk+baDUQ65dm1KngYscvTv/ZfYEC34E4oglrglD4Md42bBYkTArdlhCPHaT183rj/8x
+         lTMtsZMXLybIlvQ8noZGCvsmvLw0LtniVnyW7ewofrRT7YMwu+mrlKPAKOi+JPFUBQHJ
+         NEMUv+nMDHSiU220GG9Hv6vRQmQFp8yqdCmPTmuqhyjcibakVJMcWs4es35st+kczGMG
+         +ABjm+g95zoyEPr/QmZGujTF67Rck8HDfODeu4RX3lIf9uyL2mx9brySnsJJl+ci5GWv
+         h9gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=6C5SUKsz707ukkmhrDTlQsTjM94yfdX7mOeeuHGdfaI=;
-        b=FrcW1JBhNQm5WbyRQqci7PJbFYW555iAgCjWoCWdpKZv9yIee8QxMtp30JchU9qJ8t
-         afbTDjvenLe2yoWGQrD3cJaTjyi4gKKAcOH0w3dVy14+XOUjWP09GDdW1bj6qIsa5ITK
-         eweKWT2XiowS/XF2D3Y5ushYAZ0maJ3UqzoziUsxPNk3Tki1kr0d6Lzd7f/4cOHAEsBM
-         C0WRc2VGEyRhauz1I8X0rmlF4xdycUDjNFjzqSulQwjfXtZgje6YE9IWj2PPUj5cxr0o
-         NNzPHhnsHDv2ClPMUUX3tD7NHczd7TzuruZFcixUhTeud5Dh7QNaw7wlSkiY+l9ZH0DD
-         aK9w==
-X-Gm-Message-State: AKGB3mJfuWEsoYk7bC0JE6U85tHja3tGMjtX+h257Y555QtEKXSOLGKY
-        rg6kw08fJ7/KH8wTVEouQ7QgH3Awi1c=
-X-Google-Smtp-Source: AGs4zMZoMCfMCDRD6j46V2LyDHvrg90IrWld6nTy17Z2Q8givVji7iiNrCTqG9+HxmRwni7FuLmrpQ==
-X-Received: by 10.36.238.67 with SMTP id b64mr2660867iti.37.1512676310040;
-        Thu, 07 Dec 2017 11:51:50 -0800 (PST)
-Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
-        by smtp.gmail.com with ESMTPSA id k19sm2715885ioc.75.2017.12.07.11.51.49
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 07 Dec 2017 11:51:49 -0800 (PST)
-From:   Stefan Beller <sbeller@google.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, Stefan Beller <sbeller@google.com>
-Subject: [PATCH] RelNotes/2.16: Fix submodule recursing argument
-Date:   Thu,  7 Dec 2017 11:51:45 -0800
-Message-Id: <20171207195145.11965-1-sbeller@google.com>
-X-Mailer: git-send-email 2.15.1.424.g9478a66081-goog
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Go/g9mDz3FZUbWI1j+AXPXWZVTlp5br4pQy+a/v5tP4=;
+        b=fQEggbgU2Y+LQ7AS7ZS5UrDN6lK+XsjsORolALDRg2JPDcsgexXANTopMp51rSuR2r
+         2IP4og4hWWmVWEpN6O5/LOTooGft10uZRQCLgLBS1GRksCo4dj+cIXOUtj8H5SKe14WQ
+         DHbDg8ey8yB9fE2tOPef7H7LxbXr15BbtbAeY9+4tuNDTY2J6XtISpgdE8Z8hlTQB6LJ
+         vBCK967elfb4HL76MIlr2vaQ3UVj91LunOmlQkTqvoPLB2bKA7NzH66vGfWiCBhT+Jx1
+         xSZRQ5kc6mfnGnDLuCWhctTe4O7VzheBLwhJmPx36Dfvf98zUpsWQUV6SwLlfH7Fb3hT
+         A2CQ==
+X-Gm-Message-State: AKGB3mLly88uyDvFniXUXfdeaLuMiwDpElcYjkgFoEwNDC6O+183enUi
+        qJe/hgq1ddzMKwfNHh/oK2FfJw/KGCWTO4O1HS8=
+X-Google-Smtp-Source: AGs4zMapu1Z47pZqVLOX0FgHnrs6GDwVzJenQGmJiSIPjj4WOtuOVTAjGjoMSM7x87HviJNjWlnxCbMAROIHKJhZU5c=
+X-Received: by 10.80.176.70 with SMTP id i64mr4923296edd.187.1512676462558;
+ Thu, 07 Dec 2017 11:54:22 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.80.174.252 with HTTP; Thu, 7 Dec 2017 11:54:02 -0800 (PST)
+In-Reply-To: <xmqq374me4a7.fsf@gitster.mtv.corp.google.com>
+References: <20171207190135.28660-1-jacob.e.keller@intel.com> <xmqq374me4a7.fsf@gitster.mtv.corp.google.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Thu, 7 Dec 2017 11:54:02 -0800
+Message-ID: <CA+P7+xom-R3JX1ghZLDciRX=5zsJs=ngCX9iM=Y8m8TN5TX_=g@mail.gmail.com>
+Subject: Re: [PATCH] diff: add tests for --relative without optional prefix value
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jacob Keller <jacob.e.keller@intel.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Some commands take a plain `--recursive` flag as an indication to recurse
-into submodules, git-clone is a notable user facing example, an internal
-example is in builtin/submodule--helper. Other commands such as git-merge
-take the `--recursive` flag to indicate recursing in their specific area
-of expertise.
+On Thu, Dec 7, 2017 at 11:17 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jacob Keller <jacob.e.keller@intel.com> writes:
+>
+>>  for type in diff numstat stat raw; do
+>> -     check_$type file2 --relative=subdir/
+>> -     check_$type file2 --relative=subdir
+>> -     check_$type dir/file2 --relative=sub
+>> +     check_$type . file2 --relative=subdir/
+>> +     check_$type . file2 --relative=subdir
+>> +     check_$type . dir/file2 --relative=sub
+>> +     check_$type subdir file2 --relative
+>
+> OK, I didn't think it would be sensible to unconditionally pass the
+> directory and use "-C ." as a no-op.  It looks good.
+>
+> I think the new one should go before the dir/file2 test; all three
+> earlier tests (including this new one) are about taking a patch
+> relative to subdir/ spelled in different ways, and the one about
+> dir/file2 alone is different.
 
-Given these examples it is evident, that such a flag is too generic as
-we can think of other recursive applications as well: recursing into trees
-is another example.
+Yea, your patch looked fine to me, minus the use of subshells where we
+could avoid it.
 
-That is why any submodule related recursing tries to use the explicit
-`--recurse-submodules` instead. Any occurrences of the genric recurse flag
-are historic accidents.
-
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
-
-Junio, feel free to just squash this into a future update
-of the release notes.
+I'm fine taking your version.
 
 Thanks,
-Stefan
-
- Documentation/RelNotes/2.16.0.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/Documentation/RelNotes/2.16.0.txt b/Documentation/RelNotes/2.16.0.txt
-index 431bd5e34a..8fbc233e56 100644
---- a/Documentation/RelNotes/2.16.0.txt
-+++ b/Documentation/RelNotes/2.16.0.txt
-@@ -275,7 +275,7 @@ Fixes since v2.15
-    ask the underlying "git fetch" to go over IPv4/IPv6, which has been
-    corrected.
- 
-- * "git checkout --recursive" may overwrite and rewind the history of
-+ * "git checkout --recurse-submodules" may overwrite and rewind the history of
-    the branch that happens to be checked out in submodule
-    repositories, which might not be desirable.  Detach the HEAD but
-    still allow the recursive checkout to succeed in such a case.
--- 
-2.15.1.424.g9478a66081-goog
-
+Jake
