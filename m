@@ -2,124 +2,216 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8B6A920C32
-	for <e@80x24.org>; Thu,  7 Dec 2017 01:22:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BBD1220C32
+	for <e@80x24.org>; Thu,  7 Dec 2017 01:59:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752151AbdLGBWU (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Dec 2017 20:22:20 -0500
-Received: from mail-wm0-f45.google.com ([74.125.82.45]:39174 "EHLO
-        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752155AbdLGBWT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Dec 2017 20:22:19 -0500
-Received: by mail-wm0-f45.google.com with SMTP id i11so10154272wmf.4
-        for <git@vger.kernel.org>; Wed, 06 Dec 2017 17:22:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=9N4zkNK5ihMP3cbOCQ9rnvVSu9puzPr2VLoxxdm27mU=;
-        b=g+Omz3bUp8/9GmTEuQKkALHV8bWzu34AT2VX9pmf8pGpdixn1PXMDg8kMYl1pZsyZz
-         4bjzkjmu3PWPEynsWMIsi2kOL8ij2h6tho+2Ls9FUpbBdZ+J5IOR4xxygx/syROvEQcH
-         0Rzv/HdvSNi4qVYbBG88Xbgv8BOmOxRYTdFAAaHH2plt5rFkxknY0RJw0CZFczR8YYXp
-         f0ukRIht4mRMQDvBDb5RbeRuPC/k/s7yiI2JDXfjQumDAMIaHzYybb38vz3xjchC7/PQ
-         r/VJzbLDQDWHXD6Wd7Mukv/l+4Pf52UCC7tUOPBgrtUnnpDDJHsL0tERiOtAtBnxEHAu
-         jE2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=9N4zkNK5ihMP3cbOCQ9rnvVSu9puzPr2VLoxxdm27mU=;
-        b=gUPaqIkOdsHJekVKpCOtnaWSfR3Fm9nSJDlwmee684pKQTYIWBtE7h1L01fn1StWJy
-         0EGs8Pc2Gn+3XzkZZKaDfB26fyczE3pziyEyXTPgMP2CVZfuEOk03tB8IbbpkLffBSU5
-         lbwXYSobs+OhmL/jPYkkHbGXiToCKXHCSxPmRdPtr1f3yGn+uzj4qAjSylGeboBOaBLu
-         6bxH0QshZdVRrPUiiM2o376QfIJfSHnfMj1V+WpKtB1L88wUdNrH9hkTRKHCoWrOq/bZ
-         uxaGaQJd/J8M/NSy1fpTHvtM7SvjgB/XanrKI1/ZxmcKl/Mblkiv0VDtRl33pI1lMPmo
-         M4uw==
-X-Gm-Message-State: AJaThX5nDnwDrzmZQea5P8vhJgKEf7NoBoh7vZrf07Vom3fPd2k+edFn
-        QNYHUIPjGEgMvDHP89bj22kJcedFQ9xVOrKmvBg=
-X-Google-Smtp-Source: AGs4zMb+DAP9zZHRtDoubcF4TA1pXOTgCTI62+YUHr7ywQHw20B5OVWiLLlaKfc99Dlk73Xn0OgTFmZMKAZbucFM/H8=
-X-Received: by 10.80.137.106 with SMTP id f39mr44447783edf.148.1512609737948;
- Wed, 06 Dec 2017 17:22:17 -0800 (PST)
+        id S1752515AbdLGB7c (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Dec 2017 20:59:32 -0500
+Received: from avasout01.plus.net ([84.93.230.227]:39597 "EHLO
+        avasout01.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752150AbdLGB7b (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Dec 2017 20:59:31 -0500
+Received: from [10.0.2.15] ([80.189.70.158])
+        by smtp with ESMTPA
+        id MlTCecQBHJjiPMlTDeBs3I; Thu, 07 Dec 2017 01:59:29 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=O6ZJhF1W c=1 sm=1 tr=0
+ a=bpDj9VLvXCYHU65eeb/Fiw==:117 a=bpDj9VLvXCYHU65eeb/Fiw==:17
+ a=r77TgQKjGQsHNAKrUKIA:9 a=5rxgeBVgAAAA:8 a=EBOSESyhAAAA:8
+ a=JtrhiT9LD60LjktgsWYA:9 a=QEXdDO2ut3YA:10 a=oTGeyFvmkqhZoMKAvEkA:9
+ a=U99dQBmVe6UA:10 a=PwKx63F5tFurRwaNxrlG:22 a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: partial_clone_get_default_filter_spec has no callers
+To:     Jeff Hostetler <git@jeffhostetler.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+References: <ec83f2d9-0d87-9d6b-4860-f4cd7c19984e@ramsayjones.plus.com>
+ <89d06941-9bee-9334-d737-11ef7801cba2@jeffhostetler.com>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <44d0c556-d5ba-186f-7493-f9900eccb442@ramsayjones.plus.com>
+Date:   Thu, 7 Dec 2017 01:59:26 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.0
 MIME-Version: 1.0
-Received: by 10.80.174.252 with HTTP; Wed, 6 Dec 2017 17:21:57 -0800 (PST)
-In-Reply-To: <20171207010421.GC1975@sigill.intra.peff.net>
-References: <20171207003517.11729-1-jacob.e.keller@intel.com> <20171207010421.GC1975@sigill.intra.peff.net>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Wed, 6 Dec 2017 17:21:57 -0800
-Message-ID: <CA+P7+xr8KobkY56-4qE4ZdVgC388L6=NKQc=3kTZvWz8XOD3ag@mail.gmail.com>
-Subject: Re: [PATCH] diff: add test showing regression to --relative
-To:     Jeff King <peff@peff.net>
-Cc:     Jacob Keller <jacob.e.keller@intel.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <89d06941-9bee-9334-d737-11ef7801cba2@jeffhostetler.com>
+Content-Type: multipart/mixed;
+ boundary="------------4E27EAE3A497AF122DFE4766"
+Content-Language: en-GB
+X-CMAE-Envelope: MS4wfGsx1pb9UNVUUFF4Js1Ol/GlHlU9CMiUWXcvIQLWtLsYBxdC0T1lVG28e372wPztM8w9qs6T14jhay3e97Tu+V+xt14vhXreH4TZiS+fn0DegS9vB1jE
+ LDxgwyWmgHTaEP++VOnCSXkgPA/z9dyhFGLcbGTRCmaL019u+5tXoqvmYZQ6tuQBlx6e+6HS8H9FxQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 6, 2017 at 5:04 PM, Jeff King <peff@peff.net> wrote:
-> On Wed, Dec 06, 2017 at 04:35:17PM -0800, Jacob Keller wrote:
->
->> Subject: [PATCH] diff: add test showing regression to --relative
->
-> Since we'd hopefully not ever merge that regression, I think this patch
-> ought to stand on its own. In which case it probably wants to say
-> something like:
->
->   diff: test --relative without a prefix
->
->   We already test "diff --relative=subdir", but not that
->   "--relative" by itself should use the current directory as
->   its prefix.
->
+This is a multi-part message in MIME format.
+--------------4E27EAE3A497AF122DFE4766
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Yea, I wasn't sure what the actual status of the changes were though,
-so I thought I'd send the actual fix I did. It's definitely up to
-Christian in determining what he thinks the best path forward is.
 
->> diff --git a/t/t4045-diff-relative.sh b/t/t4045-diff-relative.sh
->> index 3950f5034d31..41e4f59b2ffb 100755
->> --- a/t/t4045-diff-relative.sh
->> +++ b/t/t4045-diff-relative.sh
->> @@ -70,4 +70,9 @@ for type in diff numstat stat raw; do
->>       check_$type dir/file2 --relative=sub
->>  done
+
+On 06/12/17 21:07, Jeff Hostetler wrote:
+> 
+> 
+> On 12/6/2017 12:39 PM, Ramsay Jones wrote:
+>> Hi Jeff,
 >>
->> +cd subdir
->> +for type in diff numstat stat raw; do
->> +     check_$type file2 --relative
->> +done
->
-> We should avoid moving the cwd of the whole test script in
-> case we add tests later. Normally we'd do the cd inside a
-> subshell, but that's complicated by the wrapper (we wouldn't
-> want to increment the test counter just inside the subshell,
-> for instance).
->
-> Adding "cd .." is the smallest thing we could do to fix
-> that. But I think the more robust solution is to actually
-> teach the check_* helper about doing the "cd" inside the
-> test_expect block. Or just pushing the helper down into the
-> test block and living with repeating the
-> "test_expect_success" parts for each call.
+>> commit f1862e8153 ("partial-clone: define partial clone settings
+>> in config", 2017-12-05), which is part of your 'jh/partial-clone'
+>> branch, introduces the partial_clone_get_default_filter_spec()
+>> function without any callers. Could you please confirm that this
+>> is intentional and that, presumably, a future series will include
+>> a call to this function.
+> 
+> I'll double check.  Thanks.
+> 
+> BTW is there another tool that you're using to find these?
+> I know I ran make DEVELOPER=1 and make sparse on everything
+> and didn't see that come up.
+
+In addition to sparse (which finds some of these), I also run a perl
+script over the object files after a given build. (The script was
+posted to the list by Junio, many moons ago, and I have made several
+changes to my local copy).
+
+I am attaching a copy of the script (static-check.pl). Note that the
+'stop list' in the script (%def_ok) is _way_ out of date. However, the
+way I use the script, that does not matter; I run the script over the
+master->next->pu branches and (ignoring the master branch) diff the
+result files from branch to branch. For example, tonight I have:
+
+  $ wc -l sc nsc psc
+    74 sc
+    73 nsc
+    75 psc
+   222 total
+  $ 
+  $ diff sc nsc
+  44d43
+  < oidmap.o	- oidmap_remove
+  $ 
+  $ diff nsc psc
+  43a44
+  > list-objects-filter-options.o	- partial_clone_get_default_filter_spec
+  58a60
+  > sequencer.o	- sign_off_header
+  $ 
+
+You also have to be careful with leaving stale object files
+laying around from previous builds ('make clean' sometimes
+doesn't). Actually, it may be simpler to read a previous mailing
+list thread on exactly this subject [1].
+
+BTW, if you are using a version of sparse post v0.5.1, you can
+get rid of the only sparse warning on Linux (assuming you don't
+build with NO_REGEX set), by using the -Wno-memcpy-max-count option;
+I have the following set in my config.mak:
+
+  $ tail -2 config.mak
+  pack-revindex.sp: SPARSE_FLAGS += -Wno-memcpy-max-count
+
+  $ 
+
+[I haven't sent a proper patch, since the required version of
+sparse is not widely available yet.]
+
+ATB,
+Ramsay Jones
+
+[1] https://public-inbox.org/git/%3Cb21c8a92-4dd5-56d6-ec6a-5709028eaf5f@ramsayjones.plus.com%3E/
+
+--------------4E27EAE3A497AF122DFE4766
+Content-Type: application/x-perl;
+ name="static-check.pl"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+ filename="static-check.pl"
+
+#!/usr/bin/perl -w
+
+my %defd = ();
+my %used = ();
+my %comd = ();
+my %trace = ();
+my $show_common = 0;
+
+my %def_ok = map { $_ => 1 } qw(
+	main
+	alloc_report
+	have_git_dir
+	prepare_git_cmd
+	print_string_list
+	tm_to_time_t
+	unsorted_string_list_has_string
+	xdl_atol
+	xdl_cha_first
+	xdl_cha_next
+	xdl_mmfile_size
+	xdl_num_out
+	xdl_recs_cmp
+);
+
+while (@ARGV) {
+	$_ = shift(@ARGV);
+
+	if (/^-t$/) {
+		my $trace_symbol = shift @ARGV;
+		die("$0: missing argument to -t option") if !$trace_symbol;
+		$trace{$trace_symbol}++;
+		next;
+	}
+
+	if ($_ eq '-c') {
+		$show_common = 1;
+		next;
+	}
+}
+
+for (<*.o>, <*/*.o>, <*/*/*.o>) {
+	my $obj = $_;
+	open(I, "-|", qw(nm -gC), $obj) or die;
+	while (<I>) {
+		unless (/^[0-9a-f ]+([A-Z]) (\S*)$/) {
+			print STDERR "? $_";
+			next;
+		}
+		next if ($2 =~ /^\.refptr\./);
+		if (exists $trace{$2}) {
+			print "-- $2: type $1, object $obj\n";
+		}
+		if ($1 eq "C") {
+			if($show_common) {
+				print "++ $2: type $1, object $obj\n";
+			}
+			if (exists $comd{$2}) {
+				$used{$2}++;
+			}
+			else {
+				$comd{$2}++;
+				push @{$defd{$obj}}, $2;
+			}
+		} elsif ($1 eq "U") {
+			$used{$2}++;
+		} else {
+			push @{$defd{$obj}}, $2;
+		}
+	}
+	close I;
+}
+
+for my $obj (sort keys %defd) {
+	my $syms = $defd{$obj};
+	for my $sym (@$syms) {
+		next if exists $used{$sym} or exists $def_ok{$sym};
+		print "$obj	- $sym\n";
+	}
+}
 
 
-Yea, I tried cd inside the subshell and it didn't work, so I did this
-as the quicker solution.
-
-I think the best method would be to update the check_* helper
-functions to take a dir parameter, and use that to do git -C "dir"
-when calling the diff commands.
-
-Thanks,
-Jake
-
->
-> -Peff
+--------------4E27EAE3A497AF122DFE4766--
