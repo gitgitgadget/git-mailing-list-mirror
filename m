@@ -2,156 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 44B4620954
-	for <e@80x24.org>; Thu,  7 Dec 2017 22:02:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AF41020954
+	for <e@80x24.org>; Thu,  7 Dec 2017 22:05:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752410AbdLGWCB (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Dec 2017 17:02:01 -0500
-Received: from mail-qt0-f174.google.com ([209.85.216.174]:44105 "EHLO
-        mail-qt0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752381AbdLGWCA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Dec 2017 17:02:00 -0500
-Received: by mail-qt0-f174.google.com with SMTP id m59so21495908qte.11
-        for <git@vger.kernel.org>; Thu, 07 Dec 2017 14:02:00 -0800 (PST)
+        id S1750929AbdLGWFz (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Dec 2017 17:05:55 -0500
+Received: from mail-wm0-f43.google.com ([74.125.82.43]:46253 "EHLO
+        mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750847AbdLGWFz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Dec 2017 17:05:55 -0500
+Received: by mail-wm0-f43.google.com with SMTP id r78so377950wme.5
+        for <git@vger.kernel.org>; Thu, 07 Dec 2017 14:05:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=Tfs1qBYPQXC29s7Qmxc0WFIB7SQtHQy0bpTxKmhszTs=;
-        b=fMboKzu8g26jfT6KHSQNlfC5a/6joQBzh/R9YnCiPPXi6K5b03y5e7nKmETcZvmKKT
-         n8U42Lc47hvkZwi2QYhNlUOkvL5tKk7MzOIMQIVHpcB2owYj6XxBCa1hF3HNRLV7dDxQ
-         XYLuUj9FjlY+y5q01VCfeCsMhMrsEMHoXb5quKAtaBw9zRUZ8XioK6oe4hFZ6lULUPbq
-         CqrMfG1bJnJOSHZWkI3ayu1NamtO7lvwp18uD17X3htBF+68YL2KvUzzoG9zn39nCIKw
-         Z/NjS7JB9X2XjnHt2B9SElut9oa64ZPrAz04dKrfOheVl8t4RUb1BtnEf7Ei3EgNG1yE
-         3/cA==
+        bh=GcrhQieH5cKUUmBNnG3m+RugJ9wQ9WRwZ+8UZ1s6CSE=;
+        b=eDjJ6CYJDU+pQUpw0lPiFHIpH4ZUqO4Qvz3aspwCmlkcXfg5rEUs0SAHnNRFwyHP1D
+         Q84RtwUJDBAIfmo7b72Ty3quNHY3CVjfjoN9+fTyWmGmGW3nbc4s9sUZfa8E6tmGBoAL
+         twwNsHCWdBaL3zvUStG1uHBtnEblP/T+pjiZbUHl62AZ5L0gjzACVlp/dW11nuoEE+06
+         lMz7gR2mE7jIwJHG36ZNejdag4GxdXPQCPmRErFaXsUWxS3mKXs2Lo+6hfJAZdTMKZ/7
+         m7LryC9968TvJ+iUMiiyI32JNg99uAynePK843injTNlYEYBTpdIzb8fbS8wSXqRAKgi
+         nnrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=Tfs1qBYPQXC29s7Qmxc0WFIB7SQtHQy0bpTxKmhszTs=;
-        b=HZanVwMKXTpwhkh3p7gkbea0pU9BLKzIRBpzJWOCZpCy4VVplBSyxNZv7CgwGcNFY3
-         OB4/0Ks1caKXHzgSSVz/VlCsBluEAmtnRU3xVVoqI1BkuwpydfRL63LummJVnazKUJ4y
-         bXS3sQ9jk6+O+ugfH/VTzy1JblIwbCymd43DWIK2fAcjxOqIDGHhCyN4grKi+lwwnKvP
-         gkPjqphRlcHXgjnTrhrTh5ObFZysjHZmvcSf0mvHqOMJqPVg1NHDyqPwMuMC5swU6dZ9
-         or2L5jPnEzMilxC4Pnfxu3Rb41AEHTwDf/dlBSW+5a4MIpl85BOb52ZcRWxx1us9JVg3
-         6eMw==
-X-Gm-Message-State: AKGB3mLpH30ywGoIxJNnGf6iByhB+2Ik1f4QBJsfPpXOIL9ReETHAfVl
-        OmvtPUnlVKbyjfw3b7MktdwGq8o5W2DWonF04g1lkWjr2vA=
-X-Google-Smtp-Source: AGs4zMZhxE8ttqcm56pPgmF22VIoB4gtkBxbcukeQNbCFoIFDpAkUB5oYc3Zkl9cz/QyhpgfBCtitpWHzsrpS2x9XuE=
-X-Received: by 10.200.36.105 with SMTP id d38mr12456120qtd.180.1512684119302;
- Thu, 07 Dec 2017 14:01:59 -0800 (PST)
+        bh=GcrhQieH5cKUUmBNnG3m+RugJ9wQ9WRwZ+8UZ1s6CSE=;
+        b=F/t3jx/TzXmyO02Ut1qXfM5Ved9RIGjbo1uT76p3EYn9K1JF6EQdSZsib0yGVaElYd
+         YZWqzGJG5PgwuIaXQuaGh9SEktFkNrXrJHAG/3TJl2v+BmyM06sU5R4sNLDjMI6Jjyz9
+         hgBCYm6zqnLklMROv7vTeyaeDCzbMMDyX2e/ShWostIwSnI3gZyGnT9qTUAEzta5i6TW
+         BJFRDMNGRC1jPM6IfxXrbdrQJ+JpZn8xOL1wt4fU738ZfCaB5A+BHk9BKJafH9So90Fc
+         RUA1J/+kazS8xK5ki2KXm48fEzOBEYYHGWNvQYpyvsTAVMCBPfxNxBnsqPQE4Ni8/nsH
+         bPxw==
+X-Gm-Message-State: AJaThX6EO9388mVsqI0Hm24dP4QDyuUoV0ZZpJAPmKCCIgQbRnrQJB+4
+        PAWzHlTVPDQ/ni68mU1yQ9qVDKYazws9NCMEED81fQ==
+X-Google-Smtp-Source: AGs4zMa4i6a9Vd3g4PPAhxEXvtTJStE0LMrkl2O+9uXGq1Cr3odBoWLIt+JAUg4HVErq7RxuN/6OAXRlGqOS8ebKDZ0=
+X-Received: by 10.80.137.106 with SMTP id f39mr48780750edf.148.1512684353707;
+ Thu, 07 Dec 2017 14:05:53 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.140.85.179 with HTTP; Thu, 7 Dec 2017 14:01:58 -0800 (PST)
-In-Reply-To: <20171204235823.63299-3-bmwill@google.com>
-References: <20171020171839.4188-1-bmwill@google.com> <20171204235823.63299-1-bmwill@google.com>
- <20171204235823.63299-3-bmwill@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 7 Dec 2017 14:01:58 -0800
-Message-ID: <CAGZ79kY5dCo1qO-4W=xdZQMjoJs1ZqJdywUsqX0CjyXHu80hCw@mail.gmail.com>
-Subject: Re: [WIP 02/15] pkt-line: introduce struct packet_reader
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git <git@vger.kernel.org>
+Received: by 10.80.174.252 with HTTP; Thu, 7 Dec 2017 14:05:33 -0800 (PST)
+In-Reply-To: <xmqqtvx2b41s.fsf@gitster.mtv.corp.google.com>
+References: <20171207190135.28660-1-jacob.e.keller@intel.com>
+ <20171207211258.GB12850@sigill.intra.peff.net> <xmqqtvx2b41s.fsf@gitster.mtv.corp.google.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Thu, 7 Dec 2017 14:05:33 -0800
+Message-ID: <CA+P7+xoBrStdKtLZ+N3gkQTd1f+hX7D=ACdpk+9ou_NU7QxjFw@mail.gmail.com>
+Subject: Re: [PATCH] diff: add tests for --relative without optional prefix value
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Jacob Keller <jacob.e.keller@intel.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 4, 2017 at 3:58 PM, Brandon Williams <bmwill@google.com> wrote:
-> Sometimes it is advantageous to be able to peek the next packet line
-> without consuming it (e.g. to be able to determine the protocol version
-> a server is speaking).  In order to do that introduce 'struct
-> packet_reader' which is an abstraction around the normal packet reading
-> logic.  This enables a caller to be able to peek a single line at a time
-> using 'packet_reader_peek()' and having a caller consume a line by
-> calling 'packet_reader_read()'.
+On Thu, Dec 7, 2017 at 1:50 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jeff King <peff@peff.net> writes:
 >
-> Signed-off-by: Brandon Williams <bmwill@google.com>
-> ---
->  pkt-line.c | 61 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
->  pkt-line.h | 20 ++++++++++++++++++++
->  2 files changed, 81 insertions(+)
+>> On Thu, Dec 07, 2017 at 11:01:35AM -0800, Jacob Keller wrote:
+>>
+>>> From: Jacob Keller <jacob.keller@gmail.com>
+>>>
+>>> We already have tests for --relative, but they currently only test when
+>>> a prefix has been provided. This fails to test the case where --relative
+>>> by itself should use the current directory as the prefix.
+>>>
+>>> Teach the check_$type functions to take a directory argument to indicate
+>>> which subdirectory to run the git commands in. Add a new test which uses
+>>> this to test --relative without a prefix value.
+>>
+>> This looks good to me (and I slightly prefer it over Junio's for the
+>> simplicity).
+>>
+>> I agree on the ordering suggestion Junio made.
 >
-> diff --git a/pkt-line.c b/pkt-line.c
-> index ac619f05b..518109bbe 100644
-> --- a/pkt-line.c
-> +++ b/pkt-line.c
-> @@ -406,3 +406,64 @@ ssize_t read_packetized_to_strbuf(int fd_in, struct strbuf *sb_out)
->         }
->         return sb_out->len - orig_len;
->  }
-> +
-> +/* Packet Reader Functions */
-> +void packet_reader_init(struct packet_reader *reader, int fd,
-> +                       char *src_buffer, size_t src_len)
-> +{
-> +       reader->fd = fd;
-> +       reader->src_buffer = src_buffer;
-> +       reader->src_len = src_len;
-> +       reader->buffer = packet_buffer;
-> +       reader->buffer_size = sizeof(packet_buffer);
-> +       reader->options = PACKET_READ_CHOMP_NEWLINE | PACKET_READ_GENTLE_ON_EOF;
+> I also prefer this one over the other one, provided if it is ported
+> on top of the preliminary clean-up I did in the other one.
+>
+> Thanks.
+>
 
-I assume the future user of this packet reader will need exactly
-these options coincidentally. ;)
+Yea. I can do that if you want.
 
-I think it might be ok for now and later we can extend the reader if needed
-to also take the flags as args. However given this set of args, this is a gentle
-packet reader, as it corresponds to the _gently version of reading
-packets AFAICT.
-
-Unlike the pkt_read function this constructor of a packet reader doesn't need
-the arguments for its buffer (packet_buffer and sizeof thereof), which
-packet_read
-unfortunately needs. We pass in packet_buffer all the time except in
-builtin/receive-pack
-for obtaining the gpg cert. I think that's ok here.
-
-> +enum packet_read_status packet_reader_read(struct packet_reader *reader)
-> +{
-> +       if (reader->line_peeked) {
-> +               reader->line_peeked = 0;
-> +               return reader->status;
-> +       }
-> +
-> +       reader->status = packet_read_with_status(reader->fd,
-> +                                                &reader->src_buffer,
-> +                                                &reader->src_len,
-> +                                                reader->buffer,
-> +                                                reader->buffer_size,
-> +                                                &reader->pktlen,
-> +                                                reader->options);
-> +
-> +       switch (reader->status) {
-> +       case PACKET_READ_ERROR:
-> +               reader->pktlen = -1;
-
-In case of error the read function might not
-have assigned the pktlen as requested, so we assign
-it to -1/NULL here. Though the caller ought to already know
-that they handle bogus, as the state is surely the first thing
-they'd inspect?
-
-> +               reader->line = NULL;
-> +               break;
-> +       case PACKET_READ_NORMAL:
-> +               reader->line = reader->buffer;
-> +               break;
-> +       case PACKET_READ_FLUSH:
-> +               reader->pktlen = 0;
-> +               reader->line = NULL;
-> +               break;
-> +       }
-
-Oh, this gives an interesting interface for someone who is
-just inspecting the len/line instead of the state, so it might be
-worth keeping it this way.
-
-Can we have an API documentation in the header file,
-explaining what to expect in each field given the state
-of the (read, peaked) packet?
+Thanks,
+Jake
