@@ -2,231 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EBB7D20C33
-	for <e@80x24.org>; Thu,  7 Dec 2017 16:36:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8124620C33
+	for <e@80x24.org>; Thu,  7 Dec 2017 17:03:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753144AbdLGQgY (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Dec 2017 11:36:24 -0500
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:46465 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753285AbdLGQgW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Dec 2017 11:36:22 -0500
-Received: by mail-wr0-f194.google.com with SMTP id x49so8100551wrb.13
-        for <git@vger.kernel.org>; Thu, 07 Dec 2017 08:36:21 -0800 (PST)
+        id S1755617AbdLGRDG (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Dec 2017 12:03:06 -0500
+Received: from mail-it0-f52.google.com ([209.85.214.52]:44255 "EHLO
+        mail-it0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755488AbdLGRDD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Dec 2017 12:03:03 -0500
+Received: by mail-it0-f52.google.com with SMTP id b5so16380912itc.3
+        for <git@vger.kernel.org>; Thu, 07 Dec 2017 09:03:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=APO+wAqTDgrwzPz2XaJzxIM5OO3vHHhKGLOiIkz2spM=;
-        b=WAh/az82R1lvd9Agj+Tsc4yoxkxp1SjYU4QgHzhxxWcuAVkTdG483wKDykkT9aNzDb
-         J9Wr1lQI35kzQrwGmVlbNNRyEFhFUvQAYZAPH0Lcj3VrhczRpOXdX//ggyh9SOsIOesb
-         txLqVMIG56Js7csxKTL2p7uOwD5CBG3anK1zgwpiUM5G8vQkoi0l5t2HAPGvBm1lWQwE
-         zX+IGicWVqHz7PZZIzXWqdUHA/et+W32BacDNimuE8X3bwEgTYJt4U4N+IFSp+pQFQHg
-         p4H3tBmOEOcTG6swdCcUGjT+JH3dhGbIDpaQAqs2QskgEWQ5/TxbP0VTlBHdky+JAKLl
-         UROQ==
+        d=sourcegraph.com; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=q7E6t28yYFwNWQn6DNdlFd+KeZmFGcLmDN6AWlSIPLk=;
+        b=cXvwqLuiPr1tS1SbDTWirlqOJOn2PpJcF08eAPdF1UDGXvaNRB8UtACByLLR7pVB05
+         WLNH7h3A5J3RaMo/vnrskis96HJ7RRWKGayS3+Aii4wvU1sMnh4n9MtsMIDQPJUbPjAM
+         cmYz5SxTbCt48jlsmRNEXVyLiNv16gY8nLDVbns+Qlrl0gaiLylgSlmVv0oLU+F4DZtd
+         fmvpC2KqwLrqpx9xUjaZI/yUMmdFZjMMvB2qxbBFwsp0p89TeLfBhWr6d6m/DqM99z68
+         eRKtvj9yayRIZBv7acpFT4UYl7GqQhWWSpTTM+7C4k9Hy8+BAvGyZhf+p5L0C3dDl8oM
+         NeWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=APO+wAqTDgrwzPz2XaJzxIM5OO3vHHhKGLOiIkz2spM=;
-        b=NJKimqNQ3ooJBRVzUV2gJFEYcMgPoY/4Nsuwxr+lzrnRBwRU9LzYoNNnlF0VU1VjTg
-         QgT2/fkoKuIJoGFHuPff8OMhi9YWGEqqn1hs3ZPtb8RLVGkrrhxyH36/3la4n7HqCQfI
-         kROc9bhGZiZv1iFUBr/Abg3VmeI/9UxDERXXoOBAfmaHrEomO0EE2fpIXoDzeJpdH/xJ
-         E/yFgN+OnTSRn6/0CH8vcTIp3ubGo6EgmEGcvKXNQuHvQop9D0Ea+kwGRATKprnqtbDj
-         ejxxVlWdVD7Yh9t8Wxh41EULvEwFPwCd6gBSEHaAd3d4mHTIjO5WGI0/Q2OqPIqbXZh0
-         VTug==
-X-Gm-Message-State: AJaThX65CpftvyB5mtKMq+0zRKjqfFBXNU2cRgkz0g3hIsxKBgeD8U6V
-        TeAwOQD32T+TJaWDMxNpYcIv754/
-X-Google-Smtp-Source: AGs4zMY6cDHSvFWpduDPQ7+WoH9JyuEL0BZo8gvhMdnzAzfqYjW7onwmDybngssbth16jrKqBty5QA==
-X-Received: by 10.223.195.103 with SMTP id e36mr24311854wrg.10.1512664581221;
-        Thu, 07 Dec 2017 08:36:21 -0800 (PST)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id 192sm6294040wmg.32.2017.12.07.08.36.20
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 07 Dec 2017 08:36:20 -0800 (PST)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v5 2/2] launch_editor(): indicate that Git waits for user input
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <xmqqmv2uec0p.fsf@gitster.mtv.corp.google.com>
-Date:   Thu, 7 Dec 2017 17:36:19 +0100
-Cc:     Lars Schneider <lars.schneider@autodesk.com>, git@vger.kernel.org,
-        sbeller@google.com, sunshine@sunshineco.com,
-        kaartic.sivaraam@gmail.com, sandals@crustytoothpaste.net,
-        peff@peff.net
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <D5CBD713-5F68-4704-B110-66689A1678E0@gmail.com>
-References: <20171207151641.75065-1-lars.schneider@autodesk.com> <20171207151641.75065-3-lars.schneider@autodesk.com> <xmqqr2s6ee7e.fsf@gitster.mtv.corp.google.com> <FCBDBD58-0593-4FFC-B574-61D67CAF13C6@gmail.com> <D17F94FA-702E-4E37-BDA5-94F0FFD5BD01@gmail.com> <xmqqmv2uec0p.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=q7E6t28yYFwNWQn6DNdlFd+KeZmFGcLmDN6AWlSIPLk=;
+        b=NbJf6veJU9OM6n6drj5hwI1dC45pUDqQzsOXp30n1aodPB3VHM7SkFSpXgM2P94sA1
+         cYLPMNfNcufDYBcjbzj+TF+KO9n1ESQZX2by0UJ0D8sve9E6JLq+vQpK06jGJaUzeew0
+         Ur8bXHnAoXrw1j9PP+w5h3QfCiFqb2shd2hy5wUM8UQImfDlBoZWmyuuhvtffC4e6p39
+         GpFcfv6umPR7q09i9OEdXQSTjJGHnn2Axw0J2owlmAzZAD85spqyeKZea5DEHSHVjydE
+         Gwnnj+vXErfkj58gGbvWJgYB7OujAo7nkGUWC79DTGCbPvUtXQMclNVg92681yJ/tRA0
+         QzMA==
+X-Gm-Message-State: AKGB3mIdm+QfnnKlhDA6NFmH+jyxFlVdPFUFWsecKRego9Xml/4KRVZ5
+        DSELcnZoU0dpbsuOKiqxoQUPXdCy6qMDJLAuw7XexA==
+X-Google-Smtp-Source: AGs4zMZMhIPiaT6Wcxt+82uTcifyrF96LFFPYNa0aRuF3/QTCZeybnr0YyvceAaN6AyZoj4nw+z1bDKGpjtEZsQIvUU=
+X-Received: by 10.36.7.12 with SMTP id f12mr2043277itf.86.1512666182977; Thu,
+ 07 Dec 2017 09:03:02 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.2.165.7 with HTTP; Thu, 7 Dec 2017 09:02:42 -0800 (PST)
+In-Reply-To: <CA+SQVf14g4zBP14BHEZQkyeqUE5Oqif3bUVADEwBZQTSwE=bKA@mail.gmail.com>
+References: <CA+SQVf1W6BhNyB6bGxh7WfCwb6+E3pNjHLeS4xDYPJ6BLT8cng@mail.gmail.com>
+ <CA+SQVf24rcQ1iKAQBW0Ky7Qm8zuF3Esw8qMKvG+KCbCA-mCcfA@mail.gmail.com>
+ <xmqqh8t3hiuq.fsf@gitster.mtv.corp.google.com> <CA+SQVf14g4zBP14BHEZQkyeqUE5Oqif3bUVADEwBZQTSwE=bKA@mail.gmail.com>
+From:   Nick Snyder <nick@sourcegraph.com>
+Date:   Thu, 7 Dec 2017 09:02:42 -0800
+Message-ID: <CA+SQVf3LuYj-N9NaDPxRcADjgWK5DFbF8LM=6VhY9N0GnbxyyA@mail.gmail.com>
+Subject: Re: git blame --reverse doesn't find line in HEAD
 To:     Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3124)
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+I built from source and was unable to find a git version where this
+has ever worked correctly.
 
-> On 07 Dec 2017, at 17:30, Junio C Hamano <gitster@pobox.com> wrote:
->=20
-> Lars Schneider <larsxschneider@gmail.com> writes:
->=20
->>> Can you squash that if you like it?
->=20
-> I thought you also had to update the log message that you forgot to?
->=20
-> Here is the replacement I queued tentatively.
+I wasn't able to compile and test versions older than 1.6.1.
 
-Perfect. Thanks a lot for your additional fixes!
+Confirmed not working:
+2.15.1
+2.13.6 (Apple Git-96)
+2.0.0
+1.7.0
+1.6.3
+1.6.2
+1.6.1
 
-- Lars
+I updated the https://github.com/nicksnyder/git-blame-bug with a
+script to easily reproduce.
 
->=20
-> -- >8 --
-> From: Lars Schneider <larsxschneider@gmail.com>
-> Date: Thu, 7 Dec 2017 16:16:41 +0100
-> Subject: [PATCH] launch_editor(): indicate that Git waits for user =
-input
->=20
-> When a graphical GIT_EDITOR is spawned by a Git command that opens
-> and waits for user input (e.g. "git rebase -i"), then the editor =
-window
-> might be obscured by other windows. The user might be left staring at
-> the original Git terminal window without even realizing that s/he =
-needs
-> to interact with another window before Git can proceed. To this user =
-Git
-> appears hanging.
->=20
-> Print a message that Git is waiting for editor input in the original
-> terminal and get rid of it when the editor returns, if the terminal
-> supports erasing the last line.  Also, make sure that our message is
-> terminated with a whitespace so that any message the editor may show
-> upon starting up will be kept separate from our message.
->=20
-> Power users might not want to see this message or their editor might
-> already print such a message (e.g. emacsclient). Allow these users to
-> suppress the message by disabling the "advice.waitingForEditor" =
-config.
->=20
-> The standard advise() function is not used here as it would always add
-> a newline which would make deleting the message harder.
->=20
-> Helped-by: Junio C Hamano <gitster@pobox.com>
-> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
-> Documentation/config.txt |  3 +++
-> advice.c                 |  2 ++
-> advice.h                 |  1 +
-> editor.c                 | 24 ++++++++++++++++++++++++
-> 4 files changed, 30 insertions(+)
->=20
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 9593bfabaa..6ebc50eea8 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -351,6 +351,9 @@ advice.*::
-> 	addEmbeddedRepo::
-> 		Advice on what to do when you've accidentally added one
-> 		git repo inside of another.
-> +	waitingForEditor::
-> +		Print a message to the terminal whenever Git is waiting =
-for
-> +		editor input from the user.
-> --
->=20
-> core.fileMode::
-> diff --git a/advice.c b/advice.c
-> index d81e1cb742..af29d23e43 100644
-> --- a/advice.c
-> +++ b/advice.c
-> @@ -17,6 +17,7 @@ int advice_set_upstream_failure =3D 1;
-> int advice_object_name_warning =3D 1;
-> int advice_rm_hints =3D 1;
-> int advice_add_embedded_repo =3D 1;
-> +int advice_waiting_for_editor =3D 1;
->=20
-> static struct {
-> 	const char *name;
-> @@ -38,6 +39,7 @@ static struct {
-> 	{ "objectnamewarning", &advice_object_name_warning },
-> 	{ "rmhints", &advice_rm_hints },
-> 	{ "addembeddedrepo", &advice_add_embedded_repo },
-> +	{ "waitingforeditor", &advice_waiting_for_editor },
->=20
-> 	/* make this an alias for backward compatibility */
-> 	{ "pushnonfastforward", &advice_push_update_rejected }
-> diff --git a/advice.h b/advice.h
-> index c84a44531c..f7cbbd342f 100644
-> --- a/advice.h
-> +++ b/advice.h
-> @@ -19,6 +19,7 @@ extern int advice_set_upstream_failure;
-> extern int advice_object_name_warning;
-> extern int advice_rm_hints;
-> extern int advice_add_embedded_repo;
-> +extern int advice_waiting_for_editor;
->=20
-> int git_default_advice_config(const char *var, const char *value);
-> __attribute__((format (printf, 1, 2)))
-> diff --git a/editor.c b/editor.c
-> index c65ea698eb..8acce0dcd4 100644
-> --- a/editor.c
-> +++ b/editor.c
-> @@ -45,6 +45,23 @@ int launch_editor(const char *path, struct strbuf =
-*buffer, const char *const *en
-> 		const char *args[] =3D { editor, real_path(path), NULL =
-};
-> 		struct child_process p =3D CHILD_PROCESS_INIT;
-> 		int ret, sig;
-> +		int print_waiting_for_editor =3D =
-advice_waiting_for_editor && isatty(2);
-> +
-> +		if (print_waiting_for_editor) {
-> +			/*
-> +			 * A dumb terminal cannot erase the line later =
-on. Add a
-> +			 * newline to separate the hint from subsequent =
-output.
-> +			 *
-> +			 * In case the editor emits further cruft after =
-what
-> +			 * we wrote above, separate it from our message =
-with SP.
-> +			 */
-> +			const char term =3D is_terminal_dumb() ? '\n' : =
-' ';
-> +
-> +			fprintf(stderr,
-> +				_("hint: Waiting for your editor to =
-close the file...%c"),
-> +				term);
-> +			fflush(stderr);
-> +		}
->=20
-> 		p.argv =3D args;
-> 		p.env =3D env;
-> @@ -63,6 +80,13 @@ int launch_editor(const char *path, struct strbuf =
-*buffer, const char *const *en
-> 		if (ret)
-> 			return error("There was a problem with the =
-editor '%s'.",
-> 					editor);
-> +
-> +		if (print_waiting_for_editor && !is_terminal_dumb())
-> +			/*
-> +			 * Go back to the beginning and erase the entire =
-line to
-> +			 * avoid wasting the vertical space.
-> +			 */
-> +			fputs("\r\033[K", stderr);
-> 	}
->=20
-> 	if (!buffer)
-> --=20
-> 2.15.1-480-gbc5668f98a
->=20
-
+On Wed, Dec 6, 2017 at 10:00 AM, Nick Snyder <nick@sourcegraph.com> wrote:
+>> Can you bisect to see when the feature stopped working as you expect?
+>
+> I will see if I can do that but might take some time.
+>
+>> It finds up to which commit each line survived without getting touched since the oldest commit in the range.
+>
+> Right, this is where it is failing in my case.
+>
+> With a history like this:
+> A <- B <- C <- HEAD
+>
+> I have a particular line in C (HEAD) that blames to commit A.
+> If I run a git blame --reverse starting at commit A for that line, it
+> doesn't give me back C, it gives me back B instead.
+> The line is not added/deleted/moved between B and C.
+>
+>
+>
+> On Wed, Dec 6, 2017 at 9:22 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Nick Snyder <nick@sourcegraph.com> writes:
+>>
+>>> This can be reproduced on Linux and Mac. This behavior seems to be a bug.
+>>
+>> Can you bisect to see when the feature stopped working as you expect?
+>>
+>> Unlike a forward blame, where the command tries to find a commit
+>> that is responsible for a line being in the final result (i.e.
+>> typically, HEAD), a reverse blame is not about finding a commit
+>> that is responsible for a line (that used to be in the oldest
+>> commit) not being in a more recent codebase.  It finds up to which
+>> commit each line survived without getting touched since the oldest
+>> commit in the range.
+>>
