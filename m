@@ -2,91 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8616220C3E
-	for <e@80x24.org>; Thu,  7 Dec 2017 20:51:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6031120954
+	for <e@80x24.org>; Thu,  7 Dec 2017 20:53:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751002AbdLGUve (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Dec 2017 15:51:34 -0500
-Received: from mout.web.de ([212.227.15.4]:49517 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750895AbdLGUvd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Dec 2017 15:51:33 -0500
-Received: from [192.168.178.36] ([91.20.50.52]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0Lx73h-1f6sL84841-016ihm; Thu, 07
- Dec 2017 21:51:28 +0100
-To:     Git List <git@vger.kernel.org>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Junio C Hamano <gitster@pobox.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] strbuf: release memory on read error in strbuf_read_once()
-Message-ID: <6a39662f-8ff2-c314-5348-4189737a6853@web.de>
-Date:   Thu, 7 Dec 2017 21:51:26 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.0
+        id S1750978AbdLGUxu (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Dec 2017 15:53:50 -0500
+Received: from mail-qt0-f175.google.com ([209.85.216.175]:43601 "EHLO
+        mail-qt0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750779AbdLGUxt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Dec 2017 15:53:49 -0500
+Received: by mail-qt0-f175.google.com with SMTP id w10so21062966qtb.10
+        for <git@vger.kernel.org>; Thu, 07 Dec 2017 12:53:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=C8Ns7S4ETZu7nMUsQM6TaPbkH8O0mtxfg36liUNMm4k=;
+        b=gpODlxDZmwJonzHVINAvvkta1Ww72PxBRhVEHgJir/5suQrOy1TjCpbX8KtaFpgxH3
+         fUtXU06tkKyXWFs62f21PEDRRx5TamIOin1wStfUshwd6WDy6OPTvV2biteotCteB/4o
+         3JIEWY+FPOQbtOYB9UmG3VpWYe4k6djkB0sbhWxIA1T7931cHF0HpOOgOZvTJC/MwmZ7
+         u7e5PfNIrl1zLpfjZqXxWZbiOWkxDN56aesP8T+nhjVlbqf0mp0+4g2vbvplJg6OVi7t
+         dd1qsdL9ojz+PkmxSaRDLRrGjQwddxKMZOS7T5Ufq3znolc3eDJL5a9X2QB/Yg8pEHKc
+         ezEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=C8Ns7S4ETZu7nMUsQM6TaPbkH8O0mtxfg36liUNMm4k=;
+        b=Z6rqNGY+lgDnA+BhITjbetIa7KbHd6iyOZYPPrXY0KmW69eG3LewaQ5qMvVmc4ISal
+         CgEeCtjxY401pAuPxf7hHte0aT6emKFwNHVmN8FtIeL/O7JUjFAPTt6nupXaYndEgUqZ
+         L2zO+UxibBUWvZjqKi7XkjW5Vqu8zme/qZAA6Kbgb3DL03flzpLCgOpXIIZNfYjbtrKO
+         r0BHddGkCBba2sSDgzNF7Qj/BsMQroxeUvZya3gP+m83voLl30sbxyUFNYk5KnNP+3y9
+         QlI0mfCqqiEDwwnpyAgc/ilEMoohaZDnDOkB2oTWNpJT3M5vc6Wjbow0VDO+F6bXrFhK
+         CHlw==
+X-Gm-Message-State: AKGB3mKl3G63rqQposuWeOGWky4e40bKJQW/jusOUuppsR8qSKdCuCE4
+        lOC2ggRhriJNwBA9AuvUpbWpazIW/wZsZppE8g/NRxngGLU=
+X-Google-Smtp-Source: AGs4zMYRSdiETjR6gjP8LhK/Ky808AWS4iT6KUNRve1gz8kmfFJw4SzHOQhTaIcBbOZ9nj6X0v3ze2y9dCGmRKoC4HE=
+X-Received: by 10.55.203.156 with SMTP id u28mr33260578qkl.353.1512680028375;
+ Thu, 07 Dec 2017 12:53:48 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:BfooLri5vGBmkt8JtLoCA2paWvuvKg4TkpHmx/Wq+aUI2ziiaK0
- IGE8x77G2NUOa+70q0Zdqldc2XOZzcbIwwSRQMBBl7DtBrgZ6EKYWbHg2sxBYWa0W4sODsK
- aaqdOovS7uCBvriExWpKR7AYyBFuiuNWgnG1k8dHlGUJ7dmjohgUJJ28FEvo0brxYWSycWY
- FzpYV9B2rxAzLqHQXruPQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:mppyxD+vaE4=:2omN6QBuue7vZa9TV8MkCW
- CgF6MRYSwQDA6LxOty5giQIG+vTxNlLAAIT8aBTkOFK/qNmGvX6doK6km2aDTZ+fHTWiOe57M
- 4piEzJJP0im96NjOzr4G8elJkz6j5mN/TruPUUSF+gxLRppyf7N6pCA851tvam4UVh17i0Koz
- RIVXijOaxcDNgfDKMJczo/x0P7eXw4WLIgrsy7M8ATBCTa8/pV2D09SE6DiYtDuVL/BYOdcnn
- onWlFiRIjMQSesNBjsGwb8ZlmCbf5t4O41iG+ZdsgDkAJLU3QogSk5LhDWuB1FJvMIqD9wSmU
- ODFRuyFLMAAr6bfd3NumZlsj2vlNtmy/RiOof7UxEkJ5lJfSAKEOA9pJeUNYmv0loJo1IMbnS
- tj4gLXLeVNRaPqYzeN7gxyU+iQ80up2AeexEYSDlcOfp4MLALe09b7BS9oMv1eIb2cllmYpoC
- JpiJADlN28xK5zQtMeuwg7DI7cErX0ZX39z/bVUWFQtk8slwDW3loyWSwQIeLpaLIhir5QpNr
- HJRbYnp2aXO2VwvxT75fmeHEGaNgYLt8Twa+xnCfZXouNx1bjC9qzakYbl1XQ2fXRtTYLZIt/
- da/YdDqFJ4Zs+nZ57CeAGYvZZrQzdtmRyBjzIppNWPsfij591HE52Bg1Na7L9v5ML3MsspBbW
- 5xMG8zHmWT+tL5LJQ94/ZVRY9zglfOI3CZlaVSkwVybqhY9VaPu9PSjbM+l4cQbOxfExVKIw7
- b5tv5WnC9RIguDxc8P7dBIkpTsJx2cz14VLCfTM77EQ4zx6QppismBrPZ1D5pEZqf/i7yxSRa
- T5WcgfBfsFA1ZwVBW2dKiu2UPB/cFsURwHEXJbe/gXnKHNbI4s=
+Received: by 10.140.85.179 with HTTP; Thu, 7 Dec 2017 12:53:47 -0800 (PST)
+In-Reply-To: <20171204235823.63299-2-bmwill@google.com>
+References: <20171020171839.4188-1-bmwill@google.com> <20171204235823.63299-1-bmwill@google.com>
+ <20171204235823.63299-2-bmwill@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 7 Dec 2017 12:53:47 -0800
+Message-ID: <CAGZ79kbV07BsKde1P_3EHjnSj7APTMQk+bbGx79X0nvpU2LD+Q@mail.gmail.com>
+Subject: Re: [WIP 01/15] pkt-line: introduce packet_read_with_status
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If other strbuf add functions cause the first allocation and
-subsequently encounter an error then they release the memory, restoring
-the pristine state of the strbuf.  That simplifies error handling for
-callers.
+On Mon, Dec 4, 2017 at 3:58 PM, Brandon Williams <bmwill@google.com> wrote:
 
-Do the same in strbuf_read_once(), and do it also in case no bytes were
-read -- which may or may not be an error as well, depending on the
-caller.
+> diff --git a/pkt-line.h b/pkt-line.h
+> index 3dad583e2..f1545929b 100644
+> --- a/pkt-line.h
+> +++ b/pkt-line.h
+> @@ -60,8 +60,16 @@ int write_packetized_from_buf(const char *src_in, size_t len, int fd_out);
+>   * If options contains PACKET_READ_CHOMP_NEWLINE, a trailing newline (if
+>   * present) is removed from the buffer before returning.
+>   */
+> +enum packet_read_status {
+> +       PACKET_READ_ERROR = -1,
+> +       PACKET_READ_NORMAL,
+> +       PACKET_READ_FLUSH,
+> +};
+>  #define PACKET_READ_GENTLE_ON_EOF (1u<<0)
+>  #define PACKET_READ_CHOMP_NEWLINE (1u<<1)
+> +enum packet_read_status packet_read_with_status(int fd, char **src_buffer, size_t *src_len,
+> +                                               char *buffer, unsigned size, int *pktlen,
+> +                                               int options);
+>  int packet_read(int fd, char **src_buffer, size_t *src_len, char
+>                 *buffer, unsigned size, int options);
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
- strbuf.c | 3 +++
- 1 file changed, 3 insertions(+)
+The documentation that is preceding these lines is very specific to
+packet_read, e.g.
 
-diff --git a/strbuf.c b/strbuf.c
-index 323c49ceb3..ac5a7ab62d 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -386,12 +386,15 @@ ssize_t strbuf_read(struct strbuf *sb, int fd, size_t hint)
- 
- ssize_t strbuf_read_once(struct strbuf *sb, int fd, size_t hint)
- {
-+	size_t oldalloc = sb->alloc;
- 	ssize_t cnt;
- 
- 	strbuf_grow(sb, hint ? hint : 8192);
- 	cnt = xread(fd, sb->buf + sb->len, sb->alloc - sb->len - 1);
- 	if (cnt > 0)
- 		strbuf_setlen(sb, sb->len + cnt);
-+	else if (oldalloc == 0)
-+		strbuf_release(sb);
- 	return cnt;
- }
- 
--- 
-2.15.1
+    If options does contain PACKET_READ_GENTLE_ON_EOF,
+    we will not die on condition 4 (truncated input), but instead return -1
+
+which doesn't hold true for the _status version. Can you adapt the comment
+to explain both read functions?
