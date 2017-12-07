@@ -2,72 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9AF5720954
-	for <e@80x24.org>; Thu,  7 Dec 2017 21:11:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 746C420954
+	for <e@80x24.org>; Thu,  7 Dec 2017 21:13:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752437AbdLGVLX (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Dec 2017 16:11:23 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54458 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752730AbdLGVK5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Dec 2017 16:10:57 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 17030C4E97;
-        Thu,  7 Dec 2017 16:10:57 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ECNiI0Qi+pO8aDcOAjNF75bAIok=; b=vDeEXi
-        8i64BjwK/lbV4+LCTOSKKI6W4kfcWLSG56uvL16E9yeWHgzAVkf1mjcrL6yNpEuw
-        K5lOvyUPdDGZa4iNishjZekB+GGnoArO/DXnB5+ELk6NiAhQWh5TcaIojhNVG4YB
-        s8LsJkFfVxvMv7zBlsXTcfCSu2pPmZuoNm3hE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=D345hyqE+XdI8w9pYmORjPugdv5wgeqt
-        PgLgJM7cX4vvikax2qrSO+c4agkp6ddCUdXyZicTBXbBsWVP/aaPbuiXKH5OgcXF
-        fRPm+YoL2OpXr/wuMU1d3QDxvKMy5ACjSEIIeVIaekABm6bNkWg64R65K+qDhQz+
-        m3XFD8OVNfE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0E523C4E96;
-        Thu,  7 Dec 2017 16:10:57 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 54B7AC4E95;
-        Thu,  7 Dec 2017 16:10:56 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-        git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Dec 2017, #01; Mon, 4)
-References: <xmqqmv2ykvy4.fsf@gitster.mtv.corp.google.com>
-        <DA960DCE-0635-47CF-B3C4-8133021799F1@gmail.com>
-        <alpine.DEB.2.21.1.1712071643410.4318@virtualbox>
-        <175f87bc-0270-fb18-fc14-24e8f59321d6@jeffhostetler.com>
-Date:   Thu, 07 Dec 2017 13:10:55 -0800
-In-Reply-To: <175f87bc-0270-fb18-fc14-24e8f59321d6@jeffhostetler.com> (Jeff
-        Hostetler's message of "Thu, 7 Dec 2017 16:08:02 -0500")
-Message-ID: <xmqqh8t2ckgw.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1752132AbdLGVNB (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Dec 2017 16:13:01 -0500
+Received: from cloud.peff.net ([104.130.231.41]:51444 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1750993AbdLGVNA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Dec 2017 16:13:00 -0500
+Received: (qmail 31098 invoked by uid 109); 7 Dec 2017 21:13:00 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 07 Dec 2017 21:13:00 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 26481 invoked by uid 111); 7 Dec 2017 21:13:21 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with ESMTPA; Thu, 07 Dec 2017 16:13:21 -0500
+Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 07 Dec 2017 16:12:58 -0500
+Date:   Thu, 7 Dec 2017 16:12:58 -0500
+From:   Jeff King <peff@peff.net>
+To:     Jacob Keller <jacob.e.keller@intel.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH] diff: add tests for --relative without optional prefix
+ value
+Message-ID: <20171207211258.GB12850@sigill.intra.peff.net>
+References: <20171207190135.28660-1-jacob.e.keller@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1DBC5276-DB93-11E7-A689-575F0C78B957-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20171207190135.28660-1-jacob.e.keller@intel.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff Hostetler <git@jeffhostetler.com> writes:
+On Thu, Dec 07, 2017 at 11:01:35AM -0800, Jacob Keller wrote:
 
-> I'm looking at t5616 now on my mac.
-> Looks like the MAC doesn't like my line counting in the tests.
+> From: Jacob Keller <jacob.keller@gmail.com>
+> 
+> We already have tests for --relative, but they currently only test when
+> a prefix has been provided. This fails to test the case where --relative
+> by itself should use the current directory as the prefix.
+> 
+> Teach the check_$type functions to take a directory argument to indicate
+> which subdirectory to run the git commands in. Add a new test which uses
+> this to test --relative without a prefix value.
 
-Ah, of course, test "$(wc -l)" = number would not work over there
-we have "test_line_count" helper exactly for that purose.
+This looks good to me (and I slightly prefer it over Junio's for the
+simplicity).
 
+I agree on the ordering suggestion Junio made.
+
+-Peff
