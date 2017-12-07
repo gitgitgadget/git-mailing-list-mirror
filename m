@@ -7,84 +7,141 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 602B220C32
-	for <e@80x24.org>; Thu,  7 Dec 2017 00:08:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E073520C32
+	for <e@80x24.org>; Thu,  7 Dec 2017 00:17:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751950AbdLGAIv (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Dec 2017 19:08:51 -0500
-Received: from mail-wm0-f46.google.com ([74.125.82.46]:40870 "EHLO
-        mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751604AbdLGAIu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Dec 2017 19:08:50 -0500
-Received: by mail-wm0-f46.google.com with SMTP id f206so9964096wmf.5
-        for <git@vger.kernel.org>; Wed, 06 Dec 2017 16:08:50 -0800 (PST)
+        id S1751990AbdLGARG (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Dec 2017 19:17:06 -0500
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:37909 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751718AbdLGARF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Dec 2017 19:17:05 -0500
+Received: by mail-wm0-f65.google.com with SMTP id 64so10013346wme.3
+        for <git@vger.kernel.org>; Wed, 06 Dec 2017 16:17:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=G/dKJNQm7PwKq2bMFf7iiiCvBZO2SCxOG6VH+nz4yfs=;
-        b=AJie7n7zzrF4irmqgKiujFYURieYjppNLWgPw3RsMAN95GGU+tpiayJK13Vq1bSciD
-         tfEXo7cBSnF5NlcWGs4kIlEJjNOyte6VDhGMuRcam23kMEnCDmMK6bddLg7ncReVNwQ1
-         OFkeVexsvqEESPf6mkUVq5hvcScu4LT+XkyKa4o/NNEOi3WOYTIVF1OWx6oaKcIGaUd2
-         y7AEJcxI2rlXZVhKUxWecBdRfSrE5ep28+GGp7CJtXjGkHhrioHhOdzf2d9L+b//TkVW
-         GvzgqV3Wb8zX4mvEICD7yD8WWY4dd+VDUjgUkDTPc1MbKMdYnF3r464X0B8p/fBvFSW1
-         jRCw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=YjkF7uuxbLecimDQZhMb3NGkdsvTNWTteqQoQJVl6W0=;
+        b=KV9gLOxH/iX5hwRSebwJUT+E1rTLjKHX6k7cLysrLfeAe4UerAuE+mXgb4yvFcWu48
+         1hGvct1XLsqqVLJugJhIrBHnmFGSIOKJ+J0thUE2L9LWWDH6QEqBERf+2SlBR1uZKGfq
+         U3cqMvDebt0BmL6qozQqx5/tGoNEWXKUOjjdr6VNg3j5tPzR+jykn3ms4jFHkz2Sdu7D
+         lDPVXcDBvCxp+jg4Ee/JHv6CdIqrkUi8StINsvfzYSHvFYENOkUvMiWlnFyiO3wTd0PP
+         enLb0/tLT1UrmMmolDp62Is96xBIrIZxSi98c6RqkjM3W3U+CeXAvoBipml47tW7ZHn/
+         UijA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=G/dKJNQm7PwKq2bMFf7iiiCvBZO2SCxOG6VH+nz4yfs=;
-        b=RKRHmN9fea3qscJllbbPx2bLV4xxGl2//7ooXrZtHskau6nUX/9ZYN7E//FoVX/PJd
-         ukwpeeigGfnMvf5abAubUqAf+dNGgVjjBFHHi1QYatgsSDa3IK99nQ98gTdNEqNSyxU4
-         KaHJpGDAVP/aYU3ocESYT/by3J/XCKeqE/mmWrnO8TUkreJQe8VjTf92iOFOAMmXJ+6v
-         CRW/vcXpL5EBsch0w9YtFVa1dnW+tvpKHHcZU4/B4GE+1kw/vwys7OWNu8hJGGw8nQIH
-         caUQLR9ewW3aytId1Ha+iUjBMZaI73TZY/HVONKoN4bDfys4jX9HWW1mJRXk6JaBq4jy
-         VH5A==
-X-Gm-Message-State: AKGB3mKZZFrXrDQ0YxBbIAaA1mb3o5D5Pkb1femzqq6z5OX1vUiqRn7R
-        BKEnAcuVeyNvFpYHfRak1/B1eT/SlEv5asuln28ToQ==
-X-Google-Smtp-Source: AGs4zMZuyiIOfL2EgXUvNausULo8z8Cn5IuFtK12fO/EOTN2aG4/vE8ghGXudv+xwqU7qzmX2j0H18IBFsRBXEzE6yQ=
-X-Received: by 10.80.176.70 with SMTP id i64mr834364edd.187.1512605329407;
- Wed, 06 Dec 2017 16:08:49 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=YjkF7uuxbLecimDQZhMb3NGkdsvTNWTteqQoQJVl6W0=;
+        b=orN/e01FBv3emuQ2ShqRI+Xvj2XyWO0HAOhrKS7X6VrPDeW0XhVCcLvIReqNs0dWRR
+         3lQxzYqvQMBQ5eKVamnf3Sarb3xP95uVr2vBFVcLkIxhOYWaiROqk3DU7yoTqnW6przF
+         aKads1kthIBIlAs2i1TXffRsnhL8dyc7mqVRdzDgRpGes4OKbGYrnB/QqbviiGSTJ7qr
+         0mA88LOXoiugPWJMeUA5pImwwiCDL17HWAPOwcZzmbn0/xmGMY/+Hpl23ZfPvA31w8u3
+         J7VckqaI1sdCa1APo+Q36cgvKcO5lr7yiHAJiJwNkGGlcaDJxv7oX9upZJMdYd6P8GHC
+         9/rg==
+X-Gm-Message-State: AJaThX7oqKD2Y4UWj60mn8QFEFKWzUoA2SO8A3KkemHv8tFacjJtdEzP
+        XWnAq+oEV2ZC9XBnfFkuNm6xz7y/urk/OXpFwKo=
+X-Google-Smtp-Source: AGs4zMZfCAM/KHxyEK/CdSq8u5mqzDiGWn79g1q1uOJfm6pUk+2K2XUZDDkeO+tQUM3vGlKCjy8jz23Z/SzXoG/jsaY=
+X-Received: by 10.80.165.109 with SMTP id z42mr41499684edb.18.1512605824267;
+ Wed, 06 Dec 2017 16:17:04 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.80.174.252 with HTTP; Wed, 6 Dec 2017 16:08:28 -0800 (PST)
-In-Reply-To: <CA+P7+xouqMi4xo7psM-PmpqcpKre2X1YyYZBLfMDYSSZ8tD_VQ@mail.gmail.com>
-References: <CA+P7+xotDPa+=G5ypfyD7gySp6r2SKRAjMSw_0BmvuyyfcjxBw@mail.gmail.com>
- <CA+P7+xouqMi4xo7psM-PmpqcpKre2X1YyYZBLfMDYSSZ8tD_VQ@mail.gmail.com>
+Received: by 10.80.174.252 with HTTP; Wed, 6 Dec 2017 16:16:43 -0800 (PST)
+In-Reply-To: <20171203170415.15939-3-chriscool@tuxfamily.org>
+References: <20171203170415.15939-1-chriscool@tuxfamily.org> <20171203170415.15939-3-chriscool@tuxfamily.org>
 From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Wed, 6 Dec 2017 16:08:28 -0800
-Message-ID: <CA+P7+xqdJjxFDSe61BTkkxE0RF6-n4OCCrsL1ZbViXnJcAqE1Q@mail.gmail.com>
-Subject: Re: git commit file completion recently broke
-To:     Git mailing list <git@vger.kernel.org>
+Date:   Wed, 6 Dec 2017 16:16:43 -0800
+Message-ID: <CA+P7+xqD80v=CsbT003b7czro4CZ77CJMppAhbQOPo1ssqTsKA@mail.gmail.com>
+Subject: Re: [PATCH 3/3] diff: use skip_to_opt_val()
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Git mailing list <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <chriscool@tuxfamily.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 6, 2017 at 4:01 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
-> On Wed, Dec 6, 2017 at 3:53 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
->> Hi,
->>
->> I'm still investigating, but thought I'd send an email. I recently
->> updated to jch branch, and found that completion for git commit does
->> not work as expected.
->>
->> If I have a git repository with a modified file in a subdirectiory,
->> then git commit <TAB> produces the name of the subdirectory instead of
->> the file names.
->>
->> This occurs regardless of where I run the git commit command.
->>
->> Thanks,
->> Jake
+On Sun, Dec 3, 2017 at 9:04 AM, Christian Couder
+<christian.couder@gmail.com> wrote:
+> From: Christian Couder <christian.couder@gmail.com>
 >
-> I think I narrowed this down to "git diff-index --name-only --relative
-> HEAD" producing a list of files *not* relative to the current
-> directory.
+> Let's simplify diff option parsing using skip_to_opt_val().
 >
-> Thanks,
-> Jake
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> ---
+>  diff.c | 22 ++++++++--------------
+>  1 file changed, 8 insertions(+), 14 deletions(-)
+>
+> diff --git a/diff.c b/diff.c
+> index 2ebe2227b4..067b498187 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -4508,17 +4508,11 @@ int diff_opt_parse(struct diff_options *options,
+>                 options->output_format |= DIFF_FORMAT_NUMSTAT;
+>         else if (!strcmp(arg, "--shortstat"))
+>                 options->output_format |= DIFF_FORMAT_SHORTSTAT;
+> -       else if (!strcmp(arg, "-X") || !strcmp(arg, "--dirstat"))
+> -               return parse_dirstat_opt(options, "");
+> -       else if (skip_prefix(arg, "-X", &arg))
+> -               return parse_dirstat_opt(options, arg);
+> -       else if (skip_prefix(arg, "--dirstat=", &arg))
+> +       else if (skip_prefix(arg, "-X", &arg) || skip_to_opt_val(arg, "--dirstat", &arg))
+>                 return parse_dirstat_opt(options, arg);
+>         else if (!strcmp(arg, "--cumulative"))
+>                 return parse_dirstat_opt(options, "cumulative");
+> -       else if (!strcmp(arg, "--dirstat-by-file"))
+> -               return parse_dirstat_opt(options, "files");
+> -       else if (skip_prefix(arg, "--dirstat-by-file=", &arg)) {
+> +       else if (skip_to_opt_val(arg, "--dirstat-by-file", &arg)) {
+>                 parse_dirstat_opt(options, "files");
+>                 return parse_dirstat_opt(options, arg);
+>         }
+> @@ -4540,13 +4534,13 @@ int diff_opt_parse(struct diff_options *options,
+>                 return stat_opt(options, av);
+>
+>         /* renames options */
+> -       else if (starts_with(arg, "-B") || starts_with(arg, "--break-rewrites=") ||
+> -                !strcmp(arg, "--break-rewrites")) {
+> +       else if (starts_with(arg, "-B") ||
+> +                skip_to_opt_val(arg, "--break-rewrites", &optarg)) {
+>                 if ((options->break_opt = diff_scoreopt_parse(arg)) == -1)
+>                         return error("invalid argument to -B: %s", arg+2);
+>         }
+> -       else if (starts_with(arg, "-M") || starts_with(arg, "--find-renames=") ||
+> -                !strcmp(arg, "--find-renames")) {
+> +       else if (starts_with(arg, "-M") ||
+> +                skip_to_opt_val(arg, "--find-renames", &optarg)) {
+>                 if ((options->rename_score = diff_scoreopt_parse(arg)) == -1)
+>                         return error("invalid argument to -M: %s", arg+2);
+>                 options->detect_rename = DIFF_DETECT_RENAME;
+> @@ -4554,8 +4548,8 @@ int diff_opt_parse(struct diff_options *options,
+>         else if (!strcmp(arg, "-D") || !strcmp(arg, "--irreversible-delete")) {
+>                 options->irreversible_delete = 1;
+>         }
+> -       else if (starts_with(arg, "-C") || starts_with(arg, "--find-copies=") ||
+> -                !strcmp(arg, "--find-copies")) {
+> +       else if (starts_with(arg, "-C") ||
+> +                skip_to_opt_val(arg, "--find-copies", &optarg)) {
+>                 if (options->detect_rename == DIFF_DETECT_COPY)
+>                         options->flags.find_copies_harder = 1;
+>                 if ((options->rename_score = diff_scoreopt_parse(arg)) == -1)
+> --
+> 2.15.1.271.g1a4e40aa5d.dirty
+>
 
-I've started a git bisect to see if i can find the source of the problem.
+This causes a regression in the --relative option which prevents it
+from working properly.
+
+If I have a repository with a modified file in a subdirectory, such as:
+
+a/file
+
+then git diff-index --relative --name-only HEAD from within "a" will
+return "a/file" instead of "file"
+
+This breaks git completion, (among other things).
 
 Thanks,
 Jake
