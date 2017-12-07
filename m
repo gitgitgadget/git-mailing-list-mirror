@@ -2,92 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 98AA020954
-	for <e@80x24.org>; Thu,  7 Dec 2017 19:54:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8446320C33
+	for <e@80x24.org>; Thu,  7 Dec 2017 20:13:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752449AbdLGTyY (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Dec 2017 14:54:24 -0500
-Received: from mail-wm0-f48.google.com ([74.125.82.48]:45410 "EHLO
-        mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750828AbdLGTyX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Dec 2017 14:54:23 -0500
-Received: by mail-wm0-f48.google.com with SMTP id 9so15047910wme.4
-        for <git@vger.kernel.org>; Thu, 07 Dec 2017 11:54:23 -0800 (PST)
+        id S1752433AbdLGUNu (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Dec 2017 15:13:50 -0500
+Received: from mail-qt0-f169.google.com ([209.85.216.169]:42917 "EHLO
+        mail-qt0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750993AbdLGUNt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Dec 2017 15:13:49 -0500
+Received: by mail-qt0-f169.google.com with SMTP id g9so20778643qth.9
+        for <git@vger.kernel.org>; Thu, 07 Dec 2017 12:13:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=Go/g9mDz3FZUbWI1j+AXPXWZVTlp5br4pQy+a/v5tP4=;
-        b=JxSqFRtgqKTAAJrebQNSWOLhvFkAMUkgB2QLsQnW0ekjw2iXxFUNzg+2clEnJ/vHgp
-         gfk+baDUQ65dm1KngYscvTv/ZfYEC34E4oglrglD4Md42bBYkTArdlhCPHaT183rj/8x
-         lTMtsZMXLybIlvQ8noZGCvsmvLw0LtniVnyW7ewofrRT7YMwu+mrlKPAKOi+JPFUBQHJ
-         NEMUv+nMDHSiU220GG9Hv6vRQmQFp8yqdCmPTmuqhyjcibakVJMcWs4es35st+kczGMG
-         +ABjm+g95zoyEPr/QmZGujTF67Rck8HDfODeu4RX3lIf9uyL2mx9brySnsJJl+ci5GWv
-         h9gg==
+        bh=VEyycFtmbfxfADkNBQ0a8nohkNFQKcsKK2XjtHQCa6g=;
+        b=T6jxdYzjsyrmP8yVCyD/qdZ9QeUPsPjJEuBkck33bTvTBjWbFcdiFadnjIB2J+ZAN7
+         tMdWzHeomG94ajsAwwiz9IccZgb46ZdwKDKNXxgIqUU93SVqY/xfxidXUfLB0QpbXf0e
+         7yAiHxyxl87NhRaCq/8AcHDUPqBQ7bkyuORv29Y0K8YGr3q6nq5jm/rMKbAAaJCW2yfE
+         DW/JKeQcfYhM9OkGFVWaRQcPhRX3fFNnyHHAZ6Uo1fTVUzIBLVlySoLh4UNEpC911nmp
+         rzl5sBpNRME9ka/eJHaZ3OvTMytAXa4gLEVfZC6Fb3TORf9vSbcvIb6Zx465riaGQJDv
+         LPUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=Go/g9mDz3FZUbWI1j+AXPXWZVTlp5br4pQy+a/v5tP4=;
-        b=fQEggbgU2Y+LQ7AS7ZS5UrDN6lK+XsjsORolALDRg2JPDcsgexXANTopMp51rSuR2r
-         2IP4og4hWWmVWEpN6O5/LOTooGft10uZRQCLgLBS1GRksCo4dj+cIXOUtj8H5SKe14WQ
-         DHbDg8ey8yB9fE2tOPef7H7LxbXr15BbtbAeY9+4tuNDTY2J6XtISpgdE8Z8hlTQB6LJ
-         vBCK967elfb4HL76MIlr2vaQ3UVj91LunOmlQkTqvoPLB2bKA7NzH66vGfWiCBhT+Jx1
-         xSZRQ5kc6mfnGnDLuCWhctTe4O7VzheBLwhJmPx36Dfvf98zUpsWQUV6SwLlfH7Fb3hT
-         A2CQ==
-X-Gm-Message-State: AKGB3mLly88uyDvFniXUXfdeaLuMiwDpElcYjkgFoEwNDC6O+183enUi
-        qJe/hgq1ddzMKwfNHh/oK2FfJw/KGCWTO4O1HS8=
-X-Google-Smtp-Source: AGs4zMapu1Z47pZqVLOX0FgHnrs6GDwVzJenQGmJiSIPjj4WOtuOVTAjGjoMSM7x87HviJNjWlnxCbMAROIHKJhZU5c=
-X-Received: by 10.80.176.70 with SMTP id i64mr4923296edd.187.1512676462558;
- Thu, 07 Dec 2017 11:54:22 -0800 (PST)
+        bh=VEyycFtmbfxfADkNBQ0a8nohkNFQKcsKK2XjtHQCa6g=;
+        b=PIJ+ReFt7IR4JT6pr3ZTzG8C6tniqrRDrWdNMXahXFJmFWbulw1Toonj63pCcuPq6n
+         M3O7xPzSLqNuyQqSHBvm00+gjRWbG6z+4LLWzaFM2MaQXEnNZrP0cU/zPf8xjUiftj8l
+         2HgTN4EDfHx47yXgWysRzvC8A4XKzSR/7VWWwqK1WiaOhHALHkyApVFNWq4Gwf92FPZC
+         V3es1EzTd7kQrX/B2i9pG4BAW7ZSOTENlvgGWf9DgufwrjX/n44SOhzGxbHRA2s+eF/k
+         wvdyrQNQvRB5a0jGEtLp3iBhi4UrWeyrbR5iZKwf5Gz2Rc+ZGYVkj7PygknB3gxYelzD
+         WUOQ==
+X-Gm-Message-State: AKGB3mIqsH8rZcowZ04xUa7Fun8uMifZfxxVHMFy+JX9cpYW162TmmZi
+        K5UNmjYIUsaA3JpLaO9tbRFU0b42QdriWeG8WjSlrQ==
+X-Google-Smtp-Source: AGs4zMZY8s9v125XUHGB8ppXzloKSqpQP46WcQ/PReFcGYeuBDuhHj5VXD671YXAVvi80CzTp6ccTAXpgZMzM1zUDTA=
+X-Received: by 10.200.44.251 with SMTP id 56mr11717630qtx.87.1512677628293;
+ Thu, 07 Dec 2017 12:13:48 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.80.174.252 with HTTP; Thu, 7 Dec 2017 11:54:02 -0800 (PST)
-In-Reply-To: <xmqq374me4a7.fsf@gitster.mtv.corp.google.com>
-References: <20171207190135.28660-1-jacob.e.keller@intel.com> <xmqq374me4a7.fsf@gitster.mtv.corp.google.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Thu, 7 Dec 2017 11:54:02 -0800
-Message-ID: <CA+P7+xom-R3JX1ghZLDciRX=5zsJs=ngCX9iM=Y8m8TN5TX_=g@mail.gmail.com>
-Subject: Re: [PATCH] diff: add tests for --relative without optional prefix value
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jacob Keller <jacob.e.keller@intel.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        Jeff King <peff@peff.net>
+Received: by 10.140.85.179 with HTTP; Thu, 7 Dec 2017 12:13:47 -0800 (PST)
+In-Reply-To: <372261511885370@web21o.yandex.ru>
+References: <372261511885370@web21o.yandex.ru>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 7 Dec 2017 12:13:47 -0800
+Message-ID: <CAGZ79kZt7hysp9Yzj8==nz9FAu3V4KduG9kH2KxhdEK5CTBiqA@mail.gmail.com>
+Subject: Re: Feature request: Reduce amount of diff in patch
+To:     KES <kes-kes@yandex.ru>
+Cc:     git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 7, 2017 at 11:17 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jacob Keller <jacob.e.keller@intel.com> writes:
+On Tue, Nov 28, 2017 at 8:09 AM, KES <kes-kes@yandex.ru> wrote:
+> Hi.
 >
->>  for type in diff numstat stat raw; do
->> -     check_$type file2 --relative=subdir/
->> -     check_$type file2 --relative=subdir
->> -     check_$type dir/file2 --relative=sub
->> +     check_$type . file2 --relative=subdir/
->> +     check_$type . file2 --relative=subdir
->> +     check_$type . dir/file2 --relative=sub
->> +     check_$type subdir file2 --relative
+> I get often patches which can be minimized:
 >
-> OK, I didn't think it would be sensible to unconditionally pass the
-> directory and use "-C ." as a no-op.  It looks good.
+> @@ -60,11 +64,8 @@ sub _get_filter {
+>          address    =>  { -like => \[ '?',  "%$search%" ] },
+>          company    =>  { -like => \[ '?',  "%$search%" ] },
+>          country_code =>  { '=' => \[ 'UPPER(?)' => $search ] },
+> -    ]);
 >
-> I think the new one should go before the dir/file2 test; all three
-> earlier tests (including this new one) are about taking a patch
-> relative to subdir/ spelled in different ways, and the one about
-> dir/file2 alone is different.
+> -    $users =  $users->search( $filter, {
+> -        prefetch => { Packages => { Ips => { Subnet => { Server => 'Locality' }}}},
+> -    });
+> +    ]);
+>
+>
+>      return $users;
+>
+> This patch can be minimized to:
+>
+> @@ -60,11 +64,8 @@ sub _get_filter {
+>          address    =>  { -like => \[ '?',  "%$search%" ] },
+>          company    =>  { -like => \[ '?',  "%$search%" ] },
+>          country_code =>  { '=' => \[ 'UPPER(?)' => $search ] },
+>      ]);
+>
+> -    $users =  $users->search( $filter, {
+> -        prefetch => { Packages => { Ips => { Subnet => { Server => 'Locality' }}}},
+> -    });
+>
+>
+>      return $users;
+>
+> May you please fix the git to generate minimized patches?
 
-Yea, your patch looked fine to me, minus the use of subshells where we
-could avoid it.
+You can use a different diff algorithm.
 
-I'm fine taking your version.
+       --diff-algorithm={patience|minimal|histogram|myers}
+           Choose a diff algorithm. The variants are as follows:
 
-Thanks,
-Jake
+           default, myers
+               The basic greedy diff algorithm. Currently, this is the
+               default.
+
+           minimal
+               Spend extra time to make sure the smallest possible diff is
+               produced.
+
+           patience
+               Use "patience diff" algorithm when generating patches.
+
+           histogram
+               This algorithm extends the patience algorithm to "support
+               low-occurrence common elements".
+
+           For instance, if you configured diff.algorithm variable to a
+           non-default value and want to use the default one, then you have to
+           use --diff-algorithm=default option.
+
+Soon we'll have another diff algorithm "anchor" that tries to
+keep a given line out of the +/- but rather move other lines around
+the line to give equal results.
