@@ -2,69 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AE66720C32
-	for <e@80x24.org>; Thu,  7 Dec 2017 00:24:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BB26120C32
+	for <e@80x24.org>; Thu,  7 Dec 2017 00:35:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752121AbdLGAYm (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Dec 2017 19:24:42 -0500
-Received: from cloud.peff.net ([104.130.231.41]:50410 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751815AbdLGAYl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Dec 2017 19:24:41 -0500
-Received: (qmail 484 invoked by uid 109); 7 Dec 2017 00:24:42 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 07 Dec 2017 00:24:42 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16319 invoked by uid 111); 7 Dec 2017 00:25:02 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Wed, 06 Dec 2017 19:25:02 -0500
-Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 06 Dec 2017 19:24:39 -0500
-Date:   Wed, 6 Dec 2017 19:24:39 -0500
-From:   Jeff King <peff@peff.net>
-To:     Jacob Keller <jacob.keller@gmail.com>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: git commit file completion recently broke
-Message-ID: <20171207002439.GB21003@sigill.intra.peff.net>
-References: <CA+P7+xotDPa+=G5ypfyD7gySp6r2SKRAjMSw_0BmvuyyfcjxBw@mail.gmail.com>
- <CA+P7+xouqMi4xo7psM-PmpqcpKre2X1YyYZBLfMDYSSZ8tD_VQ@mail.gmail.com>
- <20171207002234.GA21003@sigill.intra.peff.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20171207002234.GA21003@sigill.intra.peff.net>
+        id S1752134AbdLGAfV (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Dec 2017 19:35:21 -0500
+Received: from mga05.intel.com ([192.55.52.43]:5582 "EHLO mga05.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751950AbdLGAfU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Dec 2017 19:35:20 -0500
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by fmsmga105.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 06 Dec 2017 16:35:20 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.45,370,1508828400"; 
+   d="scan'208";a="561647"
+Received: from jekeller-desk.amr.corp.intel.com (HELO jekeller-desk.jekeller.internal) ([134.134.177.172])
+  by fmsmga008.fm.intel.com with ESMTP; 06 Dec 2017 16:35:19 -0800
+From:   Jacob Keller <jacob.e.keller@intel.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Jacob Keller <jacob.keller@gmail.com>
+Subject: [PATCH] diff: add test showing regression to --relative
+Date:   Wed,  6 Dec 2017 16:35:17 -0800
+Message-Id: <20171207003517.11729-1-jacob.e.keller@intel.com>
+X-Mailer: git-send-email 2.15.1.477.g3ed0a2a61da8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 06, 2017 at 07:22:35PM -0500, Jeff King wrote:
+From: Jacob Keller <jacob.keller@gmail.com>
 
-> On Wed, Dec 06, 2017 at 04:01:51PM -0800, Jacob Keller wrote:
-> 
-> > I think I narrowed this down to "git diff-index --name-only --relative
-> > HEAD" producing a list of files *not* relative to the current
-> > directory.
-> 
-> Hmm, my guess would have been something funny in the setup code
-> forgetting our original prefix.
-> 
-> But nope, it looks like the culprit is f7923a5ece (diff: use
-> skip_to_optional_val(), 2017-12-04), which switched over parsing of
-> "--relative".
+Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+---
+ t/t4045-diff-relative.sh | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-Oh, actually, I guess I was half-right. It feeds &options->prefix as the
-"default", meaning that we overwrite it with the empty string. I don't
-think "--relative" works for the semantics of skip_to_optional_value,
-since it needs:
+diff --git a/t/t4045-diff-relative.sh b/t/t4045-diff-relative.sh
+index 3950f5034d31..41e4f59b2ffb 100755
+--- a/t/t4045-diff-relative.sh
++++ b/t/t4045-diff-relative.sh
+@@ -70,4 +70,9 @@ for type in diff numstat stat raw; do
+ 	check_$type dir/file2 --relative=sub
+ done
+ 
++cd subdir
++for type in diff numstat stat raw; do
++	check_$type file2 --relative
++done
++
+ test_done
+-- 
+2.15.1.477.g3ed0a2a61da8
 
-  --relative=foo: set prefix to "foo"
-
-  --relative: leave prefix untouched
-
--Peff
