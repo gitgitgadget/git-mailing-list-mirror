@@ -6,110 +6,69 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C9EE20C32
-	for <e@80x24.org>; Fri,  8 Dec 2017 10:15:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6ADA320C32
+	for <e@80x24.org>; Fri,  8 Dec 2017 10:47:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753116AbdLHKPG (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Dec 2017 05:15:06 -0500
-Received: from cloud.peff.net ([104.130.231.41]:51942 "HELO cloud.peff.net"
+        id S1753427AbdLHKq4 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Dec 2017 05:46:56 -0500
+Received: from cloud.peff.net ([104.130.231.41]:51952 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1753106AbdLHKPD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Dec 2017 05:15:03 -0500
-Received: (qmail 32763 invoked by uid 109); 8 Dec 2017 10:14:57 -0000
+        id S1753403AbdLHKqt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Dec 2017 05:46:49 -0500
+Received: (qmail 1703 invoked by uid 109); 8 Dec 2017 10:46:49 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 08 Dec 2017 10:14:57 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 08 Dec 2017 10:46:49 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 30800 invoked by uid 111); 8 Dec 2017 10:15:19 -0000
+Received: (qmail 30908 invoked by uid 111); 8 Dec 2017 10:47:11 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Fri, 08 Dec 2017 05:15:19 -0500
+ by peff.net (qpsmtpd/0.94) with ESMTPA; Fri, 08 Dec 2017 05:47:11 -0500
 Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 08 Dec 2017 05:14:56 -0500
-Date:   Fri, 8 Dec 2017 05:14:56 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 08 Dec 2017 05:46:47 -0500
+Date:   Fri, 8 Dec 2017 05:46:47 -0500
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] fmt-merge-msg: avoid leaking strbuf in shortlog()
-Message-ID: <20171208101455.GC1899@sigill.intra.peff.net>
-References: <b2238da3-9eba-1521-f4ca-3b805f103555@web.de>
- <xmqq4lp2cisd.fsf@gitster.mtv.corp.google.com>
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Stefan Beller <sbeller@google.com>
+Subject: [PATCH v2 0/4] making test-suite tracing more useful
+Message-ID: <20171208104647.GA4016@sigill.intra.peff.net>
+References: <20171019210140.64lb52cqtgdh22ew@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqq4lp2cisd.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <20171019210140.64lb52cqtgdh22ew@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 07, 2017 at 01:47:14PM -0800, Junio C Hamano wrote:
+This series fixes some rough edges in the "-x" feature of the test
+suite. With it, it should be possible to turn on tracing for CI runs.
 
-> > diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
-> > index 22034f87e7..8e8a15ea4a 100644
-> > --- a/builtin/fmt-merge-msg.c
-> > +++ b/builtin/fmt-merge-msg.c
-> > @@ -377,7 +377,8 @@ static void shortlog(const char *name,
-> >  			string_list_append(&subjects,
-> >  					   oid_to_hex(&commit->object.oid));
-> >  		else
-> > -			string_list_append(&subjects, strbuf_detach(&sb, NULL));
-> > +			string_list_append_nodup(&subjects,
-> > +						 strbuf_detach(&sb, NULL));
-> >  	}
-> >  
-> >  	if (opts->credit_people)
-> 
-> What is leaked comes from strbuf, so the title is not a lie, but I
-> tend to think that this leak is caused by a somewhat strange
-> string_list API.  The subjects string-list is initialized as a "dup"
-> kind, but a caller that wants to avoid leaking can (and should) use
-> _nodup() call to add a string without duping.  It all feels a bit
-> too convoluted.
+This is mostly a repost of v1 at:
 
-I'm not sure it's string-list's fault. Many callers (including this one)
-have _some_ entries whose strings must be duplicated and others which do
-not.
+  https://public-inbox.org/git/20171019210140.64lb52cqtgdh22ew@sigill.intra.peff.net
 
-So either:
+which had some discussion, but wasn't picked up.
 
-  1. The list gets marked as "nodup", and we add an extra xstrdup() to the
-     oid_to_hex call above. And also need to remember to free() the
-     strings later, since the list does not own them.
+I fixed a few typos pointed out by reviewers, and I tried to summarize
+the discussion around "magic descriptor 4" in the commit message of
+patch 2.  My conclusion there was that none of the options is
+particularly good.  The only thing thing that might make sense is making
+"7" the magical descriptor. But given that "4" only had one troubling
+call, I'm inclined to just leave it as-is and see if this ever comes up
+again (especially if we start using "-x" in the Travis builds, then we'd
+catch any problems).
 
-or
+  [1/4]: test-lib: silence "-x" cleanup under bash
+  [2/4]: t5615: avoid re-using descriptor 4
+  [3/4]: test-lib: make "-x" work with "--verbose-log"
+  [4/4]: t/Makefile: introduce TEST_SHELL_PATH
 
-  2. We mark it as "dup" and incur an extra allocation and copy, like:
-
-       string_list_append(&subjects, sb.buf);
-       strbuf_release(&buf);
-
-So I'd really blame the caller, which doesn't want to do (2) out of a
-sense of optimization. It could also perhaps write it as:
-
-  while (commit = get_revision(rev)) {
-	strbuf_reset(&sb);
-	... maybe put some stuff in sb ...
-	if (!sb.len)
-		string_list_append(&subjects, oid_to_hex(obj));
-	else
-		string_list_append(&subjects, sb.buf);
-  }
-  strbuf_release(&sb);
-
-which at least avoids the extra allocations.
-
-By the way, I think there's another quite subtle leak in this function.
-We do this:
-
-  format_commit_message(commit, "%s", &sb, &ctx);
-  strbuf_ltrim(&sb);
-
-and then only use "sb" if sb.len is non-zero. But we may have actually
-allocated to create our zero-length string (e.g., if we had a strbuf
-full of spaces and trimmed them all off). Since we reuse "sb" over and
-over as we loop, this will actually only leak once for the whole loop,
-not once per iteration. So it's probably not a big deal, but writing it
-with the explicit reset/release pattern fixes that (and is more
-idiomatic for our code base, I think).
+ Makefile                 |  8 ++++++++
+ t/Makefile               |  6 ++++--
+ t/t5615-alternate-env.sh |  6 +++---
+ t/test-lib.sh            | 46 +++++++++++++++++++++++++++++++++-------------
+ 4 files changed, 48 insertions(+), 18 deletions(-)
 
 -Peff
