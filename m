@@ -2,101 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-1.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E23F520C39
-	for <e@80x24.org>; Fri,  8 Dec 2017 18:01:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4AE5520C39
+	for <e@80x24.org>; Fri,  8 Dec 2017 18:03:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752291AbdLHSBc (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Dec 2017 13:01:32 -0500
-Received: from mail-qt0-f182.google.com ([209.85.216.182]:41382 "EHLO
-        mail-qt0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752126AbdLHSBb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Dec 2017 13:01:31 -0500
-Received: by mail-qt0-f182.google.com with SMTP id i40so27806360qti.8
-        for <git@vger.kernel.org>; Fri, 08 Dec 2017 10:01:30 -0800 (PST)
+        id S1752565AbdLHSDj (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Dec 2017 13:03:39 -0500
+Received: from mail-it0-f44.google.com ([209.85.214.44]:41077 "EHLO
+        mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752379AbdLHSDi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Dec 2017 13:03:38 -0500
+Received: by mail-it0-f44.google.com with SMTP id x28so6643265ita.0
+        for <git@vger.kernel.org>; Fri, 08 Dec 2017 10:03:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=Gpu/7dpRD+cGfZ48F/BmcOT0vaNg++MQbe3m+T7YrPU=;
-        b=ojoYYLNMf/Fy4pfb4rSnRTYvxdf1q9dM5qB8UJdzcHnI4xb7d4dZBc9JVd7Kh9N3U4
-         fnvVi9tLm8u5yF5UTFwf5nO39JYebBPpMSWM7Aila+dTcLvlNvPvFEbDBzWTijFf7UAn
-         lFChkFwzLReNwd1utIMiqJoL//UhNX3ZwcPhyBLy1WewzIkWD4nATV1pAGDqxRC7D+an
-         K+pEsZoyD/mV2UN61I+SXM/Nyf5fAJTt/NRjLSXjBOqExeN1hy1P1uPo91Apxr93tgOc
-         vjSJtMbVE7oRA034lHWcSyITd1fX/nNzgjtbihrjfy0EEpPpZ2XijHF/ZU4L4yshfuYL
-         pWPw==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=5EQIAqVlZo68D8+rXSHcsosSUfm8H/zOzWOl7F9F9ng=;
+        b=WrHP+Tgmqfy9+ZNxIQ1SiZQYrOVY7hl3AjMthZ7d3mylRestCQ80WYy9QWX+/80pUe
+         QPyVXqeLgOHcoiGxliuyC36K4WRHs2PdGJCqOHLsPLF0V4DVhKbRNIv1YyxBuZ4ylKmc
+         j4u3QxlqHfjdgO/fpCcyYTA6yniv0bKOugzHvG8Vby1XZovwhHDU0UI3qdrTeXHtVfXp
+         mjULUuLW8gCff4W8UEBiYBidcDdaAe95ldNIuuPnD5HNSzkcLsKRaBr1MpLyh26Id7bz
+         ylD4hdOA+0Sbpr9u19sOgNq0Nk1C+bZVJm7gls10zr9iJT48zL/Muxk/wKrzffbJLGXH
+         SDJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=Gpu/7dpRD+cGfZ48F/BmcOT0vaNg++MQbe3m+T7YrPU=;
-        b=T2n6mQlUbaOTsssFt7VOjASLCG4wqkT77oAHj1hLG/KlJE0WmkkhZEzOrHgzwkWedb
-         EQFDV9oTODiHM+Aucik2wWg9R26ItyKRcJcgkfcq14Ud/A7i5lDyQmrd6FluvrBJBM9P
-         V5tjNMRvV8C7IGi2IJHHtvgYqGuqvEg3eFdCHHmmj9j4yBnlXcZaO/U+htNZjb9cwBuP
-         PvCKIXygkAljCUIJR4X0n3UaDYNOMWszaK9ts0j1crgM0/wHtDYFUwmtCchAMHbqXJxa
-         lWsTR7uP951JsEkbZI+Ww6w2IdINcJIzOynCbkWSfQmyDKEito5rQuAdUrWUVcTXYHYv
-         b5xQ==
-X-Gm-Message-State: AKGB3mJub8OtACIA7QEuXAz2I0mduh954nvVBFiaoGCAvg5ZSn/TXsei
-        FTsanW9qicCHGDC01htOknA7Lk8V5IxmQIiyZTk=
-X-Google-Smtp-Source: AGs4zMZsUOZlJyGgtvsYDUxos0VD0HtGqzjP5WcLKF8LQqEqBxdiuRC9VdpK9E1Uq9E40aAlP6vvtyDUznjTjzW1CiY=
-X-Received: by 10.237.59.22 with SMTP id p22mr16560185qte.34.1512756090277;
- Fri, 08 Dec 2017 10:01:30 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=5EQIAqVlZo68D8+rXSHcsosSUfm8H/zOzWOl7F9F9ng=;
+        b=OPKqxOXDKyCEQguVb4iWb3ALTbhiH0DMPuv1TiUurZAS33n59SHfzil3tIdByKb9BW
+         XHuwvwiT0Z2oJWeFDzZCjVHFhykbA0z0wJBwD0Gr4b7V4zFsTM7R+5h9SKca6LINNcbL
+         r3NLfd646rutAsio1DCcbinL8KRd1JQ8ldLEkL9HDCISRlse3YfGVTHwrcCQFH4ZWpVn
+         /7AB+n1Sgo5tr81Gl/cSOM4abzj5Tjssfws6vQnr5XrjGud9J6Tg0cGsxJU2hpHdSHdI
+         KTkroxHjw3zLsWoVRMDaGo/BT5kcDBDGruOw+YpRLqiguWbzlsjGMCxZC3eEl5bq479g
+         8Rrg==
+X-Gm-Message-State: AKGB3mJG7ScIbbbJWdUQ/kDej77CFILY5c8u31at87I+fYgrITv6F4Sf
+        JY50pSsoDusoZ+5IOu7S//oBuqD8UYs=
+X-Google-Smtp-Source: ACJfBoslpXAeEWLOUF5MZl1hhP/W+pMFnGTqTio47CfZu4KotiIsohhJNZgSymN720ox8abphPSDqg==
+X-Received: by 10.107.186.193 with SMTP id k184mr5109154iof.242.1512756217200;
+        Fri, 08 Dec 2017 10:03:37 -0800 (PST)
+Received: from google.com ([2620:0:100e:422:949a:89bd:af08:7a9c])
+        by smtp.gmail.com with ESMTPSA id l66sm3642838ioa.29.2017.12.08.10.03.35
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 08 Dec 2017 10:03:36 -0800 (PST)
+Date:   Fri, 8 Dec 2017 10:03:34 -0800
+From:   Brandon Williams <bmwill@google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git <git@vger.kernel.org>
+Subject: Re: [WIP 01/15] pkt-line: introduce packet_read_with_status
+Message-ID: <20171208180334.GF152943@google.com>
+References: <20171020171839.4188-1-bmwill@google.com>
+ <20171204235823.63299-1-bmwill@google.com>
+ <20171204235823.63299-2-bmwill@google.com>
+ <CAGZ79kbV07BsKde1P_3EHjnSj7APTMQk+bbGx79X0nvpU2LD+Q@mail.gmail.com>
 MIME-Version: 1.0
-Received: by 10.12.198.4 with HTTP; Fri, 8 Dec 2017 10:01:29 -0800 (PST)
-In-Reply-To: <20171208151807.3569-1-daniel.bensoussan--bohm@etu.univ-lyon1.fr>
-References: <20171208151807.3569-1-daniel.bensoussan--bohm@etu.univ-lyon1.fr>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 8 Dec 2017 13:01:29 -0500
-X-Google-Sender-Auth: 4yfBRXIarDWvioFQIE5TXNYR-Ow
-Message-ID: <CAPig+cTgJepi6xVn0+qP3SW0Y0g-6Nf4LvCjCkvEHfZwugY1Hg@mail.gmail.com>
-Subject: Re: [PATCH] doc: reword gitworflows for neutrality
-To:     Daniel Bensoussan <daniel.bensoussan--bohm@etu.univ-lyon1.fr>
-Cc:     Git List <git@vger.kernel.org>,
-        Matthieu Moy <matthieu.moy@univ-lyon1.fr>,
-        Timothee Albertin <timothee.albertin@etu.univ-lyon1.fr>,
-        Nathan Payre <nathan.payre@etu.univ-lyon1.fr>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kbV07BsKde1P_3EHjnSj7APTMQk+bbGx79X0nvpU2LD+Q@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 8, 2017 at 10:18 AM, Daniel Bensoussan
-<daniel.bensoussan--bohm@etu.univ-lyon1.fr> wrote:
-> doc: reword gitworflows for neutrality
+On 12/07, Stefan Beller wrote:
+> On Mon, Dec 4, 2017 at 3:58 PM, Brandon Williams <bmwill@google.com> wrote:
+> 
+> > diff --git a/pkt-line.h b/pkt-line.h
+> > index 3dad583e2..f1545929b 100644
+> > --- a/pkt-line.h
+> > +++ b/pkt-line.h
+> > @@ -60,8 +60,16 @@ int write_packetized_from_buf(const char *src_in, size_t len, int fd_out);
+> >   * If options contains PACKET_READ_CHOMP_NEWLINE, a trailing newline (if
+> >   * present) is removed from the buffer before returning.
+> >   */
+> > +enum packet_read_status {
+> > +       PACKET_READ_ERROR = -1,
+> > +       PACKET_READ_NORMAL,
+> > +       PACKET_READ_FLUSH,
+> > +};
+> >  #define PACKET_READ_GENTLE_ON_EOF (1u<<0)
+> >  #define PACKET_READ_CHOMP_NEWLINE (1u<<1)
+> > +enum packet_read_status packet_read_with_status(int fd, char **src_buffer, size_t *src_len,
+> > +                                               char *buffer, unsigned size, int *pktlen,
+> > +                                               int options);
+> >  int packet_read(int fd, char **src_buffer, size_t *src_len, char
+> >                 *buffer, unsigned size, int options);
+> 
+> The documentation that is preceding these lines is very specific to
+> packet_read, e.g.
+> 
+>     If options does contain PACKET_READ_GENTLE_ON_EOF,
+>     we will not die on condition 4 (truncated input), but instead return -1
+> 
+> which doesn't hold true for the _status version. Can you adapt the comment
+> to explain both read functions?
 
-s/gitworflows/gitworkflows/
+Good point, I'll makes changes and document the _status version
+separately.
 
-> Changed 'he' to 'them' to be more neutral in "gitworkflows.txt".
->
-> See discussion at: https://public-inbox.org/git/xmqqvahieeqy.fsf@gitster.mtv.corp.google.com/
->
-> Signed-off-by: Matthieu Moy <matthieu.moy@univ-lyon1.fr>
-> Signed-off-by: Timothee Albertin <timothee.albertin@etu.univ-lyon1.fr>
-> Signed-off-by: Nathan Payre <nathan.payre@etu.univ-lyon1.fr>
-> Signed-off-by: Daniel Bensoussan <daniel.bensoussan--bohm@etu.univ-lyon1.fr>
-> ---
-> diff --git a/Documentation/gitworkflows.txt b/Documentation/gitworkflows.txt
-> @@ -407,8 +407,8 @@ follows.
-> -Occasionally, the maintainer may get merge conflicts when he tries to
-> -pull changes from downstream.  In this case, he can ask downstream to
-> +Occasionally, the maintainer may get merge conflicts when they try to
-> +pull changes from downstream.  In this case, they can ask downstream to
-
-As a native English speaker, I find the new phrasing odd, and think
-this may a step backward. How about trying a different approach? For
-example:
-
-    Occasionally, the maintainer may get merge conflicts when trying
-    to pull changes from downstream. In this case, it may make sense
-    to ask downstream to do the merge and resolve the conflicts
-    instead (since, presumably, downstream will know better how to
-    resolve them).
-
->  do the merge and resolve the conflicts themselves (perhaps they will
->  know better how to resolve them).  It is one of the rare cases where
->  downstream 'should' merge from upstream.
+-- 
+Brandon Williams
