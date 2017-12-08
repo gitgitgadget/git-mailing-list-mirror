@@ -6,32 +6,32 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D36BF20C32
-	for <e@80x24.org>; Fri,  8 Dec 2017 10:47:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DB4E720C32
+	for <e@80x24.org>; Fri,  8 Dec 2017 10:47:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752971AbdLHKrR (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Dec 2017 05:47:17 -0500
-Received: from cloud.peff.net ([104.130.231.41]:51964 "HELO cloud.peff.net"
+        id S1753373AbdLHKrT (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Dec 2017 05:47:19 -0500
+Received: from cloud.peff.net ([104.130.231.41]:51972 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1753444AbdLHKrK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Dec 2017 05:47:10 -0500
-Received: (qmail 1749 invoked by uid 109); 8 Dec 2017 10:47:10 -0000
+        id S1753202AbdLHKrP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Dec 2017 05:47:15 -0500
+Received: (qmail 1762 invoked by uid 109); 8 Dec 2017 10:47:15 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 08 Dec 2017 10:47:09 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 08 Dec 2017 10:47:15 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 30938 invoked by uid 111); 8 Dec 2017 10:47:31 -0000
+Received: (qmail 30957 invoked by uid 111); 8 Dec 2017 10:47:37 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Fri, 08 Dec 2017 05:47:31 -0500
+ by peff.net (qpsmtpd/0.94) with ESMTPA; Fri, 08 Dec 2017 05:47:37 -0500
 Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 08 Dec 2017 05:47:08 -0500
-Date:   Fri, 8 Dec 2017 05:47:08 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 08 Dec 2017 05:47:13 -0500
+Date:   Fri, 8 Dec 2017 05:47:13 -0500
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
         Lars Schneider <larsxschneider@gmail.com>,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCH v2 1/4] test-lib: silence "-x" cleanup under bash
-Message-ID: <20171208104708.GA4939@sigill.intra.peff.net>
+Subject: [PATCH v2 2/4] t5615: avoid re-using descriptor 4
+Message-ID: <20171208104713.GB4939@sigill.intra.peff.net>
 References: <20171208104647.GA4016@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -42,107 +42,70 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When the test suite's "-x" option is used with bash, we end
-up seeing cleanup cruft in the output:
+File descriptors 3 and 4 are special in our test suite, as
+they link back to the test script's original stdout and
+stderr. Normally this isn't something tests need to worry
+about: they are free to clobber these descriptors for
+sub-commands without affecting the overall script.
 
-  $ bash t0001-init.sh -x
-  [...]
-  ++ diff -u expected actual
-  + test_eval_ret_=0
-  + want_trace
-  + test t = t
-  + test t = t
-  + set +x
-  ok 42 - re-init from a linked worktree
+But there's one very special thing about descriptor 4: since
+d88785e424 (test-lib: set BASH_XTRACEFD automatically,
+2016-05-11), we ask bash to output "set -x" output to it by
+number. This goes to _any_ descriptor 4, even if it no
+longer points to the place it did when we set BASH_XTRACEFD.
 
-This ranges from mildly annoying (for a successful test) to
-downright confusing (when we say "last command exited with
-error", but it's really 5 commands back).
+But in t5615, we run a shell loop with descriptor 4
+redirected.  As a result, t5615 works with non-bash shells
+even with "-x". And it works with bash without "-x". But the
+combination of "bash t5615-alternate-env.sh -x" gets a test
+failure (because our "set -x" output pollutes one of the
+files).
 
-We normally are able to suppress this cleanup. As the
-in-code comment explains, we can't convince the shell not to
-print it, but we can redirect its stderr elsewhere.
+We can fix this by using any descriptor _except_ the magical
+4. So let's switch arbitrarily to using 5/6 in this loop,
+not 3/4.
 
-But since d88785e424 (test-lib: set BASH_XTRACEFD
-automatically, 2016-05-11), that doesn't hold for bash. It
-sends the "set -x" output directly to descriptor 4, not to
-stderr.
+Another alternative is to use a different descriptor for
+BASH_XTRACEFD. But picking an unused one turns out to be
+hard. Most shells limit us to 9 numbered descriptors. Bash
+can handle more, but:
 
-We can fix this by also redirecting descriptor 4, and
-paying close attention to which commands redirected and
-which are not (see the updated comment).
+  - while the BASH_XTRACEFD is specific to bash, GIT_TRACE=4
+    has a similar problem, and would affect all shells
 
-Two alternatives I considered and rejected:
+  - constructs like "999>/dev/null" are synticatically
+    invalid to non-bash shells. So we have to actually bury
+    it inside an eval, which creates more complications.
 
-  - unsetting and setting BASH_XTRACEFD; doing so closes the
-    descriptor, which we must avoid
-
-  - we could keep everything in a single block as before,
-    redirect 4>/dev/null there, but retain 5>&4 as a copy.
-    And then selectively restore 4>&5 for commands which
-    should be allowed to trace. This would work, but the
-    descriptor swapping seems unnecessarily confusing.
+Of the numbers 1-9, you might think that "9" would be less
+used than "4". But it's not; many of our scripts use
+descriptors 8 and 9 (probably under the assumption that they
+are high and therefore unused). The least-used descriptor is
+currently "7". We could switch to that, but we're just
+trading one magic number for another.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- t/test-lib.sh | 34 ++++++++++++++++++++++++----------
- 1 file changed, 24 insertions(+), 10 deletions(-)
+ t/t5615-alternate-env.sh | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 116bd6a70c..7914453a3b 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -601,26 +601,40 @@ test_eval_inner_ () {
- }
- 
- test_eval_ () {
--	# We run this block with stderr redirected to avoid extra cruft
--	# during a "-x" trace. Once in "set -x" mode, we cannot prevent
-+	# If "-x" tracing is in effect, then we want to avoid polluting stderr
-+	# with non-test commands. But once in "set -x" mode, we cannot prevent
- 	# the shell from printing the "set +x" to turn it off (nor the saving
- 	# of $? before that). But we can make sure that the output goes to
- 	# /dev/null.
- 	#
--	# The test itself is run with stderr put back to &4 (so either to
--	# /dev/null, or to the original stderr if --verbose was used).
-+	# There are a few subtleties here:
-+	#
-+	#   - we have to redirect descriptor 4 in addition to 2, to cover
-+	#     BASH_XTRACEFD
-+	#
-+	#   - the actual eval has to come before the redirection block (since
-+	#     it needs to see descriptor 4 to set up its stderr)
-+	#
-+	#   - likewise, any error message we print must be outside the block to
-+	#     access descriptor 4
-+	#
-+	#   - checking $? has to come immediately after the eval, but it must
-+	#     be _inside_ the block to avoid polluting the "set -x" output
-+	#
-+
-+	test_eval_inner_ "$@" </dev/null >&3 2>&4
- 	{
--		test_eval_inner_ "$@" </dev/null >&3 2>&4
- 		test_eval_ret_=$?
- 		if want_trace
- 		then
- 			set +x
--			if test "$test_eval_ret_" != 0
--			then
--				say_color error >&4 "error: last command exited with \$?=$test_eval_ret_"
--			fi
- 		fi
--	} 2>/dev/null
-+	} 2>/dev/null 4>&2
-+
-+	if test "$test_eval_ret_" != 0 && want_trace
-+	then
-+		say_color error >&4 "error: last command exited with \$?=$test_eval_ret_"
-+	fi
- 	return $test_eval_ret_
- }
- 
+diff --git a/t/t5615-alternate-env.sh b/t/t5615-alternate-env.sh
+index d2d883f3a1..b4905b822c 100755
+--- a/t/t5615-alternate-env.sh
++++ b/t/t5615-alternate-env.sh
+@@ -7,9 +7,9 @@ check_obj () {
+ 	alt=$1; shift
+ 	while read obj expect
+ 	do
+-		echo "$obj" >&3 &&
+-		echo "$obj $expect" >&4
+-	done 3>input 4>expect &&
++		echo "$obj" >&5 &&
++		echo "$obj $expect" >&6
++	done 5>input 6>expect &&
+ 	GIT_ALTERNATE_OBJECT_DIRECTORIES=$alt \
+ 		git "$@" cat-file --batch-check='%(objectname) %(objecttype)' \
+ 		<input >actual &&
 -- 
 2.15.1.659.g8bd2eae3ea
 
