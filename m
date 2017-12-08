@@ -7,147 +7,171 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A15801FC34
-	for <e@80x24.org>; Fri,  8 Dec 2017 23:31:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 41B8A1FC34
+	for <e@80x24.org>; Fri,  8 Dec 2017 23:54:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753594AbdLHXbE (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Dec 2017 18:31:04 -0500
-Received: from mail-wr0-f178.google.com ([209.85.128.178]:38212 "EHLO
-        mail-wr0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753341AbdLHXbD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Dec 2017 18:31:03 -0500
-Received: by mail-wr0-f178.google.com with SMTP id o2so12199872wro.5
-        for <git@vger.kernel.org>; Fri, 08 Dec 2017 15:31:02 -0800 (PST)
+        id S1753494AbdLHXyN (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Dec 2017 18:54:13 -0500
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:37009 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753378AbdLHXyM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Dec 2017 18:54:12 -0500
+Received: by mail-wr0-f195.google.com with SMTP id k61so12216165wrc.4
+        for <git@vger.kernel.org>; Fri, 08 Dec 2017 15:54:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=xBpgkZY19w5u3XuJNq8XXZdLDomKgvzeRg7NOiOkcS4=;
-        b=MgLXzJjNDfEyH+J4HFK2bCfEHF++O24XKOC/oiMa8YKBtZTeMrz6+LJhnKkYg6MBDJ
-         zjk8sFK5sjU3NLzr6kY3Pt5ThIzyG7qjFcVozwDLazqJ+B1Zj2oBVTpJV6/ASpaUhDOD
-         ro5nvokaTt8XkqkXFDtGLF3x7GKaCmwpsBrBBY9ce9FDMfebv5SAwU9MePFhAtFw6XS3
-         dOgtn3kw/ChVvmujUtBMswObjC5c/M3esY2R+iuDSuNDu/ewuBuVaeRCSBPMhF4EQkJo
-         5YCBLjKK732z65TPFG5ibJYdcsdVajJx4J7+uCdXEEgNLlzjzA4EBVp/rqqyHZnUNzo5
-         JfLQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=p+t5R7BLHX3MGt++hW7C+8eSyNKrJ8iTqhXjL7Mx7qU=;
+        b=BdvIpt8XoeJpV4cpsfz7y0VKaldSqjv9vp+Tl84Dl7xrHq0GryDUSv2Siymp+XdWIc
+         QsfM4h26pvFCLKC6hHPUUNnHvsi/AIAM5zIYMOc4OZqxrqPx7muUL9iTyP1KCnHycpSV
+         fIK22QpAb65ZzYaBwIkJDQ+quo+JXRd+3vWAqq+dxUwZT7MeQhhIx5/7eL12zZbXetEL
+         pUzSM0SsW5U9TTMBNdt8v3AlWnYlg8l2ltvWDti33Ad9rM28O5huzQinO2AmV7LZ6/Cc
+         IOoff/LsfyYLTI4zJsHpIGkdupm/6YRwGysbiVjrFLZ7YicDLqRKggx9ZAoHmsdU+2Rw
+         MB0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=xBpgkZY19w5u3XuJNq8XXZdLDomKgvzeRg7NOiOkcS4=;
-        b=ovoO23Ia2aPt5HtqYGau1yIO/fh2/ywSrS11DYRc0om2HWnkuO1IXz4YSFGrThTPOC
-         ytU091zikIImGWPc9fRv4awHUG5QJ/OXr8uzFqW7ZJx+JQUwLM5pIdkbUjFuiti3Vk8f
-         CShktpM6B96gPbi9W31Mtb7YiXW7ITVLBvhqFmSDOX15OhuFCJuVx+9fjPqju4gOLSip
-         pcuMgciPIdQ+NkYqnGK75PGX7424Btf9uBwU5AuJPfVyuZ/K/KihPgWeEGJDCM4XhLkc
-         mP6wNWpQOE06r55fCmOTozdL8DwOI5vaucqYXgyfF3I8XRqFhr2NpVzb3LwvgX5SP/4U
-         y0IQ==
-X-Gm-Message-State: AJaThX6qkXG6FnnxhUH1oB6yFgin8pwusjBBtkZ79ybmIwS4pDqVENi7
-        c35Vez/PcsvW0iGTMZrG7BE=
-X-Google-Smtp-Source: AGs4zMbcO0i7hs7lBjQEvYLeX1DBOSYrwtkFhzp1l/d0iA9M7jBpvty6VAv5xwZV11UlUeoH0qCJZA==
-X-Received: by 10.223.172.226 with SMTP id o89mr28637294wrc.197.1512775862092;
-        Fri, 08 Dec 2017 15:31:02 -0800 (PST)
-Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
-        by smtp.gmail.com with ESMTPSA id p128sm2750034wmb.23.2017.12.08.15.31.00
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 08 Dec 2017 15:31:00 -0800 (PST)
-Received: from avar by evledraar with local (Exim 4.89)
-        (envelope-from <avarab@gmail.com>)
-        id 1eNS6d-0000Rq-TB; Sat, 09 Dec 2017 00:30:59 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Takashi Iwai <tiwai@suse.de>,
-        Jeff King <peff@peff.net>,
-        Brandon Williams <bmwill@google.com>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH v2 4/5] Makefile: use the sha1collisiondetection submodule by default
-References: <20171208223001.556-1-avarab@gmail.com> <20171128213214.12477-1-avarab@gmail.com> <20171208223001.556-5-avarab@gmail.com> <xmqqo9n86dde.fsf@gitster.mtv.corp.google.com>
-User-agent: Debian GNU/Linux 9.2 (stretch); Emacs 25.1.1; mu4e 0.9.19
-In-reply-to: <xmqqo9n86dde.fsf@gitster.mtv.corp.google.com>
-Date:   Sat, 09 Dec 2017 00:30:59 +0100
-Message-ID: <87bmj8er0s.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=p+t5R7BLHX3MGt++hW7C+8eSyNKrJ8iTqhXjL7Mx7qU=;
+        b=jhVTgdNBDPZaGdJjSfZpZH8HifUdOi/dYbFmGZnoEA9faznIpaDSFqz2J5LVHCFWMj
+         UUHlEWUud08w33CAIgJimzHIup0SO46KXj9g2LuujEE96GCOoWopRtrl5kRaVSUaimFk
+         vWgZd/XV8UE8GhMJXqAMgUmCCC+JLInIo8ynKU52OnYCaALT2Wbz6tXOb3WlQA9PsTlo
+         7yBb1TJZJlMy3htC+9qXJXQWxeFOAoAaLmS8Ji7jDSiVewtuwNacXG8jhtuQhkYAR0B3
+         r03rYudoldxjAfMtXum90wrGTTIpUGOOUqHrFZhYGoGBhZkyJgljSyg5SRiI8mV5mHG+
+         5iBQ==
+X-Gm-Message-State: AKGB3mKP3RM5VyYgNevpHPGuadi45w2UatDX/zE1TXM6zeKO+2tEo1iG
+        tTftCxSJ3j/Tkm7x8qo+5Sc=
+X-Google-Smtp-Source: AGs4zMYf1R9qRNufv/Di/fziE5YCRZ/IDzwhKsz/g13AAFu/SCb+mv0OFRchcEI3Ojvv0T/XpBHB1Q==
+X-Received: by 10.223.180.69 with SMTP id v5mr14085808wrd.193.1512777251374;
+        Fri, 08 Dec 2017 15:54:11 -0800 (PST)
+Received: from [192.168.5.102] (cable-24-135-61-30.dynamic.sbb.rs. [24.135.61.30])
+        by smtp.gmail.com with ESMTPSA id c2sm10350718wrg.57.2017.12.08.15.54.09
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 08 Dec 2017 15:54:10 -0800 (PST)
+Subject: Re: [SCRIPT/RFC 0/3] git-commit --onto-parent (three-way merge, no
+ working tree file changes)
+To:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Nikolay Shustov <nikolay.shustov@gmail.com>,
+        Johannes Schneider <mailings@cedarsoft.com>,
+        Patrik Gornicz <patrik-git@mail.pgornicz.com>,
+        Martin Waitz <tali@admingilde.org>,
+        Shawn Pearce <spearce@spearce.org>,
+        Sam Vilain <sam@vilain.net>, Jakub Narebski <jnareb@gmail.com>
+References: <8998e832-f49f-4de4-eb8d-a7934fba97b5@gmail.com>
+ <d5f243a5-6e35-f3fc-4daf-6e1376bef897@kdbg.org>
+ <203a75c8-0c58-253c-2c18-05450f7ae49b@gmail.com>
+ <ea156b8b-29d8-7501-b5a5-a29cfbd7d1d6@kdbg.org>
+ <741dfedc-07f8-24fb-ebe2-940f8b2639d4@gmail.com>
+ <33e97533-716b-e1cc-6aa0-bf8941225319@kdbg.org>
+ <7ae3ffd5-147d-55d2-9630-da12c429d631@gmail.com>
+ <39323748-282c-5881-2bfa-de622bb8b765@kdbg.org>
+ <CAPc5daWupO6DMOMFGn=XjUCG-JMYc4eyo8+TmAsdWcAOHXzwWg@mail.gmail.com>
+ <f9a94a62-9541-e019-8ab3-9fc9cfe2c43f@gmail.com>
+ <xmqqo9n99ohc.fsf@gitster.mtv.corp.google.com>
+From:   Igor Djordjevic <igor.d.djordjevic@gmail.com>
+Message-ID: <a3510c14-23e9-d1d9-0847-b60451f8e15d@gmail.com>
+Date:   Sat, 9 Dec 2017 00:54:06 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
 MIME-Version: 1.0
+In-Reply-To: <xmqqo9n99ohc.fsf@gitster.mtv.corp.google.com>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 08/12/2017 17:24, Junio C Hamano wrote:
+> 
+> > To get back on track, and regarding what`s already been said,
+> > would having something like this(1) feel useful?
+> >
+> > (1) git commit --onto <commit>
+> 
+> Are you asking me if _I_ find it useful?  It is not a very useful
+> question to ask, as I've taken things that I do not find useful
+> myself.
 
-On Fri, Dec 08 2017, Junio C. Hamano jotted:
+It was also (kind of shy and subtle) "would you take it?", indeed, 
+but I do value your personal opinion here, too, being a recognized 
+developer, and one really knowing the Git (mailing list) community on 
+top of it, so I appreciate you addressed both sides of the question.
 
-> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
->
->> Instead the Makefile will emit an error if the contents of the
->> submodule aren't checked out (line-wrapped. GNU make emits this all on
->> one line):
->>
->>     Makefile:1031: *** The sha1collisiondetection submodule is not
->>     checked out. Please make it available, either by cloning with
->>     --recurse-submodules, or by running "git submodule update
->>     --init". If you can't use it for whatever reason you can define
->>     NO_DC_SHA1_SUBMODULE=NoThanks.  Stop.
->
-> Sounds OK.
->
-> But I actually do not mind to (and may even prefer to) have an
-> endgame opposite of what this series tries to lead us to.  We've
-> tried to have this as submodule, we've seen that the arrangement
-> works, and now we declare victory and get rid of the submodule.
+And it was partly addressed to Hannes, but more for a confirmation, I 
+guess, him being the one to favor such a flow in the first place, 
+over what I initially suggested.
 
-I don't think we can say we tried without having this 4/5 (5/5 not
-needed) in a couple of releases. Without this series we always smoothly
-fall back to the non-submodule, and only use it if you opt in.
+> Having said that, I do not see me personally using it. You keep
+> claiming that committing without ever materializing the exact state
+> that is committed in the working tree is a good thing.
+> 
+> I do not subscribe to that view.  
 
-So all we've really tested so far is:
+No - and I find it an important difference to note - just that it 
+might be acceptable / more preferable _in certain situations_, where 
+the only alternative seems to be wasting (significant) amount of time 
+on needless rebuilds of many files (just because of branch switching, 
+otherwise untouched by the changes we`re interested in).
 
- * CI systems that consume git.git and provide --recurse-submodules to
-   git-clone by default.
+If this is perceived a too uncommon/exotic case to worth addressing 
+is a different matter, though.
 
- * People on this list that have gone out of their way to test by
-   manually toggling the the flag.
+> I'd rather do a quick fix-up on top (which ensures that at least the
+> fix-up works in the context of the tip), and then "rebase -i" to
+> move it a more appropriate place in the history (during which I have
+> a chance to ensure that the fix-up works in the context it is
+> intended to apply to).
 
-> That endgame allows us not force people to grab an essential part of
-> the codebase as an external dependency from another place, which
-> feels quite bad, especially when their primary interest is not in
-> dogfooding submodule but in building a working version of Git.
+Chris reported in this very topic[1] that sometimes, due to conflicts 
+with later commits, "checkout > commit > [checkout >] rebase --onto" 
+is "much easier to do", where "commit --fixup > rebase -i" "breaks" 
+(does not apply cleanly).
 
-As noted previously my two motivations are:
+> I know that every time I say this, people who prefer to commit
+> things that never existed in the working tree will say "but we'll
+> test it later after we make these commit without having their state
+> in the working tree".  But I also know better that "later" often do
+> not come, ever, at least for people like me ;-).
 
- 1) That we decide what we want to do with this, ultimately I don't
-    really mind which way we go.
+No comment here ;)
 
- 2) That if we go with the submodule by default, it should be understood
-    that one of the main benefits is us *actually* dogfooding it and
-    subsequently improving it for all git users.
+> The amount of work _required_ to record the fix-up at its final
+> resting place deeper in the history would be larger with "rebase -i"
+> approach, simply because approaches like "commit --onto" and "git
+> post" that throw a new commit deep in the history would not require
+> ever materializing it in the working tree.  But because I care about
+> what I am actually committing, and because I am just lazy as any
+> other human (if not more), I'd prefer an apporach that _forces_ me
+> to have a checkout of the exact state that I'd be committing.  That
+> would prod me to actually looking at and testing the state after the
+> change in the context it is meant to go.
 
-> Removing one and keeping the other between the two will make the
-> distribution more streamlined by removing the build-time knob we
-> need to tweak, but the one that gets removed does not have to be the
-> in-tree one that allows people to "git clone" from just one place.
+All that I agree with, too.
 
-What you're describing here is a great example of #2, and also a way of
-making my point above that we really haven't tried submodules in git.git
-yet, since you're just worrying about this issue now that using it would
-the default.
+But that said, I do find `git add --patch` invaluable (for example), 
+where one can still opt to commit right away (and test later ;)), or 
+do a proper `git stash push --keep-index` first in order to actually 
+check/test the exact state/context before committing.
 
-This is a UX issue with submodules that I agree sucks and there's no
-reason for why it couldn't be solved. E.g. one solution is that
-submodules could have something like:
+One of the biggest advantages I see in using Git is that it provides 
+so many possibilities, where there is not necessarily a single 
+"correct" way to do something - depending on the (sub)context, the 
+decision on "_the_ correct" way can be deferred to the user himself.
 
-    [submodule "sha1collisiondetection"]
-            path = sha1collisiondetection
-            url = https://github.com/cr-marcstevens/sha1collisiondetection.git
-            branch = master
-            localbranch = sha1collisiondetection/master
+Git (usually) does not judge, except in cases where something is 
+considered "plain wrong" - still different than "might not be the 
+best approach", but not necessarily a wrong one, either.
 
-Where the localbranch would be git.git's own copy in a branch of the the
-sha1collisiondetection/ commit. Then when you update the ref
-sha1collisiondetection/ points to it would also update the
-sha1collisiondetection/master branch (and warn/die when you push git.git
-master but not that branch).
+But I do realize it also means more chances for beginner users to 
+shoot themselves in the foot, blaming it on Git, so even if just a 
+matter of personal taste, a more restrictive preference from the Git 
+maintainer is understandable :)
 
-This would solve offer a solution to this submodule UX issue, but more
-importantly I think the likelyhood of such a patch (and others) actually
-being written is going to go up *significantly* if the git project
-itself is dogfooding the feature, with exhibit A being that you're
-already annoyed by it :)
+Regards, Buga
+
+[1] https://public-inbox.org/git/CAPc5daWupO6DMOMFGn=XjUCG-JMYc4eyo8+TmAsdWcAOHXzwWg@mail.gmail.com/T/#m989306ab9327e15f14027cfd74ae8c5bf487affb
