@@ -2,218 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6FB7120C31
-	for <e@80x24.org>; Fri,  8 Dec 2017 15:59:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 344FA20C31
+	for <e@80x24.org>; Fri,  8 Dec 2017 16:24:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754470AbdLHP75 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Dec 2017 10:59:57 -0500
-Received: from siwi.pair.com ([209.68.5.199]:55827 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754491AbdLHP7J (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Dec 2017 10:59:09 -0500
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 23348844F2;
-        Fri,  8 Dec 2017 10:59:09 -0500 (EST)
-Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S1753564AbdLHQYu (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Dec 2017 11:24:50 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52546 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752840AbdLHQYt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Dec 2017 11:24:49 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0C761D0DD7;
+        Fri,  8 Dec 2017 11:24:49 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=aff8JpE1w0Fldi8hT81eAs8A5iU=; b=MHqkBg
+        GM0Y0j7rlUaor2gfQYSE/JKVWaNBUME4wNRs3pPTDWYUAWyjMXpSJcNvzK6RFhns
+        9as3agVlPotT2JEIV1DY/nyQbT0UBUNQcDmfBgFad/7lwkvLF1UJYrw2JC7hHd1o
+        5AdyNVUJ+vp0fOtSxbvqh/Hymxnrr77mqeasw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=JrgZr+0fbXIbe88UQmPkuNLkMxTYhb+9
+        EifCiciA/nsUVEDmTzSNlkjaqYWWgEb+LHK0n2CckKFgreqU854JFdEQPKetA+yU
+        tgzHLf0L8iW94Pcav/ND2hRbS3nTnnPO9miMqx68Dicw/aJv7uh+WwJiBa3b8JdW
+        RHQERZON9QE=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0385DD0DD6;
+        Fri,  8 Dec 2017 11:24:49 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id AA02D844DE;
-        Fri,  8 Dec 2017 10:59:08 -0500 (EST)
-From:   Jeff Hostetler <git@jeffhostetler.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net, jonathantanmy@google.com,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v7 04/16] upload-pack: add object filtering for partial clone
-Date:   Fri,  8 Dec 2017 15:58:39 +0000
-Message-Id: <20171208155851.855-5-git@jeffhostetler.com>
-X-Mailer: git-send-email 2.9.3
-In-Reply-To: <20171208155851.855-1-git@jeffhostetler.com>
-References: <20171208155851.855-1-git@jeffhostetler.com>
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5D05FD0DD3;
+        Fri,  8 Dec 2017 11:24:48 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Igor Djordjevic <igor.d.djordjevic@gmail.com>
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        Git Mailing List <git@vger.kernel.org>,
+        Nikolay Shustov <nikolay.shustov@gmail.com>,
+        Johannes Schneider <mailings@cedarsoft.com>,
+        Patrik Gornicz <patrik-git@mail.pgornicz.com>,
+        Martin Waitz <tali@admingilde.org>,
+        Shawn Pearce <spearce@spearce.org>,
+        Sam Vilain <sam@vilain.net>, Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [SCRIPT/RFC 0/3] git-commit --onto-parent (three-way merge, no working tree file changes)
+References: <8998e832-f49f-4de4-eb8d-a7934fba97b5@gmail.com>
+        <d5f243a5-6e35-f3fc-4daf-6e1376bef897@kdbg.org>
+        <203a75c8-0c58-253c-2c18-05450f7ae49b@gmail.com>
+        <ea156b8b-29d8-7501-b5a5-a29cfbd7d1d6@kdbg.org>
+        <741dfedc-07f8-24fb-ebe2-940f8b2639d4@gmail.com>
+        <33e97533-716b-e1cc-6aa0-bf8941225319@kdbg.org>
+        <7ae3ffd5-147d-55d2-9630-da12c429d631@gmail.com>
+        <39323748-282c-5881-2bfa-de622bb8b765@kdbg.org>
+        <CAPc5daWupO6DMOMFGn=XjUCG-JMYc4eyo8+TmAsdWcAOHXzwWg@mail.gmail.com>
+        <f9a94a62-9541-e019-8ab3-9fc9cfe2c43f@gmail.com>
+Date:   Fri, 08 Dec 2017 08:24:47 -0800
+In-Reply-To: <f9a94a62-9541-e019-8ab3-9fc9cfe2c43f@gmail.com> (Igor
+        Djordjevic's message of "Fri, 8 Dec 2017 01:15:25 +0100")
+Message-ID: <xmqqo9n99ohc.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4F48579E-DC34-11E7-A0C4-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff Hostetler <jeffhost@microsoft.com>
+Igor Djordjevic <igor.d.djordjevic@gmail.com> writes:
 
-Teach upload-pack to negotiate object filtering over the protocol and
-to send filter parameters to pack-objects.  This is intended for partial
-clone and fetch.
+> To get back on track, and regarding what`s already been said, would 
+> having something like this(1) feel useful?
+>
+> (1) git commit --onto <commit>
 
-The idea to make upload-pack configurable using uploadpack.allowFilter
-comes from Jonathan Tan's work in [1].
+Are you asking me if _I_ find it useful?  It is not a very useful
+question to ask, as I've taken things that I do not find useful
+myself.
 
-[1] https://public-inbox.org/git/f211093280b422c32cc1b7034130072f35c5ed51.1506714999.git.jonathantanmy@google.com/
+Having said that, I do not see me personally using it.  You keep
+claiming that committing without ever materializing the exact state
+that is committed in the working tree is a good thing.
 
-Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
----
- Documentation/config.txt                          |  4 ++++
- Documentation/technical/pack-protocol.txt         |  8 +++++++
- Documentation/technical/protocol-capabilities.txt |  8 +++++++
- upload-pack.c                                     | 26 ++++++++++++++++++++++-
- 4 files changed, 45 insertions(+), 1 deletion(-)
+I do not subscribe to that view.  
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 1ac0ae6..e528210 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -3268,6 +3268,10 @@ uploadpack.packObjectsHook::
- 	was run. I.e., `upload-pack` will feed input intended for
- 	`pack-objects` to the hook, and expects a completed packfile on
- 	stdout.
-+
-+uploadpack.allowFilter::
-+	If this option is set, `upload-pack` will advertise partial
-+	clone and partial fetch object filtering.
- +
- Note that this configuration variable is ignored if it is seen in the
- repository-level config (this is a safety measure against fetching from
-diff --git a/Documentation/technical/pack-protocol.txt b/Documentation/technical/pack-protocol.txt
-index ed1eae8..a43a113 100644
---- a/Documentation/technical/pack-protocol.txt
-+++ b/Documentation/technical/pack-protocol.txt
-@@ -212,6 +212,7 @@ out of what the server said it could do with the first 'want' line.
-   upload-request    =  want-list
- 		       *shallow-line
- 		       *1depth-request
-+		       [filter-request]
- 		       flush-pkt
- 
-   want-list         =  first-want
-@@ -227,6 +228,8 @@ out of what the server said it could do with the first 'want' line.
-   additional-want   =  PKT-LINE("want" SP obj-id)
- 
-   depth             =  1*DIGIT
-+
-+  filter-request    =  PKT-LINE("filter" SP filter-spec)
- ----
- 
- Clients MUST send all the obj-ids it wants from the reference
-@@ -249,6 +252,11 @@ complete those commits. Commits whose parents are not received as a
- result are defined as shallow and marked as such in the server. This
- information is sent back to the client in the next step.
- 
-+The client can optionally request that pack-objects omit various
-+objects from the packfile using one of several filtering techniques.
-+These are intended for use with partial clone and partial fetch
-+operations.  See `rev-list` for possible "filter-spec" values.
-+
- Once all the 'want's and 'shallow's (and optional 'deepen') are
- transferred, clients MUST send a flush-pkt, to tell the server side
- that it is done sending the list.
-diff --git a/Documentation/technical/protocol-capabilities.txt b/Documentation/technical/protocol-capabilities.txt
-index 26dcc6f..332d209 100644
---- a/Documentation/technical/protocol-capabilities.txt
-+++ b/Documentation/technical/protocol-capabilities.txt
-@@ -309,3 +309,11 @@ to accept a signed push certificate, and asks the <nonce> to be
- included in the push certificate.  A send-pack client MUST NOT
- send a push-cert packet unless the receive-pack server advertises
- this capability.
-+
-+filter
-+------
-+
-+If the upload-pack server advertises the 'filter' capability,
-+fetch-pack may send "filter" commands to request a partial clone
-+or partial fetch and request that the server omit various objects
-+from the packfile.
-diff --git a/upload-pack.c b/upload-pack.c
-index e25f725..e6d38b9 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -10,6 +10,8 @@
- #include "diff.h"
- #include "revision.h"
- #include "list-objects.h"
-+#include "list-objects-filter.h"
-+#include "list-objects-filter-options.h"
- #include "run-command.h"
- #include "connect.h"
- #include "sigchain.h"
-@@ -18,6 +20,7 @@
- #include "parse-options.h"
- #include "argv-array.h"
- #include "prio-queue.h"
-+#include "quote.h"
- 
- static const char * const upload_pack_usage[] = {
- 	N_("git upload-pack [<options>] <dir>"),
-@@ -64,6 +67,10 @@ static int advertise_refs;
- static int stateless_rpc;
- static const char *pack_objects_hook;
- 
-+static int filter_capability_requested;
-+static int filter_advertise;
-+static struct list_objects_filter_options filter_options;
-+
- static void reset_timeout(void)
- {
- 	alarm(timeout);
-@@ -131,6 +138,12 @@ static void create_pack_file(void)
- 		argv_array_push(&pack_objects.args, "--delta-base-offset");
- 	if (use_include_tag)
- 		argv_array_push(&pack_objects.args, "--include-tag");
-+	if (filter_options.filter_spec) {
-+		struct strbuf buf = STRBUF_INIT;
-+		sq_quote_buf(&buf, filter_options.filter_spec);
-+		argv_array_pushf(&pack_objects.args, "--filter=%s", buf.buf);
-+		strbuf_release(&buf);
-+	}
- 
- 	pack_objects.in = -1;
- 	pack_objects.out = -1;
-@@ -794,6 +807,12 @@ static void receive_needs(void)
- 			deepen_rev_list = 1;
- 			continue;
- 		}
-+		if (skip_prefix(line, "filter ", &arg)) {
-+			if (!filter_capability_requested)
-+				die("git upload-pack: filtering capability not negotiated");
-+			parse_list_objects_filter(&filter_options, arg);
-+			continue;
-+		}
- 		if (!skip_prefix(line, "want ", &arg) ||
- 		    get_oid_hex(arg, &oid_buf))
- 			die("git upload-pack: protocol error, "
-@@ -821,6 +840,8 @@ static void receive_needs(void)
- 			no_progress = 1;
- 		if (parse_feature_request(features, "include-tag"))
- 			use_include_tag = 1;
-+		if (parse_feature_request(features, "filter"))
-+			filter_capability_requested = 1;
- 
- 		o = parse_object(&oid_buf);
- 		if (!o) {
-@@ -940,7 +961,7 @@ static int send_ref(const char *refname, const struct object_id *oid,
- 		struct strbuf symref_info = STRBUF_INIT;
- 
- 		format_symref_info(&symref_info, cb_data);
--		packet_write_fmt(1, "%s %s%c%s%s%s%s%s agent=%s\n",
-+		packet_write_fmt(1, "%s %s%c%s%s%s%s%s%s agent=%s\n",
- 			     oid_to_hex(oid), refname_nons,
- 			     0, capabilities,
- 			     (allow_unadvertised_object_request & ALLOW_TIP_SHA1) ?
-@@ -949,6 +970,7 @@ static int send_ref(const char *refname, const struct object_id *oid,
- 				     " allow-reachable-sha1-in-want" : "",
- 			     stateless_rpc ? " no-done" : "",
- 			     symref_info.buf,
-+			     filter_advertise ? " filter" : "",
- 			     git_user_agent_sanitized());
- 		strbuf_release(&symref_info);
- 	} else {
-@@ -1027,6 +1049,8 @@ static int upload_pack_config(const char *var, const char *value, void *unused)
- 	} else if (current_config_scope() != CONFIG_SCOPE_REPO) {
- 		if (!strcmp("uploadpack.packobjectshook", var))
- 			return git_config_string(&pack_objects_hook, var, value);
-+	} else if (!strcmp("uploadpack.allowfilter", var)) {
-+		filter_advertise = git_config_bool(var, value);
- 	}
- 	return parse_hide_refs_config(var, value, "uploadpack");
- }
--- 
-2.9.3
+I'd rather do a quick fix-up on top (which ensures that at least the
+fix-up works in the context of the tip), and then "rebase -i" to
+move it a more appropriate place in the history (during which I have
+a chance to ensure that the fix-up works in the context it is
+intended to apply to).
 
+I know that every time I say this, people who prefer to commit
+things that never existed in the working tree will say "but we'll
+test it later after we make these commit without having their state
+in the working tree".  But I also know better that "later" often do
+not come, ever, at least for people like me ;-).
+
+The amount of work _required_ to record the fix-up at its final
+resting place deeper in the history would be larger with "rebase -i"
+approach, simply because approaches like "commit --onto" and "git
+post" that throw a new commit deep in the history would not require
+ever materializing it in the working tree.  But because I care about
+what I am actually committing, and because I am just lazy as any
+other human (if not more), I'd prefer an apporach that _forces_ me
+to have a checkout of the exact state that I'd be committing.  That
+would prod me to actually looking at and testing the state after the
+change in the context it is meant to go.
