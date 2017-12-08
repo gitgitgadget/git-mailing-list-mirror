@@ -6,61 +6,61 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 56EE020C32
-	for <e@80x24.org>; Fri,  8 Dec 2017 09:03:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6475520C32
+	for <e@80x24.org>; Fri,  8 Dec 2017 09:05:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752257AbdLHJDv (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Dec 2017 04:03:51 -0500
-Received: from cloud.peff.net ([104.130.231.41]:51856 "HELO cloud.peff.net"
+        id S1752335AbdLHJFh (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Dec 2017 04:05:37 -0500
+Received: from cloud.peff.net ([104.130.231.41]:51870 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751800AbdLHJDt (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Dec 2017 04:03:49 -0500
-Received: (qmail 29627 invoked by uid 109); 8 Dec 2017 09:03:48 -0000
+        id S1750993AbdLHJFd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Dec 2017 04:05:33 -0500
+Received: (qmail 29722 invoked by uid 109); 8 Dec 2017 09:05:33 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 08 Dec 2017 09:03:48 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 08 Dec 2017 09:05:33 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 30200 invoked by uid 111); 8 Dec 2017 09:04:10 -0000
+Received: (qmail 30221 invoked by uid 111); 8 Dec 2017 09:05:55 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Fri, 08 Dec 2017 04:04:10 -0500
+ by peff.net (qpsmtpd/0.94) with ESMTPA; Fri, 08 Dec 2017 04:05:55 -0500
 Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 08 Dec 2017 04:03:46 -0500
-Date:   Fri, 8 Dec 2017 04:03:46 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 08 Dec 2017 04:05:31 -0500
+Date:   Fri, 8 Dec 2017 04:05:31 -0500
 From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-Subject: Re: [PATCH] hashmap: adjust documentation to reflect reality
-Message-ID: <20171208090346.GB26199@sigill.intra.peff.net>
-References: <466dd5331907754ca5c25cc83173ca895220ca81.1511999045.git.johannes.schindelin@gmx.de>
- <20171130030727.GA24732@sigill.intra.peff.net>
- <xmqqindojrw1.fsf@gitster.mtv.corp.google.com>
- <CAGZ79kbDevUjjAzvfa-Un6=fnFZu+kLx7bF3vuheXZdxJWvaRw@mail.gmail.com>
- <alpine.DEB.2.21.1.1712072244040.4318@virtualbox>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, christian.couder@gmail.com,
+        jacob.e.keller@intel.com
+Subject: Re: [PATCH v2 5/7] diff: use skip-to-optional-val in parsing
+ --relative
+Message-ID: <20171208090531.GC26199@sigill.intra.peff.net>
+References: <20171207003517.11729-1-jacob.e.keller@intel.com>
+ <20171207173034.12865-1-gitster@pobox.com>
+ <20171207173034.12865-2-gitster@pobox.com>
+ <20171207211102.GA12850@sigill.intra.peff.net>
+ <xmqqpo7qb3n8.fsf@gitster.mtv.corp.google.com>
+ <20171207222143.GA14845@sigill.intra.peff.net>
+ <xmqqlgieb25x.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.21.1.1712072244040.4318@virtualbox>
+In-Reply-To: <xmqqlgieb25x.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 07, 2017 at 10:47:43PM +0100, Johannes Schindelin wrote:
+On Thu, Dec 07, 2017 at 02:31:38PM -0800, Junio C Hamano wrote:
 
-> > We could add that example to the test helper as then we have a good (tested)
-> > example for that case, too.
-> 
-> What we could *also* do, and what would probably make *even more* sense,
-> is to simplify the example drastically, to a point where testing it in
-> test-hashmap is pointless, and where a reader can gather *very* quickly
-> what it takes to use the hashmap routines.
+> If this goes on top as a standalone patch, then the reason why it is
+> separate from the other users of _default() is not because the way
+> it uses the null return is special, but because it was written by a
+> different author, I would think.
 
-Yes, I'd be in favor of that, too.
+Mostly I was just concerned that we missed a somewhat subtle bug in the
+first conversion, and I think it's worth calling out in the commit
+message why that callsite must be converted in a particular way. Whether
+that happens in a separate commit or squashed, I don't care too much.
 
-> In any case, I would really like to see my patch applied first, as it is a
-> separate concern from what you gentle people talk about: I simply want
-> that incorrect documentation fixed. The earlier, the better.
-
-Definitely. I think it is in "next" already.
+But I dunno. Maybe it is obvious now that the correct code is in there.
+;)
 
 -Peff
