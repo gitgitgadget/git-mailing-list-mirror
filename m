@@ -2,103 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5FD3B1FC34
-	for <e@80x24.org>; Fri,  8 Dec 2017 23:15:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 609331FC34
+	for <e@80x24.org>; Fri,  8 Dec 2017 23:21:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753225AbdLHXPX (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Dec 2017 18:15:23 -0500
-Received: from mail-wm0-f47.google.com ([74.125.82.47]:32915 "EHLO
-        mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752730AbdLHXPW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Dec 2017 18:15:22 -0500
-Received: by mail-wm0-f47.google.com with SMTP id g130so6182346wme.0
-        for <git@vger.kernel.org>; Fri, 08 Dec 2017 15:15:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=EmLPBYT0/w/b+gSuiI18Wt1vuAOTSdJdvRKWd/HsxeM=;
-        b=ZVA18jwfwqBfZTmf9oyOzhl0tQ1f3ntQZ0SQ8bb0ytliNpa456LLGYZTuDEnfHJkJf
-         g5UPZx8RKmoJ8K5wjj7gngguqUts71D/2xKrWWR2hhc4P6X2RvhOyThikonrT7lyyFpJ
-         a9EdgCwqrSGBNL1nfyk6bgJq4wvDsvcvDb2ifr41S8gFRmTmp6WFtMa/xAFwpIZSh22X
-         GihVZGSl1fyCElFxZ4qXwlZIJChtvaPuv9y+UrM7RNW5noncst14QN8ittoz2OIVZbA9
-         p3hJqYcmsIYOreOrc+E/ljUk6crVl1IsR1pUvwifHPrH1cS0LeJafy3eNQB/cqV0Ua3R
-         LtJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=EmLPBYT0/w/b+gSuiI18Wt1vuAOTSdJdvRKWd/HsxeM=;
-        b=gSNjowjM4qjS+Fnur1x3fTAqYnOdXm1QP19zt9q7phxGgkdbhJ5DXJrIg6lpWh4o0z
-         KfV+C14z+tEH67HGcPVEGQjPryfwjM5LJGMLqtTz0X5MUv3teSyy5LUzHtSfRht8Yol3
-         g71Tm5ZwmfxcymIaXS/zPQenNqOVe771T/UGd101lXgOXwXLT0VT7ZWu70eUxOt6Frz3
-         vJhaTWdKWi+V0ldz1D9rIhp7RB/blqnwXlPDDDukrpkq0NhwlpV6MnHpMHhKgL5V/0Ia
-         SSdyYEteIbKfQtrAgaZ++Dwbu0zp1XB2w+eznhkZ/vXUCr2nFfJNQjrDJR7oTiR/07qe
-         hBrA==
-X-Gm-Message-State: AKGB3mJRCtSC60+VKacx1wXqBtcqIUnJPWIfoyp4kFhvVwSvp21Ezj6M
-        Xru5eG1Q3wdC8iQTYz/nTUM=
-X-Google-Smtp-Source: ACJfBoteA4Sd6ZgPJ02+qmtGD2uXmyUroTAEWwQwz5f9fC2eSGB/O/VEUwvQzwYtnGsged7oADrXFQ==
-X-Received: by 10.28.37.3 with SMTP id l3mr2257309wml.66.1512774921264;
-        Fri, 08 Dec 2017 15:15:21 -0800 (PST)
-Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
-        by smtp.gmail.com with ESMTPSA id a5sm9538795wra.87.2017.12.08.15.15.16
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 08 Dec 2017 15:15:18 -0800 (PST)
-Received: from avar by evledraar with local (Exim 4.89)
-        (envelope-from <avarab@gmail.com>)
-        id 1eNRrP-0008Mm-Nw; Sat, 09 Dec 2017 00:15:15 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
+        id S1753336AbdLHXV1 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Dec 2017 18:21:27 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52661 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1753112AbdLHXV0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Dec 2017 18:21:26 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 95946AF1F2;
+        Fri,  8 Dec 2017 18:21:25 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=PnnFCCnt//6rYNN3Jiyd8bEi/XA=; b=RgXW3G
+        iDe4xAg8pAT27I2AS5CnCk3b0RI8H1Aj2rtAWCXUMUQzI3lD9DJvOjZuw6Y2F9ML
+        1ByvrwgsBCDUyVbBGCx2IBN5RupkT/u6HNOK6AkJDGBoYgVnQxpZgYCd1hoIMDka
+        KIQRF8OACVAfYJiX9DNUFNd9tbohzkxEYYObw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=lBluafjsl7Vx5rxn22I6dOkjRsHENVKM
+        yIh7whQdccvD6enJDQcz6e8VKh+TLfViOBY4denXmom3OENbo4qYPfNFaqZXgVG2
+        NAnCiUrL4CdnlRkDzWxS77BkJf5MlH7+WHXUIqGPNB84gCty24YPc3LSEVch3nWq
+        HsqEUv7caFs=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8D169AF1F1;
+        Fri,  8 Dec 2017 18:21:25 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DF5CAAF1F0;
+        Fri,  8 Dec 2017 18:21:24 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     git@vger.kernel.org, Takashi Iwai <tiwai@suse.de>,
         Jeff King <peff@peff.net>,
         Brandon Williams <bmwill@google.com>,
         Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH v2 2/5] Makefile: under "make dist", include the sha1collisiondetection submodule
-References: <20171208223001.556-1-avarab@gmail.com> <20171128213214.12477-1-avarab@gmail.com> <20171208223001.556-3-avarab@gmail.com> <xmqqvahg6dkc.fsf@gitster.mtv.corp.google.com>
-User-agent: Debian GNU/Linux 9.2 (stretch); Emacs 25.1.1; mu4e 0.9.19
-In-reply-to: <xmqqvahg6dkc.fsf@gitster.mtv.corp.google.com>
-Date:   Sat, 09 Dec 2017 00:15:15 +0100
-Message-ID: <87d13oerr0.fsf@evledraar.gmail.com>
+Subject: Re: [PATCH v2 4/5] Makefile: use the sha1collisiondetection submodule by default
+References: <20171208223001.556-1-avarab@gmail.com>
+        <20171128213214.12477-1-avarab@gmail.com>
+        <20171208223001.556-5-avarab@gmail.com>
+        <xmqqo9n86dde.fsf@gitster.mtv.corp.google.com>
+Date:   Fri, 08 Dec 2017 15:21:23 -0800
+In-Reply-To: <xmqqo9n86dde.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Fri, 08 Dec 2017 14:53:01 -0800")
+Message-ID: <xmqqk1xw6c24.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 825FCC86-DC6E-11E7-A722-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Fri, Dec 08 2017, Junio C. Hamano jotted:
-
-> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+> That endgame allows us not force people to grab an essential part of
+> the codebase as an external dependency from another place, which
+> feels quite bad, especially when their primary interest is not in
+> dogfooding submodule but in building a working version of Git.
 >
->> Include the sha1collisiondetection submodule when running "make
->> dist". Even though we've been shipping the sha1collisiondetection
->> submodule[1] and using it by default if it's checked out[2] anyone
->> downloading git as a tarball would just get an empty
->> sha1collisiondetection/ directory.
->
-> While I can see that you are not including everything, but I do not
-> see _why_ you chose to do so and hardcode the burden of maintaining
-> the list of files we need to copy in the Makefile.
+> Removing one and keeping the other between the two will make the
+> distribution more streamlined by removing the build-time knob we
+> need to tweak, but the one that gets removed does not have to be the
+> in-tree one that allows people to "git clone" from just one place.
 
-I started by trying to come up with something generic which would handle
-future submodules, i.e.:
+Perhaps this may deserve a bit more explanation.
 
-    git submodule foreach 'git ls-files'
+I wouldn't be so against "let's do submodule-only" if this were not
+SHA-1 implementation but something like gitk and git-gui.  An optional
+part of a system that it is safe to leave to individual builders if
+they want to fetch and use that part *is* an ideal target to bind as
+a submodule to the system.
 
-However, unlike the C programs ./git-submodule will bark about missing
-shell stuff when not installed, and the "dist" target already use
-./git-*.
+It's just the "default SHA-1 implementation" is at the far opposite
+end of the spectrum from "an optional part", and our use of
+submodule to bind this code is definitely *not* because it makes
+sense to use submodule in that context; it is because developers
+(not necessarily those who consume Git sourcecode) *wanted* to use
+submodule there, regardless of the real merit of doing so.
 
-Between that and someone using git.git probably never running
-sha1collisiondetection/ itself, it seemed fine just to hardcode the
-couple of things we needed, which are very unlikely to change.
+And that is why I do not feel entirely happy with the step 4/5 and
+also I feel moderately strongly against the step 5/5.  These two
+steps have a "developer first" smell that disgusts me.
 
-> This is much better than shipping a tarball that would not build at
-> the endgame stage, of course ;-)
