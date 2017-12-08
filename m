@@ -2,100 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 351941FC34
-	for <e@80x24.org>; Fri,  8 Dec 2017 20:37:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1C1021FC34
+	for <e@80x24.org>; Fri,  8 Dec 2017 20:40:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752171AbdLHUhh (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Dec 2017 15:37:37 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55349 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750951AbdLHUhg (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Dec 2017 15:37:36 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BAAC8AC7F7;
-        Fri,  8 Dec 2017 15:37:35 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=+rNQ39xNYP1Wl96rMeishCa6iiQ=; b=DXZ8jM
-        Tlw8SEwFYtc1i5+0H5kR/4DCsyXzNFUhI6p68imUzFgRUS9x6jdbyN0JH2ZdF9g2
-        NoLnrHraPu0GoUBDnHd5XZc/2I0+Sk0FW6LNO5GsE0jAZPwNNgg3sSpUcqVPLdtq
-        L246JNXhGKK8/2L6QTKQL+j6Iz+REPln7WdDs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=A1o66etYSHQlGpDVnnzoXbwNXqhMADFY
-        Ekw4SvJ45rsY81Xjk10if9MBGrTJmLnlvDQoeo7RgSblPK/ZJmKKxAqwN9qYUbcl
-        tkWFoUeIiMLSJGAucAGNSO/LbLtuI9vifyAuUbK6kRILXac7ppZGgbSB3slK9tvU
-        AF7ZGsjcXEo=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B39C5AC7F6;
-        Fri,  8 Dec 2017 15:37:35 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 295FCAC7F5;
-        Fri,  8 Dec 2017 15:37:35 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Olga Telezhnaya <olyatelezhnaya@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH Outreachy 1/2] format: create pretty.h file
-References: <01020160364a23d5-471a2fd0-9fff-4599-86f8-b2f37a4a0a84-000000@eu-west-1.amazonses.com>
-Date:   Fri, 08 Dec 2017 12:37:33 -0800
-In-Reply-To: <01020160364a23d5-471a2fd0-9fff-4599-86f8-b2f37a4a0a84-000000@eu-west-1.amazonses.com>
-        (Olga Telezhnaya's message of "Fri, 8 Dec 2017 13:21:56 +0000")
-Message-ID: <xmqqr2s56jn6.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1752761AbdLHUj6 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Dec 2017 15:39:58 -0500
+Received: from mail-qt0-f176.google.com ([209.85.216.176]:34185 "EHLO
+        mail-qt0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750951AbdLHUj5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Dec 2017 15:39:57 -0500
+Received: by mail-qt0-f176.google.com with SMTP id 33so28470626qtv.1
+        for <git@vger.kernel.org>; Fri, 08 Dec 2017 12:39:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=w+1VddSFFpMQF11NrMMRiVp184ii9VAkdcAz5So1pcs=;
+        b=Fqddn1PuWxAM3jPYZ9KEA0G7Nl2lzsVXmGll5Cdr69dx8H9SH+E/5zlhhWcw3q8iTp
+         TMVtkMMRaKHpSXb5TnJGdEUMOBhmJJ7Lz2QzgbOOVGqg0raTzv8bLP1b/N6Xu9Xq3X1P
+         wjzxroQk+KBWXxh6cHUVewAV7uy1U2Etet6090OPPXU8Bk00Q7q5D+8hb2x7IZxRqxtN
+         PdEbBICOCc/XHkNOnpfZWYxpRsiKNIHYO8cwMANYstIG9cfiUlPPL8R9qkuPPZQchvWX
+         Ch65TCPKyorrka43LBM9OOAeVpTE+bfMVM16hMPwWIOtfRGl+dO1H9CTu7jnbvtvpUag
+         BCPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=w+1VddSFFpMQF11NrMMRiVp184ii9VAkdcAz5So1pcs=;
+        b=D9Y/CTyUfYi2EoY9O97s/NGCtjXXriarVGNDJNmb7FE49PTRd4sdrOOQKEpXrisQAc
+         TtoX1tWYXQpoS1MsZiFZD+7Z0HSF19S3j+mIJ5Nzzbv2Z21KCoPifLfw4nY4jM2fSNxb
+         sZPolhjKVfc4OAZzremWN4FGY0Q1QBrLXlQrdVf1SuzIoGyraoB9MrhIZn3p51ySRY/x
+         7faGtcldUR5z2wMVRVzYRdFRMWZd9vHOpyke1OVoTXf4x2CszM391/z9EXYvCFDx2b80
+         USSU92obPfauQ2ylIZHl3dbQLuSDuyScH6/V5bM9Ec2WcB4THjrFbmj+80ZriN0Z7sja
+         EvhA==
+X-Gm-Message-State: AKGB3mI2vxolAlbekmKo/ygPvXUJPfRoTPZn9/J7WdI6YG9zrZXngWtD
+        3Q8PvYADftVtSRn37+waTnhvXrHOszEZnkYBRfQvlw==
+X-Google-Smtp-Source: AGs4zMYNvwEaX4NkUz/Ulw6yHiXxeJ+ZAygety6RxWfYdXwPfcGppnj/eB3H77dxeyPJ+y+fevwv3uKAGZo7N8CVc/o=
+X-Received: by 10.200.6.130 with SMTP id f2mr17608493qth.140.1512765596243;
+ Fri, 08 Dec 2017 12:39:56 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9F5A4BD4-DC57-11E7-B66E-8EF31968708C-77302942!pb-smtp1.pobox.com
+Received: by 10.140.85.179 with HTTP; Fri, 8 Dec 2017 12:39:55 -0800 (PST)
+In-Reply-To: <20171208201957.GA456@sigill.intra.peff.net>
+References: <20171208002447.20261-1-sbeller@google.com> <20171208002447.20261-2-sbeller@google.com>
+ <20171208093434.GD26199@sigill.intra.peff.net> <643e1afd-43e2-7fcc-452b-8b9ceac6868c@ramsayjones.plus.com>
+ <20171208201957.GA456@sigill.intra.peff.net>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 8 Dec 2017 12:39:55 -0800
+Message-ID: <CAGZ79kaos7cmQe3bmR5gCVXbUjBBQdSYYOE11egnDEMaX-7xSA@mail.gmail.com>
+Subject: Re: [PATCH 1/1] diffcore: add a filter to find a specific blob
+To:     Jeff King <peff@peff.net>
+Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Olga Telezhnaya <olyatelezhnaya@gmail.com> writes:
-
->  archive.c             |  1 +
->  builtin/notes.c       |  2 +-
->  builtin/reset.c       |  2 +-
->  builtin/show-branch.c |  2 +-
->  combine-diff.c        |  1 +
->  commit.c              |  1 +
->  commit.h              | 80 ----------------------------------------------
->  diffcore-pickaxe.c    |  1 +
->  grep.c                |  1 +
->  log-tree.c            |  1 +
->  notes-cache.c         |  1 +
->  pretty.h              | 87 +++++++++++++++++++++++++++++++++++++++++++++++++++
->  revision.h            |  2 +-
->  sequencer.c           |  1 +
->  sha1_name.c           |  1 +
->  submodule.c           |  1 +
->  16 files changed, 101 insertions(+), 84 deletions(-)
->  create mode 100644 pretty.h
+On Fri, Dec 8, 2017 at 12:19 PM, Jeff King <peff@peff.net> wrote:
+> On Fri, Dec 08, 2017 at 04:28:23PM +0000, Ramsay Jones wrote:
 >
-> diff --git a/archive.c b/archive.c
-> index 0b7b62af0c3ec..60607e8c00857 100644
-> --- a/archive.c
-> +++ b/archive.c
-> @@ -2,6 +2,7 @@
->  #include "config.h"
->  #include "refs.h"
->  #include "commit.h"
-> +#include "pretty.h"
->  #include "tree-walk.h"
->  #include "attr.h"
->  #include "archive.h"
+>> On 08/12/17 09:34, Jeff King wrote:
+>> > On Thu, Dec 07, 2017 at 04:24:47PM -0800, Stefan Beller wrote:
+>> [snip]
+>> >> Junio hinted at a different approach of solving this problem, which this
+>> >> patch implements. Teach the diff machinery another flag for restricting
+>> >> the information to what is shown. For example:
+>> >>
+>> >>   $ ./git log --oneline --blobfind=v2.0.0:Makefile
+>> >>   b2feb64309 Revert the whole "ask curl-config" topic for now
+>> >>   47fbfded53 i18n: only extract comments marked with "TRANSLATORS:"
+>> >>
+>> >> we observe that the Makefile as shipped with 2.0 was introduced in
+>> >> v1.9.2-471-g47fbfded53 and replaced in v2.0.0-rc1-5-gb2feb64309 by
+>> >> a different blob.
+>>
+>> Sorry, this has nothing to do with this specific thread. :(
+>>
+>> However, the above caught my eye. Commit b2feb64309 does not 'replace
+>> the Makefile with a different blob'. That commit was a 'last minute'
+>> revert of a topic _prior_ to v2.0.0, which resulted in the _same_
+>> blob as commit 47fbfded53. (i.e. a53f3a8326c2e62dc79bae7169d64137ac3dab20).
+>
+> Right, I think the patch is working as advertised but the commit message
+> misinterprets the results. :)
 
-This has a toll on topics in flight that expect the symbols for
-pretty are available in "commit.h"; they are forced to include
-this new file they did not even know about.
+Thanks for digging. I came to a similar realization.
 
-I notice that "commit.h" is included in "builtin.h"; perhaps adding
-a new include for "pretty.h" there would be of lessor impact?  I
-dunno.
+> If you add --raw, you can see that both commits introduce that blob, and
+> it never "goes away". That's because that happened in a merge, which we
+> don't diff in a default log invocation.
 
+We should when --raw is given.
+--raw is documented as  "For each commit, show a summary of changes
+using the raw diff format." and I would argue that 'each commit' includes
+merges. Though I guess this may have implications for long time users.
+
+> And in fact finding where this "goes away" is hard, because the merge
+> doesn't trigger "-c" or "--cc". It's 8eaf517835, which presumably was
+> forked before the revert in b2feb64309, and then the merge was able to
+> replace that blob completely with the other side of the merge.
+>
+> Viewing with "-m" turns up a bunch of uninteresting merges. Looking at
+> "--first-parent" is how I got 8eaf517835.
+>
+> So I think this one is tricky because of the revert. In the same way
+> that pathspec-limiting is often tricky in the face of a revert, because
+> the merges "hide" interesting things happening.
+
+yup, hidden merges are unfortunate. Is there an easy way to find out
+about merges? (Junio hints at having tests around merges, which I'll do
+next)
