@@ -2,109 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1D2551FC34
-	for <e@80x24.org>; Fri,  8 Dec 2017 18:51:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D0DAF1FC34
+	for <e@80x24.org>; Fri,  8 Dec 2017 19:26:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753259AbdLHSvF (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Dec 2017 13:51:05 -0500
-Received: from mout.web.de ([212.227.15.14]:65184 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752338AbdLHSvE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Dec 2017 13:51:04 -0500
-Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MBY4U-1eFA0a2GrW-00AUjz; Fri, 08
- Dec 2017 19:50:58 +0100
-Date:   Fri, 8 Dec 2017 19:50:58 +0100
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, ashishnegi33@gmail.com
-Subject: Re: [PATCH v1 1/2] t0027: Don't use git commit <empty-pathspec>
-Message-ID: <20171208185058.GA13088@tor.lan>
-References: <CAJ_+vJ6FXXda4fe7=1YxtDGR2d8CqP4KXN+YR6+mdQ+5jQQXug@mail.gmail.com>
- <20171208174633.9903-1-tboegi@web.de>
- <xmqqpo7p84vz.fsf@gitster.mtv.corp.google.com>
- <xmqqlgid84io.fsf@gitster.mtv.corp.google.com>
+        id S1752375AbdLHT0Z (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Dec 2017 14:26:25 -0500
+Received: from mail-qt0-f169.google.com ([209.85.216.169]:35976 "EHLO
+        mail-qt0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752111AbdLHT0Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Dec 2017 14:26:25 -0500
+Received: by mail-qt0-f169.google.com with SMTP id a16so28226908qtj.3
+        for <git@vger.kernel.org>; Fri, 08 Dec 2017 11:26:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=G1twZ/sq3qbjWOHye92jFA7g7tswn3LICR5yltQb7q0=;
+        b=b+nU6l6OT8J9CbWEFDdxGufGMz5/Kh5GnS1SsKMMdLV6/63dS94qkXgUi5xaiKfIPS
+         iJiJC7YhhEgGoEljDyek6S5LeulJcLp7dRA1jzf+9OSaSfoUVVtr4EyiN9DE0DWFpfxD
+         qeRZmD7h6GmwN4bUa5ICZkkEBM+qW+M9U6vz2YPKYkhYN40hthMkViqrsIbKhp6QrJNv
+         6Tpp5zGex7x2pSuW7omwwkmPQhnICyVSh9KFbfxjy22ZSwfhbbKimN37I+M5Q+xWLZRb
+         B5umV7Wi7ul5GlnWzt4RYt2eBVkPZPm/FEP2I7y22jcS5wNC13iZIfyBAQK6SD+UiuAi
+         edTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=G1twZ/sq3qbjWOHye92jFA7g7tswn3LICR5yltQb7q0=;
+        b=HB+4CHGpsKJ30VIce1bPx4CseElPE1HYqvEx+TrtgW3opqugrZF6vjocZSWddcvOvu
+         gcFkHmxFgO07cAksElkEGKwo0iNzsXYQIiWOouGjNXeVOMFCokOscji5av5rshr1nTUP
+         llzRnGIX/Mcvl+AV9Q+NfxkPc0+11UpWztoqCPq32ExiXfMPAN8IESIw8i4O0KSKI9Xl
+         YRLoBw86PgSmhJzD86U34HwmqMxdfZ1/D7eviXakE3V7htpdNQ4/57QcoLhfEgB3q81e
+         KWaS8QeLFzAcLPm/OM5ft5C6E+koAuj1Mb451Av+p24/7Q3+Lg10Qef4D0b+D39wEMON
+         HsMg==
+X-Gm-Message-State: AKGB3mLtEsnk6WM8afoYqyTVEWZMK3jM/MBJ9MeqGQDhnOLyjC+wqAkh
+        Tj5uERfUzzdcvYt82aDMvZhhk5baJo7IzHJFzZI=
+X-Google-Smtp-Source: AGs4zMbqAeER9/1BUxIcNd3YFsQprIjON4aywd1qnI7FP6AIMlb8w40uiZ5qNg4qZAhvT1Tg6RjF+sibD+FInxiZT2A=
+X-Received: by 10.237.35.37 with SMTP id h34mr17589370qtc.9.1512761184332;
+ Fri, 08 Dec 2017 11:26:24 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqlgid84io.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Provags-ID: V03:K0:0rbLWe23eIWXOcnhsudiNIeSQR2Hp14k3Zwq/eEw/P+nntZDGSB
- UtC8inaZIP8yyeyTCCdgrr6Pyaz3Wco8epvYKHMYRtpAZfMEaN/ve1o8r0TORGwYXfq142Z
- z+Q5q/Dy3kL4uvuWvD/xjtzCaJ1TP+03gq37yfGdIE4jUMyLpCrDx0OBEYHaDUEDzAlH9Od
- Sd6j2RbUJJMyDMryTlwnQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:j6xDa4ISDig=:VC6XZxGaWXicnb09kY1mP8
- 9uQXFI4Z5Yf+sWvU9vRPLT2lQQUK/MeeTV2pC2aFrbhgT9QUhMwYBgxHGpQ1Npr8vPDJtwcjP
- YFMFQ2XR2x/UFMd5eBpxjmbzt3H9gW0vPX+0vkQfcAhJ497KKZfcQwoNM8MzjxIiqxlsXXlUC
- qQUatRqir3LKGQyqVE9+BclG4TrnD2aySHuSPeFsdGBdP5sg9E5jRchfl+ch9gnXp61GiSp57
- yvJKkpWzdpFoqHrtRo8wvcvQ5w1H/ICNmGheYwstmFVPSuwZT/iELWxu4EQD6aFkXvY26N9of
- 8Fh5E6Tujoq+Gesh5w29MZAinTcxlRohBJLSAvXwHZulxU+6kfRiNlLbqYRk2Wqzl0BQUL0Wa
- esed1cJtilHAmGk6B2Rea16+8QKFK0mAawCXPA6nufWo7xTlivwx7QMuXNm8MwuE+dYzFlJZE
- ZkMRLPTSOgMQpuVlIaKXWdwXo4VAMG18NduvYunPfTHVuHQvlPCHVwjJfAXGMCVM8qTePcHsR
- Nvx0WsNdw7+gLm2E+aVdZ+yKdVWYRhWiKuQAi8IF1umTgKqZbo+uVqmCyzQW1mfvM1kDWR+mI
- SmqbA96m9VbejRIhxYtIDwRqx9tLdZQNOhPW1Mqk8Pdj8XJR2b6SeOdafk7tlwuV4RcdmxuCf
- RriDfW/YJw0QS0Nzg+j8WlZQY65i4fqLjnYeXsXgKZg156RkdThfQwqIyexqqMa3BQ/qFVPx8
- eWUtVSmgme/3PQ6BufSEMLtneRv34SynFhFD18loAcbSKd3v7o2H+H/JTwYynu/i7Z7GFnwN0
- 8mVvROQ+A78VgMe9KfwRCB9ct6uZA==
+Received: by 10.12.198.4 with HTTP; Fri, 8 Dec 2017 11:26:23 -0800 (PST)
+In-Reply-To: <01020160364a2471-0e40e237-80b4-485c-a987-9c83206a2ee5-000000@eu-west-1.amazonses.com>
+References: <01020160364a23d5-471a2fd0-9fff-4599-86f8-b2f37a4a0a84-000000@eu-west-1.amazonses.com>
+ <01020160364a2471-0e40e237-80b4-485c-a987-9c83206a2ee5-000000@eu-west-1.amazonses.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 8 Dec 2017 14:26:23 -0500
+X-Google-Sender-Auth: nchXuB9cVP9-ZbYUJ8-uA3nsnOw
+Message-ID: <CAPig+cSjSHJoBz5rWBZE=AO=XhEk6ZoGkmqiuk_r9PgAe5wt4w@mail.gmail.com>
+Subject: Re: [PATCH Outreachy 2/2] format: create docs for pretty.h
+To:     Olga Telezhnaya <olyatelezhnaya@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 08, 2017 at 10:21:19AM -0800, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > tboegi@web.de writes:
-> >
-> >> From: Torsten Bögershausen <tboegi@web.de>
-> >>
-> >> Replace `git commit -m "comment" ""` with `git commit -m "comment"` to
-> >> remove the empty path spec.
-> >>
-> >> Signed-off-by: Torsten Bögershausen <tboegi@web.de>
-> >> ---
-> >>  t/t0027-auto-crlf.sh | 2 +-
-> >>  1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > This looks a bit strange.  The intent seems to commit all changes
-> > made in the working tree, so I'd understand it if it replaced the
-> > empty string with a single dot.
-> >
-> > I also thought that we deprecated use of an empty string as "match
-> > all" pathspec recently, and expected that this to break.
-> >
-> >     ... goes and looks ...
-> >
-> > Indeed, 229a95aa ("t0027: do not use an empty string as a pathspec
-> > element", 2017-06-23) does exactly that.
-> 
-> OK, I think I can safely omit this patch, because
-> 
->  (1) when 2/2 is queued on top of tb/check-crlf-for-safe-crlf,
->      because ex/deprecate-empty-pathspec-as-match-all is not yet in
->      the topic, an empty pathspec still means "match all" and
->      nothing breaks; and
-> 
->  (2) when tb/check-crlf-for-safe-crlf plus 2/2 is merged to any
->      branch with ex/deprecate-empty-pathspec-as-match-all, the topic
->      already fixes what this 1/2 tries to
-> 
-> Thanks for being thorough, though.
-> 
+On Fri, Dec 8, 2017 at 8:21 AM, Olga Telezhnaya
+<olyatelezhnaya@gmail.com> wrote:
+> Write some docs for functions in pretty.h.
+> Take it as a first draft, they would be changed later.
+>
+> Signed-off-by: Olga Telezhnaia <olyatelezhnaya@gmail.com>
+> Mentored-by: Christian Couder <christian.couder@gmail.com>
+> Mentored by: Jeff King <peff@peff.net>
+> ---
+> diff --git a/pretty.h b/pretty.h
+> @@ -57,31 +58,74 @@ struct userformat_want {
+> +/*
+> + * Create a text message about commit using given "format" and "context".
+> + * Put the result to "sb".
+> + * Please use this function for custom formats.
+> + */
+>  void format_commit_message(const struct commit *commit,
+>                         const char *format, struct strbuf *sb,
+>                         const struct pretty_print_context *context);
+>
+> +/*
+> + * Parse given arguments from "arg", check it for correctness and
+> + * fill struct rev_info.
 
-Sure, the credit goes 100% to you:
+To be consistent with the way you formatted the other comments, I
+think you'd want quotes around rev_info.
 
-commit 229a95aafa77b583b46a3156b4fad469c264ddfd
-Author: Junio C Hamano <gitster@pobox.com>
-Date:   Fri Jun 23 11:04:14 2017 -0700
-
-    t0027: do not use an empty string as a pathspec element
-
-My brain did just assume that this had mad it to master, sorry for the noise
-
+> + */
+>  void get_commit_format(const char *arg, struct rev_info *);
