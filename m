@@ -8,136 +8,425 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4430220C31
-	for <e@80x24.org>; Fri,  8 Dec 2017 13:22:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C2A9620C31
+	for <e@80x24.org>; Fri,  8 Dec 2017 13:22:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753470AbdLHNV7 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Dec 2017 08:21:59 -0500
-Received: from a7-12.smtp-out.eu-west-1.amazonses.com ([54.240.7.12]:57464
-        "EHLO a7-12.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753457AbdLHNV6 (ORCPT
+        id S1753487AbdLHNWB (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Dec 2017 08:22:01 -0500
+Received: from a7-17.smtp-out.eu-west-1.amazonses.com ([54.240.7.17]:36806
+        "EHLO a7-17.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1753191AbdLHNV6 (ORCPT
         <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2017 08:21:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
         s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1512739316;
-        h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=evyGG2CZPB07KHKjW777zcrTord/cIjZnD+9xYhC+aA=;
-        b=aKWX7NtuXBlDrSOyLy4MrGpAB3OFj71mLSsJ8FqlUfp9B0Jjs/OlARKU5sysfSQw
-        VowTFsVrpij6O4pRieMAAi3ELZ91V/QKohErxMtaOLaCYlU9IAl99A7zQvOXf6v5eAJ
-        QcufWlqZI+X4xgO1+LITY2lpkqHkXWIEDI2cKRUA=
+        h=From:To:Message-ID:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+        bh=BFYAwfBhN1hYtkvNwqyLPVsTlEAl+kX9G19WyTSo9W4=;
+        b=A6er1LZiICm1HgwtVKvjl/A11lsXSYKxsOT+Vp8IuI0VSEtag2hGqYSH2pA/55Yi
+        XI1H5HrzoSR9IP+slypliq/XirWLBvAH/YLbfZ7okSjUy58Mst4TYXqmE7WAvZA8ai9
+        J47yWtlknV+TpqvTpxwOVaG7C61+SziNndI2TbvY=
 From:   Olga Telezhnaya <olyatelezhnaya@gmail.com>
 To:     git@vger.kernel.org
-Message-ID: <01020160364a2471-0e40e237-80b4-485c-a987-9c83206a2ee5-000000@eu-west-1.amazonses.com>
-In-Reply-To: <01020160364a23d5-471a2fd0-9fff-4599-86f8-b2f37a4a0a84-000000@eu-west-1.amazonses.com>
-References: <01020160364a23d5-471a2fd0-9fff-4599-86f8-b2f37a4a0a84-000000@eu-west-1.amazonses.com>
-Subject: [PATCH Outreachy 2/2] format: create docs for pretty.h
+Message-ID: <01020160364a23d5-471a2fd0-9fff-4599-86f8-b2f37a4a0a84-000000@eu-west-1.amazonses.com>
+Subject: [PATCH Outreachy 1/2] format: create pretty.h file
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 Date:   Fri, 8 Dec 2017 13:21:56 +0000
-X-SES-Outgoing: 2017.12.08-54.240.7.12
+X-SES-Outgoing: 2017.12.08-54.240.7.17
 Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Write some docs for functions in pretty.h.
-Take it as a first draft, they would be changed later.
+Create header for pretty.c to make formatting interface more structured.
+This is a middle point, this file would be merged futher with other
+files which contain formatting stuff.
 
 Signed-off-by: Olga Telezhnaia <olyatelezhnaya@gmail.com>
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored by: Jeff King <peff@peff.net>
 ---
- pretty.h | 44 ++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 44 insertions(+)
+ archive.c             |  1 +
+ builtin/notes.c       |  2 +-
+ builtin/reset.c       |  2 +-
+ builtin/show-branch.c |  2 +-
+ combine-diff.c        |  1 +
+ commit.c              |  1 +
+ commit.h              | 80 ----------------------------------------------
+ diffcore-pickaxe.c    |  1 +
+ grep.c                |  1 +
+ log-tree.c            |  1 +
+ notes-cache.c         |  1 +
+ pretty.h              | 87 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ revision.h            |  2 +-
+ sequencer.c           |  1 +
+ sha1_name.c           |  1 +
+ submodule.c           |  1 +
+ 16 files changed, 101 insertions(+), 84 deletions(-)
+ create mode 100644 pretty.h
 
+diff --git a/archive.c b/archive.c
+index 0b7b62af0c3ec..60607e8c00857 100644
+--- a/archive.c
++++ b/archive.c
+@@ -2,6 +2,7 @@
+ #include "config.h"
+ #include "refs.h"
+ #include "commit.h"
++#include "pretty.h"
+ #include "tree-walk.h"
+ #include "attr.h"
+ #include "archive.h"
+diff --git a/builtin/notes.c b/builtin/notes.c
+index 1a2c7d92ad7e7..7c8176164561b 100644
+--- a/builtin/notes.c
++++ b/builtin/notes.c
+@@ -12,7 +12,7 @@
+ #include "builtin.h"
+ #include "notes.h"
+ #include "blob.h"
+-#include "commit.h"
++#include "pretty.h"
+ #include "refs.h"
+ #include "exec_cmd.h"
+ #include "run-command.h"
+diff --git a/builtin/reset.c b/builtin/reset.c
+index 906e541658230..e15f595799c40 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -12,7 +12,7 @@
+ #include "lockfile.h"
+ #include "tag.h"
+ #include "object.h"
+-#include "commit.h"
++#include "pretty.h"
+ #include "run-command.h"
+ #include "refs.h"
+ #include "diff.h"
+diff --git a/builtin/show-branch.c b/builtin/show-branch.c
+index 2e24b5c330e8e..e8a4aa40cb4b6 100644
+--- a/builtin/show-branch.c
++++ b/builtin/show-branch.c
+@@ -1,6 +1,6 @@
+ #include "cache.h"
+ #include "config.h"
+-#include "commit.h"
++#include "pretty.h"
+ #include "refs.h"
+ #include "builtin.h"
+ #include "color.h"
+diff --git a/combine-diff.c b/combine-diff.c
+index 2505de119a2be..01ba1b03a06d2 100644
+--- a/combine-diff.c
++++ b/combine-diff.c
+@@ -1,5 +1,6 @@
+ #include "cache.h"
+ #include "commit.h"
++#include "pretty.h"
+ #include "blob.h"
+ #include "diff.h"
+ #include "diffcore.h"
+diff --git a/commit.c b/commit.c
+index cab8d4455bdbd..ac17a27a4ab0a 100644
+--- a/commit.c
++++ b/commit.c
+@@ -1,6 +1,7 @@
+ #include "cache.h"
+ #include "tag.h"
+ #include "commit.h"
++#include "pretty.h"
+ #include "pkt-line.h"
+ #include "utf8.h"
+ #include "diff.h"
+diff --git a/commit.h b/commit.h
+index 99a3fea68d3f6..41a2067809444 100644
+--- a/commit.h
++++ b/commit.h
+@@ -121,93 +121,13 @@ struct commit_list *copy_commit_list(struct commit_list *list);
+ 
+ void free_commit_list(struct commit_list *list);
+ 
+-/* Commit formats */
+-enum cmit_fmt {
+-	CMIT_FMT_RAW,
+-	CMIT_FMT_MEDIUM,
+-	CMIT_FMT_DEFAULT = CMIT_FMT_MEDIUM,
+-	CMIT_FMT_SHORT,
+-	CMIT_FMT_FULL,
+-	CMIT_FMT_FULLER,
+-	CMIT_FMT_ONELINE,
+-	CMIT_FMT_EMAIL,
+-	CMIT_FMT_MBOXRD,
+-	CMIT_FMT_USERFORMAT,
+-
+-	CMIT_FMT_UNSPECIFIED
+-};
+-
+-static inline int cmit_fmt_is_mail(enum cmit_fmt fmt)
+-{
+-	return (fmt == CMIT_FMT_EMAIL || fmt == CMIT_FMT_MBOXRD);
+-}
+-
+ struct rev_info; /* in revision.h, it circularly uses enum cmit_fmt */
+ 
+-struct pretty_print_context {
+-	/*
+-	 * Callers should tweak these to change the behavior of pp_* functions.
+-	 */
+-	enum cmit_fmt fmt;
+-	int abbrev;
+-	const char *after_subject;
+-	int preserve_subject;
+-	struct date_mode date_mode;
+-	unsigned date_mode_explicit:1;
+-	int print_email_subject;
+-	int expand_tabs_in_log;
+-	int need_8bit_cte;
+-	char *notes_message;
+-	struct reflog_walk_info *reflog_info;
+-	struct rev_info *rev;
+-	const char *output_encoding;
+-	struct string_list *mailmap;
+-	int color;
+-	struct ident_split *from_ident;
+-
+-	/*
+-	 * Fields below here are manipulated internally by pp_* functions and
+-	 * should not be counted on by callers.
+-	 */
+-	struct string_list in_body_headers;
+-	int graph_width;
+-};
+-
+-struct userformat_want {
+-	unsigned notes:1;
+-};
+-
+ extern int has_non_ascii(const char *text);
+ extern const char *logmsg_reencode(const struct commit *commit,
+ 				   char **commit_encoding,
+ 				   const char *output_encoding);
+-extern void get_commit_format(const char *arg, struct rev_info *);
+-extern const char *format_subject(struct strbuf *sb, const char *msg,
+-				  const char *line_separator);
+-extern void userformat_find_requirements(const char *fmt, struct userformat_want *w);
+-extern int commit_format_is_empty(enum cmit_fmt);
+ extern const char *skip_blank_lines(const char *msg);
+-extern void format_commit_message(const struct commit *commit,
+-				  const char *format, struct strbuf *sb,
+-				  const struct pretty_print_context *context);
+-extern void pretty_print_commit(struct pretty_print_context *pp,
+-				const struct commit *commit,
+-				struct strbuf *sb);
+-extern void pp_commit_easy(enum cmit_fmt fmt, const struct commit *commit,
+-			   struct strbuf *sb);
+-void pp_user_info(struct pretty_print_context *pp,
+-		  const char *what, struct strbuf *sb,
+-		  const char *line, const char *encoding);
+-void pp_title_line(struct pretty_print_context *pp,
+-		   const char **msg_p,
+-		   struct strbuf *sb,
+-		   const char *encoding,
+-		   int need_8bit_cte);
+-void pp_remainder(struct pretty_print_context *pp,
+-		  const char **msg_p,
+-		  struct strbuf *sb,
+-		  int indent);
+-
+ 
+ /** Removes the first commit from a list sorted by date, and adds all
+  * of its parents.
+diff --git a/diffcore-pickaxe.c b/diffcore-pickaxe.c
+index 9476bd21081f4..c5e12fc096058 100644
+--- a/diffcore-pickaxe.c
++++ b/diffcore-pickaxe.c
+@@ -8,6 +8,7 @@
+ #include "xdiff-interface.h"
+ #include "kwset.h"
+ #include "commit.h"
++#include "pretty.h"
+ #include "quote.h"
+ 
+ typedef int (*pickaxe_fn)(mmfile_t *one, mmfile_t *two,
+diff --git a/grep.c b/grep.c
+index a69c05edc2e4f..1b99ed01898b0 100644
+--- a/grep.c
++++ b/grep.c
+@@ -6,6 +6,7 @@
+ #include "diff.h"
+ #include "diffcore.h"
+ #include "commit.h"
++#include "pretty.h"
+ #include "quote.h"
+ 
+ static int grep_source_load(struct grep_source *gs);
+diff --git a/log-tree.c b/log-tree.c
+index 3b904f0375e23..c305eeff80aa0 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -2,6 +2,7 @@
+ #include "config.h"
+ #include "diff.h"
+ #include "commit.h"
++#include "pretty.h"
+ #include "tag.h"
+ #include "graph.h"
+ #include "log-tree.h"
+diff --git a/notes-cache.c b/notes-cache.c
+index 17ee8602b3d2f..d6346a095c18b 100644
+--- a/notes-cache.c
++++ b/notes-cache.c
+@@ -1,6 +1,7 @@
+ #include "cache.h"
+ #include "notes-cache.h"
+ #include "commit.h"
++#include "pretty.h"
+ #include "refs.h"
+ 
+ static int notes_cache_match_validity(const char *ref, const char *validity)
 diff --git a/pretty.h b/pretty.h
-index ef5167484fb64..5c85d94e332d7 100644
---- a/pretty.h
+new file mode 100644
+index 0000000000000..ef5167484fb64
+--- /dev/null
 +++ b/pretty.h
-@@ -48,6 +48,7 @@ struct pretty_print_context {
- 	int graph_width;
- };
- 
-+/* Check whether commit format is mail. */
- static inline int cmit_fmt_is_mail(enum cmit_fmt fmt)
- {
- 	return (fmt == CMIT_FMT_EMAIL || fmt == CMIT_FMT_MBOXRD);
-@@ -57,31 +58,74 @@ struct userformat_want {
- 	unsigned notes:1;
- };
- 
-+/* Set the flag "w->notes" if there is placeholder %N in "fmt". */
- void userformat_find_requirements(const char *fmt, struct userformat_want *w);
+@@ -0,0 +1,87 @@
++#ifndef PRETTY_H
++#define PRETTY_H
 +
-+/*
-+ * Shortcut for invoking pretty_print_commit if we do not have any context.
-+ * Context would be set empty except "fmt".
-+ */
- void pp_commit_easy(enum cmit_fmt fmt, const struct commit *commit,
- 			struct strbuf *sb);
++struct commit;
 +
-+/*
-+ * Get information about user and date from "line", format it and
-+ * put it into "sb".
-+ * Format of "line" must be readable for split_ident_line function.
-+ * The resulting format is "what: name <email> date".
-+ */
- void pp_user_info(struct pretty_print_context *pp, const char *what,
- 			struct strbuf *sb, const char *line,
- 			const char *encoding);
++/* Commit formats */
++enum cmit_fmt {
++	CMIT_FMT_RAW,
++	CMIT_FMT_MEDIUM,
++	CMIT_FMT_DEFAULT = CMIT_FMT_MEDIUM,
++	CMIT_FMT_SHORT,
++	CMIT_FMT_FULL,
++	CMIT_FMT_FULLER,
++	CMIT_FMT_ONELINE,
++	CMIT_FMT_EMAIL,
++	CMIT_FMT_MBOXRD,
++	CMIT_FMT_USERFORMAT,
 +
-+/*
-+ * Format title line of commit message taken from "msg_p" and
-+ * put it into "sb".
-+ * First line of "msg_p" is also affected.
-+ */
- void pp_title_line(struct pretty_print_context *pp, const char **msg_p,
- 			struct strbuf *sb, const char *encoding,
- 			int need_8bit_cte);
++	CMIT_FMT_UNSPECIFIED
++};
 +
-+/*
-+ * Get current state of commit message from "msg_p" and continue formatting
-+ * by adding indentation and '>' signs. Put result into "sb".
-+ */
- void pp_remainder(struct pretty_print_context *pp, const char **msg_p,
- 			struct strbuf *sb, int indent);
++struct pretty_print_context {
++	/*
++	 * Callers should tweak these to change the behavior of pp_* functions.
++	 */
++	enum cmit_fmt fmt;
++	int abbrev;
++	const char *after_subject;
++	int preserve_subject;
++	struct date_mode date_mode;
++	unsigned date_mode_explicit:1;
++	int print_email_subject;
++	int expand_tabs_in_log;
++	int need_8bit_cte;
++	char *notes_message;
++	struct reflog_walk_info *reflog_info;
++	struct rev_info *rev;
++	const char *output_encoding;
++	struct string_list *mailmap;
++	int color;
++	struct ident_split *from_ident;
++
++	/*
++	 * Fields below here are manipulated internally by pp_* functions and
++	 * should not be counted on by callers.
++	 */
++	struct string_list in_body_headers;
++	int graph_width;
++};
++
++static inline int cmit_fmt_is_mail(enum cmit_fmt fmt)
++{
++	return (fmt == CMIT_FMT_EMAIL || fmt == CMIT_FMT_MBOXRD);
++}
++
++struct userformat_want {
++	unsigned notes:1;
++};
++
++void userformat_find_requirements(const char *fmt, struct userformat_want *w);
++void pp_commit_easy(enum cmit_fmt fmt, const struct commit *commit,
++			struct strbuf *sb);
++void pp_user_info(struct pretty_print_context *pp, const char *what,
++			struct strbuf *sb, const char *line,
++			const char *encoding);
++void pp_title_line(struct pretty_print_context *pp, const char **msg_p,
++			struct strbuf *sb, const char *encoding,
++			int need_8bit_cte);
++void pp_remainder(struct pretty_print_context *pp, const char **msg_p,
++			struct strbuf *sb, int indent);
++
++void format_commit_message(const struct commit *commit,
++			const char *format, struct strbuf *sb,
++			const struct pretty_print_context *context);
++
++void get_commit_format(const char *arg, struct rev_info *);
++
++void pretty_print_commit(struct pretty_print_context *pp,
++			const struct commit *commit,
++			struct strbuf *sb);
++
++const char *format_subject(struct strbuf *sb, const char *msg,
++			const char *line_separator);
++
++int commit_format_is_empty(enum cmit_fmt);
++
++#endif /* PRETTY_H */
+diff --git a/revision.h b/revision.h
+index 54761200adf2d..747bce8d8a184 100644
+--- a/revision.h
++++ b/revision.h
+@@ -4,7 +4,7 @@
+ #include "parse-options.h"
+ #include "grep.h"
+ #include "notes.h"
+-#include "commit.h"
++#include "pretty.h"
+ #include "diff.h"
  
-+/*
-+ * Create a text message about commit using given "format" and "context".
-+ * Put the result to "sb".
-+ * Please use this function for custom formats.
-+ */
- void format_commit_message(const struct commit *commit,
- 			const char *format, struct strbuf *sb,
- 			const struct pretty_print_context *context);
- 
-+/*
-+ * Parse given arguments from "arg", check it for correctness and
-+ * fill struct rev_info.
-+ */
- void get_commit_format(const char *arg, struct rev_info *);
- 
-+/*
-+ * Make a commit message with all rules from given "pp"
-+ * and put it into "sb".
-+ * Please use this function if you have a context (candidate for "pp").
-+ */
- void pretty_print_commit(struct pretty_print_context *pp,
- 			const struct commit *commit,
- 			struct strbuf *sb);
- 
-+/*
-+ * Change line breaks in "msg" to "line_separator" and put it into "sb".
-+ * Return "msg" itself.
-+ */
- const char *format_subject(struct strbuf *sb, const char *msg,
- 			const char *line_separator);
- 
-+/* Check if "cmit_fmt" will produce an empty output. */
- int commit_format_is_empty(enum cmit_fmt);
- 
- #endif /* PRETTY_H */
+ /* Remember to update object flag allocation in object.h */
+diff --git a/sequencer.c b/sequencer.c
+index fa94ed652d2ce..654d577ca3cc7 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -5,6 +5,7 @@
+ #include "dir.h"
+ #include "object.h"
+ #include "commit.h"
++#include "pretty.h"
+ #include "tag.h"
+ #include "run-command.h"
+ #include "exec_cmd.h"
+diff --git a/sha1_name.c b/sha1_name.c
+index 611c7d24ddee6..d35917612c8e7 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -2,6 +2,7 @@
+ #include "config.h"
+ #include "tag.h"
+ #include "commit.h"
++#include "pretty.h"
+ #include "tree.h"
+ #include "blob.h"
+ #include "tree-walk.h"
+diff --git a/submodule.c b/submodule.c
+index 95e6aff2bb74e..c05db7a45d9fe 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -6,6 +6,7 @@
+ #include "dir.h"
+ #include "diff.h"
+ #include "commit.h"
++#include "pretty.h"
+ #include "revision.h"
+ #include "run-command.h"
+ #include "diffcore.h"
 
 --
 https://github.com/git/git/pull/439
