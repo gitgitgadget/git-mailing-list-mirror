@@ -2,84 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0C0D720C31
-	for <e@80x24.org>; Fri,  8 Dec 2017 17:21:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 50C3720C31
+	for <e@80x24.org>; Fri,  8 Dec 2017 17:23:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751927AbdLHRVl (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Dec 2017 12:21:41 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54508 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750865AbdLHRVl (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Dec 2017 12:21:41 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 98712AAE5F;
-        Fri,  8 Dec 2017 12:21:40 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=46IdRwfl1dhe0KZEP34nnatSM0E=; b=lij6X7
-        suvNKQa5mTc+Lt730B6e3VvG3s1btanSlWVDwSqTYnajo25F5+tfwYGROA521jr5
-        k2WBYz5gxmoVn5VMBbk6fwFSheLNPkV49BmhgRCWjwj3bYd/E6dOm5cg4NzEe7Zy
-        pIGLiTsKrJIXlY+BueXTbtaZ0ZBVZ/5oxAIWo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=xLVdq1K600ISNjYgabxk/tdP43mpGy0T
-        E/dvYj/4US5DkvSOk1SauATYWj+hDdwyItrM19wZuDg13lhYJkOf4nR1CEwszH2U
-        CXl8nsepGDc6qTg2UPKEaLTr38ozelt56gaSkK6Cq9pbBk0UhQtzSg1G1zajnBkz
-        g11+NS2uhzM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8EEFDAAE5E;
-        Fri,  8 Dec 2017 12:21:40 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0223BAAE5D;
-        Fri,  8 Dec 2017 12:21:39 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/1] diffcore: add a filter to find a specific blob
-References: <20171208002447.20261-1-sbeller@google.com>
-        <20171208002447.20261-2-sbeller@google.com>
-        <xmqq1sk5b6rx.fsf@gitster.mtv.corp.google.com>
-Date:   Fri, 08 Dec 2017 09:21:38 -0800
-In-Reply-To: <xmqq1sk5b6rx.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Fri, 08 Dec 2017 07:04:18 -0800")
-Message-ID: <xmqqbmj99lul.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1752078AbdLHRX2 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Dec 2017 12:23:28 -0500
+Received: from mail-it0-f66.google.com ([209.85.214.66]:38284 "EHLO
+        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750941AbdLHRX1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Dec 2017 12:23:27 -0500
+Received: by mail-it0-f66.google.com with SMTP id r6so6235915itr.3
+        for <git@vger.kernel.org>; Fri, 08 Dec 2017 09:23:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=uMB31IHVz3xpMvT8UKYBzZgbR4XS/zNpEcCmuRvp7nA=;
+        b=ndT5qLzILa75kZT0dCZms9AWSy4COh8i3/hegJA1k+l8kyeEEOR/P5JXFCC1Q1lQCP
+         Mas6QxRu5auDRV7sVAGwoW7K4yA5ULCcjvrtym8JnBpTAhK7I5d6RLt/Py//tyeHsmXQ
+         f6pM6kX1tfumKTptPWVStbza9km+1HAnO4D+d1cAMyVZ1CvaLd3vATm9d3CYaY6xhzZd
+         t+J0syX8ZCKA31426tlBh74og2tGuWfMUb1mVRbwhUwn3Ojk9C9PCtqxXrZ6AH5y99cE
+         S3bstFUuIuE/Z2nRrG2pkeMG6DSHxWVwtFciduqFpD45EDWBE/EWq6Zb5Gapsznlbs9R
+         GzBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=uMB31IHVz3xpMvT8UKYBzZgbR4XS/zNpEcCmuRvp7nA=;
+        b=YEYY7BbacfVFEkBGbZLrZcTn1OG5opE40ypJIJ86gvIQw4BbabWIuUMp6sVnOb1o3U
+         eZlwde2i37ue457Bw15CAiktv7KvDo6IktzRBl7hPCTV6fdyvxKUQkEq/IEMoPq8irKZ
+         kIAu8Z95yFxDPTKkg0KjneA3/V+cm7dwkr3FRXmB7G/1OW7mhflpPF/dAxE8PTOZ8HSf
+         4SVICMu4ZsX1qJWXabu/4Toml1ZjvSJaVuVi7sEoLb0czJ/ywQhHsQW03g98ttt2R1aY
+         8amCnR1i75X0xr9W/ksrfMStFhbuZzsA3v6MnmgDvpWzx9mwQtQjmjYf6DsVMR7eo+jZ
+         xtrQ==
+X-Gm-Message-State: AKGB3mLJP9pLCwJ98O+1/l4nHxuG4ZYMddjcQ4Ay2nLqk2qjavoVtiii
+        vntGO2Pgc8o3mZSalWFIKpI=
+X-Google-Smtp-Source: AGs4zMYiOlvb6fBbOB9AiRhv9ZmD+rwKDutiTefFkPw0koW64Apcf3HAwSB+uwAKbzpO9N6ccBOmZw==
+X-Received: by 10.107.172.4 with SMTP id v4mr16261414ioe.234.1512753806732;
+        Fri, 08 Dec 2017 09:23:26 -0800 (PST)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id v9sm1017353itv.35.2017.12.08.09.23.25
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 08 Dec 2017 09:23:26 -0800 (PST)
+Date:   Fri, 8 Dec 2017 09:23:24 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Adric Norris <landstander668@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] git version --build-options: report the build
+ platform, too
+Message-ID: <20171208172324.GB14261@aiede.mtv.corp.google.com>
+References: <cover.1512752468.git.johannes.schindelin@gmx.de>
+ <978adf12e85ec6c4d407ba09da82945a08ee1f8c.1512752468.git.johannes.schindelin@gmx.de>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 40BB0372-DC3C-11E7-9012-575F0C78B957-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <978adf12e85ec6c4d407ba09da82945a08ee1f8c.1512752468.git.johannes.schindelin@gmx.de>
+User-Agent: Mutt/1.9.1 (2017-09-22)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi,
 
-> Stefan Beller <sbeller@google.com> writes:
-> ...
->> @@ -2883,6 +2884,8 @@ int prepare_revision_walk(struct rev_info *revs)
->>  		simplify_merges(revs);
->>  	if (revs->children.name)
->>  		set_children(revs);
->> +	if (revs->diffopt.blobfind)
->> +		revs->simplify_history = 0;
->>  	return 0;
->>  }
+Johannes Schindelin wrote:
+
+> From: Adric Norris <landstander668@gmail.com>
 >
-> It makes sense to clear this bit by default, but is this an
-> unconditonal clearing?  In other words, is there a way for the user
-> to countermand this default and ask for merge simplification from
-> the command line, e.g. "diff --simplify-history --blobfind=<blob>"?
+> When asking for bug reports to include the output of `git version
+> --build-options`, the idea is that we get a better idea of the
+> environment where said bug occurs. In this context, it is useful to
+> distinguish between 32 and 64-bit builds.
 
-Looking at the places that assign to revs->simplify_history in
-revision.c it seems that "this option turns the merge simplification
-off unconditionally" is pretty much the norm, and this change just
-follows suit.  So perhaps it is OK to let this pass, at least for
-now.
+Neat!
 
+The cover letter gives a clearer idea of the motivation:
+
+	In Git for Windows, we ask users to paste the output of said command
+	into their bug reports, with the idea that this frequently helps
+	identify where the problems are coming from.
+
+	There are some obvious missing bits of information in said output,
+	though, and this patch series tries to fill the gaps at least a little.
+
+Could some of that text go here, too?
+
+[...]
+> --- a/help.c
+> +++ b/help.c
+> @@ -390,6 +390,7 @@ const char *help_unknown_cmd(const char *cmd)
+>  
+>  int cmd_version(int argc, const char **argv, const char *prefix)
+>  {
+> +	static char build_platform[] = GIT_BUILD_PLATFORM;
+>  	int build_options = 0;
+>  	const char * const usage[] = {
+>  		N_("git version [<options>]"),
+> @@ -413,6 +414,7 @@ int cmd_version(int argc, const char **argv, const char *prefix)
+>  
+>  	if (build_options) {
+>  		printf("sizeof-long: %d\n", (int)sizeof(long));
+> +		printf("machine: %s\n", build_platform);
+
+Can this use GIT_BUILD_PLATFORM directly instead of going via the indirection
+of a mutable static string?  That is, something like
+
+		printf("machine: %s\n", GIT_BUILD_PLATFORM);
+
+>  		/* NEEDSWORK: also save and output GIT-BUILD_OPTIONS? */
+
+What do you think of this idea?  uname_M isn't one of the variables
+in that file, though, so that's orthogonal to this patch.
+
+[...]
+> --- a/help.h
+> +++ b/help.h
+> @@ -33,3 +33,16 @@ extern void list_commands(unsigned int colopts, struct cmdnames *main_cmds, stru
+>   */
+>  extern void help_unknown_ref(const char *ref, const char *cmd, const char *error);
+>  #endif /* HELP_H */
+> +
+> +/*
+> + * identify build platform
+> + */
+> +#ifndef GIT_BUILD_PLATFORM
+> +	#if defined __x86__ || defined __i386__ || defined __i586__ || defined __i686__
+> +		#define GIT_BUILD_PLATFORM "x86"
+> +	#elif defined __x86_64__
+> +		#define GIT_BUILD_PLATFORM "x86_64"
+> +	#else
+> +		#define GIT_BUILD_PLATFORM "unknown"
+> +	#endif
+> +#endif
+
+This code needs to be inside the HELP_H header guard.
+
+Thanks and hope that helps,
+Jonathan
