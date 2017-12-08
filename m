@@ -2,107 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 263341FC34
-	for <e@80x24.org>; Fri,  8 Dec 2017 18:44:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1D2551FC34
+	for <e@80x24.org>; Fri,  8 Dec 2017 18:51:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752270AbdLHSoS (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Dec 2017 13:44:18 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55762 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751268AbdLHSoS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Dec 2017 13:44:18 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6D2B8D29E1;
-        Fri,  8 Dec 2017 13:44:17 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=zC+jWRzEHD+T
-        HUBcDJiB8yEvtGk=; b=TZzr+Mc+eqpHP4kZhN/DiA4k3xrEKi3iumwQkMm05/Go
-        +Glc3AJeGmQhhMLahQnyZQvxoXFXVduhgo7UW8OUDekSoY3Ln1j18CG/YC369Cd5
-        idSpM8ZHl1sHY3Saw2CIWeruQrjJwsjzjbjKfHOjJJ+zNHKQQ0CqhHoTJqboM6M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=pvPFeR
-        aiwQU4bXhUUu8+TNO0MKOCnQL1KOe17iJZdvEG6198QcfhkbN0lcBrOhgXdpQ1cy
-        3Rq4OW4lz29k201N1tIJv7nrp9Mufyt04vQ/6XuoYa4O2fFcllJWiyMIEXbmJ1qd
-        vc4LxaPh9JRHB02wrEnwmpV86ZEOzlvPyBiN8=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 65599D29E0;
-        Fri,  8 Dec 2017 13:44:17 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DAAF7D29DF;
-        Fri,  8 Dec 2017 13:44:16 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] fmt-merge-msg: avoid leaking strbuf in shortlog()
-References: <b2238da3-9eba-1521-f4ca-3b805f103555@web.de>
-        <20171207212735.GD12850@sigill.intra.peff.net>
-        <e1daa2b6-004b-ad66-b84d-84fa70a44baf@web.de>
-Date:   Fri, 08 Dec 2017 10:44:15 -0800
-In-Reply-To: <e1daa2b6-004b-ad66-b84d-84fa70a44baf@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Fri, 8 Dec 2017 18:29:31 +0100")
-Message-ID: <xmqq609h83gg.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1753259AbdLHSvF (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Dec 2017 13:51:05 -0500
+Received: from mout.web.de ([212.227.15.14]:65184 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752338AbdLHSvE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Dec 2017 13:51:04 -0500
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb004
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MBY4U-1eFA0a2GrW-00AUjz; Fri, 08
+ Dec 2017 19:50:58 +0100
+Date:   Fri, 8 Dec 2017 19:50:58 +0100
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, ashishnegi33@gmail.com
+Subject: Re: [PATCH v1 1/2] t0027: Don't use git commit <empty-pathspec>
+Message-ID: <20171208185058.GA13088@tor.lan>
+References: <CAJ_+vJ6FXXda4fe7=1YxtDGR2d8CqP4KXN+YR6+mdQ+5jQQXug@mail.gmail.com>
+ <20171208174633.9903-1-tboegi@web.de>
+ <xmqqpo7p84vz.fsf@gitster.mtv.corp.google.com>
+ <xmqqlgid84io.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: CB44066E-DC47-11E7-B811-8EF31968708C-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqlgid84io.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Provags-ID: V03:K0:0rbLWe23eIWXOcnhsudiNIeSQR2Hp14k3Zwq/eEw/P+nntZDGSB
+ UtC8inaZIP8yyeyTCCdgrr6Pyaz3Wco8epvYKHMYRtpAZfMEaN/ve1o8r0TORGwYXfq142Z
+ z+Q5q/Dy3kL4uvuWvD/xjtzCaJ1TP+03gq37yfGdIE4jUMyLpCrDx0OBEYHaDUEDzAlH9Od
+ Sd6j2RbUJJMyDMryTlwnQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:j6xDa4ISDig=:VC6XZxGaWXicnb09kY1mP8
+ 9uQXFI4Z5Yf+sWvU9vRPLT2lQQUK/MeeTV2pC2aFrbhgT9QUhMwYBgxHGpQ1Npr8vPDJtwcjP
+ YFMFQ2XR2x/UFMd5eBpxjmbzt3H9gW0vPX+0vkQfcAhJ497KKZfcQwoNM8MzjxIiqxlsXXlUC
+ qQUatRqir3LKGQyqVE9+BclG4TrnD2aySHuSPeFsdGBdP5sg9E5jRchfl+ch9gnXp61GiSp57
+ yvJKkpWzdpFoqHrtRo8wvcvQ5w1H/ICNmGheYwstmFVPSuwZT/iELWxu4EQD6aFkXvY26N9of
+ 8Fh5E6Tujoq+Gesh5w29MZAinTcxlRohBJLSAvXwHZulxU+6kfRiNlLbqYRk2Wqzl0BQUL0Wa
+ esed1cJtilHAmGk6B2Rea16+8QKFK0mAawCXPA6nufWo7xTlivwx7QMuXNm8MwuE+dYzFlJZE
+ ZkMRLPTSOgMQpuVlIaKXWdwXo4VAMG18NduvYunPfTHVuHQvlPCHVwjJfAXGMCVM8qTePcHsR
+ Nvx0WsNdw7+gLm2E+aVdZ+yKdVWYRhWiKuQAi8IF1umTgKqZbo+uVqmCyzQW1mfvM1kDWR+mI
+ SmqbA96m9VbejRIhxYtIDwRqx9tLdZQNOhPW1Mqk8Pdj8XJR2b6SeOdafk7tlwuV4RcdmxuCf
+ RriDfW/YJw0QS0Nzg+j8WlZQY65i4fqLjnYeXsXgKZg156RkdThfQwqIyexqqMa3BQ/qFVPx8
+ eWUtVSmgme/3PQ6BufSEMLtneRv34SynFhFD18loAcbSKd3v7o2H+H/JTwYynu/i7Z7GFnwN0
+ 8mVvROQ+A78VgMe9KfwRCB9ct6uZA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+On Fri, Dec 08, 2017 at 10:21:19AM -0800, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > tboegi@web.de writes:
+> >
+> >> From: Torsten Bögershausen <tboegi@web.de>
+> >>
+> >> Replace `git commit -m "comment" ""` with `git commit -m "comment"` to
+> >> remove the empty path spec.
+> >>
+> >> Signed-off-by: Torsten Bögershausen <tboegi@web.de>
+> >> ---
+> >>  t/t0027-auto-crlf.sh | 2 +-
+> >>  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > This looks a bit strange.  The intent seems to commit all changes
+> > made in the working tree, so I'd understand it if it replaced the
+> > empty string with a single dot.
+> >
+> > I also thought that we deprecated use of an empty string as "match
+> > all" pathspec recently, and expected that this to break.
+> >
+> >     ... goes and looks ...
+> >
+> > Indeed, 229a95aa ("t0027: do not use an empty string as a pathspec
+> > element", 2017-06-23) does exactly that.
+> 
+> OK, I think I can safely omit this patch, because
+> 
+>  (1) when 2/2 is queued on top of tb/check-crlf-for-safe-crlf,
+>      because ex/deprecate-empty-pathspec-as-match-all is not yet in
+>      the topic, an empty pathspec still means "match all" and
+>      nothing breaks; and
+> 
+>  (2) when tb/check-crlf-for-safe-crlf plus 2/2 is merged to any
+>      branch with ex/deprecate-empty-pathspec-as-match-all, the topic
+>      already fixes what this 1/2 tries to
+> 
+> Thanks for being thorough, though.
+> 
 
-> Am 07.12.2017 um 22:27 schrieb Jeff King:
->> Grepping for "list_append.*detach" shows a few other possible cases in
->> transport-helper.c, which I think are leaks.
->
-> -- >8 --
-> Subject: [PATCH] transport-helper: plug strbuf and string_list leaks
->
-> Transfer ownership of detached strbufs to string_lists of the
-> duplicating variety by calling string_list_append_nodup() instead of
-> string_list_append() to avoid duplicating and then leaking the buffer.
->
-> While at it make sure to release the string_list when done;
-> push_refs_with_export() already does that.
->
-> Reported-by: Jeff King <peff@peff.net>
-> Signed-off-by: Rene Scharfe <l.s.r@web.de>
-> ---
->  transport-helper.c | 7 +++++--
->  1 file changed, 5 insertions(+), 2 deletions(-)
->
-> diff --git a/transport-helper.c b/transport-helper.c
-> index bf05a2dcf1..f682e7c534 100644
-> --- a/transport-helper.c
-> +++ b/transport-helper.c
-> @@ -882,7 +882,8 @@ static int push_refs_with_push(struct transport *tr=
-ansport,
->  			struct strbuf cas =3D STRBUF_INIT;
->  			strbuf_addf(&cas, "%s:%s",
->  				    ref->name, oid_to_hex(&ref->old_oid_expect));
-> -			string_list_append(&cas_options, strbuf_detach(&cas, NULL));
-> +			string_list_append_nodup(&cas_options,
-> +						 strbuf_detach(&cas, NULL));
->  		}
->  	}
->  	if (buf.len =3D=3D 0) {
-> @@ -897,6 +898,7 @@ static int push_refs_with_push(struct transport *tr=
-ansport,
->  	strbuf_addch(&buf, '\n');
->  	sendline(data, &buf);
->  	strbuf_release(&buf);
-> +	string_list_release(&cas_options, 0);
+Sure, the credit goes 100% to you:
 
-There is no such function; you meant _clear() perhaps?
+commit 229a95aafa77b583b46a3156b4fad469c264ddfd
+Author: Junio C Hamano <gitster@pobox.com>
+Date:   Fri Jun 23 11:04:14 2017 -0700
+
+    t0027: do not use an empty string as a pathspec element
+
+My brain did just assume that this had mad it to master, sorry for the noise
+
