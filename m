@@ -6,110 +6,92 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1DCAF20C31
+	by dcvr.yhbt.net (Postfix) with ESMTP id A1F0320C31
 	for <e@80x24.org>; Fri,  8 Dec 2017 15:27:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753964AbdLHP1i (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Dec 2017 10:27:38 -0500
-Received: from siwi.pair.com ([209.68.5.199]:50007 "EHLO siwi.pair.com"
+        id S1754012AbdLHP1j (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Dec 2017 10:27:39 -0500
+Received: from siwi.pair.com ([209.68.5.199]:53505 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753792AbdLHP1g (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1753902AbdLHP1g (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 8 Dec 2017 10:27:36 -0500
 Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 6099D844E8;
-        Fri,  8 Dec 2017 10:27:35 -0500 (EST)
+        by siwi.pair.com (Postfix) with ESMTP id 886DC844C7;
+        Fri,  8 Dec 2017 10:27:33 -0500 (EST)
 Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id EA588844B8;
-        Fri,  8 Dec 2017 10:27:34 -0500 (EST)
+        by siwi.pair.com (Postfix) with ESMTPSA id 05C2C844B8;
+        Fri,  8 Dec 2017 10:27:32 -0500 (EST)
 From:   Jeff Hostetler <git@jeffhostetler.com>
 To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net, jonathantanmy@google.com
-Subject: [PATCH v7 03/10] fsck: support refs pointing to promisor objects
-Date:   Fri,  8 Dec 2017 15:27:09 +0000
-Message-Id: <20171208152716.64232-4-git@jeffhostetler.com>
+Cc:     gitster@pobox.com, peff@peff.net, jonathantanmy@google.com,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: [PATCH v7 00/10] Partial clone part 2: fsck and promisors
+Date:   Fri,  8 Dec 2017 15:27:06 +0000
+Message-Id: <20171208152716.64232-1-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.9.3
-In-Reply-To: <20171208152716.64232-1-git@jeffhostetler.com>
-References: <20171208152716.64232-1-git@jeffhostetler.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jonathan Tan <jonathantanmy@google.com>
+From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Teach fsck to not treat refs referring to missing promisor objects as an
-error when extensions.partialclone is set.
+This is V7 of part 2 of partial clone.  This builds upon V6 of part 1.
 
-For the purposes of warning about no default refs, such refs are still
-treated as legitimate refs.
+This version squashes the fixup commits that I added to the V6p2 series.
+The net result is identical.
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
- builtin/fsck.c           |  8 ++++++++
- t/t0410-partial-clone.sh | 24 ++++++++++++++++++++++++
- 2 files changed, 32 insertions(+)
+Jonathan Tan (10):
+  extension.partialclone: introduce partial clone extension
+  fsck: introduce partialclone extension
+  fsck: support refs pointing to promisor objects
+  fsck: support referenced promisor objects
+  fsck: support promisor objects as CLI argument
+  index-pack: refactor writing of .keep files
+  introduce fetch-object: fetch one promisor object
+  sha1_file: support lazily fetching missing objects
+  rev-list: support termination at promisor objects
+  gc: do not repack promisor packfiles
 
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 2934299..ee937bb 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -434,6 +434,14 @@ static int fsck_handle_ref(const char *refname, const struct object_id *oid,
- 
- 	obj = parse_object(oid);
- 	if (!obj) {
-+		if (is_promisor_object(oid)) {
-+			/*
-+			 * Increment default_refs anyway, because this is a
-+			 * valid ref.
-+			 */
-+			 default_refs++;
-+			 return 0;
-+		}
- 		error("%s: invalid sha1 pointer %s", refname, oid_to_hex(oid));
- 		errors_found |= ERROR_REACHABLE;
- 		/* We'll continue with the rest despite the error.. */
-diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
-index 3ddb3b9..bf75162 100755
---- a/t/t0410-partial-clone.sh
-+++ b/t/t0410-partial-clone.sh
-@@ -13,6 +13,14 @@ pack_as_from_promisor () {
- 	>repo/.git/objects/pack/pack-$HASH.promisor
- }
- 
-+promise_and_delete () {
-+	HASH=$(git -C repo rev-parse "$1") &&
-+	git -C repo tag -a -m message my_annotated_tag "$HASH" &&
-+	git -C repo rev-parse my_annotated_tag | pack_as_from_promisor &&
-+	git -C repo tag -d my_annotated_tag &&
-+	delete_object repo "$HASH"
-+}
-+
- test_expect_success 'missing reflog object, but promised by a commit, passes fsck' '
- 	test_create_repo repo &&
- 	test_commit -C repo my_commit &&
-@@ -78,4 +86,20 @@ test_expect_success 'missing reflog object alone fails fsck, even with extension
- 	test_must_fail git -C repo fsck
- '
- 
-+test_expect_success 'missing ref object, but promised, passes fsck' '
-+	rm -rf repo &&
-+	test_create_repo repo &&
-+	test_commit -C repo my_commit &&
-+
-+	A=$(git -C repo commit-tree -m a HEAD^{tree}) &&
-+
-+	# Reference $A only from ref
-+	git -C repo branch my_branch "$A" &&
-+	promise_and_delete "$A" &&
-+
-+	git -C repo config core.repositoryformatversion 1 &&
-+	git -C repo config extensions.partialclone "arbitrary string" &&
-+	git -C repo fsck
-+'
-+
- test_done
+ Documentation/git-pack-objects.txt             |  11 +
+ Documentation/gitremote-helpers.txt            |   7 +
+ Documentation/rev-list-options.txt             |  11 +
+ Documentation/technical/repository-version.txt |  12 +
+ Makefile                                       |   1 +
+ builtin/cat-file.c                             |   2 +
+ builtin/fetch-pack.c                           |  10 +
+ builtin/fsck.c                                 |  26 +-
+ builtin/gc.c                                   |   3 +
+ builtin/index-pack.c                           | 113 ++++----
+ builtin/pack-objects.c                         |  37 ++-
+ builtin/prune.c                                |   7 +
+ builtin/repack.c                               |   8 +-
+ builtin/rev-list.c                             |  71 ++++-
+ cache.h                                        |  13 +-
+ environment.c                                  |   1 +
+ fetch-object.c                                 |  27 ++
+ fetch-object.h                                 |   6 +
+ fetch-pack.c                                   |  48 ++--
+ fetch-pack.h                                   |   8 +
+ list-objects.c                                 |  29 ++-
+ object.c                                       |   2 +-
+ packfile.c                                     |  77 +++++-
+ packfile.h                                     |  13 +
+ remote-curl.c                                  |  14 +-
+ revision.c                                     |  33 ++-
+ revision.h                                     |   5 +-
+ setup.c                                        |   7 +-
+ sha1_file.c                                    |  32 ++-
+ t/t0410-partial-clone.sh                       | 343 +++++++++++++++++++++++++
+ transport.c                                    |   8 +
+ transport.h                                    |  11 +
+ 32 files changed, 899 insertions(+), 97 deletions(-)
+ create mode 100644 fetch-object.c
+ create mode 100644 fetch-object.h
+ create mode 100755 t/t0410-partial-clone.sh
+
 -- 
 2.9.3
 
