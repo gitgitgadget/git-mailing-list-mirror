@@ -7,76 +7,123 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DE1ED20C31
-	for <e@80x24.org>; Fri,  8 Dec 2017 17:02:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CBB2620C31
+	for <e@80x24.org>; Fri,  8 Dec 2017 17:02:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753193AbdLHRCO (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Dec 2017 12:02:14 -0500
-Received: from mout.gmx.net ([212.227.17.22]:51194 "EHLO mout.gmx.net"
+        id S1752532AbdLHRCf (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Dec 2017 12:02:35 -0500
+Received: from mout.gmx.net ([212.227.15.18]:56198 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752484AbdLHRCL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Dec 2017 12:02:11 -0500
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M6SE3-1fFtdC3SdH-00yOMD; Fri, 08
- Dec 2017 18:02:06 +0100
-Date:   Fri, 8 Dec 2017 18:01:46 +0100 (CET)
+        id S1752050AbdLHRCc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Dec 2017 12:02:32 -0500
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LmKag-1evrmL23dK-00Zx6c; Fri, 08
+ Dec 2017 18:02:27 +0100
+Date:   Fri, 8 Dec 2017 18:02:26 +0100 (CET)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 0/2] Offer more information in `git version --build-options`'s
- output
-Message-ID: <cover.1512752468.git.johannes.schindelin@gmx.de>
+cc:     Adric Norris <landstander668@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 1/2] git version --build-options: report the build platform,
+ too
+In-Reply-To: <cover.1512752468.git.johannes.schindelin@gmx.de>
+Message-ID: <978adf12e85ec6c4d407ba09da82945a08ee1f8c.1512752468.git.johannes.schindelin@gmx.de>
+References: <cover.1512752468.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:+lCM/p4OFUtsjOGjadvpwkv1bExHuLhAlI8wGBv+zj+5MiP2J6k
- pqzcS9Y4Ym+VbBtw3kB3Ot5gIoCYicPw7YQk0j7is52i3bW3WnWdvE+w+5Z1O3bLQTzOa0O
- WzqnQ3hsms3MbqZp1NTm0k4tCzWfs0P56N0izEgccYsn7lWFDO75tl8B2KVgQR1H0vDihNN
- DndeT4Z8ucpoxrIuox33w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:VbWEHJgFn+U=:6ajQSXC0s6HGFoUHdlacLG
- V5ckbCoNcXWkjucdkUSlLeqTA+TXQmJtCtNGBxvvSx3x+fd0FOCZ3XxBOGXE3aQwmxr4wLysL
- kvBh8iFft5+9uS+DHQvEYedxzy94GCgdpTiMc9ab/qVql0i21ZXdyA85pPgcyvmhUCjeIMero
- 05I2fq+9mutCqS2QMOLrV3PPO1npNdSZqn7adAQE7iWWtWtV4pmnLaQ9z2r98imJkRRKCq1+0
- UkjVKlBJ9MbMcsdqmjg/nxvx6oNTmvFgDU5YHN9WqHu4eci8KO5LpZtSL0mBh6fpOjgwHUzPb
- YNxzs+6CaXF+R1FnDDQdL47r3fvXU8oca53NQ9Q99O/tneS/nQWE+LlrPmilfVEG0gmRJx9YJ
- oqnFfPOiCsCmujlvgUDWM6T5E/vUtLchlUGFlGvsKBLwpW7M+RePHRKEk/Dppeogt2+9nqMJE
- yDdepwFh13z7uDnFD9OCWiNNo/HbiyA0lfThdGB+BM/1NhWT0z4JDCe+kPt6cQd1PEfl+Vfau
- I8p0Wq3VDm+8fG8deoytvsEAGxxXWZ0Z8IPCMhAmXj+XY+SC5ao4pX91dhgosn2ZzTqLnUWiO
- FbNY3B1kK3GP1fn/Z8VKxY8Jf/JYfPsdebat+EtcK8Afh3BLcx94rDd7CTDYArgV4vh5q5BED
- KS9Q78TnlX2nOx+wtTUIVQ39vKelSXNXcYEKQDqJp/4e6C+1bFGmoDB+iYc/nkYfWb6l3Hcqv
- WHrJtLrpNwimCA8aBXs7WU8bNXGx4dFLbc5CGAirz0LacCkwRNd7fUhcMESmXpf6jcR/PvWh/
- ZIzHziNFVhmMgSQpXFHeyawmgIYjx2jTJ7E0XQzUItVpJObsJo=
+X-Provags-ID: V03:K0:7QiYORUn0rxciUxcN+xKc82hLEYPblyYzHgmDSFczBD9Y9sqAAc
+ qEf87VoLmm8YxtkuKdDfyODkd5PI8pZLSC6OPpryhqY164Z3E0Ux+kLHevsGvVgIvcI2MDP
+ cvboNd0FCXylbtLTWW7zxj45NLJVTBZWJZfTWgUiA7wP2x9BQ+0XoYutQZfhijtdePdfl9f
+ e78Gp70ADmRuUBZe55GZA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:dEOZMNF405M=:0kWfHK9oS2sM9dZGt+1w8g
+ YmzBzuP+aNxk8RksrmffIgY1l71b7T4RFhWmuyVLgRy5MTsjiMD+dpN03vyzyRtH+Wi085DFy
+ FJR0NGr+GRKnviaDVdvxMvHZqeJSCG3Xagna54gDhRbzNtMEENyvIT4JfWVHRbl3ui2LvJBe1
+ 7B5xcahJtMyIK820Ws5xUrAWYhm8CFjgtQRVKebP+HiX7UXfNGQo2xRSPCKD2RsU5s58nR6N0
+ dmdunkvZfW8Vjrt49Qhvy7pu5wHxa/Tt/tz3YTAMogxLpaemM2ItxiukYdVE1iFyT43ol3xOH
+ jooNgH2gZ9+Z+r+BBsFvPjnsFqJTlok8yYJrf1gWK7mWhS07e8uFhCrHYfJz+WG7TdauJAu7l
+ EZoyGnjkkPNmVJUmYjXD8Vzw4vWvLK9Nwu7WBFE+YiErc/l5bVLI2MEYShdN4EyhCtwuJyaqC
+ ocvSCtla9LFZfx3P16Kug43CY6bCPmNnDcZWtKHNH4mfjHv5p1X/9b9+gWRtdCzB4ZKkrV6cs
+ b1Wezd9n244JhbBLS60hoKKs/eqlmeP7pVoqVbWPcYyGs4u2QWruecGrrIlaIkzg9IUUCuref
+ Hkdcsb+b7nWXLtiruu80u/k6MLoPvGycKDccYkadsdrGNPiiGfMDlUsM/CAgAJqeb5eMUUdDg
+ AFQQ5RydJ5RpgR9zme6seXhyziwKtcZvz8QsSWtTf3nPzdleCerMMneG8nnoBwo05QlSFrO/O
+ mftpG3mcaTNksDlaNrPeMuwvGFgSd/tAF7uHE55xRbHuQVHlJ8yTNrPQI3dby412OQ1qKT2TP
+ lb8/VyHCyHUFWMtxCdqVP38MReYIoj7RZHb5uGnCuoZUXUiu+g=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In Git for Windows, we ask users to paste the output of said command
-into their bug reports, with the idea that this frequently helps
-identify where the problems are coming from.
+From: Adric Norris <landstander668@gmail.com>
 
-There are some obvious missing bits of information in said output,
-though, and this patch series tries to fill the gaps at least a little.
+When asking for bug reports to include the output of `git version
+--build-options`, the idea is that we get a better idea of the
+environment where said bug occurs. In this context, it is useful to
+distinguish between 32 and 64-bit builds.
 
+We start by distinguishing between x86 and x86_64 (hoping that
+interested parties will extend this to other architectures in the
+future).  In addition, all 32-bit variants (i686, i586, etc.) are
+collapsed into `x86'. An example of the output is:
 
-Adric Norris (1):
-  git version --build-options: report the build platform, too
+   $ git version --build-options
+   git version 2.9.3.windows.2.826.g06c0f2f
+   sizeof-long: 4
+   machine: x86_64
 
-Johannes Schindelin (1):
-  version --build-options: report commit, too, if possible
+The label of `machine' was chosen so the new information will approximate
+the output of `uname -m'.
 
- Makefile  |  4 +++-
- help.c    |  4 ++++
- help.h    | 13 +++++++++++++
- version.c |  1 +
- version.h |  1 +
- 5 files changed, 22 insertions(+), 1 deletion(-)
+Signed-off-by: Adric Norris <landstander668@gmail.com>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ help.c |  2 ++
+ help.h | 13 +++++++++++++
+ 2 files changed, 15 insertions(+)
 
-
-base-commit: 95ec6b1b3393eb6e26da40c565520a8db9796e9f
-Published-As: https://github.com/dscho/git/releases/tag/built-from-commit-v1
-Fetch-It-Via: git fetch https://github.com/dscho/git built-from-commit-v1
+diff --git a/help.c b/help.c
+index 88a3aeaeb9f..df1332fa3c9 100644
+--- a/help.c
++++ b/help.c
+@@ -390,6 +390,7 @@ const char *help_unknown_cmd(const char *cmd)
+ 
+ int cmd_version(int argc, const char **argv, const char *prefix)
+ {
++	static char build_platform[] = GIT_BUILD_PLATFORM;
+ 	int build_options = 0;
+ 	const char * const usage[] = {
+ 		N_("git version [<options>]"),
+@@ -413,6 +414,7 @@ int cmd_version(int argc, const char **argv, const char *prefix)
+ 
+ 	if (build_options) {
+ 		printf("sizeof-long: %d\n", (int)sizeof(long));
++		printf("machine: %s\n", build_platform);
+ 		/* NEEDSWORK: also save and output GIT-BUILD_OPTIONS? */
+ 	}
+ 	return 0;
+diff --git a/help.h b/help.h
+index b21d7c94e8c..42dd9852194 100644
+--- a/help.h
++++ b/help.h
+@@ -33,3 +33,16 @@ extern void list_commands(unsigned int colopts, struct cmdnames *main_cmds, stru
+  */
+ extern void help_unknown_ref(const char *ref, const char *cmd, const char *error);
+ #endif /* HELP_H */
++
++/*
++ * identify build platform
++ */
++#ifndef GIT_BUILD_PLATFORM
++	#if defined __x86__ || defined __i386__ || defined __i586__ || defined __i686__
++		#define GIT_BUILD_PLATFORM "x86"
++	#elif defined __x86_64__
++		#define GIT_BUILD_PLATFORM "x86_64"
++	#else
++		#define GIT_BUILD_PLATFORM "unknown"
++	#endif
++#endif
 -- 
 2.15.1.windows.2
+
 
