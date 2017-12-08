@@ -2,101 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B460220C32
-	for <e@80x24.org>; Fri,  8 Dec 2017 11:38:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4430220C31
+	for <e@80x24.org>; Fri,  8 Dec 2017 13:22:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752303AbdLHLif (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Dec 2017 06:38:35 -0500
-Received: from mout.gmx.net ([212.227.17.22]:58345 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751641AbdLHLie (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Dec 2017 06:38:34 -0500
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M6730-1fFlRm2D74-00y709; Fri, 08
- Dec 2017 12:38:28 +0100
-Date:   Fri, 8 Dec 2017 12:38:20 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Dec 2017, #02; Thu, 7)
-In-Reply-To: <20171208054934.GA17893@tor.lan>
-Message-ID: <alpine.DEB.2.21.1.1712081227080.4318@virtualbox>
-References: <xmqqfu8me7ot.fsf@gitster.mtv.corp.google.com> <20171208054934.GA17893@tor.lan>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1753470AbdLHNV7 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Dec 2017 08:21:59 -0500
+Received: from a7-12.smtp-out.eu-west-1.amazonses.com ([54.240.7.12]:57464
+        "EHLO a7-12.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1753457AbdLHNV6 (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2017 08:21:58 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1512739316;
+        h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+        bh=evyGG2CZPB07KHKjW777zcrTord/cIjZnD+9xYhC+aA=;
+        b=aKWX7NtuXBlDrSOyLy4MrGpAB3OFj71mLSsJ8FqlUfp9B0Jjs/OlARKU5sysfSQw
+        VowTFsVrpij6O4pRieMAAi3ELZ91V/QKohErxMtaOLaCYlU9IAl99A7zQvOXf6v5eAJ
+        QcufWlqZI+X4xgO1+LITY2lpkqHkXWIEDI2cKRUA=
+From:   Olga Telezhnaya <olyatelezhnaya@gmail.com>
+To:     git@vger.kernel.org
+Message-ID: <01020160364a2471-0e40e237-80b4-485c-a987-9c83206a2ee5-000000@eu-west-1.amazonses.com>
+In-Reply-To: <01020160364a23d5-471a2fd0-9fff-4599-86f8-b2f37a4a0a84-000000@eu-west-1.amazonses.com>
+References: <01020160364a23d5-471a2fd0-9fff-4599-86f8-b2f37a4a0a84-000000@eu-west-1.amazonses.com>
+Subject: [PATCH Outreachy 2/2] format: create docs for pretty.h
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323329-171833994-1512733108=:4318"
-X-Provags-ID: V03:K0:1rFGTAB9IzIXKi+PQlf7uQc4Q7CsBLXAiygO3GrTqUFb16kVz4K
- oJ57sLE/EGE7uqlzngOp3LlbTWv70XAJpUbl3fJgiUoh02CzyjSyauDC5bppuyyeoc1dYPS
- QND9kG51yjj70+AnzooOBvTaJ96K8qRXrJUjhY8B9l6qfUwk45SBxC1J6JNWyQIGVLrJDKO
- PnO+mPa8nI3BELXJ9FMCg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:gell+K/qOhc=:gYfbW5r+ZulHphzTkd6H1y
- 4Pig/8t0slCBhYgLc7jTOaJuPeN+THl/6d/UghOAwZjb5rrWpLnKU07AelXQNOnWf6x3MQdQ+
- BX7A+KuBfG5o0iR1qZEeBJxua0REqlSPUk+VmWKPqn+bT5wA6Vr7X4JL99tfZXCZv5PQsnoe8
- +agLAt2VCaV+nbORrc5k8di78gcCLdzXsfjp1kHGZ/mrGiCdQuISefWu8NCIfeHYj1CrK+q4T
- NAdTFqHPfCzxQXSNagqW1A7n+MvQ9DXuzfBYEb6m8hy0pj6f4gUPs0HbJJ2W98fXx0W9yPmoI
- Vd98T8Voyhbdz+nYJK2MJpEDDjkH4mwMymEzJqSgGbwvMTq2cmlCBfNVZXwn4qXqEEmLQBRd1
- onUVEFUpaaPmmGmlrcCkMSsdZRAmfFTfC5OnD/BCEt7di5TmPkZttx29Sf64PEthWsZXQashv
- RMH7nKwrATofTm+6x90ODULYcX9V+GwJKeXz9C//SSkbA/SvlJcMVT5n+bN2ZkWIZGDqCWtZm
- ZJ8dg/3vUfnbMVz60ns3r/WmzBB4i3y5B0uxXtSIVIKSq6bSzLW4eeFi+Bn3HAyin3wGhWdrM
- 41dDKcaMyrPxSyW8zEK52I+Bhl/zRraQkuIalP9SIdKzPLf5n+NX5d9LlhXxD2fKkI8Jj2Cw2
- LVSYgCeAEp0bVoXKNWOjp2pTm3iThB4wjDbsOssewkT8FoDRVthEWdrEYJREyDD1mZyq+5apg
- NrdZp8sldsSFdZNAKScUZ6opnue6FMbJWzUYfIJjC7V/MqeoNWLlrgBmk2uw5TMMlI8bmkU1s
- MEb8caEJhuCQIarIokJYDWJ8/Uy+iDrwdCT0nKwbe5gaxt9/mI=
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 8 Dec 2017 13:21:56 +0000
+X-SES-Outgoing: 2017.12.08-54.240.7.12
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Write some docs for functions in pretty.h.
+Take it as a first draft, they would be changed later.
 
---8323329-171833994-1512733108=:4318
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Signed-off-by: Olga Telezhnaia <olyatelezhnaya@gmail.com>
+Mentored-by: Christian Couder <christian.couder@gmail.com>
+Mentored by: Jeff King <peff@peff.net>
+---
+ pretty.h | 44 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 44 insertions(+)
 
-Hi,
+diff --git a/pretty.h b/pretty.h
+index ef5167484fb64..5c85d94e332d7 100644
+--- a/pretty.h
++++ b/pretty.h
+@@ -48,6 +48,7 @@ struct pretty_print_context {
+ 	int graph_width;
+ };
+ 
++/* Check whether commit format is mail. */
+ static inline int cmit_fmt_is_mail(enum cmit_fmt fmt)
+ {
+ 	return (fmt == CMIT_FMT_EMAIL || fmt == CMIT_FMT_MBOXRD);
+@@ -57,31 +58,74 @@ struct userformat_want {
+ 	unsigned notes:1;
+ };
+ 
++/* Set the flag "w->notes" if there is placeholder %N in "fmt". */
+ void userformat_find_requirements(const char *fmt, struct userformat_want *w);
++
++/*
++ * Shortcut for invoking pretty_print_commit if we do not have any context.
++ * Context would be set empty except "fmt".
++ */
+ void pp_commit_easy(enum cmit_fmt fmt, const struct commit *commit,
+ 			struct strbuf *sb);
++
++/*
++ * Get information about user and date from "line", format it and
++ * put it into "sb".
++ * Format of "line" must be readable for split_ident_line function.
++ * The resulting format is "what: name <email> date".
++ */
+ void pp_user_info(struct pretty_print_context *pp, const char *what,
+ 			struct strbuf *sb, const char *line,
+ 			const char *encoding);
++
++/*
++ * Format title line of commit message taken from "msg_p" and
++ * put it into "sb".
++ * First line of "msg_p" is also affected.
++ */
+ void pp_title_line(struct pretty_print_context *pp, const char **msg_p,
+ 			struct strbuf *sb, const char *encoding,
+ 			int need_8bit_cte);
++
++/*
++ * Get current state of commit message from "msg_p" and continue formatting
++ * by adding indentation and '>' signs. Put result into "sb".
++ */
+ void pp_remainder(struct pretty_print_context *pp, const char **msg_p,
+ 			struct strbuf *sb, int indent);
+ 
++/*
++ * Create a text message about commit using given "format" and "context".
++ * Put the result to "sb".
++ * Please use this function for custom formats.
++ */
+ void format_commit_message(const struct commit *commit,
+ 			const char *format, struct strbuf *sb,
+ 			const struct pretty_print_context *context);
+ 
++/*
++ * Parse given arguments from "arg", check it for correctness and
++ * fill struct rev_info.
++ */
+ void get_commit_format(const char *arg, struct rev_info *);
+ 
++/*
++ * Make a commit message with all rules from given "pp"
++ * and put it into "sb".
++ * Please use this function if you have a context (candidate for "pp").
++ */
+ void pretty_print_commit(struct pretty_print_context *pp,
+ 			const struct commit *commit,
+ 			struct strbuf *sb);
+ 
++/*
++ * Change line breaks in "msg" to "line_separator" and put it into "sb".
++ * Return "msg" itself.
++ */
+ const char *format_subject(struct strbuf *sb, const char *msg,
+ 			const char *line_separator);
+ 
++/* Check if "cmit_fmt" will produce an empty output. */
+ int commit_format_is_empty(enum cmit_fmt);
+ 
+ #endif /* PRETTY_H */
 
-On Fri, 8 Dec 2017, Torsten B=C3=B6gershausen wrote:
-
-> > * tb/check-crlf-for-safe-crlf (2017-11-27) 1 commit
-> >   (merged to 'next' on 2017-12-05 at 7adaa1fe01)
-> >  + convert: tighten the safe autocrlf handling
-> >=20
-> >  The "safe crlf" check incorrectly triggered for contents that does
-> >  not use CRLF as line endings, which has been corrected.
-> >=20
-> >  Broken on Windows???
-> >  cf. <DA960DCE-0635-47CF-B3C4-8133021799F1@gmail.com>
->=20
-> Yes, broken on Windows. A fix is coming the next days.
-
-We might want to consider using a saner Continuous Testing workflow, to
-avoid re-testing (and re-finding) breakages in individual patch series
-just because completely unrelated patch got updated.
-
-I mean, yes, it seemed like a good idea a long time ago to have One Branch
-that contains All The Patch Series Currently Cooking, back when our most
-reliable (because only) test facilities were poor humans.
-
-But we see how many more subtle bugs are spotted nowadays where Git's
-source code is tested automatically on a growing number of Operating
-System/CPU architecture "coordinates", and it is probably time to save
-some human resources.
-
-How about testing the individual branches instead?
-
-This would save me a ton of time, as bisecting is just too expensive given
-the scattered base commits of the branches smooshed into `pu`. (There is a
-new Git/Error.pm breakage in pu for about a week that I simply have not
-gotten around to, or better put: that I did not want to tackle given the
-time committment).)
-
-Ciao,
-Dscho
---8323329-171833994-1512733108=:4318--
+--
+https://github.com/git/git/pull/439
