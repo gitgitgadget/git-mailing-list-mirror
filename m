@@ -6,30 +6,30 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BC60F20C31
-	for <e@80x24.org>; Fri,  8 Dec 2017 15:59:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6CC1020C31
+	for <e@80x24.org>; Fri,  8 Dec 2017 15:59:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754583AbdLHP7Q (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Dec 2017 10:59:16 -0500
-Received: from siwi.pair.com ([209.68.5.199]:55827 "EHLO siwi.pair.com"
+        id S1754505AbdLHP7T (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Dec 2017 10:59:19 -0500
+Received: from siwi.pair.com ([209.68.5.199]:55821 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754460AbdLHP7M (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Dec 2017 10:59:12 -0500
+        id S1754096AbdLHP7P (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Dec 2017 10:59:15 -0500
 Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 360C1844F2;
-        Fri,  8 Dec 2017 10:59:12 -0500 (EST)
+        by siwi.pair.com (Postfix) with ESMTP id CFED9844F3;
+        Fri,  8 Dec 2017 10:59:14 -0500 (EST)
 Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id B236D844DE;
-        Fri,  8 Dec 2017 10:59:11 -0500 (EST)
+        by siwi.pair.com (Postfix) with ESMTPSA id 58E48844DE;
+        Fri,  8 Dec 2017 10:59:14 -0500 (EST)
 From:   Jeff Hostetler <git@jeffhostetler.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, jonathantanmy@google.com,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v7 09/16] fetch: support filters
-Date:   Fri,  8 Dec 2017 15:58:44 +0000
-Message-Id: <20171208155851.855-10-git@jeffhostetler.com>
+Subject: [PATCH v7 13/16] fetch-pack: restore save_commit_buffer after use
+Date:   Fri,  8 Dec 2017 15:58:48 +0000
+Message-Id: <20171208155851.855-14-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20171208155851.855-1-git@jeffhostetler.com>
 References: <20171208155851.855-1-git@jeffhostetler.com>
@@ -38,186 +38,60 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff Hostetler <jeffhost@microsoft.com>
+From: Jonathan Tan <jonathantanmy@google.com>
 
-Teach fetch to support filters. This is only allowed for the remote
-configured in extensions.partialcloneremote.
+In fetch-pack, the global variable save_commit_buffer is set to 0, but
+not restored to its original value after use.
+
+In particular, if show_log() (in log-tree.c) is invoked after
+fetch_pack() in the same process, show_log() will return before printing
+out the commit message (because the invocation to
+get_cached_commit_buffer() returns NULL, because the commit buffer was
+not saved). I discovered this when attempting to run "git log -S" in a
+partial clone, triggering the case where revision walking lazily loads
+missing objects.
+
+Therefore, restore save_commit_buffer to its original value after use.
+
+An alternative to solve the problem I had is to replace
+get_cached_commit_buffer() with get_commit_buffer(). That invocation was
+introduced in commit a97934d ("use get_cached_commit_buffer where
+appropriate", 2014-06-13) to replace "commit->buffer" introduced in
+commit 3131b71 ("Add "--show-all" revision walker flag for debugging",
+2008-02-13). In the latter commit, the commit author seems to be
+deciding between not showing an unparsed commit at all and showing an
+unparsed commit without the message (which is what the commit does), and
+did not mention parsing the unparsed commit, so I prefer to preserve the
+existing behavior.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- builtin/fetch.c       | 23 +++++++++++++++++++++--
- connected.c           |  2 ++
- remote-curl.c         |  6 ++++++
- t/t5500-fetch-pack.sh | 36 ++++++++++++++++++++++++++++++++++++
- 4 files changed, 65 insertions(+), 2 deletions(-)
+ fetch-pack.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 1b1f039..14aab71 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -18,6 +18,7 @@
- #include "argv-array.h"
- #include "utf8.h"
- #include "packfile.h"
-+#include "list-objects-filter-options.h"
- 
- static const char * const builtin_fetch_usage[] = {
- 	N_("git fetch [<options>] [<repository> [<refspec>...]]"),
-@@ -55,6 +56,7 @@ static int recurse_submodules_default = RECURSE_SUBMODULES_ON_DEMAND;
- static int shown_url = 0;
- static int refmap_alloc, refmap_nr;
- static const char **refmap_array;
-+static struct list_objects_filter_options filter_options;
- 
- static int git_fetch_config(const char *k, const char *v, void *cb)
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 3c5f064..773453c 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -717,6 +717,7 @@ static int everything_local(struct fetch_pack_args *args,
  {
-@@ -160,6 +162,7 @@ static struct option builtin_fetch_options[] = {
- 			TRANSPORT_FAMILY_IPV4),
- 	OPT_SET_INT('6', "ipv6", &family, N_("use IPv6 addresses only"),
- 			TRANSPORT_FAMILY_IPV6),
-+	OPT_PARSE_LIST_OBJECTS_FILTER(&filter_options),
- 	OPT_END()
- };
+ 	struct ref *ref;
+ 	int retval;
++	int old_save_commit_buffer = save_commit_buffer;
+ 	timestamp_t cutoff = 0;
  
-@@ -1044,6 +1047,11 @@ static struct transport *prepare_transport(struct remote *remote, int deepen)
- 		set_option(transport, TRANS_OPT_DEEPEN_RELATIVE, "yes");
- 	if (update_shallow)
- 		set_option(transport, TRANS_OPT_UPDATE_SHALLOW, "yes");
-+	if (filter_options.choice) {
-+		set_option(transport, TRANS_OPT_LIST_OBJECTS_FILTER,
-+			   filter_options.filter_spec);
-+		set_option(transport, TRANS_OPT_FROM_PROMISOR, "1");
-+	}
- 	return transport;
+ 	save_commit_buffer = 0;
+@@ -786,6 +787,9 @@ static int everything_local(struct fetch_pack_args *args,
+ 		print_verbose(args, _("already have %s (%s)"), oid_to_hex(remote),
+ 			      ref->name);
+ 	}
++
++	save_commit_buffer = old_save_commit_buffer;
++
+ 	return retval;
  }
  
-@@ -1328,6 +1336,8 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 
- 	packet_trace_identity("fetch");
- 
-+	fetch_if_missing = 0;
-+
- 	/* Record the command line for the reflog */
- 	strbuf_addstr(&default_rla, "fetch");
- 	for (i = 1; i < argc; i++)
-@@ -1361,6 +1371,9 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 	if (depth || deepen_since || deepen_not.nr)
- 		deepen = 1;
- 
-+	if (filter_options.choice && !repository_format_partial_clone)
-+		die("--filter can only be used when extensions.partialClone is set");
-+
- 	if (all) {
- 		if (argc == 1)
- 			die(_("fetch --all does not take a repository argument"));
-@@ -1390,10 +1403,16 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 		}
- 	}
- 
--	if (remote)
-+	if (remote) {
-+		if (filter_options.choice &&
-+		    strcmp(remote->name, repository_format_partial_clone))
-+			die(_("--filter can only be used with the remote configured in core.partialClone"));
- 		result = fetch_one(remote, argc, argv);
--	else
-+	} else {
-+		if (filter_options.choice)
-+			die(_("--filter can only be used with the remote configured in core.partialClone"));
- 		result = fetch_multiple(&list);
-+	}
- 
- 	if (!result && (recurse_submodules != RECURSE_SUBMODULES_OFF)) {
- 		struct argv_array options = ARGV_ARRAY_INIT;
-diff --git a/connected.c b/connected.c
-index f416b05..3a5bd67 100644
---- a/connected.c
-+++ b/connected.c
-@@ -56,6 +56,8 @@ int check_connected(sha1_iterate_fn fn, void *cb_data,
- 	argv_array_push(&rev_list.args,"rev-list");
- 	argv_array_push(&rev_list.args, "--objects");
- 	argv_array_push(&rev_list.args, "--stdin");
-+	if (repository_format_partial_clone)
-+		argv_array_push(&rev_list.args, "--exclude-promisor-objects");
- 	argv_array_push(&rev_list.args, "--not");
- 	argv_array_push(&rev_list.args, "--all");
- 	argv_array_push(&rev_list.args, "--quiet");
-diff --git a/remote-curl.c b/remote-curl.c
-index 4318391..6ec5352 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -24,6 +24,7 @@ struct options {
- 	char *deepen_since;
- 	struct string_list deepen_not;
- 	struct string_list push_options;
-+	char *filter;
- 	unsigned progress : 1,
- 		check_self_contained_and_connected : 1,
- 		cloning : 1,
-@@ -165,6 +166,9 @@ static int set_option(const char *name, const char *value)
- 	} else if (!strcmp(name, "no-dependents")) {
- 		options.no_dependents = 1;
- 		return 0;
-+	} else if (!strcmp(name, "filter")) {
-+		options.filter = xstrdup(value);;
-+		return 0;
- 	} else {
- 		return 1 /* unsupported */;
- 	}
-@@ -834,6 +838,8 @@ static int fetch_git(struct discovery *heads,
- 		argv_array_push(&args, "--from-promisor");
- 	if (options.no_dependents)
- 		argv_array_push(&args, "--no-dependents");
-+	if (options.filter)
-+		argv_array_pushf(&args, "--filter=%s", options.filter);
- 	argv_array_push(&args, url.buf);
- 
- 	for (i = 0; i < nr_heads; i++) {
-diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
-index c57916b..ec9ba9b 100755
---- a/t/t5500-fetch-pack.sh
-+++ b/t/t5500-fetch-pack.sh
-@@ -782,4 +782,40 @@ test_expect_success 'filtering by size has no effect if support for it is not ad
- 	test_i18ngrep "filtering not recognized by server" err
- '
- 
-+fetch_filter_blob_limit_zero () {
-+	SERVER="$1"
-+	URL="$2"
-+
-+	rm -rf "$SERVER" client &&
-+	test_create_repo "$SERVER" &&
-+	test_commit -C "$SERVER" one &&
-+	test_config -C "$SERVER" uploadpack.allowfilter 1 &&
-+
-+	git clone "$URL" client &&
-+	test_config -C client extensions.partialclone origin &&
-+
-+	test_commit -C "$SERVER" two &&
-+
-+	git -C client fetch --filter=blob:limit=0 origin HEAD:somewhere &&
-+
-+	# Ensure that commit is fetched, but blob is not
-+	test_config -C client extensions.partialclone "arbitrary string" &&
-+	git -C client cat-file -e $(git -C "$SERVER" rev-parse two) &&
-+	test_must_fail git -C client cat-file -e $(git hash-object "$SERVER/two.t")
-+}
-+
-+test_expect_success 'fetch with --filter=blob:limit=0' '
-+	fetch_filter_blob_limit_zero server server
-+'
-+
-+. "$TEST_DIRECTORY"/lib-httpd.sh
-+start_httpd
-+
-+test_expect_success 'fetch with --filter=blob:limit=0 and HTTP' '
-+	fetch_filter_blob_limit_zero "$HTTPD_DOCUMENT_ROOT_PATH/server" "$HTTPD_URL/smart/server"
-+'
-+
-+stop_httpd
-+
-+
- test_done
 -- 
 2.9.3
 
