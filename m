@@ -6,92 +6,127 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A1F0320C31
-	for <e@80x24.org>; Fri,  8 Dec 2017 15:27:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3BB7620C31
+	for <e@80x24.org>; Fri,  8 Dec 2017 15:27:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754012AbdLHP1j (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Dec 2017 10:27:39 -0500
-Received: from siwi.pair.com ([209.68.5.199]:53505 "EHLO siwi.pair.com"
+        id S1754095AbdLHP1r (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Dec 2017 10:27:47 -0500
+Received: from siwi.pair.com ([209.68.5.199]:48807 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753902AbdLHP1g (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1753890AbdLHP1g (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 8 Dec 2017 10:27:36 -0500
 Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 886DC844C7;
-        Fri,  8 Dec 2017 10:27:33 -0500 (EST)
+        by siwi.pair.com (Postfix) with ESMTP id 19CD8844DA;
+        Fri,  8 Dec 2017 10:27:34 -0500 (EST)
 Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 05C2C844B8;
-        Fri,  8 Dec 2017 10:27:32 -0500 (EST)
+        by siwi.pair.com (Postfix) with ESMTPSA id A4D13844B8;
+        Fri,  8 Dec 2017 10:27:33 -0500 (EST)
 From:   Jeff Hostetler <git@jeffhostetler.com>
 To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net, jonathantanmy@google.com,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v7 00/10] Partial clone part 2: fsck and promisors
-Date:   Fri,  8 Dec 2017 15:27:06 +0000
-Message-Id: <20171208152716.64232-1-git@jeffhostetler.com>
+Cc:     gitster@pobox.com, peff@peff.net, jonathantanmy@google.com
+Subject: [PATCH v7 01/10] extension.partialclone: introduce partial clone extension
+Date:   Fri,  8 Dec 2017 15:27:07 +0000
+Message-Id: <20171208152716.64232-2-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.9.3
+In-Reply-To: <20171208152716.64232-1-git@jeffhostetler.com>
+References: <20171208152716.64232-1-git@jeffhostetler.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff Hostetler <jeffhost@microsoft.com>
+From: Jonathan Tan <jonathantanmy@google.com>
 
-This is V7 of part 2 of partial clone.  This builds upon V6 of part 1.
+Introduce new repository extension option:
+    `extensions.partialclone`
 
-This version squashes the fixup commits that I added to the V6p2 series.
-The net result is identical.
+See the update to Documentation/technical/repository-version.txt
+in this patch for more information.
 
-Jonathan Tan (10):
-  extension.partialclone: introduce partial clone extension
-  fsck: introduce partialclone extension
-  fsck: support refs pointing to promisor objects
-  fsck: support referenced promisor objects
-  fsck: support promisor objects as CLI argument
-  index-pack: refactor writing of .keep files
-  introduce fetch-object: fetch one promisor object
-  sha1_file: support lazily fetching missing objects
-  rev-list: support termination at promisor objects
-  gc: do not repack promisor packfiles
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+ Documentation/technical/repository-version.txt | 12 ++++++++++++
+ cache.h                                        |  2 ++
+ environment.c                                  |  1 +
+ setup.c                                        |  7 ++++++-
+ 4 files changed, 21 insertions(+), 1 deletion(-)
 
- Documentation/git-pack-objects.txt             |  11 +
- Documentation/gitremote-helpers.txt            |   7 +
- Documentation/rev-list-options.txt             |  11 +
- Documentation/technical/repository-version.txt |  12 +
- Makefile                                       |   1 +
- builtin/cat-file.c                             |   2 +
- builtin/fetch-pack.c                           |  10 +
- builtin/fsck.c                                 |  26 +-
- builtin/gc.c                                   |   3 +
- builtin/index-pack.c                           | 113 ++++----
- builtin/pack-objects.c                         |  37 ++-
- builtin/prune.c                                |   7 +
- builtin/repack.c                               |   8 +-
- builtin/rev-list.c                             |  71 ++++-
- cache.h                                        |  13 +-
- environment.c                                  |   1 +
- fetch-object.c                                 |  27 ++
- fetch-object.h                                 |   6 +
- fetch-pack.c                                   |  48 ++--
- fetch-pack.h                                   |   8 +
- list-objects.c                                 |  29 ++-
- object.c                                       |   2 +-
- packfile.c                                     |  77 +++++-
- packfile.h                                     |  13 +
- remote-curl.c                                  |  14 +-
- revision.c                                     |  33 ++-
- revision.h                                     |   5 +-
- setup.c                                        |   7 +-
- sha1_file.c                                    |  32 ++-
- t/t0410-partial-clone.sh                       | 343 +++++++++++++++++++++++++
- transport.c                                    |   8 +
- transport.h                                    |  11 +
- 32 files changed, 899 insertions(+), 97 deletions(-)
- create mode 100644 fetch-object.c
- create mode 100644 fetch-object.h
- create mode 100755 t/t0410-partial-clone.sh
-
+diff --git a/Documentation/technical/repository-version.txt b/Documentation/technical/repository-version.txt
+index 00ad379..e03eacc 100644
+--- a/Documentation/technical/repository-version.txt
++++ b/Documentation/technical/repository-version.txt
+@@ -86,3 +86,15 @@ for testing format-1 compatibility.
+ When the config key `extensions.preciousObjects` is set to `true`,
+ objects in the repository MUST NOT be deleted (e.g., by `git-prune` or
+ `git repack -d`).
++
++`partialclone`
++~~~~~~~~~~~~~~
++
++When the config key `extensions.partialclone` is set, it indicates
++that the repo was created with a partial clone (or later performed
++a partial fetch) and that the remote may have omitted sending
++certain unwanted objects.  Such a remote is called a "promisor remote"
++and it promises that all such omitted objects can be fetched from it
++in the future.
++
++The value of this key is the name of the promisor remote.
+diff --git a/cache.h b/cache.h
+index 6440e2b..35e3f5e 100644
+--- a/cache.h
++++ b/cache.h
+@@ -860,10 +860,12 @@ extern int grafts_replace_parents;
+ #define GIT_REPO_VERSION 0
+ #define GIT_REPO_VERSION_READ 1
+ extern int repository_format_precious_objects;
++extern char *repository_format_partial_clone;
+ 
+ struct repository_format {
+ 	int version;
+ 	int precious_objects;
++	char *partial_clone; /* value of extensions.partialclone */
+ 	int is_bare;
+ 	char *work_tree;
+ 	struct string_list unknown_extensions;
+diff --git a/environment.c b/environment.c
+index 8289c25..e52aab3 100644
+--- a/environment.c
++++ b/environment.c
+@@ -27,6 +27,7 @@ int warn_ambiguous_refs = 1;
+ int warn_on_object_refname_ambiguity = 1;
+ int ref_paranoia = -1;
+ int repository_format_precious_objects;
++char *repository_format_partial_clone;
+ const char *git_commit_encoding;
+ const char *git_log_output_encoding;
+ const char *apply_default_whitespace;
+diff --git a/setup.c b/setup.c
+index 03f51e0..58536bd 100644
+--- a/setup.c
++++ b/setup.c
+@@ -420,7 +420,11 @@ static int check_repo_format(const char *var, const char *value, void *vdata)
+ 			;
+ 		else if (!strcmp(ext, "preciousobjects"))
+ 			data->precious_objects = git_config_bool(var, value);
+-		else
++		else if (!strcmp(ext, "partialclone")) {
++			if (!value)
++				return config_error_nonbool(var);
++			data->partial_clone = xstrdup(value);
++		} else
+ 			string_list_append(&data->unknown_extensions, ext);
+ 	} else if (strcmp(var, "core.bare") == 0) {
+ 		data->is_bare = git_config_bool(var, value);
+@@ -463,6 +467,7 @@ static int check_repository_format_gently(const char *gitdir, int *nongit_ok)
+ 	}
+ 
+ 	repository_format_precious_objects = candidate.precious_objects;
++	repository_format_partial_clone = candidate.partial_clone;
+ 	string_list_clear(&candidate.unknown_extensions, 0);
+ 	if (!has_common) {
+ 		if (candidate.is_bare != -1) {
 -- 
 2.9.3
 
