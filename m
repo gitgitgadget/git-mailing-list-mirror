@@ -2,131 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,STOX_REPLY_TYPE,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4A8D01FC34
-	for <e@80x24.org>; Fri,  8 Dec 2017 20:26:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 351941FC34
+	for <e@80x24.org>; Fri,  8 Dec 2017 20:37:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753084AbdLHU0c (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Dec 2017 15:26:32 -0500
-Received: from smtp-out-4.talktalk.net ([62.24.135.68]:31853 "EHLO
-        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752521AbdLHU0b (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Dec 2017 15:26:31 -0500
-Received: from PhilipOakley ([92.29.14.162])
-        by smtp.talktalk.net with SMTP
-        id NPE5evoYtAp17NPE5elN35; Fri, 08 Dec 2017 20:26:30 +0000
-X-Originating-IP: [92.29.14.162]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=EsGilWUA c=1 sm=1 tr=0 a=NXc+vVEgz70gitWznrz3ig==:117
- a=NXc+vVEgz70gitWznrz3ig==:17 a=8nJEP1OIZ-IA:10 a=5rxgeBVgAAAA:8
- a=xtxXYLxNAAAA:8 a=ybZZDoGAAAAA:8 a=f0J4QF_wgYAcVRAD5vYA:9 a=wPNLvfGTeEIA:10
- a=0XOFGUN2hUcA:10 a=PwKx63F5tFurRwaNxrlG:22 a=xts0dhWdiJbonKbuqhAr:22
- a=0RhZnL1DYvcuLYC8JZ5M:22
-Message-ID: <582105F8768F4DA6AF4EC82888F0BFBE@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:   "Philip Oakley" <philipoakley@iee.org>
-To:     "Ulrich Windl" <Ulrich.Windl@rz.uni-regensburg.de>,
-        "Junio C Hamano" <gitster@pobox.com>
-Cc:     "Git List" <git@vger.kernel.org>
-References:  <5A1D70FD020000A100029137@gwsmtp1.uni-regensburg.de><5A1D70FD020000A100029137@gwsmtp1.uni-regensburg.de><xmqqtvxd6gu9.fsf@gitster.mtv.corp.google.com><5A1E70AA020000A100029175@gwsmtp1.uni-regensburg.de><7973FF5C21C64E6492828DD0B91F5AF7@PhilipOakley> <xmqq1skcleo7.fsf@gitster.mtv.corp.google.com> <AB9C836772CD4391A8866DC71103CCFE@PhilipOakley> <5A25705C020000A1000292B0@gwsmtp1.uni-regensburg.de>
-Subject: Re: Re: bug deleting "unmerged" branch (2.12.3)
-Date:   Fri, 8 Dec 2017 20:26:27 -0000
-Organization: OPDS
+        id S1752171AbdLHUhh (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Dec 2017 15:37:37 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55349 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750951AbdLHUhg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Dec 2017 15:37:36 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BAAC8AC7F7;
+        Fri,  8 Dec 2017 15:37:35 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=+rNQ39xNYP1Wl96rMeishCa6iiQ=; b=DXZ8jM
+        Tlw8SEwFYtc1i5+0H5kR/4DCsyXzNFUhI6p68imUzFgRUS9x6jdbyN0JH2ZdF9g2
+        NoLnrHraPu0GoUBDnHd5XZc/2I0+Sk0FW6LNO5GsE0jAZPwNNgg3sSpUcqVPLdtq
+        L246JNXhGKK8/2L6QTKQL+j6Iz+REPln7WdDs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=A1o66etYSHQlGpDVnnzoXbwNXqhMADFY
+        Ekw4SvJ45rsY81Xjk10if9MBGrTJmLnlvDQoeo7RgSblPK/ZJmKKxAqwN9qYUbcl
+        tkWFoUeIiMLSJGAucAGNSO/LbLtuI9vifyAuUbK6kRILXac7ppZGgbSB3slK9tvU
+        AF7ZGsjcXEo=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B39C5AC7F6;
+        Fri,  8 Dec 2017 15:37:35 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 295FCAC7F5;
+        Fri,  8 Dec 2017 15:37:35 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Olga Telezhnaya <olyatelezhnaya@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH Outreachy 1/2] format: create pretty.h file
+References: <01020160364a23d5-471a2fd0-9fff-4599-86f8-b2f37a4a0a84-000000@eu-west-1.amazonses.com>
+Date:   Fri, 08 Dec 2017 12:37:33 -0800
+In-Reply-To: <01020160364a23d5-471a2fd0-9fff-4599-86f8-b2f37a4a0a84-000000@eu-west-1.amazonses.com>
+        (Olga Telezhnaya's message of "Fri, 8 Dec 2017 13:21:56 +0000")
+Message-ID: <xmqqr2s56jn6.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="iso-8859-1";
-        reply-type=original
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-Antivirus: AVG (VPS 171208-2, 08/12/2017), Outbound message
-X-Antivirus-Status: Clean
-X-CMAE-Envelope: MS4wfLpaPoTRMbfmzlnyCcJ5KP3HNv1zN479Ya5MBdHh+GzY6/H/aTlcnGH9+ULjvSMZAawYpfbUjDiTExPRnaMb/y0Xe+B2osCFdh5WOUd4kbJJoU1iDzBB
- E3hm36uGoCsFoZEKS7BTcvTTbQN/yHXyUlOeAdWfbl2SnuSYajKsRX9yfQrkmnZx9JMWATaJ9P/mtZOad6+hEiDHruZC9d3VwQCq1DQRwg6J0RT/CuGLgiNG
- UX3qWAidHLy01x/n3mllSg==
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9F5A4BD4-DC57-11E7-B66E-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Ulrich Windl" <Ulrich.Windl@rz.uni-regensburg.de>
-> Hi Philip!
+Olga Telezhnaya <olyatelezhnaya@gmail.com> writes:
+
+>  archive.c             |  1 +
+>  builtin/notes.c       |  2 +-
+>  builtin/reset.c       |  2 +-
+>  builtin/show-branch.c |  2 +-
+>  combine-diff.c        |  1 +
+>  commit.c              |  1 +
+>  commit.h              | 80 ----------------------------------------------
+>  diffcore-pickaxe.c    |  1 +
+>  grep.c                |  1 +
+>  log-tree.c            |  1 +
+>  notes-cache.c         |  1 +
+>  pretty.h              | 87 +++++++++++++++++++++++++++++++++++++++++++++++++++
+>  revision.h            |  2 +-
+>  sequencer.c           |  1 +
+>  sha1_name.c           |  1 +
+>  submodule.c           |  1 +
+>  16 files changed, 101 insertions(+), 84 deletions(-)
+>  create mode 100644 pretty.h
 >
-> I'm unsure what you are asking for...
->
-> Ulrich
+> diff --git a/archive.c b/archive.c
+> index 0b7b62af0c3ec..60607e8c00857 100644
+> --- a/archive.c
+> +++ b/archive.c
+> @@ -2,6 +2,7 @@
+>  #include "config.h"
+>  #include "refs.h"
+>  #include "commit.h"
+> +#include "pretty.h"
+>  #include "tree-walk.h"
+>  #include "attr.h"
+>  #include "archive.h"
 
-Hi Ulrich,
+This has a toll on topics in flight that expect the symbols for
+pretty are available in "commit.h"; they are forced to include
+this new file they did not even know about.
 
-I was doing a retrospective follow up (of the second kind [1]).
-
-In your initial email
-https://public-inbox.org/git/5A1D70FD020000A100029137@gwsmtp1.uni-regensburg.de/
-you said
-
-"I wanted to delete the temporary branch (which is of no use now), I got a
-message that the branch is unmerged.
-I think if more than one branches are pointing to the same commit, one
-should be allowed to delete all but the last one without warning."
-
-My retrospectives question was to find what what part of the documentation
-could be improved to assist fellow coders and Git users in gaining a better
-understanding here. I think it's an easy mistake [2] to make and that we
-should try to make the man pages more assistive.
-
-I suspect that the description for the `git branch -d` needs a few more
-words to clarify the 'merged/unmerged' issue for those who recieve the
-warning message. Or maybe the git-glossary, etc. I tend to believe that most
-users will read some of the man pages, and would continue to do so if they
-are useful.
-
-I'd welcome any feedback or suggestions you could provide.
---
-Philip
-
-> >>> "Philip Oakley" <philipoakley@iee.org> 04.12.17 0.30 Uhr >>>
-> From: "Junio C Hamano" <gitster@pobox.com>
-> > "Philip Oakley" <philipoakley@iee.org> writes:
-> >
-> >> I think it was that currently you are on M, and neither A nor B are
-> >> ancestors (i.e. merged) of M.
-> >>
-> >> As Junio said:- "branch -d" protects branches that are yet to be
-> >> merged to the **current branch**.
-> >
-> > Actually, I think people loosened this over time and removal of
-> > branch X is not rejected even if the range HEAD..X is not empty, as
-> > long as X is marked to integrate with/build on something else with
-> > branch.X.{remote,merge} and the range X@{upstream}..X is empty.
-> >
-> > So the stress of "current branch" above you added is a bit of a
-> > white lie.
->
-> Ah, thanks. [I haven't had chance to check the code]
->
-> The man page does say:
-> .    -d
-> .    Delete a branch. The branch must be fully merged in its upstream
-> .    branch, or in HEAD if no upstream was set with --track
-> .    or --set-upstream.
->
-> It's whether or not Ulrich had joined the two aspects together, and if the
-> doc was sufficient to help recognise the 'unmerged' issue. Ulrich?
-> --
-> Philip
->
->
-
-[1] Retrospective Second Directive, section 3.4.2 of (15th Ed) Agile
-Processes in software engineering and extreme programming. ISBN 1628251042
-(for the perspective of the retrospective..)
-[2] 'mistake' colloquial part of the error categories of slips lapses and
-mistakes : Human Error, by Reason (James, prof) ISBN 0521314194 (worthwhile)
+I notice that "commit.h" is included in "builtin.h"; perhaps adding
+a new include for "pretty.h" there would be of lessor impact?  I
+dunno.
 
