@@ -2,100 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E8DD620C32
-	for <e@80x24.org>; Fri,  8 Dec 2017 11:22:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B460220C32
+	for <e@80x24.org>; Fri,  8 Dec 2017 11:38:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753326AbdLHLW1 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Dec 2017 06:22:27 -0500
-Received: from cloud.peff.net ([104.130.231.41]:52012 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1753284AbdLHLWY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Dec 2017 06:22:24 -0500
-Received: (qmail 3294 invoked by uid 109); 8 Dec 2017 11:22:24 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 08 Dec 2017 11:22:24 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 31090 invoked by uid 111); 8 Dec 2017 11:22:45 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Fri, 08 Dec 2017 06:22:45 -0500
-Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 08 Dec 2017 06:22:22 -0500
-Date:   Fri, 8 Dec 2017 06:22:22 -0500
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Cc:     Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH] refs: drop "clear packed-refs while locked" assertion
-Message-ID: <20171208112222.GA6094@sigill.intra.peff.net>
+        id S1752303AbdLHLif (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Dec 2017 06:38:35 -0500
+Received: from mout.gmx.net ([212.227.17.22]:58345 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751641AbdLHLie (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Dec 2017 06:38:34 -0500
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M6730-1fFlRm2D74-00y709; Fri, 08
+ Dec 2017 12:38:28 +0100
+Date:   Fri, 8 Dec 2017 12:38:20 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Dec 2017, #02; Thu, 7)
+In-Reply-To: <20171208054934.GA17893@tor.lan>
+Message-ID: <alpine.DEB.2.21.1.1712081227080.4318@virtualbox>
+References: <xmqqfu8me7ot.fsf@gitster.mtv.corp.google.com> <20171208054934.GA17893@tor.lan>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: multipart/mixed; boundary="8323329-171833994-1512733108=:4318"
+X-Provags-ID: V03:K0:1rFGTAB9IzIXKi+PQlf7uQc4Q7CsBLXAiygO3GrTqUFb16kVz4K
+ oJ57sLE/EGE7uqlzngOp3LlbTWv70XAJpUbl3fJgiUoh02CzyjSyauDC5bppuyyeoc1dYPS
+ QND9kG51yjj70+AnzooOBvTaJ96K8qRXrJUjhY8B9l6qfUwk45SBxC1J6JNWyQIGVLrJDKO
+ PnO+mPa8nI3BELXJ9FMCg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:gell+K/qOhc=:gYfbW5r+ZulHphzTkd6H1y
+ 4Pig/8t0slCBhYgLc7jTOaJuPeN+THl/6d/UghOAwZjb5rrWpLnKU07AelXQNOnWf6x3MQdQ+
+ BX7A+KuBfG5o0iR1qZEeBJxua0REqlSPUk+VmWKPqn+bT5wA6Vr7X4JL99tfZXCZv5PQsnoe8
+ +agLAt2VCaV+nbORrc5k8di78gcCLdzXsfjp1kHGZ/mrGiCdQuISefWu8NCIfeHYj1CrK+q4T
+ NAdTFqHPfCzxQXSNagqW1A7n+MvQ9DXuzfBYEb6m8hy0pj6f4gUPs0HbJJ2W98fXx0W9yPmoI
+ Vd98T8Voyhbdz+nYJK2MJpEDDjkH4mwMymEzJqSgGbwvMTq2cmlCBfNVZXwn4qXqEEmLQBRd1
+ onUVEFUpaaPmmGmlrcCkMSsdZRAmfFTfC5OnD/BCEt7di5TmPkZttx29Sf64PEthWsZXQashv
+ RMH7nKwrATofTm+6x90ODULYcX9V+GwJKeXz9C//SSkbA/SvlJcMVT5n+bN2ZkWIZGDqCWtZm
+ ZJ8dg/3vUfnbMVz60ns3r/WmzBB4i3y5B0uxXtSIVIKSq6bSzLW4eeFi+Bn3HAyin3wGhWdrM
+ 41dDKcaMyrPxSyW8zEK52I+Bhl/zRraQkuIalP9SIdKzPLf5n+NX5d9LlhXxD2fKkI8Jj2Cw2
+ LVSYgCeAEp0bVoXKNWOjp2pTm3iThB4wjDbsOssewkT8FoDRVthEWdrEYJREyDD1mZyq+5apg
+ NrdZp8sldsSFdZNAKScUZ6opnue6FMbJWzUYfIJjC7V/MqeoNWLlrgBmk2uw5TMMlI8bmkU1s
+ MEb8caEJhuCQIarIokJYDWJ8/Uy+iDrwdCT0nKwbe5gaxt9/mI=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patch fixes a regression in v2.14.0. It's actually fixed already in
-v2.15.0 because all of the packed-ref code there was rewritten. So
-there's no point in applying this on "master" or even "maint". But I
-figured it was worth sharing here in case somebody else runs across it,
-and in case we ever do a v2.14.4 release.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
--- >8 --
-In clear_packed_ref_cache(), we assert that we're not
-currently holding the packed-refs lock. But in each of the
-three code paths that can hit this, the assertion is either
-a noop or actively does the wrong thing:
+--8323329-171833994-1512733108=:4318
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
- 1. in rollback_packed_refs(), we will have just released
-    the lock before calling the function, and so the
-    assertion can never trigger.
+Hi,
 
- 2. get_packed_ref_cache() can reach this assertion via
-    validate_packed_ref_cache(). But it calls the validate
-    function only when it knows that we're not holding the
-    lock, so again, the assertion can never trigger.
+On Fri, 8 Dec 2017, Torsten B=C3=B6gershausen wrote:
 
- 3. lock_packed_refs() also calls validate_packed_ref_cache().
-    In this case we're _always_ holding the lock, which
-    means any time the validate function has to clear the
-    cache, we'll trigger this assertion and die.
+> > * tb/check-crlf-for-safe-crlf (2017-11-27) 1 commit
+> >   (merged to 'next' on 2017-12-05 at 7adaa1fe01)
+> >  + convert: tighten the safe autocrlf handling
+> >=20
+> >  The "safe crlf" check incorrectly triggered for contents that does
+> >  not use CRLF as line endings, which has been corrected.
+> >=20
+> >  Broken on Windows???
+> >  cf. <DA960DCE-0635-47CF-B3C4-8133021799F1@gmail.com>
+>=20
+> Yes, broken on Windows. A fix is coming the next days.
 
-    This doesn't happen often in practice because the
-    validate function clears the cache only if we find that
-    somebody else has racily rewritten the packed-refs file
-    between the time we read it and the time we took the lock.
+We might want to consider using a saner Continuous Testing workflow, to
+avoid re-testing (and re-finding) breakages in individual patch series
+just because completely unrelated patch got updated.
 
-    So most of the time we don't reach the assertion at all
-    (nobody has racily written the file so there's no need
-    to clear the cache). And when we do, it is not actually
-    indicative of a bug; clearing the cache while holding
-    the lock is the right thing to do here.
+I mean, yes, it seemed like a good idea a long time ago to have One Branch
+that contains All The Patch Series Currently Cooking, back when our most
+reliable (because only) test facilities were poor humans.
 
-This final case is relatively new, being triggerd by the
-extra validation added in fed6ebebf1 (lock_packed_refs():
-fix cache validity check, 2017-06-12).
+But we see how many more subtle bugs are spotted nowadays where Git's
+source code is tested automatically on a growing number of Operating
+System/CPU architecture "coordinates", and it is probably time to save
+some human resources.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- refs/files-backend.c | 2 --
- 1 file changed, 2 deletions(-)
+How about testing the individual branches instead?
 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index f21a954ce7..dd41e1d382 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -99,8 +99,6 @@ static void clear_packed_ref_cache(struct files_ref_store *refs)
- 	if (refs->packed) {
- 		struct packed_ref_cache *packed_refs = refs->packed;
- 
--		if (is_lock_file_locked(&refs->packed_refs_lock))
--			die("BUG: packed-ref cache cleared while locked");
- 		refs->packed = NULL;
- 		release_packed_ref_cache(packed_refs);
- 	}
--- 
-2.15.1.659.g8bd2eae3ea
+This would save me a ton of time, as bisecting is just too expensive given
+the scattered base commits of the branches smooshed into `pu`. (There is a
+new Git/Error.pm breakage in pu for about a week that I simply have not
+gotten around to, or better put: that I did not want to tackle given the
+time committment).)
+
+Ciao,
+Dscho
+--8323329-171833994-1512733108=:4318--
