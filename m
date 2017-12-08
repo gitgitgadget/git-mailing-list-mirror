@@ -7,67 +7,97 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 90AFA1FC34
-	for <e@80x24.org>; Fri,  8 Dec 2017 22:17:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2AF5B1FC34
+	for <e@80x24.org>; Fri,  8 Dec 2017 22:29:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752562AbdLHWRE (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Dec 2017 17:17:04 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53430 "EHLO
+        id S1752833AbdLHW3P (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Dec 2017 17:29:15 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58082 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752350AbdLHWRD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Dec 2017 17:17:03 -0500
+        with ESMTP id S1752631AbdLHW3O (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Dec 2017 17:29:14 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id ABA7AAE2C0;
-        Fri,  8 Dec 2017 17:17:02 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-        :subject:date:message-id:mime-version:content-type; s=sasl; bh=S
-        f0g2OZWLo6RaGOSzW/RT99xJCs=; b=COv3NMeTNvaZSELun5GKwNC1uXfwIOwKQ
-        AfMjldMPFp2Vlm5/1RscnVB1ZN7u/ni952XEXvg8aF98bznhmxp6NFKU0gwX9Cte
-        LznBv+fGSoE2hEpbaTtbWjFd+NU3mr+oJgqh7GkfV8iE6a/p4UHlpEFoIcdDiNN9
-        bQ/RidWvyQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-        :date:message-id:mime-version:content-type; q=dns; s=sasl; b=VNt
-        dlPU+TVsJXnxXZpywUX4woa+1bYGlD6cMrhu4PPMKgKk1xzF/9qRD2oTkfsLT/f5
-        Q04lx3T5CNTzbjbSpIkYUIRXEp/I6hX0Ybmlhv9W+j4B7NzJ/0A6bU395GptHdIk
-        iuwsyYwB8ve8R6QO/7OVR/OsUnN5zx7fdUv8O3qw=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A0C4FAE2BF;
-        Fri,  8 Dec 2017 17:17:02 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CFC60B17B2;
+        Fri,  8 Dec 2017 17:29:13 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=f0bHlaOtMEMobHo5L/GxLPnSO/k=; b=QosXpA
+        /dMi36+FgbVlTzLjCBW6GA1CE7eAurbPnAObJNrcbka3NFhbCN4Ekm+IyRsxYd2T
+        GKp0+ABee80xvuInijtQH2kYDhiUOJFZDCMcl2UBTQ1WLHQbhac7Zk0eeB+nqoJ9
+        0984cC7qXDuKYGk13TbBUiYQqP5mDjYwrx4wA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=dbQJ8nfYwcxndL/H5rhsU+fjd4486wW8
+        MmZ/PIi7BOrvMLTwaWd+cDKW+GGJZT/3HSpeNIyEE7qjwet2i0SeasENhSg8kzPa
+        v00P5CusGoVvKnoLcZrizn5Xz4vJ1SKTVA5J8WzvqCmYVHVzs7zadguxSszecaJa
+        /obJ3OeVz7M=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C4DBFB17B1;
+        Fri,  8 Dec 2017 17:29:13 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 27A5CAE2BD;
-        Fri,  8 Dec 2017 17:17:02 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3A589B17B0;
+        Fri,  8 Dec 2017 17:29:13 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Subject: [PATCH] t6120: fix under gettext-poison
-Date:   Fri, 08 Dec 2017 14:17:00 -0800
-Message-ID: <xmqqa7ys7tlv.fsf@gitster.mtv.corp.google.com>
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>
+Cc:     "'Jeff King'" <peff@peff.net>,
+        =?utf-8?Q?'=C3=86var_Arnfj=C3=B6r?= =?utf-8?Q?=C3=B0_Bjarmason'?= 
+        <avarab@gmail.com>, <git@vger.kernel.org>
+Subject: Re: Documentation Breakage at 2.5.6
+References: <008d01d36e48$747cc130$5d764390$@nexbridge.com>
+        <877eu0uvb2.fsf@evledraar.gmail.com>
+        <20171206084833.GA9501@sigill.intra.peff.net>
+        <002601d36ea8$ea80b160$bf821420$@nexbridge.com>
+Date:   Fri, 08 Dec 2017 14:29:11 -0800
+In-Reply-To: <002601d36ea8$ea80b160$bf821420$@nexbridge.com> (Randall
+        S. Becker's message of "Wed, 6 Dec 2017 10:43:03 -0500")
+Message-ID: <xmqq4lp07t1k.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 83F47956-DC65-11E7-ABCD-8EF31968708C-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 37B6E5EA-DC67-11E7-A20C-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I'll queue this on top so that 'pu' would have one fewer breakage at
-Travis.
+"Randall S. Becker" <rsbecker@nexbridge.com> writes:
 
-diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
-index 4668f0058e..3e3fb462a0 100755
---- a/t/t6120-describe.sh
-+++ b/t/t6120-describe.sh
-@@ -341,7 +341,7 @@ test_expect_success 'describe directly tagged blob' '
- test_expect_success 'describe tag object' '
- 	git tag test-blob-1 -a -m msg unique-file:file &&
- 	test_must_fail git describe test-blob-1 2>actual &&
--	grep "fatal: test-blob-1 is neither a commit nor blob" actual
-+	test_i18ngrep "fatal: test-blob-1 is neither a commit nor blob" actual
- '
- 
- test_expect_failure ULIMIT_STACK_SIZE 'name-rev works in a deep repo' '
--- 
-2.15.1-501-gdae66d7f65
+> One request to Junio: Would it be possible to tag the commits to
+> align with the tags in the main repo? That way, I can build a nice
+> little Jenkins job to automatically fetch the correct commit for
+> man pages when packaging up a release.
 
+Sorry, I missed this due to an overlong line in the message.
+
+I am not interested in doing anything more than absolute minimum in
+the history that records generated cruft.  We already describe the
+mainline commit object names in the messages; perhaps that is
+sufficient?
+
+        commit daa88a54a985ed1ef258800c742223c2a8f0caaa
+        Author: Junio C Hamano <gitster@pobox.com>
+        Date:   Wed Dec 6 10:04:03 2017 -0800
+
+            Autogenerated manpages for v2.15.1-354-g95ec6
+
+        commit 466a3070abecf4081a12d8e07c770689506440b9
+        Author: Junio C Hamano <gitster@pobox.com>
+        Date:   Wed Nov 29 10:12:49 2017 +0900
+
+            Autogenerated manpages for v2.15.1-271-g1a4e4
+
+        commit be681f4100647ab93fd19cb5066fcaa2cb79204b
+        Author: Junio C Hamano <gitster@pobox.com>
+        Date:   Mon Nov 27 12:33:30 2017 +0900
+
+            Autogenerated manpages for v2.15.0-374-g5f995
+
+The primary reason why I do not want to tag them is because the tree
+the documentation sources were taken from is *not* the only thing
+that affects these autogenerated cruft.  The AsciiDoc toolchain that
+happen to be installed on the box the day I ran the documentation
+tools is an obvious difference, and I do not want to make them
+appear any more definitive and official.  "This is *the* manpage for
+release v2.15.1" is the message I do not want to give.
