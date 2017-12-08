@@ -7,96 +7,95 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DD9B520C3A
-	for <e@80x24.org>; Fri,  8 Dec 2017 18:13:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5FEDF20C39
+	for <e@80x24.org>; Fri,  8 Dec 2017 18:21:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752556AbdLHSNY (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Dec 2017 13:13:24 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60558 "EHLO
+        id S1752596AbdLHSVX (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Dec 2017 13:21:23 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54121 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752111AbdLHSNX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Dec 2017 13:13:23 -0500
+        with ESMTP id S1752235AbdLHSVW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Dec 2017 13:21:22 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 627DED244A;
-        Fri,  8 Dec 2017 13:13:22 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B43ABABC72;
+        Fri,  8 Dec 2017 13:21:21 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=qi4rOqOPWyTq
-        eGYvRaGFLbSkFvA=; b=wcjvtZ6SXn+g3IsEI4LeYst5OTeiXbGTsJNzq4kH9f/b
-        u0i+Q5uZkNXZEvo21G+o55o0+AloqT53U32XUXYSyB+nf1pqj+52YHc7xgQ0P8U+
-        LVp1PIei181456wY498O9T3ShW3vZkxBLfss1W9Nay9yt2n7WhfYCn0ymVAag9w=
+        :content-type:content-transfer-encoding; s=sasl; bh=RPHXEuOT9eJu
+        4DwY8XQUWqYYAqk=; b=iDqR/4lbRfTUBMV0yAYWPE2nO37JRH32xB3KiwSJoRUC
+        eHAy7yNen82+g6rF0clBf5Q3zIz1/awraU3QWQEfPg5ZTB6CcM57l3FM1hwk06F4
+        iKUGMUKPsDudOQTbARRhH4MlKfHIH/j3OkNRdq+pNx7o8U2/z6jntX+sjEqWkXc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=NGNLZX
-        NoubZBB5NDJ/K07u3sNmjONcgHFGtSnCtwbPN3rCUy9svJCaP3aHmX0LARCnW1cy
-        GvBETbzzRAHFHWVMMJIqDY9OBNI4Xe5rTYsmqRwbfPHyUs5X99nvLB7SRAFT8pfA
-        u52xRitR7k5I8LF2LWBJCoIbhZAyYEdLkRn1g=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 596A7D2449;
-        Fri,  8 Dec 2017 13:13:22 -0500 (EST)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=sUd1nQ
+        QknGnDiExLj6fXOxi+8IKT3eeZ/I9lTWFBH0eA08LFJUqeYolKCkDqIMa2wz9gss
+        RAvc/khp9NBA0OshHP5CzmSozzJpwcvssn6kTelrSepumc4d90Z2zLYGbtvap3bc
+        6jujLZuI4L/zPNYMUUfIB1GFBdTrm1cudeUTM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id AD50BABC71;
+        Fri,  8 Dec 2017 13:21:21 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BA200D2448;
-        Fri,  8 Dec 2017 13:13:21 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 250DEABC70;
+        Fri,  8 Dec 2017 13:21:21 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     tboegi@web.de
 Cc:     git@vger.kernel.org, ashishnegi33@gmail.com
 Subject: Re: [PATCH v1 1/2] t0027: Don't use git commit <empty-pathspec>
 References: <CAJ_+vJ6FXXda4fe7=1YxtDGR2d8CqP4KXN+YR6+mdQ+5jQQXug@mail.gmail.com>
         <20171208174633.9903-1-tboegi@web.de>
-Date:   Fri, 08 Dec 2017 10:13:20 -0800
-In-Reply-To: <20171208174633.9903-1-tboegi@web.de> (tboegi@web.de's message of
-        "Fri, 8 Dec 2017 18:46:33 +0100")
-Message-ID: <xmqqpo7p84vz.fsf@gitster.mtv.corp.google.com>
+        <xmqqpo7p84vz.fsf@gitster.mtv.corp.google.com>
+Date:   Fri, 08 Dec 2017 10:21:19 -0800
+In-Reply-To: <xmqqpo7p84vz.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Fri, 08 Dec 2017 10:13:20 -0800")
+Message-ID: <xmqqlgid84io.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 7985E846-DC43-11E7-A419-8EF31968708C-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 97425C74-DC44-11E7-A6E4-575F0C78B957-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-tboegi@web.de writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> From: Torsten B=C3=B6gershausen <tboegi@web.de>
+> tboegi@web.de writes:
 >
-> Replace `git commit -m "comment" ""` with `git commit -m "comment"` to
-> remove the empty path spec.
+>> From: Torsten B=C3=B6gershausen <tboegi@web.de>
+>>
+>> Replace `git commit -m "comment" ""` with `git commit -m "comment"` to
+>> remove the empty path spec.
+>>
+>> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+>> ---
+>>  t/t0027-auto-crlf.sh | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
-> ---
->  t/t0027-auto-crlf.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> This looks a bit strange.  The intent seems to commit all changes
+> made in the working tree, so I'd understand it if it replaced the
+> empty string with a single dot.
+>
+> I also thought that we deprecated use of an empty string as "match
+> all" pathspec recently, and expected that this to break.
+>
+>     ... goes and looks ...
+>
+> Indeed, 229a95aa ("t0027: do not use an empty string as a pathspec
+> element", 2017-06-23) does exactly that.
 
-This looks a bit strange.  The intent seems to commit all changes
-made in the working tree, so I'd understand it if it replaced the
-empty string with a single dot.
+OK, I think I can safely omit this patch, because
 
-I also thought that we deprecated use of an empty string as "match
-all" pathspec recently, and expected that this to break.
+ (1) when 2/2 is queued on top of tb/check-crlf-for-safe-crlf,
+     because ex/deprecate-empty-pathspec-as-match-all is not yet in
+     the topic, an empty pathspec still means "match all" and
+     nothing breaks; and
 
-    ... goes and looks ...
+ (2) when tb/check-crlf-for-safe-crlf plus 2/2 is merged to any
+     branch with ex/deprecate-empty-pathspec-as-match-all, the topic
+     already fixes what this 1/2 tries to
 
-Indeed, 229a95aa ("t0027: do not use an empty string as a pathspec
-element", 2017-06-23) does exactly that.
+Thanks for being thorough, though.
 
-
-> diff --git a/t/t0027-auto-crlf.sh b/t/t0027-auto-crlf.sh
-> index c2c208fdcd..97154f5c79 100755
-> --- a/t/t0027-auto-crlf.sh
-> +++ b/t/t0027-auto-crlf.sh
-> @@ -370,7 +370,7 @@ test_expect_success 'setup master' '
->  	echo >.gitattributes &&
->  	git checkout -b master &&
->  	git add .gitattributes &&
-> -	git commit -m "add .gitattributes" "" &&
-> +	git commit -m "add .gitattributes" &&
->  	printf "\$Id: 0000000000000000000000000000000000000000 \$\nLINEONE\nL=
-INETWO\nLINETHREE"     >LF &&
->  	printf "\$Id: 0000000000000000000000000000000000000000 \$\r\nLINEONE\=
-r\nLINETWO\r\nLINETHREE" >CRLF &&
->  	printf "\$Id: 0000000000000000000000000000000000000000 \$\nLINEONE\r\=
-nLINETWO\nLINETHREE"   >CRLF_mix_LF &&
