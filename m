@@ -2,93 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6D8851FC34
-	for <e@80x24.org>; Fri,  8 Dec 2017 20:08:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3EB721FC34
+	for <e@80x24.org>; Fri,  8 Dec 2017 20:10:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752501AbdLHUI4 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Dec 2017 15:08:56 -0500
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:44010 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752350AbdLHUIx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Dec 2017 15:08:53 -0500
-Received: by mail-pg0-f66.google.com with SMTP id b18so7540954pgv.10
-        for <git@vger.kernel.org>; Fri, 08 Dec 2017 12:08:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=SGfnHMfUL0tv9O+mZy57WWMf20XwKQory6X8nbv4YRs=;
-        b=q82Q0jUSLd9xlRt3cAWGVI9lt6CzhvbiAPFJV7OTp2Mj8RKnpUfSs1xf1GyaZHuSnB
-         hd1amYoxNoJKntHyyJFb8Qialt1TfMIM54tXVJJv5FUjCoemL0j7U9qYZ6z+2Jp5FglV
-         42f1ktwY3NYHCq26udNIHrs2Fi2xN3L9VHkVWCEaJPGTBr1xVs7TomkNxql4wlRnBgg7
-         dflSrKAXGV5NeOQuvkjFD91p0+3RE9TPg4y/YkEQPkVM785Vt7NBsmPLHMZXwg4kaMim
-         Nylb1qogMACYO8YO6mn4V+BN7BDub0IcAQdMiSRfykB69eYgEcSBcOijiZ+MLi4zJ2ah
-         WdnA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=SGfnHMfUL0tv9O+mZy57WWMf20XwKQory6X8nbv4YRs=;
-        b=rxT02MCiMxG7vt0jT+Yf5/Wa1o3RaTjoUAWlfe4kNmZ3PmfY0DRdscXL8CiR6hSdFS
-         sDpv7u+BCIqC3vtyg29+5Deb/4Py6WcSfZMPo+50ulJwUtbinQYw4gCtSf92itt7FNmA
-         F4BmFB7PJq9eFOZ+tLJyi8SN/TUepuWoiI/kCdu0A61YG6QRyHzd2NE3xcq6mm1siJqy
-         I5wMjSr0dtTM5LRnhnZrfbT0RDl4PkzKMDLRIONmcISAQ4nT3plBPwrU18E+/T9lVK4P
-         SWlPo9maKVcLYVrrxJ432fpQZGD8osMEkoc8zz5XCEGwNJSClfSeBRNERlDWtz9401Qa
-         +nuQ==
-X-Gm-Message-State: AJaThX5QUpTDqUXKxgFpxjD9MjTpRk//5FvXJJ0lSEG439hgMyO/vXet
-        wuTiCQUuTUo8YhOBQNQdvd05UA==
-X-Google-Smtp-Source: AGs4zMaEjcqZZEYk6UOq/T2J0e1f6ECWdv2mKmljfEWY1zk+fHN87a2/siUJ9U6whNo2EGkZnv1fYQ==
-X-Received: by 10.101.96.213 with SMTP id r21mr30200225pgv.395.1512763732612;
-        Fri, 08 Dec 2017 12:08:52 -0800 (PST)
-Received: from google.com ([2620:0:100e:422:e4f1:b67a:70f2:4fbe])
-        by smtp.gmail.com with ESMTPSA id h69sm15390404pfe.107.2017.12.08.12.08.51
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 08 Dec 2017 12:08:51 -0800 (PST)
-Date:   Fri, 8 Dec 2017 12:08:50 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git <git@vger.kernel.org>
-Subject: Re: [WIP 03/15] pkt-line: add delim packet support
-Message-ID: <20171208200850.GA140529@google.com>
-References: <20171020171839.4188-1-bmwill@google.com>
- <20171204235823.63299-1-bmwill@google.com>
- <20171204235823.63299-4-bmwill@google.com>
- <CAGZ79kYw3y3grehEbFeoA2r7pEra079M7zVpcVwxcoK5BPN1Dw@mail.gmail.com>
+        id S1752070AbdLHUKg (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Dec 2017 15:10:36 -0500
+Received: from mout.web.de ([217.72.192.78]:58685 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750741AbdLHUKf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Dec 2017 15:10:35 -0500
+Received: from [192.168.178.36] ([91.20.50.52]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MDxGV-1eHabj2sAB-00HR4c; Fri, 08
+ Dec 2017 21:10:28 +0100
+Subject: Re: [PATCH] fmt-merge-msg: avoid leaking strbuf in shortlog()
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>
+References: <b2238da3-9eba-1521-f4ca-3b805f103555@web.de>
+ <20171207212735.GD12850@sigill.intra.peff.net>
+ <e1daa2b6-004b-ad66-b84d-84fa70a44baf@web.de>
+ <xmqq609h83gg.fsf@gitster.mtv.corp.google.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <20ca4c68-1101-0309-966e-cd0615931f1e@web.de>
+Date:   Fri, 8 Dec 2017 21:10:26 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kYw3y3grehEbFeoA2r7pEra079M7zVpcVwxcoK5BPN1Dw@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <xmqq609h83gg.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:5+xGXZr0a1l8EIDbtsAD7wiqtN2Dwg5BaoFNZFTkdXF7HV0wXbU
+ O+mV0dvixNWPKb7+qQ0gDZSG5NDEmFiSrZQ65drbMeDqMyfAzMvngPa4yFcXcC9D0MULY8Q
+ zWiNgKKjoqu8GRHVAO0p0tHnoZxId2OsCGOIGjVfuYuCHaGRRMvnRf4RIHjgRykdP1HMYtz
+ NahzCHwVivTsePj/b9COw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:xiSKTwxDbHU=:ZpC58wa2ZVY3pmf01IkPlU
+ QoCSA8mG39fD2WuabnL1QLakKmvPRyLgQyzzdx51mMdmBd5gSRV3opKyYGpunCqjrleDk9lGo
+ XgSNtrSqlIVbASwUqE8YT1jiTNr6+IanlWWcPPzR9rWjO9XefxHvVD4V1I9y2Il9pyudVQwSY
+ WLMJ01oJJPKTFO9U7UGkjmN9bEe4sBIc0uPyKF4ziN47xjwQkddbvlVU+tXoUQScsGG+9qSCV
+ 88EX5ORvtoxHzbDp6k66uRTL62syBnBZi52NabnQ5EISwbQ0D73681TJYmWPEvNnA1PMjLHZn
+ 2s9grHmNgqZ+WnsT/9FwkEqZo3i4yoRN/m7OexW9Ehgx4Pk9KGV3dZ3hlg3YaEkcFzRWD8LJO
+ oEulN5DM83ZeTQJd9RfmNMmDgxJxEhIQ9yi48WyVLuQxYsdIAvMcHywuQzDrdf+N8ixCDtDf3
+ 9ZSzjiwb1Rj82eBRFnNnQY7zUNPks06upCVsKpodvw9UL/vUPSVrMMyToHGrLrhT8798cxvnP
+ 65a9/khKrEgPbBL9RHZl+wo17nx2sax7MByBXQMUKXJltdSoHB1EPgIj01/fcKUp7uBxJvvP3
+ ozm5GlCjca72QdVvamW5Yc8WrqKWiFYVuG8fGe9yj6f8ysPzqmEeMCMJoPWajVRpy9n9ijkA5
+ iIWSQAlYw58AtuDTwH2DCXoTWxhArVS07u/iJ4JcJ0uCtB/bKCC9Xqr/vBwUgbScFSdE1shzQ
+ S2ey12DTb7SrdckNBQCTXWsafe+vCfx7T2c3Ff6AXR6DKX3Nl2Vg1e/TC5oTkuJOHmoBKmQCm
+ OrLFoC7v1f9/xL/ZZYHOdAlve6BP2FcW7qL8csgNHHmdcMHsXs=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/07, Stefan Beller wrote:
-> On Mon, Dec 4, 2017 at 3:58 PM, Brandon Williams <bmwill@google.com> wrote:
-> > One of the design goals of protocol-v2 is to improve the semantics of
-> > flush packets.  Currently in protocol-v1, flush packets are used both to
-> > indicate a break in a list of packet lines as well as an indication that
-> > one side has finished speaking.  This makes it particularly difficult
-> > to implement proxies as a proxy would need to completely understand git
-> > protocol instead of simply looking for a flush packet.
-> >
-> > To do this, introduce the special deliminator packet '0001'.  A delim
-> > packet can then be used as a deliminator between lists of packet lines
-> > while flush packets can be reserved to indicate the end of a response.
-> >
-> > Signed-off-by: Brandon Williams <bmwill@google.com>
+Am 08.12.2017 um 19:44 schrieb Junio C Hamano:
+> René Scharfe <l.s.r@web.de> writes:
 > 
-> I presume the update for Documentation/technical/* comes at a later patch in the
-> series, clarifying the exact semantic difference between the packet types?
+>> Am 07.12.2017 um 22:27 schrieb Jeff King:
+>>> Grepping for "list_append.*detach" shows a few other possible cases in
+>>> transport-helper.c, which I think are leaks.
+>>
+>> -- >8 --
+>> Subject: [PATCH] transport-helper: plug strbuf and string_list leaks
+>>
+>> Transfer ownership of detached strbufs to string_lists of the
+>> duplicating variety by calling string_list_append_nodup() instead of
+>> string_list_append() to avoid duplicating and then leaking the buffer.
+>>
+>> While at it make sure to release the string_list when done;
+>> push_refs_with_export() already does that.
+>>
+>> Reported-by: Jeff King <peff@peff.net>
+>> Signed-off-by: Rene Scharfe <l.s.r@web.de>
+>> ---
+>>   transport-helper.c | 7 +++++--
+>>   1 file changed, 5 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/transport-helper.c b/transport-helper.c
+>> index bf05a2dcf1..f682e7c534 100644
+>> --- a/transport-helper.c
+>> +++ b/transport-helper.c
+>> @@ -882,7 +882,8 @@ static int push_refs_with_push(struct transport *transport,
+>>   			struct strbuf cas = STRBUF_INIT;
+>>   			strbuf_addf(&cas, "%s:%s",
+>>   				    ref->name, oid_to_hex(&ref->old_oid_expect));
+>> -			string_list_append(&cas_options, strbuf_detach(&cas, NULL));
+>> +			string_list_append_nodup(&cas_options,
+>> +						 strbuf_detach(&cas, NULL));
+>>   		}
+>>   	}
+>>   	if (buf.len == 0) {
+>> @@ -897,6 +898,7 @@ static int push_refs_with_push(struct transport *transport,
+>>   	strbuf_addch(&buf, '\n');
+>>   	sendline(data, &buf);
+>>   	strbuf_release(&buf);
+>> +	string_list_release(&cas_options, 0);
+> 
+> There is no such function; you meant _clear() perhaps?
 
-Yeah, currently there isn't a use for the delim packet but there will be
-one when v2 is introduced.
+Yes, of course, I'm sorry.  Not sure what happened there. O_o
 
--- 
-Brandon Williams
+René
