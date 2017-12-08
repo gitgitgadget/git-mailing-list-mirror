@@ -6,29 +6,30 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 47AC820C31
-	for <e@80x24.org>; Fri,  8 Dec 2017 15:59:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0D27D20C31
+	for <e@80x24.org>; Fri,  8 Dec 2017 15:59:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754290AbdLHP7m (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Dec 2017 10:59:42 -0500
-Received: from siwi.pair.com ([209.68.5.199]:55853 "EHLO siwi.pair.com"
+        id S1754331AbdLHP7o (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Dec 2017 10:59:44 -0500
+Received: from siwi.pair.com ([209.68.5.199]:55845 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754549AbdLHP7M (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Dec 2017 10:59:12 -0500
+        id S1754486AbdLHP7L (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Dec 2017 10:59:11 -0500
 Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 90829844F5;
+        by siwi.pair.com (Postfix) with ESMTP id 0AEB3844F4;
         Fri,  8 Dec 2017 10:59:11 -0500 (EST)
 Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 28512844DE;
-        Fri,  8 Dec 2017 10:59:11 -0500 (EST)
+        by siwi.pair.com (Postfix) with ESMTPSA id 82301844DE;
+        Fri,  8 Dec 2017 10:59:10 -0500 (EST)
 From:   Jeff Hostetler <git@jeffhostetler.com>
 To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net, jonathantanmy@google.com
-Subject: [PATCH v7 08/16] fetch: refactor calculation of remote list
-Date:   Fri,  8 Dec 2017 15:58:43 +0000
-Message-Id: <20171208155851.855-9-git@jeffhostetler.com>
+Cc:     gitster@pobox.com, peff@peff.net, jonathantanmy@google.com,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: [PATCH v7 07/16] fetch-pack: test support excluding large blobs
+Date:   Fri,  8 Dec 2017 15:58:42 +0000
+Message-Id: <20171208155851.855-8-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20171208155851.855-1-git@jeffhostetler.com>
 References: <20171208155851.855-1-git@jeffhostetler.com>
@@ -39,68 +40,77 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jonathan Tan <jonathantanmy@google.com>
 
-Separate out the calculation of remotes to be fetched from and the
-actual fetching. This will allow us to include an additional step before
-the actual fetching in a subsequent commit.
+Created tests to verify fetch-pack and upload-pack support
+for excluding large blobs using --filter=blobs:limit=<n>
+parameter.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- builtin/fetch.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ t/t5500-fetch-pack.sh | 27 +++++++++++++++++++++++++++
+ upload-pack.c         | 13 +++++++++----
+ 2 files changed, 36 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 225c734..1b1f039 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1322,7 +1322,7 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- {
- 	int i;
- 	struct string_list list = STRING_LIST_INIT_DUP;
--	struct remote *remote;
-+	struct remote *remote = NULL;
- 	int result = 0;
- 	struct argv_array argv_gc_auto = ARGV_ARRAY_INIT;
+diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
+index 80a1a32..c57916b 100755
+--- a/t/t5500-fetch-pack.sh
++++ b/t/t5500-fetch-pack.sh
+@@ -755,4 +755,31 @@ test_expect_success 'fetching deepen' '
+ 	)
+ '
  
-@@ -1367,17 +1367,14 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 		else if (argc > 1)
- 			die(_("fetch --all does not make sense with refspecs"));
- 		(void) for_each_remote(get_one_remote_for_fetch, &list);
--		result = fetch_multiple(&list);
- 	} else if (argc == 0) {
- 		/* No arguments -- use default remote */
- 		remote = remote_get(NULL);
--		result = fetch_one(remote, argc, argv);
- 	} else if (multiple) {
- 		/* All arguments are assumed to be remotes or groups */
- 		for (i = 0; i < argc; i++)
- 			if (!add_remote_or_group(argv[i], &list))
- 				die(_("No such remote or remote group: %s"), argv[i]);
--		result = fetch_multiple(&list);
- 	} else {
- 		/* Single remote or group */
- 		(void) add_remote_or_group(argv[0], &list);
-@@ -1385,14 +1382,19 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 			/* More than one remote */
- 			if (argc > 1)
- 				die(_("Fetching a group and specifying refspecs does not make sense"));
--			result = fetch_multiple(&list);
- 		} else {
- 			/* Zero or one remotes */
- 			remote = remote_get(argv[0]);
--			result = fetch_one(remote, argc-1, argv+1);
-+			argc--;
-+			argv++;
- 		}
++test_expect_success 'filtering by size' '
++	rm -rf server client &&
++	test_create_repo server &&
++	test_commit -C server one &&
++	test_config -C server uploadpack.allowfilter 1 &&
++
++	test_create_repo client &&
++	git -C client fetch-pack --filter=blob:limit=0 ../server HEAD &&
++
++	# Ensure that object is not inadvertently fetched
++	test_must_fail git -C client cat-file -e $(git hash-object server/one.t)
++'
++
++test_expect_success 'filtering by size has no effect if support for it is not advertised' '
++	rm -rf server client &&
++	test_create_repo server &&
++	test_commit -C server one &&
++
++	test_create_repo client &&
++	git -C client fetch-pack --filter=blob:limit=0 ../server HEAD 2> err &&
++
++	# Ensure that object is fetched
++	git -C client cat-file -e $(git hash-object server/one.t) &&
++
++	test_i18ngrep "filtering not recognized by server" err
++'
++
+ test_done
+diff --git a/upload-pack.c b/upload-pack.c
+index e6d38b9..15b6605 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -139,10 +139,15 @@ static void create_pack_file(void)
+ 	if (use_include_tag)
+ 		argv_array_push(&pack_objects.args, "--include-tag");
+ 	if (filter_options.filter_spec) {
+-		struct strbuf buf = STRBUF_INIT;
+-		sq_quote_buf(&buf, filter_options.filter_spec);
+-		argv_array_pushf(&pack_objects.args, "--filter=%s", buf.buf);
+-		strbuf_release(&buf);
++		if (pack_objects.use_shell) {
++			struct strbuf buf = STRBUF_INIT;
++			sq_quote_buf(&buf, filter_options.filter_spec);
++			argv_array_pushf(&pack_objects.args, "--filter=%s", buf.buf);
++			strbuf_release(&buf);
++		} else {
++			argv_array_pushf(&pack_objects.args, "--filter=%s",
++					 filter_options.filter_spec);
++		}
  	}
  
-+	if (remote)
-+		result = fetch_one(remote, argc, argv);
-+	else
-+		result = fetch_multiple(&list);
-+
- 	if (!result && (recurse_submodules != RECURSE_SUBMODULES_OFF)) {
- 		struct argv_array options = ARGV_ARRAY_INIT;
- 
+ 	pack_objects.in = -1;
 -- 
 2.9.3
 
