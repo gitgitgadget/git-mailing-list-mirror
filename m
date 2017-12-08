@@ -2,87 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5E7CD1FC34
-	for <e@80x24.org>; Fri,  8 Dec 2017 21:17:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9E53E1FC34
+	for <e@80x24.org>; Fri,  8 Dec 2017 21:17:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752487AbdLHVRI (ORCPT <rfc822;e@80x24.org>);
+        id S1753012AbdLHVRK (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Dec 2017 16:17:10 -0500
+Received: from cloud.peff.net ([104.130.231.41]:52896 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1752255AbdLHVRI (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 8 Dec 2017 16:17:08 -0500
-Received: from mail-qk0-f171.google.com ([209.85.220.171]:46144 "EHLO
-        mail-qk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750951AbdLHVRG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Dec 2017 16:17:06 -0500
-Received: by mail-qk0-f171.google.com with SMTP id b184so530637qkc.13
-        for <git@vger.kernel.org>; Fri, 08 Dec 2017 13:17:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=hXJFrvSRMI30ONP+KinzCX1EJIWME1pzpL6c7dDmmA8=;
-        b=c7l1vtq5j4TPenFzSZUVlc0qx4DOrmZk0gnrLffAkik9fpGliZdZbm2ZAydqxjNoU8
-         zJaEQHbOAUpea4ufsr5w33AE6styKm70iVM4TYF5VD3MVZCh6x/D5VJoftQXlHa3/BJC
-         Doad66ENs6bZHBmznujoiiregOAHZXkfPXXO6hdzvrAUVgcwNp1O+GgY2GA2ie9YpFxD
-         OBUKf/Y6EEMqOxHN4Sg3VIAXcuF/KnX1za130PVhxd3o234MBUrPgbMt04C0+lJ9pNbN
-         XwRNrFogAPznM2cEKckbwCe+dxyfRg7c34TGrWyTdmcp5TWmBb7QdTKDSIWBQFmicLV4
-         NFkw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=hXJFrvSRMI30ONP+KinzCX1EJIWME1pzpL6c7dDmmA8=;
-        b=BfG3LqnwQKpFYNi5vtAIupksIZH4RnhLn6Tetsafvr70cvzC1hxs6et8KPDq7vrDty
-         /uO7LKPyKVhouQdjdvkw4MZZ0p8o+oD2nT2AcOeU4Os8qX4HeXMZKfwOtaN5E4PpWbVL
-         PbIVmCoNli0MMLDjk4kMWStKaDDHvhXUX07w0SBm5boMzjs0W/mEZtybXFLnccRaDgzk
-         tjW9HkkFfyT732cQrXMxMlJ+gqgPvKdV6rctPwota3TbeO21U9W/KeAo08aNvz8sqFcN
-         J3RH+KFha/UrCmrsLYWWsPAuGHotZypJQKinyRC9D/nB8fc5SePsGbfm0bgAXmfu1Z7j
-         Rofw==
-X-Gm-Message-State: AKGB3mLU2TbAX0zUDe61bhnRApZKGDODEgjIsherScOyzoLwntZD8oxn
-        OXYXh4u+MoGBTq9Jvvavnka+cYg1J6DdzrWI6FY=
-X-Google-Smtp-Source: AGs4zMYoQU5UnXlPwP879dacbRDazdQJE3CC1u7E8LBSP2nr83t8H4/TCDXLDPMdw11wPo4b+/l4lTXvF10uuTJyi78=
-X-Received: by 10.55.130.194 with SMTP id e185mr35948186qkd.357.1512767825600;
- Fri, 08 Dec 2017 13:17:05 -0800 (PST)
+Received: (qmail 29881 invoked by uid 109); 8 Dec 2017 21:17:08 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 08 Dec 2017 21:17:08 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6210 invoked by uid 111); 8 Dec 2017 21:17:30 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with ESMTPA; Fri, 08 Dec 2017 16:17:30 -0500
+Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 08 Dec 2017 16:17:06 -0500
+Date:   Fri, 8 Dec 2017 16:17:06 -0500
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] fmt-merge-msg: avoid leaking strbuf in shortlog()
+Message-ID: <20171208211706.GB7355@sigill.intra.peff.net>
+References: <b2238da3-9eba-1521-f4ca-3b805f103555@web.de>
+ <xmqq4lp2cisd.fsf@gitster.mtv.corp.google.com>
+ <20171208101455.GC1899@sigill.intra.peff.net>
+ <1654a696-73d5-c9ef-0fc2-bd82aaf2cabb@web.de>
 MIME-Version: 1.0
-Received: by 10.12.198.4 with HTTP; Fri, 8 Dec 2017 13:17:05 -0800 (PST)
-In-Reply-To: <xmqq374l9kti.fsf@gitster.mtv.corp.google.com>
-References: <cover.1512752468.git.johannes.schindelin@gmx.de>
- <978adf12e85ec6c4d407ba09da82945a08ee1f8c.1512752468.git.johannes.schindelin@gmx.de>
- <20171208172324.GB14261@aiede.mtv.corp.google.com> <xmqq374l9kti.fsf@gitster.mtv.corp.google.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 8 Dec 2017 16:17:05 -0500
-X-Google-Sender-Auth: YzaQPBUeVYcVCPSyNv5Sqzjdv2E
-Message-ID: <CAPig+cRrVRJ+H7c5Q3zLj6gjPegLFQmngGtiezgxTBTDqWSj0g@mail.gmail.com>
-Subject: Re: [PATCH 1/2] git version --build-options: report the build
- platform, too
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Git List <git@vger.kernel.org>,
-        Adric Norris <landstander668@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1654a696-73d5-c9ef-0fc2-bd82aaf2cabb@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 8, 2017 at 12:43 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
->>> @@ -413,6 +414,7 @@ int cmd_version(int argc, const char **argv, const char *prefix)
->>>
->>>      if (build_options) {
->>>              printf("sizeof-long: %d\n", (int)sizeof(long));
->>> +            printf("machine: %s\n", build_platform);
->>
->> Can this use GIT_BUILD_PLATFORM directly instead of going via the indirection
->> of a mutable static string?  That is, something like
->>
->>               printf("machine: %s\n", GIT_BUILD_PLATFORM);
->
-> Good point.  And if this is externally identified as "machine",
-> probably the macro should also use the same word, not "platform".
-> We can go either way, as long as we are consistent, though.
+On Fri, Dec 08, 2017 at 06:29:34PM +0100, René Scharfe wrote:
 
-In Autoconf parlance, this would be called "host architecture" (GIT_HOST_ARCH).
+> > By the way, I think there's another quite subtle leak in this function.
+> > We do this:
+> > 
+> >    format_commit_message(commit, "%s", &sb, &ctx);
+> >    strbuf_ltrim(&sb);
+> > 
+> > and then only use "sb" if sb.len is non-zero. But we may have actually
+> > allocated to create our zero-length string (e.g., if we had a strbuf
+> > full of spaces and trimmed them all off). Since we reuse "sb" over and
+> > over as we loop, this will actually only leak once for the whole loop,
+> > not once per iteration. So it's probably not a big deal, but writing it
+> > with the explicit reset/release pattern fixes that (and is more
+> > idiomatic for our code base, I think).
+> 
+> It's subtle, but I think it's not leaking, at least not in your example
+> case (and I can't think of another way).  IIUC format_subject(), which
+> handles the "%s" part, doesn't touch sb if the subject is made up only
+> of whitespace.
+
+Yeah, I suspected that may be the case. But IMHO it is a poor use of
+strbufs if you have to dig that far to see whether the code leaks or
+not. The whole point of strbufs is to make string handling and memory
+ownership more obviously correct.
+
+Just skimming the history, I think it's mostly an artifact of the
+function was slowly converted over the years.
+
+-Peff
