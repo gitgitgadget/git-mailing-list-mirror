@@ -6,30 +6,30 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8D5FD20C31
-	for <e@80x24.org>; Fri,  8 Dec 2017 15:59:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 95A7820C31
+	for <e@80x24.org>; Fri,  8 Dec 2017 15:59:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754584AbdLHP7U (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Dec 2017 10:59:20 -0500
-Received: from siwi.pair.com ([209.68.5.199]:55827 "EHLO siwi.pair.com"
+        id S1754587AbdLHP7X (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Dec 2017 10:59:23 -0500
+Received: from siwi.pair.com ([209.68.5.199]:55838 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754461AbdLHP7O (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1754578AbdLHP7O (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 8 Dec 2017 10:59:14 -0500
 Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 3CE4E844F1;
-        Fri,  8 Dec 2017 10:59:14 -0500 (EST)
+        by siwi.pair.com (Postfix) with ESMTP id 8C1F2844F3;
+        Fri,  8 Dec 2017 10:59:13 -0500 (EST)
 Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id AECAE844DE;
+        by siwi.pair.com (Postfix) with ESMTPSA id 1295A844DE;
         Fri,  8 Dec 2017 10:59:13 -0500 (EST)
 From:   Jeff Hostetler <git@jeffhostetler.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, jonathantanmy@google.com,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v7 12/16] unpack-trees: batch fetching of missing blobs
-Date:   Fri,  8 Dec 2017 15:58:47 +0000
-Message-Id: <20171208155851.855-13-git@jeffhostetler.com>
+Subject: [PATCH v7 11/16] clone: partial clone
+Date:   Fri,  8 Dec 2017 15:58:46 +0000
+Message-Id: <20171208155851.855-12-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20171208155851.855-1-git@jeffhostetler.com>
 References: <20171208155851.855-1-git@jeffhostetler.com>
@@ -40,197 +40,159 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jonathan Tan <jonathantanmy@google.com>
 
-When running checkout, first prefetch all blobs that are to be updated
-but are missing. This means that only one pack is downloaded during such
-operations, instead of one per missing blob.
-
-This operates only on the blob level - if a repository has a missing
-tree, they are still fetched one at a time.
-
-This does not use the delayed checkout mechanism introduced in commit
-2841e8f ("convert: add "status=delayed" to filter process protocol",
-2017-06-30) due to significant conceptual differences - in particular,
-for partial clones, we already know what needs to be fetched based on
-the contents of the local repo alone, whereas for status=delayed, it is
-the filter process that tells us what needs to be checked in the end.
-
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- fetch-object.c   | 26 ++++++++++++++++++++++----
- fetch-object.h   |  5 +++++
- t/t5601-clone.sh | 52 ++++++++++++++++++++++++++++++++++++++++++++++++++++
- unpack-trees.c   | 22 ++++++++++++++++++++++
- 4 files changed, 101 insertions(+), 4 deletions(-)
+ builtin/clone.c  | 22 ++++++++++++++++++++--
+ t/t5601-clone.sh | 49 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 69 insertions(+), 2 deletions(-)
 
-diff --git a/fetch-object.c b/fetch-object.c
-index 258fcfa..853624f 100644
---- a/fetch-object.c
-+++ b/fetch-object.c
-@@ -5,11 +5,10 @@
- #include "transport.h"
- #include "fetch-object.h"
- 
--void fetch_object(const char *remote_name, const unsigned char *sha1)
-+static void fetch_refs(const char *remote_name, struct ref *ref)
- {
- 	struct remote *remote;
- 	struct transport *transport;
--	struct ref *ref;
- 	int original_fetch_if_missing = fetch_if_missing;
- 
- 	fetch_if_missing = 0;
-@@ -18,10 +17,29 @@ void fetch_object(const char *remote_name, const unsigned char *sha1)
- 		die(_("Remote with no URL"));
- 	transport = transport_get(remote, remote->url[0]);
- 
--	ref = alloc_ref(sha1_to_hex(sha1));
--	hashcpy(ref->old_oid.hash, sha1);
- 	transport_set_option(transport, TRANS_OPT_FROM_PROMISOR, "1");
- 	transport_set_option(transport, TRANS_OPT_NO_DEPENDENTS, "1");
- 	transport_fetch_refs(transport, ref);
- 	fetch_if_missing = original_fetch_if_missing;
- }
-+
-+void fetch_object(const char *remote_name, const unsigned char *sha1)
-+{
-+	struct ref *ref = alloc_ref(sha1_to_hex(sha1));
-+	hashcpy(ref->old_oid.hash, sha1);
-+	fetch_refs(remote_name, ref);
-+}
-+
-+void fetch_objects(const char *remote_name, const struct oid_array *to_fetch)
-+{
-+	struct ref *ref = NULL;
-+	int i;
-+
-+	for (i = 0; i < to_fetch->nr; i++) {
-+		struct ref *new_ref = alloc_ref(oid_to_hex(&to_fetch->oid[i]));
-+		oidcpy(&new_ref->old_oid, &to_fetch->oid[i]);
-+		new_ref->next = ref;
-+		ref = new_ref;
-+	}
-+	fetch_refs(remote_name, ref);
-+}
-diff --git a/fetch-object.h b/fetch-object.h
-index f371300..4b269d0 100644
---- a/fetch-object.h
-+++ b/fetch-object.h
-@@ -1,6 +1,11 @@
- #ifndef FETCH_OBJECT_H
- #define FETCH_OBJECT_H
- 
-+#include "sha1-array.h"
-+
- extern void fetch_object(const char *remote_name, const unsigned char *sha1);
- 
-+extern void fetch_objects(const char *remote_name,
-+			  const struct oid_array *to_fetch);
-+
- #endif
-diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index 6d37c6d..13610b7 100755
---- a/t/t5601-clone.sh
-+++ b/t/t5601-clone.sh
-@@ -611,6 +611,58 @@ test_expect_success 'partial clone: warn if server does not support object filte
- 	test_i18ngrep "filtering not recognized by server" err
- '
- 
-+test_expect_success 'batch missing blob request during checkout' '
-+	rm -rf server client &&
-+
-+	test_create_repo server &&
-+	echo a >server/a &&
-+	echo b >server/b &&
-+	git -C server add a b &&
-+
-+	git -C server commit -m x &&
-+	echo aa >server/a &&
-+	echo bb >server/b &&
-+	git -C server add a b &&
-+	git -C server commit -m x &&
-+
-+	test_config -C server uploadpack.allowfilter 1 &&
-+	test_config -C server uploadpack.allowanysha1inwant 1 &&
-+
-+	git clone --filter=blob:limit=0 "file://$(pwd)/server" client &&
-+
-+	# Ensure that there is only one negotiation by checking that there is
-+	# only "done" line sent. ("done" marks the end of negotiation.)
-+	GIT_TRACE_PACKET="$(pwd)/trace" git -C client checkout HEAD^ &&
-+	grep "git> done" trace >done_lines &&
-+	test_line_count = 1 done_lines
-+'
-+
-+test_expect_success 'batch missing blob request does not inadvertently try to fetch gitlinks' '
-+	rm -rf server client &&
-+
-+	test_create_repo repo_for_submodule &&
-+	test_commit -C repo_for_submodule x &&
-+
-+	test_create_repo server &&
-+	echo a >server/a &&
-+	echo b >server/b &&
-+	git -C server add a b &&
-+	git -C server commit -m x &&
-+
-+	echo aa >server/a &&
-+	echo bb >server/b &&
-+	# Also add a gitlink pointing to an arbitrary repository
-+	git -C server submodule add "$(pwd)/repo_for_submodule" c &&
-+	git -C server add a b c &&
-+	git -C server commit -m x &&
-+
-+	test_config -C server uploadpack.allowfilter 1 &&
-+	test_config -C server uploadpack.allowanysha1inwant 1 &&
-+
-+	# Make sure that it succeeds
-+	git clone --filter=blob:limit=0 "file://$(pwd)/server" client
-+'
-+
- . "$TEST_DIRECTORY"/lib-httpd.sh
- start_httpd
- 
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 71b70cc..73a1cdb 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -14,6 +14,7 @@
- #include "dir.h"
- #include "submodule.h"
- #include "submodule-config.h"
-+#include "fetch-object.h"
+diff --git a/builtin/clone.c b/builtin/clone.c
+index dbddd98..f519bd4 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -26,6 +26,7 @@
+ #include "run-command.h"
+ #include "connected.h"
+ #include "packfile.h"
++#include "list-objects-filter-options.h"
  
  /*
-  * Error messages expected by scripts out of plumbing commands such as
-@@ -369,6 +370,27 @@ static int check_updates(struct unpack_trees_options *o)
- 		load_gitmodules_file(index, &state);
+  * Overall FIXMEs:
+@@ -60,6 +61,7 @@ static struct string_list option_optional_reference = STRING_LIST_INIT_NODUP;
+ static int option_dissociate;
+ static int max_jobs = -1;
+ static struct string_list option_recurse_submodules = STRING_LIST_INIT_NODUP;
++static struct list_objects_filter_options filter_options;
  
- 	enable_delayed_checkout(&state);
-+	if (repository_format_partial_clone && o->update && !o->dry_run) {
-+		/*
-+		 * Prefetch the objects that are to be checked out in the loop
-+		 * below.
-+		 */
-+		struct oid_array to_fetch = OID_ARRAY_INIT;
-+		int fetch_if_missing_store = fetch_if_missing;
-+		fetch_if_missing = 0;
-+		for (i = 0; i < index->cache_nr; i++) {
-+			struct cache_entry *ce = index->cache[i];
-+			if ((ce->ce_flags & CE_UPDATE) &&
-+			    !S_ISGITLINK(ce->ce_mode)) {
-+				if (!has_object_file(&ce->oid))
-+					oid_array_append(&to_fetch, &ce->oid);
-+			}
-+		}
-+		if (to_fetch.nr)
-+			fetch_objects(repository_format_partial_clone,
-+				      &to_fetch);
-+		fetch_if_missing = fetch_if_missing_store;
+ static int recurse_submodules_cb(const struct option *opt,
+ 				 const char *arg, int unset)
+@@ -135,6 +137,7 @@ static struct option builtin_clone_options[] = {
+ 			TRANSPORT_FAMILY_IPV4),
+ 	OPT_SET_INT('6', "ipv6", &family, N_("use IPv6 addresses only"),
+ 			TRANSPORT_FAMILY_IPV6),
++	OPT_PARSE_LIST_OBJECTS_FILTER(&filter_options),
+ 	OPT_END()
+ };
+ 
+@@ -886,6 +889,8 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	struct refspec *refspec;
+ 	const char *fetch_pattern;
+ 
++	fetch_if_missing = 0;
++
+ 	packet_trace_identity("clone");
+ 	argc = parse_options(argc, argv, prefix, builtin_clone_options,
+ 			     builtin_clone_usage, 0);
+@@ -1073,6 +1078,8 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 			warning(_("--shallow-since is ignored in local clones; use file:// instead."));
+ 		if (option_not.nr)
+ 			warning(_("--shallow-exclude is ignored in local clones; use file:// instead."));
++		if (filter_options.choice)
++			warning(_("--filter is ignored in local clones; use file:// instead."));
+ 		if (!access(mkpath("%s/shallow", path), F_OK)) {
+ 			if (option_local > 0)
+ 				warning(_("source repository is shallow, ignoring --local"));
+@@ -1104,7 +1111,13 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 		transport_set_option(transport, TRANS_OPT_UPLOADPACK,
+ 				     option_upload_pack);
+ 
+-	if (transport->smart_options && !deepen)
++	if (filter_options.choice) {
++		transport_set_option(transport, TRANS_OPT_LIST_OBJECTS_FILTER,
++				     filter_options.filter_spec);
++		transport_set_option(transport, TRANS_OPT_FROM_PROMISOR, "1");
 +	}
- 	for (i = 0; i < index->cache_nr; i++) {
- 		struct cache_entry *ce = index->cache[i];
++
++	if (transport->smart_options && !deepen && !filter_options.choice)
+ 		transport->smart_options->check_self_contained_and_connected = 1;
  
+ 	refs = transport_get_remote_refs(transport);
+@@ -1164,13 +1177,17 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	write_refspec_config(src_ref_prefix, our_head_points_at,
+ 			remote_head_points_at, &branch_top);
+ 
++	if (filter_options.choice)
++		partial_clone_register("origin", &filter_options);
++
+ 	if (is_local)
+ 		clone_local(path, git_dir);
+ 	else if (refs && complete_refs_before_fetch)
+ 		transport_fetch_refs(transport, mapped_refs);
+ 
+ 	update_remote_refs(refs, mapped_refs, remote_head_points_at,
+-			   branch_top.buf, reflog_msg.buf, transport, !is_local);
++			   branch_top.buf, reflog_msg.buf, transport,
++			   !is_local && !filter_options.choice);
+ 
+ 	update_head(our_head_points_at, remote_head, reflog_msg.buf);
+ 
+@@ -1191,6 +1208,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	}
+ 
+ 	junk_mode = JUNK_LEAVE_REPO;
++	fetch_if_missing = 1;
+ 	err = checkout(submodule_progress);
+ 
+ 	strbuf_release(&reflog_msg);
+diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+index 9c56f77..6d37c6d 100755
+--- a/t/t5601-clone.sh
++++ b/t/t5601-clone.sh
+@@ -571,4 +571,53 @@ test_expect_success 'GIT_TRACE_PACKFILE produces a usable pack' '
+ 	git -C replay.git index-pack -v --stdin <tmp.pack
+ '
+ 
++partial_clone () {
++	       SERVER="$1" &&
++	       URL="$2" &&
++
++	rm -rf "$SERVER" client &&
++	test_create_repo "$SERVER" &&
++	test_commit -C "$SERVER" one &&
++	HASH1=$(git hash-object "$SERVER/one.t") &&
++	git -C "$SERVER" revert HEAD &&
++	test_commit -C "$SERVER" two &&
++	HASH2=$(git hash-object "$SERVER/two.t") &&
++	test_config -C "$SERVER" uploadpack.allowfilter 1 &&
++	test_config -C "$SERVER" uploadpack.allowanysha1inwant 1 &&
++
++	git clone --filter=blob:limit=0 "$URL" client &&
++
++	git -C client fsck &&
++
++	# Ensure that unneeded blobs are not inadvertently fetched.
++	test_config -C client extensions.partialclone "not a remote" &&
++	test_must_fail git -C client cat-file -e "$HASH1" &&
++
++	# But this blob was fetched, because clone performs an initial checkout
++	git -C client cat-file -e "$HASH2"
++}
++
++test_expect_success 'partial clone' '
++	partial_clone server "file://$(pwd)/server"
++'
++
++test_expect_success 'partial clone: warn if server does not support object filtering' '
++	rm -rf server client &&
++	test_create_repo server &&
++	test_commit -C server one &&
++
++	git clone --filter=blob:limit=0 "file://$(pwd)/server" client 2> err &&
++
++	test_i18ngrep "filtering not recognized by server" err
++'
++
++. "$TEST_DIRECTORY"/lib-httpd.sh
++start_httpd
++
++test_expect_success 'partial clone using HTTP' '
++	partial_clone "$HTTPD_DOCUMENT_ROOT_PATH/server" "$HTTPD_URL/smart/server"
++'
++
++stop_httpd
++
+ test_done
 -- 
 2.9.3
 
