@@ -2,134 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-1.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DC6B31FC34
-	for <e@80x24.org>; Fri,  8 Dec 2017 20:14:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E8201FC34
+	for <e@80x24.org>; Fri,  8 Dec 2017 20:19:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752658AbdLHUOl (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Dec 2017 15:14:41 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50479 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752464AbdLHUOk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Dec 2017 15:14:40 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id CE0E0AC14E;
-        Fri,  8 Dec 2017 15:14:39 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Gq80PR6WtWH+ofS1FRKMZVgwsc4=; b=pXhgrF
-        QroFeNgOWyo+VLDZkbH/qFpSeGZfxXILFhTQlmPZfFzF32yjhqd/SM4goKmAOyM/
-        T8SqnSedHLF/nGygOfynHCDwDNSwUy/d9Y7Yn770MCrg+KoqQfbWD+nCvjx+rHD4
-        u8zeLyJINpuEuwFmX7/S08oJB8JV2oBKZdSpA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=yMXtErVIDsm40KQwGwAs47Mbn3hRSwzO
-        2PPOqMpoHFOWKn2dZ8DmSbo6dgdeMVbOJfqURRQhUc9BNCjbFfGhbKwqPu3Y41Kt
-        Gl9115G8efGBsdc3epcsBq/LJ815yR183mCtWMwNq747fsfa2/GKsGgPWueHEnQo
-        gxPSf21ke+w=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C3FB5AC14C;
-        Fri,  8 Dec 2017 15:14:39 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1DF1CAC14B;
-        Fri,  8 Dec 2017 15:14:39 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     git@vger.kernel.org, peff@peff.net, jonathantanmy@google.com,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH] partial-clone: design doc
-References: <20171208192636.13678-1-git@jeffhostetler.com>
-        <20171208192636.13678-2-git@jeffhostetler.com>
-Date:   Fri, 08 Dec 2017 12:14:37 -0800
-In-Reply-To: <20171208192636.13678-2-git@jeffhostetler.com> (Jeff Hostetler's
-        message of "Fri, 8 Dec 2017 19:26:36 +0000")
-Message-ID: <xmqqzi6t6kpe.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751004AbdLHUTf (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Dec 2017 15:19:35 -0500
+Received: from mail-it0-f49.google.com ([209.85.214.49]:42939 "EHLO
+        mail-it0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750911AbdLHUTe (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Dec 2017 15:19:34 -0500
+Received: by mail-it0-f49.google.com with SMTP id p139so7225792itb.1
+        for <git@vger.kernel.org>; Fri, 08 Dec 2017 12:19:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=GgsOWhoIoUvix1MZq5iBjuLwD5qA/4OCxgAQPd0q3GY=;
+        b=pQrUKHJfd2Ko4wMpILG0MtlCRPJZCyrdDjc4oDcUa51+ZFu5E1lFaaS9xuYbCa68mg
+         wseoxt1EJeao6r8f1ah7X85eQf5vDHgIqFy3CkrQ35evesAWpHEBP1C7hurzp568FvDW
+         cXmVJmyhZJAFJL/rnIbcu7XKAgGklZZjC0yqInvsZmTmza1E9nTS8TAAj+3cv7Vuz3o4
+         Om/LTekGp2PJNVqNzIJtKM0J6CJeanaYrQoGMkzWwsAW6Pj5AeX663kX0H9r78m1qB50
+         admhcIG4whYIj8FKR2kA6G+yDkoIe6zOMDSLQbfcCXATR3r6vvD1r/d6J9kMoAVsJk3U
+         Z5HQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=GgsOWhoIoUvix1MZq5iBjuLwD5qA/4OCxgAQPd0q3GY=;
+        b=YdKlgC7wN+1SxhOdCnTJGUy+A8upu7f17uzOYu+cshM7rdzPvnTc0sro2/8oOFhrtJ
+         SwNmh7jx7oyfiN0aKs+IfRzgnI4AU0VaKFprdsRiQBdI6sBv/VMneu7kCUMBvNMvKyNN
+         YeM8KDAJOn1CtJIObwmGqqPxE+yAwu8U1/zJtwLUwXDl3Th7mDGwiG3pGRccUGdK9/7A
+         sA8AStYaXyyhR0trnT6CNJsNPnR0nH3r81HHAYL2MWvL7C/lku2ZqzUbHtpiZPJ0nZcF
+         zfbf2q7Lmj92Mcve4H3GoFzJ1e6QQRlhvCzBKxXEieDDW1Ui84vjYCTGL95cLa9xws3e
+         pNQA==
+X-Gm-Message-State: AKGB3mKleh4WGl8/k2uamt5CbjOM6vzSZwVTZrNHc3DRUsat2g7Na8FW
+        i/96y1OYCRt/4sCh2WHey1ZWXKPn6fM=
+X-Google-Smtp-Source: AGs4zMYq6pRRtdzu4Ml+tj7dfL+2vKB72deuJx5iaucDjdkN8M0hVMQ0+uE5Ji1M6pTIbBLrvli7Uw==
+X-Received: by 10.36.60.77 with SMTP id m74mr8062914ita.117.1512764373352;
+        Fri, 08 Dec 2017 12:19:33 -0800 (PST)
+Received: from google.com ([2620:0:100e:422:e4f1:b67a:70f2:4fbe])
+        by smtp.gmail.com with ESMTPSA id d14sm1092523itj.11.2017.12.08.12.19.31
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 08 Dec 2017 12:19:32 -0800 (PST)
+Date:   Fri, 8 Dec 2017 12:19:30 -0800
+From:   Brandon Williams <bmwill@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [WIP 07/15] connect: convert get_remote_heads to use struct
+ packet_reader
+Message-ID: <20171208201930.GD140529@google.com>
+References: <20171020171839.4188-1-bmwill@google.com>
+ <20171204235823.63299-1-bmwill@google.com>
+ <20171204235823.63299-8-bmwill@google.com>
+ <xmqqh8t3fpm7.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 6B2A6932-DC54-11E7-9257-8EF31968708C-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqh8t3fpm7.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff Hostetler <git@jeffhostetler.com> writes:
+On 12/06, Junio C Hamano wrote:
+> Brandon Williams <bmwill@google.com> writes:
+> 
+> 
+> EXPECTING_DONE sounded like we are expecting to see 'done' packet
+> sent from the other side, but I was mistaken.  It is the state
+> where we are "done" expecting anything ;-).
+> 
+> Having an (unconditional) assignment to 'state' in the above switch
+> makes me feel somewhat uneasy, as the next "switch (state)" is what
+> is meant as the state machine that would allow us to say things like
+> "from this state, transition to that state is impossible".  When we
+> get a flush while we are expecting the first ref, for example, we'd
+> just go into the "done" state.  There is no provision for a future
+> update to say "no, getting a flush in this state is an error".
 
-> From: Jeff Hostetler <jeffhost@microsoft.com>
->
-> First draft of design document for partial clone feature.
->
-> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-> ---
+I believe this is accepted behavior, receiving a flush in that state.
+And I don't think there is ever an instance during the ref advertisement
+where a flush would be an error.  It just indicates that the
+advertisement is finished.
 
-Thanks.
+> 
+> That is no different from the current code; when read_remote_ref()
+> notices that it got a flush, it just leaves the loop without even
+> touching 'state' variable.  But at least, I find that the current
+> code is more honest---it does not even touch 'state' and allows the
+> code after the loop to inspect it, if needed.  From that point of
+> vhew, the way the new code uses 'state' to leave the loop upon
+> seeing a flush is a regression---it makes it harder to notice and
+> report when we got a flush in a wrong state.
+> 
+> Perhaps getting rid of "EXPECTING_DONE" from the enum and then:
+> 
+> 	int got_flush = 0;
+> 	while (1) {
+> 		switch (reader_read()) {
+> 		case PACKET_READ_FLUSH:
+> 			got_flush = 1;
+> 			break;
+> 		... other cases ...
+> 		}
+> 
+> 		if (got_flush)
+> 			break;
+> 
+> 		switch (state) {
+> 		... current code ...
+> 		}
+> 	}
+> 
+> would be an improvement; we can later extend "if (got_flush)" part
+> to check what state we are in if we wanted to notice and report an
+> error there before breaking out of the loop.
+> 
 
-> +Non-Goals
-> +---------
-> +
-> +Partial clone is independent of and not intended to conflict with
-> +shallow-clone, refspec, or limited-ref mechanisms since these all operate
-> +at the DAG level whereas partial clone and fetch works *within* the set
-> +of commits already chosen for download.
+I don't really see how this is any clearer from what this patch does
+though.  I thought it made it easier to read as you no longer have an
+infinite loop, but rather know when it will end (when you move to the
+done state).
 
-It probably is not a huge deal (simply because it is about
-"Non-Goals") but I have no idea what "refspec" and "limited-ref
-mechanism" refer to in the above sentence, and I suspect many others
-share the same puzzlement.
-
-> +An object may be missing due to a partial clone or fetch, or missing due
-> +to repository corruption. To differentiate these cases, the local
-> +repository specially indicates packfiles obtained from the promisor
-> +remote. These "promisor packfiles" consist of a "<name>.promisor" file
-> +with arbitrary contents (like the "<name>.keep" files), in addition to
-> +their "<name>.pack" and "<name>.idx" files. (In the future, this ability
-> +may be extended to loose objects[a].)
-> + ...
-> +Foot Notes
-> +----------
-> +
-> +[a] Remembering that loose objects are promisor objects is mainly
-> +    important for trees, since they may refer to promisor blobs that
-> +    the user does not have.  We do not need to mark loose blobs as
-> +    promisor because they do not refer to other objects.
-
-I fail to see any logical link between the "loose" and "tree".
-Putting it differently, I do not see why "tree" is so special.
-
-A promisor pack that contains a tree but lacks blobs the tree refers
-to would be sufficient to let us remember that these missing blobs
-are not corruption.  A loose commit or a tag that is somehow marked
-as obtained from a promisor, if it can serve just like a commit or a
-tag in a promisor pack to promise its direct pointee, would equally
-be useful (if very inefficient).
-
-In any case, I suspect "since they may refer to promisor blobs" is a
-typo of "since they may refer to promised blobs".
-
-> +- Currently, dynamic object fetching invokes fetch-pack for each item
-> +  because most algorithms stumble upon a missing object and need to have
-> +  it resolved before continuing their work.  This may incur significant
-> +  overhead -- and multiple authentication requests -- if many objects are
-> +  needed.
-> +
-> +  We need to investigate use of a long-running process, such as proposed
-> +  in [5,6] to reduce process startup and overhead costs.
-
-Also perhaps in some operations we can enumerate the objects we will
-need upfront and ask for them in one go (e.g. "git log -p A..B" may
-internally want to do "rev-list --objects A..B" to enumerate trees
-and blobs that we may lack upfront).  I do not think having the
-other side guess is a good idea, though.
-
-> +- We currently only promisor packfiles.  We need to add support for
-> +  promisor loose objects as described earlier.
-
-The earlier description was not convincing enough to feel the need
-to me; at least not yet.
+-- 
+Brandon Williams
