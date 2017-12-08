@@ -6,170 +6,96 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6AA6F20C32
-	for <e@80x24.org>; Fri,  8 Dec 2017 10:47:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E8DD620C32
+	for <e@80x24.org>; Fri,  8 Dec 2017 11:22:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753395AbdLHKr2 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Dec 2017 05:47:28 -0500
-Received: from cloud.peff.net ([104.130.231.41]:51994 "HELO cloud.peff.net"
+        id S1753326AbdLHLW1 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Dec 2017 06:22:27 -0500
+Received: from cloud.peff.net ([104.130.231.41]:52012 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1753448AbdLHKrY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Dec 2017 05:47:24 -0500
-Received: (qmail 1790 invoked by uid 109); 8 Dec 2017 10:47:24 -0000
+        id S1753284AbdLHLWY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Dec 2017 06:22:24 -0500
+Received: (qmail 3294 invoked by uid 109); 8 Dec 2017 11:22:24 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 08 Dec 2017 10:47:23 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 08 Dec 2017 11:22:24 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 30982 invoked by uid 111); 8 Dec 2017 10:47:45 -0000
+Received: (qmail 31090 invoked by uid 111); 8 Dec 2017 11:22:45 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Fri, 08 Dec 2017 05:47:45 -0500
+ by peff.net (qpsmtpd/0.94) with ESMTPA; Fri, 08 Dec 2017 06:22:45 -0500
 Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 08 Dec 2017 05:47:22 -0500
-Date:   Fri, 8 Dec 2017 05:47:22 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 08 Dec 2017 06:22:22 -0500
+Date:   Fri, 8 Dec 2017 06:22:22 -0500
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Stefan Beller <sbeller@google.com>
-Subject: [PATCH v2 4/4] t/Makefile: introduce TEST_SHELL_PATH
-Message-ID: <20171208104722.GD4939@sigill.intra.peff.net>
-References: <20171208104647.GA4016@sigill.intra.peff.net>
+Cc:     Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH] refs: drop "clear packed-refs while locked" assertion
+Message-ID: <20171208112222.GA6094@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20171208104647.GA4016@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-You may want to run the test suite with a different shell
-than you use to build Git. For instance, you may build with
-SHELL_PATH=/bin/sh (because it's faster, or it's what you
-expect to exist on systems where the build will be used) but
-want to run the test suite with bash (e.g., since that
-allows using "-x" reliably across the whole test suite).
-There's currently no good way to do this.
+This patch fixes a regression in v2.14.0. It's actually fixed already in
+v2.15.0 because all of the packed-ref code there was rewritten. So
+there's no point in applying this on "master" or even "maint". But I
+figured it was worth sharing here in case somebody else runs across it,
+and in case we ever do a v2.14.4 release.
 
-You might think that doing two separate make invocations,
-like:
+-- >8 --
+In clear_packed_ref_cache(), we assert that we're not
+currently holding the packed-refs lock. But in each of the
+three code paths that can hit this, the assertion is either
+a noop or actively does the wrong thing:
 
-  make &&
-  make -C t SHELL_PATH=/bin/bash
+ 1. in rollback_packed_refs(), we will have just released
+    the lock before calling the function, and so the
+    assertion can never trigger.
 
-would work. And it _almost_ does. The second make will see
-our bash SHELL_PATH, and we'll use that to run the
-individual test scripts (or tell prove to use it to do so).
-So far so good.
+ 2. get_packed_ref_cache() can reach this assertion via
+    validate_packed_ref_cache(). But it calls the validate
+    function only when it knows that we're not holding the
+    lock, so again, the assertion can never trigger.
 
-But this breaks down when "--tee" or "--verbose-log" is
-used. Those options cause the test script to actually
-re-exec itself using $SHELL_PATH. But wait, wouldn't our
-second make invocation have set SHELL_PATH correctly in the
-environment?
+ 3. lock_packed_refs() also calls validate_packed_ref_cache().
+    In this case we're _always_ holding the lock, which
+    means any time the validate function has to clear the
+    cache, we'll trigger this assertion and die.
 
-Yes, but test-lib.sh sources GIT-BUILD-OPTIONS, which we
-built during the first "make". And that overrides the
-environment, giving us the original SHELL_PATH again.
+    This doesn't happen often in practice because the
+    validate function clears the cache only if we find that
+    somebody else has racily rewritten the packed-refs file
+    between the time we read it and the time we took the lock.
 
-Let's introduce a new variable that lets you specify a
-specific shell to be run for the test scripts. Note that we
-have to touch both the main and t/ Makefiles, since we have
-to record it in GIT-BUILD-OPTIONS in one, and use it in the
-latter.
+    So most of the time we don't reach the assertion at all
+    (nobody has racily written the file so there's no need
+    to clear the cache). And when we do, it is not actually
+    indicative of a bug; clearing the cache while holding
+    the lock is the right thing to do here.
+
+This final case is relatively new, being triggerd by the
+extra validation added in fed6ebebf1 (lock_packed_refs():
+fix cache validity check, 2017-06-12).
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- Makefile      | 8 ++++++++
- t/Makefile    | 6 ++++--
- t/test-lib.sh | 2 +-
- 3 files changed, 13 insertions(+), 3 deletions(-)
+ refs/files-backend.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index fef9c8d272..8a21c4d8f1 100644
---- a/Makefile
-+++ b/Makefile
-@@ -425,6 +425,10 @@ all::
- #
- # to say "export LESS=FRX (and LV=-c) if the environment variable
- # LESS (and LV) is not set, respectively".
-+#
-+# Define TEST_SHELL_PATH if you want to use a shell besides SHELL_PATH for
-+# running the test scripts (e.g., bash has better support for "set -x"
-+# tracing).
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index f21a954ce7..dd41e1d382 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -99,8 +99,6 @@ static void clear_packed_ref_cache(struct files_ref_store *refs)
+ 	if (refs->packed) {
+ 		struct packed_ref_cache *packed_refs = refs->packed;
  
- GIT-VERSION-FILE: FORCE
- 	@$(SHELL_PATH) ./GIT-VERSION-GEN
-@@ -729,6 +733,8 @@ endif
- export PERL_PATH
- export PYTHON_PATH
- 
-+TEST_SHELL_PATH = $(SHELL_PATH)
-+
- LIB_FILE = libgit.a
- XDIFF_LIB = xdiff/lib.a
- VCSSVN_LIB = vcs-svn/lib.a
-@@ -1725,6 +1731,7 @@ prefix_SQ = $(subst ','\'',$(prefix))
- gitwebdir_SQ = $(subst ','\'',$(gitwebdir))
- 
- SHELL_PATH_SQ = $(subst ','\'',$(SHELL_PATH))
-+TEST_SHELL_PATH_SQ = $(subst ','\'',$(TEST_SHELL_PATH))
- PERL_PATH_SQ = $(subst ','\'',$(PERL_PATH))
- PYTHON_PATH_SQ = $(subst ','\'',$(PYTHON_PATH))
- TCLTK_PATH_SQ = $(subst ','\'',$(TCLTK_PATH))
-@@ -2355,6 +2362,7 @@ GIT-LDFLAGS: FORCE
- # and the first level quoting from the shell that runs "echo".
- GIT-BUILD-OPTIONS: FORCE
- 	@echo SHELL_PATH=\''$(subst ','\'',$(SHELL_PATH_SQ))'\' >$@+
-+	@echo TEST_SHELL_PATH=\''$(subst ','\'',$(TEST_SHELL_PATH_SQ))'\' >>$@+
- 	@echo PERL_PATH=\''$(subst ','\'',$(PERL_PATH_SQ))'\' >>$@+
- 	@echo DIFF=\''$(subst ','\'',$(subst ','\'',$(DIFF)))'\' >>$@+
- 	@echo PYTHON_PATH=\''$(subst ','\'',$(PYTHON_PATH_SQ))'\' >>$@+
-diff --git a/t/Makefile b/t/Makefile
-index 1bb06c36f2..96317a35f4 100644
---- a/t/Makefile
-+++ b/t/Makefile
-@@ -8,6 +8,7 @@
- 
- #GIT_TEST_OPTS = --verbose --debug
- SHELL_PATH ?= $(SHELL)
-+TEST_SHELL_PATH ?= $(SHELL_PATH)
- PERL_PATH ?= /usr/bin/perl
- TAR ?= $(TAR)
- RM ?= rm -f
-@@ -23,6 +24,7 @@ endif
- 
- # Shell quote;
- SHELL_PATH_SQ = $(subst ','\'',$(SHELL_PATH))
-+TEST_SHELL_PATH_SQ = $(subst ','\'',$(TEST_SHELL_PATH))
- PERL_PATH_SQ = $(subst ','\'',$(PERL_PATH))
- TEST_RESULTS_DIRECTORY_SQ = $(subst ','\'',$(TEST_RESULTS_DIRECTORY))
- 
-@@ -42,11 +44,11 @@ failed:
- 	test -z "$$failed" || $(MAKE) $$failed
- 
- prove: pre-clean $(TEST_LINT)
--	@echo "*** prove ***"; $(PROVE) --exec '$(SHELL_PATH_SQ)' $(GIT_PROVE_OPTS) $(T) :: $(GIT_TEST_OPTS)
-+	@echo "*** prove ***"; $(PROVE) --exec '$(TEST_SHELL_PATH_SQ)' $(GIT_PROVE_OPTS) $(T) :: $(GIT_TEST_OPTS)
- 	$(MAKE) clean-except-prove-cache
- 
- $(T):
--	@echo "*** $@ ***"; '$(SHELL_PATH_SQ)' $@ $(GIT_TEST_OPTS)
-+	@echo "*** $@ ***"; '$(TEST_SHELL_PATH_SQ)' $@ $(GIT_TEST_OPTS)
- 
- pre-clean:
- 	$(RM) -r '$(TEST_RESULTS_DIRECTORY_SQ)'
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index b8dd5e79ac..1ae0fc02d0 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -80,7 +80,7 @@ done,*)
- 	# from any previous runs.
- 	>"$GIT_TEST_TEE_OUTPUT_FILE"
- 
--	(GIT_TEST_TEE_STARTED=done ${SHELL_PATH} "$0" "$@" 2>&1;
-+	(GIT_TEST_TEE_STARTED=done ${TEST_SHELL_PATH} "$0" "$@" 2>&1;
- 	 echo $? >"$BASE.exit") | tee -a "$GIT_TEST_TEE_OUTPUT_FILE"
- 	test "$(cat "$BASE.exit")" = 0
- 	exit
+-		if (is_lock_file_locked(&refs->packed_refs_lock))
+-			die("BUG: packed-ref cache cleared while locked");
+ 		refs->packed = NULL;
+ 		release_packed_ref_cache(packed_refs);
+ 	}
 -- 
 2.15.1.659.g8bd2eae3ea
