@@ -2,138 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 960CE1FC34
-	for <e@80x24.org>; Fri,  8 Dec 2017 20:25:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8D75F1FC34
+	for <e@80x24.org>; Fri,  8 Dec 2017 20:26:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751628AbdLHUZe (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Dec 2017 15:25:34 -0500
-Received: from mail-pf0-f174.google.com ([209.85.192.174]:34533 "EHLO
-        mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750908AbdLHUZd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Dec 2017 15:25:33 -0500
-Received: by mail-pf0-f174.google.com with SMTP id a90so8045280pfk.1
-        for <git@vger.kernel.org>; Fri, 08 Dec 2017 12:25:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=9lWPT4pnfrdvj9c/viWerxMu5F4Rdyt6QnZaLfesX0c=;
-        b=SZs99I9635aDXwpLtK7g5/OksE9QcZtT70F6GpB4cJlD8qsc/2zSjxNi/iTCDUQolr
-         /SC26Fb6+l/sZGgMm6IJf4asQp3hk8jdNytOnt8gzlDl94QIWmG+K9n0CB8P5B3cG8NU
-         w2X5zxJ15qudvlxkgzQrZZ4EIl+JEi9LNbAdno0tRkj0YqC1AYQEgZ44siD/yAlbmboj
-         bwYFW8j4G0J3/8k96XW08cePEGC0N91zXEH2sx93DsaAouE2KIigrptBzDKu/QYRRtgK
-         C9ZHfrtB3O2Qz5F8uivluBlKSUfwufC0MWchmw+ENN/0qr/OSp41yKUilrLtz6yekjmI
-         G7Pw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=9lWPT4pnfrdvj9c/viWerxMu5F4Rdyt6QnZaLfesX0c=;
-        b=UK+KUWY2sL2CVQ5HenvpoVGWy8Ge/HrRmWOW5jDQ+dMoZOdbMziPTIq0kUUjYHpfpW
-         hM2lm6OnaDje1CnZX53uySaB+QDBb2T8w8c19LLAY/amWmVwhDAUkCJPAEIAi4CuEAYi
-         FzdDUIAhSnQvO3KXlyOxgl1C9azWZiJdNQEOmfmm0I8cxolNiF11T0cDzkLHLVfGZTi7
-         n6JgS2vac60+wREyUfEpzhbFY7oyqZRVsSX24bEt1UJYzURzW4W1DIN+e0uhmM+vl3ZT
-         dIi198RC7Q9MKj9IyQA6CILfNOMHH+/Iv/TczbSStTuUtl9EKDppLJqo2MDeYilMo2PD
-         Q2DA==
-X-Gm-Message-State: AJaThX4bZjKR3tJbbqCKyCpsvz7NDJ8zykJEKjBFkM9i1FeDB2MtYFC8
-        PHHoX15svDJNPIhkq8CddBuZcWIycNM=
-X-Google-Smtp-Source: AGs4zMaRxQN0TXi2HBuqJqsFiezkpdVTrGWQCG3EzTilbH1FJoIJkH3IWQYR6eSK9SI5VqxlbjpUiA==
-X-Received: by 10.84.135.101 with SMTP id 92mr32630797pli.172.1512764732724;
-        Fri, 08 Dec 2017 12:25:32 -0800 (PST)
-Received: from google.com ([2620:0:100e:422:e4f1:b67a:70f2:4fbe])
-        by smtp.gmail.com with ESMTPSA id h13sm13591483pfi.40.2017.12.08.12.25.31
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 08 Dec 2017 12:25:31 -0800 (PST)
-Date:   Fri, 8 Dec 2017 12:25:30 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [WIP 11/15] serve: introduce git-serve
-Message-ID: <20171208202530.GE140529@google.com>
+        id S1753055AbdLHU0J (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Dec 2017 15:26:09 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60693 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752405AbdLHU0H (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Dec 2017 15:26:07 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3B7D7AC47B;
+        Fri,  8 Dec 2017 15:26:07 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=a2+RBbgx1lj2tTBz0pQmvAvmr54=; b=M7ucn9
+        61l15teCqmIXzvc56P81xoLE0YblowTfKimDYOmJU5iNLzD0j036ea14flW6M/aX
+        xLNgxju+Nhb93yivrJ6+DBZOoLiLp8b3KqA8bLuZAOurLAvXTWJwLHq26PrVZNUG
+        V8Sqlf9A4QaIoAOx5eJrb0diTnCtV+dXimdgI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=On/xM0COENva5GbZvwol3Fg5l7ppIEIA
+        lu6v+wWBaQQZHw6N3vA9yI7EpCAoYBUcewiDDOQKVwiyeeecIsqnOTBtdZMILyOD
+        Vou1iG1nGHTTmjEJmaaH3zmipPCKYreGmIBtuxhL9SeReLyxbQ3KkTnKkoGnMb6P
+        bwSfNVHaank=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 34BCFAC47A;
+        Fri,  8 Dec 2017 15:26:07 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A24F1AC477;
+        Fri,  8 Dec 2017 15:26:06 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Brandon Williams <bmwill@google.com>, git@vger.kernel.org
+Subject: Re: [WIP 04/15] upload-pack: convert to a builtin
 References: <20171020171839.4188-1-bmwill@google.com>
- <20171204235823.63299-1-bmwill@google.com>
- <20171204235823.63299-12-bmwill@google.com>
- <xmqq8teeaywm.fsf@gitster.mtv.corp.google.com>
+        <20171204235823.63299-1-bmwill@google.com>
+        <20171204235823.63299-5-bmwill@google.com>
+        <xmqqr2s7frga.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.21.1.1712071658120.4318@virtualbox>
+Date:   Fri, 08 Dec 2017 12:26:05 -0800
+In-Reply-To: <alpine.DEB.2.21.1.1712071658120.4318@virtualbox> (Johannes
+        Schindelin's message of "Thu, 7 Dec 2017 17:14:46 +0100 (CET)")
+Message-ID: <xmqqvahh6k6a.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq8teeaywm.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 04F873FA-DC56-11E7-94F1-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/07, Junio C Hamano wrote:
-> Brandon Williams <bmwill@google.com> writes:
-> 
-> > +static struct protocol_capability *get_capability(const char *key)
-> > +{
-> > +	int i;
-> > +
-> > +	if (!key)
-> > +		return NULL;
-> > +
-> > +	for (i = 0; i < ARRAY_SIZE(capabilities); i++) {
-> > +		struct protocol_capability *c = &capabilities[i];
-> > +		const char *out;
-> > +		if (skip_prefix(key, c->name, &out) && (!*out || *out == '='))
-> > +			return c;
-> 
-> Looks familiar and resembles what was recently discussed on list ;-)
-> 
-> > +int cmd_serve(int argc, const char **argv, const char *prefix)
-> > +{
-> > +
-> > +	struct option options[] = {
-> > +		OPT_END()
-> > +	};
-> > +
-> > +	/* ignore all unknown cmdline switches for now */
-> > +	argc = parse_options(argc, argv, prefix, options, grep_usage,
-> > +			     PARSE_OPT_KEEP_DASHDASH |
-> > +			     PARSE_OPT_KEEP_UNKNOWN);
-> > +	serve();
-> > +
-> > +	return 0;
-> > +}
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-I assume that at some point we may want to have a new endpoint that just
-does v2 without needing the side channel to tell it to do so.  Maybe for
-brand new server commands, like a remote grep or a remote object-stat or
-something that don't have a v1 equivalent that can be fallen back to.
-That's why I included a builtin/serve.c 
+> On Wed, 6 Dec 2017, Junio C Hamano wrote:
+> ...
+>> I vaguely recalled and feared that we on purpose kept this program
+>> separate from the rest of the system for a reason, but my mailing
+>> list search is coming up empty.
+>
+> I only recall that we kept it in the bin/ directory (as opposed to
+> mlibexec/git-core/) to help with fetching via SSH.
 
-> > ...
-> > +/* Main serve loop for protocol version 2 */
-> > +void serve(void)
-> > +{
-> > +	/* serve by default supports v2 */
-> > +	packet_write_fmt(1, "version 2\n");
-> > +
-> > +	advertise_capabilities();
-> > +
-> > +	for (;;)
-> > +		if (process_request())
-> > +			break;
-> > +}
-> 
-> I am guessing that this would be run just like upload-pack,
-> i.e. invoked via ssh or via git-daemon, and that is why it can just
-> assume that fd#0/fd#1 are already connected to the other end.  It
-> may be helpful to document somewhere how we envision to invoke this
-> program.
-> 
+Yes, that is about where it is installed (i.e. on $PATH), which is a
+different issue.  
 
-This function I was planning to just be executed by upload-pack and
-receive-pack when a client requests protocol v2.  But yes the idea would
-be that fd#0/fd#1 would be already setup like they are for upload-pack
-and receive-pack.
+My vague recollection was about what is (and what is not) included
+in and linked into the program built, with some reason that is
+different from but similar to the reason why remote helpers that
+link to curl and openssl libraries are excluded from the builtin
+deliberately.  I know we exclude remote-helpers from builtin in
+order to save the start-up overhead for other more important
+built-in commands by not having to link these heavyweight libs.  I
+suspect there was some valid reason why we didn't make upload-pack
+a built-in, but am failing to recall what the reason was.
 
--- 
-Brandon Williams
+
