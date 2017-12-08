@@ -2,111 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2D17A1FC34
-	for <e@80x24.org>; Fri,  8 Dec 2017 20:12:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DC6B31FC34
+	for <e@80x24.org>; Fri,  8 Dec 2017 20:14:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752134AbdLHUMe (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Dec 2017 15:12:34 -0500
-Received: from mail-it0-f66.google.com ([209.85.214.66]:40884 "EHLO
-        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750741AbdLHUMd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Dec 2017 15:12:33 -0500
-Received: by mail-it0-f66.google.com with SMTP id f190so7055212ita.5
-        for <git@vger.kernel.org>; Fri, 08 Dec 2017 12:12:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=PBj1p8CUBqwE/nxA0IGjdOc1WEyqxiKVI6wHoBTbOwI=;
-        b=Z7SNqekyeiZ13CR6Y+XYKsPMy9rl6ZrmktiYTCurcVy/eTRZ8RXsUnNdXqsFdLOLjr
-         V1PgeHvL3sh97vT1IGKukDZh1KqAZBN6HQQBil8ySBbt/yScyBRGfFN4qJ7io4R269Ks
-         cRpS0V4hDmCx9KUzrr6R9LFIO+JtMBTYWnCUSP1f2XouXNSKCufYwug2AnlbAAP0hH2e
-         q6AAotbGzTmdowoxDEXKdK69T53iV72d7FC6WmjFWG7qq1gHNQb2k9O6kLZxI/v7oMdO
-         p0oAKk50sNChNkSFwutx3+5UzJsVmcgVv/GDvOnr/SR7o8GbrhQ+W/yXF59/7u3oekhS
-         js3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=PBj1p8CUBqwE/nxA0IGjdOc1WEyqxiKVI6wHoBTbOwI=;
-        b=OJRxhlTgGrdSOPMgd94rmzobw+OkYq+5iowE6KVSAVevMTdzCFgJcuDSEf/H50Kw6Q
-         ZzJBtDAR5hEIPY309S9YeuPve6ayLNL4RlvPaBdoejnHAzpLYv0/xHOTfdZNv3qEzqVS
-         o/HGn3fqUssvAO1xRXN6n5nxA8QX6Oo5Dw3rn0k93B1gvVTltjvsq/O3mBUc6aaCNHx5
-         DbM94qdcx2tyY4rCPTG4N3OxpctMwStT54phCs5GKmSPmRqhLz1PtsQW6/vAaWERa4jZ
-         bJ/33QVy8pJLm/WFtFX2qhyVp9TFoj2x/x3QDM6fRimDxXnV9TEXf9oVE7qGlP/8tlv0
-         cOzQ==
-X-Gm-Message-State: AKGB3mI7YYZFU8PNNJ9Dq8cy5mEV37E7zAORu6AGGol5/moCMdA3AEJk
-        SwpSu8hOy7wGkkcF8lUUcSVJqkAsELo=
-X-Google-Smtp-Source: AGs4zMYP6lqNH/lN13VAZULcrgn+xqnZR/NXqr9CQmwCQ0L1g06maq3shfFRQiCTaUUAwkWOX+6Rpw==
-X-Received: by 10.36.159.197 with SMTP id c188mr7242398ite.142.1512763952408;
-        Fri, 08 Dec 2017 12:12:32 -0800 (PST)
-Received: from google.com ([2620:0:100e:422:e4f1:b67a:70f2:4fbe])
-        by smtp.gmail.com with ESMTPSA id 97sm3828114ioh.22.2017.12.08.12.12.31
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 08 Dec 2017 12:12:31 -0800 (PST)
-Date:   Fri, 8 Dec 2017 12:12:30 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [WIP 04/15] upload-pack: convert to a builtin
-Message-ID: <20171208201230.GC140529@google.com>
-References: <20171020171839.4188-1-bmwill@google.com>
- <20171204235823.63299-1-bmwill@google.com>
- <20171204235823.63299-5-bmwill@google.com>
- <xmqqr2s7frga.fsf@gitster.mtv.corp.google.com>
+        id S1752658AbdLHUOl (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Dec 2017 15:14:41 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50479 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752464AbdLHUOk (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Dec 2017 15:14:40 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id CE0E0AC14E;
+        Fri,  8 Dec 2017 15:14:39 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Gq80PR6WtWH+ofS1FRKMZVgwsc4=; b=pXhgrF
+        QroFeNgOWyo+VLDZkbH/qFpSeGZfxXILFhTQlmPZfFzF32yjhqd/SM4goKmAOyM/
+        T8SqnSedHLF/nGygOfynHCDwDNSwUy/d9Y7Yn770MCrg+KoqQfbWD+nCvjx+rHD4
+        u8zeLyJINpuEuwFmX7/S08oJB8JV2oBKZdSpA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=yMXtErVIDsm40KQwGwAs47Mbn3hRSwzO
+        2PPOqMpoHFOWKn2dZ8DmSbo6dgdeMVbOJfqURRQhUc9BNCjbFfGhbKwqPu3Y41Kt
+        Gl9115G8efGBsdc3epcsBq/LJ815yR183mCtWMwNq747fsfa2/GKsGgPWueHEnQo
+        gxPSf21ke+w=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C3FB5AC14C;
+        Fri,  8 Dec 2017 15:14:39 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1DF1CAC14B;
+        Fri,  8 Dec 2017 15:14:39 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     git@vger.kernel.org, peff@peff.net, jonathantanmy@google.com,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH] partial-clone: design doc
+References: <20171208192636.13678-1-git@jeffhostetler.com>
+        <20171208192636.13678-2-git@jeffhostetler.com>
+Date:   Fri, 08 Dec 2017 12:14:37 -0800
+In-Reply-To: <20171208192636.13678-2-git@jeffhostetler.com> (Jeff Hostetler's
+        message of "Fri, 8 Dec 2017 19:26:36 +0000")
+Message-ID: <xmqqzi6t6kpe.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqr2s7frga.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6B2A6932-DC54-11E7-9257-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/06, Junio C Hamano wrote:
-> Brandon Williams <bmwill@google.com> writes:
-> 
-> > In order to allow for code sharing with the server-side of fetch in
-> > protocol-v2 convert upload-pack to be a builtin.
-> >
-> > Signed-off-by: Brandon Williams <bmwill@google.com>
-> > ---
-> 
-> This looks obvious and straight-forward to a cursory look.
-> 
-> I vaguely recalled and feared that we on purpose kept this program
-> separate from the rest of the system for a reason, but my mailing
-> list search is coming up empty.
-> 
-> >  Makefile      | 3 ++-
-> >  builtin.h     | 1 +
-> >  git.c         | 1 +
-> >  upload-pack.c | 2 +-
-> >  4 files changed, 5 insertions(+), 2 deletions(-)
-> > ...
-> > diff --git a/upload-pack.c b/upload-pack.c
-> > index ef99a029c..2d16952a3 100644
-> > --- a/upload-pack.c
-> > +++ b/upload-pack.c
-> > @@ -1033,7 +1033,7 @@ static int upload_pack_config(const char *var, const char *value, void *unused)
-> >  	return parse_hide_refs_config(var, value, "uploadpack");
-> >  }
-> >  
-> > -int cmd_main(int argc, const char **argv)
-> > +int cmd_upload_pack(int argc, const char **argv, const char *prefix)
-> >  {
-> >  	const char *dir;
-> >  	int strict = 0;
-> 
-> Shouldn't this file be moved to builtin/ directory, though?
+Jeff Hostetler <git@jeffhostetler.com> writes:
 
-I can definitely move the file to builtin if you would prefer.
+> From: Jeff Hostetler <jeffhost@microsoft.com>
+>
+> First draft of design document for partial clone feature.
+>
+> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> ---
 
--- 
-Brandon Williams
+Thanks.
+
+> +Non-Goals
+> +---------
+> +
+> +Partial clone is independent of and not intended to conflict with
+> +shallow-clone, refspec, or limited-ref mechanisms since these all operate
+> +at the DAG level whereas partial clone and fetch works *within* the set
+> +of commits already chosen for download.
+
+It probably is not a huge deal (simply because it is about
+"Non-Goals") but I have no idea what "refspec" and "limited-ref
+mechanism" refer to in the above sentence, and I suspect many others
+share the same puzzlement.
+
+> +An object may be missing due to a partial clone or fetch, or missing due
+> +to repository corruption. To differentiate these cases, the local
+> +repository specially indicates packfiles obtained from the promisor
+> +remote. These "promisor packfiles" consist of a "<name>.promisor" file
+> +with arbitrary contents (like the "<name>.keep" files), in addition to
+> +their "<name>.pack" and "<name>.idx" files. (In the future, this ability
+> +may be extended to loose objects[a].)
+> + ...
+> +Foot Notes
+> +----------
+> +
+> +[a] Remembering that loose objects are promisor objects is mainly
+> +    important for trees, since they may refer to promisor blobs that
+> +    the user does not have.  We do not need to mark loose blobs as
+> +    promisor because they do not refer to other objects.
+
+I fail to see any logical link between the "loose" and "tree".
+Putting it differently, I do not see why "tree" is so special.
+
+A promisor pack that contains a tree but lacks blobs the tree refers
+to would be sufficient to let us remember that these missing blobs
+are not corruption.  A loose commit or a tag that is somehow marked
+as obtained from a promisor, if it can serve just like a commit or a
+tag in a promisor pack to promise its direct pointee, would equally
+be useful (if very inefficient).
+
+In any case, I suspect "since they may refer to promisor blobs" is a
+typo of "since they may refer to promised blobs".
+
+> +- Currently, dynamic object fetching invokes fetch-pack for each item
+> +  because most algorithms stumble upon a missing object and need to have
+> +  it resolved before continuing their work.  This may incur significant
+> +  overhead -- and multiple authentication requests -- if many objects are
+> +  needed.
+> +
+> +  We need to investigate use of a long-running process, such as proposed
+> +  in [5,6] to reduce process startup and overhead costs.
+
+Also perhaps in some operations we can enumerate the objects we will
+need upfront and ask for them in one go (e.g. "git log -p A..B" may
+internally want to do "rev-list --objects A..B" to enumerate trees
+and blobs that we may lack upfront).  I do not think having the
+other side guess is a good idea, though.
+
+> +- We currently only promisor packfiles.  We need to add support for
+> +  promisor loose objects as described earlier.
+
+The earlier description was not convincing enough to feel the need
+to me; at least not yet.
