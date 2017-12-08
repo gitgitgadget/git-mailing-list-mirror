@@ -6,125 +6,97 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 34A591FC34
-	for <e@80x24.org>; Fri,  8 Dec 2017 21:28:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6B9271FC34
+	for <e@80x24.org>; Fri,  8 Dec 2017 21:38:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752572AbdLHV2f (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Dec 2017 16:28:35 -0500
-Received: from cloud.peff.net ([104.130.231.41]:52912 "HELO cloud.peff.net"
+        id S1752587AbdLHViZ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Dec 2017 16:38:25 -0500
+Received: from cloud.peff.net ([104.130.231.41]:52924 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750951AbdLHV2f (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Dec 2017 16:28:35 -0500
-Received: (qmail 30412 invoked by uid 109); 8 Dec 2017 21:28:35 -0000
+        id S1752172AbdLHViY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Dec 2017 16:38:24 -0500
+Received: (qmail 30851 invoked by uid 109); 8 Dec 2017 21:38:24 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 08 Dec 2017 21:28:35 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 08 Dec 2017 21:38:24 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6258 invoked by uid 111); 8 Dec 2017 21:28:56 -0000
+Received: (qmail 6279 invoked by uid 111); 8 Dec 2017 21:38:46 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Fri, 08 Dec 2017 16:28:56 -0500
+ by peff.net (qpsmtpd/0.94) with ESMTPA; Fri, 08 Dec 2017 16:38:46 -0500
 Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 08 Dec 2017 16:28:33 -0500
-Date:   Fri, 8 Dec 2017 16:28:33 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 08 Dec 2017 16:38:22 -0500
+Date:   Fri, 8 Dec 2017 16:38:22 -0500
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] fmt-merge-msg: avoid leaking strbuf in shortlog()
-Message-ID: <20171208212832.GC7355@sigill.intra.peff.net>
-References: <b2238da3-9eba-1521-f4ca-3b805f103555@web.de>
- <xmqq4lp2cisd.fsf@gitster.mtv.corp.google.com>
- <20171208101455.GC1899@sigill.intra.peff.net>
- <1654a696-73d5-c9ef-0fc2-bd82aaf2cabb@web.de>
- <xmqqd13p83sb.fsf@gitster.mtv.corp.google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        git <git@vger.kernel.org>
+Subject: Re: [PATCH 1/1] diffcore: add a filter to find a specific blob
+Message-ID: <20171208213822.GD7355@sigill.intra.peff.net>
+References: <20171208002447.20261-1-sbeller@google.com>
+ <20171208002447.20261-2-sbeller@google.com>
+ <20171208093434.GD26199@sigill.intra.peff.net>
+ <643e1afd-43e2-7fcc-452b-8b9ceac6868c@ramsayjones.plus.com>
+ <20171208201957.GA456@sigill.intra.peff.net>
+ <CAGZ79kaos7cmQe3bmR5gCVXbUjBBQdSYYOE11egnDEMaX-7xSA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqd13p83sb.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <CAGZ79kaos7cmQe3bmR5gCVXbUjBBQdSYYOE11egnDEMaX-7xSA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 08, 2017 at 10:37:08AM -0800, Junio C Hamano wrote:
+On Fri, Dec 08, 2017 at 12:39:55PM -0800, Stefan Beller wrote:
 
-> > The two modes (dup/nodup) make string_list code tricky.  Not sure
-> > how far we'd get with something simpler (e.g. an array of char pointers),
-> > but having the caller do all string allocations would make the code
-> > easier to analyze.
+> > If you add --raw, you can see that both commits introduce that blob, and
+> > it never "goes away". That's because that happened in a merge, which we
+> > don't diff in a default log invocation.
 > 
-> Yes.
+> We should when --raw is given.
+> --raw is documented as  "For each commit, show a summary of changes
+> using the raw diff format." and I would argue that 'each commit' includes
+> merges. Though I guess this may have implications for long time users.
+
+And "--patch" is documented as "generate patch", but it also does
+nothing for merges by default. I think it has little to do with "--raw".
+It is simply that the default for "log" is none of "-c", "--cc", or
+"-m".
+
+We _could_ change that default ("--cc" is already the default for
+git-show), but I would not be surprised if that has fallouts (certainly
+it makes git-log much slower).
+
+> > So I think this one is tricky because of the revert. In the same way
+> > that pathspec-limiting is often tricky in the face of a revert, because
+> > the merges "hide" interesting things happening.
 > 
-> It probably would have been more sensible if the API did not have
-> two modes (instead, have the caller pass whatever string to be
-> stored, *and* make the caller responsible for freeing them *if* it
-> passed an allocated string).
+> yup, hidden merges are unfortunate. Is there an easy way to find out
+> about merges? (Junio hints at having tests around merges, which I'll do
+> next)
 
-I'd actually argue the other way: the simplest interface is one where
-the string list owns all of its pointers. That keeps the
-ownership/lifetime issues clear, and it's one less step for the caller
-to have to remember to do at the end (they do have to clear() the list,
-but they must do that anyway to free the array of items).
+If you find such an easy way, let me know. :)
 
-It does mean that some callers may have to remember to free a temporary
-buffer right after adding its contents to the list. But that's a lesser
-evil, I think, since the memory ownership issues are all clearly
-resolved at the time of add.
+One of the few really manual types of query I remember having done in
+recent years is trying to pinpoint a bad merge. I.e., somebody during
+merge resolution accidentally does "git checkout --ours foo.c", blowing
+away changes which they didn't mean to. And then later you want to
+figure out which merge did it.
 
-The big cost is just extra copies/allocations.
+If you use "-c" or "--cc", that isn't an "interesting" change, because
+it resolves to one side of the merge. If you use "-m", you get way too
+many changes and have to comb through them manually. I've resorted to
+"-m --first-parent", but then you frequently have to dig down several
+layers (e.g., the bad merge is a merge from "master" onto a topic
+branch, and your first "--first-parent" attempt will just find the bad
+topic being merged back into master).
 
-I dunno. I actually do not mind the "nodup" version of append being used
-on a "dup" list. It is just a way of letting each call decide on whether
-to hand over ownership, and I think most sites are pretty clear.
+I think the most promising tool I've seen there is to redo the merge and
+show the diff between the auto-merge (including conflicts) and the
+committed tree. It's just another definition of "is this hunk
+interesting" that's different from "--cc".
 
-> For the push_refs_with_push() patch you sent, another possible fix
-> would be to make cas_options a nodup kind so that the result of
-> strbuf_detach() does not get an extra strdup to be lost when placed
-> in cas_options.  With the current string-list API that would not
-> quite work, because freeing done in _release() is tied to the
-> "dup/nodup" ness of the string list.  I think there even is a
-> codepath that initializes a string_list as nodup kind, stuffs string
-> in it giving the ownership, and then flips it into dup kind just
-> before calling _release() only to have it free the strings, or
-> something silly/ugly like that.
-
-Yes, the first grep hit for NODUP is bisect_clean_state(), which does
-this. I think it would be more clear if we could do:
-
-diff --git a/bisect.c b/bisect.c
-index 0fca17c02b..7c59408a13 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -1060,8 +1060,7 @@ static int mark_for_removal(const char *refname, const struct object_id *oid,
- 			    int flag, void *cb_data)
- {
- 	struct string_list *refs = cb_data;
--	char *ref = xstrfmt("refs/bisect%s", refname);
--	string_list_append(refs, ref);
-+	string_list_appendf(refs, "refs/bisect%s", refname);
- 	return 0;
- }
- 
-@@ -1070,11 +1069,10 @@ int bisect_clean_state(void)
- 	int result = 0;
- 
- 	/* There may be some refs packed during bisection */
--	struct string_list refs_for_removal = STRING_LIST_INIT_NODUP;
-+	struct string_list refs_for_removal = STRING_LIST_INIT_DUP;
- 	for_each_ref_in("refs/bisect", mark_for_removal, (void *) &refs_for_removal);
- 	string_list_append(&refs_for_removal, xstrdup("BISECT_HEAD"));
- 	result = delete_refs("bisect: remove", &refs_for_removal, REF_NO_DEREF);
--	refs_for_removal.strdup_strings = 1;
- 	string_list_clear(&refs_for_removal, 0);
- 	unlink_or_warn(git_path_bisect_expected_rev());
- 	unlink_or_warn(git_path_bisect_ancestors_ok());
-
-
-Having a "format into a string" wrapper doesn't cover _every_ string you
-might want to add to a list, but my experience with argv_array_pushf
-leads me to believe that it covers quite a lot of cases.
-
-I dunno. I am not so bothered by the current dual-nature that I think it
-is worth going on a crusade to eliminate one side. But I'm OK if
-somebody else wants to do so.
+I'm not sure how that would interact with something like "--blobfind",
+though. For that matter, I'm not quite sure how your patch would
+interact with "--cc". I think you may need to special-case it.
 
 -Peff
