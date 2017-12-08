@@ -2,66 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 844EB1FC34
-	for <e@80x24.org>; Fri,  8 Dec 2017 22:47:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 484641FC34
+	for <e@80x24.org>; Fri,  8 Dec 2017 22:48:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753130AbdLHWrc convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Fri, 8 Dec 2017 17:47:32 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:60939 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752730AbdLHWrb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Dec 2017 17:47:31 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.136.74])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id vB8MlPeM013200
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Fri, 8 Dec 2017 17:47:26 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Junio C Hamano'" <gitster@pobox.com>
-Cc:     "'Jeff King'" <peff@peff.net>,
-        "=?utf-8?Q?'=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason'?=" 
-        <avarab@gmail.com>, <git@vger.kernel.org>
-References: <008d01d36e48$747cc130$5d764390$@nexbridge.com>     <877eu0uvb2.fsf@evledraar.gmail.com>    <20171206084833.GA9501@sigill.intra.peff.net>   <002601d36ea8$ea80b160$bf821420$@nexbridge.com> <xmqq4lp07t1k.fsf@gitster.mtv.corp.google.com>
-In-Reply-To: <xmqq4lp07t1k.fsf@gitster.mtv.corp.google.com>
-Subject: RE: Documentation Breakage at 2.5.6
-Date:   Fri, 8 Dec 2017 17:47:19 -0500
-Message-ID: <003301d37076$846d3e00$8d47ba00$@nexbridge.com>
+        id S1753423AbdLHWsy (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Dec 2017 17:48:54 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50802 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752610AbdLHWsx (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Dec 2017 17:48:53 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E2D03AEA05;
+        Fri,  8 Dec 2017 17:48:52 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=dhJIF2guRRVL
+        lP1CvaGq4DYnLRU=; b=ohmxdiciARmhNNdoHxQaEqZNZDNNvh9itZFNCgOhc8lb
+        0MEhOKJCUaGDG3lgf315cSE5HPtzoEvAWD7LgP83LcwOgzNZIYwab0gzkGkm4Ugm
+        qBbtvVmhXd7Q3KTtE1KoahtyR28RYXI9VZBjSS1QjpnFWcojtjP9mlAEeUA5AWI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=mkj6tx
+        aMirfb4otEeqQ5g0dThDGsdFjydEbDLZzImwKw0V74ex7K3Q7rZXjr8EteUT13r1
+        qKoSOl84DK/l7RafYtHvEY3HCkV6jbZCmcvab8Vp4A/PWLYkcsFkvZ/1lWpc/wVM
+        2ha5rdl5033bCCbr1HaYL5tibxxYFrrI2JqOs=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id DAB46AEA04;
+        Fri,  8 Dec 2017 17:48:52 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 46A8BAEA03;
+        Fri,  8 Dec 2017 17:48:52 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Takashi Iwai <tiwai@suse.de>,
+        Jeff King <peff@peff.net>,
+        Brandon Williams <bmwill@google.com>,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH v2 2/5] Makefile: under "make dist", include the sha1collisiondetection submodule
+References: <20171208223001.556-1-avarab@gmail.com>
+        <20171128213214.12477-1-avarab@gmail.com>
+        <20171208223001.556-3-avarab@gmail.com>
+Date:   Fri, 08 Dec 2017 14:48:51 -0800
+In-Reply-To: <20171208223001.556-3-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Fri, 8 Dec 2017 22:29:58 +0000")
+Message-ID: <xmqqvahg6dkc.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQFJqr9tdoz5nNh/MRDCzDickCDUBQFCj0pwAi1FvPkBEIVPoAKceD/HpBSvZgA=
-Content-Language: en-ca
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: F6857D4A-DC69-11E7-9988-8EF31968708C-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
------Original Message-----
-On December 8, 2017 5:29 PM Junio C Hamano wrote:
->"Randall S. Becker" <rsbecker@nexbridge.com> writes:
->> One request to Junio: Would it be possible to tag the commits to align 
->> with the tags in the main repo? That way, I can build a nice little 
->> Jenkins job to automatically fetch the correct commit for man pages 
->> when packaging up a release.
->I am not interested in doing anything more than absolute minimum in the history that records generated cruft.  We already describe the mainline commit object names in the messages; perhaps that is >sufficient?
->        commit daa88a54a985ed1ef258800c742223c2a8f0caaa
->       Author: Junio C Hamano <gitster@pobox.com>
->       Date:   Wed Dec 6 10:04:03 2017 -0800
->
->           Autogenerated manpages for v2.15.1-354-g95ec6
->The primary reason why I do not want to tag them is because the tree the documentation sources were taken from is *not* the only thing that affects these autogenerated cruft.  The AsciiDoc toolchain that >happen to be installed on the box the day I ran the documentation tools is an obvious difference, and I do not want to make them appear any more definitive and official.  "This is *the* manpage for release >v2.15.1" is the message I do not want to give.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-No worries. I will push on with trying to get asciidoc to build so that I can generate the man pages. That probably won't happen soon, so I'll keep MacGyvering. I do get generating is the better solution, but I would rather focus my own efforts on keeping up with git (that ports fairly easily and is essential to work life) than burning off $DAYJOB hours on asciidoc and/or xmlto.
+> Include the sha1collisiondetection submodule when running "make
+> dist". Even though we've been shipping the sha1collisiondetection
+> submodule[1] and using it by default if it's checked out[2] anyone
+> downloading git as a tarball would just get an empty
+> sha1collisiondetection/ directory.
 
-Cheers,
-Randall
+While I can see that you are not including everything, but I do not
+see _why_ you chose to do so and hardcode the burden of maintaining
+the list of files we need to copy in the Makefile.
 
+This is much better than shipping a tarball that would not build at
+the endgame stage, of course ;-)
 
+Thanks.
