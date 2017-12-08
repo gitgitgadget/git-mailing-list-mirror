@@ -2,106 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3AB2520C33
-	for <e@80x24.org>; Fri,  8 Dec 2017 17:27:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7A79720C31
+	for <e@80x24.org>; Fri,  8 Dec 2017 17:29:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752373AbdLHR1h (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Dec 2017 12:27:37 -0500
-Received: from mail-it0-f66.google.com ([209.85.214.66]:42506 "EHLO
-        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751028AbdLHR1g (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Dec 2017 12:27:36 -0500
-Received: by mail-it0-f66.google.com with SMTP id p139so6400432itb.1
-        for <git@vger.kernel.org>; Fri, 08 Dec 2017 09:27:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=eDJAuKTktMPoBLLGWi2jRy6rF9dXJEQ9JuXCCqyUbhc=;
-        b=OqI0Dq+GgVKWoMADhFy43B1KXDjPUDQm0nu3zeHQRnYj+M1jwmXW7b9M0hAlQzYTud
-         ibIcQRS00PTju/kHrr6olqi8MPy5bmOWWJUfQkLFFcDO16AXukRlmiuek4tsw4joFX6R
-         e6Y6D12uz+nUQrIGiNVGtYCR2tfC9Ow9WE2CqN91mxSon1Q8DwRIdiQM1zc7PiKjpxxK
-         LdF+qWdC6gwlLGO1WYs99ifbOimZ0vrGym2PirttFry0AGvUsPvYREB2CQld2VaL7chW
-         q6ERWlctB/RKfe1/f+EC5n8igoi5SwIeUjED5SIy4WkJbel/ayuaFiWGvGut9226a8pr
-         bH+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=eDJAuKTktMPoBLLGWi2jRy6rF9dXJEQ9JuXCCqyUbhc=;
-        b=GPqDsOKitbwUV67fWJ8Pu7hWUDRf88Pdmj87jeS0gr1RJ+y1JuK6tGIrKhz2VS3ZiP
-         8Gh/1cyq98GvxdddGmk1AM7cDFVQuC4Rnoz6j3LPNr+bzH2NlA+jGVG+lr5Gi4xQH1Ua
-         cWt77kt+32R+3o5OqgzSP4GnJ93ri9uyT46RPHaI0nOKgkJQxdlVPkmpiMz5ZLPtuflF
-         OaNBAK+RszAipxJXO7aX5p7Sgg4GJpx4G7Rb2ZHYHy3hyWSLiNFr9Q6AMB0+qzc5/jWD
-         hNeu0ZXVUHdE+w1MYQdZFWDk9XYAamBCUJFRYqPxGtiBU+/Xdz5wxOAkAZ/4XMk8bIwk
-         fLJQ==
-X-Gm-Message-State: AJaThX44MK/auBymrKnPg/ccUGp0Sfkx/LUi6V1S/tE/2y2UFpJYoeht
-        sGyJf6DQeoPqBE4iFAO4ETA=
-X-Google-Smtp-Source: AGs4zMZtq+WI4CVjajWwRuruJOndOkr2huvnx7DPWMggOxFAMjsxyhFi+UdgVoL8KcM4BLMISnD9tw==
-X-Received: by 10.107.169.132 with SMTP id f4mr41606338ioj.218.1512754055934;
-        Fri, 08 Dec 2017 09:27:35 -0800 (PST)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id g79sm967527itb.29.2017.12.08.09.27.35
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 08 Dec 2017 09:27:35 -0800 (PST)
-Date:   Fri, 8 Dec 2017 09:27:33 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] version --build-options: report commit, too, if
- possible
-Message-ID: <20171208172733.GC14261@aiede.mtv.corp.google.com>
-References: <cover.1512752468.git.johannes.schindelin@gmx.de>
- <908989103a06291e38c8551c447bc73eb781fb26.1512752468.git.johannes.schindelin@gmx.de>
+        id S1752366AbdLHR3l (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Dec 2017 12:29:41 -0500
+Received: from mout.web.de ([212.227.17.12]:57670 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751299AbdLHR3k (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Dec 2017 12:29:40 -0500
+Received: from [192.168.178.36] ([91.20.50.52]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0M5g0a-1fG9w51s08-00xcUl; Fri, 08
+ Dec 2017 18:29:33 +0100
+Subject: Re: [PATCH] fmt-merge-msg: avoid leaking strbuf in shortlog()
+To:     Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>
+References: <b2238da3-9eba-1521-f4ca-3b805f103555@web.de>
+ <20171207212735.GD12850@sigill.intra.peff.net>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Cc:     Junio C Hamano <gitster@pobox.com>
+Message-ID: <e1daa2b6-004b-ad66-b84d-84fa70a44baf@web.de>
+Date:   Fri, 8 Dec 2017 18:29:31 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <908989103a06291e38c8551c447bc73eb781fb26.1512752468.git.johannes.schindelin@gmx.de>
-User-Agent: Mutt/1.9.1 (2017-09-22)
+In-Reply-To: <20171207212735.GD12850@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:bdmIRvaG75EzXJZjAJzU7VmaCHuHIp/h9yWgAHwbiCkn6QOj0kR
+ qVwlk+8tKGy9WwvaMWyXk/OLoGerOCaz/RbVpFNGSl9ITVbgnljJ/2hYU8RUmo10jaZQNm6
+ C1V9PltExYdBFUhYpDilKK3qEDPlJ0I2NohZykYsk5roH1i8yiWghCwCgOAxphTFpzfzDpE
+ cEaVqIxy8/yx23wT8qqtA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:PBUWbUVwr2c=:8qlGUcpeOfybfKUzkODVCW
+ XWkQ/GSk3w+MfSgYZ+D9ML4UPLzNhN5SWidFojETXhtRhA7i9XL1N6x6ZLY2mRZld5rhcRkB3
+ 0sg3Oe7BWQGPtPKFRDlOmSFjDYv8Lhfg3TUPQMLwAi62/AMsE1gRKVbD+95jtYBXDuPo3u48B
+ hK1WHjlIdMxi0tOUXCujdC4oDTpgY52P+5O63g0a+9B8oAvVMomACWRMXav9MLvbqOKw92kFH
+ +wuBO4GUYNkYpL+l1PuFr5Jj1IiUUNWsb0MBCO3VZm9Wj59wSczi6JuUYmqOG2IDmMS+2/J31
+ KR0bU5XCFqHDdR3rs/xx4qH1CuzgTDASpyo9c4/1FiEaZKvCp2NXHRqCT++93WC54G0n+Mj+z
+ EDzHg3nxwFaSuz8z61rPlpzJJyyI5M6f3QoVmuckNFnmky7ME3wsV3HlOig6xmJ6LvVO3e+EW
+ ZcacGmLBgQk3BC1Fs5xECsno6tSTwaulYMLtXijX76C8jH8YTQAiO9Vd7OkfZU6oOwbzzEyeE
+ KE1k0vKO9MDUUcMoNM6MULsiVLLY1gaRDgCJFyhiIlU+iAI/ZHrbmahQc5sUL63rF72gf9ePY
+ 1kJ0lz2FSQPyG78GXTEMHjjWOQAcZxGuo6B/8srSqb7k8IXk0y5zTsbBQDkp+RBcJlirE+xEA
+ LjVZOvbqMEDCLx4uitqynolL4MKQvd1r0Xde5l0wL6ddpftPKkw0u46FQHxH7dgXN/CtCW3FO
+ 9+tK04+AkD4cSCfu4w5LCansqe/vvNRx/XKVIRsT1xg1/e2F0RjGRsV+p4ulCW7BiAbepLdvv
+ 5vu5lCXxHznhTMmZKo7f384F5lzAAiSE6+4g2UmPTHKOXAFGjk=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Am 07.12.2017 um 22:27 schrieb Jeff King:
+> Grepping for "list_append.*detach" shows a few other possible cases in
+> transport-helper.c, which I think are leaks.
 
-Johannes Schindelin wrote:
+-- >8 --
+Subject: [PATCH] transport-helper: plug strbuf and string_list leaks
 
-> In particular when local tags are used (or tags that are pushed to some
-> fork) to build Git, it is very hard to figure out from which particular
-> revision a particular Git executable was built.
+Transfer ownership of detached strbufs to string_lists of the
+duplicating variety by calling string_list_append_nodup() instead of
+string_list_append() to avoid duplicating and then leaking the buffer.
 
-Hm, can you say more about how this comes up in practice?  I wonder if
-we should always augment the version string with the commit hash.
-E.g. I am running
+While at it make sure to release the string_list when done;
+push_refs_with_export() already does that.
 
-	git version 2.15.1.424.g9478a66081
+Reported-by: Jeff King <peff@peff.net>
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ transport-helper.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-now, which already includes the commit hash because it disambiguates
-the .424 thing, but depending on the motivation, maybe we would also
-want
-
-	git version 2.15.1.0.g9b185bef0c15
-
-for people running v2.15.1 (or at least when such a tag is not a well
-known, published tag).
-
-> We need to be careful, though, to report when the current commit cannot be
-> determined, e.g. when building from a tarball without any associated Git
-> repository.
-
-This means that on Debian, it would always print
-
-	built from commit: (unknown)
-
-Maybe I shouldn't care, but I wonder if there's a way to improve on
-that. E.g. should there be a makefile knob to allow Debian to specify
-what to put there?
-
-Thanks,
-Jonathan
+diff --git a/transport-helper.c b/transport-helper.c
+index bf05a2dcf1..f682e7c534 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -882,7 +882,8 @@ static int push_refs_with_push(struct transport *transport,
+ 			struct strbuf cas = STRBUF_INIT;
+ 			strbuf_addf(&cas, "%s:%s",
+ 				    ref->name, oid_to_hex(&ref->old_oid_expect));
+-			string_list_append(&cas_options, strbuf_detach(&cas, NULL));
++			string_list_append_nodup(&cas_options,
++						 strbuf_detach(&cas, NULL));
+ 		}
+ 	}
+ 	if (buf.len == 0) {
+@@ -897,6 +898,7 @@ static int push_refs_with_push(struct transport *transport,
+ 	strbuf_addch(&buf, '\n');
+ 	sendline(data, &buf);
+ 	strbuf_release(&buf);
++	string_list_release(&cas_options, 0);
+ 
+ 	return push_update_refs_status(data, remote_refs, flags);
+ }
+@@ -930,7 +932,8 @@ static int push_refs_with_export(struct transport *transport,
+ 		private = apply_refspecs(data->refspecs, data->refspec_nr, ref->name);
+ 		if (private && !get_oid(private, &oid)) {
+ 			strbuf_addf(&buf, "^%s", private);
+-			string_list_append(&revlist_args, strbuf_detach(&buf, NULL));
++			string_list_append_nodup(&revlist_args,
++						 strbuf_detach(&buf, NULL));
+ 			oidcpy(&ref->old_oid, &oid);
+ 		}
+ 		free(private);
+-- 
+2.15.1
