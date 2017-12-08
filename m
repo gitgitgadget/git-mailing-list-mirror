@@ -2,66 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B1A101FC34
-	for <e@80x24.org>; Fri,  8 Dec 2017 22:00:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 90AFA1FC34
+	for <e@80x24.org>; Fri,  8 Dec 2017 22:17:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752697AbdLHWAt (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Dec 2017 17:00:49 -0500
-Received: from cloud.peff.net ([104.130.231.41]:52936 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1752289AbdLHWAs (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Dec 2017 17:00:48 -0500
-Received: (qmail 31816 invoked by uid 109); 8 Dec 2017 22:00:48 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 08 Dec 2017 22:00:48 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6638 invoked by uid 111); 8 Dec 2017 22:01:10 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Fri, 08 Dec 2017 17:01:10 -0500
-Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 08 Dec 2017 17:00:46 -0500
-Date:   Fri, 8 Dec 2017 17:00:46 -0500
-From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH v2 4/4] t/Makefile: introduce TEST_SHELL_PATH
-Message-ID: <20171208220046.GA26270@sigill.intra.peff.net>
-References: <20171208104647.GA4016@sigill.intra.peff.net>
- <20171208104722.GD4939@sigill.intra.peff.net>
- <alpine.DEB.2.21.1.1712081602570.4318@virtualbox>
+        id S1752562AbdLHWRE (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Dec 2017 17:17:04 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53430 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752350AbdLHWRD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Dec 2017 17:17:03 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id ABA7AAE2C0;
+        Fri,  8 Dec 2017 17:17:02 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+        :subject:date:message-id:mime-version:content-type; s=sasl; bh=S
+        f0g2OZWLo6RaGOSzW/RT99xJCs=; b=COv3NMeTNvaZSELun5GKwNC1uXfwIOwKQ
+        AfMjldMPFp2Vlm5/1RscnVB1ZN7u/ni952XEXvg8aF98bznhmxp6NFKU0gwX9Cte
+        LznBv+fGSoE2hEpbaTtbWjFd+NU3mr+oJgqh7GkfV8iE6a/p4UHlpEFoIcdDiNN9
+        bQ/RidWvyQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+        :date:message-id:mime-version:content-type; q=dns; s=sasl; b=VNt
+        dlPU+TVsJXnxXZpywUX4woa+1bYGlD6cMrhu4PPMKgKk1xzF/9qRD2oTkfsLT/f5
+        Q04lx3T5CNTzbjbSpIkYUIRXEp/I6hX0Ybmlhv9W+j4B7NzJ/0A6bU395GptHdIk
+        iuwsyYwB8ve8R6QO/7OVR/OsUnN5zx7fdUv8O3qw=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A0C4FAE2BF;
+        Fri,  8 Dec 2017 17:17:02 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 27A5CAE2BD;
+        Fri,  8 Dec 2017 17:17:02 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org
+Subject: [PATCH] t6120: fix under gettext-poison
+Date:   Fri, 08 Dec 2017 14:17:00 -0800
+Message-ID: <xmqqa7ys7tlv.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.21.1.1712081602570.4318@virtualbox>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 83F47956-DC65-11E7-ABCD-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 08, 2017 at 04:08:19PM +0100, Johannes Schindelin wrote:
+I'll queue this on top so that 'pu' would have one fewer breakage at
+Travis.
 
-> > Yes, but test-lib.sh sources GIT-BUILD-OPTIONS, which we
-> > built during the first "make". And that overrides the
-> > environment, giving us the original SHELL_PATH again.
-> 
-> ... and we could simply see whether the environment variable
-> TEST_SHELL_PATH (which we would set in t/Makefile from the passed-in
-> SHELL_PATH) is set, and override it again.
-> 
-> I still think we can do without recording test-phase details in the
-> build-phase (which may, or may not, know what the test-phase wants to do).
-> 
-> In other words, I believe that we can make the invocation you mentioned
-> above work, by touching only t/Makefile (to pass SHELL_PATH as
-> TEST_SHELL_PATH) and t/test-lib.sh (to override the SHELL_PATH from
-> GIT-BUILD-OPTIONS with TEST_SHELL_PATH, if set).
+diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
+index 4668f0058e..3e3fb462a0 100755
+--- a/t/t6120-describe.sh
++++ b/t/t6120-describe.sh
+@@ -341,7 +341,7 @@ test_expect_success 'describe directly tagged blob' '
+ test_expect_success 'describe tag object' '
+ 	git tag test-blob-1 -a -m msg unique-file:file &&
+ 	test_must_fail git describe test-blob-1 2>actual &&
+-	grep "fatal: test-blob-1 is neither a commit nor blob" actual
++	test_i18ngrep "fatal: test-blob-1 is neither a commit nor blob" actual
+ '
+ 
+ test_expect_failure ULIMIT_STACK_SIZE 'name-rev works in a deep repo' '
+-- 
+2.15.1-501-gdae66d7f65
 
-We could do that, but it makes TEST_SHELL_PATH inconsistent with all of
-the other config.mak variables.
-
--Peff
