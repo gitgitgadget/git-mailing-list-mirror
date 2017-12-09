@@ -2,226 +2,167 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D6C61F406
-	for <e@80x24.org>; Sat,  9 Dec 2017 15:37:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 66B241F406
+	for <e@80x24.org>; Sat,  9 Dec 2017 19:01:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750931AbdLIPhw (ORCPT <rfc822;e@80x24.org>);
-        Sat, 9 Dec 2017 10:37:52 -0500
-Received: from cisrsmtp.univ-lyon1.fr ([134.214.188.146]:59744 "EHLO
-        cisrsmtp.univ-lyon1.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750908AbdLIPhv (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Dec 2017 10:37:51 -0500
-Received: from localhost (localhost [127.0.0.1])
-        by cisrsmtp.univ-lyon1.fr (Postfix) with ESMTP id 5DDCAA013F;
-        Sat,  9 Dec 2017 16:37:49 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at cisrsmtp.univ-lyon1.fr
-Received: from cisrsmtp.univ-lyon1.fr ([127.0.0.1])
-        by localhost (cisrsmtp.univ-lyon1.fr [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id 5RsaZ0QM1dA3; Sat,  9 Dec 2017 16:37:47 +0100 (CET)
-Received: from BEMBX2013-01.univ-lyon1.fr (bembx2013-01.univ-lyon1.fr [134.214.201.247])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by cisrsmtp.univ-lyon1.fr (Postfix) with ESMTPS id 9B239A002A;
-        Sat,  9 Dec 2017 16:37:47 +0100 (CET)
-Received: from localhost.localdomain (134.214.126.172) by
- BEMBX2013-01.univ-lyon1.fr (134.214.201.247) with Microsoft SMTP Server (TLS)
- id 15.0.1263.5; Sat, 9 Dec 2017 16:37:46 +0100
-From:   Nathan Payre <nathan.payre@etu.univ-lyon1.fr>
-To:     <git@vger.kernel.org>
-CC:     Eric Sunshine <sunshine@sunshineco.com>,
-        Nathan Payre <nathan.payre@etu.univ-lyon1.fr>,
-        Matthieu Moy <matthieu.moy@univ-lyon1.fr>,
-        Timothee Albertin <timothee.albertin@etu.univ-lyon1.fr>,
-        Daniel Bensoussan <daniel.bensoussan--bohm@etu.univ-lyon1.fr>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] send-email: extract email-parsing code into a subroutine
-Date:   Sat, 9 Dec 2017 16:37:27 +0100
-Message-ID: <20171209153727.30113-1-nathan.payre@etu.univ-lyon1.fr>
-X-Mailer: git-send-email 2.15.0.318.g7c8d76e5a.dirty
-In-Reply-To: <CAGb4CBWZciqxdfpSkK1vezhiuSYX5Yy-xSq=Uj4h+vhRo9uyoQ@mail.gmail.com>
-References: <CAGb4CBWZciqxdfpSkK1vezhiuSYX5Yy-xSq=Uj4h+vhRo9uyoQ@mail.gmail.com>
+        id S1751212AbdLITBX (ORCPT <rfc822;e@80x24.org>);
+        Sat, 9 Dec 2017 14:01:23 -0500
+Received: from smtp-out-2.talktalk.net ([62.24.135.66]:3067 "EHLO
+        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750998AbdLITBW (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Dec 2017 14:01:22 -0500
+Received: from [192.168.2.201] ([92.22.34.132])
+        by smtp.talktalk.net with SMTP
+        id NkNCeDITQNSVVNkNCedWnb; Sat, 09 Dec 2017 19:01:20 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1512846080;
+        bh=eAnyhaBeMrytJ4qeLAb1uv3Zzwxdz+aKPQYaIX+4XR0=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=ap2yuW9btAc/3xi6F8JL0I8PS3JPD6F0u2XAbjPt+tMfl5J0brX9ne0rU/0ATDbjg
+         QPhlTbI989L3w1F+7ddRCCtFcKctiv1iQcRliy6Upn/pOjV3en2urMg9EX1uu9ifac
+         G8n1xi/c2gTAF13pRGauh1skUB6M4LXP8sTrq8Xw=
+X-Originating-IP: [92.22.34.132]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=NYGW7yL4 c=1 sm=1 tr=0 a=2gYdyS03q/cwff7SV6P5Ng==:117
+ a=2gYdyS03q/cwff7SV6P5Ng==:17 a=IkcTkHD0fZMA:10 a=cqbjjwBjl6n-utjRzjYA:9
+ a=QEXdDO2ut3YA:10
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [SCRIPT/RFC 0/3] git-commit --onto-parent (three-way merge,
+ noworking tree file changes)
+To:     Igor Djordjevic <igor.d.djordjevic@gmail.com>,
+        Alexei Lozovsky <a.lozovsky@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
+        Git Mailing List <git@vger.kernel.org>,
+        Nikolay Shustov <nikolay.shustov@gmail.com>,
+        Johannes Schneider <mailings@cedarsoft.com>,
+        Patrik Gornicz <patrik-git@mail.pgornicz.com>,
+        Martin Waitz <tali@admingilde.org>,
+        Shawn Pearce <spearce@spearce.org>,
+        Sam Vilain <sam@vilain.net>, Jakub Narebski <jnareb@gmail.com>
+References: <8998e832-f49f-4de4-eb8d-a7934fba97b5@gmail.com>
+ <d5f243a5-6e35-f3fc-4daf-6e1376bef897@kdbg.org>
+ <203a75c8-0c58-253c-2c18-05450f7ae49b@gmail.com>
+ <ea156b8b-29d8-7501-b5a5-a29cfbd7d1d6@kdbg.org>
+ <741dfedc-07f8-24fb-ebe2-940f8b2639d4@gmail.com>
+ <33e97533-716b-e1cc-6aa0-bf8941225319@kdbg.org>
+ <7ae3ffd5-147d-55d2-9630-da12c429d631@gmail.com>
+ <39323748-282c-5881-2bfa-de622bb8b765@kdbg.org>
+ <CAPc5daWupO6DMOMFGn=XjUCG-JMYc4eyo8+TmAsdWcAOHXzwWg@mail.gmail.com>
+ <f9a94a62-9541-e019-8ab3-9fc9cfe2c43f@gmail.com>
+ <xmqqo9n99ohc.fsf@gitster.mtv.corp.google.com>
+ <a3510c14-23e9-d1d9-0847-b60451f8e15d@gmail.com>
+ <D842B04A-9331-4F26-8F19-B61F6F13FC79@gmail.com>
+ <92643df4-f54e-cd31-da4a-138ec314655a@gmail.com>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <4a92e34c-d713-25d3-e1ac-100525011d3f@talktalk.net>
+Date:   Sat, 9 Dec 2017 19:01:17 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [134.214.126.172]
-X-ClientProxiedBy: BEMBX2013-02.univ-lyon1.fr (134.214.201.248) To
- BEMBX2013-01.univ-lyon1.fr (134.214.201.247)
+In-Reply-To: <92643df4-f54e-cd31-da4a-138ec314655a@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfNtCscPWkDPACovlA+7nw47zaB2BjWnQQYJBoUqhhB3bUDUxv8GXzUKgD8MZDSZRUAVRVLw6LpVhbTSf5mCpw5K0wSWGit5rn4E96SDkS17GEplKe7QA
+ BhKg+CcCGYsYSZjLmrMhhoK3ga64xx6KQ/1Z6xgUzJbUGieavS2wvjWLiG6bU1BlZOt/rJMzVVUOHVilSLvpcuLn0Mc2a6Txq3tNnYOXX3cLYBn1QhkIhoHa
+ LdIH2xlIWPivwZRd59XdAJ7EiQVC8H57aJYx0Uf/76k745+PJaOxH4i5Djp+qu0839P5/LSTfmSElmUGLJvJVzksHpnKSa28aU3kspC3hGAogOERNZrbEPVN
+ OJgYeK/gWVSOgtH6tKt2PqU5zJLWzhPeEMmFnjJ7x+76aSb9lmyvYL73OCJ0TpRJ/PYwTLp4XvPME5iuo01tmynieb+c8IAB4G9eIOlLV+AR0q+EoLZCD/bJ
+ UwrE/Gi8cMwXvdfs28j65+mRYdvF1Eyw9rGrwCYfNc/OtnJqbA/DP4L/EPQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The existing code mixes parsing of email header with regular
-expression and actual code. Extract the parsing code into a new
-subroutine "parse_header_line()". This improves the code readability
-and make parse_header_line reusable in other place.
+Hi Igor
 
-"parsed_header_line()" and "filter_body()" could be used for
-refactoring the part of code which parses the header to prepare the
-email and send it.
+On 09/12/17 03:03, Igor Djordjevic wrote:
+> 
+> Hi Alexei,
+> 
+> On 09/12/2017 03:18, Alexei Lozovsky wrote:
+>>
+>>> Chris reported in this very topic[1] that sometimes, due to
+>>> conflicts with later commits, "checkout > commit > [checkout >]
+>>> rebase --onto" is "much easier to do", where "commit --fixup >
+>>> rebase -i" "breaks" (does not apply cleanly).
+>>
+>> It was more of a rant about conflict resolution by rebase rather than
+>> a concern about modification time of files. While I'd prefer git to
+>> not touch the source tree unnecessarily, it's not really a big deal
+>> for me if it does and some parts of the project need to be rebuilt.
+> 
+> Nevertheless, I found it valuable in supporting the case where 
+> "commit --fixup > rebase -i" seems to require even more work than 
+> otherwise necessary :)
+> 
+> But thanks for clarifying, anyway, it does feel like `git rebase -i 
+> --autosquash` could be smarter in this regards, if `git rebase 
+> --onto` does it better...?
 
-Signed-off-by: Nathan Payre <nathan.payre@etu.univ-lyon1.fr>
-Signed-off-by: Matthieu Moy <matthieu.moy@univ-lyon1.fr>
-Signed-off-by: Timothee Albertin <timothee.albertin@etu.univ-lyon1.fr>
-Signed-off-by: Daniel Bensoussan <daniel.bensoussan--bohm@etu.univ-lyon1.fr>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
-Thanks-to: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
+Creating the fixup directly on A rather than on top of B avoids the
+conflicting merge B f!A A. Creating the fixup on top of B and then using
+git commit --onto A would suffer from the same conflicts as rebase does.
+I don't think there is any way for 'git rebase --autosquash' to avoid
+the conflicts unless it used a special fixup merge strategy that somehow
+took advantage of the DAG to resolve the conflicts by realizing they
+come from a later commit. However I don't think that could be
+implemented reliably as sometimes one wants those conflicting lines from
+the later commit to be moved to the earlier commit with the fixup.
 
-I fixed the last reported problems and removed some other old
-variable as $need_8bit_cte.
+Best Wishes
 
- git-send-email.perl | 110 ++++++++++++++++++++++++++++++++++------------------
- 1 file changed, 73 insertions(+), 37 deletions(-)
+Phillip
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 2208dcc21..ac36c6aac 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -685,7 +685,7 @@ Lines beginning in "GIT:" will be removed.
- Consider including an overall diffstat or table of contents
- for the patch you are writing.
- 
--Clear the body content if you don't wish to send a summary.
-+Clear the body content if you dont wish to send a summary.
- EOT2
- From: $tpl_sender
- Subject: $tpl_subject
-@@ -709,51 +709,61 @@ EOT3
- 	open $c, "<", $compose_filename
- 		or die sprintf(__("Failed to open %s: %s"), $compose_filename, $!);
- 
--	my $need_8bit_cte = file_has_nonascii($compose_filename);
--	my $in_body = 0;
--	my $summary_empty = 1;
- 	if (!defined $compose_encoding) {
- 		$compose_encoding = "UTF-8";
- 	}
--	while(<$c>) {
--		next if m/^GIT:/;
--		if ($in_body) {
--			$summary_empty = 0 unless (/^\n$/);
--		} elsif (/^\n$/) {
--			$in_body = 1;
--			if ($need_8bit_cte) {
--				print $c2 "MIME-Version: 1.0\n",
--					 "Content-Type: text/plain; ",
--					   "charset=$compose_encoding\n",
--					 "Content-Transfer-Encoding: 8bit\n";
--			}
--		} elsif (/^MIME-Version:/i) {
--			$need_8bit_cte = 0;
--		} elsif (/^Subject:\s*(.+)\s*$/i) {
--			$initial_subject = $1;
--			my $subject = $initial_subject;
--			$_ = "Subject: " .
--				quote_subject($subject, $compose_encoding) .
--				"\n";
--		} elsif (/^In-Reply-To:\s*(.+)\s*$/i) {
--			$initial_reply_to = $1;
--			next;
--		} elsif (/^From:\s*(.+)\s*$/i) {
--			$sender = $1;
--			next;
--		} elsif (/^(?:To|Cc|Bcc):/i) {
--			print __("To/Cc/Bcc fields are not interpreted yet, they have been ignored\n");
--			next;
-+
-+
-+	my %parsed_email;
-+	$parsed_email{'body'} = '';
-+	while (my $line = <$c>) {
-+		next if $line =~ m/^GIT:/;
-+		parse_header_line($line, \%parsed_email);
-+		if ($line =~ /^$/) {
-+			$parsed_email{'body'} = filter_body($c);
- 		}
--		print $c2 $_;
- 	}
--	close $c;
--	close $c2;
- 
--	if ($summary_empty) {
-+	if ($parsed_email{'from'}) {
-+		$sender = $parsed_email{'from'};
-+	}
-+	if ($parsed_email{'in-reply-to'}) {
-+		$initial_reply_to = $parsed_email{'in-reply-to'};
-+	}
-+	if ($parsed_email{'subject'}) {
-+		$initial_subject = $parsed_email{'subject'};
-+		print $c2 "Subject: " .
-+			quote_subject($parsed_email{'subject'}, $compose_encoding) .
-+			"\n";
-+	}
-+	if ($parsed_email{'mime-version'}) {
-+		print $c2 "MIME-Version: $parsed_email{'mime-version'}\n",
-+				"Content-Type: $parsed_email{'content-type'};\n",
-+				"Content-Transfer-Encoding: $parsed_email{'content-transfer-encoding'}\n";
-+	}
-+
-+	if ($parsed_email{'content-type'}) {
-+		print $c2 "MIME-Version: 1.0\n",
-+			 "Content-Type: $parsed_email{'content-type'};\n",
-+			 "Content-Transfer-Encoding: 8bit\n";
-+	} elsif (file_has_nonascii($compose_filename)) {
-+                my $content_type = ($parsed_email{'content-type'} or
-+                        "text/plain; charset=$compose_encoding");
-+                print $c2 "MIME-Version: 1.0\n",
-+                          "Content-Type: $content_type\n",
-+                          "Content-Transfer-Encoding: 8bit\n";
-+        }
-+
-+	if ($parsed_email{'body'}) {
-+		print $c2 "\n$parsed_email{'body'}\n";
-+	} else {
- 		print __("Summary email is empty, skipping it\n");
- 		$compose = -1;
- 	}
-+
-+	close $c;
-+	close $c2;
-+
- } elsif ($annotate) {
- 	do_edit(@files);
- }
-@@ -792,6 +802,32 @@ sub ask {
- 	return;
- }
- 
-+sub parse_header_line {
-+	my $lines = shift;
-+	my $parsed_line = shift;
-+	my $pattern = join "|", qw(To Cc Bcc);
-+	
-+	foreach (split(/\n/, $lines)) {
-+		if (/^($pattern):\s*(.+)$/i) {
-+		        $parsed_line->{lc $1} = [ parse_address_line($2) ];
-+		} elsif (/^([^:]*):\s*(.+)\s*$/i) {
-+		        $parsed_line->{lc $1} = $2;
-+		}
-+	}
-+}
-+
-+sub filter_body {
-+	my $c = shift;
-+	my $body = "";
-+	while (my $body_line = <$c>) {
-+		if ($body_line !~ m/^GIT:/) {
-+			$body .= $body_line;
-+		}
-+	}
-+	return $body;
-+}
-+
-+
- my %broken_encoding;
- 
- sub file_declares_8bit_cte {
--- 
-2.15.1
+> 
+> Even though your explanation seems clear, having a real, easily 
+> reproducible case would help as well, I guess.
+> 
+>> I kinda hoped that you may know this magic and incorporate it into 
+>> "commit --onto" which will allow to immediately get to the result of 
+>> the rebase:
+>>
+>>   ---A---f!A---B'
+>>
+>> without spelling it all manually.
+> 
+> If you mind enough to be bothered testing it out, might be even 
+> existing/initial state of originally proposed `git commit 
+> --onto-parent` script would work for you, as it does incorporate some 
+> trivial three-way merge resolution.
+> 
+> In your starting situation:
+> 
+>     ---A---B
+> 
+> .... you would just do something like:
+> 
+>     git commit --onto-parent A
+> 
+> .... hopefully ending up in the desired state (hopefully = conflicts 
+> automatically resolved):
+> 
+>     ---A---C---B'
+> 
+> You could even do this instead:
+> 
+>     git commit --onto-parent A --amend
+> 
+> .... ending up with:
+> 
+>     ---A'---B'
+> 
+> .... as that is basically what you wanted in the first place ;)
+> 
+>> (And yeah, I'm actually Alexei, not Chris. That was my MUA being
+>> dumb and using an old pseudonym than Google insists I'm called by.)
+> 
+> Ah, sorry for the confusion :)
+> 
+> Regards, Buga
+> 
 
