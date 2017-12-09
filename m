@@ -2,78 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8081D1F404
-	for <e@80x24.org>; Sat,  9 Dec 2017 03:44:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B72751F407
+	for <e@80x24.org>; Sat,  9 Dec 2017 07:48:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753548AbdLIDon (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Dec 2017 22:44:43 -0500
-Received: from mail-pl0-f52.google.com ([209.85.160.52]:45707 "EHLO
-        mail-pl0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752960AbdLIDom (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Dec 2017 22:44:42 -0500
-Received: by mail-pl0-f52.google.com with SMTP id o2so140026plk.12
-        for <git@vger.kernel.org>; Fri, 08 Dec 2017 19:44:42 -0800 (PST)
+        id S1751087AbdLIHsl (ORCPT <rfc822;e@80x24.org>);
+        Sat, 9 Dec 2017 02:48:41 -0500
+Received: from mail-qk0-f176.google.com ([209.85.220.176]:32821 "EHLO
+        mail-qk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751008AbdLIHsk (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Dec 2017 02:48:40 -0500
+Received: by mail-qk0-f176.google.com with SMTP id 63so1569914qke.0
+        for <git@vger.kernel.org>; Fri, 08 Dec 2017 23:48:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=c/fmazF8ZQPkR5tc/+4FKApYSKLxOYwBQQrcYwbsEoU=;
-        b=xyUUYY9Ym14AY5VgS0MX7GX/zSHb+EriXC2doSNfMRwQC6s+FEO1UvrEzz6bPHfPq6
-         Q0+by94tRTfB+M4FlL8axHsTVJC2SaorkSCKNkKTWcL1RziQo4bsHKyVI/cX31WXEaSa
-         6frx3A0+hIo4Bikx+2I06DCS3S2SGZFhuqr52QTMuJPr3uocYvqRjIbVAxND16KZGAc6
-         B0z+NxRAxQc++cIqOuXzkxWKyybOdaAlRy/MMqLYNv9J1Ww0Nl48Us2LySXVn85LhaGi
-         +b7jgEwmvQY9cuBl6ueOvWo3F86aXHxHIzSuEm7/eiWv1poSoMU5w7fRNNfbKoauGt/U
-         XJRQ==
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=CXQllRDcsunExcPUY8YVd9o6D2Cw6dPyQwIiVLEHe6g=;
+        b=PvD2dCrGz+QMCMo1Q9XBNWV4cSrDwfIIA4LL7PiRR0+vdomRdsusa+V/c2e2tPsmS7
+         HzYSu/aKUb7oa/AN7hP4kYOpwNqYpWWctOGBxHN58RpaQpLBKt8aeTFLseOCcnwPJKKH
+         21jDAtXcC7CyHjyMzSSmAqKKiXYDDEFP58GvNQ6H/esl/kivduOHVjLXNfVGipEvIPE3
+         uv0j61vAE5C2AbEy21nZTe93WBz9DzGbB7f1DqcYgOAoSpJAjExwwVdZzcYFp/EDi5Xm
+         rWdUn8WZBtF6BheeTJC6305CvfQ38W693iW1lyjIwcom5P3WxXGf4yLQeAokLUpDcE6n
+         m+Hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=c/fmazF8ZQPkR5tc/+4FKApYSKLxOYwBQQrcYwbsEoU=;
-        b=PvespepgZhF4K12FmCsRvxOWcNTO5c78/JvsTtbwEkzdiuYxI1wH4TQk5RtXKhFpHP
-         nTdxCvvh3mkSoq5WxXlB6jFTyzlf6HzRo1p7Lty/p4PIw5p6vBYmKmgUQuwucqOY1z0y
-         TeBddYKVcCl4Dk3RLfsuHPNRMYjHT3atNCUwvHSJLjQcUAhDed74+YcIWkaJk4MYi2w5
-         FrNgJNhDk65yYs0QhvWGHlKM3p0B/rH2MxfIrW8Q3+YkpkDQsHxfuQGZdICbsU0dAZyY
-         +fMWcrYcx+CSFt/IPeb6SWGVJ9ILjRqGRell/JefhZhuqxj+MpMKm1sH2w3+/n3tFIvQ
-         ksOw==
-X-Gm-Message-State: AJaThX6Gmox+VSB/h6LHURh2H+8LAPUZMezMx8ieMQOr//51mWX6NjOb
-        LJFZO9cTlQDmQX6PsIOXDWJrYaOCyxU=
-X-Google-Smtp-Source: AGs4zMb86DieYjZfp/pM06sQF4FHp/f6k2HgEs3OO6Y2F1jtod8SzcjMCFRalimBEgEaMTbWQQhvLw==
-X-Received: by 10.159.233.198 with SMTP id b6mr33254784plr.350.1512791081390;
-        Fri, 08 Dec 2017 19:44:41 -0800 (PST)
-Received: from localhost ([205.175.97.239])
-        by smtp.gmail.com with ESMTPSA id t4sm15402119pfd.110.2017.12.08.19.44.38
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 08 Dec 2017 19:44:39 -0800 (PST)
-Date:   Fri, 8 Dec 2017 19:44:36 -0800
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] docs/pretty-formats: mention commas in %(trailers) syntax
-Message-ID: <20171209034436.GA43611@D-10-157-251-166.dhcp4.washington.edu>
-References: <20171208051636.GA24693@sigill.intra.peff.net>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=CXQllRDcsunExcPUY8YVd9o6D2Cw6dPyQwIiVLEHe6g=;
+        b=SsrSKPSmQOzpAgxTxgn0/OsPz21wRCEFt83hgvbhL5DKICUoUl/7nHY2NxR9GBayyz
+         U+LSMs+4qzrcNSxvfL3uxtFjqcQsMnRXk2PL2YC/708ULCvgFhfG2pTcKY8eqScH18hH
+         VaMKO2k7RQjuaJ5SHm5OinVwtG6iPKMcLuGb2kv3wF1XISjkEaw3QPUZwK3b/YbnOBR+
+         7DG8s2oj6a1tIKxVtgqRHi9oHLYEKsKh81N5by++bykdtPqkcw3zUDcW0BZDzgiVcYlC
+         GmT9BIGTrNDrQ1poNdfLSkY6TMRNIkDCMIuqkEG8JkW3G5jrJza0jcnHd2VUwi2+7mWO
+         K/sQ==
+X-Gm-Message-State: AKGB3mLxkCANgaSBakFsbi6AALWN0sPpUPQcFjw47MANy1GOhkUw+VJi
+        jFaINOsZFfOALx1SXNf8nBrsKCtua/tKHfrtZo4=
+X-Google-Smtp-Source: AGs4zMZIGPImyV6DkIdVegtsVAqvgfzMj/sJY4AUrBtiGnKZYe3zy8WZR/qeFFNcC8vGauJkHMSFojAHIwOUh6nLOwo=
+X-Received: by 10.55.126.7 with SMTP id z7mr12924868qkc.306.1512805719669;
+ Fri, 08 Dec 2017 23:48:39 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20171208051636.GA24693@sigill.intra.peff.net>
-User-Agent: Mutt/1.9.1 (2017-09-22)
+Received: by 10.200.16.154 with HTTP; Fri, 8 Dec 2017 23:48:39 -0800 (PST)
+In-Reply-To: <xmqqr2s56jn6.fsf@gitster.mtv.corp.google.com>
+References: <01020160364a23d5-471a2fd0-9fff-4599-86f8-b2f37a4a0a84-000000@eu-west-1.amazonses.com>
+ <xmqqr2s56jn6.fsf@gitster.mtv.corp.google.com>
+From:   =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>
+Date:   Sat, 9 Dec 2017 10:48:39 +0300
+Message-ID: <CAL21BmmPNFAGnjtJy_ULBPjeU9HJAVx3x8B4ZrbqKaq_MU4W0Q@mail.gmail.com>
+Subject: Re: [PATCH Outreachy 1/2] format: create pretty.h file
+To:     Junio C Hamano <gitster@pobox.com>, sunshine@sunshineco.com
+Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Christian Couder <christian.couder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 08, 2017 at 12:16:36AM -0500, Jeff King wrote:
-> Commit 84ff053d47 (pretty.c: delimit "%(trailers)" arguments
-> with ",", 2017-10-01) switched the syntax of the trailers
-> placeholder, but forgot to update the documentation in
-> pretty-formats.txt.
->
-> There's need to mention the old syntax; it was never in a
-> released version of Git.
->
-> Signed-off-by: Jeff King <peff@peff.net>
+> I see you've "standardized" to drop "extern" from the declarations
+> in the header; I have an impression that our preference however is
+> to go in the other direction.
 
-My mistake, and thank you for giving this your attention.
+OK, absolutely not a problem, I will return them. Do I need to write
+"extern" further in function declarations? And why did everyone choose
+writing "extern" every time? It looks obvious for me that declaration
+of function is extern, that's why I decided to throw them away.
+
+
+> The choice of bits that are moved to the new header looks quite
+> sensible to me.
+
+I'm very happy and satisfied with it :-)
+
+
+> s/futher/further/
+
+It was a typo that I missed. Thank you! Will fix it also.
+
+
+> This has a toll on topics in flight that expect the symbols for
+> pretty are available in "commit.h"; they are forced to include
+> this new file they did not even know about.
+>
+> I notice that "commit.h" is included in "builtin.h"; perhaps adding
+> a new include for "pretty.h" there would be of lessor impact?  I
+> dunno.
+>
+
+It's a middle point, as I said. I have plans to create unifying
+format.h then (for all formatting issues). I guess that pretty.h and
+ref-filter.h will be deleted later. But, I really need to create now
+that pretty.h because it is much easier to work with existing
+interface. If you have another ideas how to achieve the main goal -
+please share them with me, I would appreciate that so much. I am not
+sure that my solution is the best, but I can't come up with something
+better for now.
