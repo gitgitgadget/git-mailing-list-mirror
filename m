@@ -6,169 +6,137 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5A00F1F406
-	for <e@80x24.org>; Sat,  9 Dec 2017 12:05:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 60F401F406
+	for <e@80x24.org>; Sat,  9 Dec 2017 12:06:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751335AbdLIMFk (ORCPT <rfc822;e@80x24.org>);
-        Sat, 9 Dec 2017 07:05:40 -0500
-Received: from ikke.info ([178.21.113.177]:47662 "EHLO vps892.directvps.nl"
+        id S1751408AbdLIMGQ (ORCPT <rfc822;e@80x24.org>);
+        Sat, 9 Dec 2017 07:06:16 -0500
+Received: from ikke.info ([178.21.113.177]:47730 "EHLO vps892.directvps.nl"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751221AbdLIMFj (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Dec 2017 07:05:39 -0500
+        id S1751221AbdLIMGP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Dec 2017 07:06:15 -0500
 Received: by vps892.directvps.nl (Postfix, from userid 1008)
-        id E15AE4400D4; Sat,  9 Dec 2017 13:05:37 +0100 (CET)
-Date:   Sat, 9 Dec 2017 13:05:37 +0100
+        id A53C84400D4; Sat,  9 Dec 2017 13:06:14 +0100 (CET)
+Date:   Sat, 9 Dec 2017 13:06:14 +0100
 From:   Kevin Daudt <me@ikke.info>
 To:     Hans Jerry Illikainen <hji@dyntopia.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/3] merge: add config option for verifySignatures
-Message-ID: <20171209120537.GA6006@alpha.vpn.ikke.info>
+Subject: Re: [PATCH 2/3] t: add tests for pull --verify-signatures
+Message-ID: <20171209120614.GB6006@alpha.vpn.ikke.info>
 References: <20171209090530.6747-1-hji@dyntopia.com>
+ <20171209090530.6747-2-hji@dyntopia.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20171209090530.6747-1-hji@dyntopia.com>
+In-Reply-To: <20171209090530.6747-2-hji@dyntopia.com>
 User-Agent: Mutt/1.9.1 (2017-09-22)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello Hans Jerry,
+On Sat, Dec 09, 2017 at 09:05:29AM +0000, Hans Jerry Illikainen wrote:
+> Add tests for `pull --verify-signatures` with untrusted, bad and no
+> signatures.  Previously the only test for `--verify-signatures` was to
+> make sure that `pull --rebase --verify-signatures` result in a warning
+> (t5520-pull.sh).
 
-Thank you for your contribution. I have soem remarks below.
+Nice!
 
-On Sat, Dec 09, 2017 at 09:05:28AM +0000, Hans Jerry Illikainen wrote:
-> Verify the signature of the tip commit when `merge.verifySignatures` is
-> true.  This can be overridden with `--no-verify-signatures`.
+Same thing regarding the `git checkout initial` commands counts
+here too.
+
 > 
 > Signed-off-by: Hans Jerry Illikainen <hji@dyntopia.com>
-
-I miss the motivation in the commit message. I imagine something like:
-
-    git merge --verify-signatures can be used to verify that the tip
-    commit of the branch being merged in is properly signed, but it's
-    cumbersome to have to specify that every time.
-    
-    Add a configuration option that enables this behaviour by default,
-    which can be overridden by --no-verify-signatures.
-
-
 > ---
->  Documentation/merge-config.txt     |  7 +++++++
->  builtin/merge.c                    |  2 ++
->  t/t7612-merge-verify-signatures.sh | 43 ++++++++++++++++++++++++++++++++++++--
->  3 files changed, 50 insertions(+), 2 deletions(-)
+>  t/t5573-pull-verify-signatures.sh | 78 +++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 78 insertions(+)
+>  create mode 100755 t/t5573-pull-verify-signatures.sh
 > 
-> diff --git a/Documentation/merge-config.txt b/Documentation/merge-config.txt
-> index df3ea3779..76571cd3b 100644
-> --- a/Documentation/merge-config.txt
-> +++ b/Documentation/merge-config.txt
-> @@ -26,6 +26,13 @@ merge.ff::
->  	allowed (equivalent to giving the `--ff-only` option from the
->  	command line).
->  
-> +merge.verifySignatures::
-> +	Verify that the tip commit of the side branch being merged is
-> +	signed with a valid key, i.e. a key that has a valid uid: in the
-> +	default trust model, this means the signing key has been signed
-> +	by a trusted key. If the tip commit of the side branch is not
-> +	signed with a valid key, the merge is aborted.
+> diff --git a/t/t5573-pull-verify-signatures.sh b/t/t5573-pull-verify-signatures.sh
+> new file mode 100755
+> index 000000000..700247910
+> --- /dev/null
+> +++ b/t/t5573-pull-verify-signatures.sh
+> @@ -0,0 +1,78 @@
+> +#!/bin/sh
 > +
-
-This is a verbatim copy of the explenation of --verify-signatures. Would
-it be an idea to refer to the explenation of merge --verify-signatures?
-
->  include::fmt-merge-msg-config.txt[]
->  
->  merge.renameLimit::
-> diff --git a/builtin/merge.c b/builtin/merge.c
-> index 612dd7bfb..30264cfd7 100644
-> --- a/builtin/merge.c
-> +++ b/builtin/merge.c
-> @@ -567,6 +567,8 @@ static int git_merge_config(const char *k, const char *v, void *cb)
->  
->  	if (!strcmp(k, "merge.diffstat") || !strcmp(k, "merge.stat"))
->  		show_diffstat = git_config_bool(k, v);
-> +	else if (!strcmp(k, "merge.verifysignatures"))
-> +		verify_signatures = git_config_bool(k, v);
->  	else if (!strcmp(k, "pull.twohead"))
->  		return git_config_string(&pull_twohead, k, v);
->  	else if (!strcmp(k, "pull.octopus"))
-> diff --git a/t/t7612-merge-verify-signatures.sh b/t/t7612-merge-verify-signatures.sh
-> index 8ae69a61c..f1a74a683 100755
-> --- a/t/t7612-merge-verify-signatures.sh
-> +++ b/t/t7612-merge-verify-signatures.sh
-> @@ -39,23 +39,62 @@ test_expect_success GPG 'merge unsigned commit with verification' '
->  	test_i18ngrep "does not have a GPG signature" mergeerror
->  '
->  
-> +test_expect_success GPG 'merge unsigned commit with merge.verifySignatures=true' '
-> +	test_config merge.verifySignatures true &&
-> +	test_must_fail git merge --ff-only side-unsigned 2>mergeerror &&
-> +	test_i18ngrep "does not have a GPG signature" mergeerror
+> +test_description='pull signature verification tests'
+> +. ./test-lib.sh
+> +. "$TEST_DIRECTORY/lib-gpg.sh"
+> +
+> +test_expect_success GPG 'create repositories with signed commits' '
+> +	echo 1 >a && git add a &&
+> +	test_tick && git commit -m initial &&
+> +	git tag initial &&
+> +
+> +	git clone . signed &&
+> +	(
+> +		cd signed &&
+> +		echo 2 >b && git add b &&
+> +		test_tick && git commit -S -m "signed"
+> +	) &&
+> +
+> +	git clone . unsigned &&
+> +	(
+> +		cd unsigned &&
+> +		echo 3 >c && git add c &&
+> +		test_tick && git commit -m "unsigned"
+> +	) &&
+> +
+> +	git clone . bad &&
+> +	(
+> +		cd bad &&
+> +		echo 4 >d && git add d &&
+> +		test_tick && git commit -S -m "bad" &&
+> +		git cat-file commit HEAD >raw &&
+> +		sed -e "s/bad/forged bad/" raw >forged &&
+> +		git hash-object -w -t commit forged >forged.commit &&
+> +		git checkout $(cat forged.commit)
+> +	) &&
+> +
+> +	git clone . untrusted &&
+> +	(
+> +		cd untrusted &&
+> +		echo 5 >e && git add e &&
+> +		test_tick && git commit -SB7227189 -m "untrusted"
+> +	)
 > +'
 > +
->  test_expect_success GPG 'merge commit with bad signature with verification' '
->  	test_must_fail git merge --ff-only --verify-signatures $(cat forged.commit) 2>mergeerror &&
->  	test_i18ngrep "has a bad GPG signature" mergeerror
->  '
->  
-> +test_expect_success GPG 'merge commit with bad signature with merge.verifySignatures=true' '
-> +	test_config merge.verifySignatures true &&
-> +	test_must_fail git merge --ff-only $(cat forged.commit) 2>mergeerror &&
-> +	test_i18ngrep "has a bad GPG signature" mergeerror
+> +test_expect_success GPG 'pull unsigned commit with --verify-signatures' '
+> +	test_must_fail git pull --ff-only --verify-signatures unsigned 2>pullerror &&
+> +	test_i18ngrep "does not have a GPG signature" pullerror
 > +'
 > +
->  test_expect_success GPG 'merge commit with untrusted signature with verification' '
->  	test_must_fail git merge --ff-only --verify-signatures side-untrusted 2>mergeerror &&
->  	test_i18ngrep "has an untrusted GPG signature" mergeerror
->  '
->  
-> +test_expect_success GPG 'merge commit with untrusted signature with merge.verifySignatures=true' '
-> +	test_config merge.verifySignatures true &&
-> +	test_must_fail git merge --ff-only side-untrusted 2>mergeerror &&
-> +	test_i18ngrep "has an untrusted GPG signature" mergeerror
+> +test_expect_success GPG 'pull commit with bad signature with --verify-signatures' '
+> +	test_must_fail git pull --ff-only --verify-signatures bad 2>pullerror &&
+> +	test_i18ngrep "has a bad GPG signature" pullerror
 > +'
 > +
->  test_expect_success GPG 'merge signed commit with verification' '
->  	git merge --verbose --ff-only --verify-signatures side-signed >mergeoutput &&
-> -	test_i18ngrep "has a good GPG signature" mergeoutput
-> +	test_i18ngrep "has a good GPG signature" mergeoutput &&
-> +	git checkout initial
-
-This looks like a clean up step. If so, it's better to add
-`test_when_finished 'git checkout initial'` at the beginning to clearly
-mark it as a clean up step and make sure it's run even when the test
-fails. Same counts for the other occurances.
-
+> +test_expect_success GPG 'pull commit with untrusted signature with --verify-signatures' '
+> +	test_must_fail git pull --ff-only --verify-signatures untrusted 2>pullerror &&
+> +	test_i18ngrep "has an untrusted GPG signature" pullerror
 > +'
 > +
-> +test_expect_success GPG 'merge signed commit with merge.verifySignatures=true' '
-> +	test_config merge.verifySignatures true &&
-> +	git merge --verbose --ff-only side-signed >mergeoutput &&
-> +	test_i18ngrep "has a good GPG signature" mergeoutput &&
-> +	git checkout initial
->  '
->  
->  test_expect_success GPG 'merge commit with bad signature without verification' '
-> -	git merge $(cat forged.commit)
-> +	git merge $(cat forged.commit) &&
+> +test_expect_success GPG 'pull signed commit with --verify-signatures' '
+> +	git pull --verify-signatures signed >pulloutput &&
+> +	test_i18ngrep "has a good GPG signature" pulloutput &&
 > +	git checkout initial
 > +'
 > +
-> +test_expect_success GPG 'merge commit with bad signature with merge.verifySignatures=false' '
-> +	test_config merge.verifySignatures false &&
-> +	git merge $(cat forged.commit) &&
+> +test_expect_success GPG 'pull commit with bad signature without verification' '
+> +	git pull --ff-only bad 2>pullerror &&
 > +	git checkout initial
 > +'
 > +
-> +test_expect_success GPG 'merge commit with bad signature with merge.verifySignatures=true and --no-verify-signatures' '
+> +test_expect_success GPG 'pull commit with bad signature with --no-verify-signatures' '
 > +	test_config merge.verifySignatures true &&
-> +	git merge --no-verify-signatures $(cat forged.commit) &&
+> +	test_config pull.verifySignatures true &&
+> +	git pull --ff-only --no-verify-signatures bad 2>pullerror &&
 > +	git checkout initial
->  '
->  
->  test_done
-
-Kevin.
+> +'
+> +
+> +test_done
+> -- 
+> 2.11.0
+> 
