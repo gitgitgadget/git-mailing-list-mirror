@@ -2,97 +2,226 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CDE601F406
-	for <e@80x24.org>; Sat,  9 Dec 2017 14:46:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3D6C61F406
+	for <e@80x24.org>; Sat,  9 Dec 2017 15:37:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751304AbdLIOqV (ORCPT <rfc822;e@80x24.org>);
-        Sat, 9 Dec 2017 09:46:21 -0500
-Received: from mout.web.de ([212.227.17.11]:61711 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751289AbdLIOqU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Dec 2017 09:46:20 -0500
-Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MEEa4-1eH2Xg1Sv2-00FWPb; Sat, 09
- Dec 2017 15:46:08 +0100
-Date:   Sat, 9 Dec 2017 15:46:07 +0100
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Todd Zullinger <tmz@pobox.com>
-Cc:     Jeff Hostetler <git@jeffhostetler.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Dec 2017, #01; Mon, 4)
-Message-ID: <20171209144607.GA6443@tor.lan>
-References: <xmqqmv2ykvy4.fsf@gitster.mtv.corp.google.com>
- <DA960DCE-0635-47CF-B3C4-8133021799F1@gmail.com>
- <alpine.DEB.2.21.1.1712071643410.4318@virtualbox>
- <175f87bc-0270-fb18-fc14-24e8f59321d6@jeffhostetler.com>
- <20171207213312.GB3693@zaya.teonanacatl.net>
+        id S1750931AbdLIPhw (ORCPT <rfc822;e@80x24.org>);
+        Sat, 9 Dec 2017 10:37:52 -0500
+Received: from cisrsmtp.univ-lyon1.fr ([134.214.188.146]:59744 "EHLO
+        cisrsmtp.univ-lyon1.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750908AbdLIPhv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Dec 2017 10:37:51 -0500
+Received: from localhost (localhost [127.0.0.1])
+        by cisrsmtp.univ-lyon1.fr (Postfix) with ESMTP id 5DDCAA013F;
+        Sat,  9 Dec 2017 16:37:49 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at cisrsmtp.univ-lyon1.fr
+Received: from cisrsmtp.univ-lyon1.fr ([127.0.0.1])
+        by localhost (cisrsmtp.univ-lyon1.fr [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id 5RsaZ0QM1dA3; Sat,  9 Dec 2017 16:37:47 +0100 (CET)
+Received: from BEMBX2013-01.univ-lyon1.fr (bembx2013-01.univ-lyon1.fr [134.214.201.247])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by cisrsmtp.univ-lyon1.fr (Postfix) with ESMTPS id 9B239A002A;
+        Sat,  9 Dec 2017 16:37:47 +0100 (CET)
+Received: from localhost.localdomain (134.214.126.172) by
+ BEMBX2013-01.univ-lyon1.fr (134.214.201.247) with Microsoft SMTP Server (TLS)
+ id 15.0.1263.5; Sat, 9 Dec 2017 16:37:46 +0100
+From:   Nathan Payre <nathan.payre@etu.univ-lyon1.fr>
+To:     <git@vger.kernel.org>
+CC:     Eric Sunshine <sunshine@sunshineco.com>,
+        Nathan Payre <nathan.payre@etu.univ-lyon1.fr>,
+        Matthieu Moy <matthieu.moy@univ-lyon1.fr>,
+        Timothee Albertin <timothee.albertin@etu.univ-lyon1.fr>,
+        Daniel Bensoussan <daniel.bensoussan--bohm@etu.univ-lyon1.fr>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] send-email: extract email-parsing code into a subroutine
+Date:   Sat, 9 Dec 2017 16:37:27 +0100
+Message-ID: <20171209153727.30113-1-nathan.payre@etu.univ-lyon1.fr>
+X-Mailer: git-send-email 2.15.0.318.g7c8d76e5a.dirty
+In-Reply-To: <CAGb4CBWZciqxdfpSkK1vezhiuSYX5Yy-xSq=Uj4h+vhRo9uyoQ@mail.gmail.com>
+References: <CAGb4CBWZciqxdfpSkK1vezhiuSYX5Yy-xSq=Uj4h+vhRo9uyoQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20171207213312.GB3693@zaya.teonanacatl.net>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Provags-ID: V03:K0:3c5A151kXREM18iXlPqR6TycVmzXSWwas3HlMx1tN6NJKk+Yrp+
- jet5AsCNP9Smyam9aQFta87PcMRw5ghhNZxU9zFW8y32OOR1yNt+2BqyK9Nvrna/Dc9+2X5
- CEvlaKI3z89sQiCWq8nVjciJJL3WWscst/Ytv4zjVaPU/tWT19j/TeM6QT1wszxImN76bTv
- 7Fecf/5vfmJ3MXNqmIKqw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:KZx3uuADjbo=:PFK9dx6/eTd64plg9hLKai
- tRbCt6ncEWd4vMBFcFRTlyq8NtvlacoI+7+qrMjPFVmGJPnLteQNxwIbmkh32w7ctls6xQMVC
- kJFqe3xznilTWSZDQyaLq96+e0O5PHn8WskdQxgGKNJof50H5VwAXxR4PPf5y5H12t0TDznU5
- FvOQcand+/7L7UytLLRPrfkv+SlQQFaC6LcZ4+xSoGdnhXI+sQauFeEY7xVDUlLws5lcPEdU5
- JnUquGs2fdk+cbr4I6AocR9yEl5mBU/aPWqud43fytUx9s8YXIa9fwqpSZRlT4qbsLj6xYRLX
- 4ylHn8LlD3Juu5SvIDhwXnDShmA4RioTfgO+Qzz6q22xSNhGhjN4Rb0Xiu99ugLm87RPsD+Vi
- nzs12O0jkEnkZHzVJ+4wjKX5QjdjTPq3zGchturEh09k7jA2Mg7030VtLoyavLU0SWsmZuoi/
- QY14bYtavTTCbNbtGTT7PcYdFxNkX1RP2MskGESq1QcpcboR+mwugMFYTsUGsb+ncEIyLSn29
- KiZh8lbEcp4bKS4bNcddAgiMkNCrjo8ZgKPcToJ4iRxxklTATVLEfHURXb/BMIgOuJo5iWWCW
- 6SOmqTpyVLDARhDU8q/b7yxE6lpqkvHIW60jQHb579j1cTWhwSDhAj92/NGOtmYFTr6m7RGMQ
- PoMplbAksZMruBNaSqzITulfcDl+loZka2DIDqKj6ZRR5NmfIjY3O7Td5049ck6Fpsl+nn+D1
- fGClp5V9cqrmSwrb4vInZS/Wc0BqCYGO/WN6TkYpnrB+zT6VMkrZBWi8EW80B9FsogLOSMrT/
- LytfOiEU+3pDDEIjJS5gWV8ldodpA==
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [134.214.126.172]
+X-ClientProxiedBy: BEMBX2013-02.univ-lyon1.fr (134.214.201.248) To
+ BEMBX2013-01.univ-lyon1.fr (134.214.201.247)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 07, 2017 at 04:33:12PM -0500, Todd Zullinger wrote:
-> Jeff Hostetler wrote:
-> >I'm looking at t5616 now on my mac.
-> >Looks like the MAC doesn't like my line counting in the tests.
-> >I'll fix in my next version.
-> 
-[]
-> 		| sort >expect_2.oids &&
-> -	test "$(wc -l <expect_2.oids)" = "8" &&
-> +	test_line_count = 8 expect_2.oids &&
-> 	git -C src blame master -- file.1.txt >expect.blame
-> '
+The existing code mixes parsing of email header with regular
+expression and actual code. Extract the parsing code into a new
+subroutine "parse_header_line()". This improves the code readability
+and make parse_header_line reusable in other place.
 
+"parsed_header_line()" and "filter_body()" could be used for
+refactoring the part of code which parses the header to prepare the
+email and send it.
 
-The problem seems to be the '"' around wc, this would work:
-test $(wc -l <expect_2.oids) = "8" &&
+Signed-off-by: Nathan Payre <nathan.payre@etu.univ-lyon1.fr>
+Signed-off-by: Matthieu Moy <matthieu.moy@univ-lyon1.fr>
+Signed-off-by: Timothee Albertin <timothee.albertin@etu.univ-lyon1.fr>
+Signed-off-by: Daniel Bensoussan <daniel.bensoussan--bohm@etu.univ-lyon1.fr>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Thanks-to: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
 
+I fixed the last reported problems and removed some other old
+variable as $need_8bit_cte.
 
-What do you guys think a about a lint test like this:
+ git-send-email.perl | 110 ++++++++++++++++++++++++++++++++++------------------
+ 1 file changed, 73 insertions(+), 37 deletions(-)
 
-diff --git a/t/check-non-portable-shell.pl b/t/check-non-portable-shell.pl
-index 03dc9d2852..9ebf65c26f 100755
---- a/t/check-non-portable-shell.pl
-+++ b/t/check-non-portable-shell.pl
-@@ -21,6 +21,7 @@ while (<>) {
- 	/^\s*declare\s+/ and err 'arrays/declare not portable';
- 	/^\s*[^#]\s*which\s/ and err 'which is not portable (please use type)';
- 	/\btest\s+[^=]*==/ and err '"test a == b" is not portable (please use =)';
-+	/\bwc -l.*"\s*=/ and err '`"$(wc -l)"` is not portable, please use `$(wc -l)`';
- 	/\bexport\s+[A-Za-z0-9_]*=/ and err '"export FOO=bar" is not portable (please use FOO=bar && expo
-
-
-
-
-
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 2208dcc21..ac36c6aac 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -685,7 +685,7 @@ Lines beginning in "GIT:" will be removed.
+ Consider including an overall diffstat or table of contents
+ for the patch you are writing.
+ 
+-Clear the body content if you don't wish to send a summary.
++Clear the body content if you dont wish to send a summary.
+ EOT2
+ From: $tpl_sender
+ Subject: $tpl_subject
+@@ -709,51 +709,61 @@ EOT3
+ 	open $c, "<", $compose_filename
+ 		or die sprintf(__("Failed to open %s: %s"), $compose_filename, $!);
+ 
+-	my $need_8bit_cte = file_has_nonascii($compose_filename);
+-	my $in_body = 0;
+-	my $summary_empty = 1;
+ 	if (!defined $compose_encoding) {
+ 		$compose_encoding = "UTF-8";
+ 	}
+-	while(<$c>) {
+-		next if m/^GIT:/;
+-		if ($in_body) {
+-			$summary_empty = 0 unless (/^\n$/);
+-		} elsif (/^\n$/) {
+-			$in_body = 1;
+-			if ($need_8bit_cte) {
+-				print $c2 "MIME-Version: 1.0\n",
+-					 "Content-Type: text/plain; ",
+-					   "charset=$compose_encoding\n",
+-					 "Content-Transfer-Encoding: 8bit\n";
+-			}
+-		} elsif (/^MIME-Version:/i) {
+-			$need_8bit_cte = 0;
+-		} elsif (/^Subject:\s*(.+)\s*$/i) {
+-			$initial_subject = $1;
+-			my $subject = $initial_subject;
+-			$_ = "Subject: " .
+-				quote_subject($subject, $compose_encoding) .
+-				"\n";
+-		} elsif (/^In-Reply-To:\s*(.+)\s*$/i) {
+-			$initial_reply_to = $1;
+-			next;
+-		} elsif (/^From:\s*(.+)\s*$/i) {
+-			$sender = $1;
+-			next;
+-		} elsif (/^(?:To|Cc|Bcc):/i) {
+-			print __("To/Cc/Bcc fields are not interpreted yet, they have been ignored\n");
+-			next;
++
++
++	my %parsed_email;
++	$parsed_email{'body'} = '';
++	while (my $line = <$c>) {
++		next if $line =~ m/^GIT:/;
++		parse_header_line($line, \%parsed_email);
++		if ($line =~ /^$/) {
++			$parsed_email{'body'} = filter_body($c);
+ 		}
+-		print $c2 $_;
+ 	}
+-	close $c;
+-	close $c2;
+ 
+-	if ($summary_empty) {
++	if ($parsed_email{'from'}) {
++		$sender = $parsed_email{'from'};
++	}
++	if ($parsed_email{'in-reply-to'}) {
++		$initial_reply_to = $parsed_email{'in-reply-to'};
++	}
++	if ($parsed_email{'subject'}) {
++		$initial_subject = $parsed_email{'subject'};
++		print $c2 "Subject: " .
++			quote_subject($parsed_email{'subject'}, $compose_encoding) .
++			"\n";
++	}
++	if ($parsed_email{'mime-version'}) {
++		print $c2 "MIME-Version: $parsed_email{'mime-version'}\n",
++				"Content-Type: $parsed_email{'content-type'};\n",
++				"Content-Transfer-Encoding: $parsed_email{'content-transfer-encoding'}\n";
++	}
++
++	if ($parsed_email{'content-type'}) {
++		print $c2 "MIME-Version: 1.0\n",
++			 "Content-Type: $parsed_email{'content-type'};\n",
++			 "Content-Transfer-Encoding: 8bit\n";
++	} elsif (file_has_nonascii($compose_filename)) {
++                my $content_type = ($parsed_email{'content-type'} or
++                        "text/plain; charset=$compose_encoding");
++                print $c2 "MIME-Version: 1.0\n",
++                          "Content-Type: $content_type\n",
++                          "Content-Transfer-Encoding: 8bit\n";
++        }
++
++	if ($parsed_email{'body'}) {
++		print $c2 "\n$parsed_email{'body'}\n";
++	} else {
+ 		print __("Summary email is empty, skipping it\n");
+ 		$compose = -1;
+ 	}
++
++	close $c;
++	close $c2;
++
+ } elsif ($annotate) {
+ 	do_edit(@files);
+ }
+@@ -792,6 +802,32 @@ sub ask {
+ 	return;
+ }
+ 
++sub parse_header_line {
++	my $lines = shift;
++	my $parsed_line = shift;
++	my $pattern = join "|", qw(To Cc Bcc);
++	
++	foreach (split(/\n/, $lines)) {
++		if (/^($pattern):\s*(.+)$/i) {
++		        $parsed_line->{lc $1} = [ parse_address_line($2) ];
++		} elsif (/^([^:]*):\s*(.+)\s*$/i) {
++		        $parsed_line->{lc $1} = $2;
++		}
++	}
++}
++
++sub filter_body {
++	my $c = shift;
++	my $body = "";
++	while (my $body_line = <$c>) {
++		if ($body_line !~ m/^GIT:/) {
++			$body .= $body_line;
++		}
++	}
++	return $body;
++}
++
++
+ my %broken_encoding;
+ 
+ sub file_declares_8bit_cte {
+-- 
+2.15.1
 
