@@ -6,96 +6,52 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4CC221F407
-	for <e@80x24.org>; Sun, 10 Dec 2017 14:39:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8251C1F407
+	for <e@80x24.org>; Sun, 10 Dec 2017 14:53:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751792AbdLJOjS (ORCPT <rfc822;e@80x24.org>);
-        Sun, 10 Dec 2017 09:39:18 -0500
-Received: from cloud.peff.net ([104.130.231.41]:53702 "HELO cloud.peff.net"
+        id S1751792AbdLJOx5 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 10 Dec 2017 09:53:57 -0500
+Received: from cloud.peff.net ([104.130.231.41]:53718 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751616AbdLJOjR (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Dec 2017 09:39:17 -0500
-Received: (qmail 30017 invoked by uid 109); 10 Dec 2017 14:39:18 -0000
+        id S1751616AbdLJOx4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Dec 2017 09:53:56 -0500
+Received: (qmail 30725 invoked by uid 109); 10 Dec 2017 14:53:57 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 10 Dec 2017 14:39:18 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 10 Dec 2017 14:53:57 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 13647 invoked by uid 111); 10 Dec 2017 14:39:39 -0000
+Received: (qmail 13692 invoked by uid 111); 10 Dec 2017 14:54:18 -0000
 Received: from pool-96-236-18-62.albyny.fios.verizon.net (HELO sigill.intra.peff.net) (96.236.18.62)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Sun, 10 Dec 2017 09:39:39 -0500
+ by peff.net (qpsmtpd/0.94) with ESMTPA; Sun, 10 Dec 2017 09:54:18 -0500
 Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 10 Dec 2017 09:39:15 -0500
-Date:   Sun, 10 Dec 2017 09:39:15 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 10 Dec 2017 09:53:54 -0500
+Date:   Sun, 10 Dec 2017 09:53:54 -0500
 From:   Jeff King <peff@peff.net>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Donald R Laster Jr <laster@dlaster.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v3 1/7] git-compat-util: introduce skip_to_optional_arg()
-Message-ID: <20171210143914.GA19894@sigill.intra.peff.net>
-References: <20171209204013.10997-1-chriscool@tuxfamily.org>
- <20171210143118.GB19453@sigill.intra.peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Olga Telezhnaya <olyatelezhnaya@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH Outreachy 1/2] format: create pretty.h file
+Message-ID: <20171210145354.GA20367@sigill.intra.peff.net>
+References: <01020160364a23d5-471a2fd0-9fff-4599-86f8-b2f37a4a0a84-000000@eu-west-1.amazonses.com>
+ <xmqq7etx9kzq.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20171210143118.GB19453@sigill.intra.peff.net>
+In-Reply-To: <xmqq7etx9kzq.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Dec 10, 2017 at 09:31:18AM -0500, Jeff King wrote:
+On Fri, Dec 08, 2017 at 09:40:09AM -0800, Junio C Hamano wrote:
 
-> On Sat, Dec 09, 2017 at 09:40:07PM +0100, Christian Couder wrote:
-> 
-> > The changes compared to v2 are:
-> > 
-> >   - s/_val/_arg/ in the name of the functions
-> >   - s/val/arg/ in the name of the third argument of the functions
-> >   - works with NULL as third argument of the functions
-> 
-> This whole series looks OK to me, but this third point made me wonder:
-> what would be the use of allowing NULL for the "arg" parameter?
-> 
-> I didn't see any use of this in the series, and I'm having trouble
-> figuring out how it would be useful. E.g., if I do:
-> 
->   if (skip_to_optional_arg(arg, "--foo", NULL))
->      ...
-> 
-> what can I do in "..."? I know we matched _some_ type of "--foo", but I
-> cannot know whether it was "--foo" or "--foo=bar", nor what "bar" is. It
-> could only be used by some kind of vague validator to say "well, at
-> least this looks like an option that I _could_ parse if I wanted to".
-> 
-> So I guess I don't mind it, as it does the most reasonable thing it can
-> when passed NULL, but I would be surprised if we ever actually exercise
-> the code path.
+> I see you've "standardized" to drop "extern" from the declarations
+> in the header; I have an impression that our preference however is
+> to go in the other direction.
 
-And of course as soon as I sent this, I went back and double-checked.
-And indeed I totally missed this call:
+Can we revisit that?
 
-  +       else if (starts_with(arg, "-B") ||
-  +                skip_to_optional_arg(arg, "--break-rewrites", NULL)) {
-	  if ((options->break_opt = diff_scoreopt_parse(arg)) == -1)
-
-So that's kind-of weird, because we are parsing "-B", etc, and then
-expecting it to be _reparsed_ by diff_scoreopt_parse. So the two
-callsites must always match. IMHO this ought to do either:
-
-  - we should just ask diff_scoreopt_parser to tell us if this was a
-    valid option that it understood
-
-or
-
-  - parse up to the "=", and then ask the scoreopt parser to parse the
-    remainder. This would require us passing 'B'/'C'/'M' to the
-    function ourselves, I think that's a better pattern. It means we
-    could reuse the parser for things like config values if we wanted to
-    (our current diff.renames is a bool, but it would not be
-    unreasonable for it to take a score).
-
-None of that is a mess of your creation, though, so I'm OK punting on it
-for now.
+I haven't see any compelling reason to include the "extern" in a
+declaration. And all things being equal, I'd prefer the thing that makes
+the source code shorter, and is one less thing for authors to remember
+to do.
 
 -Peff
