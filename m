@@ -2,212 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7079E1F407
-	for <e@80x24.org>; Sun, 10 Dec 2017 12:22:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A96351F407
+	for <e@80x24.org>; Sun, 10 Dec 2017 13:51:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751945AbdLJMWm (ORCPT <rfc822;e@80x24.org>);
-        Sun, 10 Dec 2017 07:22:42 -0500
-Received: from smtp-out-1.talktalk.net ([62.24.135.65]:25750 "EHLO
-        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751768AbdLJMWk (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Dec 2017 07:22:40 -0500
-Received: from [192.168.2.201] ([92.22.34.132])
-        by smtp.talktalk.net with SMTP
-        id O0cue8ErHmITaO0cuei504; Sun, 10 Dec 2017 12:22:38 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1512908558;
-        bh=BC/uOQ72TYuug0Q1Huydu2fthVRYi71bKYiXoeMRRqE=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=nZvRCXHPunKdbVAORcUEYHCob4VMWGeT/P1xJEIH76ZSDQSUNxYqXXQU0gw7cSMw9
-         iDRo/VzACZl7Y/WD0hcqtkRdZiQHqRdT4ySfEYCvemXbbPFHJ99Asa0Q2nso0AgfJx
-         l06QAaaBNtx8rjc+LYzpxl5LWj4L+sR48dPjEa7I=
-X-Originating-IP: [92.22.34.132]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=W/RIbVek c=1 sm=1 tr=0 a=2gYdyS03q/cwff7SV6P5Ng==:117
- a=2gYdyS03q/cwff7SV6P5Ng==:17 a=IkcTkHD0fZMA:10 a=5rxgeBVgAAAA:8
- a=nN7BH9HXAAAA:8 a=ZgNugiVed41o-w91cMEA:9 a=QEXdDO2ut3YA:10
- a=PwKx63F5tFurRwaNxrlG:22
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [SCRIPT/RFC 0/3] git-commit --onto-parent (three-way
- merge,noworking tree file changes)
-To:     Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        phillip.wood@dunelm.org.uk, Alexei Lozovsky <a.lozovsky@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
-        Git Mailing List <git@vger.kernel.org>,
-        Nikolay Shustov <nikolay.shustov@gmail.com>,
-        Johannes Schneider <mailings@cedarsoft.com>,
-        Patrik Gornicz <patrik-git@mail.pgornicz.com>,
-        Martin Waitz <tali@admingilde.org>,
-        Shawn Pearce <spearce@spearce.org>,
-        Sam Vilain <sam@vilain.net>, Jakub Narebski <jnareb@gmail.com>
-References: <8998e832-f49f-4de4-eb8d-a7934fba97b5@gmail.com>
- <d5f243a5-6e35-f3fc-4daf-6e1376bef897@kdbg.org>
- <203a75c8-0c58-253c-2c18-05450f7ae49b@gmail.com>
- <ea156b8b-29d8-7501-b5a5-a29cfbd7d1d6@kdbg.org>
- <741dfedc-07f8-24fb-ebe2-940f8b2639d4@gmail.com>
- <33e97533-716b-e1cc-6aa0-bf8941225319@kdbg.org>
- <7ae3ffd5-147d-55d2-9630-da12c429d631@gmail.com>
- <39323748-282c-5881-2bfa-de622bb8b765@kdbg.org>
- <CAPc5daWupO6DMOMFGn=XjUCG-JMYc4eyo8+TmAsdWcAOHXzwWg@mail.gmail.com>
- <f9a94a62-9541-e019-8ab3-9fc9cfe2c43f@gmail.com>
- <xmqqo9n99ohc.fsf@gitster.mtv.corp.google.com>
- <a3510c14-23e9-d1d9-0847-b60451f8e15d@gmail.com>
- <D842B04A-9331-4F26-8F19-B61F6F13FC79@gmail.com>
- <92643df4-f54e-cd31-da4a-138ec314655a@gmail.com>
- <4a92e34c-d713-25d3-e1ac-100525011d3f@talktalk.net>
- <da74fb2c-c452-4716-91d2-182f945b4254@gmail.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <82da4317-6b50-f60d-6d8f-50fc47579c56@talktalk.net>
-Date:   Sun, 10 Dec 2017 12:22:35 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.0
+        id S1751499AbdLJNvm (ORCPT <rfc822;e@80x24.org>);
+        Sun, 10 Dec 2017 08:51:42 -0500
+Received: from mout.gmx.net ([212.227.17.21]:61449 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751374AbdLJNvl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Dec 2017 08:51:41 -0500
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LvPgd-1f6THr3apH-010c0D; Sun, 10
+ Dec 2017 14:51:32 +0100
+Date:   Sun, 10 Dec 2017 14:50:28 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+cc:     Todd Zullinger <tmz@pobox.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Dec 2017, #01; Mon, 4)
+In-Reply-To: <20171209144607.GA6443@tor.lan>
+Message-ID: <alpine.DEB.2.21.1.1712101450010.4318@virtualbox>
+References: <xmqqmv2ykvy4.fsf@gitster.mtv.corp.google.com> <DA960DCE-0635-47CF-B3C4-8133021799F1@gmail.com> <alpine.DEB.2.21.1.1712071643410.4318@virtualbox> <175f87bc-0270-fb18-fc14-24e8f59321d6@jeffhostetler.com> <20171207213312.GB3693@zaya.teonanacatl.net>
+ <20171209144607.GA6443@tor.lan>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <da74fb2c-c452-4716-91d2-182f945b4254@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfD4NuXPOjvDkp+W1jjrn9B8ZscrYcxtzFPEd4U0kQnm7q7+0uvSN95KSY/7RcfcCRXIt8Z/ifFogDv4fdKYbRRkQ/4MQ+FRs3NTrYPrQPcXj3bvoas8Y
- 7TjZjW73KwOYJlVFeP82bwN+z+R6vlAUGGei/05RbcDU9WAqBFOwTfta7E75EulB0knyYJTjfdSJ+0TOI2Z/hUmVUr50TyQHvKXqcw84xD1rWb1RRQNHJgb7
- EQg4jduY6U2jJC+p5ZXQ6xQf06Y+WhZlzcz+WANPqvTzKLTvWKGwT9AfAkHREGcK9DJhL4jpdkT9aRMfaRtzCd8CNAeZ9o7OKG8rAJxzlmy7QhssOds6rTb2
- sJrhDnTYTJr8qUEWuJy56VDMXm28epkcSihvbAC5hVY/kv4e50N4tDAOF4NGsOkZ5hn9M9jLxsP9b8aaxw1+mMtoHBO6OCypYZQDzVFcLhoDmvIffVUnRsEg
- 4WVhB+PWCN1TjoWPOBzdgfyxWo/XZ33Un/wkIg2yBoNDGHcbP4l8NyMyZoFqWpB58vUucU5f2adCehFaupLSlbcc7gZEEnmvR3Pk5A==
+Content-Type: multipart/mixed; boundary="8323329-2117151292-1512913892=:4318"
+X-Provags-ID: V03:K0:31Zx9EMduCn99yUw051mtWqtGgLjBM8NGhlE1rDn8a5jjU9NrHN
+ Pfcj83tT26IBsYMHaDvTPhnMmcFBgEqZALb6ET7sIym6Hu5iXqVFQgFnjzUGk8k8Buex7gc
+ YwccQO1CxSpmcKw3i5Ow3tV+wo44FgMfkdmhbdGhOEDMlbiEdi/d3g2T3Y5AlzKKskiP54x
+ b6gpdG1s/XsLUbrkoa1/g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ivUD1JxPsvQ=:DaFKj38hcSddLmDBheeRPb
+ +IOcUrF40RVzj24f+qDnLHKL+D3A2Ceg/VfgIglUBae0Y6DPUR2Svuv0ZFHwEAUfqLNrSBwx6
+ 4tZq6HyzZbNCV/0dwtuUSnr/EXl7olmtV71cTSYwS1ItYRom8HZ2azKw9PT/eeFIbqguxGcpQ
+ Dn/Ip0pxFgJ5AGSTHN4cz7NFDc5vBL8D9BOGFJCDJ9ytPsV4SSn37N8wt4nvLusG3pSgR1CKV
+ ahyIP3n9glrUIu4no7HvU+qcQeTVuCKjzDtMOJLqzzKG5IzaKUThGQuI0FP7N0Ktn+KEaQkag
+ zO/1Fu0XWnVBetEI0GbteL9Ebni9oaXfAuHLp1PeVVYlG344wqVWiP4VWeV61VAJQpXXiQfpe
+ tIe4YsA/DiBOIDh8eyTnogtxrpWw5fu5g/12lSZehjSZk6KgWFKLizVrhZlauMRDuGTp/O4Fl
+ 03SqAhzEFHajOj1etsv/oQmD+5L5BL0+u113uoqEMECHoQc/sdxBcQIa4JLLEp6s+JQr8UfEJ
+ d/jhLnqDCfMjahiE1JdEJMaG1t144ZwI2YGgIzU84D7L2xfKcXbllgVJLHQp4Sj+C5pJjcF1T
+ GxN4ddnDpe0bxiG2+Z12c64FkG5aW08QCfGjwR3jCa8oJnuh43kIcmuTiV5M9CU7+BwuIjAFJ
+ NlBOFnHkfFCAy9pdA2QFBP4LhsaN5fYkFOYsoNk3UO03bLAU2kLN80AO9YVNYG3Uk8fzVogB7
+ N+NJqDfHzWw4+x0uWkBXJmSIpWzO/jRDE03X3MlCFqI7V5zatiojLlD2EJvd1/b67SakeTRMp
+ Hox7+CgVHkp/ueHR6EGxiAB6pkpBv9wQ2TmTudpfBKoa3OtjnwXNzjn0VUgDi/+AHVXqvVp
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/12/17 01:20, Igor Djordjevic wrote:
-> 
-> Hi Philip,
-> 
-> On 09/12/2017 20:01, Phillip Wood wrote:
->>
->>> But thanks for clarifying, anyway, it does feel like `git rebase
->>> -i --autosquash` could be smarter in this regards, if `git rebase 
->>> --onto` does it better...?
->>
->> Creating the fixup directly on A rather than on top of B avoids the 
->> conflicting merge B f!A A. Creating the fixup on top of B and then
->> using git commit --onto A would suffer from the same conflicts as
->> rebase does.
-> 
-> I`m a bit confused here, as you`re replying to the part where we 
-> strictly discussed `rebase --autosquash` versus `rebase --onto`, 
-> having the latter succeed where the former fails
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Sorry I should have been clearer. The point I was somewhat obliquely
-making was that 'rebase --onto' succeeds where 'rebase --autosquash'
-fails not because it is smarter but because it is doing something
-different. Specifically it avoids the conflicting merge to create A' as
-the user has already created that commit in the temporary branch
+--8323329-2117151292-1512913892=:4318
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
+Hi Torsten,
 
-> - but you`re 
-> mentioning `git _commit_ --onto` instead, comparing it with `rebase`... 
-> and which one of the two ("--autosquash", I assume)?
+On Sat, 9 Dec 2017, Torsten B=C3=B6gershausen wrote:
 
-Yes because in an earlier message you said
+> On Thu, Dec 07, 2017 at 04:33:12PM -0500, Todd Zullinger wrote:
+> > Jeff Hostetler wrote:
+> > >I'm looking at t5616 now on my mac.
+> > >Looks like the MAC doesn't like my line counting in the tests.
+> > >I'll fix in my next version.
+> >=20
+> []
+> > =09=09| sort >expect_2.oids &&
+> > -=09test "$(wc -l <expect_2.oids)" =3D "8" &&
+> > +=09test_line_count =3D 8 expect_2.oids &&
+> > =09git -C src blame master -- file.1.txt >expect.blame
+> > '
+>=20
+>=20
+> The problem seems to be the '"' around wc, this would work:
+> test $(wc -l <expect_2.oids) =3D "8" &&
+>=20
+>=20
+> What do you guys think a about a lint test like this:
+>=20
+> diff --git a/t/check-non-portable-shell.pl b/t/check-non-portable-shell.p=
+l
+> index 03dc9d2852..9ebf65c26f 100755
+> --- a/t/check-non-portable-shell.pl
+> +++ b/t/check-non-portable-shell.pl
+> @@ -21,6 +21,7 @@ while (<>) {
+>  =09/^\s*declare\s+/ and err 'arrays/declare not portable';
+>  =09/^\s*[^#]\s*which\s/ and err 'which is not portable (please use type)=
+';
+>  =09/\btest\s+[^=3D]*=3D=3D/ and err '"test a =3D=3D b" is not portable (=
+please use =3D)';
+> +=09/\bwc -l.*"\s*=3D/ and err '`"$(wc -l)"` is not portable, please use =
+`$(wc -l)`';
+>  =09/\bexport\s+[A-Za-z0-9_]*=3D/ and err '"export FOO=3Dbar" is not port=
+able (please use FOO=3Dbar && expo
 
-> If you mind enough to be bothered testing it out, might be even
-> existing/initial state of originally proposed `git commit
-> --onto-parent` script would work for you, as it does incorporate some
-> trivial three-way merge resolution.
->
-> In your starting situation:
->
->     ---A---B
->
-> .... you would just do something like:
->
->     git commit --onto-parent A
->
-> .... hopefully ending up in the desired state (hopefully = conflicts
-> automatically resolved):
->
->     ---A---C---B'
+Please suggest `test_line_count` instead.
 
-and I was pointing out that this would involve performing the same merge
-as 'rebase --autosquash' which has conflicts
-
-> 
-> Even further, while I do seem to understand (and agree with) what 
-> you`re talking about with `commit --onto` and `rebase --autosquah` 
-> suffering from the same conflicts in attempt to take f!A, originally 
-> created on top of B, and apply it on top of A - the thing is that 
-> Alexei actually pointed to B being the problematic one, failing to 
-> rebase on top of already (successfully) autosquashed A' (where A' = A 
-> + f!A, fixup applied through --autosquash), while it doesn`t fail 
-> rebasing --onto f!A when f!A is being committed on top of A directly 
-> (and not through --autosquash).
-
-I understood Alexei to mean that it was merging the f!A into A that
-caused conflicts due to the fact that f!A has conflicting context that
-was introduced in B. After all B' the rebased B is merge A A' B whether
-it is created by 'rebase --autosquash' or 'rebase --onto'. A' must be
-the same in both cases or one is applying a different fix.
-
-I've found conflicts arising from moving fixups can be quite common, so
-these days I tend to edit the commit to be fixed up directly. I have a
-script git-amend that does something like
-
-target=$(git rev-parse --verify "$1") && GIT_SEQUENCE_EDITOR="sed -i
-s/^pick $target/edit $target/" rebase -ik $target^
-
-so I can just type 'git amend <commit>' to make this easier
-
-> 
-> In that (very?) specific case, proposed `git commit --onto-parent`[1] 
-> doesn`t suffer from this, as once f!A is successfully applied onto A 
-> (either squashed in with --amend, or on top of it), we take original 
-> f!A _snapshot_ (not patch!) made on top of B, and just "declare" it 
-> B` (being equal to B + f!A, which we already know, and being 
-> correct), without a need to (try to) apply B patch on top of fixed-up 
-> A to create B', as `rebase` does (and fails).
-
-Ah I understand, but that only works when you're fixing up HEAD~1. If
-you had A-B-C-f!A you have to recreate B with a merge.
-
-> 
->> I don't think there is any way for 'git rebase --autosquash' to
->> avoid the conflicts unless it used a special fixup merge strategy
->> that somehow took advantage of the DAG to resolve the conflicts by
->> realizing they come from a later commit. However I don't think that
->> could be implemented reliably as sometimes one wants those
->> conflicting lines from the later commit to be moved to the earlier
->> commit with the fixup.
-> 
-> I think I agree on this part being tricky (if possible at all), but I 
-> also think this is not what Alexei was complaining about, nor what we 
-> were discussing (as I tried to explain above) - but please do correct 
-> me if I misunderstood you.
-
-No, I don't think Alexei was complaining about that directly, but if
-such a solution existed he (and everyone else) wouldn't have to bother
-with the --onto approach in the case where merging the fixup creates
-conflicts.
-
-Best Wishes
-
-
-Phillip
-
-> 
-> That said, and what I mentioned already, we might really benefit from 
-> simple test case(s), showing "rebase --autosquash" failing where 
-> "rebase --onto" works, as Alexei explained, giving some more (and 
-> firm) context to the discussion.
->
-> 
-> I *think* I`ve experienced this in the past myself, but now I can`t 
-> seem to wrap my head around a reproducible example just yet... :$
-> 
-> Regards, Buga
-> 
-> [1] https://public-inbox.org/git/4a92e34c-d713-25d3-e1ac-100525011d3f@talktalk.net/T/#m72f45ad7a8f1c733266a875bca087ee82cc781e7
-> 
-
+Ciao,
+Dscho
+--8323329-2117151292-1512913892=:4318--
