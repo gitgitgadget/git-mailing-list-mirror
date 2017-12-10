@@ -2,105 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8BE4C1F407
-	for <e@80x24.org>; Sun, 10 Dec 2017 21:15:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 945B41F407
+	for <e@80x24.org>; Sun, 10 Dec 2017 21:20:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751213AbdLJVO6 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 10 Dec 2017 16:14:58 -0500
-Received: from mail-wm0-f43.google.com ([74.125.82.43]:46547 "EHLO
-        mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751100AbdLJVO5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Dec 2017 16:14:57 -0500
-Received: by mail-wm0-f43.google.com with SMTP id r78so11157855wme.5
-        for <git@vger.kernel.org>; Sun, 10 Dec 2017 13:14:57 -0800 (PST)
+        id S1752403AbdLJVUf (ORCPT <rfc822;e@80x24.org>);
+        Sun, 10 Dec 2017 16:20:35 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:36512 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752048AbdLJVUe (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Dec 2017 16:20:34 -0500
+Received: by mail-wm0-f67.google.com with SMTP id b76so10936427wmg.1
+        for <git@vger.kernel.org>; Sun, 10 Dec 2017 13:20:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=1KCVGyPI3PQxBeetOCzGL3vCLaL/BZX1r4efOrZUzCk=;
-        b=uCYrWIfjfPl3MXMfT8RZJMP/p0IjpGWbBpdnsFPYxBF8tBuBDsBuJBsRRKBAExJFqT
-         mjO7T0AqarbszlrfhZex4jRXsMZDjfEe4n5bgOc+UjlkOf3xmDtdzg2WP6g+brBB8bzk
-         ammQhMZu7jQwLtY3msd9wgebh98CoVn5ouiSRY9sO3sSA6e1dzPrAht/8Kq/m2Uf8RA4
-         3gDUhjtUbZcwxo+WXuTb5OU9w3M8Qcoyi5doZDx6c7wZHjGAdlFBK6GAR5q34L4I9yJn
-         Z4py/lOP2FKguR/9d4M7eDDYYXDDai7DST7xBgNq128bbW4LANpykjiFU6lngnyoFRQG
-         H3ww==
+        h=from:to:cc:subject:date:message-id;
+        bh=4/X8B9Vk9jhvwoAJLgP1JlvI9aEmJBvSj7h8FupPEso=;
+        b=rPdFEVeKmWJ1Oij0KttWvdqo4U/D+xlf5noGoRHe71h5l3QHUZK5Mxn09pIUcCQa8e
+         Zx9olsKCdhDBxgRqKrRcRwpXd+UFKDgZcO4h+rlb8lB1Vz91rgcD4x/Z0j1rYDhCmhvj
+         mFSdPCIttXRqUjQ2+dQVgCk2zMLYgppLVizWi0VSp7t+k293+jh/OiiYFRDn0lapGsJf
+         L3E9AtK2AW67j6IK+zjMWLk7HD+YEH/9W27ZX10Qvk3WCEEZ0Lr4OdkWKSxvxUL3bqU/
+         3mCh2nRIf7zWFl4wKGLiEb/3Kb4cnIvBEv/AVWl8e6FXDgo6LGAswGkzqZhdJ6Cc9OMV
+         lvBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=1KCVGyPI3PQxBeetOCzGL3vCLaL/BZX1r4efOrZUzCk=;
-        b=PTfSeyF0zaU6LnLWTkoyQ3bKZodOE7VDjWYsEXK//aJQlCVu9XKaMeMz9MnCQ8cnHh
-         1f/DUWay64IBOVuI6VWxTaodpEj04JSTy3B/MLRqDCEmNXKUWemMioRW6sXPOE/L0H0X
-         KAxKlm09TLiHqiCTdmXYi4noPx+1qIe3H9jEZpduSrli08JjMr/GmvpIVVwlX/o99o/f
-         QN8NdX9ls9IABwppxefnsq53hq+js1bldq9biNA2gPAjNDvtWCINOipi/df09HKuPty/
-         q8bmU4WZyQ2gHzXGcu1ijp7pZYucy4paAh7BQRcouRT2BOQcjJjf7fORrqe2G0uSE+0V
-         isbg==
-X-Gm-Message-State: AKGB3mLZAmz5ryCr46mTRSP8mhtFVS2HVjGLn6GEh+evtgUgUHoUOvYa
-        5zkgtXUfPecCvzWeDDqAwvwrR6Fq
-X-Google-Smtp-Source: AGs4zMYi/264ipsvA7r1dqHloxcPjIvvOcHAbDYPVw0wm93qU38XBbkf8B3jUlTZiT1cfzkeAAq7yg==
-X-Received: by 10.28.55.82 with SMTP id e79mr8476287wma.60.1512940496689;
-        Sun, 10 Dec 2017 13:14:56 -0800 (PST)
-Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
-        by smtp.gmail.com with ESMTPSA id m127sm7327352wmm.48.2017.12.10.13.14.55
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=4/X8B9Vk9jhvwoAJLgP1JlvI9aEmJBvSj7h8FupPEso=;
+        b=I05qLVT9KlTgZmOEcTVWHi8ldMStSPBUgrhokSexUzEcgel7i6t0828JRR++ivv+eq
+         CemtUn3Nl9H99kVYrwCMpl/Ax0qXM98duIHJdFtbtLxIlqy1VHAPWo4Wbf/IShxgkI13
+         c4Blj7YIkHulXxxq+I7b6nxMJ152li0MijobEiaYV3bhESxq9dwwlDbZpQBHSRx+00J6
+         C6WZpZA64+yF/6HnSa2wam5mlkBEsAU5jJjbD24NUphW9AU5otK0pmXwDH7PrLpAqrW6
+         YTablg9Bmn7RA7oGjfMxPD0meazz53ve+qhDF6zogCqoFWvZwDAQHRGHBdKRZHZFYJwZ
+         0r6Q==
+X-Gm-Message-State: AKGB3mIvU7zHX1Q+1hYQBPBHqZYT5G8y8j3cyw8GY+Uil9slBLRR7074
+        avk51BiQfS87M14G0IRT8q6Ke+iL
+X-Google-Smtp-Source: AGs4zMYRxzUoHTD2jJXV9tezv5frgHVJ12Iah3aeFweoB/waD/Sa6X764ufG6rCDoCsNrcujGFXa4Q==
+X-Received: by 10.28.69.136 with SMTP id l8mr8425363wmi.19.1512940832816;
+        Sun, 10 Dec 2017 13:20:32 -0800 (PST)
+Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
+        by smtp.gmail.com with ESMTPSA id 67sm1976566wmq.38.2017.12.10.13.20.31
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 10 Dec 2017 13:14:55 -0800 (PST)
-Received: from avar by evledraar with local (Exim 4.89)
-        (envelope-from <avarab@gmail.com>)
-        id 1eO8w2-00032z-K5; Sun, 10 Dec 2017 22:14:54 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        GIT Mailing-list <git@vger.kernel.org>
-Subject: Re: t9001 failures on 32-bit Linux?
-References: <42367c9f-debb-8ea2-e1ea-1ca513853ded@ramsayjones.plus.com> <CACBZZX7+tTCNrLQzjh2dP-bnty3BegpaO+xrUqJQ7_Nh22JyDw@mail.gmail.com> <95fe2703-07b2-88a7-dfe6-c3c29cb565a3@ramsayjones.plus.com>
-User-agent: Debian GNU/Linux 9.2 (stretch); Emacs 25.1.1; mu4e 0.9.19
-In-reply-to: <95fe2703-07b2-88a7-dfe6-c3c29cb565a3@ramsayjones.plus.com>
-Date:   Sun, 10 Dec 2017 22:14:54 +0100
-Message-ID: <87374ie14h.fsf@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+        Sun, 10 Dec 2017 13:20:32 -0800 (PST)
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Christian Couder <chriscool@tuxfamily.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, Thomas Gummerer <t.gummerer@gmail.com>
+Subject: [PATCH 0/3] fixes for split index mode
+Date:   Sun, 10 Dec 2017 21:21:59 +0000
+Message-Id: <20171210212202.28231-1-t.gummerer@gmail.com>
+X-Mailer: git-send-email 2.15.1.504.g5279b80103
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On the current master branch, 95ec6b1b33 ("RelNotes: the eighth
+batch", 2017-12-06) , the test suite fails a few tests when
+GIT_TEST_SPLIT_INDEX is set:
 
-On Sun, Dec 10 2017, Ramsay Jones jotted:
+Test Summary Report
+-------------------
+t3007-ls-files-recurse-submodules.sh             (Wstat: 256 Tests: 21 Failed: 13)
+  Failed tests:  2-14
+  Non-zero exit status: 1
+t7009-filter-branch-null-sha1.sh                 (Wstat: 256 Tests: 6 Failed: 1)
+  Failed test:  4
+  Non-zero exit status: 1
+t5304-prune.sh                                   (Wstat: 256 Tests: 25 Failed: 3)
+  Failed tests:  23-25
+  Non-zero exit status: 1
+t7814-grep-recurse-submodules.sh                 (Wstat: 256 Tests: 22 Failed: 13)
+  Failed tests:  2-3, 5-10, 12-15, 22
+  Non-zero exit status: 1
 
-> On 10/12/17 20:33, Ævar Arnfjörð Bjarmason wrote:
->> On Sun, Dec 10, 2017 at 8:58 PM, Ramsay Jones
->> <ramsay@ramsayjones.plus.com> wrote:
->>> I noticed the revert of the 'ab/simplify-perl-makefile' branch on
->>> top of 'pu'. So, I fired up my 32-bit Linux and attempted to see
->>> if I could debug this t9001 test failure.
->>>
->>> Unfortunately, I could not get it to fail. :(
->>>
->>> Both of the 'pu' (@77e921d77d) and 'pu~1' (@cfef1ebefd) builds pass
->>> the full test-suite and, likewise, running t9001 in a loop for a
->>> count of 100 (about 45 minutes run-time each).
->>>
->>> [If it makes any difference, I don't have sendmail installed (no
->>> /usr/sbin/sendmail or /usr/lib/sendmail), or any sendmail in my
->>> $PATH.]
->>>
->>> Sorry I couldn't help with this! :(
->>
->> It's a bug in my patch, I'll follow-up with a patch once I figure out
->> what it is, but for now I wanted to say it's my bad.
->>
->> That this is failing has nothing to do with 32bit per say, but that
->> system doesn't have Error.pm installed, so we fall back on our own
->> copy, there's some bug in the new Error.pm fallback logic I
->> introduced.
->
-> Ah, OK, that makes sense.
+This series fixes these and makes travis run the test suite with
+GIT_TEST_SPLIT_INDEX to avoid similar breakages in the future.
 
-Updated patch sent just now as <20171210211333.9820-1-avarab@gmail.com>:
-https://public-inbox.org/git/20171210211333.9820-1-avarab@gmail.com/
+Thomas Gummerer (3):
+  repository: fix repo_read_index with submodules
+  prune: fix pruning with multiple worktrees and split index
+  travis: run tests with GIT_TEST_SPLIT_INDEX
+
+ .travis.yml  |  2 +-
+ cache.h      |  1 +
+ read-cache.c | 19 +++++++++++++++++--
+ repository.c | 13 ++++++++++++-
+ repository.h |  2 ++
+ revision.c   | 13 ++++++++-----
+ 6 files changed, 41 insertions(+), 9 deletions(-)
+
+-- 
+2.15.1.504.g5279b80103
+
