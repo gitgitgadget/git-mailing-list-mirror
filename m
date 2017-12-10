@@ -2,108 +2,153 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C98601F406
-	for <e@80x24.org>; Sun, 10 Dec 2017 00:08:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DEB901F406
+	for <e@80x24.org>; Sun, 10 Dec 2017 01:20:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751263AbdLJAIW (ORCPT <rfc822;e@80x24.org>);
-        Sat, 9 Dec 2017 19:08:22 -0500
-Received: from avasout04.plus.net ([212.159.14.19]:45572 "EHLO
-        avasout04.plus.net.plus.net" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1751073AbdLJAIV (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 9 Dec 2017 19:08:21 -0500
-Received: from [10.0.2.15] ([80.189.70.158])
-        by smtp with ESMTPA
-        id NpAHejkEUzbmWNpAIeQ6Dp; Sun, 10 Dec 2017 00:08:19 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=P6pKvmIu c=1 sm=1 tr=0
- a=bpDj9VLvXCYHU65eeb/Fiw==:117 a=bpDj9VLvXCYHU65eeb/Fiw==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=5rxgeBVgAAAA:8 a=FEwn8AxFsdz831qadf8A:9
- a=QEXdDO2ut3YA:10 a=yJM6EZoI5SlJf8ks9Ge_:22 a=PwKx63F5tFurRwaNxrlG:22
-X-AUTH: ramsayjones@:2500
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     GIT Mailing-list <git@vger.kernel.org>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH] sequencer: make sign_off_header a file local symbol
-Message-ID: <8caabe3e-4dc3-657a-236d-6cf91e1e6d03@ramsayjones.plus.com>
-Date:   Sun, 10 Dec 2017 00:08:18 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.0
+        id S1751344AbdLJBUW (ORCPT <rfc822;e@80x24.org>);
+        Sat, 9 Dec 2017 20:20:22 -0500
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:46920 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751290AbdLJBUV (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Dec 2017 20:20:21 -0500
+Received: by mail-wm0-f66.google.com with SMTP id r78so8718341wme.5
+        for <git@vger.kernel.org>; Sat, 09 Dec 2017 17:20:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=UHW8Tfm40YbexXnnz2d88+JUsWdfkG4escI9wwMEYiE=;
+        b=huEupUPsuaXe2YHLaroKlPg0l3mO1FkQEj6zYrQGvDvYiYSpintJsgAURu08qaapa4
+         J2Sg5kZMEt5x945elmDJFZeBQC3z70NXoUYFKyZbFZ66j3J+GR7nvlGeVHEL7d8Za0zP
+         eOStnDOiYb0nHnE70Jvm8Av1OPiANq4QwDe/fH/4D5g8uxGO6rKz76uHqStY0fD8U84S
+         oFYy77zzviRMxQ+nLdFEXp377kWKLjIt8BCHkA7QVRpBkpQElpG+qviXmGPtMO5E6lyk
+         jfgkryh0QuxLhOHk809MhIauI57g+1r8WQf3di+h0I1e6j4EIgd5dfWGKtEWAj5GDw8r
+         tzxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=UHW8Tfm40YbexXnnz2d88+JUsWdfkG4escI9wwMEYiE=;
+        b=It4ccA487ZVsm59OKR11ua7/5e968o8utl5bWtBKHsaZmFLzjSQSYnWdY+NnmPP3Ft
+         9FTT6H+K1fpyLenQseFw+QDecJByLzxlnWxSJeMNEJGqDBUYXdBVqj7KKtR1e6snO26t
+         m9fJ6wdD0Vx0fLiLCd0kKEVhX/DpYRFib2FZdkROsUir+YxsUATNGqQaMNublBgulum7
+         dS6VerDjN2oBPYOPWQrt5YSPdcBg674XoH3g3EsAC3tXqcr7YfD2rcCGYcsFPxeG75wN
+         mhsVu8tB5LgbrB+nbkSRFrPQiTA7eaItklnqUDEzmUGDsi1jfRlJzLKmGHKF9jLC1VTR
+         98WA==
+X-Gm-Message-State: AKGB3mJmteMnISbBpvYJ5fIQy8Gnb9/9Qc5YtqT54G3Om/n4OIMQFIk5
+        h4TzSSTee62qFdF9oqH3ifA=
+X-Google-Smtp-Source: AGs4zMavYX981RDlevu9O0jkQV9vX02E0COhurRQhugfbe0420ZOAz9LXzZH+gn91ujNHN/+h/UYWQ==
+X-Received: by 10.28.66.11 with SMTP id p11mr7715426wma.114.1512868820380;
+        Sat, 09 Dec 2017 17:20:20 -0800 (PST)
+Received: from [192.168.5.102] (cable-24-135-61-30.dynamic.sbb.rs. [24.135.61.30])
+        by smtp.gmail.com with ESMTPSA id j125sm5805074wmd.24.2017.12.09.17.20.18
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 09 Dec 2017 17:20:19 -0800 (PST)
+Subject: Re: [SCRIPT/RFC 0/3] git-commit --onto-parent (three-way merge,
+ noworking tree file changes)
+To:     phillip.wood@dunelm.org.uk, Alexei Lozovsky <a.lozovsky@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
+        Git Mailing List <git@vger.kernel.org>,
+        Nikolay Shustov <nikolay.shustov@gmail.com>,
+        Johannes Schneider <mailings@cedarsoft.com>,
+        Patrik Gornicz <patrik-git@mail.pgornicz.com>,
+        Martin Waitz <tali@admingilde.org>,
+        Shawn Pearce <spearce@spearce.org>,
+        Sam Vilain <sam@vilain.net>, Jakub Narebski <jnareb@gmail.com>
+References: <8998e832-f49f-4de4-eb8d-a7934fba97b5@gmail.com>
+ <d5f243a5-6e35-f3fc-4daf-6e1376bef897@kdbg.org>
+ <203a75c8-0c58-253c-2c18-05450f7ae49b@gmail.com>
+ <ea156b8b-29d8-7501-b5a5-a29cfbd7d1d6@kdbg.org>
+ <741dfedc-07f8-24fb-ebe2-940f8b2639d4@gmail.com>
+ <33e97533-716b-e1cc-6aa0-bf8941225319@kdbg.org>
+ <7ae3ffd5-147d-55d2-9630-da12c429d631@gmail.com>
+ <39323748-282c-5881-2bfa-de622bb8b765@kdbg.org>
+ <CAPc5daWupO6DMOMFGn=XjUCG-JMYc4eyo8+TmAsdWcAOHXzwWg@mail.gmail.com>
+ <f9a94a62-9541-e019-8ab3-9fc9cfe2c43f@gmail.com>
+ <xmqqo9n99ohc.fsf@gitster.mtv.corp.google.com>
+ <a3510c14-23e9-d1d9-0847-b60451f8e15d@gmail.com>
+ <D842B04A-9331-4F26-8F19-B61F6F13FC79@gmail.com>
+ <92643df4-f54e-cd31-da4a-138ec314655a@gmail.com>
+ <4a92e34c-d713-25d3-e1ac-100525011d3f@talktalk.net>
+From:   Igor Djordjevic <igor.d.djordjevic@gmail.com>
+Message-ID: <da74fb2c-c452-4716-91d2-182f945b4254@gmail.com>
+Date:   Sun, 10 Dec 2017 02:20:12 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
 MIME-Version: 1.0
+In-Reply-To: <4a92e34c-d713-25d3-e1ac-100525011d3f@talktalk.net>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfLRLXDI9nQoNwGiurYWPKy4+ZTV2mwfwEVUIJVuFIYA9XfxsJbZ9eKYvZut1MX7pqYozk/cmQytKCnOmKuOYjPejl/+CKdPgQ/MKX8rZYl9bp7EowB7R
- 2knniI/+a3Hi4Q6kAES4C3AvC/RMixAHxqoLmVu7rLf1q8AXkOHM5ZqBcZJU0BSk27OA5aFpXNdiFw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Philip,
 
-Commit d0aaa46fd3 ("commit: move empty message checks to libgit",
-2017-11-10) removes the last use of 'sign_off_header' outside of
-the "sequencer.c" source file. Remove the extern declaration from
-the header file and mark the definition of the symbol with the
-static keyword.
+On 09/12/2017 20:01, Phillip Wood wrote:
+> 
+> > But thanks for clarifying, anyway, it does feel like `git rebase
+> > -i --autosquash` could be smarter in this regards, if `git rebase 
+> > --onto` does it better...?
+> 
+> Creating the fixup directly on A rather than on top of B avoids the 
+> conflicting merge B f!A A. Creating the fixup on top of B and then
+> using git commit --onto A would suffer from the same conflicts as
+> rebase does.
 
-Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
----
+I`m a bit confused here, as you`re replying to the part where we 
+strictly discussed `rebase --autosquash` versus `rebase --onto`, 
+having the latter succeed where the former fails - but you`re 
+mentioning `git _commit_ --onto` instead, comparing it with `rebase`... 
+and which one of the two ("--autosquash", I assume)?
 
-Hi Junio,
+Even further, while I do seem to understand (and agree with) what 
+you`re talking about with `commit --onto` and `rebase --autosquah` 
+suffering from the same conflicts in attempt to take f!A, originally 
+created on top of B, and apply it on top of A - the thing is that 
+Alexei actually pointed to B being the problematic one, failing to 
+rebase on top of already (successfully) autosquashed A' (where A' = A 
++ f!A, fixup applied through --autosquash), while it doesn`t fail 
+rebasing --onto f!A when f!A is being committed on top of A directly 
+(and not through --autosquash).
 
-Now that the 'pw/sequencer-in-process-commit' branch has
-graduated to 'next', the static-check.pl script is barking on
-that branch. This patch applies to the next (and pu) branches
-without conflict. You mentioned that the previous version of
-this patch (see [1]) conflicted with an in-flight patch series.
-('ot/pretty' and 'lb/rebase-i-short-command-names' have nearby
-changes, but don't conflict).
+In that (very?) specific case, proposed `git commit --onto-parent`[1] 
+doesn`t suffer from this, as once f!A is successfully applied onto A 
+(either squashed in with --amend, or on top of it), we take original 
+f!A _snapshot_ (not patch!) made on top of B, and just "declare" it 
+B` (being equal to B + f!A, which we already know, and being 
+correct), without a need to (try to) apply B patch on top of fixed-up 
+A to create B', as `rebase` does (and fails).
 
-Was this an 'not in any integration branch, but I'm still holding
-onto it' topic branch? If it is still a problem, please just ignore
-this patch.
+> I don't think there is any way for 'git rebase --autosquash' to
+> avoid the conflicts unless it used a special fixup merge strategy
+> that somehow took advantage of the DAG to resolve the conflicts by
+> realizing they come from a later commit. However I don't think that
+> could be implemented reliably as sometimes one wants those
+> conflicting lines from the later commit to be moved to the earlier
+> commit with the fixup.
 
-Thanks!
+I think I agree on this part being tricky (if possible at all), but I 
+also think this is not what Alexei was complaining about, nor what we 
+were discussing (as I tried to explain above) - but please do correct 
+me if I misunderstood you.
 
-[1] https://public-inbox.org/git/%3Cd9d05477-5d2f-04fc-adee-10d18bc0947d@ramsayjones.plus.com%3E/
+That said, and what I mentioned already, we might really benefit from 
+simple test case(s), showing "rebase --autosquash" failing where 
+"rebase --onto" works, as Alexei explained, giving some more (and 
+firm) context to the discussion.
 
-ATB,
-Ramsay Jones
+I *think* I`ve experienced this in the past myself, but now I can`t 
+seem to wrap my head around a reproducible example just yet... :$
 
+Regards, Buga
 
- sequencer.c | 2 +-
- sequencer.h | 2 --
- 2 files changed, 1 insertion(+), 3 deletions(-)
-
-diff --git a/sequencer.c b/sequencer.c
-index 0f17b4d32..8c2af94ed 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -26,7 +26,7 @@
- 
- #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
- 
--const char sign_off_header[] = "Signed-off-by: ";
-+static const char sign_off_header[] = "Signed-off-by: ";
- static const char cherry_picked_prefix[] = "(cherry picked from commit ";
- 
- GIT_PATH_FUNC(git_path_seq_dir, "sequencer")
-diff --git a/sequencer.h b/sequencer.h
-index 77cb174b2..688b0276d 100644
---- a/sequencer.h
-+++ b/sequencer.h
-@@ -53,8 +53,6 @@ int check_todo_list(void);
- int skip_unnecessary_picks(void);
- int rearrange_squash(void);
- 
--extern const char sign_off_header[];
--
- void append_signoff(struct strbuf *msgbuf, int ignore_footer, unsigned flag);
- void append_conflicts_hint(struct strbuf *msgbuf);
- int git_sequencer_config(const char *k, const char *v, void *cb);
--- 
-2.15.0
+[1] https://public-inbox.org/git/4a92e34c-d713-25d3-e1ac-100525011d3f@talktalk.net/T/#m72f45ad7a8f1c733266a875bca087ee82cc781e7
