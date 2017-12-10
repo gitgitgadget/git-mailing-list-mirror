@@ -7,89 +7,81 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9E46C1F407
-	for <e@80x24.org>; Sun, 10 Dec 2017 22:28:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D081A1F407
+	for <e@80x24.org>; Sun, 10 Dec 2017 22:36:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751526AbdLJW2L (ORCPT <rfc822;e@80x24.org>);
-        Sun, 10 Dec 2017 17:28:11 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52679 "EHLO
+        id S1751408AbdLJWgo (ORCPT <rfc822;e@80x24.org>);
+        Sun, 10 Dec 2017 17:36:44 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61093 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751268AbdLJW2K (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Dec 2017 17:28:10 -0500
+        with ESMTP id S1751263AbdLJWgo (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Dec 2017 17:36:44 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B471DCCDFD;
-        Sun, 10 Dec 2017 17:28:09 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4EF79CB79B;
+        Sun, 10 Dec 2017 17:36:43 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=PKpvzl4xJHNWfBcclpIpt3Jik6w=; b=qlXNqS
-        k0uQLTo3QizXs3KxyhFKSr/vTPLIB+pJIDPJqYmB7dRbDwi9JE8e+NqZOxD1gPlq
-        4vcIBqIe1FVS3lmNsBOVa160mi/SfdbKFBfCit7IL2MNGMQuOm775MJW1Y/+5hsQ
-        NhR7409yICk1BNYzYZwWSulWCL1mAQ/qDtX9E=
+        :content-type; s=sasl; bh=mQZmFA7Nu0eilpmJZnYIFDb4CjA=; b=vr9r/U
+        zI8v0/s/MrqDjXG+VKE2DZlejeXZkutn3BDhHW3VIE8eMJKKHkn3qSYSiFauuSq+
+        +3JB0pA28sPyjUQrgItxhnnbJgmX1zhsmKI3zenKWfJiYkcHF7oHdS7YHvqnWT/y
+        RC+exHmmDQgvgBGxAwSA8nHnXdUEtFlQFE/Vw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=dz0WrwLMCNvH/3f73BvvUTEAWIV5z4OO
-        JRHh4tOI6QdY12ZqhbDhdkhqjNIE0likzof8GnxIx5JJ+vmjF87+J470Re66UO7r
-        kOMlgMa5DypyD1kA5D0edwiPdIZOGIpcH6SNo+E8/Hg1/dY23IgOGybZjwDCxVxI
-        CQRpYWR9iK0=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id AC96CCCDFC;
-        Sun, 10 Dec 2017 17:28:09 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=Y/QOz/wA5RJDVYSysIR2DZgJDHT1oxKb
+        8bhD07xG/LRc4bkgxAiXAD+IkW/wQ1HwMr4JqIgTzlqOXPTPvRNsYPrJ0P2ohrVa
+        WDKgksH3cMRtIUZ45uNZ6Ndg6073zJvfytz603MZjgimuGJzXSBGYovg1nadg0Nq
+        3bJIqhB4wVA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 460EACB79A;
+        Sun, 10 Dec 2017 17:36:43 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2D265CCDFB;
-        Sun, 10 Dec 2017 17:28:09 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B4AA4CB799;
+        Sun, 10 Dec 2017 17:36:42 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     GIT Mailing-list <git@vger.kernel.org>
-Subject: Re: t9001 failures on 32-bit Linux?
-References: <42367c9f-debb-8ea2-e1ea-1ca513853ded@ramsayjones.plus.com>
-Date:   Sun, 10 Dec 2017 14:28:07 -0800
-In-Reply-To: <42367c9f-debb-8ea2-e1ea-1ca513853ded@ramsayjones.plus.com>
-        (Ramsay Jones's message of "Sun, 10 Dec 2017 19:58:18 +0000")
-Message-ID: <xmqqfu8i5ibs.fsf@gitster.mtv.corp.google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Olga Telezhnaya <olyatelezhnaya@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH Outreachy 1/2] format: create pretty.h file
+References: <01020160364a23d5-471a2fd0-9fff-4599-86f8-b2f37a4a0a84-000000@eu-west-1.amazonses.com>
+        <xmqq7etx9kzq.fsf@gitster.mtv.corp.google.com>
+        <20171210145354.GA20367@sigill.intra.peff.net>
+Date:   Sun, 10 Dec 2017 14:36:41 -0800
+In-Reply-To: <20171210145354.GA20367@sigill.intra.peff.net> (Jeff King's
+        message of "Sun, 10 Dec 2017 09:53:54 -0500")
+Message-ID: <xmqq8tea5hxi.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 665C17EC-DDF9-11E7-B27E-575F0C78B957-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 98769742-DDFA-11E7-88D5-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Hi Junio,
+> On Fri, Dec 08, 2017 at 09:40:09AM -0800, Junio C Hamano wrote:
 >
-> I noticed the revert of the 'ab/simplify-perl-makefile' branch on
-> top of 'pu'. So, I fired up my 32-bit Linux and attempted to see
-> if I could debug this t9001 test failure.
+>> I see you've "standardized" to drop "extern" from the declarations
+>> in the header; I have an impression that our preference however is
+>> to go in the other direction.
 >
-> Unfortunately, I could not get it to fail. :(
+> Can we revisit that?
 >
-> Both of the 'pu' (@77e921d77d) and 'pu~1' (@cfef1ebefd) builds pass
-> the full test-suite and, likewise, running t9001 in a loop for a
-> count of 100 (about 45 minutes run-time each).
->
-> [If it makes any difference, I don't have sendmail installed (no
-> /usr/sbin/sendmail or /usr/lib/sendmail), or any sendmail in my
-> $PATH.]
->
-> Sorry I couldn't help with this! :(
+> I haven't see any compelling reason to include the "extern" in a
+> declaration. And all things being equal, I'd prefer the thing that makes
+> the source code shorter, and is one less thing for authors to remember
+> to do.
 
-I suspect that the difference is not about send(e)mail per-se, but
-the differences between the set of perl modules installed in the
-linux32 Travis environment and the other one.  Perhaps the use of
-deprecated Error.pm is the culprit?
+Surely, but there is no point revisiting.  I simply misremembered
+what we did at around 1354c9b2 ("refs: remove unnecessary "extern"
+keywords", 2016-03-31).
 
-I do appreciate that the environments we use on Travis are not
-monoculture and we end up testing more variations (in this case,
-the cause likely does not have anything to do with 64- vs 32-bit,
-but Perl modules).  It sometimes gets confusing, though ;-)
-
-Another difference I noticed while scanning the failing log is that
-the Linux32 environment seem to lack libsvn-perl and all tests are
-skipped there.  I do not think that this particular variation is
-helping us to diversify our test base, though ;-)
+As long as we know which way we are standardizing, I personally do
+not have strong preference either way.  I appreciate shorter-to-type
+(i.e. missing "extern") but I also appreciate the more familiar and
+logical declaration in a header file that indicates something exists
+somewhere (i.e. explicit "extern") ;-).
 
 Thanks.
