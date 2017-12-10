@@ -2,66 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F1ED61F407
-	for <e@80x24.org>; Sun, 10 Dec 2017 19:58:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 187721F407
+	for <e@80x24.org>; Sun, 10 Dec 2017 20:23:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752048AbdLJT6V (ORCPT <rfc822;e@80x24.org>);
-        Sun, 10 Dec 2017 14:58:21 -0500
-Received: from avasout04.plus.net ([212.159.14.19]:50250 "EHLO
-        avasout04.plus.net.plus.net" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1751994AbdLJT6U (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 10 Dec 2017 14:58:20 -0500
-Received: from [10.0.2.15] ([80.189.70.158])
-        by smtp with ESMTPA
-        id O7juemJPnzbmWO7jveQW5D; Sun, 10 Dec 2017 19:58:19 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=P6pKvmIu c=1 sm=1 tr=0
- a=bpDj9VLvXCYHU65eeb/Fiw==:117 a=bpDj9VLvXCYHU65eeb/Fiw==:17
- a=IkcTkHD0fZMA:10 a=PM_bwM5RYzhMJqn7-0wA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     GIT Mailing-list <git@vger.kernel.org>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: t9001 failures on 32-bit Linux?
-Message-ID: <42367c9f-debb-8ea2-e1ea-1ca513853ded@ramsayjones.plus.com>
-Date:   Sun, 10 Dec 2017 19:58:18 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.0
+        id S1752208AbdLJUXr (ORCPT <rfc822;e@80x24.org>);
+        Sun, 10 Dec 2017 15:23:47 -0500
+Received: from a27-62.smtp-out.us-west-2.amazonses.com ([54.240.27.62]:60400
+        "EHLO a27-62.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752015AbdLJUXq (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 10 Dec 2017 15:23:46 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=hsbnp7p3ensaochzwyq5wwmceodymuwv; d=amazonses.com; t=1512937425;
+        h=Message-ID:From:To:Subject:Date:MIME-Version:Content-Type:Feedback-ID;
+        bh=xQhqMHE3nJpRtS0T6pUk+9xryyff7f9oNkOk4zSOeZk=;
+        b=A2Ldyq6LnB9q/GIcJNxtc1mYMKSpKdHI7M4YvCvsAkI215s0s6yCEg2IOS7VRzDb
+        X6VNqJC+b1KveqwQzCtRD8hEZS8RJoc/YWRF+aITn5ySdqbL5xV+i1SWqxIK3pkeuWJ
+        hi/8pmw/QIBe4wjIPC7UXZItlMYceFd9HTGYk/2Y=
+Message-ID: <0101016042190a3b-091dfab3-e010-4fbe-94e7-739ae3090883-000000@us-west-2.amazonses.com>
+From:   "mqudsi@neosmart.net" <mqudsi@neosmart.net>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: SSH port ignored when ssh:// prefix isn't specified
+Date:   Sun, 10 Dec 2017 20:23:45 +0000
+X-Mailer: sendEmail-1.56
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfDmwJG0qbZ/KGE4+a8RbBe+AHL7ZikK3madoJUvth7fNWWKnqefIDBYppKTkmRMHAH/8h4KvXG2/vsTIQuU1no2GNSUqXK4+avSMpZItnLdvlGDwtRXn
- +4tLMKQ6agHCgqNurOyFrRgTxVyNzDYxSQBax23v/hiUkttY71pgOS2yS7ojzMJIauW5bhFp5H/AMw==
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-660011.932560341"
+X-SES-Outgoing: 2017.12.10-54.240.27.62
+Feedback-ID: 1.us-west-2.PCEy91/Vd+GU67P48MglE9FKtQG6qQD9MhgwC/YKQRM=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+This is a multi-part message in MIME format. To properly display this message you need a MIME-Version 1.0 compliant Email program.
 
-I noticed the revert of the 'ab/simplify-perl-makefile' branch on
-top of 'pu'. So, I fired up my 32-bit Linux and attempted to see
-if I could debug this t9001 test failure.
+------MIME delimiter for sendEmail-660011.932560341
+Content-Type: text/plain;
+        charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
 
-Unfortunately, I could not get it to fail. :(
+Greetings,
 
-Both of the 'pu' (@77e921d77d) and 'pu~1' (@cfef1ebefd) builds pass
-the full test-suite and, likewise, running t9001 in a loop for a
-count of 100 (about 45 minutes run-time each).
+It appears that for non-standard ports to be specified for ssh-based
+clones/checkouts, the leading "ssh://" prefix must be applied. I am unsure if
+there's a reason for this or if it is simply an overlooked idiosyncrasy in the
+parser.
 
-[If it makes any difference, I don't have sendmail installed (no
-/usr/sbin/sendmail or /usr/lib/sendmail), or any sendmail in my
-$PATH.]
+Basically, while `git clone ssh://git@example.com:2222/path` works, the same
+with the `ssh://` prefix doesn't, and attempts to establish a connection to
+port 22 instead: `git clone git@example.com:2222/path` (I'm not sure what it
+will do with the `:2222` should the connection actually succeed).
 
-Sorry I couldn't help with this! :(
-
-ATB,
-Ramsay Jones
+Mahmoud Al-Qudsi
+NeoSmart Technologies
 
 
+------MIME delimiter for sendEmail-660011.932560341--
 
