@@ -2,136 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5B0E21F406
-	for <e@80x24.org>; Sat,  9 Dec 2017 22:08:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C98601F406
+	for <e@80x24.org>; Sun, 10 Dec 2017 00:08:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751372AbdLIWII (ORCPT <rfc822;e@80x24.org>);
-        Sat, 9 Dec 2017 17:08:08 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:44072 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751038AbdLIWII (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Dec 2017 17:08:08 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.136.74])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id vB9M85Dr056772
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO)
-        for <git@vger.kernel.org>; Sat, 9 Dec 2017 17:08:06 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     <git@vger.kernel.org>
-Subject: [Proposed] Externalize man/html ref for quick-install-man and quick-install-html
-Date:   Sat, 9 Dec 2017 17:07:57 -0500
-Message-ID: <000801d3713a$2f1259d0$8d370d70$@nexbridge.com>
+        id S1751263AbdLJAIW (ORCPT <rfc822;e@80x24.org>);
+        Sat, 9 Dec 2017 19:08:22 -0500
+Received: from avasout04.plus.net ([212.159.14.19]:45572 "EHLO
+        avasout04.plus.net.plus.net" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1751073AbdLJAIV (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 9 Dec 2017 19:08:21 -0500
+Received: from [10.0.2.15] ([80.189.70.158])
+        by smtp with ESMTPA
+        id NpAHejkEUzbmWNpAIeQ6Dp; Sun, 10 Dec 2017 00:08:19 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=P6pKvmIu c=1 sm=1 tr=0
+ a=bpDj9VLvXCYHU65eeb/Fiw==:117 a=bpDj9VLvXCYHU65eeb/Fiw==:17
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=5rxgeBVgAAAA:8 a=FEwn8AxFsdz831qadf8A:9
+ a=QEXdDO2ut3YA:10 a=yJM6EZoI5SlJf8ks9Ge_:22 a=PwKx63F5tFurRwaNxrlG:22
+X-AUTH: ramsayjones@:2500
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     GIT Mailing-list <git@vger.kernel.org>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: [PATCH] sequencer: make sign_off_header a file local symbol
+Message-ID: <8caabe3e-4dc3-657a-236d-6cf91e1e6d03@ramsayjones.plus.com>
+Date:   Sun, 10 Dec 2017 00:08:18 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.0
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AdNxOh0goyqszi1WQY2QhnIaYv12vw==
+X-CMAE-Envelope: MS4wfLRLXDI9nQoNwGiurYWPKy4+ZTV2mwfwEVUIJVuFIYA9XfxsJbZ9eKYvZut1MX7pqYozk/cmQytKCnOmKuOYjPejl/+CKdPgQ/MKX8rZYl9bp7EowB7R
+ 2knniI/+a3Hi4Q6kAES4C3AvC/RMixAHxqoLmVu7rLf1q8AXkOHM5ZqBcZJU0BSk27OA5aFpXNdiFw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I am proposing the following trivial change to allow the external
-specification of the reference used for quick-install-man. The justification
-is that I cannot have my production team modifying scripts when non-master
-versions of git are installed in production (that violates so many rules
-that I would have trouble enumerating). This does add any requirements for
-changes to the automation for building either git-manpages or  git-htmldocs.
-What it does is allow the top level make to pass GIT_MAN_REF down to the
-underlying shell script with a default of master if unspecific. Where I am
-uncertain is what else would be required for this change (documentation,
-unit tests).
 
-I humbly submit this for consideration.
-Sincerely,
-Randall
+Commit d0aaa46fd3 ("commit: move empty message checks to libgit",
+2017-11-10) removes the last use of 'sign_off_header' outside of
+the "sequencer.c" source file. Remove the extern declaration from
+the header file and mark the definition of the symbol with the
+static keyword.
 
-From 6acc4a4238b3e3e62674bf8a5d0b9084258a0967 Mon Sep 17 00:00:00 2001
-From: "Randall S. Becker" <rsbecker@nexbridge.com>
-Date: Sat, 9 Dec 2017 15:52:44 -0600
-Subject: Externalize man/html ref for quick-install-man and
-quick-install-html
-
+Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
 ---
- Documentation/Makefile             | 6 ++++--
- Documentation/install-doc-quick.sh | 7 ++++---
- 2 files changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 3e39e28..4f1e6df 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -39,6 +39,8 @@ MAN_TXT = $(MAN1_TXT) $(MAN5_TXT) $(MAN7_TXT)
- MAN_XML = $(patsubst %.txt,%.xml,$(MAN_TXT))
- MAN_HTML = $(patsubst %.txt,%.html,$(MAN_TXT))
+Hi Junio,
 
-+GIT_MAN_REF = master
-+
- OBSOLETE_HTML += everyday.html
- OBSOLETE_HTML += git-remote-helpers.html
- DOC_HTML = $(MAN_HTML) $(OBSOLETE_HTML)
-@@ -415,14 +417,14 @@ require-manrepo::
-        then echo "git-manpages repository must exist at $(MAN_REPO)"; exit
-1; fi
+Now that the 'pw/sequencer-in-process-commit' branch has
+graduated to 'next', the static-check.pl script is barking on
+that branch. This patch applies to the next (and pu) branches
+without conflict. You mentioned that the previous version of
+this patch (see [1]) conflicted with an in-flight patch series.
+('ot/pretty' and 'lb/rebase-i-short-command-names' have nearby
+changes, but don't conflict).
 
- quick-install-man: require-manrepo
--       '$(SHELL_PATH_SQ)' ./install-doc-quick.sh $(MAN_REPO)
-$(DESTDIR)$(mandir)
-+       '$(SHELL_PATH_SQ)' ./install-doc-quick.sh $(MAN_REPO)
-$(DESTDIR)$(mandir) $(GIT_MAN_REF)
+Was this an 'not in any integration branch, but I'm still holding
+onto it' topic branch? If it is still a problem, please just ignore
+this patch.
 
- require-htmlrepo::
-        @if test ! -d $(HTML_REPO); \
-        then echo "git-htmldocs repository must exist at $(HTML_REPO)"; exit
-1; fi
+Thanks!
 
- quick-install-html: require-htmlrepo
--       '$(SHELL_PATH_SQ)' ./install-doc-quick.sh $(HTML_REPO)
-$(DESTDIR)$(htmldir)
-+       '$(SHELL_PATH_SQ)' ./install-doc-quick.sh $(HTML_REPO)
-$(DESTDIR)$(htmldir) $(GIT_MAN_REF)
+[1] https://public-inbox.org/git/%3Cd9d05477-5d2f-04fc-adee-10d18bc0947d@ramsayjones.plus.com%3E/
 
- print-man1:
-        @for i in $(MAN1_TXT); do echo $$i; done
-diff --git a/Documentation/install-doc-quick.sh
-b/Documentation/install-doc-quick.sh
-index 327f69b..a7715eb 100755
---- a/Documentation/install-doc-quick.sh
-+++ b/Documentation/install-doc-quick.sh
-@@ -4,7 +4,8 @@
- repository=${1?repository}
- destdir=${2?destination}
-
--head=master GIT_DIR=
-+GIT_MAN_REF=${3?master}
-+GIT_DIR=
- for d in "$repository/.git" "$repository"
- do
-        if GIT_DIR="$d" git rev-parse refs/heads/master >/dev/null 2>&1
-@@ -27,12 +28,12 @@ export GIT_INDEX_FILE GIT_WORK_TREE
- rm -f "$GIT_INDEX_FILE"
- trap 'rm -f "$GIT_INDEX_FILE"' 0
-
--git read-tree $head
-+git read-tree $GIT_MAN_REF
- git checkout-index -a -f --prefix="$destdir"/
-
- if test -n "$GZ"
- then
--       git ls-tree -r --name-only $head |
-+       git ls-tree -r --name-only $GIT_MAN_REF |
-        xargs printf "$destdir/%s\n" |
-        xargs gzip -f
- fi
---
-2.5.6.18.ga013bef
+ATB,
+Ramsay Jones
 
 
+ sequencer.c | 2 +-
+ sequencer.h | 2 --
+ 2 files changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/sequencer.c b/sequencer.c
+index 0f17b4d32..8c2af94ed 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -26,7 +26,7 @@
+ 
+ #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
+ 
+-const char sign_off_header[] = "Signed-off-by: ";
++static const char sign_off_header[] = "Signed-off-by: ";
+ static const char cherry_picked_prefix[] = "(cherry picked from commit ";
+ 
+ GIT_PATH_FUNC(git_path_seq_dir, "sequencer")
+diff --git a/sequencer.h b/sequencer.h
+index 77cb174b2..688b0276d 100644
+--- a/sequencer.h
++++ b/sequencer.h
+@@ -53,8 +53,6 @@ int check_todo_list(void);
+ int skip_unnecessary_picks(void);
+ int rearrange_squash(void);
+ 
+-extern const char sign_off_header[];
+-
+ void append_signoff(struct strbuf *msgbuf, int ignore_footer, unsigned flag);
+ void append_conflicts_hint(struct strbuf *msgbuf);
+ int git_sequencer_config(const char *k, const char *v, void *cb);
+-- 
+2.15.0
