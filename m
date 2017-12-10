@@ -6,85 +6,156 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F03971F404
-	for <e@80x24.org>; Sun, 10 Dec 2017 06:53:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A25821F404
+	for <e@80x24.org>; Sun, 10 Dec 2017 06:53:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751262AbdLJGsJ (ORCPT <rfc822;e@80x24.org>);
-        Sun, 10 Dec 2017 01:48:09 -0500
-Received: from mail-lf0-f50.google.com ([209.85.215.50]:43093 "EHLO
-        mail-lf0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751244AbdLJGsI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Dec 2017 01:48:08 -0500
-Received: by mail-lf0-f50.google.com with SMTP id 94so15832013lfy.10
-        for <git@vger.kernel.org>; Sat, 09 Dec 2017 22:48:07 -0800 (PST)
+        id S1751258AbdLJGxf (ORCPT <rfc822;e@80x24.org>);
+        Sun, 10 Dec 2017 01:53:35 -0500
+Received: from mail-lf0-f68.google.com ([209.85.215.68]:37843 "EHLO
+        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751207AbdLJGxe (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Dec 2017 01:53:34 -0500
+Received: by mail-lf0-f68.google.com with SMTP id a12so15844633lfe.4
+        for <git@vger.kernel.org>; Sat, 09 Dec 2017 22:53:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=dyntopia-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=2uSt9wAm3JfR30O0xKcjqVgv7iOxan1RIIyB/c1D7Tg=;
-        b=VOUc4dsAlC5ADnRsW6TUU+tU5JrGWmdDeH/JDqsbFd247/fZLBU98LGxCoWnKVY2bf
-         6njjXEaZBtiOx+uUX7uxqg5aZhI2xBaedDUtli+Ud2kf5xoFGz8beeNz2KdO0qUiDDtS
-         m3oCG2yjipoD3QUNLTe/J1UEswqUJpkG7ZE1ecsuthA74g6PGEGhCnQyaWfFDOTxM9HR
-         03AzK4hVja5OsCqoPI+NuNgmv9Tsh+/2Syxj/XqHl4+Vwq077vFZS7jwsXqZ5Acrwtvq
-         Lyc7ERbgCIz/mug4x4KUwvCoEJQ4lz9wcnNmujqSsTzDDIN9IIrwqZDyDMPkuISMk1Qc
-         WHcg==
+        h=from:to:subject:date:message-id:in-reply-to:references;
+        bh=bDsARmZQ4fVkiuccy9RM2pQdWkNRkf/7h8pS451qKuk=;
+        b=ecREXG2G5rga/wWLYhKEVQ3XVTkMGD24W2I0OOIzb8k8PMh0+8QuH3gXd5VZ9lfcyp
+         LoiZz358vDYA86r3tmBeHAE8dYuYXzWccTuskcwZGgiDgpzhHg49C3OrEaSeXQRlzanS
+         0vhvkNy7Mdiwo/bzdkeKyA1uVUp/5SLl4sBcopI+uWin5XOsIFGbplQJrCtv4Pf7uJiz
+         m6Uk+h04dkGjyNxkA+SUbYuxsEsUawZ7CEDgsXQ+F1ND8kWeZDiKlxAnrTYy/sQoQagr
+         4JWkYiB8pzZc9aeVJX3AvcqahRzXPit7s/lqFRT/7Dqf5I42Qz7ahNYSU/tiQlv+UnPa
+         +Dog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=2uSt9wAm3JfR30O0xKcjqVgv7iOxan1RIIyB/c1D7Tg=;
-        b=Hr0Ul1poHUgE2FwlXxd+wMiFaIUQObzcpwdjDv+GuyDrY8fUhFDSKxckoKAWnmN+bI
-         SI3CxbDJX2kchaZsCN3IwRKyVnxRMDoAyCfi8ttIFMpW8yWUH9i23NdN7+g0t0a25VaB
-         ejmp1TqMjlEOdz/O4Zk4oB4ZT7sj7B6VZZB99LYMsVGe699yT9QIfLxhfI2iZVcMA3Mw
-         Vh03VFuoOcOYgbi3U9LHch+poc0eORffUxfJxBFe+lvJmEVjREIZchg5D/hV99CCLn9o
-         cIbzO3ctnwWv7QxbgVaLbIuNDbGA/y5oc7dTKMFXi8VfusTX5SmHr/+JgpuC+/404/gk
-         52BQ==
-X-Gm-Message-State: AJaThX42gJE/pt+2s9kE0Ho/Bokm40yVcLX8l3R/wxI6/c64Ns7JWr29
-        MUPkF57WoWIJGWBkFtOYVpNJWqnMAJI=
-X-Google-Smtp-Source: AGs4zMZ6llWLxnTOyLAX/ejUFuetYpscseEhfom6w+rocC8pIQWoqZOr0Fp+mUXsl7KTPDm60JkFaQ==
-X-Received: by 10.46.82.132 with SMTP id n4mr19011595lje.31.1512888486704;
-        Sat, 09 Dec 2017 22:48:06 -0800 (PST)
+        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+         :references;
+        bh=bDsARmZQ4fVkiuccy9RM2pQdWkNRkf/7h8pS451qKuk=;
+        b=Fjfro53nXELBmadc/RiFMxQJZwPg/5e/VgnrpOaIEGndti1Bsm1CrrmTIjHfCKDmW0
+         CK5IdenWmWOgUTScHSmYPlXFtjCRuL4f9St0WI1qfmCPQUGlzVkyGZWdHmr/gWZK5KqQ
+         JSdmsDyHsULT0RjYkVgmaNqzAUVo4KvIn//rjrc0U/SI/j4GNjFBx7zWMh8j65g6Ka7h
+         oKfHux3xn2lykdZrDQgE9G8uOJj+Honcc0Yu18UgKigX6l78YDbsSIiHtKANmwAB7jHw
+         my1W6FPP+WplR+Idqk7Grnu/akBTlOt+6tjvyniqSzWfpbQFaEK4ps8aY5j4EWDSXQCh
+         5BYQ==
+X-Gm-Message-State: AJaThX65AiOJKvQXBDz7uLudWUmR/SbqdLe0AuD5f6wwF//3cFpo8twN
+        Q2mJfyO9MWeSFWHfkxKT72ZBgdGv2B4=
+X-Google-Smtp-Source: AGs4zMZcI/o1iXjaCXxOTLVTVilUckFXyNhcYBIU8jyTiIu/Xj3o4uVfw2NB565VfD8QTiMXAlJe1A==
+X-Received: by 10.46.69.67 with SMTP id s64mr18782148lja.94.1512888812897;
+        Sat, 09 Dec 2017 22:53:32 -0800 (PST)
 Received: from localhost ([185.65.132.137])
-        by smtp.gmail.com with ESMTPSA id f67sm2166419lfb.20.2017.12.09.22.48.05
+        by smtp.gmail.com with ESMTPSA id q142sm2125549lfe.94.2017.12.09.22.53.32
+        for <git@vger.kernel.org>
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 09 Dec 2017 22:48:06 -0800 (PST)
-Date:   Sun, 10 Dec 2017 06:48:40 +0000
+        Sat, 09 Dec 2017 22:53:32 -0800 (PST)
 From:   Hans Jerry Illikainen <hji@dyntopia.com>
-To:     Kevin Daudt <me@ikke.info>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 3/3] pull: add config option for verifySignatures
-Message-ID: <20171210064840.GA8087@darpa.mil>
+To:     git@vger.kernel.org
+Subject: [PATCH v2 2/2] t: add tests for pull --verify-signatures
+Date:   Sun, 10 Dec 2017 06:53:58 +0000
+Message-Id: <20171210065358.8156-2-hji@dyntopia.com>
+In-Reply-To: <20171210065358.8156-1-hji@dyntopia.com>
 References: <20171209090530.6747-1-hji@dyntopia.com>
- <20171209090530.6747-3-hji@dyntopia.com>
- <20171209120623.GC6006@alpha.vpn.ikke.info>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20171209120623.GC6006@alpha.vpn.ikke.info>
+ <20171210065358.8156-1-hji@dyntopia.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Dec 09, 2017 at 01:06:23PM +0100, Kevin Daudt wrote:
-> On Sat, Dec 09, 2017 at 09:05:30AM +0000, Hans Jerry Illikainen wrote:
-> > Verify the signature of the tip commit when `pull.verifySignatures` is
-> > true.  This option overrides `merge.verifySignatures` on pull, and can
-> > be disabled with the option `--no-verify-signatures`.
-> 
-> Is there a reason why git pull would need a different behaviour from git
-> merge? Pull itself is just a convenience command for fetch +
-> merge/rebase.
-> 
-> One precedent for having a separate configuration option for pull
-> however is 'pull.ff', so there might be a usecase for it.
-> 
-> I guess your commit message could use a motivation on why you want to
-> set this differently from 'merge.verifySignature'.
+Add tests for pull --verify-signatures with untrusted, bad and no
+signatures.  Previously the only test for --verify-signatures was to
+make sure that pull --rebase --verify-signatures result in a warning
+(t5520-pull.sh).
 
-Thanks for the review!  I wasn't sure whether pull.verifySignatures made
-sense -- I included it to be consistent with pull.ff/merge.ff, but it's
-scrapped in v2.
+Signed-off-by: Hans Jerry Illikainen <hji@dyntopia.com>
+---
+ t/t5573-pull-verify-signatures.sh | 78 +++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 78 insertions(+)
+ create mode 100755 t/t5573-pull-verify-signatures.sh
 
+diff --git a/t/t5573-pull-verify-signatures.sh b/t/t5573-pull-verify-signatures.sh
+new file mode 100755
+index 000000000..8ae331f40
+--- /dev/null
++++ b/t/t5573-pull-verify-signatures.sh
+@@ -0,0 +1,78 @@
++#!/bin/sh
++
++test_description='pull signature verification tests'
++. ./test-lib.sh
++. "$TEST_DIRECTORY/lib-gpg.sh"
++
++test_expect_success GPG 'create repositories with signed commits' '
++	echo 1 >a && git add a &&
++	test_tick && git commit -m initial &&
++	git tag initial &&
++
++	git clone . signed &&
++	(
++		cd signed &&
++		echo 2 >b && git add b &&
++		test_tick && git commit -S -m "signed"
++	) &&
++
++	git clone . unsigned &&
++	(
++		cd unsigned &&
++		echo 3 >c && git add c &&
++		test_tick && git commit -m "unsigned"
++	) &&
++
++	git clone . bad &&
++	(
++		cd bad &&
++		echo 4 >d && git add d &&
++		test_tick && git commit -S -m "bad" &&
++		git cat-file commit HEAD >raw &&
++		sed -e "s/bad/forged bad/" raw >forged &&
++		git hash-object -w -t commit forged >forged.commit &&
++		git checkout $(cat forged.commit)
++	) &&
++
++	git clone . untrusted &&
++	(
++		cd untrusted &&
++		echo 5 >e && git add e &&
++		test_tick && git commit -SB7227189 -m "untrusted"
++	)
++'
++
++test_expect_success GPG 'pull unsigned commit with --verify-signatures' '
++	test_must_fail git pull --ff-only --verify-signatures unsigned 2>pullerror &&
++	test_i18ngrep "does not have a GPG signature" pullerror
++'
++
++test_expect_success GPG 'pull commit with bad signature with --verify-signatures' '
++	test_must_fail git pull --ff-only --verify-signatures bad 2>pullerror &&
++	test_i18ngrep "has a bad GPG signature" pullerror
++'
++
++test_expect_success GPG 'pull commit with untrusted signature with --verify-signatures' '
++	test_must_fail git pull --ff-only --verify-signatures untrusted 2>pullerror &&
++	test_i18ngrep "has an untrusted GPG signature" pullerror
++'
++
++test_expect_success GPG 'pull signed commit with --verify-signatures' '
++	test_when_finished "git checkout initial" &&
++	git pull --verify-signatures signed >pulloutput &&
++	test_i18ngrep "has a good GPG signature" pulloutput
++'
++
++test_expect_success GPG 'pull commit with bad signature without verification' '
++	test_when_finished "git checkout initial" &&
++	git pull --ff-only bad 2>pullerror
++'
++
++test_expect_success GPG 'pull commit with bad signature with --no-verify-signatures' '
++	test_when_finished "git checkout initial" &&
++	test_config merge.verifySignatures true &&
++	test_config pull.verifySignatures true &&
++	git pull --ff-only --no-verify-signatures bad 2>pullerror
++'
++
++test_done
 -- 
-hji
+2.15.1.356.g13e4cf275
+
