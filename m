@@ -7,30 +7,30 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 969A01F404
-	for <e@80x24.org>; Mon, 11 Dec 2017 14:14:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D09191F404
+	for <e@80x24.org>; Mon, 11 Dec 2017 14:14:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752811AbdLKOOC (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Dec 2017 09:14:02 -0500
-Received: from smtp-out-3.talktalk.net ([62.24.135.67]:28253 "EHLO
+        id S1753219AbdLKOOM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Dec 2017 09:14:12 -0500
+Received: from smtp-out-3.talktalk.net ([62.24.135.67]:25076 "EHLO
         smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752886AbdLKONr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Dec 2017 09:13:47 -0500
+        with ESMTP id S1752938AbdLKONt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Dec 2017 09:13:49 -0500
 Received: from lindisfarne.localdomain ([92.22.30.250])
         by smtp.talktalk.net with SMTP
-        id OOpteDPs4CbAZOOq1eBivW; Mon, 11 Dec 2017 14:13:45 +0000
+        id OOpteDPs4CbAZOOq3eBiw0; Mon, 11 Dec 2017 14:13:48 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1513001626;
-        bh=CpSjrh3cyin6sZjRC/BTL4t6cxqzENhD2QqXVFSInOw=;
+        s=cmr1711; t=1513001628;
+        bh=1Q4oyIJ+IbA8fGKvn/ekVwpFTyl+DiOSL867Xx0N1/k=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:Reply-To;
-        b=JvJAFknH75Z4oUpADSp7H8FGPEAMjrHwTiDPJI4NsSz0mUCBmIAGfFfnN1LvGqgt5
-         uqK3OKyR34ohuU3hSlsUMcEmOv7nw0frJ02QoQhMcz+52DxQKjcpE9SCfJt4SN845g
-         gXP4xkyLvzos4EnZi/sEZZhBpvB9+q0LGA0IxRdg=
+        b=pICoaU3ywofJ1Bs4+3YenzWRDSdDemI8FkgYis89bWQo5g/8eopZ0BSVdQco7a2Pd
+         9//yhJZBFFoo2loHl7HMvCqPRnaFK75nANu+0YCxzbHYBZr+drcs5C58duv0HBlxTx
+         IAB/+Rx2I0U9zCef/B6DMVexjvj6B/5lsU9LerXE=
 X-Originating-IP: [92.22.30.250]
 X-Spam: 0
 X-OAuthority: v=2.2 cv=JvuBlIwC c=1 sm=1 tr=0 a=hCO86xb6nvxPok+3LE1svw==:117
- a=hCO86xb6nvxPok+3LE1svw==:17 a=evINK-nbAAAA:8 a=gmYsS5rWCjj2l-UK0YYA:9
- a=_ZaXjYxdQjk28jSF:21 a=Ak7Cal96fJlfYphb:21 a=RfR_gqz1fSpA9VikTjo0:22
+ a=hCO86xb6nvxPok+3LE1svw==:17 a=evINK-nbAAAA:8 a=qo_IBofmjA8VuP4PJYkA:9
+ a=thI04XVJ8FcZUJgH:21 a=x326BpXhDvg8PScu:21 a=RfR_gqz1fSpA9VikTjo0:22
 From:   Phillip Wood <phillip.wood@talktalk.net>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -39,18 +39,18 @@ Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Adam Dinwoodie <adam@dinwoodie.org>,
         Stefan Beller <sbeller@google.com>,
         Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH v5 2/9] commit: move empty message checks to libgit
-Date:   Mon, 11 Dec 2017 14:13:23 +0000
-Message-Id: <20171211141330.23566-3-phillip.wood@talktalk.net>
+Subject: [PATCH v5 6/9] sequencer: simplify adding Signed-off-by: trailer
+Date:   Mon, 11 Dec 2017 14:13:27 +0000
+Message-Id: <20171211141330.23566-7-phillip.wood@talktalk.net>
 X-Mailer: git-send-email 2.15.1
 In-Reply-To: <20171211141330.23566-1-phillip.wood@talktalk.net>
 References: <20170925101041.18344-1-phillip.wood@talktalk.net>
  <20171211141330.23566-1-phillip.wood@talktalk.net>
 Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
-X-CMAE-Envelope: MS4wfCkKLf5C3ntqVQLKaiaaPnge9xOtiNC0A3Rc+uZSswgLb1nitE4vjAV9PWOOZm6qDN+jz3qeqMP0N+mRKw1ykVYuzzhTf0kvNOP49itQyt6Z+xo/DnBX
- hg31ZpUKL1qxz5vNca2jtey2CTUe2+k+Szo5qyytFPrpA0bgwYqzzCoY0e8fVT81UaWA9wqTB3V8kceeSYS8mUptc81u6x0maZ5WxwS56WubXVtblGY+CbXp
- fwqhUMtbpoPJ/MJ7ADhVsoc/4Fa1qFnbaUqmKRDtXmD7ND1z4CvqjsKCPCMtRxn4T3iWYXrE8tg9OW2f2JjJ2HlofSp3te2dE7UIzcYX6p/68bc3vpQ0f+c7
- ILGdFbLo7H2iVJe9md293c3c8s8wpScTPdUzPM7htqywo3mU0YA=
+X-CMAE-Envelope: MS4wfMgaPtxxjpvOSKbrzJrtarpT561UvwcY/Sp8qT1ogGO9vEQjTzKh2oD4SE1AEhTDhojnGJJHwBKond5WjM9Mr2/5wiBy01bH9R/9dCnQw5jaznG8iHPd
+ cw9xBk6Ds52LxpxyJO02tVge1ZwXKAJ2MgEyQDU+n5aVhP9ptbgr6jNfeYAdONAsJfsZw8nxmRHvBQUw3KYaprS8uGoWoG7sbxKLFLzoLtwm96PLeJ+74ZLO
+ sTHRLZjjV6uTyoukbKjzy5V36VYcg9aS6RRRfE90QmSedAGK/0aks//X7tacYFsKYLvLG9/oCWlvbg6fu/W0WJh0AoHBZkk204o7iCSCvEHJ3mp0dEKsSmPY
+ agVI5srRpkSTgZMzptJJ7x1SO/5M0SjvvhinaPuZjVxn3U4MW7M=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -58,294 +58,52 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Move the functions that check for empty messages from bulitin/commit.c
-to sequencer.c so they can be shared with other commands. The
-functions are refactored to take an explicit cleanup mode and template
-filename passed by the caller.
+Add the Signed-off-by: trailer in one place rather than adding it to
+the message when doing a recursive merge and specifying '--signoff'
+when running 'git commit'. This means that if there are conflicts when
+merging with a strategy other than 'recursive' the Signed-off-by:
+trailer will be added if the user commits the resolution themselves
+without passing '--signoff' to 'git commit'. It also simplifies the
+in-process commit that is about to be added to the sequencer.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
+ sequencer.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-Notes:
-    changes since v4:
-     - move the definition of cleanup mode enum so it can be referenced in
-       struct replay_opts by a later commit
-    
-    changes since v1:
-     - prefix cleanup_mode enum and constants with commit_msg_
-
- builtin/commit.c | 99 +++++++++++---------------------------------------------
- sequencer.c      | 61 ++++++++++++++++++++++++++++++++++
- sequencer.h      | 12 ++++++-
- 3 files changed, 91 insertions(+), 81 deletions(-)
-
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 2de75882b847be1a100931f6218e7e14dc01c4bd..2175dac8036c465a73c4c782f061e85ae6d1a629 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -128,12 +128,7 @@ static char *sign_commit;
-  * if editor is used, and only the whitespaces if the message
-  * is specified explicitly.
-  */
--static enum {
--	CLEANUP_SPACE,
--	CLEANUP_NONE,
--	CLEANUP_SCISSORS,
--	CLEANUP_ALL
--} cleanup_mode;
-+static enum commit_msg_cleanup_mode cleanup_mode;
- static const char *cleanup_arg;
- 
- static enum commit_whence whence;
-@@ -673,7 +668,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 	struct strbuf sb = STRBUF_INIT;
- 	const char *hook_arg1 = NULL;
- 	const char *hook_arg2 = NULL;
--	int clean_message_contents = (cleanup_mode != CLEANUP_NONE);
-+	int clean_message_contents = (cleanup_mode != COMMIT_MSG_CLEANUP_NONE);
- 	int old_display_comment_prefix;
- 
- 	/* This checks and barfs if author is badly specified */
-@@ -812,7 +807,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 		struct ident_split ci, ai;
- 
- 		if (whence != FROM_COMMIT) {
--			if (cleanup_mode == CLEANUP_SCISSORS)
-+			if (cleanup_mode == COMMIT_MSG_CLEANUP_SCISSORS)
- 				wt_status_add_cut_line(s->fp);
- 			status_printf_ln(s, GIT_COLOR_NORMAL,
- 			    whence == FROM_MERGE
-@@ -832,14 +827,15 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 		}
- 
- 		fprintf(s->fp, "\n");
--		if (cleanup_mode == CLEANUP_ALL)
-+		if (cleanup_mode == COMMIT_MSG_CLEANUP_ALL)
- 			status_printf(s, GIT_COLOR_NORMAL,
- 				_("Please enter the commit message for your changes."
- 				  " Lines starting\nwith '%c' will be ignored, and an empty"
- 				  " message aborts the commit.\n"), comment_line_char);
--		else if (cleanup_mode == CLEANUP_SCISSORS && whence == FROM_COMMIT)
-+		else if (cleanup_mode == COMMIT_MSG_CLEANUP_SCISSORS &&
-+			 whence == FROM_COMMIT)
- 			wt_status_add_cut_line(s->fp);
--		else /* CLEANUP_SPACE, that is. */
-+		else /* COMMIT_MSG_CLEANUP_SPACE, that is. */
- 			status_printf(s, GIT_COLOR_NORMAL,
- 				_("Please enter the commit message for your changes."
- 				  " Lines starting\n"
-@@ -984,65 +980,6 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 	return 1;
- }
- 
--static int rest_is_empty(struct strbuf *sb, int start)
--{
--	int i, eol;
--	const char *nl;
--
--	/* Check if the rest is just whitespace and Signed-off-by's. */
--	for (i = start; i < sb->len; i++) {
--		nl = memchr(sb->buf + i, '\n', sb->len - i);
--		if (nl)
--			eol = nl - sb->buf;
--		else
--			eol = sb->len;
--
--		if (strlen(sign_off_header) <= eol - i &&
--		    starts_with(sb->buf + i, sign_off_header)) {
--			i = eol;
--			continue;
--		}
--		while (i < eol)
--			if (!isspace(sb->buf[i++]))
--				return 0;
--	}
--
--	return 1;
--}
--
--/*
-- * Find out if the message in the strbuf contains only whitespace and
-- * Signed-off-by lines.
-- */
--static int message_is_empty(struct strbuf *sb)
--{
--	if (cleanup_mode == CLEANUP_NONE && sb->len)
--		return 0;
--	return rest_is_empty(sb, 0);
--}
--
--/*
-- * See if the user edited the message in the editor or left what
-- * was in the template intact
-- */
--static int template_untouched(struct strbuf *sb)
--{
--	struct strbuf tmpl = STRBUF_INIT;
--	const char *start;
--
--	if (cleanup_mode == CLEANUP_NONE && sb->len)
--		return 0;
--
--	if (!template_file || strbuf_read_file(&tmpl, template_file, 0) <= 0)
--		return 0;
--
--	strbuf_stripspace(&tmpl, cleanup_mode == CLEANUP_ALL);
--	if (!skip_prefix(sb->buf, tmpl.buf, &start))
--		start = sb->buf;
--	strbuf_release(&tmpl);
--	return rest_is_empty(sb, start - sb->buf);
--}
--
- static const char *find_author_by_nickname(const char *name)
- {
- 	struct rev_info revs;
-@@ -1227,15 +1164,17 @@ static int parse_and_validate_options(int argc, const char *argv[],
- 	if (argc == 0 && (also || (only && !amend && !allow_empty)))
- 		die(_("No paths with --include/--only does not make sense."));
- 	if (!cleanup_arg || !strcmp(cleanup_arg, "default"))
--		cleanup_mode = use_editor ? CLEANUP_ALL : CLEANUP_SPACE;
-+		cleanup_mode = use_editor ? COMMIT_MSG_CLEANUP_ALL :
-+					    COMMIT_MSG_CLEANUP_SPACE;
- 	else if (!strcmp(cleanup_arg, "verbatim"))
--		cleanup_mode = CLEANUP_NONE;
-+		cleanup_mode = COMMIT_MSG_CLEANUP_NONE;
- 	else if (!strcmp(cleanup_arg, "whitespace"))
--		cleanup_mode = CLEANUP_SPACE;
-+		cleanup_mode = COMMIT_MSG_CLEANUP_SPACE;
- 	else if (!strcmp(cleanup_arg, "strip"))
--		cleanup_mode = CLEANUP_ALL;
-+		cleanup_mode = COMMIT_MSG_CLEANUP_ALL;
- 	else if (!strcmp(cleanup_arg, "scissors"))
--		cleanup_mode = use_editor ? CLEANUP_SCISSORS : CLEANUP_SPACE;
-+		cleanup_mode = use_editor ? COMMIT_MSG_CLEANUP_SCISSORS :
-+					    COMMIT_MSG_CLEANUP_SPACE;
- 	else
- 		die(_("Invalid cleanup mode %s"), cleanup_arg);
- 
-@@ -1768,17 +1707,17 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	if (verbose || /* Truncate the message just before the diff, if any. */
--	    cleanup_mode == CLEANUP_SCISSORS)
-+	    cleanup_mode == COMMIT_MSG_CLEANUP_SCISSORS)
- 		strbuf_setlen(&sb, wt_status_locate_end(sb.buf, sb.len));
--	if (cleanup_mode != CLEANUP_NONE)
--		strbuf_stripspace(&sb, cleanup_mode == CLEANUP_ALL);
-+	if (cleanup_mode != COMMIT_MSG_CLEANUP_NONE)
-+		strbuf_stripspace(&sb, cleanup_mode == COMMIT_MSG_CLEANUP_ALL);
- 
--	if (message_is_empty(&sb) && !allow_empty_message) {
-+	if (message_is_empty(&sb, cleanup_mode) && !allow_empty_message) {
- 		rollback_index_files();
- 		fprintf(stderr, _("Aborting commit due to empty commit message.\n"));
- 		exit(1);
- 	}
--	if (template_untouched(&sb) && !allow_empty_message) {
-+	if (template_untouched(&sb, template_file, cleanup_mode) && !allow_empty_message) {
- 		rollback_index_files();
- 		fprintf(stderr, _("Aborting commit; you did not edit the message.\n"));
- 		exit(1);
 diff --git a/sequencer.c b/sequencer.c
-index fa94ed652d2ce87fddf824aa516456b5f42735e7..168da5093e71f50a4d70af7288cf761110e69e87 100644
+index b4ff2a4a973b2733cca7bb65fcb7947cb8d08988..4966dd1b9359aaa82064608c05a7f5b18cea2d7a 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -692,6 +692,67 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
- 	return run_command(&cmd);
- }
+@@ -478,9 +478,6 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
+ 			_(action_name(opts)));
+ 	rollback_lock_file(&index_lock);
  
-+static int rest_is_empty(const struct strbuf *sb, int start)
-+{
-+	int i, eol;
-+	const char *nl;
-+
-+	/* Check if the rest is just whitespace and Signed-off-by's. */
-+	for (i = start; i < sb->len; i++) {
-+		nl = memchr(sb->buf + i, '\n', sb->len - i);
-+		if (nl)
-+			eol = nl - sb->buf;
-+		else
-+			eol = sb->len;
-+
-+		if (strlen(sign_off_header) <= eol - i &&
-+		    starts_with(sb->buf + i, sign_off_header)) {
-+			i = eol;
-+			continue;
-+		}
-+		while (i < eol)
-+			if (!isspace(sb->buf[i++]))
-+				return 0;
-+	}
-+
-+	return 1;
-+}
-+
-+/*
-+ * Find out if the message in the strbuf contains only whitespace and
-+ * Signed-off-by lines.
-+ */
-+int message_is_empty(const struct strbuf *sb,
-+		     enum commit_msg_cleanup_mode cleanup_mode)
-+{
-+	if (cleanup_mode == COMMIT_MSG_CLEANUP_NONE && sb->len)
-+		return 0;
-+	return rest_is_empty(sb, 0);
-+}
-+
-+/*
-+ * See if the user edited the message in the editor or left what
-+ * was in the template intact
-+ */
-+int template_untouched(const struct strbuf *sb, const char *template_file,
-+		       enum commit_msg_cleanup_mode cleanup_mode)
-+{
-+	struct strbuf tmpl = STRBUF_INIT;
-+	const char *start;
-+
-+	if (cleanup_mode == COMMIT_MSG_CLEANUP_NONE && sb->len)
-+		return 0;
-+
-+	if (!template_file || strbuf_read_file(&tmpl, template_file, 0) <= 0)
-+		return 0;
-+
-+	strbuf_stripspace(&tmpl, cleanup_mode == COMMIT_MSG_CLEANUP_ALL);
-+	if (!skip_prefix(sb->buf, tmpl.buf, &start))
-+		start = sb->buf;
-+	strbuf_release(&tmpl);
-+	return rest_is_empty(sb, start - sb->buf);
-+}
-+
- static int is_original_commit_empty(struct commit *commit)
- {
- 	const struct object_id *ptree_oid;
-diff --git a/sequencer.h b/sequencer.h
-index 6f3d3df82c0ade64b7b125acd49bf3f5e15c53af..2040773c7b6fd3966d5a1a14f410ea8ff53843c8 100644
---- a/sequencer.h
-+++ b/sequencer.h
-@@ -11,6 +11,13 @@ enum replay_action {
- 	REPLAY_INTERACTIVE_REBASE
- };
- 
-+enum commit_msg_cleanup_mode {
-+	COMMIT_MSG_CLEANUP_SPACE,
-+	COMMIT_MSG_CLEANUP_NONE,
-+	COMMIT_MSG_CLEANUP_SCISSORS,
-+	COMMIT_MSG_CLEANUP_ALL
-+};
-+
- struct replay_opts {
- 	enum replay_action action;
- 
-@@ -57,5 +64,8 @@ extern const char sign_off_header[];
- 
- void append_signoff(struct strbuf *msgbuf, int ignore_footer, unsigned flag);
- void append_conflicts_hint(struct strbuf *msgbuf);
+-	if (opts->signoff)
+-		append_signoff(msgbuf, 0, 0);
 -
-+int message_is_empty(const struct strbuf *sb,
-+		     enum commit_msg_cleanup_mode cleanup_mode);
-+int template_untouched(const struct strbuf *sb, const char *template_file,
-+		       enum commit_msg_cleanup_mode cleanup_mode);
- #endif
+ 	if (!clean)
+ 		append_conflicts_hint(msgbuf);
+ 
+@@ -658,8 +655,6 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
+ 		argv_array_push(&cmd.args, "--amend");
+ 	if (opts->gpg_sign)
+ 		argv_array_pushf(&cmd.args, "-S%s", opts->gpg_sign);
+-	if (opts->signoff)
+-		argv_array_push(&cmd.args, "-s");
+ 	if (defmsg)
+ 		argv_array_pushl(&cmd.args, "-F", defmsg, NULL);
+ 	if ((flags & CLEANUP_MSG))
+@@ -1348,6 +1343,9 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
+ 		}
+ 	}
+ 
++	if (opts->signoff)
++		append_signoff(&msgbuf, 0, 0);
++
+ 	if (is_rebase_i(opts) && write_author_script(msg.message) < 0)
+ 		res = -1;
+ 	else if (!opts->strategy || !strcmp(opts->strategy, "recursive") || command == TODO_REVERT) {
 -- 
 2.15.1
 
