@@ -2,137 +2,287 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C32CB1F404
-	for <e@80x24.org>; Mon, 11 Dec 2017 21:35:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 76B841F404
+	for <e@80x24.org>; Mon, 11 Dec 2017 21:38:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751965AbdLKVft (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Dec 2017 16:35:49 -0500
-Received: from washoe.dartmouth.edu ([129.170.30.229]:56457 "EHLO
-        smtp.onerussian.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751622AbdLKVfs (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Dec 2017 16:35:48 -0500
-X-Greylist: delayed 1479 seconds by postgrey-1.27 at vger.kernel.org; Mon, 11 Dec 2017 16:35:48 EST
-Received: from [129.170.31.54] (helo=localhost)
-        by smtp.onerussian.com with esmtpsa (TLS1.2:RSA_AES_256_CBC_SHA1:256)
-        (Exim 4.80)
-        (envelope-from <yoh@onerussian.com>)
-        id 1eOVLv-0004Un-9t; Mon, 11 Dec 2017 16:11:08 -0500
-Date:   Mon, 11 Dec 2017 16:11:02 -0500
-From:   Yaroslav Halchenko <yoh@onerussian.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Cc:     kyle@kyleam.com
-Message-ID: <20171211211102.rrxqd6yscnd33efd@hopa.kiewit.dartmouth.edu>
+        id S1751663AbdLKViG (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Dec 2017 16:38:06 -0500
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:34781 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750929AbdLKViF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Dec 2017 16:38:05 -0500
+Received: by mail-wr0-f193.google.com with SMTP id y21so19116511wrc.1
+        for <git@vger.kernel.org>; Mon, 11 Dec 2017 13:38:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=8Ox+LSvjBMN6jAroZ4zVgwuMkPRVACCHJRNxs2I5+kc=;
+        b=VIij/hlwcucEvwqBR/1jrs66UBegHKOuq8eoCR3ApTGTQFHJr/sg0pWr6PFf9pmrSs
+         ulH5QU/N/368Xc4jfSrzGSNUX+zfweiM9UoyGRB6ho8H02JyFo3mS+viy28IuAj+IcrF
+         Y0e706RioUpPLyQY83uUUde+6BG9/YxH78vh9CIoPIynBOP+f27qd7UZ4xYzQ/F1oxW+
+         Ih1sCQ1trygZ53Htf+h2gJCTzmN2TXO/f/kWVY5yL/PBA+gEEe3e+ftOIbsej84EnRI8
+         gQmvsezg8qQmin0/n4umHF3yBN2uwEexfUyiTRhBmC6i8INNoITnnhgbR6MWovi+id0x
+         7Swg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=8Ox+LSvjBMN6jAroZ4zVgwuMkPRVACCHJRNxs2I5+kc=;
+        b=tjdx8Ky1LEuvr3v+5AfMRucN7stHbXAgLiWZo/X6tnFMMQb3xZDzg0VRoHMtSnFehk
+         HuXIva0jr9D58Dz9XAMu0MGMt5u49LWyfqohsgQ5AIoo8NzFF3Bx660o8hRIEi+MeOcR
+         EvQKdxHzzZTpzc6h3JeshENBUhWgnQGXm4V+cjF/PTxaQqVQmAGdEG4Yh3rP9LHNUPpQ
+         cA4BLxrR8oTB9ICii+O8eXErnI573xSBQUqghSklnC69vXZlt6/WWG9ifHwv4dA/ZTXf
+         otNW6emoE4gbgna01SZUe6uWaZpOaUORc4vTyoHxptfUw27/czm+YoIt8zt0GDRIgyVq
+         QC8w==
+X-Gm-Message-State: AKGB3mLZ2ZEcPYojRDEIV4Y168Y1azKyyfA97c7E5GJx7vNN6WQKUtcZ
+        Qh9BfBVJYsTPm+7c5BC49vULn8bQ
+X-Google-Smtp-Source: ACJfBosCa304EIBLr3I9IwRuPvjXbwBHPj0NU8GKIM0Sxy5r2019Y0SNzjdcmqGEh1D7746E0hrgHw==
+X-Received: by 10.223.191.13 with SMTP id p13mr1769135wrh.69.1513028284364;
+        Mon, 11 Dec 2017 13:38:04 -0800 (PST)
+Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
+        by smtp.gmail.com with ESMTPSA id w142sm557763wme.3.2017.12.11.13.38.03
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 11 Dec 2017 13:38:03 -0800 (PST)
+Date:   Mon, 11 Dec 2017 21:39:48 +0000
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 2/3] prune: fix pruning with multiple worktrees and split
+ index
+Message-ID: <20171211213948.GC25616@hank>
+References: <20171210212202.28231-1-t.gummerer@gmail.com>
+ <20171210212202.28231-3-t.gummerer@gmail.com>
+ <20171211190946.GB177995@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-X-URL:  http://www.onerussian.com
-X-Image-Url: http://www.onerussian.com/img/yoh.png
-X-PGP-Key: http://www.onerussian.com/gpg-yoh.asc
-X-fingerprint: C5B9 05F0 E8D9 FD96 68FF  366F A2DE 2350 62DA 33FA
-User-Agent: NeoMutt/20170609 (1.8.3)
-X-SA-Exim-Connect-IP: 129.170.31.54
-X-SA-Exim-Rcpt-To: git@vger.kernel.org, kyle@kyleam.com
-X-SA-Exim-Mail-From: yoh@onerussian.com
-Subject: Q: rational for $XDG_CONFIG_HOME/git/config to be "non global" or
- just a bug?
-X-SA-Exim-Version: 4.2.1 (built Mon, 26 Dec 2011 16:57:07 +0000)
-X-SA-Exim-Scanned: Yes (on smtp.onerussian.com)
+In-Reply-To: <20171211190946.GB177995@google.com>
+User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Git Gurus,
+On 12/11, Brandon Williams wrote:
+> On 12/10, Thomas Gummerer wrote:
+> > be489d02d2 ("revision.c: --indexed-objects add objects from all
+> > worktrees", 2017-08-23) made sure that pruning takes objects from all
+> > worktrees into account.
+> > 
+> > It did that by reading the index of every worktree and adding the
+> > necessary index objects to the set of pending objects.  The index is
+> > read by read_index_from.  As mentioned in the previous commit,
+> > read_index_from depends on the CWD for the location of the split index,
+> > and add_index_objects_to_pending doesn't set that before using
+> > read_index_from.
+> > 
+> > Instead of using read_index_from, use repo_read_index, which is aware of
+> > the proper paths for the worktree.
+> > 
+> > This fixes t5304-prune when ran with GIT_TEST_SPLIT_INDEX set.
+> > 
+> 
+> I'm on the fence about this change.  I understand that this will ensure
+> that the proper objects aren't pruned when using a split index in the
+> presence of worktrees but I think the solution needs to be thought
+> through a bit more.
+> 
+> My big concern right now is the interaction of 'struct worktree's and
+> 'struct repository'.  I'll try to highlight my concerns below.
 
-We [1] have got confused a bit about this recent addition of handling
-$XDG_CONFIG_HOME/git/config -- is it --global or not? ;)
+Thanks for the review!  My thoughts on the concerns are below.
 
-According to the man git-config (v 2.15.0 in debian)
+> > Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+> > ---
+> > 
+> > This also fixes t7009 when ran with GIT_TEST_SPLIT_INDEX.  I'm not
+> > quite sure why it is fixed by this.  Either way I tracked the failure
+> > down to f767178a5a ("Merge branch 'jk/no-null-sha1-in-cache-tree'",
+> > 2017-05-16).  Maybe Peff has an idea why this fixes that test?
+> > 
+> >  repository.c | 11 +++++++++++
+> >  repository.h |  2 ++
+> >  revision.c   | 13 ++++++++-----
+> >  3 files changed, 21 insertions(+), 5 deletions(-)
+> > 
+> > diff --git a/repository.c b/repository.c
+> > index 928b1f553d..3c9bfbd1b8 100644
+> > --- a/repository.c
+> > +++ b/repository.c
+> > @@ -2,6 +2,7 @@
+> >  #include "repository.h"
+> >  #include "config.h"
+> >  #include "submodule-config.h"
+> > +#include "worktree.h"
+> >  
+> >  /* The main repository */
+> >  static struct repository the_repo = {
+> > @@ -146,6 +147,16 @@ int repo_init(struct repository *repo, const char *gitdir, const char *worktree)
+> >  	return -1;
+> >  }
+> >  
+> > +/*
+> > + * Initialize 'repo' based on the provided worktree
+> > + * Return 0 upon success and a non-zero value upon failure.
+> > + */
+> > +int repo_worktree_init(struct repository *repo, struct worktree *worktree)
+> > +{
+> > +	return repo_init(repo, get_worktree_git_dir(worktree),
+> > +			 worktree->path);
+> > +}
+> 
+> My first concern is the use of 'get_worktree_git_dir()'.  Under the hood
+> it calls 'get_git_dir()', 'get_git_common_dir()', and
+> 'git_common_path()' which rely on global state as stored in
+> 'the_repository'.  So how does one initialize a repository struct (using
+> this initializer) using a worktree from a repository other than the
+> global 'the_repository' struct?  I'm not sure I have an answer right
+> now, but its an issue that needs to be thought through before we head
+> down this road.
 
-       --global
-           For writing options: write to global ~/.gitconfig file rather than
-           the repository .git/config, write to $XDG_CONFIG_HOME/git/config
-           file if this file exists and the ~/.gitconfig file doesn’t.
+The main reason for just using 'get_worktree_git_dir()' was because it
+exists and it does exactly what I needed.  If we ever have the need to
+initialize a repository struct for a worktree from another repository
+struct, I would imagine we introduce a new function
+'repo_get_worktree_git_dir()', which takes a struct repository as
+input and returns the worktree git dir based on that.
 
-           For reading options: read only from global ~/.gitconfig and from
-           $XDG_CONFIG_HOME/git/config rather than from all available files.
+And then we'd have to add a different initializer
+'repo_worktree_init_from_repo()' or something like that, where we
+could initialize a worktree from a repository struct different from
+'the_repository'.  But maybe there are some complications there that I
+didn't think about?
 
-           See also the section called “FILES”.
+> Just thinking to myself, Does it make sense to have worktree's as a
+> separate struct or to have them stored in 'struct repository' in some
+> way?
 
-suggesting that $XDG_CONFIG_HOME/git/config is a part of the "--global" config
-space, which it is not, which is also later described in FILES:
+I'm not sure I have a good answer for this.  Looking at the libgit2
+source, which has a repository struct for (I assume at least, I'm not
+very familiar with the libgit2 source :)), they have a repository
+struct for each worktree, with a flag specifying whether the struct is
+for a worktree, or a "normal" git repository/the main worktree.
 
-       $(prefix)/etc/gitconfig
-           System-wide configuration file.
+Obviously that doesn't mean we should do it the same way, but it
+probably also doesn't hurt to look at prior art.
 
-       $XDG_CONFIG_HOME/git/config
-           Second user-specific configuration file. If $XDG_CONFIG_HOME is not set or empty, $HOME/.config/git/config will be used. Any
-           single-valued variable set in this file will be overwritten by whatever is in ~/.gitconfig. It is a good idea not to create this file if
-           you sometimes use older versions of Git, as support for this file was added fairly recently.
+> Shouldn't a repository struct have a way to interact with all of
+> its worktrees?
 
-       ~/.gitconfig
-           User-specific configuration file. Also called "global" configuration file.
+It could go either way I guess depending on how we want to design it.
+If we want the repository struct to interact with all worktrees, it
+seems to me like we would almost need some kind of 'struct
+super_repository', which then contains a list of 'struct repository's
+representing each worktree, probably including the main worktree.
 
-which
+But then again in normal operation we probably only want the
+repository struct for the current repository we're working with, not
+all of the worktrees.  I suspect it's only in some special cases where
+we want to have all worktrees in memory at once (such as in the prune
+case).
 
-1. says that $XDG_CONFIG_HOME/git/config is the "Second user-specific ..."
-   suggesting that it should be the one read AFTER the first user-specific...
-   I guess that the first one is the ~/.gitconfig , but then why the first one
-   overrides the settings of the second one ? ;)  (as described above in TFM and
-   see below for an example)
+Or how would you haven envisioned this?
 
-2. why $XDG_CONFIG_HOME/git/config is not a part of the "global" configuration?
+> How would initializing a repository struct for every
+> worktree work once we migrate the object store to be stored in 'struct
+> repoisotry'?  Shouldn't every worktree share the same object store
+> in-memory like they do on-disk?
 
-   I always assumed that "global" is ALL settings defined for a user,
-   which are not specific to a repository.
+I haven't thought this far.  They probably want to share the same
+object store, if they all want the object store to be loaded.  But
+we can do that either way, whether we have one 'struct repository'
+that has links to the worktrees, or we have multiple 'struct
+repository's, which each have a ref-counted pointer to the object
+store or something like that.
 
-   It is double-confusing since, as --global doc describes (and example
-   below shows), git config --global --add modifies the
-   $XDG_CONFIG_HOME/git/config if there is no ~/.gitconfig
+> > +
+> >  /*
+> >   * Initialize 'submodule' as the submodule given by 'path' in parent repository
+> >   * 'superproject'.
+> > diff --git a/repository.h b/repository.h
+> > index 7f5e24a0a2..2adeb05bf4 100644
+> > --- a/repository.h
+> > +++ b/repository.h
+> > @@ -4,6 +4,7 @@
+> >  struct config_set;
+> >  struct index_state;
+> >  struct submodule_cache;
+> > +struct worktree;
+> >  
+> >  struct repository {
+> >  	/* Environment */
+> > @@ -87,6 +88,7 @@ extern struct repository *the_repository;
+> >  extern void repo_set_gitdir(struct repository *repo, const char *path);
+> >  extern void repo_set_worktree(struct repository *repo, const char *path);
+> >  extern int repo_init(struct repository *repo, const char *gitdir, const char *worktree);
+> > +extern int repo_worktree_init(struct repository *repo, struct worktree *worktree);
+> >  extern int repo_submodule_init(struct repository *submodule,
+> >  			       struct repository *superproject,
+> >  			       const char *path);
+> > diff --git a/revision.c b/revision.c
+> > index e2e691dd5a..9d8d9b96d1 100644
+> > --- a/revision.c
+> > +++ b/revision.c
+> > @@ -22,6 +22,7 @@
+> >  #include "packfile.h"
+> >  #include "worktree.h"
+> >  #include "argv-array.h"
+> > +#include "repository.h"
+> >  
+> >  volatile show_early_output_fn_t show_early_output;
+> >  
+> > @@ -1346,15 +1347,17 @@ void add_index_objects_to_pending(struct rev_info *revs, unsigned int flags)
+> >  	worktrees = get_worktrees(0);
+> >  	for (p = worktrees; *p; p++) {
+> >  		struct worktree *wt = *p;
+> > -		struct index_state istate = { NULL };
+> > +		struct repository *repo;
+> >  
+> > +		repo = xmalloc(sizeof(struct repository));
+> 
+> This was allocated but never freed, was that intentional?
 
-   Actually the doc for --global for "reading" seems to be not correct,
-   that the file is not consulted for --global (see below)
+No, that was an oversight, will fix, thanks!
 
-Example to show that TFM outlines precedence and --global correctly:
+> >  		if (wt->is_current)
+> >  			continue; /* current index already taken care of */
+> > +		if (repo_worktree_init(repo, wt))
+> > +			BUG("couldn't initialize repository object from worktree");
+> >  
+> > -		if (read_index_from(&istate,
+> > -				    worktree_git_path(wt, "index")) > 0)
+> > -			do_add_index_objects_to_pending(revs, &istate);
+> > -		discard_index(&istate);
+> > +		if (repo_read_index(repo) > 0)
+> > +			do_add_index_objects_to_pending(revs, repo->index);
+> > +		discard_index(repo->index);
+> 
+> One we have separate object stores per-repository how would we handle
+> this since this pruning should only work on a single repository's object
+> store?
 
-$> grep xdg .gitconfig .config/git/config                              
-.gitconfig:    xdg-and-user = user
-.config/git/config: xdg = xdg
-.config/git/config: xdg-and-user = xdg
-$> git config user.xdg ; git config user.xdg-and-user
-xdg                          
-user
-$> git config --global user.xdg            # so outputs nothing
-$> git config --global user.xdg-and-user
-user
+That depends a lot on how we design the object store and how it's held
+by the repository struct.  If we only have one in-memory
+representation of it, the answer is obvious.  If we have multiple
+in-memory representations of it at the same time, things will get a
+bit more hairy.  But until we have at least a design of how that would
+look like it's quite hard to tell I'd say.
 
-$> mv .gitconfig{,.aside}
-$> git config --global --add user.new value 
-$> cat .config/git/config 
-[user]
- xdg = xdg
- xdg-and-user = xdg
- new = value
-
-
-So, is that simply a bug and $XDG_CONFIG_HOME/git/config should be
-consulted for --global reading and doc should be adjusted to
-state that it is a part of "global" config in FILES description?
-Or it shouldn't be --global (then writing should be fixed, and
-documentation adjusted to exclude it from --global)
-Or am I just confused? ;)
-
-thanks in advance for the clarification!
-
-[1]  https://github.com/datalad/datalad/pull/2019#issuecomment-350757960
--- 
-Yaroslav O. Halchenko
-Center for Open Neuroscience     http://centerforopenneuroscience.org
-Dartmouth College, 419 Moore Hall, Hinman Box 6207, Hanover, NH 03755
-Phone: +1 (603) 646-9834                       Fax: +1 (603) 646-1419
-WWW:   http://www.linkedin.com/in/yarik        
+> >  	}
+> >  	free_worktrees(worktrees);
+> >  }
+> > -- 
+> > 2.15.1.504.g5279b80103
+> > 
+> 
+> -- 
+> Brandon Williams
