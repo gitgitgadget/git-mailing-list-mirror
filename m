@@ -2,118 +2,202 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B030B1F404
-	for <e@80x24.org>; Mon, 11 Dec 2017 20:27:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 74F501F404
+	for <e@80x24.org>; Mon, 11 Dec 2017 20:35:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751400AbdLKU1Z (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Dec 2017 15:27:25 -0500
-Received: from mail-qt0-f172.google.com ([209.85.216.172]:38522 "EHLO
-        mail-qt0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750886AbdLKU1Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Dec 2017 15:27:24 -0500
-Received: by mail-qt0-f172.google.com with SMTP id d4so41923212qtj.5
-        for <git@vger.kernel.org>; Mon, 11 Dec 2017 12:27:24 -0800 (PST)
+        id S1752077AbdLKUf0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Dec 2017 15:35:26 -0500
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:43135 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751433AbdLKUfZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Dec 2017 15:35:25 -0500
+Received: by mail-wm0-f66.google.com with SMTP id n138so16874157wmg.2
+        for <git@vger.kernel.org>; Mon, 11 Dec 2017 12:35:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=pIJthEwmb1+pOZW+0dwbMfKeD7jnz1NonQVqEj77Tis=;
-        b=WTrLQntKBwtBWJRqrl7L7WW39Dh6aqQfJMguaFCIPFw6Zq4/SFXBPBaknDWWHiJjwP
-         RqnYJgVlFDyjXDzNGUeDJaXJ6X6e0P4ikVsqTc5rEUg9rUhkZxUA4IUrLNCUsizeFPXU
-         YfLwahg6QA7ibYLH0PsLF++bbVg+dIAv9JER8xekalxC1Hm4L4d/eaR3LqWmxFCVICqV
-         ieqLFsgh4vrtRpm4d6Eaw0GkIyKuQNIzjEfmiILffB3PaWgeikD07lOe0WAUkN8g6MIB
-         AwfBuaFAuiisDF2UplgchkkXfhnRp7JQBbr/zrPMukLFXTF7dwaeQkgSbV/FFIMYGaiw
-         KTZA==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=oZcnt13QcAvWrrXnmxaQNzkMKrS8dfoTeT3U522X+ro=;
+        b=hlmhin8wWhNT89Be6NHaxKWz7bCCH07GZ0p2KHhF9hwC4ixqjkZWL79j2kG2zALh74
+         qRDrm6gGwA+/mk7B6SfrTFsN08JnSiClJ909pBgiW9KhOZ4o4teJ+CY1SW9+wfJVVyKO
+         3j9j/MbMMK6oafc3tLDXDgyNZRvvHLuxJeGlKT03+vSyoKyj1GzYEesviR604EhyXGEH
+         TiSnF7RM7o3Vg75b/iu3BIvBW9Qq22NEtXifdioaf4LJ5FUTPUpmzcb5qZBjQwoX8RA6
+         pW+LwGlocsgj59BcXrI07PFck8t1CT7+HbKC+goH7wWTTm/GY9sU5f4KuCfHsuMmRXNz
+         5U+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=pIJthEwmb1+pOZW+0dwbMfKeD7jnz1NonQVqEj77Tis=;
-        b=NwMnSAy1wnggaERMb1b3nY7vX8cVQdqLutk/PGtH3/9jZELJbyM06rWe6SYCkpif0t
-         alyGxkUfqSxnLTlcffz+BCrmOqkpGBYzeT0YS2nQXheP5a5qn3c3yjuQMEmoYcEdfh9u
-         67Y3/Q9QYmfr30vSvJLMkyniX5BWQTCJsRn4hTweCZwyCek90OS4lb7mj+CyatEferY8
-         Ho5yJ5peeksebH4XjosNp8dILFNRefoSpZoRkDbadncL5O1LDJIV/I2mzaoDKj+Xb/Aa
-         JXSuwgA7YtQVrjV4JwAdh7kwB/K9zPajvQ7lBFPhYRG/KS47sOMI6P5yLEhiZ1P/zxsc
-         n7NA==
-X-Gm-Message-State: AKGB3mKVWb7252yenQWDdeeL6SY8l0Y9yl5RjGB1YVnuLmpJXRJ+FpHL
-        TQbw+hfRmiuBoXu/Rx4OWGXSMejKv7iqIHKRWHc3yTJz
-X-Google-Smtp-Source: ACJfBovuidq0WEaqvgYXr/p1ZkTC12kqoOaFvnzFURPRG4n6icPoQ5pmLQDKCxLid7UgzjJJH2yJ8IuA7DYPr8yfC2M=
-X-Received: by 10.200.35.215 with SMTP id r23mr2298114qtr.174.1513024043492;
- Mon, 11 Dec 2017 12:27:23 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=oZcnt13QcAvWrrXnmxaQNzkMKrS8dfoTeT3U522X+ro=;
+        b=tBiUizYv6x4u8aEzqVbs+xF6021wLnBPT+lS50f5i4QWfrr0svP+8Jne+663BIOpR7
+         PXEKwxb2f/2rttdo5GbYjOaf05cx6aOUdMzHXFDyQ1q+DOGw/azf5jv74xa0MBGZnc/Y
+         MfTFRLokrX3NqZY83LV20LaLdYN1mbJO2ZMiHtCNM6muSiJPSfRv+r2k/81Apn6kXbs9
+         w99+MZzAptfzqT9sqnK7/8CQcq+mLxKqWUsfOGxaEl3iI+RFjxExBUF2lXplP148gXXO
+         vcdltRqP4fQH2armd675oAlPj500DS1hX/ut7oAtUH6yCe7cOo0/2vX6E1kUer0qCV9B
+         0xSg==
+X-Gm-Message-State: AKGB3mIDXmmE/sdpDoHP52Mcgy3u46vDCsmhrg/W92E+5PoMGLa+RDmu
+        AfiYwMYhI27+lFACs88vcjY=
+X-Google-Smtp-Source: ACJfBouLhBjIhTitk0kymz5X5Pmq4q6KdkCJ68O3HC2+N8gf1kgeCvvM0J0U1IP5DqnAz6Q6mxjrqQ==
+X-Received: by 10.28.190.12 with SMTP id o12mr1829400wmf.148.1513024524000;
+        Mon, 11 Dec 2017 12:35:24 -0800 (PST)
+Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
+        by smtp.gmail.com with ESMTPSA id a203sm9781050wmh.45.2017.12.11.12.35.22
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 11 Dec 2017 12:35:23 -0800 (PST)
+Date:   Mon, 11 Dec 2017 20:37:07 +0000
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 1/3] repository: fix repo_read_index with submodules
+Message-ID: <20171211203707.GB25616@hank>
+References: <20171210212202.28231-1-t.gummerer@gmail.com>
+ <20171210212202.28231-2-t.gummerer@gmail.com>
+ <20171211185406.GA177995@google.com>
 MIME-Version: 1.0
-Received: by 10.140.85.179 with HTTP; Mon, 11 Dec 2017 12:27:22 -0800 (PST)
-In-Reply-To: <1512423580.9882.405.camel@novalis.org>
-References: <1512423580.9882.405.camel@novalis.org>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 11 Dec 2017 12:27:22 -0800
-Message-ID: <CAGZ79kZVm7ZgnqBFnKd8L51Uy+5_7DOttUMAU=qofN3XXD94nQ@mail.gmail.com>
-Subject: Re: submodule modify/delete wrong message
-To:     David Turner <novalis@novalis.org>
-Cc:     git <git@vger.kernel.org>, brock.peabody@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20171211185406.GA177995@google.com>
+User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 4, 2017 at 1:39 PM, David Turner <novalis@novalis.org> wrote:
-> When merging with a submodule modify/delete conflict (i.e. I've deleted
-> the submodule, and I'm merging in a branch that modified it), git lies
-> about what it is doing:
->
-> "CONFLICT (modify/delete): submodule deleted in HEAD and modified in
-> submodules.
+On 12/11, Brandon Williams wrote:
+> On 12/10, Thomas Gummerer wrote:
+> > repo_read_index calls read_index_from, which takes an path argument for
+> > the location of the index file.  For the split index however it relies
+> > on the current working directory to construct the path using git_path.
+> > 
+> > repo_read_index calls read_index_from with the full path for the index
+> > file, however it doesn't change the cwd, so when split index mode is
+> > turned on, read_index_from can't find the file for the split index.
+> > 
+> > For example t3007-ls-files-recurse-submodules.sh was broken with
+> > GIT_TEST_SPLIT_INDEX set in 188dce131f ("ls-files: use repository
+> > object", 2017-06-22), and t7814-grep-recurse-submodules.sh was also
+> > broken in a similar manner, probably by introducing struct repository
+> > there, although I didn't track down the exact commit for that.
+> > 
+> > Fix this by introducing a new read_index_for_repo function, which knows
+> > about the correct paths for the submodules.
+> > 
+> > The alternative would have been to make the callers pass in the base
+> > path for the split index, however that ended up being more complicated,
+> > and I think we want to converge towards using struct repository for
+> > things like these anyway.
+> 
+> Thanks for catching this, I'm not a user of split index myself which is
+> why I unfortunately overlooked this.  Definitely a good change.  I
+> really only have one nit below.
 
-Up to here the error message sounds correct, still?
+Me neither, I just remember to run the split index tests every once in
+a while, which is also why it's taken so long to catch this.
+Hopefully after we fixed this we can get travis to run the tests,
+which should help :)
 
+> > 
+> > Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+> > ---
+> >  cache.h      |  1 +
+> >  read-cache.c | 19 +++++++++++++++++--
+> >  repository.c |  2 +-
+> >  3 files changed, 19 insertions(+), 3 deletions(-)
+> > 
+> > diff --git a/cache.h b/cache.h
+> > index cb5db7bf83..d42bea1ef7 100644
+> > --- a/cache.h
+> > +++ b/cache.h
+> > @@ -614,6 +614,7 @@ extern int read_index_preload(struct index_state *, const struct pathspec *paths
+> >  extern int do_read_index(struct index_state *istate, const char *path,
+> >  			 int must_exist); /* for testting only! */
+> >  extern int read_index_from(struct index_state *, const char *path);
+> > +extern int read_index_for_repo(const struct repository *);
+> >  extern int is_index_unborn(struct index_state *);
+> >  extern int read_index_unmerged(struct index_state *);
+> >  
+> > diff --git a/read-cache.c b/read-cache.c
+> > index 2eb81a66b9..4d5c4ad79b 100644
+> > --- a/read-cache.c
+> > +++ b/read-cache.c
+> > @@ -20,6 +20,7 @@
+> >  #include "split-index.h"
+> >  #include "utf8.h"
+> >  #include "fsmonitor.h"
+> > +#include "repository.h"
+> >  
+> >  /* Mask for the name length in ce_flags in the on-disk index */
+> >  
+> > @@ -1871,7 +1872,8 @@ static void freshen_shared_index(char *base_sha1_hex, int warn)
+> >  	free(shared_index);
+> >  }
+> >  
+> > -int read_index_from(struct index_state *istate, const char *path)
+> > +static int do_read_index_from(struct index_state *istate, const char *path,
+> > +			      const struct repository *repo)
+> >  {
+> >  	struct split_index *split_index;
+> >  	int ret;
+> > @@ -1896,7 +1898,10 @@ int read_index_from(struct index_state *istate, const char *path)
+> >  		split_index->base = xcalloc(1, sizeof(*split_index->base));
+> >  
+> >  	base_sha1_hex = sha1_to_hex(split_index->base_sha1);
+> > -	base_path = git_path("sharedindex.%s", base_sha1_hex);
+> > +	if (repo)
+> > +		base_path = repo_git_path(repo, "sharedindex.%s", base_sha1_hex);
+> > +	else
+> > +		base_path = git_path("sharedindex.%s", base_sha1_hex);
+> >  	ret = do_read_index(split_index->base, base_path, 1);
+> >  	if (hashcmp(split_index->base_sha1, split_index->base->sha1))
+> >  		die("broken index, expect %s in %s, got %s",
+> > @@ -1909,6 +1914,16 @@ int read_index_from(struct index_state *istate, const char *path)
+> >  	return ret;
+> >  }
+> >  
+> > +int read_index_for_repo(const struct repository *repo)
+> > +{
+> > +	return do_read_index_from(repo->index, repo->index_file, repo);
+> > +}
+> > +
+> > +int read_index_from(struct index_state *istate, const char *path)
+> > +{
+> > +	return do_read_index_from(istate, path, NULL);
+> > +}
+> 
+> Instead of passing NULL and having to special case it in
+> 'do_read_index_from()', how about we pass in 'the_repository'?
 
-> Version submodules of submodule left in tree at
-> submodule~submodules.
-> Automatic merge failed; fix conflicts and then commit the result."
+I think that makes sense the only way this function used to work with
+split index turned on is if it's called from the main repository, so
+just passing through 'the_repository' would have the function behave
+the exact same way as before.
 
-This sounds as if the code assumed to handle only files.
-
-> In fact, the working tree does not contain anything named
-> 'submodule~submodules'.
->
-> In addition, I would ordinarily resolve a conflict like this by using
-> 'git rm'. Here, this gives a warning:
->
-> $ git rm submodule
-> submodule: needs merge
-
-(Regarding submodule merges in general:)
-
-Uh. We cannot add merge markers to a submodule or such.
-More importantly we'd have to ask the question if the merge conflict
-is on the superproject level (Choose one of the commits of the submodule)
-or on the submodule level (perform a merge in the submodule between the
-two commits) or some hybrid approach thereof.
-
-> rm 'submodule'
-> warning: Could not find section in .gitmodules where path=submodule
-
-The deletion of the submodule removed the .gitmodules entry, and the
-merge of the .gitmodules file presumably went fine. :/
-
-I assume we need a special merge driver for the .gitmodules file to keep
-the submodule around when it is in at least one side.
-
-> Git's behavior here is significantly better than liggit2's (which tries
-> to check out 'submodule' as if it were a blob, and fails to do so), but
-> it's still confusing.
->
-> It's not clear to me what the correct behavior is here.  Maybe it's
-> sufficient to just fix the message?
-
-I think the first step is to fix the message to reflect reality.
-
-As alluded to above, I don't know what the correct merge
-behavior is (and where to put 'conflict markers').
-
-Stefan
+> > +
+> >  int is_index_unborn(struct index_state *istate)
+> >  {
+> >  	return (!istate->cache_nr && !istate->timestamp.sec);
+> > diff --git a/repository.c b/repository.c
+> > index bb2fae5446..928b1f553d 100644
+> > --- a/repository.c
+> > +++ b/repository.c
+> > @@ -229,5 +229,5 @@ int repo_read_index(struct repository *repo)
+> >  	if (!repo->index)
+> >  		repo->index = xcalloc(1, sizeof(*repo->index));
+> >  
+> > -	return read_index_from(repo->index, repo->index_file);
+> > +	return read_index_for_repo(repo);
+> >  }
+> > -- 
+> > 2.15.1.504.g5279b80103
+> > 
+> 
+> -- 
+> Brandon Williams
