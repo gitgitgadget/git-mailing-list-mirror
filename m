@@ -7,30 +7,30 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7146F1F404
-	for <e@80x24.org>; Mon, 11 Dec 2017 14:15:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D3C141F404
+	for <e@80x24.org>; Mon, 11 Dec 2017 14:17:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753180AbdLKOOI (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Dec 2017 09:14:08 -0500
-Received: from smtp-out-3.talktalk.net ([62.24.135.67]:35381 "EHLO
+        id S1753160AbdLKOOG (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Dec 2017 09:14:06 -0500
+Received: from smtp-out-3.talktalk.net ([62.24.135.67]:28253 "EHLO
         smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753039AbdLKONu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Dec 2017 09:13:50 -0500
+        with ESMTP id S1753001AbdLKONt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Dec 2017 09:13:49 -0500
 Received: from lindisfarne.localdomain ([92.22.30.250])
         by smtp.talktalk.net with SMTP
-        id OOpteDPs4CbAZOOq5eBiwE; Mon, 11 Dec 2017 14:13:49 +0000
+        id OOpteDPs4CbAZOOq4eBiw7; Mon, 11 Dec 2017 14:13:48 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
         s=cmr1711; t=1513001629;
-        bh=vzTB9zZ06QUgtmNHZO2raTmr4ui9zh/itTH/LzG1LoE=;
+        bh=tPF3bixair+pa9seBaZfHbjydUvx2ztX8EFMxPUOzSQ=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:Reply-To;
-        b=a+4GZPZZ3+9JhpPpYkMEjPfVbyHbSKfD5/NHQE6QbYgzKZXNdVfAe7MSXTkf7zvD4
-         bxfH8xdUYaRrxHVvYCViJDb9K1hvkqhIOCLODcRAi+CUTXQCQ6QkZ+lhtdV9IFrwcz
-         3RDwzSPl1PgI8NiTBARJIZd83s/q2SaeqQwxdRI0=
+        b=ZLJtLdYpS62Ot6OEAXffWPWGym5E9Ph71JdqLy6mNgJFRKZAgDOOumtFaMKmwNdHL
+         05KA2kL4Y1L5zVP24PhdEAEjDKpwXFh0/+WRcuAAmF1mjzyTbkTbb/GNKaALDTbntX
+         0h2Dn9CXxbpqLlVLpBqAe1ra/EjqePJK/zFzAV5s=
 X-Originating-IP: [92.22.30.250]
 X-Spam: 0
 X-OAuthority: v=2.2 cv=JvuBlIwC c=1 sm=1 tr=0 a=hCO86xb6nvxPok+3LE1svw==:117
- a=hCO86xb6nvxPok+3LE1svw==:17 a=evINK-nbAAAA:8 a=okoqV1XmMXfFbB0JckAA:9
- a=erY4bljehwCFADyP:21 a=mXiPC96pzGqrftqL:21 a=RfR_gqz1fSpA9VikTjo0:22
+ a=hCO86xb6nvxPok+3LE1svw==:17 a=evINK-nbAAAA:8 a=wCDodDw9Ewchy9PJPCEA:9
+ a=pzV2rJyJFlvamdHe:21 a=fRi6gA69vdXXY4sx:21 a=RfR_gqz1fSpA9VikTjo0:22
 From:   Phillip Wood <phillip.wood@talktalk.net>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -39,9 +39,9 @@ Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Adam Dinwoodie <adam@dinwoodie.org>,
         Stefan Beller <sbeller@google.com>,
         Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH v5 8/9] sequencer: try to commit without forking 'git commit'
-Date:   Mon, 11 Dec 2017 14:13:29 +0000
-Message-Id: <20171211141330.23566-9-phillip.wood@talktalk.net>
+Subject: [PATCH v5 7/9] sequencer: load commit related config
+Date:   Mon, 11 Dec 2017 14:13:28 +0000
+Message-Id: <20171211141330.23566-8-phillip.wood@talktalk.net>
 X-Mailer: git-send-email 2.15.1
 In-Reply-To: <20171211141330.23566-1-phillip.wood@talktalk.net>
 References: <20170925101041.18344-1-phillip.wood@talktalk.net>
@@ -58,277 +58,158 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-If the commit message does not need to be edited then create the
-commit without forking 'git commit'. Taking the best time of ten runs
-with a warm cache this reduces the time taken to cherry-pick 10
-commits by 27% (from 282ms to 204ms), and the time taken by 'git
-rebase --continue' to pick 10 commits by 45% (from 386ms to 212ms) on
-my computer running linux. Some of greater saving for rebase is
-because it no longer wastes time creating the commit summary just to
-throw it away.
+Load default values for message cleanup, gpg signing of commits and
+basic diff configuration in preparation for committing without forking
+'git commit'. Note that we interpret commit.cleanup=scissors to mean
+COMMIT_MSG_CLEANUP_SPACE to be consistent with 'git commit'.
 
-The code to create the commit is based on builtin/commit.c. It is
-simplified as it doesn't have to deal with merges and modified so that
-it does not die but returns an error to make sure the sequencer exits
-cleanly, as it would when forking 'git commit'
-
-Even when not forking 'git commit' the commit message is written to a
-file and CHERRY_PICK_HEAD is created unnecessarily. This could be
-eliminated in future. I hacked up a version that does not write these
-files and just passed an strbuf (with the wrong message for fixup and
-squash commands) to do_commit() but I couldn't measure any significant
-time difference when running cherry-pick or rebase. I think
-eliminating the writes properly for rebase would require a bit of
-effort as the code would need to be restructured.
+The sequencer should probably have been calling
+git_diff_basic_config() before as it creates a patch when there are
+conflicts. The shell version uses 'diff-index' to create the patch so
+calling git_diff_basic_config() should match that. Although 'git
+commit' calls git_diff_ui_config() I don't think the output of
+print_commit_summary() is affected by anything that is loaded by that
+as print_commit_summary() always turns on rename detection so would
+ignore the value in the user's configuration anyway. The other values
+loaded by git_diff_ui_config() are about the formatting of patches so
+are not relevant to print_commit_summary().
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
 
 Notes:
     changes since v4:
-     - changed cleanup and gpg handling to reflect the changes in the last patch
+     - reworked config handling to call git_diff_basic_config() and store
+       defaults in struct replay_opts rather than using global variables.
+     - added a warning if there is an invalid value for commit.cleanup.
     
     changes since v3:
-     - take account of change print_commit_summary() return type after
-       dropping the patch that made it return an error instead of dying.
-    
-    changes since v2:
-     - style fixes
+     - interpret commit.cleanup=scissors to mean COMMIT_MSG_CLEANUP_SPACE
+       to match 'git commit'
     
     changes since v1:
-     - added comments to explain return value of try_to_commit()
-     - removed unnecessary NULL tests before calling free()
-     - style cleanups
-     - corrected commit message
+     - renamed git_revert_config() to common_config()
      - prefixed cleanup_mode constants to reflect the changes to patch 2
        in this series
 
- sequencer.c | 176 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 174 insertions(+), 2 deletions(-)
+ builtin/rebase--helper.c |  2 +-
+ builtin/revert.c         |  4 ++--
+ sequencer.c              | 45 +++++++++++++++++++++++++++++++++++++++++++++
+ sequencer.h              |  3 +++
+ 4 files changed, 51 insertions(+), 3 deletions(-)
 
+diff --git a/builtin/rebase--helper.c b/builtin/rebase--helper.c
+index f8519363a393862b6857acab037e74367c7f2134..decb8f7a09e42eb94bed264164985e54e13a32f6 100644
+--- a/builtin/rebase--helper.c
++++ b/builtin/rebase--helper.c
+@@ -39,7 +39,7 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
+ 		OPT_END()
+ 	};
+ 
+-	git_config(git_default_config, NULL);
++	sequencer_init_config(&opts);
+ 
+ 	opts.action = REPLAY_INTERACTIVE_REBASE;
+ 	opts.allow_ff = 1;
+diff --git a/builtin/revert.c b/builtin/revert.c
+index b9d927eb09c9ed87c84681df1396f4e6d9b13c97..76f0a35b074b858ab4cb3e3894bc7c877401b7e8 100644
+--- a/builtin/revert.c
++++ b/builtin/revert.c
+@@ -208,7 +208,7 @@ int cmd_revert(int argc, const char **argv, const char *prefix)
+ 	if (isatty(0))
+ 		opts.edit = 1;
+ 	opts.action = REPLAY_REVERT;
+-	git_config(git_default_config, NULL);
++	sequencer_init_config(&opts);
+ 	res = run_sequencer(argc, argv, &opts);
+ 	if (res < 0)
+ 		die(_("revert failed"));
+@@ -221,7 +221,7 @@ int cmd_cherry_pick(int argc, const char **argv, const char *prefix)
+ 	int res;
+ 
+ 	opts.action = REPLAY_PICK;
+-	git_config(git_default_config, NULL);
++	sequencer_init_config(&opts);
+ 	res = run_sequencer(argc, argv, &opts);
+ 	if (res < 0)
+ 		die(_("cherry-pick failed"));
 diff --git a/sequencer.c b/sequencer.c
-index 3ce1e5b71474f1cd25b232a319fb7b0e13dc6e14..74770bd00cc3840573057a1868e0a3acb05a71bb 100644
+index 4966dd1b9359aaa82064608c05a7f5b18cea2d7a..3ce1e5b71474f1cd25b232a319fb7b0e13dc6e14 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -638,6 +638,18 @@ static int read_env_script(struct argv_array *env)
- 	return 0;
- }
+@@ -132,6 +132,51 @@ static GIT_PATH_FUNC(rebase_path_strategy, "rebase-merge/strategy")
+ static GIT_PATH_FUNC(rebase_path_strategy_opts, "rebase-merge/strategy_opts")
+ static GIT_PATH_FUNC(rebase_path_allow_rerere_autoupdate, "rebase-merge/allow_rerere_autoupdate")
  
-+static char *get_author(const char *message)
++static int git_sequencer_config(const char *k, const char *v, void *cb)
 +{
-+	size_t len;
-+	const char *a;
++	struct replay_opts *opts = cb;
++	int status;
 +
-+	a = find_commit_header(message, "author", &len);
-+	if (a)
-+		return xmemdupz(a, len);
++	if (!strcmp(k, "commit.cleanup")) {
++		const char *s;
 +
-+	return NULL;
-+}
++		status = git_config_string(&s, k, v);
++		if (status)
++			return status;
 +
- static const char staged_changes_advice[] =
- N_("you have staged changes in your working tree\n"
- "If these changes are meant to be squashed into the previous commit, run:\n"
-@@ -996,6 +1008,158 @@ void print_commit_summary(const char *prefix, const struct object_id *oid,
- 	strbuf_release(&format);
- }
- 
-+static int parse_head(struct commit **head)
-+{
-+	struct commit *current_head;
-+	struct object_id oid;
-+
-+	if (get_oid("HEAD", &oid)) {
-+		current_head = NULL;
-+	} else {
-+		current_head = lookup_commit_reference(&oid);
-+		if (!current_head)
-+			return error(_("could not parse HEAD"));
-+		if (oidcmp(&oid, &current_head->object.oid)) {
-+			warning(_("HEAD %s is not a commit!"),
-+				oid_to_hex(&oid));
-+		}
-+		if (parse_commit(current_head))
-+			return error(_("could not parse HEAD commit"));
-+	}
-+	*head = current_head;
-+
-+	return 0;
-+}
-+
-+/*
-+ * Try to commit without forking 'git commit'. In some cases we need
-+ * to run 'git commit' to display an error message
-+ *
-+ * Returns:
-+ *  -1 - error unable to commit
-+ *   0 - success
-+ *   1 - run 'git commit'
-+ */
-+static int try_to_commit(struct strbuf *msg, const char *author,
-+			 struct replay_opts *opts, unsigned int flags,
-+			 struct object_id *oid)
-+{
-+	struct object_id tree;
-+	struct commit *current_head;
-+	struct commit_list *parents = NULL;
-+	struct commit_extra_header *extra = NULL;
-+	struct strbuf err = STRBUF_INIT;
-+	struct strbuf amend_msg = STRBUF_INIT;
-+	char *amend_author = NULL;
-+	enum commit_msg_cleanup_mode cleanup;
-+	int res = 0;
-+
-+	if (parse_head(&current_head))
-+		return -1;
-+
-+	if (flags & AMEND_MSG) {
-+		const char *exclude_gpgsig[] = { "gpgsig", NULL };
-+		const char *out_enc = get_commit_output_encoding();
-+		const char *message = logmsg_reencode(current_head, NULL,
-+						      out_enc);
-+
-+		if (!msg) {
-+			const char *orig_message = NULL;
-+
-+			find_commit_subject(message, &orig_message);
-+			msg = &amend_msg;
-+			strbuf_addstr(msg, orig_message);
-+		}
-+		author = amend_author = get_author(message);
-+		unuse_commit_buffer(current_head, message);
-+		if (!author) {
-+			res = error(_("unable to parse commit author"));
-+			goto out;
-+		}
-+		parents = copy_commit_list(current_head->parents);
-+		extra = read_commit_extra_headers(current_head, exclude_gpgsig);
-+	} else if (current_head) {
-+		commit_list_insert(current_head, &parents);
-+	}
-+
-+	cleanup = (flags & CLEANUP_MSG) ? COMMIT_MSG_CLEANUP_ALL :
-+					  opts->default_msg_cleanup;
-+
-+	if (cleanup != COMMIT_MSG_CLEANUP_NONE)
-+		strbuf_stripspace(msg, cleanup == COMMIT_MSG_CLEANUP_ALL);
-+	if (!opts->allow_empty_message && message_is_empty(msg, cleanup)) {
-+		res = 1; /* run 'git commit' to display error message */
-+		goto out;
-+	}
-+
-+	if (write_cache_as_tree(tree.hash, 0, NULL)) {
-+		res = error(_("git write-tree failed to write a tree"));
-+		goto out;
-+	}
-+
-+	if (!(flags & ALLOW_EMPTY) && !oidcmp(current_head ?
-+					      &current_head->tree->object.oid :
-+					      &empty_tree_oid, &tree)) {
-+		res = 1; /* run 'git commit' to display error message */
-+		goto out;
-+	}
-+
-+	if (commit_tree_extended(msg->buf, msg->len, tree.hash, parents,
-+				 oid->hash, author, opts->gpg_sign, extra)) {
-+		res = error(_("failed to write commit object"));
-+		goto out;
-+	}
-+
-+	if (update_head_with_reflog(current_head, oid,
-+				    getenv("GIT_REFLOG_ACTION"), msg, &err)) {
-+		res = error("%s", err.buf);
-+		goto out;
-+	}
-+
-+	if (flags & AMEND_MSG)
-+		commit_post_rewrite(current_head, oid);
-+
-+out:
-+	free_commit_extra_headers(extra);
-+	strbuf_release(&err);
-+	strbuf_release(&amend_msg);
-+	free(amend_author);
-+
-+	return res;
-+}
-+
-+static int do_commit(const char *msg_file, const char *author,
-+		     struct replay_opts *opts, unsigned int flags)
-+{
-+	int res = 1;
-+
-+	if (!(flags & EDIT_MSG) && !(flags & VERIFY_MSG)) {
-+		struct object_id oid;
-+		struct strbuf sb = STRBUF_INIT;
-+
-+		if (msg_file && strbuf_read_file(&sb, msg_file, 2048) < 0)
-+			return error_errno(_("unable to read commit message "
-+					     "from '%s'"),
-+					   msg_file);
-+
-+		res = try_to_commit(msg_file ? &sb : NULL, author, opts, flags,
-+				    &oid);
-+		strbuf_release(&sb);
-+		if (!res) {
-+			unlink(git_path_cherry_pick_head());
-+			unlink(git_path_merge_msg());
-+			if (!is_rebase_i(opts))
-+				print_commit_summary(NULL, &oid,
-+						SUMMARY_SHOW_AUTHOR_DATE);
-+			return res;
-+		}
-+	}
-+	if (res == 1)
-+		return run_git_commit(msg_file, opts, flags);
-+
-+	return res;
-+}
-+
- static int is_original_commit_empty(struct commit *commit)
- {
- 	const struct object_id *ptree_oid;
-@@ -1247,6 +1411,7 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
- 	struct object_id head;
- 	struct commit *base, *next, *parent;
- 	const char *base_label, *next_label;
-+	char *author = NULL;
- 	struct commit_message msg = { NULL, NULL, NULL, NULL };
- 	struct strbuf msgbuf = STRBUF_INIT;
- 	int res, unborn = 0, allow;
-@@ -1363,6 +1528,8 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
- 			strbuf_addstr(&msgbuf, oid_to_hex(&commit->object.oid));
- 			strbuf_addstr(&msgbuf, ")\n");
- 		}
-+		if (!is_fixup(command))
-+			author = get_author(msg.message);
- 	}
- 
- 	if (command == TODO_REWORD)
-@@ -1448,9 +1615,13 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
- 		goto leave;
- 	} else if (allow)
- 		flags |= ALLOW_EMPTY;
--	if (!opts->no_commit)
-+	if (!opts->no_commit) {
- fast_forward_edit:
--		res = run_git_commit(msg_file, opts, flags);
-+		if (author || command == TODO_REVERT || (flags & AMEND_MSG))
-+			res = do_commit(msg_file, author, opts, flags);
++		if (!strcmp(s, "verbatim"))
++			opts->default_msg_cleanup = COMMIT_MSG_CLEANUP_NONE;
++		else if (!strcmp(s, "whitespace"))
++			opts->default_msg_cleanup = COMMIT_MSG_CLEANUP_SPACE;
++		else if (!strcmp(s, "strip"))
++			opts->default_msg_cleanup = COMMIT_MSG_CLEANUP_ALL;
++		else if (!strcmp(s, "scissors"))
++			opts->default_msg_cleanup = COMMIT_MSG_CLEANUP_SPACE;
 +		else
-+			res = error(_("unable to parse commit author"));
++			warning(_("invalid commit message cleanup mode '%s'"),
++				  s);
++
++		return status;
 +	}
++
++	if (!strcmp(k, "commit.gpgsign")) {
++		opts->gpg_sign = git_config_bool(k, v) ? "" : NULL;
++		return 0;
++	}
++
++	status = git_gpg_config(k, v, NULL);
++	if (status)
++		return status;
++
++	return git_diff_basic_config(k, v, NULL);
++}
++
++void sequencer_init_config(struct replay_opts *opts)
++{
++	opts->default_msg_cleanup = COMMIT_MSG_CLEANUP_NONE;
++	git_config(git_sequencer_config, opts);
++}
++
+ static inline int is_rebase_i(const struct replay_opts *opts)
+ {
+ 	return opts->action == REPLAY_INTERACTIVE_REBASE;
+diff --git a/sequencer.h b/sequencer.h
+index bf72e339adbb81900283d8811ed51569aa3e05ee..3a5072c2ab9088c237b83d92deae3c801289e543 100644
+--- a/sequencer.h
++++ b/sequencer.h
+@@ -36,6 +36,7 @@ struct replay_opts {
+ 	int mainline;
  
- 	if (!res && final_fixup) {
- 		unlink(rebase_path_fixup_msg());
-@@ -1459,6 +1630,7 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
+ 	char *gpg_sign;
++	enum commit_msg_cleanup_mode default_msg_cleanup;
  
- leave:
- 	free_message(commit, &msg);
-+	free(author);
- 	update_abort_safety_file();
+ 	/* Merge strategy */
+ 	char *strategy;
+@@ -47,6 +48,8 @@ struct replay_opts {
+ };
+ #define REPLAY_OPTS_INIT { -1 }
  
- 	return res;
++/* Call this to setup defaults before parsing command line options */
++void sequencer_init_config(struct replay_opts *opts);
+ int sequencer_pick_revisions(struct replay_opts *opts);
+ int sequencer_continue(struct replay_opts *opts);
+ int sequencer_rollback(struct replay_opts *opts);
 -- 
 2.15.1
 
