@@ -2,227 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 845A91F404
-	for <e@80x24.org>; Mon, 11 Dec 2017 19:09:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 286841F404
+	for <e@80x24.org>; Mon, 11 Dec 2017 19:19:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752373AbdLKTJv (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Dec 2017 14:09:51 -0500
-Received: from mail-it0-f66.google.com ([209.85.214.66]:37006 "EHLO
-        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752066AbdLKTJu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Dec 2017 14:09:50 -0500
-Received: by mail-it0-f66.google.com with SMTP id d137so18348515itc.2
-        for <git@vger.kernel.org>; Mon, 11 Dec 2017 11:09:49 -0800 (PST)
+        id S1752656AbdLKTTT (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Dec 2017 14:19:19 -0500
+Received: from mail-it0-f46.google.com ([209.85.214.46]:46139 "EHLO
+        mail-it0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751965AbdLKTTS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Dec 2017 14:19:18 -0500
+Received: by mail-it0-f46.google.com with SMTP id t1so18483655ite.5
+        for <git@vger.kernel.org>; Mon, 11 Dec 2017 11:19:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=5q2TtcKdMIO2slBwNoUCHR31Su4yJJ5zDddnfnZ2Fcs=;
-        b=Em1AxEJ2oLMAxTFeWW8tt9H8h+VYFfAXBqjLJKi3XHTP+vPPYPzPJXyX26b30Xje9P
-         T6OkQeHWqAUrUjqgRzItZMYNcfjiAiz4rwHJf6JlaA6Y+0VdkP9SBnTzrbUu1awlkMca
-         X2LvIAQZReXXyCeemnpPhmJr4gik03YCqNAn7Iue++FEKAxe1zhkgh5xJ3ZQuoWjlAUf
-         iGk2TaJTE6FqcGdCWOd4JM7I/F5DjNaSR+hQ+oV02n0kdukkunRNbs/gFpY1Ne30snw8
-         A/ptdpMpqEp8LBnb09lNtVSqkZBsL5Mo0z9OUBx5owNQX7BjlN+tY11q4HcyO6wRWjBl
-         97wA==
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=tR6Bcv+T9i2kjQ5F+EbJCpNZfUi73pQhek/I43fGDWA=;
+        b=wJV4f8BOX9zqWWHu5aj8WZI6gyw8jscGHNOlCciZdQ+4I+pQ1cTi11l+MhBfnkaij1
+         uJUi5+sWOpVTq5teKSPwwh43k2AOfV6/sJti++dJdX1fgT65sMZd53kKT3YJJSbZn8Iw
+         rLwd4KC2YCw4nCAoR3iji5vTnqp3NvC8P/d9HcVkO053yTbSjE4CBxE0V/jauvwXtwhc
+         tlwzD6O065qRdwLUl4+EcwkT0bAhAqtcoQT2No/uyhk1EcvbB7IuWeXFBZ6U24Q8aSkq
+         diXUeLidkgFvek0pscZEQbM8f1adkUIr24Fn7rr+bbwIW6YYxdkVa2uUPv0eZA4ZbP0i
+         RjaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=5q2TtcKdMIO2slBwNoUCHR31Su4yJJ5zDddnfnZ2Fcs=;
-        b=rWyxsNvwmdVi+nJJ0YiSfK85RQPh/ih6jNdnxksvX4vVqPVMyDSSD76hdwAnmKhD+Z
-         mMp4y63/DFQxGXzRYrnEFA9IOXwiKz4HmhDMOhikut7BUgaxt8RhrLogxxdzY8ry4ASc
-         yVBrHdy8DPuhUGx3MyeJqAS9XMTXqAoJWGc6aXKXBAxIhEWsBXa+GGtXoibhhY09lkui
-         h2t24xMYW6kLkWRhNCg6NQbjno26DWTUPNRONn4IBvhcEnPT1ZCKHqyRTjYn24fLEQHU
-         UnELRWgd9MV740gHfFdrBmlqwt/QdSEAPZpuTs7gqRNWN8V0F/kupSmTnKIbg9yGAOul
-         EBQQ==
-X-Gm-Message-State: AKGB3mJUfEdbJJFvBpUUrgGPF/f6CXK+KLOjSP0RgK1skvrG/0JY7fkN
-        hi1nX4t2GQ16DA3lZ93qQhAo8g==
-X-Google-Smtp-Source: ACJfBotkS+UoRjSkkUQLUR75+Ddj3qyn3AUzYrfv9PSIuakRcoYal6SBxm7Y7dbbV5RQX/sbjPu7VA==
-X-Received: by 10.107.174.98 with SMTP id x95mr2106529ioe.241.1513019388598;
-        Mon, 11 Dec 2017 11:09:48 -0800 (PST)
-Received: from google.com ([2620:0:100e:422:bdc4:e5a2:2ef4:d600])
-        by smtp.gmail.com with ESMTPSA id f206sm6462504ioa.32.2017.12.11.11.09.47
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 11 Dec 2017 11:09:47 -0800 (PST)
-Date:   Mon, 11 Dec 2017 11:09:46 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 2/3] prune: fix pruning with multiple worktrees and split
- index
-Message-ID: <20171211190946.GB177995@google.com>
-References: <20171210212202.28231-1-t.gummerer@gmail.com>
- <20171210212202.28231-3-t.gummerer@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20171210212202.28231-3-t.gummerer@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=tR6Bcv+T9i2kjQ5F+EbJCpNZfUi73pQhek/I43fGDWA=;
+        b=mhfzRMbI/uyZNy/0JJLfVYBpRacPmLMnDg5Z3aTDvJtM+7os5ve8FO2NgZcCHDrivf
+         9R8pgwMg8MU/CngCbMDmclXSIBJjA1NDxRyTCnkFtiZRu2sYXZ7t8ZdAgkiFbfFUOPdw
+         3UiLlLCkM4YomFe9TlH5a4E+mhN8WQqBJPsH6TH/x1jCSdkmbxbMP6UMffRKCPJY4Aio
+         75EoxQYwIO5POA20BGRbXdGDBpcmlc0f/YN9nyePVhLIHSgI+5LNyKoFg5TaS7rjKS1p
+         gRHSXq5ifRqtwDGv4TN1U8qJ8uHyOIlmuVjgqBOLG//cXIr/cv3LFYjQDyXae0rMix5m
+         t/NA==
+X-Gm-Message-State: AKGB3mJ8O4k+FX9m5PMsbweIHubLC2hiKznDA/m0horFx8u6s7251Net
+        dC/USoryml8o6mLClBYxI42yrZZdwnM=
+X-Google-Smtp-Source: ACJfBosAqYRx8TOB7oiZ2H7MiTa9LdElAXrL1AoeFyOUK/GkfXju9pID7Exuh125OOyi0UjycjVhyA==
+X-Received: by 10.36.7.80 with SMTP id f77mr2352980itf.77.1513019957948;
+        Mon, 11 Dec 2017 11:19:17 -0800 (PST)
+Received: from twelve3.mtv.corp.google.com ([2620:0:100e:422:909e:f3a:a55a:80a])
+        by smtp.gmail.com with ESMTPSA id 30sm6778804iop.47.2017.12.11.11.19.16
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 11 Dec 2017 11:19:17 -0800 (PST)
+Date:   Mon, 11 Dec 2017 11:19:16 -0800
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     Jeff Hostetler <git@jeffhostetler.com>, git@vger.kernel.org,
+        gitster@pobox.com, peff@peff.net,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v7 00/16] Parial clone part 3: clone, fetch, fetch-pack,
+ upload-pack, and tests
+Message-Id: <20171211111916.b3ea2deacba67f6e8416d285@google.com>
+In-Reply-To: <20171208223010.GF140529@google.com>
+References: <20171208155851.855-1-git@jeffhostetler.com>
+        <20171208223010.GF140529@google.com>
+X-Mailer: Sylpheed 3.4.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/10, Thomas Gummerer wrote:
-> be489d02d2 ("revision.c: --indexed-objects add objects from all
-> worktrees", 2017-08-23) made sure that pruning takes objects from all
-> worktrees into account.
-> 
-> It did that by reading the index of every worktree and adding the
-> necessary index objects to the set of pending objects.  The index is
-> read by read_index_from.  As mentioned in the previous commit,
-> read_index_from depends on the CWD for the location of the split index,
-> and add_index_objects_to_pending doesn't set that before using
-> read_index_from.
-> 
-> Instead of using read_index_from, use repo_read_index, which is aware of
-> the proper paths for the worktree.
-> 
-> This fixes t5304-prune when ran with GIT_TEST_SPLIT_INDEX set.
-> 
+On Fri, 8 Dec 2017 14:30:10 -0800
+Brandon Williams <bmwill@google.com> wrote:
 
-I'm on the fence about this change.  I understand that this will ensure
-that the proper objects aren't pruned when using a split index in the
-presence of worktrees but I think the solution needs to be thought
-through a bit more.
+> I just finished reading through parts 1-3.  Overall I like the series.
+> There are a few point's that I'm not a big fan of but i wasn't able to
+> come up with a better alternative.  One of these being the need for a
+> global variable to tell the fetch-object logic to not go to the server
+> to try and fetch a missing object.
 
-My big concern right now is the interaction of 'struct worktree's and
-'struct repository'.  I'll try to highlight my concerns below.
+I didn't really like that approach too but I went with that because,
+like you, I couldn't come up with a better one. The main issue is that
+too many functions (e.g. parse_commit() in commit.c) indirectly read
+objects, and I couldn't find a better way to control them all. Ideally,
+we should have a "struct object_store" (or maybe "struct repository"
+could do this too) on which we can set "fetch_if_missing", and have all
+object-reading functions take a pointer to this struct. Or completely
+separate the object-reading and object-parsing code (e.g. commit.c
+should not be able to read objects at all). Or both.
 
-> Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
-> ---
-> 
-> This also fixes t7009 when ran with GIT_TEST_SPLIT_INDEX.  I'm not
-> quite sure why it is fixed by this.  Either way I tracked the failure
-> down to f767178a5a ("Merge branch 'jk/no-null-sha1-in-cache-tree'",
-> 2017-05-16).  Maybe Peff has an idea why this fixes that test?
-> 
->  repository.c | 11 +++++++++++
->  repository.h |  2 ++
->  revision.c   | 13 ++++++++-----
->  3 files changed, 21 insertions(+), 5 deletions(-)
-> 
-> diff --git a/repository.c b/repository.c
-> index 928b1f553d..3c9bfbd1b8 100644
-> --- a/repository.c
-> +++ b/repository.c
-> @@ -2,6 +2,7 @@
->  #include "repository.h"
->  #include "config.h"
->  #include "submodule-config.h"
-> +#include "worktree.h"
->  
->  /* The main repository */
->  static struct repository the_repo = {
-> @@ -146,6 +147,16 @@ int repo_init(struct repository *repo, const char *gitdir, const char *worktree)
->  	return -1;
->  }
->  
-> +/*
-> + * Initialize 'repo' based on the provided worktree
-> + * Return 0 upon success and a non-zero value upon failure.
-> + */
-> +int repo_worktree_init(struct repository *repo, struct worktree *worktree)
-> +{
-> +	return repo_init(repo, get_worktree_git_dir(worktree),
-> +			 worktree->path);
-> +}
+Any of these would be major undertakings, though, and there are good
+reasons for why the same function does the reading and parsing (for
+example, parse_commit() does not perform any reading if the object has
+been already parsed).
 
-My first concern is the use of 'get_worktree_git_dir()'.  Under the hood
-it calls 'get_git_dir()', 'get_git_common_dir()', and
-'git_common_path()' which rely on global state as stored in
-'the_repository'.  So how does one initialize a repository struct (using
-this initializer) using a worktree from a repository other than the
-global 'the_repository' struct?  I'm not sure I have an answer right
-now, but its an issue that needs to be thought through before we head
-down this road.
+> One other thing i noticed was it looks like when you discover that you
+> are missing a blob you you'll try to fault it in from the server without
+> first checking its an object the server would even have.  Shouldn't you
+> first do a check to verify that the object in question is a promised
+> object before you go out to contact the server to request it?  You may
+> have already ruled this out for some reason I'm not aware of (maybe its
+> too costly to compute?).
 
-Just thinking to myself, Does it make sense to have worktree's as a
-separate struct or to have them stored in 'struct repository' in some
-way?  Shouldn't a repository struct have a way to interact with all of
-its worktrees?  How would initializing a repository struct for every
-worktree work once we migrate the object store to be stored in 'struct
-repoisotry'?  Shouldn't every worktree share the same object store
-in-memory like they do on-disk?
+It is quite costly to compute - in the worst case, we would need to read
+every object in every promisor packfile of one or more certain types
+(e.g. if we know that we're fetching a blob, we need to read every tree)
+to find out if the object we want is a promisor object.
 
-> +
->  /*
->   * Initialize 'submodule' as the submodule given by 'path' in parent repository
->   * 'superproject'.
-> diff --git a/repository.h b/repository.h
-> index 7f5e24a0a2..2adeb05bf4 100644
-> --- a/repository.h
-> +++ b/repository.h
-> @@ -4,6 +4,7 @@
->  struct config_set;
->  struct index_state;
->  struct submodule_cache;
-> +struct worktree;
->  
->  struct repository {
->  	/* Environment */
-> @@ -87,6 +88,7 @@ extern struct repository *the_repository;
->  extern void repo_set_gitdir(struct repository *repo, const char *path);
->  extern void repo_set_worktree(struct repository *repo, const char *path);
->  extern int repo_init(struct repository *repo, const char *gitdir, const char *worktree);
-> +extern int repo_worktree_init(struct repository *repo, struct worktree *worktree);
->  extern int repo_submodule_init(struct repository *submodule,
->  			       struct repository *superproject,
->  			       const char *path);
-> diff --git a/revision.c b/revision.c
-> index e2e691dd5a..9d8d9b96d1 100644
-> --- a/revision.c
-> +++ b/revision.c
-> @@ -22,6 +22,7 @@
->  #include "packfile.h"
->  #include "worktree.h"
->  #include "argv-array.h"
-> +#include "repository.h"
->  
->  volatile show_early_output_fn_t show_early_output;
->  
-> @@ -1346,15 +1347,17 @@ void add_index_objects_to_pending(struct rev_info *revs, unsigned int flags)
->  	worktrees = get_worktrees(0);
->  	for (p = worktrees; *p; p++) {
->  		struct worktree *wt = *p;
-> -		struct index_state istate = { NULL };
-> +		struct repository *repo;
->  
-> +		repo = xmalloc(sizeof(struct repository));
+Such a check would be better at surfacing mistakes (e.g. the user giving
+the wrong SHA-1) early, but beyond that, I don't think that having the
+check is very important. Consider these two very common situations:
 
-This was allocated but never freed, was that intentional?
+ (1) Fetching a single branch by its tip's SHA-1. A naive implementation
+     will first check if we have that SHA-1, which triggers the dynamic
+     fetch (since it is an object read), and assuming success, notice
+     that we indeed have that tip, and not fetch anything else. The
+     check you describe will avoid this situation.
+ (2) Dynamically fetching a missing blob by its SHA-1. A naive
+     implementation will first check if we have that SHA-1, which
+     triggers the dynamic fetch, and that fetch will first check if we
+     have that SHA-1, and so on (thus, an infinite loop). The check you
+     describe will not avoid that situation.
 
->  		if (wt->is_current)
->  			continue; /* current index already taken care of */
-> +		if (repo_worktree_init(repo, wt))
-> +			BUG("couldn't initialize repository object from worktree");
->  
-> -		if (read_index_from(&istate,
-> -				    worktree_git_path(wt, "index")) > 0)
-> -			do_add_index_objects_to_pending(revs, &istate);
-> -		discard_index(&istate);
-> +		if (repo_read_index(repo) > 0)
-> +			do_add_index_objects_to_pending(revs, repo->index);
-> +		discard_index(repo->index);
-
-One we have separate object stores per-repository how would we handle
-this since this pruning should only work on a single repository's object
-store?
-
->  	}
->  	free_worktrees(worktrees);
->  }
-> -- 
-> 2.15.1.504.g5279b80103
-> 
-
--- 
-Brandon Williams
+The check solves (1), but we still need a solution to (2) - I used
+"fetch_if_missing", as discussed in your previous question and my answer
+to that. A solution to (2) is usually also a solution to (1), so the
+check wouldn't help much here.
