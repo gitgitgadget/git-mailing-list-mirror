@@ -7,139 +7,78 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9D7211F404
-	for <e@80x24.org>; Mon, 11 Dec 2017 23:17:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 698371F404
+	for <e@80x24.org>; Mon, 11 Dec 2017 23:23:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751512AbdLKXRe (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Dec 2017 18:17:34 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55747 "EHLO
+        id S1751663AbdLKXXS (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Dec 2017 18:23:18 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60995 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751274AbdLKXRd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Dec 2017 18:17:33 -0500
+        with ESMTP id S1751379AbdLKXXR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Dec 2017 18:23:17 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 266FBB293A;
-        Mon, 11 Dec 2017 18:17:33 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 28E60BB69F;
+        Mon, 11 Dec 2017 18:23:17 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ZpxCELY/6i2MdW5akFxaQiaNLCs=; b=sg5us+
-        zdea+IcbeGOoG1H2ixs0WlBIv3v5h+QvyN4lHFkScfqUO18tF8ZVYZb9SE0zu3fD
-        +RthnBMzwzQ1HPnsfgDihoqx/+glTz1eSMrypXVUabh8jW4VkqO9aWfZ3+3AtkHz
-        MUq02JmLaCE9LRLDx6fYEICSinS5Fqtslt28E=
+        :content-type; s=sasl; bh=/Lon0n7PRrgUwLmFQ+r6pe+xqgQ=; b=MjE7mq
+        Kdo6bbs7btlTzPOqW/exFG135QUimM45krB/YH01+n7m6lNZFUWLvsLBuMX6vAH6
+        UU7RQ6I0TL11QwcgEv/d/j3d954d8alGy0G5+xuRm5TDJ68rWatpLSwnCLvzpR4A
+        g4C6HGDWheTbGlNEwLKa+7JPoBZ7HR+k0Fbzw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=PwlexLCD9NfKZlybkCM4NLnyfoIXHVpg
-        fWTbBCcbrQm/llNNp0cgW1O27XxGbR0Ca+qgkmbDVBLTdjihnz7kIQcX8x2Gdylk
-        sqeptsEcQNGtGenXvs96KD8kSY4TiaLwKcU37GaXdPEEnsg8nU9sgGcYGvTBuzC8
-        jyQHVpzFl9o=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1E533B2939;
-        Mon, 11 Dec 2017 18:17:33 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=O2VC4b14v0IHR8hAv3C4wZ1SMcW5zTGJ
+        Qmk9Zo1Hbexusv7IB/r/kuBvZ9MOWi/ItEK0DHBQiXR5tduv0DQa3WnO6moXKVAc
+        iQ5SwBm4kCf5VIXLJmg/PbtaWKt7BtdsrHlonHZKWNq0eSJ1lfGBi9qSDyVpdt8F
+        auULe8BzjG4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1FB7ABB69E;
+        Mon, 11 Dec 2017 18:23:17 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8F948B2938;
-        Mon, 11 Dec 2017 18:17:32 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7590FBB69C;
+        Mon, 11 Dec 2017 18:23:16 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org, peff@peff.net
-Subject: Re: [PATCH 1/1] diffcore: add a filter to find a specific blob
-References: <20171208002447.20261-1-sbeller@google.com>
-        <20171211195835.57057-1-sbeller@google.com>
-        <20171211195835.57057-2-sbeller@google.com>
-Date:   Mon, 11 Dec 2017 15:17:31 -0800
-In-Reply-To: <20171211195835.57057-2-sbeller@google.com> (Stefan Beller's
-        message of "Mon, 11 Dec 2017 11:58:35 -0800")
-Message-ID: <xmqqr2s04zxw.fsf@gitster.mtv.corp.google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
+        Donald R Laster Jr <laster@dlaster.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v3 1/7] git-compat-util: introduce skip_to_optional_arg()
+References: <20171209204013.10997-1-chriscool@tuxfamily.org>
+        <20171210143118.GB19453@sigill.intra.peff.net>
+        <20171210143914.GA19894@sigill.intra.peff.net>
+Date:   Mon, 11 Dec 2017 15:23:15 -0800
+In-Reply-To: <20171210143914.GA19894@sigill.intra.peff.net> (Jeff King's
+        message of "Sun, 10 Dec 2017 09:39:15 -0500")
+Message-ID: <xmqqmv2o4zoc.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 7719725C-DEC9-11E7-AB92-8EF31968708C-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 441D3810-DECA-11E7-98A5-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> the information to what is shown. For example:
 >
->   $ ./git log --oneline --blobfind=v2.0.0:Makefile
->   b2feb64309 Revert the whole "ask curl-config" topic for now
->   47fbfded53 i18n: only extract comments marked with "TRANSLATORS:"
+>   +       else if (starts_with(arg, "-B") ||
+>   +                skip_to_optional_arg(arg, "--break-rewrites", NULL)) {
+> 	  if ((options->break_opt = diff_scoreopt_parse(arg)) == -1)
+>
+> So that's kind-of weird, because we are parsing "-B", etc, and then
+> expecting it to be _reparsed_ by diff_scoreopt_parse. So the two
+> callsites must always match.
 
-This part is a bit stale???
+Correct.  diff_scoreopt_parse() can be coaxed to fit better within
+this if/else if/... cascade by making it take a pointer to .break_opt
+field and have it return "did I handle the -B/break-rewrites?" etc.,
+but otherwise, this shows that skip_to_optional_arg() has impedance
+mismatch with its current API.  And the NULL thing serves as a reminder
+that skip_to_optional_arg() is used _only_ as a prefix check and not
+for parsing.
 
-> diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-> index dd0dba5b1d..67a99e522b 100644
-> --- a/Documentation/diff-options.txt
-> +++ b/Documentation/diff-options.txt
-> @@ -500,6 +500,12 @@ information.
->  --pickaxe-regex::
->  	Treat the <string> given to `-S` as an extended POSIX regular
->  	expression to match.
-> +
-> +--find-object=<object-id>::
-> +	Restrict the output such that one side of the diff
-> +	matches the given object id. The object can be a blob,
-> +	or gitlink entry.
 
-OK.  In principle you should also be able to find a tree, but I do
-not now how useful it would be.  Extending it to gitlink, which is
-another kind of leaf node in the reachability DAG, does make tons of
-sense---it's a no brainer that I feel ashamed not to have thought of
-myself ;-)
-
-> +LIB_OBJS += diffcore-oidfind.o
-
-Just to nitpick, but "blobfind" was to find "blob", and if you are
-extending it to find any "object", then that should be "objfind".
-"oid" is _A_ way to refer to an object (i.e. the _name_ of it), and
-name is *not* the same as the thing the name refers to, so...
-
-> +static int parse_oidfind_opt(struct diff_options *opt, const char *arg)
-> +{
-> +	struct object_id oid;
-> +
-> +	/* We don't even need to have the object, any oid works. */
-> +	if (get_oid_blob(arg, &oid))
-> +		return error("unable to resolve '%s'", arg);
-
-Should this still be get_oid_blob(), or should it be less specific
-to blobs?
-
-> +test_expect_success 'find the greeting blob' '
-> +	cat >expect <<-EOF &&
-> +	Revert "add the greeting blob"
-> +	add the greeting blob
-> +	EOF
-> +
-> +	git log --format=%s --find-object=greeting^{blob} >actual &&
-> +
-> +	test_cmp expect actual
-> +'
-
-Makes sense.
-
-> +
-> +test_expect_success 'setup a submodule' '
-> +	test_create_repo sub &&
-> +	test_commit -C sub sub &&
-> +	git submodule add ./sub sub &&
-> +	git commit -a -m "add sub"
-> +'
-> +
-> +test_expect_success 'find a submodule' '
-> +	cat >expect <<-EOF &&
-> +	add sub
-> +	EOF
-> +
-> +	git log --format=%s --find-object=HEAD:sub >actual &&
-> +
-> +	test_cmp expect actual
-> +'
-
-Nice (and cute).
-
-> +test_done
-
-Looking good.  Thanks.
