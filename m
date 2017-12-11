@@ -7,114 +7,124 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ABC641F404
-	for <e@80x24.org>; Mon, 11 Dec 2017 21:41:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 39AAF1F404
+	for <e@80x24.org>; Mon, 11 Dec 2017 22:56:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751433AbdLKVlN (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Dec 2017 16:41:13 -0500
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:36495 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750886AbdLKVlM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Dec 2017 16:41:12 -0500
-Received: by mail-wr0-f194.google.com with SMTP id v105so19090245wrc.3
-        for <git@vger.kernel.org>; Mon, 11 Dec 2017 13:41:11 -0800 (PST)
+        id S1752232AbdLKW4Y (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Dec 2017 17:56:24 -0500
+Received: from mail-it0-f66.google.com ([209.85.214.66]:36269 "EHLO
+        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752326AbdLKW4T (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Dec 2017 17:56:19 -0500
+Received: by mail-it0-f66.google.com with SMTP id d16so19804726itj.1
+        for <git@vger.kernel.org>; Mon, 11 Dec 2017 14:56:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=EVyLVV5ygh43j17++Q85RBZvPwEHaulE4KsEWritimM=;
-        b=JspmwZLpnTPJucgD71w6Ily2Ha/AiSrBZk9hapVwk1p6RdmzT6EV+pvCpMRVCDYO+z
-         EQU521HDGr99AXG4bm2ZTtMY3oKJGYkUA288SnowqG0RxAU8/j3AqUt1NTlta9tKMuRC
-         vNQQSBVJVqMHBcHrf2V56HYmGxgXp/1C6RNhYUca8B5ZuZPh0ElbCVVJAn2d+nGRJRDP
-         uYPvmE/ttv0s5X82YNHY2ADgl4xGg5+DlMS1OM8Osy8EfRZEcc3G78itdfoFGumoaaQ8
-         eeRLlVl3FsHmv2nXt4SqgkRne3W6Q9fdnjeeHM+C16cix+f5gOTKmSxEKy+Aw/Z46AJt
-         LrCQ==
+         :content-disposition:in-reply-to:user-agent;
+        bh=/njm9DbLD29jdvrva/EEVgBtfILFCrNbCoSglp7+SHA=;
+        b=lSnEAj+8B1zzaawoyteG+f82SG3iMjOJ11mOSV+GAMEmsPJ9GtmL4VaKRnwvzgc014
+         3O1bOzCpSbuWGN1V/SWoA1sXRp7KoI8SZeFggWOZKorkeRLYasDJBzPj6YUe9084Eb9v
+         fd0jPm4o0haA+ptpO51uSradKuwYbu6BKXFT/72KlSud5Hooo3zTKngKTk9Aaq96vCi0
+         daSMHktRPUYBNykTv1mLhAgmsnYtvsPFx1FO36Oib5X5yazDw8mT6NDaJFKZ3a2zNMgg
+         wkJTWnJ+x2rww+BpjNIi2THbmYOh4Zk5sTgbGDhYuX1kjrI+vF9P6Bh8hX0/5paBEUE6
+         fnCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=EVyLVV5ygh43j17++Q85RBZvPwEHaulE4KsEWritimM=;
-        b=dbjS59QT3IkGImBtZJqNQ6Z+WVrM+V57WNa+rEYdwmQ2hXAhfzvg9hGsF1+AOtOtvn
-         B94tG1DdhzD/bSnwmZ3iq15Z30xmts800MoH88vJFE3fD9DhALWzHEbrXvXZN4yuDGwo
-         40ej96XwgWD9tpYAXIC9lbJDC5j6t1oNqkIJuiO3fIsQT819N02xQP8g4Ap5YRZnKLDk
-         aIV7dawZ2WYKZQwpFYCePHsx84iCAVdUmBhhZjsEbJ2NdiVVsbMqU2qi/Xd3DGtw/V4r
-         hyZf8yYk/+XnUR3IGW4Npzkyq0p8mS7PZMPyN7Zk0c2toxxdfQ0yj4QfzZUgPR/BfpHO
-         VhcA==
-X-Gm-Message-State: AKGB3mIiBkkIINgOLw9VcOzBxr4LFOODoTEnm8xQatAk4Qq9QpltcCjh
-        SvKDExz3HPSHbJcUg0gjU8M=
-X-Google-Smtp-Source: ACJfBosdRzqq08FxLEEQkhp9Bu0zaN00aBX+FgFci9bhbg0HB6YaNqMwri3QADC8/Zv5bi7KYqVoTQ==
-X-Received: by 10.223.167.76 with SMTP id e12mr1772580wrd.204.1513028471200;
-        Mon, 11 Dec 2017 13:41:11 -0800 (PST)
-Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
-        by smtp.gmail.com with ESMTPSA id w142sm562784wme.3.2017.12.11.13.41.10
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=/njm9DbLD29jdvrva/EEVgBtfILFCrNbCoSglp7+SHA=;
+        b=DiuHEQc4aRA5pVRp4zqQQ08CjM85wIrdjK24rm/FiL/BeXdyBQ5/Kk8en84gWCGG5R
+         w48FeFYU1vVsFqQIvKrtaLq+MmFra9EAyvLdRKQW1h9FHoKOc6pdnTV6tF6N0yJSSzuI
+         FKV7/h3iI1FDMJk6zaGzsys2YWNT8mDKYngSRNPwlEZBK0tFsFbAd+U0IMhyYsT43LwV
+         x1uSfNTi4RRhj6RjseAahlJCFdBE2Kh27W6zUJdWTIkLAQwOvZ0NW7kWgmoSKd1EEPPx
+         wHDBgQJp0kCj5c5/3Nqh113mCy1an1p6aJKJ0pbg9TWYE8fdKjAepdr+L3pqYwALd+Gx
+         Tm8Q==
+X-Gm-Message-State: AKGB3mJKlB0dmRZVVQEVHe+CD8im9zhnn3+CkFl+ri4nSmuSS425jWT7
+        PteC23+6nUAOq7eMJLrhfio=
+X-Google-Smtp-Source: ACJfBov+5pCuOOdlSmPl1ofUBkK+zmyUs/7mKV+lf/CDJqNVnwurKnYiu4VK4D1RwVbLlJva1fK8oA==
+X-Received: by 10.36.115.133 with SMTP id y127mr3245522itb.83.1513032978225;
+        Mon, 11 Dec 2017 14:56:18 -0800 (PST)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id 76sm4303285itk.23.2017.12.11.14.56.17
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 11 Dec 2017 13:41:10 -0800 (PST)
-Date:   Mon, 11 Dec 2017 21:42:55 +0000
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
-Cc:     Christian Couder <chriscool@tuxfamily.org>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Brandon Williams <bmwill@google.com>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 3/3] travis: run tests with GIT_TEST_SPLIT_INDEX
-Message-ID: <20171211214255.GA24597@hank>
-References: <20171210212202.28231-4-t.gummerer@gmail.com>
- <20171211210948.6867-1-szeder.dev@gmail.com>
+        Mon, 11 Dec 2017 14:56:17 -0800 (PST)
+Date:   Mon, 11 Dec 2017 14:56:15 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Yaroslav Halchenko <yoh@onerussian.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>, kyle@kyleam.com,
+        Jeff King <peff@peff.net>
+Subject: Re: Q: rational for $XDG_CONFIG_HOME/git/config to be "non global"
+ or just a bug?
+Message-ID: <20171211225615.GC214273@aiede.mtv.corp.google.com>
+References: <20171211211102.rrxqd6yscnd33efd@hopa.kiewit.dartmouth.edu>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20171211210948.6867-1-szeder.dev@gmail.com>
-User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
+In-Reply-To: <20171211211102.rrxqd6yscnd33efd@hopa.kiewit.dartmouth.edu>
+User-Agent: Mutt/1.9.1 (2017-09-22)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/11, SZEDER Gábor wrote:
-> > Make sure that split index doesn't get broken, by running it on travis
-> > CI.
-> > 
-> > Run the test suite with split index enabled in linux 64 bit mode, and
-> > leave split index turned off in 32-bit mode.
-> 
-> This doesn't accurately describe what the patch does.
-> Travis CI runs three 64 bit Linux build jobs for us: one compiled with
-> Clang, one with GCC, and one with GETTEXT_POISON enabled.  This patch
-> enables split index only in the latter build job, but not in the Clang
-> and GCC build jobs.
+Hi,
 
-You're right, it's my first time using travis CI and I got confused
-about how the .travis.yml works, thanks for catching that.  Will
-re-phrase the commit message.
+Yaroslav Halchenko wrote:
 
-> >  The laternative would be
-> > to add an extra target in the matrix, enabling split index mode, but
-> > that would only use additional cycles on travis and would not bring that
-> > much benefit, as we are still running the test suite in the "vanilla"
-> > version in the 32-bit mode.
-> > 
-> > Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
-> > ---
-> >  .travis.yml | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> > 
-> > diff --git a/.travis.yml b/.travis.yml
-> > index 281f101f31..c83c766dee 100644
-> > --- a/.travis.yml
-> > +++ b/.travis.yml
-> > @@ -39,7 +39,7 @@ env:
-> >  
-> >  matrix:
-> >    include:
-> > -    - env: GETTEXT_POISON=YesPlease
-> > +    - env: GETTEXT_POISON=YesPlease GIT_TEST_SPLIT_INDEX=YesPlease
-> >        os: linux
-> >        compiler:
-> >        addons:
-> > -- 
-> > 2.15.1.504.g5279b80103
+> Example to show that TFM outlines precedence and --global correctly:
+>
+> $> grep xdg .gitconfig .config/git/config
+> .gitconfig:    xdg-and-user = user
+> .config/git/config: xdg = xdg
+> .config/git/config: xdg-and-user = xdg
+> $> git config user.xdg ; git config user.xdg-and-user
+> xdg
+> user
+
+I agree, this is confusing.
+
+Reverse engineering from source, I find that git reads the following
+files in sequence:
+
+	system:
+		/etc/gitconfig
+	global:
+		$XDG_CONFIG_HOME/git/config
+		$HOME/.gitconfig
+	repo:
+		$GIT_DIR/config
+	commandline:
+		options passed with -c or GIT_CONFIG_PARAMETERS
+
+These terms (system, global, repo, etc) are accessible in code as
+current_config_scope().  I don't think there's any user-visible effect
+to $XDG_CONFIG_HOME/git/config and $HOME/.gitconfig both being global
+--- it would probably be a good cleanup to rename the scope for one of
+them.
+
+I think the documentation
+
+	~/.gitconfig
+		User-specific configuration file. Also called "global"
+		configuration file.
+
+should be clarified --- e.g. it could say
+
+	$XDG_CONFIG_HOME/git/config
+	~/.gitconfig
+		User-specific configuration files. Because options in
+		these files are not specific to any repository, thes
+		are sometimes called global configuration files.
+
+As for "git config --global", I think the best thing would be to split
+it into two options: something like "git config --user" and "git
+config --xdg-user".  That way, it is unambiguous which configuration
+file the user intends to inspect or modify.  When a user calls "git
+config --global" and both files exist, it could warn that the command
+is ambiguous.
+
+Thoughts?
+
+Thanks,
+Jonathan
