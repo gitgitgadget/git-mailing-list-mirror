@@ -2,124 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3834A1F404
-	for <e@80x24.org>; Mon, 11 Dec 2017 23:42:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 720591F404
+	for <e@80x24.org>; Mon, 11 Dec 2017 23:45:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751609AbdLKXmO (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Dec 2017 18:42:14 -0500
-Received: from mail-wr0-f177.google.com ([209.85.128.177]:44902 "EHLO
-        mail-wr0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750836AbdLKXmM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Dec 2017 18:42:12 -0500
-Received: by mail-wr0-f177.google.com with SMTP id l22so19309164wrc.11
-        for <git@vger.kernel.org>; Mon, 11 Dec 2017 15:42:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=xSiPJxqs2b4BIs4K+BpWiHef+NjFL/2eik6NA1bVue8=;
-        b=CAAgxraiebhV3v7ICNNbp/wuKEmoyOc1DhksRCuCKjGQJ1LTnJLmXTsUO6qntRcUES
-         Jj3oaeuGPgXNtIsmYavi2drt21o7FTKtR61yx+4LW6FEQsEQE31AnRzOipziVZtblRHH
-         IYqI9pl/MdHDLOWT5eZesxnpyzImkkyPDrXcsgvb8VWN7ylLP6+xRjQdwz04uy/o+Vmw
-         G+4aVJpHuUmRq1Yn5ACfr8YI9Vr9iQYLK7YXJkI2M24mOLVz90tcmO0tsq2lgd6QCiEV
-         k2H+z0KnASQ7jPfsd7e0UnAZ0502WJJvYclpHgzGU8tMlJz6ou2vo8sY2MyYSzEAcQLb
-         7IsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=xSiPJxqs2b4BIs4K+BpWiHef+NjFL/2eik6NA1bVue8=;
-        b=dGamqesH5xThlqvtG0eYPAUPXS8sQUu65EU5zY5IevqjVVKbrIq9NVYHJu07zEk/90
-         spZI0k0EtuONvFbmQslMZzQvMSMfuOuK+AGa2esXmPomliTXoOPclxkH2IftdKDCkhuG
-         UBjnD201PoGZBkQbXCHzL3BhfaXJHjrAUtA0v9+J5C0O35qyuad7aQ4eMv3usv9T8jX8
-         pfDWczIsDggNHaAm5wMdjj1oXSVknw8tZoFA7RHhS+8pYiYYu4CaFsGvDQ65sScvcKcX
-         6+ACo0XFroqM3gKruOO76VGWLP1DHiCPgWeksRa97wKjjrtn1O4Hr/kgYK3huJXvA3S/
-         d1ow==
-X-Gm-Message-State: AKGB3mLCq6QfC4mq4r10DsRElWu0tO768BmKpjQJMk36CRl8t2Urez8a
-        J9rjoFND2fGCTvsrpDhiDjGIAA==
-X-Google-Smtp-Source: ACJfBos+00lTg0PERElKJqLwlq14V9oJJnDLE/i98DXD9Lz2LlbxDYlTGhhWN+18CyCM7E+0uBWTJw==
-X-Received: by 10.223.195.113 with SMTP id e46mr1802405wrg.149.1513035731605;
-        Mon, 11 Dec 2017 15:42:11 -0800 (PST)
-Received: from slxbook3.fritz.box (p5DDB687E.dip0.t-ipconnect.de. [93.219.104.126])
-        by smtp.gmail.com with ESMTPSA id y2sm18519144wra.18.2017.12.11.15.42.09
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 11 Dec 2017 15:42:11 -0800 (PST)
-Content-Type: text/plain; charset=iso-8859-1
-Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
-Subject: Re: [PATCH v1] convert: add support for 'encoding' attribute
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <a07a0b5c-453a-f644-d5e5-7d185a943088@kdbg.org>
-Date:   Tue, 12 Dec 2017 00:42:23 +0100
-Cc:     lars.schneider@autodesk.com, git@vger.kernel.org,
-        gitster@pobox.com, tboegi@web.de, peff@peff.net, patrick@luehne.de
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <0BA27EC9-3836-407A-9A8A-52D06B8052AE@gmail.com>
-References: <20171211155023.1405-1-lars.schneider@autodesk.com> <a07a0b5c-453a-f644-d5e5-7d185a943088@kdbg.org>
-To:     Johannes Sixt <j6t@kdbg.org>
-X-Mailer: Apple Mail (2.1878.6)
+        id S1751678AbdLKXpG (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Dec 2017 18:45:06 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54040 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751512AbdLKXpF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Dec 2017 18:45:05 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8C669BBA71;
+        Mon, 11 Dec 2017 18:44:59 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=SC+C/Jp1c39I6ajFcCqp9/7yRaE=; b=GdhOte
+        OzbAFBf3uWJgjOTB55fpQeGhudJgkVHXFy5NqdpTxKe0PBsL34QE9z+if1iLvAB2
+        r6UXTWrQq3ePVuLN1E7+WFBcAibQwk3JT7TYg6JQNZUaSU4RV8b+m7py6hmyfK7y
+        E9s3QR1W9kXPzl4K89SFsVvQ5ZvXGXoACzk00=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=FK9rF60fiy3zx5qgjFOIZKwrkSYCeuSc
+        n/Wh7COJCOgtTVRk/dhZCasXVh6QtoPeUhpYqMuKOTasv1ACM/52hSCqmpPzK5HZ
+        Q/TrCQ0eN6D9jwacofBzc1vGYDoxQ2/9yd3okmSJChu6J4iDodwmVydHTBA6Ynpp
+        8LRlI1trE9w=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 85399BBA6F;
+        Mon, 11 Dec 2017 18:44:59 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E83FDBBA6E;
+        Mon, 11 Dec 2017 18:44:58 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Phillip Wood <phillip.wood@talktalk.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Adam Dinwoodie <adam@dinwoodie.org>,
+        Stefan Beller <sbeller@google.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v5 0/9] sequencer: don't fork git commit
+References: <20170925101041.18344-1-phillip.wood@talktalk.net>
+        <20171211141330.23566-1-phillip.wood@talktalk.net>
+Date:   Mon, 11 Dec 2017 15:44:57 -0800
+In-Reply-To: <20171211141330.23566-1-phillip.wood@talktalk.net> (Phillip
+        Wood's message of "Mon, 11 Dec 2017 14:13:21 +0000")
+Message-ID: <xmqq8te84yo6.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4C727EF0-DECD-11E7-99D8-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Phillip Wood <phillip.wood@talktalk.net> writes:
 
-On 11 Dec 2017, at 21:47, Johannes Sixt <j6t@kdbg.org> wrote:
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>
+> I've reworked the config handling since v4. It now stores the default
+> values in struct replay_opt rather than using global variables and
+> calls git_diff_basic_config(). Unfortunately I've not had time to
+> modify git_gpg_config() to indicate if it successfully handled the key
+> so git_diff_basic_config() is called unnecessarily in that case. Within
+> git_diff_basic_config() userdiff_config() also suffers from the same
+> problem of not indicating if it has handled the key.
 
-> Am 11.12.2017 um 16:50 schrieb lars.schneider@autodesk.com:
->> From: Lars Schneider <larsxschneider@gmail.com>
->> Git and its tools (e.g. git diff) expect all text files in UTF-8
->> encoding. Git will happily accept content in all other encodings, =
-too,
->> but it might not be able to process the text (e.g. viewing diffs or
->> changing line endings).
->> Add an attribute to tell Git what encoding the user has defined for a
->> given file. If the content is added to the index, then Git converts =
-the
->> content to a canonical UTF-8 representation. On checkout Git will
->> reverse the conversion.
->> Reviewed-by: Patrick L=FChne <patrick@luehne.de>
->> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
->> ---
->> Hi,
->> here is a WIP patch to add text encoding support for files encoded =
-with
->> something other than UTF-8 [RFC].
->> The 'encoding' attribute is already used to view blobs in gitk. That
->> could be a problem as the content is stored in Git with the defined
->> encoding. This patch would interpret the content as UTF-8 encoded and
->=20
-> This will be a major drawback for me because my code base stores text =
-files that are not UTF-8 encoded. And I do use the existing 'encoding' =
-attribute to view the text in git-gui and gitk. Repurposing this =
-attribute name is not an option, IMO.
+Ouch.  I thought we agreed that we were ready to go incremental and
+the topic was merged to 'next' earlier last week.
 
-I understand your point of view and I kind of expected that that reply.
-Thanks for the feedback!
+After scanning the difference between the two rounds, it seems that
+the more important difference is the rework of the configuration,
+which looks better thought out than the previous round, and with
+associated change to use replay_opts fields instead of free variables
+to carry gpg-sign and cleanup-mode settings around, which also looks
+sensible to me.
 
-Question is: Given that "encoding" is not available, how could I name
-             the attribute without confusing the user?
+Can you make these differences into incremental "that earlier one
+was suboptimal for this and that reasons, let's make it better by
+doing this" patches to queue them on top?
 
-I contemplated:
-  - "enc" or "encode" because "eol" and "ident" use abbreviations, too
-    (enc could be confused with encryption. plus, a user might ask
-     what is the difference between "enc" and "encoding" attribute :-)
-  - "wte", "wtenc", or "worktree-encoding" to emphasize that this is=20
-    the encoding used in the worktree=20
-    (I fear that users think that is git-worktree, the command, related)
-
-I think my favorite is "worktree-encoding".
-What do you think?
-
-Thanks,
-Lars=20
-
-
-BTW: I am curios, can you share what encoding you use?
-My main use case is UTF-16 and I was surprised that I haven't
-found a single public repo on github.com with "encoding=3Dutf-16"
-
+Thanks.
