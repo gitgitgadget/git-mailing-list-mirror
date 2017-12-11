@@ -2,214 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D3C141F404
-	for <e@80x24.org>; Mon, 11 Dec 2017 14:17:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 71E111F404
+	for <e@80x24.org>; Mon, 11 Dec 2017 15:25:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753160AbdLKOOG (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Dec 2017 09:14:06 -0500
-Received: from smtp-out-3.talktalk.net ([62.24.135.67]:28253 "EHLO
-        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753001AbdLKONt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Dec 2017 09:13:49 -0500
-Received: from lindisfarne.localdomain ([92.22.30.250])
-        by smtp.talktalk.net with SMTP
-        id OOpteDPs4CbAZOOq4eBiw7; Mon, 11 Dec 2017 14:13:48 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1513001629;
-        bh=tPF3bixair+pa9seBaZfHbjydUvx2ztX8EFMxPUOzSQ=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:Reply-To;
-        b=ZLJtLdYpS62Ot6OEAXffWPWGym5E9Ph71JdqLy6mNgJFRKZAgDOOumtFaMKmwNdHL
-         05KA2kL4Y1L5zVP24PhdEAEjDKpwXFh0/+WRcuAAmF1mjzyTbkTbb/GNKaALDTbntX
-         0h2Dn9CXxbpqLlVLpBqAe1ra/EjqePJK/zFzAV5s=
-X-Originating-IP: [92.22.30.250]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=JvuBlIwC c=1 sm=1 tr=0 a=hCO86xb6nvxPok+3LE1svw==:117
- a=hCO86xb6nvxPok+3LE1svw==:17 a=evINK-nbAAAA:8 a=wCDodDw9Ewchy9PJPCEA:9
- a=pzV2rJyJFlvamdHe:21 a=fRi6gA69vdXXY4sx:21 a=RfR_gqz1fSpA9VikTjo0:22
-From:   Phillip Wood <phillip.wood@talktalk.net>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Adam Dinwoodie <adam@dinwoodie.org>,
-        Stefan Beller <sbeller@google.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH v5 7/9] sequencer: load commit related config
-Date:   Mon, 11 Dec 2017 14:13:28 +0000
-Message-Id: <20171211141330.23566-8-phillip.wood@talktalk.net>
-X-Mailer: git-send-email 2.15.1
-In-Reply-To: <20171211141330.23566-1-phillip.wood@talktalk.net>
-References: <20170925101041.18344-1-phillip.wood@talktalk.net>
- <20171211141330.23566-1-phillip.wood@talktalk.net>
-Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
-X-CMAE-Envelope: MS4wfCJMr5CICHb1u3txFxYlws6YcZKnl2kjKZseArAEf+5Tzv46SemVG3vV71rRmYEiIW+As/U8V0ARtVoet8/bh48vterxwRJ0YYcDJylnDpPm9YoekfJH
- CA2BQWPOfcVnJMAqiRzYORE54jRCa+off9fxKB3BGxPHcBkzezrBzMnFmrsMwr2HmVZSlBd3OaLJWkqHFon+iOmRgPIoewf1LDPKbZ2quGjyI0xgKL+V4Cts
- PrpTaJoMGhD44mkrU8I2h3dUkLtVqkGuaZpucZCyH/pwZ1cya//4w2j+3INTZcvjbi367bC4kAqoskgQtn2bMcpVKfUjEwANSY7Qs/wAQmdAeNBJevl3EwVZ
- FB3WYx9zvW/ZWR5f38H9GgAeC7jboMuLStewJumk3jN4a8TcdN4=
+        id S1752252AbdLKPZc (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Dec 2017 10:25:32 -0500
+Received: from mail-it0-f47.google.com ([209.85.214.47]:37792 "EHLO
+        mail-it0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751622AbdLKPZb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Dec 2017 10:25:31 -0500
+Received: by mail-it0-f47.google.com with SMTP id d137so16608998itc.2
+        for <git@vger.kernel.org>; Mon, 11 Dec 2017 07:25:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=9LtObEjTfHX0E+jb30BAnUe30BO6nwRJt2XBLpUcesk=;
+        b=HeJtf86W8LZhP45rqgh1Ei0ET2Ut+cZqEDK7icgvsHd14HQBEwVyrIi6brjBbrooYC
+         n9qURTMKsmIfO2SBP86oFaqO1gA8elQ/gfQghwoXCsQfLXIHOgCqUbmJql/T7feQqGDy
+         vbxtYqwViqdvvjUGMP9vKg3eg2NsBdjoW+/20L32mjmWrAtcyEchI3gxRVGS9EL30ET/
+         TlkB+QtkvimTnz1eXAeRVnt1L8ousXXB9o0hzA5b47f6aTgiWobA6JEmJ9GJhEGc7fn3
+         C2soqku/6V0RGWk9HavOHpeA1j5ut7wdZ9mnpWd5RVKQP0rVcYo34FvGszs/x9xTJQDN
+         y9QQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=9LtObEjTfHX0E+jb30BAnUe30BO6nwRJt2XBLpUcesk=;
+        b=lUiEhfN8lpanvvkH2sZb1lkDNvhfhNXtcNlP7DFBZ7Du4jogfsaM7bQLKU8giIt8KZ
+         LSfTEE5EVR3XrIiAmtnLdTk/f4kF/F+sSomPZtkaLpAM6SLqk51dBqQLM7KwdGGnYmuI
+         LCvm9lL1RoKLj4h3gbH67iDYK23KWMtPFsvm8TZ9Ea24d5B8dV1ns0Sb/7rJo4oOsH9r
+         Bet5ZAwTayrCwqydaLXuKq8ms+hZ1OVvwr+/HEcj3yonQZXrSujNrxUmNCoJ92/bzh2R
+         uTMWWjUWbVrBEIre4zJygFbilMd6jTKXrCS0ijfADT0+284ncJBgpD2+tC3oviWXPFKu
+         DLnQ==
+X-Gm-Message-State: AKGB3mJjfQFJIlbpgXp7iOhu//6tVoTlKvnFYaoQWQKsJP3xMwMFEPit
+        rT/9PmMJ4Men2oKC3MDolT5fJPXUk33sJMukTdaCXA==
+X-Google-Smtp-Source: ACJfBovBB7VHOIVf3bF6hlZe0LMaKR5YeAo5UZ1HEHrjR1n8CB5QrfWHKVDI90d2PRrZD1/vogxj2KuYod41nl+EYKM=
+X-Received: by 10.36.129.212 with SMTP id q203mr1580493itd.152.1513005930516;
+ Mon, 11 Dec 2017 07:25:30 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.2.131.68 with HTTP; Mon, 11 Dec 2017 07:25:30 -0800 (PST)
+In-Reply-To: <ca421d38-2d9a-8681-7947-3799c59984a7@gmail.com>
+References: <20171211134409.13339-1-g3orge.app@gmail.com> <ca421d38-2d9a-8681-7947-3799c59984a7@gmail.com>
+From:   George Papanikolaou <g3orge.app@gmail.com>
+Date:   Mon, 11 Dec 2017 17:25:30 +0200
+Message-ID: <CAByyCQDBtCdxB9fLUeH6A8o-g444TO_yD+O7ap8RO2Bg0b6aAA@mail.gmail.com>
+Subject: Re: [PATCH] builtin/tag.c: return appropriate value when --points-at
+ finds an empty list
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+I agree with what you're saying, just I thought this might be ultra-minor f=
+or
+API-breakage. To me, 0 doesn't necessarily mean "I didn't segfault".
+I lot of tools use ret-values to give information back. And that way it's m=
+uch
+easier to just `||` the command to something else instead of `[[ -z ]]` in =
+the
+script.
 
-Load default values for message cleanup, gpg signing of commits and
-basic diff configuration in preparation for committing without forking
-'git commit'. Note that we interpret commit.cleanup=scissors to mean
-COMMIT_MSG_CLEANUP_SPACE to be consistent with 'git commit'.
+But I see what you're saying...
+--
+/=CE=93=CE=A0
 
-The sequencer should probably have been calling
-git_diff_basic_config() before as it creates a patch when there are
-conflicts. The shell version uses 'diff-index' to create the patch so
-calling git_diff_basic_config() should match that. Although 'git
-commit' calls git_diff_ui_config() I don't think the output of
-print_commit_summary() is affected by anything that is loaded by that
-as print_commit_summary() always turns on rename detection so would
-ignore the value in the user's configuration anyway. The other values
-loaded by git_diff_ui_config() are about the formatting of patches so
-are not relevant to print_commit_summary().
 
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
-
-Notes:
-    changes since v4:
-     - reworked config handling to call git_diff_basic_config() and store
-       defaults in struct replay_opts rather than using global variables.
-     - added a warning if there is an invalid value for commit.cleanup.
-    
-    changes since v3:
-     - interpret commit.cleanup=scissors to mean COMMIT_MSG_CLEANUP_SPACE
-       to match 'git commit'
-    
-    changes since v1:
-     - renamed git_revert_config() to common_config()
-     - prefixed cleanup_mode constants to reflect the changes to patch 2
-       in this series
-
- builtin/rebase--helper.c |  2 +-
- builtin/revert.c         |  4 ++--
- sequencer.c              | 45 +++++++++++++++++++++++++++++++++++++++++++++
- sequencer.h              |  3 +++
- 4 files changed, 51 insertions(+), 3 deletions(-)
-
-diff --git a/builtin/rebase--helper.c b/builtin/rebase--helper.c
-index f8519363a393862b6857acab037e74367c7f2134..decb8f7a09e42eb94bed264164985e54e13a32f6 100644
---- a/builtin/rebase--helper.c
-+++ b/builtin/rebase--helper.c
-@@ -39,7 +39,7 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
- 		OPT_END()
- 	};
- 
--	git_config(git_default_config, NULL);
-+	sequencer_init_config(&opts);
- 
- 	opts.action = REPLAY_INTERACTIVE_REBASE;
- 	opts.allow_ff = 1;
-diff --git a/builtin/revert.c b/builtin/revert.c
-index b9d927eb09c9ed87c84681df1396f4e6d9b13c97..76f0a35b074b858ab4cb3e3894bc7c877401b7e8 100644
---- a/builtin/revert.c
-+++ b/builtin/revert.c
-@@ -208,7 +208,7 @@ int cmd_revert(int argc, const char **argv, const char *prefix)
- 	if (isatty(0))
- 		opts.edit = 1;
- 	opts.action = REPLAY_REVERT;
--	git_config(git_default_config, NULL);
-+	sequencer_init_config(&opts);
- 	res = run_sequencer(argc, argv, &opts);
- 	if (res < 0)
- 		die(_("revert failed"));
-@@ -221,7 +221,7 @@ int cmd_cherry_pick(int argc, const char **argv, const char *prefix)
- 	int res;
- 
- 	opts.action = REPLAY_PICK;
--	git_config(git_default_config, NULL);
-+	sequencer_init_config(&opts);
- 	res = run_sequencer(argc, argv, &opts);
- 	if (res < 0)
- 		die(_("cherry-pick failed"));
-diff --git a/sequencer.c b/sequencer.c
-index 4966dd1b9359aaa82064608c05a7f5b18cea2d7a..3ce1e5b71474f1cd25b232a319fb7b0e13dc6e14 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -132,6 +132,51 @@ static GIT_PATH_FUNC(rebase_path_strategy, "rebase-merge/strategy")
- static GIT_PATH_FUNC(rebase_path_strategy_opts, "rebase-merge/strategy_opts")
- static GIT_PATH_FUNC(rebase_path_allow_rerere_autoupdate, "rebase-merge/allow_rerere_autoupdate")
- 
-+static int git_sequencer_config(const char *k, const char *v, void *cb)
-+{
-+	struct replay_opts *opts = cb;
-+	int status;
-+
-+	if (!strcmp(k, "commit.cleanup")) {
-+		const char *s;
-+
-+		status = git_config_string(&s, k, v);
-+		if (status)
-+			return status;
-+
-+		if (!strcmp(s, "verbatim"))
-+			opts->default_msg_cleanup = COMMIT_MSG_CLEANUP_NONE;
-+		else if (!strcmp(s, "whitespace"))
-+			opts->default_msg_cleanup = COMMIT_MSG_CLEANUP_SPACE;
-+		else if (!strcmp(s, "strip"))
-+			opts->default_msg_cleanup = COMMIT_MSG_CLEANUP_ALL;
-+		else if (!strcmp(s, "scissors"))
-+			opts->default_msg_cleanup = COMMIT_MSG_CLEANUP_SPACE;
-+		else
-+			warning(_("invalid commit message cleanup mode '%s'"),
-+				  s);
-+
-+		return status;
-+	}
-+
-+	if (!strcmp(k, "commit.gpgsign")) {
-+		opts->gpg_sign = git_config_bool(k, v) ? "" : NULL;
-+		return 0;
-+	}
-+
-+	status = git_gpg_config(k, v, NULL);
-+	if (status)
-+		return status;
-+
-+	return git_diff_basic_config(k, v, NULL);
-+}
-+
-+void sequencer_init_config(struct replay_opts *opts)
-+{
-+	opts->default_msg_cleanup = COMMIT_MSG_CLEANUP_NONE;
-+	git_config(git_sequencer_config, opts);
-+}
-+
- static inline int is_rebase_i(const struct replay_opts *opts)
- {
- 	return opts->action == REPLAY_INTERACTIVE_REBASE;
-diff --git a/sequencer.h b/sequencer.h
-index bf72e339adbb81900283d8811ed51569aa3e05ee..3a5072c2ab9088c237b83d92deae3c801289e543 100644
---- a/sequencer.h
-+++ b/sequencer.h
-@@ -36,6 +36,7 @@ struct replay_opts {
- 	int mainline;
- 
- 	char *gpg_sign;
-+	enum commit_msg_cleanup_mode default_msg_cleanup;
- 
- 	/* Merge strategy */
- 	char *strategy;
-@@ -47,6 +48,8 @@ struct replay_opts {
- };
- #define REPLAY_OPTS_INIT { -1 }
- 
-+/* Call this to setup defaults before parsing command line options */
-+void sequencer_init_config(struct replay_opts *opts);
- int sequencer_pick_revisions(struct replay_opts *opts);
- int sequencer_continue(struct replay_opts *opts);
- int sequencer_rollback(struct replay_opts *opts);
--- 
-2.15.1
-
+On Mon, Dec 11, 2017 at 4:05 PM, Derrick Stolee <stolee@gmail.com> wrote:
+> On 12/11/2017 8:44 AM, George Papanikolaou wrote:
+>>
+>> `git tag --points-at` can simply return if the given rev does not have
+>> any tags pointing to it. It's not a failure but it shouldn't return
+>> with 0 value.
+>
+>
+> I disagree. I think the 0 return means "I completed successfully" and the
+> empty output means "I didn't find any tags pointing to this object."
+>
+> Changing the return value here could break a lot of scripts out in the wi=
+ld,
+> and I consider this to be an "API" compatibility that needs to stay as-is=
+.
+>
+> What are you using "--points-at" where you need a nonzero exit code inste=
+ad
+> of a different indicator?
+>
+> Thanks,
+> -Stolee
+>
