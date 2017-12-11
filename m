@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3CB6B1F404
-	for <e@80x24.org>; Mon, 11 Dec 2017 23:35:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AB4A11F404
+	for <e@80x24.org>; Mon, 11 Dec 2017 23:35:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752048AbdLKXfg (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Dec 2017 18:35:36 -0500
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:45232 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751612AbdLKXff (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Dec 2017 18:35:35 -0500
-Received: by mail-wr0-f195.google.com with SMTP id h1so19274471wre.12
-        for <git@vger.kernel.org>; Mon, 11 Dec 2017 15:35:34 -0800 (PST)
+        id S1752228AbdLKXfl (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Dec 2017 18:35:41 -0500
+Received: from mail-wr0-f180.google.com ([209.85.128.180]:38296 "EHLO
+        mail-wr0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751492AbdLKXfl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Dec 2017 18:35:41 -0500
+Received: by mail-wr0-f180.google.com with SMTP id o2so19318377wro.5
+        for <git@vger.kernel.org>; Mon, 11 Dec 2017 15:35:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=CS21P6krh+P0hMUyO6WJxN8UH9sQvnoMPfbrI0OQu4w=;
-        b=jwb2cLEaqlObCwcUWiIpfUjWWzgbOpgoRmAgik6StasiI/UbD5lzC+X28bZL4OaclH
-         9JPRZEgpuqImFCkugmDXsuAQnihMj6bMZINlkdNlLBc/9h/CjRutygR9huh/59iAoFir
-         7RGYs9LIgrSS+uUZY6iH5tAPOr+48lUOKnWOro1X9oK38etk3B3xjG/uamQ9nCQlGnCM
-         wE65vkeoCIXyOcfpSMIVKmjCftGHZ4iiz601oOvNwXzgW42lgpj6q1Bql0ak/kZCSLmb
-         G5qkw3/jZ6TyTmgdOgugIvADHf3lEeYOaLQ1+tUYqcC0gNbyNCD6XCJpeLq4rxXyY4Hy
-         yeIA==
+        bh=Qfk5GQSZYh3d2NOekukf9lE/98gFeMQliwE7/Oqzo4c=;
+        b=eg9GETsWrCbJSB0WN9024528TLhOy/i7WoAZuRa+Fku5gR+ZlVlsdSrZchCYR/i403
+         08oMpf2g0c2CDTUCruzFrlyvEddphCDjzbu+GoolyjwOsFiVcORAzFipl1/YOouNTRcc
+         /oMmXqY9OIUd2k6Is8xXFloYmxNtZxLjrJlYKGuqMhMZP4kObWWsIBRfTPMmrxBnGpod
+         llMOZMBXBA2hT722QQZHRlqJGhtH1HvCdYkffKvJnkts1A75GuNV75a5jLDFiiC/WM9m
+         LV6Dgv0hJBOPFGz2DH4fhU9IaAyEY3uNDLmA/2akOQMYx6sf51LscN8xxyju1ORnuRZE
+         q5Gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=CS21P6krh+P0hMUyO6WJxN8UH9sQvnoMPfbrI0OQu4w=;
-        b=D54rs0tOPpEf4ZU5ySaWmrRaTKrDoQtTV2ncA1loPz25Hz/kGh2WYT+5BsT79DNM27
-         f6mkpdDkvLS2nETrwz04QeBebSkxGR+WnOfCXvAYEQXeVPd1LHWd27I+VSk0kDgICiRq
-         ZmPDCZRXx706vaq149FtSufya9lUh/0Y9j5XY+bGrbINTOrmfRmOjmnMdLySCh/+A9wE
-         but0LRbNwVCSPdfSY21EHpEKNjB97snNMXFwF0sprm6P1nJPuY7Rz0raZIFRdd+K/dBw
-         NTwYc2HSqQtVouGwjZOvEGFLGlZ8FufEbgjTlxySv+hlhbaTjYPwnI4S6uinXACDa4BH
-         8oLA==
-X-Gm-Message-State: AKGB3mJ3IojeIZnedtgGIdPs0i/XYYpJNjy96cGxzFyK3HbWJgX3TApq
-        GQsnzCVjBcz9jugPWE47xl3izg==
-X-Google-Smtp-Source: ACJfBouV2z1xEldKRcsx4LTcco7qDDVWZI5SN9juHRFf/KIFb+rhYGDjxn8wyYOBaw9X/BsSKx4Qrg==
-X-Received: by 10.223.139.67 with SMTP id v3mr1852575wra.70.1513035333853;
-        Mon, 11 Dec 2017 15:35:33 -0800 (PST)
+        bh=Qfk5GQSZYh3d2NOekukf9lE/98gFeMQliwE7/Oqzo4c=;
+        b=nq4yxudSHjJMb41Vz/hzD6kw2Zs3tACs8r8nrqWZYCogPcQAVxmWvpR1Ox4/KcyTLH
+         OccbZ5i8kyzmk0j13VwbDuiprEJ0+1+obvkSXovUVq0TwZ8y73sqJ9GLm/cgbOtZI3yG
+         luoOkVdI3GIyoU1jJ/1s8siQI0Sut1K2S+oGq/4GbVp6r8qOY4CnXVWWTcYuCqOKwMEe
+         P7ljImcvpEPNfCurqm9KfDZ39iA9k8ROVvt1y1OQb8TWFht+PJy/MaO6xPHrgkczEv94
+         YxCzg8yn4szGTMFUhDG66CWNjZcKmCz+3oPn9QltKXQXd6YvLSEvFMifbhXvty8MCLqF
+         Xxwg==
+X-Gm-Message-State: AKGB3mJcLA98A/H7LpK3PXR+mCf+4inFr2OSzarKNqV4j4HKhEHyFR8Y
+        bnGbKP7+l2+3w9DLTFyCiXwLcA==
+X-Google-Smtp-Source: ACJfBotLoorASoIr5DtFx5FZuFI2qQgdJ76/ib0K12vYW24gaSIeW1Dqj9YHTK/GDkt5ZUqxZ/OuNA==
+X-Received: by 10.223.151.197 with SMTP id t5mr1739634wrb.263.1513035339583;
+        Mon, 11 Dec 2017 15:35:39 -0800 (PST)
 Received: from localhost.localdomain (x590d9245.dyn.telefonica.de. [89.13.146.69])
-        by smtp.gmail.com with ESMTPSA id h12sm15408811wre.52.2017.12.11.15.35.33
+        by smtp.gmail.com with ESMTPSA id h12sm15408811wre.52.2017.12.11.15.35.38
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 11 Dec 2017 15:35:33 -0800 (PST)
+        Mon, 11 Dec 2017 15:35:39 -0800 (PST)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Lars Schneider <larsxschneider@gmail.com>,
         Thomas Gummerer <t.gummerer@gmail.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH 3/4] travis-ci: move setting environment variables to 'ci/lib-travisci.sh'
-Date:   Tue, 12 Dec 2017 00:34:45 +0100
-Message-Id: <20171211233446.10596-4-szeder.dev@gmail.com>
+Subject: [PATCH 4/4] travis-ci: set GIT_TEST_HTTPD in 'ci/lib-travisci.sh'
+Date:   Tue, 12 Dec 2017 00:34:46 +0100
+Message-Id: <20171211233446.10596-5-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.15.1.421.gc469ca1de
 In-Reply-To: <20171211233446.10596-1-szeder.dev@gmail.com>
 References: <20171101115535.15074-1-szeder.dev@gmail.com>
@@ -69,109 +69,76 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Our '.travis.yml's 'env.global' section sets a bunch of environment
-variables for all build jobs, though none of them actually affects all
-build jobs.  It's convenient for us, and in most cases it works just
-fine, because irrelevant environment variables are simply ignored.
+Commit 657343a60 (travis-ci: move Travis CI code into dedicated
+scripts, 2017-09-10) converted '.travis.yml's default 'before_install'
+scriptlet to the 'ci/install-dependencies.sh' script, and while doing
+so moved setting GIT_TEST_HTTPD=YesPlease for the 64-bit GCC and Clang
+Linux build jobs to that script.  This is wrong for two reasons:
 
-However, $GIT_SKIP_TESTS is an exception: it tells the test harness to
-skip the two test scripts that are prone to occasional failures on
-OSX, but as it's set for all build jobs those tests are not run in any
-of the build jobs that are capable to run them reliably, either.
+ - The purpose of that script is, as its name suggests, to install
+   dependencies, not to set any environment variables influencing
+   which tests should be run (though, arguably, this was already an
+   issue with the original 'before_install' scriptlet).
 
-Therefore $GIT_SKIP_TESTS should only be set in the OSX build jobs,
-but those build jobs are included in the build matrix implicitly (i.e.
-by combining the matrix keys 'os' and 'compiler'), and there is no way
-to set an environment variable only for a subset of those implicit
-build jobs.  (Unless we were to add new scriptlets to '.travis.yml',
-which is exactly the opposite direction that we took with commit
-657343a60 (travis-ci: move Travis CI code into dedicated scripts,
-2017-09-10)).
+ - Setting the variable has no effect anymore, because that script is
+   run in a separate shell process, and the variable won't be visible
+   in any of the other scripts, notably in 'ci/run-tests.sh'
+   responsible for, well, running the tests.
 
-So move setting $GIT_SKIP_TESTS to 'ci/lib-travisci.sh', where it can
-trivially be set only for the OSX build jobs.
+Luckily, this didn't have a negative effect on our Travis CI build
+jobs, because GIT_TEST_HTTPD is a tri-state variable defaulting to
+"auto" and a functioning web server was installed in those Linux build
+jobs, so the httpd tests were run anyway.
 
-Furthermore, move setting all other environment variables from
-'.travis.yml' to 'ci/lib-travisci.sh', too, because a couple of
-environment variables are already set there, and this way all
-environment variables will be set in the same place.  All the logic
-controlling our builds is already in the 'ci/*' scripts anyway, so
-there is really no good reason to keep the environment variables
-separately.
+Apparently the httpd tests run just fine without GIT_TEST_HTTPD being
+set, therefore we could simply remove this environment variable.
+However, if a bug were to creep in to change the Travis CI build
+environment to run the tests as root or to not install Apache, then
+the httpd tests would be skipped and the build job would still
+succeed.  We would only notice if someone actually were to look
+through the build job's trace log; but who would look at the trace log
+of a successful build job?!
+
+Since httpd tests are important, we do want to run them and we want to
+be loudly reminded if they can't be run.  Therefore, move setting
+GIT_TEST_HTTPD=YesPlease for the 64-bit GCC and Clang Linux build jobs
+to 'ci/lib-travisci.sh' to ensure that the build job fails when the
+httpd tests can't be run.  (We could set it in 'ci/run-tests.sh' just
+as well, but it's better to keep all environment variables in one
+place in 'ci/lib-travisci.sh'.)
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- .travis.yml        | 18 +-----------------
- ci/lib-travisci.sh | 21 +++++++++++++++++++++
- 2 files changed, 22 insertions(+), 17 deletions(-)
+ ci/install-dependencies.sh | 2 --
+ ci/lib-travisci.sh         | 2 ++
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/.travis.yml b/.travis.yml
-index 88435e11c..7c9aa0557 100644
---- a/.travis.yml
-+++ b/.travis.yml
-@@ -21,25 +21,9 @@ addons:
-     - git-svn
-     - apache2
+diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
+index 468788566..75a9fd247 100755
+--- a/ci/install-dependencies.sh
++++ b/ci/install-dependencies.sh
+@@ -10,8 +10,6 @@ LFSWHENCE=https://github.com/github/git-lfs/releases/download/v$LINUX_GIT_LFS_VE
  
--env:
--  global:
--    - DEVELOPER=1
--    # The Linux build installs the defined dependency versions below.
--    # The OS X build installs the latest available versions. Keep that
--    # in mind when you encounter a broken OS X build!
--    - LINUX_P4_VERSION="16.2"
--    - LINUX_GIT_LFS_VERSION="1.5.2"
--    - DEFAULT_TEST_TARGET=prove
--    - GIT_PROVE_OPTS="--timer --jobs 3 --state=failed,slow,save"
--    - GIT_TEST_OPTS="--verbose-log"
--    - GIT_TEST_CLONE_2GB=YesPlease
--    # t9810 occasionally fails on Travis CI OS X
--    # t9816 occasionally fails with "TAP out of sequence errors" on Travis CI OS X
--    - GIT_SKIP_TESTS="t9810 t9816"
--
- matrix:
-   include:
--    - env: jobname=GETTEXT_POISON GETTEXT_POSION=YesPlease
-+    - env: jobname=GETTEXT_POISON
-       os: linux
-       compiler:
-       addons:
-diff --git a/ci/lib-travisci.sh b/ci/lib-travisci.sh
-index b60e93797..e85571298 100755
---- a/ci/lib-travisci.sh
-+++ b/ci/lib-travisci.sh
-@@ -32,10 +32,31 @@ then
- 	jobname="$TRAVIS_OS_NAME-$CC"
- fi
- 
-+export DEVELOPER=1
-+export DEFAULT_TEST_TARGET=prove
-+export GIT_PROVE_OPTS="--timer --jobs 3 --state=failed,slow,save"
-+export GIT_TEST_OPTS="--verbose-log"
-+export GIT_TEST_CLONE_2GB=YesPlease
-+
  case "$jobname" in
  linux-clang|linux-gcc)
-+	# The Linux build installs the defined dependency versions below.
-+	# The OS X build installs the latest available versions. Keep that
-+	# in mind when you encounter a broken OS X build!
-+	export LINUX_P4_VERSION="16.2"
-+	export LINUX_GIT_LFS_VERSION="1.5.2"
+-	export GIT_TEST_HTTPD=YesPlease
+-
+ 	mkdir --parents "$P4_PATH"
+ 	pushd "$P4_PATH"
+ 		wget --quiet "$P4WHENCE/bin.linux26x86_64/p4d"
+diff --git a/ci/lib-travisci.sh b/ci/lib-travisci.sh
+index e85571298..331d3eb3a 100755
+--- a/ci/lib-travisci.sh
++++ b/ci/lib-travisci.sh
+@@ -40,6 +40,8 @@ export GIT_TEST_CLONE_2GB=YesPlease
+ 
+ case "$jobname" in
+ linux-clang|linux-gcc)
++	export GIT_TEST_HTTPD=YesPlease
 +
- 	P4_PATH="$(pwd)/custom/p4"
- 	GIT_LFS_PATH="$(pwd)/custom/git-lfs"
- 	export PATH="$GIT_LFS_PATH:$P4_PATH:$PATH"
- 	;;
-+osx-clang|osx-gcc)
-+	# t9810 occasionally fails on Travis CI OS X
-+	# t9816 occasionally fails with "TAP out of sequence errors" on
-+	# Travis CI OS X
-+	export GIT_SKIP_TESTS="t9810 t9816"
-+	;;
-+GETTEXT_POISON)
-+	export GETTEXT_POISON=YesPlease
-+	;;
- esac
+ 	# The Linux build installs the defined dependency versions below.
+ 	# The OS X build installs the latest available versions. Keep that
+ 	# in mind when you encounter a broken OS X build!
 -- 
 2.15.1.421.gc469ca1de
 
