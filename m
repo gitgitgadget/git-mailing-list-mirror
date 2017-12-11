@@ -7,120 +7,102 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 27ED51F407
-	for <e@80x24.org>; Mon, 11 Dec 2017 06:04:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F3E4B1F407
+	for <e@80x24.org>; Mon, 11 Dec 2017 06:20:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751434AbdLKF4G (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Dec 2017 00:56:06 -0500
-Received: from mail-it0-f51.google.com ([209.85.214.51]:36195 "EHLO
-        mail-it0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751260AbdLKF4F (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Dec 2017 00:56:05 -0500
-Received: by mail-it0-f51.google.com with SMTP id d16so13146501itj.1
-        for <git@vger.kernel.org>; Sun, 10 Dec 2017 21:56:05 -0800 (PST)
+        id S1751276AbdLKGRl (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Dec 2017 01:17:41 -0500
+Received: from mail-it0-f65.google.com ([209.85.214.65]:44865 "EHLO
+        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750709AbdLKGRk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Dec 2017 01:17:40 -0500
+Received: by mail-it0-f65.google.com with SMTP id b5so13309277itc.3
+        for <git@vger.kernel.org>; Sun, 10 Dec 2017 22:17:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=mK/GVpubz9HSDT1nf4Foivons42lZ/y2TYKAkGgPxak=;
-        b=MbwrofvlMgqALLUcib+Vbd5nSv3xFnzraCg7+d2PpXW6OtnvZb2ZwamgI9tC7PaKcw
-         E06V8zWHw19RFkOhaq3F5+R7UVLBb72kETX7FvqElIKrYTwx5koDT3Q8bSArYCoblQQP
-         hddTzlkvbEhV9KKNdOHO1BJXYqBRoe8sg+i7oiDWUKMCnyLYuwaCCEAp4e6jJ6Ehiy+u
-         R9oz6sMGIqK+KJ/u57N4lqetZja645+ys8R/Rg+zfeGwLUArEzSw4hLAGIprSg40JLo1
-         FcagY3q6ELdb+Kimvi5dGTPlw6ofAS1vT9qLH3oPdcStt6SD5tHd/iNi7T2K6vkW7SOv
-         13Eg==
+        bh=kce7Bupg+4Ju0B//HbpaSVTP2NZklpzI4fFtt9DU4zU=;
+        b=UA0wWsOnqdam3TtW8TNDzkg7k7b9b/gwyanuEMj0p2jJf4BHcGu2f/b2uooisqgM43
+         9agVKb5kufwObSfkM3+4+OJV0q0dLuZlQVvJUDDekuByLSpgK44Net7+rEEziwPqUyp6
+         uAeV9Z7a/dJBBVnLvgZHAGwbFnghkwDL2yHQ+OpTxKohcduD/qoWJct08p0HhaLV1rHd
+         tq05A74MUFIeZ91HJSyZPfp1ZB/hPiayV57jgBUivv5YMKosb7XA/etT+2TuI2RcRPwy
+         E0lh517L4jNX/6nBz89/4A6bqNzDJQ7Rx0mK4CIHvOFRMk5tFF09lCljFKunwljRpoco
+         SHkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=mK/GVpubz9HSDT1nf4Foivons42lZ/y2TYKAkGgPxak=;
-        b=a7a9XF4eCbLEo3+QFEkUuxeL6zbZmcoSDm7r98LNdPG6oDfyCQZjUQ27jVAXukrwJc
-         fVPryI9O0qYgM43zkNFN5iH93C5iQKACfBK0tSWotsfMX0t0cedTUOCIle9lWli89FKJ
-         zzg/NVpC8NK5OLRB3qHMiBQSDi/tcqOc1EP3jdRWNf16PUaHjmNcJoiES4Dyk5OcvbBh
-         FN2nfwXZLcET4szB65LhoDxwWeDfsifHnOBzqvUq9iTIJl/tk35fFgBdN96jlESlZYaz
-         ZUFjpQNZDzHVc9S0AwJjnZDRYh0LPsM/jOnDtcQ/mgJemKeSItShM0NxP2bVitb6UbCX
-         ZSBg==
-X-Gm-Message-State: AKGB3mKCsWEFU8lRLKe177n6/DqzfOClcrQwSBMg5uonrxyFnFhYwr5Y
-        4eF+e8Lyo0YEGRNqp+494a3KMgmnZUVSpKTGHfk=
-X-Google-Smtp-Source: AGs4zMZh0YNnbtsHFB05+7rFutNhIDAe//RknqZgreZMO27vZ0zLiO0SKRH+X3/O3q/cEVVpiXhXDK901+ixuAzi9z8=
-X-Received: by 10.107.81.2 with SMTP id f2mr23438461iob.282.1512971764396;
- Sun, 10 Dec 2017 21:56:04 -0800 (PST)
+        bh=kce7Bupg+4Ju0B//HbpaSVTP2NZklpzI4fFtt9DU4zU=;
+        b=JipCb3Qq/g71ri5bUpkMsmqeo27TMJLCMsyKtSRbzPNjQ/bjmBCBLizZ0kMWe51rXD
+         VPOxxne7vyPXa+6RHeoqZYuBTzsCQAJhFuG2DdP9nY2Ps7x+F5W80nvwic+LXBrXjQ3d
+         3ptmsRNTWRF9RaLs67P+oKJ4AOzWgYsOBxB5i04D9dnv0AHLfvVl47UnzBwL7aRIJXY9
+         w6VH3KAzkXXD2OGgXlwoSflGYfvr4b5LTjnfR1EbJOlzL+eWY7UAfmBvwpelzLuX6r6v
+         YhUeuzcvYGIWk+lW0NLiYdk2csbfw3V6JOMZgkdDL+T8zYSRuknr6NoT3asMNAAvmmW4
+         MTew==
+X-Gm-Message-State: AJaThX4m1oqYGFUSO+WzA+Y/rCyI/+SVXqkPlPkul81tWrdwrCaZwE9u
+        B+nkCIWGWpvCaT1hpVCDvdI+MZjOIYq9iqpuYoo=
+X-Google-Smtp-Source: AGs4zMbjtAEbXZXzn9LLzcYSaBV36bNs86l46CleNa8AJyfAsMFW4QCQTrp27CpDD6B7AXBp14VybSZIWGtg2JwxFlg=
+X-Received: by 10.107.25.204 with SMTP id 195mr54754333ioz.67.1512973059431;
+ Sun, 10 Dec 2017 22:17:39 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.79.28.137 with HTTP; Sun, 10 Dec 2017 21:56:03 -0800 (PST)
-In-Reply-To: <20171210143914.GA19894@sigill.intra.peff.net>
-References: <20171209204013.10997-1-chriscool@tuxfamily.org>
- <20171210143118.GB19453@sigill.intra.peff.net> <20171210143914.GA19894@sigill.intra.peff.net>
+Received: by 10.79.28.137 with HTTP; Sun, 10 Dec 2017 22:17:38 -0800 (PST)
+In-Reply-To: <20171205165014.64488-4-git@jeffhostetler.com>
+References: <20171205165014.64488-1-git@jeffhostetler.com> <20171205165014.64488-4-git@jeffhostetler.com>
 From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 11 Dec 2017 06:56:03 +0100
-Message-ID: <CAP8UFD26ZJQWtfzETHXjPoKWyL0f3qEuimohVysYo0WtmpSyBg@mail.gmail.com>
-Subject: Re: [PATCH v3 1/7] git-compat-util: introduce skip_to_optional_arg()
-To:     Jeff King <peff@peff.net>
+Date:   Mon, 11 Dec 2017 07:17:38 +0100
+Message-ID: <CAP8UFD1A8+tRqeY5v9gbbUHY6W6fS2LS-7Z3zCqiBZQ8ZTHkNg@mail.gmail.com>
+Subject: Re: [PATCH v6 3/3] rev-list: support --no-filter argument
+To:     Jeff Hostetler <git@jeffhostetler.com>
 Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Donald R Laster Jr <laster@dlaster.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
+        Jeff King <peff@peff.net>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Dec 10, 2017 at 3:39 PM, Jeff King <peff@peff.net> wrote:
-> On Sun, Dec 10, 2017 at 09:31:18AM -0500, Jeff King wrote:
+On Tue, Dec 5, 2017 at 5:50 PM, Jeff Hostetler <git@jeffhostetler.com> wrote:
+> From: Jeff Hostetler <jeffhost@microsoft.com>
 >
->> On Sat, Dec 09, 2017 at 09:40:07PM +0100, Christian Couder wrote:
->>
->> > The changes compared to v2 are:
->> >
->> >   - s/_val/_arg/ in the name of the functions
->> >   - s/val/arg/ in the name of the third argument of the functions
->> >   - works with NULL as third argument of the functions
->>
->> This whole series looks OK to me, but this third point made me wonder:
->> what would be the use of allowing NULL for the "arg" parameter?
->>
->> I didn't see any use of this in the series, and I'm having trouble
->> figuring out how it would be useful. E.g., if I do:
->>
->>   if (skip_to_optional_arg(arg, "--foo", NULL))
->>      ...
->>
->> what can I do in "..."? I know we matched _some_ type of "--foo", but I
->> cannot know whether it was "--foo" or "--foo=bar", nor what "bar" is. It
->> could only be used by some kind of vague validator to say "well, at
->> least this looks like an option that I _could_ parse if I wanted to".
->>
->> So I guess I don't mind it, as it does the most reasonable thing it can
->> when passed NULL, but I would be surprised if we ever actually exercise
->> the code path.
+> Teach rev-list to support --no-filter to override a
+> previous --filter=<filter_spec> argument.  This is
+> to be consistent with commands that use OPT_PARSE
+> macros.
 >
-> And of course as soon as I sent this, I went back and double-checked.
-> And indeed I totally missed this call:
+> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+> ---
+>  Documentation/rev-list-options.txt | 15 ++++++++++-----
+>  builtin/rev-list.c                 |  4 ++++
+>  2 files changed, 14 insertions(+), 5 deletions(-)
 >
->   +       else if (starts_with(arg, "-B") ||
->   +                skip_to_optional_arg(arg, "--break-rewrites", NULL)) {
->           if ((options->break_opt = diff_scoreopt_parse(arg)) == -1)
+> diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+> index 11bb87f..8d8b7f4 100644
+> --- a/Documentation/rev-list-options.txt
+> +++ b/Documentation/rev-list-options.txt
+> @@ -715,16 +715,21 @@ ifdef::git-rev-list[]
+>  The form '--filter=blob:none' omits all blobs.
+>  +
+>  The form '--filter=blob:limit=<n>[kmg]' omits blobs larger than n bytes
+> -or units.  The value may be zero.
+> +or units.  n may be zero.  The suffixes k, m, and g can be used to name
 
-Yeah, calls like this were discussed in:
-https://public-inbox.org/git/xmqqh8t6o9me.fsf@gitster.mtv.corp.google.com/
+"'<n>' may be zero" would be more consistent with other parts of this file.
+s/k, m, and g/'k', 'm', and 'g'/ could also help.
 
-> So that's kind-of weird, because we are parsing "-B", etc, and then
-> expecting it to be _reparsed_ by diff_scoreopt_parse. So the two
-> callsites must always match. IMHO this ought to do either:
->
->   - we should just ask diff_scoreopt_parser to tell us if this was a
->     valid option that it understood
->
-> or
->
->   - parse up to the "=", and then ask the scoreopt parser to parse the
->     remainder. This would require us passing 'B'/'C'/'M' to the
->     function ourselves, I think that's a better pattern. It means we
->     could reuse the parser for things like config values if we wanted to
->     (our current diff.renames is a bool, but it would not be
->     unreasonable for it to take a score).
->
-> None of that is a mess of your creation, though, so I'm OK punting on it
-> for now.
+> +units in KiB, MiB, or GiB.  For example, 'blob:limit=1k' is the same
+> +as 'blob:limit=1024'.
+>  +
+> -The form '--filter=sparse:oid=<oid-ish>' uses a sparse-checkout
+> -specification contained in the object (or the object that the expression
+> -evaluates to) to omit blobs that would not be not required for a
+> -sparse checkout on the requested refs.
+> +The form '--filter=sparse:oid=<blob-ish>' uses a sparse-checkout
+> +specification contained in the blob (or blob-expression) '<blob-ish>'
 
-Yeah, this could be part of the #leftoverbits.
+For example here '<blob-ish>' is used.
+
+> +to omit blobs that would not be not required for a sparse checkout on
+> +the requested refs.
