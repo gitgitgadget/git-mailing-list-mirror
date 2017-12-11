@@ -7,57 +7,56 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B93911F407
-	for <e@80x24.org>; Mon, 11 Dec 2017 01:00:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0FFA91F407
+	for <e@80x24.org>; Mon, 11 Dec 2017 01:13:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752078AbdLKBAM (ORCPT <rfc822;e@80x24.org>);
-        Sun, 10 Dec 2017 20:00:12 -0500
-Received: from mail-lf0-f66.google.com ([209.85.215.66]:46869 "EHLO
-        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752044AbdLKBAL (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Dec 2017 20:00:11 -0500
-Received: by mail-lf0-f66.google.com with SMTP id r143so17334790lfe.13
-        for <git@vger.kernel.org>; Sun, 10 Dec 2017 17:00:10 -0800 (PST)
+        id S1751994AbdLKBNX (ORCPT <rfc822;e@80x24.org>);
+        Sun, 10 Dec 2017 20:13:23 -0500
+Received: from mail-lf0-f68.google.com ([209.85.215.68]:46618 "EHLO
+        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751420AbdLKBNW (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Dec 2017 20:13:22 -0500
+Received: by mail-lf0-f68.google.com with SMTP id r143so17355070lfe.13
+        for <git@vger.kernel.org>; Sun, 10 Dec 2017 17:13:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:subject:from:in-reply-to:date:cc
          :content-transfer-encoding:message-id:references:to;
-        bh=1OrS6LVhFlh1bBA/5G1A8OEF9r7s9qSEaiH110VKaLs=;
-        b=SkN0tjBgiI0y0rWFWRAPcI/IOislBOSiq3NKUM+irkTpwukLB6utGaZnhFBOa6zO6p
-         /zWlqIFqMpSFNBoC6zXM4WnfdOQ79TaowRkOd9pf34bvQOK6ojL57Lkej/mf1rnYiwU9
-         4TGJBmr+9slHWf9lTDoKdOEgwBGuQ+Zn3FfT7/25OpKArl0HeNb/2MtssSL1k91yKiw8
-         pG3YueOjqaZjnPkHqInlFtNvcNgOuxFz5ZMAvGgzDxG3casna5jsAy+CjZjerU68nJPq
-         WpCcAFccc1b2fT1laPXxEe0fJe0c+9gvrahQ1DZRtjoICP94a+LCTJ4Vp0cmH0BnmqRa
-         QxkA==
+        bh=2kTZpHPlhy+oLQGGUEpXuhDMSh3EKrtKwLNcAU1883E=;
+        b=YivMKq4uqyO3ExomRccXlCAVViHBj8SsOstrqbyrtFJj6aSUMftsrmbaxHJDXF13JG
+         4UYJ8EXj+4JfJWX8ye4BmVrT4nZjOl82hTArEakDnn7ZgW8utwDcFFPGGx+uQXtAFkUx
+         pPysYzjSQtxDQW+LMi8fnlh2WiU9rpZwWvj9L8iz5AoTvp1hr0isuH0kMLPiLXn3FhLQ
+         SlWHmL/sj7LRjGIuJc1HhHmrXn7oniv8SlaHZ80PRZ9F6xeCRF4KTRgbw3n4LAbVs+Oc
+         qOI3NRsS3BDBA+8Uipsnn8M2jJXnEaEmNdoyABbTIQ4ujvzfw7Bx9FlvIANPE5zyBdwG
+         a6nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
          :content-transfer-encoding:message-id:references:to;
-        bh=1OrS6LVhFlh1bBA/5G1A8OEF9r7s9qSEaiH110VKaLs=;
-        b=h72tAndxjpr/V+bmAPWT3nH4lVup8M0MfUKZdJnI7Lai9bmRivQJeRe5eZZl8rkrDP
-         EV60ifSoVXMvKcuXO50dYzbyhiXiPf2mqturVKGdeqbZ4fFd55O/yFzjR3Y+pRf7KlRH
-         VbjqETs84KCXhEEHI2a6qBw5pdQwSheS9VJfbLG1mE2+UUqTCUFINsj9iFoY1V4pMvZW
-         rfu2ZrH2k1gojD/NHzmHdhKrX2MpPCcMyAGymVmg+X55p0fzoXTbeG0KAyZmqEoK2XHF
-         nEDNBgZcKc2kE5jROy47Hbr76qMJ88NAX7AyW/xmu1IyYoO7B1I/R/bjd+a6fFiVy011
-         SMew==
-X-Gm-Message-State: AJaThX7+gQEMEWejBDoVCaGGH251nmbrerRD5l9yHQ3C3/Aeo+Ufg3+0
-        pfY3o7pKLLDTqdtU+oe0Zto=
-X-Google-Smtp-Source: AGs4zMbeJEmN3Nxx6gG6EUMfqG7tJL8KZPFvc4H8gVNvKkpeAbr0bW1N9KAo5cRP+Hb9fhNTO3pV0Q==
-X-Received: by 10.25.163.17 with SMTP id m17mr17268838lfe.88.1512954010180;
-        Sun, 10 Dec 2017 17:00:10 -0800 (PST)
+        bh=2kTZpHPlhy+oLQGGUEpXuhDMSh3EKrtKwLNcAU1883E=;
+        b=BTq8MSQxjwnBWVs+duuT7yBHBRNwCAjs/Nj5fFj33DCHOZB/oD3QDQxvOkmyz33/xh
+         OYvJ9WuhCfUdB0PNlY6gjg2U38deS80JqSJpWphD4ktXLDcaZnP5yasE9uQY3k0K2NnQ
+         cUgrFO4lkRfWQt2fC73Kv30MJfd5ZlfQUBxvaKHe+tBO6OsrHyrz0qpDVbhm/E6seqx0
+         FfDtvPn0YNnhhZNyL6LeWE2N2vZdNOumdV904OahjUYNrxwV7VH2Hpxlpz4ZvW0MUuKC
+         oa/6tFSuQ0L5SJoG6Pt5W939AjtmNiEjsyq0dEbyg10J+fMWF2vUVSn4oQUx8yYg1ywy
+         L5Zw==
+X-Gm-Message-State: AJaThX5HWN8lB1CDzCE8ZEhofFeKgdMZGFXFu2QomRKJhhbKKf4yyLhi
+        L/mTnHLEvUzX1HLakQnnCRo=
+X-Google-Smtp-Source: AGs4zMYacLPDVO9U77mVSOKTVO6R93+LLAqrdoigqEH7usG09cC94ap8JD1PL6imZsWEhs3yFezl3w==
+X-Received: by 10.25.234.143 with SMTP id y15mr17248565lfi.12.1512954801300;
+        Sun, 10 Dec 2017 17:13:21 -0800 (PST)
 Received: from [192.168.0.102] ([46.98.114.168])
-        by smtp.gmail.com with ESMTPSA id i18sm2568160ljd.27.2017.12.10.17.00.08
+        by smtp.gmail.com with ESMTPSA id y3sm2538303ljd.62.2017.12.10.17.13.20
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 10 Dec 2017 17:00:09 -0800 (PST)
+        Sun, 10 Dec 2017 17:13:20 -0800 (PST)
 Content-Type: text/plain; charset=us-ascii
 Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
 Subject: Re: [SCRIPT/RFC 0/3] git-commit --onto-parent (three-way
  merge,noworking tree file changes)
 From:   Alexei Lozovsky <a.lozovsky@gmail.com>
-In-Reply-To: <82da4317-6b50-f60d-6d8f-50fc47579c56@talktalk.net>
-Date:   Mon, 11 Dec 2017 03:00:07 +0200
-Cc:     Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
+In-Reply-To: <36d2b05b-8b68-a157-99ed-44050ac34ab6@gmail.com>
+Date:   Mon, 11 Dec 2017 03:13:19 +0200
+Cc:     phillip.wood@dunelm.org.uk, Junio C Hamano <gitster@pobox.com>,
         Johannes Sixt <j6t@kdbg.org>,
         Git Mailing List <git@vger.kernel.org>,
         Nikolay Shustov <nikolay.shustov@gmail.com>,
@@ -67,7 +66,7 @@ Cc:     Igor Djordjevic <igor.d.djordjevic@gmail.com>,
         Shawn Pearce <spearce@spearce.org>,
         Sam Vilain <sam@vilain.net>, Jakub Narebski <jnareb@gmail.com>
 Content-Transfer-Encoding: 7bit
-Message-Id: <EC2DA0F0-7DA2-412B-AB9E-5F8B0CD12F57@gmail.com>
+Message-Id: <1BA66B37-0BD2-417F-AAD5-3F3FA83A3A5E@gmail.com>
 References: <8998e832-f49f-4de4-eb8d-a7934fba97b5@gmail.com>
  <d5f243a5-6e35-f3fc-4daf-6e1376bef897@kdbg.org>
  <203a75c8-0c58-253c-2c18-05450f7ae49b@gmail.com>
@@ -85,24 +84,36 @@ References: <8998e832-f49f-4de4-eb8d-a7934fba97b5@gmail.com>
  <4a92e34c-d713-25d3-e1ac-100525011d3f@talktalk.net>
  <da74fb2c-c452-4716-91d2-182f945b4254@gmail.com>
  <82da4317-6b50-f60d-6d8f-50fc47579c56@talktalk.net>
-To:     phillip.wood@dunelm.org.uk
+ <36d2b05b-8b68-a157-99ed-44050ac34ab6@gmail.com>
+To:     Igor Djordjevic <igor.d.djordjevic@gmail.com>
 X-Mailer: Apple Mail (2.3273)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Dec 10, 2017, at 14:22, Phillip Wood wrote:
+On Dec 11, 2017, at 01:17, Igor Djordjevic wrote:
+> On 10/12/2017 13:22, Phillip Wood wrote:
+>> I understood Alexei to mean that it was merging the f!A into A that 
+>> caused conflicts due to the fact that f!A has conflicting context
+>> that was introduced in B. After all B' the rebased B is merge A A' B
+>> whether it is created by 'rebase --autosquash' or 'rebase --onto'. A'
+>> must be the same in both cases or one is applying a different fix.
 > 
-> I've found conflicts arising from moving fixups can be quite common, so
-> these days I tend to edit the commit to be fixed up directly. I have a
-> script git-amend that does something like
-> 
-> target=$(git rev-parse --verify "$1") && GIT_SEQUENCE_EDITOR="sed -i
-> s/^pick $target/edit $target/" rebase -ik $target^
-> 
-> so I can just type 'git amend <commit>' to make this easier
+> Yes, I understand and agree you might be right, what you are talking 
+> about being what he actually _meant_, but because that is not what he 
+> _wrote_, I wanted to see an example of it, (still?) hoping that he 
+> really did mean what he wrote (commit B being the problematic one), 
+> as then there would be a possibility for improvement.
 
-Hm... I just realized that using "edit" command during interactive rebase
-should probably be the same as the strategy with a temporary branch and
-rebase --onto I described earlier. I should fix my habits, I guess.
+I'm not really good at remembering the exact details, so if you ask
+for a testimony then I'm not sure whether it's the conflicts in the
+fixups or the later commits that I was annoyed by :) I'm also not
+really versed in the technical details of rebasing, so I cannot give
+an educated guess on which one is more likely to cause conflicts.
+
+> Still, I hope for that example...! :D
+
+I keep this thread pinned, so I hope to provide a more concrete example
+as soon as I encounter the conflicting situation again in the wild. I'm
+not sure that I am able to construct a relevant example artificially.
