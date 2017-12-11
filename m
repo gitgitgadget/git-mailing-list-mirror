@@ -2,127 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 286841F404
-	for <e@80x24.org>; Mon, 11 Dec 2017 19:19:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D08AF1F404
+	for <e@80x24.org>; Mon, 11 Dec 2017 19:47:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752656AbdLKTTT (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Dec 2017 14:19:19 -0500
-Received: from mail-it0-f46.google.com ([209.85.214.46]:46139 "EHLO
-        mail-it0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751965AbdLKTTS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Dec 2017 14:19:18 -0500
-Received: by mail-it0-f46.google.com with SMTP id t1so18483655ite.5
-        for <git@vger.kernel.org>; Mon, 11 Dec 2017 11:19:18 -0800 (PST)
+        id S1750929AbdLKTrN (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Dec 2017 14:47:13 -0500
+Received: from mail-it0-f47.google.com ([209.85.214.47]:34535 "EHLO
+        mail-it0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752048AbdLKTrI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Dec 2017 14:47:08 -0500
+Received: by mail-it0-f47.google.com with SMTP id m11so14130824iti.1
+        for <git@vger.kernel.org>; Mon, 11 Dec 2017 11:47:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=tR6Bcv+T9i2kjQ5F+EbJCpNZfUi73pQhek/I43fGDWA=;
-        b=wJV4f8BOX9zqWWHu5aj8WZI6gyw8jscGHNOlCciZdQ+4I+pQ1cTi11l+MhBfnkaij1
-         uJUi5+sWOpVTq5teKSPwwh43k2AOfV6/sJti++dJdX1fgT65sMZd53kKT3YJJSbZn8Iw
-         rLwd4KC2YCw4nCAoR3iji5vTnqp3NvC8P/d9HcVkO053yTbSjE4CBxE0V/jauvwXtwhc
-         tlwzD6O065qRdwLUl4+EcwkT0bAhAqtcoQT2No/uyhk1EcvbB7IuWeXFBZ6U24Q8aSkq
-         diXUeLidkgFvek0pscZEQbM8f1adkUIr24Fn7rr+bbwIW6YYxdkVa2uUPv0eZA4ZbP0i
-         RjaA==
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=tuwnp8AQYSYI+Uf7WFoZHGUdGZHRlpi9ym9YmPUT69E=;
+        b=cUkkxkUSqw2X0DzG9n+zsgoSqVS4AA2WArZttoNqPyZXr8qMzvMLl6I3WpoLLWNxzS
+         cQTuIpv8nDQ0H/NUYk45Vym9jDj+ZduZ3YEfKJltWpcCZitIFNBA3JgDNF1B4qryQhOi
+         jZgT6u3hBSIBB8VSsAJGSxd2KSKWYBrvr20FYPhoapQgvNFGyYEcKU5CWYJAFrkKkmi4
+         cE+DwZKCL6WMuQDwQ365pdORCAk3WsI/kWiFtIOkpE5vNpaodOHDLoeY3d2+T+snIfkG
+         URVz0KiKN94AX/XP8WjbLLKO4qn3FTzIpneGPiNypuCAEHhunfp7TzgS0wCLVfcPm/D9
+         38rA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=tR6Bcv+T9i2kjQ5F+EbJCpNZfUi73pQhek/I43fGDWA=;
-        b=mhfzRMbI/uyZNy/0JJLfVYBpRacPmLMnDg5Z3aTDvJtM+7os5ve8FO2NgZcCHDrivf
-         9R8pgwMg8MU/CngCbMDmclXSIBJjA1NDxRyTCnkFtiZRu2sYXZ7t8ZdAgkiFbfFUOPdw
-         3UiLlLCkM4YomFe9TlH5a4E+mhN8WQqBJPsH6TH/x1jCSdkmbxbMP6UMffRKCPJY4Aio
-         75EoxQYwIO5POA20BGRbXdGDBpcmlc0f/YN9nyePVhLIHSgI+5LNyKoFg5TaS7rjKS1p
-         gRHSXq5ifRqtwDGv4TN1U8qJ8uHyOIlmuVjgqBOLG//cXIr/cv3LFYjQDyXae0rMix5m
-         t/NA==
-X-Gm-Message-State: AKGB3mJ8O4k+FX9m5PMsbweIHubLC2hiKznDA/m0horFx8u6s7251Net
-        dC/USoryml8o6mLClBYxI42yrZZdwnM=
-X-Google-Smtp-Source: ACJfBosAqYRx8TOB7oiZ2H7MiTa9LdElAXrL1AoeFyOUK/GkfXju9pID7Exuh125OOyi0UjycjVhyA==
-X-Received: by 10.36.7.80 with SMTP id f77mr2352980itf.77.1513019957948;
-        Mon, 11 Dec 2017 11:19:17 -0800 (PST)
-Received: from twelve3.mtv.corp.google.com ([2620:0:100e:422:909e:f3a:a55a:80a])
-        by smtp.gmail.com with ESMTPSA id 30sm6778804iop.47.2017.12.11.11.19.16
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 11 Dec 2017 11:19:17 -0800 (PST)
-Date:   Mon, 11 Dec 2017 11:19:16 -0800
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     Jeff Hostetler <git@jeffhostetler.com>, git@vger.kernel.org,
-        gitster@pobox.com, peff@peff.net,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v7 00/16] Parial clone part 3: clone, fetch, fetch-pack,
- upload-pack, and tests
-Message-Id: <20171211111916.b3ea2deacba67f6e8416d285@google.com>
-In-Reply-To: <20171208223010.GF140529@google.com>
-References: <20171208155851.855-1-git@jeffhostetler.com>
-        <20171208223010.GF140529@google.com>
-X-Mailer: Sylpheed 3.4.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=tuwnp8AQYSYI+Uf7WFoZHGUdGZHRlpi9ym9YmPUT69E=;
+        b=OK4x/Dp0fKklsg4fzLBnQjcX1yzsD/ixW6lpZtiakJQE6RyccPIN2b75GLnOttftWh
+         5s1Dm+hG7fgCuC6GVf/DIRZ7Q5ukGEMl/AIGHpjoqFltmZfzM5MuzTSrfyaZGP66Nbah
+         VNrNcL3swTW7Zkv+1twLsOyal5jclgZwgEA9PS3fETRBf+e7b11Mzb4mejw8lIabFbJf
+         5JZaN15cnGPl7CTuShRUQTOUjew03rJGfdbCVb0633GWXD+dDJqtSmfnVNUzaawdTIWp
+         wSypy5UbnO7WzO1cy6K7rosmD/XCYBvR5yRj9oriJ/h+4a3aKIJf5W3dcG7Xpf3YkUq5
+         tHvQ==
+X-Gm-Message-State: AKGB3mLaMeHu4sv2/PH7uD9Vdkip7+QJs7iMR2R5vxP2HS76XNj/HEXf
+        I1pfO0HIVbUwGuEu2JPUZfqKx3vTR6Da0VDcbCE=
+X-Google-Smtp-Source: ACJfBouxv3VUOYwIxiSIvY+v0UcWVgnbPwd5KE6kYQ0swHPQwPp4Iy4Ml8aXyduIGoECmktkDXixtxBnYakX9AKzejc=
+X-Received: by 10.36.39.8 with SMTP id g8mr2808793ita.42.1513021627673; Mon,
+ 11 Dec 2017 11:47:07 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.107.19.167 with HTTP; Mon, 11 Dec 2017 11:46:46 -0800 (PST)
+In-Reply-To: <20171211172615.jfsjthkvs4itjpcn@laptop>
+References: <20171116154814.23785-1-alex.bennee@linaro.org>
+ <CAPig+cTXq6jSN9f2_xyj=Jfv_cg2kUFUtA5uVkZDrRRSi2x7vg@mail.gmail.com>
+ <87wp2jwe9o.fsf@linaro.org> <20171121205206.fvwjkkwhil4abmmk@laptop>
+ <xmqq8tezyu3g.fsf@gitster.mtv.corp.google.com> <87mv2p89wu.fsf@linaro.org> <20171211172615.jfsjthkvs4itjpcn@laptop>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Mon, 11 Dec 2017 20:46:46 +0100
+Message-ID: <CACBZZX58KpQ7=V8GUFfxuMQq_Ar6cmmoXyPx_umUTbU19+0LCw@mail.gmail.com>
+Subject: Re: [PATCH] git-send-email: fix get_maintainer.pl regression
+To:     Thomas Adam <thomas@xteddy.org>
+Cc:     =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>,
+        Matthieu Moy <Matthieu.Moy@imag.fr>,
+        Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 8 Dec 2017 14:30:10 -0800
-Brandon Williams <bmwill@google.com> wrote:
+On Mon, Dec 11, 2017 at 6:26 PM, Thomas Adam <thomas@xteddy.org> wrote:
+> On Mon, Dec 11, 2017 at 05:13:53PM +0000, Alex Benn=C3=A9e wrote:
+>> So have we come to a consensus about the best solution here?
+>>
+>> I'm perfectly happy to send a reversion patch because to be honest
+>> hacking on a bunch of perl to handle special mail cases is not my idea
+>> of fun spare time hacking ;-)
+>>
+>> I guess the full solution is to make Mail::Address a hard dependency?
+>
+> This is what I was suggesting, and then as a follow-up, addressing the po=
+int
+> that there's a bunch of require() hacks to also get around needing
+> hard-dependencies.
 
-> I just finished reading through parts 1-3.  Overall I like the series.
-> There are a few point's that I'm not a big fan of but i wasn't able to
-> come up with a better alternative.  One of these being the need for a
-> global variable to tell the fetch-object logic to not go to the server
-> to try and fetch a missing object.
+I don't know what the right move is here, but just saying that this
+could also be built on top of my "Git::Error" wrapper which I added in
+"Makefile: replace perl/Makefile.PL with simple make rules" which is
+currently cooking.
 
-I didn't really like that approach too but I went with that because,
-like you, I couldn't come up with a better one. The main issue is that
-too many functions (e.g. parse_commit() in commit.c) indirectly read
-objects, and I couldn't find a better way to control them all. Ideally,
-we should have a "struct object_store" (or maybe "struct repository"
-could do this too) on which we can set "fetch_if_missing", and have all
-object-reading functions take a pointer to this struct. Or completely
-separate the object-reading and object-parsing code (e.g. commit.c
-should not be able to read objects at all). Or both.
-
-Any of these would be major undertakings, though, and there are good
-reasons for why the same function does the reading and parsing (for
-example, parse_commit() does not perform any reading if the object has
-been already parsed).
-
-> One other thing i noticed was it looks like when you discover that you
-> are missing a blob you you'll try to fault it in from the server without
-> first checking its an object the server would even have.  Shouldn't you
-> first do a check to verify that the object in question is a promised
-> object before you go out to contact the server to request it?  You may
-> have already ruled this out for some reason I'm not aware of (maybe its
-> too costly to compute?).
-
-It is quite costly to compute - in the worst case, we would need to read
-every object in every promisor packfile of one or more certain types
-(e.g. if we know that we're fetching a blob, we need to read every tree)
-to find out if the object we want is a promisor object.
-
-Such a check would be better at surfacing mistakes (e.g. the user giving
-the wrong SHA-1) early, but beyond that, I don't think that having the
-check is very important. Consider these two very common situations:
-
- (1) Fetching a single branch by its tip's SHA-1. A naive implementation
-     will first check if we have that SHA-1, which triggers the dynamic
-     fetch (since it is an object read), and assuming success, notice
-     that we indeed have that tip, and not fetch anything else. The
-     check you describe will avoid this situation.
- (2) Dynamically fetching a missing blob by its SHA-1. A naive
-     implementation will first check if we have that SHA-1, which
-     triggers the dynamic fetch, and that fetch will first check if we
-     have that SHA-1, and so on (thus, an infinite loop). The check you
-     describe will not avoid that situation.
-
-The check solves (1), but we still need a solution to (2) - I used
-"fetch_if_missing", as discussed in your previous question and my answer
-to that. A solution to (2) is usually also a solution to (1), so the
-check wouldn't help much here.
+I.e. we'd just ship a copy of Email::Valid and Mail::Address in
+perl/Git/FromCPAN/, use a wrapper to load them, and then we wouldn't
+need to if/else this at the code level, just always use the module,
+and it would work even on core perl.
