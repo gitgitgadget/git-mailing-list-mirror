@@ -2,57 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 52B041F404
-	for <e@80x24.org>; Mon, 11 Dec 2017 18:35:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C49921F404
+	for <e@80x24.org>; Mon, 11 Dec 2017 18:38:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752160AbdLKSfE (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Dec 2017 13:35:04 -0500
-Received: from mail-it0-f65.google.com ([209.85.214.65]:33146 "EHLO
-        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751274AbdLKSfD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Dec 2017 13:35:03 -0500
-Received: by mail-it0-f65.google.com with SMTP id o130so13865946itg.0
-        for <git@vger.kernel.org>; Mon, 11 Dec 2017 10:35:03 -0800 (PST)
+        id S1751678AbdLKSiQ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Dec 2017 13:38:16 -0500
+Received: from mail-it0-f67.google.com ([209.85.214.67]:36593 "EHLO
+        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751307AbdLKSiP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Dec 2017 13:38:15 -0500
+Received: by mail-it0-f67.google.com with SMTP id d16so18145301itj.1
+        for <git@vger.kernel.org>; Mon, 11 Dec 2017 10:38:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlemail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=pwD1OclVNPXNsF3EWVkGcon8dOdBOWPEoU2P5156veU=;
-        b=BOQmWEUCQaq+ZfvZ3EyDZmEELHGwcDbldrsKpQvs5m+wjNeFIkozh48M+6J+qRwzhs
-         kt9QerD8u7pL7sY+RbUGF4aOc5UZT1pZ970Ull7M1EqAtyCQEl0AW/8mFkrGZYVkfeJg
-         XLGpyhDFVAWnvTJ2RhmiQlwuh39UZgD0GwgESnIXKvkYL8kkgVqziFtFwTnHzMulpdM4
-         MmOseIe+KCwPKdeTXATIbJg78rCnkaRtghRbz5euuaAiV3BVJ+dL6zmeBpWfksJ8Zr11
-         a+tatZ4MBPhdeBNbGoMQgZLANrLysfrTIwMDwhxZp7PfaiJSmq6gWcJVjpoeedYByouN
-         i0DQ==
+        bh=gAo0u3Z1jjEufLVgwCxrYlte3qUeWpUhcdaI/r1wnh0=;
+        b=dxFBlIkyCV5fm38IxDiux8adhQh6jHKXgzOi/NMJJfNmfYCMv0mB1jMQc63IUvMmBo
+         7OF59BcVPlHhku2gi3udExKIAYicxzgdyD/nhqpFMaj2+QaqCAdXXimhNviJN81JLe+R
+         bXsxiukKhLAIIHMuR+0ymYcIQcPx9I3MvmPMTD5AI+LNr7jKlUFaM9kVNxTAvp2jwHRB
+         WLU1v4FU66CHjzaLpRunhjc9kADQZyK7n4irwjo5t8PHKns9xgKOHii2qs88/JoHt4Cv
+         +JsCKbbkN2wVboi//oFPF2YWiEB43ZIbGDOWDd+HpMbUlbB8qkOom5X+w9CJ+vpuGeAs
+         4vaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=pwD1OclVNPXNsF3EWVkGcon8dOdBOWPEoU2P5156veU=;
-        b=lTGOfSesdSZ44C24/apbeT6KzdRXwvVGOo/QjLc9m3K2bSaGUNfsePDYHPt5/mqfJk
-         pxP4/C69fgXqntVvAO0bVgZmug4lmGcSC04L7nLEVrOyRYup0/blj4bp6QBK6p51ImtL
-         4N9rbfeeO+fqEeb5XPvzc7dc7JopsXsHKIX10ifnWWTu2RmjaVjMT0hobVnHewRk0kDk
-         sXlVkeOjj4SYlq9HkLJvfIBwb9hqRcCbCqK04OxoDpN07snXPyCJxOEi65b87ww2co5o
-         41CuszbYysSGFHHjaldsKYdbD9wusY6MzVUPJ/EAcOHWvkcSHaxtDe/HOr4/TrbLAcub
-         RuCA==
-X-Gm-Message-State: AKGB3mL8vvebHrRQIhRyHZe9U0fj0PKPicI5mIPqUHcp+Fvq7vnNCgOf
-        PVz5dkp1f/woSxHTmJTLgpTYVRia1EUZJ25KhuA=
-X-Google-Smtp-Source: ACJfBos+oSMz0l5PgAj5UviX1AOguwBqToKW/Z7Gknh598wZC4GcqvsQwa97qHeljDx5X3K83h1e3gLtIKvHueCE1Uk=
-X-Received: by 10.107.136.167 with SMTP id s39mr1654146ioi.169.1513017303089;
- Mon, 11 Dec 2017 10:35:03 -0800 (PST)
+        bh=gAo0u3Z1jjEufLVgwCxrYlte3qUeWpUhcdaI/r1wnh0=;
+        b=T8hzjAWHa3E7rXCmFc3LWI8pHwrajx7uOye7Lhm1gYjc7RCOMRTVKiagmTN2AF1obn
+         462lFPir+M4DZ82pwrYpO9rJozavVncGSkRBSTq8BzE9ODsPIzM/2UNtVhyipZsYDwHX
+         9s3bo4u3O0Q+A52rUegpY42k0sDwJD8sBS3zNrT/VtHan2RUDTZZ6WvyAxti/bXwCAS3
+         /aAgX4X7qQkqo678kZ7iGYuD/rV4PqhFOLnFHfkFyLvG4cI+QL1OxV6jmWcq4JvW4nd4
+         NoTGVFF/ZWCijqISjfyFgEkHJZFA3kNV+/zuhMCEotTQ9iHiDpCujVMFHGpyvY+WWiJv
+         bPVQ==
+X-Gm-Message-State: AKGB3mISxppHlPp3ZMJhIX5QdVj5tQwgwqX0M3jeVP9HZt/hEasUnLo6
+        DUFpIt3TtbrbNiCokN3onT9deK6UuTnaPfk0ZY6/tQ==
+X-Google-Smtp-Source: ACJfBovy+fZkcHQES8qOnMWcUL/lxrzso59dPuqI+LJrJCHuAQrYnKXIyjIoBdNHdxq16hSjal7wy+atvWceSECrEPE=
+X-Received: by 10.107.7.169 with SMTP id g41mr1967731ioi.38.1513017494407;
+ Mon, 11 Dec 2017 10:38:14 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.79.109.73 with HTTP; Mon, 11 Dec 2017 10:34:42 -0800 (PST)
-In-Reply-To: <xmqqefocjrp2.fsf@gitster.mtv.corp.google.com>
+Received: by 10.79.109.73 with HTTP; Mon, 11 Dec 2017 10:37:53 -0800 (PST)
+In-Reply-To: <CACx-yZ1DGz2z6qqAX=pzeExT689y0sON+wVDaocdWk75a5SOxA@mail.gmail.com>
 References: <CACx-yZ10GiDT=dDeF1EUtM_K4nGd414SDfxLRqGWyXt0ub02Gg@mail.gmail.com>
- <CACx-yZ1dJuUj5mD6WE8yqZCPMK8q-yaJ0GKUSppZ7uDkqvJ5UA@mail.gmail.com> <xmqqefocjrp2.fsf@gitster.mtv.corp.google.com>
+ <CACx-yZ1dJuUj5mD6WE8yqZCPMK8q-yaJ0GKUSppZ7uDkqvJ5UA@mail.gmail.com>
+ <xmqqefocjrp2.fsf@gitster.mtv.corp.google.com> <CACx-yZ1DGz2z6qqAX=pzeExT689y0sON+wVDaocdWk75a5SOxA@mail.gmail.com>
 From:   Daniel Knittl-Frank <knittl89@googlemail.com>
-Date:   Mon, 11 Dec 2017 19:34:42 +0100
-Message-ID: <CACx-yZ1DGz2z6qqAX=pzeExT689y0sON+wVDaocdWk75a5SOxA@mail.gmail.com>
+Date:   Mon, 11 Dec 2017 19:37:53 +0100
+Message-ID: <CACx-yZ3FxqFvXgM-V0stODcyAdCoO83s=WwyZ2OLiJON6qqvkA@mail.gmail.com>
 Subject: Re: "git describe" documentation and behavior mismatch
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
@@ -62,51 +63,44 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Dec 3, 2017 at 6:39 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> I suspect that "see if the name recorded in the tag object matches
-> the name of the ref that stores the tag after refs/tags/" code *is*
-> not just verifying what it claims to (which may be good) but also
-> unintentionally affecting the output (i.e. "--all" promises that the
-> prefix tags/ should be shown).  Perhaps the code needs to be fixed
-> if that is the case.
+Forget the above patch. I should compile my code after refactoring ...
 
-What is the course of action then? I wrote up a really dumb 2-line
-patch which simply checks if --all was specified and prepends the
-output with "tags/".
-
-Good enough? Should we instead update the documentation? Still not
-sure, what the behavior _should_ be in the case of annotated tags with
-embedded names.
+Here is the fixed version.
 
 -- >8 --
 
-From 7243d700aad280b11e647e04ade027c412dde54c Mon Sep 17 00:00:00 2001
+From 8203bd0ad5baab7024ebff597c9f35a0250d09ff Mon Sep 17 00:00:00 2001
 From: Daniel Knittl-Frank <knittl89+git@googlemail.com>
 Date: Mon, 11 Dec 2017 19:24:54 +0100
 Subject: [PATCH] Prepend "tags/" when describing tags with embedded name
 
 Signed-off-by: Daniel Knittl-Frank <knittl89+git@googlemail.com>
 ---
- builtin/describe.c | 2 ++
- 1 file changed, 2 insertions(+)
+ builtin/describe.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/builtin/describe.c b/builtin/describe.c
-index e14e162ef6..54aaf30562 100644
+index e14e162ef6..9da6d85ea3 100644
 --- a/builtin/describe.c
 +++ b/builtin/describe.c
-@@ -272,6 +272,8 @@ static void display_name(struct commit_name *n)
+@@ -271,10 +271,13 @@ static void display_name(struct commit_name *n)
+         n->name_checked = 1;
      }
 
-     if (n->tag)
+-    if (n->tag)
++    if (n->tag) {
 +        if (all)
 +            printf("tags/");
          printf("%s", n->tag->tag);
-     else
+-    else
++    } else {
          printf("%s", n->path);
++    }
+ }
+
+ static void show_suffix(int depth, const struct object_id *oid)
 -- 
 2.15.GIT
-
-
 
 -- 
 typed with http://neo-layout.org
