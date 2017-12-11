@@ -2,87 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3B6E21F404
-	for <e@80x24.org>; Mon, 11 Dec 2017 17:02:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0886B1F404
+	for <e@80x24.org>; Mon, 11 Dec 2017 17:14:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752357AbdLKRCN (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Dec 2017 12:02:13 -0500
-Received: from mail-wm0-f49.google.com ([74.125.82.49]:36882 "EHLO
-        mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751585AbdLKRCL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Dec 2017 12:02:11 -0500
-Received: by mail-wm0-f49.google.com with SMTP id f140so15451189wmd.2
-        for <git@vger.kernel.org>; Mon, 11 Dec 2017 09:02:10 -0800 (PST)
+        id S1752415AbdLKRN5 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Dec 2017 12:13:57 -0500
+Received: from mail-wr0-f171.google.com ([209.85.128.171]:37313 "EHLO
+        mail-wr0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752277AbdLKRN4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Dec 2017 12:13:56 -0500
+Received: by mail-wr0-f171.google.com with SMTP id k61so18354485wrc.4
+        for <git@vger.kernel.org>; Mon, 11 Dec 2017 09:13:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=UmmtBj8qYpKl0LPN8v/k6K4yuIVMiRAcb0N0LB0NHvw=;
-        b=p6KCXNZdlZ4/abC90D8Y6Er0S2vbL6drRh3dGfz4xIrrb4bMAqybbkF4lH8DJk0a+Z
-         nBk4mbgc/5AySeJN372tayGzpFd3fNY+j4+vV0KSqy40lPfZQ881BMfw6YR2lysXD1Mj
-         3ROCKuRYImuPwLviXrkh0BlPhiUiIxwP/kc6borYB635fw4hpA0qy3qLtrWyvTbG7HsI
-         1ETiPbS9p5X1Jyjl7qT/hiN5tyl/Fl1p+fYi8G8vPmA1U43++E20hYzUV1kRnSngZcVJ
-         W5XTOoObBCBMyvEyqNIpXkuDJ5kMecdEWFCgLcFOheIxmsW1OrASkT19GbxhTkvCWW9u
-         5hYw==
+        d=linaro.org; s=google;
+        h=references:user-agent:from:to:cc:subject:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=Dv45GZpAzBLZr/BzsYua6oQO00dUQE7ipBzQeIEzBJg=;
+        b=RavbEb72E/HMxV33vCxAt4DjtgeYhQVqDQgTSHOHrd9xZkuPKXTNdX2H5cwjzksFAn
+         N8behy6dY9MXuVneUt1hNUEx6K8PJahoT71COlwYb5HHhn/oNVcFzmDW+t944nq4Cejs
+         FkKFXrhdtZDYuDlpPEhTyH/UkUzIFOLDAsl/w=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=UmmtBj8qYpKl0LPN8v/k6K4yuIVMiRAcb0N0LB0NHvw=;
-        b=KWrZ6Tokbga857vKRMwaObNJg/WtHE00Ns37snOuL/6BEEuTx629O1++sdYoUUsShB
-         629zgPEQOpcbCu4JPoMkXusKaHUr9iJBDjmts5lcAFNBH3FJL2v1UhmW4pLhqze9ENJv
-         9vr2aTs8gU/sB2uEBf1fap/3cxrN9NTkgYStq75RoPIGtzTqWavcx0KnBJvBe87tSFZk
-         6fwbGmOTc89aIy2+F2j5hohNxvPKC4Vx/3lmrUn1euyLD2oO3WDDOLWIrScJ7oT0w4bR
-         gQmvImf+/p1+54XaWheRcF3QxB6QgwpL7eO/fuOnnn3pWJ0U4yNJlO4XAakoz5d+3iMZ
-         aqgA==
-X-Gm-Message-State: AKGB3mLwEq7wXk1IuqEi9+HG8oaoVM6j0AN4MQJJBBYmxa+noVUXKTwy
-        2swdIdknieinGsUWIoHCR8+ZlPBrplJyELUprPJ+lSCv
-X-Google-Smtp-Source: ACJfBotf52WIr5ZAOtnljU2EPuOrBLo4sXuqwfzyKY0rZEUQUbChEWDvlQycszwm82HXXaYN43WgM2jIMjNg8cEMwm8=
-X-Received: by 10.28.51.133 with SMTP id z127mr1504175wmz.84.1513011730049;
- Mon, 11 Dec 2017 09:02:10 -0800 (PST)
+        h=x-gm-message-state:references:user-agent:from:to:cc:subject
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=Dv45GZpAzBLZr/BzsYua6oQO00dUQE7ipBzQeIEzBJg=;
+        b=PhJmNdTbOrHnvFJNQjO9eTvrFNaBpYt8FnWYOt4btN46JNcx2p7KflMDD/HeGThIJy
+         IXnyWfM0v/kimfJJIXH/171Q6BZhmYG/b/llySkWv2fBmsqQPzJNzttiq/njvrm2He1N
+         RrqmAQ7Nr/UmQPP6moHCuE3a37oQy2//udwJIx7Z9Ih8XP5f3HJnXId7/7mQLavTnLvV
+         3uRzXlHIg2gS4GkqLQBmjrZmXb79FkwygpgO+OWz4MzLogvL+2B+0HoPFrp44FVHarKA
+         ZgFX001zpqmxvJz7X1/vIDNd6LeaLvXlyAScAwfGUK4pij2/57WaDtaONJn0bl4H7MUo
+         ccuw==
+X-Gm-Message-State: AKGB3mLmOiq6mkhMSXWJLeOMrb0LhJIXHHuDpmqx+iCd+Tlw/O9BQd+O
+        EIM2r05LpCrw/Mz2HM7Tw4Wp9xEtUcs=
+X-Google-Smtp-Source: ACJfBos7zJZhkjq7yBOacNPWyC8mHa2OdzWLAVsK2EsPvotmHQvz3j/YC0jk569B+e2slx/CRZ4bbg==
+X-Received: by 10.223.157.138 with SMTP id p10mr1177924wre.28.1513012435324;
+        Mon, 11 Dec 2017 09:13:55 -0800 (PST)
+Received: from zen.linaro.local ([81.128.185.34])
+        by smtp.gmail.com with ESMTPSA id r3sm10075962wmg.31.2017.12.11.09.13.53
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 11 Dec 2017 09:13:53 -0800 (PST)
+Received: from zen (localhost [127.0.0.1])
+        by zen.linaro.local (Postfix) with ESMTPS id 838D23E041E;
+        Mon, 11 Dec 2017 17:13:53 +0000 (GMT)
+References: <20171116154814.23785-1-alex.bennee@linaro.org> <CAPig+cTXq6jSN9f2_xyj=Jfv_cg2kUFUtA5uVkZDrRRSi2x7vg@mail.gmail.com> <87wp2jwe9o.fsf@linaro.org> <20171121205206.fvwjkkwhil4abmmk@laptop> <xmqq8tezyu3g.fsf@gitster.mtv.corp.google.com>
+User-agent: mu4e 1.0-alpha2; emacs 26.0.90
+From:   Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Thomas Adam <thomas@xteddy.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>,
+        Matthieu Moy <Matthieu.Moy@imag.fr>,
+        Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
+Subject: Re: [PATCH] git-send-email: fix get_maintainer.pl regression
+In-reply-to: <xmqq8tezyu3g.fsf@gitster.mtv.corp.google.com>
+Date:   Mon, 11 Dec 2017 17:13:53 +0000
+Message-ID: <87mv2p89wu.fsf@linaro.org>
 MIME-Version: 1.0
-Received: by 10.223.165.153 with HTTP; Mon, 11 Dec 2017 09:02:09 -0800 (PST)
-From:   =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date:   Mon, 11 Dec 2017 18:02:09 +0100
-Message-ID: <CAJ+F1CJB+fOJmYpDQtjn1kLa-wk=oUeQGjO7q=N2igYhVG0tiQ@mail.gmail.com>
-Subject: Shared clone from worktree directory
-To:     Git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
 
-For better, or worse, I encountered a script doing a git clone
---shared from the working directory. However, if clone --shared is run
-from a worktree, it fails with cryptic errors.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Ex:
-elmarco@boraha:/tmp/test/wt (wt)$ git worktree list
-/tmp/test     4ae16a0 [master]
-/tmp/test/wt  4ae16a0 [wt]
-elmarco@boraha:/tmp/test/wt (wt)$ git clone --shared  . clone-dir
-Cloning into 'clone-dir'...
-done.
-error: object directory /tmp/test/.git/worktrees/wt/objects does not
-exist; check .git/objects/info/alternates.
-fatal: update_ref failed for ref 'HEAD': cannot update ref
-'refs/heads/wt': trying to write ref 'refs/heads/wt' with nonexistent
-object 4ae16a066ee088d40dbefeaaae7b5578d68b4b51
-fatal: The remote end hung up unexpectedly
+> Thomas Adam <thomas@xteddy.org> writes:
+>
+>> Trying to come up with a reinvention of regexps for email addresses is a=
+sking
+>> for trouble, not to mention a crappy rod for your own back.  Don't do th=
+at.
+>> This is why people use Mail::Address.
+>>
+>> https://metacpan.org/pod/distribution/MailTools/lib/Mail/Address.pod
+>
+> Now we are coming back to cc907506 ("send-email: don't use
+> Mail::Address, even if available", 2017-08-23).  It argues
+>
+>     * Having this optional Mail::Address makes it tempting to anwser "ple=
+ase
+>       install Mail::Address" to users instead of fixing our own code. We'=
+ve
+>       reached the stage where bugs in our parser should be fixed, not wor=
+ked
+>       around.
+>
+> but if it costs us maintaining our substitute that much, it seems to
+> me that depending on Mail::Address is not just tempting but may be a
+> sensible way forward.
+>
+> Was there any reason why Mail::Address was _inadequate_?  I know we
+> had trouble with random garbage that are *not* addresses people put
+> on the in-body CC: trailer in the past, but I do not recall if they
+> are something Mail::Address would give worse result and we need our
+> workaround (hence our own substitute), or Mail::Address would handle
+> them just fine.
 
-Is this a bug? If not, a nicer error message would be welcome, as well
-as man page note.
+Ping?
 
-thanks
+So have we come to a consensus about the best solution here?
 
---=20
-Marc-Andr=C3=A9 Lureau
+I'm perfectly happy to send a reversion patch because to be honest
+hacking on a bunch of perl to handle special mail cases is not my idea
+of fun spare time hacking ;-)
+
+I guess the full solution is to make Mail::Address a hard dependency?
+
+--
+Alex Benn=C3=A9e
